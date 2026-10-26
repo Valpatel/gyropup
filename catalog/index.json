@@ -1,0 +1,10 @@
+{
+  "files": [
+    "leg_actuators.json",
+    "motor_drivers.json",
+    "power_electronics.json",
+    "sensors_compute.json",
+    "wheel_motors.json"
+  ],
+  "items": 273
+}

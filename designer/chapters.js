@@ -40,7 +40,7 @@ export const CHAPTERS = [
     id: 'brain', title: 'A brain to think with',
     story: () => `Your wobbit thinks with a Jetson AGX Orin 32GB in the J501 compute box. It is the heaviest single `
       + `part on the robot, so everything else is sized around it.`,
-    slot: 'compute', filter: byCat('compute'), optional: false,
+    slot: 'compute', filter: (i) => i.category === 'compute' && /orin|jetson|raspberry/i.test(i.model + i.id), optional: false,
   },
   {
     id: 'lidar', title: 'Eyes that see all around',
@@ -54,9 +54,21 @@ export const CHAPTERS = [
     slot: 'stereo', filter: (i) => i.category === 'sensor' && /zed/i.test(i.model), optional: true,
   },
   {
-    id: 'depth', title: 'A close-up depth camera',
-    story: () => `A RealSense depth camera is good for close obstacles and the ground just ahead of the wheels.`,
-    slot: 'depth', filter: (i) => i.category === 'sensor' && /realsense/i.test(i.vendor + i.model), optional: true,
+    id: 'depth_front', title: 'A depth camera looking ahead',
+    story: () => `A RealSense depth camera sees close obstacles and the ground just ahead of the wheels. It sits in a `
+      + `cradle on a 1/4-20 screw that fits a D415 or a D435, so cameras swap in a minute.`,
+    slot: 'depth_front', filter: (i) => i.category === 'sensor' && /realsense/i.test(i.vendor + i.model), optional: true,
+  },
+  {
+    id: 'depth_rear', title: 'Eyes in the back of its head',
+    story: () => `A second depth camera, facing backwards, lets wobbit reverse safely. It uses the same cradle as the front one.`,
+    slot: 'depth_rear', filter: (i) => i.category === 'sensor' && /realsense/i.test(i.vendor + i.model), optional: true,
+  },
+  {
+    id: 'imu', title: 'A sense of balance',
+    story: () => `Balancing needs a fast, rigidly mounted IMU on the body near the centre of mass, not on the lidar `
+      + `mast, which flexes and carries a spinning rotor.`,
+    slot: 'imu', filter: (i) => i.category === 'imu', optional: true,
   },
   {
     id: 'topology', title: 'How the legs bend',
@@ -94,10 +106,16 @@ export const CHAPTERS = [
     slot: 'battery', filter: byCat('battery'),
   },
   {
-    id: 'dcdc', title: 'Taming the voltage',
-    when: (d, cat, r) => r.checks.some((c) => c.id === 'volts-compute') || d.parts.dcdc,
+    id: 'dcdc_compute', title: 'Taming the voltage',
+    when: (d, cat, r) => r.checks.some((c) => c.id === 'volts-compute') || d.parts.dcdc_compute,
     story: () => `Your battery's full-charge voltage is higher than the compute box accepts, so it needs a DC-DC converter.`,
-    slot: 'dcdc', filter: byCat('dcdc'), optional: true,
+    slot: 'dcdc_compute', filter: byCat('dcdc'), optional: true,
+  },
+  {
+    id: 'dcdc_12v', title: 'A steady 12 volts for the lidar',
+    when: (d) => Boolean(d.parts.lidar),
+    story: () => `The VLP-16 accepts only 9–18 V and surges about 3 A when it spins up, so it runs from a regulated 12 V converter.`,
+    slot: 'dcdc_12v', filter: (i) => i.category === 'dcdc' && /12/.test(i.model + i.id), optional: true,
   },
   {
     id: 'safety', title: 'A big red button',

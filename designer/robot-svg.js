@@ -35,8 +35,11 @@ export function robotSvg(design, catalog, { crouch = 0.35, color = '#f5b82e', wi
       + `<rect x="-52" y="${-(lz + 44)}" width="104" height="14" class="lidar-band"/>`);
     headTop = lz + 72;
   }
-  if (has('depth')) {
+  if (has('depth_front')) {
     head.push(`<rect x="${bx1 - 4}" y="${-(bodyBottom + trayH + 30)}" width="14" height="26" rx="4" class="sensor"/>`);
+  }
+  if (has('depth_rear')) {
+    head.push(`<rect x="${bx0 - 10}" y="${-(bodyBottom + trayH + 30)}" width="14" height="26" rx="4" class="sensor"/>`);
   }
 
   // face on the front of the body: two eyes and a little beak, the duck nod

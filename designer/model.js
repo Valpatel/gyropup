@@ -57,6 +57,23 @@ function spec(item, key, fallback = null) {
   return v === undefined || v === null ? fallback : v;
 }
 
+// Mass in grams: the published mass, else a labelled estimate.
+function massOf(item) {
+  return spec(item, 'mass_g') ?? spec(item, 'mass_g_estimate');
+}
+
+// Typical power in W: the published typical figure, else the middle of a published range.
+function powerOf(item) {
+  const r = spec(item, 'system_power_w') ?? spec(item, 'power_range_w');
+  return spec(item, 'power_typical_w') ?? (Array.isArray(r) ? (r[0] + r[1]) / 2 : 0);
+}
+
+// No-load speed at the actual bus voltage: speed scales with voltage for a BLDC motor.
+function speedAt(item, busV) {
+  const rpm = spec(item, 'no_load_speed_rpm'), vNom = spec(item, 'voltage_nominal_v');
+  return rpm && vNom && busV ? (rpm * busV) / vNom : rpm;
+}
+
 // A design names a catalog part by id, or carries a custom part inline:
 //   {"custom": true, "category": "leg_actuator", "vendor": "Custom", "model": "My motor", "price_usd": 300,
 //    "specs": {"mass_g": 900, "peak_torque_nm": 40, ...}}
@@ -105,7 +122,7 @@ export function printedParts(d) {
   const sec = boxSection(s.width_mm, s.depth_mm, s.wall_mm);
   const link = (len) => ({ volume_cm3: (sec.area * len) / 1000 + 2 * 40, area_cm2: (sec.perim * len) / 100 + 2 * 60 });
   const body = d.geometry.body;
-  const frameVol = (2 * (body.length_mm + body.width_mm) * 60 * 4 + body.length_mm * body.width_mm * 3) / 1000;
+  const frameVol = (2 * (body.depth_mm + body.width_mm) * 60 * 4 + body.depth_mm * body.width_mm * 3) / 1000;
   return [
     { id: 'body_frame', name: 'Body frame', qty: 1, ...{ volume_cm3: frameVol, area_cm2: frameVol * 6.5 }, load: 'body' },
     { id: 'hip_mount', name: 'Hip motor mount', qty: 2, volume_cm3: 120, area_cm2: 400, load: 'motor', hot: true },
@@ -114,38 +131,53 @@ export function printedParts(d) {
     { id: 'wheel_mount', name: 'Wheel motor mount', qty: 2, volume_cm3: 60, area_cm2: 220, load: 'motor', hot: true },
     { id: 'sensor_head', name: 'Sensor head', qty: 1, volume_cm3: 260, area_cm2: 1400, load: 'light' },
     { id: 'battery_tray', name: 'Battery tray', qty: 1, volume_cm3: 110, area_cm2: 700, load: 'light' },
-  ].map((p) => ({ ...p, estimate: true }));
+    { id: 'camera_cradle', name: 'Depth camera cradle (D415/D435)', qty: (d.parts.depth_front ? 1 : 0) + (d.parts.depth_rear ? 1 : 0), volume_cm3: 18, area_cm2: 110, load: 'light' },
+    ...(d.wheel_from_motor ? [] : [
+      { id: 'wheel_hub', name: 'Wheel hub', qty: 2, volume_cm3: 0.12 * g.wheel_diameter_mm, area_cm2: 0.9 * g.wheel_diameter_mm, load: 'motor' },
+      { id: 'tyre', name: 'Tyre', qty: 2, volume_cm3: 0.35 * g.wheel_diameter_mm, area_cm2: 1.5 * g.wheel_diameter_mm, load: 'light', material: 'tpu95' },
+    ]),
+  ].filter((p) => p.qty > 0).map((p) => ({ ...p, estimate: true }));
 }
 
 // ----------------------------------------------------------------------------- the model
 
+// The wheel size comes from the wheel motor when it has its own tyre; otherwise the design's size is used and a
+// printed hub and TPU tyre are added.
+export function effectiveDesign(design, catalog) {
+  const wheel = resolvePart(design.parts.wheel_motor, catalog);
+  const dia = wheel?.specs?.diameter_mm;
+  const d = JSON.parse(JSON.stringify(design));
+  d.wheel_from_motor = dia != null;
+  if (dia != null) d.geometry.wheel_diameter_mm = dia;
+  return d;
+}
+
 export function evaluate(design, catalog, materials, opts = {}) {
   const o = { ...DEFAULTS, ...opts };
-  const d = design;
+  const d = effectiveDesign(design, catalog);
   const pick = (slot) => resolvePart(d.parts[slot], catalog);
   const checks = [];
   const check = (id, level, text) => checks.push({ id, level, text });
 
   // --- BOM: catalogue parts
-  const slots = [
-    ['compute', 1], ['lidar', 1], ['stereo', 1], ['depth', 1],
-    ['leg_actuator', 4], ['wheel_motor', 2], ['motor_driver', d.parts.motor_driver ? 2 : 0],
-    ['battery', d.battery_count ?? 1], ['dcdc', 1], ['estop', 1], ['can_adapter', 1], ['imu', 1],
-  ];
+  // Every filled slot is a BOM line, so a design can add any part. Quantities for the paired parts:
+  const QTY = { leg_actuator: 4, wheel_motor: 2, motor_driver: 2, battery: d.battery_count ?? 1 };
+  const slots = Object.keys(d.parts).map((slot) => [slot, QTY[slot] ?? d.part_qty?.[slot] ?? 1]);
   const lines = [];
   for (const [slot, qty] of slots) {
     const item = pick(slot);
     if (!item || !qty) continue;
     lines.push({ slot, id: item.id, name: `${item.vendor} ${item.model}`, qty, group: bomGroup(item),
-                 unit_usd: item.price_usd, mass_g: spec(item, 'mass_g'), source: item.buy?.[0]?.url ?? item.sources?.[0] ?? null,
+                 unit_usd: item.price_usd, mass_g: massOf(item), mass_estimate: spec(item, 'mass_g') == null && massOf(item) != null, source: item.buy?.[0]?.url ?? item.sources?.[0] ?? null,
                  price_checked: item.price_checked ?? null });
     if (item.price_usd == null) check(`price-${slot}`, 'warn', `${item.vendor} ${item.model} has no public price; it is left out of the total.`);
-    if (spec(item, 'mass_g') == null) check(`mass-${slot}`, 'warn', `${item.vendor} ${item.model} has no published mass; it is left out of the mass budget.`);
+    if (massOf(item) == null) check(`mass-${slot}`, 'warn', `${item.vendor} ${item.model} has no published mass; it is left out of the mass budget.`);
+    else if (spec(item, 'mass_g') == null) check(`mass-${slot}`, 'warn', `${item.vendor} ${item.model}: mass is an estimate (${massOf(item)} g). Weigh it.`);
   }
 
   // --- BOM: printed parts
   const parts = printedParts(d).map((p) => {
-    const matId = d.materials?.parts?.[p.id] ?? d.materials?.default ?? 'pla';
+    const matId = d.materials?.parts?.[p.id] ?? p.material ?? d.materials?.default ?? 'pla';
     const m = materials[matId];
     const grams = printedMassG(p.volume_cm3, p.area_cm2, m, d.print);
     return { ...p, material: matId, mass_g: grams, filament_usd: (grams / 1000) * m.price_usd_per_kg };
@@ -160,17 +192,18 @@ export function evaluate(design, catalog, materials, opts = {}) {
 
   const total = (group) => lines.filter((l) => !group || l.group === group)
     .reduce((s, l) => s + (l.unit_usd ?? 0) * l.qty, 0);
-  const massOf = (pred) => lines.filter(pred).reduce((s, l) => s + (l.mass_g ?? 0) * l.qty, 0);
+  const massWhere = (pred) => lines.filter(pred).reduce((s, l) => s + (l.mass_g ?? 0) * l.qty, 0);
   const cost = { sensors_compute_usd: total('sensors_compute'), chassis_actuators_usd: total('chassis_actuators'), total_usd: total() };
 
   // --- mass budget: what each leg carries
   const legAct = pick('leg_actuator'), wheel = pick('wheel_motor');
+  const busV = spec(pick('battery'), 'voltage_nominal_v');  // motor speeds scale with this
   const thighShin = parts.filter((p) => p.id === 'thigh' || p.id === 'shin' || p.id === 'wheel_mount')
     .reduce((s, p) => s + p.mass_g * p.qty, 0);
-  const wheelMass = 2 * (spec(wheel, 'mass_g', 0));
+  const wheelMass = 2 * (massOf(wheel) ?? 0);
   const kneeAtKnee = d.leg.topology === 'serial_knee_at_knee';
-  const legMovingG = thighShin + wheelMass + (kneeAtKnee ? 2 * spec(legAct, 'mass_g', 0) : 0);
-  const totalG = massOf(() => true);
+  const legMovingG = thighShin + wheelMass + (kneeAtKnee ? 2 * (massOf(legAct) ?? 0) : 0);
+  const totalG = massWhere(() => true);
   const supportedKg = (totalG - wheelMass) / 1000;    // everything above the wheels (approx.: shins carried too)
   const totalKg = totalG / 1000;
 
@@ -201,12 +234,17 @@ export function evaluate(design, catalog, materials, opts = {}) {
     const forceN = (2 * legPeak * o.jump_factor) / (leverM * topo.torque_share);
     const accel = forceN / totalKg - G;
     let v = accel > 0 ? Math.sqrt(2 * accel * strokeM) : 0;
-    const rpm = spec(legAct, 'no_load_speed_rpm');
+    const rpm = speedAt(legAct, busV);
+    legs.no_load_rpm_at_bus = rpm;
     const vCap = rpm ? ((rpm * 2 * Math.PI) / 60) * leverM * 0.6 : Infinity;
     const speedLimited = v > vCap;
     v = Math.min(v, vCap);
     legs.jump_height_mm = (v * v) / (2 * G) * 1000;
     legs.jump_speed_limited = speedLimited;
+    const vNom = spec(legAct, 'voltage_nominal_v');
+    if (busV && vNom && busV < 0.75 * vNom) {
+      check('leg-speed', 'warn', `The leg actuators are rated at ${vNom} V; on a ${busV} V battery they reach about ${Math.round(rpm)} rpm instead of ${spec(legAct, 'no_load_speed_rpm')}, so jumps and fast squats are slower.`);
+    }
   }
 
   // --- wheels
@@ -222,7 +260,7 @@ export function evaluate(design, catalog, materials, opts = {}) {
     else check('balance', 'ok', `The wheels can catch a ${wheels.catch_lean_deg.toFixed(0)}° lean.`);
   }
   if (wRated) wheels.max_slope_deg = (Math.asin(Math.min(1, (2 * wRated) / r / (totalKg * G))) * 180) / Math.PI;
-  const wRpm = spec(wheel, 'no_load_speed_rpm');
+  const wRpm = speedAt(wheel, busV);
   if (wRpm) wheels.top_speed_kmh = ((wRpm * 0.8 * Math.PI * d.geometry.wheel_diameter_mm) / 1000) * 60 / 1000;
   const enc = String(spec(wheel, 'encoder', '')).toLowerCase();
   if (wheel && /hall/.test(enc) && !/magnetic|absolute|bit/.test(enc)) {
@@ -234,7 +272,8 @@ export function evaluate(design, catalog, materials, opts = {}) {
   const power = {};
   if (batt) {
     const vNom = spec(batt, 'voltage_nominal_v'), vFull = spec(batt, 'voltage_max_v') ?? spec(batt, 'voltage_full_v');
-    const vEmpty = spec(batt, 'voltage_min_v') ?? (vNom ? vNom * 0.85 : null);
+    const cells = spec(batt, 'cells_series');
+    const vEmpty = spec(batt, 'voltage_min_v') ?? (cells ? cells * 3.0 : vNom ? vNom * 0.83 : null);  // 3.0 V/cell Li-ion cut-off
     const wh = spec(batt, 'energy_wh') * (d.battery_count ?? 1);
     power.bus_v = [vEmpty, vFull];
     for (const [slot, label] of [['leg_actuator', 'leg actuators'], ['wheel_motor', 'wheel motors'], ['motor_driver', 'motor drivers']]) {
@@ -245,15 +284,19 @@ export function evaluate(design, catalog, materials, opts = {}) {
     }
     const compute = pick('compute');
     const cRange = spec(compute, 'voltage_range_v');
-    if (cRange && vFull && (vFull > cRange[1] || vEmpty < cRange[0]) && !pick('dcdc')) {
+    if (cRange && vFull && (vFull > cRange[1] || vEmpty < cRange[0]) && !pick('dcdc_compute')) {
       check('volts-compute', 'fail', `The compute box takes ${cRange[0]}–${cRange[1]} V; a ${vFull.toFixed(1)} V full battery needs a DC-DC converter.`);
     }
-    const sensorsW = ['compute', 'lidar', 'stereo', 'depth'].reduce((s, k) => s + spec(pick(k), 'power_typical_w', 0), 0);
+    const lidarV = spec(pick('lidar'), 'voltage_range_v');
+    if (lidarV && vFull > lidarV[1] && !pick('dcdc_12v')) {
+      check('volts-lidar', 'fail', `The lidar takes ${lidarV[0]}–${lidarV[1]} V; it needs a regulated 12 V supply from a ${vFull.toFixed(1)} V battery.`);
+    }
+    const sensorsW = ['compute', 'lidar', 'stereo', 'depth_front', 'depth_rear', 'imu', 'balance_mcu'].reduce((s, k) => s + powerOf(pick(k)), 0);
     const legsW = 4 * o.power.legs_standing_w, wheelsW = o.power.wheels_rolling_w;
     power.average_w = sensorsW + legsW + wheelsW + o.power.electronics_w;
     power.sensors_compute_w = sensorsW;
     if (wh) power.runtime_min = ((wh * o.efficiency) / power.average_w) * 60;
-    const maxA = spec(batt, 'max_continuous_a');
+    const maxA = spec(batt, 'max_continuous_a') ?? spec(batt, 'continuous_discharge_a');
     const peakDraw = 4 * spec(legAct, 'peak_current_a', 0) * 0.5 + 2 * spec(wheel, 'peak_current_a', 0);
     if (maxA && peakDraw > maxA) check('battery-current', 'warn', `Peak motor current could reach ${Math.round(peakDraw)} A; the battery is rated ${maxA} A continuous.`);
   }
@@ -262,7 +305,7 @@ export function evaluate(design, catalog, materials, opts = {}) {
   for (const p of parts) {
     const m = materials[p.material];
     if (p.hot && m.max_service_c != null && m.max_service_c < 70) {
-      check(`heat-${p.id}`, 'warn', `${p.name} in ${m.name}: it softens near ${m.max_service_c} °C and actuators can run hotter. Use ${m.next ?? 'a higher-temperature material'} or a metal spacer.`);
+      check(`heat-${p.id}`, 'warn', `${p.name} in ${m.name}: it softens near ${m.max_service_c} °C and actuators can run hotter. Use ${m.next_name ?? 'a higher-temperature material'} or a metal spacer.`);
     }
     if (p.load === 'link' && p.section) {
       // worst case: the full leg load at the end of the link, link horizontal
@@ -278,7 +321,7 @@ export function evaluate(design, catalog, materials, opts = {}) {
   return {
     lines, parts, cost, checks,
     mass: { total_kg: totalKg, supported_kg: supportedKg, leg_moving_kg: legMovingG / 1000,
-            sensors_compute_kg: massOf((l) => l.group === 'sensors_compute') / 1000 },
+            sensors_compute_kg: massWhere((l) => l.group === "sensors_compute") / 1000 },
     legs, wheels, power,
     verdict: checks.some((c) => c.level === 'fail') ? 'fail' : checks.some((c) => c.level === 'warn') ? 'warn' : 'ok',
   };

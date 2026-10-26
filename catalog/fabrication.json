@@ -1,0 +1,4864 @@
+{
+ "meta": {
+  "checked": "2026-10-25",
+  "units": "mm, MPa, GPa, g/cm3, USD unless a key says otherwise",
+  "rules": "null = not published / not retrievable. Values labelled 'derived' or 'ESTIMATE' are computed by us from the cited inputs.",
+  "report": "research/fabrication.md",
+  "schema_note": "Object layout requested for the design guide; differs from catalog/SCHEMA.md item lists on purpose."
+ },
+ "sendcutsend": {
+  "checked": "2026-10-25",
+  "materials": [
+   {
+    "name": "5052-H32 aluminum",
+    "scs_name": "5052 H32 Aluminum",
+    "process": "fiber laser",
+    "thicknesses_mm": [
+     1.016,
+     1.6,
+     2.032,
+     2.286,
+     2.54,
+     3.175,
+     4.75,
+     6.35,
+     7.95,
+     9.525,
+     12.7
+    ],
+    "thicknesses_in": [
+     0.04,
+     0.063,
+     0.08,
+     0.09,
+     0.1,
+     0.125,
+     0.187,
+     0.25,
+     0.313,
+     0.375,
+     0.5
+    ],
+    "min_hole_mm_by_thickness": {
+     "1.016": 0.381,
+     "1.6": 0.356,
+     "2.032": 0.356,
+     "2.286": 0.457,
+     "2.54": 0.584,
+     "3.175": 0.813,
+     "4.75": 1.067,
+     "6.35": 1.448,
+     "7.95": 1.905,
+     "9.525": 2.159,
+     "12.7": 3.175
+    },
+    "min_hole_note": "Hard minimum the instant quoter accepts (min_hole_diameter in SendCutSend's public materials JSON). SendCutSend's design guidance is stricter: laser holes >= 50% of thickness (sheet-cutting guideline) and the 5052/6061 pages recommend hole >= thickness. Use max(quoter min, 1.0 x t) for metals in the designer.",
+    "min_cut_to_edge_mm_by_thickness": {
+     "1.016": 0.508,
+     "1.6": 0.508,
+     "2.032": 0.61,
+     "2.286": 0.686,
+     "2.54": 0.762,
+     "3.175": 0.965,
+     "4.75": 1.422,
+     "6.35": 1.905,
+     "7.95": 2.388,
+     "9.525": 2.87,
+     "12.7": 3.81
+    },
+    "min_cut_to_edge_note": "min_cut_to_edge_distance_soft from the materials JSON (a soft/warning limit). Material pages recommend holes 1.5-2x thickness from edges (6061) or 2x (5052).",
+    "bend": {
+     "available": true,
+     "by_thickness_mm": {
+      "1.016": {
+       "k_factor": 0.45,
+       "bend_radius_mm": 0.61,
+       "effective_inside_radius_mm": 0.61,
+       "min_flange_mm": 6.452,
+       "bottom_die_width_mm": 11.989,
+       "keep_features_from_bend_centerline_mm": 5.995,
+       "max_bend_angle_deg": 130.0
+      },
+      "1.6": {
+       "k_factor": 0.42,
+       "bend_radius_mm": 0.61,
+       "effective_inside_radius_mm": 0.889,
+       "min_flange_mm": 6.452,
+       "bottom_die_width_mm": 11.989,
+       "keep_features_from_bend_centerline_mm": 5.995,
+       "max_bend_angle_deg": 130.0
+      },
+      "2.032": {
+       "k_factor": 0.48,
+       "bend_radius_mm": 0.61,
+       "effective_inside_radius_mm": 0.965,
+       "min_flange_mm": 6.452,
+       "bottom_die_width_mm": 11.989,
+       "keep_features_from_bend_centerline_mm": 5.995,
+       "max_bend_angle_deg": 130.0
+      },
+      "2.286": {
+       "k_factor": 0.37,
+       "bend_radius_mm": 0.61,
+       "effective_inside_radius_mm": 0.813,
+       "min_flange_mm": 6.452,
+       "bottom_die_width_mm": 11.989,
+       "keep_features_from_bend_centerline_mm": 5.995,
+       "max_bend_angle_deg": 130.0
+      },
+      "2.54": {
+       "k_factor": 0.4,
+       "bend_radius_mm": 3.175,
+       "effective_inside_radius_mm": 3.175,
+       "min_flange_mm": 9.322,
+       "bottom_die_width_mm": 16.002,
+       "keep_features_from_bend_centerline_mm": 8.001,
+       "max_bend_angle_deg": 130.0
+      },
+      "3.175": {
+       "k_factor": 0.44,
+       "bend_radius_mm": 3.175,
+       "effective_inside_radius_mm": 3.175,
+       "min_flange_mm": 9.322,
+       "bottom_die_width_mm": 16.002,
+       "keep_features_from_bend_centerline_mm": 8.001,
+       "max_bend_angle_deg": 130.0
+      },
+      "4.75": {
+       "k_factor": 0.43,
+       "bend_radius_mm": 6.35,
+       "effective_inside_radius_mm": 6.35,
+       "min_flange_mm": 15.723,
+       "bottom_die_width_mm": 24.994,
+       "keep_features_from_bend_centerline_mm": 12.497,
+       "max_bend_angle_deg": 90.0
+      },
+      "6.35": {
+       "k_factor": 0.42,
+       "bend_radius_mm": 6.35,
+       "effective_inside_radius_mm": 6.35,
+       "min_flange_mm": 29.185,
+       "bottom_die_width_mm": 40.005,
+       "keep_features_from_bend_centerline_mm": 20.003,
+       "max_bend_angle_deg": 90.0
+      }
+     },
+     "note": "Radii/K-factors are fixed by SendCutSend tooling (no custom radii). Keep cut features >= half the die width from the bend centerline."
+    },
+    "tap_sizes_metric_by_thickness": {
+     "1.016": [
+      "M2 x 0.4",
+      "M2.5 x 0.45"
+     ],
+     "1.6": [
+      "M2 x 0.4",
+      "M2.5 x 0.45",
+      "M3 x 0.5",
+      "M4 x 0.7"
+     ],
+     "2.032": [
+      "M2 x 0.4",
+      "M2.5 x 0.45",
+      "M3 x 0.5",
+      "M4 x 0.7",
+      "M5 x 0.8",
+      "M6 x 1.0"
+     ],
+     "2.286": [
+      "M2 x 0.4",
+      "M2.5 x 0.45",
+      "M3 x 0.5",
+      "M4 x 0.7",
+      "M5 x 0.8",
+      "M6 x 1.0",
+      "M10 x 1.0",
+      "M12 x 1.0"
+     ],
+     "2.54": [
+      "M2 x 0.4",
+      "M2.5 x 0.45",
+      "M3 x 0.5",
+      "M4 x 0.7",
+      "M5 x 0.8",
+      "M6 x 1.0",
+      "M10 x 1.0",
+      "M12 x 1.0"
+     ],
+     "3.175": [
+      "M2 x 0.4",
+      "M2.5 x 0.45",
+      "M3 x 0.5",
+      "M4 x 0.7",
+      "M5 x 0.8",
+      "M6 x 1.0",
+      "M8 x 1.25",
+      "M10 x 1.0",
+      "M10 x 1.5",
+      "M11 x 1.5",
+      "M12 x 1.0",
+      "M12 x 1.5"
+     ],
+     "4.75": [
+      "M2 x 0.4",
+      "M2.5 x 0.45",
+      "M3 x 0.5",
+      "M4 x 0.7",
+      "M5 x 0.8",
+      "M6 x 1.0",
+      "M8 x 1.25",
+      "M10 x 1.0",
+      "M10 x 1.5",
+      "M11 x 1.5",
+      "M12 x 1.0",
+      "M12 x 1.75",
+      "M12 x 1.5",
+      "M14 x 2.0",
+      "M16 x 2.0"
+     ],
+     "6.35": [
+      "M2.5 x 0.45",
+      "M3 x 0.5",
+      "M4 x 0.7",
+      "M5 x 0.8",
+      "M6 x 1.0",
+      "M8 x 1.25",
+      "M10 x 1.0",
+      "M10 x 1.5",
+      "M11 x 1.5",
+      "M12 x 1.0",
+      "M12 x 1.75",
+      "M12 x 1.5",
+      "M14 x 2.0",
+      "M16 x 2.0"
+     ],
+     "7.95": [
+      "M2.5 x 0.45",
+      "M3 x 0.5",
+      "M4 x 0.7",
+      "M5 x 0.8",
+      "M6 x 1.0",
+      "M8 x 1.25",
+      "M10 x 1.0",
+      "M10 x 1.5",
+      "M11 x 1.5",
+      "M12 x 1.0",
+      "M12 x 1.75",
+      "M12 x 1.5",
+      "M14 x 2.0",
+      "M16 x 2.0"
+     ],
+     "9.525": [
+      "M4 x 0.7",
+      "M5 x 0.8",
+      "M6 x 1.0",
+      "M8 x 1.25",
+      "M10 x 1.0",
+      "M10 x 1.5",
+      "M11 x 1.5",
+      "M12 x 1.0",
+      "M12 x 1.75",
+      "M12 x 1.5",
+      "M14 x 2.0",
+      "M16 x 2.0"
+     ],
+     "12.7": [
+      "M5 x 0.8",
+      "M6 x 1.0",
+      "M6 x 1",
+      "M8 x 1.25",
+      "M10 x 1.0",
+      "M10 x 1.5",
+      "M11 x 1.5",
+      "M12 x 1.0",
+      "M12 x 1.75",
+      "M12 x 1.5",
+      "M14 x 2.0",
+      "M16 x 2.0"
+     ]
+    },
+    "countersink_by_thickness": {
+     "3.175": {
+      "max_major_dia_mm": 6,
+      "min_major_dia_mm": 1,
+      "min_hole_to_edge_mm": 6.248
+     },
+     "4.75": {
+      "max_major_dia_mm": 12,
+      "min_major_dia_mm": 1,
+      "min_hole_to_edge_mm": 7.01
+     },
+     "6.35": {
+      "max_major_dia_mm": 13,
+      "min_major_dia_mm": 1,
+      "min_hole_to_edge_mm": 8.585
+     },
+     "7.95": {
+      "max_major_dia_mm": 13,
+      "min_major_dia_mm": 1,
+      "min_hole_to_edge_mm": 8.585
+     },
+     "9.525": {
+      "max_major_dia_mm": 13,
+      "min_major_dia_mm": 3,
+      "min_hole_to_edge_mm": 8.585
+     },
+     "12.7": {
+      "max_major_dia_mm": 13,
+      "min_major_dia_mm": 10,
+      "min_hole_to_edge_mm": 8.585
+     }
+    },
+    "services_by_thickness": {
+     "1.016": [
+      "bending",
+      "dimple_forming",
+      "hardware",
+      "tapping"
+     ],
+     "1.6": [
+      "anodizing",
+      "bending",
+      "deburring",
+      "dimple_forming",
+      "engraving",
+      "hardware",
+      "powder",
+      "tapping",
+      "welding"
+     ],
+     "2.032": [
+      "anodizing",
+      "bending",
+      "deburring",
+      "dimple_forming",
+      "engraving",
+      "hardware",
+      "powder",
+      "tapping",
+      "welding"
+     ],
+     "2.286": [
+      "anodizing",
+      "bending",
+      "deburring",
+      "dimple_forming",
+      "engraving",
+      "hardware",
+      "powder",
+      "tapping",
+      "welding"
+     ],
+     "2.54": [
+      "anodizing",
+      "bending",
+      "deburring",
+      "dimple_forming",
+      "engraving",
+      "hardware",
+      "powder",
+      "tapping",
+      "welding"
+     ],
+     "3.175": [
+      "anodizing",
+      "bending",
+      "countersinking",
+      "deburring",
+      "dimple_forming",
+      "engraving",
+      "hardware",
+      "powder",
+      "tapping",
+      "tumbling",
+      "welding"
+     ],
+     "4.75": [
+      "anodizing",
+      "bending",
+      "countersinking",
+      "deburring",
+      "engraving",
+      "hardware",
+      "powder",
+      "tapping",
+      "tumbling",
+      "welding"
+     ],
+     "6.35": [
+      "anodizing",
+      "bending",
+      "countersinking",
+      "deburring",
+      "engraving",
+      "hardware",
+      "powder",
+      "tapping",
+      "tumbling",
+      "welding"
+     ],
+     "7.95": [
+      "anodizing",
+      "countersinking",
+      "deburring",
+      "engraving",
+      "hardware",
+      "powder",
+      "tapping",
+      "tumbling"
+     ],
+     "9.525": [
+      "anodizing",
+      "countersinking",
+      "deburring",
+      "engraving",
+      "hardware",
+      "powder",
+      "tapping",
+      "tumbling"
+     ],
+     "12.7": [
+      "anodizing",
+      "countersinking",
+      "deburring",
+      "engraving",
+      "hardware",
+      "powder",
+      "tapping",
+      "tumbling"
+     ]
+    },
+    "density_g_cm3": 2.685,
+    "density_note": "0.097 lb/in3 on material page, converted",
+    "notes": "Best SendCutSend alloy for bent brackets (bending offered .040-.250 in). Material page: hole >= thickness, keep holes >= 2x thickness from edges. Min part (instant quote): .040-.125 in: 0.25x0.375 in; .187-.250: 0.5x0.75 in.",
+    "source": [
+     "https://app.sendcutsend.com/materials",
+     "https://sendcutsend.com/materials/5052-aluminum/",
+     "https://sendcutsend.com/materials/min-max/"
+    ]
+   },
+   {
+    "name": "6061-T6 aluminum",
+    "scs_name": "6061 T6 Aluminum",
+    "process": "fiber laser",
+    "thicknesses_mm": [
+     1.016,
+     1.6,
+     2.032,
+     2.54,
+     3.175,
+     4.75,
+     6.35,
+     7.95,
+     9.525,
+     12.7,
+     15.875,
+     19.05
+    ],
+    "thicknesses_in": [
+     0.04,
+     0.063,
+     0.08,
+     0.1,
+     0.125,
+     0.187,
+     0.25,
+     0.313,
+     0.375,
+     0.5,
+     0.625,
+     0.75
+    ],
+    "min_hole_mm_by_thickness": {
+     "1.016": 0.356,
+     "1.6": 0.356,
+     "2.032": 0.457,
+     "2.54": 0.584,
+     "3.175": 0.813,
+     "4.75": 1.067,
+     "6.35": 1.448,
+     "7.95": 1.905,
+     "9.525": 2.159,
+     "12.7": 3.175,
+     "15.875": 6.35,
+     "19.05": 7.62
+    },
+    "min_hole_note": "Hard minimum the instant quoter accepts (min_hole_diameter in SendCutSend's public materials JSON). SendCutSend's design guidance is stricter: laser holes >= 50% of thickness (sheet-cutting guideline) and the 5052/6061 pages recommend hole >= thickness. Use max(quoter min, 1.0 x t) for metals in the designer.",
+    "min_cut_to_edge_mm_by_thickness": {
+     "1.016": 0.508,
+     "1.6": 0.508,
+     "2.032": 0.61,
+     "2.54": 0.762,
+     "3.175": 0.965,
+     "4.75": 1.422,
+     "6.35": 1.905,
+     "7.95": 2.388,
+     "9.525": 2.87,
+     "12.7": 3.81,
+     "15.875": 4.775,
+     "19.05": 5.715
+    },
+    "min_cut_to_edge_note": "min_cut_to_edge_distance_soft from the materials JSON (a soft/warning limit). Material pages recommend holes 1.5-2x thickness from edges (6061) or 2x (5052).",
+    "bend": {
+     "available": false,
+     "by_thickness_mm": null,
+     "note": "Bending not offered for this material in the quoter."
+    },
+    "tap_sizes_metric_by_thickness": {
+     "1.016": [
+      "M2 x 0.4",
+      "M2.5 x 0.45"
+     ],
+     "1.6": [
+      "M2 x 0.4",
+      "M2.5 x 0.45",
+      "M3 x 0.5",
+      "M4 x 0.7",
+      "M5 x 0.8",
+      "M6 x 1.0"
+     ],
+     "2.032": [
+      "M2 x 0.4",
+      "M2.5 x 0.45",
+      "M3 x 0.5",
+      "M4 x 0.7",
+      "M5 x 0.8",
+      "M6 x 1.0"
+     ],
+     "2.54": [
+      "M2 x 0.4",
+      "M2.5 x 0.45",
+      "M3 x 0.5",
+      "M4 x 0.7",
+      "M5 x 0.8",
+      "M6 x 1",
+      "M6 x 1.0",
+      "M8 x 1.25",
+      "M10 x 1.0",
+      "M12 x 1.0"
+     ],
+     "3.175": [
+      "M2 x 0.4",
+      "M2.5 x 0.45",
+      "M3 x 0.5",
+      "M4 x 0.7",
+      "M5 x 0.8",
+      "M6 x 1.0",
+      "M8 x 1.25",
+      "M10 x 1.0",
+      "M10 x 1.5",
+      "M11 x 1.5",
+      "M12 x 1.0",
+      "M12 x 1.5"
+     ],
+     "4.75": [
+      "M2 x 0.4",
+      "M2.5 x 0.45",
+      "M3 x 0.5",
+      "M4 x 0.7",
+      "M5 x 0.8",
+      "M6 x 1.0",
+      "M8 x 1.25",
+      "M10 x 1.0",
+      "M10 x 1.5",
+      "M11 x 1.5",
+      "M12 x 1.0",
+      "M12 x 1.75",
+      "M12 x 1.5",
+      "M14 x 2.0",
+      "M16 x 2.0"
+     ],
+     "6.35": [
+      "M2.5 x 0.45",
+      "M3 x 0.5",
+      "M4 x 0.7",
+      "M5 x 0.8",
+      "M6 x 1.0",
+      "M8 x 1.25",
+      "M10 x 1.0",
+      "M10 x 1.5",
+      "M11 x 1.5",
+      "M12 x 1.0",
+      "M12 x 1.75",
+      "M12 x 1.5",
+      "M14 x 2.0",
+      "M16 x 2.0"
+     ],
+     "7.95": [
+      "M2.5 x 0.45",
+      "M3 x 0.5",
+      "M4 x 0.7",
+      "M5 x 0.8",
+      "M6 x 1.0",
+      "M8 x 1.25",
+      "M10 x 1.0",
+      "M10 x 1.5",
+      "M11 x 1.5",
+      "M12 x 1.0",
+      "M12 x 1.75",
+      "M12 x 1.5",
+      "M14 x 2.0",
+      "M16 x 2.0"
+     ],
+     "9.525": [
+      "M4 x 0.7",
+      "M5 x 0.8",
+      "M6 x 1.0",
+      "M8 x 1.25",
+      "M10 x 1.0",
+      "M10 x 1.5",
+      "M11 x 1.5",
+      "M12 x 1.0",
+      "M12 x 1.75",
+      "M12 x 1.5",
+      "M14 x 2.0",
+      "M16 x 2.0"
+     ],
+     "12.7": [
+      "M5 x 0.8",
+      "M6 x 1.0",
+      "M8 x 1.25",
+      "M10 x 1.0",
+      "M10 x 1.5",
+      "M11 x 1.5",
+      "M12 x 1.0",
+      "M12 x 1.75",
+      "M12 x 1.5",
+      "M14 x 2.0",
+      "M16 x 2.0"
+     ],
+     "15.875": [
+      "M8 x 1.25",
+      "M10 x 1.0",
+      "M10 x 1.5",
+      "M11 x 1.5",
+      "M12 x 1.0",
+      "M12 x 1.75",
+      "M12 x 1.5",
+      "M14 x 2.0",
+      "M16 x 2.0"
+     ],
+     "19.05": [
+      "M8 x 1.25",
+      "M10 x 1.0",
+      "M10 x 1.5",
+      "M11 x 1.5",
+      "M12 x 1.0",
+      "M12 x 1.75",
+      "M12 x 1.5",
+      "M14 x 2.0",
+      "M16 x 2.0"
+     ]
+    },
+    "countersink_by_thickness": {
+     "3.175": {
+      "max_major_dia_mm": 6,
+      "min_major_dia_mm": 1,
+      "min_hole_to_edge_mm": 6.248
+     },
+     "4.75": {
+      "max_major_dia_mm": 12,
+      "min_major_dia_mm": 1,
+      "min_hole_to_edge_mm": 7.01
+     },
+     "6.35": {
+      "max_major_dia_mm": 13,
+      "min_major_dia_mm": 1,
+      "min_hole_to_edge_mm": 8.585
+     },
+     "7.95": {
+      "max_major_dia_mm": 13,
+      "min_major_dia_mm": 1,
+      "min_hole_to_edge_mm": 8.585
+     },
+     "9.525": {
+      "max_major_dia_mm": 13,
+      "min_major_dia_mm": 3,
+      "min_hole_to_edge_mm": 8.585
+     },
+     "12.7": {
+      "max_major_dia_mm": 13,
+      "min_major_dia_mm": 10,
+      "min_hole_to_edge_mm": 8.585
+     },
+     "15.875": {
+      "max_major_dia_mm": 13,
+      "min_major_dia_mm": 6,
+      "min_hole_to_edge_mm": 8.585
+     },
+     "19.05": {
+      "max_major_dia_mm": 13,
+      "min_major_dia_mm": 13,
+      "min_hole_to_edge_mm": 8.585
+     }
+    },
+    "services_by_thickness": {
+     "1.016": [
+      "dimple_forming",
+      "engraving",
+      "hardware",
+      "tapping"
+     ],
+     "1.6": [
+      "anodizing",
+      "deburring",
+      "dimple_forming",
+      "engraving",
+      "hardware",
+      "powder",
+      "tapping"
+     ],
+     "2.032": [
+      "anodizing",
+      "deburring",
+      "dimple_forming",
+      "engraving",
+      "hardware",
+      "powder",
+      "tapping"
+     ],
+     "2.54": [
+      "anodizing",
+      "deburring",
+      "dimple_forming",
+      "engraving",
+      "hardware",
+      "powder",
+      "tapping"
+     ],
+     "3.175": [
+      "anodizing",
+      "countersinking",
+      "deburring",
+      "dimple_forming",
+      "engraving",
+      "hardware",
+      "powder",
+      "tapping",
+      "tumbling"
+     ],
+     "4.75": [
+      "anodizing",
+      "countersinking",
+      "deburring",
+      "engraving",
+      "hardware",
+      "powder",
+      "tapping",
+      "tumbling"
+     ],
+     "6.35": [
+      "anodizing",
+      "countersinking",
+      "deburring",
+      "engraving",
+      "hardware",
+      "powder",
+      "tapping",
+      "tumbling"
+     ],
+     "7.95": [
+      "anodizing",
+      "countersinking",
+      "deburring",
+      "engraving",
+      "hardware",
+      "powder",
+      "tapping",
+      "tumbling"
+     ],
+     "9.525": [
+      "anodizing",
+      "countersinking",
+      "deburring",
+      "engraving",
+      "hardware",
+      "powder",
+      "tapping",
+      "tumbling"
+     ],
+     "12.7": [
+      "anodizing",
+      "countersinking",
+      "deburring",
+      "engraving",
+      "hardware",
+      "powder",
+      "tapping",
+      "tumbling"
+     ],
+     "15.875": [
+      "anodizing",
+      "countersinking",
+      "deburring",
+      "powder",
+      "tapping",
+      "tumbling"
+     ],
+     "19.05": [
+      "anodizing",
+      "countersinking",
+      "deburring",
+      "powder",
+      "tapping",
+      "tumbling"
+     ]
+    },
+    "density_g_cm3": 2.699,
+    "density_note": "0.0975 lb/in3 on material page, converted",
+    "notes": "Bending is NOT offered for 6061 sheet in the quoter (no 'bending' operation in the materials JSON); use 5052 for bent parts. Material page: holes no smaller than thickness, holes/cutouts 1.5-2x thickness from edges; tolerance +/-.005 in. Max instant part 30x44 in.",
+    "source": [
+     "https://app.sendcutsend.com/materials",
+     "https://sendcutsend.com/materials/6061-aluminum/",
+     "https://sendcutsend.com/materials/min-max/"
+    ]
+   },
+   {
+    "name": "7075-T6 aluminum",
+    "scs_name": "7075 T6 Aluminum",
+    "process": "fiber laser",
+    "thicknesses_mm": [
+     3.175,
+     4.826,
+     6.35
+    ],
+    "thicknesses_in": [
+     0.125,
+     0.19,
+     0.25
+    ],
+    "min_hole_mm_by_thickness": {
+     "3.175": 1.27,
+     "4.826": 1.092,
+     "6.35": 1.448
+    },
+    "min_hole_note": "Hard minimum the instant quoter accepts (min_hole_diameter in SendCutSend's public materials JSON). SendCutSend's design guidance is stricter: laser holes >= 50% of thickness (sheet-cutting guideline) and the 5052/6061 pages recommend hole >= thickness. Use max(quoter min, 1.0 x t) for metals in the designer.",
+    "min_cut_to_edge_mm_by_thickness": {
+     "3.175": 0.965,
+     "4.826": 1.448,
+     "6.35": 1.905
+    },
+    "min_cut_to_edge_note": "min_cut_to_edge_distance_soft from the materials JSON (a soft/warning limit). Material pages recommend holes 1.5-2x thickness from edges (6061) or 2x (5052).",
+    "bend": {
+     "available": false,
+     "by_thickness_mm": null,
+     "note": "Bending not offered for this material in the quoter."
+    },
+    "tap_sizes_metric_by_thickness": {
+     "3.175": [
+      "M2 x 0.4",
+      "M2.5 x 0.45",
+      "M3 x 0.5",
+      "M4 x 0.7",
+      "M5 x 0.8",
+      "M6 x 1.0",
+      "M8 x 1.25",
+      "M10 x 1.5"
+     ],
+     "4.826": [
+      "M3 x 0.5",
+      "M4 x 0.7",
+      "M5 x 0.8",
+      "M6 x 1.0",
+      "M8 x 1.25",
+      "M10 x 1.5"
+     ],
+     "6.35": [
+      "M3 x 0.5",
+      "M4 x 0.7",
+      "M5 x 0.8",
+      "M6 x 1.0",
+      "M8 x 1.25",
+      "M10 x 1.5"
+     ]
+    },
+    "countersink_by_thickness": {
+     "3.175": {
+      "max_major_dia_mm": 6,
+      "min_major_dia_mm": 1,
+      "min_hole_to_edge_mm": 6.248
+     },
+     "4.826": {
+      "max_major_dia_mm": 12,
+      "min_major_dia_mm": 1,
+      "min_hole_to_edge_mm": 7.01
+     },
+     "6.35": {
+      "max_major_dia_mm": 13,
+      "min_major_dia_mm": 3,
+      "min_hole_to_edge_mm": 8.585
+     }
+    },
+    "services_by_thickness": {
+     "3.175": [
+      "anodizing",
+      "countersinking",
+      "deburring",
+      "engraving",
+      "hardware",
+      "powder",
+      "tapping",
+      "tumbling"
+     ],
+     "4.826": [
+      "anodizing",
+      "countersinking",
+      "deburring",
+      "engraving",
+      "hardware",
+      "powder",
+      "tapping",
+      "tumbling"
+     ],
+     "6.35": [
+      "anodizing",
+      "countersinking",
+      "deburring",
+      "engraving",
+      "hardware",
+      "powder",
+      "tapping",
+      "tumbling"
+     ]
+    },
+    "density_g_cm3": 2.796,
+    "density_note": "0.101 lb/in3 on material page, converted",
+    "notes": "Flat only (no bending). Thicknesses .125/.190/.250 in. Min part .125: 0.25x0.375 in, .190: 0.5x0.5 in, .250: 0.5x0.75 in.",
+    "source": [
+     "https://app.sendcutsend.com/materials",
+     "https://sendcutsend.com/materials/7075-aluminum/",
+     "https://sendcutsend.com/materials/min-max/"
+    ]
+   },
+   {
+    "name": "Mild steel (A36/1008 HRPO and CRS)",
+    "scs_name": "A36/1008 Mild Steel",
+    "process": "fiber laser",
+    "thicknesses_mm": [
+     0.762,
+     1.219,
+     1.499,
+     1.88,
+     2.642,
+     3.023,
+     3.429,
+     4.775,
+     6.35,
+     7.95,
+     9.525,
+     12.7
+    ],
+    "thicknesses_in": [
+     0.03,
+     0.048,
+     0.059,
+     0.074,
+     0.104,
+     0.119,
+     0.135,
+     0.188,
+     0.25,
+     0.313,
+     0.375,
+     0.5
+    ],
+    "min_hole_mm_by_thickness": {
+     "0.762": 0.381,
+     "1.219": 0.457,
+     "1.499": 0.356,
+     "1.88": 0.432,
+     "2.642": 0.584,
+     "3.023": 0.711,
+     "3.429": 0.813,
+     "4.775": 1.067,
+     "6.35": 1.448,
+     "7.95": 1.905,
+     "9.525": 2.159,
+     "12.7": 3.175
+    },
+    "min_hole_note": "Hard minimum the instant quoter accepts (min_hole_diameter in SendCutSend's public materials JSON). SendCutSend's design guidance is stricter: laser holes >= 50% of thickness (sheet-cutting guideline) and the 5052/6061 pages recommend hole >= thickness. Use max(quoter min, 1.0 x t) for metals in the designer.",
+    "min_cut_to_edge_mm_by_thickness": {
+     "0.762": 0.508,
+     "1.219": 0.508,
+     "1.499": 0.508,
+     "1.88": 0.559,
+     "2.642": 0.787,
+     "3.023": 0.914,
+     "3.429": 1.041,
+     "4.775": 1.422,
+     "6.35": 1.905,
+     "7.95": 2.388,
+     "9.525": 2.87,
+     "12.7": 3.81
+    },
+    "min_cut_to_edge_note": "min_cut_to_edge_distance_soft from the materials JSON (a soft/warning limit). Material pages recommend holes 1.5-2x thickness from edges (6061) or 2x (5052).",
+    "bend": {
+     "available": true,
+     "by_thickness_mm": {
+      "0.762": {
+       "k_factor": 0.38,
+       "bend_radius_mm": 0.61,
+       "effective_inside_radius_mm": 1.143,
+       "min_flange_mm": 6.477,
+       "bottom_die_width_mm": 11.989,
+       "keep_features_from_bend_centerline_mm": 5.995,
+       "max_bend_angle_deg": 130.0
+      },
+      "1.219": {
+       "k_factor": 0.38,
+       "bend_radius_mm": 0.61,
+       "effective_inside_radius_mm": 1.219,
+       "min_flange_mm": 6.477,
+       "bottom_die_width_mm": 11.989,
+       "keep_features_from_bend_centerline_mm": 5.995,
+       "max_bend_angle_deg": 130.0
+      },
+      "1.499": {
+       "k_factor": 0.4,
+       "bend_radius_mm": 0.61,
+       "effective_inside_radius_mm": 1.6,
+       "min_flange_mm": 6.477,
+       "bottom_die_width_mm": 11.989,
+       "keep_features_from_bend_centerline_mm": 5.995,
+       "max_bend_angle_deg": 130.0
+      },
+      "1.88": {
+       "k_factor": 0.4,
+       "bend_radius_mm": 0.61,
+       "effective_inside_radius_mm": 1.6,
+       "min_flange_mm": 6.477,
+       "bottom_die_width_mm": 11.989,
+       "keep_features_from_bend_centerline_mm": 5.995,
+       "max_bend_angle_deg": 130.0
+      },
+      "2.642": {
+       "k_factor": 0.34,
+       "bend_radius_mm": 0.61,
+       "effective_inside_radius_mm": 1.6,
+       "min_flange_mm": 9.347,
+       "bottom_die_width_mm": 16.002,
+       "keep_features_from_bend_centerline_mm": 8.001,
+       "max_bend_angle_deg": 130.0
+      },
+      "3.023": {
+       "k_factor": 0.38,
+       "bend_radius_mm": 0.61,
+       "effective_inside_radius_mm": 1.6,
+       "min_flange_mm": 9.347,
+       "bottom_die_width_mm": 16.002,
+       "keep_features_from_bend_centerline_mm": 8.001,
+       "max_bend_angle_deg": 130.0
+      },
+      "3.429": {
+       "k_factor": 0.32,
+       "bend_radius_mm": 0.61,
+       "effective_inside_radius_mm": 2.54,
+       "min_flange_mm": 15.748,
+       "bottom_die_width_mm": 24.994,
+       "keep_features_from_bend_centerline_mm": 12.497,
+       "max_bend_angle_deg": 110.0
+      },
+      "4.775": {
+       "k_factor": 0.36,
+       "bend_radius_mm": 3.175,
+       "effective_inside_radius_mm": 3.175,
+       "min_flange_mm": 15.748,
+       "bottom_die_width_mm": 24.994,
+       "keep_features_from_bend_centerline_mm": 12.497,
+       "max_bend_angle_deg": 90.0
+      },
+      "6.35": {
+       "k_factor": 0.36,
+       "bend_radius_mm": 3.175,
+       "effective_inside_radius_mm": 3.81,
+       "min_flange_mm": 29.185,
+       "bottom_die_width_mm": 40.005,
+       "keep_features_from_bend_centerline_mm": 20.003,
+       "max_bend_angle_deg": 90.0
+      }
+     },
+     "note": "Radii/K-factors are fixed by SendCutSend tooling (no custom radii). Keep cut features >= half the die width from the bend centerline."
+    },
+    "tap_sizes_metric_by_thickness": {
+     "1.219": [
+      "M2 x 0.4",
+      "M2.5 x 0.45",
+      "M3 x 0.5"
+     ],
+     "1.499": [
+      "M2 x 0.4",
+      "M2.5 x 0.45",
+      "M3 x 0.5"
+     ],
+     "1.88": [
+      "M2 x 0.4",
+      "M2.5 x 0.45",
+      "M3 x 0.5",
+      "M4 x 0.7",
+      "M5 x 0.8",
+      "M6 x 1.0"
+     ],
+     "2.642": [
+      "M2 x 0.4",
+      "M2.5 x 0.45",
+      "M3 x 0.5",
+      "M4 x 0.7",
+      "M5 x 0.8",
+      "M6 x 1.0"
+     ],
+     "3.023": [
+      "M2 x 0.4",
+      "M2.5 x 0.45",
+      "M3 x 0.5",
+      "M4 x 0.7",
+      "M5 x 0.8",
+      "M6 x 1.0",
+      "M8 x 1.25"
+     ],
+     "3.429": [
+      "M2 x 0.4",
+      "M2.5 x 0.45",
+      "M3 x 0.5",
+      "M4 x 0.7",
+      "M5 x 0.8",
+      "M6 x 1.0",
+      "M8 x 1.25",
+      "M10 x 1.5"
+     ],
+     "4.775": [
+      "M2.5 x 0.45",
+      "M3 x 0.5",
+      "M4 x 0.7",
+      "M5 x 0.8",
+      "M6 x 1.0",
+      "M8 x 1.25",
+      "M10 x 1.5"
+     ],
+     "6.35": [
+      "M2.5 x 0.45",
+      "M3 x 0.5",
+      "M4 x 0.7",
+      "M5 x 0.8",
+      "M6 x 1.0",
+      "M8 x 1.25",
+      "M10 x 1.0",
+      "M10 x 1.5",
+      "M11 x 1.5",
+      "M12 x 1.0",
+      "M12 x 1.75",
+      "M12 x 1.5",
+      "M14 x 2.0",
+      "M16 x 2.0"
+     ],
+     "7.95": [
+      "M4 x 0.7",
+      "M5 x 0.8",
+      "M6 x 1.0",
+      "M8 x 1.25",
+      "M10 x 1.5"
+     ],
+     "9.525": [
+      "M5 x 0.8",
+      "M6 x 1.0",
+      "M8 x 1.25",
+      "M10 x 1.0",
+      "M10 x 1.5",
+      "M11 x 1.5",
+      "M12 x 1.0",
+      "M12 x 1.75",
+      "M12 x 1.5",
+      "M14 x 2.0",
+      "M16 x 2.0"
+     ],
+     "12.7": [
+      "M5 x 0.8",
+      "M6 x 1.0",
+      "M8 x 1.25",
+      "M10 x 1.0",
+      "M10 x 1.5",
+      "M11 x 1.5",
+      "M12 x 1.0",
+      "M12 x 1.75",
+      "M12 x 1.5",
+      "M14 x 2.0",
+      "M16 x 2.0"
+     ]
+    },
+    "countersink_by_thickness": null,
+    "services_by_thickness": {
+     "0.762": [
+      "bending",
+      "dimple_forming"
+     ],
+     "1.219": [
+      "bending",
+      "deburring",
+      "dimple_forming",
+      "engraving",
+      "hardware",
+      "powder",
+      "tapping"
+     ],
+     "1.499": [
+      "bending",
+      "deburring",
+      "dimple_forming",
+      "engraving",
+      "hardware",
+      "powder",
+      "tapping"
+     ],
+     "1.88": [
+      "bending",
+      "deburring",
+      "dimple_forming",
+      "hardware",
+      "powder",
+      "tapping",
+      "welding"
+     ],
+     "2.642": [
+      "bending",
+      "deburring",
+      "dimple_forming",
+      "hardware",
+      "powder",
+      "tapping",
+      "welding"
+     ],
+     "3.023": [
+      "bending",
+      "deburring",
+      "dimple_forming",
+      "hardware",
+      "powder",
+      "tapping",
+      "tumbling",
+      "welding"
+     ],
+     "3.429": [
+      "bending",
+      "deburring",
+      "hardware",
+      "powder",
+      "tapping",
+      "tumbling",
+      "welding"
+     ],
+     "4.775": [
+      "bending",
+      "deburring",
+      "hardware",
+      "plating",
+      "powder",
+      "tapping",
+      "tumbling",
+      "welding"
+     ],
+     "6.35": [
+      "bending",
+      "deburring",
+      "hardware",
+      "plating",
+      "powder",
+      "tapping",
+      "tumbling",
+      "welding"
+     ],
+     "7.95": [
+      "deburring",
+      "hardware",
+      "plating",
+      "powder",
+      "tapping",
+      "tumbling"
+     ],
+     "9.525": [
+      "deburring",
+      "hardware",
+      "plating",
+      "powder",
+      "tapping",
+      "tumbling"
+     ],
+     "12.7": [
+      "deburring",
+      "hardware",
+      "plating",
+      "powder",
+      "tapping",
+      "tumbling"
+     ]
+    },
+    "density_g_cm3": 7.83,
+    "density_note": "material page states 0.283 lb/in3 (7.83 g/cm3)",
+    "notes": "Bending offered up to .250 in. Plating/powder coat available.",
+    "source": [
+     "https://app.sendcutsend.com/materials",
+     "https://sendcutsend.com/materials/mild-steel/",
+     "https://sendcutsend.com/materials/min-max/"
+    ]
+   },
+   {
+    "name": "304 stainless steel",
+    "scs_name": "Stainless Steel (304 series)",
+    "process": "fiber laser",
+    "thicknesses_mm": [
+     0.762,
+     1.219,
+     1.524,
+     1.88,
+     2.54,
+     3.175,
+     4.75,
+     6.35,
+     9.525,
+     12.7
+    ],
+    "thicknesses_in": [
+     0.03,
+     0.048,
+     0.06,
+     0.074,
+     0.1,
+     0.125,
+     0.187,
+     0.25,
+     0.375,
+     0.5
+    ],
+    "min_hole_mm_by_thickness": {
+     "0.762": 0.381,
+     "1.219": 0.483,
+     "1.524": 0.356,
+     "1.88": 0.432,
+     "2.54": 0.584,
+     "3.175": 0.813,
+     "4.75": 1.067,
+     "6.35": 1.448,
+     "9.525": 2.159,
+     "12.7": 3.175
+    },
+    "min_hole_note": "Hard minimum the instant quoter accepts (min_hole_diameter in SendCutSend's public materials JSON). SendCutSend's design guidance is stricter: laser holes >= 50% of thickness (sheet-cutting guideline) and the 5052/6061 pages recommend hole >= thickness. Use max(quoter min, 1.0 x t) for metals in the designer.",
+    "min_cut_to_edge_mm_by_thickness": {
+     "0.762": 0.381,
+     "1.219": 0.508,
+     "1.524": 0.508,
+     "1.88": 0.559,
+     "2.54": 0.762,
+     "3.175": 0.965,
+     "4.75": 1.397,
+     "6.35": 1.524,
+     "9.525": 2.87,
+     "12.7": 3.81
+    },
+    "min_cut_to_edge_note": "min_cut_to_edge_distance_soft from the materials JSON (a soft/warning limit). Material pages recommend holes 1.5-2x thickness from edges (6061) or 2x (5052).",
+    "bend": {
+     "available": true,
+     "by_thickness_mm": {
+      "0.762": {
+       "k_factor": 0.36,
+       "bend_radius_mm": 0.61,
+       "effective_inside_radius_mm": 2.032,
+       "min_flange_mm": 6.477,
+       "bottom_die_width_mm": 11.989,
+       "keep_features_from_bend_centerline_mm": 5.995,
+       "max_bend_angle_deg": 130.0
+      },
+      "1.219": {
+       "k_factor": 0.36,
+       "bend_radius_mm": 0.61,
+       "effective_inside_radius_mm": 2.032,
+       "min_flange_mm": 6.477,
+       "bottom_die_width_mm": 11.989,
+       "keep_features_from_bend_centerline_mm": 5.995,
+       "max_bend_angle_deg": 130.0
+      },
+      "1.524": {
+       "k_factor": 0.34,
+       "bend_radius_mm": 0.61,
+       "effective_inside_radius_mm": 1.778,
+       "min_flange_mm": 6.477,
+       "bottom_die_width_mm": 11.989,
+       "keep_features_from_bend_centerline_mm": 5.995,
+       "max_bend_angle_deg": 130.0
+      },
+      "1.88": {
+       "k_factor": 0.36,
+       "bend_radius_mm": 0.61,
+       "effective_inside_radius_mm": 1.905,
+       "min_flange_mm": 6.477,
+       "bottom_die_width_mm": 11.989,
+       "keep_features_from_bend_centerline_mm": 5.995,
+       "max_bend_angle_deg": 130.0
+      },
+      "2.54": {
+       "k_factor": 0.36,
+       "bend_radius_mm": 0.61,
+       "effective_inside_radius_mm": 4.75,
+       "min_flange_mm": 15.748,
+       "bottom_die_width_mm": 24.994,
+       "keep_features_from_bend_centerline_mm": 12.497,
+       "max_bend_angle_deg": 130.0
+      },
+      "3.175": {
+       "k_factor": 0.38,
+       "bend_radius_mm": 0.61,
+       "effective_inside_radius_mm": 3.81,
+       "min_flange_mm": 15.748,
+       "bottom_die_width_mm": 24.994,
+       "keep_features_from_bend_centerline_mm": 12.497,
+       "max_bend_angle_deg": 120.0
+      },
+      "4.75": {
+       "k_factor": 0.35,
+       "bend_radius_mm": 3.175,
+       "effective_inside_radius_mm": 3.302,
+       "min_flange_mm": 15.748,
+       "bottom_die_width_mm": 24.994,
+       "keep_features_from_bend_centerline_mm": 12.497,
+       "max_bend_angle_deg": 90.0
+      },
+      "6.35": {
+       "k_factor": 0.34,
+       "bend_radius_mm": 3.175,
+       "effective_inside_radius_mm": 5.715,
+       "min_flange_mm": 29.21,
+       "bottom_die_width_mm": 40.005,
+       "keep_features_from_bend_centerline_mm": 20.003,
+       "max_bend_angle_deg": 90.0
+      }
+     },
+     "note": "Radii/K-factors are fixed by SendCutSend tooling (no custom radii). Keep cut features >= half the die width from the bend centerline."
+    },
+    "tap_sizes_metric_by_thickness": {
+     "1.524": [
+      "M2 x 0.4",
+      "M2.5 x 0.45",
+      "M3 x 0.5",
+      "M4 x 0.7",
+      "M5 x 0.8",
+      "M6 x 1.0"
+     ],
+     "1.88": [
+      "M2 x 0.4",
+      "M2.5 x 0.45",
+      "M3 x 0.5",
+      "M4 x 0.7",
+      "M5 x 0.8",
+      "M6 x 1.0"
+     ],
+     "2.54": [
+      "M2 x 0.4",
+      "M2.5 x 0.45",
+      "M3 x 0.5",
+      "M4 x 0.7",
+      "M5 x 0.8",
+      "M6 x 1.0"
+     ],
+     "3.175": [
+      "M2 x 0.4",
+      "M2.5 x 0.45",
+      "M3 x 0.5",
+      "M4 x 0.7",
+      "M5 x 0.8",
+      "M6 x 1.0",
+      "M8 x 1.25",
+      "M10 x 1.5"
+     ],
+     "4.75": [
+      "M3 x 0.5",
+      "M4 x 0.7",
+      "M5 x 0.8",
+      "M6 x 1.0",
+      "M8 x 1.25",
+      "M10 x 1.5"
+     ],
+     "6.35": [
+      "M4 x 0.7",
+      "M5 x 0.8",
+      "M6 x 1.0",
+      "M8 x 1.25",
+      "M10 x 1.5"
+     ],
+     "9.525": [
+      "M6 x 1.0",
+      "M8 x 1.25",
+      "M10 x 1.5"
+     ],
+     "12.7": [
+      "M6 x 1.0",
+      "M8 x 1.25",
+      "M10 x 1.5"
+     ]
+    },
+    "countersink_by_thickness": null,
+    "services_by_thickness": {
+     "0.762": [
+      "bending",
+      "dimple_forming"
+     ],
+     "1.219": [
+      "bending",
+      "deburring",
+      "dimple_forming",
+      "engraving",
+      "hardware",
+      "powder"
+     ],
+     "1.524": [
+      "bending",
+      "deburring",
+      "dimple_forming",
+      "engraving",
+      "hardware",
+      "powder",
+      "tapping",
+      "welding"
+     ],
+     "1.88": [
+      "bending",
+      "deburring",
+      "dimple_forming",
+      "engraving",
+      "hardware",
+      "powder",
+      "tapping",
+      "welding"
+     ],
+     "2.54": [
+      "bending",
+      "deburring",
+      "dimple_forming",
+      "engraving",
+      "hardware",
+      "powder",
+      "tapping",
+      "welding"
+     ],
+     "3.175": [
+      "bending",
+      "deburring",
+      "dimple_forming",
+      "engraving",
+      "hardware",
+      "powder",
+      "tapping",
+      "tumbling",
+      "welding"
+     ],
+     "4.75": [
+      "bending",
+      "deburring",
+      "engraving",
+      "hardware",
+      "powder",
+      "tapping",
+      "tumbling"
+     ],
+     "6.35": [
+      "bending",
+      "deburring",
+      "engraving",
+      "hardware",
+      "powder",
+      "tapping",
+      "tumbling"
+     ],
+     "9.525": [
+      "deburring",
+      "hardware",
+      "powder",
+      "tapping",
+      "tumbling"
+     ],
+     "12.7": [
+      "deburring",
+      "hardware",
+      "powder",
+      "tapping",
+      "tumbling"
+     ]
+    },
+    "density_g_cm3": 7.999,
+    "density_note": "0.289 lb/in3 on material page, converted",
+    "notes": "Bending offered up to .250 in.",
+    "source": [
+     "https://app.sendcutsend.com/materials",
+     "https://sendcutsend.com/materials/stainless-steel/",
+     "https://sendcutsend.com/materials/min-max/"
+    ]
+   },
+   {
+    "name": "316 stainless steel",
+    "scs_name": "Stainless Steel (316 series)",
+    "process": "fiber laser",
+    "thicknesses_mm": [
+     1.524,
+     3.175,
+     4.75,
+     6.35
+    ],
+    "thicknesses_in": [
+     0.06,
+     0.125,
+     0.187,
+     0.25
+    ],
+    "min_hole_mm_by_thickness": {
+     "1.524": 0.61,
+     "3.175": 1.27,
+     "4.75": 1.905,
+     "6.35": 2.032
+    },
+    "min_hole_note": "Hard minimum the instant quoter accepts (min_hole_diameter in SendCutSend's public materials JSON). SendCutSend's design guidance is stricter: laser holes >= 50% of thickness (sheet-cutting guideline) and the 5052/6061 pages recommend hole >= thickness. Use max(quoter min, 1.0 x t) for metals in the designer.",
+    "min_cut_to_edge_mm_by_thickness": {
+     "1.524": 0.457,
+     "3.175": 0.965,
+     "4.75": 1.397,
+     "6.35": 1.524
+    },
+    "min_cut_to_edge_note": "min_cut_to_edge_distance_soft from the materials JSON (a soft/warning limit). Material pages recommend holes 1.5-2x thickness from edges (6061) or 2x (5052).",
+    "bend": {
+     "available": true,
+     "by_thickness_mm": {
+      "1.524": {
+       "k_factor": 0.34,
+       "bend_radius_mm": 0.61,
+       "effective_inside_radius_mm": 1.778,
+       "min_flange_mm": 6.477,
+       "bottom_die_width_mm": 11.989,
+       "keep_features_from_bend_centerline_mm": 5.995,
+       "max_bend_angle_deg": 130.0
+      },
+      "3.175": {
+       "k_factor": 0.38,
+       "bend_radius_mm": 0.61,
+       "effective_inside_radius_mm": 3.81,
+       "min_flange_mm": 15.748,
+       "bottom_die_width_mm": 24.994,
+       "keep_features_from_bend_centerline_mm": 12.497,
+       "max_bend_angle_deg": 120.0
+      },
+      "4.75": {
+       "k_factor": 0.35,
+       "bend_radius_mm": 3.175,
+       "effective_inside_radius_mm": 3.302,
+       "min_flange_mm": 15.748,
+       "bottom_die_width_mm": 24.994,
+       "keep_features_from_bend_centerline_mm": 12.497,
+       "max_bend_angle_deg": 90.0
+      },
+      "6.35": {
+       "k_factor": 0.34,
+       "bend_radius_mm": 3.175,
+       "effective_inside_radius_mm": 5.715,
+       "min_flange_mm": 29.21,
+       "bottom_die_width_mm": 40.005,
+       "keep_features_from_bend_centerline_mm": 20.003,
+       "max_bend_angle_deg": 90.0
+      }
+     },
+     "note": "Radii/K-factors are fixed by SendCutSend tooling (no custom radii). Keep cut features >= half the die width from the bend centerline."
+    },
+    "tap_sizes_metric_by_thickness": {
+     "1.524": [
+      "M2 x 0.4",
+      "M2.5 x 0.45",
+      "M3 x 0.5",
+      "M4 x 0.7",
+      "M5 x 0.8",
+      "M6 x 1.0"
+     ],
+     "3.175": [
+      "M2 x 0.4",
+      "M2.5 x 0.45",
+      "M3 x 0.5",
+      "M4 x 0.7",
+      "M5 x 0.8",
+      "M6 x 1.0",
+      "M8 x 1.25",
+      "M10 x 1.5"
+     ],
+     "4.75": [
+      "M2 x 0.4",
+      "M2.5 x 0.45",
+      "M3 x 0.5",
+      "M4 x 0.7",
+      "M5 x 0.8",
+      "M6 x 1.0",
+      "M8 x 1.25",
+      "M10 x 1.5"
+     ],
+     "6.35": [
+      "M4 x 0.7",
+      "M5 x 0.8",
+      "M6 x 1.0",
+      "M8 x 1.25",
+      "M10 x 1.5"
+     ]
+    },
+    "countersink_by_thickness": null,
+    "services_by_thickness": {
+     "1.524": [
+      "bending",
+      "deburring",
+      "dimple_forming",
+      "engraving",
+      "hardware",
+      "powder",
+      "tapping"
+     ],
+     "3.175": [
+      "bending",
+      "deburring",
+      "dimple_forming",
+      "hardware",
+      "powder",
+      "tapping",
+      "tumbling"
+     ],
+     "4.75": [
+      "bending",
+      "deburring",
+      "hardware",
+      "powder",
+      "tapping",
+      "tumbling"
+     ],
+     "6.35": [
+      "bending",
+      "deburring",
+      "hardware",
+      "powder",
+      "tapping",
+      "tumbling"
+     ]
+    },
+    "density_g_cm3": null,
+    "density_note": "not published on material page",
+    "notes": "Bending offered.",
+    "source": [
+     "https://app.sendcutsend.com/materials",
+     "https://sendcutsend.com/materials/stainless-steel-316/",
+     "https://sendcutsend.com/materials/min-max/"
+    ]
+   },
+   {
+    "name": "4130 chromoly steel",
+    "scs_name": "4130 Chromoly",
+    "process": "fiber laser",
+    "thicknesses_mm": [
+     1.27,
+     1.6,
+     3.175,
+     4.826,
+     6.35
+    ],
+    "thicknesses_in": [
+     0.05,
+     0.063,
+     0.125,
+     0.19,
+     0.25
+    ],
+    "min_hole_mm_by_thickness": {
+     "1.27": 0.508,
+     "1.6": 0.635,
+     "3.175": 1.27,
+     "4.826": 1.778,
+     "6.35": 2.54
+    },
+    "min_hole_note": "Hard minimum the instant quoter accepts (min_hole_diameter in SendCutSend's public materials JSON). SendCutSend's design guidance is stricter: laser holes >= 50% of thickness (sheet-cutting guideline) and the 5052/6061 pages recommend hole >= thickness. Use max(quoter min, 1.0 x t) for metals in the designer.",
+    "min_cut_to_edge_mm_by_thickness": {
+     "1.27": 0.508,
+     "1.6": 0.508,
+     "3.175": 0.965,
+     "4.826": 1.448,
+     "6.35": 1.905
+    },
+    "min_cut_to_edge_note": "min_cut_to_edge_distance_soft from the materials JSON (a soft/warning limit). Material pages recommend holes 1.5-2x thickness from edges (6061) or 2x (5052).",
+    "bend": {
+     "available": true,
+     "by_thickness_mm": {
+      "1.27": {
+       "k_factor": 0.38,
+       "bend_radius_mm": 0.61,
+       "effective_inside_radius_mm": 1.27,
+       "min_flange_mm": 6.477,
+       "bottom_die_width_mm": 11.989,
+       "keep_features_from_bend_centerline_mm": 5.995,
+       "max_bend_angle_deg": 130.0
+      },
+      "1.6": {
+       "k_factor": 0.41,
+       "bend_radius_mm": 0.61,
+       "effective_inside_radius_mm": 1.27,
+       "min_flange_mm": 6.477,
+       "bottom_die_width_mm": 11.989,
+       "keep_features_from_bend_centerline_mm": 5.995,
+       "max_bend_angle_deg": 130.0
+      },
+      "3.175": {
+       "k_factor": 0.43,
+       "bend_radius_mm": 0.61,
+       "effective_inside_radius_mm": 2.286,
+       "min_flange_mm": 15.748,
+       "bottom_die_width_mm": 24.994,
+       "keep_features_from_bend_centerline_mm": 12.497,
+       "max_bend_angle_deg": 120.0
+      },
+      "4.826": {
+       "k_factor": 0.37,
+       "bend_radius_mm": 3.175,
+       "effective_inside_radius_mm": 3.175,
+       "min_flange_mm": 15.748,
+       "bottom_die_width_mm": 24.994,
+       "keep_features_from_bend_centerline_mm": 12.497,
+       "max_bend_angle_deg": 90.0
+      },
+      "6.35": {
+       "k_factor": 0.36,
+       "bend_radius_mm": 3.175,
+       "effective_inside_radius_mm": 4.318,
+       "min_flange_mm": 29.21,
+       "bottom_die_width_mm": 40.005,
+       "keep_features_from_bend_centerline_mm": 20.003,
+       "max_bend_angle_deg": 90.0
+      }
+     },
+     "note": "Radii/K-factors are fixed by SendCutSend tooling (no custom radii). Keep cut features >= half the die width from the bend centerline."
+    },
+    "tap_sizes_metric_by_thickness": null,
+    "countersink_by_thickness": null,
+    "services_by_thickness": {
+     "1.27": [
+      "bending",
+      "plating",
+      "powder"
+     ],
+     "1.6": [
+      "bending",
+      "engraving",
+      "plating",
+      "powder"
+     ],
+     "3.175": [
+      "bending",
+      "plating",
+      "powder",
+      "tumbling"
+     ],
+     "4.826": [
+      "bending",
+      "plating",
+      "powder",
+      "tumbling"
+     ],
+     "6.35": [
+      "bending",
+      "plating",
+      "powder",
+      "tumbling"
+     ]
+    },
+    "density_g_cm3": 7.83,
+    "density_note": "material page states 0.283 lb/in3 (7.83 g/cm3)",
+    "notes": "Bending offered; no tapping/hardware in quoter.",
+    "source": [
+     "https://app.sendcutsend.com/materials",
+     "https://sendcutsend.com/materials/4130-chromoly/",
+     "https://sendcutsend.com/materials/min-max/"
+    ]
+   },
+   {
+    "name": "Ti-6Al-4V (grade 5) titanium",
+    "scs_name": "Grade 5 Titanium",
+    "process": "fiber laser",
+    "thicknesses_mm": [
+     1.016,
+     1.6,
+     3.175,
+     4.75,
+     6.35
+    ],
+    "thicknesses_in": [
+     0.04,
+     0.063,
+     0.125,
+     0.187,
+     0.25
+    ],
+    "min_hole_mm_by_thickness": {
+     "1.016": 0.508,
+     "1.6": 0.61,
+     "3.175": 1.016,
+     "4.75": 1.905,
+     "6.35": 2.54
+    },
+    "min_hole_note": "Hard minimum the instant quoter accepts (min_hole_diameter in SendCutSend's public materials JSON). SendCutSend's design guidance is stricter: laser holes >= 50% of thickness (sheet-cutting guideline) and the 5052/6061 pages recommend hole >= thickness. Use max(quoter min, 1.0 x t) for metals in the designer.",
+    "min_cut_to_edge_mm_by_thickness": {
+     "1.016": 0.508,
+     "1.6": 0.508,
+     "3.175": 0.965,
+     "4.75": 1.422,
+     "6.35": 1.905
+    },
+    "min_cut_to_edge_note": "min_cut_to_edge_distance_soft from the materials JSON (a soft/warning limit). Material pages recommend holes 1.5-2x thickness from edges (6061) or 2x (5052).",
+    "bend": {
+     "available": false,
+     "by_thickness_mm": null,
+     "note": "Bending not offered for this material in the quoter."
+    },
+    "tap_sizes_metric_by_thickness": null,
+    "countersink_by_thickness": null,
+    "services_by_thickness": {
+     "1.016": [
+      "engraving"
+     ],
+     "1.6": [
+      "deburring",
+      "engraving"
+     ],
+     "3.175": [
+      "deburring",
+      "engraving",
+      "tumbling"
+     ],
+     "4.75": [
+      "deburring",
+      "tumbling"
+     ],
+     "6.35": [
+      "deburring",
+      "tumbling"
+     ]
+    },
+    "density_g_cm3": 4.43,
+    "density_note": "material page states 4.43 g/cm3",
+    "notes": "No bending, tapping, hardware or countersinking in quoter (deburr/tumble/engrave only). Example: a sprocket cost $19.60 in .063 Ti vs $6.76 in .060 304 SS (SCS blog).",
+    "source": [
+     "https://app.sendcutsend.com/materials",
+     "https://sendcutsend.com/materials/titanium/",
+     "https://sendcutsend.com/materials/min-max/"
+    ]
+   },
+   {
+    "name": "CP grade 2 titanium",
+    "scs_name": "Grade 2 Titanium",
+    "process": "fiber laser",
+    "thicknesses_mm": [
+     1.016
+    ],
+    "thicknesses_in": [
+     0.04
+    ],
+    "min_hole_mm_by_thickness": {
+     "1.016": 0.508
+    },
+    "min_hole_note": "Hard minimum the instant quoter accepts (min_hole_diameter in SendCutSend's public materials JSON). SendCutSend's design guidance is stricter: laser holes >= 50% of thickness (sheet-cutting guideline) and the 5052/6061 pages recommend hole >= thickness. Use max(quoter min, 1.0 x t) for metals in the designer.",
+    "min_cut_to_edge_mm_by_thickness": {
+     "1.016": 0.508
+    },
+    "min_cut_to_edge_note": "min_cut_to_edge_distance_soft from the materials JSON (a soft/warning limit). Material pages recommend holes 1.5-2x thickness from edges (6061) or 2x (5052).",
+    "bend": {
+     "available": true,
+     "by_thickness_mm": {
+      "1.016": {
+       "k_factor": 0.38,
+       "bend_radius_mm": 0.61,
+       "effective_inside_radius_mm": 1.143,
+       "min_flange_mm": 6.477,
+       "bottom_die_width_mm": 11.989,
+       "keep_features_from_bend_centerline_mm": 5.995,
+       "max_bend_angle_deg": 90.0
+      }
+     },
+     "note": "Radii/K-factors are fixed by SendCutSend tooling (no custom radii). Keep cut features >= half the die width from the bend centerline."
+    },
+    "tap_sizes_metric_by_thickness": null,
+    "countersink_by_thickness": null,
+    "services_by_thickness": {
+     "1.016": [
+      "bending",
+      "engraving"
+     ]
+    },
+    "density_g_cm3": null,
+    "density_note": "not published",
+    "notes": "Only .040 in; bendable.",
+    "source": [
+     "https://app.sendcutsend.com/materials",
+     "https://sendcutsend.com/materials/titanium-cp2/",
+     "https://sendcutsend.com/materials/min-max/"
+    ]
+   },
+   {
+    "name": "Carbon fiber sheet (2x2 twill, epoxy)",
+    "scs_name": "Carbon Fiber",
+    "process": "abrasive waterjet",
+    "thicknesses_mm": [
+     0.991,
+     1.6,
+     2.007,
+     2.997,
+     3.988,
+     5.004,
+     8.001
+    ],
+    "thicknesses_in": [
+     0.039,
+     0.063,
+     0.079,
+     0.118,
+     0.157,
+     0.197,
+     0.315
+    ],
+    "min_hole_mm_by_thickness": {
+     "0.991": 1.778,
+     "1.6": 1.778,
+     "2.007": 1.778,
+     "2.997": 1.778,
+     "3.988": 3.175,
+     "5.004": 3.175,
+     "8.001": 3.175
+    },
+    "min_hole_note": "Hard minimum the instant quoter accepts (min_hole_diameter in SendCutSend's public materials JSON). SendCutSend's design guidance is stricter: laser holes >= 50% of thickness (sheet-cutting guideline) and the 5052/6061 pages recommend hole >= thickness. Use max(quoter min, 1.0 x t) for metals in the designer.",
+    "min_cut_to_edge_mm_by_thickness": {
+     "0.991": 0.508,
+     "1.6": 0.508,
+     "2.007": 0.61,
+     "2.997": 0.889,
+     "3.988": 1.194,
+     "5.004": 1.499,
+     "8.001": 2.413
+    },
+    "min_cut_to_edge_note": "min_cut_to_edge_distance_soft from the materials JSON (a soft/warning limit). Material pages recommend holes 1.5-2x thickness from edges (6061) or 2x (5052).",
+    "bend": {
+     "available": false,
+     "by_thickness_mm": null,
+     "note": "Bending not offered for this material in the quoter."
+    },
+    "tap_sizes_metric_by_thickness": null,
+    "countersink_by_thickness": null,
+    "services_by_thickness": {
+     "0.991": [],
+     "1.6": [],
+     "2.007": [],
+     "2.997": [],
+     "3.988": [],
+     "5.004": [],
+     "8.001": []
+    },
+    "density_g_cm3": 1.661,
+    "density_note": "~0.06 lb/in3 on material page, converted (approximate)",
+    "notes": "Waterjet tolerance +/-.009 in; kerf ~0.030 in; min web >= 2x thickness; page suggests holes ~0.125 in for best results (quoter minimum shown per thickness). Min part 1x2 in (.040-.118) or 3x3 in (.157-.197). No add-on services in quoter. Material-page strength figures (500+ ksi, 20-30 Msi) describe the fiber, not the laminate - do not use for design.",
+    "source": [
+     "https://app.sendcutsend.com/materials",
+     "https://sendcutsend.com/materials/carbon-fiber/",
+     "https://sendcutsend.com/materials/min-max/"
+    ]
+   },
+   {
+    "name": "G10/FR-4",
+    "scs_name": "G10 Black fiberglass",
+    "process": "abrasive waterjet",
+    "thicknesses_mm": [
+     1.6,
+     3.175,
+     4.75,
+     6.35,
+     9.525,
+     12.7
+    ],
+    "thicknesses_in": [
+     0.063,
+     0.125,
+     0.187,
+     0.25,
+     0.375,
+     0.5
+    ],
+    "min_hole_mm_by_thickness": {
+     "1.6": 1.778,
+     "3.175": 1.778,
+     "4.75": 1.778,
+     "6.35": 1.778,
+     "9.525": 1.778,
+     "12.7": 1.778
+    },
+    "min_hole_note": "Hard minimum the instant quoter accepts (min_hole_diameter in SendCutSend's public materials JSON). SendCutSend's design guidance is stricter: laser holes >= 50% of thickness (sheet-cutting guideline) and the 5052/6061 pages recommend hole >= thickness. Use max(quoter min, 1.0 x t) for metals in the designer.",
+    "min_cut_to_edge_mm_by_thickness": {
+     "1.6": 0.508,
+     "3.175": 0.965,
+     "4.75": 1.422,
+     "6.35": 1.905,
+     "9.525": 2.87,
+     "12.7": 3.81
+    },
+    "min_cut_to_edge_note": "min_cut_to_edge_distance_soft from the materials JSON (a soft/warning limit). Material pages recommend holes 1.5-2x thickness from edges (6061) or 2x (5052).",
+    "bend": {
+     "available": false,
+     "by_thickness_mm": null,
+     "note": "Bending not offered for this material in the quoter."
+    },
+    "tap_sizes_metric_by_thickness": null,
+    "countersink_by_thickness": null,
+    "services_by_thickness": {
+     "1.6": [],
+     "3.175": [],
+     "4.75": [],
+     "6.35": [],
+     "9.525": [],
+     "12.7": []
+    },
+    "density_g_cm3": null,
+    "density_note": "not published",
+    "notes": "Waterjet; min part 1x2 in; material page quotes ~40,000 psi tensile. No add-on services in quoter.",
+    "source": [
+     "https://app.sendcutsend.com/materials",
+     "https://sendcutsend.com/materials/g10-fr4/",
+     "https://sendcutsend.com/materials/min-max/"
+    ]
+   },
+   {
+    "name": "Delrin (acetal)",
+    "scs_name": "Delrin",
+    "process": "CNC router (.270) / CO2 laser (.125)",
+    "thicknesses_mm": [
+     3.175,
+     6.858
+    ],
+    "thicknesses_in": [
+     0.125,
+     0.27
+    ],
+    "min_hole_mm_by_thickness": {
+     "3.175": 1.422,
+     "6.858": 3.175
+    },
+    "min_hole_note": "Hard minimum the instant quoter accepts (min_hole_diameter in SendCutSend's public materials JSON). SendCutSend's design guidance is stricter: laser holes >= 50% of thickness (sheet-cutting guideline) and the 5052/6061 pages recommend hole >= thickness. Use max(quoter min, 1.0 x t) for metals in the designer.",
+    "min_cut_to_edge_mm_by_thickness": {
+     "3.175": 0.965,
+     "6.858": 2.057
+    },
+    "min_cut_to_edge_note": "min_cut_to_edge_distance_soft from the materials JSON (a soft/warning limit). Material pages recommend holes 1.5-2x thickness from edges (6061) or 2x (5052).",
+    "bend": {
+     "available": false,
+     "by_thickness_mm": null,
+     "note": "Bending not offered for this material in the quoter."
+    },
+    "tap_sizes_metric_by_thickness": {
+     "3.175": [
+      "M2 x 0.4",
+      "M2.5 x 0.45",
+      "M3 x 0.5",
+      "M4 x 0.7",
+      "M5 x 0.8",
+      "M6 x 1.0",
+      "M8 x 1.25",
+      "M10 x 1.5"
+     ],
+     "6.858": [
+      "M4 x 0.7",
+      "M5 x 0.8",
+      "M6 x 1.0",
+      "M8 x 1.25",
+      "M10 x 1.5"
+     ]
+    },
+    "countersink_by_thickness": {
+     "3.175": {
+      "max_major_dia_mm": 6,
+      "min_major_dia_mm": 3,
+      "min_hole_to_edge_mm": 6.248
+     },
+     "6.858": {
+      "max_major_dia_mm": 13,
+      "min_major_dia_mm": 3,
+      "min_hole_to_edge_mm": 8.585
+     }
+    },
+    "services_by_thickness": {
+     "3.175": [
+      "countersinking",
+      "tapping"
+     ],
+     "6.858": [
+      "countersinking",
+      "tapping"
+     ]
+    },
+    "density_g_cm3": null,
+    "density_note": "not published",
+    "notes": "Router min hole 0.125 in, min internal radius 0.063 in; router tolerance +/-.005 in; tapping and countersinking offered.",
+    "source": [
+     "https://app.sendcutsend.com/materials",
+     "https://sendcutsend.com/materials/delrin/",
+     "https://sendcutsend.com/materials/min-max/"
+    ]
+   },
+   {
+    "name": "UHMW polyethylene",
+    "scs_name": "UHMW Black",
+    "process": "CNC router",
+    "thicknesses_mm": [
+     9.525,
+     12.7
+    ],
+    "thicknesses_in": [
+     0.375,
+     0.5
+    ],
+    "min_hole_mm_by_thickness": {
+     "9.525": 3.175,
+     "12.7": 3.175
+    },
+    "min_hole_note": "Hard minimum the instant quoter accepts (min_hole_diameter in SendCutSend's public materials JSON). SendCutSend's design guidance is stricter: laser holes >= 50% of thickness (sheet-cutting guideline) and the 5052/6061 pages recommend hole >= thickness. Use max(quoter min, 1.0 x t) for metals in the designer.",
+    "min_cut_to_edge_mm_by_thickness": {
+     "9.525": 2.87,
+     "12.7": 3.81
+    },
+    "min_cut_to_edge_note": "min_cut_to_edge_distance_soft from the materials JSON (a soft/warning limit). Material pages recommend holes 1.5-2x thickness from edges (6061) or 2x (5052).",
+    "bend": {
+     "available": false,
+     "by_thickness_mm": null,
+     "note": "Bending not offered for this material in the quoter."
+    },
+    "tap_sizes_metric_by_thickness": null,
+    "countersink_by_thickness": null,
+    "services_by_thickness": {
+     "9.525": [],
+     "12.7": []
+    },
+    "density_g_cm3": null,
+    "density_note": "not published",
+    "notes": "Router; .375/.500 in only; no add-on services.",
+    "source": [
+     "https://app.sendcutsend.com/materials",
+     "https://sendcutsend.com/materials/uhmw/",
+     "https://sendcutsend.com/materials/min-max/"
+    ]
+   },
+   {
+    "name": "Polycarbonate",
+    "scs_name": "Polycarbonate-Clear",
+    "process": "CNC router",
+    "thicknesses_mm": [
+     2.997,
+     4.496,
+     5.588
+    ],
+    "thicknesses_in": [
+     0.118,
+     0.177,
+     0.22
+    ],
+    "min_hole_mm_by_thickness": {
+     "2.997": 3.175,
+     "4.496": 3.175,
+     "5.588": 3.175
+    },
+    "min_hole_note": "Hard minimum the instant quoter accepts (min_hole_diameter in SendCutSend's public materials JSON). SendCutSend's design guidance is stricter: laser holes >= 50% of thickness (sheet-cutting guideline) and the 5052/6061 pages recommend hole >= thickness. Use max(quoter min, 1.0 x t) for metals in the designer.",
+    "min_cut_to_edge_mm_by_thickness": {
+     "2.997": 0.889,
+     "4.496": 1.346,
+     "5.588": 1.676
+    },
+    "min_cut_to_edge_note": "min_cut_to_edge_distance_soft from the materials JSON (a soft/warning limit). Material pages recommend holes 1.5-2x thickness from edges (6061) or 2x (5052).",
+    "bend": {
+     "available": true,
+     "by_thickness_mm": {
+      "2.997": {
+       "k_factor": 0.33,
+       "bend_radius_mm": 0.61,
+       "effective_inside_radius_mm": 1.016,
+       "min_flange_mm": 7.315,
+       "bottom_die_width_mm": 11.989,
+       "keep_features_from_bend_centerline_mm": 5.995,
+       "max_bend_angle_deg": 90.0
+      },
+      "4.496": {
+       "k_factor": 0.33,
+       "bend_radius_mm": 3.175,
+       "effective_inside_radius_mm": 2.159,
+       "min_flange_mm": 15.723,
+       "bottom_die_width_mm": 24.994,
+       "keep_features_from_bend_centerline_mm": 12.497,
+       "max_bend_angle_deg": 90.0
+      },
+      "5.588": {
+       "k_factor": 0.33,
+       "bend_radius_mm": 3.175,
+       "effective_inside_radius_mm": 2.54,
+       "min_flange_mm": 16.51,
+       "bottom_die_width_mm": 24.994,
+       "keep_features_from_bend_centerline_mm": 12.497,
+       "max_bend_angle_deg": 90.0
+      }
+     },
+     "note": "Radii/K-factors are fixed by SendCutSend tooling (no custom radii). Keep cut features >= half the die width from the bend centerline."
+    },
+    "tap_sizes_metric_by_thickness": {
+     "2.997": [
+      "M4 x 0.7",
+      "M5 x 0.8",
+      "M6 x 1.0",
+      "M8 x 1.25",
+      "M10 x 1.5"
+     ],
+     "4.496": [
+      "M4 x 0.7",
+      "M5 x 0.8",
+      "M6 x 1.0",
+      "M8 x 1.25",
+      "M10 x 1.5"
+     ],
+     "5.588": [
+      "M4 x 0.7",
+      "M5 x 0.8",
+      "M6 x 1.0",
+      "M8 x 1.25",
+      "M10 x 1.5"
+     ]
+    },
+    "countersink_by_thickness": null,
+    "services_by_thickness": {
+     "2.997": [
+      "bending",
+      "tapping"
+     ],
+     "4.496": [
+      "bending",
+      "tapping"
+     ],
+     "5.588": [
+      "bending",
+      "tapping"
+     ]
+    },
+    "density_g_cm3": null,
+    "density_note": "not published",
+    "notes": "Bendable (+/-5 deg up to 24 in). Tapping offered.",
+    "source": [
+     "https://app.sendcutsend.com/materials",
+     "https://sendcutsend.com/materials/polycarbonate/",
+     "https://sendcutsend.com/materials/min-max/"
+    ]
+   },
+   {
+    "name": "HDPE",
+    "scs_name": "HDPE BLACK",
+    "process": "CNC router",
+    "thicknesses_mm": [
+     4.75,
+     6.35,
+     9.525,
+     12.7
+    ],
+    "thicknesses_in": [
+     0.187,
+     0.25,
+     0.375,
+     0.5
+    ],
+    "min_hole_mm_by_thickness": {
+     "4.75": 3.175,
+     "6.35": 3.175,
+     "9.525": 3.175,
+     "12.7": 3.175
+    },
+    "min_hole_note": "Hard minimum the instant quoter accepts (min_hole_diameter in SendCutSend's public materials JSON). SendCutSend's design guidance is stricter: laser holes >= 50% of thickness (sheet-cutting guideline) and the 5052/6061 pages recommend hole >= thickness. Use max(quoter min, 1.0 x t) for metals in the designer.",
+    "min_cut_to_edge_mm_by_thickness": {
+     "4.75": 1.905,
+     "6.35": 1.905,
+     "9.525": 2.87,
+     "12.7": 3.81
+    },
+    "min_cut_to_edge_note": "min_cut_to_edge_distance_soft from the materials JSON (a soft/warning limit). Material pages recommend holes 1.5-2x thickness from edges (6061) or 2x (5052).",
+    "bend": {
+     "available": false,
+     "by_thickness_mm": null,
+     "note": "Bending not offered for this material in the quoter."
+    },
+    "tap_sizes_metric_by_thickness": {
+     "4.75": [
+      "M4 x 0.7",
+      "M5 x 0.8",
+      "M6 x 1.0",
+      "M8 x 1.25",
+      "M10 x 1.5"
+     ],
+     "6.35": [
+      "M4 x 0.7",
+      "M5 x 0.8",
+      "M6 x 1.0",
+      "M8 x 1.25",
+      "M10 x 1.5"
+     ],
+     "9.525": [
+      "M4 x 0.7",
+      "M5 x 0.8",
+      "M6 x 1.0",
+      "M8 x 1.25",
+      "M10 x 1.5"
+     ],
+     "12.7": [
+      "M4 x 0.7",
+      "M5 x 0.8",
+      "M6 x 1.0",
+      "M8 x 1.25",
+      "M10 x 1.5"
+     ]
+    },
+    "countersink_by_thickness": {
+     "4.75": {
+      "max_major_dia_mm": 13,
+      "min_major_dia_mm": 3,
+      "min_hole_to_edge_mm": 8.585
+     },
+     "6.35": {
+      "max_major_dia_mm": 13,
+      "min_major_dia_mm": 3,
+      "min_hole_to_edge_mm": 8.585
+     },
+     "9.525": {
+      "max_major_dia_mm": 13,
+      "min_major_dia_mm": 3,
+      "min_hole_to_edge_mm": 8.585
+     },
+     "12.7": {
+      "max_major_dia_mm": 13,
+      "min_major_dia_mm": 3,
+      "min_hole_to_edge_mm": 8.585
+     }
+    },
+    "services_by_thickness": {
+     "4.75": [
+      "countersinking",
+      "tapping"
+     ],
+     "6.35": [
+      "countersinking",
+      "tapping"
+     ],
+     "9.525": [
+      "countersinking",
+      "tapping"
+     ],
+     "12.7": [
+      "countersinking",
+      "tapping"
+     ]
+    },
+    "density_g_cm3": null,
+    "density_note": "not published",
+    "notes": "Tapping and countersinking offered.",
+    "source": [
+     "https://app.sendcutsend.com/materials",
+     "https://sendcutsend.com/materials/hdpe/",
+     "https://sendcutsend.com/materials/min-max/"
+    ]
+   }
+  ],
+  "services": [
+   {
+    "name": "laser/waterjet/router cutting",
+    "lead_time_business_days": "2-4 (base)",
+    "price": "see pricing_model",
+    "source": "https://sendcutsend.com/rush-production"
+   },
+   {
+    "name": "bending",
+    "lead_time_added_days": "1-2 (rush page) / 2-3 (shipping page)",
+    "price": null,
+    "price_note": "No per-bend price published. Bent parts carry a minimum charge; the current blog table implies $19 for 1-2 bent parts (an older version of the same post said $9).",
+    "source": [
+     "https://sendcutsend.com/services/cnc-bending/",
+     "https://sendcutsend.com/blog/4-ways-to-save-money-on-your-sendcutsend-order/",
+     "https://sendcutsend.com/rush-production",
+     "https://sendcutsend.com/shipping/"
+    ]
+   },
+   {
+    "name": "tapping",
+    "lead_time_added_days": "1-2",
+    "price": null,
+    "price_note": "No per-hole price published.",
+    "source": [
+     "https://sendcutsend.com/services/tapping/",
+     "https://sendcutsend.com/rush-production"
+    ]
+   },
+   {
+    "name": "countersinking",
+    "lead_time_added_days": "1-2",
+    "price": null,
+    "price_note": "Not published. Available on 5052/6061/7075 >= .125 in plus plastics (see countersink_by_thickness).",
+    "source": [
+     "https://app.sendcutsend.com/materials",
+     "https://sendcutsend.com/rush-production"
+    ]
+   },
+   {
+    "name": "hardware insertion (PEM)",
+    "lead_time_added_days": "1-3",
+    "price": null,
+    "price_note": "No per-insert price published.",
+    "source": [
+     "https://sendcutsend.com/services/hardware/",
+     "https://sendcutsend.com/rush-production"
+    ]
+   },
+   {
+    "name": "deburring",
+    "lead_time_added_days": "0",
+    "price": null,
+    "price_note": "Added by default on several aluminum thicknesses (add_by_default in materials JSON).",
+    "source": [
+     "https://sendcutsend.com/rush-production",
+     "https://app.sendcutsend.com/materials"
+    ]
+   },
+   {
+    "name": "tumbling",
+    "lead_time_added_days": "1-2",
+    "price": null,
+    "source": "https://sendcutsend.com/rush-production"
+   },
+   {
+    "name": "dimple forming",
+    "lead_time_added_days": "1-3",
+    "price": null,
+    "source": "https://sendcutsend.com/rush-production"
+   },
+   {
+    "name": "anodizing (Type II)",
+    "lead_time_added_days": "clear/black 1-3, red/blue/gold 5-7",
+    "price": null,
+    "source": "https://sendcutsend.com/services/anodizing/"
+   },
+   {
+    "name": "powder coating",
+    "lead_time_added_days": "3-5",
+    "price": null,
+    "source": [
+     "https://sendcutsend.com/rush-production",
+     "https://sendcutsend.com/shipping/"
+    ]
+   },
+   {
+    "name": "plating",
+    "lead_time_added_days": "7-10",
+    "price": null,
+    "source": [
+     "https://sendcutsend.com/rush-production",
+     "https://sendcutsend.com/shipping/"
+    ]
+   },
+   {
+    "name": "welding",
+    "lead_time_added_days": "1-2",
+    "price": null,
+    "source": "https://sendcutsend.com/rush-production"
+   },
+   {
+    "name": "CNC machining (6061 billet)",
+    "lead_time_business_days": "2-5",
+    "price": null,
+    "source": "https://sendcutsend.com/rush-production"
+   }
+  ],
+  "guidelines": {
+   "file_formats": {
+    "value": [
+     ".ai",
+     ".dxf",
+     ".dwg",
+     ".eps",
+     ".stp",
+     ".step"
+    ],
+    "note": "PDF not instant-quotable (custom quote form).",
+    "source": "https://sendcutsend.com/faq/"
+   },
+   "scale": {
+    "value": "1:1, inch preferred, mm accepted if consistent with quote inputs; cm/m not supported",
+    "source": "https://sendcutsend.com/guidelines/sheet-cutting/"
+   },
+   "min_hole_laser": {
+    "value": "hole >= 50% of material thickness",
+    "source": "https://sendcutsend.com/guidelines/sheet-cutting/"
+   },
+   "min_hole_waterjet_in": {
+    "value": 0.07,
+    "mm": 1.778,
+    "note": "most materials; varies by material/thickness",
+    "source": "https://sendcutsend.com/guidelines/sheet-cutting/"
+   },
+   "min_hole_router_in": {
+    "value": 0.125,
+    "mm": 3.175,
+    "source": "https://sendcutsend.com/guidelines/sheet-cutting/"
+   },
+   "min_internal_radius": {
+    "laser": "approximately the kerf width (not numerically published)",
+    "laser_with_kerf_in": 0.032,
+    "waterjet_in": 0.032,
+    "router_in": 0.063,
+    "source": [
+     "https://sendcutsend.com/guidelines/sheet-cutting/",
+     "https://sendcutsend.com/services/laser-cutting/"
+    ]
+   },
+   "min_bridge_web": {
+    "carbon_fiber": "at least 2x material thickness",
+    "metals": null,
+    "metals_note": "not published as a general number ('varies by material')",
+    "source": [
+     "https://sendcutsend.com/materials/carbon-fiber/",
+     "https://sendcutsend.com/guidelines/sheet-cutting/"
+    ]
+   },
+   "kerf": {
+    "laser": null,
+    "laser_note": "not published; software compensates for kerf automatically",
+    "waterjet_carbon_fiber_in": 0.03,
+    "source": [
+     "https://sendcutsend.com/services/laser-cutting/",
+     "https://sendcutsend.com/materials/carbon-fiber/"
+    ]
+   },
+   "tolerance_in": {
+    "laser_under_12in": 0.005,
+    "laser_over_12in": 0.01,
+    "waterjet_composites": 0.009,
+    "router": 0.005,
+    "source": "https://sendcutsend.com/services/laser-cutting/"
+   },
+   "max_material_removal": {
+    "value": "keep removal under 50% (router guideline)",
+    "source": "https://sendcutsend.com/guidelines/sheet-cutting/"
+   },
+   "router_tabs": {
+    "width_in": 0.1875,
+    "depth": "half thickness",
+    "min_node_spacing_in": 0.4,
+    "source": "https://sendcutsend.com/guidelines/sheet-cutting/"
+   },
+   "part_size_laser_in": {
+    "instant_max": [
+     44,
+     30
+    ],
+    "custom_max_typical": [
+     56,
+     44
+    ],
+    "min": "material/thickness dependent, smallest 0.25 x 0.375",
+    "source": "https://sendcutsend.com/materials/min-max/"
+   },
+   "part_size_waterjet_in": {
+    "instant_max": "44x23 or 44x30",
+    "custom_max": "47x23 or 46x34",
+    "min": "1x2 (3x3 for some carbon fiber)",
+    "source": "https://sendcutsend.com/materials/min-max/"
+   },
+   "part_size_router_in": {
+    "instant_max": "44x23 to 44x44",
+    "custom_max": [
+     46,
+     46
+    ],
+    "min": [
+     1,
+     2
+    ],
+    "source": "https://sendcutsend.com/materials/min-max/"
+   },
+   "bending": {
+    "min_flat_part_in": [
+     0.375,
+     1.5
+    ],
+    "max_flat_part_in": [
+     30,
+     44
+    ],
+    "max_bend_length_in": "16-44 depending on thickness",
+    "max_bend_angle_deg": 130,
+    "angle_tolerance_deg": {
+     "up_to_24in": 1,
+     "over_24in": 2,
+     "polycarbonate_up_to_24in": 5,
+     "polycarbonate_over_24in": 7
+    },
+    "bend_to_edge_tolerance_in": "+/-0.015, add >= 0.015 per additional bend",
+    "u_channel_base": ">= 2x flange length (3x for polycarbonate)",
+    "flange_coverage": "flanges must meet min flange length over ~50-60% of bend length",
+    "feature_to_bend": ">= half die width from bend centerline",
+    "custom_radius": false,
+    "source": "https://sendcutsend.com/services/cnc-bending/"
+   },
+   "tapping": {
+    "hole_center_from_other_features": "tap_hole_dia/2 + material min tap hole-to-edge",
+    "from_bend": ">= half full die width from bend line",
+    "max_thread_depth": "3x tap diameter",
+    "source": "https://sendcutsend.com/services/tapping/"
+   },
+   "hardware": {
+    "types": "PEM nuts, standoffs, studs (>200 imperial and metric SKUs)",
+    "part_size_in": {
+     "min": [
+      1,
+      1.5
+     ],
+     "max": [
+      36,
+      46
+     ]
+    },
+    "max_hole_in": 4,
+    "sheet_hole_tolerance_in": "+0.003/-0.000 (per catalog H)",
+    "min_thickness_in": {
+     "5052/6061": 0.04,
+     "7075": 0.125,
+     "steel/304": 0.048,
+     "316": 0.06
+    },
+    "catalog": "https://sendcutsend.com/guidelines/hardware/catalog/",
+    "source": "https://sendcutsend.com/services/hardware/"
+   },
+   "anodizing": {
+    "type": "Type II",
+    "colors": [
+     "clear",
+     "black",
+     "blue",
+     "gold",
+     "red"
+    ],
+    "alloys": [
+     "5052",
+     "6061",
+     "7075"
+    ],
+    "flat_part_in": {
+     "min": [
+      1,
+      3
+     ],
+     "max": [
+      23,
+      23
+     ]
+    },
+    "source": "https://sendcutsend.com/services/anodizing/"
+   }
+  },
+  "pricing_model": {
+   "drivers": [
+    {
+     "driver": "material and thickness",
+     "detail": "'One of the biggest factors in order cost'",
+     "source": "https://sendcutsend.com/blog/4-ways-to-save-money-on-your-sendcutsend-order/"
+    },
+    {
+     "driver": "pierce count (internal cutouts/holes)",
+     "detail": "cost rises with number of laser pierces; 40 holes cheaper than 100",
+     "source": [
+      "https://sendcutsend.com/blog/4-ways-to-save-money-on-your-sendcutsend-order/",
+      "https://sendcutsend.com/blog/designing-your-products-for-pricing-efficiency/"
+     ]
+    },
+    {
+     "driver": "cut length / geometry complexity",
+     "detail": "intricate patterns, perforations, thin bridges take longer; no $/length rate published",
+     "source": "https://sendcutsend.com/blog/designing-your-products-for-pricing-efficiency/"
+    },
+    {
+     "driver": "part size / bounding area",
+     "detail": "material used and machine time; keep largest dimension < 28 in to keep cost low",
+     "source": [
+      "https://sendcutsend.com/blog/4-ways-to-save-money-on-your-sendcutsend-order/",
+      "https://sendcutsend.com/blog/designing-your-products-for-pricing-efficiency/"
+     ]
+    },
+    {
+     "driver": "quantity of identical parts",
+     "detail": "discounts start at 2 identical parts, per line item only; '50 of the same part can give you a 50% discount'; bulk 'up to 80%'",
+     "source": [
+      "https://sendcutsend.com/blog/4-ways-to-save-money-on-your-sendcutsend-order/",
+      "https://sendcutsend.com/blog/designing-your-products-for-pricing-efficiency/",
+      "https://sendcutsend.com/services/laser-cutting/"
+     ]
+    },
+    {
+     "driver": "post-processing services",
+     "detail": "each service adds cost; quantity discounts also apply to services; bent parts have a minimum charge",
+     "source": "https://sendcutsend.com/blog/4-ways-to-save-money-on-your-sendcutsend-order/"
+    },
+    {
+     "driver": "one part per file",
+     "detail": "pre-nested files cost more; upload one part per file",
+     "source": "https://sendcutsend.com/blog/designing-your-products-for-pricing-efficiency/"
+    }
+   ],
+   "minimum_order": {
+    "value": null,
+    "note": "SendCutSend: no minimum quantity on most processes. Free US shipping at >= $39 (US and Canada only). OSH Cut's self-published comparison claims a '$39 minimum' for SendCutSend - conflicts with SendCutSend's own pages; treat $39 as the free-shipping threshold.",
+    "source": [
+     "https://sendcutsend.com/blog/4-ways-to-save-money-on-your-sendcutsend-order/",
+     "https://sendcutsend.com/shipping/",
+     "https://www.oshcut.com/osh-cut-vs-send-cut-send"
+    ]
+   },
+   "shipping": {
+    "free_us_threshold_usd": 39,
+    "canada": "orders >= $39 ship from $19 USD",
+    "regions": [
+     "US",
+     "CA"
+    ],
+    "source": "https://sendcutsend.com/shipping/"
+   },
+   "lead_times": {
+    "standard_business_days": "2-4 (free)",
+    "fast": "1-3 (rush production)",
+    "faster": "1-2 (rush + overnight)",
+    "fastest": "within 24 h (rush + overnight + order by noon PT)",
+    "cutoff": "12:00 PM PT Mon-Fri",
+    "adders": {
+     "100+ parts": "+2-4 d",
+     ">46 in parts": "+1-2 d",
+     ">80 lb": "+1-2 d",
+     ">40 sq ft": "+2-5 d"
+    },
+    "rush_prices": null,
+    "source": "https://sendcutsend.com/rush-production"
+   },
+   "quoting_access": {
+    "public_api": null,
+    "api_note": "No public API documented (sendcutsend.com/api and /developers return 404). Instant quote = upload DXF/DWG/AI/EPS/STEP at sendcutsend.com. CAD plug-ins: Autodesk Fusion and SolidWorks (live quotes + cart). An unauthenticated JSON of material specs exists at app.sendcutsend.com/materials (used by their bending calculator) - undocumented, may change; use for rules, not prices.",
+    "link_for_designer": "https://sendcutsend.com/ (upload page) ; bending calculator https://sendcutsend.com/bending-calculator/",
+    "source": [
+     "https://sendcutsend.com/faq/",
+     "https://sendcutsend.com/add-ins/",
+     "https://app.sendcutsend.com/materials"
+    ]
+   },
+   "published_examples": [
+    {
+     "label": "EXAMPLE (published by SendCutSend; marked by them as estimates that may not reflect current prices)",
+     "material": "5052 aluminum",
+     "thickness_in": 0.187,
+     "thickness_mm": 4.75,
+     "bbox_in": [
+      3.5,
+      2.5
+     ],
+     "bbox_mm": [
+      88.9,
+      63.5
+     ],
+     "services": [
+      "laser",
+      "deburr"
+     ],
+     "usd_each_qty1": 9.9,
+     "usd_each_qty100": 3.7,
+     "qty100_to_qty1": 0.37,
+     "source": "https://sendcutsend.com/services/laser-cutting/"
+    },
+    {
+     "label": "EXAMPLE (published by SendCutSend; marked by them as estimates that may not reflect current prices)",
+     "material": "carbon fiber",
+     "thickness_in": 0.039,
+     "thickness_mm": 0.991,
+     "bbox_in": [
+      3.35,
+      3.25
+     ],
+     "bbox_mm": [
+      85.1,
+      82.5
+     ],
+     "services": [
+      "waterjet"
+     ],
+     "usd_each_qty1": 53.42,
+     "usd_each_qty100": 29.6,
+     "qty100_to_qty1": 0.55,
+     "source": "https://sendcutsend.com/services/laser-cutting/"
+    },
+    {
+     "label": "EXAMPLE (published by SendCutSend; marked by them as estimates that may not reflect current prices)",
+     "material": "ABS",
+     "thickness_in": 0.125,
+     "thickness_mm": 3.175,
+     "bbox_in": [
+      3.5,
+      3.5
+     ],
+     "bbox_mm": [
+      88.9,
+      88.9
+     ],
+     "services": [
+      "router"
+     ],
+     "usd_each_qty1": 7.42,
+     "usd_each_qty100": 2.99,
+     "qty100_to_qty1": 0.4,
+     "source": "https://sendcutsend.com/services/laser-cutting/"
+    },
+    {
+     "label": "EXAMPLE (published by SendCutSend; marked by them as estimates that may not reflect current prices)",
+     "material": "5052 aluminum",
+     "thickness_in": 0.1,
+     "thickness_mm": 2.54,
+     "bbox_in": [
+      2.5,
+      4.75
+     ],
+     "bbox_mm": [
+      63.5,
+      120.6
+     ],
+     "services": [
+      "laser",
+      "deburr",
+      "tap"
+     ],
+     "usd_each_qty1": 12.09,
+     "usd_each_qty100": 4.4,
+     "qty100_to_qty1": 0.36,
+     "source": "https://sendcutsend.com/services/tapping/"
+    },
+    {
+     "label": "EXAMPLE (published by SendCutSend; marked by them as estimates that may not reflect current prices)",
+     "material": "HRP&O steel",
+     "thickness_in": 0.187,
+     "thickness_mm": 4.75,
+     "bbox_in": [
+      4.0,
+      4.0
+     ],
+     "bbox_mm": [
+      101.6,
+      101.6
+     ],
+     "services": [
+      "laser",
+      "tap"
+     ],
+     "usd_each_qty1": 23.32,
+     "usd_each_qty100": 5.77,
+     "qty100_to_qty1": 0.25,
+     "source": "https://sendcutsend.com/services/tapping/"
+    },
+    {
+     "label": "EXAMPLE (published by SendCutSend; marked by them as estimates that may not reflect current prices)",
+     "material": "Delrin",
+     "thickness_in": null,
+     "thickness_mm": null,
+     "bbox_in": [
+      2.5,
+      3.0
+     ],
+     "bbox_mm": [
+      63.5,
+      76.2
+     ],
+     "services": [
+      "router",
+      "tap"
+     ],
+     "usd_each_qty1": 15.16,
+     "usd_each_qty100": 5.66,
+     "qty100_to_qty1": 0.37,
+     "source": "https://sendcutsend.com/services/tapping/"
+    },
+    {
+     "label": "EXAMPLE (published by SendCutSend; marked by them as estimates that may not reflect current prices)",
+     "material": "HRP&O steel",
+     "thickness_in": 0.188,
+     "thickness_mm": 4.775,
+     "bbox_in": [
+      3.5,
+      1.0
+     ],
+     "bbox_mm": [
+      88.9,
+      25.4
+     ],
+     "services": [
+      "laser",
+      "hardware"
+     ],
+     "usd_each_qty1": 14.14,
+     "usd_each_qty100": 3.24,
+     "qty100_to_qty1": 0.23,
+     "source": "https://sendcutsend.com/services/hardware/"
+    },
+    {
+     "label": "EXAMPLE (published by SendCutSend; marked by them as estimates that may not reflect current prices)",
+     "material": "cold rolled steel",
+     "thickness_in": 0.135,
+     "thickness_mm": 3.429,
+     "bbox_in": [
+      3.0,
+      3.0
+     ],
+     "bbox_mm": [
+      76.2,
+      76.2
+     ],
+     "services": [
+      "laser",
+      "bend",
+      "hardware"
+     ],
+     "usd_each_qty1": 27.05,
+     "usd_each_qty100": 6.44,
+     "qty100_to_qty1": 0.24,
+     "source": "https://sendcutsend.com/services/hardware/"
+    },
+    {
+     "label": "EXAMPLE (published by SendCutSend; marked by them as estimates that may not reflect current prices)",
+     "material": "5052 aluminum",
+     "thickness_in": 0.063,
+     "thickness_mm": 1.6,
+     "bbox_in": [
+      5.5,
+      6.0
+     ],
+     "bbox_mm": [
+      139.7,
+      152.4
+     ],
+     "services": [
+      "laser",
+      "bend",
+      "deburr",
+      "hardware",
+      "anodize"
+     ],
+     "usd_each_qty1": 44.51,
+     "usd_each_qty100": 19.48,
+     "qty100_to_qty1": 0.44,
+     "source": "https://sendcutsend.com/services/hardware/"
+    },
+    {
+     "label": "EXAMPLE (published by SendCutSend; marked by them as estimates that may not reflect current prices)",
+     "material": "G90 galvanized steel",
+     "thickness_in": 0.059,
+     "thickness_mm": 1.499,
+     "bbox_in": [
+      5.4,
+      6.0
+     ],
+     "bbox_mm": [
+      137.2,
+      152.4
+     ],
+     "services": [
+      "laser",
+      "bend",
+      "hardware"
+     ],
+     "usd_each_qty1": 31.76,
+     "usd_each_qty100": 8.32,
+     "qty100_to_qty1": 0.26,
+     "source": "https://sendcutsend.com/services/cnc-bending/"
+    },
+    {
+     "label": "EXAMPLE (published by SendCutSend; marked by them as estimates that may not reflect current prices)",
+     "material": "cold rolled steel",
+     "thickness_in": 0.119,
+     "thickness_mm": 3.023,
+     "bbox_in": [
+      6.3,
+      7.4
+     ],
+     "bbox_mm": [
+      160.0,
+      188.0
+     ],
+     "services": [
+      "laser",
+      "bend",
+      "other services"
+     ],
+     "usd_each_qty1": 73.33,
+     "usd_each_qty100": 16.21,
+     "qty100_to_qty1": 0.22,
+     "source": "https://sendcutsend.com/services/cnc-bending/"
+    },
+    {
+     "label": "EXAMPLE (published by SendCutSend; marked by them as estimates that may not reflect current prices)",
+     "material": "polycarbonate",
+     "thickness_in": 0.118,
+     "thickness_mm": 2.997,
+     "bbox_in": [
+      4.0,
+      5.5
+     ],
+     "bbox_mm": [
+      101.6,
+      139.7
+     ],
+     "services": [
+      "router",
+      "bend"
+     ],
+     "usd_each_qty1": 24.98,
+     "usd_each_qty100": 7.84,
+     "qty100_to_qty1": 0.31,
+     "source": "https://sendcutsend.com/services/cnc-bending/"
+    },
+    {
+     "label": "EXAMPLE (published by SendCutSend; marked by them as estimates that may not reflect current prices)",
+     "material": "5052 aluminum",
+     "thickness_in": 0.125,
+     "thickness_mm": 3.175,
+     "bbox_in": [
+      4.0,
+      3.25
+     ],
+     "bbox_mm": [
+      101.6,
+      82.5
+     ],
+     "services": [
+      "laser",
+      "bend",
+      "countersink",
+      "deburr",
+      "anodize"
+     ],
+     "usd_each_qty1": 41.58,
+     "usd_each_qty100": 12.86,
+     "qty100_to_qty1": 0.31,
+     "source": "https://sendcutsend.com/services/anodizing/"
+    },
+    {
+     "label": "EXAMPLE (published by SendCutSend; marked by them as estimates that may not reflect current prices)",
+     "material": "5052 aluminum",
+     "thickness_in": 0.09,
+     "thickness_mm": 2.286,
+     "bbox_in": [
+      6.5,
+      7.5
+     ],
+     "bbox_mm": [
+      165.1,
+      190.5
+     ],
+     "services": [
+      "laser",
+      "bend",
+      "tap",
+      "dimple",
+      "deburr",
+      "anodize"
+     ],
+     "usd_each_qty1": 72.63,
+     "usd_each_qty100": 24.62,
+     "qty100_to_qty1": 0.34,
+     "source": "https://sendcutsend.com/services/anodizing/"
+    },
+    {
+     "label": "EXAMPLE (published by SendCutSend; marked by them as estimates that may not reflect current prices)",
+     "material": "6061-T6 billet",
+     "thickness_in": null,
+     "thickness_mm": null,
+     "bbox_in": [
+      2.5,
+      2.5
+     ],
+     "bbox_mm": [
+      63.5,
+      63.5
+     ],
+     "services": [
+      "CNC machine",
+      "media blast",
+      "anodize"
+     ],
+     "usd_each_qty1": 357.23,
+     "usd_each_qty100": 73.32,
+     "qty100_to_qty1": 0.21,
+     "source": "https://sendcutsend.com/services/anodizing/"
+    },
+    {
+     "label": "EXAMPLE (blog screenshot, quantity not stated)",
+     "material": "304 stainless",
+     "thickness_in": 0.06,
+     "part": "sprocket",
+     "usd_each": 6.76,
+     "source": "https://sendcutsend.com/blog/4-ways-to-save-money-on-your-sendcutsend-order/"
+    },
+    {
+     "label": "EXAMPLE (blog screenshot, quantity not stated)",
+     "material": "grade 5 titanium",
+     "thickness_in": 0.063,
+     "part": "same sprocket",
+     "usd_each": 19.6,
+     "source": "https://sendcutsend.com/blog/4-ways-to-save-money-on-your-sendcutsend-order/"
+    },
+    {
+     "label": "EXAMPLE (blog screenshot, quantity not stated)",
+     "material": "304 stainless",
+     "thickness_in": 0.048,
+     "part": "bracket",
+     "usd_each": 3.58,
+     "source": "https://sendcutsend.com/blog/4-ways-to-save-money-on-your-sendcutsend-order/"
+    },
+    {
+     "label": "EXAMPLE (blog screenshot, quantity not stated)",
+     "material": "304 stainless",
+     "thickness_in": 0.06,
+     "part": "same bracket",
+     "usd_each": 4.07,
+     "source": "https://sendcutsend.com/blog/4-ways-to-save-money-on-your-sendcutsend-order/"
+    }
+   ],
+   "derived_estimates": {
+    "label": "ESTIMATE derived by us from the published examples above - not a SendCutSend rate",
+    "qty100_to_qty1_ratio": {
+     "min": 0.21,
+     "median": 0.31,
+     "max": 0.55,
+     "n": 15
+    },
+    "simple_aluminum_usd_per_in2_bbox_qty1": [
+     1.13,
+     1.02
+    ],
+    "simple_aluminum_usd_per_in2_bbox_qty100": [
+     0.42,
+     0.37
+    ],
+    "inputs": "5052 .187in 3.5x2.5in laser+deburr $9.90/$3.70; 5052 .100in 2.5x4.75in laser+deburr+tap $12.09/$4.40",
+    "carbon_fiber_usd_per_in2_bbox_qty1": 4.91,
+    "carbon_fiber_inputs": "1 mm CF 3.35x3.25in waterjet $53.42 qty1 / $29.60 qty100"
+   },
+   "estimate_formula_note": "SendCutSend does not publish its formula. For the designer use: price_each(qty) ~= max(bbox_in2 * rate_qty1[material], floor) * qty_factor(qty) + services, with rate_qty1 ~ $1.0-1.1/in2 of bounding box for small simple 5052 parts and ~$4.9/in2 for 1 mm CF (both ESTIMATES from 2-3 examples), qty_factor(100) ~ 0.21-0.55 (median 0.31 across 15 published examples), and a bent-part minimum (~$19 implied). Always label results 'estimate - confirm by uploading the DXF'. Prices follow commodity costs."
+  }
+ },
+ "alternatives": [
+  {
+   "name": "OSH Cut",
+   "url": "https://www.oshcut.com/",
+   "best_for": "multi-part sheet jobs with bends, tube cutting, thick bending (3/4 in steel claimed)",
+   "price_model": "instant upload quote; job-level nesting with automatic discounts visible at checkout; no minimum (self-reported); standard ~3 days, paid priority/same-day rush; US only",
+   "source": [
+    "https://www.oshcut.com/osh-cut-vs-send-cut-send",
+    "https://oshcut.com/services/online-dfm-ordering"
+   ]
+  },
+  {
+   "name": "Xometry",
+   "url": "https://www.xometry.com/sheet-metal-fabrication",
+   "best_for": "one portal for sheet, CNC, injection molding; CAD add-ins (SolidWorks, Fusion, Onshape)",
+   "price_model": "instant quote engine; help centre says no minimum for the majority of services (from search snippet; full article text not retrievable)",
+   "source": [
+    "https://community.xometry.com/kb/articles/642-what-is-your-minimum-order-quantity",
+    "https://www.xometry.com/cad-add-in-downloads"
+   ]
+  },
+  {
+   "name": "JLCCNC sheet metal",
+   "url": "https://jlccnc.com/",
+   "best_for": "cheapest small sheet parts from China (5052, SS201/304, CRS, galvanized)",
+   "price_model": "online instant quote; 'minimum order price starts from $0.4'; fastest production 1 day (+ international shipping)",
+   "source": "https://jlccnc.com/blog/sheet-metel-online"
+  },
+  {
+   "name": "JLC3DP",
+   "url": "https://jlc3dp.com/",
+   "best_for": "MJF PA12/PA11 nylon and SLA parts when the P1S cannot make the part (fine features, isotropic nylon)",
+   "price_model": "instant quote by volume/material; homepage 'from' prices: SLA $0.30 (2 d), MJF/SLS/FDM $1.00 (3 d), SLM metal $8.00, CNC $5.00; up to 21.5% material price cuts from 2025-08-13",
+   "source": [
+    "https://jlc3dp.com/",
+    "https://jlc3dp.com/blog/drastic-material-price-cuts-and-adjusted-post-processing-service-fees"
+   ]
+  },
+  {
+   "name": "PCBWay CNC / sheet metal",
+   "url": "https://www.pcbway.com/rapid-prototyping/manufacture/?type=3",
+   "best_for": "CNC + sheet metal bundled with PCB orders",
+   "price_model": "RFQ (manual quote, not instant); 10-12 day lead time on the page; VAT/freight excluded",
+   "source": "https://www.pcbway.com/rapid-prototyping/manufacture/?type=3"
+  },
+  {
+   "name": "Protolabs sheet metal",
+   "url": "https://www.protolabs.com/services/sheet-metal-fabrication/",
+   "best_for": "US-made, ISO 9001/ITAR, fast formed parts with hardware/finishing; expensive for hobby quantities",
+   "price_model": "online upload-to-quote, average one day; 3-day tier (<=0.125 in, <=12 bends) and 5-day standard; no prices or minimum published",
+   "source": "https://www.protolabs.com/services/sheet-metal-fabrication/"
+  }
+ ],
+ "cf_tubes": [
+  {
+   "seller": "Easy Composites (UK)",
+   "od_mm": 16,
+   "id_mm": 14,
+   "type": "roll-wrapped (UD layers + 3k twill outer), epoxy",
+   "length_m": 1,
+   "price_usd_per_m": null,
+   "price_gbp_per_m_ex_vat": 17.35,
+   "qty_break_prices_gbp": [
+    17.35,
+    15.6,
+    13.9
+   ],
+   "mass_g_per_m": 74.2,
+   "tensile_modulus_gpa": 64,
+   "tensile_strength_mpa": 650,
+   "max_service_c": 80,
+   "url": "https://www.easycomposites.co.uk/16mm-woven-finish-carbon-fibre-tube",
+   "price_checked": "2026-10-25"
+  },
+  {
+   "seller": "Easy Composites (UK)",
+   "od_mm": 20,
+   "id_mm": 18,
+   "type": "roll-wrapped (UD layers + 3k twill outer), epoxy",
+   "length_m": 1,
+   "price_usd_per_m": null,
+   "price_gbp_per_m_ex_vat": 20.4,
+   "qty_break_prices_gbp": [
+    20.4,
+    18.35,
+    16.35
+   ],
+   "mass_g_per_m": 86.5,
+   "tensile_modulus_gpa": 64,
+   "tensile_strength_mpa": 650,
+   "max_service_c": 80,
+   "url": "https://www.easycomposites.co.uk/20mm-woven-finish-carbon-fibre-tube",
+   "price_checked": "2026-10-25"
+  },
+  {
+   "seller": "Easy Composites (UK)",
+   "od_mm": 25,
+   "id_mm": 22,
+   "type": "roll-wrapped, epoxy",
+   "length_m": 1,
+   "price_usd_per_m": null,
+   "price_gbp_per_m_ex_vat": 33.65,
+   "qty_break_prices_gbp": [
+    33.65,
+    30.3,
+    26.95
+   ],
+   "mass_g_per_m": 168.5,
+   "tensile_modulus_gpa": 64,
+   "tensile_strength_mpa": 650,
+   "max_service_c": null,
+   "url": "https://www.easycomposites.co.uk/25mm-22mm-woven-finish-carbon-fibre-tube",
+   "price_checked": "2026-10-25"
+  },
+  {
+   "seller": "Easy Composites (UK)",
+   "od_mm": 12,
+   "id_mm": 10,
+   "type": "pultruded unidirectional, epoxy",
+   "length_m": 1,
+   "price_usd_per_m": null,
+   "price_gbp_per_m_ex_vat": 12.5,
+   "qty_break_prices_gbp": [
+    12.5,
+    10.5,
+    8.75
+   ],
+   "mass_g_per_m": null,
+   "tensile_modulus_gpa": "28-40",
+   "tensile_strength_mpa": "400-500",
+   "max_service_c": null,
+   "url": "https://www.easycomposites.co.uk/12mm-pultruded-carbon-fibre-tube",
+   "note": "Largest pultruded size in EC range (2-12 mm). EC: pultruded = max longitudinal strength but vulnerable to crushing/torsion; roll-wrapped more resilient to crush and twist.",
+   "price_checked": "2026-10-25"
+  },
+  {
+   "seller": "Rock West Composites (US)",
+   "od_mm": 17.96,
+   "id_mm": 15.88,
+   "type": "roll-wrapped fabric",
+   "length_m": 1.829,
+   "price_usd": 78.99,
+   "price_usd_per_m": 43.19,
+   "url": "https://www.rockwestcomposites.com/45526.html",
+   "note": "0.625 x 0.707 x 72 in; $/m derived = price / length",
+   "price_checked": "2026-10-25"
+  },
+  {
+   "seller": "Rock West Composites (US)",
+   "od_mm": 21.74,
+   "id_mm": 19.05,
+   "type": "roll-wrapped standard modulus twill (INFINITube V size 04)",
+   "length_m": 1.88,
+   "price_usd": 129.99,
+   "price_usd_per_m": 69.16,
+   "url": "https://www.rockwestcomposites.com/46404.html",
+   "note": "$/m derived",
+   "price_checked": "2026-10-25"
+  },
+  {
+   "seller": "Rock West Composites (US)",
+   "od_mm": 24.31,
+   "id_mm": 22.22,
+   "type": "roll-wrapped fabric",
+   "length_m": 1.829,
+   "price_usd": 106.99,
+   "price_usd_per_m": 58.5,
+   "url": "https://www.rockwestcomposites.com/45529.html",
+   "note": "$/m derived",
+   "price_checked": "2026-10-25"
+  },
+  {
+   "seller": "Rock West Composites (US)",
+   "od_mm": 25.6,
+   "id_mm": 23.83,
+   "type": "roll-wrapped fabric",
+   "length_m": 1.524,
+   "price_usd": 98.99,
+   "price_usd_per_m": 64.95,
+   "url": "https://www.rockwestcomposites.com/45682.html",
+   "note": "$/m derived",
+   "price_checked": "2026-10-25"
+  },
+  {
+   "seller": "Rock West Composites (US)",
+   "od_mm": 18.03,
+   "id_mm": 15.88,
+   "type": "roll-wrapped unidirectional",
+   "length_m": 1.829,
+   "price_usd": 69.99,
+   "price_usd_per_m": 38.27,
+   "url": "https://www.rockwestcomposites.com/45353.html",
+   "note": "$/m derived",
+   "price_checked": "2026-10-25"
+  },
+  {
+   "seller": "Rock West Composites (US)",
+   "od_mm": 12,
+   "id_mm": 9.8,
+   "type": "pultruded unidirectional",
+   "length_m": 1.829,
+   "price_usd": 40.99,
+   "price_usd_per_m": 22.41,
+   "url": "https://www.rockwestcomposites.com/t-rnd-472-l72.html",
+   "note": "largest pultruded round in RW listing; $/m derived",
+   "price_checked": "2026-10-25"
+  },
+  {
+   "seller": "CarbonFiberTubeShop (US)",
+   "od_mm": 17.78,
+   "id_mm": 15.88,
+   "type": "roll-wrapped uni, cello finish (SM7072U)",
+   "length_m": 1.829,
+   "price_usd": 67.7,
+   "price_usd_per_m": 37.02,
+   "url": "http://www.carbonfibertubeshop.com/small%20tubing.html",
+   "note": "$/m derived; sanded +$15",
+   "price_checked": "2026-10-25"
+  },
+  {
+   "seller": "CarbonFiberTubeShop (US)",
+   "od_mm": 20.95,
+   "id_mm": 19.05,
+   "type": "roll-wrapped uni, cello finish (ME8272U)",
+   "length_m": 1.829,
+   "price_usd": 75.61,
+   "price_usd_per_m": 41.34,
+   "url": "http://www.carbonfibertubeshop.com/medium%20tubing.html",
+   "note": "$/m derived",
+   "price_checked": "2026-10-25"
+  },
+  {
+   "seller": "CarbonFiberTubeShop (US)",
+   "od_mm": 25.27,
+   "id_mm": 22.22,
+   "type": "roll-wrapped uni, cello finish (ME9972U)",
+   "length_m": 1.829,
+   "price_usd": 117.07,
+   "price_usd_per_m": 64.01,
+   "url": "http://www.carbonfibertubeshop.com/medium%20tubing.html",
+   "note": "$/m derived",
+   "price_checked": "2026-10-25"
+  },
+  {
+   "seller": "DragonPlate",
+   "od_mm": null,
+   "id_mm": null,
+   "type": null,
+   "price_usd_per_m": null,
+   "url": "https://dragonplate.com/",
+   "note": "not retrieved (tube category URL not found without search)",
+   "price_checked": "2026-10-25"
+  }
+ ],
+ "cf_tube_vs_aluminium": {
+  "label": "DERIVED with beam theory from published E/strength/mass",
+  "rows": [
+   {
+    "tube": "CF roll-wrapped 20x18 (EC)",
+    "EI_n_m2": 172.9,
+    "moment_limit_n_m": 175.6,
+    "mass_g_per_m": 86.5,
+    "basis": "E 64 GPa, 650 MPa tensile (EC page)"
+   },
+   {
+    "tube": "Al 6061-T6 20x18",
+    "EI_n_m2": 186.2,
+    "moment_limit_n_m": 74.5,
+    "mass_g_per_m": 161.1,
+    "basis": "E 68.9 GPa (10 Msi, CarbonFiberTubeShop table), yield ~40 ksi and 0.0975 lb/in3 (SendCutSend 6061 page)"
+   },
+   {
+    "tube": "Al 6061-T6 20x16",
+    "EI_n_m2": 319.7,
+    "moment_limit_n_m": 127.9,
+    "mass_g_per_m": 305.2,
+    "basis": "same"
+   },
+   {
+    "tube": "CF roll-wrapped 16x14 (EC)",
+    "EI_n_m2": 85.2,
+    "moment_limit_n_m": 108.2,
+    "mass_g_per_m": 74.2,
+    "basis": "EC page"
+   },
+   {
+    "tube": "CF roll-wrapped 25x22 (EC)",
+    "EI_n_m2": 491.2,
+    "moment_limit_n_m": 399.1,
+    "mass_g_per_m": 168.5,
+    "basis": "EC page"
+   },
+   {
+    "tube": "PLA Basic solid 20 mm rod (XY)",
+    "EI_n_m2": 21.6,
+    "moment_limit_n_m": 59.7,
+    "mass_g_per_m": 389.6,
+    "basis": "TDS flexural 2.75 GPa / 76 MPa, 1.24 g/cm3"
+   }
+  ],
+  "note": "CF moment limit uses tensile strength - an upper bound; compression/crushing at clamps and the bond usually govern. Same-size CF and Al tubes have about equal stiffness; CF is ~half the mass and ~2.4x the tensile-based moment capacity.",
+  "source": [
+   "https://www.easycomposites.co.uk/20mm-woven-finish-carbon-fibre-tube",
+   "http://www.carbonfibertubeshop.com/tube%20properties.html",
+   "https://sendcutsend.com/materials/6061-aluminum/"
+  ]
+ },
+ "cf_plates": [
+  {
+   "seller": "SendCutSend (cut to shape)",
+   "thicknesses_mm": [
+    1.02,
+    1.6,
+    2.01,
+    3.0,
+    3.99,
+    5.0,
+    8.0
+   ],
+   "construction": "2x2 twill, epoxy",
+   "price_usd": "see sendcutsend.pricing_model (example: 1 mm, 3.35x3.25 in: $53.42 qty1 / $29.60 qty100)",
+   "url": "https://sendcutsend.com/materials/carbon-fiber/",
+   "source": [
+    "https://sendcutsend.com/materials/",
+    "https://sendcutsend.com/services/laser-cutting/"
+   ]
+  },
+  {
+   "seller": "Easy Composites (UK) double-sided high strength sheet",
+   "thicknesses_mm": [
+    0.25,
+    0.5,
+    1,
+    1.5,
+    2,
+    3
+   ],
+   "actual_thickness_mm": {
+    "1": 0.86,
+    "2": 1.78,
+    "3": 2.82
+   },
+   "areal_mass_kg_m2": {
+    "0.25": 0.35,
+    "0.5": 0.74,
+    "1": 1.42,
+    "1.5": 2.41,
+    "2": 2.98,
+    "3": 4.22
+   },
+   "tensile_strength_0_90_mpa": 641,
+   "tensile_modulus_0_90_gpa": 50.1,
+   "tg_c": 80,
+   "sheet_sizes_mm": [
+    "285x140",
+    "285x285",
+    "580x285",
+    "580x580"
+   ],
+   "price_gbp_ex_vat_example": {
+    "0.25mm 285x140": 15.8,
+    "qty_breaks": [
+     15.8,
+     14.75,
+     13.75
+    ]
+   },
+   "note": "Uncut sheet - you machine it yourself; EC offers no cutting service.",
+   "url": "https://www.easycomposites.co.uk/double-sided-high-strength-carbon-fibre-sheet"
+  }
+ ],
+ "filaments": [
+  {
+   "name": "PLA Basic",
+   "brand": "Bambu Lab",
+   "price_usd_per_kg": 14.99,
+   "price_usd_per_kg_with_spool": 17.99,
+   "price_note": "refill (no spool) price where offered; spool price in price_usd_per_kg_with_spool",
+   "price_checked": "2026-10-25",
+   "density_g_cm3": 1.24,
+   "tensile_mpa": 35,
+   "tensile_z_mpa": 31,
+   "modulus_gpa": 2.58,
+   "flexural_modulus_xy_gpa": 2.75,
+   "flexural_strength_xy_mpa": 76,
+   "flexural_strength_z_mpa": 59,
+   "hdt_c": 54,
+   "hdt_c_0_45mpa": 57,
+   "impact_xy_kj_m2": 26.6,
+   "impact_note": "ISO 179 X-Y value as printed in the TDS (PLA Basic: 26.6 unnotched, 7.9 notched); mix of notched/unnotched across TDS versions - compare with care",
+   "hardened_nozzle_required": false,
+   "enclosure": "no",
+   "chamber_temp_c": "25-45",
+   "test_basis": "Bambu TDS, ISO 527/178/75, 100% infill printed specimens; X-Y = in-plane, Z = across layers",
+   "source": [
+    "https://store.bblcdn.com/s1/default/58b85d0f3db94878854a28fdb8a0006e/Bambu_PLA_Basic_Technical_Data_Sheet.pdf",
+    "https://us.store.bambulab.com/products/pla-basic-filament"
+   ],
+   "water_absorption_saturated_pct_25c_55rh": 0.43
+  },
+  {
+   "name": "PLA Matte",
+   "brand": "Bambu Lab",
+   "price_usd_per_kg": 15.99,
+   "price_usd_per_kg_with_spool": 18.99,
+   "price_note": "refill (no spool) price where offered; spool price in price_usd_per_kg_with_spool",
+   "price_checked": "2026-10-25",
+   "density_g_cm3": 1.31,
+   "tensile_mpa": 30,
+   "tensile_z_mpa": 22,
+   "modulus_gpa": 1.96,
+   "flexural_modulus_xy_gpa": 2.36,
+   "flexural_strength_xy_mpa": 53,
+   "flexural_strength_z_mpa": 29,
+   "hdt_c": 52,
+   "hdt_c_0_45mpa": 58,
+   "impact_xy_kj_m2": null,
+   "impact_note": "ISO 179 X-Y value as printed in the TDS (PLA Basic: 26.6 unnotched, 7.9 notched); mix of notched/unnotched across TDS versions - compare with care",
+   "hardened_nozzle_required": false,
+   "enclosure": "no",
+   "chamber_temp_c": "25-45",
+   "test_basis": "Bambu TDS, ISO 527/178/75, 100% infill printed specimens; X-Y = in-plane, Z = across layers",
+   "source": [
+    "https://store.bblcdn.com/s7/default/5b061f2feeac4ba88f355a33248bbda7/Bambu_PLA_Matte_Technical_Data_Sheet.pdf",
+    "https://us.store.bambulab.com/products/pla-matte"
+   ]
+  },
+  {
+   "name": "PLA Tough+",
+   "brand": "Bambu Lab",
+   "price_usd_per_kg": 20.99,
+   "price_usd_per_kg_with_spool": 23.99,
+   "price_note": "refill (no spool) price where offered; spool price in price_usd_per_kg_with_spool",
+   "price_checked": "2026-10-25",
+   "density_g_cm3": 1.21,
+   "tensile_mpa": 34.9,
+   "tensile_z_mpa": 20.9,
+   "modulus_gpa": 1.86,
+   "flexural_modulus_xy_gpa": 2.14,
+   "flexural_strength_xy_mpa": 65,
+   "flexural_strength_z_mpa": 54,
+   "hdt_c": 58,
+   "hdt_c_0_45mpa": 61,
+   "impact_xy_kj_m2": 72.3,
+   "impact_note": "ISO 179 X-Y value as printed in the TDS (PLA Basic: 26.6 unnotched, 7.9 notched); mix of notched/unnotched across TDS versions - compare with care",
+   "hardened_nozzle_required": false,
+   "enclosure": "no",
+   "chamber_temp_c": "25-45",
+   "test_basis": "Bambu TDS, ISO 527/178/75, 100% infill printed specimens; X-Y = in-plane, Z = across layers",
+   "source": [
+    "https://store.bblcdn.com/s7/default/80a85371db2e40bda97069d283fed76c/BambuPLA_Tough_TechnicalData_Sheet_(2).pdf",
+    "https://us.store.bambulab.com/products/pla-tough-upgrade"
+   ]
+  },
+  {
+   "name": "PLA-CF",
+   "brand": "Bambu Lab",
+   "price_usd_per_kg": 31.99,
+   "price_usd_per_kg_with_spool": 34.99,
+   "price_note": "refill (no spool) price where offered; spool price in price_usd_per_kg_with_spool",
+   "price_checked": "2026-10-25",
+   "density_g_cm3": 1.22,
+   "tensile_mpa": 38,
+   "tensile_z_mpa": 26,
+   "modulus_gpa": 2.79,
+   "flexural_modulus_xy_gpa": 3.95,
+   "flexural_strength_xy_mpa": 89,
+   "flexural_strength_z_mpa": 49,
+   "hdt_c": 54,
+   "hdt_c_0_45mpa": 55,
+   "impact_xy_kj_m2": null,
+   "impact_note": "ISO 179 X-Y value as printed in the TDS (PLA Basic: 26.6 unnotched, 7.9 notched); mix of notched/unnotched across TDS versions - compare with care",
+   "hardened_nozzle_required": true,
+   "enclosure": "no",
+   "chamber_temp_c": "25-45",
+   "test_basis": "Bambu TDS, ISO 527/178/75, 100% infill printed specimens; X-Y = in-plane, Z = across layers",
+   "source": [
+    "https://store.bblcdn.com/842f399d4e274507953a5231126ec8c1.pdf",
+    "https://us.store.bambulab.com/products/pla-cf"
+   ]
+  },
+  {
+   "name": "PETG Basic",
+   "brand": "Bambu Lab",
+   "price_usd_per_kg": 13.99,
+   "price_usd_per_kg_with_spool": 16.99,
+   "price_note": "refill (no spool) price where offered; spool price in price_usd_per_kg_with_spool",
+   "price_checked": "2026-10-25",
+   "density_g_cm3": 1.25,
+   "tensile_mpa": 51,
+   "tensile_z_mpa": 35,
+   "modulus_gpa": 2.78,
+   "flexural_modulus_xy_gpa": 1.95,
+   "flexural_strength_xy_mpa": 75,
+   "flexural_strength_z_mpa": 56,
+   "hdt_c": 68,
+   "hdt_c_0_45mpa": 71,
+   "impact_xy_kj_m2": 34.2,
+   "impact_note": "ISO 179 X-Y value as printed in the TDS (PLA Basic: 26.6 unnotched, 7.9 notched); mix of notched/unnotched across TDS versions - compare with care",
+   "hardened_nozzle_required": false,
+   "enclosure": "recommended (wiki: enclosure improves interlayer strength)",
+   "chamber_temp_c": "35-50",
+   "test_basis": "Bambu TDS, ISO 527/178/75, 100% infill printed specimens; X-Y = in-plane, Z = across layers",
+   "source": [
+    "https://store.bblcdn.com/s1/default/cb94589bf7994fdcbfa833badefae9cd/Bambu_PETG_Basic_Technical_Data_Sheet.pdf",
+    "https://us.store.bambulab.com/products/petg-basic"
+   ],
+   "water_absorption_saturated_pct_25c_55rh": 0.45
+  },
+  {
+   "name": "PETG HF",
+   "brand": "Bambu Lab",
+   "price_usd_per_kg": 15.99,
+   "price_usd_per_kg_with_spool": 18.99,
+   "price_note": "refill (no spool) price where offered; spool price in price_usd_per_kg_with_spool",
+   "price_checked": "2026-10-25",
+   "density_g_cm3": 1.28,
+   "tensile_mpa": 34,
+   "tensile_z_mpa": 23,
+   "modulus_gpa": 1.81,
+   "flexural_modulus_xy_gpa": 2.05,
+   "flexural_strength_xy_mpa": 64,
+   "flexural_strength_z_mpa": 48,
+   "hdt_c": 62,
+   "hdt_c_0_45mpa": 69,
+   "impact_xy_kj_m2": null,
+   "impact_note": "ISO 179 X-Y value as printed in the TDS (PLA Basic: 26.6 unnotched, 7.9 notched); mix of notched/unnotched across TDS versions - compare with care",
+   "hardened_nozzle_required": false,
+   "enclosure": "recommended",
+   "chamber_temp_c": "35-50",
+   "test_basis": "Bambu TDS, ISO 527/178/75, 100% infill printed specimens; X-Y = in-plane, Z = across layers",
+   "source": [
+    "https://store.bblcdn.com/3a230e260a3a47c2b0db0156e07eef91.pdf",
+    "https://us.store.bambulab.com/products/petg-hf"
+   ]
+  },
+  {
+   "name": "PETG-CF",
+   "brand": "Bambu Lab",
+   "price_usd_per_kg": 31.99,
+   "price_usd_per_kg_with_spool": 34.99,
+   "price_note": "refill (no spool) price where offered; spool price in price_usd_per_kg_with_spool",
+   "price_checked": "2026-10-25",
+   "density_g_cm3": 1.25,
+   "tensile_mpa": 35,
+   "tensile_z_mpa": 29,
+   "modulus_gpa": 2.46,
+   "flexural_modulus_xy_gpa": 2.91,
+   "flexural_strength_xy_mpa": 70,
+   "flexural_strength_z_mpa": 48,
+   "hdt_c": 68,
+   "hdt_c_0_45mpa": 74,
+   "impact_xy_kj_m2": 15.7,
+   "impact_note": "ISO 179 X-Y value as printed in the TDS (PLA Basic: 26.6 unnotched, 7.9 notched); mix of notched/unnotched across TDS versions - compare with care",
+   "hardened_nozzle_required": true,
+   "enclosure": "recommended",
+   "chamber_temp_c": "35-50",
+   "test_basis": "Bambu TDS, ISO 527/178/75, 100% infill printed specimens; X-Y = in-plane, Z = across layers",
+   "source": [
+    "https://store.bblcdn.com/626e4f424bf345ae965ad0ddfcaf2459.pdf",
+    "https://us.store.bambulab.com/products/petg-cf"
+   ],
+   "water_absorption_saturated_pct_25c_55rh": 0.3
+  },
+  {
+   "name": "ASA",
+   "brand": "Bambu Lab",
+   "price_usd_per_kg": 29.99,
+   "price_usd_per_kg_with_spool": 29.99,
+   "price_note": "refill (no spool) price where offered; spool price in price_usd_per_kg_with_spool",
+   "price_checked": "2026-10-25",
+   "density_g_cm3": 1.05,
+   "tensile_mpa": 37,
+   "tensile_z_mpa": 31,
+   "modulus_gpa": 2.45,
+   "flexural_modulus_xy_gpa": 1.92,
+   "flexural_strength_xy_mpa": 65,
+   "flexural_strength_z_mpa": 40,
+   "hdt_c": 92,
+   "hdt_c_0_45mpa": 100,
+   "impact_xy_kj_m2": 19.6,
+   "impact_note": "ISO 179 X-Y value as printed in the TDS (PLA Basic: 26.6 unnotched, 7.9 notched); mix of notched/unnotched across TDS versions - compare with care",
+   "hardened_nozzle_required": false,
+   "enclosure": "yes",
+   "chamber_temp_c": "45-60",
+   "test_basis": "Bambu TDS, ISO 527/178/75, 100% infill printed specimens; X-Y = in-plane, Z = across layers",
+   "source": [
+    "https://store.bblcdn.com/ad7b08230c164e72856cffbe06bb7dc9.pdf",
+    "https://us.store.bambulab.com/products/asa-filament"
+   ]
+  },
+  {
+   "name": "ABS",
+   "brand": "Bambu Lab",
+   "price_usd_per_kg": 15.99,
+   "price_usd_per_kg_with_spool": 18.99,
+   "price_note": "refill (no spool) price where offered; spool price in price_usd_per_kg_with_spool",
+   "price_checked": "2026-10-25",
+   "density_g_cm3": 1.05,
+   "tensile_mpa": 33,
+   "tensile_z_mpa": 28,
+   "modulus_gpa": 2.2,
+   "flexural_modulus_xy_gpa": 1.88,
+   "flexural_strength_xy_mpa": 62,
+   "flexural_strength_z_mpa": 39,
+   "hdt_c": 84,
+   "hdt_c_0_45mpa": 87,
+   "impact_xy_kj_m2": 21.5,
+   "impact_note": "ISO 179 X-Y value as printed in the TDS (PLA Basic: 26.6 unnotched, 7.9 notched); mix of notched/unnotched across TDS versions - compare with care",
+   "hardened_nozzle_required": false,
+   "enclosure": "yes",
+   "chamber_temp_c": "45-60",
+   "test_basis": "Bambu TDS, ISO 527/178/75, 100% infill printed specimens; X-Y = in-plane, Z = across layers",
+   "source": [
+    "https://store.bblcdn.com/s7/default/23b4cf2b83d5470bb96d19970b5f3ae8/Bambu_ABS_Technical_Data_Sheet_V3.pdf",
+    "https://us.store.bambulab.com/products/abs-filament"
+   ]
+  },
+  {
+   "name": "PC",
+   "brand": "Bambu Lab",
+   "price_usd_per_kg": 39.99,
+   "price_usd_per_kg_with_spool": 39.99,
+   "price_note": "refill (no spool) price where offered; spool price in price_usd_per_kg_with_spool",
+   "price_checked": "2026-10-25",
+   "density_g_cm3": 1.2,
+   "tensile_mpa": 62,
+   "tensile_z_mpa": 56,
+   "modulus_gpa": 2.11,
+   "flexural_modulus_xy_gpa": 2.31,
+   "flexural_strength_xy_mpa": 108,
+   "flexural_strength_z_mpa": 55,
+   "hdt_c": 117,
+   "hdt_c_0_45mpa": 112,
+   "impact_xy_kj_m2": 7.5,
+   "impact_note": "ISO 179 X-Y value as printed in the TDS (PLA Basic: 26.6 unnotched, 7.9 notched); mix of notched/unnotched across TDS versions - compare with care",
+   "hardened_nozzle_required": false,
+   "enclosure": "yes",
+   "chamber_temp_c": "45-60",
+   "test_basis": "Bambu TDS, ISO 527/178/75, 100% infill printed specimens; X-Y = in-plane, Z = across layers",
+   "source": [
+    "https://store.bblcdn.com/a52afdccddfd448583d119587122c8c5.pdf",
+    "https://us.store.bambulab.com/products/pc-filament"
+   ]
+  },
+  {
+   "name": "PET-CF",
+   "brand": "Bambu Lab",
+   "price_usd_per_kg": 84.99,
+   "price_usd_per_kg_with_spool": 84.99,
+   "price_note": "1 kg spool price; 0.5 kg spools also sold (PET-CF $44.99, PA6-CF $42.99, PAHT-CF $49.99)",
+   "price_checked": "2026-10-25",
+   "density_g_cm3": 1.29,
+   "tensile_mpa": 74,
+   "tensile_z_mpa": 35,
+   "modulus_gpa": 4.73,
+   "flexural_modulus_xy_gpa": 5.32,
+   "flexural_strength_xy_mpa": 131,
+   "flexural_strength_z_mpa": 49,
+   "hdt_c": 182,
+   "hdt_c_0_45mpa": 205,
+   "impact_xy_kj_m2": 8.6,
+   "impact_note": "ISO 179 X-Y value as printed in the TDS (PLA Basic: 26.6 unnotched, 7.9 notched); mix of notched/unnotched across TDS versions - compare with care",
+   "hardened_nozzle_required": true,
+   "enclosure": "yes",
+   "chamber_temp_c": "45-60",
+   "test_basis": "Bambu TDS, ISO 527/178/75, 100% infill printed specimens; X-Y = in-plane, Z = across layers",
+   "source": [
+    "https://store.bblcdn.com/9690d6226f024acab2ba0dd52dabb654.pdf",
+    "https://us.store.bambulab.com/products/pet-cf"
+   ],
+   "water_absorption_saturated_pct_25c_55rh": 0.37
+  },
+  {
+   "name": "PA6-CF",
+   "brand": "Bambu Lab",
+   "price_usd_per_kg": 79.99,
+   "price_usd_per_kg_with_spool": 79.99,
+   "price_note": "1 kg spool price; 0.5 kg spools also sold (PET-CF $44.99, PA6-CF $42.99, PAHT-CF $49.99)",
+   "price_checked": "2026-10-25",
+   "density_g_cm3": 1.09,
+   "tensile_mpa": 102,
+   "tensile_z_mpa": 48,
+   "modulus_gpa": 4.43,
+   "flexural_modulus_xy_gpa": 5.46,
+   "flexural_strength_xy_mpa": 151,
+   "flexural_strength_z_mpa": 80,
+   "hdt_c": 164,
+   "hdt_c_0_45mpa": 186,
+   "impact_xy_kj_m2": 13.4,
+   "impact_note": "ISO 179 X-Y value as printed in the TDS (PLA Basic: 26.6 unnotched, 7.9 notched); mix of notched/unnotched across TDS versions - compare with care",
+   "hardened_nozzle_required": true,
+   "enclosure": "yes",
+   "chamber_temp_c": "45-60",
+   "test_basis": "Bambu TDS, ISO 527/178/75, 100% infill printed specimens; X-Y = in-plane, Z = across layers",
+   "source": [
+    "https://store.bblcdn.com/b2abc59ac250492b979a52f1ce3e61b3.pdf",
+    "https://us.store.bambulab.com/products/pa6-cf"
+   ],
+   "water_absorption_saturated_pct_25c_55rh": 2.35
+  },
+  {
+   "name": "PAHT-CF",
+   "brand": "Bambu Lab",
+   "price_usd_per_kg": 94.99,
+   "price_usd_per_kg_with_spool": 94.99,
+   "price_note": "1 kg spool price; 0.5 kg spools also sold (PET-CF $44.99, PA6-CF $42.99, PAHT-CF $49.99)",
+   "price_checked": "2026-10-25",
+   "density_g_cm3": 1.06,
+   "tensile_mpa": 92,
+   "tensile_z_mpa": 47,
+   "modulus_gpa": 3.86,
+   "flexural_modulus_xy_gpa": 4.23,
+   "flexural_strength_xy_mpa": 125,
+   "flexural_strength_z_mpa": 61,
+   "hdt_c": 170,
+   "hdt_c_0_45mpa": 194,
+   "impact_xy_kj_m2": 22.8,
+   "impact_note": "ISO 179 X-Y value as printed in the TDS (PLA Basic: 26.6 unnotched, 7.9 notched); mix of notched/unnotched across TDS versions - compare with care",
+   "hardened_nozzle_required": true,
+   "enclosure": "yes",
+   "chamber_temp_c": "45-60",
+   "test_basis": "Bambu TDS, ISO 527/178/75, 100% infill printed specimens; X-Y = in-plane, Z = across layers",
+   "source": [
+    "https://store.bblcdn.com/7166b20bc68f4c87b32c972b856eeb4b.pdf",
+    "https://us.store.bambulab.com/products/paht-cf"
+   ],
+   "water_absorption_saturated_pct_25c_55rh": 0.88
+  },
+  {
+   "name": "PPA-CF",
+   "brand": "Bambu Lab",
+   "price_usd_per_kg": 199.99,
+   "price_usd_per_kg_with_spool": 199.99,
+   "price_note": "sold as 0.75 kg spool at $149.99; $/kg derived",
+   "price_checked": "2026-10-25",
+   "density_g_cm3": 1.25,
+   "tensile_mpa": 168,
+   "tensile_z_mpa": 57,
+   "modulus_gpa": 11.8,
+   "flexural_modulus_xy_gpa": 9.86,
+   "flexural_strength_xy_mpa": 208,
+   "flexural_strength_z_mpa": 63,
+   "hdt_c": 196,
+   "hdt_c_0_45mpa": 227,
+   "impact_xy_kj_m2": null,
+   "impact_note": "ISO 179 X-Y value as printed in the TDS (PLA Basic: 26.6 unnotched, 7.9 notched); mix of notched/unnotched across TDS versions - compare with care",
+   "hardened_nozzle_required": true,
+   "enclosure": "yes (heated chamber preferred)",
+   "chamber_temp_c": "50-80",
+   "test_basis": "Bambu TDS, ISO 527/178/75, 100% infill printed specimens; X-Y = in-plane, Z = across layers",
+   "source": [
+    "https://store.bblcdn.com/05b0e4ca5ee14a4cb378cfa48df24f91.pdf",
+    "https://us.store.bambulab.com/products/ppa-cf"
+   ],
+   "water_absorption_saturated_pct_25c_55rh": 1.3
+  },
+  {
+   "name": "TPU 95A HF",
+   "brand": "Bambu Lab",
+   "price_usd_per_kg": 41.99,
+   "price_usd_per_kg_with_spool": 41.99,
+   "price_note": "refill (no spool) price where offered; spool price in price_usd_per_kg_with_spool",
+   "price_checked": "2026-10-25",
+   "density_g_cm3": 1.22,
+   "tensile_mpa": 27.3,
+   "tensile_z_mpa": 22.3,
+   "modulus_gpa": 0.0098,
+   "flexural_modulus_xy_gpa": null,
+   "flexural_strength_xy_mpa": null,
+   "flexural_strength_z_mpa": null,
+   "hdt_c": null,
+   "hdt_c_0_45mpa": null,
+   "impact_xy_kj_m2": 123.2,
+   "impact_note": "ISO 179 X-Y value as printed in the TDS (PLA Basic: 26.6 unnotched, 7.9 notched); mix of notched/unnotched across TDS versions - compare with care",
+   "hardened_nozzle_required": false,
+   "enclosure": "no",
+   "chamber_temp_c": "25-45",
+   "test_basis": "Bambu TDS, ISO 527/178/75, 100% infill printed specimens; X-Y = in-plane, Z = across layers",
+   "source": [
+    "https://store.bblcdn.com/58df32731eab4c90a7dac9b12e13ba88.pdf",
+    "https://us.store.bambulab.com/products/tpu-95a-hf"
+   ]
+  },
+  {
+   "name": "TPU 90A",
+   "brand": "Bambu Lab",
+   "price_usd_per_kg": null,
+   "price_usd_per_kg_with_spool": null,
+   "price_note": "combined 85A/90A product page: $41.99-$44.99 per 1 kg depending on colour (special colours $59.99); variant-to-hardness mapping not shown",
+   "price_checked": "2026-10-25",
+   "density_g_cm3": 1.24,
+   "tensile_mpa": 12.5,
+   "tensile_z_mpa": 10.1,
+   "modulus_gpa": 0.0053,
+   "flexural_modulus_xy_gpa": null,
+   "flexural_strength_xy_mpa": null,
+   "flexural_strength_z_mpa": null,
+   "hdt_c": null,
+   "hdt_c_0_45mpa": null,
+   "impact_xy_kj_m2": null,
+   "impact_note": "ISO 179 X-Y value as printed in the TDS (PLA Basic: 26.6 unnotched, 7.9 notched); mix of notched/unnotched across TDS versions - compare with care",
+   "hardened_nozzle_required": false,
+   "enclosure": "no",
+   "chamber_temp_c": null,
+   "test_basis": "Bambu TDS, ISO 527/178/75, 100% infill printed specimens; X-Y = in-plane, Z = across layers",
+   "source": [
+    "https://cdn.shopify.com/s/files/1/0645/5876/0155/files/Bambu_TPU_90A_Technical_Data_Sheet_582bf8f6-1f0a-474c-aeda-9e72af3689dc.pdf",
+    "https://us.store.bambulab.com/products/tpu-85a-tpu-90a"
+   ]
+  },
+  {
+   "name": "TPU 85A",
+   "brand": "Bambu Lab",
+   "price_usd_per_kg": null,
+   "price_usd_per_kg_with_spool": null,
+   "price_note": "combined 85A/90A product page: $41.99-$44.99 per 1 kg depending on colour (special colours $59.99); variant-to-hardness mapping not shown",
+   "price_checked": "2026-10-25",
+   "density_g_cm3": 1.18,
+   "tensile_mpa": 12.0,
+   "tensile_z_mpa": 10.5,
+   "modulus_gpa": 0.0068,
+   "flexural_modulus_xy_gpa": null,
+   "flexural_strength_xy_mpa": null,
+   "flexural_strength_z_mpa": null,
+   "hdt_c": null,
+   "hdt_c_0_45mpa": null,
+   "impact_xy_kj_m2": null,
+   "impact_note": "ISO 179 X-Y value as printed in the TDS (PLA Basic: 26.6 unnotched, 7.9 notched); mix of notched/unnotched across TDS versions - compare with care",
+   "hardened_nozzle_required": false,
+   "enclosure": "no",
+   "chamber_temp_c": null,
+   "test_basis": "Bambu TDS, ISO 527/178/75, 100% infill printed specimens; X-Y = in-plane, Z = across layers",
+   "source": [
+    "https://cdn.shopify.com/s/files/1/0645/5876/0155/files/Bambu_TPU_85A_Technical_Data_Sheet_a7233668-497b-487f-af8a-3adb49fafaa1.pdf",
+    "https://us.store.bambulab.com/products/tpu-85a-tpu-90a"
+   ]
+  },
+  {
+   "name": "TPU for AMS (68D)",
+   "brand": "Bambu Lab",
+   "price_usd_per_kg": 34.99,
+   "price_usd_per_kg_with_spool": 38.99,
+   "price_note": "refill (no spool) price where offered; spool price in price_usd_per_kg_with_spool",
+   "price_checked": "2026-10-25",
+   "density_g_cm3": 1.26,
+   "tensile_mpa": 22.4,
+   "tensile_z_mpa": 11.2,
+   "modulus_gpa": 1.19,
+   "flexural_modulus_xy_gpa": null,
+   "flexural_strength_xy_mpa": null,
+   "flexural_strength_z_mpa": null,
+   "hdt_c": null,
+   "hdt_c_0_45mpa": null,
+   "impact_xy_kj_m2": 124.3,
+   "impact_note": "ISO 179 X-Y value as printed in the TDS (PLA Basic: 26.6 unnotched, 7.9 notched); mix of notched/unnotched across TDS versions - compare with care",
+   "hardened_nozzle_required": false,
+   "enclosure": "no",
+   "chamber_temp_c": "25-45",
+   "test_basis": "Bambu TDS, ISO 527/178/75, 100% infill printed specimens; X-Y = in-plane, Z = across layers",
+   "source": [
+    "https://store.bblcdn.com/s5/default/0a98353dce6d486ca848b21d2b19a207.pdf",
+    "https://us.store.bambulab.com/products/tpu-for-ams"
+   ]
+  },
+  {
+   "name": "PolyLite PLA",
+   "brand": "Polymaker",
+   "price_usd_per_kg": 19.99,
+   "price_note": "1 kg; 3 kg $49.99, 5 kg $79.99",
+   "price_checked": "2026-10-25",
+   "density_g_cm3": null,
+   "tensile_mpa": null,
+   "modulus_gpa": null,
+   "hdt_c": null,
+   "source": [
+    "https://us.polymaker.com/products/polylite-pla"
+   ],
+   "notes": "CNC Kitchen measured 57 MPa flat tensile, ~3000 MPa bending modulus, fails at 65 C (cnckitchen.com/blog/the-difference-of-pla-and-pla-tested-feat-polymaker)"
+  },
+  {
+   "name": "PolyLite PLA Pro",
+   "brand": "Polymaker",
+   "price_usd_per_kg": 23.99,
+   "price_note": "1 kg; 3 kg $59.99; 5 kg $89.99",
+   "price_checked": "2026-10-25",
+   "density_g_cm3": null,
+   "tensile_mpa": null,
+   "modulus_gpa": null,
+   "hdt_c": null,
+   "source": [
+    "https://us.polymaker.com/products/polylite-pla-pro"
+   ]
+  },
+  {
+   "name": "HT-PLA Pro",
+   "brand": "Polymaker",
+   "price_usd_per_kg": 24.99,
+   "price_note": "1 kg ($24.99-25.99 by colour)",
+   "price_checked": "2026-10-25",
+   "density_g_cm3": null,
+   "tensile_mpa": null,
+   "modulus_gpa": null,
+   "hdt_c": null,
+   "hdt_c_0_45mpa": 56.3,
+   "hdt_c_0_45mpa_annealed": 107.6,
+   "vicat_c": 148.3,
+   "impact_kj_m2": 9.94,
+   "z_tensile_mpa": 26.8,
+   "notes": "Prints with PLA settings, no hardened nozzle or enclosure. Annealing (30 min at 100 C) needed for heat resistance under load. Best PLA-family candidate for parts next to warm motors on a P1S.",
+   "source": [
+    "https://us.polymaker.com/products/polymaker-ht-pla-pro"
+   ]
+  },
+  {
+   "name": "Fiberon PET-CF17",
+   "brand": "Polymaker",
+   "price_usd_per_kg": 44.99,
+   "price_note": "1 kg; 0.5 kg $24.99; 3 kg $109.99",
+   "price_checked": "2026-10-25",
+   "density_g_cm3": null,
+   "tensile_mpa": null,
+   "modulus_gpa": null,
+   "hdt_c": null,
+   "source": [
+    "https://us.polymaker.com/products/fiberon-pet-cf17"
+   ]
+  },
+  {
+   "name": "Fiberon PA6-CF20",
+   "brand": "Polymaker",
+   "price_usd_per_kg": 52.99,
+   "price_note": "1 kg; 0.5 kg $39.99; 3 kg $159.99",
+   "price_checked": "2026-10-25",
+   "density_g_cm3": null,
+   "tensile_mpa": 109,
+   "modulus_gpa": 8.6,
+   "hdt_c": null,
+   "notes": "Product page: 'tensile strength up to 109 MPa and Young's modulus over 8.6 GPa (XY)', 'withstands temperatures up to 215 C'; hardened nozzle required; dry + anneal.",
+   "source": [
+    "https://us.polymaker.com/products/fiberon-pa6-cf20"
+   ]
+  },
+  {
+   "name": "Fiberon PA12-CF10",
+   "brand": "Polymaker",
+   "price_usd_per_kg": null,
+   "price_note": "0.5 kg $69.99; 3 kg $159.99",
+   "price_checked": "2026-10-25",
+   "density_g_cm3": null,
+   "tensile_mpa": null,
+   "modulus_gpa": null,
+   "hdt_c": null,
+   "source": [
+    "https://us.polymaker.com/products/fiberon-pa12-cf10"
+   ]
+  },
+  {
+   "name": "PolyFlex TPU95",
+   "brand": "Polymaker",
+   "price_usd_per_kg": 39.99,
+   "price_note": "0.75 kg $29.99; $/kg derived",
+   "price_checked": "2026-10-25",
+   "density_g_cm3": null,
+   "tensile_mpa": null,
+   "modulus_gpa": null,
+   "hdt_c": null,
+   "source": [
+    "https://us.polymaker.com/products/polyflex-tpu95"
+   ]
+  },
+  {
+   "name": "PLA+",
+   "brand": "eSUN",
+   "price_usd_per_kg": 20.99,
+   "price_note": "third-party Amazon seller price 2026-08-01 via camelcamelcamel (Amazon itself out of stock); no official store price found",
+   "price_checked": "2026-08-01",
+   "density_g_cm3": null,
+   "tensile_mpa": null,
+   "modulus_gpa": null,
+   "hdt_c": null,
+   "notes": "eSUN-affiliated page quotes 63 MPa tensile; a retailer lists 53.34 MPa XY / 31.2 MPa Z - conflicting, official TDS not retrieved.",
+   "source": [
+    "https://camelcamelcamel.com/product/B0F6LG6BYR"
+   ]
+  }
+ ],
+ "printers": [
+  {
+   "model": "P1S",
+   "price_usd": 399,
+   "combo_prices_usd": {
+    "AMS Combo": 549,
+    "AMS 2 Pro Combo": 579
+   },
+   "build_mm": [
+    256,
+    256,
+    256
+   ],
+   "stock_nozzle": "0.4 mm stainless steel",
+   "max_nozzle_c": 300,
+   "max_bed_c": 100,
+   "chamber": "enclosed, passive (no heater); chamber regulator fan",
+   "cf_ready": false,
+   "cf_upgrade": "Hardened Steel Upgrade Combo (0.4 hardened complete hotend + hardened extruder gears) $49.48; hardened gear assembly alone $19.99; hardened complete hotend 0.4/0.6/0.8 $34.99 (hotend only $14.99). Bambu recommends 0.6 mm hardened for CF/GF.",
+   "supported": "Ideal PLA, PETG, TPU, PVA, PET, ABS, ASA; capable PA, PC",
+   "source": [
+    "https://us.store.bambulab.com/products/p1s",
+    "https://us.store.bambulab.com/products/hardened-steel-upgrade-combo",
+    "https://us.store.bambulab.com/products/hardened-steel-extruder-gear-assembly",
+    "https://us.store.bambulab.com/products/bambu-hotend-p1-series",
+    "https://wiki.bambulab.com/en/p1/manual/p1s-extruder-upgrade"
+   ]
+  },
+  {
+   "model": "P2S",
+   "price_usd": 549,
+   "combo_prices_usd": {
+    "Combo": 749
+   },
+   "build_mm": [
+    256,
+    256,
+    256
+   ],
+   "stock_nozzle": "hardened steel (nozzle and extruder gears)",
+   "max_nozzle_c": null,
+   "chamber": "enclosed, no active heating; '50 C chamber ready'",
+   "cf_ready": true,
+   "source": [
+    "https://us.store.bambulab.com/products/p2s"
+   ]
+  },
+  {
+   "model": "X2D",
+   "price_usd": 649,
+   "combo_prices_usd": {
+    "AMS Combo": 899
+   },
+   "build_mm": null,
+   "stock_nozzle": null,
+   "max_nozzle_c": 300,
+   "chamber": "65 C active chamber heating; dual nozzle",
+   "cf_ready": null,
+   "note": "nozzle material not confirmed on store page",
+   "source": [
+    "https://us.store.bambulab.com/products/x2d"
+   ]
+  },
+  {
+   "model": "H2S",
+   "price_usd": 1199,
+   "combo_prices_usd": {
+    "AMS Combo": 1399,
+    "Laser Full Combo": 1799
+   },
+   "build_mm": [
+    340,
+    320,
+    340
+   ],
+   "stock_nozzle": null,
+   "max_nozzle_c": 350,
+   "chamber": "65 C active heated chamber",
+   "cf_ready": null,
+   "note": "nozzle material not stated on store page (H2D/H2C ship hardened steel)",
+   "source": [
+    "https://us.store.bambulab.com/products/h2s"
+   ]
+  },
+  {
+   "model": "H2D",
+   "price_usd": "1549-1749 (two 'standard' listings)",
+   "build_mm": [
+    325,
+    320,
+    325
+   ],
+   "stock_nozzle": "hardened steel 0.4 mm, hardened extruder gear",
+   "max_nozzle_c": 350,
+   "chamber": "65 C active chamber heating; dual nozzle",
+   "cf_ready": true,
+   "source": [
+    "https://us.store.bambulab.com/products/h2d"
+   ]
+  },
+  {
+   "model": "H2C",
+   "price_usd": "2199-2499 (standard listings)",
+   "build_mm": [
+    330,
+    320,
+    325
+   ],
+   "stock_nozzle": "0.4/0.6 hardened steel hotends (+0.2 stainless) in combo",
+   "max_nozzle_c": 350,
+   "chamber": "65 C active heated chamber; induction hotend swap",
+   "cf_ready": true,
+   "source": [
+    "https://us.store.bambulab.com/products/h2c"
+   ]
+  },
+  {
+   "model": "X1C / X1E",
+   "price_usd": null,
+   "note": "Not listed new in the US store sitemap on 2026-10-25; refurbished X1C Combo $649. Wiki still lists X1E as able to print PPS-CF.",
+   "source": [
+    "https://us.store.bambulab.com/products/refurbished-x1c",
+    "https://wiki.bambulab.com/en/general/filament-guide-material-table"
+   ]
+  }
+ ],
+ "print_design_rules": {
+  "material_ladder": {
+   "basis": "Bambu Lab TDS values (XY flexural modulus/strength, Z tensile, HDT at 1.8 MPa) relative to PLA Basic; price = $/kg (refill where sold) on 2026-10-25",
+   "formulas": {
+    "equal_bending_stiffness": "t_new = t_PLA * (E_PLA/E_new)^(1/3)  (rectangular section, fixed width)",
+    "equal_bending_strength": "t_new = t_PLA * (sigma_PLA/sigma_new)^(1/2)",
+    "governing": "use the larger of the two factors; also check Z (layer) strength if load crosses layers",
+    "mass": "mass_new/mass_PLA = (rho_new/rho_PLA) * thickness_factor",
+    "cost": "cost factor = mass factor * ($/kg_new / $/kg_PLA)"
+   },
+   "label": "DERIVED from published TDS values with standard beam theory (not vendor data)",
+   "rows": [
+    {
+     "material": "PLA Basic",
+     "flex_modulus_ratio": 1.0,
+     "flex_strength_ratio": 1.0,
+     "z_tensile_ratio": 1.0,
+     "thickness_factor_equal_stiffness": 1.0,
+     "thickness_factor_equal_bending_strength": 1.0,
+     "thickness_factor_equal_z_strength": 1.0,
+     "mass_factor_at_governing_thickness": 1.0,
+     "filament_cost_factor": 1.0,
+     "hdt_c_1_8mpa": 54
+    },
+    {
+     "material": "PLA Tough+",
+     "flex_modulus_ratio": 0.78,
+     "flex_strength_ratio": 0.86,
+     "z_tensile_ratio": 0.67,
+     "thickness_factor_equal_stiffness": 1.09,
+     "thickness_factor_equal_bending_strength": 1.08,
+     "thickness_factor_equal_z_strength": 1.22,
+     "mass_factor_at_governing_thickness": 1.06,
+     "filament_cost_factor": 1.49,
+     "hdt_c_1_8mpa": 58
+    },
+    {
+     "material": "PLA-CF",
+     "flex_modulus_ratio": 1.44,
+     "flex_strength_ratio": 1.17,
+     "z_tensile_ratio": 0.84,
+     "thickness_factor_equal_stiffness": 0.89,
+     "thickness_factor_equal_bending_strength": 0.92,
+     "thickness_factor_equal_z_strength": 1.09,
+     "mass_factor_at_governing_thickness": 0.91,
+     "filament_cost_factor": 1.94,
+     "hdt_c_1_8mpa": 54
+    },
+    {
+     "material": "PETG Basic",
+     "flex_modulus_ratio": 0.71,
+     "flex_strength_ratio": 0.99,
+     "z_tensile_ratio": 1.13,
+     "thickness_factor_equal_stiffness": 1.12,
+     "thickness_factor_equal_bending_strength": 1.01,
+     "thickness_factor_equal_z_strength": 0.94,
+     "mass_factor_at_governing_thickness": 1.13,
+     "filament_cost_factor": 1.06,
+     "hdt_c_1_8mpa": 68
+    },
+    {
+     "material": "PETG HF",
+     "flex_modulus_ratio": 0.75,
+     "flex_strength_ratio": 0.84,
+     "z_tensile_ratio": 0.74,
+     "thickness_factor_equal_stiffness": 1.1,
+     "thickness_factor_equal_bending_strength": 1.09,
+     "thickness_factor_equal_z_strength": 1.16,
+     "mass_factor_at_governing_thickness": 1.14,
+     "filament_cost_factor": 1.21,
+     "hdt_c_1_8mpa": 62
+    },
+    {
+     "material": "PETG-CF",
+     "flex_modulus_ratio": 1.06,
+     "flex_strength_ratio": 0.92,
+     "z_tensile_ratio": 0.94,
+     "thickness_factor_equal_stiffness": 0.98,
+     "thickness_factor_equal_bending_strength": 1.04,
+     "thickness_factor_equal_z_strength": 1.03,
+     "mass_factor_at_governing_thickness": 1.05,
+     "filament_cost_factor": 2.24,
+     "hdt_c_1_8mpa": 68
+    },
+    {
+     "material": "ASA",
+     "flex_modulus_ratio": 0.7,
+     "flex_strength_ratio": 0.86,
+     "z_tensile_ratio": 1.0,
+     "thickness_factor_equal_stiffness": 1.13,
+     "thickness_factor_equal_bending_strength": 1.08,
+     "thickness_factor_equal_z_strength": 1.0,
+     "mass_factor_at_governing_thickness": 0.95,
+     "filament_cost_factor": 1.91,
+     "hdt_c_1_8mpa": 92
+    },
+    {
+     "material": "PET-CF",
+     "flex_modulus_ratio": 1.93,
+     "flex_strength_ratio": 1.72,
+     "z_tensile_ratio": 1.13,
+     "thickness_factor_equal_stiffness": 0.8,
+     "thickness_factor_equal_bending_strength": 0.76,
+     "thickness_factor_equal_z_strength": 0.94,
+     "mass_factor_at_governing_thickness": 0.83,
+     "filament_cost_factor": 4.73,
+     "hdt_c_1_8mpa": 182
+    },
+    {
+     "material": "PA6-CF",
+     "flex_modulus_ratio": 1.99,
+     "flex_strength_ratio": 1.99,
+     "z_tensile_ratio": 1.55,
+     "thickness_factor_equal_stiffness": 0.8,
+     "thickness_factor_equal_bending_strength": 0.71,
+     "thickness_factor_equal_z_strength": 0.8,
+     "mass_factor_at_governing_thickness": 0.7,
+     "filament_cost_factor": 3.73,
+     "hdt_c_1_8mpa": 164
+    },
+    {
+     "material": "PAHT-CF",
+     "flex_modulus_ratio": 1.54,
+     "flex_strength_ratio": 1.64,
+     "z_tensile_ratio": 1.52,
+     "thickness_factor_equal_stiffness": 0.87,
+     "thickness_factor_equal_bending_strength": 0.78,
+     "thickness_factor_equal_z_strength": 0.81,
+     "mass_factor_at_governing_thickness": 0.74,
+     "filament_cost_factor": 4.69,
+     "hdt_c_1_8mpa": 170
+    },
+    {
+     "material": "PPA-CF",
+     "flex_modulus_ratio": 3.59,
+     "flex_strength_ratio": 2.74,
+     "z_tensile_ratio": 1.84,
+     "thickness_factor_equal_stiffness": 0.65,
+     "thickness_factor_equal_bending_strength": 0.6,
+     "thickness_factor_equal_z_strength": 0.74,
+     "mass_factor_at_governing_thickness": 0.66,
+     "filament_cost_factor": 8.79,
+     "hdt_c_1_8mpa": 196
+    }
+   ],
+   "caveat": "TDS specimens are 100% infill, annealed/dried; real parts with walls+infill are weaker. Bambu PETG Basic has LOWER flexural modulus than PLA Basic (1.95 vs 2.75 GPa) - PETG parts must be ~12% thicker for equal stiffness."
+  },
+  "orientation": {
+   "flat_vs_upright_pla": "63 MPa flat vs 31 MPa upright (~50%); 45 deg gives 40 MPa (+27% vs upright)",
+   "source": "https://www.cnckitchen.com/blog/stop-printing-flat-the-45-secret-for-stronger-parts",
+   "tds_z_over_xy_tensile": {
+    "PLA Basic": 0.89,
+    "PLA Tough+": 0.6,
+    "PETG Basic": 0.69,
+    "PET-CF": 0.47,
+    "PA6-CF": 0.47,
+    "PPA-CF": 0.34
+   },
+   "rule": "Lay leg links flat so bending stresses run along layers; CF-filled filaments are much more anisotropic (Z/XY ~0.34-0.47) than plain PLA (~0.89)."
+  },
+  "walls_vs_infill": {
+   "finding": "bending/torsion load is carried at the outer skin; gradient (outer-dense) infill was ~30% stiffer at equal weight; 100% infill gave 43,406 cycles vs 28,325 at 50% in tension-tension fatigue and E 2553 vs 2004 MPa",
+   "source": [
+    "https://www.cnckitchen.com/blog/gradient-infill-for-3d-prints",
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC10096656"
+   ],
+   "rule": "For leg links: many walls (perimeters filling the outer region) + high infill near bolt holes; wall count number not published by a cited source - choose by test."
+  },
+  "fatigue_and_static_allowables_pla": {
+   "static_reference_mpa": 22,
+   "fatigue_limit_2e6_cycles": "10% of UTS (90% survival)",
+   "sn_inverse_slope": 5.5,
+   "source": "https://eprints.whiterose.ac.uk/id/eprint/142395/ (Ezeh & Susmel 2019)",
+   "rule": "Design PLA legs to <= 22 MPa peak static stress and <= 10% of TDS UTS for cyclic (stance/landing) stress: PLA Basic 35 MPa XY -> 3.5 MPa cyclic (derived)."
+  },
+  "heat": {
+   "pla_softening": "PLA Basic HDT 54 C @1.8 MPa, Vicat 57 C, Tg 60 C (TDS); CNC Kitchen loaded oven test: PLA gives at 60 C, PETG 80 C, ASA 110 C",
+   "source": [
+    "https://store.bblcdn.com/s1/default/58b85d0f3db94878854a28fdb8a0006e/Bambu_PLA_Basic_Technical_Data_Sheet.pdf",
+    "https://www.cnckitchen.com/blog/comparing-pla-petg-amp-asa-feat-prusament"
+   ],
+   "rule": "Any printed part touching a motor stator/housing: not PLA unless measured housing temp stays well below 54 C. Options on a P1S: PETG (HDT 68), ASA (92), annealed HT-PLA Pro (107.6 @0.45 MPa). Motor temperatures were not researched here."
+  },
+  "annealing_pla": {
+   "result": "100 C / 45 min: tensile +7.5%, hook +16%, but up to 10% shrink in XY and growth in Z; not correctable by scaling",
+   "source": "https://www.cnckitchen.com/blog/better-performing-3d-prints-with-annealing-but-part-1-pla"
+  },
+  "pla_plus": {
+   "result": "PolyMax PLA+ vs PolyLite PLA: 43 vs 57 MPa tensile, ~2200 vs ~3000 MPa stiffness, ~4x impact, same 65 C heat failure",
+   "source": "https://www.cnckitchen.com/blog/the-difference-of-pla-and-pla-tested-feat-polymaker"
+  },
+  "creep": {
+   "pla": null,
+   "pla_note": "no vendor creep data published; design to the static reference above and test bolted joints",
+   "pa6_cf": "un-annealed PA6-CF bolted joint needed re-tightening almost daily for a week; annealing 8 h at 110 C brought creep close to other polymers; PA12-CF needed one re-tightening",
+   "source": "https://www.cnckitchen.com/blog/carbon-fiber-nylon-in-3d-printing-pa6-vs-pa12-tested"
+  },
+  "nylon_moisture": {
+   "result": "conditioned PA6-CF (~3% water) kept 56% of dry strength and ~1/3 of stiffness; PA12-CF lost ~15% strength; dry 80 C ~20 h",
+   "source": "https://www.cnckitchen.com/blog/carbon-fiber-nylon-in-3d-printing-pa6-vs-pa12-tested"
+  },
+  "heat_set_inserts": {
+   "m3_hole_mm": {
+    "nominal_drilled": 4.0,
+    "as_printed_pla_best": 4.2
+   },
+   "printed_holes_undersize_mm": 0.25,
+   "pullout_m3_pla_n": 1400,
+   "iron_temp_c": {
+    "PLA": 225,
+    "PETG": 245,
+    "ABS": 265
+   },
+   "blind_hole_extra_depth_mm": 1,
+   "torque_out_nm_petg": {
+    "heat_set_insert": 3,
+    "direct_screw": 1,
+    "helicoil": 1,
+    "nut_pocket": 2
+   },
+   "source": [
+    "https://www.cnckitchen.com/blog/are-our-heat-set-insert-datasheets-wrong",
+    "https://www.cnckitchen.com/blog/tips-and-tricks-for-heat-set-inserts",
+    "https://www.cnckitchen.com/blog/helicoils-threaded-insets-and-embedded-nuts-in-3d-prints-strength-amp-strength-assessment"
+   ]
+  },
+  "hole_and_bearing_seat_fit": {
+   "rule": "Calibrate with a test coupon using the same filament/profile; correct with Bambu Studio XY hole compensation (holes only) and XY contour compensation (outer size). No numeric press-fit allowance published by Bambu.",
+   "source": "https://wiki.bambulab.com/en/software/bambu-studio/xy-hole-contour-compensation"
+  },
+  "nozzle_rules": {
+   "rule": "CF/GF filled filaments need a hardened steel nozzle; 0.6 mm first choice (0.4 hardened OK for Bambu PLA-CF/PETG-CF); never 0.2 mm; stainless/brass wear quickly. P1S stainless nozzle was visibly worn after 10 h of PETG-CF.",
+   "source": [
+    "https://wiki.bambulab.com/en/general/filament-guide-material-table",
+    "https://wiki.bambulab.com/en/p1/manual/p1s-extruder-upgrade"
+   ]
+  },
+  "enclosure_rules": {
+   "rule": "PA/PC/ABS/ASA and their CF/GF variants need an enclosed printer; PLA/PETG/TPU fine open-frame (enclosure recommended for PETG). With PLA in an enclosed printer and bed > 45 C, open the door/remove the top glass. PPS-CF only on H2 series and X1E.",
+   "source": "https://wiki.bambulab.com/en/general/filament-guide-material-table"
+  },
+  "tpu_tyres": {
+   "rule": "TPU 85A/90A/95A HF are not AMS-compatible (feed spool directly); 'TPU for AMS' is 68D and much stiffer (1.19 GPa) - for bumpers, not grippy tyres. TPU 95A HF: 27.3 MPa, >650% elongation.",
+   "source": [
+    "https://wiki.bambulab.com/en/general/filament-guide-material-table",
+    "https://store.bblcdn.com/58df32731eab4c90a7dac9b12e13ba88.pdf"
+   ]
+  }
+ },
+ "bearings": [
+  {
+   "designation": "6800-2RS",
+   "bore_mm": 10,
+   "od_mm": 19,
+   "width_mm": 5,
+   "seal": "2RS",
+   "price_usd": 7.77,
+   "pack": "single",
+   "dynamic_load_n": 1380,
+   "static_load_n": 585,
+   "max_speed_rpm_grease": 22000,
+   "seller": "VXB",
+   "url": "https://vxb.com/products/6800-2rs-ball-bearing-6800rs",
+   "price_checked": "2026-10-25"
+  },
+  {
+   "designation": "6801-2RS",
+   "bore_mm": 12,
+   "od_mm": 21,
+   "width_mm": 5,
+   "seal": "2RS",
+   "price_usd": 7.77,
+   "pack": "single",
+   "dynamic_load_n": null,
+   "static_load_n": null,
+   "max_speed_rpm_grease": null,
+   "seller": "VXB",
+   "url": "https://vxb.com/products/premium-6801-2rs-ball-bearing-12x21x5mm-sealed",
+   "price_checked": "2026-10-25"
+  },
+  {
+   "designation": "6802-2RS",
+   "bore_mm": 15,
+   "od_mm": 24,
+   "width_mm": 5,
+   "seal": "2RS",
+   "price_usd": 9.99,
+   "pack": "single",
+   "dynamic_load_n": 2080,
+   "static_load_n": 1260,
+   "max_speed_rpm_grease": 17000,
+   "seller": "VXB",
+   "url": "https://vxb.com/products/6802-2rs-sealed-bearing-15x24x5",
+   "price_checked": "2026-10-25"
+  },
+  {
+   "designation": "6804-2RS",
+   "bore_mm": 20,
+   "od_mm": 32,
+   "width_mm": 7,
+   "seal": "2RS",
+   "price_usd": 7.77,
+   "pack": "single",
+   "dynamic_load_n": 4000,
+   "static_load_n": 2640,
+   "max_speed_rpm_grease": 13000,
+   "seller": "VXB",
+   "url": "https://vxb.com/products/6804-2rs-sealed-bearing-20x32x7",
+   "price_checked": "2026-10-25"
+  },
+  {
+   "designation": "6805-2RS",
+   "bore_mm": 25,
+   "od_mm": 37,
+   "width_mm": 7,
+   "seal": "2RS",
+   "price_usd": 7.77,
+   "pack": "single",
+   "dynamic_load_n": 4360,
+   "static_load_n": 2600,
+   "max_speed_rpm_grease": 11000,
+   "seller": "VXB",
+   "url": "https://vxb.com/products/6805-2rs-bearing-6805-2rs",
+   "price_checked": "2026-10-25"
+  },
+  {
+   "designation": "6806-2RS",
+   "bore_mm": 30,
+   "od_mm": 42,
+   "width_mm": 7,
+   "seal": "2RS",
+   "price_usd": 9.99,
+   "pack": "single",
+   "dynamic_load_n": 4490,
+   "static_load_n": 2900,
+   "max_speed_rpm_grease": 9500,
+   "seller": "VXB",
+   "url": "https://vxb.com/products/6806-2rs-bearing-6806-2rs",
+   "price_checked": "2026-10-25"
+  },
+  {
+   "designation": "6900-2RS",
+   "bore_mm": 10,
+   "od_mm": 22,
+   "width_mm": 6,
+   "seal": "2RS",
+   "price_usd": 7.77,
+   "pack": "single",
+   "dynamic_load_n": null,
+   "static_load_n": null,
+   "max_speed_rpm_grease": null,
+   "seller": "VXB",
+   "url": "https://vxb.com/products/6900-2rs-bearing-sealed-10x22x6",
+   "price_checked": "2026-10-25"
+  },
+  {
+   "designation": "6902-2RS",
+   "bore_mm": 15,
+   "od_mm": 28,
+   "width_mm": 7,
+   "seal": "2RS",
+   "price_usd": 9.99,
+   "pack": "single",
+   "dynamic_load_n": 4300,
+   "static_load_n": 2250,
+   "max_speed_rpm_grease": 17000,
+   "seller": "VXB",
+   "url": "https://vxb.com/products/6902-2rs-bearing-15x28x7-sealed",
+   "price_checked": "2026-10-25"
+  },
+  {
+   "designation": "6904-2RS",
+   "bore_mm": 20,
+   "od_mm": 37,
+   "width_mm": 9,
+   "seal": "2RS",
+   "price_usd": 9.99,
+   "pack": "single",
+   "dynamic_load_n": 6350,
+   "static_load_n": 3700,
+   "max_speed_rpm_grease": 12000,
+   "seller": "VXB",
+   "url": "https://vxb.com/products/6904-2rs-sealed-bearing-20x37x9",
+   "price_checked": "2026-10-25"
+  },
+  {
+   "designation": "6905-2RS",
+   "bore_mm": 25,
+   "od_mm": 42,
+   "width_mm": 9,
+   "seal": "2RS",
+   "price_usd": 9.99,
+   "pack": "single",
+   "dynamic_load_n": null,
+   "static_load_n": null,
+   "max_speed_rpm_grease": null,
+   "seller": "VXB",
+   "url": "https://vxb.com/products/6905-2rs-bearing-25x42x9-sealed",
+   "price_checked": "2026-10-25"
+  },
+  {
+   "designation": "6000-2RS",
+   "bore_mm": 10,
+   "od_mm": 26,
+   "width_mm": 8,
+   "seal": "2RS",
+   "price_usd": 7.77,
+   "pack": "single",
+   "dynamic_load_n": 4750,
+   "static_load_n": 1960,
+   "max_speed_rpm_grease": 19000,
+   "seller": "VXB",
+   "url": "https://vxb.com/products/6000-2rs-bearing-ball-bearing-6000rs",
+   "price_checked": "2026-10-25"
+  },
+  {
+   "designation": "6001-2RS",
+   "bore_mm": 12,
+   "od_mm": 28,
+   "width_mm": 8,
+   "seal": "2RS",
+   "price_usd": 7.77,
+   "pack": "single",
+   "dynamic_load_n": 5400,
+   "static_load_n": 2360,
+   "max_speed_rpm_grease": null,
+   "seller": "VXB",
+   "url": "https://vxb.com/products/6001-2rs-bearing",
+   "price_checked": "2026-10-25"
+  },
+  {
+   "designation": "6002-2RS",
+   "bore_mm": 15,
+   "od_mm": 32,
+   "width_mm": 9,
+   "seal": "2RS",
+   "price_usd": 9.99,
+   "pack": "single",
+   "dynamic_load_n": 5850,
+   "static_load_n": 2850,
+   "max_speed_rpm_grease": 14000,
+   "seller": "VXB",
+   "url": "https://vxb.com/products/6002-2rs-bearing-6002-2rs",
+   "price_checked": "2026-10-25"
+  },
+  {
+   "designation": "6004-2RS",
+   "bore_mm": 20,
+   "od_mm": 42,
+   "width_mm": 12,
+   "seal": "2RS",
+   "price_usd": 7.77,
+   "pack": "single",
+   "dynamic_load_n": null,
+   "static_load_n": null,
+   "max_speed_rpm_grease": null,
+   "seller": "VXB",
+   "url": "https://vxb.com/products/6004-2rs-bearing-6004-2rs",
+   "price_checked": "2026-10-25"
+  },
+  {
+   "designation": "RU42UU (crossed roller)",
+   "bore_mm": 20,
+   "od_mm": 70,
+   "width_mm": 12,
+   "price_usd": 199.99,
+   "dynamic_load_n": 7350,
+   "static_load_n": 8350,
+   "seller": "VXB",
+   "url": "https://vxb.com/products/ru42uu-crossed-roller-slewing-ring-turntable-beari",
+   "price_checked": "2026-10-25"
+  },
+  {
+   "designation": "CRBH3510AC1 (crossed roller)",
+   "bore_mm": 35,
+   "od_mm": null,
+   "width_mm": 10,
+   "price_usd": 313.99,
+   "dynamic_load_n": null,
+   "static_load_n": null,
+   "seller": "VXB",
+   "url": "https://vxb.com/products/high-rigidity-crossed-roller-crbh3510ac1-single-be",
+   "price_checked": "2026-10-25",
+   "note": "bore/width from part number convention (CRBH 35 10); OD not on retrieved listing"
+  },
+  {
+   "designation": "6000/6800/6900 pack pricing",
+   "price_usd": null,
+   "note": "VXB 10-packs: 6800-2RS $29.99, 6802-2RS $29.99, 6900-2RS $29.99, 6000-2RS $29.99, 6904-2RS $49.99, 6004-2RS $39.99 (~$3-5 each)",
+   "seller": "VXB",
+   "url": "https://vxb.com/",
+   "price_checked": "2026-10-25"
+  },
+  {
+   "designation": "McMaster-Carr / Misumi",
+   "price_usd": null,
+   "note": "not retrieved - both sites block automated fetching; check manually",
+   "url": "https://www.mcmaster.com/"
+  }
+ ],
+ "fasteners_notes": "Pivots: hobby five-bar legs (Stanford Doggo) stack two deep-groove bearings in one link and run a shoulder bolt through them into the opposing link; drive links use a drilled/tapped set-screw hole (https://github.com/Nate711/StanfordDoggoProject). Shoulder bolts: VXB 20-pack M6x1.0 thread / 8 mm shoulder x 12 mm, $49.98 (~$2.50 each) (https://vxb.com/products/20-pack-shoulder-bolts-m6-10-x-12-mm-thread-8-mm-d); McMaster/Misumi prices not retrieved. Heat-set inserts (CNC Kitchen store, 2026-10-25): M3x5.7 100 pcs $9.40, M4x8.1 50 pcs $9.90, M5x9.5 50 pcs $9.90, M3/M4/M5 200-pc set $25.90 (https://cnckitchen.store). M3 insert pull-out ~1400 N in PLA; torque-out 3 Nm vs 1 Nm for a screw straight into PETG; bottom-pocket captive nut gave the highest pull-out (166 kg) in PETG. CF tubes cannot be threaded (Easy Composites); join with bonded inserts/clamps. 3M DP420 is the usual structural epoxy for tube-to-insert bonds but its TDS could not be fetched (3M blocks automated access) - strength values null. SendCutSend can tap M2-M16 and press PEM nuts/standoffs/studs into aluminium from .040 in."
+}

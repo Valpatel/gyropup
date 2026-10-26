@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "name": "Wobbit",
+  "size": "sturdy",
+  "geometry": {
+    "thigh_mm": 200,
+    "shin_mm": 200,
+    "wheel_diameter_mm": 180,
+    "knee_min_deg": 40,
+    "knee_max_deg": 160,
+    "track_mm": 330,
+    "link_section": {
+      "width_mm": 40,
+      "depth_mm": 30,
+      "wall_mm": 3
+    },
+    "body": {
+      "depth_mm": 181,
+      "width_mm": 206,
+      "height_mm": 112
+    },
+    "battery_tray_mm": 80
+  },
+  "leg": {
+    "topology": "serial_knee_at_hip"
+  },
+  "parts": {
+    "compute": "seeed-j501-agx-orin-32gb",
+    "lidar": "velodyne-vlp-16",
+    "stereo": null,
+    "depth_front": "realsense-d435",
+    "depth_rear": "realsense-d435",
+    "imu": "vectornav-vn-100-rugged",
+    "balance_mcu": "pjrc-teensy-4-1",
+    "can_transceiver": "adafruit-can-pal-5708",
+    "leg_actuator": "robstride-rs-03",
+    "wheel_motor": "odrive-botwheel",
+    "motor_driver": "mjbots-moteus-n1",
+    "battery": "wrekd-nexus-7s2p-molicel-p50b-10000",
+    "dcdc_compute": null,
+    "dcdc_12v": "pololu-d36v50f12",
+    "power_switch": "flipsky-antispark-switch-pro-200a",
+    "fuse": "blue-sea-5191-mrbf-terminal-fuse-block",
+    "estop": "generic-hb2-es544-22mm-estop",
+    "contactor": "altran-alev100-bs",
+    "can_adapter": null
+  },
+  "battery_count": 1,
+  "materials": {
+    "default": "pla",
+    "parts": {
+      "hip_mount": "petg",
+      "wheel_mount": "petg"
+    }
+  },
+  "print": {
+    "wall_mm": 2.0,
+    "infill": 0.4
+  },
+  "hardware_allowance": {
+    "usd": 80,
+    "mass_g": 500,
+    "note": "bearings, shoulder bolts, inserts, fasteners, wiring"
+  },
+  "character": {
+    "color": "#f5b82e"
+  },
+  "notes": "Defaults from the research: a 24 V-class 7S pack runs the J501 directly. A Teensy 4.1 runs the 1 kHz balance loop: VN-100 over serial, the motors on two CAN buses through CAN Pal transceivers. The J501's native CAN-FD (J25) stays free for the Jetson. The contactor cuts motor power only.",
+  "part_qty": {
+    "can_transceiver": 2
+  }
+}

@@ -1,0 +1,879 @@
+[
+ {
+  "id": "seeed-j501-agx-orin-32gb",
+  "category": "compute",
+  "vendor": "Seeed Studio / NVIDIA",
+  "model": "reServer Industrial J501 carrier + Jetson AGX Orin 32GB + Seeed heatsink with fan, in the j501-agx printed enclosure",
+  "preferred": true,
+  "price_usd": 1328.0,
+  "price_note": "Sum of parts, no single retail SKU: AGX Orin 32GB module $900 (Diamond Systems listing; resellers range $900-1,179), J501 carrier $379 and heatsink with fan $49 (Seeed store). Printed enclosure filament is extra (see the j501-agx print package). GMSL board ($59) not included: the default build has no GMSL camera.",
+  "price_checked": "2026-10-25",
+  "buy": [
+   {
+    "seller": "Seeed Studio (carrier)",
+    "url": "https://www.seeedstudio.com/reServer-Industrial-J501-Carrier-board-for-Jetson-AGX-Orin-p-5950.html",
+    "in_stock": true,
+    "ships_from": null
+   },
+   {
+    "seller": "Seeed Studio (GMSL extension board)",
+    "url": "https://www.seeedstudio.com/reServer-Industrial-J501-GMSL-extension-board-p-5949.html",
+    "in_stock": true,
+    "ships_from": null
+   },
+   {
+    "seller": "Seeed Studio (heatsink with fan)",
+    "url": "https://www.seeedstudio.com/Aluminum-heatsink-with-Fan-for-Jetson-AGX-Orin-p-5970.html",
+    "in_stock": true,
+    "ships_from": null
+   }
+  ],
+  "specs": {
+   "mass_g": null,
+   "mass_breakdown_g": {
+    "j501_carrier_without_module": 225,
+    "gmsl_extension_board_optional": 47,
+    "agx_orin_32gb_module": null,
+    "seeed_heatsink_with_fan": null,
+    "printed_enclosure_and_hardware_estimate": [
+     400,
+     700
+    ]
+   },
+   "mass_note": "Carrier 225 g and GMSL board 47 g are from the Seeed datasheet. Module and heatsink masses are not published. The enclosure figure is an estimate, not a measurement. Weigh the assembled box.",
+   "enclosure_dimensions_mm": [
+    206,
+    181,
+    112
+   ],
+   "carrier_dimensions_mm": [
+    176,
+    163
+   ],
+   "module_dimensions_mm": [
+    100,
+    87
+   ],
+   "heatsink_dimensions_mm": [
+    100,
+    87,
+    34
+   ],
+   "voltage_range_v": [
+    12,
+    36
+   ],
+   "power_input_connector": "2-pin terminal block (DC 12-36 V)",
+   "system_power_w": [
+    15,
+    60
+   ],
+   "module_power_w": [
+    15,
+    40
+   ],
+   "heatsink_fan": "5 V DC (3.5-6.5 V), 0.16 A +/- 0.02 A, PWM",
+   "ethernet": "1x RJ45 GbE (LAN0), 1x RJ45 10GbE (LAN1)",
+   "usb": "3x USB 3.1 Type-A, 1x USB 3.1 Type-C (host), 1x USB 2.0 Type-C (device)",
+   "camera_expansion": "2x Samtec QSH-030-01-L-D-A (60-pin), 8 MIPI CSI-2 lanes each. Not the AGX Orin devkit's 120-pin camera connector.",
+   "gmsl_extension_board": "2x MAX96724 deserializers, 8 GMSL1/GMSL2 inputs on 4-port FM4-NZRP jacks, 12 V PoC through MAX20087, 103 x 45 mm, -20 to 60 C",
+   "can": "1x CAN",
+   "other_io": "4x DI, 4x DO, HDMI 2.1, 2x SATA III, M.2 Key M (PCIe 4.0), M.2 Key B, M.2 Key E, Mini PCIe",
+   "jetpack": "JetPack 6.0 (Seeed datasheet)",
+   "operating_temp_c": null,
+   "ip_rating": null,
+   "mass_g_estimate": 1500,
+   "mass_estimate_note": "ESTIMATE until weighed: carrier 225 g (Seeed datasheet) + module ~300 g + heatsink with fan ~400 g (both unpublished, guessed from size) + printed enclosure ~450 g (j501-agx part volumes, PLA at ~60% effective fill) + fasteners and cables ~100 g."
+  },
+  "cad": {
+   "step_url": "https://files.seeedstudio.com/wiki/reComputer-Jetson/J501/RESERVER_AGX_ORIN_CARRIER_BOARD.stp",
+   "available": true,
+   "extra": [
+    "https://developer.nvidia.com/downloads/jetson-agx-orin-module-3d-step-modelzip",
+    "https://github.com/mvalancy/j501-agx-orin (enclosure; exports/assembly_gmsl.step)"
+   ]
+  },
+  "sources": [
+   "https://files.seeedstudio.com/wiki/reComputer-Jetson/J501/reServer_Industrial_J501_Carrier_Board_Datasheet.pdf",
+   "https://files.seeedstudio.com/wiki/reComputer-Jetson/J501/202003906_reServer_Industrial_J501_Carrier_Board_v1.0_SCH_PDF_20240529.pdf",
+   "https://files.seeedstudio.com/wiki/reComputer-Jetson/J501/GMSL2_Adapter_Board_For_J501_v1_SCH.pdf",
+   "https://wiki.seeedstudio.com/j501_carrier_board_interfaces_usage/",
+   "https://www.nvidia.com/content/dam/en-zz/Solutions/gtcf21/jetson-orin/nvidia-jetson-agx-orin-technical-brief.pdf",
+   "https://files.seeedstudio.com/wiki/reComputer-Jetson/J501/323011387Jetson_AGX_Orin_Heatsink_100x87x34mm-datasheet.pdf",
+   "https://www.seeedstudio.com/reServer-Industrial-J501-Carrier-board-for-Jetson-AGX-Orin-p-5950.html",
+   "https://shop.diamondsystems.com/shop/8882250/",
+   "https://www.sabrepc.com/900-13701-0040-000-NVIDIA-S181904966"
+  ],
+  "confidence": "seller listing",
+  "notes": "Runs directly from 4S-8S packs (12-36 V input; 8S full is 33.6 V). The Seeed GMSL board only has published support for Seeed SENSING cameras. Stereolabs and RealSense publish no GMSL driver for it, and the ZED Link Duo cannot plug into the J501 (wrong connector). The box is the heaviest single payload item; mount it low on the torso, near the hip axis."
+ },
+ {
+  "id": "velodyne-vlp-16",
+  "category": "sensor",
+  "vendor": "Velodyne Lidar (now Ouster)",
+  "model": "VLP-16 Puck (datasheet 63-9229 Rev K)",
+  "preferred": true,
+  "price_usd": 4000.0,
+  "price_note": "Mostly bought used on eBay now; used prices vary. $4,000 is the last published new list price, after Velodyne's 2018 price cut.",
+  "price_checked": "2026-10-25",
+  "buy": [
+   {
+    "seller": "eBay (used)",
+    "url": "https://www.ebay.com/sch/i.html?_nkw=velodyne+vlp-16",
+    "in_stock": null,
+    "ships_from": null
+   }
+  ],
+  "specs": {
+   "mass_g": 830,
+   "mass_note": "~830 g without cabling and Interface Box. Cable and box masses are not published.",
+   "mass_with_cable_and_box_g": null,
+   "diameter_mm": 103.3,
+   "height_mm": 71.7,
+   "optical_center_above_base_mm": 37.8,
+   "mounting": "Base: 1x 1/4-20 UNC hole, 9/32 in (7.1 mm) deep, plus 2x 0.16 in locating holes for 5/32 in pins (datasheet drawing). Any orientation is allowed, but bearing life is best at 0 deg inclination.",
+   "voltage_range_v": [
+    9,
+    18
+   ],
+   "voltage_note": "9-18 V, with the Interface Box and a regulated supply. The sensor does not operate outside this range.",
+   "power_typical_w": 8,
+   "spinup_surge_current_a": 3.0,
+   "operating_input_current_a": [
+    0.3,
+    1.0
+   ],
+   "interface": "100 Mbps Ethernet, UDP; default IP 192.168.1.201",
+   "connector": "Integrated ~3.0 m cable, permanently attached, terminated in the Interface Box. An M12 option exists (Phoenix SACC-M12FS-8CON-PG 9-SH).",
+   "channels": 16,
+   "range_max_m": 100,
+   "range_min_m": null,
+   "range_accuracy_cm": 3,
+   "fov_h_deg": 360,
+   "fov_v_deg": [
+    -15.0,
+    15.0
+   ],
+   "vertical_resolution_deg": 2.0,
+   "azimuth_resolution_deg": [
+    0.1,
+    0.4
+   ],
+   "rotation_rate_hz": [
+    5,
+    20
+   ],
+   "rpm_setting": "300-1200 in steps of 60",
+   "points_per_s": {
+    "single_return": 300000,
+    "dual_return": 600000
+   },
+   "wavelength_nm": 903,
+   "laser_class": "Class 1 (IEC 60825-1:2007 & 2014)",
+   "operating_temp_c": [
+    -10,
+    60
+   ],
+   "storage_temp_c": [
+    -40,
+    105
+   ],
+   "ip_rating": "IP67",
+   "shock": "500 m/s^2 amplitude, 11 ms (manual 5.2: 'does not need shock proofing')",
+   "vibration": "3 Grms, 5-2000 Hz",
+   "imu": null,
+   "rotor_inertia_kg_m2": null,
+   "gps_sync": "PPS + NMEA $GPRMC/$GPGGA through the Interface Box"
+  },
+  "cad": {
+   "step_url": null,
+   "available": false
+  },
+  "sources": [
+   "https://data.ouster.io/downloads/datasheets/velodyne/Puck%20Datasheets.zip",
+   "https://data.ouster.io/downloads/velodyne/user-manual/vlp-16-user-manual-revf.pdf",
+   "https://ouster.com/downloads/velodyne-downloads",
+   "https://ouster.com/products/hardware/vlp-16",
+   "https://www.geoweeknews.com/articles/velodyne-cuts-vlp-16-lidar-price-4k/"
+  ],
+  "confidence": "estimate",
+  "notes": "Minimum range is not published. Rotor mass and inertia are not published. Needs a clear 360 deg horizon; the lowest beam is 15 deg below horizontal. Spinning at 5-20 Hz puts rotor-imbalance vibration in the balance controller's band, so keep its IMU path filtered. Gyroscopic torque from a pitching chassis appears about the roll axis (upper-bound estimate in research/sensors-compute.md)."
+ },
+ {
+  "id": "velodyne-vlp-16-interface-box",
+  "category": "sensor",
+  "vendor": "Velodyne Lidar (now Ouster)",
+  "model": "VLP-16 Interface Box (enclosure drawing 50-6001 Rev B, schematic 69-8230 Rev A)",
+  "preferred": true,
+  "price_usd": null,
+  "price_note": "Ships with the sensor; no separate public price.",
+  "price_checked": "2026-10-25",
+  "buy": [],
+  "specs": {
+   "mass_g": null,
+   "dimensions_mm": null,
+   "dimensions_note": "Not published as overall dimensions. Manual drawing 50-6001 Rev B shows a flanged Polycase enclosure with 2 flange mounting holes; overall size is not dimensioned.",
+   "voltage_range_v": [
+    9,
+    18
+   ],
+   "voltage_note": "The box does not regulate. Input passes through a 3.0 A fuse to the sensor, with a 5KP30A TVS (30 V standoff) across it. The sensor's 9-18 V limit therefore applies at the barrel jack.",
+   "power_input": "5.5 mm OD x 2.5 mm ID barrel jack (PJ-102A), center positive. Also a red/black terminal block inside.",
+   "fuse_a": 3.0,
+   "connectors": "RJ45 Ethernet (100 Mbps); DC barrel; GPS port SM06B-SRSS-TB (6-pin); internal screw terminals for GPS PPS/serial",
+   "sensor_cable_m": 3.0,
+   "ethernet_cable_supplied_m": 1.0,
+   "internal_regulator": "MC7805 (5 V, GPS receiver supply only)"
+  },
+  "cad": {
+   "step_url": null,
+   "available": false
+  },
+  "sources": [
+   "https://data.ouster.io/downloads/velodyne/user-manual/vlp-16-user-manual-revf.pdf"
+  ],
+  "confidence": "datasheet",
+  "notes": "Do NOT connect a 6S (18.0-25.2 V) or 7S (21-29.4 V) pack directly. Both exceed the sensor's 18 V maximum, and the TVS does not clamp until ~33 V. Feed it from a regulated 12 V DC-DC rated for at least 3 A (spin-up surge). The manual allows replacing the box with a custom harness if you add equivalent fuse, reverse and over-voltage protection (manual 5.4.2). Do not cut the cable without a Velodyne waiver (minimum length requirement)."
+ },
+ {
+  "id": "stereolabs-zed-x",
+  "category": "sensor",
+  "vendor": "Stereolabs",
+  "model": "ZED X (2.2 mm or 4.6 mm lens; datasheet Rev1.6)",
+  "preferred": false,
+  "price_usd": 599.0,
+  "price_note": "Stereolabs store, 'from $599'",
+  "price_checked": "2026-10-25",
+  "buy": [
+   {
+    "seller": "Stereolabs store",
+    "url": "https://www.stereolabs.com/store/products/zed-x-stereo-camera",
+    "in_stock": null,
+    "ships_from": null
+   }
+  ],
+  "specs": {
+   "mass_g": 239,
+   "mass_with_cable_g": null,
+   "dimensions_mm": [
+    163.4,
+    31.8,
+    36.7
+   ],
+   "mounting": "Bottom: 1x 1/4-20 UNC (max 6.4 mm) centered, plus 2x M3x0.5 (max 6.4 mm) 36 mm apart. Back: 4x M4x0.7 (max 5 mm) on an 80 x 10 mm rectangle.",
+   "voltage_range_v": [
+    5,
+    20
+   ],
+   "power_typical_w": 1.46,
+   "power_note": "Powered over GMSL2 PoC. Typical draw 1.46 W (0.122 A at 12 V). Peak is not published.",
+   "interface": "GMSL2 (needs a deserializer/capture card on a Jetson)",
+   "connector": "FAKRA Z (serial coax GMSL2)",
+   "cable": "Stereolabs FAKRA Z cables 0.3-15 m; bend radius 33 mm static, 66 mm loaded",
+   "baseline_mm": 120,
+   "resolution": "2x 1920x1200 @60, 2x 1920x1080 @60, 2x 960x600 @120; global shutter, AR0234",
+   "fov_deg": {
+    "2.2mm": "110 H x 80 V x 120 D",
+    "4.6mm": "73 H x 45 V x 87 D"
+   },
+   "depth_range_m": {
+    "2.2mm": [
+     0.3,
+     20
+    ],
+    "4.6mm": [
+     1.0,
+     35
+    ]
+   },
+   "ideal_range_m": {
+    "2.2mm": [
+     0.3,
+     12
+    ],
+    "4.6mm": [
+     1.0,
+     20
+    ]
+   },
+   "imu": "6-axis: accelerometer +/-12 g, gyroscope +/-1000 dps, 200 Hz, 16-bit",
+   "ip_rating": "IP67",
+   "operating_temp_c": [
+    -20,
+    60
+   ],
+   "vibration": "2 g RMS @ 3-500 Hz, 1 h/axis",
+   "host_support": "Jetson AGX Orin, AGX Xavier, Orin NX, Xavier NX; L4T 35.1 or newer, through Stereolabs capture cards"
+  },
+  "cad": {
+   "step_url": "https://cdn.sanity.io/files/s18ewfw4/staging/0ddd9d208a26fcfc08cd91e402a4493e06a805ec.step/ZED%20X%20Wide.step",
+   "available": true,
+   "extra": [
+    "https://cdn.sanity.io/files/s18ewfw4/staging/02f9b19bcb895b0a5f4699d5ce2bcb197d23a786.step/ZED%20X%20Narrow.step",
+    "https://www.stereolabs.com/3dmodels"
+   ]
+  },
+  "sources": [
+   "https://cdn.sanity.io/files/s18ewfw4/staging/7e01a2228a00212daa4daed50035ef87250bf7d5.pdf/ZED%20X%20-%20ZED%20X%20Mini%20-%20Datasheet.pdf",
+   "https://cdn.sanity.io/files/s18ewfw4/staging/5e6000357620db56f0ec57cb522b6377880c4790.pdf/GMSL2%20Cables%20-%20Datasheet.pdf",
+   "https://www.stereolabs.com/products/zed-x",
+   "https://docs.stereolabs.com/docs/embedded/zed-link",
+   "https://docs.stereolabs.com/docs/products/embedded/zed-link-capture-card/gmsl2/install-and-upgrade-the-drivers/",
+   "https://www.stereolabs.com/store"
+  ],
+  "confidence": "datasheet",
+  "notes": "INTEGRATION BLOCKER on the J501. Stereolabs ships GMSL2 drivers only for its ZED Link cards (MAX96712/MAX9296A) on NVIDIA devkits and ZED Box. 'Other Jetson carrier boards' are listed as unsupported (contact support). Seeed documents no ZED X support on its MAX96724 board. The ZED Link Duo cannot plug into the J501 (120-pin vs 2x 60-pin connector). Treat it as unusable on the J501 until Stereolabs confirms a driver."
+ },
+ {
+  "id": "stereolabs-zed-2i",
+  "category": "sensor",
+  "vendor": "Stereolabs",
+  "model": "ZED 2i (2.1 mm or 4.6 mm lens; datasheet V1.5 2026-09-22)",
+  "preferred": false,
+  "price_usd": 499.0,
+  "price_note": "Stereolabs store, 'from $499'",
+  "price_checked": "2026-10-25",
+  "buy": [
+   {
+    "seller": "Stereolabs store",
+    "url": "https://www.stereolabs.com/store/products/zed-2i",
+    "in_stock": null,
+    "ships_from": null
+   }
+  ],
+  "specs": {
+   "mass_g": 229,
+   "mass_with_cable_g": null,
+   "dimensions_mm": [
+    175.3,
+    30.3,
+    43.1
+   ],
+   "mounting": "Bottom: 1x 1/4-20 UNC (max 7 mm) centered, plus 2x M3x0.5 (max 10 mm) 36 mm apart. Back: 4x M3 on a 153.4 x 14 mm rectangle. Flat bottom.",
+   "voltage_v": 5,
+   "power_typical_w": 1.9,
+   "power_note": "USB bus powered, 0.38 A at 5 V typical. Peak is not published.",
+   "interface": "USB 3.0",
+   "connector": "USB Type-C with dual locking screws",
+   "cable": "USB 3.0 Type-C, up to 10 m without external power (Stereolabs cables)",
+   "baseline_mm": 120,
+   "resolution": "2x 2208x1242 @15, 2x 1920x1080 @30, 2x 1280x720 @60, 2x 662x376 @100; rolling shutter",
+   "fov_deg": {
+    "2.1mm": "110 H x 70 V x 120 D",
+    "4.6mm": "68 H x 38 V x 78 D"
+   },
+   "depth_range_m": {
+    "2.1mm": [
+     0.3,
+     20
+    ],
+    "4.6mm": [
+     0.5,
+     35
+    ]
+   },
+   "ideal_range_m": {
+    "2.1mm": [
+     0.3,
+     12
+    ],
+    "4.6mm": [
+     0.5,
+     20
+    ]
+   },
+   "imu": "Accelerometer +/-8 g, gyroscope +/-1000 dps (400 Hz), magnetometer, barometer, temperature sensors",
+   "ip_rating": "IP66",
+   "operating_temp_c": [
+    -10,
+    45
+   ],
+   "storage_temp_c": [
+    -30,
+    70
+   ]
+  },
+  "cad": {
+   "step_url": "https://cdn.sanity.io/files/s18ewfw4/staging/1eae249387d9bde53972abbe470483024c31c6fb.step/ZED2i.step",
+   "available": true
+  },
+  "sources": [
+   "https://cdn.sanity.io/files/s18ewfw4/staging/17e28531d47c0c5feab2be4ca304abf06ffa889a.pdf/ZED%202i%20-%20Datasheet%20-%20V1.5%20-%202026-09-22.pdf",
+   "https://www.stereolabs.com/products/zed-2",
+   "https://www.stereolabs.com/3dmodels",
+   "https://www.stereolabs.com/store"
+  ],
+  "confidence": "datasheet",
+  "notes": "Works on the J501 today over USB 3 (ZED SDK supports Jetson L4T). Rolling shutter: expect motion skew on a balancing or jumping robot. The product page says -10 to +50 C; the datasheet says -10 to +45 C, with depth precision degrading outside that range."
+ },
+ {
+  "id": "stereolabs-zed-link-duo",
+  "category": "sensor",
+  "vendor": "Stereolabs",
+  "model": "ZED Link Capture Card Duo (ACC-210000; datasheet V1.3)",
+  "preferred": false,
+  "price_usd": 379.0,
+  "price_note": "Stereolabs store",
+  "price_checked": "2026-10-25",
+  "buy": [
+   {
+    "seller": "Stereolabs store",
+    "url": "https://www.stereolabs.com/store/products/zed-link-capture-card",
+    "in_stock": null,
+    "ships_from": null
+   }
+  ],
+  "specs": {
+   "mass_g": 30,
+   "dimensions_mm": [
+    81.47,
+    39.2,
+    31.15
+   ],
+   "mounting": "3x 3.4 mm holes (67.0 mm and 32.2 mm spacing per drawing); stacks 16 mm board-to-board on the AGX devkit Samtec connector",
+   "voltage_range_v": [
+    9,
+    19
+   ],
+   "power_typical_w": 0.32,
+   "power_note": "No external power needed on the AGX Orin devkit (powered through the Samtec port). 9-19 V DC jack (2.5 x 6.5 mm) for NX/Nano.",
+   "interface": "MIPI CSI-2 to host: Samtec QTH-060-04-H-D-A-TR (120-pin, 0.5 mm; its board designator is J501, unrelated to the Seeed J501) for the AGX devkit, or 2x 15-pin (22-pin adapter) for NX/Nano",
+   "connector": "Quad FAKRA (J4, 1-2304169-Q); GPIO header 2x5 with frame sync",
+   "deserializer": "MAX96712",
+   "capture": "Up to 4x GMSL2 cameras SD/HD (1920x1200@30), or 2x at 4K@15",
+   "operating_temp_c": [
+    -20,
+    85
+   ],
+   "supported_hosts": "Jetson AGX Orin, Orin NX, Orin Nano developer kits; other carriers not supported (contact Stereolabs)",
+   "driver": "stereolabs-zedlink-duo_<ver>-LI-MAX96712-all-L4T36.x_arm64.deb (JetPack 6)"
+  },
+  "cad": {
+   "step_url": null,
+   "available": false,
+   "note": "The 3D models page lists ZED Link Duo without a working link; only Quad and MIPI Quad STEP files are posted."
+  },
+  "sources": [
+   "https://cdn.sanity.io/files/s18ewfw4/staging/917f28656b640bfdb4d056294e9aad9ad5fc77be.pdf/ZED%20Link%20Capture%20Card%20Duo%20-%20Datasheet%20-%20V1.3%20-%202026-09-08.pdf",
+   "https://docs.stereolabs.com/docs/embedded/zed-link",
+   "https://docs.stereolabs.com/docs/products/embedded/zed-link-capture-card/gmsl2/install-and-upgrade-the-drivers/",
+   "https://cdn.sanity.io/files/s18ewfw4/staging/7e01a2228a00212daa4daed50035ef87250bf7d5.pdf/ZED%20X%20-%20ZED%20X%20Mini%20-%20Datasheet.pdf",
+   "https://www.stereolabs.com/store",
+   "https://files.seeedstudio.com/wiki/reComputer-Jetson/J501/202003906_reServer_Industrial_J501_Carrier_Board_v1.0_SCH_PDF_20240529.pdf"
+  ],
+  "confidence": "datasheet",
+  "notes": "Listed as a possible adapter only. It does NOT fit the J501: the card mates with the AGX Orin devkit's 120-pin Samtec QSH-060 camera connector, while the J501 carrier has 2x 60-pin QSH-030 connectors with Seeed's own pinout. Using ZED X with it would mean switching to an AGX Orin devkit or a ZED Box."
+ },
+ {
+  "id": "realsense-d435i",
+  "category": "sensor",
+  "vendor": "RealSense (formerly Intel RealSense)",
+  "model": "Depth Camera D435i",
+  "preferred": false,
+  "price_usd": 399.0,
+  "price_note": "store.realsenseai.com; tariff surcharge on orders since 2026-02-03 (amount not published)",
+  "price_checked": "2026-10-25",
+  "buy": [
+   {
+    "seller": "RealSense store",
+    "url": "https://store.realsenseai.com/buy-realsense-depth-camera-d435i.html",
+    "in_stock": null,
+    "ships_from": null
+   }
+  ],
+  "specs": {
+   "mass_g": 75,
+   "mass_note": "+/-10%",
+   "dimensions_mm": [
+    90,
+    25,
+    25
+   ],
+   "mounting": "1x 1/4-20 UNC bottom; 2x M3 on back, 45 mm apart, max insertion 3 mm, 0.4 N m",
+   "voltage_v": 5,
+   "power_max_w": 3.4,
+   "power_note": "3.40 W at max mode (1280x720 depth + 1920x1080 RGB @30), of which 3.04 W is heat; USB 5 V, up to 700 mA",
+   "interface": "USB 3.1 Gen 1",
+   "connector": "USB Type-C",
+   "baseline_mm": 50,
+   "depth_fov_deg": "87 H x 58 V x 95 D (HD)",
+   "rgb_fov_deg": "69 H x 42 V x 77 D",
+   "min_z_mm": {
+    "1280x720": 280,
+    "848x480": 195,
+    "640x360": 150,
+    "424x240": 105
+   },
+   "ideal_range_m": [
+    0.3,
+    3
+   ],
+   "range_max_m": null,
+   "depth_tech": "Active IR stereo, global-shutter depth imagers",
+   "imu": "BMI055 or BMI085 depending on revision (6-DoF, +/-4 g, +/-1000 dps, gyro 200/400 Hz)",
+   "ip_rating": null,
+   "operating_temp_c": [
+    0,
+    35
+   ],
+   "operating_temp_note": "Ambient 0-35 C validated; back case 0-50 C (D400 datasheet T3-55)"
+  },
+  "cad": {
+   "step_url": null,
+   "available": true,
+   "native_url": "https://dev.realsenseai.com/download/41950",
+   "note": "Official CAD is a SolidWorks .SLDPRT zip (D400 Depth Cameras); no STEP is published. ROS description meshes exist at github.com/IntelRealSense/realsense-ros (realsense2_description/meshes)."
+  },
+  "sources": [
+   "https://www.realsenseai.com/wp-content/uploads/2026/03/RealSense-D400-Series-Datasheet-Mar-2026.pdf",
+   "https://www.realsenseai.com/wp-content/uploads/2026/04/RealSense_D401_D415_D430_D457_Compare_Table.pdf",
+   "https://github.com/realsenseai/librealsense/blob/master/doc/installation_jetson.md",
+   "https://github.com/realsenseai/librealsense/releases/tag/v2.59.1",
+   "https://dev.realsenseai.com/docs/cad-files",
+   "https://store.realsenseai.com/buy-realsense-depth-camera-d435i.html"
+  ],
+  "confidence": "datasheet",
+  "notes": "USB on the J501 with librealsense v2.58.1+ (JetPack 6 support; v2.59.1 current). Smallest-baseline USB option with an IMU; best near field (min-Z 0.28 m at 720p)."
+ },
+ {
+  "id": "realsense-d455",
+  "category": "sensor",
+  "vendor": "RealSense (formerly Intel RealSense)",
+  "model": "Depth Camera D455",
+  "preferred": false,
+  "price_usd": 499.0,
+  "price_note": "store.realsenseai.com; tariff surcharge on orders since 2026-02-03 (amount not published)",
+  "price_checked": "2026-10-25",
+  "buy": [
+   {
+    "seller": "RealSense store",
+    "url": "https://store.realsenseai.com/buy-realsense-depth-camera-d455.html",
+    "in_stock": null,
+    "ships_from": null
+   }
+  ],
+  "specs": {
+   "mass_g": 116,
+   "mass_note": "+/-10%",
+   "dimensions_mm": [
+    124,
+    29,
+    26
+   ],
+   "mounting": "1x 1/4-20 UNC bottom (max insertion 9 mm); 2x M4 on back, 95 mm apart, max insertion 4 mm, 0.4 N m",
+   "voltage_v": 5,
+   "power_max_w": 3.46,
+   "power_note": "3.46 W at max mode, 3.10 W heat; USB 5 V",
+   "interface": "USB 3.1 Gen 1",
+   "connector": "USB Type-C",
+   "baseline_mm": 95,
+   "depth_fov_deg": "87 H x 58 V x 95 D (HD)",
+   "rgb_fov_deg": "90 H x 65 V x 98 D (OV9782, global shutter)",
+   "min_z_mm": {
+    "1280x720": 520,
+    "848x480": 350,
+    "640x360": 260,
+    "424x240": 180
+   },
+   "ideal_range_m": [
+    0.6,
+    6
+   ],
+   "range_max_m": null,
+   "depth_tech": "Active IR stereo",
+   "imu": "BMI055 or BMI085 depending on revision (6-DoF)",
+   "ip_rating": null,
+   "operating_temp_c": [
+    0,
+    35
+   ],
+   "operating_temp_note": "Ambient 0-35 C validated; back case 0-50 C (D400 datasheet T3-55)"
+  },
+  "cad": {
+   "step_url": null,
+   "available": true,
+   "native_url": "https://dev.realsenseai.com/download/41950",
+   "note": "Official CAD is a SolidWorks .SLDPRT zip (D400 Depth Cameras); no STEP is published. ROS description meshes exist at github.com/IntelRealSense/realsense-ros (realsense2_description/meshes)."
+  },
+  "sources": [
+   "https://www.realsenseai.com/wp-content/uploads/2026/03/RealSense-D400-Series-Datasheet-Mar-2026.pdf",
+   "https://github.com/realsenseai/librealsense/blob/master/doc/installation_jetson.md",
+   "https://github.com/realsenseai/librealsense/releases/tag/v2.59.1",
+   "https://dev.realsenseai.com/docs/cad-files",
+   "https://store.realsenseai.com/buy-realsense-depth-camera-d455.html"
+  ],
+  "confidence": "datasheet",
+  "notes": "USB on the J501. Longer baseline gives better depth at 2-6 m, but the min-Z of 0.52 m at 720p makes it blind up close. The D456 is the IP65 USB version (same size, $560)."
+ },
+ {
+  "id": "realsense-d457",
+  "category": "sensor",
+  "vendor": "RealSense (formerly Intel RealSense)",
+  "model": "Depth Camera D457 (GMSL2/FAKRA)",
+  "preferred": false,
+  "price_usd": 599.0,
+  "price_note": "store.realsenseai.com; tariff surcharge on orders since 2026-02-03 (amount not published)",
+  "price_checked": "2026-10-25",
+  "buy": [
+   {
+    "seller": "RealSense store",
+    "url": "https://store.realsenseai.com/buy-realsense-depth-camera-d457.html",
+    "in_stock": null,
+    "ships_from": null
+   }
+  ],
+  "specs": {
+   "mass_g": 145,
+   "mass_note": "approximate",
+   "dimensions_mm": [
+    124,
+    29,
+    36
+   ],
+   "mounting": "1x 1/4-20 UNC bottom (max insertion 9 mm); 2x M4 thread inserts on back, 61.5 mm apart, max insertion 6 mm, max 3.0 N m",
+   "voltage_range_v": [
+    10.8,
+    13.2
+   ],
+   "power_max_w": 3.72,
+   "power_note": "Over FAKRA (PoC): 12 V typical (10.8-13.2 V), 300 mA typical. 3.72 W at max mode. USB alternative: 5 V, up to 700 mA.",
+   "interface": "GMSL2 (MAX9295 serializer on camera); USB 3.1 Gen 1 for debug/production only",
+   "connector": "FAKRA (GMSL2) + USB Type-C; GMSL/USB boot-mode switch",
+   "baseline_mm": 95,
+   "depth_fov_deg": "87 H x 58 V x 95 D (HD)",
+   "rgb_fov_deg": "90 H x 65 V x 98 D",
+   "min_z_mm": {
+    "1280x720": 520,
+    "848x480": 350,
+    "640x360": 260,
+    "480x270": 200
+   },
+   "ideal_range_m": [
+    0.6,
+    6
+   ],
+   "range_max_m": null,
+   "depth_tech": "Active IR stereo (D450 module)",
+   "imu": "BMI085 (6-DoF)",
+   "ip_rating": "IP65 (connectors IP67; sync-port cap must be closed)",
+   "operating_temp_c": [
+    0,
+    35
+   ],
+   "operating_temp_note": "Ambient 0-35 C validated; back case 0-50 C (D400 datasheet T3-55)"
+  },
+  "cad": {
+   "step_url": null,
+   "available": true,
+   "native_url": "https://dev.realsenseai.com/download/41950",
+   "note": "Official CAD is a SolidWorks .SLDPRT zip (D400 Depth Cameras); no STEP is published. ROS description meshes exist at github.com/IntelRealSense/realsense-ros (realsense2_description/meshes)."
+  },
+  "sources": [
+   "https://realsenseai.com/wp-content/uploads/2025/12/RealSense-D457-Datasheet-Dec-2025.pdf",
+   "https://www.realsenseai.com/wp-content/uploads/2026/04/RealSense_D401_D415_D430_D457_Compare_Table.pdf",
+   "https://github.com/realsenseai/realsense_mipi_platform_driver",
+   "https://github.com/realsenseai/librealsense/releases/tag/v2.59.1",
+   "https://dev.realsenseai.com/docs/cad-files",
+   "https://store.realsenseai.com/buy-realsense-depth-camera-d457.html"
+  ],
+  "confidence": "datasheet",
+  "notes": "INTEGRATION BLOCKER on the J501. The official GMSL driver (realsense_mipi_platform_driver, JetPack 5.0.2-7.1) targets the RealSense MAX9296 deserializer board plus a Leopard LI-JTX1-SUB-ADPT adapter on the AGX devkit. It has no overlay for the J501 or for AGX Orin with a MAX96724. USB-C works electrically, but the datasheet calls it debug/production only."
+ },
+ {
+  "id": "realsense-d405",
+  "category": "sensor",
+  "vendor": "RealSense (formerly Intel RealSense)",
+  "model": "Depth Camera D405",
+  "preferred": false,
+  "price_usd": 325.0,
+  "price_note": "store.realsenseai.com; tariff surcharge on orders since 2026-02-03 (amount not published)",
+  "price_checked": "2026-10-25",
+  "buy": [
+   {
+    "seller": "RealSense store",
+    "url": "https://store.realsenseai.com/buy-realsense-depth-camera-d405.html",
+    "in_stock": null,
+    "ships_from": null
+   }
+  ],
+  "specs": {
+   "mass_g": 58,
+   "mass_note": "+/-10% (product page says 60 g)",
+   "dimensions_mm": [
+    42,
+    42,
+    23
+   ],
+   "mounting": "1x 1/4-20 UNC (max insertion 5 mm); 2x M3x0.5 on back, 20 mm apart, max insertion 4 mm",
+   "voltage_v": 5,
+   "power_max_w": 1.48,
+   "power_note": "1.48 W at max mode (848x480 @90)",
+   "interface": "USB 3.1 Gen 1",
+   "connector": "USB Micro-B (per D400 datasheet 3.7.6)",
+   "baseline_mm": 18,
+   "depth_fov_deg": "84 H x 58 V x 92 D",
+   "rgb_fov_deg": "84 H x 58 V x 92 D (from left imager)",
+   "min_z_mm": {
+    "1280x720": 100,
+    "848x480": 70,
+    "640x360": 55,
+    "424x240": 40
+   },
+   "ideal_range_m": [
+    0.07,
+    0.5
+   ],
+   "range_max_m": null,
+   "depth_tech": "Passive stereo, no IR projector",
+   "imu": null,
+   "ip_rating": null,
+   "operating_temp_c": [
+    0,
+    35
+   ],
+   "operating_temp_note": "Ambient 0-35 C validated; back case 0-50 C (D400 datasheet T3-55)"
+  },
+  "cad": {
+   "step_url": null,
+   "available": true,
+   "native_url": "https://dev.realsenseai.com/download/41950",
+   "note": "Official CAD is a SolidWorks .SLDPRT zip (D400 Depth Cameras); no STEP is published. ROS description meshes exist at github.com/IntelRealSense/realsense-ros (realsense2_description/meshes)."
+  },
+  "sources": [
+   "https://www.realsenseai.com/wp-content/uploads/2026/03/RealSense-D400-Series-Datasheet-Mar-2026.pdf",
+   "https://www.realsenseai.com/wp-content/uploads/2026/04/RealSense_D401_D415_D430_D457_Compare_Table.pdf",
+   "https://dev.realsenseai.com/docs/cad-files",
+   "https://store.realsenseai.com/buy-realsense-depth-camera-d405.html"
+  ],
+  "confidence": "datasheet",
+  "notes": "Close range only (7-50 cm), no IMU, no projector. Useful as a foot or ground-contact camera, not for navigation."
+ },
+ {
+  "id": "realsense-d435",
+  "category": "sensor",
+  "vendor": "RealSense (formerly Intel RealSense)",
+  "model": "Depth Camera D435",
+  "preferred": true,
+  "price_usd": 375.0,
+  "price_note": "store.realsenseai.com, single unit",
+  "price_checked": "2026-10-25",
+  "buy": [
+   {
+    "seller": "RealSense store",
+    "url": "https://store.realsenseai.com/buy-realsense-depth-camera-d435.html",
+    "in_stock": true,
+    "ships_from": null
+   }
+  ],
+  "specs": {
+   "voltage_v": 5,
+   "interface": "USB 3.1 Gen 1",
+   "connector": "USB Type-C",
+   "mounting": "1x 1/4-20 UNC bottom; 2x M3 on back",
+   "imu": null,
+   "ip_rating": null,
+   "operating_temp_c": [
+    0,
+    35
+   ],
+   "mass_g": 75,
+   "mass_note": "+/-10% (D400 datasheet Table 3-52)",
+   "dimensions_mm": [
+    90,
+    25,
+    25
+   ],
+   "power_max_w": 3.4,
+   "power_typical_w": 3.0,
+   "power_note": "3.40 W in max mode, 3.04 W of it heat (Table 7-8)",
+   "depth_fov_deg": "87 H x 58 V (HD)",
+   "min_z_mm": {
+    "1280x720": 280,
+    "848x480": 195,
+    "640x360": 150,
+    "424x240": 105
+   },
+   "ideal_range_m": [
+    0.2,
+    3
+   ],
+   "depth_tech": "Active IR stereo, global-shutter depth imagers"
+  },
+  "cad": {
+   "step_url": null,
+   "available": true,
+   "native_url": "https://dev.realsenseai.com/download/41950",
+   "note": "SolidWorks zip; ROS meshes in realsense-ros realsense2_description"
+  },
+  "sources": [
+   "https://www.realsenseai.com/wp-content/uploads/2026/03/RealSense-D400-Series-Datasheet-Mar-2026.pdf",
+   "https://store.realsenseai.com/buy-realsense-depth-camera-d435.html"
+  ],
+  "confidence": "datasheet",
+  "notes": "Default depth camera: global shutter and a wide field of view suit a moving, balancing robot. No IMU (the robot has its own). USB on the J501 with librealsense."
+ },
+ {
+  "id": "realsense-d415",
+  "category": "sensor",
+  "vendor": "RealSense (formerly Intel RealSense)",
+  "model": "Depth Camera D415",
+  "preferred": true,
+  "price_usd": 325.0,
+  "price_note": "store.realsenseai.com, single unit",
+  "price_checked": "2026-10-25",
+  "buy": [
+   {
+    "seller": "RealSense store",
+    "url": "https://store.realsenseai.com/buy-realsense-depth-camera-d415.html",
+    "in_stock": true,
+    "ships_from": null
+   }
+  ],
+  "specs": {
+   "voltage_v": 5,
+   "interface": "USB 3.1 Gen 1",
+   "connector": "USB Type-C",
+   "mounting": "1x 1/4-20 UNC bottom; 2x M3 on back",
+   "imu": null,
+   "ip_rating": null,
+   "operating_temp_c": [
+    0,
+    35
+   ],
+   "mass_g": 64,
+   "mass_note": "+/-10% (D400 datasheet Table 3-51)",
+   "dimensions_mm": [
+    99,
+    23,
+    20
+   ],
+   "power_max_w": 2.96,
+   "power_typical_w": 2.6,
+   "power_note": "2.96 W in max mode, 2.60 W of it heat (Table 7-7)",
+   "depth_fov_deg": "65 H x 40 V (HD)",
+   "min_z_mm": {
+    "1280x720": 450,
+    "848x480": 310,
+    "640x360": 240,
+    "424x240": 160
+   },
+   "ideal_range_m": [
+    0.3,
+    4
+   ],
+   "depth_tech": "Active IR stereo, rolling-shutter depth imagers"
+  },
+  "cad": {
+   "step_url": null,
+   "available": true,
+   "native_url": "https://dev.realsenseai.com/download/41950",
+   "note": "SolidWorks zip; ROS meshes in realsense-ros realsense2_description"
+  },
+  "sources": [
+   "https://www.realsenseai.com/wp-content/uploads/2026/03/RealSense-D400-Series-Datasheet-Mar-2026.pdf",
+   "https://store.realsenseai.com/buy-realsense-depth-camera-d415.html"
+  ],
+  "confidence": "datasheet",
+  "notes": "Narrower field of view and more accurate at range, but rolling shutter smears depth when the robot moves or wobbles. Good as a second, forward-looking camera for distance."
+ }
+]
