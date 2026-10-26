@@ -141,7 +141,8 @@ def yoke_bracket(S: Stack, L: dict):
         b = b.cut(cq.Workplane('XY').box(26, YOKE_WALL + 2, 22).translate((x, (S.y['bracket'][0] + S.y['bracket'][1]) / 2, 88)))
     # keep clear of the thigh hub, crank and posts between the plates: nothing below the deck there
     span = (S.y['hip_tab'][0], S.y['knee_tab'][1])                 # between the drop faces: plates, posts, thigh, crank
-    b = b.cut(cq.Workplane('XY').box(W + 2, span[1] - span[0], 40).translate((0, sum(span) / 2, deck_z - 25.01)))
+    deck_bot = deck_z - YOKE_DECK / 2
+    b = b.cut(cq.Workplane('XY').box(W + 2, span[1] - span[0], 60).translate((0, sum(span) / 2, deck_bot - 30.01)))   # up to the deck's underside
     for (x, z) in hm_holes():
         b = b.cut(_ycyl(gmi.clear(STD['HM']['thread']) / 2, S.y['bracket'][0] - 1, S.y['bracket'][1] + 1, x, z))
     for (x, z) in hm_dowels():

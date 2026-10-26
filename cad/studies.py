@@ -164,7 +164,8 @@ def run(design: Path, mesh: float):
     zf = adi['z_face']
 
     def adapter_setup(st):
-        st.fix(lambda f: f.kind == 'Cylinder' and rad(f) < 17 and f.center[2] < zf - 2 and (f.bbox[3] - f.bbox[0]) < 6)
+        mp = S.hip['output']['bolts']['pcd'] / 2                 # the motor's own screws and dowels, whatever the motor
+        st.fix(lambda f: f.kind == 'Cylinder' and abs(rad(f) - mp) < 2.5 and f.center[2] < zf - 2 and (f.bbox[3] - f.bbox[0]) < 7)
         face_bolts = lambda f: f.kind == 'Cylinder' and 22 < rad(f) < 28 and f.center[2] > zf - 10
         st.torque(face_bolts, (0, 0, zf), (0, 0, 1), T_mot)
         st.torque(face_bolts, (0, 0, zf), (1, 0, 0), M_out, probe=False)
