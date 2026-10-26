@@ -32,6 +32,7 @@ class Push:
     duration: float = 0.1
     height_m: float = 0.15     # above the hip axis, in the base frame
     absolute: bool = False     # True: impulse_ns is in N·s (a dart's recoil), not per kg
+    lateral: bool = False      # True: sideways (to the robot's left), not along its heading
 
 
 @dataclass
@@ -48,6 +49,10 @@ class Scenario:
     targets: List[Target] = field(default_factory=list)   # foam targets the turret engages
     darts: int = 0                         # dart bodies loaded in the magazine
     min_hit_rate: Optional[float] = None   # pass needs at least this share of shots on target
+    motors_off_at: Optional[float] = None  # every motor stops at this time (e-stop, a flat battery): a fall test
+    expect_fall: bool = False              # a fall is the point of the test: pass on how it lands, not on staying up
+    start_drop_m: float = 0.0              # start this far above the ground (a landing test)
+    max_body_impact_n: Optional[float] = None   # pass needs the body's peak contact force below this
 
 
 def ramp(deg, x0=0.8, length=2.0):
@@ -60,6 +65,11 @@ def ramp(deg, x0=0.8, length=2.0):
     return (f'<geom name="ramp" type="box" size="{hl} 1.5 0.05" pos="{cx - 0.05 * nx} 0 {cz - 0.05 * nz}" '
             f'quat="{q[0]} {q[1]} {q[2]} {q[3]}" rgba=".55 .5 .42 1" friction="0.9 0.01 0.001"/>'
             f'<geom name="plateau" type="box" size="1.5 1.5 {top_z / 2}" pos="{x0 + length * math.cos(t) + 1.5} 0 {top_z / 2}" rgba=".55 .5 .42 1"/>')
+
+
+def platform(height, edge_x):
+    """A raised floor the robot starts on, ending at edge_x (a kerb to drive off)."""
+    return f'<geom name="platform" type="box" size="1.5 1.5 {height / 2}" pos="{edge_x - 1.5} 0 {height / 2}" rgba=".6 .6 .62 1"/>'
 
 
 def curb(height, x0=0.8):
@@ -95,6 +105,18 @@ SCENARIOS = {
                         targets=TARGETS, darts=24, min_hit_rate=0.4),
     'look': Scenario('look', 'Look up: lean back 15° on the legs, hold, then look ahead again', 9.0,
                      lambda t: Command(height=0.7, look_up=0.26 if 2 < t < 6 else 0.0), hold_from=8.0),
+    # falls, drops and landings (review A5): how the body lands matters, and the lidar under the waist must not touch
+    'fall_front': Scenario('fall_front', 'Motors cut while standing, nudged forwards: how it lands', 4.0, lambda t: Command(height=0.6),
+                           pushes=[Push(1.0, 0.15)], motors_off_at=1.0, expect_fall=True, max_body_impact_n=3000.0),
+    'fall_back': Scenario('fall_back', 'Motors cut while standing, nudged backwards: how it lands', 4.0, lambda t: Command(height=0.6),
+                          pushes=[Push(1.0, -0.15)], motors_off_at=1.0, expect_fall=True, max_body_impact_n=3000.0),
+    'fall_side': Scenario('fall_side', 'Motors cut while standing, pushed sideways: how it lands', 4.0, lambda t: Command(height=0.6),
+                          pushes=[Push(1.0, 0.25, lateral=True)], motors_off_at=1.0, expect_fall=True, max_body_impact_n=3000.0),
+    'kerb_drop': Scenario('kerb_drop', 'Drive off a 50 mm kerb at 0.8 m/s', 7.0,
+                          lambda t: Command(height=0.6, speed=ramp_profile(t, 1, 1.0, 0.8) if t < 5 else 0.0),
+                          terrain=platform(0.05, 0.6), start_drop_m=0.05, hold_from=6.5),
+    'landing': Scenario('landing', 'Dropped from 80 mm while balancing: land and stay up', 5.0, lambda t: Command(height=0.6),
+                        start_drop_m=0.08, hold_from=4.5),
     'curb': Scenario('curb', 'Drive up a 25 mm kerb', 9.0,
                      lambda t: Command(height=0.6, speed=ramp_profile(t, 1, 1.0, 0.6) if t < 6 else 0.0),
                      terrain=curb(0.025), must_reach_x=1.5),
@@ -165,6 +187,12 @@ def run(xml_path: Path, info: dict, sc: Scenario, video: Optional[Path] = None, 
     data = mujoco.MjData(model)
     rb = Robot(model, info)
     place_standing(rb, data, sc.start_height)
+    if sc.start_drop_m:
+        data.qpos[2] += sc.start_drop_m
+        mujoco.mj_forward(model, data)
+    lidar_geom = next((g for g in range(model.ngeom) if model.geom(g).name == 'lidar'), None)
+    base_geoms = {g for g in range(model.ngeom) if model.geom_bodyid[g] == rb.base}
+    peak_body_n, lidar_touch, force6 = 0.0, None, np.zeros(6)
     ctl = Controller(rb, noise=noise, delay_steps=delay_steps)
     ctl.height = sc.start_height                 # start from the pose the robot is placed in
     turret = TurretController(model, data, list(sc.targets))
@@ -211,6 +239,8 @@ def run(xml_path: Path, info: dict, sc: Scenario, video: Optional[Path] = None, 
         for p in pushes:
             if p.t <= t < p.t + p.duration:
                 fwd = ctl.heading(data)
+                if p.lateral:
+                    fwd = np.array([-fwd[1], fwd[0], 0.0])
                 F = fwd * ((p.impulse_ns if p.absolute else p.impulse_ns * rb.total_mass) / p.duration)
                 data.xfrc_applied[base, :3] = F
                 R = data.xmat[base].reshape(3, 3)
@@ -219,8 +249,20 @@ def run(xml_path: Path, info: dict, sc: Scenario, video: Optional[Path] = None, 
         if turret.has and sc.targets:
             cmd = shooting_stance(cmd, turret, t)
         st = ctl.control(data, cmd, dt)
+        if sc.motors_off_at is not None and t >= sc.motors_off_at:
+            data.ctrl[:] = 0.0                       # power cut: every motor goes limp
         turret.step(t, dt)
         mujoco.mj_step(model, data)
+        for ci in range(data.ncon):                  # what the body (and the lidar) hits
+            c = data.contact[ci]
+            if c.geom1 in base_geoms or c.geom2 in base_geoms:
+                other = c.geom2 if c.geom1 in base_geoms else c.geom1
+                if model.geom_bodyid[other] in robot_set:
+                    continue
+                mujoco.mj_contactForce(model, data, ci, force6)
+                peak_body_n = max(peak_body_n, abs(float(force6[0])))
+                if lidar_geom is not None and lidar_touch is None and lidar_geom in (c.geom1, c.geom2):
+                    lidar_touch = round(float(data.time), 3)
         th = st['theta']
         thetas.append(th)
         max_theta = max(max_theta, abs(th))
@@ -230,7 +272,7 @@ def run(xml_path: Path, info: dict, sc: Scenario, video: Optional[Path] = None, 
         for n in names:
             tau = data.actuator_force[rb.act[n]]
             peak_tau[n] = max(peak_tau[n], abs(tau))
-            energy[n] += abs(tau * data.qvel[rb.vadr[n]]) * dt
+            energy[n] += abs(tau * data.actuator_velocity[rb.act[n]]) * dt
         if k % 2 == 0:
             # the load each robot link takes from its parent, at its joint: MuJoCo's cfrc_int is a spatial force about
             # the root's centre of mass, so move the moment to the joint anchor, then express both in the link's frame
@@ -266,15 +308,19 @@ def run(xml_path: Path, info: dict, sc: Scenario, video: Optional[Path] = None, 
 
     th = np.array(thetas)
     reasons = []
-    if fell_at is not None:
+    if fell_at is not None and not sc.expect_fall:
         reasons.append(f'fell at {fell_at:.1f} s')
+    if lidar_touch is not None:
+        reasons.append(f'the lidar hit the ground at {lidar_touch:.2f} s')
+    if sc.max_body_impact_n is not None and peak_body_n > sc.max_body_impact_n:
+        reasons.append(f'body impact {peak_body_n:.0f} N (limit {sc.max_body_impact_n:.0f} N)')
     tsum = turret.summary() if turret.has else None
     if sc.min_hit_rate is not None and tsum and tsum['hit_rate'] < sc.min_hit_rate:
         reasons.append(f"hit {tsum['hits']} of {tsum['shots']} shots ({tsum['hit_rate']:.0%}), needs {sc.min_hit_rate:.0%}")
     if sc.min_hit_rate is not None and tsum and tsum.get('targets') and tsum['knocked_down'] < math.ceil(0.6 * tsum['targets']):
         reasons.append(f"knocked down {tsum['knocked_down']} of {tsum['targets']} targets, needs {math.ceil(0.6 * tsum['targets'])}")
     clear = min_base_z + (info['layout_mm']['trayBottom'] - 80) / 1000      # the lowest part: the lidar under the waist
-    if info['layout_mm'].get('lidarMount') == 'under' and clear < 0.01:
+    if info['layout_mm'].get('lidarMount') == 'under' and clear < 0.01 and lidar_geom is None:
         reasons.append(f'the lidar came within {clear * 1000:.0f} mm of the ground')
     if sc.must_reach_x is not None and x_max < sc.must_reach_x:
         reasons.append(f'only reached {x_max:.2f} m of {sc.must_reach_x} m')
@@ -301,7 +347,7 @@ def run(xml_path: Path, info: dict, sc: Scenario, video: Optional[Path] = None, 
                   + [{'t': round(p.t, 3), 'type': 'push'} for p in sc.pushes if not p.absolute]
                   + ([{'t': round(min(tipping_at or fell_at, fell_at), 3), 'type': 'fall'}] if fell_at is not None else []),
         'fell_at': round(fell_at, 3) if fell_at is not None else None,
-        'lidar_clearance_mm': round(clear * 1000, 1),
+        'lidar_clearance_mm': round(clear * 1000, 1), 'body_impact_peak_n': round(peak_body_n), 'lidar_touched_at': lidar_touch,
         'turret': tsum,
         'qpos_layout': {model.joint(j).name: int(model.jnt_qposadr[j]) for j in range(model.njnt)},
         'props': props,

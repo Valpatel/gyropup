@@ -87,14 +87,16 @@
     "hub_od": 44.0
   },
   "PR": {
-    "rod_end": "M6 female rod end (Igus KBRM-06 or SKF SIKAC 6 M)",
-    "rod_end_eye_d": 6.0,
-    "rod_end_ball_w": 9.0,
-    "tube_od": 12.0,
-    "tube_id": 10.0,
-    "tube": "steel 12 x 1 or carbon 12/10",
-    "crank_r": 45.0,
-    "bolt": "M6 shoulder bolt"
+    "rod_end": "M8 female rod end (igus KBRM-08 or SKF SIKAC 8 M)",
+    "rod_end_eye_d": 8.0,
+    "rod_end_ball_w": 12.0,
+    "tube_od": 14.0,
+    "tube_id": 11.0,
+    "tube": "steel 14 x 1.5 (or carbon 14/11)",
+    "crank_r": 60.0,
+    "bolt": "M8 shoulder bolt",
+    "lever_beta_deg": -75.0,
+    "note": "crank and shin lever parallel, at lever_beta_deg from the forward perpendicular (- = towards the foot): the rod's transmission sin = |cos(knee - beta)| stays >= 0.5 over the knee range (review A1)"
   },
   "WH": {
     "pilot_d": 32.0,

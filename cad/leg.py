@@ -30,6 +30,7 @@ PARAMS = {
     'shin_w': 34.0, 'shin_wall': 2.0,                 # the shin carries less
     'yoke_wall': 12.0, 'yoke_deck': 10.0, 'yoke_rib': 6.0,   # 6061 yoke (FEA: SF 3.4 at 12/12/8, 1.9 at 10/8/6)
     'crank_r': STD['PR']['crank_r'],
+    'lever_beta_deg': STD['PR']['lever_beta_deg'],   # crank and lever direction, from the forward perpendicular (- = towards the foot)
 }
 if os.environ.get('GYROPUP_CAD_PARAMS'):
     PARAMS.update(json.loads(Path(os.environ['GYROPUP_CAD_PARAMS']).read_text()))
@@ -47,6 +48,26 @@ class Stack:
     hip: dict        # motor interfaces
     knee: dict
     wheel: dict
+
+
+def lever_pin(r: float = None, beta_deg: float = None):
+    """(x, z) of the crank pin from the hip axis, and of the lever pin from the knee pin, at the zero pose."""
+    r = PARAMS['crank_r'] if r is None else r
+    b = math.radians(PARAMS['lever_beta_deg'] if beta_deg is None else beta_deg)
+    return r * math.cos(b), r * math.sin(b)
+
+
+def transmission(knee_min_deg: float, knee_max_deg: float, beta_deg: float = None, n: int = 60):
+    """The push-rod's transmission: sin(angle between rod and lever) = |cos(q - beta)| with q = knee interior angle - 180°.
+    Returns (smallest sin over the knee range, the interior knee angle where it happens). 0 is a dead point."""
+    b = math.radians(PARAMS['lever_beta_deg'] if beta_deg is None else beta_deg)
+    worst = (2.0, None)
+    for k in range(n + 1):
+        g = math.radians(knee_min_deg + (knee_max_deg - knee_min_deg) * k / n)
+        sphi = abs(math.cos(g - math.pi - b))
+        if sphi < worst[0]:
+            worst = (sphi, math.degrees(g))
+    return worst
 
 
 def _ycyl(r, y0, y1, x=0.0, z=0.0):
@@ -98,6 +119,10 @@ def stack(L: dict, hip_id: str, knee_id: str, wheel_id: str) -> Stack:
         g = 2 * math.degrees(math.asin(min(1.0, r_need / (2 * min(a, b)))))
         y['min_knee_deg'] = g
         notes.append(f'the wheel passes under the knee motor: hip-to-axle at least {r_need:.0f} mm, so the knee stops at {g:.0f}° or more')
+    sphi, at = transmission(L['kneeMinDeg'], L['kneeMaxDeg'])
+    y['min_sin_phi'], y['min_sin_phi_at_knee_deg'] = round(sphi, 3), round(at, 1)
+    if sphi < 0.5:
+        notes.append(f'the push-rod nears its dead point: sin phi {sphi:.2f} at a {at:.0f}° knee (keep >= 0.5)')
     return Stack(y, 2 * y['wheel_centre'], notes, hip, knee, wheel)
 
 
@@ -203,8 +228,11 @@ def shin(S: Stack, b: float, crank_r: float):
     kc, wh = STD['KC'], STD['WH']
     s = _box_link(y0, y1, b, SHIN_W, SHIN_WALL, kc['hub_od'] / 2, wh['plate_d'] / 2)
     yl = S.y['rod'][1] + 1.5                                    # lever in the crank's plane, next to the rod end
-    s = s.union(cq.Workplane('XY').box(crank_r, 10, 22).translate((crank_r / 2, yl + 5, 0))).union(_ycyl(11, yl, yl + 10, crank_r, 0))
-    s = s.cut(_ycyl(3.1, yl - 1, yl + 12, crank_r, 0))
+    lx, lz = lever_pin(crank_r)
+    beta = PARAMS['lever_beta_deg']
+    arm = cq.Workplane('XY').box(crank_r, 10, 24).translate((crank_r / 2, yl + 5, 0)).rotate((0, 0, 0), (0, 1, 0), -beta)
+    s = s.union(arm).union(_ycyl(13, yl, yl + 10, lx, lz))
+    s = s.cut(_ycyl(4.1, yl - 1, yl + 12, lx, lz))                                           # M8 shoulder bolt
     s = s.cut(_ycyl(kc['bearing_od'] / 2 + 0.02, y0 - 0.01, y0 + kc['bearing_w']))
     s = s.cut(_ycyl(kc['bearing_od'] / 2 + 0.02, y1 - kc['bearing_w'], y1 + 0.01))
     s = s.cut(_ycyl(kc['pin_d'] / 2 + 1.0, y0 - 1, y1 + 1))
@@ -220,10 +248,11 @@ def shin(S: Stack, b: float, crank_r: float):
 def crank(S: Stack, crank_r: float):
     """Knee crank (10 mm 6061) on the knee's standard face, an M6 pin for the rod end at the crank radius."""
     y0, y1 = S.y['crank']
-    c = (_ycyl(36.0, y0, y1).union(cq.Workplane('XY').box(crank_r, y1 - y0, 24).translate((crank_r / 2, (y0 + y1) / 2, 0)))
-         .union(_ycyl(12, y0, y1, crank_r, 0)))
+    lx, lz = lever_pin(crank_r)
+    arm = cq.Workplane('XY').box(crank_r, y1 - y0, 26).translate((crank_r / 2, (y0 + y1) / 2, 0)).rotate((0, 0, 0), (0, 1, 0), -PARAMS['lever_beta_deg'])
+    c = _ycyl(36.0, y0, y1).union(arm).union(_ycyl(14, y0, y1, lx, lz))
     c = c.cut(gmi.place(gmi.std_face_mate('L', depth=y1 - y0 + 2), (0, y1, 0), (0, -1, 0)))
-    return c.cut(_ycyl(3.1, y0 - 1, y1 + 1, crank_r, 0))
+    return c.cut(_ycyl(4.1, y0 - 1, y1 + 1, lx, lz))
 
 
 def pushrod(S: Stack, a: float, crank_r: float):
@@ -231,9 +260,10 @@ def pushrod(S: Stack, a: float, crank_r: float):
     y0, y1 = S.y['rod']
     pr = STD['PR']
     yc = (y0 + y1) / 2
-    eye = lambda z: _ycyl(9.5, y0, y1, crank_r, z).cut(_ycyl(3.0, y0 - 1, y1 + 1, crank_r, z))
-    tube = cq.Workplane('XY').circle(pr['tube_od'] / 2).circle(pr['tube_id'] / 2).extrude(a - 48).translate((crank_r, yc, -a + 24))
-    return eye(0).union(eye(-a)).union(tube)
+    lx, lz = lever_pin(crank_r)
+    eye = lambda z: _ycyl(12, y0, y1, lx, z).cut(_ycyl(4.0, y0 - 1, y1 + 1, lx, z))
+    tube = cq.Workplane('XY').circle(pr['tube_od'] / 2).circle(pr['tube_id'] / 2).extrude(a - 56).translate((lx, yc, lz - a + 28))
+    return eye(lz).union(eye(lz - a)).union(tube)
 
 
 def wheel_adapter(S: Stack, b: float):
@@ -308,8 +338,9 @@ def pose(shape, part: str, hip_rad: float, knee_rad: float, a: float, crank_r: f
         return shape.rotate((0, 0, 0), (0, 1, 0), deg(hip_rad + knee_rad))
     if kind == 'rod':
         th = hip_rad + knee_rad                     # the crank pin turns by this; the rod stays parallel to the thigh
-        px, pz = crank_r * math.cos(th), -crank_r * math.sin(th)
-        s = shape.translate((px - crank_r, 0, pz))
+        x0, z0 = lever_pin(crank_r)
+        px, pz = x0 * math.cos(th) + z0 * math.sin(th), -x0 * math.sin(th) + z0 * math.cos(th)
+        s = shape.translate((px - x0, 0, pz - z0))
         return s.rotate((px, 0, pz), (px, 1, pz), deg(hip_rad))
     return shape
 

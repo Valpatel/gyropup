@@ -6,8 +6,8 @@
     "thigh_mm": 200,
     "shin_mm": 200,
     "wheel_diameter_mm": 180,
-    "knee_min_deg": 45,
-    "knee_max_deg": 160,
+    "knee_min_deg": 48,
+    "knee_max_deg": 155,
     "track_mm": 330,
     "link_section": {
       "width_mm": 40,

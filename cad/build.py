@@ -169,6 +169,18 @@ def camera_cradle(L, front=True):
     return c
 
 
+def lidar_guard(L):
+    """A TPU ring around the VLP-16, flush with its bottom and 23 mm wider, on three posts from the hanger: in a forward
+    fall it touches the ground before the lidar does (sim: fall_front)."""
+    z0 = L['trayBottom']
+    zb = z0 - 8 - 72                                            # the lidar's bottom
+    ring = cq.Workplane('XY').circle(75).circle(56).extrude(12).translate((0, 0, zb))
+    for k in range(3):
+        a = math.radians(90 + 120 * k)
+        ring = ring.union(cq.Workplane('XY').circle(6).extrude(z0 - 8 - zb).translate((65 * math.cos(a), 65 * math.sin(a), zb)))
+    return ring
+
+
 def lidar_hanger(L):
     z0 = L['trayBottom']
     lp = P['lidar']
@@ -217,6 +229,7 @@ def build(design_path: Path, fast: bool = False):
     add('camera_cradle', camera_cradle(L, True), 'pla', 2, 'printed PLA')
     placed['camera_cradle_rear'] = camera_cradle(L, False)
     add('lidar_hanger', lidar_hanger(L), 'pla', 1, 'printed PLA')
+    add('lidar_guard', lidar_guard(L), 'tpu95', 1, 'printed TPU 95A')
     # the legs: left as built, right mirrored; each part turned to the standing pose
     for name, shape in lparts.items():
         m = lmeta[name]
@@ -229,10 +242,11 @@ def build(design_path: Path, fast: bool = False):
            'yoke_bracket': ((1, 0, 0), -90), 'battery_cradle': None}
     materials = json.loads((R / 'catalog/materials.json').read_text())
     OUT.mkdir(exist_ok=True)
-    for old in OUT.glob('asm_*.step'):          # parts from an earlier build must not linger
-        old.unlink()
-    for old in OUT.glob('*.stl'):
-        old.unlink()
+    if not fast:                                # parts from an earlier build (a removed part, an old design) must not linger
+        for pat in ('*.step', '*.stl', 'view/*', 'links/*'):
+            for old in OUT.glob(pat):
+                if old.is_file():
+                    old.unlink()
     report, mass = {}, {}
     METAL_DENSITY = {'al6061': 2.70}
     for name, shape in parts.items():
@@ -339,7 +353,7 @@ def export_link_meshes(design_path, L, S, parts, lparts, lbought, bought, placed
            'knee_motor': gmi.place(_envelope(hip_id), (0, S.y['knee_out'], 0), (0, -1, 0))}
     for name, shape in env.items():
         put('body', name, shape, 'l')
-    for name in ('chassis', 'battery_cradle', 'face', 'lidar_hanger', 'head_saddle'):
+    for name in ('chassis', 'battery_cradle', 'face', 'lidar_hanger', 'lidar_guard', 'head_saddle'):
         put('body', name, parts[name], None)
     put('body', 'camera_cradle_front', parts['camera_cradle'], None)
     put('body', 'camera_cradle_rear', placed['camera_cradle_rear'], None)
@@ -349,7 +363,7 @@ def export_link_meshes(design_path, L, S, parts, lparts, lbought, bought, placed
     (d / 'manifest.json').write_text(json.dumps({
         'design': str(Path(design_path).resolve().relative_to(R)), 'units': 'mm',
         'frame': 'robot: x forward, y left, z up, origin on the hip axis; legs at the zero pose (hanging straight down)',
-        'thigh_mm': L['thigh'], 'shin_mm': L['shin'], 'crank_r_mm': leg.PARAMS['crank_r'], 'mirror': 'side l parts are mirrored (y -> -y) for the right leg',
+        'thigh_mm': L['thigh'], 'shin_mm': L['shin'], 'crank_r_mm': leg.PARAMS['crank_r'], 'lever_beta_deg': leg.PARAMS['lever_beta_deg'], 'mirror': 'side l parts are mirrored (y -> -y) for the right leg',
         'links': links}, indent=1) + '\n')
 
 

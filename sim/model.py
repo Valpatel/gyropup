@@ -255,6 +255,22 @@ def build(design_path: Path, out_dir: Path | None = None) -> dict:
     ])]
     if part(design, catalog, 'lidar') and L['lidarMount'] != 'under':
         links[0].collisions.append(rb.Collision('cylinder', (0.068, 0.09), xyz=(0, 0, top + 0.05), contype=2, conaffinity=1))
+    if part(design, catalog, 'lidar') and L['lidarMount'] == 'under':   # the lowest part of the body: falls must not land on it
+        lz = (L['trayBottom'] - 8 - 36) * M
+        links[0].collisions.append(rb.Collision('cylinder', (0.0517, 0.072), xyz=(0, 0, lz), contype=2, conaffinity=1, name='lidar'))
+        # the TPU guard ring around it (cad/build.py lidar_guard): flush with its bottom, 23 mm wider, so it lands first
+        links[0].collisions.append(rb.Collision('cylinder', (0.075, 0.012), xyz=(0, 0, lz - 0.036 + 0.006), contype=2, conaffinity=1, name='lidar_guard'))
+    for x, nm in ((Bd / 2 + 0.017, 'camera_front'), (-Bd / 2 - 0.017, 'camera_rear')):
+        links[0].collisions.append(rb.Collision('box', (0.025, 0.09, 0.025), xyz=(x, 0, (L['trayBottom'] + 17) * M), contype=2, conaffinity=1, name=nm))
+    if mech:                                             # the leg modules: both motors per side and the yoke over them
+        st = mech['stack_mm']
+        for side, tag in ((1, 'l'), (-1, 'r')):
+            for key in ('hip_motor', 'knee_motor'):
+                y0, y1 = st[key]
+                links[0].collisions.append(rb.Collision('cylinder', (0.0503, (y1 - y0) * M), xyz=(0, side * (y0 + y1) / 2 * M, 0), rpy=(math.pi / 2, 0, 0),
+                                                        contype=2, conaffinity=1, name=f'{key}_{tag}'))
+            yw0, yw1 = st['bracket'][0], st['knee_motor'][0]
+            links[0].collisions.append(rb.Collision('box', (0.11, (yw1 - yw0) * M, 0.05), xyz=(0, side * (yw0 + yw1) / 2 * M, 0.095), contype=2, conaffinity=1, name=f'yoke_{tag}'))
     joints, motors = [], []
     for side, tag in ((1, 'l'), (-1, 'r')):
         th = rb.combine([bd for s, bd in thigh if s == side], f'thigh_{tag}')
@@ -271,11 +287,16 @@ def build(design_path: Path, out_dir: Path | None = None) -> dict:
             rb.Joint(f'hip_{tag}', 'revolute', 'base', f'thigh_{tag}', xyz=(0, side * hipY, 0), axis=(0, 1, 0), lower=-0.6, upper=2.2,
                      effort=legl['peak_nm'], velocity=legl['omega_max'], damping=0.05, friction=0.05, armature=legl['armature']),
             rb.Joint(f'knee_{tag}', 'revolute', f'thigh_{tag}', f'shin_{tag}', xyz=(0, 0, -a), axis=(0, 1, 0), lower=knee_lo, upper=knee_hi,
-                     effort=legl['peak_nm'], velocity=legl['omega_max'], damping=0.05, friction=0.05, armature=legl['armature']),
+                     effort=legl['peak_nm'], velocity=legl['omega_max'], damping=0.05, friction=0.05, armature=0.0),
             rb.Joint(f'wheel_{tag}', 'continuous', f'shin_{tag}', f'wheel_{tag}', xyz=(0, side * (wheelY - hipY), -b), axis=(0, 1, 0),
                      effort=wl['peak_nm'], velocity=wl['omega_max'], damping=0.01, friction=0.02),
         ]
-        motors += [rb.Motor(f'hip_{tag}', legl['peak_nm']), rb.Motor(f'knee_{tag}', legl['peak_nm']), rb.Motor(f'wheel_{tag}', wl['peak_nm'])]
+        # the knee motor sits on the body, coaxial with the hip, and turns the shin through the push-rod parallelogram:
+        # its output angle is hip + knee, so it drives both joints (a fixed tendon), and its rotor inertia rides on
+        # that combined motion; the hip motor's torque is then what the hip joint needs minus the knee motor's
+        motors += [rb.Motor(f'hip_{tag}', legl['peak_nm']),
+                   rb.Motor(f'knee_{tag}', legl['peak_nm'], coupling={f'hip_{tag}': 1.0, f'knee_{tag}': 1.0}, armature=legl['armature']),
+                   rb.Motor(f'wheel_{tag}', wl['peak_nm'])]
 
     # the turret (head payload): a pan ring and a tilting launcher with a muzzle, each on a servo-class motor
     turret = None

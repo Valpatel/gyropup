@@ -64,7 +64,10 @@ def main(design: Path) -> dict:
             return
         ml = json.loads((out / 'mech-layout.json').read_text())
         mp = json.loads((out / 'mass-properties.json').read_text())
-        m.update(track_mm=round(ml['track_mm']), made_kg=round(mp['made_total_g'] / 1000, 3), stack_notes=ml['notes'])
+        m.update(track_mm=round(ml['track_mm']), made_kg=round(mp['made_total_g'] / 1000, 3), stack_notes=ml['notes'],
+                 min_sin_phi=ml['stack_mm'].get('min_sin_phi'))
+        if (m['min_sin_phi'] or 0) < 0.5:
+            m['reasons'].append(f"push-rod near its dead point: sin phi {m['min_sin_phi']}")
     stage('cad', cad)
     if m['reasons']:
         return finish(m, out, 'cad')
@@ -89,6 +92,12 @@ def main(design: Path) -> dict:
         sm = json.loads((out / 'sim' / design.stem / 'summary.json').read_text())
         m.update(model_mass_kg=sm['mass_kg'], scenarios_passed=sm['passed'], scenarios_total=sm['total'],
                  scenario_fails={k: v['reasons'] for k, v in sm['scenarios'].items() if not v['pass']})
+        # the hardest any leg or wheel motor works in any powered scenario, as a share of its peak
+        worst = max((mo['of_peak'], k, n) for k, v in sm['scenarios'].items() if not k.startswith('fall')
+                    for n, mo in v['motors'].items())
+        m.update(worst_motor_of_peak=worst[0], worst_motor=f'{worst[2]} in {worst[1]}')
+        if worst[0] > 0.95:
+            m['reasons'].append(f'{worst[2]} needs {worst[0]:.0%} of its peak in {worst[1]}')
         if sm['passed'] < sm['total']:
             m['reasons'].append(f"{sm['total'] - sm['passed']} scenarios fail: {', '.join(m['scenario_fails'])}")
     stage('sims', sims)
@@ -102,8 +111,13 @@ def main(design: Path) -> dict:
             return
         fs = json.loads((out / 'fea' / 'summary.json').read_text())
         v = fs['verdict']['al6061']
-        m.update(min_safety_factor=v['min_safety_factor'], wheel_deflection_mm=v['wheel_deflection_mm'],
+        m.update(min_safety_factor=v['min_safety_factor'], min_safety_factor_fall=v.get('min_safety_factor_fall'), wheel_deflection_mm=v['wheel_deflection_mm'],
                  safety_factors={f"{x['part']} {x['case']}": x['safety_factor'] for x in fs['results']})
+        m['rod'] = fs.get('rod')
+        if fs.get('rod') and not v.get('rod_ok', True):
+            m['reasons'].append(f"push-rod: {fs['rod']['force_n']} N, buckling SF {fs['rod']['buckling_sf']}, rod-end SF {fs['rod']['rod_end_sf']}")
+        if v.get('min_safety_factor_fall') is not None and v['min_safety_factor_fall'] < fs['targets'].get('metal_sf_fall', 1.2):
+            m['reasons'].append(f"fall safety factor {v['min_safety_factor_fall']} < {fs['targets'].get('metal_sf_fall', 1.2)}")
         if v['min_safety_factor'] < fs['targets']['metal_sf']:
             m['reasons'].append(f"safety factor {v['min_safety_factor']} < {fs['targets']['metal_sf']}")
         if v['wheel_deflection_mm'] > fs['targets']['wheel_deflection_mm']:

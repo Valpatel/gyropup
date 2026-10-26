@@ -73,5 +73,20 @@
   "qty": 1,
   "made": "printed PLA",
   "print": true
+ },
+ "lidar_guard": {
+  "degenerate_tessellation_faces_removed": 0,
+  "cad_valid": true,
+  "solid_count": 1,
+  "watertight": true,
+  "print_bounds_mm": [
+   149.966,
+   149.983,
+   72.0
+  ],
+  "volume_cm3": 114.191,
+  "qty": 1,
+  "made": "printed TPU 95A",
+  "print": true
  }
 }

@@ -78,6 +78,7 @@ class Robot:
         self.wheel_peak = info['wheel_motor']['peak_nm']
         self.wheel_omega = info['wheel_motor']['omega_max']
         self.total_mass = float(sum(model.body_mass[i] for i in self.bodies))
+        self.knee_coupled = int(model.actuator_trntype[self.act['knee_l']]) == int(mujoco.mjtTrn.mjTRN_TENDON)
 
     def peak_for(self, name):
         return self.wheel_peak if name.startswith('wheel') else self.leg_peak
@@ -262,8 +263,13 @@ class Controller:
         tau['wheel_r'] = 0.5 * u + tau_yaw
 
         out = {}
+        if rb.knee_coupled:
+            # joint torques -> motor torques: the knee motor drives hip + knee (parallelogram), so it supplies all of the
+            # knee's torque and that much of the hip's; the hip motor supplies the rest
+            for side in ('l', 'r'):
+                tau[f'hip_{side}'] -= tau[f'knee_{side}']
         for name, t in tau.items():
-            omega = data.qvel[rb.vadr[name]]
+            omega = data.actuator_velocity[rb.act[name]]               # the motor's own speed (hip + knee for the knee motor)
             peak, om = (rb.wheel_peak, rb.wheel_omega) if name.startswith('wheel') else (rb.leg_peak, rb.leg_omega)
             c = clip_torque(t, omega, peak, om)
             if abs(c) < abs(t) - 1e-9:

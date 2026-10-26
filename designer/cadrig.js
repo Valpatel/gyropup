@@ -39,6 +39,8 @@ export async function loadCadRig(root, designFile) {
     geo[p.file] = g;
   }));
   const a = man.thigh_mm / 1000, b = man.shin_mm / 1000, r = man.crank_r_mm / 1000;
+  const beta = ((man.lever_beta_deg ?? 0) * Math.PI) / 180;
+  const x0 = r * Math.cos(beta), z0 = r * Math.sin(beta);       // the crank pin at the zero pose (CAD x forward, z up)
   const mat = (c) => new THREE.MeshPhysicalMaterial({ color: c, roughness: 0.42, metalness: /#(9a|b8|c9|d6|5a)/i.test(c) ? 0.55 : 0.05, clearcoat: 0.2 });
   const mesh = (p, side) => {
     const m = new THREE.Mesh(side === 'r' ? mirrored(geo[p.file]) : geo[p.file], mat(p.color));
@@ -71,7 +73,7 @@ export async function loadCadRig(root, designFile) {
     const crank = new THREE.Group();                            // on the knee motor's output: turns by hip + knee
     add(crank, 'crank');
     const rod = new THREE.Group();                              // the push-rod: rides on the crank pin, parallel to the thigh
-    add(rod, 'rod', [0, 0, -r]);
+    add(rod, 'rod', [0, -z0, -x0]);
     group.add(thigh, crank, rod);
     legs[side] = { thigh, knee, wheel, crank, rod };
   }
@@ -86,7 +88,7 @@ export async function loadCadRig(root, designFile) {
       L.wheel.rotation.x = wheel;
       const th = hip + knee;
       L.crank.rotation.x = th;
-      L.rod.position.set(0, -r * Math.sin(th), r * Math.cos(th));   // the crank pin
+      L.rod.position.set(0, -x0 * Math.sin(th) + z0 * Math.cos(th), x0 * Math.cos(th) + z0 * Math.sin(th));   // the crank pin
       L.rod.rotation.x = hip;
     },
   };

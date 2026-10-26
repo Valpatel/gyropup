@@ -4,7 +4,8 @@
  "frame": "robot: x forward, y left, z up, origin on the hip axis; legs at the zero pose (hanging straight down)",
  "thigh_mm": 200,
  "shin_mm": 200,
- "crank_r_mm": 45.0,
+ "crank_r_mm": 60.0,
+ "lever_beta_deg": -75.0,
  "mirror": "side l parts are mirrored (y -> -y) for the right leg",
  "links": {
   "body": [
@@ -66,6 +67,12 @@
     "file": "lidar_hanger.stl",
     "name": "lidar_hanger",
     "color": "#3b3f46",
+    "side": null
+   },
+   {
+    "file": "lidar_guard.stl",
+    "name": "lidar_guard",
+    "color": "#2a2d33",
     "side": null
    },
    {

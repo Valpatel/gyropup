@@ -35,11 +35,17 @@
   "how": "printed PLA",
   "mass_g_each": 61.4
  },
+ "lidar_guard": {
+  "material": "tpu95",
+  "qty": 1,
+  "how": "printed TPU 95A",
+  "mass_g_each": 103.0
+ },
  "yoke_bracket": {
   "material": "al6061",
   "qty": 2,
   "how": "CNC 6061-T6 (FEA: printed PA6-CF bends 10 mm); M6 into the chassis, M5 into both plate tabs",
-  "mass_g_each": 952.0
+  "mass_g_each": 960.9
  },
  "hip_motor_plate": {
   "material": "al6061",
@@ -75,13 +81,13 @@
   "material": "al6061",
   "qty": 2,
   "how": "CNC 6061-T6 box, two 6001-2RS; cables inside",
-  "mass_g_each": 308.5
+  "mass_g_each": 312.1
  },
  "knee_crank": {
   "material": "al6061",
   "qty": 2,
   "how": "CNC 6061-T6, 10 mm",
-  "mass_g_each": 105.1
+  "mass_g_each": 118.0
  },
  "wheel_adapter": {
   "material": "al6061",

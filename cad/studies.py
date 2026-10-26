@@ -40,13 +40,16 @@ EXPORTS = Path(os.environ['GYROPUP_EXPORTS']).resolve() if os.environ.get('GYROP
 OUT = EXPORTS / 'fea'
 
 
-def worst_link_loads(stem: str) -> dict:
-    """For each link: the run with the peak force and the run with the peak moment."""
+def worst_link_loads(stem: str, falls: bool = False) -> dict:
+    """For each link: the run with the peak force and the run with the peak moment, over the everyday scenarios or
+    (falls=True) over the fall scenarios only: falls are rare events with their own, lower, target."""
     best = {}
     for f in glob.glob(str(EXPORTS / 'sim' / stem / '*.json')):
         if f.endswith('summary.json'):
             continue
         r = json.loads(Path(f).read_text())
+        if r['scenario'].startswith('fall') != falls:
+            continue
         for body, v in (r.get('link_loads') or {}).items():
             b = best.setdefault(body, {})
             if v.get('force_n', 0) > b.get('force', {}).get('force_n', -1):
@@ -62,20 +65,22 @@ FLOOR = {'vertical_x_static': 2.5,      # vertical wheel load, times the static 
          'lateral_g': 0.5}              # sideways grip on one wheel, as a fraction of the whole robot's weight
 
 
-def cases(loads: dict, L: dict, S, crank_r: float, mass_kg: float = 20.0) -> dict:
+def cases(loads: dict, L: dict, S, crank_r: float, mass_kg: float = 20.0, floor: bool = True) -> dict:
     a, b = L['thigh'], L['shin']
     W = mass_kg * 9.81
-    vert_floor, lat_floor = FLOOR['vertical_x_static'] * W / 2, FLOOR['lateral_g'] * W
+    vert_floor, lat_floor = (FLOOR['vertical_x_static'] * W / 2, FLOOR['lateral_g'] * W) if floor else (0.0, 0.0)
     leg_h = (a + b) * 0.9 / 1000 + L['wheelR'] / 1000             # hip to the tyre's contact, standing
     sh_f = loads['shin_l']['force']
     th_m = loads['thigh_l']['moment']
     wh = loads['wheel_l']['force']
     Fx, _, Fz = sh_f['force_vec_body']
     My = sh_f['moment_with_force_body'][1]
-    P = abs(My) / (crank_r / 1000.0)                          # push-rod force, N
+    sphi, at = leg.transmission(L['kneeMinDeg'], L['kneeMaxDeg'])
+    P = abs(My) / (crank_r / 1000.0 * sphi)                    # push-rod force at the worst transmission angle, N
     # T1: pin force on the thigh at the knee = -(shin force - rod force along the thigh axis)
     t1 = {'force': (-Fx, 0.0, -(Fz) + P), 'moments': {'x': -sh_f['moment_with_force_body'][0], 'z': -sh_f['moment_with_force_body'][2]},
-          'from': f"{sh_f['scenario']}: shin force {sh_f['force_n']:.0f} N, knee torque {abs(My):.0f} N·m -> push-rod {P:.0f} N"}
+          'from': f"{sh_f['scenario']}: shin force {sh_f['force_n']:.0f} N, knee torque {abs(My):.0f} N·m -> push-rod {P:.0f} N (sin phi {sphi:.2f} at a {at:.0f}° knee)",
+          'rod_force_n': P, 'sin_phi': sphi}
     # T2: the thigh's peak hip moment (out of plane) re-expressed as loads at the knee: M_knee = M_hip - r x F
     Fh = list(th_m['force_with_moment_body'])
     Mh = list(th_m['moment_vec_body'])
@@ -138,7 +143,8 @@ def run(design: Path, mesh: float):
         return f
 
     bearings = cylinder_at((0, ys, -a), (0, 1, 0), radius_max=15)
-    rod_pin = cylinder_at((cr, S.y['rod'][1] + 6.5, -a), (0, 1, 0), radius_max=4)
+    lx, lz = leg.lever_pin(cr)
+    rod_pin = cylinder_at((lx, S.y['rod'][1] + 6.5, -a + lz), (0, 1, 0), radius_max=5)
     wh_bolts = cylinder_at((0, S.y['shin'][1], -a - b), (0, 1, 0), within=27, radius_max=4)    # the WH screws carry the wheel
 
     def shin_setup(st):
@@ -199,10 +205,33 @@ def run(design: Path, mesh: float):
     study('motor_plate', 'P1', 'al6061', plate_setup)
     study('yoke_bracket', 'Y1', 'al6061', yoke_setup)
 
+    # --- falls: the same parts under the fall scenarios' loads (no floor), against the lower fall target
+    fall_loads = worst_link_loads(design.stem, falls=True)
+    normal_results = list(results)
+    fall_results = []
+    if fall_loads.get('shin_l') and fall_loads.get('thigh_l') and fall_loads.get('wheel_l'):
+        C_normal = C
+        C = cases(fall_loads, L, S, cr, mass, floor=False)
+        leg_f = C['S1']['force']
+        M_out = abs(C['T2']['moments']['x']) + abs(C['T2']['force'][1]) * a / 1000.0
+        T_mot = abs(fall_loads['shin_l']['force']['moment_with_force_body'][1])
+        C['Y1'] = {'from': f"falls: the whole leg, {leg_f[2]:.0f} N up, {abs(leg_f[1]):.0f} N sideways, {M_out:.0f} N·m out of plane"}
+        n0 = len(results)
+        study('thigh', 'T1', 'al6061', thigh_setup('T1'))
+        study('thigh', 'T2', 'al6061', thigh_setup('T2'))
+        study('shin', 'S1', 'al6061', shin_setup)
+        study('yoke_bracket', 'Y1', 'al6061', yoke_setup)
+        fall_results = results[n0:]
+        for r in fall_results:
+            r['case'] += '-fall'
+        results[:] = normal_results
+        C = {**C_normal, **{k + '-fall': v for k, v in C.items()}}
+
     # leg deflection at the wheel: thigh tip (worst case) carried down the shin, plus the shin's own
     summary = {'design': str(design.relative_to(R)), 'mesh_mm': mesh, 'cases': C, 'stack_mm': S.y, 'track_mm': S.track,
                'stack_notes': S.notes, 'assumed_interfaces': assumed, 'results': results,
-               'targets': {'printed_sf': 2.0, 'metal_sf': 2.0, 'wheel_deflection_mm': 2.0}}
+               'targets': {'printed_sf': 2.0, 'metal_sf': 2.0, 'metal_sf_fall': 1.2, 'wheel_deflection_mm': 2.0}}
+    summary['results'] = results + fall_results
     by = {(r['part'], r['case'], r['material_id']): r for r in results}
     verdict = {}
     for material in ('al6061',):
@@ -211,8 +240,20 @@ def run(design: Path, mesh: float):
         # the thigh tip's slope also swings the shin: approximate by the tip deflection scaled by (a + b) / a
         total = dt * (a + b) / a + ds
         sf = min(r['safety_factor'] for r in results if r['material_id'] == material)
-        verdict[material] = {'wheel_deflection_mm': round(total, 2), 'min_safety_factor': sf,
-                             'ok': total <= 2.0 and sf >= 2.0}
+        sf_fall = min((r['safety_factor'] for r in fall_results), default=None)
+        verdict[material] = {'wheel_deflection_mm': round(total, 2), 'min_safety_factor': sf, 'min_safety_factor_fall': sf_fall,
+                             'ok': total <= 2.0 and sf >= 2.0 and (sf_fall is None or sf_fall >= 1.2)}
+    # the push-rod (bought tube and rod ends): Euler buckling, pinned both ends, and the rod ends' static rating
+    pr = gmi.STD['PR']
+    E = 200000.0 if 'steel' in pr['tube'] else 64000.0
+    I = math.pi * (pr['tube_od'] ** 4 - pr['tube_id'] ** 4) / 64
+    P = C['T1']['rod_force_n']
+    P_cr = math.pi ** 2 * E * I / (a ** 2)
+    rod_end_static = {6: 4600.0, 8: 7800.0, 10: 11200.0}.get(int(pr['rod_end_eye_d']), 4000.0)   # igus KBRM-xx static radial (approx.)
+    summary['rod'] = {'force_n': round(P), 'buckling_n': round(P_cr), 'buckling_sf': round(P_cr / P, 1), 'rod_end_static_n': rod_end_static,
+                      'rod_end_sf': round(rod_end_static / P, 1), 'sin_phi_min': round(C['T1']['sin_phi'], 3)}
+    verdict['al6061']['rod_ok'] = P_cr / P >= 3 and rod_end_static / P >= 2
+    verdict['al6061']['ok'] = verdict['al6061']['ok'] and verdict['al6061']['rod_ok']
     summary['verdict'] = verdict
     (OUT / 'summary.json').write_text(json.dumps(summary, indent=1, default=lambda o: list(o) if isinstance(o, tuple) else str(o)) + '\n')
     print('verdict', json.dumps(verdict))
