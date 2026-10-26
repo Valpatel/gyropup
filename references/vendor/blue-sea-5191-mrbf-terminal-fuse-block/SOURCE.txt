@@ -1,0 +1,9 @@
+Vendor: Blue Sea Systems
+Model: 5191 MRBF Terminal Fuse Block 30-300A
+Retrieved: 2026-10-26
+Product page: https://www.bluesea.com/products/5191/MRBF_Terminal_Fuse_Block_-_30_to_300A  (needs a real browser: Cloudflare blocks scripted fetches)
+Files:
+  5191_dim.jpg    <-  https://d2pyqm2yd3fw2i.cloudfront.net/files/resources/dimensioned_drawing/5191.jpg  (Dimensioned Drawing, 2D)
+  5191_mount.jpg  <-  https://d2pyqm2yd3fw2i.cloudfront.net/files/resources/mounting_diagram/5191_drawing.jpg  (Mounting Diagram, 2D)
+No STEP/3D model is offered on the product page (only these two JPG drawings); none found elsewhere from Blue Sea.
+Licence/terms: public product-page documents; bluesea.com Terms of Use not reviewed. Local reference only; do not redistribute.

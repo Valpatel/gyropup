@@ -1,0 +1,11 @@
+Vendor: Mean Well Enterprises Co., Ltd.
+Model: DDR-120C-24 (STEP covers the whole DDR-120 series, case no. 221)
+Retrieved: 2026-10-26
+Product page: https://www.meanwell.com/webapp/product/search.aspx?prod=DDR-120  ("3D OUTLINE" tab, link "DDR-120-3D")
+Files:
+  DDR-120.stp  <-  unzipped from https://www.meanwell.com/upload/pdf/DDR-120/DDR-120-3D.zip  (414287 bytes zip; STEP 2564599 bytes, Creo export 2024-05-17)
+  DDR-120-SPEC.PDF  <-  https://www.meanwell.com/Upload/PDF/DDR-120/DDR-120-SPEC.PDF  (spec dated 2026-09-10)
+Licence/terms: downloadable without login from the public product page; no licence or terms are stated on the page or in the zip.
+  Treat as all rights reserved: local reference for our own design work only; do not redistribute or commit.
+Notes: STEP measured with OCP: 112.25 x 32.0 x 125.2 mm overall (21 solids incl. internal parts and the DIN-rail latch);
+  case shell 102.5 x 32.0 x 125.2 mm, latch protrudes ~9.8 mm behind the case at the rail face.

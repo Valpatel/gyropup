@@ -1,0 +1,13 @@
+Vendor: RealSense, Inc. (formerly Intel RealSense)
+Model: Depth Camera D435
+Retrieved: 2026-10-26
+Files:
+  D435_Solid.SLDPRT  <-  https://dev.realsenseai.com/download/41950/  ("D400 Depth Cameras" on https://dev.realsenseai.com/docs/cad-files;
+      the download is a 15.1 MB zip, sha256 31d176bd773f0e25..., of SolidWorks parts D405/D415/D435/D435f/D435i/D455/D455f/D456/D457, dated 2023-10-17;
+      only D435_Solid.SLDPRT is kept here)
+  RealSense-D400-Series-Datasheet-Mar-2026.pdf  <-  https://www.realsenseai.com/wp-content/uploads/2026/03/RealSense-D400-Series-Datasheet-Mar-2026.pdf
+      (doc 337029-017; Table 3-52 dimensions/mass, Figure 10-9 drawing on PDF page 139)
+Format: RealSense publishes SolidWorks parts only for the cameras; no STEP was offered on the CAD page. Convert in SolidWorks/Onshape if a STEP is needed
+  (FreeCAD/OCP cannot read .SLDPRT).
+Licence/terms: the CAD page states no licence or usage terms (only site Terms of Use and a trademark notice). Publicly downloadable without login.
+  Keep as a local reference copy for our own design work; do not redistribute or commit.

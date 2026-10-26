@@ -34,7 +34,13 @@ from pathlib import Path
 import cadquery as cq
 
 from cadagent.geometry import export_print_stl
-from cadagent.robot import Body, fit_mesh, printed_part_body
+from cadagent.robot import Body, printed_part_body
+
+try:                                    # cad-agent PR #4; until it is released, meshes are left as exported
+    from cadagent.robot import fit_mesh
+except ImportError:                     # pragma: no cover
+    def fit_mesh(path, max_faces=150_000):
+        return 0
 
 R = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(R / 'cad'))
@@ -43,6 +49,7 @@ import assembly  # noqa: E402
 import electronics  # noqa: E402
 import gmi  # noqa: E402
 import leg  # noqa: E402
+import turret  # noqa: E402
 
 P = json.loads((R / 'cad/parameters.json').read_text())
 OUT = Path(os.environ['GYROPUP_EXPORTS']).resolve() if os.environ.get('GYROPUP_EXPORTS') else R / 'exports'          # GYROPUP_EXPORTS: a separate folder per optimiser trial
@@ -128,7 +135,9 @@ def battery_cradle(L):
 
 
 def head_saddle(L):
-    """Open frame on the J501 lid screws; turret ring raised 20 mm so the cooler grille keeps breathing."""
+    """Open frame on the J501 lid screws carrying the turret's mount ring (TM: 4 x M5 inserts on 80 x 80, 2 dowels,
+    Ø45 centre; cad/turret.py head_ring_tm), raised 20 mm so the cooler grille keeps breathing. PA6-CF: it carries
+    the turret's fall loads."""
     jb = P['j501_box']
     top = L['bodyTop']
     t = 6.0
@@ -141,17 +150,9 @@ def head_saddle(L):
         arm = cq.Workplane('XY').box(dist, 14, t).translate((dist / 2, 0, t / 2)).rotate((0, 0, 0), (0, 0, 1), ang).translate((0, 0, top))
         foot = cq.Workplane('XY').circle(9).extrude(t).translate((x, y, top))
         frame = arm.union(foot) if frame is None else frame.union(arm).union(foot)
-    ring = cq.Workplane('XY').circle(57).circle(30).extrude(t).translate((0, 0, ring_z))
-    legs = None
-    for k in range(4):
-        a = math.pi / 4 + k * math.pi / 2
-        leg = cq.Workplane('XY').circle(6).extrude(ring_z - top).translate((44 * math.cos(a), 44 * math.sin(a), top))
-        legs = leg if legs is None else legs.union(leg)
-    s = frame.union(legs).union(ring)
+    s = frame.union(turret.head_ring_tm(L))
     for (x, y) in pts:
         s = s.cut(cq.Workplane('XY').circle(1.7).extrude(30).translate((x, y, top - 5)))
-    for (x, y) in [(40, 40), (40, -40), (-40, 40), (-40, -40)]:
-        s = s.cut(cq.Workplane('XY').circle(P['print']['insert_m4_pilot'] / 2).extrude(t + 2).translate((x * 0.71, y * 0.71, ring_z - 1)))
     return s
 
 
@@ -239,7 +240,7 @@ def build(design_path: Path, fast: bool = False):
 
     add('chassis', chassis(L, S), 'pa6-cf', 1, f'printed PA6-CF tub, {SHEET:.0f} mm walls, {HM_PAD:.0f} mm under the legs; M3/M4 inserts', solid=True)
     add('battery_cradle', battery_cradle(L), 'petg', 1, 'printed PETG')
-    add('head_saddle', head_saddle(L), 'petg', 1, 'printed PETG; M4 inserts for the turret')
+    add('head_saddle', head_saddle(L), 'pa6-cf', 1, 'printed PA6-CF; the turret mount (TM: 4 x M5 inserts, 2 dowels)', solid=True)
     catalog = load_catalog()
     elec, bay_shape, elec_report = electronics.layout(L, d, catalog, floor_t=FLOOR_T, wall_t=SHEET)
     front_x = L['tray']['depth'] / 2 + elec_report['bay_depth_mm']
@@ -257,13 +258,18 @@ def build(design_path: Path, fast: bool = False):
         placed[f'{name}_l'] = posed
         placed[f'{name}_r'] = posed.mirror('XZ')
 
+    # the turret (cad/turret.py), at pan 0 / tilt 0
+    TUR = turret.Turret(L)
+    tur_posed = TUR.posed(0.0, 0.0)
+    for name, m in TUR.meta.items():
+        add(name, tur_posed[name], m['material'], m['qty'], m['note'], solid=m['solid'])
     # print orientation (rotation onto the bed): links, plates, crank and adapters lie flat on their y faces (their
     # bending then runs along the layers); the yoke stands on its wall flange
     flat = ((1, 0, 0), 90)
     rot = {'face': ((0, 1, 0), 90), 'head_saddle': ((1, 0, 0), 180), 'lidar_hanger': ((1, 0, 0), 180), 'camera_cradle': None,
            'yoke_bracket': ((1, 0, 0), 90), 'battery_cradle': None, 'thigh': flat, 'shin': flat, 'knee_crank': flat,
            'hip_motor_plate': flat, 'knee_motor_plate': flat, 'hip_output_adapter': flat, 'knee_output_adapter': flat,
-           'wheel_adapter': flat}
+           'wheel_adapter': flat, **{n: m['print_rotation'] for n, m in TUR.meta.items()}}
     materials = json.loads((R / 'catalog/materials.json').read_text())
     OUT.mkdir(exist_ok=True)
     if not fast:                                # parts from an earlier build (a removed part, an old design) must not linger
@@ -325,12 +331,19 @@ def build(design_path: Path, fast: bool = False):
                                                       'hip_y_mm': sum(S.y['thigh']) / 2, 'wheel_y_mm': S.y['wheel_centre'],
                                                       'min_knee_deg': S.y.get('min_knee_deg')}, indent=1) + '\n')
     write_print_plan(plan)
-    asm = assemble(design_path, d, ev, L, S, parts, meta, lparts, lbought, hip_id, elec, front_x, materials, meshes=not fast)
+    asm = assemble(design_path, d, ev, L, S, parts, meta, lparts, lbought, hip_id, elec, front_x, materials, meshes=not fast, tur=TUR)
     if not fast:                                  # the 3D page: everything else on the body from the assembly
         skip = set(parts) | {f'{n}_{t}' for n in lparts for t in 'lr'} | {f'{n}_{t}' for n in ('posts', 'pushrod', 'pushrod_half', 'wheel_rotor', 'wheel_stator') for t in 'lr'}
-        extra = [(nm, sh, c, kind == 'bought' or kind == 'electronics') for (lk, nm, kind, _, sh, c, _) in asm.pop('_items')
-                 if lk == 'base' and sh is not None and nm not in skip and not nm.startswith(('camera_cradle', 'face'))]
-        export_link_meshes(design_path, L, S, parts, lparts, lbought, {}, placed, hip_id, extra)
+        items = asm.pop('_items')
+        tur_names = set(TUR.meta)
+        tlinks = {'turret_pan': 'turret_pan', 'turret_tilt': 'turret_tilt'}
+        extra = [(nm, sh, c, kind in ('bought', 'electronics'), 'body') for (lk, nm, kind, _, sh, c, _) in items
+                 if lk == 'base' and sh is not None and nm not in skip and not nm.startswith(('camera_cradle', 'face')) and nm not in tur_names
+                 and not nm.startswith('turret_')]
+        # the turret: fixed parts with the head, the rest on its pan and tilt links (the page turns them)
+        extra += [(nm, sh, c, kind in ('bought', 'electronics'), tlinks.get(lk, 'turret_base')) for (lk, nm, kind, _, sh, c, _) in items
+                  if sh is not None and (lk in tlinks or (lk == 'base' and (nm in tur_names or nm.startswith('turret_'))))]
+        export_link_meshes(design_path, L, S, parts, lparts, lbought, {}, placed, hip_id, extra, turret=asm.get('turret'))
     else:
         asm.pop('_items')
     print(f"assembly: {asm['total_kg']:.2f} kg in {sum(len(v['parts']) for v in asm['links'].values())} placed parts; "
@@ -461,11 +474,18 @@ def vendor_visual(cat_id, size, center):
     return cq.Shape.cast(BRepBuilderAPI_Transform(sh.wrapped, tr, True).Shape())
 
 
-def assemble(design_path, d, ev, L, S, parts, meta, lparts, lbought, hip_id, elec, front_x, materials, meshes=True):
+def assemble(design_path, d, ev, L, S, parts, meta, lparts, lbought, hip_id, elec, front_x, materials, meshes=True, tur=None):
     """Every part of the robot on its link: exports/assembly.json (+ exports/mjcf/*.stl meshes when meshes=True)."""
     a, b = L['thigh'], L['shin']
     hy, wy = sum(S.y['thigh']) / 2, S.y['wheel_centre']
     origins = {'base': (0, 0, 0)}
+    tinfo = None
+    if tur is not None:
+        tilt_z = tur.point((0, 0, tur.G.tilt_c), 'tilt', 0.0, 0.0)[2]
+        origins.update({'turret_pan': (0, 0, tur.mount_z), 'turret_tilt': (0, 0, tilt_z)})
+        tinfo = {'pan_mm': [0, 0, tur.mount_z], 'tilt_mm': [0, 0, tilt_z],
+                 'muzzle_mm': list(tur.point((tur.G.barrel_x1, 0, 0), 'tilt', 0.0, 0.0)),
+                 'tilt_range_deg': [tur.G.tilt_min, 0.0], 'pan_range_deg': [-170.0, 170.0], 'tilt_positive': 'muzzle up (CAD)'}
     for side, tag in ((1, 'l'), (-1, 'r')):
         origins.update({f'thigh_{tag}': (0, side * hy, 0), f'shin_{tag}': (0, side * hy, -a), f'wheel_{tag}': (0, side * wy, -a - b)})
     A = assembly.Assembly(origins)
@@ -480,9 +500,17 @@ def assemble(design_path, d, ev, L, S, parts, meta, lparts, lbought, hip_id, ele
     col = lambda n: colors.get(n) or '#9aa3ad'
     notes = []
     # made parts: body ones once, leg ones on both sides
+    tlink = {'base': 'base', 'pinion': 'base', 'pan': 'turret_pan', 'tilt': 'turret_tilt'}
     for name, shape in parts.items():
         dens = materials[meta[name]['material']]['density_g_cm3']
         solid = meta[name]['solid']
+        if tur is not None and name in tur.meta:                  # turret parts on the pan / tilt links
+            lk = tlink[tur.frame[name]]
+            shapes = [shape] if meta[name]['qty'] == 1 else [shape, assembly.mirror_y(shape)]
+            for k, sh in enumerate(shapes):
+                A.add(lk, name if len(shapes) == 1 else f'{name}_{k + 1}', 'made', assembly.body_of(sh, density=dens, solid=solid, name=name), sh,
+                      {'barrel': '#ff6a13', 'hopper': '#9cc7e8', 'hopper_lid': '#9cc7e8'}.get(name, '#4a5058'))
+            continue
         if name in lparts:
             link = ASM_LINK.get(name, 'base')
             bl = assembly.body_of(shape, density=dens, solid=solid, name=name)
@@ -531,6 +559,15 @@ def assemble(design_path, d, ev, L, S, parts, meta, lparts, lbought, hip_id, ele
         half = Body(rb.mass / 2, rb.com, tuple(tuple(v / 2 for v in row) for row in rb.inertia), 'pushrod')
         A.add(f'thigh_{tag}', f'pushrod_{tag}', 'hardware', half, rod, col('pushrod'))
         A.add(f'shin_{tag}', f'pushrod_half_{tag}', 'hardware', half.translated((0, 0, 0)), None)
+    if tur is not None:                                           # the turret's bought parts, balls and unmodelled bits
+        tp = tur.posed(0.0, 0.0, names=list(tur.bought))
+        for name, (_, frame, mass_g, note) in tur.bought.items():
+            if mass_g:
+                A.add(tlink[frame], f'turret_{name}', 'bought', assembly.body_of(tp[name], mass_g=mass_g, name=name), tp[name], '#2d3748', True)
+        tilt_o = [v / 1000 for v in origins['turret_tilt']]
+        A.add('turret_tilt', 'turret balls (30)', 'bought', Body(0.055, (0.0, 0.0, tilt_o[2] + 0.03)), None, estimate=True)
+        A.add('turret_pan', 'turret wiring, MCU, fasteners (not modelled)', 'hardware', Body(0.145, (0.0, 0.0, origins['turret_pan'][2] / 1000 + 0.05)), None, estimate=True)
+        placed_slots.add('head_payload')
     # the body: battery, compute box, sensors
     T = L['tray']
     if 'battery' in lines and L.get('battery'):
@@ -602,6 +639,9 @@ def assemble(design_path, d, ev, L, S, parts, meta, lparts, lbought, hip_id, ele
         notes.append(f'{slot}: {g:.0f} g not placed in the CAD yet (a point on the body)')
         A.add('base', f'{slot} (unplaced)', 'bought', Body(g / 1000, (0, 0, (L['trayBottom'] + T['height'] / 2) / 1000)), None, estimate=True)
     data = A.write(OUT / 'assembly.json', str(Path(design_path).resolve().relative_to(R)), OUT / 'mjcf' if meshes else None, notes)
+    if tinfo:
+        data['turret'] = tinfo
+        (OUT / 'assembly.json').write_text(json.dumps({k: v for k, v in data.items()}, indent=1) + '\n')
     data['_items'] = A.items
     return data
 
@@ -612,7 +652,7 @@ LEG_LINK = {'thigh': 'thigh', 'hip_output_adapter': 'thigh', 'shin': 'shin', 'wh
 VIEW_SKIP = {'j501_box', 'lidar', 'camera_front', 'camera_rear'}       # the 3D page draws these itself (FOV, eyes)
 
 
-def export_link_meshes(design_path, L, S, parts, lparts, lbought, bought, placed, hip_id, extra=()):
+def export_link_meshes(design_path, L, S, parts, lparts, lbought, bought, placed, hip_id, extra=(), turret=None):
     """Meshes of every part grouped by the link it moves with, for the 3D simulator: exports/links/*.stl (robot frame,
     millimetres, legs at the zero pose, left leg only: the page mirrors it) and exports/links/manifest.json. The page
     turns the thigh by the hip angle, the shin by the knee angle about the knee pin, the wheel by its spin, the crank
@@ -629,7 +669,7 @@ def export_link_meshes(design_path, L, S, parts, lparts, lbought, bought, placed
     d.mkdir(exist_ok=True)
     for old in d.glob('*.stl'):
         old.unlink()
-    links = {k: [] for k in ('body', 'thigh', 'shin', 'wheel', 'crank', 'rod')}
+    links = {k: [] for k in ('body', 'thigh', 'shin', 'wheel', 'crank', 'rod', 'turret_base', 'turret_pan', 'turret_tilt')}
 
     (d / 'local').mkdir(exist_ok=True)
     for old in (d / 'local').glob('*.stl'):
@@ -651,13 +691,14 @@ def export_link_meshes(design_path, L, S, parts, lparts, lbought, bought, placed
             put('body', name, parts[name], None)
     put('body', 'camera_cradle_front', parts['camera_cradle'], None)
     put('body', 'camera_cradle_rear', placed['camera_cradle_rear'], None)
-    for name, shape, color, local in extra:      # motors, battery, the J501 box, electronics, sensors: from the assembly
-        put('body', name, shape, None, color, local)
+    for name, shape, color, local, link in extra:   # motors, battery, the J501 box, electronics, sensors, turret
+        put(link, name, shape, None, color, local)
     (d / 'manifest.json').write_text(json.dumps({
         'design': str(Path(design_path).resolve().relative_to(R)), 'units': 'mm',
         'frame': 'robot: x forward, y left, z up, origin on the hip axis; legs at the zero pose (hanging straight down)',
         'thigh_mm': L['thigh'], 'shin_mm': L['shin'], 'crank_r_mm': leg.PARAMS['crank_r'], 'lever_beta_deg': leg.PARAMS['lever_beta_deg'], 'mirror': 'side l parts are mirrored (y -> -y) for the right leg',
         'cad_has': sorted({n for n, *_ in extra} | {'chassis'}),
+        'turret': turret,
         'mounts': {'eyes': [L['body']['depth'] / 2 + 7.0, 0.0, L['bodyBottom'] + 0.62 * L['body']['height']],
                    'headlights': [[mount_front_x(L, extra) + 54.0, y, L['trayBottom'] + 30.0] for y in (-50.0, 50.0)]},
         'links': links}, indent=1) + '\n')

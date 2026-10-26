@@ -1,0 +1,11 @@
+Vendor: Waveshare
+Model: 0.71inch DualEye LCD Module
+Retrieved: 2026-10-26
+Files:
+  0.71inch-DualEye-LCD-Module-3D-File.zip  <-  https://files.waveshare.com/wiki/0.71inch_DualEye_LCD_Module/0.71inch-DualEye-LCD-Module-3D-File.zip
+      (contains .step and .DWG; the .step is extracted alongside)
+  0.71inch-DualEye-LCD-Module-details-size.jpg  <-  https://www.waveshare.com/w/upload/5/55/0.71inch-DualEye-LCD-Module-details-size.jpg
+  (both linked from https://www.waveshare.com/wiki/0.71inch_DualEye_LCD_Module)
+Licence/terms: wiki resources, public, no login; no licence stated. Local reference copy only; do not redistribute or commit.
+Notes: the STEP is only the 51.1 x 20.1 mm board outline (0.41 mm thick) plus a few SMD parts (total 1.86 mm); it has no round
+  screens, no SH1.0 connector and no M2 nuts. Use the size drawing for those.

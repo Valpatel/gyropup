@@ -110,10 +110,11 @@ def output_adapter(part_id: str, size: str = 'L'):
     o = mi['output']
     relief = s['relief']
     z_sh0 = relief
-    z_j0 = z_sh0 + s['shoulder_len']
-    z_face = z_j0 + s['journal_len'] + PRINT['journal_extra']        # longer journal: room for a thicker printed plate
+    z_face = z_sh0 + s['shoulder_len'] + s['journal_len'] + PRINT['journal_extra']   # longer: room for a thicker printed plate
+    bw = STD[f'AC-{size}']['bearing_w']
+    z_j0 = z_face - 1.0 - bw                       # the bearing sits at the top (the plate's leg-side face, its retainers)
     body = (_cyl(o['flange_d'] / 2 - 0.5, 0, relief + 0.01)                                # contact boss on the flange only
-            .union(_cyl(s['shoulder_d'] / 2, z_sh0, z_j0))                                  # bearing shoulder
+            .union(_cyl(s['shoulder_d'] / 2, z_sh0, z_j0))                                  # shoulder: seats the inner ring
             .union(_cyl(s['journal_d'] / 2, z_j0, z_face))                                  # bearing journal
             .union(_cyl(s['spigot_d'] / 2, z_face, z_face + s['spigot_h'])))                 # standard spigot
     # the motor's screws: clearance through, heads in counterbores under the spigot face
@@ -133,7 +134,7 @@ def output_adapter(part_id: str, size: str = 'L'):
         body = body.union(_cyl(o['pilot_d'] / 2 - 0.05, -2.0, 0.01))
     # the standard face: heat-set inserts on the PCD, dowel holes, all clear of the motor screw counterbores
     for (x, y) in circle_pts(s['pcd'], s['bolts'], 360.0 / s['bolts'] / 2):
-        body = body.cut(_cyl(FAST[s['thread']]['insert_pilot'] / 2, z_face - 10, z_face + 0.01, x, y))
+        body = body.cut(_cyl(FAST[s['thread']]['insert_pilot'] / 2, z_face - PRINT['insert_depth_ao'], z_face + 0.01, x, y))
     for a in s['dowel_deg']:
         x, y = s['pcd'] / 2 * math.cos(math.radians(a)), s['pcd'] / 2 * math.sin(math.radians(a))
         body = body.cut(_cyl(s['dowel_d'] / 2, z_face - 8, z_face + 0.01, x, y))
@@ -200,13 +201,13 @@ def motor_plate(part_id: str, size: str = 'L', thick_extra: float = 1.0):
                   .rect(2 * (s['plate_r'] * 0.55 - 12), win_z1 - win_z0).extrude(z_top - lug_z + 2))
     for k in range(s['bracket_bolts']):
         x = (k - (s['bracket_bolts'] - 1) / 2) * s['plate_r'] * 0.4
-        p = p.cut(_cyl(FAST[s['bracket_thread']]['insert_pilot'] / 2, z_top - 10, z_top + 1, x, tab_top - BRACKET_DROP))   # inserts from the leg side
+        p = p.cut(_cyl(FAST[s['bracket_thread']]['insert_pilot'] / 2, lug_z - 1, lug_z + 10, x, tab_top - BRACKET_DROP))   # inserts from the motor side, where the yoke is
     # motor side: the spigot recess (if the motor has a male spigot) and the lug screws (counterbored from the leg side)
     if c['spigot_d']:
         p = p.cut(_cyl(c['spigot_d'] / 2 + 0.03, lug_z - 0.01, lug_z + c['spigot_h'] + 0.1))
     for (x, y) in circle_pts(b['pcd'], angles=b['angles']):
         p = p.cut(_cyl(clear(b['thread']) / 2, lug_z - 1, z_top + 1, x, y))
-        p = p.cut(_cyl(clear(b['thread']) * 0.95, z_top - 4.5, z_top + 1, x, y))
+        p = p.cut(_cyl(clear(b['thread']) * 0.95, z_top - PRINT['lug_counterbore'], z_top + 1, x, y))   # deep: a stocked length engages
     # the bore: clears the rotating shoulder (lip), then the bearing seat
     p = p.cut(_cyl(s['lip_d'] / 2, lug_z - 1, z_top + 1))
     p = p.cut(_cyl(s['bearing_od'] / 2, z_bear0, z_top + 1))                              # printed seat: line-to-line, sanded to fit

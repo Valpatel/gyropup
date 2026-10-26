@@ -26,10 +26,11 @@ STD = gmi.STD
 # Sizes the optimiser varies (tools/iterate.py). Defaults are the current design; GYROPUP_CAD_PARAMS names a JSON file
 # that overrides any of them for one trial.
 PARAMS = {
-    'link_w': 60.0, 'link_t': 44.0, 'wall': 5.0,      # thigh: a closed printed box section, x by y, wall (sized by the FEA)
+    'link_w': 60.0, 'link_t': 52.0, 'wall': 6.0,      # thigh: a closed printed box section, x by y, wall (sized by the FEA)
     'shin_w': 50.0, 'shin_wall': 4.0,                 # the shin carries less
-    'yoke_t': 8.0, 'yoke_depth': 50.0, 'yoke_gusset': 80.0,   # the yoke: wall thickness, side-flange depth, gusset length
+    'yoke_t': 10.0, 'yoke_depth': 55.0, 'yoke_gusset': 80.0,   # the yoke: wall thickness, side-flange depth, gusset length
     'crank_t': 14.0,                                  # knee crank thickness
+    'knee_boss_r': 24.0,                              # the thigh's knee boss across the rod plane: radius at the shin
     'crank_r': STD['PR']['crank_r'],
     'lever_beta_deg': STD['PR']['lever_beta_deg'],   # crank and lever direction, from the forward perpendicular (- = towards the foot)
 }
@@ -96,7 +97,7 @@ def stack(L: dict, hip_id: str, knee_id: str, wheel_id: str) -> Stack:
     y['hip_face'] = y['hip_out'] + had['z_face']                          # the standard AO face
     y['hip_tab'] = (y['hip_out'] + hpl['tab_z'][0], y['hip_out'] + hpl['tab_z'][1])   # the plate's top tab (bracket bolts)
     y['thigh'] = (y['hip_face'], y['hip_face'] + LINK_T)
-    y['rod'] = (y['thigh'][1] + 1.5, y['thigh'][1] + 1.5 + pr['rod_end_ball_w'])
+    y['rod'] = (y['thigh'][1] + pr['nut_gap'], y['thigh'][1] + pr['nut_gap'] + pr['rod_end_ball_w'])   # room for the pins' nuts
     y['crank'] = (y['rod'][1] + 1.5, y['rod'][1] + 1.5 + CRANK_T)
     y['knee_face'] = y['crank'][1]
     y['knee_out'] = y['knee_face'] + kad['z_face']                        # the knee motor's output face (it faces -y)
@@ -104,7 +105,12 @@ def stack(L: dict, hip_id: str, knee_id: str, wheel_id: str) -> Stack:
     y['knee_motor'] = (y['knee_out'], y['knee_out'] + knee['length'])
     y['knee_tab'] = (y['knee_out'] - kpl['tab_z'][1], y['knee_out'] - kpl['tab_z'][0])   # mirrored: the tab's motor side faces +y
     y['posts'] = (y['hip_plate'][1], y['knee_plate'][0])
-    y['shin'] = (y['crank'][0], y['crank'][0] + max(28.0, kc['spacing'] + kc['bearing_w']))
+    # the knee pin is a stocked shoulder screw through the thigh, the gap (the thigh's boss fills it) and the shin: the
+    # shin is as wide as the shortest stocked length allows (at least its two bearings)
+    gap = y['crank'][0] - y['thigh'][1]
+    need = LINK_T + gap + max(28.0, kc['spacing'] + kc['bearing_w'])
+    y['knee_pin_mm'] = min([l for l in kc['pin_lengths'] if l >= need - 0.01] or [need])
+    y['shin'] = (y['crank'][0], y['crank'][0] + y['knee_pin_mm'] - LINK_T - gap)
     y['wheel_adapter'] = (y['shin'][1], y['shin'][1] + wh['plate_t'])
     boss_h = wheel['case']['spigot_h'] or 5.0
     y['wheel_mount'] = y['wheel_adapter'][1]                                # the wheel's boss face
@@ -219,10 +225,18 @@ def thigh(S: Stack, a: float):
     flare = (cq.Workplane('XZ', origin=(0, y1, 0)).polyline([(-36.0, 0.0), (36.0, 0.0), (LINK_W / 2, -36.0 - 45.0), (-LINK_W / 2, -36.0 - 45.0)])
              .close().extrude(y1 - y0))
     t = t.union(flare.cut(cq.Workplane('XY').box(LINK_W - 2 * WALL, y1 - y0 - 2 * WALL, 45.0).translate((0, (y0 + y1) / 2, -36.0 - 3 - 22.5 - 0.01))))
-    face = 10.0                                   # the hub keeps a 10 mm face on the AO side; hollow behind it (screw heads)
-    t = t.cut(_ycyl(36.0 - WALL - 1, y0 + face, y1 + 1))
+    face = 10.0                                   # the hub keeps a 10 mm face on the AO side
+    ao = STD['AO-L']
+    for (x, z) in gmi.circle_pts(ao['pcd'], ao['bolts'], 360.0 / ao['bolts'] / 2):   # a pocket per screw head, bored from
+        t = t.cut(_ycyl(5.25, y0 + face, y1 + 1, x, z))                               # the outer face: the hub stays solid
     t = t.cut(gmi.place(gmi.std_face_mate('L', depth=y1 - y0 + 2), (0, y0, 0), (0, 1, 0)))
-    t = t.cut(_ycyl(kc['pin_d'] / 2 + 0.01, y0 - 1, y1 + 1, 0, -a))
+    # the boss bridges the rod plane to the shin, flaring from the thigh's full width into it (it carries the pin's load
+    # as a short cantilever: a slim boss cracks at its root)
+    yb = S.y['shin'][0] - 0.5
+    boss = (cq.Workplane('XZ', origin=(0, y1, 0)).center(0, -a).circle(LINK_W / 2)
+            .workplane(offset=-(yb - y1)).circle(PARAMS['knee_boss_r']).loft())
+    t = t.union(boss)
+    t = t.cut(_ycyl(kc['pin_d'] / 2 + 0.01, y0 - 1, S.y['shin'][0], 0, -a))
     for z in (-36.0 - 18, -a + kc['hub_od'] / 2 + 18):                  # cable ports on the back face (-x)
         t = t.cut(cq.Workplane('YZ', origin=(-LINK_W / 2 - 1, 0, 0)).center((y0 + y1) / 2, z).rect(12, 16).extrude(WALL + 2))
     return t
@@ -238,13 +252,17 @@ def shin(S: Stack, b: float, crank_r: float):
     yl = S.y['rod'][1] + 1.5                                    # lever in the crank's plane, next to the rod end
     lx, lz = lever_pin(crank_r)
     beta = PARAMS['lever_beta_deg']
-    arm = cq.Workplane('XY').box(crank_r, 12, 30).translate((crank_r / 2, yl + 6, 0)).rotate((0, 0, 0), (0, 1, 0), -beta)
-    s = s.union(arm).union(_ycyl(15, yl, yl + 12, lx, lz))
-    s = s.cut(_ycyl(4.1, yl - 1, yl + 14, lx, lz))                                           # M8 bolt + nut through the lever
+    arm = cq.Workplane('XY').box(crank_r, CRANK_T, 30).translate((crank_r / 2, yl + CRANK_T / 2, 0)).rotate((0, 0, 0), (0, 1, 0), -beta)
+    s = s.union(arm).union(_ycyl(15, yl, yl + CRANK_T, lx, lz))
+    s = s.cut(_ycyl(4.1, yl - 1, yl + CRANK_T + 1, lx, lz))                                  # the rod-end pin (8 mm shoulder)
+    s = s.cut(_ycyl(6.9, yl + CRANK_T - 6.0, yl + CRANK_T + 1, lx, lz))                      # its head, flush in the outer face
     s = s.cut(_ycyl(kc['bearing_od'] / 2 + 0.02, y0 - 0.01, y0 + kc['bearing_w']))
     s = s.cut(_ycyl(kc['bearing_od'] / 2 + 0.02, y1 - kc['bearing_w'], y1 + 0.01))
     s = s.cut(_ycyl(kc['pin_d'] / 2 + 1.0, y0 - 1, y1 + 1))
     s = s.union(_ycyl(wh['plate_d'] / 2 + 6, y0, y1, 0, -b))                                 # a solid printed foot round the WH face
+    bw = S.wheel['case']['bolts']                                                            # pockets for the BotWheel's own screw heads
+    for (x, z) in gmi.circle_pts(bw['pcd'], angles=bw['angles']):
+        s = s.cut(_ycyl(gmi.FAST[bw['thread']]['clear'] * 0.95, y1 - 7.0, y1 + 1, x, -b + z))
     s = s.cut(_ycyl(wh['pilot_d'] / 2 + 0.05, y1 - 3, y1 + 1, 0, -b))
     for (x, z) in gmi.circle_pts(wh['pcd'], wh['bolts'], 30):
         s = s.cut(_ycyl(gmi.FAST[wh['thread']]['insert_pilot'] / 2, y1 - 12, y1 + 1, x, -b + z))   # heat-set inserts
@@ -261,7 +279,8 @@ def crank(S: Stack, crank_r: float):
     arm = cq.Workplane('XY').box(crank_r, y1 - y0, 32).translate((crank_r / 2, (y0 + y1) / 2, 0)).rotate((0, 0, 0), (0, 1, 0), -PARAMS['lever_beta_deg'])
     c = _ycyl(36.0, y0, y1).union(arm).union(_ycyl(16, y0, y1, lx, lz))
     c = c.cut(gmi.place(gmi.std_face_mate('L', depth=y1 - y0 + 2), (0, y1, 0), (0, -1, 0)))
-    return c.cut(_ycyl(4.1, y0 - 1, y1 + 1, lx, lz))
+    c = c.cut(_ycyl(4.1, y0 - 1, y1 + 1, lx, lz))                               # the rod-end pin (8 mm shoulder)
+    return c.cut(_ycyl(6.9, y1 - 6.0, y1 + 1, lx, lz))                          # its head, flush in the face next to the knee plate
 
 
 def pushrod(S: Stack, a: float, crank_r: float):
@@ -371,6 +390,16 @@ def clashes_for_design(design_file: str, heights=(0.0, 0.5, 1.0), min_mm3: float
     lo, hi = math.radians(L['kneeMinDeg']), math.radians(L['kneeMaxDeg'])
     hmin, hmax = (math.sqrt(a * a + b * b - 2 * a * b * math.cos(g)) for g in (lo, hi))
     out = []
+    # an output adapter and its own motor are mated: the vendor model is one static solid whose output flange and pins
+    # turn with the adapter in reality, so check that pair once, unturned, and skip it in the swept poses
+    MATED = {('hip_output_adapter', 'hip_motor'), ('knee_output_adapter', 'knee_motor')}
+    for an, mn in MATED:
+        try:
+            v = parts[an].intersect(bought[mn]).val().Volume()
+        except Exception:
+            v = 0.0
+        if v > min_mm3:
+            out.append([an, mn, round(v), 'mated'])
     allp = {**parts, **bought}
     for i, frac in enumerate(heights):
         h = hmin + (hmax - hmin) * frac
@@ -380,6 +409,8 @@ def clashes_for_design(design_file: str, heights=(0.0, 0.5, 1.0), min_mm3: float
         for (n1, s1), (n2, s2) in itertools.combinations(placed.items(), 2):
             if i > 0 and n1 not in ROTATES and n2 not in ROTATES:
                 continue                                   # two fixed parts: checked once is enough
+            if (n1, n2) in MATED or (n2, n1) in MATED:
+                continue
             b1, b2 = boxes[n1], boxes[n2]
             if b1.xmax < b2.xmin or b2.xmax < b1.xmin or b1.ymax < b2.ymin or b2.ymax < b1.ymin or b1.zmax < b2.zmin or b2.zmax < b1.zmin:
                 continue                                   # bounding boxes apart: no overlap possible

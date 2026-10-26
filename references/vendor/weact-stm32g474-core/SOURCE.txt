@@ -1,0 +1,11 @@
+Vendor: WeAct Studio
+Model: STM32G474 Core Board (QFN48, STM32G474CEU6, V1.0 standard-length board)
+Retrieved: 2026-10-26
+Repository: https://github.com/WeActStudio/WeActStudio.STM32G474CoreBoard (branch master, commit e33b45cf09bc558f7b8b0e514a5a5c472ac9b0ba)
+Files:
+  WeAct-STM32G47x_CoreBoard_3D.step  <-  https://raw.githubusercontent.com/WeActStudio/WeActStudio.STM32G474CoreBoard/e33b45cf09bc558f7b8b0e514a5a5c472ac9b0ba/Hardware/QFN48/WeAct-STM32G47x_CoreBoard_3D.step
+  WeAct-STM32G474CoreBoard_V10_Board_Shape.pdf  <-  https://raw.githubusercontent.com/WeActStudio/WeActStudio.STM32G474CoreBoard/e33b45cf09bc558f7b8b0e514a5a5c472ac9b0ba/Hardware/QFN48/WeAct-STM32G474CoreBoard_V10%20Board%20Shape%20%E5%A4%96%E5%BD%A2.pdf
+  (The repo also has a "Long" QFN48 board and QFP48 variants; not downloaded.)
+Licence/terms: the GitHub repository has NO licence (GitHub API license=null). Public, no login. All rights reserved by default:
+  local reference copies for our own design work only; do not redistribute or commit.
+Notes: STEP bbox measured with OCP: 36.53 x 28.40 x 12.25 mm (PCB plus soldered 2.54 mm headers, z -3.75..+8.5).

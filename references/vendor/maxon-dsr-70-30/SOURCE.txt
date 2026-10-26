@@ -1,0 +1,14 @@
+Vendor: maxon motor ag (maxon group)
+Model: Shunt Regulator DSR 70/30, part number 235811
+Retrieved: 2026-10-26
+Product page: https://www.maxongroup.com/maxon/view/product/235811
+Files:
+  235811-CAD-Files.zip  <-  https://www.maxongroup.com/medias/sys_master/root/8834319417374/235811-CAD-Files.zip  (16044279 bytes, sha256 140a05eb78373d96de88e7dd0f9986dec0da8ca932bbec2f83a477860ea23345)
+     contains bremschopper_70_30_zusammenbau_asm.stp (24932130 bytes), .igs, and a drawing PDF (2016-12-16)
+  bremschopper_70_30_zusammenbau_asm.stp  <-  extracted from the zip above
+  235811-DSR-70-30-Operating-Instructions-En.pdf  <-  https://www.maxongroup.com/medias/sys_master/root/8834319024158/235811-DSR-70-30-Operating-Instructions-En.pdf (August 2012 edition)
+Licence/terms: offered as a free download ("CAD-FILES (DXF, STP,....)") on the public product page, no login.
+  The archive contains no licence text. maxon's website terms apply; treat as all rights reserved:
+  local reference copy for our own design work only, do not redistribute or commit.
+Notes: STEP bounding box measured with OCP (gyropup .venv): 180.0 x 26.0 x 103.0 mm (matches the datasheet 180 x 103 x 26).
+  Not yet chosen in the design: proposed real part for the regen_clamp slot (placeholder assumed-regen-clamp-58v).

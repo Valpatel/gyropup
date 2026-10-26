@@ -24,6 +24,7 @@ It is a tool dependency, not a requirement of the CAD build.
 from __future__ import annotations
 
 import argparse
+import contextlib
 import json
 import sys
 from pathlib import Path
@@ -36,12 +37,13 @@ VENDOR = R / 'references/vendor/mcmaster'
 CATEGORY = {'bearing': 'bearing', 'rod_end': 'bearing', 'grommet': 'wiring'}      # everything else: fastener
 
 
-def refresh(pn: str, kind: str, session, force: bool = False, choose=None):
-    """Download (unless already here) and normalise one part. Returns (page, info, cad path relative to the repo)."""
+def refresh(pn: str, kind: str, browser, force: bool = False, choose=None):
+    """Download (unless already here) and normalise one part. Returns (page, info, cad path relative to the repo).
+    ``browser()`` returns the open Session; it is only called when a page is actually needed."""
     folder = VENDOR / pn
     step, page_file = folder / f'{pn}.step', folder / f'{pn}.page.json'
-    if force or not step.exists():
-        session.fetch(pn, folder, choose=choose)
+    if force or not step.exists() or not page_file.exists():
+        browser().fetch(pn, folder, choose=choose)
     page = json.loads(page_file.read_text())
     material = mc.material_of(page.get('specs', {}).get('raw', {}))
     norm, info = mc.normalise(step, kind, material=material)
@@ -93,9 +95,17 @@ def main(argv=None) -> int:
     if a.pns and not a.kind:
         ap.error('--kind is needed with part numbers')
     rc = 0
-    with mc.Session(delay_s=a.delay) as s:
+    with contextlib.ExitStack() as stack:
+        session = None
+
+        def browser():                                   # started only for a part not downloaded yet: offline otherwise
+            nonlocal session
+            if session is None:
+                session = stack.enter_context(mc.Session(delay_s=a.delay))
+            return session
+
         for pn in a.pns:
-            page, info, cad = refresh(pn.upper(), a.kind, s, a.force)
+            page, info, cad = refresh(pn.upper(), a.kind, browser, a.force)
             print(f"{pn}: {page['description']} | {page['price_text']} | bbox {info['bbox_mm']['size']} -> {cad}")
         if a.catalog:
             items = json.loads(CATALOG.read_text())
@@ -104,8 +114,10 @@ def main(argv=None) -> int:
                     continue
                 pn, kind = item['model'], item.get('cad', {}).get('kind') or item.get('kind')
                 try:
-                    page, info, cad = refresh(pn, kind, s, a.force, item.get('choose'))
-                except Exception as exc:                     # one bad part should not stop the others
+                    page, info, cad = refresh(pn, kind, browser, a.force, item.get('choose'))
+                except mc.MissingDependency:
+                    raise                                # no Playwright or no Chrome: say so once
+                except Exception as exc:                 # one bad part should not stop the others
                     print(f"{item.get('key')} ({pn}): FAILED {exc}", file=sys.stderr)
                     rc = 1
                     continue

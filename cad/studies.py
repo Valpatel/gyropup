@@ -20,7 +20,8 @@ so the real number lies between; the bench test in docs/cad-plan.md (S4) measure
 Each part is studied in its own material (leg.leg_parts: PA6-CF along or across the layers, humid allowables).
 Targets (docs/mechanical-interfaces.md): safety factor >= 2 everyday, >= 1.2 in falls; leg deflection at the wheel
 <= 4 mm (printed). Writes exports/fea/<part>-<case>.png, an overload video exports/fea/<part>-<case>.mp4 (the load
-ramped to failure and past it; --no-anim skips them) and exports/fea/summary.json.
+ramped to failure and past it) with the interactive viewer's data exports/fea/<part>-<case>.json (--no-anim skips
+both) and exports/fea/summary.json.
 """
 from __future__ import annotations
 
@@ -74,7 +75,7 @@ TARGETS = {'sf': 2.0, 'sf_fall': 1.2, 'wheel_deflection_mm': 4.0}
 FEA_MATERIAL = {'output_adapter': 'pa6_cf_z', 'motor_plate': 'pa6_cf_xy'}
 
 
-def cases(loads: dict, L: dict, S, crank_r: float, mass_kg: float = 20.0, floor: bool = True) -> dict:
+def cases(loads: dict, L: dict, S, crank_r: float, mass_kg: float = 20.0, floor: bool = True, motor_cap_nm: float | None = None) -> dict:
     a, b = L['thigh'], L['shin']
     W = mass_kg * 9.81
     vert_floor, lat_floor = (FLOOR['vertical_x_static'] * W / 2, FLOOR['lateral_g'] * W) if floor else (0.0, 0.0)
@@ -85,11 +86,16 @@ def cases(loads: dict, L: dict, S, crank_r: float, mass_kg: float = 20.0, floor:
     Fx, _, Fz = sh_f['force_vec_body']
     My = sh_f['moment_with_force_body'][1]
     sphi, at = leg.transmission(L['kneeMinDeg'], L['kneeMaxDeg'])
-    P = abs(My) / (crank_r / 1000.0 * sphi)                    # push-rod force at the worst transmission angle, N
+    # the push-rod carries only what the knee motor resists: its firmware cap (motor_cap_nm, +10 % overshoot); a fall that
+    # folds the knee harder ends on the knee's hard stop, not in the rod (knee_stop_nm records that load)
+    T_rod = min(abs(My), 1.1 * motor_cap_nm) if motor_cap_nm else abs(My)
+    P = T_rod / (crank_r / 1000.0 * sphi)                      # push-rod force at the worst transmission angle, N
     # T1: pin force on the thigh at the knee = -(shin force - rod force along the thigh axis)
     t1 = {'force': (-Fx, 0.0, -(Fz) + P), 'moments': {'x': -sh_f['moment_with_force_body'][0], 'z': -sh_f['moment_with_force_body'][2]},
-          'from': f"{sh_f['scenario']}: shin force {sh_f['force_n']:.0f} N, knee torque {abs(My):.0f} N·m -> push-rod {P:.0f} N (sin phi {sphi:.2f} at a {at:.0f}° knee)",
-          'rod_force_n': P, 'sin_phi': sphi}
+          'from': f"{sh_f['scenario']}: shin force {sh_f['force_n']:.0f} N, knee torque {abs(My):.0f} N·m"
+                  + (f" (the rod takes the motor's {T_rod:.0f}, the knee stop the rest)" if T_rod < abs(My) else '')
+                  + f" -> push-rod {P:.0f} N (sin phi {sphi:.2f} at a {at:.0f}° knee)",
+          'rod_force_n': P, 'sin_phi': sphi, 'knee_torque_nm': abs(My), 'knee_stop_nm': max(0.0, abs(My) - T_rod)}
     # T2: the thigh's peak hip moment (out of plane) re-expressed as loads at the knee: M_knee = M_hip - r x F
     Fh = list(th_m['force_with_moment_body'])
     Mh = list(th_m['moment_vec_body'])
@@ -141,7 +147,7 @@ def output_joint(mi: dict, design: dict) -> dict:
             'note': 'clamp friction + dowel bearing on PA6-CF (humid, sustained); torque the screws to the preload, re-check after a week'}
 
 
-def run(design: Path, mesh: float, anim: bool = True):
+def run(design: Path, mesh: float, anim: bool = True, only=None):
     out = subprocess.run(['node', str(R / 'tools/derive.mjs'), str(design)], capture_output=True, text=True, check=True)
     L = json.loads(out.stdout)['layout']
     d = json.loads(design.read_text())
@@ -150,7 +156,8 @@ def run(design: Path, mesh: float, anim: bool = True):
     cr = leg.PARAMS['crank_r']
     loads = worst_link_loads(design.stem)
     mass = json.loads((R / 'build' / 'sim' / design.stem / 'model.json').read_text())['total_mass_kg'] if (R / 'build' / 'sim' / design.stem / 'model.json').exists() else 20.0
-    C = cases(loads, L, S, cr, mass)
+    cap = d.get('leg_torque_limit_nm')
+    C = cases(loads, L, S, cr, mass, motor_cap_nm=cap)
     a, b = L['thigh'], L['shin']
     yt, ys = sum(S.y['thigh']) / 2, sum(S.y['shin']) / 2
     OUT.mkdir(parents=True, exist_ok=True)
@@ -159,6 +166,8 @@ def run(design: Path, mesh: float, anim: bool = True):
     VIEWS = {'thigh': (15, -115), 'shin': (15, -115), 'yoke_bracket': (25, -40)}
 
     def study(part, case, material=None, setup=None, tag=''):
+        if only and part not in only:
+            return
         t0 = time.time()
         material = material or meta.get(part, {}).get('fea_material') or FEA_MATERIAL.get(part, 'pa6_cf_z')
         st = Study(parts[part], MATERIALS[material], mesh_mm=mesh, name=f'{part} {case}')
@@ -171,6 +180,9 @@ def run(design: Path, mesh: float, anim: bool = True):
             mp4 = st.animate(OUT / f'{part}-{case}{tag}.mp4', view=VIEWS.get(part, (25, -60)),
                              title=f"{part} {case}{tag}: {MATERIALS[material].name}")
             r['animation'] = str(Path(mp4).relative_to(R))
+            # the interactive viewer's data (designer/kit/fea.html?case=...): written with the videos, so the
+            # optimiser's --no-anim runs stay fast and do not fill its trial folders
+            r['viewer'] = str(st.export_viewer(OUT / f'{part}-{case}{tag}.json').relative_to(R))
         r.update(part=part, case=case, material_id=material, load_from=C[case]['from'], png=str(png.relative_to(R)),
                  seconds=round(time.time() - t0, 1), assumed_interfaces=assumed)
         results.append(r)
@@ -192,7 +204,13 @@ def run(design: Path, mesh: float, anim: bool = True):
     bearings = cylinder_at((0, ys, -a), (0, 1, 0), radius_max=15)
     lx, lz = leg.lever_pin(cr)
     rod_pin = cylinder_at((lx, S.y['rod'][1] + 6.5, -a + lz), (0, 1, 0), radius_max=5)
-    wh_bolts = cylinder_at((0, S.y['shin'][1], -a - b), (0, 1, 0), within=27, radius_max=4)    # the WH screws carry the wheel
+    whp = gmi.STD['WH']['pcd'] / 2
+
+    def wh_bolts(f):                                           # the WH screws' insert holes carry the wheel (on their circle)
+        if f.kind != 'Cylinder' or (f.bbox[3] - f.bbox[0]) > 8.5:
+            return False
+        rr = math.hypot(f.center[0], f.center[2] + a + b)
+        return abs(rr - whp) < 2.5 and f.bbox[4] > S.y['shin'][1] - 13
 
     def shin_setup(st):
         st.fix(lambda f: bearings(f) or rod_pin(f))
@@ -258,7 +276,7 @@ def run(design: Path, mesh: float, anim: bool = True):
     fall_results = []
     if fall_loads.get('shin_l') and fall_loads.get('thigh_l') and fall_loads.get('wheel_l'):
         C_normal = C
-        C = cases(fall_loads, L, S, cr, mass, floor=False)
+        C = cases(fall_loads, L, S, cr, mass, floor=False, motor_cap_nm=cap)
         leg_f = C['S1']['force']
         M_out = abs(C['T2']['moments']['x']) + abs(C['T2']['force'][1]) * a / 1000.0
         T_mot = abs(fall_loads['shin_l']['force']['moment_with_force_body'][1])
@@ -275,6 +293,8 @@ def run(design: Path, mesh: float, anim: bool = True):
         results[:] = normal_results
         C = {**C_normal, **{k: v for k, v in C.items() if k.endswith('-fall')}}
 
+    if only:                                                   # a quick look at some parts: no summary, no verdict
+        return {'results': results + fall_results}
     # leg deflection at the wheel: thigh tip (worst case) carried down the shin, plus the shin's own
     summary = {'design': str(design.relative_to(R)), 'mesh_mm': mesh, 'cases': C, 'stack_mm': S.y, 'track_mm': S.track,
                'stack_notes': S.notes, 'assumed_interfaces': assumed, 'results': results,
@@ -301,6 +321,11 @@ def run(design: Path, mesh: float, anim: bool = True):
     summary['rod'] = {'force_n': round(P), 'buckling_n': round(P_cr), 'buckling_sf': round(P_cr / P, 1), 'rod_end_static_n': rod_end_static,
                       'rod_end_sf': round(rod_end_static / P, 1), 'sin_phi_min': round(C['T1']['sin_phi'], 3)}
     summary['output_joint'] = output_joint(S.hip, d)
+    # what the knee's hard stop must take: the knee torque beyond the motor's cap, in any scenario (a fall with the
+    # motors off folds the leg onto it); the stop is not designed yet: docs/cad-plan.md
+    stops = [v.get('knee_stop_nm', 0.0) for v in C.values() if isinstance(v, dict) and 'knee_stop_nm' in v]
+    summary['knee_stop'] = {'torque_nm': round(max(stops, default=0.0), 1), 'designed': False,
+                            'note': 'the knee torque beyond the motor cap ends on the knee hard stop; size a stop (and a TPU bumper) for it'}
     verdict['all']['joint_ok'] = summary['output_joint']['sf'] >= TARGETS['sf']
     verdict['all']['rod_ok'] = P_cr / P >= 3 and rod_end_static / P >= 2
     verdict['all']['ok'] = verdict['all']['ok'] and verdict['all']['rod_ok'] and verdict['all']['joint_ok']
@@ -315,5 +340,6 @@ if __name__ == '__main__':
     ap.add_argument('design', nargs='?', default=str(R / 'designs/default.json'))
     ap.add_argument('--mesh', type=float, default=4.0)
     ap.add_argument('--no-anim', action='store_true', help='skip the overload videos (the optimiser)')
+    ap.add_argument('--only', nargs='+', help='study only these parts (a quick look; the summary is then partial)')
     a = ap.parse_args()
-    run(Path(a.design).resolve(), a.mesh, anim=not a.no_anim)
+    run(Path(a.design).resolve(), a.mesh, anim=not a.no_anim, only=a.only)

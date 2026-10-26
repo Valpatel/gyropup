@@ -40,21 +40,21 @@
    "how": "printed PETG"
   },
   "head_saddle": {
-   "material": "petg",
+   "material": "pa6-cf",
    "qty": 1,
    "size_mm": [
     206,
     150,
-    26
+    28
    ],
    "fits": true,
    "placement": "straight",
-   "grams_each": 106,
-   "grams": 106,
-   "hours": 4.2,
-   "cost_usd": 1.48,
-   "infill": "2 mm walls, 40 % gyroid",
-   "how": "printed PETG; M4 inserts for the turret"
+   "grams_each": 154,
+   "grams": 154,
+   "hours": 10.1,
+   "cost_usd": 12.28,
+   "infill": "100 %",
+   "how": "printed PA6-CF; the turret mount (TM: 4 x M5 inserts, 2 dowels)"
   },
   "electronics_bay": {
    "material": "petg",
@@ -145,16 +145,16 @@
    "material": "pa6-cf",
    "qty": 2,
    "size_mm": [
-    146,
-    137,
-    196
+    150,
+    139,
+    214
    ],
    "fits": true,
    "placement": "straight",
-   "grams_each": 650,
-   "grams": 1300,
-   "hours": 85.2,
-   "cost_usd": 104.02,
+   "grams_each": 878,
+   "grams": 1755,
+   "hours": 115.0,
+   "cost_usd": 140.41,
    "infill": "100 %",
    "how": "printed PA6-CF on its wall flange; 6 x M6 through the chassis wall with nuts, 3 x M5 into each plate tab"
   },
@@ -168,10 +168,10 @@
    ],
    "fits": true,
    "placement": "straight",
-   "grams_each": 413,
-   "grams": 826,
-   "hours": 54.2,
-   "cost_usd": 66.1,
+   "grams_each": 418,
+   "grams": 835,
+   "hours": 54.7,
+   "cost_usd": 66.81,
    "infill": "100 %",
    "how": "printed PA6-CF, 100 % solid, flat; 61812 (60 x 78 x 10) support bearing pressed in, held by 3 x M3 + washers; 3 x M5 inserts for the yoke"
   },
@@ -179,16 +179,16 @@
    "material": "pa6-cf",
    "qty": 2,
    "size_mm": [
-    66,
-    66,
+    64,
+    64,
     28
    ],
    "fits": true,
    "placement": "straight",
-   "grams_each": 69,
-   "grams": 139,
-   "hours": 9.1,
-   "cost_usd": 11.09,
+   "grams_each": 72,
+   "grams": 144,
+   "hours": 9.5,
+   "cost_usd": 11.55,
    "infill": "100 %",
    "how": "printed PA6-CF, 100 % solid; 8 x M5 heat-set inserts in the face; sockets for the motor's 3 x \u00d86 pins; 9 x M5 12.9 screws with washers into the motor"
   },
@@ -196,16 +196,16 @@
    "material": "pa6-cf",
    "qty": 2,
    "size_mm": [
-    66,
-    66,
+    64,
+    64,
     28
    ],
    "fits": true,
    "placement": "straight",
-   "grams_each": 69,
-   "grams": 139,
-   "hours": 9.1,
-   "cost_usd": 11.09,
+   "grams_each": 72,
+   "grams": 144,
+   "hours": 9.5,
+   "cost_usd": 11.55,
    "infill": "100 %",
    "how": "printed PA6-CF, 100 % solid; 8 x M5 heat-set inserts in the face; sockets for the motor's 3 x \u00d86 pins; 9 x M5 12.9 screws with washers into the motor"
   },
@@ -219,10 +219,10 @@
    ],
    "fits": true,
    "placement": "straight",
-   "grams_each": 413,
-   "grams": 826,
-   "hours": 54.2,
-   "cost_usd": 66.1,
+   "grams_each": 418,
+   "grams": 835,
+   "hours": 54.7,
+   "cost_usd": 66.81,
    "infill": "100 %",
    "how": "printed PA6-CF, 100 % solid, flat; 61812 (60 x 78 x 10) support bearing pressed in, held by 3 x M3 + washers; 3 x M5 inserts for the yoke"
   },
@@ -230,33 +230,33 @@
    "material": "pa6-cf",
    "qty": 2,
    "size_mm": [
-    258,
+    266,
     72,
-    44
+    72
    ],
    "fits": true,
    "placement": "turned",
-   "grams_each": 362,
-   "grams": 724,
-   "hours": 47.4,
-   "cost_usd": 57.88,
+   "grams_each": 582,
+   "grams": 1164,
+   "hours": 76.3,
+   "cost_usd": 93.08,
    "infill": "100 %",
-   "how": "printed PA6-CF flat, 60 x 44 box, 5.0 mm walls, 100 % solid; 8 x M5 into the hip adapter; cables inside"
+   "how": "printed PA6-CF flat, 60 x 52 box, 6.0 mm walls, 100 % solid; 8 x M5 into the hip adapter; cables inside"
   },
   "shin": {
    "material": "pa6-cf",
    "qty": 2,
    "size_mm": [
-    259,
-    74,
-    28
+    267,
+    90,
+    38
    ],
    "fits": true,
    "placement": "turned",
-   "grams_each": 267,
-   "grams": 534,
-   "hours": 35.0,
-   "cost_usd": 42.75,
+   "grams_each": 418,
+   "grams": 835,
+   "hours": 54.7,
+   "cost_usd": 66.81,
    "infill": "100 %",
    "how": "printed PA6-CF flat, 50 mm box, 4.0 mm walls; two 6001-2RS pressed in; M5 inserts at the wheel; cables inside"
   },
@@ -271,9 +271,9 @@
    "fits": true,
    "placement": "straight",
    "grams_each": 72,
-   "grams": 145,
-   "hours": 9.5,
-   "cost_usd": 11.57,
+   "grams": 143,
+   "hours": 9.4,
+   "cost_usd": 11.47,
    "infill": "100 %",
    "how": "printed PA6-CF flat, 14 mm; 8 x M5 into the knee adapter; M8 bolt for the rod end"
   },
@@ -281,42 +281,314 @@
    "material": "pa6-cf",
    "qty": 2,
    "size_mm": [
-    62,
-    62,
+    78,
+    78,
     12
    ],
    "fits": true,
    "placement": "straight",
-   "grams_each": 26,
-   "grams": 51,
-   "hours": 3.4,
-   "cost_usd": 4.1,
+   "grams_each": 44,
+   "grams": 89,
+   "hours": 5.8,
+   "cost_usd": 7.1,
    "infill": "100 %",
    "how": "printed PA6-CF flat, 10 mm"
+  },
+  "pan_base": {
+   "material": "pa6-cf",
+   "qty": 1,
+   "size_mm": [
+    158,
+    155,
+    50
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 131,
+   "grams": 131,
+   "hours": 8.6,
+   "cost_usd": 10.49,
+   "infill": "100 %",
+   "how": "PA6-CF on its foot; 4 x M5 x 16 into the head ring, 2 x \u00d85 dowels"
+  },
+  "pan_clamp": {
+   "material": "pa6-cf",
+   "qty": 1,
+   "size_mm": [
+    98,
+    88,
+    3
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 7,
+   "grams": 7,
+   "hours": 0.5,
+   "cost_usd": 0.58,
+   "infill": "100 %",
+   "how": "PA6-CF; 3 x M3 x 8 into inserts"
+  },
+  "pan_ring": {
+   "material": "pa6-cf",
+   "qty": 1,
+   "size_mm": [
+    115,
+    81,
+    34
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 80,
+   "grams": 80,
+   "hours": 5.2,
+   "cost_usd": 6.37,
+   "infill": "100 %",
+   "how": "PA6-CF upside down; DIN 471-50 circlip; 4 x M4 inserts"
+  },
+  "pan_pinion": {
+   "material": "pa6-cf",
+   "qty": 1,
+   "size_mm": [
+    29,
+    29,
+    13
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 7,
+   "grams": 7,
+   "hours": 0.4,
+   "cost_usd": 0.54,
+   "infill": "100 %",
+   "how": "PA6-CF; 4 x M2 to the horn; turns -3 x pan about the servo axis"
+  },
+  "tilt_yoke": {
+   "material": "pa6-cf",
+   "qty": 1,
+   "size_mm": [
+    161,
+    83,
+    48
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 82,
+   "grams": 82,
+   "hours": 5.4,
+   "cost_usd": 6.59,
+   "infill": "100 %",
+   "how": "PA6-CF on its back; 4 x M4 x 12 to the turntable"
+  },
+  "cradle": {
+   "material": "pa6-cf",
+   "qty": 1,
+   "size_mm": [
+    182,
+    131,
+    57
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 59,
+   "grams": 59,
+   "hours": 3.9,
+   "cost_usd": 4.72,
+   "infill": "100 %",
+   "how": "PA6-CF flat; ISO 7379 6 x 12 shoulder screw (M5) in an insert"
+  },
+  "cartridge_body": {
+   "material": "pa6-cf",
+   "qty": 1,
+   "size_mm": [
+    162,
+    109,
+    53
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 159,
+   "grams": 159,
+   "hours": 10.4,
+   "cost_usd": 12.69,
+   "infill": "100 %",
+   "how": "PA6-CF on its base; supports under the chute"
+  },
+  "flywheel": {
+   "material": "pa6-cf",
+   "qty": 2,
+   "size_mm": [
+    32,
+    32,
+    15
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 7,
+   "grams": 14,
+   "hours": 0.9,
+   "cost_usd": 1.09,
+   "infill": "100 %",
+   "how": "PA6-CF hub; M3 grub screw"
+  },
+  "flywheel_tyre": {
+   "material": "tpu95",
+   "qty": 2,
+   "size_mm": [
+    40,
+    40,
+    12
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 7,
+   "grams": 13,
+   "hours": 1.4,
+   "cost_usd": 0.55,
+   "infill": "2 mm walls, 40 % gyroid",
+   "how": "TPU 95A tyre"
+  },
+  "dial": {
+   "material": "petg",
+   "qty": 1,
+   "size_mm": [
+    91,
+    91,
+    26
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 42,
+   "grams": 42,
+   "hours": 1.7,
+   "cost_usd": 0.58,
+   "infill": "2 mm walls, 40 % gyroid",
+   "how": "PETG; M3 grub screw on the flat"
+  },
+  "hopper": {
+   "material": "petg",
+   "qty": 1,
+   "size_mm": [
+    111,
+    102,
+    35
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 28,
+   "grams": 28,
+   "hours": 1.1,
+   "cost_usd": 0.39,
+   "infill": "2 mm walls, 40 % gyroid",
+   "how": "translucent PETG; 3 x M3 to the housing"
+  },
+  "hopper_lid": {
+   "material": "petg",
+   "qty": 1,
+   "size_mm": [
+    102,
+    102,
+    13
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 26,
+   "grams": 26,
+   "hours": 1.0,
+   "cost_usd": 0.36,
+   "infill": "2 mm walls, 40 % gyroid",
+   "how": "PETG"
+  },
+  "hopper_flap": {
+   "material": "petg",
+   "qty": 1,
+   "size_mm": [
+    40,
+    36,
+    6
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 3,
+   "grams": 3,
+   "hours": 0.1,
+   "cost_usd": 0.04,
+   "infill": "2 mm walls, 40 % gyroid",
+   "how": "PETG; \u00d82 pin + torsion spring"
+  },
+  "barrel": {
+   "material": "petg",
+   "qty": 1,
+   "size_mm": [
+    35,
+    30,
+    100
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 32,
+   "grams": 32,
+   "hours": 1.3,
+   "cost_usd": 0.44,
+   "infill": "2 mm walls, 40 % gyroid",
+   "how": "PETG standing; last 15 mm blaze orange"
+  },
+  "laser_mount": {
+   "material": "petg",
+   "qty": 1,
+   "size_mm": [
+    22,
+    20,
+    26
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 8,
+   "grams": 8,
+   "hours": 0.3,
+   "cost_usd": 0.11,
+   "infill": "2 mm walls, 40 % gyroid",
+   "how": "PETG; 3 x M3 boresight, 2 x M3 to the cradle"
+  },
+  "bumper_ring": {
+   "material": "tpu95",
+   "qty": 1,
+   "size_mm": [
+    172,
+    169,
+    16
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 54,
+   "grams": 54,
+   "hours": 5.5,
+   "cost_usd": 2.25,
+   "infill": "2 mm walls, 40 % gyroid",
+   "how": "TPU 95A; 5 x M3 with washers"
   }
  },
  "by_material": {
   "pa6-cf": {
-   "grams": 5382,
-   "hours": 352.8,
-   "cost_usd": 430.49,
-   "parts": 19
+   "grams": 7335,
+   "hours": 480.7,
+   "cost_usd": 586.73,
+   "parts": 29
   },
   "petg": {
-   "grams": 669,
-   "hours": 26.8,
-   "cost_usd": 9.35,
-   "parts": 7
+   "grams": 702,
+   "hours": 28.1,
+   "cost_usd": 9.79,
+   "parts": 12
   },
   "tpu95": {
-   "grams": 103,
-   "hours": 10.6,
-   "cost_usd": 4.32,
-   "parts": 1
+   "grams": 170,
+   "hours": 17.5,
+   "cost_usd": 7.12,
+   "parts": 4
   }
  },
  "too_big": [],
- "total_hours": 390.2,
- "total_grams": 6154,
+ "total_hours": 526.3,
+ "total_grams": 8207,
  "note": "hours are rough: grams / material density / a strength-holding volumetric rate"
 }

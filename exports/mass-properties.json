@@ -34,19 +34,19 @@
    ]
   },
   "head_saddle": {
-   "volume_cm3": 92.069,
-   "area_cm2": 400.48,
-   "wall_mm": 2.0,
-   "infill": 0.4,
-   "effective_fill": 0.922,
-   "mass_g": 106.1,
+   "volume_cm3": 140.845,
+   "area_cm2": 497.55,
+   "wall_mm": 500.0,
+   "infill": 1.0,
+   "effective_fill": 1.0,
+   "mass_g": 153.5,
    "estimate": true,
-   "material": "petg",
+   "material": "pa6-cf",
    "qty": 1,
    "com_m": [
-    -5.008335228371117e-18,
-    -3.3299996163390604e-17,
-    0.19916158012498036
+    -5.799385752110378e-05,
+    5.7993857521025575e-05,
+    0.20254974554171315
    ]
   },
   "electronics_bay": {
@@ -130,151 +130,407 @@
    ]
   },
   "yoke_bracket": {
-   "volume_cm3": 596.537,
-   "area_cm2": 1581.01,
+   "volume_cm3": 805.265,
+   "area_cm2": 1727.3,
    "wall_mm": 500.0,
    "infill": 1.0,
    "effective_fill": 1.0,
-   "mass_g": 650.2,
+   "mass_g": 877.7,
    "estimate": true,
    "material": "pa6-cf",
    "qty": 2,
    "com_m": [
-    6.13628886171154e-06,
-    0.17765205433117592,
-    0.09260208619953982
+    5.682169902703757e-06,
+    0.18611060473794108,
+    0.09388893608476134
    ]
   },
   "hip_motor_plate": {
-   "volume_cm3": 379.119,
-   "area_cm2": 579.69,
+   "volume_cm3": 383.144,
+   "area_cm2": 575.97,
    "wall_mm": 500.0,
    "infill": 1.0,
    "effective_fill": 1.0,
-   "mass_g": 413.2,
+   "mass_g": 417.6,
    "estimate": true,
    "material": "pa6-cf",
    "qty": 2,
    "com_m": [
-    3.339963560468892e-18,
-    0.18109852876950605,
-    -0.039645044693044904
+    -1.980016188418013e-18,
+    0.1830835340434664,
+    -0.039228528072167645
    ]
   },
   "hip_output_adapter": {
-   "volume_cm3": 63.54,
-   "area_cm2": 172.35,
+   "volume_cm3": 66.251,
+   "area_cm2": 171.54,
    "wall_mm": 500.0,
    "infill": 1.0,
    "effective_fill": 1.0,
-   "mass_g": 69.3,
+   "mass_g": 72.2,
    "estimate": true,
    "material": "pa6-cf",
    "qty": 2,
    "com_m": [
-    -5.05904951166821e-07,
-    0.18201650388892157,
-    -5.059049511644744e-07
+    -4.85202353018762e-07,
+    0.18385112006393126,
+    -4.85202353016617e-07
    ]
   },
   "knee_output_adapter": {
-   "volume_cm3": 63.54,
-   "area_cm2": 172.35,
+   "volume_cm3": 66.251,
+   "area_cm2": 171.54,
    "wall_mm": 500.0,
    "infill": 1.0,
    "effective_fill": 1.0,
-   "mass_g": 69.3,
+   "mass_g": 72.2,
    "estimate": true,
    "material": "pa6-cf",
    "qty": 2,
    "com_m": [
-    -5.059049511665417e-07,
-    0.2795834961110783,
-    5.059049511666464e-07
+    -4.852023530182981e-07,
+    0.2952488799360691,
+    4.852023530176751e-07
    ]
   },
   "knee_motor_plate": {
-   "volume_cm3": 379.119,
-   "area_cm2": 579.69,
+   "volume_cm3": 383.144,
+   "area_cm2": 575.97,
    "wall_mm": 500.0,
    "infill": 1.0,
    "effective_fill": 1.0,
-   "mass_g": 413.2,
+   "mass_g": 417.6,
    "estimate": true,
    "material": "pa6-cf",
    "qty": 2,
    "com_m": [
-    2.932813666033033e-18,
-    0.2805014712304936,
-    0.03964504469304498
+    -7.515931373089803e-19,
+    0.2960164659565337,
+    0.039228528072167645
    ]
   },
   "thigh": {
-   "volume_cm3": 331.951,
-   "area_cm2": 926.46,
+   "volume_cm3": 533.765,
+   "area_cm2": 1086.39,
    "wall_mm": 500.0,
    "infill": 1.0,
    "effective_fill": 1.0,
-   "mass_g": 361.8,
+   "mass_g": 581.8,
    "estimate": true,
    "material": "pa6-cf",
    "qty": 2,
    "com_m": [
-    0.00017670103206396238,
-    0.21520483540824464,
-    -0.0995914346216837
+    0.00012751690656649992,
+    0.22517774679006441,
+    -0.09200590000291328
    ]
   },
   "shin": {
-   "volume_cm3": 245.135,
-   "area_cm2": 671.13,
+   "volume_cm3": 383.112,
+   "area_cm2": 813.78,
    "wall_mm": 500.0,
    "infill": 1.0,
    "effective_fill": 1.0,
-   "mass_g": 267.2,
+   "mass_g": 417.6,
    "estimate": true,
    "material": "pa6-cf",
    "qty": 2,
    "com_m": [
-    0.0005049164924342392,
-    0.2668463585203297,
-    -0.32537533110617683
+    0.00036250012634776393,
+    0.2869291605351266,
+    -0.340143327574154
    ]
   },
   "knee_crank": {
-   "volume_cm3": 66.363,
-   "area_cm2": 169.71,
+   "volume_cm3": 65.782,
+   "area_cm2": 170.76,
    "wall_mm": 500.0,
    "infill": 1.0,
    "effective_fill": 1.0,
-   "mass_g": 72.3,
+   "mass_g": 71.7,
    "estimate": true,
    "material": "pa6-cf",
    "qty": 2,
    "com_m": [
-    0.0033808224173378513,
-    0.25996401355103926,
-    -0.012617401032872531
+    0.0032736064241946747,
+    0.27542574594841385,
+    -0.012217265499078235
    ]
   },
   "wheel_adapter": {
-   "volume_cm3": 23.493,
-   "area_cm2": 98.67,
+   "volume_cm3": 40.695,
+   "area_cm2": 141.61,
    "wall_mm": 500.0,
    "infill": 1.0,
    "effective_fill": 1.0,
-   "mass_g": 25.6,
+   "mass_g": 44.4,
    "estimate": true,
    "material": "pa6-cf",
    "qty": 2,
    "com_m": [
-    -3.4768942068772596e-18,
-    0.28535737240976955,
-    -0.3999999999999999
+    4.469794863027144e-20,
+    0.31071580810359734,
+    -0.4
+   ]
+  },
+  "pan_base": {
+   "volume_cm3": 120.41,
+   "area_cm2": 681.98,
+   "wall_mm": 500.0,
+   "infill": 1.0,
+   "effective_fill": 1.0,
+   "mass_g": 131.2,
+   "estimate": true,
+   "material": "pa6-cf",
+   "qty": 1,
+   "com_m": [
+    -0.004497418285283167,
+    -0.0013064076902579973,
+    0.22482016813324904
+   ]
+  },
+  "pan_clamp": {
+   "volume_cm3": 6.612,
+   "area_cm2": 59.69,
+   "wall_mm": 500.0,
+   "infill": 1.0,
+   "effective_fill": 1.0,
+   "mass_g": 7.2,
+   "estimate": true,
+   "material": "pa6-cf",
+   "qty": 1,
+   "com_m": [
+    0.0022867973221731216,
+    -3.905906005767895e-18,
+    0.2535000000000001
+   ]
+  },
+  "pan_ring": {
+   "volume_cm3": 72.986,
+   "area_cm2": 244.5,
+   "wall_mm": 500.0,
+   "infill": 1.0,
+   "effective_fill": 1.0,
+   "mass_g": 79.6,
+   "estimate": true,
+   "material": "pa6-cf",
+   "qty": 1,
+   "com_m": [
+    -0.0012946098869306463,
+    -5.29863615903468e-18,
+    0.262760795665153
+   ]
+  },
+  "pan_pinion": {
+   "volume_cm3": 6.248,
+   "area_cm2": 36.1,
+   "wall_mm": 500.0,
+   "infill": 1.0,
+   "effective_fill": 1.0,
+   "mass_g": 6.8,
+   "estimate": true,
+   "material": "pa6-cf",
+   "qty": 1,
+   "com_m": [
+    -0.052650000000000044,
+    -2.1996167260210194e-20,
+    0.2636973669377411
+   ]
+  },
+  "tilt_yoke": {
+   "volume_cm3": 75.594,
+   "area_cm2": 322.45,
+   "wall_mm": 500.0,
+   "infill": 1.0,
+   "effective_fill": 1.0,
+   "mass_g": 82.4,
+   "estimate": true,
+   "material": "pa6-cf",
+   "qty": 1,
+   "com_m": [
+    -3.8327589369491905e-05,
+    0.003475135289849346,
+    0.30170792634090443
+   ]
+  },
+  "cradle": {
+   "volume_cm3": 54.16,
+   "area_cm2": 289.09,
+   "wall_mm": 500.0,
+   "infill": 1.0,
+   "effective_fill": 1.0,
+   "mass_g": 59.0,
+   "estimate": true,
+   "material": "pa6-cf",
+   "qty": 1,
+   "com_m": [
+    0.0183901426667614,
+    -0.0031101225597563553,
+    0.31542373354982606
+   ]
+  },
+  "cartridge_body": {
+   "volume_cm3": 145.621,
+   "area_cm2": 1032.14,
+   "wall_mm": 500.0,
+   "infill": 1.0,
+   "effective_fill": 1.0,
+   "mass_g": 158.7,
+   "estimate": true,
+   "material": "pa6-cf",
+   "qty": 1,
+   "com_m": [
+    0.03484901762535083,
+    -5.2843445215862314e-05,
+    0.3286473186749203
+   ]
+  },
+  "flywheel": {
+   "volume_cm3": 6.273,
+   "area_cm2": 38.63,
+   "wall_mm": 500.0,
+   "infill": 1.0,
+   "effective_fill": 1.0,
+   "mass_g": 6.8,
+   "estimate": true,
+   "material": "pa6-cf",
+   "qty": 2,
+   "com_m": [
+    0.06799109905349261,
+    0.029987999995551084,
+    0.32239152979597746
+   ]
+  },
+  "flywheel_tyre": {
+   "volume_cm3": 5.429,
+   "area_cm2": 36.19,
+   "wall_mm": 2.0,
+   "infill": 0.4,
+   "effective_fill": 1.0,
+   "mass_g": 6.6,
+   "estimate": true,
+   "material": "tpu95",
+   "qty": 2,
+   "com_m": [
+    0.06799999999999982,
+    0.029988000000000004,
+    0.32200000000000006
+   ]
+  },
+  "dial": {
+   "volume_cm3": 33.298,
+   "area_cm2": 211.06,
+   "wall_mm": 2.0,
+   "infill": 0.4,
+   "effective_fill": 1.0,
+   "mass_g": 41.6,
+   "estimate": true,
+   "material": "petg",
+   "qty": 1,
+   "com_m": [
+    1.8921204019140185e-06,
+    2.1275318313908416e-12,
+    0.34513924227388126
+   ]
+  },
+  "hopper": {
+   "volume_cm3": 22.596,
+   "area_cm2": 239.29,
+   "wall_mm": 2.0,
+   "infill": 0.4,
+   "effective_fill": 1.0,
+   "mass_g": 28.2,
+   "estimate": true,
+   "material": "petg",
+   "qty": 1,
+   "com_m": [
+    -0.00021538206164668338,
+    -1.6656476286432368e-13,
+    0.37400752884997396
+   ]
+  },
+  "hopper_lid": {
+   "volume_cm3": 20.836,
+   "area_cm2": 190.1,
+   "wall_mm": 2.0,
+   "infill": 0.4,
+   "effective_fill": 1.0,
+   "mass_g": 26.0,
+   "estimate": true,
+   "material": "petg",
+   "qty": 1,
+   "com_m": [
+    0.0018261493751215955,
+    -6.176421049114672e-18,
+    0.39332736423715886
+   ]
+  },
+  "hopper_flap": {
+   "volume_cm3": 2.459,
+   "area_cm2": 26.78,
+   "wall_mm": 2.0,
+   "infill": 0.4,
+   "effective_fill": 1.0,
+   "mass_g": 3.1,
+   "estimate": true,
+   "material": "petg",
+   "qty": 1,
+   "com_m": [
+    -0.023281697641758317,
+    2.933040696452437e-19,
+    0.39633959589203044
+   ]
+  },
+  "barrel": {
+   "volume_cm3": 25.195,
+   "area_cm2": 179.95,
+   "wall_mm": 2.0,
+   "infill": 0.4,
+   "effective_fill": 1.0,
+   "mass_g": 31.5,
+   "estimate": true,
+   "material": "petg",
+   "qty": 1,
+   "com_m": [
+    0.14410021063701756,
+    7.57965663606543e-09,
+    0.3219999759224438
+   ]
+  },
+  "laser_mount": {
+   "volume_cm3": 6.264,
+   "area_cm2": 35.74,
+   "wall_mm": 2.0,
+   "infill": 0.4,
+   "effective_fill": 1.0,
+   "mass_g": 7.8,
+   "estimate": true,
+   "material": "petg",
+   "qty": 1,
+   "com_m": [
+    0.11599999921242798,
+    -0.03200000907469423,
+    0.31697458050469757
+   ]
+  },
+  "bumper_ring": {
+   "volume_cm3": 44.663,
+   "area_cm2": 217.68,
+   "wall_mm": 2.0,
+   "infill": 0.4,
+   "effective_fill": 0.985,
+   "mass_g": 53.7,
+   "estimate": true,
+   "material": "tpu95",
+   "qty": 1,
+   "com_m": [
+    -0.0002699576572229457,
+    0.00856328548425831,
+    0.22600000000000026
    ]
   }
  },
- "made_total_g": 6153.6,
+ "made_total_g": 8206.0,
  "estimate": true,
  "note": "printed parts at 2 mm walls and 40 % infill; metal parts solid; weigh the real parts"
 }

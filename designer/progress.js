@@ -40,20 +40,26 @@ if (fea) {
     const ok = r.safety_factor >= need;
     return { r, ok, warn: !ok && r.safety_factor >= 0.8 * need, need };
   });
-  $('fea').innerHTML = `<table class="cmp"><thead><tr><th>part</th><th>case</th><th>material</th><th>SF</th><th>need</th><th>deflection</th><th></th></tr></thead><tbody>`
+  // the interactive viewer (web kit fea.html) for a study that wrote its data (studies.py with animations on)
+  const viewerHref = (r) => (r.viewer ? `kit/fea.html?case=${encodeURIComponent(`../../${r.viewer}`)}&title=${encodeURIComponent(`${r.part} ${r.case}`)}&current=progress` : null);
+  $('fea').innerHTML = `<table class="cmp"><thead><tr><th>part</th><th>case</th><th>material</th><th>SF</th><th>need</th><th>deflection</th><th></th><th>3D</th></tr></thead><tbody>`
     + rows.map(({ r, ok, warn, need }, i) => `<tr class="click" data-i="${i}"><td>${esc(r.part)}</td><td>${esc(r.case)}</td><td>${esc(r.material)}</td>`
-      + `<td>${r.safety_factor}</td><td>${need}</td><td>${r.probe_displacement_mm ? Math.hypot(...r.probe_displacement_mm).toFixed(2) : '—'} mm</td><td>${tag(ok, warn)}</td></tr>`).join('')
-    + `<tr><td colspan="3">leg deflection at the wheel</td><td colspan="2">${v.wheel_deflection_mm} mm</td><td>≤ ${T.wheel_deflection_mm} mm</td><td>${tag(v.wheel_deflection_mm <= T.wheel_deflection_mm)}</td></tr>`
-    + (fea.output_joint ? `<tr><td colspan="3">motor output joint (${esc(fea.output_joint.screws)})</td><td>${fea.output_joint.sf}</td><td>${T.sf}</td><td>${esc(fea.output_joint.capacity_nm)} N·m held</td><td>${tag(fea.output_joint.sf >= T.sf)}</td></tr>` : '')
-    + (fea.rod ? `<tr><td colspan="3">push-rod (${fea.rod.force_n} N)</td><td>${fea.rod.buckling_sf}</td><td>3</td><td>buckling</td><td>${tag(fea.rod.buckling_sf >= 3)}</td></tr>` : '')
+      + `<td>${r.safety_factor}</td><td>${need}</td><td>${r.probe_displacement_mm ? Math.hypot(...r.probe_displacement_mm).toFixed(2) : '—'} mm</td><td>${tag(ok, warn)}</td>`
+      + `<td>${viewerHref(r) ? `<a class="open3d" href="${esc(viewerHref(r))}" title="Interactive: load slider, hot spots, section cut">open ↗</a>` : '—'}</td></tr>`).join('')
+    + `<tr><td colspan="3">leg deflection at the wheel</td><td colspan="2">${v.wheel_deflection_mm} mm</td><td>≤ ${T.wheel_deflection_mm} mm</td><td>${tag(v.wheel_deflection_mm <= T.wheel_deflection_mm)}</td><td></td></tr>`
+    + (fea.output_joint ? `<tr><td colspan="3">motor output joint (${esc(fea.output_joint.screws)})</td><td>${fea.output_joint.sf}</td><td>${T.sf}</td><td>${esc(fea.output_joint.capacity_nm)} N·m held</td><td>${tag(fea.output_joint.sf >= T.sf)}</td><td></td></tr>` : '')
+    + (fea.rod ? `<tr><td colspan="3">push-rod (${fea.rod.force_n} N)</td><td>${fea.rod.buckling_sf}</td><td>3</td><td>buckling</td><td>${tag(fea.rod.buckling_sf >= 3)}</td><td></td></tr>` : '')
     + '</tbody></table>';
   const show = (i) => {
     const r = rows[i].r;
     if (r.animation) { $('feavid').src = `../${r.animation}`; $('feavid').play().catch(() => {}); }
     else { $('feavid').removeAttribute('src'); $('feavid').poster = `../${r.png}`; }
-    $('feanote').textContent = `${r.part} ${r.case}: ${r.load_from}. ${r.material_note || ''}`;
+    const href = viewerHref(r);
+    $('feanote').innerHTML = `${href ? `<a class="hud-btn primary" href="${esc(href)}">Open ${esc(r.part)} ${esc(r.case)} in 3D ↗</a> ` : ''}`
+      + `${esc(r.part)} ${esc(r.case)}: ${esc(r.load_from)}. ${esc(r.material_note || '')}`;
+    document.querySelectorAll('#fea tr.click').forEach((tr) => tr.classList.toggle('on', +tr.dataset.i === i));
   };
-  document.querySelectorAll('#fea tr.click').forEach((tr) => tr.addEventListener('click', () => show(+tr.dataset.i)));
+  document.querySelectorAll('#fea tr.click').forEach((tr) => tr.addEventListener('click', (e) => { if (!e.target.closest('a')) show(+tr.dataset.i); }));
   const worst = rows.reduce((a, b, i) => (b.r.safety_factor / b.need < rows[a].r.safety_factor / rows[a].need ? i : a), 0);
   show(worst);
 }

@@ -9,22 +9,34 @@
  "mirror": "side l parts are mirrored (y -> -y) for the right leg",
  "cad_has": [
   "balance_mcu",
+  "barrel",
   "battery_1",
+  "bumper_ring",
   "can_transceiver_1",
   "can_transceiver_2",
+  "cartridge_body",
   "chassis",
   "contactor",
+  "cradle",
   "dcdc_12v",
   "dcdc_compute",
   "depth_front",
   "depth_rear",
+  "dial",
   "estop",
   "eyes",
+  "flywheel_1",
+  "flywheel_2",
+  "flywheel_tyre_1",
+  "flywheel_tyre_2",
   "fuse",
   "headlight_l",
   "headlight_r",
   "hip_motor_l",
   "hip_motor_r",
+  "hopper",
+  "hopper_flap",
+  "hopper_lid",
   "imu",
   "j501_base",
   "j501_cover",
@@ -33,12 +45,56 @@
   "j501_side_hatch",
   "knee_motor_l",
   "knee_motor_r",
+  "laser_mount",
   "lidar",
   "motor_driver_l",
   "motor_driver_r",
+  "pan_base",
+  "pan_clamp",
+  "pan_pinion",
+  "pan_ring",
   "power_switch",
-  "regen_clamp"
+  "regen_clamp",
+  "tilt_yoke",
+  "turret_dt_receptacle",
+  "turret_esc_l",
+  "turret_esc_r",
+  "turret_feed_esc",
+  "turret_feed_motor",
+  "turret_flywheel_motor_l",
+  "turret_flywheel_motor_r",
+  "turret_laser",
+  "turret_pan_bearing",
+  "turret_pan_servo",
+  "turret_tilt_bearing",
+  "turret_tilt_servo"
  ],
+ "turret": {
+  "pan_mm": [
+   0,
+   0,
+   214.0
+  ],
+  "tilt_mm": [
+   0,
+   0,
+   337.0
+  ],
+  "muzzle_mm": [
+   194.0,
+   0.0,
+   322.0
+  ],
+  "tilt_range_deg": [
+   -25.0,
+   0.0
+  ],
+  "pan_range_deg": [
+   -170.0,
+   170.0
+  ],
+  "tilt_positive": "muzzle up (CAD)"
+ },
  "mounts": {
   "eyes": [
    97.5,
@@ -398,6 +454,204 @@
     "name": "pushrod",
     "color": "#c9ced6",
     "side": "l"
+   }
+  ],
+  "turret_base": [
+   {
+    "file": "pan_base.stl",
+    "name": "pan_base",
+    "color": "#4a5058",
+    "side": null
+   },
+   {
+    "file": "pan_clamp.stl",
+    "name": "pan_clamp",
+    "color": "#4a5058",
+    "side": null
+   },
+   {
+    "file": "pan_pinion.stl",
+    "name": "pan_pinion",
+    "color": "#4a5058",
+    "side": null
+   },
+   {
+    "file": "bumper_ring.stl",
+    "name": "bumper_ring",
+    "color": "#4a5058",
+    "side": null
+   },
+   {
+    "file": "local/turret_pan_servo.stl",
+    "name": "turret_pan_servo",
+    "color": "#2d3748",
+    "side": null,
+    "local": true
+   },
+   {
+    "file": "local/turret_pan_bearing.stl",
+    "name": "turret_pan_bearing",
+    "color": "#2d3748",
+    "side": null,
+    "local": true
+   },
+   {
+    "file": "local/turret_dt_receptacle.stl",
+    "name": "turret_dt_receptacle",
+    "color": "#2d3748",
+    "side": null,
+    "local": true
+   }
+  ],
+  "turret_pan": [
+   {
+    "file": "pan_ring.stl",
+    "name": "pan_ring",
+    "color": "#4a5058",
+    "side": null
+   },
+   {
+    "file": "tilt_yoke.stl",
+    "name": "tilt_yoke",
+    "color": "#4a5058",
+    "side": null
+   },
+   {
+    "file": "local/turret_tilt_servo.stl",
+    "name": "turret_tilt_servo",
+    "color": "#2d3748",
+    "side": null,
+    "local": true
+   },
+   {
+    "file": "local/turret_tilt_bearing.stl",
+    "name": "turret_tilt_bearing",
+    "color": "#2d3748",
+    "side": null,
+    "local": true
+   }
+  ],
+  "turret_tilt": [
+   {
+    "file": "cradle.stl",
+    "name": "cradle",
+    "color": "#4a5058",
+    "side": null
+   },
+   {
+    "file": "cartridge_body.stl",
+    "name": "cartridge_body",
+    "color": "#4a5058",
+    "side": null
+   },
+   {
+    "file": "flywheel_1.stl",
+    "name": "flywheel_1",
+    "color": "#4a5058",
+    "side": null
+   },
+   {
+    "file": "flywheel_2.stl",
+    "name": "flywheel_2",
+    "color": "#4a5058",
+    "side": null
+   },
+   {
+    "file": "flywheel_tyre_1.stl",
+    "name": "flywheel_tyre_1",
+    "color": "#4a5058",
+    "side": null
+   },
+   {
+    "file": "flywheel_tyre_2.stl",
+    "name": "flywheel_tyre_2",
+    "color": "#4a5058",
+    "side": null
+   },
+   {
+    "file": "dial.stl",
+    "name": "dial",
+    "color": "#4a5058",
+    "side": null
+   },
+   {
+    "file": "hopper.stl",
+    "name": "hopper",
+    "color": "#9cc7e8",
+    "side": null
+   },
+   {
+    "file": "hopper_lid.stl",
+    "name": "hopper_lid",
+    "color": "#9cc7e8",
+    "side": null
+   },
+   {
+    "file": "hopper_flap.stl",
+    "name": "hopper_flap",
+    "color": "#4a5058",
+    "side": null
+   },
+   {
+    "file": "barrel.stl",
+    "name": "barrel",
+    "color": "#ff6a13",
+    "side": null
+   },
+   {
+    "file": "laser_mount.stl",
+    "name": "laser_mount",
+    "color": "#4a5058",
+    "side": null
+   },
+   {
+    "file": "local/turret_flywheel_motor_l.stl",
+    "name": "turret_flywheel_motor_l",
+    "color": "#2d3748",
+    "side": null,
+    "local": true
+   },
+   {
+    "file": "local/turret_flywheel_motor_r.stl",
+    "name": "turret_flywheel_motor_r",
+    "color": "#2d3748",
+    "side": null,
+    "local": true
+   },
+   {
+    "file": "local/turret_esc_l.stl",
+    "name": "turret_esc_l",
+    "color": "#2d3748",
+    "side": null,
+    "local": true
+   },
+   {
+    "file": "local/turret_esc_r.stl",
+    "name": "turret_esc_r",
+    "color": "#2d3748",
+    "side": null,
+    "local": true
+   },
+   {
+    "file": "local/turret_feed_motor.stl",
+    "name": "turret_feed_motor",
+    "color": "#2d3748",
+    "side": null,
+    "local": true
+   },
+   {
+    "file": "local/turret_feed_esc.stl",
+    "name": "turret_feed_esc",
+    "color": "#2d3748",
+    "side": null,
+    "local": true
+   },
+   {
+    "file": "local/turret_laser.stl",
+    "name": "turret_laser",
+    "color": "#2d3748",
+    "side": null,
+    "local": true
    }
   ]
  }

@@ -339,6 +339,20 @@ export function buildRobot(design, catalog, { eyes, mech, cad } = {}) {
       pod.children.forEach((c) => { if (c.isMesh && c !== l.lens) c.visible = false; });   // the CAD has the pod's body
       pod.position.copy(at(mounts.headlights[i]));
     });
+    // the turret: the CAD's meshes in the procedural turret's moving groups, at the CAD's pivots; the procedural
+    // stand-in meshes hide, its muzzle (shots, laser) moves to the CAD's barrel tip
+    if (cad.turret && turret) {
+      const T = cad.turret;
+      turret.group.traverse((o) => { if (o.isMesh && o !== turret.muzzle && !o.userData.keep) o.visible = false; });
+      turret.group.position.set(0, 0, 0);
+      turret.group.add(T.base);
+      turret.pan.position.copy(T.panPivot);
+      turret.pan.add(T.pan);
+      turret.tilt.position.copy(T.tiltPivot).sub(T.panPivot);
+      turret.tilt.add(T.tilt);
+      if (turret.muzzle) turret.muzzle.position.copy(T.muzzle).sub(T.tiltPivot);
+      if (turret.flashMesh) turret.flashMesh.position.copy(T.muzzle).sub(T.tiltPivot).add(new THREE.Vector3(0, 0, 0.006));
+    }
     if (mounts.eyes) {
       const e = at(mounts.eyes);
       eyeMeshes.forEach((m) => { m.position.z = e.z + 0.0022; m.position.y = e.y; });

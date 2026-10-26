@@ -317,9 +317,31 @@ def build(design_path: Path, out_dir: Path | None = None) -> dict:
                    rb.Motor(f'knee_{tag}', legl['peak_nm'], coupling={f'hip_{tag}': 1.0, f'knee_{tag}': 1.0}, armature=legl['armature']),
                    rb.Motor(f'wheel_{tag}', wl['peak_nm'])]
 
-    # the turret (head payload): a pan ring and a tilting launcher with a muzzle, each on a servo-class motor
+    # the turret (head payload): from the CAD assembly when it has one (cad/turret.py), else a pan ring and a tilting
+    # launcher sized from the designer's budget, each on a servo-class motor
     turret = None
-    if turret_mass > 0:
+    asm_pre = cad_assembly(design_path)
+    if asm_pre and asm_pre.get('turret') and 'turret_pan' in asm_pre['links']:
+        tu = asm_pre['turret']
+        pan_o, tilt_o = [v * M for v in tu['pan_mm']], [v * M for v in tu['tilt_mm']]
+        mz = [(m - t) * M for m, t in zip(tu['muzzle_mm'], tu['tilt_mm'])]
+        tmin = math.radians(-tu['tilt_range_deg'][0])                   # the model's + tilt is muzzle down
+        links += [rb.Link('turret_pan', rb.Body(0.0), [], []),
+                  rb.Link('turret_tilt', rb.Body(0.0), [], [rb.Collision('box', (0.2, 0.12, 0.12), xyz=(0.04, 0, 0.0), contype=2, conaffinity=1)],
+                          sites=[('muzzle', tuple(mz))])]
+        joints += [
+            rb.Joint('turret_pan', 'revolute', 'base', 'turret_pan', xyz=tuple(pan_o), axis=(0, 0, 1), lower=math.radians(tu['pan_range_deg'][0]),
+                     upper=math.radians(tu['pan_range_deg'][1]), effort=5.0, velocity=10.0, damping=0.05, friction=0.02, armature=0.002),
+            rb.Joint('turret_tilt', 'revolute', 'turret_pan', 'turret_tilt', xyz=tuple(t - p_ for t, p_ in zip(tilt_o, pan_o)), axis=(0, 1, 0),
+                     lower=-0.01, upper=tmin, effort=3.0, velocity=6.0, damping=0.05, friction=0.02, armature=0.001),
+        ]
+        motors += [rb.Motor('turret_pan', 5.0), rb.Motor('turret_tilt', 3.0)]
+        hp = design.get('head_payload', {})
+        turret = {'pan_effort_nm': 5.0, 'tilt_effort_nm': 3.0, 'magazine': hp.get('magazine_shots', 24), 'dart_speed_mps': 24.0,
+                  'dart_mass_kg': 0.001, 'tilt_positive': 'barrel down', 'from_cad': True, 'estimates': 'servo torques'}
+        turret_mass = 0.0                                              # its mass is in the assembly's links
+        notes.append('turret from the CAD (cad/turret.py)')
+    elif turret_mass > 0:
         hp = design.get('head_payload', {})
         pan_m, tilt_m = 0.4 * turret_mass, 0.6 * turret_mass
         pan_link = rb.Link('turret_pan', rb.cylinder_body(pan_m, 0.05, 0.03, axis='z', center=(0, 0, 0.015)),

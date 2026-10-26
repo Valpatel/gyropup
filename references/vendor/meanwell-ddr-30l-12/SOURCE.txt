@@ -1,0 +1,10 @@
+Vendor: Mean Well Enterprises Co., Ltd.
+Model: DDR-30L-12 (STEP covers the whole DDR-30 series)
+Retrieved: 2026-10-26
+Product page: https://www.meanwell.com/webapp/product/search.aspx?prod=DDR-30  ("3D OUTLINE" tab, link "DDR-30-3D")
+Files:
+  DDR-30.stp  <-  unzipped from https://www.meanwell.com/upload/pdf/DDR-30/DDR-30-3D.zip  (412288 bytes zip; STEP 2271184 bytes, 2024-02-05)
+  DDR-30-SPEC.PDF  <-  https://www.meanwell.com/Upload/PDF/DDR-30/DDR-30-SPEC.PDF  (spec dated 2026-03-31)
+Licence/terms: downloadable without login from the public product page; no licence or terms are stated on the page or in the zip.
+  Treat as all rights reserved: local reference for our own design work only; do not redistribute or commit.
+Notes: STEP measured with OCP: 35.0 x 92.4 x 58.6 mm overall (3 solids), matching the drawing (35 W x 90 H x 54.5 D, 58.4 incl. DIN latch).

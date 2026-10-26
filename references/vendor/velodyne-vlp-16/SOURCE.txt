@@ -1,0 +1,8 @@
+Vendor: Velodyne Lidar (now Ouster)
+Model: VLP-16 Puck
+Retrieved: 2026-10-26
+Files:
+  63-9229_Rev-K_Puck-_Datasheet_Web.pdf  <-  https://data.ouster.io/downloads/datasheets/velodyne/Puck%20Datasheets.zip (extracted; page 1 has the dimension drawing)
+CAD: none. https://ouster.com/downloads/velodyne-downloads (rendered 2026-10-26) offers only datasheets and user manuals for the VLP-16; no STEP/3D model
+  is published by Ouster/Velodyne. Third-party models (GrabCAD etc.) exist but are unofficial.
+Licence/terms: public datasheet; no licence stated. Local reference copy only.

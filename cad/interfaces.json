@@ -5,7 +5,7 @@
  "AO-L": {
   "journal_d": 60.0,
   "journal_len": 11.0,
-  "shoulder_d": 66.0,
+  "shoulder_d": 63.5,
   "shoulder_len": 2.0,
   "relief": 0.6,
   "spigot_d": 40.0,
@@ -19,13 +19,14 @@
    22.5,
    247.5
   ],
-  "note": "printed adapter on the motor output: contact boss = the output flange, 0.6 mm relief elsewhere; steel dowels into the motor; a \u00d860 journal (lengthened by print.journal_extra) for the 61812; the standard face with M5 heat-set inserts"
+  "note": "printed adapter on the motor output: contact boss = the output flange, 0.6 mm relief elsewhere; steel dowels into the motor; a \u00d860 journal (lengthened by print.journal_extra) for the 61812; the standard face with M5 heat-set inserts",
+  "shoulder_note": "printed: the shoulder runs up to the bearing and seats only its inner ring (61812 inner-ring shoulder 62-64)"
  },
  "AC-L": {
   "bearing": "61812 (60 x 78 x 10)",
   "bearing_od": 78.0,
   "bearing_w": 10.0,
-  "lip_d": 70.0,
+  "lip_d": 73.0,
   "plate_r": 76.0,
   "top_ext": 28.0,
   "post_r": 82.0,
@@ -38,7 +39,8 @@
   "post_d": 10.0,
   "bracket_bolts": 3,
   "bracket_thread": "M5",
-  "note": "printed motor plate: the motor lug pattern and spigot recess on one side, the 61812 seat on the other (pressed in, 3 x M3 + washers), post and yoke-insert holes"
+  "note": "printed motor plate: the motor lug pattern and spigot recess on one side, the 61812 seat on the other (pressed in, 3 x M3 + washers), post and yoke-insert holes",
+  "lip_note": "the plate bore under the bearing: clears the motor's rotating shoulder (70) and the adapter shoulder, seats only the outer ring (61812 outer shoulder 72-76)"
  },
  "AO-S": {
   "journal_d": 40.0,
@@ -83,8 +85,17 @@
   "bearing_w": 8.0,
   "spacing": 20.0,
   "pin_d": 12.0,
-  "pin": "M10 shoulder bolt, 12 mm shoulder",
-  "hub_od": 44.0
+  "pin": "ISO 7379 shoulder screw, 12 mm shoulder, M10; length from the stack (a stocked length: the shin width takes up the rest)",
+  "hub_od": 44.0,
+  "pin_lengths": [
+   60,
+   70,
+   80,
+   90,
+   100,
+   110,
+   120
+  ]
  },
  "PR": {
   "rod_end": "M8 female rod end (igus KBRM-08 or SKF SIKAC 8 M)",
@@ -97,16 +108,19 @@
   "lever_beta_deg": -75.0,
   "note": "crank and shin lever parallel, at lever_beta_deg from the forward perpendicular (- = towards the foot): the rod's transmission sin = |cos(knee - beta)| stays >= 0.5 over the knee range (review A1); the rod is plain M8 threaded rod (buckling SF > 10 at the design load)",
   "rod": "M8 threaded rod, class 8.8 steel, cut to length; two female M8 rod ends and jam nuts (length adjustable)",
-  "rod_root_d": 6.47
+  "rod_root_d": 6.47,
+  "pin": "ISO 7379 shoulder screw, 8 mm shoulder, M6, head flush in a counterbore on the crank / lever outer face; washer + thin M6 nyloc on the thigh side",
+  "nut_gap": 7.0
  },
  "WH": {
   "pilot_d": 32.0,
   "bolts": 6,
   "thread": "M5",
-  "pcd": 50.0,
+  "pcd": 64.0,
   "cable_bore": 16.0,
   "plate_t": 10.0,
-  "plate_d": 62.0
+  "plate_d": 78.0,
+  "note": "PCD 64 so the M5 heads clear the BotWheel's \u00d850 boss; the BotWheel's own M6 heads sit in pockets in the shin foot"
  },
  "HM": {
   "bolts": 6,
@@ -126,7 +140,8 @@
  },
  "CP": {
   "grommet_hole": 18.0,
-  "clamp_screws": "2 x M3"
+  "clamp_screws": "2 x M3",
+  "note": "plain \u00d818 pass through the printed walls (20 mm of PA6-CF): no grommet fits that thickness; break the edges"
  },
  "fasteners": {
   "M3": {
@@ -187,7 +202,9 @@
    "plate_arm_w": 28.0,
    "plate_tab_window": false,
    "plate_pockets": false,
-   "tab_extra": 8.0
+   "tab_extra": 8.0,
+   "insert_depth_ao": 12.0,
+   "lug_counterbore": 8.0
   }
  }
 }

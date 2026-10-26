@@ -52,6 +52,7 @@ export function buildTurret(color = 0xe8892b) {
   laserOrigin.position.set(-26 * M, -8 * M, 139 * M);
   const flash = new THREE.Mesh(new THREE.SphereGeometry(14 * M, 12, 8), new THREE.MeshBasicMaterial({ color: 0xfff1a8, transparent: true, opacity: 0 }));
   flash.position.z = 166 * M;
+  flash.userData.keep = true;                         // an effect, not a stand-in: stays when the CAD turret replaces the rest
   tilt.add(body, cage, barrel, tip, drum, muzzle, flash, laserBody, laserLens, laserOrigin);
   pan.add(ring, yokeL, yokeR, tilt);
   group.add(plate, latch, pan);
@@ -77,7 +78,7 @@ export function buildTurret(color = 0xe8892b) {
 
   let flashT = 0;
   return {
-    group, pan, tilt, muzzle, laser,
+    group, pan, tilt, muzzle, laser, flashMesh: flash,
     /** Point the beam: from the laser along the barrel to the first thing it meets (`hitObjects`) or the ground. */
     updateLaser(hitObjects = [], on = true) {
       laser.visible = on && group.visible;

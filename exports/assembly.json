@@ -1,11 +1,11 @@
 {
  "design": "designs/default.json",
  "units": "robot frame, legs at the zero pose; origins mm, inertials SI in each link frame",
- "total_kg": 23.6523,
+ "total_kg": 26.3541,
  "by_kind_kg": {
-  "made": 6.1536,
-  "bought": 14.493,
-  "hardware": 0.8606,
+  "made": 8.206,
+  "bought": 14.9799,
+  "hardware": 1.0228,
   "electronics": 2.145
  },
  "notes": [
@@ -19,27 +19,27 @@
     0
    ],
    "name": "base",
-   "mass_kg": 17.006203,
+   "mass_kg": 17.898302,
    "com_m": [
-    0.023001,
-    -0.001043,
-    0.020811
+    0.02154,
+    -0.000989,
+    0.027484
    ],
    "inertia_kg_m2": [
     [
-     0.573960799,
-     0.001981596,
-     0.004595977
+     0.658642184,
+     0.002060699,
+     0.008386801
     ],
     [
-     0.001981596,
-     0.157450061,
-     -0.000237031
+     0.002060699,
+     0.180590069,
+     -0.000361961
     ],
     [
-     0.004595977,
-     -0.000237031,
-     0.613585381
+     0.008386801,
+     -0.000361961,
+     0.681015451
     ]
    ],
    "parts": [
@@ -72,11 +72,11 @@
     {
      "name": "head_saddle",
      "kind": "made",
-     "mass_kg": 0.10611,
+     "mass_kg": 0.15352,
      "com_m": [
-      -0.0,
-      -0.0,
-      0.19916
+      -6e-05,
+      6e-05,
+      0.20255
      ],
      "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__head_saddle.stl",
      "color": "#3b3f46",
@@ -163,11 +163,11 @@
     {
      "name": "yoke_bracket_l",
      "kind": "made",
-     "mass_kg": 0.65022,
+     "mass_kg": 0.87774,
      "com_m": [
       1e-05,
-      0.17765,
-      0.0926
+      0.18611,
+      0.09389
      ],
      "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__yoke_bracket_l.stl",
      "color": "#b8bec7",
@@ -176,11 +176,11 @@
     {
      "name": "yoke_bracket_r",
      "kind": "made",
-     "mass_kg": 0.65022,
+     "mass_kg": 0.87774,
      "com_m": [
       1e-05,
-      -0.17765,
-      0.0926
+      -0.18611,
+      0.09389
      ],
      "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__yoke_bracket_r.stl",
      "color": "#b8bec7",
@@ -189,11 +189,11 @@
     {
      "name": "hip_motor_plate_l",
      "kind": "made",
-     "mass_kg": 0.41324,
+     "mass_kg": 0.41763,
      "com_m": [
-      0.0,
-      0.1811,
-      -0.03965
+      -0.0,
+      0.18308,
+      -0.03923
      ],
      "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__hip_motor_plate_l.stl",
      "color": "#9aa3ad",
@@ -202,11 +202,11 @@
     {
      "name": "hip_motor_plate_r",
      "kind": "made",
-     "mass_kg": 0.41324,
+     "mass_kg": 0.41763,
      "com_m": [
-      0.0,
-      -0.1811,
-      -0.03965
+      -0.0,
+      -0.18308,
+      -0.03923
      ],
      "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__hip_motor_plate_r.stl",
      "color": "#9aa3ad",
@@ -215,11 +215,11 @@
     {
      "name": "knee_motor_plate_l",
      "kind": "made",
-     "mass_kg": 0.41324,
+     "mass_kg": 0.41763,
      "com_m": [
-      0.0,
-      0.2805,
-      0.03965
+      -0.0,
+      0.29602,
+      0.03923
      ],
      "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__knee_motor_plate_l.stl",
      "color": "#9aa3ad",
@@ -228,14 +228,66 @@
     {
      "name": "knee_motor_plate_r",
      "kind": "made",
-     "mass_kg": 0.41324,
+     "mass_kg": 0.41763,
      "com_m": [
-      0.0,
-      -0.2805,
-      0.03965
+      -0.0,
+      -0.29602,
+      0.03923
      ],
      "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__knee_motor_plate_r.stl",
      "color": "#9aa3ad",
+     "estimate": false
+    },
+    {
+     "name": "pan_base",
+     "kind": "made",
+     "mass_kg": 0.13125,
+     "com_m": [
+      -0.0045,
+      -0.00131,
+      0.22482
+     ],
+     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__pan_base.stl",
+     "color": "#4a5058",
+     "estimate": false
+    },
+    {
+     "name": "pan_clamp",
+     "kind": "made",
+     "mass_kg": 0.00721,
+     "com_m": [
+      0.00229,
+      -0.0,
+      0.2535
+     ],
+     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__pan_clamp.stl",
+     "color": "#4a5058",
+     "estimate": false
+    },
+    {
+     "name": "pan_pinion",
+     "kind": "made",
+     "mass_kg": 0.00681,
+     "com_m": [
+      -0.05265,
+      -0.0,
+      0.2637
+     ],
+     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__pan_pinion.stl",
+     "color": "#4a5058",
+     "estimate": false
+    },
+    {
+     "name": "bumper_ring",
+     "kind": "made",
+     "mass_kg": 0.05366,
+     "com_m": [
+      -0.00027,
+      0.00856,
+      0.226
+     ],
+     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__bumper_ring.stl",
+     "color": "#4a5058",
      "estimate": false
     },
     {
@@ -244,7 +296,7 @@
      "mass_kg": 1.42,
      "com_m": [
       0.0,
-      0.14172,
+      0.14372,
       -0.0
      ],
      "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__hip_motor_l.stl",
@@ -257,7 +309,7 @@
      "mass_kg": 1.42,
      "com_m": [
       0.0,
-      0.31988,
+      0.33538,
       -0.0
      ],
      "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__knee_motor_l.stl",
@@ -270,7 +322,7 @@
      "mass_kg": 1.42,
      "com_m": [
       0.0,
-      -0.14172,
+      -0.14372,
       -0.0
      ],
      "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__hip_motor_r.stl",
@@ -283,7 +335,7 @@
      "mass_kg": 1.42,
      "com_m": [
       0.0,
-      -0.31988,
+      -0.33538,
       -0.0
      ],
      "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__knee_motor_r.stl",
@@ -293,10 +345,10 @@
     {
      "name": "posts_l",
      "kind": "hardware",
-     "mass_kg": 0.04771,
+     "mass_kg": 0.0563,
      "com_m": [
       -0.0,
-      0.2308,
+      0.23955,
       0.05467
      ],
      "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__posts_l.stl",
@@ -306,15 +358,54 @@
     {
      "name": "posts_r",
      "kind": "hardware",
-     "mass_kg": 0.04771,
+     "mass_kg": 0.0563,
      "com_m": [
       -0.0,
-      -0.2308,
+      -0.23955,
       0.05467
      ],
      "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__posts_r.stl",
      "color": "#d6dbe1",
      "estimate": false
+    },
+    {
+     "name": "turret_pan_servo",
+     "kind": "bought",
+     "mass_kg": 0.089,
+     "com_m": [
+      -0.05265,
+      0.01001,
+      0.23695
+     ],
+     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__turret_pan_servo.stl",
+     "color": "#2d3748",
+     "estimate": true
+    },
+    {
+     "name": "turret_pan_bearing",
+     "kind": "bought",
+     "mass_kg": 0.052,
+     "com_m": [
+      -0.0,
+      0.0,
+      0.2485
+     ],
+     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__turret_pan_bearing.stl",
+     "color": "#2d3748",
+     "estimate": true
+    },
+    {
+     "name": "turret_dt_receptacle",
+     "kind": "bought",
+     "mass_kg": 0.015,
+     "com_m": [
+      -0.0,
+      -0.07679,
+      0.229
+     ],
+     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__turret_dt_receptacle.stl",
+     "color": "#2d3748",
+     "estimate": true
     },
     {
      "name": "battery_1",
@@ -682,44 +773,435 @@
     }
    ]
   },
-  "thigh_l": {
+  "turret_pan": {
    "origin_mm": [
     0,
-    216.3,
-    0
+    0,
+    214.0
    ],
-   "name": "thigh_l",
-   "mass_kg": 0.701468,
+   "name": "turret_pan",
+   "mass_kg": 0.397952,
    "com_m": [
-    0.001907,
-    0.009589,
-    -0.076509
+    -0.000267,
+    0.02052,
+    0.072014
    ],
    "inertia_kg_m2": [
     [
-     0.00506183,
-     -2.8299e-05,
-     7.9597e-05
+     0.001277594,
+     -2.38e-06,
+     -1.634e-06
     ],
     [
-     -2.8299e-05,
-     0.004708579,
-     -0.000165569
+     -2.38e-06,
+     0.000420442,
+     -0.000330457
     ],
     [
-     7.9597e-05,
-     -0.000165569,
-     0.000800537
+     -1.634e-06,
+     -0.000330457,
+     0.000974472
+    ]
+   ],
+   "parts": [
+    {
+     "name": "pan_ring",
+     "kind": "made",
+     "mass_kg": 0.07955,
+     "com_m": [
+      -0.00129,
+      -0.0,
+      0.26276
+     ],
+     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/turret_pan__pan_ring.stl",
+     "color": "#4a5058",
+     "estimate": false
+    },
+    {
+     "name": "tilt_yoke",
+     "kind": "made",
+     "mass_kg": 0.0824,
+     "com_m": [
+      -4e-05,
+      0.00348,
+      0.30171
+     ],
+     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/turret_pan__tilt_yoke.stl",
+     "color": "#4a5058",
+     "estimate": false
+    },
+    {
+     "name": "turret_tilt_servo",
+     "kind": "bought",
+     "mass_kg": 0.089,
+     "com_m": [
+      0.0,
+      0.09004,
+      0.32699
+     ],
+     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/turret_pan__turret_tilt_servo.stl",
+     "color": "#2d3748",
+     "estimate": true
+    },
+    {
+     "name": "turret_tilt_bearing",
+     "kind": "bought",
+     "mass_kg": 0.002,
+     "com_m": [
+      -0.0,
+      -0.06699,
+      0.337
+     ],
+     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/turret_pan__turret_tilt_bearing.stl",
+     "color": "#2d3748",
+     "estimate": true
+    },
+    {
+     "name": "turret wiring, MCU, fasteners (not modelled)",
+     "kind": "hardware",
+     "mass_kg": 0.145,
+     "com_m": [
+      0.0,
+      0.0,
+      0.264
+     ],
+     "mesh": null,
+     "color": "#9aa3ad",
+     "estimate": true
+    }
+   ]
+  },
+  "turret_tilt": {
+   "origin_mm": [
+    0,
+    0,
+    337.0
+   ],
+   "name": "turret_tilt",
+   "mass_kg": 0.622893,
+   "com_m": [
+    0.032014,
+    -0.001532,
+    -0.002519
+   ],
+   "inertia_kg_m2": [
+    [
+     0.000925944,
+     9.0307e-05,
+     0.000123181
+    ],
+    [
+     9.0307e-05,
+     0.001990654,
+     -1.9329e-05
+    ],
+    [
+     0.000123181,
+     -1.9329e-05,
+     0.002086738
+    ]
+   ],
+   "parts": [
+    {
+     "name": "cradle",
+     "kind": "made",
+     "mass_kg": 0.05903,
+     "com_m": [
+      0.01839,
+      -0.00311,
+      0.31542
+     ],
+     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/turret_tilt__cradle.stl",
+     "color": "#4a5058",
+     "estimate": false
+    },
+    {
+     "name": "cartridge_body",
+     "kind": "made",
+     "mass_kg": 0.15873,
+     "com_m": [
+      0.03485,
+      -5e-05,
+      0.32865
+     ],
+     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/turret_tilt__cartridge_body.stl",
+     "color": "#4a5058",
+     "estimate": false
+    },
+    {
+     "name": "flywheel_1",
+     "kind": "made",
+     "mass_kg": 0.00684,
+     "com_m": [
+      0.06799,
+      0.02999,
+      0.32239
+     ],
+     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/turret_tilt__flywheel_1.stl",
+     "color": "#4a5058",
+     "estimate": false
+    },
+    {
+     "name": "flywheel_2",
+     "kind": "made",
+     "mass_kg": 0.00684,
+     "com_m": [
+      0.06799,
+      -0.02999,
+      0.32239
+     ],
+     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/turret_tilt__flywheel_2.stl",
+     "color": "#4a5058",
+     "estimate": false
+    },
+    {
+     "name": "flywheel_tyre_1",
+     "kind": "made",
+     "mass_kg": 0.00662,
+     "com_m": [
+      0.068,
+      0.02999,
+      0.322
+     ],
+     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/turret_tilt__flywheel_tyre_1.stl",
+     "color": "#4a5058",
+     "estimate": false
+    },
+    {
+     "name": "flywheel_tyre_2",
+     "kind": "made",
+     "mass_kg": 0.00662,
+     "com_m": [
+      0.068,
+      -0.02999,
+      0.322
+     ],
+     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/turret_tilt__flywheel_tyre_2.stl",
+     "color": "#4a5058",
+     "estimate": false
+    },
+    {
+     "name": "dial",
+     "kind": "made",
+     "mass_kg": 0.04162,
+     "com_m": [
+      0.0,
+      0.0,
+      0.34514
+     ],
+     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/turret_tilt__dial.stl",
+     "color": "#4a5058",
+     "estimate": false
+    },
+    {
+     "name": "hopper",
+     "kind": "made",
+     "mass_kg": 0.02824,
+     "com_m": [
+      -0.00022,
+      -0.0,
+      0.37401
+     ],
+     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/turret_tilt__hopper.stl",
+     "color": "#9cc7e8",
+     "estimate": false
+    },
+    {
+     "name": "hopper_lid",
+     "kind": "made",
+     "mass_kg": 0.02605,
+     "com_m": [
+      0.00183,
+      -0.0,
+      0.39333
+     ],
+     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/turret_tilt__hopper_lid.stl",
+     "color": "#9cc7e8",
+     "estimate": false
+    },
+    {
+     "name": "hopper_flap",
+     "kind": "made",
+     "mass_kg": 0.00307,
+     "com_m": [
+      -0.02328,
+      0.0,
+      0.39634
+     ],
+     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/turret_tilt__hopper_flap.stl",
+     "color": "#4a5058",
+     "estimate": false
+    },
+    {
+     "name": "barrel",
+     "kind": "made",
+     "mass_kg": 0.03149,
+     "com_m": [
+      0.1441,
+      0.0,
+      0.322
+     ],
+     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/turret_tilt__barrel.stl",
+     "color": "#ff6a13",
+     "estimate": false
+    },
+    {
+     "name": "laser_mount",
+     "kind": "made",
+     "mass_kg": 0.00783,
+     "com_m": [
+      0.116,
+      -0.032,
+      0.31697
+     ],
+     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/turret_tilt__laser_mount.stl",
+     "color": "#4a5058",
+     "estimate": false
+    },
+    {
+     "name": "turret_flywheel_motor_l",
+     "kind": "bought",
+     "mass_kg": 0.0278,
+     "com_m": [
+      0.068,
+      0.02999,
+      0.34224
+     ],
+     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/turret_tilt__turret_flywheel_motor_l.stl",
+     "color": "#2d3748",
+     "estimate": true
+    },
+    {
+     "name": "turret_flywheel_motor_r",
+     "kind": "bought",
+     "mass_kg": 0.0278,
+     "com_m": [
+      0.068,
+      -0.02999,
+      0.34224
+     ],
+     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/turret_tilt__turret_flywheel_motor_r.stl",
+     "color": "#2d3748",
+     "estimate": true
+    },
+    {
+     "name": "turret_esc_l",
+     "kind": "bought",
+     "mass_kg": 0.005,
+     "com_m": [
+      0.0725,
+      0.0075,
+      0.3595
+     ],
+     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/turret_tilt__turret_esc_l.stl",
+     "color": "#2d3748",
+     "estimate": true
+    },
+    {
+     "name": "turret_esc_r",
+     "kind": "bought",
+     "mass_kg": 0.005,
+     "com_m": [
+      0.0725,
+      -0.0075,
+      0.3595
+     ],
+     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/turret_tilt__turret_esc_r.stl",
+     "color": "#2d3748",
+     "estimate": true
+    },
+    {
+     "name": "turret_feed_motor",
+     "kind": "bought",
+     "mass_kg": 0.09,
+     "com_m": [
+      -1e-05,
+      0.0,
+      0.30782
+     ],
+     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/turret_tilt__turret_feed_motor.stl",
+     "color": "#2d3748",
+     "estimate": true
+    },
+    {
+     "name": "turret_feed_esc",
+     "kind": "bought",
+     "mass_kg": 0.0133,
+     "com_m": [
+      -0.031,
+      0.0,
+      0.31625
+     ],
+     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/turret_tilt__turret_feed_esc.stl",
+     "color": "#2d3748",
+     "estimate": true
+    },
+    {
+     "name": "turret_laser",
+     "kind": "bought",
+     "mass_kg": 0.016,
+     "com_m": [
+      0.124,
+      -0.032,
+      0.322
+     ],
+     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/turret_tilt__turret_laser.stl",
+     "color": "#2d3748",
+     "estimate": true
+    },
+    {
+     "name": "turret balls (30)",
+     "kind": "bought",
+     "mass_kg": 0.055,
+     "com_m": [
+      0.0,
+      0.0,
+      0.367
+     ],
+     "mesh": null,
+     "color": "#9aa3ad",
+     "estimate": true
+    }
+   ]
+  },
+  "thigh_l": {
+   "origin_mm": [
+    0,
+    222.3,
+    0
+   ],
+   "name": "thigh_l",
+   "mass_kg": 0.926723,
+   "com_m": [
+    0.001444,
+    0.011395,
+    -0.07675
+   ],
+   "inertia_kg_m2": [
+    [
+     0.007179609,
+     -3.7415e-05,
+     7.9769e-05
+    ],
+    [
+     -3.7415e-05,
+     0.006578781,
+     -1.9673e-05
+    ],
+    [
+     7.9769e-05,
+     -1.9673e-05,
+     0.001180215
     ]
    ],
    "parts": [
     {
      "name": "hip_output_adapter_l",
      "kind": "made",
-     "mass_kg": 0.06926,
+     "mass_kg": 0.07221,
      "com_m": [
       -0.0,
-      0.18202,
+      0.18385,
       -0.0
      ],
      "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/thigh_l__hip_output_adapter_l.stl",
@@ -729,10 +1211,10 @@
     {
      "name": "knee_output_adapter_l",
      "kind": "made",
-     "mass_kg": 0.06926,
+     "mass_kg": 0.07221,
      "com_m": [
       -0.0,
-      0.27958,
+      0.29525,
       0.0
      ],
      "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/thigh_l__knee_output_adapter_l.stl",
@@ -742,11 +1224,11 @@
     {
      "name": "thigh_l",
      "kind": "made",
-     "mass_kg": 0.36183,
+     "mass_kg": 0.5818,
      "com_m": [
-      0.00018,
-      0.2152,
-      -0.09959
+      0.00013,
+      0.22518,
+      -0.09201
      ],
      "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/thigh_l__thigh_l.stl",
      "color": "#f5b82e",
@@ -755,11 +1237,11 @@
     {
      "name": "knee_crank_l",
      "kind": "made",
-     "mass_kg": 0.07234,
+     "mass_kg": 0.0717,
      "com_m": [
-      0.00338,
-      0.25996,
-      -0.01262
+      0.00327,
+      0.27543,
+      -0.01222
      ],
      "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/thigh_l__knee_crank_l.stl",
      "color": "#d6dbe1",
@@ -771,7 +1253,7 @@
      "mass_kg": 0.06629,
      "com_m": [
       0.01553,
-      0.2458,
+      0.2613,
       -0.15796
      ],
      "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/thigh_l__pushrod_l.stl",
@@ -784,7 +1266,7 @@
      "mass_kg": 0.0625,
      "com_m": [
       0,
-      0.2163,
+      0.2223,
       -0.1
      ],
      "mesh": null,
@@ -796,42 +1278,42 @@
   "shin_l": {
    "origin_mm": [
     0,
-    216.3,
+    222.3,
     -200
    ],
    "name": "shin_l",
-   "mass_kg": 0.971595,
+   "mass_kg": 1.14074,
    "com_m": [
-    0.001198,
-    0.07641,
-    -0.156531
+    0.001035,
+    0.0885,
+    -0.158544
    ],
    "inertia_kg_m2": [
     [
-     0.007861161,
-     5.2471e-05,
-     -0.000218933
+     0.009223136,
+     5.5854e-05,
+     -0.000223141
     ],
     [
-     5.2471e-05,
-     0.007115467,
-     0.001746654
+     5.5854e-05,
+     0.008115767,
+     0.00194731
     ],
     [
-     -0.000218933,
-     0.001746654,
-     0.001658069
+     -0.000223141,
+     0.00194731,
+     0.002229971
     ]
    ],
    "parts": [
     {
      "name": "shin_l",
      "kind": "made",
-     "mass_kg": 0.2672,
+     "mass_kg": 0.41759,
      "com_m": [
-      0.0005,
-      0.26685,
-      -0.32538
+      0.00036,
+      0.28693,
+      -0.34014
      ],
      "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/shin_l__shin_l.stl",
      "color": "#f5b82e",
@@ -840,10 +1322,10 @@
     {
      "name": "wheel_adapter_l",
      "kind": "made",
-     "mass_kg": 0.02561,
+     "mass_kg": 0.04436,
      "com_m": [
-      -0.0,
-      0.28536,
+      0.0,
+      0.31072,
       -0.4
      ],
      "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/shin_l__wheel_adapter_l.stl",
@@ -855,8 +1337,8 @@
      "kind": "bought",
      "mass_kg": 0.55,
      "com_m": [
-      0.0,
-      0.31995,
+      -0.0,
+      0.34495,
       -0.4
      ],
      "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/shin_l__wheel_stator_l.stl",
@@ -869,7 +1351,7 @@
      "mass_kg": 0.06629,
      "com_m": [
       0.01553,
-      0.2458,
+      0.2613,
       -0.15796
      ],
      "mesh": null,
@@ -882,7 +1364,7 @@
      "mass_kg": 0.0625,
      "com_m": [
       0,
-      0.2163,
+      0.2223,
       -0.3
      ],
      "mesh": null,
@@ -894,7 +1376,7 @@
   "wheel_l": {
    "origin_mm": [
     0,
-    321.1,
+    346.1,
     -400
    ],
    "name": "wheel_l",
@@ -902,7 +1384,7 @@
    "com_m": [
     -0.0,
     0.0,
-    0.0
+    -0.0
    ],
    "inertia_kg_m2": [
     [
@@ -928,7 +1410,7 @@
      "mass_kg": 1.65,
      "com_m": [
       -0.0,
-      0.3211,
+      0.3461,
       -0.4
      ],
      "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/wheel_l__wheel_rotor_l.stl",
@@ -940,41 +1422,41 @@
   "thigh_r": {
    "origin_mm": [
     0,
-    -216.3,
+    -222.3,
     0
    ],
    "name": "thigh_r",
-   "mass_kg": 0.701468,
+   "mass_kg": 0.926723,
    "com_m": [
-    0.001907,
-    -0.009589,
-    -0.076509
+    0.001444,
+    -0.011395,
+    -0.07675
    ],
    "inertia_kg_m2": [
     [
-     0.00506183,
-     2.8299e-05,
-     7.9597e-05
+     0.007179609,
+     3.7415e-05,
+     7.9769e-05
     ],
     [
-     2.8299e-05,
-     0.004708579,
-     0.000165569
+     3.7415e-05,
+     0.006578781,
+     1.9673e-05
     ],
     [
-     7.9597e-05,
-     0.000165569,
-     0.000800537
+     7.9769e-05,
+     1.9673e-05,
+     0.001180215
     ]
    ],
    "parts": [
     {
      "name": "hip_output_adapter_r",
      "kind": "made",
-     "mass_kg": 0.06926,
+     "mass_kg": 0.07221,
      "com_m": [
       -0.0,
-      -0.18202,
+      -0.18385,
       -0.0
      ],
      "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/thigh_r__hip_output_adapter_r.stl",
@@ -984,10 +1466,10 @@
     {
      "name": "knee_output_adapter_r",
      "kind": "made",
-     "mass_kg": 0.06926,
+     "mass_kg": 0.07221,
      "com_m": [
       -0.0,
-      -0.27958,
+      -0.29525,
       0.0
      ],
      "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/thigh_r__knee_output_adapter_r.stl",
@@ -997,11 +1479,11 @@
     {
      "name": "thigh_r",
      "kind": "made",
-     "mass_kg": 0.36183,
+     "mass_kg": 0.5818,
      "com_m": [
-      0.00018,
-      -0.2152,
-      -0.09959
+      0.00013,
+      -0.22518,
+      -0.09201
      ],
      "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/thigh_r__thigh_r.stl",
      "color": "#f5b82e",
@@ -1010,11 +1492,11 @@
     {
      "name": "knee_crank_r",
      "kind": "made",
-     "mass_kg": 0.07234,
+     "mass_kg": 0.0717,
      "com_m": [
-      0.00338,
-      -0.25996,
-      -0.01262
+      0.00327,
+      -0.27543,
+      -0.01222
      ],
      "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/thigh_r__knee_crank_r.stl",
      "color": "#d6dbe1",
@@ -1026,7 +1508,7 @@
      "mass_kg": 0.06629,
      "com_m": [
       0.01553,
-      -0.2458,
+      -0.2613,
       -0.15796
      ],
      "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/thigh_r__pushrod_r.stl",
@@ -1039,7 +1521,7 @@
      "mass_kg": 0.0625,
      "com_m": [
       0,
-      -0.2163,
+      -0.2223,
       -0.1
      ],
      "mesh": null,
@@ -1051,42 +1533,42 @@
   "shin_r": {
    "origin_mm": [
     0,
-    -216.3,
+    -222.3,
     -200
    ],
    "name": "shin_r",
-   "mass_kg": 0.971595,
+   "mass_kg": 1.14074,
    "com_m": [
-    0.001198,
-    -0.07641,
-    -0.156531
+    0.001035,
+    -0.0885,
+    -0.158544
    ],
    "inertia_kg_m2": [
     [
-     0.007861161,
-     -5.2471e-05,
-     -0.000218933
+     0.009223136,
+     -5.5854e-05,
+     -0.000223141
     ],
     [
-     -5.2471e-05,
-     0.007115467,
-     -0.001746654
+     -5.5854e-05,
+     0.008115767,
+     -0.00194731
     ],
     [
-     -0.000218933,
-     -0.001746654,
-     0.001658069
+     -0.000223141,
+     -0.00194731,
+     0.002229971
     ]
    ],
    "parts": [
     {
      "name": "shin_r",
      "kind": "made",
-     "mass_kg": 0.2672,
+     "mass_kg": 0.41759,
      "com_m": [
-      0.0005,
-      -0.26685,
-      -0.32538
+      0.00036,
+      -0.28693,
+      -0.34014
      ],
      "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/shin_r__shin_r.stl",
      "color": "#f5b82e",
@@ -1095,10 +1577,10 @@
     {
      "name": "wheel_adapter_r",
      "kind": "made",
-     "mass_kg": 0.02561,
+     "mass_kg": 0.04436,
      "com_m": [
-      -0.0,
-      -0.28536,
+      0.0,
+      -0.31072,
       -0.4
      ],
      "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/shin_r__wheel_adapter_r.stl",
@@ -1110,8 +1592,8 @@
      "kind": "bought",
      "mass_kg": 0.55,
      "com_m": [
-      0.0,
-      -0.31995,
+      -0.0,
+      -0.34495,
       -0.4
      ],
      "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/shin_r__wheel_stator_r.stl",
@@ -1124,7 +1606,7 @@
      "mass_kg": 0.06629,
      "com_m": [
       0.01553,
-      -0.2458,
+      -0.2613,
       -0.15796
      ],
      "mesh": null,
@@ -1137,7 +1619,7 @@
      "mass_kg": 0.0625,
      "com_m": [
       0,
-      -0.2163,
+      -0.2223,
       -0.3
      ],
      "mesh": null,
@@ -1149,7 +1631,7 @@
   "wheel_r": {
    "origin_mm": [
     0,
-    -321.1,
+    -346.1,
     -400
    ],
    "name": "wheel_r",
@@ -1157,7 +1639,7 @@
    "com_m": [
     -0.0,
     0.0,
-    0.0
+    -0.0
    ],
    "inertia_kg_m2": [
     [
@@ -1183,7 +1665,7 @@
      "mass_kg": 1.65,
      "com_m": [
       -0.0,
-      -0.3211,
+      -0.3461,
       -0.4
      ],
      "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/wheel_r__wheel_rotor_r.stl",
@@ -1192,5 +1674,31 @@
     }
    ]
   }
+ },
+ "turret": {
+  "pan_mm": [
+   0,
+   0,
+   214.0
+  ],
+  "tilt_mm": [
+   0,
+   0,
+   337.0
+  ],
+  "muzzle_mm": [
+   194.0,
+   0.0,
+   322.0
+  ],
+  "tilt_range_deg": [
+   -25.0,
+   0.0
+  ],
+  "pan_range_deg": [
+   -170.0,
+   170.0
+  ],
+  "tilt_positive": "muzzle up (CAD)"
  }
 }

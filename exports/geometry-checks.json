@@ -37,11 +37,11 @@
   "print_bounds_mm": [
    149.999,
    206.397,
-   26.0
+   28.0
   ],
-  "volume_cm3": 92.069,
+  "volume_cm3": 140.845,
   "qty": 1,
-  "made": "printed PETG; M4 inserts for the turret",
+  "made": "printed PA6-CF; the turret mount (TM: 4 x M5 inserts, 2 dowels)",
   "print": true
  },
  "electronics_bay": {
@@ -125,11 +125,11 @@
   "solid_count": 1,
   "watertight": true,
   "print_bounds_mm": [
-   146.0,
-   137.0,
-   196.4
+   150.0,
+   139.0,
+   213.9
   ],
-  "volume_cm3": 596.537,
+  "volume_cm3": 805.265,
   "qty": 2,
   "made": "printed PA6-CF on its wall flange; 6 x M6 through the chassis wall with nuts, 3 x M5 into each plate tab",
   "print": true
@@ -144,7 +144,7 @@
    177.973,
    24.1
   ],
-  "volume_cm3": 379.119,
+  "volume_cm3": 383.144,
   "qty": 2,
   "made": "printed PA6-CF, 100 % solid, flat; 61812 (60 x 78 x 10) support bearing pressed in, held by 3 x M3 + washers; 3 x M5 inserts for the yoke",
   "print": true
@@ -155,11 +155,11 @@
   "solid_count": 1,
   "watertight": true,
   "print_bounds_mm": [
-   65.985,
-   65.993,
+   63.486,
+   63.493,
    27.6
   ],
-  "volume_cm3": 63.54,
+  "volume_cm3": 66.251,
   "qty": 2,
   "made": "printed PA6-CF, 100 % solid; 8 x M5 heat-set inserts in the face; sockets for the motor's 3 x \u00d86 pins; 9 x M5 12.9 screws with washers into the motor",
   "print": true
@@ -170,11 +170,11 @@
   "solid_count": 1,
   "watertight": true,
   "print_bounds_mm": [
-   65.985,
-   65.993,
+   63.486,
+   63.493,
    27.6
   ],
-  "volume_cm3": 63.54,
+  "volume_cm3": 66.251,
   "qty": 2,
   "made": "printed PA6-CF, 100 % solid; 8 x M5 heat-set inserts in the face; sockets for the motor's 3 x \u00d86 pins; 9 x M5 12.9 screws with washers into the motor",
   "print": true
@@ -189,7 +189,7 @@
    177.973,
    24.1
   ],
-  "volume_cm3": 379.119,
+  "volume_cm3": 383.144,
   "qty": 2,
   "made": "printed PA6-CF, 100 % solid, flat; 61812 (60 x 78 x 10) support bearing pressed in, held by 3 x M3 + washers; 3 x M5 inserts for the yoke",
   "print": true
@@ -201,12 +201,12 @@
   "watertight": true,
   "print_bounds_mm": [
    71.969,
-   257.99,
-   44.0
+   265.987,
+   72.0
   ],
-  "volume_cm3": 331.951,
+  "volume_cm3": 533.765,
   "qty": 2,
-  "made": "printed PA6-CF flat, 60 x 44 box, 5.0 mm walls, 100 % solid; 8 x M5 into the hip adapter; cables inside",
+  "made": "printed PA6-CF flat, 60 x 52 box, 6.0 mm walls, 100 % solid; 8 x M5 into the hip adapter; cables inside",
   "print": true
  },
  "shin": {
@@ -215,11 +215,11 @@
   "solid_count": 1,
   "watertight": true,
   "print_bounds_mm": [
-   73.996,
-   258.99,
-   28.0
+   89.966,
+   266.99,
+   37.5
   ],
-  "volume_cm3": 245.135,
+  "volume_cm3": 383.112,
   "qty": 2,
   "made": "printed PA6-CF flat, 50 mm box, 4.0 mm walls; two 6001-2RS pressed in; M5 inserts at the wheel; cables inside",
   "print": true
@@ -234,7 +234,7 @@
    109.945,
    14.0
   ],
-  "volume_cm3": 66.363,
+  "volume_cm3": 65.782,
   "qty": 2,
   "made": "printed PA6-CF flat, 14 mm; 8 x M5 into the knee adapter; M8 bolt for the rod end",
   "print": true
@@ -245,13 +245,253 @@
   "solid_count": 1,
   "watertight": true,
   "print_bounds_mm": [
-   61.986,
-   61.993,
+   77.983,
+   77.991,
    12.5
   ],
-  "volume_cm3": 23.493,
+  "volume_cm3": 40.695,
   "qty": 2,
   "made": "printed PA6-CF flat, 10 mm",
+  "print": true
+ },
+ "pan_base": {
+  "degenerate_tessellation_faces_removed": 0,
+  "cad_valid": true,
+  "solid_count": 1,
+  "watertight": true,
+  "print_bounds_mm": [
+   157.98,
+   154.956,
+   50.0
+  ],
+  "volume_cm3": 120.41,
+  "qty": 1,
+  "made": "PA6-CF on its foot; 4 x M5 x 16 into the head ring, 2 x \u00d85 dowels",
+  "print": true
+ },
+ "pan_clamp": {
+  "degenerate_tessellation_faces_removed": 0,
+  "cad_valid": true,
+  "solid_count": 1,
+  "watertight": true,
+  "print_bounds_mm": [
+   87.98,
+   97.994,
+   3.0
+  ],
+  "volume_cm3": 6.612,
+  "qty": 1,
+  "made": "PA6-CF; 3 x M3 x 8 into inserts",
+  "print": true
+ },
+ "pan_ring": {
+  "degenerate_tessellation_faces_removed": 0,
+  "cad_valid": true,
+  "solid_count": 1,
+  "watertight": true,
+  "print_bounds_mm": [
+   114.623,
+   81.241,
+   34.0
+  ],
+  "volume_cm3": 72.986,
+  "qty": 1,
+  "made": "PA6-CF upside down; DIN 471-50 circlip; 4 x M4 inserts",
+  "print": true
+ },
+ "pan_pinion": {
+  "degenerate_tessellation_faces_removed": 0,
+  "cad_valid": true,
+  "solid_count": 1,
+  "watertight": true,
+  "print_bounds_mm": [
+   28.634,
+   28.714,
+   13.0
+  ],
+  "volume_cm3": 6.248,
+  "qty": 1,
+  "made": "PA6-CF; 4 x M2 to the horn; turns -3 x pan about the servo axis",
+  "print": true
+ },
+ "tilt_yoke": {
+  "degenerate_tessellation_faces_removed": 0,
+  "cad_valid": true,
+  "solid_count": 1,
+  "watertight": true,
+  "print_bounds_mm": [
+   82.991,
+   160.976,
+   48.384
+  ],
+  "volume_cm3": 75.594,
+  "qty": 1,
+  "made": "PA6-CF on its back; 4 x M4 x 12 to the turntable",
+  "print": true
+ },
+ "cradle": {
+  "degenerate_tessellation_faces_removed": 0,
+  "cad_valid": true,
+  "solid_count": 1,
+  "watertight": true,
+  "print_bounds_mm": [
+   181.6,
+   130.976,
+   57.09
+  ],
+  "volume_cm3": 54.16,
+  "qty": 1,
+  "made": "PA6-CF flat; ISO 7379 6 x 12 shoulder screw (M5) in an insert",
+  "print": true
+ },
+ "cartridge_body": {
+  "degenerate_tessellation_faces_removed": 0,
+  "cad_valid": true,
+  "solid_count": 1,
+  "watertight": true,
+  "print_bounds_mm": [
+   161.6,
+   108.976,
+   53.1
+  ],
+  "volume_cm3": 145.621,
+  "qty": 1,
+  "made": "PA6-CF on its base; supports under the chute",
+  "print": true
+ },
+ "flywheel": {
+  "degenerate_tessellation_faces_removed": 0,
+  "cad_valid": true,
+  "solid_count": 1,
+  "watertight": true,
+  "print_bounds_mm": [
+   31.993,
+   31.996,
+   15.0
+  ],
+  "volume_cm3": 6.273,
+  "qty": 2,
+  "made": "PA6-CF hub; M3 grub screw",
+  "print": true
+ },
+ "flywheel_tyre": {
+  "degenerate_tessellation_faces_removed": 0,
+  "cad_valid": true,
+  "solid_count": 1,
+  "watertight": true,
+  "print_bounds_mm": [
+   39.991,
+   39.996,
+   12.0
+  ],
+  "volume_cm3": 5.429,
+  "qty": 2,
+  "made": "TPU 95A tyre",
+  "print": true
+ },
+ "dial": {
+  "degenerate_tessellation_faces_removed": 0,
+  "cad_valid": true,
+  "solid_count": 1,
+  "watertight": true,
+  "print_bounds_mm": [
+   90.87,
+   90.87,
+   26.0
+  ],
+  "volume_cm3": 33.298,
+  "qty": 1,
+  "made": "PETG; M3 grub screw on the flat",
+  "print": true
+ },
+ "hopper": {
+  "degenerate_tessellation_faces_removed": 0,
+  "cad_valid": true,
+  "solid_count": 1,
+  "watertight": true,
+  "print_bounds_mm": [
+   111.175,
+   102.2,
+   35.0
+  ],
+  "volume_cm3": 22.596,
+  "qty": 1,
+  "made": "translucent PETG; 3 x M3 to the housing",
+  "print": true
+ },
+ "hopper_lid": {
+  "degenerate_tessellation_faces_removed": 0,
+  "cad_valid": true,
+  "solid_count": 1,
+  "watertight": true,
+  "print_bounds_mm": [
+   102.177,
+   102.189,
+   13.0
+  ],
+  "volume_cm3": 20.836,
+  "qty": 1,
+  "made": "PETG",
+  "print": true
+ },
+ "hopper_flap": {
+  "degenerate_tessellation_faces_removed": 0,
+  "cad_valid": true,
+  "solid_count": 1,
+  "watertight": true,
+  "print_bounds_mm": [
+   39.992,
+   35.995,
+   6.0
+  ],
+  "volume_cm3": 2.459,
+  "qty": 1,
+  "made": "PETG; \u00d82 pin + torsion spring",
+  "print": true
+ },
+ "barrel": {
+  "degenerate_tessellation_faces_removed": 0,
+  "cad_valid": true,
+  "solid_count": 1,
+  "watertight": true,
+  "print_bounds_mm": [
+   29.997,
+   35.0,
+   100.0
+  ],
+  "volume_cm3": 25.195,
+  "qty": 1,
+  "made": "PETG standing; last 15 mm blaze orange",
+  "print": true
+ },
+ "laser_mount": {
+  "degenerate_tessellation_faces_removed": 0,
+  "cad_valid": true,
+  "solid_count": 1,
+  "watertight": true,
+  "print_bounds_mm": [
+   20.0,
+   22.0,
+   26.1
+  ],
+  "volume_cm3": 6.264,
+  "qty": 1,
+  "made": "PETG; 3 x M3 boresight, 2 x M3 to the cradle",
+  "print": true
+ },
+ "bumper_ring": {
+  "degenerate_tessellation_faces_removed": 0,
+  "cad_valid": true,
+  "solid_count": 1,
+  "watertight": true,
+  "print_bounds_mm": [
+   171.957,
+   168.583,
+   16.0
+  ],
+  "volume_cm3": 44.663,
+  "qty": 1,
+  "made": "TPU 95A; 5 x M3 with washers",
   "print": true
  }
 }

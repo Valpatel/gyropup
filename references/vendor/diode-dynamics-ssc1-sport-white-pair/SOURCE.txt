@@ -1,0 +1,8 @@
+Vendor: Diode Dynamics
+Model: Stage Series C1 (SSC1) Sport LED pod, white, standard mount, pair (DD6440P wide / DD6445P flood / DD6450P spot)
+Retrieved: 2026-10-26
+Files:
+  Stage_Series_C1_LED_Pod_Info_Guide.pdf  <-  http://images.diodedynamics.com/docs/install/universal/stage_series/Stage_Series_C1_LED_Pod_Info_Guide.pdf
+      (doc PP0140H; specs and wiring on page 1, dimension drawing on page 2)
+CAD: none found; Diode Dynamics does not publish a STEP for the SSC1.
+Licence/terms: public install/info guide; no licence stated. Local reference copy only.

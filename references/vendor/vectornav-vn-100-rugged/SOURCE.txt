@@ -1,0 +1,12 @@
+Vendor: VectorNav Technologies
+Model: VN-100 Rugged
+Retrieved: 2026-10-26
+Files:
+  vn100_rugged.step  <-  https://www.vectornav.com/docs/default-source/cad-files/vn100_rugged.step?sfvrsn=ee60a9dd_3&download=true
+      (linked from https://www.vectornav.com/resources/detail/vn-100-rugged-step-file ; SolidWorks 2014 AP214 export dated 2016-01-28)
+  vn-100-cr-asm_v7.0.0.pdf  <-  https://www.vectornav.com/docs/default-source/mechanical-drawings/vn-100-cr-asm_v7.0.0.pdf?sfvrsn=829b12ec_3
+      (drawing VN-100-CR-ASM rev 7.0.0, linked from https://www.vectornav.com/resources/detail/vn-100-rugged-mechanical-drawing)
+Licence/terms: both are public downloads without login on VectorNav's resources pages. No CAD licence stated; site Terms of Use at
+  https://www.vectornav.com/terms-of-use apply. The drawing title block says "PUBLIC" but carries a "proprietary and confidential, no reproduction
+  without written permission" notice. Keep as local reference copies for our own design work; do not redistribute or commit.
+Notes: STEP bbox measured with OCP: 35.92 x 33.11 x 8.92 mm (matches drawing 35.9 x 33.1 x 8.9).

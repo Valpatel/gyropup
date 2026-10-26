@@ -80,9 +80,22 @@ export async function loadCadRig(root, designFile) {
     group.add(thigh, crank, rod);
     legs[side] = { thigh, knee, wheel, crank, rod };
   }
+  // the turret's meshes, each set re-centred on its pivot (pan axis, tilt axis), for robot3d to put in its turret's groups
+  let turret = null;
+  if (man.turret && (man.links.turret_pan?.length || man.links.turret_tilt?.length)) {
+    const pv = (p) => new THREE.Vector3(p[1] / 1000, p[2] / 1000, p[0] / 1000);       // robot mm -> page m
+    const pan = pv(man.turret.pan_mm), tilt = pv(man.turret.tilt_mm);
+    const set = (link, origin) => {
+      const g = new THREE.Group();
+      for (const p of man.links[link] ?? []) { const m = mesh(p, null); m.position.sub(origin); g.add(m); }
+      return g;
+    };
+    turret = { base: set('turret_base', new THREE.Vector3()), pan: set('turret_pan', pan), tilt: set('turret_tilt', tilt),
+               panPivot: pan, tiltPivot: tilt, muzzle: pv(man.turret.muzzle_mm) };
+  }
   group.traverse((o) => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } });
   return {
-    group, manifest: man,
+    group, manifest: man, turret,
     /** Joint angles as in the physics model (radians, right-hand rule about the robot's +y). */
     set(side, hip, knee, wheel = 0) {
       const L = legs[side];

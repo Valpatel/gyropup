@@ -159,7 +159,7 @@ def main():
     if not study.trials:
         # start from today's design, so the search has a passing point to improve on
         base = {'leg_actuator': 'robstride-rs-04', 'thigh_mm': 200, 'shin_mm': 200, 'knee_min_deg': 48, 'knee_max_deg': 155, 'link_w': 60.0,
-                'link_t': 44.0, 'wall': 5.0, 'shin_w': 48.0, 'shin_wall': 4.0, 'yoke_t': 8.0, 'yoke_depth': 50.0, 'yoke_gusset': 80.0,
+                'link_t': 52.0, 'wall': 6.0, 'shin_w': 48.0, 'shin_wall': 4.0, 'yoke_t': 10.0, 'yoke_depth': 55.0, 'yoke_gusset': 80.0,
                 'crank_r': 60.0, 'crank_t': 14.0, 'lever_beta_deg': -75.0, 'journal_extra': 11.0, 'plate_arm_w': 28.0, 'tab_extra': 8.0}
         study.enqueue_trial({**base, 'bus': '60v'})               # today's design, on both buses, and on the RS-03
         study.enqueue_trial({**base, 'bus': '2x20v'})

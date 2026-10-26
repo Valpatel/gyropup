@@ -25,7 +25,13 @@ from pathlib import Path
 
 import cadquery as cq
 
-from cadagent.robot import Body, combine, fit_mesh, printed_part_body, solid_mass_properties
+from cadagent.robot import Body, combine, printed_part_body, solid_mass_properties
+
+try:                                    # cad-agent PR #4; until it is released, meshes are left as exported
+    from cadagent.robot import fit_mesh
+except ImportError:                     # pragma: no cover
+    def fit_mesh(path, max_faces=150_000):
+        return 0
 
 LEG_HARDWARE_SHARE = 0.5          # of the hardware allowance not yet placed part by part: the share in the legs
 ROTOR_SHARE = 0.75                # BotWheel: the spinning share (rotor + tyre); the stator rides on the shin

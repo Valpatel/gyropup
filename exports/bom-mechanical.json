@@ -14,11 +14,11 @@
   "mass_g_each": 46.3
  },
  "head_saddle": {
-  "material": "petg",
+  "material": "pa6-cf",
   "qty": 1,
-  "how": "printed PETG; M4 inserts for the turret",
-  "solid": false,
-  "mass_g_each": 106.1
+  "how": "printed PA6-CF; the turret mount (TM: 4 x M5 inserts, 2 dowels)",
+  "solid": true,
+  "mass_g_each": 153.5
  },
  "electronics_bay": {
   "material": "petg",
@@ -60,62 +60,174 @@
   "qty": 2,
   "how": "printed PA6-CF on its wall flange; 6 x M6 through the chassis wall with nuts, 3 x M5 into each plate tab",
   "solid": true,
-  "mass_g_each": 650.2
+  "mass_g_each": 877.7
  },
  "hip_motor_plate": {
   "material": "pa6-cf",
   "qty": 2,
   "how": "printed PA6-CF, 100 % solid, flat; 61812 (60 x 78 x 10) support bearing pressed in, held by 3 x M3 + washers; 3 x M5 inserts for the yoke",
   "solid": true,
-  "mass_g_each": 413.2
+  "mass_g_each": 417.6
  },
  "hip_output_adapter": {
   "material": "pa6-cf",
   "qty": 2,
   "how": "printed PA6-CF, 100 % solid; 8 x M5 heat-set inserts in the face; sockets for the motor's 3 x \u00d86 pins; 9 x M5 12.9 screws with washers into the motor",
   "solid": true,
-  "mass_g_each": 69.3
+  "mass_g_each": 72.2
  },
  "knee_output_adapter": {
   "material": "pa6-cf",
   "qty": 2,
   "how": "printed PA6-CF, 100 % solid; 8 x M5 heat-set inserts in the face; sockets for the motor's 3 x \u00d86 pins; 9 x M5 12.9 screws with washers into the motor",
   "solid": true,
-  "mass_g_each": 69.3
+  "mass_g_each": 72.2
  },
  "knee_motor_plate": {
   "material": "pa6-cf",
   "qty": 2,
   "how": "printed PA6-CF, 100 % solid, flat; 61812 (60 x 78 x 10) support bearing pressed in, held by 3 x M3 + washers; 3 x M5 inserts for the yoke",
   "solid": true,
-  "mass_g_each": 413.2
+  "mass_g_each": 417.6
  },
  "thigh": {
   "material": "pa6-cf",
   "qty": 2,
-  "how": "printed PA6-CF flat, 60 x 44 box, 5.0 mm walls, 100 % solid; 8 x M5 into the hip adapter; cables inside",
+  "how": "printed PA6-CF flat, 60 x 52 box, 6.0 mm walls, 100 % solid; 8 x M5 into the hip adapter; cables inside",
   "solid": true,
-  "mass_g_each": 361.8
+  "mass_g_each": 581.8
  },
  "shin": {
   "material": "pa6-cf",
   "qty": 2,
   "how": "printed PA6-CF flat, 50 mm box, 4.0 mm walls; two 6001-2RS pressed in; M5 inserts at the wheel; cables inside",
   "solid": true,
-  "mass_g_each": 267.2
+  "mass_g_each": 417.6
  },
  "knee_crank": {
   "material": "pa6-cf",
   "qty": 2,
   "how": "printed PA6-CF flat, 14 mm; 8 x M5 into the knee adapter; M8 bolt for the rod end",
   "solid": true,
-  "mass_g_each": 72.3
+  "mass_g_each": 71.7
  },
  "wheel_adapter": {
   "material": "pa6-cf",
   "qty": 2,
   "how": "printed PA6-CF flat, 10 mm",
   "solid": true,
-  "mass_g_each": 25.6
+  "mass_g_each": 44.4
+ },
+ "pan_base": {
+  "material": "pa6-cf",
+  "qty": 1,
+  "how": "PA6-CF on its foot; 4 x M5 x 16 into the head ring, 2 x \u00d85 dowels",
+  "solid": true,
+  "mass_g_each": 131.2
+ },
+ "pan_clamp": {
+  "material": "pa6-cf",
+  "qty": 1,
+  "how": "PA6-CF; 3 x M3 x 8 into inserts",
+  "solid": true,
+  "mass_g_each": 7.2
+ },
+ "pan_ring": {
+  "material": "pa6-cf",
+  "qty": 1,
+  "how": "PA6-CF upside down; DIN 471-50 circlip; 4 x M4 inserts",
+  "solid": true,
+  "mass_g_each": 79.6
+ },
+ "pan_pinion": {
+  "material": "pa6-cf",
+  "qty": 1,
+  "how": "PA6-CF; 4 x M2 to the horn; turns -3 x pan about the servo axis",
+  "solid": true,
+  "mass_g_each": 6.8
+ },
+ "tilt_yoke": {
+  "material": "pa6-cf",
+  "qty": 1,
+  "how": "PA6-CF on its back; 4 x M4 x 12 to the turntable",
+  "solid": true,
+  "mass_g_each": 82.4
+ },
+ "cradle": {
+  "material": "pa6-cf",
+  "qty": 1,
+  "how": "PA6-CF flat; ISO 7379 6 x 12 shoulder screw (M5) in an insert",
+  "solid": true,
+  "mass_g_each": 59.0
+ },
+ "cartridge_body": {
+  "material": "pa6-cf",
+  "qty": 1,
+  "how": "PA6-CF on its base; supports under the chute",
+  "solid": true,
+  "mass_g_each": 158.7
+ },
+ "flywheel": {
+  "material": "pa6-cf",
+  "qty": 2,
+  "how": "PA6-CF hub; M3 grub screw",
+  "solid": true,
+  "mass_g_each": 6.8
+ },
+ "flywheel_tyre": {
+  "material": "tpu95",
+  "qty": 2,
+  "how": "TPU 95A tyre",
+  "solid": false,
+  "mass_g_each": 6.6
+ },
+ "dial": {
+  "material": "petg",
+  "qty": 1,
+  "how": "PETG; M3 grub screw on the flat",
+  "solid": false,
+  "mass_g_each": 41.6
+ },
+ "hopper": {
+  "material": "petg",
+  "qty": 1,
+  "how": "translucent PETG; 3 x M3 to the housing",
+  "solid": false,
+  "mass_g_each": 28.2
+ },
+ "hopper_lid": {
+  "material": "petg",
+  "qty": 1,
+  "how": "PETG",
+  "solid": false,
+  "mass_g_each": 26.0
+ },
+ "hopper_flap": {
+  "material": "petg",
+  "qty": 1,
+  "how": "PETG; \u00d82 pin + torsion spring",
+  "solid": false,
+  "mass_g_each": 3.1
+ },
+ "barrel": {
+  "material": "petg",
+  "qty": 1,
+  "how": "PETG standing; last 15 mm blaze orange",
+  "solid": false,
+  "mass_g_each": 31.5
+ },
+ "laser_mount": {
+  "material": "petg",
+  "qty": 1,
+  "how": "PETG; 3 x M3 boresight, 2 x M3 to the cradle",
+  "solid": false,
+  "mass_g_each": 7.8
+ },
+ "bumper_ring": {
+  "material": "tpu95",
+  "qty": 1,
+  "how": "TPU 95A; 5 x M3 with washers",
+  "solid": false,
+  "mass_g_each": 53.7
  }
 }

@@ -19,3 +19,5 @@ references/vendor/**
 # optimiser trials (tools/iterate.py)
 work/
 exports/iterate/
+exports/turret/*.step
+exports/turret/*.stl

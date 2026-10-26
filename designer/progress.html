@@ -22,6 +22,9 @@
   table.cmp th, table.cmp td { padding: 7px 10px; border-bottom: 1px solid var(--hairline); text-align: left; vertical-align: top; }
   table.cmp th { color: var(--muted); font-weight: 500; }
   table.cmp tr.click { cursor: pointer; } table.cmp tr.click:hover td { background: rgba(0,240,255,.04); }
+  table.cmp tr.click.on td { background: rgba(0,240,255,.07); } table.cmp a.open3d { white-space: nowrap; }
+  #feanote .hud-btn { display: inline-block; margin: 0 8px 6px 0; text-decoration: none; }
+  #fea { overflow-x: auto; }
   .tag { display: inline-block; padding: 1px 8px; border-radius: 99px; font: 600 11px var(--font-mono); letter-spacing: .08em; }
   .tag.pass { color: var(--mint); background: rgba(5,255,161,.08); } .tag.fail { color: var(--magenta); background: rgba(255,42,109,.1); }
   .tag.warn { color: #ffb020; background: rgba(255,176,32,.1); }
@@ -53,7 +56,8 @@
 
   <div class="sec">Strength: every load-bearing part, loaded to breaking</div>
   <p class="lede">Each part under the simulator's worst loads (everyday and falls). Click a row: the video ramps the load from zero
-  to the design load, on to where the part first reaches its strength, and past it (black = beyond the material's strength).</p>
+  to the design load, on to where the part first reaches its strength, and past it (black = beyond the material's strength).
+  <b>open ↗</b> opens the interactive 3D view: drag the load, see the hot spots and the load at which each fails, cut it open, probe any point.</p>
   <div class="viewer"><div id="fea"></div><div><video id="feavid" controls loop muted playsinline></video><p class="lede" id="feanote"></p></div></div>
 
   <div class="sec">Physics simulation</div>

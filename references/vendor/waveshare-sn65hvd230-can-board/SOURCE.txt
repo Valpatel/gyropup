@@ -1,0 +1,10 @@
+Vendor: Waveshare
+Model: SN65HVD230 CAN Board
+Retrieved: 2026-10-26
+Files:
+  CAN_Transiver_SN65HVD230.step  <-  https://files.waveshare.com/upload/c/ca/CAN%20Transiver%20SN65HVD230.step
+  SN65HVD230-CAN-Board-Schematic.pdf  <-  https://files.waveshare.com/upload/c/c5/SN65HVD230-CAN-Board-Schematic.pdf
+  (both linked from https://www.waveshare.com/wiki/SN65HVD230_CAN_Board)
+Licence/terms: wiki resources, public, no login; no licence stated. Local reference copy only; do not redistribute or commit.
+Notes: STEP bbox measured with OCP: 32.5 x 13.8 x 10.3 mm (PCB ~27.2 x 10.1 mm, plus straight 4-pin header overhanging one end and
+  a 2-way 5.0 mm screw terminal at the other). Matches the product photos.
