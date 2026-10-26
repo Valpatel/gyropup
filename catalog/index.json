@@ -6,9 +6,10 @@
     "motor_drivers.json",
     "power_electronics.json",
     "sensors_compute.json",
+    "tail.json",
     "tool_batteries.json",
     "turret.json",
     "wheel_motors.json"
   ],
-  "items": 327
+  "items": 330
 }

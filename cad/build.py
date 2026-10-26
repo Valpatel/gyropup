@@ -198,6 +198,9 @@ def tray(L):
     for (x, y) in [(-30, -30), (30, -30), (-30, 30), (30, 30)]:
         t = t.cut(cq.Workplane('XY').circle(2.8).extrude(10).translate((x, y, z0 - 1)))
     t = t.cut(cq.Workplane('XY').circle(3.4).extrude(10).translate((0, 0, z0 - 1)))   # lidar cable
+    if L.get('tail'):                                # tail mount: 4x M5 inserts in the floor, behind the lidar
+        for (x, y) in TAIL_MOUNT_BOLTS:
+            t = t.cut(cq.Workplane('XY').circle(P['print']['insert_m5_pilot'] / 2).extrude(10).translate((x, y, z0 - 1)))
     return t
 
 
@@ -258,6 +261,78 @@ def camera_cradle(L, front=True):
     return c
 
 
+TAIL_MOUNT_BOLTS = [(-82, -35), (-82, 35), (-64, -35), (-64, 35)]
+
+
+def tail_mount(L):
+    """Holds the tail's pitch motor (RS-06 class) under the back of the tray: a plate on 4x M5 inserts and a cheek the
+    motor's case bolts to. The motor's axis is y, centred; its output faces +y, where the yoke bolts on."""
+    TL, z0 = L['tail'], L['trayBottom']
+    px, pz, ml = TL['pivotX'], TL['pivotZ'], TL['pitchL']
+    rs = P['rs06']
+    x0, x1 = px - 50, -58                            # behind the lidar hanger (radius 52)
+    plate = cq.Workplane('XY').box(x1 - x0, 84, 7).translate(((x0 + x1) / 2, 0, z0 - 3.5))
+    cheek_y = -ml / 2 - 4.5
+    cheek = (cq.Workplane('XZ', origin=(0, cheek_y + 4.5, 0)).center(px, (pz + z0) / 2 - 6).rect(96, z0 - pz + 60).extrude(9))
+    rib = cq.Workplane('XY').box(9, 40, z0 - pz + 40).translate((px + 44, cheek_y - 15, (pz + z0) / 2 - 6))
+    m = plate.union(cheek).union(rib)
+    for (x, y) in TAIL_MOUNT_BOLTS:
+        m = m.cut(cq.Workplane('XY').circle(2.75).extrude(30).translate((x, y, z0 - 20)))
+    for (x, z) in bolt_circle(rs['case_pcd'], rs['case_holes'], math.pi / 6):
+        m = m.cut(cq.Workplane('XZ', origin=(0, cheek_y + 10, 0)).center(px + x, pz + z).circle(2.25).extrude(30))
+    m = m.cut(cq.Workplane('XZ', origin=(0, cheek_y + 10, 0)).center(px, pz).circle(rs['output_pilot'] / 2 + 6).extrude(30))
+    return m
+
+
+def tail_yoke(L):
+    """Joins the pitch motor's output to the wag motor: a 5 mm aluminium plate, bent once. The upright part bolts to the
+    pitch output; the flat part runs back over the wag motor, whose case bolts up into it (axis vertical)."""
+    TL = L['tail']
+    px, pz, ml, yoff, yl = TL['pivotX'], TL['pivotZ'], TL['pitchL'], TL['yawOffset'], TL['yawL']
+    t, y0 = 5.0, ml / 2 + 1
+    a, b = P['rs06'], P['rs00']
+    disc = cq.Workplane('XZ', origin=(0, y0, 0)).center(px, pz).circle(36).extrude(-t)
+    top_z = pz + yl / 2
+    web = cq.Workplane('XZ', origin=(0, y0, 0)).center(px - 18, (pz + top_z + t) / 2).rect(36, top_z + t - pz).extrude(-t)
+    flat = cq.Workplane('XY').box(yoff + 36, 2 * y0 + t, t).translate((px - yoff / 2 - 4, 0, top_z + t / 2))
+    y = disc.union(web).union(flat)
+    for (x, z) in bolt_circle(a['output_pcd'], a['output_holes']):
+        y = y.cut(cq.Workplane('XZ', origin=(0, y0 + 1, 0)).center(px + x, pz + z).circle(2.25).extrude(-t - 2))
+    for (x, yy) in bolt_circle(b['case_pcd'], b['case_holes']):
+        y = y.cut(cq.Workplane('XY').circle(1.7).extrude(t + 2).translate((px - yoff + x, yy, top_z - 1)))
+    return y
+
+
+def tail_clamp(L):
+    """Bolts under the wag motor's output and grips the 20 mm carbon tube (split clamp, 2x M4)."""
+    TL = L['tail']
+    px, pz, yoff, yl, drop, d = TL['pivotX'], TL['pivotZ'], TL['yawOffset'], TL['yawL'], TL['tubeDrop'], TL['tubeD']
+    b = P['rs00']
+    cx, top = px - yoff, pz - yl / 2
+    blk = cq.Workplane('XY').box(46, 34, drop + d / 2 + 6 - yl / 2).translate((cx - 4, 0, top - (drop + d / 2 + 6 - yl / 2) / 2))
+    sock = cq.Workplane('YZ').circle(d / 2 + 5).extrude(46).translate((cx - 27, 0, pz - drop))
+    c = blk.union(sock)
+    c = c.cut(cq.Workplane('YZ').circle(d / 2 + 0.15).extrude(60).translate((cx - 60, 0, pz - drop)))
+    c = c.cut(cq.Workplane('XY').box(60, P['tail']['clamp_slot'], d).translate((cx - 30, 0, pz - drop - d / 2)))   # pinch slot
+    for x in (cx - 18, cx + 8):
+        c = c.cut(cq.Workplane('XZ', origin=(0, 30, 0)).center(x, pz - drop - d / 2 - 4).circle(2.25).extrude(60))
+    for (x, y) in bolt_circle(b['output_pcd'], b['output_holes']):
+        c = c.cut(cq.Workplane('XY').circle(1.7).extrude(30).translate((cx + x, y, top - 25)))
+    return c
+
+
+def tail_shoe(L):
+    """TPU skid shoe on the end of the tube: rounded underneath so it slides on grass and gravel."""
+    TL = L['tail']
+    px, pz, R = TL['pivotX'], TL['pivotZ'], TL['shoeR']
+    reach = TL['length'] - R
+    tip = (px - reach, 0, pz - TL['tubeDrop'])
+    shoe = cq.Workplane('XY').sphere(R).translate(tip)
+    shoe = shoe.union(cq.Workplane('YZ').circle(TL['tubeD'] / 2 + 4).extrude(30).translate((tip[0], 0, tip[2])))
+    shoe = shoe.cut(cq.Workplane('YZ').circle(TL['tubeD'] / 2 + 0.1).extrude(40).translate((tip[0] + 2, 0, tip[2])))
+    return shoe
+
+
 def lidar_hanger(L):
     z0 = L['trayBottom']
     lp = P['lidar']
@@ -305,6 +380,9 @@ def build(design_path: Path):
     parts['face'] = face(L)
     parts['camera_cradle'] = camera_cradle(L, True)
     parts['lidar_hanger'] = lidar_hanger(L)
+    if L.get('tail'):
+        for name, fn in (('tail_mount', tail_mount), ('tail_yoke', tail_yoke), ('tail_clamp', tail_clamp), ('tail_shoe', tail_shoe)):
+            parts[name] = fn(L)
     # legs at the standing pose (rotation about +y: thigh back by alpha; shin forward by knee_q)
     kx, kz = -a * math.sin(alpha), -a * math.cos(alpha)
     for side, tag in ((1, 'l'), (-1, 'r')):
@@ -318,14 +396,21 @@ def build(design_path: Path):
     placed['camera_cradle_front'] = parts['camera_cradle']
     placed['camera_cradle_rear'] = camera_cradle(L, False)
     placed['lidar_hanger'] = parts['lidar_hanger']
+    if L.get('tail'):                    # the tail raised to where it rides while balancing (0.45 rad up; + about y raises it), turning about the pitch axis
+        TL = L['tail']
+        piv = (TL['pivotX'], 0, TL['pivotZ'])
+        placed['tail_mount'] = parts['tail_mount']
+        for name in ('tail_yoke', 'tail_clamp', 'tail_shoe'):
+            placed[name] = parts[name].rotate(piv, (piv[0], 1, piv[2]), math.degrees(0.45))
 
     # print orientation: largest flat face down
     rot = {'thigh': ((1, 0, 0), 90), 'shin': ((1, 0, 0), 90), 'knee_crank': ((1, 0, 0), 90), 'pushrod': ((1, 0, 0), 90),
            'hip_yoke': ((1, 0, 0), -90), 'face': ((0, 1, 0), 90), 'head_saddle': ((1, 0, 0), 180), 'lidar_hanger': ((1, 0, 0), 180),
-           'camera_cradle': None, 'tray': None}
+           'camera_cradle': None, 'tray': None, 'tail_mount': ((1, 0, 0), 180), 'tail_yoke': None, 'tail_clamp': ((1, 0, 0), 180), 'tail_shoe': ((0, 1, 0), -90)}
     qty = {'thigh': 2, 'shin': 2, 'knee_crank': 2, 'pushrod': 2, 'hip_yoke': 2, 'camera_cradle': 2}
     materials = json.loads((R / 'catalog/materials.json').read_text())
-    hot = {'hip_yoke', 'knee_crank'}         # touch the motor cases: PETG
+    hot = {'hip_yoke', 'knee_crank', 'tail_mount', 'tail_clamp'}         # touch the motor cases: PETG
+    METAL = {'tail_yoke': 'aluminium 6061 (SendCutSend)'}
     OUT.mkdir(exist_ok=True)
     for old in OUT.glob('asm_*.step'):          # parts from an earlier design (e.g. a second battery) must not linger
         old.unlink()
@@ -338,8 +423,12 @@ def build(design_path: Path):
         rep = export_print_stl(printable, OUT / f'{name}.stl', rotation=rot.get(name))
         rep.update(qty=qty.get(name, 1))
         report[name] = rep
-        mat = 'petg' if name in hot else 'pla'
-        body, mrep = printed_part_body(solid, materials[mat]['density_g_cm3'], wall_mm=2.0, infill=0.4, name=name)
+        mat = 'petg' if name in hot else 'tpu95' if name == 'tail_shoe' else 'pla'
+        if name in METAL:                       # cut from plate: solid, not infilled
+            mat = METAL[name]
+            body, mrep = printed_part_body(solid, 2.70, wall_mm=50.0, infill=1.0, name=name)
+        else:
+            body, mrep = printed_part_body(solid, materials[mat]['density_g_cm3'], wall_mm=2.0, infill=0.4, name=name)
         mass[name] = {**mrep, 'material': mat, 'qty': qty.get(name, 1), 'com_m': list(body.com)}
     # bought parts as simple envelopes at their real positions, so the assembly view shows the whole robot
     T, B = L['tray'], L['body']
@@ -359,6 +448,15 @@ def build(design_path: Path):
             cq.Workplane('XZ').circle(L['motorD'] / 2).extrude(-L['motorL']).translate((0, -yk, 0))
         wy = side * (Y['leg_y'] + 20 + P['links']['shin_thickness'] / 2 + L['wheelW'] / 2)
         bought[f'wheel_{tag}'] = cq.Workplane('XZ').circle(L['wheelR']).circle(L['wheelR'] * 0.3).extrude(L['wheelW'] / 2, both=True).translate((0, wy, -hh))
+    if L.get('tail'):
+        TL = L['tail']
+        piv = (TL['pivotX'], 0, TL['pivotZ'])
+        turn = lambda w: w.rotate(piv, (piv[0], 1, piv[2]), math.degrees(0.45))
+        bought['tail_pitch_motor'] = cq.Workplane('XZ').circle(TL['pitchD'] / 2).extrude(TL['pitchL'] / 2, both=True).translate(piv)
+        bought['tail_wag_motor'] = turn(cq.Workplane('XY').circle(TL['yawD'] / 2).extrude(TL['yawL']).translate((piv[0] - TL['yawOffset'], 0, piv[2] - TL['yawL'] / 2)))
+        tube_len = TL['length'] - TL['yawOffset'] - 2 * TL['shoeR'] + 10
+        bought['tail_tube'] = turn(cq.Workplane('YZ').circle(TL['tubeD'] / 2).circle(TL['tubeD'] / 2 - 1).extrude(tube_len)
+                                   .translate((piv[0] - TL['yawOffset'] + 20 - tube_len, 0, piv[2] - TL['tubeDrop'])))
     lz = L['trayBottom'] - 8 - 36
     bought['lidar'] = cq.Workplane('XY').circle(51.65).extrude(71.7).translate((0, 0, lz - 36))
     for name, x in (('camera_front', T['depth'] / 2 + 17), ('camera_rear', -(T['depth'] / 2 + 17))):

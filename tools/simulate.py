@@ -38,6 +38,8 @@ def simulate(design: Path, only=None, video=False) -> dict:
     for name, sc in suite.items():
         if only and name not in only:
             continue
+        if sc.needs_tail and not info.get('tail'):
+            continue
         t0 = time.time()
         res = run(xml, info, sc, video=(out / f'{name}.mp4') if video else None)
         res['wall_s'] = round(time.time() - t0, 2)

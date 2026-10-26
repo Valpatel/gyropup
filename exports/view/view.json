@@ -324,6 +324,118 @@
    ]
   },
   {
+   "name": "tail_clamp",
+   "id": "",
+   "file": "tail_clamp.stl",
+   "color": "#3b3f46",
+   "visible": true,
+   "explode": null,
+   "bounds_mm": [
+    -232.11,
+    -17.0,
+    -93.46,
+    -177.19,
+    17.0,
+    -45.52
+   ]
+  },
+  {
+   "name": "tail_mount",
+   "id": "",
+   "file": "tail_mount.stl",
+   "color": "#3b3f46",
+   "visible": true,
+   "explode": null,
+   "bounds_mm": [
+    -160.5,
+    -64.0,
+    -106.0,
+    -58.0,
+    42.0,
+    -1.0
+   ]
+  },
+  {
+   "name": "tail_pitch_motor",
+   "id": "",
+   "file": "tail_pitch_motor.stl",
+   "color": "#9aa3ad",
+   "visible": true,
+   "explode": null,
+   "bounds_mm": [
+    -154.5,
+    -24.55,
+    -114.04,
+    -66.45,
+    24.55,
+    -25.96
+   ]
+  },
+  {
+   "name": "tail_shoe",
+   "id": "",
+   "file": "tail_shoe.stl",
+   "color": "#ff7a1a",
+   "visible": true,
+   "explode": null,
+   "bounds_mm": [
+    -481.46,
+    -22.14,
+    28.38,
+    -426.15,
+    22.14,
+    76.24
+   ]
+  },
+  {
+   "name": "tail_tube",
+   "id": "",
+   "file": "tail_tube.stl",
+   "color": "#15171b",
+   "visible": true,
+   "explode": null,
+   "bounds_mm": [
+    -434.81,
+    -10.0,
+    -88.5,
+    -178.47,
+    10.01,
+    49.14
+   ]
+  },
+  {
+   "name": "tail_wag_motor",
+   "id": "",
+   "file": "tail_wag_motor.stl",
+   "color": "#9aa3ad",
+   "visible": true,
+   "explode": null,
+   "bounds_mm": [
+    -220.19,
+    -28.53,
+    -70.16,
+    -146.65,
+    28.53,
+    0.61
+   ]
+  },
+  {
+   "name": "tail_yoke",
+   "id": "",
+   "file": "tail_yoke.stl",
+   "color": "#c9ced6",
+   "visible": true,
+   "explode": null,
+   "bounds_mm": [
+    -192.16,
+    -28.0,
+    -106.03,
+    -74.46,
+    30.54,
+    2.27
+   ]
+  },
+  {
    "name": "thigh_l",
    "id": "",
    "file": "thigh_l.stl",

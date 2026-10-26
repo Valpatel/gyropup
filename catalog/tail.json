@@ -1,0 +1,62 @@
+[
+ {
+  "id": "easycomposites-cf-tube-20x18",
+  "category": "cf_tube",
+  "vendor": "Easy Composites (UK)",
+  "model": "Carbon fibre tube 20 mm OD × 18 mm ID, roll-wrapped, woven finish, 1 m",
+  "preferred": true,
+  "price_usd": 26.0,
+  "price_note": "£20.40/m ex VAT (catalog/fabrication.json, checked 2026-10-25), about $26 at 1.27 $/£",
+  "price_checked": "2026-10-25",
+  "buy": [
+   {
+    "seller": "Easy Composites",
+    "url": "https://www.easycomposites.co.uk/20mm-woven-finish-carbon-fibre-tube"
+   }
+  ],
+  "specs": {
+   "mass_g": 86.5,
+   "mass_g_per_m": 86.5,
+   "od_mm": 20,
+   "id_mm": 18,
+   "length_mm": 1000,
+   "tensile_modulus_gpa": 64,
+   "tensile_strength_mpa": 650
+  },
+  "cad": {
+   "step_url": null,
+   "available": null
+  },
+  "sources": [
+   "https://www.easycomposites.co.uk/20mm-woven-finish-carbon-fibre-tube"
+  ],
+  "confidence": "published",
+  "notes": "The tail arm (cut to length; the mass in a design is per metre × length). Bending at an 80 N tip load on a 0.36 m arm: about 107 MPa, a factor of 6 on the published strength."
+ },
+ {
+  "id": "assumed-tail-ratchet-lock",
+  "category": "mechanism",
+  "vendor": "Generic (assumed)",
+  "model": "Fail-safe tail lock: spring-applied steel pawl on a 60 mm ratchet ring, 24 V pull solenoid to release",
+  "preferred": true,
+  "price_usd": 35.0,
+  "price_note": "ASSUMED: a 24 V pull solenoid (~$15), a laser-cut steel ratchet ring and pawl (SendCutSend, ~$20)",
+  "price_checked": "2026-10-25",
+  "buy": [],
+  "specs": {
+   "mass_g": 90,
+   "hold_torque_nm": 80,
+   "tooth_deg": 4,
+   "solenoid_v": 24,
+   "solenoid_hold_w": 3,
+   "function": "tail_lock"
+  },
+  "cad": {
+   "step_url": null,
+   "available": null
+  },
+  "sources": [],
+  "confidence": "estimate",
+  "notes": "Assumed part. Powered, the solenoid holds the pawl clear and the tail moves freely. Unpowered (e-stop, flat battery, a pulled pack) the spring drops the pawl into the ratchet: the tail can still swing down but cannot be pushed up, so it props the robot. The RS-06 has no brake of its own."
+ }
+]

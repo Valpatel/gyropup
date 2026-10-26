@@ -432,3 +432,23 @@ The CNY → USD conversions are approximate, at about ¥7.2 per $1, and are not 
 6. **Ignoring actuator dynamics in sim.** Without delay randomization, Ascento oscillated at up to 15 rad/s on hardware. Microduck's authors say actuator fidelity is "most of the sim2real gap". Open Duck builders with the wrong servo gear ratio could not walk.
 7. **Hip abduction in v1.** Diablo, Upkie, Ascento and every hobby build balance without it. TITA has it, at 8 DOF and $13k. Leave it out until there is a reason; leaning on uneven ground can come from differential leg length.
 
+---
+
+## Beni (Mondo Robotics): a consumer wheel-legged camera robot
+
+Added 2026-10-25 at the user's suggestion: "another good consumer example product for inspiration, but we want this way heavier, more durable, more capable."
+
+| Item | Value | Source |
+|---|---|---|
+| What it is | Two self-balancing wheel-legs; follows and films a person or pet in 4K, edits highlight reels | [DIY Photography](https://www.diyphotography.net/?p=321790), [PhotoWorkout](https://www.photoworkout.com/?p=223335) |
+| Mass | 3.86 lb (1.75 kg) | [Notebookcheck](https://www.notebookcheck.net/4K-without-the-flight-This-jumping-robot-could-replace-your-drone.1356616.0.html) |
+| Top speed | 17.9 mph (28.8 km/h) | [Notebookcheck](https://www.notebookcheck.net/4K-without-the-flight-This-jumping-robot-could-replace-your-drone.1356616.0.html) |
+| Jumps | over obstacles of 10 in (Notebookcheck); about 10 cm in other reports | [Notebookcheck](https://www.notebookcheck.net/4K-without-the-flight-This-jumping-robot-could-replace-your-drone.1356616.0.html) |
+| Tricks | jumps, flips, rights itself after a fall, climbs stairs | [DIY Photography](https://www.diyphotography.net/?p=321790), [Digital Camera World](https://www.digitalcameraworld.com/cameras/sorry-drones-beni-is-a-cute-camera-on-wheels-and-the-quirky-little-robot-can-even-climb-stairs) |
+| Battery | swappable, about 90 min (reports vary) | [PhotoWorkout](https://www.photoworkout.com/?p=223335) |
+| Price | $549 pre-order (about $800 retail reported) | [Notebookcheck](https://www.notebookcheck.net/4K-without-the-flight-This-jumping-robot-could-replace-your-drone.1356616.0.html) |
+| Weak points (hands-on) | tracking still unreliable; not waterproof | [Tom's Guide](https://www.tomsguide.com/cameras-photography/i-cant-fly-drones-in-nyc-so-i-let-this-camera-robot-follow-me-around-instead-and-came-away-impressed), The Verge (via [Ground News](https://ground.news/article/this-jumping-800-robot-camera-dog-filled-me-with-joy)) |
+
+**What Gyropup takes from it:** character first (it reads as a pet, not a machine); getting up by itself after a fall; small hops and kerbs; follow-me with onboard tracking (the Orin, two depth cameras and a lidar can do this far better); a battery you swap in seconds (FLEXVOLT).
+
+**Where Gyropup goes further:** ten times the mass (about 19 kg) with RS-03 legs and BotWheels, so it can carry a turret and drive outdoors; a tail that props it up, catches backward falls and sits it down safely on an e-stop; tougher parts (aluminium where loads peak, carbon tube, TPU bumpers and shoe); weather resistance as a goal, not an afterthought.

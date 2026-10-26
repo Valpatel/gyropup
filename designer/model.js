@@ -132,6 +132,11 @@ export function printedParts(d) {
     { id: 'sensor_head', name: 'Sensor head', qty: 1, volume_cm3: 260, area_cm2: 1400, load: 'light' },
     { id: 'battery_tray', name: 'Battery tray', qty: 1, volume_cm3: 110, area_cm2: 700, load: 'light' },
     { id: 'lidar_crown', name: 'Lidar crown (fall guard)', qty: d.parts.lidar && d.lidar_mount !== 'under' ? 1 : 0, volume_cm3: 140, area_cm2: 900, load: 'impact' },
+    ...(d.parts.tail_pitch ? [
+      { id: 'tail_mount', name: 'Tail motor mount', qty: 1, volume_cm3: 70, area_cm2: 260, load: 'motor', hot: true },
+      { id: 'tail_clamp', name: 'Tail tube clamp (on the wag motor)', qty: 1, volume_cm3: 25, area_cm2: 110, load: 'motor', hot: true },
+      { id: 'tail_shoe', name: 'Tail skid shoe', qty: 1, volume_cm3: 30, area_cm2: 120, load: 'impact', material: 'tpu95' },
+    ] : []),
     { id: 'camera_cradle', name: 'Depth camera cradle (D415/D435)', qty: (d.parts.depth_front ? 1 : 0) + (d.parts.depth_rear ? 1 : 0), volume_cm3: 18, area_cm2: 110, load: 'light' },
     ...(d.wheel_from_motor ? [] : [
       { id: 'wheel_hub', name: 'Wheel hub', qty: 2, volume_cm3: 0.12 * g.wheel_diameter_mm, area_cm2: 0.9 * g.wheel_diameter_mm, load: 'motor' },
@@ -182,6 +187,15 @@ export function layout(design, catalog) {
     body: { width: B.width_mm, depth: B.depth_mm, height: B.height_mm }, frameWidth: bodyW,
     battery: dims ? { packs, dims, vendor: batt?.vendor ?? '' } : null,
     kneeMinDeg: g.knee_min_deg, kneeMaxDeg: g.knee_max_deg, lidarMount: d.lidar_mount ?? 'top',
+    // the tail: pitch motor under the back of the tray (clear of the lidar and the rear camera), arm to the skid shoe
+    tail: d.parts.tail_pitch ? {
+      pivotX: -(tray.depth / 2 + 20), pivotZ: trayBottom - 45, length: g.tail_mm ?? 360,
+      pitchD: part('tail_pitch')?.specs?.diameter_mm ?? 88, pitchL: part('tail_pitch')?.specs?.length_mm ?? 49,
+      yawD: part('tail_yaw')?.specs?.diameter_mm ?? 57, yawL: part('tail_yaw')?.specs?.length_mm ?? 51,
+      tubeD: part('tail_tube')?.specs?.od_mm ?? 20, shoeR: 22,
+      tubeDrop: Math.round((part('tail_yaw')?.specs?.length_mm ?? 51) / 2 + (part('tail_tube')?.specs?.od_mm ?? 20) / 2 + 4),   // clamp under the wag motor's output
+      yawOffset: Math.ceil((part('tail_pitch')?.specs?.diameter_mm ?? 88) / 2 + (part('tail_yaw')?.specs?.diameter_mm ?? 57) / 2 + 8),   // wag motor clear of the pitch motor
+    } : null,
   };
 }
 
@@ -201,8 +215,10 @@ export function evaluate(design, catalog, materials, opts = {}) {
   for (const [slot, qty] of slots) {
     const item = pick(slot);
     if (!item || !qty) continue;
+    const grams = item.category === 'cf_tube' && spec(item, 'mass_g_per_m')            // tubes are cut to length
+      ? spec(item, 'mass_g_per_m') * ((slot === 'tail_tube' ? d.geometry.tail_mm ?? 360 : 1000) - 40) / 1000 : massOf(item);
     lines.push({ slot, id: item.id, name: `${item.vendor} ${item.model}`, qty, group: bomGroup(item),
-                 unit_usd: item.price_usd, mass_g: massOf(item), mass_estimate: spec(item, 'mass_g') == null && massOf(item) != null, source: item.buy?.[0]?.url ?? item.sources?.[0] ?? null,
+                 unit_usd: item.price_usd, mass_g: grams, mass_estimate: spec(item, 'mass_g') == null && massOf(item) != null, source: item.buy?.[0]?.url ?? item.sources?.[0] ?? null,
                  price_checked: item.price_checked ?? null });
     if (item.price_usd == null) check(`price-${slot}`, 'warn', `${item.vendor} ${item.model} has no public price; it is left out of the total.`);
     if (massOf(item) == null) check(`mass-${slot}`, 'warn', `${item.vendor} ${item.model} has no published mass; it is left out of the mass budget.`);

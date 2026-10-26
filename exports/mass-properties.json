@@ -2,19 +2,19 @@
  "design": "designs/default.json",
  "parts": {
   "tray": {
-   "volume_cm3": 490.885,
-   "area_cm2": 2397.5,
+   "volume_cm3": 490.371,
+   "area_cm2": 2398.14,
    "wall_mm": 2.0,
    "infill": 0.4,
-   "effective_fill": 0.986,
-   "mass_g": 600.2,
+   "effective_fill": 0.987,
+   "mass_g": 600.1,
    "estimate": true,
    "material": "pla",
    "qty": 1,
    "com_m": [
-    -3.552378029295932e-05,
-    2.164769717543578e-17,
-    0.013426145136862414
+    4.106354146012372e-05,
+    9.703837385919222e-18,
+    0.01346437991962756
    ]
   },
   "hip_yoke": {
@@ -160,9 +160,73 @@
     0.0015772139612158832,
     -0.028996900364680403
    ]
+  },
+  "tail_mount": {
+   "volume_cm3": 153.885,
+   "area_cm2": 455.76,
+   "wall_mm": 2.0,
+   "infill": 0.4,
+   "effective_fill": 0.755,
+   "mass_g": 145.3,
+   "estimate": true,
+   "material": "petg",
+   "qty": 1,
+   "com_m": [
+    -0.10361205990739665,
+    -0.020698646609297114,
+    -0.04356771152394031
+   ]
+  },
+  "tail_yoke": {
+   "volume_cm3": 52.507,
+   "area_cm2": 243.19,
+   "wall_mm": 50.0,
+   "infill": 1.0,
+   "effective_fill": 1.0,
+   "mass_g": 141.8,
+   "estimate": true,
+   "material": "aluminium 6061 (SendCutSend)",
+   "qty": 1,
+   "com_m": [
+    -0.13824030424321954,
+    0.010664940102151244,
+    -0.05265261193155042
+   ]
+  },
+  "tail_clamp": {
+   "volume_cm3": 36.553,
+   "area_cm2": 118.86,
+   "wall_mm": 2.0,
+   "infill": 0.4,
+   "effective_fill": 0.79,
+   "mass_g": 36.1,
+   "estimate": true,
+   "material": "petg",
+   "qty": 1,
+   "com_m": [
+    -0.19333546511801722,
+    -3.475796607956192e-10,
+    -0.11050471233431367
+   ]
+  },
+  "tail_shoe": {
+   "volume_cm3": 42.037,
+   "area_cm2": 89.26,
+   "wall_mm": 2.0,
+   "infill": 0.4,
+   "effective_fill": 0.655,
+   "mass_g": 33.6,
+   "estimate": true,
+   "material": "tpu95",
+   "qty": 1,
+   "com_m": [
+    -0.4781508771650263,
+    4.3384967583533294e-13,
+    -0.10999999999133851
+   ]
   }
  },
- "printed_total_g": 2306.7,
+ "printed_total_g": 2663.4,
  "estimate": true,
  "note": "printed at 2 mm walls and 40 % infill; weigh the real parts"
 }

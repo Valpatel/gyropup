@@ -48,6 +48,9 @@ class Scenario:
     targets: List[Target] = field(default_factory=list)   # foam targets the turret engages
     darts: int = 0                         # dart bodies loaded in the magazine
     min_hit_rate: Optional[float] = None   # pass needs at least this share of shots on target
+    needs_tail: bool = False               # only for designs with a tail
+    expect_modes: tuple = ()               # controller modes the run must pass through, in order
+    end_mode: Optional[str] = None         # controller mode at the end
 
 
 def ramp(deg, x0=0.8, length=2.0):
@@ -95,6 +98,15 @@ SCENARIOS = {
                         targets=TARGETS, darts=24, min_hit_rate=0.4),
     'look': Scenario('look', 'Look up: lean back 15° on the legs, hold, then look ahead again', 9.0,
                      lambda t: Command(height=0.7, look_up=0.26 if 2 < t < 6 else 0.0), hold_from=8.0),
+    # the tail: sit back on it, get caught by it, stop safely on it, wag it
+    'sit': Scenario('sit', 'Sit on the tail, then stand up again', 12.0, lambda t: Command(height=0.6, sit=2 < t < 7),
+                    hold_from=11.0, needs_tail=True, expect_modes=('sitting', 'balance'), end_mode='balance'),
+    'catch': Scenario('catch', 'Shoved hard backwards: the tail catches it, then it stands up', 10.0, lambda t: Command(height=0.6),
+                      pushes=[Push(2.0, -1.6)], hold_from=9.0, needs_tail=True, expect_modes=('catching', 'sitting', 'balance'), end_mode='balance'),
+    'estop': Scenario('estop', 'Emergency stop: sit on the tail, lock it, cut the power', 8.0, lambda t: Command(height=0.6, estop=t > 2.0),
+                      needs_tail=True, expect_modes=('sitting', 'off'), end_mode='off'),
+    'wag': Scenario('wag', 'Wag the tail while balancing', 8.0, lambda t: Command(height=0.6, wag=0.5 if 2 < t < 6 else 0.0, tail_up=0.7 if 2 < t < 6 else 0.45),
+                    hold_from=2.0, needs_tail=True),
     'curb': Scenario('curb', 'Drive up a 25 mm kerb', 9.0,
                      lambda t: Command(height=0.6, speed=ramp_profile(t, 1, 1.0, 0.6) if t < 6 else 0.0),
                      terrain=curb(0.025), must_reach_x=1.5),
@@ -171,12 +183,15 @@ def run(xml_path: Path, info: dict, sc: Scenario, video: Optional[Path] = None, 
     dt = model.opt.timestep
     steps = int(sc.seconds / dt)
     frame_every = max(1, int(round(1 / (FPS * dt))))
-    names = list(rb.act)
+    names = list(rb.act) + (list(rb.tact) if rb.tail else [])
+    act_id = lambda n: rb.tact[n] if n.startswith('tail') else rb.act[n]
+    dof_id = lambda n: rb.tv[n] if n.startswith('tail') else rb.vadr[n]
     peak_tau = {n: 0.0 for n in names}
     energy = {n: 0.0 for n in names}
     thetas, speed_err, frames = [], [], []
     link_load = {model.body(i).name: {'force_n': 0.0, 'moment_nm': 0.0} for i in range(1, model.nbody)}
     fell_at, tipping_at, max_theta, x_max, v_peak = None, None, 0.0, -1e9, 0.0
+    min_base_z = 1e9
     vid = Video(model, video) if video else None
     # static props (terrain, targets) as world-frame primitives, so the 3D page can draw exactly what was simulated
     robot_set = set(rb.bodies)
@@ -225,9 +240,9 @@ def run(xml_path: Path, info: dict, sc: Scenario, video: Optional[Path] = None, 
         speed_err.append(st['v'] - st['v_cmd'])
         v_peak = max(v_peak, abs(st['v']))
         for n in names:
-            tau = data.actuator_force[rb.act[n]]
+            tau = data.actuator_force[act_id(n)]
             peak_tau[n] = max(peak_tau[n], abs(tau))
-            energy[n] += abs(tau * data.qvel[rb.vadr[n]]) * dt
+            energy[n] += abs(tau * data.qvel[dof_id(n)]) * dt
         if k % 10 == 0:
             mujoco.mj_rnePostConstraint(model, data)
             for i in range(1, model.nbody):
@@ -236,6 +251,7 @@ def run(xml_path: Path, info: dict, sc: Scenario, video: Optional[Path] = None, 
                 ll['moment_nm'] = max(ll['moment_nm'], float(np.linalg.norm(f[:3])))
                 ll['force_n'] = max(ll['force_n'], float(np.linalg.norm(f[3:])))
         base_z = data.xpos[base][2]
+        min_base_z = min(min_base_z, base_z)
         if tipping_at is None and abs(th) > 0.35:
             tipping_at = t                         # past saving, usually: the moment for an "oh no"
         if fell_at is None and (abs(th) > 0.9 or base_z < rb.r + 0.06):
@@ -258,6 +274,16 @@ def run(xml_path: Path, info: dict, sc: Scenario, video: Optional[Path] = None, 
         reasons.append(f"hit {tsum['hits']} of {tsum['shots']} shots ({tsum['hit_rate']:.0%}), needs {sc.min_hit_rate:.0%}")
     if sc.min_hit_rate is not None and tsum and tsum.get('targets') and tsum['knocked_down'] < math.ceil(0.6 * tsum['targets']):
         reasons.append(f"knocked down {tsum['knocked_down']} of {tsum['targets']} targets, needs {math.ceil(0.6 * tsum['targets'])}")
+    seen = [md for _, md in ctl.modes]
+    if sc.expect_modes:
+        it = iter(seen)
+        if not all(any(x == want for x in it) for want in sc.expect_modes):
+            reasons.append(f"modes {' > '.join(seen) or 'none'}; expected {' > '.join(sc.expect_modes)}")
+    if sc.end_mode and ctl.mode != sc.end_mode:
+        reasons.append(f'ended in {ctl.mode}, expected {sc.end_mode}')
+    clear = min_base_z + (info['layout_mm']['trayBottom'] - 80) / 1000      # the lowest part: the lidar under the waist
+    if info['layout_mm'].get('lidarMount') == 'under' and clear < 0.01:
+        reasons.append(f'the lidar came within {clear * 1000:.0f} mm of the ground')
     if sc.must_reach_x is not None and x_max < sc.must_reach_x:
         reasons.append(f'only reached {x_max:.2f} m of {sc.must_reach_x} m')
     if sc.hold_from is not None and fell_at is None:
@@ -267,9 +293,7 @@ def run(xml_path: Path, info: dict, sc: Scenario, video: Optional[Path] = None, 
     leg_rated = info['leg_actuator']['rated_nm']
     motors = {}
     for n in names:
-        is_wheel = n.startswith('wheel')
-        peak = rb.wheel_peak if is_wheel else rb.leg_peak
-        rated = info['wheel_motor' if is_wheel else 'leg_actuator']['rated_nm']
+        peak, rated = rb.peak_for(n), rb.rated_for(n)
         motors[n] = {'peak_torque_nm': round(peak_tau[n], 2), 'of_peak': round(peak_tau[n] / peak, 3), 'of_rated': round(peak_tau[n] / rated, 3),
                      'saturated_s': round(ctl.saturation[n] * dt, 3), 'energy_j': round(energy[n], 1)}
     return {
@@ -283,8 +307,11 @@ def run(xml_path: Path, info: dict, sc: Scenario, video: Optional[Path] = None, 
         'terrain': sc.terrain, 'video': video.name if video else None,
         'events': [{'t': round(p.t, 3), 'type': 'shot'} for p in sc.pushes if p.absolute] + (turret.events if turret.has else [])
                   + [{'t': round(p.t, 3), 'type': 'push'} for p in sc.pushes if not p.absolute]
+                  + [{'t': t_, 'type': 'mode', 'mode': md} for t_, md in ctl.modes]
                   + ([{'t': round(min(tipping_at or fell_at, fell_at), 3), 'type': 'fall'}] if fell_at is not None else []),
         'fell_at': round(fell_at, 3) if fell_at is not None else None,
+        'modes': [{'t': t_, 'mode': md} for t_, md in ctl.modes], 'lidar_clearance_mm': round(clear * 1000, 1),
+        'tail_load_nm': {k: round(v, 2) for k, v in ctl.tail_load.items()},
         'turret': tsum,
         'qpos_layout': {model.joint(j).name: int(model.jnt_qposadr[j]) for j in range(model.njnt)},
         'props': props,

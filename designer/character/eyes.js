@@ -99,10 +99,12 @@ export function createEyes(opts = {}) {
     texture.needsUpdate = true;
   }
 
+  let current = 'neutral';
   return {
     left, right, params, expressions: Object.keys(EXPRESSIONS), step,
     draw() { drawOne(left, -1); drawOne(right, 1); },
-    set(name) { Object.assign(target, EXPRESSIONS[name] ?? EXPRESSIONS.neutral); },
+    set(name) { current = EXPRESSIONS[name] ? name : 'neutral'; Object.assign(target, EXPRESSIONS[current]); },
+    get current() { return current; },
   };
 }
 

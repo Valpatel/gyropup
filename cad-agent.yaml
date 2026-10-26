@@ -10,7 +10,9 @@ cad:
     extra: [{glob: "exports/asm_*.step", strip: "asm_"}]
     colors: {tray: "#2f343c", hip_yoke: "#3b3f46", thigh: "#f5b82e", shin: "#f5b82e", knee_crank: "#8a9099", pushrod: "#8a9099",
              head_saddle: "#3b3f46", face: "#2f343c", camera_cradle: "#3b3f46", lidar_hanger: "#3b3f46", j501_box: "#e8892b",
-             battery: "#fdb913", hip_motor: "#9aa3ad", knee_motor: "#9aa3ad", wheel: "#1d2025", lidar: "#2a2d33", camera: "#2a2d33"}
+             battery: "#fdb913", hip_motor: "#9aa3ad", knee_motor: "#9aa3ad", wheel: "#1d2025", lidar: "#2a2d33", camera: "#2a2d33",
+             tail_mount: "#3b3f46", tail_yoke: "#c9ced6", tail_clamp: "#3b3f46", tail_shoe: "#ff7a1a", tail_tube: "#15171b",
+             tail_pitch_motor: "#9aa3ad", tail_wag_motor: "#9aa3ad"}
   steps:
     - {name: catalog,   run: tools/check_catalog.py}
     - {name: materials, run: tools/build_materials.py}

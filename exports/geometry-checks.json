@@ -9,7 +9,7 @@
    206.0,
    104.0
   ],
-  "volume_cm3": 490.885,
+  "volume_cm3": 490.371,
   "qty": 1
  },
  "hip_yoke": {
@@ -127,6 +127,58 @@
    8.0
   ],
   "volume_cm3": 63.853,
+  "qty": 1
+ },
+ "tail_mount": {
+  "degenerate_tessellation_faces_removed": 0,
+  "cad_valid": true,
+  "solid_count": 1,
+  "watertight": true,
+  "print_bounds_mm": [
+   102.5,
+   106.0,
+   105.0
+  ],
+  "volume_cm3": 153.885,
+  "qty": 1
+ },
+ "tail_yoke": {
+  "degenerate_tessellation_faces_removed": 0,
+  "cad_valid": true,
+  "solid_count": 1,
+  "watertight": true,
+  "print_bounds_mm": [
+   138.988,
+   58.5,
+   71.989
+  ],
+  "volume_cm3": 52.507,
+  "qty": 1
+ },
+ "tail_clamp": {
+  "degenerate_tessellation_faces_removed": 0,
+  "cad_valid": true,
+  "solid_count": 1,
+  "watertight": true,
+  "print_bounds_mm": [
+   46.0,
+   34.0,
+   31.0
+  ],
+  "volume_cm3": 36.553,
+  "qty": 1
+ },
+ "tail_shoe": {
+  "degenerate_tessellation_faces_removed": 2,
+  "cad_valid": true,
+  "solid_count": 1,
+  "watertight": true,
+  "print_bounds_mm": [
+   44.0,
+   43.99,
+   52.0
+  ],
+  "volume_cm3": 42.037,
   "qty": 1
  }
 }

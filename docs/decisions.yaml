@@ -199,3 +199,18 @@
   why: The user asked for Gyropup to talk like Moxie, with word bubbles and STT, and for cool sound effects. Adapting our own MIT Moxie code keeps one voice stack; the fallbacks keep the page working with nothing else running.
   status: decided
   source: {kind: user, quote: "gyropup should talk like Moxie does as well and have word bubbles, Moxie has STT"}
+- id: D28
+  date: "2026-10-25"
+  title: Two wheel-legs plus a tail, not a three-legged tricycle
+  decision: "Gyropup keeps its two balancing wheel-legs and gains a tail: a RobStride RS-06 lifts it (36 N·m peak, 621 g), a RobStride RS-00 wags it (14 N·m, 310 g), a 20 mm carbon tube carries a TPU skid shoe 390 mm from the pivot, and a spring-applied ratchet (ASSUMED part) locks it against being pushed up whenever the solenoid is unpowered. The tail is not driven. It rides up while balancing; the robot sits on it (2.4 N·m on the motor, parked on the ratchet), it catches a backward fall, and an e-stop is a controlled stop: sit, lock, cut the power."
+  why: "A third wheel-leg would add about 4.3 kg and six-hundred-odd dollars, make turning scrub, and still balance when lifting a leg; the tail gives the robot most of the tripod's benefits for 1.2 kg. In simulation the tail lets the robot survive a backward shove of 2.0 m/s per kg (vs 1.2 without), sits and stands up again in about 5 s, and stops safely with the lidar 80 mm off the ground. RS-02 and RS-00 pitch motors also sit and catch moderate shoves but drop the hardest catch, so the RS-06 stays. The ratchet sees at most 43 N·m."
+  status: decided
+  source: {kind: user, quote: "Don't worry about cost can you just think about light weight, high quality with good tail motors but not driving wheels?"}
+  alternatives: [three wheel-legs (a tricycle), a passive kickstand, an RS-02 or RS-00 for the tail lift]
+- id: D29
+  date: "2026-10-25"
+  title: Beni as a consumer reference; Gyropup heavier, tougher and more capable
+  decision: Beni (Mondo Robotics, 1.75 kg) joins the reference robots for character and tricks (self-righting, hops, follow-me filming, swappable battery). Gyropup stays a ~19 kg outdoor robot and aims higher on durability and capability (see research/reference-robots.md)
+  why: The user pointed to Beni as consumer inspiration but wants Gyropup way heavier, more durable and more capable.
+  status: decided
+  source: {kind: user, quote: "The beni robot is another good consumer exmaple product for inspiration, but we want this way heavier, more durable, more capable."}

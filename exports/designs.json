@@ -4,11 +4,11 @@
    "name": "Gyropup",
    "file": "designs/default.json",
    "verdict": "warn",
-   "summary": "RobStride RS-03 legs, ODrive Robotics BotWheel (BW0124) wheels, DeWalt DCB609 FLEXVOLT 20V/60V MAX 9.0Ah battery. 8 printed part types, 1788 g of filament.",
+   "summary": "RobStride RS-03 legs, ODrive Robotics BotWheel (BW0124) wheels, DeWalt DCB609 FLEXVOLT 20V/60V MAX 9.0Ah battery. 11 printed part types, 1923 g of filament.",
    "metrics": [
     {
      "label": "chassis & actuators",
-     "value": "$1,985"
+     "value": "$2,398"
     },
     {
      "label": "sensors & compute",
@@ -16,7 +16,7 @@
     },
     {
      "label": "mass",
-     "value": 17.0,
+     "value": 18.2,
      "unit": "kg",
      "estimate": true
     },
@@ -27,14 +27,14 @@
     },
     {
      "label": "leg torque margin (dynamic)",
-     "value": 2.1,
+     "value": 1.9,
      "unit": "\u00d7",
      "estimate": true,
      "level": ""
     },
     {
      "label": "lean it can catch",
-     "value": 63,
+     "value": 62,
      "unit": "\u00b0",
      "level": "ok"
     },
@@ -53,17 +53,17 @@
     },
     {
      "label": "simulated scenarios passed",
-     "value": "9/9",
+     "value": "13/13",
      "level": ""
     },
     {
      "label": "darts on target (sim)",
-     "value": "18/18"
+     "value": "15/16"
     }
    ],
    "checks": {
     "ok": 4,
-    "warn": 10,
+    "warn": 12,
     "fail": 0
    },
    "link": "designer/",
@@ -126,6 +126,26 @@
      "label": "look pass",
      "level": "done",
      "title": "Look up: lean back 15\u00b0 on the legs, hold, then look ahead again"
+    },
+    {
+     "label": "sit pass",
+     "level": "done",
+     "title": "Sit on the tail, then stand up again"
+    },
+    {
+     "label": "catch pass",
+     "level": "done",
+     "title": "Shoved hard backwards: the tail catches it, then it stands up"
+    },
+    {
+     "label": "estop pass",
+     "level": "done",
+     "title": "Emergency stop: sit on the tail, lock it, cut the power"
+    },
+    {
+     "label": "wag pass",
+     "level": "done",
+     "title": "Wag the tail while balancing"
     }
    ]
   },
