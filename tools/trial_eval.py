@@ -108,11 +108,20 @@ def main(design: Path) -> dict:
         return finish(m, out, 'sims')
 
     def fea():
-        r = run([PY, 'cad/studies.py', str(design), '--mesh', '3.5', '--no-anim'], 1800)
-        if r.returncode:
-            m['reasons'].append('FEA failed: ' + r.stderr.strip().splitlines()[-1][:300])
-            return
-        fs = json.loads((out / 'fea' / 'summary.json').read_text())
+        # two passes: a coarse mesh (5 mm, ~3x faster) decides clear passes and clear failures; a candidate within 15 %
+        # of a target is re-run on the fine mesh (3.5 mm), which is what counts
+        for mesh in ('5.0', '3.5'):
+            r = run([PY, 'cad/studies.py', str(design), '--mesh', mesh, '--no-anim'], 2400)
+            if r.returncode:
+                m['reasons'].append('FEA failed: ' + r.stderr.strip().splitlines()[-1][:300])
+                return
+            fs = json.loads((out / 'fea' / 'summary.json').read_text())
+            v, T = fs['verdict']['all'], fs['targets']
+            ratios = [v['min_safety_factor'] / T['sf'], (v.get('min_safety_factor_fall') or 9) / T['sf_fall'],
+                      T['wheel_deflection_mm'] / max(v['wheel_deflection_mm'], 1e-6)]
+            m['fea_mesh_mm'] = float(mesh)
+            if min(ratios) >= 1.15 or min(ratios) < 0.85:
+                break
         v = fs['verdict']['all']
         m.update(min_safety_factor=v['min_safety_factor'], min_safety_factor_fall=v.get('min_safety_factor_fall'), wheel_deflection_mm=v['wheel_deflection_mm'],
                  safety_factors={f"{x['part']} {x['case']}": x['safety_factor'] for x in fs['results']})
