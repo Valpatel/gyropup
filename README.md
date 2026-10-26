@@ -35,7 +35,9 @@ documents, and the designer at `/designer/`.
 | [`research/`](research/) | Sourced research: reference robots, actuators, wheels, power, sensors, fabrication, prior art |
 | [`catalog/`](catalog/) | Parts with prices, specs and sources ([format](catalog/SCHEMA.md)) |
 | [`designer/`](designer/) | The choose-your-own-adventure designer (web) and its model |
-| [`designs/`](designs/) | Designs; `default.json` is the starting robot |
+| [`designs/`](designs/) | Designs; `default.json` is the starting robot (one FLEXVOLT in 60 V mode) |
+| [`cad/`](cad/) | The printed parts in CadQuery, built from a design ([pictures and parts list](cad/README.md)) |
+| [`sim/`](sim/) | Physics: design → MuJoCo/URDF model, balance controller, turret, scenarios |
 | [`tools/`](tools/) | Catalog checks, material table, command-line model |
 
 Built with [cad-agent](https://github.com/Valpatel/cad-agent).

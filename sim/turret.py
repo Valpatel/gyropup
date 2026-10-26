@@ -8,7 +8,9 @@
 - **Firing:** only when settled on target (aim error and turret speed small), at up to 5 shots per second. Each shot
   takes a parked dart body (1 g, 24 m/s, air drag from MuJoCo's fluid model), places it at the muzzle along the barrel,
   and applies the reaction impulse to the launcher.
-- **Hits:** dart-to-target contacts, each dart counted once.
+- **Hits:** dart-to-target contacts, each dart counted once. A target is done when its plate is knocked over.
+- **Laser:** off at the start and while slewing between targets; on once the turret is close to on target, and it stays
+  on for a moment before the first shot (a visible "about to fire" warning). Off again when the target goes down.
 """
 from __future__ import annotations
 
@@ -35,24 +37,35 @@ class Target:
 
 
 def targets_xml(targets: List[Target]) -> str:
+    """Knock-down targets: a light foam plate (20 g) hinged along its bottom edge, its weight 4 mm forward of the hinge so
+    it rests 4° towards the shooter against a stop, on a post. A dart hit knocks it over backwards (negative hinge angle), as on a real foam-dart range."""
     out = []
     for t in targets:
         x, y, z = t.pos
         yaw = math.atan2(-y, -x)                                   # face back towards the origin
         q = (math.cos(yaw / 2), 0, 0, math.sin(yaw / 2))
+        hinge_z = z - 0.12
         out.append(f'<body name="{t.name}_stand" pos="{x} {y} 0" quat="{q[0]} {q[1]} {q[2]} {q[3]}">'
-                   f'<geom name="{t.name}" type="box" size="0.012 0.16 0.16" pos="0 0 {z}" rgba="0.96 0.96 0.94 1"/>'
-                   f'<geom name="{t.name}_ring" type="cylinder" size="0.11 0.002" pos="0.0135 0 {z}" quat="0.7071 0 0.7071 0" rgba="1 0.16 0.43 1" contype="0" conaffinity="0"/>'
-                   f'<geom name="{t.name}_bull" type="cylinder" size="0.045 0.0025" pos="0.0145 0 {z}" quat="0.7071 0 0.7071 0" rgba="0 0.94 1 1" contype="0" conaffinity="0"/>'
-                   f'<geom name="{t.name}_post" type="box" size="0.015 0.015 {z / 2 - 0.08}" pos="-0.03 0 {z / 2 - 0.08}" rgba="0.35 0.3 0.25 1"/></body>')
+                   f'<geom name="{t.name}_post" type="box" size="0.015 0.015 {hinge_z / 2}" pos="-0.03 0 {hinge_z / 2}" rgba="0.08 0.08 0.09 1"/>'
+                   f'<geom name="{t.name}_foot" type="box" size="0.08 0.08 0.006" pos="-0.03 0 0.006" rgba="0.95 0.8 0.05 1"/>'
+                   f'<body name="{t.name}_plate" pos="0 0 {hinge_z}">'
+                   f'<joint name="{t.name}_hinge" type="hinge" axis="0 1 0" range="-1.65 0.07" damping="0.0004"/>'
+                   f'<geom name="{t.name}" type="box" size="0.006 0.12 0.12" pos="0.004 0 0.12" mass="0.02" rgba="1 0.3 0 1" solref="0.01 1"/>'
+                   f'<geom name="{t.name}_ring" type="cylinder" size="0.085 0.0015" pos="0.0105 0 0.12" quat="0.7071 0 0.7071 0" rgba="0.03 0.03 0.04 1" contype="0" conaffinity="0" mass="0"/>'
+                   f'<geom name="{t.name}_bull" type="cylinder" size="0.035 0.002" pos="0.0112 0 0.12" quat="0.7071 0 0.7071 0" rgba="1 0.98 0.9 1" contype="0" conaffinity="0" mass="0"/>'
+                   f'</body></body>')
     return ''.join(out)
 
 
 def darts_xml(n: int) -> str:
-    """n parked darts in a rack off to the side, resting on the ground until fired."""
+    """n parked darts, resting off to the side until fired. Each is a light foam body with a heavier rubber tip ahead
+    of it (0.45 g + 0.55 g), so the centre of mass is forward and drag on the body keeps it flying nose-first."""
     return ''.join(f'<body name="dart_{i}" pos="{-2 - 0.05 * (i % 12)} {3 + 0.05 * (i // 12)} {DART_R + 0.0005}" quat="0.7071 0 0.7071 0">'
-                   f'<freejoint name="dart_{i}"/><geom name="dart_{i}" type="capsule" size="{DART_R} {DART_HALF}" mass="{DART_MASS}" '
-                   f'fluidshape="ellipsoid" fluidcoef="0.5 0.25 1.5 0 0" rgba="1 0.48 0.1 1" friction="0.8 0.01 0.001" solref="0.004 1"/></body>' for i in range(n))
+                   f'<freejoint name="dart_{i}"/>'
+                   f'<geom name="dart_{i}" type="capsule" size="{DART_R} {DART_HALF * 0.8}" pos="0 0 -0.004" mass="0.00045" '
+                   f'fluidshape="ellipsoid" fluidcoef="0.5 0.25 1.5 0 0" rgba="1 0.48 0.1 1" friction="0.9 0.01 0.001" solref="0.012 1"/>'
+                   f'<geom name="dart_{i}_tip" type="sphere" size="{DART_R}" pos="0 0 {DART_HALF}" mass="0.00055" rgba="0.17 0.42 1 1" '
+                   f'friction="0.9 0.01 0.001" solref="0.012 1"/></body>' for i in range(n))
 
 
 def fluid_option(xml: str) -> str:
@@ -130,10 +143,13 @@ class TurretController:
         self.base = m.body('base').id
         names = [m.body(i).name for i in range(m.nbody)]
         self.darts = [i for i, n in enumerate(names) if n.startswith('dart_')]
-        self.dart_geoms = {m.body(b).geomadr[0]: b for b in self.darts}
+        self.dart_geoms = {m.body(b).geomadr[0] + k: b for b in self.darts for k in range(m.body(b).geomnum[0])}
         self.dart_qadr = {b: m.jnt_qposadr[m.body(b).jntadr[0]] for b in self.darts}
         self.dart_vadr = {b: m.jnt_dofadr[m.body(b).jntadr[0]] for b in self.darts}
         self.target_geoms = {m.geom(t.name).id: t.name for t in self.targets if t.name in [m.geom(g).name for g in range(m.ngeom)]}
+        jn = [m.joint(j).name for j in range(m.njnt)]
+        self.hinge_q = {t.name: m.jnt_qposadr[m.joint(f'{t.name}_hinge').id] for t in self.targets if f'{t.name}_hinge' in jn}
+        self.down = {}
         self.next_dart = 0
         self.last_shot = -1e9
         self.fired = {t.name: 0 for t in self.targets}
@@ -147,6 +163,17 @@ class TurretController:
         # walking shots in: per target elevation and bearing corrections learned from where earlier darts went
         self.correction = {t.name: [0.0, 0.0] for t in self.targets}
         self.in_flight = []          # (dart body, target, muzzle position at the shot)
+        self.laser = False
+        self.laser_since = 0.0
+        self.engaged = None          # the target being aimed at
+    laser_near_rad: float = 0.08     # aim error below which the laser comes on
+    laser_warn_s: float = 0.35       # laser on at least this long before the first shot at a target
+
+    def set_laser(self, t: float, on: bool, target: Optional[str] = None):
+        if on != self.laser:
+            self.laser = on
+            self.laser_since = t
+            self.events.append({'t': round(t, 3), 'type': 'laser_on' if on else 'laser_off', **({'target': target} if target else {})})
 
     # --- aiming
     def aim(self, target: Target):
@@ -170,9 +197,13 @@ class TurretController:
         # tilt joint: + = barrel down relative to the body; world elevation = -(tilt + body pitch)
         return pan, -elev - pitch
 
+    pause_after_down_s: float = 0.6  # a beat between targets (laser off) after one goes down
+
     def current_target(self, t: float) -> Optional[Target]:
+        if self.down and t - max(self.down.values()) < self.pause_after_down_s:
+            return None
         for tg in self.targets:
-            if tg.window[0] <= t <= tg.window[1] and self.fired[tg.name] < tg.shots:
+            if tg.window[0] <= t <= tg.window[1] and self.fired[tg.name] < tg.shots and tg.name not in self.down:
                 return tg
         return None
 
@@ -191,8 +222,15 @@ class TurretController:
         d.ctrl[self.pan_a] = float(np.clip(self.kp_pan * pe - self.kd_pan * d.qvel[self.pan_v] + d.qfrc_bias[self.pan_v], -self.pan_lim, self.pan_lim))
         d.ctrl[self.tilt_a] = float(np.clip(self.kp_tilt * te - self.kd_tilt * d.qvel[self.tilt_v] + d.qfrc_bias[self.tilt_v], -self.tilt_lim, self.tilt_lim))
         self.aim_err = math.hypot(pe, te)
+        name = tg.name if tg is not None else None
+        if name != self.engaged:                                  # new target (or none): laser off while slewing
+            self.set_laser(t, False)
+            self.engaged = name
+        if tg is not None and not self.laser and self.aim_err < self.laser_near_rad and self.in_range:
+            self.set_laser(t, True, tg.name)
         settled = self.aim_err < self.tol_rad and abs(d.qvel[self.pan_v]) < 0.1 and abs(d.qvel[self.tilt_v]) < 0.1
-        if tg is not None and settled and self.in_range and t - self.last_shot >= 1.0 / self.rate_hz and self.next_dart < len(self.darts):
+        warned = self.laser and t - self.laser_since >= self.laser_warn_s
+        if tg is not None and settled and warned and self.in_range and t - self.last_shot >= 1.0 / self.rate_hz and self.next_dart < len(self.darts):
             self.fire(t, tg)
         # recoil: the reaction impulse on the launcher, spread over a 2 ms shot
         d.xfrc_applied[self.tilt_body] = 0
@@ -203,6 +241,10 @@ class TurretController:
             self.recoil_steps -= 1
         self.check_hits(t)
         self.observe()
+        for name, qa in self.hinge_q.items():                     # knocked down: the plate has flipped back
+            if name not in self.down and d.qpos[qa] < -0.8:
+                self.down[name] = round(t, 3)
+                self.events.append({'t': round(t, 3), 'type': 'down', 'target': name})
 
     def observe(self):
         """When a dart reaches its target's distance (or lands), note how far above/below and left/right it passed, and
@@ -268,5 +310,6 @@ class TurretController:
     def summary(self):
         shots = sum(1 for e in self.events if e['type'] == 'shot')
         return {'shots': shots, 'hits': len(self.hits), 'hit_rate': round(len(self.hits) / shots, 3) if shots else 0.0,
-                'by_target': {t.name: {'shots': self.fired[t.name], 'hits': self.hits.count(t.name)} for t in self.targets},
+                'by_target': {t.name: {'shots': self.fired[t.name], 'hits': self.hits.count(t.name), 'knocked_down_s': self.down.get(t.name)} for t in self.targets},
+                'knocked_down': len(self.down), 'targets': len(self.targets),
                 'out_of_range_at_times': sorted(self.unreachable)}

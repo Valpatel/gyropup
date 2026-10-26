@@ -10,6 +10,11 @@
   #design-select, #run-select { font: 12px var(--font-mono); background: var(--surface-2); color: var(--text); border: 1px solid var(--hairline); border-radius: 6px; padding: 5px 8px; max-width: 240px; }
   .stage-card h2 { margin: 0 0 4px; font-size: 13px; font-family: var(--font-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
   .stage-card .big { font-size: 22px; font-weight: 700; }
+  .stage-card .fold { cursor: pointer; display: flex; align-items: center; gap: 8px; }
+  .stage-card .fold .chev { margin-left: auto; width: 7px; height: 7px; border-right: 1.5px solid var(--muted); border-bottom: 1.5px solid var(--muted); transform: rotate(45deg); }
+  .stage-card.min .fold { margin: 0; }
+  .stage-card.min .fold .chev { transform: rotate(-45deg); }
+  .stage-card.min .hud-readouts { display: none; }
 </style>
 </head>
 <body>

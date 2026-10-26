@@ -12,7 +12,7 @@ from __future__ import annotations
 import json
 import math
 import subprocess
-from dataclasses import dataclass, field
+from dataclasses import replace, dataclass, field
 from pathlib import Path
 from typing import Callable, List, Optional
 
@@ -70,10 +70,12 @@ def ramp_profile(t, start, ramp_s, v):
     return 0.0 if t < start else min(v, v * (t - start) / ramp_s)
 
 
-# Knee-height targets within range: the barrel never points upwards (kid-safety rule), so from a ~0.6-0.7 m muzzle a
-# 24 m/s foam dart reaches 0.3 m high out to roughly 3.5-4 m. Gyropup stands tall to shoot, which lifts the muzzle.
-TARGETS = [Target('target_a', (3.0, 1.3, 0.30), 8, (2.0, 7.0)), Target('target_b', (3.6, -0.3, 0.30), 8, (5.0, 10.0)),
-           Target('target_c', (4.0, -1.6, 0.30), 8, (10.0, 16.0))]
+# Knock-down targets at knee height, within range: the barrel never points upwards (kid-safety rule), so from a
+# ~0.6-0.7 m muzzle a 24 m/s foam dart reaches 0.3 m high out to roughly 3.5-4 m. Gyropup stands tall to shoot.
+# Each target takes up to 5 darts; once its plate flips, the turret moves on.
+TARGETS = [Target('target_a', (3.0, 1.3, 0.30), 5, (2.0, 16.0)), Target('target_b', (3.4, 0.2, 0.30), 5, (2.0, 16.0)),
+           Target('target_c', (3.2, -1.0, 0.30), 5, (2.0, 16.0)), Target('target_d', (3.8, -2.0, 0.30), 5, (9.0, 16.0)),
+           Target('target_e', (4.2, 0.9, 0.30), 5, (9.0, 16.0))]
 
 SCENARIOS = {
     'stand': Scenario('stand', 'Stand and balance', 8.0, lambda t: Command(height=0.6), hold_from=2.0),
@@ -88,9 +90,11 @@ SCENARIOS = {
     'slope': Scenario('slope', 'Climb a 10° ramp and hold on it', 12.0,
                       lambda t: Command(height=0.6, speed=ramp_profile(t, 1, 1.5, 0.5) if t < 7 else 0.0),
                       terrain=ramp(10), must_reach_x=1.6, hold_from=10.0),
-    'targets': Scenario('targets', 'Target practice: three foam targets, standing then driving', 16.0,
+    'targets': Scenario('targets', 'Knock-down range: five foam targets, standing then driving', 16.0,
                         lambda t: Command(height=0.6 if t < 1.5 else 0.9, speed=ramp_profile(t, 9, 1.0, 0.35) if t < 12.5 else 0.0),
-                        targets=TARGETS, darts=24, min_hit_rate=0.5),
+                        targets=TARGETS, darts=24, min_hit_rate=0.4),
+    'look': Scenario('look', 'Look up: lean back 15° on the legs, hold, then look ahead again', 9.0,
+                     lambda t: Command(height=0.7, look_up=0.26 if 2 < t < 6 else 0.0), hold_from=8.0),
     'curb': Scenario('curb', 'Drive up a 25 mm kerb', 9.0,
                      lambda t: Command(height=0.6, speed=ramp_profile(t, 1, 1.0, 0.6) if t < 6 else 0.0),
                      terrain=curb(0.025), must_reach_x=1.5),
@@ -137,6 +141,21 @@ class Video:
         self.r.close()
 
 
+# Shooting body language (expressive, not physics: a 1 g dart at 24 m/s is a 0.024 N·s kick, nothing on a 17 kg robot,
+# and that real impulse is applied separately by the turret). While the laser is on Gyropup braces, a little lower;
+# each shot it dips and rocks back on its legs and springs up again, like a pup flinching at its own bark.
+BRACE = 0.10          # height fraction lower while aiming
+FLINCH_DIP = 0.10     # height fraction dip per shot
+FLINCH_KICK = 0.14    # rad rock back per shot
+FLINCH_TAU = 0.06     # s decay
+
+
+def shooting_stance(cmd: Command, turret, t: float) -> Command:
+    since = t - turret.last_shot
+    f = math.exp(-since / FLINCH_TAU) if 0 <= since < 6 * FLINCH_TAU else 0.0
+    return replace(cmd, height=cmd.height - (BRACE if turret.laser else 0.0), dip=cmd.dip - FLINCH_DIP * f, kick=cmd.kick + FLINCH_KICK * f)
+
+
 def run(xml_path: Path, info: dict, sc: Scenario, video: Optional[Path] = None, noise=0.0, delay_steps=0) -> dict:
     extra = sc.terrain + (targets_xml(sc.targets) if sc.targets else '') + (darts_xml(sc.darts) if sc.darts else '')
     xml = with_terrain(Path(xml_path).read_text(), extra)
@@ -157,11 +176,20 @@ def run(xml_path: Path, info: dict, sc: Scenario, video: Optional[Path] = None, 
     energy = {n: 0.0 for n in names}
     thetas, speed_err, frames = [], [], []
     link_load = {model.body(i).name: {'force_n': 0.0, 'moment_nm': 0.0} for i in range(1, model.nbody)}
-    fell_at, max_theta, x_max, v_peak = None, 0.0, -1e9, 0.0
+    fell_at, tipping_at, max_theta, x_max, v_peak = None, None, 0.0, -1e9, 0.0
     vid = Video(model, video) if video else None
     # static props (terrain, targets) as world-frame primitives, so the 3D page can draw exactly what was simulated
     robot_set = set(rb.bodies)
-    props = []
+    props, movers = [], []
+    plate_bodies = {model.body(i).name: i for i in range(model.nbody) if model.body(i).name.endswith('_plate')}
+    for name, bi in plate_bodies.items():           # target plates swing on hinges: the page animates them
+        jid = model.body_jntadr[bi]
+        q = np.zeros(4)
+        mujoco.mju_mat2Quat(q, data.xmat[bi])
+        axis = data.xaxis[jid] if jid >= 0 else np.array([0, 1, 0])
+        movers.append({'body': name, 'qpos': int(model.jnt_qposadr[jid]), 'pivot': [round(float(v), 4) for v in data.xanchor[jid]],
+                       'axis': [round(float(v), 4) for v in axis],
+                       'geoms': [model.geom(g).name for g in range(model.body_geomadr[bi], model.body_geomadr[bi] + model.body_geomnum[bi])]})
     for gi in range(model.ngeom):
         b = model.geom_bodyid[gi]
         if b in robot_set or model.body(b).name.startswith('dart_') or model.geom_type[gi] == mujoco.mjtGeom.mjGEOM_PLANE:
@@ -185,6 +213,8 @@ def run(xml_path: Path, info: dict, sc: Scenario, video: Optional[Path] = None, 
                 R = data.xmat[base].reshape(3, 3)
                 arm = R @ np.array([0, 0, p.height_m])
                 data.xfrc_applied[base, 3:] = np.cross(arm, F)
+        if turret.has and sc.targets:
+            cmd = shooting_stance(cmd, turret, t)
         st = ctl.control(data, cmd, dt)
         turret.step(t, dt)
         mujoco.mj_step(model, data)
@@ -206,6 +236,8 @@ def run(xml_path: Path, info: dict, sc: Scenario, video: Optional[Path] = None, 
                 ll['moment_nm'] = max(ll['moment_nm'], float(np.linalg.norm(f[:3])))
                 ll['force_n'] = max(ll['force_n'], float(np.linalg.norm(f[3:])))
         base_z = data.xpos[base][2]
+        if tipping_at is None and abs(th) > 0.35:
+            tipping_at = t                         # past saving, usually: the moment for an "oh no"
         if fell_at is None and (abs(th) > 0.9 or base_z < rb.r + 0.06):
             fell_at = t
         if k % frame_every == 0:
@@ -224,6 +256,8 @@ def run(xml_path: Path, info: dict, sc: Scenario, video: Optional[Path] = None, 
     tsum = turret.summary() if turret.has else None
     if sc.min_hit_rate is not None and tsum and tsum['hit_rate'] < sc.min_hit_rate:
         reasons.append(f"hit {tsum['hits']} of {tsum['shots']} shots ({tsum['hit_rate']:.0%}), needs {sc.min_hit_rate:.0%}")
+    if sc.min_hit_rate is not None and tsum and tsum.get('targets') and tsum['knocked_down'] < math.ceil(0.6 * tsum['targets']):
+        reasons.append(f"knocked down {tsum['knocked_down']} of {tsum['targets']} targets, needs {math.ceil(0.6 * tsum['targets'])}")
     if sc.must_reach_x is not None and x_max < sc.must_reach_x:
         reasons.append(f'only reached {x_max:.2f} m of {sc.must_reach_x} m')
     if sc.hold_from is not None and fell_at is None:
@@ -247,9 +281,13 @@ def run(xml_path: Path, info: dict, sc: Scenario, video: Optional[Path] = None, 
         'lqr': {k: round(float(v), 4) for k, v in ctl.lqr_info.items()},
         'frames': {'fps': FPS, 'qpos': frames, 'joint_order': ['free(7)'] + [model.joint(j).name for j in range(1, model.njnt)]},
         'terrain': sc.terrain, 'video': video.name if video else None,
-        'events': [{'t': round(p.t, 3), 'type': 'shot'} for p in sc.pushes if p.absolute] + (turret.events if turret.has else []),
+        'events': [{'t': round(p.t, 3), 'type': 'shot'} for p in sc.pushes if p.absolute] + (turret.events if turret.has else [])
+                  + [{'t': round(p.t, 3), 'type': 'push'} for p in sc.pushes if not p.absolute]
+                  + ([{'t': round(min(tipping_at or fell_at, fell_at), 3), 'type': 'fall'}] if fell_at is not None else []),
+        'fell_at': round(fell_at, 3) if fell_at is not None else None,
         'turret': tsum,
         'qpos_layout': {model.joint(j).name: int(model.jnt_qposadr[j]) for j in range(model.njnt)},
         'props': props,
+        'movers': movers,
         'physical_test': False,
     }

@@ -39,6 +39,9 @@ class Command:
     height: float = 0.6        # 0 = deepest crouch, 1 = full stand
     speed: float = 0.0         # m/s forward
     yaw_rate: float = 0.0      # rad/s, positive = turn left
+    look_up: float = 0.0       # rad: lean the body back (nose up) on the legs to look up; balance keeps the CoM over the wheels
+    dip: float = 0.0           # instant height offset (fraction), not slewed: quick expressive moves such as a shot flinch
+    kick: float = 0.0          # rad, instant lean back on the legs, not slewed (the flinch's rock back)
 
 
 @dataclass
@@ -191,7 +194,11 @@ class Controller:
             self.height = cmd.height
         step = self.gains.height_rate * dt
         self.height += max(-step, min(step, cmd.height - self.height))
-        hip_t, knee_t = rb.pose_angles(self.height)
+        hip_t, knee_t = rb.pose_angles(max(0.0, min(1.0, self.height + cmd.dip)))
+        self.look = getattr(self, 'look', 0.0)
+        dl = 0.5 * dt                                             # look-up slew, rad/s
+        self.look += max(-dl, min(dl, max(-0.1, min(0.35, cmd.look_up)) - self.look))
+        hip_t += self.look + cmd.kick                             # rotate the body back relative to the legs
         if self.K is None or abs(self.height - (self.K_height or 0)) > 0.05:
             self.K, self.lqr_info = self.lqr(data)
             self.K_height = self.height

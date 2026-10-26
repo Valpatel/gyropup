@@ -336,9 +336,14 @@ export function evaluate(design, catalog, materials, opts = {}) {
     }
     for (const [slot, label] of [['leg_actuator', 'leg actuators'], ['wheel_motor', 'wheel motors'], ['motor_driver', 'motor drivers']]) {
       const range = spec(pick(slot), 'voltage_range_v');      // braking pushes the bus above full charge
-      if (range && vFull && vFull <= range[1] && vFull > 0.92 * range[1]) {
+      if (range && vFull && vFull <= range[1] && vFull > 0.92 * range[1] && spec(pick('regen_clamp'), 'trip_voltage_v') == null) {
         check(`regen-${slot}`, 'warn', `A full battery (${vFull.toFixed(1)} V) is within 8% of the ${label}' ${range[1]} V limit; braking energy can push the bus over it. Add a brake resistor or use a lower voltage.`);
       }
+    }
+    const clampV = spec(pick('regen_clamp'), 'trip_voltage_v');
+    if (clampV && vFull) {
+      const limits = ['leg_actuator', 'wheel_motor', 'motor_driver'].map((k) => spec(pick(k), 'voltage_range_v')?.[1]).filter(Boolean);
+      if (limits.some((v) => clampV >= v)) check('regen-clamp', 'fail', `The regen clamp trips at ${clampV} V, at or above a motor limit (${Math.min(...limits)} V).`);
     }
     const lidarV = spec(pick('lidar'), 'voltage_range_v');
     if (lidarV && vFull > lidarV[1] && !pick('dcdc_12v')) {

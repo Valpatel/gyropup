@@ -167,9 +167,9 @@
   title: Two DeWalt FLEXVOLT packs in series (40 V) power Gyropup
   decision: Two FLEXVOLT packs in 20 V mode (5S3P each) wired in series give a 30–40 V bus. A Pololu D42V55F24 (24–60 V in) feeds the J501. Off-the-shelf adapters provide the latch and contacts; 10 AWG leads, a 60–80 A time-delay fuse at the battery for burst current, the adapters' blade fuses as backup. The robot enforces a 3.0 V/cell cut-off per pack and a current limit, because tool packs leave that to the tool
   why: "The user has 60 V FLEXVOLT packs and likes tool batteries (easy to swap and charge). Of the three ways to use them, the series pair is the only one with no problems: it passes all 7 simulated scenarios at 17.6 kg, with 153 min estimated runtime, 146 rpm leg speed and 8 km/h top speed. One pack in 20 V mode is too slow (73 rpm legs, 4 km/h); 60 V mode exceeds the moteus drivers' 54 V and the lidar converter's 50 V, and leaves no regeneration margin on the RS-03s."
-  status: decided
+  status: superseded by D25
   source: {kind: user, quote: "Oh dewalt batteries are actually a really good idea, I have the 60V kind..."}
-  alternatives: [8S LiFePO4 custom A123 pack (designs/lfp-8s4p.json), one FLEXVOLT in 20 V mode (designs/flexvolt-20v.json), one FLEXVOLT in 60 V mode (designs/flexvolt-60v.json)]
+  alternatives: [8S LiFePO4 custom A123 pack (designs/lfp-8s4p.json), one FLEXVOLT in 20 V mode (designs/flexvolt-20v.json), two FLEXVOLTs in series (now designs/flexvolt-2x20v.json)]
 - id: D24
   date: "2026-10-25"
   title: Assumptions to keep moving
@@ -177,3 +177,25 @@
   why: The user asked to make things up where needed and keep going until the design is realistic, fires darts in simulation and has forward lights.
   status: decided
   source: {kind: user, quote: "Can you just make things up and keep going independently until we have a realistic design that fires darts in sim, has forward facing lights, and is awesome?"}
+- id: D25
+  date: "2026-10-25"
+  title: One FLEXVOLT in 60 V mode is the default, with a regen clamp
+  decision: "designs/default.json runs from one DeWalt FLEXVOLT in 60 V mode (15S, 45–60 V) in a FLEXVOLT 60 V dock adapter. The parts that could not take 60 V are swapped: two Flipsky 75100 VESCs (14–84 V) drive the BotWheels instead of moteus (54 V max), a Mean Well DDR-30L-12 (18–75 V) makes the 12 V rail instead of the Pololu D36V50F12 (50 V max), and a Mean Well DDR-120C-24 (33.6–67.2 V) feeds the J501. A full pack sits at the RS-03's 60 V limit, so a regen clamp (brake chopper and 2 Ω resistor, ASSUMED part) trips at 58 V and the robot treats 58 V as full. The two-pack 40 V build is kept as designs/flexvolt-2x20v.json"
+  why: The user has 60 V packs and asked for this build in the simulator. One pack is simpler to swap and dock than two in series. The designer now checks the clamp against every motor's limit; the build passes 9/9 scenarios at 17.0 kg (17.5 kg with the CAD part masses).
+  status: decided
+  source: {kind: user, quote: "Gyropup on one flexvolt 60v and replay target practice should be the sim default"}
+  alternatives: [two FLEXVOLTs in series, 40 V (designs/flexvolt-2x20v.json), one FLEXVOLT in 20 V mode (designs/flexvolt-20v.json)]
+- id: D26
+  date: "2026-10-25"
+  title: Knock-down targets, nose-first darts, and a laser that warns before firing
+  decision: "Targets are 20 g foam plates hinged at the bottom on posts; a hit knocks them over and the turret moves on (5 targets, pass = 60 % knocked down and 40 % of darts on target). Darts have a heavier rubber tip (0.55 g of 1 g) so they fly nose-first. The laser is off at the start and while slewing between targets, comes on when the turret is within 0.08 rad of its aim, and stays on for 0.35 s before the first shot. A 0.6 s pause follows each knock-down. The simulator's laser has AUTO / ON / OFF modes"
+  why: The user said the darts looked cheesy (they tumbled and nothing reacted to a hit) and asked for the laser to come on only when getting ready to fire. A laser before every burst is also a sensible visible warning for kids.
+  status: decided
+  source: {kind: user, quote: "laser should be toggleable, toggle on when getting ready to fire, toggle off in-between targets and at stat."}
+- id: D27
+  date: "2026-10-25"
+  title: Gyropup's voice comes from Moxie's stack, with browser fallbacks
+  decision: "designer/character/talk.js gives speech bubbles over the head, spoken lines, listening and a small brain. It uses Moxie's local Piper TTS (:8081) and Whisper STT (:8082) when they run, else the browser's speech synthesis and Web Speech recognition; an OpenAI-compatible endpoint or local Ollama when reachable, else a scripted kid-safe brain. Sound effects (flywheels, shots, hits, knock-downs, laser, servos, reload) are synthesised in designer/sfx.js"
+  why: The user asked for Gyropup to talk like Moxie, with word bubbles and STT, and for cool sound effects. Adapting our own MIT Moxie code keeps one voice stack; the fallbacks keep the page working with nothing else running.
+  status: decided
+  source: {kind: user, quote: "gyropup should talk like Moxie does as well and have word bubbles, Moxie has STT"}

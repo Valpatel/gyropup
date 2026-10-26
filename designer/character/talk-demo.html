@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gyropup Talk Demo</title>
+<link rel="stylesheet" href="../kit/hud.css">
+<script type="importmap">{"imports": {"three": "../kit/vendor/three/three.module.min.js", "three/addons/": "../kit/vendor/three/addons/"}}</script>
+<style>
+  #panel .body { display: grid; gap: 8px; }
+  #panel .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  #panel .hud-btn { width: 100%; }
+  #svc { white-space: pre-line; font: 11px var(--font-mono); color: var(--muted); }
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div id="hud">
+  <header id="topbar">
+    <span class="glyph"></span><h1>Gyropup talk</h1>
+    <span class="hud-tag">character/talk.js demo</span>
+    <span class="spacer"></span>
+  </header>
+  <main id="stage-overlay">
+    <div class="hud-hint">DRAG · ORBIT // SCROLL · ZOOM // RIGHT-DRAG · PAN</div>
+  </main>
+  <aside id="panel">
+    <details class="hud-section" open>
+      <summary><span class="tick"></span>Sim events<span class="note">react(event)</span></summary>
+      <div class="body grid2" id="events"></div>
+    </details>
+    <details class="hud-section" open>
+      <summary><span class="tick"></span>Say<span class="note">say(text, {mood})</span></summary>
+      <div class="body grid2" id="moods"></div>
+    </details>
+    <details class="hud-section" open>
+      <summary><span class="tick"></span>Services</summary>
+      <div class="body"><button class="hud-btn" id="detect">Detect services</button><div id="svc">not checked yet</div></div>
+    </details>
+  </aside>
+</div>
+<script type="module">
+  import * as THREE from 'three';
+  import { createStage } from '../kit/stage.js';
+  import { mountTalk } from './talk.js';
+
+  const stage = createStage(document.getElementById('app'), { height: 0.4 });
+
+  // a stand-in pup: a body and a cube head whose colour follows the eye mood
+  const body = new THREE.Mesh(new THREE.BoxGeometry(0.16, 0.14, 0.12), new THREE.MeshStandardMaterial({ color: 0x2b3442, metalness: 0.3, roughness: 0.5 }));
+  body.position.y = 0.16; body.castShadow = true;
+  const head = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.09, 0.1), new THREE.MeshStandardMaterial({ color: 0x3a4658, emissive: 0x00f0ff, emissiveIntensity: 0.15 }));
+  head.position.y = 0.13; head.castShadow = true;
+  body.add(head);
+  for (const x of [-0.1, 0.1]) {
+    const w = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, 0.03, 32), new THREE.MeshStandardMaterial({ color: 0x111418 }));
+    w.rotation.z = Math.PI / 2; w.position.set(x, -0.1, 0); w.castShadow = true; body.add(w);
+  }
+  stage.root.add(body);
+
+  const moodColor = { neutral: 0x00f0ff, happy: 0x05ffa1, curious: 0x55e9ff, sleepy: 0x3b4a6b, sad: 0x4a6bff, grumpy: 0xff2a6d, surprised: 0xfcee0a, focused: 0xa855f7, thinking: 0x8892a4 };
+  const eyes = { set(n) { head.material.emissive.setHex(moodColor[n] ?? 0x00f0ff); head.material.emissiveIntensity = 0.35; document.body.dataset.mood = n; } };
+
+  stage.onFrame((t) => { body.position.x = Math.sin(t * 0.6) * 0.05; body.rotation.z = Math.sin(t * 1.7) * 0.03; });
+  stage.start();
+
+  const talk = mountTalk({ stage, eyes, getHead: () => head, root: '../../' });
+  window.__talk = talk;
+
+  const btn = (parent, label, fn) => { const b = document.createElement('button'); b.className = 'hud-btn'; b.textContent = label; b.onclick = fn; parent.appendChild(b); };
+  for (const ev of ['hello', 'fire', 'hit', 'down', 'miss', 'reload', 'fall', 'low_battery']) btn(document.getElementById('events'), ev, () => talk.react(ev));
+  const lines = { happy: 'Wheee! That was fun!', curious: 'Ooh, what is that?', sleepy: 'Yawn... charger time?', grumpy: 'Hey! Darts at targets only!', surprised: 'Whoa! Did you see that?', focused: 'Locking on to the target...' };
+  for (const [mood, line] of Object.entries(lines)) btn(document.getElementById('moods'), mood, () => talk.say(line, { mood }));
+  document.getElementById('detect').onclick = async () => {
+    const s = await talk.detect(true);
+    document.getElementById('svc').textContent =
+      `voice: ${s.tts.ok ? 'Piper ' + s.tts.base : s.tts.name}\nears:  ${s.stt.ok ? 'Whisper ' + s.stt.base : s.stt.name}\nbrain: ${s.llm.ok ? s.llm.base + ' ' + s.llm.model : 'scripted'}`;
+  };
+
+  setTimeout(() => talk.say('Hi! I am Gyropup. Want to play a target game?', { mood: 'happy', hold: 60000 }), 400);
+</script>
+</body>
+</html>

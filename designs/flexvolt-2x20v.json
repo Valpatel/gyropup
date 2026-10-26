@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "name": "Gyropup on one FLEXVOLT (60 V mode)",
+  "name": "Gyropup on two FLEXVOLTs (2 × 20 V in series)",
   "size": "sturdy",
   "geometry": {
     "thigh_mm": 200,
@@ -31,21 +31,22 @@
     "depth_front": "realsense-d435",
     "depth_rear": "realsense-d435",
     "eyes": "waveshare-0-71-dualeye-lcd",
+    "headlights": "assumed-led-pod-pair-20w",
     "imu": "vectornav-vn-100-rugged",
     "balance_mcu": null,
     "can_transceiver": null,
     "leg_actuator": "robstride-rs-03",
     "wheel_motor": "odrive-botwheel",
     "motor_driver": "mjbots-moteus-n1",
-    "battery": "dewalt-dcb609",
-    "dcdc_compute": "meanwell-ddr-120c-24",
+    "battery": "dewalt-2x-dcb609-20v-series",
+    "dcdc_compute": "pololu-d42v55f24",
     "dcdc_12v": "pololu-d36v50f12",
     "power_switch": "flipsky-antispark-switch-pro-200a",
     "fuse": "blue-sea-5191-mrbf-terminal-fuse-block",
     "estop": "generic-hb2-es544-22mm-estop",
     "contactor": "altran-alev100-bs",
     "can_adapter": null,
-    "battery_adapter": "terrafirma-flexvolt-60v-dock-adapter"
+    "battery_adapter": "generic-dewalt-20v-power-wheels-adapter-fuse-switch"
   },
   "battery_count": 1,
   "materials": {
@@ -67,7 +68,7 @@
   "character": {
     "color": "#f5b82e"
   },
-  "notes": "DeWalt FLEXVOLT option (the user has 60 V FLEXVOLT packs). A FLEXVOLT pack is three 5-cell strings that the adapter switches between 20 V (5S3P) and 60 V (15S). Tool packs leave under-voltage and current limits to the tool, so the robot must enforce a 3.0 V/cell cut-off and a current limit.",
+  "notes": "Default: two DeWalt FLEXVOLT packs (the user has 60 V FLEXVOLTs) in 20 V mode, wired in series for a 30-40 V bus. A Pololu D42V55F24 (24-60 V in) feeds the J501. Tool packs leave under-voltage and current limits to the tool, so the robot enforces 3.0 V/cell per pack and a current limit. Power path: the adapters are latch and contacts only; 10 AWG from the pack terminals to the power board; a 60-80 A time-delay fuse (MRBF) at the battery for burst current; the adapters' own blade fuses stay as a backstop. A microcontroller with CAN runs the 1 kHz balance loop and owns the motor CAN bus; the VN-100 Rugged is the balance IMU; the contactor cuts motor power only.",
   "balance_controller": {
     "requirements": [
       "steady 1 kHz loop independent of Linux",
@@ -79,7 +80,7 @@
     "options": [
       "a microcontroller with CAN from the user's own boards (to be named)"
     ],
-    "status": "open: waiting for the user's microcontroller list"
+    "status": "assumed: WeAct STM32G474 core with two CAN transceivers (D7), until the user names a board"
   },
   "lidar_mount": "under",
   "head_payload": {
@@ -93,5 +94,9 @@
     "magazine_shots": 24,
     "magazine": "drum or belt, swappable at the reload station (the dock)",
     "burst_rate_hz": 10
+  },
+  "part_qty": {
+    "battery_adapter": 2,
+    "can_transceiver": 2
   }
 }

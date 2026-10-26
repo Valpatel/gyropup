@@ -1,0 +1,132 @@
+{
+ "tray": {
+  "degenerate_tessellation_faces_removed": 0,
+  "cad_valid": true,
+  "solid_count": 1,
+  "watertight": true,
+  "print_bounds_mm": [
+   181.0,
+   206.0,
+   104.0
+  ],
+  "volume_cm3": 490.885,
+  "qty": 1
+ },
+ "hip_yoke": {
+  "degenerate_tessellation_faces_removed": 0,
+  "cad_valid": true,
+  "solid_count": 1,
+  "watertight": true,
+  "print_bounds_mm": [
+   124.0,
+   140.0,
+   168.0
+  ],
+  "volume_cm3": 429.089,
+  "qty": 2
+ },
+ "thigh": {
+  "degenerate_tessellation_faces_removed": 0,
+  "cad_valid": true,
+  "solid_count": 1,
+  "watertight": true,
+  "print_bounds_mm": [
+   199.413,
+   199.413,
+   18.0
+  ],
+  "volume_cm3": 163.883,
+  "qty": 2
+ },
+ "shin": {
+  "degenerate_tessellation_faces_removed": 0,
+  "cad_valid": true,
+  "solid_count": 1,
+  "watertight": true,
+  "print_bounds_mm": [
+   216.7,
+   201.418,
+   18.0
+  ],
+  "volume_cm3": 164.841,
+  "qty": 2
+ },
+ "knee_crank": {
+  "degenerate_tessellation_faces_removed": 0,
+  "cad_valid": true,
+  "solid_count": 1,
+  "watertight": true,
+  "print_bounds_mm": [
+   78.983,
+   55.996,
+   10.0
+  ],
+  "volume_cm3": 24.169,
+  "qty": 2
+ },
+ "pushrod": {
+  "degenerate_tessellation_faces_removed": 0,
+  "cad_valid": true,
+  "solid_count": 1,
+  "watertight": true,
+  "print_bounds_mm": [
+   165.421,
+   165.421,
+   8.0
+  ],
+  "volume_cm3": 23.874,
+  "qty": 2
+ },
+ "head_saddle": {
+  "degenerate_tessellation_faces_removed": 0,
+  "cad_valid": true,
+  "solid_count": 1,
+  "watertight": true,
+  "print_bounds_mm": [
+   149.999,
+   206.397,
+   26.0
+  ],
+  "volume_cm3": 92.069,
+  "qty": 1
+ },
+ "face": {
+  "degenerate_tessellation_faces_removed": 0,
+  "cad_valid": true,
+  "solid_count": 1,
+  "watertight": true,
+  "print_bounds_mm": [
+   76.0,
+   140.0,
+   14.0
+  ],
+  "volume_cm3": 56.023,
+  "qty": 1
+ },
+ "camera_cradle": {
+  "degenerate_tessellation_faces_removed": 0,
+  "cad_valid": true,
+  "solid_count": 1,
+  "watertight": true,
+  "print_bounds_mm": [
+   35.0,
+   106.0,
+   30.0
+  ],
+  "volume_cm3": 28.217,
+  "qty": 2
+ },
+ "lidar_hanger": {
+  "degenerate_tessellation_faces_removed": 0,
+  "cad_valid": true,
+  "solid_count": 1,
+  "watertight": true,
+  "print_bounds_mm": [
+   103.983,
+   103.759,
+   8.0
+  ],
+  "volume_cm3": 63.853,
+  "qty": 1
+ }
+}

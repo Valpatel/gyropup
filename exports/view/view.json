@@ -1,0 +1,408 @@
+{
+ "title": "Gyropup",
+ "units": "mm",
+ "up": "z",
+ "parts": [
+  {
+   "name": "battery_1",
+   "id": "",
+   "file": "battery_1.stl",
+   "color": "#fdb913",
+   "visible": true,
+   "explode": null,
+   "bounds_mm": [
+    -78.51,
+    -55.01,
+    -19.01,
+    78.51,
+    55.01,
+    73.01
+   ]
+  },
+  {
+   "name": "camera_cradle_front",
+   "id": "",
+   "file": "camera_cradle_front.stl",
+   "color": "#3b3f46",
+   "visible": true,
+   "explode": null,
+   "bounds_mm": [
+    90.5,
+    -53.0,
+    -25.0,
+    125.5,
+    53.0,
+    5.0
+   ]
+  },
+  {
+   "name": "camera_cradle_rear",
+   "id": "",
+   "file": "camera_cradle_rear.stl",
+   "color": "#3b3f46",
+   "visible": true,
+   "explode": null,
+   "bounds_mm": [
+    -125.5,
+    -53.0,
+    -25.0,
+    -90.5,
+    53.0,
+    5.0
+   ]
+  },
+  {
+   "name": "camera_front",
+   "id": "",
+   "file": "camera_front.stl",
+   "color": "#2a2d33",
+   "visible": true,
+   "explode": null,
+   "bounds_mm": [
+    95.0,
+    -45.0,
+    -20.0,
+    120.0,
+    45.0,
+    5.0
+   ]
+  },
+  {
+   "name": "camera_rear",
+   "id": "",
+   "file": "camera_rear.stl",
+   "color": "#2a2d33",
+   "visible": true,
+   "explode": null,
+   "bounds_mm": [
+    -120.0,
+    -45.0,
+    -20.0,
+    -95.0,
+    45.0,
+    5.0
+   ]
+  },
+  {
+   "name": "face",
+   "id": "",
+   "file": "face.stl",
+   "color": "#2f343c",
+   "visible": true,
+   "explode": null,
+   "bounds_mm": [
+    90.49,
+    -70.01,
+    -23.01,
+    104.52,
+    70.01,
+    53.01
+   ]
+  },
+  {
+   "name": "head_saddle",
+   "id": "",
+   "file": "head_saddle.stl",
+   "color": "#3b3f46",
+   "visible": true,
+   "explode": null,
+   "bounds_mm": [
+    -75.01,
+    -103.21,
+    190.99,
+    75.01,
+    103.21,
+    217.07
+   ]
+  },
+  {
+   "name": "hip_motor_l",
+   "id": "",
+   "file": "hip_motor_l.stl",
+   "color": "#9aa3ad",
+   "visible": true,
+   "explode": null,
+   "bounds_mm": [
+    -53.0,
+    111.93,
+    -53.05,
+    53.07,
+    168.07,
+    53.05
+   ]
+  },
+  {
+   "name": "hip_motor_r",
+   "id": "",
+   "file": "hip_motor_r.stl",
+   "color": "#9aa3ad",
+   "visible": true,
+   "explode": null,
+   "bounds_mm": [
+    -53.0,
+    -168.07,
+    -53.05,
+    53.07,
+    -111.93,
+    53.05
+   ]
+  },
+  {
+   "name": "hip_yoke_l",
+   "id": "",
+   "file": "hip_yoke_l.stl",
+   "color": "#3b3f46",
+   "visible": true,
+   "explode": null,
+   "bounds_mm": [
+    -62.0,
+    103.0,
+    -62.0,
+    62.0,
+    271.0,
+    78.0
+   ]
+  },
+  {
+   "name": "hip_yoke_r",
+   "id": "",
+   "file": "hip_yoke_r.stl",
+   "color": "#3b3f46",
+   "visible": true,
+   "explode": null,
+   "bounds_mm": [
+    -62.0,
+    -271.0,
+    -62.0,
+    62.0,
+    -103.0,
+    78.0
+   ]
+  },
+  {
+   "name": "j501_box",
+   "id": "",
+   "file": "j501_box.stl",
+   "color": "#e8892b",
+   "visible": true,
+   "explode": null,
+   "bounds_mm": [
+    -90.52,
+    -103.02,
+    78.98,
+    90.52,
+    103.02,
+    191.02
+   ]
+  },
+  {
+   "name": "knee_crank_l",
+   "id": "",
+   "file": "knee_crank_l.stl",
+   "color": "#8a9099",
+   "visible": true,
+   "explode": null,
+   "bounds_mm": [
+    -28.03,
+    184.97,
+    -28.03,
+    51.0,
+    195.03,
+    28.03
+   ]
+  },
+  {
+   "name": "knee_crank_r",
+   "id": "",
+   "file": "knee_crank_r.stl",
+   "color": "#8a9099",
+   "visible": true,
+   "explode": null,
+   "bounds_mm": [
+    -28.03,
+    -195.03,
+    -28.03,
+    51.0,
+    -184.97,
+    28.03
+   ]
+  },
+  {
+   "name": "knee_motor_l",
+   "id": "",
+   "file": "knee_motor_l.stl",
+   "color": "#9aa3ad",
+   "visible": true,
+   "explode": null,
+   "bounds_mm": [
+    -53.0,
+    196.93,
+    -53.05,
+    53.07,
+    253.07,
+    53.05
+   ]
+  },
+  {
+   "name": "knee_motor_r",
+   "id": "",
+   "file": "knee_motor_r.stl",
+   "color": "#9aa3ad",
+   "visible": true,
+   "explode": null,
+   "bounds_mm": [
+    -53.0,
+    -253.07,
+    -53.05,
+    53.07,
+    -196.93,
+    53.05
+   ]
+  },
+  {
+   "name": "lidar",
+   "id": "",
+   "file": "lidar.stl",
+   "color": "#2a2d33",
+   "visible": true,
+   "explode": null,
+   "bounds_mm": [
+    -51.65,
+    -51.7,
+    -105.06,
+    51.71,
+    51.7,
+    -33.24
+   ]
+  },
+  {
+   "name": "lidar_hanger",
+   "id": "",
+   "file": "lidar_hanger.stl",
+   "color": "#3b3f46",
+   "visible": true,
+   "explode": null,
+   "bounds_mm": [
+    -52.05,
+    -51.82,
+    -33.06,
+    52.05,
+    52.0,
+    -24.94
+   ]
+  },
+  {
+   "name": "shin_l",
+   "id": "",
+   "file": "shin_l.stl",
+   "color": "#f5b82e",
+   "visible": true,
+   "explode": null,
+   "bounds_mm": [
+    -161.21,
+    187.96,
+    -327.12,
+    36.03,
+    206.04,
+    -107.09
+   ]
+  },
+  {
+   "name": "shin_r",
+   "id": "",
+   "file": "shin_r.stl",
+   "color": "#f5b82e",
+   "visible": true,
+   "explode": null,
+   "bounds_mm": [
+    -161.21,
+    -206.04,
+    -327.12,
+    36.03,
+    -187.96,
+    -107.09
+   ]
+  },
+  {
+   "name": "thigh_l",
+   "id": "",
+   "file": "thigh_l.stl",
+   "color": "#f5b82e",
+   "visible": true,
+   "explode": null,
+   "bounds_mm": [
+    -159.2,
+    167.96,
+    -167.56,
+    36.03,
+    186.04,
+    36.03
+   ]
+  },
+  {
+   "name": "thigh_r",
+   "id": "",
+   "file": "thigh_r.stl",
+   "color": "#f5b82e",
+   "visible": true,
+   "explode": null,
+   "bounds_mm": [
+    -159.2,
+    -186.04,
+    -167.56,
+    36.03,
+    -167.96,
+    36.03
+   ]
+  },
+  {
+   "name": "tray",
+   "id": "",
+   "file": "tray.stl",
+   "color": "#2f343c",
+   "visible": true,
+   "explode": null,
+   "bounds_mm": [
+    -90.51,
+    -103.01,
+    -25.01,
+    90.51,
+    103.01,
+    79.01
+   ]
+  },
+  {
+   "name": "wheel_l",
+   "id": "",
+   "file": "wheel_l.stl",
+   "color": "#1d2025",
+   "visible": true,
+   "explode": null,
+   "bounds_mm": [
+    -85.5,
+    205.89,
+    -376.66,
+    85.61,
+    250.71,
+    -205.5
+   ]
+  },
+  {
+   "name": "wheel_r",
+   "id": "",
+   "file": "wheel_r.stl",
+   "color": "#1d2025",
+   "visible": true,
+   "explode": null,
+   "bounds_mm": [
+    -85.5,
+    -250.71,
+    -376.66,
+    85.61,
+    -205.89,
+    -205.5
+   ]
+  }
+ ],
+ "skipped": []
+}

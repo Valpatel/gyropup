@@ -212,7 +212,8 @@ export function buildRobot(design, catalog, { eyes } = {}) {
       can.rotation.x = Math.PI / 2;
       const lens = new THREE.Mesh(new THREE.CircleGeometry(15 * M, 24), new THREE.MeshStandardMaterial({ color: 0xffffff, emissive: 0xfff4d6, emissiveIntensity: 1.6 }));
       lens.position.z = 11.2 * M;
-      const spot = new THREE.SpotLight(0xfff1d8, 70, 12, 0.42, 0.45, 1.6);   // physical units: a bright LED pod
+      const spot = new THREE.SpotLight(0xfff1d8, 70, 12, 0.42, 0.45, 1.6);   // physical units: a bright LED pod (pages dim it in daylight)
+      spot.userData.full = 70;
       spot.position.z = 12 * M;
       const aimAt = new THREE.Object3D();
       aimAt.position.set(0, -0.35, 3);

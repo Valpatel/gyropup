@@ -133,6 +133,13 @@ export const CHAPTERS = [
     slot: 'dcdc_12v', filter: (i) => i.category === 'dcdc' && /12/.test(i.model + i.id), optional: true,
   },
   {
+    id: 'regen_clamp', title: 'Somewhere for braking energy to go',
+    when: (d) => Boolean(d.parts.battery),
+    story: () => `When Gyropup brakes, its motors push energy back into the battery and the voltage rises. A full 60 V pack `
+      + `has no room left, so a regen clamp burns the extra in a resistor before it reaches the motors' limit.`,
+    slot: 'regen_clamp', filter: (i) => i.specs?.function === 'regen_clamp', optional: true,
+  },
+  {
     id: 'safety', title: 'A big red button',
     story: () => `Every gyropup has an emergency stop that cuts motor power while the computer keeps running.`,
     slot: 'estop', filter: (i) => i.category === 'estop', optional: true,

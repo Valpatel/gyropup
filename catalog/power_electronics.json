@@ -220,9 +220,9 @@
    "continuous_discharge_a": null,
    "peak_discharge_a": null,
    "mass_g": 1565,
-   "length_mm": 193,
+   "length_mm": 157,
    "width_mm": 92,
-   "height_mm": 206,
+   "height_mm": 110,
    "connector": "DeWalt FLEXVOLT slide rail",
    "chemistry": "Li-ion (15 cells)",
    "bms": false,
@@ -237,7 +237,7 @@
    "https://www.linenplus.ca/en/dewalt-flexvoltr-battery-20-v-60-v-9-ah-lithium-ion-dcb609.html"
   ],
   "confidence": "product page",
-  "notes": "180 Wh published. Weight 3.2-3.45 lb (product page); 1565 g = 3.45 lb upper figure. Dims 7.6x3.625x8.1 in from Linen Plus (Canada) - the 8.1 in height looks large, verify. 9.0 Ah at 20V / 3.0 Ah at 60V. 60 V mode needs DC-DC for J501. Power-tool pack: typically no discharge-cutoff MOSFET in the pack; the tool reads the pack and does UV cutoff (estimate, not published). Robot MUST implement its own UVLO (~15 V for 5S, ~3.0 V/cell) and current limit. Continuous current not published by manufacturer. Needs a dock/adapter; latch gives fast hot-swap. Cell format/parallel count not published in fetched sources; series count inferred from brand voltage class (estimate).",
+  "notes": "180 Wh published. Weight 3.2-3.45 lb (product page); 1565 g = 3.45 lb upper figure. Dims 7.6x3.625x8.1 in from Linen Plus (Canada) - the 8.1 in height looks large, verify. 9.0 Ah at 20V / 3.0 Ah at 60V. 60 V mode needs DC-DC for J501. Power-tool pack: typically no discharge-cutoff MOSFET in the pack; the tool reads the pack and does UV cutoff (estimate, not published). Robot MUST implement its own UVLO (~15 V for 5S, ~3.0 V/cell) and current limit. Continuous current not published by manufacturer. Needs a dock/adapter; latch gives fast hot-swap. Cell format/parallel count not published in fetched sources; series count inferred from brand voltage class (estimate). Dimensions corrected 2026-10-25 to 157 x 92 x 110 mm (the same pack as the 20 V-mode entries; 193 x 92 x 206 was a package size).",
   "preferred": true
  },
  {
@@ -385,7 +385,7 @@
   "vendor": "Makita",
   "model": "BL1850B 18V LXT 5.0Ah",
   "price_usd": 169.0,
-  "price_note": "The Power Tool Store (thepowertoolstore.com), Shopify store JSON read 2026-10-25 (list); UK \u00a365-\u00a380 at Tuckwells/Selco",
+  "price_note": "The Power Tool Store (thepowertoolstore.com), Shopify store JSON read 2026-10-25 (list); UK £65-£80 at Tuckwells/Selco",
   "price_checked": "2026-10-25",
   "buy": [
    {
@@ -4495,7 +4495,7 @@
   "vendor": "MyActuator",
   "model": "CAN Adapter Analyzer (USBCAN-Z)",
   "price_usd": 71.25,
-  "price_note": "RobotShop US sale price including tariffs, in stock (46 units). UK \u00a355.38.",
+  "price_note": "RobotShop US sale price including tariffs, in stock (46 units). UK £55.38.",
   "price_checked": "2026-10-25",
   "buy": [
    {
@@ -4529,7 +4529,7 @@
   "vendor": "Innomaker",
   "model": "USB2CAN (isolated, STM32F0)",
   "price_usd": null,
-  "price_note": "No USD price found today. RS UK lists an Innomaker USB-to-CAN converter (MS124) at \u00a356.99 ex VAT. Innomaker's own shop shows no price.",
+  "price_note": "No USD price found today. RS UK lists an Innomaker USB-to-CAN converter (MS124) at £56.99 ex VAT. Innomaker's own shop shows no price.",
   "price_checked": "2026-10-25",
   "buy": [
    {
@@ -4645,7 +4645,7 @@
   "vendor": "Linux Automation GmbH",
   "model": "candleLight FD",
   "price_usd": null,
-  "price_note": "\u20ac46.00 excl. VAT (\u20ac54.74 incl. 19% VAT), 'Available'. No USD listing.",
+  "price_note": "€46.00 excl. VAT (€54.74 incl. 19% VAT), 'Available'. No USD listing.",
   "price_checked": "2026-10-25",
   "buy": [
    {
@@ -4893,7 +4893,7 @@
    "https://invensense.tdk.com/products/motion-tracking/6-axis/icm-42688-p/"
   ],
   "confidence": "product page",
-  "notes": "The best-value raw gyro for balance (2.8 mdps/\u221aHz, used in most flight controllers). Max ODR 32 kHz is from the TDK datasheet, not re-checked today. Breakouts are expensive right now. A $50-80 flight controller with the same chip and an MCU is better value."
+  "notes": "The best-value raw gyro for balance (2.8 mdps/√Hz, used in most flight controllers). Max ODR 32 kHz is from the TDK datasheet, not re-checked today. Breakouts are expensive right now. A $50-80 flight controller with the same chip and an MCU is better value."
  },
  {
   "id": "tdk-dk-45686",
@@ -4901,7 +4901,7 @@
   "vendor": "TDK InvenSense",
   "model": "ICM-45686 DK-45686 dev kit",
   "price_usd": 99.45,
-  "price_note": "DigiKey US, 1 unit, 13 in stock (8-week lead). The bare EV_ICM-45686 board is \u20ac27.84 at DigiKey AT, out of stock.",
+  "price_note": "DigiKey US, 1 unit, 13 in stock (8-week lead). The bare EV_ICM-45686 board is €27.84 at DigiKey AT, out of stock.",
   "price_checked": "2026-10-25",
   "buy": [
    {
@@ -4935,7 +4935,7 @@
   "vendor": "Seeed Studio",
   "model": "Grove 6-Axis Accelerometer & Gyroscope (BMI088)",
   "price_usd": 28.15,
-  "price_note": "seeedstudio.com list price; stock status unclear on page. Switch Science JP \u00a55,264.",
+  "price_note": "seeedstudio.com list price; stock status unclear on page. Switch Science JP ¥5,264.",
   "price_checked": "2026-10-25",
   "buy": [
    {
@@ -4963,7 +4963,7 @@
    "https://www.bosch-sensortec.com/media/boschsensortec/downloads/datasheets/bst-bmi088-ds001.pdf"
   ],
   "confidence": "datasheet",
-  "notes": "BMI088 is used in RoboMaster, PX4 and early pi3hats because it is vibration-robust and has a \u00b124 g accel. Gyro noise is 0.014 \u00b0/s/\u221aHz, about 5x the ICM-42688. The Grove board is I2C-only, so prefer an SPI breakout for a 1 kHz loop."
+  "notes": "BMI088 is used in RoboMaster, PX4 and early pi3hats because it is vibration-robust and has a ±24 g accel. Gyro noise is 0.014 °/s/√Hz, about 5x the ICM-42688. The Grove board is I2C-only, so prefer an SPI breakout for a 1 kHz loop."
  },
  {
   "id": "adafruit-ism330dhcx-4502",
@@ -5025,7 +5025,7 @@
    "max_rate_note": "800 Hz IMU, 400 Hz attitude",
    "gyro_noise_mdps_per_rthz": 3.5,
    "bias_stability_dph": 5,
-   "bias_stability_note": "<10 \u00b0/h, 5 \u00b0/h typ.",
+   "bias_stability_note": "<10 °/h, 5 °/h typ.",
    "accel_noise_ug_per_rthz": 140
   },
   "cad": {
@@ -5037,7 +5037,7 @@
    "https://vectornav.com/resources/purchasing-guides/vn-100-purchasing-guide"
   ],
   "confidence": "product page",
-  "notes": "Calibrated tactical-lite AHRS. Its gyro noise is no better than an ICM-42688 (3.5 vs 2.8 mdps/\u221aHz). What you pay for is calibration, temperature compensation and bias stability. Overkill for balance, where drift is corrected by gravity.",
+  "notes": "Calibrated tactical-lite AHRS. Its gyro noise is no better than an ICM-42688 (3.5 vs 2.8 mdps/√Hz). What you pay for is calibration, temperature compensation and bias stability. Overkill for balance, where drift is corrected by gravity.",
   "preferred": false
  },
  {
@@ -5046,7 +5046,7 @@
   "vendor": "MicroStrain by HBK",
   "model": "3DM-CV7-AHRS",
   "price_usd": null,
-  "price_note": "No US price captured. Mouser AT \u20ac574.24 at qty 1 (about 46 in stock); Mouser SG $928.13 (likely SGD); Mouser CA $1,034.97 (likely CAD).",
+  "price_note": "No US price captured. Mouser AT €574.24 at qty 1 (about 46 in stock); Mouser SG $928.13 (likely SGD); Mouser CA $1,034.97 (likely CAD).",
   "price_checked": "2026-10-25",
   "buy": [
    {
@@ -5071,7 +5071,7 @@
    "https://www.mouser.at/c/semiconductors/sensor-ics/imus-inertial-measurement-units"
   ],
   "confidence": "seller listing",
-  "notes": "Tactical-grade OEM AHRS (bias around 1.5 \u00b0/h class per marketing; datasheet blocked today, so specs are null). About \u20ac574 is the cheapest 'real' AHRS here. Only worth it if you want dead-reckoning heading, not for balance."
+  "notes": "Tactical-grade OEM AHRS (bias around 1.5 °/h class per marketing; datasheet blocked today, so specs are null). About €574 is the cheapest 'real' AHRS here. Only worth it if you want dead-reckoning heading, not for balance."
  },
  {
   "id": "xsens-mti-3-dk",
@@ -5079,7 +5079,7 @@
   "vendor": "Movella (Xsens)",
   "model": "MTi-3 Development Kit",
   "price_usd": null,
-  "price_note": "No USD price found. RS UK \u00a3408.17 ex VAT (MTi-3-5A-DK).",
+  "price_note": "No USD price found. RS UK £408.17 ex VAT (MTi-3-5A-DK).",
   "price_checked": "2026-10-25",
   "buy": [
    {
@@ -5111,7 +5111,7 @@
   "vendor": "Movella (Xsens)",
   "model": "MTi-630 AHRS Development Kit",
   "price_usd": null,
-  "price_note": "No USD price found. RS UK \u00a3940.57 ex VAT, 2 in stock; RS IE \u20ac1,128.68 ex VAT.",
+  "price_note": "No USD price found. RS UK £940.57 ex VAT, 2 in stock; RS IE €1,128.68 ex VAT.",
   "price_checked": "2026-10-25",
   "buy": [
    {
@@ -5201,7 +5201,7 @@
    "https://witmotion-sensor.com/products/accelerometer-with-self-recovering-magnetic-ield-chip-inclinometer-hwt905-ttl-mpu-9250"
   ],
   "confidence": "product page",
-  "notes": "Rugged IP67 AHRS with a CAN option that could share the leg bus. Output rate not on the product page; the WitMotion family is typically \u2264200 Hz, so verify before using it in the loop."
+  "notes": "Rugged IP67 AHRS with a CAN option that could share the leg bus. Output rate not on the product page; the WitMotion family is typically ≤200 Hz, so verify before using it in the loop."
  },
  {
   "id": "matek-h743-slim-v3",
@@ -5481,7 +5481,7 @@
    "https://github.com/WeActStudio/WeActStudio.STM32G474CoreBoard"
   ],
   "confidence": "estimate",
-  "notes": "Tiny, cheap G474 board for a custom PCB/backpack. Same FDCAN capability as the Nucleo, but no debugger. Check the WeAct repo for whether a transceiver is fitted (assumed not). ASSUMED default balance controller (D7): 3\u00d7 FDCAN (motors + J501 link), 170 MHz Cortex-M4F with FPU, UART for the VN-100; needs CAN transceivers.",
+  "notes": "Tiny, cheap G474 board for a custom PCB/backpack. Same FDCAN capability as the Nucleo, but no debugger. Check the WeAct repo for whether a transceiver is fitted (assumed not). ASSUMED default balance controller (D7): 3× FDCAN (motors + J501 link), 170 MHz Cortex-M4F with FPU, UART for the VN-100; needs CAN transceivers.",
   "preferred": true
  },
  {
@@ -6433,5 +6433,34 @@
   ],
   "confidence": "product page",
   "notes": "Gyropup's eyes: two round 160x160 screens on one 20 x 51 mm board, with lenses. Drive them from a small separate controller (e.g. an ESP32) so the character layer never touches the balance loop."
+ },
+ {
+  "id": "assumed-regen-clamp-58v",
+  "category": "power_distribution",
+  "vendor": "Generic (assumed)",
+  "model": "Regen clamp (brake chopper), 58 V trip, with 2 Ω 100 W resistor",
+  "preferred": true,
+  "price_usd": 45.0,
+  "price_note": "ASSUMED: a shunt-regulator / brake-chopper board plus an aluminium-clad 100 W resistor; pick a real product",
+  "price_checked": "2026-10-25",
+  "buy": [],
+  "specs": {
+   "mass_g": 180,
+   "trip_voltage_v": 58.0,
+   "voltage_range_v": [
+    24,
+    75
+   ],
+   "resistor_ohm": 2.0,
+   "resistor_w": 100,
+   "function": "regen_clamp"
+  },
+  "cad": {
+   "step_url": null,
+   "available": null
+  },
+  "sources": [],
+  "confidence": "estimate",
+  "notes": "Assumed part. Dumps braking energy into a resistor when the bus rises above 58 V, so a full 60 V FLEXVOLT plus regen cannot push the RS-03s (60 V max) over their limit. Pair it with a charge cap: the robot treats 58 V as full and does not regen above it."
  }
 ]

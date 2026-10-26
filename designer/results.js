@@ -41,7 +41,8 @@ for (const x of sims) {
       return `<button class="tile" data-run="${n}">${tag(r.pass)}<b>${esc(r.title)}</b>`
         + `<small>max lean ${r.max_theta_deg}° · ${worst[0]} ${pct(worst[1].of_peak)} of peak</small>`
         + (r.top_speed_mps != null ? `<small>top speed ${r.top_speed_mps} m/s (limit ${r.speed_limit_mps})</small>` : '')
-        + (r.turret ? `<small>darts: ${r.turret.hits}/${r.turret.shots} on target (${Math.round(r.turret.hit_rate * 100)}%)</small>` : '') + '</button>';
+        + (r.turret ? `<small>darts: ${r.turret.hits}/${r.turret.shots} on target (${Math.round(r.turret.hit_rate * 100)}%)`
+          + (r.turret.targets ? ` · ${r.turret.knocked_down}/${r.turret.targets} knocked down` : '') + '</small>' : '') + '</button>';
     }).join('')}</div><div class="detail-host"></div>`;
   host.appendChild(el);
   el.querySelectorAll('.tile').forEach((b) => b.addEventListener('click', () => show(el, x, b.dataset.run)));
@@ -60,7 +61,8 @@ function show(el, x, run) {
     + `<div class="hud-readouts">${[['max lean', `${r.max_theta_deg}°`], ['lean RMS', `${r.theta_rms_deg}°`], ['speed tracking RMS', `${r.speed_rms_mps} m/s`],
       ['distance', `${r.x_max_m} m`], ['energy', `${r.energy_j} J`],
       ...(r.turret ? [['darts on target', `${r.turret.hits} of ${r.turret.shots} (${Math.round(r.turret.hit_rate * 100)}%)`, r.turret.hit_rate >= 0.5 ? 'ok' : 'fail'],
-                      ...Object.entries(r.turret.by_target).map(([n, v]) => [n.replace('_', ' '), `${v.hits}/${v.shots}`])] : []), ...rows.map(([n, a, b, l]) => [n, `${a} (${b})`, l])]
+                      ...(r.turret.targets ? [['targets knocked down', `${r.turret.knocked_down} of ${r.turret.targets}`, r.turret.knocked_down === r.turret.targets ? 'ok' : 'warn']] : []),
+                      ...Object.entries(r.turret.by_target).map(([n, v]) => [n.replace('_', ' '), `${v.hits}/${v.shots}${v.knocked_down_s != null ? ` · down at ${v.knocked_down_s} s` : ''}`])] : []), ...rows.map(([n, a, b, l]) => [n, `${a} (${b})`, l])]
       .map(([k, v, l]) => `<div class="r ${l ?? ''}"><span>${esc(k)}</span><b>${esc(v)}</b></div>`).join('')}</div>`
     + `<p style="margin-top:12px"><a class="hud-btn primary" style="text-decoration:none" href="sim.html?design=${encodeURIComponent(x.d.file)}&run=${run}">Replay in 3D</a></p></div></div>`;
 }

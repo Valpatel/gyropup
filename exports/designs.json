@@ -4,11 +4,11 @@
    "name": "Gyropup",
    "file": "designs/default.json",
    "verdict": "warn",
-   "summary": "RobStride RS-03 legs, ODrive Robotics BotWheel (BW0124) wheels, DeWalt 2 \u00d7 FLEXVOLT DCB609 in series, 20 V mode (10S) battery. 8 printed part types, 1788 g of filament.",
+   "summary": "RobStride RS-03 legs, ODrive Robotics BotWheel (BW0124) wheels, DeWalt DCB609 FLEXVOLT 20V/60V MAX 9.0Ah battery. 8 printed part types, 1788 g of filament.",
    "metrics": [
     {
      "label": "chassis & actuators",
-     "value": "$2,364"
+     "value": "$1,985"
     },
     {
      "label": "sensors & compute",
@@ -16,7 +16,7 @@
     },
     {
      "label": "mass",
-     "value": 17.8,
+     "value": 17.0,
      "unit": "kg",
      "estimate": true
     },
@@ -27,43 +27,43 @@
     },
     {
      "label": "leg torque margin (dynamic)",
-     "value": 1.9,
+     "value": 2.1,
      "unit": "\u00d7",
      "estimate": true,
      "level": ""
     },
     {
      "label": "lean it can catch",
-     "value": 62,
+     "value": 63,
      "unit": "\u00b0",
      "level": "ok"
     },
     {
      "label": "jump",
-     "value": 74,
+     "value": 168,
      "unit": "mm",
      "estimate": true,
      "level": ""
     },
     {
      "label": "runtime",
-     "value": 129,
+     "value": 72,
      "unit": "min",
      "estimate": true
     },
     {
      "label": "simulated scenarios passed",
-     "value": "8/8",
+     "value": "9/9",
      "level": ""
     },
     {
      "label": "darts on target (sim)",
-     "value": "23/24"
+     "value": "18/18"
     }
    ],
    "checks": {
     "ok": 4,
-    "warn": 9,
+    "warn": 10,
     "fail": 0
    },
    "link": "designer/",
@@ -120,7 +120,12 @@
     {
      "label": "targets pass",
      "level": "done",
-     "title": "Target practice: three foam targets, standing then driving"
+     "title": "Knock-down range: five foam targets, standing then driving"
+    },
+    {
+     "label": "look pass",
+     "level": "done",
+     "title": "Look up: lean back 15\u00b0 on the legs, hold, then look ahead again"
     }
    ]
   },
@@ -177,12 +182,12 @@
     },
     {
      "label": "simulated scenarios passed",
-     "value": "7/8",
+     "value": "8/9",
      "level": "fail"
     },
     {
      "label": "darts on target (sim)",
-     "value": "23/24"
+     "value": "18/18"
     }
    ],
    "checks": {
@@ -244,19 +249,24 @@
     {
      "label": "targets pass",
      "level": "done",
-     "title": "Target practice: three foam targets, standing then driving"
+     "title": "Knock-down range: five foam targets, standing then driving"
+    },
+    {
+     "label": "look pass",
+     "level": "done",
+     "title": "Look up: lean back 15\u00b0 on the legs, hold, then look ahead again"
     }
    ]
   },
   {
-   "name": "Gyropup on one FLEXVOLT (60 V mode)",
-   "file": "designs/flexvolt-60v.json",
-   "verdict": "fail",
-   "summary": "RobStride RS-03 legs, ODrive Robotics BotWheel (BW0124) wheels, DeWalt DCB609 FLEXVOLT 20V/60V MAX 9.0Ah battery. 8 printed part types, 1788 g of filament.",
+   "name": "Gyropup on two FLEXVOLTs (2 \u00d7 20 V in series)",
+   "file": "designs/flexvolt-2x20v.json",
+   "verdict": "warn",
+   "summary": "RobStride RS-03 legs, ODrive Robotics BotWheel (BW0124) wheels, DeWalt 2 \u00d7 FLEXVOLT DCB609 in series, 20 V mode (10S) battery. 8 printed part types, 1788 g of filament.",
    "metrics": [
     {
      "label": "chassis & actuators",
-     "value": "$2,096"
+     "value": "$2,364"
     },
     {
      "label": "sensors & compute",
@@ -264,7 +274,7 @@
     },
     {
      "label": "mass",
-     "value": 16.5,
+     "value": 17.8,
      "unit": "kg",
      "estimate": true
     },
@@ -275,58 +285,58 @@
     },
     {
      "label": "leg torque margin (dynamic)",
-     "value": 2.1,
+     "value": 1.9,
      "unit": "\u00d7",
      "estimate": true,
      "level": ""
     },
     {
      "label": "lean it can catch",
-     "value": 64,
+     "value": 62,
      "unit": "\u00b0",
      "level": "ok"
     },
     {
      "label": "jump",
-     "value": 168,
+     "value": 74,
      "unit": "mm",
      "estimate": true,
      "level": ""
     },
     {
      "label": "runtime",
-     "value": 85,
+     "value": 129,
      "unit": "min",
      "estimate": true
     },
     {
      "label": "simulated scenarios passed",
-     "value": "8/8",
+     "value": "9/9",
      "level": ""
     },
     {
      "label": "darts on target (sim)",
-     "value": "23/24"
+     "value": "18/18"
     }
    ],
    "checks": {
     "ok": 4,
-    "warn": 10,
-    "fail": 2
+    "warn": 9,
+    "fail": 0
    },
    "link": "designer/",
    "links": [
     {
      "title": "Simulation results",
-     "href": "designer/results.html#flexvolt-60v"
+     "href": "designer/results.html#flexvolt-2x20v"
     },
     {
      "title": "Watch it shoot",
-     "href": "designer/sim.html?design=designs/flexvolt-60v.json&run=targets"
+     "href": "designer/sim.html?design=designs/flexvolt-2x20v.json&run=targets"
     },
     {
      "title": "Simulate in 3D",
-     "href": "designer/sim.html?design=designs/flexvolt-60v.json"
+     "href": "designer/sim.html?design=designs/flexvolt-2x20v.json"
     }
    ],
    "badges": [
@@ -356,6 +366,16 @@
      "title": "Climb a 10\u00b0 ramp and hold on it"
     },
     {
+     "label": "targets pass",
+     "level": "done",
+     "title": "Knock-down range: five foam targets, standing then driving"
+    },
+    {
+     "label": "look pass",
+     "level": "done",
+     "title": "Look up: lean back 15\u00b0 on the legs, hold, then look ahead again"
+    },
+    {
      "label": "curb pass",
      "level": "done",
      "title": "Drive up a 25 mm kerb"
@@ -364,11 +384,6 @@
      "label": "recoil pass",
      "level": "done",
      "title": "Recoil: empty a 24-shot magazine in bursts of 8, standing then driving"
-    },
-    {
-     "label": "targets pass",
-     "level": "done",
-     "title": "Target practice: three foam targets, standing then driving"
     }
    ]
   },
@@ -425,12 +440,12 @@
     },
     {
      "label": "simulated scenarios passed",
-     "value": "8/8",
+     "value": "9/9",
      "level": ""
     },
     {
      "label": "darts on target (sim)",
-     "value": "23/24"
+     "value": "18/18"
     }
    ],
    "checks": {
@@ -492,7 +507,12 @@
     {
      "label": "targets pass",
      "level": "done",
-     "title": "Target practice: three foam targets, standing then driving"
+     "title": "Knock-down range: five foam targets, standing then driving"
+    },
+    {
+     "label": "look pass",
+     "level": "done",
+     "title": "Look up: lean back 15\u00b0 on the legs, hold, then look ahead again"
     }
    ]
   },
@@ -549,12 +569,12 @@
     },
     {
      "label": "simulated scenarios passed",
-     "value": "7/8",
+     "value": "8/9",
      "level": "fail"
     },
     {
      "label": "darts on target (sim)",
-     "value": "17/18"
+     "value": "18/18"
     }
    ],
    "checks": {
@@ -616,7 +636,12 @@
     {
      "label": "targets pass",
      "level": "done",
-     "title": "Target practice: three foam targets, standing then driving"
+     "title": "Knock-down range: five foam targets, standing then driving"
+    },
+    {
+     "label": "look pass",
+     "level": "done",
+     "title": "Look up: lean back 15\u00b0 on the legs, hold, then look ahead again"
     }
    ]
   },
@@ -673,12 +698,12 @@
     },
     {
      "label": "simulated scenarios passed",
-     "value": "7/8",
+     "value": "8/9",
      "level": "fail"
     },
     {
      "label": "darts on target (sim)",
-     "value": "23/24"
+     "value": "17/18"
     }
    ],
    "checks": {
@@ -740,7 +765,12 @@
     {
      "label": "targets pass",
      "level": "done",
-     "title": "Target practice: three foam targets, standing then driving"
+     "title": "Knock-down range: five foam targets, standing then driving"
+    },
+    {
+     "label": "look pass",
+     "level": "done",
+     "title": "Look up: lean back 15\u00b0 on the legs, hold, then look ahead again"
     }
    ]
   }

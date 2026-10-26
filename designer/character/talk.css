@@ -1,0 +1,152 @@
+/* Gyropup's voice UI: the speech bubble over its head and the bottom chat dock, in the control-room HUD skin
+ * (kit/hud.css tokens; falls back to literal values when the skin is not loaded).
+ *
+ * Adapted from the Moxie simulator's css/hud.css (#bubble) and css/dock.css (the composer dock) in
+ * mvalancy/moxie-robot-saver, MIT, © 2026 moxie-robot-parent-app contributors. */
+
+/* ---- the speech bubble ------------------------------------------------------------------------------------ */
+.gp-bubble {
+  position: fixed; left: 0; top: 0; z-index: 7;
+  max-width: min(400px, calc(100vw - 32px)); min-width: 120px;
+  padding: 10px 14px 12px;
+  background: rgba(10, 12, 18, 0.84);
+  backdrop-filter: blur(10px) saturate(1.1); -webkit-backdrop-filter: blur(10px) saturate(1.1);
+  border: 1px solid var(--glow-30, rgba(0, 240, 255, 0.30));
+  border-radius: 10px;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.35), 0 10px 34px rgba(0, 0, 0, 0.45), 0 0 22px var(--glow-12, rgba(0, 240, 255, 0.12));
+  color: var(--text, #e8edf5);
+  pointer-events: none;
+  transition: opacity 0.22s ease;
+  will-change: transform;
+}
+.gp-bubble.hidden { opacity: 0; }
+.gp-bubble.off-stage { opacity: 0; }
+.gp-bubble .gp-label {
+  display: flex; align-items: center; gap: 7px; margin-bottom: 4px;
+  font: 600 10px/1 var(--font-mono, 'JetBrains Mono', ui-monospace, monospace);
+  letter-spacing: 0.16em; text-transform: uppercase; color: var(--cyan, #00f0ff);
+}
+.gp-bubble .gp-label::before {
+  content: ""; width: 7px; height: 7px; transform: rotate(45deg); flex: none;
+  background: var(--cyan, #00f0ff); box-shadow: 0 0 8px var(--glow-30, rgba(0, 240, 255, 0.3));
+}
+.gp-bubble .gp-text {
+  display: block; font: 500 17px/1.4 var(--font-ui, 'Inter', system-ui, sans-serif); letter-spacing: -0.005em;
+  color: var(--text, #e8edf5); overflow-wrap: anywhere;
+}
+/* the tail: a rotated square with two cyan hairline edges, pointing at the head */
+.gp-bubble::after {
+  content: ""; position: absolute; width: 12px; height: 12px;
+  background: rgba(10, 12, 18, 0.95);
+  border-right: 1px solid var(--glow-30, rgba(0, 240, 255, 0.30));
+  border-bottom: 1px solid var(--glow-30, rgba(0, 240, 255, 0.30));
+  left: var(--tail-x, 50%); bottom: -7px; transform: translateX(-50%) rotate(45deg);
+}
+.gp-bubble.side-r::after { left: -7px; bottom: auto; top: var(--tail-y, 18px); transform: rotate(135deg); }
+.gp-bubble.side-l::after { left: auto; right: -7px; bottom: auto; top: var(--tail-y, 18px); transform: rotate(-45deg); }
+/* typewriter caret while the line is typing out */
+.gp-bubble.typing .gp-text::after {
+  content: ""; display: inline-block; width: 2px; height: 1.05em; margin-left: 2px; vertical-align: -0.16em;
+  background: var(--cyan, #00f0ff); box-shadow: 0 0 6px var(--glow-30, rgba(0, 240, 255, 0.3));
+  animation: gp-caret 0.9s steps(1) infinite;
+}
+/* thinking: three pulsing dots instead of text */
+.gp-bubble.thinking .gp-text { letter-spacing: 0.3em; color: var(--cyan, #00f0ff); }
+.gp-bubble.thinking .gp-text span { animation: gp-dot 1.2s ease-in-out infinite; }
+.gp-bubble.thinking .gp-text span:nth-child(2) { animation-delay: 0.2s; }
+.gp-bubble.thinking .gp-text span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes gp-caret { 50% { opacity: 0; } }
+@keyframes gp-dot { 0%, 100% { opacity: 0.25; } 50% { opacity: 1; } }
+
+/* ---- the chat dock ---------------------------------------------------------------------------------------- *
+ * Fixed to the bottom of the STAGE column: it stops short of the right-side #panel (--panel-w + its 10px margin),
+ * and sits above the orbit hint. The wrapper is pointer-transparent so the rest of the stage stays draggable. */
+.gp-dock {
+  position: fixed; z-index: 6;
+  left: 16px; right: calc(var(--panel-w, 360px) + 26px); bottom: 34px;
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  pointer-events: none;
+  font-family: var(--font-ui, 'Inter', system-ui, sans-serif);
+}
+.gp-dock.no-panel, body:has(#hud.panel-collapsed) .gp-dock { right: 16px; }
+.gp-dock > * { pointer-events: auto; }
+.gp-dock-body {
+  width: min(640px, 100%);
+  padding: 8px 10px 9px;
+  background: rgba(14, 14, 20, 0.84);
+  backdrop-filter: blur(12px) saturate(1.1); -webkit-backdrop-filter: blur(12px) saturate(1.1);
+  border: 1px solid var(--hairline, #2a303c); border-radius: 10px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.42), 0 0 24px var(--glow-06, rgba(0, 240, 255, 0.06));
+}
+.gp-dock.collapsed .gp-dock-body { display: none; }
+.gp-dock-head { display: flex; align-items: center; gap: 8px; margin: 0 0 7px; min-height: 22px; }
+.gp-dock-head .gp-tick { width: 12px; height: 2px; background: var(--cyan, #00f0ff); box-shadow: 0 0 6px var(--glow-30, rgba(0, 240, 255, 0.3)); flex: none; }
+.gp-dock-head .gp-title {
+  font: 600 11px var(--font-mono, ui-monospace, monospace); letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--text, #e8edf5); white-space: nowrap;
+}
+.gp-dock-head .gp-status {
+  margin-left: auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  font: 10px var(--font-mono, ui-monospace, monospace); letter-spacing: 0.06em; color: var(--dim, #5a6577);
+}
+.gp-dock-head .gp-status b { font-weight: 500; color: var(--muted, #8892a4); }
+.gp-dock-head .gp-status b.ok { color: var(--mint, #05ffa1); }
+.gp-icon-btn {
+  flex: none; width: 28px; height: 24px; padding: 3px; display: inline-grid; place-items: center; cursor: pointer;
+  border: 1px solid var(--hairline, #2a303c); border-radius: 5px; background: var(--surface-2, #12121a); color: var(--text-dim, #c8d0dc);
+}
+.gp-icon-btn:hover { color: var(--cyan, #00f0ff); border-color: var(--cyan-dim, #0e7490); }
+.gp-icon-btn svg { width: 15px; height: 15px; }
+.gp-icon-btn.muted { color: var(--magenta, #ff2a6d); border-color: rgba(255, 42, 109, 0.5); }
+
+.gp-chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 7px; }
+.gp-chip {
+  font: 500 12.5px var(--font-ui, 'Inter', system-ui, sans-serif); padding: 5px 11px; border-radius: 999px; cursor: pointer;
+  border: 1px solid var(--hairline, #2a303c); background: rgba(18, 18, 26, 0.9); color: var(--text-dim, #c8d0dc);
+}
+.gp-chip:hover { color: var(--cyan, #00f0ff); border-color: var(--cyan-dim, #0e7490); box-shadow: 0 0 10px var(--glow-12, rgba(0, 240, 255, 0.12)); }
+
+.gp-row { display: flex; gap: 6px; margin: 0; }
+.gp-row input[type=text] {
+  flex: 1 1 auto; min-width: 0; min-height: 40px; padding: 8px 12px; border-radius: 7px;
+  font: 15px var(--font-ui, 'Inter', system-ui, sans-serif); color: var(--text, #e8edf5);
+  background: var(--surface-1, #0e0e14); border: 1px solid var(--hairline, #2a303c); outline: none;
+}
+.gp-row input[type=text]:focus { border-color: var(--cyan-dim, #0e7490); box-shadow: 0 0 0 2px var(--glow-12, rgba(0, 240, 255, 0.12)); }
+.gp-row input[type=text]::placeholder { color: var(--muted-2, #6b7a8d); }
+.gp-btn {
+  flex: none; min-height: 40px; display: inline-flex; align-items: center; gap: 6px; padding: 8px 13px; border-radius: 7px; cursor: pointer;
+  font: 600 11px var(--font-mono, ui-monospace, monospace); letter-spacing: 0.12em; text-transform: uppercase;
+  border: 1px solid var(--hairline, #2a303c); background: var(--surface-2, #12121a); color: var(--text, #e8edf5);
+}
+.gp-btn svg { width: 14px; height: 14px; flex: none; }
+.gp-btn:hover { border-color: var(--cyan, #00f0ff); color: var(--cyan, #00f0ff); box-shadow: 0 0 10px var(--glow-12, rgba(0, 240, 255, 0.12)); }
+.gp-btn.primary { border-color: var(--cyan, #00f0ff); background: var(--glow-06, rgba(0, 240, 255, 0.06)); color: var(--cyan, #00f0ff); }
+.gp-btn.listening { border-color: var(--magenta, #ff2a6d); color: var(--magenta, #ff2a6d); background: rgba(255, 42, 109, 0.08); }
+.gp-btn.listening svg { animation: gp-dot 1s ease-in-out infinite; }
+.gp-btn:disabled { opacity: 0.5; cursor: default; }
+.gp-hint { margin: 6px 2px 0; font-size: 12px; line-height: 1.35; color: var(--muted, #8892a4); max-height: 2.8em; overflow: hidden; }
+.gp-hint:empty { display: none; }
+.gp-hint.warn { color: var(--amber, #fcee0a); }
+
+/* the collapse tab: always visible, centred on the dock's top edge */
+.gp-dock-tab {
+  display: inline-flex; align-items: center; gap: 7px; padding: 4px 12px; border-radius: 999px; cursor: pointer;
+  font: 600 10px var(--font-mono, ui-monospace, monospace); letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--muted, #8892a4); background: rgba(14, 14, 20, 0.86); border: 1px solid var(--hairline, #2a303c);
+}
+.gp-dock-tab:hover { color: var(--cyan, #00f0ff); border-color: var(--cyan-dim, #0e7490); }
+.gp-dock-tab svg { width: 10px; height: 10px; transition: transform 0.15s; }
+.gp-dock.collapsed .gp-dock-tab svg { transform: rotate(180deg); }
+.gp-dock-tab .gp-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--cyan, #00f0ff); box-shadow: 0 0 6px var(--glow-30, rgba(0, 240, 255, 0.3)); }
+
+/* matches kit/hud.css: below 820px the panel moves to the bottom 46vh, so the dock sits above it */
+@media (max-width: 820px) {
+  .gp-dock { left: 8px; right: 8px; bottom: calc(46vh + 6px); }
+  .gp-dock.no-panel { bottom: 12px; }
+  .gp-chip { font-size: 12px; }
+  .gp-btn .gp-btn-label { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gp-bubble.typing .gp-text::after, .gp-bubble.thinking .gp-text span, .gp-btn.listening svg { animation: none; }
+}
