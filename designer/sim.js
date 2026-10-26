@@ -290,9 +290,13 @@ stage.onFrame((t, dt) => {
       } else if (ev.type === 'hit') {
         const m = propMeshes.get(ev.target);
         if (m) { m.material.emissive.set(0x00f0ff); m.userData.glowT = 0.35; }
+        eyes.set('happy');                                      // a hit makes Gyropup happy for a moment
+        R.moodUntil = tt + 0.8;
       }
+      if (ev.type === 'shot' && !(R.moodUntil > tt)) eyes.set('focused');
     }
     for (const m of propMeshes.values()) if (m.userData.glowT > 0) { m.userData.glowT -= dt; if (m.userData.glowT <= 0) m.material.emissive.set(0x000000); }
+    if (R.moodUntil && tt > R.moodUntil) { eyes.set('neutral'); R.moodUntil = 0; }
     if (tt < (R.lastT ?? 0)) darts.clear();
     R.lastT = tt;
     if (state.robot.turret) { state.robot.turret.step(dt); state.robot.turret.updateLaser([terrain], gun.laser); }
