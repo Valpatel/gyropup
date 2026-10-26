@@ -131,6 +131,7 @@ export function printedParts(d) {
     { id: 'wheel_mount', name: 'Wheel motor mount', qty: 2, volume_cm3: 60, area_cm2: 220, load: 'motor', hot: true },
     { id: 'sensor_head', name: 'Sensor head', qty: 1, volume_cm3: 260, area_cm2: 1400, load: 'light' },
     { id: 'battery_tray', name: 'Battery tray', qty: 1, volume_cm3: 110, area_cm2: 700, load: 'light' },
+    { id: 'lidar_crown', name: 'Lidar crown (fall guard)', qty: d.parts.lidar && d.lidar_mount !== 'under' ? 1 : 0, volume_cm3: 140, area_cm2: 900, load: 'impact' },
     { id: 'camera_cradle', name: 'Depth camera cradle (D415/D435)', qty: (d.parts.depth_front ? 1 : 0) + (d.parts.depth_rear ? 1 : 0), volume_cm3: 18, area_cm2: 110, load: 'light' },
     ...(d.wheel_from_motor ? [] : [
       { id: 'wheel_hub', name: 'Wheel hub', qty: 2, volume_cm3: 0.12 * g.wheel_diameter_mm, area_cm2: 0.9 * g.wheel_diameter_mm, load: 'motor' },
@@ -157,6 +158,7 @@ export function evaluate(design, catalog, materials, opts = {}) {
   const d = effectiveDesign(design, catalog);
   const pick = (slot) => resolvePart(d.parts[slot], catalog);
   const checks = [];
+  const perception = {};
   const check = (id, level, text) => checks.push({ id, level, text });
 
   // --- BOM: catalogue parts
@@ -301,6 +303,21 @@ export function evaluate(design, catalog, materials, opts = {}) {
     if (maxA && peakDraw > maxA) check('battery-current', 'warn', `Peak motor current could reach ${Math.round(peakDraw)} A; the battery is rated ${maxA} A continuous.`);
   }
 
+  // --- lidar mount: view and falls
+  if (pick('lidar')) {
+    const mount = d.lidar_mount ?? 'top';
+    if (mount === 'under') {
+      // From the lidar between the legs, each wheel disc hides an arc to the side; the legs add a little more.
+      const g = d.geometry, r = g.wheel_diameter_mm / 2, side = g.track_mm / 2 - (spec(wheel, 'width_mm', 45) / 2);
+      const blocked = 2 * ((2 * Math.atan(r / side) * 180) / Math.PI + 10);
+      perception.lidar_blocked_deg = blocked;
+      check('lidar-view', 'warn', `Under the body, the wheels and legs hide about ${Math.round(blocked)}° of the lidar's 360° view, and its downward beams reach the floor within about 0.75 m.`);
+    } else {
+      perception.lidar_blocked_deg = 0;
+      check('lidar-view', 'ok', `On ${mount === 'mast' ? 'a mast' : 'top of the body'}, the lidar has a clear 360° view. It is the highest part, so the crown takes the hit in a fall.`);
+    }
+  }
+
   // --- printed part strength and heat
   for (const p of parts) {
     const m = materials[p.material];
@@ -322,7 +339,7 @@ export function evaluate(design, catalog, materials, opts = {}) {
     lines, parts, cost, checks,
     mass: { total_kg: totalKg, supported_kg: supportedKg, leg_moving_kg: legMovingG / 1000,
             sensors_compute_kg: massWhere((l) => l.group === "sensors_compute") / 1000 },
-    legs, wheels, power,
+    legs, wheels, power, perception,
     verdict: checks.some((c) => c.level === 'fail') ? 'fail' : checks.some((c) => c.level === 'warn') ? 'warn' : 'ok',
   };
 }

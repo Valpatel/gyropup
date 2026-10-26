@@ -65,19 +65,19 @@
   "character": {
     "color": "#f5b82e"
   },
-  "notes": "Defaults from the research: a 24 V-class 7S pack runs the J501 directly. The balance loop runs at 1 kHz on a microcontroller with CAN (the user's own board, to be chosen) or on the Jetson with a real-time kernel; the VN-100 Rugged is the balance IMU. The contactor cuts motor power only.",
+  "notes": "Defaults from the research: a 24 V-class 7S pack runs the J501 directly. A microcontroller with CAN (the user's own board, to be chosen) runs the 1 kHz balance loop, owns the motor CAN bus and talks to the Jetson over the J501's built-in CAN-FD. The VN-100 Rugged is the balance IMU. The contactor cuts motor power only.",
   "balance_controller": {
     "requirements": [
       "steady 1 kHz loop independent of Linux",
-      "2x CAN, or 1x CAN-FD, to the motors",
+      "CAN to the motors (it owns the motor bus)",
+      "CAN to the J501's built-in CAN-FD for the Jetson link (a second bus, or one shared CAN-FD bus)",
       "UART (TTL or RS-232) for the VN-100",
-      "USB or Ethernet to the Jetson",
       "hardware FPU"
     ],
     "options": [
-      "a microcontroller with CAN (user's own board, to be named)",
-      "Linux real-time loop on the Jetson using the J501's native CAN-FD plus a hardware watchdog on the contactor (Upkie style)"
+      "a microcontroller with CAN from the user's own boards (to be named)"
     ],
     "status": "open: waiting for the user's microcontroller list"
-  }
+  },
+  "lidar_mount": "top"
 }

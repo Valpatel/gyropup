@@ -1,0 +1,63 @@
+{
+ "designs": [
+  {
+   "name": "Gyropup",
+   "file": "designs/default.json",
+   "verdict": "warn",
+   "summary": "RobStride RS-03 legs, ODrive Robotics BotWheel (BW0124) wheels, WREKD / Nexus Battery Systems 7S2P 25.2V Molicel P50B 10000mAh Li-ion pack battery. 9 printed part types, 1961 g of filament.",
+   "metrics": [
+    {
+     "label": "chassis & actuators",
+     "value": "$2,032"
+    },
+    {
+     "label": "sensors & compute",
+     "value": "$6,078"
+    },
+    {
+     "label": "mass",
+     "value": 14.2,
+     "unit": "kg",
+     "estimate": true
+    },
+    {
+     "label": "standing hip height",
+     "value": 479,
+     "unit": "mm"
+    },
+    {
+     "label": "leg torque margin (dynamic)",
+     "value": 2.7,
+     "unit": "\u00d7",
+     "estimate": true,
+     "level": ""
+    },
+    {
+     "label": "lean it can catch",
+     "value": 67,
+     "unit": "\u00b0",
+     "level": "ok"
+    },
+    {
+     "label": "jump",
+     "value": 36,
+     "unit": "mm",
+     "estimate": true,
+     "level": "warn"
+    },
+    {
+     "label": "runtime",
+     "value": 134,
+     "unit": "min",
+     "estimate": true
+    }
+   ],
+   "checks": {
+    "ok": 5,
+    "warn": 8,
+    "fail": 0
+   },
+   "link": "designer/"
+  }
+ ]
+}

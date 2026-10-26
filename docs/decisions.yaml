@@ -1,0 +1,111 @@
+# Decision log. status: decided | open | superseded. source.kind: user | research | agent
+- id: D1
+  date: "2026-10-25"
+  title: A Diablo-like wheel-legged biped
+  decision: Two legs (hip + knee) ending in direct-drive wheels; it balances on the wheels and crouches, stands and hops on the legs
+  why: What the user asked for; the reference robots (Diablo, Ascento, Upkie) show the layout works.
+  status: decided
+  source: {kind: user, quote: "Can you take this up a notch and design a robot for me like the diablo robot?", ref: "[reference robots](research/reference-robots.md)"}
+- id: D2
+  date: "2026-10-25"
+  title: The real goal is a closed loop
+  decision: Design → CAD and robot model → simulation → loads and stress → manufacturing and cost → iterate without a human, with any components and any specs
+  why: The user's stated goal. Prior art has the pieces but nobody has published the whole loop, and stress checking is the missing step.
+  status: decided
+  source: {kind: user, quote: "Honestly the real goal should be closed loop - design a robot, evaluate it in sim, look at the stress points and how well it can drive around etc, iterate independently.", ref: "[architecture](docs/architecture.md)"}
+- id: D3
+  date: "2026-10-25"
+  title: Mostly 3D printed, PLA on a P1S first
+  decision: Every structural part starts as PLA on a Bambu P1S; a material ladder (PLA → PETG → CF-filled) and SendCutSend metal or CF tube are upgrades with the same interfaces
+  why: Low cost and fast iteration. PLA softens at 54 °C, so parts touching motors start in PETG and the checks flag heat.
+  status: decided
+  source: {kind: user, quote: "Ideally this is mostly 3d printed for low cost and we use a fancier bambu printer to make it a carbon fiber filled material later on. But start with PLA", ref: "[fabrication](research/fabrication.md)"}
+- id: D4
+  date: "2026-10-25"
+  title: Compute is the J501 AGX Orin box
+  decision: Jetson AGX Orin 32GB on the Seeed J501 in our printed enclosure, powered straight from the pack (12–36 V input)
+  why: It is what we have; a 7S pack stays under 36 V so no converter is needed.
+  status: decided
+  source: {kind: user, quote: "assume jetson orin agx 32GB with our new compute box"}
+- id: D5
+  date: "2026-10-25"
+  title: Perception is a VLP-16 plus RealSense, no ZED or GMSL
+  decision: VLP-16 on top with a clear horizon; RealSense D435 facing forward and another facing back in a cradle that also fits the D415
+  why: GMSL is overkill for a robot this size, and the ZED X has no driver for the J501's MAX96724 GMSL board.
+  status: decided
+  source: {kind: user, quote: "So honestly the intel realsense is probably the best for our size with vlp-16 lidar.", ref: "[sensors and compute](research/sensors-compute.md)"}
+  alternatives: ["ZED X over GMSL (needs a J501 driver port)", ZED 2i over USB]
+- id: D6
+  date: "2026-10-25"
+  title: The balance IMU is the VN-100 Rugged
+  decision: VectorNav VN-100 in its housing, mounted rigidly on the body near the centre of mass, read over serial at up to 800 Hz
+  why: A calibrated, temperature-compensated IMU the user has; the lidar mast flexes and carries a spinning rotor, so the IMU stays off it.
+  status: decided
+  source: {kind: user, quote: "VN-100 is a good IMU I have"}
+- id: D7
+  date: "2026-10-25"
+  title: Which controller runs the 1 kHz balance loop
+  decision: A microcontroller with CAN, from the user's own boards (which one is still open). It runs the 1 kHz loop and owns the motor CAN bus
+  why: Needs a steady 1 kHz loop independent of Linux, CAN for the motors plus CAN to the J501 (2× CAN, or 1× CAN-FD shared), a UART for the VN-100, and an FPU. Waiting for the user's list of boards.
+  status: open
+  source: {kind: user, quote: "Why a teensy 4.1? I don't have one of those but I have other microcontrollers with CAN I think."}
+  alternatives: [Teensy 4.1 (research pick), STM32 G4/H7 with FDCAN, Matek H7A3 flight controller, Jetson with PREEMPT_RT (Upkie style)]
+- id: D8
+  date: "2026-10-25"
+  title: A 24 V-class battery, 7S
+  decision: WREKD 7S2P Molicel P50B pack (29.4 V full, 252 Wh, 1.05 kg) runs the J501 directly; a 12 V regulator feeds the VLP-16
+  why: Keeps the J501 within 12–36 V without a converter; Diablo's motors are in the same class. The trade-off is that 48 V-rated leg motors run at about half speed.
+  status: decided
+  source: {kind: research, ref: "[power and electronics](research/power-electronics.md)"}
+  alternatives: [12S 48 V pack with a DC-DC for the J501, power-tool packs]
+- id: D9
+  date: "2026-10-25"
+  title: The microcontroller owns the motor CAN bus; the J501's CAN-FD links it to the Jetson
+  decision: The balance microcontroller drives the motors on its own CAN bus. The J501's built-in CAN-FD carries setpoints and state between the Jetson and the microcontroller, so no USB sits in the control path; the second J501 port is free for logging. The e-stop, a wireless relay and the controller's enable switch drive a contactor that cuts motor power while the computer stays up
+  why: Seeed's schematic shows two isolated CAN-FD ports on J25; the user wants the microcontroller to be the main CAN for the motors.
+  status: decided
+  source: {kind: user, quote: "Also our board likely has CAN built in? For the AGX board but the microcontroler board is the main one for CAN", ref: "[power and electronics](research/power-electronics.md)"}
+- id: D10
+  date: "2026-10-25"
+  title: Leg layout like the Diablo, no hip abduction
+  decision: Hip and knee motors stacked on the body with a four-bar link to the knee; legs move only fore and aft in v1
+  why: Diablo is built this way (DDT's sim model); motors on the body keep legs light; Diablo, Upkie and Ascento all balance without hip abduction.
+  status: decided
+  source: {kind: research, ref: "[reference robots](research/reference-robots.md)"}
+  alternatives: [five-bar leg, motor at the knee]
+- id: D11
+  date: "2026-10-25"
+  title: Default parts for the first design
+  decision: RobStride RS-03 leg actuators; ODrive BotWheel wheels with moteus n1 drivers
+  why: RS-03 is $225 for 60 N·m peak and 20 N·m rated with STEP files and torque–speed data; BotWheel has a fine encoder for slow balancing and is in stock in the US. The loop may change both.
+  status: decided
+  source: {kind: research, ref: "[leg actuators](research/leg-actuators.md), [wheel motors](research/wheel-motors.md)"}
+- id: D12
+  date: "2026-10-25"
+  title: Build on prior work for the loop
+  decision: MuJoCo for evaluation with a per-design LQR ported from Upkie; mjlab (from mjlab_upkie) for RL, Isaac Lab later; gmsh + scikit-fem FEA, CalculiX to verify; Optuna 5 with staged fidelity
+  why: The toolchain survey found these are the best maintained, permissively licensed options; no framework ships a wheel-legged scenario suite, so we write that part.
+  status: decided
+  source: {kind: research, ref: "[toolchain prior art](research/prior-art-toolchain.md), [co-design prior art](research/prior-art-codesign.md)"}
+- id: D13
+  date: "2026-10-25"
+  title: The name is Gyropup
+  decision: Gyropup (gyro, because it balances itself; pup, because it is a small, friendly robot). It is its own robot, not a duck; Open Duck Mini was only a reference for charm and buildability
+  why: wobbit.com was taken. The user picked Gyropup from names with unregistered .com domains and kept it after finding a furry who uses the name.
+  status: decided
+  source: {kind: user, quote: "We aren't making a duck, the duck was just a design reference for a new friendly robot. gyropup is a cool name"}
+- id: D14
+  date: "2026-10-25"
+  title: Gyropup is closed for now; cad-agent stays public and generic
+  decision: Gyropup lives in a private repository; everything generic (robot export, the project site, FEA glue, optimiser staging) goes into the public cad-agent, which stays modular for any CAD project
+  why: The user wants to build on a public toolkit while keeping this design closed, maybe opening it later.
+  status: decided
+  source: {kind: user, quote: "Ideally we can build on a public cad-agent but have gyropup be our design eventually free maybe but closed for now"}
+- id: D15
+  date: "2026-10-25"
+  title: The lidar sits on top as the head, in a crown
+  decision: VLP-16 directly on top of the body (no mast), centred over the wheel axle, on rubber isolators, inside a printed crown that takes the hit in a fall. The mount stays a design variable (top, mast, under) for the loop to test
+  why: Moving 0.83 kg changes the centre of mass by at most about 16 mm, so view and falls decide. Under the body, the wheels and legs hide roughly a third of its view; on top it is the first part to hit the ground, so it needs a guard.
+  status: decided
+  source: {kind: user, quote: "Also the lidar is heavy, it can be mounted directly to the head? or under the body?"}
+  alternatives: [on a mast, under the body between the legs]

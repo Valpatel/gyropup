@@ -16,7 +16,7 @@ export const SIZES = {
 };
 
 export const COLORS = [
-  { id: 'duckling', name: 'Duckling yellow', hex: '#f5b82e' },
+  { id: 'sunny', name: 'Sunny yellow', hex: '#f5b82e' },
   { id: 'tangerine', name: 'Tangerine', hex: '#ef7d32' },
   { id: 'mint', name: 'Mint', hex: '#5cc8a8' },
   { id: 'sky', name: 'Sky', hex: '#5aa9e6' },
@@ -47,6 +47,19 @@ export const CHAPTERS = [
     story: () => `A spinning lidar sees 360° around the robot. It sits on top so nothing blocks its view. `
       + `It is heavy and high up, which makes balancing harder, so the legs and wheels must be stronger.`,
     slot: 'lidar', filter: (i) => i.category === 'sensor' && /lidar/i.test(i.specs?.type ?? i.model + i.notes), optional: true,
+  },
+  {
+    id: 'lidar_mount', title: 'Where the lidar sits',
+    when: (d) => Boolean(d.parts.lidar),
+    story: () => `The VLP-16 weighs about 0.8 kg. Moving it changes balance very little; what it can see and how it survives a fall matter more.`,
+    options: () => [
+      { id: 'top', name: 'On top, as its head', blurb: 'Clear 360° view, centred over the wheels, inside a printed crown that takes the hit in a fall.',
+        selected: (d) => (d.lidar_mount ?? 'top') === 'top', apply: (d) => { d.lidar_mount = 'top'; } },
+      { id: 'mast', name: 'On a mast', blurb: 'Sees over clutter, but it is higher, sways more and lands harder.',
+        selected: (d) => d.lidar_mount === 'mast', apply: (d) => { d.lidar_mount = 'mast'; } },
+      { id: 'under', name: 'Under the body', blurb: 'Protected and low, but the wheels and legs block part of its view and it sees the floor close by.',
+        selected: (d) => d.lidar_mount === 'under', apply: (d) => { d.lidar_mount = 'under'; } },
+    ],
   },
   {
     id: 'stereo', title: 'Eyes that see depth',
@@ -136,8 +149,9 @@ export const CHAPTERS = [
   },
   {
     id: 'character', title: 'Give it a personality',
-    story: () => `Like Open Duck Mini, a gyropup should be fun to watch: a friendly colour, a face, and motion `
-      + `with a little bounce. The lidar and antennas make a natural tuft on top.`,
+    story: () => `Gyropup is a friendly robot, not a tool on wheels: a warm colour, a face with eyes, and motion `
+      + `with a little bounce. (The cute-but-it-works lesson comes from Open Duck Mini, a design reference, not a look `
+      + `to copy.) The lidar in its crown reads as a head.`,
     kind: 'character',
   },
   { id: 'summary', title: 'Your gyropup', story: () => `Here is your robot: what it costs, what it weighs, what it can do, `

@@ -23,6 +23,12 @@ flowchart LR
 
 **Status:** research and architecture. Nothing is built or tested on hardware.
 
+**Licence:** private and closed source for now; it may be opened later. Generic tooling lives in the public
+[cad-agent](https://github.com/Valpatel/cad-agent).
+
+**Dashboard:** `.venv/bin/cad-agent build && .venv/bin/cad-agent site --serve` serves progress, designs, decisions and
+documents, and the designer at `/designer/`.
+
 | Folder | What is in it |
 |---|---|
 | [`docs/`](docs/) | [Requirements](docs/requirements.md) (in the user's words) and the [architecture](docs/architecture.md) of the closed loop |

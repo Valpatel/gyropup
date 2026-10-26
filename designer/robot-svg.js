@@ -1,5 +1,5 @@
-// Side view of the current design as an SVG string, drawn to scale (1 unit = 1 mm). Knees bend backwards like a
-// duck's. `crouch` 0..1 goes from standing (knee_max_deg) to the deepest crouch (knee_min_deg).
+// Side view of the current design as an SVG string, drawn to scale (1 unit = 1 mm). Knees bend backwards, which keeps
+// the wheel under the hip. `crouch` 0..1 goes from standing (knee_max_deg) to the deepest crouch (knee_min_deg).
 
 import { legPose } from './model.js';
 
@@ -29,11 +29,19 @@ export function robotSvg(design, catalog, { crouch = 0.35, color = '#f5b82e', wi
     headTop = Math.max(headTop, bodyTop + 32);
   }
   if (has('lidar')) {
-    const mast = 50, lz = bodyTop + mast;
-    head.push(`<rect x="-8" y="${-lz}" width="16" height="${mast}" class="mast"/>`
-      + `<rect x="-52" y="${-(lz + 72)}" width="104" height="72" rx="10" class="lidar"/>`
-      + `<rect x="-52" y="${-(lz + 44)}" width="104" height="14" class="lidar-band"/>`);
-    headTop = lz + 72;
+    const mount = design.lidar_mount ?? 'top';
+    if (mount === 'under') {
+      const lz = bodyBottom - 6;  // hangs below the tray, between the legs
+      head.push(`<rect x="-52" y="${-lz}" width="104" height="72" rx="10" class="lidar"/>`
+        + `<rect x="-52" y="${-(lz - 44)}" width="104" height="14" class="lidar-band"/>`);
+    } else {
+      const mast = mount === 'mast' ? 50 : 8, lz = bodyTop + mast;
+      if (mount === 'mast') head.push(`<rect x="-8" y="${-lz}" width="16" height="${mast}" class="mast"/>`);
+      head.push(`<rect x="-52" y="${-(lz + 72)}" width="104" height="72" rx="10" class="lidar"/>`
+        + `<rect x="-52" y="${-(lz + 44)}" width="104" height="14" class="lidar-band"/>`
+        + `<path d="M -64 ${-(lz + 2)} V ${-(lz + 84)} Q 0 ${-(lz + 104)} 64 ${-(lz + 84)} V ${-(lz + 2)}" class="crown"/>`);
+      headTop = lz + 100;
+    }
   }
   if (has('depth_front')) {
     head.push(`<rect x="${bx1 - 4}" y="${-(bodyBottom + trayH + 30)}" width="14" height="26" rx="4" class="sensor"/>`);
@@ -42,10 +50,10 @@ export function robotSvg(design, catalog, { crouch = 0.35, color = '#f5b82e', wi
     head.push(`<rect x="${bx0 - 10}" y="${-(bodyBottom + trayH + 30)}" width="14" height="26" rx="4" class="sensor"/>`);
   }
 
-  // face on the front of the body: two eyes and a little beak, the duck nod
+  // face on the front of the body: friendly eyes with a little smile
   const eyeZ = bodyBottom + trayH + body.height_mm * 0.62;
   const face = `<circle cx="${bx1 - 2}" cy="${-eyeZ}" r="11" class="eye"/><circle cx="${bx1 + 1}" cy="${-eyeZ}" r="5" class="pupil"/>`
-    + `<path d="M ${bx1} ${-(eyeZ - 22)} q 22 6 0 14 z" class="beak"/>`;
+    + `<path d="M ${bx1 - 3} ${-(eyeZ - 26)} q 8 7 0 14" class="smile"/>`;
 
   const minX = Math.min(bx0, kx - 30, -r) - 30, maxX = Math.max(bx1 + 40, r) + 30;
   const top = headTop + 30, bottom = -10;
@@ -64,8 +72,8 @@ export function robotSvg(design, catalog, { crouch = 0.35, color = '#f5b82e', wi
     .body{fill:${color};stroke:#00000022;stroke-width:3}
     .box{fill:#2f343c}.tray{fill:#6b717a}
     .sensor{fill:#2f343c}.lens{fill:#6fb4ff}.mast{fill:#6b717a}
-    .lidar{fill:#3b3f46}.lidar-band{fill:#20242a}
-    .eye{fill:#fff;stroke:#2f343c;stroke-width:3}.pupil{fill:#20242a}.beak{fill:#ef7d32}
+    .lidar{fill:#3b3f46}.crown{fill:none;stroke:${color};stroke-width:9;stroke-linejoin:round}.lidar-band{fill:#20242a}
+    .eye{fill:#fff;stroke:#2f343c;stroke-width:3}.pupil{fill:#20242a}.smile{fill:none;stroke:#20242a;stroke-width:3;stroke-linecap:round}
   </style>
   <line x1="${minX}" y1="0" x2="${maxX}" y2="0" class="ground"/>
   <rect x="${bx0}" y="${-(bodyBottom + trayH)}" width="${body.depth_mm}" height="${trayH}" rx="10" class="tray"/>

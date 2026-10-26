@@ -1,0 +1,39 @@
+# Milestones from docs/architecture.md. status: done | active | next | blocked
+- id: M0
+  title: Research, catalogs, analytic model, designer draft
+  status: done
+  done_when: Sourced research on reference robots, parts, fabrication and prior art; a checked parts catalog; the Tier 0 model runs in the browser and from the command line
+  evidence: [docs/architecture.md, catalog/SCHEMA.md, designs/default.json]
+- id: M1
+  title: Design → CAD parts → mass properties → MJCF + URDF
+  status: active
+  done_when: The default design builds; the model loads in MuJoCo; masses reconcile with Tier 0; the URDF passes both validators; the Upkie fixture loads in the same harness
+  notes: Starts after the architecture review. Robot export (`cadagent.robot`) is written and tested in cad-agent.
+- id: M2
+  title: Scenario harness, per-design LQR, level-0 actuators
+  status: next
+  done_when: The default design passes stand, balance, push and drive; videos are written; it fails sensibly when a part is undersized
+- id: M3
+  title: Loads → FEA screen
+  status: next
+  done_when: A safety factor per printed part for the stand, landing and fall cases; a stress-coloured mesh per part
+- id: M4
+  title: Manufacturing gate and cost
+  status: next
+  done_when: RoboForge-style checks and the text-to-cad DfAM, Bambu and SendCutSend skills pass on the default design
+- id: M5
+  title: Optimiser and agent loop
+  status: next
+  done_when: tools/iterate.py improves the default design against spec.json unattended and writes a Pareto report
+- id: M6
+  title: The designer shows it all
+  status: next
+  done_when: 3D view, scenario replay, stress overlay and the Pareto set inside the guide
+- id: M7
+  title: RL policy
+  status: next
+  done_when: An mjlab velocity policy on the default design, exported to ONNX
+- id: M8
+  title: Hardware calibration
+  status: next
+  done_when: Bench actuator identification, coupon and leg break tests, then the sim and FEA are updated to match

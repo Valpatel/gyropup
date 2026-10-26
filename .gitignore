@@ -4,3 +4,5 @@ __pycache__/
 node_modules/
 exports/*.log
 runs/
+site/
+preview/site-url.txt
