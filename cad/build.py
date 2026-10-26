@@ -345,11 +345,22 @@ def print_plan_row(solid, rotation, mat, m, mass_g, materials):
     dx, dy, dz = sorted((bb.xlen, bb.ylen), reverse=True) + [bb.zlen]
     margin = 6.0
     flat = dx <= BED[0] - margin and dy <= BED[1] - margin
-    diag = (dx + dy) / math.sqrt(2) <= BED[0] - margin           # laid at 45 degrees
+    diag = False
+    if not flat:                                   # turn the part's real outline on the bed (not its box) until it fits
+        import numpy as np
+        verts, _ = s.tessellate(2.0, 0.5)
+        xy = np.array([(v.x, v.y) for v in verts])
+        for a in np.radians(np.arange(0.0, 90.0, 2.0)):
+            c, sn = math.cos(a), math.sin(a)
+            q = xy @ np.array([[c, -sn], [sn, c]])
+            w, h = np.ptp(q, axis=0)
+            if w <= BED[0] - margin and h <= BED[1] - margin:
+                diag = True
+                break
     fits = (flat or diag) and dz <= BED[2] - margin
     grams = mass_g * m['qty']
     return {'material': mat, 'qty': m['qty'], 'size_mm': [round(dx), round(dy), round(dz)], 'fits': fits,
-            'placement': 'flat' if flat else 'diagonal' if diag else 'TOO BIG', 'grams_each': round(mass_g),
+            'placement': 'straight' if flat else 'turned' if diag else 'TOO BIG', 'grams_each': round(mass_g),
             'grams': round(grams), 'hours': round(grams / materials[mat]['density_g_cm3'] / PRINT_RATE_CM3_H.get(mat, 15.0), 1),
             'cost_usd': round(grams / 1000 * materials[mat].get('price_usd_per_kg', 30.0), 2),
             'infill': '100 %' if m.get('solid') else '2 mm walls, 40 % gyroid', 'how': m.get('how') or m.get('note')}
