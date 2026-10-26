@@ -38,11 +38,16 @@ def main(design: Path) -> dict:
         t0 = time.time()
         try:
             fn()
+        except Exception as e:                          # a crash in a stage fails the candidate, with the reason
+            m['reasons'].append(f'{name} crashed: {type(e).__name__}: {e}'[:300])
         finally:
             m['seconds'][name] = round(time.time() - t0, 1)
 
     def designer():
-        ev = json.loads(run(['node', 'tools/derive.mjs', str(design)], 120).stdout)
+        r = run(['node', 'tools/derive.mjs', str(design)], 120)
+        if r.returncode:
+            raise RuntimeError(r.stderr.strip().splitlines()[-1] if r.stderr.strip() else 'derive.mjs failed')
+        ev = json.loads(r.stdout)
         fails = [c['text'] for c in ev['checks'] if c['level'] == 'fail']
         m.update(designer_mass_kg=ev['mass']['total_kg'], cost_usd=round(ev['cost']['total_usd']), designer_fails=fails,
                  leg_torque_margin=ev['legs'].get('peak_margin'), runtime_min=ev['power'].get('runtime_min'))

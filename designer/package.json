@@ -1,0 +1,5 @@
+{
+  "type": "module",
+  "private": true,
+  "description": "The designer is plain ES modules (browser and node); this tells older node versions so"
+}
