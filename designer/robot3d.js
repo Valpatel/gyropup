@@ -53,7 +53,7 @@ export function buildRobot(design, catalog, { eyes } = {}) {
 
   // body: battery tray + compute box, hip axis at y = 0
   const trayH = L0.trayH;
-  const tray = box(B.width_mm * M, trayH * M, B.depth_mm * M, DARK());
+  const tray = box((B.width_mm - 4) * M, (trayH - 1) * M, (B.depth_mm - 4) * M, DARK());
   tray.position.y = (-25 + trayH / 2) * M;
   const shell = box(B.width_mm * M, B.height_mm * M, B.depth_mm * M, mat(color));
   const bodyBottom = L0.bodyBottom;
@@ -64,8 +64,8 @@ export function buildRobot(design, catalog, { eyes } = {}) {
   // hip motor stacks (hip + knee actuators side by side, Diablo style)
   for (const s of [-1, 1]) {
     for (const k of [0, 1]) {
-      const m = cylX(motorD / 2 * M, motorL / 2 * M, STEEL());
-      m.position.set(s * (B.width_mm / 2 + motorL / 4 + k * motorL / 2) * M, 0, 0);
+      const m = cylX(motorD / 2 * M, (motorL / 2 - 1) * M, STEEL());
+      m.position.set(s * (B.width_mm / 2 + 3 + motorL / 4 + k * motorL / 2) * M, 0, 0);
       body.add(m);
     }
   }
@@ -129,7 +129,7 @@ export function buildRobot(design, catalog, { eyes } = {}) {
   const eyeMeshes = [];
   if (part('eyes')) {
     const bezel = box(0.062, 0.03, 0.004, new THREE.MeshPhysicalMaterial({ color: 0x0b0e12, roughness: 0.3, clearcoat: 1 }));
-    const eyeY = (bodyBottom + B.height_mm * 0.62) * M, z = (B.depth_mm / 2 + 2) * M;
+    const eyeY = (bodyBottom + B.height_mm * 0.62) * M, z = (B.depth_mm / 2 + 3.5) * M;
     bezel.position.set(0, eyeY, z);
     body.add(bezel);
     for (const [s, tex] of [[-1, eyes?.left?.texture], [1, eyes?.right?.texture]]) {
@@ -161,10 +161,10 @@ export function buildRobot(design, catalog, { eyes } = {}) {
     ankle.position.set(s * (wheelX - hipX) * M, -b * M, 0);
     const wheel = new THREE.Group();
     const tyre = cylX(r * M, wheelW * M, RUBBER(), 56);
-    const hub = cylX(r * 0.62 * M, (wheelW + 2) * M, STEEL(), 40);
+    const hub = cylX(r * 0.62 * M, (wheelW + 8) * M, STEEL(), 40);
     wheel.add(tyre, hub);
     for (let i = 0; i < 3; i++) {
-      const spoke = box((wheelW + 3) * M, r * 1.15 * M, 6 * M, DARK());
+      const spoke = box((wheelW + 16) * M, r * 1.15 * M, 6 * M, DARK());
       spoke.rotation.x = (i * Math.PI) / 3;
       wheel.add(spoke);
     }

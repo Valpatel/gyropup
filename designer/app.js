@@ -12,7 +12,7 @@ const usd = (v) => (v == null ? '—' : '$' + Math.round(v).toLocaleString('en-U
 const kg = (g) => (g == null ? '—' : (g / 1000).toFixed(2) + ' kg');
 const clone = (o) => JSON.parse(JSON.stringify(o));
 
-let catalog, items, materials, defaults, state;
+let catalog, items, materials, defaults, state, images = {};
 
 async function getJson(url) {
   const r = await fetch(url);
@@ -27,6 +27,7 @@ async function load() {
   items = lists.flat();
   catalog = indexCatalog(lists);
   materials = await getJson('../catalog/materials.json');
+  try { images = await getJson('../catalog/images/index.json'); } catch { /* no images fetched yet */ }
   defaults = await getJson('../designs/default.json');
   let saved = null;
   try { saved = JSON.parse(localStorage.getItem(STORE) || 'null'); } catch { /* private window */ }
@@ -100,7 +101,9 @@ function slotOptions(ch) {
     const r = result(cand);
     const selected = state.design.parts[ch.slot] === item.id;
     const buy = item.buy?.[0];
+    const img = images[item.id]?.file;
     return `<button class="card" data-slot="${ch.slot}" data-id="${esc(item.id)}" aria-pressed="${selected}">
+      <div class="pic">${img ? `<img src="../catalog/images/${esc(img)}" alt="" loading="lazy">` : `<span class="noimg">${esc(item.category.replace('_', ' '))}</span>`}</div>
       <div>${item.preferred ? '<span class="badge">preferred</span> ' : ''}<span class="vendor">${esc(item.vendor)}</span></div>
       <h3>${esc(item.model)}</h3>
       <div class="price">${usd(item.price_usd)}</div>

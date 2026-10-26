@@ -159,8 +159,15 @@ stage.onFrame((t, dt) => {
   if (state.replay) {
     const R = state.replay, F = R.run.frames;
     if (R.playing) R.t = (R.t + dt * R.rate) % (F.qpos.length / F.fps);
-    const i = Math.min(F.qpos.length - 1, Math.floor(R.t * F.fps));
-    state.robot.setFromQpos(F.qpos[i]);
+    // blend between the recorded 30 fps frames so motion stays smooth at the screen's frame rate
+    const f = Math.min(F.qpos.length - 1, R.t * F.fps), i = Math.floor(f), j = Math.min(F.qpos.length - 1, i + 1), w = f - i;
+    const A = F.qpos[i], B = F.qpos[j];
+    const qp = A.map((v, k) => v + (B[k] - v) * w);
+    const dot = A[3] * B[3] + A[4] * B[4] + A[5] * B[5] + A[6] * B[6];
+    if (dot < 0) for (let k = 3; k < 7; k++) qp[k] = A[k] - (B[k] + A[k]) * w;   // shortest path between orientations
+    const n = Math.hypot(qp[3], qp[4], qp[5], qp[6]) || 1;
+    for (let k = 3; k < 7; k++) qp[k] /= n;
+    state.robot.setFromQpos(qp);
     if (R.playing) scrub.set(i);
     const b = state.robot.base.position;
     stage.controls.target.lerp(new THREE.Vector3(b.x, b.y * 0.8, b.z), 0.1);

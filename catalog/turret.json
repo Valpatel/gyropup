@@ -1,0 +1,844 @@
+[
+  {
+    "id": "eli-wu-neutron-solenoid",
+    "category": "turret",
+    "vendor": "Eli Wu (sold by Out of Darts)",
+    "model": "Neutron Compact High-Rate-of-Fire Solenoid",
+    "preferred": true,
+    "price_usd": 29.99,
+    "price_note": "Out of Darts, single unit; Blaster-Time EU lists EUR 42.95",
+    "price_checked": "2026-10-25",
+    "buy": [
+      {"seller": "Out of Darts", "url": "https://outofdarts.com/products/eli-wu-neutron-compact-high-rate-of-fire-solenoid", "in_stock": true, "ships_from": "US"},
+      {"seller": "Blaster-Time", "url": "https://www.blaster-time.eu/shop/neutron-high-rate-of-fire-compact-solenoid/", "in_stock": null, "ships_from": "EU"}
+    ],
+    "specs": {
+      "mass_g": 209,
+      "body_mm": [53.5, 27.0, 30.0],
+      "core_diameter_mm": 12.0,
+      "core_length_mm": 87.0,
+      "stroke_mm": 26.0,
+      "push_force_n": [20, 35],
+      "coil_resistance_ohm": 2.3,
+      "peak_current_a": 25,
+      "voltage_nominal_v": 12,
+      "voltage_range_v": [12, 32],
+      "rate_of_fire_rps_3s": 10,
+      "rate_of_fire_rps_4s": 18,
+      "rate_of_fire_rps_max_boost": 40,
+      "mounting": "up to 8x M3x10",
+      "interface": "2-wire coil; needs MOSFET driver + flyback diode (Zener + diode for fast release)",
+      "ip_rating": null
+    },
+    "cad": {"step_url": "https://www.dropbox.com/s/tnca329kvp6ozdi/High%20ROF%20Solenoid.STEP?dl=0", "available": true},
+    "sources": [
+      "https://outofdarts.com/products/eli-wu-neutron-compact-high-rate-of-fire-solenoid",
+      "https://www.blaster-time.eu/shop/neutron-high-rate-of-fire-compact-solenoid/"
+    ],
+    "confidence": "product page",
+    "notes": "De-facto standard short-dart pusher (Momentum, Blitz, Protean). One stroke = one dart, so the controller can count and cap every shot. 40 rps needs a ~32 V boost circuit (25 A burst, ~10 A average per the listing) and the upgrade spring; Gyropup caps rate of fire far below that, so plain 12 V operation is enough. Voltage range is my reading of the listing ('Over 4S (16V)', 32 V boost), not a rated range."
+  },
+  {
+    "id": "eli-wu-supernova-1507-5-4200kv",
+    "category": "turret",
+    "vendor": "Eli Wu (sold by Out of Darts)",
+    "model": "Supernova 1507.5 4200KV brushless flywheel motor",
+    "preferred": true,
+    "price_usd": 26.99,
+    "price_note": "Out of Darts, per motor (need 2 per single-stage cage)",
+    "price_checked": "2026-10-25",
+    "buy": [
+      {"seller": "Out of Darts", "url": "https://outofdarts.com/products/supernova-brushless-motors-for-momentum", "in_stock": true, "ships_from": "US"}
+    ],
+    "specs": {
+      "mass_g": null,
+      "diameter_mm": 19.4,
+      "can_height_mm": 12,
+      "length_mm": 21.3,
+      "kv_rpm_per_v": 4200,
+      "shaft": "T-mount, 1.5 mm",
+      "voltage_nominal_v": 14.8,
+      "calc_no_load_speed_rpm_at_12v": 50400,
+      "calc_no_load_speed_rpm_at_14_8v": 62160,
+      "interface": "3-phase; needs a brushless ESC",
+      "ip_rating": null
+    },
+    "cad": {"step_url": null, "available": false},
+    "sources": ["https://outofdarts.com/products/supernova-brushless-motors-for-momentum"],
+    "confidence": "product page",
+    "notes": "Motor designed for Eli Wu's Momentum (dual-stage, presets 100-200 fps on 4S). Mass not published; the shop's shipping weight is 30 g. Brushless + closed-loop RPM is what lets software hold a muzzle-velocity cap; a brushed 130 cannot be capped reliably. calc_ speeds are Kv x V, no load."
+  },
+  {
+    "id": "ood-kraken-130-3s",
+    "category": "turret",
+    "vendor": "Out of Darts (made by Jiali Motor)",
+    "model": "Kraken 130 3S neodymium brushed flywheel motor",
+    "price_usd": 8.99,
+    "price_note": "Out of Darts, per motor",
+    "price_checked": "2026-10-25",
+    "buy": [
+      {"seller": "Out of Darts", "url": "https://outofdarts.com/products/ood-kraken-130-3s-neodymium-high-performance-motor", "in_stock": true, "ships_from": "US"}
+    ],
+    "specs": {
+      "mass_g": null,
+      "dimensions_mm": [38.0, 20.4, 15.4],
+      "form_factor": "130",
+      "voltage_nominal_v": 11.1,
+      "no_load_speed_rpm": 35000,
+      "no_load_current_a": 0.55,
+      "stall_torque_nm": 0.0726,
+      "stall_current_a": 26,
+      "shaft": "2 x 10 mm smooth",
+      "fps_short_dart_3s": {"19mm Nightingale cage": 110, "33mm Pulsar cage": 145, "39mm Daybreak cage": 160, "40.2mm Wraith cage": 190},
+      "interface": "brushed DC; MOSFET or brushed ESC",
+      "ip_rating": null
+    },
+    "cad": {"step_url": null, "available": false},
+    "sources": ["https://outofdarts.com/products/ood-kraken-130-3s-neodymium-high-performance-motor"],
+    "confidence": "product page",
+    "notes": "Stall torque converted from 740 g-cm. FPS values are the shop's 'up to' figures on 3S. Cheap and simple, but no speed feedback: velocity drifts with battery voltage and wear, so it is a poor fit for an enforced velocity cap unless paired with a muzzle chronograph. Over 4S at own risk. Mass not published (shipping weight 32 g)."
+  },
+  {
+    "id": "dji-robomaster-snail-2305",
+    "category": "turret",
+    "vendor": "DJI RoboMaster",
+    "model": "Snail 2305 friction-wheel motor (+ C615 ESC)",
+    "price_usd": 40.0,
+    "price_note": "aifitlab: motor $40; C615 ESC $60; motor + C615 $100; motor + 420S ESC $80",
+    "price_checked": "2026-10-25",
+    "buy": [
+      {"seller": "aifitlab", "url": "https://aifitlab.com/products/dji-robomaster-snail-2305-motor-c615-speed-controller", "in_stock": true, "ships_from": null}
+    ],
+    "specs": {
+      "mass_g": 27.8,
+      "diameter_mm": 29,
+      "stator_mm": "23 x 5",
+      "shaft_diameter_mm": 2.95,
+      "kv_rpm_per_v": 875,
+      "no_load_speed_rpm": 21000,
+      "no_load_current_a": 0.4,
+      "kt_nm_per_a": 0.0109,
+      "rotor_inertia_kg_mm2": 1.84,
+      "voltage_nominal_v": 24,
+      "esc_c615_max_voltage_v": 26,
+      "esc_c615_continuous_a": 15,
+      "esc_c615_peak_a_3s": 20,
+      "esc_c615_mass_g": 9.7,
+      "esc_signal": "PWM up to 500 Hz",
+      "interface": "C615 ESC, PWM",
+      "ip_rating": null
+    },
+    "cad": {"step_url": "https://aifitlab.com/products/dji-robomaster-snail-2305-motor-c615-speed-controller", "available": true},
+    "sources": ["https://aifitlab.com/products/dji-robomaster-snail-2305-motor-c615-speed-controller"],
+    "confidence": "seller listing",
+    "notes": "RoboMaster's 17 mm friction-wheel launcher motor. The listing gives KV both as 2400 and as 875 rpm/V; 21000 rpm at 24 V matches 875. Listing links STEP files and user guides. C615 max 26 V is below a 7S pack's 29.4 V full charge, so it needs a regulated rail. Not a foam-dart part: flywheels and cage would be custom (2.95 mm shaft)."
+  },
+  {
+    "id": "favourite-littlebee-spring-30a-esc",
+    "category": "turret",
+    "vendor": "Favourite (sold by Out of Darts)",
+    "model": "BLHeli LittleBee-Spring 30A brushless ESC",
+    "price_usd": 12.99,
+    "price_note": "Out of Darts, per ESC",
+    "price_checked": "2026-10-25",
+    "buy": [
+      {"seller": "Out of Darts", "url": "https://outofdarts.com/products/brushless-esc-30a", "in_stock": true, "ships_from": "US"}
+    ],
+    "specs": {
+      "mass_g": null,
+      "dimensions_mm": [35, 17.5, 6],
+      "continuous_current_a": 30,
+      "burst_current_a_10s": 35,
+      "voltage_range_v": [8, 24],
+      "cells": "2-6S",
+      "protocols": "Multishot, Oneshot42, Oneshot125, DShot",
+      "mcu": "SiLabs EFM8BB21F16 @ 48 MHz (BLHeli_S class)",
+      "bec": "none",
+      "rpm_telemetry": null,
+      "ip_rating": null
+    },
+    "cad": {"step_url": null, "available": false},
+    "sources": ["https://outofdarts.com/products/brushless-esc-30a"],
+    "confidence": "product page",
+    "notes": "Used in the OOD Infinite Pack blower. RPM telemetry is not published; for an enforced velocity cap pick an ESC whose firmware reports eRPM (bidirectional DShot) or measure every dart at the muzzle. Mass not published (shipping weight 9 g). 6S max (25.2 V) is below a 7S pack's full charge."
+  },
+  {
+    "id": "worker-nightingale-micro-flywheels",
+    "category": "turret",
+    "vendor": "Worker",
+    "model": "Nightingale micro-flywheels (pair)",
+    "price_usd": 8.99,
+    "price_note": "Out of Darts, pair",
+    "price_checked": "2026-10-25",
+    "buy": [
+      {"seller": "Out of Darts", "url": "https://outofdarts.com/products/nightingale-flywheel-pair", "in_stock": true, "ships_from": "US"}
+    ],
+    "specs": {
+      "mass_g": 3,
+      "outer_diameter_mm": 18.1,
+      "root_diameter_mm": 12,
+      "concavity_mm": 11.25,
+      "height_mm": 12,
+      "max_crush_mm": 19,
+      "shaft_bore_mm": 2,
+      "material": "CNC acetal, grooved",
+      "ip_rating": null
+    },
+    "cad": {"step_url": null, "available": false},
+    "sources": ["https://outofdarts.com/products/nightingale-flywheel-pair"],
+    "confidence": "product page",
+    "notes": "mass_g is per wheel. 2 mm bore fits 130 motors, not the 1.5 mm T-mount Supernova. With Krakens on 3S the Blitz (19.5 mm cage) gives 100 fps, close to the Gyropup cap, so small wheels plus brushed motors are a simple low-energy option."
+  },
+  {
+    "id": "worker-metal-flywheel-cage-v3",
+    "category": "turret",
+    "vendor": "Worker",
+    "model": "Maxim Pro / Stryfe / Rapidstrike single-stage metal flywheel cage V3",
+    "price_usd": 22.0,
+    "price_note": "Out of Darts; motors and flywheels not included",
+    "price_checked": "2026-10-25",
+    "buy": [
+      {"seller": "Out of Darts", "url": "https://outofdarts.com/products/worker-metal-flywheel-cage", "in_stock": true, "ships_from": "US"}
+    ],
+    "specs": {
+      "mass_g": 88,
+      "cage_spacing_mm": 43.5,
+      "material": "aluminium alloy",
+      "motor_size": "130",
+      "ip_rating": null
+    },
+    "cad": {"step_url": null, "available": false},
+    "sources": ["https://outofdarts.com/products/worker-metal-flywheel-cage"],
+    "confidence": "product page",
+    "notes": "Full-size Stryfe-pattern cage; useful as a stiff, wear-proof starting point if building a turret around a gutted Stryfe/Rapidstrike. Full-size wheels give high fps, which Gyropup must cap."
+  },
+  {
+    "id": "worker-15rd-straight-talon-short-dart-mag",
+    "category": "turret",
+    "vendor": "Worker",
+    "model": "15-round straight standard Talon short-dart magazine",
+    "preferred": true,
+    "price_usd": 9.99,
+    "price_note": "Out of Darts; some colours sold out",
+    "price_checked": "2026-10-25",
+    "buy": [
+      {"seller": "Out of Darts", "url": "https://outofdarts.com/products/worker-15-round-straight-standard-talon-short-dart-magazine-clip", "in_stock": true, "ships_from": "US"}
+    ],
+    "specs": {
+      "mass_g": 105,
+      "dimensions_mm": [240, 36, 19],
+      "capacity_rounds": 15,
+      "dart": "short / half-length 13 x 36 mm",
+      "material": "ABS + stainless spring",
+      "ip_rating": null
+    },
+    "cad": {"step_url": null, "available": false},
+    "sources": ["https://outofdarts.com/products/worker-15-round-straight-standard-talon-short-dart-magazine-clip"],
+    "confidence": "product page",
+    "notes": "The 'standard Talon' magwell is the common short-dart interface (Blitz, Protean, Momentum, Harrier). Empty mass. 240 mm long: on a tilting turret the magazine sweeps a large arc, so mount it along the pitch axis or use a short mag."
+  },
+  {
+    "id": "ood-koda-23rd-short-dart-mag",
+    "category": "turret",
+    "vendor": "Out of Darts (Eli Wu design)",
+    "model": "Koda 23-round straight standard short-dart magazine",
+    "price_usd": 19.99,
+    "price_note": "Out of Darts",
+    "price_checked": "2026-10-25",
+    "buy": [
+      {"seller": "Out of Darts", "url": "https://outofdarts.com/products/ood-koda-23rd-talon-magazine", "in_stock": true, "ships_from": "US"}
+    ],
+    "specs": {
+      "mass_g": 115,
+      "length_mm": 315,
+      "base_mm": [50, 22],
+      "capacity_rounds": 23,
+      "material": "33% glass-fibre nylon",
+      "ip_rating": null
+    },
+    "cad": {"step_url": null, "available": false},
+    "sources": ["https://outofdarts.com/products/ood-koda-23rd-talon-magazine"],
+    "confidence": "product page",
+    "notes": "Highest-capacity standard straight short-dart mag; Talon-compatible. 315 mm long, which is awkward on a small head."
+  },
+  {
+    "id": "worker-he-short-darts-1-0g-200",
+    "category": "turret",
+    "vendor": "Worker",
+    "model": "HE standard-weight short darts, 200-pack (1.0 g)",
+    "preferred": true,
+    "price_usd": 16.99,
+    "price_note": "Out of Darts, 200 darts",
+    "price_checked": "2026-10-25",
+    "buy": [
+      {"seller": "Out of Darts", "url": "https://outofdarts.com/products/worker-he-standard-weight-short-darts-200-pack-1-0g", "in_stock": true, "ships_from": "US"}
+    ],
+    "specs": {
+      "mass_g": 1.0,
+      "dimensions_mm": [13, 36],
+      "material": "TPR rubber tip, EVA foam",
+      "pack_count": 200,
+      "ip_rating": null
+    },
+    "cad": {"step_url": null, "available": false},
+    "sources": ["https://outofdarts.com/products/worker-he-standard-weight-short-darts-200-pack-1-0g"],
+    "confidence": "product page",
+    "notes": "mass_g is per dart. Out of Darts' reference dart for chronographing short-dart blasters. Lightweight 0.9 g and heavyweight 1.2 g versions exist. Lowest kinetic energy per shot of the common ammo at a given velocity."
+  },
+  {
+    "id": "worker-full-length-darts-1-3g-200",
+    "category": "turret",
+    "vendor": "Worker",
+    "model": "Full-length darts, 200-pack (1.3 g)",
+    "price_usd": 17.99,
+    "price_note": "Out of Darts, 200 darts",
+    "price_checked": "2026-10-25",
+    "buy": [
+      {"seller": "Out of Darts", "url": "https://outofdarts.com/products/worker-full-length-foam-darts", "in_stock": true, "ships_from": "US"}
+    ],
+    "specs": {
+      "mass_g": 1.28,
+      "dimensions_mm": [13, 72],
+      "material": "TPR rubber tip, EVA foam",
+      "pack_count": 200,
+      "ip_rating": null
+    },
+    "cad": {"step_url": null, "available": false},
+    "sources": ["https://outofdarts.com/products/worker-full-length-foam-darts"],
+    "confidence": "product page",
+    "notes": "mass_g is per dart (listing: 1.28 g each, 260 g per pack). 'Elite-spec' length, compatible with stock Nerf blasters and magazines."
+  },
+  {
+    "id": "worker-cheetah-rival-rounds-100",
+    "category": "turret",
+    "vendor": "Worker",
+    "model": "Cheetah Rival-compatible rounds, 100-pack",
+    "price_usd": 14.99,
+    "price_note": "Out of Darts, 100 rounds",
+    "price_checked": "2026-10-25",
+    "buy": [
+      {"seller": "Out of Darts", "url": "https://outofdarts.com/products/worker-cheetah-rounds-rival-compatible-ammo-100-pack", "in_stock": true, "ships_from": "US"}
+    ],
+    "specs": {
+      "mass_g": 1.75,
+      "diameter_mm": 22.7,
+      "material": "EVA foam",
+      "pack_count": 100,
+      "ip_rating": null
+    },
+    "cad": {"step_url": null, "available": false},
+    "sources": ["https://outofdarts.com/products/worker-cheetah-rounds-rival-compatible-ammo-100-pack"],
+    "confidence": "product page",
+    "notes": "mass_g is per round. 75% heavier than a short dart, so more energy at the same speed; Hasbro sells Rival as 14+ with eyewear recommended. Not recommended for a kids' game."
+  },
+  {
+    "id": "ood-infinite-pack-rival-hopper",
+    "category": "turret",
+    "vendor": "Out of Darts",
+    "model": "Infinite Pack Rival hopper (3D parts + hardware kit, v4.0)",
+    "price_usd": 259.99,
+    "price_note": "Out of Darts DIY kit; fully assembled from $319.99; +400 rounds +$50",
+    "price_checked": "2026-10-25",
+    "buy": [
+      {"seller": "Out of Darts", "url": "https://outofdarts.com/products/ood-infinite-pack-rival-hopper", "in_stock": true, "ships_from": "US"}
+    ],
+    "specs": {
+      "mass_g": 1250,
+      "capacity_rounds": 430,
+      "feed_rate_rps_continuous": 20,
+      "feed_rate_rps_burst": 30,
+      "hose_length_max_m": 1.22,
+      "parts": "2205 brushless blower + 30 A ESC, 37D metal gear-motor agitator, Arduino-based current-sensing PCB",
+      "ip_rating": null
+    },
+    "cad": {"step_url": null, "available": false},
+    "sources": ["https://outofdarts.com/products/ood-infinite-pack-rival-hopper"],
+    "confidence": "product page",
+    "notes": "Proof that a blower-pressurised hose feed works for balls (not darts). Mass without ammo. Rival rounds only; heavier, higher-energy ammo, so not the Gyropup default."
+  },
+  {
+    "id": "chance-blitz-hardware-kit",
+    "category": "turret",
+    "vendor": "Chance Henderson (sold by Out of Darts)",
+    "model": "Blitz micro-flywheeler hardware kit",
+    "price_usd": 65.99,
+    "price_note": "Out of Darts; printed parts not included (files on Printables)",
+    "price_checked": "2026-10-25",
+    "buy": [
+      {"seller": "Out of Darts", "url": "https://outofdarts.com/products/chance-blitz-hardware-kit", "in_stock": true, "ships_from": "US"}
+    ],
+    "specs": {
+      "mass_g": 321,
+      "assembled_dimensions_mm": [210, 112, 60],
+      "motors": "2x Kraken 130 (brushed)",
+      "pusher": "Neutron solenoid",
+      "voltage_nominal_v": 11.1,
+      "fps_3s": {"22mm cage OOD Ghost": 96, "19.5mm cage Nightingale": 100, "25mm cage OOD Reaper": 126},
+      "magazine": "standard Talon",
+      "license": "CC-BY-NC-SA (Printables)",
+      "ip_rating": null
+    },
+    "cad": {"step_url": "https://www.printables.com/model/1003532-blitz", "available": true},
+    "sources": ["https://outofdarts.com/products/chance-blitz-hardware-kit", "https://www.printables.com/model/1003532-blitz"],
+    "confidence": "product page",
+    "notes": "Compact solenoid micro-flywheeler, 321 g assembled, Talon magwell; the closest off-the-shelf 'launcher module' size for a robot head. FPS are 20-shot means (SD 1-3) from the shop. Printables files are STL (no STEP listed); licence NC-SA, fine for a non-commercial robot."
+  },
+  {
+    "id": "flygonial-gryphon-hardware-kit",
+    "category": "turret",
+    "vendor": "Flygonial (kit by Out of Darts)",
+    "model": "Gryphon v1.31 hardware kit",
+    "preferred": true,
+    "price_usd": 44.99,
+    "price_note": "Out of Darts; printed parts not included",
+    "price_checked": "2026-10-25",
+    "buy": [
+      {"seller": "Out of Darts", "url": "https://outofdarts.com/products/flygonial-gryphon-hardware-kit", "in_stock": true, "ships_from": "US"}
+    ],
+    "specs": {
+      "mass_g": 142,
+      "motors": "2x Kraken 130 (brushed)",
+      "flywheels": "Daybreak pair",
+      "pusher": "manual (no solenoid in kit)",
+      "license": "CC0 public domain (Printables)",
+      "ip_rating": null
+    },
+    "cad": {"step_url": "https://www.printables.com/model/208101-the-gryphon-foam-dart-blaster", "available": true},
+    "sources": ["https://outofdarts.com/products/flygonial-gryphon-hardware-kit", "https://www.printables.com/model/208101-the-gryphon-foam-dart-blaster"],
+    "confidence": "product page",
+    "notes": "mass_g is the hardware kit, not the blaster. The original open-source printed flywheeler; public-domain files (174 STLs) are the least-restricted base for a custom turret cage. FPS not published for the kit."
+  },
+  {
+    "id": "flygonial-protean-hardware-kit",
+    "category": "turret",
+    "vendor": "Flygonial (OOD edition)",
+    "model": "Protean modular flywheel blaster hardware kit",
+    "price_usd": 109.99,
+    "price_note": "Out of Darts; printed parts not included",
+    "price_checked": "2026-10-25",
+    "buy": [
+      {"seller": "Out of Darts", "url": "https://outofdarts.com/products/flygonial-protean-hardware-kit", "in_stock": true, "ships_from": "US"}
+    ],
+    "specs": {
+      "mass_g": 672,
+      "motors": "4x Kraken 130 (2 single-stage cages or 1 dual-stage)",
+      "pusher": "Neutron solenoid",
+      "fps_3s": {"42.0mm cage": 102, "41.5mm cage": 123, "41.0mm cage": 133, "40.0mm cage": 141},
+      "license": "CC-BY-NC-SA (Printables, OOD edition)",
+      "ip_rating": null
+    },
+    "cad": {"step_url": "https://www.printables.com/model/1830195-flygonial-protean-modular-flywheel-blaster-ood-edi", "available": true},
+    "sources": ["https://outofdarts.com/products/flygonial-protean-hardware-kit", "https://www.printables.com/model/1830195-flygonial-protean-modular-flywheel-blaster-ood-edi"],
+    "confidence": "product page",
+    "notes": "Listing weight 672 g; unclear whether kit or assembled. Shows how cage crush (spacing) sets fps: 42 mm cage = 102 fps, 40 mm = 141 fps with the same motors. A wide-crush cage is a mechanical velocity limiter."
+  },
+  {
+    "id": "ood-stryfe-ultimate-mod-kit",
+    "category": "turret",
+    "vendor": "Out of Darts",
+    "model": "Stryfe Ultimate Mod Kit",
+    "price_usd": 57.99,
+    "price_note": "Out of Darts, 2S or 3S version; Stryfe blaster not included",
+    "price_checked": "2026-10-25",
+    "buy": [
+      {"seller": "Out of Darts", "url": "https://outofdarts.com/products/stryfe-ultimate-mod-kit", "in_stock": true, "ships_from": "US"}
+    ],
+    "specs": {
+      "mass_g": 120,
+      "motors": "2x Fang or Kraken 130",
+      "fps_short_dart": 155,
+      "fps_full_length": 177,
+      "ip_rating": null
+    },
+    "cad": {"step_url": null, "available": false},
+    "sources": ["https://outofdarts.com/products/stryfe-ultimate-mod-kit"],
+    "confidence": "product page",
+    "notes": "Typical 'modded Stryfe' numbers: 155-177 fps, far above a kids' cap. Listed so the doc can show what a mod does to energy. Shop notes the chrono procedure was not yet standardised for this one."
+  },
+  {
+    "id": "hare-tech-vesper",
+    "category": "turret",
+    "vendor": "Hare Tech",
+    "model": "Vesper brushless flywheel blaster",
+    "price_usd": 314.99,
+    "price_note": "Out of Darts; translucent colours $349.99",
+    "price_checked": "2026-10-25",
+    "buy": [
+      {"seller": "Out of Darts", "url": "https://outofdarts.com/products/hare-tech-hc-tac-vesper-brushless-flywheel-blaster", "in_stock": true, "ships_from": "US"}
+    ],
+    "specs": {
+      "mass_g": 990,
+      "dimensions_mm": [448, 251, 46],
+      "motors": "custom 1404 brushless outrunners",
+      "pusher": "bearing-assisted solenoid",
+      "voltage_nominal_v": 14.8,
+      "fps_presets_4s": {"low": 48, "med": 134, "high": 176},
+      "rate_of_fire_rps": 15,
+      "trigger_response_ms": 120,
+      "magazine": "16-round Hare Tech (Diana-compatible)",
+      "ip_rating": null
+    },
+    "cad": {"step_url": null, "available": false},
+    "sources": ["https://outofdarts.com/products/hare-tech-hc-tac-vesper-brushless-flywheel-blaster"],
+    "confidence": "product page",
+    "notes": "Mass without battery. Commercial proof that brushless + firmware presets can hold a low velocity (48 fps preset, SD 2). Handheld, so using it on a robot means gutting it; no published control interface."
+  },
+  {
+    "id": "hare-tech-diana",
+    "category": "turret",
+    "vendor": "Hare Tech",
+    "model": "Diana brushless micro-flywheel blaster (2025)",
+    "price_usd": 249.99,
+    "price_note": "Out of Darts; the search listing showed $229.99, product page $249.99",
+    "price_checked": "2026-10-25",
+    "buy": [
+      {"seller": "Out of Darts", "url": "https://outofdarts.com/products/hare-tech-diana-brushless", "in_stock": true, "ships_from": "US"}
+    ],
+    "specs": {
+      "mass_g": 590,
+      "dimensions_mm": [210, 40, 150],
+      "motors": "2 small brushless",
+      "pusher": "small solenoid",
+      "voltage_nominal_v": 14.8,
+      "fps_4s": 140,
+      "rate_of_fire_rps": 16,
+      "trigger_response_ms": 160,
+      "magazine": "11-round Diana",
+      "ip_rating": null
+    },
+    "cad": {"step_url": null, "available": false},
+    "sources": ["https://outofdarts.com/products/hare-tech-diana-brushless"],
+    "confidence": "product page",
+    "notes": "Compact brushless sidearm with motor idling. Fixed ~140 fps is too hot for kids without re-tuning."
+  },
+  {
+    "id": "xtra-atrox",
+    "category": "turret",
+    "vendor": "Xtra",
+    "model": "Atrox brushless flywheel blaster",
+    "price_usd": 139.99,
+    "price_note": "Out of Darts",
+    "price_checked": "2026-10-25",
+    "buy": [
+      {"seller": "Out of Darts", "url": "https://outofdarts.com/products/xtra-atrox-brushless-flywheel-blaster", "in_stock": true, "ships_from": "US"}
+    ],
+    "specs": {
+      "mass_g": 582,
+      "motors": "brushless flywheels, brushless cam pusher",
+      "fps_short_dart_1g": 140,
+      "rate_of_fire_rps": 12,
+      "magazine": "9-round Atrox (cross-compatible with Lightning and Diana)",
+      "firmware": "USB-C updatable, OLED settings",
+      "ip_rating": null
+    },
+    "cad": {"step_url": null, "available": false},
+    "sources": ["https://outofdarts.com/products/xtra-atrox-brushless-flywheel-blaster"],
+    "confidence": "product page",
+    "notes": "Cheapest brushless blaster in the shop; a possible donor for a brushless cage + cam pusher. Darts must be under 37 mm."
+  },
+  {
+    "id": "worker-nightingale-2",
+    "category": "turret",
+    "vendor": "Worker",
+    "model": "Nightingale 2.0 micro-flywheel blaster",
+    "price_usd": 84.99,
+    "price_note": "Out of Darts; semi-auto $84.99, full-auto $94.99",
+    "price_checked": "2026-10-25",
+    "buy": [
+      {"seller": "Out of Darts", "url": "https://outofdarts.com/products/worker-nightingale-2-blaster", "in_stock": true, "ships_from": "US"}
+    ],
+    "specs": {
+      "mass_g": null,
+      "dimensions_mm": [239, 242, 45],
+      "motors": "132 neodymium brushed",
+      "fps": {"2s": 110, "3s": 127, "4s_not_recommended": 134},
+      "rate_of_fire_rps_full_auto": {"2s": 6, "3s": 11, "4s": 15},
+      "magazine": "15-round slim-angled Nightingale (not standard Talon)",
+      "ip_rating": null
+    },
+    "cad": {"step_url": null, "available": false},
+    "sources": ["https://outofdarts.com/products/worker-nightingale-2-blaster"],
+    "confidence": "product page",
+    "notes": "Cheap complete flywheeler whose fps scales with battery voltage (2S 110 fps). Mass not published (shipping weight 698-716 g)."
+  },
+  {
+    "id": "eli-wu-momentum",
+    "category": "turret",
+    "vendor": "Eli Wu (sold by Out of Darts)",
+    "model": "Momentum dual-stage brushless blaster",
+    "price_usd": 649.99,
+    "price_note": "Out of Darts, fully assembled; sold out on check date",
+    "price_checked": "2026-10-25",
+    "buy": [
+      {"seller": "Out of Darts", "url": "https://outofdarts.com/products/eli-wu-momentum-dual-stage-brushless-blaster", "in_stock": false, "ships_from": "US"}
+    ],
+    "specs": {
+      "mass_g": null,
+      "motors": "4x Supernova 1507.5 brushless (dual stage)",
+      "pusher": "Neutron solenoid",
+      "voltage_nominal_v": 14.8,
+      "fps_presets": [100, 200],
+      "fps_firmware_max": 215,
+      "rate_of_fire_presets_rps": [7, 26],
+      "rate_of_fire_firmware_max_rps": 35,
+      "magazine": "standard Talon",
+      "ip_rating": null
+    },
+    "cad": {"step_url": null, "available": false},
+    "sources": ["https://outofdarts.com/products/eli-wu-momentum-dual-stage-brushless-blaster"],
+    "confidence": "product page",
+    "notes": "Reference design for brushless + solenoid with firmware fps/ROF presets. Lowest published preset (100 fps) is still above the Gyropup cap. Muzzles always printed orange for compliance."
+  },
+  {
+    "id": "ood-juno-rival-hardware-kit",
+    "category": "turret",
+    "vendor": "Tarik (sold by Out of Darts)",
+    "model": "Juno full-auto Rival flywheel blaster hardware kit",
+    "price_usd": 89.99,
+    "price_note": "Out of Darts; printed parts not included",
+    "price_checked": "2026-10-25",
+    "buy": [
+      {"seller": "Out of Darts", "url": "https://outofdarts.com/products/juno-rival-blaster-hardware-kit", "in_stock": true, "ships_from": "US"}
+    ],
+    "specs": {
+      "mass_g": null,
+      "fps_kraken": 130,
+      "pusher": "600 rpm gear motor (~9 balls/s)",
+      "ammo": "Rival rounds",
+      "license": "CC-BY-NC-SA (Printables)",
+      "ip_rating": null
+    },
+    "cad": {"step_url": "https://www.printables.com/model/1876250-out-of-darts-juno-full-auto-rival-flywheel-blaster", "available": true},
+    "sources": ["https://outofdarts.com/products/juno-rival-blaster-hardware-kit", "https://www.printables.com/model/1876250-out-of-darts-juno-full-auto-rival-flywheel-blaster"],
+    "confidence": "product page",
+    "notes": "Open Rival flywheeler that pairs with the Infinite Pack hopper. Build guide PDF linked from the listing."
+  },
+  {
+    "id": "feetech-sts3215-c018-12v",
+    "category": "turret",
+    "vendor": "Feetech (Waveshare ST3215)",
+    "model": "STS3215 / ST3215 12 V 30 kg-cm serial bus servo",
+    "preferred": true,
+    "price_usd": 21.99,
+    "price_note": "Waveshare SKU 22414, 1 unit (tiers to ~$20.63); RobotShop US $49.22 out of stock",
+    "price_checked": "2026-10-25",
+    "buy": [
+      {"seller": "Waveshare", "url": "https://www.waveshare.com/st3215-servo.htm?sku=22414", "in_stock": null, "ships_from": "CN"},
+      {"seller": "RobotShop", "url": "https://robotshop.com/products/feetech-12v-30kgcm-magnetic-encoding-servo-sts3215", "in_stock": false, "ships_from": null}
+    ],
+    "specs": {
+      "mass_g": 89,
+      "stall_torque_nm": 2.94,
+      "rated_torque_nm": null,
+      "no_load_speed_rpm": 45,
+      "no_load_speed_deg_per_s": 270,
+      "voltage_nominal_v": 12,
+      "voltage_range_v": [6, 12.6],
+      "interface": "TTL UART half-duplex serial bus, 38400 bps-1 Mbps",
+      "encoder": "12-bit magnetic, 4096 counts/turn, 360 deg, no mechanical limit",
+      "ip_rating": null
+    },
+    "cad": {"step_url": null, "available": false},
+    "sources": ["https://www.waveshare.com/st3215-servo.htm?sku=22414", "https://robotshop.com/products/feetech-12v-30kgcm-magnetic-encoding-servo-sts3215"],
+    "confidence": "product page",
+    "notes": "Stall torque converted from 30 kg-cm at 12 V (7.4 V version: 19.5 kg-cm, 52 rpm). Waveshare lists 89 g; other listings say 55 g. Cheap, light tilt actuator with an absolute encoder, so tilt angle is known at power-up. Needs a 12 V rail (not the 7S bus) and a UART bus adapter. Not PWM controllable."
+  },
+  {
+    "id": "robotis-dynamixel-xm430-w350-t",
+    "category": "turret",
+    "vendor": "ROBOTIS",
+    "model": "DYNAMIXEL XM430-W350-T",
+    "price_usd": 310.39,
+    "price_note": "ROBOTIS US store; stock shown inconsistently (page said sold out, store data said available)",
+    "price_checked": "2026-10-25",
+    "buy": [
+      {"seller": "ROBOTIS US", "url": "https://www.robotis.us/dynamixel-xm430-w350-t/", "in_stock": null, "ships_from": "US"}
+    ],
+    "specs": {
+      "mass_g": 82,
+      "dimensions_mm": [28.5, 46.5, 34],
+      "stall_torque_nm": 4.1,
+      "stall_current_a": 2.3,
+      "no_load_speed_rpm": 46,
+      "voltage_nominal_v": 12,
+      "voltage_range_v": [10.0, 14.8],
+      "standby_current_a": 0.04,
+      "interface": "TTL multidrop, 9600 bps-4.5 Mbps",
+      "encoder": "4096 counts/rev",
+      "ip_rating": null
+    },
+    "cad": {"step_url": "https://emanual.robotis.com/docs/en/dxl/x/xm430-w350/", "available": true},
+    "sources": ["https://emanual.robotis.com/docs/en/dxl/x/xm430-w350/", "https://www.robotis.us/dynamixel-xm430-w350-t/"],
+    "confidence": "datasheet",
+    "notes": "Torque/speed at 12 V (3.8 Nm/43 rpm at 11.1 V, 4.8 Nm/57 rpm at 14.8 V). Premium, well-documented alternative to the STS3215 at ~14x the price. CAD downloads are linked from the e-manual."
+  },
+  {
+    "id": "dji-robomaster-gm6020",
+    "category": "turret",
+    "vendor": "DJI RoboMaster",
+    "model": "GM6020 direct-drive gimbal motor",
+    "price_usd": 225.0,
+    "price_note": "aifitlab (reseller); no official price shown",
+    "price_checked": "2026-10-25",
+    "buy": [
+      {"seller": "aifitlab", "url": "https://aifitlab.com/products/dji-robomaster-gm6020-brushless-dc-motor", "in_stock": null, "ships_from": null}
+    ],
+    "specs": {
+      "mass_g": 468,
+      "diameter_mm": 66.7,
+      "length_mm": 45,
+      "rated_torque_nm": 1.2,
+      "stall_torque_continuous_nm": 0.86,
+      "no_load_speed_rpm": 320,
+      "speed_at_rated_torque_rpm": 132,
+      "gear_ratio": 1,
+      "voltage_nominal_v": 24,
+      "voltage_range_v": null,
+      "rated_current_a": 1.62,
+      "kt_nm_per_a": 0.741,
+      "pole_pairs": 10,
+      "hollow_shaft_mm": 18,
+      "interface": "CAN (priority) or PWM; built-in driver",
+      "encoder": "13-bit position sensor",
+      "ip_rating": null
+    },
+    "cad": {"step_url": "https://aifitlab.com/products/dji-robomaster-gm6020-brushless-dc-motor", "available": true},
+    "sources": ["https://www.robomaster.com/en-US/products/components/general/GM6020", "https://aifitlab.com/products/dji-robomaster-gm6020-brushless-dc-motor"],
+    "confidence": "datasheet",
+    "notes": "The standard RoboMaster yaw/pitch gimbal motor. 18 mm hollow shaft fits a slip ring or cable pass-through for continuous pan. Max input voltage not found; a 7S pack (29.4 V full) may exceed it, so check before connecting to the bus. aifitlab shows 'available' but earlier notes say backorder; elecena says not available in EU."
+  },
+  {
+    "id": "dji-robomaster-m2006-p36",
+    "category": "turret",
+    "vendor": "DJI RoboMaster",
+    "model": "M2006 P36 geared motor (+ C610 ESC)",
+    "price_usd": 95.0,
+    "price_note": "aifitlab motor only; C610 ESC V2.0 $250 listed separately",
+    "price_checked": "2026-10-25",
+    "buy": [
+      {"seller": "aifitlab", "url": "https://aifitlab.com/products/dji-robomaster-m2006-p36-brushless-dc-gear-motor", "in_stock": true, "ships_from": null}
+    ],
+    "specs": {
+      "mass_g": 90,
+      "gear_ratio": 36,
+      "rated_torque_nm": 1.0,
+      "stall_torque_nm": 7,
+      "stall_current_a": 27.3,
+      "no_load_speed_rpm": 500,
+      "rated_speed_rpm": 416,
+      "voltage_nominal_v": 24,
+      "kt_nm_per_a": 0.18,
+      "interface": "C610 ESC (CAN)",
+      "ip_rating": null
+    },
+    "cad": {"step_url": "https://aifitlab.com/products/dji-robomaster-m2006-p36-brushless-dc-gear-motor", "available": true},
+    "sources": ["https://aifitlab.com/products/dji-robomaster-m2006-p36-brushless-dc-gear-motor"],
+    "confidence": "seller listing",
+    "notes": "RoboMaster's usual trigger / feed-dial motor (jam detection by watching its speed). Overkill for darts; listed because it is how RoboMaster feeds 17 mm balls. Speeds with C610; Z650 ESC values differ."
+  },
+  {
+    "id": "adafruit-1196-slip-ring-22mm-12w",
+    "category": "turret",
+    "vendor": "Adafruit",
+    "model": "1196 slip ring with flange, 22 mm, 12 wires, 2 A",
+    "preferred": true,
+    "price_usd": 19.95,
+    "price_note": "Adafruit, 1-9 units ($17.96 at 10+); Jameco $25.75",
+    "price_checked": "2026-10-25",
+    "buy": [
+      {"seller": "Adafruit", "url": "https://www.adafruit.com/product/1196", "in_stock": true, "ships_from": "US"}
+    ],
+    "specs": {
+      "mass_g": null,
+      "diameter_mm": 22,
+      "flange_diameter_mm": 44,
+      "circuits": 12,
+      "current_per_circuit_a": 2,
+      "voltage_max_v": 240,
+      "wire_awg": 28,
+      "max_speed_rpm": 300,
+      "lead_length_mm": 150,
+      "hollow_shaft_mm": null,
+      "ip_rating": null
+    },
+    "cad": {"step_url": null, "available": false},
+    "sources": ["https://www.adafruit.com/product/1196"],
+    "confidence": "product page",
+    "notes": "Capsule (not through-bore) ring for continuous pan. 2 A per circuit: parallel 3-4 circuits per power rail for the launcher, and keep CAN/serial on twisted pairs. Datasheet: SRC022A-12. Brush contacts add electrical noise on signal lines."
+  },
+  {
+    "id": "ingiant-dhk012-12-through-bore-slip-ring",
+    "category": "turret",
+    "vendor": "Ingiant",
+    "model": "DHK012-12 through-bore slip ring, 12.7 mm ID",
+    "price_usd": null,
+    "price_note": "not published (quote form)",
+    "price_checked": null,
+    "buy": [
+      {"seller": "Ingiant", "url": "https://www.ingiant-slipring.com/12-7mm-id-through-bore-slip-ring-12-circuits-5a10a-380vac-300rpm-ip51-hollow-shaft-rotary-connector-product/", "in_stock": null, "ships_from": "CN"}
+    ],
+    "specs": {
+      "mass_g": null,
+      "hollow_shaft_mm": 12.7,
+      "circuits": 12,
+      "circuit_options": [6, 12, 18, 24],
+      "current_per_circuit_a": [2, 5, 10],
+      "voltage_max_v": 380,
+      "max_speed_rpm": 300,
+      "ip_rating": "IP51 (IP54 / IP65 optional)"
+    },
+    "cad": {"step_url": null, "available": false},
+    "sources": ["https://www.ingiant-slipring.com/12-7mm-id-through-bore-slip-ring-12-circuits-5a10a-380vac-300rpm-ip51-hollow-shaft-rotary-connector-product/"],
+    "confidence": "product page",
+    "notes": "Through-bore option if the pan axis needs a hollow centre (e.g. a pan bearing around a fixed post). The only listed option with an IP65 variant. Marketplace 12.7 mm 6-circuit 10 A rings appear at roughly $34-80 (unverified sellers)."
+  },
+  {
+    "id": "dji-robomaster-speed-monitor-17mm",
+    "category": "sensor",
+    "vendor": "DJI RoboMaster",
+    "model": "Referee System Speed Monitor Module (17 mm)",
+    "price_usd": null,
+    "price_note": "not published on the product page",
+    "price_checked": null,
+    "buy": [
+      {"seller": "RoboMaster", "url": "https://www.robomaster.com/en-US/products/components/detail/1296", "in_stock": null, "ships_from": "CN"}
+    ],
+    "specs": {
+      "mass_g": 175,
+      "dimensions_mm": [110.04, 43.5, 38.9],
+      "speed_range_m_s": [1, 50],
+      "frequency_range_hz": [1, 50],
+      "interface": null,
+      "ip_rating": null
+    },
+    "cad": {"step_url": null, "available": false},
+    "sources": ["https://www.robomaster.com/en-US/products/components/detail/1296"],
+    "confidence": "product page",
+    "notes": "Precedent for measuring every projectile at the muzzle and penalising over-speed (RoboMaster referee system). Sized for 17 mm balls, not 13 mm darts, and tied to the referee system; Gyropup should copy the idea with its own two-gate muzzle chronograph."
+  },
+  {
+    "id": "tops76-dart-turret",
+    "category": "turret",
+    "vendor": "Tops76 (open design)",
+    "model": "Dart Turret: brushless 2-axis automatic dart turret",
+    "price_usd": null,
+    "price_note": "open design, build from BOM; no kit sold",
+    "price_checked": null,
+    "buy": [],
+    "specs": {
+      "mass_g": null,
+      "launch_motors": "2x Armattan Oomph 2206 2300KV (FPV brushless) + 20-30 A ESCs",
+      "pan_tilt": "2x Waveshare SC15 17 kg serial bus servos + 1 RC servo (pusher)",
+      "controller": "ESP32-S3 (RPi optional)",
+      "battery": "4x 18650",
+      "max_dart_speed_m_s": 38.9,
+      "speed_sensor": "integrated muzzle speed measurement",
+      "license": "CC-BY-NC-SA (Printables); no licence file on GitHub",
+      "ip_rating": null
+    },
+    "cad": {"step_url": "https://www.printables.com/model/338574-nerf-dart-turret-brushless-wifi-wip", "available": true},
+    "sources": ["https://github.com/Tops76/Dart-Turret", "https://www.printables.com/model/338574-nerf-dart-turret-brushless-wifi-wip"],
+    "confidence": "product page",
+    "notes": "Closest open-source match to the Gyropup turret: brushless flywheels, serial-bus-servo gimbal, and a built-in dart speed sensor. 'Max dart speed 140 km/h' (= 38.9 m/s, 128 fps) is far above the Gyropup cap. Work in progress per the author."
+  }
+]

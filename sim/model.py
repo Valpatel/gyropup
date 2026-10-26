@@ -170,10 +170,10 @@ def build(design_path: Path, out_dir: Path | None = None) -> dict:
     leg_rgba = tuple(c * 0.85 for c in body_rgba[:3]) + (1.0,)
     DARK, STEEL, TYRE, LENS = (0.18, 0.2, 0.24, 1), (0.55, 0.57, 0.6, 1), (0.1, 0.1, 0.12, 1), (0.33, 0.9, 1.0, 1)
     V = rb.Visual
-    base_vis = [V(kind='box', size=(Bd, Bw, L['trayH'] * M), xyz=(0, 0, trayZ), rgba=DARK),
+    base_vis = [V(kind='box', size=(Bd - 0.004, Bw - 0.004, (L['trayH'] - 1) * M), xyz=(0, 0, trayZ - 0.0005), rgba=DARK),
                 V(kind='box', size=(Bd, Bw, Bh), xyz=(0, 0, bodyZ), rgba=body_rgba)]
     for side in (1, -1):
-        base_vis.append(V(kind='cylinder', size=(L['motorD'] * M / 2, L['motorL'] * M), xyz=(0, side * (Bw / 2 + L['motorL'] * M / 2), 0),
+        base_vis.append(V(kind='cylinder', size=(L['motorD'] * M / 2, L['motorL'] * M - 0.003), xyz=(0, side * (Bw / 2 + 0.003 + L['motorL'] * M / 2), 0),
                           rpy=(math.pi / 2, 0, 0), rgba=STEEL))
     if part(design, catalog, 'lidar'):
         mount = L['lidarMount']
@@ -207,8 +207,8 @@ def build(design_path: Path, out_dir: Path | None = None) -> dict:
             rb.Link(f'thigh_{tag}', th, [V(kind='box', size=(L['linkD'] * M, L['linkW'] * M, a), xyz=(0, 0, -a / 2), rgba=leg_rgba)], [rb.Collision('box', (L['linkD'] * M, L['linkW'] * M, a), xyz=(0, 0, -a / 2), contype=4, conaffinity=1)]),
             rb.Link(f'shin_{tag}', sh, [V(kind='box', size=(L['linkD'] * M, L['linkW'] * M, b), xyz=(0, 0, -b / 2), rgba=leg_rgba)], [rb.Collision('box', (L['linkD'] * M, L['linkW'] * M, b), xyz=(0, 0, -b / 2), contype=4, conaffinity=1)]),
             rb.Link(f'wheel_{tag}', wh, [V(kind='cylinder', size=(r, L['wheelW'] * M), rpy=(math.pi / 2, 0, 0), rgba=TYRE),
-                                         V(kind='cylinder', size=(0.62 * r, L['wheelW'] * M + 0.002), rpy=(math.pi / 2, 0, 0), rgba=STEEL),
-                                         V(kind='box', size=(1.1 * r, L['wheelW'] * M + 0.004, 0.012), rgba=DARK)], [rb.Collision('cylinder', (r, L['wheelW'] * M), rpy=(math.pi / 2, 0, 0), contype=4, conaffinity=1, friction=(1.0, 0.02, 0.001))]),
+                                         V(kind='cylinder', size=(0.62 * r, L['wheelW'] * M + 0.008), rpy=(math.pi / 2, 0, 0), rgba=STEEL),
+                                         V(kind='box', size=(1.1 * r, L['wheelW'] * M + 0.016, 0.012), rgba=DARK)], [rb.Collision('cylinder', (r, L['wheelW'] * M), rpy=(math.pi / 2, 0, 0), contype=4, conaffinity=1, friction=(1.0, 0.02, 0.001))]),
         ]
         joints += [
             rb.Joint(f'hip_{tag}', 'revolute', 'base', f'thigh_{tag}', xyz=(0, side * hipY, 0), axis=(0, 1, 0), lower=-0.6, upper=2.2,
