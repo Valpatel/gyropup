@@ -4,6 +4,7 @@
 import * as THREE from 'three';
 import { legPose, effectiveDesign, resolvePart, layout } from './model.js';
 import { buildTurret } from './turret3d.js';
+import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
 
 const M = 0.001;
 
@@ -129,8 +130,8 @@ export function buildRobot(design, catalog, { eyes } = {}) {
       tray.add(pack);
     }
   }
-  const shell = box(B.width_mm * M, B.height_mm * M, B.depth_mm * M, mat(color));
-  shell.scale.x = 1;
+  // the printed shell around the compute box: rounded edges, like the j501 enclosure it wraps
+  const shell = new THREE.Mesh(new RoundedBoxGeometry(B.width_mm * M, B.height_mm * M, B.depth_mm * M, 5, 14 * M), mat(color));
   const bodyBottom = L0.bodyBottom;
   shell.position.y = (bodyBottom + B.height_mm / 2) * M;
   body.add(tray, shell);
@@ -200,6 +201,28 @@ export function buildRobot(design, catalog, { eyes } = {}) {
   };
   if (part('depth_front')) cam((B.depth_mm / 2 + 13) * M, false, part('depth_front'));
   if (part('depth_rear')) cam(-(B.depth_mm / 2 + 13) * M, true, part('depth_rear'));
+
+  // headlights: two forward LED pods under the eyes, with real spotlights
+  const lights = [];
+  const hl = part('headlights');
+  if (hl) {
+    for (const sx of [-1, 1]) {
+      const pod = new THREE.Group();
+      const can = new THREE.Mesh(new THREE.CylinderGeometry(17 * M, 19 * M, 22 * M, 24), mat(0x2a2d33, { roughness: 0.35 }));
+      can.rotation.x = Math.PI / 2;
+      const lens = new THREE.Mesh(new THREE.CircleGeometry(15 * M, 24), new THREE.MeshStandardMaterial({ color: 0xffffff, emissive: 0xfff4d6, emissiveIntensity: 1.6 }));
+      lens.position.z = 11.2 * M;
+      const spot = new THREE.SpotLight(0xfff1d8, 70, 12, 0.42, 0.45, 1.6);   // physical units: a bright LED pod
+      spot.position.z = 12 * M;
+      const aimAt = new THREE.Object3D();
+      aimAt.position.set(0, -0.35, 3);
+      spot.target = aimAt;
+      pod.add(can, lens, spot, aimAt);
+      pod.position.set(sx * (B.width_mm / 2 - 30) * M, (bodyBottom + 22) * M, (B.depth_mm / 2 + 11) * M);
+      body.add(pod);
+      lights.push({ spot, lens });
+    }
+  }
 
   // fields of view (toggle with robot.fov.visible)
   const fov = new THREE.Group();
@@ -315,7 +338,11 @@ export function buildRobot(design, catalog, { eyes } = {}) {
   // Replay a MuJoCo state: qpos = [x y z, qw qx qy qz, hip_l knee_l wheel_l, hip_r knee_r wheel_r] in MuJoCo's frame
   // (x forward, y left, z up). This page's frame is x left, y up, z forward, a proper rotation of it: (y, z, x).
   // legs[1] (x > 0) is the robot's left leg.
-  function setFromQpos(q) {
+  function setFromQpos(q, layout) {
+    if (turret && layout && layout.turret_pan != null) {
+      turret.pan.rotation.y = q[layout.turret_pan];
+      turret.tilt.rotation.x = q[layout.turret_tilt];
+    }
     base.position.set(q[1], q[2], q[0]);
     base.quaternion.set(q[5], q[6], q[4], q[3]);
     const sides = [[legs[1], 7], [legs[0], 10]];
@@ -328,5 +355,5 @@ export function buildRobot(design, catalog, { eyes } = {}) {
     group.position.set(0, 0, 0);
   }
   const heightM = (r + hMax + top + (lidar ? 90 : 0)) * M;
-  return { group, setPose, setFromQpos, base, fov, turret, info: { heightM, hMin, hMax, wheelR: r, trackMM: 2 * wheelX } };
+  return { group, setPose, setFromQpos, base, fov, turret, lights, info: { heightM, hMin, hMax, wheelR: r, trackMM: 2 * wheelX } };
 }

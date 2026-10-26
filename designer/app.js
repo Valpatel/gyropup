@@ -228,7 +228,7 @@ function ensureView() {
     eyes.draw();
     view3d.robot.group.rotation.y = 0.35 + 0.15 * Math.sin(t * 0.2);   // a slow turn so it reads as 3D
     view3d.robot.fov.visible = Boolean(state.showFov);
-    if (view3d.robot.turret) { view3d.robot.turret.setAim(0.5 * Math.sin(t * 0.35), -0.04, 0); view3d.robot.turret.step(dt); }
+    if (view3d.robot.turret) { view3d.robot.turret.setAim(0.5 * Math.sin(t * 0.35), -0.04, 0); view3d.robot.turret.step(dt); view3d.robot.turret.updateLaser([], true); }
   });
   stage.start();
   return view3d;
@@ -243,8 +243,10 @@ function updateView(d) {
     v.stage.root.remove(v.robot.group);
     v.robot.group.traverse((o) => { o.geometry?.dispose?.(); if (o.material && !o.material.map) o.material.dispose?.(); });
   }
+  if (v.robot?.turret) v.stage.root.remove(v.robot.turret.laser);
   v.robot = buildRobot(d, catalog, { eyes: v.eyes });
   v.stage.root.add(v.robot.group);
+  if (v.robot.turret) v.stage.root.add(v.robot.turret.laser);
   v.stage.frame(v.robot.info.heightM);
   const hm = v.robot.info.heightM;                       // the sheet is small: come in closer than the full stage does
   v.stage.camera.position.set(0.9 * hm, 0.75 * hm, 1.55 * hm);

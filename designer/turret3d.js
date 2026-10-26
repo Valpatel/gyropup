@@ -42,17 +42,60 @@ export function buildTurret(color = 0xe8892b) {
   drum.position.set(0, 46 * M, -25 * M);
   const muzzle = new THREE.Object3D();
   muzzle.position.z = 160 * M;
+  // the green aiming laser, beside the barrel (real one: Class 1 or low-power Class 2, never aimed above horizontal)
+  const laserBody = new THREE.Mesh(new THREE.CylinderGeometry(7 * M, 7 * M, 40 * M, 16), mat(0x1d2025));
+  laserBody.rotation.x = Math.PI / 2;
+  laserBody.position.set(-26 * M, -8 * M, 118 * M);
+  const laserLens = new THREE.Mesh(new THREE.CircleGeometry(4 * M, 12), new THREE.MeshBasicMaterial({ color: 0x39ff6a }));
+  laserLens.position.set(-26 * M, -8 * M, 138.5 * M);
+  const laserOrigin = new THREE.Object3D();
+  laserOrigin.position.set(-26 * M, -8 * M, 139 * M);
   const flash = new THREE.Mesh(new THREE.SphereGeometry(14 * M, 12, 8), new THREE.MeshBasicMaterial({ color: 0xfff1a8, transparent: true, opacity: 0 }));
   flash.position.z = 166 * M;
-  tilt.add(body, cage, barrel, tip, drum, muzzle, flash);
+  tilt.add(body, cage, barrel, tip, drum, muzzle, flash, laserBody, laserLens, laserOrigin);
   pan.add(ring, yokeL, yokeR, tilt);
   group.add(plate, latch, pan);
   group.traverse((o) => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } });
   flash.castShadow = false;
 
+  // the beam and the dot where it lands (in world space, added to the scene by the page)
+  // a thin glowing rod, scaled to the beam's length each frame (a 1-pixel line is invisible on most screens)
+  const beam = new THREE.Mesh(new THREE.CylinderGeometry(1.2 * M, 1.2 * M, 1, 6, 1, true),
+    new THREE.MeshBasicMaterial({ color: 0x39ff6a, transparent: true, opacity: 0.75, blending: THREE.AdditiveBlending, depthWrite: false }));
+  const halo = new THREE.Mesh(new THREE.CylinderGeometry(4 * M, 4 * M, 1, 8, 1, true),
+    new THREE.MeshBasicMaterial({ color: 0x39ff6a, transparent: true, opacity: 0.12, blending: THREE.AdditiveBlending, depthWrite: false }));
+  beam.add(halo);
+  const dot = new THREE.Mesh(new THREE.SphereGeometry(10 * M, 12, 8), new THREE.MeshBasicMaterial({ color: 0x8dff9f, transparent: true, opacity: 0.95, blending: THREE.AdditiveBlending, depthWrite: false }));
+  const dotGlow = new THREE.PointLight(0x39ff6a, 0.4, 0.6);
+  dot.add(dotGlow);
+  beam.frustumCulled = false;
+  const laser = new THREE.Group();
+  laser.add(beam, dot);
+  const ray = new THREE.Raycaster();
+  ray.far = 25;
+  const o = new THREE.Vector3(), dir = new THREE.Vector3(), q = new THREE.Quaternion();
+
   let flashT = 0;
   return {
-    group, pan, tilt, muzzle,
+    group, pan, tilt, muzzle, laser,
+    /** Point the beam: from the laser along the barrel to the first thing it meets (`hitObjects`) or the ground. */
+    updateLaser(hitObjects = [], on = true) {
+      laser.visible = on && group.visible;
+      if (!laser.visible) return;
+      laserOrigin.getWorldPosition(o);
+      laserOrigin.getWorldQuaternion(q);
+      dir.set(0, 0, 1).applyQuaternion(q).normalize();
+      let len = ray.far;
+      if (dir.y < -1e-4) len = Math.min(len, -o.y / dir.y);   // the ground
+      ray.set(o, dir);
+      const hit = ray.intersectObjects(hitObjects, true)[0];
+      if (hit && hit.distance < len) len = hit.distance;
+      const end = o.clone().addScaledVector(dir, len);
+      beam.position.copy(o).addScaledVector(dir, len / 2);
+      beam.scale.set(1, len, 1);
+      beam.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), dir);
+      dot.position.copy(end);
+    },
     setAim(panRad, tiltRad, bodyPitch = 0) {
       pan.rotation.y = panRad;
       // the limit applies in the world frame: the body pitches, so subtract it

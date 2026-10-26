@@ -344,7 +344,7 @@ export function evaluate(design, catalog, materials, opts = {}) {
     if (lidarV && vFull > lidarV[1] && !pick('dcdc_12v')) {
       check('volts-lidar', 'fail', `The lidar takes ${lidarV[0]}–${lidarV[1]} V; it needs a regulated 12 V supply from a ${vFull.toFixed(1)} V battery.`);
     }
-    const sensorsW = ['compute', 'lidar', 'stereo', 'depth_front', 'depth_rear', 'imu', 'balance_mcu'].reduce((s, k) => s + powerOf(pick(k)), 0);
+    const sensorsW = ['compute', 'lidar', 'stereo', 'depth_front', 'depth_rear', 'imu', 'balance_mcu', 'headlights', 'eyes'].reduce((s, k) => s + powerOf(pick(k)), 0);
     const legsW = 4 * o.power.legs_standing_w, wheelsW = o.power.wheels_rolling_w;
     power.average_w = sensorsW + legsW + wheelsW + o.power.electronics_w + (d.head_payload?.power_w ?? 0) * 0.3;  // payload duty ~30 % (estimate)
     power.sensors_compute_w = sensorsW;

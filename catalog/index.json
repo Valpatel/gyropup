@@ -2,6 +2,7 @@
   "files": [
     "leg_actuators.json",
     "lfp_batteries.json",
+    "lights.json",
     "motor_drivers.json",
     "power_electronics.json",
     "sensors_compute.json",
@@ -9,5 +10,5 @@
     "turret.json",
     "wheel_motors.json"
   ],
-  "items": 326
+  "items": 327
 }

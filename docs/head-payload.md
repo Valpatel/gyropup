@@ -15,6 +15,8 @@ This page is the contract between the two. The simulator holds the robot to it (
 | Data | CAN-FD (the J501's second port) and USB to the Jetson | Aiming and firing commands come from the Jetson; the balance controller never waits on the payload |
 | Safety line | The robot's e-stop and dead-man signal go to the payload; it must not spin up or fire when either is open | Kid safety (D19): muzzle-energy cap, no aiming above a set height, wireless e-stop |
 | Mounting | Head plate with a bolt pattern centred on the axle (to be fixed with the turret project) | Heat-set inserts in the printed head plate, or a SendCutSend aluminium plate |
+| Aiming laser | Green, mounted beside the barrel, Class 1 or low-power Class 2 (≤ 1 mW) | Shown in the simulator; it follows the never-above-horizontal rule, so it never reaches eye height from a robot this size |
+| Range | About 3.5–4 m to knee-height targets at 24 m/s without aiming upwards (from the `targets` scenario) | Gyropup stands tall to shoot; a higher muzzle reaches further |
 | Reload | Swap the magazine at the reload station, which is the dock (D18) | Gyropup sits down onto the dock, so the magazine sits at a repeatable height and position |
 
 Changes to these numbers are made here and in `designs/*.json` (`head_payload`), then the suite is re-run

@@ -13,7 +13,7 @@
 - id: M2
   title: Scenario harness, per-design LQR, level-0 actuators
   status: done
-  notes: "Six scenarios (stand, squat, push, drive, slope, kerb) with videos and 3D replay. The full Gyropup passes all six; the DDSM115 designs fail the drive course and the kerb, which is the point: undersized parts show up."
+  notes: "Eight scenarios (stand, squat, push, drive, slope, kerb, recoil, target practice with real dart bodies: 23/24 hits) with videos and 3D replay. The full Gyropup passes all six; the DDSM115 designs fail the drive course and the kerb, which is the point: undersized parts show up."
   evidence: [sim/controller.py, sim/scenarios.py, tools/simulate.py, designer/results.html]
   done_when: The default design passes stand, balance, push and drive; videos are written; it fails sensibly when a part is undersized
 - id: M3

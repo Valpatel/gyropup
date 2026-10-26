@@ -20,6 +20,7 @@ import mujoco
 import numpy as np
 
 from sim.controller import Command, Controller, Robot, place_standing
+from sim.turret import Target, TurretController, darts_xml, fluid_option, targets_xml
 
 FPS = 30
 
@@ -44,6 +45,9 @@ class Scenario:
     start_height: float = 0.6
     must_reach_x: Optional[float] = None   # pass needs the axle to get this far forward (m)
     hold_from: Optional[float] = None      # pass needs |theta| small after this time
+    targets: List[Target] = field(default_factory=list)   # foam targets the turret engages
+    darts: int = 0                         # dart bodies loaded in the magazine
+    min_hit_rate: Optional[float] = None   # pass needs at least this share of shots on target
 
 
 def ramp(deg, x0=0.8, length=2.0):
@@ -66,6 +70,11 @@ def ramp_profile(t, start, ramp_s, v):
     return 0.0 if t < start else min(v, v * (t - start) / ramp_s)
 
 
+# Knee-height targets within range: the barrel never points upwards (kid-safety rule), so from a ~0.6-0.7 m muzzle a
+# 24 m/s foam dart reaches 0.3 m high out to roughly 3.5-4 m. Gyropup stands tall to shoot, which lifts the muzzle.
+TARGETS = [Target('target_a', (3.0, 1.3, 0.30), 8, (2.0, 7.0)), Target('target_b', (3.6, -0.3, 0.30), 8, (5.0, 10.0)),
+           Target('target_c', (4.0, -1.6, 0.30), 8, (10.0, 16.0))]
+
 SCENARIOS = {
     'stand': Scenario('stand', 'Stand and balance', 8.0, lambda t: Command(height=0.6), hold_from=2.0),
     'squat': Scenario('squat', 'Squat sweep: stand tall, crouch deep, stand again', 10.0,
@@ -79,6 +88,9 @@ SCENARIOS = {
     'slope': Scenario('slope', 'Climb a 10° ramp and hold on it', 12.0,
                       lambda t: Command(height=0.6, speed=ramp_profile(t, 1, 1.5, 0.5) if t < 7 else 0.0),
                       terrain=ramp(10), must_reach_x=1.6, hold_from=10.0),
+    'targets': Scenario('targets', 'Target practice: three foam targets, standing then driving', 16.0,
+                        lambda t: Command(height=0.6 if t < 1.5 else 0.9, speed=ramp_profile(t, 9, 1.0, 0.35) if t < 12.5 else 0.0),
+                        targets=TARGETS, darts=24, min_hit_rate=0.5),
     'curb': Scenario('curb', 'Drive up a 25 mm kerb', 9.0,
                      lambda t: Command(height=0.6, speed=ramp_profile(t, 1, 1.0, 0.6) if t < 6 else 0.0),
                      terrain=curb(0.025), must_reach_x=1.5),
@@ -126,13 +138,17 @@ class Video:
 
 
 def run(xml_path: Path, info: dict, sc: Scenario, video: Optional[Path] = None, noise=0.0, delay_steps=0) -> dict:
-    xml = with_terrain(Path(xml_path).read_text(), sc.terrain)
+    extra = sc.terrain + (targets_xml(sc.targets) if sc.targets else '') + (darts_xml(sc.darts) if sc.darts else '')
+    xml = with_terrain(Path(xml_path).read_text(), extra)
+    if sc.darts:
+        xml = fluid_option(xml)
     model = mujoco.MjModel.from_xml_string(xml.replace('<compiler ', f'<compiler meshdir="{Path(xml_path).parent}" ', 1))
     data = mujoco.MjData(model)
     rb = Robot(model, info)
     place_standing(rb, data, sc.start_height)
     ctl = Controller(rb, noise=noise, delay_steps=delay_steps)
     ctl.height = sc.start_height                 # start from the pose the robot is placed in
+    turret = TurretController(model, data, list(sc.targets))
     dt = model.opt.timestep
     steps = int(sc.seconds / dt)
     frame_every = max(1, int(round(1 / (FPS * dt))))
@@ -143,6 +159,18 @@ def run(xml_path: Path, info: dict, sc: Scenario, video: Optional[Path] = None, 
     link_load = {model.body(i).name: {'force_n': 0.0, 'moment_nm': 0.0} for i in range(1, model.nbody)}
     fell_at, max_theta, x_max, v_peak = None, 0.0, -1e9, 0.0
     vid = Video(model, video) if video else None
+    # static props (terrain, targets) as world-frame primitives, so the 3D page can draw exactly what was simulated
+    robot_set = set(rb.bodies)
+    props = []
+    for gi in range(model.ngeom):
+        b = model.geom_bodyid[gi]
+        if b in robot_set or model.body(b).name.startswith('dart_') or model.geom_type[gi] == mujoco.mjtGeom.mjGEOM_PLANE:
+            continue
+        q = np.zeros(4)
+        mujoco.mju_mat2Quat(q, data.geom_xmat[gi])
+        props.append({'name': model.geom(gi).name, 'type': int(model.geom_type[gi]), 'size': [round(float(v), 4) for v in model.geom_size[gi]],
+                      'pos': [round(float(v), 4) for v in data.geom_xpos[gi]], 'quat': [round(float(v), 5) for v in q],
+                      'rgba': [round(float(v), 3) for v in model.geom_rgba[gi]]})
     pushes = list(sc.pushes)
     base = rb.base
     for k in range(steps):
@@ -158,6 +186,7 @@ def run(xml_path: Path, info: dict, sc: Scenario, video: Optional[Path] = None, 
                 arm = R @ np.array([0, 0, p.height_m])
                 data.xfrc_applied[base, 3:] = np.cross(arm, F)
         st = ctl.control(data, cmd, dt)
+        turret.step(t, dt)
         mujoco.mj_step(model, data)
         th = st['theta']
         thetas.append(th)
@@ -192,6 +221,9 @@ def run(xml_path: Path, info: dict, sc: Scenario, video: Optional[Path] = None, 
     reasons = []
     if fell_at is not None:
         reasons.append(f'fell at {fell_at:.1f} s')
+    tsum = turret.summary() if turret.has else None
+    if sc.min_hit_rate is not None and tsum and tsum['hit_rate'] < sc.min_hit_rate:
+        reasons.append(f"hit {tsum['hits']} of {tsum['shots']} shots ({tsum['hit_rate']:.0%}), needs {sc.min_hit_rate:.0%}")
     if sc.must_reach_x is not None and x_max < sc.must_reach_x:
         reasons.append(f'only reached {x_max:.2f} m of {sc.must_reach_x} m')
     if sc.hold_from is not None and fell_at is None:
@@ -215,6 +247,9 @@ def run(xml_path: Path, info: dict, sc: Scenario, video: Optional[Path] = None, 
         'lqr': {k: round(float(v), 4) for k, v in ctl.lqr_info.items()},
         'frames': {'fps': FPS, 'qpos': frames, 'joint_order': ['free(7)'] + [model.joint(j).name for j in range(1, model.njnt)]},
         'terrain': sc.terrain, 'video': video.name if video else None,
-        'events': [{'t': round(p.t, 3), 'type': 'shot'} for p in sc.pushes if p.absolute],
+        'events': [{'t': round(p.t, 3), 'type': 'shot'} for p in sc.pushes if p.absolute] + (turret.events if turret.has else []),
+        'turret': tsum,
+        'qpos_layout': {model.joint(j).name: int(model.jnt_qposadr[j]) for j in range(model.njnt)},
+        'props': props,
         'physical_test': False,
     }

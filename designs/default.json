@@ -31,6 +31,7 @@
     "depth_front": "realsense-d435",
     "depth_rear": "realsense-d435",
     "eyes": "waveshare-0-71-dualeye-lcd",
+    "headlights": "assumed-led-pod-pair-20w",
     "imu": "vectornav-vn-100-rugged",
     "balance_mcu": null,
     "can_transceiver": null,
@@ -79,7 +80,7 @@
     "options": [
       "a microcontroller with CAN from the user's own boards (to be named)"
     ],
-    "status": "open: waiting for the user's microcontroller list"
+    "status": "assumed: WeAct STM32G474 core with two CAN transceivers (D7), until the user names a board"
   },
   "lidar_mount": "under",
   "head_payload": {
@@ -95,6 +96,7 @@
     "burst_rate_hz": 10
   },
   "part_qty": {
-    "battery_adapter": 2
+    "battery_adapter": 2,
+    "can_transceiver": 2
   }
 }

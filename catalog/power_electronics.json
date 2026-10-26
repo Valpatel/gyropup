@@ -5481,7 +5481,8 @@
    "https://github.com/WeActStudio/WeActStudio.STM32G474CoreBoard"
   ],
   "confidence": "estimate",
-  "notes": "Tiny, cheap G474 board for a custom PCB/backpack. Same FDCAN capability as the Nucleo, but no debugger. Check the WeAct repo for whether a transceiver is fitted (assumed not)."
+  "notes": "Tiny, cheap G474 board for a custom PCB/backpack. Same FDCAN capability as the Nucleo, but no debugger. Check the WeAct repo for whether a transceiver is fitted (assumed not). ASSUMED default balance controller (D7): 3\u00d7 FDCAN (motors + J501 link), 170 MHz Cortex-M4F with FPU, UART for the VN-100; needs CAN transceivers.",
+  "preferred": true
  },
  {
   "id": "st-nucleo-h723zg",

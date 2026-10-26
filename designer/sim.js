@@ -36,18 +36,26 @@ const stage = createStage($('#app'), { height: 0.75, screenshots: true });
 const state = { height: 0.6, pitch: 0, rollMM: 0, speed: 0, wheel: 0, alive: true, design: null, robot: null, result: null, replay: null };
 const terrain = new THREE.Group();
 stage.root.add(terrain);
+// an outdoor yard: ground that takes light (headlight pools, the laser dot) and a few props
+const yard = new THREE.Mesh(new THREE.CircleGeometry(18, 72), new THREE.MeshStandardMaterial({ color: 0x24302a, roughness: 1 }));
+yard.rotation.x = -Math.PI / 2;
+yard.position.y = 0.0004;
+yard.receiveShadow = true;
+stage.root.add(yard);
 const darts = createDarts(stage.root);
-const gun = { pan: 0, tilt: -0.05, mag: 24, capacity: 24, queue: [], attached: true, showFov: false, lastShot: -1 };
+const gun = { pan: 0, tilt: -0.05, mag: 24, capacity: 24, queue: [], attached: true, showFov: false, lastShot: -1, laser: true, headlights: true };
 
 async function loadDesign(value) {
   const design = value === '@designer' ? fromDesigner : await getJson(`../${value}`);
   state.design = design;
   state.result = evaluate(design, catalog, materials);
-  if (state.robot) stage.root.remove(state.robot.group);
+  if (state.robot) { stage.root.remove(state.robot.group); if (state.robot.turret) stage.root.remove(state.robot.turret.laser); }
   state.robot = buildRobot(design, catalog, { eyes });
   stage.root.add(state.robot.group);
   stage.frame(state.robot.info.heightM);
   state.robot.fov.visible = gun.showFov;
+  if (state.robot.turret) stage.root.add(state.robot.turret.laser);
+  for (const l of state.robot.lights) { l.spot.visible = gun.headlights; l.lens.material.emissiveIntensity = gun.headlights ? 1.6 : 0.05; }
   if (state.robot.turret) {
     gun.capacity = state.design.head_payload?.magazine_shots ?? 24;
     gun.mag = gun.capacity;
@@ -71,6 +79,35 @@ async function listRuns(value) {
   } catch { /* not simulated yet */ }
 }
 
+const propMeshes = new Map();
+let replayDarts = [];
+// MuJoCo geom types: 2 sphere, 3 capsule, 5 cylinder, 6 box. World frame (x fwd, y left, z up) -> page (y, z, x).
+function propMesh(p) {
+  const [r, g, b, a] = p.rgba;
+  const material = new THREE.MeshStandardMaterial({ color: new THREE.Color(r, g, b), roughness: 0.8, transparent: a < 1, opacity: a, emissive: 0x000000 });
+  let geo;
+  const s = p.size;
+  if (p.type === 6) geo = new THREE.BoxGeometry(2 * s[1], 2 * s[2], 2 * s[0]);
+  else if (p.type === 5) geo = new THREE.CylinderGeometry(s[0], s[0], 2 * s[1], 32);
+  else if (p.type === 3) geo = new THREE.CapsuleGeometry(s[0], 2 * s[1], 6, 12);
+  else if (p.type === 2) geo = new THREE.SphereGeometry(s[0], 16, 12);
+  else return null;
+  const mesh = new THREE.Mesh(geo, material);
+  mesh.position.set(p.pos[1], p.pos[2], p.pos[0]);
+  mesh.quaternion.set(p.quat[2], p.quat[3], p.quat[1], p.quat[0]);
+  mesh.castShadow = mesh.receiveShadow = true;
+  return mesh;
+}
+function dartMesh() {
+  const g = new THREE.Group();
+  const body = new THREE.Mesh(new THREE.CapsuleGeometry(0.0065, 0.045, 4, 10), new THREE.MeshStandardMaterial({ color: 0xff7a1a, roughness: 0.8 }));
+  const tip = new THREE.Mesh(new THREE.SphereGeometry(0.0068, 10, 8), new THREE.MeshStandardMaterial({ color: 0x2b6cff, roughness: 0.6 }));
+  tip.position.y = 0.024;
+  g.add(body, tip);
+  g.traverse((o) => { if (o.isMesh) o.castShadow = true; });
+  return g;
+}
+
 function boxFromMjcf(attrs) {
   const num = (k) => attrs[k]?.split(/\s+/).map(Number);
   const [sx, sy, sz] = num('size'), [px, py, pz] = num('pos'), qq = num('quat') ?? [1, 0, 0, 0];
@@ -87,11 +124,29 @@ async function startReplay(key) {
   if (!key) return;
   const run = await getJson(`../exports/sim/${key}.json`);
   terrain.clear();
-  for (const m of (run.terrain || '').matchAll(/<geom ([^>]*)\/>/g)) {
-    const attrs = Object.fromEntries([...m[1].matchAll(/(\w+)="([^"]*)"/g)].map((a) => [a[1], a[2]]));
-    if (attrs.type === 'box') terrain.add(boxFromMjcf(attrs));
+  propMeshes.clear();
+  for (const p of run.props ?? []) {
+    const mesh = propMesh(p);
+    if (mesh) { terrain.add(mesh); propMeshes.set(p.name, mesh); }
   }
-  state.replay = { run, t: 0, playing: true, rate: 1 };
+  // physics darts: one mesh per dart body, posed from the recorded frames
+  replayDarts = Object.keys(run.qpos_layout ?? {}).filter((n) => n.startsWith('dart_')).map((n) => {
+    const g = dartMesh();
+    stage.root.add(g);
+    return { name: n, adr: run.qpos_layout[n], g };
+  });
+  state.replay = { run, t: 0, playing: true, rate: 1, focus: null };
+  // runs with targets: frame the robot and the targets together, from behind the robot
+  const targetsOnly = (run.props ?? []).filter((p) => /^target_[a-z]+$/.test(p.name));
+  if (targetsOnly.length) {
+    const c = new THREE.Vector3();
+    for (const p of targetsOnly) c.add(new THREE.Vector3(p.pos[1], p.pos[2], p.pos[0]));
+    c.divideScalar(targetsOnly.length);
+    const dir = c.clone().setY(0).normalize();
+    state.replay.focus = c;
+    stage.camera.position.copy(dir.clone().multiplyScalar(-2.2)).add(new THREE.Vector3(-0.9, 1.6, 0));
+    stage.controls.target.copy(c.clone().multiplyScalar(0.45)).setY(0.35);
+  }
   replayPanel.hidden = false;
   scrub.input.max = String(run.frames.qpos.length - 1);
   replayInfo.set([['scenario', run.title], ['result', run.pass ? 'pass' : `FAIL: ${run.reasons.join('; ')}`, run.pass ? 'ok' : 'fail'],
@@ -101,6 +156,8 @@ async function startReplay(key) {
 function stopReplay() {
   state.replay = null;
   terrain.clear();
+  for (const d of replayDarts) stage.root.remove(d.g);
+  replayDarts = [];
   if (typeof replayPanel !== 'undefined') replayPanel.hidden = true;
 }
 
@@ -152,6 +209,7 @@ for (const [label, fn] of [['FIRE', () => queueShots(1)], ['BURST 8', () => queu
 }
 gunSec.appendChild(gunRow);
 toggle(gunSec, 'Turret attached', true, (on) => { gun.attached = on; if (state.robot?.turret) state.robot.turret.group.visible = on; renderGun(); });
+toggle(gunSec, 'Green aiming laser', true, (on) => { gun.laser = on; });
 const fovToggle = toggle(gunSec, 'Show sensor fields of view', false, (on) => { gun.showFov = on; if (state.robot) state.robot.fov.visible = on; });
 
 function queueShots(n) {
@@ -178,7 +236,8 @@ const eyePanel = section(panel, 'Eyes', { note: 'DualEye screens' });
 const eyeChips = chips(eyePanel, eyes.expressions.map((n) => ({ id: n, html: eyesGlyph(n), title: n })), (n) => { eyes.set(n); state.lastExpr = performance.now(); });
 eyeChips.mark('neutral');
 const scene = section(panel, 'Scene');
-slider(scene, { label: 'Light', min: 0, max: 1, step: 0.01, value: 1, fmt: (v) => v.toFixed(2), onInput: (v) => stage.setSceneLight(v) });
+toggle(scene, 'Headlights', true, (on) => { gun.headlights = on; for (const l of state.robot?.lights ?? []) { l.spot.visible = on; l.lens.material.emissiveIntensity = on ? 1.6 : 0.05; } });
+slider(scene, { label: 'Daylight (lower it for dusk)', min: 0, max: 1, step: 0.01, value: 1, fmt: (v) => v.toFixed(2), onInput: (v) => stage.setSceneLight(v) });
 toggle(scene, 'Liveliness (idle motion, blinks, moods)', true, (on) => { state.alive = on; $('#alive').classList.toggle('on', on); });
 $('#alive').onclick = () => { state.alive = !state.alive; $('#alive').classList.toggle('on', state.alive); };
 
@@ -214,18 +273,33 @@ stage.onFrame((t, dt) => {
     if (dot < 0) for (let k = 3; k < 7; k++) qp[k] = A[k] - (B[k] + A[k]) * w;   // shortest path between orientations
     const n = Math.hypot(qp[3], qp[4], qp[5], qp[6]) || 1;
     for (let k = 3; k < 7; k++) qp[k] /= n;
-    state.robot.setFromQpos(qp);
+    state.robot.setFromQpos(qp, R.run.qpos_layout);
     if (R.playing) scrub.set(i);
-    const tt = R.t;                                            // replayed shots: fire when the replay passes each one
-    for (const ev of R.run.events ?? []) {
-      if (ev.type === 'shot' && ev.t <= tt && (R.lastT ?? -1) < ev.t && state.robot.turret) { darts.fire(state.robot.turret.muzzle); state.robot.turret.flash(); }
+    for (const d of replayDarts) {                             // physics darts, from MuJoCo
+      const a = d.adr;
+      d.g.position.set(qp[a + 1], qp[a + 2], qp[a]);
+      d.g.quaternion.set(qp[a + 5], qp[a + 6], qp[a + 4], qp[a + 3]).normalize();
     }
+    const tt = R.t;
+    for (const ev of R.run.events ?? []) {
+      const passed = ev.t <= tt && (R.lastT ?? -1) < ev.t;
+      if (!passed) continue;
+      if (ev.type === 'shot') {
+        state.robot.turret?.flash();
+        if (!replayDarts.length && state.robot.turret) darts.fire(state.robot.turret.muzzle);   // impulse-only runs
+      } else if (ev.type === 'hit') {
+        const m = propMeshes.get(ev.target);
+        if (m) { m.material.emissive.set(0x00f0ff); m.userData.glowT = 0.35; }
+      }
+    }
+    for (const m of propMeshes.values()) if (m.userData.glowT > 0) { m.userData.glowT -= dt; if (m.userData.glowT <= 0) m.material.emissive.set(0x000000); }
     if (tt < (R.lastT ?? 0)) darts.clear();
     R.lastT = tt;
-    if (state.robot.turret) { state.robot.turret.setAim(0, -0.03, 0); state.robot.turret.step(dt); }
+    if (state.robot.turret) { state.robot.turret.step(dt); state.robot.turret.updateLaser([terrain], gun.laser); }
     darts.step(dt);
     const b = state.robot.base.position;
-    stage.controls.target.lerp(new THREE.Vector3(b.x, b.y * 0.8, b.z), 0.1);
+    const follow = R.focus ? new THREE.Vector3(b.x, 0.3, b.z).lerp(R.focus, 0.45) : new THREE.Vector3(b.x, b.y * 0.8, b.z);
+    stage.controls.target.lerp(follow, 0.1);
     eyes.step(t, dt);
     eyes.draw();
     return;
@@ -243,6 +317,7 @@ stage.onFrame((t, dt) => {
   const p = state.robot.setPose({ height, pitch, rollMM: state.rollMM, wheel: state.wheel });
   if (state.robot.turret) {
     state.robot.turret.setAim(gun.pan, gun.tilt, pitch);
+    state.robot.turret.updateLaser([terrain], gun.laser);
     const now = performance.now() / 1000;
     while (gun.queue.length && gun.queue[0] <= now) { gun.queue.shift(); if (!shoot()) { gun.queue = []; break; } }
     state.robot.turret.step(dt);
@@ -266,11 +341,13 @@ if (camAt) { const dist = state.robot.info.heightM * 2.4; stage.camera.position.
 if (q.has('height')) window.__sim?.setHeight?.(+q.get('height'));
 if (q.get('alive') === '0') { state.alive = false; $('#alive').classList.remove('on'); }
 if (q.has('fire')) queueShots(+q.get('fire') || 1);
+if (q.has('light')) stage.setSceneLight(+q.get('light'), true);
 if (q.get('fov') === '1') { gun.showFov = true; fovToggle.checked = true; if (state.robot) state.robot.fov.visible = true; }
 if (q.get('run') && sel.value !== '@designer') {
   const key = `${sel.value.split('/').pop().replace(/\.json$/, '')}/${q.get('run')}`;
   runSel.value = key;
   await startReplay(key);
+  if (q.has('t') && state.replay) { state.replay.t = +q.get('t'); state.replay.playing = q.get('play') === '1'; }
 }
 document.body.dataset.ready = '1';
 

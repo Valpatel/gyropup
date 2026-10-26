@@ -45,7 +45,7 @@
 - id: D7
   date: "2026-10-25"
   title: Which controller runs the 1 kHz balance loop
-  decision: A microcontroller with CAN, from the user's own boards (which one is still open). It runs the 1 kHz loop and owns the motor CAN bus
+  decision: "Assumed for now: a WeAct STM32G474 core board (3× FDCAN, 170 MHz with FPU) with two CAN transceivers runs the 1 kHz loop and owns the motor CAN bus. Swap in one of the user's own boards when named"
   why: Needs a steady 1 kHz loop independent of Linux, CAN for the motors plus CAN to the J501 (2× CAN, or 1× CAN-FD shared), a UART for the VN-100, and an FPU. Waiting for the user's list of boards.
   status: open
   source: {kind: user, quote: "Why a teensy 4.1? I don't have one of those but I have other microcontrollers with CAN I think."}
@@ -170,3 +170,10 @@
   status: decided
   source: {kind: user, quote: "Oh dewalt batteries are actually a really good idea, I have the 60V kind..."}
   alternatives: [8S LiFePO4 custom A123 pack (designs/lfp-8s4p.json), one FLEXVOLT in 20 V mode (designs/flexvolt-20v.json), one FLEXVOLT in 60 V mode (designs/flexvolt-60v.json)]
+- id: D24
+  date: "2026-10-25"
+  title: Assumptions to keep moving
+  decision: "Where a fact was missing, a reasonable assumption is used and labelled as assumed: FLEXVOLT pack size about 157 × 92 × 110 mm; a WeAct STM32G474 balance controller; a pair of 20 W 12–30 V LED pods as headlights; turret pan/tilt torques (5 and 3 N·m) and a 40/60 pan/tilt mass split; darts of 1 g at 24 m/s with drag only"
+  why: The user asked to make things up where needed and keep going until the design is realistic, fires darts in simulation and has forward lights.
+  status: decided
+  source: {kind: user, quote: "Can you just make things up and keep going independently until we have a realistic design that fires darts in sim, has forward facing lights, and is awesome?"}

@@ -68,12 +68,13 @@ class Robot:
         self.vadr = {n: j(n).dofadr[0] for n in self.qadr}
         self.act = {n: model.actuator(n).id for n in self.qadr}
         self.base = model.body('base').id
+        self.bodies = [i for i in range(1, model.nbody) if model.body_rootid[i] == self.base]   # the robot only, not darts or props
         self.wheels = [model.body('wheel_l').id, model.body('wheel_r').id]
         self.leg_peak = info['leg_actuator']['peak_nm']
         self.leg_omega = info['leg_actuator']['omega_max']
         self.wheel_peak = info['wheel_motor']['peak_nm']
         self.wheel_omega = info['wheel_motor']['omega_max']
-        self.total_mass = float(sum(model.body_mass))
+        self.total_mass = float(sum(model.body_mass[i] for i in self.bodies))
 
     def height_m(self, frac):
         return self.h_min + (self.h_max - self.h_min) * frac
@@ -142,7 +143,7 @@ class Controller:
         m = self.robot.m
         wheel_set = set(self.robot.wheels)
         Mb, com = 0.0, np.zeros(3)
-        for i in range(1, m.nbody):
+        for i in self.robot.bodies:
             if i in wheel_set:
                 continue
             Mb += m.body_mass[i]
@@ -151,7 +152,7 @@ class Controller:
         axle = (data.xpos[self.robot.wheels[0]] + data.xpos[self.robot.wheels[1]]) / 2
         l = float(np.linalg.norm((com - axle)[[0, 2]]))
         Ib = 0.0
-        for i in range(1, m.nbody):
+        for i in self.robot.bodies:
             if i in wheel_set:
                 continue
             R = data.ximat[i].reshape(3, 3)
@@ -199,7 +200,7 @@ class Controller:
         # pendulum angle: body centre of mass relative to the axle, in the heading's vertical plane
         wheel_set = set(rb.wheels)
         com = np.zeros(3); Mb = 0.0
-        for i in range(1, m.nbody):
+        for i in rb.bodies:
             if i in wheel_set:
                 continue
             com += m.body_mass[i] * data.xipos[i]; Mb += m.body_mass[i]

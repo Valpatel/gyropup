@@ -156,6 +156,12 @@ export const CHAPTERS = [
     slot: 'eyes', filter: (i) => i.category === 'display', optional: true,
   },
   {
+    id: 'headlights', title: 'Lights for driving at dusk',
+    story: () => `Two forward LED pods light the ground ahead for driving outside after dark, and make Gyropup easy to `
+      + `spot. They run from the 12 V rail with the lidar.`,
+    slot: 'headlights', filter: (i) => i.category === 'light', optional: true,
+  },
+  {
     id: 'character', title: 'Give it a personality',
     story: () => `Gyropup is a friendly robot, not a tool on wheels: a warm colour, a face with eyes, and motion `
       + `with a little bounce. (The cute-but-it-works lesson comes from Open Duck Mini, a design reference, not a look `

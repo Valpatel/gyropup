@@ -46,6 +46,12 @@ def summarize(path: Path) -> dict:
         out['metrics'].append({'label': 'simulated scenarios passed', 'value': f"{sm['passed']}/{sm['total']}",
                                'level': '' if sm['passed'] == sm['total'] else 'fail'})
         out['links'].insert(0, {'title': 'Simulation results', 'href': f'designer/results.html#{path.stem}'})
+        tgt = R / 'exports' / 'sim' / path.stem / 'targets.json'
+        if tgt.is_file():
+            tr = json.loads(tgt.read_text()).get('turret') or {}
+            if tr.get('shots'):
+                out['metrics'].append({'label': 'darts on target (sim)', 'value': f"{tr['hits']}/{tr['shots']}"})
+                out['links'].insert(1, {'title': 'Watch it shoot', 'href': f'designer/sim.html?design={path.relative_to(R).as_posix()}&run=targets'})
         if sm['passed'] < sm['total'] and out['verdict'] == 'ok':
             out['verdict'] = 'warn'
     return out
