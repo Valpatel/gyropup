@@ -2,19 +2,19 @@
  "design": "designs/default.json",
  "parts": {
   "chassis": {
-   "volume_cm3": 337.673,
-   "area_cm2": 2305.44,
+   "volume_cm3": 663.944,
+   "area_cm2": 2347.36,
    "wall_mm": 500.0,
    "infill": 1.0,
    "effective_fill": 1.0,
-   "mass_g": 911.7,
+   "mass_g": 723.7,
    "estimate": true,
-   "material": "al6061",
+   "material": "pa6-cf",
    "qty": 1,
    "com_m": [
-    -0.002002205158065662,
-    1.1032250359702152e-16,
-    0.013507258069380208
+    -0.001686124907393556,
+    1.78845785328451e-17,
+    0.01822244775128591
    ]
   },
   "battery_cradle": {
@@ -23,14 +23,14 @@
    "wall_mm": 2.0,
    "infill": 0.4,
    "effective_fill": 0.953,
-   "mass_g": 52.3,
+   "mass_g": 52.7,
    "estimate": true,
-   "material": "pla",
+   "material": "petg",
    "qty": 1,
    "com_m": [
     -0.02434656687276276,
     -4.9532718463516404e-18,
-    -0.012544419134396348
+    -0.011544419134396347
    ]
   },
   "head_saddle": {
@@ -39,9 +39,9 @@
    "wall_mm": 2.0,
    "infill": 0.4,
    "effective_fill": 0.922,
-   "mass_g": 105.3,
+   "mass_g": 106.1,
    "estimate": true,
-   "material": "pla",
+   "material": "petg",
    "qty": 1,
    "com_m": [
     -5.008335228371117e-18,
@@ -55,9 +55,9 @@
    "wall_mm": 2.0,
    "infill": 0.4,
    "effective_fill": 0.918,
-   "mass_g": 63.8,
+   "mass_g": 64.3,
    "estimate": true,
-   "material": "pla",
+   "material": "petg",
    "qty": 1,
    "com_m": [
     0.0942244695460926,
@@ -71,9 +71,9 @@
    "wall_mm": 2.0,
    "infill": 0.4,
    "effective_fill": 0.976,
-   "mass_g": 34.2,
+   "mass_g": 34.4,
    "estimate": true,
-   "material": "pla",
+   "material": "petg",
    "qty": 2,
    "com_m": [
     0.10600018373723562,
@@ -87,9 +87,9 @@
    "wall_mm": 2.0,
    "infill": 0.4,
    "effective_fill": 0.775,
-   "mass_g": 61.4,
+   "mass_g": 61.9,
    "estimate": true,
-   "material": "pla",
+   "material": "petg",
    "qty": 1,
    "com_m": [
     -3.1761045091803227e-18,
@@ -114,151 +114,151 @@
    ]
   },
   "yoke_bracket": {
-   "volume_cm3": 183.873,
-   "area_cm2": 970.0,
+   "volume_cm3": 596.537,
+   "area_cm2": 1581.01,
    "wall_mm": 500.0,
    "infill": 1.0,
    "effective_fill": 1.0,
-   "mass_g": 496.5,
+   "mass_g": 650.2,
    "estimate": true,
-   "material": "al6061",
+   "material": "pa6-cf",
    "qty": 2,
    "com_m": [
-    9.9539342840855e-06,
-    0.15659582519461068,
-    0.08061293643422501
+    6.13628886171154e-06,
+    0.17765205433117592,
+    0.09260208619953982
    ]
   },
   "hip_motor_plate": {
-   "volume_cm3": 154.872,
-   "area_cm2": 412.59,
+   "volume_cm3": 378.497,
+   "area_cm2": 578.91,
    "wall_mm": 500.0,
    "infill": 1.0,
    "effective_fill": 1.0,
-   "mass_g": 418.2,
+   "mass_g": 412.6,
    "estimate": true,
-   "material": "al6061",
+   "material": "pa6-cf",
    "qty": 2,
    "com_m": [
-    -1.1199672388879419e-17,
-    0.17238413417106074,
-    -0.030103469231042866
+    -2.087530046386989e-20,
+    0.18109827974326154,
+    -0.039667354586961336
    ]
   },
   "hip_output_adapter": {
-   "volume_cm3": 39.423,
-   "area_cm2": 126.74,
+   "volume_cm3": 63.54,
+   "area_cm2": 172.35,
    "wall_mm": 500.0,
    "infill": 1.0,
    "effective_fill": 1.0,
-   "mass_g": 106.4,
+   "mass_g": 69.3,
    "estimate": true,
-   "material": "al6061",
+   "material": "pa6-cf",
    "qty": 2,
    "com_m": [
-    -1.5870781919756515e-05,
-    0.17372716522856071,
-    -1.5870781919755973e-05
+    -5.05904951166821e-07,
+    0.18201650388892157,
+    -5.059049511644744e-07
    ]
   },
   "knee_output_adapter": {
-   "volume_cm3": 39.423,
-   "area_cm2": 126.74,
+   "volume_cm3": 63.54,
+   "area_cm2": 172.35,
    "wall_mm": 500.0,
    "infill": 1.0,
    "effective_fill": 1.0,
-   "mass_g": 106.4,
+   "mass_g": 69.3,
    "estimate": true,
-   "material": "al6061",
+   "material": "pa6-cf",
    "qty": 2,
    "com_m": [
-    -1.5870781919756145e-05,
-    0.241672834771439,
-    1.5870781919754797e-05
+    -5.059049511665417e-07,
+    0.2795834961110783,
+    5.059049511666464e-07
    ]
   },
   "knee_motor_plate": {
-   "volume_cm3": 154.872,
-   "area_cm2": 412.59,
+   "volume_cm3": 378.497,
+   "area_cm2": 578.91,
    "wall_mm": 500.0,
    "infill": 1.0,
    "effective_fill": 1.0,
-   "mass_g": 418.2,
+   "mass_g": 412.6,
    "estimate": true,
-   "material": "al6061",
+   "material": "pa6-cf",
    "qty": 2,
    "com_m": [
-    -1.3492634306414544e-17,
-    0.24301586582893908,
-    0.03010346923104287
+    6.863318210063703e-20,
+    0.28050172025673836,
+    0.03966735458696136
    ]
   },
   "thigh": {
-   "volume_cm3": 139.648,
-   "area_cm2": 649.85,
+   "volume_cm3": 331.951,
+   "area_cm2": 926.46,
    "wall_mm": 500.0,
    "infill": 1.0,
    "effective_fill": 1.0,
-   "mass_g": 377.1,
+   "mass_g": 361.8,
    "estimate": true,
-   "material": "al6061",
+   "material": "pa6-cf",
    "qty": 2,
    "com_m": [
-    0.00012889521260614126,
-    0.19379514892394215,
-    -0.1053063457355555
+    0.00017670103206396238,
+    0.21520483540824464,
+    -0.0995914346216837
    ]
   },
   "shin": {
-   "volume_cm3": 115.587,
-   "area_cm2": 584.11,
+   "volume_cm3": 245.135,
+   "area_cm2": 671.13,
    "wall_mm": 500.0,
    "infill": 1.0,
    "effective_fill": 1.0,
-   "mass_g": 312.1,
+   "mass_g": 267.2,
    "estimate": true,
-   "material": "al6061",
+   "material": "pa6-cf",
    "qty": 2,
    "com_m": [
-    0.0009392340580839535,
-    0.23979778427028198,
-    -0.29749320556827924
+    0.0005049164924342392,
+    0.2668463585203297,
+    -0.32537533110617683
    ]
   },
   "knee_crank": {
-   "volume_cm3": 43.715,
-   "area_cm2": 145.99,
+   "volume_cm3": 66.363,
+   "area_cm2": 169.71,
    "wall_mm": 500.0,
    "infill": 1.0,
    "effective_fill": 1.0,
-   "mass_g": 118.0,
+   "mass_g": 72.3,
    "estimate": true,
-   "material": "al6061",
+   "material": "pa6-cf",
    "qty": 2,
    "com_m": [
-    0.002855089010499737,
-    0.22988061892044703,
-    -0.010655337247316184
+    0.0033808224173378513,
+    0.25996401355103926,
+    -0.012617401032872531
    ]
   },
   "wheel_adapter": {
-   "volume_cm3": 13.339,
-   "area_cm2": 81.4,
+   "volume_cm3": 23.493,
+   "area_cm2": 98.67,
    "wall_mm": 500.0,
    "infill": 1.0,
    "effective_fill": 1.0,
-   "mass_g": 36.0,
+   "mass_g": 25.6,
    "estimate": true,
-   "material": "al6061",
+   "material": "pa6-cf",
    "qty": 2,
    "com_m": [
-    -9.971830892010607e-18,
-    0.2552625176049073,
-    -0.4000000000000003
+    -3.4768942068772596e-18,
+    0.28535737240976955,
+    -0.3999999999999999
    ]
   }
  },
- "made_total_g": 6143.7,
+ "made_total_g": 5862.3,
  "estimate": true,
  "note": "printed parts at 2 mm walls and 40 % infill; metal parts solid; weigh the real parts"
 }

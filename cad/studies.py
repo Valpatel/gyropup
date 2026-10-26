@@ -17,9 +17,10 @@ so the real number lies between; the bench test in docs/cad-plan.md (S4) measure
     S1 the wheel's peak force at the WH face, with the moment of the lateral grip about the axle (tyre radius) and of
        the vertical load about the WH face (the wheel's offset)
 
-Each part is studied in printed PA6-CF and in 6061 aluminium. Targets (docs/mechanical-interfaces.md): printed
-safety factor >= 2 on layer strength, metal >= 2 on yield; leg deflection at the wheel <= 2 mm. Writes
-exports/fea/<part>-<case>-<material>.png and exports/fea/summary.json.
+Each part is studied in its own material (leg.leg_parts: PA6-CF along or across the layers, humid allowables).
+Targets (docs/mechanical-interfaces.md): safety factor >= 2 everyday, >= 1.2 in falls; leg deflection at the wheel
+<= 4 mm (printed). Writes exports/fea/<part>-<case>.png, an overload video exports/fea/<part>-<case>.mp4 (the load
+ramped to failure and past it; --no-anim skips them) and exports/fea/summary.json.
 """
 from __future__ import annotations
 
@@ -67,6 +68,10 @@ def worst_link_loads(stem: str, falls: bool = False) -> dict:
 # rough ground). Each case uses the larger of the simulated load and this floor.
 FLOOR = {'vertical_x_static': 2.5,      # vertical wheel load, times the static load per wheel
          'lateral_g': 0.5}              # sideways grip on one wheel, as a fraction of the whole robot's weight
+# Printed parts: everyday SF 2 and falls 1.2 on humid, knocked-down allowables (cadagent.fea pa6_cf_*); the leg may
+# flex up to 4 mm at the wheel (plastic is ~20x softer than aluminium; the balance loop tolerates it, the sim checks)
+TARGETS = {'sf': 2.0, 'sf_fall': 1.2, 'wheel_deflection_mm': 4.0}
+FEA_MATERIAL = {'output_adapter': 'pa6_cf_z', 'motor_plate': 'pa6_cf_xy'}
 
 
 def cases(loads: dict, L: dict, S, crank_r: float, mass_kg: float = 20.0, floor: bool = True) -> dict:
@@ -105,7 +110,38 @@ def cases(loads: dict, L: dict, S, crank_r: float, mass_kg: float = 20.0, floor:
     return {'T1': t1, 'T2': t2, 'S1': s1}
 
 
-def run(design: Path, mesh: float):
+# The printed adapter on a motor's output: the torque goes through the clamp of the motor's screws (friction) and the
+# dowels bearing on the plastic. Preload is limited by what PA6-CF takes under a DIN 9021 washer without creeping away.
+JOINT = {'bearing_mpa': 40.0,           # PA6-CF (humid) under a pin or washer, sustained: compressive allowable
+         'washer_mpa': 25.0,            # sustained pressure under a screw's washer (creep), sets the usable preload
+         'mu': 0.25,                    # PA6-CF on the anodised output flange
+         'washer_od': {'M3': 9.0, 'M4': 12.0, 'M5': 15.0, 'M6': 18.0}}
+
+
+def output_joint(mi: dict, design: dict) -> dict:
+    """Torque the screws' friction plus the dowels can carry at a motor's output, against the motor's (capped) peak."""
+    o = mi['output']
+    b, dw = o['bolts'], o['dowels']
+    cat = json.loads((R / 'catalog/leg_actuators.json').read_text())
+    items = cat if isinstance(cat, list) else cat.get('parts') or cat.get('items') or list(cat.values())
+    peak = next((p['specs']['peak_torque_nm'] for p in items if isinstance(p, dict) and p.get('id') == mi['id']), 60.0)
+    T = min(float(design.get('leg_torque_limit_nm') or peak), float(peak))
+    clear_d = gmi.clear(b['thread'])
+    area = math.pi / 4 * (JOINT['washer_od'][b['thread']] ** 2 - clear_d ** 2)
+    preload = JOINT['washer_mpa'] * area                               # N per screw
+    r_b = b['pcd'] / 2 / 1000
+    friction = b['count'] * preload * JOINT['mu'] * r_b
+    pins = 0.0
+    if dw:
+        engage = (dw.get('protrusion') or 3.0) if dw.get('installed') else 16.0
+        pins = dw['count'] * JOINT['bearing_mpa'] * dw['d'] * engage * dw['pcd'] / 2 / 1000
+    cap = friction + pins
+    return {'torque_nm': round(T, 1), 'screws': f"{b['count']} x {b['thread']} on Ø{b['pcd']:g}, {preload / 1000:.1f} kN each",
+            'friction_nm': round(friction, 1), 'dowels_nm': round(pins, 1), 'capacity_nm': round(cap, 1), 'sf': round(cap / T, 2),
+            'note': 'clamp friction + dowel bearing on PA6-CF (humid, sustained); torque the screws to the preload, re-check after a week'}
+
+
+def run(design: Path, mesh: float, anim: bool = True):
     out = subprocess.run(['node', str(R / 'tools/derive.mjs'), str(design)], capture_output=True, text=True, check=True)
     L = json.loads(out.stdout)['layout']
     d = json.loads(design.read_text())
@@ -120,14 +156,21 @@ def run(design: Path, mesh: float):
     OUT.mkdir(parents=True, exist_ok=True)
     results = []
 
-    def study(part, case, material, setup):
+    VIEWS = {'thigh': (15, -115), 'shin': (15, -115), 'yoke_bracket': (25, -40)}
+
+    def study(part, case, material=None, setup=None, tag=''):
         t0 = time.time()
+        material = material or meta.get(part, {}).get('fea_material') or FEA_MATERIAL.get(part, 'pa6_cf_z')
         st = Study(parts[part], MATERIALS[material], mesh_mm=mesh, name=f'{part} {case}')
         setup(st)
         r = st.solve()
-        png = OUT / f'{part}-{case}-{material}.png'
-        st.render(png, title=f"{part} {case} ({MATERIALS[material].name}): SF {r['safety_factor']}, "
+        png = OUT / f'{part}-{case}{tag}.png'
+        st.render(png, view=VIEWS.get(part, (25, -60)), title=f"{part} {case}{tag} ({MATERIALS[material].name}): SF {r['safety_factor']}, "
                              f"{r['probe_displacement_mm'] and round(math.hypot(*r['probe_displacement_mm']), 2)} mm at the load")
+        if anim:
+            mp4 = st.animate(OUT / f'{part}-{case}{tag}.mp4', view=VIEWS.get(part, (25, -60)),
+                             title=f"{part} {case}{tag}: {MATERIALS[material].name}")
+            r['animation'] = str(Path(mp4).relative_to(R))
         r.update(part=part, case=case, material_id=material, load_from=C[case]['from'], png=str(png.relative_to(R)),
                  seconds=round(time.time() - t0, 1), assumed_interfaces=assumed)
         results.append(r)
@@ -157,10 +200,9 @@ def run(design: Path, mesh: float):
         m = C['S1']['moments']['x']
         st.torque(wh_bolts, (0, S.y['shin'][1], -a - b), (1, 0, 0), m, probe=False)
 
-    for material in ('al6061',):
-        study('thigh', 'T1', material, thigh_setup('T1'))
-        study('thigh', 'T2', material, thigh_setup('T2'))
-        study('shin', 'S1', material, shin_setup)
+    study('thigh', 'T1', setup=thigh_setup('T1'))
+    study('thigh', 'T2', setup=thigh_setup('T2'))
+    study('shin', 'S1', setup=shin_setup)
 
     # --- the joint hardware, in each part's own motor frame (axis z, output face z = 0, robot "up" = +y)
     import numpy as np
@@ -206,9 +248,9 @@ def run(design: Path, mesh: float):
         st.torque(drops, (0, yc, 0), (1, 0, 0), M_out, probe=False)
         st.torque(drops, (0, yc, 0), (0, 1, 0), T_mot, probe=False)
 
-    study('output_adapter', 'A1', 'al6061', adapter_setup)
-    study('motor_plate', 'P1', 'al6061', plate_setup)
-    study('yoke_bracket', 'Y1', 'al6061', yoke_setup)
+    study('output_adapter', 'A1', setup=adapter_setup)
+    study('motor_plate', 'P1', setup=plate_setup)
+    study('yoke_bracket', 'Y1', setup=yoke_setup)
 
     # --- falls: the same parts under the fall scenarios' loads (no floor), against the lower fall target
     fall_loads = worst_link_loads(design.stem, falls=True)
@@ -222,43 +264,46 @@ def run(design: Path, mesh: float):
         T_mot = abs(fall_loads['shin_l']['force']['moment_with_force_body'][1])
         C['Y1'] = {'from': f"falls: the whole leg, {leg_f[2]:.0f} N up, {abs(leg_f[1]):.0f} N sideways, {M_out:.0f} N·m out of plane"}
         n0 = len(results)
-        study('thigh', 'T1', 'al6061', thigh_setup('T1'))
-        study('thigh', 'T2', 'al6061', thigh_setup('T2'))
-        study('shin', 'S1', 'al6061', shin_setup)
-        study('yoke_bracket', 'Y1', 'al6061', yoke_setup)
+        C = {**C, **{k + '-fall': v for k, v in C.items()}}
+        study('thigh', 'T1', setup=thigh_setup('T1'), tag='-fall')
+        study('thigh', 'T2', setup=thigh_setup('T2'), tag='-fall')
+        study('shin', 'S1', setup=shin_setup, tag='-fall')
+        study('yoke_bracket', 'Y1', setup=yoke_setup, tag='-fall')
         fall_results = results[n0:]
         for r in fall_results:
             r['case'] += '-fall'
         results[:] = normal_results
-        C = {**C_normal, **{k + '-fall': v for k, v in C.items()}}
+        C = {**C_normal, **{k: v for k, v in C.items() if k.endswith('-fall')}}
 
     # leg deflection at the wheel: thigh tip (worst case) carried down the shin, plus the shin's own
     summary = {'design': str(design.relative_to(R)), 'mesh_mm': mesh, 'cases': C, 'stack_mm': S.y, 'track_mm': S.track,
                'stack_notes': S.notes, 'assumed_interfaces': assumed, 'results': results,
-               'targets': {'printed_sf': 2.0, 'metal_sf': 2.0, 'metal_sf_fall': 1.2, 'wheel_deflection_mm': 2.0}}
+               'targets': TARGETS}
     summary['results'] = results + fall_results
-    by = {(r['part'], r['case'], r['material_id']): r for r in results}
-    verdict = {}
-    for material in ('al6061',):
-        dt = max(math.hypot(*by[('thigh', c, material)]['probe_displacement_mm']) for c in ('T1', 'T2'))
-        ds = math.hypot(*by[('shin', 'S1', material)]['probe_displacement_mm'])
-        # the thigh tip's slope also swings the shin: approximate by the tip deflection scaled by (a + b) / a
-        total = dt * (a + b) / a + ds
-        sf = min(r['safety_factor'] for r in results if r['material_id'] == material)
-        sf_fall = min((r['safety_factor'] for r in fall_results), default=None)
-        verdict[material] = {'wheel_deflection_mm': round(total, 2), 'min_safety_factor': sf, 'min_safety_factor_fall': sf_fall,
-                             'ok': total <= 2.0 and sf >= 2.0 and (sf_fall is None or sf_fall >= 1.2)}
+    by = {(r['part'], r['case']): r for r in results}
+    dt = max(math.hypot(*by[('thigh', c)]['probe_displacement_mm']) for c in ('T1', 'T2'))
+    ds = math.hypot(*by[('shin', 'S1')]['probe_displacement_mm'])
+    # the thigh tip's slope also swings the shin: approximate by the tip deflection scaled by (a + b) / a
+    total = dt * (a + b) / a + ds
+    sf = min(r['safety_factor'] for r in results)
+    sf_fall = min((r['safety_factor'] for r in fall_results), default=None)
+    weakest = min(results + fall_results, key=lambda r: r['safety_factor'] / (TARGETS['sf_fall'] if r['case'].endswith('fall') else TARGETS['sf']))
+    verdict = {'all': {'wheel_deflection_mm': round(total, 2), 'min_safety_factor': sf, 'min_safety_factor_fall': sf_fall,
+                       'weakest': f"{weakest['part']} {weakest['case']}",
+                       'ok': total <= TARGETS['wheel_deflection_mm'] and sf >= TARGETS['sf'] and (sf_fall is None or sf_fall >= TARGETS['sf_fall'])}}
     # the push-rod (bought tube and rod ends): Euler buckling, pinned both ends, and the rod ends' static rating
     pr = gmi.STD['PR']
-    E = 200000.0 if 'steel' in pr['tube'] else 64000.0
-    I = math.pi * (pr['tube_od'] ** 4 - pr['tube_id'] ** 4) / 64
+    E = 200000.0                                                # steel threaded rod (the root diameter carries it)
+    I = math.pi * pr['rod_root_d'] ** 4 / 64 if pr.get('rod_root_d') else math.pi * (pr['tube_od'] ** 4 - pr['tube_id'] ** 4) / 64
     P = C['T1']['rod_force_n']
     P_cr = math.pi ** 2 * E * I / (a ** 2)
     rod_end_static = {6: 4600.0, 8: 7800.0, 10: 11200.0}.get(int(pr['rod_end_eye_d']), 4000.0)   # igus KBRM-xx static radial (approx.)
     summary['rod'] = {'force_n': round(P), 'buckling_n': round(P_cr), 'buckling_sf': round(P_cr / P, 1), 'rod_end_static_n': rod_end_static,
                       'rod_end_sf': round(rod_end_static / P, 1), 'sin_phi_min': round(C['T1']['sin_phi'], 3)}
-    verdict['al6061']['rod_ok'] = P_cr / P >= 3 and rod_end_static / P >= 2
-    verdict['al6061']['ok'] = verdict['al6061']['ok'] and verdict['al6061']['rod_ok']
+    summary['output_joint'] = output_joint(S.hip, d)
+    verdict['all']['joint_ok'] = summary['output_joint']['sf'] >= TARGETS['sf']
+    verdict['all']['rod_ok'] = P_cr / P >= 3 and rod_end_static / P >= 2
+    verdict['all']['ok'] = verdict['all']['ok'] and verdict['all']['rod_ok'] and verdict['all']['joint_ok']
     summary['verdict'] = verdict
     (OUT / 'summary.json').write_text(json.dumps(summary, indent=1, default=lambda o: list(o) if isinstance(o, tuple) else str(o)) + '\n')
     print('verdict', json.dumps(verdict))
@@ -269,5 +314,6 @@ if __name__ == '__main__':
     ap = argparse.ArgumentParser()
     ap.add_argument('design', nargs='?', default=str(R / 'designs/default.json'))
     ap.add_argument('--mesh', type=float, default=4.0)
+    ap.add_argument('--no-anim', action='store_true', help='skip the overload videos (the optimiser)')
     a = ap.parse_args()
-    run(Path(a.design).resolve(), a.mesh)
+    run(Path(a.design).resolve(), a.mesh, anim=not a.no_anim)

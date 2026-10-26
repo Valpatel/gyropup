@@ -35,7 +35,7 @@
     "imu": "vectornav-vn-100-rugged",
     "balance_mcu": null,
     "can_transceiver": null,
-    "leg_actuator": "robstride-rs-03",
+    "leg_actuator": "robstride-rs-04",
     "wheel_motor": "odrive-botwheel",
     "motor_driver": "flipsky-75100",
     "battery": "dewalt-dcb609",
@@ -98,5 +98,6 @@
   },
   "part_qty": {
     "can_transceiver": 2
-  }
+  },
+  "leg_torque_limit_nm": 60
 }

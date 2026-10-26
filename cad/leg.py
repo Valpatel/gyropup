@@ -26,9 +26,10 @@ STD = gmi.STD
 # Sizes the optimiser varies (tools/iterate.py). Defaults are the current design; GYROPUP_CAD_PARAMS names a JSON file
 # that overrides any of them for one trial.
 PARAMS = {
-    'link_w': 40.0, 'link_t': 30.0, 'wall': 2.5,      # thigh: a closed 6061 box section, x by y, wall (sized by the FEA)
-    'shin_w': 34.0, 'shin_wall': 2.0,                 # the shin carries less
-    'yoke_t': 4.0, 'yoke_depth': 40.0, 'yoke_gusset': 80.0,   # the yoke: sheet thickness, side-flange depth, gusset length
+    'link_w': 60.0, 'link_t': 44.0, 'wall': 5.0,      # thigh: a closed printed box section, x by y, wall (sized by the FEA)
+    'shin_w': 50.0, 'shin_wall': 4.0,                 # the shin carries less
+    'yoke_t': 8.0, 'yoke_depth': 50.0, 'yoke_gusset': 80.0,   # the yoke: wall thickness, side-flange depth, gusset length
+    'crank_t': 14.0,                                  # knee crank thickness
     'crank_r': STD['PR']['crank_r'],
     'lever_beta_deg': STD['PR']['lever_beta_deg'],   # crank and lever direction, from the forward perpendicular (- = towards the foot)
 }
@@ -36,6 +37,7 @@ if os.environ.get('GYROPUP_CAD_PARAMS'):
     PARAMS.update(json.loads(Path(os.environ['GYROPUP_CAD_PARAMS']).read_text()))
 LINK_W, LINK_T, WALL = PARAMS['link_w'], PARAMS['link_t'], PARAMS['wall']
 SHIN_W, SHIN_WALL = PARAMS['shin_w'], PARAMS['shin_wall']
+CRANK_T = PARAMS['crank_t']
 YOKE_T, YOKE_DEPTH, YOKE_GUSSET = PARAMS['yoke_t'], PARAMS['yoke_depth'], PARAMS['yoke_gusset']
 CABLE_PASSES = [(-40.0, 20.0), (40.0, 0.0)]   # through the yoke's wall plate and the chassis side: wheel harness, motor leads
 
@@ -95,7 +97,7 @@ def stack(L: dict, hip_id: str, knee_id: str, wheel_id: str) -> Stack:
     y['hip_tab'] = (y['hip_out'] + hpl['tab_z'][0], y['hip_out'] + hpl['tab_z'][1])   # the plate's top tab (bracket bolts)
     y['thigh'] = (y['hip_face'], y['hip_face'] + LINK_T)
     y['rod'] = (y['thigh'][1] + 1.5, y['thigh'][1] + 1.5 + pr['rod_end_ball_w'])
-    y['crank'] = (y['rod'][1] + 1.5, y['rod'][1] + 1.5 + 10.0)
+    y['crank'] = (y['rod'][1] + 1.5, y['rod'][1] + 1.5 + CRANK_T)
     y['knee_face'] = y['crank'][1]
     y['knee_out'] = y['knee_face'] + kad['z_face']                        # the knee motor's output face (it faces -y)
     y['knee_plate'] = (y['knee_out'] - kpl['z'][1], y['knee_out'] - kpl['z'][0])
@@ -139,11 +141,11 @@ def hm_dowels():
 
 
 def yoke_bracket(S: Stack, L: dict):
-    """The yoke: a bent-sheet hat channel (6061 or 5052, YOKE_T thick). A deck over both motors, two deep side flanges
+    """The yoke: a printed PA6-CF hat channel (walls YOKE_T thick). A deck over both motors, two deep side flanges
     (front and back, YOKE_DEPTH deep) that carry the leg's out-of-plane moment, gusseted down to a wall flange on the
-    chassis side (HM: 6 x M6 + 2 dowels, and the cable passes), and two drop plates bolted to the top tabs of the hip
-    and knee motor plates (3 x M5 each). With the three posts between the plates it closes a box around the joint.
-    (rev 0.2 was a machined block: 961 g.)"""
+    chassis side (HM: 6 x M6 through-bolts with nuts inside the chassis, 2 dowels, and the cable passes), and two drop
+    walls screwed to the top tabs of the hip and knee motor plates (3 x M5 into inserts each). With the three posts
+    between the plates it closes a box around the joint. Printed on its wall flange."""
     ac = STD['AC-L']
     t, H, G = YOKE_T, YOKE_DEPTH, YOKE_GUSSET
     tab_top = max(S.hip['plate']['tab_top'], S.knee['plate']['tab_top'])
@@ -175,17 +177,16 @@ def yoke_bracket(S: Stack, L: dict):
         b = b.cut(_ycyl(STD['HM']['dowel_d'] / 2 + 0.02, y0 - 1, y0 + t + 1, x, z))
     for k in range(ac['bracket_bolts']):
         x = (k - (ac['bracket_bolts'] - 1) / 2) * ac['plate_r'] * 0.4
-        b = b.cut(_ycyl(gmi.clear(ac['bracket_thread']) / 2, ydh - t - 1, ydh + 1, x, S.hip['plate']['tab_top'] - 8))
-        b = b.cut(_ycyl(gmi.clear(ac['bracket_thread']) / 2, ydk - 1, ydk + t + 1, x, S.knee['plate']['tab_top'] - 8))
+        b = b.cut(_ycyl(gmi.clear(ac['bracket_thread']) / 2, ydh - t - 1, ydh + 1, x, S.hip['plate']['tab_top'] - gmi.BRACKET_DROP))
+        b = b.cut(_ycyl(gmi.clear(ac['bracket_thread']) / 2, ydk - 1, ydk + t + 1, x, S.knee['plate']['tab_top'] - gmi.BRACKET_DROP))
     for (x, z) in CABLE_PASSES:                    # the same holes as the chassis wall
         b = b.cut(_ycyl(STD['CP']['grommet_hole'] / 2, y0 - 1, y0 + t + 1, x, z))
-    for x in (-27.5, 27.5):                       # lightening windows in the deck, clear of the drops and the flanges
-        b = b.cut(cq.Workplane('XY').box(30, max(10.0, ydh - y0 - 3 * t - 14), t + 2).translate((x, (y0 + ydh) / 2, deck_z)))
-    return b
+    return b                                      # (no deck windows: in plastic their corners start the cracks)
 
 
 def posts(S: Stack):
-    """Three spacer posts between the motor plates (bought: aluminium round standoffs, M5 both ends)."""
+    """Three spacer posts between the motor plates (bought: Ø10 aluminium round standoffs, M5 both ends; M5 screws
+    through the printed plates with washers)."""
     ac = STD['AC-L']
     out = None
     for ang in ac['post_deg']:
@@ -208,13 +209,17 @@ def _box_link(y0, y1, length, w, wall, end0_r, end1_r):
 
 
 def thigh(S: Stack, a: float):
-    """Thigh: a closed 6061 box (40 x 30, 3 mm walls) from the hip's standard face to the knee pin. Machined from solid,
-    or a 40 x 30 x 3 tube with bonded end fittings. The wheel's cables run inside it, in and out through grommeted
-    holes near each end."""
+    """Thigh: a closed printed box (LINK_W x LINK_T, WALL walls, PA6-CF printed flat so bending runs along the
+    layers) from the hip's standard face to the knee pin. M5 screws from inside the hub into the adapter's inserts.
+    The wheel's cables run inside it, in and out through grommeted holes near each end."""
     y0, y1 = S.y['thigh']
     kc = STD['KC']
     t = _box_link(y0, y1, a, LINK_W, WALL, 36.0, kc['hub_od'] / 2)
-    face = 7.0                                    # the hub keeps a 7 mm face on the AO side; hollow behind it (bolt heads)
+    # flare the box into the hip hub (in plastic the step from a 72 mm hub to the box is where it cracks)
+    flare = (cq.Workplane('XZ', origin=(0, y1, 0)).polyline([(-36.0, 0.0), (36.0, 0.0), (LINK_W / 2, -36.0 - 45.0), (-LINK_W / 2, -36.0 - 45.0)])
+             .close().extrude(y1 - y0))
+    t = t.union(flare.cut(cq.Workplane('XY').box(LINK_W - 2 * WALL, y1 - y0 - 2 * WALL, 45.0).translate((0, (y0 + y1) / 2, -36.0 - 3 - 22.5 - 0.01))))
+    face = 10.0                                   # the hub keeps a 10 mm face on the AO side; hollow behind it (screw heads)
     t = t.cut(_ycyl(36.0 - WALL - 1, y0 + face, y1 + 1))
     t = t.cut(gmi.place(gmi.std_face_mate('L', depth=y1 - y0 + 2), (0, y0, 0), (0, 1, 0)))
     t = t.cut(_ycyl(kc['pin_d'] / 2 + 0.01, y0 - 1, y1 + 1, 0, -a))
@@ -224,54 +229,56 @@ def thigh(S: Stack, a: float):
 
 
 def shin(S: Stack, b: float, crank_r: float):
-    """Shin: a closed 6061 box (40 x the KC width, 3 mm walls); the KC hub (two 6001s) and the push-rod lever at the
-    knee, the WH face on the outer side at the axle. The wheel's cable comes through the WH bore into the box and up
-    to a port near the knee."""
+    """Shin: a closed printed box (SHIN_W x the KC width, SHIN_WALL walls); the KC hub (two 6001s pressed in) and the
+    push-rod lever at the knee, the WH face (M5 inserts) on the outer side at the axle. The wheel's cable comes through
+    the WH bore into the box and up to a port near the knee."""
     y0, y1 = S.y['shin']
     kc, wh = STD['KC'], STD['WH']
     s = _box_link(y0, y1, b, SHIN_W, SHIN_WALL, kc['hub_od'] / 2, wh['plate_d'] / 2)
     yl = S.y['rod'][1] + 1.5                                    # lever in the crank's plane, next to the rod end
     lx, lz = lever_pin(crank_r)
     beta = PARAMS['lever_beta_deg']
-    arm = cq.Workplane('XY').box(crank_r, 10, 24).translate((crank_r / 2, yl + 5, 0)).rotate((0, 0, 0), (0, 1, 0), -beta)
-    s = s.union(arm).union(_ycyl(13, yl, yl + 10, lx, lz))
-    s = s.cut(_ycyl(4.1, yl - 1, yl + 12, lx, lz))                                           # M8 shoulder bolt
+    arm = cq.Workplane('XY').box(crank_r, 12, 30).translate((crank_r / 2, yl + 6, 0)).rotate((0, 0, 0), (0, 1, 0), -beta)
+    s = s.union(arm).union(_ycyl(15, yl, yl + 12, lx, lz))
+    s = s.cut(_ycyl(4.1, yl - 1, yl + 14, lx, lz))                                           # M8 bolt + nut through the lever
     s = s.cut(_ycyl(kc['bearing_od'] / 2 + 0.02, y0 - 0.01, y0 + kc['bearing_w']))
     s = s.cut(_ycyl(kc['bearing_od'] / 2 + 0.02, y1 - kc['bearing_w'], y1 + 0.01))
     s = s.cut(_ycyl(kc['pin_d'] / 2 + 1.0, y0 - 1, y1 + 1))
-    s = s.cut(_ycyl(wh['plate_d'] / 2 - SHIN_WALL - 2, y0 - 0.01, y1 - 8, 0, -b))            # hollow the foot, keep the WH face
+    s = s.union(_ycyl(wh['plate_d'] / 2 + 6, y0, y1, 0, -b))                                 # a solid printed foot round the WH face
     s = s.cut(_ycyl(wh['pilot_d'] / 2 + 0.05, y1 - 3, y1 + 1, 0, -b))
     for (x, z) in gmi.circle_pts(wh['pcd'], wh['bolts'], 30):
-        s = s.cut(_ycyl(gmi.tap(wh['thread']) / 2, y1 - 12, y1 + 1, x, -b + z))
+        s = s.cut(_ycyl(gmi.FAST[wh['thread']]['insert_pilot'] / 2, y1 - 12, y1 + 1, x, -b + z))   # heat-set inserts
     s = s.cut(_ycyl(wh['cable_bore'] / 2, y0 + WALL, y1 + 1, 0, -b))
     s = s.cut(cq.Workplane('YZ', origin=(-SHIN_W / 2 - 1, 0, 0)).center((y0 + y1) / 2, -kc['hub_od'] / 2 - 18).rect(12, 16).extrude(SHIN_WALL + 2))
     return s
 
 
 def crank(S: Stack, crank_r: float):
-    """Knee crank (10 mm 6061) on the knee's standard face, an M6 pin for the rod end at the crank radius."""
+    """Knee crank (printed PA6-CF, CRANK_T thick) on the knee's standard face, an M8 bolt for the rod end at the
+    crank radius."""
     y0, y1 = S.y['crank']
     lx, lz = lever_pin(crank_r)
-    arm = cq.Workplane('XY').box(crank_r, y1 - y0, 26).translate((crank_r / 2, (y0 + y1) / 2, 0)).rotate((0, 0, 0), (0, 1, 0), -PARAMS['lever_beta_deg'])
-    c = _ycyl(36.0, y0, y1).union(arm).union(_ycyl(14, y0, y1, lx, lz))
+    arm = cq.Workplane('XY').box(crank_r, y1 - y0, 32).translate((crank_r / 2, (y0 + y1) / 2, 0)).rotate((0, 0, 0), (0, 1, 0), -PARAMS['lever_beta_deg'])
+    c = _ycyl(36.0, y0, y1).union(arm).union(_ycyl(16, y0, y1, lx, lz))
     c = c.cut(gmi.place(gmi.std_face_mate('L', depth=y1 - y0 + 2), (0, y1, 0), (0, -1, 0)))
     return c.cut(_ycyl(4.1, y0 - 1, y1 + 1, lx, lz))
 
 
 def pushrod(S: Stack, a: float, crank_r: float):
-    """Push-rod envelope: two M6 rod ends and a Ø12 tube, centres one thigh-length apart (bought parts)."""
+    """Push-rod envelope: two female M8 rod ends on an M8 threaded rod, centres one thigh-length apart (bought)."""
     y0, y1 = S.y['rod']
     pr = STD['PR']
     yc = (y0 + y1) / 2
     lx, lz = lever_pin(crank_r)
     eye = lambda z: _ycyl(12, y0, y1, lx, z).cut(_ycyl(4.0, y0 - 1, y1 + 1, lx, z))
-    tube = cq.Workplane('XY').circle(pr['tube_od'] / 2).circle(pr['tube_id'] / 2).extrude(a - 56).translate((lx, yc, lz - a + 28))
+    w = cq.Workplane('XY').circle(pr['tube_od'] / 2)
+    tube = (w.circle(pr['tube_id'] / 2) if pr.get('tube_id') else w).extrude(a - 56).translate((lx, yc, lz - a + 28))
     return eye(lz).union(eye(lz - a)).union(tube)
 
 
 def wheel_adapter(S: Stack, b: float):
-    """Wheel adapter (6061): WH face to the shin; the wheel motor's flange pattern and boss recess on the other side;
-    the wheel's cable comes out of the middle of its boss and goes through here into the shin."""
+    """Wheel adapter (printed PA6-CF): WH face to the shin; the wheel motor's flange pattern and boss recess on the
+    other side; the wheel's cable comes out of the middle of its boss and goes through here into the shin."""
     y0, y1 = S.y['wheel_adapter']
     wh, w = STD['WH'], S.wheel['case']
     boss = w['boss_d'] or 50.0
@@ -294,23 +301,25 @@ def leg_parts(L: dict, hip_id: str, knee_id: str, wheel_id: str, crank_r: float 
     cr = crank_r or PARAMS['crank_r']
     parts, meta = {}, {}
 
-    def add(name, shape, material, note):
+    def add(name, shape, material, note, fea='pa6_cf_xy'):
         parts[name] = shape
-        meta[name] = {'material': material, 'qty': 2, 'note': note}
+        meta[name] = {'material': material, 'qty': 2, 'note': note, 'fea_material': fea, 'solid': True}
 
     ha, hai = gmi.output_adapter(hip_id, 'L')
     hp, _ = gmi.motor_plate(hip_id, 'L')
     ka, _ = gmi.output_adapter(knee_id, 'L')
     kp, _ = gmi.motor_plate(knee_id, 'L')
-    add('yoke_bracket', yoke_bracket(S, L), 'al6061', 'bent sheet hat channel, 6061-T6 or 5052 (SendCutSend: cut + bend); M6 into the chassis, M5 into both plate tabs')
-    add('hip_motor_plate', gmi.place(hp, (0, S.y['hip_out'], 0), (0, 1, 0)), 'al6061', f"CNC 6061-T6, {STD['AC-L']['bearing']}")
-    add('hip_output_adapter', gmi.place(ha, (0, S.y['hip_out'], 0), (0, 1, 0)), 'al6061', 'CNC 6061-T6, M5 helicoils, motor dowels')
-    add('knee_output_adapter', gmi.place(ka, (0, S.y['knee_out'], 0), (0, -1, 0)), 'al6061', 'CNC 6061-T6, M5 helicoils, motor dowels')
-    add('knee_motor_plate', gmi.place(kp, (0, S.y['knee_out'], 0), (0, -1, 0)), 'al6061', f"CNC 6061-T6, {STD['AC-L']['bearing']}")
-    add('thigh', thigh(S, a), 'al6061', 'CNC 6061-T6 box (or 40 x 30 x 3 tube + bonded ends); cables inside')
-    add('shin', shin(S, b, cr).translate((0, 0, -a)), 'al6061', 'CNC 6061-T6 box, two 6001-2RS; cables inside')
-    add('knee_crank', crank(S, cr), 'al6061', 'CNC 6061-T6, 10 mm')
-    add('wheel_adapter', wheel_adapter(S, b).translate((0, 0, -a)), 'al6061', '6061, 6 mm')
+    _, hpi = gmi.motor_plate(hip_id, 'L')
+    _, hai = gmi.output_adapter(hip_id, 'L')
+    add('yoke_bracket', yoke_bracket(S, L), 'pa6-cf', 'printed PA6-CF on its wall flange; 6 x M6 through the chassis wall with nuts, 3 x M5 into each plate tab', fea='pa6_cf_z')
+    add('hip_motor_plate', gmi.place(hp, (0, S.y['hip_out'], 0), (0, 1, 0)), 'pa6-cf', hpi['note'])
+    add('hip_output_adapter', gmi.place(ha, (0, S.y['hip_out'], 0), (0, 1, 0)), 'pa6-cf', hai['note'], fea='pa6_cf_z')
+    add('knee_output_adapter', gmi.place(ka, (0, S.y['knee_out'], 0), (0, -1, 0)), 'pa6-cf', hai['note'], fea='pa6_cf_z')
+    add('knee_motor_plate', gmi.place(kp, (0, S.y['knee_out'], 0), (0, -1, 0)), 'pa6-cf', hpi['note'])
+    add('thigh', thigh(S, a), 'pa6-cf', f'printed PA6-CF flat, {LINK_W:.0f} x {LINK_T:.0f} box, {WALL} mm walls, 100 % solid; 8 x M5 into the hip adapter; cables inside')
+    add('shin', shin(S, b, cr).translate((0, 0, -a)), 'pa6-cf', f'printed PA6-CF flat, {SHIN_W:.0f} mm box, {SHIN_WALL} mm walls; two 6001-2RS pressed in; M5 inserts at the wheel; cables inside')
+    add('knee_crank', crank(S, cr), 'pa6-cf', f'printed PA6-CF flat, {CRANK_T:.0f} mm; 8 x M5 into the knee adapter; M8 bolt for the rod end')
+    add('wheel_adapter', wheel_adapter(S, b).translate((0, 0, -a)), 'pa6-cf', f"printed PA6-CF flat, {STD['WH']['plate_t']:.0f} mm", fea='pa6_cf_z')
     bought = {
         'posts': posts(S),
         'pushrod': pushrod(S, a, cr),

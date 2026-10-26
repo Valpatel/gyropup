@@ -1,0 +1,305 @@
+{
+ "bed_mm": [
+  256,
+  256,
+  256
+ ],
+ "parts": {
+  "chassis": {
+   "material": "pa6-cf",
+   "qty": 1,
+   "size_mm": [
+    206,
+    181,
+    104
+   ],
+   "fits": true,
+   "placement": "flat",
+   "grams_each": 724,
+   "grams": 724,
+   "hours": 47.4,
+   "cost_usd": 57.89,
+   "infill": "100 %",
+   "how": "printed PA6-CF tub, 5 mm walls, 12 mm under the legs; M3/M4 inserts"
+  },
+  "battery_cradle": {
+   "material": "petg",
+   "qty": 1,
+   "size_mm": [
+    163,
+    122,
+    18
+   ],
+   "fits": true,
+   "placement": "flat",
+   "grams_each": 53,
+   "grams": 53,
+   "hours": 2.1,
+   "cost_usd": 0.74,
+   "infill": "2 mm walls, 40 % gyroid",
+   "how": "printed PETG"
+  },
+  "head_saddle": {
+   "material": "petg",
+   "qty": 1,
+   "size_mm": [
+    206,
+    150,
+    26
+   ],
+   "fits": true,
+   "placement": "flat",
+   "grams_each": 106,
+   "grams": 106,
+   "hours": 4.2,
+   "cost_usd": 1.48,
+   "infill": "2 mm walls, 40 % gyroid",
+   "how": "printed PETG; M4 inserts for the turret"
+  },
+  "face": {
+   "material": "petg",
+   "qty": 1,
+   "size_mm": [
+    140,
+    76,
+    14
+   ],
+   "fits": true,
+   "placement": "flat",
+   "grams_each": 64,
+   "grams": 64,
+   "hours": 2.6,
+   "cost_usd": 0.9,
+   "infill": "2 mm walls, 40 % gyroid",
+   "how": "printed PETG"
+  },
+  "camera_cradle": {
+   "material": "petg",
+   "qty": 2,
+   "size_mm": [
+    106,
+    35,
+    30
+   ],
+   "fits": true,
+   "placement": "flat",
+   "grams_each": 34,
+   "grams": 69,
+   "hours": 2.8,
+   "cost_usd": 0.96,
+   "infill": "2 mm walls, 40 % gyroid",
+   "how": "printed PETG"
+  },
+  "lidar_hanger": {
+   "material": "petg",
+   "qty": 1,
+   "size_mm": [
+    104,
+    104,
+    8
+   ],
+   "fits": true,
+   "placement": "flat",
+   "grams_each": 62,
+   "grams": 62,
+   "hours": 2.5,
+   "cost_usd": 0.87,
+   "infill": "2 mm walls, 40 % gyroid",
+   "how": "printed PETG"
+  },
+  "lidar_guard": {
+   "material": "tpu95",
+   "qty": 1,
+   "size_mm": [
+    150,
+    150,
+    72
+   ],
+   "fits": true,
+   "placement": "flat",
+   "grams_each": 103,
+   "grams": 103,
+   "hours": 10.6,
+   "cost_usd": 4.32,
+   "infill": "2 mm walls, 40 % gyroid",
+   "how": "printed TPU 95A"
+  },
+  "yoke_bracket": {
+   "material": "pa6-cf",
+   "qty": 2,
+   "size_mm": [
+    146,
+    137,
+    196
+   ],
+   "fits": true,
+   "placement": "flat",
+   "grams_each": 650,
+   "grams": 1300,
+   "hours": 85.2,
+   "cost_usd": 104.02,
+   "infill": "100 %",
+   "how": "printed PA6-CF on its wall flange; 6 x M6 through the chassis wall with nuts, 3 x M5 into each plate tab"
+  },
+  "hip_motor_plate": {
+   "material": "pa6-cf",
+   "qty": 2,
+   "size_mm": [
+    178,
+    164,
+    24
+   ],
+   "fits": true,
+   "placement": "flat",
+   "grams_each": 413,
+   "grams": 825,
+   "hours": 54.1,
+   "cost_usd": 66.01,
+   "infill": "100 %",
+   "how": "printed PA6-CF, 100 % solid, flat; 61812 (60 x 78 x 10) support bearing pressed in, held by 3 x M3 + washers; 3 x M5 inserts for the yoke"
+  },
+  "hip_output_adapter": {
+   "material": "pa6-cf",
+   "qty": 2,
+   "size_mm": [
+    66,
+    66,
+    28
+   ],
+   "fits": true,
+   "placement": "flat",
+   "grams_each": 69,
+   "grams": 139,
+   "hours": 9.1,
+   "cost_usd": 11.09,
+   "infill": "100 %",
+   "how": "printed PA6-CF, 100 % solid; 8 x M5 heat-set inserts in the face; sockets for the motor's 3 x \u00d86 pins; 9 x M5 12.9 screws with washers into the motor"
+  },
+  "knee_output_adapter": {
+   "material": "pa6-cf",
+   "qty": 2,
+   "size_mm": [
+    66,
+    66,
+    28
+   ],
+   "fits": true,
+   "placement": "flat",
+   "grams_each": 69,
+   "grams": 139,
+   "hours": 9.1,
+   "cost_usd": 11.09,
+   "infill": "100 %",
+   "how": "printed PA6-CF, 100 % solid; 8 x M5 heat-set inserts in the face; sockets for the motor's 3 x \u00d86 pins; 9 x M5 12.9 screws with washers into the motor"
+  },
+  "knee_motor_plate": {
+   "material": "pa6-cf",
+   "qty": 2,
+   "size_mm": [
+    178,
+    164,
+    24
+   ],
+   "fits": true,
+   "placement": "flat",
+   "grams_each": 413,
+   "grams": 825,
+   "hours": 54.1,
+   "cost_usd": 66.01,
+   "infill": "100 %",
+   "how": "printed PA6-CF, 100 % solid, flat; 61812 (60 x 78 x 10) support bearing pressed in, held by 3 x M3 + washers; 3 x M5 inserts for the yoke"
+  },
+  "thigh": {
+   "material": "pa6-cf",
+   "qty": 2,
+   "size_mm": [
+    258,
+    72,
+    44
+   ],
+   "fits": true,
+   "placement": "diagonal",
+   "grams_each": 362,
+   "grams": 724,
+   "hours": 47.4,
+   "cost_usd": 57.88,
+   "infill": "100 %",
+   "how": "printed PA6-CF flat, 60 x 44 box, 5.0 mm walls, 100 % solid; 8 x M5 into the hip adapter; cables inside"
+  },
+  "shin": {
+   "material": "pa6-cf",
+   "qty": 2,
+   "size_mm": [
+    259,
+    74,
+    28
+   ],
+   "fits": true,
+   "placement": "diagonal",
+   "grams_each": 267,
+   "grams": 534,
+   "hours": 35.0,
+   "cost_usd": 42.75,
+   "infill": "100 %",
+   "how": "printed PA6-CF flat, 50 mm box, 4.0 mm walls; two 6001-2RS pressed in; M5 inserts at the wheel; cables inside"
+  },
+  "knee_crank": {
+   "material": "pa6-cf",
+   "qty": 2,
+   "size_mm": [
+    110,
+    72,
+    14
+   ],
+   "fits": true,
+   "placement": "flat",
+   "grams_each": 72,
+   "grams": 145,
+   "hours": 9.5,
+   "cost_usd": 11.57,
+   "infill": "100 %",
+   "how": "printed PA6-CF flat, 14 mm; 8 x M5 into the knee adapter; M8 bolt for the rod end"
+  },
+  "wheel_adapter": {
+   "material": "pa6-cf",
+   "qty": 2,
+   "size_mm": [
+    62,
+    62,
+    12
+   ],
+   "fits": true,
+   "placement": "flat",
+   "grams_each": 26,
+   "grams": 51,
+   "hours": 3.4,
+   "cost_usd": 4.1,
+   "infill": "100 %",
+   "how": "printed PA6-CF flat, 10 mm"
+  }
+ },
+ "by_material": {
+  "pa6-cf": {
+   "grams": 5406,
+   "hours": 354.3,
+   "cost_usd": 432.41,
+   "parts": 19
+  },
+  "petg": {
+   "grams": 354,
+   "hours": 14.2,
+   "cost_usd": 4.95,
+   "parts": 6
+  },
+  "tpu95": {
+   "grams": 103,
+   "hours": 10.6,
+   "cost_usd": 4.32,
+   "parts": 1
+  }
+ },
+ "too_big": [],
+ "total_hours": 379.1,
+ "total_grams": 5863,
+ "note": "hours are rough: grams / material density / a strength-holding volumetric rate"
+}

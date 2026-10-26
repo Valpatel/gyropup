@@ -222,6 +222,10 @@ def build(design_path: Path, out_dir: Path | None = None) -> dict:
     leg_act = part(design, catalog, 'leg_actuator')
     wheel_act = part(design, catalog, 'wheel_motor')
     legl = actuator_limits(leg_act, bus_nom, 'leg')
+    cap = design.get('leg_torque_limit_nm')            # set in the motors' firmware: protects printed parts (D33)
+    if cap and cap < legl['peak_nm']:
+        legl['catalog_peak_nm'], legl['peak_nm'] = legl['peak_nm'], float(cap)
+        legl['rated_nm'] = min(legl['rated_nm'], float(cap))
     wl = actuator_limits(wheel_act, bus_nom, 'wheel')
 
     # visuals: simple coloured shapes until the CAD meshes exist

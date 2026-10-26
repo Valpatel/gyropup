@@ -17,10 +17,10 @@ try {
     (updated ${esc(b.updated)}). Furthest stage reached: ${esc(st)}.${base}`);
   const f = (v, d = 2) => (v == null ? '—' : typeof v === 'number' ? v.toFixed(d) : esc(v));
   document.getElementById('loop').innerHTML = `<table class="cmp"><thead><tr><th>#</th><th>result</th><th>mass</th><th>min SF</th>
-    <th>wheel defl.</th><th>track</th><th>motor</th><th>thigh / shin</th><th>thigh box</th><th>shin box</th><th>yoke</th><th>crank</th><th>why not</th></tr></thead><tbody>`
+    <th>wheel defl.</th><th>print h</th><th>track</th><th>motor</th><th>thigh / shin</th><th>thigh box</th><th>shin box</th><th>yoke</th><th>crank</th><th>why not</th></tr></thead><tbody>`
     + b.best.slice(0, 15).map((r) => {
       const p = r.params || {};
-      return `<tr><td>${r.trial}</td><td>${tag(r.ok)}</td><td>${f(r.model_mass_kg)} kg</td><td>${f(r.min_safety_factor)}</td><td>${f(r.wheel_deflection_mm)} mm</td>`
+      return `<tr><td>${r.trial}</td><td>${tag(r.ok)}</td><td>${f(r.model_mass_kg)} kg</td><td>${f(r.min_safety_factor)}</td><td>${f(r.wheel_deflection_mm)} mm</td><td>${f(r.print_hours, 0)}</td>`
         + `<td>${f(r.track_mm, 0)}</td><td>${esc((p.leg_actuator || '').replace('robstride-', '').toUpperCase())}</td><td>${p.thigh_mm ?? '—'} / ${p.shin_mm ?? '—'}</td>`
         + `<td>${f(p.link_w, 0)}×${f(p.link_t, 0)}×${f(p.wall, 1)}</td><td>${f(p.shin_w, 0)}×${f(p.shin_wall, 1)}</td><td>${f(p.yoke_t, 0)}/${f(p.yoke_depth, 0)}/${f(p.yoke_gusset, 0)}</td>`
         + `<td>${f(p.crank_r, 0)}</td><td class="why">${esc((r.reasons || [])[0] || '')}</td></tr>`;

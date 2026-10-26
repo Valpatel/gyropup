@@ -4,15 +4,16 @@ by tools/trial_eval.py (designer checks, CAD, clashes, physics scenarios, stiffn
     .venv/bin/python tools/iterate.py --workers 7 --hours 10        # on a many-core machine
     .venv/bin/python tools/iterate.py --report                       # the leaderboard so far
 
-Search space (catalog parts that are in stock and rated for the 60 V pack, catalog/availability.json):
-  leg actuator   RobStride RS-03, RS-04, RS-06 (the same model for hip and knee)
-  thigh, shin    170-240 mm
+Every made part is printed (D33: PA6-CF for structure). Search space:
+  leg actuator   RobStride RS-04 or RS-03 (the same model for hip and knee; both capped at 60 N·m in firmware)
+  thigh, shin    170-240 mm (a part that does not fit the 256 mm bed fails the candidate)
   links          thigh box width, depth and wall; shin width and wall
-  yoke           sheet thickness, side-flange depth, gusset length (a bent hat channel)
-  crank radius   35-60 mm (the push-rod force is knee torque / crank radius)
-Objective: the lightest robot (the physics model's mass, with the CAD parts) that passes everything; cost breaks ties
-(1 kg ~ $1000), and a part that is not in stock costs 5 kg. Failed candidates score by how far they got, so the
-search still learns from them. Results: work/iterate/<trial>/metrics.json, work/iterate/study.db (Optuna), and
+  yoke           wall thickness, side-flange depth, gusset length (a printed hat channel)
+  motor plates   thickness (via the adapter journal), arm width, tab height
+  crank          radius, lever angle, thickness
+Objectives (NSGA-II, all minimised): the robot's mass (the physics model, with the CAD parts), print hours, the hardest
+motor's share of its limit, and the track width. Failed candidates score by how far they got, so the search still
+learns from them. Results: work/iterate/<trial>/metrics.json, work/iterate/study.db (Optuna), and
 exports/iterate/leaderboard.json (the best 25, refreshed after every trial).
 """
 from __future__ import annotations
@@ -29,7 +30,7 @@ from pathlib import Path
 R = Path(__file__).resolve().parents[1]
 WORK = R / 'work' / 'iterate'
 BOARD = R / 'exports' / 'iterate' / 'leaderboard.json'
-ACTUATORS = ['robstride-rs-03', 'robstride-rs-04']     # in stock and rated to 60 V (RS-06 cannot hold a crouch)
+ACTUATORS = ['robstride-rs-04', 'robstride-rs-03']     # rated to 60 V (RS-06 cannot hold a landing; see docs/cad-plan.md)
 BUSES = {'60v': 'designs/default.json', '2x20v': 'designs/flexvolt-2x20v.json'}   # where each bus's power parts come from
 POWER_SLOTS = ('battery', 'dcdc_compute', 'dcdc_12v', 'motor_driver', 'battery_adapter', 'regen_clamp')
 STAGES = ['designer', 'cad', 'clashes', 'sims', 'fea', 'cables', 'done']
@@ -49,26 +50,28 @@ def suggest(trial) -> tuple[dict, dict]:
            'knee_min_deg': trial.suggest_int('knee_min_deg', 42, 60, step=2), 'knee_max_deg': trial.suggest_int('knee_max_deg', 140, 160, step=5),
            'bus': trial.suggest_categorical('bus', list(BUSES))}
     params = {
-        'link_w': trial.suggest_float('link_w', 30.0, 46.0, step=2.0), 'link_t': trial.suggest_float('link_t', 22.0, 34.0, step=2.0),
-        'wall': trial.suggest_float('wall', 1.6, 3.2, step=0.2), 'shin_w': trial.suggest_float('shin_w', 26.0, 40.0, step=2.0),
-        'shin_wall': trial.suggest_float('shin_wall', 1.6, 3.2, step=0.2), 'yoke_t': trial.suggest_float('yoke_t', 3.0, 6.0, step=1.0),
-        'yoke_depth': trial.suggest_float('yoke_depth', 25.0, 60.0, step=5.0), 'yoke_gusset': trial.suggest_float('yoke_gusset', 50.0, 110.0, step=10.0),
-        'crank_r': trial.suggest_float('crank_r', 45.0, 70.0, step=5.0),
+        'link_w': trial.suggest_float('link_w', 48.0, 72.0, step=4.0), 'link_t': trial.suggest_float('link_t', 36.0, 56.0, step=4.0),
+        'wall': trial.suggest_float('wall', 3.5, 6.5, step=0.5), 'shin_w': trial.suggest_float('shin_w', 40.0, 60.0, step=4.0),
+        'shin_wall': trial.suggest_float('shin_wall', 3.0, 5.0, step=0.5), 'yoke_t': trial.suggest_float('yoke_t', 6.0, 11.0, step=1.0),
+        'yoke_depth': trial.suggest_float('yoke_depth', 35.0, 70.0, step=5.0), 'yoke_gusset': trial.suggest_float('yoke_gusset', 60.0, 110.0, step=10.0),
+        'crank_r': trial.suggest_float('crank_r', 45.0, 70.0, step=5.0), 'crank_t': trial.suggest_float('crank_t', 10.0, 18.0, step=2.0),
         'lever_beta_deg': trial.suggest_float('lever_beta_deg', -90.0, -60.0, step=5.0),
+        'journal_extra': trial.suggest_float('journal_extra', 6.0, 16.0, step=1.0), 'plate_arm_w': trial.suggest_float('plate_arm_w', 20.0, 36.0, step=4.0),
+        'tab_extra': trial.suggest_float('tab_extra', 4.0, 14.0, step=2.0),
     }
     return {'leg_actuator': act, **geo}, params
 
 
-OBJECTIVES = ['mass_kg', 'cost_usd', 'motor_load', 'track_mm']    # all minimised (NSGA-II)
+OBJECTIVES = ['mass_kg', 'print_hours', 'motor_load', 'track_mm']    # all minimised (NSGA-II)
 
 
 def score(m: dict) -> list:
     """Four objectives. A failed candidate gets a penalty by how far it got (later is better), so the search still
     learns which way to go; an out-of-stock part counts as a failure."""
     if m.get('ok') and availability(m.get('leg_actuator', '')):
-        return [m['model_mass_kg'], m.get('cost_usd', 0), m.get('worst_motor_of_peak', 1.0), m.get('track_mm', 600)]
+        return [m['model_mass_kg'], m.get('print_hours', 400), m.get('worst_motor_of_peak', 1.0), m.get('track_mm', 600)]
     p = 100.0 - 10.0 * STAGES.index(m.get('stage', 'designer'))
-    return [p + (m.get('model_mass_kg') or 30.0), p * 100 + 9000, p + 1.0, p * 10 + 700]
+    return [p + (m.get('model_mass_kg') or 30.0), p * 10 + (m.get('print_hours') or 600), p + 1.0, p * 10 + 700]
 
 
 def run_trial(trial) -> float:
@@ -100,7 +103,8 @@ def run_trial(trial) -> float:
         m = {'ok': False, 'stage': 'designer', 'reasons': [f'{type(e).__name__}: {e}'[:300]]}
     m.update(leg_actuator=choice['leg_actuator'], choice=choice, params=params)
     (tdir / 'metrics.json').write_text(json.dumps(m, indent=1) + '\n')
-    for k in ('ok', 'stage', 'model_mass_kg', 'min_safety_factor', 'wheel_deflection_mm', 'cost_usd', 'track_mm', 'worst_motor_of_peak', 'worst_motor', 'min_sin_phi'):
+    for k in ('ok', 'stage', 'model_mass_kg', 'min_safety_factor', 'min_safety_factor_fall', 'wheel_deflection_mm', 'cost_usd', 'track_mm', 'worst_motor_of_peak',
+              'worst_motor', 'min_sin_phi', 'print_hours', 'print_kg', 'weakest_part'):
         trial.set_user_attr(k, m.get(k))
     trial.set_user_attr('reasons', (m.get('reasons') or [])[:3])
     s = score(m)
@@ -114,7 +118,8 @@ def write_board(study):
         if t.values is None:
             continue
         rows.append({'trial': t.number, 'score': round(t.values[0], 3), **{k: t.user_attrs.get(k) for k in ('ok', 'stage', 'model_mass_kg',
-                     'min_safety_factor', 'wheel_deflection_mm', 'cost_usd', 'track_mm', 'worst_motor_of_peak', 'worst_motor', 'min_sin_phi', 'reasons')}, 'params': t.params})
+                     'min_safety_factor', 'min_safety_factor_fall', 'wheel_deflection_mm', 'cost_usd', 'track_mm', 'worst_motor_of_peak', 'worst_motor',
+                     'min_sin_phi', 'print_hours', 'print_kg', 'weakest_part', 'reasons')}, 'params': t.params})
     rows.sort(key=lambda r: (not r['ok'], r['score']))
     ok = [r for r in rows if r['ok']]
     board = {'updated': time.strftime('%Y-%m-%d %H:%M:%S'), 'trials': len(rows), 'passing': len(ok),
@@ -153,11 +158,12 @@ def main():
         return
     if not study.trials:
         # start from today's design, so the search has a passing point to improve on
-        base = {'leg_actuator': 'robstride-rs-03', 'thigh_mm': 200, 'shin_mm': 200, 'knee_min_deg': 48, 'knee_max_deg': 155, 'link_w': 40.0,
-                'link_t': 30.0, 'wall': 2.6, 'shin_w': 34.0, 'shin_wall': 2.0, 'yoke_t': 4.0, 'yoke_depth': 40.0, 'yoke_gusset': 80.0,
-                'crank_r': 60.0, 'lever_beta_deg': -75.0}
-        study.enqueue_trial({**base, 'bus': '60v'})               # today's design, on both buses: passing points to improve on
+        base = {'leg_actuator': 'robstride-rs-04', 'thigh_mm': 200, 'shin_mm': 200, 'knee_min_deg': 48, 'knee_max_deg': 155, 'link_w': 60.0,
+                'link_t': 44.0, 'wall': 5.0, 'shin_w': 48.0, 'shin_wall': 4.0, 'yoke_t': 8.0, 'yoke_depth': 50.0, 'yoke_gusset': 80.0,
+                'crank_r': 60.0, 'crank_t': 14.0, 'lever_beta_deg': -75.0, 'journal_extra': 11.0, 'plate_arm_w': 28.0, 'tab_extra': 8.0}
+        study.enqueue_trial({**base, 'bus': '60v'})               # today's design, on both buses, and on the RS-03
         study.enqueue_trial({**base, 'bus': '2x20v'})
+        study.enqueue_trial({**base, 'bus': '60v', 'leg_actuator': 'robstride-rs-03'})
     deadline = time.time() + a.hours * 3600
     procs = [mp.Process(target=worker, args=(storage, deadline, 1000 + k)) for k in range(a.workers)]
     for p in procs:

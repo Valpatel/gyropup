@@ -160,7 +160,19 @@
         "pcd": 36.0,
         "depth": 6.5,
         "pcd_tol": 0.1,
-        "depth_note": "min"
+        "depth_note": "min",
+        "angles_deg": [
+          45.0,
+          75.0,
+          105.0,
+          165.0,
+          195.0,
+          225.0,
+          285.0,
+          315.0,
+          345.0
+        ],
+        "angles_basis": "STEP (RS04.stp): 12 positions every 30 deg from 15 deg, pins at 3 of them; angles from STEP +X"
       },
       "dowel_pins": {
         "count": 3,
@@ -170,7 +182,12 @@
         "pcd_tol": 0.025,
         "protrusion": 3.0,
         "protrusion_tol": 0.25,
-        "note": "pins are INSTALLED and stand 3 mm proud of the output face"
+        "note": "pins are INSTALLED and stand 3 mm proud of the output face",
+        "angles_deg": [
+          15.0,
+          135.0,
+          255.0
+        ]
       },
       "pilot": null,
       "through_hole": false,

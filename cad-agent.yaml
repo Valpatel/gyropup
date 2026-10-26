@@ -30,6 +30,7 @@ cad:
     theme: hud
     live_reload: {watch: [designer, designs, catalog, exports, docs, cad]}   # pages reload as these change
     nav:
+      - {id: progress, title: Progress, href: designer/progress.html}
       - {id: overview, title: Overview, href: site/}
       - {id: design, title: Design, href: designer/}
       - {id: simulate, title: Simulate, href: designer/sim.html}
@@ -38,6 +39,7 @@ cad:
       - {id: docs, title: Docs, href: "site/#documents"}
       - {id: repo, title: Repository, href: "https://github.com/Valpatel/gyropup"}
     links:
+      - {title: Progress, href: designer/progress.html}
       - {title: Open the designer, href: designer/}
       - {title: Simulator, href: designer/sim.html}
       - {title: Results, href: designer/results.html}

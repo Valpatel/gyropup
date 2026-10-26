@@ -1,4 +1,19 @@
 {
+ "chassis": {
+  "degenerate_tessellation_faces_removed": 0,
+  "cad_valid": true,
+  "solid_count": 1,
+  "watertight": true,
+  "print_bounds_mm": [
+   181.0,
+   206.0,
+   104.0
+  ],
+  "volume_cm3": 663.944,
+  "qty": 1,
+  "made": "printed PA6-CF tub, 5 mm walls, 12 mm under the legs; M3/M4 inserts",
+  "print": true
+ },
  "battery_cradle": {
   "degenerate_tessellation_faces_removed": 0,
   "cad_valid": true,
@@ -11,7 +26,7 @@
   ],
   "volume_cm3": 44.251,
   "qty": 1,
-  "made": "printed PLA",
+  "made": "printed PETG",
   "print": true
  },
  "head_saddle": {
@@ -26,7 +41,7 @@
   ],
   "volume_cm3": 92.069,
   "qty": 1,
-  "made": "printed PLA",
+  "made": "printed PETG; M4 inserts for the turret",
   "print": true
  },
  "face": {
@@ -41,7 +56,7 @@
   ],
   "volume_cm3": 56.023,
   "qty": 1,
-  "made": "printed PLA",
+  "made": "printed PETG",
   "print": true
  },
  "camera_cradle": {
@@ -56,7 +71,7 @@
   ],
   "volume_cm3": 28.217,
   "qty": 2,
-  "made": "printed PLA",
+  "made": "printed PETG",
   "print": true
  },
  "lidar_hanger": {
@@ -71,7 +86,7 @@
   ],
   "volume_cm3": 63.853,
   "qty": 1,
-  "made": "printed PLA",
+  "made": "printed PETG",
   "print": true
  },
  "lidar_guard": {
@@ -87,6 +102,141 @@
   "volume_cm3": 114.191,
   "qty": 1,
   "made": "printed TPU 95A",
+  "print": true
+ },
+ "yoke_bracket": {
+  "degenerate_tessellation_faces_removed": 0,
+  "cad_valid": true,
+  "solid_count": 1,
+  "watertight": true,
+  "print_bounds_mm": [
+   146.0,
+   137.0,
+   196.4
+  ],
+  "volume_cm3": 596.537,
+  "qty": 2,
+  "made": "printed PA6-CF on its wall flange; 6 x M6 through the chassis wall with nuts, 3 x M5 into each plate tab",
+  "print": true
+ },
+ "hip_motor_plate": {
+  "degenerate_tessellation_faces_removed": 0,
+  "cad_valid": true,
+  "solid_count": 1,
+  "watertight": true,
+  "print_bounds_mm": [
+   164.026,
+   177.973,
+   24.1
+  ],
+  "volume_cm3": 378.497,
+  "qty": 2,
+  "made": "printed PA6-CF, 100 % solid, flat; 61812 (60 x 78 x 10) support bearing pressed in, held by 3 x M3 + washers; 3 x M5 inserts for the yoke",
+  "print": true
+ },
+ "hip_output_adapter": {
+  "degenerate_tessellation_faces_removed": 0,
+  "cad_valid": true,
+  "solid_count": 1,
+  "watertight": true,
+  "print_bounds_mm": [
+   65.985,
+   65.993,
+   27.6
+  ],
+  "volume_cm3": 63.54,
+  "qty": 2,
+  "made": "printed PA6-CF, 100 % solid; 8 x M5 heat-set inserts in the face; sockets for the motor's 3 x \u00d86 pins; 9 x M5 12.9 screws with washers into the motor",
+  "print": true
+ },
+ "knee_output_adapter": {
+  "degenerate_tessellation_faces_removed": 0,
+  "cad_valid": true,
+  "solid_count": 1,
+  "watertight": true,
+  "print_bounds_mm": [
+   65.985,
+   65.993,
+   27.6
+  ],
+  "volume_cm3": 63.54,
+  "qty": 2,
+  "made": "printed PA6-CF, 100 % solid; 8 x M5 heat-set inserts in the face; sockets for the motor's 3 x \u00d86 pins; 9 x M5 12.9 screws with washers into the motor",
+  "print": true
+ },
+ "knee_motor_plate": {
+  "degenerate_tessellation_faces_removed": 0,
+  "cad_valid": true,
+  "solid_count": 1,
+  "watertight": true,
+  "print_bounds_mm": [
+   164.026,
+   177.973,
+   24.1
+  ],
+  "volume_cm3": 378.497,
+  "qty": 2,
+  "made": "printed PA6-CF, 100 % solid, flat; 61812 (60 x 78 x 10) support bearing pressed in, held by 3 x M3 + washers; 3 x M5 inserts for the yoke",
+  "print": true
+ },
+ "thigh": {
+  "degenerate_tessellation_faces_removed": 0,
+  "cad_valid": true,
+  "solid_count": 1,
+  "watertight": true,
+  "print_bounds_mm": [
+   71.969,
+   257.99,
+   44.0
+  ],
+  "volume_cm3": 331.951,
+  "qty": 2,
+  "made": "printed PA6-CF flat, 60 x 44 box, 5.0 mm walls, 100 % solid; 8 x M5 into the hip adapter; cables inside",
+  "print": true
+ },
+ "shin": {
+  "degenerate_tessellation_faces_removed": 0,
+  "cad_valid": true,
+  "solid_count": 1,
+  "watertight": true,
+  "print_bounds_mm": [
+   73.996,
+   258.99,
+   28.0
+  ],
+  "volume_cm3": 245.135,
+  "qty": 2,
+  "made": "printed PA6-CF flat, 50 mm box, 4.0 mm walls; two 6001-2RS pressed in; M5 inserts at the wheel; cables inside",
+  "print": true
+ },
+ "knee_crank": {
+  "degenerate_tessellation_faces_removed": 0,
+  "cad_valid": true,
+  "solid_count": 1,
+  "watertight": true,
+  "print_bounds_mm": [
+   71.996,
+   109.945,
+   14.0
+  ],
+  "volume_cm3": 66.363,
+  "qty": 2,
+  "made": "printed PA6-CF flat, 14 mm; 8 x M5 into the knee adapter; M8 bolt for the rod end",
+  "print": true
+ },
+ "wheel_adapter": {
+  "degenerate_tessellation_faces_removed": 0,
+  "cad_valid": true,
+  "solid_count": 1,
+  "watertight": true,
+  "print_bounds_mm": [
+   61.986,
+   61.993,
+   12.5
+  ],
+  "volume_cm3": 23.493,
+  "qty": 2,
+  "made": "printed PA6-CF flat, 10 mm",
   "print": true
  }
 }

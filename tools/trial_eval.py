@@ -64,8 +64,11 @@ def main(design: Path) -> dict:
             return
         ml = json.loads((out / 'mech-layout.json').read_text())
         mp = json.loads((out / 'mass-properties.json').read_text())
+        pp = json.loads((out / 'print-plan.json').read_text())
         m.update(track_mm=round(ml['track_mm']), made_kg=round(mp['made_total_g'] / 1000, 3), stack_notes=ml['notes'],
-                 min_sin_phi=ml['stack_mm'].get('min_sin_phi'))
+                 min_sin_phi=ml['stack_mm'].get('min_sin_phi'), print_hours=pp['total_hours'], print_kg=round(pp['total_grams'] / 1000, 2))
+        if pp['too_big']:
+            m['reasons'].append(f"does not fit the {pp['bed_mm'][0]} mm bed: {', '.join(pp['too_big'])}")
         if (m['min_sin_phi'] or 0) < 0.5:
             m['reasons'].append(f"push-rod near its dead point: sin phi {m['min_sin_phi']}")
     stage('cad', cad)
@@ -105,21 +108,22 @@ def main(design: Path) -> dict:
         return finish(m, out, 'sims')
 
     def fea():
-        r = run([PY, 'cad/studies.py', str(design), '--mesh', '3.5'], 1800)
+        r = run([PY, 'cad/studies.py', str(design), '--mesh', '3.5', '--no-anim'], 1800)
         if r.returncode:
             m['reasons'].append('FEA failed: ' + r.stderr.strip().splitlines()[-1][:300])
             return
         fs = json.loads((out / 'fea' / 'summary.json').read_text())
-        v = fs['verdict']['al6061']
+        v = fs['verdict']['all']
         m.update(min_safety_factor=v['min_safety_factor'], min_safety_factor_fall=v.get('min_safety_factor_fall'), wheel_deflection_mm=v['wheel_deflection_mm'],
                  safety_factors={f"{x['part']} {x['case']}": x['safety_factor'] for x in fs['results']})
         m['rod'] = fs.get('rod')
         if fs.get('rod') and not v.get('rod_ok', True):
             m['reasons'].append(f"push-rod: {fs['rod']['force_n']} N, buckling SF {fs['rod']['buckling_sf']}, rod-end SF {fs['rod']['rod_end_sf']}")
-        if v.get('min_safety_factor_fall') is not None and v['min_safety_factor_fall'] < fs['targets'].get('metal_sf_fall', 1.2):
-            m['reasons'].append(f"fall safety factor {v['min_safety_factor_fall']} < {fs['targets'].get('metal_sf_fall', 1.2)}")
-        if v['min_safety_factor'] < fs['targets']['metal_sf']:
-            m['reasons'].append(f"safety factor {v['min_safety_factor']} < {fs['targets']['metal_sf']}")
+        m['weakest_part'] = v.get('weakest')
+        if v.get('min_safety_factor_fall') is not None and v['min_safety_factor_fall'] < fs['targets']['sf_fall']:
+            m['reasons'].append(f"fall safety factor {v['min_safety_factor_fall']} < {fs['targets']['sf_fall']} ({v.get('weakest')})")
+        if v['min_safety_factor'] < fs['targets']['sf']:
+            m['reasons'].append(f"safety factor {v['min_safety_factor']} < {fs['targets']['sf']} ({v.get('weakest')})")
         if v['wheel_deflection_mm'] > fs['targets']['wheel_deflection_mm']:
             m['reasons'].append(f"wheel deflection {v['wheel_deflection_mm']} mm > {fs['targets']['wheel_deflection_mm']} mm")
     stage('fea', fea)

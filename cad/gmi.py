@@ -1,4 +1,4 @@
-"""Gyropup mechanical interfaces (GMI v0.2): the standard faces and the parts that put each motor onto them.
+"""Gyropup mechanical interfaces (GMI v0.3, printed): the standard faces and the parts that put each motor onto them.
 
 docs/mechanical-interfaces.md explains the standard; cad/interfaces.json holds its numbers. Each motor's own patterns
 come from catalog/interfaces.json, taken from the vendor drawings and checked against their STEP files
@@ -18,6 +18,7 @@ from __future__ import annotations
 
 import json
 import math
+import os
 from pathlib import Path
 
 import cadquery as cq
@@ -25,7 +26,14 @@ import cadquery as cq
 R = Path(__file__).resolve().parents[1]
 STD = json.loads((R / 'cad/interfaces.json').read_text())
 FAST = STD['fasteners']
+# Printed parts (D33): sizes the optimiser may vary, overridden like leg.PARAMS by GYROPUP_CAD_PARAMS
+PRINT = dict(STD['print']['defaults'])
+if os.environ.get('GYROPUP_CAD_PARAMS'):
+    PRINT.update({k: v for k, v in json.loads(Path(os.environ['GYROPUP_CAD_PARAMS']).read_text()).items() if k in PRINT})
 CAT = json.loads((R / 'catalog/interfaces.json').read_text()) if (R / 'catalog/interfaces.json').exists() else {}
+
+
+BRACKET_DROP = 10.0          # the yoke screws sit this far below the tab's top edge (the tab reaches 4 mm above tab_top)
 
 
 def motor_interface(part_id: str) -> dict:
@@ -53,9 +61,11 @@ def motor_interface(part_id: str) -> dict:
             'flange_d': out.get('flange_diameter'),
             'face_offset': out.get('face_offset_from_case_face') or 0.0,
             'bolts': pat(out.get('bolts'), 'output bolts'),
-            'dowels': ({'count': out['dowel_holes'].get('count'), 'd': out['dowel_holes'].get('diameter'), 'pcd': out['dowel_holes'].get('pcd'),
-                        'angles': out['dowel_holes'].get('angles_deg') or [360.0 * k / out['dowel_holes']['count'] for k in range(out['dowel_holes']['count'])]}
-                       if out.get('dowel_holes') else None),
+            # dowels: holes in the motor (we press pins in) or pins the motor already has (we drill sockets for them)
+            'dowels': ({'count': dw.get('count'), 'd': dw.get('diameter'), 'pcd': dw.get('pcd'),
+                        'angles': dw.get('angles_deg') or [360.0 * k / dw['count'] + (dw.get('start_deg') or 0.0) for k in range(dw['count'])],
+                        'installed': bool(out.get('dowel_pins')), 'protrusion': dw.get('protrusion')}
+                       if (dw := out.get('dowel_holes') or out.get('dowel_pins')) else None),
             'pilot_d': (out.get('pilot') or {}).get('diameter'),
         } if out.get('bolts') else None,
         'case': {
@@ -101,7 +111,7 @@ def output_adapter(part_id: str, size: str = 'L'):
     relief = s['relief']
     z_sh0 = relief
     z_j0 = z_sh0 + s['shoulder_len']
-    z_face = z_j0 + s['journal_len']
+    z_face = z_j0 + s['journal_len'] + PRINT['journal_extra']        # longer journal: room for a thicker printed plate
     body = (_cyl(o['flange_d'] / 2 - 0.5, 0, relief + 0.01)                                # contact boss on the flange only
             .union(_cyl(s['shoulder_d'] / 2, z_sh0, z_j0))                                  # bearing shoulder
             .union(_cyl(s['journal_d'] / 2, z_j0, z_face))                                  # bearing journal
@@ -112,20 +122,27 @@ def output_adapter(part_id: str, size: str = 'L'):
         d = clear(b['thread'])
         body = body.cut(_cyl(d / 2, -1, z_face + s['spigot_h'] + 1, x, y))
         body = body.cut(_cyl(d * 0.92, z_face + s['spigot_h'] - 4.5, z_face + s['spigot_h'] + 1, x, y))
-    if o['dowels']:                                                                         # pins pressed in, into the motor
+    if o['dowels']:
         dw = o['dowels']
         for (x, y) in circle_pts(dw['pcd'], angles=dw['angles']):
-            body = body.cut(_cyl(dw['d'] / 2 - 0.01, -1, 6, x, y))
+            if dw['installed']:                                                             # the motor's own pins: sockets
+                body = body.cut(_cyl(dw['d'] / 2 + 0.03, -1, (dw['protrusion'] or 3.0) + 0.5, x, y))
+            else:                                                                           # steel pins pressed in, into the motor
+                body = body.cut(_cyl(dw['d'] / 2 - 0.05, -1, 16, x, y))                     # 16 mm in the plastic: low bearing stress
     if o['pilot_d']:                                                                        # locating boss into the motor's recess
         body = body.union(_cyl(o['pilot_d'] / 2 - 0.05, -2.0, 0.01))
-    # the standard face: tapped holes (helicoils) on the PCD, dowel holes, all clear of the motor screw counterbores
+    # the standard face: heat-set inserts on the PCD, dowel holes, all clear of the motor screw counterbores
     for (x, y) in circle_pts(s['pcd'], s['bolts'], 360.0 / s['bolts'] / 2):
-        body = body.cut(_cyl(tap(s['thread']) / 2, z_face - 9, z_face + 0.01, x, y))
+        body = body.cut(_cyl(FAST[s['thread']]['insert_pilot'] / 2, z_face - 10, z_face + 0.01, x, y))
     for a in s['dowel_deg']:
         x, y = s['pcd'] / 2 * math.cos(math.radians(a)), s['pcd'] / 2 * math.sin(math.radians(a))
         body = body.cut(_cyl(s['dowel_d'] / 2, z_face - 8, z_face + 0.01, x, y))
-    return body, {'part': part_id, 'z_face': z_face, 'z_journal': (z_j0, z_face), 'material': 'al6061',
-                  'note': 'CNC 6061-T6; standard-face holes take M5 helicoils; motor dowels pressed in', 'assumed': mi['assumed']}
+    return body, {'part': part_id, 'z_face': z_face, 'z_journal': (z_j0, z_face), 'material': 'pa6-cf',
+                  'note': f"printed PA6-CF, 100 % solid; {s['bolts']} x {s['thread']} heat-set inserts in the face; "
+                          + (f"sockets for the motor's {o['dowels']['count']} x Ø{o['dowels']['d']:g} pins" if o['dowels'] and o['dowels']['installed']
+                             else f"{o['dowels']['count']} x Ø{o['dowels']['d']:g} x 20 steel dowels into the motor" if o['dowels'] else 'no dowels: torque by clamp')
+                          + f"; {b['count']} x {b['thread']} 12.9 screws with washers into the motor",
+                  'assumed': mi['assumed']}
 
 
 def std_face_mate(size: str = 'L', depth: float = 12.0):
@@ -158,29 +175,32 @@ def motor_plate(part_id: str, size: str = 'L', thick_extra: float = 1.0):
         raise ValueError('journal shorter than the bearing')
     b = c['bolts']
     ring_r = max(b['pcd'] / 2 + clear(b['thread']) + 4.5, s['bearing_od'] / 2 + 6)
-    t_arm = min(8.0, z_top - lug_z)
-    arm_z0 = z_top - t_arm                                                                  # arms flush with the leg-side face
+    t_arm = z_top - lug_z                                                                   # printed: arms the plate's full thickness
+    arm_z0 = z_top - t_arm
     p = _cyl(ring_r, lug_z, z_top)
     # three arms to the spacer posts, and a tab on top for the hip bracket
     for ang in s['post_deg']:
         x, y = s['post_r'] * math.cos(math.radians(ang)), s['post_r'] * math.sin(math.radians(ang))
-        arm = (cq.Workplane('XY').workplane(offset=arm_z0).center(x / 2, y / 2).rect(math.hypot(x, y), 16)
+        arm = (cq.Workplane('XY').workplane(offset=arm_z0).center(x / 2, y / 2).rect(math.hypot(x, y), PRINT['plate_arm_w'])
                .extrude(t_arm).rotate((x / 2, y / 2, 0), (x / 2, y / 2, 1), math.degrees(math.atan2(y, x))))
-        p = p.union(arm).union(_cyl(s['post_d'] / 2 + 4, lug_z, z_top, x, y))
+        p = p.union(arm).union(_cyl(s['post_d'] / 2 + 6, lug_z, z_top, x, y))
         p = p.cut(_cyl(clear(s['post_thread']) / 2, lug_z - 1, z_top + 1, x, y))
-    tab_top = s['plate_r'] + s['top_ext']
+    tab_top = s['plate_r'] + s['top_ext'] + PRINT['tab_extra']        # printed: a taller tab, the yoke screws clear of every edge
     # the tab carries the whole leg into the yoke: full plate thickness, widening into the ring (no thin neck)
+    # printed: the tab's shoulders run out to the side posts' bosses, so there is no notch between tab and arms
+    sx, sy = s['post_r'] * math.cos(math.radians(min(s['post_deg']))), s['post_r'] * math.sin(math.radians(min(s['post_deg'])))
     tab = (cq.Workplane('XY').workplane(offset=lug_z).polyline([(-s['plate_r'] * 0.55, tab_top + 4), (s['plate_r'] * 0.55, tab_top + 4),
-                                                               (ring_r * 0.95, ring_r * 0.35), (-ring_r * 0.95, ring_r * 0.35)]).close()
-           .extrude(min(10.0, z_top - lug_z)).translate((0, 0, max(0.0, z_top - lug_z - 10.0))))
+                                                               (sx + 2, sy + 4), (sx - 4, sy - 16), (ring_r, 0.0),
+                                                               (-ring_r, 0.0), (-sx + 4, sy - 16), (-sx - 2, sy + 4)]).close()
+           .extrude(z_top - lug_z))
     p = p.union(tab)
-    win_z0, win_z1 = ring_r + 8.0, tab_top - 18.0                         # a window in the tab, a 10 mm frame left round it
-    if win_z1 - win_z0 > 8:
+    win_z0, win_z1 = ring_r + 12.0, tab_top - 22.0                        # a window in the tab, a 14 mm frame left round it
+    if PRINT['plate_tab_window'] and win_z1 - win_z0 > 8:
         p = p.cut(cq.Workplane('XY').workplane(offset=lug_z - 1).center(0, (win_z0 + win_z1) / 2)
                   .rect(2 * (s['plate_r'] * 0.55 - 12), win_z1 - win_z0).extrude(z_top - lug_z + 2))
     for k in range(s['bracket_bolts']):
         x = (k - (s['bracket_bolts'] - 1) / 2) * s['plate_r'] * 0.4
-        p = p.cut(_cyl(tap(s['bracket_thread']) / 2, lug_z - 1, z_top + 1, x, tab_top - 8))
+        p = p.cut(_cyl(FAST[s['bracket_thread']]['insert_pilot'] / 2, z_top - 10, z_top + 1, x, tab_top - BRACKET_DROP))   # inserts from the leg side
     # motor side: the spigot recess (if the motor has a male spigot) and the lug screws (counterbored from the leg side)
     if c['spigot_d']:
         p = p.cut(_cyl(c['spigot_d'] / 2 + 0.03, lug_z - 0.01, lug_z + c['spigot_h'] + 0.1))
@@ -189,11 +209,14 @@ def motor_plate(part_id: str, size: str = 'L', thick_extra: float = 1.0):
         p = p.cut(_cyl(clear(b['thread']) * 0.95, z_top - 4.5, z_top + 1, x, y))
     # the bore: clears the rotating shoulder (lip), then the bearing seat
     p = p.cut(_cyl(s['lip_d'] / 2, lug_z - 1, z_top + 1))
-    p = p.cut(_cyl(s['bearing_od'] / 2 + 0.01, z_bear0, z_top + 1))
+    p = p.cut(_cyl(s['bearing_od'] / 2, z_bear0, z_top + 1))                              # printed seat: line-to-line, sanded to fit
+    for k in range(3):                                                                     # 3 x M3 + washers hold the outer race in
+        x, y = (s['bearing_od'] / 2 + 4.5) * math.cos(math.radians(60 + 120 * k)), (s['bearing_od'] / 2 + 4.5) * math.sin(math.radians(60 + 120 * k))
+        p = p.cut(_cyl(FAST['M3']['insert_pilot'] / 2, z_top - 6, z_top + 1, x, y))
     # lightening pockets in the ring between the lug screws, from the motor side, 6 mm deep (the lug faces, the bearing
     # seat and the leg-side face stay whole)
     r_in, r_out = s['bearing_od'] / 2 + 3.0, ring_r - 3.0
-    if r_out - r_in > 6:
+    if PRINT['plate_pockets'] and r_out - r_in > 6:                      # (printed: no pockets, their thin walls crack)
         angs = sorted(b['angles'])
         for k, a0 in enumerate(angs):
             a1 = angs[(k + 1) % len(angs)] + (360 if k == len(angs) - 1 else 0)
@@ -211,8 +234,9 @@ def motor_plate(part_id: str, size: str = 'L', thick_extra: float = 1.0):
                                      (r_in * math.cos(math.radians(mid - half)), r_in * math.sin(math.radians(mid - half))))
                       .close().extrude(min(6.0, z_bear0 - lug_z + 4.0)))
             p = p.cut(sector)
-    return p, {'part': part_id, 'z': (lug_z, z_top), 'bearing_z': (z_bear0, z_bear1), 'tab_z': (max(lug_z, z_top - 10.0), z_top), 'tab_top': tab_top, 'ring_r': ring_r, 'material': 'al6061',
-               'note': f"CNC 6061-T6; {s['bearing']} support bearing, circlips DIN 472/471", 'assumed': mi['assumed']}
+    return p, {'part': part_id, 'z': (lug_z, z_top), 'bearing_z': (z_bear0, z_bear1), 'tab_z': (lug_z, z_top), 'tab_top': tab_top, 'ring_r': ring_r, 'material': 'pa6-cf',
+               'note': f"printed PA6-CF, 100 % solid, flat; {s['bearing']} support bearing pressed in, held by 3 x M3 + washers; "
+                       f"{s['bracket_bolts']} x {s['bracket_thread']} inserts for the yoke", 'assumed': mi['assumed']}
 
 
 # vendor STEP files (kept local, see references/vendor/*/SOURCE.txt): where each one's output face is

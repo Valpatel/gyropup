@@ -1,98 +1,114 @@
 {
  "chassis": {
-  "material": "al6061",
+  "material": "pa6-cf",
   "qty": 1,
-  "how": "3 mm 6061, laser cut and bent (SendCutSend); tapped M6/M5/M4/M3",
-  "mass_g_each": 911.7
+  "how": "printed PA6-CF tub, 5 mm walls, 12 mm under the legs; M3/M4 inserts",
+  "solid": true,
+  "mass_g_each": 723.7
  },
  "battery_cradle": {
-  "material": "pla",
+  "material": "petg",
   "qty": 1,
-  "how": "printed PLA",
-  "mass_g_each": 52.3
+  "how": "printed PETG",
+  "solid": false,
+  "mass_g_each": 52.7
  },
  "head_saddle": {
-  "material": "pla",
+  "material": "petg",
   "qty": 1,
-  "how": "printed PLA",
-  "mass_g_each": 105.3
+  "how": "printed PETG; M4 inserts for the turret",
+  "solid": false,
+  "mass_g_each": 106.1
  },
  "face": {
-  "material": "pla",
+  "material": "petg",
   "qty": 1,
-  "how": "printed PLA",
-  "mass_g_each": 63.8
+  "how": "printed PETG",
+  "solid": false,
+  "mass_g_each": 64.3
  },
  "camera_cradle": {
-  "material": "pla",
+  "material": "petg",
   "qty": 2,
-  "how": "printed PLA",
-  "mass_g_each": 34.2
+  "how": "printed PETG",
+  "solid": false,
+  "mass_g_each": 34.4
  },
  "lidar_hanger": {
-  "material": "pla",
+  "material": "petg",
   "qty": 1,
-  "how": "printed PLA",
-  "mass_g_each": 61.4
+  "how": "printed PETG",
+  "solid": false,
+  "mass_g_each": 61.9
  },
  "lidar_guard": {
   "material": "tpu95",
   "qty": 1,
   "how": "printed TPU 95A",
+  "solid": false,
   "mass_g_each": 103.0
  },
  "yoke_bracket": {
-  "material": "al6061",
+  "material": "pa6-cf",
   "qty": 2,
-  "how": "bent sheet hat channel, 6061-T6 or 5052 (SendCutSend: cut + bend); M6 into the chassis, M5 into both plate tabs",
-  "mass_g_each": 496.5
+  "how": "printed PA6-CF on its wall flange; 6 x M6 through the chassis wall with nuts, 3 x M5 into each plate tab",
+  "solid": true,
+  "mass_g_each": 650.2
  },
  "hip_motor_plate": {
-  "material": "al6061",
+  "material": "pa6-cf",
   "qty": 2,
-  "how": "CNC 6061-T6, 61812 (60 x 78 x 10)",
-  "mass_g_each": 418.2
+  "how": "printed PA6-CF, 100 % solid, flat; 61812 (60 x 78 x 10) support bearing pressed in, held by 3 x M3 + washers; 3 x M5 inserts for the yoke",
+  "solid": true,
+  "mass_g_each": 412.6
  },
  "hip_output_adapter": {
-  "material": "al6061",
+  "material": "pa6-cf",
   "qty": 2,
-  "how": "CNC 6061-T6, M5 helicoils, motor dowels",
-  "mass_g_each": 106.4
+  "how": "printed PA6-CF, 100 % solid; 8 x M5 heat-set inserts in the face; sockets for the motor's 3 x \u00d86 pins; 9 x M5 12.9 screws with washers into the motor",
+  "solid": true,
+  "mass_g_each": 69.3
  },
  "knee_output_adapter": {
-  "material": "al6061",
+  "material": "pa6-cf",
   "qty": 2,
-  "how": "CNC 6061-T6, M5 helicoils, motor dowels",
-  "mass_g_each": 106.4
+  "how": "printed PA6-CF, 100 % solid; 8 x M5 heat-set inserts in the face; sockets for the motor's 3 x \u00d86 pins; 9 x M5 12.9 screws with washers into the motor",
+  "solid": true,
+  "mass_g_each": 69.3
  },
  "knee_motor_plate": {
-  "material": "al6061",
+  "material": "pa6-cf",
   "qty": 2,
-  "how": "CNC 6061-T6, 61812 (60 x 78 x 10)",
-  "mass_g_each": 418.2
+  "how": "printed PA6-CF, 100 % solid, flat; 61812 (60 x 78 x 10) support bearing pressed in, held by 3 x M3 + washers; 3 x M5 inserts for the yoke",
+  "solid": true,
+  "mass_g_each": 412.6
  },
  "thigh": {
-  "material": "al6061",
+  "material": "pa6-cf",
   "qty": 2,
-  "how": "CNC 6061-T6 box (or 40 x 30 x 3 tube + bonded ends); cables inside",
-  "mass_g_each": 377.1
+  "how": "printed PA6-CF flat, 60 x 44 box, 5.0 mm walls, 100 % solid; 8 x M5 into the hip adapter; cables inside",
+  "solid": true,
+  "mass_g_each": 361.8
  },
  "shin": {
-  "material": "al6061",
+  "material": "pa6-cf",
   "qty": 2,
-  "how": "CNC 6061-T6 box, two 6001-2RS; cables inside",
-  "mass_g_each": 312.1
+  "how": "printed PA6-CF flat, 50 mm box, 4.0 mm walls; two 6001-2RS pressed in; M5 inserts at the wheel; cables inside",
+  "solid": true,
+  "mass_g_each": 267.2
  },
  "knee_crank": {
-  "material": "al6061",
+  "material": "pa6-cf",
   "qty": 2,
-  "how": "CNC 6061-T6, 10 mm",
-  "mass_g_each": 118.0
+  "how": "printed PA6-CF flat, 14 mm; 8 x M5 into the knee adapter; M8 bolt for the rod end",
+  "solid": true,
+  "mass_g_each": 72.3
  },
  "wheel_adapter": {
-  "material": "al6061",
+  "material": "pa6-cf",
   "qty": 2,
-  "how": "6061, 6 mm",
-  "mass_g_each": 36.0
+  "how": "printed PA6-CF flat, 10 mm",
+  "solid": true,
+  "mass_g_each": 25.6
  }
 }

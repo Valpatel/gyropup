@@ -235,4 +235,11 @@
   why: "The user asked to iterate on the CAD all night with the best, most available parts (in stock and rated for 60 V: RobStride RS-03/RS-04, catalog/availability.json), on the RTX 4090 (its LLM services stopped with the user's approval). The review (research/mech-review-2026-10-25.md) showed that optimising the old model would have optimised the wrong machine."
   status: decided
   source: {kind: user, quote: "But what I really need is for you to iterate on the CAD all night with the best parts that are most available. Use the RTX4090 and the Thor they are likely doing useless work."}
+- id: D33
+  date: "2026-10-26"
+  title: Every made part is 3D printed; RS-04 leg motors capped at 60 N·m
+  decision: "All custom parts are printed: structure in PA6-CF on a hardened nozzle (100 % solid where the CAD has walls, so the FEA sees what is printed), the rest in PETG, the lidar guard in TPU. Bought hardware only: bearings, steel pins and shoulder bolts, rod ends on M8 threaded rod, screws, heat-set inserts. Strength uses humid, print-knocked-down PA6-CF allowables (x0.6 x0.8 on Bambu's dry TDS; along or across the layers by print orientation), targets SF 2 everyday and 1.2 in falls, leg flex at the wheel <= 4 mm. Four RobStride RS-04 (hip and knee on each leg; RS-03 fits the same faces), capped at 60 N·m in firmware so the printed joints never see more; the output joint carries it by screw clamp plus the motor's pins (SF 3.2). Hip ab/adduction is not added: two wheels 600 mm apart need no sideways balance and differential leg height levels the body (as DDT Diablo and Ascento do)."
+  why: "The user wants to print it and has PA6-CF on a hardened-nozzle printer; RS-04s ship sooner than RS-03s (Seeed: 11 on hand and 80 due Nov 14, against none until Nov 20). The aluminium parts of D31/D32 were sized for CNC and SendCutSend, which the user does not want."
+  status: decided
+  source: {kind: user, quote: "To be clear I want to 3d print it, We can go with the RS-03 I can wait for them or what about the RS-04? Those ship sooner."}
 
