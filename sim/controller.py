@@ -55,6 +55,8 @@ class Gains:
     height_rate: float = 0.6       # height command slew, fraction of range per second
     speed_margin: float = 0.5      # top speed = this × wheel no-load speed, keeping half the torque in reserve for balance
     accel: float = 1.5             # m/s², commanded speed slew
+    roll_rate: float = 4.0         # body levelling: leg-height difference grows at this × roll (fraction of range per s per rad)
+    roll_max: float = 0.45         # the most one leg may be shorter than the other, fraction of the height range
 
 
 class Robot:
@@ -201,11 +203,21 @@ class Controller:
             self.height = cmd.height
         step = self.gains.height_rate * dt
         self.height += max(-step, min(step, cmd.height - self.height))
-        hip_t, knee_t = rb.pose_angles(max(0.0, min(1.0, self.height + cmd.dip)))
+        # body levelling (no hip ab/adduction): on a side slope or with one wheel on a kerb, shorten the leg on the
+        # high side and lengthen the other until the body is level; roll > 0 = the left side up
+        Rb = data.xmat[rb.base].reshape(3, 3)
+        roll = math.asin(max(-1.0, min(1.0, float(Rb[2, 1]))))
+        self.dh = getattr(self, 'dh', 0.0)
+        h0 = max(0.0, min(1.0, self.height + cmd.dip))
+        lim = min(self.gains.roll_max, h0, 1.0 - h0)
+        self.dh = max(-lim, min(lim, self.dh + self.gains.roll_rate * roll * dt))
+        targets = {}
         self.look = getattr(self, 'look', 0.0)
         dl = 0.5 * dt                                             # look-up slew, rad/s
         self.look += max(-dl, min(dl, max(-0.1, min(0.35, cmd.look_up)) - self.look))
-        hip_t += self.look + cmd.kick                             # rotate the body back relative to the legs
+        for side, sgn in (('l', -1.0), ('r', 1.0)):
+            hq, kq = rb.pose_angles(h0 + sgn * self.dh)
+            targets[side] = (hq + self.look + cmd.kick, kq)       # rotate the body back relative to the legs
         if self.K is None or abs(self.height - (self.K_height or 0)) > 0.05:
             self.K, self.lqr_info = self.lqr(data)
             self.K_height = self.height
@@ -255,6 +267,7 @@ class Controller:
         tau = {}
         for side, wid in (('l', rb.wheels[0]), ('r', rb.wheels[1])):
             mujoco.mj_jacBody(m, data, jacp, None, wid)
+            hip_t, knee_t = targets[side]
             for name, target in ((f'hip_{side}', hip_t), (f'knee_{side}', knee_t)):
                 qi, vi = rb.qadr[name], rb.vadr[name]
                 ff = data.qfrc_bias[vi] - jacp[:, vi] @ weight
@@ -280,4 +293,4 @@ class Controller:
             out = self.buffer.pop(0) if len(self.buffer) > self.delay_steps else {n: 0.0 for n in out}
         for name, c in out.items():
             data.ctrl[rb.act[name]] = c
-        return dict(theta=theta, x=x, v=v, u=u, height=self.height, v_cmd=self.v_cmd)
+        return dict(theta=theta, x=x, v=v, u=u, height=self.height, v_cmd=self.v_cmd, roll=roll, level=self.dh)

@@ -53,6 +53,8 @@ class Scenario:
     expect_fall: bool = False              # a fall is the point of the test: pass on how it lands, not on staying up
     start_drop_m: float = 0.0              # start this far above the ground (a landing test)
     max_body_impact_n: Optional[float] = None   # pass needs the body's peak contact force below this
+    max_roll_deg: Optional[float] = None   # pass needs the body this level (rms roll) inside roll_window
+    roll_window: tuple = (0.0, 0.0)        # seconds
 
 
 def ramp(deg, x0=0.8, length=2.0):
@@ -74,6 +76,12 @@ def platform(height, edge_x):
 
 def curb(height, x0=0.8):
     return f'<geom name="curb" type="box" size="1.5 1.5 {height / 2}" pos="{x0 + 1.5} 0 {height / 2}" rgba=".6 .6 .62 1"/>'
+
+
+def side_plank(height, x0=0.8, length=2.0):
+    """A plank under the robot's LEFT wheel only (it starts 50 mm left of the centre line): one wheel rides high."""
+    return (f'<geom name="side_plank" type="box" size="{length / 2} 0.725 {height / 2}" pos="{x0 + length / 2} 0.775 {height / 2}" '
+            f'rgba=".6 .6 .62 1"/>')
 
 
 def ramp_profile(t, start, ramp_s, v):
@@ -117,6 +125,9 @@ SCENARIOS = {
                           terrain=platform(0.05, 0.6), start_drop_m=0.05, hold_from=6.5),
     'landing': Scenario('landing', 'Dropped from 80 mm while balancing: land and stay up', 5.0, lambda t: Command(height=0.6),
                         start_drop_m=0.08, hold_from=4.5),
+    'side_kerb': Scenario('side_kerb', 'One wheel up a 30 mm plank, along it and off: the body stays level', 11.0,
+                          lambda t: Command(height=0.6, speed=ramp_profile(t, 1.0, 1.0, 0.4) if t < 9.0 else 0.0),
+                          terrain=side_plank(0.03), max_roll_deg=2.5, roll_window=(4.5, 7.0)),
     'curb': Scenario('curb', 'Drive up a 25 mm kerb', 9.0,
                      lambda t: Command(height=0.6, speed=ramp_profile(t, 1, 1.0, 0.6) if t < 6 else 0.0),
                      terrain=curb(0.025), must_reach_x=1.5),
@@ -206,7 +217,7 @@ def run(xml_path: Path, info: dict, sc: Scenario, video: Optional[Path] = None, 
     names = list(rb.act)
     peak_tau = {n: 0.0 for n in names}
     energy = {n: 0.0 for n in names}
-    thetas, speed_err, frames = [], [], []
+    thetas, speed_err, frames, rolls = [], [], [], []
     robot_joint_bodies = [i for i in range(1, model.nbody) if model.body_rootid[i] == model.body('base').id and model.body_jntnum[i] > 0
                           and model.jnt_type[model.body_jntadr[i]] != mujoco.mjtJoint.mjJNT_FREE]
     link_load = {model.body(i).name: {'force_n': 0.0, 'moment_nm': 0.0} for i in robot_joint_bodies}
@@ -269,6 +280,7 @@ def run(xml_path: Path, info: dict, sc: Scenario, video: Optional[Path] = None, 
                     lidar_touch = round(float(data.time), 3)
         th = st['theta']
         thetas.append(th)
+        rolls.append((t, st.get('roll', 0.0)))
         max_theta = max(max_theta, abs(th))
         x_max = max(x_max, st['x'])
         speed_err.append(st['v'] - st['v_cmd'])
@@ -326,6 +338,10 @@ def run(xml_path: Path, info: dict, sc: Scenario, video: Optional[Path] = None, 
     clear = min_base_z + (info['layout_mm']['trayBottom'] - 80) / 1000      # the lowest part: the lidar under the waist
     if info['layout_mm'].get('lidarMount') == 'under' and clear < 0.01 and lidar_geom is None:
         reasons.append(f'the lidar came within {clear * 1000:.0f} mm of the ground')
+    rw = [r for (tt, r) in rolls if sc.roll_window[0] <= tt <= sc.roll_window[1]]
+    roll_rms = math.degrees(math.sqrt(sum(r * r for r in rw) / len(rw))) if rw else None
+    if sc.max_roll_deg is not None and fell_at is None and roll_rms is not None and roll_rms > sc.max_roll_deg:
+        reasons.append(f'body not level on the plank: roll {roll_rms:.1f}° rms (limit {sc.max_roll_deg}°)')
     if sc.must_reach_x is not None and x_max < sc.must_reach_x:
         reasons.append(f'only reached {x_max:.2f} m of {sc.must_reach_x} m')
     if sc.hold_from is not None and fell_at is None:
@@ -340,7 +356,9 @@ def run(xml_path: Path, info: dict, sc: Scenario, video: Optional[Path] = None, 
                      'saturated_s': round(ctl.saturation[n] * dt, 3), 'energy_j': round(energy[n], 1)}
     return {
         'scenario': sc.name, 'title': sc.title, 'seconds': round(float(data.time), 3), 'pass': not reasons, 'reasons': reasons,
-        'max_theta_deg': round(math.degrees(max_theta), 2), 'theta_rms_deg': round(math.degrees(float(np.sqrt(np.mean(th ** 2)))), 3),
+        'max_theta_deg': round(math.degrees(max_theta), 2),
+        'max_roll_deg': round(math.degrees(max(abs(r) for _, r in rolls)), 2) if rolls else None,
+        'roll_rms_window_deg': round(roll_rms, 2) if roll_rms is not None else None, 'theta_rms_deg': round(math.degrees(float(np.sqrt(np.mean(th ** 2)))), 3),
         'speed_rms_mps': round(float(np.sqrt(np.mean(np.square(speed_err)))), 3), 'x_max_m': round(x_max, 3),
         'top_speed_mps': round(v_peak, 2), 'speed_limit_mps': round(ctl.top_speed, 2),
         'motors': motors, 'energy_j': round(sum(energy.values()), 1), 'link_loads': {k: {kk: (round(vv, 1) if isinstance(vv, float) else vv) for kk, vv in v.items()} for k, v in link_load.items()},

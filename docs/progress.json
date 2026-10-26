@@ -1,28 +1,153 @@
 {
- "updated": "2026-10-26 07:05",
+ "updated": "2026-10-26 08:10",
  "status": [
-  {"title": "Build method", "value": "100 % printed", "note": "PA6-CF (hardened nozzle) for structure, PETG for the rest; bought hardware only"},
-  {"title": "Leg motors", "value": "4 x RS-04", "note": "capped at 60 N·m in firmware to protect the printed parts; RS-03 fits the same mounts"},
-  {"title": "Robot mass (model)", "value": "22.5 kg", "note": "printed parts 5.2 kg (estimate)"},
-  {"title": "Physics scenarios", "value": "14 / 14 pass", "note": "falls, kerb drop and landing included; hardest motor 80 % of the cap (landing)"},
-  {"title": "Strength", "value": "2 parts short", "note": "thigh, shin and adapters pass; motor plate SF 1.43 (need 2), yoke in a fall 0.73 (need 1.2)"},
-  {"title": "Printing", "value": "~300 h", "note": "rough; the design loop minimises it next"}
+  {
+   "title": "Build method",
+   "value": "100 % printed",
+   "note": "PA6-CF (hardened nozzle) for structure, PETG for the rest; bought hardware only"
+  },
+  {
+   "title": "Leg motors",
+   "value": "4 x RS-04",
+   "note": "capped at 60 N·m in firmware to protect the printed parts; RS-03 fits the same mounts"
+  },
+  {
+   "title": "Robot mass (model)",
+   "value": "23.3 kg",
+   "note": "printed parts 5.9 kg (estimate); the design loop is cutting it"
+  },
+  {
+   "title": "Physics scenarios",
+   "value": "15 / 15 pass",
+   "note": "now with one wheel on a 30 mm plank: body held level to 0.14° by leg heights"
+  },
+  {
+   "title": "Strength",
+   "value": "at the line",
+   "note": "every part within 4 % of SF 2 (everyday) / 1.2 (falls); leg flex 3.8 mm (limit 4)"
+  },
+  {
+   "title": "Printing",
+   "value": "~380 h",
+   "note": "5.4 kg PA6-CF (~$430); the loop minimises hours next"
+  },
+  {
+   "title": "Design loop (RTX 4090)",
+   "value": "running",
+   "note": "printed search space, 12 h; leaderboard on Results"
+  }
  ],
  "log": [
-  {"time": "10-25 22:00", "title": "Overnight loop, aluminium version", "text": "340 candidates on the RTX 4090; every passing design used the RS-03 on one 60 V pack. Superseded: the robot is now printed."},
-  {"time": "10-26 05:00", "title": "Decision: print everything", "text": "All custom parts printed; PA6-CF on the work printer's hardened nozzle for structure. RS-04 chosen because it ships sooner; four needed either way (hip and knee on each leg)."},
-  {"time": "10-26 05:30", "title": "Breaking animations in every strength report", "text": "cad-agent's FEA now writes an overload video per load case: the load ramps past the design load to first failure and beyond, the overstressed region in black.", "links": [{"title": "strength section", "href": "#fea"}]},
-  {"time": "10-26 05:40", "title": "How the two motors work", "text": "Annotated renders and an animation of the leg module with two RS-04s.", "links": [{"title": "leg module", "href": "../exports/explain/leg-module.png"}, {"title": "video", "href": "../exports/explain/leg-motors.mp4"}]},
-  {"title": "Printed parts, first pass", "time": "10-26 06:10", "text": "PA6-CF allowables for humid air (x0.6) and print defects (x0.8). First printed leg failed: thin thigh, hollow shin foot, pockets in the motor plate, windows in the yoke. Fixed: bigger thigh flaring into its hub, solid foot, no pockets or windows. Thigh and shin now pass; leg flex 3.9 mm at the wheel."},
-  {"time": "10-26 06:40", "title": "Studied RobStride's open-source robots", "text": "K-Bot, LeRobot Humanoid, Berkeley Humanoid Lite and others: no hard press-fits in prints, torque through screw clamp not the RS-04's short pins, ~70 % torque caps, printed mounts derate the motor thermally.", "links": [{"title": "report", "href": "../site/pages/research-robstride-open-source-2026-10-26-md.html"}]},
-  {"time": "10-26 07:05", "title": "This page", "text": "Progress, designs, strength videos, simulation videos, print plan and the motor order in one place; it reloads itself as files change."}
+  {
+   "time": "10-25 22:00",
+   "title": "Overnight loop, aluminium version",
+   "text": "340 candidates on the RTX 4090; every passing design used the RS-03 on one 60 V pack. Superseded: the robot is now printed."
+  },
+  {
+   "time": "10-26 05:00",
+   "title": "Decision: print everything",
+   "text": "All custom parts printed; PA6-CF on the work printer's hardened nozzle for structure. RS-04 chosen because it ships sooner; four needed either way (hip and knee on each leg)."
+  },
+  {
+   "time": "10-26 05:30",
+   "title": "Breaking animations in every strength report",
+   "text": "cad-agent's FEA now writes an overload video per load case: the load ramps past the design load to first failure and beyond, the overstressed region in black.",
+   "links": [
+    {
+     "title": "strength section",
+     "href": "#fea"
+    }
+   ]
+  },
+  {
+   "time": "10-26 05:40",
+   "title": "How the two motors work",
+   "text": "Annotated renders and an animation of the leg module with two RS-04s.",
+   "links": [
+    {
+     "title": "leg module",
+     "href": "../exports/explain/leg-module.png"
+    },
+    {
+     "title": "video",
+     "href": "../exports/explain/leg-motors.mp4"
+    }
+   ]
+  },
+  {
+   "title": "Printed parts, first pass",
+   "time": "10-26 06:10",
+   "text": "PA6-CF allowables for humid air (x0.6) and print defects (x0.8). First printed leg failed: thin thigh, hollow shin foot, pockets in the motor plate, windows in the yoke. Fixed: bigger thigh flaring into its hub, solid foot, no pockets or windows. Thigh and shin now pass; leg flex 3.9 mm at the wheel."
+  },
+  {
+   "time": "10-26 06:40",
+   "title": "Studied RobStride's open-source robots",
+   "text": "K-Bot, LeRobot Humanoid, Berkeley Humanoid Lite and others: no hard press-fits in prints, torque through screw clamp not the RS-04's short pins, ~70 % torque caps, printed mounts derate the motor thermally.",
+   "links": [
+    {
+     "title": "report",
+     "href": "../site/pages/research-robstride-open-source-2026-10-26-md.html"
+    }
+   ]
+  },
+  {
+   "time": "10-26 07:05",
+   "title": "This page",
+   "text": "Progress, designs, strength videos, simulation videos, print plan and the motor order in one place; it reloads itself as files change."
+  },
+  {
+   "time": "10-26 07:40",
+   "title": "Every printed part passes (just)",
+   "text": "Fixed the last weak spots: notch-free motor-plate shoulders, retainer screws moved off the bearing seat, taller tabs so the yoke screws sit clear of every edge, 3 mm thicker plates, 8 mm yoke walls, a deeper thigh. Strength now within 4 % of target everywhere; the loop takes it from here."
+  },
+  {
+   "time": "10-26 07:55",
+   "title": "Design loop restarted for printed parts",
+   "text": "On the RTX 4090: RS-04 or RS-03, printed section sizes, plate thickness and tab height, crank; objectives mass, print hours, motor load and width; any part too big for the bed fails.",
+   "links": [
+    {
+     "title": "leaderboard",
+     "href": "results.html"
+    }
+   ]
+  },
+  {
+   "time": "10-26 08:10",
+   "title": "No hip in/out joint needed: body levelling",
+   "text": "The controller now shortens the leg on the high side, as Diablo does. New scenario side_kerb: one wheel up a 30 mm plank, along it and off; body level to 0.14° rms (2.7° without levelling).",
+   "links": [
+    {
+     "title": "watch it in 3D",
+     "href": "sim.html?run=side_kerb"
+    }
+   ]
+  }
  ],
  "shopping": {
   "note": "Prices and stock from 2026-10-25; Seeed's pages block automated reads, so confirm in the cart. The wheels (ODrive BotWheel pair, $269) and their Flipsky 75100 drivers are not sold by Seeed.",
   "items": [
-   {"item": "RobStride RS-04 actuator", "href": "https://www.seeedstudio.com/Robostride-04-Actuator-p-6775.html", "qty": "4 + 1 spare", "each": "$255", "total": "$1,275", "notes": "11 on hand (CN), 80 due Nov 14; hip + knee on each leg"},
-   {"item": "RobStride USB-to-CAN debug adapter", "qty": "1", "each": "~$25", "total": "~$25", "notes": "motor IDs, zeroing, firmware and the 60 N·m cap in RobStride's tool"},
-   {"item": "XT30 (2+2) motor leads", "qty": "5", "each": "~$3", "total": "~$15", "notes": "if not in the box"}
+   {
+    "item": "RobStride RS-04 actuator",
+    "href": "https://www.seeedstudio.com/Robostride-04-Actuator-p-6775.html",
+    "qty": "4 + 1 spare",
+    "each": "$255",
+    "total": "$1,275",
+    "notes": "11 on hand (CN), 80 due Nov 14; hip + knee on each leg"
+   },
+   {
+    "item": "RobStride USB-to-CAN debug adapter",
+    "qty": "1",
+    "each": "~$25",
+    "total": "~$25",
+    "notes": "motor IDs, zeroing, firmware and the 60 N·m cap in RobStride's tool"
+   },
+   {
+    "item": "XT30 (2+2) motor leads",
+    "qty": "5",
+    "each": "~$3",
+    "total": "~$15",
+    "notes": "if not in the box"
+   }
   ]
  }
 }
