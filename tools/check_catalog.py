@@ -12,7 +12,7 @@ import json, re, sys
 
 R = Path(__file__).resolve().parents[1]
 C = R / 'catalog'
-SKIP = {'index.json', 'materials.json', 'fabrication.json'}
+SKIP = {'index.json', 'materials.json', 'fabrication.json', 'interfaces.json'}  # interfaces.json: per-part mechanical/electrical interface data, keyed by id
 CATEGORIES = set(re.findall(r'`(\w+)`', (C / 'SCHEMA.md').read_text().split('Categories:')[1].split('\n\n')[0]))
 
 

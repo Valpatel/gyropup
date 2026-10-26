@@ -1,100 +1,36 @@
 {
  "design": "designs/default.json",
  "parts": {
-  "tray": {
-   "volume_cm3": 490.371,
-   "area_cm2": 2398.14,
+  "chassis": {
+   "volume_cm3": 337.673,
+   "area_cm2": 2305.44,
+   "wall_mm": 500.0,
+   "infill": 1.0,
+   "effective_fill": 1.0,
+   "mass_g": 911.7,
+   "estimate": true,
+   "material": "al6061",
+   "qty": 1,
+   "com_m": [
+    -0.002002205158065662,
+    1.1032250359702152e-16,
+    0.013507258069380208
+   ]
+  },
+  "battery_cradle": {
+   "volume_cm3": 44.251,
+   "area_cm2": 203.95,
    "wall_mm": 2.0,
    "infill": 0.4,
-   "effective_fill": 0.987,
-   "mass_g": 600.1,
+   "effective_fill": 0.953,
+   "mass_g": 52.3,
    "estimate": true,
    "material": "pla",
    "qty": 1,
    "com_m": [
-    4.106354146012372e-05,
-    9.703837385919222e-18,
-    0.01346437991962756
-   ]
-  },
-  "hip_yoke": {
-   "volume_cm3": 429.089,
-   "area_cm2": 1049.16,
-   "wall_mm": 2.0,
-   "infill": 0.4,
-   "effective_fill": 0.693,
-   "mass_g": 371.9,
-   "estimate": true,
-   "material": "petg",
-   "qty": 2,
-   "com_m": [
-    -2.8148186887370166e-18,
-    0.1901387214249512,
-    0.025950839040326495
-   ]
-  },
-  "thigh": {
-   "volume_cm3": 163.883,
-   "area_cm2": 379.16,
-   "wall_mm": 2.0,
-   "infill": 0.4,
-   "effective_fill": 0.678,
-   "mass_g": 137.7,
-   "estimate": true,
-   "material": "pla",
-   "qty": 2,
-   "com_m": [
-    2.628319693031254e-17,
-    3.121684601626014e-20,
-    -0.08136066337827937
-   ]
-  },
-  "shin": {
-   "volume_cm3": 164.841,
-   "area_cm2": 396.85,
-   "wall_mm": 2.0,
-   "infill": 0.4,
-   "effective_fill": 0.689,
-   "mass_g": 140.8,
-   "estimate": true,
-   "material": "pla",
-   "qty": 2,
-   "com_m": [
-    0.0019378007594791759,
-    -9.527850835051368e-19,
-    -0.11798619054411678
-   ]
-  },
-  "knee_crank": {
-   "volume_cm3": 24.169,
-   "area_cm2": 90.94,
-   "wall_mm": 2.0,
-   "infill": 0.4,
-   "effective_fill": 0.852,
-   "mass_g": 25.7,
-   "estimate": true,
-   "material": "petg",
-   "qty": 2,
-   "com_m": [
-    0.006772959471529427,
-    -7.408386439714494e-20,
-    -7.76228504798443e-19
-   ]
-  },
-  "pushrod": {
-   "volume_cm3": 23.874,
-   "area_cm2": 106.31,
-   "wall_mm": 2.0,
-   "infill": 0.4,
-   "effective_fill": 0.934,
-   "mass_g": 27.7,
-   "estimate": true,
-   "material": "pla",
-   "qty": 2,
-   "com_m": [
-    -5.790420007236914e-18,
-    1.4047482747819817e-19,
-    -0.09999999999999998
+    -0.02434656687276276,
+    -4.9532718463516404e-18,
+    -0.012544419134396348
    ]
   },
   "head_saddle": {
@@ -161,72 +97,152 @@
     -0.028996900364680403
    ]
   },
-  "tail_mount": {
-   "volume_cm3": 153.885,
-   "area_cm2": 455.76,
-   "wall_mm": 2.0,
-   "infill": 0.4,
-   "effective_fill": 0.755,
-   "mass_g": 145.3,
-   "estimate": true,
-   "material": "petg",
-   "qty": 1,
-   "com_m": [
-    -0.10361205990739665,
-    -0.020698646609297114,
-    -0.04356771152394031
-   ]
-  },
-  "tail_yoke": {
-   "volume_cm3": 52.507,
-   "area_cm2": 243.19,
-   "wall_mm": 50.0,
+  "yoke_bracket": {
+   "volume_cm3": 352.593,
+   "area_cm2": 840.79,
+   "wall_mm": 500.0,
    "infill": 1.0,
    "effective_fill": 1.0,
-   "mass_g": 141.8,
+   "mass_g": 952.0,
    "estimate": true,
-   "material": "aluminium 6061 (SendCutSend)",
-   "qty": 1,
+   "material": "al6061",
+   "qty": 2,
    "com_m": [
-    -0.13824030424321954,
-    0.010664940102151244,
-    -0.05265261193155042
+    1.557257985700094e-05,
+    0.1546739279381845,
+    0.08614826120010156
    ]
   },
-  "tail_clamp": {
-   "volume_cm3": 36.553,
-   "area_cm2": 118.86,
-   "wall_mm": 2.0,
-   "infill": 0.4,
-   "effective_fill": 0.79,
-   "mass_g": 36.1,
+  "hip_motor_plate": {
+   "volume_cm3": 154.872,
+   "area_cm2": 412.59,
+   "wall_mm": 500.0,
+   "infill": 1.0,
+   "effective_fill": 1.0,
+   "mass_g": 418.2,
    "estimate": true,
-   "material": "petg",
-   "qty": 1,
+   "material": "al6061",
+   "qty": 2,
    "com_m": [
-    -0.19333546511801722,
-    -3.475796607956192e-10,
-    -0.11050471233431367
+    -1.3736070537044848e-17,
+    0.18038413417106094,
+    -0.03010346923104287
    ]
   },
-  "tail_shoe": {
-   "volume_cm3": 42.037,
-   "area_cm2": 89.26,
-   "wall_mm": 2.0,
-   "infill": 0.4,
-   "effective_fill": 0.655,
-   "mass_g": 33.6,
+  "hip_output_adapter": {
+   "volume_cm3": 39.423,
+   "area_cm2": 126.74,
+   "wall_mm": 500.0,
+   "infill": 1.0,
+   "effective_fill": 1.0,
+   "mass_g": 106.4,
    "estimate": true,
-   "material": "tpu95",
-   "qty": 1,
+   "material": "al6061",
+   "qty": 2,
    "com_m": [
-    -0.4781508771650263,
-    4.3384967583533294e-13,
-    -0.10999999999133851
+    -1.587078191975746e-05,
+    0.1817271652285609,
+    -1.5870781919756034e-05
+   ]
+  },
+  "knee_output_adapter": {
+   "volume_cm3": 39.423,
+   "area_cm2": 126.74,
+   "wall_mm": 500.0,
+   "infill": 1.0,
+   "effective_fill": 1.0,
+   "mass_g": 106.4,
+   "estimate": true,
+   "material": "al6061",
+   "qty": 2,
+   "com_m": [
+    -1.5870781919756145e-05,
+    0.2466728347714389,
+    1.5870781919754797e-05
+   ]
+  },
+  "knee_motor_plate": {
+   "volume_cm3": 154.872,
+   "area_cm2": 412.59,
+   "wall_mm": 500.0,
+   "infill": 1.0,
+   "effective_fill": 1.0,
+   "mass_g": 418.2,
+   "estimate": true,
+   "material": "al6061",
+   "qty": 2,
+   "com_m": [
+    -1.3449324128933394e-17,
+    0.24801586582893922,
+    0.03010346923104291
+   ]
+  },
+  "thigh": {
+   "volume_cm3": 139.648,
+   "area_cm2": 649.85,
+   "wall_mm": 500.0,
+   "infill": 1.0,
+   "effective_fill": 1.0,
+   "mass_g": 377.1,
+   "estimate": true,
+   "material": "al6061",
+   "qty": 2,
+   "com_m": [
+    0.00012889521260613953,
+    0.201795148923942,
+    -0.10530634573555546
+   ]
+  },
+  "shin": {
+   "volume_cm3": 114.269,
+   "area_cm2": 597.89,
+   "wall_mm": 500.0,
+   "infill": 1.0,
+   "effective_fill": 1.0,
+   "mass_g": 308.5,
+   "estimate": true,
+   "material": "al6061",
+   "qty": 2,
+   "com_m": [
+    0.0022832864959563357,
+    0.24486376015938296,
+    -0.295309176991501
+   ]
+  },
+  "knee_crank": {
+   "volume_cm3": 38.93,
+   "area_cm2": 132.28,
+   "wall_mm": 500.0,
+   "infill": 1.0,
+   "effective_fill": 1.0,
+   "mass_g": 105.1,
+   "estimate": true,
+   "material": "al6061",
+   "qty": 2,
+   "com_m": [
+    0.004956694080289753,
+    0.23484136044883847,
+    -1.3714643378872624e-19
+   ]
+  },
+  "wheel_adapter": {
+   "volume_cm3": 13.339,
+   "area_cm2": 81.4,
+   "wall_mm": 500.0,
+   "infill": 1.0,
+   "effective_fill": 1.0,
+   "mass_g": 36.0,
+   "estimate": true,
+   "material": "al6061",
+   "qty": 2,
+   "com_m": [
+    2.2330082852194526e-18,
+    0.26026251760490754,
+    -0.40000000000000024
    ]
   }
  },
- "printed_total_g": 2663.4,
+ "made_total_g": 6918.7,
  "estimate": true,
- "note": "printed at 2 mm walls and 40 % infill; weigh the real parts"
+ "note": "printed parts at 2 mm walls and 40 % infill; metal parts solid; weigh the real parts"
 }

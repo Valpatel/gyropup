@@ -1,26 +1,25 @@
-"""Gyropup printed parts in CadQuery, from a design file.
+"""Gyropup's parts in CadQuery, from a design file: the chassis, the two leg modules, the head, face and sensor mounts.
 
     python cad/build.py [designs/default.json]
 
-Link lengths, wheel size, motor size and the body/tray size come from the designer's layout (tools/derive.mjs), so
-every design gets parts that fit it. Interfaces are in cad/parameters.json (values marked ASSUMED need checking).
+The leg modules are built on the mechanical interface standard (docs/mechanical-interfaces.md, cad/gmi.py, cad/leg.py)
+from the motors' real drawings (catalog/interfaces.json). Link lengths, wheel size and the body size come from the
+designer's layout (tools/derive.mjs), so every design gets parts that fit it.
 
 Frame: x forward, y left, z up, origin on the hip axis (the same as the physics model). STEP files are in that frame
-at the standing pose; STL files are in print orientation on z = 0. Writes exports/<part>.step/.stl,
-exports/geometry-checks.json (the cad-agent parts file) and exports/mass-properties.json (CAD masses for sim/model.py).
+(legs at the zero pose); STL files are in print orientation on z = 0 for printed parts. The assembly (exports/asm_*.step)
+is posed standing. Writes exports/<part>.step/.stl, exports/geometry-checks.json (the cad-agent parts file),
+exports/mass-properties.json (CAD masses for sim/model.py), exports/mech-layout.json (the real stack and track for the
+physics model) and exports/bom-mechanical.json (every part with its material and how it is made).
 
-Parts, per side where marked (x2):
-  tray            battery tray and hip frame: hangs under the J501 box on its four stacking standoffs, holds the
-                  FLEXVOLT pack(s) in their adapters (strapped), carries the hip yokes, face, cameras and the lidar
-  hip_yoke  x2    C-yoke on the tray side: hip motor inboard, knee motor outboard, coaxial (Diablo layout)
-  thigh     x2    bolts to the hip motor output; knee pivot at the far end
-  shin      x2    knee bearings, a push-rod lever, and the BotWheel flange at the bottom
-  knee_crank x2   on the knee motor output; drives the shin through the push-rod (a parallelogram four-bar)
-  pushrod   x2    two 625 bearings, centres one thigh-length apart
-  head_saddle     open frame on the J501 lid screws, raising the turret ring above the cooler grille
-  face            eye window (DualEye LCD) and two headlight bosses, on the tray front
-  camera_cradle x2  holds a D415 or D435 on its 1/4-20, front and rear
-  lidar_hanger    holds the VLP-16 under the waist
+Made parts (qty):
+  chassis (1)            3 mm 6061, bent (SendCutSend): floor, side walls with the HM pattern for the legs, front and
+                         rear walls for the face and cameras, top flanges with the J501 box's M3 standoffs
+  battery_cradle (1)     printed: rails and strap slots for the FLEXVOLT pack inside the chassis
+  per leg, x2: yoke_bracket (PA6-CF), hip/knee motor plates and output adapters (CNC 6061), thigh and shin (6061 box),
+                         knee crank (6061), wheel adapter (6061); bought: 61812 x2, 6001 x2, two M6 rod ends and a tube,
+                         three spacer posts
+  head_saddle, face, camera_cradle (2), lidar_hanger
 """
 from __future__ import annotations
 
@@ -32,12 +31,18 @@ from pathlib import Path
 
 import cadquery as cq
 
-from cadagent.geometry import export_print_stl, solid_report
+from cadagent.geometry import export_print_stl
 from cadagent.robot import printed_part_body
 
 R = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(R / 'cad'))
+sys.path.insert(0, str(R))
+import gmi  # noqa: E402
+import leg  # noqa: E402
+
 P = json.loads((R / 'cad/parameters.json').read_text())
 OUT = R / 'exports'
+SHEET = 3.0          # chassis sheet thickness (6061)
 
 
 def derive(design_path: Path) -> dict:
@@ -45,163 +50,65 @@ def derive(design_path: Path) -> dict:
     return json.loads(out.stdout)
 
 
-# --------------------------------------------------------------------------- helpers
-
-def bolt_circle(pcd, n, angle0=0.0):
-    return [(pcd / 2 * math.cos(angle0 + 2 * math.pi * k / n), pcd / 2 * math.sin(angle0 + 2 * math.pi * k / n)) for k in range(n)]
-
-
-def side_plate(profile: cq.Workplane) -> cq.Workplane:
-    return profile
-
-
-def link_xz(length, width, thick, end_r_top, end_r_bot, slot=True):
-    """A link in the XZ plane (sagittal), thickness along y, centred on y = 0, from (0,0) down to (0,-length)."""
-    wp = cq.Workplane('XZ')
-    body = (wp.circle(end_r_top).extrude(thick / 2, both=True)
-            .union(wp.center(0, -length).circle(end_r_bot).extrude(thick / 2, both=True))
-            .union(wp.center(0, -length / 2).rect(width, length).extrude(thick / 2, both=True)))
-    if slot and length > 2.4 * (end_r_top + end_r_bot):
-        s_len = length - 1.2 * (end_r_top + end_r_bot)
-        body = body.cut(cq.Workplane('XZ').center(0, -length / 2).slot2D(s_len, width * 0.36, angle=90).extrude(thick, both=True))
-    return body
-
-
-def holes_xz(body, pts, d, depth=None):
-    """Through (or blind) holes along y at XZ points."""
-    for (x, z) in pts:
-        cyl = cq.Workplane('XZ').center(x, z).circle(d / 2).extrude(depth / 2 if depth else 200, both=True)
-        body = body.cut(cyl)
-    return body
-
-
-# --------------------------------------------------------------------------- parts
-
-def thigh(L):
-    t, w = P['links']['thigh_thickness'], P['links']['thigh_width']
-    hub_r = P['links']['hub_d'] / 2
-    b = link_xz(L['thigh'], w, t, hub_r, 22.0)
-    rs = P['rs03']
-    b = holes_xz(b, bolt_circle(rs['output_pcd'], rs['output_holes']), 4.5)
-    b = holes_xz(b, [(0, 0)], rs['output_pilot'] + 0.5)
-    b = holes_xz(b, [(0, -L['thigh'])], P['knee']['pin_d'] + 0.3)
-    return b
-
-
-def shin(L):
-    t, w = P['links']['shin_thickness'], P['links']['shin_width']
-    k = P['knee']
-    b = link_xz(L['shin'], w, t, 24.0, 36.0)
-    lever_r = P['pushrod']['crank_r']
-    # push-rod lever: a boss one crank radius forward of the knee, joined to the knee hub
-    lever = (cq.Workplane('XZ').center(lever_r / 2, 0).rect(lever_r, 18).extrude(t / 2, both=True)
-             .union(cq.Workplane('XZ').center(lever_r, 0).circle(11).extrude(t / 2, both=True)))
-    b = b.union(lever)
-    b = holes_xz(b, [(lever_r, 0)], 5.2)
-    # two 6000 bearings, pressed in from each face, with a web between them (XZ extrudes along -y)
-    r_b = k['bearing_od'] / 2 + 0.05
-    b = b.cut(cq.Workplane('XZ', origin=(0, t / 2, 0)).circle(r_b).extrude(k['bearing_w']))
-    b = b.cut(cq.Workplane('XZ', origin=(0, -t / 2, 0)).circle(r_b).extrude(-k['bearing_w']))
-    b = holes_xz(b, [(0, 0)], 12.0)
-    # BotWheel flange at the bottom: 4x M6 on the PCD, cable hole
-    bw = P['botwheel']
-    pts = [(x, z - L['shin']) for x, z in bolt_circle(bw['pcd'], bw['holes'], math.pi / 4)]
-    b = holes_xz(b, pts, 6.4)
-    b = holes_xz(b, [(0, -L['shin'])], bw['cable_hole'])
-    return b
-
-
-def knee_crank():
-    rs = P['rs03']
-    r = P['pushrod']['crank_r']
-    b = (cq.Workplane('XZ').circle(28).extrude(5, both=True)
-         .union(cq.Workplane('XZ').center(r / 2, 0).rect(r, 20).extrude(5, both=True))
-         .union(cq.Workplane('XZ').center(r, 0).circle(11).extrude(5, both=True)))
-    b = holes_xz(b, bolt_circle(rs['output_pcd'], rs['output_holes']), 4.5)
-    b = holes_xz(b, [(0, 0)], rs['output_pilot'] + 0.5)
-    return holes_xz(b, [(r, 0)], 5.2)
-
-
-def pushrod(L):
-    pr = P['pushrod']
-    c = L['thigh']
-    b = (cq.Workplane('XZ').circle(12).extrude(4, both=True)
-         .union(cq.Workplane('XZ').center(0, -c).circle(12).extrude(4, both=True))
-         .union(cq.Workplane('XZ').center(0, -c / 2).rect(14, c).extrude(4, both=True)))
-    return holes_xz(b, [(0, 0), (0, -c)], pr['bearing_od'] + 0.05)
-
-
-def hip_yoke(L):
-    """C-yoke, left side, in the robot frame: inner plate on the tray wall, hip motor outboard of it, thigh hub, crank,
-    knee motor, outer plate; a bridge over the top joins the plates."""
-    y_p = P['yoke']
-    rs = P['rs03']
-    ml, md = L['motorL'], L['motorD']
-    tray_half = L['tray']['width'] / 2
-    pt = y_p['plate_t']
-    y_in = tray_half                                     # inner plate's inner face on the tray wall
-    y_hip_motor = y_in + pt                              # hip motor case face
-    y_crank_end = y_hip_motor + ml + 3 + P['links']['hub_t'] + 2 + 10 + 2
-    y_out = y_crank_end + ml                             # outer plate inner face
-    size = y_p['plate_size']
-    top = 62.0 + 10.0
-    plate = lambda y0: (cq.Workplane('XZ', origin=(0, y0, 0)).center(0, 8).rect(size, size + 16).extrude(-pt))
-    inner = plate(y_in + pt)
-    outer = plate(y_out + pt)
-    bridge = cq.Workplane('XY').box(80, (y_out + pt) - y_in, y_p['bridge_t']).translate((0, (y_in + y_out + pt) / 2, top))
-    yoke = inner.union(outer).union(bridge)
-    for y0 in (y_in, y_out):
-        for (x, z) in bolt_circle(rs['case_pcd'], rs['case_holes'], math.pi / 8):
-            yoke = yoke.cut(cq.Workplane('XZ', origin=(0, y0 + pt + 1, 0)).center(x, z).circle(2.25).extrude(pt + 2))
-        yoke = yoke.cut(cq.Workplane('XZ', origin=(0, y0 + pt + 1, 0)).circle(22).extrude(pt + 2))
-    # tray bolts (4x M5) through the inner plate
-    for (x, z) in [(-45, 35), (45, 35), (-45, 62), (45, 62)]:
-        yoke = yoke.cut(cq.Workplane('XZ', origin=(0, y_in + pt + 1, 0)).center(x, z).circle(2.75).extrude(pt + 2))
-    return yoke, {'y_in': y_in, 'y_out': y_out + pt, 'leg_y': y_hip_motor + ml + 3 + P['links']['hub_t'] / 2,
-                  'crank_y': y_hip_motor + ml + 3 + P['links']['hub_t'] + 2 + 5}
-
-
-def tray(L):
+def chassis(L, S):
+    """A 3 mm 6061 box: floor, two side walls carrying the legs (HM pattern: 6 x M6 tapped + 2 dowel holes each side,
+    and the cable pass), front and rear walls (face and cameras), and inward top flanges where the J501 box stands on
+    its four M3 standoffs. Bent from sheet by SendCutSend (floor + sides), front/rear plates riveted on."""
     T = L['tray']
-    W, D, H = T['width'], T['depth'], T['height']
-    tp = P['tray']
-    z0 = L['trayBottom']
-    outer = cq.Workplane('XY').box(D, W, H).translate((0, 0, z0 + H / 2)).edges('|Z').fillet(10)
-    inner = cq.Workplane('XY').box(D - 2 * tp['wall'], W - 2 * tp['wall'], H).translate((0, 0, z0 + tp['floor'] + H / 2)).edges('|Z').fillet(7)
-    t = outer.cut(inner)
-    n = (L.get('battery') or {}).get('packs', 1)
-    for k in range(1, n):                      # dividers between packs
-        y = k * W / n - W / 2
-        t = t.union(cq.Workplane('XY').box(D - 2 * tp['wall'], tp['wall'], H - 20).translate((0, y, z0 + (H - 20) / 2)))
-    # stacking columns under the J501 box's feet (M3 standoffs), J501 frame centred on the tray
+    W, D = T['width'], T['depth']
+    z0, z1 = L['trayBottom'], L['bodyBottom']
+    H = z1 - z0
+    box = cq.Workplane('XY').box(D, W, H).translate((0, 0, z0 + H / 2))
+    inner = cq.Workplane('XY').box(D - 2 * SHEET, W - 2 * SHEET, H).translate((0, 0, z0 + SHEET + H / 2))
+    c = box.cut(inner)
+    # top flanges (12 mm inward) along the sides, for the J501 standoffs
+    for s in (1, -1):
+        c = c.union(cq.Workplane('XY').box(D, 12, SHEET).translate((0, s * (W / 2 - 6), z1 - SHEET / 2)))
     jb = P['j501_box']
     for (jx, jy) in jb['standoff_centers']:
-        x = (jb['depth'] / 2 - jy)            # J501 y runs front to back; our x is forward
-        y = (jx - jb['width'] / 2)
-        col = cq.Workplane('XY').circle(6.5).extrude(H).translate((x, y, z0))
-        t = t.union(col).cut(cq.Workplane('XY').circle(1.7).extrude(H + 2).translate((x, y, z0 - 1)))
-    # strap slots in the floor, two per pack
-    sw, sl = tp['strap_slot']
-    for sy in [(k + 0.5) * W / n - W / 2 for k in range(n)]:
-        for sx in (-D / 4, D / 4):
-            t = t.cut(cq.Workplane('XY').box(sl, sw, 20).translate((sx, sy, z0)))
-    # hip yoke bolt inserts (M5) in both side walls
-    for side in (1, -1):
-        for (x, z) in [(-45, 35), (45, 35), (-45, 62), (45, 62)]:
-            t = t.cut(cq.Workplane('XZ', origin=(0, side * W / 2 + side * 1, 0)).center(x, z).circle(P['print']['insert_m5_pilot'] / 2)
-                      .extrude(-side * 10))
-    # front: face and front camera; back: rear camera (M4 inserts); bottom: lidar hanger (M4 inserts)
+        x, y = jb['depth'] / 2 - jy, jx - jb['width'] / 2
+        c = c.cut(cq.Workplane('XY').circle(1.7).extrude(10).translate((x, y, z1 - 5)))
+    # legs: HM pattern and cable passes on both sides
+    for s in (1, -1):
+        yw = s * W / 2
+        for (x, z) in leg.hm_holes():
+            c = c.cut(cq.Workplane('XZ', origin=(0, yw + s, 0)).center(x, z).circle(gmi.tap('M6') / 2).extrude(s * (SHEET + 2)))
+        for (x, z) in leg.hm_dowels():
+            c = c.cut(cq.Workplane('XZ', origin=(0, yw + s, 0)).center(x, z).circle(leg.STD['HM']['dowel_d'] / 2).extrude(s * (SHEET + 2)))
+        for (x, z) in leg.CABLE_PASSES:
+            c = c.cut(cq.Workplane('XZ', origin=(0, yw + s, 0)).center(x, z).circle(leg.STD['CP']['grommet_hole'] / 2).extrude(s * (SHEET + 2)))
+    # front and rear: face, camera cradles (M4 tapped) and a window behind the face for the eyes and lights
     for xs, pts in ((D / 2, [(-45, 20), (45, 20), (-45, 60), (45, 60)]), (-D / 2, [(-20, 12), (20, 12)])):
         for (y, z) in pts:
-            t = t.cut(cq.Workplane('YZ', origin=(xs + math.copysign(1, xs), 0, 0)).center(y, z0 + z).circle(2.8)
-                      .extrude(-math.copysign(10, xs)))
+            c = c.cut(cq.Workplane('YZ', origin=(xs + math.copysign(1, xs), 0, 0)).center(y, z0 + z).circle(gmi.tap('M4') / 2).extrude(-math.copysign(SHEET + 2, xs)))
+    c = c.cut(cq.Workplane('YZ', origin=(D / 2 + 1, 0, 0)).center(0, z0 + 40).rect(70, 36).extrude(-(SHEET + 2)))
+    # floor: lidar hanger (M4), lidar cable, drain/vent slots under the battery
     for (x, y) in [(-30, -30), (30, -30), (-30, 30), (30, 30)]:
-        t = t.cut(cq.Workplane('XY').circle(2.8).extrude(10).translate((x, y, z0 - 1)))
-    t = t.cut(cq.Workplane('XY').circle(3.4).extrude(10).translate((0, 0, z0 - 1)))   # lidar cable
-    if L.get('tail'):                                # tail mount: 4x M5 inserts in the floor, behind the lidar
-        for (x, y) in TAIL_MOUNT_BOLTS:
-            t = t.cut(cq.Workplane('XY').circle(P['print']['insert_m5_pilot'] / 2).extrude(10).translate((x, y, z0 - 1)))
-    return t
+        c = c.cut(cq.Workplane('XY').circle(gmi.tap('M4') / 2).extrude(10).translate((x, y, z0 - 1)))
+    c = c.cut(cq.Workplane('XY').circle(8).extrude(10).translate((0, 0, z0 - 1)))
+    for x in (-D / 4, D / 4):
+        c = c.cut(cq.Workplane('XY').box(40, 8, 10).translate((x, 0, z0)))
+    return c
+
+
+def battery_cradle(L):
+    """Printed rails on the chassis floor that locate the FLEXVOLT pack(s) in their adapters, with strap slots."""
+    T = L['tray']
+    W, D = T['width'], T['depth']
+    z0 = L['trayBottom'] + SHEET
+    n = (L.get('battery') or {}).get('packs', 1)
+    bl, bw, bh = (L.get('battery') or {}).get('dims', (157, 92, 110))
+    rails = None
+    for k in range(n):
+        yc = (k + 0.5) * (W - 2 * SHEET) / n - (W - 2 * SHEET) / 2
+        for s in (1, -1):
+            r = cq.Workplane('XY').box(bl, 6, 18).translate((0, yc + s * (bw / 2 + 3.2), z0 + 9))
+            rails = r if rails is None else rails.union(r)
+        stop = cq.Workplane('XY').box(6, bw + 12.4, 18).translate((-bl / 2 - 3, yc, z0 + 9))
+        rails = rails.union(stop)
+    for x in (-D / 4, D / 4):
+        rails = rails.cut(cq.Workplane('XY').box(30, W, 4).translate((x, 0, z0 + 2)))       # strap channels
+    return rails
 
 
 def head_saddle(L):
@@ -261,78 +168,6 @@ def camera_cradle(L, front=True):
     return c
 
 
-TAIL_MOUNT_BOLTS = [(-82, -35), (-82, 35), (-64, -35), (-64, 35)]
-
-
-def tail_mount(L):
-    """Holds the tail's pitch motor (RS-06 class) under the back of the tray: a plate on 4x M5 inserts and a cheek the
-    motor's case bolts to. The motor's axis is y, centred; its output faces +y, where the yoke bolts on."""
-    TL, z0 = L['tail'], L['trayBottom']
-    px, pz, ml = TL['pivotX'], TL['pivotZ'], TL['pitchL']
-    rs = P['rs06']
-    x0, x1 = px - 50, -58                            # behind the lidar hanger (radius 52)
-    plate = cq.Workplane('XY').box(x1 - x0, 84, 7).translate(((x0 + x1) / 2, 0, z0 - 3.5))
-    cheek_y = -ml / 2 - 4.5
-    cheek = (cq.Workplane('XZ', origin=(0, cheek_y + 4.5, 0)).center(px, (pz + z0) / 2 - 6).rect(96, z0 - pz + 60).extrude(9))
-    rib = cq.Workplane('XY').box(9, 40, z0 - pz + 40).translate((px + 44, cheek_y - 15, (pz + z0) / 2 - 6))
-    m = plate.union(cheek).union(rib)
-    for (x, y) in TAIL_MOUNT_BOLTS:
-        m = m.cut(cq.Workplane('XY').circle(2.75).extrude(30).translate((x, y, z0 - 20)))
-    for (x, z) in bolt_circle(rs['case_pcd'], rs['case_holes'], math.pi / 6):
-        m = m.cut(cq.Workplane('XZ', origin=(0, cheek_y + 10, 0)).center(px + x, pz + z).circle(2.25).extrude(30))
-    m = m.cut(cq.Workplane('XZ', origin=(0, cheek_y + 10, 0)).center(px, pz).circle(rs['output_pilot'] / 2 + 6).extrude(30))
-    return m
-
-
-def tail_yoke(L):
-    """Joins the pitch motor's output to the wag motor: a 5 mm aluminium plate, bent once. The upright part bolts to the
-    pitch output; the flat part runs back over the wag motor, whose case bolts up into it (axis vertical)."""
-    TL = L['tail']
-    px, pz, ml, yoff, yl = TL['pivotX'], TL['pivotZ'], TL['pitchL'], TL['yawOffset'], TL['yawL']
-    t, y0 = 5.0, ml / 2 + 1
-    a, b = P['rs06'], P['rs00']
-    disc = cq.Workplane('XZ', origin=(0, y0, 0)).center(px, pz).circle(36).extrude(-t)
-    top_z = pz + yl / 2
-    web = cq.Workplane('XZ', origin=(0, y0, 0)).center(px - 18, (pz + top_z + t) / 2).rect(36, top_z + t - pz).extrude(-t)
-    flat = cq.Workplane('XY').box(yoff + 36, 2 * y0 + t, t).translate((px - yoff / 2 - 4, 0, top_z + t / 2))
-    y = disc.union(web).union(flat)
-    for (x, z) in bolt_circle(a['output_pcd'], a['output_holes']):
-        y = y.cut(cq.Workplane('XZ', origin=(0, y0 + 1, 0)).center(px + x, pz + z).circle(2.25).extrude(-t - 2))
-    for (x, yy) in bolt_circle(b['case_pcd'], b['case_holes']):
-        y = y.cut(cq.Workplane('XY').circle(1.7).extrude(t + 2).translate((px - yoff + x, yy, top_z - 1)))
-    return y
-
-
-def tail_clamp(L):
-    """Bolts under the wag motor's output and grips the 20 mm carbon tube (split clamp, 2x M4)."""
-    TL = L['tail']
-    px, pz, yoff, yl, drop, d = TL['pivotX'], TL['pivotZ'], TL['yawOffset'], TL['yawL'], TL['tubeDrop'], TL['tubeD']
-    b = P['rs00']
-    cx, top = px - yoff, pz - yl / 2
-    blk = cq.Workplane('XY').box(46, 34, drop + d / 2 + 6 - yl / 2).translate((cx - 4, 0, top - (drop + d / 2 + 6 - yl / 2) / 2))
-    sock = cq.Workplane('YZ').circle(d / 2 + 5).extrude(46).translate((cx - 27, 0, pz - drop))
-    c = blk.union(sock)
-    c = c.cut(cq.Workplane('YZ').circle(d / 2 + 0.15).extrude(60).translate((cx - 60, 0, pz - drop)))
-    c = c.cut(cq.Workplane('XY').box(60, P['tail']['clamp_slot'], d).translate((cx - 30, 0, pz - drop - d / 2)))   # pinch slot
-    for x in (cx - 18, cx + 8):
-        c = c.cut(cq.Workplane('XZ', origin=(0, 30, 0)).center(x, pz - drop - d / 2 - 4).circle(2.25).extrude(60))
-    for (x, y) in bolt_circle(b['output_pcd'], b['output_holes']):
-        c = c.cut(cq.Workplane('XY').circle(1.7).extrude(30).translate((cx + x, y, top - 25)))
-    return c
-
-
-def tail_shoe(L):
-    """TPU skid shoe on the end of the tube: rounded underneath so it slides on grass and gravel."""
-    TL = L['tail']
-    px, pz, R = TL['pivotX'], TL['pivotZ'], TL['shoeR']
-    reach = TL['length'] - R
-    tip = (px - reach, 0, pz - TL['tubeDrop'])
-    shoe = cq.Workplane('XY').sphere(R).translate(tip)
-    shoe = shoe.union(cq.Workplane('YZ').circle(TL['tubeD'] / 2 + 4).extrude(30).translate((tip[0], 0, tip[2])))
-    shoe = shoe.cut(cq.Workplane('YZ').circle(TL['tubeD'] / 2 + 0.1).extrude(40).translate((tip[0] + 2, 0, tip[2])))
-    return shoe
-
-
 def lidar_hanger(L):
     z0 = L['trayBottom']
     lp = P['lidar']
@@ -348,89 +183,70 @@ def lidar_hanger(L):
 
 # --------------------------------------------------------------------------- assembly and export
 
+
+
 def build(design_path: Path):
     ev = derive(design_path)
     L = ev['layout']
-    yoke, Y = hip_yoke(L)
-    hip_t = math.radians(0)
-    # standing pose for the assembly: wheel under the hip at 60 % height
+    d = json.loads(Path(design_path).read_text())
+    hip_id = d['parts']['leg_actuator']
+    lparts, lmeta, lbought, S, assumed = leg.leg_parts(L, hip_id, hip_id, d['parts']['wheel_motor'])
     a, b = L['thigh'], L['shin']
+    cr = leg.STD['PR']['crank_r']
+    # standing pose for the assembly (60 % height), from the controller's own leg geometry
+    from sim.controller import hip_for, knee_for
+    am, bm = a / 1000, b / 1000
     lo, hi = math.radians(L['kneeMinDeg']), math.radians(L['kneeMaxDeg'])
-    h = lambda g: math.sqrt(a * a + b * b - 2 * a * b * math.cos(g))
-    hh = h(lo) + 0.6 * (h(hi) - h(lo))
-    gamma = math.acos((a * a + b * b - hh * hh) / (2 * a * b))
-    alpha = math.acos((a * a + hh * hh - b * b) / (2 * a * hh))
-    knee_q = gamma - math.pi
+    hmin, hmax = (math.sqrt(am * am + bm * bm - 2 * am * bm * math.cos(g)) for g in (lo, hi))
+    hh = hmin + 0.6 * (hmax - hmin)
+    hip_q, knee_q = hip_for(am, bm, hh), knee_for(am, bm, hh) - math.pi
 
-    def place_leg(shape, side, y, rot_deg, at=(0, 0, 0)):
-        s = shape.rotate((0, 0, 0), (0, 1, 0), rot_deg).translate((at[0], side * y, at[2]))
-        return s
+    parts, meta, placed = {}, {}, {}
 
-    parts, placed = {}, {}
-    parts['tray'] = tray(L)
-    for side, tag in ((1, 'l'), (-1, 'r')):
-        yk = yoke if side == 1 else yoke.mirror('XZ')
-        placed[f'hip_yoke_{tag}'] = yk
-    parts['hip_yoke'] = yoke
-    parts['thigh'] = thigh(L)
-    parts['shin'] = shin(L)
-    parts['knee_crank'] = knee_crank()
-    parts['pushrod'] = pushrod(L)
-    parts['head_saddle'] = head_saddle(L)
-    parts['face'] = face(L)
-    parts['camera_cradle'] = camera_cradle(L, True)
-    parts['lidar_hanger'] = lidar_hanger(L)
-    if L.get('tail'):
-        for name, fn in (('tail_mount', tail_mount), ('tail_yoke', tail_yoke), ('tail_clamp', tail_clamp), ('tail_shoe', tail_shoe)):
-            parts[name] = fn(L)
-    # legs at the standing pose (rotation about +y: thigh back by alpha; shin forward by knee_q)
-    kx, kz = -a * math.sin(alpha), -a * math.cos(alpha)
-    for side, tag in ((1, 'l'), (-1, 'r')):
-        placed[f'thigh_{tag}'] = place_leg(parts['thigh'], side, Y['leg_y'], math.degrees(alpha))
-        sh = parts['shin'].rotate((0, 0, 0), (0, 1, 0), math.degrees(alpha + knee_q)).translate((kx, side * (Y['leg_y'] + 20), kz))
-        placed[f'shin_{tag}'] = sh
-        placed[f'knee_crank_{tag}'] = place_leg(parts['knee_crank'], side, Y['crank_y'], 0)
-    placed['tray'] = parts['tray']
-    placed['head_saddle'] = parts['head_saddle']
-    placed['face'] = parts['face']
-    placed['camera_cradle_front'] = parts['camera_cradle']
+    def add(name, shape, material, qty, how, place=True):
+        parts[name], meta[name] = shape, {'material': material, 'qty': qty, 'how': how}
+        if place:
+            placed[name] = shape
+
+    add('chassis', chassis(L, S), 'al6061', 1, '3 mm 6061, laser cut and bent (SendCutSend); tapped M6/M5/M4/M3')
+    add('battery_cradle', battery_cradle(L), 'pla', 1, 'printed PLA')
+    add('head_saddle', head_saddle(L), 'pla', 1, 'printed PLA')
+    add('face', face(L), 'pla', 1, 'printed PLA')
+    add('camera_cradle', camera_cradle(L, True), 'pla', 2, 'printed PLA')
     placed['camera_cradle_rear'] = camera_cradle(L, False)
-    placed['lidar_hanger'] = parts['lidar_hanger']
-    if L.get('tail'):                    # the tail raised to where it rides while balancing (0.45 rad up; + about y raises it), turning about the pitch axis
-        TL = L['tail']
-        piv = (TL['pivotX'], 0, TL['pivotZ'])
-        placed['tail_mount'] = parts['tail_mount']
-        for name in ('tail_yoke', 'tail_clamp', 'tail_shoe'):
-            placed[name] = parts[name].rotate(piv, (piv[0], 1, piv[2]), math.degrees(0.45))
+    add('lidar_hanger', lidar_hanger(L), 'pla', 1, 'printed PLA')
+    # the legs: left as built, right mirrored; each part turned to the standing pose
+    for name, shape in lparts.items():
+        m = lmeta[name]
+        add(name, shape, m['material'], 2, m['note'], place=False)
+        posed = leg.pose(shape, name, hip_q, knee_q, a, cr)
+        placed[f'{name}_l'] = posed
+        placed[f'{name}_r'] = posed.mirror('XZ')
 
-    # print orientation: largest flat face down
-    rot = {'thigh': ((1, 0, 0), 90), 'shin': ((1, 0, 0), 90), 'knee_crank': ((1, 0, 0), 90), 'pushrod': ((1, 0, 0), 90),
-           'hip_yoke': ((1, 0, 0), -90), 'face': ((0, 1, 0), 90), 'head_saddle': ((1, 0, 0), 180), 'lidar_hanger': ((1, 0, 0), 180),
-           'camera_cradle': None, 'tray': None, 'tail_mount': ((1, 0, 0), 180), 'tail_yoke': None, 'tail_clamp': ((1, 0, 0), 180), 'tail_shoe': ((0, 1, 0), -90)}
-    qty = {'thigh': 2, 'shin': 2, 'knee_crank': 2, 'pushrod': 2, 'hip_yoke': 2, 'camera_cradle': 2}
+    rot = {'face': ((0, 1, 0), 90), 'head_saddle': ((1, 0, 0), 180), 'lidar_hanger': ((1, 0, 0), 180), 'camera_cradle': None,
+           'yoke_bracket': ((1, 0, 0), -90), 'battery_cradle': None}
     materials = json.loads((R / 'catalog/materials.json').read_text())
-    hot = {'hip_yoke', 'knee_crank', 'tail_mount', 'tail_clamp'}         # touch the motor cases: PETG
-    METAL = {'tail_yoke': 'aluminium 6061 (SendCutSend)'}
     OUT.mkdir(exist_ok=True)
-    for old in OUT.glob('asm_*.step'):          # parts from an earlier design (e.g. a second battery) must not linger
+    for old in OUT.glob('asm_*.step'):          # parts from an earlier build must not linger
+        old.unlink()
+    for old in OUT.glob('*.stl'):
         old.unlink()
     report, mass = {}, {}
-    diagonal = {'thigh', 'shin', 'pushrod'}   # longer than the bed: print them corner to corner
+    METAL_DENSITY = {'al6061': 2.70}
     for name, shape in parts.items():
         solid = shape.val() if hasattr(shape, 'val') else shape
         cq.exporters.export(solid, str(OUT / f'{name}.step'))
-        printable = solid.rotate((0, 0, 0), (0, 1, 0), 45) if name in diagonal else solid
-        rep = export_print_stl(printable, OUT / f'{name}.stl', rotation=rot.get(name))
-        rep.update(qty=qty.get(name, 1))
-        report[name] = rep
-        mat = 'petg' if name in hot else 'tpu95' if name == 'tail_shoe' else 'pla'
-        if name in METAL:                       # cut from plate: solid, not infilled
-            mat = METAL[name]
-            body, mrep = printed_part_body(solid, 2.70, wall_mm=50.0, infill=1.0, name=name)
+        mat = meta[name]['material']
+        if mat in METAL_DENSITY:                # machined or cut: solid metal, no STL to print
+            body, mrep = printed_part_body(solid, METAL_DENSITY[mat], wall_mm=500.0, infill=1.0, name=name)
+            report[name] = {'cad_valid': solid.isValid(), 'solid_count': len(solid.Solids()), 'made': meta[name]['how'], 'qty': meta[name]['qty'], 'print': False}
         else:
-            body, mrep = printed_part_body(solid, materials[mat]['density_g_cm3'], wall_mm=2.0, infill=0.4, name=name)
-        mass[name] = {**mrep, 'material': mat, 'qty': qty.get(name, 1), 'com_m': list(body.com)}
-    # bought parts as simple envelopes at their real positions, so the assembly view shows the whole robot
+            rep = export_print_stl(solid, OUT / f'{name}.stl', rotation=rot.get(name))
+            rep.update(qty=meta[name]['qty'], made=meta[name]['how'], print=True)
+            report[name] = rep
+            body, mrep = printed_part_body(solid, materials[{'pa_cf': 'pa6-cf'}.get(mat, mat)]['density_g_cm3'], wall_mm=2.0, infill=0.4, name=name)
+        mass[name] = {**mrep, 'material': mat, 'qty': meta[name]['qty'], 'com_m': list(body.com)}
+    # bought parts at their real positions (envelopes; vendor STEP files stay local and are not exported)
     T, B = L['tray'], L['body']
     bought = {}
     bought['j501_box'] = cq.Workplane('XY').box(B['depth'], B['width'], B['height']).edges().fillet(6).translate((0, 0, L['bodyBottom'] + B['height'] / 2))
@@ -438,48 +254,47 @@ def build(design_path: Path):
         n, (bl, bw, bh) = L['battery']['packs'], L['battery']['dims']
         for i in range(n):
             y = (i + 0.5) * T['width'] / n - T['width'] / 2
-            bought[f'battery_{i + 1}'] = cq.Workplane('XY').box(bl, bw, bh).edges('|X').fillet(8).translate((0, y, L['trayBottom'] + 6 + bh / 2))
-    for side, tag in ((1, 'l'), (-1, 'r')):
-        y0 = Y['y_in'] + P['yoke']['plate_t']
-        bought[f'hip_motor_{tag}'] = cq.Workplane('XZ').circle(L['motorD'] / 2).extrude(-L['motorL']).translate((0, side * y0 if side > 0 else 0, 0)) if side > 0 else \
-            cq.Workplane('XZ').circle(L['motorD'] / 2).extrude(L['motorL']).translate((0, -y0, 0))
-        yk = Y['y_out'] - P['yoke']['plate_t']
-        bought[f'knee_motor_{tag}'] = cq.Workplane('XZ').circle(L['motorD'] / 2).extrude(L['motorL']).translate((0, side * yk if side > 0 else 0, 0)) if side > 0 else \
-            cq.Workplane('XZ').circle(L['motorD'] / 2).extrude(-L['motorL']).translate((0, -yk, 0))
-        wy = side * (Y['leg_y'] + 20 + P['links']['shin_thickness'] / 2 + L['wheelW'] / 2)
-        bought[f'wheel_{tag}'] = cq.Workplane('XZ').circle(L['wheelR']).circle(L['wheelR'] * 0.3).extrude(L['wheelW'] / 2, both=True).translate((0, wy, -hh))
-    if L.get('tail'):
-        TL = L['tail']
-        piv = (TL['pivotX'], 0, TL['pivotZ'])
-        turn = lambda w: w.rotate(piv, (piv[0], 1, piv[2]), math.degrees(0.45))
-        bought['tail_pitch_motor'] = cq.Workplane('XZ').circle(TL['pitchD'] / 2).extrude(TL['pitchL'] / 2, both=True).translate(piv)
-        bought['tail_wag_motor'] = turn(cq.Workplane('XY').circle(TL['yawD'] / 2).extrude(TL['yawL']).translate((piv[0] - TL['yawOffset'], 0, piv[2] - TL['yawL'] / 2)))
-        tube_len = TL['length'] - TL['yawOffset'] - 2 * TL['shoeR'] + 10
-        bought['tail_tube'] = turn(cq.Workplane('YZ').circle(TL['tubeD'] / 2).circle(TL['tubeD'] / 2 - 1).extrude(tube_len)
-                                   .translate((piv[0] - TL['yawOffset'] + 20 - tube_len, 0, piv[2] - TL['tubeDrop'])))
+            bought[f'battery_{i + 1}'] = cq.Workplane('XY').box(bl, bw, bh).edges('|X').fillet(8).translate((0, y, L['trayBottom'] + SHEET + 18 + bh / 2 - 12))
+    env = {'hip_motor': gmi.place(_envelope(hip_id), (0, S.y['hip_out'], 0), (0, 1, 0)),
+           'knee_motor': gmi.place(_envelope(hip_id), (0, S.y['knee_out'], 0), (0, -1, 0)),
+           'posts': lbought['posts'], 'pushrod': lbought['pushrod'], 'wheel': lbought['wheel']}
+    for name, shape in env.items():
+        posed = leg.pose(shape, name, hip_q, knee_q, a, cr)
+        bought[f'{name}_l'], bought[f'{name}_r'] = posed, posed.mirror('XZ')
     lz = L['trayBottom'] - 8 - 36
     bought['lidar'] = cq.Workplane('XY').circle(51.65).extrude(71.7).translate((0, 0, lz - 36))
     for name, x in (('camera_front', T['depth'] / 2 + 17), ('camera_rear', -(T['depth'] / 2 + 17))):
         bought[name] = cq.Workplane('XY').box(25, 90, 25).translate((x, 0, L['trayBottom'] + 5 + 12.5))
     for name, shape in bought.items():
         cq.exporters.export(shape.val(), str(OUT / f'asm_{name}.step'))
-
-    # the assembly at the standing pose, for the 3D viewer and review
-    asm = cq.Assembly()
-    for name, shape in placed.items():
-        asm.add(shape, name=name)
-    asm.save(str(OUT / 'assembly.step'))
     for name, shape in placed.items():
         cq.exporters.export(shape.val() if hasattr(shape, 'val') else shape, str(OUT / f'asm_{name}.step'))
-    (OUT / 'geometry-checks.json').write_text(json.dumps(report, indent=1) + '\n')
+
+    (OUT / 'geometry-checks.json').write_text(json.dumps({k: v for k, v in report.items() if v.get('print')}, indent=1) + '\n')
     total = sum(m['mass_g'] * m['qty'] for m in mass.values())
     (OUT / 'mass-properties.json').write_text(json.dumps({'design': str(Path(design_path).resolve().relative_to(R)), 'parts': mass,
-                                                          'printed_total_g': round(total, 1), 'estimate': True,
-                                                          'note': 'printed at 2 mm walls and 40 % infill; weigh the real parts'}, indent=1) + '\n')
-    print(f"{len(parts)} part types, {sum(qty.get(n, 1) for n in parts)} printed parts, {total:.0f} g of filament (estimate)")
+                                                          'made_total_g': round(total, 1), 'estimate': True,
+                                                          'note': 'printed parts at 2 mm walls and 40 % infill; metal parts solid; weigh the real parts'}, indent=1) + '\n')
+    (OUT / 'mech-layout.json').write_text(json.dumps({'design': str(Path(design_path).resolve().relative_to(R)), 'stack_mm': S.y, 'track_mm': S.track,
+                                                      'notes': S.notes, 'assumed_interfaces': assumed,
+                                                      'hip_y_mm': sum(S.y['thigh']) / 2, 'wheel_y_mm': S.y['wheel_centre'],
+                                                      'min_knee_deg': S.y.get('min_knee_deg')}, indent=1) + '\n')
+    (OUT / 'bom-mechanical.json').write_text(json.dumps({n: {**meta[n], 'mass_g_each': round(mass[n]['mass_g'], 1)} for n in parts}, indent=1) + '\n')
+    print(f"{len(parts)} part types, {sum(m['qty'] for m in meta.values())} parts, {total / 1000:.2f} kg made (estimate); track {S.track:.0f} mm")
+    for n in S.notes:
+        print('  note:', n)
     for name, rep in report.items():
-        print(f"  {name:14} x{rep['qty']}  {rep['print_bounds_mm']}  valid={rep['cad_valid']} solids={rep['solid_count']} watertight={rep['watertight']}")
+        print(f"  {name:20} x{rep['qty']}  {meta[name]['material']:7} valid={rep['cad_valid']} solids={rep['solid_count']}  {meta[name]['how']}")
     return report
+
+
+def _envelope(part_id):
+    """A motor's stepped envelope (never the vendor STEP, which stays local)."""
+    mi = gmi.motor_interface(part_id)
+    od, Lm = mi['od'] or 100.0, mi['length'] or 50.0
+    off = mi['output']['face_offset'] if mi['output'] else 0.0
+    front = mi['case']['spigot_d'] or od * 0.7
+    return gmi._cyl(od / 2, -Lm, -off).union(gmi._cyl(front / 2, -off, 0.0))
 
 
 if __name__ == '__main__':

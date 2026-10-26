@@ -840,5 +840,469 @@
     "sources": ["https://github.com/Tops76/Dart-Turret", "https://www.printables.com/model/338574-nerf-dart-turret-brushless-wifi-wip"],
     "confidence": "product page",
     "notes": "Closest open-source match to the Gyropup turret: brushless flywheels, serial-bus-servo gimbal, and a built-in dart speed sensor. 'Max dart speed 140 km/h' (= 38.9 m/s, 128 fps) is far above the Gyropup cap. Work in progress per the author."
+  },
+  {
+    "id": "ait-40max-lailaps-solenoid-pusher",
+    "category": "turret",
+    "vendor": "AIT + 40MAX (sold by Out of Darts)",
+    "model": "Lailaps Solenoid Pusher",
+    "price_usd": 19.99,
+    "price_note": "Out of Darts, single unit",
+    "price_checked": "2026-10-25",
+    "buy": [
+      {"seller": "Out of Darts", "url": "https://outofdarts.com/products/ait-40max-lailaps-solenoid-pusher", "in_stock": true, "ships_from": "US"}
+    ],
+    "specs": {
+      "mass_g": 63,
+      "body_mm": [22.0, 27.0],
+      "core_mm": [8.0, 43.6],
+      "stroke_mm": 12.5,
+      "push_force_n": 10,
+      "peak_current_a": 12,
+      "voltage_range_v": [11, 17],
+      "pulse_response_ms": 10,
+      "mounting": "6x M2, 3 mm max depth",
+      "interface": "2-wire coil, pulsed only (never hold on); MOSFET + flyback",
+      "ip_rating": null
+    },
+    "cad": {"step_url": "https://outofdarts.com/products/ait-40max-lailaps-solenoid-pusher", "available": true},
+    "sources": ["https://outofdarts.com/products/ait-40max-lailaps-solenoid-pusher"],
+    "confidence": "product page",
+    "notes": "Lightest proven short-dart solenoid found (63 g vs Neutron 209 g); 12 rps in the Lailaps blaster. 11-17 V, so on Gyropup it needs a 12 V buck in the head. Pick for a dart cartridge."
+  },
+  {
+    "id": "repeat-robotics-am32-35a-esc",
+    "category": "turret",
+    "vendor": "Repeat Robotics (sold by Palm Beach Bots)",
+    "model": "AM32 Brushless Drive ESC 35 A (bi-directional)",
+    "price_usd": 24.99,
+    "price_note": "Palm Beach Bots, single unit",
+    "price_checked": "2026-10-25",
+    "buy": [
+      {"seller": "Palm Beach Bots", "url": "https://palmbeachbots.com/products/repeat-robotics-am32-brushless-drive-esc-bi-directional", "in_stock": true, "ships_from": "US"}
+    ],
+    "specs": {
+      "mass_g": 5,
+      "size_mm": [25, 13, 5],
+      "continuous_current_a": 35,
+      "cells_s": [3, 6],
+      "voltage_range_v": [9.0, 25.2],
+      "firmware": "AM32 (reprogrammable with the AM32 config tool)",
+      "interface": "servo PWM / DShot (AM32); RPM telemetry on this board not confirmed",
+      "ip_rating": null
+    },
+    "cad": {"step_url": null, "available": false},
+    "sources": ["https://palmbeachbots.com/products/repeat-robotics-am32-brushless-drive-esc-bi-directional", "https://github.com/am32-firmware/AM32"],
+    "confidence": "product page",
+    "notes": "6S-capable 5 g ESC, so it runs flywheel motors straight from a regulated 24 V payload rail. Ships with crawler (bi-directional) settings; reflash as uni-directional with RPM telemetry for a closed-loop flywheel. Voltage range is 3-6S LiPo (calc), not a stated rating. Listing shipping weight 15 g."
+  },
+  {
+    "id": "dji-robomaster-c615-esc",
+    "category": "turret",
+    "vendor": "DJI RoboMaster",
+    "model": "C615 Brushless ESC (for Snail 2305)",
+    "price_usd": 39.0,
+    "price_note": "RoboMaster official store price (contact organising committee to buy)",
+    "price_checked": "2026-10-25",
+    "buy": [
+      {"seller": "RoboMaster", "url": "https://www.robomaster.com/en-US/products/components/detail/2396", "in_stock": null, "ships_from": "CN"}
+    ],
+    "specs": {
+      "mass_g": 9.7,
+      "continuous_current_a": 15,
+      "voltage_nominal_v": 24,
+      "voltage_max_v": 26,
+      "interface": "PWM",
+      "ip_rating": null
+    },
+    "cad": {"step_url": null, "available": false},
+    "sources": ["https://www.robomaster.com/en-US/products/components/detail/2396", "https://aifitlab.com/products/dji-robomaster-snail-2305-motor-c615-speed-controller"],
+    "confidence": "product page",
+    "notes": "The ESC RoboMaster pairs with the Snail 2305 friction-wheel motor in every 17 mm launcher. 26 V max: only on a regulated 24 V rail. Official Snail price is $29 (catalog item dji-robomaster-snail-2305 lists a $40 reseller price)."
+  },
+  {
+    "id": "kelly-industries-plus-motor-2207-3200kv",
+    "category": "turret",
+    "vendor": "Kelly Industries",
+    "model": "Plus Motor (Brushless) 2207 3200KV",
+    "price_usd": 21.99,
+    "price_note": "Kelly Industries store, single unit",
+    "price_checked": "2026-10-25",
+    "buy": [
+      {"seller": "Kelly Industries", "url": "https://kellyindustries.us/products/plus-motor-brushless", "in_stock": true, "ships_from": "US"}
+    ],
+    "specs": {
+      "mass_g": null,
+      "shipping_weight_g": 51,
+      "stator": "2207",
+      "kv_rpm_per_v": 3200,
+      "cells_s": [3, 4],
+      "esc_min_a": "30 A on 3S, 35 A on 4S",
+      "esc_firmware": "BLHeli_32, AM32 or FlyShot",
+      "flywheel_mount": "4x M3",
+      "ip_rating": null
+    },
+    "cad": {"step_url": "https://kellyindustries.us/products/plus-motor-brushless", "available": true},
+    "sources": ["https://kellyindustries.us/products/plus-motor-brushless"],
+    "confidence": "product page",
+    "notes": "Blaster-specific brushless flywheel motor with a STEP file and bolt-on flywheel. Too fast for a 24 V rail (76,800 rpm no-load, calc); use on 3-4S or pick the Snail 2305 for 24 V."
+  },
+  {
+    "id": "emax-eco-ii-2207-1700kv",
+    "category": "turret",
+    "vendor": "Emax",
+    "model": "ECO II 2207 1700KV",
+    "price_usd": 12.99,
+    "price_note": "Emax USA store; 1900 and 2400 KV at the same price",
+    "price_checked": "2026-10-25",
+    "buy": [
+      {"seller": "Emax USA", "url": "https://shop.emax-usa.com/products/eco-ii-2207-brushless-motor-1700kv-1900kv-2400kv", "in_stock": true, "ships_from": "US"}
+    ],
+    "specs": {
+      "mass_g": null,
+      "shipping_weight_g": 64,
+      "stator": "2207",
+      "kv_rpm_per_v": 1700,
+      "cells_s": [3, 6],
+      "ip_rating": null
+    },
+    "cad": {"step_url": null, "available": false},
+    "sources": ["https://shop.emax-usa.com/products/eco-ii-2207-brushless-motor-1700kv-1900kv-2400kv"],
+    "confidence": "product page",
+    "notes": "Cheap low-KV FPV motor: 1700 KV x 24 V = 40,800 rpm no-load (calc). Same 2207 class torukmakto4 lists for T19 (Emax RS2205S, Racerstar BR2207S). Alternative to the Snail for a 24 V flywheel."
+  },
+  {
+    "id": "ood-loki-130-3s",
+    "category": "turret",
+    "vendor": "Out of Darts",
+    "model": "Loki 130 3S High-Speed Motor",
+    "price_usd": 9.49,
+    "price_note": "Out of Darts, single unit",
+    "price_checked": "2026-10-25",
+    "buy": [
+      {"seller": "Out of Darts", "url": "https://outofdarts.com/products/ood-loki-130-3s-neodymium-high-speed-high-rpm-motor-for-nerf-blasters", "in_stock": true, "ships_from": "US"}
+    ],
+    "specs": {
+      "mass_g": null,
+      "shipping_weight_g": 32,
+      "voltage_nominal_v": 11.1,
+      "no_load_speed_rpm": 62000,
+      "no_load_current_a": 0.9,
+      "stall_current_a": 21,
+      "ip_rating": null
+    },
+    "cad": {"step_url": null, "available": false},
+    "sources": ["https://outofdarts.com/products/ood-loki-130-3s-neodymium-high-speed-high-rpm-motor-for-nerf-blasters"],
+    "confidence": "product page",
+    "notes": "Brushed 130 reference for a cheap 12 V launcher. No speed feedback and 21 A stall; Gyropup prefers brushless with RPM telemetry."
+  },
+  {
+    "id": "kptn-a-super-drum-hardware-kit",
+    "category": "turret",
+    "vendor": "Kptn A (sold by Out of Darts)",
+    "model": "Super Drum Magazine Hardware Kit (70 short darts, Talon)",
+    "price_usd": 25.99,
+    "price_note": "Out of Darts, hardware only; printed parts extra (IFB Singapore sells them for $60)",
+    "price_checked": "2026-10-25",
+    "buy": [
+      {"seller": "Out of Darts", "url": "https://outofdarts.com/products/kptn-a-super-drum-magazine-hardware-kit", "in_stock": true, "ships_from": "US"},
+      {"seller": "IFB", "url": "https://ifb.sg/products/superdrum-70-3d-printed-parts", "in_stock": null, "ships_from": "SG"}
+    ],
+    "specs": {
+      "mass_g": null,
+      "hardware_mass_g": 65,
+      "capacity_darts": 70,
+      "dart": "short (Talon)",
+      "springs": "8 constant-force",
+      "ip_rating": null
+    },
+    "cad": {"step_url": null, "available": false},
+    "sources": ["https://outofdarts.com/products/kptn-a-super-drum-magazine-hardware-kit", "https://ifb.sg/products/superdrum-70-3d-printed-parts"],
+    "confidence": "product page",
+    "notes": "Open 3D-printed Talon drum; files linked from the listing. 'Strongly prefers fresher... stiffer' darts and has tight feed lips. Option for a high-capacity dart cartridge; total printed mass not published."
+  },
+  {
+    "id": "worker-18rd-curved-talon-short-dart-mag",
+    "category": "turret",
+    "vendor": "Worker (sold by Out of Darts)",
+    "model": "18-Round Curved Standard Talon Short Dart Magazine",
+    "price_usd": 11.99,
+    "price_note": "Out of Darts, any colour",
+    "price_checked": "2026-10-25",
+    "buy": [
+      {"seller": "Out of Darts", "url": "https://outofdarts.com/products/worker-18-round-curved-standard-talon-short-dart-magazine", "in_stock": true, "ships_from": "US"}
+    ],
+    "specs": {
+      "mass_g": 105,
+      "shipping_weight_g": 140,
+      "capacity_darts": 18,
+      "dart": "short (Talon)",
+      "ip_rating": null
+    },
+    "cad": {"step_url": null, "available": false},
+    "sources": ["https://outofdarts.com/products/worker-18-round-curved-standard-talon-short-dart-magazine"],
+    "confidence": "product page",
+    "notes": "Mass from the product description (105 g); 140-144 g is the listing's shipping weight."
+  },
+  {
+    "id": "dart-zone-powerstrike-rounds-200",
+    "category": "turret",
+    "vendor": "Dart Zone (sold by Out of Darts)",
+    "model": "BallistixOps Powerstrike Rounds 200-Pack (Rival-compatible)",
+    "price_usd": 29.99,
+    "price_note": "Out of Darts, 200 rounds",
+    "price_checked": "2026-10-25",
+    "buy": [
+      {"seller": "Out of Darts", "url": "https://outofdarts.com/products/dart-zone-ballistix-ops-powerstrike-rounds-rival-compatible-ammo-200-pack", "in_stock": true, "ships_from": "US"}
+    ],
+    "specs": {
+      "mass_g": 1.85,
+      "diameter_mm": 22.8,
+      "material": "polyurethane foam",
+      "count": 200,
+      "ip_rating": null
+    },
+    "cad": {"step_url": null, "available": false},
+    "sources": ["https://outofdarts.com/products/dart-zone-ballistix-ops-powerstrike-rounds-rival-compatible-ammo-200-pack"],
+    "confidence": "product page",
+    "notes": "mass_g is per round. Second source of Rival-size ammo for the ball cartridge (Worker Cheetah 1.75 g is the other). Heavier than Cheetah, so it sets the energy cap: 0.42 J at 70 fps (calc)."
+  },
+  {
+    "id": "worker-15rd-rival-mag",
+    "category": "turret",
+    "vendor": "Worker (sold by Out of Darts)",
+    "model": "15-Round Rival Magazine (Apollo + OOD Juno)",
+    "price_usd": 9.99,
+    "price_note": "Out of Darts, single unit",
+    "price_checked": "2026-10-25",
+    "buy": [
+      {"seller": "Out of Darts", "url": "https://outofdarts.com/products/worker-15-round-rival-magazine-apollo-juno", "in_stock": true, "ships_from": "US"}
+    ],
+    "specs": {
+      "mass_g": null,
+      "shipping_weight_g": 227,
+      "capacity_rounds": 15,
+      "material": "ABS",
+      "ip_rating": null
+    },
+    "cad": {"step_url": null, "available": false},
+    "sources": ["https://outofdarts.com/products/worker-15-round-rival-magazine-apollo-juno"],
+    "confidence": "product page",
+    "notes": "Shows how heavy a Rival magazine is per round (~15 g/round, est from shipping weight). Gyropup's ball cartridge uses a hopper + dial instead."
+  },
+  {
+    "id": "ait-40max-lightning",
+    "category": "turret",
+    "vendor": "AIT + 40MAX (sold by Out of Darts)",
+    "model": "Lightning Brushless Flywheel Blaster",
+    "price_usd": 199.97,
+    "price_note": "Out of Darts",
+    "price_checked": "2026-10-25",
+    "buy": [
+      {"seller": "Out of Darts", "url": "https://outofdarts.com/products/ait-40max-lightning-brushless-flywheel-blaster", "in_stock": true, "ships_from": "US"}
+    ],
+    "specs": {
+      "mass_g": 582,
+      "muzzle_velocity_fps_presets": [87, 117, 132, 140],
+      "rate_of_fire_rps": 12,
+      "pusher": "brushless cam",
+      "feed": "Talon short-dart magazine",
+      "ip_rating": null
+    },
+    "cad": {"step_url": null, "available": false},
+    "sources": ["https://outofdarts.com/products/ait-40max-lightning-brushless-flywheel-blaster"],
+    "confidence": "product page",
+    "notes": "Reference: a whole brushless short-dart blaster with a lowest preset of 87 fps (SD 2-3) and 'intelligent idling'. Closed design."
+  },
+  {
+    "id": "ood-juno-rival-3d-parts-hardware-kit",
+    "category": "turret",
+    "vendor": "Out of Darts",
+    "model": "Juno Rival Blaster 3D Parts + Hardware Kit",
+    "price_usd": 129.99,
+    "price_note": "Out of Darts, printed parts + hardware, build it yourself",
+    "price_checked": "2026-10-25",
+    "buy": [
+      {"seller": "Out of Darts", "url": "https://outofdarts.com/products/juno-rival-blaster-3d-parts-hardware-kit", "in_stock": true, "ships_from": "US"}
+    ],
+    "specs": {
+      "mass_g": null,
+      "shipping_weight_g": 1134,
+      "muzzle_velocity_fps": 130,
+      "pusher_rpm_to_rate": {"300": 4.5, "600": 9, "1000": 15},
+      "flywheel_motors": "Kraken 130",
+      "ip_rating": null
+    },
+    "cad": {"step_url": null, "available": false},
+    "sources": ["https://outofdarts.com/products/juno-rival-blaster-3d-parts-hardware-kit"],
+    "confidence": "product page",
+    "notes": "Open Rival flywheel blaster (files on Printables/GitHub); shows rate of fire set by pusher-motor rpm. Catalog item ood-juno-rival-hardware-kit is the hardware-only kit."
+  },
+  {
+    "id": "dji-robomaster-s1-gel-bead-container",
+    "category": "turret",
+    "vendor": "DJI",
+    "model": "RoboMaster S1 Gel Bead Container",
+    "price_usd": 29.0,
+    "price_note": "DJI store",
+    "price_checked": "2026-10-25",
+    "buy": [
+      {"seller": "DJI Store", "url": "https://store.dji.com/product/robomaster-s1-gel-bead-container", "in_stock": null, "ships_from": "CN"}
+    ],
+    "specs": {
+      "mass_g": null,
+      "capacity_beads": 430,
+      "size_mm": [152, 55, 30],
+      "feed": "sliding plate releases beads when fitted; 2 drain holes",
+      "ip_rating": null
+    },
+    "cad": {"step_url": null, "available": false},
+    "sources": ["https://store.dji.com/product/robomaster-s1-gel-bead-container", "https://www.dji.com/ca/support/product/robomaster-s1"],
+    "confidence": "product page",
+    "notes": "Reference for a compact robot gel feed: 430 beads in 152 x 55 x 30 mm. S1 beads are 5.9-6.8 mm, 0.12-0.17 g, launched at ~26 m/s."
+  },
+  {
+    "id": "gel-blaster-gellets-30k",
+    "category": "turret",
+    "vendor": "Gel Blaster",
+    "model": "Gellets 30,000-pack (teal)",
+    "price_usd": 14.99,
+    "price_note": "Tractor Supply listing (via search; page timed out on re-check); 10k packs ~$4.99",
+    "price_checked": "2026-10-25",
+    "buy": [
+      {"seller": "Tractor Supply", "url": "https://www.tractorsupply.com/tsc/product/gel-blaster-teal-30-000-pack", "in_stock": null, "ships_from": "US"}
+    ],
+    "specs": {
+      "mass_g": 0.22,
+      "hydrated_diameter_mm": 7.5,
+      "count": 30000,
+      "soak_h_min": 2,
+      "ip_rating": null
+    },
+    "cad": {"step_url": null, "available": false},
+    "sources": ["https://www.tractorsupply.com/tsc/product/gel-blaster-teal-30-000-pack", "https://gelblaster.com/pages/faq"],
+    "confidence": "seller listing",
+    "notes": "mass_g is per hydrated bead (calc, 7.5 mm sphere at ~1 g/cm3). Soak >= 2 h (4 h for Starfire), 1 gal of water per pack; keep 2 weeks sealed. 14+ product. US water-bead rule 16 CFR 1250 covers bead guns for under-14s."
+  },
+  {
+    "id": "gel-blaster-surge-xl",
+    "category": "turret",
+    "vendor": "Gel Blaster",
+    "model": "Surge XL",
+    "price_usd": 89.96,
+    "price_note": "KK Hardware listing, out of stock; Amazon seen at $43.99 in Jul 2026 (asinsight)",
+    "price_checked": "2026-10-25",
+    "buy": [
+      {"seller": "KK Hardware", "url": "https://kkhardware.com/p/surge-xl-water-blaster-with-gellets-shooting-modes-850040523263-123975", "in_stock": false, "ships_from": "US"}
+    ],
+    "specs": {
+      "mass_g": null,
+      "muzzle_velocity_fps": [170, 250],
+      "rate_of_fire_rps": 12,
+      "hopper_beads": 1000,
+      "age_rating": "14+",
+      "ip_rating": null
+    },
+    "cad": {"step_url": null, "available": false},
+    "sources": ["https://kkhardware.com/p/surge-xl-water-blaster-with-gellets-shooting-modes-850040523263-123975", "https://ttpm.com/?p=22692"],
+    "confidence": "seller listing",
+    "notes": "Reference AEG-style gel blaster; its gearbox is what the open Gelblaster Wingman robot reuses. 170-250 fps is 0.30-0.64 J and 5200-14500 J/m2 with 0.22 g beads (calc): far over toy limits for kids."
+  },
+  {
+    "id": "hasbro-nerf-pro-gelfire-mythic",
+    "category": "turret",
+    "vendor": "Hasbro",
+    "model": "Nerf Pro Gelfire Mythic",
+    "price_usd": null,
+    "price_note": "Street price varies: $53.99 Walmart (Jun 2025), $17.99 Best Buy (9 Oct 2026), per shopsavvy; launch MSRP $79.99",
+    "price_checked": "2026-10-25",
+    "buy": [
+      {"seller": "shopsavvy (price history)", "url": "https://shopsavvy.com/products/nerf-gelfire-mythic-blaster", "in_stock": null, "ships_from": "US"}
+    ],
+    "specs": {
+      "mass_g": 790,
+      "size_mm": [355, 266, 66],
+      "rate_of_fire_rps": 10,
+      "hopper_beads": 800,
+      "battery": "7.4 V 500 mAh LiPo",
+      "muzzle_velocity_fps": 80,
+      "age_rating": "14+",
+      "ip_rating": null
+    },
+    "cad": {"step_url": null, "available": false},
+    "sources": ["https://www.fleetfarm.com/detail/nerf-gelfire-mythic-blaster/0000101804219", "https://www.bestbuy.ca/en-ca/product/17664937", "https://www.blaster-time.eu/shop/nerf-pro-gelfire-mythic-motorized-gel-blaster/"],
+    "confidence": "seller listing",
+    "notes": "Lowest-velocity motorised gel blaster found (80 fps per one EU retailer only). Gravity hopper; rate of fire drops as it empties. Candidate donor mechanism for a 14+ gel cartridge."
+  },
+  {
+    "id": "cyma-v2-gearbox",
+    "category": "turret",
+    "vendor": "CYMA",
+    "model": "Version 2 gearbox (M4 pattern, no motor)",
+    "price_usd": 55.95,
+    "price_note": "Evike listing $55.95-75.00 (403 on re-check)",
+    "price_checked": "2026-10-25",
+    "buy": [
+      {"seller": "Evike", "url": "https://www.evike.com/products/100665/", "in_stock": null, "ships_from": "US"}
+    ],
+    "specs": {
+      "mass_g": null,
+      "motor": "460 long-shaft (not included)",
+      "voltage_nominal_v": 7.4,
+      "ip_rating": null
+    },
+    "cad": {"step_url": null, "available": false},
+    "sources": ["https://www.evike.com/products/100665/", "https://www.newegg.com/p/03O-09W7-00077"],
+    "confidence": "seller listing",
+    "notes": "Airsoft AEG gearbox used in M4-pattern gel blasters (CYMA, 7.4 V). No mass or current published. Only relevant to a gel cartridge."
+  },
+  {
+    "id": "picotronic-dd520-1-24-12x40-laser",
+    "category": "turret",
+    "vendor": "Picotronic",
+    "model": "DD520-1-24(12x40) green dot laser, 520 nm 1 mW Class 2 (70146981)",
+    "price_usd": null,
+    "price_note": "EUR 319.90 incl. VAT; no USD price; lead time ~21 days",
+    "price_checked": "2026-10-25",
+    "buy": [
+      {"seller": "Picotronic", "url": "https://shop.picotronic.de/en/p/70146981", "in_stock": null, "ships_from": "DE"}
+    ],
+    "specs": {
+      "mass_g": 16,
+      "diameter_mm": 12,
+      "length_mm": 40,
+      "wavelength_nm": 520,
+      "power_mw": 1,
+      "laser_class": "2",
+      "voltage_range_v": [12, 24],
+      "ip_rating": null
+    },
+    "cad": {"step_url": null, "available": false},
+    "sources": ["https://shop.picotronic.de/en/p/70146981"],
+    "confidence": "product page",
+    "notes": "Certified Class 2 industrial module that runs straight from the 24 V payload rail. Expensive; a cheap '<1 mW' module must be measured with a power meter before use near kids. Class 1 visible AEL is ~0.22 mW at 514 nm (ANSI Z136.1 table)."
+  },
+  {
+    "id": "narfduino-brushless-micro",
+    "category": "turret",
+    "vendor": "Blasters by Airzone",
+    "model": "Narfduino Brushless Micro",
+    "price_usd": null,
+    "price_note": "AUD 15 ex GST, out of stock",
+    "price_checked": "2026-10-25",
+    "buy": [
+      {"seller": "Blasters by Airzone", "url": "https://blastersbyairzone.com/product/narfduino-brushless-micro/", "in_stock": false, "ships_from": "AU"}
+    ],
+    "specs": {
+      "mass_g": 10,
+      "size_mm": [25, 16.5, 3.5],
+      "cells_s": [2, 6],
+      "interface": "Arduino-compatible blaster controller; needs external ESCs",
+      "ip_rating": null
+    },
+    "cad": {"step_url": null, "available": false},
+    "sources": ["https://blastersbyairzone.com/product/narfduino-brushless-micro/", "https://blastersbyairzone.com/hardware/narfduino-brushless-micro/"],
+    "confidence": "product page",
+    "notes": "The hobby-standard brushless blaster controller (FlyShot ESC support, tach inputs). Gyropup's head MCU does the same job on CAN, so this is a reference."
   }
 ]

@@ -133,14 +133,6 @@ export const CHAPTERS = [
     slot: 'dcdc_12v', filter: (i) => i.category === 'dcdc' && /12/.test(i.model + i.id), optional: true,
   },
   {
-    id: 'tail', title: 'A tail to lean on',
-    story: () => `A balancing robot falls over when its power stops. Gyropup gets a tail: a carbon arm with a skid shoe that `
-      + `rides up while it balances, wags when it is happy, and drops to make a tripod. It sits on it to rest, dock and `
-      + `charge; it catches a hard shove backwards; and an emergency stop sits it down before the power goes, with a `
-      + `spring-loaded ratchet holding the tail. The motor here lifts it; a smaller one wags it. Not driven: the shoe just slides.`,
-    slot: 'tail_pitch', filter: (i) => i.category === 'leg_actuator' && (i.specs?.mass_g ?? 9999) < 900, optional: true,
-  },
-  {
     id: 'regen_clamp', title: 'Somewhere for braking energy to go',
     when: (d) => Boolean(d.parts.battery),
     story: () => `When Gyropup brakes, its motors push energy back into the battery and the voltage rises. A full 60 V pack `

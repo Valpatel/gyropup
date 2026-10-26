@@ -86,6 +86,16 @@ def cad_masses(design_path: Path):
     return {n: (v['mass_g'] / 1000, v['qty']) for n, v in mp['parts'].items()}
 
 
+def mech_layout(design_path: Path):
+    """The real stack across the hip (exports/mech-layout.json, written by cad/build.py) when it was built from this
+    design; None otherwise."""
+    f = R / 'exports' / 'mech-layout.json'
+    if not f.exists():
+        return None
+    ml = json.loads(f.read_text())
+    return ml if (R / ml.get('design', '')).resolve() == Path(design_path).resolve() else None
+
+
 def build(design_path: Path, out_dir: Path | None = None) -> dict:
     design_path = Path(design_path).resolve()
     design = json.loads(design_path.read_text())
@@ -103,27 +113,15 @@ def build(design_path: Path, out_dir: Path | None = None) -> dict:
     top = L['bodyTop'] * M
 
     base, thigh, shin, wheel = [], [], [], []
-    tail_link1, tail_arm = [], []          # the tail: wag-motor link at the pivot, and the arm with its shoe
-    T = L.get('tail')
-    if T:
-        tpx, tpz, tlen = T['pivotX'] * M, T['pivotZ'] * M, T['length'] * M
-        yoff = T['yawOffset'] * M          # pitch axis to the wag axis
-        arm = tlen - yoff                  # wag axis to the shoe's far end
-        dz = T['tubeDrop'] * M             # the tube runs this far below the pitch axis (clamped under the wag motor)
+    mech = mech_layout(design_path)        # the real stack across the hip, from the CAD, when it was built from this design
+    if mech:
+        hipY, wheelY = mech['hip_y_mm'] * M, mech['wheel_y_mm'] * M
     turret_mass = 0.0
     notes = []
+    if mech:
+        notes.append(f"hip and wheel positions from the CAD stack (track {mech['track_mm']:.0f} mm)")
     bus_v = ev['power'].get('bus_v', [None, None])
     bus_nom = part(design, catalog, 'battery')['specs'].get('voltage_nominal_v') if part(design, catalog, 'battery') else None
-
-    def add_tail_print(pid, kg):
-        if pid == 'tail_mount':
-            base.append(rb.box_body(kg, (0.1, 0.07, 0.1), center=(tpx, 0, tpz), name=pid))
-        elif pid == 'tail_yoke':
-            tail_link1.append(rb.box_body(kg, (yoff, 0.06, 0.04), center=(-yoff / 2, 0, 0.02), name=pid))
-        elif pid == 'tail_clamp':
-            tail_arm.append(rb.box_body(kg, (0.05, 0.04, 0.04), center=(-0.03, 0, -dz), name=pid))
-        else:
-            tail_arm.append(rb.point_body(kg, (-arm + T['shoeR'] * M, 0, -dz), name=pid))
 
     for line in ev['lines']:
         g = (line.get('mass_g') or 0) * line['qty'] * M
@@ -136,7 +134,8 @@ def build(design_path: Path, out_dir: Path | None = None) -> dict:
             each = g / line['qty']
             for side in (1, -1):
                 for k in (0, 1):
-                    y = side * (Bw / 2 + L['motorL'] * M * (0.25 + 0.5 * k))
+                    y = side * (sum(mech['stack_mm']['hip_motor' if k == 0 else 'knee_motor']) / 2 * M if mech
+                                else Bw / 2 + L['motorL'] * M * (0.25 + 0.5 * k))
                     base.append(rb.cylinder_body(each, L['motorD'] * M / 2, L['motorL'] * M / 2, axis='y', center=(0, y, 0), name='leg actuator'))
         elif slot == 'wheel_motor':
             each = g / 2
@@ -171,21 +170,23 @@ def build(design_path: Path, out_dir: Path | None = None) -> dict:
                     for side in (1, -1):
                         thigh.append((side, rb.point_body(kg / 2, (0, 0, -a / 2), name='pushrod (CAD)')))
                         shin.append((side, rb.point_body(kg / 2, (0, 0, 0), name='pushrod (CAD)')))
-                elif name.startswith('tail_') and T:
-                    add_tail_print(name, kg * qty)
-                elif name == 'knee_crank':       # on the knee motor's output, at the hip axis
+                elif name in ('knee_crank', 'hip_output_adapter', 'knee_output_adapter'):   # on the motor outputs, at the hip axis
                     for side in (1, -1):
-                        thigh.append((side, rb.point_body(kg, (0, 0, 0), name='knee crank (CAD)')))
+                        thigh.append((side, rb.point_body(kg, (0, 0, 0), name=f'{name} (CAD)')))
+                elif name == 'wheel_adapter':
+                    for side in (1, -1):
+                        shin.append((side, rb.point_body(kg, (0, 0, -b), name='wheel adapter (CAD)')))
+                elif qty == 2:                   # the leg module's fixed parts (yoke, motor plates) sit beside the hips
+                    for side in (1, -1):
+                        base.append(rb.box_body(kg, (0.15, 0.05, 0.15), center=(0, side * hipY, 0.02), name=f'{name} (CAD)'))
                 else:
                     base.append(rb.box_body(kg * qty, (Bd, Bw, 0.02), center=(0, 0, trayZ), name=f'{name} (CAD)'))
-            for p in ev['parts']:                # printed wheel and tail parts are not in the CAD yet
-                if p['id'].startswith('tail_') and p['id'] not in cad_masses(design_path):
-                    add_tail_print(p['id'], p['mass_g'] * p['qty'] * M)
+            for p in ev['parts']:                # printed wheel parts (if any) are not in the CAD yet
                 if p['id'] in ('wheel_hub', 'tyre'):
                     pg = p['mass_g'] * p['qty'] * M
                     for side in (1, -1):
                         wheel.append((side, rb.cylinder_body(pg / 2, r, L['wheelW'] * M, axis='y', hollow_radius=0.5 * r, name=p['id'])))
-            notes.append('printed part masses from the CAD (exports/mass-properties.json)')
+            notes.append('made part masses from the CAD (exports/mass-properties.json)')
         elif slot == 'printed':
             for p in ev['parts']:
                 pg = p['mass_g'] * p['qty'] * M
@@ -199,18 +200,10 @@ def build(design_path: Path, out_dir: Path | None = None) -> dict:
                 elif p['id'] in ('wheel_hub', 'tyre'):
                     for side in (1, -1):
                         wheel.append((side, rb.cylinder_body(pg / 2, r, L['wheelW'] * M, axis='y', hollow_radius=0.5 * r, name=p['id'])))
-                elif p['id'].startswith('tail_'):
-                    add_tail_print(p['id'], pg)
                 elif p['id'] == 'lidar_crown':
                     base.append(rb.cylinder_body(pg, 0.066, 0.05, axis='z', center=(0, 0, top + 0.03), hollow_radius=0.06, name='crown'))
                 else:
                     base.append(rb.box_body(pg, (Bd, Bw, 0.02), center=(0, 0, bodyZ - Bh / 2), name=p['id']))
-        elif slot in ('tail_pitch', 'tail_lock') and T:     # on the body, at the tail pivot
-            base.append(rb.cylinder_body(g, T['pitchD'] * M / 2, T['pitchL'] * M, axis='y', center=(tpx, 0, tpz), name=slot))
-        elif slot == 'tail_yaw' and T:                         # rides on the pitch output, at the pivot
-            tail_link1.append(rb.cylinder_body(g, T['yawD'] * M / 2, T['yawL'] * M, axis='z', center=(-yoff, 0, 0), name=slot))
-        elif slot == 'tail_tube' and T:
-            tail_arm.append(rb.cylinder_body(g, T['tubeD'] * M / 2, arm - 0.04, axis='x', center=(-arm / 2, 0, -dz), hollow_radius=T['tubeD'] * M / 2 - 0.001, name='tail tube'))
         elif slot == 'head_payload':
             turret_mass = g          # becomes the turret's pan and tilt links below
         elif slot == 'hardware':
@@ -308,39 +301,6 @@ def build(design_path: Path, out_dir: Path | None = None) -> dict:
         turret = {'pan_effort_nm': 5.0, 'tilt_effort_nm': 3.0, 'magazine': hp.get('magazine_shots', 24), 'dart_speed_mps': 24.0,
                   'dart_mass_kg': 0.001, 'tilt_positive': 'barrel down', 'estimates': 'pan/tilt torques and the 40/60 mass split'}
 
-    # the tail: pitch (RS-06 class) at the back of the tray, wag (yaw) right after it, a carbon arm and a skid shoe.
-    # Positive pitch raises the tail; the arm points backwards (-x) at zero.
-    tail = None
-    if T:
-        tpitch, tyaw = part(design, catalog, 'tail_pitch'), part(design, catalog, 'tail_yaw')
-        lp, ly = actuator_limits(tpitch, bus_nom or 48, 'leg'), actuator_limits(tyaw, bus_nom or 48, 'leg')
-        lock = part(design, catalog, 'tail_lock')
-        shoe_r = T['shoeR'] * M
-        links += [
-            rb.Link('tail_pitch', rb.combine(tail_link1, 'tail_pitch') if tail_link1 else rb.point_body(0.05),
-                    [V(kind='cylinder', size=(T['yawD'] * M / 2, T['yawL'] * M), xyz=(-yoff, 0, 0), rgba=STEEL),
-                     V(kind='box', size=(yoff, 0.04, 0.006), xyz=(-yoff / 2, 0, T['yawL'] * M / 2 + 0.003), rgba=STEEL)], []),
-            rb.Link('tail', rb.combine(tail_arm, 'tail'),
-                    [V(kind='cylinder', size=(T['tubeD'] * M / 2, arm - shoe_r), xyz=(-(arm - shoe_r) / 2, 0, -dz), rpy=(0, math.pi / 2, 0), rgba=DARK),
-                     V(kind='box', size=(0.04, 0.034, dz), xyz=(0, 0, -dz / 2), rgba=leg_rgba),
-                     V(kind='sphere', size=(shoe_r,), xyz=(-arm + shoe_r, 0, -dz), rgba=leg_rgba)],
-                    [rb.Collision('cylinder', (T['tubeD'] * M / 2 + 0.002, arm - 0.06), xyz=(-(arm - 0.06) / 2 - 0.03, 0, -dz), rpy=(0, math.pi / 2, 0), contype=4, conaffinity=1),
-                     rb.Collision('sphere', (shoe_r,), xyz=(-arm + shoe_r, 0, -dz), contype=4, conaffinity=1, friction=(0.7, 0.02, 0.001))],
-                    sites=[('tail_tip', (-arm + shoe_r, 0, -dz))]),
-        ]
-        joints += [
-            rb.Joint('tail_pitch', 'revolute', 'base', 'tail_pitch', xyz=(tpx, 0, tpz), axis=(0, 1, 0), lower=-1.75, upper=0.95,
-                     effort=lp['peak_nm'], velocity=lp['omega_max'], damping=0.05, friction=0.05, armature=lp['armature']),
-            rb.Joint('tail_yaw', 'revolute', 'tail_pitch', 'tail', xyz=(-yoff, 0, 0), axis=(0, 0, 1), lower=-0.7, upper=0.7,
-                     effort=ly['peak_nm'], velocity=ly['omega_max'], damping=0.03, friction=0.03, armature=ly['armature']),
-        ]
-        motors += [rb.Motor('tail_pitch', lp['peak_nm']), rb.Motor('tail_yaw', ly['peak_nm'])]
-        tail = {'pitch': {k: v for k, v in lp.items()}, 'yaw': {k: v for k, v in ly.items()}, 'length_m': tlen, 'shoe_r_m': shoe_r,
-                'reach_m': tlen - shoe_r, 'yaw_offset_m': yoff, 'drop_m': dz,
-                'pivot_m': [tpx, 0, tpz], 'lock_hold_nm': (lock or {}).get('specs', {}).get('hold_torque_nm'),
-                'lock_tooth_rad': math.radians((lock or {}).get('specs', {}).get('tooth_deg', 4)),
-                'positive': 'tail up', 'parts': {'pitch': tpitch['id'], 'yaw': tyaw['id'], 'lock': (lock or {}).get('id')}}
-
     name = design.get('name', 'gyropup')
     rb.write_mjcf(out_dir / 'robot.xml', 'gyropup', links, joints, motors, floating=True, floor=True, timestep=0.001,
                   imu_link='base', comment=f'{name}: generated by sim/model.py from {design_path.name}')
@@ -349,7 +309,7 @@ def build(design_path: Path, out_dir: Path | None = None) -> dict:
     total = sum(l.body.mass for l in links)
     cad = cad_masses(design_path)
     est_printed = sum(p['mass_g'] * p['qty'] for p in ev['parts']          # the estimates the CAD replaced
-                      if p['id'] not in ('wheel_hub', 'tyre') and (not p['id'].startswith('tail_') or p['id'] in (cad or {}))) * M
+                      if p['id'] not in ('wheel_hub', 'tyre')) * M
     cad_delta = (sum(kg * q for kg, q in cad.values()) - est_printed) if cad else 0.0   # CAD replaces the estimate
     info = {
         'design': str(design_path.relative_to(R)), 'name': name, 'total_mass_kg': total,
@@ -357,7 +317,7 @@ def build(design_path: Path, out_dir: Path | None = None) -> dict:
         'mass_reconciles': abs(total - ev['mass']['total_kg'] - cad_delta) < 0.01 * ev['mass']['total_kg'],
         'links': {l.name: l.body.as_dict() for l in links},
         'leg_actuator': {k: v for k, v in legl.items()}, 'wheel_motor': {k: v for k, v in wl.items()},
-        'head_payload': design.get('head_payload'), 'body_top_m': top, 'turret': turret, 'tail': tail,
+        'head_payload': design.get('head_payload'), 'body_top_m': top, 'turret': turret, 'mech_layout': mech,
         'bus_v_nominal': bus_nom, 'bus_v_range': bus_v, 'layout_mm': L, 'urdf_check': urdf_check, 'notes': notes,
         'estimates': ['hub motor rotor/stator split', 'leg actuator rotor inertia (armature)' if legl['estimates'].get('armature') else None,
                       'printed part masses (CAD at 2 mm walls, 40 % infill)' if cad_masses(design_path) else 'printed part masses (designer estimate until CAD)',

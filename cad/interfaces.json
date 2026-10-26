@@ -1,0 +1,172 @@
+{
+  "version": "GMI v0.2",
+  "units": "mm",
+  "note": "Standard faces (docs/mechanical-interfaces.md). Motor-specific patterns live in catalog/interfaces.json; adapters convert between them.",
+  "AO-L": {
+    "journal_d": 60.0,
+    "journal_len": 11.0,
+    "shoulder_d": 66.0,
+    "shoulder_len": 2.0,
+    "relief": 0.6,
+    "spigot_d": 40.0,
+    "spigot_h": 3.0,
+    "bolts": 8,
+    "thread": "M5",
+    "pcd": 50.0,
+    "dowels": 2,
+    "dowel_d": 5.0,
+    "dowel_deg": [
+      22.5,
+      247.5
+    ],
+    "note": "adapter on the motor output: contact boss = the motor's output flange, 0.6 mm relief elsewhere (RobStride outputs are flush with a stationary ring); a \u00d860 journal for the 61812 support bearing; the standard face on the end"
+  },
+  "AC-L": {
+    "bearing": "61812 (60 x 78 x 10)",
+    "bearing_od": 78.0,
+    "bearing_w": 10.0,
+    "lip_d": 70.0,
+    "plate_r": 76.0,
+    "top_ext": 28.0,
+    "post_r": 82.0,
+    "post_deg": [
+      30,
+      90,
+      150
+    ],
+    "post_thread": "M5",
+    "post_d": 10.0,
+    "bracket_bolts": 3,
+    "bracket_thread": "M5",
+    "note": "motor plate (CNC 6061): the motor's lug pattern and spigot recess on one side, the 61812 support bearing seat on the other (clear of the RS-03 lug screw heads at r = 44.7), standard post and bracket holes; DIN 472-78 and DIN 471-60 circlips"
+  },
+  "AO-S": {
+    "journal_d": 40.0,
+    "journal_len": 8.0,
+    "shoulder_d": 45.0,
+    "shoulder_len": 1.5,
+    "relief": 0.5,
+    "spigot_d": 24.0,
+    "spigot_h": 2.5,
+    "bolts": 6,
+    "thread": "M4",
+    "pcd": 34.0,
+    "dowels": 2,
+    "dowel_d": 4.0,
+    "dowel_deg": [
+      30.0,
+      270.0
+    ]
+  },
+  "AC-S": {
+    "bearing": "61808 (40 x 52 x 7)",
+    "bearing_od": 52.0,
+    "bearing_w": 7.0,
+    "lip_d": 47.0,
+    "plate_r": 52.0,
+    "top_ext": 18.0,
+    "post_r": 56.0,
+    "post_deg": [
+      30,
+      90,
+      150
+    ],
+    "post_thread": "M4",
+    "post_d": 8.0,
+    "bracket_bolts": 3,
+    "bracket_thread": "M4"
+  },
+  "KC": {
+    "bearing": "6001-2RS",
+    "bearing_od": 28.0,
+    "bearing_id": 12.0,
+    "bearing_w": 8.0,
+    "spacing": 20.0,
+    "pin_d": 12.0,
+    "pin": "M10 shoulder bolt, 12 mm shoulder",
+    "hub_od": 44.0
+  },
+  "PR": {
+    "rod_end": "M6 female rod end (Igus KBRM-06 or SKF SIKAC 6 M)",
+    "rod_end_eye_d": 6.0,
+    "rod_end_ball_w": 9.0,
+    "tube_od": 12.0,
+    "tube_id": 10.0,
+    "tube": "steel 12 x 1 or carbon 12/10",
+    "crank_r": 45.0,
+    "bolt": "M6 shoulder bolt"
+  },
+  "WH": {
+    "pilot_d": 32.0,
+    "bolts": 6,
+    "thread": "M5",
+    "pcd": 50.0,
+    "cable_bore": 16.0,
+    "plate_t": 6.0,
+    "plate_d": 62.0
+  },
+  "HM": {
+    "bolts": 6,
+    "thread": "M6",
+    "rect": [
+      100.0,
+      60.0
+    ],
+    "dowels": 2,
+    "dowel_d": 6.0
+  },
+  "TM": {
+    "bolts": 4,
+    "thread": "M5",
+    "dowels": 2,
+    "dowel_d": 5.0
+  },
+  "CP": {
+    "grommet_hole": 18.0,
+    "clamp_screws": "2 x M3"
+  },
+  "fasteners": {
+    "M3": {
+      "clear": 3.4,
+      "tap": 2.5,
+      "insert_pilot": 4.0
+    },
+    "M4": {
+      "clear": 4.5,
+      "tap": 3.3,
+      "insert_pilot": 5.6
+    },
+    "M5": {
+      "clear": 5.5,
+      "tap": 4.2,
+      "insert_pilot": 6.4
+    },
+    "M6": {
+      "clear": 6.6,
+      "tap": 5.0,
+      "insert_pilot": 8.0
+    }
+  },
+  "cables": {
+    "wheel_power": {
+      "od": 7.5,
+      "what": "BotWheel phases (3 x 18 AWG) in a sleeve",
+      "bend_min_flex": 75
+    },
+    "wheel_signal": {
+      "od": 4.5,
+      "what": "hall + encoder",
+      "bend_min_flex": 45
+    },
+    "leg_power": {
+      "od": 6.0,
+      "what": "2 x 14 AWG silicone, 60 V bus to the hip and knee actuators",
+      "bend_min_flex": 60
+    },
+    "can": {
+      "od": 4.0,
+      "what": "CAN twisted pair + ground",
+      "bend_min_flex": 40
+    }
+  }
+}

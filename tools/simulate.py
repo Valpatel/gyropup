@@ -38,8 +38,6 @@ def simulate(design: Path, only=None, video=False) -> dict:
     for name, sc in suite.items():
         if only and name not in only:
             continue
-        if sc.needs_tail and not info.get('tail'):
-            continue
         t0 = time.time()
         res = run(xml, info, sc, video=(out / f'{name}.mp4') if video else None)
         res['wall_s'] = round(time.time() - t0, 2)
@@ -52,6 +50,7 @@ def simulate(design: Path, only=None, video=False) -> dict:
     prev = {}
     if (out / 'summary.json').is_file():
         prev = json.loads((out / 'summary.json').read_text()).get('scenarios', {})
+    prev = {k: v for k, v in prev.items() if k in suite}       # scenarios that no longer exist drop out
     prev.update(results)
     summary = {'design': info['design'], 'name': info['name'], 'mass_kg': round(info['total_mass_kg'], 3),
                'mass_reconciles': info['mass_reconciles'], 'scenarios': prev,

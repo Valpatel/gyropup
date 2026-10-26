@@ -4,11 +4,11 @@
    "name": "Gyropup",
    "file": "designs/default.json",
    "verdict": "warn",
-   "summary": "RobStride RS-03 legs, ODrive Robotics BotWheel (BW0124) wheels, DeWalt DCB609 FLEXVOLT 20V/60V MAX 9.0Ah battery. 11 printed part types, 1923 g of filament.",
+   "summary": "RobStride RS-03 legs, ODrive Robotics BotWheel (BW0124) wheels, DeWalt DCB609 FLEXVOLT 20V/60V MAX 9.0Ah battery. 8 printed part types, 1788 g of filament.",
    "metrics": [
     {
      "label": "chassis & actuators",
-     "value": "$2,398"
+     "value": "$1,985"
     },
     {
      "label": "sensors & compute",
@@ -16,7 +16,7 @@
     },
     {
      "label": "mass",
-     "value": 18.2,
+     "value": 17.0,
      "unit": "kg",
      "estimate": true
     },
@@ -27,20 +27,20 @@
     },
     {
      "label": "leg torque margin (dynamic)",
-     "value": 1.9,
+     "value": 2.1,
      "unit": "\u00d7",
      "estimate": true,
      "level": ""
     },
     {
      "label": "lean it can catch",
-     "value": 62,
+     "value": 63,
      "unit": "\u00b0",
      "level": "ok"
     },
     {
      "label": "jump",
-     "value": 168,
+     "value": 162,
      "unit": "mm",
      "estimate": true,
      "level": ""
@@ -53,17 +53,17 @@
     },
     {
      "label": "simulated scenarios passed",
-     "value": "13/13",
+     "value": "9/9",
      "level": ""
     },
     {
      "label": "darts on target (sim)",
-     "value": "15/16"
+     "value": "15/15"
     }
    ],
    "checks": {
     "ok": 4,
-    "warn": 12,
+    "warn": 10,
     "fail": 0
    },
    "link": "designer/",
@@ -126,26 +126,6 @@
      "label": "look pass",
      "level": "done",
      "title": "Look up: lean back 15\u00b0 on the legs, hold, then look ahead again"
-    },
-    {
-     "label": "sit pass",
-     "level": "done",
-     "title": "Sit on the tail, then stand up again"
-    },
-    {
-     "label": "catch pass",
-     "level": "done",
-     "title": "Shoved hard backwards: the tail catches it, then it stands up"
-    },
-    {
-     "label": "estop pass",
-     "level": "done",
-     "title": "Emergency stop: sit on the tail, lock it, cut the power"
-    },
-    {
-     "label": "wag pass",
-     "level": "done",
-     "title": "Wag the tail while balancing"
     }
    ]
   },

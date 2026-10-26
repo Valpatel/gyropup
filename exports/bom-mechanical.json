@@ -1,0 +1,92 @@
+{
+ "chassis": {
+  "material": "al6061",
+  "qty": 1,
+  "how": "3 mm 6061, laser cut and bent (SendCutSend); tapped M6/M5/M4/M3",
+  "mass_g_each": 911.7
+ },
+ "battery_cradle": {
+  "material": "pla",
+  "qty": 1,
+  "how": "printed PLA",
+  "mass_g_each": 52.3
+ },
+ "head_saddle": {
+  "material": "pla",
+  "qty": 1,
+  "how": "printed PLA",
+  "mass_g_each": 105.3
+ },
+ "face": {
+  "material": "pla",
+  "qty": 1,
+  "how": "printed PLA",
+  "mass_g_each": 63.8
+ },
+ "camera_cradle": {
+  "material": "pla",
+  "qty": 2,
+  "how": "printed PLA",
+  "mass_g_each": 34.2
+ },
+ "lidar_hanger": {
+  "material": "pla",
+  "qty": 1,
+  "how": "printed PLA",
+  "mass_g_each": 61.4
+ },
+ "yoke_bracket": {
+  "material": "al6061",
+  "qty": 2,
+  "how": "CNC 6061-T6 (FEA: printed PA6-CF bends 10 mm); M6 into the chassis, M5 into both plate tabs",
+  "mass_g_each": 952.0
+ },
+ "hip_motor_plate": {
+  "material": "al6061",
+  "qty": 2,
+  "how": "CNC 6061-T6, 61812 (60 x 78 x 10)",
+  "mass_g_each": 418.2
+ },
+ "hip_output_adapter": {
+  "material": "al6061",
+  "qty": 2,
+  "how": "CNC 6061-T6, M5 helicoils, motor dowels",
+  "mass_g_each": 106.4
+ },
+ "knee_output_adapter": {
+  "material": "al6061",
+  "qty": 2,
+  "how": "CNC 6061-T6, M5 helicoils, motor dowels",
+  "mass_g_each": 106.4
+ },
+ "knee_motor_plate": {
+  "material": "al6061",
+  "qty": 2,
+  "how": "CNC 6061-T6, 61812 (60 x 78 x 10)",
+  "mass_g_each": 418.2
+ },
+ "thigh": {
+  "material": "al6061",
+  "qty": 2,
+  "how": "CNC 6061-T6 box (or 40 x 30 x 3 tube + bonded ends); cables inside",
+  "mass_g_each": 377.1
+ },
+ "shin": {
+  "material": "al6061",
+  "qty": 2,
+  "how": "CNC 6061-T6 box, two 6001-2RS; cables inside",
+  "mass_g_each": 308.5
+ },
+ "knee_crank": {
+  "material": "al6061",
+  "qty": 2,
+  "how": "CNC 6061-T6, 10 mm",
+  "mass_g_each": 105.1
+ },
+ "wheel_adapter": {
+  "material": "al6061",
+  "qty": 2,
+  "how": "6061, 6 mm",
+  "mass_g_each": 36.0
+ }
+}

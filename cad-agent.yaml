@@ -8,11 +8,11 @@ cad:
   view:
     parts: false
     extra: [{glob: "exports/asm_*.step", strip: "asm_"}]
-    colors: {tray: "#2f343c", hip_yoke: "#3b3f46", thigh: "#f5b82e", shin: "#f5b82e", knee_crank: "#8a9099", pushrod: "#8a9099",
-             head_saddle: "#3b3f46", face: "#2f343c", camera_cradle: "#3b3f46", lidar_hanger: "#3b3f46", j501_box: "#e8892b",
-             battery: "#fdb913", hip_motor: "#9aa3ad", knee_motor: "#9aa3ad", wheel: "#1d2025", lidar: "#2a2d33", camera: "#2a2d33",
-             tail_mount: "#3b3f46", tail_yoke: "#c9ced6", tail_clamp: "#3b3f46", tail_shoe: "#ff7a1a", tail_tube: "#15171b",
-             tail_pitch_motor: "#9aa3ad", tail_wag_motor: "#9aa3ad"}
+    colors: {chassis: "#5a5f68", battery_cradle: "#2f343c", yoke_bracket: "#b8bec7", hip_motor_plate: "#9aa3ad", knee_motor_plate: "#9aa3ad",
+             hip_output_adapter: "#d6dbe1", knee_output_adapter: "#d6dbe1", thigh: "#f5b82e", shin: "#f5b82e", knee_crank: "#d6dbe1",
+             wheel_adapter: "#d6dbe1", posts: "#d6dbe1", pushrod: "#c9ced6", head_saddle: "#3b3f46", face: "#2f343c",
+             camera_cradle: "#3b3f46", lidar_hanger: "#3b3f46", j501_box: "#e8892b", battery: "#fdb913", hip_motor: "#3a3f47",
+             knee_motor: "#3a3f47", wheel: "#1d2025", lidar: "#2a2d33", camera: "#2a2d33"}
   steps:
     - {name: catalog,   run: tools/check_catalog.py}
     - {name: materials, run: tools/build_materials.py}
@@ -28,6 +28,7 @@ cad:
     designs: exports/designs.json
     pages: [README.md, "docs/*.md", "research/*.md", catalog/SCHEMA.md]
     theme: hud
+    live_reload: {watch: [designer, designs, catalog, exports, docs, cad]}   # pages reload as these change
     nav:
       - {id: overview, title: Overview, href: site/}
       - {id: design, title: Design, href: designer/}

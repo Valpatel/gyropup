@@ -1,0 +1,83 @@
+{
+ "wheel": {
+  "route": "wheel boss -> wheel adapter -> inside the shin -> shin port -> knee loop -> thigh port -> inside the thigh -> hip port -> hip loop -> under the yoke deck -> body cable pass",
+  "knee": {
+   "port_distance_mm": 46.6,
+   "straight_min_mm": 85.4,
+   "straight_max_mm": 101.8,
+   "slack_needed_mm": 16.3,
+   "loop": "a loose loop of about 122 mm between the ports, around the knee hub"
+  },
+  "hip": {
+   "port_distance_mm": 59.1,
+   "straight_min_mm": 23.3,
+   "straight_max_mm": 60.0,
+   "slack_needed_mm": 36.7,
+   "loop": "a loose loop of about 80 mm between the thigh port and the yoke clip"
+  },
+  "bend_radius": {
+   "loop_radius_mm": 46.6,
+   "needed_mm": 20.0,
+   "ok": true,
+   "note": "conductors loose (not a stiff jacketed cable) through the loops; a jacketed 10 mm cable would need 75-100 mm"
+  },
+  "lead_length": {
+   "botwheel_lead_mm": 300,
+   "path_mm": 616,
+   "extension": "470 mm extension (to the driver in the body, with 150 mm spare), joined inside the shin top"
+  },
+  "clearance": {
+   "knee_crank": {
+    "clearance_mm": 35.5,
+    "at": {
+     "height": 0.0,
+     "look_up": 0.0
+    }
+   },
+   "pushrod": {
+    "clearance_mm": 9.4,
+    "at": {
+     "height": 0.33,
+     "look_up": 0.0
+    }
+   },
+   "yoke_bracket": {
+    "clearance_mm": 75.0,
+    "at": {
+     "height": 0.0,
+     "look_up": 0.35
+    }
+   },
+   "hip_motor_plate": {
+    "clearance_mm": 6.0,
+    "at": {
+     "height": 0.0,
+     "look_up": 0.0
+    }
+   },
+   "knee_motor_plate": {
+    "clearance_mm": 38.0,
+    "at": {
+     "height": 0.0,
+     "look_up": 0.0
+    }
+   },
+   "posts": {
+    "clearance_mm": 20.1,
+    "at": {
+     "height": 0.0,
+     "look_up": 0.35
+    }
+   }
+  },
+  "clearance_ok": true
+ },
+ "hip": {
+  "route": "rear cover connectors -> body wall cable pass",
+  "crosses_joint": false
+ },
+ "knee": {
+  "route": "rear cover connectors (outboard) -> up the knee plate -> under the yoke deck -> body cable pass",
+  "crosses_joint": false
+ }
+}

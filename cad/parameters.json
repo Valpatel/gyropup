@@ -1,7 +1,7 @@
 {
   "revision": "0.1-cad",
   "units": "mm",
-  "note": "Interfaces and printing rules for the printed parts. Link lengths, wheel size and motor size come from the design file (designs/*.json) through the designer's layout(), so every design gets its own parts. Values marked ASSUMED need checking against the real part.",
+  "note": "Interfaces of the body parts (J501 box, cameras, lidar, head plate) and printing rules. The leg's interfaces are in cad/interfaces.json (the GMI standard) and catalog/interfaces.json (each motor's drawing).",
   "print": {
     "printer": "Bambu Lab P1S",
     "bed_mm": [
@@ -41,63 +41,6 @@
     "standoff": "M3 male-female hex, 5.5 AF",
     "basis": "j501-agx cad/parameters.json storage.standoff_centers: the base's stacking inserts"
   },
-  "rs03": {
-    "case_pcd": 98.0,
-    "case_holes": 8,
-    "case_thread": "M4",
-    "output_pcd": 30.35,
-    "output_holes": 9,
-    "output_thread": "M4",
-    "output_pilot": 20.0,
-    "assumed": true,
-    "basis": "catalog note: 'output 30.35x9x6 (M4), mount 98x8x8 (M4)' - ASSUMED to mean PCD x holes x depth"
-  },
-  "botwheel": {
-    "pcd": 36.0,
-    "holes": 4,
-    "thread": "M6",
-    "boss": 50.0,
-    "cable_hole": 14.0,
-    "basis": "catalog: fixed flange 4x M6 on dia 36 PCD, dia 50 boss, cable exits centre one side"
-  },
-  "knee": {
-    "bearing": "6000-2RS",
-    "bearing_od": 26.0,
-    "bearing_w": 8.0,
-    "bolt": "10 mm shoulder bolt, M8 thread",
-    "pin_d": 10.0
-  },
-  "pushrod": {
-    "bearing": "625-2RS",
-    "bearing_od": 16.0,
-    "bearing_w": 5.0,
-    "pin": "M5 shoulder bolt",
-    "crank_r": 40.0
-  },
-  "links": {
-    "thigh_width": 40.0,
-    "thigh_thickness": 18.0,
-    "shin_width": 36.0,
-    "shin_thickness": 18.0,
-    "hub_d": 72.0,
-    "hub_t": 12.0
-  },
-  "yoke": {
-    "plate_t": 9.0,
-    "plate_size": 124.0,
-    "bridge_t": 10.0,
-    "gap": 3.0,
-    "tray_bolts": "4x M5 into heat-set inserts in the tray side wall"
-  },
-  "tray": {
-    "wall": 4.0,
-    "floor": 4.0,
-    "strap_slot": [
-      26.0,
-      4.0
-    ],
-    "basis": "holds the design's FLEXVOLT pack(s) in their adapters, strapped down"
-  },
   "camera": {
     "mount": "1/4-20 UNC",
     "d435": [
@@ -116,33 +59,5 @@
     "size": 110.0,
     "t": 6.0,
     "turret_bolts": "4x M4 on 80 mm square, heat-set inserts (turret project to match)"
-  },
-  "rs06": {
-    "case_pcd": 70.0,
-    "case_holes": 6,
-    "case_thread": "M4",
-    "output_pcd": 50.0,
-    "output_holes": 8,
-    "output_thread": "M4",
-    "output_pilot": 30.0,
-    "assumed": true,
-    "basis": "ASSUMED: RobStride RS-06 drawings not in hand; check the bolt circles before printing"
-  },
-  "rs00": {
-    "case_pcd": 46.0,
-    "case_holes": 6,
-    "case_thread": "M3",
-    "output_pcd": 30.0,
-    "output_holes": 6,
-    "output_thread": "M3",
-    "output_pilot": 18.0,
-    "assumed": true,
-    "basis": "ASSUMED: RobStride RS-00 drawings not in hand; check the bolt circles before printing"
-  },
-  "tail": {
-    "yoke": "6061 aluminium, 5 mm, cut and bent once (SendCutSend)",
-    "clamp_slot": 2.0,
-    "shoe": "TPU 95A, replaceable",
-    "mount_bolts": "4x M5 into heat-set inserts under the back of the tray"
   }
 }

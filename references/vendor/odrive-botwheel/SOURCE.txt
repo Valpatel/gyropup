@@ -1,0 +1,10 @@
+Vendor: ODrive Robotics
+Model: BotWheel (SKU BW0124 / BW0124_x2)
+Retrieved: 2026-10-25
+Files:
+  BotWheel_Drawng.png  <-  https://cdn.shopify.com/s/files/1/0580/2904/7878/files/BotWheel_Drawng.png?v=1738951877
+      (dimension drawing published as a product image on https://shop.odriverobotics.com/products/botwheels)
+STEP: NOT downloaded. The product page "CAD files" link is an Onshape publication:
+  https://cad.onshape.com/publications/ffa16d9268e83ffcb5643cba/w/81f7a79746984b3bebf1d392/e/3101f331226b74a504e702ae
+  Exporting STEP from Onshape needs a (free) Onshape login, so it was not fetched. Export it manually if needed.
+Licence/terms: no licence statement on the product page for the drawing or CAD. Treat as local reference only.

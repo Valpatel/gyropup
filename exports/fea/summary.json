@@ -1,0 +1,541 @@
+{
+ "design": "designs/default.json",
+ "mesh_mm": 3.0,
+ "cases": {
+  "T1": {
+   "force": [
+    104.4,
+    0.0,
+    650.3333333333333
+   ],
+   "moments": {
+    "x": 18.99,
+    "z": -10.08
+   },
+   "from": "targets: shin force 220 N, knee torque 21 N\u00b7m -> push-rod 457 N"
+  },
+  "T2": {
+   "force": [
+    63.2,
+    -108.6933285,
+    -38.2
+   ],
+   "moments": {
+    "x": -26.684212146750003,
+    "z": -17.23
+   },
+   "from": "drive or the floor: out-of-plane moment at the hip 48 N\u00b7m, lateral force 109 N"
+  },
+  "S1": {
+   "force": [
+    0.0,
+    -108.6933285,
+    271.73332125
+   ],
+   "moments": {
+    "x": 19.021332487500004
+   },
+   "from": "curb or the floor: 272 N vertical, 109 N sideways, wheel offset 36 mm"
+  },
+  "A1": {
+   "from": "motor torque 54 N\u00b7m with 48 N\u00b7m out of plane and 272 N radial"
+  },
+  "P1": {
+   "from": "272 N up and 109 N sideways through the bearing, 48 N\u00b7m out of plane, motor torque 54 N\u00b7m on the lugs"
+  },
+  "Y1": {
+   "from": "the whole leg: 272 N up, 109 N sideways, 48 N\u00b7m out of plane, 54 N\u00b7m about the hip axis"
+  }
+ },
+ "stack_mm": {
+  "wall": 104.0,
+  "bracket": [
+   104.0,
+   116.0
+  ],
+  "hip_out": 174.6,
+  "hip_motor": [
+   118.0,
+   174.6
+  ],
+  "hip_plate": [
+   172.1,
+   187.2
+  ],
+  "hip_face": 188.2,
+  "hip_tab": [
+   177.2,
+   187.2
+  ],
+  "thigh": [
+   188.2,
+   218.2
+  ],
+  "rod": [
+   219.7,
+   228.7
+  ],
+  "crank": [
+   230.2,
+   240.2
+  ],
+  "knee_face": 240.2,
+  "knee_out": 253.79999999999998,
+  "knee_plate": [
+   241.2,
+   256.29999999999995
+  ],
+  "knee_motor": [
+   253.79999999999998,
+   310.4
+  ],
+  "knee_tab": [
+   241.2,
+   251.2
+  ],
+  "posts": [
+   187.2,
+   241.2
+  ],
+  "shin": [
+   230.2,
+   258.2
+  ],
+  "wheel_adapter": [
+   258.2,
+   264.2
+  ],
+  "wheel_mount": 264.2,
+  "wheel": [
+   271.7,
+   316.3
+  ],
+  "wheel_centre": 294.0,
+  "min_hip_to_axle": 141.9,
+  "min_knee_deg": 41.5562464803072
+ },
+ "track_mm": 588.0,
+ "stack_notes": [
+  "the wheel passes under the knee motor: hip-to-axle at least 142 mm, so the knee stops at 42\u00b0 or more"
+ ],
+ "assumed_interfaces": [],
+ "results": [
+  {
+   "part": "thigh",
+   "material": "Aluminium 6061-T6",
+   "material_note": "yield strength",
+   "mesh": {
+    "nodes": 11891,
+    "tets": 41226,
+    "size_mm": 3.0,
+    "element": "P2 tetrahedra"
+   },
+   "loads": [
+    {
+     "kind": "force",
+     "n": [
+      104.4,
+      0.0,
+      650.3333333333333
+     ],
+     "area_mm2": 1124.7
+    },
+    {
+     "kind": "torque",
+     "nm": 18.99,
+     "axis": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "point_mm": [
+      0.0,
+      203.2,
+      -200.0
+     ],
+     "area_mm2": 1124.7
+    },
+    {
+     "kind": "torque",
+     "nm": -10.08,
+     "axis": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "point_mm": [
+      0.0,
+      203.2,
+      -200.0
+     ],
+     "area_mm2": 1124.7
+    }
+   ],
+   "max_displacement_mm": 0.2941,
+   "probe_displacement_mm": [
+    0.0525,
+    0.2381,
+    0.0143
+   ],
+   "max_von_mises_mpa": 78.86,
+   "von_mises_design_mpa": 78.46,
+   "safety_factor": 3.52,
+   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
+   "stiffness_n_per_mm": 29328.2,
+   "torsional_stiffness_nm_per_deg": null,
+   "case": "T1",
+   "material_id": "al6061",
+   "load_from": "targets: shin force 220 N, knee torque 21 N\u00b7m -> push-rod 457 N",
+   "png": "exports/fea/thigh-T1-al6061.png",
+   "seconds": 16.8,
+   "assumed_interfaces": []
+  },
+  {
+   "part": "thigh",
+   "material": "Aluminium 6061-T6",
+   "material_note": "yield strength",
+   "mesh": {
+    "nodes": 11891,
+    "tets": 41226,
+    "size_mm": 3.0,
+    "element": "P2 tetrahedra"
+   },
+   "loads": [
+    {
+     "kind": "force",
+     "n": [
+      63.2,
+      -108.6933285,
+      -38.2
+     ],
+     "area_mm2": 1124.7
+    },
+    {
+     "kind": "torque",
+     "nm": -26.684212146750003,
+     "axis": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "point_mm": [
+      0.0,
+      203.2,
+      -200.0
+     ],
+     "area_mm2": 1124.7
+    },
+    {
+     "kind": "torque",
+     "nm": -17.23,
+     "axis": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "point_mm": [
+      0.0,
+      203.2,
+      -200.0
+     ],
+     "area_mm2": 1124.7
+    }
+   ],
+   "max_displacement_mm": 0.521,
+   "probe_displacement_mm": [
+    0.0272,
+    -0.4338,
+    -0.0173
+   ],
+   "max_von_mises_mpa": 148.4,
+   "von_mises_design_mpa": 128.21,
+   "safety_factor": 2.15,
+   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
+   "stiffness_n_per_mm": 348.6,
+   "torsional_stiffness_nm_per_deg": null,
+   "case": "T2",
+   "material_id": "al6061",
+   "load_from": "drive or the floor: out-of-plane moment at the hip 48 N\u00b7m, lateral force 109 N",
+   "png": "exports/fea/thigh-T2-al6061.png",
+   "seconds": 13.6,
+   "assumed_interfaces": []
+  },
+  {
+   "part": "shin",
+   "material": "Aluminium 6061-T6",
+   "material_note": "yield strength",
+   "mesh": {
+    "nodes": 11592,
+    "tets": 40042,
+    "size_mm": 3.0,
+    "element": "P2 tetrahedra"
+   },
+   "loads": [
+    {
+     "kind": "force",
+     "n": [
+      0.0,
+      -108.6933285,
+      271.73332125
+     ],
+     "area_mm2": 659.2
+    },
+    {
+     "kind": "torque",
+     "nm": 19.021332487500004,
+     "axis": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "point_mm": [
+      0.0,
+      258.2,
+      -400.0
+     ],
+     "area_mm2": 659.2
+    }
+   ],
+   "max_displacement_mm": 0.1133,
+   "probe_displacement_mm": [
+    -0.0006,
+    0.0506,
+    0.0058
+   ],
+   "max_von_mises_mpa": 52.71,
+   "von_mises_design_mpa": 52.71,
+   "safety_factor": 5.24,
+   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
+   "stiffness_n_per_mm": null,
+   "torsional_stiffness_nm_per_deg": 264.24,
+   "case": "S1",
+   "material_id": "al6061",
+   "load_from": "curb or the floor: 272 N vertical, 109 N sideways, wheel offset 36 mm",
+   "png": "exports/fea/shin-S1-al6061.png",
+   "seconds": 16.1,
+   "assumed_interfaces": []
+  },
+  {
+   "part": "output_adapter",
+   "material": "Aluminium 6061-T6",
+   "material_note": "yield strength",
+   "mesh": {
+    "nodes": 5946,
+    "tets": 25353,
+    "size_mm": 3.0,
+    "element": "P2 tetrahedra"
+   },
+   "loads": [
+    {
+     "kind": "torque",
+     "nm": 54.0,
+     "axis": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "point_mm": [
+      0.0,
+      0.0,
+      13.6
+     ],
+     "area_mm2": 979.3
+    },
+    {
+     "kind": "torque",
+     "nm": 48.422877846750005,
+     "axis": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "point_mm": [
+      0.0,
+      0.0,
+      13.6
+     ],
+     "area_mm2": 979.3
+    },
+    {
+     "kind": "force",
+     "n": [
+      0.0,
+      271.73332125,
+      0.0
+     ],
+     "area_mm2": 979.3
+    }
+   ],
+   "max_displacement_mm": 0.0027,
+   "probe_displacement_mm": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "max_von_mises_mpa": 30.93,
+   "von_mises_design_mpa": 12.64,
+   "safety_factor": 21.84,
+   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
+   "torsional_stiffness_nm_per_deg": 13774.3,
+   "stiffness_n_per_mm": 8925876.7,
+   "case": "A1",
+   "material_id": "al6061",
+   "load_from": "motor torque 54 N\u00b7m with 48 N\u00b7m out of plane and 272 N radial",
+   "png": "exports/fea/output_adapter-A1-al6061.png",
+   "seconds": 9.5,
+   "assumed_interfaces": []
+  },
+  {
+   "part": "motor_plate",
+   "material": "Aluminium 6061-T6",
+   "material_note": "yield strength",
+   "mesh": {
+    "nodes": 13140,
+    "tets": 53084,
+    "size_mm": 3.0,
+    "element": "P2 tetrahedra"
+   },
+   "loads": [
+    {
+     "kind": "force",
+     "n": [
+      0.0,
+      271.73332125,
+      108.6933285
+     ],
+     "area_mm2": 2450.6
+    },
+    {
+     "kind": "torque",
+     "nm": 48.422877846750005,
+     "axis": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "point_mm": [
+      0.0,
+      0.0,
+      7.6
+     ],
+     "area_mm2": 2450.6
+    },
+    {
+     "kind": "torque",
+     "nm": 54.0,
+     "axis": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "point_mm": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "area_mm2": 1185.3
+    }
+   ],
+   "max_displacement_mm": 0.3058,
+   "probe_displacement_mm": [
+    0.0047,
+    -0.0025,
+    -0.1091
+   ],
+   "max_von_mises_mpa": 85.21,
+   "von_mises_design_mpa": 85.21,
+   "safety_factor": 3.24,
+   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
+   "stiffness_n_per_mm": null,
+   "torsional_stiffness_nm_per_deg": 12422.97,
+   "case": "P1",
+   "material_id": "al6061",
+   "load_from": "272 N up and 109 N sideways through the bearing, 48 N\u00b7m out of plane, motor torque 54 N\u00b7m on the lugs",
+   "png": "exports/fea/motor_plate-P1-al6061.png",
+   "seconds": 21.6,
+   "assumed_interfaces": []
+  },
+  {
+   "part": "yoke_bracket",
+   "material": "Aluminium 6061-T6",
+   "material_note": "yield strength",
+   "mesh": {
+    "nodes": 22554,
+    "tets": 93993,
+    "size_mm": 3.0,
+    "element": "P2 tetrahedra"
+   },
+   "loads": [
+    {
+     "kind": "force",
+     "n": [
+      0.0,
+      -108.6933285,
+      271.73332125
+     ],
+     "area_mm2": 854.3
+    },
+    {
+     "kind": "torque",
+     "nm": 48.422877846750005,
+     "axis": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "point_mm": [
+      0.0,
+      214.2,
+      0.0
+     ],
+     "area_mm2": 854.3
+    },
+    {
+     "kind": "torque",
+     "nm": 54.0,
+     "axis": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "point_mm": [
+      0.0,
+      214.2,
+      0.0
+     ],
+     "area_mm2": 854.3
+    }
+   ],
+   "max_displacement_mm": 0.5701,
+   "probe_displacement_mm": [
+    0.1043,
+    -0.0358,
+    0.3121
+   ],
+   "max_von_mises_mpa": 117.31,
+   "von_mises_design_mpa": 112.18,
+   "safety_factor": 2.46,
+   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
+   "stiffness_n_per_mm": 965.8,
+   "torsional_stiffness_nm_per_deg": 974.81,
+   "case": "Y1",
+   "material_id": "al6061",
+   "load_from": "the whole leg: 272 N up, 109 N sideways, 48 N\u00b7m out of plane, 54 N\u00b7m about the hip axis",
+   "png": "exports/fea/yoke_bracket-Y1-al6061.png",
+   "seconds": 48.9,
+   "assumed_interfaces": []
+  }
+ ],
+ "targets": {
+  "printed_sf": 2.0,
+  "metal_sf": 2.0,
+  "wheel_deflection_mm": 2.0
+ },
+ "verdict": {
+  "al6061": {
+   "wheel_deflection_mm": 0.92,
+   "min_safety_factor": 2.15,
+   "ok": true
+  }
+ }
+}

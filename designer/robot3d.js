@@ -83,7 +83,7 @@ export function kneeFor(a, b, h) {
  * buildRobot(design, catalog, { eyes }) -> { group, setPose(p), info }
  * setPose({ height: 0..1 (crouch..stand), pitch: rad, rollMM: left-right leg difference, wheel: rad })
  */
-export function buildRobot(design, catalog, { eyes } = {}) {
+export function buildRobot(design, catalog, { eyes, mech } = {}) {
   const d = effectiveDesign(design, catalog);
   const g = d.geometry, part = (slot) => resolvePart(d.parts[slot], catalog);
   const color = new THREE.Color(d.character?.color ?? '#f5b82e');
@@ -92,7 +92,10 @@ export function buildRobot(design, catalog, { eyes } = {}) {
   const hMax = legPose(a, b, g.knee_max_deg).hip_height;
   const L0 = layout(design, catalog);
   const lw = L0.linkW, ld = L0.linkD, motorD = L0.motorD, motorL = L0.motorL, wheelW = L0.wheelW;
-  const B = { width_mm: L0.body.width, depth_mm: L0.body.depth, height_mm: L0.body.height }, hipX = L0.hipX, wheelX = L0.wheelX;
+  const B = { width_mm: L0.body.width, depth_mm: L0.body.depth, height_mm: L0.body.height };
+  // the CAD's real stack across the hip (exports/mech-layout.json), when the page has it for this design
+  const hipX = mech?.hip_y_mm ?? L0.hipX, wheelX = mech?.wheel_y_mm ?? L0.wheelX;
+  const motorY = mech ? [mech.stack_mm.hip_motor, mech.stack_mm.knee_motor].map(([a, b]) => (a + b) / 2) : null;
   const FW = L0.frameWidth;
   const act = part('leg_actuator');
 
@@ -141,7 +144,7 @@ export function buildRobot(design, catalog, { eyes } = {}) {
   for (const s of [-1, 1]) {
     for (const k of [0, 1]) {
       const m = cylX(motorD / 2 * M, (motorL / 2 - 1) * M, STEEL());
-      m.position.set(s * (FW / 2 + 3 + motorL / 4 + k * motorL / 2) * M, 0, 0);
+      m.position.set(s * (motorY ? motorY[k] : FW / 2 + 3 + motorL / 4 + k * motorL / 2) * M, 0, 0);
       body.add(m);
     }
   }
@@ -275,45 +278,6 @@ export function buildRobot(design, catalog, { eyes } = {}) {
     }
   }
 
-  // the tail: pitch motor under the back of the tray, wag motor on its output, a carbon tube and a TPU skid shoe.
-  // Page frame: MuJoCo's -x (backwards) is -z here; tail pitch turns about x (+ = up), wag about the arm's y.
-  let tail = null;
-  if (L0.tail) {
-    const TL = L0.tail;
-    const pitch = new THREE.Group();
-    pitch.position.set(0, TL.pivotZ * M, TL.pivotX * M);
-    const pm = cylX(TL.pitchD / 2 * M, TL.pitchL * M, STEEL());
-    const mount = box((TL.pitchL + 16) * M, 24 * M, (TL.pitchD * 0.7) * M, DARK());
-    body.add(mount);
-    mount.position.set(0, (TL.pivotZ + TL.pitchD / 2 - 6) * M, TL.pivotX * M);
-    const wagM = new THREE.Mesh(new THREE.CylinderGeometry(TL.yawD / 2 * M, TL.yawD / 2 * M, TL.yawL * M, 32), STEEL());
-    wagM.position.z = -TL.yawOffset * M;
-    const yokePlate = box(40 * M, 6 * M, TL.yawOffset * M, STEEL());
-    yokePlate.position.set(0, (TL.yawL / 2 + 3) * M, -TL.yawOffset / 2 * M);
-    const yaw = new THREE.Group();
-    yaw.position.z = -TL.yawOffset * M;
-    const drop = new THREE.Group();                 // the tube is clamped under the wag motor's output
-    drop.position.y = -TL.tubeDrop * M;
-    const len = TL.length - TL.yawOffset;
-    const tube = new THREE.Mesh(new THREE.CylinderGeometry(TL.tubeD / 2 * M, TL.tubeD / 2 * M, (len - TL.shoeR) * M, 20), mat(0x1d2025, { roughness: 0.35, clearcoat: 0.6 }));
-    tube.rotation.x = Math.PI / 2;
-    tube.position.z = -(len - TL.shoeR) / 2 * M;
-    const clamp = box((TL.tubeD + 14) * M, (TL.tubeD + 14) * M, 34 * M, mat(color));
-    clamp.position.z = -(TL.yawD / 2 + 14) * M;
-    const shoe = new THREE.Mesh(new THREE.SphereGeometry(TL.shoeR * M, 24, 16), mat(0xff7a1a, { roughness: 0.8 }));
-    shoe.scale.set(1.15, 0.8, 1.3);
-    shoe.position.z = -(len - TL.shoeR) * M;
-    clamp.position.y = TL.tubeDrop / 2 * M - 6 * M;
-    clamp.scale.y = (TL.tubeDrop + 12) / (TL.tubeD + 14);
-    clamp.position.z = 0;
-    drop.add(tube, shoe);
-    yaw.add(drop, clamp);
-    pitch.add(pm, wagM, yokePlate, yaw);
-    body.add(pitch);
-    pitch.rotation.x = 0.45;
-    tail = { pitch, yaw };
-  }
-
   // legs
   const legMat = mat(color.clone().multiplyScalar(0.85));
   const legs = [-1, 1].map((s) => {
@@ -385,10 +349,6 @@ export function buildRobot(design, catalog, { eyes } = {}) {
     }
     base.position.set(q[1], q[2], q[0]);
     base.quaternion.set(q[5], q[6], q[4], q[3]);
-    if (tail && layout && layout.tail_pitch != null) {
-      tail.pitch.rotation.x = q[layout.tail_pitch];
-      tail.yaw.rotation.y = q[layout.tail_yaw];
-    }
     const sides = [[legs[1], 7], [legs[0], 10]];
     for (const [L, i] of sides) {
       L.hip.rotation.x = q[i];
@@ -399,7 +359,5 @@ export function buildRobot(design, catalog, { eyes } = {}) {
     group.position.set(0, 0, 0);
   }
   const heightM = (r + hMax + top + (lidar ? 90 : 0)) * M;
-  /** Live pose of the tail: pitch (rad, + = up) and wag (rad). */
-  function setTail(pitchRad = 0.45, wagRad = 0) { if (tail) { tail.pitch.rotation.x = pitchRad; tail.yaw.rotation.y = wagRad; } }
-  return { group, setPose, setFromQpos, setTail, tail, base, fov, turret, lights, info: { heightM, hMin, hMax, wheelR: r, trackMM: 2 * wheelX } };
+  return { group, setPose, setFromQpos, base, fov, turret, lights, info: { heightM, hMin, hMax, wheelR: r, trackMM: 2 * wheelX } };
 }

@@ -1,0 +1,10 @@
+Vendor: Shenzhen Damiao Technology Co., Ltd. (dmBots)
+Model: DM-J10010L-2EC
+Retrieved: 2026-10-25
+Repository: https://github.com/dmBots/DM-J10010L-2EC (branch master, commit 67eef1499e16cc2dbe7f5819ea329075342630ef)
+Files:
+  dm-j10010l-0730_1.STEP     <-  models/3d/dm-j10010l-0730_1.STEP
+  dm-j10010l-2ec-2D.pdf      <-  drawings/2d/dm-j10010l-2ec-2D尺寸图.pdf  (2D尺寸图 = "2D dimension drawing")
+  Not downloaded: models/3d/dm-j10010l-240726.sldasm.7z, dm-j10010l-240726_1.SLDPRT (SolidWorks native), drawings/2d/dm-l10010.pdf
+Licence/terms: repository has no licence file (GitHub API license=null); manuals carry "All rights are reserved".
+  Treat as local reference copies only; do not redistribute or commit to a public repo.

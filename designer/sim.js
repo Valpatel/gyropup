@@ -27,8 +27,10 @@ let fromDesigner = null;
 try { fromDesigner = JSON.parse(localStorage.getItem(STORE) || 'null'); } catch { /* storage blocked */ }
 
 const sel = $('#design-select');
-sel.innerHTML = (fromDesigner ? '<option value="@designer">From the designer (your current build)</option>' : '')
-  + designs.map((d) => `<option value="${d.file}">${d.name}</option>`).join('');
+// Gyropup (designs/default.json) first and selected; the designer's working copy last
+designs.sort((x, y) => (y.file === 'designs/default.json') - (x.file === 'designs/default.json'));
+sel.innerHTML = designs.map((d) => `<option value="${d.file}">${d.name}</option>`).join('')
+  + (fromDesigner ? '<option value="@designer">From the designer (your current build)</option>' : '');
 if (q.get('design') && designs.some((d) => d.file === q.get('design'))) sel.value = q.get('design');
 else if (designs.some((d) => d.file === 'designs/default.json')) sel.value = 'designs/default.json';   // Gyropup on one 60 V FLEXVOLT
 const runSel = $('#run-select');
@@ -77,7 +79,9 @@ async function loadDesign(value) {
   state.design = design;
   state.result = evaluate(design, catalog, materials);
   if (state.robot) { stage.root.remove(state.robot.group); if (state.robot.turret) stage.root.remove(state.robot.turret.laser); }
-  state.robot = buildRobot(design, catalog, { eyes });
+  let mech = null;                                     // the real stack from the CAD, if it was built from this design
+  try { const ml = await getJson('../exports/mech-layout.json'); if (ml.design === value) mech = ml; } catch { /* no CAD yet */ }
+  state.robot = buildRobot(design, catalog, { eyes, mech });
   stage.root.add(state.robot.group);
   stage.frame(state.robot.info.heightM);
   state.robot.fov.visible = gun.showFov;
@@ -258,17 +262,6 @@ const INTRO = {
   recoil: ['Hi! Brace for recoil!', 'Hello! Big burst coming, hold on!'],
   look: ['Hi! What is up there?', 'Hello! Let me look up at the sky!'],
   targets: ['Hi! Target practice time! I promise to aim for the legs!', 'Hello! Five targets? Easy peasy!', 'Hi! Safety glasses on? Let us knock them down!'],
-  sit: ['Hi! Watch me sit, like a good pup!', 'Hello! Sit... and stay!'],
-  catch: ['Hi! Go on, shove me backwards. My tail has me!', 'Hello! Push me over, I dare you. I have a tail!'],
-  estop: ['Hi! Safety check: big red button test!', 'Hello! If you hit my stop button, I sit down safely.'],
-  wag: ['Hi! Look, I can wag my tail!', 'Hello! Wag, wag, wag!'],
-};
-// what it says as the tail controller changes mode in a replay
-const MODE_LINES = {
-  catching: [['Whoa! Tail save!', 'surprised'], ['Oh no... caught it! Thanks, tail!', 'surprised']],
-  sitting: [['Sitting pretty.', 'happy'], ['Sit! Good pup.', 'happy']],
-  standing_up: [['And... up!', 'focused'], ['Hup!', 'focused']],
-  off: [['Stop button pressed. Resting on my tail, motors off.', 'sleepy']],
 };
 function introLine(R) {
   const lines = INTRO[R.run.scenario ?? R.key?.split('/').pop()] ?? ['Hi! Watch this!'];
@@ -399,12 +392,6 @@ function shoot() {
   return true;
 }
 
-const tailSec = section(panel, 'Tail', { note: 'RS-06 lift, RS-00 wag' });
-toggle(tailSec, 'Wag', false, (on) => { gun.wag = on; });
-const tailInfo = document.createElement('p');
-tailInfo.className = 'hud-note';
-tailInfo.textContent = 'Replays: "Sit on the tail", "Shoved hard backwards", "Emergency stop" and "Wag".';
-tailSec.appendChild(tailInfo);
 const eyePanel = section(panel, 'Eyes', { note: 'DualEye screens' });
 const eyeChips = chips(eyePanel, eyes.expressions.map((n) => ({ id: n, html: eyesGlyph(n), title: n })), (n) => { eyes.set(n); state.lastExpr = performance.now(); });
 eyeChips.mark('neutral');
@@ -513,15 +500,6 @@ stage.onFrame((t, dt) => {
         R.moodUntil = tt + 3;
         react('fall');
         setTimeout(() => sfx.down(), 500);
-      } else if (ev.type === 'mode') {
-        const opts = MODE_LINES[ev.mode];
-        if (opts) {
-          const [line, mood] = opts[Math.floor(Math.random() * opts.length)];
-          try { talk?.say?.(line, { mood }); } catch { /* the voice is optional */ }
-          eyes.set(mood === 'sleepy' ? 'sleepy' : mood);
-          R.moodUntil = tt + 1.5;
-          if (ev.mode === 'catching') sfx.down();
-        }
       } else if (ev.type === 'push') {
         eyes.set('surprised');
         R.moodUntil = tt + 0.9;
@@ -562,10 +540,6 @@ stage.onFrame((t, dt) => {
   pitch += -state.speed * 0.05;                                                       // lean into the drive
   state.wheel += (state.speed / state.robot.info.wheelR * 1000) * dt;
   const p = state.robot.setPose({ height, pitch, rollMM: state.rollMM, wheel: state.wheel });
-  if (state.robot.tail) {                                    // the tail: up, and wagging when it is happy or asked to
-    const wagging = gun.wag || eyes.current === 'happy';
-    state.robot.setTail(0.45 + (wagging ? 0.25 : 0) + 0.04 * Math.sin(t * 1.1), wagging ? 0.45 * Math.sin(t * 2 * Math.PI * 2.2) : 0.05 * Math.sin(t * 0.8));
-  }
   if (state.robot.turret) {
     state.robot.turret.setAim(gun.pan, gun.tilt, pitch);
     const now = performance.now() / 1000;

@@ -6,7 +6,7 @@
     "thigh_mm": 200,
     "shin_mm": 200,
     "wheel_diameter_mm": 180,
-    "knee_min_deg": 40,
+    "knee_min_deg": 45,
     "knee_max_deg": 160,
     "track_mm": 330,
     "link_section": {
@@ -19,8 +19,7 @@
       "width_mm": 206,
       "height_mm": 112
     },
-    "battery_tray_mm": 80,
-    "tail_mm": 390
+    "battery_tray_mm": 80
   },
   "leg": {
     "topology": "serial_knee_at_hip"
@@ -48,20 +47,14 @@
     "contactor": "altran-alev100-bs",
     "can_adapter": null,
     "battery_adapter": "terrafirma-flexvolt-60v-dock-adapter",
-    "regen_clamp": "assumed-regen-clamp-58v",
-    "tail_pitch": "robstride-rs-06",
-    "tail_yaw": "robstride-rs-00",
-    "tail_lock": "assumed-tail-ratchet-lock",
-    "tail_tube": "easycomposites-cf-tube-20x18"
+    "regen_clamp": "assumed-regen-clamp-58v"
   },
   "battery_count": 1,
   "materials": {
     "default": "pla",
     "parts": {
       "hip_mount": "petg",
-      "wheel_mount": "petg",
-      "tail_mount": "petg",
-      "tail_clamp": "petg"
+      "wheel_mount": "petg"
     }
   },
   "print": {
@@ -76,7 +69,7 @@
   "character": {
     "color": "#f5b82e"
   },
-  "notes": "Default: one DeWalt FLEXVOLT in 60 V mode (15S, 45-60 V; the user has these packs) in a FLEXVOLT 60 V dock adapter. 60 V is the RS-03 limit, so a regen clamp trips at 58 V and the robot treats 58 V as full (no regen above it). The BotWheels run from two Flipsky 75100 VESCs (14-84 V; moteus tops out at 54 V). A Mean Well DDR-120C-24 (33.6-67.2 V in) feeds the J501 and a DDR-30L-12 (18-75 V in) the lidar and headlights. Tool packs leave under-voltage and current limits to the tool, so the robot enforces 3.0 V/cell (45 V) and a current limit. A 60-80 A MRBF fuse at the battery; a microcontroller with CAN runs the 1 kHz balance loop; the contactor cuts motor power only. A tail (D28): RS-06 lift and RS-00 wag on a 20 mm carbon tube with a TPU skid shoe (not driven), 390 mm from its pivot under the back of the tray, and a spring-applied ratchet that locks it whenever unpowered. It rides up while balancing, sits the robot down, catches backward falls, and makes the e-stop a controlled sit-down.",
+  "notes": "Default: one DeWalt FLEXVOLT in 60 V mode (15S, 45-60 V; the user has these packs) in a FLEXVOLT 60 V dock adapter. 60 V is the RS-03 limit, so a regen clamp trips at 58 V and the robot treats 58 V as full (no regen above it). The BotWheels run from two Flipsky 75100 VESCs (14-84 V; moteus tops out at 54 V). A Mean Well DDR-120C-24 (33.6-67.2 V in) feeds the J501 and a DDR-30L-12 (18-75 V in) the lidar and headlights. Tool packs leave under-voltage and current limits to the tool, so the robot enforces 3.0 V/cell (45 V) and a current limit. A 60-80 A MRBF fuse at the battery; a microcontroller with CAN runs the 1 kHz balance loop; the contactor cuts motor power only.",
   "balance_controller": {
     "requirements": [
       "steady 1 kHz loop independent of Linux",

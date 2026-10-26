@@ -204,7 +204,7 @@
   title: Two wheel-legs plus a tail, not a three-legged tricycle
   decision: "Gyropup keeps its two balancing wheel-legs and gains a tail: a RobStride RS-06 lifts it (36 N·m peak, 621 g), a RobStride RS-00 wags it (14 N·m, 310 g), a 20 mm carbon tube carries a TPU skid shoe 390 mm from the pivot, and a spring-applied ratchet (ASSUMED part) locks it against being pushed up whenever the solenoid is unpowered. The tail is not driven. It rides up while balancing; the robot sits on it (2.4 N·m on the motor, parked on the ratchet), it catches a backward fall, and an e-stop is a controlled stop: sit, lock, cut the power."
   why: "A third wheel-leg would add about 4.3 kg and six-hundred-odd dollars, make turning scrub, and still balance when lifting a leg; the tail gives the robot most of the tripod's benefits for 1.2 kg. In simulation the tail lets the robot survive a backward shove of 2.0 m/s per kg (vs 1.2 without), sits and stands up again in about 5 s, and stops safely with the lidar 80 mm off the ground. RS-02 and RS-00 pitch motors also sit and catch moderate shoves but drop the hardest catch, so the RS-06 stays. The ratchet sees at most 43 N·m."
-  status: decided
+  status: reversed by D30
   source: {kind: user, quote: "Don't worry about cost can you just think about light weight, high quality with good tail motors but not driving wheels?"}
   alternatives: [three wheel-legs (a tricycle), a passive kickstand, an RS-02 or RS-00 for the tail lift]
 - id: D29
@@ -214,3 +214,17 @@
   why: The user pointed to Beni as consumer inspiration but wants Gyropup way heavier, more durable and more capable.
   status: decided
   source: {kind: user, quote: "The beni robot is another good consumer exmaple product for inspiration, but we want this way heavier, more durable, more capable."}
+- id: D30
+  date: "2026-10-25"
+  title: No tail
+  decision: "The tail is removed from Gyropup: from the design, the catalog, the physics model and controller, the scenarios, the 3D views and the CAD. Gyropup is back to two balancing wheel-legs. An emergency stop is a controlled crouch (category 1) before the motors are cut, with the knees landing on their mechanical stops; a skid or bumper under the chassis protects the lidar if the robot does tip."
+  why: The user found the tail ridiculous. Its benefits in simulation (catching hard backward shoves, a tripod to sit on) did not outweigh how it looks and the extra 1.2 kg.
+  status: decided
+  source: {kind: user, quote: "the tail is ridiculous please remove it"}
+- id: D31
+  date: "2026-10-25"
+  title: Real mechanical design on a modular interface standard; aluminium where the loads are
+  decision: "Legs are built from motor-specific adapters onto standard faces (GMI, docs/mechanical-interfaces.md): an output adapter (AO-L) with a 61812 support bearing in a motor plate (AC-L), standard faces for links, a yoke box closed by three posts, a 3 mm 6061 chassis as the spine. The thigh and shin are 6061 boxes (40 x 30, 3 mm walls) with the wheel's cables inside. Any of the RS-03, RS-04, CubeMars AK70-10 or Damiao J10010 fits the same leg with its own two adapters."
+  why: "The user asked for real motor attachment points, real cable routing and stiffness studies, with modular interfaces so motors and leg designs can change. The studies showed printed PA6-CF links and a flat 16 mm thigh far too flexible for the hard-turn case (out-of-plane 50 N m at the hip, 120 N sideways at the knee: safety factor 0.11, 38 mm deflection), and RobStride outputs ride on thin 45 x 58 mm ball bearings, so a separate support bearing takes the leg's bending."
+  status: decided
+  source: {kind: user, quote: "we need to start the real mechanical design. Ideally separate it into components such as: the interface between motor and leg, knee motor interface, hip motor interface, keeping it flexible so we can swap motors and change our leg designs but have modular mating interfaces and such. But we need real cable routing, real motor attachment points. Real stiffness studies and so on."}

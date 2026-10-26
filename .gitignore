@@ -8,3 +8,8 @@ site/
 preview/site-url.txt
 build/
 exports/sim/
+
+# vendor CAD has no licence to redistribute: keep it local, track only where it came from
+references/vendor/**
+!references/vendor/**/
+!references/vendor/**/SOURCE.txt

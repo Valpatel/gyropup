@@ -1,0 +1,300 @@
+"""The leg module, built on the GMI standard faces (docs/mechanical-interfaces.md, cad/gmi.py).
+
+Robot frame: x forward, y left, z up; the hip axis is the y axis. Parts are built for the LEFT leg at the zero pose
+(thigh and shin hanging straight down); the right leg is the mirror image (y -> -y).
+
+The stack across the hip, from the body outwards (all from the motors' drawings and cad/interfaces.json):
+  tray wall | hip bracket | hip motor (rear inboard) | hip motor plate (61812) | hip output adapter | thigh |
+  push-rod plane | knee crank | knee output adapter | knee motor plate (61812) | knee motor (rear outboard)
+Three spacer posts join the two motor plates above the axis, where the leg never swings. The knee is a passive pivot
+(KC cartridge in the shin); the knee motor drives the shin through the push-rod (a parallelogram). The wheel adapter
+(WH) sits on the shin's outer face; the wheel motor's cable comes out of the middle of its boss, through the adapter.
+"""
+from __future__ import annotations
+
+import math
+from dataclasses import dataclass
+
+import cadquery as cq
+
+import gmi
+
+STD = gmi.STD
+LINK_W, LINK_T, WALL = 40.0, 30.0, 2.5      # thigh and shin: a closed 6061 box section 40 (x) by 30 (y), 2.5 mm walls (sized by the FEA)
+SHIN_W, SHIN_WALL = 34.0, 2.0                # the shin carries less (FEA safety factor 55 at 40 x 3)
+CABLE_PASSES = [(-40.0, 20.0), (40.0, 0.0)]   # through the yoke's wall plate and the chassis side: wheel harness, motor leads
+YOKE_WALL, YOKE_DECK, YOKE_RIB = 12.0, 10.0, 6.0  # 6061 (FEA: safety factor 3.4 at 12/12/8, 1.9 at 10/8/6)
+
+
+@dataclass
+class Stack:
+    y: dict          # named y positions (mm), left leg
+    track: float     # wheel centre to wheel centre (mm)
+    notes: list
+    hip: dict        # motor interfaces
+    knee: dict
+    wheel: dict
+
+
+def _ycyl(r, y0, y1, x=0.0, z=0.0):
+    """A cylinder along y from y0 to y1, centred at (x, z)."""
+    return cq.Workplane('XZ', origin=(0, y1, 0)).center(x, z).circle(r).extrude(y1 - y0)
+
+
+def stack(L: dict, hip_id: str, knee_id: str, wheel_id: str) -> Stack:
+    hip, knee = gmi.motor_interface(hip_id), gmi.motor_interface(knee_id)
+    wheel = gmi.motor_interface(wheel_id)
+    _, had = gmi.output_adapter(hip_id, 'L')
+    _, hpl = gmi.motor_plate(hip_id, 'L')
+    hip['plate'] = hpl
+    _, kad = gmi.output_adapter(knee_id, 'L')
+    _, kpl = gmi.motor_plate(knee_id, 'L')
+    knee['plate'] = kpl
+    pr, kc, wh = STD['PR'], STD['KC'], STD['WH']
+    y = {}
+    y['wall'] = L['tray']['width'] / 2 + 1.0
+    y['bracket'] = (y['wall'], y['wall'] + YOKE_WALL)
+    y['hip_out'] = y['bracket'][1] + 2.0 + hip['length']                 # the hip motor's output face
+    y['hip_motor'] = (y['hip_out'] - hip['length'], y['hip_out'])
+    y['hip_plate'] = (y['hip_out'] + hpl['z'][0], y['hip_out'] + hpl['z'][1])
+    y['hip_face'] = y['hip_out'] + had['z_face']                          # the standard AO face
+    y['hip_tab'] = (y['hip_out'] + hpl['tab_z'][0], y['hip_out'] + hpl['tab_z'][1])   # the plate's top tab (bracket bolts)
+    y['thigh'] = (y['hip_face'], y['hip_face'] + LINK_T)
+    y['rod'] = (y['thigh'][1] + 1.5, y['thigh'][1] + 1.5 + pr['rod_end_ball_w'])
+    y['crank'] = (y['rod'][1] + 1.5, y['rod'][1] + 1.5 + 10.0)
+    y['knee_face'] = y['crank'][1]
+    y['knee_out'] = y['knee_face'] + kad['z_face']                        # the knee motor's output face (it faces -y)
+    y['knee_plate'] = (y['knee_out'] - kpl['z'][1], y['knee_out'] - kpl['z'][0])
+    y['knee_motor'] = (y['knee_out'], y['knee_out'] + knee['length'])
+    y['knee_tab'] = (y['knee_out'] - kpl['tab_z'][1], y['knee_out'] - kpl['tab_z'][0])   # mirrored: the tab's motor side faces +y
+    y['posts'] = (y['hip_plate'][1], y['knee_plate'][0])
+    y['shin'] = (y['crank'][0], y['crank'][0] + max(28.0, kc['spacing'] + kc['bearing_w']))
+    y['wheel_adapter'] = (y['shin'][1], y['shin'][1] + wh['plate_t'])
+    boss_h = wheel['case']['spigot_h'] or 5.0
+    y['wheel_mount'] = y['wheel_adapter'][1]                                # the wheel's boss face
+    tyre0 = y['wheel_mount'] + 7.5                                          # BotWheel drawing: boss face 7.5 outboard of the tyre side
+    y['wheel'] = (tyre0, tyre0 + 44.6)
+    y['wheel_centre'] = sum(y['wheel']) / 2
+    notes = []
+    if y['knee_plate'][0] - y['crank'][1] < 0.5:
+        notes.append('the crank touches the knee motor plate')
+    r_need = (wheel['od'] or 171.3) / 2 + (knee['od'] or 100) / 2 + 6
+    y['min_hip_to_axle'] = r_need
+    if y['wheel'][0] < y['knee_motor'][1] and y['wheel'][1] > y['knee_motor'][0]:
+        a, b = L['thigh'], L['shin']
+        g = 2 * math.degrees(math.asin(min(1.0, r_need / (2 * min(a, b)))))
+        y['min_knee_deg'] = g
+        notes.append(f'the wheel passes under the knee motor: hip-to-axle at least {r_need:.0f} mm, so the knee stops at {g:.0f}° or more')
+    return Stack(y, 2 * y['wheel_centre'], notes, hip, knee, wheel)
+
+
+# ----------------------------------------------------------------------------------- the yoke
+
+def hm_holes():
+    """The HM pattern on the chassis side (x, z): 6 x M6 in two rows 60 mm apart, low enough to land on the chassis."""
+    w, h = STD['HM']['rect']
+    return [(x, z) for x in (-w / 2, 0, w / 2) for z in (0.0, h)]
+
+
+def hm_dowels():
+    return [(-STD['HM']['rect'][0] / 4, STD['HM']['rect'][1] / 2), (STD['HM']['rect'][0] / 4, STD['HM']['rect'][1] / 2)]
+
+
+def yoke_bracket(S: Stack, L: dict):
+    """The yoke's spine (printed PA6-CF): a wall plate on the tray side (HM: 6 x M6 + 2 dowels), a deck over both motors,
+    and two drop faces that bolt to the top tabs of the hip and knee motor plates (3 x M5 each). With the three posts
+    between the plates this closes a box around the joint, so neither plate hangs off the other."""
+    ac = STD['AC-L']
+    tab_top = max(S.hip['plate']['tab_top'], S.knee['plate']['tab_top'])
+    ydh = S.y['hip_tab'][0]                       # hip drop: on the motor side (-y) of the hip plate's tab
+    ydk = S.y['knee_tab'][1]                      # knee drop: on the motor side (+y) of the knee plate's tab
+    y0, y1 = S.y['bracket'][0], ydk + 8
+    deck_z = tab_top + 4 + 1 + YOKE_DECK / 2   # the plate tabs reach 4 mm above tab_top; the deck clears them by 1 mm
+    W = 110.0
+    z_low = -12.0                                  # the wall plate reaches down the chassis side (HM rows at z = 0 and 60)
+    top = deck_z + YOKE_DECK / 2
+    wall = cq.Workplane('XY').box(W, YOKE_WALL, top - z_low).translate((0, (S.y['bracket'][0] + S.y['bracket'][1]) / 2, (top + z_low) / 2))
+    deck = cq.Workplane('XY').box(W, y1 - y0, YOKE_DECK).translate((0, (y0 + y1) / 2, deck_z))
+    post_top = STD['AC-L']['post_r'] + STD['AC-L']['post_d'] / 2 + 4      # the top post's boss
+    dz0 = post_top + 1.0                                                   # drops stop just above it
+    drops = (cq.Workplane('XY').box(W, 8, top - dz0).translate((0, ydh - 4, (top + dz0) / 2))
+             .union(cq.Workplane('XY').box(W, 8, top - dz0).translate((0, ydk + 4, (top + dz0) / 2))))
+    ribs = None
+    for x in (-W / 2 + 4, 0, W / 2 - 4):
+        r = cq.Workplane('XY').box(YOKE_RIB, y1 - y0, top - dz0).translate((x, (y0 + y1) / 2, (top + dz0) / 2))
+        ribs = r if ribs is None else ribs.union(r)
+    b = wall.union(deck).union(drops).union(ribs)
+    for x in (-27.5, 27.5):                       # windows in the wall plate above the HM rows, clear of the bolts
+        b = b.cut(cq.Workplane('XY').box(26, YOKE_WALL + 2, 22).translate((x, (S.y['bracket'][0] + S.y['bracket'][1]) / 2, 88)))
+    # keep clear of the thigh hub, crank and posts between the plates: nothing below the deck there
+    span = (S.y['hip_tab'][0], S.y['knee_tab'][1])                 # between the drop faces: plates, posts, thigh, crank
+    b = b.cut(cq.Workplane('XY').box(W + 2, span[1] - span[0], 40).translate((0, sum(span) / 2, deck_z - 25.01)))
+    for (x, z) in hm_holes():
+        b = b.cut(_ycyl(gmi.clear(STD['HM']['thread']) / 2, S.y['bracket'][0] - 1, S.y['bracket'][1] + 1, x, z))
+    for (x, z) in hm_dowels():
+        b = b.cut(_ycyl(STD['HM']['dowel_d'] / 2 + 0.02, S.y['bracket'][0] - 1, S.y['bracket'][1] + 1, x, z))
+    for k in range(ac['bracket_bolts']):
+        x = (k - (ac['bracket_bolts'] - 1) / 2) * ac['plate_r'] * 0.4
+        b = b.cut(_ycyl(gmi.clear(ac['bracket_thread']) / 2, ydh - 10, ydh + 1, x, S.hip['plate']['tab_top'] - 8))
+        b = b.cut(_ycyl(gmi.clear(ac['bracket_thread']) / 2, ydk - 1, ydk + 10, x, S.knee['plate']['tab_top'] - 8))
+    for (x, z) in CABLE_PASSES:                    # the same holes as the chassis wall
+        b = b.cut(_ycyl(STD['CP']['grommet_hole'] / 2, S.y['bracket'][0] - 1, S.y['bracket'][1] + 1, x, z))
+    return b
+
+
+def posts(S: Stack):
+    """Three spacer posts between the motor plates (bought: aluminium round standoffs, M5 both ends)."""
+    ac = STD['AC-L']
+    out = None
+    for ang in ac['post_deg']:
+        x, z = ac['post_r'] * math.cos(math.radians(ang)), ac['post_r'] * math.sin(math.radians(ang))
+        p = _ycyl(ac['post_d'] / 2, *S.y['posts'], x, z)
+        out = p if out is None else out.union(p)
+    return out
+
+
+# ----------------------------------------------------------------------------------- links
+
+def _box_link(y0, y1, length, w, wall, end0_r, end1_r):
+    """A closed box beam along -z from z = 0 to z = -length, solid round bosses at both ends (hollow in between, so
+    cables can run inside)."""
+    t = y1 - y0
+    outer = cq.Workplane('XY').box(w, t, length).translate((0, (y0 + y1) / 2, -length / 2))
+    inner = cq.Workplane('XY').box(w - 2 * wall, t - 2 * wall, length - end0_r - end1_r - 6).translate(
+        (0, (y0 + y1) / 2, -(end0_r + 3) - (length - end0_r - end1_r - 6) / 2))
+    return (outer.cut(inner).union(_ycyl(end0_r, y0, y1)).union(_ycyl(end1_r, y0, y1, 0, -length)))
+
+
+def thigh(S: Stack, a: float):
+    """Thigh: a closed 6061 box (40 x 30, 3 mm walls) from the hip's standard face to the knee pin. Machined from solid,
+    or a 40 x 30 x 3 tube with bonded end fittings. The wheel's cables run inside it, in and out through grommeted
+    holes near each end."""
+    y0, y1 = S.y['thigh']
+    kc = STD['KC']
+    t = _box_link(y0, y1, a, LINK_W, WALL, 36.0, kc['hub_od'] / 2)
+    face = 7.0                                    # the hub keeps a 7 mm face on the AO side; hollow behind it (bolt heads)
+    t = t.cut(_ycyl(36.0 - WALL - 1, y0 + face, y1 + 1))
+    t = t.cut(gmi.place(gmi.std_face_mate('L', depth=y1 - y0 + 2), (0, y0, 0), (0, 1, 0)))
+    t = t.cut(_ycyl(kc['pin_d'] / 2 + 0.01, y0 - 1, y1 + 1, 0, -a))
+    for z in (-36.0 - 18, -a + kc['hub_od'] / 2 + 18):                  # cable ports on the back face (-x)
+        t = t.cut(cq.Workplane('YZ', origin=(-LINK_W / 2 - 1, 0, 0)).center((y0 + y1) / 2, z).rect(12, 16).extrude(WALL + 2))
+    return t
+
+
+def shin(S: Stack, b: float, crank_r: float):
+    """Shin: a closed 6061 box (40 x the KC width, 3 mm walls); the KC hub (two 6001s) and the push-rod lever at the
+    knee, the WH face on the outer side at the axle. The wheel's cable comes through the WH bore into the box and up
+    to a port near the knee."""
+    y0, y1 = S.y['shin']
+    kc, wh = STD['KC'], STD['WH']
+    s = _box_link(y0, y1, b, SHIN_W, SHIN_WALL, kc['hub_od'] / 2, wh['plate_d'] / 2)
+    yl = S.y['rod'][1] + 1.5                                    # lever in the crank's plane, next to the rod end
+    s = s.union(cq.Workplane('XY').box(crank_r, 10, 22).translate((crank_r / 2, yl + 5, 0))).union(_ycyl(11, yl, yl + 10, crank_r, 0))
+    s = s.cut(_ycyl(3.1, yl - 1, yl + 12, crank_r, 0))
+    s = s.cut(_ycyl(kc['bearing_od'] / 2 + 0.02, y0 - 0.01, y0 + kc['bearing_w']))
+    s = s.cut(_ycyl(kc['bearing_od'] / 2 + 0.02, y1 - kc['bearing_w'], y1 + 0.01))
+    s = s.cut(_ycyl(kc['pin_d'] / 2 + 1.0, y0 - 1, y1 + 1))
+    s = s.cut(_ycyl(wh['plate_d'] / 2 - SHIN_WALL - 2, y0 - 0.01, y1 - 8, 0, -b))            # hollow the foot, keep the WH face
+    s = s.cut(_ycyl(wh['pilot_d'] / 2 + 0.05, y1 - 3, y1 + 1, 0, -b))
+    for (x, z) in gmi.circle_pts(wh['pcd'], wh['bolts'], 30):
+        s = s.cut(_ycyl(gmi.tap(wh['thread']) / 2, y1 - 12, y1 + 1, x, -b + z))
+    s = s.cut(_ycyl(wh['cable_bore'] / 2, y0 + WALL, y1 + 1, 0, -b))
+    s = s.cut(cq.Workplane('YZ', origin=(-SHIN_W / 2 - 1, 0, 0)).center((y0 + y1) / 2, -kc['hub_od'] / 2 - 18).rect(12, 16).extrude(SHIN_WALL + 2))
+    return s
+
+
+def crank(S: Stack, crank_r: float):
+    """Knee crank (10 mm 6061) on the knee's standard face, an M6 pin for the rod end at the crank radius."""
+    y0, y1 = S.y['crank']
+    c = (_ycyl(36.0, y0, y1).union(cq.Workplane('XY').box(crank_r, y1 - y0, 24).translate((crank_r / 2, (y0 + y1) / 2, 0)))
+         .union(_ycyl(12, y0, y1, crank_r, 0)))
+    c = c.cut(gmi.place(gmi.std_face_mate('L', depth=y1 - y0 + 2), (0, y1, 0), (0, -1, 0)))
+    return c.cut(_ycyl(3.1, y0 - 1, y1 + 1, crank_r, 0))
+
+
+def pushrod(S: Stack, a: float, crank_r: float):
+    """Push-rod envelope: two M6 rod ends and a Ø12 tube, centres one thigh-length apart (bought parts)."""
+    y0, y1 = S.y['rod']
+    pr = STD['PR']
+    yc = (y0 + y1) / 2
+    eye = lambda z: _ycyl(9.5, y0, y1, crank_r, z).cut(_ycyl(3.0, y0 - 1, y1 + 1, crank_r, z))
+    tube = cq.Workplane('XY').circle(pr['tube_od'] / 2).circle(pr['tube_id'] / 2).extrude(a - 48).translate((crank_r, yc, -a + 24))
+    return eye(0).union(eye(-a)).union(tube)
+
+
+def wheel_adapter(S: Stack, b: float):
+    """Wheel adapter (6061): WH face to the shin; the wheel motor's flange pattern and boss recess on the other side;
+    the wheel's cable comes out of the middle of its boss and goes through here into the shin."""
+    y0, y1 = S.y['wheel_adapter']
+    wh, w = STD['WH'], S.wheel['case']
+    boss = w['boss_d'] or 50.0
+    d = max(wh['plate_d'], boss + 12)
+    p = _ycyl(d / 2, y0, y1, 0, -b).union(_ycyl(wh['pilot_d'] / 2, y0 - 2.5, y0, 0, -b))
+    p = p.cut(_ycyl(boss / 2 + 0.03, y1 - (w['spigot_h'] or 5.0) + 0.01 if False else y1 - 1.5, y1 + 0.01, 0, -b))
+    for (x, z) in gmi.circle_pts(wh['pcd'], wh['bolts'], 30):
+        p = p.cut(_ycyl(gmi.clear(wh['thread']) / 2, y0 - 3, y1 + 1, x, -b + z))
+        p = p.cut(_ycyl(gmi.clear(wh['thread']) * 0.95, y1 - 3.5, y1 + 1, x, -b + z))
+    bw = w['bolts']
+    for (x, z) in gmi.circle_pts(bw['pcd'], angles=bw['angles']):
+        p = p.cut(_ycyl(gmi.clear(bw['thread']) / 2, y0 - 3, y1 + 1, x, -b + z))
+    return p.cut(_ycyl(wh['cable_bore'] / 2, y0 - 3, y1 + 1, 0, -b))
+
+
+def leg_parts(L: dict, hip_id: str, knee_id: str, wheel_id: str, crank_r: float = None):
+    """All the leg module's parts (left leg, zero pose), the bought envelopes, the stack, and what each part is."""
+    S = stack(L, hip_id, knee_id, wheel_id)
+    a, b = L['thigh'], L['shin']
+    cr = crank_r or STD['PR']['crank_r']
+    parts, meta = {}, {}
+
+    def add(name, shape, material, note):
+        parts[name] = shape
+        meta[name] = {'material': material, 'qty': 2, 'note': note}
+
+    ha, hai = gmi.output_adapter(hip_id, 'L')
+    hp, _ = gmi.motor_plate(hip_id, 'L')
+    ka, _ = gmi.output_adapter(knee_id, 'L')
+    kp, _ = gmi.motor_plate(knee_id, 'L')
+    add('yoke_bracket', yoke_bracket(S, L), 'al6061', 'CNC 6061-T6 (FEA: printed PA6-CF bends 10 mm); M6 into the chassis, M5 into both plate tabs')
+    add('hip_motor_plate', gmi.place(hp, (0, S.y['hip_out'], 0), (0, 1, 0)), 'al6061', f"CNC 6061-T6, {STD['AC-L']['bearing']}")
+    add('hip_output_adapter', gmi.place(ha, (0, S.y['hip_out'], 0), (0, 1, 0)), 'al6061', 'CNC 6061-T6, M5 helicoils, motor dowels')
+    add('knee_output_adapter', gmi.place(ka, (0, S.y['knee_out'], 0), (0, -1, 0)), 'al6061', 'CNC 6061-T6, M5 helicoils, motor dowels')
+    add('knee_motor_plate', gmi.place(kp, (0, S.y['knee_out'], 0), (0, -1, 0)), 'al6061', f"CNC 6061-T6, {STD['AC-L']['bearing']}")
+    add('thigh', thigh(S, a), 'al6061', 'CNC 6061-T6 box (or 40 x 30 x 3 tube + bonded ends); cables inside')
+    add('shin', shin(S, b, cr).translate((0, 0, -a)), 'al6061', 'CNC 6061-T6 box, two 6001-2RS; cables inside')
+    add('knee_crank', crank(S, cr), 'al6061', 'CNC 6061-T6, 10 mm')
+    add('wheel_adapter', wheel_adapter(S, b).translate((0, 0, -a)), 'al6061', '6061, 6 mm')
+    bought = {
+        'posts': posts(S),
+        'pushrod': pushrod(S, a, cr),
+        'hip_motor': gmi.place(gmi.motor_body(hip_id)[0], (0, S.y['hip_out'], 0), (0, 1, 0)),
+        'knee_motor': gmi.place(gmi.motor_body(knee_id)[0], (0, S.y['knee_out'], 0), (0, -1, 0)),
+        'wheel': _ycyl((S.wheel['od'] or 171) / 2, *S.y['wheel'], 0, -a - b).cut(_ycyl(30, S.y['wheel'][0] - 1, S.y['wheel'][1] + 1, 0, -a - b))
+                 .union(_ycyl(25, S.y['wheel_mount'], S.y['wheel'][0], 0, -a - b)),
+    }
+    assumed = sorted({m['id'] for m in (S.hip, S.knee, S.wheel) if m['assumed']})
+    return parts, meta, bought, S, assumed
+
+
+ROTATES = {'thigh': 'hip', 'hip_output_adapter': 'hip', 'shin': 'knee', 'wheel_adapter': 'knee', 'wheel': 'knee',
+           'knee_crank': 'crank', 'knee_output_adapter': 'crank', 'pushrod': 'rod'}
+
+
+def pose(shape, part: str, hip_rad: float, knee_rad: float, a: float, crank_r: float):
+    """Turn a left-leg part from the zero pose: + hip swings the thigh forward (about +y, x towards -z... i.e. the
+    right-hand rule about +y), + knee folds the shin about the knee pin. The crank turns by hip + knee (parallelogram),
+    and the push-rod translates with it, staying parallel to the thigh."""
+    deg = math.degrees
+    kind = ROTATES.get(part)
+    if kind == 'hip':
+        return shape.rotate((0, 0, 0), (0, 1, 0), deg(hip_rad))
+    if kind == 'knee':
+        return shape.rotate((0, 0, -a), (0, 1, -a), deg(knee_rad)).rotate((0, 0, 0), (0, 1, 0), deg(hip_rad))
+    if kind == 'crank':
+        return shape.rotate((0, 0, 0), (0, 1, 0), deg(hip_rad + knee_rad))
+    if kind == 'rod':
+        th = hip_rad + knee_rad                     # the crank pin turns by this; the rod stays parallel to the thigh
+        px, pz = crank_r * math.cos(th), -crank_r * math.sin(th)
+        s = shape.translate((px - crank_r, 0, pz))
+        return s.rotate((px, 0, pz), (px, 1, pz), deg(hip_rad))
+    return shape

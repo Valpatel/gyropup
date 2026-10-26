@@ -1,0 +1,78 @@
+{
+ "design": "designs/default.json",
+ "stack_mm": {
+  "wall": 104.0,
+  "bracket": [
+   104.0,
+   116.0
+  ],
+  "hip_out": 174.6,
+  "hip_motor": [
+   118.0,
+   174.6
+  ],
+  "hip_plate": [
+   172.1,
+   187.2
+  ],
+  "hip_face": 188.2,
+  "hip_tab": [
+   177.2,
+   187.2
+  ],
+  "thigh": [
+   188.2,
+   218.2
+  ],
+  "rod": [
+   219.7,
+   228.7
+  ],
+  "crank": [
+   230.2,
+   240.2
+  ],
+  "knee_face": 240.2,
+  "knee_out": 253.79999999999998,
+  "knee_plate": [
+   241.2,
+   256.29999999999995
+  ],
+  "knee_motor": [
+   253.79999999999998,
+   310.4
+  ],
+  "knee_tab": [
+   241.2,
+   251.2
+  ],
+  "posts": [
+   187.2,
+   241.2
+  ],
+  "shin": [
+   230.2,
+   258.2
+  ],
+  "wheel_adapter": [
+   258.2,
+   264.2
+  ],
+  "wheel_mount": 264.2,
+  "wheel": [
+   271.7,
+   316.3
+  ],
+  "wheel_centre": 294.0,
+  "min_hip_to_axle": 141.9,
+  "min_knee_deg": 41.5562464803072
+ },
+ "track_mm": 588.0,
+ "notes": [
+  "the wheel passes under the knee motor: hip-to-axle at least 142 mm, so the knee stops at 42\u00b0 or more"
+ ],
+ "assumed_interfaces": [],
+ "hip_y_mm": 203.2,
+ "wheel_y_mm": 294.0,
+ "min_knee_deg": 41.5562464803072
+}
