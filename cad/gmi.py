@@ -174,6 +174,10 @@ def motor_plate(part_id: str, size: str = 'L', thick_extra: float = 1.0):
                                                                (ring_r * 0.95, ring_r * 0.35), (-ring_r * 0.95, ring_r * 0.35)]).close()
            .extrude(min(10.0, z_top - lug_z)).translate((0, 0, max(0.0, z_top - lug_z - 10.0))))
     p = p.union(tab)
+    win_z0, win_z1 = ring_r + 8.0, tab_top - 18.0                         # a window in the tab, a 10 mm frame left round it
+    if win_z1 - win_z0 > 8:
+        p = p.cut(cq.Workplane('XY').workplane(offset=lug_z - 1).center(0, (win_z0 + win_z1) / 2)
+                  .rect(2 * (s['plate_r'] * 0.55 - 12), win_z1 - win_z0).extrude(z_top - lug_z + 2))
     for k in range(s['bracket_bolts']):
         x = (k - (s['bracket_bolts'] - 1) / 2) * s['plate_r'] * 0.4
         p = p.cut(_cyl(tap(s['bracket_thread']) / 2, lug_z - 1, z_top + 1, x, tab_top - 8))
@@ -186,7 +190,28 @@ def motor_plate(part_id: str, size: str = 'L', thick_extra: float = 1.0):
     # the bore: clears the rotating shoulder (lip), then the bearing seat
     p = p.cut(_cyl(s['lip_d'] / 2, lug_z - 1, z_top + 1))
     p = p.cut(_cyl(s['bearing_od'] / 2 + 0.01, z_bear0, z_top + 1))
-    return p, {'part': part_id, 'z': (lug_z, z_top), 'bearing_z': (z_bear0, z_bear1), 'tab_z': (max(lug_z, z_top - 10.0), z_top), 'tab_top': tab_top, 'material': 'al6061',
+    # lightening pockets in the ring between the lug screws, from the motor side, 6 mm deep (the lug faces, the bearing
+    # seat and the leg-side face stay whole)
+    r_in, r_out = s['bearing_od'] / 2 + 3.0, ring_r - 3.0
+    if r_out - r_in > 6:
+        angs = sorted(b['angles'])
+        for k, a0 in enumerate(angs):
+            a1 = angs[(k + 1) % len(angs)] + (360 if k == len(angs) - 1 else 0)
+            mid, span = (a0 + a1) / 2, (a1 - a0)
+            half = max(0.0, span / 2 - math.degrees((clear(b['thread']) * 0.95 + 3.0) / (b['pcd'] / 2)))
+            if half < 4:
+                continue
+            sector = (cq.Workplane('XY').workplane(offset=lug_z - 0.01)
+                      .moveTo(r_in * math.cos(math.radians(mid - half)), r_in * math.sin(math.radians(mid - half)))
+                      .lineTo(r_out * math.cos(math.radians(mid - half)), r_out * math.sin(math.radians(mid - half)))
+                      .threePointArc((r_out * math.cos(math.radians(mid)), r_out * math.sin(math.radians(mid))),
+                                     (r_out * math.cos(math.radians(mid + half)), r_out * math.sin(math.radians(mid + half))))
+                      .lineTo(r_in * math.cos(math.radians(mid + half)), r_in * math.sin(math.radians(mid + half)))
+                      .threePointArc((r_in * math.cos(math.radians(mid)), r_in * math.sin(math.radians(mid))),
+                                     (r_in * math.cos(math.radians(mid - half)), r_in * math.sin(math.radians(mid - half))))
+                      .close().extrude(min(6.0, z_bear0 - lug_z + 4.0)))
+            p = p.cut(sector)
+    return p, {'part': part_id, 'z': (lug_z, z_top), 'bearing_z': (z_bear0, z_bear1), 'tab_z': (max(lug_z, z_top - 10.0), z_top), 'tab_top': tab_top, 'ring_r': ring_r, 'material': 'al6061',
                'note': f"CNC 6061-T6; {s['bearing']} support bearing, circlips DIN 472/471", 'assumed': mi['assumed']}
 
 

@@ -231,7 +231,7 @@
    "material_id": "al6061",
    "load_from": "landing: shin force 315 N, knee torque 40 N\u00b7m -> push-rod 1223 N (sin phi 0.54 at a 48\u00b0 knee)",
    "png": "exports/fea/thigh-T1-al6061.png",
-   "seconds": 12.1,
+   "seconds": 12.0,
    "assumed_interfaces": []
   },
   {
@@ -301,7 +301,7 @@
    "material_id": "al6061",
    "load_from": "landing or the floor: out-of-plane moment at the hip 47 N\u00b7m, lateral force 105 N",
    "png": "exports/fea/thigh-T2-al6061.png",
-   "seconds": 10.1,
+   "seconds": 9.8,
    "assumed_interfaces": []
   },
   {
@@ -356,7 +356,7 @@
    "material_id": "al6061",
    "load_from": "landing or the floor: 336 N vertical, 105 N sideways, wheel offset 36 mm",
    "png": "exports/fea/shin-S1-al6061.png",
-   "seconds": 11.8,
+   "seconds": 11.5,
    "assumed_interfaces": []
   },
   {
@@ -426,7 +426,7 @@
    "material_id": "al6061",
    "load_from": "motor torque 54 N\u00b7m with 47 N\u00b7m out of plane and 336 N radial",
    "png": "exports/fea/output_adapter-A1-al6061.png",
-   "seconds": 8.1,
+   "seconds": 8.6,
    "assumed_interfaces": []
   },
   {
@@ -434,8 +434,8 @@
    "material": "Aluminium 6061-T6",
    "material_note": "yield strength",
    "mesh": {
-    "nodes": 10753,
-    "tets": 42441,
+    "nodes": 8908,
+    "tets": 32193,
     "size_mm": 3.5,
     "element": "P2 tetrahedra"
    },
@@ -480,23 +480,23 @@
      "area_mm2": 1185.3
     }
    ],
-   "max_displacement_mm": 0.2941,
+   "max_displacement_mm": 0.4438,
    "probe_displacement_mm": [
-    0.0046,
-    -0.0023,
-    -0.1051
+    0.0049,
+    -0.0005,
+    -0.1534
    ],
-   "max_von_mises_mpa": 82.42,
-   "von_mises_design_mpa": 82.42,
-   "safety_factor": 3.35,
+   "max_von_mises_mpa": 112.11,
+   "von_mises_design_mpa": 112.11,
+   "safety_factor": 2.46,
    "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
    "stiffness_n_per_mm": null,
-   "torsional_stiffness_nm_per_deg": 12358.54,
+   "torsional_stiffness_nm_per_deg": 10201.36,
    "case": "P1",
    "material_id": "al6061",
    "load_from": "336 N up and 105 N sideways through the bearing, 47 N\u00b7m out of plane, motor torque 54 N\u00b7m on the lugs",
    "png": "exports/fea/motor_plate-P1-al6061.png",
-   "seconds": 17.3,
+   "seconds": 12.8,
    "assumed_interfaces": []
   },
   {
@@ -566,7 +566,7 @@
    "material_id": "al6061",
    "load_from": "the whole leg: 336 N up, 105 N sideways, 47 N\u00b7m out of plane, 54 N\u00b7m about the hip axis",
    "png": "exports/fea/yoke_bracket-Y1-al6061.png",
-   "seconds": 17.5,
+   "seconds": 17.6,
    "assumed_interfaces": []
   },
   {
@@ -636,7 +636,7 @@
    "material_id": "al6061",
    "load_from": "fall_side: shin force 1002 N, knee torque 8 N\u00b7m -> push-rod 234 N (sin phi 0.54 at a 48\u00b0 knee)",
    "png": "exports/fea/thigh-T1-al6061.png",
-   "seconds": 11.7,
+   "seconds": 11.2,
    "assumed_interfaces": []
   },
   {
@@ -706,7 +706,7 @@
    "material_id": "al6061",
    "load_from": "fall_side or the floor: out-of-plane moment at the hip 102 N\u00b7m, lateral force 457 N",
    "png": "exports/fea/thigh-T2-al6061.png",
-   "seconds": 9.8,
+   "seconds": 10.0,
    "assumed_interfaces": []
   },
   {
@@ -831,7 +831,7 @@
    "material_id": "al6061",
    "load_from": "falls: the whole leg, 616 N up, 510 N sideways, 102 N\u00b7m out of plane",
    "png": "exports/fea/yoke_bracket-Y1-al6061.png",
-   "seconds": 17.5,
+   "seconds": 17.9,
    "assumed_interfaces": []
   }
  ],

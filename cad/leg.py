@@ -152,7 +152,10 @@ def yoke_bracket(S: Stack, L: dict):
     y0, y1 = S.y['bracket'][0], ydk + t
     deck_z = tab_top + 4 + 1 + t / 2              # the plate tabs reach 4 mm above tab_top; the deck clears them by 1 mm
     top = deck_z + t / 2
-    W = 110.0
+    # wide enough that the side flanges clear the bigger of the two motors and the motor plates' tabs and rings
+    ring = max(S.hip['plate'].get('ring_r', 58.0), S.knee['plate'].get('ring_r', 58.0))
+    od = max(S.hip['od'] or 100.0, S.knee['od'] or 100.0)
+    W = 2 * (max(55.0, od / 2 + 4.0, ring + 3.0) + t)
     z_low = -12.0                                 # the wall flange reaches down the chassis side (HM rows at z = 0 and 60)
     wall = cq.Workplane('XY').box(W, t, top - z_low).translate((0, y0 + t / 2, (top + z_low) / 2))
     deck = cq.Workplane('XY').box(W, y1 - y0, t).translate((0, (y0 + y1) / 2, deck_z))
