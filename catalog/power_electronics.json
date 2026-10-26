@@ -6376,5 +6376,59 @@
   ],
   "confidence": "product page",
   "notes": "Calibrated, temperature-compensated AHRS. Mount it rigidly on the body near the centre of mass (not on the lidar mast) and read it from the balance MCU over TTL serial at up to 800 Hz."
+ },
+ {
+  "id": "waveshare-0-71-dualeye-lcd",
+  "category": "display",
+  "vendor": "Waveshare",
+  "model": "0.71inch DualEye LCD Module",
+  "preferred": true,
+  "price_usd": 15.99,
+  "price_note": "Waveshare store, single unit ($15.39 each for 1-9 in volume pricing)",
+  "price_checked": "2026-10-25",
+  "buy": [
+   {
+    "seller": "Waveshare",
+    "url": "https://www.waveshare.com/0.71inch-dualeye-lcd-module.htm",
+    "in_stock": null,
+    "ships_from": "CN"
+   }
+  ],
+  "specs": {
+   "mass_g": 11,
+   "dimensions_mm": [
+    51,
+    20,
+    null
+   ],
+   "displays": 2,
+   "resolution_px": [
+    160,
+    160
+   ],
+   "display_size_mm": [
+    18,
+    18
+   ],
+   "panel": "round IPS, 65K colours",
+   "driver": "GC9D01",
+   "interface": "SPI (SH1.0 11-pin)",
+   "voltage_range_v": [
+    3.3,
+    5
+   ],
+   "power_typical_w": null,
+   "includes": "cable and two convex lenses"
+  },
+  "cad": {
+   "step_url": null,
+   "available": null
+  },
+  "sources": [
+   "https://www.waveshare.com/0.71inch-dualeye-lcd-module.htm",
+   "http://www.waveshare.com/wiki/0.71inch_DualEye_LCD_Module"
+  ],
+  "confidence": "product page",
+  "notes": "Gyropup's eyes: two round 160x160 screens on one 20 x 51 mm board, with lenses. Drive them from a small separate controller (e.g. an ESP32) so the character layer never touches the balance loop."
  }
 ]

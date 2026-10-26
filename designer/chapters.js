@@ -115,7 +115,9 @@ export const CHAPTERS = [
   {
     id: 'battery', title: 'Energy',
     story: (d, r) => `The battery sets the voltage for everything. Your build draws about `
-      + `${Math.round(r.power.average_w ?? 0)} W on average, and the compute box accepts 12–36 V.`,
+      + `${Math.round(r.power.average_w ?? 0)} W on average, and the compute box accepts 12–36 V. LiFePO4 is the safe `
+      + `choice to charge: an 8S pack (25.6 V, 29.2 V full) runs everything directly. It weighs about twice as much per `
+      + `watt-hour as Li-ion, and it must still deliver 60 A or more for the motors.`,
     slot: 'battery', filter: byCat('battery'),
   },
   {
@@ -146,6 +148,12 @@ export const CHAPTERS = [
       + `carry the most load can move up the ladder to PETG or carbon-fibre-filled filament, or be swapped for `
       + `SendCutSend aluminium or carbon-fibre tube. The strength checks below show which parts need it.`,
     kind: 'materials',
+  },
+  {
+    id: 'eyes', title: 'Eyes that look back at you',
+    story: () => `Two round screens make Gyropup's eyes: they blink, look around and show how it feels. A small `
+      + `controller of their own drives them, so the character never touches the balance loop.`,
+    slot: 'eyes', filter: (i) => i.category === 'display', optional: true,
   },
   {
     id: 'character', title: 'Give it a personality',

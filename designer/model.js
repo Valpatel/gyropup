@@ -275,7 +275,10 @@ export function evaluate(design, catalog, materials, opts = {}) {
   if (batt) {
     const vNom = spec(batt, 'voltage_nominal_v'), vFull = spec(batt, 'voltage_max_v') ?? spec(batt, 'voltage_full_v');
     const cells = spec(batt, 'cells_series');
-    const vEmpty = spec(batt, 'voltage_min_v') ?? (cells ? cells * 3.0 : vNom ? vNom * 0.83 : null);  // 3.0 V/cell Li-ion cut-off
+    const lfp = /lifepo4|lfp/i.test(String(spec(batt, 'chemistry', '')));
+    const cutoff = lfp ? 2.5 : 3.0;  // V per cell at the BMS cut-off: LiFePO4 2.5, Li-ion 3.0
+    const vEmpty = spec(batt, 'voltage_min_v') ?? (cells ? cells * cutoff : vNom ? vNom * 0.83 : null);
+    power.chemistry = spec(batt, 'chemistry');
     const wh = spec(batt, 'energy_wh') * (d.battery_count ?? 1);
     power.bus_v = [vEmpty, vFull];
     for (const [slot, label] of [['leg_actuator', 'leg actuators'], ['wheel_motor', 'wheel motors'], ['motor_driver', 'motor drivers']]) {

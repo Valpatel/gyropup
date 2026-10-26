@@ -52,12 +52,13 @@
   alternatives: [Teensy 4.1 (research pick), STM32 G4/H7 with FDCAN, Matek H7A3 flight controller, Jetson with PREEMPT_RT (Upkie style)]
 - id: D8
   date: "2026-10-25"
-  title: A 24 V-class battery, 7S
+  title: A 24 V-class battery, 7S Li-ion (superseded by D17)
   decision: WREKD 7S2P Molicel P50B pack (29.4 V full, 252 Wh, 1.05 kg) runs the J501 directly; a 12 V regulator feeds the VLP-16
   why: Keeps the J501 within 12–36 V without a converter; Diablo's motors are in the same class. The trade-off is that 48 V-rated leg motors run at about half speed.
-  status: decided
+  status: superseded
   source: {kind: research, ref: "[power and electronics](research/power-electronics.md)"}
   alternatives: [12S 48 V pack with a DC-DC for the J501, power-tool packs]
+  superseded_by: D17
 - id: D9
   date: "2026-10-25"
   title: The microcontroller owns the motor CAN bus; the J501's CAN-FD links it to the Jetson
@@ -109,3 +110,26 @@
   status: decided
   source: {kind: user, quote: "Also the lidar is heavy, it can be mounted directly to the head? or under the body?"}
   alternatives: [on a mast, under the body between the legs]
+- id: D16
+  date: "2026-10-25"
+  title: Gyropup's eyes are two round screens
+  decision: Waveshare 0.71 in DualEye LCD (two 160×160 round IPS screens, GC9D01, SPI, 11 g, $15.99) on the front of the head, driven by a small separate controller; no mouth
+  why: Expressive eyes carry most of a friendly robot's character; a separate controller keeps the character layer off the balance loop.
+  status: decided
+  source: {kind: user, quote: "waveshare 0.71inch Double Eye Round LCD Display Module 160×160 Resolution 65K Colors IPS Display ... <-- cool robot eyes", ref: "[Waveshare product page](https://www.waveshare.com/0.71inch-dualeye-lcd-module.htm)"}
+- id: D17
+  date: "2026-10-25"
+  title: The battery is 8S LiFePO4
+  decision: An 8S LiFePO4 pack (25.6 V nominal, 29.2 V full, about 20 V at cut-off) runs the J501, motors and drivers directly. It must deliver 60 A or more continuous; the pack (ready-made or custom high-rate cells with a 60–150 A BMS) is being sourced
+  why: LiFePO4 is safer to charge, which matters most because Gyropup will dock and charge itself unattended (D18). It is a preference, not a requirement ("If LiFeP04 doesn't work that's OK too"). 8S keeps the J501 inside 12–36 V; 10S would exceed 36 V. The cost is weight, about twice the mass per watt-hour of the Li-ion pack. The only LFP pack in the catalog so far (Bioenno, 10 A continuous) is a placeholder that fails the current check.
+  status: open
+  source: {kind: user, quote: "I would like to use LiFeP04 cells/battery pack if possible because they are safer to charge etc."}
+  alternatives: [7S Li-ion Molicel pack (lighter, D8)]
+- id: D18
+  date: "2026-10-25"
+  title: Gyropup docks and charges itself by sitting down
+  decision: A low dock with spring contacts and a fiducial marker. Gyropup reverses over it using the rear depth camera and lidar, then crouches so a contact plate under the battery tray lands on the contacts; its weight holds them closed. The dock holds the charger (29.2 V for 8S LiFePO4); the robot enables its charge input only after it detects the dock
+  why: "Legs make docking easy: lowering the body is precise and needs no connector alignment. Unattended charging is why LiFePO4 is preferred."
+  status: open
+  source: {kind: user, quote: "I would like the robot to be able to auto dock and charge that's where LiFeP04 is nice because of the sketchyness of LiPo"}
+  alternatives: [rear charge contacts like a robot vacuum, a magnetic charge connector on the side]

@@ -20,6 +20,7 @@ cad:
     pages: [README.md, "docs/*.md", "research/*.md", catalog/SCHEMA.md]
     links:
       - {title: Open the designer, href: designer/}
+      - {title: Simulator, href: designer/sim.html}
       - {title: Architecture, href: site/pages/docs-architecture-md.html}
       - {title: Requirements, href: site/pages/docs-requirements-md.html}
       - {title: Repository, href: "https://github.com/Valpatel/gyropup"}

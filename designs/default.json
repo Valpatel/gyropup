@@ -30,13 +30,14 @@
     "stereo": null,
     "depth_front": "realsense-d435",
     "depth_rear": "realsense-d435",
+    "eyes": "waveshare-0-71-dualeye-lcd",
     "imu": "vectornav-vn-100-rugged",
     "balance_mcu": null,
     "can_transceiver": null,
     "leg_actuator": "robstride-rs-03",
     "wheel_motor": "odrive-botwheel",
     "motor_driver": "mjbots-moteus-n1",
-    "battery": "wrekd-nexus-7s2p-molicel-p50b-10000",
+    "battery": "bioenno-blf-2410as",
     "dcdc_compute": null,
     "dcdc_12v": "pololu-d36v50f12",
     "power_switch": "flipsky-antispark-switch-pro-200a",
@@ -65,7 +66,7 @@
   "character": {
     "color": "#f5b82e"
   },
-  "notes": "Defaults from the research: a 24 V-class 7S pack runs the J501 directly. A microcontroller with CAN (the user's own board, to be chosen) runs the 1 kHz balance loop, owns the motor CAN bus and talks to the Jetson over the J501's built-in CAN-FD. The VN-100 Rugged is the balance IMU. The contactor cuts motor power only.",
+  "notes": "Defaults from the research: an 8S LiFePO4 pack (safer to charge) runs the J501 directly; a high-discharge LFP pack is being sourced. A microcontroller with CAN (the user's own board, to be chosen) runs the 1 kHz balance loop, owns the motor CAN bus and talks to the Jetson over the J501's built-in CAN-FD. The VN-100 Rugged is the balance IMU. The contactor cuts motor power only.",
   "balance_controller": {
     "requirements": [
       "steady 1 kHz loop independent of Linux",

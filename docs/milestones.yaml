@@ -29,6 +29,10 @@
   title: The designer shows it all
   status: next
   done_when: 3D view, scenario replay, stress overlay and the Pareto set inside the guide
+- id: M6b
+  title: Auto-docking and charging
+  status: next
+  done_when: A dock design (printed base, spring contacts, fiducial, charger); a docking scenario in simulation where the robot reverses over the dock, aligns, crouches and makes contact; contact force and alignment tolerance reported
 - id: M7
   title: RL policy
   status: next
