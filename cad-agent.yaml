@@ -18,9 +18,17 @@ cad:
     decisions: docs/decisions.yaml
     designs: exports/designs.json
     pages: [README.md, "docs/*.md", "research/*.md", catalog/SCHEMA.md]
+    theme: hud
+    nav:
+      - {id: overview, title: Overview, href: site/}
+      - {id: design, title: Design, href: designer/}
+      - {id: simulate, title: Simulate, href: designer/sim.html}
+      - {id: results, title: Results, href: designer/results.html}
+      - {id: decisions, title: Decisions, href: "site/#decisions"}
+      - {id: docs, title: Docs, href: "site/#documents"}
+      - {id: repo, title: Repository, href: "https://github.com/Valpatel/gyropup"}
     links:
       - {title: Open the designer, href: designer/}
       - {title: Simulator, href: designer/sim.html}
+      - {title: Results, href: designer/results.html}
       - {title: Architecture, href: site/pages/docs-architecture-md.html}
-      - {title: Requirements, href: site/pages/docs-requirements-md.html}
-      - {title: Repository, href: "https://github.com/Valpatel/gyropup"}

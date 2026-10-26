@@ -104,10 +104,10 @@
   source: {kind: user, quote: "Ideally we can build on a public cad-agent but have gyropup be our design eventually free maybe but closed for now"}
 - id: D15
   date: "2026-10-25"
-  title: The lidar sits on top as the head, in a crown
+  title: The lidar sits on top as the head, in a crown (superseded by D20)
   decision: VLP-16 directly on top of the body (no mast), centred over the wheel axle, on rubber isolators, inside a printed crown that takes the hit in a fall. The mount stays a design variable (top, mast, under) for the loop to test
   why: Moving 0.83 kg changes the centre of mass by at most about 16 mm, so view and falls decide. Under the body, the wheels and legs hide roughly a third of its view; on top it is the first part to hit the ground, so it needs a guard.
-  status: decided
+  status: superseded
   source: {kind: user, quote: "Also the lidar is heavy, it can be mounted directly to the head? or under the body?"}
   alternatives: [on a mast, under the body between the legs]
 - id: D16
@@ -133,3 +133,32 @@
   status: open
   source: {kind: user, quote: "I would like the robot to be able to auto dock and charge that's where LiFeP04 is nice because of the sketchyness of LiPo"}
   alternatives: [rear charge contacts like a robot vacuum, a magnetic charge connector on the side]
+- id: D19
+  date: "2026-10-25"
+  title: Gyropup is a Tritium robot, outdoors, with a foam-dart turret
+  decision: Gyropup drives outdoors and carries a foam-dart turret on its head for Tritium's neighborhood robot battles with kids. Kid safety is a hard requirement in hardware and software (dart energy limits, aiming limits, wireless e-stop, speed limits, pinch points)
+  why: The user's goal for the robot. Turret recoil and head mass, terrain and weather now drive the design and the simulation scenarios.
+  status: decided
+  source: {kind: user, quote: "Honestly the goal is for this to drive around outdoors and be able to shoot nerf darts with a turret on it's head, that's the whole dream with tritium : kids battling robots."}
+- id: D20
+  date: "2026-10-25"
+  title: The lidar goes under the waist
+  decision: The VLP-16 hangs under the body between the legs; the legs and wheels block part of its view and that is accepted. The head is free for the turret
+  why: The user's call. Under the waist it is protected in falls and lowers the centre of mass; the depth cameras cover what the legs hide.
+  status: decided
+  source: {kind: user, quote: "lidar could go under it's waist and just accept leg obstructions."}
+  alternatives: [on top in a crown (D15), on a mast]
+- id: D21
+  date: "2026-10-25"
+  title: A mini Gyropup for controller development
+  decision: A second design, about 5.8 kg, on the user's Waveshare DDSM115 hub motors (12–24 V, RS485) with Steadywin GIM6010-8 legs, a Raspberry Pi 5 and a Makita 18 V pack, for tuning the balance controller cheaply before the full robot
+  why: The DDSM115 is too weak and too low-voltage for the 15 kg robot (it catches only a 32° lean and exceeds its 24 V limit on 8S LiFePO4), but suits a small, safe-to-crash dev robot (55° catch, 42° slope in the model).
+  status: open
+  source: {kind: user, quote: "As a side note I have some of these around already: https://www.waveshare.com/ddsm115.htm in case they are relevant, maybe not enough torque for a bigger robot?"}
+- id: D22
+  date: "2026-10-25"
+  title: The turret is its own project; Gyropup offers a head payload interface
+  decision: The foam-dart turret (automated reload and firing) is developed in a separate lane. Gyropup defines and simulates a head payload interface (bolt pattern, power, data, mass and centre-of-mass height, recoil impulse) so any turret that meets it can mount
+  why: The turret is a large project with plenty of open-source work to build on; keeping an interface between the two lets both move independently. The user expects about 24 shots per magazine (drum or belt) and a trip to get a new magazine, so the dock doubles as the reload station.
+  status: decided
+  source: {kind: user, quote: "The robot mounted nerf gun with automated reload and firing is a clear separate session/lane with massive amounts of open source online resources to discover."}

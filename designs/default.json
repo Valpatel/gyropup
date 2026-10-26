@@ -80,5 +80,17 @@
     ],
     "status": "open: waiting for the user's microcontroller list"
   },
-  "lidar_mount": "top"
+  "lidar_mount": "under",
+  "head_payload": {
+    "name": "Turret (separate project)",
+    "mass_g": 1500,
+    "com_above_top_mm": 120,
+    "recoil_ns_per_shot": 0.05,
+    "burst_shots": 8,
+    "power_w": 40,
+    "note": "Budget for the head payload interface (docs/head-payload.md); the turret itself is developed separately.",
+    "magazine_shots": 24,
+    "magazine": "drum or belt, swappable at the reload station (the dock)",
+    "burst_rate_hz": 10
+  }
 }

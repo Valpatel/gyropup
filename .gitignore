@@ -6,3 +6,5 @@ exports/*.log
 runs/
 site/
 preview/site-url.txt
+build/
+exports/sim/

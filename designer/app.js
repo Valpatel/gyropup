@@ -3,6 +3,7 @@
 import { evaluate, indexCatalog } from './model.js';
 import { visibleChapters, COLORS } from './chapters.js';
 import { robotSvg } from './robot-svg.js';
+import { mountAppNav } from './kit/appnav.js';
 
 const STORE = 'gyropup-design-v1';
 const $ = (sel) => document.querySelector(sel);
@@ -20,6 +21,7 @@ async function getJson(url) {
 }
 
 async function load() {
+  await mountAppNav({ root: '../', current: 'design' });
   const index = await getJson('../catalog/index.json');
   const lists = await Promise.all(index.files.map((f) => getJson(`../catalog/${f}`)));
   items = lists.flat();

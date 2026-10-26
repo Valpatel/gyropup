@@ -30,7 +30,7 @@ Every file in `catalog/` is a JSON list of items in this shape. Unknown values a
 
 Categories: `leg_actuator`, `wheel_motor`, `motor_driver`, `wheel`, `tire`, `battery`, `bms`, `charger`,
 `dcdc`, `power_distribution`, `estop`, `can_adapter`, `imu`, `compute`, `sensor`, `display`, `wiring`, `fastener`, `bearing`,
-`cf_tube`, `cf_plate`, `sheet_material`, `filament`, `fab_service`.
+`cf_tube`, `cf_plate`, `sheet_material`, `filament`, `fab_service`, `turret`.
 
 `"preferred": true` marks the default choice the designer starts from. The BOM groups items into **Sensors & compute**
 (`compute`, `sensor`) and **Chassis & actuators** (everything else), each with its own subtotal.

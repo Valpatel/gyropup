@@ -8,10 +8,13 @@
   title: Design → CAD parts → mass properties → MJCF + URDF
   status: active
   done_when: The default design builds; the model loads in MuJoCo; masses reconcile with Tier 0; the URDF passes both validators; the Upkie fixture loads in the same harness
-  notes: Starts after the architecture review. Robot export (`cadagent.robot`) is written and tested in cad-agent.
+  notes: "Done: `sim/model.py` builds MJCF + URDF from any design, masses reconcile with the designer, cad-agent's URDF check passes. Still to do: CAD parts (printed-part masses are estimates), text-to-cad's validator, the Upkie fixture."
+  evidence: [sim/model.py]
 - id: M2
   title: Scenario harness, per-design LQR, level-0 actuators
-  status: next
+  status: done
+  notes: "Six scenarios (stand, squat, push, drive, slope, kerb) with videos and 3D replay. The full Gyropup passes all six; the DDSM115 designs fail the drive course and the kerb, which is the point: undersized parts show up."
+  evidence: [sim/controller.py, sim/scenarios.py, tools/simulate.py, designer/results.html]
   done_when: The default design passes stand, balance, push and drive; videos are written; it fails sensibly when a part is undersized
 - id: M3
   title: Loads → FEA screen

@@ -2,7 +2,7 @@
 // wheel under the hip, wheels sized by the chosen motor, lidar in its crown, depth cameras and the DualEye screens.
 // Everything is to scale (metres, y up, z forward). Rebuild it whenever the design changes.
 import * as THREE from 'three';
-import { legPose, effectiveDesign, resolvePart } from './model.js';
+import { legPose, effectiveDesign, resolvePart, layout } from './model.js';
 
 const M = 0.001;
 
@@ -40,13 +40,10 @@ export function buildRobot(design, catalog, { eyes } = {}) {
   const a = g.thigh_mm, b = g.shin_mm, r = g.wheel_diameter_mm / 2;
   const hMin = legPose(a, b, g.knee_min_deg).hip_height;
   const hMax = legPose(a, b, g.knee_max_deg).hip_height;
-  const lw = g.link_section?.width_mm ?? 40, ld = g.link_section?.depth_mm ?? 30;
-  const act = part('leg_actuator'), wheelPart = part('wheel_motor');
-  const motorD = act?.specs?.diameter_mm ?? 100, motorL = act?.specs?.length_mm ?? 50;
-  const wheelW = wheelPart?.specs?.width_mm ?? 45;
-  const B = g.body;
-  const hipX = B.width_mm / 2 + motorL + 8;                       // leg plane, outside the hip motor stack
-  const wheelX = hipX + lw / 2 + wheelW / 2 + 6;
+  const L0 = layout(design, catalog);
+  const lw = L0.linkW, ld = L0.linkD, motorD = L0.motorD, motorL = L0.motorL, wheelW = L0.wheelW;
+  const B = g.body, hipX = L0.hipX, wheelX = L0.wheelX;
+  const act = part('leg_actuator');
 
   const group = new THREE.Group();
   const base = new THREE.Group();                                   // hip axis frame: moves with height, pitches the body
@@ -55,11 +52,11 @@ export function buildRobot(design, catalog, { eyes } = {}) {
   base.add(body);
 
   // body: battery tray + compute box, hip axis at y = 0
-  const trayH = g.battery_tray_mm ?? 60;
+  const trayH = L0.trayH;
   const tray = box(B.width_mm * M, trayH * M, B.depth_mm * M, DARK());
   tray.position.y = (-25 + trayH / 2) * M;
   const shell = box(B.width_mm * M, B.height_mm * M, B.depth_mm * M, mat(color));
-  const bodyBottom = -25 + trayH;
+  const bodyBottom = L0.bodyBottom;
   shell.position.y = (bodyBottom + B.height_mm / 2) * M;
   body.add(tray, shell);
   const top = bodyBottom + B.height_mm;
@@ -201,6 +198,22 @@ export function buildRobot(design, catalog, { eyes } = {}) {
     return { hipHeightMM: hAvg + r, kneeDeg: kneeFor(a, b, hAvg) * 180 / Math.PI };
   }
   setPose();
+
+  // Replay a MuJoCo state: qpos = [x y z, qw qx qy qz, hip_l knee_l wheel_l, hip_r knee_r wheel_r] in MuJoCo's frame
+  // (x forward, y left, z up). This page's frame is x left, y up, z forward, a proper rotation of it: (y, z, x).
+  // legs[1] (x > 0) is the robot's left leg.
+  function setFromQpos(q) {
+    base.position.set(q[1], q[2], q[0]);
+    base.quaternion.set(q[5], q[6], q[4], q[3]);
+    const sides = [[legs[1], 7], [legs[0], 10]];
+    for (const [L, i] of sides) {
+      L.hip.rotation.x = q[i];
+      L.knee.rotation.x = q[i + 1];
+      L.ankle.rotation.x = -(q[i] + q[i + 1]);
+      L.wheel.rotation.x = q[i + 2];
+    }
+    group.position.set(0, 0, 0);
+  }
   const heightM = (r + hMax + top + (lidar ? 90 : 0)) * M;
-  return { group, setPose, info: { heightM, hMin, hMax, wheelR: r, trackMM: 2 * wheelX } };
+  return { group, setPose, setFromQpos, base, info: { heightM, hMin, hMax, wheelR: r, trackMM: 2 * wheelX } };
 }

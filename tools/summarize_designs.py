@@ -35,8 +35,20 @@ def summarize(path: Path) -> dict:
     name = {l['slot']: l['name'] for l in r['lines']}
     summary = (f"{name.get('leg_actuator')} legs, {name.get('wheel_motor')} wheels, {name.get('battery')} battery. "
                f"{len(r['parts'])} printed part types, {round(sum(p['mass_g'] * p['qty'] for p in r['parts']))} g of filament.")
-    return {'name': design.get('name', path.stem), 'file': path.relative_to(R).as_posix(), 'verdict': r['verdict'],
-            'summary': summary, 'metrics': metrics, 'checks': levels, 'link': 'designer/'}
+    out = {'name': design.get('name', path.stem), 'file': path.relative_to(R).as_posix(), 'verdict': r['verdict'],
+           'summary': summary, 'metrics': metrics, 'checks': levels, 'link': 'designer/',
+           'links': [{'title': 'Simulate in 3D', 'href': f'designer/sim.html?design={path.relative_to(R).as_posix()}'}]}
+    sim = R / 'exports' / 'sim' / path.stem / 'summary.json'
+    if sim.is_file():
+        sm = json.loads(sim.read_text())
+        out['badges'] = [{'label': f"{n} {'pass' if v['pass'] else 'fail'}", 'level': 'done' if v['pass'] else 'fail',
+                          'title': '; '.join(v.get('reasons', [])) or v.get('title', n)} for n, v in sm['scenarios'].items()]
+        out['metrics'].append({'label': 'simulated scenarios passed', 'value': f"{sm['passed']}/{sm['total']}",
+                               'level': '' if sm['passed'] == sm['total'] else 'fail'})
+        out['links'].insert(0, {'title': 'Simulation results', 'href': f'designer/results.html#{path.stem}'})
+        if sm['passed'] < sm['total'] and out['verdict'] == 'ok':
+            out['verdict'] = 'warn'
+    return out
 
 
 def main():

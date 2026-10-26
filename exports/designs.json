@@ -4,11 +4,11 @@
    "name": "Gyropup",
    "file": "designs/default.json",
    "verdict": "warn",
-   "summary": "RobStride RS-03 legs, ODrive Robotics BotWheel (BW0124) wheels, Bioenno Power BLF-2410AS 24V 10Ah LiFePO4 (ABS case, PCM) battery. 9 printed part types, 1961 g of filament.",
+   "summary": "RobStride RS-03 legs, ODrive Robotics BotWheel (BW0124) wheels, Bioenno Power BLF-2410AS 24V 10Ah LiFePO4 (ABS case, PCM) battery. 8 printed part types, 1788 g of filament.",
    "metrics": [
     {
      "label": "chassis & actuators",
-     "value": "$1,944"
+     "value": "$1,941"
     },
     {
      "label": "sensors & compute",
@@ -16,7 +16,7 @@
     },
     {
      "label": "mass",
-     "value": 15.7,
+     "value": 17.0,
      "unit": "kg",
      "estimate": true
     },
@@ -27,14 +27,14 @@
     },
     {
      "label": "leg torque margin (dynamic)",
-     "value": 2.3,
+     "value": 2.1,
      "unit": "\u00d7",
      "estimate": true,
      "level": ""
     },
     {
      "label": "lean it can catch",
-     "value": 65,
+     "value": 63,
      "unit": "\u00b0",
      "level": "ok"
     },
@@ -47,17 +47,291 @@
     },
     {
      "label": "runtime",
-     "value": 136,
+     "value": 121,
      "unit": "min",
      "estimate": true
+    },
+    {
+     "label": "simulated scenarios passed",
+     "value": "7/7",
+     "level": ""
     }
    ],
    "checks": {
-    "ok": 5,
-    "warn": 9,
+    "ok": 4,
+    "warn": 10,
     "fail": 0
    },
-   "link": "designer/"
+   "link": "designer/",
+   "links": [
+    {
+     "title": "Simulation results",
+     "href": "designer/results.html#default"
+    },
+    {
+     "title": "Simulate in 3D",
+     "href": "designer/sim.html?design=designs/default.json"
+    }
+   ],
+   "badges": [
+    {
+     "label": "stand pass",
+     "level": "done",
+     "title": "Stand and balance"
+    },
+    {
+     "label": "squat pass",
+     "level": "done",
+     "title": "Squat sweep: stand tall, crouch deep, stand again"
+    },
+    {
+     "label": "push pass",
+     "level": "done",
+     "title": "Push recovery, front and back"
+    },
+    {
+     "label": "drive pass",
+     "level": "done",
+     "title": "Drive course: accelerate, turn, stop, reverse"
+    },
+    {
+     "label": "slope pass",
+     "level": "done",
+     "title": "Climb a 10\u00b0 ramp and hold on it"
+    },
+    {
+     "label": "curb pass",
+     "level": "done",
+     "title": "Drive up a 25 mm kerb"
+    },
+    {
+     "label": "recoil pass",
+     "level": "done",
+     "title": "Recoil: empty a 24-shot magazine in bursts of 8, standing then driving"
+    }
+   ]
+  },
+  {
+   "name": "Mini Gyropup (DDSM115 dev robot)",
+   "file": "designs/mini-ddsm115.json",
+   "verdict": "warn",
+   "summary": "Steadywin GIM6010-8 + GDS68 driver legs, Waveshare (DDT OEM) DDSM115 (= DDT M0601C_411 = DFRobot M0601 FIT1038/FIT1042) wheels, Makita BL1850B 18V LXT 5.0Ah battery. 8 printed part types, 1501 g of filament.",
+   "metrics": [
+    {
+     "label": "chassis & actuators",
+     "value": "$798"
+    },
+    {
+     "label": "sensors & compute",
+     "value": "$575"
+    },
+    {
+     "label": "mass",
+     "value": 6.2,
+     "unit": "kg",
+     "estimate": true
+    },
+    {
+     "label": "standing hip height",
+     "value": 326,
+     "unit": "mm"
+    },
+    {
+     "label": "leg torque margin (dynamic)",
+     "value": 1.5,
+     "unit": "\u00d7",
+     "estimate": true,
+     "level": ""
+    },
+    {
+     "label": "lean it can catch",
+     "value": 53,
+     "unit": "\u00b0",
+     "level": "ok"
+    },
+    {
+     "label": "jump",
+     "value": 169,
+     "unit": "mm",
+     "estimate": true,
+     "level": ""
+    },
+    {
+     "label": "runtime",
+     "value": 89,
+     "unit": "min",
+     "estimate": true
+    },
+    {
+     "label": "simulated scenarios passed",
+     "value": "5/7",
+     "level": "fail"
+    }
+   ],
+   "checks": {
+    "ok": 4,
+    "warn": 5,
+    "fail": 0
+   },
+   "link": "designer/",
+   "links": [
+    {
+     "title": "Simulation results",
+     "href": "designer/results.html#mini-ddsm115"
+    },
+    {
+     "title": "Simulate in 3D",
+     "href": "designer/sim.html?design=designs/mini-ddsm115.json"
+    }
+   ],
+   "badges": [
+    {
+     "label": "stand pass",
+     "level": "done",
+     "title": "Stand and balance"
+    },
+    {
+     "label": "squat pass",
+     "level": "done",
+     "title": "Squat sweep: stand tall, crouch deep, stand again"
+    },
+    {
+     "label": "push pass",
+     "level": "done",
+     "title": "Push recovery, front and back"
+    },
+    {
+     "label": "drive fail",
+     "level": "fail",
+     "title": "fell at 5.4 s"
+    },
+    {
+     "label": "slope pass",
+     "level": "done",
+     "title": "Climb a 10\u00b0 ramp and hold on it"
+    },
+    {
+     "label": "curb fail",
+     "level": "fail",
+     "title": "fell at 3.3 s; only reached 0.77 m of 1.5 m"
+    },
+    {
+     "label": "recoil pass",
+     "level": "done",
+     "title": "Recoil: empty a 24-shot magazine in bursts of 8, standing then driving"
+    }
+   ]
+  },
+  {
+   "name": "Gyropup with DDSM115 wheels",
+   "file": "designs/variant-ddsm115-wheels.json",
+   "verdict": "fail",
+   "summary": "RobStride RS-03 legs, Waveshare (DDT OEM) DDSM115 (= DDT M0601C_411 = DFRobot M0601 FIT1038/FIT1042) wheels, Bioenno Power BLF-2410AS 24V 10Ah LiFePO4 (ABS case, PCM) battery. 8 printed part types, 1788 g of filament.",
+   "metrics": [
+    {
+     "label": "chassis & actuators",
+     "value": "$1,504"
+    },
+    {
+     "label": "sensors & compute",
+     "value": "$6,078"
+    },
+    {
+     "label": "mass",
+     "value": 14.2,
+     "unit": "kg",
+     "estimate": true
+    },
+    {
+     "label": "standing hip height",
+     "value": 444,
+     "unit": "mm"
+    },
+    {
+     "label": "leg torque margin (dynamic)",
+     "value": 2.1,
+     "unit": "\u00d7",
+     "estimate": true,
+     "level": ""
+    },
+    {
+     "label": "lean it can catch",
+     "value": 30,
+     "unit": "\u00b0",
+     "level": "ok"
+    },
+    {
+     "label": "jump",
+     "value": 38,
+     "unit": "mm",
+     "estimate": true,
+     "level": "warn"
+    },
+    {
+     "label": "runtime",
+     "value": 121,
+     "unit": "min",
+     "estimate": true
+    },
+    {
+     "label": "simulated scenarios passed",
+     "value": "5/7",
+     "level": "fail"
+    }
+   ],
+   "checks": {
+    "ok": 4,
+    "warn": 10,
+    "fail": 1
+   },
+   "link": "designer/",
+   "links": [
+    {
+     "title": "Simulation results",
+     "href": "designer/results.html#variant-ddsm115-wheels"
+    },
+    {
+     "title": "Simulate in 3D",
+     "href": "designer/sim.html?design=designs/variant-ddsm115-wheels.json"
+    }
+   ],
+   "badges": [
+    {
+     "label": "stand pass",
+     "level": "done",
+     "title": "Stand and balance"
+    },
+    {
+     "label": "squat pass",
+     "level": "done",
+     "title": "Squat sweep: stand tall, crouch deep, stand again"
+    },
+    {
+     "label": "push pass",
+     "level": "done",
+     "title": "Push recovery, front and back"
+    },
+    {
+     "label": "drive fail",
+     "level": "fail",
+     "title": "fell at 5.4 s"
+    },
+    {
+     "label": "slope pass",
+     "level": "done",
+     "title": "Climb a 10\u00b0 ramp and hold on it"
+    },
+    {
+     "label": "curb fail",
+     "level": "fail",
+     "title": "fell at 3.4 s; only reached 0.78 m of 1.5 m"
+    },
+    {
+     "label": "recoil pass",
+     "level": "done",
+     "title": "Recoil: empty a 24-shot magazine in bursts of 8, standing then driving"
+    }
+   ]
   }
  ]
 }

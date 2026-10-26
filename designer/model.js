@@ -153,6 +153,25 @@ export function effectiveDesign(design, catalog) {
   return d;
 }
 
+// Where things sit, in mm, in the hip-axis frame (x right, y up, z forward). The 3D page and the physics model both
+// use this, so they always agree.
+export function layout(design, catalog) {
+  const d = effectiveDesign(design, catalog), g = d.geometry, B = g.body;
+  const act = resolvePart(d.parts.leg_actuator, catalog), wheel = resolvePart(d.parts.wheel_motor, catalog);
+  const motorD = act?.specs?.diameter_mm ?? 100, motorL = act?.specs?.length_mm ?? 50;
+  const lw = g.link_section?.width_mm ?? 40, ld = g.link_section?.depth_mm ?? 30;
+  const wheelW = wheel?.specs?.width_mm ?? 45;
+  const trayH = g.battery_tray_mm ?? 60;
+  const hipX = B.width_mm / 2 + motorL + 8;
+  const bodyBottom = -25 + trayH;
+  return {
+    motorD, motorL, linkW: lw, linkD: ld, wheelW, wheelR: g.wheel_diameter_mm / 2, thigh: g.thigh_mm, shin: g.shin_mm,
+    hipX, wheelX: hipX + lw / 2 + wheelW / 2 + 6, trayBottom: -25, trayH, bodyBottom, bodyTop: bodyBottom + B.height_mm,
+    body: { width: B.width_mm, depth: B.depth_mm, height: B.height_mm },
+    kneeMinDeg: g.knee_min_deg, kneeMaxDeg: g.knee_max_deg, lidarMount: d.lidar_mount ?? 'top',
+  };
+}
+
 export function evaluate(design, catalog, materials, opts = {}) {
   const o = { ...DEFAULTS, ...opts };
   const d = effectiveDesign(design, catalog);
@@ -188,6 +207,10 @@ export function evaluate(design, catalog, materials, opts = {}) {
   const filamentUsd = parts.reduce((s, p) => s + p.filament_usd * p.qty, 0);
   lines.push({ slot: 'printed', id: 'printed-parts', name: `Printed parts (${parts.reduce((s, p) => s + p.qty, 0)} parts, ${Math.round(filamentG)} g filament)`,
                qty: 1, group: 'chassis_actuators', unit_usd: filamentUsd, mass_g: filamentG, estimate: true });
+  if (d.head_payload?.mass_g) {          // a head payload developed elsewhere (the turret): counts for mass and power, not cost
+    lines.push({ slot: 'head_payload', id: 'head-payload', name: `${d.head_payload.name ?? 'Head payload'} (budget)`, qty: 1,
+                 group: 'chassis_actuators', unit_usd: 0, mass_g: d.head_payload.mass_g, estimate: true });
+  }
   const hardware = d.hardware_allowance ?? { usd: 60, mass_g: 400, note: 'bearings, fasteners, inserts, wiring' };
   lines.push({ slot: 'hardware', id: 'hardware-allowance', name: `Hardware allowance (${hardware.note})`, qty: 1,
                group: 'chassis_actuators', unit_usd: hardware.usd, mass_g: hardware.mass_g, estimate: true });
@@ -298,7 +321,7 @@ export function evaluate(design, catalog, materials, opts = {}) {
     }
     const sensorsW = ['compute', 'lidar', 'stereo', 'depth_front', 'depth_rear', 'imu', 'balance_mcu'].reduce((s, k) => s + powerOf(pick(k)), 0);
     const legsW = 4 * o.power.legs_standing_w, wheelsW = o.power.wheels_rolling_w;
-    power.average_w = sensorsW + legsW + wheelsW + o.power.electronics_w;
+    power.average_w = sensorsW + legsW + wheelsW + o.power.electronics_w + (d.head_payload?.power_w ?? 0) * 0.3;  // payload duty ~30 % (estimate)
     power.sensors_compute_w = sensorsW;
     if (wh) power.runtime_min = ((wh * o.efficiency) / power.average_w) * 60;
     const maxA = spec(batt, 'max_continuous_a') ?? spec(batt, 'continuous_discharge_a');
@@ -342,7 +365,7 @@ export function evaluate(design, catalog, materials, opts = {}) {
     lines, parts, cost, checks,
     mass: { total_kg: totalKg, supported_kg: supportedKg, leg_moving_kg: legMovingG / 1000,
             sensors_compute_kg: massWhere((l) => l.group === "sensors_compute") / 1000 },
-    legs, wheels, power, perception,
+    legs, wheels, power, perception, layout: layout(design, catalog),
     verdict: checks.some((c) => c.level === 'fail') ? 'fail' : checks.some((c) => c.level === 'warn') ? 'warn' : 'ok',
   };
 }

@@ -1,0 +1,96 @@
+{
+  "schema": 1,
+  "name": "Mini Gyropup (DDSM115 dev robot)",
+  "size": "compact",
+  "geometry": {
+    "thigh_mm": 140,
+    "shin_mm": 140,
+    "wheel_diameter_mm": 180,
+    "knee_min_deg": 40,
+    "knee_max_deg": 160,
+    "track_mm": 330,
+    "link_section": {
+      "width_mm": 30,
+      "depth_mm": 22,
+      "wall_mm": 2.4
+    },
+    "body": {
+      "depth_mm": 150,
+      "width_mm": 160,
+      "height_mm": 70
+    },
+    "battery_tray_mm": 60
+  },
+  "leg": {
+    "topology": "serial_knee_at_hip"
+  },
+  "parts": {
+    "compute": "raspberrypi-5-8gb",
+    "lidar": null,
+    "stereo": null,
+    "depth_front": "realsense-d435",
+    "depth_rear": null,
+    "eyes": "waveshare-0-71-dualeye-lcd",
+    "imu": "vectornav-vn-100-rugged",
+    "balance_mcu": null,
+    "can_transceiver": null,
+    "leg_actuator": "steadywin-gim6010-8",
+    "wheel_motor": "waveshare-ddsm115",
+    "motor_driver": null,
+    "battery": "makita-bl1850b",
+    "dcdc_compute": null,
+    "dcdc_12v": null,
+    "power_switch": "flipsky-antispark-switch-pro-200a",
+    "fuse": null,
+    "estop": "generic-hb2-es544-22mm-estop",
+    "contactor": null,
+    "can_adapter": null
+  },
+  "battery_count": 1,
+  "materials": {
+    "default": "pla",
+    "parts": {
+      "hip_mount": "petg",
+      "wheel_mount": "petg"
+    }
+  },
+  "print": {
+    "wall_mm": 2.0,
+    "infill": 0.4
+  },
+  "hardware_allowance": {
+    "usd": 40,
+    "mass_g": 250,
+    "note": "bearings, shoulder bolts, inserts, fasteners, wiring"
+  },
+  "character": {
+    "color": "#f5b82e"
+  },
+  "notes": "A small, cheap development robot for tuning the balance controller before the full Gyropup: the user already has DDSM115 hub motors (RS485, 12-24 V). Raspberry Pi 5 instead of the AGX box, no lidar, one D435, Steadywin GIM6010-8 legs, a Makita 18 V tool pack (21 V full) so the DDSM115s stay inside 24 V.",
+  "balance_controller": {
+    "requirements": [
+      "steady 1 kHz loop independent of Linux",
+      "CAN to the motors (it owns the motor bus)",
+      "CAN to the J501's built-in CAN-FD for the Jetson link (a second bus, or one shared CAN-FD bus)",
+      "UART (TTL or RS-232) for the VN-100",
+      "hardware FPU"
+    ],
+    "options": [
+      "a microcontroller with CAN from the user's own boards (to be named)"
+    ],
+    "status": "open: waiting for the user's microcontroller list"
+  },
+  "lidar_mount": "top",
+  "head_payload": {
+    "name": "Turret (separate project)",
+    "mass_g": 400,
+    "com_above_top_mm": 70,
+    "recoil_ns_per_shot": 0.05,
+    "burst_shots": 8,
+    "power_w": 15,
+    "note": "Budget for the head payload interface (docs/head-payload.md); the turret itself is developed separately.",
+    "magazine_shots": 24,
+    "magazine": "drum or belt, swappable at the reload station (the dock)",
+    "burst_rate_hz": 10
+  }
+}
