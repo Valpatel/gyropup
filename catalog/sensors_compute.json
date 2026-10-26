@@ -29,7 +29,7 @@
    }
   ],
   "specs": {
-   "mass_g": null,
+   "mass_g": 1500,
    "mass_breakdown_g": {
     "j501_carrier_without_module": 225,
     "gmsl_extension_board_optional": 47,
@@ -83,7 +83,56 @@
    "operating_temp_c": null,
    "ip_rating": null,
    "mass_g_estimate": 1500,
-   "mass_estimate_note": "ESTIMATE until weighed: carrier 225 g (Seeed datasheet) + module ~300 g + heatsink with fan ~400 g (both unpublished, guessed from size) + printed enclosure ~450 g (j501-agx part volumes, PLA at ~60% effective fill) + fasteners and cables ~100 g."
+   "mass_estimate_note": "ESTIMATE until weighed: carrier 225 g (Seeed datasheet) + module ~300 g + heatsink with fan ~400 g (both unpublished, guessed from size) + printed enclosure ~450 g (j501-agx part volumes, PLA at ~60% effective fill) + fasteners and cables ~100 g.",
+   "dimensions_mm": [
+    206,
+    181,
+    112
+   ],
+   "dimensions_axes": "Enclosure (j501-agx Rev 0.7, robot build P1M base): L = 206 mm along X (side hatch on the +X wall), W = 181 mm along Y (front plate at Y = 5.5 with DC IN, 1GbE, 10GbE, audio, LED, GMSL; rear plate at Y = 186.5 with I/O terminal, HDMI, USB-A, USB-C), H = 112 mm (base 72 + lid 40; hex-grille roof is the fan inlet). Mounting tabs add 26 mm at floor level on the front and rear faces: footprint 206 x 233 mm.",
+   "dimensions_mm_basis": "measured-from-CAD (j501-agx exports/base_mount.step bbox 206 x 233 x 76.5 incl. tabs, cover.step 206 x 181 x 40; exports/design-metrics.json envelope.outer_mm)",
+   "mounting": {
+    "type": "4 tabs on the base floor (P1M), 8 mm thick, 32 mm wide, projecting 26 mm from the front and rear faces",
+    "slots_mm": [
+     12.0,
+     6.6
+    ],
+    "fastener": "M6 screw + 16 mm washer (j501-agx README)",
+    "pattern_mm": [
+     154.0,
+     211.0
+    ],
+    "pattern_axes": "154 mm along the 206 mm side (X), 211 mm along the 181 mm side (Y); centred on the box footprint",
+    "slot_centres_mm": [
+     [
+      26.0,
+      -15.0
+     ],
+     [
+      26.0,
+      196.0
+     ],
+     [
+      180.0,
+      -15.0
+     ],
+     [
+      180.0,
+      196.0
+     ]
+    ],
+    "slot_centres_frame": "X from the -X wall, Y from the front face (front face Y = 0, rear face Y = 181); slots are 15 mm outside each face",
+    "mounting_basis": "measured-from-CAD (exports/design-metrics.json mounts; base_mount.step)"
+   },
+   "orientation_cooling": "Keep the hex-grille roof clear: the Seeed cooler fan draws air in through the roof (50 % open, 10 mm A/F cells) and out through the lid side/end slots and base side slots. Do not mount anything over the roof or block the side vents; the box is designed roof-up. Front and rear faces carry the plugs and need cable bend room (RJ45, USB, DC IN plug sticks out 9.9 mm before its cable).",
+   "printed_enclosure_volume_cm3": 586.8,
+   "printed_enclosure_volume_basis": "measured-from-CAD: base_mount 317.64 + cover 198.33 + front_no_gmsl 30.77 + rear_io 29.45 + side_hatch 8.78 + chimney_cap (P18 floor cap) 1.81 cm3 (j501-agx exports/geometry-checks.json)",
+   "printed_enclosure_mass_g": [
+    545,
+    730
+   ],
+   "printed_enclosure_mass_basis": "estimate: 586.8 cm3 of solid PLA at 1.24 g/cm3 = 728 g if printed solid; ~75 % effective fill for these 3-6 mm walls gives ~545 g. No print profile is stored in the j501-agx exports, so weigh the prints.",
+   "mass_g_basis": "estimate (same as mass_g_estimate: carrier 225 g datasheet + module, cooler and printed enclosure estimated); weigh the assembled box"
   },
   "cad": {
    "step_url": "https://files.seeedstudio.com/wiki/reComputer-Jetson/J501/RESERVER_AGX_ORIN_CARRIER_BOARD.stp",
@@ -91,7 +140,8 @@
    "extra": [
     "https://developer.nvidia.com/downloads/jetson-agx-orin-module-3d-step-modelzip",
     "https://github.com/mvalancy/j501-agx-orin (enclosure; exports/assembly_gmsl.step)"
-   ]
+   ],
+   "local": "~/Code/j501-agx/exports/ (base_mount.step, cover.step, front_no_gmsl.step, rear_io.step, side_hatch.step; assembly_detailed.step has the board, module and cooler in place)"
   },
   "sources": [
    "https://files.seeedstudio.com/wiki/reComputer-Jetson/J501/reServer_Industrial_J501_Carrier_Board_Datasheet.pdf",
@@ -105,7 +155,7 @@
    "https://www.sabrepc.com/900-13701-0040-000-NVIDIA-S181904966"
   ],
   "confidence": "seller listing",
-  "notes": "Runs directly from 4S-8S packs (12-36 V input; 8S full is 33.6 V). The Seeed GMSL board only has published support for Seeed SENSING cameras. Stereolabs and RealSense publish no GMSL driver for it, and the ZED Link Duo cannot plug into the J501 (wrong connector). The box is the heaviest single payload item; mount it low on the torso, near the hip axis."
+  "notes": "Runs directly from 4S-8S packs (12-36 V input; 8S full is 33.6 V). The Seeed GMSL board only has published support for Seeed SENSING cameras. Stereolabs and RealSense publish no GMSL driver for it, and the ZED Link Duo cannot plug into the J501 (wrong connector). The box is the heaviest single payload item; mount it low on the torso, near the hip axis. Enclosure geometry and mounting recorded 2026-10-26 from the j501-agx repo (Rev 0.7); the j501-agx repo stores part volumes but no mass properties, so the enclosure mass stays an estimate. Not verified (2026-10-26): AGX Orin module and Seeed cooler masses (unpublished; the 1500 g total is still an estimate); printed enclosure mass (no slicer profile in the repo)."
  },
  {
   "id": "velodyne-vlp-16",
@@ -131,7 +181,12 @@
    "diameter_mm": 103.3,
    "height_mm": 71.7,
    "optical_center_above_base_mm": 37.8,
-   "mounting": "Base: 1x 1/4-20 UNC hole, 9/32 in (7.1 mm) deep, plus 2x 0.16 in locating holes for 5/32 in pins (datasheet drawing). Any orientation is allowed, but bearing life is best at 0 deg inclination.",
+   "mounting": {
+    "centre": "1x 1/4-20 UNC threaded hole at the base centre, 9/32 in (7.1 mm) deep",
+    "locating": "2x dia 0.16 in (4.06 mm) holes for 5/32 in (3.97 mm) dowel pins, 7/32 in (5.5 mm) deep, on a diameter through the centre, 88.9 mm (3.50 in) apart (i.e. +/-44.45 mm from centre), on the 90/270 deg axis; one of them is drawn as a slot",
+    "pattern_axis": "pin axis is perpendicular to the 0 deg axis, which is the cable-exit direction",
+    "rule": "any orientation allowed; bearing life best at 0 deg inclination (manual)"
+   },
    "voltage_range_v": [
     9,
     18
@@ -144,7 +199,7 @@
     1.0
    ],
    "interface": "100 Mbps Ethernet, UDP; default IP 192.168.1.201",
-   "connector": "Integrated ~3.0 m cable, permanently attached, terminated in the Interface Box. An M12 option exists (Phoenix SACC-M12FS-8CON-PG 9-SH).",
+   "connector": "integrated ~3 m cable leaving the base band radially at the 0 deg direction through a gland that projects <=12.7 mm, centred <=12.7 mm above the base; terminates in the Interface Box (optional M12 Phoenix SACC-M12FS-8CON-PG 9-SH, ~56 mm long, dia 20)",
    "channels": 16,
    "range_max_m": 100,
    "range_min_m": null,
@@ -183,11 +238,22 @@
    "vibration": "3 Grms, 5-2000 Hz",
    "imu": null,
    "rotor_inertia_kg_m2": null,
-   "gps_sync": "PPS + NMEA $GPRMC/$GPGGA through the Interface Box"
+   "gps_sync": "PPS + NMEA $GPRMC/$GPGGA through the Interface Box",
+   "dimensions_mm": [
+    103.3,
+    103.3,
+    71.7
+   ],
+   "dimensions_axes": "cylinder: L = W = 103.3 diameter, H = 71.7 base to top; plus the cable gland, which sticks out up to 12.7 mm radially at the base (0 deg direction)",
+   "dimensions_mm_basis": "datasheet 63-9229 Rev K drawing",
+   "mounting_basis": "datasheet 63-9229 Rev K drawing (page 1)",
+   "cable_exits": "radial at the base, 0 deg direction; keep >=12.7 mm gland clearance plus cable bend radius on that side of the mount",
+   "orientation_cooling": "Needs a clear 360 deg horizon from 15 deg below to 15 deg above horizontal about the optical centre (37.8 mm above the base). The base (18.8 mm band) is stationary; the 38.1 mm active window band spins. Mount face sinks heat; 8 W typical."
   },
   "cad": {
    "step_url": null,
-   "available": false
+   "available": false,
+   "note": "No STEP published by Ouster/Velodyne (https://ouster.com/downloads/velodyne-downloads lists datasheets and manuals only). Datasheet kept at references/vendor/velodyne-vlp-16/."
   },
   "sources": [
    "https://data.ouster.io/downloads/datasheets/velodyne/Puck%20Datasheets.zip",
@@ -197,7 +263,7 @@
    "https://www.geoweeknews.com/articles/velodyne-cuts-vlp-16-lidar-price-4k/"
   ],
   "confidence": "estimate",
-  "notes": "Minimum range is not published. Rotor mass and inertia are not published. Needs a clear 360 deg horizon; the lowest beam is 15 deg below horizontal. Spinning at 5-20 Hz puts rotor-imbalance vibration in the balance controller's band, so keep its IMU path filtered. Gyroscopic torque from a pitching chassis appears about the roll axis (upper-bound estimate in research/sensors-compute.md)."
+  "notes": "Minimum range is not published. Rotor mass and inertia are not published. Needs a clear 360 deg horizon; the lowest beam is 15 deg below horizontal. Spinning at 5-20 Hz puts rotor-imbalance vibration in the balance controller's band, so keep its IMU path filtered. Gyroscopic torque from a pitching chassis appears about the roll axis (upper-bound estimate in research/sensors-compute.md). Base pattern from the datasheet drawing: centre 1/4-20 x 7.1 deep plus 2 dowel holes for 5/32 in pins 88.9 mm apart, perpendicular to the cable exit. Not verified (2026-10-26): no official STEP; build a simple cylinder model from the datasheet; which dowel hole is the slot (drawing shows the 0-deg-side-top one as elongated) and slot length; cable + Interface Box mass."
  },
  {
   "id": "velodyne-vlp-16-interface-box",
@@ -768,8 +834,12 @@
   "specs": {
    "voltage_v": 5,
    "interface": "USB 3.1 Gen 1",
-   "connector": "USB Type-C",
-   "mounting": "1x 1/4-20 UNC bottom; 2x M3 on back",
+   "connector": "USB Type-C receptacle (USB 3.1 Gen 1) on one 25 x 25 end face; the datasheet recommends a certified locking USB-C cable",
+   "mounting": {
+    "bottom": "1x 1/4-20 UNC tripod socket on the bottom face; the left imager (depth origin) is 17.5 mm from the 1/4-20 centreline along L (Table 4-20). Thread depth not stated.",
+    "back": "2x M3 threaded mounting points on the back face, 45 mm apart, on the horizontal centreline, symmetric about the centre per the drawing; max screw insertion 3 mm; torque 0.4 N*m",
+    "preferred": "back 2x M3 into an aluminium bracket: the datasheet recommends the back M3 mount to a 6000-series aluminium bracket (2x mating area) as the heat path"
+   },
    "imu": null,
    "ip_rating": null,
    "operating_temp_c": [
@@ -781,7 +851,7 @@
    "dimensions_mm": [
     90,
     25,
-    25
+    25.05
    ],
    "power_max_w": 3.4,
    "power_typical_w": 3.0,
@@ -797,20 +867,29 @@
     0.2,
     3
    ],
-   "depth_tech": "Active IR stereo, global-shutter depth imagers"
+   "depth_tech": "Active IR stereo, global-shutter depth imagers",
+   "dimensions_axes": "L = 90 along the stereo baseline (left-right), W = 25 front-to-back depth (25.05 on drawing; 25.15 max), H = 25 bottom-to-top",
+   "dimensions_mm_basis": "datasheet 337029-017 Table 3-52 (90 / 25 / 25 nominal, +/-0.15) and Figure 10-9 drawing (25.05 depth)",
+   "mass_g_basis": "datasheet Table 3-52: 75 g nominal, +/-10%; bulk units ship without the ~2.3 g USB cap",
+   "mounting_basis": "datasheet Figure 10-9 (PDF p.139), Table 4-20, section 3.8.2 thermal guidance",
+   "cable_exits": "along L from one end face: leave ~30-35 mm past that end for a straight USB-C overmold plus bend radius, or use a right-angle plug",
+   "orientation_cooling": "Front (lens) face needs a clear 87 x 58 deg FOV; front window must not be covered. 3.04 W of heat at max load (Table 7-8); passive heat sinking through the back M3 face to aluminium recommended; keep side vents clear; ambient 0-35 C."
   },
   "cad": {
    "step_url": null,
    "available": true,
    "native_url": "https://dev.realsenseai.com/download/41950",
-   "note": "SolidWorks zip; ROS meshes in realsense-ros realsense2_description"
+   "local": "references/vendor/realsense-d435/D435_Solid.SLDPRT",
+   "format": "SolidWorks .SLDPRT only (no STEP offered)",
+   "note": "SolidWorks zip of all D400 cameras; ROS meshes in realsense-ros realsense2_description"
   },
   "sources": [
    "https://www.realsenseai.com/wp-content/uploads/2026/03/RealSense-D400-Series-Datasheet-Mar-2026.pdf",
-   "https://store.realsenseai.com/buy-realsense-depth-camera-d435.html"
+   "https://store.realsenseai.com/buy-realsense-depth-camera-d435.html",
+   "https://dev.realsenseai.com/docs/cad-files"
   ],
   "confidence": "datasheet",
-  "notes": "Default depth camera: global shutter and a wide field of view suit a moving, balancing robot. No IMU (the robot has its own). USB on the J501 with librealsense."
+  "notes": "Default depth camera: global shutter and a wide field of view suit a moving, balancing robot. No IMU (the robot has its own). USB on the J501 with librealsense. Mounting confirmed from datasheet Figure 10-9: 2x M3 on the back 45 mm apart (max 3 mm insertion, 0.4 N*m) and a 1/4-20 underneath. Vendor CAD is SolidWorks only; convert to STEP before using it in OCP. Not verified (2026-10-26): 1/4-20 thread depth and its exact position along L relative to the case centre (only the 17.5 mm offset to the left imager is given); which end face carries the USB-C port (left or right when viewed from the front): check the SLDPRT or the part; no vendor STEP; SLDPRT not inspected (cannot be read by OCP/FreeCAD here)."
  },
  {
   "id": "realsense-d415",

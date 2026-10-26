@@ -34,11 +34,13 @@ from pathlib import Path
 import cadquery as cq
 
 from cadagent.geometry import export_print_stl
-from cadagent.robot import printed_part_body
+from cadagent.robot import Body, fit_mesh, printed_part_body
 
 R = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(R / 'cad'))
 sys.path.insert(0, str(R))
+import assembly  # noqa: E402
+import electronics  # noqa: E402
 import gmi  # noqa: E402
 import leg  # noqa: E402
 
@@ -153,12 +155,12 @@ def head_saddle(L):
     return s
 
 
-def face(L):
-    """Eye window and headlight bosses, bolted to the tray front."""
-    D = L['tray']['depth']
+def face(L, front_x=None):
+    """The bay's front cover: headlight bosses and the screws into the bay (the eyes are on the J501 box)."""
+    D = 2 * front_x if front_x else L['tray']['depth']
     z0 = L['trayBottom']
     plate = cq.Workplane('YZ').center(0, z0 + 40).rect(140, 76).extrude(5).translate((D / 2, 0, 0)).edges('|X').fillet(8)
-    plate = plate.cut(cq.Workplane('YZ').center(0, z0 + 60).rect(53, 22).extrude(10).translate((D / 2 - 1, 0, 0)))         # DualEye
+
     for y in (-50, 50):
         boss = cq.Workplane('YZ').center(y, z0 + 30).circle(14).extrude(14).translate((D / 2, 0, 0))
         plate = plate.union(boss).cut(cq.Workplane('YZ').center(y, z0 + 30).circle(4.2).extrude(30).translate((D / 2 - 1, 0, 0)))  # M8 pod bolt
@@ -167,8 +169,8 @@ def face(L):
     return plate
 
 
-def camera_cradle(L, front=True):
-    D = L['tray']['depth']
+def camera_cradle(L, front=True, front_x=None):
+    D = 2 * front_x if (front and front_x) else L['tray']['depth']
     z0 = L['trayBottom']
     sgn = 1 if front else -1
     w, h, d = P['camera']['d435']
@@ -238,8 +240,12 @@ def build(design_path: Path, fast: bool = False):
     add('chassis', chassis(L, S), 'pa6-cf', 1, f'printed PA6-CF tub, {SHEET:.0f} mm walls, {HM_PAD:.0f} mm under the legs; M3/M4 inserts', solid=True)
     add('battery_cradle', battery_cradle(L), 'petg', 1, 'printed PETG')
     add('head_saddle', head_saddle(L), 'petg', 1, 'printed PETG; M4 inserts for the turret')
-    add('face', face(L), 'petg', 1, 'printed PETG')
-    add('camera_cradle', camera_cradle(L, True), 'petg', 2, 'printed PETG')
+    catalog = load_catalog()
+    elec, bay_shape, elec_report = electronics.layout(L, d, catalog, floor_t=FLOOR_T, wall_t=SHEET)
+    front_x = L['tray']['depth'] / 2 + elec_report['bay_depth_mm']
+    add('electronics_bay', bay_shape, 'petg', 1, f"printed PETG, {elec_report['bay_depth_mm']:.0f} mm deep: the power electronics; 4 x M4 into the tub")
+    add('face', face(L, front_x), 'petg', 1, 'printed PETG')
+    add('camera_cradle', camera_cradle(L, True, front_x), 'petg', 2, 'printed PETG')
     placed['camera_cradle_rear'] = camera_cradle(L, False)
     add('lidar_hanger', lidar_hanger(L), 'petg', 1, 'printed PETG')
     add('lidar_guard', lidar_guard(L), 'tpu95', 1, 'printed TPU 95A')
@@ -308,8 +314,7 @@ def build(design_path: Path, fast: bool = False):
         for name, shape in placed.items():
             cq.exporters.export(shape.val() if hasattr(shape, 'val') else shape, str(OUT / f'asm_{name}.step'))
 
-    if not fast:
-        export_link_meshes(design_path, L, S, parts, lparts, lbought, bought, placed, hip_id)
+
     (OUT / 'geometry-checks.json').write_text(json.dumps({k: v for k, v in report.items() if v.get('print')}, indent=1) + '\n')
     total = sum(m['mass_g'] * m['qty'] for m in mass.values())
     (OUT / 'mass-properties.json').write_text(json.dumps({'design': str(Path(design_path).resolve().relative_to(R)), 'parts': mass,
@@ -320,6 +325,16 @@ def build(design_path: Path, fast: bool = False):
                                                       'hip_y_mm': sum(S.y['thigh']) / 2, 'wheel_y_mm': S.y['wheel_centre'],
                                                       'min_knee_deg': S.y.get('min_knee_deg')}, indent=1) + '\n')
     write_print_plan(plan)
+    asm = assemble(design_path, d, ev, L, S, parts, meta, lparts, lbought, hip_id, elec, front_x, materials, meshes=not fast)
+    if not fast:                                  # the 3D page: everything else on the body from the assembly
+        skip = set(parts) | {f'{n}_{t}' for n in lparts for t in 'lr'} | {f'{n}_{t}' for n in ('posts', 'pushrod', 'pushrod_half', 'wheel_rotor', 'wheel_stator') for t in 'lr'}
+        extra = [(nm, sh, c, kind == 'bought' or kind == 'electronics') for (lk, nm, kind, _, sh, c, _) in asm.pop('_items')
+                 if lk == 'base' and sh is not None and nm not in skip and not nm.startswith(('camera_cradle', 'face'))]
+        export_link_meshes(design_path, L, S, parts, lparts, lbought, {}, placed, hip_id, extra)
+    else:
+        asm.pop('_items')
+    print(f"assembly: {asm['total_kg']:.2f} kg in {sum(len(v['parts']) for v in asm['links'].values())} placed parts; "
+          f"by kind {asm['by_kind_kg']}; bay {elec_report['bay_depth_mm']:.0f} mm" + (f"; {'; '.join(elec_report['notes'])}" if elec_report['notes'] else ''))
     (OUT / 'bom-mechanical.json').write_text(json.dumps({n: {**meta[n], 'mass_g_each': round(mass[n]['mass_g'], 1)} for n in parts}, indent=1) + '\n')
     print(f"{len(parts)} part types, {sum(m['qty'] for m in meta.values())} parts, {total / 1000:.2f} kg made (estimate); track {S.track:.0f} mm")
     for n in S.notes:
@@ -382,13 +397,222 @@ def write_print_plan(plan):
         print(f'  PRINT: {n} does not fit the {BED[0]} mm bed: {plan[n]["size_mm"]}')
 
 
+# --------------------------------------------------------------------------- the whole robot, for the physics
+
+def load_catalog():
+    cat = {}
+    for f in sorted((R / 'catalog').glob('*.json')):
+        try:
+            j = json.loads(f.read_text())
+        except Exception:
+            continue
+        items = j if isinstance(j, list) else j.get('parts') or j.get('items') or []
+        for p in items if isinstance(items, list) else []:
+            if isinstance(p, dict) and p.get('id'):
+                cat[p['id']] = p
+    return cat
+
+
+ASM_LINK = {'thigh': 'thigh', 'hip_output_adapter': 'thigh', 'knee_crank': 'thigh', 'knee_output_adapter': 'thigh',
+            'shin': 'shin', 'wheel_adapter': 'shin'}
+J501 = R.parent / 'j501-agx' / 'exports'          # the compute box is its own project (j501-agx): its real shells when here
+
+
+def j501_box_shapes(L):
+    """The J501 enclosure's shells from the j501-agx project, turned into the robot frame (its x across, y front to
+    back, z up; the box's front faces our +x), or None when that repo is not on this machine."""
+    names = ['base', 'cover', 'front_no_gmsl', 'rear_io', 'side_hatch']
+    if not all((J501 / f'{n}.step').exists() for n in names):
+        return None
+    out = []
+    for n in names:
+        s = cq.importers.importStep(str(J501 / f'{n}.step'))
+        out.append((n, s.rotate((0, 0, 0), (0, 0, 1), 90).translate((96.0, -103.0, L['bodyBottom']))))
+    return out
+
+
+def vendor_visual(cat_id, size, center):
+    """The vendor's own model of a bought part (references/vendor/<id>/*.step, kept local) turned so its extents match
+    the box the layout placed (the largest extent along the box's largest side, ...), centred on it; None if absent."""
+    import itertools
+    folder = R / 'references' / 'vendor' / (cat_id or '')
+    files = sorted([f for f in folder.glob('*') if f.suffix.lower() in ('.step', '.stp')]) if cat_id and folder.exists() else []
+    if not files:
+        return None
+    try:
+        sh = cq.importers.importStep(str(files[0])).val()
+    except Exception:
+        return None
+    bb = sh.BoundingBox()
+    e = (bb.xlen, bb.ylen, bb.zlen)
+    best = min(itertools.permutations(range(3)), key=lambda p: sum(abs(e[p[i]] - size[i]) for i in range(3)))
+    Rm = [[1.0 if j == best[i] else 0.0 for j in range(3)] for i in range(3)]
+    det = (Rm[0][0] * (Rm[1][1] * Rm[2][2] - Rm[1][2] * Rm[2][1]) - Rm[0][1] * (Rm[1][0] * Rm[2][2] - Rm[1][2] * Rm[2][0])
+           + Rm[0][2] * (Rm[1][0] * Rm[2][1] - Rm[1][1] * Rm[2][0]))
+    if det < 0:
+        Rm[0] = [-v for v in Rm[0]]
+    c = bb.center
+    mc = [sum(Rm[i][j] * (c.x, c.y, c.z)[j] for j in range(3)) for i in range(3)]
+    t = [center[i] - mc[i] for i in range(3)]
+    from OCP.BRepBuilderAPI import BRepBuilderAPI_Transform
+    from OCP.gp import gp_Trsf
+    tr = gp_Trsf()
+    tr.SetValues(*Rm[0], t[0], *Rm[1], t[1], *Rm[2], t[2])
+    return cq.Shape.cast(BRepBuilderAPI_Transform(sh.wrapped, tr, True).Shape())
+
+
+def assemble(design_path, d, ev, L, S, parts, meta, lparts, lbought, hip_id, elec, front_x, materials, meshes=True):
+    """Every part of the robot on its link: exports/assembly.json (+ exports/mjcf/*.stl meshes when meshes=True)."""
+    a, b = L['thigh'], L['shin']
+    hy, wy = sum(S.y['thigh']) / 2, S.y['wheel_centre']
+    origins = {'base': (0, 0, 0)}
+    for side, tag in ((1, 'l'), (-1, 'r')):
+        origins.update({f'thigh_{tag}': (0, side * hy, 0), f'shin_{tag}': (0, side * hy, -a), f'wheel_{tag}': (0, side * wy, -a - b)})
+    A = assembly.Assembly(origins)
+    lines = {ln['slot']: ln for ln in ev['lines']}
+    placed_slots = set()
+    colors = {}
+    try:
+        import yaml
+        colors = ((yaml.safe_load((R / 'cad-agent.yaml').read_text()).get('cad') or {}).get('view') or {}).get('colors', {})
+    except Exception:
+        pass
+    col = lambda n: colors.get(n) or '#9aa3ad'
+    notes = []
+    # made parts: body ones once, leg ones on both sides
+    for name, shape in parts.items():
+        dens = materials[meta[name]['material']]['density_g_cm3']
+        solid = meta[name]['solid']
+        if name in lparts:
+            link = ASM_LINK.get(name, 'base')
+            bl = assembly.body_of(shape, density=dens, solid=solid, name=name)
+            for side, tag in ((1, 'l'), (-1, 'r')):
+                sh = shape if side > 0 else assembly.mirror_y(shape)
+                A.add(f'{link}_{tag}' if link != 'base' else 'base', f'{name}_{tag}', 'made', bl if side > 0 else assembly.mirror_body(bl), sh, col(name))
+        else:
+            qty = meta[name]['qty']
+            shapes = [shape] if qty == 1 else [shape, assembly.mirror_y(shape).translate((0, 0, 0))]
+            if name == 'camera_cradle':
+                shapes = [shape, camera_cradle(L, False)]
+            for k, sh in enumerate(shapes):
+                A.add('base', name if len(shapes) == 1 else f'{name}_{k + 1}', 'made', assembly.body_of(sh, density=dens, solid=solid, name=name), sh, col(name))
+    placed_slots.add('printed')
+    # the leg motors: mass on the envelope, the vendor model for looks when it is here
+    if 'leg_actuator' in lines:
+        each = lines['leg_actuator']['mass_g']
+        vend, how = gmi.motor_body(hip_id)
+        env = _envelope(hip_id)
+        for side, tag in ((1, 'l'), (-1, 'r')):
+            for key, y, ax in (('hip_motor', S.y['hip_out'], (0, 1, 0)), ('knee_motor', S.y['knee_out'], (0, -1, 0))):
+                e = gmi.place(env, (0, y, 0), ax)
+                v = gmi.place(vend, (0, y, 0), ax)
+                if side < 0:
+                    e, v = assembly.mirror_y(e), assembly.mirror_y(v)
+                A.add('base', f'{key}_{tag}', 'bought', assembly.body_of(e, mass_g=each, name=key), v, col('hip_motor'), estimate=how != 'step')
+        placed_slots.add('leg_actuator')
+    # the wheels: rotor + tyre spin, the stator is fixed to the shin
+    if 'wheel_motor' in lines:
+        each = lines['wheel_motor']['mass_g']
+        r_t = (S.wheel['od'] or 171) / 2
+        y0, y1 = S.y['wheel']
+        tyre = leg._ycyl(r_t, y0, y1, 0, -a - b).cut(leg._ycyl(0.62 * r_t, y0 - 1, y1 + 1, 0, -a - b))
+        stator = leg._ycyl(0.6 * r_t, y0 + 3, y1 - 3, 0, -a - b).union(leg._ycyl(25, S.y['wheel_mount'], y0, 0, -a - b))
+        for side, tag in ((1, 'l'), (-1, 'r')):
+            t_, s_ = (tyre, stator) if side > 0 else (assembly.mirror_y(tyre), assembly.mirror_y(stator))
+            A.add(f'wheel_{tag}', f'wheel_rotor_{tag}', 'bought', assembly.body_of(t_, mass_g=each * assembly.ROTOR_SHARE, name='wheel rotor'), t_, col('wheel'), True)
+            A.add(f'shin_{tag}', f'wheel_stator_{tag}', 'bought', assembly.body_of(s_, mass_g=each * (1 - assembly.ROTOR_SHARE), name='wheel stator'), s_, '#3a3f47', True)
+        placed_slots.add('wheel_motor')
+    # bought leg hardware with a shape: posts (aluminium) and the push-rods (steel), half the rod on each link
+    for side, tag in ((1, 'l'), (-1, 'r')):
+        po = lbought['posts'] if side > 0 else assembly.mirror_y(lbought['posts'])
+        A.add('base', f'posts_{tag}', 'hardware', assembly.body_of(po, density=2.7, name='posts'), po, col('posts'))
+        rod = lbought['pushrod'] if side > 0 else assembly.mirror_y(lbought['pushrod'])
+        rb = assembly.body_of(rod, density=7.85, name='pushrod')
+        half = Body(rb.mass / 2, rb.com, tuple(tuple(v / 2 for v in row) for row in rb.inertia), 'pushrod')
+        A.add(f'thigh_{tag}', f'pushrod_{tag}', 'hardware', half, rod, col('pushrod'))
+        A.add(f'shin_{tag}', f'pushrod_half_{tag}', 'hardware', half.translated((0, 0, 0)), None)
+    # the body: battery, compute box, sensors
+    T = L['tray']
+    if 'battery' in lines and L.get('battery'):
+        n, (bl, bw, bh) = L['battery']['packs'], L['battery']['dims']
+        for i in range(n):
+            y = (i + 0.5) * T['width'] / n - T['width'] / 2
+            sh = cq.Workplane('XY').box(bl, bw, bh).edges('|X').fillet(8).translate((0, y, L['trayBottom'] + FLOOR_T + 18 + bh / 2 - 12))
+            A.add('base', f'battery_{i + 1}', 'bought', assembly.body_of(sh, mass_g=lines['battery']['mass_g'], name='battery'), sh, col('battery'))
+        placed_slots.add('battery')
+    if 'compute' in lines:
+        B = L['body']
+        box = cq.Workplane('XY').box(B['depth'], B['width'], B['height']).translate((0, 0, L['bodyBottom'] + B['height'] / 2))
+        body = assembly.body_of(box, mass_g=lines['compute']['mass_g'], name='J501 box')
+        shells = j501_box_shapes(L)
+        if shells:
+            A.add('base', 'j501_box', 'bought', body, None, col('j501_box'), estimate=True)
+            for n_, sh in shells:
+                A.add('base', f'j501_{n_}', 'bought', Body(0.0), sh, col('j501_box'))
+        else:
+            A.add('base', 'j501_box', 'bought', body, box.edges().fillet(6), col('j501_box'), estimate=True)
+        placed_slots.add('compute')
+    if 'lidar' in lines:
+        lz = L['trayBottom'] - 8 - 36
+        sh = cq.Workplane('XY').circle(51.65).extrude(71.7).translate((0, 0, lz - 36))
+        A.add('base', 'lidar', 'bought', assembly.body_of(sh, mass_g=lines['lidar']['mass_g'], name='lidar'), sh, col('lidar'))
+        placed_slots.add('lidar')
+    for slot, x in (('depth_front', front_x + 17), ('depth_rear', -(T['depth'] / 2 + 17))):
+        if slot in lines:
+            sh = cq.Workplane('XY').box(25, 90, 25).translate((x, 0, L['trayBottom'] + 5 + 12.5))
+            A.add('base', slot, 'bought', assembly.body_of(sh, mass_g=lines[slot]['mass_g'], name=slot), sh, col('camera'))
+            placed_slots.add(slot)
+    if 'headlights' in lines:                       # two pods on the face's bosses
+        for y in (-50, 50):
+            sh = cq.Workplane('YZ').center(y, L['trayBottom'] + 30).rect(51, 51).extrude(40).translate((front_x + 14, 0, 0))
+            A.add('base', f'headlight_{"l" if y > 0 else "r"}', 'bought', assembly.body_of(sh, mass_g=lines['headlights']['mass_g'] / 2, name='headlight'), sh, '#2d3748')
+        placed_slots.add('headlights')
+    # electronics, where cad/electronics.py put them
+    by_slot = {}
+    for it in elec:
+        by_slot.setdefault(it['slot'], []).append(it)
+    for slot, its in by_slot.items():
+        total_g = (lines[slot]['mass_g'] * lines[slot]['qty'] if slot in lines and lines[slot].get('mass_g')
+                   else sum(i['mass_g'] for i in its))                    # no catalogue mass: the layout's estimate
+        for it in its:
+            sh = cq.Workplane('XY').box(*it['size']).translate(tuple(it['center']))
+            vis = vendor_visual(d['parts'].get(slot), it['size'], it['center']) if meshes else None
+            A.add('base', it['name'], 'electronics', assembly.body_of(sh, mass_g=total_g / len(its), name=it['name']), vis or sh, it['color'], it['estimate'])
+        placed_slots.add(slot)
+    if 'eyes' in lines:                             # the DualEye board on the J501 box's front: the character's eyes
+        size, c = (7.0, 51.0, 20.0), (L['body']['depth'] / 2 + 3.5, 0.0, L['bodyBottom'] + 0.62 * L['body']['height'])
+        sh = cq.Workplane('XY').box(*size).translate(c)
+        vis = vendor_visual(d['parts'].get('eyes'), size, c) if meshes else None
+        A.add('base', 'eyes', 'electronics', assembly.body_of(sh, mass_g=lines['eyes']['mass_g'], name='eyes'), vis or sh, '#1a202c')
+        placed_slots.add('eyes')
+    # what is left in the BOM: the hardware allowance spread over the links, anything else as a point on the body
+    for slot, ln in lines.items():
+        if slot in placed_slots or slot in ('head_payload',):
+            continue
+        g = (ln.get('mass_g') or 0) * ln['qty']
+        if g <= 0:
+            continue
+        if slot == 'hardware':
+            legs = g * assembly.LEG_HARDWARE_SHARE
+            A.add('base', 'hardware (allowance)', 'hardware', Body(( g - legs) / 1000, (0, 0, L['trayBottom'] / 1000)), None, estimate=True)
+            for side, tag in ((1, 'l'), (-1, 'r')):
+                A.add(f'thigh_{tag}', f'hardware (allowance)_{tag}', 'hardware', Body(legs / 4000, (0, side * hy / 1000, -a / 2000)), None, estimate=True)
+                A.add(f'shin_{tag}', f'hardware (allowance) shin_{tag}', 'hardware', Body(legs / 4000, (0, side * hy / 1000, -(a + b / 2) / 1000)), None, estimate=True)
+            continue
+        notes.append(f'{slot}: {g:.0f} g not placed in the CAD yet (a point on the body)')
+        A.add('base', f'{slot} (unplaced)', 'bought', Body(g / 1000, (0, 0, (L['trayBottom'] + T['height'] / 2) / 1000)), None, estimate=True)
+    data = A.write(OUT / 'assembly.json', str(Path(design_path).resolve().relative_to(R)), OUT / 'mjcf' if meshes else None, notes)
+    data['_items'] = A.items
+    return data
+
+
 # Which link each leg part moves with (left leg, zero pose); everything else is fixed to the body.
 LEG_LINK = {'thigh': 'thigh', 'hip_output_adapter': 'thigh', 'shin': 'shin', 'wheel_adapter': 'shin',
             'knee_crank': 'crank', 'knee_output_adapter': 'crank', 'pushrod': 'rod', 'wheel': 'wheel'}
 VIEW_SKIP = {'j501_box', 'lidar', 'camera_front', 'camera_rear'}       # the 3D page draws these itself (FOV, eyes)
 
 
-def export_link_meshes(design_path, L, S, parts, lparts, lbought, bought, placed, hip_id):
+def export_link_meshes(design_path, L, S, parts, lparts, lbought, bought, placed, hip_id, extra=()):
     """Meshes of every part grouped by the link it moves with, for the 3D simulator: exports/links/*.stl (robot frame,
     millimetres, legs at the zero pose, left leg only: the page mirrors it) and exports/links/manifest.json. The page
     turns the thigh by the hip angle, the shin by the knee angle about the knee pin, the wheel by its spin, the crank
@@ -407,31 +631,44 @@ def export_link_meshes(design_path, L, S, parts, lparts, lbought, bought, placed
         old.unlink()
     links = {k: [] for k in ('body', 'thigh', 'shin', 'wheel', 'crank', 'rod')}
 
-    def put(link, name, shape, side):
-        f = f'{name}.stl'
+    (d / 'local').mkdir(exist_ok=True)
+    for old in (d / 'local').glob('*.stl'):
+        old.unlink()
+
+    def put(link, name, shape, side, color=None, local=False):
+        f = f'local/{name}.stl' if local else f'{name}.stl'       # local: vendor geometry, kept off git
         cq.exporters.export(shape.val() if hasattr(shape, 'val') else shape, str(d / f), tolerance=0.4, angularTolerance=0.3)
-        links[link].append({'file': f, 'name': name, 'color': col(name), 'side': side})
+        if local:
+            fit_mesh(d / f, 60_000)
+        links[link].append({'file': f, 'name': name, 'color': color or col(name), 'side': side, **({'local': True} if local else {})})
 
     for name, shape in lparts.items():                         # left leg, zero pose
         put(LEG_LINK.get(name, 'body'), name, shape, 'l')
     for name in ('posts', 'pushrod', 'wheel'):
         put(LEG_LINK.get(name, 'body'), name, lbought[name], 'l')
-    env = {'hip_motor': gmi.place(_envelope(hip_id), (0, S.y['hip_out'], 0), (0, 1, 0)),
-           'knee_motor': gmi.place(_envelope(hip_id), (0, S.y['knee_out'], 0), (0, -1, 0))}
-    for name, shape in env.items():
-        put('body', name, shape, 'l')
-    for name in ('chassis', 'battery_cradle', 'face', 'lidar_hanger', 'lidar_guard', 'head_saddle'):
-        put('body', name, parts[name], None)
+    for name in ('chassis', 'electronics_bay', 'battery_cradle', 'face', 'lidar_hanger', 'lidar_guard', 'head_saddle'):
+        if name in parts:
+            put('body', name, parts[name], None)
     put('body', 'camera_cradle_front', parts['camera_cradle'], None)
     put('body', 'camera_cradle_rear', placed['camera_cradle_rear'], None)
-    for name, shape in bought.items():
-        if name.startswith('battery'):
-            put('body', name, shape, None)
+    for name, shape, color, local in extra:      # motors, battery, the J501 box, electronics, sensors: from the assembly
+        put('body', name, shape, None, color, local)
     (d / 'manifest.json').write_text(json.dumps({
         'design': str(Path(design_path).resolve().relative_to(R)), 'units': 'mm',
         'frame': 'robot: x forward, y left, z up, origin on the hip axis; legs at the zero pose (hanging straight down)',
         'thigh_mm': L['thigh'], 'shin_mm': L['shin'], 'crank_r_mm': leg.PARAMS['crank_r'], 'lever_beta_deg': leg.PARAMS['lever_beta_deg'], 'mirror': 'side l parts are mirrored (y -> -y) for the right leg',
+        'cad_has': sorted({n for n, *_ in extra} | {'chassis'}),
+        'mounts': {'eyes': [L['body']['depth'] / 2 + 7.0, 0.0, L['bodyBottom'] + 0.62 * L['body']['height']],
+                   'headlights': [[mount_front_x(L, extra) + 54.0, y, L['trayBottom'] + 30.0] for y in (-50.0, 50.0)]},
         'links': links}, indent=1) + '\n')
+
+
+def mount_front_x(L, extra):
+    """The face plane: the front of the electronics bay (from the headlights' place in the assembly)."""
+    for n, sh, *_ in extra:
+        if n.startswith('headlight'):
+            return (sh.val() if hasattr(sh, 'val') else sh).BoundingBox().xmin - 14.0
+    return L['tray']['depth'] / 2
 
 
 def _envelope(part_id):

@@ -7,6 +7,57 @@
  "crank_r_mm": 60.0,
  "lever_beta_deg": -75.0,
  "mirror": "side l parts are mirrored (y -> -y) for the right leg",
+ "cad_has": [
+  "balance_mcu",
+  "battery_1",
+  "can_transceiver_1",
+  "can_transceiver_2",
+  "chassis",
+  "contactor",
+  "dcdc_12v",
+  "dcdc_compute",
+  "depth_front",
+  "depth_rear",
+  "estop",
+  "eyes",
+  "fuse",
+  "headlight_l",
+  "headlight_r",
+  "hip_motor_l",
+  "hip_motor_r",
+  "imu",
+  "j501_base",
+  "j501_cover",
+  "j501_front_no_gmsl",
+  "j501_rear_io",
+  "j501_side_hatch",
+  "knee_motor_l",
+  "knee_motor_r",
+  "lidar",
+  "motor_driver_l",
+  "motor_driver_r",
+  "power_switch",
+  "regen_clamp"
+ ],
+ "mounts": {
+  "eyes": [
+   97.5,
+   0.0,
+   143.44
+  ],
+  "headlights": [
+   [
+    282.49999990000003,
+    -50.0,
+    5.0
+   ],
+   [
+    282.49999990000003,
+    50.0,
+    5.0
+   ]
+  ]
+ },
  "links": {
   "body": [
    {
@@ -34,21 +85,15 @@
     "side": "l"
    },
    {
-    "file": "hip_motor.stl",
-    "name": "hip_motor",
-    "color": "#3a3f47",
-    "side": "l"
-   },
-   {
-    "file": "knee_motor.stl",
-    "name": "knee_motor",
-    "color": "#3a3f47",
-    "side": "l"
-   },
-   {
     "file": "chassis.stl",
     "name": "chassis",
     "color": "#5a5f68",
+    "side": null
+   },
+   {
+    "file": "electronics_bay.stl",
+    "name": "electronics_bay",
+    "color": "#9aa3ad",
     "side": null
    },
    {
@@ -94,10 +139,207 @@
     "side": null
    },
    {
-    "file": "battery_1.stl",
+    "file": "local/hip_motor_l.stl",
+    "name": "hip_motor_l",
+    "color": "#3a3f47",
+    "side": null,
+    "local": true
+   },
+   {
+    "file": "local/knee_motor_l.stl",
+    "name": "knee_motor_l",
+    "color": "#3a3f47",
+    "side": null,
+    "local": true
+   },
+   {
+    "file": "local/hip_motor_r.stl",
+    "name": "hip_motor_r",
+    "color": "#3a3f47",
+    "side": null,
+    "local": true
+   },
+   {
+    "file": "local/knee_motor_r.stl",
+    "name": "knee_motor_r",
+    "color": "#3a3f47",
+    "side": null,
+    "local": true
+   },
+   {
+    "file": "local/battery_1.stl",
     "name": "battery_1",
     "color": "#fdb913",
-    "side": null
+    "side": null,
+    "local": true
+   },
+   {
+    "file": "local/j501_base.stl",
+    "name": "j501_base",
+    "color": "#e8892b",
+    "side": null,
+    "local": true
+   },
+   {
+    "file": "local/j501_cover.stl",
+    "name": "j501_cover",
+    "color": "#e8892b",
+    "side": null,
+    "local": true
+   },
+   {
+    "file": "local/j501_front_no_gmsl.stl",
+    "name": "j501_front_no_gmsl",
+    "color": "#e8892b",
+    "side": null,
+    "local": true
+   },
+   {
+    "file": "local/j501_rear_io.stl",
+    "name": "j501_rear_io",
+    "color": "#e8892b",
+    "side": null,
+    "local": true
+   },
+   {
+    "file": "local/j501_side_hatch.stl",
+    "name": "j501_side_hatch",
+    "color": "#e8892b",
+    "side": null,
+    "local": true
+   },
+   {
+    "file": "local/lidar.stl",
+    "name": "lidar",
+    "color": "#2a2d33",
+    "side": null,
+    "local": true
+   },
+   {
+    "file": "local/depth_front.stl",
+    "name": "depth_front",
+    "color": "#2a2d33",
+    "side": null,
+    "local": true
+   },
+   {
+    "file": "local/depth_rear.stl",
+    "name": "depth_rear",
+    "color": "#2a2d33",
+    "side": null,
+    "local": true
+   },
+   {
+    "file": "local/headlight_r.stl",
+    "name": "headlight_r",
+    "color": "#2d3748",
+    "side": null,
+    "local": true
+   },
+   {
+    "file": "local/headlight_l.stl",
+    "name": "headlight_l",
+    "color": "#2d3748",
+    "side": null,
+    "local": true
+   },
+   {
+    "file": "local/motor_driver_l.stl",
+    "name": "motor_driver_l",
+    "color": "#2b6cb0",
+    "side": null,
+    "local": true
+   },
+   {
+    "file": "local/motor_driver_r.stl",
+    "name": "motor_driver_r",
+    "color": "#2b6cb0",
+    "side": null,
+    "local": true
+   },
+   {
+    "file": "local/imu.stl",
+    "name": "imu",
+    "color": "#c53030",
+    "side": null,
+    "local": true
+   },
+   {
+    "file": "local/balance_mcu.stl",
+    "name": "balance_mcu",
+    "color": "#276749",
+    "side": null,
+    "local": true
+   },
+   {
+    "file": "local/can_transceiver_1.stl",
+    "name": "can_transceiver_1",
+    "color": "#2f855a",
+    "side": null,
+    "local": true
+   },
+   {
+    "file": "local/can_transceiver_2.stl",
+    "name": "can_transceiver_2",
+    "color": "#2f855a",
+    "side": null,
+    "local": true
+   },
+   {
+    "file": "local/regen_clamp.stl",
+    "name": "regen_clamp",
+    "color": "#718096",
+    "side": null,
+    "local": true
+   },
+   {
+    "file": "local/dcdc_compute.stl",
+    "name": "dcdc_compute",
+    "color": "#a0aec0",
+    "side": null,
+    "local": true
+   },
+   {
+    "file": "local/dcdc_12v.stl",
+    "name": "dcdc_12v",
+    "color": "#a0aec0",
+    "side": null,
+    "local": true
+   },
+   {
+    "file": "local/contactor.stl",
+    "name": "contactor",
+    "color": "#4a5568",
+    "side": null,
+    "local": true
+   },
+   {
+    "file": "local/power_switch.stl",
+    "name": "power_switch",
+    "color": "#2d3748",
+    "side": null,
+    "local": true
+   },
+   {
+    "file": "local/fuse.stl",
+    "name": "fuse",
+    "color": "#1a202c",
+    "side": null,
+    "local": true
+   },
+   {
+    "file": "local/estop.stl",
+    "name": "estop",
+    "color": "#e53e3e",
+    "side": null,
+    "local": true
+   },
+   {
+    "file": "local/eyes.stl",
+    "name": "eyes",
+    "color": "#1a202c",
+    "side": null,
+    "local": true
    }
   ],
   "thigh": [

@@ -7,9 +7,9 @@
   "print_bounds_mm": [
    181.0,
    206.0,
-   104.0
+   99.0
   ],
-  "volume_cm3": 663.944,
+  "volume_cm3": 639.886,
   "qty": 1,
   "made": "printed PA6-CF tub, 5 mm walls, 12 mm under the legs; M3/M4 inserts",
   "print": true
@@ -20,11 +20,11 @@
   "solid_count": 1,
   "watertight": true,
   "print_bounds_mm": [
-   163.0,
-   122.4,
+   144.0,
+   109.4,
    18.0
   ],
-  "volume_cm3": 44.251,
+  "volume_cm3": 38.743,
   "qty": 1,
   "made": "printed PETG",
   "print": true
@@ -44,6 +44,21 @@
   "made": "printed PETG; M4 inserts for the turret",
   "print": true
  },
+ "electronics_bay": {
+  "degenerate_tessellation_faces_removed": 0,
+  "cad_valid": true,
+  "solid_count": 5,
+  "watertight": true,
+  "print_bounds_mm": [
+   138.0,
+   206.0,
+   99.0
+  ],
+  "volume_cm3": 252.942,
+  "qty": 1,
+  "made": "printed PETG, 138 mm deep: the power electronics; 4 x M4 into the tub",
+  "print": true
+ },
  "face": {
   "degenerate_tessellation_faces_removed": 0,
   "cad_valid": true,
@@ -54,7 +69,7 @@
    140.0,
    14.0
   ],
-  "volume_cm3": 56.023,
+  "volume_cm3": 61.853,
   "qty": 1,
   "made": "printed PETG",
   "print": true
@@ -129,7 +144,7 @@
    177.973,
    24.1
   ],
-  "volume_cm3": 378.497,
+  "volume_cm3": 379.119,
   "qty": 2,
   "made": "printed PA6-CF, 100 % solid, flat; 61812 (60 x 78 x 10) support bearing pressed in, held by 3 x M3 + washers; 3 x M5 inserts for the yoke",
   "print": true
@@ -174,7 +189,7 @@
    177.973,
    24.1
   ],
-  "volume_cm3": 378.497,
+  "volume_cm3": 379.119,
   "qty": 2,
   "made": "printed PA6-CF, 100 % solid, flat; 61812 (60 x 78 x 10) support bearing pressed in, held by 3 x M3 + washers; 3 x M5 inserts for the yoke",
   "print": true

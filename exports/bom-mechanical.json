@@ -4,14 +4,14 @@
   "qty": 1,
   "how": "printed PA6-CF tub, 5 mm walls, 12 mm under the legs; M3/M4 inserts",
   "solid": true,
-  "mass_g_each": 723.7
+  "mass_g_each": 697.5
  },
  "battery_cradle": {
   "material": "petg",
   "qty": 1,
   "how": "printed PETG",
   "solid": false,
-  "mass_g_each": 52.7
+  "mass_g_each": 46.3
  },
  "head_saddle": {
   "material": "petg",
@@ -20,12 +20,19 @@
   "solid": false,
   "mass_g_each": 106.1
  },
+ "electronics_bay": {
+  "material": "petg",
+  "qty": 1,
+  "how": "printed PETG, 138 mm deep: the power electronics; 4 x M4 into the tub",
+  "solid": false,
+  "mass_g_each": 316.2
+ },
  "face": {
   "material": "petg",
   "qty": 1,
   "how": "printed PETG",
   "solid": false,
-  "mass_g_each": 64.3
+  "mass_g_each": 69.6
  },
  "camera_cradle": {
   "material": "petg",
@@ -60,7 +67,7 @@
   "qty": 2,
   "how": "printed PA6-CF, 100 % solid, flat; 61812 (60 x 78 x 10) support bearing pressed in, held by 3 x M3 + washers; 3 x M5 inserts for the yoke",
   "solid": true,
-  "mass_g_each": 412.6
+  "mass_g_each": 413.2
  },
  "hip_output_adapter": {
   "material": "pa6-cf",
@@ -81,7 +88,7 @@
   "qty": 2,
   "how": "printed PA6-CF, 100 % solid, flat; 61812 (60 x 78 x 10) support bearing pressed in, held by 3 x M3 + washers; 3 x M5 inserts for the yoke",
   "solid": true,
-  "mass_g_each": 412.6
+  "mass_g_each": 413.2
  },
  "thigh": {
   "material": "pa6-cf",

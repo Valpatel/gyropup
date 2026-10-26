@@ -11,14 +11,14 @@
    "size_mm": [
     206,
     181,
-    104
+    99
    ],
    "fits": true,
-   "placement": "flat",
-   "grams_each": 724,
-   "grams": 724,
-   "hours": 47.4,
-   "cost_usd": 57.89,
+   "placement": "straight",
+   "grams_each": 698,
+   "grams": 698,
+   "hours": 45.7,
+   "cost_usd": 55.79,
    "infill": "100 %",
    "how": "printed PA6-CF tub, 5 mm walls, 12 mm under the legs; M3/M4 inserts"
   },
@@ -26,16 +26,16 @@
    "material": "petg",
    "qty": 1,
    "size_mm": [
-    163,
-    122,
+    144,
+    109,
     18
    ],
    "fits": true,
-   "placement": "flat",
-   "grams_each": 53,
-   "grams": 53,
-   "hours": 2.1,
-   "cost_usd": 0.74,
+   "placement": "straight",
+   "grams_each": 46,
+   "grams": 46,
+   "hours": 1.9,
+   "cost_usd": 0.65,
    "infill": "2 mm walls, 40 % gyroid",
    "how": "printed PETG"
   },
@@ -48,13 +48,30 @@
     26
    ],
    "fits": true,
-   "placement": "flat",
+   "placement": "straight",
    "grams_each": 106,
    "grams": 106,
    "hours": 4.2,
    "cost_usd": 1.48,
    "infill": "2 mm walls, 40 % gyroid",
    "how": "printed PETG; M4 inserts for the turret"
+  },
+  "electronics_bay": {
+   "material": "petg",
+   "qty": 1,
+   "size_mm": [
+    206,
+    138,
+    99
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 316,
+   "grams": 316,
+   "hours": 12.6,
+   "cost_usd": 4.42,
+   "infill": "2 mm walls, 40 % gyroid",
+   "how": "printed PETG, 138 mm deep: the power electronics; 4 x M4 into the tub"
   },
   "face": {
    "material": "petg",
@@ -65,11 +82,11 @@
     14
    ],
    "fits": true,
-   "placement": "flat",
-   "grams_each": 64,
-   "grams": 64,
-   "hours": 2.6,
-   "cost_usd": 0.9,
+   "placement": "straight",
+   "grams_each": 70,
+   "grams": 70,
+   "hours": 2.8,
+   "cost_usd": 0.97,
    "infill": "2 mm walls, 40 % gyroid",
    "how": "printed PETG"
   },
@@ -82,7 +99,7 @@
     30
    ],
    "fits": true,
-   "placement": "flat",
+   "placement": "straight",
    "grams_each": 34,
    "grams": 69,
    "hours": 2.8,
@@ -99,7 +116,7 @@
     8
    ],
    "fits": true,
-   "placement": "flat",
+   "placement": "straight",
    "grams_each": 62,
    "grams": 62,
    "hours": 2.5,
@@ -116,7 +133,7 @@
     72
    ],
    "fits": true,
-   "placement": "flat",
+   "placement": "straight",
    "grams_each": 103,
    "grams": 103,
    "hours": 10.6,
@@ -133,7 +150,7 @@
     196
    ],
    "fits": true,
-   "placement": "flat",
+   "placement": "straight",
    "grams_each": 650,
    "grams": 1300,
    "hours": 85.2,
@@ -150,11 +167,11 @@
     24
    ],
    "fits": true,
-   "placement": "flat",
+   "placement": "straight",
    "grams_each": 413,
-   "grams": 825,
-   "hours": 54.1,
-   "cost_usd": 66.01,
+   "grams": 826,
+   "hours": 54.2,
+   "cost_usd": 66.1,
    "infill": "100 %",
    "how": "printed PA6-CF, 100 % solid, flat; 61812 (60 x 78 x 10) support bearing pressed in, held by 3 x M3 + washers; 3 x M5 inserts for the yoke"
   },
@@ -167,7 +184,7 @@
     28
    ],
    "fits": true,
-   "placement": "flat",
+   "placement": "straight",
    "grams_each": 69,
    "grams": 139,
    "hours": 9.1,
@@ -184,7 +201,7 @@
     28
    ],
    "fits": true,
-   "placement": "flat",
+   "placement": "straight",
    "grams_each": 69,
    "grams": 139,
    "hours": 9.1,
@@ -201,11 +218,11 @@
     24
    ],
    "fits": true,
-   "placement": "flat",
+   "placement": "straight",
    "grams_each": 413,
-   "grams": 825,
-   "hours": 54.1,
-   "cost_usd": 66.01,
+   "grams": 826,
+   "hours": 54.2,
+   "cost_usd": 66.1,
    "infill": "100 %",
    "how": "printed PA6-CF, 100 % solid, flat; 61812 (60 x 78 x 10) support bearing pressed in, held by 3 x M3 + washers; 3 x M5 inserts for the yoke"
   },
@@ -218,7 +235,7 @@
     44
    ],
    "fits": true,
-   "placement": "diagonal",
+   "placement": "turned",
    "grams_each": 362,
    "grams": 724,
    "hours": 47.4,
@@ -235,7 +252,7 @@
     28
    ],
    "fits": true,
-   "placement": "diagonal",
+   "placement": "turned",
    "grams_each": 267,
    "grams": 534,
    "hours": 35.0,
@@ -252,7 +269,7 @@
     14
    ],
    "fits": true,
-   "placement": "flat",
+   "placement": "straight",
    "grams_each": 72,
    "grams": 145,
    "hours": 9.5,
@@ -269,7 +286,7 @@
     12
    ],
    "fits": true,
-   "placement": "flat",
+   "placement": "straight",
    "grams_each": 26,
    "grams": 51,
    "hours": 3.4,
@@ -280,16 +297,16 @@
  },
  "by_material": {
   "pa6-cf": {
-   "grams": 5406,
-   "hours": 354.3,
-   "cost_usd": 432.41,
+   "grams": 5382,
+   "hours": 352.8,
+   "cost_usd": 430.49,
    "parts": 19
   },
   "petg": {
-   "grams": 354,
-   "hours": 14.2,
-   "cost_usd": 4.95,
-   "parts": 6
+   "grams": 669,
+   "hours": 26.8,
+   "cost_usd": 9.35,
+   "parts": 7
   },
   "tpu95": {
    "grams": 103,
@@ -299,7 +316,7 @@
   }
  },
  "too_big": [],
- "total_hours": 379.1,
- "total_grams": 5863,
+ "total_hours": 390.2,
+ "total_grams": 6154,
  "note": "hours are rough: grams / material density / a strength-holding volumetric rate"
 }

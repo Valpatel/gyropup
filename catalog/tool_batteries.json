@@ -30,11 +30,11 @@
    "peak_discharge_a": null,
    "packs": 1,
    "pack_dimensions_mm": [
-    157,
-    92,
-    110
+    138,
+    87,
+    97
    ],
-   "dimensions_note": "ESTIMATE per pack (the catalog listing for the DCB609 gives 206 mm tall, which looks wrong): measure your packs"
+   "dimensions_note": "Per pack, L x W x H with H including the rail tower: 138 x 87 x 97 mm from the DeWalt DCB547-XJ datasheet (EU name of the same 9 Ah FLEXVOLT pack; https://assets.cef.co.uk/downloads/pdg/dewalt_dcb547-xj_datasheet/dewalt_dcb547-xj_datasheet.pdf), matching dewalt-dcb609 in power_electronics.json. The earlier 157 x 92 x 110 was an estimate; measure your packs"
   },
   "cad": {
    "step_url": null,
@@ -77,11 +77,11 @@
    "peak_discharge_a": null,
    "packs": 2,
    "pack_dimensions_mm": [
-    157,
-    92,
-    110
+    138,
+    87,
+    97
    ],
-   "dimensions_note": "ESTIMATE per pack (the catalog listing for the DCB609 gives 206 mm tall, which looks wrong): measure your packs"
+   "dimensions_note": "Per pack, L x W x H with H including the rail tower: 138 x 87 x 97 mm from the DeWalt DCB547-XJ datasheet (EU name of the same 9 Ah FLEXVOLT pack; https://assets.cef.co.uk/downloads/pdg/dewalt_dcb547-xj_datasheet/dewalt_dcb547-xj_datasheet.pdf), matching dewalt-dcb609 in power_electronics.json. The earlier 157 x 92 x 110 was an estimate; measure your packs"
   },
   "cad": {
    "step_url": null,

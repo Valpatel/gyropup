@@ -153,6 +153,7 @@ export function buildRobot(design, catalog, { eyes, mech, cad } = {}) {
 
   // lidar in its crown (or on a mast, or under the body)
   const lidar = part('lidar');
+  let lidarPuck = null;
   if (lidar) {
     const mount = d.lidar_mount ?? 'top';
     const puck = new THREE.Group();
@@ -160,6 +161,7 @@ export function buildRobot(design, catalog, { eyes, mech, cad } = {}) {
     const band = new THREE.Mesh(new THREE.CylinderGeometry(0.0518, 0.0518, 0.022, 48), new THREE.MeshPhysicalMaterial({ color: 0x0b0d10, roughness: 0.08, clearcoat: 1 }));
     band.position.y = 0.006;
     puck.add(can, band);
+    lidarPuck = puck;
     if (mount === 'under') {
       puck.position.y = (-25 - 4) * M - 0.036;
     } else {
@@ -202,6 +204,7 @@ export function buildRobot(design, catalog, { eyes, mech, cad } = {}) {
     }
     c.position.set(0, (bodyBottom + 14) * M, z);
     if (flip) c.rotation.y = Math.PI;
+    c.userData.kind = 'camera';
     body.add(c);
   };
   if (part('depth_front')) cam((B.depth_mm / 2 + 13) * M, false, part('depth_front'));
@@ -323,6 +326,23 @@ export function buildRobot(design, catalog, { eyes, mech, cad } = {}) {
     motorMeshes.forEach((m) => { m.visible = false; });
     legs.forEach((L) => { L.hip.visible = false; });
     base.add(cad.group);
+    // the CAD has the real J501 box, sensors and lights: hide the stand-ins, move what animates (eyes, lights) to the
+    // CAD's mounts (manifest: robot frame mm -> this page: x = y_cad, y = z_cad, z = x_cad)
+    const has = new Set(cad.manifest.cad_has ?? []);
+    const at = (p) => new THREE.Vector3(p[1] * M, p[2] * M, p[0] * M);
+    if ([...has].some((n) => n.startsWith('j501_'))) shell.visible = false;
+    body.children.forEach((c) => { if (c.userData.kind === 'camera' && has.has('depth_front')) c.visible = false; });
+    if (has.has('lidar') && lidarPuck) lidarPuck.visible = false;
+    const mounts = cad.manifest.mounts ?? {};
+    if (mounts.headlights) lights.forEach((l, i) => {
+      const pod = l.spot.parent;
+      pod.children.forEach((c) => { if (c.isMesh && c !== l.lens) c.visible = false; });   // the CAD has the pod's body
+      pod.position.copy(at(mounts.headlights[i]));
+    });
+    if (mounts.eyes) {
+      const e = at(mounts.eyes);
+      eyeMeshes.forEach((m) => { m.position.z = e.z + 0.0022; m.position.y = e.y; });
+    }
   }
 
   shadowed(group);

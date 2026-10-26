@@ -220,24 +220,41 @@
    "continuous_discharge_a": null,
    "peak_discharge_a": null,
    "mass_g": 1565,
-   "length_mm": 157,
-   "width_mm": 92,
-   "height_mm": 110,
+   "length_mm": 138,
+   "width_mm": 87,
+   "height_mm": 97,
    "connector": "DeWalt FLEXVOLT slide rail",
    "chemistry": "Li-ion (15 cells)",
    "bms": false,
-   "j501_direct_ok": false
+   "j501_direct_ok": false,
+   "dimensions_mm": [
+    138,
+    87,
+    97
+   ],
+   "dimensions_axes": "L = slide direction (front fuel-gauge end to rear latch end), W = across the rails, H = bottom of the pack to the top of the rail tower",
+   "dimensions_mm_basis": "datasheet: DeWalt DCB547-XJ datasheet (EU name of the same 9 Ah FLEXVOLT pack) 138.0 x 87.0 x 97.0 mm; DeWalt UK/AU DCB547 pages give 138 x 87 (no height); one UK seller lists 138 x 86 x 98",
+   "mass_g_basis": "product page (DeWalt US DCB609: 3.45 lb = 1565 g); DeWalt DCB547-XJ datasheet gives 1.46 kg",
+   "mass_note": "1565 g (DeWalt US) used as the conservative figure; the EU DCB547 datasheet says 1.46 kg. Weigh a pack.",
+   "interface_face": "Top face (the H = 97 includes the raised rail tower). Two slide rails run along L on the tower, with the terminal slot opening at the front end of the tower; the latch catch and release button are at the rear. The tool or dock slides on from the front along L.",
+   "interface_face_basis": "estimate from the standard DeWalt 20V MAX/FLEXVOLT slide interface; not shown on a DeWalt drawing",
+   "dimensions_note": "Earlier 157 x 92 x 110 and US listings of 7.6 x 3.625 x 8.1 in (193 x 92 x 206 mm) are packaging sizes; the 125 x 85 x 90 mm on some EU sheets is the 6 Ah DCB546. DeWalt US dcb609 page lists 7.6 x 3.625 x 8.1 in (blister-pack size). Measure one pack before freezing the tray."
   },
   "cad": {
    "step_url": null,
-   "available": false
+   "available": false,
+   "note": "DeWalt publishes no CAD."
   },
   "sources": [
    "https://thepowertoolstore.com/products/dewalt-dcb609",
-   "https://www.linenplus.ca/en/dewalt-flexvoltr-battery-20-v-60-v-9-ah-lithium-ion-dcb609.html"
+   "https://www.linenplus.ca/en/dewalt-flexvoltr-battery-20-v-60-v-9-ah-lithium-ion-dcb609.html",
+   "https://assets.cef.co.uk/downloads/pdg/dewalt_dcb547-xj_datasheet/dewalt_dcb547-xj_datasheet.pdf",
+   "https://www.dewalt.co.uk/product/dcb547-xe/xr-flexvolt-9-ah-battery",
+   "https://assets.cef.co.uk/downloads/pdg/dewalt_dcb546-xj_datasheet/dewalt_dcb546-xj_datasheet.pdf",
+   "https://www.dewalt.com/product/dcb609/20v60v-max-flexvolt-9ah-battery"
   ],
-  "confidence": "product page",
-  "notes": "180 Wh published. Weight 3.2-3.45 lb (product page); 1565 g = 3.45 lb upper figure. Dims 7.6x3.625x8.1 in from Linen Plus (Canada) - the 8.1 in height looks large, verify. 9.0 Ah at 20V / 3.0 Ah at 60V. 60 V mode needs DC-DC for J501. Power-tool pack: typically no discharge-cutoff MOSFET in the pack; the tool reads the pack and does UV cutoff (estimate, not published). Robot MUST implement its own UVLO (~15 V for 5S, ~3.0 V/cell) and current limit. Continuous current not published by manufacturer. Needs a dock/adapter; latch gives fast hot-swap. Cell format/parallel count not published in fetched sources; series count inferred from brand voltage class (estimate). Dimensions corrected 2026-10-25 to 157 x 92 x 110 mm (the same pack as the 20 V-mode entries; 193 x 92 x 206 was a package size).",
+  "confidence": "datasheet",
+  "notes": "180 Wh published. Weight 3.2-3.45 lb (product page); 1565 g = 3.45 lb upper figure. Dims 7.6x3.625x8.1 in from Linen Plus (Canada) - the 8.1 in height looks large, verify. 9.0 Ah at 20V / 3.0 Ah at 60V. 60 V mode needs DC-DC for J501. Power-tool pack: typically no discharge-cutoff MOSFET in the pack; the tool reads the pack and does UV cutoff (estimate, not published). Robot MUST implement its own UVLO (~15 V for 5S, ~3.0 V/cell) and current limit. Continuous current not published by manufacturer. Needs a dock/adapter; latch gives fast hot-swap. Cell format/parallel count not published in fetched sources; series count inferred from brand voltage class (estimate). Dimensions corrected 2026-10-25 to 157 x 92 x 110 mm (the same pack as the 20 V-mode entries; 193 x 92 x 206 was a package size). Pack dims 138 x 87 x 97 mm and 1.46 kg come from DeWalt's datasheet for the DCB547 (EU name for the same 9 Ah FLEXVOLT pack); tool_batteries.json entries dewalt-dcb609-20v-mode and dewalt-2x-dcb609-20v-series still say 157 x 92 x 110 and should be updated to match. Not verified (2026-10-26): that DCB547 and DCB609 are dimensionally identical (DeWalt markets them as the same 9 Ah FLEXVOLT pack, but no single page states it); rail/terminal positions along L (no DeWalt drawing); which mass (1460 vs 1565 g) is correct.",
   "preferred": true
  },
  {
@@ -1862,18 +1879,49 @@
    "length_mm": 102,
    "width_mm": 32,
    "height_mm": 125.2,
-   "mounting": "DIN rail (TS-35)"
+   "mounting": {
+    "din_rail": "TS35/7.5 or TS35/15 (EN 60715), snap-on latch on the 32 x 125.2 rear face",
+    "screw_holes": "none for mounting: the two holes on the side face are marked 'No Use' on the drawing",
+    "robot_note": "screw a ~40 mm length of TS35 rail to the chassis; vibration rated to IEC 61373 (railway) when DIN mounted"
+   },
+   "dimensions_mm": [
+    102,
+    32,
+    125.2
+   ],
+   "dimensions_axes": "L = depth from front face to DIN-rail face, W = width along the rail, H = height across the rail (terminals on the 32 x 102 top and bottom faces)",
+   "dimensions_mm_basis": "datasheet DDR-120-SPEC 2026-09-10 p.9, case no. 221, tolerance +/-1 mm",
+   "envelope_with_din_latch_mm": [
+    112.3,
+    32.0,
+    125.2
+   ],
+   "envelope_with_din_latch_mm_basis": "measured-from-CAD (Mean Well DDR-120.stp): case 102.5 deep, the DIN latch adds ~9.8 mm on the rail face; latch may be modelled pulled out",
+   "mass_g_basis": "datasheet 'PACKING 510g' (per-unit weight incl. individual carton; 28 pcs = 15.3 kg carton)",
+   "mass_note": "Net (unpacked) mass is not published; 510 g is the packed per-unit figure, so treat it as a conservative upper bound (net likely ~10-15 % less, estimate).",
+   "mounting_basis": "datasheet p.9 drawing and p.2 (vibration: Mounting compliance to IEC61373)",
+   "terminals": {
+    "input": "TB1 on the bottom face: 3-way screw terminal, pin 1 FG, 2 -Vin, 3 +Vin",
+    "output": "TB2 on the top face: 4-way screw terminal, pins 1,2 -Vo, 3,4 +Vo; Vo adj. pot and DC-OK LED on the front face"
+   },
+   "terminals_basis": "datasheet p.9 drawing",
+   "cable_exits": "input wires leave the bottom (125.2 mm face end), output wires the top; leave ~25 mm above and below for wire bend radius (estimate)",
+   "orientation_cooling": "free-air convection, no fan. Derating curve is for VERTICAL mounting (terminals up/down, as on a vertical DIN rail): 100 % load to +55 C, linear to 40 % at +70 C; 150 % peak for 3 s. Input below 43.2 V derates output to 85 %. Other orientations not rated by the datasheet: keep vents at top and bottom clear.",
+   "orientation_cooling_basis": "datasheet p.4 derating curves"
   },
   "cad": {
-   "step_url": null,
-   "available": false
+   "step_url": "https://www.meanwell.com/upload/pdf/DDR-120/DDR-120-3D.zip",
+   "available": true,
+   "local": "references/vendor/meanwell-ddr-120c-24/DDR-120.stp",
+   "note": "series model (all DDR-120 variants share case 221); STEP bbox 112.25 x 32.0 x 125.2 mm incl. DIN latch"
   },
   "sources": [
    "https://www.meanwell.com/Upload/PDF/DDR-120/DDR-120-SPEC.PDF",
-   "https://www.bravoelectro.com/ddr-120c-24.html"
+   "https://www.bravoelectro.com/ddr-120c-24.html",
+   "https://www.meanwell.com/webapp/product/search.aspx?prod=DDR-120"
   ],
   "confidence": "datasheet",
-  "notes": "Top pick for J501 on a 48 V-class bus: isolated, 91 % efficient, 33.6-67.2 V input covers 12S/13S (54.6 V) with headroom for regen, 150 % peak for 3 s handles Orin load spikes, internal reverse-polarity MOSFET, EN50155 S1 interruption. 120 W = 2x the J501's 60 W max. Mass is packed weight (510 g)."
+  "notes": "Top pick for J501 on a 48 V-class bus: isolated, 91 % efficient, 33.6-67.2 V input covers 12S/13S (54.6 V) with headroom for regen, 150 % peak for 3 s handles Orin load spikes, internal reverse-polarity MOSFET, EN50155 S1 interruption. 120 W = 2x the J501's 60 W max. Mass is packed weight (510 g). Mechanical data checked 2026-10-26 against the spec drawing and Mean Well's STEP: 102 D x 32 W x 125.2 H (112.3 deep with the DIN latch), DIN rail only, input terminals bottom / output top, rated for vertical mounting with 100 % load to 55 C. A 45-60 V FLEXVOLT bus is above the 43.2 V input-derating knee, so full 120 W is available. Not verified (2026-10-26): net (unpacked) mass - only the 510 g packed figure is published; terminal wire range and torque (installation manual not found on meanwell.com); derating for horizontal / non-vertical mounting; whether the STEP models the DIN latch in its closed position."
  },
  {
   "id": "meanwell-rsd-150c-24",
@@ -2714,18 +2762,51 @@
    "mass_g": 120,
    "length_mm": 54.5,
    "width_mm": 35,
-   "height_mm": 90
+   "height_mm": 90,
+   "dimensions_mm": [
+    54.5,
+    35,
+    90
+   ],
+   "dimensions_axes": "L = depth from front face to DIN-rail face, W = width along the rail, H = height across the rail (terminals on the top and bottom ends)",
+   "dimensions_mm_basis": "datasheet DDR-30-SPEC 2026-03-31 p.4, tolerance +/-0.5 mm",
+   "envelope_with_din_latch_mm": [
+    58.6,
+    35.0,
+    92.4
+   ],
+   "envelope_with_din_latch_mm_basis": "measured-from-CAD (Mean Well DDR-30.stp); drawing gives 58.4 deep incl. latch",
+   "mass_g_basis": "datasheet 'PACKING 0.12Kg' (per-unit weight incl. individual carton; 96 pcs = 12.5 kg carton)",
+   "mass_note": "Net mass not published; 120 g is the packed per-unit figure (conservative upper bound).",
+   "mounting": {
+    "din_rail": "TS35/7.5 or TS35/15, snap-on latch on the rear face",
+    "screw_holes": "none",
+    "robot_note": "short TS35 rail section screwed to the chassis; can share the rail with the DDR-120"
+   },
+   "mounting_basis": "datasheet p.4 drawing",
+   "terminals": {
+    "output": "top end: 2 screw terminals, pin 1 +Vo, pin 2 -Vo",
+    "input": "bottom end: 2 screw terminals, pin 3 -Vin, pin 4 +Vin",
+    "indicator": "power LED on the front face"
+   },
+   "terminals_basis": "datasheet p.4 drawing",
+   "cable_exits": "output wires leave the top, input wires the bottom (screw heads on the front face)",
+   "orientation_cooling": "free-air convection, no fan. Derating curve (vertical mounting): 100 % load to +60 C, falling to 40 % at +85 C. L-type input below 24 V derates to 85 % (not relevant on a 45-60 V bus).",
+   "orientation_cooling_basis": "datasheet p.3 derating curves"
   },
   "cad": {
-   "step_url": null,
-   "available": false
+   "step_url": "https://www.meanwell.com/upload/pdf/DDR-30/DDR-30-3D.zip",
+   "available": true,
+   "local": "references/vendor/meanwell-ddr-30l-12/DDR-30.stp",
+   "note": "series model; STEP bbox 35.0 x 92.4 x 58.6 mm incl. DIN latch"
   },
   "sources": [
    "https://www.meanwell.com/Upload/PDF/DDR-30/DDR-30-SPEC.PDF",
-   "https://www.bravoelectro.com/ddr-30l-12.html"
+   "https://www.bravoelectro.com/ddr-30l-12.html",
+   "https://www.meanwell.com/webapp/product/search.aspx?prod=DDR-30"
   ],
   "confidence": "datasheet",
-  "notes": "Isolated 12 V aux for either bus voltage."
+  "notes": "Isolated 12 V aux for either bus voltage. Mechanical data checked 2026-10-26 against the spec drawing and Mean Well's STEP. Budget check: lidar ~8 W + 20 W headlights + ALEV100 12 V coil 5.5 W = ~33.5 W, above this unit's 30 W - dim the lights, use a DDR-60L-12, or put the contactor coil elsewhere. Not verified (2026-10-26): net (unpacked) mass; terminal wire range and torque."
  },
  {
   "id": "meanwell-ddr-30g-5",
@@ -3084,20 +3165,40 @@
    "continuous_current_a": 100,
    "continuous_current_heatsink_version_a": 60,
    "max_current_a": 200,
-   "mass_g": 200,
+   "mass_g": 150,
    "length_mm": 83.9,
    "width_mm": 45,
-   "height_mm": 17
+   "height_mm": 17,
+   "variant": "V3.0 with aluminium PCB and aluminium case (SKU AWAPFS14SH, $48); the $33 price in this entry is the heatsink version (42.2 x 33 x 26.6 mm, 12 AWG, 60 A continuous)",
+   "dimensions_mm": [
+    83.9,
+    45,
+    17
+   ],
+   "dimensions_axes": "L = along the wire axis (battery leads leave one short end, ESC leads the other), W = 45, H = 17 (flat; LED/button connector on the top face)",
+   "dimensions_mm_basis": "product page (alu PCB/case V3.0: 83.9 x 45 x 17 mm, 8 AWG)",
+   "mass_g_basis": "estimate",
+   "mass_note": "Not published; 200 g is the Shopify shipping weight for all three variants. Estimate for the alu-case body with short 8 AWG leads.",
+   "mounting": "No mounting flanges or holes on the alu case (only the case's own assembly screws). Hold it with a printed cradle / strap or VHB against a plate; the flat aluminium face spreads MOSFET heat.",
+   "mounting_basis": "product page photos",
+   "cable_exits": "IN+ / IN- (battery, 8 AWG) leave one short end; OUT+ / OUT- (to ESC, 8 AWG) leave the opposite short end, so it sits in-line in the main lead. A 5-pin JST-style socket (S, +, LED-, LED+) on the top face near the IN end takes the 16 mm illuminated push button lead (button needs a 16 mm panel hole).",
+   "cable_exits_basis": "product page wiring diagram",
+   "button_panel_hole_mm": 16,
+   "orientation_cooling": "Any orientation. 100 A continuous only with the aluminium PCB/case; heatsink version 60 A.",
+   "max_voltage_note": "Rated 3S-14S / 60 V max. A full FLEXVOLT (15S) is 60.0 V with no margin, and regen pushes the bus higher; MOSFETs are HYG015N10NS1TA (100 V parts) but the vendor rating is 60 V."
   },
   "cad": {
    "step_url": null,
-   "available": false
+   "available": false,
+   "note": "No vendor CAD; a box 83.9 x 45 x 17 with leads on both short ends is enough."
   },
   "sources": [
-   "https://flipsky.net/products/flipsky-antispark-switch-pro-with-aluminum-pcb-case-200a-for-electric-skateboard-ebike-scooter-robots"
+   "https://flipsky.net/products/flipsky-antispark-switch-pro-with-aluminum-pcb-case-200a-for-electric-skateboard-ebike-scooter-robots",
+   "https://flipsky.net/products/flipsky-antispark-switch-pro-with-aluminum-pcb-case-200a-for-electric-skateboard-ebike-scooter-robots.json",
+   "https://cdn.shopify.com/s/files/1/0011/4039/1996/files/f4b3da9554de4e60ffd11b8edcb16ff8_96ad10a7-2b60-4015-be3c-d685e2be4bd3_1024x1024.jpg?v=1714976886"
   ],
   "confidence": "product page",
-  "notes": "14S/60 V; 100 A continuous in alu-case version. Dims are for alu PCB/case version. Mass is shipping weight."
+  "notes": "14S/60 V; 100 A continuous in alu-case version. Dims are for alu PCB/case version. Mass is shipping weight. Vendor limit is 14S/60 V: a fully charged 15S FLEXVOLT (60 V) plus any regen is at or above the rating, so keep the 58 V regen clamp and consider a switch rated for 20S. No mounting holes on the alu-case version. Not verified (2026-10-26): mass (estimate 150 g); lead length out of each end; button connector pitch/type."
  },
  {
   "id": "flipsky-anti-spark-switch-smart-300a-v4",
@@ -3307,18 +3408,44 @@
    ],
    "stud": "5/16-18 (8 mm)",
    "ingress": "IP66 with MRBF fuse",
-   "width_mm": 63.5,
-   "height_mm": 50.8
+   "width_mm": 20.0,
+   "height_mm": 44.5,
+   "dimensions_mm": [
+    60.9,
+    20.0,
+    44.5
+   ],
+   "dimensions_axes": "L = along the base plate from the mounting-hole end to the stud end, W = plate width, H = base underside to top of the M8 output stud (the insulator body is 11.0 mm tall without the stud)",
+   "dimensions_mm_basis": "datasheet (Blue Sea dimensioned drawing 5191.jpg: 2.40 in / 60.9, 0.79 in / 20.0, 1.75 in / 44.5, 0.43 in / 11.0, plate 0.10 in / 2.5 mm)",
+   "length_mm": 60.9,
+   "mass_g": 70,
+   "mass_g_basis": "product page (0.16 lb / 0.07 kg), without fuse",
+   "mounting": {
+    "hole": "one Ø9.525 mm (3/8 in) hole in the 2.5 mm base plate: slips over a 3/8 in (M10) battery post, switch terminal or bus-bar stud",
+    "hole_to_stud_mm": 29.0,
+    "hole_to_stud_basis": "drawing 1.14 in / 29.0 mm (mounting-hole centre to output-stud centre, read from the drawing; confirm on the part)",
+    "output_stud": "M8 (5/16 in) isolated stud, max torque 8.47 N*m (75 in-lb); accepts a 5/16 in ring terminal and stacked terminals",
+    "fuse": "MRBF fuse (30-300 A) bolts between the plate and the stud insulator",
+    "robot_note": "there is no battery stud on the FLEXVOLT dock adapter, so mount it on an M10 bolt/stud in a printed or Al bus block with the battery lead ring under the plate"
+   },
+   "mounting_basis": "Blue Sea dimensioned drawing and mounting diagram; product page",
+   "terminals": "input: the 3/8 in base-plate hole (ring terminal or post); output: M8 stud with nut",
+   "orientation_cooling": "any orientation; keep the exposed stud and plate insulated (boot) because both are live",
+   "max_voltage_v_basis": "product page: 58 V DC max"
   },
   "cad": {
    "step_url": null,
-   "available": false
+   "available": false,
+   "note": "Blue Sea product page offers only 2D JPG drawings (saved under references/vendor/blue-sea-5191-mrbf-terminal-fuse-block/); no STEP found"
   },
   "sources": [
-   "https://www.amazon.com/dp/B0019ZBTV4"
+   "https://www.amazon.com/dp/B0019ZBTV4",
+   "https://www.bluesea.com/products/5191/MRBF_Terminal_Fuse_Block_-_30_to_300A",
+   "https://d2pyqm2yd3fw2i.cloudfront.net/files/resources/dimensioned_drawing/5191.jpg",
+   "https://d2pyqm2yd3fw2i.cloudfront.net/files/resources/mounting_diagram/5191_drawing.jpg"
   ],
-  "confidence": "seller listing",
-  "notes": "Bolts straight onto the battery stud; 58 V DC rating covers 13S (54.6 V) - unlike most automotive ANL/MIDI/ATO fuses which are 32 V parts. Size fuse for wiring (e.g. 80-100 A)."
+  "confidence": "datasheet",
+  "notes": "Bolts straight onto the battery stud; 58 V DC rating covers 13S (54.6 V) - unlike most automotive ANL/MIDI/ATO fuses which are 32 V parts. Size fuse for wiring (e.g. 80-100 A). WARNING: Blue Sea rates the 5191 (and MRBF fuses) at 58 V DC max; a fresh FLEXVOLT pack is 60 V and regen can push the bus higher, so this block is over its rating on the 60 V build - look for a fuse/holder rated >= 80 V (e.g. 125 V-class) instead. Not verified (2026-10-26): hole-to-stud spacing (29.0 mm read from a low-resolution drawing); a 3D model; the 4.5 mm / 0.57 in label on the drawing (units disagree; ignored)."
  },
  {
   "id": "blue-sea-7183-285-series-50a",
@@ -3798,19 +3925,61 @@
    }
   ],
   "specs": {
-   "panel_hole_mm": 22,
+   "panel_hole_mm": 22.5,
    "contacts": "2NC",
-   "contact_rating": "10 A 660 V AC"
+   "contact_rating": "10 A 660 V AC",
+   "panel_hole_mm_basis": "Schneider XB2BS542C datasheet: Ø22.5 recommended (22.3 +0.4/0); the clone listing only says '22mm'",
+   "panel_thickness_mm": [
+    1,
+    6
+   ],
+   "panel_thickness_mm_basis": "Schneider XB2BS542C datasheet (clamping thickness e = 1-6 mm)",
+   "head_diameter_mm": 40,
+   "head_diameter_mm_basis": "Schneider XB2BS542C and generic XB2-BS542 datasheets (Ø40 mushroom)",
+   "height_above_panel_mm": 32,
+   "height_above_panel_mm_basis": "Schneider XB2BS542C drawing (head face to panel front face, released position)",
+   "depth_behind_panel_mm": 66.5,
+   "depth_behind_panel_mm_basis": "estimate from the Schneider drawing: body + one NC block = 42.5 mm from the panel front face, each added ZB2-BE contact block +24 mm; 2NC = 42.5 + 24 = 66.5 (clone may place the second block differently)",
+   "body_behind_panel_mm": [
+    40,
+    30
+   ],
+   "body_behind_panel_mm_basis": "Schneider XB2BS542C (40 x 30 mm body/contact blocks; generic clone drawing 29 mm block width)",
+   "dimensions_mm": [
+    40,
+    40,
+    98.5
+   ],
+   "dimensions_axes": "L x W = head Ø40 (body behind the panel 40 x 30), H = overall front-to-back depth along the button axis: 32 in front of the panel + 66.5 behind (2NC, estimate)",
+   "dimensions_mm_basis": "Schneider XB2BS542C datasheet (1NC: 40 x 40 x 74.5 mm) + one extra ZB2-BE block (estimate)",
+   "min_spacing_mm": [
+    40,
+    30
+   ],
+   "min_spacing_mm_basis": "Schneider panel cut-out table for B2BS4 heads: >= 40 x 30 mm centres",
+   "mass_g": 105,
+   "mass_g_basis": "estimate: Schneider XB2BS542C 1NC net 95 g (datasheet) + ~10 g for the second NC block; clone not weighed",
+   "mounting": {
+    "panel_cutout": "Ø22.5 mm round hole (22.3-22.7), panel 1-6 mm; the anti-rotation tab is optional on XB2",
+    "fixing": "metal clamp collar behind the panel with screw beneath head, 0.8-1.0 N*m",
+    "robot_note": "a 3 mm printed wall on the top/rear of the body works; leave ~70 mm clear behind the hole plus wire bend room"
+   },
+   "mounting_basis": "Schneider XB2BS542C datasheet pp.1-6",
+   "terminals": "screw-clamp terminals on the contact blocks behind the panel, 0.5-2.5 mm^2 (1 x 2.5 or 2 x 1.5 mm^2) per Schneider; clone blocks typically the same M3.5 screw style (estimate)",
+   "orientation_cooling": "any orientation; turn-to-release latching; positive-opening NC on the genuine part (clone uncertified)"
   },
   "cad": {
    "step_url": null,
-   "available": false
+   "available": false,
+   "note": "no clone CAD; Schneider CAD for XB2BS542C (+ ZB2BE102) is the geometry reference but download.schneider-electric.com refused scripted access (HTTP 403) - download it manually from se.com if needed"
   },
   "sources": [
-   "https://www.amazon.com/dp/B07R8PTTDX"
+   "https://www.amazon.com/dp/B07R8PTTDX",
+   "https://docs.rs-online.com/d0d3/A700000014718496.pdf",
+   "https://evelta.com/content/datasheets/408-XB2-BS542.pdf"
   ],
-  "confidence": "seller listing",
-  "notes": "Fine for bench/prototype; uncertified clone of Schneider XB2."
+  "confidence": "estimate",
+  "notes": "Fine for bench/prototype; uncertified clone of Schneider XB2. Geometry is taken from the genuine Schneider XB2BS542C datasheet (the clone copies the XB2 form): Ø22.5 cut-out, Ø40 head 32 mm proud, ~66.5 mm behind the panel with two NC blocks (estimate), ~105 g (estimate). The Amazon listing gives no drawing. Not verified (2026-10-26): clone's actual depth, block arrangement and mass (Amazon listing unreadable, no clone drawing); clone's anti-rotation tab / cut-out keyway; Schneider CAD not downloaded (403)."
  },
  {
   "id": "te-kilovac-ev200aaana",
@@ -4001,17 +4170,49 @@
   "specs": {
    "continuous_current_a": 100,
    "coil_voltage_v": 12,
-   "contacts": "SPST-NO"
+   "contacts": "SPST-NO",
+   "dimensions_mm": [
+    53.9,
+    41.0,
+    52.5
+   ],
+   "dimensions_axes": "Side-mount version. L = across the mounting-flange ears (53.9), W = flange face to the far side of the Ø39.9 body (41.0; body centre is 21.1 mm from the flange face), H = base to top of the M5 terminals (52.5; flange plate is 49.4 tall, can body 35.2 wide)",
+   "dimensions_mm_basis": "datasheet ALEV100 Rev K 05-Feb-2025 p.4, 'B. Side mount-Polar' (tolerance +/-0.3 to 0.6 mm)",
+   "length_mm": 53.9,
+   "width_mm": 41.0,
+   "height_mm": 52.5,
+   "mass_g": 190,
+   "mass_g_basis": "datasheet (0.42 lb / 0.19 kg)",
+   "mounting": {
+    "type": "side mount: flat flange on one side of the can with two ears, one hole each, screw axis perpendicular to the flange (parallel to the 41.0 mm axis)",
+    "hole_size": "M4 clearance (the bottom-mount version specifies 'Two M4 mounting holes'; the side-mount drawing does not size them)",
+    "hole_spacing_mm": null,
+    "hole_spacing_note": "not dimensioned on the drawing; ears span 53.9 mm overall, so centres are roughly 45-47 mm apart (estimate) - measure the part or use the bottom-mount 46.2 mm figure only as a guide",
+    "torque_nm": 2.3,
+    "orientation": "any orientation without loss of performance (datasheet)"
+   },
+   "mounting_basis": "datasheet p.1 (orientation), p.4 (drawing), p.6 (mounting torque 2.3 N*m)",
+   "terminals": {
+    "load": "two M5 x 0.8 threaded inserts on top (+A1, -A2 polarized), max screw depth 7 threads, torque 3.4-4.5 N*m; screws NOT supplied - use M5 screws, split washers, ring lugs direct to the terminal",
+    "coil": "two white 22 AWG flying leads, ~380-390 mm long, non-polar; 12 V coil 461 mA / 5.5 W, pickup 9.6 V, dropout 0.8 V"
+   },
+   "terminals_basis": "datasheet p.2, p.4, p.6",
+   "cable_exits": "load cables leave upward from the M5 terminals (top face); coil leads exit from the top beside the terminals",
+   "orientation_cooling": "any orientation; -40 to +85 C ambient; keep away from magnets/strong fields (datasheet note 4) - i.e. not right next to the hub motors",
+   "variant_decoded": "ALEV100-BS = 12 V coil (B), side mount (S), polarized load terminals, no aux contact"
   },
   "cad": {
    "step_url": null,
-   "available": false
+   "available": false,
+   "note": "no STEP from Altran or distributors found; build from the datasheet drawing"
   },
   "sources": [
-   "https://findchips.com/search/LEV100"
+   "https://findchips.com/search/LEV100",
+   "https://mm.digikey.com/Volume0/opasdata/d220001/medias/docus/7158/ALEV100_DataSheet_05-Feb-2025.pdf",
+   "https://forum.digikey.com/t/contact-screws-for-altran-magnetics-asev30-alev50-alev100-contactors/25837"
   ],
-  "confidence": "seller listing",
-  "notes": "Cheapest LEV100-style sealed contactor from a real distributor."
+  "confidence": "datasheet",
+  "notes": "Cheapest LEV100-style sealed contactor from a real distributor. Dimensions, mass, mounting and terminals from Altran's own ALEV100 datasheet Rev K (side-mount drawing), 2026-10-26. The 'S' suffix is the side-mount version; if a bottom-mount layout suits the bay better, order ALEV100-B (58.0 tall x 53.85 across the base, two M4 holes). Coil draws 5.5 W continuously from the 12 V rail; consider an economiser/PWM hold. Not verified (2026-10-26): side-mount hole spacing and hole diameter (not dimensioned); contactor bounding box in the flange-ear direction includes ears only on the flange side; exact ear thickness."
  },
  {
   "id": "hiitio-hcz01-250f-a",
@@ -5471,17 +5672,37 @@
    "mcu": "STM32G474 170 MHz",
    "can_channels": 3,
    "can_fd": true,
-   "transceiver_onboard": false
+   "transceiver_onboard": false,
+   "dimensions_mm": [
+    36.28,
+    28.14,
+    12.25
+   ],
+   "dimensions_axes": "L = 36.28 (USB-C end to SWD end), W = 28.14, H = 12.25 with soldered pin headers (3.75 below the PCB, 8.5 above incl. parts); bare PCB ~1.6",
+   "dimensions_mm_basis": "L, W: board-shape drawing WeAct-STM32G474CoreBoard_V10; H: measured-from-CAD (STEP 36.53 x 28.40 x 12.25)",
+   "mass_g": 8,
+   "mass_g_basis": "estimate (not published): ~5 g bare board + ~3 g headers",
+   "mounting": {
+    "holes": "none: no mounting holes",
+    "headers": "48 pins on a 2.54 mm grid: two double rows of 12 along the long edges. Row centres 1.37 and 3.91 mm from the top edge and 3.91 / 1.37 mm from the bottom edge (inner rows 20.32 apart); first column 6.97 mm from the USB end; 12 columns at 2.54 pitch",
+    "rule": "plug into 2x 2x12 female headers on a carrier/backplane PCB, or clamp in a printed cradle; SWD 4-pin right-angle header on the end opposite the USB"
+   },
+   "mounting_basis": "board-shape drawing (Hardware/QFN48/WeAct-STM32G474CoreBoard_V10 Board Shape)",
+   "connector": "USB-C on one short end (left in the drawing); 4-pin 2.54 mm right-angle SWD header (GND/CLK/DIO/3V3) on the other short end; NRST, BOOT0 and KEY buttons on top",
+   "cable_exits": "USB-C along -L; SWD along +L; header wiring up/down",
+   "orientation_cooling": "no cooling needed"
   },
   "cad": {
-   "step_url": null,
-   "available": false
+   "step_url": "https://raw.githubusercontent.com/WeActStudio/WeActStudio.STM32G474CoreBoard/master/Hardware/QFN48/WeAct-STM32G47x_CoreBoard_3D.step",
+   "available": true,
+   "local": "references/vendor/weact-stm32g474-core/WeAct-STM32G47x_CoreBoard_3D.step"
   },
   "sources": [
-   "https://github.com/WeActStudio/WeActStudio.STM32G474CoreBoard"
+   "https://github.com/WeActStudio/WeActStudio.STM32G474CoreBoard",
+   "https://github.com/WeActStudio/WeActStudio.STM32G474CoreBoard/tree/master/Hardware/QFN48"
   ],
-  "confidence": "estimate",
-  "notes": "Tiny, cheap G474 board for a custom PCB/backpack. Same FDCAN capability as the Nucleo, but no debugger. Check the WeAct repo for whether a transceiver is fitted (assumed not). ASSUMED default balance controller (D7): 3× FDCAN (motors + J501 link), 170 MHz Cortex-M4F with FPU, UART for the VN-100; needs CAN transceivers.",
+  "confidence": "datasheet",
+  "notes": "Tiny, cheap G474 board for a custom PCB/backpack. Same FDCAN capability as the Nucleo, but no debugger. Check the WeAct repo for whether a transceiver is fitted (assumed not). ASSUMED default balance controller (D7): 3× FDCAN (motors + J501 link), 170 MHz Cortex-M4F with FPU, UART for the VN-100; needs CAN transceivers. Board 36.28 x 28.14 mm (QFN48 V1.0), no mounting holes: it mounts by its 2.54 mm headers. No transceiver on board (schematic), so add two SN65HVD230 boards. A 'Long' variant also exists in the repo. Not verified (2026-10-26): mass (estimate); price; which variant (standard vs Long, QFN48 vs QFP48) the user will buy.",
   "preferred": true
  },
  {
@@ -5758,7 +5979,24 @@
    "switch": false,
    "max_current_a": null,
    "connector": "bare leads",
-   "fits": "DeWalt FLEXVOLT (60 V mode)"
+   "fits": "DeWalt FLEXVOLT (60 V mode)",
+   "dimensions_mm": [
+    80,
+    65,
+    30
+   ],
+   "dimensions_axes": "L = along the pack's slide direction, W = across the rails, H = dock base to the pack's rail face (estimate)",
+   "dimensions_mm_basis": "estimate",
+   "mass_g": 60,
+   "mass_g_basis": "estimate",
+   "mass_note": "Not published (eBay listing could not be read: eBay returns 403/error to scripts and the browser). 60 g assumed for a printed dock with ~30 cm of 12 AWG leads.",
+   "mounting": "Not published. Third-party printed docks usually have 2-4 countersunk holes through the base (M3/M4) - measure the part when it arrives.",
+   "mounting_basis": "estimate",
+   "mates_with": "DeWalt FLEXVOLT pack top face (rail tower + terminal slot). The pack slides onto the dock along its 138 mm length until the pack's latch clicks; release button is at the pack's rear end.",
+   "stack_height_mm": 110,
+   "stack_height_mm_basis": "estimate: DCB609 97 mm (datasheet, height includes the rail tower) + ~13 mm dock base under it",
+   "cable_exits": "Two bare 12 AWG leads (red/black) from the dock (exit position unknown)",
+   "mode_60v": "FLEXVOLT packs only connect their cells in series (60 V) when the 60 V tool foot actuates the pack's internal switch; a dock that lacks that feature gives 20 V. The listing title says '60V max' and the item specific says 54 V, which suggests the 60 V switch is engaged, but this is unconfirmed - check with a meter before wiring the DC-DC."
   },
   "cad": {
    "step_url": null,
@@ -5766,10 +6004,12 @@
   },
   "sources": [
    "https://ebay.com/str/terrafirmatechnology/Business-Industrial/_i.html",
-   "https://www.ebay.com/itm/144006678331"
+   "https://www.ebay.com/itm/144006678331",
+   "https://www.ebay.de/itm/142917514402",
+   "https://assets.cef.co.uk/downloads/pdg/dewalt_dcb547-xj_datasheet/dewalt_dcb547-xj_datasheet.pdf"
   ],
-  "confidence": "seller listing",
-  "notes": "Whether this dock engages the FLEXVOLT 60 V switch tab must be confirmed with seller. 54 V nominal / 60 V max: needs DC-DC for J501 and a fuse added."
+  "confidence": "estimate",
+  "notes": "Whether this dock engages the FLEXVOLT 60 V switch tab must be confirmed with seller. 54 V nominal / 60 V max: needs DC-DC for J501 and a fuse added. Dimensions, mass and mounting are unpublished (eBay listing unreadable); values are placeholders to be measured. The 12 AWG leads limit continuous current (about 30-40 A in free air) - fine for the 2x 75100 if peaks are short, but check. Not verified (2026-10-26): all dimensions; mass; mounting holes; whether the 60 V switch is actuated; lead exit position; current rating."
  },
  {
   "id": "amass-xt30-2plus2-motor-cable",
@@ -6356,9 +6596,9 @@
   "specs": {
    "mass_g": 15,
    "dimensions_mm": [
-    36,
-    33,
-    9
+    33.1,
+    35.9,
+    8.9
    ],
    "voltage_range_v": [
     4.5,
@@ -6366,19 +6606,35 @@
    ],
    "power_typical_w": 0.22,
    "interface": "Serial TTL, RS-232",
-   "connector": "10-pin Harwin",
+   "connector": "Harwin Datamate J-Tek 10-pin, 2 mm pitch (M80-5001042) on the -X end face with two jack-screw holes; mating plug from the Harwin M80 range",
    "max_rate_hz": 800,
-   "max_rate_note": "800 Hz IMU data"
+   "max_rate_note": "800 Hz IMU data",
+   "dimensions_axes": "L = 33.1 along the sensor X axis (connector end to far end, incl. connector), W = 35.9 across the two mounting tabs (body 25.8 without tabs), H = 8.9 (tabs 2.0 thick at the base)",
+   "dimensions_mm_basis": "drawing VN-100-CR-ASM rev 7.0.0; STEP bbox 35.92 x 33.11 x 8.92 (measured-from-CAD) agrees",
+   "mass_g_basis": "product page (15 g)",
+   "mounting": {
+    "screws": "2x dia 3.18 mm through-holes in side tabs for 4-40 or M3 screws, 30.84 mm apart (across W), 17.8 mm from the connector-end face along L",
+    "dowels": "2x dia 1.59 mm holes for 1/16 in dowel pins, 3.81 mm from each screw hole toward the far (non-connector) end, same W positions (30.84 apart)",
+    "tab_thickness_mm": 2.0,
+    "rule": "mount rigidly, flat on the base; per the drawing the printed axes are X along L pointing away from the connector, Y across the tabs, Z down into the mounting face"
+   },
+   "mounting_basis": "drawing VN-100-CR-ASM rev 7.0.0",
+   "cable_exits": "along -X from the connector end face; leave ~25 mm for the Datamate plug body and jack screws plus bend radius",
+   "orientation_cooling": "No cooling needed (0.22 W). Mount near the centre of mass, aligned to the body axes."
   },
   "cad": {
-   "step_url": null,
-   "available": null
+   "step_url": "https://www.vectornav.com/docs/default-source/cad-files/vn100_rugged.step?sfvrsn=ee60a9dd_3&download=true",
+   "available": true,
+   "local": "references/vendor/vectornav-vn-100-rugged/vn100_rugged.step",
+   "drawing": "https://www.vectornav.com/docs/default-source/mechanical-drawings/vn-100-cr-asm_v7.0.0.pdf?sfvrsn=829b12ec_3"
   },
   "sources": [
-   "https://www.vectornav.com/products/detail/vn-100"
+   "https://www.vectornav.com/products/detail/vn-100",
+   "https://www.vectornav.com/docs/default-source/mechanical-drawings/vn-100-cr-asm_v7.0.0.pdf?sfvrsn=829b12ec_3",
+   "https://www.vectornav.com/resources/detail/vn-100-rugged-step-file"
   ],
-  "confidence": "product page",
-  "notes": "Calibrated, temperature-compensated AHRS. Mount it rigidly on the body near the centre of mass (not on the lidar mast) and read it from the balance MCU over TTL serial at up to 800 Hz."
+  "confidence": "datasheet",
+  "notes": "Calibrated, temperature-compensated AHRS. Mount it rigidly on the body near the centre of mass (not on the lidar mast) and read it from the balance MCU over TTL serial at up to 800 Hz. Hole pattern from VectorNav drawing VN-100-CR-ASM 7.0.0: 2x 3.18 mm (4-40/M3) 30.84 mm apart plus 2x 1/16 in dowel holes; vendor STEP downloaded. Not verified (2026-10-26): price (quote only)."
  },
  {
   "id": "waveshare-0-71-dualeye-lcd",
@@ -6402,7 +6658,7 @@
    "dimensions_mm": [
     51,
     20,
-    null
+    7
    ],
    "displays": 2,
    "resolution_px": [
@@ -6421,18 +6677,32 @@
     5
    ],
    "power_typical_w": null,
-   "includes": "cable and two convex lenses"
+   "includes": "cable and two convex lenses",
+   "dimensions_axes": "L = 51 across both eyes, W = 20 tall (screen diameter 18 each), H = 7 thickness from screen face to the back of the connector/M2 nuts (H is an ESTIMATE; the vendor STEP is board-only, 1.86 mm)",
+   "dimensions_mm_basis": "L, W: Waveshare size drawing; H: estimate",
+   "mass_g_basis": "product page 0.011 kg (may include the cable and lenses)",
+   "mounting": {
+    "holes": "2x M2 threaded brass nuts/standoffs on the back (outer dia ~3.8), 41.0 mm apart, on the board's horizontal centreline (10.0 mm from the top edge), symmetric about the board centre",
+    "rule": "screw from behind through a printed plate with 2x M2; screens face forward through two ~19 mm round windows (screen centres are not dimensioned; on the drawing they sit close to the M2 positions)"
+   },
+   "mounting_basis": "Waveshare size drawing (0.71inch-DualEye-LCD-Module-details-size.jpg)",
+   "connector": "SH1.0 11-pin on the back, centred along L, 13.3 mm wide, ~9.0 mm above the bottom edge; cable included",
+   "cable_exits": "from the back connector; allow ~8 mm behind the board for the SH1.0 plug and cable bend",
+   "orientation_cooling": "No cooling. Round IPS screens face forward; lenses (included) sit in front of the screens."
   },
   "cad": {
-   "step_url": null,
-   "available": null
+   "step_url": "https://files.waveshare.com/wiki/0.71inch_DualEye_LCD_Module/0.71inch-DualEye-LCD-Module-3D-File.zip",
+   "available": true,
+   "local": "references/vendor/waveshare-0-71-dualeye-lcd/0.71inch-DualEye-LCD-Module.step",
+   "note": "STEP is a board outline only (51.1 x 20.1 x 1.86 mm measured): no screens, connector or M2 nuts"
   },
   "sources": [
    "https://www.waveshare.com/0.71inch-dualeye-lcd-module.htm",
-   "http://www.waveshare.com/wiki/0.71inch_DualEye_LCD_Module"
+   "http://www.waveshare.com/wiki/0.71inch_DualEye_LCD_Module",
+   "https://www.waveshare.com/w/upload/5/55/0.71inch-DualEye-LCD-Module-details-size.jpg"
   ],
   "confidence": "product page",
-  "notes": "Gyropup's eyes: two round 160x160 screens on one 20 x 51 mm board, with lenses. Drive them from a small separate controller (e.g. an ESP32) so the character layer never touches the balance loop."
+  "notes": "Gyropup's eyes: two round 160x160 screens on one 20 x 51 mm board, with lenses. Drive them from a small separate controller (e.g. an ESP32) so the character layer never touches the balance loop. Mounting from the Waveshare size drawing: 2x M2 nuts 41 mm apart on the back, SH1.0 11-pin connector centred on the back. Not verified (2026-10-26): total thickness with screens, connector and M2 nuts (7 mm is an estimate); screen centre spacing (not dimensioned; appears close to the 41 mm hole spacing); M2 nut depth; whether the 11 g includes cable and lenses."
  },
  {
   "id": "assumed-regen-clamp-58v",
@@ -6459,8 +6729,131 @@
    "step_url": null,
    "available": null
   },
-  "sources": [],
+  "sources": [
+   "https://www.maxongroup.com/maxon/view/product/235811"
+  ],
   "confidence": "estimate",
-  "notes": "Assumed part. Dumps braking energy into a resistor when the bus rises above 58 V, so a full 60 V FLEXVOLT plus regen cannot push the RS-03s (60 V max) over their limit. Pair it with a charge cap: the robot treats 58 V as full and does not regen above it."
+  "notes": "Assumed part. Dumps braking energy into a resistor when the bus rises above 58 V, so a full 60 V FLEXVOLT plus regen cannot push the RS-03s (60 V max) over their limit. Pair it with a charge cap: the robot treats 58 V as full and does not regen above it. Proposed real part: maxon DSR 70/30 shunt regulator (maxon-dsr-70-30, part 235811): parallel clamp, threshold set by DIP switch in 1 V steps (Vth = 75 V - code; code 17 gives 58 V), 475 W short-term / 25 W continuous, 30 A max, 8800 uF, 180 x 103 x 26 mm, 500 g, EUR 397. Vendor STEP in references/vendor/maxon-dsr-70-30."
+ },
+ {
+  "id": "maxon-dsr-70-30",
+  "category": "power_distribution",
+  "vendor": "maxon",
+  "model": "DSR 70/30 shunt regulator (235811)",
+  "price_usd": 444.53,
+  "price_note": "maxon online shop EUR 397.15 qty 1-4 excl. VAT and shipping (EUR 372.94 at 5-19); converted at 1 EUR = 1.1193 USD",
+  "price_checked": "2026-10-26",
+  "buy": [
+   {
+    "seller": "maxon online shop",
+    "url": "https://www.maxongroup.com/maxon/view/product/235811",
+    "in_stock": null,
+    "ships_from": "CH"
+   }
+  ],
+  "specs": {
+   "function": "regen_clamp",
+   "topology": "shunt regulator in parallel with the bus; internal brake resistor; optional external resistor >= 5 ohm",
+   "supply_voltage_range_v": [
+    12,
+    70
+   ],
+   "trip_voltage_v": 58.0,
+   "trip_voltage_note": "Threshold 12-75 V set by DIP switch S1-6: Vth = 75 V - binary code x 1 V; code 17 (switches 1 and 5 ON) = 58 V",
+   "trip_voltage_range_v": [
+    12,
+    75
+   ],
+   "power_peak_w": 475,
+   "power_continuous_w": 25,
+   "power_continuous_note": "25 W at 25 C without extra cooling (housing ~2.2 K/W); more with a heatsink or fan",
+   "max_current_a": 30,
+   "buffer_capacitance_uf": 8800,
+   "no_load_current_ma": 15,
+   "operating_temp_note": "derating curve in manual; storage -40 to +85 C",
+   "mass_g": 500,
+   "mass_g_basis": "datasheet (ca. 500 g)",
+   "dimensions_mm": [
+    180,
+    103,
+    26
+   ],
+   "dimensions_axes": "L = 180 (mounting slots at each end), W = 103, H = 26 (mounting face to top)",
+   "dimensions_mm_basis": "datasheet; STEP bounding box 180.0 x 26.0 x 103.0 (measured-from-CAD)",
+   "mounting": {
+    "type": "flanges at both short ends with open-ended slots",
+    "holes": 4,
+    "pattern_mm": [
+     76.8,
+     174
+    ],
+    "pattern_note": "174 mm between slot centres along L; slots 76.8 mm apart across W, the first 12 mm from the left edge (103 wide)",
+    "fastener": "M4"
+   },
+   "mounting_basis": "datasheet dimension drawing (Operating Instructions ch. 9)",
+   "terminals": "one 10-pole pluggable PCB terminal strip (5 mm pitch, 0.14-1.5 mm2 / AWG 26-16) along one long side: 1-2 external resistor, 3/8 safety earth, 4-5 input +Vcc/GND, 6-7 output 1, 9-10 output 2. DIP switches and two LEDs (yellow: dissipating, red: over-temperature) on the same side.",
+   "orientation_cooling": "Dissipates through its aluminium housing; mount the flat back on a metal plate or give it airflow. Over-temperature shuts the clamp off, so the robot must also stop regenerating (charge cap at 58 V).",
+   "wire_note": "Parallel tap only (it does not carry motor current), so AWG 16 to the bus is enough."
+  },
+  "cad": {
+   "step_url": "https://www.maxongroup.com/medias/sys_master/root/8834319417374/235811-CAD-Files.zip",
+   "available": true,
+   "local": "references/vendor/maxon-dsr-70-30/bremschopper_70_30_zusammenbau_asm.stp"
+  },
+  "sources": [
+   "https://www.maxongroup.com/maxon/view/product/235811",
+   "https://www.maxongroup.com/medias/sys_master/root/8834319024158/235811-DSR-70-30-Operating-Instructions-En.pdf",
+   "https://www.maxongroup.com/medias/sys_master/root/8834319417374/235811-CAD-Files.zip"
+  ],
+  "confidence": "datasheet",
+  "notes": "Proposed real part for the regen_clamp slot (replaces assumed-regen-clamp-58v). Sized against a ~30 kg robot braking from 3 m/s (135 J; ~270 W if shed in 0.5 s) plus RS-04 squat regen: fits inside 475 W short-term, and the battery absorbs regen whenever it is below 58 V, so the clamp only works near full charge. Rejected: AMC SRST50/SRST70 (fixed 50 V / 70 V clamp - 50 V would drain a 54 V pack, 70 V exceeds the 60 V parts) and Applied Motion RC880 (series diode clamp tracking the supply, 15 A through-current limit, blocks regen into the battery)."
+ },
+ {
+  "id": "waveshare-sn65hvd230-can-board",
+  "category": "can_adapter",
+  "vendor": "Waveshare",
+  "model": "SN65HVD230 CAN Board (3.3 V CAN transceiver module)",
+  "price_usd": 4.99,
+  "price_note": "Waveshare store, single unit; robot needs 2 (motor bus + J501 link)",
+  "price_checked": "2026-10-26",
+  "buy": [
+   {
+    "seller": "Waveshare",
+    "url": "https://www.waveshare.com/sn65hvd230-can-board.htm",
+    "in_stock": null,
+    "ships_from": "CN"
+   }
+  ],
+  "specs": {
+   "transceiver": "TI SN65HVD230 (CAN 2.0, up to 1 Mbit/s; not CAN-FD rated)",
+   "voltage_v": 3.3,
+   "mass_g": 3,
+   "mass_g_basis": "product page (0.003 kg)",
+   "dimensions_mm": [
+    32.5,
+    13.8,
+    10.3
+   ],
+   "dimensions_axes": "L = 32.5 overall incl. the straight 4-pin header overhanging one end and the screw terminal at the other (PCB ~27.2 long), W = 10.3 board width, H = 13.8 from header pin tips under the board to the top of the screw terminal",
+   "dimensions_mm_basis": "measured-from-CAD (Waveshare STEP); product photos agree",
+   "mounting": "no mounting holes; hold by its 4-pin 2.54 mm header (into a female header on the MCU carrier) or a printed slot/clip",
+   "mounting_basis": "product photos and STEP",
+   "connector": "4-pin 2.54 mm header (3.3V, GND, CAN_RX, CAN_TX) at one end; 2-way 5.0 mm screw terminal (CANH, CANL) at the other",
+   "termination": "120 ohm termination resistor fitted on board (schematic R2); remove it on a node that is not at a bus end",
+   "slope_control": "Rs pin via 10k (schematic R1)",
+   "can_fd": false
+  },
+  "cad": {
+   "step_url": "https://files.waveshare.com/upload/c/ca/CAN%20Transiver%20SN65HVD230.step",
+   "available": true,
+   "local": "references/vendor/waveshare-sn65hvd230-can-board/CAN_Transiver_SN65HVD230.step"
+  },
+  "sources": [
+   "https://www.waveshare.com/wiki/SN65HVD230_CAN_Board",
+   "https://www.waveshare.com/sn65hvd230-can-board.htm",
+   "https://files.waveshare.com/upload/c/c5/SN65HVD230-CAN-Board-Schematic.pdf"
+  ],
+  "confidence": "product page",
+  "notes": "Pairs with the WeAct STM32G474 (no on-board transceiver). Classic CAN only: the SN65HVD230 is rated to 1 Mbit/s, so the FDCAN peripherals run in classic mode; for CAN-FD at 5 Mbit/s use a TCAN337/MCP2562FD board instead. Wires from the screw terminal run along +L."
  }
 ]

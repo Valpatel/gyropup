@@ -31,10 +31,10 @@
     "depth_front": "realsense-d435",
     "depth_rear": "realsense-d435",
     "eyes": "waveshare-0-71-dualeye-lcd",
-    "headlights": "assumed-led-pod-pair-20w",
+    "headlights": "diode-dynamics-ssc1-sport-white-pair",
     "imu": "vectornav-vn-100-rugged",
-    "balance_mcu": null,
-    "can_transceiver": null,
+    "balance_mcu": "weact-stm32g474-core",
+    "can_transceiver": "waveshare-sn65hvd230-can-board",
     "leg_actuator": "robstride-rs-04",
     "wheel_motor": "odrive-botwheel",
     "motor_driver": "flipsky-75100",
@@ -47,7 +47,7 @@
     "contactor": "altran-alev100-bs",
     "can_adapter": null,
     "battery_adapter": "terrafirma-flexvolt-60v-dock-adapter",
-    "regen_clamp": "assumed-regen-clamp-58v"
+    "regen_clamp": "maxon-dsr-70-30"
   },
   "battery_count": 1,
   "materials": {

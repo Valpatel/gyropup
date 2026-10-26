@@ -33,11 +33,14 @@ export async function loadCadRig(root, designFile) {
   const loader = new STLLoader();
   const geo = {};
   await Promise.all(Object.values(man.links).flat().map(async (p) => {
-    const g = await loader.loadAsync(`${root}exports/links/${p.file}`);
-    g.applyMatrix4(TO_PAGE);
-    g.computeVertexNormals();
-    geo[p.file] = g;
+    try {                                                       // 'local' meshes (vendor models) exist only where they were built
+      const g = await loader.loadAsync(`${root}exports/links/${p.file}`);
+      g.applyMatrix4(TO_PAGE);
+      g.computeVertexNormals();
+      geo[p.file] = g;
+    } catch { if (!p.local) console.warn('missing mesh', p.file); }
   }));
+  for (const k of Object.keys(man.links)) man.links[k] = man.links[k].filter((p) => geo[p.file]);
   const a = man.thigh_mm / 1000, b = man.shin_mm / 1000, r = man.crank_r_mm / 1000;
   const beta = ((man.lever_beta_deg ?? 0) * Math.PI) / 180;
   const x0 = r * Math.cos(beta), z0 = r * Math.sin(beta);       // the crank pin at the zero pose (CAD x forward, z up)

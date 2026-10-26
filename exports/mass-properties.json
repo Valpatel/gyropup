@@ -2,35 +2,35 @@
  "design": "designs/default.json",
  "parts": {
   "chassis": {
-   "volume_cm3": 663.944,
-   "area_cm2": 2347.36,
+   "volume_cm3": 639.886,
+   "area_cm2": 2236.4,
    "wall_mm": 500.0,
    "infill": 1.0,
    "effective_fill": 1.0,
-   "mass_g": 723.7,
+   "mass_g": 697.5,
    "estimate": true,
    "material": "pa6-cf",
    "qty": 1,
    "com_m": [
-    -0.001686124907393556,
-    1.78845785328451e-17,
-    0.01822244775128591
+    -0.0017495186651483457,
+    -2.619810429659075e-17,
+    0.015988633934081342
    ]
   },
   "battery_cradle": {
-   "volume_cm3": 44.251,
-   "area_cm2": 203.95,
+   "volume_cm3": 38.743,
+   "area_cm2": 179.47,
    "wall_mm": 2.0,
    "infill": 0.4,
-   "effective_fill": 0.953,
-   "mass_g": 52.7,
+   "effective_fill": 0.956,
+   "mass_g": 46.3,
    "estimate": true,
    "material": "petg",
    "qty": 1,
    "com_m": [
-    -0.02434656687276276,
-    -4.9532718463516404e-18,
-    -0.011544419134396347
+    -0.02195725701542464,
+    3.955529157342151e-18,
+    -0.011479650622560865
    ]
   },
   "head_saddle": {
@@ -46,23 +46,39 @@
    "com_m": [
     -5.008335228371117e-18,
     -3.3299996163390604e-17,
-    0.20416158012498034
+    0.19916158012498036
    ]
   },
-  "face": {
-   "volume_cm3": 56.023,
-   "area_cm2": 241.9,
+  "electronics_bay": {
+   "volume_cm3": 252.942,
+   "area_cm2": 1530.5,
    "wall_mm": 2.0,
    "infill": 0.4,
-   "effective_fill": 0.918,
-   "mass_g": 64.3,
+   "effective_fill": 1.0,
+   "mass_g": 316.2,
    "estimate": true,
    "material": "petg",
    "qty": 1,
    "com_m": [
-    0.0942244695460926,
-    -4.935248553010862e-18,
-    0.011319482040893114
+    0.17395971399219234,
+    4.34859458208507e-17,
+    0.004171626087823135
+   ]
+  },
+  "face": {
+   "volume_cm3": 61.853,
+   "area_cm2": 257.72,
+   "wall_mm": 2.0,
+   "infill": 0.4,
+   "effective_fill": 0.9,
+   "mass_g": 69.6,
+   "estimate": true,
+   "material": "petg",
+   "qty": 1,
+   "com_m": [
+    0.23210905587524672,
+    0.0,
+    0.013551514282048167
    ]
   },
   "camera_cradle": {
@@ -76,8 +92,8 @@
    "material": "petg",
    "qty": 2,
    "com_m": [
-    0.10600018373723562,
-    -3.0297824862192428e-18,
+    0.24400018373723562,
+    -1.7082816145704239e-18,
     -0.017935539264389167
    ]
   },
@@ -130,19 +146,19 @@
    ]
   },
   "hip_motor_plate": {
-   "volume_cm3": 378.497,
-   "area_cm2": 578.91,
+   "volume_cm3": 379.119,
+   "area_cm2": 579.69,
    "wall_mm": 500.0,
    "infill": 1.0,
    "effective_fill": 1.0,
-   "mass_g": 412.6,
+   "mass_g": 413.2,
    "estimate": true,
    "material": "pa6-cf",
    "qty": 2,
    "com_m": [
-    -2.087530046386989e-20,
-    0.18109827974326154,
-    -0.039667354586961336
+    3.339963560468892e-18,
+    0.18109852876950605,
+    -0.039645044693044904
    ]
   },
   "hip_output_adapter": {
@@ -178,19 +194,19 @@
    ]
   },
   "knee_motor_plate": {
-   "volume_cm3": 378.497,
-   "area_cm2": 578.91,
+   "volume_cm3": 379.119,
+   "area_cm2": 579.69,
    "wall_mm": 500.0,
    "infill": 1.0,
    "effective_fill": 1.0,
-   "mass_g": 412.6,
+   "mass_g": 413.2,
    "estimate": true,
    "material": "pa6-cf",
    "qty": 2,
    "com_m": [
-    6.863318210063703e-20,
-    0.28050172025673836,
-    0.03966735458696136
+    2.932813666033033e-18,
+    0.2805014712304936,
+    0.03964504469304498
    ]
   },
   "thigh": {
@@ -258,7 +274,7 @@
    ]
   }
  },
- "made_total_g": 5862.3,
+ "made_total_g": 6153.6,
  "estimate": true,
  "note": "printed parts at 2 mm walls and 40 % infill; metal parts solid; weigh the real parts"
 }

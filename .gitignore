@@ -8,6 +8,8 @@ site/
 preview/site-url.txt
 build/
 exports/sim/
+exports/mjcf/
+exports/links/local/
 
 # vendor CAD has no licence to redistribute: keep it local, track only where it came from
 references/vendor/**
