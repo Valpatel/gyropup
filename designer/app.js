@@ -4,7 +4,7 @@ import { evaluate, indexCatalog } from './model.js';
 import { visibleChapters, COLORS } from './chapters.js';
 import { robotSvg } from './robot-svg.js';
 
-const STORE = 'wobbit-design-v1';
+const STORE = 'gyropup-design-v1';
 const $ = (sel) => document.querySelector(sel);
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const usd = (v) => (v == null ? '—' : '$' + Math.round(v).toLocaleString('en-US'));
@@ -244,8 +244,8 @@ document.addEventListener('click', (e) => {
     const ch = visibleChapters(d, catalog, result())[state.chapter];
     ch.options().find((o) => o.id === t.dataset.opt)?.apply(d);
   } else if (t.dataset.color) { d.character.color = t.dataset.color; }
-  else if (t.id === 'dl-design') return download(`${d.name.replace(/\W+/g, '-').toLowerCase() || 'wobbit'}.design.json`, JSON.stringify(d, null, 2) + '\n', 'application/json');
-  else if (t.id === 'dl-bom') return download('wobbit-bom.csv', bomCsv(result()), 'text/csv');
+  else if (t.id === 'dl-design') return download(`${d.name.replace(/\W+/g, '-').toLowerCase() || 'gyropup'}.design.json`, JSON.stringify(d, null, 2) + '\n', 'application/json');
+  else if (t.id === 'dl-bom') return download('gyropup-bom.csv', bomCsv(result()), 'text/csv');
   else if (t.id === 'reset') { state.design = clone(defaults); }
   else return;
   save(); render();

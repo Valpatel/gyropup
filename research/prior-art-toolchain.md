@@ -1,8 +1,8 @@
-# Prior art: the toolchain wobbit should build on
+# Prior art: the toolchain gyropup should build on
 
-Research date: 2026-10-25. Stars, licences and "last push" dates come from the GitHub API on that date. PyPI versions and release dates come from `pypi.org/pypi/<name>/json` on that date. Where a capability could not be confirmed from a repo, its docs or a local test, the text says **not documented** or **not verified**. Some behaviour was checked locally against the wobbit venv (Python 3.12.3, MuJoCo 3.17.0, CadQuery 2.8.0, RTX 3080 12 GB, driver 580.178.04, Ubuntu 24.04). Those results are marked **(tested locally)**.
+Research date: 2026-10-25. Stars, licences and "last push" dates come from the GitHub API on that date. PyPI versions and release dates come from `pypi.org/pypi/<name>/json` on that date. Where a capability could not be confirmed from a repo, its docs or a local test, the text says **not documented** or **not verified**. Some behaviour was checked locally against the gyropup venv (Python 3.12.3, MuJoCo 3.17.0, CadQuery 2.8.0, RTX 3080 12 GB, driver 580.178.04, Ubuntu 24.04). Those results are marked **(tested locally)**.
 
-The wobbit loop this survey serves: parametric design → CadQuery CAD → URDF + MJCF with CAD mass properties → scenarios (balance, push, drive, slope, curb, squat, hop) with a baseline controller → loads → FEA of printed parts → manufacturability and cost → optimiser or agent → repeat. Later: RL in Isaac Lab, deployed to a Jetson AGX Orin 32 GB.
+The gyropup loop this survey serves: parametric design → CadQuery CAD → URDF + MJCF with CAD mass properties → scenarios (balance, push, drive, slope, curb, squat, hop) with a baseline controller → loads → FEA of printed parts → manufacturability and cost → optimiser or agent → repeat. Later: RL in Isaac Lab, deployed to a Jetson AGX Orin 32 GB.
 
 ---
 
@@ -13,7 +13,7 @@ The wobbit loop this survey serves: parametric design → CadQuery CAD → URDF 
    - copy onshape-to-robot's conventions: `closing_*` loop markers become MJCF `<equality>`, plus `joint_properties`, `geom_properties`, frames as sites, and a generated `scene.xml`;
    - gate every URDF with the vendored `cadgen urdf validate`;
    - hand the Isaac side to NVIDIA's own converters, `urdf-usd-converter` and `mujoco-usd-converter`. Isaac Sim 6's importers are built on them.
-2. **Closest existing robot: Upkie.** [Upkie](https://github.com/upkie/upkie) (Apache-2.0) is an open wheeled biped with exactly wobbit's joints: hip, knee and wheel per leg. It comes with a PD/MPC balancer and an RL velocity task in **mjlab** ([MarcDcls/mjlab_upkie](https://github.com/MarcDcls/mjlab_upkie), Apache-2.0). This is the nearest template for both the baseline controller and RL.
+2. **Closest existing robot: Upkie.** [Upkie](https://github.com/upkie/upkie) (Apache-2.0) is an open wheeled biped with exactly gyropup's joints: hip, knee and wheel per leg. It comes with a PD/MPC balancer and an RL velocity task in **mjlab** ([MarcDcls/mjlab_upkie](https://github.com/MarcDcls/mjlab_upkie), Apache-2.0). This is the nearest template for both the baseline controller and RL.
 3. **Fastest path to "load a generated robot and score it on a drive course": plain MuJoCo 3.17 on the CPU, which is already installed**, plus our own scenario harness and an LQR/VMC baseline. Port the LQR from Upkie's examples, or from the RoboMaster "balance infantry" pattern (LQR gains fitted as a function of leg length, see [RP_Balance](https://github.com/WilliamGwok/RP_Balance), MIT). No simulator framework currently ships a wheel-legged scenario suite we could reuse.
 4. **Fastest path to RL: [mjlab](https://github.com/mujocolab/mjlab)** (Apache-2.0, pip, Python 3.10–3.13). It is Isaac Lab's manager-based API running on MuJoCo Warp, so it trains on the same MJCF the evaluation loop uses, with no USD conversion step. **Isaac Lab 3.0** ([released 2026-10-20](https://github.com/isaac-sim/IsaacLab/releases/tag/v3.0.0)) now has the same API on a Newton/MuJoCo-Warp backend, with Isaac Sim optional. That gives a clean upgrade path for rendering, sensors and the Isaac Sim tooling later. Note that Isaac Lab 3.0 targets Isaac Sim **6.2**, while we have 6.0.
 5. **Actuators: model them at the MuJoCo layer, not in our own code.**
@@ -36,7 +36,7 @@ The wobbit loop this survey serves: parametric design → CadQuery CAD → URDF 
 
 ### 1.1 Comparison
 
-| Tool | What it does | Licence | Stars / last push | Maturity | Fit for wobbit |
+| Tool | What it does | Licence | Stars / last push | Maturity | Fit for gyropup |
 |---|---|---|---|---|---|
 | [Rhoban/onshape-to-robot](https://github.com/Rhoban/onshape-to-robot) ([docs](https://onshape-to-robot.readthedocs.io/en/latest/)) | Onshape assembly → URDF, SDF or MuJoCo via the Onshape API. MuJoCo export: "Actuators will be created for all actuated joints"; frames become `site`s; loops marked by mates named `closing_*` become `<equality>` (fixed→`weld`, ball→`connect`, revolute→two `connect`s) ([kinematic loops](https://onshape-to-robot.readthedocs.io/en/latest/kinematic_loops.html), [MuJoCo exporter](https://onshape-to-robot.readthedocs.io/en/latest/exporter_mujoco.html)); also writes `scene.xml`. Loop export for URDF/SDF: **not documented**. | MIT | 642 / 2026-08-26 (PyPI 1.8.3) | Mature; used by Open Duck Mini ([prepare_robot.md](https://github.com/apirrone/Open_Duck_Mini/blob/v2/docs/prepare_robot.md): "design you robot according to onshape-to-robot constraints") | **Cannot be used directly** (Onshape only). **Copy its config schema and loop conventions.** |
 | CadQuery/build123d-based URDF/MJCF generators | GitHub searches ("cadquery urdf", "build123d urdf", "cadquery mujoco", "build123d mujoco") returned nothing relevant; one 0-star build123d robot ([cogu](https://github.com/laroccathebrux/cogu)) | — | — | None exist | Keep our own writer |
@@ -45,7 +45,7 @@ The wobbit loop this survey serves: parametric design → CadQuery CAD → URDF 
 | [kscalelabs/urdf2mjcf](https://github.com/kscalelabs/urdf2mjcf) | URDF → MJCF converter | MIT | 143 / 2025-09-26 (PyPI 0.2.39, 2025-08) | Stale for a year | Skip; MjSpec covers it |
 | [robot-descriptions/robot_descriptions.py](https://github.com/robot-descriptions/robot_descriptions.py) | 200+ URDF/MJCF descriptions with loaders for MuJoCo, Pinocchio, yourdfpy and others. "Wheeled" list includes `upkie_description` (6 DOF), `cookie_description`, `tron1_wf_tron1a_mj_description`, `wl_p311d_description` | Apache-2.0 | 847 / 2026-10-22 (PyPI 3.3.0) | Mature | **Use for test fixtures and reference models** (Upkie, TRON1-WF) |
 | [clemense/yourdfpy](https://github.com/clemense/yourdfpy) | Python URDF parser with FK and trimesh scene; viser and robot_descriptions use it | MIT | 297 / 2026-05-10 | Mature | Use in tests (FK checks) |
-| [earthtojake/text-to-cad](https://github.com/earthtojake/text-to-cad) (vendored) | `cadgen urdf validate` (structure, joints, inertials, mesh refs); viewer; a `tcad:four_bar` URDF vendor extension for loop coupling in its viewer only ("Other consumers ignore the namespaced element", [authoring contract](https://github.com/earthtojake/text-to-cad/blob/main/skills/urdf/references/authoring-contract.md)) | MIT | 23,126 / 2026-10-25 | Active | Keep as a **validation gate**. Its skill says "do not build a Python generation pipeline". wobbit has to be parametric, so we generate and then validate. |
+| [earthtojake/text-to-cad](https://github.com/earthtojake/text-to-cad) (vendored) | `cadgen urdf validate` (structure, joints, inertials, mesh refs); viewer; a `tcad:four_bar` URDF vendor extension for loop coupling in its viewer only ("Other consumers ignore the namespaced element", [authoring contract](https://github.com/earthtojake/text-to-cad/blob/main/skills/urdf/references/authoring-contract.md)) | MIT | 23,126 / 2026-10-25 | Active | Keep as a **validation gate**. Its skill says "do not build a Python generation pipeline". gyropup has to be parametric, so we generate and then validate. |
 | [newton-physics/urdf-usd-converter](https://github.com/newton-physics/urdf-usd-converter) | URDF → OpenUSD. **Isaac Sim 6's URDF importer 3.0 is built on it** ([Isaac Lab import guide](https://github.com/isaac-sim/IsaacLab/blob/main/docs/source/how-to/import_new_asset.rst)). Mimic → `NewtonMimicAPI`; "Transmission, Gazebo, and other out-of-spec URDF extensions have no equivalent in UsdPhysics" ([CHANGELOG](https://github.com/newton-physics/urdf-usd-converter/blob/main/CHANGELOG.md)) | Apache-2.0 | 75 / 2026-10-22 (PyPI 0.3.4, Python <3.13) | **Alpha** (README) | Use (through Isaac Lab's `UrdfConverterCfg`) |
 | [newton-physics/mujoco-usd-converter](https://github.com/newton-physics/mujoco-usd-converter) | MJCF → OpenUSD; **Isaac Sim's MJCF importer has used it since 5.0** ([Isaac Lab import guide](https://github.com/isaac-sim/IsaacLab/blob/main/docs/source/how-to/import_new_asset.rst)). Converts Connect, Joint and Weld equalities, tendons and actuators. Known limitation: "Collision filtering via the contype & conaffinity algorithm is not implemented" ([CHANGELOG](https://github.com/newton-physics/mujoco-usd-converter/blob/main/CHANGELOG.md)) | Apache-2.0 | 75 / 2026-10-21 | **Alpha** | Use for MJCF → Isaac |
 | GUI-CAD exporters: [fusion2urdf](https://github.com/syuntoku14/fusion2urdf) (MIT, 763, 2025-03), [solidworks_urdf_exporter](https://github.com/ros/solidworks_urdf_exporter) (MIT, 702), [phobos](https://github.com/dfki-ric/phobos) (BSD-3, 911), [freecad.cross](https://github.com/galou/freecad.cross) (LGPL-2.1, 162) | Export from a GUI CAD tool | various | — | Mature | Not applicable (no code-CAD path) |
@@ -73,8 +73,8 @@ The wobbit loop this survey serves: parametric design → CadQuery CAD → URDF 
 | RL practice | Train an **open-chain equivalent** leg and map it to the real linkage. [Wheel-Legged-Gym](https://github.com/clearlab-sustech/Wheel-Legged-Gym) uses "VMC to unify motion control of open-chain and closed-chain mechanisms"; DDT's own Diablo RL URDF replaces the linkage with a serial 2-link leg (see `research/reference-robots.md`) | cited |
 
 **Recommendation:** emit two models from one design.
-- **`wobbit_closed.xml`**: the true linkage, with `connect` equalities. It drives the evaluation and load extraction, because four-bar link loads exist only here.
-- **`wobbit_serial.xml` / `.urdf`**: the serial equivalent with reflected inertia. It drives RL, Isaac import and the browser.
+- **`gyropup_closed.xml`**: the true linkage, with `connect` equalities. It drives the evaluation and load extraction, because four-bar link loads exist only here.
+- **`gyropup_serial.xml` / `.urdf`**: the serial equivalent with reflected inertia. It drives RL, Isaac import and the browser.
 
 A test checks that both models give the same foot trajectory and joint torques under quasi-static loads.
 
@@ -93,8 +93,8 @@ uvx --from cadgen==0.7.26 cadgen urdf validate path/to/robot.urdf               
 
 | Project | Robot / joints | Sim / framework | Controller | Licence | Stars / last push | Notes |
 |---|---|---|---|---|---|---|
-| [upkie/upkie](https://github.com/upkie/upkie) ([docs](https://upkie.github.io/upkie/)) | Upkie: hip, knee, wheel per leg (6 DOF, [robot_descriptions](https://github.com/robot-descriptions/robot_descriptions.py)), mjbots actuators | PyBullet + "Spine" real/sim interface; Gymnasium envs (`pip install upkie`, 13.1.0) | PD balancer, MPC balancer, torque balancer (`examples/pybullet/{pd,mpc,torque}_balancing.py`) | Apache-2.0 | 452 / 2026-10-11 | **Same morphology as wobbit.** Hardware build docs. `stephane-caron/mpc_balancer` (Apache-2.0) uses ProxQP but targets upkie 8.0.0 (old) |
-| [MarcDcls/mjlab_upkie](https://github.com/MarcDcls/mjlab_upkie) | Upkie (own design variant) | **mjlab** (MuJoCo Warp), RSL-RL; CPU MuJoCo playback (`sim.py`) | RL velocity tracking, "resist external disturbances"; pretrained checkpoint | Apache-2.0 | 39 / 2026-05-26 | **Closest RL template for wobbit** |
+| [upkie/upkie](https://github.com/upkie/upkie) ([docs](https://upkie.github.io/upkie/)) | Upkie: hip, knee, wheel per leg (6 DOF, [robot_descriptions](https://github.com/robot-descriptions/robot_descriptions.py)), mjbots actuators | PyBullet + "Spine" real/sim interface; Gymnasium envs (`pip install upkie`, 13.1.0) | PD balancer, MPC balancer, torque balancer (`examples/pybullet/{pd,mpc,torque}_balancing.py`) | Apache-2.0 | 452 / 2026-10-11 | **Same morphology as gyropup.** Hardware build docs. `stephane-caron/mpc_balancer` (Apache-2.0) uses ProxQP but targets upkie 8.0.0 (old) |
+| [MarcDcls/mjlab_upkie](https://github.com/MarcDcls/mjlab_upkie) | Upkie (own design variant) | **mjlab** (MuJoCo Warp), RSL-RL; CPU MuJoCo playback (`sim.py`) | RL velocity tracking, "resist external disturbances"; pretrained checkpoint | Apache-2.0 | 39 / 2026-05-26 | **Closest RL template for gyropup** |
 | [zyicome/Wheel-Legged-Lab](https://github.com/zyicome/Wheel-Legged-Lab) | Open-chain 2-leg wheel-legged | Isaac Lab 2.3.2 / Isaac Sim 5.1 / Python 3.11, RSL-RL PPO | Policy outputs virtual leg angle, length and wheel speed → **VMC** torques. Balance, velocity, height, **jumps (0.09–0.12 m), moving jumps up to 1.0 m/s, 7 cm obstacle** | Apache-2.0 | 29 / 2026-08-02 | Best reference for **hop/curb rewards and curricula**. README says no sim-to-real yet |
 | [limxdynamics/tron1-rl-isaaclab](https://github.com/limxdynamics/tron1-rl-isaaclab) | TRON1 **WF**: abad, hip, knee + wheel per leg ("6 leg position actions + 2 wheel velocity actions") | Isaac Lab, Python 3.10, rsl_rl; physics 200 Hz, policy 50 Hz | PPO, velocity-estimator MLP, privileged critic; ONNX export | Apache-2.0 | 73 / 2026-10-23 | Commercial robot, industrial-quality task code. Blind, **flat ground only**. Sim-to-sim in [tron1-mujoco-sim](https://github.com/limxdynamics/tron1-mujoco-sim) (Apache-2.0) |
 | [jaykorea/Isaac-RL-Two-wheel-Legged-Bot](https://github.com/jaykorea/Isaac-RL-Two-wheel-Legged-Bot) ("Flamingo") | 2-wheel-legged | Isaac Lab 2.0 / Isaac Sim 4.5 | PPO + off-policy, Constraints-as-Terminations; Lab→MuJoCo sim2sim branch; zero-shot sim2real claimed | MIT | 352 / 2026-03-26 | Older Isaac versions |
@@ -273,7 +273,7 @@ pip install rerun-sdk viser
 
 ---
 
-## 7. Recommended stack for wobbit
+## 7. Recommended stack for gyropup
 
 | Stage | Tool (build on) | Why | Write ourselves |
 |---|---|---|---|
@@ -290,7 +290,7 @@ pip install rerun-sdk viser
 | FEA (verify) | CalculiX `ccx` (apt) + ccx2paraview | Orthotropic printed materials, contact | `.inp` writer |
 | Manufacturability / cost | text-to-cad `dfam-check`, `bambu-labs`, `sendcutsend` skills (vendored) | Already in our toolkit | Cost roll-up into the objective |
 | Optimiser | Optuna 5 (MO TPE / GPSampler, constraints, Journal storage) + staged fidelity; pymoo for analytic pre-screen; pycma for controller gains; BoTorch MOMF later | Categoricals + MO + constraints, minimal engineering | Staging gates |
-| RL (phase 1) | mjlab + RSL-RL, starting from `mjlab_upkie`; rewards from Wheel-Legged-Lab and TRON1 | Same MJCF, pip-installable, Python 3.12 | wobbit task config |
+| RL (phase 1) | mjlab + RSL-RL, starting from `mjlab_upkie`; rewards from Wheel-Legged-Lab and TRON1 | Same MJCF, pip-installable, Python 3.12 | gyropup task config |
 | RL (phase 2) | Isaac Lab 3.0 (Newton/MuJoCo-Warp backend first, Isaac Sim 6.2 when needed) | Same manager API; Isaac Sim tooling | Port of task config |
 | Deployment | ONNX export (all of the above) → TensorRT on Jetson AGX Orin (pattern shown by DDT `tita_rl`) | Proven path | Runtime node |
 | Web designer | three.js + urdf-loader; GLB vertex-colour stress; `@mujoco/mujoco` for live replay | Static page, no server | `run.json` / GLB exporters |

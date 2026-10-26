@@ -1,6 +1,6 @@
 # Prior art: closed-loop design of legged and wheel-legged robots
 
-Research date: 2026-10-25. This file covers the loop wobbit wants to build: spec → CAD → URDF/MJCF → simulation → loads → FEA → manufacturability and cost → iterate.
+Research date: 2026-10-25. This file covers the loop gyropup wants to build: spec → CAD → URDF/MJCF → simulation → loads → FEA → manufacturability and cost → iterate.
 
 Companion file: [reference-robots.md](reference-robots.md) covers the robots themselves (Diablo, Ascento, Upkie, Open Duck, Microduck). This file covers how other people designed robots in a loop.
 
@@ -15,7 +15,7 @@ Each entry says how deeply it was read: **[full text]** means the paper body was
 
 ## 1. Executive summary
 
-1. **Nobody has published the full wobbit loop.** I found no work that goes CAD → sim → FEA → printability/cost → iterate automatically, and none that does it for a **wheel-legged biped**. The pieces exist separately:
+1. **Nobody has published the full gyropup loop.** I found no work that goes CAD → sim → FEA → printability/cost → iterate automatically, and none that does it for a **wheel-legged biped**. The pieces exist separately:
    - Text2Robot: text → mesh → URDF → evolution + RL → PLA print.
    - RoboForge: agent-generated STEP/STL/URDF, pre-fabrication checks, then RL.
    - Skaterbots and Geilinger 2020: legged-wheeled design with trajectory optimisation.
@@ -23,7 +23,7 @@ Each entry says how deeply it was read: **[full text]** means the paper body was
    - Quadruped skating 2026: BO outer loop, PPO inner loop, wheel angles as design variables.
    - Ascento: a topology-optimised printed wheel-legged robot, designed by hand.
 
-   wobbit would be the first open loop of this kind, which leaves room to contribute but also means no proven recipe to copy end to end.
+   gyropup would be the first open loop of this kind, which leaves room to contribute but also means no proven recipe to copy end to end.
 2. **Do not train RL from scratch for every candidate.** It is the cost that limits everyone:
    - RoboMorph: ≈200 A100 GPU-hours per seed.
    - Disney BDX: ≈22 days on an RTX 4090 for one final policy, though 30 min was enough to preview behaviour.
@@ -44,7 +44,7 @@ Each entry says how deeply it was read: **[full text]** means the paper body was
    - Sathuluri (2023) uses loads from dynamics simulation to optimise the structure.
    - Upkie's printed femurs and tibias broke in use, and v2 redesigned the lower leg as a fork.
 
-   Extracting loads from simulation and running FEA on PLA parts is therefore a real gap wobbit can fill.
+   Extracting loads from simulation and running FEA on PLA parts is therefore a real gap gyropup can fill.
 7. **Actuator models matter more than morphology for sim-to-real:**
    - Disney BDX: system-identified actuator model with friction, backlash and reflected inertia.
    - Open Duck and Microduck: Rhoban BAM.
@@ -56,7 +56,7 @@ Each entry says how deeply it was read: **[full text]** means the paper body was
    - Quadruped skating 2026: 14.6 % lower CoT.
    - SurGE 2026: CMA-ES with surrogate gradients; the trend found in simulation held on hardware.
 9. **For discrete choices (actuator SKU, wheel, battery, leg topology), use a grammar or catalogue so that every candidate can be built** (RoboGrammar, Text2Robot modules, Skaterbots components, Vitruvio actuator list). Then search with evolution or multi-objective TPE, with an LLM as an extra proposal operator.
-10. **Licences:** most of what wobbit would reuse is permissively licensed:
+10. **Licences:** most of what gyropup would reuse is permissively licensed:
     - MIT: Eureka/DrEureka, RoboGrammar, Transform2Act, EvoGym, SurGE, onshape-to-robot.
     - Apache-2.0: Text2Robot, BAM, MuJoCo Playground, Upkie, Open Duck Mini, BodyGen.
     - RoboGen is GPL-3.0, and Vitruvio and Open_Duck_Playground have no licence file. Read those, don't copy them.
@@ -133,11 +133,11 @@ Survey for more breadth: Wang et al., "Embodied Co-Design for Rapidly Evolving A
 - **Results.** 0.7 m/s walking and ≈10 h of public shows without falls.
 - **What went wrong.** The jump hit the knee and head torque limits. Tracking velocity directly with the torso made the feet shuffle.
 - **Code.** None released.
-- **For wobbit:**
+- **For gyropup:**
   - Copy the "30-minute preview policy" idea as the RL fidelity tier.
   - Copy the actuator-model structure.
   - Copy the reward structure, which Open Duck re-implemented successfully.
-  - Feed the peak torques and the hop's torque saturation back into the design. BDX saturated in a jump, and wobbit's hop scenario should report saturation explicitly.
+  - Feed the peak torques and the hop's torque saturation back into the design. BDX saturated in a jump, and gyropup's hop scenario should report saturation explicitly.
 
 **Megaro et al. 2015, Coros, Thomaszewski: "Interactive Design of 3D-Printable Robotic Creatures" [abstract].** [Disney page](https://la.disneyresearch.com/publication/interactive-design-of-3d-printable-robotic-creatures/)
 - **What it does.**
@@ -151,7 +151,7 @@ Survey for more breadth: Wang et al., "Embodied Co-Design for Rapidly Evolving A
   - Adjoint co-design (Desai et al. 2018) ([arXiv 1801.00385](https://arxiv.org/abs/1801.00385)).
   - Optimal Design of Robotic Character Kinematics (Maloisel et al. TOG 2023): dynamic programming over design and control for robots with kinematic loops ([DOI](https://doi.org/10.1145/3618404)).
 - **Code.** None released.
-- **For wobbit:**
+- **For gyropup:**
   - **The guide UX and the "blueprint" output** (BOM, printable parts, assembly sheet) are exactly what Megaro produced. Copy the pattern of editing in a parametric space with the motion re-solved after each edit.
   - Ha 2016's cost (Σ torque² across a task suite) is a cheap, sensible analytic-screen objective for leg lengths.
 
@@ -163,7 +163,7 @@ Survey for more breadth: Wang et al., "Embodied Co-Design for Rapidly Evolving A
   - The 2020 paper builds a real legged-wheeled robot. It shows the framework "can accurately predict the way in which different design decisions affect the robot's ability to move", and adds a continuation-based warm start for the trajectory optimiser.
 - **Relevance.** This is the most direct academic prior art for designing **legged-wheeled** robots computationally.
 - **Code.** None found.
-- **For wobbit.** The idea of a catalogue of components plus generated connectors matches the wobbit `catalog/` approach. Trajectory optimisation as an evaluator is a mid-fidelity option between LQR and RL.
+- **For gyropup.** The idea of a catalogue of components plus generated connectors matches the gyropup `catalog/` approach. Trajectory optimisation as an evaluator is a mid-fidelity option between LQR and RL.
 
 **Ascento (Klemm et al., ICRA 2019) [full text].** [arXiv 2005.11435](https://arxiv.org/abs/2005.11435)
 - **Robot.** Two-wheeled jumping biped, 10.4 kg, height adjustable from 31 to 66 cm.
@@ -174,7 +174,7 @@ Survey for more breadth: Wang et al., "Embodied Co-Design for Rapidly Evolving A
   - Printed in SLS PA12.
 - **Actuators.** ANYdrive hips (40 N·m peak); Maxon EC90 hub motors (3.5 N·m).
 - **Later work.** Klemm, Mannhart and Siegwart, "Design Optimization of a Four-Bar Leg Linkage for a Legged-Wheeled Balancing Robot" (CLAWAR 2022), found via DBLP but not read.
-- **For wobbit:**
+- **For gyropup:**
   - Copy the **linkage-objective idea**: optimise leg geometry for a straight wheel path under the CoM, and for torque spread over the squat range.
   - Copy **gravity-compensating springs** as a design variable.
   - Note that topology optimisation needed a manual cleanup step. Automating that is hard, so prefer parametric ribs, wall thickness and infill as the structural variables.
@@ -186,31 +186,31 @@ Survey for more breadth: Wang et al., "Embodied Co-Design for Rapidly Evolving A
 - **Related work, same group.**
   - Belmonte-Baeza et al., meta-RL policy for optimising kinematics and actuator parameters ([arXiv 2210.02750](https://arxiv.org/abs/2210.02750)).
   - Bjelonic, Tischhauser and Hutter, IJRR 2025 ([arXiv 2509.06342](https://arxiv.org/abs/2509.06342)): a motor energy-loss model; "All code, models, and datasets are publicly available"; 32 % lower full CoT on ANYmal.
-- **For wobbit.** **This is the core template for the RL tier.** Train one balance/drive/hop policy whose input includes the design vector (leg lengths, wheel radius, masses), then BO or CMA-ES over designs. Use the IJRR energy model for an electrical CoT that is realistic.
+- **For gyropup.** **This is the core template for the RL tier.** Train one balance/drive/hop policy whose input includes the design vector (leg lengths, wheel radius, masses), then BO or CMA-ES over designs. Use the IJRR energy model for an electrical CoT that is realistic.
 
 **Quadrupedal skating co-design (Wang, Fang, Hanna, Xiong, arXiv 2603.18408, ICRA 2026) [overview + abstract].**
 - **Method.** A Go1 with printed passive-wheel mounts. BO with a GP proposes wheel yaw angles; PPO in Isaac Lab trains a policy for each design.
 - **Metric.** CoT = ‖τ‖²/(mg‖ξ‖).
 - **Results.** The 2-D design gave a further 14.6 % CoT reduction over the 1-D design. The optimiser found an asymmetric design that the policy exploits by turning around.
 - **Hardware.** I could not confirm real-robot results.
-- **For wobbit:**
+- **For gyropup:**
   - This is the closest **RL co-design involving wheels**.
-  - Note the pitfall: the optimiser found an asymmetric, direction-specific design. wobbit's scenario suite must command both directions, turning and reversing, or it will get "drives well only forwards" designs.
+  - Note the pitfall: the optimiser found an asymmetric, direction-specific design. gyropup's scenario suite must command both directions, turning and reversing, or it will get "drives well only forwards" designs.
 
 **Dinev et al., "A Versatile Co-Design Approach for Dynamic Legged Robots" (IROS 2022) [abstract].** [arXiv 2103.04660](https://arxiv.org/abs/2103.04660)
 - **Method.** Bilevel optimisation in which motion-planning derivatives let an outer nonlinear program optimise morphology, payload distribution and actuator parameters under full dynamics, joint limits and friction cones. The result was a more energy-efficient Solo quadruped.
-- **For wobbit.** Battery and electronics placement is a real design variable, as payload distribution here. Gradient-based co-design is possible if the controller is a differentiable trajectory optimiser, but that is overkill for v1.
+- **For gyropup.** Battery and electronics placement is a real design variable, as payload distribution here. Gradient-based co-design is possible if the controller is a differentiable trajectory optimiser, but that is overkill for v1.
 
 **Vitruvio (ETH, 2020) [README].** [repo](https://github.com/leggedrobotics/vitruvio)
 - **What it does.** Takes trajectories from the TOWR optimiser and computes the joint speed, torque, power and energy a given leg design needs. A GA then optimises link lengths, density and actuator choice from a list (ANYdrive, Neo, …).
 - **Licence.** None. Read it, don't copy it.
-- **For wobbit.** **This is the analytic-screen tier in its simplest form**: run reference motions (squat, hop, slope hold) through the inverse dynamics of each candidate, check against catalogue actuator torque–speed curves, and reject infeasible designs before any simulation.
+- **For gyropup.** **This is the analytic-screen tier in its simplest form**: run reference motions (squat, hop, slope hold) through the inverse dynamics of each candidate, check against catalogue actuator torque–speed curves, and reject infeasible designs before any simulation.
 
 **SERL / Wow Orin (Cheng et al., 2024) [full text].** [arXiv 2408.15632](https://arxiv.org/abs/2408.15632)
 - **Method.** A GA (population 250) alternates with Isaac Gym RL to choose thigh and shin lengths for a 10.5 kg biped.
 - **Results.** Longer shins than thighs were best for general locomotion. Reported CoT was 0.407 in a flat-ground simulation.
 - **Structure.** Strength is asserted from material choice; **no FEA**; mass scaled with leg length at uniform density.
-- **For wobbit.** This is a cautionary example. Uniform-density mass scaling and no stress check are exactly what wobbit should improve on: take masses from CAD and the slicer, and check stress.
+- **For gyropup.** This is a cautionary example. Uniform-density mass scaling and no stress check are exactly what gyropup should improve on: take masses from CAD and the slicer, and check stress.
 
 **Rapid co-design of whegged robots (MiniRHex, 2024) [search snippet only].** [arXiv 2405.05096](https://arxiv.org/abs/2405.05096)
 - BO over wheg lengths and thickness. The search snippet reports nearly twice the efficiency of the nominal platform in hardware; I did not open the paper.
@@ -223,19 +223,19 @@ Survey for more breadth: Wang et al., "Embodied Co-Design for Rapidly Evolving A
 
 **Luck et al., Co-adaptation (CoRL 2019) [abstract].** [arXiv 1911.06832](https://arxiv.org/abs/1911.06832), [repo, MIT](https://github.com/ksluck/Coadaptation)
 - Reuses earlier morphologies' data and the Q-function to estimate how new candidates will perform, which needs "drastically less design prototypes".
-- Idea for wobbit: use the critic as a surrogate that screens candidates.
+- Idea for gyropup: use the critic as a surrogate that screens candidates.
 
 **NGE (ICLR 2019) [abstract], Transform2Act (ICLR 2022) [abstract], BodyGen (ICLR 2025) [abstract].**
 - NGE: [arXiv 1906.05370](https://arxiv.org/abs/1906.05370), [repo, MIT](https://github.com/WilsonWangTHU/neural_graph_evolution). Graph evolution with a GNN policy that transfers skills.
 - Transform2Act: [arXiv 2110.03659](https://arxiv.org/abs/2110.03659), [repo, MIT](https://github.com/Khrylx/Transform2Act). "Transform" steps are folded into the RL episode.
 - BodyGen: [arXiv 2503.00533](https://arxiv.org/abs/2503.00533), [repo, Apache-2.0](https://github.com/Josh00-Lu/BodyGen). Topology-aware self-attention; reports a 60.03 % average gain over baselines.
 - All three run on MuJoCo creatures made of capsules. **No hardware and no manufacturing constraints.**
-- For wobbit: wobbit's topology is fixed (two legs plus two wheels), so graph-topology search is unnecessary. The ideas that do transfer are **policy sharing across designs** and **morphology-aware observations**.
+- For gyropup: gyropup's topology is fixed (two legs plus two wheels), so graph-topology search is unnecessary. The ideas that do transfer are **policy sharing across designs** and **morphology-aware observations**.
 
 **Evolution Gym (NeurIPS 2021) [abstract].** [arXiv 2201.09863](https://arxiv.org/abs/2201.09863), [repo, MIT](https://github.com/EvolutionGym/evogym)
 - Soft-voxel benchmark with GA, BO and CPPN-NEAT baselines plus PPO.
 - The authors report that "all tested algorithms fail to find robots that succeed in our hardest environments".
-- Useful only as a benchmark for testing an LLM-plus-evolution optimiser before running it on wobbit, which is what Auto-Robotist did.
+- Useful only as a benchmark for testing an LLM-plus-evolution optimiser before running it on gyropup, which is what Auto-Robotist did.
 
 **DiffAqua (SIGGRAPH 2021) [abstract].** [arXiv 2104.00837](https://arxiv.org/abs/2104.00837), [repo, no licence](https://github.com/mit-gfx/DiffAqua)
 - Uses a differentiable soft-body simulator, which makes gradient-based shape design possible.
@@ -245,11 +245,11 @@ Survey for more breadth: Wang et al., "Embodied Co-Design for Rapidly Evolving A
 - A graph grammar of physical assemblies; "The construction of the grammar limits the design space to designs that can be fabricated".
 - Graph Heuristic Search learns a value function over partial designs.
 - RoboMorph reports RoboGrammar's search at 31 CPU-hours.
-- For wobbit: **the idea of buildable-by-construction is the main lesson**. wobbit's version should be a typed parametric template with catalogue parts, not a free-form graph.
+- For gyropup: **the idea of buildable-by-construction is the main lesson**. gyropup's version should be a typed parametric template with catalogue parts, not a free-form graph.
 
 **Kriegman lab, "Creating manufacturable blueprints for coarse-grained virtual robots" (2026) [abstract].** [arXiv 2603.13582](https://arxiv.org/abs/2603.13582)
 - **Explains why toy co-design does not transfer:** abstraction "swept away almost all of the physical details of functional body parts". Their pipeline embeds motors, electronics, batteries and wiring into the abstract design step by step to produce builder-ready blueprints.
-- For wobbit: confirms the decision to search directly in a CAD-backed parametric space.
+- For gyropup: confirms the decision to search directly in a CAD-backed parametric space.
 
 **What transfers to real, manufacturable robots, in summary:**
 - policy sharing or conditioning across designs;
@@ -265,7 +265,7 @@ Survey for more breadth: Wang et al., "Embodied Co-Design for Rapidly Evolving A
 
 ### 3.3 LLM- and agent-driven robot design
 
-**Text2Robot (Ringel et al., Duke, ICRA 2025) [full text + README]: the closest analogue to wobbit.** [arXiv 2406.19963](https://arxiv.org/abs/2406.19963), [repo, Apache-2.0](https://github.com/generalroboticslab/Text2Robot), [project](http://generalroboticslab.com/Text2Robot/)
+**Text2Robot (Ringel et al., Duke, ICRA 2025) [full text + README]: the closest analogue to gyropup.** [arXiv 2406.19963](https://arxiv.org/abs/2406.19963), [repo, Apache-2.0](https://github.com/generalroboticslab/Text2Robot), [project](http://generalroboticslab.com/Text2Robot/)
 
 Pipeline:
 1. A text prompt goes to Meshy text-to-3D. Meshes are filtered **manually** for one connected body, bilateral symmetry and four legs.
@@ -284,14 +284,14 @@ Results and gaps:
 - **Limitations**: quadrupeds only; manual mesh selection; the text-to-3D step gets no feedback from the optimiser; arched feet snag on rough terrain.
 - **RoboGrammar baseline**: designs often had badly placed joints and limbs too close together.
 
-For wobbit, reuse:
+For gyropup, reuse:
 - the **modular electronics and servo pods** that fit any body;
 - the **symmetric mutation operators**;
 - the **"few minutes of PPO per design" budget** as a per-candidate cap;
 - the **Apache-2.0 evolutionary driver** (`Evolutionary_Algorithm/driver.py`) as reference code.
 
 Do not copy:
-- the mesh-first approach. wobbit's mechanics are parametric CadQuery, so text should map to **parameters and styling**, not raw meshes.
+- the mesh-first approach. gyropup's mechanics are parametric CadQuery, so text should map to **parameters and styling**, not raw meshes.
 
 **RoboForge, "Agentic Robot Creation through Generation, Verification, and Revision" (Li et al., Oct 2026) [full text].** [arXiv 2610.17881](https://arxiv.org/abs/2610.17881), [project](https://roboforge-project.github.io/)
 
@@ -310,49 +310,49 @@ Results:
 - The Gorilla was printed in PLA on a Bambu X1E (0.2 mm, 15 % infill) with 8 × XL330 servos, and policies were deployed zero-shot. No quantitative hardware results were reported.
 - No code repo found.
 
-For wobbit:
-- **Copy the 23-check list almost verbatim** as wobbit's manufacturability and validity gate. It is the most complete published checklist.
+For gyropup:
+- **Copy the 23-check list almost verbatim** as gyropup's manufacturability and validity gate. It is the most complete published checklist.
 - Copy the **diagnose-then-revise** structure: attribute each failure to geometry, control target or reward before changing anything.
-- Their PLA, Bambu, 15 % infill setup matches wobbit's first manufacturing target.
+- Their PLA, Bambu, 15 % infill setup matches gyropup's first manufacturing target.
 
 **RoboMorph (Qiu et al., 2024; listed as ICRA by Semantic Scholar) [full text].** [arXiv 2407.08626](https://arxiv.org/abs/2407.08626), [project](https://robomorph.github.io)
 - **Method.** GPT-4o writes designs in a RoboGrammar-derived grammar, which a compiler checks. Each valid design gets a SAC policy (Brax) in MuJoCo MJX. The top-3 designs come back as few-shot examples **without their fitness scores**; showing scores made the LLM overfit.
 - **Setup.** Population 32, 50 generations.
 - **Cost.** ≈200 A100 GPU-hours per seed.
 - **Failure modes.** Grammar violations, designs that compile but cannot move, and convergence when the prompt lacks diversity. No hardware.
-- **For wobbit.** Use a compiler or validator in front of the LLM. Keep the history fed back to the LLM diverse. Expect GPU cost to dominate unless training is amortised.
+- **For gyropup.** Use a compiler or validator in front of the LLM. Keep the history fed back to the LLM diverse. Expect GPU cost to dominate unless training is amortised.
 
 **RoboMoRe (2025), Debate2Create (2025), LACE-CRAFT (2026) [abstracts].** [arXiv 2506.00276](https://arxiv.org/abs/2506.00276), [arXiv 2510.25850](https://arxiv.org/abs/2510.25850), [arXiv 2610.09283](https://arxiv.org/abs/2610.09283)
 - **RoboMoRe** optimises morphology and **reward** together, because a fixed reward makes all morphologies converge to one motion style.
 - **Debate2Create** uses design and control agents plus criterion-specific LLM judges. It reports up to 3.2× on Ant and 18–35 % gains over zero-shot generation at matched compute.
 - **LACE** continues training from the incumbent's actor instead of retraining. CRAFT uses roles (Feedback, Morphology, Reward, Integration) sharing a common record. One printed prototype walked.
 - All of these are MuJoCo benchmark bodies.
-- **For wobbit.** Multi-objective **LLM judges** fit the guide's "any specs" requirement. **Actor inheritance** is a cheap form of amortisation.
+- **For gyropup.** Multi-objective **LLM judges** fit the guide's "any specs" requirement. **Actor inheritance** is a cheap form of amortisation.
 
 **Auto-Robotist (EMNLP 2026) [abstract].** [arXiv 2605.25832](https://arxiv.org/abs/2605.25832), [repo, MIT](https://github.com/wangyf9/Auto-Robotist)
 - Distils search traces into a **natural-language skill library**: archetypes, rules backed by evidence, and the designs that support them. The GA keeps a mutation path for exploration.
-- **For wobbit.** This is a good pattern for "iterate without a human": the agent accumulates auditable design rules. It also suits wobbit's existing habit of writing lessons into files.
+- **For gyropup.** This is a good pattern for "iterate without a human": the agent accumulates auditable design rules. It also suits gyropup's existing habit of writing lessons into files.
 
 **Kawaharazuka et al., BBO + LLM (IEEE Access 2025) [full text].** [arXiv 2511.17178](https://arxiv.org/abs/2511.17178)
 - **Method.** Optuna multi-objective TPE does most of the sampling. Every 10th sample comes from GPT-4o, which is shown random Pareto and non-Pareto results with per-target errors and torques.
 - **Results.** Hypervolume improved, e.g. 6.70 → 10.25 on one target set, and variance was lower.
 - **Limitations.** Gains depend on the task; the LLM rounds values off; spatial reasoning is weak. The test problem was a simple 4-joint arm.
-- **For wobbit.** **This is the safest way to add an LLM to the optimiser**: as a proposal operator interleaved with a proper BBO, never as the only optimiser.
+- **For gyropup.** **This is the safest way to add an LLM to the optimiser**: as a proposal operator interleaved with a proper BBO, never as the only optimiser.
 
 **Wilhelm, Zhou, Napp, "LLMs for Model-Based Robot Design" (2026) [abstract].** [arXiv 2609.33423](https://arxiv.org/abs/2609.33423)
 - The LLM writes an **explicit engineering model** (physical relations, compatibility constraints, objectives). People inspect and revise it before formal multi-objective optimisation.
 - Direct LLM designs: 0 of 30 could be verified as feasible.
-- **For wobbit.** The wobbit guide should turn user intent into an explicit, inspectable spec and constraint model, for example `designer/spec.yaml`, before any optimisation.
+- **For gyropup.** The gyropup guide should turn user intent into an explicit, inspectable spec and constraint model, for example `designer/spec.yaml`, before any optimisation.
 
 **Eureka (ICLR 2024) and DrEureka (2024) [abstracts].** [arXiv 2310.12931](https://arxiv.org/abs/2310.12931), [repo, MIT](https://github.com/eureka-research/Eureka); [arXiv 2406.01967](https://arxiv.org/abs/2406.01967), [repo, MIT](https://github.com/eureka-research/DrEureka)
 - **Eureka** runs LLM evolutionary search over reward code. It beat human rewards on 83 % of 29 tasks, with an average normalised improvement of 52 %.
 - **DrEureka** also writes the **domain-randomisation ranges** and transfers to a real quadruped, including walking on a yoga ball.
-- **For wobbit.** Use these for the *controller-side* automation, such as new scenario rewards (curb, hop) and DR ranges, not for morphology.
+- **For gyropup.** Use these for the *controller-side* automation, such as new scenario rewards (curb, hop) and DR ranges, not for morphology.
 
 **RobotDesignGPT (2026) [abstract]**, **Lang2Morph (2025, robotic hands, not read; [arXiv 2509.18937](https://arxiv.org/abs/2509.18937))**, **DOA personalised limbed robots (npj Robotics 2026) [abstract].**
 - RobotDesignGPT: [arXiv 2601.11801](https://arxiv.org/abs/2601.11801). A VLM uses visual feedback to make designs "visually appealing and kinematically valid".
 - DOA: [DOI 10.1038/s44182-026-00101-3](https://doi.org/10.1038/s44182-026-00101-3). Text or image → **selected motors + 3D-printable parts** through optimisation over "actuators, geometry, and structural density"; a Centaur was fabricated. Full text was paywalled, so details are not reported here.
-- **For wobbit.** DOA is worth reading in full when access allows. It is the only LLM-era pipeline I found that names structural density as an optimised quantity.
+- **For gyropup.** DOA is worth reading in full when access allows. It is the only LLM-era pipeline I found that names structural density as an optimised quantity.
 
 ### 3.4 Printed robots with structural constraints (FEA, strength, anisotropy)
 
@@ -360,12 +360,12 @@ What I found is thin. This part of the loop is not well covered in the robotics 
 
 - **Ascento** (above). Topology optimisation was used as inspiration and the result redesigned by hand. Parts were SLS PA12, which is near-isotropic, unlike FDM PLA.
 - **Upkie** ([reference-robots.md](reference-robots.md), FOSDEM 2026 transcript). **Printed femurs and tibias broke.** v2's fork-shaped lower leg is "much stiffer". FreeCAD was adopted so leg lengths could be changed. Optional bearing supports protect the knee actuators from radial load ([upkie_parts](https://github.com/upkie/upkie_parts)).
-- **MechStyle (2025)** [abstract] ([arXiv 2509.20571](https://arxiv.org/abs/2509.20571)). FEA feedback limits generative geometry changes in regions with high stress. For wobbit: this is the pattern for "styling" from the guide. Cosmetic shell changes must not touch high-stress regions of load-path parts.
-- **Sathuluri et al. 2023** [abstract] ([DOI](https://doi.org/10.3390/robotics12040091)). Architecture search, then **dynamics-informed structural optimisation**, giving 16 % less structural mass than aluminium tubes. This is the two-step pattern wobbit should copy: loads from simulation, then structural sizing.
-- **Li 2026, strain-energy distribution** [abstract] ([arXiv 2608.29146](https://arxiv.org/abs/2608.29146)). Claims that in an optimal lightweight system the strain energy per unit mass is uniform. That lets a system-level problem be split into per-part optimisations. For wobbit: a cheap global check is to flag parts whose strain energy per gram is far above or below the median.
+- **MechStyle (2025)** [abstract] ([arXiv 2509.20571](https://arxiv.org/abs/2509.20571)). FEA feedback limits generative geometry changes in regions with high stress. For gyropup: this is the pattern for "styling" from the guide. Cosmetic shell changes must not touch high-stress regions of load-path parts.
+- **Sathuluri et al. 2023** [abstract] ([DOI](https://doi.org/10.3390/robotics12040091)). Architecture search, then **dynamics-informed structural optimisation**, giving 16 % less structural mass than aluminium tubes. This is the two-step pattern gyropup should copy: loads from simulation, then structural sizing.
+- **Li 2026, strain-energy distribution** [abstract] ([arXiv 2608.29146](https://arxiv.org/abs/2608.29146)). Claims that in an optimal lightweight system the strain energy per unit mass is uniform. That lets a system-level problem be split into per-part optimisations. For gyropup: a cheap global check is to flag parts whose strain energy per gram is far above or below the median.
 - **Berkeley Humanoid Lite (RSS 2025)** [abstract] ([arXiv 2504.17249](https://arxiv.org/abs/2504.17249), [repo, MIT](https://github.com/HybridRobotics/berkeley-humanoid-lite)). Printed cycloidal gearboxes with "extensive testing … to validate their durability". **ToddlerBot** ([arXiv 2502.00893](https://arxiv.org/abs/2502.00893), [repo, MIT](https://github.com/hshi74/toddlerbot)) is entirely 3D-printed, costs under $6k and was replicated independently. Both show that printed robots work when parts are tested; neither puts FEA in a design loop.
 - **RoboGen (EPFL, 2014)** ([repo, GPL-3.0](https://github.com/lis-epfl/robogen)). Evolution of body and brain with 3D-printable parts and servos, used in teaching. No structural analysis that I could find.
-- **Stress Relief (Stava et al., SIGGRAPH 2012)** is the classic graphics paper on automatically reinforcing printed objects against stress. Its ≈200 citations are mostly graphics and printing work, not robots. **I found no robotics paper that handles FDM anisotropy (weak Z / interlayer strength) inside a design loop.** wobbit will have to set its own derating; see section 4.4.
+- **Stress Relief (Stava et al., SIGGRAPH 2012)** is the classic graphics paper on automatically reinforcing printed objects against stress. Its ≈200 citations are mostly graphics and printing work, not robots. **I found no robotics paper that handles FDM anisotropy (weak Z / interlayer strength) inside a design loop.** gyropup will have to set its own derating; see section 4.4.
 
 ### 3.5 Open Duck Mini, Microduck and Upkie: design → sim → real in practice
 
@@ -386,8 +386,8 @@ The mechanical design was declared "pretty much finalized" in January 2025 befor
 
 **Microduck** (Pollen, 2026): the same toolchain on mjlab, with voltage sag and backlash modelled. The author notes that actuator fidelity is "most of the sim2real gap".
 
-For wobbit, copy:
-- onshape-to-robot-style export, which in wobbit is CadQuery → URDF/MJCF;
+For gyropup, copy:
+- onshape-to-robot-style export, which in gyropup is CadQuery → URDF/MJCF;
 - **slicer-derived masses**;
 - BAM-style actuator identification;
 - imitation rewards for squat and hop motions.
@@ -397,14 +397,14 @@ For wobbit, copy:
 - Built-in MPC and PD balancers, with RL through mjlab.
 - Iteration lessons: printed legs broke; parametric CAD made leg-length changes possible; one shared code path for robot, sim and RL was "too greedy" and was split.
 
-For wobbit:
+For gyropup:
 - Upkie is the **open baseline wheel-legged biped**.
 - Its pendulum env and MPC balancer are ready-made **tier-1 evaluators**.
-- Its parts list is a sanity check for wobbit's printable-leg FEA. Check whether wobbit's FEA would have predicted the Upkie v1 tibia failure.
+- Its parts list is a sanity check for gyropup's printable-leg FEA. Check whether gyropup's FEA would have predicted the Upkie v1 tibia failure.
 
 ---
 
-## 4. Recommended architecture for wobbit's loop, built on prior work
+## 4. Recommended architecture for gyropup's loop, built on prior work
 
 ### 4.1 Design representation: buildable by construction
 
@@ -484,7 +484,7 @@ Pass candidates up a tier only when they are within a margin of the current Pare
 1. **Buildable by construction.** CadQuery generators only emit assemblies made from catalogue parts, with fastener bosses, tool access and cable channels built in. This avoids RoboForge's top failures: missing mounts, self-intersections and actuator clearance.
 2. **Deterministic gate: the RoboForge checklist.** Single watertight solids, fit on the P1S 256 mm bed, insertion paths, tolerance stack-up, fastener length chains, joint-limit margins, clearance through the full range of motion and under tracking error, and mass reconciliation (CAD vs slicer vs URDF).
 3. **Masses from the slicer** (Open Duck), not uniform density (SERL). Re-export URDF/MJCF inertials after every structural change.
-4. **FEA with FDM derating.** No robotics source I found does this, so it must be set and validated by wobbit:
+4. **FEA with FDM derating.** No robotics source I found does this, so it must be set and validated by gyropup:
    - treat each part as transversely isotropic or apply a Z-direction knock-down to allowables;
    - make print orientation a design variable;
    - use separate safety factors for the static squat, hop landing and fall impact cases.
@@ -494,7 +494,7 @@ Pass candidates up a tier only when they are within a margin of the current Pare
 
 ### 4.5 Pitfalls others hit, and how to avoid them
 
-| Pitfall | Who hit it | Mitigation in wobbit |
+| Pitfall | Who hit it | Mitigation in gyropup |
 |---|---|---|
 | Optimiser exploits the simulator or actuator model | General co-design; BDX/Open Duck/Microduck say actuator fidelity dominates the gap | BAM-style actuator ID; torque–speed limits, friction, backlash, voltage sag in sim; DR on actuator parameters |
 | One-directional or narrow-task designs | Quadruped skating (asymmetric wheel angles) | Scenario suite covers reverse, turns, sideways pushes |

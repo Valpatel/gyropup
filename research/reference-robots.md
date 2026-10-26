@@ -1,8 +1,8 @@
-# Reference robots for wobbit
+# Reference robots for gyropup
 
 Research date: 2026-10-25. All numbers carry a source URL. Where a number could not be found it is written as **unknown**. Where we worked a number out ourselves (from a URDF/SDF or from physics), it is labelled **(derived)** and the inputs are shown.
 
-wobbit summary for context: a self-balancing wheel-legged biped like the DDT Diablo. It carries a ~1.5–2.5 kg Jetson AGX Orin 32GB / Seeed J501 box (206 × 181 × 112 mm, 12–36 V input), will be trained with RL in Isaac Sim / Isaac Lab, and will be **mostly 3D printed in PLA on a Bambu P1S at first** (carbon-fibre-filled filament later; SendCutSend metal / CF plate later still).
+gyropup summary for context: a self-balancing wheel-legged biped like the DDT Diablo. It carries a ~1.5–2.5 kg Jetson AGX Orin 32GB / Seeed J501 box (206 × 181 × 112 mm, 12–36 V input), will be trained with RL in Isaac Sim / Isaac Lab, and will be **mostly 3D printed in PLA on a Bambu P1S at first** (carbon-fibre-filled filament later; SendCutSend metal / CF plate later still).
 
 ---
 
@@ -39,7 +39,7 @@ MYBOTSHOP's integration docs say the same: "two parallel-linkage legs, each endi
 
 Masses from the SDF: body 6.72 kg; per leg Leg0 2.46 + Leg1 1.25 + Leg2 0.10 + Leg3 1.30 + wheel 1.36 kg. That totals ≈19.7 kg (**derived**), against 22.9 kg spec, so the SDF is approximate.
 
-DDT's RL model ([Col_DIABLO_Issac_RL `diablo.urdf`](https://github.com/DDTRobot/Col_DIABLO_Issac_RL)) replaces the linkage with an **equivalent serial 2-link leg**: thigh 0.14 m, shank 0.14 m, **wheel radius 0.10 m (200 mm wheel)**. All joints have effort 27 N·m and velocity 26 rad/s, the base is 11.64 kg and the total is ≈20.9 kg (**derived**). Swapping a closed linkage for an equivalent serial chain in sim is a useful trick for wobbit too.
+DDT's RL model ([Col_DIABLO_Issac_RL `diablo.urdf`](https://github.com/DDTRobot/Col_DIABLO_Issac_RL)) replaces the linkage with an **equivalent serial 2-link leg**: thigh 0.14 m, shank 0.14 m, **wheel radius 0.10 m (200 mm wheel)**. All joints have effort 27 N·m and velocity 26 rad/s, the base is 11.64 kg and the total is ≈20.9 kg (**derived**). Swapping a closed linkage for an equivalent serial chain in sim is a useful trick for gyropup too.
 
 ### DDT M1502D motor (Diablo's joint)
 
@@ -137,7 +137,7 @@ Interchangeable point-foot, sole and **wheel** feet ([LimX spec](https://limxdyn
 
 ### Unitree
 
-As of this research, Unitree's wheel-legged products are **quadrupeds** (Go2-W, B2-W), not bipeds. Go2-W: 18 kg, ≈45 N·m knee motor, Orin Nano / NX compute ([RobotShop](https://www.robotshop.com/products/unitree-go2-w-wheeled-robotic-dog-us); reseller figures conflict). They are relevant mainly for RL technique (e.g. [DreamWaQ_Go2W](https://github.com/ShengqianChen/DreamWaQ_Go2W)), not for wobbit's mechanics.
+As of this research, Unitree's wheel-legged products are **quadrupeds** (Go2-W, B2-W), not bipeds. Go2-W: 18 kg, ≈45 N·m knee motor, Orin Nano / NX compute ([RobotShop](https://www.robotshop.com/products/unitree-go2-w-wheeled-robotic-dog-us); reseller figures conflict). They are relevant mainly for RL technique (e.g. [DreamWaQ_Go2W](https://github.com/ShengqianChen/DreamWaQ_Go2W)), not for gyropup's mechanics.
 
 ### Open-source hobby / student builds
 
@@ -152,7 +152,7 @@ As of this research, Unitree's wheel-legged products are **quadrupeds** (Go2-W, 
 
 No public wheel-legged biped built on **hoverboard hub motors** was found in this research. The web-search budget ran out before a dedicated search could be done, so treat this as "not found", not "does not exist".
 
-**Actuator price points for a wobbit-class build** (reseller listings):
+**Actuator price points for a gyropup-class build** (reseller listings):
 - **RobStride 02:** 17 N·m peak, 6 N·m rated, 7.75:1, 405 g, ≈US $145 ([AIFIT Lab](https://aifitlab.com/products/robstride-02-motor)).
 - **Xiaomi CyberGear:** 12 N·m peak, 4 N·m continuous, 317 g, ≈US $179, now end-of-life ([OpenELAB](https://openelab.io/blogs/learn/xiaomi-cybergear-micromotor-guide)); launched at ¥499 ([SMM](https://news.metal.com/newscontent/102352716)).
 - **Damiao DM-J4310-2EC:** 7 N·m peak (V3 driver) / 12.5 N·m (V4), ≈US $125–167 ([OpenELAB](https://openelab.com/products/damiao-brushless-servo-dm-j4310), [AIFIT Lab](https://aifitlab.com/products/damiao-dm-j4310-2ec-v1-1-servo-motor)).
@@ -350,18 +350,18 @@ Sources: [print guide](https://github.com/apirrone/Open_Duck_Mini/blob/main/docs
   - Use potential-based shaping and no "jackpot" rewards.
   - Run a smoke test before every long run.
 
-### Lessons from Open Duck Mini for wobbit
+### Lessons from Open Duck Mini for gyropup
 
 1. **Character is cheap and separate from the policy.** Copy the open-loop show layer from Disney and Open Duck:
    - a head or "face" on a small neck (1–3 DOF), antennas or ears on hobby servos, LED or screen eyes, sounds;
    - a **seeded per-robot voice**, petting or touch detection, and an idle "sleep" behaviour.
    - None of this touches the balance controller.
 2. **Proportions:** a big head/body over short legs reads as cute (BDX, Open Duck, Microduck).
-   - wobbit's 206 × 181 × 112 mm Orin box is a natural "big head/body". Put the face on it.
+   - gyropup's 206 × 181 × 112 mm Orin box is a natural "big head/body". Put the face on it.
    - Treat the box like Microduck's 38 %-of-mass head: give it a **body-pitch/height command input**, allow some natural bob, and randomize its mass and CoM.
 3. **Low-cost printed build works at small scale:** PLA at 15 % infill, heat-set inserts, TPU soles.
-   - But Open Duck is ≈2 kg on ≈3 N·m joints. wobbit will be ~6–9 kg with ~5–12 N·m knees (section 3), so **PLA loads are 3–4× higher**.
-   - Combine this with the Upkie (printed tibia and femur broke) and RP_Balance (printed part crept under a hot motor) findings. For wobbit in PLA:
+   - But Open Duck is ≈2 kg on ≈3 N·m joints. gyropup will be ~6–9 kg with ~5–12 N·m knees (section 3), so **PLA loads are 3–4× higher**.
+   - Combine this with the Upkie (printed tibia and femur broke) and RP_Balance (printed part crept under a hot motor) findings. For gyropup in PLA:
      - use high wall counts / ≥40 % infill on load paths;
      - put **bearings and metal shafts at every pivot**; PLA must not be the bearing surface (see Open Duck's screw wearing its own slot);
      - **never clamp PLA directly against a motor housing**; PLA softens near 55–60 °C and creeps under sustained load;
@@ -376,7 +376,7 @@ Sources: [print guide](https://github.com/apirrone/Open_Duck_Mini/blob/main/docs
    - one shared observation space with swappable mode policies (balance / drive / jump / "trick");
    - optionally, an imitation term from a reference-motion generator for expressive moves.
 5. **Microduck's passive-wheel "roller mode" plus policy switching** is the closest public template for mixing legged expression with wheeled motion on a cheap printed robot.
-6. **Licence hygiene:** three Open Duck repos and several DDT repos have no licence. Pick wobbit's licence on day one, and only fork code with a clear permissive licence.
+6. **Licence hygiene:** three Open Duck repos and several DDT repos have no licence. Pick gyropup's licence on day one, and only fork code with a clear permissive licence.
 
 ---
 
@@ -401,7 +401,7 @@ The CNY → USD conversions are approximate, at about ¥7.2 per $1, and are not 
 
 ---
 
-## 7. What wobbit should copy / avoid
+## 7. What gyropup should copy / avoid
 
 ### Copy
 

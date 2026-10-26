@@ -1,4 +1,4 @@
-// Wobbit design model: design + catalog -> BOM, mass, performance and checks.
+// Gyropup design model: design + catalog -> BOM, mass, performance and checks.
 //
 // Pure functions, no DOM, so the same file runs in the browser (designer) and in Node (tools/derive.mjs, tests).
 // Every derived number says where it came from: "catalog" (a cited part spec), "formula" (computed from

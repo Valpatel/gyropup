@@ -1,11 +1,12 @@
-# wobbit
+# Gyropup
 
 A self-balancing wheel-legged robot, and the tool that designs it.
 
-wobbit is a two-wheeled, two-legged robot in the spirit of the DDT Diablo: it balances on direct-drive wheels and
+Gyropup is a two-wheeled, two-legged robot in the spirit of the DDT Diablo: it balances on direct-drive wheels and
 crouches, stands and hops on legs driven by quasi-direct-drive actuators. It carries a Jetson AGX Orin 32GB compute
-box, a Velodyne VLP-16 lidar, a ZED stereo camera and a RealSense depth camera. It is mostly 3D printed, starting in PLA
-on a Bambu P1S, with carbon-fibre filament, SendCutSend metal and carbon-fibre tube as upgrades.
+box, a Velodyne VLP-16 lidar, RealSense depth cameras facing forwards and backwards, and a VectorNav VN-100 for balance.
+It is mostly 3D printed, starting in PLA on a Bambu P1S, with carbon-fibre filament, SendCutSend metal and carbon-fibre
+tube as upgrades.
 
 The designer is as important as the robot. The goal is a closed loop:
 

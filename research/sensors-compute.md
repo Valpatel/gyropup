@@ -1,4 +1,4 @@
-# Preferred sensors and compute for wobbit
+# Preferred sensors and compute for gyropup
 
 Checked 2026-10-25. Data lives in `catalog/sensors_compute.json` (10 items).
 Prices are single-unit list prices before shipping and tax, for reference only. "n/p" means not published.

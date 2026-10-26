@@ -1,4 +1,4 @@
-# Wheel / hub motors for wobbit
+# Wheel / hub motors for gyropup
 
 Checked 2026-10-25. Data lives in `catalog/wheel_motors.json` (27 items) and `catalog/motor_drivers.json` (19 items).
 Prices are single-unit list prices before shipping and tax. "n/p" means not published. Foreign-currency prices are left unconverted.
@@ -15,7 +15,7 @@ Prices are single-unit list prices before shipping and tax. "n/p" means not publ
   - BotWheel peak torque = 15 A × Kt; no-load speed = Kv × 24 V.
   - Hoverboard no-load speed = measured Kv × 36 V.
 
-### What wobbit needs from each wheel
+### What gyropup needs from each wheel
 
 These are my working assumptions, not sourced figures.
 
@@ -116,8 +116,8 @@ Balancing is mostly done near zero speed. So the useful number is **continuous s
   - DM-H65: 21.5 Nm.
   - BotWheel: 15 A for 3 s, which caps it at ~14 Nm for a short burst only.
 - **Rated torque is the better sizing number.**
-  - **10–20 kg wobbit:** 3 Nm on a ~170 mm wheel gives ~35 N, which is the minimum. The M1502D (9.6), DM-H65 (6.0) and BotWheel (5) clear it comfortably.
-  - **≤10 kg wobbit:** the GL100 (3) and DM-J6006 (4) are adequate.
+  - **10–20 kg gyropup:** 3 Nm on a ~170 mm wheel gives ~35 N, which is the minimum. The M1502D (9.6), DM-H65 (6.0) and BotWheel (5) clear it comfortably.
+  - **≤10 kg gyropup:** the GL100 (3) and DM-J6006 (4) are adequate.
   - **Below the line:** DDSM115 (0.96 Nm, 19 N) only suits a ≤8 kg proof of concept.
 - **Hoverboard motors:** with Kt ≈ 0.52 Nm/A (ODrive's 8.27/Kv rule, measured Kv 16), a 20 A driver limit gives ~10 Nm (derived, ignoring saturation). They are thermally large, but nobody publishes a rating.
 
@@ -219,7 +219,7 @@ Direct drive avoids these. For an RL sim, model the backlash explicitly if you c
 
 **Light premium: MAB MA-D GL100** ×2 (€1,054.60) or CubeMars GL100 + moteus n1 + MA600 ring encoder (~$420 per wheel), each with a printed hub and tyre.
 - **Strengths:** only ~0.75 kg of motor per leg for 3 / 7.7 Nm, giving the least unsprung mass in the direct-drive set.
-- **Fit:** suits a 8–12 kg wobbit that wants fast legs.
+- **Fit:** suits a 8–12 kg gyropup that wants fast legs.
 
 ## Sources
 

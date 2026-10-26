@@ -55,7 +55,7 @@ export function robotSvg(design, catalog, { crouch = 0.35, color = '#f5b82e', wi
     return `<line x1="${-r * 0.75 * Math.cos(t)}" y1="${-(axleZ + r * 0.75 * Math.sin(t))}" x2="${r * 0.75 * Math.cos(t)}" y2="${-(axleZ - r * 0.75 * Math.sin(t))}" class="spoke"/>`;
   }).join('');
 
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${vb}" width="${width}" role="img" aria-label="Side view of your wobbit">
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${vb}" width="${width}" role="img" aria-label="Side view of your gyropup">
   <style>
     .ground{stroke:var(--line,#c9c3b8);stroke-width:3}
     .tyre{fill:#2c2f36}.hub{fill:#8a9099}.spoke{stroke:#5d636c;stroke-width:5}

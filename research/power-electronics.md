@@ -1,4 +1,4 @@
-# Power and electronics for wobbit
+# Power and electronics for gyropup
 
 Prices were checked on 2026-10-25. Every part named here is in
 [`catalog/power_electronics.json`](../catalog/power_electronics.json), with 165 items, their sources and confidence.

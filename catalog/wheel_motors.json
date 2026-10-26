@@ -557,7 +557,7 @@
       "https://cdn.shopify.com/s/files/1/0673/6848/5000/files/M1505A_222-Installation_diagram.pdf"
     ],
     "confidence": "seller listing",
-    "notes": "Right size for a 10-15 kg wobbit and lighter than M1502D, but not buyable today. 2D drawing only."
+    "notes": "Right size for a 10-15 kg gyropup and lighter than M1502D, but not buyable today. 2D drawing only."
   },
   {
     "id": "odrive-botwheel",
@@ -1374,7 +1374,7 @@
       "https://rcdrone.top/collections/robstride"
     ],
     "confidence": "seller listing",
-    "notes": "78.5 mm body. Speed figures @48 V. Same family is likely used for wobbit legs, so one bus protocol for all joints."
+    "notes": "78.5 mm body. Speed figures @48 V. Same family is likely used for gyropup legs, so one bus protocol for all joints."
   },
   {
     "id": "unitree-go-m8010-6-wheel",

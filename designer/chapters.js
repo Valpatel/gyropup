@@ -25,8 +25,8 @@ export const COLORS = [
 
 export const CHAPTERS = [
   {
-    id: 'size', title: 'Meet your wobbit',
-    story: () => `Every wobbit balances on two wheels and crouches, stands and hops on two legs, like the Diablo. `
+    id: 'size', title: 'Meet your gyropup',
+    story: () => `Every gyropup balances on two wheels and crouches, stands and hops on two legs, like the Diablo. `
       + `It carries a real brain and real senses, so it is a working robot, not a toy, but it should still be fun `
       + `to be around. First: how big is it?`,
     options: () => Object.entries(SIZES).map(([id, s]) => ({
@@ -38,7 +38,7 @@ export const CHAPTERS = [
   },
   {
     id: 'brain', title: 'A brain to think with',
-    story: () => `Your wobbit thinks with a Jetson AGX Orin 32GB in the J501 compute box. It is the heaviest single `
+    story: () => `Your gyropup thinks with a Jetson AGX Orin 32GB in the J501 compute box. It is the heaviest single `
       + `part on the robot, so everything else is sized around it.`,
     slot: 'compute', filter: (i) => i.category === 'compute' && /orin|jetson|raspberry/i.test(i.model + i.id), optional: false,
   },
@@ -61,7 +61,7 @@ export const CHAPTERS = [
   },
   {
     id: 'depth_rear', title: 'Eyes in the back of its head',
-    story: () => `A second depth camera, facing backwards, lets wobbit reverse safely. It uses the same cradle as the front one.`,
+    story: () => `A second depth camera, facing backwards, lets gyropup reverse safely. It uses the same cradle as the front one.`,
     slot: 'depth_rear', filter: (i) => i.category === 'sensor' && /realsense/i.test(i.vendor + i.model), optional: true,
   },
   {
@@ -119,7 +119,7 @@ export const CHAPTERS = [
   },
   {
     id: 'safety', title: 'A big red button',
-    story: () => `Every wobbit has an emergency stop that cuts motor power while the computer keeps running.`,
+    story: () => `Every gyropup has an emergency stop that cuts motor power while the computer keeps running.`,
     slot: 'estop', filter: (i) => i.category === 'estop', optional: true,
   },
   {
@@ -136,11 +136,11 @@ export const CHAPTERS = [
   },
   {
     id: 'character', title: 'Give it a personality',
-    story: () => `Like Open Duck Mini, a wobbit should be fun to watch: a friendly colour, a face, and motion `
+    story: () => `Like Open Duck Mini, a gyropup should be fun to watch: a friendly colour, a face, and motion `
       + `with a little bounce. The lidar and antennas make a natural tuft on top.`,
     kind: 'character',
   },
-  { id: 'summary', title: 'Your wobbit', story: () => `Here is your robot: what it costs, what it weighs, what it can do, `
+  { id: 'summary', title: 'Your gyropup', story: () => `Here is your robot: what it costs, what it weighs, what it can do, `
       + `and what to print.`, kind: 'summary' },
 ];
 

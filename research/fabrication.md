@@ -1,8 +1,8 @@
-# Fabrication rules and prices for wobbit
+# Fabrication rules and prices for gyropup
 
 Checked 2026-10-25. Every number has a source tag like [B1]. The sources are listed at the end. If a value was not published or could not be fetched, it says so. Values we calculated ourselves are marked **derived** or **estimate**, and their inputs are shown. The machine-readable version is `catalog/fabrication.json`.
 
-Plan of record: wobbit is **mostly 3D printed**. The first build is PLA on the Bambu P1S. Later builds move to carbon-fibre-filled filament on an upgraded or newer Bambu printer. SendCutSend metal and CF tubes are **optional upgrades** for single parts. This report follows that order: printing first, upgrades after.
+Plan of record: gyropup is **mostly 3D printed**. The first build is PLA on the Bambu P1S. Later builds move to carbon-fibre-filled filament on an upgraded or newer Bambu printer. SendCutSend metal and CF tubes are **optional upgrades** for single parts. This report follows that order: printing first, upgrades after.
 
 ---
 
@@ -150,7 +150,7 @@ Inputs are the XY flexural modulus and strength from §2.2 [B1–B14], with stan
 | PAHT-CF | 1.54 | 1.64 | 1.52 | 0.87 | 0.78 | 0.81 | 0.74 | 4.69 | 170 |
 | PPA-CF | 3.59 | 2.74 | 1.84 | 0.65 | 0.60 | 0.74 | 0.66 | 8.79 | 196 |
 
-**Recommended ladder for wobbit:**
+**Recommended ladder for gyropup:**
 
 1. **PLA Basic.** Cheapest; for parts away from motors.
 2. **PETG Basic.** Same price, +14 °C HDT. Make parts 12% thicker for equal stiffness.

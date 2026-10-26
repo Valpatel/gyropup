@@ -129,11 +129,11 @@ chain for RL and URDF.
 | Actuators | MuJoCo `DcMotor` / `<dcmotor>`, `mujoco.sysid`, BAM | Catalog → actuator parameters |
 | FEA | gmsh, scikit-fem, CalculiX | STEP → mesh → loads → safety factor glue |
 | Optimiser | Optuna, pymoo, pycma | Staging and gates |
-| RL | mjlab, `mjlab_upkie`, Isaac Lab 3.0 | wobbit task config |
+| RL | mjlab, `mjlab_upkie`, Isaac Lab 3.0 | gyropup task config |
 | Viewer | three.js + urdf-loader, `@mujoco/mujoco`, Rerun | `run.json` and stress GLB exporters |
 
 **Generic pieces go into cad-agent** (R7): robot export, the scenario harness API, FEA glue, mass reconciliation and the
-staged optimiser. wobbit-specific parts stay here: the template, scenarios, controller and spec. GPL tools (gmsh,
+staged optimiser. gyropup-specific parts stay here: the template, scenarios, controller and spec. GPL tools (gmsh,
 CalculiX) stay optional extras in the public MIT cad-agent.
 
 **Licences.** Upkie, mjlab, `mjlab_upkie`, Text2Robot, BAM and robot_descriptions are Apache-2.0. RP_Balance, SurGE,
