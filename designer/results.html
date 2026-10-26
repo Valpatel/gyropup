@@ -38,6 +38,10 @@
   <p class="lede">Every design runs the same scenarios in MuJoCo with a balance controller derived from its own model. Motor limits
   come from the catalog at the design's battery voltage. Simulation only: nothing here has been tested on hardware.
   Run <code>tools/simulate.py --all --video</code> to refresh.</p>
+  <div class="sec">Overnight design loop</div>
+  <p class="lede" id="loop-lede">The optimiser (tools/iterate.py) builds and checks candidates end to end: designer checks, CAD, clashes,
+  the physics scenarios, stiffness and strength, cables. Lightest passing robot wins; out-of-stock parts are penalised.</p>
+  <div id="loop"></div>
   <div class="sec">Compare</div>
   <div id="compare"></div>
   <div class="sec">Designs</div>

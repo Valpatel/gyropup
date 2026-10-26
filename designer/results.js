@@ -4,8 +4,28 @@ import { mountAppNav } from './kit/appnav.js';
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const getJson = async (u) => { const r = await fetch(u, { cache: 'no-store' }); if (!r.ok) throw new Error(`${u}: ${r.status}`); return r.json(); };
 const pct = (v) => `${Math.round(v * 100)}%`;
+const tag = (ok) => `<span class="tag ${ok ? 'pass' : 'fail'}">${ok ? 'PASS' : 'FAIL'}</span>`;
 
 await mountAppNav({ root: '../', current: 'results' });
+
+// the overnight design loop's leaderboard (exports/iterate/leaderboard.json, mirrored from the machine running it)
+try {
+  const b = await getJson('../exports/iterate/leaderboard.json');
+  const st = Object.entries(b.by_stage).map(([k, v]) => `${k} ${v}`).join(' · ');
+  const base = b.baseline ? ` Today's design: ${b.baseline.model_mass_kg} kg.` : '';
+  document.getElementById('loop-lede').insertAdjacentHTML('beforeend', `<br><b>${b.trials}</b> candidates so far, <b>${b.passing}</b> pass everything
+    (updated ${esc(b.updated)}). Furthest stage reached: ${esc(st)}.${base}`);
+  const f = (v, d = 2) => (v == null ? '—' : typeof v === 'number' ? v.toFixed(d) : esc(v));
+  document.getElementById('loop').innerHTML = `<table class="cmp"><thead><tr><th>#</th><th>result</th><th>mass</th><th>min SF</th>
+    <th>wheel defl.</th><th>track</th><th>motor</th><th>thigh / shin</th><th>thigh box</th><th>shin box</th><th>yoke</th><th>crank</th><th>why not</th></tr></thead><tbody>`
+    + b.best.slice(0, 15).map((r) => {
+      const p = r.params || {};
+      return `<tr><td>${r.trial}</td><td>${tag(r.ok)}</td><td>${f(r.model_mass_kg)} kg</td><td>${f(r.min_safety_factor)}</td><td>${f(r.wheel_deflection_mm)} mm</td>`
+        + `<td>${f(r.track_mm, 0)}</td><td>${esc((p.leg_actuator || '').replace('robstride-', '').toUpperCase())}</td><td>${p.thigh_mm ?? '—'} / ${p.shin_mm ?? '—'}</td>`
+        + `<td>${f(p.link_w, 0)}×${f(p.link_t, 0)}×${f(p.wall, 1)}</td><td>${f(p.shin_w, 0)}×${f(p.shin_wall, 1)}</td><td>${f(p.yoke_wall, 0)}/${f(p.yoke_deck, 0)}/${f(p.yoke_rib, 0)}</td>`
+        + `<td>${f(p.crank_r, 0)}</td><td class="why">${esc((r.reasons || [])[0] || '')}</td></tr>`;
+    }).join('') + '</tbody></table>';
+} catch { document.getElementById('loop').innerHTML = '<p class="hud-note">No design loop has run yet.</p>'; }
 const designs = (await getJson('../exports/designs.json')).designs;
 const sims = [];
 for (const d of designs) {
@@ -14,7 +34,6 @@ for (const d of designs) {
 }
 
 const scenarios = [...new Set(sims.flatMap((x) => (x.s ? Object.keys(x.s.scenarios) : [])))];
-const tag = (ok) => `<span class="tag ${ok ? 'pass' : 'fail'}">${ok ? 'PASS' : 'FAIL'}</span>`;
 document.getElementById('compare').innerHTML = `<table class="cmp"><thead><tr><th>Scenario</th>${sims.map((x) => `<th>${esc(x.d.name)}</th>`).join('')}</tr></thead><tbody>`
   + scenarios.map((n) => `<tr><td>${esc(n)}</td>${sims.map((x) => {
     const r = x.s?.scenarios?.[n];
