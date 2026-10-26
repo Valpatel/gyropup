@@ -1,0 +1,5 @@
+6656K236 Steel Ball Bearing, Steel, Shielded, Trade Number 6812-2Z, ABEC Rating 1
+URL: https://www.mcmaster.com/6656K236/
+Downloaded: 2026-10-26
+McMaster-Carr CAD, for design use; not redistributed.
+Files: <PN>.step (as downloaded), <PN>.norm.step (moved into the frame for its kind), <PN>.page.json (the product page's data).

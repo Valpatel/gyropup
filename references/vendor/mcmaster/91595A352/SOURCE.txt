@@ -1,0 +1,5 @@
+91595A352 Dowel Pin, 52100 Alloy Steel, 5 mm Diameter, 16 mm Long
+URL: https://www.mcmaster.com/91595A352/
+Downloaded: 2026-10-26
+McMaster-Carr CAD, for design use; not redistributed.
+Files: <PN>.step (as downloaded), <PN>.norm.step (moved into the frame for its kind), <PN>.page.json (the product page's data).

@@ -1,0 +1,5 @@
+9307K884 Buna-N Rubber Grommet, for 11/16" Hole Diameter and 1/4" Material Thickness, 7/16" ID
+URL: https://www.mcmaster.com/9307K884/
+Downloaded: 2026-10-26
+McMaster-Carr CAD, for design use; not redistributed.
+Files: <PN>.step (as downloaded), <PN>.norm.step (moved into the frame for its kind), <PN>.page.json (the product page's data).

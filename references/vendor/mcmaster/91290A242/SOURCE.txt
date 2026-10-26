@@ -1,0 +1,5 @@
+91290A242 Black-Oxide Alloy Steel Socket Head Screw, US Origin, M5 x 0.8 mm Thread Size, 20 mm Long
+URL: https://www.mcmaster.com/91290A242/
+Downloaded: 2026-10-26
+McMaster-Carr CAD, for design use; not redistributed.
+Files: <PN>.step (as downloaded), <PN>.norm.step (moved into the frame for its kind), <PN>.page.json (the product page's data).

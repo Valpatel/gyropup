@@ -1,0 +1,5 @@
+93475A270 18-8 Stainless Steel General Purpose Washer, for M8 Screw Size, 8.4 mm ID, 16.0 mm OD
+URL: https://www.mcmaster.com/93475A270/
+Downloaded: 2026-10-26
+McMaster-Carr CAD, for design use; not redistributed.
+Files: <PN>.step (as downloaded), <PN>.norm.step (moved into the frame for its kind), <PN>.page.json (the product page's data).

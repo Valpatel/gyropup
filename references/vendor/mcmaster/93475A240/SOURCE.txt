@@ -1,0 +1,5 @@
+93475A240 18-8 Stainless Steel General Purpose Washer, for M5 Screw Size, 5.3 mm ID, 10.0 mm OD
+URL: https://www.mcmaster.com/93475A240/
+Downloaded: 2026-10-26
+McMaster-Carr CAD, for design use; not redistributed.
+Files: <PN>.step (as downloaded), <PN>.norm.step (moved into the frame for its kind), <PN>.page.json (the product page's data).

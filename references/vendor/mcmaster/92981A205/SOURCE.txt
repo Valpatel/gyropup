@@ -1,0 +1,5 @@
+92981A205 Alloy Steel Shoulder Screws, 8 mm Shoulder Diameter, 30 mm Shoulder Length, M6 x 1 mm Thread
+URL: https://www.mcmaster.com/92981A205/
+Downloaded: 2026-10-26
+McMaster-Carr CAD, for design use; not redistributed.
+Files: <PN>.step (as downloaded), <PN>.norm.step (moved into the frame for its kind), <PN>.page.json (the product page's data).

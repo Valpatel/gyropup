@@ -1,5 +1,6 @@
 {
   "files": [
+    "hardware.json",
     "leg_actuators.json",
     "lfp_batteries.json",
     "lights.json",
@@ -10,5 +11,5 @@
     "turret.json",
     "wheel_motors.json"
   ],
-  "items": 347
+  "items": 381
 }

@@ -1,0 +1,5 @@
+91116A150 18-8 Stainless Steel Oversized Washer, for M6 Screw, 6.4mm ID, 18.0mm OD, 1.4mm to 1.8mm Thick
+URL: https://www.mcmaster.com/91116A150/
+Downloaded: 2026-10-26
+McMaster-Carr CAD, for design use; not redistributed.
+Files: <PN>.step (as downloaded), <PN>.norm.step (moved into the frame for its kind), <PN>.page.json (the product page's data).

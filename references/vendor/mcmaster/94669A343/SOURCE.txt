@@ -1,0 +1,5 @@
+94669A343 Aluminum Unthreaded Spacer, 10 mm OD, 24 mm Long, for M5 Screw Size
+URL: https://www.mcmaster.com/94669A343/
+Downloaded: 2026-10-26
+McMaster-Carr CAD, for design use; not redistributed.
+Files: <PN>.step (as downloaded), <PN>.norm.step (moved into the frame for its kind), <PN>.page.json (the product page's data).

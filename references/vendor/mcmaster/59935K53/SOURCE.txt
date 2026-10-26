@@ -1,0 +1,5 @@
+59935K53 Ball Joint Rod End, M8 x 1.25mm Internal Thread
+URL: https://www.mcmaster.com/59935K53/
+Downloaded: 2026-10-26
+McMaster-Carr CAD, for design use; not redistributed.
+Files: <PN>.step (as downloaded), <PN>.norm.step (moved into the frame for its kind), <PN>.page.json (the product page's data).

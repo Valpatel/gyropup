@@ -1,0 +1,5 @@
+90695A040 Medium-Strength Steel Thin-Profile Hex Nut, Zinc-Plated, M8 x 1.25 mm Thread, Class 04
+URL: https://www.mcmaster.com/90695A040/
+Downloaded: 2026-10-26
+McMaster-Carr CAD, for design use; not redistributed.
+Files: <PN>.step (as downloaded), <PN>.norm.step (moved into the frame for its kind), <PN>.page.json (the product page's data).
