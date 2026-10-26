@@ -1,0 +1,10 @@
+model: policy.onnx  input obs[1, 25]  output actions[1, 6]  providers ['CPUExecutionProvider']
+reference check: max |onnx - torch| = 5.96e-08
+raw action        : [ 0.     0.103  0.055  0.135  0.129 -0.294]
+  hip_l    position target +0.756 rad
+  knee_l   position target -1.460 rad
+  hip_r    position target +0.783 rad
+  knee_r   position target -1.444 rad
+  wheel_l  velocity target +2.575 rad/s
+  wheel_r  velocity target -5.872 rad/s
+onnxruntime CPU latency: 17 us per step (50 Hz control loop budget 20000 us)

@@ -1,0 +1,24 @@
+{
+ "run": "2026-10-25_19-26-19_default",
+ "iterations": 4000,
+ "wall_clock_min": 39.4,
+ "env_steps": 393216000,
+ "first_iteration": {
+  "mean_return": -0.8459108471870422,
+  "episode_length_s": 0.48
+ },
+ "last_50_iterations": {
+  "mean_return": 97.99,
+  "episode_length_s": 20.0,
+  "mean_abs_speed_error_mps": 0.093,
+  "mean_abs_yaw_rate_error_radps": 0.085,
+  "falls_per_episode_batch": 0.0,
+  "command_range": {
+   "forward_mps": 1.0,
+   "yaw_radps": 1.5
+  },
+  "push_intensity": 1.0
+ },
+ "best_mean_return": 100.62,
+ "note": "Tracking errors are converted from mjlab's Metrics/twist/* (episode sum / (8 s / 0.02 s)) to a mean per step."
+}

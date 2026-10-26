@@ -1,0 +1,73 @@
+{
+ "simulator": "MuJoCo 3.11.0 CPU, 1 ms timestep, full robot.xml (turret held by PD)",
+ "model": "/home/scubasonar/Code/gyropup/rl/results/trained_model",
+ "model_mass_kg": 17.028666,
+ "policy": "policy.onnx",
+ "command_delay_ms": 20.0,
+ "fell_at_s": null,
+ "rms_vx_error_mps": 0.05330387407592606,
+ "rms_yaw_rate_error_radps": 0.02889171529677038,
+ "max_abs_pitch_deg": 3.316229176706957,
+ "final_position_m": [
+  2.333643939268495,
+  0.16317949705255289
+ ],
+ "segments": [
+  {
+   "segment": "stand",
+   "cmd_vx": 0.0,
+   "cmd_wz": 0.0,
+   "mean_vx": 0.015,
+   "mean_wz": 0.009
+  },
+  {
+   "segment": "forward 0.5 m/s",
+   "cmd_vx": 0.5,
+   "cmd_wz": 0.0,
+   "mean_vx": 0.528,
+   "mean_wz": 0.013
+  },
+  {
+   "segment": "forward 1.0 m/s",
+   "cmd_vx": 1.0,
+   "cmd_wz": 0.0,
+   "mean_vx": 1.017,
+   "mean_wz": 0.016
+  },
+  {
+   "segment": "arc left",
+   "cmd_vx": 0.6,
+   "cmd_wz": 1.0,
+   "mean_vx": 0.603,
+   "mean_wz": 1.061
+  },
+  {
+   "segment": "spin right",
+   "cmd_vx": 0.0,
+   "cmd_wz": -1.5,
+   "mean_vx": -0.003,
+   "mean_wz": -1.521
+  },
+  {
+   "segment": "reverse 0.5 m/s",
+   "cmd_vx": -0.5,
+   "cmd_wz": 0.0,
+   "mean_vx": -0.522,
+   "mean_wz": 0.008
+  },
+  {
+   "segment": "arc right",
+   "cmd_vx": 0.8,
+   "cmd_wz": -0.8,
+   "mean_vx": 0.825,
+   "mean_wz": -0.806
+  },
+  {
+   "segment": "stop",
+   "cmd_vx": 0.0,
+   "cmd_wz": 0.0,
+   "mean_vx": -0.012,
+   "mean_wz": 0.002
+  }
+ ]
+}

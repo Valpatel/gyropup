@@ -1,0 +1,7 @@
+.venv/
+logs/
+runs/
+build/
+__pycache__/
+*.egg-info/
+MUJOCO_LOG.TXT

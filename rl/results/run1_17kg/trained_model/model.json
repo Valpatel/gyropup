@@ -1,0 +1,345 @@
+{
+ "design": "designs/default.json",
+ "name": "Gyropup",
+ "total_mass_kg": 17.02865752,
+ "designer_mass_kg": 17.02865752,
+ "mass_reconciles": true,
+ "links": {
+  "base": {
+   "name": "base",
+   "mass_kg": 10.353486,
+   "com_m": [
+    0.0,
+    0.0,
+    0.032636
+   ],
+   "inertia_kg_m2": [
+    [
+     0.112800835,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.057107527,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.089054803
+    ]
+   ]
+  },
+  "thigh_l": {
+   "name": "thigh_l",
+   "mass_kg": 0.162293,
+   "com_m": [
+    0.0,
+    0.0,
+    -0.1
+   ],
+   "inertia_kg_m2": [
+    [
+     0.000475948,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.00046794,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     2.8603e-05
+    ]
+   ]
+  },
+  "shin_l": {
+   "name": "shin_l",
+   "mass_kg": 1.105293,
+   "com_m": [
+    0.0,
+    0.038455,
+    -0.185317
+   ],
+   "inertia_kg_m2": [
+    [
+     0.002840092,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.002666147,
+     0.000624096
+    ],
+    [
+     0.0,
+     0.000624096,
+     0.001008116
+    ]
+   ]
+  },
+  "wheel_l": {
+   "name": "wheel_l",
+   "mass_kg": 1.32,
+   "com_m": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "inertia_kg_m2": [
+    [
+     0.003499648,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.00656168,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.003499648
+    ]
+   ]
+  },
+  "thigh_r": {
+   "name": "thigh_r",
+   "mass_kg": 0.162293,
+   "com_m": [
+    0.0,
+    0.0,
+    -0.1
+   ],
+   "inertia_kg_m2": [
+    [
+     0.000475948,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.00046794,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     2.8603e-05
+    ]
+   ]
+  },
+  "shin_r": {
+   "name": "shin_r",
+   "mass_kg": 1.105293,
+   "com_m": [
+    0.0,
+    -0.038455,
+    -0.185317
+   ],
+   "inertia_kg_m2": [
+    [
+     0.002840092,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.002666147,
+     -0.000624096
+    ],
+    [
+     0.0,
+     -0.000624096,
+     0.001008116
+    ]
+   ]
+  },
+  "wheel_r": {
+   "name": "wheel_r",
+   "mass_kg": 1.32,
+   "com_m": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "inertia_kg_m2": [
+    [
+     0.003499648,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.00656168,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.003499648
+    ]
+   ]
+  },
+  "turret_pan": {
+   "name": "",
+   "mass_kg": 0.6,
+   "com_m": [
+    0,
+    0,
+    0.015
+   ],
+   "inertia_kg_m2": [
+    [
+     0.00042,
+     0,
+     0
+    ],
+    [
+     0,
+     0.00042,
+     0
+    ],
+    [
+     0,
+     0,
+     0.00075
+    ]
+   ]
+  },
+  "turret_tilt": {
+   "name": "",
+   "mass_kg": 0.9,
+   "com_m": [
+    0.02,
+    0,
+    0
+   ],
+   "inertia_kg_m2": [
+    [
+     0.0008775,
+     0,
+     0
+    ],
+    [
+     0,
+     0.0019575,
+     0
+    ],
+    [
+     0,
+     0,
+     0.002295
+    ]
+   ]
+  }
+ },
+ "leg_actuator": {
+  "peak_nm": 60,
+  "rated_nm": 20,
+  "omega_max": 22.97289627937536,
+  "rpm_at_bus": 219.375,
+  "armature": 0.017169338339999993,
+  "estimates": {
+   "armature": true
+  }
+ },
+ "wheel_motor": {
+  "peak_nm": 14.3,
+  "rated_nm": 5,
+  "omega_max": 49.24446484502001,
+  "rpm_at_bus": 470.25,
+  "armature": 0.0,
+  "estimates": {}
+ },
+ "head_payload": {
+  "name": "Turret (separate project)",
+  "mass_g": 1500,
+  "com_above_top_mm": 120,
+  "recoil_ns_per_shot": 0.05,
+  "burst_shots": 8,
+  "power_w": 40,
+  "note": "Budget for the head payload interface (docs/head-payload.md); the turret itself is developed separately.",
+  "magazine_shots": 24,
+  "magazine": "drum or belt, swappable at the reload station (the dock)",
+  "burst_rate_hz": 10
+ },
+ "body_top_m": 0.191,
+ "turret": {
+  "pan_effort_nm": 5.0,
+  "tilt_effort_nm": 3.0,
+  "magazine": 24,
+  "dart_speed_mps": 24.0,
+  "dart_mass_kg": 0.001,
+  "tilt_positive": "barrel down",
+  "estimates": "pan/tilt torques and the 40/60 mass split"
+ },
+ "bus_v_nominal": 54.0,
+ "bus_v_range": [
+  45,
+  60
+ ],
+ "layout_mm": {
+  "motorD": 106,
+  "motorL": 56,
+  "linkW": 40,
+  "linkD": 30,
+  "wheelW": 44.6,
+  "wheelR": 85.5,
+  "thigh": 200,
+  "shin": 200,
+  "hipX": 167,
+  "wheelX": 215.3,
+  "trayBottom": -25,
+  "trayH": 104,
+  "tray": {
+   "width": 206,
+   "depth": 216,
+   "height": 104
+  },
+  "bodyBottom": 79,
+  "bodyTop": 191,
+  "body": {
+   "width": 206,
+   "depth": 181,
+   "height": 112
+  },
+  "frameWidth": 206,
+  "battery": {
+   "packs": 1,
+   "dims": [
+    206,
+    193,
+    92
+   ],
+   "vendor": "DeWalt"
+  },
+  "kneeMinDeg": 40,
+  "kneeMaxDeg": 160,
+  "lidarMount": "under"
+ },
+ "urdf_check": {
+  "pass": true,
+  "problems": [],
+  "links": 9,
+  "joints": 8,
+  "moving_joints": 8,
+  "total_mass_kg": 17.0287,
+  "physical_fit_verified": false
+ },
+ "notes": [
+  "hub motor split 60% spinning / 40% stator (estimate)"
+ ],
+ "estimates": [
+  "hub motor rotor/stator split",
+  "leg actuator rotor inertia (armature)",
+  "printed part masses (designer estimate until CAD)",
+  "joint damping and friction"
+ ]
+}

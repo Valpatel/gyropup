@@ -1,0 +1,73 @@
+{
+ "checkpoint": "logs/rsl_rl/gyropup_velocity/2026-10-25_20-10-22_default/model_2999.pt",
+ "design": "designs/default.json",
+ "seconds": 21.0,
+ "falls": 0,
+ "rms_vx_error_mps": 0.018183767745884417,
+ "rms_yaw_rate_error_radps": 0.02833566415076143,
+ "max_abs_pitch_deg": 5.548872947692871,
+ "height_min_max_m": [
+  0.34871211647987366,
+  0.3846017122268677
+ ],
+ "peak_leg_torque_nm": 30.79495620727539,
+ "peak_wheel_torque_nm": 8.06662368774414,
+ "segments": [
+  {
+   "segment": "stand",
+   "cmd_vx": 0.0,
+   "cmd_wz": 0.0,
+   "mean_vx": -0.013526568859815598,
+   "mean_wz": 0.008699837420135737
+  },
+  {
+   "segment": "forward 0.5 m/s",
+   "cmd_vx": 0.5,
+   "cmd_wz": 0.0,
+   "mean_vx": 0.500138426721096,
+   "mean_wz": -0.011571094514802099
+  },
+  {
+   "segment": "forward 1.0 m/s",
+   "cmd_vx": 1.0,
+   "cmd_wz": 0.0,
+   "mean_vx": 0.9860034120082856,
+   "mean_wz": -0.028684791754931212
+  },
+  {
+   "segment": "arc left",
+   "cmd_vx": 0.6,
+   "cmd_wz": 1.0,
+   "mean_vx": 0.5998611551523209,
+   "mean_wz": 1.0349574238061905
+  },
+  {
+   "segment": "spin right",
+   "cmd_vx": 0.0,
+   "cmd_wz": -1.5,
+   "mean_vx": -0.03111292156080405,
+   "mean_wz": -1.507012054125468
+  },
+  {
+   "segment": "reverse 0.5 m/s",
+   "cmd_vx": -0.5,
+   "cmd_wz": 0.0,
+   "mean_vx": -0.5076648120085399,
+   "mean_wz": -0.002825476062328865
+  },
+  {
+   "segment": "arc right",
+   "cmd_vx": 0.8,
+   "cmd_wz": -0.8,
+   "mean_vx": 0.7861909604072571,
+   "mean_wz": -0.8324558073282242
+  },
+  {
+   "segment": "stop",
+   "cmd_vx": 0.0,
+   "cmd_wz": 0.0,
+   "mean_vx": -0.01381344688590616,
+   "mean_wz": 0.0007875949175286223
+  }
+ ]
+}
