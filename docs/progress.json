@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-26 08:10",
+ "updated": "2026-10-26 08:20",
  "status": [
   {
    "title": "Build method",
@@ -13,13 +13,18 @@
   },
   {
    "title": "Robot mass (model)",
-   "value": "23.3 kg",
-   "note": "printed parts 5.9 kg (estimate); the design loop is cutting it"
+   "value": "25.2 kg",
+   "note": "the whole CAD assembly: 6.2 printed, 14.5 bought, 2.1 electronics, 0.9 hardware (allowance until McMaster parts land) + turret budget 1.5"
   },
   {
    "title": "Physics scenarios",
    "value": "15 / 15 pass",
    "note": "now with one wheel on a 30 mm plank: body held level to 0.14° by leg heights"
+  },
+  {
+   "title": "Power wiring",
+   "value": "3 parts under-rated",
+   "note": "fuse block 58 V, anti-spark switch 60 V, 12 V converter 30 W (needs ~39 W): see the log"
   },
   {
    "title": "Strength",
@@ -121,6 +126,27 @@
      "href": "sim.html?run=side_kerb"
     }
    ]
+  },
+  {
+   "time": "10-26 08:00",
+   "title": "The whole robot, every part, in the CAD and the physics",
+   "text": "Every made, bought and electronic part is placed on the link it moves with; the physics takes each link's mass and inertia from the CAD and draws the real meshes (vendor models where we have them, the J501 box's own shells). The electronics did not fit the tub, so a printed front bay holds them (138 mm deep, packed in 3D). Model mass 25.2 kg (the designer's estimate was 20.4).",
+   "links": [
+    {
+     "title": "3D",
+     "href": "sim.html"
+    }
+   ]
+  },
+  {
+   "time": "10-26 08:05",
+   "title": "Real parts for every electronic slot",
+   "text": "Datasheet sizes, masses and mounts for all electronics; real parts for the placeholders (maxon DSR 70/30 regen clamp, Diode Dynamics SSC1 lights, Waveshare CAN boards, WeAct G474). Found: the Blue Sea fuse block is rated 58 V, the anti-spark switch 60 V (14S), the 12 V converter 30 W for ~39 W of load."
+  },
+  {
+   "time": "10-26 08:10",
+   "title": "McMaster hardware and the turret CAD under way",
+   "text": "Real McMaster STEP models with part numbers for every bearing, screw, insert, pin and rod end (one at a time, like an engineer); the turret's printed CAD from the launcher study; an interactive strength viewer in cad-agent."
   }
  ],
  "shopping": {
