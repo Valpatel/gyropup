@@ -83,7 +83,7 @@ export function kneeFor(a, b, h) {
  * buildRobot(design, catalog, { eyes }) -> { group, setPose(p), info }
  * setPose({ height: 0..1 (crouch..stand), pitch: rad, rollMM: left-right leg difference, wheel: rad })
  */
-export function buildRobot(design, catalog, { eyes, mech } = {}) {
+export function buildRobot(design, catalog, { eyes, mech, cad } = {}) {
   const d = effectiveDesign(design, catalog);
   const g = d.geometry, part = (slot) => resolvePart(d.parts[slot], catalog);
   const color = new THREE.Color(d.character?.color ?? '#f5b82e');
@@ -141,11 +141,13 @@ export function buildRobot(design, catalog, { eyes, mech } = {}) {
   const top = bodyBottom + B.height_mm;
 
   // hip motor stacks (hip + knee actuators side by side, Diablo style)
+  const motorMeshes = [];
   for (const s of [-1, 1]) {
     for (const k of [0, 1]) {
       const m = cylX(motorD / 2 * M, (motorL / 2 - 1) * M, STEEL());
       m.position.set(s * (motorY ? motorY[k] : FW / 2 + 3 + motorL / 4 + k * motorL / 2) * M, 0, 0);
       body.add(m);
+      motorMeshes.push(m);
     }
   }
 
@@ -315,6 +317,14 @@ export function buildRobot(design, catalog, { eyes, mech } = {}) {
     return { hip, knee, ankle, wheel, side: s };
   });
 
+  // the real CAD (cadrig.js) in place of the procedural tray, motors and legs, when it was built from this design
+  if (cad) {
+    tray.visible = false;
+    motorMeshes.forEach((m) => { m.visible = false; });
+    legs.forEach((L) => { L.hip.visible = false; });
+    base.add(cad.group);
+  }
+
   shadowed(group);
   eyeMeshes.forEach((m) => { m.castShadow = false; });
 
@@ -330,6 +340,7 @@ export function buildRobot(design, catalog, { eyes, mech } = {}) {
       L.knee.rotation.x = gamma - Math.PI;
       L.ankle.rotation.x = Math.PI - gamma - alpha;              // undo the leg's rotation: the axle frame stays level
       L.wheel.rotation.x = wheel;
+      cad?.set(i === 1 ? 'l' : 'r', alpha - pitch, gamma - Math.PI, wheel);
     });
     const hAvg = (hs[0] + hs[1]) / 2;
     base.position.y = (r + hAvg) * M;
@@ -356,6 +367,7 @@ export function buildRobot(design, catalog, { eyes, mech } = {}) {
       L.ankle.rotation.x = -(q[i] + q[i + 1]);
       L.wheel.rotation.x = q[i + 2];
     }
+    if (cad) { cad.set('l', q[7], q[8], q[9]); cad.set('r', q[10], q[11], q[12]); }
     group.position.set(0, 0, 0);
   }
   const heightM = (r + hMax + top + (lidar ? 90 : 0)) * M;

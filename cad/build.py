@@ -270,6 +270,7 @@ def build(design_path: Path):
     for name, shape in placed.items():
         cq.exporters.export(shape.val() if hasattr(shape, 'val') else shape, str(OUT / f'asm_{name}.step'))
 
+    export_link_meshes(design_path, L, S, parts, lparts, lbought, bought, placed, hip_id)
     (OUT / 'geometry-checks.json').write_text(json.dumps({k: v for k, v in report.items() if v.get('print')}, indent=1) + '\n')
     total = sum(m['mass_g'] * m['qty'] for m in mass.values())
     (OUT / 'mass-properties.json').write_text(json.dumps({'design': str(Path(design_path).resolve().relative_to(R)), 'parts': mass,
@@ -286,6 +287,58 @@ def build(design_path: Path):
     for name, rep in report.items():
         print(f"  {name:20} x{rep['qty']}  {meta[name]['material']:7} valid={rep['cad_valid']} solids={rep['solid_count']}  {meta[name]['how']}")
     return report
+
+
+# Which link each leg part moves with (left leg, zero pose); everything else is fixed to the body.
+LEG_LINK = {'thigh': 'thigh', 'hip_output_adapter': 'thigh', 'shin': 'shin', 'wheel_adapter': 'shin',
+            'knee_crank': 'crank', 'knee_output_adapter': 'crank', 'pushrod': 'rod', 'wheel': 'wheel'}
+VIEW_SKIP = {'j501_box', 'lidar', 'camera_front', 'camera_rear'}       # the 3D page draws these itself (FOV, eyes)
+
+
+def export_link_meshes(design_path, L, S, parts, lparts, lbought, bought, placed, hip_id):
+    """Meshes of every part grouped by the link it moves with, for the 3D simulator: exports/links/*.stl (robot frame,
+    millimetres, legs at the zero pose, left leg only: the page mirrors it) and exports/links/manifest.json. The page
+    turns the thigh by the hip angle, the shin by the knee angle about the knee pin, the wheel by its spin, the crank
+    by hip + knee, and keeps the push-rod parallel to the thigh, from the physics run's joint angles."""
+    import re
+    colors = {}
+    try:
+        import yaml
+        colors = ((yaml.safe_load((R / 'cad-agent.yaml').read_text()).get('cad') or {}).get('view') or {}).get('colors', {})
+    except Exception:
+        pass
+    col = lambda n: colors.get(n) or colors.get(re.sub(r'_(l|r|\d+)$', '', n)) or colors.get(n.split('_')[0]) or '#9aa3ad'
+    d = OUT / 'links'
+    d.mkdir(exist_ok=True)
+    for old in d.glob('*.stl'):
+        old.unlink()
+    links = {k: [] for k in ('body', 'thigh', 'shin', 'wheel', 'crank', 'rod')}
+
+    def put(link, name, shape, side):
+        f = f'{name}.stl'
+        cq.exporters.export(shape.val() if hasattr(shape, 'val') else shape, str(d / f), tolerance=0.4, angularTolerance=0.3)
+        links[link].append({'file': f, 'name': name, 'color': col(name), 'side': side})
+
+    for name, shape in lparts.items():                         # left leg, zero pose
+        put(LEG_LINK.get(name, 'body'), name, shape, 'l')
+    for name in ('posts', 'pushrod', 'wheel'):
+        put(LEG_LINK.get(name, 'body'), name, lbought[name], 'l')
+    env = {'hip_motor': gmi.place(_envelope(hip_id), (0, S.y['hip_out'], 0), (0, 1, 0)),
+           'knee_motor': gmi.place(_envelope(hip_id), (0, S.y['knee_out'], 0), (0, -1, 0))}
+    for name, shape in env.items():
+        put('body', name, shape, 'l')
+    for name in ('chassis', 'battery_cradle', 'face', 'lidar_hanger', 'head_saddle'):
+        put('body', name, parts[name], None)
+    put('body', 'camera_cradle_front', parts['camera_cradle'], None)
+    put('body', 'camera_cradle_rear', placed['camera_cradle_rear'], None)
+    for name, shape in bought.items():
+        if name.startswith('battery'):
+            put('body', name, shape, None)
+    (d / 'manifest.json').write_text(json.dumps({
+        'design': str(Path(design_path).resolve().relative_to(R)), 'units': 'mm',
+        'frame': 'robot: x forward, y left, z up, origin on the hip axis; legs at the zero pose (hanging straight down)',
+        'thigh_mm': L['thigh'], 'shin_mm': L['shin'], 'crank_r_mm': leg.STD['PR']['crank_r'], 'mirror': 'side l parts are mirrored (y -> -y) for the right leg',
+        'links': links}, indent=1) + '\n')
 
 
 def _envelope(part_id):

@@ -1,0 +1,155 @@
+{
+ "design": "designs/default.json",
+ "units": "mm",
+ "frame": "robot: x forward, y left, z up, origin on the hip axis; legs at the zero pose (hanging straight down)",
+ "thigh_mm": 200,
+ "shin_mm": 200,
+ "crank_r_mm": 45.0,
+ "mirror": "side l parts are mirrored (y -> -y) for the right leg",
+ "links": {
+  "body": [
+   {
+    "file": "yoke_bracket.stl",
+    "name": "yoke_bracket",
+    "color": "#b8bec7",
+    "side": "l"
+   },
+   {
+    "file": "hip_motor_plate.stl",
+    "name": "hip_motor_plate",
+    "color": "#9aa3ad",
+    "side": "l"
+   },
+   {
+    "file": "knee_motor_plate.stl",
+    "name": "knee_motor_plate",
+    "color": "#9aa3ad",
+    "side": "l"
+   },
+   {
+    "file": "posts.stl",
+    "name": "posts",
+    "color": "#d6dbe1",
+    "side": "l"
+   },
+   {
+    "file": "hip_motor.stl",
+    "name": "hip_motor",
+    "color": "#3a3f47",
+    "side": "l"
+   },
+   {
+    "file": "knee_motor.stl",
+    "name": "knee_motor",
+    "color": "#3a3f47",
+    "side": "l"
+   },
+   {
+    "file": "chassis.stl",
+    "name": "chassis",
+    "color": "#5a5f68",
+    "side": null
+   },
+   {
+    "file": "battery_cradle.stl",
+    "name": "battery_cradle",
+    "color": "#2f343c",
+    "side": null
+   },
+   {
+    "file": "face.stl",
+    "name": "face",
+    "color": "#2f343c",
+    "side": null
+   },
+   {
+    "file": "lidar_hanger.stl",
+    "name": "lidar_hanger",
+    "color": "#3b3f46",
+    "side": null
+   },
+   {
+    "file": "head_saddle.stl",
+    "name": "head_saddle",
+    "color": "#3b3f46",
+    "side": null
+   },
+   {
+    "file": "camera_cradle_front.stl",
+    "name": "camera_cradle_front",
+    "color": "#2a2d33",
+    "side": null
+   },
+   {
+    "file": "camera_cradle_rear.stl",
+    "name": "camera_cradle_rear",
+    "color": "#2a2d33",
+    "side": null
+   },
+   {
+    "file": "battery_1.stl",
+    "name": "battery_1",
+    "color": "#fdb913",
+    "side": null
+   }
+  ],
+  "thigh": [
+   {
+    "file": "hip_output_adapter.stl",
+    "name": "hip_output_adapter",
+    "color": "#d6dbe1",
+    "side": "l"
+   },
+   {
+    "file": "thigh.stl",
+    "name": "thigh",
+    "color": "#f5b82e",
+    "side": "l"
+   }
+  ],
+  "shin": [
+   {
+    "file": "shin.stl",
+    "name": "shin",
+    "color": "#f5b82e",
+    "side": "l"
+   },
+   {
+    "file": "wheel_adapter.stl",
+    "name": "wheel_adapter",
+    "color": "#d6dbe1",
+    "side": "l"
+   }
+  ],
+  "wheel": [
+   {
+    "file": "wheel.stl",
+    "name": "wheel",
+    "color": "#1d2025",
+    "side": "l"
+   }
+  ],
+  "crank": [
+   {
+    "file": "knee_output_adapter.stl",
+    "name": "knee_output_adapter",
+    "color": "#d6dbe1",
+    "side": "l"
+   },
+   {
+    "file": "knee_crank.stl",
+    "name": "knee_crank",
+    "color": "#d6dbe1",
+    "side": "l"
+   }
+  ],
+  "rod": [
+   {
+    "file": "pushrod.stl",
+    "name": "pushrod",
+    "color": "#c9ced6",
+    "side": "l"
+   }
+  ]
+ }
+}

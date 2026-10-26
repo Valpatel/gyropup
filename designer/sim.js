@@ -6,6 +6,7 @@ import { createStage } from './kit/stage.js';
 import { mountAppNav } from './kit/appnav.js';
 import { section, slider, chips, readouts, toggle, collapsiblePanel, overlayInsets } from './kit/panel.js';
 import { buildRobot, kneeFor } from './robot3d.js';
+import { loadCadRig } from './cadrig.js';
 import { createEyes, eyesGlyph } from './character/eyes.js';
 import { createDarts } from './turret3d.js';
 import { evaluate, indexCatalog, legPose, effectiveDesign, resolvePart } from './model.js';
@@ -78,10 +79,15 @@ async function loadDesign(value) {
   const design = value === '@designer' ? fromDesigner : await getJson(`../${value}`);
   state.design = design;
   state.result = evaluate(design, catalog, materials);
+  state.modelMass = null;                              // the physics model's mass (CAD parts), when there is a run
+  if (value !== '@designer') {
+    try { state.modelMass = (await getJson(`../exports/sim/${value.split('/').pop().replace(/\.json$/, '')}/summary.json`)).mass_kg; } catch { /* not simulated */ }
+  }
   if (state.robot) { stage.root.remove(state.robot.group); if (state.robot.turret) stage.root.remove(state.robot.turret.laser); }
   let mech = null;                                     // the real stack from the CAD, if it was built from this design
   try { const ml = await getJson('../exports/mech-layout.json'); if (ml.design === value) mech = ml; } catch { /* no CAD yet */ }
-  state.robot = buildRobot(design, catalog, { eyes, mech });
+  const cad = value === '@designer' ? null : await loadCadRig('../', value);   // the real CAD meshes, posed by the joints
+  state.robot = buildRobot(design, catalog, { eyes, mech, cad });
   stage.root.add(state.robot.group);
   stage.frame(state.robot.info.heightM);
   state.robot.fov.visible = gun.showFov;
@@ -313,7 +319,7 @@ function renderSummary() {
   const r = state.result, d = state.design;
   $('#summary').innerHTML = `<h2 class="fold" title="Show or hide the details">${d.name ?? 'Gyropup'}<span class="chev"></span></h2>`
     + `<div class="hud-readouts">`
-    + [['mass', `${r.mass.total_kg.toFixed(1)} kg`], ['chassis & actuators', `$${Math.round(r.cost.chassis_actuators_usd).toLocaleString()}`],
+    + [['mass', state.modelMass ? `${state.modelMass.toFixed(1)} kg (with the CAD parts)` : `${r.mass.total_kg.toFixed(1)} kg (estimate)`], ['chassis & actuators', `$${Math.round(r.cost.chassis_actuators_usd).toLocaleString()}`],
        ['leg torque margin', r.legs.peak_margin ? `${r.legs.peak_margin.toFixed(1)}×` : '—'],
        ['lean it can catch', r.wheels.catch_lean_deg ? `${r.wheels.catch_lean_deg.toFixed(0)}°` : '—'],
        ['runtime', r.power.runtime_min ? `${Math.round(r.power.runtime_min)} min` : '—'],
