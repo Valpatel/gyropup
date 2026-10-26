@@ -5,6 +5,10 @@
 Load cases come from exports/sim/<design>/*.json (link_loads: the wrench each link takes at its joint, in its own
 frame, at the moment of peak force and of peak moment) and are turned into loads on the CAD parts:
 
+Bolted flanges are modelled clamped over their contact face (the yoke's wall flange on the chassis): right where the
+joint stays in compression, optimistic where it lifts off. With only the bolt holes held the yoke reads ~6x weaker,
+so the real number lies between; the bench test in docs/cad-plan.md (S4) measures it.
+
   thigh (clamped on its AO-L mate at the hip)
     T1 in-plane, hard catch: knee pin force = shin force + the push-rod's reaction, P = knee torque / crank radius,
        along the thigh (the rod is a two-force member, so the knee torque reaches the thigh as an axial pin load)
@@ -194,7 +198,8 @@ def run(design: Path, mesh: float):
     yw = S.y['bracket']
 
     def yoke_setup(st):
-        st.fix(lambda f: f.kind == 'Cylinder' and yw[0] - 0.5 <= f.bbox[1] and f.bbox[4] <= yw[1] + 0.5 and (f.bbox[3] - f.bbox[0]) < 8)
+        wall_face = plane_at(1, yw[0])                       # the flange is bolted flat to the chassis wall: clamped there
+        st.fix(lambda f: (f.kind == 'Cylinder' and yw[0] - 0.5 <= f.bbox[1] and f.bbox[4] <= yw[1] + 0.5 and (f.bbox[3] - f.bbox[0]) < 8) or wall_face(f))
         drops = lambda f: f.kind == 'Cylinder' and f.bbox[1] > yw[1] + 20 and (f.bbox[3] - f.bbox[0]) < 6.5
         st.force(drops, (0, -abs(leg_f[1]), leg_f[2]))
         yc = (S.y['hip_tab'][0] + S.y['knee_tab'][1]) / 2

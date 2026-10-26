@@ -28,7 +28,7 @@ STD = gmi.STD
 PARAMS = {
     'link_w': 40.0, 'link_t': 30.0, 'wall': 2.5,      # thigh: a closed 6061 box section, x by y, wall (sized by the FEA)
     'shin_w': 34.0, 'shin_wall': 2.0,                 # the shin carries less
-    'yoke_wall': 12.0, 'yoke_deck': 10.0, 'yoke_rib': 6.0,   # 6061 yoke (FEA: SF 3.4 at 12/12/8, 1.9 at 10/8/6)
+    'yoke_t': 4.0, 'yoke_depth': 40.0, 'yoke_gusset': 80.0,   # the yoke: sheet thickness, side-flange depth, gusset length
     'crank_r': STD['PR']['crank_r'],
     'lever_beta_deg': STD['PR']['lever_beta_deg'],   # crank and lever direction, from the forward perpendicular (- = towards the foot)
 }
@@ -36,7 +36,7 @@ if os.environ.get('GYROPUP_CAD_PARAMS'):
     PARAMS.update(json.loads(Path(os.environ['GYROPUP_CAD_PARAMS']).read_text()))
 LINK_W, LINK_T, WALL = PARAMS['link_w'], PARAMS['link_t'], PARAMS['wall']
 SHIN_W, SHIN_WALL = PARAMS['shin_w'], PARAMS['shin_wall']
-YOKE_WALL, YOKE_DECK, YOKE_RIB = PARAMS['yoke_wall'], PARAMS['yoke_deck'], PARAMS['yoke_rib']
+YOKE_T, YOKE_DEPTH, YOKE_GUSSET = PARAMS['yoke_t'], PARAMS['yoke_depth'], PARAMS['yoke_gusset']
 CABLE_PASSES = [(-40.0, 20.0), (40.0, 0.0)]   # through the yoke's wall plate and the chassis side: wheel harness, motor leads
 
 
@@ -87,7 +87,7 @@ def stack(L: dict, hip_id: str, knee_id: str, wheel_id: str) -> Stack:
     pr, kc, wh = STD['PR'], STD['KC'], STD['WH']
     y = {}
     y['wall'] = L['tray']['width'] / 2 + 1.0
-    y['bracket'] = (y['wall'], y['wall'] + YOKE_WALL)
+    y['bracket'] = (y['wall'], y['wall'] + YOKE_T)
     y['hip_out'] = y['bracket'][1] + 2.0 + hip['length']                 # the hip motor's output face
     y['hip_motor'] = (y['hip_out'] - hip['length'], y['hip_out'])
     y['hip_plate'] = (y['hip_out'] + hpl['z'][0], y['hip_out'] + hpl['z'][1])
@@ -139,45 +139,45 @@ def hm_dowels():
 
 
 def yoke_bracket(S: Stack, L: dict):
-    """The yoke's spine (printed PA6-CF): a wall plate on the tray side (HM: 6 x M6 + 2 dowels), a deck over both motors,
-    and two drop faces that bolt to the top tabs of the hip and knee motor plates (3 x M5 each). With the three posts
-    between the plates this closes a box around the joint, so neither plate hangs off the other."""
+    """The yoke: a bent-sheet hat channel (6061 or 5052, YOKE_T thick). A deck over both motors, two deep side flanges
+    (front and back, YOKE_DEPTH deep) that carry the leg's out-of-plane moment, gusseted down to a wall flange on the
+    chassis side (HM: 6 x M6 + 2 dowels, and the cable passes), and two drop plates bolted to the top tabs of the hip
+    and knee motor plates (3 x M5 each). With the three posts between the plates it closes a box around the joint.
+    (rev 0.2 was a machined block: 961 g.)"""
     ac = STD['AC-L']
+    t, H, G = YOKE_T, YOKE_DEPTH, YOKE_GUSSET
     tab_top = max(S.hip['plate']['tab_top'], S.knee['plate']['tab_top'])
     ydh = S.y['hip_tab'][0]                       # hip drop: on the motor side (-y) of the hip plate's tab
     ydk = S.y['knee_tab'][1]                      # knee drop: on the motor side (+y) of the knee plate's tab
-    y0, y1 = S.y['bracket'][0], ydk + 8
-    deck_z = tab_top + 4 + 1 + YOKE_DECK / 2   # the plate tabs reach 4 mm above tab_top; the deck clears them by 1 mm
+    y0, y1 = S.y['bracket'][0], ydk + t
+    deck_z = tab_top + 4 + 1 + t / 2              # the plate tabs reach 4 mm above tab_top; the deck clears them by 1 mm
+    top = deck_z + t / 2
     W = 110.0
-    z_low = -12.0                                  # the wall plate reaches down the chassis side (HM rows at z = 0 and 60)
-    top = deck_z + YOKE_DECK / 2
-    wall = cq.Workplane('XY').box(W, YOKE_WALL, top - z_low).translate((0, (S.y['bracket'][0] + S.y['bracket'][1]) / 2, (top + z_low) / 2))
-    deck = cq.Workplane('XY').box(W, y1 - y0, YOKE_DECK).translate((0, (y0 + y1) / 2, deck_z))
-    post_top = STD['AC-L']['post_r'] + STD['AC-L']['post_d'] / 2 + 4      # the top post's boss
-    dz0 = post_top + 1.0                                                   # drops stop just above it
-    drops = (cq.Workplane('XY').box(W, 8, top - dz0).translate((0, ydh - 4, (top + dz0) / 2))
-             .union(cq.Workplane('XY').box(W, 8, top - dz0).translate((0, ydk + 4, (top + dz0) / 2))))
-    ribs = None
-    for x in (-W / 2 + 4, 0, W / 2 - 4):
-        r = cq.Workplane('XY').box(YOKE_RIB, y1 - y0, top - dz0).translate((x, (y0 + y1) / 2, (top + dz0) / 2))
-        ribs = r if ribs is None else ribs.union(r)
-    b = wall.union(deck).union(drops).union(ribs)
-    for x in (-27.5, 27.5):                       # windows in the wall plate above the HM rows, clear of the bolts
-        b = b.cut(cq.Workplane('XY').box(26, YOKE_WALL + 2, 22).translate((x, (S.y['bracket'][0] + S.y['bracket'][1]) / 2, 88)))
-    # keep clear of the thigh hub, crank and posts between the plates: nothing below the deck there
-    span = (S.y['hip_tab'][0], S.y['knee_tab'][1])                 # between the drop faces: plates, posts, thigh, crank
-    deck_bot = deck_z - YOKE_DECK / 2
-    b = b.cut(cq.Workplane('XY').box(W + 2, span[1] - span[0], 60).translate((0, sum(span) / 2, deck_bot - 30.01)))   # up to the deck's underside
+    z_low = -12.0                                 # the wall flange reaches down the chassis side (HM rows at z = 0 and 60)
+    wall = cq.Workplane('XY').box(W, t, top - z_low).translate((0, y0 + t / 2, (top + z_low) / 2))
+    deck = cq.Workplane('XY').box(W, y1 - y0, t).translate((0, (y0 + y1) / 2, deck_z))
+    post_top = ac['post_r'] + ac['post_d'] / 2 + 4                       # the top post's boss
+    dz0 = post_top + 1.0                                                  # drops stop just above it
+    drops = (cq.Workplane('XY').box(W, t, top - dz0).translate((0, ydh - t / 2, (top + dz0) / 2))
+             .union(cq.Workplane('XY').box(W, t, top - dz0).translate((0, ydk + t / 2, (top + dz0) / 2))))
+    flanges = None
+    for x in (-W / 2 + t / 2, W / 2 - t / 2):     # side flanges: full height at the wall, tapering to H over G
+        prof = [(y0, z_low), (y0 + G, top - H), (y1, top - H), (y1, top), (y0, top)]
+        f = cq.Workplane('YZ', origin=(x - t / 2, 0, 0)).polyline(prof).close().extrude(t)
+        flanges = f if flanges is None else flanges.union(f)
+    b = wall.union(deck).union(drops).union(flanges)
     for (x, z) in hm_holes():
-        b = b.cut(_ycyl(gmi.clear(STD['HM']['thread']) / 2, S.y['bracket'][0] - 1, S.y['bracket'][1] + 1, x, z))
+        b = b.cut(_ycyl(gmi.clear(STD['HM']['thread']) / 2, y0 - 1, y0 + t + 1, x, z))
     for (x, z) in hm_dowels():
-        b = b.cut(_ycyl(STD['HM']['dowel_d'] / 2 + 0.02, S.y['bracket'][0] - 1, S.y['bracket'][1] + 1, x, z))
+        b = b.cut(_ycyl(STD['HM']['dowel_d'] / 2 + 0.02, y0 - 1, y0 + t + 1, x, z))
     for k in range(ac['bracket_bolts']):
         x = (k - (ac['bracket_bolts'] - 1) / 2) * ac['plate_r'] * 0.4
-        b = b.cut(_ycyl(gmi.clear(ac['bracket_thread']) / 2, ydh - 10, ydh + 1, x, S.hip['plate']['tab_top'] - 8))
-        b = b.cut(_ycyl(gmi.clear(ac['bracket_thread']) / 2, ydk - 1, ydk + 10, x, S.knee['plate']['tab_top'] - 8))
+        b = b.cut(_ycyl(gmi.clear(ac['bracket_thread']) / 2, ydh - t - 1, ydh + 1, x, S.hip['plate']['tab_top'] - 8))
+        b = b.cut(_ycyl(gmi.clear(ac['bracket_thread']) / 2, ydk - 1, ydk + t + 1, x, S.knee['plate']['tab_top'] - 8))
     for (x, z) in CABLE_PASSES:                    # the same holes as the chassis wall
-        b = b.cut(_ycyl(STD['CP']['grommet_hole'] / 2, S.y['bracket'][0] - 1, S.y['bracket'][1] + 1, x, z))
+        b = b.cut(_ycyl(STD['CP']['grommet_hole'] / 2, y0 - 1, y0 + t + 1, x, z))
+    for x in (-27.5, 27.5):                       # lightening windows in the deck, clear of the drops and the flanges
+        b = b.cut(cq.Workplane('XY').box(30, max(10.0, ydh - y0 - 3 * t - 14), t + 2).translate((x, (y0 + ydh) / 2, deck_z)))
     return b
 
 
@@ -299,7 +299,7 @@ def leg_parts(L: dict, hip_id: str, knee_id: str, wheel_id: str, crank_r: float 
     hp, _ = gmi.motor_plate(hip_id, 'L')
     ka, _ = gmi.output_adapter(knee_id, 'L')
     kp, _ = gmi.motor_plate(knee_id, 'L')
-    add('yoke_bracket', yoke_bracket(S, L), 'al6061', 'CNC 6061-T6 (FEA: printed PA6-CF bends 10 mm); M6 into the chassis, M5 into both plate tabs')
+    add('yoke_bracket', yoke_bracket(S, L), 'al6061', 'bent sheet hat channel, 6061-T6 or 5052 (SendCutSend: cut + bend); M6 into the chassis, M5 into both plate tabs')
     add('hip_motor_plate', gmi.place(hp, (0, S.y['hip_out'], 0), (0, 1, 0)), 'al6061', f"CNC 6061-T6, {STD['AC-L']['bearing']}")
     add('hip_output_adapter', gmi.place(ha, (0, S.y['hip_out'], 0), (0, 1, 0)), 'al6061', 'CNC 6061-T6, M5 helicoils, motor dowels')
     add('knee_output_adapter', gmi.place(ka, (0, S.y['knee_out'], 0), (0, -1, 0)), 'al6061', 'CNC 6061-T6, M5 helicoils, motor dowels')

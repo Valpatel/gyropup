@@ -4,77 +4,77 @@
   "wall": 104.0,
   "bracket": [
    104.0,
-   116.0
+   108.0
   ],
-  "hip_out": 174.6,
+  "hip_out": 166.6,
   "hip_motor": [
-   118.0,
-   174.6
+   110.0,
+   166.6
   ],
   "hip_plate": [
-   172.1,
-   187.2
+   164.1,
+   179.2
   ],
-  "hip_face": 188.2,
+  "hip_face": 180.2,
   "hip_tab": [
-   177.2,
-   187.2
+   169.2,
+   179.2
   ],
   "thigh": [
-   188.2,
-   218.2
+   180.2,
+   210.2
   ],
   "rod": [
-   219.7,
-   231.7
+   211.7,
+   223.7
   ],
   "crank": [
-   233.2,
-   243.2
+   225.2,
+   235.2
   ],
-  "knee_face": 243.2,
-  "knee_out": 256.8,
+  "knee_face": 235.2,
+  "knee_out": 248.79999999999998,
   "knee_plate": [
-   244.20000000000002,
-   259.3
+   236.2,
+   251.29999999999998
   ],
   "knee_motor": [
-   256.8,
-   313.40000000000003
+   248.79999999999998,
+   305.4
   ],
   "knee_tab": [
-   244.20000000000002,
-   254.20000000000002
+   236.2,
+   246.2
   ],
   "posts": [
-   187.2,
-   244.20000000000002
+   179.2,
+   236.2
   ],
   "shin": [
-   233.2,
-   261.2
+   225.2,
+   253.2
   ],
   "wheel_adapter": [
-   261.2,
-   267.2
+   253.2,
+   259.2
   ],
-  "wheel_mount": 267.2,
+  "wheel_mount": 259.2,
   "wheel": [
-   274.7,
-   319.3
+   266.7,
+   311.3
   ],
-  "wheel_centre": 297.0,
+  "wheel_centre": 289.0,
   "min_hip_to_axle": 141.9,
   "min_knee_deg": 41.5562464803072,
   "min_sin_phi": 0.545,
   "min_sin_phi_at_knee_deg": 48.0
  },
- "track_mm": 594.0,
+ "track_mm": 578.0,
  "notes": [
   "the wheel passes under the knee motor: hip-to-axle at least 142 mm, so the knee stops at 42\u00b0 or more"
  ],
  "assumed_interfaces": [],
- "hip_y_mm": 203.2,
- "wheel_y_mm": 297.0,
+ "hip_y_mm": 195.2,
+ "wheel_y_mm": 289.0,
  "min_knee_deg": 41.5562464803072
 }

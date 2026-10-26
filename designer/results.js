@@ -22,7 +22,7 @@ try {
       const p = r.params || {};
       return `<tr><td>${r.trial}</td><td>${tag(r.ok)}</td><td>${f(r.model_mass_kg)} kg</td><td>${f(r.min_safety_factor)}</td><td>${f(r.wheel_deflection_mm)} mm</td>`
         + `<td>${f(r.track_mm, 0)}</td><td>${esc((p.leg_actuator || '').replace('robstride-', '').toUpperCase())}</td><td>${p.thigh_mm ?? '—'} / ${p.shin_mm ?? '—'}</td>`
-        + `<td>${f(p.link_w, 0)}×${f(p.link_t, 0)}×${f(p.wall, 1)}</td><td>${f(p.shin_w, 0)}×${f(p.shin_wall, 1)}</td><td>${f(p.yoke_wall, 0)}/${f(p.yoke_deck, 0)}/${f(p.yoke_rib, 0)}</td>`
+        + `<td>${f(p.link_w, 0)}×${f(p.link_t, 0)}×${f(p.wall, 1)}</td><td>${f(p.shin_w, 0)}×${f(p.shin_wall, 1)}</td><td>${f(p.yoke_t, 0)}/${f(p.yoke_depth, 0)}/${f(p.yoke_gusset, 0)}</td>`
         + `<td>${f(p.crank_r, 0)}</td><td class="why">${esc((r.reasons || [])[0] || '')}</td></tr>`;
     }).join('') + '</tbody></table>';
 } catch { document.getElementById('loop').innerHTML = '<p class="hud-note">No design loop has run yet.</p>'; }

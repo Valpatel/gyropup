@@ -8,7 +8,7 @@ Search space (catalog parts that are in stock and rated for the 60 V pack, catal
   leg actuator   RobStride RS-03, RS-04, RS-06 (the same model for hip and knee)
   thigh, shin    170-240 mm
   links          thigh box width, depth and wall; shin width and wall
-  yoke           wall, deck and rib thickness
+  yoke           sheet thickness, side-flange depth, gusset length (a bent hat channel)
   crank radius   35-60 mm (the push-rod force is knee torque / crank radius)
 Objective: the lightest robot (the physics model's mass, with the CAD parts) that passes everything; cost breaks ties
 (1 kg ~ $1000), and a part that is not in stock costs 5 kg. Failed candidates score by how far they got, so the
@@ -51,8 +51,8 @@ def suggest(trial) -> tuple[dict, dict]:
     params = {
         'link_w': trial.suggest_float('link_w', 30.0, 46.0, step=2.0), 'link_t': trial.suggest_float('link_t', 22.0, 34.0, step=2.0),
         'wall': trial.suggest_float('wall', 1.6, 3.2, step=0.2), 'shin_w': trial.suggest_float('shin_w', 26.0, 40.0, step=2.0),
-        'shin_wall': trial.suggest_float('shin_wall', 1.6, 3.2, step=0.2), 'yoke_wall': trial.suggest_float('yoke_wall', 8.0, 14.0, step=1.0),
-        'yoke_deck': trial.suggest_float('yoke_deck', 6.0, 12.0, step=1.0), 'yoke_rib': trial.suggest_float('yoke_rib', 4.0, 8.0, step=1.0),
+        'shin_wall': trial.suggest_float('shin_wall', 1.6, 3.2, step=0.2), 'yoke_t': trial.suggest_float('yoke_t', 3.0, 6.0, step=1.0),
+        'yoke_depth': trial.suggest_float('yoke_depth', 25.0, 60.0, step=5.0), 'yoke_gusset': trial.suggest_float('yoke_gusset', 50.0, 110.0, step=10.0),
         'crank_r': trial.suggest_float('crank_r', 45.0, 70.0, step=5.0),
         'lever_beta_deg': trial.suggest_float('lever_beta_deg', -90.0, -60.0, step=5.0),
     }
@@ -154,7 +154,7 @@ def main():
     if not study.trials:
         # start from today's design, so the search has a passing point to improve on
         base = {'leg_actuator': 'robstride-rs-03', 'thigh_mm': 200, 'shin_mm': 200, 'knee_min_deg': 48, 'knee_max_deg': 155, 'link_w': 40.0,
-                'link_t': 30.0, 'wall': 2.6, 'shin_w': 34.0, 'shin_wall': 2.0, 'yoke_wall': 12.0, 'yoke_deck': 10.0, 'yoke_rib': 6.0,
+                'link_t': 30.0, 'wall': 2.6, 'shin_w': 34.0, 'shin_wall': 2.0, 'yoke_t': 4.0, 'yoke_depth': 40.0, 'yoke_gusset': 80.0,
                 'crank_r': 60.0, 'lever_beta_deg': -75.0}
         study.enqueue_trial({**base, 'bus': '60v'})               # today's design, on both buses: passing points to improve on
         study.enqueue_trial({**base, 'bus': '2x20v'})

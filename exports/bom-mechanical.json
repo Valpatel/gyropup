@@ -44,8 +44,8 @@
  "yoke_bracket": {
   "material": "al6061",
   "qty": 2,
-  "how": "CNC 6061-T6 (FEA: printed PA6-CF bends 10 mm); M6 into the chassis, M5 into both plate tabs",
-  "mass_g_each": 960.9
+  "how": "bent sheet hat channel, 6061-T6 or 5052 (SendCutSend: cut + bend); M6 into the chassis, M5 into both plate tabs",
+  "mass_g_each": 496.5
  },
  "hip_motor_plate": {
   "material": "al6061",
