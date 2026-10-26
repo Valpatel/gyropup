@@ -172,9 +172,13 @@ FLINCH_KICK = 0.14    # rad rock back per shot
 FLINCH_TAU = 0.06     # s decay
 
 
+FLINCH_RISE = 0.04    # s: the flinch eases in (a step in the setpoint makes a torque spike no real motion needs)
+
+
 def shooting_stance(cmd: Command, turret, t: float) -> Command:
     since = t - turret.last_shot
-    f = math.exp(-since / FLINCH_TAU) if 0 <= since < 6 * FLINCH_TAU else 0.0
+    rise = 0.5 - 0.5 * math.cos(math.pi * min(1.0, since / FLINCH_RISE)) if since >= 0 else 0.0
+    f = rise * math.exp(-max(0.0, since - FLINCH_RISE) / FLINCH_TAU) if 0 <= since < FLINCH_RISE + 6 * FLINCH_TAU else 0.0
     return replace(cmd, height=cmd.height - (BRACE if turret.laser else 0.0), dip=cmd.dip - FLINCH_DIP * f, kick=cmd.kick + FLINCH_KICK * f)
 
 
