@@ -31,8 +31,8 @@
     "depth_front": "realsense-d435",
     "depth_rear": "realsense-d435",
     "imu": "vectornav-vn-100-rugged",
-    "balance_mcu": "pjrc-teensy-4-1",
-    "can_transceiver": "adafruit-can-pal-5708",
+    "balance_mcu": null,
+    "can_transceiver": null,
     "leg_actuator": "robstride-rs-03",
     "wheel_motor": "odrive-botwheel",
     "motor_driver": "mjbots-moteus-n1",
@@ -65,8 +65,19 @@
   "character": {
     "color": "#f5b82e"
   },
-  "notes": "Defaults from the research: a 24 V-class 7S pack runs the J501 directly. A Teensy 4.1 runs the 1 kHz balance loop: VN-100 over serial, the motors on two CAN buses through CAN Pal transceivers. The J501's native CAN-FD (J25) stays free for the Jetson. The contactor cuts motor power only.",
-  "part_qty": {
-    "can_transceiver": 2
+  "notes": "Defaults from the research: a 24 V-class 7S pack runs the J501 directly. The balance loop runs at 1 kHz on a microcontroller with CAN (the user's own board, to be chosen) or on the Jetson with a real-time kernel; the VN-100 Rugged is the balance IMU. The contactor cuts motor power only.",
+  "balance_controller": {
+    "requirements": [
+      "steady 1 kHz loop independent of Linux",
+      "2x CAN, or 1x CAN-FD, to the motors",
+      "UART (TTL or RS-232) for the VN-100",
+      "USB or Ethernet to the Jetson",
+      "hardware FPU"
+    ],
+    "options": [
+      "a microcontroller with CAN (user's own board, to be named)",
+      "Linux real-time loop on the Jetson using the J501's native CAN-FD plus a hardware watchdog on the contactor (Upkie style)"
+    ],
+    "status": "open: waiting for the user's microcontroller list"
   }
 }

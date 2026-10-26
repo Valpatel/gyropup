@@ -5415,7 +5415,7 @@
   ],
   "confidence": "product page",
   "notes": "3 CAN (1 FD) plus a fast USB link to the Jetson and a huge Arduino ecosystem (FlexCAN_T4). Needs external 3.3 V CAN transceivers (e.g. Adafruit CAN Pal, $3.95 each). A very good balance-loop MCU.",
-  "preferred": true
+  "preferred": false
  },
  {
   "id": "st-nucleo-g474re",

@@ -24,9 +24,11 @@ flowchart LR
 
 | Folder | What is in it |
 |---|---|
-| [`docs/`](docs/) | Requirements (in the user's words) and architecture |
+| [`docs/`](docs/) | [Requirements](docs/requirements.md) (in the user's words) and the [architecture](docs/architecture.md) of the closed loop |
 | [`research/`](research/) | Sourced research: reference robots, actuators, wheels, power, sensors, fabrication, prior art |
 | [`catalog/`](catalog/) | Parts with prices, specs and sources ([format](catalog/SCHEMA.md)) |
 | [`designer/`](designer/) | The choose-your-own-adventure designer (web) and its model |
+| [`designs/`](designs/) | Designs; `default.json` is the starting robot |
+| [`tools/`](tools/) | Catalog checks, material table, command-line model |
 
 Built with [cad-agent](https://github.com/Valpatel/cad-agent).
