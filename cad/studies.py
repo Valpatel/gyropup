@@ -23,6 +23,7 @@ import argparse
 import glob
 import json
 import math
+import os
 import subprocess
 import sys
 import time
@@ -35,13 +36,14 @@ import gmi  # noqa: E402
 import leg  # noqa: E402
 from cadagent.fea import MATERIALS, Study, cylinder_at, plane_at  # noqa: E402
 
-OUT = R / 'exports' / 'fea'
+EXPORTS = Path(os.environ['GYROPUP_EXPORTS']).resolve() if os.environ.get('GYROPUP_EXPORTS') else R / 'exports'
+OUT = EXPORTS / 'fea'
 
 
 def worst_link_loads(stem: str) -> dict:
     """For each link: the run with the peak force and the run with the peak moment."""
     best = {}
-    for f in glob.glob(str(R / 'exports' / 'sim' / stem / '*.json')):
+    for f in glob.glob(str(EXPORTS / 'sim' / stem / '*.json')):
         if f.endswith('summary.json'):
             continue
         r = json.loads(Path(f).read_text())
@@ -100,7 +102,7 @@ def run(design: Path, mesh: float):
     d = json.loads(design.read_text())
     hip_id = d['parts']['leg_actuator']
     parts, meta, bought, S, assumed = leg.leg_parts(L, hip_id, hip_id, d['parts']['wheel_motor'])
-    cr = gmi.STD['PR']['crank_r']
+    cr = leg.PARAMS['crank_r']
     loads = worst_link_loads(design.stem)
     mass = json.loads((R / 'build' / 'sim' / design.stem / 'model.json').read_text())['total_mass_kg'] if (R / 'build' / 'sim' / design.stem / 'model.json').exists() else 20.0
     C = cases(loads, L, S, cr, mass)

@@ -29,7 +29,7 @@ def simulate(design: Path, only=None, video=False) -> dict:
     design = Path(design).resolve()
     info = build(design)
     xml = R / 'build' / 'sim' / design.stem / 'robot.xml'
-    out = R / 'exports' / 'sim' / design.stem
+    out = (Path(os.environ['GYROPUP_EXPORTS']).resolve() if os.environ.get('GYROPUP_EXPORTS') else R / 'exports') / 'sim' / design.stem
     out.mkdir(parents=True, exist_ok=True)
     results = {}
     suite = dict(SCENARIOS)

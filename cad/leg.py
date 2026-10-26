@@ -12,18 +12,31 @@ Three spacer posts join the two motor plates above the axis, where the leg never
 """
 from __future__ import annotations
 
+import json
 import math
+import os
 from dataclasses import dataclass
+from pathlib import Path
 
 import cadquery as cq
 
 import gmi
 
 STD = gmi.STD
-LINK_W, LINK_T, WALL = 40.0, 30.0, 2.5      # thigh and shin: a closed 6061 box section 40 (x) by 30 (y), 2.5 mm walls (sized by the FEA)
-SHIN_W, SHIN_WALL = 34.0, 2.0                # the shin carries less (FEA safety factor 55 at 40 x 3)
+# Sizes the optimiser varies (tools/iterate.py). Defaults are the current design; GYROPUP_CAD_PARAMS names a JSON file
+# that overrides any of them for one trial.
+PARAMS = {
+    'link_w': 40.0, 'link_t': 30.0, 'wall': 2.5,      # thigh: a closed 6061 box section, x by y, wall (sized by the FEA)
+    'shin_w': 34.0, 'shin_wall': 2.0,                 # the shin carries less
+    'yoke_wall': 12.0, 'yoke_deck': 10.0, 'yoke_rib': 6.0,   # 6061 yoke (FEA: SF 3.4 at 12/12/8, 1.9 at 10/8/6)
+    'crank_r': STD['PR']['crank_r'],
+}
+if os.environ.get('GYROPUP_CAD_PARAMS'):
+    PARAMS.update(json.loads(Path(os.environ['GYROPUP_CAD_PARAMS']).read_text()))
+LINK_W, LINK_T, WALL = PARAMS['link_w'], PARAMS['link_t'], PARAMS['wall']
+SHIN_W, SHIN_WALL = PARAMS['shin_w'], PARAMS['shin_wall']
+YOKE_WALL, YOKE_DECK, YOKE_RIB = PARAMS['yoke_wall'], PARAMS['yoke_deck'], PARAMS['yoke_rib']
 CABLE_PASSES = [(-40.0, 20.0), (40.0, 0.0)]   # through the yoke's wall plate and the chassis side: wheel harness, motor leads
-YOKE_WALL, YOKE_DECK, YOKE_RIB = 12.0, 10.0, 6.0  # 6061 (FEA: safety factor 3.4 at 12/12/8, 1.9 at 10/8/6)
 
 
 @dataclass
@@ -244,7 +257,7 @@ def leg_parts(L: dict, hip_id: str, knee_id: str, wheel_id: str, crank_r: float 
     """All the leg module's parts (left leg, zero pose), the bought envelopes, the stack, and what each part is."""
     S = stack(L, hip_id, knee_id, wheel_id)
     a, b = L['thigh'], L['shin']
-    cr = crank_r or STD['PR']['crank_r']
+    cr = crank_r or PARAMS['crank_r']
     parts, meta = {}, {}
 
     def add(name, shape, material, note):
@@ -298,3 +311,38 @@ def pose(shape, part: str, hip_rad: float, knee_rad: float, a: float, crank_r: f
         s = shape.translate((px - crank_r, 0, pz))
         return s.rotate((px, 0, pz), (px, 1, pz), deg(hip_rad))
     return shape
+
+
+def clashes_for_design(design_file: str, heights=(0.0, 0.5, 1.0), min_mm3: float = 10.0):
+    """Pairs of leg parts that overlap by more than min_mm3 at three heights from crouch to stand (the motors as
+    envelopes, or the vendor STEP where it is on this machine). Returns [[part, part, mm3, height], ...]."""
+    import itertools
+    import subprocess as sp
+    from sim.controller import hip_for, knee_for
+    R = Path(__file__).resolve().parents[1]
+    d = json.loads((R / design_file if not Path(design_file).is_absolute() else Path(design_file)).read_text())
+    L = json.loads(sp.run(['node', str(R / 'tools/derive.mjs'), str(R / design_file)], capture_output=True, text=True, check=True).stdout)['layout']
+    parts, meta, bought, S, _ = leg_parts(L, d['parts']['leg_actuator'], d['parts']['leg_actuator'], d['parts']['wheel_motor'])
+    a, b = L['thigh'] / 1000, L['shin'] / 1000
+    lo, hi = math.radians(L['kneeMinDeg']), math.radians(L['kneeMaxDeg'])
+    hmin, hmax = (math.sqrt(a * a + b * b - 2 * a * b * math.cos(g)) for g in (lo, hi))
+    out = []
+    allp = {**parts, **bought}
+    for i, frac in enumerate(heights):
+        h = hmin + (hmax - hmin) * frac
+        hip, knee = hip_for(a, b, h), knee_for(a, b, h) - math.pi
+        placed = {n: pose(sh, n, hip, knee, L['thigh'], PARAMS['crank_r']) for n, sh in allp.items()}
+        boxes = {n: s.val().BoundingBox() for n, s in placed.items()}
+        for (n1, s1), (n2, s2) in itertools.combinations(placed.items(), 2):
+            if i > 0 and n1 not in ROTATES and n2 not in ROTATES:
+                continue                                   # two fixed parts: checked once is enough
+            b1, b2 = boxes[n1], boxes[n2]
+            if b1.xmax < b2.xmin or b2.xmax < b1.xmin or b1.ymax < b2.ymin or b2.ymax < b1.ymin or b1.zmax < b2.zmin or b2.zmax < b1.zmin:
+                continue                                   # bounding boxes apart: no overlap possible
+            try:
+                v = s1.intersect(s2).val().Volume()
+            except Exception:
+                v = 0.0
+            if v > min_mm3:
+                out.append([n1, n2, round(v), frac])
+    return out

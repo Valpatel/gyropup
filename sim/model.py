@@ -16,6 +16,7 @@ serial chain (DDT models the Diablo the same way). Numbers marked "estimate" in 
 from __future__ import annotations
 
 import json
+import os
 import math
 import subprocess
 import sys
@@ -29,6 +30,8 @@ M = 0.001
 ROTOR_SHARE = 0.6        # estimate: share of a hub motor's mass that spins (outer rotor + tyre)
 LEG_HARDWARE_SHARE = 0.2  # estimate: share of the hardware allowance carried by the legs (bearings, pins)
 
+
+EXPORTS = Path(os.environ['GYROPUP_EXPORTS']).resolve() if os.environ.get('GYROPUP_EXPORTS') else R / 'exports'   # GYROPUP_EXPORTS: a separate folder per optimiser trial
 
 def derive(design_path: Path) -> dict:
     out = subprocess.run(['node', str(R / 'tools/derive.mjs'), str(design_path)], capture_output=True, text=True, check=True)
@@ -77,7 +80,7 @@ def actuator_limits(item: dict, bus_v: float, kind: str) -> dict:
 def cad_masses(design_path: Path):
     """Printed part masses from the CAD (exports/mass-properties.json, written by cad/build.py) when they were built
     from this design; None otherwise. {part: (kg each, qty)}."""
-    f = R / 'exports' / 'mass-properties.json'
+    f = EXPORTS / 'mass-properties.json'
     if not f.exists():
         return None
     mp = json.loads(f.read_text())
@@ -89,7 +92,7 @@ def cad_masses(design_path: Path):
 def mech_layout(design_path: Path):
     """The real stack across the hip (exports/mech-layout.json, written by cad/build.py) when it was built from this
     design; None otherwise."""
-    f = R / 'exports' / 'mech-layout.json'
+    f = EXPORTS / 'mech-layout.json'
     if not f.exists():
         return None
     ml = json.loads(f.read_text())

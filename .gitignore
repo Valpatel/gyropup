@@ -13,3 +13,6 @@ exports/sim/
 references/vendor/**
 !references/vendor/**/
 !references/vendor/**/SOURCE.txt
+
+# optimiser trials (tools/iterate.py)
+work/

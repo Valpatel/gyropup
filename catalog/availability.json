@@ -1,0 +1,935 @@
+{
+  "checked": "2026-10-25",
+  "method": "Vendor and reseller pages fetched 2026-10-25. EUR converted at 1 EUR = 1.1193 USD (ECB 2026-10-23); original EUR prices are in stock_note. in_stock=true means at least one seller shows the item in stock or orderable now; unit counts are rarely shown. lead_time_days is the stated ship/delivery upper bound for the best in-stock source, null if not stated. volts_ok_60v uses the manufacturer's stated max voltage; null = max not stated. Shopify 'available' flags alone were not treated as in stock (backorders allowed). RobotShop search, Foxtech, AliExpress and some rcdrone/aifitlab pages blocked automated access.",
+  "parts": {
+    "robstride-rs-03": {
+      "in_stock": true,
+      "lead_time_days": null,
+      "sources": [
+        {
+          "seller": "Seeed Studio",
+          "url": "https://www.seeedstudio.com/Robostride-03-Actuator-p-6774.html",
+          "price_usd": 225.0,
+          "stock_note": "In stock, China warehouse; $214 each at 10+; lead time not stated",
+          "region": "CN"
+        },
+        {
+          "seller": "rcdrone.top",
+          "url": "https://rcdrone.top/collections/robstride",
+          "price_usd": 224.0,
+          "stock_note": "Add to cart; cart allowed 150 units; lead time not stated",
+          "region": "CN"
+        },
+        {
+          "seller": "aifitlab",
+          "url": "https://aifitlab.com/products/robstride-03-motor",
+          "price_usd": 225.0,
+          "stock_note": "Store data 'available' but hidden backorder notice; cart cap 50; ships from China",
+          "region": "CN"
+        },
+        {
+          "seller": "roboticscenter.ai",
+          "url": "https://www.roboticscenter.ai/store/product/robstride-03",
+          "price_usd": 245.0,
+          "stock_note": "Backorder; standard delivery 4-6 weeks; ~$66 US shipping",
+          "region": "US"
+        },
+        {
+          "seller": "OpenELAB US",
+          "url": "https://openelab.com/products/robstride03-integrated-joint-motor-module",
+          "price_usd": 249.99,
+          "stock_note": "Add to cart; warehouse China; 8-15 business days + pre-order time",
+          "region": "CN"
+        },
+        {
+          "seller": "OpenELAB EU",
+          "url": "https://openelab.io/products/robstride03-qdd-60n-m-integrated-joint-motor-module",
+          "price_usd": 241.71,
+          "stock_note": "EUR 215.95; motor-only variant sold out / pre-order",
+          "region": "EU"
+        },
+        {
+          "seller": "Amazon",
+          "url": "https://www.amazon.com/dp/B0H2HGYYQ5",
+          "price_usd": null,
+          "stock_note": "Currently unavailable",
+          "region": "US"
+        }
+      ],
+      "volts_ok_60v": true,
+      "note": "robstride.com spec table: rated 48 V, range 15-60 V; 60 V full charge is exactly at the stated max (no margin for regen, which will push the bus above 60 V without a clamp). Seeed shows 'In stock' (China warehouse), no count/lead time; rcdrone cart accepted 150 units (CN-sourced, not confirmed by seller). Amazon unavailable. RobotShop/Foxtech: no listing found (sites returned 403). Official AliExpress store 1103506059 returned an empty page."
+    },
+    "robstride-rs-04": {
+      "in_stock": true,
+      "lead_time_days": null,
+      "sources": [
+        {
+          "seller": "Seeed Studio",
+          "url": "https://www.seeedstudio.com/Robostride-04-Actuator-p-6775.html",
+          "price_usd": 255.0,
+          "stock_note": "In stock, China warehouse; $242 each at 10+; lead time not stated",
+          "region": "CN"
+        },
+        {
+          "seller": "rcdrone.top",
+          "url": "https://rcdrone.top/collections/robstride",
+          "price_usd": 319.0,
+          "stock_note": "Add to cart; cart allowed 78 units; lead time not stated",
+          "region": "CN"
+        },
+        {
+          "seller": "aifitlab",
+          "url": "https://aifitlab.com/products/robstride-04-motor",
+          "price_usd": 255.0,
+          "stock_note": "Store data 'available' but hidden backorder notice; qty cap not checked (blocked)",
+          "region": "CN"
+        },
+        {
+          "seller": "roboticscenter.ai",
+          "url": "https://www.roboticscenter.ai/store/product/robstride-04",
+          "price_usd": 295.0,
+          "stock_note": "Backorder; standard delivery 4-6 weeks",
+          "region": "US"
+        },
+        {
+          "seller": "OpenELAB EU",
+          "url": "https://openelab.io/products/robstride04-qdd-120n-m-integrated-joint-motor-module",
+          "price_usd": 285.14,
+          "stock_note": "EUR 254.75; motor-only variant sold out / pre-order",
+          "region": "EU"
+        },
+        {
+          "seller": "Amazon",
+          "url": "https://www.amazon.com/dp/B0H2HCMYR7",
+          "price_usd": null,
+          "stock_note": "Currently unavailable",
+          "region": "US"
+        }
+      ],
+      "volts_ok_60v": true,
+      "note": "robstride.com spec table: rated 48 V, range 15-60 V; 60 V full charge is exactly at the stated max (no margin for regen, which will push the bus above 60 V without a clamp). Seeed shows 'In stock' (China warehouse), no count/lead time; rcdrone cart accepted 78 units. Amazon unavailable. RobotShop/Foxtech: no listing found."
+    },
+    "robstride-rs-02": {
+      "in_stock": true,
+      "lead_time_days": null,
+      "sources": [
+        {
+          "seller": "Seeed Studio",
+          "url": "https://www.seeedstudio.com/Robostride-02-Actuator-p-6665.html",
+          "price_usd": 145.0,
+          "stock_note": "In stock; $138 each at 10+; warehouse/lead time not stated",
+          "region": "CN"
+        },
+        {
+          "seller": "rcdrone.top",
+          "url": "https://rcdrone.top/collections/robstride",
+          "price_usd": 189.0,
+          "stock_note": "Add to cart; qty check blocked; lead time not stated",
+          "region": "CN"
+        },
+        {
+          "seller": "aifitlab",
+          "url": "https://aifitlab.com/products/robstride-02-motor",
+          "price_usd": 145.0,
+          "stock_note": "Store data 'available' but hidden backorder notice; cart cap 50",
+          "region": "CN"
+        },
+        {
+          "seller": "roboticscenter.ai",
+          "url": "https://www.roboticscenter.ai/store/product/robstride-02",
+          "price_usd": 195.0,
+          "stock_note": "Backorder; standard delivery 4-6 weeks",
+          "region": "US"
+        },
+        {
+          "seller": "OpenELAB US",
+          "url": "https://openelab.com/products/robstride02-qdd-joint-motor-module",
+          "price_usd": 174.99,
+          "stock_note": "Add to cart; warehouse China; motor-only variant sold out",
+          "region": "CN"
+        },
+        {
+          "seller": "OpenELAB EU",
+          "url": "https://openelab.io/products/robstride02-qdd-17n-m-joint-motor-module-dual-encoders",
+          "price_usd": 167.84,
+          "stock_note": "EUR 149.95; pre-order",
+          "region": "EU"
+        },
+        {
+          "seller": "Amazon",
+          "url": "https://www.amazon.com/dp/B0H2HMVHK3",
+          "price_usd": null,
+          "stock_note": "Currently unavailable",
+          "region": "US"
+        }
+      ],
+      "volts_ok_60v": true,
+      "note": "robstride.com spec table: rated 48 V, range 24-60 V; 60 V full charge is exactly at the stated max (no margin for regen, which will push the bus above 60 V without a clamp). Seeed shows 'In stock', no count/lead time. Same motor as wheel_motors.json 'robstride-rs02'."
+    },
+    "robstride-rs-06": {
+      "in_stock": true,
+      "lead_time_days": null,
+      "sources": [
+        {
+          "seller": "Seeed Studio",
+          "url": "https://www.seeedstudio.com/Robostride-06-Actuator-p-6668.html",
+          "price_usd": 210.0,
+          "stock_note": "In stock; $200 each at 10+; lead time not stated",
+          "region": "CN"
+        },
+        {
+          "seller": "rcdrone.top",
+          "url": "https://rcdrone.top/collections/robstride",
+          "price_usd": 239.0,
+          "stock_note": "Add to cart; cart allowed 76 units; lead time not stated",
+          "region": "CN"
+        },
+        {
+          "seller": "aifitlab",
+          "url": "https://aifitlab.com/products/robstride-06-motor",
+          "price_usd": 210.0,
+          "stock_note": "Store data 'available' but hidden backorder notice",
+          "region": "CN"
+        },
+        {
+          "seller": "roboticscenter.ai",
+          "url": "https://www.roboticscenter.ai/store/product/robstride-06",
+          "price_usd": 255.0,
+          "stock_note": "Backorder; standard delivery 4-6 weeks",
+          "region": "US"
+        },
+        {
+          "seller": "OpenELAB EU",
+          "url": "https://openelab.io/products/robstride06-qdd-joint-motor-module",
+          "price_usd": 212.61,
+          "stock_note": "EUR 189.95; pre-order",
+          "region": "EU"
+        },
+        {
+          "seller": "Amazon",
+          "url": "https://www.amazon.com/dp/B0H2HKBH61",
+          "price_usd": null,
+          "stock_note": "Currently unavailable",
+          "region": "US"
+        }
+      ],
+      "volts_ok_60v": true,
+      "note": "robstride.com spec table: rated 48 V, range 15-60 V; 60 V full charge is exactly at the stated max (no margin for regen, which will push the bus above 60 V without a clamp). Seeed shows 'In stock' (China and Germany warehouses listed, which one applies not stated); rcdrone cart accepted 76 units."
+    },
+    "robstride-rs-00": {
+      "in_stock": true,
+      "lead_time_days": null,
+      "sources": [
+        {
+          "seller": "Seeed Studio",
+          "url": "https://www.seeedstudio.com/Robostride-00-Actuator-p-6664.html",
+          "price_usd": 138.99,
+          "stock_note": "In stock; $131.99 at 10+",
+          "region": "CN"
+        },
+        {
+          "seller": "aifitlab",
+          "url": "https://aifitlab.com/products/robstride-00-motor",
+          "price_usd": 125.0,
+          "stock_note": "Store data 'available' but hidden backorder notice; cart cap 50",
+          "region": "CN"
+        },
+        {
+          "seller": "roboticscenter.ai",
+          "url": "https://www.roboticscenter.ai/store/product/robstride-00",
+          "price_usd": 185.0,
+          "stock_note": "Backorder; 4-6 weeks",
+          "region": "US"
+        },
+        {
+          "seller": "Amazon",
+          "url": "https://www.amazon.com/dp/B0H2H8BV9N",
+          "price_usd": null,
+          "stock_note": "Currently unavailable",
+          "region": "US"
+        }
+      ],
+      "volts_ok_60v": true,
+      "note": "robstride.com spec table: rated 48 V, range 24-60 V; 60 V full charge is exactly at the stated max (no margin for regen, which will push the bus above 60 V without a clamp). Checked as a bonus; smaller than needed for legs."
+    },
+    "cubemars-ak70-10": {
+      "in_stock": true,
+      "lead_time_days": null,
+      "sources": [
+        {
+          "seller": "RobotShop US",
+          "url": "https://www.robotshop.com/products/cubemars-ak70-10-kv100-ak-series-robotic-actuator",
+          "price_usd": 563.76,
+          "stock_note": "In stock (no count, no lead time); w/o driver board $450.76 also in stock",
+          "region": "US"
+        },
+        {
+          "seller": "RobotShop EU",
+          "url": "https://eu.robotshop.com/products/cubemars-ak70-10-kv100-ak-series-robotic-actuator",
+          "price_usd": 614.27,
+          "stock_note": "EUR 548.80; In stock",
+          "region": "EU"
+        },
+        {
+          "seller": "CubeMars store",
+          "url": "https://store.cubemars.com/products/ak70-10",
+          "price_usd": 498.9,
+          "stock_note": "Store data available; $398.90 without driver; stock/lead time not stated",
+          "region": "CN"
+        }
+      ],
+      "volts_ok_60v": false,
+      "note": "CubeMars AKA manual V3.0.0 (https://www.cubemars.com/images/file/20250207/1738921575887499.pdf): 48 V driver boards rated 48 V, allowable 18-52 V. 60 V and anything above 52 V in our 45-58 V band is out of spec. RobotShop US/EU 'In stock' (no count). Official store: Add to cart, no stock/lead text."
+    },
+    "cubemars-ak80-64": {
+      "in_stock": false,
+      "lead_time_days": null,
+      "sources": [
+        {
+          "seller": "RobotShop US",
+          "url": "https://www.robotshop.com/products/cubemars-ak80-64-kv80-ak-series-robotic-actuator",
+          "price_usd": 1118.59,
+          "stock_note": "Available on backorder",
+          "region": "US"
+        },
+        {
+          "seller": "RobotShop EU",
+          "url": "https://eu.robotshop.com/products/cubemars-ak80-64-kv80-ak-series-robotic-actuator",
+          "price_usd": 1218.79,
+          "stock_note": "EUR 1088.89; Available on backorder",
+          "region": "EU"
+        },
+        {
+          "seller": "CubeMars store",
+          "url": "https://store.cubemars.com/products/ak80-64",
+          "price_usd": 989.9,
+          "stock_note": "Store data available (cubemars.com page shows $889.90); stock/lead time not stated",
+          "region": "CN"
+        }
+      ],
+      "volts_ok_60v": false,
+      "note": "CubeMars AKA manual V3.0.0 (https://www.cubemars.com/images/file/20250207/1738921575887499.pdf): 48 V driver boards rated 48 V, allowable 18-52 V. 60 V and anything above 52 V in our 45-58 V band is out of spec. Backorder at RobotShop US and EU; official store data says available but on-page stock/lead time not stated."
+    },
+    "cubemars-ak10-9-v3": {
+      "in_stock": false,
+      "lead_time_days": null,
+      "sources": [
+        {
+          "seller": "RobotShop US",
+          "url": "https://www.robotshop.com/products/cubemars-ak10-9-v30-kv60-ak-series-robotic-actuator",
+          "price_usd": 902.76,
+          "stock_note": "Available on backorder",
+          "region": "US"
+        },
+        {
+          "seller": "RobotShop EU",
+          "url": "https://eu.robotshop.com/products/cubemars-ak10-9-v30-kv60-ak-series-robotic-actuator",
+          "price_usd": 983.63,
+          "stock_note": "EUR 878.79; Available on backorder",
+          "region": "EU"
+        },
+        {
+          "seller": "CubeMars store",
+          "url": "https://store.cubemars.com/products/ak10-9-v3-0-kv60",
+          "price_usd": 798.9,
+          "stock_note": "Store data available (cubemars.com page shows $698.90); stock/lead time not stated",
+          "region": "CN"
+        }
+      ],
+      "volts_ok_60v": false,
+      "note": "CubeMars AKA manual V3.0.0 (https://www.cubemars.com/images/file/20250207/1738921575887499.pdf): 48 V driver boards rated 48 V, allowable 18-52 V. 60 V and anything above 52 V in our 45-58 V band is out of spec. Backorder at RobotShop US and EU; official store data says available but on-page stock/lead time not stated."
+    },
+    "cubemars-ak80-9-v3": {
+      "in_stock": true,
+      "lead_time_days": null,
+      "sources": [
+        {
+          "seller": "RobotShop US",
+          "url": "https://www.robotshop.com/products/cubemars-ak80-9-v30-kv100-ak-series-robotic-actuator",
+          "price_usd": 655.29,
+          "stock_note": "In stock (no count, no lead time)",
+          "region": "US"
+        },
+        {
+          "seller": "RobotShop EU",
+          "url": "https://eu.robotshop.com/products/cubemars-ak80-9-v30-kv100-ak-series-robotic-actuator",
+          "price_usd": 713.99,
+          "stock_note": "EUR 637.89; Available on backorder",
+          "region": "EU"
+        },
+        {
+          "seller": "CubeMars store",
+          "url": "https://store.cubemars.com/products/ak80-9-v3-0-kv100",
+          "price_usd": 579.9,
+          "stock_note": "Store data available (cubemars.com page shows $479.90); stock/lead time not stated",
+          "region": "CN"
+        },
+        {
+          "seller": "AliExpress (resellers)",
+          "url": "https://www.aliexpress.com/w/wholesale-cubemars-ak80-9.html",
+          "price_usd": null,
+          "stock_note": "12 reseller listings $788-$2002; no official CubeMars store found; stock not stated",
+          "region": "CN"
+        }
+      ],
+      "volts_ok_60v": false,
+      "note": "CubeMars AKA manual V3.0.0 (https://www.cubemars.com/images/file/20250207/1738921575887499.pdf): 48 V driver boards rated 48 V, allowable 18-52 V. 60 V and anything above 52 V in our 45-58 V band is out of spec. RobotShop US 'In stock'; RobotShop EU backorder."
+    },
+    "cubemars-ak80-8": {
+      "in_stock": true,
+      "lead_time_days": null,
+      "sources": [
+        {
+          "seller": "RobotShop US",
+          "url": "https://www.robotshop.com/products/cubemars-ak80-8-kv60-ak-series-robotic-actuator",
+          "price_usd": 643.99,
+          "stock_note": "In stock",
+          "region": "US"
+        },
+        {
+          "seller": "RobotShop EU",
+          "url": "https://eu.robotshop.com/products/cubemars-ak80-8-kv60-ak-series-robotic-actuator",
+          "price_usd": 701.68,
+          "stock_note": "EUR 626.89; In stock",
+          "region": "EU"
+        },
+        {
+          "seller": "CubeMars store",
+          "url": "https://store.cubemars.com/products/ak80-8",
+          "price_usd": 569.9,
+          "stock_note": "Store data available; $469.90 without driver",
+          "region": "CN"
+        }
+      ],
+      "volts_ok_60v": false,
+      "note": "CubeMars AKA manual V3.0.0 (https://www.cubemars.com/images/file/20250207/1738921575887499.pdf): 48 V driver boards rated 48 V, allowable 18-52 V. 60 V and anything above 52 V in our 45-58 V band is out of spec. Bonus check."
+    },
+    "cubemars-ak70-9-v3": {
+      "in_stock": null,
+      "lead_time_days": null,
+      "sources": [
+        {
+          "seller": "CubeMars store",
+          "url": "https://store.cubemars.com/products/ak70-9-v3-0-kv60",
+          "price_usd": 498.9,
+          "stock_note": "Store data available; $398.90 without driver; stock/lead time not stated",
+          "region": "CN"
+        }
+      ],
+      "volts_ok_60v": false,
+      "note": "CubeMars AKA manual V3.0.0 (https://www.cubemars.com/images/file/20250207/1738921575887499.pdf): 48 V driver boards rated 48 V, allowable 18-52 V. 60 V and anything above 52 V in our 45-58 V band is out of spec. Bonus check; RobotShop lists an 'AK70-9 KV60' (not labelled V3) as Special order at $563.76."
+    },
+    "damiao-dm-j8009p-2ec": {
+      "in_stock": true,
+      "lead_time_days": 21,
+      "sources": [
+        {
+          "seller": "roboticscenter.ai",
+          "url": "https://www.roboticscenter.ai/store/product/damiao-dm-j8009p-2ec",
+          "price_usd": 480.0,
+          "stock_note": "In stock; standard delivery 1-3 weeks; +$68.60 US shipping est.",
+          "region": "US"
+        },
+        {
+          "seller": "OpenELAB US",
+          "url": "https://openelab.com/products/damiao-brushless-servo-dm-j8009p",
+          "price_usd": 493.99,
+          "stock_note": "Add to cart (V4; V3 $500.99); warehouse China; US 3-7 business days",
+          "region": "CN"
+        },
+        {
+          "seller": "Amazon (PAIDAXING123)",
+          "url": "https://www.amazon.com/dp/B0GLNR35PZ",
+          "price_usd": 1334.91,
+          "stock_note": "Usually ships within 6-7 days; qty dropdown to 30",
+          "region": "US"
+        },
+        {
+          "seller": "OpenELAB EU",
+          "url": "https://openelab.io/products/damiao-brushless-servo-dm-j8009p",
+          "price_usd": 497.08,
+          "stock_note": "EUR 444.10 (V4); Pre-order, stock 0, restock in 10-20 days",
+          "region": "EU"
+        },
+        {
+          "seller": "aifitlab",
+          "url": "https://aifitlab.com/products/damiao-dm-j8009p-2ec-servo-motor",
+          "price_usd": 395.0,
+          "stock_note": "Backordered; ships from China",
+          "region": "CN"
+        },
+        {
+          "seller": "rcdrone.top",
+          "url": "https://rcdrone.top/products/damiao-dm-j8009p-2ec-servo-motor",
+          "price_usd": 494.99,
+          "stock_note": "Add to cart; stock/lead time not stated",
+          "region": "CN"
+        }
+      ],
+      "volts_ok_60v": false,
+      "note": "Official spec (https://www.damiaokeji.com/index.php?c=show&id=105): rated 24 V, 'supports 24-48 V', overvoltage limit <=52 V. Not 60 V capable. roboticscenter.ai 'In stock', delivery 1-3 weeks (lead_time = upper bound). AliExpress/RobotShop blocked by captcha/403."
+    },
+    "damiao-dm-j10010l-2ec": {
+      "in_stock": true,
+      "lead_time_days": 21,
+      "sources": [
+        {
+          "seller": "roboticscenter.ai",
+          "url": "https://www.roboticscenter.ai/store/product/damiao-dm-j10010l-2ec",
+          "price_usd": 230.0,
+          "stock_note": "In stock; standard delivery 1-3 weeks; +$71.73 shipping est.",
+          "region": "US"
+        },
+        {
+          "seller": "rcdrone.top",
+          "url": "https://rcdrone.top/products/damiao-dm-j10010l-2ec-servo-motor",
+          "price_usd": 225.0,
+          "stock_note": "Add to cart; stock/lead time not stated",
+          "region": "CN"
+        },
+        {
+          "seller": "OpenELAB US",
+          "url": "https://openelab.com/products/damiao-brushless-servo-dm-j10010l",
+          "price_usd": 321.99,
+          "stock_note": "Add to cart; warehouse China",
+          "region": "CN"
+        },
+        {
+          "seller": "OpenELAB EU",
+          "url": "https://openelab.io/products/damiao-brushless-servo-dm-j10010l",
+          "price_usd": 324.32,
+          "stock_note": "EUR 289.75; Add to cart; count not stated",
+          "region": "EU"
+        },
+        {
+          "seller": "aifitlab",
+          "url": "https://aifitlab.com/products/damiao-dm-j10010l-2ec-servo-motor",
+          "price_usd": 265.0,
+          "stock_note": "Backordered",
+          "region": "CN"
+        }
+      ],
+      "volts_ok_60v": false,
+      "note": "Official spec (https://www.damiaokeji.com/index.php?c=show&id=106): rated 48 V, 'wide voltage 24-48 V', overvoltage limit <=58 V. Covers 45-58 V in use but NOT 60 V full charge. roboticscenter.ai in stock 1-3 weeks."
+    },
+    "damiao-dm-j6006-2ec": {
+      "in_stock": true,
+      "lead_time_days": 21,
+      "sources": [
+        {
+          "seller": "roboticscenter.ai",
+          "url": "https://www.roboticscenter.ai/store/product/damiao-dm-j6006-2ec",
+          "price_usd": 150.0,
+          "stock_note": "In stock; standard delivery 1-3 weeks; +$66.13 shipping est.",
+          "region": "US"
+        },
+        {
+          "seller": "rcdrone.top",
+          "url": "https://rcdrone.top/products/damiao-dm-j6006-2ec-servo-motor",
+          "price_usd": 150.0,
+          "stock_note": "Add to cart; stock/lead time not stated",
+          "region": "CN"
+        },
+        {
+          "seller": "aifitlab",
+          "url": "https://aifitlab.com/products/damiao-dm-j6006-2ec-servo-motor",
+          "price_usd": 150.0,
+          "stock_note": "Backordered",
+          "region": "CN"
+        }
+      ],
+      "volts_ok_60v": false,
+      "note": "Official spec (https://www.damiaokeji.com/index.php?c=show&id=102): rated 24 V, 'supports 24-48 V', overvoltage <=52 V. Not on OpenELAB."
+    },
+    "damiao-dm-j4340-2ec": {
+      "in_stock": true,
+      "lead_time_days": 21,
+      "sources": [
+        {
+          "seller": "roboticscenter.ai",
+          "url": "https://www.roboticscenter.ai/store/product/damiao-dm-j4340-2ec",
+          "price_usd": 215.0,
+          "stock_note": "In stock; standard delivery 1-3 weeks",
+          "region": "US"
+        },
+        {
+          "seller": "OpenELAB US",
+          "url": "https://openelab.com/products/damiao-brushless-servo-dm-j4340",
+          "price_usd": 222.99,
+          "stock_note": "48 V version (24 V $209.99); Add to cart; warehouse China",
+          "region": "CN"
+        },
+        {
+          "seller": "OpenELAB EU",
+          "url": "https://openelab.io/products/damiao-brushless-servo-dm-j4340",
+          "price_usd": 224.42,
+          "stock_note": "EUR 200.50 (48 V); stock count 200 per option",
+          "region": "EU"
+        },
+        {
+          "seller": "aifitlab",
+          "url": "https://aifitlab.com/products/damiao-dm-j4340-2ec-servo-motor",
+          "price_usd": 165.0,
+          "stock_note": "48 V version ($155 24 V); Backordered",
+          "region": "CN"
+        },
+        {
+          "seller": "rcdrone.top",
+          "url": "https://rcdrone.top/products/damiao-dm-j4340-2ec-servo-motor",
+          "price_usd": 235.0,
+          "stock_note": "48 V version ($198.99 24 V); Add to cart",
+          "region": "CN"
+        }
+      ],
+      "volts_ok_60v": false,
+      "note": "Official spec (https://www.damiaokeji.com/index.php?c=show&id=100): separate 24 V (overvoltage 32 V) and 48 V (overvoltage 52 V) versions. Catalog entry is the 24 V version; buy the 48 V version if used. Neither handles 60 V."
+    },
+    "damiao-dm-j8009-2ec": {
+      "in_stock": true,
+      "lead_time_days": 21,
+      "sources": [
+        {
+          "seller": "roboticscenter.ai",
+          "url": "https://www.roboticscenter.ai/store/product/damiao-dm-j8009-2ec",
+          "price_usd": 470.0,
+          "stock_note": "In stock; 1-3 weeks",
+          "region": "US"
+        },
+        {
+          "seller": "rcdrone.top",
+          "url": "https://rcdrone.top/collections/damiao",
+          "price_usd": 470.0,
+          "stock_note": "Listed; stock not stated",
+          "region": "CN"
+        },
+        {
+          "seller": "aifitlab",
+          "url": "https://aifitlab.com/collections/damiao",
+          "price_usd": 470.0,
+          "stock_note": "Listed; backorder notice",
+          "region": "CN"
+        }
+      ],
+      "volts_ok_60v": null,
+      "note": "Quick check; official voltage table not read (sister J8009P is 52 V max, so likely not 60 V)."
+    },
+    "damiao-dm-j10010-2ec": {
+      "in_stock": true,
+      "lead_time_days": 21,
+      "sources": [
+        {
+          "seller": "roboticscenter.ai",
+          "url": "https://www.roboticscenter.ai/store/product/damiao-dm-j10010-2ec-48v",
+          "price_usd": 540.0,
+          "stock_note": "In stock; 1-3 weeks",
+          "region": "US"
+        },
+        {
+          "seller": "rcdrone.top",
+          "url": "https://rcdrone.top/collections/damiao",
+          "price_usd": 455.0,
+          "stock_note": "Listed; stock not stated",
+          "region": "CN"
+        },
+        {
+          "seller": "aifitlab",
+          "url": "https://aifitlab.com/collections/damiao",
+          "price_usd": 455.0,
+          "stock_note": "Listed; backorder notice",
+          "region": "CN"
+        }
+      ],
+      "volts_ok_60v": false,
+      "note": "Official spec (https://www.damiaokeji.com/index.php?c=show&id=107): rated 48 V, overvoltage <=52 V."
+    },
+    "unitree-go-m8010-6": {
+      "in_stock": true,
+      "lead_time_days": null,
+      "sources": [
+        {
+          "seller": "Unitree shop",
+          "url": "https://shop.unitree.com/products/go1-motor",
+          "price_usd": 369.0,
+          "stock_note": "Ready to ship; free shipping; lead time/count not stated",
+          "region": "US"
+        },
+        {
+          "seller": "Amazon (UnitreeRobotics)",
+          "url": "https://www.amazon.com/dp/B0BS3XFZLZ",
+          "price_usd": 369.0,
+          "stock_note": "Usually ships within 9-10 days; qty dropdown to 30",
+          "region": "US"
+        },
+        {
+          "seller": "4gltemall",
+          "url": "https://4gltemall.com/unitree-go-m8010-6-motor.html",
+          "price_usd": 359.0,
+          "stock_note": "In stock; region not stated",
+          "region": "CN"
+        },
+        {
+          "seller": "aifitlab",
+          "url": "https://aifitlab.com/products/unitree-go-m8010-6-motor",
+          "price_usd": 280.0,
+          "stock_note": "Store data available; page stock text not captured",
+          "region": "CN"
+        },
+        {
+          "seller": "OpenELAB EU",
+          "url": "https://openelab.io/products/unitree-go-m8010-6-high-torque-foc-four-legged-robot-joint-micro-micromotor",
+          "price_usd": 351.4,
+          "stock_note": "EUR 313.95; stock count 1, no orders beyond stock",
+          "region": "EU"
+        }
+      ],
+      "volts_ok_60v": false,
+      "note": "unitree.com/go1/motor: working voltage 12-30 VDC, 24 V recommended. Incompatible with the 60 V pack at any charge (would need a 24 V DC-DC rail). Easiest to buy of all leg motors (official US store ready to ship)."
+    },
+    "odrive-botwheel": {
+      "in_stock": true,
+      "lead_time_days": null,
+      "sources": [
+        {
+          "seller": "ODrive Robotics shop",
+          "url": "https://shop.odriverobotics.com/products/botwheels",
+          "price_usd": 269.0,
+          "stock_note": "2-pack: Add to cart (orderable); single: Sold out; count/lead time not stated",
+          "region": "US"
+        }
+      ],
+      "volts_ok_60v": null,
+      "note": "Sold only as 2-packs ($269/pair = $134.50 each; $259 at 20). Single unit $139 'Sold out'. Rated speed quoted 'at 24 V'; no max bus voltage stated on shop page or docs (datasheet URL returned 403). Hall + 3200 CPR encoder, 5 Nm rated, 2.2 kg, 171 mm."
+    },
+    "uumotor-svh6hs": {
+      "in_stock": true,
+      "lead_time_days": null,
+      "sources": [
+        {
+          "seller": "UUmotor webstore",
+          "url": "https://www.uumotor.com/ws/p/6-5-inch-agvs-bulit-in-encoder-servo-wheel-hub-motor/",
+          "price_usd": 145.0,
+          "stock_note": "961 in stock; ship-from/lead time not stated",
+          "region": "CN"
+        }
+      ],
+      "volts_ok_60v": null,
+      "note": "Webstore listing is 'SVH6H' 6.5 in 350 W AGV hub servo (catalog SVH6HS blog URL has no stock info). Voltage options 24/36/48 V; max voltage not stated so 60 V unknown. 1024-line optical encoder + Halls; 5 Nm rated / 10 Nm peak."
+    },
+    "uumotor-svb6": {
+      "in_stock": true,
+      "lead_time_days": null,
+      "sources": [
+        {
+          "seller": "UUmotor webstore",
+          "url": "https://www.uumotor.com/ws/p/6-5-inch-600w-max-load-180kg-servo-hub-motor/",
+          "price_usd": 165.0,
+          "stock_note": "967 in stock",
+          "region": "CN"
+        }
+      ],
+      "volts_ok_60v": null,
+      "note": "NEW id (not in catalog): UUmotor SVB6 6.5 in 600 W hub servo, 24/36/48 V options ('36v-48v'), max not stated. 20 Nm rated / 40 Nm peak, 180 kg load, 1024-line encoder + Halls."
+    },
+    "uumotor-svb8s": {
+      "in_stock": true,
+      "lead_time_days": null,
+      "sources": [
+        {
+          "seller": "UUmotor webstore",
+          "url": "https://www.uumotor.com/ws/p/8-inch-350w-600w-max-load-180kg-servo-hub-motor/",
+          "price_usd": 165.0,
+          "stock_note": "71 in stock",
+          "region": "CN"
+        }
+      ],
+      "volts_ok_60v": null,
+      "note": "NEW id (not in catalog): UUmotor SVB8S 8 in 350-600 W hub servo, 36-48 V, max not stated. 20/40 Nm. Page says 168 mm diameter, contradicting '8 inch'."
+    },
+    "uumotor-svh8": {
+      "in_stock": true,
+      "lead_time_days": null,
+      "sources": [
+        {
+          "seller": "UUmotor webstore",
+          "url": "https://www.uumotor.com/ws/p/8-inch-1024-encoder-gearless-brushless-robot-hub-motor/",
+          "price_usd": 145.0,
+          "stock_note": "954 in stock",
+          "region": "CN"
+        }
+      ],
+      "volts_ok_60v": null,
+      "note": "NEW id (not in catalog): UUmotor SVH8 8 in (200 mm) gearless hub servo, 24/36/48 V options, max not stated. 5/10 Nm, 1024-line encoder + Halls."
+    },
+    "zltech-zllg65-asm250-v3": {
+      "in_stock": false,
+      "lead_time_days": null,
+      "sources": [
+        {
+          "seller": "aifitlab",
+          "url": "https://aifitlab.com/products/zhongling-zllg65-asm250-v3-0-motor",
+          "price_usd": 115.0,
+          "stock_note": "Backordered; ships from China; $390 pair with ZLAC8015D",
+          "region": "CN"
+        }
+      ],
+      "volts_ok_60v": false,
+      "note": "Rated 24 VDC only; backordered."
+    },
+    "zltech-zllg65-asm500-v2": {
+      "in_stock": true,
+      "lead_time_days": 7,
+      "sources": [
+        {
+          "seller": "ZLTECH (Made-in-China storefront)",
+          "url": "https://zltech-hubmotor.en.made-in-china.com/product/baoRlrwYgIkU/",
+          "price_usd": 180.0,
+          "stock_note": "Lead time 7 days (1-10 pcs); $150 at 200+; stock not stated; description also says '24V 500W'",
+          "region": "CN"
+        },
+        {
+          "seller": "Amazon (third-party CN seller)",
+          "url": "https://www.amazon.com/dp/B0FQ2G98R6",
+          "price_usd": 851.56,
+          "stock_note": "In stock, usually ships in 2-3 days; delivery Nov 6-17",
+          "region": "US"
+        },
+        {
+          "seller": "aifitlab (V2.0)",
+          "url": "https://aifitlab.com/products/zhongling-zllg65-asm500-v2-0-motor",
+          "price_usd": 250.0,
+          "stock_note": "Backordered; $400 with 8015 driver",
+          "region": "CN"
+        },
+        {
+          "seller": "aifitlab (V2.09)",
+          "url": "https://aifitlab.com/products/zhongling-zllg65-asm500-v2-09-motor",
+          "price_usd": 195.0,
+          "stock_note": "Backordered; $330 with 8015 driver",
+          "region": "CN"
+        }
+      ],
+      "volts_ok_60v": null,
+      "note": "NEW id (not in catalog): ZLTECH ZLLG65-ASM500 6.5 in (165 mm) 48 VDC hub servo, 10 Nm rated / 30 Nm peak, 4096-line encoder; max voltage not stated. Amazon listing ($851.56) is in stock but specs conflict with ZLTECH's; manufacturer quotes 7 days for 1-10 pcs."
+    },
+    "zltech-zllg80-asm800-v2": {
+      "in_stock": false,
+      "lead_time_days": null,
+      "sources": [
+        {
+          "seller": "aifitlab",
+          "url": "https://aifitlab.com/products/zhongling-zllg80-asm800-motor",
+          "price_usd": 260.0,
+          "stock_note": "Backordered; $530 with ZLAC8030L driver",
+          "region": "CN"
+        }
+      ],
+      "volts_ok_60v": null,
+      "note": "NEW id (not in catalog): ZLTECH ZLLG80-ASM800 8 in (200 mm) 48 VDC hub servo, 20 Nm rated / 60 Nm peak, 150 rpm; max voltage not stated."
+    },
+    "damiao-dm-h65-1ec": {
+      "in_stock": null,
+      "lead_time_days": null,
+      "sources": [
+        {
+          "seller": "rcdrone.top",
+          "url": "https://rcdrone.top/products/damiao-dm-h65-1ec-motor",
+          "price_usd": 222.0,
+          "stock_note": "Add to cart; $326 with DM6540 driver; stock/lead time not stated",
+          "region": "CN"
+        }
+      ],
+      "volts_ok_60v": null,
+      "note": "Nominal 24/36/48 V; max voltage not stated. 17-bit encoder, 6 Nm rated / 21.5 Nm peak, 171 mm. Store marks variants available but no stock text."
+    },
+    "ddt-m1502d-233": {
+      "in_stock": true,
+      "lead_time_days": 1,
+      "sources": [
+        {
+          "seller": "Switch Science (left)",
+          "url": "https://www.switch-science.com/products/9218",
+          "price_usd": null,
+          "stock_note": "JPY 60,500 incl. tax (not converted); 9 in stock; same-day dispatch if paid by 14:00 weekday",
+          "region": "JP"
+        }
+      ],
+      "volts_ok_60v": false,
+      "note": "Switch Science page states rated 24 VDC and gives no 22-63 V range (catalog range unconfirmed). Seller is in Japan (region JP). Integrated FOC + CAN, 16384-step encoder."
+    },
+    "mab-ma-d-gl100": {
+      "in_stock": null,
+      "lead_time_days": null,
+      "sources": [
+        {
+          "seller": "MAB Robotics",
+          "url": "https://www.mabrobotics.pl/product-page/ma-d-gl100",
+          "price_usd": 293.06,
+          "stock_note": "EUR 261.82; schema InStock (GL100 motor)",
+          "region": "EU"
+        }
+      ],
+      "volts_ok_60v": null,
+      "note": "Only the bare GL100 frameless motor was checkable (EUR 261.82, InStock); not a hub wheel. MA-D actuator page (mybotshop.de) returned 503; controller voltage unconfirmed."
+    },
+    "odrive-s1": {
+      "in_stock": false,
+      "lead_time_days": null,
+      "sources": [
+        {
+          "seller": "ODrive Robotics shop",
+          "url": "https://shop.odriverobotics.com/products/odrive-s1",
+          "price_usd": 149.0,
+          "stock_note": "Sold out",
+          "region": "US"
+        }
+      ],
+      "volts_ok_60v": false,
+      "note": "Spec '12-48V operation (50.5V max)'. Both variants sold out."
+    },
+    "odrive-pro": {
+      "in_stock": true,
+      "lead_time_days": null,
+      "sources": [
+        {
+          "seller": "ODrive Robotics shop",
+          "url": "https://shop.odriverobotics.com/products/odrive-pro",
+          "price_usd": 229.0,
+          "stock_note": "Add to cart (in stock); $219 at 10+; count/lead time not stated",
+          "region": "US"
+        }
+      ],
+      "volts_ok_60v": false,
+      "note": "Spec '12-56V operation (58V max)' (catalog's 15-58 V is slightly off). In stock, but 60 V full charge exceeds 58 V max; no brake-resistor output."
+    },
+    "flipsky-75100": {
+      "in_stock": true,
+      "lead_time_days": null,
+      "sources": [
+        {
+          "seller": "Flipsky",
+          "url": "https://flipsky.net/products/flipsky-75100-75v-100a-single-esc-based-on-vesc-for-electric-skateboard-electric-scooter-ebike-speed-controller",
+          "price_usd": 65.0,
+          "stock_note": "In stock, ready to ship; count/lead time not stated",
+          "region": "CN"
+        }
+      ],
+      "volts_ok_60v": true,
+      "note": "14-84 V (4-20S), 100 A continuous; Hall/ABI/AS5047/AS5048A sensors. Page shows both 'In stock, ready to ship' and 'Inventory on the way'; store data says available."
+    },
+    "flipsky-dual-75100": {
+      "in_stock": true,
+      "lead_time_days": null,
+      "sources": [
+        {
+          "seller": "Flipsky",
+          "url": "https://flipsky.net/products/flipsky-dual-75100-with-aluminum-pcb-based-on-vesc-for-electric-skateboard-electric-scooter-ebike-speed-controller",
+          "price_usd": 172.0,
+          "stock_note": "In stock, ready to ship (marked down from $216)",
+          "region": "CN"
+        }
+      ],
+      "volts_ok_60v": true,
+      "note": "14-84 V (4-20S), 100 A per channel; one board drives both wheels."
+    }
+  }
+}

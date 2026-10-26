@@ -21,6 +21,7 @@ from __future__ import annotations
 
 import json
 import math
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -134,7 +135,7 @@ def check(design: Path):
         segs = [r['shin'][-1], r['thigh'][0], r['thigh'][-1], r['yoke'][0]]
         line = np.vstack([np.linspace(segs[0], segs[1], 12), np.linspace(segs[2], segs[3], 12)])
         for name, m in meshes.items():
-            mp = _leg.pose(_shape_of(name, parts, bought), name, math.radians(0) + hip, knee, a, leg.STD['PR']['crank_r']) if name in ('knee_crank', 'pushrod') else None
+            mp = _leg.pose(_shape_of(name, parts, bought), name, math.radians(0) + hip, knee, a, leg.PARAMS['crank_r']) if name in ('knee_crank', 'pushrod') else None
             mm = m
             if mp is not None:
                 vs, fs = mp.val().tessellate(0.5, 0.3)
@@ -145,9 +146,10 @@ def check(design: Path):
                 worst[name] = {'clearance_mm': round(dmin, 1), 'at': {'height': round(frac, 2), 'look_up': look}}
     res['wheel']['clearance'] = worst
     res['wheel']['clearance_ok'] = all(v['clearance_mm'] >= 5 for v in worst.values())
-    out = R / 'exports' / 'cables.json'
+    exports = Path(os.environ['GYROPUP_EXPORTS']).resolve() if os.environ.get('GYROPUP_EXPORTS') else R / 'exports'
+    out = exports / 'cables.json'
     out.write_text(json.dumps(res, indent=1) + '\n')
-    _plot(samples, S, L, R / 'exports' / 'cables.png')
+    _plot(samples, S, L, exports / 'cables.png')
     return res
 
 

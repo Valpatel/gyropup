@@ -25,6 +25,7 @@ from __future__ import annotations
 
 import json
 import math
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -41,7 +42,7 @@ import gmi  # noqa: E402
 import leg  # noqa: E402
 
 P = json.loads((R / 'cad/parameters.json').read_text())
-OUT = R / 'exports'
+OUT = Path(os.environ['GYROPUP_EXPORTS']).resolve() if os.environ.get('GYROPUP_EXPORTS') else R / 'exports'          # GYROPUP_EXPORTS: a separate folder per optimiser trial
 SHEET = 3.0          # chassis sheet thickness (6061)
 
 
@@ -185,14 +186,15 @@ def lidar_hanger(L):
 
 
 
-def build(design_path: Path):
+def build(design_path: Path, fast: bool = False):
+    """fast: only what the optimiser needs (masses, the stack, the BOM): no STEP/STL files, no assembly, no meshes."""
     ev = derive(design_path)
     L = ev['layout']
     d = json.loads(Path(design_path).read_text())
     hip_id = d['parts']['leg_actuator']
     lparts, lmeta, lbought, S, assumed = leg.leg_parts(L, hip_id, hip_id, d['parts']['wheel_motor'])
     a, b = L['thigh'], L['shin']
-    cr = leg.STD['PR']['crank_r']
+    cr = leg.PARAMS['crank_r']
     # standing pose for the assembly (60 % height), from the controller's own leg geometry
     from sim.controller import hip_for, knee_for
     am, bm = a / 1000, b / 1000
@@ -235,6 +237,12 @@ def build(design_path: Path):
     METAL_DENSITY = {'al6061': 2.70}
     for name, shape in parts.items():
         solid = shape.val() if hasattr(shape, 'val') else shape
+        if fast:
+            mat = meta[name]['material']
+            dens = METAL_DENSITY.get(mat) or materials[{'pa_cf': 'pa6-cf'}.get(mat, mat)]['density_g_cm3']
+            body, mrep = printed_part_body(solid, dens, wall_mm=500.0 if mat in METAL_DENSITY else 2.0, infill=1.0 if mat in METAL_DENSITY else 0.4, name=name)
+            mass[name] = {**mrep, 'material': mat, 'qty': meta[name]['qty'], 'com_m': list(body.com)}
+            continue
         cq.exporters.export(solid, str(OUT / f'{name}.step'))
         mat = meta[name]['material']
         if mat in METAL_DENSITY:                # machined or cut: solid metal, no STL to print
@@ -246,6 +254,8 @@ def build(design_path: Path):
             report[name] = rep
             body, mrep = printed_part_body(solid, materials[{'pa_cf': 'pa6-cf'}.get(mat, mat)]['density_g_cm3'], wall_mm=2.0, infill=0.4, name=name)
         mass[name] = {**mrep, 'material': mat, 'qty': meta[name]['qty'], 'com_m': list(body.com)}
+    if fast:
+        bought, placed = {}, {}
     # bought parts at their real positions (envelopes; vendor STEP files stay local and are not exported)
     T, B = L['tray'], L['body']
     bought = {}
@@ -265,12 +275,14 @@ def build(design_path: Path):
     bought['lidar'] = cq.Workplane('XY').circle(51.65).extrude(71.7).translate((0, 0, lz - 36))
     for name, x in (('camera_front', T['depth'] / 2 + 17), ('camera_rear', -(T['depth'] / 2 + 17))):
         bought[name] = cq.Workplane('XY').box(25, 90, 25).translate((x, 0, L['trayBottom'] + 5 + 12.5))
-    for name, shape in bought.items():
-        cq.exporters.export(shape.val(), str(OUT / f'asm_{name}.step'))
-    for name, shape in placed.items():
-        cq.exporters.export(shape.val() if hasattr(shape, 'val') else shape, str(OUT / f'asm_{name}.step'))
+    if not fast:
+        for name, shape in bought.items():
+            cq.exporters.export(shape.val(), str(OUT / f'asm_{name}.step'))
+        for name, shape in placed.items():
+            cq.exporters.export(shape.val() if hasattr(shape, 'val') else shape, str(OUT / f'asm_{name}.step'))
 
-    export_link_meshes(design_path, L, S, parts, lparts, lbought, bought, placed, hip_id)
+    if not fast:
+        export_link_meshes(design_path, L, S, parts, lparts, lbought, bought, placed, hip_id)
     (OUT / 'geometry-checks.json').write_text(json.dumps({k: v for k, v in report.items() if v.get('print')}, indent=1) + '\n')
     total = sum(m['mass_g'] * m['qty'] for m in mass.values())
     (OUT / 'mass-properties.json').write_text(json.dumps({'design': str(Path(design_path).resolve().relative_to(R)), 'parts': mass,
@@ -337,7 +349,7 @@ def export_link_meshes(design_path, L, S, parts, lparts, lbought, bought, placed
     (d / 'manifest.json').write_text(json.dumps({
         'design': str(Path(design_path).resolve().relative_to(R)), 'units': 'mm',
         'frame': 'robot: x forward, y left, z up, origin on the hip axis; legs at the zero pose (hanging straight down)',
-        'thigh_mm': L['thigh'], 'shin_mm': L['shin'], 'crank_r_mm': leg.STD['PR']['crank_r'], 'mirror': 'side l parts are mirrored (y -> -y) for the right leg',
+        'thigh_mm': L['thigh'], 'shin_mm': L['shin'], 'crank_r_mm': leg.PARAMS['crank_r'], 'mirror': 'side l parts are mirrored (y -> -y) for the right leg',
         'links': links}, indent=1) + '\n')
 
 
@@ -351,4 +363,5 @@ def _envelope(part_id):
 
 
 if __name__ == '__main__':
-    build(Path(sys.argv[1]) if len(sys.argv) > 1 else R / 'designs/default.json')
+    args = [a for a in sys.argv[1:] if not a.startswith('--')]
+    build(Path(args[0]) if args else R / 'designs/default.json', fast='--fast' in sys.argv)
