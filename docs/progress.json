@@ -1,45 +1,45 @@
 {
- "updated": "2026-10-26 08:20",
+ "updated": "2026-10-26 11:40",
  "status": [
   {
    "title": "Build method",
    "value": "100 % printed",
-   "note": "PA6-CF (hardened nozzle) for structure, PETG for the rest; bought hardware only"
+   "note": "PA6-CF for structure, PETG for the rest; McMaster hardware (31 part numbers, 465 pieces)"
   },
   {
    "title": "Leg motors",
    "value": "4 x RS-04",
-   "note": "capped at 60 N·m in firmware to protect the printed parts; RS-03 fits the same mounts"
+   "note": "capped at 60 N·m in firmware; RS-03 fits the same mounts"
   },
   {
-   "title": "Robot mass (model)",
-   "value": "25.2 kg",
-   "note": "the whole CAD assembly: 6.2 printed, 14.5 bought, 2.1 electronics, 0.9 hardware (allowance until McMaster parts land) + turret budget 1.5"
+   "title": "Robot mass",
+   "value": "26.4 kg",
+   "note": "the whole CAD assembly incl. the turret (1.38 kg) and electronics bay"
   },
   {
    "title": "Physics scenarios",
    "value": "15 / 15 pass",
-   "note": "now with one wheel on a 30 mm plank: body held level to 0.14° by leg heights"
+   "note": "falls, kerb drop, landing, one wheel on a plank"
+  },
+  {
+   "title": "Strength (everyday)",
+   "value": "pass (1.91)",
+   "note": "thigh sideways 1.91 vs 2.0; everything else >= 2.6"
+  },
+  {
+   "title": "Strength (falls)",
+   "value": "thigh short",
+   "note": "thigh 0.62 / 0.86 in a sideways fall (need 1.2): next, bumpers + a compliant contact model + the knee stop"
   },
   {
    "title": "Power wiring",
    "value": "3 parts under-rated",
-   "note": "fuse block 58 V, anti-spark switch 60 V, 12 V converter 30 W (needs ~39 W): see the log"
+   "note": "fuse block 58 V, anti-spark 60 V, 12 V converter 30 W: the 2 x 20 V bus fixes the first two"
   },
   {
-   "title": "Strength",
-   "value": "at the line",
-   "note": "every part within 4 % of SF 2 (everyday) / 1.2 (falls); leg flex 3.8 mm (limit 4)"
-  },
-  {
-   "title": "Printing",
-   "value": "~380 h",
-   "note": "5.4 kg PA6-CF (~$430); the loop minimises hours next"
-  },
-  {
-   "title": "Design loop (RTX 4090)",
-   "value": "running",
-   "note": "printed search space, 12 h; leaderboard on Results"
+   "title": "cad-agent PRs",
+   "value": "#4 #5 #6 ready",
+   "note": "reviewed, fixed, re-reviewed, CI green: waiting for the go-ahead to merge"
   }
  ],
  "log": [
@@ -147,6 +147,42 @@
    "time": "10-26 08:10",
    "title": "McMaster hardware and the turret CAD under way",
    "text": "Real McMaster STEP models with part numbers for every bearing, screw, insert, pin and rod end (one at a time, like an engineer); the turret's printed CAD from the launcher study; an interactive strength viewer in cad-agent."
+  },
+  {
+   "time": "10-26 09:00",
+   "title": "McMaster hardware",
+   "text": "31 part numbers with their STEP models and full spec tables, fetched one at a time; cad-agent mcmaster + skill (PR #5). The real parts showed eight CAD dimensions that had to change; all fixed."
+  },
+  {
+   "time": "10-26 10:30",
+   "title": "The turret's real CAD",
+   "text": "16 printed parts, a 30-ball hopper, dial feed, twin flywheels, hard stops that keep the barrel at or below horizontal; in the physics and the 3D page.",
+   "links": [
+    {
+     "title": "picture",
+     "href": "../exports/turret/turret.png"
+    },
+    {
+     "title": "section",
+     "href": "../exports/turret/turret-section.png"
+    }
+   ]
+  },
+  {
+   "time": "10-26 11:00",
+   "title": "Interactive strength viewer",
+   "text": "Every strength case opens in 3D: load slider past failure, hot spots with the load each fails at and why (hole edge, fillet, corner), section cut, readouts (cad-agent PR #6). It found the thigh's weak spot: a hollow hub, now solid with screw pockets.",
+   "links": [
+    {
+     "title": "strength section",
+     "href": "#fea"
+    }
+   ]
+  },
+  {
+   "time": "10-26 11:40",
+   "title": "Where it stands",
+   "text": "26.35 kg, clash-free, 15/15 scenarios, everyday strength passes; the thigh is short in a sideways fall. Next: TPU bumpers so the body lands first, a compliant tyre/bumper contact model, and the knee hard stop."
   }
  ],
  "shopping": {
