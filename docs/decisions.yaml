@@ -119,10 +119,10 @@
   source: {kind: user, quote: "waveshare 0.71inch Double Eye Round LCD Display Module 160×160 Resolution 65K Colors IPS Display ... <-- cool robot eyes", ref: "[Waveshare product page](https://www.waveshare.com/0.71inch-dualeye-lcd-module.htm)"}
 - id: D17
   date: "2026-10-25"
-  title: The battery is 8S LiFePO4
+  title: The battery is 8S LiFePO4 (superseded by D23)
   decision: An 8S LiFePO4 pack (25.6 V nominal, 29.2 V full, about 20 V at cut-off) runs the J501, motors and drivers directly. It must deliver 60 A or more continuous; the pack (ready-made or custom high-rate cells with a 60–150 A BMS) is being sourced
   why: LiFePO4 is safer to charge, which matters most because Gyropup will dock and charge itself unattended (D18). It is a preference, not a requirement ("If LiFeP04 doesn't work that's OK too"). 8S keeps the J501 inside 12–36 V; 10S would exceed 36 V. The cost is weight, about twice the mass per watt-hour of the Li-ion pack. The only LFP pack in the catalog so far (Bioenno, 10 A continuous) is a placeholder that fails the current check.
-  status: open
+  status: superseded
   source: {kind: user, quote: "I would like to use LiFeP04 cells/battery pack if possible because they are safer to charge etc."}
   alternatives: [7S Li-ion Molicel pack (lighter, D8)]
 - id: D18
@@ -162,3 +162,11 @@
   why: The turret is a large project with plenty of open-source work to build on; keeping an interface between the two lets both move independently. The user expects about 24 shots per magazine (drum or belt) and a trip to get a new magazine, so the dock doubles as the reload station.
   status: decided
   source: {kind: user, quote: "The robot mounted nerf gun with automated reload and firing is a clear separate session/lane with massive amounts of open source online resources to discover."}
+- id: D23
+  date: "2026-10-25"
+  title: Two DeWalt FLEXVOLT packs in series (40 V) power Gyropup
+  decision: Two FLEXVOLT packs in 20 V mode (5S3P each) wired in series give a 30–40 V bus. A Pololu D42V55F24 (24–60 V in) feeds the J501. Off-the-shelf adapters provide the latch and contacts; 10 AWG leads, a 60–80 A time-delay fuse at the battery for burst current, the adapters' blade fuses as backup. The robot enforces a 3.0 V/cell cut-off per pack and a current limit, because tool packs leave that to the tool
+  why: "The user has 60 V FLEXVOLT packs and likes tool batteries (easy to swap and charge). Of the three ways to use them, the series pair is the only one with no problems: it passes all 7 simulated scenarios at 17.6 kg, with 153 min estimated runtime, 146 rpm leg speed and 8 km/h top speed. One pack in 20 V mode is too slow (73 rpm legs, 4 km/h); 60 V mode exceeds the moteus drivers' 54 V and the lidar converter's 50 V, and leaves no regeneration margin on the RS-03s."
+  status: decided
+  source: {kind: user, quote: "Oh dewalt batteries are actually a really good idea, I have the 60V kind..."}
+  alternatives: [8S LiFePO4 custom A123 pack (designs/lfp-8s4p.json), one FLEXVOLT in 20 V mode (designs/flexvolt-20v.json), one FLEXVOLT in 60 V mode (designs/flexvolt-60v.json)]

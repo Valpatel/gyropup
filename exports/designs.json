@@ -4,11 +4,11 @@
    "name": "Gyropup",
    "file": "designs/default.json",
    "verdict": "warn",
-   "summary": "RobStride RS-03 legs, ODrive Robotics BotWheel (BW0124) wheels, Bioenno Power BLF-2410AS 24V 10Ah LiFePO4 (ABS case, PCM) battery. 8 printed part types, 1788 g of filament.",
+   "summary": "RobStride RS-03 legs, ODrive Robotics BotWheel (BW0124) wheels, DeWalt 2 \u00d7 FLEXVOLT DCB609 in series, 20 V mode (10S) battery. 8 printed part types, 1788 g of filament.",
    "metrics": [
     {
      "label": "chassis & actuators",
-     "value": "$1,941"
+     "value": "$2,339"
     },
     {
      "label": "sensors & compute",
@@ -16,7 +16,7 @@
     },
     {
      "label": "mass",
-     "value": 17.0,
+     "value": 17.6,
      "unit": "kg",
      "estimate": true
     },
@@ -27,7 +27,7 @@
     },
     {
      "label": "leg torque margin (dynamic)",
-     "value": 2.1,
+     "value": 2.0,
      "unit": "\u00d7",
      "estimate": true,
      "level": ""
@@ -40,14 +40,125 @@
     },
     {
      "label": "jump",
-     "value": 38,
+     "value": 74,
+     "unit": "mm",
+     "estimate": true,
+     "level": ""
+    },
+    {
+     "label": "runtime",
+     "value": 153,
+     "unit": "min",
+     "estimate": true
+    },
+    {
+     "label": "simulated scenarios passed",
+     "value": "7/7",
+     "level": ""
+    }
+   ],
+   "checks": {
+    "ok": 4,
+    "warn": 9,
+    "fail": 0
+   },
+   "link": "designer/",
+   "links": [
+    {
+     "title": "Simulation results",
+     "href": "designer/results.html#default"
+    },
+    {
+     "title": "Simulate in 3D",
+     "href": "designer/sim.html?design=designs/default.json"
+    }
+   ],
+   "badges": [
+    {
+     "label": "stand pass",
+     "level": "done",
+     "title": "Stand and balance"
+    },
+    {
+     "label": "squat pass",
+     "level": "done",
+     "title": "Squat sweep: stand tall, crouch deep, stand again"
+    },
+    {
+     "label": "push pass",
+     "level": "done",
+     "title": "Push recovery, front and back"
+    },
+    {
+     "label": "drive pass",
+     "level": "done",
+     "title": "Drive course: accelerate, turn, stop, reverse"
+    },
+    {
+     "label": "slope pass",
+     "level": "done",
+     "title": "Climb a 10\u00b0 ramp and hold on it"
+    },
+    {
+     "label": "curb pass",
+     "level": "done",
+     "title": "Drive up a 25 mm kerb"
+    },
+    {
+     "label": "recoil pass",
+     "level": "done",
+     "title": "Recoil: empty a 24-shot magazine in bursts of 8, standing then driving"
+    }
+   ]
+  },
+  {
+   "name": "Gyropup on one FLEXVOLT (20 V mode)",
+   "file": "designs/flexvolt-20v.json",
+   "verdict": "warn",
+   "summary": "RobStride RS-03 legs, ODrive Robotics BotWheel (BW0124) wheels, DeWalt FLEXVOLT DCB609, 20 V mode (5S3P) battery. 8 printed part types, 1788 g of filament.",
+   "metrics": [
+    {
+     "label": "chassis & actuators",
+     "value": "$2,020"
+    },
+    {
+     "label": "sensors & compute",
+     "value": "$6,078"
+    },
+    {
+     "label": "mass",
+     "value": 16.0,
+     "unit": "kg",
+     "estimate": true
+    },
+    {
+     "label": "standing hip height",
+     "value": 479,
+     "unit": "mm"
+    },
+    {
+     "label": "leg torque margin (dynamic)",
+     "value": 2.2,
+     "unit": "\u00d7",
+     "estimate": true,
+     "level": ""
+    },
+    {
+     "label": "lean it can catch",
+     "value": 65,
+     "unit": "\u00b0",
+     "level": "ok"
+    },
+    {
+     "label": "jump",
+     "value": 19,
      "unit": "mm",
      "estimate": true,
      "level": "warn"
     },
     {
      "label": "runtime",
-     "value": 121,
+     "value": 77,
      "unit": "min",
      "estimate": true
     },
@@ -66,11 +177,233 @@
    "links": [
     {
      "title": "Simulation results",
-     "href": "designer/results.html#default"
+     "href": "designer/results.html#flexvolt-20v"
     },
     {
      "title": "Simulate in 3D",
-     "href": "designer/sim.html?design=designs/default.json"
+     "href": "designer/sim.html?design=designs/flexvolt-20v.json"
+    }
+   ],
+   "badges": [
+    {
+     "label": "stand pass",
+     "level": "done",
+     "title": "Stand and balance"
+    },
+    {
+     "label": "squat pass",
+     "level": "done",
+     "title": "Squat sweep: stand tall, crouch deep, stand again"
+    },
+    {
+     "label": "push pass",
+     "level": "done",
+     "title": "Push recovery, front and back"
+    },
+    {
+     "label": "drive pass",
+     "level": "done",
+     "title": "Drive course: accelerate, turn, stop, reverse"
+    },
+    {
+     "label": "slope pass",
+     "level": "done",
+     "title": "Climb a 10\u00b0 ramp and hold on it"
+    },
+    {
+     "label": "curb pass",
+     "level": "done",
+     "title": "Drive up a 25 mm kerb"
+    },
+    {
+     "label": "recoil pass",
+     "level": "done",
+     "title": "Recoil: empty a 24-shot magazine in bursts of 8, standing then driving"
+    }
+   ]
+  },
+  {
+   "name": "Gyropup on one FLEXVOLT (60 V mode)",
+   "file": "designs/flexvolt-60v.json",
+   "verdict": "fail",
+   "summary": "RobStride RS-03 legs, ODrive Robotics BotWheel (BW0124) wheels, DeWalt DCB609 FLEXVOLT 20V/60V MAX 9.0Ah battery. 8 printed part types, 1788 g of filament.",
+   "metrics": [
+    {
+     "label": "chassis & actuators",
+     "value": "$2,096"
+    },
+    {
+     "label": "sensors & compute",
+     "value": "$6,078"
+    },
+    {
+     "label": "mass",
+     "value": 16.5,
+     "unit": "kg",
+     "estimate": true
+    },
+    {
+     "label": "standing hip height",
+     "value": 479,
+     "unit": "mm"
+    },
+    {
+     "label": "leg torque margin (dynamic)",
+     "value": 2.1,
+     "unit": "\u00d7",
+     "estimate": true,
+     "level": ""
+    },
+    {
+     "label": "lean it can catch",
+     "value": 64,
+     "unit": "\u00b0",
+     "level": "ok"
+    },
+    {
+     "label": "jump",
+     "value": 168,
+     "unit": "mm",
+     "estimate": true,
+     "level": ""
+    },
+    {
+     "label": "runtime",
+     "value": 85,
+     "unit": "min",
+     "estimate": true
+    },
+    {
+     "label": "simulated scenarios passed",
+     "value": "7/7",
+     "level": ""
+    }
+   ],
+   "checks": {
+    "ok": 4,
+    "warn": 10,
+    "fail": 2
+   },
+   "link": "designer/",
+   "links": [
+    {
+     "title": "Simulation results",
+     "href": "designer/results.html#flexvolt-60v"
+    },
+    {
+     "title": "Simulate in 3D",
+     "href": "designer/sim.html?design=designs/flexvolt-60v.json"
+    }
+   ],
+   "badges": [
+    {
+     "label": "stand pass",
+     "level": "done",
+     "title": "Stand and balance"
+    },
+    {
+     "label": "squat pass",
+     "level": "done",
+     "title": "Squat sweep: stand tall, crouch deep, stand again"
+    },
+    {
+     "label": "push pass",
+     "level": "done",
+     "title": "Push recovery, front and back"
+    },
+    {
+     "label": "drive pass",
+     "level": "done",
+     "title": "Drive course: accelerate, turn, stop, reverse"
+    },
+    {
+     "label": "slope pass",
+     "level": "done",
+     "title": "Climb a 10\u00b0 ramp and hold on it"
+    },
+    {
+     "label": "curb pass",
+     "level": "done",
+     "title": "Drive up a 25 mm kerb"
+    },
+    {
+     "label": "recoil pass",
+     "level": "done",
+     "title": "Recoil: empty a 24-shot magazine in bursts of 8, standing then driving"
+    }
+   ]
+  },
+  {
+   "name": "Gyropup on LiFePO4 (custom 8S4P A123)",
+   "file": "designs/lfp-8s4p.json",
+   "verdict": "warn",
+   "summary": "RobStride RS-03 legs, ODrive Robotics BotWheel (BW0124) wheels, custom build Custom 8S4P Lithium Werks/A123 ANR26650M1-B (32 cells) battery. 8 printed part types, 1788 g of filament.",
+   "metrics": [
+    {
+     "label": "chassis & actuators",
+     "value": "$1,751"
+    },
+    {
+     "label": "sensors & compute",
+     "value": "$6,078"
+    },
+    {
+     "label": "mass",
+     "value": 17.2,
+     "unit": "kg",
+     "estimate": true
+    },
+    {
+     "label": "standing hip height",
+     "value": 479,
+     "unit": "mm"
+    },
+    {
+     "label": "leg torque margin (dynamic)",
+     "value": 2.0,
+     "unit": "\u00d7",
+     "estimate": true,
+     "level": ""
+    },
+    {
+     "label": "lean it can catch",
+     "value": 63,
+     "unit": "\u00b0",
+     "level": "ok"
+    },
+    {
+     "label": "jump",
+     "value": 40,
+     "unit": "mm",
+     "estimate": true,
+     "level": "warn"
+    },
+    {
+     "label": "runtime",
+     "value": 125,
+     "unit": "min",
+     "estimate": true
+    },
+    {
+     "label": "simulated scenarios passed",
+     "value": "7/7",
+     "level": ""
+    }
+   ],
+   "checks": {
+    "ok": 4,
+    "warn": 10,
+    "fail": 0
+   },
+   "link": "designer/",
+   "links": [
+    {
+     "title": "Simulation results",
+     "href": "designer/results.html#lfp-8s4p"
+    },
+    {
+     "title": "Simulate in 3D",
+     "href": "designer/sim.html?design=designs/lfp-8s4p.json"
     }
    ],
    "badges": [
@@ -164,7 +497,7 @@
     },
     {
      "label": "simulated scenarios passed",
-     "value": "5/7",
+     "value": "6/7",
      "level": "fail"
     }
    ],
@@ -201,9 +534,9 @@
      "title": "Push recovery, front and back"
     },
     {
-     "label": "drive fail",
-     "level": "fail",
-     "title": "fell at 5.4 s"
+     "label": "drive pass",
+     "level": "done",
+     "title": "Drive course: accelerate, turn, stop, reverse"
     },
     {
      "label": "slope pass",
@@ -213,7 +546,7 @@
     {
      "label": "curb fail",
      "level": "fail",
-     "title": "fell at 3.3 s; only reached 0.77 m of 1.5 m"
+     "title": "fell at 3.4 s; only reached 0.77 m of 1.5 m"
     },
     {
      "label": "recoil pass",
@@ -275,7 +608,7 @@
     },
     {
      "label": "simulated scenarios passed",
-     "value": "5/7",
+     "value": "6/7",
      "level": "fail"
     }
    ],
@@ -312,9 +645,9 @@
      "title": "Push recovery, front and back"
     },
     {
-     "label": "drive fail",
-     "level": "fail",
-     "title": "fell at 5.4 s"
+     "label": "drive pass",
+     "level": "done",
+     "title": "Drive course: accelerate, turn, stop, reverse"
     },
     {
      "label": "slope pass",

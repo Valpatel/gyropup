@@ -156,18 +156,31 @@ export function effectiveDesign(design, catalog) {
 // Where things sit, in mm, in the hip-axis frame (x right, y up, z forward). The 3D page and the physics model both
 // use this, so they always agree.
 export function layout(design, catalog) {
-  const d = effectiveDesign(design, catalog), g = d.geometry, B = g.body;
-  const act = resolvePart(d.parts.leg_actuator, catalog), wheel = resolvePart(d.parts.wheel_motor, catalog);
+  const d = effectiveDesign(design, catalog), g = d.geometry;
+  const part = (slot) => resolvePart(d.parts[slot], catalog);
+  const act = part('leg_actuator'), wheel = part('wheel_motor'), compute = part('compute'), batt = part('battery');
   const motorD = act?.specs?.diameter_mm ?? 100, motorL = act?.specs?.length_mm ?? 50;
   const lw = g.link_section?.width_mm ?? 40, ld = g.link_section?.depth_mm ?? 30;
   const wheelW = wheel?.specs?.width_mm ?? 45;
-  const trayH = g.battery_tray_mm ?? 60;
-  const hipX = B.width_mm / 2 + motorL + 8;
-  const bodyBottom = -25 + trayH;
+  // the body is the compute box: its enclosure size when the catalog has one, else the design's own
+  const cd = compute?.specs?.enclosure_dimensions_mm ?? compute?.specs?.dimensions_mm;
+  const B = cd?.length === 3 && cd.every(Boolean) ? { width_mm: cd[0], depth_mm: cd[1], height_mm: cd[2] } : g.body;
+  // the battery tray fits the pack(s): lying flat, long side front to back, packs side by side
+  const packs = (batt?.specs?.packs ?? 1) * (d.battery_count ?? 1);
+  const pd = batt?.specs?.pack_dimensions_mm ?? [batt?.specs?.length_mm, batt?.specs?.width_mm, batt?.specs?.height_mm];
+  const dims = pd.every((x) => x) ? [...pd].sort((p, q) => q - p) : null;
+  const tray = dims
+    ? { width: Math.max(B.width_mm, packs * dims[1] + 10 * packs), depth: Math.max(B.depth_mm, dims[0] + 10), height: Math.max(g.battery_tray_mm ?? 40, dims[2] + 12) }
+    : { width: B.width_mm, depth: B.depth_mm, height: g.battery_tray_mm ?? 60 };
+  const trayBottom = -25;
+  const bodyW = Math.max(B.width_mm, tray.width);
+  const hipX = bodyW / 2 + motorL + 8;
+  const bodyBottom = trayBottom + tray.height;
   return {
     motorD, motorL, linkW: lw, linkD: ld, wheelW, wheelR: g.wheel_diameter_mm / 2, thigh: g.thigh_mm, shin: g.shin_mm,
-    hipX, wheelX: hipX + lw / 2 + wheelW / 2 + 6, trayBottom: -25, trayH, bodyBottom, bodyTop: bodyBottom + B.height_mm,
-    body: { width: B.width_mm, depth: B.depth_mm, height: B.height_mm },
+    hipX, wheelX: hipX + lw / 2 + wheelW / 2 + 6, trayBottom, trayH: tray.height, tray, bodyBottom, bodyTop: bodyBottom + B.height_mm,
+    body: { width: B.width_mm, depth: B.depth_mm, height: B.height_mm }, frameWidth: bodyW,
+    battery: dims ? { packs, dims, vendor: batt?.vendor ?? '' } : null,
     kneeMinDeg: g.knee_min_deg, kneeMaxDeg: g.knee_max_deg, lidarMount: d.lidar_mount ?? 'top',
   };
 }
@@ -314,6 +327,18 @@ export function evaluate(design, catalog, materials, opts = {}) {
     const cRange = spec(compute, 'voltage_range_v');
     if (cRange && vFull && (vFull > cRange[1] || vEmpty < cRange[0]) && !pick('dcdc_compute')) {
       check('volts-compute', 'fail', `The compute box takes ${cRange[0]}–${cRange[1]} V; a ${vFull.toFixed(1)} V full battery needs a DC-DC converter.`);
+    }
+    for (const slot of ['dcdc_compute', 'dcdc_12v']) {    // a converter must work across the whole battery range
+      const inR = spec(pick(slot), 'input_voltage_range_v');
+      if (inR && vFull && vEmpty && (vEmpty < inR[0] || vFull > inR[1])) {
+        check(`dcdc-${slot}`, 'fail', `${pick(slot).vendor} ${pick(slot).model} takes ${inR[0]}–${inR[1]} V in; the battery runs ${vEmpty.toFixed(1)}–${vFull.toFixed(1)} V.`);
+      }
+    }
+    for (const [slot, label] of [['leg_actuator', 'leg actuators'], ['wheel_motor', 'wheel motors'], ['motor_driver', 'motor drivers']]) {
+      const range = spec(pick(slot), 'voltage_range_v');      // braking pushes the bus above full charge
+      if (range && vFull && vFull <= range[1] && vFull > 0.92 * range[1]) {
+        check(`regen-${slot}`, 'warn', `A full battery (${vFull.toFixed(1)} V) is within 8% of the ${label}' ${range[1]} V limit; braking energy can push the bus over it. Add a brake resistor or use a lower voltage.`);
+      }
     }
     const lidarV = spec(pick('lidar'), 'voltage_range_v');
     if (lidarV && vFull > lidarV[1] && !pick('dcdc_12v')) {

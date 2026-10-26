@@ -184,12 +184,14 @@
   "from": null
  },
  "custom-8s3p-a123-anr26650m1b": {
-  "file": "custom-8s3p-a123-anr26650m1b.jpg",
-  "from": "https://lithiumwerks.com/wp-content/uploads/2020/03/product-cell-26650.jpg"
+  "file": null,
+  "from": null,
+  "rejected": "same image as other products"
  },
  "custom-8s4p-a123-anr26650m1b": {
-  "file": "custom-8s4p-a123-anr26650m1b.jpg",
-  "from": "https://lithiumwerks.com/wp-content/uploads/2020/03/product-cell-26650.jpg"
+  "file": null,
+  "from": null,
+  "rejected": "same image as other products"
  },
  "custom-8s4p-vapcell-t25-ifr26650": {
   "file": "custom-8s4p-vapcell-t25-ifr26650.jpg",
@@ -287,6 +289,14 @@
   "file": "ddt-p1010b-111.jpg",
   "from": "http://aifitlab.com/cdn/shop/files/P1010B_111-main-4.jpg?crop=center&height=1200&v=1754579022&width=1200"
  },
+ "dewalt-2x-dcb606-20v-series": {
+  "file": "dewalt-2x-dcb606-20v-series.jpg",
+  "from": "https://assets.dewalt.com/NAG/PRODUCT/IMAGES/HIRES/WHITEBG/DCB606_1_1680.webp"
+ },
+ "dewalt-2x-dcb609-20v-series": {
+  "file": "dewalt-2x-dcb609-20v-series.jpg",
+  "from": "https://assets.dewalt.com/NAG/PRODUCT/IMAGES/HIRES/WHITEBG/DCB609_1_1680.webp"
+ },
  "dewalt-dcb115": {
   "file": "dewalt-dcb115.jpg",
   "from": "https://thepowertoolstore.com/cdn/shop/files/dewalt-12v-max20v-max-4-amp-charger-dcb1104_1200x1200.webp?v=1791322514"
@@ -310,6 +320,10 @@
  "dewalt-dcb609": {
   "file": "dewalt-dcb609.jpg",
   "from": "https://thepowertoolstore.com/cdn/shop/files/DCB609_1_530x530_4ad26371-0f08-44a2-8f56-687c327fe36e_1200x1200.webp?v=1764964090"
+ },
+ "dewalt-dcb609-20v-mode": {
+  "file": "dewalt-dcb609-20v-mode.jpg",
+  "from": "https://assets.dewalt.com/NAG/PRODUCT/IMAGES/HIRES/WHITEBG/DCB609_1_1680.webp"
  },
  "dewalt-dcbp520": {
   "file": "dewalt-dcbp520.jpg",
@@ -656,24 +670,29 @@
   "from": "http://maytech.cn/cdn/shop/files/MTS2009AS_9_ec1c19a2-a395-4e03-9f2a-0a985f2551d5.jpg?v=1765527186"
  },
  "meanwell-ddr-120b-24": {
-  "file": "meanwell-ddr-120b-24.jpg",
-  "from": "https://www.bravoelectro.com/media/catalog/product/cache/656e967247d4eb88b33e3f0739f96e0a/m/e/mea-ddr-120.png"
+  "file": null,
+  "from": null,
+  "rejected": "same image as other products"
  },
  "meanwell-ddr-120c-24": {
-  "file": "meanwell-ddr-120c-24.jpg",
-  "from": "https://www.bravoelectro.com/media/catalog/product/cache/656e967247d4eb88b33e3f0739f96e0a/m/e/mea-ddr-120.png"
+  "file": null,
+  "from": null,
+  "rejected": "same image as other products"
  },
  "meanwell-ddr-30g-5": {
-  "file": "meanwell-ddr-30g-5.jpg",
-  "from": "https://www.bravoelectro.com/media/catalog/product/cache/656e967247d4eb88b33e3f0739f96e0a/m/e/mea-ddr-30.png"
+  "file": null,
+  "from": null,
+  "rejected": "same image as other products"
  },
  "meanwell-ddr-30l-12": {
-  "file": "meanwell-ddr-30l-12.jpg",
-  "from": "https://www.bravoelectro.com/media/catalog/product/cache/656e967247d4eb88b33e3f0739f96e0a/m/e/mea-ddr-30.png"
+  "file": null,
+  "from": null,
+  "rejected": "same image as other products"
  },
  "meanwell-ddr-30l-5": {
-  "file": "meanwell-ddr-30l-5.jpg",
-  "from": "https://www.bravoelectro.com/media/catalog/product/cache/656e967247d4eb88b33e3f0739f96e0a/m/e/mea-ddr-30.png"
+  "file": null,
+  "from": null,
+  "rejected": "same image as other products"
  },
  "meanwell-rsd-150c-24": {
   "file": "meanwell-rsd-150c-24.jpg",
@@ -953,16 +972,18 @@
   "from": "https://media-cdn.seeedstudio.com/media/catalog/product/cache/7f7f32ef807b8c2c2215b49801c56084/1/-/1-robsrideo02-17n.m.jpg"
  },
  "robstride-rs-03": {
-  "file": "robstride-rs-03.jpg",
-  "from": "https://www.seeedstudio.com/_pub/images/seeedstudio.png"
+  "file": null,
+  "from": null,
+  "rejected": "same image as other products"
  },
  "robstride-rs-04": {
   "file": "robstride-rs-04.jpg",
   "from": "https://media-cdn.seeedstudio.com/media/catalog/product/cache/7f7f32ef807b8c2c2215b49801c56084/1/_/1.shoutu_4.22.png"
  },
  "robstride-rs-06": {
-  "file": "robstride-rs-06.jpg",
-  "from": "https://www.seeedstudio.com/_pub/images/seeedstudio.png"
+  "file": null,
+  "from": null,
+  "rejected": "same image as other products"
  },
  "robstride-rs00": {
   "file": null,
@@ -1025,16 +1046,19 @@
   "from": null
  },
  "steadywin-gim6010-8": {
-  "file": "steadywin-gim6010-8.jpg",
-  "from": "https://openelab.io/cdn/shop/files/8_1200x1200_633f752b-1d55-448a-80b0-ae37be307480.webp?v=1770869123&width=1200"
+  "file": null,
+  "from": null,
+  "rejected": "same image as other products"
  },
  "steadywin-gim8108-8": {
-  "file": "steadywin-gim8108-8.jpg",
-  "from": "https://openelab.io/cdn/shop/files/8_1200x1200_633f752b-1d55-448a-80b0-ae37be307480.webp?v=1770869123&width=1200"
+  "file": null,
+  "from": null,
+  "rejected": "same image as other products"
  },
  "steadywin-gim8115-9": {
-  "file": "steadywin-gim8115-9.jpg",
-  "from": "https://openelab.io/cdn/shop/files/8_1200x1200_633f752b-1d55-448a-80b0-ae37be307480.webp?v=1770869123&width=1200"
+  "file": null,
+  "from": null,
+  "rejected": "same image as other products"
  },
  "stereolabs-zed-2i": {
   "file": "stereolabs-zed-2i.jpg",
@@ -1065,12 +1089,14 @@
   "from": null
  },
  "terrafirma-flexvolt-60v-dock-adapter": {
-  "file": "terrafirma-flexvolt-60v-dock-adapter.jpg",
-  "from": "https://i.ebayimg.com/images/g/w8sAAOSwwj5b76jn/s-l300.jpg"
+  "file": null,
+  "from": null,
+  "rejected": "same image as other products"
  },
  "terrafirma-m18-xt60-fused-adapter": {
-  "file": "terrafirma-m18-xt60-fused-adapter.jpg",
-  "from": "https://i.ebayimg.com/images/g/w8sAAOSwwj5b76jn/s-l300.jpg"
+  "file": null,
+  "from": null,
+  "rejected": "same image as other products"
  },
  "toolkitrc-m6dac-pro": {
   "file": "toolkitrc-m6dac-pro.jpg",
@@ -1089,28 +1115,33 @@
   "from": null
  },
  "unitree-a1-motor": {
-  "file": "unitree-a1-motor.jpg",
-  "from": "http://shop.unitree.com/cdn/shop/files/Unitree-Go2-ENCover-3_1200x1200.jpg?v=1700551758"
+  "file": null,
+  "from": null,
+  "rejected": "same image as other products"
  },
  "unitree-go-m8010-6": {
-  "file": "unitree-go-m8010-6.jpg",
-  "from": "http://shop.unitree.com/cdn/shop/files/Unitree-Go2-ENCover-3_1200x1200.jpg?v=1700551758"
+  "file": null,
+  "from": null,
+  "rejected": "same image as other products"
  },
  "unitree-go-m8010-6-wheel": {
   "file": "unitree-go-m8010-6-wheel.jpg",
   "from": "http://shop.unitree.com/cdn/shop/products/169_1200x1200.jpg?v=1668073892"
  },
  "unitree-im6014": {
-  "file": "unitree-im6014.jpg",
-  "from": "http://shop.unitree.com/cdn/shop/files/Unitree-Go2-ENCover-3_1200x1200.jpg?v=1700551758"
+  "file": null,
+  "from": null,
+  "rejected": "same image as other products"
  },
  "upp-42v-2a-xlr-charger": {
-  "file": "upp-42v-2a-xlr-charger.jpg",
-  "from": "https://www.unitpackpower.com/wp-content/uploads/2024/08/battery_charger_XLR_port-1024x573.png"
+  "file": null,
+  "from": null,
+  "rejected": "same image as other products"
  },
  "upp-54v6-4a-xlr-charger": {
-  "file": "upp-54v6-4a-xlr-charger.jpg",
-  "from": "https://www.unitpackpower.com/wp-content/uploads/2024/08/battery_charger_XLR_port-1024x573.png"
+  "file": null,
+  "from": null,
+  "rejected": "same image as other products"
  },
  "upp-d034-36v-20ah": {
   "file": "upp-d034-36v-20ah.jpg",
@@ -1297,11 +1328,13 @@
   "from": "https://m.media-amazon.com/images/I/612G44Iz9gL._AC_SL1500_.jpg"
  },
  "zltech-zlac8015d": {
-  "file": "zltech-zlac8015d.jpg",
-  "from": "http://aifitlab.com/cdn/shop/files/ZLLG65ASM250_V3.0-main-3.jpg?crop=center&height=1200&v=1770477381&width=1200"
+  "file": null,
+  "from": null,
+  "rejected": "same image as other products"
  },
  "zltech-zllg65-asm250-v3": {
-  "file": "zltech-zllg65-asm250-v3.jpg",
-  "from": "http://aifitlab.com/cdn/shop/files/ZLLG65ASM250_V3.0-main-3.jpg?crop=center&height=1200&v=1770477381&width=1200"
+  "file": null,
+  "from": null,
+  "rejected": "same image as other products"
  }
 }

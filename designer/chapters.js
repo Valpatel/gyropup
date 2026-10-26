@@ -115,9 +115,9 @@ export const CHAPTERS = [
   {
     id: 'battery', title: 'Energy',
     story: (d, r) => `The battery sets the voltage for everything. Your build draws about `
-      + `${Math.round(r.power.average_w ?? 0)} W on average, and the compute box accepts 12–36 V. LiFePO4 is the safe `
-      + `choice to charge: an 8S pack (25.6 V, 29.2 V full) runs everything directly. It weighs about twice as much per `
-      + `watt-hour as Li-ion, and it must still deliver 60 A or more for the motors.`,
+      + `${Math.round(r.power.average_w ?? 0)} W on average, and the compute box accepts 12–36 V. Two DeWalt FLEXVOLT packs `
+      + `in series (40 V) are the default: easy to swap and charge, and fast enough for the legs. LiFePO4 is the safest `
+      + `to charge but heavier; one FLEXVOLT on its own is too slow, and 60 V mode is too high for the drivers.`,
     slot: 'battery', filter: byCat('battery'),
   },
   {

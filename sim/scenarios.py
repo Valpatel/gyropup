@@ -215,5 +215,6 @@ def run(xml_path: Path, info: dict, sc: Scenario, video: Optional[Path] = None, 
         'lqr': {k: round(float(v), 4) for k, v in ctl.lqr_info.items()},
         'frames': {'fps': FPS, 'qpos': frames, 'joint_order': ['free(7)'] + [model.joint(j).name for j in range(1, model.njnt)]},
         'terrain': sc.terrain, 'video': video.name if video else None,
+        'events': [{'t': round(p.t, 3), 'type': 'shot'} for p in sc.pushes if p.absolute],
         'physical_test': False,
     }

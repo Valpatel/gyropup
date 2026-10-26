@@ -47,9 +47,10 @@ class Gains:
     leg_kd_per_nm: float = 0.06
     q: tuple = (40.0, 600.0, 30.0, 20.0)   # LQR weights: position, pitch, speed, pitch rate
     r: float = 2.0
-    yaw_kp: float = 3.0
+    yaw_kp_per_nm: float = 0.25    # yaw gain = this × wheel peak torque (N m per rad/s)
+    yaw_share: float = 0.3          # turning may use at most this share of a wheel's peak torque
     height_rate: float = 0.6       # height command slew, fraction of range per second
-    speed_margin: float = 0.7      # top speed = this × wheel no-load speed, keeping torque in reserve for balance
+    speed_margin: float = 0.5      # top speed = this × wheel no-load speed, keeping half the torque in reserve for balance
     accel: float = 1.5             # m/s², commanded speed slew
 
 
@@ -228,7 +229,9 @@ class Controller:
         u = float(-self.K @ s)
         mujoco.mj_objectVelocity(m, data, mujoco.mjtObj.mjOBJ_BODY, rb.base, vel, 0)
         yaw_rate = float(vel[2])                      # world-frame angular velocity about z
-        tau_yaw = self.gains.yaw_kp * (cmd.yaw_rate - yaw_rate)
+        tau_yaw = self.gains.yaw_kp_per_nm * rb.wheel_peak * (cmd.yaw_rate - yaw_rate)
+        lim = self.gains.yaw_share * rb.wheel_peak               # balancing keeps the rest of each wheel's torque
+        tau_yaw = max(-lim, min(lim, tau_yaw))
 
         # legs: PD + gravity feedforward (generalised gravity minus the ground reaction through each wheel)
         kp, kd = self.gains.leg_kp_per_nm * rb.leg_peak, self.gains.leg_kd_per_nm * rb.leg_peak

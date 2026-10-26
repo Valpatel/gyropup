@@ -3,6 +3,7 @@
 // Everything is to scale (metres, y up, z forward). Rebuild it whenever the design changes.
 import * as THREE from 'three';
 import { legPose, effectiveDesign, resolvePart, layout } from './model.js';
+import { buildTurret } from './turret3d.js';
 
 const M = 0.001;
 
@@ -21,6 +22,54 @@ function cylX(radius, length, material, seg = 40) {
   const m = new THREE.Mesh(new THREE.CylinderGeometry(radius, radius, length, seg), material);
   m.rotation.z = Math.PI / 2;
   return m;
+}
+
+// ---- sensor fields of view, from the catalog's numbers
+export function parseFov(item) {
+  const sp = item?.specs ?? {};
+  if (sp.fov_h_deg) return { h: sp.fov_h_deg, v: sp.fov_v_deg, range: Math.min(sp.range_max_m ?? 2, 2) };   // drawn to 2 m
+  let f = sp.depth_fov_deg ?? sp.fov_deg;
+  if (f && typeof f === 'object') f = Object.values(f)[0];
+  const m = String(f ?? '').match(/(\d+(?:\.\d+)?)\s*H\s*x\s*(\d+(?:\.\d+)?)\s*V/i);
+  if (!m) return null;
+  let ideal = sp.ideal_range_m;
+  if (ideal && !Array.isArray(ideal)) ideal = Object.values(ideal)[0];
+  return { h: +m[1], v: +m[2], range: Math.min(ideal?.[1] ?? 2, 2) };
+}
+
+function fovMaterial(color) {
+  return new THREE.MeshBasicMaterial({ color, transparent: true, opacity: 0.045, side: THREE.DoubleSide, depthWrite: false });
+}
+
+/** A camera's viewing pyramid, looking along +z from its origin. */
+function frustum(f, color) {
+  const g = new THREE.Group();
+  const hw = Math.tan((f.h / 2) * Math.PI / 180) * f.range, hh = Math.tan((f.v / 2) * Math.PI / 180) * f.range;
+  const geo = new THREE.BufferGeometry();
+  const P = [0, 0, 0, -hw, -hh, f.range, hw, -hh, f.range, hw, hh, f.range, -hw, hh, f.range];
+  geo.setAttribute('position', new THREE.Float32BufferAttribute(P, 3));
+  geo.setIndex([0, 1, 2, 0, 2, 3, 0, 3, 4, 0, 4, 1]);
+  g.add(new THREE.Mesh(geo, fovMaterial(color)));
+  const edges = new THREE.LineSegments(new THREE.EdgesGeometry(geo), new THREE.LineBasicMaterial({ color, transparent: true, opacity: 0.7 }));
+  g.add(edges);
+  return g;
+}
+
+/** A spinning lidar's band: the surface between its lowest and highest beams, all the way round. */
+function lidarBand(f, color) {
+  const g = new THREE.Group();
+  const [lo, hi] = Array.isArray(f.v) ? f.v : [-f.v / 2, f.v / 2];
+  for (const a of [lo, hi]) {
+    const pts = [new THREE.Vector2(0.05, 0), new THREE.Vector2(f.range * Math.cos(a * Math.PI / 180), f.range * Math.sin(a * Math.PI / 180))];
+    const cone = new THREE.Mesh(new THREE.LatheGeometry(pts, 72), fovMaterial(color));
+    g.add(cone);
+  }
+  const ring = new THREE.Mesh(new THREE.TorusGeometry(f.range * Math.cos(lo * Math.PI / 180), 0.004, 6, 96),
+    new THREE.MeshBasicMaterial({ color, transparent: true, opacity: 0.35 }));
+  ring.rotation.x = Math.PI / 2;
+  ring.position.y = f.range * Math.sin(lo * Math.PI / 180);
+  g.add(ring);
+  return g;
 }
 
 /** Inverse leg: knee interior angle that gives a hip height h (mm) above the axle. */
@@ -42,7 +91,8 @@ export function buildRobot(design, catalog, { eyes } = {}) {
   const hMax = legPose(a, b, g.knee_max_deg).hip_height;
   const L0 = layout(design, catalog);
   const lw = L0.linkW, ld = L0.linkD, motorD = L0.motorD, motorL = L0.motorL, wheelW = L0.wheelW;
-  const B = g.body, hipX = L0.hipX, wheelX = L0.wheelX;
+  const B = { width_mm: L0.body.width, depth_mm: L0.body.depth, height_mm: L0.body.height }, hipX = L0.hipX, wheelX = L0.wheelX;
+  const FW = L0.frameWidth;
   const act = part('leg_actuator');
 
   const group = new THREE.Group();
@@ -53,9 +103,34 @@ export function buildRobot(design, catalog, { eyes } = {}) {
 
   // body: battery tray + compute box, hip axis at y = 0
   const trayH = L0.trayH;
-  const tray = box((B.width_mm - 4) * M, (trayH - 1) * M, (B.depth_mm - 4) * M, DARK());
-  tray.position.y = (-25 + trayH / 2) * M;
+  // the battery tray: an open frame sized to the pack(s), with the packs visible inside
+  const T = L0.tray;
+  const tray = new THREE.Group();
+  const floor = box((T.width - 4) * M, 6 * M, (T.depth - 4) * M, DARK());
+  floor.position.y = (-25 + 3) * M;
+  tray.add(floor);
+  for (const sx of [-1, 1]) {
+    const rail = box(8 * M, (trayH - 2) * M, (T.depth - 4) * M, DARK());
+    rail.position.set(sx * (T.width / 2 - 6) * M, (-25 + trayH / 2) * M, 0);
+    tray.add(rail);
+  }
+  if (L0.battery) {
+    const [len, wid, hgt] = L0.battery.dims, n = L0.battery.packs;
+    const dewalt = /dewalt/i.test(L0.battery.vendor);
+    for (let i = 0; i < n; i++) {
+      const pack = new THREE.Group();
+      const shellMat = mat(dewalt ? 0xfdb913 : 0x2b3a55), capMat = mat(0x1d2025);
+      const main = box((wid - 4) * M, (hgt * 0.7) * M, len * M, shellMat);
+      main.position.y = hgt * 0.35 * M;
+      const cap = box((wid - 2) * M, (hgt * 0.3) * M, len * 0.85 * M, capMat);
+      cap.position.y = hgt * 0.85 * M;
+      pack.add(main, cap);
+      pack.position.set(((i + 0.5) * T.width / n - T.width / 2) * M, (-25 + 6) * M, 0);
+      tray.add(pack);
+    }
+  }
   const shell = box(B.width_mm * M, B.height_mm * M, B.depth_mm * M, mat(color));
+  shell.scale.x = 1;
   const bodyBottom = L0.bodyBottom;
   shell.position.y = (bodyBottom + B.height_mm / 2) * M;
   body.add(tray, shell);
@@ -65,7 +140,7 @@ export function buildRobot(design, catalog, { eyes } = {}) {
   for (const s of [-1, 1]) {
     for (const k of [0, 1]) {
       const m = cylX(motorD / 2 * M, (motorL / 2 - 1) * M, STEEL());
-      m.position.set(s * (B.width_mm / 2 + 3 + motorL / 4 + k * motorL / 2) * M, 0, 0);
+      m.position.set(s * (FW / 2 + 3 + motorL / 4 + k * motorL / 2) * M, 0, 0);
       body.add(m);
     }
   }
@@ -110,20 +185,51 @@ export function buildRobot(design, catalog, { eyes } = {}) {
   }
 
   // depth cameras, front and back
-  const cam = (z, flip) => {
+  const cam = (z, flip, item) => {
+    const [cw, ch, cdp] = (item?.specs?.dimensions_mm ?? [90, 25, 25]).map((v) => v * M);
     const c = new THREE.Group();
-    c.add(box(0.09, 0.025, 0.025, mat(0x2a2d33, { roughness: 0.35 })));
-    for (const x of [-0.025, 0, 0.025]) {
-      const lens = new THREE.Mesh(new THREE.CircleGeometry(0.0045, 20), new THREE.MeshPhysicalMaterial({ color: 0x050608, roughness: 0.05, clearcoat: 1 }));
-      lens.position.set(x, 0, 0.0126);
+    c.add(box(cw, ch, cdp, mat(0x2a2d33, { roughness: 0.35 })));
+    for (const x of [-cw * 0.28, 0, cw * 0.28]) {
+      const lens = new THREE.Mesh(new THREE.CircleGeometry(Math.min(ch, cdp) * 0.18, 20), new THREE.MeshPhysicalMaterial({ color: 0x050608, roughness: 0.05, clearcoat: 1 }));
+      lens.position.set(x, 0, cdp / 2 + 0.0006);
       c.add(lens);
     }
     c.position.set(0, (bodyBottom + 14) * M, z);
     if (flip) c.rotation.y = Math.PI;
     body.add(c);
   };
-  if (part('depth_front')) cam((B.depth_mm / 2 + 13) * M, false);
-  if (part('depth_rear')) cam(-(B.depth_mm / 2 + 13) * M, true);
+  if (part('depth_front')) cam((B.depth_mm / 2 + 13) * M, false, part('depth_front'));
+  if (part('depth_rear')) cam(-(B.depth_mm / 2 + 13) * M, true, part('depth_rear'));
+
+  // fields of view (toggle with robot.fov.visible)
+  const fov = new THREE.Group();
+  fov.visible = false;
+  for (const [slot, z, flip] of [['depth_front', (B.depth_mm / 2 + 26) * M, false], ['depth_rear', -(B.depth_mm / 2 + 26) * M, true]]) {
+    const f = parseFov(part(slot));
+    if (!f) continue;
+    const fr = frustum(f, 0x00f0ff);
+    fr.position.set(0, (bodyBottom + 14) * M, z);
+    if (flip) fr.rotation.y = Math.PI;
+    fov.add(fr);
+  }
+  {
+    const f = parseFov(part('lidar'));
+    if (f) {
+      const lb = lidarBand(f, 0x05ffa1);
+      const mount = d.lidar_mount ?? 'top';
+      lb.position.y = mount === 'under' ? (-25 - 4) * M - 0.036 : (top + (mount === 'mast' ? 50 : 8)) * M + 0.036;
+      fov.add(lb);
+    }
+  }
+  body.add(fov);
+
+  // the turret on the head plate (the head payload), removable
+  let turret = null;
+  if (d.head_payload?.mass_g) {
+    turret = buildTurret(color.getHex());
+    turret.group.position.y = top * M;
+    body.add(turret.group);
+  }
 
   // eyes: the DualEye module (two 18 mm round screens, 31 mm apart) behind small lenses
   const eyeMeshes = [];
@@ -170,6 +276,13 @@ export function buildRobot(design, catalog, { eyes } = {}) {
     }
     ankle.add(wheel);
     knee.add(kneeCap, shin, ankle);
+    const drv = part('motor_driver');                      // a wheel motor driver rides on each shin
+    if (drv) {
+      const [dl, dw, dh] = [drv.specs?.length_mm ?? 46, drv.specs?.width_mm ?? 46, drv.specs?.height_mm ?? 10];
+      const pcb = box((dh + 4) * M, dl * M, dw * M, mat(0x1d5c3a, { roughness: 0.6 }));
+      pcb.position.set(s * (lw * 0.43 + dh / 2 + 2) * M, -b * 0.62 * M, 0);
+      knee.add(pcb);
+    }
     hip.add(thigh, knee);
     base.add(hip);
     return { hip, knee, ankle, wheel, side: s };
@@ -215,5 +328,5 @@ export function buildRobot(design, catalog, { eyes } = {}) {
     group.position.set(0, 0, 0);
   }
   const heightM = (r + hMax + top + (lidar ? 90 : 0)) * M;
-  return { group, setPose, setFromQpos, base, info: { heightM, hMin, hMax, wheelR: r, trackMM: 2 * wheelX } };
+  return { group, setPose, setFromQpos, base, fov, turret, info: { heightM, hMin, hMax, wheelR: r, trackMM: 2 * wheelX } };
 }

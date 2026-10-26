@@ -5,7 +5,6 @@ import { readFileSync } from 'node:fs';
 import assert from 'node:assert/strict';
 import { evaluate, indexCatalog } from '../designer/model.js';
 import { CHAPTERS, visibleChapters } from '../designer/chapters.js';
-import { robotSvg } from '../designer/robot-svg.js';
 
 const root = new URL('..', import.meta.url).pathname;
 const read = (p) => JSON.parse(readFileSync(root + p, 'utf8'));
@@ -32,6 +31,5 @@ for (const ch of visibleChapters(design, catalog, r)) {
     for (const o of ch.options()) { const d = clone(design); o.apply(d); evaluate(d, catalog, materials); evaluations++; }
   }
 }
-for (const c of [0, 0.5, 1]) assert.match(robotSvg(design, catalog, { crouch: c }), /^<svg/);
 for (const p of r.parts) assert.ok(materials[p.material], `material ${p.material} for ${p.id}`);
 console.log(`designer ok: ${CHAPTERS.length} chapters, ${evaluations} option evaluations, verdict ${r.verdict}`);

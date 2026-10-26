@@ -192,7 +192,8 @@
    "https://thepowertoolstore.com/products/dewalt-dcb606c"
   ],
   "confidence": "product page",
-  "notes": "Listing: 6.0 Ah at 20V MAX / 2.0 Ah at 60V MAX, 2.55 lb (1.16 kg) each. energy_wh computed (2 Ah x 54 V = 6 Ah x 18 V). The 15S config only appears when the dock pushes the FLEXVOLT switch tab; a 20V dock gives 5S3P (18 V nominal, J501-direct OK). In 60 V mode J501 needs a DC-DC (>36 V). Power-tool pack: typically no discharge-cutoff MOSFET in the pack; the tool reads the pack and does UV cutoff (estimate, not published). Robot MUST implement its own UVLO (~15 V for 5S, ~3.0 V/cell) and current limit. Continuous current not published by manufacturer. Needs a dock/adapter; latch gives fast hot-swap. Cell format/parallel count not published in fetched sources; series count inferred from brand voltage class (estimate)."
+  "notes": "Listing: 6.0 Ah at 20V MAX / 2.0 Ah at 60V MAX, 2.55 lb (1.16 kg) each. energy_wh computed (2 Ah x 54 V = 6 Ah x 18 V). The 15S config only appears when the dock pushes the FLEXVOLT switch tab; a 20V dock gives 5S3P (18 V nominal, J501-direct OK). In 60 V mode J501 needs a DC-DC (>36 V). Power-tool pack: typically no discharge-cutoff MOSFET in the pack; the tool reads the pack and does UV cutoff (estimate, not published). Robot MUST implement its own UVLO (~15 V for 5S, ~3.0 V/cell) and current limit. Continuous current not published by manufacturer. Needs a dock/adapter; latch gives fast hot-swap. Cell format/parallel count not published in fetched sources; series count inferred from brand voltage class (estimate).",
+  "preferred": true
  },
  {
   "id": "dewalt-dcb609",
@@ -236,7 +237,8 @@
    "https://www.linenplus.ca/en/dewalt-flexvoltr-battery-20-v-60-v-9-ah-lithium-ion-dcb609.html"
   ],
   "confidence": "product page",
-  "notes": "180 Wh published. Weight 3.2-3.45 lb (product page); 1565 g = 3.45 lb upper figure. Dims 7.6x3.625x8.1 in from Linen Plus (Canada) - the 8.1 in height looks large, verify. 9.0 Ah at 20V / 3.0 Ah at 60V. 60 V mode needs DC-DC for J501. Power-tool pack: typically no discharge-cutoff MOSFET in the pack; the tool reads the pack and does UV cutoff (estimate, not published). Robot MUST implement its own UVLO (~15 V for 5S, ~3.0 V/cell) and current limit. Continuous current not published by manufacturer. Needs a dock/adapter; latch gives fast hot-swap. Cell format/parallel count not published in fetched sources; series count inferred from brand voltage class (estimate)."
+  "notes": "180 Wh published. Weight 3.2-3.45 lb (product page); 1565 g = 3.45 lb upper figure. Dims 7.6x3.625x8.1 in from Linen Plus (Canada) - the 8.1 in height looks large, verify. 9.0 Ah at 20V / 3.0 Ah at 60V. 60 V mode needs DC-DC for J501. Power-tool pack: typically no discharge-cutoff MOSFET in the pack; the tool reads the pack and does UV cutoff (estimate, not published). Robot MUST implement its own UVLO (~15 V for 5S, ~3.0 V/cell) and current limit. Continuous current not published by manufacturer. Needs a dock/adapter; latch gives fast hot-swap. Cell format/parallel count not published in fetched sources; series count inferred from brand voltage class (estimate).",
+  "preferred": true
  },
  {
   "id": "milwaukee-48-11-1850",

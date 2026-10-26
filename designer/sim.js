@@ -7,6 +7,7 @@ import { mountAppNav } from './kit/appnav.js';
 import { section, slider, chips, readouts, toggle } from './kit/panel.js';
 import { buildRobot, kneeFor } from './robot3d.js';
 import { createEyes, eyesGlyph } from './character/eyes.js';
+import { createDarts } from './turret3d.js';
 import { evaluate, indexCatalog, legPose, effectiveDesign, resolvePart } from './model.js';
 
 const $ = (s) => document.querySelector(s);
@@ -35,6 +36,8 @@ const stage = createStage($('#app'), { height: 0.75, screenshots: true });
 const state = { height: 0.6, pitch: 0, rollMM: 0, speed: 0, wheel: 0, alive: true, design: null, robot: null, result: null, replay: null };
 const terrain = new THREE.Group();
 stage.root.add(terrain);
+const darts = createDarts(stage.root);
+const gun = { pan: 0, tilt: -0.05, mag: 24, capacity: 24, queue: [], attached: true, showFov: false, lastShot: -1 };
 
 async function loadDesign(value) {
   const design = value === '@designer' ? fromDesigner : await getJson(`../${value}`);
@@ -44,6 +47,13 @@ async function loadDesign(value) {
   state.robot = buildRobot(design, catalog, { eyes });
   stage.root.add(state.robot.group);
   stage.frame(state.robot.info.heightM);
+  state.robot.fov.visible = gun.showFov;
+  if (state.robot.turret) {
+    gun.capacity = state.design.head_payload?.magazine_shots ?? 24;
+    gun.mag = gun.capacity;
+    state.robot.turret.group.visible = gun.attached;
+  }
+  renderGun();
   renderSummary();
   telemetry(state.robot.setPose({ height: state.height }));
   await listRuns(value);
@@ -127,11 +137,48 @@ playBtn.textContent = 'Play / pause';
 playBtn.onclick = () => { if (state.replay) state.replay.playing = !state.replay.playing; };
 replaySec.appendChild(playBtn);
 const tele = readouts(section(panel, 'Telemetry', { note: 'static, from the design' }));
+const gunSec = section(panel, 'Turret', { note: 'removable head payload' });
+const gunInfo = readouts(gunSec);
+slider(gunSec, { label: 'Pan', min: -180, max: 180, step: 1, value: 0, unit: '°', onInput: (v) => { gun.pan = v * Math.PI / 180; } });
+slider(gunSec, { label: 'Tilt (never above horizontal)', min: -20, max: 0, step: 0.5, value: -3, unit: '°', onInput: (v) => { gun.tilt = v * Math.PI / 180; } });
+const gunRow = document.createElement('div');
+gunRow.className = 'hud-chips';
+for (const [label, fn] of [['FIRE', () => queueShots(1)], ['BURST 8', () => queueShots(8)], ['RELOAD', () => { gun.mag = gun.capacity; gun.queue = []; renderGun(); }]]) {
+  const b = document.createElement('button');
+  b.className = 'hud-btn' + (label === 'FIRE' ? ' primary' : '');
+  b.textContent = label;
+  b.onclick = fn;
+  gunRow.appendChild(b);
+}
+gunSec.appendChild(gunRow);
+toggle(gunSec, 'Turret attached', true, (on) => { gun.attached = on; if (state.robot?.turret) state.robot.turret.group.visible = on; renderGun(); });
+const fovToggle = toggle(gunSec, 'Show sensor fields of view', false, (on) => { gun.showFov = on; if (state.robot) state.robot.fov.visible = on; });
+
+function queueShots(n) {
+  const now = performance.now() / 1000;
+  for (let k = 0; k < n; k++) gun.queue.push(now + k / 10);     // 10 shots per second
+}
+function renderGun() {
+  const t = state.robot?.turret;
+  gunInfo.set(t ? [['magazine', `${gun.mag} / ${gun.capacity} darts`, gun.mag ? 'ok' : 'fail'], ['dart speed', '24 m/s (80 fps cap)'],
+                   ['status', gun.attached ? (gun.mag ? 'armed' : 'empty: drive to the dock to reload') : 'removed']]
+                 : [['turret', 'none: this design has no head payload']]);
+}
+function shoot() {
+  const t = state.robot?.turret;
+  if (!t || !gun.attached || gun.mag <= 0) return false;
+  darts.fire(t.muzzle);
+  t.flash();
+  gun.mag -= 1;
+  renderGun();
+  return true;
+}
+
 const eyePanel = section(panel, 'Eyes', { note: 'DualEye screens' });
 const eyeChips = chips(eyePanel, eyes.expressions.map((n) => ({ id: n, html: eyesGlyph(n), title: n })), (n) => { eyes.set(n); state.lastExpr = performance.now(); });
 eyeChips.mark('neutral');
 const scene = section(panel, 'Scene');
-slider(scene, { label: 'Light', min: 0, max: 1, step: 0.01, value: 0.85, fmt: (v) => v.toFixed(2), onInput: (v) => stage.setSceneLight(v) });
+slider(scene, { label: 'Light', min: 0, max: 1, step: 0.01, value: 1, fmt: (v) => v.toFixed(2), onInput: (v) => stage.setSceneLight(v) });
 toggle(scene, 'Liveliness (idle motion, blinks, moods)', true, (on) => { state.alive = on; $('#alive').classList.toggle('on', on); });
 $('#alive').onclick = () => { state.alive = !state.alive; $('#alive').classList.toggle('on', state.alive); };
 
@@ -169,6 +216,14 @@ stage.onFrame((t, dt) => {
     for (let k = 3; k < 7; k++) qp[k] /= n;
     state.robot.setFromQpos(qp);
     if (R.playing) scrub.set(i);
+    const tt = R.t;                                            // replayed shots: fire when the replay passes each one
+    for (const ev of R.run.events ?? []) {
+      if (ev.type === 'shot' && ev.t <= tt && (R.lastT ?? -1) < ev.t && state.robot.turret) { darts.fire(state.robot.turret.muzzle); state.robot.turret.flash(); }
+    }
+    if (tt < (R.lastT ?? 0)) darts.clear();
+    R.lastT = tt;
+    if (state.robot.turret) { state.robot.turret.setAim(0, -0.03, 0); state.robot.turret.step(dt); }
+    darts.step(dt);
     const b = state.robot.base.position;
     stage.controls.target.lerp(new THREE.Vector3(b.x, b.y * 0.8, b.z), 0.1);
     eyes.step(t, dt);
@@ -186,6 +241,13 @@ stage.onFrame((t, dt) => {
   pitch += -state.speed * 0.05;                                                       // lean into the drive
   state.wheel += (state.speed / state.robot.info.wheelR * 1000) * dt;
   const p = state.robot.setPose({ height, pitch, rollMM: state.rollMM, wheel: state.wheel });
+  if (state.robot.turret) {
+    state.robot.turret.setAim(gun.pan, gun.tilt, pitch);
+    const now = performance.now() / 1000;
+    while (gun.queue.length && gun.queue[0] <= now) { gun.queue.shift(); if (!shoot()) { gun.queue = []; break; } }
+    state.robot.turret.step(dt);
+  }
+  darts.step(dt);
   state.robot.group.position.z += state.speed * dt;
   if (Math.abs(state.robot.group.position.z) > 2.5) state.robot.group.position.z *= -0.98;
   eyes.step(t, dt);
@@ -203,6 +265,8 @@ const camAt = { side: [1, 0.35, 0], front: [0, 0.35, 1], iso: [0.6, 0.45, 1], ba
 if (camAt) { const dist = state.robot.info.heightM * 2.4; stage.camera.position.set(...camAt.map((v) => v * dist)); stage.controls.target.set(0, state.robot.info.heightM * 0.45, 0); }
 if (q.has('height')) window.__sim?.setHeight?.(+q.get('height'));
 if (q.get('alive') === '0') { state.alive = false; $('#alive').classList.remove('on'); }
+if (q.has('fire')) queueShots(+q.get('fire') || 1);
+if (q.get('fov') === '1') { gun.showFov = true; fovToggle.checked = true; if (state.robot) state.robot.fov.visible = true; }
 if (q.get('run') && sel.value !== '@designer') {
   const key = `${sel.value.split('/').pop().replace(/\.json$/, '')}/${q.get('run')}`;
   runSel.value = key;

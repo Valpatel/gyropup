@@ -123,8 +123,15 @@ def main():
     for pid, v in index.items():
         if v.get('file'):
             by_hash.setdefault(hashlib.sha1((OUT / v['file']).read_bytes()).hexdigest(), []).append(pid)
+    models = {it['id']: it.get('model', '') for it in items}
+
+    def names_part(pid):   # the image's address mentions the part's model number (e.g. "gim6010" or "rs-03")
+        url = (index[pid].get('from') or '').lower().replace('-', '').replace('_', '')
+        toks = [t for t in re.findall(r'[a-z0-9]+', models.get(pid, '').lower().replace('-', '')) if len(t) >= 4 and re.search(r'\d', t)]
+        return any(t in url for t in toks)
+
     for pids in by_hash.values():
-        if len(pids) > 1 and len({p.split('-')[0] for p in pids}) > 1:
+        if len(pids) > 1 and not all(names_part(p) for p in pids):
             for pid in pids:
                 (OUT / index[pid]['file']).unlink(missing_ok=True)
                 index[pid] = {'file': None, 'from': None, 'rejected': 'same image as other products'}

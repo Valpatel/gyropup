@@ -1,0 +1,143 @@
+[
+ {
+  "id": "dewalt-dcb609-20v-mode",
+  "category": "battery",
+  "vendor": "DeWalt",
+  "model": "FLEXVOLT DCB609, 20 V mode (5S3P)",
+  "preferred": true,
+  "price_usd": 259.0,
+  "price_note": "derived from the single-pack price in power_electronics.json",
+  "price_checked": "2026-10-25",
+  "buy": [
+   {
+    "seller": "DeWalt",
+    "url": "https://www.dewalt.com/product/dcb609/20v-max-60v-max-flexvolt-90ah-battery",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "chemistry": "Li-ion",
+   "bms": false,
+   "mass_g": 1565,
+   "cells_series": 5,
+   "voltage_nominal_v": 18.0,
+   "voltage_full_v": 20.0,
+   "voltage_min_v": 15.0,
+   "capacity_ah": 9.0,
+   "energy_wh": 162,
+   "continuous_discharge_a": null,
+   "peak_discharge_a": null,
+   "packs": 1,
+   "pack_dimensions_mm": [
+    157,
+    92,
+    110
+   ],
+   "dimensions_note": "ESTIMATE per pack (the catalog listing for the DCB609 gives 206 mm tall, which looks wrong): measure your packs"
+  },
+  "cad": {
+   "step_url": null,
+   "available": null
+  },
+  "sources": [
+   "https://www.dewalt.com/product/dcb609/20v-max-60v-max-flexvolt-90ah-battery"
+  ],
+  "confidence": "estimate",
+  "notes": "The same pack as dewalt-dcb609 used through a 20 V adapter that does not press the FLEXVOLT tab: the three 5-cell strings in parallel. 15 V empty assumes a 3.0 V/cell cut-off that the robot must enforce: DeWalt packs leave under-voltage and current limits to the tool."
+ },
+ {
+  "id": "dewalt-2x-dcb609-20v-series",
+  "category": "battery",
+  "vendor": "DeWalt",
+  "model": "2 \u00d7 FLEXVOLT DCB609 in series, 20 V mode (10S)",
+  "preferred": true,
+  "price_usd": 518.0,
+  "price_note": "derived from the single-pack price in power_electronics.json",
+  "price_checked": "2026-10-25",
+  "buy": [
+   {
+    "seller": "DeWalt",
+    "url": "https://www.dewalt.com/product/dcb609/20v-max-60v-max-flexvolt-90ah-battery",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "chemistry": "Li-ion",
+   "bms": false,
+   "mass_g": 3130,
+   "cells_series": 10,
+   "voltage_nominal_v": 36.0,
+   "voltage_full_v": 40.0,
+   "voltage_min_v": 30.0,
+   "capacity_ah": 9.0,
+   "energy_wh": 324,
+   "continuous_discharge_a": null,
+   "peak_discharge_a": null,
+   "packs": 2,
+   "pack_dimensions_mm": [
+    157,
+    92,
+    110
+   ],
+   "dimensions_note": "ESTIMATE per pack (the catalog listing for the DCB609 gives 206 mm tall, which looks wrong): measure your packs"
+  },
+  "cad": {
+   "step_url": null,
+   "available": null
+  },
+  "sources": [
+   "https://www.dewalt.com/product/dcb609/20v-max-60v-max-flexvolt-90ah-battery"
+  ],
+  "confidence": "estimate",
+  "notes": "Two 20 V adapters wired in series give a 40 V bus. Both packs must be at the same charge; the robot must watch each pack's voltage and cut off at 3.0 V/cell. Price and mass are two single packs (adapters extra)."
+ },
+ {
+  "id": "dewalt-2x-dcb606-20v-series",
+  "category": "battery",
+  "vendor": "DeWalt",
+  "model": "2 \u00d7 FLEXVOLT DCB606 in series, 20 V mode (10S)",
+  "preferred": true,
+  "price_usd": 299.0,
+  "price_note": "derived from the single-pack price in power_electronics.json",
+  "price_checked": "2026-10-25",
+  "buy": [
+   {
+    "seller": "DeWalt",
+    "url": "https://www.dewalt.com/product/dcb606/20v-max-60v-max-flexvolt-60ah-battery",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "chemistry": "Li-ion",
+   "bms": false,
+   "mass_g": 2320,
+   "cells_series": 10,
+   "voltage_nominal_v": 36.0,
+   "voltage_full_v": 40.0,
+   "voltage_min_v": 30.0,
+   "capacity_ah": 6.0,
+   "energy_wh": 216,
+   "continuous_discharge_a": null,
+   "peak_discharge_a": null,
+   "packs": 2,
+   "pack_dimensions_mm": [
+    157,
+    92,
+    92
+   ],
+   "dimensions_note": "ESTIMATE per pack (the catalog listing for the DCB609 gives 206 mm tall, which looks wrong): measure your packs"
+  },
+  "cad": {
+   "step_url": null,
+   "available": null
+  },
+  "sources": [
+   "https://www.dewalt.com/product/dcb606/20v-max-60v-max-flexvolt-60ah-battery"
+  ],
+  "confidence": "estimate",
+  "notes": "Lighter series pair: two 6 Ah FLEXVOLT packs in 20 V mode, 40 V bus. Same per-pack monitoring and cut-off rules."
+ }
+]

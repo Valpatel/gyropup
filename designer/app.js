@@ -2,7 +2,10 @@
 
 import { evaluate, indexCatalog } from './model.js';
 import { visibleChapters, COLORS } from './chapters.js';
-import { robotSvg } from './robot-svg.js';
+import * as THREE from 'three';
+import { createStage } from './kit/stage.js';
+import { buildRobot } from './robot3d.js';
+import { createEyes } from './character/eyes.js';
 import { mountAppNav } from './kit/appnav.js';
 
 const STORE = 'gyropup-design-v1';
@@ -206,14 +209,59 @@ function render() {
   history.replaceState(null, '', `#${ch.id}`);
 }
 
+// ---- the 3D robot in the sheet: built once, rebuilt when the design changes
+let view3d = null;
+function ensureView() {
+  if (view3d) return view3d;
+  const host = document.createElement('div');
+  host.className = 'view3d';
+  $('#sheet').prepend(host);
+  const stage = createStage(host, { height: 0.8 });
+  stage.controls.enableZoom = false;
+  const eyes = createEyes();
+  view3d = { host, stage, eyes, robot: null, key: '' };
+  stage.onFrame((t, dt) => {
+    if (!view3d.robot) return;
+    const h = 1 - state.crouch;
+    view3d.robot.setPose({ height: h + 0.02 * Math.sin(t * 1.3), pitch: 0.012 * Math.sin(t * 0.7) });
+    eyes.step(t, dt);
+    eyes.draw();
+    view3d.robot.group.rotation.y = 0.35 + 0.15 * Math.sin(t * 0.2);   // a slow turn so it reads as 3D
+    view3d.robot.fov.visible = Boolean(state.showFov);
+    if (view3d.robot.turret) { view3d.robot.turret.setAim(0.5 * Math.sin(t * 0.35), -0.04, 0); view3d.robot.turret.step(dt); }
+  });
+  stage.start();
+  return view3d;
+}
+
+function updateView(d) {
+  const v = ensureView();
+  const key = JSON.stringify([d.parts, d.geometry, d.lidar_mount, d.character, d.head_payload]);
+  if (key === v.key) return;
+  v.key = key;
+  if (v.robot) {
+    v.stage.root.remove(v.robot.group);
+    v.robot.group.traverse((o) => { o.geometry?.dispose?.(); if (o.material && !o.material.map) o.material.dispose?.(); });
+  }
+  v.robot = buildRobot(d, catalog, { eyes: v.eyes });
+  v.stage.root.add(v.robot.group);
+  v.stage.frame(v.robot.info.heightM);
+  const hm = v.robot.info.heightM;                       // the sheet is small: come in closer than the full stage does
+  v.stage.camera.position.set(0.9 * hm, 0.75 * hm, 1.55 * hm);
+  v.stage.controls.target.set(0, 0.5 * hm, 0);
+}
+
 function renderSheet(r) {
   const d = state.design;
   const stat = (num, lbl, est) => `<div class="stat"><span class="num">${num}</span><span class="lbl">${lbl}${est ? ' <span class="est">est.</span>' : ''}</span></div>`;
   const order = { fail: 0, warn: 1, ok: 2 };
   const checks = [...r.checks].sort((a, b) => order[a.level] - order[b.level]).slice(0, 7);
-  $('#sheet').innerHTML = `<h2 class="name">${esc(d.name)}</h2>
-    <div class="view">${robotSvg(d, catalog, { crouch: state.crouch, color: d.character.color })}</div>
+  let body = $('#sheet-body');
+  if (!body) { body = document.createElement('div'); body.id = 'sheet-body'; $('#sheet').appendChild(body); }
+  updateView(d);
+  body.innerHTML = `<h2 class="name">${esc(d.name)} <a class="open3d" href="sim.html">open in the simulator →</a></h2>
     <label class="slider">stand <input type="range" min="0" max="1" step="0.01" value="${state.crouch}" id="crouch" aria-label="Crouch"> crouch</label>
+    <label class="fovtoggle"><input type="checkbox" id="show-fov" ${state.showFov ? 'checked' : ''}> Show what the sensors see (fields of view)</label>
     <div class="money"><div><span>Sensors &amp; compute</span><span>${usd(r.cost.sensors_compute_usd)}</span></div>
       <div><span>Chassis &amp; actuators</span><span>${usd(r.cost.chassis_actuators_usd)}</span></div>
       <div class="total"><span>Total</span><span>${usd(r.cost.total_usd)}</span></div></div>
@@ -257,7 +305,8 @@ document.addEventListener('click', (e) => {
 });
 
 document.addEventListener('input', (e) => {
-  if (e.target.id === 'crouch') { state.crouch = Number(e.target.value); renderSheet(result()); }
+  if (e.target.id === 'crouch') { state.crouch = Number(e.target.value); }
+  else if (e.target.id === 'show-fov') { state.showFov = e.target.checked; }
   else if (e.target.id === 'robot-name') { state.design.name = e.target.value; save(); renderSheet(result()); }
 });
 
