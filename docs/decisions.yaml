@@ -228,3 +228,11 @@
   why: "The user asked for real motor attachment points, real cable routing and stiffness studies, with modular interfaces so motors and leg designs can change. The studies showed printed PA6-CF links and a flat 16 mm thigh far too flexible for the hard-turn case (out-of-plane 50 N m at the hip, 120 N sideways at the knee: safety factor 0.11, 38 mm deflection), and RobStride outputs ride on thin 45 x 58 mm ball bearings, so a separate support bearing takes the leg's bending."
   status: decided
   source: {kind: user, quote: "we need to start the real mechanical design. Ideally separate it into components such as: the interface between motor and leg, knee motor interface, hip motor interface, keeping it flexible so we can swap motors and change our leg designs but have modular mating interfaces and such. But we need real cable routing, real motor attachment points. Real stiffness studies and so on."}
+- id: D32
+  date: "2026-10-25"
+  title: Stage S0 of the CAD plan, and an overnight design loop on the RTX 4090
+  decision: "Applied the review's blockers before optimising: the knee crank and shin lever point 75° from the perpendicular towards the foot (the rod's transmission stays >= 0.5 over the knee range; it was at its dead point), the knee motor is modelled as it drives (a tendon over hip + knee), the body has collision shapes, and falls, a kerb drop and a landing are scenarios. The yoke is a bent hat channel (496 g, was 961 g) and the motor plates are pocketed (344 g, was 418 g); the robot is 21.4 kg. tools/iterate.py (NSGA-II: mass, cost, motor load, width) runs every candidate end to end on the 4090 overnight; the open questions in docs/cad-plan.md section 9 take its defaults until the user answers."
+  why: "The user asked to iterate on the CAD all night with the best, most available parts (in stock and rated for 60 V: RobStride RS-03/RS-04, catalog/availability.json), on the RTX 4090 (its LLM services stopped with the user's approval). The review (research/mech-review-2026-10-25.md) showed that optimising the old model would have optimised the wrong machine."
+  status: decided
+  source: {kind: user, quote: "But what I really need is for you to iterate on the CAD all night with the best parts that are most available. Use the RTX4090 and the Thor they are likely doing useless work."}
+
