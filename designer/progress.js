@@ -83,3 +83,17 @@ if (pp) {
     + Object.entries(pp.parts).sort((a, b) => b[1].hours - a[1].hours).map(([n, r]) => `<tr><td><a href="../exports/${esc(n)}.stl">${esc(n)}</a></td><td>${esc(r.material)}</td><td>${r.qty}</td>`
       + `<td>${r.size_mm.join(' × ')}</td><td>${esc(r.placement)}</td><td>${r.grams_each}</td><td>${r.hours}</td><td>${esc(r.infill)}</td><td>${esc(r.how)}</td></tr>`).join('') + '</tbody></table>';
 }
+
+// the design loop (RTX 4090), mirrored here every 2 minutes
+const lb = await getJson('../exports/iterate/leaderboard.json');
+if (lb) {
+  const f = (v, d = 1) => (v == null ? '—' : typeof v === 'number' ? v.toFixed(d) : esc(v));
+  $('looplede').innerHTML = `<b>${lb.trials}</b> printed candidates checked end to end, <b>${lb.passing}</b> pass everything (updated ${esc(lb.updated)}).`
+    + ` Stopped at: ${Object.entries(lb.by_stage).filter(([, n]) => n).map(([k, n]) => `${esc(k)} ${n}`).join(' · ')}.`;
+  $('loop').innerHTML = `<table class="cmp"><thead><tr><th>#</th><th></th><th>mass</th><th>print h</th><th>min SF / falls</th><th>flex</th><th>hardest motor</th>`
+    + `<th>motor</th><th>thigh / shin</th><th>why not</th></tr></thead><tbody>`
+    + lb.best.slice(0, 10).map((r) => `<tr><td>${r.trial}</td><td>${tag(r.ok)}</td><td>${f(r.model_mass_kg, 2)} kg</td><td>${f(r.print_hours, 0)}</td>`
+      + `<td>${f(r.min_safety_factor, 2)} / ${f(r.min_safety_factor_fall, 2)}</td><td>${f(r.wheel_deflection_mm, 2)} mm</td><td>${r.worst_motor_of_peak != null ? Math.round(r.worst_motor_of_peak * 100) + ' %' : '—'}</td>`
+      + `<td>${esc(((r.params || {}).leg_actuator || '').replace('robstride-', '').toUpperCase())}</td><td>${(r.params || {}).thigh_mm ?? '—'} / ${(r.params || {}).shin_mm ?? '—'}</td>`
+      + `<td style="color:var(--magenta)">${esc((r.reasons || [])[0] || '')}</td></tr>`).join('') + '</tbody></table>';
+}
