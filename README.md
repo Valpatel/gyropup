@@ -1,3 +1,5 @@
+<p align="center"><img src="docs/hero.jpg" alt="Gyropup: the current full assembly, with five-bar legs, hub-motor wheels and the foam-ball turret" width="100%"></p>
+
 # Gyropup
 
 A friendly self-balancing wheel-legged robot that plays foam-ball target games with kids.
