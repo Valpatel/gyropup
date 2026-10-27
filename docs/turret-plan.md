@@ -26,7 +26,14 @@ the same wheels on 24 V), and a hardware window comparator on the barrel's two c
 line open on any ball over the cap. Releasing the line cuts the ESC and dial power and shorts the flywheel phases: the
 wheels are at 5 % speed in 36 ms, before a ball already dropped (96 ms) can reach them.
 
-## 1. Decisions that need the user (with recommendations)
+## 1. Decisions (decided 2026-10-27: docs/decisions.yaml D40, D41)
+
+**Decided.** The user asked not to wait on them, and set a parts rule (D40): every part is off the shelf with a listed
+price, printed, or ordered online as a custom part (SendCutSend, Xometry/JLCCNC, JLCPCB); nothing needs a quote. So
+the recommendations below stand as decided (D41) except **D2**: the SparkFun ROB-13065 ($27.95, in stock) is the ring
+on the bench *and* on the robot (the soft start holds every circuit under 2 A; power circuits paralleled), and **D8**
+(quotes) is dropped. Section 5.2's quote text is no longer needed.
+
 
 | # | Decision | Options | Recommendation and why |
 |---|---|---|---|

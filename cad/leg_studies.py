@@ -46,7 +46,7 @@ OUT = R / 'exports' / 'leg' / 'fea'
 TARGETS = {'sf': 2.0, 'sf_rare': 1.2,
            'bearing_s0': 2.0, 'bearing_s0_rare': 1.0}   # rolling bearings: static safety s0 = C0 / P0 (SKF: >= 1 with normal
                                                         # demands on running; a rare overload may use it, everyday ones not)
-ROBOT_KG = 22.0                      # the condensed robot (the rig carries half)
+ROBOT_KG = 26.2                      # the v2 robot (sim/robot_v2.py); the rig carries half
 G = 9.81
 CAP, PEAK = 60.0, 120.0
 
@@ -85,18 +85,30 @@ def loads_at(h_mm, Fw3, lean=0.0):
 def cases():
     rig = json.loads((R / 'exports/leg/rig-results.json').read_text())['scenarios']
     land = rig['drop_150']
-    Fz = land['peak_axle_force_n']
     h_land = land['pose_at_peak_axle_force']['L_mm']
+    # a landing's spike on the axle is mostly taken by the links' and the body's inertia: the knees' real peak force
+    # (the rig, every step; the capped jump's landing is the worst of the landings) is what the parts above the wheel
+    # link see. R1's axle force is the one whose statics gives that knee force at the landing pose; the wheel link,
+    # which the full spike does load, is checked at the full axle force too (cases()['R1w']).
+    knee_dyn = max(max(rig[n].get('peak_joint_force_n', {}).get(k, 0.0) for k in ('knee_f', 'knee_r')) for n in ('drop_150', 'jump'))
+    Fz_full = land['peak_axle_force_n']
+    ratio = land['peak_knee_pin_n'] / Fz_full                          # statics: knee force per axle force at that pose
+    Fz = knee_dyn / ratio if knee_dyn else Fz_full
     static = ROBOT_KG / 2 * G
     off = rig['power_off']
     out = {
-        'R1': {'title': 'landing', 'rare': True, 'h': h_land, 'Fw3': (0.10 * Fz, 0.10 * Fz, Fz), 'gearbox_nm': land.get('peak_gearbox_nm'),
-               'from': f"rig 'drop_150': {Fz:.0f} N on the axle at {h_land:.0f} mm, plus 10 % fore-aft and 10 % sideways"},
+        'R1': {'title': 'landing', 'rare': True, 'h': h_land, 'Fw3': (0.10 * Fz, 0.10 * Fz, Fz),
+               'gearbox_nm': max(rig[n].get('peak_gearbox_nm') or 0.0 for n in ('drop_150', 'jump')) or None,
+               'from': f"the rig's landings (drop_150, the capped jump): knees at {knee_dyn:.0f} N, as {Fz:.0f} N on the axle at "
+                       f"{h_land:.0f} mm (statics on the {Fz_full:.0f} N spike gives {Fz_full * ratio:.0f}), plus 10 % fore-aft and 10 % sideways"},
+        'R1w': {'title': 'landing, the wheel link', 'rare': True, 'h': h_land, 'Fw3': (0.10 * Fz_full, 0.10 * Fz_full, Fz_full),
+                'from': f"rig 'drop_150': the full {Fz_full:.0f} N axle spike on the wheel link, plus 10 % fore-aft and 10 % sideways"},
         'E1': {'title': 'turn', 'rare': False, 'h': 300.0, 'Fw3': (0.0, 0.5 * ROBOT_KG * G, 2.5 * static),
                'from': f"standing: 2.5 x {static:.0f} N vertical, 0.5 g of a {ROBOT_KG:.0f} kg robot sideways"},
     }
     for k, c in out.items():
         c['loads'] = loads_at(c['h'], c['Fw3'])
+    out['R1w']['gearbox_nm'] = out['R1']['gearbox_nm']
     Fo = off['peak_axle_force_n']
     out['R3'] = {'title': 'collapse', 'rare': True, 'stop_nm': off['peak_stop_nm'], 'h': max(102.0, off['L_range_mm'][0]),
                  'gearbox_nm': off.get('peak_gearbox_nm'),
@@ -252,6 +264,21 @@ HUB_MU = 0.15                # printed PA6-CF on PA6-CF, dry (low end, so fricti
 DOWEL_ENGAGED = 8.0          # mm of each Ø5 x 16 dowel in the link and in the adapter
 
 
+PAD_RIM_BAND = 5.0           # mm: the upper link's design stress leaves out this band round the rim of its bonded contact
+                             # pad (the adapter face's edge, r 30): a bond there pulls where the real bolted joint lifts,
+                             # a spike that only grows with the mesh; the joint itself is joint_checks' hub_joint
+
+
+def away_from_pad_rim(st, r_rim):
+    """The upper link's safety factor on the elements away from its contact pad's rim (and from every clamp and load
+    patch, as cadagent does): (sf, design MPa)."""
+    c = st.points[st.tets[:, :4]].mean(axis=1)
+    d = np.hypot(np.hypot(c[:, 0], c[:, 2]) - r_rim, c[:, 1])
+    keep = ~st._touches_bc & (d > PAD_RIM_BAND)
+    vm = float(st.vm_elem[keep].max())
+    return round(st.material.strength_mpa / vm, 2), round(vm, 2)
+
+
 def joint_checks(C, SH):
     """The joints the whole-leg study bonds, checked on their own in the rare case R1, each chain at its design share of
     the out-of-plane load (chain_moments): each knee's steel pin in bending where it leaves the upper link's eye, its
@@ -358,6 +385,9 @@ def run(mesh, anim=True, only=None):
         if part == 'leg':                                        # the printed members; the joints are joint_checks()
             r['safety_factor_with_joint_plugs'] = r['safety_factor']
             r['safety_factor'], r['von_mises_design_mpa'] = members_only(st, JOINTS[case])
+        if part == 'upper_link' and shape is not None:           # held on its bonded pad: leave out the pad rim's spike
+            r['safety_factor_with_pad_rim'] = r['safety_factor']
+            r['safety_factor'], r['von_mises_design_mpa'] = away_from_pad_rim(st, gmi.STD['AO-L']['journal_d'] / 2)
         r.update(part=part, case=case, material_id=mat, load_from=why, png=str(png.relative_to(R)), target=target,
                  ok=r['safety_factor'] >= target, seconds=round(time.time() - t0, 1))
         results.append(r)
@@ -484,14 +514,14 @@ def run(mesh, anim=True, only=None):
     # ---- the wheel link (knee D at the origin, apex E at (l2, 0)): the wheel at its seat, the front link on the hub
     hub = lambda f: f.kind == 'Cylinder' and rad(f, l2) < 0.5 and abs(half(f) - 30.0) < 0.6
     seat = lambda f: rad(f, l2) < 26 and f.center[1] > fb.Y['wheel_boss'] - 0.5 and (f.kind == 'Plane' or abs(half(f) - 25.0) < 0.6)
-    for key in ('R1', 'E1'):
+    for key in ('R1', 'R1w', 'E1'):
         c = C[key]
         ld = c['loads']
         a = ld['alpha']['wheel_link']
         Fx, Fy, Fz = c['Fw3']
         wx, wz = rot_in(a, (Fx, Fz))
         ux, uz = rot_in(a, ld['fu'])
-        s = SH[key]['rear']                                             # what the wheel link keeps of the out-of-plane load
+        s = SH['R1' if key == 'R1w' else key]['rear']                   # what the wheel link keeps of the out-of-plane load
         Pl = (l2 + rot_in(a, (0.0, -WHEEL_R * 1000))[0], fb.Y['wheel'], rot_in(a, (0.0, -WHEEL_R * 1000))[1])   # the contact patch
         mx, mz = rot_in(a, chain_moments(c, s)['H'])
 
@@ -535,17 +565,19 @@ def run(mesh, anim=True, only=None):
     ld = C['R1']['loads']
     M_out = max(SH['R1']['rear'], SH['R1']['front']) * math.hypot(*ld['M_B_out'])   # the more loaded hub's share at the hip
     Frad = max(float(np.linalg.norm(ld['F_D_on_upper'])), float(np.linalg.norm(ld['F_C_on_upper'])))
-    T_R1 = max(PEAK, C['R1'].get('gearbox_nm') or 0.0)     # the motor's peak (a fault), or the landing's measured gearbox torque
+    T_R1 = C['R1'].get('gearbox_nm') or PEAK                # a landing's torque through the hub: what the rig measured
     face_bolts = lambda f: f.kind == 'Cylinder' and 22 < math.hypot(f.center[0], f.center[2]) < 28 and f.center[1] > -12
     motor_holes = lambda f: f.kind == 'Cylinder' and abs(math.hypot(f.center[0], f.center[2]) - 18.0) < 2.5 and half(f) < 3.6
-    for key, T, rare in (('R1', T_R1, True), ('E1', CAP, False)):
-        def setup(st, T=T, rare=rare):
+    for key, T, rare, M in (('R1', T_R1, True, M_out), ('R2', PEAK, True, 0.0), ('E1', CAP, False, M_out * 0.25)):
+        def setup(st, T=T, M=M):                            # R2: a motor at its full torque against a stalled leg (a fault)
             st.fix(motor_holes)
             st.torque(face_bolts, (0.0, 0.0, 0.0), (0, 1, 0), T)
-            couple(st, face_bolts, (M_out if rare else M_out * 0.25, 0.0, 0.0))
-            st.force(face_bolts, (0.0, 0.0, Frad if rare else Frad * 0.25), probe=False)
-        study('output_adapter', key, setup, rare, f"motor torque {T:.0f} N m with the R1 out-of-plane moment {M_out:.0f} N m and {Frad:.0f} N radial"
-              + ('' if rare else ' (x 0.25)'))
+            if M:
+                couple(st, face_bolts, (M, 0.0, 0.0))
+            if M:
+                st.force(face_bolts, (0.0, 0.0, Frad if rare else Frad * 0.25), probe=False)
+        study('output_adapter', key, setup, rare, f"motor torque {T:.0f} N m" + (f" with an out-of-plane moment of {M:.0f} N m and {Frad:.0f} N radial"
+                                                                                    if M else ' against a stalled leg (a fault)'))
 
     # ---- the front lower link as a strut: Euler buckling, pinned both ends, about its weak axis
     E_mod = MATERIALS['pa6_cf_xy'].E_mpa if hasattr(MATERIALS['pa6_cf_xy'], 'E_mpa') else 3000.0

@@ -1,0 +1,134 @@
+{
+ "y_centre_mm": 99.0,
+ "coil_od_mm": 25.4,
+ "boot_od_mm": 32.0,
+ "hook_mm": 12.0,
+ "heights": {
+  "105": {
+   "span_mm": 449.9,
+   "knee_z_mm": 4.1,
+   "tyre_top_z_mm": -19.3,
+   "boot_to_tyre_gap_mm": 7.4,
+   "boot_tyre_y_overlap_mm": 32.0,
+   "coil_hits": [],
+   "boot_hits": []
+  },
+  "110": {
+   "span_mm": 450.0,
+   "knee_z_mm": -1.0,
+   "tyre_top_z_mm": -24.3,
+   "boot_to_tyre_gap_mm": 7.3,
+   "boot_tyre_y_overlap_mm": 32.0,
+   "coil_hits": [],
+   "boot_hits": []
+  },
+  "115": {
+   "span_mm": 449.8,
+   "knee_z_mm": -5.8,
+   "tyre_top_z_mm": -29.4,
+   "boot_to_tyre_gap_mm": 7.6,
+   "boot_tyre_y_overlap_mm": 32.0,
+   "coil_hits": [],
+   "boot_hits": []
+  },
+  "120": {
+   "span_mm": 449.3,
+   "knee_z_mm": -10.3,
+   "tyre_top_z_mm": -34.3,
+   "boot_to_tyre_gap_mm": 8.1,
+   "boot_tyre_y_overlap_mm": 32.0,
+   "coil_hits": [],
+   "boot_hits": []
+  },
+  "130": {
+   "span_mm": 447.7,
+   "knee_z_mm": -18.7,
+   "tyre_top_z_mm": -44.3,
+   "boot_to_tyre_gap_mm": 9.7,
+   "boot_tyre_y_overlap_mm": 32.0,
+   "coil_hits": [],
+   "boot_hits": []
+  },
+  "150": {
+   "span_mm": 442.4,
+   "knee_z_mm": -33.5,
+   "tyre_top_z_mm": -64.3,
+   "boot_to_tyre_gap_mm": 14.8,
+   "boot_tyre_y_overlap_mm": 32.0,
+   "coil_hits": [],
+   "boot_hits": []
+  },
+  "180": {
+   "span_mm": 430.7,
+   "knee_z_mm": -53.0,
+   "tyre_top_z_mm": -94.3,
+   "boot_to_tyre_gap_mm": 25.4,
+   "boot_tyre_y_overlap_mm": 32.0,
+   "coil_hits": [],
+   "boot_hits": []
+  },
+  "210": {
+   "span_mm": 414.9,
+   "knee_z_mm": -70.4,
+   "tyre_top_z_mm": -124.3,
+   "boot_to_tyre_gap_mm": 37.9,
+   "boot_tyre_y_overlap_mm": 32.0,
+   "coil_hits": [],
+   "boot_hits": []
+  },
+  "250": {
+   "span_mm": 387.2,
+   "knee_z_mm": -91.8,
+   "tyre_top_z_mm": -164.4,
+   "boot_to_tyre_gap_mm": 56.5,
+   "boot_tyre_y_overlap_mm": 32.0,
+   "coil_hits": [],
+   "boot_hits": []
+  },
+  "300": {
+   "span_mm": 339.3,
+   "knee_z_mm": -116.4,
+   "tyre_top_z_mm": -214.3,
+   "boot_to_tyre_gap_mm": 82.0,
+   "boot_tyre_y_overlap_mm": 32.0,
+   "coil_hits": [],
+   "boot_hits": []
+  },
+  "330": {
+   "span_mm": 299.9,
+   "knee_z_mm": -129.9,
+   "tyre_top_z_mm": -244.3,
+   "boot_to_tyre_gap_mm": 98.4,
+   "boot_tyre_y_overlap_mm": 32.0,
+   "coil_hits": [],
+   "boot_hits": []
+  },
+  "360": {
+   "span_mm": 245.5,
+   "knee_z_mm": -142.2,
+   "tyre_top_z_mm": -274.4,
+   "boot_to_tyre_gap_mm": 116.1,
+   "boot_tyre_y_overlap_mm": 32.0,
+   "coil_hits": [],
+   "boot_hits": []
+  },
+  "375": {
+   "span_mm": 206.5,
+   "knee_z_mm": -147.3,
+   "tyre_top_z_mm": -289.4,
+   "boot_to_tyre_gap_mm": 126.0,
+   "boot_tyre_y_overlap_mm": 32.0,
+   "coil_hits": [],
+   "boot_hits": []
+  },
+  "390": {
+   "span_mm": 139.4,
+   "knee_z_mm": -149.9,
+   "tyre_top_z_mm": -304.4,
+   "boot_to_tyre_gap_mm": 138.4,
+   "boot_tyre_y_overlap_mm": 32.0,
+   "coil_hits": [],
+   "boot_hits": []
+  }
+ }
+}

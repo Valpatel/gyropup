@@ -13,7 +13,7 @@
    "mass_g_each": 60.0,
    "note": null,
    "media_key": "feetech-sts3215-c018-12v",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/feetech-sts3215-c018-12v.jpg",
    "thumb_from": "https://www.waveshare.com/st3215-servo.htm?sku=22414",
    "alternates": [
     {
@@ -79,7 +79,7 @@
    "mass_g_each": 60.0,
    "note": null,
    "media_key": "feetech-sts3215-c018-12v",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/feetech-sts3215-c018-12v.jpg",
    "thumb_from": "https://www.waveshare.com/st3215-servo.htm?sku=22414",
    "alternates": [
     {
@@ -145,7 +145,7 @@
    "mass_g_each": 27.8,
    "note": null,
    "media_key": "dji-robomaster-snail-2305",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/dji-robomaster-snail-2305.jpg",
    "thumb_from": "https://aifitlab.com/products/dji-robomaster-snail-2305-motor-c615-speed-controller",
    "alternates": [
     {
@@ -175,7 +175,7 @@
    "mass_g_each": 27.8,
    "note": null,
    "media_key": "dji-robomaster-snail-2305",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/dji-robomaster-snail-2305.jpg",
    "thumb_from": "https://aifitlab.com/products/dji-robomaster-snail-2305-motor-c615-speed-controller",
    "alternates": [
     {
@@ -205,7 +205,7 @@
    "mass_g_each": 5.0,
    "note": null,
    "media_key": "repeat-robotics-am32-35a-esc",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/repeat-robotics-am32-35a-esc.jpg",
    "thumb_from": "https://palmbeachbots.com/products/repeat-robotics-am32-brushless-drive-esc-bi-directional",
    "alternates": [
     {
@@ -247,7 +247,7 @@
    "mass_g_each": 5.0,
    "note": null,
    "media_key": "repeat-robotics-am32-35a-esc",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/repeat-robotics-am32-35a-esc.jpg",
    "thumb_from": "https://palmbeachbots.com/products/repeat-robotics-am32-brushless-drive-esc-bi-directional",
    "alternates": [
     {
@@ -289,7 +289,7 @@
    "mass_g_each": 90.0,
    "note": null,
    "media_key": "dji-robomaster-m2006-p36",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/dji-robomaster-m2006-p36.jpg",
    "thumb_from": "https://aifitlab.com/products/dji-robomaster-m2006-p36-brushless-dc-gear-motor",
    "alternates": [
     {
@@ -343,7 +343,7 @@
    "mass_g_each": 17.0,
    "note": null,
    "media_key": "dji-c610-esc",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/dji-c610-esc.jpg",
    "thumb_from": "https://store.dji.com/product/rm-c610-brushless-dc-motor-speed-control",
    "alternates": [
     {
@@ -473,7 +473,7 @@
    "mass_g_each": 1.3125,
    "note": null,
    "media_key": "bearing_mr126",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/bearing_mr126.jpg",
    "thumb_from": "https://www.mcmaster.com/7804K112/",
    "alternates": [
     {
@@ -530,7 +530,7 @@
    "mass_g_each": 0.4375,
    "note": "bought with the line above it",
    "media_key": "bearing_mr126",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/bearing_mr126.jpg",
    "thumb_from": "https://www.mcmaster.com/7804K112/",
    "alternates": [
     {
@@ -587,7 +587,7 @@
    "mass_g_each": 11.4,
    "note": null,
    "media_key": "circlip_50",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/circlip_50.jpg",
    "thumb_from": "https://www.mcmaster.com/98541A167/",
    "alternates": [
     {
@@ -655,7 +655,7 @@
    "mass_g_each": 6.7,
    "note": null,
    "media_key": "shoulder_6x12_m5",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/shoulder_6x12_m5.jpg",
    "thumb_from": "https://www.mcmaster.com/92981A101/",
    "alternates": [
     {
@@ -699,7 +699,7 @@
    "mass_g_each": 20.0,
    "note": null,
    "media_key": "te-dt04-12pa-l012",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/te-dt04-12pa-l012.jpg",
    "thumb_from": "https://www.lcsc.com/product-detail/C6423585.html",
    "alternates": [
     {
@@ -771,7 +771,7 @@
    "mass_g_each": 0.0,
    "note": null,
    "media_key": "te-dt06-12sa-kit",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/te-dt06-12sa-kit.jpg",
    "thumb_from": "https://www.digikey.com/en/products/detail/te-connectivity-deutsch-ict-connectors/DT06-12SA/6566568",
    "alternates": [
     {
@@ -809,7 +809,7 @@
    "mass_g_each": 25.0,
    "note": null,
    "media_key": "sparkfun-rob-13065",
-   "thumb": "references/vendor/thumbs/sparkfun-rob-13065.jpg",
+   "thumb": null,
    "thumb_from": "https://www.sparkfun.com/products/13065",
    "alternates": []
   },
@@ -826,7 +826,7 @@
    "mass_g_each": 0.0,
    "note": "bought with the line above it",
    "media_key": "sparkfun-rob-13065",
-   "thumb": "references/vendor/thumbs/sparkfun-rob-13065.jpg",
+   "thumb": null,
    "thumb_from": "https://www.sparkfun.com/products/13065",
    "alternates": []
   },
@@ -843,7 +843,7 @@
    "mass_g_each": 0.0,
    "note": "bought with the line above it",
    "media_key": "sparkfun-rob-13065",
-   "thumb": "references/vendor/thumbs/sparkfun-rob-13065.jpg",
+   "thumb": null,
    "thumb_from": "https://www.sparkfun.com/products/13065",
    "alternates": []
   },
@@ -860,7 +860,7 @@
    "mass_g_each": 2.0,
    "note": null,
    "media_key": "turret_tube_coupling",
-   "thumb": "references/vendor/thumbs/turret_tube_coupling.jpg",
+   "thumb": null,
    "thumb_from": "https://www.mcmaster.com/51225K32/",
    "alternates": []
   },
@@ -877,7 +877,7 @@
    "mass_g_each": 0.8,
    "note": null,
    "media_key": "turret_magnet_disc",
-   "thumb": "references/vendor/thumbs/turret_magnet_disc.jpg",
+   "thumb": null,
    "thumb_from": "https://www.mcmaster.com/5862K103/",
    "alternates": []
   },
@@ -894,7 +894,7 @@
    "mass_g_each": 0.3,
    "note": null,
    "media_key": "allegro-a1120lua-t",
-   "thumb": "references/vendor/thumbs/allegro-a1120lua-t.jpg",
+   "thumb": null,
    "thumb_from": "https://www.cytechsystems.com/fr/product/a1120lua-t",
    "alternates": []
   },
@@ -911,7 +911,7 @@
    "mass_g_each": 4.0,
    "note": null,
    "media_key": "turret_thumbscrew_m4x12",
-   "thumb": "references/vendor/thumbs/turret_thumbscrew_m4x12.jpg",
+   "thumb": null,
    "thumb_from": "https://www.mcmaster.com/92581A250/",
    "alternates": []
   },
@@ -928,7 +928,7 @@
    "mass_g_each": 30.0,
    "note": null,
    "media_key": "proto-board-52x50",
-   "thumb": "references/vendor/thumbs/proto-board-52x50.jpg",
+   "thumb": null,
    "thumb_from": "https://www.taydaelectronics.com/double-side-prototyping-board-50x70mm.html",
    "alternates": []
   },
@@ -945,7 +945,7 @@
    "mass_g_each": 100.0,
    "note": null,
    "media_key": "proto-board-52x50",
-   "thumb": "references/vendor/thumbs/proto-board-52x50.jpg",
+   "thumb": null,
    "thumb_from": "https://www.taydaelectronics.com/double-side-prototyping-board-50x70mm.html",
    "alternates": []
   },
@@ -962,7 +962,7 @@
    "mass_g_each": null,
    "note": null,
    "media_key": "screw_m5x16",
-   "thumb": "references/vendor/thumbs/screw_m5x16.jpg",
+   "thumb": null,
    "thumb_from": "https://www.mcmaster.com/91290A232/",
    "alternates": []
   },
@@ -979,7 +979,7 @@
    "mass_g_each": null,
    "note": null,
    "media_key": "dowel_5x16",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/dowel_5x16.jpg",
    "thumb_from": "https://www.mcmaster.com/91595A352/",
    "alternates": [
     {
@@ -1023,7 +1023,7 @@
    "mass_g_each": null,
    "note": null,
    "media_key": "turret_screw_m2x8",
-   "thumb": "references/vendor/thumbs/turret_screw_m2x8.jpg",
+   "thumb": null,
    "thumb_from": "https://www.mcmaster.com/91290A015/",
    "alternates": []
   },
@@ -1040,7 +1040,7 @@
    "mass_g_each": null,
    "note": null,
    "media_key": "turret_screw_m2x10",
-   "thumb": "references/vendor/thumbs/turret_screw_m2x10.jpg",
+   "thumb": null,
    "thumb_from": "https://www.mcmaster.com/91290A017/",
    "alternates": []
   },
@@ -1057,7 +1057,7 @@
    "mass_g_each": null,
    "note": null,
    "media_key": "turret_screw_m2x20",
-   "thumb": "references/vendor/thumbs/turret_screw_m2x20.jpg",
+   "thumb": null,
    "thumb_from": "https://www.mcmaster.com/91290A049/",
    "alternates": []
   },
@@ -1074,7 +1074,7 @@
    "mass_g_each": null,
    "note": null,
    "media_key": "screw_m3x6",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/screw_m3x6.jpg",
    "thumb_from": "https://www.mcmaster.com/91290A111/",
    "alternates": [
     {
@@ -1105,7 +1105,7 @@
    "mass_g_each": null,
    "note": null,
    "media_key": "turret_screw_m3x8",
-   "thumb": "references/vendor/thumbs/turret_screw_m3x8.jpg",
+   "thumb": null,
    "thumb_from": "https://www.mcmaster.com/91290A113/",
    "alternates": []
   },
@@ -1122,7 +1122,7 @@
    "mass_g_each": null,
    "note": null,
    "media_key": "turret_screw_m3x10",
-   "thumb": "references/vendor/thumbs/turret_screw_m3x10.jpg",
+   "thumb": null,
    "thumb_from": "https://www.mcmaster.com/91290A115/",
    "alternates": []
   },
@@ -1139,7 +1139,7 @@
    "mass_g_each": null,
    "note": null,
    "media_key": "turret_screw_m3x12",
-   "thumb": "references/vendor/thumbs/turret_screw_m3x12.jpg",
+   "thumb": null,
    "thumb_from": "https://www.mcmaster.com/91290A117/",
    "alternates": []
   },
@@ -1156,7 +1156,7 @@
    "mass_g_each": null,
    "note": null,
    "media_key": "turret_screw_m3x16",
-   "thumb": "references/vendor/thumbs/turret_screw_m3x16.jpg",
+   "thumb": null,
    "thumb_from": "https://www.mcmaster.com/91290A120/",
    "alternates": []
   },
@@ -1173,7 +1173,7 @@
    "mass_g_each": null,
    "note": null,
    "media_key": "turret_screw_m3x20",
-   "thumb": "references/vendor/thumbs/turret_screw_m3x20.jpg",
+   "thumb": null,
    "thumb_from": "https://www.mcmaster.com/91290A123/",
    "alternates": []
   },
@@ -1190,7 +1190,7 @@
    "mass_g_each": null,
    "note": null,
    "media_key": "turret_screw_m4x10",
-   "thumb": "references/vendor/thumbs/turret_screw_m4x10.jpg",
+   "thumb": null,
    "thumb_from": "https://www.mcmaster.com/91290A144/",
    "alternates": []
   },
@@ -1207,7 +1207,7 @@
    "mass_g_each": null,
    "note": null,
    "media_key": "turret_screw_m3x6_flat",
-   "thumb": "references/vendor/thumbs/turret_screw_m3x6_flat.jpg",
+   "thumb": null,
    "thumb_from": "https://www.mcmaster.com/91294A126/",
    "alternates": []
   },
@@ -1224,7 +1224,7 @@
    "mass_g_each": null,
    "note": null,
    "media_key": "turret_screw_m3x8_flat",
-   "thumb": "references/vendor/thumbs/turret_screw_m3x8_flat.jpg",
+   "thumb": null,
    "thumb_from": "https://www.mcmaster.com/91294A128/",
    "alternates": []
   },
@@ -1241,7 +1241,7 @@
    "mass_g_each": null,
    "note": null,
    "media_key": "turret_screw_m3x10_flat",
-   "thumb": "references/vendor/thumbs/turret_screw_m3x10_flat.jpg",
+   "thumb": null,
    "thumb_from": "https://www.mcmaster.com/91294A130/",
    "alternates": []
   },
@@ -1258,7 +1258,7 @@
    "mass_g_each": null,
    "note": null,
    "media_key": "turret_setscrew_m3x6_nylon",
-   "thumb": "references/vendor/thumbs/turret_setscrew_m3x6_nylon.jpg",
+   "thumb": null,
    "thumb_from": "https://www.mcmaster.com/93285A115/",
    "alternates": []
   },
@@ -1275,7 +1275,7 @@
    "mass_g_each": null,
    "note": null,
    "media_key": "insert_m3",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/insert_m3.jpg",
    "thumb_from": "https://www.mcmaster.com/94459A140/",
    "alternates": [
     {
@@ -1318,7 +1318,7 @@
    "mass_g_each": null,
    "note": null,
    "media_key": "turret_insert_m3_short",
-   "thumb": "references/vendor/thumbs/turret_insert_m3_short.jpg",
+   "thumb": null,
    "thumb_from": "https://www.mcmaster.com/94459A130/",
    "alternates": []
   },
@@ -1335,7 +1335,7 @@
    "mass_g_each": null,
    "note": null,
    "media_key": "turret_insert_m4",
-   "thumb": "references/vendor/thumbs/turret_insert_m4.jpg",
+   "thumb": null,
    "thumb_from": "https://www.mcmaster.com/94459A160/",
    "alternates": []
   },
@@ -1352,7 +1352,7 @@
    "mass_g_each": null,
    "note": null,
    "media_key": "insert_m5",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/insert_m5.jpg",
    "thumb_from": "https://www.mcmaster.com/94459A775/",
    "alternates": [
     {
@@ -1395,7 +1395,7 @@
    "mass_g_each": null,
    "note": null,
    "media_key": "washer_m3_large",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/washer_m3_large.jpg",
    "thumb_from": "https://www.mcmaster.com/91116A120/",
    "alternates": [
     {
@@ -1437,7 +1437,7 @@
    "mass_g_each": null,
    "note": null,
    "media_key": "turret_washer_m3",
-   "thumb": "references/vendor/thumbs/turret_washer_m3.jpg",
+   "thumb": null,
    "thumb_from": "https://www.mcmaster.com/93475A210/",
    "alternates": []
   },
@@ -1454,7 +1454,7 @@
    "mass_g_each": null,
    "note": null,
    "media_key": "turret_dowel_4x8",
-   "thumb": "references/vendor/thumbs/turret_dowel_4x8.jpg",
+   "thumb": null,
    "thumb_from": "https://www.mcmaster.com/91595A150/",
    "alternates": []
   },
@@ -1471,7 +1471,7 @@
    "mass_g_each": null,
    "note": null,
    "media_key": "turret_pin_1_16x3_16",
-   "thumb": "references/vendor/thumbs/turret_pin_1_16x3_16.jpg",
+   "thumb": null,
    "thumb_from": "https://www.mcmaster.com/98381A414/",
    "alternates": []
   },
@@ -1488,7 +1488,7 @@
    "mass_g_each": null,
    "note": null,
    "media_key": "turret_pin_2x20",
-   "thumb": "references/vendor/thumbs/turret_pin_2x20.jpg",
+   "thumb": null,
    "thumb_from": "https://www.mcmaster.com/93600A249/",
    "alternates": []
   },
@@ -1505,7 +1505,7 @@
    "mass_g_each": null,
    "note": null,
    "media_key": "turret_spring_flap",
-   "thumb": "references/vendor/thumbs/turret_spring_flap.jpg",
+   "thumb": null,
    "thumb_from": "https://www.mcmaster.com/9271K13/",
    "alternates": []
   },
@@ -1522,7 +1522,7 @@
    "mass_g_each": null,
    "note": null,
    "media_key": "turret_oring_ct",
-   "thumb": "references/vendor/thumbs/turret_oring_ct.jpg",
+   "thumb": null,
    "thumb_from": "https://www.mcmaster.com/9452K14/",
    "alternates": []
   },
@@ -1539,7 +1539,7 @@
    "mass_g_each": null,
    "note": null,
    "media_key": "turret_standoff_m3x12",
-   "thumb": "references/vendor/thumbs/turret_standoff_m3x12.jpg",
+   "thumb": null,
    "thumb_from": "https://www.mcmaster.com/98952A110/",
    "alternates": []
   },
@@ -1556,7 +1556,7 @@
    "mass_g_each": null,
    "note": null,
    "media_key": "turret_standoff_m3x14",
-   "thumb": "references/vendor/thumbs/turret_standoff_m3x14.jpg",
+   "thumb": null,
    "thumb_from": "https://www.mcmaster.com/98952A112/",
    "alternates": []
   },
@@ -1573,7 +1573,7 @@
    "mass_g_each": null,
    "note": null,
    "media_key": "adafruit-feather-m4-can-4759",
-   "thumb": "references/vendor/thumbs/adafruit-feather-m4-can-4759.jpg",
+   "thumb": null,
    "thumb_from": "https://www.adafruit.com/product/4759",
    "alternates": []
   },
@@ -1590,7 +1590,7 @@
    "mass_g_each": null,
    "note": null,
    "media_key": "pololu-d24v150f12-2885",
-   "thumb": "references/vendor/thumbs/pololu-d24v150f12-2885.jpg",
+   "thumb": null,
    "thumb_from": "https://www.pololu.com/product/2885",
    "alternates": []
   },
@@ -1607,7 +1607,7 @@
    "mass_g_each": null,
    "note": null,
    "media_key": "pololu-d36v50f12-4095",
-   "thumb": "references/vendor/thumbs/pololu-d36v50f12-4095.jpg",
+   "thumb": null,
    "thumb_from": "https://www.pololu.com/product/4095",
    "alternates": []
   },
@@ -1624,7 +1624,7 @@
    "mass_g_each": null,
    "note": null,
    "media_key": "pololu-d36v28f5-3782",
-   "thumb": "references/vendor/thumbs/pololu-d36v28f5-3782.jpg",
+   "thumb": null,
    "thumb_from": "https://www.pololu.com/product/3782",
    "alternates": []
   },
@@ -1641,7 +1641,7 @@
    "mass_g_each": null,
    "note": null,
    "media_key": "pololu-2815",
-   "thumb": "references/vendor/thumbs/pololu-2815.jpg",
+   "thumb": null,
    "thumb_from": "https://www.pololu.com/product/2815",
    "alternates": []
   },
@@ -1879,7 +1879,7 @@
    "mass_g_each": null,
    "note": null,
    "media_key": "adafruit-2167",
-   "thumb": "references/vendor/thumbs/adafruit-2167.jpg",
+   "thumb": null,
    "thumb_from": "https://www.adafruit.com/product/2167",
    "alternates": []
   },
@@ -1896,7 +1896,7 @@
    "mass_g_each": null,
    "note": null,
    "media_key": "adafruit-neopixel-ring-12-1643",
-   "thumb": "references/vendor/thumbs/adafruit-neopixel-ring-12-1643.jpg",
+   "thumb": null,
    "thumb_from": "https://www.adafruit.com/product/1643",
    "alternates": []
   },
@@ -1930,7 +1930,7 @@
    "mass_g_each": null,
    "note": null,
    "media_key": "molex-43020-1200",
-   "thumb": "references/vendor/thumbs/molex-43020-1200.jpg",
+   "thumb": null,
    "thumb_from": "https://heilind.com/mol43020-1200.html",
    "alternates": []
   },
@@ -1947,7 +1947,7 @@
    "mass_g_each": null,
    "note": null,
    "media_key": "molex-43025-0600",
-   "thumb": "references/vendor/thumbs/molex-43025-0600.jpg",
+   "thumb": null,
    "thumb_from": "https://heilind.com/mol43025-0600.html",
    "alternates": []
   },
@@ -1964,7 +1964,7 @@
    "mass_g_each": null,
    "note": null,
    "media_key": "molex-43020-0600",
-   "thumb": "references/vendor/thumbs/molex-43020-0600.jpg",
+   "thumb": null,
    "thumb_from": "https://heilind.com/mol43020-0600.html",
    "alternates": []
   },
@@ -2015,7 +2015,7 @@
    "mass_g_each": null,
    "note": null,
    "media_key": "molex-43030-0038",
-   "thumb": "references/vendor/thumbs/molex-43030-0038.jpg",
+   "thumb": null,
    "thumb_from": "https://heilind.com/mol43030-0038.html",
    "alternates": []
   },
@@ -2032,7 +2032,7 @@
    "mass_g_each": null,
    "note": null,
    "media_key": "molex-43031-0021",
-   "thumb": "references/vendor/thumbs/molex-43031-0021.jpg",
+   "thumb": null,
    "thumb_from": "https://heilind.com/mol43031-0021.html",
    "alternates": []
   },
@@ -2049,7 +2049,7 @@
    "mass_g_each": null,
    "note": null,
    "media_key": "molex-43030-0001",
-   "thumb": "references/vendor/thumbs/molex-43030-0001.jpg",
+   "thumb": null,
    "thumb_from": "https://heilind.com/mol43030-0001.html",
    "alternates": []
   },
@@ -2066,7 +2066,7 @@
    "mass_g_each": null,
    "note": null,
    "media_key": "molex-43031-0001",
-   "thumb": "references/vendor/thumbs/molex-43031-0001.jpg",
+   "thumb": null,
    "thumb_from": "https://heilind.com/mol43031-0001.html",
    "alternates": []
   },
@@ -2083,7 +2083,7 @@
    "mass_g_each": null,
    "note": null,
    "media_key": "keystone-3557-2",
-   "thumb": "references/vendor/thumbs/keystone-3557-2.jpg",
+   "thumb": null,
    "thumb_from": "https://jlcpcb.com/partdetail/3557-2/C352820",
    "alternates": []
   },
@@ -2219,7 +2219,7 @@
    "mass_g_each": null,
    "note": null,
    "media_key": "adafruit-2517",
-   "thumb": "references/vendor/thumbs/adafruit-2517.jpg",
+   "thumb": null,
    "thumb_from": "https://www.adafruit.com/product/2517",
    "alternates": []
   },
@@ -2254,7 +2254,7 @@
    "price_usd_each": 1.5,
    "mass_g_each": null,
    "media_key": "amass-xt60e-m",
-   "thumb": "references/vendor/thumbs/amass-xt60e-m.jpg",
+   "thumb": null,
    "thumb_from": "https://pro.maplin.co.uk/products/male-xt60e-panel-mount-gold-plated-connector-20a-amass",
    "alternates": []
   },
@@ -2270,7 +2270,7 @@
    "price_usd_each": 0.246,
    "mass_g_each": null,
    "media_key": "turret_screw_m2_5x8",
-   "thumb": "references/vendor/thumbs/turret_screw_m2_5x8.jpg",
+   "thumb": null,
    "thumb_from": "https://www.mcmaster.com/91290A102/",
    "alternates": []
   },
@@ -2286,7 +2286,7 @@
    "price_usd_each": 0.071,
    "mass_g_each": null,
    "media_key": "turret_nut_m2_5",
-   "thumb": "references/vendor/thumbs/turret_nut_m2_5.jpg",
+   "thumb": null,
    "thumb_from": "https://www.mcmaster.com/91828A113/",
    "alternates": []
   },
@@ -2302,7 +2302,7 @@
    "price_usd_each": null,
    "mass_g_each": null,
    "media_key": "kcd1-rocker-16a",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/kcd1-rocker-16a.jpg",
    "thumb_from": "https://www.e-switch.com/product/rca1913-series-sealed-power-rocker-switch/",
    "alternates": [
     {
@@ -2349,7 +2349,7 @@
    "price_usd_each": 7.16,
    "mass_g_each": null,
    "media_key": "fuse-holder-5x20-panel",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/fuse-holder-5x20-panel.jpg",
    "thumb_from": "https://www.digikey.com/en/products/detail/littelfuse-inc/03455LS1H/553826",
    "alternates": [
     {
@@ -2460,7 +2460,7 @@
    "price_usd_each": 75.0,
    "mass_g_each": null,
    "media_key": "pendant-hold-to-run",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/pendant-hold-to-run.jpg",
    "thumb_from": "https://www.ablenetinc.com/specs-ic/",
    "alternates": [
     {
@@ -2509,7 +2509,7 @@
    "price_usd_each": 8.0,
    "mass_g_each": null,
    "media_key": "usb-can-canable2",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/usb-can-canable2.jpg",
    "thumb_from": "https://www.fysetc.com/products/fysetc-ucan-board",
    "alternates": [
     {
@@ -2570,7 +2570,7 @@
    "price_usd_each": 0.99,
    "mass_g_each": null,
    "media_key": "proto-board-70x50",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/proto-board-70x50.jpg",
    "thumb_from": "https://botland.store/circuit-boards/2745-universal-double-sided-board-50x70mm-5904422303303.html",
    "alternates": [
     {
@@ -2617,7 +2617,7 @@
    "price_usd_each": null,
    "mass_g_each": null,
    "media_key": "bumper-feet-12.7",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/bumper-feet-12.7.jpg",
    "thumb_from": "https://www.digikey.com/en/products/detail/3m/SJ5003/26770367",
    "alternates": [
     {
@@ -2665,7 +2665,7 @@
    "price_usd_each": 0.2728,
    "mass_g_each": null,
    "media_key": "insert_m5",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/insert_m5.jpg",
    "thumb_from": "https://www.mcmaster.com/94459A775/",
    "alternates": [
     {
@@ -2707,7 +2707,7 @@
    "price_usd_each": 0.2182,
    "mass_g_each": null,
    "media_key": "insert_m3",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/insert_m3.jpg",
    "thumb_from": "https://www.mcmaster.com/94459A140/",
    "alternates": [
     {
@@ -2749,7 +2749,7 @@
    "price_usd_each": 0.1328,
    "mass_g_each": null,
    "media_key": "turret_screw_m3x8",
-   "thumb": "references/vendor/thumbs/turret_screw_m3x8.jpg",
+   "thumb": null,
    "thumb_from": "https://www.mcmaster.com/91290A113/",
    "alternates": []
   },
@@ -2765,7 +2765,7 @@
    "price_usd_each": 14.99,
    "mass_g_each": null,
    "media_key": "worker-cheetah-rival-rounds-100",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/worker-cheetah-rival-rounds-100.jpg",
    "thumb_from": "https://outofdarts.com/products/worker-cheetah-rounds-rival-compatible-ammo-100-pack",
    "alternates": [
     {

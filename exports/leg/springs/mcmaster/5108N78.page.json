@@ -1,0 +1,72 @@
+{
+ "pn": "5108N78",
+ "url": "https://www.mcmaster.com/5108N78/",
+ "final_url": "https://www.mcmaster.com/5108N78/",
+ "title": "Music Wire Steel Extension Spring with Loop Ends",
+ "subtitle": "7\" Long, 1\" OD, 0.105\" Wire Diameter",
+ "description": "Music Wire Steel Extension Spring with Loop Ends, 7\" Long, 1\" OD, 0.105\" Wire Diameter",
+ "price_text": "$11.86 per pack of 1",
+ "price_usd": 11.86,
+ "pack_qty": 1,
+ "listed_weight_g": null,
+ "options": [],
+ "breadcrumbs": [],
+ "specs": {
+  "raw": {
+   "Loop Type": "Single",
+   "End Type": "Loop",
+   "Material": "Spring Steel",
+   "Length": "7\"",
+   "OD": "1\"",
+   "Wire Diameter": "0.105\"",
+   "Extended Length @ Maximum Load": "14.73\"",
+   "Load Minimum": "3.8 lb.",
+   "Load Maximum": "42.25 lb.",
+   "Spring Rate": "5 lbf/in",
+   "Minimum Load Tolerance Minimum": "Not Rated",
+   "Minimum Load Tolerance Maximum": "Not Rated",
+   "OD Tolerance Minimum": "Not Rated",
+   "OD Tolerance Maximum": "Not Rated",
+   "Spring Rate Tolerance Minimum": "Not Rated",
+   "Spring Rate Tolerance Maximum": "Not Rated",
+   "Spring Type": "Extension",
+   "Steel Grade": "Music-Wire Steel",
+   "System of Measurement": "Inch",
+   "Country of Origin": "China",
+   "DFARS Compliance": "Specialty Metals COTS-Exempt",
+   "Export Control Classification Number (ECCN)": "EAR99",
+   "REACH Compliance": "REACH (EC 1907/2006) (02/04/2026, 253 SVHC) Compliant",
+   "RoHS Compliance": "RoHS 3 (2015/863/EU) Compliant",
+   "Schedule B Number": "732020.5000",
+   "U.S.–Mexico–Canada Agreement (USMCA) Qualifying": "No"
+  },
+  "parsed": {
+   "Length": {
+    "value": 177.8,
+    "unit": "mm"
+   },
+   "OD": {
+    "value": 25.4,
+    "unit": "mm"
+   },
+   "Wire Diameter": {
+    "value": 2.667,
+    "unit": "mm"
+   },
+   "Extended Length @ Maximum Load": {
+    "value": 374.142,
+    "unit": "mm"
+   },
+   "Load Minimum": {
+    "value": 16.903242,
+    "unit": "N"
+   },
+   "Load Maximum": {
+    "value": 187.937363,
+    "unit": "N"
+   }
+  }
+ },
+ "read": "2026-10-27",
+ "checked": "2026-10-27"
+}

@@ -50,9 +50,9 @@
    "fits": true,
    "placement": "straight",
    "grams_each": 364,
-   "grams": 727,
-   "hours": 47.6,
-   "cost_usd": 58.15,
+   "grams": 728,
+   "hours": 47.7,
+   "cost_usd": 58.2,
    "infill": "100 %",
    "how": "printed PA6-CF flat, 30 mm, 100 % solid; 8 x M5 into the adapter; the knee shoulder screw clamped by an M10 nyloc in a pocket"
   },
@@ -127,9 +127,9 @@
  },
  "by_material": {
   "pa6-cf": {
-   "grams": 2723,
-   "hours": 178.4,
-   "cost_usd": 217.81,
+   "grams": 2724,
+   "hours": 178.5,
+   "cost_usd": 217.86,
    "parts": 8
   },
   "tpu95": {
@@ -140,7 +140,7 @@
   }
  },
  "too_big": [],
- "total_hours": 180.0,
- "total_grams": 2739,
+ "total_hours": 180.1,
+ "total_grams": 2740,
  "note": "hours are rough: grams / material density / a strength-holding volumetric rate"
 }

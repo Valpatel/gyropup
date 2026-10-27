@@ -16,7 +16,7 @@
 - id: M3
   title: Single-leg test rig
   status: next
-  done_when: The rig is in CAD (rail, carriage, dummy mass, bumpers), with its own parts list; the leg and rig are printed, bought and assembled; first stand, squat and jump on hardware
+  done_when: The rig is in CAD (rail, carriage, dummy mass, bumpers), with its own parts list; the leg and rig are printed, bought and assembled; first stand, squat and jump on hardware. Bench tests that set the models' unknowns (D39) - an unpowered RS-04 back-driven (its power-off damping, torque against speed), the TPU stop sleeve squeezed (its stiffness and travel), an M5 heat-set insert in printed PA6-CF (torque against preload, pull-out), the BotWheel tyre's radial stiffness, and the RS-04's rotor inertia from a spin-down
 - id: M4
   title: The foam-ball turret on its own
   status: next

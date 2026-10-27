@@ -78,6 +78,7 @@ EYE_BOSS = 20.0                                          # the eye stands this p
                                                          # the nut's pocket)
 
 
+
 # ----------------------------------------------------------------------------------- kinematics
 
 def motors():
@@ -207,18 +208,20 @@ def yslab(points, y0, y1):
     return cq.Workplane('XZ', origin=(0, y1, 0)).polyline(points).close().extrude(y1 - y0)
 
 
-def boss_fillet(outline, face_y, side, r=None, f=6.0):
-    """A fillet ring where a lower link's knee boss (radius r, round the origin) stands out of the link's face at face_y
-    and runs on towards side = -1 (smaller y) or +1: that sharp inside corner carried the wheel link's peak stress
-    (cad/leg_studies.py, R1). Clipped to the link's outline, so it is only where the face is."""
+def boss_fillet(outline, face_y, side, r=None, f=6.0, cx=0.0, arm_dir=1):
+    """A fillet ring where a boss (radius r, round (cx, 0)) stands out of a link's face at face_y and runs on towards
+    side = -1 (smaller y) or +1: those sharp inside corners carried the links' peak stresses (cad/leg_studies.py: the
+    wheel link's knee boss in R1, the upper link's eye boss in the collapse). Clipped to the link's outline and to the
+    arm's side of the boss (arm_dir = +1: the arm runs towards +x), so it is only where the face is."""
     r = KC['hub_od'] / 2 if r is None else r
     s = side
     ring = (cq.Workplane('XY').moveTo(r, face_y + s * f).lineTo(r, face_y).lineTo(r + f, face_y)
             .threePointArc((r + 0.2929 * f, face_y + s * 0.2929 * f), (r, face_y + s * f)).close()
-            .revolve(360, (0, 0, 0), (0, 1, 0)))
+            .revolve(360, (0, 0, 0), (0, 1, 0))).translate((cx, 0, 0))
     lo, hi = sorted((face_y, face_y + s * f))
-    arm = cq.Workplane('XY').box(r + f + 2, hi - lo + 0.02, 2 * (r + f + 2)).translate(((r + f + 2) / 2, (lo + hi) / 2, 0))
-    return ring.intersect(yslab(outline, lo - 0.01, hi + 0.01)).intersect(arm)     # the arm's side only (x > 0)
+    w = r + f + 2
+    arm = cq.Workplane('XY').box(w, hi - lo + 0.02, 2 * w).translate((cx + arm_dir * w / 2, (lo + hi) / 2, 0))
+    return ring.intersect(yslab(outline, lo - 0.01, hi + 0.01)).intersect(arm)
 
 
 def link_outline(p0, p1, w0, w1, r0, r1, n=24):
@@ -417,6 +420,7 @@ def upper_link():
     l1, t = P['l1'], P['upper_t']
     out = link_outline((0, 0), (l1, 0), P['upper_w0'], P['upper_w1'], UPPER_HUB_R, UPPER_EYE_R)
     u = yslab(out, 0.0, t).union(ycyl(UPPER_EYE_R - 0.5, -EYE_BOSS, 0.01, l1, 0))   # inside the outline's polygon: no slivers
+    u = u.union(boss_fillet(out, 0.0, -1, r=UPPER_EYE_R - 0.5, f=5.0, cx=l1, arm_dir=-1))   # where the arm meets the boss
     u = u.cut(gmi.place(gmi.std_face_mate('L', depth=t + 2), (0, 0, 0), (0, 1, 0)))
     # the 8 M5 heads sit proud on the hub's outer face (no lower link ever passes over a hub: build_leg's clash
     # sweep), so the hub keeps its full thickness where the leg's out-of-plane moment is largest
