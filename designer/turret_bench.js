@@ -3,7 +3,8 @@
 // manifest.json with the pivots, the ball path, the callouts, the journey and the numbers). You aim it by hand and it
 // fires only while ARM is held: ARM is the hold-to-run safety line (the bench pendant; the radio stop on the robot).
 // The mechanism, part by part: X-ray, a section through the ball path, an exploded view, callouts, and one ball's
-// journey from the hopper to a target in slow motion.
+// journey from the hopper to a target in slow motion. Its sounds are sfx.turret's (sfx.js): the flywheels' hum follows
+// their speed and brakes on release, and the journey plays each stage's sound in its slow motion.
 //
 //   const bench = await createTurretBench({ stage, sfx, panel, root: '../', onLayout });
 //   bench.enter();   // shows its scene, panel sections and action bar (built once, by createTurretBench)
@@ -25,6 +26,7 @@ const CRATE = { w: 0.48, d: 0.62, h: 0.30 };                                   /
 const K_DRAG = 0.5 * 1.2 * BALL.cd * Math.PI * (BALL.d / 2) ** 2 / BALL.mass;
 const SPREAD_DEG = 0.5, SPEED_SPREAD = 0.015;        // shot-to-shot spread: assumed until the chronograph and the paper say
 const SPIN_UP_S = 0.35, DIAL_DEG_S = 450;            // the firmware's flywheel ramp; the dial at 75 rpm (10 balls/s)
+const BRAKE_DELAY_S = 0.01, BRAKE_TAU_S = 0.012;     // D9: the phase short closes 10 ms after ARM drops; tau 12 ms (turret-physics.md section 5)
 const BALL_R = BALL.d / 2;
 // the parts that are see-through in the X-ray view (the rest, the mechanism, stays solid)
 const SHELL = new Set(['pan_base', 'pan_clamp', 'bumper_ring', 'cartridge_body', 'cradle', 'tilt_yoke', 'hopper', 'hopper_lid', 'hopper_flap',
@@ -340,7 +342,7 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
     phi: man.dial_park_deg * D2R, phiCmd: man.dial_park_deg * D2R, pockets: man.pockets.map(() => true), pile: pileBalls.length,
     transit: [], flying: [], shots: 0, hits: 0, lastSpeed: null, view: 'solid', explode: 0, explodeCmd: 0,
     labels: true, airflow: false, antennas: false, marker: true, timeScale: 1, journey: null, selected: null, wheelAng: 0,
-    flapT: 0,
+    flapT: 0, offFor: 0,
   };
   const hopperCount = () => S.pockets.filter(Boolean).length + S.pile;
 
@@ -715,6 +717,8 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
     jcard.hidden = false;
     document.body.classList.add('tb-journey-on');
     S.panCmd = S.pan; S.tiltCmd = Math.min(S.tilt, -2 * D2R);
+    sfx.turret.slowmo(1);
+    sfx.turret.pile();                                // the first stage, the hopper (gotoStep plays the others)
     renderJourney();
     onLayout();
   }
@@ -771,6 +775,7 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
     jy.step = i;
     jy.t = 0;
     jy.landed = null;
+    jy.flashed = jy.nipped = false;
     const id = J[i].id;
     // rewind or fast-forward the demonstration ball to where this step starts
     if (['hopper', 'dial'].includes(id)) {
@@ -789,8 +794,18 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
       for (const b of S.flying) b.demo = false;
       launch(true);
     }
+    // each stage's sound, in its slow motion (the nip and the muzzle sound when the ball gets there: stepJourney)
+    sfx.turret.slowmo(stageScale(id));
+    if (id === 'hopper') sfx.turret.pile();
+    else if (id === 'dial') sfx.turret.dial();
+    else if (id === 'exit') sfx.turret.drop();
+    else if (id === 'chute') sfx.turret.roll((JWIN.chute[1] - JWIN.chute[0]) / STEP.chute.vis);
+    else if (id === 'barrel') sfx.turret.bore((JWIN.barrel[1] - JWIN.barrel[0]) / STEP.barrel.vis);
+    else if (id === 'flight') sfx.turret.fly();
     renderJourney();
   }
+  // the time scale a stage starts at (stepJourney keeps it up to date as the ball goes)
+  const stageScale = (id) => STEP[id].scale ?? (JWIN[id] ? STEP[id].vis / Math.max(0.05, speedAt(JWIN[id][0])) : 1);
   function pocketAtExitNext() {                       // the pocket that reaches the exit next as the dial turns forward
     let best = null, bestA = 1e9;
     S.pockets.forEach((_, k) => {
@@ -803,6 +818,7 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
   function stepJourney(dtReal) {
     const jy = S.journey, st = J[jy.step], cfg = STEP[st.id];
     S.timeScale = cfg.scale ?? 1;
+    if (cfg.scale != null) sfx.turret.slowmo(cfg.scale);      // the ball's stages set it as the ball goes (below)
     jy.t += dtReal;
     if (cfg.view && S.view !== cfg.view) setView(cfg.view);
     let done = false;
@@ -812,12 +828,14 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
       const b = jy.ball;
       const end = JWIN[st.id][1];
       S.timeScale = cfg.vis / Math.max(0.05, speedAt(b.s));
+      sfx.turret.slowmo(S.timeScale);
       b.s = Math.min(end, b.s + cfg.vis * dtReal);
       pathAt(b.s, b.g.position);
       if (b.s > segS.barrel[1]) b.g.position.copy(muzzle.position).add(new THREE.Vector3(0, 0, b.s - segS.barrel[1]));
       squash(b.g, b.s);
       gateBlink(b.s);
-      if (st.id === 'muzzle' && b.s >= segS.barrel[1] && !jy.flashed) { jy.flashed = true; flashT = 0.06; sfx.shot(); }
+      if (st.id === 'nip' && b.s >= cum[IX.nipIn] && !jy.nipped) { jy.nipped = true; sfx.turret.nip(); }
+      if (st.id === 'muzzle' && b.s >= segS.barrel[1] && !jy.flashed) { jy.flashed = true; flashT = 0.06; sfx.turret.shot({ nip: false }); }
       done = b.s >= end - 1e-6 && (st.id !== 'muzzle' || jy.t > cfg.dwell);
     } else if (st.id === 'flight') {                             // over a moment after it lands or hits something
       const b = S.flying.find((q) => q.demo);
@@ -836,7 +854,7 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
       if (b) { const dir = new THREE.Vector3(0.9, 0.55, -0.55).normalize(); ease(b.g.position.clone().lerp(new THREE.Vector3(0, 0.4, 1.5), 0.3), 1.6, dir); }
     }
     if (done && jy.auto) {
-      if (jy.step < J.length - 1) { jy.flashed = false; gotoStep(jy.step + 1); } else if (jy.t > 2.5) stopJourney();
+      if (jy.step < J.length - 1) gotoStep(jy.step + 1); else if (jy.t > 2.5) stopJourney();
     }
   }
   // the ball's speed along the path (m/s, real time): falling round the chute, then rolling, then flying out
@@ -874,7 +892,7 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
     S.lastSpeed = v;
     S.shots += 1;
     flashT = 0.06;
-    if (!demo) sfx.shot();
+    if (!demo) sfx.turret.shot({ power: v / BALL.speed });       // the journey's muzzle stage plays its own
   }
   function stepTransit(dt) {
     const tmT = (mech.timing.chute_ms + mech.timing.to_nip_ms) / 1000;
@@ -919,8 +937,8 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
       const vt = b.v.clone().addScaledVector(n, -b.v.dot(n));
       b.v.addScaledVector(vt, -0.25);
       if (o.kind === 'plate' && !o.plate.down) hitPlate(o.plate, contactLocal, j * BALL.mass);
-      if (o.kind === 'paper' && !b.hitOnce) { b.hitOnce = true; paper.mark(contactLocal); S.hits += 1; sfx.hit(); }
-      if (o.kind === 'plate' && !b.hitOnce) { b.hitOnce = true; S.hits += 1; sfx.hit(); ringAt(b.g.position, 0xfff1a8); }
+      if (o.kind === 'paper' && !b.hitOnce) { b.hitOnce = true; paper.mark(contactLocal); S.hits += 1; sfx.turret.hit('paper', -vn / 15); }
+      if (o.kind === 'plate' && !b.hitOnce) { b.hitOnce = true; S.hits += 1; sfx.turret.hit('plate', -vn / 15); ringAt(b.g.position, 0xfff1a8); }
     }
     return true;
   }
@@ -937,7 +955,7 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
       p.w += (tq / p.I) * dt - p.w * 0.6 * dt;
       p.th += p.w * dt;
       if (p.th < -4 * D2R) { p.th = -4 * D2R; p.w = Math.max(0, -p.w * 0.2); }
-      if (p.th >= 88 * D2R) { p.th = 88 * D2R; p.w = 0; p.down = true; sfx.down(); burstAt(p.face.getWorldPosition(new THREE.Vector3()), 0xff6a13); if (plates.every((q) => q.down)) { setTimeout(() => sfx.chirp(), 300); say('All four plates down!'); } }
+      if (p.th >= 88 * D2R) { p.th = 88 * D2R; p.w = 0; p.down = true; sfx.turret.down(); burstAt(p.face.getWorldPosition(new THREE.Vector3()), 0xff6a13); if (plates.every((q) => q.down)) { setTimeout(() => sfx.chirp(), 300); say('All four plates down!'); } }
       p.hinge.rotation.x = -p.th;
     }
   }
@@ -951,7 +969,7 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
     const j = (1 + 0.35) * vn;
     b.v.addScaledVector(n2, -j);
     wake(c, n2.clone().multiplyScalar(j * BALL.mass / 0.014).add(new THREE.Vector3(0, 0.4, 0)));
-    if (!b.hitOnce) { b.hitOnce = true; S.hits += 1; sfx.hit(); }
+    if (!b.hitOnce) { b.hitOnce = true; S.hits += 1; sfx.turret.hit('can', vn / 15); }
   }
   function wake(c, v) {
     if (c.dyn) { c.v.add(v); return; }
@@ -969,6 +987,7 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
       if (wl > 1e-4) c.m.quaternion.premultiply(tmpQ.setFromAxisAngle(tmpV.copy(c.w).divideScalar(wl), wl * dt));
       if (c.m.position.y < 0.033) {
         c.m.position.y = 0.033;
+        if (c.v.y < -0.35) sfx.turret.can(-c.v.y);                  // it lands (and bounces once, softer)
         c.v.y = Math.abs(c.v.y) > 0.6 ? -c.v.y * 0.25 : 0;
         c.v.x *= 1 - 3 * dt; c.v.z *= 1 - 3 * dt;
         c.w.multiplyScalar(1 - 4 * dt);
@@ -1002,7 +1021,7 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
         }
         if (b.g.position.y <= BALL_R) {
           b.g.position.y = BALL_R;
-          if (b.v.y < -1) { b.v.y *= -0.3; b.v.x *= 0.5; b.v.z *= 0.5; } else { b.v.y = 0; b.rolling = true; }
+          if (b.v.y < -1) { sfx.turret.bounce(-b.v.y); b.v.y *= -0.3; b.v.x *= 0.5; b.v.z *= 0.5; } else { b.v.y = 0; b.rolling = true; }
         }
       }
       if (b.rolling) b.v.multiplyScalar(Math.max(0, 1 - 4 * dt));
@@ -1174,10 +1193,11 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
   // ------------------------------------------------------------------------------------------------ the frame
   let liveT = 0;
   const prevAim = { pan: 0, tilt: 0 };
+  const PAN_GEAR = Math.abs(man.pivots.pinion_ratio || 3);
   function step(t, dtReal) {
     if (!S.active) return;
     if (S.journey) stepJourney(dtReal);
-    else S.timeScale = 1;
+    else { S.timeScale = 1; sfx.turret.slowmo(1); }
     const dt = dtReal * S.timeScale;
     // aim: keys slew the command; the servos follow at their top speeds
     const kp = (S.keys.has('arrowleft') || S.keys.has('a') ? 1 : 0) - (S.keys.has('arrowright') || S.keys.has('d') ? 1 : 0);
@@ -1195,10 +1215,16 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
     panPivot.rotation.y = S.pan;
     tiltPivot.rotation.x = -S.tilt;
     pinionPivot.rotation.y = man.pivots.pinion_ratio * S.pan;
-    // the safety line: ARM held = flywheels up, laser on; released = no feed, flywheels coast down
+    // the safety line: ARM held = flywheels up, laser on; released = no feed, and the phase-short brake stops the
+    // flywheels (D9: 5 % speed at 45 ms; unbraked they would coast for 1.4 s)
     const armed = S.arm.size > 0 || !!S.journey;
-    if (armed !== S.wasArmed) { S.wasArmed = armed; sfx.flywheels(armed); armBtn.classList.toggle('on', armed); if (!armed) S.queue = 0; }
-    S.rpm = armed ? Math.min(fl.rpm, S.rpm + fl.rpm / SPIN_UP_S * dt) : Math.max(0, S.rpm - fl.rpm / Math.max(0.3, fl.coast_down_s) * dt);
+    if (armed !== S.wasArmed) {
+      S.wasArmed = armed;
+      armBtn.classList.toggle('on', armed);
+      if (!armed) { S.queue = 0; S.offFor = 0; if (S.rpm > 0.05 * fl.rpm) sfx.turret.brake(); }
+    }
+    if (armed) S.rpm = Math.min(fl.rpm, S.rpm + fl.rpm / SPIN_UP_S * dt);
+    else if ((S.offFor += dt) > BRAKE_DELAY_S) S.rpm = S.rpm < 0.5 ? 0 : S.rpm * Math.exp(-dt / BRAKE_TAU_S);
     const laserOn = armed && !S.journey;
     if (laserOn !== S.laserOn) { S.laserOn = laserOn; sfx.laser(laserOn); }
     const ready = armed && S.rpm >= 0.95 * fl.rpm && hopperCount() > 0;
@@ -1208,18 +1234,20 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
       S.phiCmd = S.phi + 45 * D2R;
       S.nextAt = now + 1 / S.rate;
       S.queue = Math.max(0, S.queue - 1);
+      sfx.turret.dial();
     }
     if (!armed && !S.journey) S.phiCmd = S.phi;          // released: the dial stops where it is
     // the dial: pockets that pass the exit drop their ball into the chute; empty ones refill from the pile
     const phi0 = S.phi;
     S.phi = mv(S.phi, S.phiCmd, DIAL_DEG_S * D2R);
+    const dialSpeed = dt > 0 ? Math.abs(S.phi - phi0) / dt : 0;
     if (S.phi !== phi0) {
       S.pockets.forEach((full, k) => {
         const a0 = 45 * k + phi0 / D2R + 1e-6, a1 = 45 * k + S.phi / D2R + 1e-6;
         if (Math.floor(a0 / 360) !== Math.floor(a1 / 360) && full) {
           S.pockets[k] = false;
           if (S.journey) { const jy = S.journey; if (!jy.ball) { const { g } = ballMesh(); tiltPivot.add(g); jy.ball = { g, s: 0 }; } pathAt(0, jy.ball.g.position); }
-          else { const { g } = ballMesh(); tiltPivot.add(g); pathAt(0, g.position); S.transit.push({ g, t: 0 }); }
+          else { const { g } = ballMesh(); tiltPivot.add(g); pathAt(0, g.position); S.transit.push({ g, t: 0 }); sfx.turret.drop(); }   // the journey's exit stage plays its own
         }
         if (Math.floor((a0 - 120) / 360) !== Math.floor((a1 - 120) / 360) && !S.pockets[k] && S.pile > 0) { S.pockets[k] = true; S.pile -= 1; }
       });
@@ -1263,10 +1291,12 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
     }
     stepLaser();
     if ((predT += dtReal) > 0.1) { predT = 0; predict(); }
-    // servo whine from the slew
-    const servoSpeed = dt > 0 ? Math.hypot(S.pan - prevAim.pan, S.tilt - prevAim.tilt) / dt : 0;
+    // the sound: the robot's motors stay quiet here; the turret's flywheels, aim servos (at the servos: the pan servo
+    // turns 3 times the turret through its gear) and feed dial
+    const servoSpeed = dt > 0 && S.timeScale >= 1 ? Math.hypot(PAN_GEAR * (S.pan - prevAim.pan), S.tilt - prevAim.tilt) / dt : 0;
     prevAim.pan = S.pan; prevAim.tilt = S.tilt;
-    sfx.motion({ wheelSpeed: 0, legSpeed: 0, servoSpeed: S.timeScale < 1 ? 0 : servoSpeed });
+    sfx.motion({ wheelSpeed: 0, legSpeed: 0, servoSpeed: 0 });
+    sfx.turret.frame({ spin: S.rpm / fl.rpm, servo: servoSpeed, dial: dialSpeed });
     // the camera glide
     if (cam.to) {
       const k = 1 - Math.exp(-dtReal * 3.2);
@@ -1310,6 +1340,7 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
     window.addEventListener('keydown', kd);
     window.addEventListener('keyup', ku);
     window.addEventListener('blur', blur);
+    prevAim.pan = S.pan; prevAim.tilt = S.tilt;              // no servo whine for where it already points
     canvas.addEventListener('pointerdown', onDown);
     canvas.addEventListener('pointerup', onUp);
     stage.controls.addEventListener('start', onCamStart);
@@ -1329,7 +1360,10 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
     for (const s of secs) s.hidden = true;
     document.body.classList.remove('tb-mode');
     S.arm.clear(); S.trigger = false; S.keys.clear();
-    if (S.wasArmed) { S.wasArmed = false; sfx.flywheels(false); }
+    if (S.wasArmed) { S.wasArmed = false; if (S.rpm > 0.05 * fl.rpm) sfx.turret.brake(); }
+    S.rpm = 0;
+    sfx.turret.stop();
+    sfx.turret.slowmo(1);
     if (S.laserOn) { S.laserOn = false; sfx.laser(false); }
     window.removeEventListener('keydown', kd);
     window.removeEventListener('keyup', ku);
