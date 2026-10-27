@@ -315,3 +315,53 @@ Newest last. One entry per agent run: what it did, what it proved, what is next.
     CONFIG from the physics, the AM32 settings, the bench host script).
   - Next: the FEA rerun on this geometry (running: cad/turret_studies.py, summary.json); measure the X2216, a servo and
     the ring in hand (T6); order; print the stand and the pan stack; then T10-T15.
+- 2026-10-27 (late): the electrics made buildable part by part and reviewed, the brake modelled as built, and the FEA
+  on the v0 geometry (plan T8, T9; decision D47).
+  - Four faults in the plan's wiring, fixed first (docs/turret-wiring.md section 3, every part with a designator;
+    exports/turret/wiring/parts.md lists them and cad/turret_boards.py counts the parts list's passives from them): the
+    arm chain ran on 5 V and fed the Feather's pins, which are not 5 V tolerant (it runs on the Feather's 3.3 V now); a
+    5 V 555 drove the opto's LED at about 0.5 mA (the 555 runs on the pendant loop's 12 V: 2 mA); the brake FETs to a
+    floating star could stay off (each phase is shorted to GND, as AM32's own brake does); the laser's 2N7000 had
+    3.3 V on its gate against a threshold of up to 3 V (the bus buffer's spare channel drives it at 5 V, from A5).
+  - Then an independent review of the drawn circuit against the datasheets (a separate agent) found two blockers and
+    nine more, all fixed: the trip latch could be cleared by the next slower ball (now set-only); the Feather could
+    raise ARM through its own pins (it reads ARM and the pulse train through 100 k); a '123 one-shot fires on a rising
+    reset (the CD74HC423E does not; an MCP120 makes the power-up reset); the ESC's phase edges would lift the brake FETs'
+    gates (100 nF gate to source); complementary PWM would push the wheels' energy into the buck-fed 12 V rail (off,
+    plus TVS diodes, Pololu's Schottky at the 2815 and ramps between set speeds); the RX divider had no margin (a
+    Schottky); A4 shares an interrupt line with D10 (PULSE_MON on A3); the Feather's USB pin is its USB-C VBUS (fed
+    through a 1N5817); signals into the unpowered ESCs and feed servo (1 k series, DShot low while disarmed); a reversed
+    supply (a 1N5822 after the fuse); and any headphone plug would have closed the pendant's 3.5 mm loop (a keyed
+    Switchcraft mini-XLR now, and a 0.1 A polyfuse). Also from it: K = 0.475 at 3.3 V (R11 starts at 63.4 k), R9 39 k
+    for the 4N35's margin, 1 k gate pull-ups, a bench check of the gates' light (3.10), the hall's bypass capacitor.
+  - The firmware and its bench host follow the circuit: 19 firmware tests pass (a new set speed ramps; no DShot frame
+    while the ESCs are unpowered) and 33 of 33 simulated bench tests (3.1 reads the 555's frequency, the opto's current
+    and every Feather input; 3.3 a slower pair after a trip stays latched; 3.10 the gates' light; 4.10 no FET gate kick
+    and no rail over 13 V through a step down).
+  - The brake as built: two FETs and the taps make the short 173 mOhm (tau 10.2 ms at low speed, 6.9 for the motor
+    alone), and the winding's inductance (not published; 35 uH est, swept 0-50) weakens it at speed: 5 % speed 40-57
+    ms after release (48 at 35 uH; it read 30 before), nothing left at the 96 ms when a ball in the chute could arrive.
+  - FEA (T9: cad/turret_studies.py on the final geometry, exports/turret/fea/summary.json). Targets: 2 everyday, 1.2 rare.
+
+    | Part | Falls (30 g) | Everyday | Stall / jam |
+    |---|---|---|---|
+    | tilt yoke | 2.78 / 2.05 / 1.78 | 1.82 (50 N push up at the muzzle; p99 SF 4.4) | |
+    | turntable, its teeth | 8.38 / 2.19 | 3.31 (servo cap) | 1.66 |
+    | pinion | | 2.7 | 1.35 |
+    | pan base | 6.12 / 1.38 | 2.26 (servo cap) | 1.13 (p99 SF 9) |
+    | aluminium clamp | 2.89 (lift) | | |
+    | **cradle** (across the layers) | **0.78 / 0.62** | **0.77** (the push) | |
+    | cartridge | 1.57 | 1.57 (recoil at 66 fps; p99 SF 11) | |
+    | dial (PETG) | | 5.75 (jam at the 30 % cap) | 1.72 |
+
+    Changes from it: the yoke's stepped relief is a cone (its 30 g down case 2.25 -> 2.78; the sweep still clean); the
+    cartridge's recoil takes the X2216's own loads at 66 fps. Named for v1 (T16): the cradle's cheeks bend across the
+    layers (0.77 under a 50 N push with humid PA6-CF, about 1.6 dry): on the bench no pushing on the barrel, keep it
+    dry, print a spare.
+  - The bench print plan holds v0's parts only with the slicer's numbers (19 parts, 1,292 g, 50 h; the build page reads
+    it). The order sheets: 125 lines from 17 sellers, $1,609.89 with the stand and the tools; the boards' passives 94
+    pieces for $15.74; every line priced with a second seller.
+  - cad/turret_box.py now tolerates the J501's Rev 0.9 parameters (its fan duct became a flush grille); the adapter's
+    intake shroud was drawn round the Rev 0.8 duct and needs a look when Rev 0.9 lands.
+  - Next: order (the servos and the X2216s first: Waveshare ships from China); print the stand and the pan stack; test-
+    fit the TB3M's panel hole; T6's measurements on the parts in hand; then T10-T15.
