@@ -1,0 +1,89 @@
+{
+ "test": "3.10",
+ "title": "The gates' light: each collector clear and cut, one clean edge per gate (operator readings)",
+ "plan": "docs/turret-prototype-plan.md section 5",
+ "mode": "sim",
+ "date": "2026-10-27",
+ "pass": true,
+ "checks": [
+  {
+   "check": "gate 1: clear under 1 V",
+   "value": 0.3,
+   "limit": "< 1 V (else R41/R42 to 39 k)",
+   "pass": true
+  },
+  {
+   "check": "gate 1: cut over 4 V",
+   "value": 4.8,
+   "limit": "> 4 V",
+   "pass": true
+  },
+  {
+   "check": "gate 1: one clean pulse",
+   "value": 2,
+   "limit": "one rise and one fall, no chatter",
+   "pass": true
+  },
+  {
+   "check": "gate 2: clear under 1 V",
+   "value": 0.3,
+   "limit": "< 1 V (else R41/R42 to 39 k)",
+   "pass": true
+  },
+  {
+   "check": "gate 2: cut over 4 V",
+   "value": 4.8,
+   "limit": "> 4 V",
+   "pass": true
+  },
+  {
+   "check": "gate 2: one clean pulse",
+   "value": 2,
+   "limit": "one rise and one fall, no chatter",
+   "pass": true
+  }
+ ],
+ "readings": {
+  "gates": [
+   {
+    "gate": 1,
+    "clear_v": 0.3,
+    "cut_v": 4.8,
+    "edges": 2
+   },
+   {
+    "gate": 2,
+    "clear_v": 0.3,
+    "cut_v": 4.8,
+    "edges": 2
+   }
+  ]
+ },
+ "notes": [],
+ "sim": {
+  "seed": 1310,
+  "simulated_s": 2.6,
+  "wall_s": 0.1,
+  "stand_ins": [
+   "clear_v_1",
+   "clear_v_2",
+   "cut_v_1",
+   "cut_v_2",
+   "edges_1",
+   "edges_2"
+  ],
+  "shortened": {},
+  "warning": "simulated turret (firmware/turret/sim_turret.py): not a bench reading"
+ },
+ "firmware": {
+  "build": "v0",
+  "servo_baud": 500000,
+  "motor": "SunnySky X2216 880KV V3",
+  "kv": 880.0,
+  "pole_pairs": 7,
+  "erpm_limit": 81312,
+  "tyre_mm": 34,
+  "set_rpm_52fps": 8855,
+  "ramp_s": 0.3
+ }
+}
