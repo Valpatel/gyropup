@@ -65,7 +65,7 @@ TYRE_SOLREF = '0.0077 0.7'
 TPU_E = json.loads((R / 'catalog/materials.json').read_text())['tpu95']['modulus_gpa'] * 1e9
 OFF_DAMPING = 0.2 * (MOTOR['kt_nm_per_a'] / MOTOR['gear_ratio']) ** 2 / 0.15 * MOTOR['gear_ratio'] ** 2   # N m s/rad, see run()
 TPU_WALL = (fb.TPU_SLEEVE[0] - fb.TPU_SLEEVE[1]) / 2 / 1000          # m
-STOP_TRAVEL = (TPU_WALL - 0.5e-3) / (fb.P['stop_r'] / 1000)          # rad: the sleeve squeezed to 0.5 mm; then the steel post
+STOP_TRAVEL = fb.stop_travel()             # rad of sleeve squeeze before the link meets the post's steel head (5 mm at R58)
 STOP_K = TPU_E * (18e-3 * 11e-3) / TPU_WALL * (fb.P['stop_r'] / 1000) ** 2
 STOP_B = 0.6 * math.sqrt(STOP_K * 0.1)   # N m s/rad: ~0.3 of critical for ~0.1 kg m^2 behind the stop
 

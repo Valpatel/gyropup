@@ -226,7 +226,8 @@ def main():
                                               'price_usd_per_leg': round(sum((r['price_usd_each'] or 0) * r['qty'] for r in rows), 2),
                                               'made_to_order_estimate_usd_per_leg': round(sum(c['price_estimate_usd_each'] * c['qty'] for c in cnc_rows), 2)},
                                              indent=1) + '\n')
-    clashes = None if a.no_clash else fb.clashes(heights=(125, 130, 160, 200, 260, 320, 380, 390), leans=(-20, -10, 0, 10, 20))
+    clashes = None if a.no_clash else fb.clashes(heights=(125, 130, 160, 200, 260, 320, 380, 390), leans=(-20, -10, 0, 10, 20),
+                                                  poses=fb.stop_poses())          # the stops too (review M1)
     phi_s = fb.stance(300.0)
     j = fb.fk(*phi_s)
     summary = {
