@@ -593,7 +593,8 @@
   ],
   "confidence": "product page",
   "used_for": "knee pin nut (M10 shoulder-screw thread)",
-  "qty_per_robot": 2
+  "qty_per_robot": 4,
+  "notes": " Leg v2: one per knee, 4 per robot."
  },
  {
   "id": "mcmaster-59935k53",
@@ -3734,5 +3735,1365 @@
   "used_for": "cable passes (CP) through the yoke wall and chassis side",
   "qty_per_robot": 4,
   "notes": "Grommets fit an 11/16 in (17.5 mm) hole in a panel up to 1/4 in (6.4 mm); the passes are 8 + 12 mm of printed wall, so they need a thinned land (or drop the grommets and round the 18 mm bores)."
+ },
+ {
+  "id": "mcmaster-92981a408",
+  "key": "knee_pin_60",
+  "category": "fastener",
+  "vendor": "McMaster-Carr",
+  "model": "92981A408",
+  "name": "Alloy Steel Shoulder Screws, 12 mm Shoulder Diameter, 60 mm Shoulder Length, M10 x 1.5 mm Thread",
+  "price_usd": 7.28,
+  "price_note": "McMaster-Carr: $7.28 each (price_usd is per piece)",
+  "price_checked": "2026-10-26",
+  "pack_qty": 1,
+  "pack_price_usd": 7.28,
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/92981A408/",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "shoulder_d_mm": 12.0,
+   "shoulder_length_mm": 60.0,
+   "thread": "M10x1.5",
+   "thread_length_mm": 16.0,
+   "head_d_mm": 18.0,
+   "head_height_mm": 9.0,
+   "mass_g": 77.5,
+   "mass_basis": "estimate (no CAD yet): 92981A411's CAD volume less 30 mm of 12 mm shoulder x 7.85 g/cm3",
+   "material": "Black-Oxide Alloy Steel",
+   "mcmaster": {
+    "raw": {
+     "Shoulder Fit": "Standard",
+     "Thread Direction": "Right Hand",
+     "Socket Head Profile": "Standard",
+     "Fastener Head Type": "Socket",
+     "Drive Style": "Hex",
+     "Material": "Black-Oxide Alloy Steel",
+     "Shoulder Diameter": "12 mm",
+     "Shoulder Diameter Tolerance": "-0.072 mm to -0.01 mm",
+     "Shoulder Length": "60 mm",
+     "Shoulder Length Tolerance": "0 mm to 0.25 mm",
+     "Thread Size": "M10 × 1.5 mm",
+     "Thread Length": "16 mm",
+     "Head Diameter": "18 mm",
+     "Head Height": "9 mm",
+     "Drive Size": "6 mm",
+     "Tensile Strength": "140,000 psi",
+     "Hardness": "Rockwell C32",
+     "Head Texture": "Smooth",
+     "Minimum Shear Strength": "84,000 psi",
+     "Performance": "High Strength, Wear Resistant",
+     "Relative Thread Length": "Standard",
+     "Relative Thread Size": "Standard",
+     "Specifications Met": "ISO 7379",
+     "System of Measurement": "Metric",
+     "Thread Fit": "Metric Class 5g6g",
+     "Thread Spacing": "Coarse",
+     "Thread Type": "Metric",
+     "Country of Origin": "United States",
+     "DFARS Compliance": "Specialty Metals Compliant (252.225-7009)",
+     "Export Control Classification Number (ECCN)": "EAR99",
+     "REACH Compliance": "Not Compliant",
+     "RoHS Compliance": "RoHS 3 (2015/863/EU) Compliant",
+     "Schedule B Number": "731815.9000",
+     "U.S.–Mexico–Canada Agreement (USMCA) Qualifying": "Yes"
+    },
+    "parsed": {
+     "Shoulder Diameter": {
+      "value": 12.0,
+      "unit": "mm"
+     },
+     "Shoulder Diameter Tolerance": {
+      "min": -0.072,
+      "max": -0.01,
+      "unit": "mm"
+     },
+     "Shoulder Length": {
+      "value": 60.0,
+      "unit": "mm"
+     },
+     "Shoulder Length Tolerance": {
+      "min": 0.0,
+      "max": 0.25,
+      "unit": "mm"
+     },
+     "Thread Size": {
+      "thread": "M10x1.5",
+      "d": 10.0,
+      "pitch": 1.5,
+      "unit": "mm"
+     },
+     "Thread Length": {
+      "value": 16.0,
+      "unit": "mm"
+     },
+     "Head Diameter": {
+      "value": 18.0,
+      "unit": "mm"
+     },
+     "Head Height": {
+      "value": 9.0,
+      "unit": "mm"
+     },
+     "Drive Size": {
+      "value": 6.0,
+      "unit": "mm"
+     },
+     "Tensile Strength": {
+      "value": 965.2664,
+      "unit": "MPa"
+     },
+     "Minimum Shear Strength": {
+      "value": 579.15984,
+      "unit": "MPa"
+     }
+    }
+   }
+  },
+  "cad": {
+   "file": null,
+   "kind": "shoulder_screw",
+   "frame": "axis +Z, centred on the axis, underside of the head at z = 0, head on +z, shoulder and thread towards -z",
+   "available": true,
+   "step_url": "https://www.mcmaster.com/92981A408/",
+   "bbox_mm": null,
+   "volume_mm3": null,
+   "pending": "STEP not downloaded yet: on 2026-10-26 McMaster-Carr asked for a login before CAD downloads ('Please log in and reload the page to download CAD', then downloads cancelled). Finish with .venv/bin/python tools/mcmaster_cad.py --catalog --only knee_pin_60 stop_post insert_m8 washer_m12_thin knee_spacer screw_m6x40 (logged in, or once the anonymous limit resets), or save the STEP from a logged-in browser as references/vendor/mcmaster/92981A408/92981A408.step and run the same command offline."
+  },
+  "frame": "axis +Z, centred on the axis, underside of the head at z = 0, head on +z, shoulder and thread towards -z",
+  "sources": [
+   "https://www.mcmaster.com/92981A408/"
+  ],
+  "confidence": "product page",
+  "used_for": "leg v2 knee joints (KC), one per knee: through the upper link, a washer, the lower link's two 6001s and their spacer, a washer",
+  "qty_per_robot": 4,
+  "notes": "Leg v2 now uses knee_pin_70 (92981A409, 12 x 70): the leg grew thicker (upper link 30, lower links 20 + 26, two 6201s per knee), so 60 no longer spans the knee stack; kept in the catalogue for reference. Earlier stack: Shoulder 60 = upper link 14 + washer 2 + 6001 8 + spacer 26 + 6001 8 + washer 2 (cad/fivebar.py stack). M10 x 16 thread into nut_m10_nyloc in the upper link's pocket (10 mm engaged). Same family as knee_pin (92981A411, 12 x 90), so leg v2 needs 4 M10 nylocs per robot (nut_m10_nyloc lists 2)."
+ },
+ {
+  "id": "mcmaster-92981a303",
+  "key": "stop_post",
+  "category": "fastener",
+  "vendor": "McMaster-Carr",
+  "model": "92981A303",
+  "name": "Alloy Steel Shoulder Screws, 10 mm Shoulder Diameter, 20 mm Shoulder Length, M8 x 1.25 mm Thread",
+  "price_usd": 3.5,
+  "price_note": "McMaster-Carr: $3.50 each (price_usd is per piece)",
+  "price_checked": "2026-10-26",
+  "pack_qty": 1,
+  "pack_price_usd": 3.5,
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/92981A303/",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "shoulder_d_mm": 10.0,
+   "shoulder_length_mm": 20.0,
+   "thread": "M8x1.25",
+   "thread_length_mm": 13.0,
+   "head_d_mm": 16.0,
+   "head_height_mm": 7.0,
+   "mass_g": 26.3,
+   "mass_basis": "estimate (no CAD yet): nominal head + shoulder + thread less the hex socket (depth 7.2 mm, calibrated on 92981A411 / 92981A205 CAD) x 7.85 g/cm3",
+   "material": "Black-Oxide Alloy Steel",
+   "mcmaster": {
+    "raw": {
+     "Shoulder Fit": "Standard",
+     "Thread Direction": "Right Hand",
+     "Socket Head Profile": "Standard",
+     "Fastener Head Type": "Socket",
+     "Drive Style": "Hex",
+     "Material": "Black-Oxide Alloy Steel",
+     "Shoulder Diameter": "10 mm",
+     "Shoulder Diameter Tolerance": "-0.072 mm to -0.01 mm",
+     "Shoulder Length": "20 mm",
+     "Shoulder Length Tolerance": "0 mm to 0.25 mm",
+     "Thread Size": "M8 × 1.25 mm",
+     "Thread Length": "13 mm",
+     "Head Diameter": "16 mm",
+     "Head Height": "7 mm",
+     "Drive Size": "5 mm",
+     "Tensile Strength": "140,000 psi",
+     "Hardness": "Rockwell C32",
+     "Head Texture": "Knurled",
+     "Minimum Shear Strength": "84,000 psi",
+     "Performance": "High Strength, Wear Resistant",
+     "Relative Thread Length": "Standard",
+     "Relative Thread Size": "Standard",
+     "Specifications Met": "ISO 7379",
+     "System of Measurement": "Metric",
+     "Thread Fit": "Metric Class 5g6g",
+     "Thread Spacing": "Coarse",
+     "Thread Type": "Metric",
+     "Country of Origin": "United States, Belgium, Canada, China, France, Germany, India, Indonesia, Italy, Japan, Malaysia, Mexico, Philippines, Poland, South Korea, Switzerland, Taiwan, Thailand, Vietnam",
+     "DFARS Compliance": "Not Specialty Metals Compliant",
+     "Export Control Classification Number (ECCN)": "EAR99",
+     "REACH Compliance": "REACH (EC 1907/2006) (02/04/2026, 253 SVHC) Compliant",
+     "RoHS Compliance": "RoHS 3 (2015/863/EU) Compliant",
+     "Schedule B Number": "731815.9000",
+     "U.S.–Mexico–Canada Agreement (USMCA) Qualifying": "No"
+    },
+    "parsed": {
+     "Shoulder Diameter": {
+      "value": 10.0,
+      "unit": "mm"
+     },
+     "Shoulder Diameter Tolerance": {
+      "min": -0.072,
+      "max": -0.01,
+      "unit": "mm"
+     },
+     "Shoulder Length": {
+      "value": 20.0,
+      "unit": "mm"
+     },
+     "Shoulder Length Tolerance": {
+      "min": 0.0,
+      "max": 0.25,
+      "unit": "mm"
+     },
+     "Thread Size": {
+      "thread": "M8x1.25",
+      "d": 8.0,
+      "pitch": 1.25,
+      "unit": "mm"
+     },
+     "Thread Length": {
+      "value": 13.0,
+      "unit": "mm"
+     },
+     "Head Diameter": {
+      "value": 16.0,
+      "unit": "mm"
+     },
+     "Head Height": {
+      "value": 7.0,
+      "unit": "mm"
+     },
+     "Drive Size": {
+      "value": 5.0,
+      "unit": "mm"
+     },
+     "Tensile Strength": {
+      "value": 965.2664,
+      "unit": "MPa"
+     },
+     "Minimum Shear Strength": {
+      "value": 579.15984,
+      "unit": "MPa"
+     }
+    }
+   }
+  },
+  "cad": {
+   "file": null,
+   "kind": "shoulder_screw",
+   "frame": "axis +Z, centred on the axis, underside of the head at z = 0, head on +z, shoulder and thread towards -z",
+   "available": true,
+   "step_url": "https://www.mcmaster.com/92981A303/",
+   "bbox_mm": null,
+   "volume_mm3": null,
+   "pending": "STEP not downloaded yet: on 2026-10-26 McMaster-Carr asked for a login before CAD downloads ('Please log in and reload the page to download CAD', then downloads cancelled). Finish with .venv/bin/python tools/mcmaster_cad.py --catalog --only knee_pin_60 stop_post insert_m8 washer_m12_thin knee_spacer screw_m6x40 (logged in, or once the anonymous limit resets), or save the STEP from a logged-in browser as references/vendor/mcmaster/92981A303/92981A303.step and run the same command offline."
+  },
+  "frame": "axis +Z, centred on the axis, underside of the head at z = 0, head on +z, shoulder and thread towards -z",
+  "sources": [
+   "https://www.mcmaster.com/92981A303/"
+  ],
+  "confidence": "product page",
+  "used_for": "leg v2 hard-stop posts: 4 per leg in the hip frame's M8 inserts; a TPU 95A sleeve (18 x 10) over the shoulder stops the upper links at +3 / -97 deg",
+  "qty_per_robot": 8,
+  "notes": "ISO 7379 10 x 20, M8 x 13 thread: the shoulder seats on the insert's face and the thread runs the whole 12.7 mm of insert_m8. Head 16 x 7 mm (cad/fivebar.py ISO7379_HEAD has 16 x 8 for the 10 mm size)."
+ },
+ {
+  "id": "mcmaster-94459a778",
+  "key": "insert_m8",
+  "category": "fastener",
+  "vendor": "McMaster-Carr",
+  "model": "94459A778",
+  "name": "Heat-Set Threaded Inserts for Plastic, Standard, Brass, M8 x 1.25mm Thread Size, 12.7mm Installed Length",
+  "price_usd": 0.6544,
+  "price_note": "McMaster-Carr: $16.36 per pack of 25 (price_usd is per piece)",
+  "price_checked": "2026-10-26",
+  "pack_qty": 25,
+  "pack_price_usd": 16.36,
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/94459A778/",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "installed_length_mm": 12.7,
+   "thread": "M8",
+   "mass_g": 3.71,
+   "mass_basis": "estimate (no CAD yet): (9.6 hole - M8 minor) annulus x 12.7 mm x 0.91 (shape factor of the M5 / M3 inserts' CAD) x 8.5 g/cm3",
+   "material": "Brass",
+   "mcmaster": {
+    "raw": {
+     "Threaded Insert Type": "Heat Set",
+     "Profile": "Standard",
+     "Material": "Brass",
+     "Thread Size": "M8",
+     "Thread Pitch": "1.25 mm",
+     "Installed Length": "12.7 mm",
+     "Drill Bit Size": "V",
+     "For Maximum Hole Diameter": "9.6 mm",
+     "End Type": "Open",
+     "For Minimum Material Thickness": "13.5 mm",
+     "For Use In": "Plastic",
+     "Performance": "Conductive, Corrosion Resistant, Nonmagnetic",
+     "System of Measurement": "Metric",
+     "Tensile Strength": "68,000 psi",
+     "Thread Direction": "Right Hand",
+     "Thread Fit": "Metric Class 4H",
+     "Thread Spacing": "Coarse",
+     "Thread Type": "Metric",
+     "Threaded Insert Securing Type": "Knurled",
+     "Country of Origin": "United States",
+     "DFARS Compliance": "Specialty Metals COTS-Exempt",
+     "Export Control Classification Number (ECCN)": "EAR99",
+     "REACH Compliance": "REACH (EC 1907/2006) (02/04/2026, 253 SVHC) Compliant",
+     "RoHS Compliance": "RoHS 3 (2015/863/EU) Compliant with Exemptions",
+     "RoHS Exemptions": "6(c)",
+     "Schedule B Number": "741539.0000",
+     "U.S.–Mexico–Canada Agreement (USMCA) Qualifying": "Yes",
+     "Related Products": "Soldering Installation Tips"
+    },
+    "parsed": {
+     "Thread Pitch": {
+      "value": 1.25,
+      "unit": "mm"
+     },
+     "Installed Length": {
+      "value": 12.7,
+      "unit": "mm"
+     },
+     "For Maximum Hole Diameter": {
+      "value": 9.6,
+      "unit": "mm"
+     },
+     "For Minimum Material Thickness": {
+      "value": 13.5,
+      "unit": "mm"
+     },
+     "Tensile Strength": {
+      "value": 468.84368,
+      "unit": "MPa"
+     }
+    }
+   },
+   "hole_mm": 9.6
+  },
+  "cad": {
+   "file": null,
+   "kind": "insert",
+   "frame": "axis +Z, centred on the axis; the larger end (flange, head, collar) at z = 0 and the part on +z; when both ends are the same size, the heavier end at z = 0",
+   "available": true,
+   "step_url": "https://www.mcmaster.com/94459A778/",
+   "bbox_mm": null,
+   "volume_mm3": null,
+   "pending": "STEP not downloaded yet: on 2026-10-26 McMaster-Carr asked for a login before CAD downloads ('Please log in and reload the page to download CAD', then downloads cancelled). Finish with .venv/bin/python tools/mcmaster_cad.py --catalog --only knee_pin_60 stop_post insert_m8 washer_m12_thin knee_spacer screw_m6x40 (logged in, or once the anonymous limit resets), or save the STEP from a logged-in browser as references/vendor/mcmaster/94459A778/94459A778.step and run the same command offline."
+  },
+  "frame": "axis +Z, centred on the axis; the larger end (flange, head, collar) at z = 0 and the part on +z; when both ends are the same size, the heavier end at z = 0",
+  "sources": [
+   "https://www.mcmaster.com/94459A778/"
+  ],
+  "confidence": "product page",
+  "used_for": "leg v2 stop posts: M8 heat-set inserts in the PA6-CF hip frame (4 per leg)",
+  "qty_per_robot": 8,
+  "notes": "Installed length 12.7 mm; recommended hole: letter drill V (9.58 mm), 9.6 mm maximum (McMaster). cad/fivebar.py cuts a 10 x 16 pilot: make it 9.6 (a printed hole comes out a little small, so 9.6-9.7 as modelled); 16 deep leaves room below the insert for displaced melt and the post's thread tip. Minimum material 13.5 mm (McMaster): the hip frame is 24.1 mm thick at the posts. The 12.7 mm length, not the 6.4 mm 94459A777, so the stop post's whole 13 mm thread is engaged and the insert resists the impact bending of a stop. Same family as insert_m5 / insert_m3 (94459A, standard brass)."
+ },
+ {
+  "id": "mcmaster-98689a118",
+  "key": "washer_m12_thin",
+  "category": "fastener",
+  "vendor": "McMaster-Carr",
+  "model": "98689A118",
+  "name": "18-8 Stainless Steel Washer, Undersized, for M12 Screw Size, 13.0 mm ID, 20.0 mm OD",
+  "price_usd": 0.1371,
+  "price_note": "McMaster-Carr: $13.71 per pack of 100 (price_usd is per piece)",
+  "price_checked": "2026-10-26",
+  "pack_qty": 100,
+  "pack_price_usd": 13.71,
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/98689A118/",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "id_mm": 13.0,
+   "od_mm": 20.0,
+   "mass_g": 2.9,
+   "mass_basis": "estimate (no CAD yet): nominal 13 x 20 x 2 x 8.0 g/cm3",
+   "material": "18-8 Stainless Steel",
+   "mcmaster": {
+    "raw": {
+     "Washer Designation": "Undersized",
+     "Material": "18-8 Stainless Steel",
+     "For Screw Size": "M12",
+     "ID": "13.0 mm",
+     "OD": "20.0 mm",
+     "Thickness": "1.8 mm to 2.2 mm",
+     "Hardness": "Rockwell B76",
+     "Performance": "Corrosion Resistant",
+     "Specifications Met": "DIN 433, ISO 7092",
+     "System of Measurement": "Metric",
+     "Washer Type": "Flat",
+     "Country of Origin": "China, Germany, India",
+     "DFARS Compliance": "Specialty Metals COTS-Exempt",
+     "Export Control Classification Number (ECCN)": "EAR99",
+     "REACH Compliance": "REACH (EC 1907/2006) (02/04/2026, 253 SVHC) Compliant",
+     "RoHS Compliance": "RoHS 3 (2015/863/EU) Compliant",
+     "Schedule B Number": "731816.0000",
+     "U.S.–Mexico–Canada Agreement (USMCA) Qualifying": "No"
+    },
+    "parsed": {
+     "ID": {
+      "value": 13.0,
+      "unit": "mm"
+     },
+     "OD": {
+      "value": 20.0,
+      "unit": "mm"
+     },
+     "Thickness": {
+      "min": 1.8,
+      "max": 2.2,
+      "unit": "mm"
+     }
+    }
+   }
+  },
+  "cad": {
+   "file": null,
+   "kind": "washer",
+   "frame": "axis +Z, centred on the axis; the larger end (flange, head, collar) at z = 0 and the part on +z; when both ends are the same size, the heavier end at z = 0",
+   "available": true,
+   "step_url": "https://www.mcmaster.com/98689A118/",
+   "bbox_mm": null,
+   "volume_mm3": null,
+   "pending": "STEP not downloaded yet: on 2026-10-26 McMaster-Carr asked for a login before CAD downloads ('Please log in and reload the page to download CAD', then downloads cancelled). Finish with .venv/bin/python tools/mcmaster_cad.py --catalog --only knee_pin_60 stop_post insert_m8 washer_m12_thin knee_spacer screw_m6x40 (logged in, or once the anonymous limit resets), or save the STEP from a logged-in browser as references/vendor/mcmaster/98689A118/98689A118.step and run the same command offline."
+  },
+  "frame": "axis +Z, centred on the axis; the larger end (flange, head, collar) at z = 0 and the part on +z; when both ends are the same size, the heavier end at z = 0",
+  "sources": [
+   "https://www.mcmaster.com/98689A118/"
+  ],
+  "confidence": "product page",
+  "used_for": "leg v2 knee joints: one each side of each knee's bearing stack (upper link to the inner 6001, outer 6001 to the knee pin's head)",
+  "qty_per_robot": 8,
+  "notes": "DIN 433 / ISO 7092 M12: 13 x 20 x 2 (1.8-2.2) = the 2 mm layer gap in cad/fivebar.py. No 13 x 24 x 2 is stocked (DIN 125 M12 is 13 x 24 x 2.5, too thick for the gap). The CAD's knee_washer envelope is 24 OD: make it 20. 20 is also the safer size: it bears on the 6001's inner ring (flat out to 15.2 in the McMaster model) and passes over the seal (recessed 0.4), while a 24 washer floating 0.5 mm on the 12 mm shoulder could reach the outer ring's face (from 24.8)."
+ },
+ {
+  "id": "mcmaster-9056k68",
+  "key": "knee_spacer",
+  "category": "fastener",
+  "vendor": "McMaster-Carr",
+  "model": "9056K68",
+  "name": "Multipurpose 6061 Aluminum Round Tube, 0.065\" Wall Thickness, 5/8\" OD",
+  "price_usd": 6.26,
+  "price_note": "McMaster-Carr: $6.26 each (price_usd is per piece)",
+  "price_checked": "2026-10-26",
+  "pack_qty": 1,
+  "pack_price_usd": 6.26,
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/9056K68/",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "length_mm": 152.4,
+   "od_mm": 15.875,
+   "id_mm": 12.573,
+   "mass_g": 30.36,
+   "mass_basis": "estimate (no CAD yet): nominal 15.875 OD x 12.573 ID x 152.4 mm (1/2 ft) x 2.7 g/cm3",
+   "material": "6061 Aluminum",
+   "mcmaster": {
+    "raw": {
+     "Tolerance Rating": "Standard",
+     "Wall Thickness": "0.065\"",
+     "Wall Thickness Tolerance": "-0.004\" to 0.004\"",
+     "Length": "1/2 ft.",
+     "Length Tolerance": "0.000\" to 0.125\"",
+     "OD": "5/8\"",
+     "OD Tolerance": "-0.01\" to 0.01\"",
+     "ID": "0.495\"",
+     "ID Minimum Tolerance": "Not Rated",
+     "ID Maximum Tolerance": "Not Rated",
+     "Fabrication": "Cold Drawn",
+     "Temper Designation": "T6",
+     "Specifications Met": "ASTM B210",
+     "Appearance": "Plain",
+     "Application": "Multipurpose",
+     "Certificate Form": "Digital",
+     "Certificate Type": "Material Certificate with Traceable Lot Number",
+     "Conductivity Percentage": "43% IACS",
+     "Elongation": "12.5%",
+     "Hardness": "Brinell 95",
+     "Hardness Rating": "Soft",
+     "Heat Treatable": "Yes",
+     "Heat Treatment": "Hardened",
+     "Material": "6061 Aluminum",
+     "Material Composition Aluminum": "95.85% to 98.61%",
+     "Material Composition Chromium": "0.04% to 0.35%",
+     "Material Composition Copper": "0.15% to 0.4%",
+     "Material Composition Iron": "0% to 0.7%",
+     "Material Composition Magnesium": "0.8% to 1.2%",
+     "Material Composition Manganese": "0% to 0.15%",
+     "Material Composition Other": "0% to 0.15%",
+     "Material Composition Silicon": "0.4% to 0.8%",
+     "Material Composition Titanium": "0% to 0.15%",
+     "Material Composition Zinc": "0% to 0.25%",
+     "Performance": "Corrosion Resistant, Formable, Heat Treatable, High Strength, Machinable, Ultra Low Temperature, Ultra Weldable",
+     "Shape": "Round Tube",
+     "Straightness Tolerance": "0.020\"/1 ft.",
+     "Temperature": "-320° F to 210° F",
+     "Warning Message": "Physical and mechanical properties are not guaranteed. They are intended only as a basis for comparison and not for design purposes.",
+     "Yield Strength": "35,000 psi",
+     "Country of Origin": "United States, Brazil",
+     "DFARS Compliance": "Specialty Metals COTS-Exempt",
+     "Export Control Classification Number (ECCN)": "EAR99",
+     "REACH Compliance": "REACH (EC 1907/2006) (02/04/2026, 253 SVHC) Compliant",
+     "RoHS Compliance": "RoHS 3 (2015/863/EU) Compliant",
+     "Schedule B Number": "760820.0030",
+     "U.S.–Mexico–Canada Agreement (USMCA) Qualifying": "No",
+     "Additional Specifications": "SDS"
+    },
+    "parsed": {
+     "Wall Thickness": {
+      "value": 1.651,
+      "unit": "mm"
+     },
+     "Wall Thickness Tolerance": {
+      "min": -0.1016,
+      "max": 0.1016,
+      "unit": "mm"
+     },
+     "Length": {
+      "value": 152.4,
+      "unit": "mm"
+     },
+     "Length Tolerance": {
+      "min": 0.0,
+      "max": 3.175,
+      "unit": "mm"
+     },
+     "OD": {
+      "value": 15.875,
+      "unit": "mm"
+     },
+     "OD Tolerance": {
+      "min": -0.254,
+      "max": 0.254,
+      "unit": "mm"
+     },
+     "ID": {
+      "value": 12.573,
+      "unit": "mm"
+     },
+     "Temperature": {
+      "min": -195.555556,
+      "max": 98.888889,
+      "unit": "degC"
+     },
+     "Yield Strength": {
+      "value": 241.3166,
+      "unit": "MPa"
+     }
+    }
+   }
+  },
+  "cad": {
+   "file": null,
+   "kind": "spacer",
+   "frame": "axis +Z, centred on the axis; the larger end (flange, head, collar) at z = 0 and the part on +z; when both ends are the same size, the heavier end at z = 0",
+   "available": true,
+   "step_url": "https://www.mcmaster.com/9056K68/",
+   "bbox_mm": null,
+   "volume_mm3": null,
+   "pending": "STEP not downloaded yet: on 2026-10-26 McMaster-Carr asked for a login before CAD downloads ('Please log in and reload the page to download CAD', then downloads cancelled). Finish with .venv/bin/python tools/mcmaster_cad.py --catalog --only knee_pin_60 stop_post insert_m8 washer_m12_thin knee_spacer screw_m6x40 (logged in, or once the anonymous limit resets), or save the STEP from a logged-in browser as references/vendor/mcmaster/9056K68/9056K68.step and run the same command offline."
+  },
+  "frame": "axis +Z, centred on the axis; the larger end (flange, head, collar) at z = 0 and the part on +z; when both ends are the same size, the heavier end at z = 0",
+  "sources": [
+   "https://www.mcmaster.com/9056K68/"
+  ],
+  "confidence": "product page",
+  "used_for": "leg v2 knee joints: the spacer between each knee's two 6001 inner races (2 per leg), cut from this tube: one 1/2 ft length makes the robot's 4 and a spare",
+  "qty_per_robot": 1,
+  "choose": [
+   "1/2"
+  ],
+  "notes": "No stocked spacer fits. McMaster's M12 unthreaded spacers (aluminium 94669A, 18-8 92871A) are 19 OD, over the 17 limit for bearing on the inner ring only, in 5 mm steps with no 26 (closest: 92871A374, 19 x 25, bore 12.0-12.3, $7.05 each, would need a seat moved 1 mm). Cut four 28 mm pieces from one 1/2 ft (152 mm) of this 6061-T6 tube (15.9 OD x 12.57 bore, 0.065 wall: clears the 12 mm shoulder by about 0.6 mm) and face both ends square to 26.00 +0/-0.05 on a lathe: the spacer sets the inner races' axial position, so its length matters most. One piece is about 5.2 g and $1.57 of tube; price_usd, mass and CAD here are for the whole 1/2 ft length (qty_per_robot counts lengths, as for threaded_rod_m8). Better than a printed spacer: PA6-CF would creep under the knee pin's clamp and let the inner races loosen. Without a lathe: made-to-order 6061 spacer 90018A130 at 0.630 OD x 0.500 ID x 1.024 in ($39.54 each in 5s, $70.39 for 1-4). Leg v2 (30 mm upper links): cut to 28.0 mm (+0/-0.05), four per 1/2 ft length.",
+  "options": [
+   "Length, ft. 1/2",
+   "Length, ft."
+  ]
+ },
+ {
+  "id": "mcmaster-91290a336",
+  "key": "screw_m6x40",
+  "category": "fastener",
+  "vendor": "McMaster-Carr",
+  "model": "91290A336",
+  "name": "Black-Oxide Alloy Steel Socket Head Screw, US Origin, M6 x 1 mm Thread Size, 40 mm Long",
+  "price_usd": 0.2658,
+  "price_note": "McMaster-Carr: $13.29 per pack of 50 (price_usd is per piece)",
+  "price_checked": "2026-10-26",
+  "pack_qty": 50,
+  "pack_price_usd": 13.29,
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/91290A336/",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "thread": "M6x1",
+   "length_mm": 40.0,
+   "head_d_mm": 10.0,
+   "head_height_mm": 6.0,
+   "mass_g": 10.74,
+   "mass_basis": "estimate (no CAD yet): 91290A334's CAD volume (M6 x 35, same series) plus 5 mm of 6 mm shank x 7.85 g/cm3",
+   "material": "Black-Oxide Alloy Steel",
+   "mcmaster": {
+    "raw": {
+     "Thread Size": "M6 × 1 mm",
+     "Thread Spacing": "Coarse",
+     "Thread Type": "Metric",
+     "Thread Fit": "Metric Class 5g6g",
+     "Thread Direction": "Right Hand",
+     "Socket Head Profile": "Standard",
+     "Fastener Head Type": "Socket",
+     "Drive Style": "Hex",
+     "Length": "40 mm",
+     "Head Diameter": "10 mm",
+     "Head Height": "6 mm",
+     "Threading": "Partially Threaded",
+     "Tensile Strength": "170,000 psi",
+     "Fastener Strength Grade/Class": "Class 12.9",
+     "Drive Size": "5 mm",
+     "Hardness": "Rockwell C41",
+     "Material": "Black-Oxide Alloy Steel",
+     "Minimum Thread Length": "24 mm",
+     "Performance": "High Strength",
+     "Specifications Met": "DIN 912, ISO 4762",
+     "System of Measurement": "Metric",
+     "Tip Type": "Flat",
+     "Country of Origin": "United States",
+     "DFARS Compliance": "Specialty Metals Compliant (252.225-7009)",
+     "Export Control Classification Number (ECCN)": "EAR99",
+     "REACH Compliance": "Not Compliant",
+     "RoHS Compliance": "RoHS 3 (2015/863/EU) Compliant",
+     "Schedule B Number": "731815.9000",
+     "U.S.–Mexico–Canada Agreement (USMCA) Qualifying": "Yes"
+    },
+    "parsed": {
+     "Thread Size": {
+      "thread": "M6x1",
+      "d": 6.0,
+      "pitch": 1.0,
+      "unit": "mm"
+     },
+     "Length": {
+      "value": 40.0,
+      "unit": "mm"
+     },
+     "Head Diameter": {
+      "value": 10.0,
+      "unit": "mm"
+     },
+     "Head Height": {
+      "value": 6.0,
+      "unit": "mm"
+     },
+     "Tensile Strength": {
+      "value": 1172.1092,
+      "unit": "MPa"
+     },
+     "Drive Size": {
+      "value": 5.0,
+      "unit": "mm"
+     },
+     "Minimum Thread Length": {
+      "value": 24.0,
+      "unit": "mm"
+     }
+    }
+   }
+  },
+  "cad": {
+   "file": null,
+   "kind": "screw",
+   "frame": "axis +Z, centred on the axis, head on +z and shank towards -z; z = 0 at the underside of the head (socket, button, pan, hex and flanged heads) or at the top face of a countersunk (flat) head",
+   "available": true,
+   "step_url": "https://www.mcmaster.com/91290A336/",
+   "bbox_mm": null,
+   "volume_mm3": null,
+   "pending": "STEP not downloaded yet: on 2026-10-26 McMaster-Carr asked for a login before CAD downloads ('Please log in and reload the page to download CAD', then downloads cancelled). Finish with .venv/bin/python tools/mcmaster_cad.py --catalog --only knee_pin_60 stop_post insert_m8 washer_m12_thin knee_spacer screw_m6x40 (logged in, or once the anonymous limit resets), or save the STEP from a logged-in browser as references/vendor/mcmaster/91290A336/91290A336.step and run the same command offline."
+  },
+  "frame": "axis +Z, centred on the axis, head on +z and shank towards -z; z = 0 at the underside of the head (socket, button, pan, hex and flanged heads) or at the top face of a countersunk (flat) head",
+  "sources": [
+   "https://www.mcmaster.com/91290A336/"
+  ],
+  "confidence": "product page",
+  "used_for": "leg v2: the BotWheel's stator flange, 4 x M6 from inside the wheel link (4 per leg)",
+  "qty_per_robot": 8,
+  "notes": "Head in the 11.2 x 7 counterbore (underside at y = 35); grip to the BotWheel's boss face (y = 67.8) 32.8 mm, so 7.2 mm into the wheel's M6 (1.2 d; the thread depth is not in interfaces.json yet: check it, 45 mm would give 12.2). Partially threaded, 24 mm minimum thread, so all of the engaged length is thread. Same series as screw_m6x35 (91290A334); 91290A203 (fully threaded, pack of 10, $4.90) is the cheaper buy for a single robot."
+ },
+ {
+  "id": "mcmaster-92981a409",
+  "key": "knee_pin_70",
+  "category": "fastener",
+  "vendor": "McMaster-Carr",
+  "model": "92981A409",
+  "name": "Alloy Steel Shoulder Screws, 12 mm Shoulder Diameter, 70 mm Shoulder Length, M10 x 1.5 mm Thread",
+  "price_usd": 6.08,
+  "price_note": "McMaster-Carr: $6.08 each (price_usd is per piece)",
+  "price_checked": "2026-10-26",
+  "pack_qty": 1,
+  "pack_price_usd": 6.08,
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/92981A409/",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "shoulder_d_mm": 12.0,
+   "shoulder_length_mm": 70.0,
+   "thread": "M10x1.5",
+   "thread_length_mm": 16.0,
+   "head_d_mm": 18.0,
+   "head_height_mm": 9.0,
+   "mass_g": 86.37,
+   "mass_basis": "estimate (no CAD yet): 92981A411's CAD volume less 20 mm of 12 mm shoulder x 7.85 g/cm3",
+   "material": "Black-Oxide Alloy Steel",
+   "mcmaster": {
+    "raw": {
+     "Shoulder Fit": "Standard",
+     "Thread Direction": "Right Hand",
+     "Socket Head Profile": "Standard",
+     "Fastener Head Type": "Socket",
+     "Drive Style": "Hex",
+     "Material": "Black-Oxide Alloy Steel",
+     "Shoulder Diameter": "12 mm",
+     "Shoulder Diameter Tolerance": "-0.072 mm to -0.01 mm",
+     "Shoulder Length": "70 mm",
+     "Shoulder Length Tolerance": "0 mm to 0.25 mm",
+     "Thread Size": "M10 × 1.5 mm",
+     "Thread Length": "16 mm",
+     "Head Diameter": "18 mm",
+     "Head Height": "9 mm",
+     "Drive Size": "6 mm",
+     "Tensile Strength": "140,000 psi",
+     "Hardness": "Rockwell C32",
+     "Head Texture": "Smooth",
+     "Minimum Shear Strength": "84,000 psi",
+     "Performance": "High Strength, Wear Resistant",
+     "Relative Thread Length": "Standard",
+     "Relative Thread Size": "Standard",
+     "Specifications Met": "ISO 7379",
+     "System of Measurement": "Metric",
+     "Thread Fit": "Metric Class 5g6g",
+     "Thread Spacing": "Coarse",
+     "Thread Type": "Metric",
+     "Country of Origin": "United States",
+     "DFARS Compliance": "Specialty Metals Compliant (252.225-7009)",
+     "Export Control Classification Number (ECCN)": "EAR99",
+     "REACH Compliance": "Not Compliant",
+     "RoHS Compliance": "RoHS 3 (2015/863/EU) Compliant",
+     "Schedule B Number": "731815.9000",
+     "U.S.–Mexico–Canada Agreement (USMCA) Qualifying": "Yes"
+    },
+    "parsed": {
+     "Shoulder Diameter": {
+      "value": 12.0,
+      "unit": "mm"
+     },
+     "Shoulder Diameter Tolerance": {
+      "min": -0.072,
+      "max": -0.01,
+      "unit": "mm"
+     },
+     "Shoulder Length": {
+      "value": 70.0,
+      "unit": "mm"
+     },
+     "Shoulder Length Tolerance": {
+      "min": 0.0,
+      "max": 0.25,
+      "unit": "mm"
+     },
+     "Thread Size": {
+      "thread": "M10x1.5",
+      "d": 10.0,
+      "pitch": 1.5,
+      "unit": "mm"
+     },
+     "Thread Length": {
+      "value": 16.0,
+      "unit": "mm"
+     },
+     "Head Diameter": {
+      "value": 18.0,
+      "unit": "mm"
+     },
+     "Head Height": {
+      "value": 9.0,
+      "unit": "mm"
+     },
+     "Drive Size": {
+      "value": 6.0,
+      "unit": "mm"
+     },
+     "Tensile Strength": {
+      "value": 965.2664,
+      "unit": "MPa"
+     },
+     "Minimum Shear Strength": {
+      "value": 579.15984,
+      "unit": "MPa"
+     }
+    }
+   }
+  },
+  "cad": {
+   "file": null,
+   "kind": "shoulder_screw",
+   "frame": "axis +Z, centred on the axis, underside of the head at z = 0, head on +z, shoulder and thread towards -z",
+   "available": true,
+   "step_url": "https://www.mcmaster.com/92981A409/",
+   "bbox_mm": null,
+   "volume_mm3": null,
+   "pending": "STEP not downloaded yet: on 2026-10-26 McMaster-Carr asked for a login before CAD downloads ('Please log in and reload the page to download CAD', then downloads cancelled). Finish with .venv/bin/python tools/mcmaster_cad.py --catalog --only knee_pin_70 bearing_6201 circlip_60 screw_m5x40 screw_m6x30 (logged in, or once the anonymous limit resets), or save the STEP from a logged-in browser as references/vendor/mcmaster/92981A409/92981A409.step and run the same command offline."
+  },
+  "frame": "axis +Z, centred on the axis, underside of the head at z = 0, head on +z, shoulder and thread towards -z",
+  "sources": [
+   "https://www.mcmaster.com/92981A409/"
+  ],
+  "confidence": "product page",
+  "used_for": "leg v2 knee joints (KC), one per knee: through the upper link, a washer, the lower link's knee boss (two 6201s and the spacer between their inner races), a washer",
+  "qty_per_robot": 4,
+  "notes": "Shoulder 70 (cad/fivebar.py knee_pin_length). The head sits on the outer washer at y = 82 (knee boss 32..80 + washer 2); from there to the M10 nyloc's seat (its pocket's ceiling, 10.5 into the upper link) the stack is 71.5 = washer 2 + knee boss 48 (6201 10 + spacer 28 + 6201 10) + washer 2 + upper link 30 - pocket 10.5, so the shoulder ends 1.5 short of the nut and the nut clamps the stack. M10 x 16 thread: the nut's whole 10 mm engaged, the tip 4 mm past the upper link's inner face (y = -4). Replaces knee_pin_60 in leg v2 (the leg grew thicker: upper link 30, lower links 20 + 26, two 6201s per knee); an 80 (92981A410) would run into the nut and clamp nothing. The spacer between the inner races is now 28 long (knee_spacer's notes give 26 mm pieces, for the 6001 stack). Same family as knee_pin (92981A411) and knee_pin_60 (92981A408)."
+ },
+ {
+  "id": "mcmaster-5972k42",
+  "key": "bearing_6201",
+  "category": "bearing",
+  "vendor": "McMaster-Carr",
+  "model": "5972K42",
+  "name": "Steel Ball Bearing, Sealed, Trade No. 6201-2RS, for 12 mm Shaft Diameter",
+  "price_usd": 19.37,
+  "price_note": "McMaster-Carr: $19.37 each (price_usd is per piece)",
+  "price_checked": "2026-10-26",
+  "pack_qty": 1,
+  "pack_price_usd": 19.37,
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/5972K42/",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "id_mm": 12.0,
+   "od_mm": 32.0,
+   "width_mm": 10.0,
+   "dynamic_load_c_n": 6894.7,
+   "static_load_c0_n": 3069.3,
+   "mass_g": 35.07,
+   "mass_basis": "estimate (no CAD yet): 5972K82's CAD (6001-2RS, same family) fills 0.646 of its 12 x 28 x 8 envelope; the same fill of 12 x 32 x 10 x 7.85 g/cm3",
+   "material": "Steel",
+   "mcmaster": {
+    "raw": {
+     "For Shaft Type": "Round",
+     "Bearing Seal Type": "Sealed",
+     "Material": "Steel",
+     "For Shaft Diameter": "12 mm",
+     "For Housing ID": "32 mm",
+     "Width": "10 mm",
+     "Width Tolerance": "-0.12 mm to 0 mm",
+     "ABEC Rating": "1",
+     "Dynamic Radial Load Capacity": "1,550 lb.",
+     "Maximum Rotation Speed": "14,600 rpm",
+     "Temperature Range Minimum": "-20° F",
+     "Temperature Range Max.": "230° F",
+     "Inner Ring Type": "Standard",
+     "Bearing Trade Number": "6201-2RS",
+     "Ball Bearing Profile": "Standard",
+     "Ball Material": "Steel",
+     "Bearing Construction": "Single Row",
+     "Bearing Type": "Ball",
+     "Cage Material": "Steel",
+     "For Load Direction": "Radial",
+     "ID": "12 mm",
+     "ID Tolerance": "-0.008 mm to 0 mm",
+     "Lubricant": "Grease",
+     "Lubrication": "Lubricated",
+     "OD": "32 mm",
+     "OD Tolerance": "-0.011 mm to 0 mm",
+     "Radial Clearance": "0.011 mm to 0.025 mm",
+     "Radial Clearance Trade Number": "C3",
+     "Seal Material": "Buna-N",
+     "Shaft Mount Type": "Press Fit",
+     "Specifications Met": "DIN 625-1",
+     "Static Radial Load Capacity": "690 lb.",
+     "System of Measurement": "Metric",
+     "Country of Origin": "South Korea",
+     "DFARS Compliance": "Specialty Metals COTS-Exempt",
+     "Export Control Classification Number (ECCN)": "1C999",
+     "REACH Compliance": "REACH (EC 1907/2006) (06/25/2025, 250 SVHC) Compliant",
+     "RoHS Compliance": "RoHS 3 (2015/863/EU) Compliant",
+     "Schedule B Number": "848210.5048",
+     "U.S.–Mexico–Canada Agreement (USMCA) Qualifying": "No"
+    },
+    "parsed": {
+     "For Shaft Diameter": {
+      "value": 12.0,
+      "unit": "mm"
+     },
+     "For Housing ID": {
+      "value": 32.0,
+      "unit": "mm"
+     },
+     "Width": {
+      "value": 10.0,
+      "unit": "mm"
+     },
+     "Width Tolerance": {
+      "min": -0.12,
+      "max": 0.0,
+      "unit": "mm"
+     },
+     "Dynamic Radial Load Capacity": {
+      "value": 6894.74348,
+      "unit": "N"
+     },
+     "Maximum Rotation Speed": {
+      "value": 14600.0,
+      "unit": "rpm"
+     },
+     "Temperature Range Minimum": {
+      "value": -28.888889,
+      "unit": "degC"
+     },
+     "Temperature Range Max.": {
+      "value": 110.0,
+      "unit": "degC"
+     },
+     "ID": {
+      "value": 12.0,
+      "unit": "mm"
+     },
+     "ID Tolerance": {
+      "min": -0.008,
+      "max": 0.0,
+      "unit": "mm"
+     },
+     "OD": {
+      "value": 32.0,
+      "unit": "mm"
+     },
+     "OD Tolerance": {
+      "min": -0.011,
+      "max": 0.0,
+      "unit": "mm"
+     },
+     "Radial Clearance": {
+      "min": 0.011,
+      "max": 0.025,
+      "unit": "mm"
+     },
+     "Static Radial Load Capacity": {
+      "value": 3069.272904,
+      "unit": "N"
+     }
+    }
+   }
+  },
+  "cad": {
+   "file": null,
+   "kind": "bearing",
+   "frame": "axis +Z, centred on the axis; the larger end (flange, head, collar) at z = 0 and the part on +z; when both ends are the same size, the heavier end at z = 0",
+   "available": true,
+   "step_url": "https://www.mcmaster.com/5972K42/",
+   "bbox_mm": null,
+   "volume_mm3": null,
+   "pending": "STEP not downloaded yet: on 2026-10-26 McMaster-Carr asked for a login before CAD downloads ('Please log in and reload the page to download CAD', then downloads cancelled). Finish with .venv/bin/python tools/mcmaster_cad.py --catalog --only knee_pin_70 bearing_6201 circlip_60 screw_m5x40 screw_m6x30 (logged in, or once the anonymous limit resets), or save the STEP from a logged-in browser as references/vendor/mcmaster/5972K42/5972K42.step and run the same command offline."
+  },
+  "frame": "axis +Z, centred on the axis; the larger end (flange, head, collar) at z = 0 and the part on +z; when both ends are the same size, the heavier end at z = 0",
+  "sources": [
+   "https://www.mcmaster.com/5972K42/"
+  ],
+  "confidence": "product page",
+  "used_for": "leg v2 knee joints (KC): two per knee, pressed into each lower link's knee boss, one at each end (y 32..42 and 70..80), outer races against the Ø27 web",
+  "qty_per_robot": 8,
+  "notes": "6201-2RS, 12 x 32 x 10, sealed (Buna-N), steel, C3, ABEC 1: the same McMaster family as bearing_6001 (5972K82, the 6001-2RS of the earlier knee). Load ratings (McMaster): dynamic C 1,550 lb = 6.89 kN, static C0 690 lb = 3.07 kN (the C0 3.1 kN that cad/fivebar.py KC assumes); the 6001 has 1,100 / 530 lb. 14,600 rpm. cad/fivebar.py seats it in Ø32.04 x 10 bores at both ends of the 48 mm knee boss."
+ },
+ {
+  "id": "mcmaster-98541a174",
+  "key": "circlip_60",
+  "category": "fastener",
+  "vendor": "McMaster-Carr",
+  "model": "98541A174",
+  "name": "External Retaining Ring, for 60 mm OD, Black-Phosphate Spring Steel",
+  "price_usd": 3.05,
+  "price_note": "McMaster-Carr: $3.05 per pack of 1 (price_usd is per piece)",
+  "price_checked": "2026-10-26",
+  "pack_qty": 1,
+  "pack_price_usd": 3.05,
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/98541A174/",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "shaft_d_mm": 60.0,
+   "groove_d_mm": 57.0,
+   "groove_d_tol_mm": [
+    -0.3,
+    0.0
+   ],
+   "groove_width_mm": 2.15,
+   "ring_id_mm": 55.8,
+   "thickness_mm": 2.0,
+   "mass_g": 13.65,
+   "mass_basis": "estimate (no CAD yet): the ring as cad/fivebar.py draws it (apex_circlip, a 57 x 66 x 2 annulus) x 7.85 g/cm3",
+   "material": "Phosphate-Coated Carbon Steel",
+   "mcmaster": {
+    "raw": {
+     "Retaining Ring Type": "External",
+     "Material": "Phosphate-Coated Carbon Steel",
+     "For OD": "60 mm",
+     "For Groove Diameter": "57 mm",
+     "For Groove Diameter Tolerance": "-0.3 mm to 0 mm",
+     "For Groove Width": "2.15 mm",
+     "Ring ID": "55.8 mm",
+     "Ring ID Tolerance": "-1.1 mm to 0.46 mm",
+     "Ring Thk.": "2 mm",
+     "Ring Thk. Tolerance": "-0.07 mm to 0 mm",
+     "Thrust Load Capacity": "15,500 lbf",
+     "Minimum Hardness": "Rockwell C44",
+     "Specifications Met": "DIN 471",
+     "Color": "Black",
+     "Magnetic Properties": "Magnetic",
+     "Retaining Ring Style": "Tapered",
+     "System of Measurement": "Metric",
+     "Country of Origin": "United States",
+     "DFARS Compliance": "Specialty Metals COTS-Exempt",
+     "Export Control Classification Number (ECCN)": "EAR99",
+     "REACH Compliance": "REACH (EC 1907/2006) (02/04/2026, 253 SVHC) Compliant",
+     "RoHS Compliance": "RoHS 3 (2015/863/EU) Compliant",
+     "Schedule B Number": "731824.0000",
+     "U.S.–Mexico–Canada Agreement (USMCA) Qualifying": "Yes",
+     "Related Product": "Pliers"
+    },
+    "parsed": {
+     "For OD": {
+      "value": 60.0,
+      "unit": "mm"
+     },
+     "For Groove Diameter": {
+      "value": 57.0,
+      "unit": "mm"
+     },
+     "For Groove Diameter Tolerance": {
+      "min": -0.3,
+      "max": 0.0,
+      "unit": "mm"
+     },
+     "For Groove Width": {
+      "value": 2.15,
+      "unit": "mm"
+     },
+     "Ring ID": {
+      "value": 55.8,
+      "unit": "mm"
+     },
+     "Ring ID Tolerance": {
+      "min": -1.1,
+      "max": 0.46,
+      "unit": "mm"
+     },
+     "Ring Thk.": {
+      "value": 2.0,
+      "unit": "mm"
+     },
+     "Ring Thk. Tolerance": {
+      "min": -0.07,
+      "max": 0.0,
+      "unit": "mm"
+     },
+     "Thrust Load Capacity": {
+      "value": 68947.4348,
+      "unit": "N"
+     }
+    }
+   }
+  },
+  "cad": {
+   "file": null,
+   "kind": "washer",
+   "frame": "axis +Z, centred on the axis; the larger end (flange, head, collar) at z = 0 and the part on +z; when both ends are the same size, the heavier end at z = 0",
+   "available": true,
+   "step_url": "https://www.mcmaster.com/98541A174/",
+   "bbox_mm": null,
+   "volume_mm3": null,
+   "pending": "STEP not downloaded yet: on 2026-10-26 McMaster-Carr asked for a login before CAD downloads ('Please log in and reload the page to download CAD', then downloads cancelled). Finish with .venv/bin/python tools/mcmaster_cad.py --catalog --only knee_pin_70 bearing_6201 circlip_60 screw_m5x40 screw_m6x30 (logged in, or once the anonymous limit resets), or save the STEP from a logged-in browser as references/vendor/mcmaster/98541A174/98541A174.step and run the same command offline."
+  },
+  "frame": "axis +Z, centred on the axis; the larger end (flange, head, collar) at z = 0 and the part on +z; when both ends are the same size, the heavier end at z = 0",
+  "sources": [
+   "https://www.mcmaster.com/98541A174/"
+  ],
+  "confidence": "product page",
+  "used_for": "leg v2 apex: holds the two apex 61812s (bearing_61812) on the wheel link's printed hub, in a DIN 471-60 groove inboard of the inner bearing (1 per leg)",
+  "qty_per_robot": 2,
+  "notes": "DIN 471 external ring for a 60 mm shaft, phosphate-coated carbon spring steel, tapered, Rockwell C44 min (McMaster): groove Ø57 (-0.3/0) x 2.15 wide, ring 2 (-0.07/0) thick, 55.8 free ID. cad/fivebar.py cuts exactly that groove (Ø57 x 2.15, y 0.8..2.95). McMaster's 15,500 lbf thrust rating is for a steel groove. In the printed PA6-CF hub the groove's outer wall carries the thrust, and it is only 0.8 mm from the hub's end (y = 0), where DIN 471 asks for at least 4.5 mm (3 x the 1.5 mm groove depth) on steel: lengthen the hub inboard by 4.5 mm or more, or the 0.8 mm lip (the last few layers of the print) can break off when the wheel link is pushed outwards relative to the front link (the other way, the Ø64 shoulder takes it). Fit with external ring pliers (McMaster 5449A82, $33.48, listed with this ring). The same ring zinc-plated is 90154A811 ($4.41), in 1.4122 stainless 90967A375 ($7.90)."
+ },
+ {
+  "id": "mcmaster-91290a662",
+  "key": "screw_m5x40",
+  "category": "fastener",
+  "vendor": "McMaster-Carr",
+  "model": "91290A662",
+  "name": "Black-Oxide Alloy Steel Socket Head Screw, M5 x 0.8 mm Thread Size, 40 mm Long, Partially Threaded",
+  "price_usd": 0.1618,
+  "price_note": "McMaster-Carr: $8.09 per pack of 50 (price_usd is per piece)",
+  "price_checked": "2026-10-26",
+  "pack_qty": 50,
+  "pack_price_usd": 8.09,
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/91290A662/",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "thread": "M5x0.8",
+   "length_mm": 40.0,
+   "head_d_mm": 8.5,
+   "head_height_mm": 5.0,
+   "mass_g": 7.34,
+   "mass_basis": "estimate (no CAD yet): 91290A254's CAD volume (M5 x 30, same 22 mm thread) plus 10 mm of 5 mm shank (19.6 mm3/mm: 91290A142 x 140 less 91290A254 x 30, over 110 mm) x 7.85 g/cm3",
+   "material": "Black-Oxide Alloy Steel",
+   "mcmaster": {
+    "raw": {
+     "Thread Size": "M5 × 0.8 mm",
+     "Thread Spacing": "Coarse",
+     "Thread Type": "Metric",
+     "Thread Fit": "Metric Class 5g6g",
+     "Thread Direction": "Right Hand",
+     "Socket Head Profile": "Standard",
+     "Fastener Head Type": "Socket",
+     "Drive Style": "Hex",
+     "Length": "40 mm",
+     "Head Diameter": "8.5 mm",
+     "Head Height": "5 mm",
+     "Threading": "Partially Threaded",
+     "Tensile Strength": "170,000 psi",
+     "Fastener Strength Grade/Class": "Class 12.9",
+     "Certificate Form": "Digital",
+     "Certificate Type": "Material Certificate with Traceable Lot Number",
+     "Drive Size": "4 mm",
+     "Hardness": "Rockwell C39",
+     "Material": "Black-Oxide Alloy Steel",
+     "Minimum Thread Length": "22 mm",
+     "Performance": "High Strength",
+     "Specifications Met": "DIN 912, ISO 4762",
+     "System of Measurement": "Metric",
+     "Tip Type": "Flat",
+     "Country of Origin": "United States, Belgium, Canada, China, France, Germany, India, Indonesia, Italy, Japan, Malaysia, Mexico, Philippines, Poland, South Korea, Switzerland, Taiwan, Thailand, Vietnam",
+     "DFARS Compliance": "Not Specialty Metals Compliant",
+     "Export Control Classification Number (ECCN)": "EAR99",
+     "REACH Compliance": "REACH (EC 1907/2006) (02/04/2026, 253 SVHC) Compliant",
+     "RoHS Compliance": "RoHS 3 (2015/863/EU) Compliant",
+     "Schedule B Number": "731815.9000",
+     "U.S.–Mexico–Canada Agreement (USMCA) Qualifying": "No"
+    },
+    "parsed": {
+     "Thread Size": {
+      "thread": "M5x0.8",
+      "d": 5.0,
+      "pitch": 0.8,
+      "unit": "mm"
+     },
+     "Length": {
+      "value": 40.0,
+      "unit": "mm"
+     },
+     "Head Diameter": {
+      "value": 8.5,
+      "unit": "mm"
+     },
+     "Head Height": {
+      "value": 5.0,
+      "unit": "mm"
+     },
+     "Tensile Strength": {
+      "value": 1172.1092,
+      "unit": "MPa"
+     },
+     "Drive Size": {
+      "value": 4.0,
+      "unit": "mm"
+     },
+     "Minimum Thread Length": {
+      "value": 22.0,
+      "unit": "mm"
+     }
+    }
+   }
+  },
+  "cad": {
+   "file": null,
+   "kind": "screw",
+   "frame": "axis +Z, centred on the axis, head on +z and shank towards -z; z = 0 at the underside of the head (socket, button, pan, hex and flanged heads) or at the top face of a countersunk (flat) head",
+   "available": true,
+   "step_url": "https://www.mcmaster.com/91290A662/",
+   "bbox_mm": null,
+   "volume_mm3": null,
+   "pending": "STEP not downloaded yet: on 2026-10-26 McMaster-Carr asked for a login before CAD downloads ('Please log in and reload the page to download CAD', then downloads cancelled). Finish with .venv/bin/python tools/mcmaster_cad.py --catalog --only knee_pin_70 bearing_6201 circlip_60 screw_m5x40 screw_m6x30 (logged in, or once the anonymous limit resets), or save the STEP from a logged-in browser as references/vendor/mcmaster/91290A662/91290A662.step and run the same command offline."
+  },
+  "frame": "axis +Z, centred on the axis, head on +z and shank towards -z; z = 0 at the underside of the head (socket, button, pan, hex and flanged heads) or at the top face of a countersunk (flat) head",
+  "sources": [
+   "https://www.mcmaster.com/91290A662/"
+  ],
+  "confidence": "product page",
+  "used_for": "leg v2: the upper links onto the output adapters' M5 heat-set inserts, 8 per upper link, heads proud (16 per leg)",
+  "qty_per_robot": 32,
+  "notes": "Head proud on the upper link's outer face (y = 30, no counterbore): a 30 mm grip, so 10 mm past the AO face, through all 7.9 mm of insert_m5 (94459A775) and 2.1 beyond it, 2.0 short of the bottom of the 12 mm pilot (cad/interfaces.json insert_depth_ao); a washer under the head (ISO 7089, 1.0) takes 1.0 off both. Partially threaded with 22 mm minimum thread, so all of the engaged length is thread. 91290A662 is the multi-origin column of McMaster's 91290A table (class 12.9, DIN 912 / ISO 4762, like screw_m5x22 = 91290A660); the US-origin one, like screw_m5x30 (91290A254), is 91290A258 at $16.58 per 50. One pack of 50 covers a robot (32)."
+ },
+ {
+  "id": "mcmaster-91290a332",
+  "key": "screw_m6x30",
+  "category": "fastener",
+  "vendor": "McMaster-Carr",
+  "model": "91290A332",
+  "name": "Black-Oxide Alloy Steel Socket Head Screw, US Origin, M6 x 1 mm Thread Size, 30 mm Long",
+  "price_usd": 0.2272,
+  "price_note": "McMaster-Carr: $11.36 per pack of 50 (price_usd is per piece)",
+  "price_checked": "2026-10-26",
+  "pack_qty": 50,
+  "pack_price_usd": 11.36,
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/91290A332/",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "thread": "M6x1",
+   "length_mm": 30.0,
+   "head_d_mm": 10.0,
+   "head_height_mm": 6.0,
+   "mass_g": 8.45,
+   "mass_basis": "estimate (no CAD yet): 91290A667's CAD volume (M6 x 16, fully threaded) plus 14 mm of its threaded shank (22.7 mm3/mm in that model) x 7.85 g/cm3",
+   "material": "Black-Oxide Alloy Steel",
+   "mcmaster": {
+    "raw": {
+     "Thread Size": "M6 × 1 mm",
+     "Thread Spacing": "Coarse",
+     "Thread Type": "Metric",
+     "Thread Fit": "Metric Class 5g6g",
+     "Thread Direction": "Right Hand",
+     "Socket Head Profile": "Standard",
+     "Fastener Head Type": "Socket",
+     "Drive Style": "Hex",
+     "Length": "30 mm",
+     "Head Diameter": "10 mm",
+     "Head Height": "6 mm",
+     "Threading": "Fully Threaded",
+     "Tensile Strength": "170,000 psi",
+     "Fastener Strength Grade/Class": "Class 12.9",
+     "Drive Size": "5 mm",
+     "Hardness": "Rockwell C41",
+     "Material": "Black-Oxide Alloy Steel",
+     "Performance": "High Strength",
+     "Specifications Met": "DIN 912, ISO 4762",
+     "System of Measurement": "Metric",
+     "Tip Type": "Flat",
+     "Country of Origin": "United States",
+     "DFARS Compliance": "Specialty Metals Compliant (252.225-7009)",
+     "Export Control Classification Number (ECCN)": "EAR99",
+     "REACH Compliance": "Not Compliant",
+     "RoHS Compliance": "RoHS 3 (2015/863/EU) Compliant",
+     "Schedule B Number": "731815.9000",
+     "U.S.–Mexico–Canada Agreement (USMCA) Qualifying": "Yes"
+    },
+    "parsed": {
+     "Thread Size": {
+      "thread": "M6x1",
+      "d": 6.0,
+      "pitch": 1.0,
+      "unit": "mm"
+     },
+     "Length": {
+      "value": 30.0,
+      "unit": "mm"
+     },
+     "Head Diameter": {
+      "value": 10.0,
+      "unit": "mm"
+     },
+     "Head Height": {
+      "value": 6.0,
+      "unit": "mm"
+     },
+     "Tensile Strength": {
+      "value": 1172.1092,
+      "unit": "MPa"
+     },
+     "Drive Size": {
+      "value": 5.0,
+      "unit": "mm"
+     }
+    }
+   }
+  },
+  "cad": {
+   "file": null,
+   "kind": "screw",
+   "frame": "axis +Z, centred on the axis, head on +z and shank towards -z; z = 0 at the underside of the head (socket, button, pan, hex and flanged heads) or at the top face of a countersunk (flat) head",
+   "available": true,
+   "step_url": "https://www.mcmaster.com/91290A332/",
+   "bbox_mm": null,
+   "volume_mm3": null,
+   "pending": "STEP not downloaded yet: on 2026-10-26 McMaster-Carr asked for a login before CAD downloads ('Please log in and reload the page to download CAD', then downloads cancelled). Finish with .venv/bin/python tools/mcmaster_cad.py --catalog --only knee_pin_70 bearing_6201 circlip_60 screw_m5x40 screw_m6x30 (logged in, or once the anonymous limit resets), or save the STEP from a logged-in browser as references/vendor/mcmaster/91290A332/91290A332.step and run the same command offline."
+  },
+  "frame": "axis +Z, centred on the axis, head on +z and shank towards -z; z = 0 at the underside of the head (socket, button, pan, hex and flanged heads) or at the top face of a countersunk (flat) head",
+  "sources": [
+   "https://www.mcmaster.com/91290A332/"
+  ],
+  "confidence": "product page",
+  "used_for": "leg v2: the BotWheel's stator flange, 4 x M6 from inside the wheel link's hub (4 per leg)",
+  "qty_per_robot": 8,
+  "notes": "Head on the foot's inner face (y = 54), inside the hub's Ø48 bore (the Ø10 heads on the 36 PCD reach r = 23); grip to the BotWheel's boss face (y = 74.8) 20.8 mm, so 9.2 mm into the wheel's M6 (1.5 d). The BotWheel's thread depth is not published (catalog/interfaces.json case.bolts.depth is null): measure it; screw_m6x40 (91290A336), listed for this joint before, would go 19.2 mm in. Fully threaded. The only 91290A M6 x 30 (US origin); same family as screw_m6x35 / screw_m6x40. One pack of 50 covers six robots."
  }
 ]

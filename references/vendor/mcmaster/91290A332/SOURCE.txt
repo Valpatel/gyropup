@@ -1,0 +1,6 @@
+McMaster-Carr parts. McMaster-Carr CAD, for design use; not redistributed.
+Files per part: <PN>.step (as downloaded), <PN>.norm.step (moved into the frame for its kind), <PN>.page.json (the product page's data).
+
+91290A332 Black-Oxide Alloy Steel Socket Head Screw, US Origin, M6 x 1 mm Thread Size, 30 mm Long
+URL: https://www.mcmaster.com/91290A332/
+Downloaded: 2026-10-26

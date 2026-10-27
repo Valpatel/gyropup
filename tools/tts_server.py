@@ -45,7 +45,8 @@ RENDER = 2                   # bump when render() changes, so lines cached by th
 # names espeak says wrongly: Gyropup is "JYE-roh-pup", Tritium "TRIT-ee-um"
 RESPELL = {'gyropup': 'Gyro-pup', 'tritium': 'Trittium'}
 LOCAL = re.compile(r'^https?://(localhost|127(\.\d+){3}|\[::1\]|0\.0\.0\.0|10(\.\d+){3}|192\.168(\.\d+){2}'
-                   r'|172\.(1[6-9]|2\d|3[01])(\.\d+){2}|[\w.-]+\.(local|lan))(:\d+)?$', re.I)
+                   r'|172\.(1[6-9]|2\d|3[01])(\.\d+){2}|100\.(6[4-9]|[7-9]\d|1[01]\d|12[0-7])(\.\d+){2}'   # + Tailscale
+                   r'|[\w.-]+\.(local|lan|ts\.net))(:\d+)?$', re.I)
 
 
 def settings(argv=None) -> argparse.Namespace:

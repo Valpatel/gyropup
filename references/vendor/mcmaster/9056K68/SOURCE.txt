@@ -1,0 +1,6 @@
+McMaster-Carr parts. McMaster-Carr CAD, for design use; not redistributed.
+Files per part: <PN>.step (as downloaded), <PN>.norm.step (moved into the frame for its kind), <PN>.page.json (the product page's data).
+
+9056K68 Multipurpose 6061 Aluminum Round Tube, 0.065" Wall Thickness, 5/8" OD (chosen: 1/2 ft.)
+URL: https://www.mcmaster.com/9056K68/
+Downloaded: 2026-10-26

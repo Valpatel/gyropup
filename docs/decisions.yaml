@@ -242,4 +242,39 @@
   why: "The user wants to print it and has PA6-CF on a hardened-nozzle printer; RS-04s ship sooner than RS-03s (Seeed: 11 on hand and 80 due Nov 14, against none until Nov 20). The aluminium parts of D31/D32 were sized for CNC and SendCutSend, which the user does not want."
   status: decided
   source: {kind: user, quote: "To be clear I want to 3d print it, We can go with the RS-03 I can wait for them or what about the RS-04? Those ship sooner."}
+- id: D34
+  date: "2026-10-26"
+  title: The simulator fires foam balls, as the CAD turret does
+  decision: "The physics fires Rival-size foam balls (22.7 mm, 1.83 g, Cd 0.5) at 70 fps (21.3 m/s, the kid-safety cap for balls) from a 30-ball hopper: the ammo of research/turret-launcher-study.md section 8 and cad/turret.py. The matched flywheels give them no spin, so they fly on drag alone. On the 3D page they turn, bounce and roll, the turret panel counts the hopper, a shot sounds like a dial step and a flywheel pomp, and Gyropup talks about balls. This replaces the dart parts of D19 and D26; the knock-down targets and the laser rules stand."
+  why: "The user saw darts in the simulator while the CAD turret shoots balls. A ball leaves slower than the 80 fps dart, so it drops about a quarter more over 4 m, but with 1.6 times the momentum it knocks plates over sooner: the targets scenario downed all five plates with 9 hits from 11 shots (darts: 18 hits from 18 shots, four plates)."
+  status: decided
+  source: {kind: user, quote: "The robot ammo still looks like darts not balls."}
+- id: D35
+  date: "2026-10-26"
+  title: Gyropup's own Piper voice
+  decision: "tools/tts_server.py is Gyropup's Piper sidecar, speaking the protocol talk.js already used (GET /health, GET /tts): en_US-hfc_female-medium, lifted 2 semitones by resampling after Piper speaks that much slower, at 0.95 pace, each line cached on disk. /health tells the page to play the audio as it is and names the voice, which the talk dock shows. Voice and settings are flags or GYROPUP_TTS_* variables. Runners-up: en_US-libritts_r-medium speaker 8329, en_US-lessac-medium, en_GB-cori-medium, en_US-ljspeech-medium. The browser fallback is gentler (pitch 1.3, natural voices first). Moxie's Whisper and the brain chain of D27 are unchanged."
+  why: "The user found the voice odd: with no Piper running, the page fell back to the browser's speech at pitch 1.7. Eighteen single-speaker English Piper voices said the same eight Gyropup lines, 1,047 speakers of the multi-speaker voices were screened on two of them, and each was measured for pitch, intonation, pace and cleanliness; hfc_female, from a studio corpus, is the liveliest with the cleanest pauses. Its data is CC BY-NC-SA 4.0: fine for this private, non-commercial robot, but a commercial product would switch (LibriTTS-R is CC BY 4.0; cori and ljspeech are public domain)."
+  status: decided
+  source: {kind: user, quote: "The voice is odd, we need a new Piper voice."}
 
+- id: D36
+  date: "2026-10-26"
+  title: One robot, one design; the parts explorer goes to cad-agent
+  decision: "Gyropup is now a single design. Removed from this repo: the choose-your-own-adventure designer pages, the results/comparison page, the design variants, the overnight optimiser loop (iterate, trial evaluation, the 4090 mirror), the catalogue's 305 alternative parts and their product images, and the vendor files of motors we do not use. Everything is kept at the git tag explorer-snapshot-2026-10-26. The generic part of it (catalogue schema, design choices, pluggable evaluation, comparisons) is being turned into a modular comparison framework in cad-agent, by a PR into dev. The old serial-leg robot (cad/build.py, cad/leg.py, sim/model.py and the 3D game page that draws it) stays only until leg v2 is on the full robot, then goes too."
+  why: "The user: the any-parts concept is cool but not realistic; it belongs in cad-agent as a framework for comparisons, and this repo should build one great robot."
+  status: decided
+  source: {kind: user, quote: "the whole massive custom gyropup concept is cool but not realistic (pick any parts in an exporer). That's something worth leaving in our cad-agent repo as a modular framework for comparisons...but let's just build a great robot and clear out the clutter here."}
+- id: D37
+  date: "2026-10-26"
+  title: No e-stop button or contactor on the robot
+  decision: "The robot carries no e-stop button and no contactor. A radio stop is designed separately. The leg's mechanical stops take a power-loss collapse on their own (sim/leg_rig.py power_off: 38 N·m on a stop, about 650 N on its post)."
+  why: "The user will use a radio and work the stop out separately."
+  status: decided
+  source: {kind: user, quote: "Honestly don't add an e-stop we will use some radio and figure that out separately."}
+- id: D38
+  date: "2026-10-26"
+  title: "Leg v2: a five-bar with both motors in the body, built and tested as one leg first"
+  decision: "Each leg is a symmetric five-bar (cad/fivebar.py): two RS-04s 150 mm apart in one printed hip frame (each on a 61812 support bearing), two 150 mm upper links, two 250 mm lower links meeting at the wheel axle; the wheel link carries the BotWheel on a hollow hub, the front lower link rides on that hub on a 61812, the knees are the standard cartridge (two 6001s on a 12 mm shoulder screw). TPU-sleeved stop posts limit the upper links (+3 deg / -97 deg). Leg 130-380 mm, at least 467 N of push anywhere in that range at the 60 N·m cap, 16.7 N·m per motor to hold 130 N, every joint at least 33 deg from a dead point, every link printable on a 256 mm bed. The track drops from 692 mm to about 360 mm. The first build is one leg on a vertical-rail test rig (sim/leg_rig.py), then the turret, then the body around two legs."
+  why: "The user asked to focus on one great leg (and the turret) before the rest. The coaxial hip-and-knee stack of D31-D33 put two 56 mm RS-04s side by side on each hip and made the robot 740 mm wide. A sweep of 330 printable five-bar geometries (tools/leg_synthesis.py: 36 feasible) found one with the motors inside the body, the load shared by both motors and links that mostly carry tension and compression, which suits printed parts. The survey (research/wheel-legged-survey-2026-10-26.md) recommended Diablo's coaxial layout instead; with RS-04s that layout is about 630 mm wide, and the five-bar is the usual leg on RoboMaster balance robots, the closest match to Gyropup's job. The price is no 360-degree hip, so the legs cannot swing over to self-right."
+  status: decided
+  source: {kind: user, quote: "Honestly you should really focus on a single leg making it awesome? Then we could make one leg first. 1 leg and a nerf turret"}

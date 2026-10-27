@@ -1,0 +1,183 @@
+{
+ "bench_turret": [
+  {
+   "item": "STS3215 / ST3215 12 V 30 kg-cm serial bus servo",
+   "id": "feetech-sts3215-c018-12v",
+   "qty": 1,
+   "for": "pan_servo",
+   "price_usd_each": 21.99,
+   "mass_g_each": 89.0
+  },
+  {
+   "item": "STS3215 / ST3215 12 V 30 kg-cm serial bus servo",
+   "id": "feetech-sts3215-c018-12v",
+   "qty": 1,
+   "for": "tilt_servo",
+   "price_usd_each": 21.99,
+   "mass_g_each": 89.0
+  },
+  {
+   "item": "Snail 2305 friction-wheel motor (+ C615 ESC)",
+   "id": "dji-robomaster-snail-2305",
+   "qty": 1,
+   "for": "flywheel_motor_l",
+   "price_usd_each": 40.0,
+   "mass_g_each": 27.8
+  },
+  {
+   "item": "Snail 2305 friction-wheel motor (+ C615 ESC)",
+   "id": "dji-robomaster-snail-2305",
+   "qty": 1,
+   "for": "flywheel_motor_r",
+   "price_usd_each": 40.0,
+   "mass_g_each": 27.8
+  },
+  {
+   "item": "AM32 Brushless Drive ESC 35 A (bi-directional)",
+   "id": "repeat-robotics-am32-35a-esc",
+   "qty": 1,
+   "for": "esc_l",
+   "price_usd_each": 24.99,
+   "mass_g_each": 5.0
+  },
+  {
+   "item": "AM32 Brushless Drive ESC 35 A (bi-directional)",
+   "id": "repeat-robotics-am32-35a-esc",
+   "qty": 1,
+   "for": "esc_r",
+   "price_usd_each": 24.99,
+   "mass_g_each": 5.0
+  },
+  {
+   "item": "M2006 P36 geared motor (+ C610 ESC)",
+   "id": "dji-robomaster-m2006-p36",
+   "qty": 1,
+   "for": "feed_motor",
+   "price_usd_each": 95.0,
+   "mass_g_each": 90.0
+  },
+  {
+   "item": "DJI C610 (CAN), comes with the M2006 kit",
+   "id": null,
+   "qty": 1,
+   "for": "feed_esc",
+   "price_usd_each": null,
+   "mass_g_each": 13.3
+  },
+  {
+   "item": "Picotronic DD520-1-24(12x40), 520 nm Class 2",
+   "id": null,
+   "qty": 1,
+   "for": "laser",
+   "price_usd_each": null,
+   "mass_g_each": 16.0
+  },
+  {
+   "item": "61810-2RS (50 x 65 x 7)",
+   "id": null,
+   "qty": 1,
+   "for": "pan_bearing",
+   "price_usd_each": null,
+   "mass_g_each": 52.0
+  },
+  {
+   "item": "MR126-2RS (6 x 12 x 4)",
+   "id": null,
+   "qty": 1,
+   "for": "tilt_bearing",
+   "price_usd_each": null,
+   "mass_g_each": 2.0
+  },
+  {
+   "item": "TE Deutsch DT04-12PA-L012 flange receptacle",
+   "id": null,
+   "qty": 1,
+   "for": "dt_receptacle",
+   "price_usd_each": null,
+   "mass_g_each": 15.0
+  },
+  {
+   "item": "TE Deutsch DT06-12SA plug + W12S wedge + 12 x 0462-201-16141 sockets",
+   "id": null,
+   "qty": 1,
+   "for": "dt_plug",
+   "price_usd_each": null,
+   "mass_g_each": 0.0
+  },
+  {
+   "item": "Amass XT60E-F panel socket (24 V in)",
+   "id": null,
+   "qty": 1,
+   "for": "bench stand",
+   "price_usd_each": null,
+   "mass_g_each": null
+  },
+  {
+   "item": "KCD1 rocker switch, 16 A",
+   "id": null,
+   "qty": 1,
+   "for": "bench stand",
+   "price_usd_each": null,
+   "mass_g_each": null
+  },
+  {
+   "item": "5 x 20 mm panel fuse holder + 5 A slow-blow fuse",
+   "id": null,
+   "qty": 1,
+   "for": "bench stand",
+   "price_usd_each": null,
+   "mass_g_each": null
+  },
+  {
+   "item": "3.5 mm panel jack + a hold-to-run pendant (momentary button on 2 m of cable)",
+   "id": null,
+   "qty": 1,
+   "for": "bench stand",
+   "price_usd_each": null,
+   "mass_g_each": null
+  },
+  {
+   "item": "USB-CAN adapter (CANable 2.0 class)",
+   "id": null,
+   "qty": 1,
+   "for": "bench stand",
+   "price_usd_each": null,
+   "mass_g_each": null
+  },
+  {
+   "item": "70 x 50 mm board with a 24 V terminal block",
+   "id": null,
+   "qty": 1,
+   "for": "bench stand",
+   "price_usd_each": null,
+   "mass_g_each": null
+  },
+  {
+   "item": "rubber bumper feet, \u00d812.7 x 5.5",
+   "id": null,
+   "qty": 4,
+   "for": "bench stand",
+   "price_usd_each": null,
+   "mass_g_each": null
+  },
+  {
+   "item": "Cheetah Rival-compatible rounds, 100-pack",
+   "id": "worker-cheetah-rival-rounds-100",
+   "qty": 1,
+   "for": "ammo",
+   "price_usd_each": 14.99,
+   "mass_g_each": null
+  }
+ ],
+ "not_modelled": {
+  "wiring and the cable loops": 50,
+  "head MCU + IMU + CAN transceiver": 15,
+  "24 -> 12 V buck": 10,
+  "chronograph emitters/receivers + hopper-full beam": 10,
+  "LEDs and buzzer": 15,
+  "screws, inserts, dowels, circlips, shoulder screw, springs": 35,
+  "CT pogo connector pair": 10
+ },
+ "price_usd_known": 283.95,
+ "note": "the turret's screws, inserts, dowels and circlips are in cad/turret.py's notes; McMaster part numbers next"
+}

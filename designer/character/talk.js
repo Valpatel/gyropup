@@ -20,6 +20,8 @@
 // (the composer dock), and the OpenAI-compatible brain call of mqtt/moxie_sdk/chat.py.
 import * as THREE from 'three';
 
+const VOICE_GAIN = 0.55;      // the voice sits under the turret's effects (designer/sfx.js runs at full level)
+
 const MOODS = ['neutral', 'happy', 'curious', 'sleepy', 'sad', 'grumpy', 'surprised', 'focused', 'thinking'];
 
 const PERSONA = `You are Gyropup, a friendly little robot pup on the Tritium robotics team. You balance on two wheels with springy legs, you have two big round glowing eyes, and a turret on your head that shoots soft foam balls. You love playing foam-ball target games and knocking down targets.
@@ -109,11 +111,13 @@ async function fetchT(url, init = {}, ms = 1500) {
   try { return await fetch(url, { ...init, signal: ctl.signal }); } finally { clearTimeout(to); }
 }
 
-// A Piper/Whisper sidecar is a localhost port: only a page served from this machine or the LAN can reach it
-// (same rule as Moxie's voice/local.js::pageCouldReachSidecar). An explicit address always wins.
+// A Piper/Whisper sidecar is a port on the machine serving the page: only a page served from this machine, the LAN or
+// the tailnet can reach it (Moxie's voice/local.js::pageCouldReachSidecar, plus Tailscale's 100.64/10 and *.ts.net).
+// An explicit address always wins.
 function pageIsLocal() {
   const h = location.hostname || '';
-  return h === '' || /^(localhost|127\.|0\.0\.0\.0|\[?::1\]?|192\.168\.|10\.|172\.(1[6-9]|2\d|3[01])\.)/.test(h) || /\.(local|lan)$/.test(h);
+  return h === '' || /^(localhost|127\.|0\.0\.0\.0|\[?::1\]?|192\.168\.|10\.|172\.(1[6-9]|2\d|3[01])\.|100\.(6[4-9]|[7-9]\d|1[01]\d|12[0-7])\.)/.test(h)
+    || /\.(local|lan|ts\.net)$/.test(h);
 }
 const sidecar = (port) => `http://${location.hostname || '127.0.0.1'}:${port}`;
 
@@ -375,7 +379,9 @@ export function mountTalk({ stage, getHead, eyes, root = '../', chips, brain, do
       const src = a.createBufferSource();
       src.buffer = buf;
       src.playbackRate.value = services.tts.rate ?? 1.14;      // 1.14 for a plain Piper: pup, not newsreader
-      src.connect(a.destination);
+      const g = a.createGain();
+      g.gain.value = VOICE_GAIN;                                // under the turret: the shots are the loudest thing (sfx.js)
+      src.connect(g).connect(a.destination);
       src.onended = () => { if (current === src) current = null; };
       current = src;
       src.start();
@@ -387,7 +393,7 @@ export function mountTalk({ stage, getHead, eyes, root = '../', chips, brain, do
     if (!('speechSynthesis' in window)) return false;
     try {
       const u = new SpeechSynthesisUtterance(text);
-      u.rate = 1.0; u.pitch = 1.3; u.volume = 1;              // a stronger lift turns most system voices into a squeak
+      u.rate = 1.0; u.pitch = 1.3; u.volume = VOICE_GAIN;      // a stronger lift turns most system voices into a squeak
       const vs = window.speechSynthesis.getVoices() || [];
       const en = vs.filter((v) => /^en/i.test(v.lang));
       const pick = (re) => en.find((v) => re.test(v.name));

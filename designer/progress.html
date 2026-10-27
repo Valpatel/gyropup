@@ -44,38 +44,46 @@
 <body>
 <main class="prog">
   <h1>Gyropup: progress</h1>
-  <p class="lede" id="updated">The working state of the design, updated as the work goes. Everything is simulation and CAD
-  until parts are printed; this page refreshes itself.</p>
+  <p class="lede" id="updated">One robot, built leg first: one leg on a test rig, then the foam-ball turret, then the body around two
+  legs. Everything here is CAD and simulation until parts are printed; this page refreshes itself.</p>
   <div class="status" id="status"></div>
 
   <div class="sec">Latest</div>
   <div class="card"><ul class="log" id="log"></ul></div>
 
-  <div class="sec">How the leg works</div>
-  <div class="gallery" id="explain"></div>
+  <div class="sec">Leg v2: a five-bar with both motors in the body</div>
+  <p class="lede" id="leglede"></p>
+  <div class="gallery" id="leg"></div>
 
-  <div class="sec">Strength: every load-bearing part, loaded to breaking</div>
-  <p class="lede">Each part under the simulator's worst loads (everyday and falls). Click a row: the video ramps the load from zero
-  to the design load, on to where the part first reaches its strength, and past it (black = beyond the material's strength).
-  <b>open ↗</b> opens the interactive 3D view: drag the load, see the hot spots and the load at which each fails, cut it open, probe any point.</p>
+  <div class="sec">The leg on its test rig (physics)</div>
+  <p class="lede" id="riglede"></p>
+  <div id="rigtable"></div>
+  <div class="gallery" id="rig" style="margin-top:14px"></div>
+
+  <div class="sec">Strength: every printed part, loaded to breaking</div>
+  <p class="lede">Each printed part under the rig's worst loads (everyday: safety factor 2; rare events: 1.2, on humid printed PA6-CF).
+  Click a row: the video ramps the load from zero to the design load and past it (black = beyond the material's strength).
+  <b>open ↗</b> opens the interactive 3D view: drag the load, see the hot spots, cut it open, probe any point.</p>
   <div class="viewer"><div id="fea"></div><div><video id="feavid" controls loop muted playsinline></video><p class="lede" id="feanote"></p></div></div>
 
-  <div class="sec">Physics simulation</div>
-  <p class="lede" id="simlede"></p>
-  <div class="gallery" id="sims"></div>
-
-  <div class="sec">Print plan</div>
+  <div class="sec">Parts: what to print</div>
   <p class="lede" id="printlede"></p>
   <div id="print"></div>
+
+  <div class="sec">Parts: what to buy (one leg)</div>
+  <p class="lede" id="buylede"></p>
+  <div id="buy"></div>
+
+  <div class="sec">The foam-ball turret, on its bench stand</div>
+  <p class="lede" id="turretlede"></p>
+  <div class="gallery" id="turret"></div>
+  <div id="turretbuy" style="margin-top:14px"></div>
 
   <div class="sec">Motors to order (Seeed Studio)</div>
   <div id="shop"></div>
 
-  <div class="sec">Design loop</div>
-  <p class="lede" id="looplede"></p>
-  <div id="loop"></div>
-  <p class="lede">The optimiser's leaderboard and every design's scenario videos are on <a href="results.html">Results</a>;
-  the robot in 3D, driven by the physics, is on <a href="sim.html">Simulate</a>.</p>
+  <p class="lede" style="margin-top:28px">The 3D game page (<a href="sim.html">Simulate</a>) still shows the first, serial-leg robot with
+  its voice and foam balls; it moves to leg v2 when the body is built around two legs.</p>
 </main>
 <script type="module" src="progress.js"></script>
 </body>

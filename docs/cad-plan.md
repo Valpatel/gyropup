@@ -1,5 +1,8 @@
 # Gyropup CAD plan: robot + turret (2026-10-25)
 
+
+> **Superseded.** This was the plan for the first, serial-leg robot (D31-D33). Leg v2 (a five-bar, D38) replaced it; the work now follows [the architecture](architecture.md) and the [milestones](milestones.yaml). Kept for the history of those decisions.
+
 Companion to the review [`research/mech-review-2026-10-25.md`](../research/mech-review-2026-10-25.md) (finding IDs
 A1…F4 are cited below). Frame everywhere: x forward, y left, z up, origin on the hip axis; left leg built, right mirrored.
 
