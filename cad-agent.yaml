@@ -1,6 +1,6 @@
 # cad-agent project definition (toolkit: Valpatel/cad-agent). Run from this directory:
-#   .venv/bin/cad-agent build          # catalog check, material table, design summaries
-#   .venv/bin/cad-agent site --serve   # local dashboard: progress, designs, decisions, docs
+#   .venv/bin/cad-agent build          # the leg (CAD, renders, print plan)
+#   .venv/bin/cad-agent site --serve   # local dashboard: progress, decisions, docs
 cad:
   name: gyropup
   title: Gyropup
@@ -14,33 +14,25 @@ cad:
              camera_cradle: "#3b3f46", lidar_hanger: "#3b3f46", j501_box: "#e8892b", battery: "#fdb913", hip_motor: "#3a3f47",
              knee_motor: "#3a3f47", wheel: "#1d2025", lidar: "#2a2d33", camera: "#2a2d33"}
   steps:
-    - {name: catalog,   run: tools/check_catalog.py}
-    - {name: materials, run: tools/build_materials.py}
-    - {name: designs,   run: tools/summarize_designs.py, needs: [catalog, materials]}
-    - {name: cad,       run: cad/build.py, needs: [catalog, materials]}
+    - {name: leg, run: cad/build_leg.py}
   site:
     title: Gyropup
-    tagline: A friendly self-balancing wheel-legged robot, and the closed-loop tool that designs, simulates and builds it
+    tagline: A friendly self-balancing wheel-legged robot for foam-ball games, built leg first
     notice: Private. Closed source for now.
     accent: "#e8892b"
     milestones: docs/milestones.yaml
     decisions: docs/decisions.yaml
-    designs: exports/designs.json
     pages: [README.md, "docs/*.md", "research/*.md", catalog/SCHEMA.md]
     theme: hud
-    live_reload: {watch: [designer, designs, catalog, exports, docs, cad]}   # pages reload as these change
+    live_reload: {watch: [designer, exports, docs, cad]}   # pages reload as these change
     nav:
       - {id: progress, title: Progress, href: designer/progress.html}
       - {id: overview, title: Overview, href: site/}
-      - {id: design, title: Design, href: designer/}
       - {id: simulate, title: Simulate, href: designer/sim.html}
-      - {id: results, title: Results, href: designer/results.html}
       - {id: decisions, title: Decisions, href: "site/#decisions"}
       - {id: docs, title: Docs, href: "site/#documents"}
       - {id: repo, title: Repository, href: "https://github.com/Valpatel/gyropup"}
     links:
       - {title: Progress, href: designer/progress.html}
-      - {title: Open the designer, href: designer/}
       - {title: Simulator, href: designer/sim.html}
-      - {title: Results, href: designer/results.html}
       - {title: Architecture, href: site/pages/docs-architecture-md.html}

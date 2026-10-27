@@ -1,7 +1,0 @@
-Vendor: Altran Magnetics LLC (Sterling, IL)
-Model: ALEV100-BS (ALEV100 series; coil code B = 12 VDC, option S = side mount, polarized load terminals, no aux)
-Retrieved: 2026-10-26
-Files:
-  ALEV100_DataSheet_05-Feb-2025.pdf  <-  https://mm.digikey.com/Volume0/opasdata/d220001/medias/docus/7158/ALEV100_DataSheet_05-Feb-2025.pdf  (Rev K, 05-Feb-2025, Digi-Key-hosted manufacturer datasheet)
-No STEP/3D model found: altranmagnetics.com product page shows no CAD; distributor listings show none.
-Licence/terms: manufacturer datasheet, publicly hosted; local reference only; do not redistribute.

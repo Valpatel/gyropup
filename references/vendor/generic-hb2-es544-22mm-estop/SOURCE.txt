@@ -1,7 +1,0 @@
-Part: generic "HB2-ES544" 22 mm red mushroom e-stop, 2NC (Amazon B07R8PTTDX, seller mxuteuk) - an uncertified clone of Schneider Harmony XB2.
-Retrieved: 2026-10-26
-The Amazon listing could not be read (bot wall); no clone drawing exists. References for the clone's geometry:
-  Schneider_XB2BS542C_datasheet.pdf  <-  https://docs.rs-online.com/d0d3/A700000014718496.pdf  (Schneider product datasheet XB2BS542C, 23 Sept 2025, hosted by RS)
-  XB2-BS542_generic_datasheet.pdf    <-  https://evelta.com/content/datasheets/408-XB2-BS542.pdf  (generic XB2-BS542 clone datasheet ds_XB2-BSx_0209)
-No CAD downloaded: Schneider CAD (download.schneider-electric.com) returned HTTP 403 to scripted access and se.com product pages did not render the CAD tab.
-Licence/terms: public datasheets; local reference only; do not redistribute.

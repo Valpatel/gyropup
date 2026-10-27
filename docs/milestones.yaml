@@ -1,46 +1,31 @@
-# Milestones from docs/architecture.md. status: done | active | next | blocked
+# Milestones of the single design (D36, D38). status: done | active | next | blocked
 - id: M0
-  title: Research, catalogs, analytic model, designer draft
+  title: Research
   status: done
-  done_when: Sourced research on reference robots, parts, fabrication and prior art; a checked parts catalog; the Tier 0 model runs in the browser and from the command line
-  evidence: [docs/architecture.md, catalog/SCHEMA.md, designs/default.json]
+  done_when: Sourced research on reference robots, actuators, wheels, power, sensors, fabrication and the turret
+  evidence: [research/wheel-legged-survey-2026-10-26.md, research/turret-launcher-study.md]
 - id: M1
-  title: Design → CAD parts → mass properties → MJCF + URDF
+  title: "Leg v2: kinematics, CAD, test-rig physics"
   status: active
-  done_when: The default design builds; the model loads in MuJoCo; masses reconcile with Tier 0; the URDF passes both validators; the Upkie fixture loads in the same harness
-  notes: "Done: `sim/model.py` builds MJCF + URDF from any design, masses reconcile with the designer, cad-agent's URDF check passes. Still to do: CAD parts (printed-part masses are estimates), text-to-cad's validator, the Upkie fixture."
-  evidence: [sim/model.py]
+  done_when: The five-bar's geometry is chosen by a sweep; every part of one leg is in CAD (printed parts, bearings, pins, screws, the BotWheel, the stops); it clears itself from crouch to full height; the rig simulation stands, squats, jumps, lands and survives losing power
+  evidence: [cad/fivebar.py, sim/leg_rig.py]
 - id: M2
-  title: Scenario harness, per-design LQR, level-0 actuators
-  status: done
-  notes: "Eight scenarios (stand, squat, push, drive, slope, kerb, recoil, target practice with real dart bodies: 23/24 hits) with videos and 3D replay. The full Gyropup passes all six; the DDSM115 designs fail the drive course and the kerb, which is the point: undersized parts show up."
-  evidence: [sim/controller.py, sim/scenarios.py, tools/simulate.py, designer/results.html]
-  done_when: The default design passes stand, balance, push and drive; videos are written; it fails sensibly when a part is undersized
+  title: "Leg v2: strength and hardware"
+  status: next
+  done_when: Every printed part has a safety factor for the rig's peak loads (landing, jump, power loss) and the sideways case, with overload animations; every bought part has a McMaster (or vendor) part number and real CAD; a print plan and a shopping list
 - id: M3
-  title: Loads → FEA screen
+  title: Single-leg test rig
   status: next
-  done_when: A safety factor per printed part for the stand, landing and fall cases; a stress-coloured mesh per part
+  done_when: The rig is in CAD (rail, carriage, dummy mass, bumpers), with its own parts list; the leg and rig are printed, bought and assembled; first stand, squat and jump on hardware
 - id: M4
-  title: Manufacturing gate and cost
+  title: The foam-ball turret on its own
   status: next
-  done_when: RoboForge-style checks and the text-to-cad DfAM, Bambu and SendCutSend skills pass on the default design
+  done_when: The turret is complete in CAD on a bench base, every part printable or bought with a part number, its strength checked, and it fires on the bench
 - id: M5
-  title: Optimiser and agent loop
+  title: The body around two legs
   status: next
-  done_when: tools/iterate.py improves the default design against spec.json unattended and writes a Pareto report
+  done_when: A custom printed body holds the compute (Orin + carrier, no separate box), battery and electronics between the hip frames; lights on the hips beside the turret; the eyes on the face; nothing hangs off the front; the full robot balances in simulation
 - id: M6
-  title: The designer shows it all
+  title: RL policy and the game
   status: next
-  done_when: 3D view, scenario replay, stress overlay and the Pareto set inside the guide
-- id: M6b
-  title: Auto-docking and charging
-  status: next
-  done_when: A dock design (printed base, spring contacts, fiducial, charger); a docking scenario in simulation where the robot reverses over the dock, aligns, crouches and makes contact; contact force and alignment tolerance reported
-- id: M7
-  title: RL policy
-  status: next
-  done_when: An mjlab velocity policy on the default design, exported to ONNX
-- id: M8
-  title: Hardware calibration
-  status: next
-  done_when: Bench actuator identification, coupon and leg break tests, then the sim and FEA are updated to match
+  done_when: A balance/drive policy on the full robot exported to ONNX; the game page shows the real robot with its voice and foam balls

@@ -1,9 +1,0 @@
-Vendor: CubeMars (Nanchang Kude Intelligent Technology Co., Ltd.)
-Model: AK80-64 KV80
-Retrieved: 2026-10-25
-Files:
-  ak80-64.stp  <-  extracted from https://www.cubemars.com/data/cms/202602/ak80-64-robotic-actuator-3d-drawing.zip (file dated 2022-01-10)
-  ak80-64-robotic-actuator-2d-drawing.pdf  <-  https://www.cubemars.com/data/cms/202602/ak80-64-robotic-actuator-2d-drawing.pdf
-Listed on: https://www.cubemars.com/technical-support-and-software-download.html (no login needed).
-Licence/terms: no licence or usage statement next to the downloads. Site footer: "Copyright © 2003-2026 CubeMars, All rights reserved."
-  Treat as local reference copies only; do not redistribute or commit to a public repo.

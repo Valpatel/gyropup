@@ -1,43 +1,38 @@
 # Gyropup
 
-A self-balancing wheel-legged robot, and the tool that designs it.
+A friendly self-balancing wheel-legged robot that plays foam-ball target games with kids.
 
-Gyropup is a two-wheeled, two-legged robot in the spirit of the DDT Diablo: it balances on direct-drive wheels and
-crouches, stands and hops on legs driven by quasi-direct-drive actuators. It carries a Jetson AGX Orin 32GB compute
-box, a Velodyne VLP-16 lidar, RealSense depth cameras facing forwards and backwards, and a VectorNav VN-100 for balance.
-It is mostly 3D printed, starting in PLA on a Bambu P1S, with carbon-fibre filament, SendCutSend metal and carbon-fibre
-tube as upgrades.
+Gyropup balances on two hub-motor wheels and crouches, stands and jumps on two five-bar legs, each driven by two
+RobStride RS-04 actuators inside the body. A pan/tilt turret on top fires Rival-size foam balls at knock-down targets
+(always low, never above horizontal). Every custom part is 3D printed: structure in PA6-CF on a hardened nozzle, the
+rest in PETG and TPU. Bought parts are bearings, pins, screws and inserts from McMaster-Carr, the motors and the
+electronics.
 
-The designer is as important as the robot. The goal is a closed loop:
+**One design, built in this order** (decisions D36-D38 in [docs/decisions.yaml](docs/decisions.yaml)):
 
-```mermaid
-flowchart LR
-    A[Design: guided choices,<br>any parts, any specs] --> B[CAD + robot model<br>URDF / MJCF]
-    B --> C[Simulate: balance, push,<br>drive course, slope, curb, hop]
-    C --> D[Loads → stress<br>in each part]
-    D --> E[Manufacturing:<br>print, sheet metal, cost]
-    E --> F{Good enough?}
-    F -- no: change the design --> A
-    F -- yes --> G[Build it, then train<br>in Isaac Lab]
-```
+1. **One leg** on a vertical-rail test rig: a five-bar with both motors in its hip frame. CAD in
+   [`cad/fivebar.py`](cad/fivebar.py), physics in [`sim/leg_rig.py`](sim/leg_rig.py).
+2. **The turret** on its own bench base ([`cad/turret.py`](cad/turret.py)).
+3. **The body** around two legs: the Orin compute, the battery and the electronics inside one printed shell, the
+   lights on the hips beside the turret, the eyes on the face.
 
-**Status:** research and architecture. Nothing is built or tested on hardware.
+**Status:** leg v2 is in CAD and simulation; nothing is built yet. The old serial-leg robot (`cad/build.py`,
+`cad/leg.py`, `sim/model.py`, the 3D game page) stays only until leg v2 is on the full robot.
 
-**Licence:** private and closed source for now; it may be opened later. Generic tooling lives in the public
-[cad-agent](https://github.com/Valpatel/cad-agent).
-
-**Dashboard:** `.venv/bin/cad-agent build && .venv/bin/cad-agent site --serve` serves progress, designs, decisions and
-documents, and the designer at `/designer/`.
+**Dashboard:** `.venv/bin/cad-agent site --serve --port 8642`, then
+[http://127.0.0.1:8642/designer/progress.html](http://127.0.0.1:8642/designer/progress.html).
 
 | Folder | What is in it |
 |---|---|
-| [`docs/`](docs/) | [Requirements](docs/requirements.md) (in the user's words) and the [architecture](docs/architecture.md) of the closed loop |
-| [`research/`](research/) | Sourced research: reference robots, actuators, wheels, power, sensors, fabrication, prior art |
-| [`catalog/`](catalog/) | Parts with prices, specs and sources ([format](catalog/SCHEMA.md)) |
-| [`designer/`](designer/) | The choose-your-own-adventure designer (web) and its model |
-| [`designs/`](designs/) | Designs; `default.json` is the starting robot (one FLEXVOLT in 60 V mode) |
-| [`cad/`](cad/) | The printed parts in CadQuery, built from a design ([pictures and parts list](cad/README.md)) |
-| [`sim/`](sim/) | Physics: design → MuJoCo/URDF model, balance controller, turret, scenarios |
-| [`tools/`](tools/) | Catalog checks, material table, command-line model |
+| [`cad/`](cad/) | The parts in CadQuery: the leg (`fivebar.py`, `build_leg.py`), the turret (`turret.py`), the interface standard (`gmi.py`, `interfaces.json`) |
+| [`sim/`](sim/) | MuJoCo: the single-leg rig (`leg_rig.py`); the old robot's balance controller and scenarios |
+| [`docs/`](docs/) | [Requirements](docs/requirements.md), [decisions](docs/decisions.yaml), [milestones](docs/milestones.yaml), the [interface standard](docs/mechanical-interfaces.md) |
+| [`research/`](research/) | Sourced research: comparable robots, actuators, wheels, power, sensors, the turret |
+| [`catalog/`](catalog/) | The parts this robot uses, with specs, prices and sources ([format](catalog/SCHEMA.md)); McMaster hardware in `hardware.json` |
+| [`designer/`](designer/) | The progress page and the 3D game page (Gyropup's voice and turret) |
+| [`tools/`](tools/) | The leg's geometry sweep, McMaster CAD downloads, the voice server |
 
-Built with [cad-agent](https://github.com/Valpatel/cad-agent).
+The tooling that compared many designs and parts lives on in [cad-agent](https://github.com/Valpatel/cad-agent) as a
+generic comparison framework; the version that was here is at the git tag `explorer-snapshot-2026-10-26`.
+
+**Licence:** private and closed source for now.

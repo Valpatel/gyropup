@@ -241,7 +241,7 @@ def motor_plate(part_id: str, size: str = 'L', thick_extra: float = 1.0):
 
 
 # vendor STEP files (kept local, see references/vendor/*/SOURCE.txt): where each one's output face is
-STEP_FRAMES = {'robstride-rs-03': {'file': 'RS03.stp', 'axis': 'z', 'output_z': 37.5},
+STEP_FRAMES = {
                'robstride-rs-04': {'file': 'RS04.stp', 'axis': 'z', 'output_z': 25.5}}     # case face 25.0, output 0.5 proud
 
 

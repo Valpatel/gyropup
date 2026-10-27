@@ -21,3 +21,6 @@ work/
 exports/iterate/
 exports/turret/*.step
 exports/turret/*.stl
+
+# meshes the rig simulation writes for its videos
+exports/leg/rig_meshes/

@@ -1,38 +1,5 @@
 [
  {
-  "id": "assumed-led-pod-pair-20w",
-  "category": "light",
-  "vendor": "Generic (assumed)",
-  "model": "2 \u00d7 2-inch 20 W LED pods, 12\u201330 V, spot beam",
-  "preferred": true,
-  "price_usd": 25.0,
-  "price_note": "ASSUMED typical price for a pair of small off-road LED pods; pick a real product",
-  "price_checked": "2026-10-25",
-  "buy": [],
-  "specs": {
-   "mass_g": 240,
-   "power_typical_w": 20,
-   "power_max_w": 40,
-   "voltage_range_v": [
-    12,
-    30
-   ],
-   "beam": "spot, ~25\u00b0 half-angle",
-   "dimensions_mm": [
-    51,
-    51,
-    40
-   ]
-  },
-  "cad": {
-   "step_url": null,
-   "available": null
-  },
-  "sources": [],
-  "confidence": "estimate",
-  "notes": "Assumed part (the user asked to make reasonable assumptions). Forward headlights for driving outdoors at dusk; run them from the 12 V rail with the lidar, at half brightness most of the time. Proposed real part: diode-dynamics-ssc1-sport-white-pair (Diode Dynamics SSC1 Sport, 2 x 12.8 W, 50.8 x 61 x 66 mm each with bracket, ~154 g each)."
- },
- {
   "id": "diode-dynamics-ssc1-sport-white-pair",
   "category": "light",
   "vendor": "Diode Dynamics",

@@ -1,1231 +1,209 @@
 {
-  "_meta": {
-    "units": "mm, g, N, N*m; angles in degrees",
-    "retrieved": "2026-10-25",
-    "notes": "Values from vendor drawings unless a field name or 'basis' says STEP (measured in the vendor STEP with OCP) or inferred. 'depth' = usable thread depth from the drawing. Output face = the rotating face the link bolts to. See research/actuator-interfaces.md for sources per value."
+ "_meta": {
+  "units": "mm, g, N, N*m; angles in degrees",
+  "retrieved": "2026-10-25",
+  "notes": "Values from vendor drawings unless a field name or 'basis' says STEP (measured in the vendor STEP with OCP) or inferred. 'depth' = usable thread depth from the drawing. Output face = the rotating face the link bolts to. See research/actuator-interfaces.md for sources per value."
+ },
+ "robstride-rs-04": {
+  "envelope": {
+   "outer_diameter": 120.0,
+   "length_case": 39.0,
+   "length_case_tol": 0.15,
+   "rear_cover_length": 13.2,
+   "rear_cover_diameter": 94.0,
+   "length_total": 52.2,
+   "length_total_basis": "drawing 13.2+39, excl. 0.5 output step and 3 mm pins",
+   "length_total_step": 55.7,
+   "mass_g": 1420,
+   "mass_note": "manual 1420+-20; spec PDF 1510"
   },
-  "robstride-rs-03": {
-    "envelope": {
-      "outer_diameter": 100.5,
-      "outer_diameter_basis": "STEP max radius 50.25 (lug ring); drawing gives only lug PCD 98 and rear cover 79.5; website's 106 not supported by STEP",
-      "length_case": 39.5,
-      "length_case_basis": "drawing: lug-ring body incl. 2.5 output-side spigot",
-      "length_total": 54.1,
-      "length_total_basis": "drawing",
-      "length_total_step": 56.6,
-      "length_total_step_note": "STEP rear cover reaches 2.5 further than the drawing datum; use 56.6 for clearance",
-      "rear_cover_diameter": 79.5,
-      "mass_g": 880,
-      "mass_note": "manual 261013: 880+-20; README (260713 spec): 900+-20; spec PDF 2026-10-09: 928+-20"
-    },
-    "output": {
-      "flange_diameter": 47.0,
-      "flange_basis": "STEP",
-      "face_offset_from_case_face": 2.5,
-      "face_note": "output face is FLUSH with the stationary 70 mm spigot ring (annulus 59-70) - zero axial clearance; links wider than ~58 mm need a relief/standoff",
-      "bolts": {
-        "count": 6,
-        "thread": "M4",
-        "pcd": 30.36,
-        "depth": 6,
-        "pcd_tol": 0.2,
-        "angles_deg": [
-          30,
-          90,
-          150,
-          210,
-          270,
-          330
-        ],
-        "blind": true
-      },
-      "dowel_holes": {
-        "count": 3,
-        "diameter": 4.0,
-        "tolerance": "+0.1/0",
-        "pcd": 30.36,
-        "depth": 7,
-        "angles_deg": [
-          60,
-          180,
-          300
-        ]
-      },
-      "pilot": {
-        "type": "female centre recess",
-        "diameter": 20.2,
-        "depth": 2.5,
-        "basis": "STEP (not toleranced on drawing)"
-      },
-      "through_hole": false,
-      "through_hole_diameter": null,
-      "angle_reference": "STEP +X; connector pockets are on +Y/-Y"
-    },
-    "case": {
-      "mount_face": "output side, lug faces 2.5 behind the output face",
-      "bolts": {
-        "count": 8,
-        "thread": "M4",
-        "pcd": 98.0,
-        "depth": 8,
-        "pcd_tol": 0.2,
-        "angles_deg": [
-          22.5,
-          67.5,
-          112.5,
-          157.5,
-          202.5,
-          247.5,
-          292.5,
-          337.5
-        ],
-        "blind": true
-      },
-      "spigot": {
-        "type": "male",
-        "diameter": 70.0,
-        "tolerance": "0/-0.1",
-        "height": 2.5
-      },
-      "rear_mount": "not specified by vendor; STEP models M4 threads from the rear lug face too, but 4 of 8 rear positions carry assembly screws on the drawing back view - unconfirmed, do not rely on it",
-      "dowel_holes": null
-    },
-    "bearing": {
-      "type": "deep-groove ball (single row, thin section)",
-      "size_d_D_B": [
-        45,
-        58,
-        7
-      ],
-      "basis": "STEP part '1_2_04_680902'; size matches 6809/61809",
-      "crossed_roller": false,
-      "rated_axial_n": null,
-      "rated_radial_n": null,
-      "rated_moment_nm": null,
-      "load_note": "not published by RobStride"
-    },
-    "connectors": {
-      "power": "AMASS XT30APW-M (board), mate XT30UW-F",
-      "signal": "GH1.25-2PWT 2-pin CAN (board), mate GH1.25-T housing",
-      "debug": "SWD 4-pin pads (SWDIO/SWCLK/3V3/GND)",
-      "exit": "radial: two connector pockets in the rear cover flats at +Y and -Y, last ~6 mm of the rear (STEP); plugs insert radially",
-      "fixed_leads": false,
-      "cable_od": null,
-      "bend_radius": null
-    },
-    "encoder": {
-      "count": 2,
-      "type": "magnetic",
-      "bits": 14,
-      "output_absolute": "manual says '14bit (absolute turn)'; second encoder location not stated",
-      "through_bore": false
-    },
-    "step": {
-      "url": "https://raw.githubusercontent.com/RobStride/Product_Information/384cc561e1ff079c22f68b19908526094430febd/Product%20Literature/CAN2.0/RS03/RS03.stp",
-      "local": "references/vendor/robstride-rs-03/RS03.stp"
-    },
-    "drawing": {
-      "url": "https://raw.githubusercontent.com/RobStride/Product_Information/384cc561e1ff079c22f68b19908526094430febd/Product%20Literature/CAN2.0/RS03/RS03User%20Manual261013.pdf",
-      "pdf_page": 10,
-      "local": "references/vendor/robstride-rs-03/RS03User_Manual261013.pdf"
-    },
-    "sources": [
-      "https://github.com/RobStride/Product_Information/tree/384cc561e1ff079c22f68b19908526094430febd/Product%20Literature/CAN2.0/RS03",
-      "https://github.com/RobStride/Product_Information/blob/main/README.md",
-      "https://github.com/RobStride/Product_Information/blob/main/%E7%81%B5%E8%B6%B3%E6%97%B6%E4%BB%A3RS%E7%B3%BB%E5%88%97%E4%BA%A7%E5%93%81%E8%A7%84%E6%A0%BC%E4%BB%8B%E7%BB%8D(2026.010.09).pdf"
+  "output": {
+   "flange_diameter": 49.8,
+   "flange_basis": "STEP",
+   "face_offset_from_case_face": 0.5,
+   "face_offset_tol": 0.3,
+   "bolts": {
+    "count": 9,
+    "thread": "M5",
+    "pcd": 36.0,
+    "depth": 6.5,
+    "pcd_tol": 0.1,
+    "depth_note": "min",
+    "angles_deg": [
+     45.0,
+     75.0,
+     105.0,
+     165.0,
+     195.0,
+     225.0,
+     285.0,
+     315.0,
+     345.0
     ],
-    "confidence": "drawing"
+    "angles_basis": "STEP (RS04.stp): 12 positions every 30 deg from 15 deg, pins at 3 of them; angles from STEP +X"
+   },
+   "dowel_pins": {
+    "count": 3,
+    "diameter": 6.0,
+    "tolerance": "0/-0.01",
+    "pcd": 35.86,
+    "pcd_tol": 0.025,
+    "protrusion": 3.0,
+    "protrusion_tol": 0.25,
+    "note": "pins are INSTALLED and stand 3 mm proud of the output face",
+    "angles_deg": [
+     15.0,
+     135.0,
+     255.0
+    ]
+   },
+   "pilot": null,
+   "through_hole": false,
+   "through_hole_diameter": null
   },
-  "robstride-rs-04": {
-    "envelope": {
-      "outer_diameter": 120.0,
-      "length_case": 39.0,
-      "length_case_tol": 0.15,
-      "rear_cover_length": 13.2,
-      "rear_cover_diameter": 94.0,
-      "length_total": 52.2,
-      "length_total_basis": "drawing 13.2+39, excl. 0.5 output step and 3 mm pins",
-      "length_total_step": 55.7,
-      "mass_g": 1420,
-      "mass_note": "manual 1420+-20; spec PDF 1510"
-    },
-    "output": {
-      "flange_diameter": 49.8,
-      "flange_basis": "STEP",
-      "face_offset_from_case_face": 0.5,
-      "face_offset_tol": 0.3,
-      "bolts": {
-        "count": 9,
-        "thread": "M5",
-        "pcd": 36.0,
-        "depth": 6.5,
-        "pcd_tol": 0.1,
-        "depth_note": "min",
-        "angles_deg": [
-          45.0,
-          75.0,
-          105.0,
-          165.0,
-          195.0,
-          225.0,
-          285.0,
-          315.0,
-          345.0
-        ],
-        "angles_basis": "STEP (RS04.stp): 12 positions every 30 deg from 15 deg, pins at 3 of them; angles from STEP +X"
-      },
-      "dowel_pins": {
-        "count": 3,
-        "diameter": 6.0,
-        "tolerance": "0/-0.01",
-        "pcd": 35.86,
-        "pcd_tol": 0.025,
-        "protrusion": 3.0,
-        "protrusion_tol": 0.25,
-        "note": "pins are INSTALLED and stand 3 mm proud of the output face",
-        "angles_deg": [
-          15.0,
-          135.0,
-          255.0
-        ]
-      },
-      "pilot": null,
-      "through_hole": false,
-      "through_hole_diameter": null
-    },
-    "case": {
-      "mount_face": "both faces",
-      "bolts": {
-        "count": 10,
-        "thread": "M4",
-        "pcd": 106.0,
-        "depth": 5,
-        "pcd_tol": 0.1,
-        "depth_note": "output-side face, min"
-      },
-      "bolts_rear": {
-        "count": 10,
-        "thread": "M4",
-        "pcd": 106.0,
-        "depth": 6,
-        "pcd_tol": 0.1
-      },
-      "locating": {
-        "count": 2,
-        "diameter": 5.0,
-        "tolerance": "0/-0.01 (as drawn)",
-        "pcd": 106.0,
-        "note": "STEP shows 4.5 deep holes"
-      },
-      "spigot": null
-    },
-    "bearing": {
-      "type": "deep-groove ball, thin section",
-      "size_d_D_B": [
-        50,
-        65,
-        7
-      ],
-      "basis": "STEP part name '61810_50'",
-      "crossed_roller": false,
-      "rated_axial_n": null,
-      "rated_radial_n": null,
-      "rated_moment_nm": null
-    },
-    "connectors": {
-      "power": "XT30UW-F on harness (board XT30APW-M)",
-      "signal": "GH1.25 2-pin CAN on harness (board GH1.25-2PWT)",
-      "fixed_leads": true,
-      "harness": "310+-5 mm sheathed lead through a silicone-sealed grommet in the rear cover, then 40+-3 mm breakout; blue CAN_H, brown CAN_L, black GND, red VBAT+",
-      "exit": "radial, rear cover side",
-      "cable_od": null,
-      "bend_radius": null
-    },
-    "encoder": {
-      "count": 2,
-      "type": "magnetic",
-      "bits": 14,
-      "output_absolute": "not stated explicitly",
-      "through_bore": false
-    },
-    "step": {
-      "url": "https://raw.githubusercontent.com/RobStride/Product_Information/384cc561e1ff079c22f68b19908526094430febd/Product%20Literature/CAN2.0/RS04/RS04.stp",
-      "local": "references/vendor/robstride-rs-04/RS04.stp"
-    },
-    "drawing": {
-      "url": "https://raw.githubusercontent.com/RobStride/Product_Information/384cc561e1ff079c22f68b19908526094430febd/Product%20Literature/CAN2.0/RS04/RS04User%20Manual260713.pdf",
-      "pdf_page": 10,
-      "local": "references/vendor/robstride-rs-04/RS04User_Manual260713.pdf"
-    },
-    "sources": [
-      "https://github.com/RobStride/Product_Information/tree/384cc561e1ff079c22f68b19908526094430febd/Product%20Literature/CAN2.0/RS04",
-      "https://github.com/RobStride/Product_Information/blob/main/README.md",
-      "https://github.com/RobStride/Product_Information/blob/main/%E7%81%B5%E8%B6%B3%E6%97%B6%E4%BB%A3RS%E7%B3%BB%E5%88%97%E4%BA%A7%E5%93%81%E8%A7%84%E6%A0%BC%E4%BB%8B%E7%BB%8D(2026.010.09).pdf"
-    ],
-    "confidence": "drawing"
+  "case": {
+   "mount_face": "both faces",
+   "bolts": {
+    "count": 10,
+    "thread": "M4",
+    "pcd": 106.0,
+    "depth": 5,
+    "pcd_tol": 0.1,
+    "depth_note": "output-side face, min"
+   },
+   "bolts_rear": {
+    "count": 10,
+    "thread": "M4",
+    "pcd": 106.0,
+    "depth": 6,
+    "pcd_tol": 0.1
+   },
+   "locating": {
+    "count": 2,
+    "diameter": 5.0,
+    "tolerance": "0/-0.01 (as drawn)",
+    "pcd": 106.0,
+    "note": "STEP shows 4.5 deep holes"
+   },
+   "spigot": null
   },
-  "robstride-rs-06": {
-    "envelope": {
-      "outer_diameter": 88.0,
-      "outer_diameter_basis": "drawing reference (88); STEP 84.5 x 82",
-      "length_case": 33.0,
-      "length_case_tol": 0.5,
-      "length_total": 50.5,
-      "length_total_basis": "drawing 49+-0.5 rear-to-lug-face + 1.5 output; STEP 50.5",
-      "rear_cover_diameter": 70.0,
-      "mass_g": 621
-    },
-    "output": {
-      "flange_diameter": 37.0,
-      "flange_tol": "0/-0.05",
-      "face_offset_from_case_face": 1.5,
-      "face_offset_tol": 0.1,
-      "face_note": "STEP: output face flush with a 48-52 mm ring on the housing (52 0/-0.05 spigot); links wider than ~47 mm need a relief",
-      "bolts": {
-        "count": 6,
-        "thread": "M4",
-        "pcd": 24.0,
-        "depth": 6,
-        "pcd_tol": 0.1,
-        "angles_deg": [
-          30,
-          90,
-          150,
-          210,
-          270,
-          330
-        ]
-      },
-      "dowel_holes": {
-        "count": 3,
-        "diameter": 4.0,
-        "tolerance": "+0.05/0",
-        "pcd": 24.0,
-        "depth": 4,
-        "angles_deg": [
-          0,
-          120,
-          240
-        ]
-      },
-      "pilot": {
-        "type": "female centre recess",
-        "diameter": 14.0,
-        "tolerance": "+0.05/0",
-        "inner_step_diameter": 10.0
-      },
-      "through_hole": false,
-      "through_hole_diameter": null
-    },
-    "case": {
-      "mount_face": "output side lug face",
-      "bolts": {
-        "count": 8,
-        "thread": "M3",
-        "pcd": 82.0,
-        "depth": 8.5,
-        "pcd_tol": 0.2
-      },
-      "spigot": {
-        "type": "male",
-        "diameter": 52.0,
-        "tolerance": "0/-0.05",
-        "height": 1.5
-      },
-      "rear_mount": "not specified by vendor (STEP shows M3 from rear on 4 of 8 lugs)"
-    },
-    "bearing": {
-      "type": "deep-groove ball, thin section (inferred)",
-      "size_d_D_B": [
-        35,
-        47,
-        7
-      ],
-      "basis": "STEP (RS06.STEP part NAUO6); size matches 6807/61807",
-      "crossed_roller": false,
-      "rated_axial_n": null,
-      "rated_radial_n": null,
-      "rated_moment_nm": null
-    },
-    "connectors": {
-      "power_and_can": "AMASS XT30PB(2+2)-M.G.B (board), mate XT30(2+2)-F.G.B",
-      "fixed_leads": false,
-      "exit": "radial pocket on the side of the housing (STEP feature at -X; inferred)",
-      "cable_od": null,
-      "bend_radius": null
-    },
-    "encoder": {
-      "count": 2,
-      "type": "magnetic",
-      "bits": 14,
-      "output_absolute": "not stated explicitly",
-      "through_bore": false
-    },
-    "step": {
-      "url": "https://raw.githubusercontent.com/RobStride/Product_Information/384cc561e1ff079c22f68b19908526094430febd/Product%20Literature/CAN2.0/RS06/RS06-new.step",
-      "local": "references/vendor/robstride-rs-06/RS06-new.step",
-      "alt_url": "https://raw.githubusercontent.com/RobStride/Product_Information/384cc561e1ff079c22f68b19908526094430febd/Product%20Literature/CAN2.0/RS06/RS06.STEP",
-      "alt_local": "references/vendor/robstride-rs-06/RS06.STEP"
-    },
-    "drawing": {
-      "url": "https://raw.githubusercontent.com/RobStride/Product_Information/384cc561e1ff079c22f68b19908526094430febd/Product%20Literature/CAN2.0/RS06/RS06User%20Manual260713.pdf",
-      "pdf_page": 9,
-      "local": "references/vendor/robstride-rs-06/RS06User_Manual260713.pdf"
-    },
-    "sources": [
-      "https://github.com/RobStride/Product_Information/tree/384cc561e1ff079c22f68b19908526094430febd/Product%20Literature/CAN2.0/RS06",
-      "https://github.com/RobStride/Product_Information/blob/main/README.md",
-      "https://github.com/RobStride/Product_Information/blob/main/%E7%81%B5%E8%B6%B3%E6%97%B6%E4%BB%A3RS%E7%B3%BB%E5%88%97%E4%BA%A7%E5%93%81%E8%A7%84%E6%A0%BC%E4%BB%8B%E7%BB%8D(2026.010.09).pdf"
-    ],
-    "confidence": "drawing"
+  "bearing": {
+   "type": "deep-groove ball, thin section",
+   "size_d_D_B": [
+    50,
+    65,
+    7
+   ],
+   "basis": "STEP part name '61810_50'",
+   "crossed_roller": false,
+   "rated_axial_n": null,
+   "rated_radial_n": null,
+   "rated_moment_nm": null
   },
-  "robstride-rs-00": {
-    "envelope": {
-      "outer_diameter": 57.0,
-      "length_case": 51.0,
-      "length_case_tol": 1.0,
-      "length_total": 52.0,
-      "length_total_basis": "drawing 51+-1 + 1 output; STEP 51.4 (output only 0.4 proud in STEP)",
-      "mass_g": 310
-    },
-    "output": {
-      "flange_diameter": 35.0,
-      "face_offset_from_case_face": 1.0,
-      "face_offset_note": "STEP: 0.4",
-      "bolts": {
-        "count": 6,
-        "thread": "M3",
-        "pcd": 27.0,
-        "depth": 5,
-        "pcd_tol": 0.1,
-        "angles_deg": [
-          30,
-          90,
-          150,
-          210,
-          270,
-          330
-        ],
-        "blind": true
-      },
-      "dowel_holes": {
-        "count": 3,
-        "diameter": 3.0,
-        "tolerance": null,
-        "pcd": 24.46,
-        "pcd_tol": 0.1,
-        "depth": 3.1,
-        "depth_basis": "STEP",
-        "angles_deg": [
-          0,
-          120,
-          240
-        ]
-      },
-      "pilot": null,
-      "through_hole": false,
-      "through_hole_diameter": null
-    },
-    "case": {
-      "mount_face": "output side face",
-      "bolts": {
-        "count": 6,
-        "thread": "M3",
-        "pcd": 50.0,
-        "depth": null,
-        "pcd_tol": 0.1,
-        "depth_note": "not on drawing; STEP 5.5",
-        "angles_deg": [
-          0,
-          60,
-          120,
-          180,
-          240,
-          300
-        ]
-      },
-      "dowel_holes": {
-        "count": 2,
-        "diameter": 3.0,
-        "tolerance": "+0.04/+0.02",
-        "pcd": 50.0,
-        "depth": 5,
-        "angles_deg": [
-          15,
-          195
-        ]
-      },
-      "bolts_rear": {
-        "count": 4,
-        "thread": "M3",
-        "pcd": 38.0,
-        "depth": 4,
-        "pcd_tol": 0.1,
-        "angles_deg": [
-          45,
-          135,
-          225,
-          315
-        ]
-      },
-      "spigot": null
-    },
-    "bearing": {
-      "type": null,
-      "rated_axial_n": null,
-      "rated_radial_n": null,
-      "rated_moment_nm": null,
-      "note": "single-body STEP; not identifiable"
-    },
-    "connectors": {
-      "power_and_can": "AMASS XT30PB(2+2)-M.G.B (board), mate XT30(2+2)-F.G.B",
-      "fixed_leads": false,
-      "exit": "radial, on the cylindrical side of the body (drawing side view)",
-      "cable_od": null,
-      "bend_radius": null
-    },
-    "encoder": {
-      "count": 2,
-      "type": "magnetic",
-      "bits": 14,
-      "output_absolute": "not stated explicitly",
-      "through_bore": false
-    },
-    "step": {
-      "url": "https://raw.githubusercontent.com/RobStride/Product_Information/384cc561e1ff079c22f68b19908526094430febd/Product%20Literature/CAN2.0/RS00/RS00.step",
-      "local": "references/vendor/robstride-rs-00/RS00.step"
-    },
-    "drawing": {
-      "url": "https://raw.githubusercontent.com/RobStride/Product_Information/384cc561e1ff079c22f68b19908526094430febd/Product%20Literature/CAN2.0/RS00/RS00User%20Manual260713.pdf",
-      "pdf_page": 8,
-      "local": "references/vendor/robstride-rs-00/RS00User_Manual260713.pdf"
-    },
-    "sources": [
-      "https://github.com/RobStride/Product_Information/tree/384cc561e1ff079c22f68b19908526094430febd/Product%20Literature/CAN2.0/RS00",
-      "https://github.com/RobStride/Product_Information/blob/main/README.md"
-    ],
-    "confidence": "drawing"
+  "connectors": {
+   "power": "XT30UW-F on harness (board XT30APW-M)",
+   "signal": "GH1.25 2-pin CAN on harness (board GH1.25-2PWT)",
+   "fixed_leads": true,
+   "harness": "310+-5 mm sheathed lead through a silicone-sealed grommet in the rear cover, then 40+-3 mm breakout; blue CAN_H, brown CAN_L, black GND, red VBAT+",
+   "exit": "radial, rear cover side",
+   "cable_od": null,
+   "bend_radius": null
   },
-  "robstride-rs-02": {
-    "envelope": {
-      "outer_diameter": 78.5,
-      "length_case": 28.0,
-      "length_total": 41.5,
-      "length_total_step": 45.5,
-      "rear_cover_diameter": 65.0,
-      "mass_g": 380,
-      "mass_note": "README 380+-3; catalog/Seeed 405"
-    },
-    "output": {
-      "flange_diameter": 29.7,
-      "flange_basis": "STEP",
-      "face_offset_from_case_face": 4.0,
-      "face_note": "43 0/-0.1 spigot stands 3.5 0/-0.3 proud of the case face; output face 0.5 beyond the spigot",
-      "bolts": {
-        "count": 6,
-        "thread": "M4",
-        "pcd": 24.0,
-        "depth": 7,
-        "pcd_tol": 0.2,
-        "depth_note": "min",
-        "angles_deg": [
-          0,
-          60,
-          120,
-          180,
-          240,
-          300
-        ]
-      },
-      "dowel_holes": {
-        "count": 3,
-        "diameter": 4.0,
-        "tolerance": "+0.1/0",
-        "pcd": 24.0,
-        "depth": null,
-        "angles_deg": [
-          90,
-          210,
-          330
-        ]
-      },
-      "pilot": null,
-      "through_hole": false,
-      "through_hole_diameter": null
-    },
-    "case": {
-      "mount_face": "output side face",
-      "bolts": {
-        "count": 9,
-        "thread": "M3",
-        "pcd": 73.0,
-        "depth": 8,
-        "pcd_tol": 0.2,
-        "angles_deg": [
-          6,
-          46,
-          86,
-          126,
-          166,
-          206,
-          246,
-          286,
-          326
-        ]
-      },
-      "tooling_holes": {
-        "count": 3,
-        "diameter": 3.0,
-        "tolerance": "+0.1/0",
-        "pcd": 73.0,
-        "note": "labelled 工艺孔 (process holes); usable as locating holes"
-      },
-      "spigot": {
-        "type": "male",
-        "diameter": 43.0,
-        "tolerance": "0/-0.1",
-        "height": 3.5
-      }
-    },
-    "bearing": {
-      "type": null,
-      "rated_axial_n": null,
-      "rated_radial_n": null,
-      "rated_moment_nm": null
-    },
-    "connectors": {
-      "power_and_can": "AMASS XT30PB(2+2)-M.G.B (board), mate XT30(2+2)-F.G.B",
-      "fixed_leads": false,
-      "exit": "radial notch in the rear cover (drawing back view)",
-      "cable_od": null,
-      "bend_radius": null
-    },
-    "encoder": {
-      "count": 2,
-      "type": "magnetic",
-      "bits": 14,
-      "output_absolute": "not stated explicitly",
-      "through_bore": false
-    },
-    "step": {
-      "url": "https://raw.githubusercontent.com/RobStride/Product_Information/384cc561e1ff079c22f68b19908526094430febd/Product%20Literature/CAN2.0/RS02/rs02.stp",
-      "local": "references/vendor/robstride-rs-02/rs02.stp"
-    },
-    "drawing": {
-      "url": "https://raw.githubusercontent.com/RobStride/Product_Information/384cc561e1ff079c22f68b19908526094430febd/Product%20Literature/CAN2.0/RS02/RS02User%20Manual260713.pdf",
-      "pdf_page": 8,
-      "local": "references/vendor/robstride-rs-02/RS02User_Manual260713.pdf"
-    },
-    "sources": [
-      "https://github.com/RobStride/Product_Information/tree/384cc561e1ff079c22f68b19908526094430febd/Product%20Literature/CAN2.0/RS02",
-      "https://github.com/RobStride/Product_Information/blob/main/README.md"
-    ],
-    "confidence": "drawing"
+  "encoder": {
+   "count": 2,
+   "type": "magnetic",
+   "bits": 14,
+   "output_absolute": "not stated explicitly",
+   "through_bore": false
   },
-  "odrive-botwheel": {
-    "envelope": {
-      "outer_diameter": 171.3,
-      "outer_diameter_basis": "drawing (171.30 reference); shop says 171",
-      "tyre_width": 44.6,
-      "tyre_width_tol": 1.5,
-      "length_total": 52.1,
-      "length_total_basis": "inferred: 44.6 width + 7.5 to mounting face",
-      "mass_g": 2200
-    },
-    "output": {
-      "type": "rotating hub/tyre (outer rotor); no output flange",
-      "rim_screws": "10 x M3 on the hub cover (assembly screws, not an interface)"
-    },
-    "case": {
-      "mount_face": "single-sided fixed stator flange on one side",
-      "bolts": {
-        "count": 4,
-        "thread": "M6",
-        "pcd": 36.0,
-        "depth": null,
-        "pcd_tol": 0.05,
-        "depth_note": "not published"
-      },
-      "spigot": {
-        "type": "male boss",
-        "diameter": 50.0,
-        "tolerance": "0/-0.04",
-        "height": 5.0,
-        "height_tol": 0.1
-      },
-      "boss_face_outboard_of_tyre_side": 7.5,
-      "boss_face_outboard_tol": 0.8,
-      "opposite_side": "closed hub with centre cap; no axle (drawing)"
-    },
-    "bearing": {
-      "type": null,
-      "rated_radial_n": 785,
-      "rated_radial_basis": "shop: 'Rated load weight: 80kg / wheel' (80 x 9.81)",
-      "rated_axial_n": null,
-      "rated_moment_nm": null
-    },
-    "connectors": {
-      "phase": "JST 03T-WPJV-1-SM (WPJ series, 3-pin, waterproof)",
-      "feedback": "JST 08R-JWPF-VSLE-D housing + SWPR-001T-P025 pins (JWPF 8-pin, waterproof); supplied stub harness ends in JST PUD with ODrive S1 pinout",
-      "exit": "axial, from the centre of the stator mounting boss",
-      "fixed_leads": true,
-      "cable_length": 300,
-      "cable_length_tol": 25,
-      "cable_note": "200 REF dimension on drawing, probably the sheathed length (inferred)",
-      "cable_od": null,
-      "bend_radius": null
-    },
-    "encoder": {
-      "type": "hall + 3200 CPR incremental",
-      "absolute": false,
-      "through_bore": null
-    },
-    "ip_rating": "IP54",
-    "step": {
-      "url": "https://cad.onshape.com/publications/ffa16d9268e83ffcb5643cba/w/81f7a79746984b3bebf1d392/e/3101f331226b74a504e702ae",
-      "local": null,
-      "note": "Onshape publication; STEP export needs an Onshape login"
-    },
-    "drawing": {
-      "url": "https://cdn.shopify.com/s/files/1/0580/2904/7878/files/BotWheel_Drawng.png?v=1738951877",
-      "local": "references/vendor/odrive-botwheel/BotWheel_Drawng.png"
-    },
-    "sources": [
-      "https://shop.odriverobotics.com/products/botwheels",
-      "https://docs.odriverobotics.com/v/latest/hardware/odrive-motors.html#odrive-botwheel"
-    ],
-    "confidence": "drawing"
+  "step": {
+   "url": "https://raw.githubusercontent.com/RobStride/Product_Information/384cc561e1ff079c22f68b19908526094430febd/Product%20Literature/CAN2.0/RS04/RS04.stp",
+   "local": "references/vendor/robstride-rs-04/RS04.stp"
   },
-  "cubemars-ak70-10": {
-    "envelope": {
-      "outer_diameter": 89.0,
-      "length_total": 50.25,
-      "rear_cover_diameter": 71.0,
-      "rear_cover_length": 11.2,
-      "mass_g": 621
-    },
-    "output": {
-      "flange_diameter": 30.0,
-      "face_offset_from_case_face": 6.5,
-      "face_note": "77 mm ring stands 6 proud of the case face; 30 mm output flange 0.5 beyond it",
-      "bolts": {
-        "count": 6,
-        "thread": "M3",
-        "pcd": 25.0,
-        "depth": 7
-      },
-      "pilot": {
-        "type": "female centre recess",
-        "diameter": 20.0,
-        "tolerance": "+0.02/0",
-        "depth": 2
-      },
-      "extra_holes_step": "STEP also shows 2 x dia 3, 3 deep at 90/270 deg on PCD 25 (not on drawing)",
-      "through_hole": false,
-      "through_hole_diameter": null
-    },
-    "case": {
-      "mount_face": "both faces",
-      "bolts": {
-        "count": 8,
-        "thread": "M3",
-        "pcd": 83.0,
-        "depth": 10,
-        "depth_note": "output-side face"
-      },
-      "bolts_rear": {
-        "count": 8,
-        "thread": "M3",
-        "pcd": 83.0,
-        "depth": 3.5
-      },
-      "spigot": {
-        "type": "male ring",
-        "diameter": 77.0,
-        "height": 6.0
-      }
-    },
-    "bearing": {
-      "type": "crossed roller (product page)",
-      "crossed_roller": true,
-      "dynamic_c_n": 2000,
-      "static_c0_n": 2520,
-      "rated_axial_n": null,
-      "rated_radial_n": null,
-      "rated_moment_nm": null,
-      "note": "C/C0 are the bearing basic load ratings from the product page"
-    },
-    "connectors": {
-      "power": "XT30PW-M",
-      "can": "A1257WR-S-4P",
-      "uart": "A1257WR-S-3P",
-      "exit": "radial, on the rear cover (drawing side view)",
-      "fixed_leads": false,
-      "cable_od": null,
-      "bend_radius": null
-    },
-    "encoder": {
-      "count": 1,
-      "type": "magnetic",
-      "bits": 14,
-      "location": "motor side",
-      "output_absolute": false,
-      "through_bore": false
-    },
-    "step": {
-      "url": "https://www.cubemars.com/data/cms/202607/ak70-10-robotic-actuator-3d-drawing.zip",
-      "local": "references/vendor/cubemars-ak70-10/AK70-10 V2.0.STEP"
-    },
-    "drawing": {
-      "url": "https://www.cubemars.com/data/cms/202602/ak70-10-robotic-actuator-2d-drawing.pdf",
-      "local": "references/vendor/cubemars-ak70-10/ak70-10-robotic-actuator-2d-drawing.pdf"
-    },
-    "sources": [
-      "https://www.cubemars.com/product/ak70-10-kv100-robotic-actuator.html",
-      "https://www.cubemars.com/technical-support-and-software-download.html"
-    ],
-    "confidence": "drawing"
+  "drawing": {
+   "url": "https://raw.githubusercontent.com/RobStride/Product_Information/384cc561e1ff079c22f68b19908526094430febd/Product%20Literature/CAN2.0/RS04/RS04User%20Manual260713.pdf",
+   "pdf_page": 10,
+   "local": "references/vendor/robstride-rs-04/RS04User_Manual260713.pdf"
   },
-  "cubemars-ak10-9-v3": {
-    "envelope": {
-      "outer_diameter": 98.0,
-      "length_total": 61.7,
-      "length_total_tol": 0.15,
-      "rear_cover_diameter": 71.0,
-      "mass_g": 940
-    },
-    "output": {
-      "flange_diameter": 30.0,
-      "face_offset_from_case_face": 10.2,
-      "face_note": "stack on the output side: 82 ring, 55 step (4.2 below the face), 30 output flange proud by 2",
-      "bolts": {
-        "count": 6,
-        "thread": "M4",
-        "pcd": 24.0,
-        "depth": 7
-      },
-      "dowel_holes": {
-        "count": 2,
-        "diameter": 3.0,
-        "tolerance": "+0.05/0",
-        "pcd": 24.0,
-        "depth": 3
-      },
-      "pilot": null,
-      "through_hole": false,
-      "through_hole_diameter": null
-    },
-    "case": {
-      "mount_face": "both faces",
-      "bolts": {
-        "count": 6,
-        "thread": "M4",
-        "pcd": 90.0,
-        "depth": 8,
-        "depth_note": "output-side face"
-      },
-      "bolts_rear": {
-        "count": 6,
-        "thread": "M4",
-        "pcd": 90.0,
-        "depth": 4
-      },
-      "spigot": {
-        "type": "male ring",
-        "diameter": 82.0
-      }
-    },
-    "bearing": {
-      "type": null,
-      "rated_axial_n": null,
-      "rated_radial_n": null,
-      "rated_moment_nm": null,
-      "note": "not on the V3 product page"
-    },
-    "connectors": {
-      "power_and_can": "XT30 (2+2) black",
-      "uart": "CJT 3-pin white",
-      "exit": "radial slot in the rear cover (drawing rear view)",
-      "fixed_leads": false,
-      "cable_od": null,
-      "bend_radius": null
-    },
-    "encoder": {
-      "count": 2,
-      "type": "magnetic",
-      "bits_motor": 21,
-      "bits_output": 15,
-      "output_absolute": true,
-      "through_bore": false
-    },
-    "step": {
-      "url": "https://www.cubemars.com/data/cms/202608/ak10-9-v3-0-robotic-actuator-3d-drawing.zip",
-      "local": "references/vendor/cubemars-ak10-9-v3/AK10-9 KV60 V3.0-3D.STEP"
-    },
-    "drawing": {
-      "url": "https://www.cubemars.com/data/cms/202602/ak10-9-v3-0-robotic-actuator-2d-drawing.pdf",
-      "local": "references/vendor/cubemars-ak10-9-v3/ak10-9-v3-0-robotic-actuator-2d-drawing.pdf"
-    },
-    "sources": [
-      "https://www.cubemars.com/product/ak10-9-v3-0-kv60-robotic-actuator.html",
-      "https://www.cubemars.com/technical-support-and-software-download.html"
-    ],
-    "confidence": "drawing"
+  "sources": [
+   "https://github.com/RobStride/Product_Information/tree/384cc561e1ff079c22f68b19908526094430febd/Product%20Literature/CAN2.0/RS04",
+   "https://github.com/RobStride/Product_Information/blob/main/README.md",
+   "https://github.com/RobStride/Product_Information/blob/main/%E7%81%B5%E8%B6%B3%E6%97%B6%E4%BB%A3RS%E7%B3%BB%E5%88%97%E4%BA%A7%E5%93%81%E8%A7%84%E6%A0%BC%E4%BB%8B%E7%BB%8D(2026.010.09).pdf"
+  ],
+  "confidence": "drawing"
+ },
+ "odrive-botwheel": {
+  "envelope": {
+   "outer_diameter": 171.3,
+   "outer_diameter_basis": "drawing (171.30 reference); shop says 171",
+   "tyre_width": 44.6,
+   "tyre_width_tol": 1.5,
+   "length_total": 52.1,
+   "length_total_basis": "inferred: 44.6 width + 7.5 to mounting face",
+   "mass_g": 2200
   },
-  "cubemars-ak80-64": {
-    "envelope": {
-      "outer_diameter": 98.0,
-      "length_total": 61.9,
-      "rear_cover_diameter": 71.0,
-      "rear_cover_length": 11.2,
-      "mass_g": 850
-    },
-    "output": {
-      "flange_diameter": 35.0,
-      "face_offset_from_case_face": 9.0,
-      "face_note": "80 ring 8 proud, 35 boss 1 beyond",
-      "bolts": {
-        "count": 6,
-        "thread": "M4",
-        "pcd": 28.0,
-        "depth": 8
-      },
-      "dowel_holes": {
-        "count": 2,
-        "diameter": 3.0,
-        "tolerance": "+0.05/0",
-        "pcd": null,
-        "depth": 3
-      },
-      "pilot": {
-        "type": "female centre recess",
-        "diameter": 21.0,
-        "tolerance": "+0.02/0",
-        "depth": 4.5
-      },
-      "through_hole": false,
-      "through_hole_diameter": null
-    },
-    "case": {
-      "mount_face": "both faces",
-      "bolts": {
-        "count": 8,
-        "thread": "M3",
-        "pcd": 89.0,
-        "depth": 10,
-        "depth_note": "output-side face"
-      },
-      "bolts_rear": {
-        "count": 8,
-        "thread": "M3",
-        "pcd": 85.0,
-        "depth": 7
-      },
-      "spigot": {
-        "type": "male ring",
-        "diameter": 80.0,
-        "height": 8.0
-      }
-    },
-    "bearing": {
-      "type": null,
-      "dynamic_c_n": 2000,
-      "static_c0_n": 2520,
-      "rated_axial_n": null,
-      "rated_radial_n": null,
-      "rated_moment_nm": null,
-      "note": "same C/C0 as AK70-10 on the product page (possibly copied)"
-    },
-    "connectors": {
-      "power": "XT30PW-M",
-      "can": "A1257WR-S-4P",
-      "uart": "A1257WR-S-3P",
-      "exit": "radial, rear cover",
-      "fixed_leads": false,
-      "cable_od": null,
-      "bend_radius": null
-    },
-    "encoder": {
-      "count": 1,
-      "type": "magnetic",
-      "bits": 14,
-      "location": "motor side",
-      "output_absolute": false,
-      "through_bore": false
-    },
-    "step": {
-      "url": "https://www.cubemars.com/data/cms/202602/ak80-64-robotic-actuator-3d-drawing.zip",
-      "local": "references/vendor/cubemars-ak80-64/ak80-64.stp"
-    },
-    "drawing": {
-      "url": "https://www.cubemars.com/data/cms/202602/ak80-64-robotic-actuator-2d-drawing.pdf",
-      "local": "references/vendor/cubemars-ak80-64/ak80-64-robotic-actuator-2d-drawing.pdf"
-    },
-    "sources": [
-      "https://www.cubemars.com/product/ak80-64-kv80-robotic-actuator.html"
-    ],
-    "confidence": "drawing"
+  "output": {
+   "type": "rotating hub/tyre (outer rotor); no output flange",
+   "rim_screws": "10 x M3 on the hub cover (assembly screws, not an interface)"
   },
-  "damiao-dm-j8009p-2ec": {
-    "envelope": {
-      "outer_diameter": 98.0,
-      "length_total": 61.7,
-      "length_case": 40.8,
-      "rear_cover_diameter": 71.0,
-      "mass_g": 963,
-      "step_note": "STEP bbox 107.2 wide: something sticks out past the 98 body (connector area); check before packaging"
-    },
-    "output": {
-      "flange_diameter": 40.0,
-      "face_offset_from_case_face": 7.7,
-      "face_note": "steps: 82 / 70 / 52.5 rings; 40 output flange 1 mm proud of the 52.5 step",
-      "bolts": {
-        "count": 6,
-        "thread": "M5",
-        "pcd": 32.0,
-        "depth": 8,
-        "angles_deg": [
-          30,
-          90,
-          150,
-          210,
-          270,
-          330
-        ]
-      },
-      "dowel_holes": [
-        {
-          "count": 2,
-          "diameter": 4.0,
-          "tolerance": "+0.04/+0.02",
-          "pcd": 32.0,
-          "depth": 4,
-          "angles_deg": [
-            0,
-            180
-          ]
-        },
-        {
-          "count": 2,
-          "diameter": 3.0,
-          "tolerance": "+0.04/+0.02",
-          "pcd": 32.0,
-          "depth": 4,
-          "angles_deg": [
-            120,
-            300
-          ]
-        }
-      ],
-      "dowel_basis": "drawing calls one of each size; STEP shows two of each",
-      "pilot": null,
-      "through_hole": false,
-      "through_hole_diameter": null
-    },
-    "case": {
-      "mount_face": "both faces",
-      "bolts": {
-        "count": 6,
-        "thread": "M4",
-        "pcd": 90.0,
-        "depth": 6,
-        "depth_note": "output-side face"
-      },
-      "bolts_rear": {
-        "count": 6,
-        "thread": "M4",
-        "pcd": 90.0,
-        "depth": 4
-      },
-      "spigot": {
-        "type": "male ring",
-        "diameter": 82.0
-      }
-    },
-    "bearing": {
-      "type": "crossed roller (manual)",
-      "crossed_roller": true,
-      "part_hint": "RAU5005 (drawing/STEP file name)",
-      "rated_axial_n": null,
-      "rated_radial_n": null,
-      "rated_moment_nm": null
-    },
-    "connectors": {
-      "power": "XT30 (pigtail supplied 200 mm)",
-      "can": "GH1.25 2-pin",
-      "uart": "GH1.25 3-pin",
-      "exit": "radial, side of the 71 mm rear cover",
-      "fixed_leads": false,
-      "cable_od": null,
-      "bend_radius": null
-    },
-    "encoder": {
-      "count": 2,
-      "type": "magnetic",
-      "bits": 14,
-      "output_absolute": true,
-      "through_bore": false
-    },
-    "step": {
-      "url": "https://github.com/dmBots/DM-J8009P-2EC/tree/master/models/3d",
-      "local": "references/vendor/damiao-dm-j8009p-2ec/8009-RAU_5005_outline-20240809.stp"
-    },
-    "drawing": {
-      "url": "https://github.com/dmBots/DM-J8009P-2EC/tree/master/drawings/2d",
-      "local": "references/vendor/damiao-dm-j8009p-2ec/8009-rau5005-20240809.pdf"
-    },
-    "sources": [
-      "https://github.com/dmBots/DM-J8009P-2EC"
-    ],
-    "confidence": "drawing"
+  "case": {
+   "mount_face": "single-sided fixed stator flange on one side",
+   "bolts": {
+    "count": 4,
+    "thread": "M6",
+    "pcd": 36.0,
+    "depth": null,
+    "pcd_tol": 0.05,
+    "depth_note": "not published"
+   },
+   "spigot": {
+    "type": "male boss",
+    "diameter": 50.0,
+    "tolerance": "0/-0.04",
+    "height": 5.0,
+    "height_tol": 0.1
+   },
+   "boss_face_outboard_of_tyre_side": 7.5,
+   "boss_face_outboard_tol": 0.8,
+   "opposite_side": "closed hub with centre cap; no axle (drawing)"
   },
-  "damiao-dm-j10010l-2ec": {
-    "envelope": {
-      "outer_diameter": 120.0,
-      "length_case": 37.7,
-      "length_case_tol": 0.25,
-      "rear_cover_length": 15.0,
-      "rear_cover_diameter": 94.0,
-      "length_total": 52.7,
-      "length_total_basis": "drawing 37.7 + 15 (manual: 53 excl. pins)",
-      "length_total_step": 60.9,
-      "mass_g": 1372
-    },
-    "output": {
-      "flange_diameter": null,
-      "face_offset_from_case_face": 0.5,
-      "face_offset_tol": 0.2,
-      "bolts": {
-        "count": 9,
-        "thread": "M5-6H",
-        "pcd": 36.0,
-        "depth": 5,
-        "pcd_tol": 0.12
-      },
-      "dowel_pins": {
-        "count": 3,
-        "diameter": 5.0,
-        "tolerance": "0/-0.02",
-        "radius": 19.5,
-        "radius_tol": 0.02,
-        "pcd": 39.0,
-        "protrusion": 3.0,
-        "protrusion_tol": "+0.1/-0.2",
-        "angles_deg": [
-          30,
-          150,
-          270
-        ],
-        "note": "installed pins"
-      },
-      "pilot": {
-        "type": "female centre bore",
-        "diameter": 28.0,
-        "tolerance": "+0.08/0",
-        "depth": null
-      },
-      "through_hole": false,
-      "through_hole_diameter": null
-    },
-    "case": {
-      "mount_face": "both faces",
-      "bolts": {
-        "count": 10,
-        "thread": "M4-6H",
-        "pcd": 106.0,
-        "depth": 5,
-        "pcd_tol": 0.12
-      },
-      "bolts_rear": {
-        "count": 10,
-        "thread": "M4-6H",
-        "pcd": 106.0,
-        "depth": 5,
-        "pcd_tol": 0.12
-      },
-      "spigot": null
-    },
-    "bearing": {
-      "type": null,
-      "rated_axial_n": null,
-      "rated_radial_n": null,
-      "rated_moment_nm": null
-    },
-    "connectors": {
-      "power": "XT30",
-      "can": "GH1.25 2-pin",
-      "uart": "GH1.25 3-pin",
-      "rs485": "port present, 'not yet open'",
-      "exit": "radial, side of the 94 mm rear cover",
-      "fixed_leads": false,
-      "cable_od": null,
-      "bend_radius": null
-    },
-    "encoder": {
-      "count": 2,
-      "type": "magnetic",
-      "bits": 14,
-      "output_absolute": true,
-      "through_bore": false
-    },
-    "step": {
-      "url": "https://github.com/dmBots/DM-J10010L-2EC/tree/master/models/3d",
-      "local": "references/vendor/damiao-dm-j10010l-2ec/dm-j10010l-0730_1.STEP"
-    },
-    "drawing": {
-      "url": "https://github.com/dmBots/DM-J10010L-2EC/tree/master/drawings/2d",
-      "local": "references/vendor/damiao-dm-j10010l-2ec/dm-j10010l-2ec-2D.pdf"
-    },
-    "sources": [
-      "https://github.com/dmBots/DM-J10010L-2EC"
-    ],
-    "confidence": "drawing"
+  "bearing": {
+   "type": null,
+   "rated_radial_n": 785,
+   "rated_radial_basis": "shop: 'Rated load weight: 80kg / wheel' (80 x 9.81)",
+   "rated_axial_n": null,
+   "rated_moment_nm": null
   },
-  "unitree-go-m8010-6": {
-    "envelope": {
-      "outer_diameter": 96.5,
-      "length_total": 42.3,
-      "mass_g": 530,
-      "basis": "existing catalog entry (unitree.com Go1 motor page); no drawing found"
-    },
-    "output": {
-      "bolts": null,
-      "pilot": null,
-      "through_hole": false,
-      "note": "no published bolt pattern"
-    },
-    "case": {
-      "bolts": null,
-      "note": "no published mounting pattern"
-    },
-    "bearing": {
-      "type": null,
-      "rated_axial_n": null,
-      "rated_radial_n": null,
-      "rated_moment_nm": null
-    },
-    "connectors": {
-      "power_and_rs485": "XT30 (2+2) (manual); RS-485 adapter uses GH1.25-3",
-      "exit": "side of the rear housing (product photos; inferred)",
-      "fixed_leads": false,
-      "cable_od": null,
-      "bend_radius": null
-    },
-    "encoder": {
-      "count": 1,
-      "location": "rotor",
-      "type": "single-turn absolute on rotor; not absolute at output",
-      "through_bore": false
-    },
-    "step": {
-      "url": "https://github.com/unitreerobotics/Qmini/tree/main/STEP_file",
-      "local": null,
-      "note": "motor only exists inside the Qmini assembly (Git LFS, 88 MB, CC BY-NC-SA 4.0); not downloaded"
-    },
-    "sources": [
-      "https://shop.unitree.com/products/go1-motor",
-      "https://techshare.co.jp/faq/wp-content/uploads/2023/12/GO-M8010-6_Motor_User_Manual_V1.0.pdf"
-    ],
-    "confidence": "partial"
-  }
+  "connectors": {
+   "phase": "JST 03T-WPJV-1-SM (WPJ series, 3-pin, waterproof)",
+   "feedback": "JST 08R-JWPF-VSLE-D housing + SWPR-001T-P025 pins (JWPF 8-pin, waterproof); supplied stub harness ends in JST PUD with ODrive S1 pinout",
+   "exit": "axial, from the centre of the stator mounting boss",
+   "fixed_leads": true,
+   "cable_length": 300,
+   "cable_length_tol": 25,
+   "cable_note": "200 REF dimension on drawing, probably the sheathed length (inferred)",
+   "cable_od": null,
+   "bend_radius": null
+  },
+  "encoder": {
+   "type": "hall + 3200 CPR incremental",
+   "absolute": false,
+   "through_bore": null
+  },
+  "ip_rating": "IP54",
+  "step": {
+   "url": "https://cad.onshape.com/publications/ffa16d9268e83ffcb5643cba/w/81f7a79746984b3bebf1d392/e/3101f331226b74a504e702ae",
+   "local": null,
+   "note": "Onshape publication; STEP export needs an Onshape login"
+  },
+  "drawing": {
+   "url": "https://cdn.shopify.com/s/files/1/0580/2904/7878/files/BotWheel_Drawng.png?v=1738951877",
+   "local": "references/vendor/odrive-botwheel/BotWheel_Drawng.png"
+  },
+  "sources": [
+   "https://shop.odriverobotics.com/products/botwheels",
+   "https://docs.odriverobotics.com/v/latest/hardware/odrive-motors.html#odrive-botwheel"
+  ],
+  "confidence": "drawing"
+ }
 }
