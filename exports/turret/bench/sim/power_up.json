@@ -1,0 +1,111 @@
+{
+ "test": "3.1",
+ "title": "Power-up: 5 V, 3.3 V, 12 V MAIN, 12 V PAN, the heartbeat, the servos, the pulse train and the 3.3 V inputs",
+ "plan": "docs/turret-prototype-plan.md section 5",
+ "mode": "sim",
+ "date": "2026-10-27",
+ "pass": true,
+ "checks": [
+  {
+   "check": "heartbeat on CAN within 2 s",
+   "value": 0.001,
+   "limit": "<= 2 s",
+   "pass": true
+  },
+  {
+   "check": "pan servo answers (ID 1)",
+   "value": true,
+   "limit": "answers",
+   "pass": true
+  },
+  {
+   "check": "tilt servo answers (ID 2)",
+   "value": true,
+   "limit": "answers",
+   "pass": true
+  },
+  {
+   "check": "12 V PAN at the pan servo",
+   "value": 12.0,
+   "limit": "11.5-12.5 V (the servo reads it)",
+   "pass": true
+  },
+  {
+   "check": "12 V MAIN at the tilt servo",
+   "value": 12.0,
+   "limit": "11.5-12.5 V",
+   "pass": true
+  },
+  {
+   "check": "5 V",
+   "value": 5.02,
+   "limit": "4.75-5.25 V",
+   "pass": true
+  },
+  {
+   "check": "3.3 V",
+   "value": 3.3,
+   "limit": "3.2-3.4 V",
+   "pass": true
+  },
+  {
+   "check": "the pulse train",
+   "value": 986.0,
+   "limit": "930-1,045 Hz (986 nominal; the firmware accepts 900-1,100)",
+   "pass": true
+  },
+  {
+   "check": "the opto LED's current (R8 2.2 k)",
+   "value": 4.4,
+   "limit": "3.5-5.3 V: 1.6-2.4 mA",
+   "pass": true
+  },
+  {
+   "check": "no Feather input above 3.3 V",
+   "value": 3.3,
+   "limit": "<= 3.4 V",
+   "pass": true
+  },
+  {
+   "check": "no fuse blown",
+   "value": true,
+   "limit": "all whole",
+   "pass": true
+  }
+ ],
+ "readings": {
+  "heartbeat_after_s": 0.001,
+  "pan_servo_rail_v": 12.0,
+  "tilt_servo_rail_v": 12.0,
+  "faults": [
+   "ARM low"
+  ]
+ },
+ "notes": [],
+ "sim": {
+  "seed": 1031,
+  "simulated_s": 2.0,
+  "wall_s": 0.1,
+  "stand_ins": [
+   "fuses_whole",
+   "max_input_v",
+   "pulse_hz",
+   "r8_drop_v",
+   "rail_3v3",
+   "rail_5v"
+  ],
+  "shortened": {},
+  "warning": "simulated turret (firmware/turret/sim_turret.py): not a bench reading"
+ },
+ "firmware": {
+  "build": "v0",
+  "servo_baud": 500000,
+  "motor": "SunnySky X2216 880KV V3",
+  "kv": 880.0,
+  "pole_pairs": 7,
+  "erpm_limit": 81312,
+  "tyre_mm": 34,
+  "set_rpm_52fps": 8855,
+  "ramp_s": 0.3
+ }
+}

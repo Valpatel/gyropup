@@ -1,0 +1,541 @@
+{
+ "test": "3.5",
+ "title": "Homing: 50 power-ups at random pans; 10 continuous turns each way and back",
+ "plan": "docs/turret-prototype-plan.md section 5",
+ "mode": "sim",
+ "date": "2026-10-27",
+ "pass": true,
+ "checks": [
+  {
+   "check": "every power-up homed",
+   "value": 50,
+   "limit": "50 of 50",
+   "pass": true
+  },
+  {
+   "check": "every home within 7 s",
+   "value": 6.31,
+   "limit": "<= 7 s",
+   "pass": true
+  },
+  {
+   "check": "index centre spread",
+   "value": 0.053,
+   "limit": "<= 0.1 deg (max - min)",
+   "pass": true
+  },
+  {
+   "check": "10 turns + and back",
+   "value": 0.056,
+   "limit": "<= 0.2 deg",
+   "pass": true
+  },
+  {
+   "check": "10 turns - and back",
+   "value": 0.03,
+   "limit": "<= 0.2 deg",
+   "pass": true
+  },
+  {
+   "check": "index re-check worst",
+   "value": 0.03,
+   "limit": "<= 0.2 deg (none asks for a re-home)",
+   "pass": true
+  }
+ ],
+ "readings": {
+  "power_ups": [
+   {
+    "run": 1,
+    "homed": true,
+    "time_s": 4.84,
+    "homing_s": 4.54,
+    "centre_counts": 1145.188,
+    "swept_deg": 270,
+    "true_err_deg": -0.039
+   },
+   {
+    "run": 2,
+    "homed": true,
+    "time_s": 4.07,
+    "homing_s": 3.77,
+    "centre_counts": 1145.562,
+    "swept_deg": 224,
+    "true_err_deg": -0.043
+   },
+   {
+    "run": 3,
+    "homed": true,
+    "time_s": 0.76,
+    "homing_s": 0.45,
+    "centre_counts": 1145.875,
+    "swept_deg": 25,
+    "true_err_deg": -0.109
+   },
+   {
+    "run": 4,
+    "homed": true,
+    "time_s": 1.83,
+    "homing_s": 1.53,
+    "centre_counts": 1145.438,
+    "swept_deg": 89,
+    "true_err_deg": -0.05
+   },
+   {
+    "run": 5,
+    "homed": true,
+    "time_s": 2.98,
+    "homing_s": 2.68,
+    "centre_counts": 1145.375,
+    "swept_deg": 158,
+    "true_err_deg": -0.045
+   },
+   {
+    "run": 6,
+    "homed": true,
+    "time_s": 1.13,
+    "homing_s": 0.83,
+    "centre_counts": 1145.812,
+    "swept_deg": 47,
+    "true_err_deg": -0.067
+   },
+   {
+    "run": 7,
+    "homed": true,
+    "time_s": 6.31,
+    "homing_s": 6.01,
+    "centre_counts": 1146.188,
+    "swept_deg": 358,
+    "true_err_deg": -0.101
+   },
+   {
+    "run": 8,
+    "homed": true,
+    "time_s": 2.03,
+    "homing_s": 1.73,
+    "centre_counts": 1145.375,
+    "swept_deg": 101,
+    "true_err_deg": -0.074
+   },
+   {
+    "run": 9,
+    "homed": true,
+    "time_s": 1.98,
+    "homing_s": 1.68,
+    "centre_counts": 1146.375,
+    "swept_deg": 98,
+    "true_err_deg": -0.106
+   },
+   {
+    "run": 10,
+    "homed": true,
+    "time_s": 1.37,
+    "homing_s": 1.07,
+    "centre_counts": 1146.25,
+    "swept_deg": 62,
+    "true_err_deg": -0.077
+   },
+   {
+    "run": 11,
+    "homed": true,
+    "time_s": 1.59,
+    "homing_s": 1.29,
+    "centre_counts": 1144.875,
+    "swept_deg": 75,
+    "true_err_deg": -0.076
+   },
+   {
+    "run": 12,
+    "homed": true,
+    "time_s": 5.88,
+    "homing_s": 5.58,
+    "centre_counts": 1145.688,
+    "swept_deg": 332,
+    "true_err_deg": -0.092
+   },
+   {
+    "run": 13,
+    "homed": true,
+    "time_s": 1.98,
+    "homing_s": 1.67,
+    "centre_counts": 1145.5,
+    "swept_deg": 98,
+    "true_err_deg": -0.079
+   },
+   {
+    "run": 14,
+    "homed": true,
+    "time_s": 2.46,
+    "homing_s": 2.16,
+    "centre_counts": 1145.562,
+    "swept_deg": 127,
+    "true_err_deg": -0.076
+   },
+   {
+    "run": 15,
+    "homed": true,
+    "time_s": 3.68,
+    "homing_s": 3.38,
+    "centre_counts": 1144.688,
+    "swept_deg": 200,
+    "true_err_deg": -0.026
+   },
+   {
+    "run": 16,
+    "homed": true,
+    "time_s": 1.09,
+    "homing_s": 0.78,
+    "centre_counts": 1145.625,
+    "swept_deg": 44,
+    "true_err_deg": -0.103
+   },
+   {
+    "run": 17,
+    "homed": true,
+    "time_s": 4.57,
+    "homing_s": 4.27,
+    "centre_counts": 1145.062,
+    "swept_deg": 254,
+    "true_err_deg": -0.075
+   },
+   {
+    "run": 18,
+    "homed": true,
+    "time_s": 2.48,
+    "homing_s": 2.18,
+    "centre_counts": 1145.438,
+    "swept_deg": 128,
+    "true_err_deg": -0.078
+   },
+   {
+    "run": 19,
+    "homed": true,
+    "time_s": 4.91,
+    "homing_s": 4.61,
+    "centre_counts": 1144.812,
+    "swept_deg": 274,
+    "true_err_deg": -0.075
+   },
+   {
+    "run": 20,
+    "homed": true,
+    "time_s": 1.62,
+    "homing_s": 1.32,
+    "centre_counts": 1146.25,
+    "swept_deg": 77,
+    "true_err_deg": -0.098
+   },
+   {
+    "run": 21,
+    "homed": true,
+    "time_s": 3.66,
+    "homing_s": 3.36,
+    "centre_counts": 1145.688,
+    "swept_deg": 199,
+    "true_err_deg": -0.091
+   },
+   {
+    "run": 22,
+    "homed": true,
+    "time_s": 3.38,
+    "homing_s": 3.08,
+    "centre_counts": 1145.562,
+    "swept_deg": 182,
+    "true_err_deg": -0.047
+   },
+   {
+    "run": 23,
+    "homed": true,
+    "time_s": 4.27,
+    "homing_s": 3.97,
+    "centre_counts": 1146.062,
+    "swept_deg": 236,
+    "true_err_deg": -0.084
+   },
+   {
+    "run": 24,
+    "homed": true,
+    "time_s": 3.77,
+    "homing_s": 3.47,
+    "centre_counts": 1145.625,
+    "swept_deg": 206,
+    "true_err_deg": -0.098
+   },
+   {
+    "run": 25,
+    "homed": true,
+    "time_s": 4.1,
+    "homing_s": 3.8,
+    "centre_counts": 1145.375,
+    "swept_deg": 226,
+    "true_err_deg": -0.091
+   },
+   {
+    "run": 26,
+    "homed": true,
+    "time_s": 4.93,
+    "homing_s": 4.63,
+    "centre_counts": 1145.25,
+    "swept_deg": 275,
+    "true_err_deg": -0.049
+   },
+   {
+    "run": 27,
+    "homed": true,
+    "time_s": 5.14,
+    "homing_s": 4.84,
+    "centre_counts": 1144.562,
+    "swept_deg": 288,
+    "true_err_deg": -0.026
+   },
+   {
+    "run": 28,
+    "homed": true,
+    "time_s": 3.92,
+    "homing_s": 3.62,
+    "centre_counts": 1145.562,
+    "swept_deg": 215,
+    "true_err_deg": -0.106
+   },
+   {
+    "run": 29,
+    "homed": true,
+    "time_s": 3.9,
+    "homing_s": 3.6,
+    "centre_counts": 1145.5,
+    "swept_deg": 213,
+    "true_err_deg": -0.069
+   },
+   {
+    "run": 30,
+    "homed": true,
+    "time_s": 6.17,
+    "homing_s": 5.87,
+    "centre_counts": 1145.312,
+    "swept_deg": 350,
+    "true_err_deg": -0.059
+   },
+   {
+    "run": 31,
+    "homed": true,
+    "time_s": 5.99,
+    "homing_s": 5.69,
+    "centre_counts": 1146.125,
+    "swept_deg": 339,
+    "true_err_deg": -0.086
+   },
+   {
+    "run": 32,
+    "homed": true,
+    "time_s": 1.74,
+    "homing_s": 1.44,
+    "centre_counts": 1145.438,
+    "swept_deg": 84,
+    "true_err_deg": -0.058
+   },
+   {
+    "run": 33,
+    "homed": true,
+    "time_s": 1.29,
+    "homing_s": 0.99,
+    "centre_counts": 1145.5,
+    "swept_deg": 57,
+    "true_err_deg": -0.067
+   },
+   {
+    "run": 34,
+    "homed": true,
+    "time_s": 2.3,
+    "homing_s": 2.0,
+    "centre_counts": 1145.938,
+    "swept_deg": 118,
+    "true_err_deg": -0.073
+   },
+   {
+    "run": 35,
+    "homed": true,
+    "time_s": 4.61,
+    "homing_s": 4.31,
+    "centre_counts": 1145.438,
+    "swept_deg": 256,
+    "true_err_deg": -0.072
+   },
+   {
+    "run": 36,
+    "homed": true,
+    "time_s": 3.11,
+    "homing_s": 2.81,
+    "centre_counts": 1145.75,
+    "swept_deg": 166,
+    "true_err_deg": -0.078
+   },
+   {
+    "run": 37,
+    "homed": true,
+    "time_s": 4.97,
+    "homing_s": 4.67,
+    "centre_counts": 1144.938,
+    "swept_deg": 278,
+    "true_err_deg": -0.055
+   },
+   {
+    "run": 38,
+    "homed": true,
+    "time_s": 3.07,
+    "homing_s": 2.77,
+    "centre_counts": 1145.625,
+    "swept_deg": 164,
+    "true_err_deg": -0.048
+   },
+   {
+    "run": 39,
+    "homed": true,
+    "time_s": 4.59,
+    "homing_s": 4.29,
+    "centre_counts": 1145.125,
+    "swept_deg": 255,
+    "true_err_deg": -0.072
+   },
+   {
+    "run": 40,
+    "homed": true,
+    "time_s": 1.08,
+    "homing_s": 0.78,
+    "centre_counts": 1144.562,
+    "swept_deg": 44,
+    "true_err_deg": -0.022
+   },
+   {
+    "run": 41,
+    "homed": true,
+    "time_s": 3.54,
+    "homing_s": 3.24,
+    "centre_counts": 1145.562,
+    "swept_deg": 192,
+    "true_err_deg": -0.048
+   },
+   {
+    "run": 42,
+    "homed": true,
+    "time_s": 3.84,
+    "homing_s": 3.54,
+    "centre_counts": 1145.125,
+    "swept_deg": 210,
+    "true_err_deg": -0.032
+   },
+   {
+    "run": 43,
+    "homed": true,
+    "time_s": 4.43,
+    "homing_s": 4.13,
+    "centre_counts": 1145.125,
+    "swept_deg": 245,
+    "true_err_deg": -0.049
+   },
+   {
+    "run": 44,
+    "homed": true,
+    "time_s": 3.4,
+    "homing_s": 3.1,
+    "centre_counts": 1145.375,
+    "swept_deg": 183,
+    "true_err_deg": -0.07
+   },
+   {
+    "run": 45,
+    "homed": true,
+    "time_s": 1.44,
+    "homing_s": 1.14,
+    "centre_counts": 1145.375,
+    "swept_deg": 66,
+    "true_err_deg": -0.088
+   },
+   {
+    "run": 46,
+    "homed": true,
+    "time_s": 2.42,
+    "homing_s": 2.12,
+    "centre_counts": 1146.0,
+    "swept_deg": 125,
+    "true_err_deg": -0.066
+   },
+   {
+    "run": 47,
+    "homed": true,
+    "time_s": 1.74,
+    "homing_s": 1.44,
+    "centre_counts": 1145.75,
+    "swept_deg": 84,
+    "true_err_deg": -0.063
+   },
+   {
+    "run": 48,
+    "homed": true,
+    "time_s": 2.35,
+    "homing_s": 2.05,
+    "centre_counts": 1145.625,
+    "swept_deg": 120,
+    "true_err_deg": -0.047
+   },
+   {
+    "run": 49,
+    "homed": true,
+    "time_s": 3.26,
+    "homing_s": 2.96,
+    "centre_counts": 1145.562,
+    "swept_deg": 175,
+    "true_err_deg": -0.073
+   },
+   {
+    "run": 50,
+    "homed": true,
+    "time_s": 2.93,
+    "homing_s": 2.63,
+    "centre_counts": 1145.25,
+    "swept_deg": 155,
+    "true_err_deg": -0.029
+   }
+  ],
+  "home_time_s": {
+   "n": 50,
+   "mean": 3.26,
+   "sd": 1.48,
+   "min": 0.76,
+   "max": 6.31
+  },
+  "index_centre_spread_deg": 0.053,
+  "turns": [
+   {
+    "direction": "+",
+    "firmware_back_deg": 0.0,
+    "back_within_deg": 0.056
+   },
+   {
+    "direction": "-",
+    "firmware_back_deg": 0.0,
+    "back_within_deg": 0.03
+   }
+  ],
+  "index_recheck_worst_deg": 0.03
+ },
+ "notes": [],
+ "sim": {
+  "seed": 1035,
+  "simulated_s": 375.9,
+  "wall_s": 12.9,
+  "stand_ins": [],
+  "shortened": {},
+  "warning": "simulated turret (firmware/turret/sim_turret.py): not a bench reading"
+ },
+ "firmware": {
+  "build": "v0",
+  "servo_baud": 500000,
+  "motor": "SunnySky X2216 880KV V3",
+  "kv": 880.0,
+  "pole_pairs": 7,
+  "erpm_limit": 81312,
+  "tyre_mm": 34,
+  "set_rpm_52fps": 8855,
+  "ramp_s": 0.3
+ }
+}

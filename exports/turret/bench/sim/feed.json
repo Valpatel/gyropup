@@ -1,0 +1,174 @@
+{
+ "test": "5.1",
+ "title": "Feed: 100 balls per pose at 3/s (level, -25 deg, level while panning at 60 deg/s)",
+ "plan": "docs/turret-prototype-plan.md section 5",
+ "mode": "sim",
+ "date": "2026-10-27",
+ "pass": true,
+ "checks": [
+  {
+   "check": "level: 100 balls",
+   "value": 100,
+   "limit": "100",
+   "pass": true
+  },
+  {
+   "check": "level: no double",
+   "value": 0,
+   "limit": "0",
+   "pass": true
+  },
+  {
+   "check": "level: jams",
+   "value": 1.0,
+   "limit": "<= 1 per 100",
+   "pass": true
+  },
+  {
+   "check": "level: empty steps after the dither",
+   "value": 0.0,
+   "limit": "<= 5 %",
+   "pass": true
+  },
+  {
+   "check": "-25 deg: 100 balls",
+   "value": 100,
+   "limit": "100",
+   "pass": true
+  },
+  {
+   "check": "-25 deg: no double",
+   "value": 0,
+   "limit": "0",
+   "pass": true
+  },
+  {
+   "check": "-25 deg: jams",
+   "value": 0.0,
+   "limit": "<= 1 per 100",
+   "pass": true
+  },
+  {
+   "check": "-25 deg: empty steps after the dither",
+   "value": 0.0,
+   "limit": "<= 5 %",
+   "pass": true
+  },
+  {
+   "check": "level, panning 60 deg/s: 100 balls",
+   "value": 100,
+   "limit": "100",
+   "pass": true
+  },
+  {
+   "check": "level, panning 60 deg/s: no double",
+   "value": 0,
+   "limit": "0",
+   "pass": true
+  },
+  {
+   "check": "level, panning 60 deg/s: jams",
+   "value": 1.0,
+   "limit": "<= 1 per 100",
+   "pass": true
+  },
+  {
+   "check": "level, panning 60 deg/s: empty steps after the dither",
+   "value": 0.99,
+   "limit": "<= 5 %",
+   "pass": true
+  }
+ ],
+ "readings": {
+  "poses": {
+   "level": {
+    "balls": 100,
+    "steps": 100,
+    "doubles": 0,
+    "jams": 1,
+    "steps_dithered": 12,
+    "dithers": 12,
+    "empty_after_dither": 0,
+    "lifts": 0,
+    "bursts": 4,
+    "ball_rate_per_s": 2.4,
+    "fps": {
+     "n": 100,
+     "mean": 51.98,
+     "sd": 1.2,
+     "min": 49.2,
+     "max": 54.1
+    },
+    "step_rate_per_s": 2.4,
+    "empty_after_dither_pct": 0.0,
+    "jams_per_100": 1.0
+   },
+   "-25 deg": {
+    "balls": 100,
+    "steps": 100,
+    "doubles": 0,
+    "jams": 0,
+    "steps_dithered": 17,
+    "dithers": 19,
+    "empty_after_dither": 0,
+    "lifts": 2,
+    "bursts": 4,
+    "ball_rate_per_s": 2.2,
+    "fps": {
+     "n": 100,
+     "mean": 51.94,
+     "sd": 1.05,
+     "min": 49.8,
+     "max": 54.5
+    },
+    "step_rate_per_s": 2.2,
+    "empty_after_dither_pct": 0.0,
+    "jams_per_100": 0.0
+   },
+   "level, panning 60 deg/s": {
+    "balls": 100,
+    "steps": 101,
+    "doubles": 0,
+    "jams": 1,
+    "steps_dithered": 20,
+    "dithers": 22,
+    "empty_after_dither": 1,
+    "lifts": 0,
+    "bursts": 4,
+    "ball_rate_per_s": 2.05,
+    "fps": {
+     "n": 100,
+     "mean": 52.15,
+     "sd": 1.05,
+     "min": 49.5,
+     "max": 54.6
+    },
+    "step_rate_per_s": 2.08,
+    "empty_after_dither_pct": 0.99,
+    "jams_per_100": 1.0
+   }
+  }
+ },
+ "notes": [
+  "The panning pose uses the bench burst that does not wait for a settled aim (the settle rule is for accuracy; every safety condition stays)."
+ ],
+ "sim": {
+  "seed": 1051,
+  "simulated_s": 145.3,
+  "wall_s": 12.0,
+  "stand_ins": [],
+  "shortened": {},
+  "warning": "simulated turret (firmware/turret/sim_turret.py): not a bench reading"
+ },
+ "firmware": {
+  "build": "v0",
+  "servo_baud": 500000,
+  "motor": "SunnySky X2216 880KV V3",
+  "kv": 880.0,
+  "pole_pairs": 7,
+  "erpm_limit": 81312,
+  "tyre_mm": 34,
+  "set_rpm_52fps": 8855,
+  "ramp_s": 0.3
+ }
+}

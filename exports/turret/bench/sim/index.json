@@ -1,0 +1,222 @@
+{
+ "mode": "sim",
+ "tests": [
+  {
+   "test": "3.1",
+   "file": "power_up.json",
+   "pass": true,
+   "failed": [],
+   "simulated_s": 2.0
+  },
+  {
+   "test": "3.2",
+   "file": "safety_line.json",
+   "pass": true,
+   "failed": [],
+   "simulated_s": 16.4
+  },
+  {
+   "test": "3.3",
+   "file": "trip.json",
+   "pass": true,
+   "failed": [],
+   "simulated_s": 7.4
+  },
+  {
+   "test": "3.4",
+   "file": "brake_timing.json",
+   "pass": true,
+   "failed": [],
+   "simulated_s": 10.1
+  },
+  {
+   "test": "3.5",
+   "file": "homing_bench.json",
+   "pass": true,
+   "failed": [],
+   "simulated_s": 375.9
+  },
+  {
+   "test": "3.6",
+   "file": "ring_servo_bus.json",
+   "pass": true,
+   "failed": [],
+   "simulated_s": 125.8
+  },
+  {
+   "test": "3.7",
+   "file": "ring_contacts.json",
+   "pass": true,
+   "failed": [],
+   "simulated_s": 219.9
+  },
+  {
+   "test": "3.8",
+   "file": "ring_can.json",
+   "pass": true,
+   "failed": [],
+   "simulated_s": 248.4
+  },
+  {
+   "test": "3.9",
+   "file": "feed_servo.json",
+   "pass": true,
+   "failed": [],
+   "simulated_s": 142.3
+  },
+  {
+   "test": "4.1",
+   "file": "ceiling_noload.json",
+   "pass": true,
+   "failed": [],
+   "simulated_s": 8.5
+  },
+  {
+   "test": "4.2",
+   "file": "ceiling.json",
+   "pass": true,
+   "failed": [],
+   "simulated_s": 15.7
+  },
+  {
+   "test": "4.3",
+   "file": "speed_map.json",
+   "pass": true,
+   "failed": [],
+   "simulated_s": 36.4
+  },
+  {
+   "test": "4.4",
+   "file": "set_speed.json",
+   "pass": true,
+   "failed": [],
+   "simulated_s": 25.9
+  },
+  {
+   "test": "4.5",
+   "file": "spinup_current.json",
+   "pass": true,
+   "failed": [],
+   "simulated_s": 9.7
+  },
+  {
+   "test": "4.6",
+   "file": "fault_24v.json",
+   "pass": true,
+   "failed": [],
+   "simulated_s": 5.4
+  },
+  {
+   "test": "4.7",
+   "file": "release.json",
+   "pass": true,
+   "failed": [],
+   "simulated_s": 174.2
+  },
+  {
+   "test": "4.8",
+   "file": "tyre_growth.json",
+   "pass": true,
+   "failed": [],
+   "simulated_s": 23.7
+  },
+  {
+   "test": "4.9",
+   "file": "ring_temperature.json",
+   "pass": true,
+   "failed": [],
+   "simulated_s": 122.8
+  },
+  {
+   "test": "5.1",
+   "file": "feed.json",
+   "pass": true,
+   "failed": [],
+   "simulated_s": 145.3
+  },
+  {
+   "test": "5.2",
+   "file": "feed_max_rate.json",
+   "pass": true,
+   "failed": [],
+   "simulated_s": 48.7
+  },
+  {
+   "test": "5.3",
+   "file": "feed_worn_damp.json",
+   "pass": true,
+   "failed": [],
+   "simulated_s": 54.3
+  },
+  {
+   "test": "5.4",
+   "file": "parked_safe.json",
+   "pass": true,
+   "failed": [],
+   "simulated_s": 9.6
+  },
+  {
+   "test": "5.5",
+   "file": "feed_last_balls.json",
+   "pass": true,
+   "failed": [],
+   "simulated_s": 17.8
+  },
+  {
+   "test": "6.1",
+   "file": "boresight.json",
+   "pass": true,
+   "failed": [],
+   "simulated_s": 12.0
+  },
+  {
+   "test": "6.2",
+   "file": "groups.json",
+   "pass": true,
+   "failed": [],
+   "simulated_s": 26.4
+  },
+  {
+   "test": "6.3",
+   "file": "aim_repeat.json",
+   "pass": true,
+   "failed": [],
+   "simulated_s": 53.0
+  },
+  {
+   "test": "6.4",
+   "file": "fire_while_panning.json",
+   "pass": true,
+   "failed": [],
+   "simulated_s": 16.0
+  },
+  {
+   "test": "6.5",
+   "file": "knockdown.json",
+   "pass": true,
+   "failed": [],
+   "simulated_s": 13.6
+  },
+  {
+   "test": "6.6",
+   "file": "temperature.json",
+   "pass": true,
+   "failed": [],
+   "simulated_s": 259.2
+  },
+  {
+   "test": "6.7",
+   "file": "release_feeding.json",
+   "pass": true,
+   "failed": [],
+   "simulated_s": 120.3
+  },
+  {
+   "test": "6.8",
+   "file": "mock_lidar.json",
+   "pass": true,
+   "failed": [],
+   "simulated_s": 47.8
+  }
+ ]
+}

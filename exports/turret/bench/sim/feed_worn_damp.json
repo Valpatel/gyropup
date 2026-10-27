@@ -1,0 +1,92 @@
+{
+ "test": "5.3",
+ "title": "Feed with 50 worn and 50 damp balls, level, 3/s (information)",
+ "plan": "docs/turret-prototype-plan.md section 5",
+ "mode": "sim",
+ "date": "2026-10-27",
+ "pass": true,
+ "checks": [
+  {
+   "check": "worn: no double",
+   "value": 0,
+   "limit": "0",
+   "pass": true
+  },
+  {
+   "check": "damp: no double",
+   "value": 0,
+   "limit": "0",
+   "pass": true
+  }
+ ],
+ "readings": {
+  "balls": {
+   "worn": {
+    "balls": 50,
+    "steps": 50,
+    "doubles": 0,
+    "jams": 1,
+    "steps_dithered": 9,
+    "dithers": 10,
+    "empty_after_dither": 0,
+    "lifts": 0,
+    "bursts": 2,
+    "ball_rate_per_s": 2.27,
+    "fps": {
+     "n": 50,
+     "mean": 52.06,
+     "sd": 1.01,
+     "min": 49.5,
+     "max": 54.0
+    },
+    "step_rate_per_s": 2.27,
+    "empty_after_dither_pct": 0.0,
+    "jams_per_100": 2.0
+   },
+   "damp": {
+    "balls": 50,
+    "steps": 51,
+    "doubles": 0,
+    "jams": 1,
+    "steps_dithered": 13,
+    "dithers": 16,
+    "empty_after_dither": 1,
+    "lifts": 0,
+    "bursts": 2,
+    "ball_rate_per_s": 2.08,
+    "fps": {
+     "n": 50,
+     "mean": 51.94,
+     "sd": 0.98,
+     "min": 50.0,
+     "max": 54.7
+    },
+    "step_rate_per_s": 2.09,
+    "empty_after_dither_pct": 1.96,
+    "jams_per_100": 2.0
+   }
+  }
+ },
+ "notes": [
+  "Jams are logged, not judged (an information test). In --sim worn and damp balls are a stand-in: p_jam 0.02, p_fill 0.75."
+ ],
+ "sim": {
+  "seed": 1053,
+  "simulated_s": 54.3,
+  "wall_s": 4.6,
+  "stand_ins": [],
+  "shortened": {},
+  "warning": "simulated turret (firmware/turret/sim_turret.py): not a bench reading"
+ },
+ "firmware": {
+  "build": "v0",
+  "servo_baud": 500000,
+  "motor": "SunnySky X2216 880KV V3",
+  "kv": 880.0,
+  "pole_pairs": 7,
+  "erpm_limit": 81312,
+  "tyre_mm": 34,
+  "set_rpm_52fps": 8855,
+  "ramp_s": 0.3
+ }
+}

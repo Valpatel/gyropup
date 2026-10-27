@@ -60,10 +60,10 @@ only in recent ones). Where a version names a row differently, set the behaviour
  ~4 ms     PULSE_MON gap:    brake on stop: low-side      monostable still high        braking
            zero throttle     FETs short the phases
  ~20 ms    -                 12 V FLY gone, ESC off       ARM falls, 2815 opens        brake gone for 10 ms
- ~30 ms    -                 off                          BRAKE: IRLZ44Ns short the    tau 6.9 ms
-                                                          phases (+10 ms)
+ ~28 ms    -                 off                          BRAKE: IRLZ44Ns short the    tau 10-13 ms
+                                                          phases to GND (+5-14 ms)
  re-arm    zero throttle     powered again; arms after    ARM rises, 2815 closes;      at rest
-           for 0.6 s         0.5 s of zero throttle       BRAKE opens ~11 ms later
+           for 0.6 s         0.5 s of zero throttle       BRAKE opens within 0.2 ms
  +0.6 s    muzzle to -25,    follows the throttle         -                            300 ms ramp; a stray
            300 ms ramp                                                                 ball leaves at ~6 fps
 ```

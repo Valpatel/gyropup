@@ -1,0 +1,64 @@
+{
+ "test": "4.4",
+ "title": "Set speed: 50 balls at the set rpm for 52 fps (\u00d834)",
+ "plan": "docs/turret-prototype-plan.md section 5",
+ "mode": "sim",
+ "date": "2026-10-27",
+ "pass": true,
+ "checks": [
+  {
+   "check": "50 balls",
+   "value": 50,
+   "limit": "50",
+   "pass": true
+  },
+  {
+   "check": "mean",
+   "value": 51.88,
+   "limit": "52 +- 2 fps",
+   "pass": true
+  },
+  {
+   "check": "SD",
+   "value": 1.01,
+   "limit": "<= 1.5 fps",
+   "pass": true
+  },
+  {
+   "check": "none over 60 fps",
+   "value": 54.2,
+   "limit": "<= 60 fps",
+   "pass": true
+  }
+ ],
+ "readings": {
+  "set_rpm": 8855,
+  "fps": {
+   "n": 50,
+   "mean": 51.88,
+   "sd": 1.01,
+   "min": 49.9,
+   "max": 54.2
+  }
+ },
+ "notes": [],
+ "sim": {
+  "seed": 1044,
+  "simulated_s": 25.9,
+  "wall_s": 1.7,
+  "stand_ins": [],
+  "shortened": {},
+  "warning": "simulated turret (firmware/turret/sim_turret.py): not a bench reading"
+ },
+ "firmware": {
+  "build": "v0",
+  "servo_baud": 500000,
+  "motor": "SunnySky X2216 880KV V3",
+  "kv": 880.0,
+  "pole_pairs": 7,
+  "erpm_limit": 81312,
+  "tyre_mm": 34,
+  "set_rpm_52fps": 8855,
+  "ramp_s": 0.3
+ }
+}

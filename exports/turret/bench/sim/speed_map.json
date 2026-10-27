@@ -1,0 +1,183 @@
+{
+ "test": "4.3",
+ "title": "Speed at every throttle: 10 balls each at 60-100 %",
+ "plan": "docs/turret-prototype-plan.md section 5",
+ "mode": "sim",
+ "date": "2026-10-27",
+ "pass": true,
+ "checks": [
+  {
+   "check": "monotonic",
+   "value": [
+    36.95,
+    43.53,
+    49.89,
+    55.4,
+    60.79
+   ],
+   "limit": "each step faster",
+   "pass": true
+  },
+  {
+   "check": "SD at 60 %",
+   "value": 0.73,
+   "limit": "<= 1.5 fps",
+   "pass": true
+  },
+  {
+   "check": "10 balls at 60 %",
+   "value": 10,
+   "limit": "10",
+   "pass": true
+  },
+  {
+   "check": "SD at 70 %",
+   "value": 0.38,
+   "limit": "<= 1.5 fps",
+   "pass": true
+  },
+  {
+   "check": "10 balls at 70 %",
+   "value": 10,
+   "limit": "10",
+   "pass": true
+  },
+  {
+   "check": "SD at 80 %",
+   "value": 0.9,
+   "limit": "<= 1.5 fps",
+   "pass": true
+  },
+  {
+   "check": "10 balls at 80 %",
+   "value": 10,
+   "limit": "10",
+   "pass": true
+  },
+  {
+   "check": "SD at 90 %",
+   "value": 0.52,
+   "limit": "<= 1.5 fps",
+   "pass": true
+  },
+  {
+   "check": "10 balls at 90 %",
+   "value": 10,
+   "limit": "10",
+   "pass": true
+  },
+  {
+   "check": "SD at 100 %",
+   "value": 1.14,
+   "limit": "<= 1.5 fps",
+   "pass": true
+  },
+  {
+   "check": "10 balls at 100 %",
+   "value": 10,
+   "limit": "10",
+   "pass": true
+  }
+ ],
+ "readings": {
+  "table": [
+   {
+    "throttle": 0.6,
+    "fps": {
+     "n": 10,
+     "mean": 36.95,
+     "sd": 0.73,
+     "min": 35.7,
+     "max": 38.5
+    },
+    "rpm_before_first_ball": 6323
+   },
+   {
+    "throttle": 0.7,
+    "fps": {
+     "n": 10,
+     "mean": 43.53,
+     "sd": 0.38,
+     "min": 42.9,
+     "max": 44.2
+    },
+    "rpm_before_first_ball": 7379
+   },
+   {
+    "throttle": 0.8,
+    "fps": {
+     "n": 10,
+     "mean": 49.89,
+     "sd": 0.9,
+     "min": 47.8,
+     "max": 51.5
+    },
+    "rpm_before_first_ball": 8422
+   },
+   {
+    "throttle": 0.9,
+    "fps": {
+     "n": 10,
+     "mean": 55.4,
+     "sd": 0.52,
+     "min": 54.6,
+     "max": 56.2
+    },
+    "rpm_before_first_ball": 9485
+   },
+   {
+    "throttle": 1.0,
+    "fps": {
+     "n": 10,
+     "mean": 60.79,
+     "sd": 1.14,
+     "min": 58.9,
+     "max": 62.3
+    },
+    "rpm_before_first_ball": 10533
+   }
+  ],
+  "config_throttle_map_rows": [
+   {
+    "throttle_permille": 600,
+    "rpm": 6323
+   },
+   {
+    "throttle_permille": 700,
+    "rpm": 7379
+   },
+   {
+    "throttle_permille": 800,
+    "rpm": 8422
+   },
+   {
+    "throttle_permille": 900,
+    "rpm": 9485
+   },
+   {
+    "throttle_permille": 1000,
+    "rpm": 10533
+   }
+  ]
+ },
+ "notes": [],
+ "sim": {
+  "seed": 1043,
+  "simulated_s": 36.4,
+  "wall_s": 2.1,
+  "stand_ins": [],
+  "shortened": {},
+  "warning": "simulated turret (firmware/turret/sim_turret.py): not a bench reading"
+ },
+ "firmware": {
+  "build": "v0",
+  "servo_baud": 500000,
+  "motor": "SunnySky X2216 880KV V3",
+  "kv": 880.0,
+  "pole_pairs": 7,
+  "erpm_limit": 81312,
+  "tyre_mm": 34,
+  "set_rpm_52fps": 8855,
+  "ramp_s": 0.3
+ }
+}

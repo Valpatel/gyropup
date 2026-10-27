@@ -51,7 +51,7 @@ class HAL:
     def can_recv(self) -> List[Tuple[int, bytes]]: raise NotImplementedError
     def can_send(self, cid: int, data: bytes): raise NotImplementedError
     def can_counters(self) -> Tuple[int, int, int]: return 0, 0, 0           # TEC, REC, bus-off count
-    def laser(self, on: bool): pass                                          # D13
+    def laser(self, on: bool): pass                                          # A5 (not D13: the bootloader pulses it)
     def bus_mv(self) -> int: return 24000                                    # A0, the ring's +24 V through 10:1
 
 

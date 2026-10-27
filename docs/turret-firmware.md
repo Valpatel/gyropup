@@ -55,7 +55,7 @@ availability (docs/turret-prototype-plan.md section 0). For the firmware:
 | D12 | ARM_IN | the arm chain's output (read only) |
 | A1 | TRIP_IN | the trip latch (read only) |
 | A4 | PULSE_MON | the 4N35's output: interrupt on rising edges; the train's frequency, the release, the ring-drop counter |
-| D13 | LASER_EN | through the 2N7000 (Quarton VLM-650-03 LPT, Class 2) |
+| A5 | LASER_EN | through the 2N7000 (Quarton VLM-650-03 LPT, Class 2); not D13, which also lights the red LED and which the bootloader pulses on a reset (the laser would flash) |
 | A2 | HOPPER_BEAM | v1 (not fitted in v0) |
 | A3 | NEOPIXEL | v1 (not fitted in v0) |
 | A0 | BUS_V | the ring's +24 V through a 10:1 divider |
@@ -70,7 +70,7 @@ BOOT -> HOMING -> IDLE <-> ARMED -> SPIN_UP -> READY <-> FIRING
                     +---- FAULT (a latched fault, or homing failed: aim only)
 ```
 
-- **BOOT.** Ping the pan and tilt servos (12 V PAN and 12 V AUX are always on). Each servo's EEPROM is read and
+- **BOOT.** Ping the pan and tilt servos (12 V PAN and 12 V MAIN are always on). Each servo's EEPROM is read and
   verified, never written: a release can cut the feed servo mid-write, and the setup tool owns EEPROM. The pan must be
   in step mode, the tilt in position mode with angle limits that keep it at most 1 deg above level. Then the RAM
   registers are written (torque limit 50 %, acceleration, speed: at most 100 deg/s, D7) and torque is enabled. Wrong
@@ -157,8 +157,9 @@ index re-check. Results are in exports/turret/firmware/homing.json: 1,000 of 1,0
   at the gates in the ramp's first 100 ms is logged as the stray ball of the last release (~6 fps; physics section 5).
 - **Stops.** Zero throttle; AM32 brakes on stop. On a release the firmware sees the 1 kHz train stop on PULSE_MON (no
   edge for 4 ms), commands zero at once, and AM32 brakes ~16 ms before the monostable cuts the rail. Then the hardware
-  phase-short closes 10 ms after ARM falls: **tau 6.9 ms** on the X2216 (the old plan's 12 ms was the Snail's), 5 %
-  speed 30 ms after ARM falls. The firmware does not drive the brake.
+  phase-short closes about 8 ms after ARM falls (5-14 ms; docs/turret-wiring.md 3.3): on the short alone the X2216
+  slows with tau 10.2 ms at low speed (its 117 mOhm, two FETs and the taps) and more slowly at speed (the winding's
+  inductance), 5 % speed about 48 ms after ARM falls. The firmware does not drive the brake.
 - **Overspeed.** The latch trips in hardware on a gate pair under 2.98 ms (66 fps over 60 mm); the firmware only
   reports TRIP and goes SAFE. It also times both gates for every ball, and a ball over 66 fps latches its own
   OVERSPEED SAFE.
@@ -242,7 +243,7 @@ robot, the USB-CAN on the bench. Classic CAN at 1 Mbit/s, the 0x300 block, littl
 | 0x312 WHEELS | turret -> host | 20 Hz | rpm L u16, rpm R u16, ESC temperatures u8 x 2 (EDT) |
 | 0x313 SHOT | turret -> host | per shot | shot no u16, speed u16 (0.1 fps), wheel rpm u16, flags u8 (stray, over 66 fps, after a release, gate 1 only, throttle mode, double) |
 | 0x314 FEED | turret -> host | 5 Hz | balls fired u16, empty steps u8, jams u8, flags u8 (hopper full [v1], feed fault, servo online, hopper empty), dial angle u8 (360/256 deg) |
-| 0x315 POWER | turret -> host | 5 Hz | ring bus voltage u16 (mV), the servos' supply as each reads it u8 x 3 (0.1 V: 12 V PAN, 12 V AUX, 12 V FEED; 0 = off the bus) |
+| 0x315 POWER | turret -> host | 5 Hz | ring bus voltage u16 (mV), the servos' supply as each reads it u8 x 3 (0.1 V: 12 V PAN, 12 V MAIN (the tilt), 12 V FLY (the feed); 0 = off the bus) |
 | 0x316 HEALTH | turret -> host | 1 Hz | CAN TEC u8, REC u8, bus-off count u8, ring-drop counter u16 (missing safety pulses), servo bus errors u16, index re-check worst u8 (0.01 deg) |
 | 0x317 EVENT | turret -> host | per event | code u8, seq u8, a u16, b u16, c u16: homed (time, index centre in 1/16 count, swept), home failed, feed step (step, settle ms, load mean, clean flag), jam (step, ms since the command, cause and count in a row), feed fault, empty step, SAFE (cause bits, latency ms, value), servo lost or back, burst done (balls, steps, why), dither, stray ball, re-home asked, bench done, refused (why), lift |
 

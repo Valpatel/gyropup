@@ -1,0 +1,163 @@
+{
+ "test": "3.7",
+ "title": "Ring contact resistance and dropouts (operator readings)",
+ "plan": "docs/turret-prototype-plan.md section 5",
+ "mode": "sim",
+ "date": "2026-10-27",
+ "pass": true,
+ "checks": [
+  {
+   "check": "resistance per paralleled pair",
+   "value": 31.8,
+   "limit": "<= 60 mOhm",
+   "pass": true
+  },
+  {
+   "check": "15rpm: no dropout over 100 us",
+   "value": 0.0,
+   "limit": "<= 100 us",
+   "pass": true
+  },
+  {
+   "check": "15rpm: variation",
+   "value": 10.9,
+   "limit": "<= 60 mOhm",
+   "pass": true
+  },
+  {
+   "check": "2rpm: no dropout over 100 us",
+   "value": 0.0,
+   "limit": "<= 100 us",
+   "pass": true
+  },
+  {
+   "check": "2rpm: variation",
+   "value": 10.7,
+   "limit": "<= 60 mOhm",
+   "pass": true
+  }
+ ],
+ "readings": {
+  "static": [
+   {
+    "pan_deg": 0,
+    "pos_pair_mohm": 26.6,
+    "gnd_pair_mohm": 25.2
+   },
+   {
+    "pan_deg": 30,
+    "pos_pair_mohm": 29.2,
+    "gnd_pair_mohm": 24.6
+   },
+   {
+    "pan_deg": 60,
+    "pos_pair_mohm": 28.3,
+    "gnd_pair_mohm": 26.9
+   },
+   {
+    "pan_deg": 90,
+    "pos_pair_mohm": 24.5,
+    "gnd_pair_mohm": 28.1
+   },
+   {
+    "pan_deg": 120,
+    "pos_pair_mohm": 24.3,
+    "gnd_pair_mohm": 27.5
+   },
+   {
+    "pan_deg": 150,
+    "pos_pair_mohm": 24.6,
+    "gnd_pair_mohm": 24.7
+   },
+   {
+    "pan_deg": 180,
+    "pos_pair_mohm": 27.4,
+    "gnd_pair_mohm": 30.6
+   },
+   {
+    "pan_deg": 210,
+    "pos_pair_mohm": 25.0,
+    "gnd_pair_mohm": 25.8
+   },
+   {
+    "pan_deg": 240,
+    "pos_pair_mohm": 29.0,
+    "gnd_pair_mohm": 31.6
+   },
+   {
+    "pan_deg": 270,
+    "pos_pair_mohm": 28.6,
+    "gnd_pair_mohm": 27.2
+   },
+   {
+    "pan_deg": 300,
+    "pos_pair_mohm": 31.8,
+    "gnd_pair_mohm": 24.4
+   },
+   {
+    "pan_deg": 330,
+    "pos_pair_mohm": 30.9,
+    "gnd_pair_mohm": 26.3
+   }
+  ],
+  "dynamic": {
+   "15rpm": {
+    "longest_dropout_us": 0.0,
+    "variation_mohm": 10.9
+   },
+   "2rpm": {
+    "longest_dropout_us": 0.0,
+    "variation_mohm": 10.7
+   }
+  }
+ },
+ "notes": [],
+ "sim": {
+  "seed": 1037,
+  "simulated_s": 219.9,
+  "wall_s": 7.7,
+  "stand_ins": [
+   "dropout_us_15",
+   "dropout_us_2",
+   "r_gnd_mohm_0",
+   "r_gnd_mohm_1",
+   "r_gnd_mohm_10",
+   "r_gnd_mohm_11",
+   "r_gnd_mohm_2",
+   "r_gnd_mohm_3",
+   "r_gnd_mohm_4",
+   "r_gnd_mohm_5",
+   "r_gnd_mohm_6",
+   "r_gnd_mohm_7",
+   "r_gnd_mohm_8",
+   "r_gnd_mohm_9",
+   "r_pos_mohm_0",
+   "r_pos_mohm_1",
+   "r_pos_mohm_10",
+   "r_pos_mohm_11",
+   "r_pos_mohm_2",
+   "r_pos_mohm_3",
+   "r_pos_mohm_4",
+   "r_pos_mohm_5",
+   "r_pos_mohm_6",
+   "r_pos_mohm_7",
+   "r_pos_mohm_8",
+   "r_pos_mohm_9",
+   "variation_mohm_15",
+   "variation_mohm_2"
+  ],
+  "shortened": {},
+  "warning": "simulated turret (firmware/turret/sim_turret.py): not a bench reading"
+ },
+ "firmware": {
+  "build": "v0",
+  "servo_baud": 500000,
+  "motor": "SunnySky X2216 880KV V3",
+  "kv": 880.0,
+  "pole_pairs": 7,
+  "erpm_limit": 81312,
+  "tyre_mm": 34,
+  "set_rpm_52fps": 8855,
+  "ramp_s": 0.3
+ }
+}

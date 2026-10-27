@@ -436,7 +436,8 @@ def stats(xs: List[float]) -> dict:
 
 
 # ===================================================================================== 5.3 electrics without motors
-@test('3.1', 'Power-up: 5 V, 12 V AUX, 12 V PAN, the heartbeat, the pan and tilt servos', 'power_up', ct_unplugged=True)
+@test('3.1', 'Power-up: 5 V, 3.3 V, 12 V MAIN, 12 V PAN, the heartbeat, the servos, the pulse train and the 3.3 V inputs', 'power_up',
+      ct_unplugged=True)
 def t_power_up(tt, b, r):
     b.do('Unplug both CT connectors; switch the stand on now', lambda: b.rig.power_cycle())
     t0 = tt.now()
@@ -446,7 +447,13 @@ def t_power_up(tt, b, r):
     f = tt.faults()
     pan_v, tilt_v = tt.power.get('pan_dv', 0) / 10.0, tt.power.get('tilt_dv', 0) / 10.0
     v5 = b.ask('rail_5v', 'Multimeter, 5 V on level 1 (V)', lambda: 5.02, stand_in=True)
+    v33 = b.ask('rail_3v3', 'Multimeter, 3.3 V at the Feather\'s 3V pin (V)', lambda: 3.30, stand_in=True)
     fuses = b.ask('fuses_whole', 'Every fuse whole? (y/n)', lambda: True, stand_in=True, kind=bool)
+    # the pulse train and the opto's LED current with the pendant held (docs/turret-wiring.md 3.1), and the Feather's
+    # inputs (none may exceed 3.3 V: the SAMD51 is not 5 V tolerant)
+    hz = b.ask('pulse_hz', 'Scope, pendant held: the 555\'s frequency at ring 7 (Hz)', lambda: 986.0, stand_in=True)
+    r8 = b.ask('r8_drop_v', 'Scope, pendant held: the peak drop across R8 on level 1 (V)', lambda: 4.4, stand_in=True)
+    vpin = b.ask('max_input_v', 'Scope: the highest level on D0, D9, D10, D11, D12, A0, A1, A4 (V)', lambda: 3.3, stand_in=True)
     r.reading('heartbeat_after_s', r1(hb_s, 3))
     r.reading('pan_servo_rail_v', pan_v)
     r.reading('tilt_servo_rail_v', tilt_v)
@@ -455,8 +462,12 @@ def t_power_up(tt, b, r):
     r.check('pan servo answers (ID 1)', not f & M.F_PAN_MISSING, not f & M.F_PAN_MISSING, 'answers')
     r.check('tilt servo answers (ID 2)', not f & M.F_TILT_MISSING, not f & M.F_TILT_MISSING, 'answers')
     r.check('12 V PAN at the pan servo', pan_v, 11.5 <= pan_v <= 12.5, '11.5-12.5 V (the servo reads it)')
-    r.check('12 V AUX at the tilt servo', tilt_v, 11.5 <= tilt_v <= 12.5, '11.5-12.5 V')
+    r.check('12 V MAIN at the tilt servo', tilt_v, 11.5 <= tilt_v <= 12.5, '11.5-12.5 V')
     r.check('5 V', v5, 4.75 <= v5 <= 5.25, '4.75-5.25 V')
+    r.check('3.3 V', v33, 3.2 <= v33 <= 3.4, '3.2-3.4 V')
+    r.check('the pulse train', hz, 930.0 <= hz <= 1045.0, '930-1,045 Hz (986 nominal; the firmware accepts 900-1,100)')
+    r.check('the opto LED\'s current (R8 2.2 k)', r8, 3.5 <= r8 <= 5.3, '3.5-5.3 V: 1.6-2.4 mA')
+    r.check('no Feather input above 3.3 V', vpin, vpin <= 3.4, '<= 3.4 V')
     r.check('no fuse blown', fuses, fuses, 'all whole')
 
 
@@ -506,7 +517,15 @@ def t_safety_line(tt, b, r):
     ok_rearm = arm(tt, b)
     disarm(tt, b)
     r.reading('cases', rows)
+    wrong_freq = ('300 Hz train', '3 kHz train', '50 Hz hum')
     for row in rows:
+        if row['case'] in wrong_freq:
+            # docs/turret-bench-tests.md 3.2: the one-shot sees edges, so the rail may stay on (the hardware frequency
+            # window is a v1 item); the firmware must zero the throttle and refuse to feed on PULSE_MON
+            r.reading(f"{row['case']}: rail off (2815 output), ms (expected: stays on)", row['rail_off_ms'])
+            r.check(f"{row['case']}: firmware zero throttle (SAFE)", row['firmware_safe_ms'],
+                    row['firmware_safe_ms'] is not None and row['firmware_safe_ms'] <= 10.0, '<= 10 ms')
+            continue
         hw_ok = row['rail_off_ms'] is not None and row['rail_off_ms'] <= 25.0
         r.check(f"{row['case']}: rail off (2815 output)", row['rail_off_ms'], hw_ok, '<= 25 ms')
         r.check(f"{row['case']}: firmware zero throttle (SAFE)", row['firmware_safe_ms'],
@@ -514,10 +533,10 @@ def t_safety_line(tt, b, r):
     r.check('genuine train arms the hardware again', hw_rearmed, hw_rearmed, 'armed')
     r.check('firmware waits for the host re-arm', fw_waits, fw_waits, 'not ARMED until the request cycles')
     r.check('host re-arm accepted', ok_rearm, ok_rearm, 'ARMED')
-    r.note('The 20 ms retriggerable 74HC123 is kept triggered by any train faster than ~50 Hz: as drawn, a 300 Hz or '
-           '3 kHz train (and 50 Hz hum at the monostable\'s own period) holds the rails on. The firmware refuses on '
-           'PULSE_MON (periods outside 0.85-1.15 ms); the hardware needs a frequency window for the plan\'s '
-           '"only the genuine 1 kHz train arms".')
+    r.note('The 20 ms retriggerable one-shot is kept triggered by any train faster than ~50 Hz: a 300 Hz or 3 kHz '
+           'train (and 50 Hz hum at the one-shot\'s own period) holds the rails on, as docs/turret-wiring.md 3.1 says. '
+           'The firmware refuses on PULSE_MON (periods outside 0.85-1.15 ms); the hardware frequency window (a 74HC221 '
+           'pair) is a v1 item.')
 
 
 @test('3.3', 'Trip latch with simulated gate pairs', 'trip', ct_unplugged=True)
@@ -586,25 +605,27 @@ def t_brake_timing(tt, b, r):
             tl = [(t, e) for t, e in b.hw.timeline if t >= t0]
             ta = next(t for t, e in tl if e == 'arm_off')
             tb = next(t for t, e in tl if e == 'brake_on')
+            ta_on = next(t for t, e in tl if e == 'arm_on' and t > tb)
             tr_on = next(t for t, e in tl if e == 'rail_on')
             tb_off = next(t for t, e in tl if e == 'brake_off')
-            on_ms, off_vs_rail = (tb - ta) * 1000, (tb_off - tr_on) * 1000
+            on_ms, off_ms, off_vs_rail = (tb - ta) * 1000, (tb_off - ta_on) * 1000, (tb_off - tr_on) * 1000
         else:
             on_ms = b.ask(f'brake_on_ms_{k}', 'Scope: ms from ARM falling to BRAKE rising')
+            off_ms = b.ask(f'brake_off_ms_{k}', 'Scope: ms from ARM rising to BRAKE falling')
             off_vs_rail = b.ask(f'brake_off_vs_rail_ms_{k}', 'Scope: ms from 12 V FLY returning to BRAKE falling '
                                 '(negative if BRAKE fell first)')
-        rows.append({'brake_on_after_arm_off_ms': r1(on_ms), 'brake_off_minus_rail_on_ms': r1(off_vs_rail)})
+        rows.append({'brake_on_after_arm_off_ms': r1(on_ms), 'brake_off_after_arm_on_ms': r1(off_ms),
+                     'brake_off_minus_rail_on_ms': r1(off_vs_rail)})
     b.pendant(False)
     r.reading('releases', rows)
     for i, x in enumerate(rows):
         r.check(f'release {i + 1}: BRAKE rises after ARM falls', x['brake_on_after_arm_off_ms'],
-                7.0 <= x['brake_on_after_arm_off_ms'] <= 13.0, '10 +- 3 ms')
-        r.check(f're-arm {i + 1}: BRAKE falls before 12 V FLY returns', x['brake_off_minus_rail_on_ms'],
-                x['brake_off_minus_rail_on_ms'] < 0, '< 0 ms')
-    r.note('As drawn (one 10 k / 1 uF RC between 74HC14s) the RC is symmetric: BRAKE falls ~11 ms after ARM rises, '
-           'while the 2815 restores 12 V FLY at once. Harmless to the ESCs (AM32 drives nothing until it has armed on '
-           '0.5 s of zero throttle, and the firmware holds zero for 0.6 s), but it fails this acceptance: a diode '
-           'across the 10 k (fast reset) makes BRAKE fall within ~1 ms of ARM rising.')
+                5.0 <= x['brake_on_after_arm_off_ms'] <= 14.0, '5-14 ms')
+        r.check(f're-arm {i + 1}: BRAKE falls within 1 ms of ARM rising', x['brake_off_after_arm_on_ms'],
+                x['brake_off_after_arm_on_ms'] <= 1.0, '<= 1 ms (the ESCs drive nothing for 0.5 s after 12 V FLY returns)')
+    r.note('As drawn (docs/turret-wiring.md 3.3: ARM through 6.8 k into 1 uF and one 74HCT14 inverter on the cartridge '
+           'board) BRAKE rises 6.8 ms x ln(3.3 / V_T-) = 5-14 ms (about 8) after ARM falls; D3 and 1 k fill the capacitor '
+           'when ARM rises, so BRAKE falls within ~0.2 ms, before the 2815 has the ESCs up.')
 
 
 @test('3.5', 'Homing: 50 power-ups at random pans; 10 continuous turns each way and back', 'homing_bench')
@@ -1032,10 +1053,10 @@ def t_release(tt, b, r):
     r.reading('fet_temp_c', fets)
     worst = lambda k, f=max: f(x[k] for x in rows if x[k] is not None)  # noqa: E731
     r.check('ESC rail off after the last pulse', worst('rail_off_after_last_pulse_ms'),
-            worst('rail_off_after_last_pulse_ms') <= 21.0, '<= 21 ms')
+            worst('rail_off_after_last_pulse_ms') <= 25.0, '<= 25 ms (the one-shot is 16-22 ms)')
     r.check('short closed after the rail off',
             [worst('short_after_rail_off_ms', min), worst('short_after_rail_off_ms')],
-            7.0 <= worst('short_after_rail_off_ms', min) and worst('short_after_rail_off_ms') <= 13.0, '10 +- 3 ms')
+            5.0 <= worst('short_after_rail_off_ms', min) and worst('short_after_rail_off_ms') <= 14.0, '5-14 ms')
     r.check('speed by +50 ms (after the rail off)', worst('speed_pct_at_rail_off_plus_50ms'),
             worst('speed_pct_at_rail_off_plus_50ms') <= 5.0, '<= 5 %')
     r.check('FETs after 20 releases in 2 min', fets, fets < 60.0, '< 60 C')

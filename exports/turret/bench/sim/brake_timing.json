@@ -1,0 +1,121 @@
+{
+ "test": "3.4",
+ "title": "Brake timing with a lamp: BRAKE after ARM falls, and before 12 V FLY returns",
+ "plan": "docs/turret-prototype-plan.md section 5",
+ "mode": "sim",
+ "date": "2026-10-27",
+ "pass": true,
+ "checks": [
+  {
+   "check": "release 1: BRAKE rises after ARM falls",
+   "value": 8.0,
+   "limit": "5-14 ms",
+   "pass": true
+  },
+  {
+   "check": "re-arm 1: BRAKE falls within 1 ms of ARM rising",
+   "value": 1.0,
+   "limit": "<= 1 ms (the ESCs drive nothing for 0.5 s after 12 V FLY returns)",
+   "pass": true
+  },
+  {
+   "check": "release 2: BRAKE rises after ARM falls",
+   "value": 8.0,
+   "limit": "5-14 ms",
+   "pass": true
+  },
+  {
+   "check": "re-arm 2: BRAKE falls within 1 ms of ARM rising",
+   "value": 1.0,
+   "limit": "<= 1 ms (the ESCs drive nothing for 0.5 s after 12 V FLY returns)",
+   "pass": true
+  },
+  {
+   "check": "release 3: BRAKE rises after ARM falls",
+   "value": 8.0,
+   "limit": "5-14 ms",
+   "pass": true
+  },
+  {
+   "check": "re-arm 3: BRAKE falls within 1 ms of ARM rising",
+   "value": 1.0,
+   "limit": "<= 1 ms (the ESCs drive nothing for 0.5 s after 12 V FLY returns)",
+   "pass": true
+  },
+  {
+   "check": "release 4: BRAKE rises after ARM falls",
+   "value": 9.0,
+   "limit": "5-14 ms",
+   "pass": true
+  },
+  {
+   "check": "re-arm 4: BRAKE falls within 1 ms of ARM rising",
+   "value": 1.0,
+   "limit": "<= 1 ms (the ESCs drive nothing for 0.5 s after 12 V FLY returns)",
+   "pass": true
+  },
+  {
+   "check": "release 5: BRAKE rises after ARM falls",
+   "value": 9.0,
+   "limit": "5-14 ms",
+   "pass": true
+  },
+  {
+   "check": "re-arm 5: BRAKE falls within 1 ms of ARM rising",
+   "value": 1.0,
+   "limit": "<= 1 ms (the ESCs drive nothing for 0.5 s after 12 V FLY returns)",
+   "pass": true
+  }
+ ],
+ "readings": {
+  "releases": [
+   {
+    "brake_on_after_arm_off_ms": 8.0,
+    "brake_off_after_arm_on_ms": 1.0,
+    "brake_off_minus_rail_on_ms": 1.0
+   },
+   {
+    "brake_on_after_arm_off_ms": 8.0,
+    "brake_off_after_arm_on_ms": 1.0,
+    "brake_off_minus_rail_on_ms": 1.0
+   },
+   {
+    "brake_on_after_arm_off_ms": 8.0,
+    "brake_off_after_arm_on_ms": 1.0,
+    "brake_off_minus_rail_on_ms": 1.0
+   },
+   {
+    "brake_on_after_arm_off_ms": 9.0,
+    "brake_off_after_arm_on_ms": 1.0,
+    "brake_off_minus_rail_on_ms": 1.0
+   },
+   {
+    "brake_on_after_arm_off_ms": 9.0,
+    "brake_off_after_arm_on_ms": 1.0,
+    "brake_off_minus_rail_on_ms": 1.0
+   }
+  ]
+ },
+ "notes": [
+  "As drawn (docs/turret-wiring.md 3.3: ARM through 6.8 k into 1 uF and one 74HCT14 inverter on the cartridge board) BRAKE rises 6.8 ms x ln(3.3 / V_T-) = 5-14 ms (about 8) after ARM falls; D3 and 1 k fill the capacitor when ARM rises, so BRAKE falls within ~0.2 ms, before the 2815 has the ESCs up."
+ ],
+ "sim": {
+  "seed": 1034,
+  "simulated_s": 10.1,
+  "wall_s": 0.3,
+  "stand_ins": [],
+  "shortened": {},
+  "warning": "simulated turret (firmware/turret/sim_turret.py): not a bench reading"
+ },
+ "firmware": {
+  "build": "v0",
+  "servo_baud": 500000,
+  "motor": "SunnySky X2216 880KV V3",
+  "kv": 880.0,
+  "pole_pairs": 7,
+  "erpm_limit": 81312,
+  "tyre_mm": 34,
+  "set_rpm_52fps": 8855,
+  "ramp_s": 0.3
+ }
+}

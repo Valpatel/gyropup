@@ -1,0 +1,203 @@
+{
+ "test": "6.7",
+ "title": "Safety-line release during feeding: 20 releases at random points of 8-ball bursts",
+ "plan": "docs/turret-prototype-plan.md section 5",
+ "mode": "sim",
+ "date": "2026-10-27",
+ "pass": true,
+ "checks": [
+  {
+   "check": "no ball above 20 fps after a release",
+   "value": 8.9,
+   "limit": "<= 20 fps",
+   "pass": true
+  }
+ ],
+ "readings": {
+  "releases": [
+   {
+    "release_s_into_burst": 1.05,
+    "balls_after_release": 0,
+    "fps_after_release": [],
+    "nip_ms_after_release": [],
+    "resting_at_the_nip": 0
+   },
+   {
+    "release_s_into_burst": 2.88,
+    "balls_after_release": 0,
+    "fps_after_release": [],
+    "nip_ms_after_release": [],
+    "resting_at_the_nip": 0
+   },
+   {
+    "release_s_into_burst": 1.31,
+    "balls_after_release": 0,
+    "fps_after_release": [],
+    "nip_ms_after_release": [],
+    "resting_at_the_nip": 1,
+    "stray_fps": [
+     6.5
+    ]
+   },
+   {
+    "release_s_into_burst": 2.33,
+    "balls_after_release": 0,
+    "fps_after_release": [],
+    "nip_ms_after_release": [],
+    "resting_at_the_nip": 0
+   },
+   {
+    "release_s_into_burst": 1.49,
+    "balls_after_release": 0,
+    "fps_after_release": [],
+    "nip_ms_after_release": [],
+    "resting_at_the_nip": 0
+   },
+   {
+    "release_s_into_burst": 1.79,
+    "balls_after_release": 0,
+    "fps_after_release": [],
+    "nip_ms_after_release": [],
+    "resting_at_the_nip": 0
+   },
+   {
+    "release_s_into_burst": 1.62,
+    "balls_after_release": 0,
+    "fps_after_release": [],
+    "nip_ms_after_release": [],
+    "resting_at_the_nip": 1,
+    "stray_fps": [
+     6.7
+    ]
+   },
+   {
+    "release_s_into_burst": 2.1,
+    "balls_after_release": 0,
+    "fps_after_release": [],
+    "nip_ms_after_release": [],
+    "resting_at_the_nip": 0
+   },
+   {
+    "release_s_into_burst": 1.87,
+    "balls_after_release": 0,
+    "fps_after_release": [],
+    "nip_ms_after_release": [],
+    "resting_at_the_nip": 0
+   },
+   {
+    "release_s_into_burst": 1.49,
+    "balls_after_release": 0,
+    "fps_after_release": [],
+    "nip_ms_after_release": [],
+    "resting_at_the_nip": 0
+   },
+   {
+    "release_s_into_burst": 2.58,
+    "balls_after_release": 0,
+    "fps_after_release": [],
+    "nip_ms_after_release": [],
+    "resting_at_the_nip": 0
+   },
+   {
+    "release_s_into_burst": 1.63,
+    "balls_after_release": 0,
+    "fps_after_release": [],
+    "nip_ms_after_release": [],
+    "resting_at_the_nip": 1,
+    "stray_fps": [
+     6.0
+    ]
+   },
+   {
+    "release_s_into_burst": 2.29,
+    "balls_after_release": 0,
+    "fps_after_release": [],
+    "nip_ms_after_release": [],
+    "resting_at_the_nip": 0
+   },
+   {
+    "release_s_into_burst": 2.01,
+    "balls_after_release": 0,
+    "fps_after_release": [],
+    "nip_ms_after_release": [],
+    "resting_at_the_nip": 1,
+    "stray_fps": [
+     6.1
+    ]
+   },
+   {
+    "release_s_into_burst": 2.57,
+    "balls_after_release": 0,
+    "fps_after_release": [],
+    "nip_ms_after_release": [],
+    "resting_at_the_nip": 0
+   },
+   {
+    "release_s_into_burst": 1.84,
+    "balls_after_release": 0,
+    "fps_after_release": [],
+    "nip_ms_after_release": [],
+    "resting_at_the_nip": 0
+   },
+   {
+    "release_s_into_burst": 2.21,
+    "balls_after_release": 0,
+    "fps_after_release": [],
+    "nip_ms_after_release": [],
+    "resting_at_the_nip": 0
+   },
+   {
+    "release_s_into_burst": 2.37,
+    "balls_after_release": 1,
+    "fps_after_release": [
+     8.9
+    ],
+    "nip_ms_after_release": [
+     17
+    ],
+    "resting_at_the_nip": 0
+   },
+   {
+    "release_s_into_burst": 1.15,
+    "balls_after_release": 0,
+    "fps_after_release": [],
+    "nip_ms_after_release": [],
+    "resting_at_the_nip": 0
+   },
+   {
+    "release_s_into_burst": 1.89,
+    "balls_after_release": 0,
+    "fps_after_release": [],
+    "nip_ms_after_release": [],
+    "resting_at_the_nip": 1,
+    "stray_fps": [
+     6.3
+    ]
+   }
+  ],
+  "fastest_after_release_fps": 8.9,
+  "fastest_reaching_the_nip_15ms_after_release_fps": 8.9
+ },
+ "notes": [
+  "A ball already at the nip, or reaching it within ~10 ms of the release, leaves fast whatever the brake does (the physics' own table: 36 fps at 0-10 ms). The firmware cuts the throttle on the PULSE_MON gap (4 ms) and AM32 brakes on stop before the rail drops at ~20 ms, which narrows that window but cannot close it."
+ ],
+ "sim": {
+  "seed": 1067,
+  "simulated_s": 120.3,
+  "wall_s": 5.6,
+  "stand_ins": [],
+  "shortened": {},
+  "warning": "simulated turret (firmware/turret/sim_turret.py): not a bench reading"
+ },
+ "firmware": {
+  "build": "v0",
+  "servo_baud": 500000,
+  "motor": "SunnySky X2216 880KV V3",
+  "kv": 880.0,
+  "pole_pairs": 7,
+  "erpm_limit": 81312,
+  "tyre_mm": 34,
+  "set_rpm_52fps": 8855,
+  "ramp_s": 0.3
+ }
+}

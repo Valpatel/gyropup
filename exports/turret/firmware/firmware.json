@@ -1,0 +1,104 @@
+{
+ "pass": true,
+ "cases": {
+  "sts_packets": {
+   "cases": 500,
+   "pass_": true
+  },
+  "dshot_frames_and_telemetry": {
+   "erpm_quantisation_worst": 0.00358,
+   "pass_": true
+  },
+  "can_frames": {
+   "messages": 14,
+   "pass_": true
+  },
+  "set_speed": {
+   "rpm": 8855.0,
+   "erpm": 61985,
+   "throttle": 0.843,
+   "pass_": true
+  },
+  "erpm_limit": {
+   "erpm": 81312,
+   "rpm": 11616.0,
+   "pass_": true
+  },
+  "tyre_36_refused": {
+   "refused": true,
+   "arming_refused": true,
+   "arms_on_34": true,
+   "pass_": true
+  },
+  "tilt_never_above_level": {
+   "max_true_tilt_deg": -0.0,
+   "clamped_commands": 4,
+   "lifts": 2,
+   "pass_": true
+  },
+  "no_spin_without_arm": {
+   "max_throttle": 0.0,
+   "pass_": true
+  },
+  "rearm_needs_the_request_to_cycle": {
+   "waited": true,
+   "armed_after": true,
+   "pass_": true
+  },
+  "heartbeat_lost_zero_throttle": {
+   "safe_after_last_heartbeat_s": 0.202,
+   "throttle_at_safe": [
+    0.0,
+    0.0
+   ],
+   "pass_": true
+  },
+  "wrong_pulse_train_refused": {
+   "hardware_still_armed": true,
+   "firmware_safe_ms": 1.0,
+   "max_throttle": 0.0,
+   "pass_": true
+  },
+  "ramp_never_steps": {
+   "max_throttle_step_per_ms": 0.0035,
+   "ramp_slope_per_ms": 0.00333,
+   "pass_": true
+  },
+  "erpm_guard_24v": {
+   "latency_ms": 2.0,
+   "trip_erpm": 82645,
+   "max_erpm": 82873,
+   "dial_refused": true,
+   "latched_while_armed": true,
+   "cleared_when_released": true,
+   "pass_": true
+  },
+  "one_bad_frame_no_trip": {
+   "pass_": true
+  },
+  "ball_over_66fps_latches_safe": {
+   "firmware": true,
+   "hardware_trip": true,
+   "pass_": true
+  },
+  "aim_live_disarmed_capped": {
+   "max_pan_rate": 90.0,
+   "max_tilt_rate": 90.0,
+   "final_pan_error_deg": 0.03,
+   "pass_": true
+  },
+  "feed_servo_drop_off_and_reinit": {
+   "offline_on_release": true,
+   "back_ms_after_arm": 320,
+   "registers_rewritten": true,
+   "balls_after": 3,
+   "pass_": true
+  },
+  "every_ball_under_66fps": {
+   "fastest_fps": 52.4,
+   "balls": 6,
+   "pass_": true
+  }
+ },
+ "scope": ".venv/bin/python firmware/turret/test_firmware.py [--out DIR]"
+}

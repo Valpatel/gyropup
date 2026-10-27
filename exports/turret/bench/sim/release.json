@@ -1,0 +1,206 @@
+{
+ "test": "4.7",
+ "title": "Release braking: 20 releases at the set speed, no ball",
+ "plan": "docs/turret-prototype-plan.md section 5",
+ "mode": "sim",
+ "date": "2026-10-27",
+ "pass": true,
+ "checks": [
+  {
+   "check": "ESC rail off after the last pulse",
+   "value": 20.6,
+   "limit": "<= 21 ms",
+   "pass": true
+  },
+  {
+   "check": "short closed after the rail off",
+   "value": [
+    8.0,
+    9.0
+   ],
+   "limit": "5-14 ms",
+   "pass": true
+  },
+  {
+   "check": "speed by +50 ms (after the rail off)",
+   "value": 0.5,
+   "limit": "<= 5 %",
+   "pass": true
+  },
+  {
+   "check": "FETs after 20 releases in 2 min",
+   "value": 38.0,
+   "limit": "< 60 C",
+   "pass": true
+  }
+ ],
+ "readings": {
+  "releases": [
+   {
+    "rail_off_after_last_pulse_ms": 19.8,
+    "short_after_rail_off_ms": 8.0,
+    "speed_pct_at_rail_off_plus_50ms": 0.5,
+    "speed_pct_at_release_plus_50ms": 2.3,
+    "firmware_zero_throttle_ms": 4.0
+   },
+   {
+    "rail_off_after_last_pulse_ms": 20.4,
+    "short_after_rail_off_ms": 9.0,
+    "speed_pct_at_rail_off_plus_50ms": 0.4,
+    "speed_pct_at_release_plus_50ms": 2.2,
+    "firmware_zero_throttle_ms": 4.0
+   },
+   {
+    "rail_off_after_last_pulse_ms": 20.6,
+    "short_after_rail_off_ms": 8.0,
+    "speed_pct_at_rail_off_plus_50ms": 0.4,
+    "speed_pct_at_release_plus_50ms": 2.2,
+    "firmware_zero_throttle_ms": 4.0
+   },
+   {
+    "rail_off_after_last_pulse_ms": 20.2,
+    "short_after_rail_off_ms": 9.0,
+    "speed_pct_at_rail_off_plus_50ms": 0.4,
+    "speed_pct_at_release_plus_50ms": 2.2,
+    "firmware_zero_throttle_ms": 4.0
+   },
+   {
+    "rail_off_after_last_pulse_ms": 20.2,
+    "short_after_rail_off_ms": 9.0,
+    "speed_pct_at_rail_off_plus_50ms": 0.4,
+    "speed_pct_at_release_plus_50ms": 2.2,
+    "firmware_zero_throttle_ms": 4.0
+   },
+   {
+    "rail_off_after_last_pulse_ms": 20.5,
+    "short_after_rail_off_ms": 9.0,
+    "speed_pct_at_rail_off_plus_50ms": 0.4,
+    "speed_pct_at_release_plus_50ms": 2.2,
+    "firmware_zero_throttle_ms": 4.0
+   },
+   {
+    "rail_off_after_last_pulse_ms": 20.3,
+    "short_after_rail_off_ms": 9.0,
+    "speed_pct_at_rail_off_plus_50ms": 0.4,
+    "speed_pct_at_release_plus_50ms": 2.2,
+    "firmware_zero_throttle_ms": 4.0
+   },
+   {
+    "rail_off_after_last_pulse_ms": 20.0,
+    "short_after_rail_off_ms": 8.0,
+    "speed_pct_at_rail_off_plus_50ms": 0.4,
+    "speed_pct_at_release_plus_50ms": 2.2,
+    "firmware_zero_throttle_ms": 4.0
+   },
+   {
+    "rail_off_after_last_pulse_ms": 20.2,
+    "short_after_rail_off_ms": 8.0,
+    "speed_pct_at_rail_off_plus_50ms": 0.4,
+    "speed_pct_at_release_plus_50ms": 2.2,
+    "firmware_zero_throttle_ms": 4.0
+   },
+   {
+    "rail_off_after_last_pulse_ms": 20.2,
+    "short_after_rail_off_ms": 8.0,
+    "speed_pct_at_rail_off_plus_50ms": 0.4,
+    "speed_pct_at_release_plus_50ms": 2.2,
+    "firmware_zero_throttle_ms": 4.0
+   },
+   {
+    "rail_off_after_last_pulse_ms": 20.0,
+    "short_after_rail_off_ms": 8.0,
+    "speed_pct_at_rail_off_plus_50ms": 0.4,
+    "speed_pct_at_release_plus_50ms": 2.2,
+    "firmware_zero_throttle_ms": 4.0
+   },
+   {
+    "rail_off_after_last_pulse_ms": 20.3,
+    "short_after_rail_off_ms": 8.0,
+    "speed_pct_at_rail_off_plus_50ms": 0.4,
+    "speed_pct_at_release_plus_50ms": 2.2,
+    "firmware_zero_throttle_ms": 4.0
+   },
+   {
+    "rail_off_after_last_pulse_ms": 19.9,
+    "short_after_rail_off_ms": 8.0,
+    "speed_pct_at_rail_off_plus_50ms": 0.5,
+    "speed_pct_at_release_plus_50ms": 2.3,
+    "firmware_zero_throttle_ms": 4.0
+   },
+   {
+    "rail_off_after_last_pulse_ms": 20.0,
+    "short_after_rail_off_ms": 8.0,
+    "speed_pct_at_rail_off_plus_50ms": 0.5,
+    "speed_pct_at_release_plus_50ms": 2.3,
+    "firmware_zero_throttle_ms": 4.0
+   },
+   {
+    "rail_off_after_last_pulse_ms": 19.9,
+    "short_after_rail_off_ms": 8.0,
+    "speed_pct_at_rail_off_plus_50ms": 0.5,
+    "speed_pct_at_release_plus_50ms": 2.3,
+    "firmware_zero_throttle_ms": 4.0
+   },
+   {
+    "rail_off_after_last_pulse_ms": 20.4,
+    "short_after_rail_off_ms": 8.0,
+    "speed_pct_at_rail_off_plus_50ms": 0.4,
+    "speed_pct_at_release_plus_50ms": 2.2,
+    "firmware_zero_throttle_ms": 4.0
+   },
+   {
+    "rail_off_after_last_pulse_ms": 19.9,
+    "short_after_rail_off_ms": 8.0,
+    "speed_pct_at_rail_off_plus_50ms": 0.5,
+    "speed_pct_at_release_plus_50ms": 2.3,
+    "firmware_zero_throttle_ms": 4.0
+   },
+   {
+    "rail_off_after_last_pulse_ms": 19.9,
+    "short_after_rail_off_ms": 8.0,
+    "speed_pct_at_rail_off_plus_50ms": 0.5,
+    "speed_pct_at_release_plus_50ms": 2.3,
+    "firmware_zero_throttle_ms": 4.0
+   },
+   {
+    "rail_off_after_last_pulse_ms": 19.8,
+    "short_after_rail_off_ms": 8.0,
+    "speed_pct_at_rail_off_plus_50ms": 0.5,
+    "speed_pct_at_release_plus_50ms": 2.3,
+    "firmware_zero_throttle_ms": 4.0
+   },
+   {
+    "rail_off_after_last_pulse_ms": 20.4,
+    "short_after_rail_off_ms": 8.0,
+    "speed_pct_at_rail_off_plus_50ms": 0.4,
+    "speed_pct_at_release_plus_50ms": 2.2,
+    "firmware_zero_throttle_ms": 4.0
+   }
+  ],
+  "fet_temp_c": 38.0
+ },
+ "notes": [
+  "The firmware sees the release on PULSE_MON (no edge for 4 ms) and commands zero throttle at once, so AM32 brakes on stop ~16 ms before the monostable cuts the rail; the phase short then finishes the job."
+ ],
+ "sim": {
+  "seed": 1047,
+  "simulated_s": 174.2,
+  "wall_s": 6.3,
+  "stand_ins": [
+   "fet_temp_c"
+  ],
+  "shortened": {},
+  "warning": "simulated turret (firmware/turret/sim_turret.py): not a bench reading"
+ },
+ "firmware": {
+  "build": "v0",
+  "servo_baud": 500000,
+  "motor": "SunnySky X2216 880KV V3",
+  "kv": 880.0,
+  "pole_pairs": 7,
+  "erpm_limit": 81312,
+  "tyre_mm": 34,
+  "set_rpm_52fps": 8855,
+  "ramp_s": 0.3
+ }
+}

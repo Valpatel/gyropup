@@ -2,12 +2,12 @@
 
 Each model, and where its numbers come from:
   safety line  the base 555 at 1 kHz (+-1 %) while the pendant is held; at the turret the 4N35 and the 74HC123
-               retriggerable monostable (20 ms +-5 %): ARM = pulses AND /TRIP, as drawn (docs/turret-wiring.md 3.1).
+               retriggerable monostable (18 ms +-10 %): ARM = pulses AND /TRIP, as drawn (docs/turret-wiring.md 3.1).
                Ring faults replace the train: open, short to GND (no edges), short to +24 V or a DC level (one edge,
                then none), 300 Hz, 3 kHz and 50 Hz hum (edges at that rate)
   trip latch   gate 1 starts a one-shot of 2.98 ms (+-1 % after the R is selected on the bench); gate 2 inside it sets
                the latch; only the reset button clears it (wiring 3.2)
-  2815, brake  12 V FLY and 12 V FEED follow ARM within the millisecond; BRAKE = ARM inverted through 10 k / 1 uF
+  2815, brake  12 V FLY and 12 V FEED follow ARM within the millisecond; BRAKE = ARM inverted through 6.8 k / 1 uF (a diode for the fast release)
                between 74HC14s: on 9.2 ms after ARM falls, off 10.8 ms after it rises (the drawn RC is symmetric)
   pan          test_homing.Hardware (the 63:21 drive, 0.44 deg backlash, the hall window with hysteresis and
                interrupt jitter) moved at the speed of the pan servo's own acceleration-limited loop (sim_servo.py),
@@ -68,7 +68,7 @@ class SimTurret(HAL):
         self.fault_t = 0.0
         self.f555 = 1000.0 * (1 + r.uniform(-0.01, 0.01))
         self.next_555: Optional[float] = None          # the next edge of whatever drives the opto (None: nothing)
-        self.mono_t = 0.020 * (1 + r.uniform(-0.05, 0.05))
+        self.mono_t = 0.018 * (1 + r.uniform(-0.10, 0.10))       # 0.45 x 39 k x 1 uF (X7R, 10 %): 16-20 ms
         self.mono_until = -1.0
         self.src: Optional[float] = None
         self.last_edge: Optional[float] = None
@@ -301,9 +301,10 @@ class SimTurret(HAL):
                     e.update(on_t=t, armed=False, zero_since=None)
                 else:
                     e.update(on_t=None, armed=False, zero_since=None, edt=False)
-        # the brake's RC: high 9.2 ms after ARM falls, low 10.8 ms after it rises
+        # the brake's RC (docs/turret-wiring.md 3.3): high ~8 ms after ARM falls (5-14 ms over the parts), low ~0.2 ms
+        # after it rises (D3 and 1 k fill the capacitor)
         want = not arm
-        lag = 0.0092 if want else 0.0108
+        lag = 0.0080 if want else 0.0002
         if want != self.brake and t - self._arm_change >= lag:
             self.brake = want
             self.timeline.append((t, 'brake_on' if want else 'brake_off'))

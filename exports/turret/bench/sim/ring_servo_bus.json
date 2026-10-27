@@ -1,0 +1,62 @@
+{
+ "test": "3.6",
+ "title": "The servo bus over the ring: 1 h of 100 Hz reads and writes to the pan servo at 500 kbit/s",
+ "plan": "docs/turret-prototype-plan.md section 5",
+ "mode": "sim",
+ "date": "2026-10-27",
+ "pass": true,
+ "checks": [
+  {
+   "check": "checksum retries",
+   "value": 0.0403,
+   "limit": "< 0.1 % of transfers",
+   "pass": true
+  },
+  {
+   "check": "no command lost",
+   "value": 1.0,
+   "limit": "within 2 counts at every stop",
+   "pass": true
+  }
+ ],
+ "readings": {
+  "seconds": 124.2,
+  "servo_errors": 5,
+  "pan_reads_est": 12420,
+  "position_error_counts_at_stops": [
+   1.0,
+   1.0,
+   1.0,
+   1.0,
+   1.0,
+   0.0
+  ]
+ },
+ "notes": [
+  "The pan servo is read at 100 Hz; the transfer count is that rate x the time (HEALTH carries the error count, not the transfers)."
+ ],
+ "sim": {
+  "seed": 1036,
+  "simulated_s": 125.8,
+  "wall_s": 4.4,
+  "stand_ins": [],
+  "shortened": {
+   "panning": {
+    "plan_s": 3600.0,
+    "sim_s": 120.0
+   }
+  },
+  "warning": "simulated turret (firmware/turret/sim_turret.py): not a bench reading"
+ },
+ "firmware": {
+  "build": "v0",
+  "servo_baud": 500000,
+  "motor": "SunnySky X2216 880KV V3",
+  "kv": 880.0,
+  "pole_pairs": 7,
+  "erpm_limit": 81312,
+  "tyre_mm": 34,
+  "set_rpm_52fps": 8855,
+  "ramp_s": 0.3
+ }
+}

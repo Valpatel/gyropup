@@ -1,0 +1,300 @@
+{
+ "test": "6.8",
+ "title": "Mock lidar: the depression table loaded; barrel and balls clear at every pan",
+ "plan": "docs/turret-prototype-plan.md section 5",
+ "mode": "sim",
+ "date": "2026-10-27",
+ "pass": true,
+ "checks": [
+  {
+   "check": "the tilt never below the table",
+   "value": -0.11,
+   "limit": ">= table - 0.5 deg at every pan",
+   "pass": true
+  },
+  {
+   "check": "clear at every pan",
+   "value": 0,
+   "limit": "10 mm",
+   "pass": true
+  }
+ ],
+ "readings": {
+  "rows": [
+   {
+    "pan_deg": 0,
+    "tilt_deg": -16.0,
+    "table_min_deg": -16.0,
+    "clear": true
+   },
+   {
+    "pan_deg": 10,
+    "tilt_deg": -16.0,
+    "table_min_deg": -16.0,
+    "clear": true
+   },
+   {
+    "pan_deg": 20,
+    "tilt_deg": -17.93,
+    "table_min_deg": -18.0,
+    "clear": true
+   },
+   {
+    "pan_deg": 30,
+    "tilt_deg": -23.38,
+    "table_min_deg": -23.5,
+    "clear": true
+   },
+   {
+    "pan_deg": 40,
+    "tilt_deg": -24.96,
+    "table_min_deg": -25.0,
+    "clear": true
+   },
+   {
+    "pan_deg": 50,
+    "tilt_deg": -25.05,
+    "table_min_deg": -25.0,
+    "clear": true
+   },
+   {
+    "pan_deg": 60,
+    "tilt_deg": -24.96,
+    "table_min_deg": -25.0,
+    "clear": true
+   },
+   {
+    "pan_deg": 70,
+    "tilt_deg": -24.87,
+    "table_min_deg": -25.0,
+    "clear": true
+   },
+   {
+    "pan_deg": 80,
+    "tilt_deg": -25.05,
+    "table_min_deg": -25.0,
+    "clear": true
+   },
+   {
+    "pan_deg": 90,
+    "tilt_deg": -25.05,
+    "table_min_deg": -25.0,
+    "clear": true
+   },
+   {
+    "pan_deg": 100,
+    "tilt_deg": -24.96,
+    "table_min_deg": -25.0,
+    "clear": true
+   },
+   {
+    "pan_deg": 110,
+    "tilt_deg": -24.96,
+    "table_min_deg": -25.0,
+    "clear": true
+   },
+   {
+    "pan_deg": 120,
+    "tilt_deg": -24.96,
+    "table_min_deg": -25.0,
+    "clear": true
+   },
+   {
+    "pan_deg": 130,
+    "tilt_deg": -24.87,
+    "table_min_deg": -25.0,
+    "clear": true
+   },
+   {
+    "pan_deg": 140,
+    "tilt_deg": -24.96,
+    "table_min_deg": -25.0,
+    "clear": true
+   },
+   {
+    "pan_deg": 150,
+    "tilt_deg": -25.05,
+    "table_min_deg": -25.0,
+    "clear": true
+   },
+   {
+    "pan_deg": 160,
+    "tilt_deg": -25.05,
+    "table_min_deg": -25.0,
+    "clear": true
+   },
+   {
+    "pan_deg": 170,
+    "tilt_deg": -24.96,
+    "table_min_deg": -25.0,
+    "clear": true
+   },
+   {
+    "pan_deg": 180,
+    "tilt_deg": -24.87,
+    "table_min_deg": -25.0,
+    "clear": true
+   },
+   {
+    "pan_deg": 190,
+    "tilt_deg": -25.05,
+    "table_min_deg": -25.0,
+    "clear": true
+   },
+   {
+    "pan_deg": 200,
+    "tilt_deg": -24.96,
+    "table_min_deg": -25.0,
+    "clear": true
+   },
+   {
+    "pan_deg": 210,
+    "tilt_deg": -24.87,
+    "table_min_deg": -25.0,
+    "clear": true
+   },
+   {
+    "pan_deg": 220,
+    "tilt_deg": -24.96,
+    "table_min_deg": -25.0,
+    "clear": true
+   },
+   {
+    "pan_deg": 230,
+    "tilt_deg": -25.05,
+    "table_min_deg": -25.0,
+    "clear": true
+   },
+   {
+    "pan_deg": 240,
+    "tilt_deg": -25.05,
+    "table_min_deg": -25.0,
+    "clear": true
+   },
+   {
+    "pan_deg": 250,
+    "tilt_deg": -24.96,
+    "table_min_deg": -25.0,
+    "clear": true
+   },
+   {
+    "pan_deg": 260,
+    "tilt_deg": -24.96,
+    "table_min_deg": -25.0,
+    "clear": true
+   },
+   {
+    "pan_deg": 270,
+    "tilt_deg": -24.96,
+    "table_min_deg": -25.0,
+    "clear": true
+   },
+   {
+    "pan_deg": 280,
+    "tilt_deg": -24.96,
+    "table_min_deg": -25.0,
+    "clear": true
+   },
+   {
+    "pan_deg": 290,
+    "tilt_deg": -24.96,
+    "table_min_deg": -25.0,
+    "clear": true
+   },
+   {
+    "pan_deg": 300,
+    "tilt_deg": -24.87,
+    "table_min_deg": -25.0,
+    "clear": true
+   },
+   {
+    "pan_deg": 310,
+    "tilt_deg": -24.87,
+    "table_min_deg": -25.0,
+    "clear": true
+   },
+   {
+    "pan_deg": 320,
+    "tilt_deg": -24.96,
+    "table_min_deg": -25.0,
+    "clear": true
+   },
+   {
+    "pan_deg": 330,
+    "tilt_deg": -23.29,
+    "table_min_deg": -23.5,
+    "clear": true
+   },
+   {
+    "pan_deg": 340,
+    "tilt_deg": -18.11,
+    "table_min_deg": -18.0,
+    "clear": true
+   },
+   {
+    "pan_deg": 350,
+    "tilt_deg": -16.0,
+    "table_min_deg": -16.0,
+    "clear": true
+   }
+  ],
+  "table_rows": 73
+ },
+ "notes": [],
+ "sim": {
+  "seed": 1068,
+  "simulated_s": 47.8,
+  "wall_s": 2.4,
+  "stand_ins": [
+   "clear_0",
+   "clear_10",
+   "clear_100",
+   "clear_110",
+   "clear_120",
+   "clear_130",
+   "clear_140",
+   "clear_150",
+   "clear_160",
+   "clear_170",
+   "clear_180",
+   "clear_190",
+   "clear_20",
+   "clear_200",
+   "clear_210",
+   "clear_220",
+   "clear_230",
+   "clear_240",
+   "clear_250",
+   "clear_260",
+   "clear_270",
+   "clear_280",
+   "clear_290",
+   "clear_30",
+   "clear_300",
+   "clear_310",
+   "clear_320",
+   "clear_330",
+   "clear_340",
+   "clear_350",
+   "clear_40",
+   "clear_50",
+   "clear_60",
+   "clear_70",
+   "clear_80",
+   "clear_90"
+  ],
+  "shortened": {},
+  "warning": "simulated turret (firmware/turret/sim_turret.py): not a bench reading"
+ },
+ "firmware": {
+  "build": "v0",
+  "servo_baud": 500000,
+  "motor": "SunnySky X2216 880KV V3",
+  "kv": 880.0,
+  "pole_pairs": 7,
+  "erpm_limit": 81312,
+  "tyre_mm": 34,
+  "set_rpm_52fps": 8855,
+  "ramp_s": 0.3
+ }
+}

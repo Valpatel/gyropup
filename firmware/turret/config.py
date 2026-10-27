@@ -117,8 +117,10 @@ SPIN_HOLD_S = 3.0              # after a burst the wheels stay at speed this lon
 DSHOT_RATE_HZ = 1000           # DShot300 frames (and eRPM telemetry back) per wheel
 
 # the hardware the firmware only reports (it neither drives nor can override it)
-BRAKE_DELAY_S = 0.010          # the phase-short closes 10 ms after ARM falls (74HC14 + 10 k / 1 uF) ...
-BRAKE_TAU_S = 0.0069           # ... and the wheel decays with tau 6.9 ms (the X2216 model): 5 % 30 ms after ARM falls
+BRAKE_DELAY_S = 0.008          # the phase-short closes ~8 ms after ARM falls (5-14 ms: 74HCT14 + 6.8 k / 1 uF) ...
+BRAKE_TAU_S = 0.0127           # ... and the wheel decays with an effective tau of 12.7 ms: the X2216's short through two FETs
+                               # and the taps (tau 10.2 ms at low speed) and its winding's inductance at speed (35 uH est):
+                               # 5 % about 48 ms after ARM falls on the short alone (docs/turret-physics.md section 5)
 GATE_SPACING_M = 0.060
 TRIP_FPS = 66.0                # the latch's 2.98 ms window over 60 mm; the firmware's own per-shot check uses it too
 CAP_FPS = 70.0                 # the hard rule
