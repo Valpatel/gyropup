@@ -1,0 +1,661 @@
+{
+ "model": "    .venv/bin/python sim/turret_launch.py            # the study: writes exports/turret/launch/launch.json and plots",
+ "snail": {
+  "kv_rpm_v": 875.0,
+  "kt": 0.0109,
+  "r_phase": 0.1815,
+  "rotor_kg_m2": 1.84e-06,
+  "i0_a": 0.4,
+  "i0_at_rpm": 21000.0
+ },
+ "tolerances": {
+  "kv": 1.05,
+  "v": 1.04,
+  "note": "motor KV +5 % (DJI gives no tolerance: est), the Pololu regulator +4 % (est from its data sheet class)"
+ },
+ "cap_fps": 70.0,
+ "ball_ranges": {
+  "d_mm": [
+   22.5,
+   23.5
+  ],
+  "m_g": [
+   1.53,
+   2.1
+  ],
+  "E_mpa": [
+   0.75,
+   3.0
+  ],
+  "mu": [
+   0.6,
+   1.0
+  ],
+  "restitution": 0.5
+ },
+ "measured_eta_on_rival_blasters": [
+  0.4,
+  0.75
+ ],
+ "efficiency_map": [
+  {
+   "crush": 0.12,
+   "E_mpa": 0.75,
+   "mu": 0.6,
+   "fps": 26.0,
+   "eta": 0.362,
+   "rejected": false,
+   "peak_normal_n": 5.1
+  },
+  {
+   "crush": 0.12,
+   "E_mpa": 0.75,
+   "mu": 0.8,
+   "fps": 29.9,
+   "eta": 0.417,
+   "rejected": false,
+   "peak_normal_n": 5.1
+  },
+  {
+   "crush": 0.12,
+   "E_mpa": 0.75,
+   "mu": 1.0,
+   "fps": 33.4,
+   "eta": 0.465,
+   "rejected": false,
+   "peak_normal_n": 5.2
+  },
+  {
+   "crush": 0.12,
+   "E_mpa": 1.5,
+   "mu": 0.6,
+   "fps": 36.0,
+   "eta": 0.502,
+   "rejected": false,
+   "peak_normal_n": 10.3
+  },
+  {
+   "crush": 0.12,
+   "E_mpa": 1.5,
+   "mu": 0.8,
+   "fps": 41.4,
+   "eta": 0.578,
+   "rejected": false,
+   "peak_normal_n": 10.5
+  },
+  {
+   "crush": 0.12,
+   "E_mpa": 1.5,
+   "mu": 1.0,
+   "fps": 46.1,
+   "eta": 0.643,
+   "rejected": false,
+   "peak_normal_n": 10.6
+  },
+  {
+   "crush": 0.12,
+   "E_mpa": 3.0,
+   "mu": 0.6,
+   "fps": 49.5,
+   "eta": 0.69,
+   "rejected": false,
+   "peak_normal_n": 21.3
+  },
+  {
+   "crush": 0.12,
+   "E_mpa": 3.0,
+   "mu": 0.8,
+   "fps": 56.9,
+   "eta": 0.794,
+   "rejected": false,
+   "peak_normal_n": 21.8
+  },
+  {
+   "crush": 0.12,
+   "E_mpa": 3.0,
+   "mu": 1.0,
+   "fps": 63.5,
+   "eta": 0.885,
+   "rejected": false,
+   "peak_normal_n": 22.3
+  },
+  {
+   "crush": 0.18,
+   "E_mpa": 0.75,
+   "mu": 0.6,
+   "fps": 36.9,
+   "eta": 0.514,
+   "rejected": false,
+   "peak_normal_n": 9.7
+  },
+  {
+   "crush": 0.18,
+   "E_mpa": 0.75,
+   "mu": 0.8,
+   "fps": 42.5,
+   "eta": 0.592,
+   "rejected": false,
+   "peak_normal_n": 9.9
+  },
+  {
+   "crush": 0.18,
+   "E_mpa": 0.75,
+   "mu": 1.0,
+   "fps": 47.3,
+   "eta": 0.66,
+   "rejected": false,
+   "peak_normal_n": 10.1
+  },
+  {
+   "crush": 0.18,
+   "E_mpa": 1.5,
+   "mu": 0.6,
+   "fps": 50.2,
+   "eta": 0.701,
+   "rejected": false,
+   "peak_normal_n": 20.2
+  },
+  {
+   "crush": 0.18,
+   "E_mpa": 1.5,
+   "mu": 0.8,
+   "fps": 58.2,
+   "eta": 0.811,
+   "rejected": false,
+   "peak_normal_n": 20.9
+  },
+  {
+   "crush": 0.18,
+   "E_mpa": 1.5,
+   "mu": 1.0,
+   "fps": 65.3,
+   "eta": 0.91,
+   "rejected": false,
+   "peak_normal_n": 21.6
+  },
+  {
+   "crush": 0.18,
+   "E_mpa": 3.0,
+   "mu": 0.6,
+   "fps": 66.1,
+   "eta": 0.922,
+   "rejected": false,
+   "peak_normal_n": 43.2
+  },
+  {
+   "crush": 0.18,
+   "E_mpa": 3.0,
+   "mu": 0.8,
+   "fps": 66.4,
+   "eta": 0.926,
+   "rejected": false,
+   "peak_normal_n": 45.6
+  },
+  {
+   "crush": 0.18,
+   "E_mpa": 3.0,
+   "mu": 1.0,
+   "fps": 66.6,
+   "eta": 0.928,
+   "rejected": false,
+   "peak_normal_n": 47.8
+  },
+  {
+   "crush": 0.25,
+   "E_mpa": 0.75,
+   "mu": 0.6,
+   "fps": 47.6,
+   "eta": 0.664,
+   "rejected": false,
+   "peak_normal_n": 16.8
+  },
+  {
+   "crush": 0.25,
+   "E_mpa": 0.75,
+   "mu": 0.8,
+   "fps": 55.4,
+   "eta": 0.773,
+   "rejected": false,
+   "peak_normal_n": 17.6
+  },
+  {
+   "crush": 0.25,
+   "E_mpa": 0.75,
+   "mu": 1.0,
+   "fps": 62.5,
+   "eta": 0.872,
+   "rejected": false,
+   "peak_normal_n": 18.2
+  },
+  {
+   "crush": 0.25,
+   "E_mpa": 1.5,
+   "mu": 0.6,
+   "fps": 65.2,
+   "eta": 0.909,
+   "rejected": false,
+   "peak_normal_n": 36.3
+  },
+  {
+   "crush": 0.25,
+   "E_mpa": 1.5,
+   "mu": 0.8,
+   "fps": 66.0,
+   "eta": 0.92,
+   "rejected": false,
+   "peak_normal_n": 38.8
+  },
+  {
+   "crush": 0.25,
+   "E_mpa": 1.5,
+   "mu": 1.0,
+   "fps": 66.2,
+   "eta": 0.923,
+   "rejected": false,
+   "peak_normal_n": 41.1
+  },
+  {
+   "crush": 0.25,
+   "E_mpa": 3.0,
+   "mu": 0.6,
+   "fps": 64.5,
+   "eta": 0.899,
+   "rejected": false,
+   "peak_normal_n": 81.5
+  },
+  {
+   "crush": 0.25,
+   "E_mpa": 3.0,
+   "mu": 0.8,
+   "fps": 65.1,
+   "eta": 0.907,
+   "rejected": false,
+   "peak_normal_n": 86.6
+  },
+  {
+   "crush": 0.25,
+   "E_mpa": 3.0,
+   "mu": 1.0,
+   "fps": 65.3,
+   "eta": 0.911,
+   "rejected": false,
+   "peak_normal_n": 86.8
+  },
+  {
+   "crush": 0.32,
+   "E_mpa": 0.75,
+   "mu": 0.6,
+   "fps": 57.4,
+   "eta": 0.801,
+   "rejected": false,
+   "peak_normal_n": 26.2
+  },
+  {
+   "crush": 0.32,
+   "E_mpa": 0.75,
+   "mu": 0.8,
+   "fps": 65.8,
+   "eta": 0.918,
+   "rejected": false,
+   "peak_normal_n": 28.1
+  },
+  {
+   "crush": 0.32,
+   "E_mpa": 0.75,
+   "mu": 1.0,
+   "fps": 66.1,
+   "eta": 0.921,
+   "rejected": false,
+   "peak_normal_n": 29.8
+  },
+  {
+   "crush": 0.32,
+   "E_mpa": 1.5,
+   "mu": 0.6,
+   "fps": 64.0,
+   "eta": 0.892,
+   "rejected": false,
+   "peak_normal_n": 58.6
+  },
+  {
+   "crush": 0.32,
+   "E_mpa": 1.5,
+   "mu": 0.8,
+   "fps": 64.8,
+   "eta": 0.903,
+   "rejected": false,
+   "peak_normal_n": 64.8
+  },
+  {
+   "crush": 0.32,
+   "E_mpa": 1.5,
+   "mu": 1.0,
+   "fps": 65.1,
+   "eta": 0.908,
+   "rejected": false,
+   "peak_normal_n": 66.9
+  },
+  {
+   "crush": 0.32,
+   "E_mpa": 3.0,
+   "mu": 0.6,
+   "fps": 61.8,
+   "eta": 0.861,
+   "rejected": false,
+   "peak_normal_n": 130.4
+  },
+  {
+   "crush": 0.32,
+   "E_mpa": 3.0,
+   "mu": 0.8,
+   "fps": 62.9,
+   "eta": 0.877,
+   "rejected": false,
+   "peak_normal_n": 131.8
+  },
+  {
+   "crush": 0.32,
+   "E_mpa": 3.0,
+   "mu": 1.0,
+   "fps": 63.4,
+   "eta": 0.883,
+   "rejected": false,
+   "peak_normal_n": 132.3
+  },
+  {
+   "crush": 0.4,
+   "E_mpa": 0.75,
+   "mu": 0.6,
+   "fps": 63.5,
+   "eta": 0.885,
+   "rejected": false,
+   "peak_normal_n": 40.0
+  },
+  {
+   "crush": 0.4,
+   "E_mpa": 0.75,
+   "mu": 0.8,
+   "fps": 64.6,
+   "eta": 0.9,
+   "rejected": false,
+   "peak_normal_n": 44.4
+  },
+  {
+   "crush": 0.4,
+   "E_mpa": 0.75,
+   "mu": 1.0,
+   "fps": 65.0,
+   "eta": 0.906,
+   "rejected": false,
+   "peak_normal_n": 48.4
+  },
+  {
+   "crush": 0.4,
+   "E_mpa": 1.5,
+   "mu": 0.6,
+   "fps": 60.9,
+   "eta": 0.849,
+   "rejected": false,
+   "peak_normal_n": 92.6
+  },
+  {
+   "crush": 0.4,
+   "E_mpa": 1.5,
+   "mu": 0.8,
+   "fps": 62.7,
+   "eta": 0.874,
+   "rejected": false,
+   "peak_normal_n": 98.0
+  },
+  {
+   "crush": 0.4,
+   "E_mpa": 1.5,
+   "mu": 1.0,
+   "fps": 63.2,
+   "eta": 0.882,
+   "rejected": false,
+   "peak_normal_n": 98.5
+  },
+  {
+   "crush": 0.4,
+   "E_mpa": 3.0,
+   "mu": 0.6,
+   "fps": 56.5,
+   "eta": 0.788,
+   "rejected": false,
+   "peak_normal_n": 186.1
+  },
+  {
+   "crush": 0.4,
+   "E_mpa": 3.0,
+   "mu": 0.8,
+   "fps": 59.2,
+   "eta": 0.825,
+   "rejected": false,
+   "peak_normal_n": 191.1
+  },
+  {
+   "crush": 0.4,
+   "E_mpa": 3.0,
+   "mu": 1.0,
+   "fps": 59.9,
+   "eta": 0.836,
+   "rejected": false,
+   "peak_normal_n": 192.5
+  }
+ ],
+ "efficiency_by_crush": {
+  "0.12": {
+   "eta_min": 0.362,
+   "eta_max": 0.885,
+   "rejections": 0
+  },
+  "0.18": {
+   "eta_min": 0.514,
+   "eta_max": 0.928,
+   "rejections": 0
+  },
+  "0.25": {
+   "eta_min": 0.664,
+   "eta_max": 0.923,
+   "rejections": 0
+  },
+  "0.32": {
+   "eta_min": 0.801,
+   "eta_max": 0.921,
+   "rejections": 0
+  },
+  "0.4": {
+   "eta_min": 0.788,
+   "eta_max": 0.906,
+   "rejections": 0
+  }
+ },
+ "ceiling_by_wheel": [
+  {
+   "wheel_d_mm": 34.0,
+   "worst_fps_at_full_throttle": 60.8,
+   "nominal_fps_at_full_throttle": 56.4,
+   "no_load_rpm": 10437
+  },
+  {
+   "wheel_d_mm": 36.0,
+   "worst_fps_at_full_throttle": 64.2,
+   "nominal_fps_at_full_throttle": 59.5,
+   "no_load_rpm": 10437
+  },
+  {
+   "wheel_d_mm": 38.0,
+   "worst_fps_at_full_throttle": 67.8,
+   "nominal_fps_at_full_throttle": 62.7,
+   "no_load_rpm": 10437
+  },
+  {
+   "wheel_d_mm": 40.0,
+   "worst_fps_at_full_throttle": 71.4,
+   "nominal_fps_at_full_throttle": 65.9,
+   "no_load_rpm": 10437
+  },
+  {
+   "wheel_d_mm": 42.0,
+   "worst_fps_at_full_throttle": 75.0,
+   "nominal_fps_at_full_throttle": 69.1,
+   "no_load_rpm": 10437
+  }
+ ],
+ "design": {
+  "wheel_d_mm": 36.0,
+  "crush": 0.25,
+  "gap_mm_for_22_7": 17.02,
+  "supply_v": 12.0,
+  "wheel_I_kg_m2": 3.917519259407896e-06,
+  "no_load_rpm": 10437,
+  "set_rpm": 9408,
+  "set_fraction_of_no_load": 0.901,
+  "nominal_shot": {
+   "v_exit": 16.764,
+   "fps": 55.0,
+   "contact_ms": 4.778,
+   "w_start": 985.1805,
+   "w_end": 915.542,
+   "surface_m_s": 17.7332,
+   "eta": 0.9453,
+   "speed_drop_pct": 7.0686,
+   "peak_normal_n": 41.411,
+   "peak_friction_n": 33.1288,
+   "impulse_ns": 0.0301,
+   "slip_loss_j": 0.4624,
+   "ball_ke_j": 0.26
+  },
+  "population_at_set_speed_fps": {
+   "n": 400,
+   "mean": 54.7,
+   "sd": 1.0,
+   "p1": 50.7,
+   "p99": 56.2,
+   "max": 56.4
+  },
+  "population_at_full_throttle_fps": {
+   "mean": 63.1,
+   "max": 66.4,
+   "note": "every ball at 100 % throttle on a +5 % motor and a +4 % regulator: the hardware ceiling"
+  },
+  "worst_ball_full_throttle_fps": 64.2,
+  "margin_fps": 3.6
+ },
+ "sensitivity": {
+  "d_mm": [
+   {
+    "value": 22.5,
+    "fps": 55.2
+   },
+   {
+    "value": 22.9,
+    "fps": 55.0
+   },
+   {
+    "value": 23.5,
+    "fps": 54.6
+   }
+  ],
+  "m_g": [
+   {
+    "value": 1.53,
+    "fps": 55.7
+   },
+   {
+    "value": 1.85,
+    "fps": 55.0
+   },
+   {
+    "value": 2.1,
+    "fps": 54.5
+   }
+  ],
+  "E_mpa": [
+   {
+    "value": 0.75,
+    "fps": 55.6
+   },
+   {
+    "value": 1.5,
+    "fps": 55.0
+   },
+   {
+    "value": 3.0,
+    "fps": 53.9
+   }
+  ],
+  "mu": [
+   {
+    "value": 0.6,
+    "fps": 54.8
+   },
+   {
+    "value": 0.8,
+    "fps": 55.0
+   },
+   {
+    "value": 1.0,
+    "fps": 55.1
+   }
+  ],
+  "wet": {
+   "value": "soaked: twice the mass (Blaster Labs)",
+   "fps": 51.5
+  },
+  "worn_soft": {
+   "value": "worn: half the stiffness",
+   "fps": 55.6
+  }
+ },
+ "burst_10_per_s": [
+  {
+   "shot": 1,
+   "w_rpm": 9408,
+   "fps": 55.0
+  },
+  {
+   "shot": 2,
+   "w_rpm": 9412,
+   "fps": 55.0
+  },
+  {
+   "shot": 3,
+   "w_rpm": 9412,
+   "fps": 55.0
+  },
+  {
+   "shot": 4,
+   "w_rpm": 9412,
+   "fps": 55.0
+  },
+  {
+   "shot": 5,
+   "w_rpm": 9412,
+   "fps": 55.0
+  },
+  {
+   "shot": 6,
+   "w_rpm": 9412,
+   "fps": 55.0
+  },
+  {
+   "shot": 7,
+   "w_rpm": 9412,
+   "fps": 55.0
+  },
+  {
+   "shot": 8,
+   "w_rpm": 9412,
+   "fps": 55.0
+  }
+ ],
+ "recoil": {
+  "per_shot_ns": 0.031,
+  "at_cap_ns": 0.0448,
+  "burst_8_ns": 0.248,
+  "peak_force_on_the_cage_n": 82.8,
+  "note": "impulse = the ball momentum at the muzzle; the at-cap figure takes the heaviest ball (2.10 g) at 70 fps"
+ }
+}

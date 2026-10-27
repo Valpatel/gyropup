@@ -74,3 +74,21 @@ Newest last. One entry per agent run: what it did, what it proved, what is next.
 - 2026-10-27 (in progress): the coordinator passed on the user's request for a high-quality electrical slip ring in
   the pan joint. A separate planner is researching it. The pan joint's cable path, the wiring and the DT12 pinout
   wait for its plan; the pan axis and centre hole stay free, and no new hard pan stops go in.
+- 2026-10-27 (in progress): physics handed to a dedicated physics agent (coordinator), which now owns sim/turret_*.py
+  and builds sim/turret_e2e.py; its "Findings for the CAD" in docs/turret-physics.md feed the CAD. Committed as they
+  stood, for it to build on:
+  - sim/turret_launch.py: a one-shot flywheel model (Hertz foam contact with Hunt-Crossley damping, Coulomb tyre
+    friction, the Snail's DJI motor constants behind an ESC current limit). It found that 12 % crush makes the speed
+    swing with the foam (efficiency 0.36-0.89), while 25 % gives 0.66-0.92 with no rejections. Ø36 TPU tyres on a
+    regulated 12 V flywheel rail: 55 fps at 90 % of no-load, 54.7 +- 1.0 fps over 400 balls (sourced size and mass
+    spread, foam and grip swept); at 100 % throttle on a +5 % motor and a +4 % rail the worst ball reaches 66.4 fps (a
+    3.6 fps ceiling margin); 8-ball bursts at 10/s hold speed; recoil 0.031 N s, 0.045 at the cap. The model's
+    efficiency (~0.95) is above what hobby Rival blasters measure (0.40-0.75 at higher wheel speeds), so the bench picks
+    the tyre from a printed set: the fastest ball at 100 % stays at or under 66 fps.
+  - sim/turret_feed.py: MuJoCo, the dial, housing, baffle and chute from the CAD's numbers with 30 balls. Found: the
+    hopper held only 15-16 balls under the old lid (raised to 100 mm, which fits 34); the parked dial never lets a ball
+    out (tilt 0 and -25 deg, shaken at 5 m/s^2, powered or not); feeding is 30/30 at 0 deg and 27-30/30 down to -25 deg
+    in 40 steps. Below about -12 deg the last balls of a magazine collect on the baffle (the front is the hopper's low
+    side), so the firmware lifts to 0 deg for 0.4 s after an empty step. The one "double" traced so far was a ball that
+    stalled at the top of the chute for a step and then reached the wheels with the next, not two out of the dial.
+
