@@ -10,10 +10,11 @@
     "coupon_frame_ring_m01": 1,
     "coupon_frame_ring_p01": 1,
     "coupon_apex_eye_m01": 1,
-    "coupon_knee_eye_m01": 1
+    "coupon_knee_eye_m01": 1,
+    "sleeve_anvil": 1
    },
-   "grams": 209,
-   "hours": 13.8,
+   "grams": 222,
+   "hours": 14.7,
    "start_h": 0.0,
    "why": "first: every seat and insert dialled in on PA6-CF before any big part (the leg waits on them); B3 and B4 run on these"
   },
@@ -35,7 +36,7 @@
    },
    "grams": 218,
    "hours": 14.1,
-   "start_h": 14.3,
+   "start_h": 15.2,
    "why": "first: every seat and insert dialled in on PA6-CF before any big part (the leg waits on them); B3 and B4 run on these"
   },
   {
@@ -44,17 +45,15 @@
    "plate": "A3",
    "material": "pa6-cf",
    "parts": {
-    "insert_coupon": 2,
     "coupon_knee_boss_m01": 1,
     "coupon_knee_boss_nom": 1,
     "coupon_knee_boss_p01": 1,
-    "sleeve_anvil": 1,
-    "coupon_knee_eye_p01": 1,
-    "sleeve_block": 1
+    "sleeve_block": 1,
+    "coupon_knee_eye_p01": 1
    },
-   "grams": 246,
-   "hours": 16.0,
-   "start_h": 28.9,
+   "grams": 124,
+   "hours": 8.0,
+   "start_h": 29.8,
    "why": "first: every seat and insert dialled in on PA6-CF before any big part (the leg waits on them); B3 and B4 run on these"
   },
   {
@@ -63,12 +62,11 @@
    "plate": "B1",
    "material": "petg",
    "parts": {
-    "tyre_cradle": 1,
     "dyno_lug_plate": 2
    },
-   "grams": 648,
-   "hours": 25.9,
-   "start_h": 45.4,
+   "grams": 422,
+   "hours": 16.9,
+   "start_h": 38.3,
    "why": "ready before the motors land (1-3 weeks): B1 and B2 start that day"
   },
   {
@@ -81,7 +79,7 @@
    },
    "grams": 292,
    "hours": 11.7,
-   "start_h": 71.8,
+   "start_h": 55.7,
    "why": "ready before the motors land (1-3 weeks): B1 and B2 start that day"
   },
   {
@@ -94,9 +92,9 @@
     "bumper_tpu": 4,
     "stop_sleeve": 6
    },
-   "grams": 396,
-   "hours": 40.4,
-   "start_h": 84.0,
+   "grams": 432,
+   "hours": 44.4,
+   "start_h": 67.9,
    "why": "the dyno's spider, B3's sleeves, the rig's bumpers (R0 picks their infill)"
   },
   {
@@ -107,9 +105,9 @@
    "parts": {
     "upper_link": 2
    },
-   "grams": 728,
-   "hours": 47.7,
-   "start_h": 124.9,
+   "grams": 724,
+   "hours": 47.5,
+   "start_h": 112.8,
    "why": "with the coupons' seat sizes"
   },
   {
@@ -122,7 +120,7 @@
    },
    "grams": 442,
    "hours": 29.0,
-   "start_h": 173.1,
+   "start_h": 160.8,
    "why": "turned on the bed"
   },
   {
@@ -135,7 +133,7 @@
    },
    "grams": 615,
    "hours": 40.3,
-   "start_h": 202.6,
+   "start_h": 190.3,
    "why": "turned on the bed"
   },
   {
@@ -146,9 +144,9 @@
    "parts": {
     "pod": 1
    },
-   "grams": 475,
-   "hours": 19.0,
-   "start_h": 243.4,
+   "grams": 491,
+   "hours": 19.6,
+   "start_h": 231.1,
    "why": "the rig's frame goes together from bought parts meanwhile; these finish it before the first power-up"
   },
   {
@@ -162,7 +160,7 @@
    },
    "grams": 251,
    "hours": 10.0,
-   "start_h": 262.9,
+   "start_h": 251.2,
    "why": "the rig's frame goes together from bought parts meanwhile; these finish it before the first power-up"
   },
   {
@@ -177,9 +175,9 @@
     "bumper_cap": 4,
     "load_cell_mount": 2
    },
-   "grams": 450,
-   "hours": 18.1,
-   "start_h": 273.4,
+   "grams": 473,
+   "hours": 19.0,
+   "start_h": 261.7,
    "why": "the rig's frame goes together from bought parts meanwhile; these finish it before the first power-up"
   },
   {
@@ -193,7 +191,7 @@
    },
    "grams": 23,
    "hours": 0.9,
-   "start_h": 292.0,
+   "start_h": 281.2,
    "why": "the rig's frame goes together from bought parts meanwhile; these finish it before the first power-up"
   },
   {
@@ -206,7 +204,7 @@
    },
    "grams": 14,
    "hours": 0.9,
-   "start_h": 293.4,
+   "start_h": 282.6,
    "why": ""
   },
   {
@@ -217,28 +215,171 @@
    "parts": {
     "hip_frame": 1
    },
-   "grams": 782,
-   "hours": 51.2,
-   "start_h": 294.8,
+   "grams": 772,
+   "hours": 50.6,
+   "start_h": 284.0,
    "why": "last: 274 x 148 x 81 turned 45 deg; a 150 x 150 PA6-CF test slab first if the P1S has not held PA6-CF flat at that size"
+  },
+  {
+   "phase": "Z",
+   "title": "Other",
+   "plate": "Z-tof_mount",
+   "material": "petg",
+   "parts": {
+    "tof_mount": 1
+   },
+   "grams": 5,
+   "hours": 0.2,
+   "start_h": 335.1,
+   "why": ""
+  },
+  {
+   "phase": "Z",
+   "title": "Other",
+   "plate": "Z-press_cage",
+   "material": "petg",
+   "parts": {
+    "press_cage": 1
+   },
+   "grams": 335,
+   "hours": 13.4,
+   "start_h": 335.8,
+   "why": ""
+  },
+  {
+   "phase": "Z",
+   "title": "Other",
+   "plate": "Z-press_base",
+   "material": "petg",
+   "parts": {
+    "press_base": 1
+   },
+   "grams": 48,
+   "hours": 1.9,
+   "start_h": 349.7,
+   "why": ""
+  },
+  {
+   "phase": "Z",
+   "title": "Other",
+   "plate": "Z-press_slider",
+   "material": "petg",
+   "parts": {
+    "press_slider": 1
+   },
+   "grams": 29,
+   "hours": 1.1,
+   "start_h": 352.1,
+   "why": ""
+  },
+  {
+   "phase": "Z",
+   "title": "Other",
+   "plate": "Z-puller_m5",
+   "material": "pa6-cf",
+   "parts": {
+    "puller_m5": 1
+   },
+   "grams": 38,
+   "hours": 2.5,
+   "start_h": 353.7,
+   "why": ""
+  },
+  {
+   "phase": "Z",
+   "title": "Other",
+   "plate": "Z-puller_m5",
+   "material": "pa6-cf",
+   "parts": {
+    "puller_m5": 1
+   },
+   "grams": 38,
+   "hours": 2.5,
+   "start_h": 356.7,
+   "why": ""
+  },
+  {
+   "phase": "Z",
+   "title": "Other",
+   "plate": "Z-puller_m5",
+   "material": "pa6-cf",
+   "parts": {
+    "puller_m5": 1
+   },
+   "grams": 38,
+   "hours": 2.5,
+   "start_h": 359.7,
+   "why": ""
+  },
+  {
+   "phase": "Z",
+   "title": "Other",
+   "plate": "Z-puller_m8",
+   "material": "pa6-cf",
+   "parts": {
+    "puller_m8": 1
+   },
+   "grams": 38,
+   "hours": 2.5,
+   "start_h": 362.7,
+   "why": ""
+  },
+  {
+   "phase": "Z",
+   "title": "Other",
+   "plate": "Z-bearing_disc",
+   "material": "pa6-cf",
+   "parts": {
+    "bearing_disc": 1
+   },
+   "grams": 2,
+   "hours": 0.13,
+   "start_h": 365.7,
+   "why": ""
+  },
+  {
+   "phase": "Z",
+   "title": "Other",
+   "plate": "Z-bearing_disc",
+   "material": "pa6-cf",
+   "parts": {
+    "bearing_disc": 1
+   },
+   "grams": 2,
+   "hours": 0.13,
+   "start_h": 366.3,
+   "why": ""
+  },
+  {
+   "phase": "Z",
+   "title": "Other",
+   "plate": "Z-bearing_disc",
+   "material": "pa6-cf",
+   "parts": {
+    "bearing_disc": 1
+   },
+   "grams": 2,
+   "hours": 0.13,
+   "start_h": 367.0,
+   "why": ""
   }
  ],
- "total_print_hours": 339.0,
- "calendar_days_at_20h": 17.3,
+ "total_print_hours": 354.6,
+ "calendar_days_at_20h": 18.4,
  "by_material": {
   "pa6-cf": {
-   "grams": 3254,
-   "hours": 213.0,
-   "plates": 8
+   "grams": 3289,
+   "hours": 215.4,
+   "plates": 15
   },
   "petg": {
-   "grams": 2139,
-   "hours": 85.6,
-   "plates": 6
+   "grams": 2369,
+   "hours": 94.7,
+   "plates": 10
   },
   "tpu95": {
-   "grams": 396,
-   "hours": 40.4,
+   "grams": 432,
+   "hours": 44.4,
    "plates": 1
   }
  },

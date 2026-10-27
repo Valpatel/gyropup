@@ -1,22 +1,42 @@
 """The order list for the first leg on its rig (milestone M3): every bought or ordered part with its price, buy link,
-stock and a backup, grouped by vendor with totals, written to docs/leg-rig-orders.md.
+stock and a backup, grouped by vendor with totals, written to docs/leg-rig-orders.md; and the rig's parts list for the
+build page (designer/build.html), exports/rig/bom.json.
 
     .venv/bin/python tools/rig_orders.py
 
-Sources: catalog/rig.json (the rig, its electronics, the leg's machined adapters and their screws), exports/leg/bom.json
-with catalog/alternates.json (the leg's own parts), the print plans for the filament (exports/leg, exports/rig,
-exports/rig/bench) priced from catalog/materials.json. Re-run it after a price check or a BOM change.
+Sources: catalog/rig.json (tools/rig_catalog.py: the rig, its electronics, the bench), exports/leg/bom.json with
+catalog/hardware.json and catalog/alternates.json (the leg's own parts and its machined adapters), BENCH_EXTRA (more of
+a part the leg or rig lists already buy), the print plans for the filament (exports/leg, exports/rig, exports/rig/bench)
+priced from catalog/materials.json. Re-run it after a price check or a BOM change.
+
+exports/rig/bom.json, as the build page reads a parts list: lists 'rig', 'electronics' and 'bench' of rows {key, qty,
+for, part_number, price_usd_each, pack_qty, sellers: [primary, backups...]}, keyed by the catalogue entry the part
+already has where it is the same part as the leg's or the turret's (so one order line covers both), and
+'made_to_order' (the carriage plate, cut by SendCutSend from our file).
 """
 from __future__ import annotations
 
 import json
 import math
+import re
 from collections import OrderedDict
 from pathlib import Path
 
 R = Path(__file__).resolve().parents[1]
 OUT = R / 'docs' / 'leg-rig-orders.md'
-EST = {'carriage_plate': (60.0, 90.0), 'adapter_cnc': (40.0, 40.0)}     # upload-priced: the estimate's range, each
+BOM = R / 'exports' / 'rig' / 'bom.json'
+EST = {'carriage_plate': (60.0, 90.0), 'output_adapter': (40.0, 40.0)}  # upload-priced: the estimate's range, each
+# more of a part another list already buys, for the bench tests (docs/leg-bench-tests.md): (key, qty, what for)
+BENCH_EXTRA = [
+    ('screw_m5x25', 18, 'the dyno: each hub onto its motor\'s output (9 each)'),
+    ('screw_m5x40', 3, 'B4: the screws under test (two inserts to 3.5 kN, the link-under-the-head test)'),
+    ('insert_m5', 3, 'B4: one in each M5 puller'),
+    ('insert_m8', 2, 'B4: the M8 puller; B3: the sleeve block\'s stop post'),
+    ('washer_m6_deck', 2, 'B4: under the screw under test, over the cage\'s hole'),
+    ('washer_3_8', 1, 'B4: under the M8 screw under test'),
+    ('hx711', 1, 'B3, B4: the load cell\'s own amplifier on the rig node'),
+]
+SHARED = re.compile(r'Same part as catalog/(hardware|turret)\.json ([\w.-]+?)[.;]?(?:\s|$)')
 
 
 def load(p, default=None):
@@ -69,6 +89,16 @@ def leg_lines() -> list:
                        pack_price_usd=a['price_usd_each'] * (a.get('pack_qty') or 1), url=a['url'], stock=a.get('stock'),
                        name=f"{a['part_number']} ({'60 x 78 x 10' if '6812' in a['part_number'] else '12 x 32 x 10'})")
         rows.append(row)
+    for m in load('exports/leg/bom.json', {}).get('made_to_order', []):         # D46: the machined output adapters
+        lo, hi = EST.get(m['key'], (m.get('price_estimate_usd_each'), m.get('price_estimate_usd_each')))
+        EST[m['key']] = (lo, hi)
+        rows.append({'key': m['key'], 'group': 'leg', 'qty': m['qty'], 'name': f"Output adapter, machined {m.get('material', '')}".strip(),
+                     'used_for': f"two per leg, made from `{m['step']}` with the callouts in `{Path(m['step']).parent}/README.md` (D46)",
+                     'vendor': m['vendor'].split(' (')[0], 'model': Path(m['step']).name, 'price_usd': m.get('price_usd_each'), 'pack_qty': 1,
+                     'pack_price_usd': None, 'url': 'https://jlccnc.com/', 'stock': None, 'checked': None,
+                     'alternates': [{'supplier': m.get('backup', '').split(' (')[0], 'part_number': Path(m['step']).name,
+                                     'url': 'https://www.xometry.com/', 'price': 'instant price on upload'}],
+                     'notes': m.get('price_note', '')})
     return rows, d46
 
 
@@ -76,12 +106,30 @@ def rig_lines() -> list:
     rows = []
     for it in load('catalog/rig.json', []):
         b = (it.get('buy') or [{}])[0]
+        m = SHARED.search(it.get('notes') or '')
         rows.append({'key': it['key'], 'group': it['group'], 'qty': it['qty'], 'name': it['name'], 'used_for': it.get('used_for', ''),
                      'vendor': it['vendor'], 'model': it['model'], 'price_usd': it['price_usd'], 'pack_qty': it.get('pack_qty') or 1,
                      'pack_price_usd': it.get('pack_price_usd'), 'url': b.get('url'), 'stock': b.get('stock_text'),
+                     'in_stock': b.get('in_stock'), 'ships_from': b.get('ships_from'),
                      'checked': it.get('price_checked'), 'alternates': it.get('alternates', []), 'notes': it.get('notes', ''),
-                     'confidence': it.get('confidence')})
+                     'confidence': it.get('confidence'), 'shared_key': m.group(2) if m else None})
     return rows
+
+
+def add_bench_extra(rows: list) -> list:
+    """BENCH_EXTRA onto the lines that already buy the part (one order line, one pack); returns the bench's uses."""
+    uses = []
+    for key, qty, why in BENCH_EXTRA:
+        hit = [r for r in rows if r['key'] == key or r.get('shared_key') == key]
+        if not hit:
+            raise SystemExit(f'BENCH_EXTRA {key}: no line buys it')
+        r = hit[0]
+        r.setdefault('used_for_base', r.get('used_for') or '')
+        r['qty'] += qty
+        r['bench_qty'] = r.get('bench_qty', 0) + qty
+        r['used_for'] = (r.get('used_for') or '') + f'; +{qty} for the bench ({why})'
+        uses.append((r, qty, why))
+    return uses
 
 
 def filament_lines() -> list:
@@ -149,15 +197,75 @@ def backup(r) -> str:
     return f"{link(s, a.get('url'))}, {price}{extra}"
 
 
+def seller_rows(r) -> list:
+    pk = r.get('pack_qty') or 1
+    pp = r.get('pack_price_usd') or (r['price_usd'] * pk if r.get('price_usd') is not None else None)
+    out = [{'seller': r['vendor'], 'url': r['url'], 'seller_pn': r['model'], 'price_usd': pp, 'pack_qty': pk, 'stock': r.get('stock'),
+            'in_stock': r.get('in_stock'), 'ships_from': r.get('ships_from'), 'read_on': r.get('checked')}]
+    for a in r.get('alternates') or []:
+        apk = a.get('pack_qty') or 1
+        out.append({'seller': a.get('supplier'), 'url': a.get('url'), 'seller_pn': a.get('part_number'),
+                    'price_usd': a['price_usd_each'] * apk if a.get('price_usd_each') is not None else None, 'pack_qty': apk,
+                    'stock': a.get('stock'), 'read_on': a.get('checked'), 'drop_in': a.get('drop_in', True), 'changes': a.get('changes'),
+                    'price_text': a.get('price')})
+    return out
+
+
+def bom_row(r, qty, why) -> dict:
+    return {'key': r.get('shared_key') or r['key'], 'qty': qty, 'for': why, 'name': r['name'], 'vendor': r['vendor'],
+            'part_number': r['model'], 'price_usd_each': r.get('price_usd'), 'pack_qty': r.get('pack_qty') or 1,
+            'sellers': seller_rows(r)}
+
+
+def write_bom(rows: list, bench_uses: list) -> dict:
+    """exports/rig/bom.json for the build page (designer/build.js reads its lists, made_to_order and sellers)."""
+    lists = OrderedDict((g, []) for g in ('rig', 'electronics', 'bench'))
+    made = []
+    for r in rows:
+        if r['group'] not in lists:
+            continue
+        if r['key'] == 'carriage_plate':
+            made.append({'key': 'carriage_plate', 'qty': r['qty'],
+                         'vendor': 'SendCutSend (sendcutsend.com: upload the STEP or DXF for the instant price)',
+                         'backup': 'Xometry (xometry.com: instant quote from the STEP)',
+                         'material': '6061-T6 aluminium, 0.250 in (6.35 mm)', 'mass_g_each': 1609, 'size_mm': [300, 320, 6.35],
+                         'step': 'exports/rig/sendcutsend/carriage_plate.step', 'drawing': 'exports/rig/sendcutsend/carriage_plate.dxf',
+                         'readme': 'exports/rig/sendcutsend/README.md',
+                         'spec': ['6061-T6 aluminium sheet, 0.250 in; laser or waterjet cut from the file as drawn (mm, 1:1)',
+                                  'Every hole is a clearance hole: no tapping, no countersinks, no bends',
+                                  'Deburr on (the blocks and the hip frame sit on both faces)',
+                                  'Check on arrival: the 16 block holes against an HGH15CA block (M4 on 38 x 30), the 6 hip-frame holes '
+                                  'against the frame (exports/rig/sendcutsend/README.md)'],
+                         'price_usd_each': None, 'price_estimate_usd_each': sum(EST['carriage_plate']) / 2,
+                         'price_note': 'an estimate until the instant price is read on upload (D40: no quotes); SendCutSend ships in '
+                                       'about a week'})
+            continue
+        own = r['qty'] - r.get('bench_qty', 0)
+        if own > 0:
+            lists[r['group']].append(bom_row(r, own, r.get('used_for_base', r.get('used_for') or '')))
+    for r, qty, why in bench_uses:
+        lists['bench'].append(bom_row(r, qty, why))
+    doc = OrderedDict(lists)
+    doc['made_to_order'] = made
+    doc['price_usd'] = round(sum(cost(dict(r, qty=r['qty'])) for r in rows if r['group'] in ('rig', 'electronics', 'bench')
+                                 and r['key'] != 'carriage_plate'), 2)
+    doc['made_to_order_estimate_usd'] = round(sum(m['price_estimate_usd_each'] * m['qty'] for m in made), 2)
+    doc['made_by'] = 'tools/rig_orders.py from catalog/rig.json (tools/rig_catalog.py)'
+    BOM.write_text(json.dumps(doc, indent=1) + '\n')
+    return doc
+
+
 def main():
     leg, d46 = leg_lines()
     rows = leg + rig_lines() + filament_lines()
+    bench_uses = add_bench_extra(rows)
+    bom = write_bom(rows, bench_uses)
     by_vendor = OrderedDict()
     for r in rows:
         v = (r['vendor'] or '?').split(' (')[0]
         by_vendor.setdefault(v, []).append(r)
     groups = OrderedDict([('leg', 'The leg (one leg)'), ('filament', 'Filament'), ('rig', 'The rig: guide, frame, ballast, safety'),
-                          ('electronics', 'Electronics and wiring')])
+                          ('electronics', 'Electronics and wiring'), ('bench', 'The bench tests (B1-B6)')])
     tot = {g: sum(cost(r) for r in rows if r['group'] == g) for g in groups}
     upload = [r for r in rows if r['price_usd'] is None]
     L = []
@@ -222,6 +330,8 @@ def main():
              '- **The load cells under jumps:** 3.4 kN would crush 50 kg cells; the load plate is for stand and squat only.\n')
     OUT.write_text('\n'.join(L) + '\n')
     print(f'{len(rows)} lines, ${sum(tot.values()):,.2f}: ' + ', '.join(f'{g} ${t:,.0f}' for g, t in tot.items()))
+    print(f"exports/rig/bom.json: {', '.join(f'{k} {len(v)}' for k, v in bom.items() if isinstance(v, list))}, ${bom['price_usd']:,.2f}"
+          f" + made to order ~${bom['made_to_order_estimate_usd']:,.0f}")
 
 
 if __name__ == '__main__':

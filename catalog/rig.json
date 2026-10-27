@@ -2125,36 +2125,73 @@
   ]
  },
  {
-  "id": "load-cell-s200",
-  "key": "load_cell_s200",
-  "group": "electronics",
+  "id": "load-cell-s500",
+  "key": "load_cell_s500",
+  "group": "bench",
   "category": "sensor",
-  "vendor": "SparkFun",
-  "model": "SEN-14282",
-  "name": "Load cell 200 kg S-type (TAS501)",
-  "price_usd": 96.95,
+  "vendor": "Phidgets",
+  "model": "3140_0",
+  "name": "S-type load cell 500 kg (C2), M12 x 1.75 both ends, 51 x 76 x 19 mm",
+  "price_usd": 50.0,
   "price_note": "",
   "price_checked": "2026-10-27",
   "pack_qty": 1,
-  "pack_price_usd": 96.95,
+  "pack_price_usd": 50.0,
   "buy": [
    {
-    "seller": "SparkFun",
-    "url": "https://www.sparkfun.com/products/14282",
+    "seller": "Phidgets",
+    "url": "https://www.phidgets.com/?prodid=231",
     "in_stock": true,
     "ships_from": "US",
-    "stock_text": "In stock"
+    "stock_text": "Quantity Available: 358"
    }
   ],
-  "specs": {},
+  "specs": {
+   "capacity_kg": 500,
+   "max_overload_kg": 750,
+   "thread": "M12 x 1.75",
+   "size_mm": [
+    51,
+    76,
+    19
+   ],
+   "drawing": "Phidgets 3140_0 mechanical drawing"
+  },
   "sources": [
-   "https://www.sparkfun.com/products/14282"
+   "https://www.phidgets.com/?prodid=231"
   ],
   "confidence": "product page",
-  "used_for": "bench tests B3 (stop sleeve), B4 (inserts), B5 (tyre): forces to 2 kN",
+  "used_for": "the press cage (B3 the stop sleeve to 2 kN, B4 the inserts and the link screws to 3.5 kN), read by an HX711",
   "qty": 1,
-  "notes": "",
-  "alternates": []
+  "notes": "Calibration certificate included. 500 kg so B4 can go to an insert's pull-out (the 200 kg TAS501 is rated 1.96 kN).",
+  "alternates": [
+   {
+    "supplier": "RobotShop",
+    "part_number": "Phidgets S-Type Load Cell 500 kg (C3)",
+    "url": "https://www.robotshop.com/products/phidgets-steel-s-type-load-cell-500kg-c3",
+    "price": "$71.54",
+    "price_usd_each": 71.54,
+    "pack_qty": 1,
+    "stock": null,
+    "drop_in": true,
+    "changes": null,
+    "checked": "2026-10-27",
+    "how_read": "search snippet"
+   },
+   {
+    "supplier": "SparkFun",
+    "part_number": "SEN-14282 (TAS501, 200 kg)",
+    "url": "https://www.sparkfun.com/products/14282",
+    "price": "$96.95",
+    "price_usd_each": 96.95,
+    "pack_qty": 1,
+    "stock": "In stock",
+    "drop_in": false,
+    "changes": "200 kg (1.96 kN), same 51 x 76 x 19 body and M12: B4 then stops at 1.9 kN (a proof load, not the pull-out)",
+    "checked": "2026-10-27",
+    "how_read": "product page"
+   }
+  ]
  },
  {
   "id": "pendant-specs",
@@ -2879,97 +2916,5 @@
   "qty": 2,
   "notes": "Same part as catalog/turret.json littelfuse-0477005-mxp.",
   "alternates": []
- },
- {
-  "id": "adapter-cnc",
-  "key": "adapter_cnc",
-  "group": "leg",
-  "category": "fab_service",
-  "vendor": "JLCCNC",
-  "model": "output_adapter.step (exports/leg/cnc/, 6061-T6)",
-  "name": "Output adapter, CNC 6061-T6 (D46)",
-  "price_usd": null,
-  "price_note": "; read instant price on upload",
-  "price_checked": "2026-10-27",
-  "pack_qty": 1,
-  "pack_price_usd": null,
-  "buy": [
-   {
-    "seller": "JLCCNC",
-    "url": "https://jlccnc.com/",
-    "in_stock": true,
-    "ships_from": "US",
-    "stock_text": null
-   }
-  ],
-  "specs": {},
-  "sources": [
-   "https://jlccnc.com/"
-  ],
-  "confidence": "instant price on upload",
-  "used_for": "two per leg: the RS-04 output to the upper link (D46: machined, not printed)",
-  "qty": 2,
-  "notes": "Instant price on upload of exports/leg/cnc/output_adapter.step with its README callouts (threads, fits); the main session's estimate is $40 each. Arrives with the next leg commit (exports/leg/cnc/).",
-  "alternates": [
-   {
-    "supplier": "Xometry",
-    "part_number": "output_adapter.step",
-    "url": "https://www.xometry.com/",
-    "price": "instant price on upload",
-    "price_usd_each": null,
-    "pack_qty": 1,
-    "stock": null,
-    "drop_in": true,
-    "changes": null,
-    "checked": "2026-10-27",
-    "how_read": "product page"
-   }
-  ]
- },
- {
-  "id": "screw-m5x25-adapter",
-  "key": "screw_m5x25_adapter",
-  "group": "leg",
-  "category": "fastener",
-  "vendor": "McMaster-Carr",
-  "model": "91290A252",
-  "name": "Black-oxide alloy steel socket head screw M5 x 25",
-  "price_usd": 0.2192,
-  "price_note": "50 per pack at $10.96",
-  "price_checked": "2026-10-27",
-  "pack_qty": 50,
-  "pack_price_usd": 10.96,
-  "buy": [
-   {
-    "seller": "McMaster-Carr",
-    "url": "https://www.mcmaster.com/91290A252/",
-    "in_stock": true,
-    "ships_from": "US",
-    "stock_text": null
-   }
-  ],
-  "specs": {},
-  "sources": [
-   "https://www.mcmaster.com/91290A252/"
-  ],
-  "confidence": "product page",
-  "used_for": "9 per motor: the adapter onto the output (D46, no washers, heads in pockets); the dyno's two hubs take 18 more from the same pack",
-  "qty": 18,
-  "notes": "",
-  "alternates": [
-   {
-    "supplier": "Belmetric",
-    "part_number": "BSH5X25 (DIN 912, class 12.9)",
-    "url": "https://belmetric.com/m5x0-8-socket-head-cap-screw-din-912-class-12-9/",
-    "price": "not read: any M5 x 25 class 12.9 socket head screw",
-    "price_usd_each": null,
-    "pack_qty": 1,
-    "stock": null,
-    "drop_in": true,
-    "changes": null,
-    "checked": "2026-10-27",
-    "how_read": "product page"
-   }
-  ]
  }
 ]

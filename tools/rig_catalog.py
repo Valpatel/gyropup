@@ -212,8 +212,15 @@ add('hx711', 'electronics', 'sensor', 'SparkFun', 'SEN-13879', 'HX711 load cell 
 add('load_cells_4x50', 'electronics', 'sensor', 'Amazon (Geekstory)', 'ASIN B079FTXR7Y', '4 x 50 kg half-bridge load cells + HX711', 7.90, 1,
     'https://www.amazon.com/dp/B079FTXR7Y', stock='Only 10 left', used_for='the load plate under the wheel (not in jumps or drops)',
     alts=[alt('VXB', 'VXB07X87GYLQ', 'https://vxb.com/products/4-pack-50kg-half-bridge-load-cell-sensor-kit-with', '$39.99', 39.99)])
-add('load_cell_s200', 'electronics', 'sensor', 'SparkFun', 'SEN-14282', 'Load cell 200 kg S-type (TAS501)', 96.95, 1, 'https://www.sparkfun.com/products/14282',
-    stock='In stock', used_for='bench tests B3 (stop sleeve), B4 (inserts), B5 (tyre): forces to 2 kN')
+add('load_cell_s500', 'bench', 'sensor', 'Phidgets', '3140_0', 'S-type load cell 500 kg (C2), M12 x 1.75 both ends, 51 x 76 x 19 mm', 50.00, 1,
+    'https://www.phidgets.com/?prodid=231', stock='Quantity Available: 358',
+    specs={'capacity_kg': 500, 'max_overload_kg': 750, 'thread': 'M12 x 1.75', 'size_mm': [51, 76, 19], 'drawing': 'Phidgets 3140_0 mechanical drawing'},
+    used_for='the press cage (B3 the stop sleeve to 2 kN, B4 the inserts and the link screws to 3.5 kN), read by an HX711',
+    note='Calibration certificate included. 500 kg so B4 can go to an insert\'s pull-out (the 200 kg TAS501 is rated 1.96 kN).',
+    alts=[alt('RobotShop', 'Phidgets S-Type Load Cell 500 kg (C3)', 'https://www.robotshop.com/products/phidgets-steel-s-type-load-cell-500kg-c3',
+              '$71.54', 71.54, how='search snippet'),
+          alt('SparkFun', 'SEN-14282 (TAS501, 200 kg)', 'https://www.sparkfun.com/products/14282', '$96.95', 96.95, stock='In stock',
+              drop_in=False, changes='200 kg (1.96 kN), same 51 x 76 x 19 body and M12: B4 then stops at 1.9 kN (a proof load, not the pull-out)')])
 add('pendant_specs', 'electronics', 'estop', 'AbleNet', 'Specs IC (10000114)', 'Momentary switch, 35 mm, 6 ft cord, 3.5 mm mono plug', 75.0, 1,
     'https://www.ablenetinc.com/specs-ic/', stock='In stock', used_for='hold-to-run: the trigger of the off-delay relay and the rig node\'s input',
     note='No current rating published: signal duty only (it switches the timer\'s trigger and the node\'s input, never the coil).',
@@ -276,16 +283,6 @@ add('fuse_holder_5x20', 'electronics', 'power_distribution', 'Digi-Key', 'Littel
 add('fuse_5a_dc', 'electronics', 'power_distribution', 'Digi-Key', 'Littelfuse 0477005.MXP', '5 x 20 mm fuse 5 A, DC-rated', 1.00, 2,
     'https://www.digikey.com/en/products/detail/littelfuse-inc/0477005-MXP/1979192', used_for='the 12 V converter\'s input (one spare)',
     note='Same part as catalog/turret.json littelfuse-0477005-mxp.')
-# ------------------------------------------------------------------ leg additions (D46) and the build's consumables
-add('adapter_cnc', 'leg', 'fab_service', 'JLCCNC', 'output_adapter.step (exports/leg/cnc/, 6061-T6)', 'Output adapter, CNC 6061-T6 (D46)', None, 2,
-    'https://jlccnc.com/', how='instant price on upload', used_for='two per leg: the RS-04 output to the upper link (D46: machined, not printed)',
-    note='Instant price on upload of exports/leg/cnc/output_adapter.step with its README callouts (threads, fits); the main session\'s estimate is $40 each. '
-         'Arrives with the next leg commit (exports/leg/cnc/).',
-    alts=[alt('Xometry', 'output_adapter.step', 'https://www.xometry.com/', 'instant price on upload', None)])
-add('screw_m5x25_adapter', 'leg', 'fastener', 'McMaster-Carr', '91290A252', 'Black-oxide alloy steel socket head screw M5 x 25', 0.2192, 18,
-    f'{MCM}91290A252/', pack=50, pack_price=10.96, used_for='9 per motor: the adapter onto the output (D46, no washers, heads in pockets); '
-    'the dyno\'s two hubs take 18 more from the same pack',
-    alts=[alt('Belmetric', 'BSH5X25 (DIN 912, class 12.9)', 'https://belmetric.com/m5x0-8-socket-head-cap-screw-din-912-class-12-9/',
-              'not read: any M5 x 25 class 12.9 socket head screw', None)])
+# ------------------------------------------------------------------ the bench (B1-B6): what the leg and rig lists do not have
 print(len(items), 'items')
 OUT.write_text(json.dumps(items, indent=1) + '\n')

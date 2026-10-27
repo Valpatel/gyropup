@@ -1,321 +1,2413 @@
 {
- "rows": [
+ "rig": [
   {
-   "key": "rail_hgr15_set",
-   "qty": 2,
-   "for": "HGR15 x 1000 mm rail with two HGH15CA blocks: the carriage's guide, on the post's front slots",
-   "vendor": null,
-   "part_number": null,
-   "name": null,
-   "price_usd_each": null,
+   "key": "rail_hgr15_kit",
+   "qty": 1,
+   "for": "the carriage guide: two rails on the post's front slots, two blocks each",
+   "name": "HGR15 rail 1000 mm x 2 + HGH15CA block x 4 (one pack)",
+   "vendor": "Amazon (iMetrx 3D)",
+   "part_number": "ASIN B0GJZCLXWJ (1000mm / 2)",
+   "price_usd_each": 69.99,
    "pack_qty": 1,
-   "cost_usd": 0
+   "sellers": [
+    {
+     "seller": "Amazon (iMetrx 3D)",
+     "url": "https://www.amazon.com/dp/B0GJZCLXWJ",
+     "seller_pn": "ASIN B0GJZCLXWJ (1000mm / 2)",
+     "price_usd": 69.99,
+     "pack_qty": 1,
+     "stock": "Only 12 left in stock",
+     "in_stock": true,
+     "ships_from": "US",
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "Amazon (Coavoo Transmission)",
+     "url": "https://www.amazon.com/dp/B0BMWQ5J7T",
+     "seller_pn": "ASIN B0BMWQ5J7T",
+     "price_usd": 72.99,
+     "pack_qty": 1,
+     "stock": "Only 3 left in stock",
+     "read_on": "2026-10-27",
+     "drop_in": true,
+     "changes": "two packs ($145.98) for the same parts",
+     "price_text": "$72.99 per 1 rail + 2 blocks (buy 2)"
+    },
+    {
+     "seller": "VXB Bearings",
+     "url": "https://vxb.com/products/beefy-square-cnc-linear-rail-kit-hgh15-39-37-inch",
+     "seller_pn": "VXB0BMWQ5J7T",
+     "price_usd": 159.95,
+     "pack_qty": 1,
+     "stock": null,
+     "read_on": "2026-10-27",
+     "drop_in": true,
+     "changes": "the Coavoo kit resold, 5-10 business days",
+     "price_text": "$159.95"
+    },
+    {
+     "seller": "Amazon (Mycncshop)",
+     "url": "https://www.amazon.com/dp/B087ZCH3BW",
+     "seller_pn": "ASIN B087ZCH3BW (FBT HGR15CA-L1000mm)",
+     "price_usd": 151.0,
+     "pack_qty": 1,
+     "stock": null,
+     "read_on": "2026-10-27",
+     "drop_in": true,
+     "changes": null,
+     "price_text": "$151.00"
+    }
+   ]
   },
   {
    "key": "extrusion_8080_1200",
    "qty": 1,
    "for": "the post",
+   "name": "Aluminium extrusion 8080, 8 series (10 mm slot), cut to 1200 mm",
    "vendor": "MISUMI",
    "part_number": "HFS8-8080-1200",
-   "name": "Aluminium extrusion 8080, 8 series (10 mm slot), cut to 1200 mm",
    "price_usd_each": 97.44,
    "pack_qty": 1,
-   "cost_usd": 97.44
+   "sellers": [
+    {
+     "seller": "MISUMI",
+     "url": "https://us.misumi-ec.com/vona2/detail/110302690740/?HissuCode=HFS8-8080-1200",
+     "seller_pn": "HFS8-8080-1200",
+     "price_usd": 97.44,
+     "pack_qty": 1,
+     "stock": "Ship Date Wed. Oct 28, 2026",
+     "in_stock": true,
+     "ships_from": "US",
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "80/20 Inc.",
+     "url": "https://8020.net/40-8080.html",
+     "seller_pn": "40-8080 cut to 1200 mm",
+     "price_usd": 151.73,
+     "pack_qty": 1,
+     "stock": null,
+     "read_on": "2026-10-27",
+     "drop_in": false,
+     "changes": "80/20's own 40-series slot: MISUMI's brackets and nuts are not verified to fit; switch the whole frame and its fasteners together",
+     "price_text": "per mm + cut charge"
+    }
+   ]
   },
   {
-   "key": "extrusion_4040",
-   "qty": 7,
-   "for": "base: 2 x 900 sides, 4 x 620 cross members, 1 brace (cut lengths in rig.json)",
-   "vendor": null,
-   "part_number": null,
-   "name": null,
-   "price_usd_each": null,
+   "key": "extrusion_4040_900",
+   "qty": 2,
+   "for": "the base's side members",
+   "name": "Aluminium extrusion 4040, 8 series (10 mm slot), cut to 900 mm",
+   "vendor": "MISUMI",
+   "part_number": "HFS8-4040-900",
+   "price_usd_each": 27.72,
    "pack_qty": 1,
-   "cost_usd": 0
+   "sellers": [
+    {
+     "seller": "MISUMI",
+     "url": "https://us.misumi-ec.com/vona2/detail/110302689860/?HissuCode=HFS8-4040-900",
+     "seller_pn": "HFS8-4040-900",
+     "price_usd": 27.72,
+     "pack_qty": 1,
+     "stock": "Ship Date Wed. Oct 28, 2026",
+     "in_stock": true,
+     "ships_from": "US",
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "80/20 Inc.",
+     "url": "https://8020.net/40-4040.html",
+     "seller_pn": "40-4040 cut to 900 mm",
+     "price_usd": 42.69,
+     "pack_qty": 1,
+     "stock": null,
+     "read_on": "2026-10-27",
+     "drop_in": false,
+     "changes": "80/20's own 40-series slot: MISUMI's brackets and nuts are not verified to fit; switch the whole frame and its fasteners together",
+     "price_text": "per mm + cut charge"
+    }
+   ]
+  },
+  {
+   "key": "extrusion_4040_620",
+   "qty": 4,
+   "for": "the base's cross members: front, wheel, bumper, rear",
+   "name": "Aluminium extrusion 4040, 8 series (10 mm slot), cut to 620 mm",
+   "vendor": "MISUMI",
+   "part_number": "HFS8-4040-620",
+   "price_usd_each": 19.09,
+   "pack_qty": 1,
+   "sellers": [
+    {
+     "seller": "MISUMI",
+     "url": "https://us.misumi-ec.com/vona2/detail/110302689860/?HissuCode=HFS8-4040-620",
+     "seller_pn": "HFS8-4040-620",
+     "price_usd": 19.09,
+     "pack_qty": 1,
+     "stock": "Ship Date Wed. Oct 28, 2026",
+     "in_stock": true,
+     "ships_from": "US",
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "80/20 Inc.",
+     "url": "https://8020.net/40-4040.html",
+     "seller_pn": "40-4040 cut to 620 mm",
+     "price_usd": 30.34,
+     "pack_qty": 1,
+     "stock": null,
+     "read_on": "2026-10-27",
+     "drop_in": false,
+     "changes": "80/20's own 40-series slot: MISUMI's brackets and nuts are not verified to fit; switch the whole frame and its fasteners together",
+     "price_text": "per mm + cut charge"
+    }
+   ]
+  },
+  {
+   "key": "extrusion_4040_720",
+   "qty": 1,
+   "for": "the brace",
+   "name": "Aluminium extrusion 4040, 8 series (10 mm slot), cut to 720 mm",
+   "vendor": "MISUMI",
+   "part_number": "HFS8-4040-720",
+   "price_usd_each": 22.17,
+   "pack_qty": 1,
+   "sellers": [
+    {
+     "seller": "MISUMI",
+     "url": "https://us.misumi-ec.com/vona2/detail/110302689860/?HissuCode=HFS8-4040-720",
+     "seller_pn": "HFS8-4040-720",
+     "price_usd": 22.17,
+     "pack_qty": 1,
+     "stock": "Ship Date Wed. Oct 28, 2026",
+     "in_stock": true,
+     "ships_from": "US",
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "80/20 Inc.",
+     "url": "https://8020.net/40-4040.html",
+     "seller_pn": "40-4040 cut to 720 mm",
+     "price_usd": 34.75,
+     "pack_qty": 1,
+     "stock": null,
+     "read_on": "2026-10-27",
+     "drop_in": false,
+     "changes": "80/20's own 40-series slot: MISUMI's brackets and nuts are not verified to fit; switch the whole frame and its fasteners together",
+     "price_text": "per mm + cut charge"
+    }
+   ]
   },
   {
    "key": "extrusion_4080_620",
    "qty": 1,
-   "for": "the post's member (lying flat under it)",
+   "for": "the post's member, lying flat under it",
+   "name": "Aluminium extrusion 4080, 8 series (10 mm slot), cut to 620 mm",
    "vendor": "MISUMI",
    "part_number": "HFS8-4080-620",
-   "name": "Aluminium extrusion 4080, 8 series (10 mm slot), cut to 620 mm",
    "price_usd_each": 34.65,
    "pack_qty": 1,
-   "cost_usd": 34.65
+   "sellers": [
+    {
+     "seller": "MISUMI",
+     "url": "https://us.misumi-ec.com/vona2/detail/110302690310/?HissuCode=HFS8-4080-620",
+     "seller_pn": "HFS8-4080-620",
+     "price_usd": 34.65,
+     "pack_qty": 1,
+     "stock": "Ship Date Wed. Oct 28, 2026",
+     "in_stock": true,
+     "ships_from": "US",
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "80/20 Inc.",
+     "url": "https://8020.net/40-4080.html",
+     "seller_pn": "40-4080 cut to 620 mm",
+     "price_usd": 54.69,
+     "pack_qty": 1,
+     "stock": null,
+     "read_on": "2026-10-27",
+     "drop_in": false,
+     "changes": "80/20's own 40-series slot: MISUMI's brackets and nuts are not verified to fit; switch the whole frame and its fasteners together",
+     "price_text": "per mm + cut charge"
+    }
+   ]
   },
   {
    "key": "bracket_corner_8",
    "qty": 24,
-   "for": "every base joint (2 per joint) and the post's foot (4)",
+   "for": "the base's 10 joints (2 each) and the post's foot (4)",
+   "name": "Corner bracket, 8 series, with 2 x M8 screws + 2 drop-in spring nuts",
    "vendor": "MISUMI",
    "part_number": "HBLTS8-C-SEP",
-   "name": "Corner bracket, 8 series, with 2 x M8 screws + 2 drop-in spring nuts",
    "price_usd_each": 4.42,
    "pack_qty": 1,
-   "cost_usd": 106.08
+   "sellers": [
+    {
+     "seller": "MISUMI",
+     "url": "https://us.misumi-ec.com/vona2/detail/110300450470/?HissuCode=HBLTS8-C-SEP",
+     "seller_pn": "HBLTS8-C-SEP",
+     "price_usd": 4.42,
+     "pack_qty": 1,
+     "stock": "Ship Date Same Day",
+     "in_stock": true,
+     "ships_from": "US",
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "MISUMI",
+     "url": "https://us.misumi-ec.com/vona2/detail/110300450470/?HissuCode=HBLTS8-C-SEC",
+     "seller_pn": "HBLTS8-C-SEC",
+     "price_usd": 5.24,
+     "pack_qty": 1,
+     "stock": null,
+     "read_on": "2026-10-27",
+     "drop_in": true,
+     "changes": "another screw set",
+     "price_text": "$5.24"
+    },
+    {
+     "seller": "80/20 Inc.",
+     "url": "https://8020.net/40-4376.html",
+     "seller_pn": "40-4376 + 3 x 75-3422",
+     "price_usd": 10.9,
+     "pack_qty": 1,
+     "stock": null,
+     "read_on": "2026-10-27",
+     "drop_in": false,
+     "changes": "80/20 slot system",
+     "price_text": "$7.48 + 3 x $1.14"
+    }
+   ]
   },
   {
-   "key": "hinge_8",
-   "qty": 2,
-   "for": "the brace's two ends",
-   "vendor": null,
-   "part_number": null,
-   "name": null,
-   "price_usd_each": null,
+   "key": "bracket_free_angle_8",
+   "qty": 4,
+   "for": "the brace's two ends, two per end (both side faces): up to 2.9 kN in the brace in a jump",
+   "name": "Free-angle bracket for 40 mm 8-series profile, with its mounting screws and nuts",
+   "vendor": "MISUMI",
+   "part_number": "HBLTBA40-SET1",
+   "price_usd_each": 8.78,
    "pack_qty": 1,
-   "cost_usd": 0
+   "sellers": [
+    {
+     "seller": "MISUMI",
+     "url": "https://us.misumi-ec.com/vona2/detail/110302255430/?HissuCode=HBLTBA40-SET1",
+     "seller_pn": "HBLTBA40-SET1",
+     "price_usd": 8.78,
+     "pack_qty": 1,
+     "stock": "Ship Date Same Day",
+     "in_stock": true,
+     "ships_from": "US",
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "MISUMI",
+     "url": "https://us.misumi-ec.com/vona2/detail/110302255430/?HissuCode=HBLTBBN40-SET",
+     "seller_pn": "HBLTBBN40-SET",
+     "price_usd": 10.15,
+     "pack_qty": 1,
+     "stock": null,
+     "read_on": "2026-10-27",
+     "drop_in": true,
+     "changes": null,
+     "price_text": "$10.15"
+    },
+    {
+     "seller": "80/20 Inc.",
+     "url": "https://8020.net/40-2085.html",
+     "seller_pn": "40-2085 hinge",
+     "price_usd": 14.34,
+     "pack_qty": 1,
+     "stock": null,
+     "read_on": "2026-10-27",
+     "drop_in": false,
+     "changes": "rated 34 kg: too light for the brace; not a substitute",
+     "price_text": "$14.34"
+    }
+   ]
   },
   {
-   "key": "tnut_m8_8",
-   "qty": 70,
-   "for": "brackets (48), hinges (8), top stop (4), drop bracket (2), pod (4), tether eye (2), spare",
-   "vendor": null,
-   "part_number": null,
-   "name": null,
-   "price_usd_each": null,
-   "pack_qty": 1,
-   "cost_usd": 0
-  },
-  {
-   "key": "screw_m8x16",
-   "qty": 70,
-   "for": "with the M8 T-nuts",
-   "vendor": null,
-   "part_number": null,
-   "name": null,
-   "price_usd_each": null,
-   "pack_qty": 1,
-   "cost_usd": 0
-  },
-  {
-   "key": "tnut_m4_8",
-   "qty": 34,
-   "for": "the rails, 17 per rail at 60 mm",
-   "vendor": null,
-   "part_number": null,
-   "name": null,
-   "price_usd_each": null,
-   "pack_qty": 1,
-   "cost_usd": 0
-  },
-  {
-   "key": "screw_m4x16",
-   "qty": 34,
-   "for": "the rails into the T-nuts",
-   "vendor": null,
-   "part_number": null,
-   "name": null,
-   "price_usd_each": null,
-   "pack_qty": 1,
-   "cost_usd": 0
-  },
-  {
-   "key": "screw_m4x12",
+   "key": "nut_m8_dropin",
    "qty": 16,
-   "for": "the four blocks onto the plate (a washer under each: 4.85 mm into the 5 mm threads)",
-   "vendor": null,
-   "part_number": null,
-   "name": null,
-   "price_usd_each": null,
+   "for": "top stop (4), drop bracket (2), pod (4), spares",
+   "name": "Drop-in nut, 8 series, M8",
+   "vendor": "MISUMI",
+   "part_number": "HNTA8-8",
+   "price_usd_each": 0.9,
    "pack_qty": 1,
-   "cost_usd": 0
+   "sellers": [
+    {
+     "seller": "MISUMI",
+     "url": "https://us.misumi-ec.com/vona2/detail/110302257010/?HissuCode=HNTA8-8",
+     "seller_pn": "HNTA8-8",
+     "price_usd": 0.9,
+     "pack_qty": 1,
+     "stock": "Ship Date Same Day",
+     "in_stock": true,
+     "ships_from": "US",
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "80/20 Inc.",
+     "url": "https://8020.net/75-3422.html",
+     "seller_pn": "75-3422 (M8 x 16 BHSCS + slide-in nut)",
+     "price_usd": 1.14,
+     "pack_qty": 1,
+     "stock": null,
+     "read_on": "2026-10-27",
+     "drop_in": false,
+     "changes": "slide-in, 80/20 slot",
+     "price_text": "$1.14"
+    }
+   ]
   },
   {
-   "key": "washer_m4",
+   "key": "screw_m8x16_bh",
    "qty": 16,
-   "for": "under the block screws",
-   "vendor": null,
-   "part_number": null,
-   "name": null,
-   "price_usd_each": null,
+   "for": "with the extra M8 drop-in nuts",
+   "name": "M8 x 16 button head socket cap screw",
+   "vendor": "80/20 Inc.",
+   "part_number": "13-8316",
+   "price_usd_each": 0.61,
    "pack_qty": 1,
-   "cost_usd": 0
+   "sellers": [
+    {
+     "seller": "80/20 Inc.",
+     "url": "https://8020.net/40-4376.html",
+     "seller_pn": "13-8316",
+     "price_usd": 0.61,
+     "pack_qty": 1,
+     "stock": null,
+     "in_stock": true,
+     "ships_from": "US",
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "80/20 Inc.",
+     "url": "https://8020.net/75-3422.html",
+     "seller_pn": "75-3422",
+     "price_usd": 1.14,
+     "pack_qty": 1,
+     "stock": null,
+     "read_on": "2026-10-27",
+     "drop_in": true,
+     "changes": null,
+     "price_text": "$1.14 (screw + nut)"
+    }
+   ]
+  },
+  {
+   "key": "nut_m4_dropin",
+   "qty": 36,
+   "for": "the rails: 17 per rail at 60 mm, 2 spare",
+   "name": "Drop-in nut, 8 series, M4",
+   "vendor": "MISUMI",
+   "part_number": "HNTA8-4",
+   "price_usd_each": 0.9,
+   "pack_qty": 1,
+   "sellers": [
+    {
+     "seller": "MISUMI",
+     "url": "https://us.misumi-ec.com/vona2/detail/110302257010/?HissuCode=HNTA8-4",
+     "seller_pn": "HNTA8-4",
+     "price_usd": 0.9,
+     "pack_qty": 1,
+     "stock": "Ship Date Same Day",
+     "in_stock": true,
+     "ships_from": "US",
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "MISUMI",
+     "url": "https://us.misumi-ec.com/vona2/detail/110302257010/?HissuCode=PACK-HNTA8-4",
+     "seller_pn": "PACK-HNTA8-4 (100)",
+     "price_usd": 62.0,
+     "pack_qty": 100,
+     "stock": null,
+     "read_on": "2026-10-27",
+     "drop_in": true,
+     "changes": null,
+     "price_text": "$61.83 per 100"
+    }
+   ]
+  },
+  {
+   "key": "nut_m6_dropin",
+   "qty": 12,
+   "for": "the deck (8) and the bottom bumpers (4)",
+   "name": "Drop-in nut, 8 series, M6",
+   "vendor": "MISUMI",
+   "part_number": "HNTA8-6",
+   "price_usd_each": 0.9,
+   "pack_qty": 1,
+   "sellers": [
+    {
+     "seller": "MISUMI",
+     "url": "https://us.misumi-ec.com/vona2/detail/110302257010/?HissuCode=HNTA8-6",
+     "seller_pn": "HNTA8-6",
+     "price_usd": 0.9,
+     "pack_qty": 1,
+     "stock": "Ship Date Same Day",
+     "in_stock": true,
+     "ships_from": "US",
+     "read_on": "2026-10-27"
+    }
+   ]
+  },
+  {
+   "key": "screw_m4x16_rail",
+   "qty": 36,
+   "for": "the rails into the drop-in nuts (HIWIN's M4 x 16)",
+   "name": "18-8 stainless socket head screw M4 x 16",
+   "vendor": "McMaster-Carr",
+   "part_number": "91292A118",
+   "price_usd_each": 0.1163,
+   "pack_qty": 100,
+   "sellers": [
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/91292A118/",
+     "seller_pn": "91292A118",
+     "price_usd": 11.63,
+     "pack_qty": 100,
+     "stock": null,
+     "in_stock": true,
+     "ships_from": "US",
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "Bolt Depot",
+     "url": "https://boltdepot.com/",
+     "seller_pn": "23082 (class 12.9, zinc)",
+     "price_usd": 0.19,
+     "pack_qty": 1,
+     "stock": null,
+     "read_on": "2026-10-27",
+     "drop_in": true,
+     "changes": null,
+     "price_text": "$0.19 each"
+    }
+   ]
+  },
+  {
+   "key": "turret_screw_m4x10",
+   "qty": 16,
+   "for": "the four blocks onto the plate: 3.65 mm into the 5 mm threads (0.9 d, steel)",
+   "name": "Black-oxide alloy steel socket head screw M4 x 10",
+   "vendor": "McMaster-Carr",
+   "part_number": "91290A144",
+   "price_usd_each": 0.1355,
+   "pack_qty": 100,
+   "sellers": [
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/91290A144/",
+     "seller_pn": "91290A144",
+     "price_usd": 13.55,
+     "pack_qty": 100,
+     "stock": null,
+     "in_stock": true,
+     "ships_from": "US",
+     "read_on": "2026-10-27"
+    }
+   ]
   },
   {
    "key": "screw_m5x16",
    "qty": 6,
-   "for": "the plate onto the hip frame's six inserts (with washers)",
-   "vendor": null,
-   "part_number": null,
-   "name": null,
-   "price_usd_each": null,
-   "pack_qty": 1,
-   "cost_usd": 0
+   "for": "the plate onto the hip frame's six M5 inserts (with washers)",
+   "name": "Black-oxide alloy steel socket head screw M5 x 16",
+   "vendor": "McMaster-Carr",
+   "part_number": "91290A232",
+   "price_usd_each": 0.1727,
+   "pack_qty": 100,
+   "sellers": [
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/91290A232/",
+     "seller_pn": "91290A232",
+     "price_usd": 17.27,
+     "pack_qty": 100,
+     "stock": null,
+     "in_stock": true,
+     "ships_from": "US",
+     "read_on": "2026-10-27"
+    }
+   ]
   },
   {
    "key": "washer_m5",
    "qty": 6,
-   "for": "under those",
-   "vendor": null,
-   "part_number": null,
-   "name": null,
-   "price_usd_each": null,
-   "pack_qty": 1,
-   "cost_usd": 0
+   "for": "under the plate screws",
+   "name": "18-8 washer for M5",
+   "vendor": "McMaster-Carr",
+   "part_number": "93475A240",
+   "price_usd_each": 0.0424,
+   "pack_qty": 100,
+   "sellers": [
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/93475A240/",
+     "seller_pn": "93475A240",
+     "price_usd": 4.24,
+     "pack_qty": 100,
+     "stock": null,
+     "in_stock": true,
+     "ships_from": "US",
+     "read_on": "2026-10-27"
+    }
+   ]
   },
   {
-   "key": "tnut_m6_8",
-   "qty": 12,
-   "for": "the deck (8) and the bottom bumpers (4)",
-   "vendor": null,
-   "part_number": null,
-   "name": null,
-   "price_usd_each": null,
-   "pack_qty": 1,
-   "cost_usd": 0
+   "key": "screw_m6x30",
+   "qty": 8,
+   "for": "the deck into the members' top slots (18 mm ply + washer + the slot's lip, 7.6 mm into the nut)",
+   "name": "Black-oxide alloy steel socket head screw M6 x 30",
+   "vendor": "McMaster-Carr",
+   "part_number": "91290A332",
+   "price_usd_each": 0.2272,
+   "pack_qty": 50,
+   "sellers": [
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/91290A332/",
+     "seller_pn": "91290A332",
+     "price_usd": 11.36,
+     "pack_qty": 50,
+     "stock": null,
+     "in_stock": true,
+     "ships_from": "US",
+     "read_on": "2026-10-27"
+    }
+   ]
   },
   {
-   "key": "screw_m6x45_fh",
-   "qty": 12,
-   "for": "the deck and the bumpers into the members' top slots",
-   "vendor": null,
-   "part_number": null,
-   "name": null,
-   "price_usd_each": null,
-   "pack_qty": 1,
-   "cost_usd": 0
+   "key": "washer_m6_large",
+   "qty": 8,
+   "for": "under the deck screws",
+   "name": "18-8 oversized washer for M6 (18 mm OD)",
+   "vendor": "McMaster-Carr",
+   "part_number": "91116A150",
+   "price_usd_each": 0.294,
+   "pack_qty": 50,
+   "sellers": [
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/91116A150/",
+     "seller_pn": "91116A150",
+     "price_usd": 14.7,
+     "pack_qty": 50,
+     "stock": null,
+     "in_stock": true,
+     "ships_from": "US",
+     "read_on": "2026-10-27"
+    }
+   ]
+  },
+  {
+   "key": "screw_m6x35",
+   "qty": 4,
+   "for": "the bottom bumpers' bases, counterbored 14 mm",
+   "name": "Black-oxide alloy steel socket head screw M6 x 35",
+   "vendor": "McMaster-Carr",
+   "part_number": "91290A334",
+   "price_usd_each": 0.2422,
+   "pack_qty": 50,
+   "sellers": [
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/91290A334/",
+     "seller_pn": "91290A334",
+     "price_usd": 12.11,
+     "pack_qty": 50,
+     "stock": null,
+     "in_stock": true,
+     "ships_from": "US",
+     "read_on": "2026-10-27"
+    }
+   ]
   },
   {
    "key": "ballast_shaft",
    "qty": 2,
-   "for": "1 in steel shaft, end-tapped: the ballast posts",
+   "for": "the two ballast posts",
+   "name": "Tapped linear shaft 1 in x 6 in, 1050 steel, 3/8-16 x 3/4 in deep both ends",
    "vendor": "McMaster-Carr",
    "part_number": "6649K433",
-   "name": "Tapped linear shaft 1 in x 6 in, 1050 steel, 3/8-16 x 3/4 in deep both ends",
    "price_usd_each": 52.94,
    "pack_qty": 1,
-   "cost_usd": 105.88
+   "sellers": [
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/6649K433/",
+     "seller_pn": "6649K433",
+     "price_usd": 52.94,
+     "pack_qty": 1,
+     "stock": null,
+     "in_stock": true,
+     "ships_from": "US",
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/4162N31/",
+     "seller_pn": "4162N31 + 6435K18 collar",
+     "price_usd": 38.42,
+     "pack_qty": 1,
+     "stock": null,
+     "read_on": "2026-10-27",
+     "drop_in": true,
+     "changes": "tapped one end only: a collar retains the plates",
+     "price_text": "$32.35 + $6.07"
+    }
+   ]
   },
   {
-   "key": "screw_ballast",
-   "qty": 4,
-   "for": "into the shafts' tapped ends: one through the plate, one with a fender washer at the free end",
-   "vendor": null,
-   "part_number": null,
-   "name": null,
-   "price_usd_each": null,
-   "pack_qty": 1,
-   "cost_usd": 0
+   "key": "screw_3_8x1",
+   "qty": 2,
+   "for": "each post through the plate (17.8 mm into the 19 mm thread with the washer)",
+   "name": "Alloy steel socket head screw 3/8-16 x 1 in",
+   "vendor": "McMaster-Carr",
+   "part_number": "91251A624",
+   "price_usd_each": 0.4992,
+   "pack_qty": 25,
+   "sellers": [
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/91251A624/",
+     "seller_pn": "91251A624",
+     "price_usd": 12.48,
+     "pack_qty": 25,
+     "stock": null,
+     "in_stock": true,
+     "ships_from": "US",
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/91251A622/",
+     "seller_pn": "91251A622 (3/4 in, no washer)",
+     "price_usd": 11.17,
+     "pack_qty": 25,
+     "stock": null,
+     "read_on": "2026-10-27",
+     "drop_in": true,
+     "changes": null,
+     "price_text": "$11.17 per 25"
+    }
+   ]
   },
   {
-   "key": "washer_fender_1in",
-   "qty": 4,
-   "for": "retain the plates; also fine ballast",
-   "vendor": null,
-   "part_number": null,
-   "name": null,
-   "price_usd_each": null,
-   "pack_qty": 1,
-   "cost_usd": 0
+   "key": "washer_3_8",
+   "qty": 2,
+   "for": "under the post screws on the plate's front",
+   "name": "Oversized washer for 3/8 in, 1.25 in OD",
+   "vendor": "McMaster-Carr",
+   "part_number": "91090A121",
+   "price_usd_each": 0.1424,
+   "pack_qty": 50,
+   "sellers": [
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/91090A121/",
+     "seller_pn": "91090A121",
+     "price_usd": 7.12,
+     "pack_qty": 50,
+     "stock": null,
+     "in_stock": true,
+     "ships_from": "US",
+     "read_on": "2026-10-27"
+    }
+   ]
   },
   {
-   "key": "weight_plate_1p25",
-   "qty": 4,
-   "for": "standard 1 in plates (ballast table in rig.json)",
-   "vendor": "Body-Solid",
-   "part_number": "RPB1-25",
-   "name": "Cast iron standard plate, 1.25 lb, 1 in hole (101.6 x 10.2 mm)",
-   "price_usd_each": 3.33,
-   "pack_qty": 1,
-   "cost_usd": 13.32
+   "key": "screw_3_8x3_4",
+   "qty": 2,
+   "for": "the posts' free ends, with the 2 in washers that hold the plates on",
+   "name": "Alloy steel socket head screw 3/8-16 x 3/4 in",
+   "vendor": "McMaster-Carr",
+   "part_number": "91251A622",
+   "price_usd_each": 0.4468,
+   "pack_qty": 25,
+   "sellers": [
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/91251A622/",
+     "seller_pn": "91251A622",
+     "price_usd": 11.17,
+     "pack_qty": 25,
+     "stock": null,
+     "in_stock": true,
+     "ships_from": "US",
+     "read_on": "2026-10-27"
+    }
+   ]
+  },
+  {
+   "key": "washer_2in",
+   "qty": 2,
+   "for": "retain the weight plates",
+   "name": "Oversized washer 0.406 in ID x 2.000 in OD",
+   "vendor": "McMaster-Carr",
+   "part_number": "91117A219",
+   "price_usd_each": 2.718,
+   "pack_qty": 5,
+   "sellers": [
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/91117A219/",
+     "seller_pn": "91117A219",
+     "price_usd": 13.59,
+     "pack_qty": 5,
+     "stock": null,
+     "in_stock": true,
+     "ships_from": "US",
+     "read_on": "2026-10-27"
+    }
+   ]
   },
   {
    "key": "weight_plate_2p5",
-   "qty": 4,
-   "for": "standard 1 in plates",
+   "qty": 2,
+   "for": "ballast: one per post at 14.75 kg",
+   "name": "Cast iron standard plate, 2.5 lb, 1 in hole (129.5 x 20.3 mm)",
    "vendor": "Body-Solid",
    "part_number": "RPB2-5",
-   "name": "Cast iron standard plate, 2.5 lb, 1 in hole (129.5 x 20.3 mm)",
    "price_usd_each": 6.65,
    "pack_qty": 1,
-   "cost_usd": 26.6
+   "sellers": [
+    {
+     "seller": "Body-Solid",
+     "url": "https://bodysolid.com/cast-iron-standard-plates",
+     "seller_pn": "RPB2-5",
+     "price_usd": 6.65,
+     "pack_qty": 1,
+     "stock": null,
+     "in_stock": true,
+     "ships_from": "US",
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "Amazon (CAP Barbell)",
+     "url": "https://www.amazon.com/dp/B0FNPPH748",
+     "seller_pn": "ASIN B0FNPPH748 (4-pack)",
+     "price_usd": 17.8,
+     "pack_qty": 4,
+     "stock": null,
+     "read_on": "2026-10-27",
+     "drop_in": true,
+     "changes": "the page gives no diameter: check under 150 mm",
+     "price_text": "$17.81 per 4"
+    }
+   ]
   },
   {
-   "key": "quick_pin_10",
-   "qty": 1,
-   "for": "the drop test's release pin (S4), with a lanyard",
-   "vendor": null,
-   "part_number": null,
-   "name": null,
-   "price_usd_each": null,
-   "pack_qty": 1,
-   "cost_usd": 0
-  },
-  {
-   "key": "webbing_sling",
+   "key": "weight_plate_1p25",
    "qty": 2,
-   "for": "the safety tethers: carriage to the post's top; the wheel link to the carriage",
-   "vendor": null,
-   "part_number": null,
-   "name": null,
-   "price_usd_each": null,
+   "for": "ballast: the 16 kg sweep",
+   "name": "Cast iron standard plate, 1.25 lb, 1 in hole (101.6 x 10.2 mm)",
+   "vendor": "Body-Solid",
+   "part_number": "RPB1-25",
+   "price_usd_each": 3.33,
    "pack_qty": 1,
-   "cost_usd": 0
+   "sellers": [
+    {
+     "seller": "Body-Solid",
+     "url": "https://bodysolid.com/cast-iron-standard-plates",
+     "seller_pn": "RPB1-25",
+     "price_usd": 3.33,
+     "pack_qty": 1,
+     "stock": null,
+     "in_stock": true,
+     "ships_from": "US",
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "Amazon (CAP Barbell)",
+     "url": "https://www.amazon.com/dp/B002BRAN66",
+     "seller_pn": "ASIN B002BRAN66",
+     "price_usd": 18.97,
+     "pack_qty": 1,
+     "stock": null,
+     "read_on": "2026-10-27",
+     "drop_in": true,
+     "changes": null,
+     "price_text": "$18.97"
+    }
+   ]
+  },
+  {
+   "key": "washer_trim_3p5in",
+   "qty": 4,
+   "for": "fine ballast: trims the carried mass to within 0.07 kg",
+   "name": "Oversized washer for 1 in screw, 3.5 in OD (~0.14 kg)",
+   "vendor": "McMaster-Carr",
+   "part_number": "91117A251",
+   "price_usd_each": 6.19,
+   "pack_qty": 1,
+   "sellers": [
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/91117A251/",
+     "seller_pn": "91117A251",
+     "price_usd": 6.19,
+     "pack_qty": 1,
+     "stock": null,
+     "in_stock": true,
+     "ships_from": "US",
+     "read_on": "2026-10-27"
+    }
+   ]
+  },
+  {
+   "key": "quick_pin",
+   "qty": 1,
+   "for": "the drop test's release (S4)",
+   "name": "Ball-lock quick-release pin with D-ring, 3/8 in, 1-1/2 in usable, 17-4 PH",
+   "vendor": "McMaster-Carr",
+   "part_number": "92384A274",
+   "price_usd_each": 38.21,
+   "pack_qty": 1,
+   "sellers": [
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/92384A274/",
+     "seller_pn": "92384A274",
+     "price_usd": 38.21,
+     "pack_qty": 1,
+     "stock": null,
+     "in_stock": true,
+     "ships_from": "US",
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/92384A760/",
+     "seller_pn": "92384A760 (1-3/4 in usable)",
+     "price_usd": 40.73,
+     "pack_qty": 1,
+     "stock": null,
+     "read_on": "2026-10-27",
+     "drop_in": true,
+     "changes": null,
+     "price_text": "$40.73"
+    }
+   ]
+  },
+  {
+   "key": "pin_lanyard",
+   "qty": 1,
+   "for": "keeps the pin on the drop bracket",
+   "name": "Lanyard, 3/64 in cable, loop-to-eye, 12 in",
+   "vendor": "McMaster-Carr",
+   "part_number": "90312A296",
+   "price_usd_each": 3.26,
+   "pack_qty": 1,
+   "sellers": [
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/90312A296/",
+     "seller_pn": "90312A296",
+     "price_usd": 3.26,
+     "pack_qty": 1,
+     "stock": null,
+     "in_stock": true,
+     "ships_from": "US",
+     "read_on": "2026-10-27"
+    }
+   ]
+  },
+  {
+   "key": "sling_1in",
+   "qty": 2,
+   "for": "the tethers: the carriage to the post (girth-hitched under the top stop), the wheel link to the carriage",
+   "name": "Lift-All Type 5 endless polyester sling 1 in x 5 ft (2400 lb vertical)",
+   "vendor": "Amazon (Megamart USA)",
+   "part_number": "ASIN B0026GIUMG",
+   "price_usd_each": 17.08,
+   "pack_qty": 1,
+   "sellers": [
+    {
+     "seller": "Amazon (Megamart USA)",
+     "url": "https://www.amazon.com/dp/B0026GIUMG",
+     "seller_pn": "ASIN B0026GIUMG",
+     "price_usd": 17.08,
+     "pack_qty": 1,
+     "stock": null,
+     "in_stock": true,
+     "ships_from": "US",
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "Amazon (Kivomot)",
+     "url": "https://www.amazon.com/dp/B0FRRVHXTR",
+     "seller_pn": "ASIN B0FRRVHXTR (2-pack, eye-eye 6.5 ft)",
+     "price_usd": 12.58,
+     "pack_qty": 2,
+     "stock": null,
+     "read_on": "2026-10-27",
+     "drop_in": true,
+     "changes": null,
+     "price_text": "$12.58 per 2"
+    }
+   ]
   },
   {
    "key": "carabiner",
-   "qty": 3,
+   "qty": 4,
    "for": "the tethers' ends",
+   "name": "Screwgate carabiner, 25 kN, 2-pack",
    "vendor": "Amazon (XINDA)",
    "part_number": "ASIN B07D73RRH5 (2-pack)",
-   "name": "Screwgate carabiner, 25 kN, 2-pack",
    "price_usd_each": 8.495,
    "pack_qty": 2,
-   "cost_usd": 33.98
+   "sellers": [
+    {
+     "seller": "Amazon (XINDA)",
+     "url": "https://www.amazon.com/dp/B07D73RRH5?th=1",
+     "seller_pn": "ASIN B07D73RRH5 (2-pack)",
+     "price_usd": 16.99,
+     "pack_qty": 2,
+     "stock": null,
+     "in_stock": true,
+     "ships_from": "US",
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "Amazon (STURME)",
+     "url": "https://www.amazon.com/dp/B085HLB374",
+     "seller_pn": "ASIN B085HLB374 (2-pack)",
+     "price_usd": 16.99,
+     "pack_qty": 2,
+     "stock": null,
+     "read_on": "2026-10-27",
+     "drop_in": true,
+     "changes": null,
+     "price_text": "$16.99 per 2"
+    }
+   ]
   },
   {
    "key": "plywood_18",
    "qty": 1,
-   "for": "the deck (600 x 400) and the load plate's pad (400 x 300), from one 2 x 4 ft panel",
+   "for": "the deck (600 x 400) and the load plate's pad (400 x 300)",
+   "name": "Sanded plywood 23/32 in, 2 x 4 ft project panel",
    "vendor": "The Home Depot",
    "part_number": "Internet #202093836",
-   "name": "Sanded plywood 23/32 in, 2 x 4 ft project panel",
    "price_usd_each": 23.76,
    "pack_qty": 1,
-   "cost_usd": 23.76
+   "sellers": [
+    {
+     "seller": "The Home Depot",
+     "url": "https://www.homedepot.com/p/Handprint-23-32-in-x-2-ft-x-4-ft-Sanded-Plywood-300969/202093836",
+     "seller_pn": "Internet #202093836",
+     "price_usd": 23.76,
+     "pack_qty": 1,
+     "stock": null,
+     "in_stock": true,
+     "ships_from": "US",
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "Lowe's",
+     "url": "https://www.lowes.com/pd/Unbranded-23-32-in-x-2-ft-x-4-ft-Pine-Sanded-Plywood/5001997945",
+     "seller_pn": "Item #7710, Model #12611",
+     "price_usd": 27.5,
+     "pack_qty": 1,
+     "stock": null,
+     "read_on": "2026-10-27",
+     "drop_in": true,
+     "changes": null,
+     "price_text": "$25.98-29.48 (snippets)"
+    }
+   ]
   },
   {
    "key": "rubber_mat",
    "qty": 1,
-   "for": "under the base: it rests on the floor along every member",
+   "for": "under the base: the floor carries every member (the wheel member under the tyre most)",
+   "name": "Rubber mat 3 x 4 ft x 5/16 in, 2-pack",
    "vendor": "Amazon (Boomerang Rubber)",
    "part_number": "ASIN B0F8RCXB7D",
-   "name": "Rubber mat 3 x 4 ft x 5/16 in, 2-pack",
    "price_usd_each": 52.0,
    "pack_qty": 1,
-   "cost_usd": 52.0
+   "sellers": [
+    {
+     "seller": "Amazon (Boomerang Rubber)",
+     "url": "https://www.amazon.com/dp/B0F8RCXB7D",
+     "seller_pn": "ASIN B0F8RCXB7D",
+     "price_usd": 52.0,
+     "pack_qty": 1,
+     "stock": null,
+     "in_stock": true,
+     "ships_from": "US",
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "Amazon (uxcell)",
+     "url": "https://www.amazon.com/dp/B0DP9TXB59",
+     "seller_pn": "ASIN B0DP9TXB59 (M8 levelling feet, 8)",
+     "price_usd": 34.0,
+     "pack_qty": 8,
+     "stock": null,
+     "read_on": "2026-10-27",
+     "drop_in": false,
+     "changes": "feet in the bottom slots; one must go under the wheel member's middle (it carries 3.4 kN at a jump)",
+     "price_text": "$33.99 per 8"
+    }
+   ]
   },
+  {
+   "key": "turret_insert_m4",
+   "qty": 3,
+   "for": "the pod: the contactor (2), the relay (1)",
+   "name": "Heat-set insert M4 (brass)",
+   "vendor": "McMaster-Carr",
+   "part_number": "94459A160",
+   "price_usd_each": 0.2346,
+   "pack_qty": 50,
+   "sellers": [
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/94459A160/",
+     "seller_pn": "94459A160",
+     "price_usd": 11.73,
+     "pack_qty": 50,
+     "stock": null,
+     "in_stock": true,
+     "ships_from": "US",
+     "read_on": "2026-10-27"
+    }
+   ]
+  }
+ ],
+ "electronics": [
+  {
+   "key": "pack_adapter_60v",
+   "qty": 1,
+   "for": "the pack into the rig (XT60 on its leads)",
+   "name": "DeWalt FLEXVOLT 60 V dock adapter, 12 AWG leads",
+   "vendor": "Terrafirma Technology (eBay)",
+   "part_number": "eBay 142917514402",
+   "price_usd_each": 16.5,
+   "pack_qty": 1,
+   "sellers": [
+    {
+     "seller": "Terrafirma Technology (eBay)",
+     "url": "https://www.ebay.com/itm/142917514402",
+     "seller_pn": "eBay 142917514402",
+     "price_usd": 16.5,
+     "pack_qty": 1,
+     "stock": null,
+     "in_stock": true,
+     "ships_from": "US",
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "Newegg (heimakeji)",
+     "url": "https://www.newegg.com/p/1DK-013R-00A95",
+     "seller_pn": "1DK-013R-00A95",
+     "price_usd": 23.35,
+     "pack_qty": 1,
+     "stock": null,
+     "read_on": "2026-10-27",
+     "drop_in": true,
+     "changes": null,
+     "price_text": "about $23.35 (snippet)"
+    }
+   ]
+  },
+  {
+   "key": "bench_supply_48v",
+   "qty": 1,
+   "for": "bench tests only (B1, B2, first enable): it cannot sink regeneration",
+   "name": "48 V 12.5 A enclosed supply",
+   "vendor": "Bravo Electro",
+   "part_number": "Mean Well LRS-600-48",
+   "price_usd_each": 61.6,
+   "pack_qty": 1,
+   "sellers": [
+    {
+     "seller": "Bravo Electro",
+     "url": "https://www.bravoelectro.com/lrs-600-48.html",
+     "seller_pn": "Mean Well LRS-600-48",
+     "price_usd": 61.6,
+     "pack_qty": 1,
+     "stock": "In stock",
+     "in_stock": true,
+     "ships_from": "US",
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "TRC Electronics",
+     "url": "https://www.trcelectronics.com/products/mean-well-lrs-600-48",
+     "seller_pn": "LRS-600-48",
+     "price_usd": 66.8,
+     "pack_qty": 1,
+     "stock": "210 can ship now",
+     "read_on": "2026-10-27",
+     "drop_in": true,
+     "changes": null,
+     "price_text": "$66.80"
+    },
+    {
+     "seller": "Bravo Electro",
+     "url": "https://www.bravoelectro.com/lrs-600n2-48.html",
+     "seller_pn": "LRS-600N2-48 (200 % peak)",
+     "price_usd": 66.1,
+     "pack_qty": 1,
+     "stock": null,
+     "read_on": "2026-10-27",
+     "drop_in": true,
+     "changes": null,
+     "price_text": "$66.10"
+    }
+   ]
+  },
+  {
+   "key": "fuse_kldr030",
+   "qty": 1,
+   "for": "the pack's positive, before the contactor",
+   "name": "Class CC time-delay fuse 30 A, 600 VAC / 300 VDC",
+   "vendor": "Standard Electric Supply",
+   "part_number": "Littelfuse KLDR030.TXP",
+   "price_usd_each": 31.7,
+   "pack_qty": 1,
+   "sellers": [
+    {
+     "seller": "Standard Electric Supply",
+     "url": "https://www.standardelectricsupply.com/Littelfuse-KLDR030-TXP-POWR-GARD-Time-Delay-Fuse",
+     "seller_pn": "Littelfuse KLDR030.TXP",
+     "price_usd": 31.7,
+     "pack_qty": 1,
+     "stock": "812 In Stock",
+     "in_stock": true,
+     "ships_from": "US",
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "Galco",
+     "url": "https://www.galco.com/kldr30-lf.html",
+     "seller_pn": "Littelfuse KLDR30",
+     "price_usd": 44.33,
+     "pack_qty": 1,
+     "stock": "10 In Stock",
+     "read_on": "2026-10-27",
+     "drop_in": true,
+     "changes": null,
+     "price_text": "$44.33"
+    },
+    {
+     "seller": "Galco",
+     "url": "https://www.galco.com/atdr30-shaw.html",
+     "seller_pn": "Mersen ATDR30",
+     "price_usd": 19.96,
+     "pack_qty": 1,
+     "stock": "31 In Stock",
+     "read_on": "2026-10-27",
+     "drop_in": true,
+     "changes": "check its DC rating before use",
+     "price_text": "$19.96"
+    }
+   ]
+  },
+  {
+   "key": "fuse_holder_cc",
+   "qty": 1,
+   "for": "holds the 30 A fuse on the pod's DIN rail",
+   "name": "Class CC fuse holder, 1-pole, DIN rail, 600 VAC/DC",
+   "vendor": "Galco",
+   "part_number": "Littelfuse LPSC0001Z",
+   "price_usd_each": 28.99,
+   "pack_qty": 1,
+   "sellers": [
+    {
+     "seller": "Galco",
+     "url": "https://www.galco.com/lpsc0001z-littelfuse.html",
+     "seller_pn": "Littelfuse LPSC0001Z",
+     "price_usd": 28.99,
+     "pack_qty": 1,
+     "stock": "170 In Stock",
+     "in_stock": true,
+     "ships_from": "US",
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "Standard Electric Supply",
+     "url": "https://www.standardelectricsupply.com/Littelfuse-LFPSC0001Z-Powr-Gard-Powr-Safe-Fuse-Holder",
+     "seller_pn": "Littelfuse LFPSC0001Z",
+     "price_usd": 26.48,
+     "pack_qty": 1,
+     "stock": "62 In Stock",
+     "read_on": "2026-10-27",
+     "drop_in": true,
+     "changes": null,
+     "price_text": "$26.48"
+    },
+    {
+     "seller": "Galco",
+     "url": "https://www.galco.com/uscc1-shaw.html",
+     "seller_pn": "Mersen USCC1",
+     "price_usd": 23.18,
+     "pack_qty": 1,
+     "stock": "68 In Stock",
+     "read_on": "2026-10-27",
+     "drop_in": true,
+     "changes": null,
+     "price_text": "$23.18"
+    }
+   ]
+  },
+  {
+   "key": "contactor_lev100",
+   "qty": 1,
+   "for": "the hold-to-run power cut in the pack's positive",
+   "name": "Sealed DC contactor 100 A, 900 VDC, 12 V coil (5.5 W)",
+   "vendor": "TTI, Inc.",
+   "part_number": "TE Kilovac LEV100A4ANG (3-1618389-7)",
+   "price_usd_each": 86.64,
+   "pack_qty": 1,
+   "sellers": [
+    {
+     "seller": "TTI, Inc.",
+     "url": "https://www.tti.com/content/ttiinc/en/apps/part-detail.html?partsNumber=LEV100A4ANG&mfgShortname=TYC",
+     "seller_pn": "TE Kilovac LEV100A4ANG (3-1618389-7)",
+     "price_usd": 86.64,
+     "pack_qty": 1,
+     "stock": "301 In Stock",
+     "in_stock": true,
+     "ships_from": "US",
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "TTI, Inc.",
+     "url": "https://www.tti.com/content/ttiinc/en/apps/part-detail.html?partsNumber=EV200AAANA&mfgShortname=TYC",
+     "seller_pn": "TE EV200AAANA",
+     "price_usd": 127.61,
+     "pack_qty": 1,
+     "stock": "439 In Stock",
+     "read_on": "2026-10-27",
+     "drop_in": true,
+     "changes": "bigger (500 A); its own coil economiser",
+     "price_text": "$127.61"
+    },
+    {
+     "seller": "RS Americas",
+     "url": "https://us.rs-online.com/product/te-connectivity/lev100a4ang/70062417/",
+     "seller_pn": "LEV100A4ANG (RS 70062417)",
+     "price_usd": 76.47,
+     "pack_qty": 1,
+     "stock": null,
+     "read_on": "2026-10-27",
+     "drop_in": true,
+     "changes": null,
+     "price_text": "$76.47 (snippet)"
+    }
+   ]
+  },
+  {
+   "key": "timer_offdelay",
+   "qty": 1,
+   "for": "holds the contactor's coil 1.0 s after the pendant is let go",
+   "name": "Timer relay, multifunction (off-delay with a trigger input), 0.1-10 s, 12-125 VDC / 240 VAC, 10 A",
+   "vendor": "AutomationDirect",
+   "part_number": "ProSense T2R-M1-ADJ-240U",
+   "price_usd_each": 44.5,
+   "pack_qty": 1,
+   "sellers": [
+    {
+     "seller": "AutomationDirect",
+     "url": "https://www.automationdirect.com/adc/shopping/catalog/relays_-z-_timers/timer_relays/t2r-m1-adj-240u",
+     "seller_pn": "ProSense T2R-M1-ADJ-240U",
+     "price_usd": 44.5,
+     "pack_qty": 1,
+     "stock": "76 Available",
+     "in_stock": true,
+     "ships_from": "US",
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "DROK",
+     "url": "https://www.droking.com/all-items/relay-1402752649/relay/Time-Delay-Relay-Relay-Switch-DC6V-30V-LCD-Multifunction-Digital-Motor-Controller-Delay-power-cut-break-Trigger-delay-Cycle-timing-circuit-Relay-Module",
+     "seller_pn": "200350 (LCD multifunction delay relay module, 6-30 V)",
+     "price_usd": 6.55,
+     "pack_qty": 1,
+     "stock": null,
+     "read_on": "2026-10-27",
+     "drop_in": true,
+     "changes": "a module, not DIN: screw it to the pod; set its mode and 1.0 s on its display",
+     "price_text": "$6.55"
+    },
+    {
+     "seller": "Galco",
+     "url": "https://www.galco.com/80-01-0-240-0000-finder.html",
+     "seller_pn": "Finder 80.01.0.240.0000",
+     "price_usd": 78.85,
+     "pack_qty": 1,
+     "stock": "ships 11/6",
+     "read_on": "2026-10-27",
+     "drop_in": true,
+     "changes": null,
+     "price_text": "$78.85"
+    }
+   ]
+  },
+  {
+   "key": "dcdc_ddr30l12",
+   "qty": 1,
+   "for": "the 12 V rail: the contactor coil, the timer, the pendant loop",
+   "name": "DIN-rail DC-DC, 18-75 V in, 12 V 2.5 A out",
+   "vendor": "Bravo Electro",
+   "part_number": "Mean Well DDR-30L-12",
+   "price_usd_each": 27.6,
+   "pack_qty": 1,
+   "sellers": [
+    {
+     "seller": "Bravo Electro",
+     "url": "https://www.bravoelectro.com/ddr-30l-12.html",
+     "seller_pn": "Mean Well DDR-30L-12",
+     "price_usd": 27.6,
+     "pack_qty": 1,
+     "stock": "In stock",
+     "in_stock": true,
+     "ships_from": "US",
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "TRC Electronics",
+     "url": "https://www.trcelectronics.com/products/mean-well-ddr-30l-12",
+     "seller_pn": "DDR-30L-12",
+     "price_usd": 35.36,
+     "pack_qty": 1,
+     "stock": "10 can ship now",
+     "read_on": "2026-10-27",
+     "drop_in": true,
+     "changes": null,
+     "price_text": "$35.36"
+    }
+   ]
+  },
+  {
+   "key": "usb_can_u2c",
+   "qty": 1,
+   "for": "the laptop on the CAN bus at 1 Mbit/s",
+   "name": "USB to CAN adapter (candleLight gs_usb: SocketCAN)",
+   "vendor": "BIQU Equipment",
+   "part_number": "BIGTREETECH U2C V2.1 (SKU 1030000107)",
+   "price_usd_each": 23.99,
+   "pack_qty": 1,
+   "sellers": [
+    {
+     "seller": "BIQU Equipment",
+     "url": "https://biqu.equipment/products/bigtreetech-ebb36-42-can-bus-u2c-v2-1-klipper-board?variant=39762747949154",
+     "seller_pn": "BIGTREETECH U2C V2.1 (SKU 1030000107)",
+     "price_usd": 23.99,
+     "pack_qty": 1,
+     "stock": "orderable",
+     "in_stock": true,
+     "ships_from": "CN",
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "InnoMaker",
+     "url": "https://www.inno-maker.com/product/usb-can/",
+     "seller_pn": "USB2CAN-Module (isolated)",
+     "price_usd": 34.99,
+     "pack_qty": 1,
+     "stock": null,
+     "read_on": "2026-10-27",
+     "drop_in": true,
+     "changes": "isolated: use it whenever the laptop is on mains",
+     "price_text": "$34.99"
+    },
+    {
+     "seller": "West3D",
+     "url": "https://west3d.com/products/fystec-ucan-usb-can-out-interface-module-connect-for-can-bus-klipper-expansion",
+     "seller_pn": "FYSETC UCAN",
+     "price_usd": 19.99,
+     "pack_qty": 1,
+     "stock": null,
+     "read_on": "2026-10-27",
+     "drop_in": true,
+     "changes": null,
+     "price_text": "$19.99"
+    }
+   ]
+  },
+  {
+   "key": "feather_m4_can",
+   "qty": 1,
+   "for": "the rig node: the pendant's loop, RUN frames, the ToF, the load cells, the bus voltage",
+   "name": "Feather M4 CAN Express (ATSAME51)",
+   "vendor": "Adafruit",
+   "part_number": "4759",
+   "price_usd_each": 24.95,
+   "pack_qty": 1,
+   "sellers": [
+    {
+     "seller": "Adafruit",
+     "url": "https://www.adafruit.com/product/4759",
+     "seller_pn": "4759",
+     "price_usd": 24.95,
+     "pack_qty": 1,
+     "stock": "In stock",
+     "in_stock": true,
+     "ships_from": "US",
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "Adafruit",
+     "url": "https://www.adafruit.com/product/5724",
+     "seller_pn": "5724 RP2040 CAN Bus Feather",
+     "price_usd": 19.95,
+     "pack_qty": 1,
+     "stock": null,
+     "read_on": "2026-10-27",
+     "drop_in": false,
+     "changes": "an MCP25625 on SPI: rig/firmware needs its CAN driver swapped",
+     "price_text": "$19.95"
+    }
+   ]
+  },
+  {
+   "key": "tof_vl53l1x",
+   "qty": 1,
+   "for": "the carriage's height (jump apex) at 50 Hz",
+   "name": "VL53L1X time-of-flight breakout, 30-4000 mm",
+   "vendor": "Adafruit",
+   "part_number": "3967",
+   "price_usd_each": 14.95,
+   "pack_qty": 1,
+   "sellers": [
+    {
+     "seller": "Adafruit",
+     "url": "https://www.adafruit.com/product/3967",
+     "seller_pn": "3967",
+     "price_usd": 14.95,
+     "pack_qty": 1,
+     "stock": "In stock",
+     "in_stock": true,
+     "ships_from": "US",
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "SparkFun",
+     "url": "https://www.sparkfun.com/products/14722",
+     "seller_pn": "SEN-14722",
+     "price_usd": 29.95,
+     "pack_qty": 1,
+     "stock": null,
+     "read_on": "2026-10-27",
+     "drop_in": true,
+     "changes": null,
+     "price_text": "$29.95"
+    }
+   ]
+  },
+  {
+   "key": "hx711",
+   "qty": 1,
+   "for": "the load plate (stand and squat)",
+   "name": "HX711 load cell amplifier",
+   "vendor": "SparkFun",
+   "part_number": "SEN-13879",
+   "price_usd_each": 4.95,
+   "pack_qty": 1,
+   "sellers": [
+    {
+     "seller": "SparkFun",
+     "url": "https://www.sparkfun.com/products/13879",
+     "seller_pn": "SEN-13879",
+     "price_usd": 4.95,
+     "pack_qty": 1,
+     "stock": "In stock",
+     "in_stock": true,
+     "ships_from": "US",
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "Adafruit",
+     "url": "https://www.adafruit.com/product/5974",
+     "seller_pn": "5974",
+     "price_usd": 9.95,
+     "pack_qty": 1,
+     "stock": null,
+     "read_on": "2026-10-27",
+     "drop_in": true,
+     "changes": null,
+     "price_text": "$9.95"
+    }
+   ]
+  },
+  {
+   "key": "load_cells_4x50",
+   "qty": 1,
+   "for": "the load plate under the wheel (not in jumps or drops)",
+   "name": "4 x 50 kg half-bridge load cells + HX711",
+   "vendor": "Amazon (Geekstory)",
+   "part_number": "ASIN B079FTXR7Y",
+   "price_usd_each": 7.9,
+   "pack_qty": 1,
+   "sellers": [
+    {
+     "seller": "Amazon (Geekstory)",
+     "url": "https://www.amazon.com/dp/B079FTXR7Y",
+     "seller_pn": "ASIN B079FTXR7Y",
+     "price_usd": 7.9,
+     "pack_qty": 1,
+     "stock": "Only 10 left",
+     "in_stock": true,
+     "ships_from": "US",
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "VXB",
+     "url": "https://vxb.com/products/4-pack-50kg-half-bridge-load-cell-sensor-kit-with",
+     "seller_pn": "VXB07X87GYLQ",
+     "price_usd": 39.99,
+     "pack_qty": 1,
+     "stock": null,
+     "read_on": "2026-10-27",
+     "drop_in": true,
+     "changes": null,
+     "price_text": "$39.99"
+    }
+   ]
+  },
+  {
+   "key": "pendant_specs",
+   "qty": 1,
+   "for": "hold-to-run: the trigger of the off-delay relay and the rig node's input",
+   "name": "Momentary switch, 35 mm, 6 ft cord, 3.5 mm mono plug",
+   "vendor": "AbleNet",
+   "part_number": "Specs IC (10000114)",
+   "price_usd_each": 75.0,
+   "pack_qty": 1,
+   "sellers": [
+    {
+     "seller": "AbleNet",
+     "url": "https://www.ablenetinc.com/specs-ic/",
+     "seller_pn": "Specs IC (10000114)",
+     "price_usd": 75.0,
+     "pack_qty": 1,
+     "stock": "In stock",
+     "in_stock": true,
+     "ships_from": "US",
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "AbleNet",
+     "url": "https://www.ablenetinc.com/jelly-bean",
+     "seller_pn": "Jelly Bean (10033400)",
+     "price_usd": 75.0,
+     "pack_qty": 1,
+     "stock": null,
+     "read_on": "2026-10-27",
+     "drop_in": true,
+     "changes": null,
+     "price_text": "$75.00"
+    }
+   ]
+  },
+  {
+   "key": "wire_12awg",
+   "qty": 1,
+   "for": "the pack, fuse, contactor and motor runs",
+   "name": "12 AWG silicone wire, 10 ft red + 10 ft black",
+   "vendor": "BNTECHGO",
+   "part_number": "SW12G68008F10C2",
+   "price_usd_each": 14.98,
+   "pack_qty": 1,
+   "sellers": [
+    {
+     "seller": "BNTECHGO",
+     "url": "https://bntechgo.com/bntechgo-12-gauge-silicone-wire-kit-ultra-flexible-20-ft-black-and-red-each-color-10-ft-high-temp-200-c-600v-12-awg-silicone-wire-680-strands-of-tinned-copper-wire-stranded-wire-stranded-wire-for-model-battery/",
+     "seller_pn": "SW12G68008F10C2",
+     "price_usd": 14.98,
+     "pack_qty": 1,
+     "stock": null,
+     "in_stock": true,
+     "ships_from": "US",
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "BNTECHGO",
+     "url": "https://bntechgo.com/",
+     "seller_pn": "SW12G68008F25C2 (25 + 25 ft)",
+     "price_usd": 32.98,
+     "pack_qty": 1,
+     "stock": null,
+     "read_on": "2026-10-27",
+     "drop_in": true,
+     "changes": null,
+     "price_text": "$32.98"
+    }
+   ]
+  },
+  {
+   "key": "xt30_male",
+   "qty": 3,
+   "for": "the Y-splice to the two motors' XT30 (female) leads, one spare",
+   "name": "XT30 connector, male",
+   "vendor": "RaceDayQuads",
+   "part_number": "Amass XT30 (male)",
+   "price_usd_each": 0.99,
+   "pack_qty": 1,
+   "sellers": [
+    {
+     "seller": "RaceDayQuads",
+     "url": "https://www.racedayquads.com/products/xt30-connector-male-or-female",
+     "seller_pn": "Amass XT30 (male)",
+     "price_usd": 0.99,
+     "pack_qty": 1,
+     "stock": null,
+     "in_stock": true,
+     "ships_from": "US",
+     "read_on": "2026-10-27"
+    }
+   ]
+  },
+  {
+   "key": "xt60_pair",
+   "qty": 4,
+   "for": "the pack lead (female) and the motors' lead (male)",
+   "name": "XT60H connector",
+   "vendor": "RaceDayQuads",
+   "part_number": "Amass XT60H (male + female)",
+   "price_usd_each": 0.99,
+   "pack_qty": 1,
+   "sellers": [
+    {
+     "seller": "RaceDayQuads",
+     "url": "https://www.racedayquads.com/products/amass-xt60h-connector-1pc-choose-your-version",
+     "seller_pn": "Amass XT60H (male + female)",
+     "price_usd": 0.99,
+     "pack_qty": 1,
+     "stock": null,
+     "in_stock": true,
+     "ships_from": "US",
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "Amazon",
+     "url": "https://www.amazon.com/dp/B0863HJZHB",
+     "seller_pn": "ASIN B0863HJZHB (XT60H pairs)",
+     "price_usd": 1.8,
+     "pack_qty": 1,
+     "stock": null,
+     "read_on": "2026-10-27",
+     "drop_in": true,
+     "changes": null,
+     "price_text": "$8.99"
+    }
+   ]
+  },
+  {
+   "key": "can_cable",
+   "qty": 1,
+   "for": "the CAN chain (pair + ground) and the 12 V signal runs (pendant, timer, coil: under 0.5 A)",
+   "name": "Shielded 22 AWG 1.5-pair data cable, 20 ft",
+   "vendor": "AutomationDirect",
+   "part_number": "Quabbin Q0357-1",
+   "price_usd_each": 21.2,
+   "pack_qty": 1,
+   "sellers": [
+    {
+     "seller": "AutomationDirect",
+     "url": "https://www.automationdirect.com/adc/shopping/catalog/bulk_wire_-a-_cable/data_-a-_communication_cable/q0357-1",
+     "seller_pn": "Quabbin Q0357-1",
+     "price_usd": 21.2,
+     "pack_qty": 1,
+     "stock": null,
+     "in_stock": true,
+     "ships_from": "US",
+     "read_on": "2026-10-27"
+    }
+   ]
+  },
+  {
+   "key": "resistor_120",
+   "qty": 2,
+   "for": "CAN terminators where the adapter's or a motor's own is not used",
+   "name": "120 ohm 1/4 W (1000)",
+   "vendor": "TTI, Inc.",
+   "part_number": "YAGEO CFR-25JB-52-120R",
+   "price_usd_each": 0.0156,
+   "pack_qty": 1000,
+   "sellers": [
+    {
+     "seller": "TTI, Inc.",
+     "url": "https://www.tti.com/content/ttiinc/en/apps/part-detail.html?partsNumber=CFR-25JB-52-120R&mfgShortname=YAG",
+     "seller_pn": "YAGEO CFR-25JB-52-120R",
+     "price_usd": 15.6,
+     "pack_qty": 1000,
+     "stock": null,
+     "in_stock": true,
+     "ships_from": "US",
+     "read_on": "2026-10-27"
+    }
+   ]
+  },
+  {
+   "key": "ferrule_kit",
+   "qty": 1,
+   "for": "every screw terminal (fuse holder, contactor coil, timer, DC-DC)",
+   "name": "Ferrule crimper + 770 ferrules (23-10 AWG)",
+   "vendor": "IWISS",
+   "part_number": "HSC8 6-4-KIT",
+   "price_usd_each": 19.99,
+   "pack_qty": 1,
+   "sellers": [
+    {
+     "seller": "IWISS",
+     "url": "https://www.iwiss.com/products/hsc8-6-4-kit-ferrule-crimping-tool-kit-awg-23-10-self-adjustable-ratchet-ferrule-crimper-plier-c-w-770end-sleeve-ferrules-connector-terminals",
+     "seller_pn": "HSC8 6-4-KIT",
+     "price_usd": 19.99,
+     "pack_qty": 1,
+     "stock": null,
+     "in_stock": true,
+     "ships_from": "US",
+     "read_on": "2026-10-27"
+    }
+   ]
+  },
+  {
+   "key": "heatshrink_kit",
+   "qty": 1,
+   "for": "",
+   "name": "Heat-shrink assortment",
+   "vendor": "RaceDayQuads",
+   "part_number": "Heat Shrink Tube Set (530PC)",
+   "price_usd_each": 9.99,
+   "pack_qty": 1,
+   "sellers": [
+    {
+     "seller": "RaceDayQuads",
+     "url": "https://www.racedayquads.com/products/530-pcs-heat-shrink-tube-set",
+     "seller_pn": "Heat Shrink Tube Set (530PC)",
+     "price_usd": 9.99,
+     "pack_qty": 1,
+     "stock": null,
+     "in_stock": true,
+     "ships_from": "US",
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "SparkFun",
+     "url": "https://www.sparkfun.com/products/9353",
+     "seller_pn": "PRT-09353",
+     "price_usd": 10.95,
+     "pack_qty": 1,
+     "stock": null,
+     "read_on": "2026-10-27",
+     "drop_in": true,
+     "changes": null,
+     "price_text": "$10.95"
+    }
+   ]
+  },
+  {
+   "key": "resistor_10r_25w",
+   "qty": 1,
+   "for": "optional: a 1 s pre-charge across the contactor at the first power-up if it sparks",
+   "name": "10 ohm 25 W aluminium-housed resistor (box of 10)",
+   "vendor": "TTI, Inc.",
+   "part_number": "TE HSA2510RJ",
+   "price_usd_each": 3.7,
+   "pack_qty": 10,
+   "sellers": [
+    {
+     "seller": "TTI, Inc.",
+     "url": "https://www.tti.com/content/ttiinc/en/apps/part-detail.html?partsNumber=HSA2510RJ&mfgShortname=TYC",
+     "seller_pn": "TE HSA2510RJ",
+     "price_usd": 37.0,
+     "pack_qty": 10,
+     "stock": null,
+     "in_stock": true,
+     "ships_from": "US",
+     "read_on": "2026-10-27"
+    }
+   ]
+  },
+  {
+   "key": "gh_header_2p",
+   "qty": 4,
+   "for": "the CAN junction: mates each RS-04's GH1.25-2P plug (two used, two spare)",
+   "name": "JST GH 1.25 mm 2-pin header, top entry (SMT)",
+   "vendor": "LCSC",
+   "part_number": "JST BM02B-GHS-TBT(LF)(SN) (LCSC C161690)",
+   "price_usd_each": 0.0897,
+   "pack_qty": 1,
+   "sellers": [
+    {
+     "seller": "LCSC",
+     "url": "https://www.lcsc.com/product-detail/C161690.html",
+     "seller_pn": "JST BM02B-GHS-TBT(LF)(SN) (LCSC C161690)",
+     "price_usd": 0.0897,
+     "pack_qty": 1,
+     "stock": "70,630 in stock",
+     "in_stock": true,
+     "ships_from": "CN",
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "HQonline",
+     "url": "https://www.hqonline.com/product-detail/wire-to-board-connectors-jst-bm02b-ghs-tbt-lf--sn--2500404027",
+     "seller_pn": "BM02B-GHS-TBT(LF)(SN)",
+     "price_usd": 0.097,
+     "pack_qty": 1,
+     "stock": null,
+     "read_on": "2026-10-27",
+     "drop_in": true,
+     "changes": null,
+     "price_text": "$0.097 (5+)"
+    }
+   ]
+  },
+  {
+   "key": "diode_1n4001",
+   "qty": 2,
+   "for": "across the contactor's coil (cathode to +): spares the relay's contact the coil's kick; one spare",
+   "name": "Rectifier diode 1N4001 (1 A, 50 V)",
+   "vendor": "SparkFun",
+   "part_number": "COM-08589",
+   "price_usd_each": 0.25,
+   "pack_qty": 1,
+   "sellers": [
+    {
+     "seller": "SparkFun",
+     "url": "https://www.sparkfun.com/diode-rectifier-1a-50v-1n4001.html",
+     "seller_pn": "COM-08589",
+     "price_usd": 0.25,
+     "pack_qty": 1,
+     "stock": "In stock",
+     "in_stock": true,
+     "ships_from": "US",
+     "read_on": "2026-10-27"
+    }
+   ]
+  },
+  {
+   "key": "resistor_kit",
+   "qty": 1,
+   "for": "the node's dividers: the pendant loop 10k/2.2k (12 V -> 2.2 V), the motors' bus 100k/4.7k (60 V -> 2.7 V)",
+   "name": "Resistor kit 1/4 W, 500 (incl. 2.2k, 4.7k, 10k, 100k)",
+   "vendor": "SparkFun",
+   "part_number": "COM-10969",
+   "price_usd_each": 9.0,
+   "pack_qty": 1,
+   "sellers": [
+    {
+     "seller": "SparkFun",
+     "url": "https://www.sparkfun.com/resistor-kit-1-4w-500-total.html",
+     "seller_pn": "COM-10969",
+     "price_usd": 9.0,
+     "pack_qty": 1,
+     "stock": null,
+     "in_stock": true,
+     "ships_from": "US",
+     "read_on": "2026-10-27"
+    }
+   ]
+  },
+  {
+   "key": "featherwing_proto",
+   "qty": 2,
+   "for": "one under the Feather (the dividers, the sensors' plugs); one as the carriage's CAN junction (the GH headers)",
+   "name": "FeatherWing Proto",
+   "vendor": "Adafruit",
+   "part_number": "2884",
+   "price_usd_each": 4.95,
+   "pack_qty": 1,
+   "sellers": [
+    {
+     "seller": "Adafruit",
+     "url": "https://www.adafruit.com/product/2884",
+     "seller_pn": "2884",
+     "price_usd": 4.95,
+     "pack_qty": 1,
+     "stock": "In Stock",
+     "in_stock": true,
+     "ships_from": "US",
+     "read_on": "2026-10-27"
+    }
+   ]
+  },
+  {
+   "key": "turret_screw_m2_5x8",
+   "qty": 4,
+   "for": "the Feather's FeatherWing into the pod's bosses (self-tapping into PETG)",
+   "name": "Socket head screw M2.5 x 8",
+   "vendor": "McMaster-Carr",
+   "part_number": "91290A102",
+   "price_usd_each": 0.246,
+   "pack_qty": 50,
+   "sellers": [
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/91290A102/",
+     "seller_pn": "91290A102",
+     "price_usd": 12.3,
+     "pack_qty": 50,
+     "stock": null,
+     "in_stock": true,
+     "ships_from": "US",
+     "read_on": "2026-10-27"
+    }
+   ]
+  },
+  {
+   "key": "amass-xt60e-m",
+   "qty": 1,
+   "for": "the pod's inlet: the pack lead carries the female",
+   "name": "XT60 male panel plug (the pack's inlet)",
+   "vendor": "Maplin (UK)",
+   "part_number": "Amass XT60E-M",
+   "price_usd_each": 1.5,
+   "pack_qty": 1,
+   "sellers": [
+    {
+     "seller": "Maplin (UK)",
+     "url": "https://pro.maplin.co.uk/products/male-xt60e-panel-mount-gold-plated-connector-20a-amass",
+     "seller_pn": "Amass XT60E-M",
+     "price_usd": 1.5,
+     "pack_qty": 1,
+     "stock": null,
+     "in_stock": true,
+     "ships_from": "UK",
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "LCSC",
+     "url": "https://www.lcsc.com/product-detail/C3040679.html",
+     "seller_pn": "XT60E-M.G.Y (C3040679)",
+     "price_usd": 0.613,
+     "pack_qty": 1,
+     "stock": "In stock (3,091)",
+     "read_on": "2026-10-27",
+     "drop_in": true,
+     "changes": null,
+     "price_text": "$0.613"
+    }
+   ]
+  },
+  {
+   "key": "xt60e_f_panel",
+   "qty": 1,
+   "for": "the pod's outlet: the motors' lead carries the male",
+   "name": "XT60 female panel socket (the motors' outlet)",
+   "vendor": "Jameco Electronics",
+   "part_number": "Amass XT60E-F",
+   "price_usd_each": 0.95,
+   "pack_qty": 1,
+   "sellers": [
+    {
+     "seller": "Jameco Electronics",
+     "url": "https://www.jameco.com/z/XT60E-F-Amass-XT60-Female-Bullet-Plug-Connector-2-Position-for-RC-Battery-Panel-Mount-60A_2338319.html",
+     "seller_pn": "Amass XT60E-F",
+     "price_usd": 0.95,
+     "pack_qty": 1,
+     "stock": null,
+     "in_stock": true,
+     "ships_from": "US",
+     "read_on": "2026-10-27"
+    }
+   ]
+  },
+  {
+   "key": "jack_3p5",
+   "qty": 1,
+   "for": "the pendant's plug on the pod's panel",
+   "name": "3.5 mm panel jack",
+   "vendor": "Master Electronics",
+   "part_number": "Switchcraft 35PM2A",
+   "price_usd_each": 6.95,
+   "pack_qty": 1,
+   "sellers": [
+    {
+     "seller": "Master Electronics",
+     "url": "https://www.masterelectronics.com/en/switchcraft/35pm2a-12319088.html",
+     "seller_pn": "Switchcraft 35PM2A",
+     "price_usd": 6.95,
+     "pack_qty": 1,
+     "stock": null,
+     "in_stock": true,
+     "ships_from": "US",
+     "read_on": "2026-10-27"
+    }
+   ]
+  },
+  {
+   "key": "fuse_holder_5x20",
+   "qty": 1,
+   "for": "the 12 V converter's input fuse, on the panel",
+   "name": "5 x 20 mm panel fuse holder",
+   "vendor": "Digi-Key",
+   "part_number": "Littelfuse 03455LS1H",
+   "price_usd_each": 7.16,
+   "pack_qty": 1,
+   "sellers": [
+    {
+     "seller": "Digi-Key",
+     "url": "https://www.digikey.com/en/products/detail/littelfuse-inc/03455LS1H/553826",
+     "seller_pn": "Littelfuse 03455LS1H",
+     "price_usd": 7.16,
+     "pack_qty": 1,
+     "stock": null,
+     "in_stock": true,
+     "ships_from": "US",
+     "read_on": "2026-10-27"
+    }
+   ]
+  },
+  {
+   "key": "littelfuse-0477005-mxp",
+   "qty": 2,
+   "for": "the 12 V converter's input (one spare)",
+   "name": "5 x 20 mm fuse 5 A, DC-rated",
+   "vendor": "Digi-Key",
+   "part_number": "Littelfuse 0477005.MXP",
+   "price_usd_each": 1.0,
+   "pack_qty": 1,
+   "sellers": [
+    {
+     "seller": "Digi-Key",
+     "url": "https://www.digikey.com/en/products/detail/littelfuse-inc/0477005-MXP/1979192",
+     "seller_pn": "Littelfuse 0477005.MXP",
+     "price_usd": 1.0,
+     "pack_qty": 1,
+     "stock": null,
+     "in_stock": true,
+     "ships_from": "US",
+     "read_on": "2026-10-27"
+    }
+   ]
+  }
+ ],
+ "bench": [
+  {
+   "key": "load_cell_s500",
+   "qty": 1,
+   "for": "the press cage (B3 the stop sleeve to 2 kN, B4 the inserts and the link screws to 3.5 kN), read by an HX711",
+   "name": "S-type load cell 500 kg (C2), M12 x 1.75 both ends, 51 x 76 x 19 mm",
+   "vendor": "Phidgets",
+   "part_number": "3140_0",
+   "price_usd_each": 50.0,
+   "pack_qty": 1,
+   "sellers": [
+    {
+     "seller": "Phidgets",
+     "url": "https://www.phidgets.com/?prodid=231",
+     "seller_pn": "3140_0",
+     "price_usd": 50.0,
+     "pack_qty": 1,
+     "stock": "Quantity Available: 358",
+     "in_stock": true,
+     "ships_from": "US",
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "RobotShop",
+     "url": "https://www.robotshop.com/products/phidgets-steel-s-type-load-cell-500kg-c3",
+     "seller_pn": "Phidgets S-Type Load Cell 500 kg (C3)",
+     "price_usd": 71.54,
+     "pack_qty": 1,
+     "stock": null,
+     "read_on": "2026-10-27",
+     "drop_in": true,
+     "changes": null,
+     "price_text": "$71.54"
+    },
+    {
+     "seller": "SparkFun",
+     "url": "https://www.sparkfun.com/products/14282",
+     "seller_pn": "SEN-14282 (TAS501, 200 kg)",
+     "price_usd": 96.95,
+     "pack_qty": 1,
+     "stock": "In stock",
+     "read_on": "2026-10-27",
+     "drop_in": false,
+     "changes": "200 kg (1.96 kN), same 51 x 76 x 19 body and M12: B4 then stops at 1.9 kN (a proof load, not the pull-out)",
+     "price_text": "$96.95"
+    }
+   ]
+  },
+  {
+   "key": "screw_m5x25",
+   "qty": 18,
+   "for": "the dyno: each hub onto its motor's output (9 each)",
+   "name": "Black-Oxide Alloy Steel Socket Head Screw, US Origin, M5 x 0.8 mm Thread Size, 25 mm Long",
+   "vendor": "McMaster-Carr",
+   "part_number": "91290A252",
+   "price_usd_each": 0.2192,
+   "pack_qty": 50,
+   "sellers": [
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/91290A252/",
+     "seller_pn": "91290A252",
+     "price_usd": 10.96,
+     "pack_qty": 50,
+     "stock": null,
+     "in_stock": null,
+     "ships_from": null,
+     "read_on": "2026-10-27"
+    }
+   ]
+  },
+  {
+   "key": "screw_m5x40",
+   "qty": 3,
+   "for": "B4: the screws under test (two inserts to 3.5 kN, the link-under-the-head test)",
+   "name": "Black-Oxide Alloy Steel Socket Head Screw, M5 x 0.8 mm Thread Size, 40 mm Long, Partially Threaded",
+   "vendor": "McMaster-Carr",
+   "part_number": "91290A662",
+   "price_usd_each": 0.1618,
+   "pack_qty": 50,
+   "sellers": [
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/91290A662/",
+     "seller_pn": "91290A662",
+     "price_usd": 8.09,
+     "pack_qty": 50,
+     "stock": null,
+     "in_stock": null,
+     "ships_from": null,
+     "read_on": "2026-10-26"
+    },
+    {
+     "seller": "Belmetric",
+     "url": "https://belmetric.com/m5x0-8-socket-head-cap-screw-din-912-class-12-9/",
+     "seller_pn": "BSH5X40",
+     "price_usd": 0.28,
+     "pack_qty": 1,
+     "stock": "In stock",
+     "read_on": "2026-10-27",
+     "drop_in": true,
+     "changes": null,
+     "price_text": "$0.28"
+    },
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/91290A258/",
+     "seller_pn": "91290A258",
+     "price_usd": 16.580000000000002,
+     "pack_qty": 50,
+     "stock": "Delivers tomorrow 7-9 am",
+     "read_on": "2026-10-27",
+     "drop_in": true,
+     "changes": "The US-origin column of the same class 12.9 ISO 4762 table: same screw, about twice the price.",
+     "price_text": "$16.58 per pack of 50"
+    }
+   ]
+  },
+  {
+   "key": "insert_m5",
+   "qty": 3,
+   "for": "B4: one in each M5 puller",
+   "name": "Heat-Set Threaded Inserts for Plastic, Standard, Brass, M5 x 0.8 mm Thread Size, 7.9 mm Installed Length",
+   "vendor": "McMaster-Carr",
+   "part_number": "94459A775",
+   "price_usd_each": 0.2728,
+   "pack_qty": 25,
+   "sellers": [
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/94459A775/",
+     "seller_pn": "94459A775",
+     "price_usd": 6.82,
+     "pack_qty": 25,
+     "stock": null,
+     "in_stock": null,
+     "ships_from": null,
+     "read_on": "2026-10-26"
+    },
+    {
+     "seller": "3DJake",
+     "url": "https://www.3djake.com/cnc-kitchen/threaded-inserts-m5-short",
+     "seller_pn": "CNC-B09FXM8ZMV",
+     "price_usd": 11.18,
+     "pack_qty": 50,
+     "stock": "In stock",
+     "read_on": "2026-10-27",
+     "drop_in": false,
+     "changes": "5.8 mm long instead of 7.9 mm, so 2.1 mm less thread engagement and pull-out strength. Same 6.4 mm hole per CNC Kitchen's table. It fits the existing 6.4 mm hole without a CAD change and sits flush with spare depth below.",
+     "price_text": "$11.18 ($0.22 / pc), excl. VAT"
+    },
+    {
+     "seller": "ruthex",
+     "url": "https://www.ruthex.de/products/ruthex-gewindeeinsatz-m5-50-stuck-rx-m5x9-5-messing-gewindebuchsen",
+     "seller_pn": "RX-M5x9.5 (set GE-M5x95-001)",
+     "price_usd": null,
+     "pack_qty": 50,
+     "stock": "In stock",
+     "read_on": "2026-10-27",
+     "drop_in": false,
+     "changes": "9.5 mm long instead of 7.9 mm (1.6 mm longer): the hole must be at least 1.6 mm deeper and the boss longer. Hole diameter is presumably 6.4 mm (see evidence). Ruthex also sells RX-M5Sx5.8 (5.8 mm long, 8.99 EUR / 50), which fits the existing hole depth but gives less engagement.",
+     "price_text": "9.99 EUR / 50 pcs"
+    }
+   ]
+  },
+  {
+   "key": "insert_m8",
+   "qty": 2,
+   "for": "B4: the M8 puller; B3: the sleeve block's stop post",
+   "name": "Heat-Set Threaded Inserts for Plastic, Standard, Brass, M8 x 1.25mm Thread Size, 12.7mm Installed Length",
+   "vendor": "McMaster-Carr",
+   "part_number": "94459A778",
+   "price_usd_each": 0.6544,
+   "pack_qty": 25,
+   "sellers": [
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/94459A778/",
+     "seller_pn": "94459A778",
+     "price_usd": 16.36,
+     "pack_qty": 25,
+     "stock": null,
+     "in_stock": null,
+     "ships_from": null,
+     "read_on": "2026-10-26"
+    },
+    {
+     "seller": "3DJake",
+     "url": "https://www.3djake.com/cnc-kitchen/threaded-inserts-m8-standard",
+     "seller_pn": "CNC-4262391010044",
+     "price_usd": 11.180000000000001,
+     "pack_qty": 20,
+     "stock": "In stock",
+     "read_on": "2026-10-27",
+     "drop_in": false,
+     "changes": "CNC Kitchen's table gives the hole as 9.7 mm, against 9.6 mm in the CAD (0.1 mm larger). Length 12.7 mm matches. It will probably go into the existing 9.6 mm hole with slightly more interference, but that is not confirmed.",
+     "price_text": "$11.18 ($0.56 / pc), excl. VAT"
+    },
+    {
+     "seller": "ruthex",
+     "url": "https://www.ruthex.de/products/ruthex-gewindeeinsatz-m8-20-stuck-rx-m8x12-7-messing-gewindebuchsen",
+     "seller_pn": "RX-M8x12.7 (set GE-M8x127-001)",
+     "price_usd": null,
+     "pack_qty": 20,
+     "stock": "In stock",
+     "read_on": "2026-10-27",
+     "drop_in": false,
+     "changes": "Length 12.7 mm matches, but the recommended hole diameter is not in the page text (the table is an image), so the fit in a 9.6 mm hole is unverified.",
+     "price_text": "9.99 EUR / 20 pcs"
+    }
+   ]
+  },
+  {
+   "key": "washer_m6_large",
+   "qty": 2,
+   "for": "B4: under the screw under test, over the cage's hole",
+   "name": "18-8 oversized washer for M6 (18 mm OD)",
+   "vendor": "McMaster-Carr",
+   "part_number": "91116A150",
+   "price_usd_each": 0.294,
+   "pack_qty": 50,
+   "sellers": [
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/91116A150/",
+     "seller_pn": "91116A150",
+     "price_usd": 14.7,
+     "pack_qty": 50,
+     "stock": null,
+     "in_stock": true,
+     "ships_from": "US",
+     "read_on": "2026-10-27"
+    }
+   ]
+  },
+  {
+   "key": "washer_3_8",
+   "qty": 1,
+   "for": "B4: under the M8 screw under test",
+   "name": "Oversized washer for 3/8 in, 1.25 in OD",
+   "vendor": "McMaster-Carr",
+   "part_number": "91090A121",
+   "price_usd_each": 0.1424,
+   "pack_qty": 50,
+   "sellers": [
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/91090A121/",
+     "seller_pn": "91090A121",
+     "price_usd": 7.12,
+     "pack_qty": 50,
+     "stock": null,
+     "in_stock": true,
+     "ships_from": "US",
+     "read_on": "2026-10-27"
+    }
+   ]
+  },
+  {
+   "key": "hx711",
+   "qty": 1,
+   "for": "B3, B4: the load cell's own amplifier on the rig node",
+   "name": "HX711 load cell amplifier",
+   "vendor": "SparkFun",
+   "part_number": "SEN-13879",
+   "price_usd_each": 4.95,
+   "pack_qty": 1,
+   "sellers": [
+    {
+     "seller": "SparkFun",
+     "url": "https://www.sparkfun.com/products/13879",
+     "seller_pn": "SEN-13879",
+     "price_usd": 4.95,
+     "pack_qty": 1,
+     "stock": "In stock",
+     "in_stock": true,
+     "ships_from": "US",
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "Adafruit",
+     "url": "https://www.adafruit.com/product/5974",
+     "seller_pn": "5974",
+     "price_usd": 9.95,
+     "pack_qty": 1,
+     "stock": null,
+     "read_on": "2026-10-27",
+     "drop_in": true,
+     "changes": null,
+     "price_text": "$9.95"
+    }
+   ]
+  }
+ ],
+ "made_to_order": [
   {
    "key": "carriage_plate",
    "qty": 1,
-   "for": "SendCutSend, 6061-T6 0.25 in (exports/rig/sendcutsend/)",
-   "vendor": "SendCutSend",
-   "part_number": "carriage_plate.dxf, 6061-T6 0.250 in",
-   "name": "Carriage plate, laser-cut 6061-T6 aluminium 0.25 in, 300 x 320 mm, 28 holes and 2 slots",
+   "vendor": "SendCutSend (sendcutsend.com: upload the STEP or DXF for the instant price)",
+   "backup": "Xometry (xometry.com: instant quote from the STEP)",
+   "material": "6061-T6 aluminium, 0.250 in (6.35 mm)",
+   "mass_g_each": 1609,
+   "size_mm": [
+    300,
+    320,
+    6.35
+   ],
+   "step": "exports/rig/sendcutsend/carriage_plate.step",
+   "drawing": "exports/rig/sendcutsend/carriage_plate.dxf",
+   "readme": "exports/rig/sendcutsend/README.md",
+   "spec": [
+    "6061-T6 aluminium sheet, 0.250 in; laser or waterjet cut from the file as drawn (mm, 1:1)",
+    "Every hole is a clearance hole: no tapping, no countersinks, no bends",
+    "Deburr on (the blocks and the hip frame sit on both faces)",
+    "Check on arrival: the 16 block holes against an HGH15CA block (M4 on 38 x 30), the 6 hip-frame holes against the frame (exports/rig/sendcutsend/README.md)"
+   ],
    "price_usd_each": null,
-   "pack_qty": 1,
-   "cost_usd": 0
+   "price_estimate_usd_each": 75.0,
+   "price_note": "an estimate until the instant price is read on upload (D40: no quotes); SendCutSend ships in about a week"
   }
  ],
- "not_in_catalog": [
-  "rail_hgr15_set",
-  "extrusion_4040",
-  "hinge_8",
-  "tnut_m8_8",
-  "screw_m8x16",
-  "tnut_m4_8",
-  "screw_m4x16",
-  "screw_m4x12",
-  "washer_m4",
-  "screw_m5x16",
-  "washer_m5",
-  "tnut_m6_8",
-  "screw_m6x45_fh",
-  "screw_ballast",
-  "washer_fender_1in",
-  "quick_pin_10",
-  "webbing_sling"
- ],
- "total_usd": 493.71
+ "price_usd": 1722.06,
+ "made_to_order_estimate_usd": 75.0,
+ "made_by": "tools/rig_orders.py from catalog/rig.json (tools/rig_catalog.py)"
 }
