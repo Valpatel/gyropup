@@ -4,7 +4,9 @@
 
 Chain (docs/turret-plan.md 2.4-2.6, main 5f09bd9): the ring's +24 V (an ideal 24 V behind the ring's series resistance,
 10 or 60 mOhm) -> the 3 x 1,000 uF bank -> the 12 V flywheel regulator (Pololu D24V150F12: 90 % efficient, 32 A
-instantaneous output limit, drops out under 13.3 V in) -> two AM32 ESCs -> two Snail 2305 (sim/turret_launch.py SNAIL).
+instantaneous output limit, drops out under 13.3 V in) -> two AM32 ESCs -> two flywheel motors (sim/turret_launch.py MOTOR: the
+SunnySky X2216 880KV since D42, its wheel about twice the Snail's inertia, so the same ramp draws about twice the current;
+`ramp_sweep` finds the ramp that keeps the ring's peak in its budget).
 Per motor: the ESC applies duty D so that D V_rail = ke w + R_eff i; the phase current i follows the speed loop
 (stepped: the 10 A limit until the set speed; ramped: a PI on a 0 -> set-speed ramp of 200 ms), the DC-side current
 is D i / eta_esc (power balance, eta_esc 0.95 est), the regulator's input current is P_out / (0.9 V_in), the bank
@@ -33,11 +35,11 @@ PLAN = {'ring_r_ohm': (0.010, 0.060), 'bank_f': 3 * 1000e-6, 'bank_esr_ohm': 0.0
                   'the bank ESR and the ESC efficiency are est'}
 
 
-def simulate(mode, w_set, L, ring_r, dt=1e-5, t_end=1.0, burst=None):
+def simulate(mode, w_set, L, ring_r, dt=1e-5, t_end=1.0, burst=None, ramp_s=None):
     """mode: 'step' (set speed applied at t = 0 on the 10 A limit) or 'ramp' (set speed ramps over PLAN ramp_s).
     burst: (rate_hz, n_shots, drop_fraction, contact_s) to fire from t = 0.1 s with the wheels at speed."""
     tl = tc.sim_module('turret_launch')
-    S = tl.SNAIL
+    S = tl.MOTOR
     ke = 60.0 / (2 * math.pi * S['kv_rpm_v'])
     kt = S['kt']
     tf_per_w = kt * S['i0_a'] / (S['i0_at_rpm'] * 2 * math.pi / 60)
@@ -61,7 +63,7 @@ def simulate(mode, w_set, L, ring_r, dt=1e-5, t_end=1.0, burst=None):
         shots = [(0.1 + k / rate, 0.1 + k / rate + contact) for k in range(n_shots)]
     for k in range(n):
         tk = t[k]
-        tgt = w_set if mode == 'step' or burst else w_set * min(1.0, tk / PLAN['ramp_s'])
+        tgt = w_set if mode == 'step' or burst else w_set * min(1.0, tk / (ramp_s or PLAN['ramp_s']))
         # the ball's drag on the wheels during a shot: a steady torque that takes drop * w_set in contact s
         load = 0.0
         for a, b in shots:
@@ -120,6 +122,14 @@ def study():
                 res['cases'][f'spinup_{mode}_ring_{int(rr * 1000)}mohm']['trace'] = r['trace']
         r = simulate('step', w_set, L, rr, burst=(10.0, 8, drop, contact))
         res['cases'][f'burst_8_at_10_per_s_ring_{int(rr * 1000)}mohm'] = {k: v for k, v in r.items() if k != 'trace'} | ({'trace': r['trace']} if rr == PLAN['ring_r_ohm'][1] else {})
+    # the ramp the ring needs with this motor: the peak on the paralleled pair (two 2 A circuits) at the high ring resistance
+    res['ramp_sweep'] = []
+    for rs in (0.2, 0.3, 0.4, 0.5, 0.6):
+        r = simulate('ramp', w_set, L, PLAN['ring_r_ohm'][1], t_end=max(1.0, rs + 0.3), ramp_s=rs)
+        res['ramp_sweep'].append({'ramp_s': rs, 'ring_peak_a': r['ring_peak_a'], 'per_circuit_a': round(r['ring_peak_a'] / 2, 2),
+                                  'time_to_95pct_speed_s': r['time_to_95pct_speed_s'], 'within_2a_per_circuit': r['ring_peak_a'] / 2 <= 2.0})
+    ok = [x['ramp_s'] for x in res['ramp_sweep'] if x['within_2a_per_circuit']]
+    res['ramp_needed_s'] = min(ok) if ok else None
     res['verdict'] = {'ramp_ring_peak_a': res['cases']['spinup_ramp_ring_60mohm']['ring_peak_a'], 'step_ring_peak_a': res['cases']['spinup_step_ring_60mohm']['ring_peak_a'],
                       'burst_ring_peak_a': res['cases']['burst_8_at_10_per_s_ring_60mohm']['ring_peak_a'], 'burst_ring_rms_a': res['cases']['burst_8_at_10_per_s_ring_60mohm']['ring_rms_1s_a'],
                       'ramp_keeps_ring_under_3a': res['cases']['spinup_ramp_ring_60mohm']['ring_peak_a'] <= 3.0,

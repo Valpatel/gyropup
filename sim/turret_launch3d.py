@@ -7,7 +7,7 @@ the ball/launcher definitions) to six degrees of freedom. It is a REDUCED MODEL 
 steps, vectorised over a population of balls); MuJoCo's soft contacts cannot hold a 25 % foam crush at 18 m/s surface
 speed without tuning that would hide the physics. What it adds over the 1D model:
 
-  - two independent wheels (+y and -y), each with its own Snail 2305 + ESC loop, so mismatched set speeds, a lagging
+  - two independent wheels (+y and -y), each with its own motor (sim/turret_launch.py MOTOR) + ESC loop, so mismatched set speeds, a lagging
     wheel in a burst, or one wheel at 100 % throttle give the ball spin about z (yaw spin -> a sideways Magnus curve);
   - the ball's position in y and z at the nip (from the feed stage: the bore's 0.75 mm play, the chute floor), the
     tyre's edges (12 mm wide), and tyre runout (a printed TPU tyre is not round: est 0.15 mm, swept), which modulates
@@ -40,13 +40,13 @@ import numpy as np
 R = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(R / 'sim'))
 sys.path.insert(0, str(R / 'cad'))
-import turret_launch as tl  # noqa: E402  (the program agent's 1D model: SNAIL, Ball, Launcher, shot, no_load_speed, ...)
+import turret_launch as tl  # noqa: E402  (the program agent's 1D model: MOTOR, Ball, Launcher, shot, no_load_speed, ...)
 
 OUT = R / 'exports' / 'turret' / 'launch'
 FPS = tl.FPS
 CAP = tl.CAP
 CAP_FPS = tl.CAP_FPS
-SNAIL = tl.SNAIL
+MOTOR = tl.MOTOR
 V_REG = 0.05                    # m/s: the slip speed over which Coulomb friction is regularised (as in the 1D model)
 DT = 1e-6
 T_MAX = 0.03                    # s: a ball still in the nip after this is counted as stuck (rejected)
@@ -81,6 +81,23 @@ class Wheels:
     ramp_s: float = 0.0                 # the set speed ramps 0 -> w_set over this (the plan's 200 ms soft start); 0: constant
     t_offset: float = 0.0               # where in the ramp the ball arrives (s)
     brake: bool = False                 # the phases are shorted (the release brake): i = -ke w / R, no drive
+
+
+# the phase-short brake as built (docs/turret-wiring.md 3.3): three IRLZ44N per motor from each phase to GND, gates at
+# ~4.5 V; the short's loop adds two FETs and the 22 AWG taps to the motor's own 117 mOhm, and the winding's inductance
+# limits the current at speed (the X2216's is not published: 35 uH between leads est, swept 0-50 uH in release_window)
+BRAKE = {'r_fet_ohm': 0.025,        # IRLZ44N R_DS(on) max at V_GS 5 V (Infineon datasheet; 0.035 at 4 V)
+         'r_taps_ohm': 0.006,       # 2 x 60 mm of 22 AWG (53 mOhm/m)
+         'l_ll_h': 35e-6,           # between two leads, est for a 28 mm 880 KV outrunner
+         'pole_pairs': 7}
+
+
+def brake_current(ke, w, L, l_ll_h=None):
+    """The in-phase braking current with the phases shorted through the FETs: E R / (R^2 + (w_e L)^2), where E = ke w."""
+    r = L.r_eff_ohm + 2 * BRAKE['r_fet_ohm'] + BRAKE['r_taps_ohm']
+    lh = BRAKE['l_ll_h'] if l_ll_h is None else l_ll_h
+    xl = BRAKE['pole_pairs'] * w * lh
+    return ke * w * r / (r * r + xl * xl)
 
 
 TPU = {'rho': 1220.0, 'E_mpa': (10.0, 30.0), 'E_nominal': 20.0,
@@ -136,9 +153,9 @@ def launch3d(balls, L: tl.Launcher, entry: Entry = Entry(), wheels: Wheels = Whe
     # motors
     kv1, kv2 = (_arr(wheels.kv_scale[0], n), _arr(wheels.kv_scale[1], n))
     V = L.supply_v * wheels.v_scale
-    ke = [60.0 / (2 * math.pi * SNAIL['kv_rpm_v'] * kv) for kv in (kv1, kv2)]
-    kt = [SNAIL['kt'] / kv for kv in (kv1, kv2)]
-    tf_per_w = SNAIL['kt'] * SNAIL['i0_a'] / (SNAIL['i0_at_rpm'] * 2 * math.pi / 60)
+    ke = [60.0 / (2 * math.pi * MOTOR['kv_rpm_v'] * kv) for kv in (kv1, kv2)]
+    kt = [MOTOR['kt'] / kv for kv in (kv1, kv2)]
+    tf_per_w = MOTOR['kt'] * MOTOR['i0_a'] / (MOTOR['i0_at_rpm'] * 2 * math.pi / 60)
     w0 = [np.array([tl.no_load_speed(L, float(k), wheels.v_scale) for k in kv]) for kv in (kv1, kv2)]
     w_set = [_arr(wheels.w_set[i], n) if not wheels.full_throttle else w0[i] for i in range(2)]
     w = [w_set[i].copy() if wheels.w0 is None else _arr(wheels.w0[i], n) for i in range(2)]
@@ -243,7 +260,7 @@ def launch3d(balls, L: tl.Launcher, entry: Entry = Entry(), wheels: Wheels = Whe
             peak_fn = np.maximum(peak_fn, Fn)
         for i in range(2):                                        # the motors run every step, loaded or not
             if wheels.brake:
-                cur = -ke[i] * w[i] / L.r_eff_ohm
+                cur = -brake_current(ke[i], w[i], L)
             elif wheels.full_throttle:
                 cur = np.minimum((V - ke[i] * w[i]) / L.r_eff_ohm, L.i_max_a)
             else:
@@ -293,10 +310,10 @@ def launch3d(balls, L: tl.Launcher, entry: Entry = Entry(), wheels: Wheels = Whe
 
 # ------------------------------------------------------------------------------------------------ the hardware ceiling, ARM release
 
-def ceiling_map(balls, rails=(10.0, 11.0, 12.0, 13.0, 14.0, 24.0), wheels=(32.0, 34.0, 36.0, 38.0, 40.0), crush=None, seed=5):
+def ceiling_map(balls, rails=(10.0, 11.0, 12.0, 13.0, 14.0, 24.0), wheels=(32.0, 34.0, 36.0, 38.0), crush=None, seed=5):
     """The fastest ball at 100 % throttle on a +5 % KV motor and a +4 % rail, with runout and the soft tyre's growth,
-    for each rail voltage and tyre diameter: the hardware ceiling the firmware cannot raise."""
-    crush = tl.DESIGN['crush'] if crush is None else crush
+    for each rail voltage and tyre diameter: the hardware ceiling the firmware cannot raise. crush None: each tyre's
+    own crush on this cage (the motors' axes tl.CAGE_C_MM apart), else the given crush for every tyre."""
     rng = np.random.default_rng(seed)
     n = len(balls)
     ent = Entry(y=rng.uniform(-0.00075, 0.00075, n), z=-0.00075 + rng.uniform(-0.0003, 0.0003, n), vx=rng.uniform(0.4, 0.8, n))
@@ -305,24 +322,24 @@ def ceiling_map(balls, rails=(10.0, 11.0, 12.0, 13.0, 14.0, 24.0), wheels=(32.0,
     rows = []
     for V in rails:
         for D in wheels:
-            L = tl.launcher_for(D, crush, supply_v=V)
+            L = tl.launcher_for(D, tl.cage_crush(D) if crush is None else crush, supply_v=V)
             W = Wheels(full_throttle=True, kv_scale=(tl.TOL['kv'], tl.TOL['kv']), v_scale=tl.TOL['v'], runout=0.00015, runout_phase=phases, tyre_E_mpa=TPU['E_mpa'][0])
             r = launch3d(balls, L, ent, W)
             wc = launch3d(worst, L, Entry(z=0.0, wy=0.0), Wheels(full_throttle=True, kv_scale=(tl.TOL['kv'], tl.TOL['kv']), v_scale=tl.TOL['v'], tyre_E_mpa=TPU['E_mpa'][0]))
             top = max(float(r['fps'][~r['rejected']].max()), float(wc['fps'][0]))
             w0 = tl.no_load_speed(L, tl.TOL['kv'], tl.TOL['v'])
-            rows.append({'rail_v': V, 'wheel_d_mm': D, 'no_load_rpm_tol': round(w0 * 60 / (2 * math.pi)), 'surface_m_s_tol': round(w0 * D / 2000, 2),
+            rows.append({'rail_v': V, 'wheel_d_mm': D, 'crush': round(tl.cage_crush(D) if crush is None else crush, 3), 'no_load_rpm_tol': round(w0 * 60 / (2 * math.pi)), 'surface_m_s_tol': round(w0 * D / 2000, 2),
                          'ceiling_fps': round(top, 1), 'population_mean_fps': round(float(r['fps'][~r['rejected']].mean()), 1), 'margin_fps': round(CAP_FPS - top, 1), 'holds': top <= CAP_FPS})
     return rows
 
 
-def wheel_decay(L, w0, t_end=1.5, i_brake=None, dt=1e-4, delay=0.0):
+def wheel_decay(L, w0, t_end=1.5, i_brake=None, dt=1e-4, delay=0.0, l_ll_h=None):
     """Wheel speed vs time after the ESC drops drive: coast (friction only) or dynamic braking with the phase current
     limited to i_brake (the ESC shorts or regenerates: i = min(i_brake, ke w / R_eff)); i_brake = 'short' is the
-    plan's phase-short FETs (no limit but the motor's own resistance), closing `delay` s after the release.
-    Returns (t, w) arrays."""
-    ke = 60.0 / (2 * math.pi * SNAIL['kv_rpm_v'])
-    tf_per_w = SNAIL['kt'] * SNAIL['i0_a'] / (SNAIL['i0_at_rpm'] * 2 * math.pi / 60)
+    phase-short FETs (brake_current: the motor's resistance, the FETs' and the taps', and the winding's inductance),
+    closing `delay` s after the release. Returns (t, w) arrays."""
+    ke = 60.0 / (2 * math.pi * MOTOR['kv_rpm_v'])
+    tf_per_w = MOTOR['kt'] * MOTOR['i0_a'] / (MOTOR['i0_at_rpm'] * 2 * math.pi / 60)
     n = int(t_end / dt)
     t = np.arange(n) * dt
     w = np.empty(n)
@@ -331,16 +348,18 @@ def wheel_decay(L, w0, t_end=1.5, i_brake=None, dt=1e-4, delay=0.0):
         w[k] = x
         tau = -tf_per_w * x
         if i_brake and t[k] >= delay:
-            ib = ke * x / L.r_eff_ohm if i_brake == 'short' else min(i_brake, ke * x / L.r_eff_ohm)
-            tau -= SNAIL['kt'] * ib
+            ib = brake_current(ke, x, L, l_ll_h) if i_brake == 'short' else min(i_brake, ke * x / L.r_eff_ohm)
+            tau -= MOTOR['kt'] * ib
         x = max(0.0, x + tau / L.wheel_I * dt)
     return t, w
 
 
-def brake_time_constant(L):
-    """tau = I R / (ke kt) of the phase-short brake, from the model's own inertia and resistance."""
-    ke = 60.0 / (2 * math.pi * SNAIL['kv_rpm_v'])
-    return L.wheel_I * L.r_eff_ohm / (ke * SNAIL['kt'])
+def brake_time_constant(L, with_circuit=True):
+    """tau = I R / (ke kt) of the phase-short brake at low speed (where the inductance no longer limits the current),
+    from the model's inertia and the short's resistance: the motor's own, plus the FETs' and the taps' (with_circuit)."""
+    ke = 60.0 / (2 * math.pi * MOTOR['kv_rpm_v'])
+    r = L.r_eff_ohm + ((2 * BRAKE['r_fet_ohm'] + BRAKE['r_taps_ohm']) if with_circuit else 0.0)
+    return L.wheel_I * r / (ke * MOTOR['kt'])
 
 
 def release_window(ball, L, w_set, delay=0.010, latencies_ms=range(0, 301, 10)):
@@ -357,8 +376,17 @@ def release_window(ball, L, w_set, delay=0.010, latencies_ms=range(0, 301, 10)):
         v = float(r['speed'][0])
         rows.append({'latency_ms': ms, 'wheel_rpm': round(wl * 60 / (2 * math.pi)), 'exit_fps': round(v / FPS, 1), 'rests': bool(r['rejected'][0] or v < 1.0)})
     pct5 = float(t[np.argmax(w < 0.05 * w_set)]) if (w < 0.05 * w_set).any() else None
-    return {'short_delay_ms': delay * 1000, 'tau_ms_model': round(brake_time_constant(L) * 1000, 2), 'tau_ms_plan': 12.0, 'speed_5pct_at_ms': round(pct5 * 1000, 1) if pct5 else None,
-            'speed_at_96ms_pct': round(100 * float(np.interp(0.096, t, w)) / w_set, 3), 'rows': rows,
+    sens = {}
+    for lh in (0.0, 20e-6, 35e-6, 50e-6):                 # the winding inductance is not published: how much it matters
+        ts, ws = wheel_decay(L, w_set, i_brake='short', delay=delay, t_end=0.4, l_ll_h=lh)
+        p5 = float(ts[np.argmax(ws < 0.05 * w_set)]) if (ws < 0.05 * w_set).any() else None
+        sens[f'{lh * 1e6:g}uH'] = {'speed_5pct_at_ms': round(p5 * 1000, 1) if p5 else None,
+                                   'speed_at_96ms_pct': round(100 * float(np.interp(0.096, ts, ws)) / w_set, 3)}
+    return {'short_delay_ms': delay * 1000, 'tau_ms_model': round(brake_time_constant(L) * 1000, 2),
+            'tau_ms_motor_only': round(brake_time_constant(L, with_circuit=False) * 1000, 2), 'tau_ms_plan': 12.0,
+            'circuit': {**BRAKE, 'loop_ohm': round(L.r_eff_ohm + 2 * BRAKE['r_fet_ohm'] + BRAKE['r_taps_ohm'], 4)},
+            'speed_5pct_at_ms': round(pct5 * 1000, 1) if pct5 else None,
+            'speed_at_96ms_pct': round(100 * float(np.interp(0.096, t, w)) / w_set, 3), 'inductance_sensitivity': sens, 'rows': rows,
             'worst_exit_fps': max(r['exit_fps'] for r in rows), 'worst_latency_ms': max((r['latency_ms'] for r in rows if r['exit_fps'] > 20), default=None)}
 
 
@@ -468,7 +496,7 @@ def validate_nuaa_mismatch():
                 'drift_cm_at_15m_if_1000_rpm_mechanical': round(abs(float(f['cross'][15][0, 0])) * 100, 1) if not np.isnan(f['cross'][15][0, 0]) else None,
                 'drift_cm_at_15m_if_1000_rpm_is_erpm_7_pole_pairs': round(abs(float(f7['cross'][15][0, 0])) * 100, 1) if not np.isnan(f7['cross'][15][0, 0]) else None,
                 'published_cm': 13.0,
-                'reading': 'the guide does not say whether its "1000 rpm" is mechanical or the ESC\'s electrical rpm (the Snail has 7 pole pairs, so 1000 eRPM = 143 rpm); '
+                'reading': 'the guide does not say whether its "1000 rpm" is mechanical or the ESC\'s electrical rpm (a 7-pole-pair motor turns 143 rpm at 1000 eRPM); '
                            'the model agrees with the guide under the eRPM reading and is ~7x over under the mechanical one. Either way the chain (slip -> spin -> Magnus) is the '
                            'right order of magnitude, and Gyropup\'s PI-matched wheels sit far below either: a 2 % mismatch is 120 rpm of ball spin',
                 'source': 'NUAA friction-wheel design guide (sim/turret_flight.py FLIGHT validation_sources)'})
@@ -562,8 +590,10 @@ def study(quick=False, seed=1):
                       'population_full_throttle_soft_tyre_growth': stats(ceil_g), 'worst_ball_full_throttle_soft_tyre_growth_fps': round(float(wc_g['fps'][0]), 2),
                       'worst_soft_ball_full_throttle_soft_tyre_growth_fps': round(float(ws_g['fps'][0]), 2),
                       'cap_fps': CAP_FPS, 'highest_fps_any_case': round(top, 2), 'margin_fps': round(CAP_FPS - top, 2), 'holds': bool(top <= CAP_FPS),
-                      'how_held': 'the regulated 12 V rail + the Snail\'s 875 rpm/V + the Ø36 tyre: 10.4 krpm no-load = 19.7 m/s surface, so even 100 % throttle on a fast motor '
-                                  'and a high rail cannot reach 70 fps; the ESC set speed (9.4 krpm, 55 fps nominal) sits under that, and the chronograph latches SAFE on any over-cap shot'}
+                      'how_held': (f'the regulated 12 V rail + the {tl.MOTOR["name"]} ({tl.MOTOR["kv_rpm_v"]:.0f} rpm/V) + the Ø{D["wheel_d_mm"]:.0f} tyre: '
+                                   f'{w0 * 60 / (2 * math.pi) / 1000:.1f} krpm no-load ({w0 * D["wheel_d_mm"] / 2000:.1f} m/s surface), so even 100 % throttle on a fast motor and a high rail '
+                                   f'stays at the figure above; the ESC set speed ({w_set * 60 / (2 * math.pi) / 1000:.1f} krpm, {D["set_fps"]:.0f} fps nominal) sits under that, and the '
+                                   'chronograph latches SAFE on any ball over 66 fps')}
     # 3. mismatched wheels: one wheel slow by 2, 5, 10 %, and one wheel at the set speed with the other at no-load
     mis = []
     for pct in (0.0, 2.0, 5.0, 10.0):
