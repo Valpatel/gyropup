@@ -1,17 +1,19 @@
 {
  "model": "    .venv/bin/python sim/turret_launch.py            # the study: writes exports/turret/launch/launch.json and plots",
- "snail": {
-  "kv_rpm_v": 875.0,
-  "kt": 0.0109,
-  "r_phase": 0.1815,
-  "rotor_kg_m2": 1.84e-06,
-  "i0_a": 0.4,
-  "i0_at_rpm": 21000.0
+ "motor": {
+  "name": "SunnySky X2216 880KV V3",
+  "kv_rpm_v": 880.0,
+  "kt": 0.010851473392629226,
+  "r_phase": 0.0585,
+  "rotor_kg_m2": 4.8e-06,
+  "i0_a": 0.5,
+  "i0_at_rpm": 8800.0,
+  "pole_pairs": 7
  },
  "tolerances": {
   "kv": 1.05,
   "v": 1.04,
-  "note": "motor KV +5 % (DJI gives no tolerance: est), the Pololu regulator +4 % (est from its data sheet class)"
+  "note": "motor KV +5 % (SunnySky gives no tolerance: est), the Pololu regulator +4 % (est from its data sheet class)"
  },
  "cap_fps": 70.0,
  "ball_ranges": {
@@ -43,7 +45,7 @@
    "E_mpa": 0.75,
    "mu": 0.6,
    "fps": 26.0,
-   "eta": 0.362,
+   "eta": 0.36,
    "rejected": false,
    "peak_normal_n": 5.1
   },
@@ -52,7 +54,7 @@
    "E_mpa": 0.75,
    "mu": 0.8,
    "fps": 29.9,
-   "eta": 0.417,
+   "eta": 0.415,
    "rejected": false,
    "peak_normal_n": 5.1
   },
@@ -61,7 +63,7 @@
    "E_mpa": 0.75,
    "mu": 1.0,
    "fps": 33.4,
-   "eta": 0.465,
+   "eta": 0.462,
    "rejected": false,
    "peak_normal_n": 5.2
   },
@@ -70,7 +72,7 @@
    "E_mpa": 1.5,
    "mu": 0.6,
    "fps": 36.0,
-   "eta": 0.502,
+   "eta": 0.499,
    "rejected": false,
    "peak_normal_n": 10.3
   },
@@ -79,7 +81,7 @@
    "E_mpa": 1.5,
    "mu": 0.8,
    "fps": 41.4,
-   "eta": 0.578,
+   "eta": 0.574,
    "rejected": false,
    "peak_normal_n": 10.5
   },
@@ -88,7 +90,7 @@
    "E_mpa": 1.5,
    "mu": 1.0,
    "fps": 46.1,
-   "eta": 0.643,
+   "eta": 0.64,
    "rejected": false,
    "peak_normal_n": 10.6
   },
@@ -97,7 +99,7 @@
    "E_mpa": 3.0,
    "mu": 0.6,
    "fps": 49.5,
-   "eta": 0.69,
+   "eta": 0.686,
    "rejected": false,
    "peak_normal_n": 21.3
   },
@@ -106,7 +108,7 @@
    "E_mpa": 3.0,
    "mu": 0.8,
    "fps": 56.9,
-   "eta": 0.794,
+   "eta": 0.789,
    "rejected": false,
    "peak_normal_n": 21.8
   },
@@ -115,7 +117,7 @@
    "E_mpa": 3.0,
    "mu": 1.0,
    "fps": 63.5,
-   "eta": 0.885,
+   "eta": 0.88,
    "rejected": false,
    "peak_normal_n": 22.3
   },
@@ -124,7 +126,7 @@
    "E_mpa": 0.75,
    "mu": 0.6,
    "fps": 36.9,
-   "eta": 0.514,
+   "eta": 0.511,
    "rejected": false,
    "peak_normal_n": 9.7
   },
@@ -133,7 +135,7 @@
    "E_mpa": 0.75,
    "mu": 0.8,
    "fps": 42.5,
-   "eta": 0.592,
+   "eta": 0.589,
    "rejected": false,
    "peak_normal_n": 9.9
   },
@@ -142,7 +144,7 @@
    "E_mpa": 0.75,
    "mu": 1.0,
    "fps": 47.3,
-   "eta": 0.66,
+   "eta": 0.656,
    "rejected": false,
    "peak_normal_n": 10.1
   },
@@ -151,7 +153,7 @@
    "E_mpa": 1.5,
    "mu": 0.6,
    "fps": 50.2,
-   "eta": 0.701,
+   "eta": 0.696,
    "rejected": false,
    "peak_normal_n": 20.2
   },
@@ -160,7 +162,7 @@
    "E_mpa": 1.5,
    "mu": 0.8,
    "fps": 58.2,
-   "eta": 0.811,
+   "eta": 0.806,
    "rejected": false,
    "peak_normal_n": 20.9
   },
@@ -169,7 +171,7 @@
    "E_mpa": 1.5,
    "mu": 1.0,
    "fps": 65.3,
-   "eta": 0.91,
+   "eta": 0.905,
    "rejected": false,
    "peak_normal_n": 21.6
   },
@@ -177,8 +179,8 @@
    "crush": 0.18,
    "E_mpa": 3.0,
    "mu": 0.6,
-   "fps": 66.1,
-   "eta": 0.922,
+   "fps": 68.8,
+   "eta": 0.953,
    "rejected": false,
    "peak_normal_n": 43.2
   },
@@ -186,8 +188,8 @@
    "crush": 0.18,
    "E_mpa": 3.0,
    "mu": 0.8,
-   "fps": 66.4,
-   "eta": 0.926,
+   "fps": 69.3,
+   "eta": 0.961,
    "rejected": false,
    "peak_normal_n": 45.6
   },
@@ -195,8 +197,8 @@
    "crush": 0.18,
    "E_mpa": 3.0,
    "mu": 1.0,
-   "fps": 66.6,
-   "eta": 0.928,
+   "fps": 69.4,
+   "eta": 0.962,
    "rejected": false,
    "peak_normal_n": 47.8
   },
@@ -205,7 +207,7 @@
    "E_mpa": 0.75,
    "mu": 0.6,
    "fps": 47.6,
-   "eta": 0.664,
+   "eta": 0.66,
    "rejected": false,
    "peak_normal_n": 16.8
   },
@@ -214,7 +216,7 @@
    "E_mpa": 0.75,
    "mu": 0.8,
    "fps": 55.4,
-   "eta": 0.773,
+   "eta": 0.768,
    "rejected": false,
    "peak_normal_n": 17.6
   },
@@ -223,7 +225,7 @@
    "E_mpa": 0.75,
    "mu": 1.0,
    "fps": 62.5,
-   "eta": 0.872,
+   "eta": 0.867,
    "rejected": false,
    "peak_normal_n": 18.2
   },
@@ -232,7 +234,7 @@
    "E_mpa": 1.5,
    "mu": 0.6,
    "fps": 65.2,
-   "eta": 0.909,
+   "eta": 0.904,
    "rejected": false,
    "peak_normal_n": 36.3
   },
@@ -240,8 +242,8 @@
    "crush": 0.25,
    "E_mpa": 1.5,
    "mu": 0.8,
-   "fps": 66.0,
-   "eta": 0.92,
+   "fps": 69.1,
+   "eta": 0.958,
    "rejected": false,
    "peak_normal_n": 38.8
   },
@@ -249,8 +251,8 @@
    "crush": 0.25,
    "E_mpa": 1.5,
    "mu": 1.0,
-   "fps": 66.2,
-   "eta": 0.923,
+   "fps": 69.2,
+   "eta": 0.96,
    "rejected": false,
    "peak_normal_n": 41.1
   },
@@ -258,8 +260,8 @@
    "crush": 0.25,
    "E_mpa": 3.0,
    "mu": 0.6,
-   "fps": 64.5,
-   "eta": 0.899,
+   "fps": 68.2,
+   "eta": 0.945,
    "rejected": false,
    "peak_normal_n": 81.5
   },
@@ -267,26 +269,26 @@
    "crush": 0.25,
    "E_mpa": 3.0,
    "mu": 0.8,
-   "fps": 65.1,
-   "eta": 0.907,
+   "fps": 68.6,
+   "eta": 0.95,
    "rejected": false,
-   "peak_normal_n": 86.6
+   "peak_normal_n": 88.3
   },
   {
    "crush": 0.25,
    "E_mpa": 3.0,
    "mu": 1.0,
-   "fps": 65.3,
-   "eta": 0.911,
+   "fps": 68.7,
+   "eta": 0.953,
    "rejected": false,
-   "peak_normal_n": 86.8
+   "peak_normal_n": 88.8
   },
   {
    "crush": 0.32,
    "E_mpa": 0.75,
    "mu": 0.6,
    "fps": 57.4,
-   "eta": 0.801,
+   "eta": 0.796,
    "rejected": false,
    "peak_normal_n": 26.2
   },
@@ -294,8 +296,8 @@
    "crush": 0.32,
    "E_mpa": 0.75,
    "mu": 0.8,
-   "fps": 65.8,
-   "eta": 0.918,
+   "fps": 68.3,
+   "eta": 0.947,
    "rejected": false,
    "peak_normal_n": 28.1
   },
@@ -303,8 +305,8 @@
    "crush": 0.32,
    "E_mpa": 0.75,
    "mu": 1.0,
-   "fps": 66.1,
-   "eta": 0.921,
+   "fps": 69.1,
+   "eta": 0.958,
    "rejected": false,
    "peak_normal_n": 29.8
   },
@@ -312,8 +314,8 @@
    "crush": 0.32,
    "E_mpa": 1.5,
    "mu": 0.6,
-   "fps": 64.0,
-   "eta": 0.892,
+   "fps": 67.9,
+   "eta": 0.942,
    "rejected": false,
    "peak_normal_n": 58.6
   },
@@ -321,53 +323,53 @@
    "crush": 0.32,
    "E_mpa": 1.5,
    "mu": 0.8,
-   "fps": 64.8,
-   "eta": 0.903,
+   "fps": 68.4,
+   "eta": 0.948,
    "rejected": false,
-   "peak_normal_n": 64.8
+   "peak_normal_n": 64.9
   },
   {
    "crush": 0.32,
    "E_mpa": 1.5,
    "mu": 1.0,
-   "fps": 65.1,
-   "eta": 0.908,
+   "fps": 68.6,
+   "eta": 0.951,
    "rejected": false,
-   "peak_normal_n": 66.9
+   "peak_normal_n": 68.5
   },
   {
    "crush": 0.32,
    "E_mpa": 3.0,
    "mu": 0.6,
-   "fps": 61.8,
-   "eta": 0.861,
+   "fps": 66.6,
+   "eta": 0.924,
    "rejected": false,
-   "peak_normal_n": 130.4
+   "peak_normal_n": 134.2
   },
   {
    "crush": 0.32,
    "E_mpa": 3.0,
    "mu": 0.8,
-   "fps": 62.9,
-   "eta": 0.877,
+   "fps": 67.3,
+   "eta": 0.933,
    "rejected": false,
-   "peak_normal_n": 131.8
+   "peak_normal_n": 136.1
   },
   {
    "crush": 0.32,
    "E_mpa": 3.0,
    "mu": 1.0,
-   "fps": 63.4,
-   "eta": 0.883,
+   "fps": 67.6,
+   "eta": 0.937,
    "rejected": false,
-   "peak_normal_n": 132.3
+   "peak_normal_n": 136.4
   },
   {
    "crush": 0.4,
    "E_mpa": 0.75,
    "mu": 0.6,
-   "fps": 63.5,
-   "eta": 0.885,
+   "fps": 67.7,
+   "eta": 0.939,
    "rejected": false,
    "peak_normal_n": 40.0
   },
@@ -375,8 +377,8 @@
    "crush": 0.4,
    "E_mpa": 0.75,
    "mu": 0.8,
-   "fps": 64.6,
-   "eta": 0.9,
+   "fps": 68.3,
+   "eta": 0.947,
    "rejected": false,
    "peak_normal_n": 44.4
   },
@@ -384,278 +386,276 @@
    "crush": 0.4,
    "E_mpa": 0.75,
    "mu": 1.0,
+   "fps": 68.5,
+   "eta": 0.95,
+   "rejected": false,
+   "peak_normal_n": 48.5
+  },
+  {
+   "crush": 0.4,
+   "E_mpa": 1.5,
+   "mu": 0.6,
+   "fps": 66.2,
+   "eta": 0.918,
+   "rejected": false,
+   "peak_normal_n": 92.8
+  },
+  {
+   "crush": 0.4,
+   "E_mpa": 1.5,
+   "mu": 0.8,
+   "fps": 67.2,
+   "eta": 0.931,
+   "rejected": false,
+   "peak_normal_n": 101.4
+  },
+  {
+   "crush": 0.4,
+   "E_mpa": 1.5,
+   "mu": 1.0,
+   "fps": 67.5,
+   "eta": 0.936,
+   "rejected": false,
+   "peak_normal_n": 101.9
+  },
+  {
+   "crush": 0.4,
+   "E_mpa": 3.0,
+   "mu": 0.6,
+   "fps": 63.4,
+   "eta": 0.879,
+   "rejected": false,
+   "peak_normal_n": 197.3
+  },
+  {
+   "crush": 0.4,
+   "E_mpa": 3.0,
+   "mu": 0.8,
    "fps": 65.0,
-   "eta": 0.906,
+   "eta": 0.901,
    "rejected": false,
-   "peak_normal_n": 48.4
-  },
-  {
-   "crush": 0.4,
-   "E_mpa": 1.5,
-   "mu": 0.6,
-   "fps": 60.9,
-   "eta": 0.849,
-   "rejected": false,
-   "peak_normal_n": 92.6
-  },
-  {
-   "crush": 0.4,
-   "E_mpa": 1.5,
-   "mu": 0.8,
-   "fps": 62.7,
-   "eta": 0.874,
-   "rejected": false,
-   "peak_normal_n": 98.0
-  },
-  {
-   "crush": 0.4,
-   "E_mpa": 1.5,
-   "mu": 1.0,
-   "fps": 63.2,
-   "eta": 0.882,
-   "rejected": false,
-   "peak_normal_n": 98.5
-  },
-  {
-   "crush": 0.4,
-   "E_mpa": 3.0,
-   "mu": 0.6,
-   "fps": 56.5,
-   "eta": 0.788,
-   "rejected": false,
-   "peak_normal_n": 186.1
-  },
-  {
-   "crush": 0.4,
-   "E_mpa": 3.0,
-   "mu": 0.8,
-   "fps": 59.2,
-   "eta": 0.825,
-   "rejected": false,
-   "peak_normal_n": 191.1
+   "peak_normal_n": 200.2
   },
   {
    "crush": 0.4,
    "E_mpa": 3.0,
    "mu": 1.0,
-   "fps": 59.9,
-   "eta": 0.836,
+   "fps": 65.5,
+   "eta": 0.907,
    "rejected": false,
-   "peak_normal_n": 192.5
+   "peak_normal_n": 201.1
   }
  ],
  "efficiency_by_crush": {
   "0.12": {
-   "eta_min": 0.362,
-   "eta_max": 0.885,
+   "eta_min": 0.36,
+   "eta_max": 0.88,
    "rejections": 0
   },
   "0.18": {
-   "eta_min": 0.514,
-   "eta_max": 0.928,
+   "eta_min": 0.511,
+   "eta_max": 0.962,
    "rejections": 0
   },
   "0.25": {
-   "eta_min": 0.664,
-   "eta_max": 0.923,
+   "eta_min": 0.66,
+   "eta_max": 0.96,
    "rejections": 0
   },
   "0.32": {
-   "eta_min": 0.801,
-   "eta_max": 0.921,
+   "eta_min": 0.796,
+   "eta_max": 0.958,
    "rejections": 0
   },
   "0.4": {
-   "eta_min": 0.788,
-   "eta_max": 0.906,
+   "eta_min": 0.879,
+   "eta_max": 0.95,
    "rejections": 0
   }
  },
  "ceiling_by_wheel": [
   {
+   "wheel_d_mm": 32.0,
+   "crush_on_this_cage": 0.075,
+   "worst_fps_at_full_throttle": 61.9,
+   "nominal_fps_at_full_throttle": 28.6,
+   "no_load_rpm": 10499
+  },
+  {
    "wheel_d_mm": 34.0,
-   "worst_fps_at_full_throttle": 60.8,
-   "nominal_fps_at_full_throttle": 56.4,
-   "no_load_rpm": 10437
+   "crush_on_this_cage": 0.163,
+   "worst_fps_at_full_throttle": 65.4,
+   "nominal_fps_at_full_throttle": 54.0,
+   "no_load_rpm": 10499
   },
   {
    "wheel_d_mm": 36.0,
-   "worst_fps_at_full_throttle": 64.2,
-   "nominal_fps_at_full_throttle": 59.5,
-   "no_load_rpm": 10437
+   "crush_on_this_cage": 0.251,
+   "worst_fps_at_full_throttle": 68.0,
+   "nominal_fps_at_full_throttle": 62.7,
+   "no_load_rpm": 10499
   },
   {
    "wheel_d_mm": 38.0,
-   "worst_fps_at_full_throttle": 67.8,
-   "nominal_fps_at_full_throttle": 62.7,
-   "no_load_rpm": 10437
-  },
-  {
-   "wheel_d_mm": 40.0,
-   "worst_fps_at_full_throttle": 71.4,
-   "nominal_fps_at_full_throttle": 65.9,
-   "no_load_rpm": 10437
-  },
-  {
-   "wheel_d_mm": 42.0,
-   "worst_fps_at_full_throttle": 75.0,
-   "nominal_fps_at_full_throttle": 69.1,
-   "no_load_rpm": 10437
+   "crush_on_this_cage": 0.339,
+   "worst_fps_at_full_throttle": 69.7,
+   "nominal_fps_at_full_throttle": 64.9,
+   "no_load_rpm": 10499
   }
  ],
  "design": {
-  "wheel_d_mm": 36.0,
-  "crush": 0.25,
-  "gap_mm_for_22_7": 17.02,
+  "wheel_d_mm": 34.0,
+  "crush": 0.163,
+  "gap_mm_for_22_7": 19.0,
   "supply_v": 12.0,
-  "wheel_I_kg_m2": 3.917519259407896e-06,
-  "no_load_rpm": 10437,
-  "set_rpm": 9408,
-  "set_fraction_of_no_load": 0.901,
+  "wheel_I_kg_m2": 6.918010419438786e-06,
+  "no_load_rpm": 10499,
+  "set_rpm": 8855,
+  "set_fraction_of_no_load": 0.843,
   "nominal_shot": {
-   "v_exit": 16.764,
-   "fps": 55.0,
-   "contact_ms": 4.778,
-   "w_start": 985.1805,
-   "w_end": 915.542,
-   "surface_m_s": 17.7332,
-   "eta": 0.9453,
-   "speed_drop_pct": 7.0686,
-   "peak_normal_n": 41.411,
-   "peak_friction_n": 33.1288,
-   "impulse_ns": 0.0301,
-   "slip_loss_j": 0.4624,
-   "ball_ke_j": 0.26
+   "v_exit": 15.8496,
+   "fps": 52.0,
+   "contact_ms": 4.687,
+   "w_start": 927.3339,
+   "w_end": 915.1962,
+   "surface_m_s": 15.7647,
+   "eta": 1.0054,
+   "speed_drop_pct": 1.3089,
+   "peak_normal_n": 19.0523,
+   "peak_friction_n": 15.2418,
+   "impulse_ns": 0.0284,
+   "slip_loss_j": 0.3069,
+   "ball_ke_j": 0.2324
   },
   "population_at_set_speed_fps": {
    "n": 400,
-   "mean": 54.7,
-   "sd": 1.0,
-   "p1": 50.7,
-   "p99": 56.2,
-   "max": 56.4
+   "mean": 48.9,
+   "sd": 4.6,
+   "p1": 36.1,
+   "p99": 52.3,
+   "max": 52.3
   },
   "population_at_full_throttle_fps": {
-   "mean": 63.1,
-   "max": 66.4,
+   "mean": 54.1,
+   "max": 65.7,
    "note": "every ball at 100 % throttle on a +5 % motor and a +4 % regulator: the hardware ceiling"
   },
-  "worst_ball_full_throttle_fps": 64.2,
-  "margin_fps": 3.6
+  "worst_ball_full_throttle_fps": 65.4,
+  "margin_fps": 4.3
  },
  "sensitivity": {
   "d_mm": [
    {
     "value": 22.5,
-    "fps": 55.2
+    "fps": 49.1
    },
    {
     "value": 22.9,
-    "fps": 55.0
+    "fps": 52.0
    },
    {
     "value": 23.5,
-    "fps": 54.6
+    "fps": 52.0
    }
   ],
   "m_g": [
    {
     "value": 1.53,
-    "fps": 55.7
+    "fps": 52.3
    },
    {
     "value": 1.85,
-    "fps": 55.0
+    "fps": 52.0
    },
    {
     "value": 2.1,
-    "fps": 54.5
+    "fps": 50.9
    }
   ],
   "E_mpa": [
    {
     "value": 0.75,
-    "fps": 55.6
+    "fps": 39.4
    },
    {
     "value": 1.5,
-    "fps": 55.0
+    "fps": 52.0
    },
    {
     "value": 3.0,
-    "fps": 53.9
+    "fps": 51.8
    }
   ],
   "mu": [
    {
     "value": 0.6,
-    "fps": 54.8
+    "fps": 46.7
    },
    {
     "value": 0.8,
-    "fps": 55.0
+    "fps": 52.0
    },
    {
     "value": 1.0,
-    "fps": 55.1
+    "fps": 52.0
    }
   ],
   "wet": {
    "value": "soaked: twice the mass (Blaster Labs)",
-   "fps": 51.5
+   "fps": 39.4
   },
   "worn_soft": {
    "value": "worn: half the stiffness",
-   "fps": 55.6
+   "fps": 39.4
   }
  },
  "burst_10_per_s": [
   {
    "shot": 1,
-   "w_rpm": 9408,
-   "fps": 55.0
+   "w_rpm": 8855,
+   "fps": 52.0
   },
   {
    "shot": 2,
-   "w_rpm": 9412,
-   "fps": 55.0
+   "w_rpm": 8858,
+   "fps": 52.0
   },
   {
    "shot": 3,
-   "w_rpm": 9412,
-   "fps": 55.0
+   "w_rpm": 8858,
+   "fps": 52.0
   },
   {
    "shot": 4,
-   "w_rpm": 9412,
-   "fps": 55.0
+   "w_rpm": 8858,
+   "fps": 52.0
   },
   {
    "shot": 5,
-   "w_rpm": 9412,
-   "fps": 55.0
+   "w_rpm": 8858,
+   "fps": 52.0
   },
   {
    "shot": 6,
-   "w_rpm": 9412,
-   "fps": 55.0
+   "w_rpm": 8858,
+   "fps": 52.0
   },
   {
    "shot": 7,
-   "w_rpm": 9412,
-   "fps": 55.0
+   "w_rpm": 8858,
+   "fps": 52.0
   },
   {
    "shot": 8,
-   "w_rpm": 9412,
-   "fps": 55.0
+   "w_rpm": 8858,
+   "fps": 52.0
   }
  ],
  "recoil": {
-  "per_shot_ns": 0.031,
+  "per_shot_ns": 0.0293,
   "at_cap_ns": 0.0448,
-  "burst_8_ns": 0.248,
-  "peak_force_on_the_cage_n": 82.8,
+  "burst_8_ns": 0.235,
+  "peak_force_on_the_cage_n": 38.1,
   "note": "impulse = the ball momentum at the muzzle; the at-cap figure takes the heaviest ball (2.10 g) at 70 fps"
  }
 }

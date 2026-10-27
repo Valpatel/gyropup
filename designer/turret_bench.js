@@ -25,8 +25,8 @@ const P = (p) => new THREE.Vector3(p[1] * M, p[2] * M, p[0] * M);           // b
 const CRATE = { w: 0.48, d: 0.62, h: 0.30 };                                   // under the J501 box
 const K_DRAG = 0.5 * 1.2 * BALL.cd * Math.PI * (BALL.d / 2) ** 2 / BALL.mass;
 const SPREAD_DEG = 0.5, SPEED_SPREAD = 0.015;        // shot-to-shot spread: assumed until the chronograph and the paper say
-const SPIN_UP_S = 0.35, DIAL_DEG_S = 450;            // the firmware's flywheel ramp; the dial at 75 rpm (10 balls/s)
-const BRAKE_DELAY_S = 0.01, BRAKE_TAU_S = 0.012;     // D9: the phase short closes 10 ms after ARM drops; tau 12 ms (turret-physics.md section 5)
+const SPIN_UP_S = 0.3, DIAL_DEG_S = 190;             // the firmware's 300 ms ramp; the feed servo's 45° step in ~235 ms (3 balls/s at most)
+const BRAKE_DELAY_S = 0.008, BRAKE_TAU_S = 0.0127;   // D9: the short closes ~8 ms after ARM drops (5-14); 5 % at ~48 ms (turret-physics.md section 5)
 const BALL_R = BALL.d / 2;
 // the parts that are see-through in the X-ray view (the rest, the mechanism, stays solid)
 const SHELL = new Set(['pan_base', 'pan_clamp', 'bumper_ring', 'cartridge_body', 'cradle', 'tilt_yoke', 'hopper', 'hopper_lid', 'hopper_flap',
@@ -338,7 +338,7 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
   const lim = man.limits;
   const S = {
     active: false, pan: 0, tilt: -3 * D2R, panCmd: 0, tiltCmd: -3 * D2R, keys: new Set(),
-    arm: new Set(), trigger: false, queue: 0, nextAt: 0, rate: 6, rpm: 0, laserOn: false, wasArmed: false,
+    arm: new Set(), trigger: false, queue: 0, nextAt: 0, rate: 3, rpm: 0, laserOn: false, wasArmed: false,
     phi: man.dial_park_deg * D2R, phiCmd: man.dial_park_deg * D2R, pockets: man.pockets.map(() => true), pile: pileBalls.length,
     transit: [], flying: [], shots: 0, hits: 0, lastSpeed: null, view: 'solid', explode: 0, explodeCmd: 0,
     labels: true, airflow: false, antennas: false, marker: true, timeScale: 1, journey: null, selected: null, wheelAng: 0,
@@ -418,7 +418,7 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
   const sec = (title, opts) => { const body = section(panel, title, opts); secs.push(body.parentElement); body.parentElement.hidden = true; return body; };
   const fireSec = sec('Fire control', { note: 'ARM = the hold-to-run safety line' });
   const fireInfo = readouts(fireSec);
-  slider(fireSec, { label: 'Rate of fire (FIRE held)', min: 1, max: 10, step: 1, value: S.rate, fmt: (v) => `${v} balls/s`, onInput: (v) => { S.rate = v; } });
+  slider(fireSec, { label: 'Rate of fire (FIRE held)', min: 1, max: 3, step: 1, value: S.rate, fmt: (v) => `${v} balls/s`, onInput: (v) => { S.rate = v; } });
   const fr = document.createElement('div');
   fr.className = 'hud-chips';
   for (const [label, fn] of [['RELOAD 30', reload], ['RESET TARGETS', resetTargets], ['CLEAR BALLS', clearBalls]]) {
@@ -470,7 +470,7 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
     ['ball', `Ø${bl.d_mm} mm, ${bl.mass_g} g, ${bl.speed_mps} m/s (${bl.fps} fps cap), ${bl.energy_j} J`],
     ['flywheels', `Ø${fl.d_mm}, ${fmt(fl.rpm)} rpm (${fl.throttle_pct} % of no-load), squeeze ${fl.crush_mm} mm`],
     ['flywheel energy', `${fl.energy_j_each} J each; a shot costs ${fl.speed_drop_per_shot_pct} % speed, back in ${fl.recovery_ms} ms`],
-    ['feed', `${fd.pockets} pockets on the M2006 ${fd.ratio}:1; ${fd.dial_rpm_at_10_per_s} rpm at 10/s; up to ${fd.max_rate_per_s}/s`],
+    ['feed', `${fd.pockets} pockets on the feed servo (STS3215, ${fd.ratio}:1); a 45° step in ~${fd.step_ms_est} ms; up to ${fd.max_rate_per_s}/s, paced on gate 1`],
     ['command to muzzle', `${tm.trigger_to_muzzle_ms} ms (dial ${tm.dial_to_exit_ms}, chute ${tm.chute_ms}, barrel ${tm.nip_to_muzzle_ms})`],
     ['pan', `${pn.pinion_teeth}:${pn.ring_teeth} gear = ${pn.ratio}x; ${pn.ring_stall_nm} N·m stall (cap 50 %), ${pn.max_deg_s}°/s`],
     ['pan resolution', `${pn.encoder_counts_per_turret_deg} encoder counts per degree of turret`],
@@ -488,8 +488,8 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
     ['upright antennas', antMin < 3 ? `the barrel hits them (${antMin} mm): depression ≤ ${Math.min(...cl.antenna_tilt_max_deg.map((r) => r[1]))}° at pans ${(cl.antenna_limited_pans_deg ?? []).map(([a, b]) => `${a}..${b}°`).join(', ')}` : 'clear', antMin < 3 ? 'warn' : 'ok'],
     ['J501 fan', `-${air.flow_drop_pct} % flow through the shroud (${air.loss_pa} Pa, est); intake and exhaust kept apart`, air.flow_drop_pct < 10 ? 'ok' : 'warn'],
     ['tipping', `${tip.total_kg} kg; a ${tip.push_to_tip_n} N push at the tilt axis tips the box over`, tip.push_to_tip_n > 15 ? 'ok' : 'warn'],
-    ['speed cap', `firmware only: flat out the Snails throw ${C.overspeed.max_exit_mps} m/s (${C.overspeed.max_fps} fps); let the chronograph open the safety line`, 'warn'],
-    ['ARM released', `a ball already dropped still fires within ${C.release.after_drop_ms} ms; brake the flywheels (${C.release.coast_s} s coast)`, 'warn'],
+    ['speed cap', `hardware: on the fixed 12 V rail the X2216s throw at most ${C.overspeed.physics_ceiling_fps} fps flat out (cap 70); the chronograph trips over 66`, C.overspeed.physics_ceiling_fps <= 70 ? 'ok' : 'fail'],
+    ['ARM released', `a dropped ball still fires within ${C.release.after_drop_ms} ms; the phase-short brake stops the flywheels to 5 % in ~${C.release.brake_to_5pct_ms} ms (${C.release.coast_s} s unbraked)`, 'ok'],
     ['lid screws', C.lid_screw],
   ]);
 
@@ -1216,7 +1216,7 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
     tiltPivot.rotation.x = -S.tilt;
     pinionPivot.rotation.y = man.pivots.pinion_ratio * S.pan;
     // the safety line: ARM held = flywheels up, laser on; released = no feed, and the phase-short brake stops the
-    // flywheels (D9: 5 % speed at 45 ms; unbraked they would coast for 1.4 s)
+    // flywheels (5 % speed ~48 ms after release; unbraked they would coast for 1.1 s)
     const armed = S.arm.size > 0 || !!S.journey;
     if (armed !== S.wasArmed) {
       S.wasArmed = armed;
@@ -1324,7 +1324,7 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
     live.set([['pan', `${(S.pan / D2R).toFixed(1)}° (servo ${(3 * S.pan / D2R).toFixed(0)}°)`],
       ['tilt', `${(S.tilt / D2R).toFixed(1)}°  (limit -${tiltMax(S.pan).toFixed(1)}°)`],
       ['dial', `${(((S.phi / D2R) % 360) + 360) % 360 | 0}° · ${Math.abs(S.phiCmd - S.phi) > 1e-6 ? 'feeding' : 'parked: spoke over the exit'}`],
-      ['laser', S.laserOn ? 'on (Class 2, 520 nm)' : 'off'],
+      ['laser', S.laserOn ? 'on (Class 2, 650 nm red)' : 'off'],
       ['shots', `${S.shots}`], ['hits', `${S.hits}`], ['plates down', `${down} / ${plates.length}`], ['cans knocked', `${knocked} / ${cans.length}`],
       ['paper group', group]]);
   }

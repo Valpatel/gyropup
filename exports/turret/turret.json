@@ -24,8 +24,8 @@
    "solid": true,
    "frame": "pan",
    "doc": "The turntable, printed PA6-CF upside down (100 % solid): a 63 T module 1.25 spur gear (16 mm face) with a",
-   "mass_g_each": 72.3,
-   "print_h": 4.7,
+   "mass_g_each": 77.9,
+   "print_h": 5.1,
    "bed_mm": [
     81.2,
     81.2,
@@ -109,12 +109,12 @@
    "solid": true,
    "frame": "tilt",
    "doc": "The ball cartridge, printed PA6-CF on its base (100 % solid, 2.5 mm walls): a base plate on the cradle rails",
-   "mass_g_each": 138.7,
-   "print_h": 9.1,
+   "mass_g_each": 150.7,
+   "print_h": 9.9,
    "bed_mm": [
     162.6,
     103.2,
-    53.1
+    81.6
    ],
    "fits_bed": true,
    "valid_single_solid": true
@@ -122,16 +122,16 @@
   "flywheel": {
    "material": "pa6-cf",
    "qty": 2,
-   "note": "PA6-CF hub; M3 grub screw",
+   "note": "PA6-CF on its top face; on the X2216's prop adapter: washer + M5 nylon-insert nut; bore reamed to 5.00",
    "solid": true,
    "frame": "tilt",
-   "doc": "Flywheel hub, printed PA6-CF (100 % solid): a \u00d828 rim for the TPU tyre, a web, and a \u00d818 boss whose top face",
-   "mass_g_each": 6.8,
-   "print_h": 0.9,
+   "doc": "Flywheel hub, printed PA6-CF (100 % solid) on its top face: a \u00d828 x 12 rim for the TPU tyre and a 5.5 mm web whose",
+   "mass_g_each": 5.2,
+   "print_h": 0.7,
    "bed_mm": [
     28.0,
     28.0,
-    15.0
+    12.0
    ],
    "fits_bed": true,
    "valid_single_solid": true
@@ -142,12 +142,12 @@
    "note": "TPU 95A tyre",
    "solid": false,
    "frame": "tilt",
-   "doc": "TPU 95A tyre as mounted, \u00d836 x 12, 4 mm thick on the hub's \u00d828 rim (the assembly; the printed blank is",
-   "mass_g_each": 5.9,
-   "print_h": 1.2,
+   "doc": "TPU 95A tyre as mounted, \u00d834 x 12 (TYRE_SET), 3 mm thick on the hub's \u00d828 rim (the assembly; the printed blank is",
+   "mass_g_each": 4.3,
+   "print_h": 0.9,
    "bed_mm": [
-    36.0,
-    36.0,
+    34.0,
+    34.0,
     12.0
    ],
    "fits_bed": true,
@@ -156,11 +156,11 @@
   "dial": {
    "material": "petg",
    "qty": 1,
-   "note": "PETG; M3 grub screw on the flat",
+   "note": "PETG; 4 x M3 x 8 down into the feed servo's horn, from the top",
    "solid": false,
    "frame": "tilt",
-   "doc": "The feed dial, printed PETG: a shelled \u00d850 hub (2 mm rim, 2 mm top, four ribs to a \u00d814 boss), 8 spokes 4 mm",
-   "mass_g_each": 46.8,
+   "doc": "The feed dial, printed PETG: a shelled \u00d850 hub (2 mm rim, 2 mm top, four ribs to a \u00d822 boss), 8 spokes 4 mm",
+   "mass_g_each": 47.8,
    "print_h": 1.9,
    "bed_mm": [
     90.9,
@@ -377,7 +377,7 @@
   },
   "turret_board": {
    "mass_g": 100.0,
-   "note": "turret boards (est): level 0 the D24V150F12 flywheel and D36V50F12 aux regulators and the Pololu 2815 switch; level 1 the 5 V regulator, the safety and trip logic, 3 x 1000 uF; level 2 the Feather M4 CAN and the connectors",
+   "note": "turret boards (cad/turret_boards.py): level 0 the D24V150F12 12 V regulator (always on); level 1 the Pololu 2815 switch (12 V to the flywheels and the feed), the 5 V regulator, 2 x 1000 uF, the opto and the one-shots; level 2 the Feather M4 CAN, the trip latch, the ARM gate and the bus buffer",
    "frame": "pan"
   },
   "index_magnet": {
@@ -421,28 +421,33 @@
    "frame": "tilt"
   },
   "flywheel_motor_l": {
-   "mass_g": 27.8,
-   "note": "DJI RoboMaster Snail 2305 (DJI drawing): hangs under the cage plate, its wheel on the bell",
+   "mass_g": 72.0,
+   "note": "SunnySky X2216 880KV V3 (short shaft) (SunnySky's drawing): hangs bell-down under the cage plate (4 x M3 x 6), the hub on its prop adapter under the bell (washer + M5 nylon-insert nut)",
    "frame": "tilt"
   },
   "flywheel_motor_r": {
-   "mass_g": 27.8,
-   "note": "DJI RoboMaster Snail 2305 (DJI drawing): hangs under the cage plate, its wheel on the bell",
+   "mass_g": 72.0,
+   "note": "SunnySky X2216 880KV V3 (short shaft) (SunnySky's drawing): hangs bell-down under the cage plate (4 x M3 x 6), the hub on its prop adapter under the bell (washer + M5 nylon-insert nut)",
+   "frame": "tilt"
+  },
+  "cartridge_board": {
+   "mass_g": 30.0,
+   "note": "cartridge board (est): 6 x IRLZ44N phase-short brake FETs standing along its front edge, the LM393 gate comparator, the feed servo's polyfuse; on 4 printed posts over the ESCs and the cage plate",
    "frame": "tilt"
   },
   "esc_l": {
    "mass_g": 5.0,
-   "note": "Repeat Robotics AM32 35 A, on the cage plate",
+   "note": "Repeat Robotics AM32 35 A, on the cage plate under the cartridge board (the backup Lumenier Razor Pro F4 45A AM32 is 28 x 12 x 5)",
    "frame": "tilt"
   },
   "esc_r": {
    "mass_g": 5.0,
-   "note": "Repeat Robotics AM32 35 A, on the cage plate",
+   "note": "Repeat Robotics AM32 35 A, on the cage plate under the cartridge board (the backup Lumenier Razor Pro F4 45A AM32 is 28 x 12 x 5)",
    "frame": "tilt"
   },
   "feed_motor": {
-   "mass_g": 90.0,
-   "note": "DJI M2006 P36 (DJI drawing) under the dial; its rear 17 mm turns",
+   "mass_g": 60.0,
+   "note": "Feetech STS3215 12 V (bus ID 3) under the dial floor, horn up through it; 4 x M2 x 6 countersunk from above; the dial on its horn",
    "frame": "tilt"
   },
   "ct_thumbscrew": {
@@ -450,14 +455,9 @@
    "note": "DIN 464 knurled thumbscrew M4 x 12 (McMaster 92581A250), the CT latch, under the rail",
    "frame": "tilt"
   },
-  "feed_esc": {
-   "mass_g": 17.0,
-   "note": "DJI C610 (CAN), on the base plate behind the M2006; in through the housing's rear window",
-   "frame": "tilt"
-  },
   "laser": {
-   "mass_g": 3.8,
-   "note": "Picotronic DD520-1-24(12x40), 520 nm Class 2",
+   "mass_g": 3.0,
+   "note": "Quarton VLM-650-03 LPT, 650 nm, < 1 mW (Class 2) (D42)",
    "frame": "tilt"
   }
  },
@@ -468,13 +468,6 @@
    "printed_od_mm": 33.08,
    "printed_bore_mm": 26.88,
    "crush_on_this_cage": 0.162
-  },
-  "36": {
-   "file": "flywheel_tyre_d36.stl",
-   "mounted_d_mm": 36.0,
-   "printed_od_mm": 35.14,
-   "printed_bore_mm": 26.88,
-   "crush_on_this_cage": 0.25
   }
  },
  "sheet": {
@@ -528,7 +521,7 @@
    ]
   },
   "muzzle": [
-   155.0,
+   147.0,
    0.0,
    339.0
   ],
@@ -538,7 +531,7 @@
    0.0
   ],
   "laser_origin": [
-   86.0,
+   78.0,
    -32.0,
    339.0
   ],
@@ -551,13 +544,13 @@
    170.0
   ],
   "pan_hard_stop_deg": 173.5,
-  "mass_estimate_g": 1556.4,
+  "mass_estimate_g": 1639.2,
   "com": [
-   -6.4,
-   -5.2,
-   304.2
+   -5.6,
+   -4.9,
+   309.5
   ],
-  "com_above_mount_mm": 90.2,
+  "com_above_mount_mm": 95.5,
   "ball_d": 22.7,
   "bore": 24.2,
   "pose": {
@@ -582,12 +575,12 @@
    -25.0
   ]
  ],
- "mass_g_with_balls": 1556.4,
- "mass_g_empty": 1501.5,
+ "mass_g_with_balls": 1639.2,
+ "mass_g_empty": 1584.3,
  "com_from_mount_mm": [
-  -6.4,
-  -5.2,
-  90.2
+  -5.6,
+  -4.9,
+  95.5
  ],
  "not_modelled_g": {
   "wiring and the cable loops": 50,
@@ -596,6 +589,6 @@
   "screws, inserts, dowels, springs": 17,
   "CT connector pair (Micro-Fit 3.0 class)": 12
  },
- "print_hours": 51.7,
- "made_g": 829.4
+ "print_hours": 52.3,
+ "made_g": 841.6
 }

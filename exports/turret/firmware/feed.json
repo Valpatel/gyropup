@@ -1,0 +1,227 @@
+{
+ "pass": true,
+ "cases": {
+  "stepping_3hz_jam": {
+   "steps": 30,
+   "settled": 30,
+   "clean": 29,
+   "jams": 1,
+   "jam_causes": [
+    "load"
+   ],
+   "reverses": 1,
+   "duration_s": 9.9,
+   "rate_per_s": 3.03,
+   "settle_ms_clean_max": 233.0,
+   "settle_ms_clean_mean": 229.2,
+   "jammed_step_total_ms": 554.0,
+   "jam_detect_ms_after_contact": 68.0,
+   "dial_moved_deg": 1348.96,
+   "expected_deg": 1350.0,
+   "final_offset_counts": -14.4,
+   "step_writes": 32,
+   "expected_step_writes": 32,
+   "jams_in_row_after": 0,
+   "pass": true
+  },
+  "jam_fault": {
+   "state": "FAULT",
+   "fault": "jams",
+   "jams": 3,
+   "reverses": 2,
+   "settled_before": 1,
+   "dial_drift_after_fault_counts": 0.0,
+   "further_steps_refused": true,
+   "pass": true
+  },
+  "jam_by_load": {
+   "jams": 1,
+   "causes": [
+    "load"
+   ],
+   "settled": 3,
+   "detect_ms_after_contact": 53.0,
+   "pass": true
+  },
+  "drop_off": {
+   "arm_signal": {
+    "state_while_off": "OFFLINE",
+    "left_bus_ms_after_cut": -0.0,
+    "back_parked_ms_after_power": 319.0,
+    "registers_after": {
+     "torque_on": true,
+     "torque_limit": 500,
+     "acc": 0,
+     "goal_speed": 2608
+    },
+    "reinit": 2,
+    "steps_after_deg": 117.1,
+    "interrupted": 1,
+    "pass": true
+   },
+   "reads_only": {
+    "state_while_off": "OFFLINE",
+    "left_bus_ms_after_cut": 20.0,
+    "back_parked_ms_after_power": 341.0,
+    "registers_after": {
+     "torque_on": true,
+     "torque_limit": 500,
+     "acc": 0,
+     "goal_speed": 2608
+    },
+    "reinit": 2,
+    "steps_after_deg": 117.1,
+    "interrupted": 1,
+    "pass": true
+   },
+   "pass": true
+  },
+  "lost_replies": {
+   "applied": {
+    "moved_deg": 45.18,
+    "resent": 0,
+    "step_writes": 1,
+    "settled": 1,
+    "pass": true
+   },
+   "dropped": {
+    "moved_deg": 45.18,
+    "resent": 1,
+    "step_writes": 1,
+    "settled": 1,
+    "pass": true
+   },
+   "pass": true
+  },
+  "step_time": {
+   "configured_acc_0": {
+    "steps": 60,
+    "settle_ms_mean": 229.6,
+    "settle_ms_max": 236.0
+   },
+   "acc_register_254": {
+    "steps": 60,
+    "settle_ms_mean": 270.2,
+    "settle_ms_max": 276.0
+   },
+   "margin_ms_acc_0": 14.0,
+   "margin_ms_acc_254": -26.0,
+   "pass": true
+  },
+  "burst": {
+   "3/s level": {
+    "balls": 30,
+    "steps": 30,
+    "empty_steps": 0,
+    "dithers": 6,
+    "recovered_by_dither": 5,
+    "doubles": 0,
+    "unexpected": 0,
+    "lifts": 0,
+    "done": "complete",
+    "duration_s": 12.07,
+    "balls_left": 170,
+    "step_gap_min_s": 0.335,
+    "step_rate_per_s": 2.47,
+    "ball_rate_per_s": 2.47,
+    "hangs": 0,
+    "freed_by_dither": 0,
+    "freed_by_step": 0
+   },
+   "4/s asked": {
+    "balls": 30,
+    "steps": 30,
+    "empty_steps": 0,
+    "dithers": 6,
+    "recovered_by_dither": 5,
+    "doubles": 0,
+    "unexpected": 0,
+    "lifts": 0,
+    "done": "complete",
+    "duration_s": 12.07,
+    "balls_left": 170,
+    "step_gap_min_s": 0.335,
+    "step_rate_per_s": 2.47,
+    "ball_rate_per_s": 2.47,
+    "hangs": 0,
+    "freed_by_dither": 0,
+    "freed_by_step": 0
+   },
+   "hung balls (p 0.25)": {
+    "balls": 30,
+    "steps": 31,
+    "empty_steps": 1,
+    "dithers": 10,
+    "recovered_by_dither": 8,
+    "doubles": 0,
+    "unexpected": 0,
+    "lifts": 0,
+    "done": "complete",
+    "duration_s": 13.81,
+    "balls_left": 170,
+    "step_gap_min_s": 0.335,
+    "step_rate_per_s": 2.23,
+    "ball_rate_per_s": 2.15,
+    "hangs": 6,
+    "freed_by_dither": 6,
+    "freed_by_step": 0
+   },
+   "5 balls at -25 deg": {
+    "balls": 5,
+    "steps": 6,
+    "empty_steps": 1,
+    "dithers": 3,
+    "recovered_by_dither": 1,
+    "doubles": 0,
+    "unexpected": 0,
+    "lifts": 1,
+    "done": "complete",
+    "duration_s": 3.62,
+    "balls_left": 0,
+    "step_gap_min_s": 0.336,
+    "step_rate_per_s": 1.53,
+    "ball_rate_per_s": 1.22,
+    "hangs": 0,
+    "freed_by_dither": 0,
+    "freed_by_step": 0
+   },
+   "empty hopper": {
+    "balls": 0,
+    "steps": 4,
+    "empty_steps": 4,
+    "dithers": 8,
+    "recovered_by_dither": 0,
+    "doubles": 0,
+    "unexpected": 0,
+    "lifts": 0,
+    "done": "hopper empty",
+    "duration_s": 4.81,
+    "balls_left": 0,
+    "step_gap_min_s": 1.201,
+    "step_rate_per_s": 0.83,
+    "ball_rate_per_s": null,
+    "hangs": 0,
+    "freed_by_dither": 0,
+    "freed_by_step": 0
+   },
+   "pass": true
+  }
+ },
+ "config": {
+  "FEED_STEP_COUNTS": 512,
+  "FEED_SETTLE_COUNTS": 23,
+  "FEED_STEP_TIMEOUT_S": 0.3,
+  "FEED_REVERSE_COUNTS": 228,
+  "FEED_DITHER_COUNTS": 114,
+  "FEED_MAX_JAMS": 3,
+  "FEED_SPEED_CPS": 2608,
+  "FEED_ACC": 0,
+  "FEED_JAM_LOAD": 400,
+  "FEED_JAM_LOAD_S": 0.06,
+  "FEED_GATE_WAIT_S": 0.4,
+  "FEED_MIN_PERIOD_S": 0.335,
+  "FEED_MAX_DITHERS": 2,
+  "SERVO_BAUD": 500000
+ },
+ "model": ".venv/bin/python firmware/turret/test_feed.py [--seed 1] [--out DIR]"
+}

@@ -1,0 +1,603 @@
+{
+ "printer": "Bambu Lab P1S 0.4 nozzle",
+ "nozzle": "0.4 mm hardened steel (PA6-CF is abrasive)",
+ "process": "0.20mm Standard @BBL X1C",
+ "bed_mm": [
+  256.0,
+  256.0
+ ],
+ "parts": {
+  "stand_box": {
+   "material": "petg",
+   "filament_profile": "Bambu PETG HF @BBL P1S 0.4 nozzle",
+   "copies": 1,
+   "orientation": "upside down, on its top plate",
+   "note": "the stand first: it needs no decision",
+   "settings": {
+    "wall_loops": "3",
+    "sparse_infill_density": "20%",
+    "sparse_infill_pattern": "gyroid",
+    "curr_bed_type": "Textured PEI Plate",
+    "enable_support": "1",
+    "support_type": "tree(auto)",
+    "support_threshold_angle": "30"
+   },
+   "file": "exports/turret/print/stand_box.3mf",
+   "size_mm": [
+    180.0,
+    200.0,
+    100.0
+   ],
+   "ok": true,
+   "grams": 377.49,
+   "minutes": 503.4,
+   "filament_m": 122.61,
+   "error": null,
+   "exit_code": 0,
+   "log_tail": null
+  },
+  "stand_bottom": {
+   "material": "petg",
+   "filament_profile": "Bambu PETG HF @BBL P1S 0.4 nozzle",
+   "copies": 1,
+   "orientation": "flat",
+   "note": "",
+   "settings": {
+    "wall_loops": "3",
+    "sparse_infill_density": "20%",
+    "sparse_infill_pattern": "gyroid",
+    "curr_bed_type": "Textured PEI Plate"
+   },
+   "file": "exports/turret/print/stand_bottom.3mf",
+   "size_mm": [
+    180.0,
+    240.0,
+    16.0
+   ],
+   "ok": true,
+   "grams": 103.86,
+   "minutes": 150.1,
+   "filament_m": 33.73,
+   "error": null,
+   "exit_code": 0,
+   "log_tail": null
+  },
+  "pan_base": {
+   "material": "pa6-cf",
+   "filament_profile": "Bambu PA6-CF @BBL X1C",
+   "copies": 1,
+   "orientation": "on its foot",
+   "note": "40 % gyroid inside 4 perimeters (the FEA case)",
+   "settings": {
+    "wall_loops": "4",
+    "top_shell_layers": "5",
+    "bottom_shell_layers": "5",
+    "sparse_infill_density": "40%",
+    "sparse_infill_pattern": "gyroid",
+    "curr_bed_type": "Textured PEI Plate",
+    "enable_support": "1",
+    "support_type": "tree(auto)",
+    "support_threshold_angle": "30"
+   },
+   "file": "exports/turret/print/pan_base.3mf",
+   "size_mm": [
+    157.6,
+    160.5,
+    47.0
+   ],
+   "ok": true,
+   "grams": 133.44,
+   "minutes": 386.5,
+   "filament_m": 50.43,
+   "error": null,
+   "exit_code": 0,
+   "log_tail": null
+  },
+  "pan_ring": {
+   "material": "pa6-cf",
+   "filament_profile": "Bambu PA6-CF @BBL X1C",
+   "copies": 1,
+   "orientation": "upside down: the gear teeth flat on the bed",
+   "note": "",
+   "settings": {
+    "wall_loops": "4",
+    "sparse_infill_density": "100%",
+    "sparse_infill_pattern": "zig-zag",
+    "curr_bed_type": "Textured PEI Plate",
+    "enable_support": "1",
+    "support_type": "tree(auto)",
+    "support_threshold_angle": "30"
+   },
+   "file": "exports/turret/print/pan_ring.3mf",
+   "size_mm": [
+    81.2,
+    81.2,
+    41.2
+   ],
+   "ok": true,
+   "grams": 78.21,
+   "minutes": 226.8,
+   "filament_m": 29.56,
+   "error": null,
+   "exit_code": 0,
+   "log_tail": null
+  },
+  "pan_spacer": {
+   "material": "pa6-cf",
+   "filament_profile": "Bambu PA6-CF @BBL X1C",
+   "copies": 1,
+   "orientation": "on its wide end",
+   "note": "",
+   "settings": {
+    "wall_loops": "4",
+    "sparse_infill_density": "100%",
+    "sparse_infill_pattern": "zig-zag",
+    "curr_bed_type": "Textured PEI Plate"
+   },
+   "file": "exports/turret/print/pan_spacer.3mf",
+   "size_mm": [
+    59.0,
+    59.0,
+    4.0
+   ],
+   "ok": true,
+   "grams": 2.62,
+   "minutes": 8.5,
+   "filament_m": 0.99,
+   "error": null,
+   "exit_code": 0,
+   "log_tail": null
+  },
+  "pan_pinion": {
+   "material": "pa6-cf",
+   "filament_profile": "Bambu PA6-CF @BBL X1C",
+   "copies": 1,
+   "orientation": "flat",
+   "note": "",
+   "settings": {
+    "wall_loops": "4",
+    "sparse_infill_density": "100%",
+    "sparse_infill_pattern": "zig-zag",
+    "curr_bed_type": "Textured PEI Plate"
+   },
+   "file": "exports/turret/print/pan_pinion.3mf",
+   "size_mm": [
+    28.6,
+    28.7,
+    17.0
+   ],
+   "ok": true,
+   "grams": 7.88,
+   "minutes": 38.0,
+   "filament_m": 2.98,
+   "error": null,
+   "exit_code": 0,
+   "log_tail": null
+  },
+  "ring_carrier": {
+   "material": "pa6-cf",
+   "filament_profile": "Bambu PA6-CF @BBL X1C",
+   "copies": 1,
+   "orientation": "on its top face",
+   "note": "reprint once the ring's flange holes are measured (plan T6)",
+   "settings": {
+    "wall_loops": "4",
+    "sparse_infill_density": "100%",
+    "sparse_infill_pattern": "zig-zag",
+    "curr_bed_type": "Textured PEI Plate"
+   },
+   "file": "exports/turret/print/ring_carrier.3mf",
+   "size_mm": [
+    64.5,
+    73.2,
+    12.0
+   ],
+   "ok": true,
+   "grams": 29.33,
+   "minutes": 70.6,
+   "filament_m": 11.08,
+   "error": null,
+   "exit_code": 0,
+   "log_tail": null
+  },
+  "ring_driver": {
+   "material": "pa6-cf",
+   "filament_profile": "Bambu PA6-CF @BBL X1C",
+   "copies": 1,
+   "orientation": "on its top face",
+   "note": "",
+   "settings": {
+    "wall_loops": "4",
+    "sparse_infill_density": "100%",
+    "sparse_infill_pattern": "zig-zag",
+    "curr_bed_type": "Textured PEI Plate"
+   },
+   "file": "exports/turret/print/ring_driver.3mf",
+   "size_mm": [
+    39.4,
+    39.9,
+    14.0
+   ],
+   "ok": true,
+   "grams": 6.83,
+   "minutes": 17.4,
+   "filament_m": 2.58,
+   "error": null,
+   "exit_code": 0,
+   "log_tail": null
+  },
+  "tilt_yoke": {
+   "material": "pa6-cf",
+   "filament_profile": "Bambu PA6-CF @BBL X1C",
+   "copies": 1,
+   "orientation": "on its back: the layers run along the arms",
+   "note": "",
+   "settings": {
+    "wall_loops": "4",
+    "sparse_infill_density": "100%",
+    "sparse_infill_pattern": "zig-zag",
+    "curr_bed_type": "Textured PEI Plate",
+    "enable_support": "1",
+    "support_type": "tree(auto)",
+    "support_threshold_angle": "30"
+   },
+   "file": "exports/turret/print/tilt_yoke.3mf",
+   "size_mm": [
+    91.0,
+    152.0,
+    48.4
+   ],
+   "ok": true,
+   "grams": 104.16,
+   "minutes": 285.7,
+   "filament_m": 39.37,
+   "error": null,
+   "exit_code": 0,
+   "log_tail": null
+  },
+  "cradle": {
+   "material": "pa6-cf",
+   "filament_profile": "Bambu PA6-CF @BBL X1C",
+   "copies": 1,
+   "orientation": "flat",
+   "note": "its cheeks bend across the layers (FEA: SF 0.77 under a 50 N push on the muzzle, humid PA6-CF): keep it dry, do not push the barrel, and print a spare when the schedule allows",
+   "settings": {
+    "wall_loops": "4",
+    "sparse_infill_density": "100%",
+    "sparse_infill_pattern": "zig-zag",
+    "curr_bed_type": "Textured PEI Plate",
+    "enable_support": "1",
+    "support_type": "tree(auto)",
+    "support_threshold_angle": "30"
+   },
+   "file": "exports/turret/print/cradle.3mf",
+   "size_mm": [
+    181.6,
+    126.0,
+    59.1
+   ],
+   "ok": true,
+   "grams": 76.56,
+   "minutes": 207.2,
+   "filament_m": 28.94,
+   "error": null,
+   "exit_code": 0,
+   "log_tail": null
+  },
+  "cartridge_body": {
+   "material": "pa6-cf",
+   "filament_profile": "Bambu PA6-CF @BBL X1C",
+   "copies": 1,
+   "orientation": "on its base; supports under the floor, the chute and the cage plate",
+   "note": "the longest print: after the motor and a servo are checked against the drawings (plan T2, T4)",
+   "settings": {
+    "wall_loops": "4",
+    "sparse_infill_density": "100%",
+    "sparse_infill_pattern": "zig-zag",
+    "curr_bed_type": "Textured PEI Plate",
+    "enable_support": "1",
+    "support_type": "tree(auto)",
+    "support_threshold_angle": "30"
+   },
+   "file": "exports/turret/print/cartridge_body.3mf",
+   "size_mm": [
+    162.6,
+    103.2,
+    81.6
+   ],
+   "ok": true,
+   "grams": 187.58,
+   "minutes": 639.4,
+   "filament_m": 70.9,
+   "error": null,
+   "exit_code": 0,
+   "log_tail": null
+  },
+  "flywheel": {
+   "material": "pa6-cf",
+   "filament_profile": "Bambu PA6-CF @BBL X1C",
+   "copies": 2,
+   "orientation": "on its top face (the flange seat flat on the bed)",
+   "note": "ream the bore to 5.00",
+   "settings": {
+    "wall_loops": "4",
+    "sparse_infill_density": "100%",
+    "sparse_infill_pattern": "zig-zag",
+    "curr_bed_type": "Textured PEI Plate"
+   },
+   "file": "exports/turret/print/flywheel.3mf",
+   "size_mm": [
+    28.0,
+    28.0,
+    12.0
+   ],
+   "ok": true,
+   "grams": 5.19,
+   "minutes": 12.7,
+   "filament_m": 1.96,
+   "error": null,
+   "exit_code": 0,
+   "log_tail": null
+  },
+  "dial": {
+   "material": "petg",
+   "filament_profile": "Bambu PETG HF @BBL P1S 0.4 nozzle",
+   "copies": 1,
+   "orientation": "on its bottom, cone up",
+   "note": "",
+   "settings": {
+    "wall_loops": "5",
+    "sparse_infill_density": "40%",
+    "sparse_infill_pattern": "gyroid",
+    "curr_bed_type": "Textured PEI Plate",
+    "enable_support": "1",
+    "support_type": "tree(auto)",
+    "support_threshold_angle": "30"
+   },
+   "file": "exports/turret/print/dial.3mf",
+   "size_mm": [
+    90.9,
+    90.9,
+    44.0
+   ],
+   "ok": true,
+   "grams": 45.54,
+   "minutes": 102.3,
+   "filament_m": 14.79,
+   "error": null,
+   "exit_code": 0,
+   "log_tail": null
+  },
+  "hopper": {
+   "material": "petg-clear",
+   "filament_profile": "Bambu PETG Translucent @BBL X1C",
+   "copies": 1,
+   "orientation": "upright, on its bottom rim and the baffle",
+   "note": "translucent PETG so the balls show",
+   "settings": {
+    "wall_loops": "5",
+    "sparse_infill_density": "40%",
+    "sparse_infill_pattern": "gyroid",
+    "curr_bed_type": "Textured PEI Plate"
+   },
+   "file": "exports/turret/print/hopper.3mf",
+   "size_mm": [
+    110.8,
+    101.4,
+    65.0
+   ],
+   "ok": true,
+   "grams": 41.0,
+   "minutes": 102.8,
+   "filament_m": 13.64,
+   "error": null,
+   "exit_code": 0,
+   "log_tail": null
+  },
+  "hopper_lid": {
+   "material": "petg",
+   "filament_profile": "Bambu PETG HF @BBL P1S 0.4 nozzle",
+   "copies": 1,
+   "orientation": "upside down",
+   "note": "the fill flap is not fitted on the bench",
+   "settings": {
+    "wall_loops": "5",
+    "sparse_infill_density": "40%",
+    "sparse_infill_pattern": "gyroid",
+    "curr_bed_type": "Textured PEI Plate"
+   },
+   "file": "exports/turret/print/hopper_lid.3mf",
+   "size_mm": [
+    102.2,
+    102.2,
+    13.0
+   ],
+   "ok": true,
+   "grams": 16.09,
+   "minutes": 31.0,
+   "filament_m": 5.23,
+   "error": null,
+   "exit_code": 0,
+   "log_tail": null
+  },
+  "barrel": {
+   "material": "petg",
+   "filament_profile": "Bambu PETG HF @BBL P1S 0.4 nozzle",
+   "copies": 1,
+   "orientation": "standing on its socket end",
+   "note": "change to blaze orange for the last 15 mm (a filament change at that layer)",
+   "settings": {
+    "wall_loops": "5",
+    "sparse_infill_density": "40%",
+    "sparse_infill_pattern": "gyroid",
+    "curr_bed_type": "Textured PEI Plate",
+    "enable_support": "1",
+    "support_type": "tree(auto)",
+    "support_threshold_angle": "30"
+   },
+   "file": "exports/turret/print/barrel.3mf",
+   "size_mm": [
+    30.0,
+    35.0,
+    100.0
+   ],
+   "ok": true,
+   "grams": 30.54,
+   "minutes": 92.5,
+   "filament_m": 9.92,
+   "error": null,
+   "exit_code": 0,
+   "log_tail": null
+  },
+  "laser_mount": {
+   "material": "petg",
+   "filament_profile": "Bambu PETG HF @BBL P1S 0.4 nozzle",
+   "copies": 1,
+   "orientation": "on its foot",
+   "note": "",
+   "settings": {
+    "wall_loops": "5",
+    "sparse_infill_density": "40%",
+    "sparse_infill_pattern": "gyroid",
+    "curr_bed_type": "Textured PEI Plate"
+   },
+   "file": "exports/turret/print/laser_mount.3mf",
+   "size_mm": [
+    20.0,
+    18.0,
+    24.1
+   ],
+   "ok": true,
+   "grams": 6.19,
+   "minutes": 23.9,
+   "filament_m": 2.01,
+   "error": null,
+   "exit_code": 0,
+   "log_tail": null
+  },
+  "board_bay": {
+   "material": "petg",
+   "filament_profile": "Bambu PETG HF @BBL P1S 0.4 nozzle",
+   "copies": 1,
+   "orientation": "on its back",
+   "note": "",
+   "settings": {
+    "wall_loops": "5",
+    "sparse_infill_density": "40%",
+    "sparse_infill_pattern": "gyroid",
+    "curr_bed_type": "Textured PEI Plate"
+   },
+   "file": "exports/turret/print/board_bay.3mf",
+   "size_mm": [
+    58.0,
+    57.0,
+    46.5
+   ],
+   "ok": true,
+   "grams": 24.36,
+   "minutes": 56.7,
+   "filament_m": 7.91,
+   "error": null,
+   "exit_code": 0,
+   "log_tail": null
+  },
+  "flywheel_tyre": {
+   "material": "tpu95",
+   "filament_profile": "Bambu TPU 95A @BBL X1C",
+   "copies": 2,
+   "orientation": "flat",
+   "note": "\u00d834 mounted (printed 4 % under the \u00d828 rim): the only tyre for the X2216 (D42)",
+   "settings": {
+    "wall_loops": "3",
+    "sparse_infill_density": "100%",
+    "sparse_infill_pattern": "zig-zag",
+    "curr_bed_type": "Textured PEI Plate"
+   },
+   "file": "exports/turret/print/flywheel_tyre.3mf",
+   "size_mm": [
+    33.1,
+    33.1,
+    12.0
+   ],
+   "ok": true,
+   "grams": 4.43,
+   "minutes": 18.7,
+   "filament_m": 1.51,
+   "error": null,
+   "exit_code": 0,
+   "log_tail": null
+  }
+ },
+ "by_material": {
+  "pa6-cf": {
+   "grams": 637.0,
+   "hours": 31.8
+  },
+  "petg": {
+   "grams": 604.1,
+   "hours": 16.0
+  },
+  "petg-clear": {
+   "grams": 41.0,
+   "hours": 1.7
+  },
+  "tpu95": {
+   "grams": 8.9,
+   "hours": 0.6
+  }
+ },
+ "total_grams": 1291.0,
+ "total_hours": 50.1,
+ "not_printed_v0": {
+  "bumper_ring": "v1 (the robot): no bumper on the bench",
+  "hopper_flap": "v1: the dock's fill flap",
+  "pan_clamp": "cut by SendCutSend in 6061-T6 aluminium (exports/turret/pan_clamp.dxf)"
+ },
+ "schedule": [
+  [
+   "Day 1",
+   [
+    "stand_box",
+    "stand_bottom"
+   ]
+  ],
+  [
+   "Day 1-2: the pan stack (PA6-CF)",
+   [
+    "pan_base",
+    "pan_ring",
+    "pan_spacer",
+    "pan_pinion",
+    "ring_carrier",
+    "ring_driver"
+   ]
+  ],
+  [
+   "Day 2-3: the tilt group (PA6-CF, PETG)",
+   [
+    "tilt_yoke",
+    "cradle",
+    "board_bay",
+    "laser_mount"
+   ]
+  ],
+  [
+   "Once the X2216 and a servo are in hand: the cartridge",
+   [
+    "cartridge_body",
+    "flywheel",
+    "dial",
+    "hopper",
+    "hopper_lid",
+    "barrel"
+   ]
+  ],
+  [
+   "Last",
+   [
+    "flywheel_tyre"
+   ]
+  ]
+ ],
+ "note": "grams and minutes are Bambu Studio's own (command line) for the part in this orientation with these settings and its supports; copies multiply them"
+}

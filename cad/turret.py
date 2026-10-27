@@ -3,7 +3,7 @@
     .venv/bin/python cad/turret.py [designs/default.json] [--no-render]
 
 The concept is research/turret-launcher-study.md section 8 and docs/cad-plan.md section 4: Rival-size foam balls, a
-gravity hopper over an 8-pocket dial on a DJI M2006 P36, twin Snail 2305 flywheels in the horizontal plane, a 100 mm
+gravity hopper over an 8-pocket dial on an STS3215 servo, twin SunnySky X2216 flywheels in the horizontal plane, a 100 mm
 barrel, an aiming laser on the cradle, an STS3215 ring-gear pan on a 61810-2RS bearing and an STS3215 tilt with a hard
 stop at 0 deg (the barrel can never point above horizontal: kid-safety rule S5 / study 6.3).
 
@@ -31,8 +31,8 @@ Made parts (one function each; PA6-CF = loaded, 100 % solid; PETG = 2 mm walls, 
   tilt_yoke (PA6-CF)       bridge + two arms; tilt servo on the +y arm, MR126 on the -y arm, hard stops at 0 / -25 deg
   cradle (PA6-CF)          cheeks on the tilt axis, rails the cartridge sits on (CT: 2 dowels + a thumbscrew), laser tab
   cartridge_body (PA6-CF)  dial housing, drop chute, flywheel cage (motors hang under its top plate), barrel socket
-  flywheel (PA6-CF)        hub on the Snail shaft; flywheel_tyre (TPU 95A) Ø40 tyre over it
-  dial (PETG)              8 pockets, stirring cone, on the M2006 shaft
+  flywheel (PA6-CF)        hub on the X2216's prop adapter; flywheel_tyre (TPU 95A) Ø34 / Ø36 tyre over it
+  dial (PETG)              8 pockets, stirring cone, on the feed servo's horn
   hopper, hopper_lid, hopper_flap (PETG, translucent)  30 balls; fill port with a sprung flap for the dock spout
   barrel (PETG, orange tip)  Ø30 x 100, bore = ball + 1.5, two chronograph gates
   laser_mount (PETG)       ring with three M3 boresight screws, on the cradle
@@ -90,23 +90,30 @@ SHOULDER = {'d': 6.0, 'L': 12.0, 'head_d': 10.0, 'head_h': 5.0, 'thread_d': 5.0,
 SERVO = {'L': 45.2, 'W': 24.7, 'H': 32.0, 'band': 1.1, 'bump': 1.9, 'shaft_from_end': 10.11, 'horn_d': 19.95, 'horn_t': 3.0,
          'horn_pcd': 14.0, 'idler_boss': (6.0, 4.1), 'holes_out': (8.30, 29.00), 'holes_idler': (8.30, 32.75), 'holes_x': 10.25,
          'plugs': (9.0, 24.0, 7.5), 'plug_room': 12.0, 'mass_g': 60.0}
-# DJI RoboMaster Snail 2305 (875 rpm/V; DJI user guide and STEP, references/vendor/dji-robomaster-snail-2305): the bell
-# Ø29 x 10.4 (it turns) on a 6.9 base; its mount face (the base's end) 17.3 from the bell's end; 4 x M3 x 3 on a 16/19
-# cross; the Ø2.95 shaft 10 out of the bell's end and a Ø6 washer 0.9 proud of the mount face (both turn); the wheel seat
-# on the bell's end: a Ø15 boss 2.0 high with 3 x M2 x 3 at 120 deg and 2 x Ø1.6 pin holes, all on Ø10.3; the leads leave
-# the base between two M3 holes 3.6 from the mount face. 27.8 g.
-SNAIL = {'d': 29.0, 'bell_h': 10.4, 'base_h': 6.9, 'base_d': 27.0, 'seat_d': 15.0, 'seat_h': 2.0, 'shaft_d': 2.95, 'shaft_l': 10.0,
-         'washer': (6.0, 0.9), 'mount': ((8.0, 0.0), (-8.0, 0.0), (0.0, 9.5), (0.0, -9.5)), 'wheel_pcd': 10.3, 'mass_g': 27.8}
-# DJI RoboMaster M2006 P36 (DJI manual V1.0 2018.01 drawing, references/vendor/dji-robomaster-m2006-p36): the gearbox
-# Ø24.4 x 25 from the front (mount) face, the motor to 30.7, then the rotor bell Ø24 x 13.1 and a Ø6 x 4 hub, which TURN at
-# 36 x the output speed (keep them clear); the front boss Ø13 x 1.5 under a circlip; the output Ø6 with a 5.5 flat, 17
-# from the face, an M3 x 5.5 thread in its end; 3 x M3 x 4 on Ø19 at 120 deg; the leads leave radially 25.7..32.7 behind
-# the face midway between two of the M3 holes (strain relief to r 22.9). 90 g.
-M2006 = {'d': 24.4, 'gear_l': 25.0, 'fixed_l': 30.7, 'body_l': 43.8, 'hub': (6.0, 4.0), 'boss': (13.0, 1.5), 'shaft_d': 6.0,
-         'flat': 5.5, 'shaft_l': 17.0, 'pcd': 19.0, 'lead': (25.7, 32.7, 22.9), 'mass_g': 90.0}
-C610 = {'size': (22.0, 50.0, 7.3), 'mass_g': 17.0}                    # x, y, z: DJI C610 user guide, 50 x 22 x 7.3, 17 g
-AM32 = {'size': (25.0, 13.0, 5.0), 'mass_g': 5.0}                     # catalog repeat-robotics-am32-35a-esc
-LASER = {'d': 7.0, 'L': 26.1, 'mass_g': 3.8}                         # Quarton VLM-520-73 LPT: 520 nm, < 1 mW (Class 2), 3-6 V
+# The flywheel motor (D42): SunnySky X2216 880KV V3, short shaft (SunnySky's drawing "X2216 short shaft" on
+# en.rcsunnysky.com/x-fixedwingseries/1102.html, references/vendor/sunnysky-x2216). Ø27.7; 32 from the mount face (the
+# base's end) to the bell's front face, a Ø9 boss 2.0 proud of that face (34), and the Ø3.175 shaft's rear end with its
+# clip 2.5 behind the mount face (36.5 overall). The base is the first 7.5 (est from the drawing: the leads leave it
+# radially, 18 AWG x 100); the bell turns from there. 4 x M3 x 0.5 in the mount face, 2.8 deep (a screw must not reach
+# further: the windings), on the two diagonals 45 deg either side of the lead exit, 19 apart on one and 16 on the other.
+# The bolt-on prop adapter in the box carries the hub: a Ø17 x 4 flange on 3 x M2 into the bell on Ø12 (a Ø9 recess
+# over the boss centres it), a Ø5 (0/-0.03) pilot 5.5 long, then an M5 x 0.8 stud 13 long; the Ø14.8 x 2 washer (Ø5.1)
+# and an M5 nylon-insert nut clamp the hub against the flange, as a propeller is. 72 g with its leads (SunnySky's
+# table; RMRC lists 67.5 g), 12N14P (7 pole pairs), 117 mOhm, 0.5 A at no load at 10 V.
+MOTOR = {'name': 'SunnySky X2216 880KV V3 (short shaft)', 'd': 27.7, 'len': 32.0, 'boss': (9.0, 2.0), 'stub': (7.0, 2.5),
+         'base_h': 7.5, 'holes_r': (8.0, 9.5), 'flange': (17.0, 4.0), 'pilot': (5.0, 5.5), 'stud': (5.0, 13.0),
+         'washer': (14.8, 2.0), 'nut': (9.2, 5.0), 'kv': 880.0, 'pole_pairs': 7, 'R_ohm': 0.117, 'I0_a': 0.5, 'mass_g': 72.0}
+# Repeat Robotics AM32 35 A (catalog repeat-robotics-am32-35a-esc): 26 x 13 x 5, 5 g with its wires. The backup ESC,
+# the Lumenier Razor Pro F4 45A AM32, is 28 x 12 x 5 and fits the same place.
+AM32 = {'size': (26.0, 13.0, 5.0), 'mass_g': 5.0}
+# The cartridge board (docs/turret-wiring.md 6, cad/turret_boards.py): a 50 x 44 piece of perfboard over the cage plate on
+# four printed posts (M3 inserts, 4 x M3 x 6), clear of the hopper by 3 mm and overhanging the cage's front over the barrel
+# socket: the 6 x IRLZ44N of the phase-short brake stand in a row along its front edge (TO-220, 21 mm tall), the LM393
+# gate comparator, the feed servo's polyfuse and the resistors behind them. The two ESCs lie on the cage plate under it.
+CART_BOARD = {'x': (54.0, 104.0), 'y': 22.0, 'boss_h': 6.0, 'standoff': 12.0, 'parts_h': 21.0, 'board_t': 1.6, 'mass_g': 30.0,
+              'bosses': ((58.0, 16.0), (58.0, -16.0), (90.0, 18.5), (90.0, -18.5))}
+# Quarton VLM-650-03 LPT (D42): 650 nm, 1 mW (Class 2), Ø7.00 x 22.50, 2.6-6 V, < 35 mA (Quarton's datasheet; Digi-Key)
+LASER = {'d': 7.0, 'L': 22.5, 'mass_g': 3.0, 'name': 'Quarton VLM-650-03 LPT, 650 nm, < 1 mW (Class 2)'}
 # Deutsch DT04-12PA-L012 flange receptacle and its DT06-12SA plug (est; check against the TE drawings)
 # TE Deutsch DT04-12PA-L012 flange receptacle (TE drawing DT04-12PX-L012 rev D2): flange 55.12 x 35.56 x 5.08, 4 x Ø4.29 on
 # 44.96 x 23.88 (M4), panel cutout 41.83 x 23.52 R6.35, shroud 40.56 x 22.25 standing 19.81 proud, ~21 behind the panel.
@@ -168,6 +175,9 @@ class Geo:
         self.floor_t = 3.0
         self.dial_z0 = self.floor_z + 0.75
         self.dial_h = 20.0
+        # the feed servo's output face sits in a 0.75 mm pocket in the floor's underside, so its horn's top is level with the
+        # dial's underside and the dial sits flat on it (no spigot: the dial prints flat on its bottom)
+        self.feed_face = self.dial_z0 - SERVO['horn_t']
         self.housing_top = 35.0
         # the lid's underside: a physics fill (sim/turret_feed.py, 40 balls jostled in) fits 15-16 balls under 70 mm,
         # 29 under 95 and 34 under 100, so 100 holds the 30-ball load with room to spare
@@ -193,10 +203,11 @@ class Geo:
         self.cage_x1 = self.wheel_x + self.cav_r + self.wall
         self.cage_y = self.wheel_y + self.cav_r + self.wall      # half-width of the cartridge
         self.base_z0 = -(self.br + 3.0)                          # underside of the cartridge base
-        # the Snails hang under the cage's top plate, their bells down; each wheel bolts to its bell's seat boss
-        self.bell_z0 = 11.0                                      # the bell's end (the seat boss stands 2 below it)
-        self.hub_top = self.bell_z0 - SNAIL['seat_h']            # the wheel hub's top face, on the seat boss
-        self.plate_z0 = self.bell_z0 + SNAIL['bell_h'] + SNAIL['base_h']     # the motors' mount face
+        # the X2216s hang bell-down under the cage's top plate; each hub sits on its motor's prop adapter with the tyre's
+        # mid-plane on the ball path, so the hub's top face (on the adapter's flange) is half a tyre above it
+        self.hub_top = self.tyre_w / 2
+        self.bell_z0 = self.hub_top + MOTOR['flange'][1]        # the bell's front face, under the adapter's flange
+        self.plate_z0 = self.bell_z0 + MOTOR['len']              # the motors' mount face: the plate's underside
         self.plate_z1 = self.plate_z0 + 3.5
         self.barrel_od = 30.0
         self.barrel_len = 100.0
@@ -209,8 +220,9 @@ class Geo:
         # ... and this far ahead of the dial axis, so the tilting group's centre of mass sits a few mm behind the axis
         # with an empty or a full hopper: unpowered, the barrel rises to the 0 deg stop and never drops onto the lidar
         # in front of it (it was 32-35 mm ahead with the axis on the dial axis). The axis stays on the pan axis, so the
-        # dial and hopper sit tilt_x behind it.
-        self.tilt_x = 40.0
+        # dial and hopper sit tilt_x behind it. 48 with the X2216s (72 g each, ahead of the axis) and the servo feed:
+        # 8.5 mm behind with 30 balls, 5.2 empty (at 40 it was 0.9 behind full and 2.3 ahead empty)
+        self.tilt_x = 48.0
         self.cheek_y = (self.cage_y + 1.5, self.cage_y + 7.5)              # 6 mm cheeks (FEA: the stop and the side load)
         self.arm_y = (self.cheek_y[1] + 4.0, self.cheek_y[1] + 12.0)
         self.rail_y = (self.cage_y - 10.5, self.cheek_y[1])
@@ -234,12 +246,12 @@ class Geo:
         self.dt_y = 73.0                                         # DT pad face (flange seat)
         self.bumper_r = (82.0, 86.0)                             # 4 mm of TPU 95A (mass: it was 6)
         self.bumper_z = (6.0, 20.0)                              # on 6 mm tabs: the M3 x 4.3 inserts need 5.1 mm
-        # height of the ball path above the mount face. Two limits: the M2006's spinning rotor hub (under the dial,
-        # tilt_x behind the pan axis) 3 mm over the turntable; and, binding, the front of the cradle (the laser tab and
-        # the laser mount's screw heads under it) at full depression passing over the pan pinion, whose 16 mm face
-        # reaches z 69 (the clash sweep at pans 0..350 asks for 1 mm: 125 gives ~2)
-        m2006_bottom = self.floor_z - self.floor_t - M2006['body_l'] - M2006['hub'][1]
-        self.path_t = max(math.ceil(self.turntable_z[1] + 3.0 - m2006_bottom), 125)
+        # height of the ball path above the mount face. Two limits: the feed servo's bus plugs (under the dial, tilt_x
+        # behind the pan axis) 3 mm over the turntable; and, binding, the front of the cradle (the laser tab and the laser
+        # mount's screw heads under it) at full depression passing over the pan pinion, whose 16 mm face reaches z 69
+        # (the clash sweep at pans 0..350 asks for 1 mm: 125 gives ~2)
+        feed_bottom = self.feed_face - SERVO['H'] - SERVO['plug_room']
+        self.path_t = max(math.ceil(self.turntable_z[1] + 3.0 - feed_bottom), 125)
         self.tilt_t = self.path_t + self.tilt_c
 
 
@@ -536,7 +548,9 @@ def pan_ring(G):
         s = s.cut(insert_hole(x, y, z1, 'M4'))
     for k in range(6):                                                                      # lightening pockets from below
         a = 30.0 + 60.0 * k
-        s = s.cut(sector_z(23.0, 34.0, a - 20.0, a + 20.0, z0 - 1, z0 + 7.0))           # 1 mm under the yoke's insert pilots
+        # outside the shoulder (r 28) by 1 mm: cut from r 23 they notched the shoulder's root, where the side-fall case
+        # peaked (FEA: SF 1.12); 1 mm under the yoke's insert pilots
+        s = s.cut(sector_z(29.0, 34.0, a - 20.0, a + 20.0, z0 - 0.01, z0 + 7.0))
     hx, hy, hz = HALL['size']
     s = s.cut(box(MAGNET['r'] - hx / 2 - 0.2, MAGNET['r'] + hx / 2 + 0.2, -hy / 2 - 0.2, hy / 2 + 0.2, z0 - 1, z0 + hz + 0.3))  # hall switch
     s = s.cut(cyl_z(1.4, z0, z1 + 1, MAGNET['r'] - 3.5, 0.0))                              # its 3 leads up through
@@ -560,7 +574,7 @@ SHEET = {'al6061': {'name': '6061-T6 aluminium', 'thickness_mm': 3.175, 'thickne
 SHEET_PARTS = {'pan_clamp': 'al6061'}
 CLAMP_EARS = (0.0, 60.0, 120.0, 240.0, 300.0)      # the pan servo stands at 180 deg
 CLAMP_T = 3.175                                   # SendCutSend 6061-T6 aluminium, 0.125 in
-YOKE_RELIEF = {'r': 35.0, 'h': 1.5, 'chamfer': 3.0}    # the bridge bears on the turntable inside r 35; 1.5 mm up from r 38
+YOKE_RELIEF = {'r': 35.0, 'h': 1.5, 'chamfer': 3.0}    # the bridge bears on the turntable inside r 35; a cone to 1.5 mm up at r 38
 # printed with 4 perimeters, 5 top and bottom layers and 40 % gyroid instead of solid (mass): the pan base's walls are
 # all perimeter at that, and its FEA peaks sit in them (cad/turret_studies.py)
 PARTIAL_FILL = {'pan_base'}
@@ -628,13 +642,11 @@ def ring_driver(G):
 
 
 # the turret-board bay (docs/turret-plan.md 2.4, 3.3): a PETG tray on the -y yoke arm's outer face holding three
-# 52 x 50 boards (50 x 70 double-sided perfboard cut to size, Ø3.2 holes drilled at the corners), stacked on M3
-# standoffs. The modules' footprints (Pololu, Adafruit pages) set the area: level 0 (power, on the tray's bosses) the
-# D24V150F12 flywheel regulator (43.2 x 31.8 x 11), the D36V50F12 aux regulator (25.4 x 25.4 x 9.5) and the Pololu
-# 2815 switch (20.3 x 25.4 x 4.1); level 1 (on 12 mm standoffs) the D36V28F5 5 V regulator (17.8 x 20.3), the safety
-# and trip logic (opto, 74HC123 x 2, 74HC74, 74HC08, 74HC14, two LM393 gate comparators, 74AHCT125) and the 3 x 1000 uF
-# bank lying down; level 2 (on 14 mm standoffs) the Feather M4 CAN (50.8 x 22.8, terminal block up) and the
-# connectors. The tray reaches y -115 at x +-29 (r 118.6): the tilt servo on the other arm already sweeps r 112, and
+# 52 x 50 boards (perfboard cut to size, Ø3.2 holes drilled at the corners), stacked on M3 standoffs. What sits on each
+# is cad/turret_boards.py's (checked there part by part): level 0 (on the tray's bosses) the D24V150F12 12 V regulator
+# (43.2 x 31.8 x 11) and the laser's switch; level 1 (on 12 mm standoffs) the Pololu 2815 switch, the D36V28F5 5 V
+# regulator, the 2 x 1000 uF bank lying down, the opto and the one-shots; level 2 (on 14 mm standoffs) the Feather M4
+# CAN (50.8 x 22.8), the trip latch, the ARM gate and the servo bus buffer. The tray reaches y -115 at x +-29 (r 118.6): the tilt servo on the other arm already sweeps r 112, and
 # nothing fixed stands above z 69 out there (the pinion's top), so it clears every pan.
 TB = {'x': 29.0, 'z': (71.0, 128.0), 'y_out': 115.0, 'wall': 1.2, 'back': 3.0, 'board': (52.0, 50.0, 1.6), 'boss': 5.0,
       'levels': ((11.0, 12.0), (12.5, 14.0), (8.5, None)),        # (tallest part, standoff to the next board) per level
@@ -717,13 +729,14 @@ def tilt_yoke(G):
     s = s.cut(cyl_y(3.25, -a1 - 1, -a0, 0, zt))
     rl = LEADS['d'] / 2 + 3.0                                                               # the ring's rotor leads pass here (3 mm clear)
     s = s.cut(box(-rl, rl, -LEADS['r'] - rl, -LEADS['r'] + rl, b0 - 1, b1 + 1))
-    # the pinion's top is level with the turntable's (z 69): outside the turntable's gear (r 37 up) the bridge and the
-    # arms' feet stand 1.5 mm clear of that plane, so the pinion passes under them at every pan
-    # ... in three 0.5 mm steps over 3 mm instead of one, so the bridge's root has no deep notch (FEA)
+    # the pinion's top is level with the turntable's (z 69): outside the turntable's gear (r 38 up, where the pinion's
+    # teeth reach) the bridge and the arms' feet stand 1.5 mm clear of that plane, so the pinion passes under them at
+    # every pan. The relief is a 27 deg cone from r 35 to r 38 (it was three 0.5 mm steps: the E-push case's peak sat
+    # in the first step's re-entrant corner, cad/turret_studies.py)
     r0r, hr, ch = YOKE_RELIEF['r'], YOKE_RELIEF['h'], YOKE_RELIEF['chamfer']
-    n = 3
-    for i in range(n):
-        s = s.cut(ring_z(110.0, r0r + ch * i / (n - 1), b0 - 1.0, b0 + hr * (i + 1) / n))
+    cone = (cq.Workplane('XZ').polyline([(r0r, b0), (r0r + ch, b0 + hr), (110.0, b0 + hr), (110.0, b0 - 1.0), (r0r, b0 - 1.0)])
+            .close().revolve(360.0, (0, 0, 0), (0, 1, 0)))
+    s = s.cut(cone)
     for (x, z) in TB['screws']:                                                             # the turret-board bay's inserts
         s = s.cut(cyl_y(FAST['M3']['insert_pilot'] / 2, -a1 - 0.1, -a1 + 6.0, x, z))
     for (x, y) in YOKE_BOLTS:
@@ -817,32 +830,33 @@ LASER_Y = -32.0
 
 def cartridge_body(G):
     """The ball cartridge, printed PA6-CF on its base (100 % solid, 2.5 mm walls): a base plate on the cradle rails
-    (CT dowels, thumbscrew insert), the dial housing (floor with the M2006 face mount and the exit hole; a window at
-    the rear for the C610), the chute that drops the ball out of the dial and turns it forward onto the path, the
-    flywheel cage (two shells round the wheels and the hanging motors; a top plate the Snails screw under with 4 x M3 x 6
-    on their 16/19 cross, a slot by each for its leads up to the ESCs that sit on the plate; a Ø41.5 opening in the
-    bottom plate under each wheel, through which a Snail goes in with its wheel already bolted on), the ball channel
-    and the barrel socket (M3 insert on top). The M2006 hangs under the dial floor: its Ø13 boss in a Ø13.4 hole, 3 x M3
-    x 6 countersunk from above flush with the floor on Ø19, its leads to the rear towards the C610."""
+    (CT dowels, thumbscrew insert), the dial housing (its floor carries the feed servo: an STS3215 hanging under it, its
+    output face 0.75 mm up in a pocket in the floor's underside (so its horn's top is level with the dial's underside)
+    with a relief for its label band, the horn up through a Ø21 hole, 4 x M2 x 6 countersunk from above flush with the
+    floor (3.75 mm into the servo); the servo's length runs to the rear and its bus plugs face down
+    through the base plate's window; side windows in the housing below the floor), the chute that drops the ball out of
+    the dial and turns it forward onto the path, the flywheel cage (two shells round the wheels and the hanging motors; a
+    top plate the X2216s screw under, 4 x M3 x 6 each in four radial slots that take the motor's 16/19 cross in any
+    quarter turn, a Ø10.5 hole over its shaft's rear end and clip, a slot outboard of each for its leads; four printed
+    posts with M3 inserts that carry the cartridge board over the plate (the two ESCs lie on the plate under it); a hole over the hopper's front
+    lug for its screw; a Ø37.5 opening in the bottom plate under each wheel, through which a motor goes in with its wheel
+    already on), the ball channel and the barrel socket (M3 insert on top)."""
     br, w = G.br, G.wall
     hr = G.housing_r
     fz = G.floor_z
     bz0 = G.base_z0
-    # base plate (windowed) under everything
+    fz0 = fz - G.floor_t                                                                    # the floor's underside
+    # base plate (windowed) under everything; the window takes the feed servo (its length runs to the rear)
     s = box(-hr - 2.0, G.cage_x1, -G.cage_y, G.cage_y, bz0, bz0 + 3)
-    s = s.cut(box(-26, 26, -34, 34, bz0 - 1, bz0 + 4))
+    s = s.cut(box(-37, 26, -34, 34, bz0 - 1, bz0 + 4))
     # dial housing: wall from the base to the top, floor, flange lugs for the hopper
     s = s.union(ring_z(hr, G.dial_wall_r, bz0 + 3, G.housing_top))
-    s = s.union(cyl_z(G.dial_wall_r, fz - G.floor_t, fz))
+    s = s.union(cyl_z(G.dial_wall_r, fz0, fz))
     for a in HOPPER_LUGS:
         lug = cyl_z(5.0, G.housing_top - 6, G.housing_top, *polar(hr + 3.5, math.radians(a)))
         s = s.union(lug.union(box(hr - 1.0, hr + 3.5, -5.0, 5.0, G.housing_top - 6, G.housing_top).rotate((0, 0, 0), (0, 0, 1), a)))
-    s = s.cut(box(-hr - 3, -24, -32, 32, bz0 + 3, fz - G.floor_t - 0.5))                  # C610 window (rear)
-    for dx in (8.0, 18.0):                                                                  # two cable ties hold the C610
-        for sy in (1, -1):
-            s = s.cut(box(-hr + 1.0 + dx - 1.6, -hr + 1.0 + dx + 1.6, sy * 26.0 - 0.9, sy * 26.0 + 0.9, bz0 - 1, bz0 + 4))
     for sy in (1, -1):
-        s = s.cut(box(-20, 20, sy * 20, sy * 60, -5, fz - G.floor_t - 3))                   # side windows
+        s = s.cut(box(-20, 20, sy * 20, sy * 60, -5, fz0 - 3))                              # side windows
     # chute and channel walls
     chute = cq.Workplane('XY').add(cq.Solid.makeTorus(G.chute_r, br + w, cq.Vector(G.chute_cx, 0, G.chute_r), cq.Vector(0, 1, 0)))
     quad = box(G.exit_x - br - w - 1, G.chute_cx, -br - w - 1, br + w + 1, -br - w - 1, fz - G.floor_t + 0.5)
@@ -854,29 +868,45 @@ def cartridge_body(G):
         s = s.union(ring_z(G.cav_r + w, G.cav_r, bz0, G.plate_z1, G.wheel_x, sy * G.wheel_y))
     plate = cyl_z(G.cav_r + w, 0, 1, G.wheel_x, G.wheel_y).union(cyl_z(G.cav_r + w, 0, 1, G.wheel_x, -G.wheel_y)) \
         .union(box(G.cage_x0, G.cage_x1, -G.wheel_y, G.wheel_y, 0, 1))
-    s = s.union(_slab(plate, G.plate_z0, G.plate_z1).cut(cyl_z(G.dial_wall_r, G.plate_z0 - 1, G.plate_z1 + 1)))   # not over the dial
+    hop = G.dial_wall_r + HOPPER_WALL + 1.0                                                 # the hopper's outside + 1 mm
+    s = s.union(_slab(plate, G.plate_z0, G.plate_z1).cut(cyl_z(hop, G.plate_z0 - 1, G.plate_z1 + 1)))   # not over the hopper
     s = s.union(_slab(plate, bz0, bz0 + 3))
     s = s.union(box(G.cage_x1 - w, G.cage_x1 + 1.5, -br - w - 3, br + w + 3, bz0, br + w + 3))   # front wall
     s = s.union(cyl_x(br + 6.0, G.socket_x0 - 1.5, G.socket_x1))                            # barrel socket
     s = s.union(box(G.socket_x0 + 3, G.socket_x0 + 11, -5, 5, 0, br + 8.5))                 # socket screw boss
+    cb = CART_BOARD
+    for (x, y) in cb['bosses']:                                                             # posts for the cartridge board
+        s = s.union(cyl_z(3.5, G.plate_z1 - 0.01, G.plate_z1 + cb['boss_h'] + cb['standoff'], x, y))
     # cuts: cavities, ball path, mounts
     for sy in (1, -1):
-        s = s.cut(cyl_z(G.cav_cut, -8.0, G.bell_z0 - 0.5, G.wheel_x, sy * G.wheel_y))
-        s = s.cut(cyl_z(SNAIL['d'] / 2 + 2.0, G.bell_z0 - 0.6, G.plate_z0, G.wheel_x, sy * G.wheel_y))
-        s = s.cut(cyl_z(18.0, G.plate_z0 - SNAIL['base_h'] - 1.0, G.plate_z0, G.wheel_x, sy * G.wheel_y))   # room for the leads
-        s = s.cut(cyl_z(4.0, G.plate_z0 - 1, G.plate_z1 + 1, G.wheel_x, sy * G.wheel_y))
-        for (hx, hy) in SNAIL['mount']:
-            s = s.cut(through_z(G.wheel_x + hx, sy * G.wheel_y + hy, FAST['M3']['clear'], G.plate_z0 - 1, G.plate_z1 + 1))
-        s = s.cut(box(G.wheel_x - 4, G.wheel_x + 4, sy * 14.0, sy * 18.0, G.plate_z0 - 1, G.plate_z1 + 1).translate((0, sy * G.wheel_y, 0)))  # leads
-        s = s.cut(cyl_z(G.wheel_d / 2 + 0.75, bz0 - 1, -7.9, G.wheel_x, sy * G.wheel_y))      # the Snail + wheel go in here
+        xw, yw = G.wheel_x, sy * G.wheel_y
+        s = s.cut(cyl_z(G.cav_cut, -8.0, G.bell_z0 - 0.5, xw, yw))                         # the tyre and the adapter
+        s = s.cut(cyl_z(MOTOR['d'] / 2 + 1.5, G.bell_z0 - 0.6, G.plate_z0, xw, yw))        # the motor (its bell turns)
+        s = s.cut(cyl_z(18.5, G.plate_z0 - MOTOR['base_h'] - 1.0, G.plate_z0, xw, yw))     # room for the leads at its base
+        s = s.cut(cyl_z(5.25, G.plate_z0 - 1, G.plate_z1 + 1, xw, yw))                    # the shaft's rear end and clip
+        for a in (45.0, 135.0, 225.0, 315.0):                                               # 4 x M3: radial slots r 8..9.5
+            for r in MOTOR['holes_r']:
+                s = s.cut(through_z(xw + r * math.cos(math.radians(a)), yw + r * math.sin(math.radians(a)), FAST['M3']['clear'],
+                                    G.plate_z0 - 1, G.plate_z1 + 1))
+            slot = box(MOTOR['holes_r'][0], MOTOR['holes_r'][1], -FAST['M3']['clear'] / 2, FAST['M3']['clear'] / 2, G.plate_z0 - 1, G.plate_z1 + 1)
+            s = s.cut(slot.rotate((0, 0, 0), (0, 0, 1), a).translate((xw, yw, 0)))
+        s = s.cut(box(xw - 4, xw + 4, yw + sy * 14.0, yw + sy * 18.0, G.plate_z0 - 1, G.plate_z1 + 1))   # its leads, outboard
+        s = s.cut(cyl_z(G.wheel_d / 2 + 0.75, bz0 - 1, -7.9, xw, yw))                      # a motor + wheel go in here
+    s = s.cut(cyl_z(3.6, G.plate_z0 - 1, G.plate_z1 + 1, hr + 3.5, 0.0))                   # over the hopper's front lug: its screw
+    for (x, y) in cb['bosses']:
+        s = s.cut(insert_hole(x, y, G.plate_z1 + cb['boss_h'] + cb['standoff'], 'M3', 6.0))
     s = s.cut(ball_path(G))
     s = s.cut(cyl_x(G.barrel_od / 2 + 0.1, G.socket_x0, G.socket_x1 + 1))
     s = s.cut(insert_hole(G.socket_x0 + 7, 0, br + 8.5, 'M3', 8.0 - 0.5))
-    s = s.cut(cyl_z(M2006['boss'][0] / 2 + 0.2, fz - G.floor_t - 1, fz + 1))               # M2006 boss and circlip
-    for a in M2006_HOLES:                                                                   # 3 x M3 countersunk, flush
-        hx, hy = polar(M2006['pcd'] / 2, math.radians(a))
-        s = s.cut(through_z(hx, hy, FAST['M3']['clear'], fz - G.floor_t - 1, fz + 1))
-        s = s.cut(cq.Workplane('XY').circle(1.7).workplane(offset=1.8).circle(3.5).loft().translate((hx, hy, fz - 1.79)))
+    # the feed servo under the floor: the horn's hole, the label band's relief, 4 x M2 countersunk from above
+    s = s.cut(cyl_z(10.5, fz0 - 1, fz + 1))
+    L_, W_, sft = SERVO['L'], SERVO['W'], SERVO['shaft_from_end']
+    s = s.cut(box(-(L_ - sft) - 0.3, sft + 0.3, -W_ / 2 - 0.3, W_ / 2 + 0.3, fz0 - 1, G.feed_face))   # its face, 0.75 up into the floor
+    for (x0, x1, y0, y1, z0, z1) in feed_servo_cuts(G):
+        s = s.cut(box(x0, x1, y0, y1, z0, z1))
+    for (hx, hy) in feed_servo_holes():
+        s = s.cut(through_z(hx, hy, 2.4, fz0 - 1, fz + 1))
+        s = s.cut(cq.Workplane('XY').circle(1.2).workplane(offset=1.1).circle(2.3).loft().translate((hx, hy, fz - 1.09)))
     ct_dowels, ct_latch = ct_points(G)
     for (x, y) in ct_dowels:
         s = s.cut(cyl_z(2.0, bz0 - 1, bz0 + 2.5, x, y))
@@ -888,7 +918,20 @@ def cartridge_body(G):
 
 
 HOPPER_LUGS = (0.0, 135.0, 225.0)
-M2006_HOLES = (0.0, 120.0, 240.0)                 # its leads leave midway between 120 and 240: to the rear
+HOPPER_WALL = 1.6
+
+
+def feed_servo_holes():
+    """The feed servo's four M2 holes in its output face (SERVO: +-10.25 across, 8.30 and 29.00 from the axis towards
+    its far end), in the C frame: the servo's axis on the dial axis, its length running to the rear (-x)."""
+    return [(-d, sgn * SERVO['holes_x']) for d in SERVO['holes_out'] for sgn in (1, -1)]
+
+
+def feed_servo_cuts(G):
+    """Boxes (x0, x1, y0, y1, z0, z1) cut from the floor's underside for the feed servo's label band (1.1 mm, 13 wide,
+    from 12 mm off the axis to 1 mm short of the far end: est), with 0.3 mm to spare."""
+    L, s = SERVO['L'], SERVO['shaft_from_end']
+    return [(-(L - s - 1.0) - 0.3, -12.0 + 0.3, -6.8, 6.8, G.feed_face - 0.01, G.feed_face + SERVO['band'] + 0.3)]
 
 
 def _slab(plate, z0, z1):
@@ -909,43 +952,40 @@ def ball_path(G):
 
 
 def flywheel(G):
-    """Flywheel hub, printed PA6-CF (100 % solid): a Ø28 rim for the TPU tyre, a web, and a Ø18 boss whose top face
-    bolts to the Snail's wheel seat (the Ø15 boss on its bell) as DJI's own wheels do: 3 x M2 x 8 at 90/210/330 deg
-    and two Ø1.6 x 4 steel pins at 0/180 deg on Ø10.3 that carry the torque, the Ø2.95 shaft in a Ø3.05 bore centring
-    it. The tyre's diameter is the launch speed's hardware ceiling (study 8.3, sim/turret_launch.py)."""
+    """Flywheel hub, printed PA6-CF (100 % solid) on its top face: a Ø28 x 12 rim for the TPU tyre and a 5.5 mm web whose
+    top face sits flat on the X2216's prop-adapter flange (Ø17) under the bell, its bore on the adapter's Ø5 pilot
+    (printed Ø4.9 and reamed to 5.00: a close slip fit that centres it), clamped by the adapter's Ø14.8 washer and an M5
+    nylon-insert nut in the recess under the web, as a propeller is; the stud's thread starts below the web, so the bore
+    rides only the pilot. A 0.5 mm chamfer at the top clears the stud's root. Runout is measured on the motor before the
+    tyre goes on (bench test 1.5). The tyre's diameter is the launch speed's hardware ceiling (study 8.3,
+    sim/turret_launch.py)."""
     x, y = G.wheel_x, G.wheel_y
-    top = G.hub_top
+    top = G.hub_top                                                     # on the adapter's flange
+    web0 = top - MOTOR['pilot'][1]                                      # the web's underside: where the pilot ends
     rr = G.wheel_d / 2 - G.tyre_t                                       # the rim, under the tyre
     s = ring_z(rr, rr - 3.0, -G.tyre_w / 2, G.tyre_w / 2, x, y)
-    s = s.union(cyl_z(rr, -3, 3, x, y)).union(cyl_z(9.0, -3, top, x, y))
-    s = s.cut(cyl_z(1.525, -4, top + 1, x, y))
-    for a in (90.0, 210.0, 330.0):
-        hx, hy = polar(SNAIL['wheel_pcd'] / 2, math.radians(a))
-        s = s.cut(cyl_z(1.1, -4, top + 1, x + hx, y + hy)).cut(cyl_z(2.0, -4, top - 6.0, x + hx, y + hy))
-    for a in (0.0, 180.0):
-        hx, hy = polar(SNAIL['wheel_pcd'] / 2, math.radians(a))
-        s = s.cut(cyl_z(0.78, top - 4.0, top + 1, x + hx, y + hy))
-    rh = 0.5 * (9.0 + rr - 3.0)                                       # lightening holes midway between boss and rim
-    for k in range(5):
-        hx, hy = polar(rh, k * 2 * math.pi / 5 + math.pi / 5)
-        s = s.cut(cyl_z(min(1.5, (rr - 3.0 - 9.0) / 2 - 0.5), -4, 4, x + hx, y + hy))
+    s = s.union(cyl_z(rr - 2.9, web0, top, x, y))
+    s = s.cut(cyl_z(2.45, web0 - 1, top + 1, x, y))
+    s = s.cut(cq.Workplane('XY').circle(2.45).workplane(offset=0.51).circle(2.96).loft().translate((x, y, top - 0.5)))
     return s
 
 
-# the tyre's bore is printed 4 % under the hub's rim: at the set speed the TPU grows 0.23-0.69 mm radially, 1-4 % looser
+# the tyre's bore is printed 4 % under the hub's rim: at the set speed the TPU grows 0.17-0.52 mm radially, 1-4 % looser
 # (docs/turret-physics.md finding 5), so a line-to-line tyre would walk; stretched 4 % it stays tight. The set: the motors'
-# centre distance is fixed (53.0 mm), so a tyre's diameter sets its crush. Ceiling at 100 % throttle on 12 V with the
-# tolerances (the physics agent's ceiling_map run for this cage): Ø34 at 16.2 % crush 64.5 fps, Ø36 at 25 % 67.5 fps,
-# Ø38 at 33.8 % 69.7 fps (0.3 fps under the cap: not printed).
+# centre distance is fixed (53.0 mm), so a tyre's diameter sets its crush. Ceiling at 100 % throttle on the fixed 12 V
+# rail with the X2216 880KV (D42) at the worst corner (KV +5 %, rail +4 %, runout, soft-tyre growth, the ball population:
+# sim/turret_launch3d.py ceiling_map): Ø34 at 16.3 % crush 67.6 fps (under the 70 fps cap; the bench keeps every ball under
+# 66 by test 4.1's no-load limit, 11,180 rpm), Ø36 at 25 % 70.7 fps: over the cap with this motor, so v0 prints Ø34 only.
 TYRE_STRETCH = 0.04
-TYRE_SET = (34.0, 36.0)
+TYRE_SET = (34.0,)
 
 
 def flywheel_tyre(G):
-    """TPU 95A tyre as mounted, Ø36 x 12, 4 mm thick on the hub's Ø28 rim (the assembly; the printed blank is
-    flywheel_tyre_print). Print both sizes of TYRE_SET: the bench ceiling test keeps the one whose fastest ball at
-    100 % throttle stays at or under 66 fps."""
-    return ring_z(G.wheel_d / 2, G.wheel_d / 2 - G.tyre_t, -G.tyre_w / 2, G.tyre_w / 2, G.wheel_x, G.wheel_y)
+    """TPU 95A tyre as mounted, Ø34 x 12 (TYRE_SET), 3 mm thick on the hub's Ø28 rim (the assembly; the printed blank is
+    flywheel_tyre_print). The cage was drawn for Ø36 (its centre distance and cavities), so a Ø34 tyre crushes the
+    ball 16.3 % and keeps 3.5 mm from the cavity's wall."""
+    rim = G.wheel_d / 2 - G.tyre_t
+    return ring_z(TYRE_SET[0] / 2, rim, -G.tyre_w / 2, G.tyre_w / 2, G.wheel_x, G.wheel_y)
 
 
 def flywheel_tyre_print(G, d=None):
@@ -958,26 +998,26 @@ def flywheel_tyre_print(G, d=None):
     return ring_z(ro, ri, -G.tyre_w / 2, G.tyre_w / 2, G.wheel_x, G.wheel_y)
 
 
-PRINT_AS = {'flywheel_tyre': flywheel_tyre_print}      # parts printed in a shape other than the one they have mounted
+PRINT_AS = {'flywheel_tyre': lambda G: flywheel_tyre_print(G, TYRE_SET[0])}   # parts printed in a shape other than the one they have mounted
 
 
 def dial(G):
-    """The feed dial, printed PETG: a shelled Ø50 hub (2 mm rim, 2 mm top, four ribs to a Ø14 boss), 8 spokes 4 mm
+    """The feed dial, printed PETG: a shelled Ø50 hub (2 mm rim, 2 mm top, four ribs to a Ø22 boss), 8 spokes 4 mm
     thick that push one ball per pocket round the housing to the exit hole, and a 30 deg cone on top with four fins
     that stir the hopper's pile at every step.
-    A D bore on the M2006's Ø6 shaft (5.5 across the flat), held down by an M3 x 8 and a washer into the shaft's end
-    thread, from the top of the cone. Each shot steps it 45 deg and stops it with a
-    pocket centred over the exit hole (drawn so): the ball drops while it stands still, and the hopper's baffle covers
-    that pocket, so it cannot refill. Parked there with the motor off, the path is blocked: the pockets either side are
-    on the floor behind a spoke."""
+    It sits flat on the feed servo's horn (Ø19.95, its top 0.75 above the floor: the dial's running clearance), a Ø7
+    pocket over the horn's centre screw, and 4 x M3 x 8 go down through the boss into the horn's tapped holes (Ø14),
+    their heads 5.5 above the horn, put in from the top through Ø6.5 holes in the cone with the hopper off. Each shot steps it 45 deg and stops it with a pocket centred over the exit hole (the servo's zero is
+    set so): the ball drops while it stands still, and the hopper's baffle covers that pocket, so it cannot refill.
+    Parked there, powered or not, the path is blocked: the pockets either side are on the floor behind a spoke."""
     z0, h = G.dial_z0, G.dial_h
     s = ring_z(G.dial_hub_r, G.dial_hub_r - 2.0, z0, z0 + h).union(cyl_z(G.dial_hub_r, z0 + h - 2, z0 + h))
-    s = s.union(cyl_z(7.0, z0, z0 + h))
+    s = s.union(cyl_z(11.0, z0, z0 + h))
     for k in range(4):
         s = s.union(box(5.0, G.dial_hub_r - 1.0, -1.25, 1.25, z0, z0 + h).rotate((0, 0, 0), (0, 0, 1), 45 + 90 * k))
     # the hub's cone, 30 deg: the pile's middle rolls out to the pocket ring; four fins on it stir the pile at every
-    # step (physics finding 1: with the M2006's real 100 ms step only 3 of 7 pockets filled under a settled pile). The
-    # fins end at r 18, inside the baffle (r 19 up), and slope down outwards to 3.5 mm over the hub's top
+    # step (physics finding 1: with a 100 ms step only 3 of 7 pockets filled under a settled pile). The fins end at
+    # r 18, inside the baffle (r 19 up), and slope down outwards to 3.5 mm over the hub's top
     s = s.union(cq.Workplane('XY').circle(G.dial_hub_r).workplane(offset=DIAL_CONE['h']).circle(DIAL_CONE['r_top']).loft()
                 .translate((0, 0, z0 + h)))
     for k in range(DIAL_CONE['fins']):
@@ -989,12 +1029,13 @@ def dial(G):
         a = (k + 0.5) * 360 / G.n_pockets
         sp = box(G.dial_hub_r - 1, G.dial_wall_r - 0.75, -G.spoke_w / 2, G.spoke_w / 2, z0, z0 + h - 2)
         s = s.union(sp.rotate((0, 0, 0), (0, 0, 1), a))
-    tip = G.floor_z - G.floor_t + M2006['shaft_l']                         # the M2006's shaft ends here
-    flat = M2006['flat'] - M2006['shaft_d'] / 2                            # the flat's distance from the axis
-    shaft = cyl_z(M2006['shaft_d'] / 2 + 0.05, z0 - 1, tip + 0.3).cut(box(flat + 0.05, 10, -10, 10, z0 - 2, tip + 1))
-    s = s.cut(shaft)
+    horn = G.feed_face + SERVO['horn_t']                                   # the horn's top face: the dial's underside
+    s = s.cut(cyl_z(3.5, horn - 1, horn + 4.0))                            # over the horn's centre screw
     top = z0 + h + max(DIAL_CONE['h'], DIAL_CONE['fin_top']) + 1
-    s = s.cut(cyl_z(FAST['M3']['clear'] / 2, tip, top)).cut(cyl_z(3.8, tip + 2.5, top))   # M3 x 8 + a Ø7 washer, from the top
+    seat = horn + 5.5                                                      # M3 x 8: 2.5 mm into the horn's thread
+    for k in range(4):                                                     # 45 deg off the fins' lines (clear of them)
+        hx, hy = polar(SERVO['horn_pcd'] / 2, math.radians(67.5 + 90 * k))
+        s = s.cut(cyl_z(FAST['M3']['clear'] / 2, horn - 1, seat + 0.01, hx, hy)).cut(cyl_z(3.25, seat, top, hx, hy))
     return s
 
 
@@ -1024,7 +1065,7 @@ def hopper(G):
     cartridge frame (30 balls with the dial's pockets: sim/turret_feed.py fills it in physics), the exit baffle in its bottom (see baffle()), three lugs
     that screw to the housing (M3), and two Ø5 holes for the hopper-full IR beam near the top. Printed standing on its
     bottom rim and the baffle."""
-    r_in, r_out = G.dial_wall_r, G.dial_wall_r + 1.6
+    r_in, r_out = G.dial_wall_r, G.dial_wall_r + HOPPER_WALL
     z0, z1 = G.housing_top, G.hopper_top
     s = ring_z(r_out, r_in, z0, z1).union(baffle(G))
     for a in HOPPER_LUGS:
@@ -1175,8 +1216,9 @@ def bought_parts(G):
         if gap:
             for (x, z) in holes:                                                           # the M3 standoffs to the next
                 stack = stack.union(cyl_y(2.75, yb - bt - gap + 0.01, yb - bt - 0.01, x, z))
-    out['turret_board'] = (stack, 'pan', TB['mass_g'], 'turret boards (est): level 0 the D24V150F12 flywheel and D36V50F12 aux regulators and '
-                           'the Pololu 2815 switch; level 1 the 5 V regulator, the safety and trip logic, 3 x 1000 uF; level 2 the Feather M4 CAN and the connectors')
+    out['turret_board'] = (stack, 'pan', TB['mass_g'], 'turret boards (cad/turret_boards.py): level 0 the D24V150F12 12 V regulator (always on); level 1 the '
+                           'Pololu 2815 switch (12 V to the flywheels and the feed), the 5 V regulator, 2 x 1000 uF, the opto and the one-shots; level 2 '
+                           'the Feather M4 CAN, the trip latch, the ARM gate and the bus buffer')
     zc0 = G.brg_z + BRG['B']                                                                # the housing's top: the clamp's underside
     out['index_magnet'] = (cyl_z(MAGNET['d'] / 2, zc0, zc0 + MAGNET['h'], MAGNET['r'], 0.0), 'base', 0.8, MAGNET['note'] + '; on the housing\'s top, through the clamp ring (0.2 mm proud), glued')
     hx, hy, hz = HALL['size']
@@ -1208,39 +1250,43 @@ def bought_parts(G):
     sh = cyl_y(S['d'] / 2, ys - S['L'], ys, xt, zt).union(cyl_y(S['head_d'] / 2, ys - S['L'] - S['head_h'], ys - S['L'], xt, zt))
     sh = sh.union(cyl_y(S['thread_d'] / 2 - 0.4, ys, ys + S['thread_L'], xt, zt))
     out['shoulder_screw'] = (sh, 'tilt', S['mass_g'], 'ISO 7379 shoulder screw 6 x 12, M5 x 10: the tilt pivot (-y); McMaster 92981A101')
+    M = MOTOR
     for sgn, nm in ((1, 'flywheel_motor_l'), (-1, 'flywheel_motor_r')):
         x, y = G.wheel_x, sgn * G.wheel_y
-        m = cyl_z(SNAIL['d'] / 2, G.bell_z0, G.bell_z0 + SNAIL['bell_h'], x, y)                    # the bell (turns)
-        m = m.union(cyl_z(SNAIL['base_d'] / 2, G.bell_z0 + SNAIL['bell_h'], G.plate_z0, x, y))     # the base
-        m = m.union(cyl_z(SNAIL['seat_d'] / 2, G.hub_top, G.bell_z0, x, y))                         # the wheel seat boss
-        m = m.union(cyl_z(SNAIL['shaft_d'] / 2, G.bell_z0 - SNAIL['shaft_l'], G.bell_z0, x, y))
-        m = m.union(cyl_z(SNAIL['washer'][0] / 2, G.plate_z0, G.plate_z0 + SNAIL['washer'][1], x, y))
-        out[nm] = (m, 'tilt', SNAIL['mass_g'], 'DJI RoboMaster Snail 2305 (DJI drawing): hangs under the cage plate, its wheel on the bell')
+        m = cyl_z(M['d'] / 2, G.bell_z0, G.plate_z0, x, y)                                   # base and bell (from base_h, it turns)
+        m = m.union(cyl_z(M['stub'][0] / 2, G.plate_z0 - 0.01, G.plate_z0 + M['stub'][1], x, y))   # the shaft's rear end and clip
+        m = m.union(cyl_z(M['flange'][0] / 2, G.hub_top, G.bell_z0 + 0.01, x, y))           # the prop adapter's flange (over the boss)
+        web0 = G.hub_top - M['pilot'][1]
+        m = m.union(cyl_z(2.4, web0, G.hub_top + 0.01, x, y))                                # its Ø5 pilot (drawn 4.8: in the hub's bore)
+        m = m.union(cyl_z(M['stud'][0] / 2, web0 - M['stud'][1], web0 + 0.01, x, y))         # the M5 stud
+        m = m.union(cyl_z(M['washer'][0] / 2, web0 - M['washer'][1], web0, x, y))            # the washer under the hub's web
+        m = m.union(cyl_z(M['nut'][0] / 2, web0 - M['washer'][1] - M['nut'][1], web0 - M['washer'][1] + 0.01, x, y))   # M5 nylon-insert nut
+        out[nm] = (m, 'tilt', M['mass_g'], f"{M['name']} (SunnySky's drawing): hangs bell-down under the cage plate (4 x M3 x 6), "
+                                          'the hub on its prop adapter under the bell (washer + M5 nylon-insert nut)')
+    cb = CART_BOARD
+    zb = G.plate_z1 + cb['boss_h'] + cb['standoff']                                       # the board's underside
+    board = box(cb['x'][0], cb['x'][1], -cb['y'], cb['y'], zb, zb + cb['board_t'])
+    board = board.union(box(cb['x'][1] - 10.2, cb['x'][1], -17.8, 17.8, zb + cb['board_t'] - 0.01, zb + cb['board_t'] + cb['parts_h']))
+    out['cartridge_board'] = (board, 'tilt', cb['mass_g'], 'cartridge board (est): 6 x IRLZ44N phase-short brake FETs standing along its front edge, '
+                              'the LM393 gate comparator, the feed servo\'s polyfuse; on 4 printed posts over the ESCs and the cage plate')
+    ex, ey, ez = AM32['size']
     for sgn, nm in ((1, 'esc_l'), (-1, 'esc_r')):
-        ex, ey, ez = AM32['size']
-        out[nm] = (box(G.wheel_x - 6, G.wheel_x - 6 + ex, sgn * 1.0 if sgn > 0 else -1.0 - ey, sgn * (1.0 + ey) if sgn > 0 else -1.0,
-                       G.plate_z1, G.plate_z1 + ez), 'tilt', AM32['mass_g'], 'Repeat Robotics AM32 35 A, on the cage plate')
-    fz0 = G.floor_z - G.floor_t                                           # the M2006's front (mount) face
-    M = M2006
-    flat = M['flat'] - M['shaft_d'] / 2
-    shaft = cyl_z(M['shaft_d'] / 2, fz0, fz0 + M['shaft_l']).cut(box(flat, 10, -10, 10, fz0 + M['boss'][1] + 2.0, fz0 + 60))
-    m2 = cyl_z(M['d'] / 2, fz0 - M['gear_l'], fz0).union(cyl_z(12.0, fz0 - M['body_l'], fz0 - M['gear_l'] + 0.01))
-    m2 = m2.union(cyl_z(M['hub'][0] / 2, fz0 - M['body_l'] - M['hub'][1], fz0 - M['body_l'] + 0.01))   # rotor hub (turns)
-    m2 = m2.union(cyl_z(M['boss'][0] / 2, fz0, fz0 + M['boss'][1])).union(shaft)
-    lead = box(-M['lead'][2], -11.0, -4.0, 4.0, fz0 - M['lead'][1], fz0 - M['lead'][0])            # leads and strain relief, rearwards
-    out['feed_motor'] = (m2.union(lead), 'tilt', M['mass_g'], 'DJI M2006 P36 (DJI drawing) under the dial; its rear 17 mm turns')
+        y0, y1 = (1.5, 1.5 + ey) if sgn > 0 else (-1.5 - ey, -1.5)
+        out[nm] = (box(62.0, 62.0 + ex, y0, y1, G.plate_z1 - 0.01, G.plate_z1 + ez), 'tilt', AM32['mass_g'],
+                   'Repeat Robotics AM32 35 A, on the cage plate under the cartridge board (the backup Lumenier Razor Pro F4 45A AM32 is 28 x 12 x 5)')
+    # the feed servo (D42): an STS3215 under the dial floor, its output face against the floor's underside, horn up, its
+    # length to the rear (the servo's far end towards -x), its bus plugs down
+    feed = servo_envelope(G, (0.0, 0.0, 0.0), '+z').rotate((0, 0, 0), (0, 0, 1), 90).translate((0, 0, G.feed_face))
+    out['feed_motor'] = (feed, 'tilt', SERVO['mass_g'], 'Feetech STS3215 12 V (bus ID 3) under the dial floor, horn up through it; '
+                                                     '4 x M2 x 6 countersunk from above; the dial on its horn')
     (lx, ly) = ct_points(G)[1]
     z0r = G.rail_z[0] - RAIL_DEEP['dz']                                                     # the rail is deeper there
     hd, hh = THUMB['head']
     cd, ch = THUMB['collar']
     thumb = cyl_z(cd / 2, z0r - ch, z0r + 0.01, lx, ly).union(cyl_z(hd / 2, z0r - ch - hh, z0r - ch + 0.01, lx, ly))
     out['ct_thumbscrew'] = (thumb, 'tilt', THUMB['mass_g'], 'DIN 464 knurled thumbscrew M4 x 12 (McMaster 92581A250), the CT latch, under the rail')
-    cx, cy, cz = C610['size']
-    xc0 = -G.housing_r + 1.0
-    out['feed_esc'] = (box(xc0, xc0 + cx, -cy / 2, cy / 2, G.base_z0 + 3, G.base_z0 + 3 + cz), 'tilt', C610['mass_g'],
-                       'DJI C610 (CAN), on the base plate behind the M2006; in through the housing\'s rear window')
     out['laser'] = (cyl_x(LASER['d'] / 2, LASER_X[0] - 2, LASER_X[0] - 2 + LASER['L'], LASER_Y, 0), 'tilt', LASER['mass_g'],
-                    'Picotronic DD520-1-24(12x40), 520 nm Class 2')
+                    LASER['name'] + ' (D42)')
     return out
 
 
@@ -1279,9 +1325,9 @@ MADE = [
     ('tilt_yoke', tilt_yoke, 'pan', 'pa6-cf', 1, ((0, 1, 0), 90), 'PA6-CF on its back; 4 x M4 x 10 to the turntable (heads 4 mm down in the bridge)'),
     ('cradle', cradle, 'tilt', 'pa6-cf', 1, None, 'PA6-CF flat; ISO 7379 6 x 12 shoulder screw (M5) in an insert'),
     ('cartridge_body', cartridge_body, 'tilt', 'pa6-cf', 1, None, 'PA6-CF on its base; supports under the chute'),
-    ('flywheel', flywheel, 'tilt', 'pa6-cf', 2, None, 'PA6-CF hub; M3 grub screw'),
+    ('flywheel', flywheel, 'tilt', 'pa6-cf', 2, ((1, 0, 0), 180), 'PA6-CF on its top face; on the X2216\'s prop adapter: washer + M5 nylon-insert nut; bore reamed to 5.00'),
     ('flywheel_tyre', flywheel_tyre, 'tilt', 'tpu95', 2, None, 'TPU 95A tyre'),
-    ('dial', dial, 'tilt', 'petg', 1, None, 'PETG; M3 grub screw on the flat'),
+    ('dial', dial, 'tilt', 'petg', 1, None, 'PETG; 4 x M3 x 8 down into the feed servo\'s horn, from the top'),
     ('hopper', hopper, 'tilt', 'petg', 1, None, 'translucent PETG; 3 x M3 to the housing'),
     ('hopper_lid', hopper_lid, 'tilt', 'petg', 1, ((1, 0, 0), 180), 'PETG'),
     ('hopper_flap', hopper_flap, 'tilt', 'petg', 1, None, 'PETG; Ø2 pin + torsion spring'),
@@ -1671,7 +1717,7 @@ COL = {
     'ring_leads_rotor': (0.75, 0.15, 0.15), 'base_board': (0.10, 0.45, 0.20), 'turret_board': (0.10, 0.45, 0.20),
     'index_magnet': (0.60, 0.60, 0.65), 'hall_switch': (0.10, 0.10, 0.10),
     'flywheel_motor_l': (0.65, 0.15, 0.15), 'flywheel_motor_r': (0.65, 0.15, 0.15), 'esc_l': (0.1, 0.35, 0.15), 'esc_r': (0.1, 0.35, 0.15),
-    'feed_motor': (0.25, 0.25, 0.60), 'feed_esc': (0.1, 0.35, 0.15), 'laser': (0.15, 0.6, 0.15),
+    'feed_motor': (0.12, 0.12, 0.14), 'cartridge_board': (0.10, 0.45, 0.20), 'laser': (0.15, 0.6, 0.15),
     'head_ring': (0.80, 0.82, 0.85, 0.5), 'j501_top': (0.80, 0.82, 0.85, 0.25), 'ball': (0.98, 0.55, 0.10),
 }
 
@@ -1728,11 +1774,11 @@ def render(T, L, out):
         ('hopper, 30 balls (translucent PETG)', p((-30, -G.dial_wall_r - 2, 55))),
         ('fill port + sprung flap (dock spout)', p((FILL_PORT[0], 0, G.hopper_top + 3))),
         ('tilt yoke; hard stops at 0 and -25 deg inside', (0, -G.arm_y[1], mz + G.tilt_t - 40)),
-        ('M2006 dial motor (under the dial floor)', p((0, -M2006['d'] / 2, 0))),
+        ('feed servo STS3215 (ID 3) under the dial floor', p((-20, -SERVO['W'] / 2, -10))),
         ('pan servo STS3215 + 21 T pinion', (G.servo_pan_xy[0], -16.0, mz + 20)),
         ('pan base on the TM pattern', (30, -64, mz + 12)),
         ('proposed head ring: 4 x M5 inserts', (60, -20, mz - 4)),
-        ('Snail 2305 motors hang under this plate', p((G.wheel_x, -G.wheel_y, G.plate_z1))),
+        ('X2216 motors hang under this plate; cartridge board and ESCs on posts above', p((G.wheel_x, -G.wheel_y, G.plate_z1))),
         ('cartridge: dial housing, chute, flywheel cage', p((G.wheel_x, -G.cage_y, 10))),
         ('barrel: bore ball + 2.0, 2 gates', p((G.barrel_x1 - 20, -G.barrel_od / 2, 0))),
         ('aiming laser (on the cradle)', p((LASER_X[1] + 10, LASER_Y - 6, 0))),
@@ -1752,13 +1798,13 @@ def render(T, L, out):
     items = [(sh, (*c[:3], 1.0)) for sh, c in _shape_items(Ps, [(head_ring_tm(L).val(), COL['head_ring'])])] + bl
     lab = _place_labels([
         ('hopper: balls fall into the dial pockets', p((-30, 0, 55))),
-        ('dial (8 pockets) on the M2006', p((-G.rp, 0, G.dial_z0 + 10))),
+        ('dial (8 pockets) on the feed servo\'s horn', p((-G.rp, 0, G.dial_z0 + 10))),
         ('exit hole: the ball drops ...', p((G.exit_x, 0, G.floor_z))),
         ('... and the chute turns it forward', p((G.chute_cx - 15, 0, 3))),
         (f'flywheel nip (crush {G.crush * G.ball:.1f} mm)', p((G.wheel_x, 4, 0))),
         (f'barrel, bore Ø{G.bore_out:.1f} from the nip on', p((G.barrel_x0 + 50, 0, G.br_out))),
         (f'tilt axis ({G.tilt_x:.0f} mm ahead of the dial axis)', p((G.tilt_x, 0, G.tilt_c))),
-        ('M2006 + C610 under the dial floor', p((-25, 0, -5))),
+        ('feed servo (STS3215) under the dial floor', p((-25, 0, -5))),
         ('pan: 6810-2Z bearing round the slip ring', (BRG['D'] / 2 - 2, 0, mz + G.brg_z + 3)),
         ('slip ring on its carrier (flange down)', (11.0, 0, mz + ring_geom(G)['top'] - 12)),
         ('ring driver: turns the rotor through a tube', (0, 0, mz + ring_geom(G)['driver'][1] - 2)),

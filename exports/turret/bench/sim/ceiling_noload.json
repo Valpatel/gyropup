@@ -1,0 +1,66 @@
+{
+ "test": "4.1",
+ "title": "No-load eRPM at 100 % throttle on the 12 V rail",
+ "plan": "docs/turret-prototype-plan.md section 5",
+ "mode": "sim",
+ "date": "2026-10-27",
+ "pass": true,
+ "checks": [
+  {
+   "check": "both wheels <= 1.10 x KV x 12 V",
+   "value": 10530,
+   "limit": "<= 11616 rpm (81312 eRPM)",
+   "pass": true
+  },
+  {
+   "check": "both wheels <= the launch model's bench limit for \u00d834",
+   "value": 10530,
+   "limit": "<= 11180 rpm (no_load_rpm_max_d34)",
+   "pass": true
+  },
+  {
+   "check": "12 V FLY under load",
+   "value": 12.06,
+   "limit": "12.0 +- 0.5 V",
+   "pass": true
+  }
+ ],
+ "readings": {
+  "rpm_left": {
+   "n": 20,
+   "mean": 10377,
+   "sd": 0.0,
+   "min": 10377,
+   "max": 10377
+  },
+  "rpm_right": {
+   "n": 20,
+   "mean": 10530,
+   "sd": 0.0,
+   "min": 10530,
+   "max": 10530
+  },
+  "erpm_max": 73710,
+  "rail_v": 12.06
+ },
+ "notes": [],
+ "sim": {
+  "seed": 1041,
+  "simulated_s": 8.5,
+  "wall_s": 0.3,
+  "stand_ins": [],
+  "shortened": {},
+  "warning": "simulated turret (firmware/turret/sim_turret.py): not a bench reading"
+ },
+ "firmware": {
+  "build": "v0",
+  "servo_baud": 500000,
+  "motor": "SunnySky X2216 880KV V3",
+  "kv": 880.0,
+  "pole_pairs": 7,
+  "erpm_limit": 81312,
+  "tyre_mm": 34,
+  "set_rpm_52fps": 8855,
+  "ramp_s": 0.3
+ }
+}

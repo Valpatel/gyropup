@@ -1,0 +1,78 @@
+{
+ "test": "6.4",
+ "title": "Fire while panning at 10 and 90 deg/s: held above 10 deg/s",
+ "plan": "docs/turret-prototype-plan.md section 5",
+ "mode": "sim",
+ "date": "2026-10-27",
+ "pass": true,
+ "checks": [
+  {
+   "check": "10 deg/s: no shot while panning",
+   "value": 0,
+   "limit": "0",
+   "pass": true
+  },
+  {
+   "check": "10 deg/s: the burst fires once settled",
+   "value": 3,
+   "limit": "3",
+   "pass": true
+  },
+  {
+   "check": "90 deg/s: no shot while panning",
+   "value": 0,
+   "limit": "0",
+   "pass": true
+  },
+  {
+   "check": "90 deg/s: the burst fires once settled",
+   "value": 3,
+   "limit": "3",
+   "pass": true
+  }
+ ],
+ "readings": {
+  "runs": [
+   {
+    "pan_rate_deg_s": 10.0,
+    "shots": 3,
+    "shots_while_panning": 0,
+    "pan_rate_at_step_deg_s": [
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "pan_rate_deg_s": 90.0,
+    "shots": 3,
+    "shots_while_panning": 0,
+    "pan_rate_at_step_deg_s": [
+     0,
+     0,
+     0
+    ]
+   }
+  ]
+ },
+ "notes": [],
+ "sim": {
+  "seed": 1064,
+  "simulated_s": 16.0,
+  "wall_s": 0.7,
+  "stand_ins": [],
+  "shortened": {},
+  "warning": "simulated turret (firmware/turret/sim_turret.py): not a bench reading"
+ },
+ "firmware": {
+  "build": "v0",
+  "servo_baud": 500000,
+  "motor": "SunnySky X2216 880KV V3",
+  "kv": 880.0,
+  "pole_pairs": 7,
+  "erpm_limit": 81312,
+  "tyre_mm": 34,
+  "set_rpm_52fps": 8855,
+  "ramp_s": 0.3
+ }
+}

@@ -8,6 +8,28 @@ with `.venv/bin/python sim/turret_e2e.py` (section 15). The numbers below are fr
 
 ## 0. In one paragraph
 
+**v0 (docs/decisions.yaml D42, rerun 2026-10-27 by the turret program agent).** The flywheels are two SunnySky X2216 880 KV
+on the same fixed 12 V rail with Ø34 tyres (16.3 % crush on this cage), and a third STS3215 steps the dial. With the
+X2216's own constants (880 rpm/V, 117 mOhm between leads, 0.5 A at 10 V; its rotor's 4.8 kg mm^2 is est from SunnySky's
+drawing, so each wheel is 6.9e-6 kg m^2, 1.5 times the Snail's), a 52 fps nominal ball needs **8,855 rpm**, 84 % of the
+10,499 rpm no-load speed; the ball population at that speed is 48.9 ± 5.0 fps (p99 53.5, max 53.7). **The 70 fps cap
+holds on Ø34:** at 100 % throttle on a +5 % motor and a +4 % rail, with runout and the soft tyre's growth, the fastest
+swept ball is **67.7 fps** (2.3 fps of margin) and the worst single corner ball 65.4. That is over the bench's 66 fps
+trip line by 1.7 fps, so the bench measures the motors' no-load speed before any ball (test 4.1): at or under **11,180
+rpm** (78,260 eRPM) at 100 % on the rail, every ball stays under 66 fps by this model; the worst-corner motor and rail make
+11,461. **Ø36 is out with this motor** (70.7 fps at the worst corner), so v0 prints Ø34 only. The heavier, lower-resistance
+wheel brakes on the phase short through its FETs with τ 10.2 ms at low speed (5 % speed ~48 ms after release with the short at +10 ms) and draws more to spin up: 3.6 A at
+the ring with a 200 ms ramp (1.8 A a circuit), **2.5 A with the 300 ms ramp the firmware now uses** (1.25 A a circuit). A
+24 V fault would spin the wheels to 21,000 rpm (123-140 fps), as before. **The feed on the servo:** a 45° step settles in
+232-246 ms and a ball reaches the tyres 300-330 ms after the command (~340 ms to the muzzle); the pocket must rest over
+the hole ~100-160 ms for the ball to fall clear, so **3 balls/s level and 2.5 at −25° are the clean fixed-period rates**
+(at 4/s and up the next step starts first and the spoke carries the ball on: 1 ball in 8 steps), and the firmware paces
+each step on the previous ball reaching the chronograph's first gate. At those rates the rigid-ball model leaves about 1
+step in 8 empty; parked, powered or not, through the jolt and the vibration, no ball reaches the wheels. Sections 3, 4, 5 and 9 have the v0 tables first; the Snail and M2006 figures below
+them are the design before D42.
+
+**Before D42 (the Snail 2305 and the M2006 + C610):**
+
 A Rival ball leaves the nip at 55 fps nominal (the ESC set speed, 9,408 rpm on Ø36 tyres at 12 V), 55.8 ± 1.3 fps over the sourced ball
 spread with a soft-ball tail to 48 fps. **The 70 fps cap holds by hardware, not firmware:** on the fixed 12 V rail the Snail cannot exceed
 10,437 rpm, and the fastest ball of the whole swept population at 100 % throttle on a +5 % motor and a +4 % regulator, with tyre runout and
@@ -67,6 +89,31 @@ quoted a "Blaster Labs" mass spread (SD 0.13-0.16 g, n = 18 and 12); no such sou
 
 ## 3. The feed under motion (`exports/turret/feed/feed_dyn.json`, `feed_dyn.png`, `feed_dyn.mp4`)
 
+**v0: the STS3215 servo (D42).** `sim/turret_feed_dyn.py` drives the dial as the servo does: its own move profile (the
+firmware's goal speed 4.0 rad/s, 85 % of the 45 rpm no-load speed, and 60 rad/s^2) tracked by a stiff position loop whose
+torque is clipped by the servo's line (2.94 N m stall, 4.71 rad/s no-load at 12 V) and by the firmware's 50 % torque
+limit, with its motor's inertia reflected through 345:1 (not published: 2.4e-8 kg m^2 est, 2.9e-3 kg m^2 at the dial,
+swept 1e-8 to 5e-8 with no change in the step time: the move is speed-limited, not torque-limited).
+
+| Case (3 steps/s unless stated) | Balls per step | Command → first touch (ms) | Step settled (ms) |
+|---|---|---|---|
+| level, hopper full | 1 1 0 1 1 1 1 1 | 308-326 | 232-244 |
+| tilt −25° | 0 1 1 0 1 1 1 2 | 30-369 (a hung ball came down with the next: one double) | 232-237 |
+| −25°, rolled 15° | 1 1 0 1 1 1 1 1 | 290-371 | 232-236 |
+| level, pitched 10° | 1 1 1 1 1 1 1 1 | 287-315 | 232-247 |
+| level and −25°, panning 90 deg/s | 1 1 0 1 1 / 0 1 1 0 2 | 26-364 | |
+| −25°, a fixed period of 2.0 / 2.5 / 3.0 steps/s | 7 / 7 / 7 of 8 | | no double at 2.0 and 2.5; one at 3.0 (a hung ball released with the next) |
+| −25°, 4 and 6 steps/s commanded | 1-2 balls in 8 steps | | the dial steps again before the ball falls clear |
+| parked, powered and unpowered, jolt + 8/15/25 Hz shake | 0 balls at the tyres | | |
+
+So the rate is **3 balls/s level and 2.5 at −25° on a fixed period** (each step needs ~235 ms and then ~100-160 ms with
+the pocket over the hole for the ball to fall clear). The firmware therefore paces the feed on the chronograph: the next
+step only after the previous ball has crossed gate 1 (or a dither, never a step, if it has not within 400 ms), at most
+3/s (docs/turret-firmware.md); the bench's test 5.1 counts what that gives with real foam. The entry state at first touch is unchanged in kind (on the channel floor,
+z −0.79 ± 0.02 mm; 0.41 ± 0.05 m/s forward; lateral 0.1 ± 0.5 mm). Nothing was left in the chute and nothing escaped.
+
+**Before D42 (the M2006 + C610):**
+
 The dial motor: M2006 P36 on a C610 (DJI manual: 500 rpm no-load, 416 rpm at 1 N m, 0.18 N m/A, 10 A limit → 1.8 N m peak, 52.8 ms mechanical
 time constant; the rotor inertia is not published: 3.5e-6 kg m² est from that time constant and the bell's size, 2.2-4.6e-6 swept) through 36:1,
 so the dial sees 4.5e-3 kg m² of reflected rotor against its own 3e-5. A 45° step therefore takes **90-125 ms** at the 10 A limit (80 ms with the
@@ -106,6 +153,35 @@ down the bore: **~245 ms**, against the simulator's 146 ms (which assumed a fast
 
 ## 4. The launch in 3D (`exports/turret/launch/launch3d.json`, `launch3d.png`)
 
+**v0: the X2216 on Ø34 (D42).** The 1D and 3D models with the X2216's constants (`sim/turret_launch.py` MOTOR) and the
+cage's own crush for each tyre (the motors' axes are 53.0 mm apart, so a tyre's diameter sets its crush:
+`sim/turret_launch.py` cage_crush):
+
+| Result | Value |
+|---|---|
+| Set speed for 52 fps nominal on Ø34 | 8,855 rpm = 61,985 eRPM (84 % of the 12 V no-load 10,499 rpm) |
+| Population at the set speed, in the channel with 0.15 mm runout | 48.9 ± 5.0 fps, p99 53.5, max 53.7; yaw SD 5.7 mrad, pitch SD 7.2 mrad |
+| Contact, forces, wheel speed lost per shot | 4.7 ms; 19 N per tyre, 28 N on the cage; 1.3 % (the heavier wheel) |
+| Tyre growth | 0.17-0.52 mm radial at the set speed, 0.29-0.86 at no-load + tolerance (E 30-10 MPa) |
+| Bursts at 3-10 per s | no droop |
+| Hand-over to the 1D model | 52.0 vs 52.0 fps |
+
+The ceiling at 100 % throttle (the fastest of the swept population, +5 % KV, +4 % rail, runout, the soft tyre's growth),
+fps, with each tyre at its crush on this cage:
+
+| Rail | Ø32 (7.5 %) | Ø34 (16.3 %) | Ø36 (25.1 %) | Ø38 (33.9 %) |
+|---|---|---|---|---|
+| 12 V (X2216, D42) | 63.3 | **67.6** | 70.7 ✗ | 73.5 ✗ |
+| 24 V (a wiring fault) | 123 ✗ | 129 ✗ | 136 ✗ | 140 ✗ |
+
+The 1D model's worst single corner ball: 61.9 / 65.4 / 68.0 / 69.7 fps for Ø32-38. Ø32 cannot reach the set speed (its
+nominal ball tops out at 28.6 fps at 100 %: too little crush to grip). So Ø34 is the tyre: under the cap, and under the
+bench's 66 fps line once the measured no-load speed is at or under 11,180 rpm (the ceiling scales with the wheel speed:
+67.6 fps x 11,180 / 11,461 = 66.0). The 24 V fault is unchanged in kind: the 12 V-only rule, the keyed CT pins and the
+pre-feed eRPM check (refuse above 1.10 x KV x 12 V) stop the first ball; the chronograph trips after it.
+
+**Before D42 (the Snail 2305 on Ø36):**
+
 The 3D model reproduces the program agent's 1D model exactly in the centred case (55.00 vs 55.00 fps) and adds what the 1D model cannot see.
 
 | Result | Value |
@@ -142,6 +218,26 @@ wiring rule and a pre-feed RPM check (AM32 telemetry: refuse to feed above 11,50
 chronograph trips after it (section 10).
 
 ## 5. The release and the stray ball (V14, the coordinator's item 2)
+
+**v0 (D42), the brake as built:** the short runs through the X2216's 117 mOhm, two IRLZ44N (25 mOhm each with 4.5 V
+on the gate) and the 22 AWG taps: 173 mOhm, so the time constant at low speed is **10.2 ms** (6.9 ms for the motor
+alone). At speed the winding's inductance limits the current (`sim/turret_launch3d.py` brake_current: E R / (R^2 +
+(w_e L)^2); the X2216's inductance is not published, 35 uH between leads est). With the short closing 10 ms after the
+line drops (the circuit gives 5-14 ms, docs/turret-wiring.md 3.3):
+
+| Winding inductance | 5 % speed after the line drops | Speed left at 96 ms |
+|---|---|---|
+| 0 (resistance only) | 40.0 ms | 0.02 % |
+| 20 uH | 42.8 ms | 0.03 % |
+| **35 uH (est)** | **48.4 ms** | 0.04 % |
+| 50 uH | 57.1 ms | 0.10 % |
+
+Nothing is left by 96 ms, when the first ball still in the chute could arrive; the peak braking current is 13-58 A
+for a few milliseconds (the IRLZ44N's pulse rating is 160 A). A ball already in the nip at the release leaves at up to
+42 fps (the wheels coasting, then braked: 21.9 fps at 20 ms, 6.6 at 30 ms, under 1 fps from 50 ms). In service AM32's
+own brake on stop starts first (the firmware commands zero on the first missing pulse, ~4 ms), so these are the
+hardware-only figures. Before D42:
+
 
 The phase-short brake's time constant from the model's own inertia and resistance is **11.95 ms** (the plan's 12). With the short closing
 10 ms after the line drops: 5 % speed at 45 ms, 0.07 % at 96 ms.
@@ -234,6 +330,12 @@ half; both under the toy limits, which a stock Rival exceeds.
 | Aim movers (mrad; cm at 2 / 4 / 6 m) | recoil 1.2 (0.2 / 0.5 / 0.7, down); **pan gear lash 7.6 (1.5 / 3.0 / 4.6)**; pan servo lash through 3:1 2.9; **tilt servo lash 8.7 (1.7 / 3.5 / 5.2)**; resolution 0.5 pan, 1.5 tilt; **pan slew 90 deg/s 14.5 (2.9 / 5.8 / 8.7)** |
 
 ## 9. Power across the ring (V3; `exports/turret/e2e/power.json`, `power.png`)
+
+**v0 (D42):** the X2216's wheel takes 3.0 J at the set speed. Spin-up ramps against the ring's paralleled +24 V pair
+(60 mOhm): 200 ms 3.56 A (1.78 A a circuit), **300 ms 2.51 A (1.25 A a circuit, 95 % speed in 0.285 s)**, 400 ms 2.0 A,
+600 ms 1.49 A; stepped (never) 12.0 A. 8 shots at 10/s: 2.28 A peak, 0.65 A RMS. The firmware's soft start is 300 ms
+(bench test 4.5 accepts at most 3 A). Before D42:
+
 
 ESC DC-side current = duty × phase current / 0.95; the D24V150F12 at 90 %, 32 A instantaneous, 13.3 V dropout; 3 × 1,000 µF; the ring at 10
 and 60 mΩ; the launch model's 7 % speed drop per shot.
