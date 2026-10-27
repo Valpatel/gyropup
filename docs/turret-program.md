@@ -52,6 +52,10 @@ Tick with a link to the evidence (file, picture, result JSON). Unticked = open.
 **Build**
 - [ ] Every printed part: orientation, supports, bed fit, print time; tolerances for bearings, inserts and the gear.
 - [ ] Every bought part with a real part number and price; nothing left as "estimate" that can be sourced.
+      Each line carries a catalogue key, part number and source URL, so the BOM can show its thumbnail and its
+      alternates (coordinator, 2026-10-27: tools/part_images.py and cad/bom_media.py enrich() are being built in
+      the main checkout; call enrich() in the turret's BOM once it lands). Parts with no buyable source or no
+      alternate are listed here.
 - [ ] Wiring: power (24 V → 12 V buck for the servos/laser), the ESCs, the M2006 + C610, CAN, the DT12 pinout.
       **On hold (coordinator, 2026-10-27):** the user wants a high-quality electrical slip ring in the pan joint; a
       separate planner is researching the ring and the electrical architecture across the pan axis
@@ -91,4 +95,6 @@ Newest last. One entry per agent run: what it did, what it proved, what is next.
     in 40 steps. Below about -12 deg the last balls of a magazine collect on the baffle (the front is the hopper's low
     side), so the firmware lifts to 0 deg for 0.4 s after an empty step. The one "double" traced so far was a ball that
     stalled at the top of the chute for a step and then reached the wheels with the next, not two out of the dial.
-
+- 2026-10-27 (in progress): the user asked for thumbnail pictures of every BOM part, to be sure each can be ordered
+  and to keep alternates in mind. Every turret bought part gets a catalogue key with a real part number and source
+  URL; the turret BOM calls cad/bom_media.py enrich() once it is on main.
