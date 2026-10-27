@@ -48,7 +48,9 @@ PARTS = [
     ('ring_carrier', 'ring_carrier.stl', 'pa6-cf', 1, SOLID, False, 'on its top face', 'reprint once the ring\'s flange holes are measured (plan T6)'),
     ('ring_driver', 'ring_driver.stl', 'pa6-cf', 1, SOLID, False, 'on its top face', ''),
     ('tilt_yoke', 'tilt_yoke.stl', 'pa6-cf', 1, SOLID, True, 'on its back: the layers run along the arms', ''),
-    ('cradle', 'cradle.stl', 'pa6-cf', 1, SOLID, True, 'flat', ''),
+    ('cradle', 'cradle.stl', 'pa6-cf', 1, SOLID, True, 'flat',
+     'its cheeks bend across the layers (FEA: SF 0.77 under a 50 N push on the muzzle, humid PA6-CF): keep it dry, do not push the barrel, '
+     'and print a spare when the schedule allows'),
     ('cartridge_body', 'cartridge_body.stl', 'pa6-cf', 1, SOLID, True, 'on its base; supports under the floor, the chute and the cage plate',
      'the longest print: after the motor and a servo are checked against the drawings (plan T2, T4)'),
     ('flywheel', 'flywheel.stl', 'pa6-cf', 2, SOLID, False, 'on its top face (the flange seat flat on the bed)', 'ream the bore to 5.00'),

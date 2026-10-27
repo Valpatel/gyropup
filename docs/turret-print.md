@@ -14,8 +14,8 @@ From `cad/turret_print.py`: every printed part of the bench turret and its stand
 | [pan_pinion](../exports/turret/print/pan_pinion.3mf) | pa6-cf (Bambu PA6-CF @BBL X1C) | 1 | flat | 4 walls, 100% zig-zag | 7.88 | 0.6 |  |
 | [ring_carrier](../exports/turret/print/ring_carrier.3mf) | pa6-cf (Bambu PA6-CF @BBL X1C) | 1 | on its top face | 4 walls, 100% zig-zag | 29.33 | 1.2 | reprint once the ring's flange holes are measured (plan T6) |
 | [ring_driver](../exports/turret/print/ring_driver.3mf) | pa6-cf (Bambu PA6-CF @BBL X1C) | 1 | on its top face | 4 walls, 100% zig-zag | 6.83 | 0.3 |  |
-| [tilt_yoke](../exports/turret/print/tilt_yoke.3mf) | pa6-cf (Bambu PA6-CF @BBL X1C) | 1 | on its back: the layers run along the arms | 4 walls, 100% zig-zag, tree supports | 104.15 | 4.8 |  |
-| [cradle](../exports/turret/print/cradle.3mf) | pa6-cf (Bambu PA6-CF @BBL X1C) | 1 | flat | 4 walls, 100% zig-zag, tree supports | 76.56 | 3.5 |  |
+| [tilt_yoke](../exports/turret/print/tilt_yoke.3mf) | pa6-cf (Bambu PA6-CF @BBL X1C) | 1 | on its back: the layers run along the arms | 4 walls, 100% zig-zag, tree supports | 104.16 | 4.8 |  |
+| [cradle](../exports/turret/print/cradle.3mf) | pa6-cf (Bambu PA6-CF @BBL X1C) | 1 | flat | 4 walls, 100% zig-zag, tree supports | 76.56 | 3.5 | its cheeks bend across the layers (FEA: SF 0.77 under a 50 N push on the muzzle, humid PA6-CF): keep it dry, do not push the barrel, and print a spare when the schedule allows |
 | [cartridge_body](../exports/turret/print/cartridge_body.3mf) | pa6-cf (Bambu PA6-CF @BBL X1C) | 1 | on its base; supports under the floor, the chute and the cage plate | 4 walls, 100% zig-zag, tree supports | 187.58 | 10.7 | the longest print: after the motor and a servo are checked against the drawings (plan T2, T4) |
 | [flywheel](../exports/turret/print/flywheel.3mf) | pa6-cf (Bambu PA6-CF @BBL X1C) | 2 | on its top face (the flange seat flat on the bed) | 4 walls, 100% zig-zag | 5.19 | 0.2 | ream the bore to 5.00 |
 | [dial](../exports/turret/print/dial.3mf) | petg (Bambu PETG HF @BBL P1S 0.4 nozzle) | 1 | on its bottom, cone up | 5 walls, 40% gyroid, tree supports | 45.54 | 1.7 |  |

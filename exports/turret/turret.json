@@ -377,7 +377,7 @@
   },
   "turret_board": {
    "mass_g": 100.0,
-   "note": "turret boards (cad/turret_boards.py): level 0 the D24V150F12 12 V regulator (always on); level 1 the Pololu 2815 switch (12 V to the flywheels and the feed), the 5 V regulator, 2 x 1000 uF, the opto and the one-shots; level 2 the Feather M4 CAN, the trip latch, the ARM gate, the brake driver and the bus buffer",
+   "note": "turret boards (cad/turret_boards.py): level 0 the D24V150F12 12 V regulator (always on); level 1 the Pololu 2815 switch (12 V to the flywheels and the feed), the 5 V regulator, 2 x 1000 uF, the opto and the one-shots; level 2 the Feather M4 CAN, the trip latch, the ARM gate and the bus buffer",
    "frame": "pan"
   },
   "index_magnet": {

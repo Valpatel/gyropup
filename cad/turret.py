@@ -574,7 +574,7 @@ SHEET = {'al6061': {'name': '6061-T6 aluminium', 'thickness_mm': 3.175, 'thickne
 SHEET_PARTS = {'pan_clamp': 'al6061'}
 CLAMP_EARS = (0.0, 60.0, 120.0, 240.0, 300.0)      # the pan servo stands at 180 deg
 CLAMP_T = 3.175                                   # SendCutSend 6061-T6 aluminium, 0.125 in
-YOKE_RELIEF = {'r': 35.0, 'h': 1.5, 'chamfer': 3.0}    # the bridge bears on the turntable inside r 35; 1.5 mm up from r 38
+YOKE_RELIEF = {'r': 35.0, 'h': 1.5, 'chamfer': 3.0}    # the bridge bears on the turntable inside r 35; a cone to 1.5 mm up at r 38
 # printed with 4 perimeters, 5 top and bottom layers and 40 % gyroid instead of solid (mass): the pan base's walls are
 # all perimeter at that, and its FEA peaks sit in them (cad/turret_studies.py)
 PARTIAL_FILL = {'pan_base'}
@@ -642,13 +642,11 @@ def ring_driver(G):
 
 
 # the turret-board bay (docs/turret-plan.md 2.4, 3.3): a PETG tray on the -y yoke arm's outer face holding three
-# 52 x 50 boards (50 x 70 double-sided perfboard cut to size, Ø3.2 holes drilled at the corners), stacked on M3
-# standoffs. The modules' footprints (Pololu, Adafruit pages) set the area: level 0 (power, on the tray's bosses) the
-# D24V150F12 flywheel regulator (43.2 x 31.8 x 11), the D36V50F12 aux regulator (25.4 x 25.4 x 9.5) and the Pololu
-# 2815 switch (20.3 x 25.4 x 4.1); level 1 (on 12 mm standoffs) the D36V28F5 5 V regulator (17.8 x 20.3), the safety
-# and trip logic (opto, 74HC123 x 2, 74HC74, 74HC08, 74HC14, two LM393 gate comparators, 74AHCT125) and the 3 x 1000 uF
-# bank lying down; level 2 (on 14 mm standoffs) the Feather M4 CAN (50.8 x 22.8, terminal block up) and the
-# connectors. The tray reaches y -115 at x +-29 (r 118.6): the tilt servo on the other arm already sweeps r 112, and
+# 52 x 50 boards (perfboard cut to size, Ø3.2 holes drilled at the corners), stacked on M3 standoffs. What sits on each
+# is cad/turret_boards.py's (checked there part by part): level 0 (on the tray's bosses) the D24V150F12 12 V regulator
+# (43.2 x 31.8 x 11) and the laser's switch; level 1 (on 12 mm standoffs) the Pololu 2815 switch, the D36V28F5 5 V
+# regulator, the 2 x 1000 uF bank lying down, the opto and the one-shots; level 2 (on 14 mm standoffs) the Feather M4
+# CAN (50.8 x 22.8), the trip latch, the ARM gate and the servo bus buffer. The tray reaches y -115 at x +-29 (r 118.6): the tilt servo on the other arm already sweeps r 112, and
 # nothing fixed stands above z 69 out there (the pinion's top), so it clears every pan.
 TB = {'x': 29.0, 'z': (71.0, 128.0), 'y_out': 115.0, 'wall': 1.2, 'back': 3.0, 'board': (52.0, 50.0, 1.6), 'boss': 5.0,
       'levels': ((11.0, 12.0), (12.5, 14.0), (8.5, None)),        # (tallest part, standoff to the next board) per level
@@ -731,13 +729,14 @@ def tilt_yoke(G):
     s = s.cut(cyl_y(3.25, -a1 - 1, -a0, 0, zt))
     rl = LEADS['d'] / 2 + 3.0                                                               # the ring's rotor leads pass here (3 mm clear)
     s = s.cut(box(-rl, rl, -LEADS['r'] - rl, -LEADS['r'] + rl, b0 - 1, b1 + 1))
-    # the pinion's top is level with the turntable's (z 69): outside the turntable's gear (r 37 up) the bridge and the
-    # arms' feet stand 1.5 mm clear of that plane, so the pinion passes under them at every pan
-    # ... in three 0.5 mm steps over 3 mm instead of one, so the bridge's root has no deep notch (FEA)
+    # the pinion's top is level with the turntable's (z 69): outside the turntable's gear (r 38 up, where the pinion's
+    # teeth reach) the bridge and the arms' feet stand 1.5 mm clear of that plane, so the pinion passes under them at
+    # every pan. The relief is a 27 deg cone from r 35 to r 38 (it was three 0.5 mm steps: the E-push case's peak sat
+    # in the first step's re-entrant corner, cad/turret_studies.py)
     r0r, hr, ch = YOKE_RELIEF['r'], YOKE_RELIEF['h'], YOKE_RELIEF['chamfer']
-    n = 3
-    for i in range(n):
-        s = s.cut(ring_z(110.0, r0r + ch * i / (n - 1), b0 - 1.0, b0 + hr * (i + 1) / n))
+    cone = (cq.Workplane('XZ').polyline([(r0r, b0), (r0r + ch, b0 + hr), (110.0, b0 + hr), (110.0, b0 - 1.0), (r0r, b0 - 1.0)])
+            .close().revolve(360.0, (0, 0, 0), (0, 1, 0)))
+    s = s.cut(cone)
     for (x, z) in TB['screws']:                                                             # the turret-board bay's inserts
         s = s.cut(cyl_y(FAST['M3']['insert_pilot'] / 2, -a1 - 0.1, -a1 + 6.0, x, z))
     for (x, y) in YOKE_BOLTS:
@@ -1219,7 +1218,7 @@ def bought_parts(G):
                 stack = stack.union(cyl_y(2.75, yb - bt - gap + 0.01, yb - bt - 0.01, x, z))
     out['turret_board'] = (stack, 'pan', TB['mass_g'], 'turret boards (cad/turret_boards.py): level 0 the D24V150F12 12 V regulator (always on); level 1 the '
                            'Pololu 2815 switch (12 V to the flywheels and the feed), the 5 V regulator, 2 x 1000 uF, the opto and the one-shots; level 2 '
-                           'the Feather M4 CAN, the trip latch, the ARM gate, the brake driver and the bus buffer')
+                           'the Feather M4 CAN, the trip latch, the ARM gate and the bus buffer')
     zc0 = G.brg_z + BRG['B']                                                                # the housing's top: the clamp's underside
     out['index_magnet'] = (cyl_z(MAGNET['d'] / 2, zc0, zc0 + MAGNET['h'], MAGNET['r'], 0.0), 'base', 0.8, MAGNET['note'] + '; on the housing\'s top, through the clamp ring (0.2 mm proud), glued')
     hx, hy, hz = HALL['size']

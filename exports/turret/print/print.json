@@ -248,8 +248,8 @@
     48.4
    ],
    "ok": true,
-   "grams": 104.15,
-   "minutes": 287.2,
+   "grams": 104.16,
+   "minutes": 285.7,
    "filament_m": 39.37,
    "error": null,
    "exit_code": 0,
@@ -260,7 +260,7 @@
    "filament_profile": "Bambu PA6-CF @BBL X1C",
    "copies": 1,
    "orientation": "flat",
-   "note": "",
+   "note": "its cheeks bend across the layers (FEA: SF 0.77 under a 50 N push on the muzzle, humid PA6-CF): keep it dry, do not push the barrel, and print a spare when the schedule allows",
    "settings": {
     "wall_loops": "4",
     "sparse_infill_density": "100%",
@@ -278,7 +278,7 @@
    ],
    "ok": true,
    "grams": 76.56,
-   "minutes": 207.1,
+   "minutes": 207.2,
    "filament_m": 28.94,
    "error": null,
    "exit_code": 0,

@@ -72,7 +72,7 @@ ROLE = {
     'flywheel_motor_r': 'SunnySky X2216, spinning the other way.',
     'esc_l': 'AM32 35 A ESC for the left flywheel motor, on the cartridge board.',
     'esc_r': 'AM32 35 A ESC for the right flywheel motor, on the cartridge board.',
-    'cartridge_board': 'The cartridge board: the two ESCs, and six FETs that short the motors\' windings 10 ms after the safety line drops (the brake).',
+    'cartridge_board': 'The cartridge board: six FETs that short the motors\' phases about 8 ms after the safety line drops (the brake), their driver and the gates\' comparator; the two ESCs lie under it on the cage plate.',
     'feed_motor': 'Feetech STS3215 servo (bus ID 3) under the dial floor: steps the dial 45 deg per ball and feels a jam in its load reading.',
     'laser': 'Quarton 650 nm Class 2 red laser (under 1 mW): the aiming dot, parallel to the barrel.',
     'box_deck': 'The adapter: carries the TM face 44 mm above the J501\'s roof on four legs at the lid\'s screw corners; the control pod hangs at the back.',
@@ -536,11 +536,13 @@ def main():
                          f'motor and a high rail: {ceil_txt}), under the {mech["ball"]["cap_fps"]} fps cap; the barrel\'s two gates trip the '
                          f'safety line on any ball over 66 fps, and 24 V must never reach the ESCs'}
     tmg = mech['timing']
+    rel = l3.get('release_phase_short') or {}
+    b5 = round(rel.get('speed_5pct_at_ms') or 48)
     release = {'after_drop_ms': round(tmg['trigger_to_muzzle_ms'] - tmg['dial_to_exit_ms']), 'coast_s': fl['coast_down_s'],
                'note': f'a ball that has already dropped still fires up to {tmg["trigger_to_muzzle_ms"] - tmg["dial_to_exit_ms"]:.0f} ms after ARM '
-                       f'is released; the phase-short brake (six FETs on the cartridge board, 10 ms after the line drops) stops the wheels to 5 % '
-                       f'in about 30 ms (docs/turret-physics.md section 5), where unbraked they would coast {fl["coast_down_s"]} s',
-               'brake_to_5pct_ms': 30}
+                       f'is released; the phase-short brake (six FETs on the cartridge board, 5-14 ms after the line drops) stops the wheels to 5 % '
+                       f'about {b5} ms after release (docs/turret-physics.md section 5), where unbraked they would coast {fl["coast_down_s"]} s',
+               'brake_to_5pct_ms': b5, 'brake_tau_ms': rel.get('tau_ms_model')}
     checks = {'clearance': sw, 'muzzle_outside_deck_mm': ball_clear(T), 'airflow': air, 'tipping': tip, 'overspeed': overspeed, 'release': release,
               'lid_screw': f'M3 x {tb.LID_SCREW_LEN:.0f} ISO 4762, tip at z {tb.LID_SCREW_TIP:.0f} (as the J501\'s own M3 x {tb.J["lid_screw_len"]:.0f})',
               'too_big': too_big}

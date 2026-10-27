@@ -331,8 +331,9 @@
   "release": {
    "after_drop_ms": 103,
    "coast_s": 1.1,
-   "note": "a ball that has already dropped still fires up to 103 ms after ARM is released; the phase-short brake (six FETs on the cartridge board, 10 ms after the line drops) stops the wheels to 5 % in about 30 ms (docs/turret-physics.md section 5), where unbraked they would coast 1.1 s",
-   "brake_to_5pct_ms": 30
+   "note": "a ball that has already dropped still fires up to 103 ms after ARM is released; the phase-short brake (six FETs on the cartridge board, 5-14 ms after the line drops) stops the wheels to 5 % about 48 ms after release (docs/turret-physics.md section 5), where unbraked they would coast 1.1 s",
+   "brake_to_5pct_ms": 48,
+   "brake_tau_ms": 10.16
   },
   "lid_screw": "M3 x 35 ISO 4762, tip at z 62 (as the J501's own M3 x 16)",
   "too_big": []
