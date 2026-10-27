@@ -1,0 +1,6 @@
+McMaster-Carr parts. McMaster-Carr CAD, for design use; not redistributed.
+Files per part: <PN>.step (as downloaded), <PN>.norm.step (moved into the frame for its kind), <PN>.page.json (the product page's data).
+
+91595A150 Dowel Pin, 52100 Alloy Steel, 4 mm Diameter, 8 mm Long
+URL: https://www.mcmaster.com/91595A150/
+Downloaded: 2026-10-27

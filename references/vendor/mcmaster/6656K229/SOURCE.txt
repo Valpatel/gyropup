@@ -1,0 +1,6 @@
+McMaster-Carr parts. McMaster-Carr CAD, for design use; not redistributed.
+Files per part: <PN>.step (as downloaded), <PN>.norm.step (moved into the frame for its kind), <PN>.page.json (the product page's data).
+
+6656K229 Steel Ball Bearing, Steel, Shielded, Trade Number 6810-2Z, ABEC Rating 1
+URL: https://www.mcmaster.com/6656K229/
+Downloaded: 2026-10-27

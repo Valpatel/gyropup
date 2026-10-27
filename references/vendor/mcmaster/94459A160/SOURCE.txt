@@ -1,0 +1,6 @@
+McMaster-Carr parts. McMaster-Carr CAD, for design use; not redistributed.
+Files per part: <PN>.step (as downloaded), <PN>.norm.step (moved into the frame for its kind), <PN>.page.json (the product page's data).
+
+94459A160 Heat-Set Threaded Inserts for Plastic, Standard, Brass, M4 x 0.7 mm Thread Size, 6.4 mm Installed Length
+URL: https://www.mcmaster.com/94459A160/
+Downloaded: 2026-10-27
