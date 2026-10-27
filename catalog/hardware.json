@@ -5216,21 +5216,21 @@
   "notes": "DIN 179 press-fit drill bushing (type PM, headless, chamfer at one end), steel hardened to Rockwell C61, used as the knee eye's sleeve: bore 12 +0.016/+0.034 (F7) on the knee pin's 12 mm shoulder (-0.072/-0.010) is a 0.026-0.106 slip fit; OD 18 +0.012/+0.023 for the press fit; 20 ±0.2 long. Size compromise: McMaster stocks no 12 x 16 at 16 or 20 mm. Its 12 mm bore press-fit bushings are 16 x 10 (96990A240, DIN 179, $37.07 each, $31.53 at 6-11), 18 x 12 (8486A94), 18 x 20 (this one), 18 x 25 (8486A99) and 22 x 16 / 28 / 36, and its metric 12 mm ID steel sleeve bearings are all drill bushings (no other hardened sleeve). CAD change (cad/fivebar.py): EYE_SLEEVE = (18.0, 12.0) and the eye's press bore Ø17.96 x 20 deep (y 10.0..30.0, was 19.0 from y 11.0). The sleeve's inner end then stands 0.5 mm into the M10 nyloc's pocket (ceiling y = 10.5), so the nut seats on steel at y = 10.0 instead of on 0.5 mm of PA6-CF, and the knee pin's clamp runs nut, sleeve, washer, 6201 inner races and spacer, washer, head all in steel. knee_pin_70 still clamps (its shoulder ends 2.0 short of the nut, was 1.5) with the nut's whole 10 mm on the M10 x 16 thread. The Ø18 leaves 11 mm of wall in the Ø40 eye, and washer_m12_thin (13 x 20) bears on the sleeve's end out to r 9. To keep the Ø16 bore instead: two 96990A240 end to end in the same 20 deep bore, 8 per robot at $31.53 ($252 a robot, against $64 for four of these). Price breaks: $16.11 each for 1-5, $13.70 for 6-11, $12.04 for 12 and up."
  },
  {
-  "id": "mcmaster-4668k273",
+  "id": "mcmaster-6656k229",
   "key": "bearing_61810",
   "category": "bearing",
   "vendor": "McMaster-Carr",
-  "model": "4668K273",
-  "name": "Permanently Lubricated 440C Stainless Steel Ball Bearing, Sealed, Trade No. 6810-2RS, for 50 mm Shaft Diameter",
-  "price_usd": 194.88,
-  "price_note": "McMaster-Carr: $194.88 each (price_usd is per piece)",
-  "price_checked": "2026-10-26",
+  "model": "6656K229",
+  "name": "Steel Ball Bearing, Steel, Shielded, Trade Number 6810-2Z, ABEC Rating 1",
+  "price_usd": 33.29,
+  "price_note": "McMaster-Carr: $33.29 each (price_usd is per piece)",
+  "price_checked": "2026-10-27",
   "pack_qty": 1,
-  "pack_price_usd": 194.88,
+  "pack_price_usd": 33.29,
   "buy": [
    {
     "seller": "McMaster-Carr",
-    "url": "https://www.mcmaster.com/4668K273/",
+    "url": "https://www.mcmaster.com/6656K229/",
     "in_stock": null,
     "ships_from": "US"
    }
@@ -5239,43 +5239,38 @@
    "id_mm": 50.0,
    "od_mm": 65.0,
    "width_mm": 7.0,
-   "dynamic_load_c_n": 6449.9,
-   "static_load_c0_n": 6005.1,
    "mass_g": 48.27,
    "mass_basis": "estimate (no CAD yet): 6656K236's CAD (6812-2Z, the same thin 618xx series) fills 0.636 of its 60 x 78 x 10 envelope; the same fill of 50 x 65 x 7 x 8.0 g/cm3",
-   "material": "440C Stainless Steel",
+   "material": "Steel",
    "mcmaster": {
     "raw": {
      "For Shaft Type": "Round",
-     "Bearing Seal Type": "Sealed",
-     "Material": "440C Stainless Steel",
+     "Bearing Seal Type": "Shielded",
+     "Material": "Steel",
      "For Shaft Diameter": "50 mm",
      "For Housing ID": "65 mm",
      "Width": "7 mm",
-     "Width Tolerance": "-0.12 mm to 0 mm",
+     "Width Tolerance": "-0.127 mm to 0 mm",
      "ABEC Rating": "1",
      "Dynamic Radial Load Capacity": "1,450 lb.",
-     "Maximum Rotation Speed": "5,000 rpm",
-     "Temperature Range Minimum": "-10° F",
-     "Temperature Range Max.": "200° F",
+     "Maximum Rotation Speed": "9,600 rpm",
+     "Temperature Range Minimum": "-40° F",
+     "Temperature Range Max.": "150° F",
      "Inner Ring Type": "Standard",
-     "Bearing Trade Number": "6810-2RS",
+     "Bearing Trade Number": "6810-2Z",
      "Ball Bearing Profile": "Standard",
-     "Ball Material": "440C Stainless Steel",
+     "Ball Material": "Steel",
      "Bearing Construction": "Single Row",
      "Bearing Type": "Ball",
-     "Cage Material": "304 Stainless Steel",
+     "Cage Material": "Steel",
      "For Load Direction": "Radial",
      "ID": "50 mm",
-     "ID Tolerance": "-0.012 mm to 0 mm",
-     "Lubricant": "Solid Polymer",
+     "ID Tolerance": "-0.013 mm to 0 mm",
+     "Lubricant": "Grease",
      "Lubrication": "Lubricated",
      "OD": "65 mm",
      "OD Tolerance": "-0.013 mm to 0 mm",
-     "Performance": "Corrosion Resistant, Permanently Lubricated",
-     "Radial Clearance": "0.008 mm to 0.018 mm",
-     "Radial Clearance Trade Number": "C0",
-     "Seal Material": "Buna-N",
+     "Radial Clearance": "0.005 mm to 0.013 mm",
      "Shaft Mount Type": "Press Fit",
      "Static Radial Load Capacity": "1,350 lb.",
      "System of Measurement": "Metric",
@@ -5284,7 +5279,7 @@
      "Export Control Classification Number (ECCN)": "1C999",
      "REACH Compliance": "REACH (EC 1907/2006) (02/04/2026, 253 SVHC) Compliant",
      "RoHS Compliance": "RoHS 3 (2015/863/EU) Compliant",
-     "Schedule B Number": "848210.5044",
+     "Schedule B Number": "848210.5028",
      "U.S.–Mexico–Canada Agreement (USMCA) Qualifying": "No"
     },
     "parsed": {
@@ -5301,7 +5296,7 @@
       "unit": "mm"
      },
      "Width Tolerance": {
-      "min": -0.12,
+      "min": -0.127,
       "max": 0.0,
       "unit": "mm"
      },
@@ -5310,15 +5305,15 @@
       "unit": "N"
      },
      "Maximum Rotation Speed": {
-      "value": 5000.0,
+      "value": 9600.0,
       "unit": "rpm"
      },
      "Temperature Range Minimum": {
-      "value": -23.333333,
+      "value": -40.0,
       "unit": "degC"
      },
      "Temperature Range Max.": {
-      "value": 93.333333,
+      "value": 65.555556,
       "unit": "degC"
      },
      "ID": {
@@ -5326,7 +5321,7 @@
       "unit": "mm"
      },
      "ID Tolerance": {
-      "min": -0.012,
+      "min": -0.013,
       "max": 0.0,
       "unit": "mm"
      },
@@ -5340,8 +5335,8 @@
       "unit": "mm"
      },
      "Radial Clearance": {
-      "min": 0.008,
-      "max": 0.018,
+      "min": 0.005,
+      "max": 0.013,
       "unit": "mm"
      },
      "Static Radial Load Capacity": {
@@ -5356,17 +5351,17 @@
    "kind": "bearing",
    "frame": "axis +Z, centred on the axis; the larger end (flange, head, collar) at z = 0 and the part on +z; when both ends are the same size, the heavier end at z = 0",
    "available": true,
-   "step_url": "https://www.mcmaster.com/4668K273/",
+   "step_url": "https://www.mcmaster.com/6656K229/",
    "bbox_mm": null,
    "volume_mm3": null,
-   "pending": "STEP not downloaded yet: on 2026-10-26 McMaster-Carr asked for a login before CAD downloads ('Please log in and reload the page to download CAD', then downloads cancelled). Finish with .venv/bin/python tools/mcmaster_cad.py --catalog --only eye_sleeve bearing_61810 bearing_mr126 circlip_50 shoulder_6x12_m5 (logged in, or once the anonymous limit resets), or save the STEP from a logged-in browser as references/vendor/mcmaster/4668K273/4668K273.step and run the same command offline."
+   "pending": "STEP not downloaded yet: McMaster-Carr asks for a login before CAD downloads (the product page itself reads without one). Finish with .venv/bin/python tools/mcmaster_cad.py --catalog --file catalog/hardware.json --only bearing_61810 once logged in, or save the STEP from a logged-in browser as references/vendor/mcmaster/6656K229/6656K229.step and run the same command."
   },
   "frame": "axis +Z, centred on the axis; the larger end (flange, head, collar) at z = 0 and the part on +z; when both ends are the same size, the heavier end at z = 0",
   "sources": [
-   "https://www.mcmaster.com/4668K273/"
+   "https://www.mcmaster.com/6656K229/"
   ],
   "confidence": "product page",
-  "used_for": "turret pan bearing (cad/turret.py BRG): outer race in the pan_base seat under the pan_clamp, the pan_ring's Ø50 journal through the inner race",
+  "used_for": "turret pan bearing (cad/turret.py BRG): the 6810-2Z, chrome steel, shielded, 50 x 65 x 7; outer race in the pan_base seat under the clamp ring, inner race on the turntable's journal over the DIN 471 circlip. McMaster's only sealed 6810 is the 440C stainless 4668K273 at $194.88 (catalog/alternates.json)",
   "qty_per_robot": 1,
   "notes": "6810-2RS = 61810-2RS, 50 x 65 x 7, sealed both sides (Buna-N), 440C stainless rings and balls, 304 stainless cage, ABEC 1, C0 clearance, solid polymer lubricant (McMaster). It is McMaster's only sealed 50 x 65 x 7. Ratings (McMaster): dynamic C 1,450 lb = 6.45 kN, static C0 1,350 lb = 6.0 kN, 5,000 rpm, -10 to 200 F. At $194.88: if shields will do here, as at the apex (bearing_61812 is a 6812-2Z), the steel 6810-2Z 6656K229 ($33.29, the same family as bearing_61812, 9,600 rpm) or the open 6810 6656K142 ($29.97) fits the same seat. cad/turret.py BRG is 50 x 65 x 7 (52 g, SKF): the pan_base seat is Ø65 on a Ø62 shoulder, the pan_clamp's Ø61 bore holds the outer race down, and the pan_ring sits on the inner race with a Ø56 shoulder and runs its Ø50 journal through it. The inner race turns with the pan ring: once the CAD is in, check that the Ø56 shoulder (top face) and circlip_50 (bottom face) touch only the inner ring, not the seals."
  },

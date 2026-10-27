@@ -4,32 +4,15 @@
    "material": "pa6-cf",
    "qty": 1,
    "note": "PA6-CF on its foot; 4 x M5 x 16 into the head ring, 2 x \u00d85 dowels",
-   "solid": true,
+   "solid": false,
    "frame": "base",
    "doc": "The fixed base, printed PA6-CF on its foot (100 % solid): a \u00d8144 x 5 foot on the TM pattern (4 x M5 x 16",
-   "mass_g_each": 140.4,
-   "print_h": 9.2,
+   "mass_g_each": 155.5,
+   "print_h": 10.2,
    "bed_mm": [
-    158.0,
-    155.0,
-    62.0
-   ],
-   "fits_bed": true,
-   "valid_single_solid": true
-  },
-  "pan_clamp": {
-   "material": "pa6-cf",
-   "qty": 1,
-   "note": "PA6-CF; 3 x M3 x 8 into inserts",
-   "solid": true,
-   "frame": "base",
-   "doc": "Printed PA6-CF clamp ring, 3 mm: its \u00d861 bore overlaps the 61810's outer race by 1.5 mm and holds it down",
-   "mass_g_each": 7.2,
-   "print_h": 0.5,
-   "bed_mm": [
-    98.0,
-    88.0,
-    3.0
+    160.5,
+    157.6,
+    47.0
    ],
    "fits_bed": true,
    "valid_single_solid": true
@@ -41,10 +24,10 @@
    "solid": true,
    "frame": "pan",
    "doc": "The turntable, printed PA6-CF upside down (100 % solid): a 63 T module 1.25 spur gear (16 mm face) with a",
-   "mass_g_each": 84.6,
-   "print_h": 5.5,
+   "mass_g_each": 72.3,
+   "print_h": 4.7,
    "bed_mm": [
-    114.6,
+    81.2,
     81.2,
     41.2
    ],
@@ -74,13 +57,13 @@
    "note": "PA6-CF; 4 x M2 to the horn; turns -3 x pan about the servo axis",
    "solid": true,
    "frame": "pinion",
-   "doc": "21 T module 1.25 spur pinion (printed PA6-CF, 12 mm face) on a \u00d820 flange that screws to the STS3215's aluminium",
-   "mass_g_each": 5.9,
-   "print_h": 0.4,
+   "doc": "21 T module 1.25 spur pinion (printed PA6-CF, 16 mm face, full-round roots) on a \u00d820 flange that screws to the",
+   "mass_g_each": 8.0,
+   "print_h": 0.5,
    "bed_mm": [
     28.7,
     28.6,
-    13.0
+    17.0
    ],
    "fits_bed": true,
    "valid_single_solid": true
@@ -88,15 +71,15 @@
   "tilt_yoke": {
    "material": "pa6-cf",
    "qty": 1,
-   "note": "PA6-CF on its back; 4 x M4 x 12 to the turntable",
+   "note": "PA6-CF on its back; 4 x M4 x 10 to the turntable (heads 4 mm down in the bridge)",
    "solid": true,
    "frame": "pan",
    "doc": "Printed PA6-CF on its back (layers run along the arms): an 8 mm bridge on the turntable (4 x M4) and two 8 mm",
-   "mass_g_each": 79.8,
-   "print_h": 5.2,
+   "mass_g_each": 101.1,
+   "print_h": 6.6,
    "bed_mm": [
-    150.0,
-    87.0,
+    152.0,
+    91.0,
     48.4
    ],
    "fits_bed": true,
@@ -109,12 +92,12 @@
    "solid": true,
    "frame": "tilt",
    "doc": "Printed PA6-CF flat (100 % solid). Two 5 mm cheeks on the tilt axis and two 17 mm rails under the cartridge,",
-   "mass_g_each": 58.2,
-   "print_h": 3.8,
+   "mass_g_each": 76.3,
+   "print_h": 5.0,
    "bed_mm": [
     181.6,
-    124.0,
-    57.1
+    126.0,
+    59.1
    ],
    "fits_bed": true,
    "valid_single_solid": true
@@ -126,8 +109,8 @@
    "solid": true,
    "frame": "tilt",
    "doc": "The ball cartridge, printed PA6-CF on its base (100 % solid, 2.5 mm walls): a base plate on the cradle rails",
-   "mass_g_each": 141.1,
-   "print_h": 9.2,
+   "mass_g_each": 138.7,
+   "print_h": 9.1,
    "bed_mm": [
     162.6,
     103.2,
@@ -159,7 +142,7 @@
    "note": "TPU 95A tyre",
    "solid": false,
    "frame": "tilt",
-   "doc": "TPU 95A tyre, \u00d836 x 12, 4 mm thick over the hub's \u00d828 rim (stretched on). Print a set (\u00d834, 36, 38): the",
+   "doc": "TPU 95A tyre as mounted, \u00d836 x 12, 4 mm thick on the hub's \u00d828 rim (the assembly; the printed blank is",
    "mass_g_each": 5.9,
    "print_h": 1.2,
    "bed_mm": [
@@ -177,12 +160,12 @@
    "solid": false,
    "frame": "tilt",
    "doc": "The feed dial, printed PETG: a shelled \u00d850 hub (2 mm rim, 2 mm top, four ribs to a \u00d814 boss), 8 spokes 4 mm",
-   "mass_g_each": 41.6,
-   "print_h": 1.7,
+   "mass_g_each": 46.8,
+   "print_h": 1.9,
    "bed_mm": [
     90.9,
     90.9,
-    26.0
+    44.0
    ],
    "fits_bed": true,
    "valid_single_solid": true
@@ -194,11 +177,11 @@
    "solid": false,
    "frame": "tilt",
    "doc": "The hopper, printed PETG (translucent, so the balls show): a \u00d8102 tube from the dial housing to z = 100 in the",
-   "mass_g_each": 54.8,
-   "print_h": 2.2,
+   "mass_g_each": 44.5,
+   "print_h": 1.8,
    "bed_mm": [
-    111.2,
-    102.2,
+    110.8,
+    101.4,
     65.0
    ],
    "fits_bed": true,
@@ -210,9 +193,9 @@
    "note": "PETG",
    "solid": false,
    "frame": "tilt",
-   "doc": "Lid, printed PETG: a 3 mm disc with a spigot into the hopper, a \u00d832 fill port where the dock's spout pushes the",
-   "mass_g_each": 26.0,
-   "print_h": 1.0,
+   "doc": "Lid, printed PETG: a 2 mm disc with a spigot into the hopper, a \u00d832 fill port where the dock's spout pushes the",
+   "mass_g_each": 16.8,
+   "print_h": 0.7,
    "bed_mm": [
     102.2,
     102.2,
@@ -244,9 +227,9 @@
    "note": "PETG standing; last 15 mm blaze orange",
    "solid": false,
    "frame": "tilt",
-   "doc": "Barrel, printed PETG standing up: \u00d830 x 100 with a bore of ball + 1.5 mm, 14 mm in the socket (M3 screw). Two",
-   "mass_g_each": 31.5,
-   "print_h": 1.3,
+   "doc": "Barrel, printed PETG standing up: \u00d830 x 100 with a bore of ball + 2.0 mm (docs/turret-physics.md finding 14), 14 mm",
+   "mass_g_each": 29.1,
+   "print_h": 1.2,
    "bed_mm": [
     35.0,
     30.0,
@@ -261,13 +244,13 @@
    "note": "PETG; 3 x M3 boresight, 2 x M3 to the cradle",
    "solid": false,
    "frame": "tilt",
-   "doc": "Laser holder, printed PETG: a ring round the \u00d812 laser (\u00d816 bore with an O-ring at the back) and three M3",
-   "mass_g_each": 7.8,
+   "doc": "Laser holder, printed PETG: a ring round the \u00d87 laser (\u00d811 bore with an O-ring at the back) and three M3",
+   "mass_g_each": 7.4,
    "print_h": 0.3,
    "bed_mm": [
-    22.0,
     20.0,
-    26.1
+    18.0,
+    24.1
    ],
    "fits_bed": true,
    "valid_single_solid": true
@@ -278,13 +261,64 @@
    "note": "TPU 95A; 5 x M3 with washers",
    "solid": false,
    "frame": "base",
-   "doc": "TPU 95A ring, 6 mm wide and 16 mm tall, around the pan base on its five tabs (M3 screws with washers); a gap",
-   "mass_g_each": 52.0,
-   "print_h": 5.3,
+   "doc": "TPU 95A ring, 4 mm wide and 14 mm tall, widened to a lug at each of the base's five tabs for its M3 screw and",
+   "mass_g_each": 37.0,
+   "print_h": 3.8,
    "bed_mm": [
     172.0,
-    166.2,
-    16.0
+    167.7,
+    14.0
+   ],
+   "fits_bed": true,
+   "valid_single_solid": true
+  },
+  "ring_carrier": {
+   "material": "pa6-cf",
+   "qty": 1,
+   "note": "PA6-CF on its top face; 3 x M3 x 10 flat heads up into the base; 3 x M3 inserts for the ring",
+   "solid": true,
+   "frame": "base",
+   "doc": "The slip ring's carrier, printed PA6-CF on its top face (100 % solid): a \u00d864.5 x 12 disc in the foot's \u00d865",
+   "mass_g_each": 30.2,
+   "print_h": 2.0,
+   "bed_mm": [
+    73.2,
+    64.5,
+    12.0
+   ],
+   "fits_bed": true,
+   "valid_single_solid": true
+  },
+  "ring_driver": {
+   "material": "pa6-cf",
+   "qty": 1,
+   "note": "PA6-CF on its top face; in the turntable's bore (ribs + CA)",
+   "solid": true,
+   "frame": "pan",
+   "doc": "The slip ring's driver, printed PA6-CF: a \u00d839.6 x 6 disc held in the top of the turntable's \u00d840 bore (three",
+   "mass_g_each": 7.0,
+   "print_h": 0.5,
+   "bed_mm": [
+    39.9,
+    39.4,
+    14.0
+   ],
+   "fits_bed": true,
+   "valid_single_solid": true
+  },
+  "board_bay": {
+   "material": "petg",
+   "qty": 1,
+   "note": "PETG on its back; 4 x M3 x 8 flat heads to the -y yoke arm; 4 x M3 inserts for the boards",
+   "solid": false,
+   "frame": "pan",
+   "doc": "The turret-board bay, printed PETG on its back: a 58 x 57 tray with 2 mm walls out to y -115, screwed to the -y",
+   "mass_g_each": 27.6,
+   "print_h": 1.1,
+   "bed_mm": [
+    58.0,
+    57.0,
+    46.5
    ],
    "fits_bed": true,
    "valid_single_solid": true
@@ -309,6 +343,51 @@
   "circlip_50": {
    "mass_g": 11.4,
    "note": "DIN 471-50 external ring under the pan_spacer; McMaster 98541A167",
+   "frame": "pan"
+  },
+  "pan_clamp": {
+   "mass_g": 17.8,
+   "note": "pan clamp ring, SendCutSend 6061-T6 aluminium 0.125 in (exports/turret/pan_clamp.dxf)",
+   "frame": "base"
+  },
+  "slip_ring": {
+   "mass_g": 25.0,
+   "note": "SparkFun ROB-13065 (Senring M220 series): 12 x 2 A, \u00d822 x 26.5, flange \u00d844.5 (envelope from the vendor sheets; flange holes to measure)",
+   "frame": "base"
+  },
+  "slip_ring_rotor": {
+   "mass_g": 0.0,
+   "note": "the ring's rotor stub (bought with the ring)",
+   "frame": "pan"
+  },
+  "ring_coupling": {
+   "mass_g": 2.0,
+   "note": "soft silicone tubing 5/16 in ID x 7/16 in OD, coupling the rotor to the driver",
+   "frame": "pan"
+  },
+  "ring_leads_rotor": {
+   "mass_g": 0.0,
+   "note": "the ring's rotor leads, a \u00d87.5 bundle (12 x 26 AWG + 2 x 17 AWG): beside the coupling, up through the driver and the yoke's slot, along the bridge and through the -y arm's window to the bay",
+   "frame": "pan"
+  },
+  "base_board": {
+   "mass_g": 30.0,
+   "note": "base board (est): DT12 fuse, the 555 safety-pulse oscillator, the pan servo's 12 V regulator, the ring's stator connector",
+   "frame": "base"
+  },
+  "turret_board": {
+   "mass_g": 100.0,
+   "note": "turret boards (est): level 0 the D24V150F12 flywheel and D36V50F12 aux regulators and the Pololu 2815 switch; level 1 the 5 V regulator, the safety and trip logic, 3 x 1000 uF; level 2 the Feather M4 CAN and the connectors",
+   "frame": "pan"
+  },
+  "index_magnet": {
+   "mass_g": 0.8,
+   "note": "neodymium disc 3/16 x 1/8 in (McMaster 5862K102), the pan index: ~760 G at the hall's element 3.5 mm over it (Br 1.32 T, on-axis formula), 4x the A1120's highest operate point; on the housing's top, through the clamp ring (0.2 mm proud), glued",
+   "frame": "base"
+  },
+  "hall_switch": {
+   "mass_g": 0.3,
+   "note": "Allegro A1120LUA-T unipolar hall switch (UA package), on the turntable",
    "frame": "pan"
   },
   "dt_receptacle": {
@@ -366,15 +445,52 @@
    "note": "DJI M2006 P36 (DJI drawing) under the dial; its rear 17 mm turns",
    "frame": "tilt"
   },
+  "ct_thumbscrew": {
+   "mass_g": 4.0,
+   "note": "DIN 464 knurled thumbscrew M4 x 12 (McMaster 92581A250), the CT latch, under the rail",
+   "frame": "tilt"
+  },
   "feed_esc": {
    "mass_g": 17.0,
    "note": "DJI C610 (CAN), on the base plate behind the M2006; in through the housing's rear window",
    "frame": "tilt"
   },
   "laser": {
-   "mass_g": 16.0,
+   "mass_g": 3.8,
    "note": "Picotronic DD520-1-24(12x40), 520 nm Class 2",
    "frame": "tilt"
+  }
+ },
+ "tyre_set": {
+  "34": {
+   "file": "flywheel_tyre_d34.stl",
+   "mounted_d_mm": 34.0,
+   "printed_od_mm": 33.08,
+   "printed_bore_mm": 26.88,
+   "crush_on_this_cage": 0.162
+  },
+  "36": {
+   "file": "flywheel_tyre_d36.stl",
+   "mounted_d_mm": 36.0,
+   "printed_od_mm": 35.14,
+   "printed_bore_mm": 26.88,
+   "crush_on_this_cage": 0.25
+  }
+ },
+ "sheet": {
+  "pan_clamp": {
+   "dxf": "exports/turret/pan_clamp.dxf",
+   "step": "exports/turret/pan_clamp.step",
+   "vendor": "SendCutSend",
+   "material": "6061-T6 aluminium",
+   "thickness_in": 0.125,
+   "thickness_mm": 3.175,
+   "size_mm": [
+    86.0,
+    86.7
+   ],
+   "mass_g": 17.8,
+   "order": "https://sendcutsend.com/materials/6061-t6-aluminum/"
   }
  },
  "info": {
@@ -403,7 +519,7 @@
    "point": [
     0.0,
     0.0,
-    350.0
+    354.0
    ],
    "dir": [
     -0.0,
@@ -414,7 +530,7 @@
   "muzzle": [
    155.0,
    0.0,
-   335.0
+   339.0
   ],
   "muzzle_dir": [
    1.0,
@@ -424,7 +540,7 @@
   "laser_origin": [
    86.0,
    -32.0,
-   335.0
+   339.0
   ],
   "tilt_range_deg": [
    -25.0,
@@ -435,13 +551,13 @@
    170.0
   ],
   "pan_hard_stop_deg": 173.5,
-  "mass_estimate_g": 1344.3,
+  "mass_estimate_g": 1556.4,
   "com": [
-   -7.6,
-   2.6,
-   307.5
+   -6.4,
+   -5.2,
+   304.2
   ],
-  "com_above_mount_mm": 93.5,
+  "com_above_mount_mm": 90.2,
   "ball_d": 22.7,
   "bore": 24.2,
   "pose": {
@@ -466,22 +582,20 @@
    -25.0
   ]
  ],
- "mass_g_with_balls": 1344.3,
- "mass_g_empty": 1289.4,
+ "mass_g_with_balls": 1556.4,
+ "mass_g_empty": 1501.5,
  "com_from_mount_mm": [
-  -7.6,
-  2.6,
-  93.5
+  -6.4,
+  -5.2,
+  90.2
  ],
  "not_modelled_g": {
   "wiring and the cable loops": 50,
-  "head MCU + IMU + CAN transceiver": 15,
-  "24 -> 12 V buck": 10,
   "chronograph emitters/receivers + hopper-full beam": 10,
   "LEDs and buzzer": 15,
   "screws, inserts, dowels, springs": 17,
-  "CT pogo connector pair": 10
+  "CT connector pair (Micro-Fit 3.0 class)": 12
  },
- "print_hours": 48.1,
- "made_g": 762.0
+ "print_hours": 51.7,
+ "made_g": 829.4
 }

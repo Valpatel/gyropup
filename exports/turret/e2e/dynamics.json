@@ -1,0 +1,174 @@
+{
+ "sts3215": {
+  "stall_nm": 2.94,
+  "no_load_rad_s": 4.71238898038469,
+  "backlash_deg": 0.5,
+  "resolution_deg": 0.087890625,
+  "ratio": 345,
+  "source": "Feetech ST-3215-C018 datasheet (references/vendor/feetech-sts3215/ST-3215-C018.pdf): 30 kg cm, 45 rpm, backlash <= 0.5 deg, 0.088 deg/pulse; checked 2026-10-27"
+ },
+ "gear": {
+  "module": 1.25,
+  "z_ring": 63,
+  "z_pinion": 21,
+  "backlash_mm_per_flank": 0.15,
+  "source": "cad/turret.py gear_profile(backlash=0.15) and Geo.gear"
+ },
+ "recoil": {
+  "impulse_per_shot_ns": 0.03009,
+  "impulse_5_burst_ns": 0.1505,
+  "impulse_30_hopper_ns": 0.903,
+  "peak_force_on_cage_n": 56.9,
+  "pulse_ms": 4.76,
+  "peak_moment_about_tilt_axis_nm": 0.853,
+  "moment_arm_mm": 15.0,
+  "tilt_angular_impulse_nms": 0.0004513,
+  "tilt_group_inertia_kg_m2": 0.002086,
+  "tilt_kick_rad_s": 0.2164,
+  "gravity_preload_nm": 0.042,
+  "kick_stops_after_mrad": 1.163,
+  "servo_backlash_mrad": 8.73,
+  "aim_shift_mrad": 1.163,
+  "crosses_backlash": false,
+  "pan_moment": "zero: the ball path lies in the pan axis's plane (y = 0) and both tyres push alike",
+  "mean_force_in_burst_n": {
+   "3_per_s": 0.0903,
+   "5_per_s": 0.1505,
+   "10_per_s": 0.3009
+  },
+  "on_the_robot": "a 30-ball hopper dump is 0.9 N s: 0.05 m/s on a 17 kg robot (docs/head-payload.md budget 0.05 N s per shot)"
+ },
+ "gyroscopic": {
+  "wheel_angular_momentum_nms": 0.00386,
+  "wheel_I_kg_m2": 3.917519259407896e-06,
+  "w_rad_s": 985,
+  "pan_slew_torque_nm": 0.0,
+  "pan_note": "the spin axes are parallel to the pan axis: no gyroscopic torque",
+  "tilt_at_200deg_s_per_wheel_nm": 0.01347,
+  "tilt_pair_net_nm": 0.0,
+  "body_pitch_1rad_s_per_wheel_nm": 0.00386,
+  "pair_note": "the two tyres counter-rotate: equal and opposite on the cartridge, net zero; each Snail mount sees the per-wheel value",
+  "one_wheel_faulted_tilt_nm": 0.01347,
+  "vs_tilt_servo_stall": 0.004582
+ },
+ "servo_margins": {
+  "tilt": {
+   "move_torque_nm": 0.1,
+   "plus_mean_recoil_at_10_per_s_nm": 0.0045,
+   "plus_gyro_one_wheel_nm": 0.01347,
+   "sustained_total_nm": 0.118,
+   "available_at_peak_speed_nm": 0.762,
+   "margin": 6.5,
+   "recoil_pulse_nm_5ms": 0.853,
+   "pulse_vs_stall": 0.29,
+   "pulse_note": "the pulse exceeds nothing the servo must hold continuously; it turns the tilting group 1-2 mrad against gravity's preload inside the gear lash (recoil.aim_shift_mrad)",
+   "hold_margin_at_stall": 63.2
+  },
+  "pan": {
+   "move_torque_at_servo_nm": 0.0128,
+   "speed_limit_deg_s_at_turret": 90.0,
+   "fastest_90_deg_s": 1.0,
+   "note": "speed-limited, not torque-limited: 45 rpm through 3:1 is 90 deg/s at the turret, so the 90 deg in 1.2 s move (150 deg/s peak) is not reachable; recoil adds no pan moment",
+   "yaw_margin_against_body": 113.1
+  },
+  "source": "catalog feetech-sts3215-c018-12v (Waveshare ST3215: 30 kg.cm, 45 rpm at 12 V)"
+ },
+ "aim_movers": {
+  "recoil_tilt_kick": {
+   "mrad": 1.163,
+   "direction": "down",
+   "note": "stopped by the gravity preload inside the backlash",
+   "cm_at": {
+    "2_m": 0.23,
+    "4_m": 0.47,
+    "6_m": 0.7
+   }
+  },
+  "pan_gear_backlash_total": {
+   "mrad": 7.62,
+   "direction": "either",
+   "note": "0.15 mm per flank on the 63 T ring: the lash the pan can sit anywhere in when the load reverses",
+   "cm_at": {
+    "2_m": 1.52,
+    "4_m": 3.05,
+    "6_m": 4.57
+   }
+  },
+  "pan_servo_backlash_through_3_1": {
+   "mrad": 2.91,
+   "direction": "either",
+   "note": "STS3215 <= 0.5 deg, divided by the 3:1",
+   "cm_at": {
+    "2_m": 0.58,
+    "4_m": 1.16,
+    "6_m": 1.75
+   }
+  },
+  "tilt_servo_backlash": {
+   "mrad": 8.73,
+   "direction": "either",
+   "note": "direct drive: the full 0.5 deg; gravity preloads it nose-up, recoil pushes nose-down",
+   "cm_at": {
+    "2_m": 1.75,
+    "4_m": 3.49,
+    "6_m": 5.24
+   }
+  },
+  "pan_resolution": {
+   "mrad": 0.511,
+   "direction": "either",
+   "note": "0.088 deg per count through 3:1",
+   "cm_at": {
+    "2_m": 0.1,
+    "4_m": 0.2,
+    "6_m": 0.31
+   }
+  },
+  "tilt_resolution": {
+   "mrad": 1.534,
+   "direction": "either",
+   "cm_at": {
+    "2_m": 0.31,
+    "4_m": 0.61,
+    "6_m": 0.92
+   }
+  },
+  "pan_slew_30_deg_s": {
+   "mrad": 4.89,
+   "direction": "against the slew",
+   "note": "the muzzle's own sideways velocity (155 mm from the pan axis) adds to the ball's",
+   "cm_at": {
+    "2_m": 0.98,
+    "4_m": 1.96,
+    "6_m": 2.93
+   }
+  },
+  "pan_slew_90_deg_s": {
+   "mrad": 14.49,
+   "direction": "against the slew",
+   "note": "the muzzle's own sideways velocity (155 mm from the pan axis) adds to the ball's",
+   "cm_at": {
+    "2_m": 2.9,
+    "4_m": 5.8,
+    "6_m": 8.69
+   }
+  },
+  "pan_slew_150_deg_s": {
+   "mrad": 24.26,
+   "direction": "against the slew",
+   "note": "the muzzle's own sideways velocity (155 mm from the pan axis) adds to the ball's",
+   "cm_at": {
+    "2_m": 4.85,
+    "4_m": 9.7,
+    "6_m": 14.56
+   }
+  }
+ },
+ "checks": {
+  "recoil_within_budget_0_05ns": true,
+  "tilt_servo_margin_ok": true,
+  "pan_reaches_90deg_in_1_2s": true,
+  "recoil_kick_inside_backlash": true,
+  "recoil_kick_under_3mrad": true
+ }
+}

@@ -64,19 +64,6 @@
   },
   {
    "supplier": "McMaster-Carr",
-   "part_number": "6656K229",
-   "url": "https://www.mcmaster.com/6656K229/",
-   "price": "$33.29 each",
-   "price_usd_each": 33.29,
-   "pack_qty": 1,
-   "stock": "Delivers tomorrow 7-9 am",
-   "drop_in": true,
-   "changes": "Chrome-steel 6810-2Z, shielded rather than sealed: the same 50 x 65 x 7 seat at a sixth of the price (the apex already uses the shielded 61812). Not stainless.",
-   "checked": "2026-10-27",
-   "evidence": "McMaster product page: Steel Ball Bearing, Steel, Shielded, Trade Number 6810-2Z, ABEC Rating 1"
-  },
-  {
-   "supplier": "McMaster-Carr",
    "part_number": "6656K142",
    "url": "https://www.mcmaster.com/6656K142/",
    "price": "$29.97 each",
@@ -87,6 +74,18 @@
    "changes": "Open 6810: the same 50 x 65 x 7 seat; no shields, so dust gets into the pan bearing.",
    "checked": "2026-10-27",
    "evidence": "McMaster product page: Steel Ball Bearing, Steel, Open, Trade No. 6810, for 50 mm Shaft Diameter"
+  },
+  {
+   "supplier": "McMaster-Carr",
+   "part_number": "4668K273",
+   "url": "https://www.mcmaster.com/4668K273/",
+   "price": "$194.88 each",
+   "price_usd_each": 194.88,
+   "pack_qty": 1,
+   "stock": null,
+   "drop_in": true,
+   "changes": "440C stainless steel and sealed (6810-2RS) instead of shielded: the same 50 x 65 x 7 seat at six times the price.",
+   "checked": "2026-10-27"
   }
  ],
  "bearing_61812": [

@@ -1,0 +1,6 @@
+McMaster-Carr parts. McMaster-Carr CAD, for design use; not redistributed.
+Files per part: <PN>.step (as downloaded), <PN>.norm.step (moved into the frame for its kind), <PN>.page.json (the product page's data).
+
+98952A110 Aluminum Male-Female Threaded Hex Standoff, 4.5mm Hex, 12mm Long, M3 x 0.50 mm Thread
+URL: https://www.mcmaster.com/98952A110/
+Downloaded: 2026-10-27

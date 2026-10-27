@@ -1,16 +1,16 @@
 {
  "checks": {
   "clearance": {
-   "deck_min_gap_mm": 19.3,
+   "deck_min_gap_mm": 47.3,
    "deck_worst_pose_deg": [
-    140.0,
+    -155.0,
     -25.0
    ],
    "antenna_min_gap_mm": {
-    "antenna_left_46.5": -3.4,
-    "antenna_left_145.5": -4.2,
-    "antenna_right_46.5": -4.2,
-    "antenna_right_145.5": -3.4
+    "antenna_left_46.5": 91.6,
+    "antenna_left_145.5": 91.6,
+    "antenna_right_46.5": 91.6,
+    "antenna_right_145.5": 91.6
    },
    "antenna_tilt_max_deg": [
     [
@@ -55,27 +55,27 @@
     ],
     [
      -120.0,
-     20.0
+     25.0
     ],
     [
      -115.0,
-     17.5
+     25.0
     ],
     [
      -110.0,
-     20.0
+     25.0
     ],
     [
      -105.0,
-     20.0
+     25.0
     ],
     [
      -100.0,
-     22.5
+     25.0
     ],
     [
      -95.0,
-     22.5
+     25.0
     ],
     [
      -90.0,
@@ -91,27 +91,27 @@
     ],
     [
      -75.0,
-     20.0
+     25.0
     ],
     [
      -70.0,
-     17.5
+     25.0
     ],
     [
      -65.0,
-     17.5
+     25.0
     ],
     [
      -60.0,
-     20.0
+     25.0
     ],
     [
      -55.0,
-     22.5
+     25.0
     ],
     [
      -50.0,
-     22.5
+     25.0
     ],
     [
      -45.0,
@@ -199,27 +199,27 @@
     ],
     [
      60.0,
-     20.0
+     25.0
     ],
     [
      65.0,
-     17.5
+     25.0
     ],
     [
      70.0,
-     20.0
+     25.0
     ],
     [
      75.0,
-     20.0
+     25.0
     ],
     [
      80.0,
-     22.5
+     25.0
     ],
     [
      85.0,
-     22.5
+     25.0
     ],
     [
      90.0,
@@ -235,27 +235,27 @@
     ],
     [
      105.0,
-     20.0
+     25.0
     ],
     [
      110.0,
-     17.5
+     25.0
     ],
     [
      115.0,
-     17.5
+     25.0
     ],
     [
      120.0,
-     20.0
+     25.0
     ],
     [
      125.0,
-     22.5
+     25.0
     ],
     [
      130.0,
-     22.5
+     25.0
     ],
     [
      135.0,
@@ -290,27 +290,10 @@
      25.0
     ]
    ],
-   "antenna_limited_pans_deg": [
-    [
-     -120.0,
-     -95.0
-    ],
-    [
-     -75.0,
-     -50.0
-    ],
-    [
-     60.0,
-     85.0
-    ],
-    [
-     105.0,
-     130.0
-    ]
-   ],
+   "antenna_limited_pans_deg": [],
    "note": "antennas: upright swivel dipoles on all four RP-SMA bulkheads (none chosen yet: typical 2.4 GHz swivel dipole, \u00d810 x 108 (est; none chosen))"
   },
-  "muzzle_outside_deck_mm": 3.0,
+  "muzzle_outside_deck_mm": -25.3,
   "airflow": {
    "mouth_mm": [
     124,
@@ -331,23 +314,23 @@
    "note": "hand estimate (K = 1 at the grille, K = 1 for the turn into the collar; a linear 8015 fan curve, 15.2 Pa / 38.9 m3/h, through the J501 CFD operating point); the J501 CFD (tools/thermal.py there) should check it with the deck and shroud in the domain"
   },
   "tipping": {
-   "total_kg": 3.09,
-   "com_height_mm": 128,
-   "tip_angle_deg": 35,
+   "total_kg": 3.3,
+   "com_height_mm": 139,
+   "tip_angle_deg": 33,
    "push_to_tip_n": 10.6,
-   "push_height_mm": 259,
+   "push_height_mm": 276,
    "note": "J501: 368 g printed (its slice report) + 1.0 kg Orin, carrier and cooler (est); a sideways push at the tilt axis that lifts the box off its narrow edge"
   },
   "overspeed": {
-   "max_exit_mps": 37.4,
-   "max_fps": 123,
+   "max_exit_mps": 33.6,
+   "max_fps": 110,
    "cap_mps": 21.3,
-   "note": "at the Snails' full no-load speed (21000 rpm at 24 V) a ball would leave at about 37 m/s: the 70 fps cap is only the throttle limit in firmware, so the barrel's chronograph gates should open the safety line on any ball over the cap"
+   "note": "at the Snails' full no-load speed (21000 rpm at 24 V) a ball would leave at about 34 m/s: the 70 fps cap is only the throttle limit in firmware, so the barrel's chronograph gates should open the safety line on any ball over the cap"
   },
   "release": {
-   "after_drop_ms": 96,
-   "coast_s": 1.4,
-   "note": "a ball that has already dropped still fires up to 96 ms after ARM is released, and the unbraked flywheels keep 1.4 s of speed: brake them (AM32 active braking) on release"
+   "after_drop_ms": 101,
+   "coast_s": 1.3,
+   "note": "a ball that has already dropped still fires up to 101 ms after ARM is released, and the unbraked flywheels keep 1.3 s of speed: brake them (AM32 active braking) on release"
   },
   "lid_screw": "M3 x 35 ISO 4762, tip at z 62 (as the J501's own M3 x 16)",
   "too_big": []
@@ -362,22 +345,22 @@
    "energy_j": 0.415
   },
   "flywheel": {
-   "d_mm": 40.0,
-   "centres_mm": 59.98,
-   "crush_mm": 2.72,
-   "crush_pct": 12.0,
-   "rpm": 11960.0,
+   "d_mm": 36.0,
+   "centres_mm": 53.02,
+   "crush_mm": 5.68,
+   "crush_pct": 25.0,
+   "rpm": 13290.0,
    "surface_mps": 25.1,
    "efficiency_assumed": 0.85,
-   "throttle_pct": 57,
+   "throttle_pct": 63,
    "motor_kv": 875,
    "no_load_rpm": 21000,
-   "inertia_kg_mm2": 5.01,
-   "energy_j_each": 3.93,
+   "inertia_kg_mm2": 4.06,
+   "energy_j_each": 3.94,
    "speed_drop_per_shot_pct": 3.5,
-   "recovery_ms": 1.0,
-   "spin_up_ms_motor_limit": 29,
-   "coast_down_s": 1.4,
+   "recovery_ms": 0.9,
+   "spin_up_ms_motor_limit": 26,
+   "coast_down_s": 1.3,
    "current_limit_a": 20.0,
    "note": "rpm for 21.3 m/s with exit = 0.85 x surface speed (assumed); foam loss 30 % (assumed); the chronograph gates in the barrel measure the real speed"
   },
@@ -395,10 +378,10 @@
   "timing": {
    "dial_to_exit_ms": 50,
    "chute_ms": 86,
-   "to_nip_ms": 4,
-   "nip_to_muzzle_ms": 5.9,
+   "to_nip_ms": 8,
+   "nip_to_muzzle_ms": 5.8,
    "speed_into_nip_mps": 0.65,
-   "trigger_to_muzzle_ms": 146
+   "trigger_to_muzzle_ms": 151
   },
   "pan": {
    "pinion_teeth": 21,
@@ -415,9 +398,9 @@
    ],
    "hard_stop_deg": 173.5,
    "encoder_counts_per_turret_deg": 34.1,
-   "inertia_kg_m2": 0.00387,
-   "accel_at_cap_deg_s2": 65313,
-   "time_to_full_slew_ms": 1.4
+   "inertia_kg_m2": 0.00421,
+   "accel_at_cap_deg_s2": 60020,
+   "time_to_full_slew_ms": 1.5
   },
   "tilt": {
    "servo_stall_nm": 2.94,
@@ -426,10 +409,10 @@
     -25.0,
     0.0
    ],
-   "group_mass_g": 623,
-   "com_ahead_mm": 32.0,
-   "holding_nm": 0.2,
-   "margin": 15.0
+   "group_mass_g": 644,
+   "com_ahead_mm": -6.2,
+   "holding_nm": -0.04,
+   "margin": 75.3
   },
   "flight_level": {
    "rows": [
@@ -470,13 +453,13 @@
      14.6
     ]
    ],
-   "from_height_m": 0.544,
-   "lands_m": 6.13,
+   "from_height_m": 0.561,
+   "lands_m": 6.21,
    "note": "a level shot from the bench (the box on a 0.3 m crate): [range m, time s, drop mm, speed m/s]; drag as a sphere, Cd 0.5"
   }
  },
  "masses_g": {
-  "turret_with_balls": 1375,
+  "turret_with_balls": 1594,
   "adapter": 342,
   "j501_printed": 368.2,
   "j501_inside_est": 1000.0

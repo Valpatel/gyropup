@@ -1,0 +1,6 @@
+McMaster-Carr parts. McMaster-Carr CAD, for design use; not redistributed.
+Files per part: <PN>.step (as downloaded), <PN>.norm.step (moved into the frame for its kind), <PN>.page.json (the product page's data).
+
+91828A113 Corrosion-Resistant 18-8 Stainless Steel Hex Nut, M2.5 x 0.45 mm Thread Size
+URL: https://www.mcmaster.com/91828A113/
+Downloaded: 2026-10-27

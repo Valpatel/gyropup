@@ -1,0 +1,6 @@
+McMaster-Carr parts. McMaster-Carr CAD, for design use; not redistributed.
+Files per part: <PN>.step (as downloaded), <PN>.norm.step (moved into the frame for its kind), <PN>.page.json (the product page's data).
+
+93600A249 316 Stainless Steel Dowel Pin, 2mm Diameter, 20mm Long
+URL: https://www.mcmaster.com/93600A249/
+Downloaded: 2026-10-27

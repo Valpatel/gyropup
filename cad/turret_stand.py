@@ -5,13 +5,14 @@ is that face (z = 0); the stand is a printed PETG box under it:
 
   stand_box (PETG, printed upside down)  the top plate with the turret's TM pattern (4 x M5 inserts on 80 x 80,
                                           2 x Ø5 dowel holes, the Ø45 cable hole), four walls, corner bosses with M3
-                                          inserts for the bottom; the front panel has the 24 V XT60 inlet, a rocker
+                                          inserts for the bottom; the front panel has the 24 V XT60E-M inlet, a rocker
                                           switch, a 5 x 20 mm fuse holder and a 3.5 mm jack for the hold-to-run pendant;
                                           the back has a slot for the USB-CAN adapter's USB-C; the -y wall a notch with
                                           a grommet for the turret's DT12 harness, which leaves the turret's plug and
                                           turns down outside the stand
   stand_bottom (PETG)                     bolts into the corner bosses; recesses for 4 rubber feet; two slotted tabs
-                                          so the stand can be clamped to a bench (the turret slews 1.4 kg)
+                                          so the stand can be clamped to a bench (the turret slews 1.5 kg); four
+                                          bosses with M3 inserts carry the terminal board, so the box drops over it
 
 What is inside (bought, as envelopes): the USB-CAN adapter (the laptop talks to the turret's own MCU over CAN, as the
 robot's Jetson will), a small terminal board that takes 24 V through the fuse and switch to the DT12 plug's power pins,
@@ -45,11 +46,16 @@ def _cyl_x(r, x0, x1, y=0.0, z=0.0):
     return cq.Workplane('YZ', origin=(x0, 0, 0)).center(y, z).circle(r).extrude(x1 - x0)
 
 
-# front panel (+x) items: (name, y, z, cutout), cutout = ('rect', w, h) or ('round', d)
-PANEL = [('xt60', -50.0, -40.0, ('rect', 16.6, 8.6)),          # Amass XT60E-F panel socket (2 x M2.5 on 28 mm)
-         ('switch', -10.0, -40.0, ('rect', 21.2, 15.2)),       # KCD1-type rocker, 16 A
-         ('fuse', 28.0, -40.0, ('round', 12.6)),               # 5 x 20 mm panel fuse holder, 5 A slow
-         ('pendant', 60.0, -40.0, ('round', 6.2))]             # 3.5 mm panel jack for the hold-to-run pendant
+# front panel (+x) items: (name, y, z, cutout, panel thickness there); cutout = ('rect', w, h), ('round', d) or
+# ('d', d, across the flat). The holes are the makers' panel cutouts, not the parts' bezels (catalog/sourcing.json risk):
+PANEL = [('xt60', -50.0, -40.0, ('rect', 16.6, 8.6), WALL),         # Amass XT60E-M panel plug (the supply's lead brings the
+                                                                     # female, so no live pin is ever bare); 2 x M2.5, their
+                                                                     # spacing not published: slotted 18..28 mm, M2.5 or M3
+         ('switch', -10.0, -40.0, ('rect', 19.4, 13.0), 2.5),       # KCD1-class rocker (E-Switch RCA1913): 19.2-19.8 x 13.0
+                                                                     # snap-in, panel 3 mm at most
+         ('fuse', 28.0, -40.0, ('d', 12.75, 12.13), WALL),          # Littelfuse 345 panel holder: Ø12.70-12.83, a flat at
+                                                                     # 12.07-12.19
+         ('pendant', 60.0, -40.0, ('round', 6.35), 2.0)]            # Switchcraft 35PM2A 3.5 mm jack: Ø6.35 in a 2 mm panel
 
 
 def stand_box():
@@ -68,21 +74,31 @@ def stand_box():
     for (x, y) in tu.TM_DOWELS:
         s = s.cut(_cyl_z(2.5 - 0.03, -TOP - 1, 0.1, x, y))
     s = s.cut(_cyl_z(tu.TM_HOLE / 2, -TOP - 1, 0.1))
-    # the front panel's cutouts
-    for name, y, z, cut in PANEL:
+    # the front panel's cutouts, the wall thinned from inside where a part wants a thin panel
+    for name, y, z, cut, t in PANEL:
+        if t < WALL:
+            s = s.cut(_box(x1 - WALL - 1, x1 - t, y - 12.0, y + 12.0, z - 9.0, z + 9.0))
         if cut[0] == 'rect':
             s = s.cut(_box(x1 - WALL - 1, x1 + 1, y - cut[1] / 2, y + cut[1] / 2, z - cut[2] / 2, z + cut[2] / 2))
             if name == 'xt60':
-                for dy in (-14.0, 14.0):
-                    s = s.cut(_cyl_x(1.35, x1 - WALL - 1, x1 + 1, y + dy, z))
+                for sy in (-1.0, 1.0):                                                     # slots: 18..28 mm spacing, M2.5 or M3
+                    for dy in (9.0, 14.0):
+                        s = s.cut(_cyl_x(1.6, x1 - WALL - 1, x1 + 1, y + sy * dy, z))
+                    ya, yb = sorted((y + sy * 9.0, y + sy * 14.0))
+                    s = s.cut(_box(x1 - WALL - 1, x1 + 1, ya, yb, z - 1.6, z + 1.6))
+        elif cut[0] == 'd':
+            hole = _cyl_x(cut[1] / 2, x1 - WALL - 1, x1 + 1, y, z).cut(_box(x1 - WALL - 2, x1 + 2, y - 10, y + 10, z + cut[2] - cut[1] / 2, z + 10))
+            s = s.cut(hole)
         else:
             s = s.cut(_cyl_x(cut[1] / 2, x1 - WALL - 1, x1 + 1, y, z))
     s = s.cut(_box(x0 - 1, x0 + WALL + 1, -6.0, 6.0, -H + 18.0, -H + 24.0))          # USB-C for the USB-CAN adapter
     s = s.cut(_box(-12.0, 12.0, y0 - 1, y0 + WALL + 1, -26.0, -TOP - 4.0))          # -y wall: the DT12 harness notch
-    # board bosses inside, on the -x wall side: M3 inserts for a 70 x 50 board
-    for (x, y) in ((-60.0, -25.0), (-60.0, 25.0), (-60.0 + 66.0, -25.0), (-60.0 + 66.0, 25.0)):
-        s = s.union(_cyl_z(4.0, -H + BOT, -H + BOT + 8.0, x, y)).cut(_cyl_z(FAST['M3']['insert_pilot'] / 2, -H + BOT + 1, -H + BOT + 8.1, x, y))
     return s
+
+
+# the terminal board's bosses stand on the bottom plate (a 70 x 50 perfboard, its corner holes drilled out to Ø3.2 at
+# 66 x 46, 2 mm in from the edges); the box drops over it
+BOARD_HOLES = ((-60.0, -23.0), (-60.0, 23.0), (6.0, -23.0), (6.0, 23.0))
 
 
 def stand_bottom():
@@ -97,7 +113,9 @@ def stand_bottom():
                    (x0 + WALL + BOSS_R - 1, y1 - WALL - BOSS_R + 1), (x1 - WALL - BOSS_R + 1, y1 - WALL - BOSS_R + 1)):
         p = p.cut(_cyl_z(FAST['M3']['clear'] / 2, -H - BOT - 1, -H + 1, x, y)).cut(_cyl_z(3.2, -H - BOT - 1, -H - BOT + 1.8, x, y))
     for (x, y) in ((x0 + 22, y0 + 22), (x1 - 22, y0 + 22), (x0 + 22, y1 - 22), (x1 - 22, y1 - 22)):
-        p = p.cut(_cyl_z(6.6, -H - BOT - 1, -H - BOT + 1.0, x, y))                   # rubber feet (Ø12.7, 1 mm recess)
+        p = p.cut(_cyl_z(6.6, -H - BOT - 1, -H - BOT + 1.0, x, y))                   # rubber feet (3M SJ5003 Ø11.2, 1 mm recess)
+    for (x, y) in BOARD_HOLES:                                                         # the terminal board's bosses, M3 inserts
+        p = p.union(_cyl_z(4.0, -H - 0.01, -H + 12.0, x, y)).cut(_cyl_z(FAST['M3']['insert_pilot'] / 2, -H + 5.0, -H + 12.1, x, y))
     return p
 
 
@@ -107,20 +125,20 @@ def bought():
     out = {}
     out['usb_can'] = (_box(-W / 2 + WALL + 1, -W / 2 + WALL + 51, -10.0, 10.0, -H + BOT + 10, -H + BOT + 22), 20.0,
                       'USB-CAN adapter (CANable 2.0 class), USB-C at the back wall')
-    out['terminal_board'] = (_box(-62.0, 8.0, -27.0, 27.0, -H + BOT + 9, -H + BOT + 11), 30.0,
+    out['terminal_board'] = (_box(-62.0, 8.0, -25.0, 25.0, -H + 12.0, -H + 13.6), 30.0,
                              '70 x 50 board: 24 V terminal block, fuse/switch wiring to the DT12 plug, the pendant loop')
-    for name, y, z, cut in PANEL:
-        d = {'xt60': (18.0, 30.0, 11.0), 'switch': (25.0, 24.0, 18.0), 'fuse': (35.0, 16.0, 16.0), 'pendant': (14.0, 9.0, 9.0)}[name]
+    for name, y, z, cut, _t in PANEL:
+        d = {'xt60': (18.0, 30.0, 11.0), 'switch': (25.0, 21.0, 15.0), 'fuse': (35.0, 16.0, 16.0), 'pendant': (14.0, 9.0, 9.0)}[name]
         out[f'panel_{name}'] = (_box(x1 - WALL - d[0], x1 + 3.0, y - d[1] / 2, y + d[1] / 2, z - d[2] / 2, z + d[2] / 2), 10.0,
-                                {'xt60': 'Amass XT60E-F panel socket', 'switch': 'KCD1 rocker switch, 16 A',
-                                 'fuse': '5 x 20 mm panel fuse holder, 5 A slow-blow', 'pendant': '3.5 mm panel jack (pendant)'}[name])
+                                {'xt60': 'Amass XT60E-M panel plug (24 V in)', 'switch': 'KCD1 rocker switch, 16 A',
+                                 'fuse': '5 x 20 mm panel fuse holder + a DC-rated 5 A time-lag fuse', 'pendant': '3.5 mm panel jack (pendant)'}[name])
     for k, (x, y) in enumerate(((-W / 2 + 22, -D / 2 + 22), (W / 2 - 22, -D / 2 + 22), (-W / 2 + 22, D / 2 - 22), (W / 2 - 22, D / 2 - 22))):
-        out[f'foot_{k + 1}'] = (_cyl_z(6.35, -H - BOT - 4.5, -H - BOT + 1.0, x, y), 2.0, 'rubber bumper foot, Ø12.7 x 5.5')
+        out[f'foot_{k + 1}'] = (_cyl_z(5.6, -H - BOT - 4.1, -H - BOT + 1.0, x, y), 2.0, 'rubber bumper foot, 3M SJ5003 Ø11.2 x 5.1')
     return out
 
 
-PARTS = {'stand_box': ('petg', 1, 'printed PETG upside down; 4 x M5 + 4 x M3 + 4 x M3 inserts', ((1, 0, 0), 180)),
-         'stand_bottom': ('petg', 1, 'printed PETG flat; 4 x M3 x 8 into the corner bosses; 4 rubber feet', None)}
+PARTS = {'stand_box': ('petg', 1, 'printed PETG upside down; 4 x M5 + 4 x M3 inserts', ((1, 0, 0), 180)),
+         'stand_bottom': ('petg', 1, 'printed PETG flat; 4 x M3 x 8 into the corner bosses; 4 rubber feet; 4 x M3 inserts for the board', None)}
 
 
 def parts():

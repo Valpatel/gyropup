@@ -1,0 +1,6 @@
+McMaster-Carr parts. McMaster-Carr CAD, for design use; not redistributed.
+Files per part: <PN>.step (as downloaded), <PN>.norm.step (moved into the frame for its kind), <PN>.page.json (the product page's data).
+
+92581A250 Steel Raised Knurled-Head Thumb Screw, M4 x 0.7mm Thread Size, 12mm Long
+URL: https://www.mcmaster.com/92581A250/
+Downloaded: 2026-10-27

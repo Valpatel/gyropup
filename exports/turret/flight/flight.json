@@ -1,0 +1,455 @@
+{
+ "model": ".venv/bin/python sim/turret_flight.py [--quick]    # writes exports/turret/flight/flight.json and plots",
+ "flight": {
+  "rho": 1.205,
+  "nu_air": 1.506e-05,
+  "air_source": "air at 20 C, 1 atm: 1.205 kg/m^3 (https://www.engineeringtoolbox.com/air-properties-d_156.html), 15.06 cSt (https://www.engineeringtoolbox.com/air-absolute-kinematic-viscosity-d_601.html); checked 2026-10-27",
+  "cd": 0.47,
+  "cd_range": [
+   0.4,
+   0.55
+  ],
+  "cd_source": "sphere in the Newton regime: Cd 0.38 (Re 5e3) to 0.50 (Re 7e4), Clift-Gauvin fit within 6 % (https://arxiv.org/pdf/1810.08787, Morrison 2016 https://pages.mtu.edu/~fmorriso/DataCorrelationForSphereDrag2016.pdf); a polystyrene foam ball fits Cd 0.4-0.5 (https://arxiv.org/pdf/1005.4086); rough/napped spheres run 0.55-0.8 (https://ojs.ub.uni-konstanz.de/cpa/article/view/1221/1108); the RoboMaster wheel guide uses 0.50 for its 17 mm TPU ball. Here Re = 1.5e4-3.3e4: 0.47 nominal (Clift-Gauvin gives 0.44-0.47), swept to 0.55 for a fuzzy foam surface; checked 2026-10-27",
+  "cl": "Nathan 2008 fit of Sawicki et al. (https://arxiv.org/pdf/physics/0605041): C_L = 1.5 S (S < 0.1), 0.09 + 0.6 S (S >= 0.1), S = r w / v; subcritical LES at Re 1e4 gives C_L ~ 0.17 at S = 0.1 (Muto et al., https://eprints.lib.hokudai.ac.jp/repo/huscap/all/53053/JoV15-3_261-268.pdf); the negative Magnus regime sits near the critical Re (4.6e4-2e5 for smooth spheres), above this ball's; checked 2026-10-27",
+  "muzzle_height_m": 0.55,
+  "muzzle_height_note": "est: the standing robot's TM face ~0.33 m hip + 0.214 m (exports/turret/turret.json mount z); the game targets sit at 0.30 m",
+  "validation_sources": {
+   "nuaa_wheel_guide": "NUAA friction-wheel design guide (RoboMaster forum, 2024.9, https://bbs-web-static.robomaster.com/bbs-prod/b98a53d00cb548a2a3d8346e48439cf0/%E6%91%A9%E6%93%A6%E8%BD%AE%E8%AE%BE%E8%AE%A1%E6%8C%87%E5%8D%97.pdf): a deliberate 1000 rpm wheel mismatch moved the 17 mm ball only ~13 cm at 15 m; 0.1 m/s of speed noise moves the fall point > 10 cm; contact < 5 ms at 340 g; checked 2026-10-27",
+   "nathan_two_wheel": "Nathan (https://arxiv.org/pdf/physics/0605041): two-wheel pitching machine: ball speed = the mean of the two surface speeds, spin from their difference",
+   "blasterhub": "BlasterHub: Hasbro Rival rounds 97 fps average over 100 shots, none under 92 or over 101 (https://blasterhub.com/2017/12/adventure-force-tactical-strike-rounds-review/)"
+  }
+ },
+ "bore_play_mm": 0.75,
+ "bore_length_from_nip_mm": 111.2,
+ "barrel": {
+  "n": 120,
+  "stuck": 0,
+  "balls_touching_wall": 119,
+  "bounces_max": 3,
+  "muzzle_fps": {
+   "mean": 54.83,
+   "sd": 1.27,
+   "min": 48.99,
+   "max": 57.11
+  },
+  "nip_fps_mean": 55.7,
+  "loss_in_bore_fps": 0.87,
+  "exit_yaw_mrad": {
+   "sd": 4.168,
+   "max_abs": 20.014
+  },
+  "exit_pitch_mrad": {
+   "mean": 8.101,
+   "sd": 9.058
+  },
+  "nip_yaw_mrad_sd": 2.668,
+  "nip_pitch_mrad_mean": -8.7,
+  "spin_at_muzzle_rad_s": {
+   "y_mean": 78.0,
+   "z_sd": 15.1
+  },
+  "transit_ms": 7.02,
+  "peak_wall_n_max": 3.61,
+  "crooked_2deg_entry": {
+   "exit_yaw_mrad_mean_abs": 21.81,
+   "bounces_mean": 2.15,
+   "fps_loss": 4.58
+  }
+ },
+ "bore_play_sweep": {
+  "play_0.25_mm": {
+   "bore_mm": 23.2,
+   "muzzle_fps_mean": 50.1,
+   "loss_fps": 4.9,
+   "pitch_mrad_sd": 21.14,
+   "yaw_mrad_sd": 11.43,
+   "spin_y_mean": 7.4,
+   "spin_y_sd": 148.6,
+   "stuck": 5
+  },
+  "play_0.5_mm": {
+   "bore_mm": 23.7,
+   "muzzle_fps_mean": 53.51,
+   "loss_fps": 1.93,
+   "pitch_mrad_sd": 16.8,
+   "yaw_mrad_sd": 7.98,
+   "spin_y_mean": 2.0,
+   "spin_y_sd": 134.0,
+   "stuck": 0
+  },
+  "play_0.75_mm": {
+   "bore_mm": 24.2,
+   "muzzle_fps_mean": 54.8,
+   "loss_fps": 0.98,
+   "pitch_mrad_sd": 11.51,
+   "yaw_mrad_sd": 3.92,
+   "spin_y_mean": 68.9,
+   "spin_y_sd": 81.8,
+   "stuck": 0
+  },
+  "play_1_mm": {
+   "bore_mm": 24.7,
+   "muzzle_fps_mean": 55.09,
+   "loss_fps": 0.74,
+   "pitch_mrad_sd": 5.0,
+   "yaw_mrad_sd": 2.64,
+   "spin_y_mean": 101.8,
+   "spin_y_sd": 40.2,
+   "stuck": 0
+  },
+  "note": "the CAD bore is ball + 1.5 mm (0.75 mm play); the entry state and the launch use the same bore"
+ },
+ "level_shot_population": {
+  "1_m": {
+   "arrived": 120,
+   "drop_cm_mean": 1.57,
+   "z_sd_cm": 0.8,
+   "drift_cm_mean": 0.01,
+   "y_sd_cm": 0.33,
+   "speed_mean": 15.68,
+   "fps_mean": 51.5,
+   "radius_68_cm": 0.44,
+   "time_s": 0.062
+  },
+  "2_m": {
+   "arrived": 120,
+   "drop_cm_mean": 8.28,
+   "z_sd_cm": 1.88,
+   "drift_cm_mean": -0.0,
+   "y_sd_cm": 0.49,
+   "speed_mean": 14.75,
+   "fps_mean": 48.4,
+   "radius_68_cm": 1.06,
+   "time_s": 0.128
+  },
+  "3_m": {
+   "arrived": 120,
+   "drop_cm_mean": 20.77,
+   "z_sd_cm": 3.77,
+   "drift_cm_mean": -0.04,
+   "y_sd_cm": 0.59,
+   "speed_mean": 13.91,
+   "fps_mean": 45.6,
+   "radius_68_cm": 2.48,
+   "time_s": 0.198
+  },
+  "4_m": {
+   "arrived": 120,
+   "drop_cm_mean": 39.8,
+   "z_sd_cm": 6.69,
+   "drift_cm_mean": -0.09,
+   "y_sd_cm": 0.83,
+   "speed_mean": 13.17,
+   "fps_mean": 43.2,
+   "radius_68_cm": 4.48,
+   "time_s": 0.274
+  },
+  "5_m": {
+   "arrived": 12,
+   "drop_cm_mean": 38.48,
+   "z_sd_cm": 7.57,
+   "drift_cm_mean": -0.26,
+   "y_sd_cm": 0.53,
+   "speed_mean": 11.99,
+   "fps_mean": 39.4,
+   "radius_68_cm": 7.53,
+   "time_s": 0.363
+  },
+  "6_m": {
+   "arrived": 5,
+   "drop_cm_mean": 49.85,
+   "z_sd_cm": 1.42,
+   "drift_cm_mean": -0.74,
+   "y_sd_cm": 1.09,
+   "speed_mean": 11.15,
+   "fps_mean": 36.6,
+   "radius_68_cm": 2.09,
+   "time_s": 0.453
+  }
+ },
+ "ball_spread_only_vs_launch": "the spread above is the ball population + the feed's entry offsets + 0.15 mm tyre runout through the bore; no aim error",
+ "nominal_drop": {
+  "55_fps_cd_0.47": {
+   "1_m": {
+    "drop_cm": 1.8,
+    "fps": 51.6,
+    "t_s": 0.062
+   },
+   "2_m": {
+    "drop_cm": 7.6,
+    "fps": 48.6,
+    "t_s": 0.127
+   },
+   "3_m": {
+    "drop_cm": 17.9,
+    "fps": 45.8,
+    "t_s": 0.197
+   },
+   "4_m": {
+    "drop_cm": 33.4,
+    "fps": 43.3,
+    "t_s": 0.272
+   },
+   "5_m": {
+    "drop_cm": 54.6,
+    "fps": 41.1,
+    "t_s": 0.352
+   },
+   "lands_at_m": 5.01
+  },
+  "55_fps_cd_0.55": {
+   "1_m": {
+    "drop_cm": 1.8,
+    "fps": 51.1,
+    "t_s": 0.062
+   },
+   "2_m": {
+    "drop_cm": 7.7,
+    "fps": 47.5,
+    "t_s": 0.129
+   },
+   "3_m": {
+    "drop_cm": 18.3,
+    "fps": 44.3,
+    "t_s": 0.201
+   },
+   "4_m": {
+    "drop_cm": 34.4,
+    "fps": 41.5,
+    "t_s": 0.278
+   },
+   "lands_at_m": 4.93
+  },
+  "70_fps_cd_0.47": {
+   "1_m": {
+    "drop_cm": 1.1,
+    "fps": 65.7,
+    "t_s": 0.048
+   },
+   "2_m": {
+    "drop_cm": 4.7,
+    "fps": 61.7,
+    "t_s": 0.1
+   },
+   "3_m": {
+    "drop_cm": 11.1,
+    "fps": 58.0,
+    "t_s": 0.155
+   },
+   "4_m": {
+    "drop_cm": 20.6,
+    "fps": 54.6,
+    "t_s": 0.214
+   },
+   "5_m": {
+    "drop_cm": 33.7,
+    "fps": 51.4,
+    "t_s": 0.276
+   },
+   "6_m": {
+    "drop_cm": 50.9,
+    "fps": 48.5,
+    "t_s": 0.343
+   },
+   "lands_at_m": 6.2
+  },
+  "70_fps_cd_0.55": {
+   "1_m": {
+    "drop_cm": 1.1,
+    "fps": 65.0,
+    "t_s": 0.049
+   },
+   "2_m": {
+    "drop_cm": 4.8,
+    "fps": 60.4,
+    "t_s": 0.101
+   },
+   "3_m": {
+    "drop_cm": 11.3,
+    "fps": 56.1,
+    "t_s": 0.158
+   },
+   "4_m": {
+    "drop_cm": 21.3,
+    "fps": 52.3,
+    "t_s": 0.218
+   },
+   "5_m": {
+    "drop_cm": 35.1,
+    "fps": 48.8,
+    "t_s": 0.284
+   },
+   "6_m": {
+    "drop_cm": 53.6,
+    "fps": 45.6,
+    "t_s": 0.355
+   },
+   "lands_at_m": 6.07
+  }
+ },
+ "aim_for_0_30m_target": {
+  "1_m": {
+   "tilt_deg": -13.0
+  },
+  "2_m": {
+   "tilt_deg": -4.95
+  },
+  "3_m": {
+   "tilt_deg": -1.35
+  },
+  "4_m": {
+   "tilt_deg": null
+  },
+  "5_m": {
+   "tilt_deg": null
+  },
+  "6_m": {
+   "tilt_deg": null
+  },
+  "7_m": {
+   "tilt_deg": null
+  },
+  "8_m": {
+   "tilt_deg": null
+  }
+ },
+ "reach_level_m": {
+  "55_fps": 5.01,
+  "70_fps": 6.2
+ },
+ "magnus": {
+  "spin_z_0_rpm": {
+   "S": 0.0,
+   "drift_cm_at_6m": NaN,
+   "drift_cm_at_4m": 0.0
+  },
+  "spin_z_300_rpm": {
+   "S": 0.0215,
+   "drift_cm_at_6m": NaN,
+   "drift_cm_at_4m": 3.82
+  },
+  "spin_z_1000_rpm": {
+   "S": 0.0715,
+   "drift_cm_at_6m": NaN,
+   "drift_cm_at_4m": 12.75
+  },
+  "spin_z_3000_rpm": {
+   "S": 0.2146,
+   "drift_cm_at_6m": NaN,
+   "drift_cm_at_4m": 25.2
+  },
+  "launch_topspin_34_rad_s": {
+   "S": 0.0236,
+   "extra_drop_cm_at_4m": 4.24,
+   "note": "the ball leaves the nip with ~35-40 rad/s of topspin (it arrives rolling): a backspin-free launch would carry a little further; topspin pushes it down"
+  }
+ },
+ "pan_slew_deflection": {
+  "30_deg_s": {
+   "muzzle_side_v_m_s": 0.081,
+   "deflection_deg": 0.28,
+   "drift_cm": {
+    "2_m": 1.0,
+    "4_m": 1.9
+   }
+  },
+  "90_deg_s": {
+   "muzzle_side_v_m_s": 0.243,
+   "deflection_deg": 0.83,
+   "drift_cm": {
+    "2_m": 2.9,
+    "4_m": 5.8
+   }
+  },
+  "150_deg_s": {
+   "muzzle_side_v_m_s": 0.406,
+   "deflection_deg": 1.39,
+   "drift_cm": {
+    "2_m": 4.8,
+    "4_m": 9.7
+   }
+  }
+ },
+ "reach": {
+  "h0.55_55fps": {
+   "lands_at_m": 5.01,
+   "farthest_0_30m_target_m": 3.5
+  },
+  "h0.55_65fps": {
+   "lands_at_m": 5.81,
+   "farthest_0_30m_target_m": 4.08
+  },
+  "h0.55_70fps": {
+   "lands_at_m": 6.2,
+   "farthest_0_30m_target_m": 4.37
+  },
+  "h0.7_55fps": {
+   "lands_at_m": 5.58,
+   "farthest_0_30m_target_m": 4.34
+  },
+  "h0.7_65fps": {
+   "lands_at_m": 6.46,
+   "farthest_0_30m_target_m": 5.05
+  },
+  "h0.7_70fps": {
+   "lands_at_m": 6.88,
+   "farthest_0_30m_target_m": 5.39
+  },
+  "h0.85_55fps": {
+   "lands_at_m": 6.08,
+   "farthest_0_30m_target_m": 5.01
+  },
+  "h0.85_65fps": {
+   "lands_at_m": 7.02,
+   "farthest_0_30m_target_m": 5.81
+  },
+  "h0.85_70fps": {
+   "lands_at_m": 7.47,
+   "farthest_0_30m_target_m": 6.2
+  }
+ },
+ "validation": {
+  "Nemesis MXVII-10K (101 fps, Blaster Piece)": {
+   "fps": 101,
+   "level_range_to_ground_from_1_5m_m": 12.5,
+   "drop_cm": {
+    "4_m": 9.9,
+    "8_m": 48.0,
+    "10_m": 83.1
+   },
+   "speed_fps": {
+    "4_m": 78.4,
+    "8_m": 61.2,
+    "10_m": 54.4
+   }
+  },
+  "Hasbro Rival rounds, BlasterHub (97 fps)": {
+   "fps": 97,
+   "level_range_to_ground_from_1_5m_m": 12.2,
+   "drop_cm": {
+    "4_m": 10.7,
+    "8_m": 52.0,
+    "10_m": 90.1
+   },
+   "speed_fps": {
+    "4_m": 75.3,
+    "8_m": 58.8,
+    "10_m": 52.4
+   }
+  },
+  "Kronos (90 fps claim)": {
+   "fps": 90,
+   "level_range_to_ground_from_1_5m_m": 11.5,
+   "drop_cm": {
+    "4_m": 12.5,
+    "8_m": 60.5,
+    "10_m": 104.7
+   },
+   "speed_fps": {
+    "4_m": 69.9,
+    "8_m": 54.8,
+    "10_m": 48.9
+   }
+  }
+ }
+}

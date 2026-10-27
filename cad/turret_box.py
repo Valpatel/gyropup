@@ -111,10 +111,11 @@ POD_BOSSES = [(POD_X[0] + POD_WALL + 4.0, POD_Y - POD_WALL - 4.0), (POD_X[0] + P
               (POD_X[1] - POD_WALL - 4.0, POD_Y - POD_WALL - 4.0), (POD_X[1] - POD_WALL - 4.0, -POD_Y + POD_WALL + 4.0)]
 # the pod's rear panel (-x face), left to right seen from behind: (name, y, z, cutout)
 POD_ZC = (POD_Z0 + DECK_Z0) / 2
-PANEL = [('xt60', -42.0, POD_ZC, ('rect', 16.6, 8.6)),          # Amass XT60E-F panel socket (2 x M2.5 on 28 mm)
-         ('switch', -14.0, POD_ZC, ('rect', 21.2, 15.2)),       # KCD1-type rocker, 16 A
-         ('fuse', 12.0, POD_ZC, ('round', 12.6)),               # 5 x 20 mm panel fuse holder, 5 A slow-blow
-         ('pendant', 30.0, POD_ZC, ('round', 6.2)),             # 3.5 mm panel jack for the hold-to-run pendant
+PANEL = [('xt60', -42.0, POD_ZC, ('rect', 16.6, 8.6)),          # Amass XT60E-M panel plug: the supply's lead brings the female
+                                                                 # (2 x M2.5; spacing not published: slotted 18..28 mm, M2.5 or M3)
+         ('switch', -14.0, POD_ZC, ('rect', 19.4, 13.0)),       # KCD1-type rocker, 16 A: the 19.2-19.8 x 13.0 snap-in cutout
+         ('fuse', 12.0, POD_ZC, ('round', 12.75)),              # 5 x 20 mm panel fuse holder (Littelfuse 345: Ø12.70-12.83)
+         ('pendant', 30.0, POD_ZC, ('round', 6.35)),            # 3.5 mm panel jack for the hold-to-run pendant (Ø6.35)
          ('usb', 47.0, POD_ZC, ('rect', 12.0, 7.0))]            # the USB-CAN adapter's cable out to the J501's rear USB
 DT_NOTCH = (-86.0, POD_ZC, 13.0)                                # x, z, Ø: the turret's DT12 harness into the pod (-y wall)
 # what the antennas on the J501's RP-SMA bulkheads might be (no part chosen yet): a swivel dipole, upright
@@ -190,8 +191,11 @@ def box_deck():
         if cut[0] == 'rect':
             s = s.cut(_box(px0 - 1, px0 + 1.0 + POD_WALL + 1, y - cut[1] / 2, y + cut[1] / 2, z - cut[2] / 2, z + cut[2] / 2))
             if name == 'xt60':
-                for dy in (-14.0, 14.0):
-                    s = s.cut(_cyl_x(1.35, px0 - 1, px0 + 1.0 + POD_WALL + 1, y + dy, z))
+                for sy in (-1.0, 1.0):                                       # slots: the screws' spacing is 18..28 mm (sellers say ~19-20 or 25)
+                    for dy in (9.0, 14.0):
+                        s = s.cut(_cyl_x(1.6, px0 - 1, px0 + 1.0 + POD_WALL + 1, y + sy * dy, z))
+                    ya, yb = sorted((y + sy * 9.0, y + sy * 14.0))
+                    s = s.cut(_box(px0 - 1, px0 + 1.0 + POD_WALL + 1, ya, yb, z - 1.6, z + 1.6))
         else:
             s = s.cut(_cyl_x(cut[1] / 2, px0 - 1, px0 + 1.0 + POD_WALL + 1, y, z))
     nx, nz, nd = DT_NOTCH
@@ -250,7 +254,7 @@ def bought():
     for name, y, z, cut in PANEL:
         d = {'xt60': (18.0, 30.0, 11.0), 'switch': (25.0, 24.0, 18.0), 'fuse': (35.0, 16.0, 16.0), 'pendant': (14.0, 9.0, 9.0),
              'usb': (50.0, 20.0, 12.0)}[name]
-        note = {'xt60': 'Amass XT60E-F panel socket: 24 V in (the J501 takes 12-36 V, so one 24 V supply can feed both)',
+        note = {'xt60': 'Amass XT60E-M panel plug: 24 V in (the J501 takes 12-36 V, so one 24 V supply can feed both)',
                 'switch': 'KCD1 rocker switch, 16 A', 'fuse': '5 x 20 mm panel fuse holder, 5 A slow-blow',
                 'pendant': '3.5 mm panel jack: the hold-to-run pendant (the safety line: nothing spins or feeds unless it is held)',
                 'usb': 'USB-CAN adapter (CANable 2.0 class): CAN to the turret, USB to the J501\'s rear USB-A'}[name]

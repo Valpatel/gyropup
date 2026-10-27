@@ -1,4 +1,54 @@
 {
+ "adafruit-2167": {
+  "source_url": "https://www.adafruit.com/product/2167",
+  "image_url": "https://www.adafruit.com/images/480x360/2167-05.jpg",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/adafruit-2167.jpg",
+  "kind": "vendor",
+  "seller": "Adafruit",
+  "part_number": "2167",
+  "read_with": "request"
+ },
+ "adafruit-2517": {
+  "source_url": "https://www.adafruit.com/product/2517",
+  "image_url": "https://www.adafruit.com/images/480x360/2517-01.jpg",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/adafruit-2517.jpg",
+  "kind": "vendor",
+  "seller": "Adafruit",
+  "part_number": "2517",
+  "read_with": "request"
+ },
+ "adafruit-feather-m4-can-4759": {
+  "source_url": "https://www.adafruit.com/product/4759",
+  "image_url": "https://www.adafruit.com/images/480x360/4759-09.jpg",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/adafruit-feather-m4-can-4759.jpg",
+  "kind": "vendor",
+  "seller": "Adafruit",
+  "part_number": "4759",
+  "read_with": "request"
+ },
+ "adafruit-neopixel-ring-12-1643": {
+  "source_url": "https://www.adafruit.com/product/1643",
+  "image_url": "https://www.adafruit.com/images/480x360/1643-00.jpg",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/adafruit-neopixel-ring-12-1643.jpg",
+  "kind": "vendor",
+  "seller": "Adafruit",
+  "part_number": "1643",
+  "read_with": "request"
+ },
+ "allegro-a1120lua-t": {
+  "source_url": "https://www.cytechsystems.com/fr/product/a1120lua-t",
+  "image_url": "https://www.cytechsystems.com/images/pages/products/hero-bg.jpeg",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/allegro-a1120lua-t.jpg",
+  "kind": "vendor",
+  "seller": "Cytech Systems (also RS Components 724-4660)",
+  "part_number": "A1120LUA-T",
+  "read_with": "chrome"
+ },
  "amass-xt60e-f": {
   "source_url": "https://pro.maplin.co.uk/products/female-xt60e-panel-mount-gold-plated-connector-20a-amass",
   "image_url": "https://pro.maplin.co.uk/cdn/shop/files/bb83438d-c18a-42cc-bfc9-f0095a11117a_1200x1200.jpg?v=1769637314",
@@ -7,6 +57,16 @@
   "kind": "vendor",
   "seller": "pro.maplin.co.uk",
   "part_number": "XT60E-F",
+  "read_with": "request"
+ },
+ "amass-xt60e-m": {
+  "source_url": "https://pro.maplin.co.uk/products/male-xt60e-panel-mount-gold-plated-connector-20a-amass",
+  "image_url": "https://pro.maplin.co.uk/cdn/shop/files/af4d9ad8-7b8e-4dd7-b682-2049cc3fffb7_1200x1200.jpg?v=1769649604",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/amass-xt60e-m.jpg",
+  "kind": "vendor",
+  "seller": "Maplin (UK)",
+  "part_number": "XT60E-M",
   "read_with": "request"
  },
  "apex_spacer": {
@@ -325,6 +385,16 @@
   "part_number": "RCA1913F1CBLKBLKWHT3",
   "read_with": "request"
  },
+ "keystone-3557-2": {
+  "source_url": "https://jlcpcb.com/partdetail/3557-2/C352820",
+  "image_url": "https://rs.jlcpcb.com/webResource/jlcpcb/component-platform-static/images/parts/detail/assembly-poster.png",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/keystone-3557-2.jpg",
+  "kind": "vendor",
+  "seller": "JLCPCB parts / Farnell",
+  "part_number": "3557-2",
+  "read_with": "chrome"
+ },
  "knee_pin": {
   "source_url": "https://www.mcmaster.com/92981A411/",
   "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/929/92981A411_97e51fb7-ee04-4f88-9356-f2c6ff39bc271788200838@4x_simix_1788200839.png?ver=ImageNotFound",
@@ -363,6 +433,96 @@
   "kind": "render",
   "material": "petg",
   "bom": "turret"
+ },
+ "molex-43020-0600": {
+  "source_url": "https://heilind.com/mol43020-0600.html",
+  "image_url": "https://heilind-product-assets.s3.us-east-1.amazonaws.com/MOL/43020_0600.jpg",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/molex-43020-0600.jpg",
+  "kind": "vendor",
+  "seller": "Heilind",
+  "part_number": "43020-0600",
+  "read_with": "chrome"
+ },
+ "molex-43020-0800": {
+  "source_url": "https://heilind.com/mol43020-0800.html",
+  "image_url": "https://heilind-product-assets.s3.us-east-1.amazonaws.com/MOL/43020_0800.jpg",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/molex-43020-0800.jpg",
+  "kind": "vendor",
+  "seller": "Heilind",
+  "part_number": "43020-0800",
+  "read_with": "chrome"
+ },
+ "molex-43020-1200": {
+  "source_url": "https://heilind.com/mol43020-1200.html",
+  "image_url": "https://heilind-product-assets.s3.us-east-1.amazonaws.com/MOL/43020_1200.jpg",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/molex-43020-1200.jpg",
+  "kind": "vendor",
+  "seller": "Heilind",
+  "part_number": "43020-1200",
+  "read_with": "chrome"
+ },
+ "molex-43025-0600": {
+  "source_url": "https://heilind.com/mol43025-0600.html",
+  "image_url": "https://sku-product-images.s3.us-east-2.amazonaws.com/MOL/43025-0600.png",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/molex-43025-0600.jpg",
+  "kind": "vendor",
+  "seller": "Heilind",
+  "part_number": "43025-0600",
+  "read_with": "chrome"
+ },
+ "molex-43025-0800": {
+  "source_url": "https://heilind.com/mol43025-0800.html",
+  "image_url": "https://heilind-product-assets.s3.us-east-1.amazonaws.com/MOL/43025_0800.jpg",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/molex-43025-0800.jpg",
+  "kind": "vendor",
+  "seller": "Heilind",
+  "part_number": "43025-0800",
+  "read_with": "chrome"
+ },
+ "molex-43030-0001": {
+  "source_url": "https://heilind.com/mol43030-0001.html",
+  "image_url": "https://heilind-product-assets.s3.us-east-1.amazonaws.com/MOL/43030_0001.jpg",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/molex-43030-0001.jpg",
+  "kind": "vendor",
+  "seller": "Heilind",
+  "part_number": "43030-0001",
+  "read_with": "chrome"
+ },
+ "molex-43030-0038": {
+  "source_url": "https://heilind.com/mol43030-0038.html",
+  "image_url": "https://sku-product-images.s3.us-east-2.amazonaws.com/MOL/43030-0038.jpg",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/molex-43030-0038.jpg",
+  "kind": "vendor",
+  "seller": "Heilind",
+  "part_number": "43030-0038",
+  "read_with": "chrome"
+ },
+ "molex-43031-0001": {
+  "source_url": "https://heilind.com/mol43031-0001.html",
+  "image_url": "https://sku-product-images.s3.us-east-2.amazonaws.com/MOL/43031-0001.jpg",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/molex-43031-0001.jpg",
+  "kind": "vendor",
+  "seller": "Heilind",
+  "part_number": "43031-0001",
+  "read_with": "chrome"
+ },
+ "molex-43031-0021": {
+  "source_url": "https://heilind.com/mol43031-0021.html",
+  "image_url": "https://heilind-product-assets.s3.us-east-1.amazonaws.com/MOL/43031_0021.jpg",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/molex-43031-0021.jpg",
+  "kind": "vendor",
+  "seller": "Heilind",
+  "part_number": "43031-0021",
+  "read_with": "chrome"
  },
  "nut_m10_nyloc": {
   "source_url": "https://www.mcmaster.com/94645A220/",
@@ -458,6 +618,56 @@
   "part_number": "DD520-1-24(12x40)-QCW, order no. 70121025",
   "read_with": "chosen"
  },
+ "pololu-2815": {
+  "source_url": "https://www.pololu.com/product/2815",
+  "image_url": "https://a.pololu-files.com/picture/0J6935.1200x627.jpg?4368b174ef0d272ae488757f22f7003b",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/pololu-2815.jpg",
+  "kind": "vendor",
+  "seller": "Pololu",
+  "part_number": "2815",
+  "read_with": "request"
+ },
+ "pololu-d24v150f12-2885": {
+  "source_url": "https://www.pololu.com/product/2885",
+  "image_url": "https://a.pololu-files.com/picture/0J7417.1200x627.jpg?6855a2c28ffe5db39f44ecffbaafc4a9",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/pololu-d24v150f12-2885.jpg",
+  "kind": "vendor",
+  "seller": "Pololu",
+  "part_number": "2885 (D24V150F12)",
+  "read_with": "request"
+ },
+ "pololu-d36v28f5-3782": {
+  "source_url": "https://www.pololu.com/product/3782",
+  "image_url": "https://a.pololu-files.com/picture/0J10034.1200x627.jpg?350df8fb4dc5d71103c50dc1d5f33deb",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/pololu-d36v28f5-3782.jpg",
+  "kind": "vendor",
+  "seller": "Pololu",
+  "part_number": "3782 (D36V28F5)",
+  "read_with": "request"
+ },
+ "pololu-d36v50f12-4095": {
+  "source_url": "https://www.pololu.com/product/4095",
+  "image_url": "https://a.pololu-files.com/picture/0J10727.1200x627.jpg?c7702cbf7fabe7700c6a33c8e31405d5",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/pololu-d36v50f12-4095.jpg",
+  "kind": "vendor",
+  "seller": "Pololu",
+  "part_number": "4095 (D36V50F12)",
+  "read_with": "request"
+ },
+ "proto-board-52x50": {
+  "source_url": "https://www.taydaelectronics.com/double-side-prototyping-board-50x70mm.html",
+  "image_url": "https://www.taydaelectronics.com/media/catalog/product/cache/1eb4f7f02fef46fb836117af4bb921e7/5/x/5x7.jpg.jpg",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/proto-board-52x50.jpg",
+  "kind": "vendor",
+  "seller": "Tayda Electronics",
+  "part_number": "double-sided prototype board 50 x 70 mm",
+  "read_with": "request"
+ },
  "proto-board-70x50": {
   "source_url": "https://botland.store/circuit-boards/2745-universal-double-sided-board-50x70mm-5904422303303.html",
   "image_url": "https://cdn3.botland.store/49246-large_default/universal-double-sided-board-50x70mm.jpg",
@@ -532,6 +742,16 @@
   "part_number": "91290A168",
   "availability": "Delivers tomorrow 7-9 am"
  },
+ "screw_m5x16": {
+  "source_url": "https://www.mcmaster.com/91290A232/",
+  "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/912/91290A232_c76f2dd5-252e-49e5-9673-f3123d628bd41772470442@2x_1533g_1772470443.png?ver=ImageNotFound",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/screw_m5x16.jpg",
+  "kind": "mcmaster",
+  "seller": "McMaster-Carr",
+  "part_number": "91290A232",
+  "availability": "Delivers tomorrow"
+ },
  "screw_m5x30": {
   "source_url": "https://www.mcmaster.com/91290A254/",
   "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/912/91290A254_31754cd4-296f-4772-a1a6-499168fcfd6d1772469060@4x_x7z38_1772469065.png?ver=ImageNotFound",
@@ -571,6 +791,16 @@
   "seller": "McMaster-Carr",
   "part_number": "92981A101",
   "availability": "Delivers tomorrow 7-9 am"
+ },
+ "sparkfun-rob-13065": {
+  "source_url": "https://www.sparkfun.com/products/13065",
+  "image_url": "https://www.sparkfun.com/media/catalog/product/cache/6b78ac9ed927a3c2db42a3c84dab4ce5/1/3/13065-01.jpg",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/sparkfun-rob-13065.jpg",
+  "kind": "vendor",
+  "seller": "SparkFun",
+  "part_number": "ROB-13065",
+  "read_with": "request"
  },
  "stand_bottom": {
   "source_url": "gyropup-turret/exports/turret/bench/stand_bottom.stl",
@@ -637,6 +867,286 @@
   "kind": "render",
   "material": "pa6-cf",
   "bom": "turret"
+ },
+ "turret_dowel_4x8": {
+  "source_url": "https://www.mcmaster.com/91595A150/",
+  "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/915/91595A150_e9ae7045-dc2d-4d0d-a21a-cb77c886d277@4x_637951010825344443.png?ver=ImageNotFound",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/turret_dowel_4x8.jpg",
+  "kind": "mcmaster",
+  "seller": "McMaster-Carr",
+  "part_number": "91595A150",
+  "availability": "Delivers tomorrow 7-9 am"
+ },
+ "turret_insert_m3_short": {
+  "source_url": "https://www.mcmaster.com/94459A130/",
+  "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/944/94459A130_a515982a-951e-4898-a4b6-a815cf3acba9@4x_638110150122526611.png?ver=ImageNotFound",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/turret_insert_m3_short.jpg",
+  "kind": "mcmaster",
+  "seller": "McMaster-Carr",
+  "part_number": "94459A130",
+  "availability": "Delivers tomorrow 7-9 am"
+ },
+ "turret_insert_m4": {
+  "source_url": "https://www.mcmaster.com/94459A160/",
+  "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/944/94459A160_2a3ecda0-18e9-4cd4-83a1-1af9d1a671a3@4x_638110149675462558.png?ver=ImageNotFound",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/turret_insert_m4.jpg",
+  "kind": "mcmaster",
+  "seller": "McMaster-Carr",
+  "part_number": "94459A160",
+  "availability": "Delivers tomorrow 7-9 am"
+ },
+ "turret_magnet_disc": {
+  "source_url": "https://www.mcmaster.com/5862K103/",
+  "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/586/5862K103_995a47e3-95c3-4b29-a523-1d974d7c5dfe@4x_1bpma_1778808629.png?ver=ImageNotFound",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/turret_magnet_disc.jpg",
+  "kind": "mcmaster",
+  "seller": "McMaster-Carr",
+  "part_number": "5862K103",
+  "availability": "Delivers tomorrow 7-9 am"
+ },
+ "turret_nut_m2_5": {
+  "source_url": "https://www.mcmaster.com/91828A113/",
+  "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/918/91828A113_5943e53a-9d38-441e-a754-b8971440d90f1785460293@4x_9slus_1785460296.png?ver=ImageNotFound",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/turret_nut_m2_5.jpg",
+  "kind": "mcmaster",
+  "seller": "McMaster-Carr",
+  "part_number": "91828A113",
+  "availability": "Delivers tomorrow 7-9 am"
+ },
+ "turret_oring_ct": {
+  "source_url": "https://www.mcmaster.com/9452K14/",
+  "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/945/9452K14p1-j05-digitall@4x_636898248326177130.png?ver=ImageNotFound",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/turret_oring_ct.jpg",
+  "kind": "mcmaster",
+  "seller": "McMaster-Carr",
+  "part_number": "9452K14",
+  "availability": "Delivers tomorrow 7-9 am"
+ },
+ "turret_pin_1_16x3_16": {
+  "source_url": "https://www.mcmaster.com/98381A414/",
+  "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/983/98381A414_e6ba0b03-1864-45bb-9889-e4e4e754f5571690578801@2x_1690578806.png?ver=ImageNotFound",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/turret_pin_1_16x3_16.jpg",
+  "kind": "mcmaster",
+  "seller": "McMaster-Carr",
+  "part_number": "98381A414",
+  "availability": "Delivers tomorrow 7-9 am"
+ },
+ "turret_pin_2x20": {
+  "source_url": "https://www.mcmaster.com/93600A249/",
+  "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/936/93600A249_70f101e7-fed9-4048-81d9-6401621b4a4e@4x_638039862576899238.png?ver=ImageNotFound",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/turret_pin_2x20.jpg",
+  "kind": "mcmaster",
+  "seller": "McMaster-Carr",
+  "part_number": "93600A249",
+  "availability": "Delivers tomorrow 7-9 am"
+ },
+ "turret_screw_m2_5x8": {
+  "source_url": "https://www.mcmaster.com/91290A102/",
+  "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/912/91290A102_f4126a63-2ea8-49b7-a2f9-a8c8161f6378@4x_638090345084361039.png?ver=ImageNotFound",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/turret_screw_m2_5x8.jpg",
+  "kind": "mcmaster",
+  "seller": "McMaster-Carr",
+  "part_number": "91290A102",
+  "availability": "Delivers tomorrow 7-9 am"
+ },
+ "turret_screw_m2x10": {
+  "source_url": "https://www.mcmaster.com/91290A017/",
+  "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/912/91290A017_4da46e33-0bea-4479-9459-d31a44c7d7ed@4x_638090337203301641.png?ver=ImageNotFound",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/turret_screw_m2x10.jpg",
+  "kind": "mcmaster",
+  "seller": "McMaster-Carr",
+  "part_number": "91290A017",
+  "availability": "Delivers tomorrow 7-9 am"
+ },
+ "turret_screw_m2x20": {
+  "source_url": "https://www.mcmaster.com/91290A049/",
+  "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/912/91290A049_5ff49e92-227e-4c22-bd19-96e804aabea9@4x_638090341073140795.png?ver=ImageNotFound",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/turret_screw_m2x20.jpg",
+  "kind": "mcmaster",
+  "seller": "McMaster-Carr",
+  "part_number": "91290A049",
+  "availability": "Delivers tomorrow 7-9 am"
+ },
+ "turret_screw_m2x8": {
+  "source_url": "https://www.mcmaster.com/91290A015/",
+  "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/912/91290A015_ef00831f-07a2-41c8-a5fa-c6e807a215c9@4x_638090336293841896.png?ver=ImageNotFound",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/turret_screw_m2x8.jpg",
+  "kind": "mcmaster",
+  "seller": "McMaster-Carr",
+  "part_number": "91290A015",
+  "availability": "Delivers tomorrow 7-9 am"
+ },
+ "turret_screw_m3x10": {
+  "source_url": "https://www.mcmaster.com/91290A115/",
+  "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/912/91290A115_b7a2d0f2-33b0-404f-be96-67cd87f43b361772469672@4x_knmfk_1772469677.png?ver=ImageNotFound",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/turret_screw_m3x10.jpg",
+  "kind": "mcmaster",
+  "seller": "McMaster-Carr",
+  "part_number": "91290A115",
+  "availability": "Delivers tomorrow 7-9 am"
+ },
+ "turret_screw_m3x10_flat": {
+  "source_url": "https://www.mcmaster.com/91294A130/",
+  "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/912/91294A130_a15225ad-3758-4486-95f9-7534ccbd91b91752243016@4x_hj0uf_1752243018.png?ver=ImageNotFound",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/turret_screw_m3x10_flat.jpg",
+  "kind": "mcmaster",
+  "seller": "McMaster-Carr",
+  "part_number": "91294A130",
+  "availability": "Delivers tomorrow 7-9 am"
+ },
+ "turret_screw_m3x12": {
+  "source_url": "https://www.mcmaster.com/91290A117/",
+  "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/912/91290A117_be41e43f-7b6d-4e6f-9c2e-ff3ef886a6031772469757@4x_40ciy_1772469762.png?ver=ImageNotFound",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/turret_screw_m3x12.jpg",
+  "kind": "mcmaster",
+  "seller": "McMaster-Carr",
+  "part_number": "91290A117",
+  "availability": "Delivers tomorrow"
+ },
+ "turret_screw_m3x16": {
+  "source_url": "https://www.mcmaster.com/91290A120/",
+  "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/912/91290A120_30f62381-8e3c-4109-a092-cb8a7eb172851772469969@4x_f37oq_1772469976.png?ver=ImageNotFound",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/turret_screw_m3x16.jpg",
+  "kind": "mcmaster",
+  "seller": "McMaster-Carr",
+  "part_number": "91290A120",
+  "availability": "Delivers tomorrow 7-9 am"
+ },
+ "turret_screw_m3x20": {
+  "source_url": "https://www.mcmaster.com/91290A123/",
+  "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/912/91290A123_b3b4aa51-f816-4783-88ef-5000780ed9051772469909@4x_txt6b_1772469914.png?ver=ImageNotFound",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/turret_screw_m3x20.jpg",
+  "kind": "mcmaster",
+  "seller": "McMaster-Carr",
+  "part_number": "91290A123",
+  "availability": "Delivers tomorrow 7-9 am"
+ },
+ "turret_screw_m3x6_flat": {
+  "source_url": "https://www.mcmaster.com/91294A126/",
+  "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/912/91294A126_ddc13748-fa0c-478e-ae08-d02ca5766f031752242984@4x_sfet8_1752242987.png?ver=ImageNotFound",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/turret_screw_m3x6_flat.jpg",
+  "kind": "mcmaster",
+  "seller": "McMaster-Carr",
+  "part_number": "91294A126",
+  "availability": "Delivers tomorrow 7-9 am"
+ },
+ "turret_screw_m3x8": {
+  "source_url": "https://www.mcmaster.com/91290A113/",
+  "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/912/91290A113_04b16d50-5c13-43f5-bdb9-e0ac07473af41772468268@4x_au45v_1772468273.png?ver=ImageNotFound",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/turret_screw_m3x8.jpg",
+  "kind": "mcmaster",
+  "seller": "McMaster-Carr",
+  "part_number": "91290A113",
+  "availability": "Delivers tomorrow 7-9 am"
+ },
+ "turret_screw_m3x8_flat": {
+  "source_url": "https://www.mcmaster.com/91294A128/",
+  "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/912/91294A128_69ef5434-3c79-4e45-afda-d6aeea4611ca1752243162@4x_lfbml_1752243164.png?ver=ImageNotFound",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/turret_screw_m3x8_flat.jpg",
+  "kind": "mcmaster",
+  "seller": "McMaster-Carr",
+  "part_number": "91294A128",
+  "availability": "Delivers tomorrow 7-9 am"
+ },
+ "turret_screw_m4x10": {
+  "source_url": "https://www.mcmaster.com/91290A144/",
+  "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/912/91290A144_bbac7fef-d28c-42bb-b1b5-0e70351372bf1772470031@4x_ke850_1772470035.png?ver=ImageNotFound",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/turret_screw_m4x10.jpg",
+  "kind": "mcmaster",
+  "seller": "McMaster-Carr",
+  "part_number": "91290A144",
+  "availability": "Delivers tomorrow 7-9 am"
+ },
+ "turret_setscrew_m3x6_nylon": {
+  "source_url": "https://www.mcmaster.com/93285A115/",
+  "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/932/93285A115_10d20692-50de-4030-9c48-278d7370c0c7@2x_638110393701749568.png?ver=ImageNotFound",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/turret_setscrew_m3x6_nylon.jpg",
+  "kind": "mcmaster",
+  "seller": "McMaster-Carr",
+  "part_number": "93285A115",
+  "availability": "Delivers tomorrow 7-9 am"
+ },
+ "turret_spring_flap": {
+  "source_url": "https://www.mcmaster.com/9271K13/",
+  "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/927/9271K13_585706f8-eef8-449f-8159-a0b5259723df@2x_638110155337456723.png?ver=ImageNotFound",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/turret_spring_flap.jpg",
+  "kind": "mcmaster",
+  "seller": "McMaster-Carr",
+  "part_number": "9271K13",
+  "availability": "Delivers tomorrow 7-9 am"
+ },
+ "turret_standoff_m3x12": {
+  "source_url": "https://www.mcmaster.com/98952A110/",
+  "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/989/98952A110p1-j08-digitall@4x_636874189957795271.png?ver=ImageNotFound",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/turret_standoff_m3x12.jpg",
+  "kind": "mcmaster",
+  "seller": "McMaster-Carr",
+  "part_number": "98952A110",
+  "availability": "Delivers tomorrow 7-9 am"
+ },
+ "turret_standoff_m3x14": {
+  "source_url": "https://www.mcmaster.com/98952A112/",
+  "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/989/98952A112p1-j08-digitall@4x_636874450993349394.png?ver=ImageNotFound",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/turret_standoff_m3x14.jpg",
+  "kind": "mcmaster",
+  "seller": "McMaster-Carr",
+  "part_number": "98952A112",
+  "availability": "Delivers tomorrow 7-9 am"
+ },
+ "turret_thumbscrew_m4x12": {
+  "source_url": "https://www.mcmaster.com/92581A250/",
+  "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/925/92581A250_4cc67876-c710-4e8d-beb1-f3bdb91a97be@4x_1680529774.png?ver=ImageNotFound",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/turret_thumbscrew_m4x12.jpg",
+  "kind": "mcmaster",
+  "seller": "McMaster-Carr",
+  "part_number": "92581A250",
+  "availability": "Delivers tomorrow 7-9 am"
+ },
+ "turret_tube_coupling": {
+  "source_url": "https://www.mcmaster.com/51225K32/",
+  "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/512/51225K32_e59b26a8-2c96-4067-8f62-977db744e096@2x_1693600028.png?ver=ImageNotFound",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/turret_tube_coupling.jpg",
+  "kind": "mcmaster",
+  "seller": "McMaster-Carr",
+  "part_number": "51225K32",
+  "availability": null
+ },
+ "turret_washer_m3": {
+  "source_url": "https://www.mcmaster.com/93475A210/",
+  "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/934/93475A210_43d9f8da-be53-4978-b846-d1498ddfcb62@4x_2cpql_1782861354.png?ver=ImageNotFound",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/turret_washer_m3.jpg",
+  "kind": "mcmaster",
+  "seller": "McMaster-Carr",
+  "part_number": "93475A210",
+  "availability": "Delivers tomorrow 7-9 am"
  },
  "upper_link": {
   "source_url": "exports/leg/upper_link.stl",
