@@ -52,7 +52,9 @@ PARAMS = {
     'front_t': 20.0, 'front_w': 30.0,                    # front lower link (thickness: the leg's out-of-plane stiffness)
     'gap': 2.0,                                          # between layers (a DIN 433 M12 washer at each knee)
     'knee_out_deg': 3.0, 'knee_in_deg': -97.0,           # the front upper link's stops (from +x, ccw); the rear mirrors
-    'stop_r': 58.0,                                      # stop posts: radius from the motor axis (between the lug screws)
+    'stop_r': 60.0,                                      # stop posts: radius from the motor axis (between the lug screws)
+    'stop_beta': 58.0,                                   # ... and their angle past the link's axis at its stop: 58 puts both of a
+                                                         # motor's posts midway between two lug screws (100 + 2 x 58 = 6 x 36)
     'hollow': False, 'skin': 5.0,                        # links as closed boxes (cavity, 'skin' walls): tried 2026-10-26, it
                                                          # weakened the wheel link and the leg too much (cad/leg_studies.py); solid
 }
@@ -64,10 +66,15 @@ KC = {**STD['KC'], 'bearing': '6201-2RS', 'bearing_od': 32.0, 'bearing_w': 10.0,
       'shoulder_d': 27.0}                                 # the knees: 6201s (C0 3.1 kN), the outer races' shoulder Ø27
 AC = STD['AC-L']
 FAST = STD['fasteners']
-ISO7379_HEAD = {12: (18.0, 9.0), 10: (16.0, 7.0)}       # shoulder d: head diameter, head height (McMaster 92981A408 / A303)
+ISO7379_HEAD = {12: (18.0, 9.0)}                         # shoulder d: head diameter, head height (McMaster 92981A408 / A411)
 M10_NUT = (17.0, 10.0)                                   # nyloc M10: across flats, height (DIN 985 is 10 mm)
-TPU_SLEEVE = (26.0, 10.0)                                # stop sleeve OD on a 10 mm shoulder: an 8 mm wall of TPU 95A gives a
-                                                         # power cut's collapse ~7 mm of travel before the steel post (D39)
+STOP_PIN = (16.0, 40.0, 23.0)                            # each stop post (D49): a 52100 dowel, diameter x length (McMaster
+                                                         # 98432A386, vented, its end tapped M8 for a puller), this deep in a
+                                                         # blind hole in the hip frame's 24.1 mm web (a 1.1 mm floor)
+TPU_SLEEVE = (32.0, 16.0)                                # the stop sleeve over it, OD x bore: an 8 mm wall of TPU 95A that the
+                                                         # upper link's radial stop face squeezes square-on (D39, D49)
+STOP_SLEEVE_TOP = 19.0                                   # y of the sleeve's top: a 3 mm cap over the pin's end (y 16). The link
+                                                         # meets only TPU, over y 0..19; above, its stop face passes over the cap
 EYE_SLEEVE = (18.0, 12.0, 20.0)                          # the steel sleeves pressed into each upper link's knee eye: OD, ID,
                                                          # length (McMaster 96990A403, DIN 179 12 x 18 x 20, HRC 61)
 EYE_SLEEVES = 2                                          # two, end to end, 40 mm: the knee pin cantilevers out to the lower
@@ -296,7 +303,7 @@ def lug_angles(front: bool = True):
     return a if front else [180.0 - v for v in a]
 
 
-DOWEL_POST_GAP = 16.0                            # mm, a dowel hole's centre to a stop post's: Ø5 hole, Ø22 boss, 2.5 wall
+DOWEL_POST_GAP = 16.0                            # mm, a dowel hole's centre to a stop post's: Ø5 hole, the pin's Ø16, 5.5 wall
 
 
 @functools.lru_cache(maxsize=2)
@@ -355,21 +362,56 @@ def upper_half_width(r: float) -> float:
     return max(tangent, sides)
 
 
-def stop_post_angles():
-    """Where the front motor's two stop posts sit (deg from +x about A): the sleeve (radius s) on a post at radius r
-    touches the link's edge when r sin(t) = half_width(r cos(t)) + s, t from the link's axis; solved by bisection."""
-    r, sr = P['stop_r'], TPU_SLEEVE[0] / 2
+def edge_touch_angle(s: float, r: float | None = None) -> float:
+    """The angle (deg, from the link's axis) at which a circle of radius s round a point at radius r (default the
+    posts') touches the upper link's own straight edge: r sin(t) = half_width(r cos(t)) + s, solved by bisection."""
+    r = P['stop_r'] if r is None else r
     lo, hi = 0.0, math.pi / 2
     for _ in range(60):
         t = (lo + hi) / 2
-        if r * math.sin(t) < upper_half_width(r * math.cos(t)) + sr:
+        if r * math.sin(t) < upper_half_width(r * math.cos(t)) + s:
             lo = t
         else:
             hi = t
-    half = math.degrees(hi)
-    return P['knee_out_deg'] + half, P['knee_in_deg'] - half
+    return math.degrees(hi)
 
 
+def stop_post_angles():
+    """Where the front motor's two stop posts sit (deg from +x about A): P['stop_beta'] past each stop angle, at
+    P['stop_r']. The upper link meets a post's sleeve with a radial stop face (stop_dogs), so the post can sit anywhere
+    its sleeve clears the link's own edge; it must, with room for the squeeze (review M6, D49)."""
+    b = P['stop_beta']
+    clear = b - edge_touch_angle(TPU_SLEEVE[0] / 2)
+    if clear < 3.0:
+        raise ValueError(f"stop_beta {b} deg: the sleeve clears the upper link's edge by only {clear:.1f} deg (>= 3)")
+    return P['knee_out_deg'] + b, P['knee_in_deg'] - b
+
+
+def stop_arm() -> float:
+    """The stop force's lever about the motor's axis (mm). The sleeve (radius s, its pin at radius r) presses square on
+    the link's radial stop face, so the force runs along the face's normal through the pin's axis, sqrt(r^2 - s^2) from
+    the motor's axis. (Against the link's straight edge, as before D49, it was 31 mm: the post took 1.9 x T / 58 mm.)"""
+    return math.sqrt(P['stop_r'] ** 2 - (TPU_SLEEVE[0] / 2) ** 2)
+
+
+def stop_dog_angle() -> float:
+    """The upper link's stop faces: radial, this far (deg) each side of its axis, tangent to the sleeve at the stop."""
+    return P['stop_beta'] - math.degrees(math.asin(TPU_SLEEVE[0] / 2 / P['stop_r']))
+
+
+def stop_contact_h() -> float:
+    """How much of the link's thickness meets the sleeve (mm along y): from its inner face to the sleeve's top."""
+    return STOP_SLEEVE_TOP - Y['upper'][0]
+
+
+def stop_pin_y() -> tuple:
+    """(bottom, top) y of each stop pin: STOP_PIN[2] down into the frame's web from its leg-side face."""
+    y0 = Y['frame'][1] - STOP_PIN[2]
+    return y0, y0 + STOP_PIN[1]
+
+
+STOP_BOSS_R = 14.0                               # the hip frame's boss round each stop pin: a 6 mm wall round the Ø16 hole
+STOP_HOLE_PLAY = 0.05                            # mm on the radius: the pin's hole Ø16.1 as drawn (a printed hole closes up)
 FLANGE_T, FLANGE_X = 13.0, 95.0                  # the hip frame's top and bottom flanges: thickness, half-length (mm).
                                                  # They carry the leg to the body across the print's layers (it prints
                                                  # web-down): 7 mm gave SF 0.75 in a landing across the layers, 13 about 1.3
@@ -394,9 +436,9 @@ def hip_frame():
     """The hip frame (printed PA6-CF): one web holding both motors on their output-side lugs (10 x M4) and a 61812
     support bearing each around the output adapters' journals, so leg bending goes into the frame, not into the
     motors' 61810. Flanges top and bottom run inwards to the body's centre plane and carry it (6 x M5 inserts in
-    their ends: the body, or the test rig's carriage; frame_mounts()). Four stop posts (M8 inserts) with TPU sleeves
-    limit the upper links. A cable pass between the motors for the wheel and motor leads. Printed web-down: it fits
-    the bed turned 45 deg."""
+    their ends: the body, or the test rig's carriage; frame_mounts()). Four stop posts limit the upper links: Ø16 steel
+    pins 23 mm into blind holes in the web, TPU sleeves over them (D49). A cable pass between the motors for the wheel
+    and motor leads. Printed web-down: it fits the bed turned 45 deg."""
     yf0, yf1 = Y['frame']
     b = gmi.motor_interface(MOTOR)['case']['bolts']
     ring_r = frame_ring_r()
@@ -419,8 +461,8 @@ def hip_frame():
         web = web.union(yslab([(-3.5, s * zf), (3.5, s * zf), (3.5, s * (zf - 34)), (-3.5, s * (zf - 34))], yf0 - 0.01, yf0 + 0.01))
         g = cq.Workplane('YZ', origin=(-3.5, 0, 0)).polyline([(yf0 + 0.01, s * zf), (yc + 18, s * zf), (yf0 + 0.01, s * (zf - 34))]).close().extrude(7.0)
         web = web.union(g)
-    for (px, pz) in stop_posts():                             # bosses round the stop posts (they sit at the web's edge)
-        web = web.union(ycyl(11.0, yf0, yf1, px, pz))
+    for (px, pz) in stop_posts():                             # bosses round the stop posts (the knee-out ones stand out
+        web = web.union(ycyl(STOP_BOSS_R, yf0, yf1, px, pz))   # past the motor's ring)
     # the motors: lug screws (counterbored from the leg side, deep so a stocked length engages), the bore
     for mx, front in ((ax, True), (bx, False)):
         for a in lug_angles(front):
@@ -433,9 +475,10 @@ def hip_frame():
         web = web.cut(ycyl(AC['bearing_od'] / 2 + 0.3, yf0 - 1, Y['bearing'][0], mx))          # the 61812 slides in from the
         web = web.cut(ycyl(AC['bearing_od'] / 2, Y['bearing'][0] - 0.01, Y['bearing'][1], mx))   # motor side, is pressed for its
         web = web.cut(ycyl(AC['lip_d'] / 2, Y['bearing'][1] - 0.01, yf1 + 1, mx))              # last 10 mm, stops on the lip
-    # stop posts: M8 heat-set inserts for 10 mm shoulder screws, at the four stop positions
+    # stop posts: blind holes for the Ø16 steel pins, 23 deep from the leg-side face (a 1.1 mm floor on the motor side,
+    # bridged in the print); a light fit dialled on the post coupon, the pin set with retaining compound (D49)
     for (px, pz) in stop_posts():
-        web = web.cut(ycyl(4.8, yf1 - 16.0, yf1 + 1, px, pz))        # M8 insert (94459A778, 12.7 long): Ø9.6, 16 deep
+        web = web.cut(ycyl(STOP_PIN[0] / 2 + STOP_HOLE_PLAY, yf1 - STOP_PIN[2], yf1 + 1, px, pz))
     web = web.cut(ycyl(9.0, yf0 - 1, yf1 + 1, 0.0, 0.0))                # cable pass between the motors
     # a relief in the leg-side face at the bottom, between the motors: the wheel link's hub end (5 mm proud of the
     # frame's face plane, the circlip's land) passes here at the leg's shortest, and a power cut squeezes the knee-out
@@ -459,16 +502,37 @@ def stop_posts():
 
 HUB_HEAD_CB = (10.0, 5.5)    # the upper links' hub counterbores for the M5 x 40 heads (Ø8.5 x 5): Ø, depth; 15.5 mm of
                              # each screw then goes into the adapter's 16 mm threads
+STOP_DOG_R = 72.0            # the upper link's stop faces reach this far from the motor's axis: past the sleeve's contact
+                             # (stop_arm(), 57.8 mm) by more than the squeezed patch's half-width
+
+
+def stop_dogs():
+    """The upper link's two stop faces (D49), in its own frame: by the hub on each edge, a radial face at
+    +-stop_dog_angle() from its axis, from inside the hub out to STOP_DOG_R, filled in to the link's own edge (a wedge
+    about 15 mm wide at the tip). A post's sleeve is pushed square to the face, so the stop's force acts stop_arm() from
+    the motor's axis and the face does not slide on the TPU. One part is both the front and the rear link (turned, not
+    mirrored), and each face is the knee-out stop of one and the knee-in stop of the other: the two faces mirror."""
+    a, back = math.radians(stop_dog_angle()), math.radians(15.0)     # 'back': well inside the link's own outline
+    r0, r1, c = 30.0, STOP_DOG_R, 2.0                                 # c: the outer corner rounded, no edge into the TPU
+    out = None
+    for s in (1, -1):
+        pol = [(r0, a), (r1 - c, a), (r1 - 0.3 * c, a - 0.3 * c / r1)]
+        pol += [(r1, a - c / r1 - (a - c / r1 - back) * k / 8) for k in range(9)]
+        pol.append((r0, back))
+        dog = yslab([(r * math.cos(q), s * r * math.sin(q)) for r, q in pol], 0.0, P['upper_t'])
+        out = dog if out is None else out.union(dog)
+    return out
 
 
 def upper_link():
     """Upper link (printed PA6-CF, flat): the AO-L face at the motor (8 x M5 from the outer face, heads proud), and
     at the knee an eye boss standing EYE_BOSS proud of the inner face: two steel sleeves end to end for the knee's
-    shoulder screw, then a pocket for its M10 nyloc. Built for the front motor, pointing along +x from the origin (the
-    rear one is the same part)."""
+    shoulder screw, then a pocket for its M10 nyloc. By the hub, a radial stop face on each edge (stop_dogs). Built for
+    the front motor, pointing along +x from the origin (the rear one is the same part)."""
     l1, t = P['l1'], P['upper_t']
     out = link_outline((0, 0), (l1, 0), P['upper_w0'], P['upper_w1'], UPPER_HUB_R, UPPER_EYE_R)
     u = yslab(out, 0.0, t).union(ycyl(UPPER_EYE_R - 0.5, -EYE_BOSS, 0.01, l1, 0))   # inside the outline's polygon: no slivers
+    u = u.union(stop_dogs())
     u = u.union(boss_fillet(out, 0.0, -1, r=UPPER_EYE_R - 0.5, f=5.0, cx=l1, arm_dir=-1))   # where the arm meets the boss
     u = u.cut(gmi.place(gmi.std_face_mate('L', depth=t + 2), (0, 0, 0), (0, 1, 0)))
     # the 8 M5 heads sit in counterbores, below the hub's outer face: at the knee-out stops the front link passes
@@ -573,7 +637,7 @@ CABLE_PASS = 18.0                                         # the channel from the
 CABLE_EXIT = (22.0, 16.0)                                 # slots through a link's wall (along the link, across it)
 CABLE_EXIT_X = 23.0 + 22.0                                # the wheel link's exit, from the knee
 CABLE_OUT_R = 90.0                                        # where the cable leaves the rear upper link for the body: past
-                                                         # the stop posts (58) and the frame's edge (62)
+                                                         # the stop posts' sleeves (to 76) and the frame's edge (62)
 
 
 def cable(phi1: float, phi2: float):
@@ -666,9 +730,13 @@ def knee_pin_length():
 
 
 def stop_sleeve():
-    """TPU 95A sleeve on a stop post's shoulder (8 mm wall): the upper link lands on it."""
+    """TPU 95A sleeve on a stop pin (D49), on its axis at the origin: Ø32 from the frame's face to y 19, an 8 mm wall,
+    a 3 mm cap over the pin's end, printed cap-down. Its bore is 0.2 mm under the pin (a stretch fit, dialled on the
+    coupon), which holds it without glue: nothing pulls it along the pin. Pulled off by hand, it uncovers the pin's
+    tapped end (a puller) and the two lug screws beside the pin."""
     od, idd = TPU_SLEEVE
-    return ycyl(od / 2, 0.0, 19.0).cut(ycyl(idd / 2 + 0.1, -1, 20.0))
+    y0 = Y['frame'][1]
+    return ycyl(od / 2, y0, STOP_SLEEVE_TOP).cut(ycyl(idd / 2 - 0.1, y0 - 1, stop_pin_y()[1]))
 
 
 # ----------------------------------------------------------------------------------- bought parts (envelopes)
@@ -680,7 +748,7 @@ def bearing(d, D, w, y0, x=0.0, z=0.0):
 def shoulder_screw(d, length, thread_len, head_y, x, z, inward=True):
     """ISO 7379 envelope: head outboard at head_y, shoulder and thread towards -y."""
     hd, hh = ISO7379_HEAD[int(d)]
-    td = {12: 10.0, 10: 8.0}[int(d)]
+    td = {12: 10.0}[int(d)]
     s = ycyl(hd / 2, head_y, head_y + hh, x, z).union(ycyl(d / 2, head_y - length, head_y, x, z))
     return s.union(ycyl(td / 2, head_y - length - thread_len, head_y - length, x, z))
 
@@ -716,18 +784,18 @@ def leg_parts() -> Leg:
 
     ad, adi = gmi.output_adapter(MOTOR, 'L')
     add('hip_frame', hip_frame(), 'pa6-cf', 1, 'printed PA6-CF web-down (turned 45 deg on the bed), 100 % solid; '
-        '20 x M4 into the motors, 2 x 61812 pressed in from the motor side onto a 2 mm lip (no retainers), 6 x M5 inserts in the flange ends, 4 x M8 inserts for the stop posts',
+        '20 x M4 into the motors, 2 x 61812 pressed in from the motor side onto a 2 mm lip (no retainers), 6 x M5 inserts in the flange ends, 4 x Ø16 stop pins in blind holes (23 deep, retaining compound)',
         fea='pa6_cf_z')                          # judged across the layers: web-down, its flanges carry the leg along print-z
     add('output_adapter', gmi.place(ad, (0, Y['motor_out'], 0), (0, 1, 0)), adi['material'], 2, adi['note'],
         fea='al6061' if adi['made'] == 'cnc' else 'pa6_cf_z', made=adi['made'], machining=(ad, adi['spec']) if adi['made'] == 'cnc' else None)
     add('upper_link', upper_link(), 'pa6-cf', 2, f"printed PA6-CF flat, {P['upper_t']:.0f} mm, 100 % solid; 8 x M5 into the adapter; "
-        'the knee shoulder screw clamped by an M10 nyloc in a pocket')
+        'the knee shoulder screw clamped by an M10 nyloc in a pocket; a radial stop face each side of the hub')
     add('front_link', front_link(), 'pa6-cf', 1, f"printed PA6-CF flat on its inner face, {P['front_t']:.0f} mm body; two 6201-2RS at the knee, "
         'two 61812 at the apex (pressed against a central web)')
     add('wheel_link', wheel_link(), 'pa6-cf', 1, f"printed PA6-CF flat on its outer face, {P['wheel_t']:.0f} mm body; two 6201-2RS at the knee; "
         'the BotWheel in its outer face (4 x M6 from inside the hub), the hub for the apex 61812 (DIN 471-60 circlip)')
     add('apex_spacer', apex_spacer(), 'pa6-cf', 1, 'printed PA6-CF ring between the apex 61812s\' inner races', fea=None)
-    add('stop_sleeve', stop_sleeve(), 'tpu95', 4, 'printed TPU 95A, on the stop posts', fea=None, solid=True)
+    add('stop_sleeve', stop_sleeve(), 'tpu95', 4, 'printed TPU 95A cap-down, 100 % solid; a stretch fit on the stop pins', fea=None, solid=True)
     bought = {}
     return Leg(parts, meta, bought)
 
@@ -881,9 +949,10 @@ def bought_parts(fr, j):
     ex, ez = j['E']
     out['apex_61812'] = (bearing(60, 78, 10, Y['apex_bearing'][0], ex, ez).union(bearing(60, 78, 10, Y['apex_bearing_in'][0], ex, ez)), 'bought')
     out['apex_circlip'] = (bearing(57.0, 66.0, 2.0, Y['circlip'][0] + 0.05, ex, ez), 'bought')
-    for (px, pz) in stop_posts():
+    p0, p1 = stop_pin_y()
+    for (px, pz) in stop_posts():                       # the stop pins (Ø16 x 40, 23 mm into the frame's web)
         out.setdefault('stop_posts', (None, 'bought'))
-        s = shoulder_screw(10, 20, 13, 19.5, px, pz)
+        s = ycyl(STOP_PIN[0] / 2, p0, p1, px, pz)
         out['stop_posts'] = (s if out['stop_posts'][0] is None else out['stop_posts'][0].union(s), 'bought')
     for name, shape in screw_groups(fr, j).items():
         out[name] = (shape, 'bought')
@@ -902,15 +971,16 @@ STATIC = ('hip_frame', 'output_adapter', 'motor_', 'bearing_61812', 'stop_')    
 
 
 def stop_travel() -> float:
-    """How far (rad) an upper link can squeeze its stop sleeve before it meets steel: the post's Ø16 head sits inside
-    the link's thickness, so the R13 sleeve gives 5 mm there, not its 8 mm wall (review M6); 0.5 mm left unsqueezed."""
-    steel = min(TPU_SLEEVE[0] - TPU_SLEEVE[1], TPU_SLEEVE[0] - ISO7379_HEAD[10][0]) / 2
-    return (steel - 0.5) / P['stop_r']
+    """How far (rad) an upper link can squeeze its stop sleeve before its stop face meets the pin: the sleeve's whole
+    8 mm wall, less 0.5 mm left unsqueezed, at stop_arm() (7.4 deg). No steel sits within the link's reach: the pin
+    ends 3 mm under the sleeve's cap, with no head (review M6, D49)."""
+    wall = (TPU_SLEEVE[0] - TPU_SLEEVE[1]) / 2
+    return (wall - 0.5) / stop_arm()
 
 
 def stop_poses():
     """(label, phi1, phi2) at the stops: both knees out (the shortest leg), both in (the longest), the two leans
-    between, and the two symmetric ones with the sleeves squeezed to steel (a power cut lands there)."""
+    between, and the two symmetric ones with the sleeves squeezed to 0.5 mm off the pins (a power cut lands there)."""
     fo, fi, ro, ri = stop_angles()
     s = stop_travel()
     return [('knees out', fo, ro), ('knees in', fi, ri), ('front out, rear in', fo, ri), ('front in, rear out', fi, ro),

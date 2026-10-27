@@ -56,17 +56,22 @@ WHEEL_R = (fb.gmi.motor_interface(fb.WHEEL)['od'] or 171.3) / 2000
 # RS-04 rotor inertia is not published (the manual has none): ~3e-4 kg m^2 (a ~150 g rotor ring at r 45 mm, an
 # estimate) x 9^2 reflected. It sets how hard a landing is: the motors' rotors are most of the leg's moving mass.
 ARMATURE = 3.0e-4 * MOTOR['gear_ratio'] ** 2
-# the stop: a TPU 95A sleeve (fivebar.TPU_SLEEVE: an 8 mm wall, ~18 x 11 mm contact) at 58 mm: k = E A / t, as a joint
-# stiffness k r^2; E is the filament maker's (catalog/materials.json tpu95: Bambu TPU 95A HF, 9.8 MPa). Until
-# 2026-10-27 the rig used an unsourced 40 MPa and a 4 mm wall: four times too stiff, with too little travel.
+# the stop: each upper link's radial stop face (cad/fivebar.py stop_dogs) presses square on a TPU 95A sleeve
+# (fivebar.TPU_SLEEVE: Ø32 on the Ø16 stop pin, an 8 mm wall), its contact the sleeve's 19 mm above the link's inner
+# face (fivebar.stop_contact_h) x ~11 mm across, at fivebar.stop_arm() = 57.8 mm from the motor's axis: k = E A / t, as
+# a joint stiffness k arm^2 (855 N m/rad); E is the filament maker's (catalog/materials.json tpu95: Bambu TPU 95A HF,
+# 9.8 MPa). Its travel is the wall less 0.5 mm, 7.4 deg, then the pin. Until 2026-10-27 the rig used an unsourced 40 MPa
+# and a 4 mm wall (four times too stiff), then a shoulder-screw post whose head stopped the TPU after 5 mm (review M6);
+# and the link's straight edge met that post 31 mm from the axis, not the 58 mm the model took (D49).
 # the BotWheel's tyre: solid rubber with a tread (estimate ~150-250 N/mm radially): MuJoCo's contact as a 7.7 ms,
 # 0.7-damped spring on the few kg behind it
 TYRE_SOLREF = '0.0077 0.7'
 TPU_E = json.loads((R / 'catalog/materials.json').read_text())['tpu95']['modulus_gpa'] * 1e9
 OFF_DAMPING = 0.2 * (MOTOR['kt_nm_per_a'] / MOTOR['gear_ratio']) ** 2 / 0.15 * MOTOR['gear_ratio'] ** 2   # N m s/rad, see run()
 TPU_WALL = (fb.TPU_SLEEVE[0] - fb.TPU_SLEEVE[1]) / 2 / 1000          # m
-STOP_TRAVEL = fb.stop_travel()             # rad of sleeve squeeze before the link meets the post's steel head (5 mm at R58)
-STOP_K = TPU_E * (18e-3 * 11e-3) / TPU_WALL * (fb.P['stop_r'] / 1000) ** 2
+STOP_ARM = fb.stop_arm() / 1000                                       # m: the stop force's lever about the motor's axis
+STOP_TRAVEL = fb.stop_travel()             # rad of sleeve squeeze before the stop face meets the pin (7.5 mm at 57.8 mm)
+STOP_K = TPU_E * (fb.stop_contact_h() * 1e-3 * 11e-3) / TPU_WALL * STOP_ARM ** 2
 STOP_B = 0.6 * math.sqrt(STOP_K * 0.1)   # N m s/rad: ~0.3 of critical for ~0.1 kg m^2 behind the stop
 
 

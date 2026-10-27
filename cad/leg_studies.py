@@ -21,6 +21,9 @@ Everyday (safety factor >= 2):
   E1 turn      standing at 300 mm, 2.5 x the static wheel load, 0.5 g of the whole robot sideways at the tyre
   E2 cap       a motor at its 60 N m cap against a stalled leg
   E3 stop      a motor at its cap driving its link into the stop post
+The stops (E3, R3) load the upper link on its radial stop face and the hip frame round a stop post (E3o, E3i: the
+knee-out and knee-in posts; R3o), at fivebar.stop_arm() from the motor's axis; joint_checks adds each post's steel pin:
+its bearing in the printed web and its bending (stop_checks).
 Writes exports/leg/fea/<part>-<case>.png (+ .mp4 overload video and .json for the interactive viewer) and summary.json.
 """
 from __future__ import annotations
@@ -281,13 +284,45 @@ def away_from_pad_rim(st, r_rim):
     return round(st.material.strength_mpa / vm, 2), round(vm, 2)
 
 
+PIN_BEARING_MPA = 40.0       # a stop pin's bearing on the printed hip frame: PA6-CF in its layers (the frame prints web-down,
+                             # so the pin bears along them), humid, sustained: the knee eyes' and the hub dowels' allowable
+PIN_YIELD_MPA = 1500.0       # the 52100 stop pin in bending: McMaster's minimum Rockwell C52 is about 1,900 MPa in tension;
+                             # 1,500 taken as its yield
+
+
+def stop_checks(C):
+    """Each stop post's steel pin (cad/fivebar.py: Ø16, 23 mm into a blind hole in the hip frame's 24.1 mm web, a TPU
+    sleeve over it) under its upper link's radial stop face: F = T / fivebar.stop_arm(), square to the face through the
+    pin's axis, at the middle of the sleeve's contact with the link, e above the hole's mouth. The steel pin is far
+    stiffer than the printed web, so it turns in its hole as a rigid body on an elastic foundation (the pressure linear
+    along the hole, changing sign about 60 % down); the pressure is highest at the mouth: p = F / (d L) (4 + 6 e / L)
+    (the 4: a force at the mouth alone already turns the pin; 6 e / L: its moment). Also the pin in bending at the
+    frame's face. E3: a motor at its 60 N m cap into a stop (everyday); R3: the rig's undamped power cut (the fault)."""
+    d, length, L = fb.STOP_PIN
+    arm = fb.stop_arm()
+    e = fb.stop_contact_h() / 2 + (fb.Y['upper'][0] - fb.Y['frame'][1])       # the hole's mouth is the frame's face
+    out = {}
+    for case, T, target, why in (('E3', CAP, TARGETS['sf'], f'a motor at its {CAP:.0f} N m cap into a stop'),
+                                 ('R3', C['R3']['stop_nm'], TARGETS['sf_fault'], C['R3']['from'])):
+        F = T / (arm / 1000.0)
+        p = F / (d * L) * (4.0 + 6.0 * e / L)
+        sig = F * e / (math.pi * d ** 3 / 32)
+        out[case] = {'stop_nm': round(T, 1), 'arm_mm': round(arm, 1), 'force_n': round(F), 'lever_mm': round(e, 1), 'from': why,
+                     'bearing': {'mpa': round(p, 1), 'allowable_mpa': PIN_BEARING_MPA, 'sf': round(PIN_BEARING_MPA / p, 2), 'target': target,
+                                 'note': f'Ø{d:g} pin {L:g} mm into the PA6-CF web (humid, sustained): p = F/(dL) (4 + 6e/L) at the mouth'},
+                     'pin': {'mpa': round(sig), 'yield_mpa': PIN_YIELD_MPA, 'sf': round(PIN_YIELD_MPA / sig, 1), 'target': target,
+                             'note': '52100 dowel in bending at the frame\'s face'}}
+    return out
+
+
 def joint_checks(C, SH):
     """The joints the whole-leg study bonds, checked on their own in the rare case R1, each chain at its design share of
     the out-of-plane load (chain_moments): each knee's steel pin in bending where it leaves the upper link's eye, its
     6201s against their static rating, the eye's bearing pressure on its steel sleeve (linear along the sleeve); the
     apex 61812s; and each hub's bolted joint (8 x M5 into the adapter's tapped holes, 2 x Ø5 dowels on the Ø60 face):
     whether the screws' preload keeps it closed under its share of the hip's out-of-plane moment, and what the dowels
-    carry once the torque beats friction (the landing's spike reaches the hubs through the rotors' inertia)."""
+    carry once the torque beats friction (the landing's spike reaches the hubs through the rotors' inertia). And the
+    stop posts' pins, everyday (E3) and in the power cut (R3): stop_checks."""
     out = {case: _joint_checks_case(C, SH, case) for case in ('R1', 'R3')}
     checks = []
     for case, r in out.items():
@@ -303,7 +338,11 @@ def joint_checks(C, SH):
                 checks.append((case, joint, 'tipping', v['sf_tip'], rare))
                 if v['sf_dowel'] is not None:
                     checks.append((case, joint, 'dowel bearing', v['sf_dowel'], rare))
-    out['checks'] = [{'case': c, 'joint': j, 'check': k, 'sf': s, 'target': t, 'ok': s >= t} for c, j, k, s, t in checks]
+    out['stop_post'] = stop_checks(C)
+    for case, v in out['stop_post'].items():
+        checks += [(case, 'stop_post', 'pin bearing in the web', v['bearing']['sf'], v['bearing']['target']),
+                   (case, 'stop_post', 'pin bending', v['pin']['sf'], v['pin']['target'])]
+    out['checks'] = [{'case': c, 'joint': j, 'check': k, 'sf': s, 'target': t, 'ok': bool(s >= t)} for c, j, k, s, t in checks]
     c, j, k, s, t = min(checks, key=lambda x: x[3] / x[4])
     out['worst'] = {'case': c, 'joint': j, 'check': k, 'sf': s, 'target': t}
     out['all_ok'] = all(s >= t for _, _, _, s, t in checks)
@@ -488,16 +527,21 @@ def run(mesh, anim=True, only=None):
             st.torque(hub_fix, (0.0, 13.0, 0.0), (0, 1, 0), T)
         study('upper_link', key, setup, rare, f'a motor at {T:.0f} N m against a stalled leg', shape=upper_padded)
 
-    # E3: the cap into a stop post: the post (r = stop_r) pushes the link's edge, the hub twists
+    # E3: the cap into a stop post: the post's sleeve pushes the link's radial stop face square on (its +z one, the front
+    # link's knee-out stop), stop_arm() from the hub's axis, over the sleeve's height; the hub twists
+    th_f, arm = math.radians(fb.stop_dog_angle()), fb.stop_arm()
+    dog = lambda f: (f.kind == 'Plane' and abs(math.atan2(f.center[2], f.center[0]) - th_f) < math.radians(0.5)
+                     and 40.0 < math.hypot(f.center[0], f.center[2]) < fb.STOP_DOG_R and f.bbox[1] < 1.0 and f.bbox[4] > fb.P['upper_t'] - 1.0)
+
     def stop_setup(T):
         def f(st):
             st.fix(hub_fix)
-            edge = lambda f: f.kind == 'Plane' and f.center[2] > 10 and f.bbox[1] < 1.0 and f.bbox[4] > fb.P['upper_t'] - 1.0
-            r_c = 0.5 * fb.P['l1']                                     # the edge face's middle, roughly half the link
-            st.force(edge, (0.0, 0.0, -T / (r_c / 1000.0)))            # the same moment about the hub as the post's push
+            F = T / (arm / 1000.0)
+            force_at(st, dog, (F * math.sin(th_f), 0.0, -F * math.cos(th_f)),
+                     (arm * math.cos(th_f), fb.stop_contact_h() / 2, arm * math.sin(th_f)))
         return f
-    study('upper_link', 'E3', stop_setup(CAP), False, f"a motor at its {CAP:.0f} N m cap driving the link into a stop post at {fb.P['stop_r']:.0f} mm",
-          shape=upper_padded)
+    study('upper_link', 'E3', stop_setup(CAP), False, f"a motor at its {CAP:.0f} N m cap driving the link into a stop post: "
+          f"{CAP / arm * 1000:.0f} N square on its stop face, {arm:.1f} mm from the hub's axis", shape=upper_padded)
     study('upper_link', 'R3', stop_setup(C['R3']['stop_nm']), 'fault', C['R3']['from'], shape=upper_padded)
 
     # ---- the front lower link (knee at the origin, the apex seat at (l2, 0)): an axial strut, plus a lateral share
@@ -565,6 +609,32 @@ def run(mesh, anim=True, only=None):
             couple(st, lugs_at(ax_), (0.0, tf, 0.0))                                 # the motors' reactions on their lugs
             couple(st, lugs_at(bx_), (0.0, tr, 0.0))
         study('hip_frame', key, setup, c['rare'], f"{c['from']}; both upper links' pin forces, the out-of-plane moment {sr:.0%} rear / {sf:.0%} front")
+
+    # ---- the hip frame round a stop post (the front motor's knee-out post, in the ear past the motor's ring, and its
+    # knee-in post): the link's stop face pushes the post's sleeve and pin, F = T / stop_arm square to the face, its line
+    # through the pin's axis at the middle of the sleeve's contact (force_at on the pin's hole carries that moment). The
+    # link takes it back through its hub, the motor's 61812 seat, and the motor's lugs take the torque: the frame is in
+    # balance, and is judged away from the loaded faces (the pin's own bearing in the hole is stop_checks')
+    fo_, fi_ = fb.P['knee_out_deg'], fb.P['knee_in_deg']
+    th_f = fb.stop_dog_angle()
+    yc_stop = fb.stop_contact_h() / 2
+    for key, T, rare, k_post, phi, sign in (('E3o', CAP, False, 0, fo_ + th_f, 1), ('E3i', CAP, False, 2, fi_ - th_f, -1),
+                                            ('R3o', C['R3']['stop_nm'], 'fault', 0, fo_ + th_f, 1)):
+        px, pz = fb.stop_posts()[k_post]
+        F = T / (fb.stop_arm() / 1000.0)
+        a = math.radians(phi)                                   # the stop face, in the frame; the post is pushed along the
+        F3 = (-sign * F * math.sin(a), 0.0, sign * F * math.cos(a))   # link's travel: + = ccw (knee-out), - = cw (knee-in)
+        P3 = (px, yc_stop, pz)
+        hole = lambda f, px=px, pz=pz: f.kind == 'Cylinder' and rad(f, px, pz) < 0.5 and abs(half(f) - (fb.STOP_PIN[0] / 2 + fb.STOP_HOLE_PLAY)) < 0.2
+
+        def setup(st, F3=F3, P3=P3, hole=hole):
+            st.fix(flange_inserts)
+            force_at(st, hole, F3, P3)                                              # the pin in its hole
+            st.force(seat_at(ax_), tuple(-v for v in F3), probe=False)              # the link's hub, through the 61812
+            couple(st, lugs_at(ax_), -np.cross(np.asarray(P3) - centroid(st, seat_at(ax_)), F3) / 1000.0)   # the motor
+        where = 'knee-out post, in the ear past the motor\'s ring' if k_post == 0 else 'knee-in post, between the motors'
+        study('hip_frame', key, setup, rare, f"{'a motor at its cap into a stop' if key.startswith('E') else C['R3']['from']}: {T:.0f} N m, "
+              f"{F:.0f} N on the front motor's {where} ({yc_stop + 1:.1f} mm above the frame's face), the motor's hub and lugs taking it back")
 
     # ---- the output adapter (CNC 6061-T6, D46; the leg's frame, its axis along y): clamped where it sits on the motor,
     # its contact face on the output flange and the motor's three pins in their sockets (the screws pass in clearance

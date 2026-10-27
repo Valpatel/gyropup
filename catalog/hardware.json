@@ -3984,89 +3984,75 @@
   "notes": "Leg v2 now uses knee_pin_70 (92981A409, 12 x 70): the leg grew thicker (upper link 30, lower links 20 + 26, two 6201s per knee), so 60 no longer spans the knee stack; kept in the catalogue for reference. Earlier stack: Shoulder 60 = upper link 14 + washer 2 + 6001 8 + spacer 26 + 6001 8 + washer 2 (cad/fivebar.py stack). M10 x 16 thread into nut_m10_nyloc in the upper link's pocket (10 mm engaged). Same family as knee_pin (92981A411, 12 x 90), so leg v2 needs 4 M10 nylocs per robot (nut_m10_nyloc lists 2)."
  },
  {
-  "id": "mcmaster-92981a303",
-  "key": "stop_post",
+  "id": "mcmaster-98432a386",
+  "key": "stop_pin",
   "category": "fastener",
   "vendor": "McMaster-Carr",
-  "model": "92981A303",
-  "name": "Alloy Steel Shoulder Screws, 10 mm Shoulder Diameter, 20 mm Shoulder Length, M8 x 1.25 mm Thread",
-  "price_usd": 3.5,
-  "price_note": "McMaster-Carr: $3.50 each (price_usd is per piece)",
-  "price_checked": "2026-10-26",
+  "model": "98432A386",
+  "name": "Vented Pull-Out Dowel Pin with Flat Shaft, High-Strength 52100 Alloy Steel, 16 mm Diameter, 40 mm Long",
+  "price_usd": 5.88,
+  "price_note": "McMaster-Carr: $5.88 each (price_usd is per piece)",
+  "price_checked": "2026-10-27",
   "pack_qty": 1,
-  "pack_price_usd": 3.5,
+  "pack_price_usd": 5.88,
   "buy": [
    {
     "seller": "McMaster-Carr",
-    "url": "https://www.mcmaster.com/92981A303/",
+    "url": "https://www.mcmaster.com/98432A386/",
     "in_stock": null,
     "ships_from": "US"
    }
   ],
   "specs": {
-   "shoulder_d_mm": 10.0,
-   "shoulder_length_mm": 20.0,
+   "d_mm": 16.0,
+   "length_mm": 40.0,
    "thread": "M8x1.25",
-   "thread_length_mm": 13.0,
-   "head_d_mm": 16.0,
-   "head_height_mm": 7.0,
-   "mass_g": 26.3,
-   "mass_basis": "estimate (no CAD yet): nominal head + shoulder + thread less the hex socket (depth 7.2 mm, calibrated on 92981A411 / 92981A205 CAD) x 7.85 g/cm3",
-   "material": "Black-Oxide Alloy Steel",
+   "mass_g": 52.748,
+   "mass_basis": "CAD volume x density 7.85 g/cm3 (estimate)",
+   "material": "Alloy Steel",
    "mcmaster": {
     "raw": {
-     "Shoulder Fit": "Standard",
-     "Thread Direction": "Right Hand",
-     "Socket Head Profile": "Standard",
-     "Fastener Head Type": "Socket",
-     "Drive Style": "Hex",
-     "Material": "Black-Oxide Alloy Steel",
-     "Shoulder Diameter": "10 mm",
-     "Shoulder Diameter Tolerance": "-0.072 mm to -0.01 mm",
-     "Shoulder Length": "20 mm",
-     "Shoulder Length Tolerance": "0 mm to 0.25 mm",
+     "Tolerance Rating": "Standard",
+     "Construction": "Vented",
+     "Removal Method": "Pull Out",
+     "Fastener Head Type": "Tapped",
+     "Shaft Type": "Flat",
+     "Material": "Alloy Steel",
+     "Diameter": "16 mm",
+     "Diameter Tolerance": "0.007 mm to 0.018 mm",
+     "Length": "40 mm",
      "Thread Size": "M8 × 1.25 mm",
-     "Thread Length": "13 mm",
-     "Head Diameter": "16 mm",
-     "Head Height": "7 mm",
-     "Drive Size": "5 mm",
-     "Tensile Strength": "140,000 psi",
-     "Hardness": "Rockwell C32",
-     "Head Texture": "Knurled",
-     "Minimum Shear Strength": "84,000 psi",
-     "Performance": "High Strength, Wear Resistant",
-     "Relative Thread Length": "Standard",
-     "Relative Thread Size": "Standard",
-     "Specifications Met": "ISO 7379",
+     "Double Shear Breaking Strength": "33,500 lbf",
+     "Minimum Hardness": "Rockwell C52",
+     "Specifications Met": "DIN 7979D-m6",
+     "End Shape": "Chamfer",
+     "End Type": "Plain",
+     "For Use With": "Blind Holes",
+     "Performance": "High Strength, Easy Removal",
+     "Pin Type": "Dowel",
+     "Steel Grade": "52100 Alloy Steel",
      "System of Measurement": "Metric",
-     "Thread Fit": "Metric Class 5g6g",
-     "Thread Spacing": "Coarse",
-     "Thread Type": "Metric",
-     "Country of Origin": "United States, Belgium, Canada, China, France, Germany, India, Indonesia, Italy, Japan, Malaysia, Mexico, Philippines, Poland, South Korea, Switzerland, Taiwan, Thailand, Vietnam",
+     "Country of Origin": "Belgium, Canada, China, France, Germany, India, Indonesia, Italy, Japan, Malaysia, Mexico, Philippines, Poland, South Korea, Switzerland, Taiwan, Thailand, Vietnam",
      "DFARS Compliance": "Not Specialty Metals Compliant",
      "Export Control Classification Number (ECCN)": "EAR99",
      "REACH Compliance": "REACH (EC 1907/2006) (02/04/2026, 253 SVHC) Compliant",
      "RoHS Compliance": "RoHS 3 (2015/863/EU) Compliant",
-     "Schedule B Number": "731815.9000",
-     "U.S.–Mexico–Canada Agreement (USMCA) Qualifying": "No"
+     "Schedule B Number": "731829.0000",
+     "U.S.–Mexico–Canada Agreement (USMCA) Qualifying": "No",
+     "Related Products": "Puller Handle"
     },
     "parsed": {
-     "Shoulder Diameter": {
-      "value": 10.0,
+     "Diameter": {
+      "value": 16.0,
       "unit": "mm"
      },
-     "Shoulder Diameter Tolerance": {
-      "min": -0.072,
-      "max": -0.01,
+     "Diameter Tolerance": {
+      "min": 0.007,
+      "max": 0.018,
       "unit": "mm"
      },
-     "Shoulder Length": {
-      "value": 20.0,
-      "unit": "mm"
-     },
-     "Shoulder Length Tolerance": {
-      "min": 0.0,
-      "max": 0.25,
+     "Length": {
+      "value": 40.0,
       "unit": "mm"
      },
      "Thread Size": {
@@ -4075,51 +4061,46 @@
       "pitch": 1.25,
       "unit": "mm"
      },
-     "Thread Length": {
-      "value": 13.0,
-      "unit": "mm"
-     },
-     "Head Diameter": {
-      "value": 16.0,
-      "unit": "mm"
-     },
-     "Head Height": {
-      "value": 7.0,
-      "unit": "mm"
-     },
-     "Drive Size": {
-      "value": 5.0,
-      "unit": "mm"
-     },
-     "Tensile Strength": {
-      "value": 965.2664,
-      "unit": "MPa"
-     },
-     "Minimum Shear Strength": {
-      "value": 579.15984,
-      "unit": "MPa"
+     "Double Shear Breaking Strength": {
+      "value": 149015.4236,
+      "unit": "N"
      }
     }
    }
   },
   "cad": {
-   "file": null,
-   "kind": "shoulder_screw",
-   "frame": "axis +Z, centred on the axis, underside of the head at z = 0, head on +z, shoulder and thread towards -z",
+   "file": "references/vendor/mcmaster/98432A386/98432A386.norm.step",
+   "kind": "pin",
+   "frame": "axis +Z, centred on the axis; the larger end (flange, head, collar) at z = 0 and the part on +z; when both ends are the same size, the heavier end at z = 0",
    "available": true,
-   "step_url": "https://www.mcmaster.com/92981A303/",
-   "bbox_mm": null,
-   "volume_mm3": null,
-   "pending": "STEP not downloaded yet: on 2026-10-26 McMaster-Carr asked for a login before CAD downloads ('Please log in and reload the page to download CAD', then downloads cancelled). Finish with .venv/bin/python tools/mcmaster_cad.py --catalog --only knee_pin_60 stop_post insert_m8 washer_m12_thin knee_spacer screw_m6x40 (logged in, or once the anonymous limit resets), or save the STEP from a logged-in browser as references/vendor/mcmaster/92981A303/92981A303.step and run the same command offline."
+   "step_url": "https://www.mcmaster.com/98432A386/",
+   "bbox_mm": {
+    "min": [
+     -8.0,
+     -8.0,
+     0.0
+    ],
+    "max": [
+     8.0,
+     7.76,
+     40.0
+    ],
+    "size": [
+     16.0,
+     15.76,
+     40.0
+    ]
+   },
+   "volume_mm3": 6719.459
   },
-  "frame": "axis +Z, centred on the axis, underside of the head at z = 0, head on +z, shoulder and thread towards -z",
+  "frame": "axis +Z, centred on the axis; the larger end (flange, head, collar) at z = 0 and the part on +z; when both ends are the same size, the heavier end at z = 0",
   "sources": [
-   "https://www.mcmaster.com/92981A303/"
+   "https://www.mcmaster.com/98432A386/"
   ],
   "confidence": "product page",
-  "used_for": "leg v2 hard-stop posts: 4 per leg in the hip frame's M8 inserts; a TPU 95A sleeve (18 x 10) over the shoulder stops the upper links at +3 / -97 deg",
+  "used_for": "leg v2 stop posts (D49): 4 per leg, 23 mm into blind Ø16 holes in the hip frame's web (a light fit, Loctite 638 filling the gap), the tapped end up under the TPU sleeve; the upper links' radial stop faces land on the sleeves at +3 / -97 deg",
   "qty_per_robot": 8,
-  "notes": "ISO 7379 10 x 20, M8 x 13 thread: the shoulder seats on the insert's face and the thread runs the whole 12.7 mm of insert_m8. Head 16 x 7 mm (cad/fivebar.py ISO7379_HEAD has 16 x 8 for the 10 mm size)."
+  "notes": "Vented pull-out dowel (DIN 7979 D, m6): the flat lets air and retaining compound out of the blind hole (turn it to face the motor's axis, square to the stop's load), and the M8 thread in its end takes a puller screw, so a pin can come out of the printed frame. Ø16 because a Ø12 pin 22 mm into the printed web bears at SF 0.6 everyday against the link's straight edge and 1.2 with the radial stop face, against 2 (cad/leg_studies.py stop_checks); Ø16 x 23 with the face: 2.1."
  },
  {
   "id": "mcmaster-94459a778",
@@ -4218,8 +4199,8 @@
    "https://www.mcmaster.com/94459A778/"
   ],
   "confidence": "product page",
-  "used_for": "leg v2 stop posts: M8 heat-set inserts in the PA6-CF hip frame (4 per leg)",
-  "qty_per_robot": 8,
+  "used_for": "no longer in the leg (its stop posts are Ø16 pins in blind holes since D49); kept for the body plan's M8 inserts (docs/body-plan.md)",
+  "qty_per_robot": null,
   "notes": "Installed length 12.7 mm; recommended hole: letter drill V (9.58 mm), 9.6 mm maximum (McMaster). cad/fivebar.py cuts a 10 x 16 pilot: make it 9.6 (a printed hole comes out a little small, so 9.6-9.7 as modelled); 16 deep leaves room below the insert for displaced melt and the post's thread tip. Minimum material 13.5 mm (McMaster): the hip frame is 24.1 mm thick at the posts. The 12.7 mm length, not the 6.4 mm 94459A777, so the stop post's whole 13 mm thread is engaged and the insert resists the impact bending of a stop. Same family as insert_m5 / insert_m3 (94459A, standard brass)."
  },
  {

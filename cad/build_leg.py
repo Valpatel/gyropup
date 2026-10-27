@@ -41,7 +41,7 @@ ROT = {'hip_frame': DOWN_OUTER,      # the web's outer face down, the flanges up
        'wheel_link': DOWN_OUTER,     # body and knee boss end flush on the outer face; the hub and the boss rise
        'output_adapter': DOWN_INNER, # the motor side down, the standard face up
        'apex_spacer': DOWN_INNER,
-       'stop_sleeve': DOWN_INNER}
+       'stop_sleeve': DOWN_OUTER}    # cap-down: the bore opens upwards, nothing bridged
 
 # Bought parts per leg: catalogue key (catalog/hardware.json, or a motor id), how many, what for
 BOUGHT = [
@@ -55,8 +55,7 @@ BOUGHT = [
     ('washer_m12_thin', 4, 'each side of each knee\'s bearing stack'),
     ('knee_spacer', 2, 'between each knee\'s two inner races (28 mm)'),
     ('eye_sleeve', 4, 'steel sleeves, two end to end in each upper link\'s knee eye: spread the pin\'s load on the plastic'),
-    ('stop_post', 4, 'stop posts (TPU sleeves over them)'),
-    ('insert_m8', 4, 'stop posts, in the hip frame'),
+    ('stop_pin', 4, 'stop posts: Ø16 x 40 vented pull-out dowels, 23 mm into blind holes in the hip frame (retaining compound), TPU sleeves over them'),
     ('screw_m4x20', 20, 'motor lugs (10 per motor), heads 10 mm down in the hip frame: 5.9 mm into the 7 mm threads'),
     ('dowel_5x16', 8, 'into each motor\'s two locating holes (4), and two in each adapter\'s standard face, pressed into its H7 holes (4)'),
     ('screw_m5x25', 18, 'motor outputs through the CNC output adapters (9 per motor), heads in pockets below the face'),
