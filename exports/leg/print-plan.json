@@ -15,29 +15,12 @@
    ],
    "fits": true,
    "placement": "turned",
-   "grams_each": 782,
-   "grams": 782,
-   "hours": 51.2,
-   "cost_usd": 62.54,
+   "grams_each": 772,
+   "grams": 772,
+   "hours": 50.6,
+   "cost_usd": 61.74,
    "infill": "100 %",
    "how": "printed PA6-CF web-down (turned 45 deg on the bed), 100 % solid; 20 x M4 into the motors, 2 x 61812 pressed in (6 x M3 + washers), 6 x M5 inserts in the flange ends, 4 x M8 inserts for the stop posts"
-  },
-  "output_adapter": {
-   "material": "pa6-cf",
-   "qty": 2,
-   "size_mm": [
-    64,
-    64,
-    28
-   ],
-   "fits": true,
-   "placement": "straight",
-   "grams_each": 72,
-   "grams": 143,
-   "hours": 9.4,
-   "cost_usd": 11.44,
-   "infill": "100 %",
-   "how": "printed PA6-CF, 100 % solid; 8 x M5 heat-set inserts in the face; sockets for the motor's 3 x \u00d86 pins; 9 x M5 12.9 screws with washers into the motor"
   },
   "upper_link": {
    "material": "pa6-cf",
@@ -49,10 +32,10 @@
    ],
    "fits": true,
    "placement": "straight",
-   "grams_each": 364,
-   "grams": 728,
-   "hours": 47.7,
-   "cost_usd": 58.2,
+   "grams_each": 362,
+   "grams": 725,
+   "hours": 47.5,
+   "cost_usd": 57.99,
    "infill": "100 %",
    "how": "printed PA6-CF flat, 30 mm, 100 % solid; 8 x M5 into the adapter; the knee shoulder screw clamped by an M10 nyloc in a pocket"
   },
@@ -111,36 +94,36 @@
    "material": "tpu95",
    "qty": 4,
    "size_mm": [
-    18,
-    18,
+    26,
+    26,
     19
    ],
    "fits": true,
    "placement": "straight",
-   "grams_each": 4,
-   "grams": 16,
-   "hours": 1.6,
-   "cost_usd": 0.67,
+   "grams_each": 10,
+   "grams": 42,
+   "hours": 4.3,
+   "cost_usd": 1.75,
    "infill": "100 %",
    "how": "printed TPU 95A, on the stop posts"
   }
  },
  "by_material": {
   "pa6-cf": {
-   "grams": 2724,
-   "hours": 178.5,
-   "cost_usd": 217.86,
-   "parts": 8
+   "grams": 2568,
+   "hours": 168.3,
+   "cost_usd": 205.41,
+   "parts": 6
   },
   "tpu95": {
-   "grams": 16,
-   "hours": 1.6,
-   "cost_usd": 0.67,
+   "grams": 42,
+   "hours": 4.3,
+   "cost_usd": 1.75,
    "parts": 4
   }
  },
  "too_big": [],
- "total_hours": 180.1,
- "total_grams": 2740,
+ "total_hours": 172.6,
+ "total_grams": 2610,
  "note": "hours are rough: grams / material density / a strength-holding volumetric rate"
 }

@@ -216,5 +216,17 @@
    "https://store.bblcdn.com/58df32731eab4c90a7dac9b12e13ba88.pdf",
    "https://us.store.bambulab.com/products/tpu-95a-hf"
   ]
+ },
+ "al6061": {
+  "kind": "metal",
+  "name": "Aluminium 6061-T6 (machined)",
+  "density_g_cm3": 2.7,
+  "tensile_mpa": 310,
+  "yield_mpa": 276,
+  "modulus_gpa": 68.9,
+  "made": "CNC from bar, ordered online at an instant price (JLCCNC, backup Xometry): not a filament, never in a print plan",
+  "source": [
+   "ASM Aerospace Specification Metals, 6061-T6 (MatWeb), typical properties"
+  ]
  }
 }

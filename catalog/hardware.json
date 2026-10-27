@@ -1786,6 +1786,115 @@
   "qty_per_robot": 6
  },
  {
+  "id": "mcmaster-91290a252",
+  "key": "screw_m5x25",
+  "category": "fastener",
+  "vendor": "McMaster-Carr",
+  "model": "91290A252",
+  "name": "Black-Oxide Alloy Steel Socket Head Screw, US Origin, M5 x 0.8 mm Thread Size, 25 mm Long",
+  "price_usd": 0.2192,
+  "price_note": "McMaster-Carr: $10.96 per pack of 50 (price_usd is per piece)",
+  "price_checked": "2026-10-27",
+  "pack_qty": 50,
+  "pack_price_usd": 10.96,
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/91290A252/",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "thread": "M5x0.8",
+   "length_mm": 25.0,
+   "head_d_mm": 8.5,
+   "head_height_mm": 5.0,
+   "mass_g": 5.02,
+   "mass_basis": "unknown",
+   "material": "Black-Oxide Alloy Steel",
+   "mcmaster": {
+    "raw": {
+     "Thread Size": "M5 × 0.8 mm",
+     "Thread Spacing": "Coarse",
+     "Thread Type": "Metric",
+     "Thread Fit": "Metric Class 5g6g",
+     "Thread Direction": "Right Hand",
+     "Socket Head Profile": "Standard",
+     "Fastener Head Type": "Socket",
+     "Drive Style": "Hex",
+     "Length": "25 mm",
+     "Head Diameter": "8.5 mm",
+     "Head Height": "5 mm",
+     "Threading": "Fully Threaded",
+     "Tensile Strength": "170,000 psi",
+     "Fastener Strength Grade/Class": "Class 12.9",
+     "Drive Size": "4 mm",
+     "Hardness": "Rockwell C41",
+     "Material": "Black-Oxide Alloy Steel",
+     "Performance": "High Strength",
+     "Specifications Met": "DIN 912, ISO 4762",
+     "System of Measurement": "Metric",
+     "Tip Type": "Flat",
+     "Country of Origin": "United States",
+     "DFARS Compliance": "Specialty Metals Compliant (252.225-7009)",
+     "Export Control Classification Number (ECCN)": "EAR99",
+     "REACH Compliance": "Not Compliant",
+     "RoHS Compliance": "RoHS 3 (2015/863/EU) Compliant",
+     "Schedule B Number": "731815.9000",
+     "U.S.–Mexico–Canada Agreement (USMCA) Qualifying": "Yes"
+    },
+    "parsed": {
+     "Thread Size": {
+      "thread": "M5x0.8",
+      "d": 5.0,
+      "pitch": 0.8,
+      "unit": "mm"
+     },
+     "Length": {
+      "value": 25.0,
+      "unit": "mm"
+     },
+     "Head Diameter": {
+      "value": 8.5,
+      "unit": "mm"
+     },
+     "Head Height": {
+      "value": 5.0,
+      "unit": "mm"
+     },
+     "Tensile Strength": {
+      "value": 1172.1092,
+      "unit": "MPa"
+     },
+     "Drive Size": {
+      "value": 4.0,
+      "unit": "mm"
+     }
+    }
+   },
+   "mass_note": "interpolated between the M5 x 20 (4.23 g) and M5 x 30 (5.80 g) pages: the page lists no weight"
+  },
+  "cad": {
+   "file": null,
+   "kind": "screw",
+   "frame": "axis +Z, centred on the axis, head on +z and shank towards -z; z = 0 at the underside of the head (socket, button, pan, hex and flanged heads) or at the top face of a countersunk (flat) head",
+   "available": true,
+   "step_url": "https://www.mcmaster.com/91290A252/",
+   "bbox_mm": null,
+   "volume_mm3": null,
+   "pending": "STEP not downloaded yet: McMaster-Carr asks for a login before CAD downloads (the product page itself reads without one). Finish with .venv/bin/python tools/mcmaster_cad.py --catalog --only screw_m5x25 once logged in, or save the STEP from a logged-in browser as references/vendor/mcmaster/91290A252/91290A252.step and run the same command."
+  },
+  "frame": "axis +Z, centred on the axis, head on +z and shank towards -z; z = 0 at the underside of the head (socket, button, pan, hex and flanged heads) or at the top face of a countersunk (flat) head",
+  "sources": [
+   "https://www.mcmaster.com/91290A252/"
+  ],
+  "confidence": "product page",
+  "used_for": "motor output (RS-04: 9 per adapter x 4) through the CNC output adapter into the motor's output flange; heads in Ø10 pockets 0.6 mm below the standard face, 6 mm into the motor's 6.5 mm threads",
+  "qty_per_robot": 36,
+  "notes": "replaces screw_m5x30 on the motor outputs (2026-10-27): the heads must sit below the AO face, which the 30 mm screws cannot without bottoming in the motor"
+ },
+ {
   "id": "mcmaster-91290a254",
   "key": "screw_m5x30",
   "category": "fastener",
@@ -1909,8 +2018,8 @@
    "https://www.mcmaster.com/91290A254/"
   ],
   "confidence": "product page",
-  "used_for": "motor output (RS-04: 9 per adapter x 4) through the printed adapter into the motor",
-  "qty_per_robot": 36,
+  "used_for": "spare: was the motor output screw while the adapters were printed (now screw_m5x25)",
+  "qty_per_robot": 0,
   "notes": "Seat at z 23.1 (counterbore 4.5 deep in a 27.6 adapter) + ISO 7089 washer 1.0 -> 5.9 mm into the motor (6.5 min thread)."
  },
  {

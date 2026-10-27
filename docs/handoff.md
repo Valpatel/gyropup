@@ -85,3 +85,19 @@ add-on if jump height or runtime ever need it.
 
 PR #19 (pure-couple torques in fea) is merged. Gyropup's venv imports cadagent from ~/Code/cad-agent-gyropup-int.
 Repoint it to dev once nothing else depends on that worktree.
+
+## Update 2026-10-27 midday (usage limit reached again)
+
+- **Leg committed** at the 14.75 kg design mass with the machined output adapters (D46). Everything passes in
+  exports/leg/fea/summary.json except **wheel_link R1w: SF 1.13 against 1.2** (the full 2,065 N drop_150 axle spike
+  on the wheel link alone, a deliberately conservative case; R1 on the same link is 1.89). Fix next: thicken the wheel
+  link's body (P['wheel_t']) a few mm or add material where its arm meets the hub, rerun cad/leg_studies.py. The drop
+  test is the last bench test, so nothing earlier waits on it. Front link R1 is 1.21 (just passes).
+- **D39 text** still quotes the 13.1 kg numbers; the 14.75 kg rig (exports/leg/rig-results.json): jump gearbox
+  101.5 N m (peak 107.3), undamped power cut 1,713 N on a knee (fault case, FEA R3K 1.27 >= 1.0), damped 263 N.
+- **Agents were stopped** at the limit, their work uncommitted in their worktrees: turret (~/Code/gyropup-turret,
+  7 commits ahead), leg rig (~/Code/gyropup-legrig), body (~/Code/gyropup-body). A Fable pre-order review of the leg
+  package and a review of cad-agent PR #23 (the FEA temp-folder fix, already merged into ~/Code/cad-agent-gyropup-int)
+  were also stopped. Restart each from its plan; recreate the 2-hour program tick (its prompt now carries the disk policy).
+- **Disk:** heavy files go to /mnt/storage-10tb/claude-scratch/gyropup/ (memory: disk-space-policy).
+- **Build page:** designer/build.html (top bar "Build"): everything to order and print, by seller.

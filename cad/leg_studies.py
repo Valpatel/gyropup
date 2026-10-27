@@ -44,9 +44,11 @@ from sim.leg_rig import WHEEL_R, pin_forces  # noqa: E402
 
 OUT = R / 'exports' / 'leg' / 'fea'
 TARGETS = {'sf': 2.0, 'sf_rare': 1.2,
+           'sf_fault': 1.0,                             # a fault (an uncontrolled power cut while standing): nothing may
+                                                        # break; inspect the knees after one (D39)
            'bearing_s0': 2.0, 'bearing_s0_rare': 1.0}   # rolling bearings: static safety s0 = C0 / P0 (SKF: >= 1 with normal
                                                         # demands on running; a rare overload may use it, everyday ones not)
-ROBOT_KG = 26.2                      # the v2 robot (sim/robot_v2.py); the rig carries half
+ROBOT_KG = 29.5                      # the robot (docs/body-plan.md's budget with its real parts); the rig carries half
 G = 9.81
 CAP, PEAK = 60.0, 120.0
 
@@ -110,7 +112,7 @@ def cases():
         c['loads'] = loads_at(c['h'], c['Fw3'])
     out['R1w']['gearbox_nm'] = out['R1']['gearbox_nm']
     Fo = off['peak_axle_force_n']
-    out['R3'] = {'title': 'collapse', 'rare': True, 'stop_nm': off['peak_stop_nm'], 'h': max(102.0, off['L_range_mm'][0]),
+    out['R3'] = {'title': 'collapse', 'rare': 'fault', 'stop_nm': off['peak_stop_nm'], 'h': max(102.0, off['L_range_mm'][0]),
                  'gearbox_nm': off.get('peak_gearbox_nm'),
                  'Fw3': (0.0, 0.10 * Fo, Fo),
                  'from': f"rig 'power_off' (no motor damping): folded onto the stops, {off['peak_stop_nm']:.0f} N m on a stop "
@@ -258,10 +260,10 @@ def members_only(st, j):
     return round(st.material.strength_mpa / vm, 2), round(vm, 2)
 
 
-HUB_PRELOAD_N = 1200.0       # per M5 into a heat-set insert in the printed adapter: an estimate, about half the insert's
-                             # pull-out in printed nylon; the bench's torque-tension coupon replaces it
-HUB_MU = 0.15                # printed PA6-CF on PA6-CF, dry (low end, so friction is not overstated)
-DOWEL_ENGAGED = 8.0          # mm of each Ø5 x 16 dowel in the link and in the adapter
+HUB_PRELOAD_N = 1200.0       # per M5 into the CNC adapter's tapped 6061, held by the printed link under its head: an
+                             # estimate (PA6-CF under a Ø8.5 head creeps); the bench's torque-tension coupon replaces it
+HUB_MU = 0.15                # printed PA6-CF on machined 6061, dry (low end, so friction is not overstated)
+DOWEL_ENGAGED = 8.0          # mm of each Ø5 x 16 dowel in the link (and 8 pressed into the adapter's H7 holes)
 
 
 PAD_RIM_BAND = 5.0           # mm: the upper link's design stress leaves out this band round the rim of its bonded contact
@@ -283,13 +285,14 @@ def joint_checks(C, SH):
     """The joints the whole-leg study bonds, checked on their own in the rare case R1, each chain at its design share of
     the out-of-plane load (chain_moments): each knee's steel pin in bending where it leaves the upper link's eye, its
     6201s against their static rating, the eye's bearing pressure on its steel sleeve (linear along the sleeve); the
-    apex 61812s; and each hub's bolted joint (8 x M5 into inserts, 2 x Ø5 dowels on the Ø60 face round the spigot):
+    apex 61812s; and each hub's bolted joint (8 x M5 into the adapter's tapped holes, 2 x Ø5 dowels on the Ø60 face):
     whether the screws' preload keeps it closed under its share of the hip's out-of-plane moment, and what the dowels
     carry once the torque beats friction (the landing's spike reaches the hubs through the rotors' inertia)."""
     out = {case: _joint_checks_case(C, SH, case) for case in ('R1', 'R3')}
-    rare, s0 = TARGETS['sf_rare'], TARGETS['bearing_s0_rare']
     checks = []
     for case, r in out.items():
+        rare = TARGETS['sf_fault'] if C[case]['rare'] == 'fault' else TARGETS['sf_rare']
+        s0 = TARGETS['bearing_s0_rare']
         for joint, v in r.items():
             if joint.startswith('knee'):
                 checks += [(case, joint, '6201 s0', v['6201']['sf'], s0), (case, joint, 'pin', v['pin']['sf'], rare),
@@ -381,7 +384,7 @@ def run(mesh, anim=True, only=None):
         if anim:
             r['animation'] = str(st.animate(OUT / f'{part}-{case}.mp4', view=VIEWS.get(part, (25, -60)), title=f'{part} {case}: {MATERIALS[mat].name}').relative_to(R))
             r['viewer'] = str(st.export_viewer(OUT / f'{part}-{case}.json').relative_to(R))
-        target = TARGETS['sf_rare' if rare else 'sf']
+        target = TARGETS['sf_fault' if rare == 'fault' else 'sf_rare' if rare else 'sf']
         if part == 'leg':                                        # the printed members; the joints are joint_checks()
             r['safety_factor_with_joint_plugs'] = r['safety_factor']
             r['safety_factor'], r['von_mises_design_mpa'] = members_only(st, JOINTS[case])
@@ -492,7 +495,7 @@ def run(mesh, anim=True, only=None):
         return f
     study('upper_link', 'E3', stop_setup(CAP), False, f"a motor at its {CAP:.0f} N m cap driving the link into a stop post at {fb.P['stop_r']:.0f} mm",
           shape=upper_padded)
-    study('upper_link', 'R3', stop_setup(C['R3']['stop_nm']), True, C['R3']['from'], shape=upper_padded)
+    study('upper_link', 'R3', stop_setup(C['R3']['stop_nm']), 'fault', C['R3']['from'], shape=upper_padded)
 
     # ---- the front lower link (knee at the origin, the apex seat at (l2, 0)): an axial strut, plus a lateral share
     knee_seats = lambda f: f.kind == 'Cylinder' and rad(f) < 0.5 and half(f) < fb.KC['bearing_od'] / 2 + 1
@@ -560,17 +563,22 @@ def run(mesh, anim=True, only=None):
             couple(st, lugs_at(bx_), (0.0, tr, 0.0))
         study('hip_frame', key, setup, c['rare'], f"{c['from']}; both upper links' pin forces, the out-of-plane moment {sr:.0%} rear / {sf:.0%} front")
 
-    # ---- the output adapter (motor frame: axis +y from the module's placement), as GMI's A1
-    zf = -fb.Y['motor_out']
+    # ---- the output adapter (CNC 6061-T6, D46; the leg's frame, its axis along y): clamped where it sits on the motor,
+    # its contact face on the output flange and the motor's three pins in their sockets (the screws pass in clearance
+    # holes); loaded at the standard face's tapped holes and dowels. Its 61812 is left out: all of the hip's bending
+    # goes through the adapter to the motor (conservative)
     ld = C['R1']['loads']
     M_out = max(SH['R1']['rear'], SH['R1']['front']) * math.hypot(*ld['M_B_out'])   # the more loaded hub's share at the hip
     Frad = max(float(np.linalg.norm(ld['F_D_on_upper'])), float(np.linalg.norm(ld['F_C_on_upper'])))
     T_R1 = C['R1'].get('gearbox_nm') or PEAK                # a landing's torque through the hub: what the rig measured
-    face_bolts = lambda f: f.kind == 'Cylinder' and 22 < math.hypot(f.center[0], f.center[2]) < 28 and f.center[1] > -12
-    motor_holes = lambda f: f.kind == 'Cylinder' and abs(math.hypot(f.center[0], f.center[2]) - 18.0) < 2.5 and half(f) < 3.6
+    face_bolts = lambda f: f.kind == 'Cylinder' and 22 < math.hypot(f.center[0], f.center[2]) < 28 and f.center[1] > -16
+    pins = gmi.motor_interface(fb.MOTOR)['output']['dowels']
+    motor_seat = lambda f: ((f.kind == 'Plane' and abs(f.center[1] - fb.Y['motor_out']) < 0.05)
+                            or (f.kind == 'Cylinder' and abs(math.hypot(f.center[0], f.center[2]) - pins['pcd'] / 2) < 0.5
+                                and abs(half(f) - pins['d'] / 2) < 0.1 and f.bbox[4] < fb.Y['motor_out'] + 5))
     for key, T, rare, M in (('R1', T_R1, True, M_out), ('R2', PEAK, True, 0.0), ('E1', CAP, False, M_out * 0.25)):
         def setup(st, T=T, M=M):                            # R2: a motor at its full torque against a stalled leg (a fault)
-            st.fix(motor_holes)
+            st.fix(motor_seat)
             st.torque(face_bolts, (0.0, 0.0, 0.0), (0, 1, 0), T)
             if M:
                 couple(st, face_bolts, (M, 0.0, 0.0))
@@ -591,7 +599,8 @@ def run(mesh, anim=True, only=None):
     summary = {'cases': {k: {kk: (vv if not isinstance(vv, np.ndarray) else vv.tolist()) for kk, vv in v.items() if kk != 'loads'} for k, v in C.items()},
                'targets': TARGETS, 'mesh_mm': mesh, 'results': results, 'front_link_buckling': buckling, 'joints': joints, 'shares': SH,
                'verdict': {'min_sf_everyday': min((r['safety_factor'] for r in results if not r['case'].startswith('R')), default=None),
-                           'min_sf_rare': min((r['safety_factor'] for r in results if r['case'].startswith('R')), default=None),
+                           'min_sf_rare': min((r['safety_factor'] for r in results if r['case'].startswith('R') and r['target'] == TARGETS['sf_rare']), default=None),
+                           'min_sf_fault': min((r['safety_factor'] for r in results if r['target'] == TARGETS['sf_fault']), default=None),
                            'all_ok': all(r['ok'] for r in results) and P_cr / max(1.0, C['R1']['loads']['front_axial']) >= 3.0 and joints['all_ok'],
                            'joints_worst': joints['worst'],
                            'weakest': min(results, key=lambda r: r['safety_factor'] / r['target'])['part'] + ' ' + min(results, key=lambda r: r['safety_factor'] / r['target'])['case'] if results else None}}

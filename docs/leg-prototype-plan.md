@@ -43,9 +43,11 @@ radial rate. Then stand, squat, jump, drop, and the power cut last, with the bum
   (front link E1); landings (R1, the rig's real knee force 753 N at 330 mm, 10 % fore-aft and sideways): whole leg
   2.33, upper link 1.41 / 1.64, front link 1.30, wheel link 1.95 (1.36 at the full 1,719 N axle spike), hip frame
   1.67, knee 6201s s0 1.39, pins 1.88, eye pressure 1.71, apex 61812 4.59, hub tipping 2.03; front-link buckling
-  SF 11. The output adapter's R1 is 1.15 against 1.2: it carries 98 N m plus a 142 N m out-of-plane moment and 850 N
-  radial in one conservative case (the more loaded hub's share, all at once). Accept it for the first leg: it is a
-  9.4 h print, so print a spare, and it is not loaded that way until the drop test (section 5).
+  SF 11. **The output adapters are machined 6061-T6 (D46, 2026-10-27):** held where they really sit on the motor (the
+  contact face and the motor's pins), the printed adapter came out at SF 0.86-1.04 across the layers in R1 at the
+  14.75 kg design mass; the CAD check also found its two face dowels sat inside bolt holes (so there were none), six
+  face inserts broke into the motor-screw counterbores, and the motor screws' heads stood 0.2-1.2 mm into the upper
+  link. The machined adapter fixes all three (exports/leg/cnc/README.md) and is at SF 7.6 in R1.
 - **The rig physics.** `sim/leg_rig.py` at 13.1 kg (carriage 8.398 kg = frame 3.842 incl. motors and bearings +
   dummy 4.556; moving parts 4.702 kg): stand-up 12.1 N m peak; squat 12.2 N m; jump at the 60 N m cap 278.9 mm,
   3,700 N on the tyre, 2,514 N on the axle, 97.6 N m through a gearbox, 753 N on a knee; 150 mm drop 1,719 N on the
@@ -391,17 +393,24 @@ Prices as read on the date given; the leg's McMaster lines are from `catalog/har
 | Eye sleeve DIN 179 12 x 18 x 20 | 4 | McMaster 96990A403 $16.11 | JW Winco DIN 179-B12-20 (stainless, price not shown); Reid DM-12025 $7.88 is 25 long (eye change) |
 | Stop post ISO 7379 10 x 20, M8 | 4 | McMaster 92981A303 $3.50 | Belmetric BSHLDR8X10X20/33 $4.05, in stock |
 | M8 heat-set insert 12.7 long | 4 | McMaster 94459A778 $0.65 | CNC Kitchen M8 x 12.7 (3DJake $11.18 / 20; 9.7 mm hole) |
-| M5 heat-set insert 7.9 long | 22 (+ coupons) | McMaster 94459A775 $0.27 | CNC Kitchen M5 x 9.5 (3DJake, deeper hole) |
+| M5 heat-set insert 7.9 long | 6 (+ coupons) | McMaster 94459A775 $0.27 | CNC Kitchen M5 x 9.5 (3DJake, deeper hole) |
 | M4 x 20 SHCS | 20 | McMaster 91290A168 $0.14 | any 12.9 |
-| O5 x 16 dowel | 4 | McMaster 91595A352 $0.38 | any DIN 6325 m6 |
-| M5 x 30 SHCS | 18 | McMaster 91290A254 $0.24 | any 12.9, with washers |
+| O5 x 16 dowel | 8 | McMaster 91595A352 $0.38 | any DIN 6325 m6 (4 into the motors, 2 in each adapter's face) |
+| M5 x 25 SHCS | 18 | McMaster 91290A252 $0.22 | any 12.9 (heads sit 0.6 mm below the adapter's face: not longer) |
 | M5 x 40 SHCS partial thread | 16 | McMaster 91290A662 $0.16 | any 12.9 |
 | M6 x 30 SHCS | 4 | McMaster 91290A332 $0.23 | measure the BotWheel's thread depth first (bom.json note) |
 | DIN 471-60 circlip | 1 | McMaster 98541A174 $3.05 | McMaster 90154A811 $4.41 (zinc) |
 | Filament PA6-CF | 3 kg + 1 spare | Bambu Lab US $79.99/kg (catalog 10-25); Gigaparts $79.99 in stock (today) | Bambu PAHT-CF $94.99/kg (same nozzle, slightly weaker) |
 | Filament TPU 95A HF, PETG | 1 + 1 kg | Bambu US $41.99, $13.99 | any |
 
-Leg bought total about **$930 with the alternate bearings** ($1,121 all-McMaster), plus filament about $320.
+**Leg, machined to order (per leg; D40, D46):**
+
+| Part | Qty | Primary | Backup |
+|---|---|---|---|
+| Output adapter, 6061-T6, `exports/leg/cnc/output_adapter.step` + the callouts in `exports/leg/cnc/README.md` | 2 | JLCCNC instant price on upload (estimate $40 each, 5-10 days shipping from China) | Xometry instant quote from the STEP |
+
+Leg bought total about **$930 with the alternate bearings** ($1,121 all-McMaster), plus the adapters (about $80 per
+leg) and filament about $300.
 
 **Rig (quantities for one rig):**
 
@@ -447,21 +456,22 @@ Hours from `exports/leg/print-plan.json` (grams / density / 14 cm^3 per h for PA
 | Day | Prints | Material | Hours | Purpose |
 |---|---|---|---|---|
 | 1 | dyno lug plates x 2, coupler disc, bumper/pin brackets, pod | PETG | 10 | bench fixtures and rig parts (order of parts does not wait on them) |
-| 1-2 | fit coupons: frame motor-ring slice, hub face, knee eye, knee boss, apex eye, hub stub; insert coupon (adapter orientation); sleeve block | PA6-CF | 8 | every seat and insert dialled in before any big part; B3 and B4 run on these |
+| 1-2 | fit coupons: frame motor-ring slice, hub face (the link's side: spigot recess, clearance and dowel holes), knee eye, knee boss, apex eye, hub stub; insert coupon; sleeve block | PA6-CF | 8 | every seat and insert dialled in before any big part; B3 and B4 run on these |
 | 2 | stop sleeves x 4 (+2 spare), TPU bumpers x 2 | TPU | 10 | B3, the rig's bottom stop |
-| 2-3 | output adapters x 2 (+1 spare) | PA6-CF | 14 | the SF 1.15 part; the first part on a motor |
 | 3-5 | upper links x 2 | PA6-CF | 48 | |
 | 5-6 | front link | PA6-CF | 29 | turned on the bed |
 | 6-8 | wheel link | PA6-CF | 40 | turned |
 | 8-10 | hip frame | PA6-CF | 51 | last: the biggest print (274 x 148 x 81, turned 45 deg, 782 g); print it only after the coupons prove the seats and the P1S holds PA6-CF flat at that size (a 150 x 150 test slab first if there is any doubt) |
 | 10 | apex spacer, spares | PA6-CF | 2 | |
 
-About 212 h of printing: 9 days if nothing fails; plan **three weeks** with drying and one reprint. The motors' lead
+About 198 h of printing (the adapters are machined now): 9 days if nothing fails; plan **three weeks** with drying and one reprint. The motors' lead
 time from China (1-3 weeks) runs in parallel; the bench fixtures and coupons are done before the motors arrive.
 
 ### 6.3 SendCutSend
 
-One part: the carriage plate (6061-T6, 0.25 in, 300 x 320 mm, hole table in section 2.1, deburred). `cad/build_rig.py`
+The rig's one part: the carriage plate (6061-T6, 0.25 in, 300 x 320 mm, hole table in section 2.1, deburred). The
+leg's machined parts (the two output adapters, CNC, D46) are ordered the same day from `exports/leg/cnc/`: JLCCNC or
+Xometry, the STEP plus the README's callouts. `cad/build_rig.py`
 exports `exports/rig/sendcutsend/carriage_plate.dxf` (flat, mm, holes as circles, no text) and the order sheet with the
 instant price read at upload. Everything else on the rig is extrusion, bought hardware or printed.
 
@@ -470,11 +480,13 @@ instant price read at upload. Everything else on the rig is extrusion, bought ha
 1. Hip frame: M5 inserts (6) and M8 inserts (4) set with the soldering iron at the coupon-proven temperature; the
    two 61812s pressed in from the motor side onto the lip (light fit + retaining compound if the coupon says so);
    O5 dowels into the frame's locating holes.
-2. Output adapters onto the motors: the 3 pins into their sockets, 9 x M5 x 30 with washers, threadlocker, the B4
-   torque; then each motor into the frame on its 2 dowels and 10 x M4 x 20 (heads 10 mm down in the counterbores);
-   check the harness exits clear the flanges and the carriage plate's slot.
-3. Upper links: two eye sleeves pressed end to end from the outer face; the link onto the adapter's face (2 dowels,
-   8 x M5 x 40, B4 torque).
+2. Output adapters (machined) onto the motors: the motor's 3 pins into the adapter's sockets, 9 x M5 x 25 (no
+   washers: the heads sit in the pockets), threadlocker, the motor maker's torque; two O5 x 16 dowels pressed into
+   each adapter's face (H7 holes, 8 mm in). Then each motor into the frame on its 2 dowels and 10 x M4 x 20 (heads
+   10 mm down in the counterbores), the adapter's j6 journal into the frame's 61812 with retaining compound (Loctite
+   641: it comes apart); check the harness exits clear the flanges and the carriage plate's slot.
+3. Upper links: two eye sleeves pressed end to end from the outer face; the link onto the adapter's face (over its
+   2 dowels and spigot, 8 x M5 x 40 into the tapped holes, B4 torque: the printed link under the heads sets the limit).
 4. Knees: two 6201s and the 28 mm spacer tube into each lower link's boss, a DIN 433 washer each side, the 12 x 90
    shoulder screw from the outer side through the eye, the M10 nyloc in the pocket torqued onto the steel sleeve.
 5. Apex: inner 61812 pressed into the front link from the inside, the apex spacer, the wheel link's hub through from

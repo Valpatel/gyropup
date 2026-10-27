@@ -13,14 +13,47 @@
   "bolts": 8,
   "thread": "M5",
   "pcd": 50.0,
+  "bolt_deg": [
+   0.0,
+   30.0,
+   90.0,
+   120.0,
+   180.0,
+   210.0,
+   270.0,
+   300.0
+  ],
   "dowels": 2,
   "dowel_d": 5.0,
   "dowel_deg": [
-   22.5,
-   247.5
+   60.0,
+   150.0
   ],
-  "note": "printed adapter on the motor output: contact boss = the output flange, 0.6 mm relief elsewhere; steel dowels into the motor; a \u00d860 journal (lengthened by print.journal_extra) for the 61812; the standard face with M5 heat-set inserts",
-  "shoulder_note": "printed: the shoulder runs up to the bearing and seats only its inner ring (61812 inner-ring shoulder 62-64)"
+  "note": "adapter on the motor output, CNC 6061-T6 from an instant-price service (D46): contact boss = the output flange, 0.6 mm relief elsewhere; sockets for the motor's pins; a \u00d860 j6 journal (lengthened by print.journal_extra) for the 61812; the standard face with 8 x M5 tapped and 2 x \u00d85 H7 dowel holes; the motor's 9 x M5 x 25 socket heads sit in pockets, below the face. made: 'print' gives the PA6-CF version (heat-set inserts)",
+  "shoulder_note": "the shoulder runs up to the bearing and seats only its inner ring (61812 inner-ring shoulder 62-64)",
+  "made": "cnc",
+  "cnc": {
+   "material": "6061-T6",
+   "thread_depth": 12.0,
+   "drill_depth": 15.0,
+   "bore_d": 24.0,
+   "bore_depth": 17.0,
+   "journal_fit": "j6",
+   "dowel_fit": "H7",
+   "general": "ISO 2768-m",
+   "finish": "as machined, deburred; no anodise (it would change the journal)"
+  },
+  "head": {
+   "kind": "ISO 4762 socket head",
+   "screw": "screw_m5x25",
+   "length": 25.0,
+   "d": 8.5,
+   "h": 5.0,
+   "pocket_d": 10.0,
+   "below_face": 0.6,
+   "note": "the motor's output screws: heads in \u00d810 pockets, their tops 0.6 mm below the standard face (the link sits on the face; its spigot recess is only \u00d840); 6 mm into the RS-04's 6.5 mm threads"
+  },
+  "pattern_note": "bolt_deg and dowel_deg are 15 deg from every RS-04 output screw (45, 75, 105, 165, 195, 225, 285, 315, 345): the old even pattern (22.5 + 45k) put six face holes 7.5 deg from a screw, where the screw-head counterbores broke into them, and both dowels on bolt holes (2026-10-27)"
  },
  "AC-L": {
   "bearing": "61812 (60 x 78 x 10)",
