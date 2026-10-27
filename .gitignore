@@ -28,3 +28,6 @@ exports/leg/rig_meshes/
 
 # the spring study's every-step results (48 MB): rebuilt by sim/leg_spring_study.py
 exports/leg/springs/results*.json
+
+# the whole rig as one STEP (5.8 MB): rebuilt by cad/build_rig.py
+exports/rig/rig_300.step

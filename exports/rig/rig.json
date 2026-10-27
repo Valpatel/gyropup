@@ -1,0 +1,1273 @@
+{
+ "frame": "deck frame: the leg's x (forward), y (outwards) and z (up); the origin on the deck under the hip axis",
+ "frame_mounts": {
+  "plane_y": -82.30000000000001,
+  "inserts_xz": [
+   [
+    -83.0,
+    67.0
+   ],
+   [
+    0.0,
+    67.0
+   ],
+   [
+    83.0,
+    67.0
+   ],
+   [
+    -83.0,
+    -67.0
+   ],
+   [
+    0.0,
+    -67.0
+   ],
+   [
+    83.0,
+    -67.0
+   ]
+  ],
+  "from": "hip_frame() constants (fivebar.frame_mounts() not on this branch yet)"
+ },
+ "carriage_plate": {
+  "material": "6061-T6 aluminium, 0.25 in (6.35 mm)",
+  "size_mm": [
+   300.0,
+   320.0
+  ],
+  "mass_kg": 1.611,
+  "holes": [
+   [
+    "frame_m5",
+    -83.0,
+    67.0,
+    5.5
+   ],
+   [
+    "frame_m5",
+    0.0,
+    67.0,
+    5.5
+   ],
+   [
+    "frame_m5",
+    83.0,
+    67.0,
+    5.5
+   ],
+   [
+    "frame_m5",
+    -83.0,
+    -67.0,
+    5.5
+   ],
+   [
+    "frame_m5",
+    0.0,
+    -67.0,
+    5.5
+   ],
+   [
+    "frame_m5",
+    83.0,
+    -67.0,
+    5.5
+   ],
+   [
+    "block_m4",
+    -33.0,
+    -138.0,
+    4.5
+   ],
+   [
+    "block_m4",
+    -33.0,
+    -112.0,
+    4.5
+   ],
+   [
+    "block_m4",
+    -7.0,
+    -138.0,
+    4.5
+   ],
+   [
+    "block_m4",
+    -7.0,
+    -112.0,
+    4.5
+   ],
+   [
+    "block_m4",
+    -33.0,
+    112.0,
+    4.5
+   ],
+   [
+    "block_m4",
+    -33.0,
+    138.0,
+    4.5
+   ],
+   [
+    "block_m4",
+    -7.0,
+    112.0,
+    4.5
+   ],
+   [
+    "block_m4",
+    -7.0,
+    138.0,
+    4.5
+   ],
+   [
+    "block_m4",
+    7.0,
+    -138.0,
+    4.5
+   ],
+   [
+    "block_m4",
+    7.0,
+    -112.0,
+    4.5
+   ],
+   [
+    "block_m4",
+    33.0,
+    -138.0,
+    4.5
+   ],
+   [
+    "block_m4",
+    33.0,
+    -112.0,
+    4.5
+   ],
+   [
+    "block_m4",
+    7.0,
+    112.0,
+    4.5
+   ],
+   [
+    "block_m4",
+    7.0,
+    138.0,
+    4.5
+   ],
+   [
+    "block_m4",
+    33.0,
+    112.0,
+    4.5
+   ],
+   [
+    "block_m4",
+    33.0,
+    138.0,
+    4.5
+   ],
+   [
+    "ballast",
+    -125.0,
+    20.0,
+    10.5
+   ],
+   [
+    "ballast",
+    125.0,
+    20.0,
+    10.5
+   ],
+   [
+    "drop_pin",
+    125.0,
+    140.0,
+    10.2
+   ],
+   [
+    "tether",
+    -125.0,
+    140.0,
+    12.5
+   ],
+   [
+    "tof_m4",
+    -138.0,
+    -104.0,
+    4.5
+   ],
+   [
+    "tof_m4",
+    -138.0,
+    -136.0,
+    4.5
+   ],
+   [
+    "harness_front",
+    97.45,
+    -46.0,
+    32.0,
+    22.0
+   ],
+   [
+    "harness_rear",
+    -49.3,
+    46.0,
+    32.0,
+    22.0
+   ]
+  ],
+  "webs_under_thickness": [],
+  "dxf": {
+   "file": "exports/rig/sendcutsend/carriage_plate.dxf",
+   "circles": 28,
+   "holes_by_diameter_mm": {
+    "4.5": 18,
+    "5.5": 6,
+    "10.2": 1,
+    "10.5": 2,
+    "12.5": 1
+   },
+   "slots": 2,
+   "outline_mm": [
+    300.0,
+    320.0
+   ],
+   "units": "mm",
+   "reimport_ok": true,
+   "missing": []
+  },
+  "harness_slots": [
+   {
+    "x": 97.45,
+    "z": -46.0,
+    "w": 32.0,
+    "h": 22.0,
+    "exit_deg": -66.8,
+    "motor": "front"
+   },
+   {
+    "x": -49.3,
+    "z": 46.0,
+    "w": 32.0,
+    "h": 22.0,
+    "exit_deg": 63.2,
+    "motor": "rear"
+   }
+  ]
+ },
+ "printed": {
+  "report": {
+   "bumper_tpu": {
+    "watertight": true,
+    "valid": true
+   },
+   "bumper_base": {
+    "watertight": true,
+    "valid": true
+   },
+   "bumper_cap": {
+    "watertight": true,
+    "valid": true
+   },
+   "top_stop_bracket": {
+    "watertight": true,
+    "valid": true
+   },
+   "drop_bracket": {
+    "watertight": true,
+    "valid": true
+   },
+   "tof_arm": {
+    "watertight": true,
+    "valid": true
+   },
+   "tof_mount": {
+    "watertight": true,
+    "valid": true
+   },
+   "pod": {
+    "watertight": true,
+    "valid": true
+   },
+   "pod_lid": {
+    "watertight": true,
+    "valid": true
+   },
+   "pendant_clip": {
+    "watertight": true,
+    "valid": true
+   },
+   "load_cell_mount": {
+    "watertight": true,
+    "valid": true
+   }
+  },
+  "too_big": []
+ },
+ "mass": {
+  "carriage_parts": {
+   "parts_kg": {
+    "carriage_plate": 1.611,
+    "blocks_4x": 0.72,
+    "ballast_shafts_2x": 1.212,
+    "screws_and_washers": 0.12,
+    "tof_arm_and_sensor": 0.088,
+    "harness_share_and_ties": 0.15
+   },
+   "total_kg": 3.901,
+   "y_mm": {
+    "carriage_plate": -85.47500000000001,
+    "blocks_4x": -100.5,
+    "ballast_shafts_2x": -164.85000000000002,
+    "screws_and_washers": -88.65,
+    "tof_arm_and_sensor": -82.30000000000001,
+    "harness_share_and_ties": -88.65
+   }
+  },
+  "leg": {
+   "frame_kg": 3.842,
+   "frame_com_y_mm": -43.6,
+   "moving_kg": 4.702,
+   "rotor_kg": 1.32,
+   "wheel_link_kg": 1.6928
+  },
+  "ballast": {
+   "lightest_kg": {
+    "with_posts": 12.45,
+    "posts_removed": 11.23,
+    "note": "the carriage's own parts set the floor: below it the rig cannot go (the plan's 11 kg point is out of reach)"
+   },
+   "11.0": {
+    "plates_needed_kg": -1.445,
+    "reachable": false,
+    "note": "below the carriage with its ballast posts: not reachable"
+   },
+   "13.1": {
+    "plates_needed_kg": 0.655,
+    "per_post": {
+     "1.25 lb": 0,
+     "2.5 lb": 0
+    },
+    "plates_kg": 0.0,
+    "short_by_kg": 0.655,
+    "washers_3p5in": 5,
+    "note": "trim with 3.5 in OD washers on the posts (McMaster 91117A251, ~0.14 kg each)"
+   },
+   "14.75": {
+    "plates_needed_kg": 2.305,
+    "per_post": {
+     "1.25 lb": 0,
+     "2.5 lb": 1
+    },
+    "plates_kg": 2.268,
+    "short_by_kg": 0.037,
+    "washers_3p5in": 0,
+    "note": ""
+   },
+   "16.0": {
+    "plates_needed_kg": 3.555,
+    "per_post": {
+     "1.25 lb": 1,
+     "2.5 lb": 1
+    },
+    "plates_kg": 3.402,
+    "short_by_kg": 0.153,
+    "washers_3p5in": 1,
+    "note": "trim with 3.5 in OD washers on the posts (McMaster 91117A251, ~0.14 kg each)"
+   }
+  },
+  "note": "the simulation's carriage at 14.75 kg is the leg's frame group + the dummy; the rig's dummy is its carriage parts + the plates"
+ },
+ "controller": {
+  "rotor_kg": 1.32,
+  "wheel_link_kg": 1.6928,
+  "ff_n_at_design": 123.45
+ },
+ "travel": {
+  "rails_z_mm": [
+   1.0,
+   1001.0
+  ],
+  "jump_apex": {
+   "11.0": {
+    "half_mass_kg": 11.0,
+    "jump_mm": 242.2,
+    "zh_max_mm": 627.8,
+    "peak_wheel_force_n": 2380.0
+   },
+   "14.75": {
+    "half_mass_kg": 14.75,
+    "jump_mm": 245.3,
+    "zh_max_mm": 631.0,
+    "peak_wheel_force_n": 3428.3
+   }
+  },
+  "margin_apex_to_top_stop_mm": 180.0,
+  "points": {
+   "bumpers_crushed": {
+    "zh_mm": 200.7,
+    "blocks_z_mm": [
+     45.0,
+     356.3
+    ],
+    "on_rails": true,
+    "closest": [
+     [
+      "carriage_plate",
+      "bumper_tpu_left",
+      0.0
+     ],
+     [
+      "carriage_plate",
+      "bumper_cap_left",
+      0.0
+     ],
+     [
+      "carriage_plate",
+      "bumper_tpu_right",
+      0.0
+     ],
+     [
+      "carriage_plate",
+      "bumper_cap_right",
+      0.0
+     ],
+     [
+      "blocks",
+      "post",
+      4.3
+     ],
+     [
+      "ballast",
+      "pendant_clip",
+      4.6
+     ]
+    ]
+   },
+   "bumper_contact": {
+    "zh_mm": 225.7,
+    "blocks_z_mm": [
+     70.0,
+     381.3
+    ],
+    "on_rails": true,
+    "closest": [
+     [
+      "carriage_plate",
+      "bumper_cap_left",
+      0.0
+     ],
+     [
+      "carriage_plate",
+      "bumper_cap_right",
+      0.0
+     ],
+     [
+      "blocks",
+      "post",
+      4.3
+     ],
+     [
+      "carriage_plate",
+      "bumper_tpu_left",
+      5.0
+     ],
+     [
+      "carriage_plate",
+      "bumper_tpu_right",
+      5.0
+     ],
+     [
+      "ballast",
+      "pendant_clip",
+      7.0
+     ]
+    ]
+   },
+   "stand_300": {
+    "zh_mm": 385.6,
+    "blocks_z_mm": [
+     229.9,
+     541.4
+    ],
+    "on_rails": true,
+    "closest": [
+     [
+      "blocks",
+      "post",
+      4.3
+     ],
+     [
+      "ballast",
+      "post",
+      20.2
+     ],
+     [
+      "ballast",
+      "rails",
+      32.8
+     ],
+     [
+      "ballast",
+      "pod_lid",
+      47.1
+     ],
+     [
+      "ballast",
+      "pod",
+      50.3
+     ],
+     [
+      "ballast",
+      "brace",
+      129.7
+     ]
+    ]
+   },
+   "drop_start": {
+    "zh_mm": 535.6,
+    "blocks_z_mm": [
+     379.9,
+     691.4
+    ],
+    "on_rails": true,
+    "closest": [
+     [
+      "blocks",
+      "post",
+      4.3
+     ],
+     [
+      "ballast",
+      "post",
+      20.2
+     ],
+     [
+      "ballast",
+      "rails",
+      32.8
+     ],
+     [
+      "ballast",
+      "brace",
+      94.1
+     ],
+     [
+      "ballast",
+      "brace_hinges",
+      98.9
+     ]
+    ]
+   },
+   "jump_apex": {
+    "zh_mm": 631.0,
+    "blocks_z_mm": [
+     475.3,
+     786.7
+    ],
+    "on_rails": true,
+    "closest": [
+     [
+      "blocks",
+      "post",
+      4.3
+     ],
+     [
+      "ballast",
+      "post",
+      20.2
+     ],
+     [
+      "ballast",
+      "rails",
+      32.8
+     ],
+     [
+      "ballast",
+      "brace_hinges",
+      75.9
+     ],
+     [
+      "ballast",
+      "brace",
+      91.5
+     ]
+    ]
+   },
+   "top_stop_contact": {
+    "zh_mm": 811.0,
+    "blocks_z_mm": [
+     655.3,
+     966.7
+    ],
+    "on_rails": true,
+    "closest": [
+     [
+      "carriage_plate",
+      "top_tpu_left",
+      0.0
+     ],
+     [
+      "carriage_plate",
+      "top_tpu_right",
+      0.0
+     ],
+     [
+      "blocks",
+      "post",
+      4.3
+     ],
+     [
+      "ballast",
+      "post",
+      20.2
+     ],
+     [
+      "ballast",
+      "rails",
+      32.8
+     ]
+    ]
+   },
+   "top_stop_crushed": {
+    "zh_mm": 836.0,
+    "blocks_z_mm": [
+     680.3,
+     991.7
+    ],
+    "on_rails": true,
+    "closest": [
+     [
+      "carriage_plate",
+      "top_tpu_left",
+      0.0
+     ],
+     [
+      "carriage_plate",
+      "top_tpu_right",
+      0.0
+     ],
+     [
+      "blocks",
+      "post",
+      4.3
+     ],
+     [
+      "carriage_plate",
+      "top_stop_bracket",
+      7.0
+     ],
+     [
+      "ballast",
+      "post",
+      20.2
+     ],
+     [
+      "ballast",
+      "rails",
+      32.8
+     ]
+    ]
+   }
+  }
+ },
+ "loads": {
+  "source": "exports/rig/predictions.json (rig/run.py --predict, 14.75 kg)",
+  "carriage_com_y_mm": -90.1,
+  "jump": {
+   "Fz_n": 3428.0,
+   "side_frac": 0.1,
+   "moment_on_rails_nm": [
+    770.3,
+    -102.8,
+    -66.7
+   ],
+   "block_loads_n": [
+    2559.0,
+    552.0,
+    768.0,
+    2374.0
+   ],
+   "worst_n": 2559.0,
+   "sf_C0": 6.6
+  },
+  "drop_150": {
+   "Fz_n": 2873.0,
+   "side_frac": 0.1,
+   "moment_on_rails_nm": [
+    645.4,
+    -86.2,
+    -55.9
+   ],
+   "block_loads_n": [
+    2144.0,
+    463.0,
+    643.0,
+    1989.0
+   ],
+   "worst_n": 2144.0,
+   "sf_C0": 7.9
+  },
+  "post": [
+   {
+    "M_nm": 770.0,
+    "zh_mm": 245.65,
+    "braced": false,
+    "foot": "fixed",
+    "max_moment_nm": 770.3,
+    "stress_mpa": 23.9,
+    "sf_yield": 6.1,
+    "sway_at_carriage_mm": 0.56
+   },
+   {
+    "M_nm": 770.0,
+    "zh_mm": 245.65,
+    "braced": true,
+    "foot": "fixed",
+    "max_moment_nm": 288.3,
+    "stress_mpa": 8.9,
+    "sf_yield": 16.2,
+    "sway_at_carriage_mm": 0.11,
+    "brace_force_n": 1750.0
+   },
+   {
+    "M_nm": 770.0,
+    "zh_mm": 245.65,
+    "braced": true,
+    "foot": "pinned",
+    "max_moment_nm": 333.9,
+    "stress_mpa": 10.3,
+    "sf_yield": 14.0,
+    "sway_at_carriage_mm": 0.14,
+    "brace_force_n": 2026.0
+   },
+   {
+    "M_nm": 770.0,
+    "zh_mm": 335.65,
+    "braced": false,
+    "foot": "fixed",
+    "max_moment_nm": 770.3,
+    "stress_mpa": 23.9,
+    "sf_yield": 6.1,
+    "sway_at_carriage_mm": 0.9
+   },
+   {
+    "M_nm": 770.0,
+    "zh_mm": 335.65,
+    "braced": true,
+    "foot": "fixed",
+    "max_moment_nm": 248.6,
+    "stress_mpa": 7.7,
+    "sf_yield": 18.8,
+    "sway_at_carriage_mm": 0.09,
+    "brace_force_n": 2164.0
+   },
+   {
+    "M_nm": 770.0,
+    "zh_mm": 335.65,
+    "braced": true,
+    "foot": "pinned",
+    "max_moment_nm": 256.7,
+    "stress_mpa": 8.0,
+    "sf_yield": 18.2,
+    "sway_at_carriage_mm": 0.07,
+    "brace_force_n": 2026.0
+   },
+   {
+    "M_nm": 770.0,
+    "zh_mm": 600.0,
+    "braced": false,
+    "foot": "fixed",
+    "max_moment_nm": 770.3,
+    "stress_mpa": 23.9,
+    "sf_yield": 6.1,
+    "sway_at_carriage_mm": 2.3
+   },
+   {
+    "M_nm": 770.0,
+    "zh_mm": 600.0,
+    "braced": true,
+    "foot": "fixed",
+    "max_moment_nm": 469.7,
+    "stress_mpa": 14.6,
+    "sf_yield": 10.0,
+    "sway_at_carriage_mm": 0.18,
+    "brace_force_n": 2811.0
+   },
+   {
+    "M_nm": 770.0,
+    "zh_mm": 600.0,
+    "braced": true,
+    "foot": "pinned",
+    "max_moment_nm": 553.6,
+    "stress_mpa": 17.2,
+    "sf_yield": 8.5,
+    "sway_at_carriage_mm": 0.17,
+    "brace_force_n": 2026.0
+   }
+  ],
+  "post_worst": {
+   "M_nm": 770.0,
+   "zh_mm": 245.65,
+   "braced": false,
+   "foot": "fixed",
+   "max_moment_nm": 770.3,
+   "stress_mpa": 23.9,
+   "sf_yield": 6.1,
+   "sway_at_carriage_mm": 0.56
+  },
+  "brace": {
+   "length_mm": 720.0,
+   "angle_deg": 60.4,
+   "cut_length_mm": 720
+  }
+ },
+ "bumpers": {
+  "contact_leg_mm": 140.0,
+  "bottomed_leg_mm": 115.0,
+  "leg_stops_mm": 101.5,
+  "base_h_mm": 20.65,
+  "contact_z_mm": 65.65,
+  "power_cut_S5": {
+   "carriage_kg": 10.05,
+   "speed_at_contact_m_s": 0.95,
+   "energy_j": 7.0,
+   "mean_force_per_bumper_n": 140.0
+  },
+  "tpu_face_mm2": 2830.0,
+  "plateau_needed_mpa": 0.049,
+  "gyroid_estimate": "TPU 95A gyroid crushes at roughly 0.3 x E x density^2 (elastomeric cells): 0.05 MPa at 15 %, 0.12 MPa at 20 %, 0.26 MPa at 30 % (E 9.8 MPa, Bambu); R0 in docs/leg-bench-tests.md drops the carriage on them to choose the infill"
+ },
+ "base": {
+  "footprint_mm": {
+   "x": [
+    -350.0,
+    350.0
+   ],
+   "y": [
+    -616.6,
+    283.35
+   ]
+  },
+  "rig_kg_est": 20.3,
+  "members": {
+   "side_left": {
+    "kind": "4040",
+    "length_mm": 900.0
+   },
+   "side_right": {
+    "kind": "4040",
+    "length_mm": 900.0
+   },
+   "post_member": {
+    "kind": "4080",
+    "length_mm": 620.0
+   },
+   "front_member": {
+    "kind": "4040",
+    "length_mm": 620.0
+   },
+   "wheel_member": {
+    "kind": "4040",
+    "length_mm": 620.0
+   },
+   "bumper_member": {
+    "kind": "4040",
+    "length_mm": 620.0
+   },
+   "rear_member": {
+    "kind": "4040",
+    "length_mm": 620.0
+   },
+   "post": {
+    "kind": "8080",
+    "length_mm": 1200.0
+   }
+  },
+  "note": "the deck's push from the tyre and the rails' couple are internal to one frame; the floor sees the weights and the moving mass's inertia, inside the footprint at y -33 mm"
+ },
+ "harness": {
+  "grommet": {
+   "angle_step_deg": 76.8,
+   "r_out": 57.0,
+   "y_from_plane": [
+    5.8,
+    18.8
+   ]
+  },
+  "slots": [
+   {
+    "x": 97.45,
+    "z": -46.0,
+    "w": 32.0,
+    "h": 22.0,
+    "exit_deg": -66.8,
+    "motor": "front"
+   },
+   {
+    "x": -49.3,
+    "z": 46.0,
+    "w": 32.0,
+    "h": 22.0,
+    "exit_deg": 63.2,
+    "motor": "rear"
+   }
+  ],
+  "lug_clock_deg": 25.0,
+  "note": "the leads leave the rear covers 6-19 mm in front of the mount plane, pointing at the frame's flanges; they go straight back through the plate. The slots follow fivebar's clocking: rebuild the DXF after any change to it"
+ },
+ "clearance": {
+  "poses": 27,
+  "limit_mm": 10.0,
+  "closest": {},
+  "under_limit": []
+ },
+ "bom": {
+  "rows": [
+   {
+    "key": "rail_hgr15_set",
+    "qty": 2,
+    "for": "HGR15 x 1000 mm rail with two HGH15CA blocks: the carriage's guide, on the post's front slots",
+    "vendor": null,
+    "part_number": null,
+    "name": null,
+    "price_usd_each": null,
+    "pack_qty": 1,
+    "cost_usd": 0
+   },
+   {
+    "key": "extrusion_8080_1200",
+    "qty": 1,
+    "for": "the post",
+    "vendor": "MISUMI",
+    "part_number": "HFS8-8080-1200",
+    "name": "Aluminium extrusion 8080, 8 series (10 mm slot), cut to 1200 mm",
+    "price_usd_each": 97.44,
+    "pack_qty": 1,
+    "cost_usd": 97.44
+   },
+   {
+    "key": "extrusion_4040",
+    "qty": 7,
+    "for": "base: 2 x 900 sides, 4 x 620 cross members, 1 brace (cut lengths in rig.json)",
+    "vendor": null,
+    "part_number": null,
+    "name": null,
+    "price_usd_each": null,
+    "pack_qty": 1,
+    "cost_usd": 0
+   },
+   {
+    "key": "extrusion_4080_620",
+    "qty": 1,
+    "for": "the post's member (lying flat under it)",
+    "vendor": "MISUMI",
+    "part_number": "HFS8-4080-620",
+    "name": "Aluminium extrusion 4080, 8 series (10 mm slot), cut to 620 mm",
+    "price_usd_each": 34.65,
+    "pack_qty": 1,
+    "cost_usd": 34.65
+   },
+   {
+    "key": "bracket_corner_8",
+    "qty": 24,
+    "for": "every base joint (2 per joint) and the post's foot (4)",
+    "vendor": "MISUMI",
+    "part_number": "HBLTS8-C-SEP",
+    "name": "Corner bracket, 8 series, with 2 x M8 screws + 2 drop-in spring nuts",
+    "price_usd_each": 4.42,
+    "pack_qty": 1,
+    "cost_usd": 106.08
+   },
+   {
+    "key": "hinge_8",
+    "qty": 2,
+    "for": "the brace's two ends",
+    "vendor": null,
+    "part_number": null,
+    "name": null,
+    "price_usd_each": null,
+    "pack_qty": 1,
+    "cost_usd": 0
+   },
+   {
+    "key": "tnut_m8_8",
+    "qty": 70,
+    "for": "brackets (48), hinges (8), top stop (4), drop bracket (2), pod (4), tether eye (2), spare",
+    "vendor": null,
+    "part_number": null,
+    "name": null,
+    "price_usd_each": null,
+    "pack_qty": 1,
+    "cost_usd": 0
+   },
+   {
+    "key": "screw_m8x16",
+    "qty": 70,
+    "for": "with the M8 T-nuts",
+    "vendor": null,
+    "part_number": null,
+    "name": null,
+    "price_usd_each": null,
+    "pack_qty": 1,
+    "cost_usd": 0
+   },
+   {
+    "key": "tnut_m4_8",
+    "qty": 34,
+    "for": "the rails, 17 per rail at 60 mm",
+    "vendor": null,
+    "part_number": null,
+    "name": null,
+    "price_usd_each": null,
+    "pack_qty": 1,
+    "cost_usd": 0
+   },
+   {
+    "key": "screw_m4x16",
+    "qty": 34,
+    "for": "the rails into the T-nuts",
+    "vendor": null,
+    "part_number": null,
+    "name": null,
+    "price_usd_each": null,
+    "pack_qty": 1,
+    "cost_usd": 0
+   },
+   {
+    "key": "screw_m4x12",
+    "qty": 16,
+    "for": "the four blocks onto the plate (a washer under each: 4.85 mm into the 5 mm threads)",
+    "vendor": null,
+    "part_number": null,
+    "name": null,
+    "price_usd_each": null,
+    "pack_qty": 1,
+    "cost_usd": 0
+   },
+   {
+    "key": "washer_m4",
+    "qty": 16,
+    "for": "under the block screws",
+    "vendor": null,
+    "part_number": null,
+    "name": null,
+    "price_usd_each": null,
+    "pack_qty": 1,
+    "cost_usd": 0
+   },
+   {
+    "key": "screw_m5x16",
+    "qty": 6,
+    "for": "the plate onto the hip frame's six inserts (with washers)",
+    "vendor": null,
+    "part_number": null,
+    "name": null,
+    "price_usd_each": null,
+    "pack_qty": 1,
+    "cost_usd": 0
+   },
+   {
+    "key": "washer_m5",
+    "qty": 6,
+    "for": "under those",
+    "vendor": null,
+    "part_number": null,
+    "name": null,
+    "price_usd_each": null,
+    "pack_qty": 1,
+    "cost_usd": 0
+   },
+   {
+    "key": "tnut_m6_8",
+    "qty": 12,
+    "for": "the deck (8) and the bottom bumpers (4)",
+    "vendor": null,
+    "part_number": null,
+    "name": null,
+    "price_usd_each": null,
+    "pack_qty": 1,
+    "cost_usd": 0
+   },
+   {
+    "key": "screw_m6x45_fh",
+    "qty": 12,
+    "for": "the deck and the bumpers into the members' top slots",
+    "vendor": null,
+    "part_number": null,
+    "name": null,
+    "price_usd_each": null,
+    "pack_qty": 1,
+    "cost_usd": 0
+   },
+   {
+    "key": "ballast_shaft",
+    "qty": 2,
+    "for": "1 in steel shaft, end-tapped: the ballast posts",
+    "vendor": "McMaster-Carr",
+    "part_number": "6649K433",
+    "name": "Tapped linear shaft 1 in x 6 in, 1050 steel, 3/8-16 x 3/4 in deep both ends",
+    "price_usd_each": 52.94,
+    "pack_qty": 1,
+    "cost_usd": 105.88
+   },
+   {
+    "key": "screw_ballast",
+    "qty": 4,
+    "for": "into the shafts' tapped ends: one through the plate, one with a fender washer at the free end",
+    "vendor": null,
+    "part_number": null,
+    "name": null,
+    "price_usd_each": null,
+    "pack_qty": 1,
+    "cost_usd": 0
+   },
+   {
+    "key": "washer_fender_1in",
+    "qty": 4,
+    "for": "retain the plates; also fine ballast",
+    "vendor": null,
+    "part_number": null,
+    "name": null,
+    "price_usd_each": null,
+    "pack_qty": 1,
+    "cost_usd": 0
+   },
+   {
+    "key": "weight_plate_1p25",
+    "qty": 4,
+    "for": "standard 1 in plates (ballast table in rig.json)",
+    "vendor": "Body-Solid",
+    "part_number": "RPB1-25",
+    "name": "Cast iron standard plate, 1.25 lb, 1 in hole (101.6 x 10.2 mm)",
+    "price_usd_each": 3.33,
+    "pack_qty": 1,
+    "cost_usd": 13.32
+   },
+   {
+    "key": "weight_plate_2p5",
+    "qty": 4,
+    "for": "standard 1 in plates",
+    "vendor": "Body-Solid",
+    "part_number": "RPB2-5",
+    "name": "Cast iron standard plate, 2.5 lb, 1 in hole (129.5 x 20.3 mm)",
+    "price_usd_each": 6.65,
+    "pack_qty": 1,
+    "cost_usd": 26.6
+   },
+   {
+    "key": "quick_pin_10",
+    "qty": 1,
+    "for": "the drop test's release pin (S4), with a lanyard",
+    "vendor": null,
+    "part_number": null,
+    "name": null,
+    "price_usd_each": null,
+    "pack_qty": 1,
+    "cost_usd": 0
+   },
+   {
+    "key": "webbing_sling",
+    "qty": 2,
+    "for": "the safety tethers: carriage to the post's top; the wheel link to the carriage",
+    "vendor": null,
+    "part_number": null,
+    "name": null,
+    "price_usd_each": null,
+    "pack_qty": 1,
+    "cost_usd": 0
+   },
+   {
+    "key": "carabiner",
+    "qty": 3,
+    "for": "the tethers' ends",
+    "vendor": "Amazon (XINDA)",
+    "part_number": "ASIN B07D73RRH5 (2-pack)",
+    "name": "Screwgate carabiner, 25 kN, 2-pack",
+    "price_usd_each": 8.495,
+    "pack_qty": 2,
+    "cost_usd": 33.98
+   },
+   {
+    "key": "plywood_18",
+    "qty": 1,
+    "for": "the deck (600 x 400) and the load plate's pad (400 x 300), from one 2 x 4 ft panel",
+    "vendor": "The Home Depot",
+    "part_number": "Internet #202093836",
+    "name": "Sanded plywood 23/32 in, 2 x 4 ft project panel",
+    "price_usd_each": 23.76,
+    "pack_qty": 1,
+    "cost_usd": 23.76
+   },
+   {
+    "key": "rubber_mat",
+    "qty": 1,
+    "for": "under the base: it rests on the floor along every member",
+    "vendor": "Amazon (Boomerang Rubber)",
+    "part_number": "ASIN B0F8RCXB7D",
+    "name": "Rubber mat 3 x 4 ft x 5/16 in, 2-pack",
+    "price_usd_each": 52.0,
+    "pack_qty": 1,
+    "cost_usd": 52.0
+   },
+   {
+    "key": "carriage_plate",
+    "qty": 1,
+    "for": "SendCutSend, 6061-T6 0.25 in (exports/rig/sendcutsend/)",
+    "vendor": "SendCutSend",
+    "part_number": "carriage_plate.dxf, 6061-T6 0.250 in",
+    "name": "Carriage plate, laser-cut 6061-T6 aluminium 0.25 in, 300 x 320 mm, 28 holes and 2 slots",
+    "price_usd_each": null,
+    "pack_qty": 1,
+    "cost_usd": 0
+   }
+  ],
+  "not_in_catalog": [
+   "rail_hgr15_set",
+   "extrusion_4040",
+   "hinge_8",
+   "tnut_m8_8",
+   "screw_m8x16",
+   "tnut_m4_8",
+   "screw_m4x16",
+   "screw_m4x12",
+   "washer_m4",
+   "screw_m5x16",
+   "washer_m5",
+   "tnut_m6_8",
+   "screw_m6x45_fh",
+   "screw_ballast",
+   "washer_fender_1in",
+   "quick_pin_10",
+   "webbing_sling"
+  ],
+  "total_usd": 493.71
+ },
+ "pictures": [
+  "rig-crouch.png",
+  "rig-stand.png",
+  "rig-tall.png",
+  "rig-jump-apex.png",
+  "rig-side.png",
+  "rig-back.png"
+ ],
+ "print": {
+  "tpu95": {
+   "grams": 303,
+   "hours": 31.0,
+   "cost_usd": 12.72,
+   "parts": 4
+  },
+  "petg": {
+   "grams": 1245,
+   "hours": 49.7,
+   "cost_usd": 17.41,
+   "parts": 17
+  }
+ }
+}
