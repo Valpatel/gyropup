@@ -27,6 +27,7 @@ cad:
     live_reload: {watch: [designer, exports, docs, cad]}   # pages reload as these change
     nav:
       - {id: progress, title: Progress, href: designer/progress.html}
+      - {id: build, title: Build, href: designer/build.html}
       - {id: overview, title: Overview, href: site/}
       - {id: simulate, title: Simulate, href: designer/sim.html}
       - {id: decisions, title: Decisions, href: "site/#decisions"}

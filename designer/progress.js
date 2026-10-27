@@ -220,12 +220,22 @@ if (pp) {
       + `<td>${r.size_mm.join(' × ')}</td><td>${esc(r.placement)}</td><td>${r.grams_each}</td><td>${r.hours}</td><td>${esc(r.infill)}</td><td>${esc(r.how)}</td></tr>`).join('') + '</tbody></table>';
   showMissing('print');
 }
+// parts machined to order from our STEP at an instant price (D40, D46): cad/build_leg.py -> exports/leg/cnc/
+const madeToOrder = (rows) => (!rows || !rows.length ? '' : `<h3 style="margin-top:22px">Machined to order</h3>`
+  + '<p class="lede">Upload the STEP for the instant price and enter the callouts (threads, fits, tolerances) the order form asks for; the callouts page doubles as the drawing.</p>'
+  + '<table class="cmp"><thead><tr><th></th><th>part</th><th>material</th><th>qty</th><th>g each</th><th>order from</th><th>each</th></tr></thead><tbody>'
+  + rows.map((r) => `<tr><td class="th">${thumb('buy', r.key, r.key, true)}</td><td><a href="../${esc(r.step)}">${esc(r.key)}.step</a> · <a href="../exports/leg/cnc/README.md">callouts</a></td>`
+    + `<td>${esc(r.material)}</td><td>${r.qty}</td><td>${r.mass_g_each}</td><td>${esc(r.vendor)}<br><span style="color:var(--muted)">backup ${esc(r.backup)}</span></td>`
+    + `<td>${r.price_usd_each != null ? money(r.price_usd_each) : `<span title="${esc(r.price_note)}">~${money(r.price_estimate_usd_each)} (estimate)</span>`}</td></tr>`).join('')
+  + '</tbody></table>');
 const bom = await getJson(`${LEG}bom.json`);
 if (bom) {
-  $('buylede').innerHTML = `About <b>$${Math.round(bom.price_usd_per_leg)}</b> per leg for what has a price. ${coverage(bom.per_leg)}`
+  const mto = bom.made_to_order || [];
+  $('buylede').innerHTML = `About <b>$${Math.round(bom.price_usd_per_leg)}</b> per leg for what has a price`
+    + (mto.length ? `, plus about <b>$${Math.round(bom.made_to_order_estimate_usd_per_leg)}</b> machined to order (below)` : '') + `. ${coverage(bom.per_leg)}`
     + (bom.to_source.length ? ` <span class="tag warn">TO SOURCE</span> ${esc(bom.to_source.join(', '))}` : ' Every part has a part number.')
     + ' Click a picture for the page it came from; open <b>alternates</b> for other places to buy each part and what would change.';
-  $('buy').innerHTML = partList('buy', bom.per_leg);
+  $('buy').innerHTML = partList('buy', bom.per_leg) + madeToOrder(mto);
   showMissing('buy');
 }
 

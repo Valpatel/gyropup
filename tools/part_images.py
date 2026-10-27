@@ -54,7 +54,7 @@ RENDERS = R / 'exports' / 'thumbs'
 TURRET_DEFAULT = R.parent / 'gyropup-turret'
 THUMB_PX = 360
 UA = ('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36')
-COLOURS = {'pa6-cf': '#5d6570', 'petg': '#4f86c6', 'tpu95': '#33373d'}      # render colour by material
+COLOURS = {'pa6-cf': '#5d6570', 'petg': '#4f86c6', 'tpu95': '#33373d', 'al6061': '#b9c0c8'}      # render colour by material
 
 
 def today() -> str:
@@ -163,12 +163,16 @@ def bom_lines(tdir: Path) -> list:
 
 
 def printed_parts(tdir: Path) -> dict:
-    """{part: {stl, material, bom}} for the leg's and the turret's printed parts that have an STL."""
+    """{part: {stl, material, bom}} for the leg's and the turret's made parts that have an STL: printed, and the leg's
+    parts machined to order (exports/leg/cnc/cnc.json)."""
     out = {}
     leg = load(R / 'exports' / 'leg' / 'print-plan.json', {}).get('parts', {})
     for name, p in leg.items():
         if (R / 'exports' / 'leg' / f'{name}.stl').exists():
             out[name] = {'stl': R / 'exports' / 'leg' / f'{name}.stl', 'material': p.get('material'), 'bom': 'leg'}
+    for name, c in load(R / 'exports' / 'leg' / 'cnc' / 'cnc.json', {}).items():
+        if (R / c['stl']).exists():
+            out[name] = {'stl': R / c['stl'], 'material': 'al6061', 'bom': 'leg'}
     plans = [tdir / 'exports' / 'turret' / 'bench' / 'print-plan.json', R / 'exports' / 'turret' / 'bench' / 'print-plan.json']
     tplan = next((load(p, {}) for p in plans if p.exists()), {}).get('parts', {})
     made = {}

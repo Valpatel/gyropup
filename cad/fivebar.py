@@ -66,7 +66,8 @@ AC = STD['AC-L']
 FAST = STD['fasteners']
 ISO7379_HEAD = {12: (18.0, 9.0), 10: (16.0, 7.0)}       # shoulder d: head diameter, head height (McMaster 92981A408 / A303)
 M10_NUT = (17.0, 10.0)                                   # nyloc M10: across flats, height (DIN 985 is 10 mm)
-TPU_SLEEVE = (18.0, 10.0)                                # stop sleeve OD on a 10 mm shoulder
+TPU_SLEEVE = (26.0, 10.0)                                # stop sleeve OD on a 10 mm shoulder: an 8 mm wall of TPU 95A gives a
+                                                         # power cut's collapse ~7 mm of travel before the steel post (D39)
 EYE_SLEEVE = (18.0, 12.0, 20.0)                          # the steel sleeves pressed into each upper link's knee eye: OD, ID,
                                                          # length (McMaster 96990A403, DIN 179 12 x 18 x 20, HRC 61)
 EYE_SLEEVES = 2                                          # two, end to end, 40 mm: the knee pin cantilevers out to the lower
@@ -350,31 +351,49 @@ def stop_post_angles():
     return P['knee_out_deg'] + half, P['knee_in_deg'] - half
 
 
+FLANGE_T, FLANGE_X = 7.0, 95.0                   # the hip frame's top and bottom flanges: thickness, half-length (mm)
+
+
+def frame_ring_r() -> float:
+    """The hip frame's ring round each motor (mm): clear of the lug screws and of the 61812's seat."""
+    b = gmi.motor_interface(MOTOR)['case']['bolts']
+    return max(b['pcd'] / 2 + gmi.clear(b['thread']) + 4.5, AC['bearing_od'] / 2 + 6)
+
+
+def frame_mounts() -> dict:
+    """Where the hip frame is carried (the body, or the test rig's carriage plate): six M5 heat-set inserts in the
+    flange ends, (x, z) mm in the leg's frame, axes along y. The mount plane is the flange end faces at
+    y = Y['centre_plane']; the carrier sits on the -y side of it and its screws go in along +y."""
+    zf = frame_ring_r()
+    return {'plane_y': Y['centre_plane'], 'thread': 'M5', 'pilot_depth': 11.0, 'boss_r': 7.0, 'boss_len': 12.0,
+            'inserts_xz': [(x, s * (zf + FLANGE_T / 2 + 1.5)) for s in (1, -1) for x in (-FLANGE_X + 12, 0.0, FLANGE_X - 12)]}
+
+
 def hip_frame():
     """The hip frame (printed PA6-CF): one web holding both motors on their output-side lugs (10 x M4) and a 61812
     support bearing each around the output adapters' journals, so leg bending goes into the frame, not into the
     motors' 61810. Flanges top and bottom run inwards to the body's centre plane and carry it (6 x M5 inserts in
-    their ends: the body, or the test rig's carriage). Four stop posts (M8 inserts) with TPU sleeves limit the upper
-    links. A cable pass between the motors for the wheel and motor leads. Printed web-down: it fits the bed turned
-    45 deg."""
+    their ends: the body, or the test rig's carriage; frame_mounts()). Four stop posts (M8 inserts) with TPU sleeves
+    limit the upper links. A cable pass between the motors for the wheel and motor leads. Printed web-down: it fits
+    the bed turned 45 deg."""
     yf0, yf1 = Y['frame']
-    mi = gmi.motor_interface(MOTOR)
-    b = mi['case']['bolts']
-    ring_r = max(b['pcd'] / 2 + gmi.clear(b['thread']) + 4.5, AC['bearing_od'] / 2 + 6)
+    b = gmi.motor_interface(MOTOR)['case']['bolts']
+    ring_r = frame_ring_r()
     (ax, _), (bx, _) = motors()
-    fl_t, fl_x = 7.0, 95.0
+    fl_t, fl_x = FLANGE_T, FLANGE_X
     web = ycyl(ring_r, yf0, yf1, ax).union(ycyl(ring_r, yf0, yf1, bx)).union(
         cq.Workplane('XY').box(2 * ax, yf1 - yf0, 2 * ring_r).translate((0, (yf0 + yf1) / 2, 0)))
     zf = ring_r                                              # flanges: z from ring_r .. ring_r + fl_t (above the motors' Ø120)
     web = web.union(cq.Workplane('XY').box(2 * fl_x, yf1 - yf0, 2 * (zf + fl_t)).translate((0, (yf0 + yf1) / 2, 0)))
-    yc = Y['centre_plane']
+    mt = frame_mounts()
+    yc = mt['plane_y']
     for s in (1, -1):
         fl = cq.Workplane('XY').box(2 * fl_x, yf0 - yc, fl_t).translate((0, (yf0 + yc) / 2, s * (zf + fl_t / 2)))
         web = web.union(fl)
-        for x in (-fl_x + 12, 0.0, fl_x - 12):                # end bosses with M5 inserts (the body or the rig)
-            zb = s * (zf + fl_t / 2 + 1.5)
-            boss = ycyl(7.0, yc, yc + 12.0, x, zb)
-            web = web.union(boss).cut(ycyl(FAST['M5']['insert_pilot'] / 2, yc - 1, yc + 11.0, x, zb))
+        for x, zb in mt['inserts_xz']:                         # end bosses with M5 inserts (the body or the rig)
+            if zb * s > 0:
+                boss = ycyl(mt['boss_r'], yc, yc + mt['boss_len'], x, zb)
+                web = web.union(boss).cut(ycyl(FAST[mt['thread']]['insert_pilot'] / 2, yc - 1, yc + mt['pilot_depth'], x, zb))
         # a gusset between the motors (x = 0, where no motor is) from the flange down the web's inner face
         web = web.union(yslab([(-3.5, s * zf), (3.5, s * zf), (3.5, s * (zf - 34)), (-3.5, s * (zf - 34))], yf0 - 0.01, yf0 + 0.01))
         g = cq.Workplane('YZ', origin=(-3.5, 0, 0)).polyline([(yf0 + 0.01, s * zf), (yc + 18, s * zf), (yf0 + 0.01, s * (zf - 34))]).close().extrude(7.0)
@@ -397,6 +416,11 @@ def hip_frame():
     for (px, pz) in stop_posts():
         web = web.cut(ycyl(4.8, yf1 - 16.0, yf1 + 1, px, pz))        # M8 insert (94459A778, 12.7 long): Ø9.6, 16 deep
     web = web.cut(ycyl(9.0, yf0 - 1, yf1 + 1, 0.0, 0.0))                # cable pass between the motors
+    # a relief in the leg-side face at the bottom, between the motors: the wheel link's hub end (5 mm proud of the
+    # frame's face plane, the circlip's land) passes here at the leg's shortest, and a power cut squeezes the knee-out
+    # stops' TPU up to 7.4 deg further (D39)
+    hub_y = Y['hub'][0]
+    web = web.cut(cq.Workplane('XY').box(64.0, yf1 + 1 - (hub_y - 1.5), 24.0).translate((0.0, (yf1 + 1 + hub_y - 1.5) / 2, -(zf + fl_t) + 10.0)))
     return web
 
 
@@ -609,7 +633,7 @@ def knee_pin_length():
 
 
 def stop_sleeve():
-    """TPU 95A sleeve on a stop post's shoulder: the upper link lands on it."""
+    """TPU 95A sleeve on a stop post's shoulder (8 mm wall): the upper link lands on it."""
     od, idd = TPU_SLEEVE
     return ycyl(od / 2, 0.0, 19.0).cut(ycyl(idd / 2 + 0.1, -1, 20.0))
 
@@ -651,13 +675,17 @@ class Leg:
 def leg_parts() -> Leg:
     parts, meta = {}, {}
 
-    def add(name, shape, material, qty, note, fea='pa6_cf_xy', solid=True):
-        parts[name], meta[name] = shape, {'material': material, 'qty': qty, 'note': note, 'fea_material': fea, 'solid': solid}
+    def add(name, shape, material, qty, note, fea='pa6_cf_xy', solid=True, made='print', machining=None):
+        """made: 'print' (the print plan) or 'cnc' (ordered online at an instant price from the STEP: exports/leg/cnc/);
+        machining: for a cnc part, (the part in the frame it is machined in, the callouts the order needs)."""
+        parts[name], meta[name] = shape, {'material': material, 'qty': qty, 'note': note, 'fea_material': fea, 'solid': solid, 'made': made,
+                                          'machining': machining}
 
     ad, adi = gmi.output_adapter(MOTOR, 'L')
     add('hip_frame', hip_frame(), 'pa6-cf', 1, 'printed PA6-CF web-down (turned 45 deg on the bed), 100 % solid; '
-        '20 x M4 into the motors, 2 x 61812 pressed in (6 x M3 + washers), 6 x M5 inserts in the flange ends, 4 x M8 inserts for the stop posts')
-    add('output_adapter', gmi.place(ad, (0, Y['motor_out'], 0), (0, 1, 0)), 'pa6-cf', 2, adi['note'], fea='pa6_cf_z')
+        '20 x M4 into the motors, 2 x 61812 pressed in from the motor side onto a 2 mm lip (no retainers), 6 x M5 inserts in the flange ends, 4 x M8 inserts for the stop posts')
+    add('output_adapter', gmi.place(ad, (0, Y['motor_out'], 0), (0, 1, 0)), adi['material'], 2, adi['note'],
+        fea='al6061' if adi['made'] == 'cnc' else 'pa6_cf_z', made=adi['made'], machining=(ad, adi['spec']) if adi['made'] == 'cnc' else None)
     add('upper_link', upper_link(), 'pa6-cf', 2, f"printed PA6-CF flat, {P['upper_t']:.0f} mm, 100 % solid; 8 x M5 into the adapter; "
         'the knee shoulder screw clamped by an M10 nyloc in a pocket')
     add('front_link', front_link(), 'pa6-cf', 1, f"printed PA6-CF flat on its inner face, {P['front_t']:.0f} mm body; two 6201-2RS at the knee, "
@@ -703,9 +731,8 @@ def assembly(phi1: float, phi2: float, with_bought: bool = True):
     fr, j = link_frames(phi1, phi2)
     out = {}
     out['hip_frame'] = (L.parts['hip_frame'], 'made')
-    (ax, _), (bx, _) = motors()
-    out['output_adapter_front'] = (L.parts['output_adapter'].translate((ax, 0, 0)), 'made')
-    out['output_adapter_rear'] = (L.parts['output_adapter'].translate((bx, 0, 0)), 'made')
+    out['output_adapter_front'] = (place(L.parts['output_adapter'], *fr['upper_front']), 'made')   # bolted to its link: turns with it
+    out['output_adapter_rear'] = (place(L.parts['output_adapter'], *fr['upper_rear']), 'made')
     out['upper_link_front'] = (place(L.parts['upper_link'], *fr['upper_front']), 'made')
     out['upper_link_rear'] = (place(L.parts['upper_link'], *fr['upper_rear']), 'made')
     out['front_link'] = (place(L.parts['front_link'], *fr['front_link']), 'made')
@@ -744,8 +771,8 @@ def screw(d, length, head_d, head_h, at, axis_y_sign, x, z):
 
 SCREWS = {   # what each screw group is, its size, and where its head seats (catalog/hardware.json keys)
     'lugs': ('screw_m4x20', 'M4 x 20 into the motors\' lugs, heads 10 mm down in the hip frame'),
-    'links': ('screw_m5x40', 'M5 x 40 through the upper links\' hubs into the adapters\' inserts, heads proud'),
-    'outputs': ('screw_m5x30', 'M5 x 30 through the adapters into the motors\' output flanges'),
+    'links': ('screw_m5x40', 'M5 x 40 through the upper links\' hubs into the adapters\' tapped holes, heads proud'),
+    'outputs': ('screw_m5x25', 'M5 x 25 through the adapters into the motors\' output flanges, heads in pockets below the standard face'),
     'wheel': ('screw_m6x30', 'M6 x 30 from inside the hub into the BotWheel\'s flange'),
 }
 
@@ -763,14 +790,25 @@ def screw_groups(fr, j):
             sc = screw(4.0, 20.0, 7.0, 4.0, yf1 - LUG_CB, -1, x, z)
             lugs = sc if lugs is None else lugs.union(sc)
     out['screws_lugs'] = lugs
+    # the hubs' screws turn with their links and adapters: built in the link's frame (a motor-frame point (x, y) sits
+    # at (x, -y) there, gmi.place's turn) and placed as the link is
     ao = STD['AO-L']
-    links = None
+    _, adi = gmi.output_adapter(MOTOR, 'L')
+    ob, hd = gmi.motor_interface(MOTOR)['output']['bolts'], adi['head']
+    links = outputs = None
     for key in ('upper_front', 'upper_rear'):
-        (ox, oz), rot = fr[key]
-        for (x, z) in gmi.circle_pts(ao['pcd'], ao['bolts'], 360.0 / ao['bolts'] / 2):
-            sc = screw(5.0, 40.0, 8.5, 5.0, P['upper_t'], -1, ox + x, oz + z)
-            links = sc if links is None else links.union(sc)
+        hub = None
+        for (x, y) in gmi.circle_pts(ao['pcd'], angles=gmi.ao_bolt_deg(ao)):
+            sc = screw(5.0, 40.0, 8.5, 5.0, P['upper_t'], -1, x, -y)
+            hub = sc if hub is None else hub.union(sc)
+        links = place(hub, *fr[key]) if links is None else links.union(place(hub, *fr[key]))
+        ring = None
+        for (x, y) in gmi.circle_pts(ob['pcd'], angles=ob['angles']):
+            sc = screw(5.0, hd['length'], hd['d'], hd['h'], Y['motor_out'] + adi['z_head_seat'], -1, x, -y)
+            ring = sc if ring is None else ring.union(sc)
+        outputs = place(ring, *fr[key]) if outputs is None else outputs.union(place(ring, *fr[key]))
     out['screws_links'] = links
+    out['screws_outputs'] = outputs
     ex, ez = j['E']
     wheel = None
     for (x, z) in gmi.circle_pts(36.0, 4, 45.0):
@@ -878,6 +916,7 @@ MATES = [('output_adapter_front', 'motor_front'), ('output_adapter_rear', 'motor
          ('wheel_link', 'apex_spacer'), ('apex_spacer', 'apex_61812'),
          ('hip_frame', 'stop_posts'), ('stop_sleeve', 'stop_posts'), ('hip_frame', 'screws_lugs'), ('motor_', 'screws_lugs'),
          ('upper_link', 'screws_links'), ('output_adapter', 'screws_links'), ('wheel_link', 'screws_wheel'), ('wheel_hub', 'screws_wheel'),
+         ('output_adapter', 'screws_outputs'), ('motor_', 'screws_outputs'),
          ('wheel_link', 'wheel_cable'),
          ('wheel_hub', 'wheel_cable'),
          ('upper_link', 'eye_sleeve'), ('eye_sleeve', 'knee_pin')]

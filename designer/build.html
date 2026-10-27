@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Gyropup Build</title>
+<link rel="stylesheet" href="kit/hud.css">
+<style>
+  /* the progress page's look (designer/progress.html): the same variables, fonts, cards, tags and part rows */
+  html, body { overflow-x: hidden; overflow-y: auto; height: auto; }
+  body.has-appnav main.prog { padding-top: 46px; }
+  main.prog { position: relative; z-index: 3; padding: 0 32px 60px; max-width: 1500px; }
+  main.prog h1 { font-size: 24px; margin: 26px 0 4px; letter-spacing: -0.01em; }
+  .lede { color: var(--muted); margin: 0 0 18px; max-width: 90ch; }
+  .lede b { color: var(--text); }
+  .sec { display: flex; align-items: center; gap: 8px; margin: 34px 0 12px; font: 600 12px var(--font-mono); letter-spacing: .14em; text-transform: uppercase; }
+  .sec::before { content: ""; width: 12px; height: 2px; background: var(--cyan); box-shadow: 0 0 6px var(--glow-30); flex: none; }
+  .card { background: rgba(14,14,20,.88); border: 1px solid var(--hairline); border-radius: 10px; padding: 14px 18px; margin-bottom: 14px; }
+  .status { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+  .status .card { margin: 0; }
+  .status .card b { display: block; font-size: 13px; margin-bottom: 4px; }
+  .status .card span, .status .card p { color: var(--muted); font-size: 13px; }
+  .status .card p { margin: 6px 0 0; }
+  .k { font: 600 22px var(--font-mono); color: var(--text); }
+  a { color: var(--cyan); }
+  .tag { display: inline-block; padding: 1px 8px; border-radius: 99px; font: 600 11px var(--font-mono); letter-spacing: .08em; white-space: nowrap; }
+  .tag.pass { color: var(--mint); background: rgba(5,255,161,.08); } .tag.fail { color: var(--magenta); background: rgba(255,42,109,.1); }
+  .tag.warn { color: #ffb020; background: rgba(255,176,32,.1); } .tag.info { color: var(--cyan); background: var(--glow-06); }
+  table.cmp { width: 100%; border-collapse: collapse; font: 12px var(--font-mono); background: rgba(18,18,26,.9); border: 1px solid var(--hairline); border-radius: 8px; overflow: hidden; }
+  table.cmp th, table.cmp td { padding: 7px 10px; border-bottom: 1px solid var(--hairline); text-align: left; vertical-align: top; }
+  table.cmp th { color: var(--muted); font-weight: 500; }
+  table.cmp td.n, table.cmp th.n { text-align: right; white-space: nowrap; }
+  table.cmp tr.tot td { color: var(--text); font-weight: 600; border-bottom: 0; }
+  .tablewrap { overflow-x: auto; }
+  /* pictures (catalog/images.json), as on the progress page */
+  .thumb { display: block; width: 72px; height: 72px; border-radius: 8px; background: #fff; overflow: hidden; flex: none; }
+  .thumb img { width: 100%; height: 100%; object-fit: contain; display: block; }
+  .thumb.sm { width: 48px; height: 48px; border-radius: 6px; }
+  .thumb.missing { background: repeating-linear-gradient(135deg, rgba(255,42,109,.10) 0 6px, transparent 6px 12px); border: 2px dashed var(--magenta);
+    display: flex; align-items: center; justify-content: center; text-align: center; color: var(--magenta); font: 700 10px/1.2 var(--font-mono); letter-spacing: .06em; }
+  .thumb.missing::after { content: "NO\A PICTURE"; white-space: pre; }
+  .thumb.sm.missing { font-size: 8px; letter-spacing: 0; }
+  .mediasum { margin: 0 0 10px; color: var(--muted); font-size: 13px; }
+  .alts summary { cursor: pointer; color: var(--text-dim); font: 12px var(--font-mono); }
+  .alts ul { list-style: none; margin: 6px 0 0; padding: 0; } .alts li { margin: 0 0 8px; font-size: 12px; overflow-wrap: anywhere; }
+  .alts .chg { color: var(--muted); margin-top: 2px; } .alts .chk { color: var(--dim); font: 10px var(--font-mono); margin-top: 1px; }
+  .risk { margin-top: 5px; font-size: 12px; color: var(--text-dim); } .risk .chk { color: var(--dim); font: 10px var(--font-mono); }
+  .key { font: 11px var(--font-mono); color: var(--dim); overflow-wrap: anywhere; }
+  .dim { color: var(--muted); } .small { font-size: 12px; }
+
+  /* the one-line summary and the workstream cards */
+  .summary { font-size: 16px; margin: 4px 0 18px; padding: 12px 16px; border: 1px solid var(--cyan-dim); border-radius: 10px; background: var(--glow-06); max-width: 120ch; }
+  .summary b { font-family: var(--font-mono); color: var(--text); }
+  .stream.off { opacity: .55; }
+  .stream .inc { display: flex; align-items: center; gap: 8px; margin-top: 8px; font: 12px var(--font-mono); color: var(--text-dim); cursor: pointer; }
+  .stream .inc input { accent-color: var(--cyan); width: 16px; height: 16px; }
+  .stream ul.files { margin: 6px 0 0; padding-left: 16px; color: var(--muted); font-size: 12px; overflow-wrap: anywhere; }
+
+  /* the order list: one row per part to buy, grouped by seller */
+  .seller { margin: 0 0 18px; }
+  .seller > header { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px; padding: 10px 14px; background: rgba(14,14,20,.92);
+    border: 1px solid var(--hairline); border-bottom: 0; border-radius: 8px 8px 0 0; }
+  .seller > header h3 { margin: 0; font-size: 15px; }
+  .seller > header .why { color: var(--muted); font-size: 12px; }
+  .seller > header .sub { margin-left: auto; font: 600 14px var(--font-mono); color: var(--text); white-space: nowrap; }
+  .olist { background: rgba(18,18,26,.9); border: 1px solid var(--hairline); border-radius: 0 0 8px 8px; overflow: hidden; font-size: 13px; }
+  .orow { display: grid; grid-template-columns: 72px minmax(0, 2.2fr) minmax(0, 1.5fr) 92px 112px 104px minmax(0, 1.9fr);
+    grid-template-areas: "thumb main pn qty unit line alts"; gap: 6px 14px; align-items: start; padding: 10px 12px; border-bottom: 1px solid var(--hairline); }
+  .orow:last-child { border-bottom: 0; }
+  .orow.head { color: var(--muted); font: 500 11px var(--font-mono); letter-spacing: .06em; padding: 7px 12px; align-items: end; }
+  .orow > .t { grid-area: thumb; } .orow > .m { grid-area: main; } .orow > .p { grid-area: pn; } .orow > .q { grid-area: qty; }
+  .orow > .u { grid-area: unit; } .orow > .l { grid-area: line; } .orow > .a { grid-area: alts; }
+  .orow .m b { display: block; color: var(--text); font-weight: 600; overflow-wrap: anywhere; }
+  .orow .for { color: var(--muted); font-size: 12px; margin-top: 2px; } .orow .for i { font-style: normal; color: var(--text-dim); }
+  .orow .p, .orow .q, .orow .u, .orow .l { font: 12px var(--font-mono); } .orow .p { overflow-wrap: anywhere; }
+  .stats { display: contents; }               /* the numbers: cells of the row's grid here, one wrapping line on a phone */
+  .orow .l b { color: var(--text); font-size: 13px; }
+  .orow small { display: block; color: var(--muted); font: 11px var(--font-mono); margin-top: 2px; }
+  .orow .avail { display: block; color: var(--mint); font: 11px var(--font-mono); margin-top: 3px; }
+  .orow .avail.bad { color: #ffb020; }
+  .orow .flags { margin-top: 4px; display: flex; flex-wrap: wrap; gap: 4px; }
+  .seller > footer { display: flex; justify-content: flex-end; padding: 6px 4px 0; }
+  .paste summary { cursor: pointer; color: var(--text-dim); font: 12px var(--font-mono); }
+  .paste textarea { display: block; width: min(420px, 100%); margin-top: 6px; background: var(--surface-2); color: var(--text); border: 1px solid var(--hairline);
+    border-radius: 6px; font: 12px var(--font-mono); padding: 8px; }
+  .grand { display: flex; flex-wrap: wrap; gap: 6px 18px; align-items: baseline; padding: 12px 16px; border: 1px solid var(--cyan-dim); border-radius: 10px; background: var(--glow-06); }
+  .grand b { font: 600 18px var(--font-mono); }
+
+  /* made to order, the day-1 list and the print queue: the same row idea */
+  .grow { display: grid; gap: 6px 14px; align-items: start; padding: 10px 12px; border-bottom: 1px solid var(--hairline); font-size: 13px; }
+  .grow:last-child { border-bottom: 0; }
+  .grow.head { color: var(--muted); font: 500 11px var(--font-mono); letter-spacing: .06em; padding: 7px 12px; align-items: end; }
+  .grow .mono { font: 12px var(--font-mono); overflow-wrap: anywhere; }
+  .grow b { color: var(--text); }
+  .glist { background: rgba(18,18,26,.9); border: 1px solid var(--hairline); border-radius: 8px; overflow: hidden; }
+  .mrow { grid-template-columns: 72px minmax(0, 1.7fr) minmax(0, 1.1fr) 44px minmax(0, 1fr) minmax(0, 1.6fr); }
+  .drow { grid-template-columns: 34px 48px minmax(0, 2fr) minmax(0, 1.3fr) minmax(0, 2.2fr); }
+  .prow { grid-template-columns: 30px 48px minmax(0, 1.6fr) 72px 40px 70px 64px minmax(0, 1.3fr) 66px; }
+  .est { font: 12px var(--font-mono); } .est .note { color: var(--muted); font: 12px var(--font-ui); margin-top: 4px; }
+  .prow .how { color: var(--muted); font-size: 12px; margin-top: 2px; }
+  .num { font: 600 12px var(--font-mono); color: var(--cyan); }
+  .callouts summary { cursor: pointer; color: var(--text-dim); font: 12px var(--font-mono); margin-top: 6px; }
+  .callouts ol { margin: 6px 0 0; padding-left: 18px; color: var(--text-dim); font-size: 12px; } .callouts li { margin-bottom: 3px; }
+  .lead { font: 12px var(--font-mono); color: var(--text); } .lead.none { color: var(--muted); }
+  .queue h3 { font-size: 14px; margin: 18px 0 8px; } .queue h3 .dim { font-weight: 400; font-size: 12px; }
+  .lbl { display: none; color: var(--muted); font: 10px var(--font-mono); letter-spacing: .06em; text-transform: uppercase; margin-right: 4px; }
+  br.narrow { display: none; }
+
+  @media (max-width: 900px) { main.prog { padding: 0 16px 60px; } }
+  @media (max-width: 760px) {
+    .orow { grid-template-columns: 64px minmax(0, 1fr); grid-template-areas: "thumb main" "thumb pn" "stats stats" "alts alts"; }
+    .orow .stats { grid-area: stats; display: flex; flex-wrap: wrap; gap: 8px 22px; }
+    .orow .stats > div { min-width: 84px; }
+    .orow.head, .grow.head { display: none; }
+    .orow .thumb { width: 64px; height: 64px; }
+    .lbl { display: block; margin: 0 0 1px; }
+    .mrow { grid-template-columns: 64px minmax(0, 1fr); } .mrow > :nth-child(n+3) { grid-column: 1 / -1; }
+    .mrow .thumb { width: 64px; height: 64px; }
+    .mrow .lbl, .drow .lbl { display: inline; }
+    .drow { grid-template-columns: 26px 48px minmax(0, 1fr); } .drow > :nth-child(n+4) { grid-column: 2 / -1; }
+    .prow { grid-template-columns: 26px 48px minmax(0, 1fr); }
+    .prow .stats { grid-column: 2 / -1; display: flex; flex-wrap: wrap; gap: 6px 18px; }
+    .seller > header .sub { margin-left: 0; }
+    .summary { font-size: 14px; }
+    table.cmp th, table.cmp td { padding: 6px 6px; }
+    table.cmp .wide { display: none; } br.narrow { display: inline; }
+  }
+</style>
+</head>
+<body>
+<main class="prog">
+  <h1>Gyropup: build the first prototype</h1>
+  <p class="summary" id="summary">Reading the parts lists and print plans…</p>
+  <p class="lede">Everything to order and to print for the first physical prototype: one leg on its single-leg test rig (milestone M3),
+  the turret v0 on its bench stand, and the body's first open frame when its files exist. Generated from the repo's own data each
+  time the page loads (the parts lists and print plans in <code>exports/</code>, the catalogue in <code>catalog/</code>, the plans'
+  chosen sellers in <code>docs/</code>); nothing on it is typed by hand. Prices are the listed ones on the date shown, before shipping and tax.</p>
+  <div class="status" id="streams"></div>
+
+  <div class="sec">Order on day 1: longest lead times first</div>
+  <p class="lede" id="daylede"></p>
+  <div id="day1"></div>
+
+  <div class="sec">Order list, by seller</div>
+  <p class="lede" id="orderlede"></p>
+  <div id="sellers"></div>
+  <div id="orders"></div>
+
+  <div class="sec">Machined and cut to order</div>
+  <p class="lede" id="madelede"></p>
+  <div id="made"></div>
+
+  <div class="sec">Print queue</div>
+  <p class="lede" id="printlede"></p>
+  <div id="materials"></div>
+  <div class="queue" id="queue"></div>
+</main>
+<script type="module" src="build.js"></script>
+</body>
+</html>
