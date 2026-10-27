@@ -31,7 +31,7 @@ electronics.
 | [`docs/`](docs/) | [Requirements](docs/requirements.md), [decisions](docs/decisions.yaml), [milestones](docs/milestones.yaml), the [interface standard](docs/mechanical-interfaces.md) |
 | [`research/`](research/) | Sourced research: comparable robots, actuators, wheels, power, sensors, the turret |
 | [`catalog/`](catalog/) | The parts this robot uses, with specs, prices and sources ([format](catalog/SCHEMA.md)); McMaster hardware in `hardware.json` |
-| [`designer/`](designer/) | The progress page and the 3D game page (Gyropup's voice and turret) |
+| [`designer/`](designer/) | The progress page and the 3D game page (Gyropup's voice and turret; the turret on the Orin AGX box, fired by hand, its mechanism laid open) |
 | [`tools/`](tools/) | The leg's geometry sweep, McMaster CAD downloads, the voice server |
 
 The tooling that compared many designs and parts lives on in [cad-agent](https://github.com/Valpatel/cad-agent) as a

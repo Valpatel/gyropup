@@ -1,0 +1,489 @@
+{
+ "checks": {
+  "clearance": {
+   "deck_min_gap_mm": 19.3,
+   "deck_worst_pose_deg": [
+    140.0,
+    -25.0
+   ],
+   "antenna_min_gap_mm": {
+    "antenna_left_46.5": -3.4,
+    "antenna_left_145.5": -4.2,
+    "antenna_right_46.5": -4.2,
+    "antenna_right_145.5": -3.4
+   },
+   "antenna_tilt_max_deg": [
+    [
+     -170.0,
+     25.0
+    ],
+    [
+     -165.0,
+     25.0
+    ],
+    [
+     -160.0,
+     25.0
+    ],
+    [
+     -155.0,
+     25.0
+    ],
+    [
+     -150.0,
+     25.0
+    ],
+    [
+     -145.0,
+     25.0
+    ],
+    [
+     -140.0,
+     25.0
+    ],
+    [
+     -135.0,
+     25.0
+    ],
+    [
+     -130.0,
+     25.0
+    ],
+    [
+     -125.0,
+     25.0
+    ],
+    [
+     -120.0,
+     20.0
+    ],
+    [
+     -115.0,
+     17.5
+    ],
+    [
+     -110.0,
+     20.0
+    ],
+    [
+     -105.0,
+     20.0
+    ],
+    [
+     -100.0,
+     22.5
+    ],
+    [
+     -95.0,
+     22.5
+    ],
+    [
+     -90.0,
+     25.0
+    ],
+    [
+     -85.0,
+     25.0
+    ],
+    [
+     -80.0,
+     25.0
+    ],
+    [
+     -75.0,
+     20.0
+    ],
+    [
+     -70.0,
+     17.5
+    ],
+    [
+     -65.0,
+     17.5
+    ],
+    [
+     -60.0,
+     20.0
+    ],
+    [
+     -55.0,
+     22.5
+    ],
+    [
+     -50.0,
+     22.5
+    ],
+    [
+     -45.0,
+     25.0
+    ],
+    [
+     -40.0,
+     25.0
+    ],
+    [
+     -35.0,
+     25.0
+    ],
+    [
+     -30.0,
+     25.0
+    ],
+    [
+     -25.0,
+     25.0
+    ],
+    [
+     -20.0,
+     25.0
+    ],
+    [
+     -15.0,
+     25.0
+    ],
+    [
+     -10.0,
+     25.0
+    ],
+    [
+     -5.0,
+     25.0
+    ],
+    [
+     0.0,
+     25.0
+    ],
+    [
+     5.0,
+     25.0
+    ],
+    [
+     10.0,
+     25.0
+    ],
+    [
+     15.0,
+     25.0
+    ],
+    [
+     20.0,
+     25.0
+    ],
+    [
+     25.0,
+     25.0
+    ],
+    [
+     30.0,
+     25.0
+    ],
+    [
+     35.0,
+     25.0
+    ],
+    [
+     40.0,
+     25.0
+    ],
+    [
+     45.0,
+     25.0
+    ],
+    [
+     50.0,
+     25.0
+    ],
+    [
+     55.0,
+     25.0
+    ],
+    [
+     60.0,
+     20.0
+    ],
+    [
+     65.0,
+     17.5
+    ],
+    [
+     70.0,
+     20.0
+    ],
+    [
+     75.0,
+     20.0
+    ],
+    [
+     80.0,
+     22.5
+    ],
+    [
+     85.0,
+     22.5
+    ],
+    [
+     90.0,
+     25.0
+    ],
+    [
+     95.0,
+     25.0
+    ],
+    [
+     100.0,
+     25.0
+    ],
+    [
+     105.0,
+     20.0
+    ],
+    [
+     110.0,
+     17.5
+    ],
+    [
+     115.0,
+     17.5
+    ],
+    [
+     120.0,
+     20.0
+    ],
+    [
+     125.0,
+     22.5
+    ],
+    [
+     130.0,
+     22.5
+    ],
+    [
+     135.0,
+     25.0
+    ],
+    [
+     140.0,
+     25.0
+    ],
+    [
+     145.0,
+     25.0
+    ],
+    [
+     150.0,
+     25.0
+    ],
+    [
+     155.0,
+     25.0
+    ],
+    [
+     160.0,
+     25.0
+    ],
+    [
+     165.0,
+     25.0
+    ],
+    [
+     170.0,
+     25.0
+    ]
+   ],
+   "antenna_limited_pans_deg": [
+    [
+     -120.0,
+     -95.0
+    ],
+    [
+     -75.0,
+     -50.0
+    ],
+    [
+     60.0,
+     85.0
+    ],
+    [
+     105.0,
+     130.0
+    ]
+   ],
+   "note": "antennas: upright swivel dipoles on all four RP-SMA bulkheads (none chosen yet: typical 2.4 GHz swivel dipole, \u00d810 x 108 (est; none chosen))"
+  },
+  "muzzle_outside_deck_mm": 3.0,
+  "airflow": {
+   "mouth_mm": [
+    124,
+    33
+   ],
+   "throat_mm": [
+    80,
+    33
+   ],
+   "air_speed_mps": {
+    "grille": 1.17,
+    "throat": 1.36
+   },
+   "loss_pa": 1.94,
+   "flow_before_m3h": 12.94,
+   "flow_after_m3h": 12.06,
+   "flow_drop_pct": 6.8,
+   "note": "hand estimate (K = 1 at the grille, K = 1 for the turn into the collar; a linear 8015 fan curve, 15.2 Pa / 38.9 m3/h, through the J501 CFD operating point); the J501 CFD (tools/thermal.py there) should check it with the deck and shroud in the domain"
+  },
+  "tipping": {
+   "total_kg": 3.09,
+   "com_height_mm": 128,
+   "tip_angle_deg": 35,
+   "push_to_tip_n": 10.6,
+   "push_height_mm": 259,
+   "note": "J501: 368 g printed (its slice report) + 1.0 kg Orin, carrier and cooler (est); a sideways push at the tilt axis that lifts the box off its narrow edge"
+  },
+  "overspeed": {
+   "max_exit_mps": 37.4,
+   "max_fps": 123,
+   "cap_mps": 21.3,
+   "note": "at the Snails' full no-load speed (21000 rpm at 24 V) a ball would leave at about 37 m/s: the 70 fps cap is only the throttle limit in firmware, so the barrel's chronograph gates should open the safety line on any ball over the cap"
+  },
+  "release": {
+   "after_drop_ms": 96,
+   "coast_s": 1.4,
+   "note": "a ball that has already dropped still fires up to 96 ms after ARM is released, and the unbraked flywheels keep 1.4 s of speed: brake them (AM32 active braking) on release"
+  },
+  "lid_screw": "M3 x 35 ISO 4762, tip at z 62 (as the J501's own M3 x 16)",
+  "too_big": []
+ },
+ "mechanics": {
+  "ball": {
+   "d_mm": 22.7,
+   "mass_g": 1.83,
+   "speed_mps": 21.3,
+   "fps": 70,
+   "bore_mm": 24.2,
+   "energy_j": 0.415
+  },
+  "flywheel": {
+   "d_mm": 40.0,
+   "centres_mm": 59.98,
+   "crush_mm": 2.72,
+   "crush_pct": 12.0,
+   "rpm": 11960.0,
+   "surface_mps": 25.1,
+   "efficiency_assumed": 0.85,
+   "throttle_pct": 57,
+   "motor_kv": 875,
+   "no_load_rpm": 21000,
+   "inertia_kg_mm2": 5.01,
+   "energy_j_each": 3.93,
+   "speed_drop_per_shot_pct": 3.5,
+   "recovery_ms": 1.0,
+   "spin_up_ms_motor_limit": 29,
+   "coast_down_s": 1.4,
+   "current_limit_a": 20.0,
+   "note": "rpm for 21.3 m/s with exit = 0.85 x surface speed (assumed); foam loss 30 % (assumed); the chronograph gates in the barrel measure the real speed"
+  },
+  "feed": {
+   "pockets": 8,
+   "motor": "DJI M2006 P36",
+   "ratio": 36,
+   "rated_rpm": 416,
+   "dial_rpm_at_10_per_s": 75,
+   "max_rate_per_s": 55,
+   "pitch_radius_mm": 37,
+   "exit_x_mm": 37.0,
+   "park_deg": 22.5
+  },
+  "timing": {
+   "dial_to_exit_ms": 50,
+   "chute_ms": 86,
+   "to_nip_ms": 4,
+   "nip_to_muzzle_ms": 5.9,
+   "speed_into_nip_mps": 0.65,
+   "trigger_to_muzzle_ms": 146
+  },
+  "pan": {
+   "pinion_teeth": 21,
+   "ring_teeth": 63,
+   "ratio": 3.0,
+   "module_mm": 1.25,
+   "servo_stall_nm": 2.94,
+   "ring_stall_nm": 8.82,
+   "firmware_cap_pct": 50,
+   "max_deg_s": 90,
+   "range_deg": [
+    -170,
+    170
+   ],
+   "hard_stop_deg": 173.5,
+   "encoder_counts_per_turret_deg": 34.1,
+   "inertia_kg_m2": 0.00387,
+   "accel_at_cap_deg_s2": 65313,
+   "time_to_full_slew_ms": 1.4
+  },
+  "tilt": {
+   "servo_stall_nm": 2.94,
+   "max_deg_s": 270,
+   "range_deg": [
+    -25.0,
+    0.0
+   ],
+   "group_mass_g": 623,
+   "com_ahead_mm": 32.0,
+   "holding_nm": 0.2,
+   "margin": 15.0
+  },
+  "flight_level": {
+   "rows": [
+    [
+     1.0,
+     0.049,
+     11,
+     19.9
+    ],
+    [
+     2.0,
+     0.101,
+     48,
+     18.7
+    ],
+    [
+     3.0,
+     0.156,
+     112,
+     17.5
+    ],
+    [
+     4.0,
+     0.215,
+     209,
+     16.4
+    ],
+    [
+     5.0,
+     0.279,
+     342,
+     15.4
+    ],
+    [
+     6.0,
+     0.346,
+     518,
+     14.6
+    ]
+   ],
+   "from_height_m": 0.544,
+   "lands_m": 6.13,
+   "note": "a level shot from the bench (the box on a 0.3 m crate): [range m, time s, drop mm, speed m/s]; drag as a sphere, Cd 0.5"
+  }
+ },
+ "masses_g": {
+  "turret_with_balls": 1375,
+  "adapter": 342,
+  "j501_printed": 368.2,
+  "j501_inside_est": 1000.0
+ },
+ "z_tm_mm": 136.0,
+ "j501": {
+  "revision": "0.8-thermal",
+  "source": "/home/scubasonar/Code/j501-agx/cad/parameters.json"
+ }
+}

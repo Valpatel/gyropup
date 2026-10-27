@@ -1,0 +1,95 @@
+{
+ "adapter": [
+  {
+   "item": "pod_xt60",
+   "note": "Amass XT60E-F panel socket: 24 V in (the J501 takes 12-36 V, so one 24 V supply can feed both)",
+   "mass_g": 10.0
+  },
+  {
+   "item": "pod_switch",
+   "note": "KCD1 rocker switch, 16 A",
+   "mass_g": 10.0
+  },
+  {
+   "item": "pod_fuse",
+   "note": "5 x 20 mm panel fuse holder, 5 A slow-blow",
+   "mass_g": 10.0
+  },
+  {
+   "item": "pod_pendant",
+   "note": "3.5 mm panel jack: the hold-to-run pendant (the safety line: nothing spins or feeds unless it is held)",
+   "mass_g": 10.0
+  },
+  {
+   "item": "pod_usb",
+   "note": "USB-CAN adapter (CANable 2.0 class): CAN to the turret, USB to the J501's rear USB-A",
+   "mass_g": 20.0
+  },
+  {
+   "item": "pod_wago",
+   "note": "WAGO 221 lever connectors: 24 V and 0 V to the DT12 power pins, the pendant loop to its safety pins",
+   "mass_g": 15.0
+  },
+  {
+   "item": "lid_screw_1",
+   "note": "M3 x 35 ISO 4762 socket head, in place of the J501's M3 x 16",
+   "mass_g": 1.5
+  },
+  {
+   "item": "lid_screw_2",
+   "note": "M3 x 35 ISO 4762 socket head, in place of the J501's M3 x 16",
+   "mass_g": 1.5
+  },
+  {
+   "item": "lid_screw_3",
+   "note": "M3 x 35 ISO 4762 socket head, in place of the J501's M3 x 16",
+   "mass_g": 1.5
+  },
+  {
+   "item": "lid_screw_4",
+   "note": "M3 x 35 ISO 4762 socket head, in place of the J501's M3 x 16",
+   "mass_g": 1.5
+  },
+  {
+   "item": "M3 x 4 heat-set inserts",
+   "qty": 6,
+   "for": "intake shroud"
+  },
+  {
+   "item": "M3 x 8 button head",
+   "qty": 6,
+   "for": "intake shroud"
+  },
+  {
+   "item": "M3 x 8 heat-set inserts",
+   "qty": 4,
+   "for": "pod cover"
+  },
+  {
+   "item": "M3 x 6 button head",
+   "qty": 4,
+   "for": "pod cover"
+  },
+  {
+   "item": "M5 x 8 heat-set inserts",
+   "qty": 4,
+   "for": "the TM face (the turret's 4 x M5 x 16)"
+  },
+  {
+   "item": "\u00d85 x 12 dowel pins",
+   "qty": 2,
+   "for": "the TM face"
+  },
+  {
+   "item": "closed-cell foam tape 3 x 1.5 mm",
+   "qty": 1,
+   "for": "under the shroud floor, round the \u00d880 hole"
+  },
+  {
+   "item": "grommet for the DT12 harness, \u00d813 hole",
+   "qty": 1,
+   "for": "the pod's -y wall"
+  }
+ ],
+ "note": "the turret's own parts: exports/turret/bench/bom.json"
+}

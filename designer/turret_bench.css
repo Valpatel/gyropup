@@ -1,0 +1,97 @@
+/* The turret on the Orin AGX box (turret_bench.js): the ARM / FIRE bar, the view buttons, callouts, the part card and
+   the journey card, over the 3D game page's HUD (kit/hud.css, sim-layout.css). ARM is the hold-to-run safety line, so
+   it is the biggest thing on the screen and lights up while it is held. */
+
+body.bench-mode .gp-dock, body.bench-mode .gp-bubble { display: none !important; }     /* no Gyropup here: no voice dock */
+body.bench-mode #stage-overlay > .hud-hint:not(.tb-keys) { display: none; }           /* the bench's own hint says it */
+
+#tb-actions { position: absolute; left: 50%; bottom: 14px; transform: translateX(-50%); z-index: 6; pointer-events: auto;
+  display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 16px;
+  background: rgba(9, 12, 19, 0.62); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.08); box-shadow: 0 0 24px rgba(0, 0, 0, 0.35);
+  user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; touch-action: none; }
+#tb-actions[hidden] { display: none; }
+#tb-actions button { font: 600 11px var(--font-mono); letter-spacing: .1em; color: var(--text); cursor: pointer; touch-action: none; }
+.tb-arm, .tb-fire { display: grid; place-items: center; gap: 1px; min-width: 86px; height: 60px; border-radius: 14px; padding: 4px 12px; }
+.tb-arm b, .tb-fire b { font-size: 15px; letter-spacing: .16em; }
+.tb-arm small, .tb-fire small { font-size: 9px; letter-spacing: .08em; color: var(--muted); font-weight: 500; }
+.tb-arm { position: relative; border: 1px solid rgba(252, 238, 10, 0.45); background: rgba(252, 238, 10, 0.06); }
+.tb-arm .tb-led { position: absolute; top: 7px; right: 8px; width: 8px; height: 8px; border-radius: 50%; background: #3a3f2a; }
+.tb-arm.on { background: rgba(252, 238, 10, 0.22); border-color: var(--amber); box-shadow: 0 0 22px rgba(252, 238, 10, 0.35); }
+.tb-arm.on .tb-led { background: var(--amber); box-shadow: 0 0 10px var(--amber); animation: hud-pulse .8s ease-in-out infinite; }
+.tb-fire { border: 1px solid rgba(255, 42, 109, 0.45); background: rgba(255, 42, 109, 0.06); }
+.tb-fire.ready { border-color: var(--magenta); background: rgba(255, 42, 109, 0.2); box-shadow: 0 0 22px rgba(255, 42, 109, 0.4); }
+.tb-fire:active { transform: scale(0.97); }
+.tb-views { display: flex; border: 1px solid var(--hairline); border-radius: 10px; overflow: hidden; }
+.tb-views button { border: 0; border-right: 1px solid var(--hairline); background: transparent; padding: 0 10px; height: 40px; color: var(--muted); }
+.tb-views button:last-child { border-right: 0; }
+.tb-views button.on { color: var(--cyan); background: var(--glow-12); }
+.tb-journey { height: 40px; padding: 0 12px; border-radius: 10px; border: 1px solid var(--cyan-dim); background: var(--glow-06); color: var(--cyan) !important; }
+
+#tb-toast { position: absolute; left: 50%; top: 14px; transform: translate(-50%, -6px); z-index: 7; pointer-events: none; max-width: min(92%, 520px);
+  padding: 8px 14px; border-radius: 10px; background: rgba(9, 12, 19, 0.86); border: 1px solid var(--hairline); color: var(--text);
+  font: 12px/1.4 var(--font-ui); text-align: center; opacity: 0; transition: opacity .25s, transform .25s; }
+#tb-toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+#tb-card { left: 16px; top: auto; bottom: 96px; max-width: 360px; z-index: 6; }
+#tb-card h3 { margin: 0 0 6px; font: 700 14px var(--font-ui); color: var(--cyan); padding-right: 22px; }
+#tb-card p { margin: 0 0 6px; font-size: 12.5px; line-height: 1.45; color: var(--text-dim); }
+#tb-card .tb-fact { font: 11px/1.45 var(--font-mono); color: var(--muted); }
+#tb-card .tb-doc { font-size: 11px; color: var(--dim); }
+.tb-x { position: absolute; top: 6px; right: 8px; width: 26px; height: 26px; border: 0; border-radius: 6px; background: transparent; color: var(--muted);
+  font-size: 18px; line-height: 1; cursor: pointer; }
+.tb-x:hover { color: var(--cyan); }
+
+body.tb-mode.tb-journey-on #summary { display: none; }
+#tb-journey-card { left: 16px; top: 16px; max-width: 400px; z-index: 6; border-color: var(--cyan-dim); box-shadow: 0 0 24px var(--glow-12); }
+#tb-journey-card .tb-jhead { display: flex; align-items: baseline; gap: 10px; padding-right: 24px; }
+#tb-journey-card .tb-jhead b { font: 700 15px var(--font-ui); color: var(--cyan); }
+#tb-journey-card .tb-jhead span { font: 10px var(--font-mono); color: var(--muted); margin-left: auto; }
+#tb-journey-card p { margin: 8px 0 10px; font-size: 13px; line-height: 1.5; color: var(--text-dim); }
+.tb-jnav { display: flex; gap: 6px; }
+.tb-jnav button { flex: 1; height: 34px; border-radius: 8px; border: 1px solid var(--hairline); background: var(--surface-2); color: var(--text);
+  font: 600 10px var(--font-mono); letter-spacing: .1em; cursor: pointer; }
+.tb-jnav button:hover { border-color: var(--cyan); color: var(--cyan); }
+.tb-jdots { display: flex; gap: 5px; margin-top: 9px; }
+.tb-jdots i { flex: 1; height: 3px; border-radius: 2px; background: var(--hairline); }
+.tb-jdots i.done { background: var(--cyan-dim); }
+.tb-jdots i.on { background: var(--cyan); box-shadow: 0 0 6px var(--glow-30); }
+
+/* callouts: under the HUD (z 4), over the canvas (z 1) */
+#tb-callouts { position: fixed; inset: 0; z-index: 3; pointer-events: none; }
+#tb-callouts[hidden] { display: none; }
+#tb-callouts svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+#tb-callouts path { fill: none; stroke: rgba(0, 240, 255, 0.55); stroke-width: 1; }
+.tb-label { position: absolute; left: 0; top: 0; display: inline-flex; align-items: center; gap: 6px; height: 22px; padding: 0 8px 0 3px;
+  border-radius: 11px; border: 1px solid rgba(0, 240, 255, 0.35); background: rgba(9, 12, 19, 0.78); color: var(--text-dim);
+  font: 500 11px var(--font-ui); white-space: nowrap; pointer-events: auto; cursor: pointer; will-change: transform; }
+.tb-label i { font: 600 9.5px var(--font-mono); font-style: normal; width: 16px; height: 16px; border-radius: 50%; display: grid; place-items: center;
+  background: var(--cyan); color: #04121a; }
+.tb-label:hover { border-color: var(--cyan); color: var(--cyan); }
+.tb-label.left { flex-direction: row-reverse; padding: 0 3px 0 8px; }
+.tb-label.dot { width: 22px; padding: 0; justify-content: center; border-radius: 50%; }
+.tb-label.dot span { display: none; }
+.tb-label[hidden] { display: none; }
+
+.tb-keys { left: 16px; bottom: 14px; max-width: calc(50% - 150px); line-height: 1.6; }
+.tb-parts { width: 100%; font: 12px var(--font-mono); background: var(--surface-2); color: var(--text); border: 1px solid var(--hairline);
+  border-radius: 6px; padding: 6px 8px; }
+
+@media (max-width: 1180px) { .tb-keys { display: none; } }
+
+/* phones: ARM on the left thumb, FIRE on the right, the views between them; cards above the bar */
+@media (max-width: 899px) {
+  #tb-actions { left: 8px; right: 8px; bottom: 8px; transform: none; justify-content: space-between; gap: 6px; padding: 6px; border-radius: 14px; }
+  .tb-arm, .tb-fire { min-width: 72px; height: 58px; padding: 2px 8px; }
+  .tb-views button { padding: 0 6px; height: 44px; font-size: 9.5px !important; letter-spacing: .04em !important; }
+  .tb-journey { display: none; }
+  #tb-card { left: 8px; right: 8px; max-width: none; bottom: 82px; max-height: 38vh; overflow: auto; }
+  #tb-journey-card { left: 8px; right: 8px; top: 8px; max-width: none; padding: 8px 10px; }
+  #tb-journey-card p { font-size: 12px; margin: 6px 0 8px; max-height: 22vh; overflow: auto; }
+  .tb-jnav button { height: 40px; }
+  #tb-toast { top: 8px; font-size: 11.5px; }
+}
+@media (max-width: 899px) and (max-height: 520px) {
+  #tb-actions { left: auto; right: max(8px, env(safe-area-inset-right)); width: min(56%, 420px); }
+  #tb-card { left: auto; right: 8px; width: min(44%, 340px); bottom: 76px; }
+}

@@ -1,0 +1,72 @@
+{
+ "bed_mm": [
+  256,
+  256,
+  256
+ ],
+ "parts": {
+  "box_deck": {
+   "material": "petg",
+   "qty": 1,
+   "size_mm": [
+    206,
+    206,
+    54
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 220,
+   "grams": 220,
+   "hours": 8.8,
+   "cost_usd": 3.07,
+   "infill": "2 mm walls, 40 % gyroid",
+   "how": "PETG upside down on the deck face; 4 x M5 x 8 inserts (TM), 6 + 4 x M3 inserts; no supports (the leg shelves are 7 mm bridges)"
+  },
+  "intake_shroud": {
+   "material": "petg",
+   "qty": 1,
+   "size_mm": [
+    142,
+    142,
+    35
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 29,
+   "grams": 29,
+   "hours": 1.2,
+   "cost_usd": 0.41,
+   "infill": "2 mm walls, 40 % gyroid",
+   "how": "PETG on its floor; 6 x M3 x 8 button heads up into the deck; foam tape under the hole rim"
+  },
+  "pod_cover": {
+   "material": "petg",
+   "qty": 1,
+   "size_mm": [
+    124,
+    59,
+    3
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 12,
+   "grams": 12,
+   "hours": 0.5,
+   "cost_usd": 0.17,
+   "infill": "2 mm walls, 40 % gyroid",
+   "how": "PETG flat; 4 x M3 x 6"
+  }
+ },
+ "by_material": {
+  "petg": {
+   "grams": 261,
+   "hours": 10.5,
+   "cost_usd": 3.65,
+   "parts": 3
+  }
+ },
+ "too_big": [],
+ "total_hours": 10.5,
+ "total_grams": 261,
+ "note": "the turret's adapter on the J501 compute box; hours are rough"
+}
