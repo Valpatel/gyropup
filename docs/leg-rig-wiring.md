@@ -83,11 +83,11 @@ parallel); `python -m rig.rs04 --iface can0 scan` finds both motors.
 | D5 | the pendant sense (H9) | input; high while the pendant is held |
 | A2 | the motors' bus after the contactor: 100k from the contactor's - terminal, 4.7k to GND | 60 V reads 2.69 V; sampled at 2 kHz, sent as max/min/mean every 10 ms (0x702) |
 | STEMMA QT (I2C) | VL53L1X on the deck (0.6 m cable) | the carriage's height from its target (0x701) |
-| D6 (DT), D9 (SCK), 3V3, GND | HX711 -> the load plate's four half-bridge cells | stand and squat only |
+| D6 (DT), D9 (SCK), 3V3, GND | HX711 -> the load plate's four half-bridge cells, on a 4-pin header | stand, squat and B5; for B3 and B4 the bench's load cell plugs in instead, with its own HX711 |
 | USB-C | the laptop | power and its log |
 
 Its frames (`rig/node.py`): RUN 0x700 at 100 Hz while D5 is high (0x5A in byte 0), SENSE 0x701 at 50 Hz, VBUS 0x702 at
-100 Hz; it never commands a motor. Its firmware: `rig/firmware/feather_rig/` (task T11).
+100 Hz; it never commands a motor. Its firmware: `rig/firmware/feather_rig/` (task T11: CircuitPython; `code.py`, `rig_frames.py` and `settings.json` onto the CIRCUITPY drive, the install steps at the top of `code.py`).
 
 ## Connectors
 
