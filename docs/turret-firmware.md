@@ -266,7 +266,7 @@ robot, the USB-CAN on the bench. Classic CAN at 1 Mbit/s, the 0x300 block, littl
 This mirrors the simulator's turret (sim/turret.py `TurretController`): aim within the depression table, the laser
 before shots, fire only when settled, and report shots. The host-side bridge maps one onto the other.
 
-## 7. Bench harness
+## 7. Bench harness and the host bridge
 
 On the stand (cad/turret_stand.py), 24 V comes through the XT60E-M inlet, the rocker switch and the DC-rated 5 A fuse
 to DT12 pins 1-4. The pendant powers the base's 555 through DT12 pins 7-8. The USB-CAN adapter (a candleLight /
@@ -274,8 +274,8 @@ gs_usb one, as can0 under socketcan) sits on pins 5-6 to the laptop and terminat
 mandatory soft start are in docs/turret-wiring.md section 1.2.
 
 `firmware/turret/bench_host.py` runs every test of docs/turret-prototype-plan.md section 5 that needs the firmware,
-its CAN link or a reading to record: 3.1-3.9, 4.1-4.9, 5.1-5.5 and 6.1-6.8. Tests 1.x and 2.x need neither. Each test
-writes its readings and pass/fail to `exports/turret/bench/<file>.json` (`--list` shows the files).
+its CAN link or a reading to record: 3.1-3.10, 4.1-4.10, 5.1-5.5 and 6.1-6.8. Tests 1.x and 2.x need neither. Each
+test writes its readings and pass/fail to `exports/turret/bench/<file>.json` (`--list` shows the files).
 
 - On the bench, `--can socketcan:can0` (python-can) is used. The script tells the operator what to do and asks for
   the instruments' readings, or takes them from `--answers`. The host heartbeat runs in a thread, so the turret stays
@@ -283,7 +283,57 @@ writes its readings and pass/fail to `exports/turret/bench/<file>.json` (`--list
 - `--sim` runs the same tests against `sim_turret.py`, which simulates the turret with this firmware on it, and writes
   to `exports/turret/bench/sim/` only, so a simulated result can never be mistaken for a bench reading. Phases longer
   than 120 s are shortened (the JSON says so), and readings the simulation cannot make (ring ohms, IR temperatures,
-  paper) are stated stand-ins, listed in each JSON. A dry run of all 31 tests takes about 2 minutes.
+  paper) are stated stand-ins, listed in each JSON. A dry run of all 33 tests takes about 2 minutes.
+
+**The host bridge.** `firmware/turret/host.py` is the one host for the turret outside the bench tests: manual firing
+on the laptop, on the Orin box and on the robot, and later the game. It is built on bench_host.py's protocol layer
+(its `SimLink` and `CanLink` and its `Turret`, imported, so the bench tests are unchanged). It:
+
+- sends the 10 Hz heartbeat, with the arm request high only while the user has asked to arm; the request drops on any
+  SAFE, FAULT or turret restart, so nothing re-arms without the user asking again;
+- sends the CONFIG rows for the mount as soon as the turret has homed, and again after the turret restarts (a gap in
+  its heartbeat, a break in the heartbeat's sequence, or BOOT). `--mount` is required: with no default, the robot can
+  never get the bench's full-range table by omission.
+
+  | Mount | Depression table | Keep-outs (aim, never fire) |
+  |---|---|---|
+  | robot | exports/turret/lidar/lidar.json `firmware_table`: the VLP-16 143 mm ahead of the pan axis, its top 41.7 mm above the TM face (`config.ROBOT_DEPRESSION` if the file is missing) | none: the body's business |
+  | box | exports/turret/lidar/box.json `firmware_table` | box.json's `keep_out_fire_pan_deg`: within 60 deg of straight back |
+  | bench | explicit: -25 deg at every 30 deg of pan | within 60 deg of straight back, where the operator stands |
+
+  With these go tyre 34, ring on, the launch ratio, and the throttle map once bench test 4.3 has passed
+  (exports/turret/bench/speed_map.json; in --sim, the simulated one). `--keepout none` or `--keepout FROM:TO`
+  replaces the keep-outs;
+- refuses to arm until those rows have gone out since the turret's last boot and its next heartbeat has come back
+  without CONFIG_MISMATCH. The reference echoes no CONFIG row, so that heartbeat and the restart watch are the
+  acknowledgement it allows (section 9);
+- sends AIM, FIRE and LASER: the tilt is never asked above level or below the table; pan and tilt run at most 90 deg/s,
+  and at most 50 deg/s while "people near" is set (the body's lidar and cameras, or the page). While it is set no FIRE
+  goes out, a burst under way stops and its wheels spin down, and an aim under way slows (its goal is re-sent, nudged
+  0.05 deg, because the firmware takes a new rate only with a new goal);
+- logs every SHOT, FEED, POWER, HEALTH and EVENT frame, the state changes, the CONFIG rows and the commands to
+  `exports/turret/bench/host-<UTC time>-<mount>.json`. In --sim the log goes to exports/turret/bench/sim/ and never
+  to bench/ itself, as with bench_host.py.
+
+The arm request is only a request. The safety line (the pendant on the bench, the body's STOP contact on the robot),
+the firmware's own conditions and the hardware arm chain decide. Running it:
+
+- **Simulated:** `.venv/bin/python firmware/turret/host.py --sim --mount robot`, or with
+  `--script "pendant on; arm; aim 0 -10; fire 24; status"`. The simulated time runs only inside a command (`wait S`
+  runs it), and `pendant on|off` and `load N` stand in for the operator.
+- **On the laptop:** the gs_usb adapter on DT12 pins 5-6 as above, python-can in the venv (`pip install python-can`),
+  `sudo ip link set can0 up type can bitrate 1000000`, then `.venv/bin/python firmware/turret/host.py --can
+  socketcan:can0 --mount bench` (`--mount box` on the Orin box).
+- **On the Jetson:** the J501's second CAN port as classic CAN at 1 Mbit/s (`sudo modprobe mttcan` if it is not
+  loaded, `sudo ip link set can1 up type can bitrate 1000000`, `ip -details link show can1` to check), python-can,
+  then `python3 firmware/turret/host.py --can socketcan:can1 --mount robot`. The body terminates its end of the bus at
+  the J501. If only can0 comes up (body P0), the turret stays on the USB-CAN adapter, as on the bench.
+- **For the game page's backend:** `--jsonl` reads one JSON object a line (`{"cmd": "aim", "pan": 10, "tilt": -5}`,
+  `{"cmd": "fire", "balls": 3}`, `{"cmd": "near", "on": true}`, `{"cmd": "status"}`) and answers each with one
+  JSON line. A Python backend can use `TurretHost` directly. No web server is needed.
+
+The commands are status, aim PAN [TILT [RATE]], fire N [RATE [FPS]], laser on|off, near on|off, arm, disarm, stop,
+spindown, rehome (refused while people are near: homing sweeps at 60 deg/s), clear, config, wait S and quit.
 
 ## 8. Proofs in simulation
 
@@ -291,7 +341,7 @@ writes its readings and pass/fail to `exports/turret/bench/<file>.json` (`--list
 |---|---|---|
 | `test_homing.py` | homing and turn counting, 1,000 random starts | unchanged: 1,000 / 1,000, max 6.7 s, repeatability 0.07 deg |
 | `test_feed.py` | the feed driver against a simulated STS3215 through the real packet code: 3/s with a jam injected and recovered; three jams fault; the load catches a jam before the timeout; the drop-off on release and the re-init; lost replies never double a step; the step time; the gate-paced burst with hung balls freed by the dither, the 5-ball hopper at -25 deg, the empty hopper | all pass: jam caught 68 ms after contact (load), reversed, retried, recovered; clean steps 229 ms mean, 236 max; 6 of 6 hung balls freed by a dither, 0 by a step, 0 doubles; 335 ms step to step |
-| `test_firmware.py` | protocols; 8,855 rpm / 61,985 eRPM; Ø36 refused; the tilt never above level; no spin without ARM; the re-arm; zero throttle when the heartbeat goes; a 300 Hz train refused though the hardware stays armed; the ramp never steps; the 24 V guard; one bad frame no trip; a 75 fps pair latches SAFE; aim live and capped while disarmed; the feed servo's drop-off and re-init through the firmware; a new set speed ramps; no DShot frame while the ESCs are unpowered | all 19 pass |
+| `test_firmware.py` | protocols; 8,855 rpm / 61,985 eRPM; Ø36 refused; the tilt never above level; no spin without ARM; the re-arm; zero throttle when the heartbeat goes; a 300 Hz train refused though the hardware stays armed; the ramp never steps; the 24 V guard; one bad frame no trip; a 75 fps pair latches SAFE; aim live and capped while disarmed; the feed servo's drop-off and re-init through the firmware; a new set speed ramps; no DShot frame while the ESCs are unpowered; the host bridge end to end with mount robot (no arming before the table is loaded, the 85 CONFIG rows in the firmware, an aim, 24 balls, then people near: a burst stopped, fire refused, pan held to 50 deg/s) | all 20 pass; the host: 24 of 24 balls, 50.0 deg/s with people near (90.0 before) |
 | `bench_host.py --sim` | every bench test runs end to end | 33 of 33 pass on the circuit as drawn now (docs/turret-wiring.md 3, D47); 6.8 on the table for the lidar 143 mm ahead |
 
 ## 9. Open items found while building v0 (for the hardware and the plan)
@@ -310,3 +360,7 @@ writes its readings and pass/fail to `exports/turret/bench/<file>.json` (`--list
   PULSE_MON on A3, TRIP_IN polled.
 - **Test 6.7 cannot hold for a ball already at the nip.** A ball at the nip at the release, or reaching it within
   ~10 ms, leaves fast (the physics' own table). The early zero throttle narrows that window and cannot close it.
+- **No CONFIG echo.** The firmware answers no CONFIG row, so the host bridge cannot see that each depression row
+  arrived (a full receive FIFO on the Feather would drop one silently). It paces the rows (about 4 a millisecond), and
+  the robot has the built-in table behind it. An EVENT per accepted row (kind and index in a, the stored values in b
+  and c) would let the host check every row: proposed for the Feather port, not in the reference yet.

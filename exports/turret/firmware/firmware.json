@@ -104,6 +104,41 @@
    "fastest_fps": 52.4,
    "balls": 6,
    "pass_": true
+  },
+  "host_bridge": {
+   "homed": true,
+   "arm_refused_without_table": true,
+   "config_rows": 85,
+   "config_landed": true,
+   "depression_rows": 73,
+   "throttle_map_rows": 5,
+   "aim_reached": true,
+   "armed": true,
+   "balls": 24,
+   "burst_end": "complete",
+   "fastest_fps": 54.3,
+   "people_near_in_a_burst": [
+    "the burst stopped and its wheels spun down"
+   ],
+   "burst_ends": [
+    "aborted"
+   ],
+   "shots_while_held": 0,
+   "wheels_stopped": true,
+   "fire_held": "people near: fire is held",
+   "pan_rate_before_people_near": 90.0,
+   "pan_rate_while_slowing": 86.7,
+   "pan_rate_under_way": 50.0,
+   "pan_rate_new_aim": 50.0,
+   "log": {
+    "shots": 25,
+    "feed": 136,
+    "power": 136,
+    "health": 28,
+    "events": 34,
+    "commands": 15
+   },
+   "pass_": true
   }
  },
  "scope": ".venv/bin/python firmware/turret/test_firmware.py [--out DIR]"

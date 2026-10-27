@@ -13,6 +13,8 @@ Safety       the tilt never above level at any command, through homing, the stra
              the first eRPM read over the limit on a 24 V rail, latched until cleared with the line released; one
              corrupt telemetry frame is not a fault; a ball over 66 fps latches SAFE; pan and tilt live and under
              100 deg/s while disarmed; the feed servo leaves the bus on a release and is re-initialised on the next arm
+Host         host.py end to end with mount robot: homing, no arming before the mount's table is loaded, the CONFIG rows
+             in the firmware, an aim, 24 balls, and people near: fire refused, pan and tilt held to 50 deg/s
 """
 from __future__ import annotations
 
@@ -361,13 +363,91 @@ def t_feed_release(out):
     check(out, 'every_ball_under_66fps', max(fast) <= C.TRIP_FPS, fastest_fps=max(fast), balls=len(fast))
 
 
+def t_host_bridge(out):
+    """host.py end to end on the simulated turret, mount robot: it homes; arming is refused before the mount's table is
+    loaded; the CONFIG rows land in the firmware (N5's lidar table, the mount, Ø34, the launch ratio); an aim; 24 balls;
+    then people near: a FIRE refused, and the pan held to 50 deg/s, both for an aim already under way and a new one."""
+    import tempfile
+    import host as H
+    rig = SimRig(seed=81, hopper=30)
+    with tempfile.TemporaryDirectory() as tmp:
+        hb = H.TurretHost(H.SimLink(rig), 'robot', log_dir=Path(tmp), auto_config=False, link_name='test_firmware.py')
+        homed = hb.start(20.0)['homed']
+        hb.sim_pendant(True)
+        no_table = hb.arm()
+        refused = not no_table['ok'] and 'table' in no_table.get('refused', '') and not rig.fw.host_arm
+        cfg = hb.load_config()
+        fw = rig.fw.cfg
+        table = [(round(a / 10.0, 1), round(b / 100.0, 2)) for k, i, a, b in hb.setup['rows'] if k == M.CF_DEPRESSION]
+        robot = H.table_rows(H.LIDAR_JSON) or list(C.ROBOT_DEPRESSION)
+        landed = (cfg['ok'] and fw.mount == 'robot' and fw.tyre_mm == 34 and not rig.fw.cfg_bad and
+                  [(round(p, 1), round(m, 2)) for p, m in fw.depression] == table == [(round(p, 1), round(m, 2)) for p, m in robot] and
+                  abs(fw.launch_ratio - round(C.LAUNCH_RATIO * 10000) / 10000.0) < 1e-9 and
+                  sorted(fw.throttle_map) == sorted((t / 1000.0, float(r)) for t, r in hb.setup['throttle_map']))
+        aim = hb.aim(10.0, -8.0, wait=True)
+        armed = hb.arm()['ok']
+        t0 = rig.hw.t
+        burst = hb.fire(24, wait=True, timeout=40.0)
+        balls = [f for _, f in hb.tt.shots_since(t0) if not f['flags'] & M.S_STRAY]
+        fastest = max((f['fps_d'] / 10.0 for _, f in hb.tt.shots_since(t0)), default=0.0)
+
+        def pan_rates(seconds):
+            rates, last = [], rig.hw.true_pan()
+            for _ in range(int(seconds / 0.01)):
+                hb.wait(0.01)
+                p = rig.hw.true_pan()
+                rates.append(abs(p - last) / 0.01)
+                last = p
+            return rates
+        # people near during a burst: the burst stops and its wheels spin down; a new FIRE is refused
+        t1 = rig.hw.t
+        hb.fire(4)
+        hb.wait_for(lambda: any(t >= t1 for t, _f in hb.tt.shots), 5.0)
+        t_near = rig.hw.t
+        near = hb.set_people_near(True)
+        held = hb.fire(3)
+        hb.wait(1.5)
+        ended = [f['c'] for _t, f in hb.tt.ev(M.EV_BURST_DONE, t1)]
+        shots_held = [f for t, f in hb.tt.shots if t >= t_near + 0.5]
+        wheels_off = hb.tt.wheels.get('rpm_l', 1) == 0 and hb.tt.wheels.get('rpm_r', 1) == 0
+        # an aim under way at 90 deg/s slows to 50 when people near is set; a new aim runs at 50
+        hb.set_people_near(False)
+        p0 = hb.tt.pan()
+        hb.aim(p0 + 150.0, -5.0, absolute=True)
+        fast = max(pan_rates(0.6))
+        hb.set_people_near(True)
+        slowing = pan_rates(0.3)                                   # the servo's own deceleration to the new speed
+        under_way = max(pan_rates(3.0))
+        hb.wait_for(hb._reached, 5.0)
+        hb.aim(hb.tt.pan() - 100.0, -5.0, absolute=True)
+        fresh = max(pan_rates(3.0))
+        hb.set_people_near(False)
+        hb.disarm()
+        log_path = hb.close()
+        log = json.loads(log_path.read_text()) if log_path else {}
+        logged = log.get('counts', {})
+    ok = (homed and refused and landed and aim.get('reached') and armed and burst.get('done') and len(balls) == 24 and
+          fastest <= C.TRIP_FPS and ended == [M.BURST_END['aborted']] and not held['ok'] and not shots_held and wheels_off and
+          fast > 80.0 and under_way <= H.PEOPLE_NEAR_RATE + 0.5 and fresh <= H.PEOPLE_NEAR_RATE + 0.5 and
+          log.get('mode') == 'sim' and logged.get('shots', 0) >= 24 and
+          min(logged.get(k, 0) for k in ('feed', 'power', 'health', 'events')) > 0)
+    check(out, 'host_bridge', ok, homed=homed, arm_refused_without_table=refused, config_rows=len(hb.setup['rows']),
+          config_landed=landed, depression_rows=len(table), throttle_map_rows=len(hb.setup['throttle_map']),
+          aim_reached=aim.get('reached'), armed=armed, balls=len(balls), burst_end=burst.get('end'), fastest_fps=fastest,
+          people_near_in_a_burst=near['acted'], burst_ends=[H.BURST_WHY.get(c, c) for c in ended],
+          shots_while_held=len(shots_held), wheels_stopped=wheels_off, fire_held=held.get('refused'),
+          pan_rate_before_people_near=round(fast, 1), pan_rate_while_slowing=round(max(slowing), 1),
+          pan_rate_under_way=round(under_way, 1), pan_rate_new_aim=round(fresh, 1),
+          log={k: logged.get(k) for k in ('shots', 'feed', 'power', 'health', 'events', 'commands')})
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--out', default=str(R / 'exports' / 'turret' / 'firmware'))
     a = ap.parse_args()
     out = {}
     for fn in (t_protocols, t_numbers, t_tilt, t_arm_conditions, t_ramp_and_guard, t_set_point_ramps, t_overspeed,
-               t_aim_disarmed, t_feed_release):
+               t_aim_disarmed, t_feed_release, t_host_bridge):
         fn(out)
     ok = all(v['pass_'] for v in out.values())
     res = {'pass': ok, 'cases': out, 'scope': __doc__.split('\n\n')[1].strip()}
