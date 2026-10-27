@@ -1,4 +1,4 @@
-<p align="center"><img src="docs/hero.jpg" alt="Gyropup: the current full assembly, with five-bar legs, hub-motor wheels and the foam-ball turret" width="100%"></p>
+<p align="center"><img src="docs/hero.jpg" alt="Gyropup, built leg first: one five-bar leg v2 on two RS-04s beside the foam-ball turret on its bench stand" width="100%"></p>
 
 # Gyropup
 

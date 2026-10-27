@@ -1,5 +1,6 @@
-"""The README banner: the current full assembly (exports/asm_*.step, written by cad/build.py) on a dark stage,
-with the title on the left. Writes docs/hero.jpg.
+"""The README banner: what is designed now (D36, D38), on a dark stage with the title on the left: leg v2 standing
+(cad/fivebar.py) beside the foam-ball turret on its bench stand (cad/turret.py, cad/turret_stand.py). When the body
+around two legs exists, this shows the whole robot instead. Writes docs/hero.jpg.
 
     .venv/bin/python tools/readme_hero.py
 """
@@ -9,10 +10,13 @@ import numpy as np, cadquery as cq, pyvista as pv
 from PIL import Image, ImageDraw, ImageFont
 
 R = Path(__file__).resolve().parents[1]
-src = str(R / 'exports')
+import sys
+sys.path.insert(0, str(R / 'cad'))
 ACC = '#e8892b'
 def colour(n):
-    if any(k in n for k in ('thigh', 'shin', 'pushrod', 'knee_crank')): return ACC, 1.0
+    if any(k in n for k in ('upper_link', 'front_link', 'wheel_link')): return ACC, 1.0
+    if n.startswith('screws') or n.startswith('knee_nut') or n == 'wheel_cable': return '#1b1e23', 1.0
+    if n.startswith('stand_'): return '#3a414c', 1.0
     if n.startswith('wheel_l') or n.startswith('wheel_r') or 'tyre' in n: return '#1b1e23', 1.0
     if 'motor_l' in n or 'motor_r' in n or n in ('flywheel', 'lidar'): return '#2b3038', 1.0
     if n in ('barrel',): return '#ff7a1a', 1.0
@@ -24,9 +28,20 @@ def colour(n):
 p = pv.Plotter(off_screen=True, window_size=(2400, 1100), lighting='three lights')
 p.set_background('#0b0f14', top='#1d2733')
 meshes = []
-for f in sorted(glob.glob(os.path.join(src, 'asm_*.step'))):
-    n = os.path.basename(f)[4:-5]
-    shape = cq.importers.importStep(f).val()
+
+
+def scene():
+    """(name, shape) of leg v2 at a 300 mm stance and the turret on its stand, set side by side."""
+    import build_leg, turret as tu, turret_stand as ts
+    out = [(n, s_.val() if hasattr(s_, 'val') else s_) for n, (s_, _) in build_leg.assembled(300.0).items() if s_ is not None]
+    T = tu.Turret({'bodyTop': -(20.0 + tu.SADDLE_T)})
+    shift = cq.Vector(-150.0, -400.0, -385.0 + ts.H + ts.BOT)              # the turret's stand on the same floor
+    out += [(n, s_.val().translate(shift)) for n, s_ in T.posed(-30.0, -8.0).items()]
+    out += [(n, s_.val().translate(shift)) for n, s_ in ts.parts().items()]
+    return out
+
+
+for n, shape in scene():
     vs, ts = shape.tessellate(0.25, 0.3)
     if not ts: continue
     v = np.array([(q.x, q.y, q.z) for q in vs]); faces = np.hstack([[3, *t] for t in ts])
@@ -88,7 +103,7 @@ text = font('inter.woff2', 44, '/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf'
 x, y = 150, 300
 d.text((x, y - 70), 'SELF-BALANCING  ·  WHEEL-LEGGED', font=mono, fill='#e8892b')
 d.text((x, y), 'Gyropup', font=title, fill='#f2f5f9')
-for i, t in enumerate(['Two five-bar legs, four RS-04 actuators,', 'a foam-ball turret on top,', 'printed in PA6-CF, PETG and TPU.']):
+for i, t in enumerate(['Built leg first: a five-bar leg on two RS-04s,', 'and the foam-ball turret on its bench stand,', 'printed in PA6-CF, PETG and TPU.']):
     d.text((x, y + 210 + i * 62), t, font=text, fill='#aab4c2')
 d.text((x, y + 430), 'DESIGNED · SIMULATED · CHECKED WITH CAD-AGENT', font=mono, fill='#5fd3e0')
 im.save(R / 'docs' / 'hero.jpg', quality=88, optimize=True, progressive=True)
