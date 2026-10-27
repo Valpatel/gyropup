@@ -23,14 +23,11 @@ REF = json.loads((R / 'exports' / 'leg' / 'rig-results.json').read_text())
 
 # ----------------------------------------------------------------------------------- the port is sim/leg_rig.py's
 
-def test_gains_clip_scenarios_are_sim_leg_rigs():
-    assert lc.Gains().__dict__ == lr.Gains().__dict__
+def test_the_controller_is_sim_leg_controls_and_the_scenarios_sim_leg_rigs():
+    import sim.leg_control as slc
+    assert lc.vmc_from_state is slc.vmc_from_state and lc.polar is slc.polar and lc.Gains is slc.Gains
+    assert lc.clip_motor is slc.clip_motor and lr.vmc_from_state is slc.vmc_from_state
     assert lc.LEG_CAP == lr.LEG_CAP and lc.LEG_PEAK == lr.LEG_PEAK
-    rnd = random.Random(2)
-    for _ in range(2000):
-        t, w = rnd.uniform(-150, 150), rnd.uniform(-30, 30)
-        for cap in (None, 60.0):
-            assert lc.clip_motor(t, w, 120.0, 23.56, cap) == lr.clip_motor(t, w, 120.0, 23.56, cap)
     assert set(lc.SCENARIOS) == set(lr.SCENARIOS)
     for k, s in lc.SCENARIOS.items():
         assert s.__dict__ == lr.SCENARIOS[k].__dict__
@@ -48,7 +45,8 @@ def model():
     return m, mujoco.MjData(m), lr.Leg(m)
 
 
-def test_polar_and_vmc_equal_sim_leg_rig(model):
+def test_polar_from_the_angles_equals_the_simulated_legs(model):
+    """fivebar's kinematics (what the rig computes from the motors' angles) against MuJoCo's leg."""
     m, d, leg = model
     rnd = random.Random(5)
     for _ in range(60):
@@ -60,9 +58,6 @@ def test_polar_and_vmc_equal_sim_leg_rig(model):
         a, b = lc.polar(p1, p2, w1, w2), leg.polar(d)
         for x, y in zip(a[:4], b[:4]):
             assert x == pytest.approx(y, rel=1e-9, abs=1e-12)
-        L_cmd, ff = rnd.uniform(0.15, 0.35), rnd.uniform(0, 150)
-        assert np.allclose(lc.vmc(a, L_cmd, 0.0, ff), lr.vmc(leg, d, L_cmd, 0.0, ff), rtol=1e-9, atol=1e-9)
-        assert np.allclose(lc.vmc(a, None, 0.0, force=5000.0), lr.vmc(leg, d, None, 0.0, force=5000.0), rtol=1e-9)
 
 
 # ----------------------------------------------------------------------------------- T7

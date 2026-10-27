@@ -1,20 +1,22 @@
-"""The leg's controller on the rig: sim/leg_rig.py's virtual-model controller and scenarios, ported to run from the
-motors' feedback alone, with the rig's safety supervisor (docs/leg-prototype-plan.md sections 3.3, 4.1-4.5).
+"""The leg's controller on the rig: sim/leg_control.py's virtual-model law (the simulator-free module sim/leg_rig.py
+also drives MuJoCo with) and sim/leg_rig.py's scenarios, run from the motors' feedback alone, with the rig's safety
+supervisor (docs/leg-prototype-plan.md sections 3.3, 4.1-4.5).
 
     ctl = LegController('squat', ff_n=..., limits=Limits())
     cmd = ctl.update(tick)                    # -> Command(tau_f, tau_r, kd, power_off, stop, phase, abort)
 
-What is reused unchanged (plan 4.1): fivebar's fk / jacobian / stop_angles, and sim.leg_rig's vmc, Gains, clip_motor
-and command(). Those three and the scenario table are copied here as a thin adapter so the laptop that drives the
-motors never imports MuJoCo; rig/tests/test_control.py checks that they stay identical to sim/leg_rig.py's (until the
-main session moves them into a MuJoCo-free module, plan F4).
+Reused as is (plan 4.1): fivebar's fk / jacobian / stop_angles and sim.leg_control's polar, vmc_from_state, Gains and
+clip_motor (imported: no copies). The scenario table and command() are sim/leg_rig.py's, copied here because that
+module imports MuJoCo and the laptop that drives the motors must not need it; rig/tests/test_control.py checks that
+the copies stay identical.
 
 What is not ported (plan 4.2): the TPU stops as springs, OFF_DAMPING, ARMATURE, TYRE_SOLREF are the plant's (they live
 in rig/sim_bus.py); the motors run MIT with Kp = Kd = 0, so the torque is pure feed-forward and this is the only loop.
 
 What is new: the jump has to know when the wheel leaves the ground and lands (the simulation reads the contact force;
 the rig has no force sensor under the wheel in a jump), so `Flight` estimates it from the leg: the push ending starts
-the flight, a landing shows as the leg being driven shorter than commanded at speed.
+the flight, a landing shows as the leg being driven shorter than commanded at speed. And the bench runs the simulation
+has no counterpart for (BENCH_SCENARIOS: B5's tyre press).
 """
 from __future__ import annotations
 
@@ -27,9 +29,11 @@ from typing import Optional
 import numpy as np
 
 R = Path(__file__).resolve().parents[1]
-if str(R / 'cad') not in sys.path:
-    sys.path.insert(0, str(R / 'cad'))
+for _p in (R, R / 'cad'):
+    if str(_p) not in sys.path:
+        sys.path.insert(0, str(_p))
 import fivebar as fb  # noqa: E402
+from sim.leg_control import Gains, clip_motor, polar, vmc_from_state  # noqa: E402,F401  (the controller, simulator-free)
 
 G = 9.81
 LEG_PEAK = 120.0                  # N m, RS-04 peak (catalog/leg_actuators.json)
@@ -37,46 +41,14 @@ LEG_CAP = 60.0                    # N m, the firmware cap (D38; limit_torque in 
 REF_DT = 0.0005                   # s: sim.leg_rig runs its controller every MuJoCo step
 
 
-# ----------------------------------------------------------------------------------- sim.leg_rig's controller, MuJoCo-free
-
-@dataclass
-class Gains:
-    kp_L: float = 3000.0          # N/m on the virtual leg's length
-    kd_L: float = 250.0
-    kp_th: float = 150.0          # N m/rad on its lean
-    kd_th: float = 6.0
-
+# ----------------------------------------------------------------------------------- sim.leg_rig's scenarios, MuJoCo-free
 
 TUCK = Gains(kp_L=3000, kd_L=260)  # the jump's gains in the air (sim.leg_rig.run)
 
 
-def clip_motor(tau, omega, peak, omega_max, cap=None):
-    lim = peak if tau * omega <= 0 else peak * max(0.0, 1.0 - abs(omega) / omega_max)
-    if cap:
-        lim = min(lim, cap)
-    return max(-lim, min(lim, tau))
-
-
-def polar(phi1: float, phi2: float, w1: float, w2: float):
-    """The virtual leg from the motor angles and speeds: length (m), lean (rad, + = wheel forward), their rates, the
-    Jacobian d(x, z)/d(phi) (m/rad) and the axle (x, z) in m (sim.leg_rig.Leg.polar without MuJoCo)."""
-    E = fb.fk(phi1, phi2)['E']
-    J = np.array(fb.jacobian(phi1, phi2)) / 1000.0
-    x, z = E[0] / 1000, E[1] / 1000
-    dx, dz = J @ np.array([w1, w2])
-    L = math.hypot(x, z)
-    th = math.atan2(x, -z)
-    return L, th, (x * dx + z * dz) / L, (-z * dx + x * dz) / (L * L), J, (x, z)
-
-
-def vmc(pol, L_cmd, th_cmd=0.0, ff=0.0, g: Gains = Gains(), force=None):
-    """Motor torques for a spring-damper virtual leg, or a straight push (force N along the leg)."""
-    L, th, dL, dth, J, _ = pol
-    F = force if force is not None else g.kp_L * (L_cmd - L) - g.kd_L * dL + ff
-    T = g.kp_th * (th_cmd - th) - g.kd_th * dth
-    uL = np.array([math.sin(th), -math.cos(th)])
-    uth = np.array([math.cos(th), math.sin(th)])
-    return J.T @ (F * uL + (T / L) * uth)
+def vmc_tick(tk, L_cmd, th_cmd=0.0, ff=0.0, g: Gains = Gains(), force=None):
+    """sim.leg_control.vmc_from_state on a tick's measured angles and rates."""
+    return vmc_from_state((tk.f.phi, tk.r.phi), (tk.f.w, tk.r.w), L_cmd, th_cmd, ff, g, force)
 
 
 @dataclass
@@ -324,7 +296,7 @@ class LegController:
             return Command(stop=self.done, phase='limp', abort=self.abort)
         pol = polar(tk.f.phi, tk.r.phi, tk.f.w, tk.r.w)
         L_cmd = self.L_abort + (self.lim.sit_to - self.L_abort) * smooth(dt / self.lim.sit_s)
-        tau = vmc(pol, L_cmd, 0.0, ff=self.ff, g=self.g)
+        tau = vmc_tick(tk, L_cmd, 0.0, ff=self.ff, g=self.g)
         f, r = self._limit(float(tau[0]), float(tau[1]), self.sc.cap, (tk.f.w, tk.r.w))
         if dt > self.lim.sit_s + 0.2:
             self.done = True
@@ -348,7 +320,7 @@ class LegController:
                 state['pushed'] = True
                 L_cmd, mode = command(sc, t, state)                           # the tuck starts this tick
         if mode == 'push':
-            tau = vmc(pol, None, 0.0, force=5000.0, g=self.g)              # as hard as the motors allow
+            tau = vmc_tick(tk, None, 0.0, force=5000.0, g=self.g)          # as hard as the motors allow
             if not slow and (L > 0.31 or (state.get('t_push') and t - state['t_push'] > 0.35)):
                 state['pushed'] = True
             state.setdefault('t_push', t)
@@ -364,7 +336,7 @@ class LegController:
                 self.abort, self.t_abort, self.L_abort = 'limp: the leg is stretching: the carriage is not held down', t, L
                 return self._aborting(tk)
             F = press_force(t)
-            tau = vmc(pol, None, 0.0, force=F, g=self.g)
+            tau = vmc_tick(tk, None, 0.0, force=F, g=self.g)
             f, r = self._limit(float(tau[0]), float(tau[1]), sc.cap, (tk.f.w, tk.r.w))
             return Command(f, r, phase=f'press {F:.0f} N', contact=True)
         jump = sc.name in ('jump', 'jump_peak')
@@ -373,7 +345,7 @@ class LegController:
         else:
             contact = self.flight.contact(t, bool(state.get('pushed')), L, pol[2], L_cmd / 1000) if jump else True
         g = self.g if (contact or not jump or not state.get('pushed')) else TUCK
-        tau = vmc(pol, L_cmd / 1000, 0.0, ff=self.ff if contact or not state.get('pushed') else 0.0, g=g)
+        tau = vmc_tick(tk, L_cmd / 1000, 0.0, ff=self.ff if contact or not state.get('pushed') else 0.0, g=g)
         f, r = self._limit(float(tau[0]), float(tau[1]), sc.cap, (tk.f.w, tk.r.w))
         phase = 'air' if not contact else ('land' if state.get('pushed') else 'track')
         return Command(f, r, phase=phase, L_cmd=L_cmd / 1000, contact=contact)
