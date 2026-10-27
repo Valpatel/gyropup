@@ -20,7 +20,7 @@ import mujoco
 import numpy as np
 
 from sim.controller import Command, Controller, Robot, place_standing
-from sim.turret import Target, TurretController, darts_xml, fluid_option, targets_xml
+from sim.turret import HOPPER, Target, TurretController, balls_xml, fluid_option, targets_xml
 
 FPS = 30
 
@@ -31,7 +31,7 @@ class Push:
     impulse_ns: float          # along the robot's heading (negative = backwards); per kg of robot unless absolute
     duration: float = 0.1
     height_m: float = 0.15     # above the hip axis, in the base frame
-    absolute: bool = False     # True: impulse_ns is in N·s (a dart's recoil), not per kg
+    absolute: bool = False     # True: impulse_ns is in N·s (a shot's recoil), not per kg
     lateral: bool = False      # True: sideways (to the robot's left), not along its heading
 
 
@@ -47,7 +47,7 @@ class Scenario:
     must_reach_x: Optional[float] = None   # pass needs the axle to get this far forward (m)
     hold_from: Optional[float] = None      # pass needs |theta| small after this time
     targets: List[Target] = field(default_factory=list)   # foam targets the turret engages
-    darts: int = 0                         # dart bodies loaded in the magazine
+    balls: int = 0                         # foam-ball bodies loaded in the hopper
     min_hit_rate: Optional[float] = None   # pass needs at least this share of shots on target
     motors_off_at: Optional[float] = None  # every motor stops at this time (e-stop, a flat battery): a fall test
     expect_fall: bool = False              # a fall is the point of the test: pass on how it lands, not on staying up
@@ -88,9 +88,9 @@ def ramp_profile(t, start, ramp_s, v):
     return 0.0 if t < start else min(v, v * (t - start) / ramp_s)
 
 
-# Knock-down targets at knee height, within range: the barrel never points upwards (kid-safety rule), so from a
-# ~0.6-0.7 m muzzle a 24 m/s foam dart reaches 0.3 m high out to roughly 3.5-4 m. Gyropup stands tall to shoot.
-# Each target takes up to 5 darts; once its plate flips, the turret moves on.
+# Knock-down targets at knee height, within range: the barrel never points upwards (kid-safety rule), and a 21.3 m/s
+# foam ball fired level from a ~0.6-0.7 m muzzle is down to 0.3 m at about 4.7-5.3 m. Gyropup stands tall to shoot.
+# Each target takes up to 5 balls; once its plate flips, the turret moves on.
 TARGETS = [Target('target_a', (3.0, 1.3, 0.30), 5, (2.0, 16.0)), Target('target_b', (3.4, 0.2, 0.30), 5, (2.0, 16.0)),
            Target('target_c', (3.2, -1.0, 0.30), 5, (2.0, 16.0)), Target('target_d', (3.8, -2.0, 0.30), 5, (9.0, 16.0)),
            Target('target_e', (4.2, 0.9, 0.30), 5, (9.0, 16.0))]
@@ -110,7 +110,7 @@ SCENARIOS = {
                       terrain=ramp(10), must_reach_x=1.6, hold_from=10.0),
     'targets': Scenario('targets', 'Knock-down range: five foam targets, standing then driving', 16.0,
                         lambda t: Command(height=0.6 if t < 1.5 else 0.9, speed=ramp_profile(t, 9, 1.0, 0.35) if t < 12.5 else 0.0),
-                        targets=TARGETS, darts=24, min_hit_rate=0.4),
+                        targets=TARGETS, balls=HOPPER, min_hit_rate=0.4),
     'look': Scenario('look', 'Look up: lean back 15° on the legs, hold, then look ahead again', 9.0,
                      lambda t: Command(height=0.7, look_up=0.26 if 2 < t < 6 else 0.0), hold_from=8.0),
     # falls, drops and landings (review A5): how the body lands matters, and the lidar under the waist must not touch
@@ -174,7 +174,7 @@ class Video:
         self.r.close()
 
 
-# Shooting body language (expressive, not physics: a 1 g dart at 24 m/s is a 0.024 N·s kick, nothing on a 17 kg robot,
+# Shooting body language (expressive, not physics: a 1.83 g ball at 21.3 m/s is a 0.039 N·s kick, nothing on a 17 kg robot,
 # and that real impulse is applied separately by the turret). While the laser is on Gyropup braces, a little lower;
 # each shot it dips and rocks back on its legs and springs up again, like a pup flinching at its own bark.
 BRACE = 0.10          # height fraction lower while aiming
@@ -194,9 +194,9 @@ def shooting_stance(cmd: Command, turret, t: float) -> Command:
 
 
 def run(xml_path: Path, info: dict, sc: Scenario, video: Optional[Path] = None, noise=0.0, delay_steps=0) -> dict:
-    extra = sc.terrain + (targets_xml(sc.targets) if sc.targets else '') + (darts_xml(sc.darts) if sc.darts else '')
+    extra = sc.terrain + (targets_xml(sc.targets) if sc.targets else '') + (balls_xml(sc.balls) if sc.balls else '')
     xml = with_terrain(Path(xml_path).read_text(), extra)
-    if sc.darts:
+    if sc.balls:
         xml = fluid_option(xml)
     model = mujoco.MjModel.from_xml_string(xml.replace('<compiler ', f'<compiler meshdir="{Path(xml_path).parent}" ', 1))
     data = mujoco.MjData(model)
@@ -238,7 +238,7 @@ def run(xml_path: Path, info: dict, sc: Scenario, video: Optional[Path] = None, 
                        'geoms': [model.geom(g).name for g in range(model.body_geomadr[bi], model.body_geomadr[bi] + model.body_geomnum[bi])]})
     for gi in range(model.ngeom):
         b = model.geom_bodyid[gi]
-        if b in robot_set or model.body(b).name.startswith('dart_') or model.geom_type[gi] == mujoco.mjtGeom.mjGEOM_PLANE:
+        if b in robot_set or model.body(b).name.startswith('ball_') or model.geom_type[gi] == mujoco.mjtGeom.mjGEOM_PLANE:
             continue
         q = np.zeros(4)
         mujoco.mju_mat2Quat(q, data.geom_xmat[gi])

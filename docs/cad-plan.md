@@ -217,7 +217,7 @@ is 24 cores / RTX 3080 12 GB (`nproc`, `nvidia-smi`); scale `--workers` to the b
 | Q4 | Charge contacts on the rear lower edge (P8) instead of under the tray? | B3. | Yes. |
 | Q5 | Battery rear door vs backpack? | B2; CoM. | Rear door. |
 | Q6 | Turret: STS3215 ring-gear pan (90°/s) accepted instead of the DM-J4310? | F1; −217 g, −$103. | Yes. |
-| Q7 | Launcher ammo: Rival balls confirmed (study's recommendation awaiting your call)? | Cartridge design. | Balls; dart cartridge as the alternative. |
+| Q7 | Launcher ammo: Rival balls confirmed (study's recommendation awaiting your call)? | Cartridge design. | Answered: balls (R45, D34); the simulator fires them too. |
 | Q8 | Which machine runs the loop tonight (this box is 24 cores / RTX 3080)? | Worker count. | 20 workers here. |
 | R1 | Knee-on-thigh topology may beat the parallelogram on hip thermal load; the loop decides, but the CAD for it is not written. | S0/S1 scope. | Loop variant only in the sim. |
 | R2 | FEA boundary conditions still idealise bolted joints; bench deflection (S4) is the real check. | E2. | Keep SF ≥ 2. |

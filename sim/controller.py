@@ -73,7 +73,7 @@ class Robot:
         self.vadr = {n: j(n).dofadr[0] for n in self.qadr}
         self.act = {n: model.actuator(n).id for n in self.qadr}
         self.base = model.body('base').id
-        self.bodies = [i for i in range(1, model.nbody) if model.body_rootid[i] == self.base]   # the robot only, not darts or props
+        self.bodies = [i for i in range(1, model.nbody) if model.body_rootid[i] == self.base]   # the robot only, not balls or props
         self.wheels = [model.body('wheel_l').id, model.body('wheel_r').id]
         self.leg_peak = info['leg_actuator']['peak_nm']
         self.leg_omega = info['leg_actuator']['omega_max']

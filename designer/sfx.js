@@ -1,6 +1,6 @@
-// Gyropup's sound effects, synthesised with Web Audio (no sound files): the dart launcher's flywheels spinning up, the
-// pusher and the shot, foam darts smacking a plate, a plate clattering over, the laser arming, the turret servos, the
-// wheel motors, the magazine reload, and the pup's little victory chirp.
+// Gyropup's sound effects, synthesised with Web Audio (no sound files): the ball launcher's flywheels spinning up, the
+// feed dial and the shot, foam balls bopping a plate, a plate clattering over, the laser arming, the turret servos, the
+// wheel motors, the dock pouring balls into the hopper, and the pup's little victory chirp.
 //
 // Browsers only start audio after a click or key press, so the context is created on the first gesture.
 // createSfx() -> { enabled, setEnabled(on), unlock(), shot(), hit(), down(), laser(on), flywheels(on), reload(),
@@ -91,26 +91,27 @@ export function createSfx({ key = 'gyropup-sfx', volume = 0.55 } = {}) {
       if (enabled) unlock(); else ctx?.suspend();
     },
     unlock,
-    /** The shot: solenoid pusher click, a deep air thump, and the dart zipping out through the flywheels. */
+    /** The shot: the feed dial steps a ball into the flywheels, they squeeze it with a round "pomp", and it whooshes out. */
     shot() {
       const c = live(); if (!c) return;
       const t = c.currentTime;
-      tone(t, { type: 'square', from: 2600, to: 1400, peak: 0.12, decay: 0.012 });             // pusher
-      tone(t + 0.004, { from: 150, to: 42, peak: 0.9, decay: 0.11 });                          // thump
-      noise(t + 0.004, { freq: 2400, q: 0.7, peak: 0.55, decay: 0.07, sweepTo: 700 });         // whoosh
-      noise(t + 0.01, { type: 'highpass', freq: 5000, peak: 0.12, decay: 0.05 });              // flywheel bite
-      for (const v of hum.fly ?? []) {                                                          // the wheels dip as the dart passes
-        v.o.frequency.setTargetAtTime(v.o.frequency.value * 0.82, t, 0.01);
-        v.o.frequency.setTargetAtTime(v.o.frequency.value, t + 0.04, 0.06);
+      tone(t, { type: 'square', from: 700, to: 420, peak: 0.07, decay: 0.025 });              // dial step (geared motor)
+      noise(t, { type: 'highpass', freq: 3500, peak: 0.08, decay: 0.012 });                    // the pocket's tick
+      tone(t + 0.03, { from: 210, to: 70, peak: 0.85, decay: 0.12 });                          // pomp: the ball through the wheels
+      noise(t + 0.03, { freq: 1500, q: 0.8, peak: 0.45, decay: 0.09, sweepTo: 450 });          // whoosh
+      noise(t + 0.035, { type: 'highpass', freq: 4200, peak: 0.08, decay: 0.04 });             // tyre scuff
+      for (const v of hum.fly ?? []) {                                                          // the wheels dip as the ball passes
+        v.o.frequency.setTargetAtTime(v.o.frequency.value * 0.76, t + 0.03, 0.012);
+        v.o.frequency.setTargetAtTime(v.o.frequency.value, t + 0.08, 0.07);
       }
     },
-    /** A foam dart smacking a plate. */
+    /** A foam ball bopping a plate: soft and hollow, and the plate rings a little. */
     hit() {
       const c = live(); if (!c) return;
       const t = c.currentTime;
-      noise(t, { freq: 900, q: 1.6, peak: 0.7, decay: 0.07 });
-      tone(t, { type: 'triangle', from: 340, to: 210, peak: 0.35, decay: 0.08 });
-      tone(t + 0.01, { from: 1250, to: 1150, peak: 0.06, decay: 0.15 });                      // the plate rings a little
+      noise(t, { freq: 620, q: 1.3, peak: 0.6, decay: 0.06 });
+      tone(t, { type: 'triangle', from: 260, to: 150, peak: 0.4, decay: 0.09 });
+      tone(t + 0.01, { from: 1250, to: 1150, peak: 0.05, decay: 0.15 });                      // the plate
     },
     /** A plate knocked over: a clatter of knocks, then a thud. */
     down() {
@@ -150,12 +151,16 @@ export function createSfx({ key = 'gyropup-sfx', volume = 0.55 } = {}) {
         }
       }
     },
-    /** Magazine swap: a ratchet of clicks and a latch. */
+    /** Refill at the dock: balls tumble into the hopper (a patter of soft knocks), then the fill flap snaps shut. */
     reload() {
       const c = live(); if (!c) return;
       const t = c.currentTime;
-      for (let k = 0; k < 6; k++) noise(t + k * 0.045, { type: 'highpass', freq: 3000, peak: 0.25, decay: 0.015 });
-      tone(t + 0.32, { type: 'square', from: 900, to: 500, peak: 0.15, decay: 0.03 });
+      let at = t;
+      for (let k = 0; k < 14; k++) {
+        noise(at, { freq: 900 + Math.random() * 1100, q: 2.5, peak: 0.22 * (1 - k / 20), decay: 0.025 });
+        at += 0.025 + Math.random() * 0.04;
+      }
+      tone(at + 0.06, { type: 'square', from: 900, to: 500, peak: 0.15, decay: 0.03 });
     },
     /** The pup's happy chirp. */
     chirp() {

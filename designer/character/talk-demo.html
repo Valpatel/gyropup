@@ -68,13 +68,13 @@
   window.__talk = talk;
 
   const btn = (parent, label, fn) => { const b = document.createElement('button'); b.className = 'hud-btn'; b.textContent = label; b.onclick = fn; parent.appendChild(b); };
-  for (const ev of ['hello', 'fire', 'hit', 'down', 'miss', 'reload', 'fall', 'low_battery']) btn(document.getElementById('events'), ev, () => talk.react(ev));
-  const lines = { happy: 'Wheee! That was fun!', curious: 'Ooh, what is that?', sleepy: 'Yawn... charger time?', grumpy: 'Hey! Darts at targets only!', surprised: 'Whoa! Did you see that?', focused: 'Locking on to the target...' };
+  for (const ev of ['hello', 'fire', 'hit', 'down', 'miss', 'reload', 'empty', 'fall', 'low_battery']) btn(document.getElementById('events'), ev, () => talk.react(ev));
+  const lines = { happy: 'Wheee! That was fun!', curious: 'Ooh, what is that?', sleepy: 'Yawn... charger time?', grumpy: 'Hey! Foam balls at targets only!', surprised: 'Whoa! Did you see that?', focused: 'Locking on to the target...' };
   for (const [mood, line] of Object.entries(lines)) btn(document.getElementById('moods'), mood, () => talk.say(line, { mood }));
   document.getElementById('detect').onclick = async () => {
     const s = await talk.detect(true);
     document.getElementById('svc').textContent =
-      `voice: ${s.tts.ok ? 'Piper ' + s.tts.base : s.tts.name}\nears:  ${s.stt.ok ? 'Whisper ' + s.stt.base : s.stt.name}\nbrain: ${s.llm.ok ? s.llm.base + ' ' + s.llm.model : 'scripted'}`;
+      `voice: ${s.tts.ok ? `Piper ${s.tts.voice ?? ''} at ${s.tts.base}` : s.tts.name}\nears:  ${s.stt.ok ? 'Whisper ' + s.stt.base : s.stt.name}\nbrain: ${s.llm.ok ? s.llm.base + ' ' + s.llm.model : 'scripted'}`;
   };
 
   setTimeout(() => talk.say('Hi! I am Gyropup. Want to play a target game?', { mood: 'happy', hold: 60000 }), 400);

@@ -8,7 +8,7 @@ import { section, slider, chips, readouts, toggle, collapsiblePanel, overlayInse
 import { buildRobot, kneeFor } from './robot3d.js';
 import { loadCadRig } from './cadrig.js';
 import { createEyes, eyesGlyph } from './character/eyes.js';
-import { createDarts } from './turret3d.js';
+import { BALL, BALL_SPIN, ballMesh, createBalls } from './turret3d.js';
 import { evaluate, indexCatalog, legPose, effectiveDesign, resolvePart } from './model.js';
 import { createSfx } from './sfx.js';
 
@@ -47,9 +47,9 @@ yard.rotation.x = -Math.PI / 2;
 yard.position.y = 0.0004;
 yard.receiveShadow = true;
 stage.root.add(yard);
-const darts = createDarts(stage.root);
+const balls = createBalls(stage.root);
 // laserMode: 'auto' (on while getting ready to fire, off between targets and at the start), 'on' or 'off'
-const gun = { pan: 0, tilt: -0.05, mag: 24, capacity: 24, queue: [], attached: true, showFov: false, lastShot: -1, laserMode: 'auto', laserOn: false,
+const gun = { pan: 0, tilt: -0.05, mag: BALL.hopper, capacity: BALL.hopper, queue: [], attached: true, showFov: false, lastShot: -1, laserMode: 'auto', laserOn: false,
               armedUntil: 0, headlights: true };
 const sfx = createSfx();
 let talk = null;            // speech bubbles and voice (character/talk.js), when loaded
@@ -95,7 +95,7 @@ async function loadDesign(value) {
   for (const l of state.robot.lights) { l.spot.visible = gun.headlights; l.lens.material.emissiveIntensity = gun.headlights ? 1.6 : 0.05; }
   setDaylight(daylight);
   if (state.robot.turret) {
-    gun.capacity = state.design.head_payload?.magazine_shots ?? 24;
+    gun.capacity = BALL.hopper;           // the CAD turret's hopper; the payload interface asks for 24 shots or more
     gun.mag = gun.capacity;
     state.robot.turret.group.visible = gun.attached;
   }
@@ -118,7 +118,7 @@ async function listRuns(value) {
 }
 
 const propMeshes = new Map();
-let replayDarts = [];
+let replayBalls = [];
 // MuJoCo geom types: 2 sphere, 3 capsule, 5 cylinder, 6 box. World frame (x fwd, y left, z up) -> page (y, z, x).
 function propMesh(p) {
   const [r, g, b, a] = p.rgba;
@@ -141,38 +141,29 @@ function propMesh(p) {
   mesh.castShadow = mesh.receiveShadow = true;
   return mesh;
 }
-// A short foam dart as simulated (sim/turret.py): a 38 mm foam body with a hollow tail and a rubber tip, nose along +y
-// (MuJoCo's +z). Plus a motion streak drawn behind it while it flies.
-const DART = {
-  foam: new THREE.MeshStandardMaterial({ color: 0xff7a1a, roughness: 0.85 }),
-  rubber: new THREE.MeshStandardMaterial({ color: 0x2b6cff, roughness: 0.5 }),
-  hollow: new THREE.MeshStandardMaterial({ color: 0x7a3305, roughness: 1 }),
-  streak: new THREE.MeshBasicMaterial({ color: 0xffc58a, transparent: true, opacity: 0.35, blending: THREE.AdditiveBlending, depthWrite: false }),
-};
-const dartGeo = {
-  body: new THREE.CylinderGeometry(0.0065, 0.0065, 0.036, 16),
-  tail: new THREE.CircleGeometry(0.0042, 16),
-  tip: new THREE.CylinderGeometry(0.0062, 0.0068, 0.008, 16),
-  nose: new THREE.SphereGeometry(0.0062, 16, 8, 0, Math.PI * 2, 0, Math.PI / 2),
-  streak: new THREE.CylinderGeometry(0.0045, 0.0005, 1, 8, 1, true),
-};
-function dartMesh() {
-  const g = new THREE.Group();
-  const body = new THREE.Mesh(dartGeo.body, DART.foam);
-  body.position.y = -0.004;
-  const tail = new THREE.Mesh(dartGeo.tail, DART.hollow);
-  tail.rotation.x = Math.PI / 2;
-  tail.position.y = -0.0221;
-  const tip = new THREE.Mesh(dartGeo.tip, DART.rubber);
-  tip.position.y = 0.018;
-  const nose = new THREE.Mesh(dartGeo.nose, DART.rubber);
-  nose.position.y = 0.022;
-  g.add(body, tail, tip, nose);
-  g.traverse((o) => { if (o.isMesh) o.castShadow = true; });
-  const streak = new THREE.Mesh(dartGeo.streak, DART.streak);
-  streak.visible = false;
-  streak.frustumCulled = false;
-  return { g, streak };
+// The foam balls as simulated (sim/turret.py): one mesh per ball body, posed from the recorded frames, with a motion
+// streak while it flies. Matched flywheels launch a ball with almost no spin, so in flight its seam turns by a cosmetic
+// spin, from the frame it leaves the muzzle to its first contact (a plate or the ground: a jump in its velocity);
+// after that it turns as the physics rolls it. Older runs fired dart bodies: those are drawn as balls too.
+const UP = new THREE.Vector3(0, 1, 0), spinQ = new THREE.Quaternion();
+function replayBall(run, name) {
+  const { g, streak } = ballMesh();
+  const adr = run.qpos_layout[name], F = run.frames, n = F.qpos.length;
+  const shot = (run.events ?? []).find((e) => e.type === 'shot' && (e.ball ?? e.dart) === name)?.t;
+  let flight = null;
+  if (shot != null) {
+    const z = (k) => F.qpos[k][adr + 2];
+    const v = (k) => [0, 1, 2].map((c) => (F.qpos[k + 1][adr + c] - F.qpos[k][adr + c]) * F.fps);
+    let i = Math.max(0, Math.floor(shot * F.fps) - 3);
+    while (i < n - 1 && z(i) < 2 * BALL.d) i++;                // parked until this frame: it leaves the muzzle
+    const start = i;
+    for (i = start + 1; i < n - 2; i++) {
+      const a = v(i - 1), b = v(i);
+      if (z(i) < BALL.d || Math.hypot(b[0] - a[0], b[1] - a[1], b[2] - a[2]) > 3) break;   // drag and gravity alone: < 1.5 m/s a frame
+    }
+    flight = [start / F.fps, i / F.fps];                       // in the replay's clock (frames / fps)
+  }
+  return { name, adr, g, streak, flight };
 }
 
 // little bursts of foam bits and sparks for hits and knock-downs
@@ -187,18 +178,18 @@ function burst(pos, color, n = 14, speed = 1.6) {
     bits.push({ m, v, life: 0.5 + Math.random() * 0.3 });
   }
 }
-function ringFlash(pos, color) {
-  const m = new THREE.Mesh(new THREE.RingGeometry(0.05, 0.07, 32), new THREE.MeshBasicMaterial({ color, transparent: true, opacity: 0.9, side: THREE.DoubleSide, blending: THREE.AdditiveBlending, depthWrite: false }));
+function ringFlash(pos, color, size = 1, life = 0.45) {
+  const m = new THREE.Mesh(new THREE.RingGeometry(0.05 * size, 0.07 * size, 32), new THREE.MeshBasicMaterial({ color, transparent: true, opacity: 0.9, side: THREE.DoubleSide, blending: THREE.AdditiveBlending, depthWrite: false }));
   m.position.copy(pos);
   m.lookAt(stage.camera.position);
   stage.root.add(m);
-  bits.push({ m, v: new THREE.Vector3(), life: 0.45, ring: true });
+  bits.push({ m, v: new THREE.Vector3(), life, life0: life, ring: true });
 }
 function stepBits(dt) {
   for (let i = bits.length - 1; i >= 0; i--) {
     const b = bits[i];
     b.life -= dt;
-    if (b.ring) { b.m.scale.multiplyScalar(1 + dt * 7); b.m.material.opacity = Math.max(0, b.life / 0.45); }
+    if (b.ring) { b.m.scale.multiplyScalar(1 + dt * 7); b.m.material.opacity = Math.max(0, b.life / b.life0); }
     else { b.v.y -= 9.81 * dt; b.m.position.addScaledVector(b.v, dt); if (b.m.position.y < 0.004) { b.m.position.y = 0.004; b.v.multiplyScalar(0.3); } b.m.material.opacity = Math.min(1, b.life * 3); }
     if (b.life <= 0) { stage.root.remove(b.m); b.m.material.dispose(); bits.splice(i, 1); }
   }
@@ -236,11 +227,11 @@ async function startReplay(key) {
     }
     return { pivot, adr: mv.qpos, axis: new THREE.Vector3(mv.axis[1], mv.axis[2], mv.axis[0]).normalize() };
   });
-  // physics darts: one mesh per dart body, posed from the recorded frames
-  replayDarts = Object.keys(run.qpos_layout ?? {}).filter((n) => n.startsWith('dart_')).map((n) => {
-    const { g, streak } = dartMesh();
-    stage.root.add(g, streak);
-    return { name: n, adr: run.qpos_layout[n], g, streak };
+  // physics balls: one mesh per ball body, posed from the recorded frames
+  replayBalls = Object.keys(run.qpos_layout ?? {}).filter((n) => /^(ball|dart)_/.test(n)).map((n) => {
+    const b = replayBall(run, n);
+    stage.root.add(b.g, b.streak);
+    return b;
   });
   const laserEvents = (run.events ?? []).filter((e) => e.type === 'laser_on' || e.type === 'laser_off');
   state.replay = { run, key, t: 0, playing: true, rate: 1, focus: null, movers, laserEvents, targets: [] };
@@ -256,7 +247,7 @@ async function startReplay(key) {
 }
 
 // Frame the robot and every target in the part of the screen the panels leave free: from behind and above the robot,
-// a little to the side, so the darts fly away from the camera towards the targets.
+// a little to the side, so the balls fly away from the camera towards the targets.
 // what Gyropup says as each demo starts (and again each time it loops)
 const INTRO = {
   stand: ['Hi! Watch me balance!', 'Hello! Standing still is harder than it looks!'],
@@ -310,8 +301,8 @@ stage.controls.addEventListener('start', () => { if (state.replay) state.replay.
 function stopReplay() {
   state.replay = null;
   terrain.clear();
-  for (const d of replayDarts) stage.root.remove(d.g, d.streak);
-  replayDarts = [];
+  for (const b of replayBalls) stage.root.remove(b.g, b.streak);
+  replayBalls = [];
   if (typeof replayPanel !== 'undefined') replayPanel.hidden = true;
 }
 
@@ -382,14 +373,16 @@ function queueShots(n) {
 }
 function renderGun() {
   const t = state.robot?.turret;
-  gunInfo.set(t ? [['magazine', `${gun.mag} / ${gun.capacity} darts`, gun.mag ? 'ok' : 'fail'], ['dart speed', '24 m/s (80 fps cap)'],
-                   ['status', gun.attached ? (gun.mag ? 'armed' : 'empty: drive to the dock to reload') : 'removed']]
+  gunInfo.set(t ? [['hopper', `${gun.mag} / ${gun.capacity} balls`, gun.mag ? 'ok' : 'fail'],
+                   ['ammo', `foam balls, Ø${(BALL.d * 1000).toFixed(1)} mm, ${(BALL.mass * 1000).toFixed(2)} g`],
+                   ['ball speed', `${BALL.speed} m/s (${BALL.fps} fps cap)`],
+                   ['status', gun.attached ? (gun.mag ? 'armed' : 'empty: drive to the dock to refill') : 'removed']]
                  : [['turret', 'none: this design has no head payload']]);
 }
 function shoot() {
   const t = state.robot?.turret;
   if (!t || !gun.attached || gun.mag <= 0) return false;
-  darts.fire(t.muzzle);
+  balls.fire(t.muzzle);
   t.flash();
   sfx.shot();
   gun.mag -= 1;
@@ -465,18 +458,19 @@ stage.onFrame((t, dt) => {
     state.robot.setFromQpos(qp, R.run.qpos_layout);
     if (R.playing) scrub.set(i);
     for (const mv of R.movers) mv.pivot.quaternion.setFromAxisAngle(mv.axis, qp[mv.adr]);
-    for (const d of replayDarts) {                             // physics darts, from MuJoCo
-      const a = d.adr;
-      d.g.position.set(qp[a + 1], qp[a + 2], qp[a]);
-      d.g.quaternion.set(qp[a + 5], qp[a + 6], qp[a + 4], qp[a + 3]).normalize();
+    for (const b of replayBalls) {                             // physics balls, from MuJoCo
+      const a = b.adr;
+      b.g.position.set(qp[a + 1], qp[a + 2], qp[a]);
+      b.g.quaternion.set(qp[a + 5], qp[a + 6], qp[a + 4], qp[a + 3]).normalize();
+      if (b.flight) b.g.quaternion.multiply(spinQ.setFromAxisAngle(UP, BALL_SPIN * Math.min(Math.max(R.t - b.flight[0], 0), b.flight[1] - b.flight[0])));
       const v = new THREE.Vector3(B[a + 1] - A[a + 1], B[a + 2] - A[a + 2], B[a] - A[a]).multiplyScalar(F.fps);
       const sp = v.length();
-      d.streak.visible = sp > 4 && sp < 40;                    // only in flight (not when parked or teleported)
-      if (d.streak.visible) {
-        const len = Math.min(0.45, sp * 0.018), dir = v.divideScalar(sp);
-        d.streak.scale.set(1, len, 1);
-        d.streak.quaternion.setFromUnitVectors(new THREE.Vector3(0, -1, 0), dir.clone().negate());
-        d.streak.position.copy(d.g.position).addScaledVector(dir, -0.022 - len / 2);
+      b.streak.visible = sp > 4 && sp < 40;                    // only in flight (not when parked or teleported)
+      if (b.streak.visible) {
+        const len = Math.min(0.4, sp * 0.016), dir = v.divideScalar(sp);
+        b.streak.scale.set(1, len, 1);
+        b.streak.quaternion.setFromUnitVectors(new THREE.Vector3(0, -1, 0), dir.clone().negate());
+        b.streak.position.copy(b.g.position).addScaledVector(dir, -BALL.d / 2 - len / 2);
       }
     }
     const lay = R.run.qpos_layout ?? {};
@@ -491,12 +485,12 @@ stage.onFrame((t, dt) => {
       if (ev.type === 'shot') {
         state.robot.turret?.flash();
         if (R.playing) { sfx.shot(); react('fire'); }
-        if (!replayDarts.length && state.robot.turret) darts.fire(state.robot.turret.muzzle);   // impulse-only runs
+        if (!replayBalls.length && state.robot.turret) balls.fire(state.robot.turret.muzzle);   // impulse-only runs
       } else if (ev.type === 'hit') {
         const m = propMeshes.get(ev.target);
         if (m) { m.material.emissive.set(0x00f0ff); m.userData.glowT = 0.35; }
-        const dart = replayDarts.find((d) => d.name === ev.dart);
-        if (dart) burst(dart.g.position, 0xffa04a, 10, 1.2);
+        const ball = replayBalls.find((b) => b.name === (ev.ball ?? ev.dart));
+        if (ball) { ringFlash(ball.g.position, BALL.color, 0.4, 0.25); burst(ball.g.position, 0xfff1a8, 6, 0.9); }   // a foam "boop"
         if (R.playing) sfx.hit();
         eyes.set('happy');                                      // a hit makes Gyropup happy for a moment
         R.moodUntil = tt + 0.8;
@@ -521,14 +515,14 @@ stage.onFrame((t, dt) => {
     }
     for (const m of propMeshes.values()) if (m.userData.glowT > 0) { m.userData.glowT -= dt; if (m.userData.glowT <= 0) m.material.emissive.copy(m.userData.baseEmissive ?? new THREE.Color(0)); }
     if (R.moodUntil && tt > R.moodUntil) { eyes.set('neutral'); R.moodUntil = 0; }
-    if (tt < (R.lastT ?? 0)) { darts.clear(); if (R.playing) introLine(R); }      // looped: say hello again
+    if (tt < (R.lastT ?? 0)) { balls.clear(); if (R.playing) introLine(R); }      // looped: say hello again
     R.lastT = tt;
     const laserNow = replayLaser(R, tt);
     if (laserNow !== gun.laserOn) {
       if (R.playing) { setLaser(laserNow); if (laserNow && Math.random() < 0.35) react('banter'); } else gun.laserOn = laserNow;
     }
     if (state.robot.turret) { state.robot.turret.step(dt); state.robot.turret.updateLaser([terrain], gun.laserOn); }
-    darts.step(dt);
+    balls.step(dt);
     stepBits(dt);
     followReplay(R);
     eyes.step(t, dt);
@@ -556,7 +550,7 @@ stage.onFrame((t, dt) => {
     while (gun.queue.length && gun.queue[0] <= now) { gun.queue.shift(); if (!shoot()) { gun.queue = []; break; } }
     state.robot.turret.step(dt);
   }
-  darts.step(dt);
+  balls.step(dt);
   stepBits(dt);
   state.robot.group.position.z += state.speed * dt;
   if (Math.abs(state.robot.group.position.z) > 2.5) state.robot.group.position.z *= -0.98;

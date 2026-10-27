@@ -337,8 +337,8 @@ def build(design_path: Path, out_dir: Path | None = None) -> dict:
         ]
         motors += [rb.Motor('turret_pan', 5.0), rb.Motor('turret_tilt', 3.0)]
         hp = design.get('head_payload', {})
-        turret = {'pan_effort_nm': 5.0, 'tilt_effort_nm': 3.0, 'magazine': hp.get('magazine_shots', 24), 'dart_speed_mps': 24.0,
-                  'dart_mass_kg': 0.001, 'tilt_positive': 'barrel down', 'from_cad': True, 'estimates': 'servo torques'}
+        turret = {'pan_effort_nm': 5.0, 'tilt_effort_nm': 3.0, 'magazine': hp.get('magazine_shots', 30), 'ball_speed_mps': 21.3,
+                  'ball_mass_kg': 0.00183, 'tilt_positive': 'barrel down', 'from_cad': True, 'estimates': 'servo torques'}
         turret_mass = 0.0                                              # its mass is in the assembly's links
         notes.append('turret from the CAD (cad/turret.py)')
     elif turret_mass > 0:
@@ -363,8 +363,8 @@ def build(design_path: Path, out_dir: Path | None = None) -> dict:
                      effort=3.0, velocity=6.0, damping=0.05, friction=0.02, armature=0.001),
         ]
         motors += [rb.Motor('turret_pan', 5.0), rb.Motor('turret_tilt', 3.0)]
-        turret = {'pan_effort_nm': 5.0, 'tilt_effort_nm': 3.0, 'magazine': hp.get('magazine_shots', 24), 'dart_speed_mps': 24.0,
-                  'dart_mass_kg': 0.001, 'tilt_positive': 'barrel down', 'estimates': 'pan/tilt torques and the 40/60 mass split'}
+        turret = {'pan_effort_nm': 5.0, 'tilt_effort_nm': 3.0, 'magazine': hp.get('magazine_shots', 30), 'ball_speed_mps': 21.3,
+                  'ball_mass_kg': 0.00183, 'tilt_positive': 'barrel down', 'estimates': 'pan/tilt torques and the 40/60 mass split'}
 
     # the whole robot from the CAD: each link's inertial and its parts' meshes replace the estimates above
     asm = cad_assembly(design_path)

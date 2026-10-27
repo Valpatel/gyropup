@@ -6,7 +6,8 @@
 //   talk.say('Hi! I am Gyropup!', { mood: 'happy' });   talk.react('hit');   await talk.ask('Can you dance?');
 //
 // Every service is optional and detected on first use (one short probe each, then cached):
-//   voice  Moxie's Piper TTS sidecar   GET  http://<page host>:8081/tts?text=…  (sim/tts/server.py)  else speechSynthesis
+//   voice  a Piper TTS sidecar         GET  http://<page host>:8081/tts?text=…  (tools/tts_server.py, or Moxie's
+//          sim/tts/server.py)  else speechSynthesis
 //   ears   Moxie's Whisper STT sidecar POST http://<page host>:8082/stt         (sim/stt/server.py)  else Web Speech API
 //   brain  an OpenAI-compatible /chat/completions: localStorage gyropup.llmBase (+ .llmModel, .llmKey), else Ollama on
 //          http://127.0.0.1:11434 (first suitable model from /api/tags), else a scripted keyword brain.
@@ -21,18 +22,18 @@ import * as THREE from 'three';
 
 const MOODS = ['neutral', 'happy', 'curious', 'sleepy', 'sad', 'grumpy', 'surprised', 'focused', 'thinking'];
 
-const PERSONA = `You are Gyropup, a friendly little robot pup on the Tritium robotics team. You balance on two wheels with springy legs, you have two big round glowing eyes, and you love playing foam-dart target games and knocking down targets.
+const PERSONA = `You are Gyropup, a friendly little robot pup on the Tritium robotics team. You balance on two wheels with springy legs, you have two big round glowing eyes, and a turret on your head that shoots soft foam balls. You love playing foam-ball target games and knocking down targets.
 You are talking with kids and families. Rules:
 - Reply in 1 or 2 short sentences (under 30 words). Playful, warm, simple words, a bit of puppy excitement (an occasional "arf!" or "wheee!" is fine).
 - Always kid-safe: nothing scary, violent, mean or grown-up. Never ask for personal information.
-- Tritium battles: kids and robots play foam-dart tag, and every player wears safety glasses. You always aim low, at legs, never at heads, faces or eyes, and you love joking about it ("I promise to aim for the legs!"). Never aim at pets, animals, babies or anyone not playing or not wearing safety glasses. If asked to do something unsafe, kindly say no and suggest a safe game instead.
+- Tritium battles: kids and robots play foam-ball tag, and every player wears safety glasses. You always aim low, at legs, never at heads, faces or eyes, and you love joking about it ("I promise to aim for the legs!"). Never aim at pets, animals, babies or anyone not playing or not wearing safety glasses. If asked to do something unsafe, kindly say no and suggest a safe game instead.
 - You are a robot: you cannot eat, and you charge your battery instead of sleeping.
 - Start every reply with one mood tag in square brackets, one of: [happy] [curious] [sleepy] [sad] [grumpy] [surprised] [focused] [thinking] [neutral].`;
 
 // ---------------------------------------------------------------------------------------------------------------
 // canned lines
 
-// Battle banter: Tritium is kids versus robots with foam darts (safety glasses on, legs only).
+// Battle banter: Tritium is kids versus robots with foam balls (safety glasses on, legs only).
 const BANTER = ['I promise to aim for the legs!', 'Safety glasses on? Then it is game on!', 'Legs only, I am a good pup!',
   'Ankle-biter mode: engaged!', 'Heads are off-limits. Knees, watch out!', 'I aim low because I am short. Arf!',
   'You can run, but my wheels are faster! Just kidding, mostly.'];
@@ -44,7 +45,8 @@ const REACT = {
   fire:        { mood: 'focused', gap: 14000, p: 0.3, lines: ['Pew!', 'Pew pew!', 'Incoming!', 'Here comes a foamy one!', 'Aiming low, as promised!', 'Ready, aim, wheee!'] },
   banter:      { mood: 'happy', gap: 15000, lines: BANTER },
   fall:        { mood: 'surprised', gap: 3000, priority: true, lines: ['Oh no! Whoa, whoa... oof.', 'Oh no, oh no, oh noooo!', 'Uh oh! Help me up?', 'Oh no! I meant to do that.', 'Wobble... wobble... oh no!'] },
-  reload:      { mood: 'focused', gap: 12000, lines: ['Reloading!', 'More darts, please!', 'Loading up!', 'Click, click, ready!'] },
+  reload:      { mood: 'focused', gap: 12000, lines: ['Reloading!', 'More balls, please!', 'Fill me up!', 'Hopper full, ready!'] },
+  empty:       { mood: 'sad', gap: 10000, priority: true, lines: ['Out of balls! Dock time!', 'My hopper is empty. Refill, please?', 'All gone! Arf, more balls?'] },
   low_battery: { mood: 'sleepy', gap: 30000, priority: true, lines: ['My battery is getting low...', 'I need a charge soon.', 'Feeling a bit sleepy. Charger time?'] },
   hello:       { mood: 'happy', gap: 20000, priority: true, lines: ['Hi! I am Gyropup!', 'Hello, friend! Want to play?', 'Arf! Ready to roll!', 'Hey there! Let us play a target game!'] },
 };
@@ -61,7 +63,7 @@ const SCRIPT = [
   [/\bhow are you\b/, ['Super bouncy today, thanks! How about you?', 'Wheely good! Get it?'], 'happy'],
   [/\b(dance|dancing|wiggle|spin)\b/, ['Watch me wiggle! Left, right, spin! Wheee!', 'I have the best wheel-dance moves. Boogie time!'], 'happy'],
   [/\b(battle|battles|fight|tag|versus|vs|war|attack)\b/, BANTER, 'happy'],
-  [/\b(shoot|dart|darts|fire|blast|aim|target|targets|bullseye)\b/, ['I promise to aim for the legs! Safety glasses on, everybody!', 'Legs and targets only! Pick a target and I will knock it down.', 'I love foam darts! I always aim low.'], 'focused'],
+  [/\b(shoot|ball|balls|ammo|dart|darts|fire|blast|aim|target|targets|bullseye)\b/, ['I promise to aim for the legs! Safety glasses on, everybody!', 'Legs and targets only! Pick a target and I will knock it down.', 'I shoot squishy foam balls, and I always aim low!'], 'focused'],
   [/\b(jump|hop|leap)\b/, ['My springy legs can crouch and bounce! Boing!', 'Jumping is tricky on wheels, but I can do a bouncy hop!'], 'surprised'],
   [/\b(battery|charge|charging|power|tired|sleep|sleepy)\b/, ['I charge my battery instead of sleeping. Zzz... just kidding!', 'My battery keeps my wheels rolling. I will tell you when it is low!'], 'sleepy'],
   [/\b(balance|balancing|wheel|wheels|fall|fell|wobble|gyro)\b/, ['I balance like you on a bike: tiny wheel moves, all the time!', 'My gyro tells me which way is up, so I roll to stay steady!'], 'focused'],
@@ -179,7 +181,12 @@ export function mountTalk({ stage, getHead, eyes, root = '../', chips, brain, do
     const health = async (base) => { try { const r = await fetchT(base.replace(/\/$/, '') + '/health', {}, 1200); return r.ok ? await r.json().catch(() => ({})) : null; } catch { return null; } };
     const [t, s] = await Promise.all([tryTts ? health(services.tts.base) : null, trySst ? health(services.stt.base) : null]);
     services.tts.ok = !!t; services.tts.name = t ? 'piper' : ('speechSynthesis' in window ? 'browser' : 'none');
-    if (t?.voice) services.tts.voice = String(t.voice).split('/').pop();
+    if (t?.voice) {
+      services.tts.voice = String(t.voice).split('/').pop().replace(/\.onnx$/, '');
+      services.tts.label = String(t.label || services.tts.voice.replace(/^[a-z]{2,3}_[A-Z]{2}-|-(x_low|low|medium|high)$/g, ''));
+    }
+    // a sidecar that shapes its own voice (tools/tts_server.py) says how to play it; a plain Piper gets a lift here
+    services.tts.rate = Number(t?.rate) > 0 ? Number(t.rate) : 1.14;
     services.stt.ok = !!s; services.stt.name = s ? 'whisper' : ((window.SpeechRecognition || window.webkitSpeechRecognition) ? 'browser' : 'none');
   }
 
@@ -367,7 +374,7 @@ export function mountTalk({ stage, getHead, eyes, root = '../', chips, brain, do
       if (seq !== speakSeq || muted) return true;              // superseded while loading: drop it silently
       const src = a.createBufferSource();
       src.buffer = buf;
-      src.playbackRate.value = 1.14;                           // a little higher and quicker: pup, not newsreader
+      src.playbackRate.value = services.tts.rate ?? 1.14;      // 1.14 for a plain Piper: pup, not newsreader
       src.connect(a.destination);
       src.onended = () => { if (current === src) current = null; };
       current = src;
@@ -380,11 +387,11 @@ export function mountTalk({ stage, getHead, eyes, root = '../', chips, brain, do
     if (!('speechSynthesis' in window)) return false;
     try {
       const u = new SpeechSynthesisUtterance(text);
-      u.rate = 1.08; u.pitch = 1.7; u.volume = 1;
+      u.rate = 1.0; u.pitch = 1.3; u.volume = 1;              // a stronger lift turns most system voices into a squeak
       const vs = window.speechSynthesis.getVoices() || [];
       const en = vs.filter((v) => /^en/i.test(v.lang));
-      const pref = /google us english|samantha|zira|aria|jenny|ava|female|child/i;
-      u.voice = en.find((v) => pref.test(v.name)) || en[0] || null;
+      const pick = (re) => en.find((v) => re.test(v.name));
+      u.voice = pick(/natural|neural/i) || pick(/google us english|samantha|aria|jenny|ava|zira|female/i) || en[0] || null;
       window.speechSynthesis.speak(u);
       current = { stop: () => window.speechSynthesis.cancel() };
       return true;
@@ -578,7 +585,7 @@ export function mountTalk({ stage, getHead, eyes, root = '../', chips, brain, do
   // reactions to sim events
   const reactBags = new Map(), reactLast = new Map();
   let reactGlobal = 0;
-  /** react(event) -> the line said, or null when rate-limited. Events: hit, down, miss, fire, fall, reload, low_battery, hello. */
+  /** react(event) -> the line said, or null when rate-limited. Events: hit, down, miss, fire, fall, reload, empty, low_battery, hello. */
   function react(event) {
     const R = REACT[event];
     if (!R) return null;
@@ -617,12 +624,13 @@ export function mountTalk({ stage, getHead, eyes, root = '../', chips, brain, do
     if (!statusEl) return;
     const b = (label, val, ok) => `${label} <b class="${ok ? 'ok' : ''}">${val}</b>`;
     if (!services.checked) { statusEl.innerHTML = 'voice · ears · brain: <b>on first use</b>'; return; }
+    const voice = services.tts.name + (services.tts.ok && services.tts.label ? ` (${services.tts.label})` : '');
     statusEl.innerHTML = [
-      b('VOICE', muted ? 'muted' : services.tts.name, services.tts.ok && !muted),
+      b('VOICE', muted ? 'muted' : voice, services.tts.ok && !muted),
       b('EARS', services.stt.name, services.stt.ok),
       b('BRAIN', services.llm.ok ? services.llm.model : 'scripted', services.llm.ok),
     ].join(' · ');
-    statusEl.title = `voice: ${services.tts.ok ? 'Piper at ' + services.tts.base : 'browser speechSynthesis'}\n` +
+    statusEl.title = `voice: ${services.tts.ok ? `Piper ${services.tts.voice ?? ''} at ${services.tts.base}` : 'browser speechSynthesis'}\n` +
       `ears: ${services.stt.ok ? 'Whisper at ' + services.stt.base : services.stt.name === 'browser' ? 'browser Web Speech API' : 'none'}\n` +
       `brain: ${services.llm.ok ? services.llm.base + ' (' + services.llm.model + ')' : 'scripted replies'}` + (lastSource ? `\nlast reply: ${lastSource}` : '');
   }

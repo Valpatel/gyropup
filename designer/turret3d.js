@@ -1,16 +1,54 @@
-// The foam-dart turret on Gyropup's head (a stand-in for the separate turret project, built to the head payload
-// budget in docs/head-payload.md), and the darts it fires.
+// The foam-ball turret on Gyropup's head (a stand-in, built to the head payload budget in docs/head-payload.md; the
+// CAD turret's meshes replace it when they exist), and the balls it fires.
 //
-// Concept from research/turret-and-safety.md: a pan ring on a quick-release plate, a launcher with twin brushless
-// flywheels and a solenoid pusher, a drum magazine. Darts leave at 24 m/s (80 fps, the safety cap) and the launcher
-// never tilts above horizontal in the world frame.
+// Concept from research/turret-launcher-study.md section 8, as cad/turret.py builds it: a pan ring on a quick-release
+// plate, a cradle with twin brushless flywheels fed by a dial under a ball hopper, a 30 mm barrel. Rival-size foam balls
+// leave at 21.3 m/s (70 fps, the safety cap for balls) and the launcher never tilts above horizontal in the world frame.
 import * as THREE from 'three';
 
 const M = 0.001;
 const mat = (c, o = {}) => new THREE.MeshPhysicalMaterial({ color: c, roughness: 0.45, clearcoat: 0.3, ...o });
-const DART_SPEED = 24;          // m/s (80 fps)
 const MAX_TILT_UP = 0;           // rad: never above horizontal
 const MAX_TILT_DOWN = -0.35;
+
+/** The ammo, as cad/turret.py and sim/turret.py have it: Rival-size foam balls from a hopper of 30. */
+export const BALL = {
+  d: 0.0227,        // m (Rival rounds are 22.2-22.8 mm)
+  mass: 0.00183,    // kg (Hasbro's own round averages 1.83 g)
+  speed: 21.3,      // m/s: 70 fps, the kid-safety cap for balls (65 fps is the default setting)
+  fps: 70,
+  cd: 0.5,          // drag coefficient (a sphere)
+  hopper: 30,
+  color: 0xffd21a,
+  seam: 0xe0700a,
+};
+// air drag: deceleration = K v^2 (K = 0.066 per metre: a ball loses about a quarter of its speed over 4 m)
+const K_DRAG = 0.5 * 1.2 * BALL.cd * Math.PI * (BALL.d / 2) ** 2 / BALL.mass;
+const UP = new THREE.Vector3(0, 1, 0);
+
+const ballGeo = {
+  ball: new THREE.SphereGeometry(BALL.d / 2, 20, 14),
+  seam: new THREE.TorusGeometry(BALL.d / 2, BALL.d * 0.06, 6, 32),          // the moulding seam: shows the ball turning
+  streak: new THREE.CylinderGeometry(BALL.d * 0.4, BALL.d * 0.05, 1, 10, 1, true),
+};
+const ballMat = {
+  foam: new THREE.MeshStandardMaterial({ color: BALL.color, roughness: 0.9 }),
+  seam: new THREE.MeshStandardMaterial({ color: BALL.seam, roughness: 0.8 }),
+  streak: new THREE.MeshBasicMaterial({ color: 0xffe08a, transparent: true, opacity: 0.3, blending: THREE.AdditiveBlending, depthWrite: false }),
+};
+
+/** One foam ball: a sphere with its seam at a random tilt (`g`), and a motion streak to draw behind it (`streak`). */
+export function ballMesh() {
+  const g = new THREE.Group();
+  const seam = new THREE.Mesh(ballGeo.seam, ballMat.seam);
+  seam.rotation.set((Math.random() - 0.5) * 0.8, Math.random() * Math.PI, 0);    // about upright, so a spin about the vertical shows
+  g.add(new THREE.Mesh(ballGeo.ball, ballMat.foam), seam);
+  g.traverse((o) => { if (o.isMesh) o.castShadow = true; });
+  const streak = new THREE.Mesh(ballGeo.streak, ballMat.streak);
+  streak.visible = false;
+  streak.frustumCulled = false;
+  return { g, streak };
+}
 
 export function buildTurret(color = 0xe8892b) {
   const group = new THREE.Group();                 // sits on the head plate, origin at the plate's top centre
@@ -32,14 +70,25 @@ export function buildTurret(color = 0xe8892b) {
   const cage = new THREE.Mesh(new THREE.CylinderGeometry(30 * M, 30 * M, 70 * M, 32), mat(0x1d2025));
   cage.rotation.z = Math.PI / 2;
   cage.position.z = 45 * M;
-  const barrel = new THREE.Mesh(new THREE.CylinderGeometry(9 * M, 9 * M, 80 * M, 24), mat(0x2a2d33));
+  const barrel = new THREE.Mesh(new THREE.CylinderGeometry(15 * M, 15 * M, 80 * M, 24), mat(0x2a2d33));   // Ø30, bore = ball + 1.5
   barrel.rotation.x = Math.PI / 2;
   barrel.position.z = 115 * M;
-  const tip = new THREE.Mesh(new THREE.CylinderGeometry(11 * M, 11 * M, 12 * M, 24), mat(0xff2a6d));
+  const tip = new THREE.Mesh(new THREE.CylinderGeometry(16.5 * M, 16.5 * M, 12 * M, 24), mat(0xff2a6d));
   tip.rotation.x = Math.PI / 2;
   tip.position.z = 152 * M;
-  const drum = new THREE.Mesh(new THREE.CylinderGeometry(42 * M, 42 * M, 34 * M, 36), mat(0x3b3f46, { transparent: true, opacity: 0.85 }));
-  drum.position.set(0, 46 * M, -25 * M);
+  // the hopper: a clear tube over the feed dial, with balls showing through
+  const hopper = new THREE.Group();
+  hopper.position.set(0, 28 * M, -25 * M);
+  const tube = new THREE.Mesh(new THREE.CylinderGeometry(51 * M, 51 * M, 64 * M, 36, 1, true),
+    mat(0xdfe8f0, { transparent: true, opacity: 0.28, side: THREE.DoubleSide, depthWrite: false }));
+  tube.position.y = 32 * M;
+  hopper.add(tube);
+  const r = BALL.d / 2, inHopper = [[0, 0], ...[0, 1, 2, 3, 4, 5].map((k) => [27 * M * Math.cos(k * Math.PI / 3), 27 * M * Math.sin(k * Math.PI / 3)])];
+  for (const [i, [x, z]] of inHopper.entries()) {
+    const b = new THREE.Mesh(ballGeo.ball, ballMat.foam);
+    b.position.set(x, r + (i ? 0 : 2 * r * 0.85), z);
+    hopper.add(b);
+  }
   const muzzle = new THREE.Object3D();
   muzzle.position.z = 160 * M;
   // the green aiming laser, beside the barrel (real one: Class 1 or low-power Class 2, never aimed above horizontal)
@@ -53,11 +102,12 @@ export function buildTurret(color = 0xe8892b) {
   const flash = new THREE.Mesh(new THREE.SphereGeometry(14 * M, 12, 8), new THREE.MeshBasicMaterial({ color: 0xfff1a8, transparent: true, opacity: 0 }));
   flash.position.z = 166 * M;
   flash.userData.keep = true;                         // an effect, not a stand-in: stays when the CAD turret replaces the rest
-  tilt.add(body, cage, barrel, tip, drum, muzzle, flash, laserBody, laserLens, laserOrigin);
+  tilt.add(body, cage, barrel, tip, hopper, muzzle, flash, laserBody, laserLens, laserOrigin);
   pan.add(ring, yokeL, yokeR, tilt);
   group.add(plate, latch, pan);
   group.traverse((o) => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } });
   flash.castShadow = false;
+  tube.castShadow = false;
 
   // the beam and the dot where it lands (in world space, added to the scene by the page)
   // a thin glowing rod, scaled to the beam's length each frame (a 1-pixel line is invisible on most screens)
@@ -108,45 +158,47 @@ export function buildTurret(color = 0xe8892b) {
   };
 }
 
-/** Darts in flight and on the ground. */
-export function createDarts(scene) {
-  const darts = [];
-  const bodyGeo = new THREE.CylinderGeometry(6.5 * M, 6.5 * M, 45 * M, 14);
-  const tipGeo = new THREE.SphereGeometry(6.8 * M, 14, 8, 0, Math.PI * 2, 0, Math.PI / 2);
-  const foam = new THREE.MeshStandardMaterial({ color: 0xff7a1a, roughness: 0.8 });
-  const rubber = new THREE.MeshStandardMaterial({ color: 0x2b6cff, roughness: 0.6 });
-  const up = new THREE.Vector3(0, 1, 0);
+/** A cosmetic spin in flight (rad/s about the vertical, ~5 turns a second): matched flywheels leave a real ball with
+ *  almost none, but a seam that turns reads as a ball, not a bullet. */
+export const BALL_SPIN = 32;
+
+/** Foam balls in flight and on the ground: gravity and air drag, a soft bounce, then a roll to a stop. */
+export function createBalls(scene) {
+  const balls = [];
+  const r = BALL.d / 2, w = new THREE.Vector3(), dq = new THREE.Quaternion();
 
   function fire(muzzle) {
-    const g = new THREE.Group();
-    const b = new THREE.Mesh(bodyGeo, foam);
-    const t = new THREE.Mesh(tipGeo, rubber);
-    t.position.y = 22.5 * M;
-    g.add(b, t);
-    g.traverse((o) => { if (o.isMesh) o.castShadow = true; });
+    const { g } = ballMesh();
     const pos = new THREE.Vector3(), dir = new THREE.Vector3();
     muzzle.getWorldPosition(pos);
     muzzle.getWorldDirection(dir);
     g.position.copy(pos);
     scene.add(g);
-    darts.push({ g, v: dir.multiplyScalar(DART_SPEED), landed: false, age: 0 });
+    balls.push({ g, v: dir.multiplyScalar(BALL.speed), rolling: false, resting: false, age: 0 });
   }
 
   function step(dt) {
-    for (const d of darts) {
-      d.age += dt;
-      if (!d.landed) {
-        d.v.y -= 9.81 * dt;
-        d.v.multiplyScalar(1 - 0.35 * dt);           // foam darts slow down quickly in air (rough drag)
-        d.g.position.addScaledVector(d.v, dt);
-        d.g.quaternion.setFromUnitVectors(up, d.v.clone().normalize());
-        if (d.g.position.y <= 0.0065) { d.g.position.y = 0.0065; d.landed = true; d.age = 0; d.g.rotation.set(0, Math.atan2(d.v.x, d.v.z), Math.PI / 2); }
+    for (const b of balls) {
+      b.age += dt;
+      if (b.resting) continue;
+      b.v.y -= 9.81 * dt;
+      b.v.addScaledVector(b.v, -K_DRAG * b.v.length() * dt);
+      b.g.position.addScaledVector(b.v, dt);
+      if (b.g.position.y <= r) {                               // the ground: a soft foam bounce, then rolling
+        b.g.position.y = r;
+        if (b.v.y < -1) { b.v.y *= -0.3; b.v.x *= 0.5; b.v.z *= 0.5; } else { b.v.y = 0; b.rolling = true; }
       }
+      if (b.rolling) b.v.multiplyScalar(Math.max(0, 1 - 4 * dt));            // grass slows a rolling ball
+      // turn the ball: spinning in flight, rolling without slipping on the ground
+      if (b.rolling) w.crossVectors(UP, b.v).divideScalar(r); else w.set(0, BALL_SPIN, 0);
+      const wl = w.length();
+      if (wl > 1e-6) b.g.quaternion.premultiply(dq.setFromAxisAngle(w.divideScalar(wl), wl * dt));
+      if (b.rolling && b.v.lengthSq() < 0.0025) { b.resting = true; b.age = 0; }
     }
-    for (let i = darts.length - 1; i >= 0; i--) {
-      if (darts[i].landed && darts[i].age > 12) { scene.remove(darts[i].g); darts.splice(i, 1); }
+    for (let i = balls.length - 1; i >= 0; i--) {
+      if (balls[i].resting && balls[i].age > 12) { scene.remove(balls[i].g); balls.splice(i, 1); }
     }
   }
-  function clear() { for (const d of darts) scene.remove(d.g); darts.length = 0; }
-  return { fire, step, clear, get count() { return darts.length; } };
+  function clear() { for (const b of balls) scene.remove(b.g); balls.length = 0; }
+  return { fire, step, clear, get count() { return balls.length; } };
 }

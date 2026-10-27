@@ -1,14 +1,19 @@
-"""The foam-dart turret in the physics simulation: aiming, firing real dart bodies, recoil and hits.
+"""The foam-ball turret in the physics simulation: aiming, firing real ball bodies, recoil and hits.
 
+- **Ammo:** the Rival-size foam balls of the CAD turret (cad/turret.py; research/turret-launcher-study.md §2.1, §8):
+  22.7 mm, 1.83 g, a hopper of 30. They leave at 70 fps (21.3 m/s), the kid-safety cap for balls (65 fps is the
+  default setting). The twin flywheels sit side by side at the same speed, so a ball leaves without spin: drag only,
+  no Magnus lift. It leaves slower than the 80 fps dart this model used to fire, so it drops about a quarter more:
+  21 cm over a level 4 m, at 16 m/s when it gets there.
 - **Servos:** pan and tilt are joint PDs on the turret's motors, clipped to their torque.
-- **Aiming:** from the muzzle site to the target, with a drop allowance for the dart's flight (no drag in the aim,
-  so long shots fall short a little, as they would). Kid-safety rule from research/turret-and-safety.md: the barrel
-  never points above horizontal *in the world frame*, so the body's lean is taken out of the tilt command; a target
-  that would need an upward shot is not engaged.
+- **Aiming:** from the muzzle site to the target, with a drop allowance for the ball's flight (with the same drag as
+  the physics). Kid-safety rule from research/turret-and-safety.md: the barrel never points above horizontal *in the
+  world frame*, so the body's lean is taken out of the tilt command; a target that would need an upward shot is not
+  engaged.
 - **Firing:** only when settled on target (aim error and turret speed small), at up to 5 shots per second. Each shot
-  takes a parked dart body (1 g, 24 m/s, air drag from MuJoCo's fluid model), places it at the muzzle along the barrel,
-  and applies the reaction impulse to the launcher.
-- **Hits:** dart-to-target contacts, each dart counted once. A target is done when its plate is knocked over.
+  takes a parked ball body (air drag from MuJoCo's fluid model), places it just ahead of the muzzle, and applies the
+  reaction impulse to the launcher.
+- **Hits:** ball-to-target contacts, each ball counted once. A target is done when its plate is knocked over.
 - **Laser:** off at the start and while slewing between targets; on once the turret is close to on target, and it stays
   on for a moment before the first shot (a visible "about to fire" warning). Off again when the target goes down.
 """
@@ -22,10 +27,11 @@ import mujoco
 import numpy as np
 
 G = 9.81
-DART_MASS = 0.001
-DART_SPEED = 24.0            # m/s, 80 fps: the kid-safety cap
-DART_HALF = 0.0225           # capsule half-length (a 45 mm short dart)
-DART_R = 0.0065
+BALL_MASS = 0.00183          # kg: Hasbro's Rival round averages 1.83 g (study §2.1)
+BALL_R = 0.0227 / 2          # m: the design ball of cad/turret.py (Geo.ball_d = 22.7 mm)
+BALL_SPEED = 21.3            # m/s, 70 fps: the kid-safety cap for balls
+BALL_CD = 0.5                # drag coefficient of a foam ball (a sphere at Re ~ 3e4)
+HOPPER = 30                  # balls in a full hopper (cad/turret.py)
 
 
 @dataclass
@@ -38,7 +44,7 @@ class Target:
 
 def targets_xml(targets: List[Target]) -> str:
     """Knock-down targets: a light foam plate (20 g) hinged along its bottom edge, its weight 4 mm forward of the hinge so
-    it rests 4° towards the shooter against a stop, on a post. A dart hit knocks it over backwards (negative hinge angle), as on a real foam-dart range."""
+    it rests 4° towards the shooter against a stop, on a post. A ball hit knocks it over backwards (negative hinge angle), as on a real foam-blaster range."""
     out = []
     for t in targets:
         x, y, z = t.pos
@@ -57,28 +63,31 @@ def targets_xml(targets: List[Target]) -> str:
     return ''.join(out)
 
 
-def darts_xml(n: int) -> str:
-    """n parked darts, resting off to the side until fired. Each is a light foam body with a heavier rubber tip ahead
-    of it (0.45 g + 0.55 g), so the centre of mass is forward and drag on the body keeps it flying nose-first."""
-    return ''.join(f'<body name="dart_{i}" pos="{-2 - 0.05 * (i % 12)} {3 + 0.05 * (i // 12)} {DART_R + 0.0005}" quat="0.7071 0 0.7071 0">'
-                   f'<freejoint name="dart_{i}"/>'
-                   f'<geom name="dart_{i}" type="capsule" size="{DART_R} {DART_HALF * 0.8}" pos="0 0 -0.004" mass="0.00045" '
-                   f'fluidshape="ellipsoid" fluidcoef="0.5 0.25 1.5 0 0" rgba="1 0.48 0.1 1" friction="0.9 0.01 0.001" solref="0.012 1"/>'
-                   f'<geom name="dart_{i}_tip" type="sphere" size="{DART_R}" pos="0 0 {DART_HALF}" mass="0.00055" rgba="0.17 0.42 1 1" '
-                   f'friction="0.9 0.01 0.001" solref="0.012 1"/></body>' for i in range(n))
+def balls_xml(n: int) -> str:
+    """n foam balls, parked in rows off to the side until fired. Each is a sphere in MuJoCo's ellipsoid air model with
+    blunt drag only; MuJoCo's blunt-drag force has no 1/2 in it, so its coefficient is half the usual Cd. The contact
+    is soft and a little springy (foam bounces off a plate and rolls on the ground)."""
+    return ''.join(f'<body name="ball_{i}" pos="{-2 - 0.05 * (i % 12)} {3 + 0.05 * (i // 12)} {BALL_R + 0.0005}">'
+                   f'<freejoint name="ball_{i}"/>'
+                   f'<geom name="ball_{i}" type="sphere" size="{BALL_R}" mass="{BALL_MASS}" fluidshape="ellipsoid" '
+                   f'fluidcoef="{BALL_CD / 2} 0.25 1.5 0 0" rgba="1 0.82 0.1 1" friction="0.9 0.01 0.002" solref="0.01 0.4"/>'
+                   f'</body>' for i in range(n))
+
+
+darts_xml = balls_xml        # the old name, for callers not yet updated
 
 
 def fluid_option(xml: str) -> str:
-    """Air for the darts (MuJoCo's ellipsoid fluid model)."""
+    """Air for the balls (MuJoCo's ellipsoid fluid model)."""
     return xml.replace('<option ', '<option density="1.2" viscosity="0.000018" ', 1)
 
 
-# drag-only flight (no lift): deceleration = K v^2, K = 0.5 rho C A / m with MuJoCo's blunt-drag coefficient
-K_DRAG = 0.5 * 1.2 * 0.5 * math.pi * DART_R ** 2 / DART_MASS
+# drag-only flight (no lift): deceleration = K v^2, K = 0.5 rho Cd A / m, the same drag MuJoCo applies to a ball
+K_DRAG = 0.5 * 1.2 * BALL_CD * math.pi * BALL_R ** 2 / BALL_MASS
 
 
-def fly(elev: float, horiz: float, v0: float = DART_SPEED, dt: float = 0.002):
-    """Height change when the dart has travelled `horiz` metres horizontally, launched at `elev` (rad, + up)."""
+def fly(elev: float, horiz: float, v0: float = BALL_SPEED, dt: float = 0.002):
+    """Height change when the ball has travelled `horiz` metres horizontally, launched at `elev` (rad, + up)."""
     x = z = 0.0
     vx, vz = v0 * math.cos(elev), v0 * math.sin(elev)
     for _ in range(2000):
@@ -95,7 +104,7 @@ def fly(elev: float, horiz: float, v0: float = DART_SPEED, dt: float = 0.002):
 
 
 def elevation_for(horiz: float, dz: float) -> Optional[float]:
-    """Launch elevation (rad) that lands the dart dz metres above the muzzle at horiz metres, by bisection."""
+    """Launch elevation (rad) that lands the ball dz metres above the muzzle at horiz metres, by bisection."""
     lo, hi = -0.6, 0.6
     if fly(hi, horiz) < dz:
         return None
@@ -103,17 +112,6 @@ def elevation_for(horiz: float, dz: float) -> Optional[float]:
         mid = (lo + hi) / 2
         lo, hi = (mid, hi) if fly(mid, horiz) < dz else (lo, mid)
     return (lo + hi) / 2
-
-
-def quat_from_z(d: np.ndarray) -> np.ndarray:
-    """Quaternion (w x y z) turning +z onto the unit vector d."""
-    z = np.array([0.0, 0.0, 1.0])
-    c = float(np.dot(z, d))
-    if c < -0.999999:
-        return np.array([0.0, 1.0, 0.0, 0.0])
-    axis = np.cross(z, d)
-    q = np.array([1.0 + c, *axis])
-    return q / np.linalg.norm(q)
 
 
 @dataclass
@@ -142,27 +140,27 @@ class TurretController:
         self.tilt_body = m.body('turret_tilt').id
         self.base = m.body('base').id
         names = [m.body(i).name for i in range(m.nbody)]
-        self.darts = [i for i, n in enumerate(names) if n.startswith('dart_')]
-        self.dart_geoms = {m.body(b).geomadr[0] + k: b for b in self.darts for k in range(m.body(b).geomnum[0])}
-        self.dart_qadr = {b: m.jnt_qposadr[m.body(b).jntadr[0]] for b in self.darts}
-        self.dart_vadr = {b: m.jnt_dofadr[m.body(b).jntadr[0]] for b in self.darts}
+        self.balls = [i for i, n in enumerate(names) if n.startswith('ball_')]
+        self.ball_geoms = {m.body(b).geomadr[0] + k: b for b in self.balls for k in range(m.body(b).geomnum[0])}
+        self.ball_qadr = {b: m.jnt_qposadr[m.body(b).jntadr[0]] for b in self.balls}
+        self.ball_vadr = {b: m.jnt_dofadr[m.body(b).jntadr[0]] for b in self.balls}
         self.target_geoms = {m.geom(t.name).id: t.name for t in self.targets if t.name in [m.geom(g).name for g in range(m.ngeom)]}
         jn = [m.joint(j).name for j in range(m.njnt)]
         self.hinge_q = {t.name: m.jnt_qposadr[m.joint(f'{t.name}_hinge').id] for t in self.targets if f'{t.name}_hinge' in jn}
         self.down = {}
-        self.next_dart = 0
+        self.next_ball = 0
         self.last_shot = -1e9
         self.fired = {t.name: 0 for t in self.targets}
-        self.events, self.hits, self.hit_darts = [], [], set()
+        self.events, self.hits, self.hit_balls = [], [], set()
         self.recoil_steps = 0
         self.recoil_force = np.zeros(3)
         self.pan_cmd, self.tilt_cmd = 0.0, 0.05
         self.aim_err = 0.0
         self.in_range = True
         self.unreachable = set()        # targets that were out of range at some point (reported, not skipped)
-        # walking shots in: per target elevation and bearing corrections learned from where earlier darts went
+        # walking shots in: per target elevation and bearing corrections learned from where earlier balls went
         self.correction = {t.name: [0.0, 0.0] for t in self.targets}
-        self.in_flight = []          # (dart body, target, muzzle position at the shot)
+        self.in_flight = []          # (ball body, target, muzzle position at the shot)
         self.laser = False
         self.laser_since = 0.0
         self.engaged = None          # the target being aimed at
@@ -230,7 +228,7 @@ class TurretController:
             self.set_laser(t, True, tg.name)
         settled = self.aim_err < self.tol_rad and abs(d.qvel[self.pan_v]) < 0.1 and abs(d.qvel[self.tilt_v]) < 0.1
         warned = self.laser and t - self.laser_since >= self.laser_warn_s
-        if tg is not None and settled and warned and self.in_range and t - self.last_shot >= 1.0 / self.rate_hz and self.next_dart < len(self.darts):
+        if tg is not None and settled and warned and self.in_range and t - self.last_shot >= 1.0 / self.rate_hz and self.next_ball < len(self.balls):
             self.fire(t, tg)
         # recoil: the reaction impulse on the launcher, spread over a 2 ms shot
         d.xfrc_applied[self.tilt_body] = 0
@@ -247,20 +245,20 @@ class TurretController:
                 self.events.append({'t': round(t, 3), 'type': 'down', 'target': name})
 
     def observe(self):
-        """When a dart reaches its target's distance (or lands), note how far above/below and left/right it passed, and
+        """When a ball reaches its target's distance (or lands), note how far above/below and left/right it passed, and
         correct the aim for the next shot, as a spotter or the turret camera would."""
         d = self.data
         still = []
         for b, tg, origin in self.in_flight:
-            qa = self.dart_qadr[b]
+            qa = self.ball_qadr[b]
             p = d.qpos[qa:qa + 3]
             to_t = np.array(tg.pos) - origin
             dist = math.hypot(to_t[0], to_t[1])
             u = np.array([to_t[0], to_t[1], 0.0]) / max(dist, 1e-6)
             along = float(np.dot((p - origin)[:2], u[:2]))
-            landed = p[2] < 0.02 and np.linalg.norm(d.qvel[self.dart_vadr[b]:self.dart_vadr[b] + 3]) < 3.0
-            if along >= dist or landed or b in self.hit_darts:
-                if b not in self.hit_darts:
+            landed = p[2] < 0.02 and np.linalg.norm(d.qvel[self.ball_vadr[b]:self.ball_vadr[b] + 3]) < 3.0
+            if along >= dist or landed or b in self.hit_balls:
+                if b not in self.hit_balls:
                     if along >= dist:     # passed the target's distance: the vertical miss there is the error
                         de = -math.atan2(p[2] - tg.pos[2], dist)
                     else:                 # landed short: aim a little higher, more for a bigger shortfall (capped)
@@ -275,37 +273,37 @@ class TurretController:
 
     def fire(self, t: float, tg: Target):
         d, m = self.data, self.model
-        b = self.darts[self.next_dart]
-        self.next_dart += 1
+        b = self.balls[self.next_ball]
+        self.next_ball += 1
         R = d.site_xmat[self.muzzle].reshape(3, 3)
         direction = R[:, 0] / np.linalg.norm(R[:, 0])              # the barrel is the tilt link's +x
-        qa, va = self.dart_qadr[b], self.dart_vadr[b]
-        d.qpos[qa:qa + 3] = d.site_xpos[self.muzzle] + direction * (DART_HALF + DART_R + 0.004)
-        d.qpos[qa + 3:qa + 7] = quat_from_z(direction)
+        qa, va = self.ball_qadr[b], self.ball_vadr[b]
+        d.qpos[qa:qa + 3] = d.site_xpos[self.muzzle] + direction * (BALL_R + 0.004)
+        d.qpos[qa + 3:qa + 7] = (1.0, 0.0, 0.0, 0.0)
         base_v = np.zeros(6)
         mujoco.mj_objectVelocity(m, d, mujoco.mjtObj.mjOBJ_SITE, self.muzzle, base_v, 0)
-        d.qvel[va:va + 3] = direction * DART_SPEED + base_v[3:]
-        d.qvel[va + 3:va + 6] = 0
+        d.qvel[va:va + 3] = direction * BALL_SPEED + base_v[3:]
+        d.qvel[va + 3:va + 6] = 0                                  # matched flywheels: no spin
         steps = max(1, int(round(0.002 / m.opt.timestep)))
-        self.recoil_force = -direction * DART_MASS * DART_SPEED / (steps * m.opt.timestep)
+        self.recoil_force = -direction * BALL_MASS * BALL_SPEED / (steps * m.opt.timestep)
         self.recoil_steps = steps
         self.last_shot = t
         self.fired[tg.name] += 1
         self.in_flight.append((b, tg, d.site_xpos[self.muzzle].copy()))
-        self.events.append({'t': round(t, 3), 'type': 'shot', 'target': tg.name, 'dart': m.body(b).name})
+        self.events.append({'t': round(t, 3), 'type': 'shot', 'target': tg.name, 'ball': m.body(b).name})
 
     def check_hits(self, t: float):
         d = self.data
         for i in range(d.ncon):
             c = d.contact[i]
             for dg, tgm in ((c.geom1, c.geom2), (c.geom2, c.geom1)):
-                if dg in self.dart_geoms and tgm in self.target_geoms:
-                    b = self.dart_geoms[dg]
-                    if b not in self.hit_darts:
-                        self.hit_darts.add(b)
+                if dg in self.ball_geoms and tgm in self.target_geoms:
+                    b = self.ball_geoms[dg]
+                    if b not in self.hit_balls:
+                        self.hit_balls.add(b)
                         name = self.target_geoms[tgm]
                         self.hits.append(name)
-                        self.events.append({'t': round(t, 3), 'type': 'hit', 'target': name, 'dart': self.model.body(b).name})
+                        self.events.append({'t': round(t, 3), 'type': 'hit', 'target': name, 'ball': self.model.body(b).name})
 
     def summary(self):
         shots = sum(1 for e in self.events if e['type'] == 'shot')
