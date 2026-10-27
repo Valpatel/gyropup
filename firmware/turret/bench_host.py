@@ -1513,23 +1513,29 @@ def t_release_feeding(tt, b, r):
 @test('6.8', 'Mock lidar: the depression table loaded; barrel and balls clear at every pan', 'mock_lidar')
 def t_mock_lidar(tt, b, r):
     boot(tt, b)
-    table = None
+    table, lidar, used = None, {}, 'exports/turret/lidar/lidar.json firmware_table'
     src = R / 'exports' / 'turret' / 'lidar' / 'lidar.json'
     if src.exists():
         try:
-            rows = json.loads(src.read_text())['firmware_table']
-            table = [(float(x['pan_deg']), float(x['min_tilt_deg'])) for x in rows]
+            d = json.loads(src.read_text())
+            table = [(float(x['pan_deg']), float(x['min_tilt_deg'])) for x in d['firmware_table']]
+            lidar = d.get('lidar') or {}
         except (KeyError, ValueError):
             table = None
-    if not table:
-        table = [(p, -16.0 if abs(p) <= 26 else -25.0) for p in range(-180, 180, 5)]
+    if not table:                                      # the firmware's built-in robot table, made for the same lidar
+        table, lidar, used = list(C.ROBOT_DEPRESSION), {}, 'config.ROBOT_DEPRESSION'
+    x = lidar.get('centre_x_mm', C.ROBOT_DEPRESSION_FOR['lidar_to_pan_mm'])
+    top = lidar.get('top_above_tm_mm', C.ROBOT_DEPRESSION_FOR['lidar_top_above_tm_mm'])
+    r.reading('table_source', used)
+    r.reading('lidar_centre_ahead_mm', x)
+    r.reading('lidar_top_above_tm_mm', top)
     tt.config(M.CF_CLEAR, a=1)
     for i, (p, m) in enumerate(table):
         tt.config(M.CF_DEPRESSION, index=i, a=int(round(p * 10)), b=int(round(m * 100)))
     tt.wait(0.3)
     cfg = C.Config(depression=table)
     rows = []
-    b.do('Mock lidar (Ø103 x 72 cylinder, 148 mm ahead, top 41.7 mm above the TM face) in place')
+    b.do(f'Mock lidar (Ø103 x 72 cylinder, {x:.0f} mm ahead, top {top:.1f} mm above the TM face) in place')
     for p in range(0, 360, 10):
         tt.aim(float(p), -25.0, 90)
         tt.wait(1.2)

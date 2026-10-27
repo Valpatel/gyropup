@@ -212,7 +212,9 @@ hung ball releases two.
 - **Depression table.** The most depression allowed at each pan for the mount in use: cad/turret_lidar.py's
   `firmware_table` for the robot over its lidar, the box scene for the Orin box. The firmware clamps the tilt goal to
   it, interpolating between rows and rounding toward safety. Every tilt goal is also clamped to [-25, 0] deg. A goal
-  above level is clamped and counted, and the barrel never points above level.
+  above level is clamped and counted, and the barrel never points above level. With mount robot and no table
+  loaded, the firmware holds its built-in copy of the robot's table (`config.ROBOT_DEPRESSION`, made for the VLP-16
+  143 mm ahead of the pan axis), so the robot is never without one; a table loaded over CAN replaces it.
 - **Keep-out sectors.** Pans where the turret may aim but never fire (the operator's side on the bench and the box).
   A burst held in a keep-out for 3 s ends.
 - **Settle before firing.** A dial step only when the pan rate is under 10 deg/s, the pan has been still 0.25 s after
@@ -290,7 +292,7 @@ writes its readings and pass/fail to `exports/turret/bench/<file>.json` (`--list
 | `test_homing.py` | homing and turn counting, 1,000 random starts | unchanged: 1,000 / 1,000, max 6.7 s, repeatability 0.07 deg |
 | `test_feed.py` | the feed driver against a simulated STS3215 through the real packet code: 3/s with a jam injected and recovered; three jams fault; the load catches a jam before the timeout; the drop-off on release and the re-init; lost replies never double a step; the step time; the gate-paced burst with hung balls freed by the dither, the 5-ball hopper at -25 deg, the empty hopper | all pass: jam caught 68 ms after contact (load), reversed, retried, recovered; clean steps 229 ms mean, 236 max; 6 of 6 hung balls freed by a dither, 0 by a step, 0 doubles; 335 ms step to step |
 | `test_firmware.py` | protocols; 8,855 rpm / 61,985 eRPM; Ø36 refused; the tilt never above level; no spin without ARM; the re-arm; zero throttle when the heartbeat goes; a 300 Hz train refused though the hardware stays armed; the ramp never steps; the 24 V guard; one bad frame no trip; a 75 fps pair latches SAFE; aim live and capped while disarmed; the feed servo's drop-off and re-init through the firmware; a new set speed ramps; no DShot frame while the ESCs are unpowered | all 19 pass |
-| `bench_host.py --sim` | every bench test runs end to end | 33 of 33 pass on the circuit as drawn now (docs/turret-wiring.md 3, D47) |
+| `bench_host.py --sim` | every bench test runs end to end | 33 of 33 pass on the circuit as drawn now (docs/turret-wiring.md 3, D47); 6.8 on the table for the lidar 143 mm ahead |
 
 ## 9. Open items found while building v0 (for the hardware and the plan)
 

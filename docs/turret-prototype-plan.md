@@ -507,7 +507,7 @@ damp ones for test 5.3).
 | 6.5 | Knock-down: 20 g hinged plates at 2 and 4 m (sim/turret.py's plate), 5 balls each | every plate down |
 | 6.6 | Temperature: 100 balls in 2 min then 10 min at speed; IR gun on ESCs, motors, the flywheel regulator, each servo | ESCs <= 80 C, motors <= 70 C, regulator <= 60 C, servos <= 60 C |
 | 6.7 | Safety-line release during feeding: 20 releases at random points of 8-ball bursts | no ball above 20 fps after a release; where each resting ball ended, logged |
-| 6.8 | Mock lidar: a Ø103 x 72 cylinder 148 mm ahead, its top 41.7 mm above the TM face, the depression table loaded | the barrel and every ball 10 mm clear at every pan |
+| 6.8 | Mock lidar: a Ø103 x 72 cylinder 143 mm ahead (the body's lidar position), its top 41.7 mm above the TM face, the depression table loaded | the barrel and every ball 10 mm clear at every pan |
 
 Numbers that differ from the models go back to their owners: launch and feed to the physics agent (sim/turret_*.py),
 fits and strengths to cad/turret.py and cad/turret_studies.py, timings to docs/turret-firmware.md.

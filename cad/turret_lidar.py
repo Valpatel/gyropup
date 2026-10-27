@@ -1,7 +1,7 @@
 """The turret firing over the VLP-16 lidar in front of it: clearance of the barrel, the cartridge and the ball's path at
 every pan and tilt, the pan-dependent depression limit that keeps them clear, and where the lidar may sit.
 
-    .venv/bin/python cad/turret_lidar.py [--x 150] [--top 43.7] [--margin 10] [--map]   # the robot: over its lidar
+    .venv/bin/python cad/turret_lidar.py [--x 143] [--top 41.7] [--margin 10] [--map]   # the robot: over its lidar
     .venv/bin/python cad/turret_lidar.py --scene box                                       # the Orin box: its deck, antennas
 
 The same check serves any mount: a scene is a list of obstacles (vertical cylinders and boxes), each with or without
@@ -12,8 +12,11 @@ The layout (user, 2026-10-26): on the robot the turret sits behind the VLP-16 on
 body is not designed yet, so the lidar's place is a parameter: its centre `x` mm ahead of the pan axis on the
 turret's centre line, its top `top` mm above the turret's mounting face (TM). Baseline: the lidar stands on the body's
 top deck and the turret on a 30 mm printed riser there (decided 2026-10-27), so the lidar's top is 71.7 - 30 = 41.7 mm
-above the TM face, and its centre is as close behind the turret's TPU bumper ring (R 86) as a 10 mm gap allows:
-x = 86 + 51.65 + 10 = 148 mm.
+above the TM face, and its centre is LIDAR_TO_PAN = 143 mm ahead of the pan axis. The source of the 143 is the body
+workstream's constant `LIDAR_TO_PAN = 143.0` in cad/body_params.py (branch body/program, not on main yet; its
+docs/body-plan.md section 1.5: the lidar 5 mm from the turret's bumper, the sim's 5 mm clearance rule between the lidar
+and anything that turns): when that file reaches main it is the one source and this constant goes. It was 147.65 here
+(the bumper's R 86 + the lidar's 51.65 + a 10 mm gap).
 
 What is checked, for pan -180..180 deg (2 deg steps) and tilt 0..-25 deg (0.5 deg steps):
   - every part that pans or tilts (sampled over its surface every ~1.2 mm, so flat faces count, not just their
@@ -44,6 +47,8 @@ import turret as tu  # noqa: E402
 OUT = R / 'exports' / 'turret' / 'lidar'
 LIDAR = {'d': 103.3, 'h': 71.7, 'model': 'Velodyne VLP-16 (Puck)', 'source': 'VLP-16 user manual: Ø103.3 x 71.7 mm'}
 DECK_BELOW_TM = 30.0                          # the turret stands on a 30 mm printed riser on the top deck (D41, 2026-10-27)
+LIDAR_TO_PAN = 143.0                          # the lidar's axis ahead of the pan axis: the body's cad/body_params.py
+#                                               LIDAR_TO_PAN (body/program; docs/body-plan.md 1.5), see the docstring
 BUMPER_R = 86.0
 BALL_MAX_D = 22.8                             # the largest Rival-size round on sale (Dart Zone Powerstrike, study 2.1)
 WILD_DEG = 2.0                                # a ball leaving 2 deg low of the barrel's axis
@@ -228,7 +233,7 @@ def keep_out_fire(pans, scene):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--scene', choices=('robot', 'box'), default='robot')
-    ap.add_argument('--x', type=float, default=None, help='robot: lidar centre ahead of the pan axis, mm')
+    ap.add_argument('--x', type=float, default=LIDAR_TO_PAN, help='robot: lidar centre ahead of the pan axis, mm')
     ap.add_argument('--top', type=float, default=LIDAR['h'] - DECK_BELOW_TM, help='robot: lidar top above the TM face, mm')
     ap.add_argument('--margin', type=float, default=10.0)
     ap.add_argument('--map', action='store_true', help='robot: the placement map (the lidar anywhere in front)')
@@ -249,8 +254,7 @@ def main():
     tilts = [round(-0.5 * k, 1) for k in range(int(-G.tilt_min / 0.5) + 1)]
     pans = [float(p) for p in range(-180, 181, 2)]
     if a.scene == 'robot':
-        x_l = a.x if a.x is not None else BUMPER_R + LIDAR['d'] / 2 + 10.0
-        obstacles = scene_robot(x_l, a.top)
+        obstacles = scene_robot(a.x, a.top)
     else:
         obstacles = scene_box()
     static = {f'{k} / {ob["name"]}': round(float(obstacle_distance(P, ob).min()), 1) for k, (fr, P) in clouds.items() if fr == 'base'
@@ -275,7 +279,9 @@ def main():
                   'pose kept (a lower bound over pan and tilt), and the ball path; the limit is the deepest tilt in 0.5 deg steps that keeps the margin',
            'seconds': round(time.time() - t0)}
     if a.scene == 'robot':
-        res['lidar'] = {**LIDAR, 'centre_x_mm': round(obstacles[0]['x'], 1), 'top_above_tm_mm': a.top, 'base_above_tm_mm': round(a.top - LIDAR['h'], 1)}
+        res['lidar'] = {**LIDAR, 'centre_x_mm': round(obstacles[0]['x'], 1), 'top_above_tm_mm': a.top, 'base_above_tm_mm': round(a.top - LIDAR['h'], 1),
+                        'gap_to_bumper_mm': round(a.x - LIDAR['d'] / 2 - BUMPER_R, 2),
+                        'x_source': 'LIDAR_TO_PAN, the body\'s cad/body_params.py (docs/body-plan.md 1.5)' if a.x == LIDAR_TO_PAN else '--x'}
         if a.map:
             res['placement_map'] = placement_map(T, clouds, a.margin)
     name = 'lidar' if a.scene == 'robot' else 'box'

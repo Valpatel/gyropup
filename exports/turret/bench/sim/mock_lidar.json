@@ -20,17 +20,20 @@
   }
  ],
  "readings": {
+  "table_source": "exports/turret/lidar/lidar.json firmware_table",
+  "lidar_centre_ahead_mm": 143.0,
+  "lidar_top_above_tm_mm": 41.7,
   "rows": [
    {
     "pan_deg": 0,
-    "tilt_deg": -16.0,
-    "table_min_deg": -16.0,
+    "tilt_deg": -16.52,
+    "table_min_deg": -16.5,
     "clear": true
    },
    {
     "pan_deg": 10,
-    "tilt_deg": -16.0,
-    "table_min_deg": -16.0,
+    "tilt_deg": -16.52,
+    "table_min_deg": -16.5,
     "clear": true
    },
    {
@@ -41,8 +44,8 @@
    },
    {
     "pan_deg": 30,
-    "tilt_deg": -23.38,
-    "table_min_deg": -23.5,
+    "tilt_deg": -22.94,
+    "table_min_deg": -23.0,
     "clear": true
    },
    {
@@ -221,8 +224,8 @@
    },
    {
     "pan_deg": 330,
-    "tilt_deg": -23.29,
-    "table_min_deg": -23.5,
+    "tilt_deg": -22.85,
+    "table_min_deg": -23.0,
     "clear": true
    },
    {
@@ -233,8 +236,8 @@
    },
    {
     "pan_deg": 350,
-    "tilt_deg": -16.0,
-    "table_min_deg": -16.0,
+    "tilt_deg": -16.52,
+    "table_min_deg": -16.5,
     "clear": true
    }
   ],
@@ -244,7 +247,7 @@
  "sim": {
   "seed": 1068,
   "simulated_s": 47.8,
-  "wall_s": 1.5,
+  "wall_s": 3.3,
   "stand_ins": [
    "clear_0",
    "clear_10",

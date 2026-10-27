@@ -138,6 +138,18 @@ PULSE_GAP_S = 0.004            # no edge for 4 ms is a release: zero throttle (A
 
 FPS = 0.3048                   # m/s per fps
 
+# ---------------------------------------------------------------- the robot's depression table (mount 'robot')
+# cad/turret_lidar.py's firmware_table for the VLP-16 143 mm ahead of the pan axis with its top 41.7 mm above the TM
+# face (exports/turret/lidar/lidar.json, 2026-10-27; the 143 is the body's LIDAR_TO_PAN, docs/body-plan.md 1.5): the
+# rows that limit the depression and a full-range row either side, which clamp exactly as the file's 73 rows do (the
+# firmware interpolates between rows). A Config with mount 'robot' and no table loaded uses it, so the robot is never
+# without one; a table loaded over CAN (host.py --mount robot sends the file's rows) replaces it.
+ROBOT_DEPRESSION = ((-35.0, -25.0), (-30.0, -23.0), (-25.0, -19.5), (-20.0, -18.0), (-15.0, -17.0), (-10.0, -16.5),
+                    (-5.0, -16.5), (0.0, -16.5), (5.0, -16.5), (10.0, -16.5), (15.0, -17.0), (20.0, -18.0),
+                    (25.0, -19.5), (30.0, -23.0), (35.0, -25.0))
+ROBOT_DEPRESSION_FOR = {'lidar_to_pan_mm': 143.0, 'lidar_top_above_tm_mm': 41.7, 'margin_mm': 10.0,
+                        'file': 'exports/turret/lidar/lidar.json'}
+
 
 def set_rpm(fps: float, tyre_mm: float, launch_ratio: float = LAUNCH_RATIO) -> float:
     """The flywheel speed for a ball speed: rpm = (v_set / ratio) x 60 / (pi x D)."""
@@ -168,10 +180,12 @@ class Config:
         return set_rpm(self.set_fps(fps), self.tyre_mm, self.launch_ratio)
 
     def min_tilt(self, pan_deg: float) -> float:
-        """The deepest depression allowed at this pan: the table interpolated, rounded toward safety (up, 0.1 deg)."""
-        if not self.depression:
+        """The deepest depression allowed at this pan: the table interpolated, rounded toward safety (up, 0.1 deg).
+        With no table loaded, mount 'robot' holds ROBOT_DEPRESSION and the other mounts the full range."""
+        table = self.depression or (ROBOT_DEPRESSION if self.mount == 'robot' else ())
+        if not table:
             return TILT_MIN_DEG
-        rows = sorted(((p % 360.0), m) for p, m in self.depression)
+        rows = sorted(((p % 360.0), m) for p, m in table)
         p = pan_deg % 360.0
         ext = [(rows[-1][0] - 360.0, rows[-1][1])] + rows + [(rows[0][0] + 360.0, rows[0][1])]
         for (p0, m0), (p1, m1) in zip(ext, ext[1:]):

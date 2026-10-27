@@ -4,7 +4,7 @@
   {
    "name": "VLP-16",
    "kind": "cyl",
-   "x": 147.65,
+   "x": 143.0,
    "y": 0.0,
    "r": 51.65,
    "z0": -30.0,
@@ -21,35 +21,35 @@
  "turret": {
   "tilt_axis_above_tm_mm": 140.0,
   "ball_path_above_tm_mm": 125,
-  "muzzle_ahead_of_pan_axis_mm": 155.0,
+  "muzzle_ahead_of_pan_axis_mm": 147.0,
   "tilt_range_deg": [
    -25.0,
    0.0
   ]
  },
  "fixed_parts_to_obstacles_mm": {
-  "pan_base / VLP-16": 10.0,
-  "pan_pinion / VLP-16": 134.8,
-  "bumper_ring / VLP-16": 10.0,
-  "ring_carrier / VLP-16": 63.8,
-  "pan_servo / VLP-16": 136.3,
-  "pan_bearing / VLP-16": 63.5,
-  "pan_clamp / VLP-16": 47.3,
-  "slip_ring / VLP-16": 73.8,
-  "base_board / VLP-16": 48.0,
-  "index_magnet / VLP-16": 58.9,
-  "dt_receptacle / VLP-16": 85.9
+  "pan_base / VLP-16": 19.4,
+  "pan_pinion / VLP-16": 130.1,
+  "bumper_ring / VLP-16": 5.4,
+  "ring_carrier / VLP-16": 59.1,
+  "pan_servo / VLP-16": 131.7,
+  "pan_bearing / VLP-16": 58.9,
+  "pan_clamp / VLP-16": 42.7,
+  "slip_ring / VLP-16": 69.1,
+  "base_board / VLP-16": 43.4,
+  "index_magnet / VLP-16": 54.2,
+  "dt_receptacle / VLP-16": 81.6
  },
  "limited_pan_window_deg": [
   -26.0,
   26.0
  ],
  "worst": {
-  "pan": -6.0,
-  "max_depression_deg": -16.0,
+  "pan": -8.0,
+  "max_depression_deg": -16.5,
   "closest_at_limit": [
    "ball path / VLP-16",
-   11.8
+   11.7
   ]
  },
  "firmware_table": [
@@ -175,7 +175,7 @@
   },
   {
    "pan_deg": -30,
-   "min_tilt_deg": -23.5
+   "min_tilt_deg": -23.0
   },
   {
    "pan_deg": -25,
@@ -187,31 +187,31 @@
   },
   {
    "pan_deg": -15,
-   "min_tilt_deg": -16.5
+   "min_tilt_deg": -17.0
   },
   {
    "pan_deg": -10,
-   "min_tilt_deg": -16.0
+   "min_tilt_deg": -16.5
   },
   {
    "pan_deg": -5,
-   "min_tilt_deg": -16.0
+   "min_tilt_deg": -16.5
   },
   {
    "pan_deg": 0,
-   "min_tilt_deg": -16.0
+   "min_tilt_deg": -16.5
   },
   {
    "pan_deg": 5,
-   "min_tilt_deg": -16.0
+   "min_tilt_deg": -16.5
   },
   {
    "pan_deg": 10,
-   "min_tilt_deg": -16.0
+   "min_tilt_deg": -16.5
   },
   {
    "pan_deg": 15,
-   "min_tilt_deg": -16.5
+   "min_tilt_deg": -17.0
   },
   {
    "pan_deg": 20,
@@ -223,7 +223,7 @@
   },
   {
    "pan_deg": 30,
-   "min_tilt_deg": -23.5
+   "min_tilt_deg": -23.0
   },
   {
    "pan_deg": 35,
@@ -353,7 +353,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    200.8
+    196.4
    ]
   },
   {
@@ -361,7 +361,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    200.7
+    196.4
    ]
   },
   {
@@ -369,7 +369,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    200.6
+    196.2
    ]
   },
   {
@@ -377,7 +377,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    200.4
+    196.0
    ]
   },
   {
@@ -385,7 +385,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    200.1
+    195.8
    ]
   },
   {
@@ -393,7 +393,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    199.7
+    195.4
    ]
   },
   {
@@ -401,7 +401,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    199.3
+    194.9
    ]
   },
   {
@@ -409,7 +409,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    198.8
+    194.4
    ]
   },
   {
@@ -417,7 +417,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    198.2
+    193.8
    ]
   },
   {
@@ -425,7 +425,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    197.5
+    193.1
    ]
   },
   {
@@ -433,7 +433,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    196.8
+    192.3
    ]
   },
   {
@@ -441,7 +441,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    196.0
+    191.5
    ]
   },
   {
@@ -449,7 +449,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    195.1
+    190.6
    ]
   },
   {
@@ -457,7 +457,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    194.1
+    189.7
    ]
   },
   {
@@ -465,7 +465,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    193.1
+    188.6
    ]
   },
   {
@@ -473,7 +473,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    192.0
+    187.5
    ]
   },
   {
@@ -481,7 +481,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    190.8
+    186.3
    ]
   },
   {
@@ -489,7 +489,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    189.6
+    185.1
    ]
   },
   {
@@ -497,7 +497,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    188.3
+    183.8
    ]
   },
   {
@@ -505,7 +505,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    186.9
+    182.4
    ]
   },
   {
@@ -513,7 +513,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    185.5
+    180.9
    ]
   },
   {
@@ -521,7 +521,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    183.9
+    179.4
    ]
   },
   {
@@ -529,7 +529,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    182.4
+    177.8
    ]
   },
   {
@@ -537,7 +537,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    180.7
+    176.2
    ]
   },
   {
@@ -545,7 +545,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    178.9
+    174.4
    ]
   },
   {
@@ -553,7 +553,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    177.1
+    172.7
    ]
   },
   {
@@ -561,7 +561,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    175.1
+    170.8
    ]
   },
   {
@@ -569,7 +569,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    173.2
+    168.9
    ]
   },
   {
@@ -577,7 +577,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    171.1
+    166.9
    ]
   },
   {
@@ -585,7 +585,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    169.0
+    164.8
    ]
   },
   {
@@ -593,7 +593,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    166.8
+    162.7
    ]
   },
   {
@@ -601,7 +601,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    164.6
+    160.4
    ]
   },
   {
@@ -609,7 +609,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    162.3
+    158.2
    ]
   },
   {
@@ -617,7 +617,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    159.9
+    155.8
    ]
   },
   {
@@ -625,7 +625,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    157.5
+    153.4
    ]
   },
   {
@@ -633,7 +633,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    155.0
+    151.0
    ]
   },
   {
@@ -641,7 +641,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    152.4
+    148.4
    ]
   },
   {
@@ -649,7 +649,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    149.8
+    145.9
    ]
   },
   {
@@ -657,7 +657,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    147.1
+    143.2
    ]
   },
   {
@@ -665,7 +665,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    144.4
+    140.5
    ]
   },
   {
@@ -673,7 +673,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    141.6
+    137.8
    ]
   },
   {
@@ -681,7 +681,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    138.7
+    134.9
    ]
   },
   {
@@ -689,7 +689,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    135.8
+    132.0
    ]
   },
   {
@@ -697,7 +697,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    132.8
+    129.1
    ]
   },
   {
@@ -705,7 +705,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    129.7
+    126.1
    ]
   },
   {
@@ -713,7 +713,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    126.6
+    123.0
    ]
   },
   {
@@ -721,7 +721,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    123.5
+    119.9
    ]
   },
   {
@@ -729,7 +729,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    120.3
+    116.7
    ]
   },
   {
@@ -737,7 +737,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    117.0
+    113.5
    ]
   },
   {
@@ -745,7 +745,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    113.7
+    110.3
    ]
   },
   {
@@ -753,7 +753,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    110.3
+    107.0
    ]
   },
   {
@@ -761,7 +761,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    106.9
+    103.6
    ]
   },
   {
@@ -769,7 +769,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    103.5
+    100.1
    ]
   },
   {
@@ -777,7 +777,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    100.0
+    96.7
    ]
   },
   {
@@ -785,7 +785,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    96.4
+    93.2
    ]
   },
   {
@@ -793,7 +793,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    92.8
+    89.6
    ]
   },
   {
@@ -801,7 +801,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    89.1
+    86.0
    ]
   },
   {
@@ -809,7 +809,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    85.4
+    82.4
    ]
   },
   {
@@ -817,7 +817,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    81.7
+    78.7
    ]
   },
   {
@@ -825,7 +825,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    77.9
+    75.0
    ]
   },
   {
@@ -833,7 +833,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    74.1
+    71.2
    ]
   },
   {
@@ -841,7 +841,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    70.3
+    67.4
    ]
   },
   {
@@ -849,7 +849,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    66.3
+    63.6
    ]
   },
   {
@@ -857,7 +857,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    62.4
+    59.8
    ]
   },
   {
@@ -865,7 +865,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    58.5
+    55.9
    ]
   },
   {
@@ -873,7 +873,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    54.5
+    52.0
    ]
   },
   {
@@ -881,7 +881,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    50.6
+    48.1
    ]
   },
   {
@@ -889,7 +889,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    46.6
+    44.2
    ]
   },
   {
@@ -897,7 +897,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    42.6
+    40.4
    ]
   },
   {
@@ -905,7 +905,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    38.6
+    36.5
    ]
   },
   {
@@ -913,7 +913,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    34.4
+    32.7
    ]
   },
   {
@@ -921,7 +921,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    30.3
+    28.9
    ]
   },
   {
@@ -929,7 +929,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    26.2
+    25.3
    ]
   },
   {
@@ -937,7 +937,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    22.2
+    21.9
    ]
   },
   {
@@ -945,31 +945,31 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    18.5
+    18.7
    ]
   },
   {
    "pan": -30.0,
    "max_depression_deg": -25.0,
    "closest_at_limit": [
-    "barrel / VLP-16",
-    15.0
+    "ball path / VLP-16",
+    15.1
    ]
   },
   {
    "pan": -28.0,
    "max_depression_deg": -25.0,
    "closest_at_limit": [
-    "barrel / VLP-16",
-    11.9
+    "ball path / VLP-16",
+    10.9
    ]
   },
   {
    "pan": -26.0,
-   "max_depression_deg": -23.5,
+   "max_depression_deg": -23.0,
    "closest_at_limit": [
     "ball path / VLP-16",
-    10.3
+    10.9
    ]
   },
   {
@@ -985,7 +985,7 @@
    "max_depression_deg": -20.5,
    "closest_at_limit": [
     "ball path / VLP-16",
-    10.4
+    10.6
    ]
   },
   {
@@ -993,15 +993,15 @@
    "max_depression_deg": -19.5,
    "closest_at_limit": [
     "ball path / VLP-16",
-    10.3
+    10.8
    ]
   },
   {
    "pan": -18.0,
-   "max_depression_deg": -18.5,
+   "max_depression_deg": -19.0,
    "closest_at_limit": [
     "ball path / VLP-16",
-    10.9
+    10.2
    ]
   },
   {
@@ -1009,7 +1009,7 @@
    "max_depression_deg": -18.0,
    "closest_at_limit": [
     "ball path / VLP-16",
-    10.7
+    11.3
    ]
   },
   {
@@ -1017,23 +1017,23 @@
    "max_depression_deg": -17.5,
    "closest_at_limit": [
     "ball path / VLP-16",
-    10.5
+    11.6
    ]
   },
   {
    "pan": -12.0,
-   "max_depression_deg": -17.0,
+   "max_depression_deg": -17.5,
    "closest_at_limit": [
     "ball path / VLP-16",
-    11.0
+    10.0
    ]
   },
   {
    "pan": -10.0,
-   "max_depression_deg": -16.5,
+   "max_depression_deg": -17.0,
    "closest_at_limit": [
     "ball path / VLP-16",
-    11.5
+    10.8
    ]
   },
   {
@@ -1041,63 +1041,63 @@
    "max_depression_deg": -16.5,
    "closest_at_limit": [
     "ball path / VLP-16",
-    10.5
+    11.7
    ]
   },
   {
    "pan": -6.0,
-   "max_depression_deg": -16.0,
-   "closest_at_limit": [
-    "ball path / VLP-16",
-    11.8
-   ]
-  },
-  {
-   "pan": -4.0,
-   "max_depression_deg": -16.0,
-   "closest_at_limit": [
-    "ball path / VLP-16",
-    11.5
-   ]
-  },
-  {
-   "pan": -2.0,
-   "max_depression_deg": -16.0,
-   "closest_at_limit": [
-    "ball path / VLP-16",
-    11.0
-   ]
-  },
-  {
-   "pan": 0.0,
-   "max_depression_deg": -16.0,
+   "max_depression_deg": -16.5,
    "closest_at_limit": [
     "ball path / VLP-16",
     10.9
    ]
   },
   {
-   "pan": 2.0,
-   "max_depression_deg": -16.0,
+   "pan": -4.0,
+   "max_depression_deg": -16.5,
    "closest_at_limit": [
     "ball path / VLP-16",
-    11.0
+    10.4
+   ]
+  },
+  {
+   "pan": -2.0,
+   "max_depression_deg": -16.5,
+   "closest_at_limit": [
+    "ball path / VLP-16",
+    10.1
+   ]
+  },
+  {
+   "pan": 0.0,
+   "max_depression_deg": -16.5,
+   "closest_at_limit": [
+    "ball path / VLP-16",
+    10.1
+   ]
+  },
+  {
+   "pan": 2.0,
+   "max_depression_deg": -16.5,
+   "closest_at_limit": [
+    "ball path / VLP-16",
+    10.1
    ]
   },
   {
    "pan": 4.0,
-   "max_depression_deg": -16.0,
+   "max_depression_deg": -16.5,
    "closest_at_limit": [
     "ball path / VLP-16",
-    11.5
+    10.4
    ]
   },
   {
    "pan": 6.0,
-   "max_depression_deg": -16.0,
+   "max_depression_deg": -16.5,
    "closest_at_limit": [
     "ball path / VLP-16",
-    11.8
+    10.9
    ]
   },
   {
@@ -1105,23 +1105,23 @@
    "max_depression_deg": -16.5,
    "closest_at_limit": [
     "ball path / VLP-16",
-    10.5
+    11.7
    ]
   },
   {
    "pan": 10.0,
-   "max_depression_deg": -16.5,
+   "max_depression_deg": -17.0,
    "closest_at_limit": [
     "ball path / VLP-16",
-    11.5
+    10.8
    ]
   },
   {
    "pan": 12.0,
-   "max_depression_deg": -17.0,
+   "max_depression_deg": -17.5,
    "closest_at_limit": [
     "ball path / VLP-16",
-    11.0
+    10.0
    ]
   },
   {
@@ -1129,7 +1129,7 @@
    "max_depression_deg": -17.5,
    "closest_at_limit": [
     "ball path / VLP-16",
-    10.5
+    11.6
    ]
   },
   {
@@ -1137,15 +1137,15 @@
    "max_depression_deg": -18.0,
    "closest_at_limit": [
     "ball path / VLP-16",
-    10.7
+    11.3
    ]
   },
   {
    "pan": 18.0,
-   "max_depression_deg": -18.5,
+   "max_depression_deg": -19.0,
    "closest_at_limit": [
     "ball path / VLP-16",
-    10.9
+    10.2
    ]
   },
   {
@@ -1153,7 +1153,7 @@
    "max_depression_deg": -19.5,
    "closest_at_limit": [
     "ball path / VLP-16",
-    10.3
+    10.8
    ]
   },
   {
@@ -1161,7 +1161,7 @@
    "max_depression_deg": -20.5,
    "closest_at_limit": [
     "ball path / VLP-16",
-    10.4
+    10.6
    ]
   },
   {
@@ -1174,26 +1174,26 @@
   },
   {
    "pan": 26.0,
-   "max_depression_deg": -23.5,
+   "max_depression_deg": -23.0,
    "closest_at_limit": [
     "ball path / VLP-16",
-    10.3
+    10.9
    ]
   },
   {
    "pan": 28.0,
    "max_depression_deg": -25.0,
    "closest_at_limit": [
-    "barrel / VLP-16",
-    11.9
+    "ball path / VLP-16",
+    10.9
    ]
   },
   {
    "pan": 30.0,
    "max_depression_deg": -25.0,
    "closest_at_limit": [
-    "barrel / VLP-16",
-    15.0
+    "ball path / VLP-16",
+    15.1
    ]
   },
   {
@@ -1201,7 +1201,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    18.5
+    18.7
    ]
   },
   {
@@ -1209,7 +1209,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    22.2
+    21.9
    ]
   },
   {
@@ -1217,7 +1217,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    26.2
+    25.3
    ]
   },
   {
@@ -1225,7 +1225,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    30.3
+    28.9
    ]
   },
   {
@@ -1233,7 +1233,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    34.4
+    32.7
    ]
   },
   {
@@ -1241,7 +1241,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    38.6
+    36.5
    ]
   },
   {
@@ -1249,7 +1249,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    42.6
+    40.4
    ]
   },
   {
@@ -1257,7 +1257,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    46.6
+    44.2
    ]
   },
   {
@@ -1265,7 +1265,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    50.6
+    48.1
    ]
   },
   {
@@ -1273,7 +1273,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    54.5
+    52.0
    ]
   },
   {
@@ -1281,7 +1281,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    58.5
+    55.9
    ]
   },
   {
@@ -1289,7 +1289,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    62.4
+    59.8
    ]
   },
   {
@@ -1297,7 +1297,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    66.3
+    63.6
    ]
   },
   {
@@ -1305,7 +1305,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    70.3
+    67.4
    ]
   },
   {
@@ -1313,7 +1313,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    74.1
+    71.2
    ]
   },
   {
@@ -1321,7 +1321,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    77.9
+    75.0
    ]
   },
   {
@@ -1329,7 +1329,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    81.7
+    78.7
    ]
   },
   {
@@ -1337,7 +1337,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    85.4
+    82.4
    ]
   },
   {
@@ -1345,7 +1345,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    89.1
+    86.0
    ]
   },
   {
@@ -1353,7 +1353,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    92.8
+    89.6
    ]
   },
   {
@@ -1361,7 +1361,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    96.4
+    93.2
    ]
   },
   {
@@ -1369,7 +1369,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    100.0
+    96.7
    ]
   },
   {
@@ -1377,7 +1377,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    103.5
+    100.1
    ]
   },
   {
@@ -1385,7 +1385,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    106.9
+    103.6
    ]
   },
   {
@@ -1393,7 +1393,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    110.3
+    107.0
    ]
   },
   {
@@ -1401,7 +1401,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    113.7
+    110.3
    ]
   },
   {
@@ -1409,7 +1409,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    117.0
+    113.5
    ]
   },
   {
@@ -1417,7 +1417,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    120.3
+    116.7
    ]
   },
   {
@@ -1425,7 +1425,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    123.5
+    119.9
    ]
   },
   {
@@ -1433,7 +1433,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    126.6
+    123.0
    ]
   },
   {
@@ -1441,7 +1441,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    129.7
+    126.1
    ]
   },
   {
@@ -1449,7 +1449,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    132.8
+    129.1
    ]
   },
   {
@@ -1457,7 +1457,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    135.8
+    132.0
    ]
   },
   {
@@ -1465,7 +1465,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    138.7
+    134.9
    ]
   },
   {
@@ -1473,7 +1473,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    141.6
+    137.8
    ]
   },
   {
@@ -1481,7 +1481,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    144.4
+    140.5
    ]
   },
   {
@@ -1489,7 +1489,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    147.1
+    143.2
    ]
   },
   {
@@ -1497,7 +1497,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    149.8
+    145.9
    ]
   },
   {
@@ -1505,7 +1505,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    152.4
+    148.4
    ]
   },
   {
@@ -1513,7 +1513,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    155.0
+    151.0
    ]
   },
   {
@@ -1521,7 +1521,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    157.5
+    153.4
    ]
   },
   {
@@ -1529,7 +1529,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    159.9
+    155.8
    ]
   },
   {
@@ -1537,7 +1537,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    162.3
+    158.2
    ]
   },
   {
@@ -1545,7 +1545,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    164.6
+    160.4
    ]
   },
   {
@@ -1553,7 +1553,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    166.8
+    162.7
    ]
   },
   {
@@ -1561,7 +1561,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    169.0
+    164.8
    ]
   },
   {
@@ -1569,7 +1569,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    171.1
+    166.9
    ]
   },
   {
@@ -1577,7 +1577,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    173.2
+    168.9
    ]
   },
   {
@@ -1585,7 +1585,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    175.1
+    170.8
    ]
   },
   {
@@ -1593,7 +1593,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    177.1
+    172.7
    ]
   },
   {
@@ -1601,7 +1601,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    178.9
+    174.4
    ]
   },
   {
@@ -1609,7 +1609,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    180.7
+    176.2
    ]
   },
   {
@@ -1617,7 +1617,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    182.4
+    177.8
    ]
   },
   {
@@ -1625,7 +1625,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    183.9
+    179.4
    ]
   },
   {
@@ -1633,7 +1633,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    185.5
+    180.9
    ]
   },
   {
@@ -1641,7 +1641,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    186.9
+    182.4
    ]
   },
   {
@@ -1649,7 +1649,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    188.3
+    183.8
    ]
   },
   {
@@ -1657,7 +1657,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    189.6
+    185.1
    ]
   },
   {
@@ -1665,7 +1665,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    190.8
+    186.3
    ]
   },
   {
@@ -1673,7 +1673,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    192.0
+    187.5
    ]
   },
   {
@@ -1681,7 +1681,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    193.1
+    188.6
    ]
   },
   {
@@ -1689,7 +1689,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    194.1
+    189.7
    ]
   },
   {
@@ -1697,7 +1697,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    195.1
+    190.6
    ]
   },
   {
@@ -1705,7 +1705,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    196.0
+    191.5
    ]
   },
   {
@@ -1713,7 +1713,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    196.8
+    192.3
    ]
   },
   {
@@ -1721,7 +1721,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    197.5
+    193.1
    ]
   },
   {
@@ -1729,7 +1729,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    198.2
+    193.8
    ]
   },
   {
@@ -1737,7 +1737,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    198.8
+    194.4
    ]
   },
   {
@@ -1745,7 +1745,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    199.3
+    194.9
    ]
   },
   {
@@ -1753,7 +1753,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    199.7
+    195.4
    ]
   },
   {
@@ -1761,7 +1761,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    200.1
+    195.8
    ]
   },
   {
@@ -1769,7 +1769,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    200.4
+    196.0
    ]
   },
   {
@@ -1777,7 +1777,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    200.6
+    196.2
    ]
   },
   {
@@ -1785,7 +1785,7 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    200.7
+    196.4
    ]
   },
   {
@@ -1793,26 +1793,28 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    200.8
+    196.4
    ]
   }
  ],
  "points": {
-  "sampled": 4890982,
+  "sampled": 5202257,
   "near_enough_to_check": {
-   "barrel": 42370
+   "barrel": 23490
   }
  },
  "how": "surface samples of every panning and tilting part (~1.2 mm apart), the ones that can come within the margin at some pose kept (a lower bound over pan and tilt), and the ball path; the limit is the deepest tilt in 0.5 deg steps that keeps the margin",
- "seconds": 196,
+ "seconds": 149,
  "lidar": {
   "d": 103.3,
   "h": 71.7,
   "model": "Velodyne VLP-16 (Puck)",
   "source": "VLP-16 user manual: \u00d8103.3 x 71.7 mm",
-  "centre_x_mm": 147.7,
+  "centre_x_mm": 143.0,
   "top_above_tm_mm": 41.7,
-  "base_above_tm_mm": -30.0
+  "base_above_tm_mm": -30.0,
+  "gap_to_bumper_mm": 5.35,
+  "x_source": "LIDAR_TO_PAN, the body's cad/body_params.py (docs/body-plan.md 1.5)"
  },
  "placement_map": {
   "x_mm": [
@@ -1877,7 +1879,7 @@
     -25.0,
     -24.0,
     -22.0,
-    -21.0,
+    -20.0,
     -19.0,
     -18.0
    ],
@@ -1906,7 +1908,7 @@
     -22.0,
     -20.0,
     -18.0,
-    -17.0,
+    -16.0,
     -15.0,
     -14.0,
     -13.0
@@ -1916,7 +1918,7 @@
     -19.0,
     -17.0,
     -16.0,
-    -15.0,
+    -14.0,
     -13.0,
     -12.0,
     -11.0
@@ -1926,28 +1928,28 @@
     -17.0,
     -15.0,
     -14.0,
-    -13.0,
+    -12.0,
     -11.0,
-    -11.0,
+    -10.0,
     -10.0
    ],
    [
     -16.0,
     -14.0,
     -13.0,
-    -12.0,
+    -11.0,
     -10.0,
-    -10.0,
+    -9.0,
     -9.0,
     -8.0
    ],
    [
     -13.0,
-    -12.0,
+    -11.0,
     -10.0,
     -9.0,
     -8.0,
-    -8.0,
+    -7.0,
     -7.0,
     -6.0
    ],
@@ -1957,7 +1959,7 @@
     -8.0,
     -7.0,
     -6.0,
-    -6.0,
+    -5.0,
     -5.0,
     -4.0
    ],
@@ -1965,7 +1967,7 @@
     -7.0,
     -6.0,
     -5.0,
-    -5.0,
+    -4.0,
     -4.0,
     -3.0,
     -3.0,

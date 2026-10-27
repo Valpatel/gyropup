@@ -244,6 +244,8 @@ def main():
     import turret_orders                                  # the order sheets from bom.json and the catalogue
     summary['orders'] = {k: v for k, v in turret_orders.write(OUT / 'bom.json').items() if k in ('grand_total_usd', 'lines', 'sellers')}
     (OUT / 'bench.json').write_text(json.dumps(summary, indent=1) + '\n')
+    import turret_mount                                   # the turret's interface for the body: exports/turret/mount.json
+    turret_mount.write(T)
     sl = summary.get('sliced') or {}
     print(f"bench turret: {summary['printed_g'] / 1000:.2f} kg printed, ~{summary['print_hours']} h"
           + (f"; sliced {sl['grams'] / 1000:.2f} kg, {sl['hours']} h" if sl.get('grams') else '') + f"; stand {ts.W:.0f} x {ts.D:.0f} x {ts.H:.0f} mm"
