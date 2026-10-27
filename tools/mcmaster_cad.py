@@ -6,6 +6,11 @@ the process is in cad-agent's skills/mcmaster-parts/SKILL.md).
     .venv/bin/python tools/mcmaster_cad.py --catalog            # every item in catalog/hardware.json
     .venv/bin/python tools/mcmaster_cad.py --catalog --only screw_m5x20 knee_pin
     .venv/bin/python tools/mcmaster_cad.py 91290A242 --kind screw   # one part, no catalogue entry
+    .venv/bin/python tools/mcmaster_cad.py --catalog --file catalog/turret.json --pages-only   # read pages, no CAD
+
+--pages-only reads the product pages without asking for the CAD (McMaster-Carr asks for a login before CAD downloads):
+the item gets the page's price and specification table and cad.pending, to finish with a CAD download later. In a
+catalogue that also lists other vendors' parts (catalog/turret.json), only the McMaster-Carr items are touched.
 
 catalog/hardware.json is a list of catalogue items (catalog/SCHEMA.md). Each item names its part (`model` = the
 McMaster part number), `key` (our name for it), `cad.kind` (the frame convention), `used_for`, `qty_per_robot` and
@@ -37,6 +42,30 @@ VENDOR = R / 'references/vendor/mcmaster'
 CATEGORY = {'bearing': 'bearing', 'rod_end': 'bearing', 'grommet': 'wiring'}      # everything else: fastener
 
 
+PENDING = ("STEP not downloaded yet: McMaster-Carr asks for a login before CAD downloads (the product page itself reads "
+           "without one). Finish with .venv/bin/python tools/mcmaster_cad.py --catalog --file {file} --only {key} once "
+           "logged in, or save the STEP from a logged-in browser as references/vendor/mcmaster/{pn}/{pn}.step and run the "
+           "same command.")
+
+
+def read_page(pn: str, browser, force: bool = False, choose=None):
+    """The product page only (no CAD): <PN>.page.json, cached. Returns the page."""
+    folder = VENDOR / pn
+    page_file = folder / f'{pn}.page.json'
+    if force or not page_file.exists():
+        s = browser()
+        page = s.read(pn)
+        if choose:
+            options = page['options']
+            s.choose(choose)
+            page = s.read(pn, reload=False)
+            page['options_offered'], page['chosen'] = options, list(choose)
+        folder.mkdir(parents=True, exist_ok=True)
+        page_file.write_text(json.dumps(page, indent=1, ensure_ascii=False) + '\n')
+        mc.write_source(folder, pn, page.get('description', ''))
+    return json.loads(page_file.read_text())
+
+
 def refresh(pn: str, kind: str, browser, force: bool = False, choose=None):
     """Download (unless already here) and normalise one part. Returns (page, info, cad path relative to the repo).
     ``browser()`` returns the open Session; it is only called when a page is actually needed."""
@@ -51,8 +80,9 @@ def refresh(pn: str, kind: str, browser, force: bool = False, choose=None):
     return page, info, str(norm.relative_to(R))
 
 
-def to_item(item: dict, page: dict, info: dict, cad: str) -> dict:
-    """Our catalogue item (catalog/SCHEMA.md) from the toolkit's entry for the part."""
+def to_item(item: dict, page: dict, info, cad, catalog: Path = CATALOG) -> dict:
+    """Our catalogue item (catalog/SCHEMA.md) from the toolkit's entry for the part. info and cad are None when only
+    the page was read: the item then carries cad.pending."""
     kind = item.get('cad', {}).get('kind') or item.get('kind')
     e = mc.catalog_entry(page, info, cad=cad)
     pack, pack_price = e['pack_qty'] or 1, e['price_usd']
@@ -68,12 +98,18 @@ def to_item(item: dict, page: dict, info: dict, cad: str) -> dict:
         'buy': [{'seller': 'McMaster-Carr', 'url': page['url'], 'in_stock': None, 'ships_from': 'US'}],
         'specs': specs,
         'cad': {'file': cad, 'kind': kind, 'frame': mc.FRAMES[kind], 'available': True, 'step_url': page['url'],
-                'bbox_mm': info['bbox_mm'], 'volume_mm3': info['volume_mm3']},
+                'bbox_mm': info['bbox_mm'] if info else None, 'volume_mm3': info['volume_mm3'] if info else None},
         'frame': mc.FRAMES[kind],
         'sources': [page['url']], 'confidence': 'product page',
         'used_for': item.get('used_for'), 'qty_per_robot': item.get('qty_per_robot'),
     }
-    for k in ('choose', 'notes'):
+    if not info:
+        out['cad']['pending'] = PENDING.format(file=str(catalog.relative_to(R)) if catalog.is_absolute() else str(catalog),
+                                               key=item.get('key'), pn=page['pn'])
+        if out['specs'].get('mass_g') is None and item.get('specs', {}).get('mass_g') is not None:
+            out['specs']['mass_g'] = item['specs']['mass_g']
+            out['specs']['mass_basis'] = item['specs'].get('mass_basis', 'estimate')
+    for k in ('choose', 'notes', 'alternates'):
         if item.get(k):
             out[k] = item[k]
     if page.get('options'):
@@ -89,6 +125,8 @@ def main(argv=None) -> int:
     ap.add_argument('--only', nargs='+', metavar='KEY', help='with --catalog: just these keys')
     ap.add_argument('--force', action='store_true', help='download again even when the STEP is here')
     ap.add_argument('--delay', type=float, default=3.0, help='seconds between product pages (default 3)')
+    ap.add_argument('--file', default=str(CATALOG), help='the catalogue to refresh (default catalog/hardware.json)')
+    ap.add_argument('--pages-only', action='store_true', help='read the product pages only; no CAD (records cad.pending)')
     a = ap.parse_args(argv)
     if not a.catalog and not a.pns:
         ap.error('give part numbers (with --kind) or --catalog')
@@ -108,22 +146,29 @@ def main(argv=None) -> int:
             page, info, cad = refresh(pn.upper(), a.kind, browser, a.force)
             print(f"{pn}: {page['description']} | {page['price_text']} | bbox {info['bbox_mm']['size']} -> {cad}")
         if a.catalog:
-            items = json.loads(CATALOG.read_text())
+            catalog = Path(a.file)
+            catalog = catalog if catalog.is_absolute() else R / catalog
+            items = json.loads(catalog.read_text())
             for i, item in enumerate(items):
                 if a.only and item.get('key') not in a.only:
                     continue
+                if item.get('vendor') != 'McMaster-Carr':
+                    continue                                 # another vendor's part in a mixed catalogue
                 pn, kind = item['model'], item.get('cad', {}).get('kind') or item.get('kind')
                 try:
-                    page, info, cad = refresh(pn, kind, browser, a.force, item.get('choose'))
+                    if a.pages_only:
+                        page, info, cad = read_page(pn, browser, a.force, item.get('choose')), None, None
+                    else:
+                        page, info, cad = refresh(pn, kind, browser, a.force, item.get('choose'))
                 except mc.MissingDependency:
                     raise                                # no Playwright or no Chrome: say so once
                 except Exception as exc:                 # one bad part should not stop the others
                     print(f"{item.get('key')} ({pn}): FAILED {exc}", file=sys.stderr)
                     rc = 1
                     continue
-                items[i] = to_item(item, page, info, cad)
-                CATALOG.write_text(json.dumps(items, indent=1, ensure_ascii=False) + '\n')
-                print(f"{item.get('key')}: {pn} {page['description']} | {page['price_text']} | bbox {info['bbox_mm']['size']}")
+                items[i] = to_item(item, page, info, cad, catalog)
+                catalog.write_text(json.dumps(items, indent=1, ensure_ascii=False) + '\n')
+                print(f"{item.get('key')}: {pn} {page['description']} | {page['price_text']}" + (f" | bbox {info['bbox_mm']['size']}" if info else ' | page only'))
     return rc
 
 
