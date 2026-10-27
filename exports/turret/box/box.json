@@ -315,10 +315,10 @@
   },
   "tipping": {
    "total_kg": 3.35,
-   "com_height_mm": 142,
+   "com_height_mm": 145,
    "tip_angle_deg": 32,
-   "push_to_tip_n": 10.8,
-   "push_height_mm": 276,
+   "push_to_tip_n": 10.6,
+   "push_height_mm": 281,
    "note": "J501: 368 g printed (its slice report) + 1.0 kg Orin, carrier and cooler (est); a sideways push at the tilt axis that lifts the box off its narrow edge"
   },
   "overspeed": {
@@ -335,7 +335,7 @@
    "brake_to_5pct_ms": 48,
    "brake_tau_ms": 10.16
   },
-  "lid_screw": "M3 x 35 ISO 4762, tip at z 62 (as the J501's own M3 x 16)",
+  "lid_screw": "M3 x 40 ISO 4762, tip at z 62 (as the J501's own M3 x 16)",
   "too_big": []
  },
  "mechanics": {
@@ -459,20 +459,20 @@
      14.6
     ]
    ],
-   "from_height_m": 0.561,
-   "lands_m": 6.21,
+   "from_height_m": 0.566,
+   "lands_m": 6.24,
    "note": "a level shot from the bench (the box on a 0.3 m crate): [range m, time s, drop mm, speed m/s]; drag as a sphere, Cd 0.5"
   }
  },
  "masses_g": {
   "turret_with_balls": 1639,
-  "adapter": 342,
+  "adapter": 338,
   "j501_printed": 368.2,
   "j501_inside_est": 1000.0
  },
- "z_tm_mm": 136.0,
+ "z_tm_mm": 141.0,
  "j501": {
-  "revision": "0.8-thermal",
+  "revision": "0.9-g48r",
   "source": "/home/scubasonar/Code/j501-agx/cad/parameters.json"
  }
 }

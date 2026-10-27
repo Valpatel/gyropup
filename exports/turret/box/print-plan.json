@@ -26,16 +26,16 @@
    "material": "petg",
    "qty": 1,
    "size_mm": [
-    142,
-    142,
+    141,
+    122,
     35
    ],
    "fits": true,
    "placement": "straight",
-   "grams_each": 29,
-   "grams": 29,
-   "hours": 1.2,
-   "cost_usd": 0.41,
+   "grams_each": 25,
+   "grams": 25,
+   "hours": 1.0,
+   "cost_usd": 0.35,
    "infill": "2 mm walls, 40 % gyroid",
    "how": "PETG on its floor; 6 x M3 x 8 button heads up into the deck; foam tape under the hole rim"
   },
@@ -59,14 +59,14 @@
  },
  "by_material": {
   "petg": {
-   "grams": 261,
-   "hours": 10.5,
-   "cost_usd": 3.65,
+   "grams": 257,
+   "hours": 10.3,
+   "cost_usd": 3.59,
    "parts": 3
   }
  },
  "too_big": [],
- "total_hours": 10.5,
- "total_grams": 261,
+ "total_hours": 10.3,
+ "total_grams": 257,
  "note": "the turret's adapter on the J501 compute box; hours are rough"
 }
