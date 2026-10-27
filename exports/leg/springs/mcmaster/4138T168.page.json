@@ -1,0 +1,119 @@
+{
+ "pn": "4138T168",
+ "url": "https://www.mcmaster.com/4138T168/",
+ "final_url": "https://www.mcmaster.com/4138T168/",
+ "title": "Gas Spring",
+ "subtitle": "20 lbs. Force, 5/16\"-18 Thread Size, 18-1/2\" Extended Length",
+ "description": "Gas Spring, 20 lbs. Force, 5/16\"-18 Thread Size, 18-1/2\" Extended Length",
+ "price_text": "$31.93 each",
+ "price_usd": 31.93,
+ "pack_qty": 1,
+ "listed_weight_g": null,
+ "options": [],
+ "breadcrumbs": [
+  "Power Transmission",
+  "Springs and Shock Absorbers",
+  "Gas Springs",
+  "4138T168"
+ ],
+ "specs": {
+  "raw": {
+   "Extension Force": "20 lbf",
+   "Ball Stud Length": "1.05\"",
+   "Ball Stud Thread Length": "0.54\"",
+   "Ball Stud Thread Size": "5/16\"-18",
+   "Ball Stud Diameter": "10 mm",
+   "Ball Stud Material": "Zinc-Plated Steel",
+   "Extended Length": "18.5\"",
+   "Compressed Length": "10.74\"",
+   "Stroke Length": "7.76\"",
+   "Compression Force": "26 lbf",
+   "Maximum Cycles per Minute": "6 cpm",
+   "Maximum Cycles": "30,000",
+   "Body Diameter": "0.709\"",
+   "Body Material": "Steel",
+   "Rod Diameter": "0.315\"",
+   "Rod Thread Size": "M6",
+   "Rod Thread Pitch": "1 mm",
+   "Rod Material": "Nitride-Coated Steel",
+   "Removable End Fittings": "Yes",
+   "Temperature Range": "-13° F to 176° F",
+   "Ball Socket Length": "0.99\"",
+   "Ball Socket Width": "0.59\"",
+   "Ball Socket Material": "Zinc-Plated Steel",
+   "Force Mechanism": "Compressed Nitrogen Gas, Oil",
+   "Lockable": "No",
+   "Mounting Position": "Rod Down",
+   "Refillable": "No",
+   "Seal Material": "Rubber",
+   "Country of Origin": "China",
+   "DFARS Compliance": "Specialty Metals COTS-Exempt",
+   "Export Control Classification Number (ECCN)": "EAR99",
+   "REACH Compliance": "REACH (EC 1907/2006) (02/04/2026, 253 SVHC) Compliant",
+   "RoHS Compliance": "RoHS 3 (2015/863/EU) Compliant",
+   "Schedule B Number": "848790.0080",
+   "U.S.–Mexico–Canada Agreement (USMCA) Qualifying": "No"
+  },
+  "parsed": {
+   "Extension Force": {
+    "value": 88.964432,
+    "unit": "N"
+   },
+   "Ball Stud Length": {
+    "value": 26.67,
+    "unit": "mm"
+   },
+   "Ball Stud Thread Length": {
+    "value": 13.716,
+    "unit": "mm"
+   },
+   "Ball Stud Diameter": {
+    "value": 10.0,
+    "unit": "mm"
+   },
+   "Extended Length": {
+    "value": 469.9,
+    "unit": "mm"
+   },
+   "Compressed Length": {
+    "value": 272.796,
+    "unit": "mm"
+   },
+   "Stroke Length": {
+    "value": 197.104,
+    "unit": "mm"
+   },
+   "Compression Force": {
+    "value": 115.653762,
+    "unit": "N"
+   },
+   "Body Diameter": {
+    "value": 18.0086,
+    "unit": "mm"
+   },
+   "Rod Diameter": {
+    "value": 8.001,
+    "unit": "mm"
+   },
+   "Rod Thread Pitch": {
+    "value": 1.0,
+    "unit": "mm"
+   },
+   "Temperature Range": {
+    "min": -25.0,
+    "max": 80.0,
+    "unit": "degC"
+   },
+   "Ball Socket Length": {
+    "value": 25.146,
+    "unit": "mm"
+   },
+   "Ball Socket Width": {
+    "value": 14.986,
+    "unit": "mm"
+   }
+  }
+ },
+ "read": "2026-10-27",
+ "checked": "2026-10-27"
+}
