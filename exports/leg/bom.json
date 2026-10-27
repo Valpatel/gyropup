@@ -1,0 +1,213 @@
+{
+ "per_leg": [
+  {
+   "key": "robstride-rs-04",
+   "qty": 2,
+   "for": "the two leg motors, in the hip frame",
+   "vendor": "RobStride",
+   "part_number": "RS-04",
+   "name": null,
+   "mass_g_each": 1420,
+   "price_usd_each": 255.0
+  },
+  {
+   "key": "odrive-botwheel",
+   "qty": 1,
+   "for": "the wheel, on the wheel link's hub",
+   "vendor": "ODrive Robotics",
+   "part_number": "BotWheel (BW0124)",
+   "name": null,
+   "mass_g_each": 2200,
+   "price_usd_each": 134.5
+  },
+  {
+   "key": "bearing_61812",
+   "qty": 4,
+   "for": "support bearings round the two output adapters; two at the apex on the wheel link's hub",
+   "vendor": "McMaster-Carr",
+   "part_number": "6656K236",
+   "name": "Steel Ball Bearing, Steel, Shielded, Trade Number 6812-2Z, ABEC Rating 1",
+   "mass_g_each": 97.439,
+   "price_usd_each": 69.11,
+   "cad": true
+  },
+  {
+   "key": "bearing_6201",
+   "qty": 4,
+   "for": "two in each knee",
+   "vendor": "McMaster-Carr",
+   "part_number": "5972K42",
+   "name": "Steel Ball Bearing, Sealed, Trade No. 6201-2RS, for 12 mm Shaft Diameter",
+   "mass_g_each": 35.07,
+   "price_usd_each": 19.37,
+   "cad": false
+  },
+  {
+   "key": "circlip_60",
+   "qty": 1,
+   "for": "holds the apex 61812 on the wheel link's hub",
+   "vendor": "McMaster-Carr",
+   "part_number": "98541A174",
+   "name": "External Retaining Ring, for 60 mm OD, Black-Phosphate Spring Steel",
+   "mass_g_each": 13.65,
+   "price_usd_each": 3.05,
+   "cad": false
+  },
+  {
+   "key": "knee_pin",
+   "qty": 2,
+   "for": "knee shoulder screws, 12 mm x 90, M10 (cad/fivebar.py knee_pin_length)",
+   "vendor": "McMaster-Carr",
+   "part_number": "92981A411",
+   "name": "Alloy Steel Shoulder Screws, 12 mm Shoulder Diameter, 90 mm Shoulder Length, M10 x 1.5 mm Thread",
+   "mass_g_each": 104.13,
+   "price_usd_each": 8.02,
+   "cad": true
+  },
+  {
+   "key": "nut_m10_nyloc",
+   "qty": 2,
+   "for": "knee pins, in the upper links' pockets",
+   "vendor": "McMaster-Carr",
+   "part_number": "94645A220",
+   "name": "High-Strength Steel Nylon-Insert Locknut, Zinc Plated, M10 x 1.5 mm Thread Size",
+   "mass_g_each": 12.3,
+   "price_usd_each": 0.4632,
+   "cad": true
+  },
+  {
+   "key": "washer_m12_thin",
+   "qty": 4,
+   "for": "each side of each knee's bearing stack",
+   "vendor": "McMaster-Carr",
+   "part_number": "98689A118",
+   "name": "18-8 Stainless Steel Washer, Undersized, for M12 Screw Size, 13.0 mm ID, 20.0 mm OD",
+   "mass_g_each": 2.9,
+   "price_usd_each": 0.1371,
+   "cad": false
+  },
+  {
+   "key": "knee_spacer",
+   "qty": 2,
+   "for": "between each knee's two inner races (28 mm)",
+   "vendor": "McMaster-Carr",
+   "part_number": "9056K68",
+   "name": "Multipurpose 6061 Aluminum Round Tube, 0.065\" Wall Thickness, 5/8\" OD (cut 4 per length)",
+   "mass_g_each": 5.2,
+   "price_usd_each": 1.56,
+   "cad": false
+  },
+  {
+   "key": "eye_sleeve",
+   "qty": 4,
+   "for": "steel sleeves, two end to end in each upper link's knee eye: spread the pin's load on the plastic",
+   "vendor": "McMaster-Carr",
+   "part_number": "96990A403",
+   "name": "Metric Press-Fit Drill Bushing, 12 mm ID, 18 mm OD, 20 mm Long, Chamfer on One End",
+   "mass_g_each": 22.2,
+   "price_usd_each": 16.11,
+   "cad": false
+  },
+  {
+   "key": "stop_post",
+   "qty": 4,
+   "for": "stop posts (TPU sleeves over them)",
+   "vendor": "McMaster-Carr",
+   "part_number": "92981A303",
+   "name": "Alloy Steel Shoulder Screws, 10 mm Shoulder Diameter, 20 mm Shoulder Length, M8 x 1.25 mm Thread",
+   "mass_g_each": 26.3,
+   "price_usd_each": 3.5,
+   "cad": false
+  },
+  {
+   "key": "insert_m8",
+   "qty": 4,
+   "for": "stop posts, in the hip frame",
+   "vendor": "McMaster-Carr",
+   "part_number": "94459A778",
+   "name": "Heat-Set Threaded Inserts for Plastic, Standard, Brass, M8 x 1.25mm Thread Size, 12.7mm Installed Length",
+   "mass_g_each": 3.71,
+   "price_usd_each": 0.6544,
+   "cad": false
+  },
+  {
+   "key": "screw_m4x20",
+   "qty": 20,
+   "for": "motor lugs (10 per motor), heads 10 mm down in the hip frame: 5.9 mm into the 7 mm threads",
+   "vendor": "McMaster-Carr",
+   "part_number": "91290A168",
+   "name": "Black-Oxide Alloy Steel Socket Head Screw, US Origin, M4 x 0.7 mm Thread Size, 20 mm Long",
+   "mass_g_each": 2.543,
+   "price_usd_each": 0.1447,
+   "cad": true
+  },
+  {
+   "key": "dowel_5x16",
+   "qty": 4,
+   "for": "into each motor's two locating holes",
+   "vendor": "McMaster-Carr",
+   "part_number": "91595A352",
+   "name": "Dowel Pin, 52100 Alloy Steel, 5 mm Diameter, 16 mm Long",
+   "mass_g_each": 2.336,
+   "price_usd_each": 0.3844,
+   "cad": true
+  },
+  {
+   "key": "screw_m5x30",
+   "qty": 18,
+   "for": "motor outputs into the output adapters (9 per motor)",
+   "vendor": "McMaster-Carr",
+   "part_number": "91290A254",
+   "name": "Black-Oxide Alloy Steel Socket Head Screw, US Origin, M5 x 0.8 mm Thread Size, 30 mm Long",
+   "mass_g_each": 5.801,
+   "price_usd_each": 0.2386,
+   "cad": true
+  },
+  {
+   "key": "screw_m5x40",
+   "qty": 16,
+   "for": "upper links onto the output adapters (8 each), heads proud",
+   "vendor": "McMaster-Carr",
+   "part_number": "91290A662",
+   "name": "Black-Oxide Alloy Steel Socket Head Screw, M5 x 0.8 mm Thread Size, 40 mm Long, Partially Threaded",
+   "mass_g_each": 7.34,
+   "price_usd_each": 0.1618,
+   "cad": false
+  },
+  {
+   "key": "insert_m5",
+   "qty": 22,
+   "for": "the adapters' standard faces (16), the frame's flange ends (6)",
+   "vendor": "McMaster-Carr",
+   "part_number": "94459A775",
+   "name": "Heat-Set Threaded Inserts for Plastic, Standard, Brass, M5 x 0.8 mm Thread Size, 7.9 mm Installed Length",
+   "mass_g_each": 1.103,
+   "price_usd_each": 0.2728,
+   "cad": true
+  },
+  {
+   "key": "screw_m6x30",
+   "qty": 4,
+   "for": "the BotWheel's flange, from inside the wheel link's hub (M6 x 40 bottoms out unless its threads are > 15 deep: measure)",
+   "vendor": "McMaster-Carr",
+   "part_number": "91290A332",
+   "name": "Black-Oxide Alloy Steel Socket Head Screw, US Origin, M6 x 1 mm Thread Size, 30 mm Long",
+   "mass_g_each": 8.45,
+   "price_usd_each": 0.2272,
+   "cad": false
+  }
+ ],
+ "to_source": [],
+ "cad_pending": [
+  "bearing_6201",
+  "circlip_60",
+  "washer_m12_thin",
+  "knee_spacer",
+  "eye_sleeve",
+  "stop_post",
+  "insert_m8",
+  "screw_m5x40",
+  "screw_m6x30"
+ ],
+ "price_usd_per_leg": 1121.39
+}

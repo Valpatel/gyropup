@@ -1,0 +1,6 @@
+McMaster-Carr parts. McMaster-Carr CAD, for design use; not redistributed.
+Files per part: <PN>.step (as downloaded), <PN>.norm.step (moved into the frame for its kind), <PN>.page.json (the product page's data).
+
+4668K273 Permanently Lubricated 440C Stainless Steel Ball Bearing, Sealed, Trade No. 6810-2RS, for 50 mm Shaft Diameter
+URL: https://www.mcmaster.com/4668K273/
+Downloaded: 2026-10-26

@@ -27,6 +27,7 @@
   "bearing_od": 78.0,
   "bearing_w": 10.0,
   "lip_d": 73.0,
+  "seat_lip": 2.0,
   "plate_r": 76.0,
   "top_ext": 28.0,
   "post_r": 82.0,
@@ -39,8 +40,8 @@
   "post_d": 10.0,
   "bracket_bolts": 3,
   "bracket_thread": "M5",
-  "note": "printed motor plate: the motor lug pattern and spigot recess on one side, the 61812 seat on the other (pressed in, 3 x M3 + washers), post and yoke-insert holes",
-  "lip_note": "the plate bore under the bearing: clears the motor's rotating shoulder (70) and the adapter shoulder, seats only the outer ring (61812 outer shoulder 72-76)"
+  "note": "printed motor plate: the motor lug pattern and spigot recess on one side; the 61812 pressed in from the motor side up against a 2 mm lip at the leg-side face (no retainers: the only axial load its outer ring sees is outward, from the adapter's shoulder lifting the inner ring, and the lip takes it; the face stays flat, 1 mm from the link); post and yoke-insert holes",
+  "lip_note": "the lip's bore at the leg-side face, over the bearing: clears the adapter's journal and the inner ring, bears only on the outer ring (61812 outer shoulder 72-76)"
  },
  "AO-S": {
   "journal_d": 40.0,
@@ -65,6 +66,7 @@
   "bearing_od": 52.0,
   "bearing_w": 7.0,
   "lip_d": 47.0,
+  "seat_lip": 2.0,
   "plate_r": 52.0,
   "top_ext": 18.0,
   "post_r": 56.0,

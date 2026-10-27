@@ -1,0 +1,161 @@
+{
+ "params": {
+  "D": 150.0,
+  "l1": 150.0,
+  "l2": 250.0,
+  "upper_t": 30.0,
+  "upper_w0": 46.0,
+  "upper_w1": 36.0,
+  "wheel_t": 26.0,
+  "wheel_w0": 42.0,
+  "wheel_w1": 36.0,
+  "front_t": 20.0,
+  "front_w": 30.0,
+  "gap": 2.0,
+  "knee_out_deg": 3.0,
+  "knee_in_deg": -97.0,
+  "stop_r": 58.0,
+  "hollow": false,
+  "skin": 5.0
+ },
+ "stack_mm": {
+  "ao_face": 0.0,
+  "motor_out": -24.6,
+  "frame": [
+   -25.1,
+   -1.0
+  ],
+  "bearing": [
+   -13.0,
+   -3.0
+  ],
+  "motor": [
+   -80.30000000000001,
+   -24.6
+  ],
+  "upper": [
+   0.0,
+   30.0
+  ],
+  "front_link": [
+   32.0,
+   52.0
+  ],
+  "wheel_link": [
+   54.0,
+   80.0
+  ],
+  "knee_boss": [
+   32.0,
+   80.0
+  ],
+  "apex_eye": [
+   0.0,
+   52.0
+  ],
+  "hub": [
+   -6.0,
+   54.0
+  ],
+  "apex_bearing": [
+   35.0,
+   45.0
+  ],
+  "apex_bearing_in": [
+   3.0,
+   13.0
+  ],
+  "circlip": [
+   0.8,
+   2.95
+  ],
+  "wheel_boss": 74.8,
+  "tyre": [
+   82.3,
+   126.9
+  ],
+  "wheel": 104.6,
+  "centre_plane": -82.30000000000001
+ },
+ "stack_notes": [],
+ "leg_range_mm": [
+  101.5,
+  392.4
+ ],
+ "track_mm_two_legs_back_to_back": 373.8,
+ "stand_300": {
+  "phi_deg": [
+   -50.9,
+   -129.1
+  ],
+  "knees": [
+   [
+    169.6,
+    -116.4
+   ],
+   [
+    -169.6,
+    -116.4
+   ]
+  ]
+ },
+ "lug_clock_deg": 25.0,
+ "stop_posts_mm": [
+  [
+   114.0,
+   42.9
+  ],
+  [
+   -114.0,
+   42.9
+  ],
+  [
+   29.5,
+   -36.0
+  ],
+  [
+   -29.5,
+   -36.0
+  ]
+ ],
+ "mass_g": {
+  "printed": 2739,
+  "bought": 6388,
+  "total": 9126,
+  "printed_parts": {
+   "hip_frame": 781.9,
+   "output_adapter": 71.5,
+   "upper_link": 363.5,
+   "front_link": 442.5,
+   "wheel_link": 614.8,
+   "apex_spacer": 13.7,
+   "stop_sleeve": 4.0
+  }
+ },
+ "print": {
+  "too_big": [],
+  "hours": 180.0
+ },
+ "clashes": [],
+ "cable_route": {
+  "105": [],
+  "130": [],
+  "170": [],
+  "220": [],
+  "270": [],
+  "320": [],
+  "370": [],
+  "390": []
+ },
+ "bought_to_source": [],
+ "pictures": [
+  "leg-stand-iso.png",
+  "leg-stand-outside.png",
+  "leg-stand-inside.png",
+  "leg-stand-front.png",
+  "leg-exploded.png",
+  "leg-crouch-outside.png",
+  "leg-crouch-iso.png",
+  "leg-tall-outside.png"
+ ]
+}
