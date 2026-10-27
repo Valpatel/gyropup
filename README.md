@@ -1,3 +1,5 @@
+<p align="center"><img src="docs/hero.jpg" alt="Gyropup: the current full assembly, with five-bar legs, hub-motor wheels and the foam-ball turret" width="100%"></p>
+
 # Gyropup
 
 A self-balancing wheel-legged robot, and the tool that designs it.
