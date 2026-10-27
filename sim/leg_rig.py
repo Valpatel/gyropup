@@ -41,6 +41,10 @@ CAT = {it['id']: it for f in ('leg_actuators.json', 'wheel_motors.json') for it 
 MOTOR = CAT[fb.MOTOR]['specs']
 WHEEL = CAT[fb.WHEEL]['specs']
 BUS_V = 54.0                                     # FLEXVOLT in 60 V mode, nominal
+HALF_MASS = 13.1                                   # kg one leg carries: half the v2 robot (26.2 kg, sim/robot_v2.py).
+                                                   # The ballast is its own welded body: the carriage's explicit
+                                                   # <inertial> made MuJoCo drop a geom mass there (the rig carried 8.5 kg
+                                                   # of a meant 11 until 2026-10-27; found by the spring study)
 LEG_PEAK = MOTOR['peak_torque_nm']               # 120 N m
 LEG_CAP = 60.0                                   # firmware cap (designs/default.json leg_torque_limit_nm)
 LEG_OMEGA = MOTOR['no_load_speed_rpm'] * BUS_V / MOTOR['voltage_nominal_v'] * 2 * math.pi / 60
@@ -144,7 +148,10 @@ def mjcf(half_mass: float, meshes: dict | None = None, rail_low: float = 0.115) 
       <joint name="rail" type="slide" axis="0 0 1" range="{rail_low + WHEEL_R - carriage_z:.4f} 0.6" damping="2" frictionloss="2"
              solreflimit="0.006 0.6"/>
       {_inertial(mp['frame'])}
-      <geom type="box" size="0.06 0.02 0.06" pos="0 -0.12 0" mass="{dummy:.3f}" rgba=".3 .32 .36 1" contype="0" conaffinity="0"/>
+      <body name="ballast" pos="0 -0.12 0">
+        <inertial pos="0 0 0" mass="{max(dummy, 1e-3):.3f}" diaginertia="{max(dummy, 1e-3) * (0.04 ** 2 + 0.12 ** 2) / 12:.6g} {max(dummy, 1e-3) * 0.12 ** 2 / 6:.6g} {max(dummy, 1e-3) * (0.12 ** 2 + 0.04 ** 2) / 12:.6g}"/>
+        <geom type="box" size="0.06 0.02 0.06" mass="0" rgba=".3 .32 .36 1" contype="0" conaffinity="0"/>
+      </body>
       {vis('hip_frame', '.4 .43 .48 1')}
       <geom type="cylinder" size="0.06 0.028" pos="{ax} {fb.Y['motor'][0] / 2000 + fb.Y['motor'][1] / 2000:.4f} 0" euler="1.5708 0 0" rgba=".16 .17 .19 1" contype="0" conaffinity="0" mass="0"/>
       <geom type="cylinder" size="0.06 0.028" pos="{-ax} {fb.Y['motor'][0] / 2000 + fb.Y['motor'][1] / 2000:.4f} 0" euler="1.5708 0 0" rgba=".16 .17 .19 1" contype="0" conaffinity="0" mass="0"/>
@@ -533,7 +540,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--only', nargs='*')
     ap.add_argument('--video', action='store_true')
-    ap.add_argument('--half-mass', type=float, default=11.0, help='what one leg carries, kg (half the robot)')
+    ap.add_argument('--half-mass', type=float, default=HALF_MASS, help='what one leg carries, kg (half the robot)')
     a = ap.parse_args()
     OUT.mkdir(parents=True, exist_ok=True)
     meshes = export_meshes(OUT / 'rig_meshes') if a.video else None

@@ -119,13 +119,13 @@
   ]
  ],
  "mass_g": {
-  "printed": 2739,
+  "printed": 2740,
   "bought": 6388,
-  "total": 9126,
+  "total": 9127,
   "printed_parts": {
    "hip_frame": 781.9,
    "output_adapter": 71.5,
-   "upper_link": 363.5,
+   "upper_link": 363.8,
    "front_link": 442.5,
    "wheel_link": 614.8,
    "apex_spacer": 13.7,
@@ -134,7 +134,7 @@
  },
  "print": {
   "too_big": [],
-  "hours": 180.0
+  "hours": 180.1
  },
  "clashes": [],
  "cable_route": {
