@@ -1,0 +1,699 @@
+{
+ "amass-xt60e-f": {
+  "source_url": "https://pro.maplin.co.uk/products/female-xt60e-panel-mount-gold-plated-connector-20a-amass",
+  "image_url": "https://pro.maplin.co.uk/cdn/shop/files/bb83438d-c18a-42cc-bfc9-f0095a11117a_1200x1200.jpg?v=1769637314",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/amass-xt60e-f.jpg",
+  "kind": "vendor",
+  "seller": "pro.maplin.co.uk",
+  "part_number": "XT60E-F",
+  "read_with": "request"
+ },
+ "apex_spacer": {
+  "source_url": "exports/leg/apex_spacer.stl",
+  "image_url": null,
+  "fetched": "2026-10-27",
+  "path": "exports/thumbs/apex_spacer.png",
+  "kind": "render",
+  "material": "pa6-cf",
+  "bom": "leg"
+ },
+ "barrel": {
+  "source_url": "gyropup-turret/exports/turret/barrel.stl",
+  "image_url": null,
+  "fetched": "2026-10-27",
+  "path": "exports/thumbs/barrel.png",
+  "kind": "render",
+  "material": "petg",
+  "bom": "turret"
+ },
+ "bearing_61810": {
+  "source_url": "https://www.mcmaster.com/4668K273/",
+  "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/466/4668K273_9f4760bc-e5c3-4a0a-833a-bc63e2c9218e@3x_1689087952.png?ver=ImageNotFound",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/bearing_61810.jpg",
+  "kind": "mcmaster",
+  "seller": "McMaster-Carr",
+  "part_number": "4668K273",
+  "availability": "Delivers tomorrow 7-9 am"
+ },
+ "bearing_61812": {
+  "source_url": "https://www.mcmaster.com/6656K236/",
+  "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/665/6656K236_dca0e3f2-2beb-4187-b67f-09508b2c0b76@3x_1686322600.png?ver=ImageNotFound",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/bearing_61812.jpg",
+  "kind": "mcmaster",
+  "seller": "McMaster-Carr",
+  "part_number": "6656K236",
+  "availability": "Delivers Wednesday 7-9 am"
+ },
+ "bearing_6201": {
+  "source_url": "https://www.mcmaster.com/5972K42/",
+  "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/597/5972K42_62befef1-15c9-458d-962d-784d87a9a185@4x_cccfs_1757605990.png?ver=ImageNotFound",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/bearing_6201.jpg",
+  "kind": "mcmaster",
+  "seller": "McMaster-Carr",
+  "part_number": "5972K42",
+  "availability": "Delivers Wednesday 7-9 am"
+ },
+ "bearing_mr126": {
+  "source_url": "https://www.mcmaster.com/7804K112/",
+  "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/780/7804K112_66876404-7476-4cfd-8e8f-96ddc4bbdab3@4x_o9vj3_1787087084.png?ver=ImageNotFound",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/bearing_mr126.jpg",
+  "kind": "mcmaster",
+  "seller": "McMaster-Carr",
+  "part_number": "7804K112",
+  "availability": "Delivers tomorrow 7-9 am"
+ },
+ "board_bay": {
+  "source_url": "gyropup-turret/exports/turret/board_bay.stl",
+  "image_url": null,
+  "fetched": "2026-10-27",
+  "path": "exports/thumbs/board_bay.png",
+  "kind": "render",
+  "material": "petg",
+  "bom": "turret"
+ },
+ "bumper-feet-12.7": {
+  "source_url": "https://www.digikey.com/en/products/detail/3m/SJ5003/26770367",
+  "image_url": "https://mm.digikey.com/Volume0/opasdata/d220001/derivates/1/003/249/318/MFG_19_SJ5003_sml%28200x200%29.jpg",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/bumper-feet-12.7.jpg",
+  "kind": "vendor",
+  "seller": "Digi-Key",
+  "part_number": "SJ5003 (Bumpon)",
+  "read_with": "chosen"
+ },
+ "bumper_ring": {
+  "source_url": "gyropup-turret/exports/turret/bumper_ring.stl",
+  "image_url": null,
+  "fetched": "2026-10-27",
+  "path": "exports/thumbs/bumper_ring.png",
+  "kind": "render",
+  "material": "tpu95",
+  "bom": "turret"
+ },
+ "cartridge_body": {
+  "source_url": "gyropup-turret/exports/turret/cartridge_body.stl",
+  "image_url": null,
+  "fetched": "2026-10-27",
+  "path": "exports/thumbs/cartridge_body.png",
+  "kind": "render",
+  "material": "pa6-cf",
+  "bom": "turret"
+ },
+ "circlip_50": {
+  "source_url": "https://www.mcmaster.com/98541A167/",
+  "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/985/98541A167_0fb2b0c0-12c6-4354-b73c-78744528e02a1691688702@4x_1691688707.png?ver=ImageNotFound",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/circlip_50.jpg",
+  "kind": "mcmaster",
+  "seller": "McMaster-Carr",
+  "part_number": "98541A167",
+  "availability": "Delivers tomorrow"
+ },
+ "circlip_60": {
+  "source_url": "https://www.mcmaster.com/98541A174/",
+  "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/985/98541A174_e74ddd8e-5862-4551-a176-27a0a882de301691688678@4x_1691688682.png?ver=ImageNotFound",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/circlip_60.jpg",
+  "kind": "mcmaster",
+  "seller": "McMaster-Carr",
+  "part_number": "98541A174",
+  "availability": "Delivers Wednesday 7-9 am"
+ },
+ "cradle": {
+  "source_url": "gyropup-turret/exports/turret/cradle.stl",
+  "image_url": null,
+  "fetched": "2026-10-27",
+  "path": "exports/thumbs/cradle.png",
+  "kind": "render",
+  "material": "pa6-cf",
+  "bom": "turret"
+ },
+ "dial": {
+  "source_url": "gyropup-turret/exports/turret/dial.stl",
+  "image_url": null,
+  "fetched": "2026-10-27",
+  "path": "exports/thumbs/dial.png",
+  "kind": "render",
+  "material": "petg",
+  "bom": "turret"
+ },
+ "dji-c610-esc": {
+  "source_url": "https://store.dji.com/product/rm-c610-brushless-dc-motor-speed-control",
+  "image_url": "https://se-cdn.djiits.com/tpc/uploads/sku/cover/558cd530-82db-40ce-811e-016067958dda@ultra.png",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/dji-c610-esc.jpg",
+  "kind": "vendor",
+  "seller": "DJI Store (official, store.dji.com)",
+  "part_number": "RoboMaster C610 (EAN 6958265164521)",
+  "read_with": "chosen"
+ },
+ "dji-robomaster-m2006-p36": {
+  "source_url": "https://aifitlab.com/products/dji-robomaster-m2006-p36-brushless-dc-gear-motor",
+  "image_url": "http://aifitlab.com/cdn/shop/files/M2006-1.jpg?crop=center&height=1200&v=1753109987&width=1200",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/dji-robomaster-m2006-p36.jpg",
+  "kind": "vendor",
+  "seller": "aifitlab",
+  "part_number": "M2006 P36 geared motor (+ C610 ESC)",
+  "read_with": "request"
+ },
+ "dji-robomaster-snail-2305": {
+  "source_url": "https://aifitlab.com/products/dji-robomaster-snail-2305-motor-c615-speed-controller",
+  "image_url": "http://aifitlab.com/cdn/shop/files/RoboMaster_Snail_2305-main-5.jpg?crop=center&height=1200&v=1757881488&width=1200",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/dji-robomaster-snail-2305.jpg",
+  "kind": "vendor",
+  "seller": "aifitlab",
+  "part_number": "Snail 2305 friction-wheel motor (+ C615 ESC)",
+  "read_with": "request"
+ },
+ "dowel_5x16": {
+  "source_url": "https://www.mcmaster.com/91595A352/",
+  "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/915/91595A352_7f0be984-dd97-46fe-a434-a790a0acb4a0@4x_637950732820060056.png?ver=ImageNotFound",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/dowel_5x16.jpg",
+  "kind": "mcmaster",
+  "seller": "McMaster-Carr",
+  "part_number": "91595A352",
+  "availability": "Delivers tomorrow 7-9 am"
+ },
+ "eye_sleeve": {
+  "source_url": "https://www.mcmaster.com/96990A403/",
+  "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/969/96990A403_2f05800d-4105-4036-b279-f25d2e9740b4@4x_638061860006710954.png?ver=ImageNotFound",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/eye_sleeve.jpg",
+  "kind": "mcmaster",
+  "seller": "McMaster-Carr",
+  "part_number": "96990A403",
+  "availability": "Delivers tomorrow 7-9 am"
+ },
+ "feetech-sts3215-c018-12v": {
+  "source_url": "https://www.waveshare.com/st3215-servo.htm?sku=22414",
+  "image_url": "https://www.waveshare.com/media/catalog/product/cache/1/image/560x560/9df78eab33525d08d6e5fb8d27136e95/s/t/st3215-servo-1_5.jpg",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/feetech-sts3215-c018-12v.jpg",
+  "kind": "vendor",
+  "seller": "Waveshare",
+  "part_number": "STS3215 / ST3215 12 V 30 kg-cm serial bus servo",
+  "read_with": "chosen"
+ },
+ "flywheel": {
+  "source_url": "gyropup-turret/exports/turret/flywheel.stl",
+  "image_url": null,
+  "fetched": "2026-10-27",
+  "path": "exports/thumbs/flywheel.png",
+  "kind": "render",
+  "material": "pa6-cf",
+  "bom": "turret"
+ },
+ "flywheel_tyre": {
+  "source_url": "gyropup-turret/exports/turret/flywheel_tyre.stl",
+  "image_url": null,
+  "fetched": "2026-10-27",
+  "path": "exports/thumbs/flywheel_tyre.png",
+  "kind": "render",
+  "material": "tpu95",
+  "bom": "turret"
+ },
+ "front_link": {
+  "source_url": "exports/leg/front_link.stl",
+  "image_url": null,
+  "fetched": "2026-10-27",
+  "path": "exports/thumbs/front_link.png",
+  "kind": "render",
+  "material": "pa6-cf",
+  "bom": "leg"
+ },
+ "fuse-5x20-5a-slow": {
+  "source_url": "https://www.lcsc.com/product-detail/C142728.html",
+  "image_url": "https://assets.lcsc.com/images/lcsc/900x900/20250824_Littelfuse-0218005-MXP_C142728_front.jpg",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/fuse-5x20-5a-slow.jpg",
+  "kind": "vendor",
+  "seller": "LCSC Electronics",
+  "part_number": "0218005.MXP",
+  "read_with": "chosen"
+ },
+ "fuse-holder-5x20-panel": {
+  "source_url": "https://www.digikey.com/en/products/detail/littelfuse-inc/03455LS1H/553826",
+  "image_url": "https://mm.digikey.com/Volume0/opasdata/d220001/derivates/1/010/175/458/03455LS1H_sml.jpg",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/fuse-holder-5x20-panel.jpg",
+  "kind": "vendor",
+  "seller": "Digi-Key",
+  "part_number": "03455LS1H",
+  "read_with": "chosen"
+ },
+ "hip_frame": {
+  "source_url": "exports/leg/hip_frame.stl",
+  "image_url": null,
+  "fetched": "2026-10-27",
+  "path": "exports/thumbs/hip_frame.png",
+  "kind": "render",
+  "material": "pa6-cf",
+  "bom": "leg"
+ },
+ "hopper": {
+  "source_url": "gyropup-turret/exports/turret/hopper.stl",
+  "image_url": null,
+  "fetched": "2026-10-27",
+  "path": "exports/thumbs/hopper.png",
+  "kind": "render",
+  "material": "petg",
+  "bom": "turret"
+ },
+ "hopper_flap": {
+  "source_url": "gyropup-turret/exports/turret/hopper_flap.stl",
+  "image_url": null,
+  "fetched": "2026-10-27",
+  "path": "exports/thumbs/hopper_flap.png",
+  "kind": "render",
+  "material": "petg",
+  "bom": "turret"
+ },
+ "hopper_lid": {
+  "source_url": "gyropup-turret/exports/turret/hopper_lid.stl",
+  "image_url": null,
+  "fetched": "2026-10-27",
+  "path": "exports/thumbs/hopper_lid.png",
+  "kind": "render",
+  "material": "petg",
+  "bom": "turret"
+ },
+ "insert_m3": {
+  "source_url": "https://www.mcmaster.com/94459A140/",
+  "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/944/94459A140_a9913aa7-f5c2-42dc-b9cf-50c0ddd18ff8@4x_1678148412.png?ver=ImageNotFound",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/insert_m3.jpg",
+  "kind": "mcmaster",
+  "seller": "McMaster-Carr",
+  "part_number": "94459A140",
+  "availability": "Delivers tomorrow 7-9 am"
+ },
+ "insert_m5": {
+  "source_url": "https://www.mcmaster.com/94459A775/",
+  "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/944/94459A775_00c6605d-575e-43e8-9b51-27e70a308c50@4x_jymiv_1745595557.png?ver=ImageNotFound",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/insert_m5.jpg",
+  "kind": "mcmaster",
+  "seller": "McMaster-Carr",
+  "part_number": "94459A775",
+  "availability": "Delivers tomorrow 7-9 am"
+ },
+ "insert_m8": {
+  "source_url": "https://www.mcmaster.com/94459A778/",
+  "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/944/94459A778_e07a0520-35fa-4ed4-a61b-5d6f10d336fb@4x_qb06t_1745595486.png?ver=ImageNotFound",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/insert_m8.jpg",
+  "kind": "mcmaster",
+  "seller": "McMaster-Carr",
+  "part_number": "94459A778",
+  "availability": "Delivers tomorrow 7-9 am"
+ },
+ "kcd1-rocker-16a": {
+  "source_url": "https://www.e-switch.com/product/rca1913-series-sealed-power-rocker-switch/",
+  "image_url": "https://www.e-switch.com/wp-content/uploads/2025/09/RCA1913F1ABLKBLKWHT3-scaled.jpg",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/kcd1-rocker-16a.jpg",
+  "kind": "vendor",
+  "seller": "www.e-switch.com",
+  "part_number": "RCA1913F1CBLKBLKWHT3",
+  "read_with": "request"
+ },
+ "knee_pin": {
+  "source_url": "https://www.mcmaster.com/92981A411/",
+  "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/929/92981A411_97e51fb7-ee04-4f88-9356-f2c6ff39bc271788200838@4x_simix_1788200839.png?ver=ImageNotFound",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/knee_pin.jpg",
+  "kind": "mcmaster",
+  "seller": "McMaster-Carr",
+  "part_number": "92981A411",
+  "availability": "Delivers tomorrow 7-9 am"
+ },
+ "knee_pin_70": {
+  "source_url": "https://www.mcmaster.com/92981A409/",
+  "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/929/92981A409_9a629ed8-cfc5-4e82-ae50-c0702f5ca1421788200756@4x_agyz4_1788200758.png?ver=ImageNotFound",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/knee_pin_70.jpg",
+  "kind": "mcmaster",
+  "seller": "McMaster-Carr",
+  "part_number": "92981A409",
+  "availability": "Delivers Wednesday 7-9 am"
+ },
+ "knee_spacer": {
+  "source_url": "https://www.mcmaster.com/9056K68/",
+  "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/905/9056K682_1d47a1bc-43a2-4385-bc86-088876c314511748449844@2x_npy81_1748449849.png?ver=ImageNotFound",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/knee_spacer.jpg",
+  "kind": "mcmaster",
+  "seller": "McMaster-Carr",
+  "part_number": "9056K68",
+  "availability": null
+ },
+ "laser_mount": {
+  "source_url": "gyropup-turret/exports/turret/laser_mount.stl",
+  "image_url": null,
+  "fetched": "2026-10-27",
+  "path": "exports/thumbs/laser_mount.png",
+  "kind": "render",
+  "material": "petg",
+  "bom": "turret"
+ },
+ "nut_m10_nyloc": {
+  "source_url": "https://www.mcmaster.com/94645A220/",
+  "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/946/94645A220_3c94cd47-bf57-4c30-b79a-5de0961431c1@4x_638092017707974091.png?ver=ImageNotFound",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/nut_m10_nyloc.jpg",
+  "kind": "mcmaster",
+  "seller": "McMaster-Carr",
+  "part_number": "94645A220",
+  "availability": "Delivers Wednesday 7-9 am"
+ },
+ "odrive-botwheel": {
+  "source_url": "https://shop.odriverobotics.com/products/botwheels",
+  "image_url": "http://shop.odriverobotics.com/cdn/shop/files/PXL_20220913_163241201-2.jpg?v=1705544648",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/odrive-botwheel.jpg",
+  "kind": "vendor",
+  "seller": "ODrive Robotics shop (2-pack)",
+  "part_number": "BotWheel (BW0124)",
+  "read_with": "request"
+ },
+ "output_adapter": {
+  "source_url": "exports/leg/output_adapter.stl",
+  "image_url": null,
+  "fetched": "2026-10-27",
+  "path": "exports/thumbs/output_adapter.png",
+  "kind": "render",
+  "material": "pa6-cf",
+  "bom": "leg"
+ },
+ "pan_base": {
+  "source_url": "gyropup-turret/exports/turret/pan_base.stl",
+  "image_url": null,
+  "fetched": "2026-10-27",
+  "path": "exports/thumbs/pan_base.png",
+  "kind": "render",
+  "material": "pa6-cf",
+  "bom": "turret"
+ },
+ "pan_clamp": {
+  "source_url": "gyropup-turret/exports/turret/pan_clamp.stl",
+  "image_url": null,
+  "fetched": "2026-10-27",
+  "path": "exports/thumbs/pan_clamp.png",
+  "kind": "render",
+  "material": "pa6-cf",
+  "bom": "turret"
+ },
+ "pan_pinion": {
+  "source_url": "gyropup-turret/exports/turret/pan_pinion.stl",
+  "image_url": null,
+  "fetched": "2026-10-27",
+  "path": "exports/thumbs/pan_pinion.png",
+  "kind": "render",
+  "material": "pa6-cf",
+  "bom": "turret"
+ },
+ "pan_ring": {
+  "source_url": "gyropup-turret/exports/turret/pan_ring.stl",
+  "image_url": null,
+  "fetched": "2026-10-27",
+  "path": "exports/thumbs/pan_ring.png",
+  "kind": "render",
+  "material": "pa6-cf",
+  "bom": "turret"
+ },
+ "pan_spacer": {
+  "source_url": "gyropup-turret/exports/turret/pan_spacer.stl",
+  "image_url": null,
+  "fetched": "2026-10-27",
+  "path": "exports/thumbs/pan_spacer.png",
+  "kind": "render",
+  "material": "pa6-cf",
+  "bom": "turret"
+ },
+ "pendant-hold-to-run": {
+  "source_url": "https://www.ablenetinc.com/specs-ic/",
+  "image_url": "https://cdn11.bigcommerce.com/s-rwcdtzv1dl/images/stencil/1280x1280/products/253/1023/21__48704_copy__76767.1755183350.jpg?c=1",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/pendant-hold-to-run.jpg",
+  "kind": "vendor",
+  "seller": "AbleNet",
+  "part_number": "Specs IC (SKU 10000114)",
+  "read_with": "chosen"
+ },
+ "picotronic-dd520-1-24-12x40": {
+  "source_url": "https://shop.picotronic.de/de/p/70121025",
+  "image_url": "https://shop.picotronic.de/media/75/53/33/1605719838/77ef5a469762cc75e98c2cad32de8842.jpg?ts=1752053638",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/picotronic-dd520-1-24-12x40.jpg",
+  "kind": "vendor",
+  "seller": "Picotronic GmbH (maker's web shop, Koblenz, Germany)",
+  "part_number": "DD520-1-24(12x40)-QCW, order no. 70121025",
+  "read_with": "chosen"
+ },
+ "proto-board-70x50": {
+  "source_url": "https://botland.store/circuit-boards/2745-universal-double-sided-board-50x70mm-5904422303303.html",
+  "image_url": "https://cdn3.botland.store/49246-large_default/universal-double-sided-board-50x70mm.jpg",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/proto-board-70x50.jpg",
+  "kind": "vendor",
+  "seller": "botland.store",
+  "part_number": "double-sided prototype board 50 x 70 mm",
+  "read_with": "request"
+ },
+ "repeat-robotics-am32-35a-esc": {
+  "source_url": "https://palmbeachbots.com/products/repeat-robotics-am32-brushless-drive-esc-bi-directional",
+  "image_url": "http://palmbeachbots.com/cdn/shop/files/AM32DriveESC.jpg?v=1706386827",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/repeat-robotics-am32-35a-esc.jpg",
+  "kind": "vendor",
+  "seller": "Palm Beach Bots",
+  "part_number": "AM32 Brushless Drive ESC 35 A (bi-directional)",
+  "read_with": "request"
+ },
+ "ring_carrier": {
+  "source_url": "gyropup-turret/exports/turret/ring_carrier.stl",
+  "image_url": null,
+  "fetched": "2026-10-27",
+  "path": "exports/thumbs/ring_carrier.png",
+  "kind": "render",
+  "material": "pa6-cf",
+  "bom": "turret"
+ },
+ "ring_driver": {
+  "source_url": "gyropup-turret/exports/turret/ring_driver.stl",
+  "image_url": null,
+  "fetched": "2026-10-27",
+  "path": "exports/thumbs/ring_driver.png",
+  "kind": "render",
+  "material": "pa6-cf",
+  "bom": "turret"
+ },
+ "robstride-rs-04": {
+  "source_url": "https://www.robstride.com/products/robStride04",
+  "image_url": "https://www.robstride.com/assets/RobStride04_banner_product-cbeffa4c.jpg",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/robstride-rs-04.jpg",
+  "kind": "vendor",
+  "seller": "www.robstride.com",
+  "part_number": "RS-04",
+  "read_with": "chosen",
+  "crop": [
+   0.28,
+   0.24,
+   0.75,
+   0.9
+  ]
+ },
+ "screw_m3x6": {
+  "source_url": "https://www.mcmaster.com/91290A111/",
+  "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/912/91290A111_b98fcb5f-bf8f-4786-bfcc-3ea5c71f81091772469680@4x_jd8ed_1772469682.png?ver=ImageNotFound",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/screw_m3x6.jpg",
+  "kind": "mcmaster",
+  "seller": "McMaster-Carr",
+  "part_number": "91290A111",
+  "availability": "Delivers tomorrow"
+ },
+ "screw_m4x20": {
+  "source_url": "https://www.mcmaster.com/91290A168/",
+  "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/912/91290A168_0a44c627-8ead-473d-bac6-2f30e649e6651772470112@4x_4iwxo_1772470116.png?ver=ImageNotFound",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/screw_m4x20.jpg",
+  "kind": "mcmaster",
+  "seller": "McMaster-Carr",
+  "part_number": "91290A168",
+  "availability": "Delivers tomorrow 7-9 am"
+ },
+ "screw_m5x30": {
+  "source_url": "https://www.mcmaster.com/91290A254/",
+  "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/912/91290A254_31754cd4-296f-4772-a1a6-499168fcfd6d1772469060@4x_x7z38_1772469065.png?ver=ImageNotFound",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/screw_m5x30.jpg",
+  "kind": "mcmaster",
+  "seller": "McMaster-Carr",
+  "part_number": "91290A254",
+  "availability": "Delivers tomorrow 7-9 am"
+ },
+ "screw_m5x40": {
+  "source_url": "https://www.mcmaster.com/91290A662/",
+  "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/912/91290A662_ff094cc8-cabe-4366-922b-fe11aec85f96@4x_jqv22_1782428026.png?ver=ImageNotFound",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/screw_m5x40.jpg",
+  "kind": "mcmaster",
+  "seller": "McMaster-Carr",
+  "part_number": "91290A662",
+  "availability": "Delivers tomorrow"
+ },
+ "screw_m6x30": {
+  "source_url": "https://www.mcmaster.com/91290A332/",
+  "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/912/91290A332_96fb5519-4c28-4da4-99ae-2fde928aa0741772469803@4x_93dxj_1772469808.png?ver=ImageNotFound",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/screw_m6x30.jpg",
+  "kind": "mcmaster",
+  "seller": "McMaster-Carr",
+  "part_number": "91290A332",
+  "availability": "Delivers tomorrow 7-9 am"
+ },
+ "shoulder_6x12_m5": {
+  "source_url": "https://www.mcmaster.com/92981A101/",
+  "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/929/92981A101_8de84135-ae26-45e3-9a42-2df22c62002a1770818613@4x_r5xg9_1770818616.png?ver=ImageNotFound",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/shoulder_6x12_m5.jpg",
+  "kind": "mcmaster",
+  "seller": "McMaster-Carr",
+  "part_number": "92981A101",
+  "availability": "Delivers tomorrow 7-9 am"
+ },
+ "stand_bottom": {
+  "source_url": "gyropup-turret/exports/turret/bench/stand_bottom.stl",
+  "image_url": null,
+  "fetched": "2026-10-27",
+  "path": "exports/thumbs/stand_bottom.png",
+  "kind": "render",
+  "material": "petg",
+  "bom": "turret"
+ },
+ "stand_box": {
+  "source_url": "exports/turret/bench/stand_box.stl",
+  "image_url": null,
+  "fetched": "2026-10-27",
+  "path": "exports/thumbs/stand_box.png",
+  "kind": "render",
+  "material": "petg",
+  "bom": "turret"
+ },
+ "stop_post": {
+  "source_url": "https://www.mcmaster.com/92981A303/",
+  "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/929/92981A303_97815f97-87bd-4a14-914d-c238428e8ebc1770817912@4x_j4jcz_1770817916.png?ver=ImageNotFound",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/stop_post.jpg",
+  "kind": "mcmaster",
+  "seller": "McMaster-Carr",
+  "part_number": "92981A303",
+  "availability": "Delivers tomorrow 7-9 am"
+ },
+ "stop_sleeve": {
+  "source_url": "exports/leg/stop_sleeve.stl",
+  "image_url": null,
+  "fetched": "2026-10-27",
+  "path": "exports/thumbs/stop_sleeve.png",
+  "kind": "render",
+  "material": "tpu95",
+  "bom": "leg"
+ },
+ "te-dt04-12pa-l012": {
+  "source_url": "https://www.lcsc.com/product-detail/C6423585.html",
+  "image_url": "https://assets.lcsc.com/images/lcsc/900x900/20260902_TE-Connectivity-DT04-12PA-L012_C6423585_front.jpg",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/te-dt04-12pa-l012.jpg",
+  "kind": "vendor",
+  "seller": "LCSC Electronics",
+  "part_number": "DT04-12PA-L012",
+  "read_with": "chosen"
+ },
+ "te-dt06-12sa-kit": {
+  "source_url": "https://www.digikey.com/en/products/detail/te-connectivity-deutsch-ict-connectors/DT06-12SA/6566568",
+  "image_url": "https://mm.digikey.com/Volume0/opasdata/d220001/derivates/1/300/314/703/DT06-12SA_sml.jpg",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/te-dt06-12sa-kit.jpg",
+  "kind": "vendor",
+  "seller": "Digi-Key",
+  "part_number": "DT06-12SA (+ W12S wedge + 12 x 0462-201-16141 sockets)",
+  "read_with": "chosen"
+ },
+ "tilt_yoke": {
+  "source_url": "gyropup-turret/exports/turret/tilt_yoke.stl",
+  "image_url": null,
+  "fetched": "2026-10-27",
+  "path": "exports/thumbs/tilt_yoke.png",
+  "kind": "render",
+  "material": "pa6-cf",
+  "bom": "turret"
+ },
+ "upper_link": {
+  "source_url": "exports/leg/upper_link.stl",
+  "image_url": null,
+  "fetched": "2026-10-27",
+  "path": "exports/thumbs/upper_link.png",
+  "kind": "render",
+  "material": "pa6-cf",
+  "bom": "leg"
+ },
+ "usb-can-canable2": {
+  "source_url": "https://www.fysetc.com/products/fysetc-ucan-board",
+  "image_url": "https://cdn.shopify.com/s/files/1/0478/7532/6101/products/FYSETC-UCAN-Board-Based-on-STM32F072-USB-to-CAN-Adapter-Support-with-CAnable-CandleLight-Klipper-firmware_e3321e86-3f1d-4340-886e-7fdda740ea04.jpg?v=1670897213",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/usb-can-canable2.jpg",
+  "kind": "vendor",
+  "seller": "FYSETC",
+  "part_number": "UCAN (SKU MM-U2CAN-0001)",
+  "read_with": "chosen"
+ },
+ "washer_m12_thin": {
+  "source_url": "https://www.mcmaster.com/98689A118/",
+  "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/986/98689A118_e8c3621b-8ec8-43e7-82b1-4dafeeab5aaf1691718543@4x_1691718546.png?ver=ImageNotFound",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/washer_m12_thin.jpg",
+  "kind": "mcmaster",
+  "seller": "McMaster-Carr",
+  "part_number": "98689A118",
+  "availability": "Delivers Wednesday 7-9 am"
+ },
+ "washer_m3_large": {
+  "source_url": "https://www.mcmaster.com/91116A120/",
+  "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/911/91116A120_5a88fe08-facd-43bc-ab0a-c42663d3bfe0@4x_xtprb_1780837777.png?ver=ImageNotFound",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/washer_m3_large.jpg",
+  "kind": "mcmaster",
+  "seller": "McMaster-Carr",
+  "part_number": "91116A120",
+  "availability": "Delivers tomorrow 7-9 am"
+ },
+ "wheel_link": {
+  "source_url": "exports/leg/wheel_link.stl",
+  "image_url": null,
+  "fetched": "2026-10-27",
+  "path": "exports/thumbs/wheel_link.png",
+  "kind": "render",
+  "material": "pa6-cf",
+  "bom": "leg"
+ },
+ "worker-cheetah-rival-rounds-100": {
+  "source_url": "https://outofdarts.com/products/worker-cheetah-rounds-rival-compatible-ammo-100-pack",
+  "image_url": "http://outofdarts.com/cdn/shop/files/Out-of-Darts-Darts-Ammo-Worker-Rival-Rounds.jpg?v=1703286147",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/worker-cheetah-rival-rounds-100.jpg",
+  "kind": "vendor",
+  "seller": "Out of Darts",
+  "part_number": "Cheetah Rival-compatible rounds, 100-pack",
+  "read_with": "request"
+ }
+}

@@ -1,0 +1,575 @@
+{
+ "about": "How the parts lists' plain-text lines map to catalogue keys (names), lines that are part of another line (skip), where a vendor part's picture is taken from when its first buy link is not the best page (image_pages: the seller blocks automated reads, or a better page) or a photo picked by hand when the page's og:image shows something else (image_urls), how hard each part is to buy when that is worth a warning (risk: level high | medium | cost, a note, the date checked), and the bought parts no catalogue file has yet (parts, in catalog/SCHEMA.md's item shape plus 'key'). Read by tools/part_images.py, cad/bom_media.py and designer/progress.js. Move a part into a catalogue file once it is chosen for good.",
+ "names": {
+  "61810-2RS (50 x 65 x 7)": "bearing_61810",
+  "pan_bearing": "bearing_61810",
+  "MR126-2RS (6 x 12 x 4)": "bearing_mr126",
+  "tilt_bearing": "bearing_mr126",
+  "circlip_50": "circlip_50",
+  "shoulder_screw": "shoulder_6x12_m5",
+  "DJI C610 (CAN), comes with the M2006 kit": "dji-c610-esc",
+  "feed_esc": "dji-c610-esc",
+  "Picotronic DD520-1-24(12x40), 520 nm Class 2": "picotronic-dd520-1-24-12x40",
+  "laser": "picotronic-dd520-1-24-12x40",
+  "TE Deutsch DT04-12PA-L012 flange receptacle": "te-dt04-12pa-l012",
+  "dt_receptacle": "te-dt04-12pa-l012",
+  "TE Deutsch DT06-12SA plug + W12S wedge + 12 x 0462-201-16141 sockets": "te-dt06-12sa-kit",
+  "dt_plug": "te-dt06-12sa-kit",
+  "Amass XT60E-F panel socket (24 V in)": "amass-xt60e-f",
+  "KCD1 rocker switch, 16 A": "kcd1-rocker-16a",
+  "5 x 20 mm panel fuse holder + 5 A slow-blow fuse": [
+   "fuse-holder-5x20-panel",
+   "fuse-5x20-5a-slow"
+  ],
+  "3.5 mm panel jack + a hold-to-run pendant (momentary button on 2 m of cable)": [
+   "jack-3.5mm-panel",
+   "pendant-hold-to-run"
+  ],
+  "USB-CAN adapter (CANable 2.0 class)": "usb-can-canable2",
+  "70 x 50 mm board with a 24 V terminal block": "proto-board-70x50",
+  "rubber bumper feet, Ø12.7 x 5.5": "bumper-feet-12.7",
+  "pod_xt60": "amass-xt60e-f",
+  "pod_switch": "kcd1-rocker-16a",
+  "pod_fuse": [
+   "fuse-holder-5x20-panel",
+   "fuse-5x20-5a-slow"
+  ],
+  "pod_pendant": [
+   "jack-3.5mm-panel",
+   "pendant-hold-to-run"
+  ],
+  "pod_usb": "usb-can-canable2"
+ },
+ "skip": [
+  "pan_bearing_inner",
+  "tilt_bearing_inner",
+  "slip_ring_rotor"
+ ],
+ "image_pages": {
+  "robstride-rs-04": "https://www.robstride.com/products/robStride04",
+  "amass-xt60e-f": "https://pro.maplin.co.uk/products/female-xt60e-panel-mount-gold-plated-connector-20a-amass",
+  "kcd1-rocker-16a": "https://www.e-switch.com/product/rca1913-series-sealed-power-rocker-switch/",
+  "jack-3.5mm-panel": "https://www.masterelectronics.com/en/switchcraft/35pm2a-12319088.html",
+  "proto-board-70x50": "https://botland.store/circuit-boards/2745-universal-double-sided-board-50x70mm-5904422303303.html"
+ },
+ "image_urls": {
+  "feetech-sts3215-c018-12v": "https://www.waveshare.com/media/catalog/product/cache/1/image/560x560/9df78eab33525d08d6e5fb8d27136e95/s/t/st3215-servo-1_5.jpg",
+  "robstride-rs-04": {
+   "url": "https://www.robstride.com/assets/RobStride04_banner_product-cbeffa4c.jpg",
+   "crop": [
+    0.28,
+    0.24,
+    0.75,
+    0.9
+   ]
+  },
+  "dji-c610-esc": "https://se-cdn.djiits.com/tpc/uploads/sku/cover/558cd530-82db-40ce-811e-016067958dda@ultra.png",
+  "picotronic-dd520-1-24-12x40": "https://shop.picotronic.de/media/75/53/33/1605719838/77ef5a469762cc75e98c2cad32de8842.jpg?ts=1752053638",
+  "te-dt04-12pa-l012": "https://assets.lcsc.com/images/lcsc/900x900/20260902_TE-Connectivity-DT04-12PA-L012_C6423585_front.jpg",
+  "te-dt06-12sa-kit": "https://mm.digikey.com/Volume0/opasdata/d220001/derivates/1/300/314/703/DT06-12SA_sml.jpg",
+  "fuse-holder-5x20-panel": "https://mm.digikey.com/Volume0/opasdata/d220001/derivates/1/010/175/458/03455LS1H_sml.jpg",
+  "fuse-5x20-5a-slow": "https://assets.lcsc.com/images/lcsc/900x900/20250824_Littelfuse-0218005-MXP_C142728_front.jpg",
+  "pendant-hold-to-run": "https://cdn11.bigcommerce.com/s-rwcdtzv1dl/images/stencil/1280x1280/products/253/1023/21__48704_copy__76767.1755183350.jpg?c=1",
+  "usb-can-canable2": "https://cdn.shopify.com/s/files/1/0478/7532/6101/products/FYSETC-UCAN-Board-Based-on-STM32F072-USB-to-CAN-Adapter-Support-with-CAnable-CandleLight-Klipper-firmware_e3321e86-3f1d-4340-886e-7fdda740ea04.jpg?v=1670897213",
+  "bumper-feet-12.7": "https://mm.digikey.com/Volume0/opasdata/d220001/derivates/1/003/249/318/MFG_19_SJ5003_sml%28200x200%29.jpg"
+ },
+ "risk": {
+  "dji-robomaster-snail-2305": {
+   "level": "high",
+   "checked": "2026-10-27",
+   "note": "DJI no longer lists it; the only seller found (aifitlab) has it on backorder. Fallback: a 2306 drone motor such as the iFlight XING-E Pro (M5 shaft, so a new flywheel hub; about twice the kV)."
+  },
+  "dji-robomaster-m2006-p36": {
+   "level": "high",
+   "checked": "2026-10-27",
+   "note": "Out of stock at DJI ($55) and backordered at aifitlab ($95). Fallback: a Damiao DM-2325 with its own driver, which also replaces the C610 (new mount, Damiao CAN protocol, 172 g against 90 g)."
+  },
+  "dji-c610-esc": {
+   "level": "high",
+   "checked": "2026-10-27",
+   "note": "DJI lists it at $39 but out of stock; the only other seller asks $250-320. Not needed with the DM-2325."
+  },
+  "odrive-botwheel": {
+   "level": "medium",
+   "checked": "2026-10-27",
+   "note": "Only ODrive sells it, in pairs ($269); singles are unavailable. Its EU store showed 40 pairs in stock. Buy spares with the first order."
+  },
+  "robstride-rs-04": {
+   "level": "medium",
+   "checked": "2026-10-27",
+   "note": "Five sellers, all shipping from China; aifitlab and roboticscenter.ai are on backorder (4-6 weeks). Seeed had 11 in stock and 80 due Nov 14 on 2026-10-25."
+  },
+  "picotronic-dd520-1-24-12x40": {
+   "level": "medium",
+   "checked": "2026-10-27",
+   "note": "In stock at the maker in Germany (about EUR 320 with VAT, 1-2 days in the EU; no US dealer). The orderable part is DD520-1-24(12x40)-QCW: its dot pulses at 1 kHz, which a camera may see flicker."
+  },
+  "bearing_61810": {
+   "level": "cost",
+   "checked": "2026-10-27",
+   "note": "McMaster's only sealed 6810 is 440C stainless at $194.88. A chrome-steel sealed 6810-2RS is $24.99 at VXB, and McMaster's shielded 6810-2Z (6656K229, $33.29, the one cad/turret.py names) fits the same seat."
+  },
+  "bearing_61812": {
+   "level": "cost",
+   "checked": "2026-10-27",
+   "note": "A sealed 6812-2RS is $38.58 at Bearings Direct (5 in stock) and $49.99 at VXB, against $69.11 for McMaster's shielded 6812-2Z: about $120 less per leg."
+  },
+  "bearing_6201": {
+   "level": "cost",
+   "checked": "2026-10-27",
+   "note": "The same 6201-2RS is $2.13 at Bearings Direct (4,428 in stock) and $5 at VXB, against $19.37 at McMaster: about $69 less per leg."
+  },
+  "kcd1-rocker-16a": {
+   "level": "fit",
+   "checked": "2026-10-27",
+   "note": "The stand's 21.2 x 15.2 cutout is the switch's bezel size: every KCD1-class datasheet asks for a 19.2-19.8 x 13.0 snap-in hole (by panel thickness, 3 mm at most), so the switch would fall through. The same cutout is in cad/turret_box.py. Only the E-Switch RCA1913 had a DC rating (16 A 30 VDC); no price was visible for it."
+  },
+  "fuse-holder-5x20-panel": {
+   "level": "fit",
+   "checked": "2026-10-27",
+   "note": "The Littelfuse 345 needs a 12.70-12.83 mm hole with an anti-rotation flat (12.07-12.19 across); Schurter's FEU 12.7-13. The stand's 12.6 mm round hole is too small. The 4 mm wall is fine."
+  },
+  "jack-3.5mm-panel": {
+   "level": "fit",
+   "checked": "2026-10-27",
+   "note": "The Switchcraft 35PM2A needs a 6.35 mm hole (the stand has 6.2), and 3.5 mm panel jacks take panels of about 2-2.5 mm: thin the stand's 4 mm front wall around the jack."
+  },
+  "amass-xt60e-f": {
+   "level": "check",
+   "checked": "2026-10-27",
+   "note": "Its screw spacing is not confirmed: the CAD has 2 x M2.5 on 28 mm; sellers say 25 mm or about 20 mm. Measure one (or slot the holes) before printing the stand."
+  },
+  "proto-board-70x50": {
+   "level": "fit",
+   "checked": "2026-10-27",
+   "note": "The stand's four M3 bosses sit on 66 x 50 mm centres, at the edges of a 70 x 50 board; its holes are a few mm in from the edges (probably 44-46 mm apart across). Measure the board and move the bosses."
+  },
+  "bumper-feet-12.7": {
+   "level": "check",
+   "checked": "2026-10-27",
+   "note": "No 3M Bumpon is 12.7 x 5.5 mm. The SJ5003 (11.2 x 5.1 mm dome) sits in the 13.2 mm recess with 1 mm play and stands 4.1 mm proud instead of 4.5."
+  },
+  "te-dt04-12pa-l012": {
+   "level": "missing",
+   "checked": "2026-10-27",
+   "note": "The receptacle also needs a W12P wedge lock and 12 size-16 pin contacts (TE: sold separately), which are not on the list. Buy plug and receptacle from one family (TE DT with TE DT, or Amphenol AT with AT)."
+  },
+  "fuse-5x20-5a-slow": {
+   "level": "check",
+   "checked": "2026-10-27",
+   "note": "Littelfuse rates the 218 series for 250 VAC only and publishes no DC rating; the stand feeds 24 V DC through it. A DC-rated 5 x 20 fuse would remove the doubt."
+  }
+ },
+ "parts": [
+  {
+   "key": "dji-c610-esc",
+   "id": "dji-c610-esc",
+   "category": "motor_driver",
+   "vendor": "DJI RoboMaster",
+   "model": "RoboMaster C610 (EAN 6958265164521)",
+   "name": "RoboMaster C610 Brushless DC Motor Speed Controller",
+   "price_usd": 39.0,
+   "price_note": "DJI Store (official, store.dji.com): $39 (USD)",
+   "price_checked": "2026-10-27",
+   "buy": [
+    {
+     "seller": "DJI Store",
+     "url": "https://store.dji.com/product/rm-c610-brushless-dc-motor-speed-control",
+     "in_stock": null,
+     "ships_from": null
+    }
+   ],
+   "stock": "Out of stock",
+   "specs": {},
+   "cad": {
+    "available": false
+   },
+   "sources": [
+    "https://store.dji.com/product/rm-c610-brushless-dc-motor-speed-control"
+   ],
+   "confidence": "product page",
+   "notes": "The catalogue's '$250' is real but misleading. It is the 'RM-C610 Brushless Motor Controller V2.0' variant on aifitlab's M2006 listing, backordered; a plain 'RM-C610' variant there is $320. Neither states a pack quantity, so both are single-unit prices, 6-8x DJI's official $39. DJI's own store is out of stock. No other seller was found (openelab, rcdrone, Pakronics, Unmanned Tech and D1 Store returned nothing). Treat the C610 as unbuyable at a sane price for now. Recommendation: replace the M2006 + C610 pair with an integrated-driver motor such as the Damiao DM-2325 rather than paying $250-320 for a C610.",
+   "status": "proposed: chosen for the plain-text BOM line, not in a catalogue file yet",
+   "evidence": "Product page JSON-LD: price '39', priceCurrency USD, availability OutOfStock; status out_of_stock. Also on the DJI RoboMaster category page with the same price and status."
+  },
+  {
+   "key": "picotronic-dd520-1-24-12x40",
+   "id": "picotronic-dd520-1-24-12x40",
+   "category": "turret",
+   "vendor": "Picotronic",
+   "model": "DD520-1-24(12x40)-QCW, order no. 70121025",
+   "name": "Dot laser module, direct green laser diode, 520 nm, 1 mW, 12-24 V DC, 12x40 mm, class 2, 1 kHz internal modulation",
+   "price_usd": null,
+   "price_note": "Picotronic: EUR 319.90 incl. VAT (EUR 268.82 net)",
+   "price_checked": "2026-10-27",
+   "buy": [
+    {
+     "seller": "Picotronic GmbH",
+     "url": "https://shop.picotronic.de/de/p/70121025",
+     "in_stock": null,
+     "ships_from": null
+    }
+   ],
+   "stock": "In stock; 1-2 days",
+   "specs": {},
+   "cad": {
+    "available": false
+   },
+   "sources": [
+    "https://shop.picotronic.de/de/p/70121025"
+   ],
+   "confidence": "product page",
+   "notes": "The orderable part is 'DD520-1-24(12x40)-QCW' (order no. 70121025). Picotronic's site search for 'DD520-1-24' returns only the -QCW version, so the catalogue name should carry the suffix. QCW here means 1 kHz internal modulation, so the dot is pulsed. A turret camera with exposure under ~1 ms or a rolling shutter may see it flicker or band. Price is high (EUR 268,82 net) but it is in stock at the maker with 1-2 day EU delivery; US shipping cost was not checked. Picotronic's dealer list names TME (tme.eu), Elmekanic (NL), Optoprim, ProPC (IT) and Quantum Optronics, and no US dealer. TME blocked automated reads, so no second-seller price was verified. Another maker's Ø12 class 2 520 nm module was not verified: the web-search budget ran out and Thorlabs product pages are JavaScript-only.",
+   "status": "proposed: chosen for the plain-text BOM line, not in a catalogue file yet",
+   "evidence": "English product page https://www.picotronic.de/picopage/en/product/detail/id/356547 (order no. 70121025, net price 268,82, specs: 520 nm, 1 mW, class 2, 0.5 mrad, <8 mm @ 10 m, 12-24 V typ 24 V DC, 5-20 mA typ 10 mA, 16 g, 100 mm 26 AWG leads, 3 mm aperture, aluminium, -10 to 60 °C, 1 kHz internal modulation; datasheet https://media.picotronic.de/datasheets/DD520-1-24%2812x40%29-QCW.pdf). Shop page meta: og:url https://shop.picotronic.de/de/p/70121025, product:price:amount 319.9 EUR."
+  },
+  {
+   "key": "te-dt04-12pa-l012",
+   "id": "te-dt04-12pa-l012",
+   "category": "wiring",
+   "vendor": "TE Connectivity (Deutsch)",
+   "model": "DT04-12PA-L012",
+   "name": "DT 12-way receptacle (pin side), key A, grey, flange mount (L012 mod) - LCSC C6423585",
+   "price_usd": 10.3574,
+   "price_note": "LCSC Electronics: $10.3574 (1+), $9.0582 (10+); page meta says 'From $7.6021' at volume",
+   "price_checked": "2026-10-27",
+   "buy": [
+    {
+     "seller": "LCSC Electronics",
+     "url": "https://www.lcsc.com/product-detail/C6423585.html",
+     "in_stock": null,
+     "ships_from": null
+    }
+   ],
+   "stock": "In stock (200)",
+   "specs": {},
+   "cad": {
+    "available": false
+   },
+   "sources": [
+    "https://www.lcsc.com/product-detail/C6423585.html",
+    "https://datasheet.lcsc.com/datasheet/pdf/c1d43e7dcc8c252bac81e39fc4287bbb.pdf?productCode=C6423585"
+   ],
+   "confidence": "product page",
+   "notes": "Fit and ratings from TE drawing 114-151009 (read as text, so check the PDF view before using): the recommended-panel-cutout figures are 44.96 +-0.07, 23.88 +-0.07, 41.83 +-0.12, 23.52 +-0.12, R6.35 and dia 4.29 +-0.07 mm. Recommended screw 6-32 [M4] at 2.26-2.82 N m. Housing PA66 GF15, size 16 contacts, 14-20 AWG, 13 A (Amphenol drawing). The parts list leaves out two things the receptacle side needs: a W12P wedge lock (TE: 'sold separately') and 12 size-16 PIN contacts. I did not check the TE pin part number. Amphenol equivalents at Chief: AT60-202-16141 pin $0.46 (13,004 in stock); AW12P wedge $0.27 (0 in stock). The Amphenol AT04-12PA-L012 is the drop-in AT part with the same flange, but the only seller I could read sells it in 250s. Amphenol notes that its IP rating does not apply to the panel joint, so a separate panel gasket is needed for sealing.",
+   "status": "proposed: chosen for the plain-text BOM line, not in a catalogue file yet",
+   "evidence": "Read the LCSC product page with curl: productModel DT04-12PA-L012, brand TE Connectivity, ladder 1+ $10.3574 / 10+ $9.0582, stockNumber 200, minimum 1, og:image, pdfUrl. Datasheet = TE customer drawing 114-151009 (DT04-12PX-L012, rev D), read with pdftotext: '12 WAY RECEPTACLE W/ FLANGE-L012 MOD', mates DT06-12SX plug, 'SECONDARY WEDGE LOCK SOLD SEPARATELY: W12P-XXXX', recommended screw 6-32 [M4] at 20-25 in-lb."
+  },
+  {
+   "key": "te-dt06-12sa-kit",
+   "id": "te-dt06-12sa-kit",
+   "category": "wiring",
+   "vendor": "TE Connectivity (Deutsch)",
+   "model": "DT06-12SA (+ W12S wedge + 12 x 0462-201-16141 sockets)",
+   "name": "CONN PLUG HSG 12POS - DT 12-way plug (socket side), key A",
+   "price_usd": 8.5,
+   "price_note": "about $8.50 for the kit: DT06-12SA $4.22 + W12S $0.42 + 12 x 0462-201-16141 at about $0.32 (75-piece minimum), from Digi-Key and Future Electronics search results",
+   "price_checked": "2026-10-27",
+   "buy": [
+    {
+     "seller": "Digi-Key",
+     "url": "https://www.digikey.com/en/products/detail/te-connectivity-deutsch-ict-connectors/DT06-12SA/6566568",
+     "in_stock": null,
+     "ships_from": null
+    }
+   ],
+   "stock": null,
+   "specs": {},
+   "cad": {
+    "available": false
+   },
+   "sources": [
+    "https://www.digikey.com/en/products/detail/te-connectivity-deutsch-ict-connectors/DT06-12SA/6566568"
+   ],
+   "confidence": "product page",
+   "notes": "The kit is 1 x DT06-12SA + 1 x W12S + 12 x 0462-201-16141 (size 16 socket, 16-20 AWG). Qty-1 cost seen: $4.22 + $0.42 + 12 x about $0.32 = about $8.5. Future's contact price has a 75-piece minimum, so about $24 for 75. I could not see Digi-Key stock. The Amphenol AT kit from one in-stock seller costs $10.49. To be safe, buy the plug and receptacle from the same family (TE DT with TE DT, or Amphenol AT with Amphenol AT). The solid contacts need a size-16 crimp tool (not researched).",
+   "status": "proposed: chosen for the plain-text BOM line, not in a catalogue file yet",
+   "evidence": "Digi-Key keyword search pages, read via WebFetch: DT06-12SA 'CONN PLUG HSG 12POS', TE Connectivity Deutsch Connectors, $4.22000, detail link and image as above. W12S 'DT WEDGELOCK', $0.42000, https://www.digikey.com/en/products/detail/te-connectivity-deutsch-ict-connectors/W12S/6566599, image https://mm.digikey.com/Volume0/opasdata/d220001/derivates/1/300/321/011/W12S_sml%28200x200%29.jpg. Stock is not shown on search pages, and Digi-Key product pages returned 403. The Digi-Key search for 0462-201-16141 was blocked. Contact price and stock from search snippets: Future Electronics about 13,803 in stock, $0.32 at 75 down to $0.29 at 3,000+ (https://www.futureelectronics.com/p/interconnect--deutsch-connectors/0462-201-16141-te-connectivity-6199151); Buerklin EUR 0.357, 5,052 pcs (https://buerklin.com/en/p/deutsch/crimp-contacts/0462-201-16141/36P0013)."
+  },
+  {
+   "key": "amass-xt60e-f",
+   "id": "amass-xt60e-f",
+   "category": "wiring",
+   "vendor": "Amass",
+   "model": "XT60E-F",
+   "name": "XT60E-F Amass XT60 Female Bullet Plug Connector 2-Position for RC Battery, Panel Mount 60A",
+   "price_usd": 0.95,
+   "price_note": "Jameco Electronics: $0.95 each, $0.69 at 100+ (search snippet)",
+   "price_checked": "2026-10-27",
+   "buy": [
+    {
+     "seller": "Jameco Electronics",
+     "url": "https://www.jameco.com/z/XT60E-F-Amass-XT60-Female-Bullet-Plug-Connector-2-Position-for-RC-Battery-Panel-Mount-60A_2338319.html",
+     "in_stock": null,
+     "ships_from": null
+    }
+   ],
+   "stock": "In stock (974); more in 5 weeks",
+   "specs": {},
+   "cad": {
+    "available": false
+   },
+   "sources": [
+    "https://www.jameco.com/z/XT60E-F-Amass-XT60-Female-Bullet-Plug-Connector-2-Position-for-RC-Battery-Panel-Mount-60A_2338319.html",
+    "https://www.electrokit.com/upload/quick/1a/fb/ccf3_41037928-tds.pdf"
+   ],
+   "confidence": "product page",
+   "notes": "MOUNTING PITCH NOT CONFIRMED. The design uses 2 x M2.5 holes on 28 mm with a 16.6 x 8.6 mm cutout. The Amass XT60E-F drawing is a raster image. OCR of it read 34.00 (flange length) and 14.00 mm; 14.00 would fit holes at +-14 = 28 mm, but that reading is not confirmed. A Rosfix XT60E-F seller listing says the holes are 25 mm apart (search snippet). A buyer measured about 20.4 mm on an XT60E-M and said it takes M2.5 screws, while another seller says M3 (search snippets). Measure a delivered part before printing, or slot the two holes over about 24-29 mm. The 16.6 x 8.6 cutout was not checked against a drawing. Ratings: 35 A at 12 AWG, 500 V DC (Amass TDS). Polarity convention: a female socket on the stand means the PSU lead carries exposed male pins. Consider an XT60E-M on the panel instead, which changes the mating lead's gender.",
+   "status": "proposed: chosen for the plain-text BOM line, not in a catalogue file yet",
+   "evidence": "Jameco blocked curl and WebFetch (Cloudflare 403), including its product-image URL, so price and stock come from a WebSearch summary of this listing. Datasheet = Amass spec sheet 2022V1 for the XT60E-F series (hosted by Electrokit), read with pdftotext and OCR: 180-degree solder, panel mount, mates XT60U-M, 35 A max (12 AWG, rise < 85 C), 500 V DC, IP40, -20 to 120 C, PA housing, gold-plated copper-alloy contacts."
+  },
+  {
+   "key": "kcd1-rocker-16a",
+   "id": "kcd1-rocker-16a",
+   "category": "power_distribution",
+   "vendor": "E-Switch",
+   "model": "RCA1913F1CBLKBLKWHT3",
+   "name": "RCA1913 series sealed rocker, SPST Off-On, rating C = 16 A 30 VDC, 0.187 in quick-connect, black housing and actuator, white I/O vertical marking, IP68, 21 x 15 mm bezel",
+   "price_usd": null,
+   "price_note": null,
+   "price_checked": "2026-10-27",
+   "buy": [
+    {
+     "seller": "E-Switch",
+     "url": "https://configured-product-images.s3.amazonaws.com/2D/specs/RCA1913F1CBLKBLKWHT3.pdf",
+     "in_stock": null,
+     "ships_from": null
+    }
+   ],
+   "stock": null,
+   "specs": {},
+   "cad": {
+    "available": false
+   },
+   "sources": [
+    "https://configured-product-images.s3.amazonaws.com/2D/specs/RCA1913F1CBLKBLKWHT3.pdf",
+    "https://configured-product-images.s3.amazonaws.com/Datasheets/RCA1913.pdf"
+   ],
+   "confidence": "product page",
+   "notes": "MISMATCH: '21 x 15' is the KCD1 BEZEL, not the hole. Every datasheet I read calls for a snap-in hole of about 19.2-19.8 x 12.9-13.0 mm: E-Switch RCA1913, E-Switch RA1, Wurth WS-RSTV, and the SHOU HAN KCD1-2P-X drawing on LCSC (bezel 21 x 15, body about 18.6 x 12.3). The stand's 21.2 x 15.2 cutout (cad/turret_stand.py, and the same in cad/turret_box.py) would let the switch fall through. Change it to about 19.4 x 13.0 for a 1.25-2.0 mm panel, or 19.8 x 13.0 for 2-3 mm. LCSC's KCD1 guide gives 21.2 x 15.0, which is the bezel; the design's number probably came from there. Panel thickness: these snap-ins accept 0.75-3.0 mm, but the front wall is 4 mm (WALL = 4.0), so pocket it to about 2 mm around the switch. Ratings: ordinary KCD1s are AC-only. LCSC's guide gives 6 A 250 VAC; LCSC lists SHOU HAN KCD1-2P-X (C5884416, out of stock) at 6 A, while its drawing says 3 A 250 VAC / 5 A 125 VAC. The only KCD1-format part I found with a DC rating is E-Switch RCA1913 with rating C (16 A 30 VDC), which covers 24 V DC behind the 5 A fuse. None of the three branded parts got a verified price: this item is hard to buy until someone checks Digi-Key or Mouser by hand.",
+   "status": "proposed: chosen for the plain-text BOM line, not in a catalogue file yet",
+   "evidence": "Read the E-Switch RCA1913 series datasheet (dated 2/2/2026): ratings A = 16(8)A 125/250VAC, B = 10(4)A 125/250VAC, C = 16A 30VDC (one rating per part), IP68, 19 x 13 mm cutout, 0-55 C. Also read E-Switch's configured spec sheet for this exact code (rev A, ECO-103944, 03/02/26): 'RATING: 16A, 30VDC T55', SPST, bezel 21.00 x 15.00 mm, recommended panel cutout 19.20 / 19.40 / 19.80 mm (+0/-0.10) x 13.00 mm (+0.15/-0) for panel 0.75-1.25 / 1.25-2.00 / 2.00-3.00 mm, 4.75 mm (0.187 in) tabs. I could not read a distributor price or stock: Digi-Key and Mouser blocked or rate-limited automated reads, and the web-search and WebFetch session limits were reached."
+  },
+  {
+   "key": "fuse-holder-5x20-panel",
+   "id": "fuse-holder-5x20-panel",
+   "category": "power_distribution",
+   "vendor": "Littelfuse",
+   "model": "03455LS1H",
+   "name": "FUSE HLDR CART 250V 10A PNL MNT - 345 series shock-safe panel holder, 5 x 20 mm, low-profile body, screwdriver-slot knob, 3/16 in right-angle dual-purpose solder/QC terminals",
+   "price_usd": 7.16,
+   "price_note": "Digi-Key: $7.16000 (qty-1 price on Digi-Key search results)",
+   "price_checked": "2026-10-27",
+   "buy": [
+    {
+     "seller": "Digi-Key",
+     "url": "https://www.digikey.com/en/products/detail/littelfuse-inc/03455LS1H/553826",
+     "in_stock": null,
+     "ships_from": null
+    }
+   ],
+   "stock": null,
+   "specs": {},
+   "cad": {
+    "available": false
+   },
+   "sources": [
+    "https://www.digikey.com/en/products/detail/littelfuse-inc/03455LS1H/553826",
+    "https://datasheet.lcsc.com/datasheet/pdf/fdf4c8f122bd48fe70625a32a738e03d.pdf?productCode=C206937"
+   ],
+   "confidence": "product page",
+   "notes": "MISMATCH: both branded holders I read use a 1/2 in-class thread: Littelfuse 345 ('special 1/2 in thread', hole 12.70-12.83 mm with a flat) and Schurter FEU (M12.7 x 1.5, hole about 12.7-13 mm). The stand's 12.6 mm round hole is 0.1-0.4 mm too small. Open it to about 12.8 mm and add the anti-rotation flat (12.07-12.19 mm across the flat for the 345). Panel thickness: 345 low-profile 0.81-7.87 mm, FEU max 7 mm, so the 4 mm front wall is fine. Search snippets mentioned a 10 A holder for a 12.5 mm hole (SCI brand, panel up to 4.5 mm, Videotronics listing) and an RS PRO HTC-type holder with a '12.7 dia, 12.0 A/F' cutout; neither was verified on a page. Price is clear only for the Littelfuse part ($7.16 at Digi-Key); LCSC has it at $1.40 but out of stock.",
+   "status": "proposed: chosen for the plain-text BOM line, not in a catalogue file yet",
+   "evidence": "Digi-Key keyword search page (WebFetch) listed 03455LS1H 'FUSE HLDR CART 250V 10A PNL MNT', Littelfuse Inc., $7.16000, with the detail link and image; stock not shown, and the product page returned 403. Littelfuse 345 series datasheet (LCSC-hosted, pdftotext): 'special 1/2 in thread'; suggested mounting hole .500-.505 in (12.70-12.83 mm) with flats (.475-.480 in / .460-.465 in figures); panel thickness .032-.310 in (0.81-7.87 mm) for low- and high-profile bodies; ordering code 0 345 5 LS 1 H = 5x20 mm, low-profile body with screwdriver-slot knob, 3/16 in right-angle dual-purpose solder/QC, bulk; approvals 10 A 250 V for 5x20. Littelfuse's 218-series fuse datasheet lists the 345 as a recommended holder."
+  },
+  {
+   "key": "fuse-5x20-5a-slow",
+   "id": "fuse-5x20-5a-slow",
+   "category": "power_distribution",
+   "vendor": "Littelfuse",
+   "model": "0218005.MXP",
+   "name": "218 series 5 x 20 mm time-lag glass fuse, 5 A 250 V (LCSC C142728)",
+   "price_usd": 0.2017,
+   "price_note": "LCSC Electronics: $0.2017 (5+, minimum 5), $0.1679 (50+), $0.1535 (150+), $0.1354 (500+), $0.1274 (2500+), $0.1226 (5000+)",
+   "price_checked": "2026-10-27",
+   "buy": [
+    {
+     "seller": "LCSC Electronics",
+     "url": "https://www.lcsc.com/product-detail/C142728.html",
+     "in_stock": null,
+     "ships_from": null
+    }
+   ],
+   "stock": "In stock (2,510)",
+   "specs": {},
+   "cad": {
+    "available": false
+   },
+   "sources": [
+    "https://www.lcsc.com/product-detail/C142728.html",
+    "https://datasheet.lcsc.com/datasheet/pdf/4694f7fbc1b8e8a5ccca49991fa5ebd5.pdf?productCode=C142728"
+   ],
+   "confidence": "product page",
+   "notes": "5 A time-lag (T) 5x20 mm glass fuse, 250 VAC, 50 A breaking capacity at 250 VAC. Littelfuse publishes no DC rating for the 218 series. A 24 V DC bench feed behind it is common practice, but formally the fuse is AC-rated. I could not check the Bel 5ST/5HT or Eaton S505 alternatives (search budget exhausted); a DC-rated 5x20 fuse would remove the doubt. It fits any 5x20 holder (the Littelfuse 345 holder is listed as a recommended accessory).",
+   "status": "proposed: chosen for the plain-text BOM line, not in a catalogue file yet",
+   "evidence": "Read the LCSC page data: model 0218005.MXP, Littelfuse, '5A Glass Tube Fuse D5.2xL20mm', price ladder, stock 2510, minimum order 5. Littelfuse 218 datasheet (pdftotext): 5x20 mm time-lag; the 005. row gives 5 A, 250 V, interrupting rating 50 A @ 250 VAC, cold resistance 0.0104 ohm, melting I2t 111 A2s. No DC rating is listed."
+  },
+  {
+   "key": "jack-3.5mm-panel",
+   "id": "jack-3.5mm-panel",
+   "category": "wiring",
+   "vendor": "Switchcraft",
+   "model": "35PM2A",
+   "name": "3.5 mm mono jack, panel mount, 2 contacts, solder, threaded bushing (1/4 in-32)",
+   "price_usd": 6.95,
+   "price_note": "Master Electronics: about $6.95 each at 5 (minimum order 5), about $4.67 at 100, about $3.61 at 5,000+ (search snippet)",
+   "price_checked": "2026-10-27",
+   "buy": [
+    {
+     "seller": "Master Electronics",
+     "url": "https://www.masterelectronics.com/en/switchcraft/35pm2a-12319088.html",
+     "in_stock": null,
+     "ships_from": null
+    }
+   ],
+   "stock": "In stock",
+   "specs": {},
+   "cad": {
+    "available": false
+   },
+   "sources": [
+    "https://www.masterelectronics.com/en/switchcraft/35pm2a-12319088.html"
+   ],
+   "confidence": "product page",
+   "notes": "MISMATCH: the Switchcraft 35PM2A needs a 6.35 mm (1/4 in-32) hole, and the stand's 6.2 mm hole is too small; make it about 6.5 mm. Panel thickness is the bigger problem. The front wall is 4 mm, while typical 3.5 mm panel jacks take only thin panels: Canford max 2.5 mm, and a SparkFun user comment advises no more than 2 mm (search snippets). Thin the wall locally to about 2 mm, or use a long-bushing jack once its drawing is checked. Mono is enough because the pendant uses 2 contacts; the AbleNet switches below end in a 3.5 mm MONO plug.",
+   "status": "proposed: chosen for the plain-text BOM line, not in a catalogue file yet",
+   "evidence": "Master Electronics returned 403 to curl. Price, stock and description ('3.5MM mono jack, female, straight, panel mount, 2 contacts, tin, solder, 48 VDC max') are from a WebSearch summary. Panel hole 0.250 in (6.35 mm) and thread 1/4 in-32 are from a search summary of the Digi-Key listing (https://www.digikey.com/en/products/detail/switchcraft-inc/35PM2A/1288954). Bushing length and maximum panel thickness were not found: the Switchcraft drawing URL I tried returned 404."
+  },
+  {
+   "key": "pendant-hold-to-run",
+   "id": "pendant-hold-to-run",
+   "category": "estop",
+   "vendor": "AbleNet",
+   "model": "Specs IC (SKU 10000114)",
+   "name": "Specs IC switch - 1 3/8 in (3.5 cm) momentary button, 3.5 mm mono plug, 6 ft (183 cm) cord",
+   "price_usd": 75.0,
+   "price_note": "AbleNet: $75.00",
+   "price_checked": "2026-10-27",
+   "buy": [
+    {
+     "seller": "AbleNet",
+     "url": "https://www.ablenetinc.com/specs-ic/",
+     "in_stock": null,
+     "ships_from": null
+    }
+   ],
+   "stock": "In stock",
+   "specs": {},
+   "cad": {
+    "available": false
+   },
+   "sources": [
+    "https://www.ablenetinc.com/specs-ic/",
+    "https://www.ablenetinc.com/content/html/Technical_Specifications/10000114-specifications.txt"
+   ],
+   "confidence": "product page",
+   "notes": "Both AbleNet switches are normally-open momentary contacts with a 3.5 mm mono plug and a 1.83 m cord (the brief asked for about 2 m), so they plug straight into the panel jack with no adapter. The AbleNet pages publish no contact rating, so the pendant should carry only the safety-line signal, never motor current. A search snippet mentions Abilia's Lolly switch (3.5 mm mono, 1.8 m cable, 24 V AC/DC 2 A), but I did not verify it on a page. The Coyote Direct button is the most pendant-like but needs a plug soldered on. I did not look at camera remote-release cables.",
+   "status": "proposed: chosen for the plain-text BOM line, not in a catalogue file yet",
+   "evidence": "Read the AbleNet page (BigCommerce JSON-LD): SKU 10000114, price 75, InStock. Spec sheet: mechanical, wired, cord 6 ft (183 cm), activation surface 1.375 in (3.5 cm), force 3.92 oz (111 g), travel 0.029 in, audible click plus tactile feedback, plug 1/8 in / 3.5 mm mono, size 5 x 5 x 1.6 cm (small enough to hold in a hand)."
+  },
+  {
+   "key": "usb-can-canable2",
+   "id": "usb-can-canable2",
+   "category": "can_adapter",
+   "vendor": "FYSETC",
+   "model": "UCAN (SKU MM-U2CAN-0001)",
+   "name": "UCAN Board Based on STM32F072 USB to CAN Adapter Support with CAnable / CandleLight / Klipper firmware",
+   "price_usd": 8.0,
+   "price_note": "FYSETC (official store): $8.00",
+   "price_checked": "2026-10-27",
+   "buy": [
+    {
+     "seller": "FYSETC",
+     "url": "https://www.fysetc.com/products/fysetc-ucan-board",
+     "in_stock": null,
+     "ships_from": null
+    }
+   ],
+   "stock": "Orderable",
+   "specs": {},
+   "cad": {
+    "available": false
+   },
+   "sources": [
+    "https://www.fysetc.com/products/fysetc-ucan-board"
+   ],
+   "confidence": "product page",
+   "notes": "'CANable 2.0 class' means an STM32 USB-CAN adapter running either slcan (a serial device, needs slcand) or candleLight (gs_usb, native SocketCAN can0). The original CANable 2.0 ($35, Openlight Labs) is sold out. The FYSETC UCAN ($8, STM32F072, USB-C) is the CANable-1.0-compatible version: classic CAN only, which is enough for the bench at up to 1 Mbit/s; flash candleLight to get gs_usb. The BTT U2C V2.1 ($23.99) already runs a candleLight fork. Makerbase MKS CANable V2.0 and InnoMaker USB2CAN were not priced: Makerbase's site returned 403, Amazon and AliExpress are not machine-readable, and InnoMaker's page (https://www.inno-maker.com/product/usb-can/) shows no price. No board size was checked against the stand's 50 x 20 x 12 mm envelope or its 12 x 6 mm USB-C slot.",
+   "status": "proposed: chosen for the plain-text BOM line, not in a catalogue file yet",
+   "evidence": "Read the Shopify product JSON: STM32F072, 'Type-C USB socket', CAN 2.0A/B up to 1 Mbit/s, 'compatible with CANable hardware', ships enumerating as a virtual serial port (slcan); 'With the alternative Candlelight firmware, UCAN is enumerated as the native CAN interface on Linux'; 3-pin screw terminal CANH/CANL/GND; jumper for the bootloader; 120 ohm termination on by default, jumper to disable."
+  },
+  {
+   "key": "proto-board-70x50",
+   "id": "proto-board-70x50",
+   "category": "wiring",
+   "vendor": "generic",
+   "model": "double-sided prototype board 50 x 70 mm",
+   "name": "Double Side Prototyping Board 50x70mm",
+   "price_usd": 0.99,
+   "price_note": "Tayda Electronics: $0.99 (search snippet)",
+   "price_checked": "2026-10-27",
+   "buy": [
+    {
+     "seller": "Tayda Electronics",
+     "url": "https://www.taydaelectronics.com/double-side-prototyping-board-50x70mm.html",
+     "in_stock": null,
+     "ships_from": null
+    }
+   ],
+   "stock": null,
+   "specs": {},
+   "cad": {
+    "available": false
+   },
+   "sources": [
+    "https://www.taydaelectronics.com/double-side-prototyping-board-50x70mm.html"
+   ],
+   "confidence": "product page",
+   "notes": "MISMATCH (board mounting): the stand's four M3 insert bosses are on 66 x 50 mm centres (cad/turret_stand.py: x = -60 and 6, y = +-25). On a 70 x 50 mm board, holes 50 mm apart in y would sit on the board's long edges. Generic 5 x 7 cm boards put their corner holes a few mm in from each edge, but no page I read gave their size or position. Measure the board and move the bosses (y pitch probably about 44-46 mm), or mount the board on its edges with clips. Terminal block: Phoenix Contact MKDS 1,5/2-5,08 (1715721), rated 17.5 A / 250 V, 5.08 mm pitch. LCSC had only 2 in stock.",
+   "status": "proposed: chosen for the plain-text BOM line, not in a catalogue file yet",
+   "evidence": "Tayda blocked curl and WebFetch (Cloudflare 403). From a WebSearch summary: 50 x 70 mm, double-sided, 1.6 mm thick, 2.54 mm pitch, 1 mm holes, $0.99. Mounting-hole size and position were not visible. Terminal block for the 24 V input: Phoenix Contact MKDS 1,5/2-5,08 = 1715721 at LCSC C480516 (https://www.lcsc.com/product-detail/C480516.html): $0.4358 (1+), $0.3401 (10+), only 2 in stock at check; 17.5 A, 250 V, 5.08 mm pitch, 14-30 AWG; image https://assets.lcsc.com/images/lcsc/900x900/20251016_Phoenix-Contact-1715721_C480516_front.jpg; datasheet https://datasheet.lcsc.com/datasheet/pdf/451ddc8e0fd091a5d2c5c858e4388910.pdf?productCode=C480516. Search snippets (not verified) put Mouser at $1.21 for 1."
+  },
+  {
+   "key": "bumper-feet-12.7",
+   "id": "bumper-feet-12.7",
+   "category": "fastener",
+   "vendor": "3M",
+   "model": "SJ5003 (Bumpon)",
+   "name": "3M Bumpon SJ5003 - hemisphere, 0.440 in (11.2 mm) diameter x 0.200 in (5.1 mm) high",
+   "price_usd": null,
+   "price_note": "Digi-Key: per-piece price unclear",
+   "price_checked": "2026-10-27",
+   "buy": [
+    {
+     "seller": "Digi-Key",
+     "url": "https://www.digikey.com/en/products/detail/3m/SJ5003/26770367",
+     "in_stock": null,
+     "ships_from": null
+    }
+   ],
+   "stock": null,
+   "specs": {},
+   "cad": {
+    "available": false
+   },
+   "sources": [
+    "https://www.digikey.com/en/products/detail/3m/SJ5003/26770367",
+    "https://www.digikey.com/en/supplier-centers/3m/bumpon-protective-products-and-rollstock"
+   ],
+   "confidence": "product page",
+   "notes": "No 3M Bumpon is a 12.7 x 5.5 mm round foot. Closest: SJ5003 (or clear SJ5303), an 11.2 x 5.1 mm hemisphere. It fits the 13.2 mm x 1 mm recess with about 1 mm radial play and stands about 4.1 mm proud, against 4.5 in the model. Alternatively SJ5012 / SJ5312, 12.7 x 3.6 mm cylinders, sit centred but only about 2.6 mm proud. SJ6115 (15.88 x 4.75) is too wide for the recess, SJ5302 (7.9 x 2.2) is too small, and SJ5018 is a 12.7 mm square whose roughly 18 mm diagonal will not sit in the round recess. Update the foot envelope in cad/turret_stand.py (dia 12.7 x 5.5) to the chosen part. 3M sells Bumpons on sheets and rolls, and Digi-Key's per-unit pack size was not readable. The stand is clamped to the bench, so foot height matters little.",
+   "status": "proposed: chosen for the plain-text BOM line, not in a catalogue file yet",
+   "evidence": "Digi-Key's 3M Bumpon supplier-centre table (WebFetch) gives SJ5003 hemisphere 0.440 in / 11.2 mm x 0.200 in / 5.1 mm. Other sizes in the table: SJ5303 (clear) is the same 11.2 x 5.1; SJ5012 cylinder 0.500 / 12.7 x 0.140 / 3.6; SJ5001 12.7 x 3.6; SJ5312 clear 12.7 x 3.6; SJ5302 clear 7.9 x 2.2; SJ5018 12.7 mm SQUARE x 5.8; SJ5027 hemisphere 16.0 x 7.9. A search snippet of 3M's page gives SJ6115 as 0.625 in / 15.88 mm x 0.187 in / 4.75 mm. The Digi-Key search for SJ5003 listed the three entries above (/en/products/detail/3m/SJ5003/26737977, /26770367, /3866043); product pages returned 403, so per-piece price and pack size are unknown."
+  }
+ ]
+}

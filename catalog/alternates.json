@@ -1,0 +1,1371 @@
+{
+ "amass-xt60e-f": [
+  {
+   "supplier": "Maplin",
+   "part_number": "XT60E-F (Maplin SKU 486711)",
+   "url": "https://pro.maplin.co.uk/products/female-xt60e-panel-mount-gold-plated-connector-20a-amass",
+   "price": "GBP 1.02",
+   "stock": "Out of stock",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "Read the Shopify product JSON: 'XT60E-F Female Panel Mount Gold Plated Connector 30A AMASS', vendor AMASS, price 102 (pence), available false, barcode 5063200339993. The description says 30 A and recommends 16 AWG."
+  },
+  {
+   "supplier": "Electrokit",
+   "part_number": "XT60E-F (Electrokit art. 4103 7928)",
+   "url": "https://www.electrokit.com/en/xt90-stromkontakt-2-pol-3060a-hona-chassi",
+   "price": "16 SEK including 25% VAT",
+   "stock": "Out of stock",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "Read the page despite its odd 'xt90' URL slug: 'XT60 power connector 2-pin 35(60)A female chassis', Manufacturer AMASS, Model XT60E-F, 500 VDC, 35 A with 12 AWG, 60 A for 1 min, dimensions 34.0 x 20.2 x 15.8 mm, panel mount, links the Amass TDS above."
+  },
+  {
+   "supplier": "LCSC",
+   "part_number": "XT60E-M.G.Y (Amass male panel-mount version; LCSC C3040679)",
+   "url": "https://www.lcsc.com/product-detail/C3040679.html",
+   "price": "$0.613 (1+), $0.5818 (10+), $0.4589 (500+), $0.4425 (1000+)",
+   "price_usd_each": 0.613,
+   "stock": "In stock (3,091)",
+   "drop_in": false,
+   "changes": "Male pins on the panel instead of female sockets, so the 24 V supply lead would carry the female plug, the usual source-side gender, which keeps the live side shrouded. Its LCSC datasheet is an image-only Amass sheet titled XT60E1-M (rated 20 A at 16 AWG per UL1977, 500 V DC). I could not confirm that its flange, cutout or hole pitch match the XT60E-F, so re-check the 16.6 x 8.6 mm cutout and the screw holes before reusing them.",
+   "checked": "2026-10-27",
+   "evidence": "Read the LCSC page data: model XT60E-M.G.Y, Changzhou Amass Elec, price ladder and stock above, datasheet https://datasheet.lcsc.com/datasheet/pdf/64afc687316c2b3fea90e9f41a370702.pdf?productCode=C3040679 (image-only PDF; OCR read the ratings, not the drawing dimensions)."
+  }
+ ],
+ "bearing_61810": [
+  {
+   "supplier": "VXB Bearings",
+   "part_number": "Kit7458",
+   "url": "https://vxb.com/products/6810-2rs-bearing-50x65x7mm-sealed",
+   "price": "$24.99",
+   "price_usd_each": 24.99,
+   "pack_qty": 1,
+   "stock": "In stock",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "curl of the Shopify product JSON: '6810-2RS Bearing 50x65x7mm - Sealed Ball Bearing - Thin Section', SKU Kit7458, chrome steel, 1 bearing. It is chrome steel rather than McMaster's 440C stainless: same seat, less corrosion resistance. This is the cheaper chrome-steel alternate you asked for."
+  },
+  {
+   "supplier": "Bearings Direct",
+   "part_number": "6810-2RS",
+   "url": "https://bearingsdirect.com/6810-2rs-ball-bearing-50x65x7-sealed/",
+   "price": "$29.19",
+   "price_usd_each": 29.19,
+   "pack_qty": 1,
+   "stock": "In stock (1)",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "curl of product page: '6810-2RS Ball Bearing 50x65x7 Sealed', SKU 6810-2RS, chrome steel SAE-52100, rubber sealed. Only 1 in stock. A 6810-ZZ (listed with interchange 61810.2ZR) is also $29.19."
+  },
+  {
+   "supplier": "McMaster-Carr",
+   "part_number": "6656K229",
+   "url": "https://www.mcmaster.com/6656K229/",
+   "price": "$33.29 each",
+   "price_usd_each": 33.29,
+   "pack_qty": 1,
+   "stock": "Delivers tomorrow 7-9 am",
+   "drop_in": true,
+   "changes": "Chrome-steel 6810-2Z, shielded rather than sealed: the same 50 x 65 x 7 seat at a sixth of the price (the apex already uses the shielded 61812). Not stainless.",
+   "checked": "2026-10-27",
+   "evidence": "McMaster product page: Steel Ball Bearing, Steel, Shielded, Trade Number 6810-2Z, ABEC Rating 1"
+  },
+  {
+   "supplier": "McMaster-Carr",
+   "part_number": "6656K142",
+   "url": "https://www.mcmaster.com/6656K142/",
+   "price": "$29.97 each",
+   "price_usd_each": 29.97,
+   "pack_qty": 1,
+   "stock": "Delivers tomorrow 7-9 am",
+   "drop_in": true,
+   "changes": "Open 6810: the same 50 x 65 x 7 seat; no shields, so dust gets into the pan bearing.",
+   "checked": "2026-10-27",
+   "evidence": "McMaster product page: Steel Ball Bearing, Steel, Open, Trade No. 6810, for 50 mm Shaft Diameter"
+  }
+ ],
+ "bearing_61812": [
+  {
+   "supplier": "Bearings Direct",
+   "part_number": "6812-2RS",
+   "url": "https://bearingsdirect.com/6812-2rs-ball-bearing-60x78x10-sealed/",
+   "price": "$38.58",
+   "price_usd_each": 38.58,
+   "pack_qty": 1,
+   "stock": "In stock (5)",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "curl of product page: H1 '6812-2RS Ball Bearing 60x78x10 Sealed', SKU 6812-2RS, 60 x 78 x 10 mm, rubber sealed, chrome steel SAE-52100, interchange 6812RS/6812LU/6812DU. Only 5 on hand vs 4 needed per leg."
+  },
+  {
+   "supplier": "VXB Bearings",
+   "part_number": "Kit7454",
+   "url": "https://vxb.com/products/6812-2rs-bearing-60x78x10-sealed",
+   "price": "$49.99",
+   "price_usd_each": 49.99,
+   "pack_qty": 1,
+   "stock": "In stock",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "curl of the Shopify product JSON (vxb.com/products/<handle>.js): '6812-2RS Bearing 60x78x10mm Sealed Ball Bearing', SKU Kit7454, chrome steel, 2RS, C0, quantity 1 bearing, equivalents 61812-2RS1. VXB also lists 6812ZZ (Kit7499) and 61812-2Z at $49.99."
+  },
+  {
+   "supplier": "McMaster-Carr",
+   "part_number": "6656K148",
+   "url": "https://www.mcmaster.com/6656K148/",
+   "price": "$64.92 each",
+   "price_usd_each": 64.92,
+   "pack_qty": 1,
+   "stock": "Delivers tomorrow 7-9 am",
+   "drop_in": true,
+   "changes": "Open (no shields): the same 60 x 78 x 10 seat, but nothing keeps the grease in or grit out. Fine in the hip frame; at the apex, next to the wheel, prefer the shielded one.",
+   "checked": "2026-10-27",
+   "evidence": "McMaster product page: Steel Ball Bearing, Steel, Open, Trade No. 6812, for 60 mm Shaft Diameter"
+  }
+ ],
+ "bearing_6201": [
+  {
+   "supplier": "Bearings Direct",
+   "part_number": "6201-2RS",
+   "url": "https://bearingsdirect.com/6201-2rs-sealed-ball-bearing-12x32x10-6201-2nsl-99201/",
+   "price": "$2.13",
+   "price_usd_each": 2.13,
+   "pack_qty": 1,
+   "stock": "In stock (4428)",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "curl of product page: '6201-2RS Sealed Ball Bearing 12x32x10 6201-2NSL 99201', SKU 6201-2RS, 12 x 32 x 10 mm, rubber sealed, chrome steel SAE-52100, made in China."
+  },
+  {
+   "supplier": "VXB Bearings",
+   "part_number": "6201-2RS-4P",
+   "url": "https://vxb.com/products/4-pack-6201-2rs-ball-bearings-rubber-sealed-6201rs",
+   "price": "$19.99 / pack of 4",
+   "price_usd_each": 4.9975,
+   "pack_qty": 4,
+   "stock": "In stock",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "curl of the Shopify product JSON: '4-Pack 6201-2RS Ball Bearings Rubber Sealed 6201RS', 4 bearings per pack, 12 x 32 x 10 mm, chrome steel (52100), double rubber seals. A single bearing (SKU 6201-2RSBearing) is $7.77."
+  }
+ ],
+ "bearing_mr126": [
+  {
+   "supplier": "Bearings Direct",
+   "part_number": "MR126-2RS",
+   "url": "https://bearingsdirect.com/mr126-2rs-mini-ball-bearing-6x12x4-sealed-r1260-2rs/",
+   "price": "$4.56",
+   "price_usd_each": 4.56,
+   "pack_qty": 1,
+   "stock": "In stock (646)",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "curl of product page: 'MR126-2RS Mini Ball Bearing 6x12x4 Sealed R1260-2RS', chrome steel, rubber sealed. MR126-ZZ is also $4.56."
+  },
+  {
+   "supplier": "VXB Bearings",
+   "part_number": "MR126-2RS",
+   "url": "https://vxb.com/products/mr126-2rs-ball-bearing-double-sealed-bore-dia-6mm",
+   "price": "$7.77",
+   "price_usd_each": 7.77,
+   "pack_qty": 1,
+   "stock": "In stock",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "curl of the Shopify product JSON: 'MR126-2RS Ball Bearing Double Sealed ID 6mm OD 12mm Width 4mm', chrome steel, pack size 1. VXB also lists MR126ZZ at $9.99 and a 10-pack of 6x12x4 sealed (kit1019) at $29.99."
+  },
+  {
+   "supplier": "McMaster-Carr",
+   "part_number": "7804K142",
+   "url": "https://www.mcmaster.com/7804K142/",
+   "price": "$9.08 each",
+   "price_usd_each": 9.08,
+   "pack_qty": 1,
+   "stock": "Delivers tomorrow 7-9 am",
+   "drop_in": false,
+   "changes": "The flanged 126-2Z (flange Ø13.6 x 0.8): the yoke's Ø12 x 4 pocket needs a Ø14 x 0.8 counterbore, or the flange stands 0.8 mm proud of the arm's inner face.",
+   "checked": "2026-10-27",
+   "evidence": "McMaster product page: Corrosion-Resistant 440C Stainless Steel Ball Bearing, Flanged, Shielded, Trade #126-2Z, for 6 mm Shaft Diameter"
+  }
+ ],
+ "bumper-feet-12.7": [
+  {
+   "supplier": "CabinetParts.com",
+   "part_number": "3M Bumpon SJ5312 (clear cylinder, 12.7 x 3.6 mm)",
+   "url": "https://www.cabinetparts.com/p/3m-furniture-components-cabinet-bumpers-3MSJ5312-p147565",
+   "price": null,
+   "stock": null,
+   "drop_in": false,
+   "changes": "Correct 12.7 mm diameter (sits centred in the 13.2 mm recess) but only 3.6 mm tall, so it stands about 2.6 mm proud instead of 4.5. Update the foot envelope height in cad/turret_stand.py.",
+   "checked": "2026-10-27",
+   "evidence": "URL and size from search results (the listing gives a 1/2 in diameter and 9/64 in thickness); the page returned Cloudflare 403 to curl. Size confirmed by Digi-Key's 3M table (SJ5312: 0.500 in x 0.140 in)."
+  },
+  {
+   "supplier": "Adafruit",
+   "part_number": "Adafruit 550 'Little Rubber Bumper Feet - Pack of 4'",
+   "url": "https://www.adafruit.com/product/550",
+   "price": "$0.95 per pack of 4 (1-9 packs), $0.86 (10-99), $0.76 (100+)",
+   "price_usd_each": 0.95,
+   "stock": "In stock",
+   "drop_in": false,
+   "changes": "Only about 8 mm diameter x 4 mm tall (style varies by supplier). It would sit loose in the 13.2 mm recess and stand about 3 mm proud. Shrink the recesses to about 8.5 mm or accept off-centre feet.",
+   "checked": "2026-10-27",
+   "evidence": "Read the Adafruit page (JSON-LD and price table): 'approx 8mm diameter and 4mm tall', polyurethane, pack of 4, in stock. The JSON-LD image is https://cdn-shop.adafruit.com//970x728/550-06.jpg (double slash as served); the version above has the slash removed."
+  }
+ ],
+ "circlip_50": [
+  {
+   "supplier": "Aspen Fasteners",
+   "part_number": "ME304-50-00050",
+   "url": "https://www.aspenfasteners.com/m50-din-471-metric-external-retaining-rings-spring-steel-phosphate-coated/",
+   "price": "Now: $183.21 (Box of 50)",
+   "price_usd_each": 3.6642,
+   "pack_qty": 50,
+   "stock": "Contact Support for Availability Info",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "curl of product page: 'M50 DIN 471, Metric, External Retaining Rings, Spring Steel, Phosphate Coated', hardened spring steel, DIN 471. Sold only as a box of 50 for a qty-1 need."
+  },
+  {
+   "supplier": "Fastenal",
+   "part_number": "1135344 (package) / 35344 (bulk)",
+   "url": "https://www.fastenal.com/content/product_specifications/M.RR.471.PC.STR.00.pdf",
+   "price": null,
+   "stock": null,
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "Fastenal product standard M.RR.471.PC.STR (PDF, curl + pdftotext): bulk 35344 / package 1135344 = shaft 50, groove dia 46.75-47.00 mm, groove width 2.150 mm, ring thickness 1.93-2.00 mm, carbon spring steel SAE 1060-1090, phosphate coated. Fastenal product pages return 403 to curl and WebFetch, so no price, pack size or stock was seen."
+  },
+  {
+   "supplier": "McMaster-Carr",
+   "part_number": "90154A768",
+   "url": "https://www.mcmaster.com/90154A768/",
+   "price": "$3.37 per pack of 1",
+   "price_usd_each": 3.37,
+   "pack_qty": 1,
+   "stock": "Delivers tomorrow 7-9 am",
+   "drop_in": true,
+   "changes": "Zinc-chromate plated, sold singly: the same DIN 471-50 ring and groove.",
+   "checked": "2026-10-27",
+   "evidence": "McMaster product page: External Retaining Ring, for 50 mm OD, Zinc-Chromate-Plated Spring Steel"
+  },
+  {
+   "supplier": "McMaster-Carr",
+   "part_number": "90967A350",
+   "url": "https://www.mcmaster.com/90967A350/",
+   "price": "$5.59 per pack of 1",
+   "price_usd_each": 5.59,
+   "pack_qty": 1,
+   "stock": "Delivers tomorrow 7-9 am",
+   "drop_in": true,
+   "changes": "1.4122 stainless, sold singly: the same DIN 471-50 ring and groove.",
+   "checked": "2026-10-27",
+   "evidence": "McMaster product page: External Retaining Ring, for 50 mm OD, DIN 1.4122 Stainless Steel"
+  }
+ ],
+ "circlip_60": [
+  {
+   "supplier": "Aspen Fasteners",
+   "part_number": "ME304-60-00040",
+   "url": "https://www.aspenfasteners.com/m60-din-471-metric-external-retaining-rings-spring-steel-phosphate-coated/",
+   "price": "Now: $177.63 (Box of 40)",
+   "price_usd_each": 4.4408,
+   "pack_qty": 40,
+   "stock": "Contact Support for Availability Info",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "curl of product page: 'M60 DIN 471, Metric, External Retaining Rings, Spring Steel, Phosphate Coated', spring steel, hardened, phosphate coated, DIN 471. Sold only as a box of 40 for a qty-1 need. Free ground shipping in the 48 states."
+  },
+  {
+   "supplier": "Fastenal",
+   "part_number": "35351",
+   "url": "https://www.fastenal.com/content/product_specifications/M.RR.471.PC.STR.00.pdf",
+   "price": null,
+   "stock": null,
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "Fastenal product standard M.RR.471.PC.STR rev 00 (PDF on fastenal.com, read via curl + pdftotext): part 35351 = shaft 60, groove dia 56.70-57.00 mm, groove width 2.150 mm, ring thickness 1.93-2.00 mm, carbon spring steel SAE 1060-1090, phosphate coated. Bulk SKU only (no package SKU). Fastenal product pages return 403 to curl and WebFetch, so I could not see a price or stock."
+  },
+  {
+   "supplier": "McMaster-Carr",
+   "part_number": "90154A811",
+   "url": "https://www.mcmaster.com/90154A811/",
+   "price": "$4.41 per pack of 1",
+   "price_usd_each": 4.41,
+   "pack_qty": 1,
+   "stock": "Delivers tomorrow 7-9 am",
+   "drop_in": true,
+   "changes": "Zinc-chromate plated instead of black phosphate: the same DIN 471-60 ring and groove.",
+   "checked": "2026-10-27",
+   "evidence": "McMaster product page: External Retaining Ring, for 60 mm OD, Zinc-Chromate-Plated Spring Steel"
+  },
+  {
+   "supplier": "McMaster-Carr",
+   "part_number": "90967A375",
+   "url": "https://www.mcmaster.com/90967A375/",
+   "price": "$7.90 per pack of 1",
+   "price_usd_each": 7.9,
+   "pack_qty": 1,
+   "stock": "Delivers tomorrow 7-9 am",
+   "drop_in": true,
+   "changes": "1.4122 stainless instead of spring steel: the same DIN 471-60 ring and groove; does not rust.",
+   "checked": "2026-10-27",
+   "evidence": "McMaster product page: External Retaining Ring, for 60 mm OD, DIN 1.4122 Stainless Steel"
+  }
+ ],
+ "dji-c610-esc": [
+  {
+   "supplier": "AIFIT Lab",
+   "part_number": "RM-C610 Brushless Motor Controller",
+   "url": "https://aifitlab.com/products/dji-robomaster-m2006-p36-brushless-dc-gear-motor?variant=43858158059656",
+   "price": "$320.00",
+   "price_usd_each": 320.0,
+   "stock": null,
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "Shopify .js variant 43858158059656 'RM-C610 Brushless Motor Controller' 32000 cents; this variant's stock status was not read (the store sells on backorder). Image as above."
+  },
+  {
+   "supplier": "AIFIT Lab",
+   "part_number": "RM-C610 Brushless Motor Controller V2.0",
+   "url": "https://aifitlab.com/products/dji-robomaster-m2006-p36-brushless-dc-gear-motor?variant=45094768476296",
+   "price": "$250.00",
+   "price_usd_each": 250.0,
+   "stock": "Backordered",
+   "drop_in": false,
+   "changes": "The page does not describe the 'V2.0' revision. Before buying, confirm that its CAN protocol and IDs, motor and encoder connector, and size match the C610. It is also about 6.4x DJI's $39 price.",
+   "checked": "2026-10-27",
+   "evidence": "Shopify .js variant 45094768476296 'RM-C610 Brushless Motor Controller V2.0' 25000 cents; backorder text read from the ?variant= page. No pack quantity is stated, so this is a single-unit price. The image is the listing's main image, which shows the M2006; the listing has no separate C610 image."
+  },
+  {
+   "supplier": "AIFIT Lab",
+   "part_number": "DM-2325 / DM-S2325-1EC ('Include Gearbox & Driver Board / NOT Include')",
+   "url": "https://aifitlab.com/products/damiao-dm-2325-motor",
+   "price": "$100.00",
+   "price_usd_each": 100.0,
+   "stock": "Backordered",
+   "drop_in": false,
+   "changes": "A system substitute: it replaces the M2006 + C610 pair with one Damiao motor that has a built-in driver (see the dji-robomaster-m2006-p36 entry for mount, mass and protocol changes). With it, no C610 is needed.",
+   "checked": "2026-10-27",
+   "evidence": "Shopify .js variant 10000 cents; backorder text in page HTML."
+  }
+ ],
+ "dji-robomaster-m2006-p36": [
+  {
+   "supplier": "DJI Store",
+   "part_number": "RoboMaster M2006 Brushless DC Gear Motor (EAN 6958265164583)",
+   "url": "https://store.dji.com/product/rm-m2006-p36-brushless-motor",
+   "price": "$55 (USD)",
+   "price_usd_each": 55.0,
+   "stock": "Out of stock",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "Product page JSON-LD: price 55, priceCurrency USD, availability OutOfStock; status code out_of_stock. Category page lists it at the same price and status."
+  },
+  {
+   "supplier": "AIFIT Lab",
+   "part_number": "DM-2325 / DM-S2325-1EC ('Include Gearbox & Driver Board / NOT Include')",
+   "url": "https://aifitlab.com/products/damiao-dm-2325-motor",
+   "price": "$100.00 (gearbox + driver board); $115.00 with USB-to-CAN; $75 gearbox only; $45 bare motor",
+   "price_usd_each": 100.0,
+   "stock": "Backordered",
+   "drop_in": false,
+   "changes": "Built-in driver, so it replaces both the M2006 and the C610 and needs no separate ESC. It is 28 mm dia x 77.6 mm, 172.2 g vs the M2006's 90 g, 25:1 instead of 36:1, 380 rpm nominal / 560 rpm no-load, 24 V (24-48 V supported). The mount and coupling must be redrawn from Damiao's DM-2325 drawing. Firmware changes from DJI's C610 CAN frames to Damiao's CAN protocol (MIT, speed and position modes; CAN 1 Mbps or CAN FD 5 Mbps; UART setup). The page's torque figures are inconsistent ('Nominal Torque 5N.M', 'Peak Torque 2 N.M'), so confirm torque against the DM-S2325-1EC manual before relying on it.",
+   "checked": "2026-10-27",
+   "evidence": "Shopify .js variants (4500/7500/10000/11500/12000/12500 cents) and description spec table; backorder text in page HTML. Listing links DM_2325_Motor.stp, DM-2325_instalation_drawing.pdf and DM-S2325-1EC_User_Manual.pdf."
+  },
+  {
+   "supplier": "OpenELAB",
+   "part_number": "DM-J4310-2EC-24V-V3",
+   "url": "https://openelab.com/products/damiao-brushless-servo-dm-j4310",
+   "price": "$139.99 (V3 / 24V); $152.99 (V4 / 24V); $163.99 (48 V versions)",
+   "price_usd_each": 139.99,
+   "stock": "Orderable; ships from China",
+   "drop_in": false,
+   "changes": "An in-stock fallback with a built-in driver (no C610). It is much larger: 57 mm dia x 46 mm, 306 g vs 90 g, 10:1, V3 3 N·m rated / 7 N·m peak, 120 rpm rated / 200 rpm no-load at 24 V (the M2006 is about 416 rpm rated on the C610). The feeder mount and coupling must be redrawn, and firmware changes to Damiao's CAN protocol (MIT, speed and position modes).",
+   "checked": "2026-10-27",
+   "evidence": "Shopify .js variants (13999/15299/16399 cents) and description table: 10:1, V3 3/7 N·m, V4 3.5/12.5 N·m, rated 120 rpm, no-load 200 rpm (24 V V3), 57 x 46 mm, ~306 g, 2 x 14-bit encoders (V3)."
+  }
+ ],
+ "dji-robomaster-snail-2305": [
+  {
+   "supplier": "RaceDayQuads",
+   "part_number": "IFLI-XE10382 (iFlight XING-E Pro 2306 1700Kv)",
+   "url": "https://www.racedayquads.com/products/iflight-xing-e-pro-2306-1700kv-motor",
+   "price": "$19.49",
+   "price_usd_each": 19.49,
+   "stock": "Orderable",
+   "drop_in": false,
+   "changes": "The shaft is a 5 mm (M5) prop shaft with a nut, on a 4 mm hollow steel inner shaft, instead of the Snail's 2.95 mm output shaft, so the flywheel hub must be redesigned (M5 bore or prop-adapter clamp). The mount is listed as 'Φ16mm' (iFlight 2306s use M3), so redraw the motor plate if the Snail plate differs. It is 33.8 g vs 27.8 g, stator 23 x 6 vs 23 x 5. Kv is 1700 vs the Snail's 875 rpm/V, about 2x faster, so on a 24 V (6S) bus cap throttle or rpm at about 50% in the ESC or firmware, or run it from a lower-voltage rail, then re-tune flywheel speed for ball exit velocity. It takes 2-6S at up to 36.66 A continuous and runs from the AM32 35 A ESC (no C615).",
+   "checked": "2026-10-27",
+   "evidence": "Shopify .js 1949 cents, SKU IFLI-XE10382; description: 'Shaft Diameter: 5 mm', 'Mounting Pattern: Φ16mm', 'Weight (w/ wires): 33.8 g', 'Input Voltage: 2-6 S', 'Max Continuous Current: 36.66 A', 'M3 shaft screw', '4mm high strength hollow steel shaft'."
+  }
+ ],
+ "dowel_5x16": [
+  {
+   "supplier": "Aspen Fasteners",
+   "part_number": "ME397-5X16-00300",
+   "url": "https://www.aspenfasteners.com/m5-x-16mm-din-6325-metric-solid-dowel-pins-steel/",
+   "price": "Now: $180.47 (Box of 300)",
+   "price_usd_each": 0.6016,
+   "pack_qty": 300,
+   "stock": "Contact Support for Availability Info",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "curl of product page: 'M5 X 16mm DIN 6325, Metric, Solid Dowel Pins, Steel', tolerance m6, hardened Rockwell C58-C62, rounded ends, chamfer 1.2 mm. Sold only as a box of 300."
+  },
+  {
+   "supplier": "Aspen Fasteners",
+   "part_number": "UB006-5X16-000400",
+   "url": "https://www.aspenfasteners.com/m5-x-16mm-din-6325-metric-solid-dowel-pins-alloy-steel-plain-unbrako/",
+   "price": "Now: $437.89 (Box of 400)",
+   "price_usd_each": 1.0947,
+   "pack_qty": 400,
+   "stock": "Contact Support for Availability Info",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "curl of product page: 'M5 X 16mm DIN 6325 ... Alloy Steel, Plain, Unbrako', through-hardened, 'Ground Oversize to 0.0002in'. Same supplier, different maker. I found no small-pack source I could read: Misumi, Bolt Depot, Accu and Fastenal block automated reads, and Belmetric's DIN 6325 items are special-order placeholders."
+  }
+ ],
+ "eye_sleeve": [
+  {
+   "supplier": "JW Winco",
+   "part_number": "DIN 179-B12-20-A-NI",
+   "url": "https://www.jwwinco.com/en-us/products/product-family/Stainless-Steel/DIN-179-Stainless-Steel-Press-Fit-Drill-Bushings",
+   "price": null,
+   "stock": null,
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "curl of product-family page: table row 179-B12-20-A-NI = bore B12 F7, length 0.79in (20 mm), OD 0.709in (18 mm) n6. Material is stainless AISI 440B hardened HRC 62+4, not case-hardened carbon steel; the dimensions are identical. The static page only prices the default part (179-B2-6-A-NI: US$16.73, 'Call / Email for Delivery Time'), so this part's price and stock were not visible."
+  },
+  {
+   "supplier": "Reid Supply",
+   "part_number": "DM-12025",
+   "url": "https://www.reidsupply.com/en-us/p/drill-bushings/dm-12025",
+   "price": "$7.88 (1+)",
+   "price_usd_each": 7.88,
+   "pack_qty": 1,
+   "stock": "In stock (9)",
+   "drop_in": false,
+   "changes": "25 mm long instead of 20 mm (same 12 mm ID and 18 mm OD): two end to end make 50 mm, so the knee eye must be 10 mm deeper, or one 25 mm with one 15 mm. ID and OD tolerance classes (F7 / n6) are not stated.",
+   "checked": "2026-10-27",
+   "evidence": "curl of product page: 'PM (Press Fit - Metric) bushing made from Steel. Outside diameter is 18.0 mm; Length is 25.0 mm; Drill size is 12.0 mm', manufacturer part AM00000429. Reid's metric press-fit list has no 12 x 18 x 20."
+  },
+  {
+   "supplier": "McMaster-Carr",
+   "part_number": "96990A240",
+   "url": "https://www.mcmaster.com/96990A240/",
+   "price": "$37.07 each",
+   "price_usd_each": 37.07,
+   "pack_qty": 1,
+   "stock": "Delivers tomorrow 7-9 am",
+   "drop_in": false,
+   "changes": "12 x 16 x 10 DIN 179 bushing: four end to end fill the knee eye's 40 mm, in a Ø16 bore instead of Ø18, so the upper link's press bore changes from Ø17.96 to Ø15.96 (cad/fivebar.py EYE_SLEEVE). Four per eye at $37.07 each.",
+   "checked": "2026-10-27",
+   "evidence": "McMaster product page: Metric Press-Fit Drill Bushing, 12 mm ID, 16 mm OD, 10 mm Long, Chamfered on One End"
+  }
+ ],
+ "feetech-sts3215-c018-12v": [
+  {
+   "supplier": "OpenELAB",
+   "part_number": "Feetech-STS3215-C018",
+   "url": "https://openelab.com/products/feetech-sts3215-c018-servo-12v",
+   "price": "$27.99",
+   "price_usd_each": 27.99,
+   "stock": "Orderable; ships from China",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "Shopify .js 2799 cents; description: 12 V, 345:1, 30 kg·cm stall / 10 kg·cm rated, 45.2 x 24.7 x 35 mm, 55 ±1 g, 25T output spline OD 5.9 mm."
+  },
+  {
+   "supplier": "AIFIT Lab",
+   "part_number": "ST-3215-C018 (12V30KG)",
+   "url": "https://aifitlab.com/products/feetech-sts3215-servo-motor",
+   "price": "$26.00",
+   "price_usd_each": 26.0,
+   "stock": "Backordered",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "Shopify .js variant 'ST-3215-C018(12V30KG)' 2600 cents; backorder text in page HTML."
+  },
+  {
+   "supplier": "OpenELAB",
+   "part_number": "Feetech-STS3250-C002",
+   "url": "https://openelab.com/products/feetech-sts3250-c002-servo-12v",
+   "price": "$73.99",
+   "price_usd_each": 73.99,
+   "stock": "Orderable",
+   "drop_in": false,
+   "changes": "Same Feetech STS serial-bus protocol and 3-pin TTL connector, so firmware stays the same apart from limits. It is stronger (50 kg·cm stall at 12 V, 345:1, 6-12 V) and costs about 2.6x. The page gives no case size or spline, and it says 'a matching TTL interface alone does not establish mechanical compatibility', so check the case and horn against the 45.2 x 24.7 x 35 mm STS3215 before reusing the turret brackets.",
+   "checked": "2026-10-27",
+   "evidence": "Shopify .js 7399 cents; description spec table (listed operating voltage 6-12 V, stall 50 kg·cm at 12 V, 345:1, TTL serial bus 3-pin)."
+  },
+  {
+   "supplier": "ROBOTIS America",
+   "part_number": "902-0135-000 (DYNAMIXEL XL430-W250-T)",
+   "url": "https://www.robotis.us/products/dynamixel-xl430-w250-t",
+   "price": "$27.50",
+   "price_usd_each": 27.5,
+   "stock": "Orderable",
+   "drop_in": false,
+   "changes": "The case is 28.5 x 46.5 x 34 mm with a different horn and mounting holes, so the pan/tilt brackets must be redrawn. It speaks DYNAMIXEL protocol over TTL instead of Feetech STS, so the servo driver/SDK and ID setup change. It is weaker: the page gives an estimated rated torque of 0.28 N·m, against about 0.98 N·m (10 kg·cm) rated for the STS3215-C018. Only worth it if the turret load is light.",
+   "checked": "2026-10-27",
+   "evidence": "Page HTML: og:price:amount 27.50 USD, 'SKU: 902-0135-000', 'Communications protocol: TTL', 'Dimensions: 28.5x46.5x34mm', 'Estimated rated torque: 0.28Nm'; Shopify .js available true."
+  }
+ ],
+ "fuse-5x20-5a-slow": [
+  {
+   "supplier": "RS Components",
+   "part_number": "0218005.MXP (RS 738-2790)",
+   "url": "https://uk.rs-online.com/web/p/cartridge-fuses/7382790",
+   "price": "GBP 0.94 each, sold in packs of 10, falling to GBP 0.714 at 750+ (search snippet)",
+   "stock": "In stock (3,710)",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "RS pages return 403 to curl. Title 'Littelfuse 5A T Glass Cartridge Fuse, 5 x 20mm', price and stock from a WebSearch summary."
+  },
+  {
+   "supplier": "Buerklin",
+   "part_number": "0218005.MXP (Buerklin 74P8739)",
+   "url": "https://buerklin.com/en/p/littelfuse/micro-fuses/0218005-mxp/74P8739",
+   "price": "EUR 0.1535 per piece (search snippet)",
+   "stock": "Out of stock; 11 weeks lead time",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "Buerklin blocked curl (Cloudflare); values from a WebSearch summary."
+  }
+ ],
+ "fuse-holder-5x20-panel": [
+  {
+   "supplier": "LCSC",
+   "part_number": "03455LS1HX020 (Littelfuse; LCSC C206937)",
+   "url": "https://www.lcsc.com/product-detail/C206937.html",
+   "price": "$1.3968 (1+), $1.1671 (10+), $1.0407 (30+), $0.8973 (100+), $0.8341 (500+), $0.8048 (1000+)",
+   "price_usd_each": 1.3968,
+   "stock": "Out of stock",
+   "drop_in": false,
+   "changes": "Same 345-series holder as the primary (the page does not explain the X020 suffix), so it needs the same 12.70-12.83 mm hole with a flat, not a 12.6 mm round hole.",
+   "checked": "2026-10-27",
+   "evidence": "Read the LCSC page data: model 03455LS1HX020, Littelfuse, price ladder as above, stock 0, datasheet link (the 345 series datasheet used above)."
+  },
+  {
+   "supplier": "Schurter",
+   "part_number": "0031.1756 (FEU = body 0031.1673 + fingergrip cap 0031.1741, 5x20 mm, solder, 90 deg)",
+   "url": "https://www.schurter.com/en/datasheet/typ_FEU.pdf",
+   "price": null,
+   "stock": null,
+   "drop_in": false,
+   "changes": "M12.7 x 1.5 thread (nut SW14). The datasheet's mounting-hole figures are 12.7 (+0.1/0) and 13 (-0.3) mm round, with flat options 12.2 (-0.13) and 11.7 (-0.13) mm (read as text; check the drawing). The 12.6 mm hole is too small; open it to about 12.8-13.0 mm. Panel thickness max 7 mm, so the 4 mm wall is fine. Caps are ordered separately unless the complete code is used.",
+   "checked": "2026-10-27",
+   "evidence": "Read Schurter's FEU datasheet with pdftotext: shock-safe PC2, panel mount from the front with fixing nut, solder or 4.8 mm QC terminals, 250 VAC (IEC) and 600 VAC/DC, 10 A (VDE) / 20 A (UL/CSA), panel thickness max 7 mm. Ordering table: 'Fingergrip, 5 x 20mm, Solder, 90 deg, IP40, black, 0031.1673 + 0031.1741 -> 0031.1756'."
+  }
+ ],
+ "insert_m3": [
+  {
+   "supplier": "3DJake",
+   "part_number": "CNC-X001FCE4M5",
+   "url": "https://www.3djake.com/cnc-kitchen/threaded-inserts-m3-standard",
+   "price": "$11.18 ($0.11 / pc), excl. VAT",
+   "price_usd_each": 0.1118,
+   "pack_qty": 100,
+   "stock": "In stock",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "curl of the 3DJake page: 'CNC Kitchen Threaded Inserts M3 Standard, M3 x 5.7 (100 pieces)', InStock. The dimension table lists M3: L 5.7, hole D3 4.0, min wall 1.6, matching the 4.0 mm hole and 5.7 mm length. Also sold direct at cnckitchen.store as TC-M3x5.7, 100 pcs, 9.40 EUR, InStock."
+  },
+  {
+   "supplier": "ruthex",
+   "part_number": "RX-M3x5.7 (set GE-M3x57-001)",
+   "url": "https://www.ruthex.de/products/ruthex-gewindeeinsatz-m3-100-stuck-rx-m3x5-7-messing-gewindebuchsen",
+   "price": "8.99 EUR / 100 pcs",
+   "pack_qty": 100,
+   "stock": "In stock",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "curl of product page (Germany, EUR): 'RX-M3x5,7 ... Länge von 5,7 mm', SKU GE-M3x57-001. The hole size is not in the page text; Ruthex's own drill-set listing names a 4.0 mm drill for its small inserts. Treat the 4.0 mm hole as very likely but not seen on this page."
+  }
+ ],
+ "insert_m5": [
+  {
+   "supplier": "3DJake",
+   "part_number": "CNC-B09FXM8ZMV",
+   "url": "https://www.3djake.com/cnc-kitchen/threaded-inserts-m5-short",
+   "price": "$11.18 ($0.22 / pc), excl. VAT",
+   "price_usd_each": 0.2236,
+   "pack_qty": 50,
+   "stock": "In stock",
+   "drop_in": false,
+   "changes": "5.8 mm long instead of 7.9 mm, so 2.1 mm less thread engagement and pull-out strength. Same 6.4 mm hole per CNC Kitchen's table. It fits the existing 6.4 mm hole without a CAD change and sits flush with spare depth below.",
+   "checked": "2026-10-27",
+   "evidence": "curl of the 3DJake page: 'CNC Kitchen Threaded Inserts M5 Short, M5 x 5.8 (50 pieces)', InStock. The dimension table lists M5 Short: L 5.8, hole D3 6.4, and M5: L 9.5, hole D3 6.4. 3DJake also sells the M5 x 9.5 (CNC-X001FCE5ZB) at $11.18/50, 75 left. Direct from cnckitchen.store: TC-M5x5.8 and TC-M5x9.5, 50 pcs, 9.90 EUR each, InStock. No 7.9 mm-long M5 was found at either."
+  },
+  {
+   "supplier": "ruthex",
+   "part_number": "RX-M5x9.5 (set GE-M5x95-001)",
+   "url": "https://www.ruthex.de/products/ruthex-gewindeeinsatz-m5-50-stuck-rx-m5x9-5-messing-gewindebuchsen",
+   "price": "9.99 EUR / 50 pcs",
+   "pack_qty": 50,
+   "stock": "In stock",
+   "drop_in": false,
+   "changes": "9.5 mm long instead of 7.9 mm (1.6 mm longer): the hole must be at least 1.6 mm deeper and the boss longer. Hole diameter is presumably 6.4 mm (see evidence). Ruthex also sells RX-M5Sx5.8 (5.8 mm long, 8.99 EUR / 50), which fits the existing hole depth but gives less engagement.",
+   "checked": "2026-10-27",
+   "evidence": "curl of product page (Germany, EUR): 'Länge von 9,5 mm', SKU GE-M5x95-001. The hole size is not in the page text. Ruthex's own insert drill set (same site, product handle) lists 3.2/4.0/5.6/6.4/8.0 mm drills for its M2-M6 inserts, which implies a 6.4 mm hole for M5."
+  }
+ ],
+ "insert_m8": [
+  {
+   "supplier": "3DJake",
+   "part_number": "CNC-4262391010044",
+   "url": "https://www.3djake.com/cnc-kitchen/threaded-inserts-m8-standard",
+   "price": "$11.18 ($0.56 / pc), excl. VAT",
+   "price_usd_each": 0.559,
+   "pack_qty": 20,
+   "stock": "In stock",
+   "drop_in": false,
+   "changes": "CNC Kitchen's table gives the hole as 9.7 mm, against 9.6 mm in the CAD (0.1 mm larger). Length 12.7 mm matches. It will probably go into the existing 9.6 mm hole with slightly more interference, but that is not confirmed.",
+   "checked": "2026-10-27",
+   "evidence": "curl of the 3DJake page (ships from Austria): 'CNC Kitchen Threaded Inserts M8 Standard, M8 x 12.7 (20 pieces)', schema.org InStock. The page's dimension table lists M8: L 12.7, hole dia D3 9.7, min wall 3.3; its D1 value for M8 looks like a copy error. The same insert is sold direct at cnckitchen.store as TC-M8x12.7, 20 pcs, 10.40 EUR, InStock."
+  },
+  {
+   "supplier": "ruthex",
+   "part_number": "RX-M8x12.7 (set GE-M8x127-001)",
+   "url": "https://www.ruthex.de/products/ruthex-gewindeeinsatz-m8-20-stuck-rx-m8x12-7-messing-gewindebuchsen",
+   "price": "9.99 EUR / 20 pcs",
+   "pack_qty": 20,
+   "stock": "In stock",
+   "drop_in": false,
+   "changes": "Length 12.7 mm matches, but the recommended hole diameter is not in the page text (the table is an image), so the fit in a 9.6 mm hole is unverified.",
+   "checked": "2026-10-27",
+   "evidence": "curl of product page (Germany, EUR): 'ruthex M8 Gewindeeinsatz - 20 Stück RX-M8x12.7', 'Länge von 12,7 mm', SKU GE-M8x127-001."
+  }
+ ],
+ "jack-3.5mm-panel": [
+  {
+   "supplier": "Markertek",
+   "part_number": "Calrad 30-493A",
+   "url": "https://www.markertek.com/product/30-493a/calrad-30-493a-stereo-3-5mm-panel-mount-jack-mounts-in-1-4in-hole",
+   "price": null,
+   "stock": null,
+   "drop_in": false,
+   "changes": "Stereo jack that 'mounts in 1/4in hole' (6.35 mm): open the 6.2 mm hole to about 6.5 mm. Maximum panel thickness unknown.",
+   "checked": "2026-10-27",
+   "evidence": "Search-result title only ('Calrad 30-493A - Stereo 3.5mm Panel Mount Jack - Mounts in 1/4in Hole'); page not read."
+  },
+  {
+   "supplier": "Canford",
+   "part_number": "Canford 43-259 miniature jack socket, 3.5 mm 3-pole",
+   "url": "https://www.canford.co.uk/Products/43-259_MINIATURE-JACK-SOCKET-3.5mm-3-pole-nickel-plated-body-gold-plated-contacts",
+   "price": null,
+   "stock": null,
+   "drop_in": false,
+   "changes": "6.0 mm hole (the 6.2 mm hole is fine), but maximum panel thickness is 2.5 mm against the stand's 4 mm wall: counterbore the wall from inside to 2.5 mm or less around the jack.",
+   "checked": "2026-10-27",
+   "evidence": "Hole 6.0 mm and max panel 2.5 mm from a WebSearch summary; page not read."
+  }
+ ],
+ "kcd1-rocker-16a": [
+  {
+   "supplier": "Digi-Key / Mouser",
+   "part_number": "RA111C1121 (E-Switch RA1 series)",
+   "url": "https://www.digikey.com/en/products/detail/e-switch/RA111C1121/4028924",
+   "price": null,
+   "stock": null,
+   "drop_in": false,
+   "changes": "Needs a 19.2 / 19.4 / 19.6 x 13 mm hole (by panel thickness 0.75-3.00 mm), not 21.2 x 15.2, and a panel no thicker than 3 mm. AC rating only: 16 A 125 VAC 1/3 HP and 10 A 250 VAC 1/3 HP (UL/cUL), with no DC rating, so it is not rated for switching 24 V DC.",
+   "checked": "2026-10-27",
+   "evidence": "E-Switch RA1 series page (read): '19.2mm x 13mm panel cutout', Rating C = 16A 125VAC 1/3HP; 10A 250VAC 1/3HP. RA1 datasheet https://configured-product-images.s3.amazonaws.com/Datasheets/RA1.pdf (pdftotext): panel 0.75-1.25 -> X 19.2, 1.25-2.00 -> 19.4, 2.00-3.00 -> 19.6; no DC rating listed. The Digi-Key and Mouser URLs for RA111C1121 came from search results; price and stock were not read."
+  },
+  {
+   "supplier": "Wurth Elektronik",
+   "part_number": "471016264142 (WS-RSTV)",
+   "url": "https://www.we-online.com/catalog/datasheet/471016264142.pdf",
+   "price": null,
+   "stock": null,
+   "drop_in": false,
+   "changes": "Cutout 19.2 / 19.4 / 19.8 x 12.9 mm for panel 0.75-1.25 / 1.25-2.00 / 2.00-3.00 mm, not 21.2 x 15.2. Marked 16(8) 250V~ T85 (ENEC) and 8/128A 250V~ T85 (UL), with no DC rating shown.",
+   "checked": "2026-10-27",
+   "evidence": "Datasheet fetched by WebFetch and read with pdftotext: title 'WS-RSTV 19.2 x 12.9 mm Panel Cut-out with 0.187'' quick connect terminal Rocker Switch', body 21.0 x 15.0, panel-cutout table, marking lines as above, UL E483308, ENEC-03124."
+  }
+ ],
+ "knee_pin": [
+  {
+   "supplier": "Aspen Fasteners",
+   "part_number": "ME343-1015X90X12-00010",
+   "url": "https://www.aspenfasteners.com/m10-1-5-x-90mm-shoulder-12mm-iso-7379-metric-hex-socket-drive-shoulder-screws-class-12-9-steel-plain/",
+   "price": "$168.80 (box of 10)",
+   "price_usd_each": 16.88,
+   "pack_qty": 10,
+   "stock": "Contact Support for Availability Info",
+   "drop_in": true,
+   "changes": "ISO 7379 12 x 90, M10 x 1.5, class 12.9 but plain (no black oxide): it rusts sooner. Sold only by the box of 10.",
+   "checked": "2026-10-27",
+   "evidence": "curl of the product page: title 'M10-1.5 X 90mm, Shoulder=12mm ISO 7379, ... Class 12.9 Steel, Plain', price 168.80, Box of 10"
+  }
+ ],
+ "knee_pin_70": [
+  {
+   "supplier": "Aspen Fasteners",
+   "part_number": "ME343-1015X70X12-00013",
+   "url": "https://www.aspenfasteners.com/m10-1-5-x-70mm-shoulder-12mm-iso-7379-metric-hex-socket-drive-shoulder-screws-class-12-9-steel-plain/",
+   "price": "Now: $179.89 (Box of 13)",
+   "price_usd_each": 13.8377,
+   "pack_qty": 13,
+   "stock": "Contact Support for Availability Info",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "curl of product page: 'M10-1.5 X 70mm, Shoulder=12mm ISO 7379, Metric, Hex Socket Drive Shoulder Screws, Class 12.9 Steel, Plain', ISO 7379. Finish is plain/uncoated rather than black oxide (dimensions and class are the same). Sold only as a box of 13."
+  },
+  {
+   "supplier": "Aspen Fasteners",
+   "part_number": "HK015-1015X70X6-000025",
+   "url": "https://www.aspenfasteners.com/m10-1-5-x-70mm-shoulder-screws-metric-hex-socket-drive-class-12-9-steel-black-oxide-holo-krome/",
+   "price": "Now: $443.25 (Box of 25)",
+   "price_usd_each": 17.73,
+   "pack_qty": 25,
+   "stock": "Contact Support for Availability Info",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "curl of product page: 'M10-1.5 X 70mm Shoulder Screws, Metric, Hex Socket Drive, Class 12.9 Steel, Black Oxide, Holo-Krome', shoulder diameter 12 mm, 6 mm drive, ISO 7379. Same supplier as the other alternate but a different manufacturer. Aspen also lists an Unbrako version (UB011-1015X70X12-000075, Box of 75, $598.96). I found no small-pack source I could read: Misumi, Bolt Depot, Accu and Fastenal all block automated reads, and Belmetric does not stock M10/12 x 70."
+  }
+ ],
+ "knee_spacer": [
+  {
+   "supplier": "Speedy Metals",
+   "part_number": "t61r.625x.065",
+   "url": "https://www.speedymetals.com/p-4561-58-od-x-0065-wall-tube-6061-t6-aluminum.aspx",
+   "price": "12in length: $8.96 (custom by the inch: Base Price $0.50)",
+   "price_usd_each": 8.96,
+   "pack_qty": 1,
+   "stock": null,
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "curl of product page: '5/8in OD x 0.495in ID x .065in Wall 6061-T6 Aluminum Tube'. The 12in length is $8.96 (cut tolerance +/-1/4in) and yields about 9-10 pieces at 28 mm. Custom cuts are +1/8in/-0, so you still face the pieces to 28 mm, as with the primary. No stock text on the page. No ready-made 12.05-12.6 bore / <=17 OD / 28 mm spacer was found: Misumi's configurator is not readable (JS-only, WebFetch 403)."
+  },
+  {
+   "supplier": "Alcobra Metals",
+   "part_number": "22210129bf34",
+   "url": "https://alcobrametals.com/product/5-8-od-x-065-wall/",
+   "price": "$20.03 (12in)",
+   "price_usd_each": 20.03,
+   "pack_qty": 1,
+   "stock": "In stock",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "curl of product page: '.625in od x .065in wall 6061T6 Alum Round Tube Drawn Smls', price range $20.03-$160.27. The 12in variant (SKU 22210129bf34) is $20.03 and in stock, read from the page's variation data. Still needs cutting to 28 mm."
+  },
+  {
+   "supplier": "McMaster-Carr",
+   "part_number": "90018A130",
+   "url": "https://www.mcmaster.com/90018A130/",
+   "price": "$70.39 each",
+   "price_usd_each": 70.39,
+   "pack_qty": 1,
+   "stock": "Delivers in 1-3 weeks",
+   "drop_in": true,
+   "changes": "Made to order, no lathe needed: order it 0.630 in OD x 0.500 in ID x 1.102 in (28.0 mm) long (16.0 x 12.7 mm, under the 17 mm limit, clears the 12 mm shoulder). About $70 each at 1-4 against $1.56 of tube, and 1-3 weeks.",
+   "checked": "2026-10-27",
+   "evidence": "McMaster product page: 6061 Aluminum Unthreaded Spacer"
+  }
+ ],
+ "nut_m10_nyloc": [
+  {
+   "supplier": "Belmetric",
+   "part_number": "NN10CLZ",
+   "url": "https://belmetric.com/nylon-locking-nut-class-8-steel-din-985/",
+   "price": "$0.26",
+   "price_usd_each": 0.26,
+   "pack_qty": 1,
+   "stock": "In stock",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "Product 'Nylon Locking Nut Class 8 Steel DIN 985', variant NN10CLZ = M10X1.5, zinc plated. The variant price and stock came from Belmetric's public site-search index (Algolia, the data behind the site's own search) via curl, because the product page only shows prices after you pick a variant. Price is per piece, with bulk tiers."
+  },
+  {
+   "supplier": "Aspen Fasteners",
+   "part_number": "ME022-1015",
+   "url": "https://www.aspenfasteners.com/m10-1-5-din-985-metric-hex-nylon-insert-stop-lock-nuts-class-8-steel-zinc-plated/",
+   "price": "Now: $148.51",
+   "stock": "Contact Support for Availability Info",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "curl of product page: 'M10-1.5 DIN 985, Metric, Hex Nylon Insert Stop Lock Nuts, Class 8 Steel, Zinc Plated'. Box options are 400/500/1500/2000; the page does not say which box the $148.51 is for, so no per-piece price. Bulk-only fallback."
+  }
+ ],
+ "odrive-botwheel": [
+  {
+   "supplier": "ODrive Robotics worldwide storefront",
+   "part_number": "BW0124_x2",
+   "url": "https://wwshop.odriverobotics.com/products/botwheels",
+   "price": "$269.00 per 2-pack (Single BW0124 $139.00 listed but unavailable)",
+   "price_usd_each": 134.5,
+   "stock": "Orderable; 2-packs only",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "Shopify .js: '2-pack' 26900 cents SKU BW0124_x2 available true, 'Single' 13900 cents SKU BW0124 available false; Shopify.currency USD. price_usd_each is the 2-pack price / 2. The primary US shop shows the same thing and says 'Only available as 2-packs at this time'."
+  },
+  {
+   "supplier": "ODrive Europe",
+   "part_number": "BW0124_x2",
+   "url": "https://eu.odriverobotics.com/shop/botwheels",
+   "price": "EUR 269.00 per pair",
+   "stock": "In stock (40)",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "Squarespace page meta product:price:amount 269.00 / currency EUR; ?format=json item variant sku BW0124_x2, qtyInStock 40, unlimited false."
+  },
+  {
+   "supplier": "AIFIT Lab",
+   "part_number": "ZLLG65ASM250-4096 V2.0 (Single Shaft / Not Include Driver)",
+   "url": "https://aifitlab.com/products/zhongling-zllg65-asm250-4096-v2-0-motor",
+   "price": "$120.00 (motor only); $260.00 with ZLAC8015 driver; $390.00 two motors with ZLAC8015D",
+   "price_usd_each": 120.0,
+   "stock": "Backordered",
+   "drop_in": false,
+   "changes": "The mount changes completely. It has a single-sided cantilever axle with an M16x1.5 thread and 12 mm flats (43 mm long), held by a nut through a slotted plate, instead of the BotWheel flange taking 4 x M6 on a 36 mm circle, so the wheel mount at the foot of the leg must be redrawn. Tyre is 173 ±2 mm dia x 44 mm wide (BotWheel 171 mm), overall width 118.2 mm. Mass is 3.75 kg vs 2.2 kg, i.e. +1.55 kg at each leg tip, which eats into the leg torque budget and needs the balance controller retuned. It has a 4096-line encoder and 15 pole pairs (BotWheel: hall + 3200 CPR), and ZLTECH power and signal connectors instead of JST PUD, so the ODrive harness must be re-terminated and its encoder and pole-pair settings changed; the alternative is ZLTECH's ZLAC8015D driver, which needs different firmware. It is 24 V, 6 N·m rated / 18 N·m peak, 160 rpm rated, IP65.",
+   "checked": "2026-10-27",
+   "evidence": "Shopify .js variants and spec table (24 VDC, 350 W, 6 N·m rated, 18 N·m peak, 160 rpm rated, 205 rpm max, 4096 lines, 15 pole pairs, 3.75 kg, IP65, compatible driver ZLAC8015/ZLAC8015D). Tyre and axle dimensions read from the listing's linked drawing ZLLG65ASM250-4096_V2.0_-Drawing.pdf: Φ173 ±2, 118.2 ±0.5, 44 ±1, 43 ±0.3, M16x1.5, 12 flats. Note: the listing text says 'Outer Diameter 130±2mm', which conflicts with the drawing."
+  }
+ ],
+ "pendant-hold-to-run": [
+  {
+   "supplier": "AbleNet",
+   "part_number": "Jelly Bean (SKU 10033400, mpn 1.3.0001)",
+   "url": "https://www.ablenetinc.com/jelly-bean",
+   "price": "$75.00",
+   "price_usd_each": 75.0,
+   "stock": "In stock",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "Read the AbleNet page and spec sheet: cord 6 ft (183 cm), 2.5 in (6.4 cm) activation surface, 2.5 oz (71 g) force, 3.5 mm mono plug, 8.4 x 8.4 x 2.7 cm. It is a table-top switch more than a hand-held one."
+  },
+  {
+   "supplier": "Coyote Direct",
+   "part_number": "Motion Raceworks 'Momentary Small Push Button w/6' Wound Cord' (no SKU on page)",
+   "url": "https://coyotedirect.com/products/momentary-small-push-button-w-6-wound-cord-red-or-green",
+   "price": "$60.00 (Red or Green); $120.00 (Both)",
+   "price_usd_each": 60.0,
+   "stock": "Orderable",
+   "drop_in": false,
+   "changes": "Ends in two bare 18 AWG wires, so wire on a 3.5 mm mono plug (not included). Sealed 10 A momentary button with a 0.625 in body and a 6 ft coiled cord when pulled tight; lock nut and washer included, no bracket. A true hand-held pendant (transbrake-style button).",
+   "checked": "2026-10-27",
+   "evidence": "Read the Shopify product JSON: vendor Motion Raceworks; description '10 amp Momentary Red Pushbutton Switch ... sealed unit with a 6 foot long retractable cord (length when full pulled tight) with two 18 ga wires ... Main body is .625 in diameter. Does NOT Include bracket.'"
+  }
+ ],
+ "picotronic-dd520-1-24-12x40": [
+  {
+   "supplier": "Picotronic GmbH",
+   "part_number": "DD520-1-12(12x40)-QCW, order no. 70124477",
+   "url": "https://shop.picotronic.de/de/p/70124477",
+   "price": "EUR 339,90 incl. VAT (EUR 285,63 net)",
+   "stock": "In stock; 1-2 days",
+   "drop_in": false,
+   "changes": "Same 12 x 40 mm housing, 1 mW class 2 and 0.5 mrad, but it needs a 10.8-13.8 V supply (typ 12 V), not the 24 V rail, and draws 5-40 mA. It comes with a 3 m 22 AWG jacketed cable instead of 100 mm leads (70 g with cable) and is IP54. Dot is 6 mm @ 10 m, rated to 35 m. The spec table still lists 1 kHz internal modulation. Needs a 12 V rail or regulator and cable routing for the extra length.",
+   "checked": "2026-10-27",
+   "evidence": "English product page https://www.picotronic.de/picopage/en/product/detail/id/356890 (order no. 70124477, net 285,63, spec table); shop page price 339.9 EUR and stock text."
+  },
+  {
+   "supplier": "Picotronic GmbH",
+   "part_number": "DD520-0.4-24(12x40)-QCW, order no. 70134865",
+   "url": "https://shop.picotronic.de/de/p/70134865",
+   "price": "EUR 319,90 incl. VAT (EUR 268,82 net)",
+   "stock": "In stock; 1-2 days",
+   "drop_in": false,
+   "changes": "Mechanically and electrically identical (12 x 40 mm, 12-24 V typ 24 V, 16 g, 100 mm leads, 1 kHz modulation, 0.5 mrad). The only change is 0.4 mW, laser class 1, instead of 1 mW class 2: a dimmer dot that is harder to see in daylight but eye-safe under class 1. No CAD or firmware change.",
+   "checked": "2026-10-27",
+   "evidence": "English product page https://www.picotronic.de/picopage/en/product/detail/id/357929 (order no. 70134865, net 268,82, 'class 1', '0.4mW'); shop page price 319.9 EUR and stock text."
+  }
+ ],
+ "proto-board-70x50": [
+  {
+   "supplier": "Botland",
+   "part_number": "Universal double sided board 50x70mm (Botland PLY-02745, EAN 5904422303303)",
+   "url": "https://botland.store/circuit-boards/2745-universal-double-sided-board-50x70mm-5904422303303.html",
+   "price": "EUR 0.90",
+   "stock": "Orderable",
+   "drop_in": false,
+   "changes": "Same board class as the primary. Mounting-hole positions are not given, so the stand's bosses may need to move (see notes).",
+   "checked": "2026-10-27",
+   "evidence": "Read the page: 50 x 70 mm, green solder mask, THT, 2.54 mm raster; og:image; product:price:amount 0.9."
+  },
+  {
+   "supplier": "Adafruit",
+   "part_number": "Adafruit 866 'Snap-action 3-Wire Block Connector (12-24 AWG) - Pack of 3' / Adafruit 874 '5-Wire' (brand not confirmed as WAGO 221)",
+   "url": "https://www.adafruit.com/product/866",
+   "price": null,
+   "stock": null,
+   "drop_in": false,
+   "changes": "No board: lever connectors splice the 24 V feed (XT60 -> fuse -> switch -> DT12 plug power pins) and the pendant loop in free air. Drop the four M3 inserts and bosses for the 70 x 50 board (or keep them for a strain-relief plate), cable-tie the connectors to the floor or a printed cradle, and use 12-24 AWG wire. There is no screw-terminal board to service, and the pendant loop becomes two inline splices.",
+   "checked": "2026-10-27",
+   "evidence": "Titles seen on Adafruit's own search results for 'wago'; product pages not read (the user stopped further fetches). A genuine WAGO 221-series part number and price were not verified."
+  }
+ ],
+ "repeat-robotics-am32-35a-esc": [
+  {
+   "supplier": "Repeat Robotics",
+   "part_number": "RR-03-3340 (AM32 35a Single Drive ESC)",
+   "url": "https://repeat-robotics.com/products/repeat-am32-drive-esc",
+   "price": "$25.00",
+   "price_usd_each": 25.0,
+   "stock": "Orderable",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "Shopify .js 2500 cents, SKU RR-03-3340; description: '35A equivalent current rating', '3-6S capable', '5g weight with full length wires', '26mm x 13mm x 5mm size', AM32 pre-flashed. Palm Beach Bots lists the same product as 25x13x5mm."
+  },
+  {
+   "supplier": "RaceDayQuads",
+   "part_number": "22300 (Lumenier Razor Pro F4 45A 2-6S AM32 ESC)",
+   "url": "https://www.racedayquads.com/products/lumenier-razor-pro-f4-45a-2-6s-am32-esc",
+   "price": "$31.49",
+   "price_usd_each": 31.49,
+   "stock": "Orderable",
+   "drop_in": false,
+   "changes": "At 12 x 28 x 5 mm (3 g without motor wires) it is 2-3 mm longer than the Repeat board's 25-26 x 13 mm, so check the ESC pocket. It is rated 45 A continuous / 60 A burst, 2-6S, no BEC. The page lists DShot1200, Proshot, Oneshot125, Oneshot42 and Multishot input with auto-detect but does not list standard servo PWM, so confirm the controller's output protocol. It is not pre-tuned: set direction, bidirectional mode and throttle limits in the AM32 configurator. It ships with a 220 µF 35 V capacitor that needs a place in the wiring.",
+   "checked": "2026-10-27",
+   "evidence": "Shopify .js 3149 cents, SKU 22300; description specifications ('Weight: 3 g (without motor wires)', 'Constant Current: 45 Amps', 'Dimensions: 12x28x5 mm', 'BEC: No BEC, OPTO only', 'Burst Current: 60 Amps', 'Input: 2-6S LiPoly')."
+  }
+ ],
+ "robstride-rs-04": [
+  {
+   "supplier": "OpenELAB",
+   "part_number": "ROBSTRIDE04",
+   "url": "https://openelab.com/products/products-robstride04-robotic-joint-motor",
+   "price": "$297.99 (variant 'Motor (w/o Debug)'; Debug Board $24.99 extra)",
+   "price_usd_each": 297.99,
+   "stock": "Orderable; 8-15 business days; ships from China; duties included",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "Shopify product .js (variant 'Motor (w/o Debug）' 29799 cents, SKU ROBSTRIDE04, available true) plus page text; og:price:currency USD. Same company's EU store openelab.io lists the same SKU at EUR 254,75 (og:price:currency EUR), available true: https://openelab.io/products/robstride04-qdd-120n-m-integrated-joint-motor-module"
+  },
+  {
+   "supplier": "AIFIT Lab",
+   "part_number": "ROBSTRIDE 04 Motor - Only Motor",
+   "url": "https://aifitlab.com/products/robstride-04-motor",
+   "price": "$255.00 (Only Motor); $273.00 with USB-to-CAN module",
+   "price_usd_each": 255.0,
+   "stock": "Backordered",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "Shopify .js: 'Only Motor' 25500 cents; page backorder message read from HTML. Listing also has '(CANFD)' variants at the same price; order the plain CAN variant to keep the current protocol."
+  },
+  {
+   "supplier": "Robotics Center",
+   "part_number": "Robstride RS-04 (no SKU shown)",
+   "url": "https://www.roboticscenter.ai/store/product/robstride-04",
+   "price": "$295.00",
+   "price_usd_each": 295.0,
+   "stock": "Backordered; 4-6 weeks",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "WebFetch of the English product page: 'Backorder', 'Standard delivery 4-6 weeks'. A search snippet of the Arabic-locale page showed $255 in stock, but the live English page says $295 backorder."
+  },
+  {
+   "supplier": "rcdrone.top",
+   "part_number": "RobStride-04-1",
+   "url": "https://rcdrone.top/products/robstride-04-qdd-120n-m-integrated-actuator-module-48v-9-1-ratio-dual-magnetic-encoder-ip52-700w-output",
+   "price": "$319.00 (120nm Motor); $329.00 with CAN2USB debugger",
+   "price_usd_each": 319.0,
+   "stock": "Orderable",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "Collection products.json and product page meta (og:price:amount 319.00, og:price:currency USD). Spec table on the page: 120 x 120 x 56 mm, 1420 g, 9:1, flange holes '35.86 x 9 x 9 mm (M5)', installation holes '106 x 10 x 6 mm (M4)', XT30 + GH1.25, 48 V (15-60 V), 40/120 N·m, 200 rpm no-load, 167 rpm rated."
+  },
+  {
+   "supplier": "OpenELAB",
+   "part_number": "DM-J10010L-2EC",
+   "url": "https://openelab.com/products/damiao-brushless-servo-dm-j10010l",
+   "price": "$321.99",
+   "price_usd_each": 321.99,
+   "stock": "Orderable; ships from China",
+   "drop_in": false,
+   "changes": "Closest substitute (Damiao DM-J10010L-2EC): same 40 N·m rated / 120 N·m peak and 200 rpm no-load at 48 V, but rated output speed is 100 rpm at 48 V vs the RS-04's 167 rpm. Round body ~120 mm dia x 53 mm (RS-04 is 120 x 120 x 56 mm), 1.37 kg vs 1.42 kg, 10:1 vs 9:1. The output flange and mounting-hole patterns differ (page gives no hole pattern, so take it from Damiao's drawing), so the printed hip frame and the leg-link flange must be redrawn. Protocol changes from RobStride's CAN protocol to Damiao's CAN protocol (MIT, speed and position modes at 1 Mbps; UART at 921600 bps for setup), so the joint driver code must be rewritten. Supply is listed as 24-48 V (the RS-04 is 15-60 V), so check the pack's full-charge voltage. Connectors are the same types: XT30 power, GH1.25 CAN.",
+   "checked": "2026-10-27",
+   "evidence": "Shopify .js (32199 cents, SKU DM-J10010L-2EC) and description spec table: 'Rated / peak output torque 40 / 120 N·m', 'Rated output speed 70 rpm at 24 V; 100 rpm at 48 V', 'Maximum no-load speed 100 rpm at 24 V; 200 rpm at 48 V', '120 mm diameter x 53 mm high', '1.37 kg', 2 x 14-bit encoders, XT30 + GH1.25 cables in the box."
+  },
+  {
+   "supplier": "AIFIT Lab",
+   "part_number": "DM-J10010L-2EC (Include Driver / NOT Include)",
+   "url": "https://aifitlab.com/products/damiao-dm-j10010l-2ec-servo-motor",
+   "price": "$265.00 (motor with integrated driver); $280.00 with USB-to-CAN",
+   "price_usd_each": 265.0,
+   "stock": "Backordered",
+   "drop_in": false,
+   "changes": "Same as the openelab DM-J10010L-2EC entry: new hip frame and flange, Damiao CAN protocol in place of RobStride's, 24-48 V supply, rated speed 100 rpm vs 167 rpm at 48 V.",
+   "checked": "2026-10-27",
+   "evidence": "Shopify .js 26500 cents; backorder text in page HTML. A search snippet from earlier showed $230, but the live price is $265."
+  },
+  {
+   "supplier": "CubeMars",
+   "part_number": "AKE90-8 KV35",
+   "url": "https://www.cubemars.com/product/ake90-8-kv35-quasi-direct-drive-actuator.html",
+   "price": "$483.90 (actuator only; driver board not included)",
+   "price_usd_each": 483.9,
+   "stock": null,
+   "drop_in": false,
+   "changes": "A stronger QDD (48 V, 55 N·m rated / 170 N·m peak, 120 rpm rated, 210 rpm no-load, 8:1), 1400 g, round 107.5 mm dia x 43.5 mm. CubeMars' comparison table lists 'Driver Board: No', so a separate driver (page downloads list an AK80-4830-1C-A4 driver; its price was not seen) must be bought, mounted and wired. That means a new hip frame and flange plus room for the driver, and CubeMars' CAN protocol in place of RobStride's in firmware. It costs about 1.9x the RS-04 before the driver.",
+   "checked": "2026-10-27",
+   "evidence": "Product page HTML: price '$483.90', spec table (rated voltage 48, peak torque 170, rated torque 55, no-load 210 rpm, rated 120 rpm, 8:1, 1400 g, Ф107.5*43.5 mm), comparison table 'Driver Board: No', accessory pack '1 x φ6 x 2.5 mm sensing magnet'. No stock text on page."
+  },
+  {
+   "supplier": "rcdrone.top",
+   "part_number": "RobStride-03-1 (RobStride 03)",
+   "url": "https://rcdrone.top/products/robstride-03-qdd-60n-m-integrated-actuator-module-48v-dual-encoders-planetary-reducer-ip52-9-1-ratio",
+   "price": "$224.00 (Motor); $239.00 with USB-to-CAN",
+   "price_usd_each": 224.0,
+   "stock": "Orderable",
+   "drop_in": false,
+   "changes": "Same maker and same RobStride CAN protocol, so firmware changes the least (motor type and limits only). But it has half the torque: 20 N·m rated / 60 N·m peak, 195 rpm no-load. It is 106 x 106 x 56 mm and 880 g, with flange holes listed as '30.35 x 9 x 6 mm (M4)' and installation holes '98 x 8 x 8 mm (M4)' (the RS-04 lists M5 '35.86 x 9 x 9' and M4 '106 x 10 x 6'), so the hip frame and flange must be redrawn. Only usable if the leg torque budget allows it or another reduction stage is added.",
+   "checked": "2026-10-27",
+   "evidence": "rcdrone collection products.json and product .js description spec table."
+  }
+ ],
+ "screw_m3x6": [
+  {
+   "supplier": "Belmetric",
+   "part_number": "BSH3X6",
+   "url": "https://belmetric.com/m3x0-5-socket-head-cap-screw-din-912-class-12-9/",
+   "price": "$0.12",
+   "price_usd_each": 0.12,
+   "pack_qty": 1,
+   "stock": "In stock",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "Product 'M3X0.5 Socket Head Cap Screw - DIN 912 Class 12.9', variant BSH3X6 = M3X0.5, 6 mm, black oxide, full thread. Price and stock from Belmetric's site-search index (curl)."
+  }
+ ],
+ "screw_m4x20": [
+  {
+   "supplier": "Belmetric",
+   "part_number": "BSH4X20",
+   "url": "https://belmetric.com/m4x0-7-socket-head-cap-screw-din-912-class-12-9/",
+   "price": "$0.20",
+   "price_usd_each": 0.2,
+   "pack_qty": 1,
+   "stock": "In stock",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "Product 'M4X0.7 Socket Head Cap Screw - DIN 912 Class 12.9', variant BSH4X20 = M4X0.7, 20 mm, black oxide, full thread. Price and stock from Belmetric's site-search index (curl); per piece."
+  }
+ ],
+ "screw_m5x30": [
+  {
+   "supplier": "Belmetric",
+   "part_number": "BSH5X30",
+   "url": "https://belmetric.com/m5x0-8-socket-head-cap-screw-din-912-class-12-9/",
+   "price": "$0.20",
+   "price_usd_each": 0.2,
+   "pack_qty": 1,
+   "stock": "In stock",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "Variant SKU name 'Bolt Socket Head 12.9 Black Partial M5X30 Coarse DIN 912'. It is partially threaded, so check that the unthreaded part under the head stays in the clearance hole and does not reach the insert. Price and stock from Belmetric's site-search index (curl). The product page price range is $0.12-$8.19 across lengths."
+  }
+ ],
+ "screw_m5x40": [
+  {
+   "supplier": "Belmetric",
+   "part_number": "BSH5X40",
+   "url": "https://belmetric.com/m5x0-8-socket-head-cap-screw-din-912-class-12-9/",
+   "price": "$0.28",
+   "price_usd_each": 0.28,
+   "pack_qty": 1,
+   "stock": "In stock",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "Variant SKU name 'Bolt Socket Head 12.9 Black Partial M5X40 Coarse DIN 912' (partial thread, which the spec allows). Price and stock from Belmetric's site-search index (curl)."
+  },
+  {
+   "supplier": "McMaster-Carr",
+   "part_number": "91290A258",
+   "url": "https://www.mcmaster.com/91290A258/",
+   "price": "$16.58 per pack of 50",
+   "price_usd_each": 0.3316,
+   "pack_qty": 50,
+   "stock": "Delivers tomorrow 7-9 am",
+   "drop_in": true,
+   "changes": "The US-origin column of the same class 12.9 ISO 4762 table: same screw, about twice the price.",
+   "checked": "2026-10-27",
+   "evidence": "McMaster product page: Black-Oxide Alloy Steel Socket Head Screw, US Origin, M5 x 0.8 mm Thread Size, 40 mm Long"
+  }
+ ],
+ "screw_m6x30": [
+  {
+   "supplier": "Belmetric",
+   "part_number": "BSH6X30",
+   "url": "https://belmetric.com/m6x1-0-socket-head-cap-screw-din-912-class-12-9/",
+   "price": "$0.23",
+   "price_usd_each": 0.23,
+   "pack_qty": 1,
+   "stock": "In stock",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "Product 'M6X1.0 Socket Head Cap Screw - DIN 912 Class 12.9', variant BSH6X30 = M6X1.0, 30 mm, black oxide, full thread. Price and stock from Belmetric's site-search index (curl)."
+  }
+ ],
+ "shoulder_6x12_m5": [
+  {
+   "supplier": "Aspen Fasteners",
+   "part_number": "ME343-508X12X6-00080",
+   "url": "https://www.aspenfasteners.com/m5-0-8-x-12mm-shoulder-6mm-iso-7379-metric-hex-socket-drive-shoulder-screws-class-12-9-steel-plain/",
+   "price": "Now: $191.06 (Box of 80)",
+   "price_usd_each": 2.3883,
+   "pack_qty": 80,
+   "stock": "Contact Support for Availability Info",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "curl of product page: 'M5-0.8 X 12mm, Shoulder=6mm ISO 7379 ... Class 12.9 Steel, Plain', heat treated, uncoated. Sold only as a box of 80 for a qty-1 need. An Unbrako version (UB011-508X12X6-000150) is a box of 150 at $494.58."
+  },
+  {
+   "supplier": "Belmetric",
+   "part_number": "BSHLDR5X6X10/19",
+   "url": "https://belmetric.com/m5x0-8-m6-shoulder-shoulder-bolt-12-9-iso-7379/",
+   "price": "$4.39",
+   "price_usd_each": 4.39,
+   "pack_qty": 1,
+   "stock": "In stock",
+   "drop_in": false,
+   "changes": "Shoulder length is 10 mm instead of 12 mm (2 mm shorter). The clamped stack must be 2 mm thinner or the CAD changed. The 6 mm shoulder, M5 x 0.8 thread and class 12.9 black oxide all match.",
+   "checked": "2026-10-27",
+   "evidence": "Product 'M5X0.8, M6 Shoulder Shoulder Bolt 12.9 ISO 7379'. Belmetric's site-search index shows only the 10 mm shoulder length for this product, and no 12 mm option."
+  }
+ ],
+ "stop_post": [
+  {
+   "supplier": "Belmetric",
+   "part_number": "BSHLDR8X10X20/33",
+   "url": "https://belmetric.com/m8x1-25-m10-shoulder-shoulder-bolt-12-9-iso-7379/",
+   "price": "$4.05",
+   "price_usd_each": 4.05,
+   "pack_qty": 1,
+   "stock": "In stock",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "Product page (curl): 'M8X1.25, M10 Shoulder Shoulder Bolt 12.9 ISO 7379', shoulder lengths 16/20/25/30 mm, class 12.9 black oxide, 'M8X1.25 will always have a taper + thread length of 13mm'. Variant SKU name 'M8X1.25X33, M10 Shoulder' (20 mm shoulder, 33 mm overall). Page price range $4.02-$4.39; the $4.05 for the 20 mm variant is from Belmetric's site-search index."
+  },
+  {
+   "supplier": "Aspen Fasteners",
+   "part_number": "ME343-8125X20X10-00050",
+   "url": "https://www.aspenfasteners.com/m8-1-25-x-20mm-shoulder-10mm-iso-7379-metric-hex-socket-drive-shoulder-screws-class-12-9-steel-plain/",
+   "price": "Now: $196.02 (Box of 50)",
+   "price_usd_each": 3.9204,
+   "pack_qty": 50,
+   "stock": "Contact Support for Availability Info",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "curl of product page: 'M8-1.25 X 20mm, Shoulder=10mm ISO 7379 ... Class 12.9 Steel, Plain', heat treated, uncoated. Box-only fallback."
+  }
+ ],
+ "te-dt04-12pa-l012": [
+  {
+   "supplier": "Newark",
+   "part_number": "DT04-12PA-L012 (Newark 38AH5620)",
+   "url": "https://www.newark.com/deutsch/dt04-12pa-l012/automotive-housing-rcpt-12pos/dp/38AH5620",
+   "price": "about $14.32 to $16.02 depending on quantity (search snippet); an oemstrade aggregator snippet showed Newark at $15.36 (1) / $14.91 (10)",
+   "stock": "In stock (99)",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "Newark returned 'Access Denied' to curl and timed out in WebFetch. Title, Newark number, price range and stock are from WebSearch result summaries only (13 A, IP68, PA GF, for AMP DT size 16 pins). Same TE part as the primary."
+  },
+  {
+   "supplier": "Del City",
+   "part_number": "DT04-12PA-L012 (Del City 15061229)",
+   "url": "https://www.delcity.net/store/wire-connectors-quick-splices/deutsch-connectors/dt-series/flange-receptacles-gaskets-12-way/15061229/",
+   "price": "$12.84 at 1+ (search snippet)",
+   "price_usd_each": 12.84,
+   "stock": "In stock",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "Del City blocked curl (Cloudflare) and WebFetch (403). Title 'Deutsch DT04-12PA-L012, DT 12-way Receptacle, Flange Mount (1 MIN)', price and stock come from search snippets. The snippet also says a matching flange gasket is sold separately (named DT12-L012-GKT there; not verified)."
+  },
+  {
+   "supplier": "Chief Enterprises",
+   "part_number": "AT04-12PA-L012 (Amphenol Sine Systems)",
+   "url": "https://www.chiefenterprises.com/amphenol-sine-at04-12pa-l012-12pos-flange-receptacle",
+   "price": "$3.75 (250-999), $3.46 (1000-9999); minimum purchase 250 units",
+   "price_usd_each": 3.75,
+   "stock": "Out of stock; 133 days lead time",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "Read the Chief page (fetched at https://store.chiefenterprises.com/AT04-12PA-L012-Recepticle; JSON-LD url above): 'AT PanelMate Series 12-position sealed male flange-mount receptacle using size 16 pin contacts, 13A, 14-20 AWG, keyed A, gray', 'Mates with AT06-12SA PLUG'. Amphenol drawing AT04-12PX-L012 (amphenol-sine.com PDF, pdftotext): 12P receptacle flange mount, 13 A, IP68/IP69K mated, needs wedge AW12P, mating part AT06-12SX; main dimensions 45.0 / 23.9 / 40.5 / 45.8 / 55.4 / 35.6 mm against TE's 44.96 / 23.88 / 40.56 / 45.92 / 55.12 / 35.56 mm, so it is the same flange within about 0.3 mm. Drop-in by fit, but hard to buy: sold in 250s with none in stock."
+  },
+  {
+   "supplier": "Waytek",
+   "part_number": "AT04-12PA-PM11 (Amphenol Sine Systems; Waytek #38157)",
+   "url": "https://waytekwire.com/product/amphenol-sine-systems-at04-12pa-pm11-12-way-at",
+   "price": null,
+   "stock": null,
+   "drop_in": false,
+   "changes": "Different flange. Amphenol drawing AT04-12PX-PMXX shows a one-piece flange with gasket and 2 holes (2X dia 4.0, 16.4 deep) for #10 sheet-metal or ST 4.8 plastic screws (mounting plate dims 45.50 / 61.0 / 25.50 mm), not the 4-hole L012 flange. The turret-base cutout and screw holes would change. It also needs the AW12P wedge.",
+   "checked": "2026-10-27",
+   "evidence": "Read with Waytek's catalog API (GET): product 38157 'Amphenol Sine Systems AT04-12PA-PM11, 12-Way AT Panel Mount Connector Receptacle, Key A', images, drawing link https://www.amphenol-sine.com/pdf/datasheet/AT04-12PA-PM11.pdf, standard lead time 140 days. Waytek gives a price only through a real-time pricing call, which I did not make."
+  }
+ ],
+ "te-dt06-12sa-kit": [
+  {
+   "supplier": "Chief Enterprises",
+   "part_number": "AT06-12SA plug + AW12S wedge + 12 x AT62-201-16141 sockets (Amphenol Sine Systems)",
+   "url": "https://www.chiefenterprises.com/amphenol-sine-at06-12sa-12pos-plug-connector",
+   "price": "AT06-12SA $3.22 (1-9); AW12S $0.31 (1-9); AT62-201-16141 $0.58 (1-9). Kit = $3.22 + $0.31 + 12 x $0.58 = $10.49",
+   "price_usd_each": 3.22,
+   "stock": "Orderable",
+   "drop_in": true,
+   "changes": "None if paired with the Amphenol AT04-12PA-L012 receptacle (Amphenol names AT04-12PA as the mate). Mating with the TE DT04-12PA-L012 relies on AT/DT intermating, which no page I read states.",
+   "checked": "2026-10-27",
+   "evidence": "Read three Chief pages (BigCommerce JSON-LD and price tables): AT06-12SA 'AT Series 12-position sealed female plug using size 16 socket contacts, 13A, 14-20 AWG', 'Mates with AT04-12PA Receptacle'. AW12S https://www.chiefenterprises.com/amphenol-sine-aw12s-12pos-plug-wedge-lock. AT62-201-16141 https://www.chiefenterprises.com/amphenol-sine-at62-201-16141-machined-contact-16-20awg ('size 16 machined socket contact, nickel plated, 13A, for 16-20 AWG'). The -22 suffix version (AT62-201-16141-22) did not appear in Chief's search; the plain AT62-201-16141 did."
+  }
+ ],
+ "usb-can-canable2": [
+  {
+   "supplier": "Openlight Labs",
+   "part_number": "CANable 2.0 (SKU PF-CANABLE-2.0)",
+   "url": "https://openlightlabs.com/products/canable-2-0",
+   "price": "$35.00",
+   "price_usd_each": 35.0,
+   "stock": "Out of stock",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "Read the Shopify JSON and canable.io: USB-C connector, 4-pin screw terminal CANH/CANL/5 V out/GND, termination switch, bootloader button, CAN FD in slcan (beta), ships with slcan (SocketCAN via slcand). canable.io says the candleLight firmware gives native SocketCAN but 'candlelight firmware for CANable 2.0 currently does not support FD frames'. Made in USA."
+  },
+  {
+   "supplier": "BIQU Equipment",
+   "part_number": "BIGTREETECH U2C V2.1 (variant '1 Pc / U2C V2.1 -3 CAN Output', SKU 1030000107)",
+   "url": "https://biqu.equipment/products/bigtreetech-ebb36-42-can-bus-u2c-v2-1-klipper-board",
+   "price": "$23.99",
+   "price_usd_each": 23.99,
+   "stock": "Orderable",
+   "drop_in": false,
+   "changes": "Board size not checked against the stand's 50 x 20 x 12 mm envelope, and it has several CAN outputs ('-3 CAN Output'). The listing is shared with the EBB boards, so pick the U2C variant. Firmware is BTT's candleLight fork (gs_usb), so Linux gets can0 without slcand.",
+   "checked": "2026-10-27",
+   "evidence": "Read the Shopify JSON (variant price 2399, available true); the description says the U2C is a USB-to-CAN module with an ESD-protected TYPE-C port. The image URL is the store's search thumbnail for this listing (the JSON's first image shows an EBB board). The BTT U2C manual on GitHub (bigtreetech/U2C) says: 'V1.0/1.1 use the open source CandleLight firmware', 'V2.0/2.1 STM32G0 support is added on the basis of open source CandleLight', DFU update over Type-C, can0 set up per Klipper's CANBUS docs."
+  },
+  {
+   "supplier": "Grid Connect",
+   "part_number": "PEAK-System PCAN-USB IPEH-002021 (Grid Connect GC-CAN-USB); opto-isolated IPEH-002022 (GC-CAN-USB-ISO)",
+   "url": "https://www.gridconnect.com/products/can-usb-adapter-pcan-usb",
+   "price": "$256.00 (no isolation); $314.00 (with isolation)",
+   "price_usd_each": 256.0,
+   "stock": "Orderable",
+   "drop_in": false,
+   "changes": "An enclosed dongle on a cable, not a board on the stand floor, so the back-wall USB-C slot and the 50 x 20 x 12 mm envelope do not apply. From general knowledge, not the page: it has a D-Sub 9 CAN connector, so it needs a DB9-to-wire lead, and it uses Linux's peak_usb SocketCAN driver instead of gs_usb or slcan. About 30 times the price of the UCAN.",
+   "checked": "2026-10-27",
+   "evidence": "Read the Shopify JSON: 'CAN to USB Adapter (PCAN-USB)', vendor Peak System Technik, variants GC-CAN-USB $256 and GC-CAN-USB-ISO $314, both available; the description names IPEH-002021/IPEH-002022, a 500 VDC isolated option and an IP20 plastic enclosure."
+  }
+ ],
+ "washer_m12_thin": [
+  {
+   "supplier": "Belmetric",
+   "part_number": "WF12X20SS",
+   "url": "https://belmetric.com/flat-washer-small-outer-diameter-a2-stainless-din-433/",
+   "price": "$0.20",
+   "price_usd_each": 0.2,
+   "pack_qty": 1,
+   "stock": "In stock",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "Variant fields on the product page (curl): SKU name 'M12X20 Small OD Flat Washer - A2 Stainless DIN 433', inner diameter 13 mm, outer diameter 20 mm, thickness 2 mm, A2 stainless. Price and stock from Belmetric's site-search index."
+  },
+  {
+   "supplier": "Aspen Fasteners",
+   "part_number": "ME351-12",
+   "url": "https://www.aspenfasteners.com/m12-din-433-iso-7092-metric-flat-washers-small-outside-diameter-a2-stainless-steel/",
+   "price": "Now: $179.53",
+   "stock": "Contact Support for Availability Info",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "curl of product page: 'M12 DIN 433 / ISO 7092 ... A2 Stainless Steel', ID 13 mm nominal, OD max 20 mm, thickness 2 mm nominal (1.8-2.2). Box options are 250/1600; the page does not say which box the price is for. Bulk-only fallback."
+  }
+ ],
+ "washer_m3_large": [
+  {
+   "supplier": "Belmetric",
+   "part_number": "WFE3X9SS",
+   "url": "https://belmetric.com/fender-washer-a2-stainless-din-9021/",
+   "price": "$0.08",
+   "price_usd_each": 0.08,
+   "pack_qty": 1,
+   "stock": "In stock",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "Variant fields on the product page (curl): 'M3X9 Oversize Washer - A2 Stainless DIN 9021', inner diameter 3.2 mm, outer diameter 9 mm, thickness 0.8 mm, A2. DIN 9021 has the same 3.2 x 9 x 0.8 dimensions as ISO 7093 M3. Price and stock from Belmetric's site-search index."
+  },
+  {
+   "supplier": "Aspen Fasteners",
+   "part_number": "ME380-3",
+   "url": "https://www.aspenfasteners.com/m3-din-9021-iso-7093-metric-fender-washers-a2-stainless-steel/",
+   "price": "Now: $180.21",
+   "stock": "Contact Support for Availability Info",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "curl of product page: 'M3 DIN 9021 / ISO 7093, Metric, Fender Washers, A2 Stainless Steel', ID 3.2 mm, OD 9 mm nominal, thickness 0.8 mm nominal. Box options are 1300/12000; the page does not say which box the price is for. Bulk-only fallback."
+  }
+ ],
+ "worker-cheetah-rival-rounds-100": [
+  {
+   "supplier": "Out of Darts",
+   "part_number": "AMMO DZN POWERSTRIKE_5306_200P (Dart Zone BallistixOps Powerstrike Rounds 200-Pack)",
+   "url": "https://outofdarts.com/products/dart-zone-ballistix-ops-powerstrike-rounds-rival-compatible-ammo-200-pack",
+   "price": "$29.99 per 200-pack (Yellow-Green or Orange)",
+   "price_usd_each": 15.0,
+   "stock": "Orderable",
+   "drop_in": false,
+   "changes": "The ball is 22.8 mm vs 22.7 mm and 1.85 g vs 1.75 g (+6%), made of medium-density polyurethane instead of ultra-soft EVA. It is firmer and more durable, so re-check the flywheel gap and compression and re-tune flywheel speed. The hopper and feeder should take it, since it is Rival HIR-compatible.",
+   "checked": "2026-10-27",
+   "evidence": "Shopify .js 2999 cents per 200-pack; description: '22.8mm diameter and 1.85-gram weight', 'medium-density polyurethane foam'. price_usd_each is per 100 rounds (29.99/2), to match this catalogue line's 100-pack unit. For comparison, the Worker listing says '22.7mm diameter', '1.75g each', EVA foam, $14.99 per 100 (SKU AMMO WOR CHEETAH 100PK_W0701), available."
+  }
+ ]
+}

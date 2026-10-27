@@ -171,7 +171,8 @@ const altList = (key) => {
       + `${a.changes ? `<div class="chg">${esc(a.changes)}</div>` : ''}<div class="chk">checked ${esc(a.checked || '?')}</div></li>`).join('')
     + '</ul></details>';
 };
-const RISK = { high: ['fail', 'HARD TO BUY'], medium: ['warn', 'CHECK STOCK'], cost: ['warn', 'CHEAPER OPTION'] };
+const RISK = { high: ['fail', 'HARD TO BUY'], medium: ['warn', 'CHECK STOCK'], cost: ['warn', 'CHEAPER OPTION'],
+  fit: ['fail', "DOESN'T FIT AS DRAWN"], missing: ['fail', 'PARTS MISSING'], check: ['warn', 'TO CHECK'] };
 const riskTag = (key) => {
   const rk = (media.sourcing.risk || {})[key];
   if (!rk) return '';
@@ -253,8 +254,8 @@ if (tbom) {
   const drawn = Object.keys((tj && tj.bought) || {}).filter((n) => !listed.has(n) && !skip.has(n));
   const all = [...rows, ...drawn.map((n) => ({ item: n, for: `${n}: drawn in cad/turret.py, not on the bench list yet`, qty: 1 }))];
   $('turretbuylede').innerHTML = `About <b>$${Math.round(tbom.price_usd_known)}</b> for what has a price. ${coverage(all)}`
-    + (drawn.length ? ` <span class="tag warn">DRAWN, NOT ON THE LIST</span> ${esc(drawn.join(', '))}` : '')
-    + ` ${esc(tbom.note || '')}`;
+    + (drawn.length ? ` <span class="tag warn">DRAWN, NOT ON THE LIST</span> ${esc(drawn.join(', '))}.` : '')
+    + (tbom.note ? ` ${esc(tbom.note.charAt(0).toUpperCase() + tbom.note.slice(1))}.` : '');
   $('turretbuy').innerHTML = partList('turretbuy', all);
   showMissing('turretbuy');
 }
