@@ -1880,5 +1880,183 @@
    "checked": "2026-10-27",
    "evidence": "Silicone tubing, 5/16 in ID x 7/16 in OD (1/16 in wall) - same bore and wall as McMaster 51225K32 (TPV). Price read today from Zoro's search results page; product page is bot-blocked (403), so sale length, durometer and stock are NOT confirmed (a second listing, ZUSA-HT-3479, same size, is $20.79 - likely a longer coil). US Plastic's search is script-only. Treat as a lead, not a confirmed backup."
   }
+ ],
+ "pololu-d24v150f12-2885": [
+  {
+   "supplier": "Pololu",
+   "part_number": "5677",
+   "url": "https://www.pololu.com/product/5677",
+   "price": "$69.95",
+   "price_usd_each": 69.95,
+   "pack_qty": 1,
+   "stock": "180",
+   "drop_in": false,
+   "changes": "D42V110F12: 9-10 A at 24 V in against 15 A: enough for the 300 ms ramp and 3/s (the recovery pulses ride the bank); same size and pinout family (Pololu's own replacement for the D24V150Fx)",
+   "checked": "2026-10-27",
+   "evidence": "Page read today: $69.95, 180 available (data-available-stock), 'New!'. 12 V out, 9 A typical max (at 42 V in), 12-60 V input. Only 9 A against the D24V150F12's 15 A: enough only if the flywheel rail's peak stays under ~9 A; Pololu has no other 12 V regulator above 9 A."
+  }
+ ],
+ "pololu-d36v50f12-4095": [
+  {
+   "supplier": "Pololu",
+   "part_number": "5577",
+   "url": "https://www.pololu.com/product/5577",
+   "price": "$47.95",
+   "price_usd_each": 47.95,
+   "pack_qty": 1,
+   "stock": "220",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "Page read today: $47.95, 220 available. 12 V, 4.5 A typical max (at 42 V in), 12-60 V input: same output rating as the D36V50F12 (12 V 4.5 A, 13.3-50 V in, $39.95). Check the footprint/mounting holes before swapping (different board family)."
+  }
+ ],
+ "pololu-d36v28f5-3782": [
+  {
+   "supplier": "Pololu",
+   "part_number": "2858",
+   "url": "https://www.pololu.com/product/2858",
+   "price": "$26.95",
+   "price_usd_each": 26.95,
+   "pack_qty": 1,
+   "stock": "141",
+   "drop_in": false,
+   "changes": "D24V22F5: 2.5 A against 3.2 A, input at most 36 V (fine on 24 V); a different footprint on the level-1 board",
+   "checked": "2026-10-27",
+   "evidence": "Page read today: $26.95, 141 available. 5 V, 2.5 A typical max (at 24 V in), 5.3-36 V input (the D36V28F5 takes up to 50 V): fine on the 24 V bench rail, not above 36 V. Larger alternatives on the same site: D36V50F5 #4091 (5 V 5.5 A), D24V50F5 #2851 (5 V 5 A), not read today."
+  }
+ ],
+ "pololu-2815": [
+  {
+   "supplier": "Pololu",
+   "part_number": "2813",
+   "url": "https://www.pololu.com/product/2813",
+   "price": "$8.95",
+   "price_usd_each": 8.95,
+   "pack_qty": 1,
+   "stock": "211",
+   "drop_in": false,
+   "changes": "the 2813 Big Pushbutton Power Switch HP: the same HP ratings, but its control is ON/OFF/CTRL pins, not the slide switch's ON pin: the arm chain's ARM output drives CTRL (check Pololu's pin logic before fitting)",
+   "checked": "2026-10-27",
+   "evidence": "Page read today: $8.95, 211 available (the 2815 itself: $8.49, 49 available). Same HP column of Pololu's shared spec table as the 2815: 4.5-32 V recommended (40 V absolute max), continuous 6 A at 55 C and 16 A at 150 C (Pololu's footnoted MOSFET-temperature ratings), 90 A max, 13 mOhm at 4.5 V / 8.6 mOhm at 10 V, reverse-voltage protected; pushbutton plus ON, OFF and CTRL control inputs on 0.1 in "
+  }
+ ],
+ "sparkfun-rob-13065": [
+  {
+   "supplier": "Adafruit",
+   "part_number": "1196",
+   "url": "https://www.adafruit.com/product/1196",
+   "price": "$19.95",
+   "price_usd_each": 19.95,
+   "pack_qty": 1,
+   "stock": "6",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "Page read today: $19.95 (10-99 $17.96), 6 in stock. 12 circuits x 2 A, 240 V AC/DC, 22 mm body with flange (SRC022A-12 datasheet). Differs: leads are 6 in (152 mm) of 28 AWG versus about 250 mm on the SparkFun ring; check the flange holes against the turret mount."
+  }
+ ],
+ "vxb-6810-2rs": [
+  {
+   "supplier": "McMaster-Carr",
+   "part_number": "6656K229",
+   "url": "https://www.mcmaster.com/6656K229/",
+   "price": "$33.29",
+   "price_usd_each": 33.29,
+   "pack_qty": 1,
+   "stock": "Delivers tomorrow 7-9 am",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "Product page read today: $33.29 each. 6810-2Z: 50 x 65 x 7 mm, steel, metal-shielded (not rubber-sealed), ABEC 1, 1,450 lb dynamic, 9,600 rpm. The dependable second source given Bearings Direct has 1 in stock."
+  },
+  {
+   "supplier": "Bearings Direct",
+   "part_number": "6810-2RS",
+   "url": "https://bearingsdirect.com/6810-2rs-ball-bearing-50x65x7-sealed/",
+   "price": "$29.19",
+   "price_usd_each": 29.19,
+   "pack_qty": 1,
+   "stock": "In stock - 1 available; usually ships in 24 hours",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "Page read today: $29.19, only 1 available. 50 x 65 x 7 mm, rubber sealed, chrome steel SAE 52100, static 1,370 lbf / dynamic 1,480 lbf."
+  }
+ ],
+ "turret_screw_m2x6_flat": [
+  {
+   "supplier": "Metric Specialties",
+   "part_number": "2C6MXF2",
+   "url": "https://metricspecialties.com/products/2c6mxf2",
+   "price": "$0.07",
+   "price_usd_each": 0.07,
+   "pack_qty": 1,
+   "stock": "available",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "Listing read today (store's product data): $0.07 each, available. M2 x 0.4 x 6 Phillips flat (countersunk) head, A2 stainless: the DIN 965 form, not hex drive like 92125A052; the page names no standard. Same store's hex-socket M2 x 6 flat head is 10.9 steel, not stainless (2C6KFCK, $0.25). Belmetric's A2 ISO 10642 M2 is special order only."
+  }
+ ],
+ "turret_standoff_m3x12": [
+  {
+   "supplier": "Mouser",
+   "part_number": "761-M2107-3005-AL",
+   "url": "https://www.mouser.com/ProductDetail/761-M2107-3005-AL",
+   "price": "$0.53",
+   "price_usd_each": 0.53,
+   "pack_qty": 1,
+   "stock": "691",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "Live offer in Octopart's feed (updated 2026-10-26), read today; product URL not opened (the seller blocks automated reads). 1 @ $0.53, 10 @ $0.422. Same part as McMaster: Fastener Superstore cross-references McMaster 98952A112 to RAF M2109-3005-A (14 mm), and RAF M2107/M2108/M2109 are 12/13/14 mm (4.5 mm hex, aluminium). Digi-Key alternative: Keystone 24338 (36-24338-ND), M3 M/F aluminium 12 mm wi"
+  }
+ ],
+ "turret_standoff_m3x14": [
+  {
+   "supplier": "Mouser",
+   "part_number": "761-M2109-3005-AL",
+   "url": "https://www.mouser.com/ProductDetail/761-M2109-3005-AL",
+   "price": "$1.42",
+   "price_usd_each": 1.42,
+   "pack_qty": 1,
+   "stock": "73",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "Live Mouser data read today via oemstrade.com/search/M2109-3005-AL (Mouser blocks automated reads; product URL not opened). 1 @ $1.42, 10 @ $1.37. Exact match: Fastener Superstore's page for its 801315 (4.5 mm hex, M3 x 14, aluminium, 4.76 mm stud) cross-references McMaster 98952A112 = RAF M2109-3005-A = Fascomp FM2109-3005-A (Fastener Superstore sells only cartons of 500, $142.81)."
+  }
+ ],
+ "sendcutsend-pan-clamp": [
+  {
+   "supplier": "Xometry",
+   "part_number": "pan_clamp.dxf, 6061-T6 0.125 in, sheet cutting",
+   "url": "https://www.xometry.com/capabilities/sheet-metal-manufacturing/",
+   "price": "instant price on upload",
+   "price_usd_each": null,
+   "pack_qty": 1,
+   "stock": null,
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "docs/turret-prototype-plan.md 3.3: Xometry sheet-cut upload (instant price), the same DXF, material and thickness"
+  }
+ ],
+ "littelfuse-0297005-wxnv": [
+  {
+   "supplier": "Digi-Key",
+   "part_number": "0297005.WXNV (F990-ND class)",
+   "url": "https://www.digikey.com/en/products/result?keywords=0297005.WXNV",
+   "price": null,
+   "price_usd_each": null,
+   "pack_qty": 1,
+   "stock": null,
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "Littelfuse MINI 5 A, the same part; price not readable (Digi-Key blocks automated reads)"
+  }
  ]
 }

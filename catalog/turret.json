@@ -3118,6 +3118,28 @@
     "url": "https://www.adafruit.com/product/4759",
     "in_stock": null,
     "ships_from": null
+   },
+   {
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/detail/adafruit-industries-llc/4759/13571587",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "1528-4759-ND",
+    "price_usd": 24.95,
+    "pack_qty": 1,
+    "stock": 473,
+    "read_on": "2026-10-27"
+   },
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/485-4759",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "485-4759",
+    "price_usd": 24.95,
+    "pack_qty": 1,
+    "stock": 455,
+    "read_on": "2026-10-27"
    }
   ],
   "specs": {
@@ -3335,10 +3357,21 @@
   "vendor": "generic",
   "model": "double-sided prototype board 50 x 70 mm",
   "name": "Double-sided prototype board 50 x 70 mm, cut to size",
-  "price_usd": 0.99,
-  "price_note": "one unit, before shipping",
+  "price_usd": 3.625,
+  "price_note": "SparkFun PRT-08619 (Wombat, 80 x 100 mm, plated through): $7.25 a board, which cuts into two 52 x 50 pieces (page 2026-10-27); backup Tayda 50 x 70",
   "price_checked": "2026-10-27",
   "buy": [
+   {
+    "seller": "SparkFun",
+    "url": "https://www.sparkfun.com/protoboard-wombat-pth.html",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "PRT-08619",
+    "price_usd": 7.25,
+    "pack_qty": 1,
+    "stock": "In stock",
+    "read_on": "2026-10-27"
+   },
    {
     "seller": "Tayda Electronics",
     "url": "https://www.taydaelectronics.com/double-side-prototyping-board-50x70mm.html",
@@ -3353,7 +3386,9 @@
   "confidence": "seller listing",
   "used_for": "the turret bay's three boards (cut to 52 x 50, Ø3.2 holes drilled at the corners) and the base board (cut to 30 x 50.8)",
   "qty_per_robot": 4,
-  "notes": "The same board as the bench stand's terminal board (catalog/sourcing.json proto-board-70x50)."
+  "notes": "The same board as the bench stand's terminal board (catalog/sourcing.json proto-board-70x50).",
+  "pack_qty": 2,
+  "pack_price_usd": 7.25
  },
  {
   "id": "ti-ne555p",
@@ -4101,6 +4136,17 @@
     "pack_qty": 1,
     "stock": null,
     "read_on": "2026-10-27"
+   },
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/534-3557-2",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "534-3557-2",
+    "price_usd": 1.17,
+    "pack_qty": 1,
+    "stock": 86411,
+    "read_on": "2026-10-27"
    }
   ],
   "specs": {},
@@ -4614,6 +4660,17 @@
   "price_note": "est",
   "price_checked": "2026-10-27",
   "buy": [
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/576-0477005.MXP",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "576-0477005.MXP",
+    "price_usd": 2.18,
+    "pack_qty": 1,
+    "stock": 8590,
+    "read_on": "2026-10-27"
+   },
    {
     "seller": "Digi-Key",
     "url": "https://www.digikey.com/en/products/detail/littelfuse-inc/0477005-MXP/1979192",
@@ -5481,6 +5538,17 @@
     "pack_qty": 1,
     "stock": 287656,
     "read_on": "2026-10-27"
+   },
+   {
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/detail/molex/0430300010/252480",
+    "in_stock": null,
+    "ships_from": "US",
+    "seller_pn": "WM1838-ND",
+    "price_usd": null,
+    "pack_qty": 1,
+    "stock": null,
+    "read_on": "2026-10-27"
    }
   ],
   "specs": {
@@ -6318,5 +6386,95 @@
   "used_for": "tool: heat-set",
   "qty_per_robot": 1,
   "notes": "Covers M3, M4 and M5. Fits a Hakko 900M-series iron (e.g. a Hakko FX-888D-class iron, or any iron taking 900M tips); check the bench iron before ordering. Found on https://www.mcmaster.com/heat-set-insert-installation-tips/ (headless Chrome)."
+ },
+ {
+  "id": "littelfuse-0fhm0001zxj",
+  "key": "littelfuse-0fhm0001zxj",
+  "category": "turret",
+  "vendor": "Littelfuse",
+  "model": "0FHM0001ZXJ",
+  "name": "In-line holder for a MINI blade fuse, black leads (MINI FHM series)",
+  "price_usd": 9.47,
+  "price_note": "Mouser 576-0FHM0001ZXJ $9.47, 8,130 in stock (oemstrade 2026-10-27); red-lead 0FHM0001ZXJ-RED $10.33",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/576-0FHM0001ZXJ",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "576-0FHM0001ZXJ",
+    "price_usd": 9.47,
+    "pack_qty": 1,
+    "stock": 8130,
+    "read_on": "2026-10-27"
+   },
+   {
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/detail/littelfuse-commercial-vehicle-products/0FHM0001ZXJ/2004060",
+    "in_stock": false,
+    "ships_from": "US",
+    "seller_pn": null,
+    "price_usd": null,
+    "pack_qty": 1,
+    "stock": null,
+    "read_on": "2026-10-27"
+   }
+  ],
+  "specs": {
+   "fuse": "MINI (297) blade",
+   "rating": "32 VDC; 15 A continuous for this series (Littelfuse MINI FHM)"
+  },
+  "cad": {
+   "step_url": null,
+   "available": false
+  },
+  "sources": [
+   "https://littelfuse.com/products/fuse-blocks-fuseholders-and-fuse-accessories/automotive-and-commercial-vehicle-fuse-holders/mini-fhm/0fhm0003zxjb.aspx"
+  ],
+  "confidence": "product page",
+  "used_for": "the turret's one fuse: 5 A MINI in the +24 V lead from the DT12 to the base board (it protects the slip ring's paralleled 2 A circuits)",
+  "qty_per_robot": 1,
+  "notes": "An in-line holder lies in the harness: no PCB blade holder with its fuse fits under the base board's 11 mm or the bay's levels (docs/turret-wiring.md 6)."
+ },
+ {
+  "id": "littelfuse-0297005-wxnv",
+  "key": "littelfuse-0297005-wxnv",
+  "category": "turret",
+  "vendor": "Littelfuse",
+  "model": "0297005.WXNV",
+  "name": "MINI blade fuse 5 A, 32 V",
+  "price_usd": 0.33,
+  "price_note": "Mouser 576-0297005.WXNV $0.33, 48,438 in stock (oemstrade 2026-10-27)",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/576-0297005.WXNV",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "576-0297005.WXNV",
+    "price_usd": 0.33,
+    "pack_qty": 1,
+    "stock": 48438,
+    "read_on": "2026-10-27"
+   }
+  ],
+  "specs": {
+   "rating_a": 5,
+   "v_max": 32,
+   "type": "MINI (297)"
+  },
+  "cad": {
+   "step_url": null,
+   "available": false
+  },
+  "sources": [
+   "https://www.mouser.com/ProductDetail/576-0297005.WXNV"
+  ],
+  "confidence": "product page",
+  "used_for": "the turret's +24 V fuse in the in-line holder (one spare)",
+  "qty_per_robot": 2,
+  "notes": ""
  }
 ]

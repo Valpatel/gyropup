@@ -1,9 +1,9 @@
 {
  "checks": {
   "clearance": {
-   "deck_min_gap_mm": 47.3,
+   "deck_min_gap_mm": 50.7,
    "deck_worst_pose_deg": [
-    -155.0,
+    -160.0,
     -25.0
    ],
    "antenna_min_gap_mm": {
@@ -293,7 +293,7 @@
    "antenna_limited_pans_deg": [],
    "note": "antennas: upright swivel dipoles on all four RP-SMA bulkheads (none chosen yet: typical 2.4 GHz swivel dipole, \u00d810 x 108 (est; none chosen))"
   },
-  "muzzle_outside_deck_mm": -25.3,
+  "muzzle_outside_deck_mm": -30.9,
   "airflow": {
    "mouth_mm": [
     124,
@@ -314,23 +314,25 @@
    "note": "hand estimate (K = 1 at the grille, K = 1 for the turn into the collar; a linear 8015 fan curve, 15.2 Pa / 38.9 m3/h, through the J501 CFD operating point); the J501 CFD (tools/thermal.py there) should check it with the deck and shroud in the domain"
   },
   "tipping": {
-   "total_kg": 3.3,
-   "com_height_mm": 139,
-   "tip_angle_deg": 33,
-   "push_to_tip_n": 10.6,
+   "total_kg": 3.35,
+   "com_height_mm": 142,
+   "tip_angle_deg": 32,
+   "push_to_tip_n": 10.8,
    "push_height_mm": 276,
    "note": "J501: 368 g printed (its slice report) + 1.0 kg Orin, carrier and cooler (est); a sideways push at the tilt axis that lifts the box off its narrow edge"
   },
   "overspeed": {
-   "max_exit_mps": 33.6,
-   "max_fps": 110,
-   "cap_mps": 21.3,
-   "note": "at the Snails' full no-load speed (21000 rpm at 24 V) a ball would leave at about 34 m/s: the 70 fps cap is only the throttle limit in firmware, so the barrel's chronograph gates should open the safety line on any ball over the cap"
+   "max_exit_mps": 18.9,
+   "max_fps": 62,
+   "cap_mps": 21.34,
+   "physics_ceiling_fps": 67.6,
+   "note": "the fixed 12 V flywheel rail is the ceiling: at the X2216s' full no-load speed on it (10560 rpm) a ball leaves at about 19 m/s by this page's rough model (the physics' fastest ball at 100 % throttle on a fast motor and a high rail: 67.6 fps on \u00d834 tyres, docs/turret-physics.md section 4), under the 70 fps cap; the barrel's two gates trip the safety line on any ball over 66 fps, and 24 V must never reach the ESCs"
   },
   "release": {
-   "after_drop_ms": 101,
-   "coast_s": 1.3,
-   "note": "a ball that has already dropped still fires up to 101 ms after ARM is released, and the unbraked flywheels keep 1.3 s of speed: brake them (AM32 active braking) on release"
+   "after_drop_ms": 103,
+   "coast_s": 1.1,
+   "note": "a ball that has already dropped still fires up to 103 ms after ARM is released; the phase-short brake (six FETs on the cartridge board, 10 ms after the line drops) stops the wheels to 5 % in about 30 ms (docs/turret-physics.md section 5), where unbraked they would coast 1.1 s",
+   "brake_to_5pct_ms": 30
   },
   "lid_screw": "M3 x 35 ISO 4762, tip at z 62 (as the J501's own M3 x 16)",
   "too_big": []
@@ -339,49 +341,52 @@
   "ball": {
    "d_mm": 22.7,
    "mass_g": 1.83,
-   "speed_mps": 21.3,
-   "fps": 70,
-   "bore_mm": 24.2,
-   "energy_j": 0.415
+   "speed_mps": 15.85,
+   "fps": 52.0,
+   "bore_mm": 24.7,
+   "cap_fps": 70,
+   "energy_j": 0.23
   },
   "flywheel": {
-   "d_mm": 36.0,
+   "d_mm": 34.0,
    "centres_mm": 53.02,
-   "crush_mm": 5.68,
-   "crush_pct": 25.0,
-   "rpm": 13290.0,
-   "surface_mps": 25.1,
-   "efficiency_assumed": 0.85,
-   "throttle_pct": 63,
-   "motor_kv": 875,
-   "no_load_rpm": 21000,
-   "inertia_kg_mm2": 4.06,
-   "energy_j_each": 3.94,
-   "speed_drop_per_shot_pct": 3.5,
-   "recovery_ms": 0.9,
-   "spin_up_ms_motor_limit": 26,
-   "coast_down_s": 1.3,
+   "crush_mm": 3.68,
+   "crush_pct": 16.2,
+   "rpm": 8860.0,
+   "surface_mps": 15.8,
+   "efficiency_assumed": 1.005,
+   "throttle_pct": 84,
+   "motor_kv": 880,
+   "no_load_rpm": 10560,
+   "inertia_kg_mm2": 6.46,
+   "energy_j_each": 2.78,
+   "speed_drop_per_shot_pct": 2.7,
+   "recovery_ms": 0.8,
+   "spin_up_ms_motor_limit": 28,
+   "coast_down_s": 1.1,
    "current_limit_a": 20.0,
-   "note": "rpm for 21.3 m/s with exit = 0.85 x surface speed (assumed); foam loss 30 % (assumed); the chronograph gates in the barrel measure the real speed"
+   "note": "the set speed for the nominal ball at the physics' set fps (sim/turret_launch3d.py); foam loss 30 % (assumed); the chronograph gates in the barrel measure the real speed"
   },
   "feed": {
    "pockets": 8,
-   "motor": "DJI M2006 P36",
-   "ratio": 36,
-   "rated_rpm": 416,
-   "dial_rpm_at_10_per_s": 75,
-   "max_rate_per_s": 55,
+   "motor": "Feetech STS3215 serial bus servo (ID 3)",
+   "ratio": 345,
+   "no_load_rpm": 45,
+   "step_deg": 45.0,
+   "step_ms_est": 235.0,
+   "rate_per_s": 3,
+   "max_rate_per_s": 3,
    "pitch_radius_mm": 37,
    "exit_x_mm": 37.0,
    "park_deg": 22.5
   },
   "timing": {
-   "dial_to_exit_ms": 50,
+   "dial_to_exit_ms": 235,
    "chute_ms": 86,
    "to_nip_ms": 8,
-   "nip_to_muzzle_ms": 5.8,
+   "nip_to_muzzle_ms": 7.8,
    "speed_into_nip_mps": 0.65,
-   "trigger_to_muzzle_ms": 151
+   "trigger_to_muzzle_ms": 338
   },
   "pan": {
    "pinion_teeth": 21,
@@ -398,8 +403,8 @@
    ],
    "hard_stop_deg": 173.5,
    "encoder_counts_per_turret_deg": 34.1,
-   "inertia_kg_m2": 0.00421,
-   "accel_at_cap_deg_s2": 60020,
+   "inertia_kg_m2": 0.00419,
+   "accel_at_cap_deg_s2": 60309,
    "time_to_full_slew_ms": 1.5
   },
   "tilt": {
@@ -409,10 +414,10 @@
     -25.0,
     0.0
    ],
-   "group_mass_g": 644,
-   "com_ahead_mm": -6.2,
-   "holding_nm": -0.04,
-   "margin": 75.3
+   "group_mass_g": 708,
+   "com_ahead_mm": -4.8,
+   "holding_nm": -0.03,
+   "margin": 87.8
   },
   "flight_level": {
    "rows": [
@@ -459,7 +464,7 @@
   }
  },
  "masses_g": {
-  "turret_with_balls": 1594,
+  "turret_with_balls": 1639,
   "adapter": 342,
   "j501_printed": 368.2,
   "j501_inside_est": 1000.0

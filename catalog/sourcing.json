@@ -558,10 +558,21 @@
    "vendor": "generic",
    "model": "double-sided prototype board 50 x 70 mm",
    "name": "Double Side Prototyping Board 50x70mm",
-   "price_usd": 0.99,
-   "price_note": "Tayda Electronics: $0.99 (search snippet)",
+   "price_usd": 7.25,
+   "price_note": "SparkFun PRT-08619 (Wombat, 80 x 100 mm): $7.25, cut to 70 x 50 for the stand's terminal board (page 2026-10-27); backup Tayda 50 x 70",
    "price_checked": "2026-10-27",
    "buy": [
+    {
+     "seller": "SparkFun",
+     "url": "https://www.sparkfun.com/protoboard-wombat-pth.html",
+     "in_stock": true,
+     "ships_from": "US",
+     "seller_pn": "PRT-08619",
+     "price_usd": 7.25,
+     "pack_qty": 1,
+     "stock": "In stock",
+     "read_on": "2026-10-27"
+    },
     {
      "seller": "Tayda Electronics",
      "url": "https://www.taydaelectronics.com/double-side-prototyping-board-50x70mm.html",
@@ -580,7 +591,9 @@
    "confidence": "product page",
    "notes": "MISMATCH (board mounting): the stand's four M3 insert bosses are on 66 x 50 mm centres (cad/turret_stand.py: x = -60 and 6, y = +-25). On a 70 x 50 mm board, holes 50 mm apart in y would sit on the board's long edges. Generic 5 x 7 cm boards put their corner holes a few mm in from each edge, but no page I read gave their size or position. Measure the board and move the bosses (y pitch probably about 44-46 mm), or mount the board on its edges with clips. Terminal block: Phoenix Contact MKDS 1,5/2-5,08 (1715721), rated 17.5 A / 250 V, 5.08 mm pitch. LCSC had only 2 in stock.",
    "status": "proposed: chosen for the plain-text BOM line, not in a catalogue file yet",
-   "evidence": "Tayda blocked curl and WebFetch (Cloudflare 403). From a WebSearch summary: 50 x 70 mm, double-sided, 1.6 mm thick, 2.54 mm pitch, 1 mm holes, $0.99. Mounting-hole size and position were not visible. Terminal block for the 24 V input: Phoenix Contact MKDS 1,5/2-5,08 = 1715721 at LCSC C480516 (https://www.lcsc.com/product-detail/C480516.html): $0.4358 (1+), $0.3401 (10+), only 2 in stock at check; 17.5 A, 250 V, 5.08 mm pitch, 14-30 AWG; image https://assets.lcsc.com/images/lcsc/900x900/20251016_Phoenix-Contact-1715721_C480516_front.jpg; datasheet https://datasheet.lcsc.com/datasheet/pdf/451ddc8e0fd091a5d2c5c858e4388910.pdf?productCode=C480516. Search snippets (not verified) put Mouser at $1.21 for 1."
+   "evidence": "Tayda blocked curl and WebFetch (Cloudflare 403). From a WebSearch summary: 50 x 70 mm, double-sided, 1.6 mm thick, 2.54 mm pitch, 1 mm holes, $0.99. Mounting-hole size and position were not visible. Terminal block for the 24 V input: Phoenix Contact MKDS 1,5/2-5,08 = 1715721 at LCSC C480516 (https://www.lcsc.com/product-detail/C480516.html): $0.4358 (1+), $0.3401 (10+), only 2 in stock at check; 17.5 A, 250 V, 5.08 mm pitch, 14-30 AWG; image https://assets.lcsc.com/images/lcsc/900x900/20251016_Phoenix-Contact-1715721_C480516_front.jpg; datasheet https://datasheet.lcsc.com/datasheet/pdf/451ddc8e0fd091a5d2c5c858e4388910.pdf?productCode=C480516. Search snippets (not verified) put Mouser at $1.21 for 1.",
+   "pack_qty": 1,
+   "pack_price_usd": 7.25
   },
   {
    "key": "bumper-feet-12.7",

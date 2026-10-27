@@ -1,15 +1,34 @@
 {
  "too_big": [],
- "print_hours": 54.5,
- "printed_g": 998,
+ "print_hours": 55.5,
+ "printed_g": 1012,
  "stand_mm": [
   180.0,
   200.0,
   100.0
  ],
- "pictures": [
-  "turret-bench-level-iso.png",
-  "turret-bench-level-front.png",
-  "turret-bench-aimed-iso.png"
- ]
+ "orders": {
+  "sellers": [
+   "Waveshare",
+   "SunnySky USA",
+   "Palm Beach Bots",
+   "Pololu",
+   "Adafruit",
+   "SparkFun",
+   "Digi-Key",
+   "Mouser",
+   "McMaster-Carr",
+   "VXB Bearings",
+   "SendCutSend",
+   "Caldwell",
+   "AbleNet",
+   "Out of Darts",
+   "Jameco",
+   "IWISS",
+   "FYSETC",
+   "Master Electronics"
+  ],
+  "grand_total_usd": 1558.65,
+  "lines": 100
+ }
 }

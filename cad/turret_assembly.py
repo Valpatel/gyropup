@@ -23,7 +23,8 @@ GREY = (0.78, 0.79, 0.81)
 STEPS = [
     ('The pan base and its inserts', ['pan_base'], {}, (0.6, -1.0, 0.7),
      'Heat-set inserts first, with the base on its foot: 5 x M3 in the clamp ears, 3 x M3 in the carrier bosses (from '
-     'below), 4 x M3 in the base-board bosses, 4 x M4 in the DT pad, 5 short M3 in the bumper tabs.'),
+     'below), 4 x M3 in the base-board bosses, 4 x M4 in the DT pad. The bumper tabs\' 5 short M3 wait for the robot '
+     '(no bumper on the bench, D42).'),
     ('The pan servo, its pinion and the DT12 receptacle', ['pan_servo', 'pan_pinion', 'dt_receptacle'],
      {'pan_servo': 40, 'pan_pinion': 70, 'dt_receptacle': (0, -40, 0)}, (0.6, -1.0, 0.7),
      'The STS3215 drops into its pocket, bus plugs down, on its four posts: 4 x M2 x 20 up through the foot. The pinion on '
@@ -60,23 +61,31 @@ STEPS = [
     ('The laser', ['laser_mount', 'laser'], {'laser_mount': -30, 'laser': -30}, (0.7, -1.0, 0.4),
      'The mount on the cradle\'s tab: 2 x M3 x 10 up through it; the laser in the mount on three nylon-tip M3 set screws '
      '(boresight them on the bench).'),
-    ('The cartridge: feed motor, dial, ESCs and wheels', ['cartridge_body', 'feed_motor', 'feed_esc', 'dial', 'flywheel_motor_l', 'flywheel_motor_r',
-                                                          'esc_l', 'esc_r', 'flywheel', 'flywheel_tyre'],
-     {'feed_motor': -40, 'feed_esc': (-30, 0, 0), 'dial': 40, 'flywheel_motor_l': -30, 'flywheel_motor_r': -30, 'flywheel': -45, 'flywheel_tyre': -45},
+    ('The cartridge: feed servo, dial, flywheel motors and the cartridge board',
+     ['cartridge_body', 'feed_motor', 'dial', 'flywheel_motor_l', 'flywheel_motor_r', 'flywheel', 'flywheel_tyre', 'cartridge_board', 'esc_l', 'esc_r'],
+     {'feed_motor': -40, 'dial': 40, 'flywheel_motor_l': -35, 'flywheel_motor_r': -35, 'flywheel': -50, 'flywheel_tyre': -50,
+      'cartridge_board': 60, 'esc_l': 25, 'esc_r': 25},
      (0.6, -1.0, 0.6),
-     'On the bench, not on the turret: the M2006 under the dial floor (3 x M3 x 6 flat), the dial on its D shaft (M3 x 8 '
-     'and a washer from the top of the cone); the C610 on the base plate with two cable ties; the Snails up under the cage '
-     'plate (4 x M3 x 6 each), each wheel on its bell (3 x M2 x 8 and two 1/16 in pins), the tyres stretched on (a drop of '
-     'CA if they creep); the AM32 ESCs and the brake board on the plate.'),
-    ('The barrel, the hopper and the lid', ['barrel', 'hopper', 'hopper_lid', 'hopper_flap'],
-     {'barrel': (40, 0, 0), 'hopper': 40, 'hopper_lid': 70, 'hopper_flap': 80}, (0.6, -1.0, 0.6),
+     'On the bench, not on the turret. The feed servo (its bus ID set to 3 beforehand) up against the dial floor\'s '
+     'underside, its horn through the floor and its length to the rear: 4 x M2 x 6 flat heads from above, flush. The '
+     'dial onto the horn: 4 x M3 x 8 down through the holes in its cone (the hopper off); set the servo\'s zero so a '
+     'pocket is centred over the exit hole and write the count down. Each X2216 with its hub: the prop adapter from its box '
+     'on the bell (3 x M2), the hub\'s flat face on the adapter\'s flange, its bore reamed to 5.00 on the pilot, the washer '
+     'and an M5 nylon-insert nut (snug plus a quarter turn); turn it by hand with a dial indicator on the rim: under 0.15 mm, '
+     'or re-seat; then the Ø34 tyre stretched on. Each motor goes up through the opening under its shell to the plate, its '
+     'leads out through the slot: 4 x M3 x 6 in the radial slots (never longer: the motor has 2.8 mm of thread). The two '
+     'AM32 ESCs on the cage plate on foam tape, each motor\'s leads to its ESC; the cartridge board on its four posts over '
+     'them (4 x M3 x 6), the brake FETs\' drains to the phase leads, and the pigtail to the two CT plugs (docs/turret-wiring.md).'),
+    ('The barrel, the hopper and the lid', ['barrel', 'hopper', 'hopper_lid'],
+     {'barrel': (40, 0, 0), 'hopper': 40, 'hopper_lid': 70}, (0.6, -1.0, 0.6),
      'The barrel into its socket (a nylon-tip M3 set screw through the socket\'s insert), the gates\' emitters and '
-     'receivers in its bosses; the hopper on the housing (3 x M3 x 8); the lid; the flap on its 2 mm pin and spring.'),
-    ('The cartridge on the cradle, the bumper, the mount', ['ct_thumbscrew', 'bumper_ring'], {'ct_thumbscrew': -30, 'bumper_ring': -30},
+     'receivers in its bosses; the hopper on the housing (3 x M3 x 8: the front one through the hole in the cage plate); '
+     'the lid. The fill flap and its spring wait for the dock (v1).'),
+    ('The cartridge on the cradle, the mount', ['ct_thumbscrew'], {'ct_thumbscrew': -30},
      (0.6, -1.0, 0.5),
      'The cartridge down onto the cradle\'s two dowels, the knurled thumbscrew up into its insert (its O-ring keeps it in '
-     'the rail); the two CT plugs (2 x 3 power, 2 x 6 signal). The bumper ring on its tabs: 5 x M3 x 20 and oversized '
-     'washers. Then the turret on its stand or head ring: 2 x Ø5 dowels, 4 x M5 x 16, and the DT12 plug.'),
+     'the rail); the two CT plugs (2 x 3 power, 2 x 5 signal). Then the turret on its stand: 2 x Ø5 dowels, 4 x M5 x 16, '
+     'and the DT12 plug. The TPU bumper ring (5 x M3 x 20 and oversized washers on the base\'s tabs) is for the robot (v1).'),
 ]
 
 
@@ -114,9 +123,12 @@ def write_doc(rows):
     hw = [r for r in bom.get('bench_turret', []) if r['for'].startswith('hw_')]
     lines = ['# Turret assembly', '',
              'The order to build the turret in, from cad/turret_assembly.py (which draws the pictures from the CAD: the new',
-             'parts of each step in colour, lifted along the way they go in; what is already fitted in grey). Tools: a',
-             'soldering iron with heat-set insert tips (M3, M4, M5), metric hex keys 1.5-4 mm, DIN 471 circlip pliers for a',
-             '50 mm ring, a crimper for Micro-Fit and DT contacts (IWISS IWD-1620 class), cyanoacrylate gel.', '']
+             'parts of each step in colour, lifted along the way they go in; what is already fitted in grey). Tools (the',
+             'order sheets list them): a soldering iron with heat-set insert tips (M3, M4, M5); metric hex keys 1.5-4 mm;',
+             'external circlip pliers for a 50 mm ring; the IWISS IWD-1620 for the DT contacts and a ratcheting open-barrel',
+             'crimper for the Micro-Fit ones; a 5 mm reamer in a tap wrench (the flywheel hubs); a dial indicator on a magnetic',
+             'base (the hub runout); the Waveshare bus servo adapter (set each servo\'s ID first: 1 pan, 2 tilt, 3 feed); the',
+             'AM32 USB linker (the ESC settings, firmware/turret/am32_settings.md); cyanoacrylate gel; double-sided foam tape.', '']
     for r in rows:
         lines += [f"## {r['step']}. {r['title']}", '', f"![step {r['step']}](../{r['picture']})", '', r['how'], '']
     if hw:

@@ -51,8 +51,9 @@ def _cyl_x(r, x0, x1, y=0.0, z=0.0):
 PANEL = [('xt60', -50.0, -40.0, ('rect', 16.6, 8.6), WALL),         # Amass XT60E-M panel plug (the supply's lead brings the
                                                                      # female, so no live pin is ever bare); 2 x M2.5, their
                                                                      # spacing not published: slotted 18..28 mm, M2.5 or M3
-         ('switch', -10.0, -40.0, ('rect', 19.4, 13.0), 2.5),       # KCD1-class rocker (E-Switch RCA1913): 19.2-19.8 x 13.0
-                                                                     # snap-in, panel 3 mm at most
+         ('switch', -10.0, -40.0, ('keyed', 20.2, 2.2), 2.5),       # DC-rated round snap-in rocker (D42): Bulgin R13244AAAA,
+                                                                     # Ø20.2, panel 3 mm at most; the backup Switch Components
+                                                                     # RA1-1A-DC-2-B-1 the same with a 2.2 mm key notch, 2-3 mm
          ('fuse', 28.0, -40.0, ('d', 12.75, 12.13), WALL),          # Littelfuse 345 panel holder: Ø12.70-12.83, a flat at
                                                                      # 12.07-12.19
          ('pendant', 60.0, -40.0, ('round', 6.35), 2.0)]            # Switchcraft 35PM2A 3.5 mm jack: Ø6.35 in a 2 mm panel
@@ -77,7 +78,7 @@ def stand_box():
     # the front panel's cutouts, the wall thinned from inside where a part wants a thin panel
     for name, y, z, cut, t in PANEL:
         if t < WALL:
-            s = s.cut(_box(x1 - WALL - 1, x1 - t, y - 12.0, y + 12.0, z - 9.0, z + 9.0))
+            s = s.cut(_box(x1 - WALL - 1, x1 - t, y - 13.0, y + 13.0, z - 13.0, z + 13.0))
         if cut[0] == 'rect':
             s = s.cut(_box(x1 - WALL - 1, x1 + 1, y - cut[1] / 2, y + cut[1] / 2, z - cut[2] / 2, z + cut[2] / 2))
             if name == 'xt60':
@@ -86,6 +87,9 @@ def stand_box():
                         s = s.cut(_cyl_x(1.6, x1 - WALL - 1, x1 + 1, y + sy * dy, z))
                     ya, yb = sorted((y + sy * 9.0, y + sy * 14.0))
                     s = s.cut(_box(x1 - WALL - 1, x1 + 1, ya, yb, z - 1.6, z + 1.6))
+        elif cut[0] == 'keyed':                                                            # a round hole with a key notch at the top
+            s = s.cut(_cyl_x(cut[1] / 2, x1 - WALL - 1, x1 + 1, y, z))
+            s = s.cut(_box(x1 - WALL - 1, x1 + 1, y - cut[2] / 2, y + cut[2] / 2, z, z + cut[1] / 2 + 1.0))
         elif cut[0] == 'd':
             hole = _cyl_x(cut[1] / 2, x1 - WALL - 1, x1 + 1, y, z).cut(_box(x1 - WALL - 2, x1 + 2, y - 10, y + 10, z + cut[2] - cut[1] / 2, z + 10))
             s = s.cut(hole)
@@ -128,9 +132,9 @@ def bought():
     out['terminal_board'] = (_box(-62.0, 8.0, -25.0, 25.0, -H + 12.0, -H + 13.6), 30.0,
                              '70 x 50 board: 24 V terminal block, fuse/switch wiring to the DT12 plug, the pendant loop')
     for name, y, z, cut, _t in PANEL:
-        d = {'xt60': (18.0, 30.0, 11.0), 'switch': (25.0, 21.0, 15.0), 'fuse': (35.0, 16.0, 16.0), 'pendant': (14.0, 9.0, 9.0)}[name]
+        d = {'xt60': (18.0, 30.0, 11.0), 'switch': (25.0, 24.0, 24.0), 'fuse': (35.0, 16.0, 16.0), 'pendant': (14.0, 9.0, 9.0)}[name]
         out[f'panel_{name}'] = (_box(x1 - WALL - d[0], x1 + 3.0, y - d[1] / 2, y + d[1] / 2, z - d[2] / 2, z + d[2] / 2), 10.0,
-                                {'xt60': 'Amass XT60E-M panel plug (24 V in)', 'switch': 'KCD1 rocker switch, 16 A',
+                                {'xt60': 'Amass XT60E-M panel plug (24 V in)', 'switch': 'DC rocker switch, Ø20.2 snap-in, 10 A 28 VDC (Bulgin R13244AAAA)',
                                  'fuse': '5 x 20 mm panel fuse holder + a DC-rated 5 A time-lag fuse', 'pendant': '3.5 mm panel jack (pendant)'}[name])
     for k, (x, y) in enumerate(((-W / 2 + 22, -D / 2 + 22), (W / 2 - 22, -D / 2 + 22), (-W / 2 + 22, D / 2 - 22), (W / 2 - 22, D / 2 - 22))):
         out[f'foot_{k + 1}'] = (_cyl_z(5.6, -H - BOT - 4.1, -H - BOT + 1.0, x, y), 2.0, 'rubber bumper foot, 3M SJ5003 Ø11.2 x 5.1')
