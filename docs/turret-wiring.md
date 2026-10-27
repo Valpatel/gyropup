@@ -223,8 +223,7 @@ signal the Feather reads is a 3.3 V signal; the bus buffer, the brake driver and
   (10.6 - 0.7 - 1.15) / 4.4 k = **2 mA**; the 4N35 (CTR at least 100 % at 10 mA, about 60 % of that at 2 mA) then
   sinks about 1.2 mA, over three times the 0.33 mA that R9 needs. A +24 V fault on SAFETY+ drives a steady 10 mA
   through R8 and the LED (no edges: released) and cannot reach the 555 (D1 blocks it); SAFETY+ to GND stops the LED;
-  D2 keeps any reverse voltage off the LED. The 555's 1 uF holds it up
-  for about 1 ms after the pendant opens.
+  D2 keeps any reverse voltage off the LED. The 555's 1 uF holds it up for about 1 ms after the pendant opens.
 - The Feather reads ARM but cannot raise it. Its own conditions sit on top (ARM_IN high, a CAN heartbeat no older than
   200 ms, the 1 kHz train on PULSE_MON) and only ever command zero throttle when they fail.
 - A bouncing ring contact drops a pulse or two (< 1 ms) and the 18 ms one-shot rides through it.
@@ -296,7 +295,7 @@ microsecond response.
 ### 3.5 The 3.3 V signals into the Feather
 
 Nothing above 3.3 V reaches a Feather pin: ARM_IN, TRIP_IN, PULSE_MON, GATE_1/2 and PAN_INDEX are 3.3 V logic or
-pulled up to 3.3 V; BUS_V is +24 V through 91 k / 10 k (2.4 V at 26 V: R20, R21, C13 on level 1); the servo bus (5 V,
+pulled up to 3.3 V; BUS_V is +24 V through 91 k / 10 k (2.4 V at 24 V, 2.6 V at 26 V: R20, R21, C13 on level 1); the servo bus (5 V,
 R14 4.7 k pull-up) comes back to RX (D0) through R15 6.8 k with R16 10 k to GND (3.0 V). The buffer (U11, 74AHCT125 on
 5 V) takes the Feather's 3.3 V TX on its TTL input; its /OE (SERVO_DIR, D4) has R13 10 k to 3.3 V, so the bus is
 released until the firmware drives it. The laser's 2N7000 needs more than the Feather's 3.3 V on its gate (its
