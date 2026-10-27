@@ -144,3 +144,47 @@ def test_hil_jump_survives_the_speed_fields_rail():
     assert h['results']['jump_height_mm'] == pytest.approx(s['jump_height_mm'], abs=5.0)
     for p in h['paths'].values():
         p.unlink()
+
+
+# ----------------------------------------------------------------------------------- B5 on the rig: the tyre press
+
+def _held_leg_ticks(ctl, L_of_t, t_end, dt=0.002):
+    """Feed the controller a leg whose length follows L_of_t (the carriage held by the top stop: the wheel cannot move
+    away), the motors reporting the commanded torque; return the commands."""
+    import fivebar as fb
+    from rig.bus import MotorState, Tick
+    out, t = [], 0.0
+    while t <= t_end:
+        phi1, phi2 = fb.ik(0.0, -L_of_t(t) * 1000.0)
+        cmd = ctl.update(Tick(t, MotorState(phi1, 0.0, out[-1][1].tau_f if out else 0.0, 30.0),
+                              MotorState(phi2, 0.0, out[-1][1].tau_r if out else 0.0, 30.0), 52.0))
+        out.append((t, cmd))
+        if cmd.stop:
+            break
+        t += dt
+    return out
+
+
+def test_tyre_press_steps_the_force_through_the_leg_and_back():
+    from rig import leg_control as lc
+    ctl = lc.LegController('tyre_press', 140.0, lc.Limits(), tick=0.002, external_cut=True)
+    L = lambda t: 0.140 + (0.360 - 0.140) * lc.smooth(t / 2.0) if t < 2.0 else 0.360
+    cmds = _held_leg_ticks(ctl, L, 66.0)
+    assert ctl.abort is None
+    seen = {}
+    for t, c in cmds:
+        if c.phase.startswith('press'):
+            seen.setdefault(c.phase, []).append(max(abs(c.tau_f), abs(c.tau_r)))
+    assert list(dict.fromkeys(seen)) == [f'press {F} N' for F in dict.fromkeys(lc.PRESS_STEPS)]
+    pol = lc.polar(*__import__('fivebar').ik(0.0, -360.0), 0.0, 0.0)
+    per_n = max(abs(x) for x in pol[4].T @ [0.0, -1.0])                       # N m per N at 360 mm
+    assert max(seen['press 900 N']) == pytest.approx(900 * per_n, rel=0.05) and max(seen['press 900 N']) <= 60.0
+    assert max(seen['press 200 N']) == pytest.approx(200 * per_n, rel=0.05)
+
+
+def test_tyre_press_goes_limp_if_the_carriage_is_not_held():
+    from rig import leg_control as lc
+    ctl = lc.LegController('tyre_press', 140.0, lc.Limits(), tick=0.002, external_cut=True)
+    L = lambda t: (0.140 + 0.220 * lc.smooth(t / 2.0)) if t < 3.2 else min(0.390, 0.360 + 0.2 * (t - 3.2))   # it stretches
+    cmds = _held_leg_ticks(ctl, L, 6.0)
+    assert ctl.abort and 'not held' in ctl.abort and cmds[-1][1].stop

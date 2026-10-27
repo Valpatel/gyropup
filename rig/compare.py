@@ -40,8 +40,14 @@ def touchdown(a, test: str) -> Optional[float]:
     if test.startswith('jump'):
         i = np.flatnonzero(a['phase'] == runlog.PHASES.index('land'))
         return float(t[i[0]]) if len(i) else None
-    L = a['L']
-    i = np.flatnonzero(L < L[0] - 0.002)
+    L, Lc = a['L'], a.get('L_cmd')
+    if Lc is None or not np.isfinite(Lc).any():
+        i = np.flatnonzero(L < L[0] - 0.002)
+        return float(t[i[0]]) if len(i) else None
+    held = np.flatnonzero(np.abs(L - Lc) < 0.002)            # the leg reached its command (on the rig: 300 after its rise)
+    if not len(held):
+        return None
+    i = np.flatnonzero((np.arange(len(t)) > held[0]) & (L < Lc - 0.002))
     return float(t[i[0]]) if len(i) else None
 
 
@@ -62,7 +68,7 @@ def metrics(a: dict, test: str) -> dict:
     h = a.get('rail_mm')
     if h is None or not np.isfinite(h).any():
         h = a.get('height_mm')
-    if h is not None and np.isfinite(h).any():
+    if test.startswith('jump') and h is not None and np.isfinite(h).any():
         hh = h[np.isfinite(h)]
         m['jump_height_mm'] = float(np.max(hh) - hh[0])
     if test == 'stand_up':
@@ -133,6 +139,33 @@ def judge(test: str, a: dict, pred: Optional[dict] = None) -> list:
         elif k == 'track':
             v = float(np.nanmax(np.abs(a[sig][w] - a[c['ref']][w])))
             row.update(value=round(v * 1000, 2), limit=c['tol'] * 1000, ok=v <= c['tol'])
+        elif k == 'follow':
+            ser = (pred or {}).get('series') or {}
+            if not ser.get('t') or not ser.get('L_mm'):
+                row['value'] = 'no prediction'
+            else:
+                t = a['t']
+                m_ = w.copy()
+                if c.get('to_event') == 'land':
+                    td = touchdown(a, test)
+                    if td is not None:
+                        m_ &= t <= td
+                ref = np.interp(t[m_], np.asarray(ser['t']), np.asarray(ser['L_mm']) / 1000.0)
+                v = float(np.nanmax(np.abs(a[sig][m_] - ref))) if m_.any() else float('nan')
+                row.update(value=round(v * 1000, 2), limit=c['tol'] * 1000, ok=bool(v <= c['tol']))
+        elif k == 'press':
+            from rig.leg_control import PRESS_HOLD, PRESS_STEPS, PRESS_T0
+            t, errs = a['t'], []
+            for i, F in enumerate(PRESS_STEPS):                    # each step's last seconds, once the force has settled
+                t1 = PRESS_T0 + (i + 1) * PRESS_HOLD
+                f = a[sig][(t >= t1 - c.get('settle_window_s', 2.0)) & (t < t1)]
+                f = f[np.isfinite(f)]
+                if len(f):
+                    errs.append(abs(float(np.mean(f)) - F) / F)
+            if not errs:
+                row['value'] = 'not measured'
+            else:
+                row.update(value=round(100 * max(errs), 1), limit=100 * c['rel_tol'], ok=max(errs) <= c['rel_tol'])
         elif k == 'jump':
             v = m.get('jump_height_mm')
             row.update(value=None if v is None else round(v, 1), limit=[c['min'], c['max']],

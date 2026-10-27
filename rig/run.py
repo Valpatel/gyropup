@@ -32,9 +32,10 @@ from rig.log import RunLog  # noqa: E402
 OUT = R / 'exports' / 'rig'
 DESIGN_KG = 14.75                     # half the 29.5 kg robot of the body plan (coordinator, 2026-10-27)
 REF_KG = 13.1                         # what exports/leg/rig-results.json was run at
-RIG_TESTS = ('stand_up', 'squat', 'jump', 'drop_150', 'power_off', 'power_off_damped')
+RIG_TESTS = ('stand_up', 'squat', 'jump', 'drop_150', 'power_off', 'power_off_damped', 'tyre_press')
 BUMPER_CONTACT_M = 0.140              # the bottom bumpers meet the carriage at this leg length (cad/build_rig.py)
 DYNAMIC = ('jump', 'jump_peak', 'drop_150')
+DROP_RIG_S = 8.0                      # s: on the rig the operator pulls the drop pin once the leg holds 300 mm
 
 
 def v_start_max(r_int: float, i_regen: float = 27.0, v_max: float = 57.5) -> float:
@@ -220,7 +221,7 @@ def run_hil(test: str, half_mass: float, rate: float, pack: Pack, plot: bool = F
 def run_can(a) -> int:
     from rig.can_bus import Calibration, CanBus
     from rig.canio import SocketCan
-    sc = lc.SCENARIOS[a.test]
+    sc = lc.scenario_of(a.test)
     if a.test not in RIG_TESTS:
         print(f'{a.test} is not a rig test (the motors are capped at 60 N m)')
         return 2
@@ -242,10 +243,14 @@ def run_can(a) -> int:
         print(f'refused: the pack is at {vb:.1f} V; {a.test} starts at {vmax} V at most (R_int {a.r_int} ohm)')
         bus.stop()
         return 3
+    duration = sc.duration
+    if a.test == 'drop_150':
+        duration = DROP_RIG_S
+        print(f'S4: the leg rises to 300 mm in 1 s; then pull the pin. The run lasts {DROP_RIG_S:.0f} s.')
     if not a.yes and input('Type ARM to run: ').strip() != 'ARM':
         bus.stop()
         return 4
-    loop(bus, ctl, log, sc.duration)
+    loop(bus, ctl, log, duration)
     log.meta['timing'] = bus.timing.summary()
     paths = log.save({})
     bus.close()
@@ -261,7 +266,7 @@ def _ff_masses():
 def main(argv=None):
     ap = argparse.ArgumentParser(prog='python -m rig.run', description=__doc__.split('\n\n')[0])
     ap.add_argument('--backend', choices=('sim', 'hil', 'can'), default='sim')
-    ap.add_argument('--test', choices=tuple(lc.SCENARIOS), default='stand_up')
+    ap.add_argument('--test', choices=tuple(lc.SCENARIOS) + tuple(lc.BENCH_SCENARIOS), default='stand_up')
     ap.add_argument('--half-mass', type=float, default=DESIGN_KG)
     ap.add_argument('--rate', type=float, default=500.0)
     ap.add_argument('--r-int', type=float, default=0.25, help='the pack\'s resistance, ohm (measured: docs/leg-bench-tests.md B6)')
@@ -290,6 +295,9 @@ def main(argv=None):
         return 0
     if a.faults:
         return 0 if faults()['all_ok'] else 1
+    if a.test in lc.BENCH_SCENARIOS and a.backend != 'can':
+        print(f'{a.test} is a bench run on the rig only (the simulation has no top stop holding the carriage down)')
+        return 2
     pack = pack_for(a.test, a.r_int, a.v_start)
     if a.backend == 'sim':
         inj = (a.inject.split('@')[0], float(a.inject.split('@')[1])) if a.inject else None

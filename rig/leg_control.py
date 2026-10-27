@@ -102,6 +102,27 @@ SCENARIOS = {
 }
 
 
+# Bench runs on the rig that the simulation has no counterpart for (not in the reproduction).
+BENCH_SCENARIOS = {
+    'tyre_press': Scenario('tyre_press', 'B5: the carriage held down by the lowered top stop, the leg presses the wheel '
+                           'into the load plate in 100 N steps and back', 70.0, start_h=140.0),
+}
+PRESS_L = 360.0                    # mm: near full stretch the motors' 60 N m reaches ~940 N at the wheel (~590 at 300)
+PRESS_STEPS = tuple(range(200, 901, 100)) + tuple(range(800, 199, -100))
+PRESS_T0, PRESS_HOLD = 3.0, 4.0    # s: stand up to PRESS_L by 2 s, settle, then each step for PRESS_HOLD s
+PRESS_GUARD = 0.010                # m: the leg stretching this much past where the press began -> the carriage is not held
+
+
+def press_force(t: float) -> Optional[float]:
+    """B5's commanded wheel force (N) at time t, or None outside the steps."""
+    k = int((t - PRESS_T0) // PRESS_HOLD) if t >= PRESS_T0 else -1
+    return float(PRESS_STEPS[k]) if 0 <= k < len(PRESS_STEPS) else None
+
+
+def scenario_of(name: str) -> Scenario:
+    return SCENARIOS[name] if name in SCENARIOS else BENCH_SCENARIOS[name]
+
+
 def smooth(t):
     t = max(0.0, min(1.0, t))
     return t * t * (3 - 2 * t)
@@ -119,10 +140,20 @@ def command(sc: Scenario, t: float, state: dict):
         if not state.get('pushed'):
             return None, 'push'
         return 250, 'pd'
-    if sc.name == 'drop_150':
-        return 300, 'pd'
+    if sc.name == 'drop_150':                  # in the simulation it starts at 300; on the rig the leg hangs below
+        L0 = state.get('L0', 0.3) * 1000.0     # the pinned carriage first and rises to 300 in 1 s before the pin goes
+        return L0 + (300 - L0) * smooth(t / 1.0), 'pd'
     if sc.name.startswith('power_off'):
         return (300, 'pd') if t < 0.6 else (None, 'off')
+    if sc.name == 'tyre_press':
+        t_end = PRESS_T0 + PRESS_HOLD * len(PRESS_STEPS)
+        if t < 2.0:
+            return 140 + (PRESS_L - 140) * smooth(t / 2.0), 'pd'
+        if press_force(t) is not None:
+            return PRESS_L, 'press'
+        if t < t_end + 1.0:
+            return PRESS_L, 'pd'
+        return PRESS_L + (150 - PRESS_L) * smooth((t - t_end - 1.0) / 2.0), 'pd'
     return 300, 'pd'
 
 
@@ -192,7 +223,7 @@ class LegController:
     def __init__(self, scenario: str, ff_n: float, limits: Limits = Limits(), gains: Gains = Gains(),
                  flight: Optional[Flight] = None, contact_truth: bool = False, tick: Optional[float] = None,
                  external_cut: bool = False):
-        self.sc = SCENARIOS[scenario]
+        self.sc = scenario_of(scenario)
         self.tick = tick                            # None: measured from the ticks themselves
         self._t_prev: Optional[float] = None
         self.ff = ff_n
@@ -303,6 +334,7 @@ class LegController:
         sc, state, t = self.sc, self.state, tk.t
         pol = polar(tk.f.phi, tk.r.phi, tk.f.w, tk.r.w)
         L = pol[0]
+        state.setdefault('L0', L)
         L_cmd, mode = command(sc, t, state)
         if mode == 'off' and self.external_cut:
             L_cmd, mode = 300, 'pd'                                   # hold until the contactor opens
@@ -326,6 +358,15 @@ class LegController:
             self.powered = False
             self.prev = (0.0, 0.0)
             return Command(power_off=True, phase='off')
+        if mode == 'press':
+            L0 = state.setdefault('L_press0', L)
+            if L > L0 + PRESS_GUARD:                                  # pushing the carriage up: the top stop is not on it
+                self.abort, self.t_abort, self.L_abort = 'limp: the leg is stretching: the carriage is not held down', t, L
+                return self._aborting(tk)
+            F = press_force(t)
+            tau = vmc(pol, None, 0.0, force=F, g=self.g)
+            f, r = self._limit(float(tau[0]), float(tau[1]), sc.cap, (tk.f.w, tk.r.w))
+            return Command(f, r, phase=f'press {F:.0f} N', contact=True)
         jump = sc.name in ('jump', 'jump_peak')
         if self.contact_truth and 'contact' in tk.extra:
             contact = tk.extra['contact'] or not state.get('pushed')

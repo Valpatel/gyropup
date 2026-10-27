@@ -2,8 +2,8 @@
  "meta": {
   "backend": "sim",
   "test": "jump",
-  "started": "2026-10-27T10:20:54",
-  "commit": "a106b12",
+  "started": "2026-10-27T11:23:58",
+  "commit": "1b323fd",
   "half_mass_kg": 14.75,
   "rate_hz": 500.0,
   "latency_ticks": 1,
@@ -130,6 +130,13 @@
  "verdict": [
   {
    "id": "S3",
+   "what": "the push and the flight follow the prediction within 20 mm (to the landing)",
+   "ok": true,
+   "value": 2.53,
+   "limit": 20.0
+  },
+  {
+   "id": "S3",
    "what": "jump height 200-320 mm",
    "ok": true,
    "value": 245.3,
@@ -177,5 +184,5 @@
   "settle_s": 0.19800000000000018
  },
  "prediction_from": "exports/rig/predictions.json (14.75 kg, the rig's controller)",
- "plot": "exports/rig/runs/2026-10-27-102056-sim-jump-prediction.png"
+ "plot": "/home/scubasonar/Code/gyropup-legrig/exports/rig/runs/2026-10-27-112403-sim-jump-prediction.png"
 }

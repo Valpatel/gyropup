@@ -479,9 +479,7 @@ class RS04Bus:
         want = {c[0] for c in commands}
         got: Dict[int, Feedback] = {}
         while want - set(got):
-            left = t0 + timeout - time.monotonic()
-            if left <= 0:
-                break
+            left = max(0.0, t0 + timeout - time.monotonic())      # past the deadline: still take what already came in
             f = self.t.recv(left)
             if f is None:
                 break

@@ -29,10 +29,15 @@ DEFAULTS = {'run_mode': 0, 'iq_ref': 0.0, 'spd_ref': 0.0, 'limit_torque': 120.0,
             'iq_test': 0, 'dcc_set': 10.0}
 
 
+VEL_KP, VEL_KI = 10.0, 200.0       # N m per rad/s, N m per rad: the emulator's own speed loop (the real gains are spd_kp/spd_ki)
+KT_OUT = 2.1                       # N m per A at the output: the manual's torque constant (2.1 N m/Arms, 1.3 item 11)
+
+
 class EmulatedRS04:
     def __init__(self, motor_id: int = P.FACTORY_ID, host: int = P.HOST_ID, uid: Optional[bytes] = None,
                  clock: Callable[[], float] = time.monotonic, plant: Optional[str] = 'inertia',
-                 inertia: float = 3.0e-4 * 81, friction: float = 0.3, viscous: float = 0.05, vbus: float = 48.0):
+                 inertia: float = 3.0e-4 * 81, friction: float = 0.3, viscous: float = 0.05, vbus: float = 48.0,
+                 load: Optional[Callable[[float], float]] = None):
         self.id = motor_id
         self.host = host
         self.uid = uid or os.urandom(8)
@@ -55,6 +60,8 @@ class EmulatedRS04:
         self.version = (0, 4, 1, 24)      # the manual's example table shows AppCodeVersion 0.4.1.24
         self.frames_seen = 0
         self.mute = False                 # fault injection: stop answering (a lead pulled out)
+        self.load = load                  # an outside torque on the output against speed (a back-driven motor on the dyno)
+        self.vint = 0.0                   # velocity mode's integral term (N m)
 
     # ------------------------------------------------------------- state as the motor reports it
     @property
@@ -97,9 +104,14 @@ class EmulatedRS04:
         if self.mode != 2 or self.fault_word:
             self.applied = 0.0
             return 0.0
+        lim = min(float(self.params['limit_torque']), P.RS04.t)
+        if self.params['run_mode'] == 2:                       # velocity mode (4.3.3): a PI speed loop, current-limited
+            tau = VEL_KP * (float(self.params['spd_ref']) - self.speed) + self.vint
+            lim = min(lim, float(self.params['limit_cur']) * KT_OUT)
+            self.applied = max(-lim, min(lim, tau))
+            return self.applied
         p, v, kp, kd, t = self.cmd
         tau = kd * (v - self.speed) + kp * (p - self.position) + t
-        lim = min(float(self.params['limit_torque']), P.RS04.t)
         self.applied = max(-lim, min(lim, tau))
         return self.applied
 
@@ -114,7 +126,14 @@ class EmulatedRS04:
         h = dt / n
         for _ in range(n):
             tau = self.torque(now)
+            if self.mode == 2 and not self.fault_word and self.params['run_mode'] == 2:
+                lim = min(float(self.params['limit_torque']), float(self.params['limit_cur']) * KT_OUT)
+                self.vint = max(-lim, min(lim, self.vint + VEL_KI * (float(self.params['spd_ref']) - self.speed) * h))
+            else:
+                self.vint = 0.0
             fr = self.coulomb * (1 if self.speed > 0 else -1 if self.speed < 0 else 0) + self.b * self.speed
+            if self.load:
+                fr += self.load(self.speed)
             if self.speed == 0.0 and abs(tau) <= self.coulomb:
                 continue
             self.speed += (tau - fr) / self.J * h
@@ -166,7 +185,7 @@ class EmulatedRS04:
             p = P.BY_INDEX.get(req.fields['index'])
             if p is None:
                 return [P.encode_param_reply(self.id, self.host, req.fields['index'], bytes(4), ok=False)]
-            live = {'mechPos': self.position, 'mechVel': self.speed, 'VBUS': self.vbus, 'iqf': self.applied / 2.1}
+            live = {'mechPos': self.position, 'mechVel': self.speed, 'VBUS': self.vbus, 'iqf': self.applied / KT_OUT}
             v = live.get(p.name, self.params.get(p.name, 0))
             return [P.encode_param_reply(self.id, self.host, p.index, P.pack_value(p, v))]
         if k == P.WRITE_PARAM:
