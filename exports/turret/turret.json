@@ -7,12 +7,12 @@
    "solid": true,
    "frame": "base",
    "doc": "The fixed base, printed PA6-CF on its foot (100 % solid): a \u00d8144 x 5 foot on the TM pattern (4 x M5 x 16",
-   "mass_g_each": 131.2,
-   "print_h": 8.6,
+   "mass_g_each": 140.4,
+   "print_h": 9.2,
    "bed_mm": [
     158.0,
     155.0,
-    50.0
+    62.0
    ],
    "fits_bed": true,
    "valid_single_solid": true
@@ -41,8 +41,8 @@
    "solid": true,
    "frame": "pan",
    "doc": "The turntable, printed PA6-CF upside down (100 % solid): a 63 T module 1.25 spur gear (16 mm face) with a",
-   "mass_g_each": 84.7,
-   "print_h": 5.6,
+   "mass_g_each": 84.6,
+   "print_h": 5.5,
    "bed_mm": [
     114.6,
     81.2,
@@ -74,8 +74,8 @@
    "note": "PA6-CF; 4 x M2 to the horn; turns -3 x pan about the servo axis",
    "solid": true,
    "frame": "pinion",
-   "doc": "21 T module 1.25 spur pinion (printed PA6-CF, 12 mm face) on a \u00d820 flange that screws to the STS3215's disc",
-   "mass_g_each": 6.8,
+   "doc": "21 T module 1.25 spur pinion (printed PA6-CF, 12 mm face) on a \u00d820 flange that screws to the STS3215's aluminium",
+   "mass_g_each": 5.9,
    "print_h": 0.4,
    "bed_mm": [
     28.7,
@@ -92,11 +92,11 @@
    "solid": true,
    "frame": "pan",
    "doc": "Printed PA6-CF on its back (layers run along the arms): an 8 mm bridge on the turntable (4 x M4) and two 8 mm",
-   "mass_g_each": 82.4,
-   "print_h": 5.4,
+   "mass_g_each": 83.6,
+   "print_h": 5.5,
    "bed_mm": [
     161.0,
-    83.0,
+    87.0,
     48.4
    ],
    "fits_bed": true,
@@ -109,11 +109,11 @@
    "solid": true,
    "frame": "tilt",
    "doc": "Printed PA6-CF flat (100 % solid). Two 5 mm cheeks on the tilt axis and two 17 mm rails under the cartridge,",
-   "mass_g_each": 59.0,
+   "mass_g_each": 60.1,
    "print_h": 3.9,
    "bed_mm": [
     181.6,
-    131.0,
+    135.0,
     57.1
    ],
    "fits_bed": true,
@@ -126,8 +126,8 @@
    "solid": true,
    "frame": "tilt",
    "doc": "The ball cartridge, printed PA6-CF on its base (100 % solid, 2.5 mm walls): a base plate on the cradle rails",
-   "mass_g_each": 158.7,
-   "print_h": 10.4,
+   "mass_g_each": 148.7,
+   "print_h": 9.7,
    "bed_mm": [
     161.6,
     109.0,
@@ -142,9 +142,9 @@
    "note": "PA6-CF hub; M3 grub screw",
    "solid": true,
    "frame": "tilt",
-   "doc": "Flywheel hub, printed PA6-CF (100 % solid): \u00d832 rim, web, a \u00d810 boss with a \u00d83 bore for the Snail's 2.95 mm",
-   "mass_g_each": 6.8,
-   "print_h": 0.9,
+   "doc": "Flywheel hub, printed PA6-CF (100 % solid): a \u00d832 rim for the TPU tyre, a web, and a \u00d818 boss whose top face",
+   "mass_g_each": 8.0,
+   "print_h": 1.0,
    "bed_mm": [
     32.0,
     32.0,
@@ -194,8 +194,8 @@
    "solid": false,
    "frame": "tilt",
    "doc": "The hopper, printed PETG (translucent, so the balls show): a \u00d8102 tube from the dial housing to z = 70 in the",
-   "mass_g_each": 28.2,
-   "print_h": 1.1,
+   "mass_g_each": 31.2,
+   "print_h": 1.2,
    "bed_mm": [
     111.2,
     102.2,
@@ -279,11 +279,11 @@
    "solid": false,
    "frame": "base",
    "doc": "TPU 95A ring, 6 mm wide and 16 mm tall, around the pan base on its five tabs (M3 screws with washers); a gap",
-   "mass_g_each": 53.7,
-   "print_h": 5.5,
+   "mass_g_each": 52.0,
+   "print_h": 5.3,
    "bed_mm": [
     172.0,
-    168.6,
+    166.2,
     16.0
    ],
    "fits_bed": true,
@@ -292,7 +292,7 @@
  },
  "bought": {
   "pan_servo": {
-   "mass_g": 89.0,
+   "mass_g": 60.0,
    "note": "Feetech STS3215 12 V; horn up, pinion on the horn",
    "frame": "base"
   },
@@ -312,8 +312,8 @@
    "frame": "pan"
   },
   "dt_receptacle": {
-   "mass_g": 15.0,
-   "note": "Deutsch DT04-12PA-L012 flange receptacle (TM: 24 V, CAN, e-stop loop, ID); envelope est",
+   "mass_g": 20.0,
+   "note": "TE Deutsch DT04-12PA-L012 flange receptacle (TE drawing): the TM connector",
    "frame": "base"
   },
   "dt_plug": {
@@ -322,7 +322,7 @@
    "frame": "base"
   },
   "tilt_servo": {
-   "mass_g": 89.0,
+   "mass_g": 60.0,
    "note": "Feetech STS3215 12 V on the +y arm",
    "frame": "pan"
   },
@@ -343,12 +343,12 @@
   },
   "flywheel_motor_l": {
    "mass_g": 27.8,
-   "note": "DJI RoboMaster Snail 2305, hangs under the cage plate (base pattern est)",
+   "note": "DJI RoboMaster Snail 2305 (DJI drawing): hangs under the cage plate, its wheel on the bell",
    "frame": "tilt"
   },
   "flywheel_motor_r": {
    "mass_g": 27.8,
-   "note": "DJI RoboMaster Snail 2305, hangs under the cage plate (base pattern est)",
+   "note": "DJI RoboMaster Snail 2305 (DJI drawing): hangs under the cage plate, its wheel on the bell",
    "frame": "tilt"
   },
   "esc_l": {
@@ -363,12 +363,12 @@
   },
   "feed_motor": {
    "mass_g": 90.0,
-   "note": "DJI M2006 P36 under the dial (envelope est)",
+   "note": "DJI M2006 P36 (DJI drawing) under the dial; its rear 17 mm turns",
    "frame": "tilt"
   },
   "feed_esc": {
-   "mass_g": 13.3,
-   "note": "DJI C610 (CAN) under the dial floor",
+   "mass_g": 17.0,
+   "note": "DJI C610 (CAN), on the base plate behind the M2006; in through the housing's rear window",
    "frame": "tilt"
   },
   "laser": {
@@ -403,7 +403,7 @@
    "point": [
     0.0,
     0.0,
-    337.0
+    350.0
    ],
    "dir": [
     -0.0,
@@ -412,9 +412,9 @@
    ]
   },
   "muzzle": [
-   194.0,
+   154.0,
    0.0,
-   322.0
+   335.0
   ],
   "muzzle_dir": [
    1.0,
@@ -422,9 +422,9 @@
    0.0
   ],
   "laser_origin": [
-   126.0,
+   86.0,
    -32.0,
-   322.0
+   335.0
   ],
   "tilt_range_deg": [
    -25.0,
@@ -435,13 +435,13 @@
    170.0
   ],
   "pan_hard_stop_deg": 173.5,
-  "mass_estimate_g": 1383.0,
+  "mass_estimate_g": 1337.8,
   "com": [
-   10.3,
-   4.9,
-   294.5
+   -7.1,
+   2.8,
+   304.5
   ],
-  "com_above_mount_mm": 80.5,
+  "com_above_mount_mm": 90.5,
   "ball_d": 22.7,
   "bore": 24.2,
   "pose": {
@@ -466,12 +466,12 @@
    -25.0
   ]
  ],
- "mass_g_with_balls": 1383.0,
- "mass_g_empty": 1328.0,
+ "mass_g_with_balls": 1337.8,
+ "mass_g_empty": 1282.9,
  "com_from_mount_mm": [
-  10.3,
-  4.9,
-  80.5
+  -7.1,
+  2.8,
+  90.5
  ],
  "not_modelled_g": {
   "wiring and the cable loops": 50,
@@ -482,6 +482,6 @@
   "screws, inserts, dowels, springs": 17,
   "CT pogo connector pair": 10
  },
- "print_hours": 48.2,
- "made_g": 751.3
+ "print_hours": 48.3,
+ "made_g": 755.5
 }

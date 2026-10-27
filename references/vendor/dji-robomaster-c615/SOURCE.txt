@@ -1,0 +1,10 @@
+Vendor: DJI RoboMaster
+Model: C615 brushless DC motor speed controller (for the Snail 2305)
+Retrieved: 2026-10-26
+Files:
+  RoboMaster_C615_User_Guide.pdf        <-  https://rm-static.djicdn.com/tem/17348/RoboMaster%20C615%20Brushless%20DC%20Motor%20Speed%20Controller%20User%20Guide.pdf
+  c615_brushless_dc_controller_asm.stp  <-  https://rm-static.djicdn.com/tem/17348/c615_brushless_dc_controller_asm.stp
+Product page: https://www.robomaster.com/en-US/products/components/detail/2396
+Facts used: 30 x 15 x 5.4 board, 9.7 g, 24 V rated / 26 V max, 15 A continuous (20 A 3 s), PWM 400-2200 us up to 500 Hz,
+  no rpm feedback (the TX wire is for DJI Assistant 2 only).
+Licence/terms: published by DJI without login; no licence stated. Local reference copy only.
