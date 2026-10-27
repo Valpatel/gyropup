@@ -1,0 +1,6 @@
+Product photos of the bought parts on Gyropup's parts lists, one per catalogue key (<key>.jpg), shrunk to thumbnails.
+Fetched by tools/part_images.py from each part's product page: McMaster-Carr product pages (the product photo) and the
+vendors' or sellers' own product pages (og:image or the main product photo). catalog/images.json records, for every
+picture, the page it came from (source_url), the image's address (image_url) and the date (fetched).
+Licence/terms: the photos belong to McMaster-Carr and the vendors; they are kept here only so our own parts lists show
+what to order. Not redistributed: this folder is gitignored except this file. Run tools/part_images.py to fetch them.

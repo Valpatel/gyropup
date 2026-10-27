@@ -24,3 +24,6 @@ exports/turret/*.stl
 
 # meshes the rig simulation writes for its videos
 exports/leg/rig_meshes/
+
+# the spring study's every-step results (48 MB): rebuilt by sim/leg_spring_study.py
+exports/leg/springs/results.json

@@ -39,6 +39,41 @@
   .log li { margin: 0 0 10px; } .log time { font: 11px var(--font-mono); color: var(--cyan); margin-right: 8px; }
   .log p { margin: 2px 0 0; color: var(--muted); font-size: 13px; }
   a { color: var(--cyan); }
+  /* parts lists: a picture of every line (catalog/images.json), its part number and its alternates (catalog/alternates.json) */
+  .thumb { display: block; width: 72px; height: 72px; border-radius: 8px; background: #fff; overflow: hidden; flex: none; }
+  .thumb img { width: 100%; height: 100%; object-fit: contain; display: block; }
+  .thumb.sm { width: 48px; height: 48px; border-radius: 6px; }
+  .thumb.missing { background: repeating-linear-gradient(135deg, rgba(255,42,109,.10) 0 6px, transparent 6px 12px); border: 2px dashed var(--magenta);
+    display: flex; align-items: center; justify-content: center; text-align: center; color: var(--magenta); font: 700 10px/1.2 var(--font-mono); letter-spacing: .06em; }
+  .thumb.missing::after { content: "NO\A PICTURE"; white-space: pre; }
+  .thumb.sm.missing { font-size: 8px; letter-spacing: 0; }
+  .thumbs { display: flex; flex-direction: column; gap: 6px; }
+  .plist { background: rgba(18,18,26,.9); border: 1px solid var(--hairline); border-radius: 8px; overflow: hidden; font-size: 13px; }
+  .prow { display: grid; grid-template-columns: 72px minmax(0, 2.1fr) minmax(0, 1.5fr) 44px 92px minmax(0, 2.3fr);
+    grid-template-areas: "thumb main pn qty price alts"; gap: 6px 14px; align-items: start; padding: 10px 12px; border-bottom: 1px solid var(--hairline); }
+  .prow:last-child { border-bottom: 0; }
+  .prow.head { color: var(--muted); font: 500 11px var(--font-mono); letter-spacing: .06em; padding: 7px 12px; align-items: end; }
+  .prow > .t { grid-area: thumb; } .prow > .m { grid-area: main; } .prow > .p { grid-area: pn; } .prow > .q { grid-area: qty; }
+  .prow > .c { grid-area: price; } .prow > .a { grid-area: alts; }
+  .prow .m b { display: block; color: var(--text); font-weight: 600; } .prow .for { color: var(--muted); font-size: 12px; margin-top: 2px; }
+  .prow .key { font: 11px var(--font-mono); color: var(--dim); }
+  .prow .p, .prow .q, .prow .c { font: 12px var(--font-mono); }
+  .prow .avail { display: block; color: var(--mint); font: 11px var(--font-mono); margin-top: 3px; }
+  .prow .c small { display: block; color: var(--muted); }
+  .alts summary { cursor: pointer; color: var(--text-dim); font: 12px var(--font-mono); }
+  .alts ul { list-style: none; margin: 6px 0 0; padding: 0; } .alts li { margin: 0 0 8px; font-size: 12px; }
+  .alts .chg { color: var(--muted); margin-top: 2px; } .alts .chk { color: var(--dim); font: 10px var(--font-mono); margin-top: 1px; }
+  .also { margin-top: 8px; padding-top: 6px; border-top: 1px dashed var(--hairline); }
+  .risk { margin-top: 5px; font-size: 12px; color: var(--text-dim); } .risk .chk { color: var(--dim); font: 10px var(--font-mono); }
+  .mediasum { margin: 0 0 10px; color: var(--muted); font-size: 13px; }
+  table.cmp td.th { width: 56px; padding: 4px 6px; }
+  @media (max-width: 760px) {
+    .prow { grid-template-columns: 64px 44px minmax(0, 1fr); grid-template-areas: "thumb main main" "thumb pn pn" "thumb qty price" "alts alts alts"; }
+    .prow.head { display: none; }
+    .thumb { width: 64px; height: 64px; }
+    .prow .q::before { content: "×"; color: var(--muted); }
+    #print, #turretprint { overflow-x: auto; }
+  }
 </style>
 </head>
 <body>
@@ -77,7 +112,12 @@
   <div class="sec">The foam-ball turret, on its bench stand</div>
   <p class="lede" id="turretlede"></p>
   <div class="gallery" id="turret"></div>
-  <div id="turretbuy" style="margin-top:14px"></div>
+  <div class="sec">The turret: what to buy</div>
+  <p class="lede" id="turretbuylede"></p>
+  <div id="turretbuy"></div>
+  <div class="sec">The turret: what to print</div>
+  <p class="lede" id="turretprintlede"></p>
+  <div id="turretprint"></div>
 
   <div class="sec">Motors to order (Seeed Studio)</div>
   <div id="shop"></div>

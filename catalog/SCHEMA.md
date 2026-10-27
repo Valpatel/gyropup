@@ -34,3 +34,26 @@ Categories: `leg_actuator`, `wheel_motor`, `motor_driver`, `wheel`, `tire`, `bat
 
 `"preferred": true` marks the default choice the designer starts from. The BOM groups items into **Sensors & compute**
 (`compute`, `sensor`) and **Chassis & actuators** (everything else), each with its own subtotal.
+
+## Pictures and alternates
+
+Three more files sit beside the catalogue (they are objects, not item lists, and are not in `index.json`):
+
+- **`images.json`**: a picture of every part on a parts list, by catalogue key (or printed part name):
+  `{source_url, image_url, fetched, path, kind}`. `kind` is `mcmaster` or `vendor` (a product photo, kept in
+  `references/vendor/thumbs/`, gitignored: not ours to redistribute) or `render` (our CAD, `exports/thumbs/`).
+  McMaster entries also keep the product page's delivery line on the day it was read (`availability`).
+  Written by `tools/part_images.py`.
+- **`alternates.json`**: other places to buy each bought part, by catalogue key: a list of
+  `{supplier, part_number, url, price, price_usd_each, pack_qty, stock, drop_in, changes, checked}`. `drop_in` is true
+  only when the alternate fits the same seat and does the same job with no CAD change; otherwise `changes` says what
+  would change. `price` and `stock` are as the page showed them on `checked`.
+- **`sourcing.json`**: what a parts list's plain-text line means (`names`: text or part name -> key, or a list of
+  keys when one line buys several products), lines that are part of another (`skip`), where a vendor part's picture
+  is taken from when its buy link is not the right page (`image_pages`, `image_urls`), parts that are hard to buy
+  (`risk`: `{level: high | medium | cost | fit | missing | check, note, checked}`: hard to buy, single source,
+  a much cheaper option, a part that does not fit the design as drawn, parts the list leaves out, a rating to check;
+  shown on the progress page), and the bought parts no
+  catalogue file has yet (`parts`, in the item shape above plus `key`).
+
+`cad/bom_media.py` `enrich(lines)` adds `thumb` and `alternates` to parts-list lines from these files.
