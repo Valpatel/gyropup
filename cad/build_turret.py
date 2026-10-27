@@ -116,6 +116,8 @@ V1_ONLY = {
     'hw_flap_pin': ('turret_pin_2x20', 1), 'hw_flap_spring': ('turret_spring_flap', 1),
     'el_hopper_beam': ('adafruit-2167', 1), 'el_lights': ('adafruit-neopixel-ring-12-1643', 1),
 }
+# the robot's printed parts the bench leaves off (D42; cad/turret_print.py NOT_PRINTED): out of the bench's print plan
+V1_PRINTED = ('bumper_ring', 'hopper_flap')
 # the bench stand (cad/turret_stand.py), its supply, the reference chronograph and the ammunition: [(key, qty)]
 BENCH_BOUGHT = [('amass-xt60e-m', 1), ('turret_screw_m2_5x8', 2), ('turret_nut_m2_5', 2), ('bulgin-r13244aaaa', 1),
                 ('fuse-holder-5x20-panel', 1), ('littelfuse-0477005-mxp', 2), ('jack-3.5mm-panel', 1), ('pendant-hold-to-run', 1),
@@ -147,7 +149,21 @@ def main():
         export_print_stl(v, OUT / f'{name}.stl', rotation=rot)
         g = solid_mass_properties(v, MATERIALS[mat]['density_g_cm3'], 0.45, name).mass * 1000
         plan[name] = printplan.row(v, rot, mat, qty, g, False, how)
-    too_big = printplan.write(OUT / 'print-plan.json', plan, note='the turret (cad/turret.py) and its bench stand; hours are rough')
+    for name in V1_PRINTED:                                # not printed for the bench (D42): the robot's bumper and fill flap
+        plan.pop(name, None)
+    # the slicer's own grams and hours where cad/turret_print.py has sliced the part in its print orientation
+    pj = R / 'exports' / 'turret' / 'print' / 'print.json'
+    sliced = json.loads(pj.read_text())['parts'] if pj.exists() else {}
+    for name, r in plan.items():
+        sp = sliced.get(name) or {}
+        if sp.get('grams') and sp.get('minutes'):
+            q = r['qty']
+            r.update(cost_usd=round(r['cost_usd'] * sp['grams'] * q / max(r['grams'], 1), 2), grams_each=round(sp['grams']),
+                     grams=round(sp['grams'] * q), hours=round(sp['minutes'] * q / 60, 1), sliced=True,
+                     settings=sp.get('settings'), print_file=sp.get('file'), orientation=sp.get('orientation'))
+    too_big = printplan.write(OUT / 'print-plan.json', plan,
+                              note='the bench turret (cad/turret.py, v0: no bumper, no fill flap) and its stand; grams and hours are '
+                                   'Bambu Studio\'s where the part is sliced (sliced: true, cad/turret_print.py), rough otherwise')
     rows = []
     for name, (key, qty) in TURRET_BOUGHT.items():
         it = CAT.get(key) or {}
@@ -192,7 +208,7 @@ def main():
                                                       'thumbnails and alternates from cad/bom_media.py'}, indent=1) + '\n')
     summary = {'too_big': too_big, 'print_hours': round(sum(p['hours'] for p in plan.values()), 1),
                'printed_g': sum(p['grams'] for p in plan.values()), 'stand_mm': [ts.W, ts.D, ts.H],
-               'note': 'printed_g and print_hours are print-plan.json\'s rough estimates; sliced is Bambu Studio\'s (cad/turret_print.py)'}
+               'note': 'printed_g and print_hours are print-plan.json\'s (the slicer\'s where sliced); sliced is cad/turret_print.py\'s own total'}
     pj = R / 'exports' / 'turret' / 'print' / 'print.json'
     if pj.exists():                                       # the slicer's own grams and hours for the v0 parts (cad/turret_print.py)
         pr = json.loads(pj.read_text())
@@ -220,7 +236,7 @@ def main():
     summary['orders'] = {k: v for k, v in turret_orders.write(OUT / 'bom.json').items() if k in ('grand_total_usd', 'lines', 'sellers')}
     (OUT / 'bench.json').write_text(json.dumps(summary, indent=1) + '\n')
     sl = summary.get('sliced') or {}
-    print(f"bench turret: {summary['printed_g'] / 1000:.2f} kg printed, ~{summary['print_hours']} h (rough)"
+    print(f"bench turret: {summary['printed_g'] / 1000:.2f} kg printed, ~{summary['print_hours']} h"
           + (f"; sliced {sl['grams'] / 1000:.2f} kg, {sl['hours']} h" if sl.get('grams') else '') + f"; stand {ts.W:.0f} x {ts.D:.0f} x {ts.H:.0f} mm"
           f"{'; TOO BIG: ' + ', '.join(too_big) if too_big else ''}; {time.time() - t0:.0f} s")
 

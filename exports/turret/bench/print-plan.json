@@ -15,12 +15,26 @@
    ],
    "fits": true,
    "placement": "straight",
-   "grams_each": 70,
-   "grams": 70,
-   "hours": 4.6,
-   "cost_usd": 5.6,
+   "grams_each": 133,
+   "grams": 133,
+   "hours": 6.4,
+   "cost_usd": 10.68,
    "infill": "2 mm walls, 40 % gyroid",
-   "how": "PA6-CF on its foot; 4 x M5 x 16 into the head ring, 2 x \u00d85 dowels"
+   "how": "PA6-CF on its foot; 4 x M5 x 16 into the head ring, 2 x \u00d85 dowels",
+   "sliced": true,
+   "settings": {
+    "wall_loops": "4",
+    "top_shell_layers": "5",
+    "bottom_shell_layers": "5",
+    "sparse_infill_density": "40%",
+    "sparse_infill_pattern": "gyroid",
+    "curr_bed_type": "Textured PEI Plate",
+    "enable_support": "1",
+    "support_type": "tree(auto)",
+    "support_threshold_angle": "30"
+   },
+   "print_file": "exports/turret/print/pan_base.3mf",
+   "orientation": "on its foot"
   },
   "pan_ring": {
    "material": "pa6-cf",
@@ -34,10 +48,22 @@
    "placement": "straight",
    "grams_each": 78,
    "grams": 78,
-   "hours": 5.1,
-   "cost_usd": 6.23,
+   "hours": 3.8,
+   "cost_usd": 6.25,
    "infill": "100 %",
-   "how": "PA6-CF upside down; DIN 471-50 circlip; 4 x M4 inserts"
+   "how": "PA6-CF upside down; DIN 471-50 circlip; 4 x M4 inserts",
+   "sliced": true,
+   "settings": {
+    "wall_loops": "4",
+    "sparse_infill_density": "100%",
+    "sparse_infill_pattern": "zig-zag",
+    "curr_bed_type": "Textured PEI Plate",
+    "enable_support": "1",
+    "support_type": "tree(auto)",
+    "support_threshold_angle": "30"
+   },
+   "print_file": "exports/turret/print/pan_ring.3mf",
+   "orientation": "upside down: the gear teeth flat on the bed"
   },
   "pan_spacer": {
    "material": "pa6-cf",
@@ -51,10 +77,19 @@
    "placement": "straight",
    "grams_each": 3,
    "grams": 3,
-   "hours": 0.2,
-   "cost_usd": 0.21,
+   "hours": 0.1,
+   "cost_usd": 0.18,
    "infill": "100 %",
-   "how": "PA6-CF on its wide end; between the 61810 inner race and the circlip"
+   "how": "PA6-CF on its wide end; between the 61810 inner race and the circlip",
+   "sliced": true,
+   "settings": {
+    "wall_loops": "4",
+    "sparse_infill_density": "100%",
+    "sparse_infill_pattern": "zig-zag",
+    "curr_bed_type": "Textured PEI Plate"
+   },
+   "print_file": "exports/turret/print/pan_spacer.3mf",
+   "orientation": "on its wide end"
   },
   "pan_pinion": {
    "material": "pa6-cf",
@@ -68,10 +103,19 @@
    "placement": "straight",
    "grams_each": 8,
    "grams": 8,
-   "hours": 0.5,
-   "cost_usd": 0.64,
+   "hours": 0.6,
+   "cost_usd": 0.63,
    "infill": "100 %",
-   "how": "PA6-CF; 4 x M2 to the horn; turns -3 x pan about the servo axis"
+   "how": "PA6-CF; 4 x M2 to the horn; turns -3 x pan about the servo axis",
+   "sliced": true,
+   "settings": {
+    "wall_loops": "4",
+    "sparse_infill_density": "100%",
+    "sparse_infill_pattern": "zig-zag",
+    "curr_bed_type": "Textured PEI Plate"
+   },
+   "print_file": "exports/turret/print/pan_pinion.3mf",
+   "orientation": "flat"
   },
   "tilt_yoke": {
    "material": "pa6-cf",
@@ -83,12 +127,24 @@
    ],
    "fits": true,
    "placement": "straight",
-   "grams_each": 101,
-   "grams": 101,
-   "hours": 6.6,
-   "cost_usd": 8.08,
+   "grams_each": 104,
+   "grams": 104,
+   "hours": 4.8,
+   "cost_usd": 8.33,
    "infill": "100 %",
-   "how": "PA6-CF on its back; 4 x M4 x 10 to the turntable (heads 4 mm down in the bridge)"
+   "how": "PA6-CF on its back; 4 x M4 x 10 to the turntable (heads 4 mm down in the bridge)",
+   "sliced": true,
+   "settings": {
+    "wall_loops": "4",
+    "sparse_infill_density": "100%",
+    "sparse_infill_pattern": "zig-zag",
+    "curr_bed_type": "Textured PEI Plate",
+    "enable_support": "1",
+    "support_type": "tree(auto)",
+    "support_threshold_angle": "30"
+   },
+   "print_file": "exports/turret/print/tilt_yoke.3mf",
+   "orientation": "on its back: the layers run along the arms"
   },
   "cradle": {
    "material": "pa6-cf",
@@ -100,12 +156,24 @@
    ],
    "fits": true,
    "placement": "straight",
-   "grams_each": 76,
-   "grams": 76,
-   "hours": 5.0,
-   "cost_usd": 6.11,
+   "grams_each": 77,
+   "grams": 77,
+   "hours": 3.5,
+   "cost_usd": 6.16,
    "infill": "100 %",
-   "how": "PA6-CF flat; ISO 7379 6 x 12 shoulder screw (M5) in an insert"
+   "how": "PA6-CF flat; ISO 7379 6 x 12 shoulder screw (M5) in an insert",
+   "sliced": true,
+   "settings": {
+    "wall_loops": "4",
+    "sparse_infill_density": "100%",
+    "sparse_infill_pattern": "zig-zag",
+    "curr_bed_type": "Textured PEI Plate",
+    "enable_support": "1",
+    "support_type": "tree(auto)",
+    "support_threshold_angle": "30"
+   },
+   "print_file": "exports/turret/print/cradle.3mf",
+   "orientation": "flat"
   },
   "cartridge_body": {
    "material": "pa6-cf",
@@ -117,12 +185,24 @@
    ],
    "fits": true,
    "placement": "straight",
-   "grams_each": 151,
-   "grams": 151,
-   "hours": 9.9,
-   "cost_usd": 12.05,
+   "grams_each": 188,
+   "grams": 188,
+   "hours": 10.7,
+   "cost_usd": 14.97,
    "infill": "100 %",
-   "how": "PA6-CF on its base; supports under the chute"
+   "how": "PA6-CF on its base; supports under the chute",
+   "sliced": true,
+   "settings": {
+    "wall_loops": "4",
+    "sparse_infill_density": "100%",
+    "sparse_infill_pattern": "zig-zag",
+    "curr_bed_type": "Textured PEI Plate",
+    "enable_support": "1",
+    "support_type": "tree(auto)",
+    "support_threshold_angle": "30"
+   },
+   "print_file": "exports/turret/print/cartridge_body.3mf",
+   "orientation": "on its base; supports under the floor, the chute and the cage plate"
   },
   "flywheel": {
    "material": "pa6-cf",
@@ -136,10 +216,19 @@
    "placement": "straight",
    "grams_each": 5,
    "grams": 10,
-   "hours": 0.7,
-   "cost_usd": 0.84,
+   "hours": 0.4,
+   "cost_usd": 0.87,
    "infill": "100 %",
-   "how": "PA6-CF on its top face; on the X2216's prop adapter: washer + M5 nylon-insert nut; bore reamed to 5.00"
+   "how": "PA6-CF on its top face; on the X2216's prop adapter: washer + M5 nylon-insert nut; bore reamed to 5.00",
+   "sliced": true,
+   "settings": {
+    "wall_loops": "4",
+    "sparse_infill_density": "100%",
+    "sparse_infill_pattern": "zig-zag",
+    "curr_bed_type": "Textured PEI Plate"
+   },
+   "print_file": "exports/turret/print/flywheel.3mf",
+   "orientation": "on its top face (the flange seat flat on the bed)"
   },
   "flywheel_tyre": {
    "material": "tpu95",
@@ -151,12 +240,21 @@
    ],
    "fits": true,
    "placement": "straight",
-   "grams_each": 2,
-   "grams": 4,
-   "hours": 0.4,
-   "cost_usd": 0.16,
+   "grams_each": 4,
+   "grams": 9,
+   "hours": 0.6,
+   "cost_usd": 0.35,
    "infill": "2 mm walls, 40 % gyroid",
-   "how": "TPU 95A tyre"
+   "how": "TPU 95A tyre",
+   "sliced": true,
+   "settings": {
+    "wall_loops": "3",
+    "sparse_infill_density": "100%",
+    "sparse_infill_pattern": "zig-zag",
+    "curr_bed_type": "Textured PEI Plate"
+   },
+   "print_file": "exports/turret/print/flywheel_tyre.3mf",
+   "orientation": "flat"
   },
   "dial": {
    "material": "petg",
@@ -168,12 +266,24 @@
    ],
    "fits": true,
    "placement": "straight",
-   "grams_each": 22,
-   "grams": 22,
-   "hours": 0.9,
-   "cost_usd": 0.3,
+   "grams_each": 46,
+   "grams": 46,
+   "hours": 1.7,
+   "cost_usd": 0.62,
    "infill": "2 mm walls, 40 % gyroid",
-   "how": "PETG; 4 x M3 x 8 down into the feed servo's horn, from the top"
+   "how": "PETG; 4 x M3 x 8 down into the feed servo's horn, from the top",
+   "sliced": true,
+   "settings": {
+    "wall_loops": "5",
+    "sparse_infill_density": "40%",
+    "sparse_infill_pattern": "gyroid",
+    "curr_bed_type": "Textured PEI Plate",
+    "enable_support": "1",
+    "support_type": "tree(auto)",
+    "support_threshold_angle": "30"
+   },
+   "print_file": "exports/turret/print/dial.3mf",
+   "orientation": "on its bottom, cone up"
   },
   "hopper": {
    "material": "petg",
@@ -185,12 +295,21 @@
    ],
    "fits": true,
    "placement": "straight",
-   "grams_each": 20,
-   "grams": 20,
-   "hours": 0.8,
-   "cost_usd": 0.28,
+   "grams_each": 41,
+   "grams": 41,
+   "hours": 1.7,
+   "cost_usd": 0.57,
    "infill": "2 mm walls, 40 % gyroid",
-   "how": "translucent PETG; 3 x M3 to the housing"
+   "how": "translucent PETG; 3 x M3 to the housing",
+   "sliced": true,
+   "settings": {
+    "wall_loops": "5",
+    "sparse_infill_density": "40%",
+    "sparse_infill_pattern": "gyroid",
+    "curr_bed_type": "Textured PEI Plate"
+   },
+   "print_file": "exports/turret/print/hopper.3mf",
+   "orientation": "upright, on its bottom rim and the baffle"
   },
   "hopper_lid": {
    "material": "petg",
@@ -202,29 +321,21 @@
    ],
    "fits": true,
    "placement": "straight",
-   "grams_each": 8,
-   "grams": 8,
-   "hours": 0.3,
-   "cost_usd": 0.11,
+   "grams_each": 16,
+   "grams": 16,
+   "hours": 0.5,
+   "cost_usd": 0.22,
    "infill": "2 mm walls, 40 % gyroid",
-   "how": "PETG"
-  },
-  "hopper_flap": {
-   "material": "petg",
-   "qty": 1,
-   "size_mm": [
-    40,
-    36,
-    6
-   ],
-   "fits": true,
-   "placement": "straight",
-   "grams_each": 1,
-   "grams": 1,
-   "hours": 0.1,
-   "cost_usd": 0.02,
-   "infill": "2 mm walls, 40 % gyroid",
-   "how": "PETG; \u00d82 pin + torsion spring"
+   "how": "PETG",
+   "sliced": true,
+   "settings": {
+    "wall_loops": "5",
+    "sparse_infill_density": "40%",
+    "sparse_infill_pattern": "gyroid",
+    "curr_bed_type": "Textured PEI Plate"
+   },
+   "print_file": "exports/turret/print/hopper_lid.3mf",
+   "orientation": "upside down"
   },
   "barrel": {
    "material": "petg",
@@ -236,12 +347,24 @@
    ],
    "fits": true,
    "placement": "straight",
-   "grams_each": 13,
-   "grams": 13,
-   "hours": 0.5,
-   "cost_usd": 0.18,
+   "grams_each": 31,
+   "grams": 31,
+   "hours": 1.5,
+   "cost_usd": 0.42,
    "infill": "2 mm walls, 40 % gyroid",
-   "how": "PETG standing; last 15 mm blaze orange"
+   "how": "PETG standing; last 15 mm blaze orange",
+   "sliced": true,
+   "settings": {
+    "wall_loops": "5",
+    "sparse_infill_density": "40%",
+    "sparse_infill_pattern": "gyroid",
+    "curr_bed_type": "Textured PEI Plate",
+    "enable_support": "1",
+    "support_type": "tree(auto)",
+    "support_threshold_angle": "30"
+   },
+   "print_file": "exports/turret/print/barrel.3mf",
+   "orientation": "standing on its socket end"
   },
   "laser_mount": {
    "material": "petg",
@@ -253,29 +376,21 @@
    ],
    "fits": true,
    "placement": "straight",
-   "grams_each": 3,
-   "grams": 3,
-   "hours": 0.1,
-   "cost_usd": 0.05,
+   "grams_each": 6,
+   "grams": 6,
+   "hours": 0.4,
+   "cost_usd": 0.1,
    "infill": "2 mm walls, 40 % gyroid",
-   "how": "PETG; 3 x M3 boresight, 2 x M3 to the cradle"
-  },
-  "bumper_ring": {
-   "material": "tpu95",
-   "qty": 1,
-   "size_mm": [
-    172,
-    168,
-    14
-   ],
-   "fits": true,
-   "placement": "straight",
-   "grams_each": 17,
-   "grams": 17,
-   "hours": 1.7,
-   "cost_usd": 0.7,
-   "infill": "2 mm walls, 40 % gyroid",
-   "how": "TPU 95A; 5 x M3 with washers"
+   "how": "PETG; 3 x M3 boresight, 2 x M3 to the cradle",
+   "sliced": true,
+   "settings": {
+    "wall_loops": "5",
+    "sparse_infill_density": "40%",
+    "sparse_infill_pattern": "gyroid",
+    "curr_bed_type": "Textured PEI Plate"
+   },
+   "print_file": "exports/turret/print/laser_mount.3mf",
+   "orientation": "on its foot"
   },
   "ring_carrier": {
    "material": "pa6-cf",
@@ -287,12 +402,21 @@
    ],
    "fits": true,
    "placement": "straight",
-   "grams_each": 30,
-   "grams": 30,
-   "hours": 2.0,
-   "cost_usd": 2.41,
+   "grams_each": 29,
+   "grams": 29,
+   "hours": 1.2,
+   "cost_usd": 2.36,
    "infill": "100 %",
-   "how": "PA6-CF on its top face; 3 x M3 x 10 flat heads up into the base; 3 x M3 inserts for the ring"
+   "how": "PA6-CF on its top face; 3 x M3 x 10 flat heads up into the base; 3 x M3 inserts for the ring",
+   "sliced": true,
+   "settings": {
+    "wall_loops": "4",
+    "sparse_infill_density": "100%",
+    "sparse_infill_pattern": "zig-zag",
+    "curr_bed_type": "Textured PEI Plate"
+   },
+   "print_file": "exports/turret/print/ring_carrier.3mf",
+   "orientation": "on its top face"
   },
   "ring_driver": {
    "material": "pa6-cf",
@@ -306,10 +430,19 @@
    "placement": "straight",
    "grams_each": 7,
    "grams": 7,
-   "hours": 0.5,
-   "cost_usd": 0.56,
+   "hours": 0.3,
+   "cost_usd": 0.55,
    "infill": "100 %",
-   "how": "PA6-CF on its top face; in the turntable's bore (ribs + CA)"
+   "how": "PA6-CF on its top face; in the turntable's bore (ribs + CA)",
+   "sliced": true,
+   "settings": {
+    "wall_loops": "4",
+    "sparse_infill_density": "100%",
+    "sparse_infill_pattern": "zig-zag",
+    "curr_bed_type": "Textured PEI Plate"
+   },
+   "print_file": "exports/turret/print/ring_driver.3mf",
+   "orientation": "on its top face"
   },
   "board_bay": {
    "material": "petg",
@@ -321,12 +454,21 @@
    ],
    "fits": true,
    "placement": "straight",
-   "grams_each": 12,
-   "grams": 12,
-   "hours": 0.5,
-   "cost_usd": 0.17,
+   "grams_each": 24,
+   "grams": 24,
+   "hours": 0.9,
+   "cost_usd": 0.35,
    "infill": "2 mm walls, 40 % gyroid",
-   "how": "PETG on its back; 4 x M3 x 8 flat heads to the -y yoke arm; 4 x M3 inserts for the boards"
+   "how": "PETG on its back; 4 x M3 x 8 flat heads to the -y yoke arm; 4 x M3 inserts for the boards",
+   "sliced": true,
+   "settings": {
+    "wall_loops": "5",
+    "sparse_infill_density": "40%",
+    "sparse_infill_pattern": "gyroid",
+    "curr_bed_type": "Textured PEI Plate"
+   },
+   "print_file": "exports/turret/print/board_bay.3mf",
+   "orientation": "on its back"
   },
   "stand_box": {
    "material": "petg",
@@ -338,12 +480,24 @@
    ],
    "fits": true,
    "placement": "straight",
-   "grams_each": 292,
-   "grams": 292,
-   "hours": 11.7,
-   "cost_usd": 4.08,
+   "grams_each": 378,
+   "grams": 378,
+   "hours": 8.4,
+   "cost_usd": 5.28,
    "infill": "2 mm walls, 40 % gyroid",
-   "how": "printed PETG upside down; 4 x M5 + 4 x M3 inserts"
+   "how": "printed PETG upside down; 4 x M5 + 4 x M3 inserts",
+   "sliced": true,
+   "settings": {
+    "wall_loops": "3",
+    "sparse_infill_density": "20%",
+    "sparse_infill_pattern": "gyroid",
+    "curr_bed_type": "Textured PEI Plate",
+    "enable_support": "1",
+    "support_type": "tree(auto)",
+    "support_threshold_angle": "30"
+   },
+   "print_file": "exports/turret/print/stand_box.3mf",
+   "orientation": "upside down, on its top plate"
   },
   "stand_bottom": {
    "material": "petg",
@@ -355,36 +509,45 @@
    ],
    "fits": true,
    "placement": "straight",
-   "grams_each": 86,
-   "grams": 86,
-   "hours": 3.4,
-   "cost_usd": 1.2,
+   "grams_each": 104,
+   "grams": 104,
+   "hours": 2.5,
+   "cost_usd": 1.45,
    "infill": "2 mm walls, 40 % gyroid",
-   "how": "printed PETG flat; 4 x M3 x 8 into the corner bosses; 4 rubber feet; 4 x M3 inserts for the board"
+   "how": "printed PETG flat; 4 x M3 x 8 into the corner bosses; 4 rubber feet; 4 x M3 inserts for the board",
+   "sliced": true,
+   "settings": {
+    "wall_loops": "3",
+    "sparse_infill_density": "20%",
+    "sparse_infill_pattern": "gyroid",
+    "curr_bed_type": "Textured PEI Plate"
+   },
+   "print_file": "exports/turret/print/stand_bottom.3mf",
+   "orientation": "flat"
   }
  },
  "by_material": {
   "pa6-cf": {
-   "grams": 534,
-   "hours": 35.1,
-   "cost_usd": 42.73,
+   "grams": 637,
+   "hours": 31.8,
+   "cost_usd": 50.98,
    "parts": 11
   },
   "tpu95": {
-   "grams": 21,
-   "hours": 2.1,
-   "cost_usd": 0.86,
-   "parts": 3
+   "grams": 9,
+   "hours": 0.6,
+   "cost_usd": 0.35,
+   "parts": 2
   },
   "petg": {
-   "grams": 457,
-   "hours": 18.3,
-   "cost_usd": 6.39,
-   "parts": 9
+   "grams": 646,
+   "hours": 17.6,
+   "cost_usd": 9.01,
+   "parts": 8
   }
  },
  "too_big": [],
- "total_hours": 55.5,
- "total_grams": 1012,
- "note": "the turret (cad/turret.py) and its bench stand; hours are rough"
+ "total_hours": 50.0,
+ "total_grams": 1292,
+ "note": "the bench turret (cad/turret.py, v0: no bumper, no fill flap) and its stand; grams and hours are Bambu Studio's where the part is sliced (sliced: true, cad/turret_print.py), rough otherwise"
 }

@@ -1,13 +1,13 @@
 {
  "too_big": [],
- "print_hours": 55.5,
- "printed_g": 1012,
+ "print_hours": 50.0,
+ "printed_g": 1292,
  "stand_mm": [
   180.0,
   200.0,
   100.0
  ],
- "note": "printed_g and print_hours are print-plan.json's rough estimates; sliced is Bambu Studio's (cad/turret_print.py)",
+ "note": "printed_g and print_hours are print-plan.json's (the slicer's where sliced); sliced is cad/turret_print.py's own total",
  "sliced": {
   "grams": 1291.1,
   "hours": 50.1,
