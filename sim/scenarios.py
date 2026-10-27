@@ -190,7 +190,8 @@ def shooting_stance(cmd: Command, turret, t: float) -> Command:
     since = t - turret.last_shot
     rise = 0.5 - 0.5 * math.cos(math.pi * min(1.0, since / FLINCH_RISE)) if since >= 0 else 0.0
     f = rise * math.exp(-max(0.0, since - FLINCH_RISE) / FLINCH_TAU) if 0 <= since < FLINCH_RISE + 6 * FLINCH_TAU else 0.0
-    return replace(cmd, height=cmd.height - (BRACE if turret.laser else 0.0), dip=cmd.dip - FLINCH_DIP * f, kick=cmd.kick + FLINCH_KICK * f)
+    return replace(cmd, height=cmd.height - (BRACE if turret.laser else 0.0) - turret.duck, dip=cmd.dip - FLINCH_DIP * f,
+                   kick=cmd.kick + FLINCH_KICK * f)
 
 
 def run(xml_path: Path, info: dict, sc: Scenario, video: Optional[Path] = None, noise=0.0, delay_steps=0) -> dict:
@@ -198,19 +199,25 @@ def run(xml_path: Path, info: dict, sc: Scenario, video: Optional[Path] = None, 
     xml = with_terrain(Path(xml_path).read_text(), extra)
     if sc.balls:
         xml = fluid_option(xml)
-    model = mujoco.MjModel.from_xml_string(xml.replace('<compiler ', f'<compiler meshdir="{Path(xml_path).parent}" ', 1))
+    if 'meshdir=' not in xml.split('<compiler', 1)[-1].split('>', 1)[0]:          # v2 names its own mesh folder
+        xml = xml.replace('<compiler ', f'<compiler meshdir="{Path(xml_path).parent}" ', 1)
+    model = mujoco.MjModel.from_xml_string(xml)
     data = mujoco.MjData(model)
-    rb = Robot(model, info)
-    place_standing(rb, data, sc.start_height)
+    if info.get('kind') == 'fivebar':                 # Gyropup v2 (sim/robot_v2.py): five-bar legs, their controller
+        from sim.controller_v2 import ControllerV2 as Ctl, RobotV2 as Rob, place_standing as place
+    else:
+        Rob, Ctl, place = Robot, Controller, place_standing
+    rb = Rob(model, info)
+    place(rb, data, sc.start_height)
     if sc.start_drop_m:
         data.qpos[2] += sc.start_drop_m
         mujoco.mj_forward(model, data)
     lidar_geom = next((g for g in range(model.ngeom) if model.geom(g).name == 'lidar'), None)
     base_geoms = {g for g in range(model.ngeom) if model.geom_bodyid[g] == rb.base}
     peak_body_n, lidar_touch, force6 = 0.0, None, np.zeros(6)
-    ctl = Controller(rb, noise=noise, delay_steps=delay_steps)
+    ctl = Ctl(rb, noise=noise, delay_steps=delay_steps)
     ctl.height = sc.start_height                 # start from the pose the robot is placed in
-    turret = TurretController(model, data, list(sc.targets))
+    turret = TurretController(model, data, list(sc.targets), tilt_max=(info.get('turret') or {}).get('tilt_max_rad'))
     dt = model.opt.timestep
     steps = int(sc.seconds / dt)
     frame_every = max(1, int(round(1 / (FPS * dt))))

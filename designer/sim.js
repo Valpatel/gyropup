@@ -6,6 +6,7 @@ import { createStage } from './kit/stage.js';
 import { mountAppNav } from './kit/appnav.js';
 import { section, slider, chips, readouts, toggle, collapsiblePanel, overlayInsets } from './kit/panel.js';
 import { buildRobot, kneeFor } from './robot3d.js';
+import { buildRobotV2 } from './robot_v2.js';
 import { loadCadRig } from './cadrig.js';
 import { createEyes, eyesGlyph } from './character/eyes.js';
 import { BALL, BALL_SPIN, ballMesh, createBalls } from './turret3d.js';
@@ -21,23 +22,24 @@ const q = new URLSearchParams(location.search);
 const index = await getJson('../catalog/index.json');
 const catalog = indexCatalog(await Promise.all(index.files.map((f) => getJson(`../catalog/${f}`))));
 const materials = await getJson('../catalog/materials.json');
-let designs = [];
-try { designs = (await getJson('../exports/designs.json')).designs.map((d) => ({ name: d.name, file: d.file })); } catch { /* no summaries yet */ }
-if (!designs.length) designs = [{ name: 'Gyropup (default)', file: 'designs/default.json' }];
-let fromDesigner = null;
-try { fromDesigner = JSON.parse(localStorage.getItem(STORE) || 'null'); } catch { /* storage blocked */ }
+// one robot (D36): v2 with the five-bar legs (sim/robot_v2.py, an interim body until M5); the first, serial-leg robot
+// stays as a legacy view
+const designs = [{ name: 'Gyropup v2 (five-bar)', file: 'v2' }, { name: 'Gyropup v1 (serial legs, legacy)', file: 'designs/default.json' }];
+const fromDesigner = null;
 
 const sel = $('#design-select');
-// Gyropup (designs/default.json) first and selected; the designer's working copy last
-designs.sort((x, y) => (y.file === 'designs/default.json') - (x.file === 'designs/default.json'));
-sel.innerHTML = designs.map((d) => `<option value="${d.file}">${d.name}</option>`).join('')
-  + (fromDesigner ? '<option value="@designer">From the designer (your current build)</option>' : '');
-if (q.get('design') && designs.some((d) => d.file === q.get('design'))) sel.value = q.get('design');
-else if (designs.some((d) => d.file === 'designs/default.json')) sel.value = 'designs/default.json';   // Gyropup on one 60 V FLEXVOLT
+sel.innerHTML = designs.map((d) => `<option value="${d.file}">${d.name}</option>`).join('');
+sel.value = q.get('design') && designs.some((d) => d.file === q.get('design')) ? q.get('design') : 'v2';
 const runSel = $('#run-select');
 
 const eyes = createEyes({ iris: '#55e9ff' });
 const stage = createStage($('#app'), { height: 0.75, screenshots: true });
+// phones and tablets: a lighter render (fewer pixels, no shadow maps; set before the first frame compiles anything)
+const phone = matchMedia('(max-width: 899px)');
+if (phone.matches || matchMedia('(pointer: coarse)').matches) {
+  stage.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+  stage.renderer.shadowMap.enabled = false;
+}
 const state = { height: 0.6, pitch: 0, rollMM: 0, speed: 0, wheel: 0, alive: true, design: null, robot: null, result: null, replay: null };
 const terrain = new THREE.Group();
 stage.root.add(terrain);
@@ -67,27 +69,71 @@ const updateInsets = () => {
   stage.setInsets(ins);
 };
 const panelFold = collapsiblePanel(hud, $('#panel'), { key: 'gyropup-sim-panel', onChange: () => { updateInsets(); if (state.replay) frameReplay(); } });
-window.addEventListener('resize', () => updateInsets());
+[...$('#topbar').querySelectorAll('.hud-pill')].filter((b) => /PANEL/.test(b.textContent)).forEach((b) => b.classList.add('panel-pill'));
+// on a phone the panel is a drawer along the bottom (sim-layout.css): a handle opens and closes it, closed at first
+const drawerBtn = document.createElement('button');
+drawerBtn.id = 'drawer-handle';
+drawerBtn.type = 'button';
+drawerBtn.innerHTML = '<span class="grip"></span>CONTROLS<span class="caret"></span>';
+$('#panel').prepend(drawerBtn);
+function setDrawer(open) {
+  hud.classList.toggle('drawer-closed', !open);
+  document.body.classList.toggle('drawer-open', open && phone.matches);
+  drawerBtn.setAttribute('aria-expanded', String(open));
+  requestAnimationFrame(() => {
+    document.documentElement.style.setProperty('--drawer-h', `${Math.round($('#panel').getBoundingClientRect().height)}px`);
+    updateInsets();
+  });
+}
+drawerBtn.onclick = () => setDrawer(hud.classList.contains('drawer-closed'));
+setDrawer(!phone.matches);
+phone.addEventListener('change', () => setDrawer(!phone.matches));
+window.addEventListener('resize', () => { updateInsets(); if (phone.matches) document.documentElement.style.setProperty('--drawer-h', `${Math.round($('#panel').getBoundingClientRect().height)}px`); });
 const soundBtn = document.createElement('button');
 soundBtn.className = 'hud-pill';
 const paintSound = () => { soundBtn.innerHTML = `<span class="dot"></span>SOUND ${sfx.enabled ? 'ON' : 'OFF'}`; soundBtn.classList.toggle('on', sfx.enabled); };
 soundBtn.onclick = () => { sfx.setEnabled(!sfx.enabled); paintSound(); };
 paintSound();
 $('#topbar').insertBefore(soundBtn, $('#alive'));
+// demo mode: every replay in turn, each once, the camera easing from one to the next (?demo=1 starts in it)
+const demo = { on: false };
+const demoBtn = document.createElement('button');
+demoBtn.className = 'hud-pill';
+const paintDemo = () => { demoBtn.innerHTML = `<span class="dot"></span>DEMO ${demo.on ? 'ON' : 'OFF'}`; demoBtn.classList.toggle('on', demo.on); };
+demoBtn.title = 'Play every physics run in turn';
+demoBtn.onclick = () => { demo.on = !demo.on; paintDemo(); if (demo.on && !state.replay) nextReplay(); };
+paintDemo();
+$('#topbar').insertBefore(demoBtn, soundBtn);
+async function nextReplay() {
+  const keys = [...runSel.options].map((o) => o.value).filter(Boolean);
+  if (!keys.length) return;
+  const at = keys.indexOf(state.replay?.key ?? '');
+  const key = keys[(at + 1) % keys.length];
+  const run = await getJson(`../exports/sim/${key}.json`);     // fetched while the last run holds its final frame
+  runSel.value = key;
+  startReplay(key, { ease: true, run });
+}
 
 async function loadDesign(value) {
-  const design = value === '@designer' ? fromDesigner : await getJson(`../${value}`);
+  const v2 = value === 'v2';
+  const design = v2 ? { name: 'Gyropup v2 (five-bar)' } : value === '@designer' ? fromDesigner : await getJson(`../${value}`);
   state.design = design;
-  state.result = evaluate(design, catalog, materials);
+  state.v2 = v2;
+  state.result = v2 ? null : evaluate(design, catalog, materials);
   state.modelMass = null;                              // the physics model's mass (CAD parts), when there is a run
+  state.summary = null;
   if (value !== '@designer') {
-    try { state.modelMass = (await getJson(`../exports/sim/${value.split('/').pop().replace(/\.json$/, '')}/summary.json`)).mass_kg; } catch { /* not simulated */ }
+    try { state.summary = await getJson(`../exports/sim/${value.split('/').pop().replace(/\.json$/, '')}/summary.json`); state.modelMass = state.summary.mass_kg; } catch { /* not simulated */ }
   }
   if (state.robot) { stage.root.remove(state.robot.group); if (state.robot.turret) stage.root.remove(state.robot.turret.laser); }
-  let mech = null;                                     // the real stack from the CAD, if it was built from this design
-  try { const ml = await getJson('../exports/mech-layout.json'); if (ml.design === value) mech = ml; } catch { /* no CAD yet */ }
-  const cad = value === '@designer' ? null : await loadCadRig('../', value);   // the real CAD meshes, posed by the joints
-  state.robot = buildRobot(design, catalog, { eyes, mech, cad });
+  if (v2) {
+    state.robot = await buildRobotV2('../', { eyes });
+  } else {
+    let mech = null;                                   // the real stack from the CAD, if it was built from this design
+    try { const ml = await getJson('../exports/mech-layout.json'); if (ml.design === value) mech = ml; } catch { /* no CAD yet */ }
+    const cad = value === '@designer' ? null : await loadCadRig('../', value);   // the real CAD meshes, posed by the joints
+    state.robot = buildRobot(design, catalog, { eyes, mech, cad });
+  }
   stage.root.add(state.robot.group);
   stage.frame(state.robot.info.heightM);
   state.robot.fov.visible = gun.showFov;
@@ -206,10 +252,13 @@ function boxFromMjcf(attrs) {
   return mesh;
 }
 
-async function startReplay(key) {
+async function startReplay(key, { ease = false, run = null } = {}) {
+  if (!run) {
+    stopReplay();
+    if (!key) return;
+    run = await getJson(`../exports/sim/${key}.json`);
+  }
   stopReplay();
-  if (!key) return;
-  const run = await getJson(`../exports/sim/${key}.json`);
   terrain.clear();
   propMeshes.clear();
   for (const p of run.props ?? []) {
@@ -239,7 +288,8 @@ async function startReplay(key) {
   state.replay.targets = (run.props ?? []).filter((p) => /^target_[a-z]+$/.test(p.name)).map((p) => new THREE.Vector3(p.pos[1], p.pos[2], p.pos[0]));
   if ($('#summary') && state.replay.targets.length) $('#summary').classList.add('min');   // room for the range
   updateInsets();
-  frameReplay();
+  if (ease) state.replay.autoCam = true;                // the demo: glide to the new shot instead of cutting to it
+  else frameReplay();
   replayPanel.hidden = false;
   scrub.input.max = String(run.frames.qpos.length - 1);
   replayInfo.set([['scenario', run.title], ['result', run.pass ? 'pass' : `FAIL: ${run.reasons.join('; ')}`, run.pass ? 'ok' : 'fail'],
@@ -307,6 +357,18 @@ function stopReplay() {
 }
 
 function renderSummary() {
+  if (state.v2) {
+    const i = state.robot.info, sm = state.summary;
+    $('#summary').innerHTML = `<h2 class="fold" title="Show or hide the details">Gyropup v2 (five-bar)<span class="chev"></span></h2>`
+      + `<div class="hud-readouts">`
+      + [['mass', `${(i.massKg ?? state.modelMass ?? 0).toFixed(1)} kg (CAD + an interim body)`], ['legs', `five-bar, 2 x RS-04 each, ${Math.round(i.hMin)}-${Math.round(i.hMax)} mm`],
+         ['track', `${Math.round(i.trackMM)} mm`], ['physics', sm ? `${sm.passed}/${sm.total} scenarios pass` : 'not simulated'],
+         ['top deck', i.deck ? `lidar in front, turret behind: ${i.deck.tilt_max_forward_deg}° down over it, ${i.deck.lidar_hidden_deg}° hidden` : 'turret'],
+         ['body', 'interim placeholder until M5']]
+        .map(([k, v]) => `<div class="r"><span>${k}</span><b>${v}</b></div>`).join('') + '</div>';
+    $('#summary .fold').onclick = () => { $('#summary').classList.toggle('min'); updateInsets(); if (state.replay) frameReplay(); };
+    return;
+  }
   const r = state.result, d = state.design;
   $('#summary').innerHTML = `<h2 class="fold" title="Show or hide the details">${d.name ?? 'Gyropup'}<span class="chev"></span></h2>`
     + `<div class="hud-readouts">`
@@ -408,6 +470,13 @@ function setDaylight(v) {
 }
 
 function telemetry(p) {
+  if (state.v2) {
+    const i = state.robot.info;
+    tele.set([['leg length', `${Math.round(p.legMM)} mm (hip line to axle)`], ['hip height', `${Math.round(p.hipHeightMM)} mm`],
+              ['wheel speed', `${Math.round(Math.abs(state.speed) / (i.wheelR / 1000) * 60 / (2 * Math.PI))} rpm`],
+              ['track width', `${Math.round(i.trackMM)} mm`], ['mass', `${(i.massKg ?? 0).toFixed(1)} kg`]]);
+    return;
+  }
   const d = effectiveDesign(state.design, catalog), g = d.geometry, r = state.result;
   const act = resolvePart(d.parts.leg_actuator, catalog);
   const hip = p.hipHeightMM - g.wheel_diameter_mm / 2;
@@ -446,7 +515,13 @@ stage.onFrame((t, dt) => {
   if (!state.robot) return;
   if (state.replay) {
     const R = state.replay, F = R.run.frames;
-    if (R.playing) R.t = (R.t + dt * R.rate) % (F.qpos.length / F.fps);
+    if (R.playing) {
+      const dur = F.qpos.length / F.fps, nt = R.t + dt * R.rate;
+      if (nt >= dur && demo.on && !R.leaving) {            // demo: hold the last frame while the next run loads
+        R.t = dur - 1e-3; R.playing = false; R.leaving = true;
+        nextReplay();
+      } else R.t = nt % dur;
+    }
     // blend between the recorded 30 fps frames so motion stays smooth at the screen's frame rate
     const f = Math.min(F.qpos.length - 1, R.t * F.fps), i = Math.floor(f), j = Math.min(F.qpos.length - 1, i + 1), w = f - i;
     const A = F.qpos[i], B = F.qpos[j];
@@ -475,8 +550,14 @@ stage.onFrame((t, dt) => {
     }
     const lay = R.run.qpos_layout ?? {};
     const pan = qp[lay.turret_pan] ?? 0, tilt = qp[lay.turret_tilt] ?? 0;
-    const bv = Math.hypot(B[0] - A[0], B[1] - A[1]) * F.fps;
-    sfx.motion({ wheelSpeed: R.playing ? bv : 0, servoSpeed: R.playing && dt > 0 ? Math.hypot(pan - prevTurret.pan, tilt - prevTurret.tilt) / dt : 0 });
+    // the drive's speed along the heading (signed, m/s) and the fastest leg motor (signed, rad/s), from the frames
+    const yaw = Math.atan2(2 * (A[3] * A[6] + A[4] * A[5]), 1 - 2 * (A[5] * A[5] + A[6] * A[6]));
+    const bv = ((B[0] - A[0]) * Math.cos(yaw) + (B[1] - A[1]) * Math.sin(yaw)) * F.fps;
+    R.legKeys ??= Object.keys(lay).filter((n) => /^(motor_[fr]_[lr]|hip_[lr]|knee_[lr])$/.test(n));
+    let legSpeed = 0;
+    for (const n of R.legKeys) { const w = (B[lay[n]] - A[lay[n]]) * F.fps; if (Math.abs(w) > Math.abs(legSpeed)) legSpeed = w; }
+    sfx.motion({ wheelSpeed: R.playing ? bv : 0, legSpeed: R.playing ? legSpeed : 0,
+                 servoSpeed: R.playing && dt > 0 ? Math.hypot(pan - prevTurret.pan, tilt - prevTurret.tilt) / dt : 0 });
     prevTurret.pan = pan; prevTurret.tilt = tilt;
     const tt = R.t;
     for (const ev of R.run.events ?? []) {
@@ -541,11 +622,13 @@ stage.onFrame((t, dt) => {
   state.wheel += (state.speed / state.robot.info.wheelR * 1000) * dt;
   const p = state.robot.setPose({ height, pitch, rollMM: state.rollMM, wheel: state.wheel });
   if (state.robot.turret) {
-    state.robot.turret.setAim(gun.pan, gun.tilt, pitch);
+    state.robot.turret.setAim(gun.pan, Math.max(gun.tilt, -tiltLimit(gun.pan)), pitch);
     const now = performance.now() / 1000;
     setLaser(gun.laserMode === 'on' || (gun.laserMode === 'auto' && gun.attached && (gun.queue.length > 0 || now < gun.armedUntil)));
     state.robot.turret.updateLaser([terrain], gun.laserOn);
-    sfx.motion({ wheelSpeed: state.speed, servoSpeed: dt > 0 ? Math.hypot(gun.pan - prevTurret.pan, gun.tilt - prevTurret.tilt) / dt : 0 });
+    const legSpeed = dt > 0 ? ((height - (state.prevHeight ?? height)) / dt) * 3 : 0;   // live pose: the height's rate (~rad/s)
+    state.prevHeight = height;
+    sfx.motion({ wheelSpeed: state.speed, legSpeed, servoSpeed: dt > 0 ? Math.hypot(gun.pan - prevTurret.pan, gun.tilt - prevTurret.tilt) / dt : 0 });
     prevTurret.pan = gun.pan; prevTurret.tilt = gun.tilt;
     while (gun.queue.length && gun.queue[0] <= now) { gun.queue.shift(); if (!shoot()) { gun.queue = []; break; } }
     state.robot.turret.step(dt);
@@ -559,6 +642,17 @@ stage.onFrame((t, dt) => {
   if ((teleT += dt) > 0.2) { teleT = 0; telemetry(p); }
 });
 
+// v2: the most the barrel may depress at a pan (rad), from the model's table (the lidar sits in front of the turret)
+function tiltLimit(pan) {
+  const tb = state.robot?.info?.deck?.tilt_max_deg;
+  if (!tb?.length) return Infinity;
+  const d = ((pan * 180 / Math.PI + 540) % 360) - 180;
+  const i = tb.findIndex((r) => r[0] >= d);
+  if (i <= 0) return tb[i < 0 ? tb.length - 1 : 0][1] * Math.PI / 180;
+  const [p0, t0] = tb[i - 1], [p1, t1] = tb[i];
+  return (t0 + (t1 - t0) * (d - p0) / (p1 - p0)) * Math.PI / 180;
+}
+
 window.__sim = { state, stage, eyes, setHeight: (v) => { state.height = v; sh.set(v); } };
 sel.onchange = () => loadDesign(sel.value);
 runSel.onchange = () => startReplay(runSel.value);
@@ -567,10 +661,27 @@ await loadDesign(sel.value);
 try {
   talk = (await import('./character/talk.js')).mountTalk({ stage, eyes, getHead: () => state.robot?.turret?.group ?? state.robot?.base });
   const dockEl = document.querySelector('.gp-dock');
-  if (dockEl) new MutationObserver(() => { updateInsets(); if (state.replay?.autoCam) frameReplay(); }).observe(dockEl, { attributes: true, attributeFilter: ['class'] });
+  if (dockEl) new MutationObserver(() => updateInsets()).observe(dockEl, { attributes: true, attributeFilter: ['class'] });
+  // on a phone the dock starts folded to its Talk tab in the corner (unless the visitor chose otherwise before)
+  let chose = null;
+  try { chose = localStorage.getItem('gyropup.dockCollapsed'); } catch { /* storage blocked */ }
+  if (phone.matches && chose === null) talk?.dock?.collapse(true);
 } catch (err) { console.warn('talk unavailable', err); }
+// the orbit hint: worded for touch on a touch screen; it fades after a few seconds or the first drag, pinch or scroll
+{
+  const hint = $('.hud-hint');
+  if (hint) {
+    if (matchMedia('(pointer: coarse)').matches) hint.textContent = 'DRAG · ORBIT // PINCH · ZOOM // TWO FINGERS · PAN';
+    const fade = () => hint.classList.add('faded');
+    setTimeout(fade, 6000);
+    stage.renderer.domElement.addEventListener('pointerdown', fade, { once: true });
+    stage.renderer.domElement.addEventListener('wheel', fade, { once: true, passive: true });
+  }
+}
 updateInsets();
-stage.start();
+// no render until the opening shot is framed (the replay below sets it): the camera never jumps at the start
+const canvas = stage.renderer.domElement;
+canvas.style.opacity = '0';
 if (q.get('panel') === '0') panelFold.set(true);
 if (q.get('sound') === '0') { sfx.setEnabled(false); paintSound(); talk?.setMuted?.(true); }
 setTimeout(() => { if (!state.replay) react(Math.random() < 0.5 ? 'hello' : 'banter'); }, 1200);   // replays greet with their own line
@@ -579,6 +690,7 @@ const camAt = { side: [1, 0.35, 0], front: [0, 0.35, 1], iso: [0.6, 0.45, 1], ba
 if (camAt) { const dist = state.robot.info.heightM * 2.4; stage.camera.position.set(...camAt.map((v) => v * dist)); stage.controls.target.set(0, state.robot.info.heightM * 0.45, 0); }
 if (q.has('height')) window.__sim?.setHeight?.(+q.get('height'));
 if (q.get('alive') === '0') { state.alive = false; $('#alive').classList.remove('on'); }
+if (q.get('demo') === '1') { demo.on = true; paintDemo(); }
 if (q.has('fire')) queueShots(+q.get('fire') || 1);
 if (q.has('light')) { stage.setSceneLight(+q.get('light'), true); setDaylight(+q.get('light')); }
 if (q.get('fov') === '1') { gun.showFov = true; fovToggle.checked = true; if (state.robot) state.robot.fov.visible = true; }
@@ -591,5 +703,7 @@ if (runName !== 'none' && sel.value !== '@designer' && [...runSel.options].some(
   await startReplay(key);
   if (q.has('t') && state.replay) { state.replay.t = +q.get('t'); state.replay.playing = q.get('play') === '1'; }
 }
+stage.start();                                         // the camera is where it will stay: show the stage
+requestAnimationFrame(() => { canvas.style.transition = 'opacity .35s ease'; canvas.style.opacity = '1'; });
 document.body.dataset.ready = '1';
 

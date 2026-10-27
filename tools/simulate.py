@@ -2,7 +2,7 @@
 
     python tools/simulate.py designs/default.json                # every scenario
     python tools/simulate.py designs/default.json --only stand push --video
-    python tools/simulate.py --all                               # every design in designs/
+    python tools/simulate.py --v2 [--only ...] [--video]        # Gyropup v2: five-bar legs (sim/robot_v2.py)
 
 Writes exports/sim/<design>/<scenario>.json (metrics and replay frames), <scenario>.mp4 with --video, and summary.json.
 Swap a part in the design file (or in the designer) and run it again: the model, the controller and the limits all
@@ -25,11 +25,18 @@ from sim.model import build                     # noqa: E402
 from sim.scenarios import SCENARIOS, recoil_scenario, run          # noqa: E402
 
 
-def simulate(design: Path, only=None, video=False) -> dict:
-    design = Path(design).resolve()
-    info = build(design)
-    xml = R / 'build' / 'sim' / design.stem / 'robot.xml'
-    out = (Path(os.environ['GYROPUP_EXPORTS']).resolve() if os.environ.get('GYROPUP_EXPORTS') else R / 'exports') / 'sim' / design.stem
+def simulate(design: Path, only=None, video=False, v2=False) -> dict:
+    exports = Path(os.environ['GYROPUP_EXPORTS']).resolve() if os.environ.get('GYROPUP_EXPORTS') else R / 'exports'
+    if v2:                                               # Gyropup v2: two five-bar legs, the turret, an interim body
+        from sim.robot_v2 import build as build_v2
+        info = build_v2()
+        xml = R / 'build' / 'sim' / 'v2' / 'robot.xml'
+        out = exports / 'sim' / 'v2'
+    else:
+        design = Path(design).resolve()
+        info = build(design)
+        xml = R / 'build' / 'sim' / design.stem / 'robot.xml'
+        out = exports / 'sim' / design.stem
     out.mkdir(parents=True, exist_ok=True)
     results = {}
     suite = dict(SCENARIOS)
@@ -66,7 +73,13 @@ def main():
     ap.add_argument('--only', nargs='+')
     ap.add_argument('--video', action='store_true')
     ap.add_argument('--all', action='store_true')
+    ap.add_argument('--v2', action='store_true', help='Gyropup v2 (five-bar legs, sim/robot_v2.py)')
     a = ap.parse_args()
+    if a.v2:
+        print('Gyropup v2:')
+        s = simulate(None, a.only, a.video, v2=True)
+        print(f"  {s['passed']}/{s['total']} scenarios pass; model {s['mass_kg']} kg")
+        return 0 if s['passed'] == s['total'] else 1
     designs = sorted((R / 'designs').glob('*.json')) if a.all else [Path(a.design)]
     ok = True
     for d in designs:
