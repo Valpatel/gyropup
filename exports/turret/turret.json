@@ -92,10 +92,10 @@
    "solid": true,
    "frame": "pan",
    "doc": "Printed PA6-CF on its back (layers run along the arms): an 8 mm bridge on the turntable (4 x M4) and two 8 mm",
-   "mass_g_each": 83.6,
-   "print_h": 5.5,
+   "mass_g_each": 79.8,
+   "print_h": 5.2,
    "bed_mm": [
-    161.0,
+    150.0,
     87.0,
     48.4
    ],
@@ -109,11 +109,11 @@
    "solid": true,
    "frame": "tilt",
    "doc": "Printed PA6-CF flat (100 % solid). Two 5 mm cheeks on the tilt axis and two 17 mm rails under the cartridge,",
-   "mass_g_each": 60.1,
-   "print_h": 3.9,
+   "mass_g_each": 58.2,
+   "print_h": 3.8,
    "bed_mm": [
     181.6,
-    135.0,
+    124.0,
     57.1
    ],
    "fits_bed": true,
@@ -126,11 +126,11 @@
    "solid": true,
    "frame": "tilt",
    "doc": "The ball cartridge, printed PA6-CF on its base (100 % solid, 2.5 mm walls): a base plate on the cradle rails",
-   "mass_g_each": 148.7,
-   "print_h": 9.7,
+   "mass_g_each": 141.1,
+   "print_h": 9.2,
    "bed_mm": [
-    161.6,
-    109.0,
+    162.6,
+    103.2,
     53.1
    ],
    "fits_bed": true,
@@ -142,12 +142,12 @@
    "note": "PA6-CF hub; M3 grub screw",
    "solid": true,
    "frame": "tilt",
-   "doc": "Flywheel hub, printed PA6-CF (100 % solid): a \u00d832 rim for the TPU tyre, a web, and a \u00d818 boss whose top face",
-   "mass_g_each": 8.0,
-   "print_h": 1.0,
+   "doc": "Flywheel hub, printed PA6-CF (100 % solid): a \u00d828 rim for the TPU tyre, a web, and a \u00d818 boss whose top face",
+   "mass_g_each": 6.8,
+   "print_h": 0.9,
    "bed_mm": [
-    32.0,
-    32.0,
+    28.0,
+    28.0,
     15.0
    ],
    "fits_bed": true,
@@ -159,12 +159,12 @@
    "note": "TPU 95A tyre",
    "solid": false,
    "frame": "tilt",
-   "doc": "TPU 95A tyre, \u00d840 x 12 over the \u00d832 hub rim.",
-   "mass_g_each": 6.6,
-   "print_h": 1.4,
+   "doc": "TPU 95A tyre, \u00d836 x 12, 4 mm thick over the hub's \u00d828 rim (stretched on). Print a set (\u00d834, 36, 38): the",
+   "mass_g_each": 5.9,
+   "print_h": 1.2,
    "bed_mm": [
-    40.0,
-    40.0,
+    36.0,
+    36.0,
     12.0
    ],
    "fits_bed": true,
@@ -193,13 +193,13 @@
    "note": "translucent PETG; 3 x M3 to the housing",
    "solid": false,
    "frame": "tilt",
-   "doc": "The hopper, printed PETG (translucent, so the balls show): a \u00d8102 tube from the dial housing to z = 70 in the",
-   "mass_g_each": 31.2,
-   "print_h": 1.2,
+   "doc": "The hopper, printed PETG (translucent, so the balls show): a \u00d8102 tube from the dial housing to z = 100 in the",
+   "mass_g_each": 54.8,
+   "print_h": 2.2,
    "bed_mm": [
     111.2,
     102.2,
-    35.0
+    65.0
    ],
    "fits_bed": true,
    "valid_single_solid": true
@@ -412,7 +412,7 @@
    ]
   },
   "muzzle": [
-   154.0,
+   155.0,
    0.0,
    335.0
   ],
@@ -435,13 +435,13 @@
    170.0
   ],
   "pan_hard_stop_deg": 173.5,
-  "mass_estimate_g": 1337.8,
+  "mass_estimate_g": 1344.3,
   "com": [
-   -7.1,
-   2.8,
-   304.5
+   -7.6,
+   2.6,
+   307.5
   ],
-  "com_above_mount_mm": 90.5,
+  "com_above_mount_mm": 93.5,
   "ball_d": 22.7,
   "bore": 24.2,
   "pose": {
@@ -466,12 +466,12 @@
    -25.0
   ]
  ],
- "mass_g_with_balls": 1337.8,
- "mass_g_empty": 1282.9,
+ "mass_g_with_balls": 1344.3,
+ "mass_g_empty": 1289.4,
  "com_from_mount_mm": [
-  -7.1,
-  2.8,
-  90.5
+  -7.6,
+  2.6,
+  93.5
  ],
  "not_modelled_g": {
   "wiring and the cable loops": 50,
@@ -482,6 +482,6 @@
   "screws, inserts, dowels, springs": 17,
   "CT pogo connector pair": 10
  },
- "print_hours": 48.3,
- "made_g": 755.5
+ "print_hours": 48.1,
+ "made_g": 762.0
 }

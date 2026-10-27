@@ -123,7 +123,7 @@ class Geo:
     """Every size that follows from the ball. ball_d: Rival rounds are 22.2-22.8 mm (study 2.1); 22.7 is the design
     ball. Bores and pockets are ball + 1.5 mm."""
 
-    def __init__(self, ball_d: float = 22.7, wheel_d: float = 40.0, crush: float = 0.12):
+    def __init__(self, ball_d: float = 22.7, wheel_d: float = 36.0, crush: float = 0.25):
         self.ball = ball_d
         self.bore = ball_d + 1.5
         self.br = self.bore / 2
@@ -140,16 +140,21 @@ class Geo:
         self.dial_z0 = self.floor_z + 0.75
         self.dial_h = 20.0
         self.housing_top = 35.0
-        self.hopper_top = 70.0
+        # the lid's underside: a physics fill (sim/turret_feed.py, 40 balls jostled in) fits 15-16 balls under 70 mm,
+        # 29 under 95 and 34 under 100, so 100 holds the 30-ball load with room to spare
+        self.hopper_top = 100.0
         self.exit_x = float(self.rp)                             # the exit hole under the front pocket
         self.ball_z_dial = self.floor_z + ball_d / 2             # ball centre in a pocket
         self.chute_r = self.ball_z_dial                          # the chute turns the ball down to the path (z = 0)
         self.chute_cx = self.exit_x + self.chute_r               # centre of the turn, at (chute_cx, chute_r)
-        # flywheels: crush ~12 % of the ball (2.7 mm on 22.7)
+        # flywheels (sim/turret_launch.py): Ø36 tyres squeeze the ball 25 % (to 17.0 mm); on the regulated 12 V
+        # flywheel rail their no-load speed is the hardware ceiling (the worst ball at 100 % throttle stays under 70 fps)
         self.wheel_d = wheel_d
-        self.wheel_c = wheel_d + ball_d * (1 - crush)            # centre distance (60 for 40 mm wheels)
+        self.crush = crush
+        self.wheel_c = wheel_d + ball_d * (1 - crush)            # centre distance (53.0 for Ø36 tyres)
         self.wheel_y = self.wheel_c / 2
         self.tyre_w = 12.0
+        self.tyre_t = 4.0                                        # TPU 95A on the hub's rim
         nip = math.sqrt((wheel_d / 2) ** 2 - ((self.wheel_c - ball_d) / 2) ** 2)   # ball touches both wheels here
         self.wheel_x = math.ceil(self.chute_cx + nip + 2.0)
         self.cav_r = wheel_d / 2 + 2.0
@@ -461,7 +466,7 @@ def tilt_yoke(G):
     """Printed PA6-CF on its back (layers run along the arms): an 8 mm bridge on the turntable (4 x M4) and two 8 mm
     arms up to the tilt axis. +y arm: a pocket for the STS3215 tilt servo on its outer face, the servo's output face
     on four pads round its M2 holes (the rest relieved 1.5 mm for its label band), 4 x M2 x 12 from the arm's inner face
-    (heads sunk), its horn through a Ø26 hole; its bus plugs face outwards. -y arm: the MR126 seat on the inner face (a Ø9.4 x 1 relief in its floor, so only
+    (heads sunk), its horn through a Ø26 hole; its bus plugs face outwards. -y arm: the MR126 seat on the inner face (a Ø9.4 x 1.3 relief in its floor, so only
     the fixed outer race sits on it, not the inner race that turns with the cradle), a Ø6.5 hole for the ISO 7379
     6 x 12 shoulder screw. The hard stop: two sectors on the -y arm's inner face that the cradle's lug hits at tilt 0
     (barrel horizontal; it cannot go above) and at -25 deg."""
@@ -495,7 +500,7 @@ def tilt_yoke(G):
         s = s.cut(box(-12, 12, sgn * 36 if sgn > 0 else -57, sgn * 57 if sgn > 0 else -36, b0 - 1, b1 + 1))
     s = s.cut(cyl_y(13.0, a0 - 1, a1 + 1, 0, zt))                                           # servo horn
     s = s.cut(cyl_y(MR126['D'] / 2, -a0 - MR126['B'], -a0 + 3, 0, zt))                      # MR126 seat (inner face)
-    s = s.cut(cyl_y(4.7, -a0 - MR126['B'] - 1.0, -a0 - MR126['B'] + 0.01, 0, zt))          # relief: only the outer race sits
+    s = s.cut(cyl_y(4.7, -a0 - MR126['B'] - 1.3, -a0 - MR126['B'] + 0.01, 0, zt))          # relief: only the outer race sits
     s = s.cut(cyl_y(3.25, -a1 - 1, -a0, 0, zt))
     s = s.cut(cyl_z(15.0, b0 - 1, b1 + 1))                                                  # cable
     for (x, y) in YOKE_BOLTS:
@@ -535,14 +540,16 @@ def cradle(G):
     s = s.cut(cyl_y(3.25, c0 - 1, G.arm_y[1], xt, zt))                                            # over the horn's centre screw
     for k in range(4):                                                                            # 4 x M3 into the horn, heads sunk
         hx, hz = polar(SERVO['horn_pcd'] / 2, math.pi / 4 + k * math.pi / 2)
-        s = s.cut(cyl_y(FAST['M3']['clear'] / 2, c0 - 1, G.arm_y[1], xt + hx, zt + hz)).cut(cyl_y(2.9, c0 - 1, c0 + 3.2, xt + hx, zt + hz))
-    for (x, y) in CT_DOWELS:
+        # M3 x 12 into the horn's 2.5 mm flange: the head sits 9.5 from the horn's face (no tip past the flange)
+        s = s.cut(cyl_y(FAST['M3']['clear'] / 2, c0 - 1, G.arm_y[1], xt + hx, zt + hz)).cut(cyl_y(2.9, c0 - 1, G.arm_y[1] - SERVO['horn_t'] - 9.5, xt + hx, zt + hz))
+    ct_dowels, ct_latch = ct_points(G)
+    for (x, y) in ct_dowels:
         s = s.cut(cyl_z(2.0, z0 - 1, z1 + 1, x, y))
-    s = s.cut(through_z(*CT_LATCH, FAST['M4']['clear'], z0 - 1, z1 + 1))
+    s = s.cut(through_z(*ct_latch, FAST['M4']['clear'], z0 - 1, z1 + 1))
     for x in (LASER_X[0] + 4, LASER_X[1] - 4):
         s = s.cut(through_z(x, LASER_Y, FAST['M3']['clear'], z0 - 1, z1 + 1))
     # lightening windows in the rails, kept 4 mm clear of every CT hole and off the cheeks
-    holes = CT_DOWELS + [CT_LATCH]
+    holes = ct_dowels + [ct_latch]
     for sgn in (1, -1):
         yc = sgn * (r0 + r1) / 2
         for xa, half in RAIL_WINDOWS:
@@ -553,9 +560,14 @@ def cradle(G):
     return s
 
 
-CT_DOWELS = [(-20.0, 49.0), (75.0, -49.0)]
 RAIL_WINDOWS = [(-38.0, 8.0), (2.0, 8.0), (82.0, 4.0)]             # (centre x, half length); C frame
-CT_LATCH = (20.0, -49.0)
+def ct_points(G):
+    """The CT interface (cradle <-> cartridge), C frame: two Ø4 x 8 dowels and the M4 captive thumbscrew up through the
+    cradle's rail into an insert in the cartridge's base, 6 mm inside the cartridge's sides."""
+    yy = G.cage_y - 6.0
+    return [(-20.0, yy), (75.0, -yy)], (20.0, -yy)
+
+
 LASER_X = (106.0, 126.0)
 LASER_Y = -32.0
 
@@ -619,10 +631,11 @@ def cartridge_body(G):
         hx, hy = polar(M2006['pcd'] / 2, math.radians(a))
         s = s.cut(through_z(hx, hy, FAST['M3']['clear'], fz - G.floor_t - 1, fz + 1))
         s = s.cut(cq.Workplane('XY').circle(1.7).workplane(offset=1.8).circle(3.5).loft().translate((hx, hy, fz - 1.79)))
-    for (x, y) in CT_DOWELS:
+    ct_dowels, ct_latch = ct_points(G)
+    for (x, y) in ct_dowels:
         s = s.cut(cyl_z(2.0, bz0 - 1, bz0 + 2.5, x, y))
-    s = s.union(cyl_z(5.0, bz0, bz0 + 9, *CT_LATCH))
-    s = s.cut(cyl_z(FAST['M4']['insert_pilot'] / 2, bz0 - 1, bz0 + 8.0, *CT_LATCH))       # insert from below
+    s = s.union(cyl_z(5.0, bz0, bz0 + 9, *ct_latch))
+    s = s.cut(cyl_z(FAST['M4']['insert_pilot'] / 2, bz0 - 1, bz0 + 8.0, *ct_latch))       # insert from below
     for a in HOPPER_LUGS:
         s = s.cut(insert_hole(*polar(hr + 3.5, math.radians(a)), G.housing_top, 'M3', 6.0))
     return s
@@ -649,14 +662,15 @@ def ball_path(G):
 
 
 def flywheel(G):
-    """Flywheel hub, printed PA6-CF (100 % solid): a Ø32 rim for the TPU tyre, a web, and a Ø18 boss whose top face
+    """Flywheel hub, printed PA6-CF (100 % solid): a Ø28 rim for the TPU tyre, a web, and a Ø18 boss whose top face
     bolts to the Snail's wheel seat (the Ø15 boss on its bell) as DJI's own wheels do: 3 x M2 x 8 at 90/210/330 deg
     and two Ø1.6 x 4 steel pins at 0/180 deg on Ø10.3 that carry the torque, the Ø2.95 shaft in a Ø3.05 bore centring
     it. The tyre's diameter is the launch speed's hardware ceiling (study 8.3, sim/turret_launch.py)."""
     x, y = G.wheel_x, G.wheel_y
     top = G.hub_top
-    s = ring_z(16.0, 13.0, -G.tyre_w / 2, G.tyre_w / 2, x, y)
-    s = s.union(cyl_z(16.0, -3, 3, x, y)).union(cyl_z(9.0, -3, top, x, y))
+    rr = G.wheel_d / 2 - G.tyre_t                                       # the rim, under the tyre
+    s = ring_z(rr, rr - 3.0, -G.tyre_w / 2, G.tyre_w / 2, x, y)
+    s = s.union(cyl_z(rr, -3, 3, x, y)).union(cyl_z(9.0, -3, top, x, y))
     s = s.cut(cyl_z(1.525, -4, top + 1, x, y))
     for a in (90.0, 210.0, 330.0):
         hx, hy = polar(SNAIL['wheel_pcd'] / 2, math.radians(a))
@@ -664,15 +678,17 @@ def flywheel(G):
     for a in (0.0, 180.0):
         hx, hy = polar(SNAIL['wheel_pcd'] / 2, math.radians(a))
         s = s.cut(cyl_z(0.78, top - 4.0, top + 1, x + hx, y + hy))
+    rh = 0.5 * (9.0 + rr - 3.0)                                       # lightening holes midway between boss and rim
     for k in range(5):
-        hx, hy = polar(11.0, k * 2 * math.pi / 5 + math.pi / 5)
-        s = s.cut(cyl_z(1.5, -4, 4, x + hx, y + hy))
+        hx, hy = polar(rh, k * 2 * math.pi / 5 + math.pi / 5)
+        s = s.cut(cyl_z(min(1.5, (rr - 3.0 - 9.0) / 2 - 0.5), -4, 4, x + hx, y + hy))
     return s
 
 
 def flywheel_tyre(G):
-    """TPU 95A tyre, Ø40 x 12 over the Ø32 hub rim."""
-    return ring_z(G.wheel_d / 2, 16.0, -G.tyre_w / 2, G.tyre_w / 2, G.wheel_x, G.wheel_y)
+    """TPU 95A tyre, Ø36 x 12, 4 mm thick over the hub's Ø28 rim (stretched on). Print a set (Ø34, 36, 38): the
+    bench test picks the one whose fastest ball at 100 % throttle stays at or under 66 fps."""
+    return ring_z(G.wheel_d / 2, G.wheel_d / 2 - G.tyre_t, -G.tyre_w / 2, G.tyre_w / 2, G.wheel_x, G.wheel_y)
 
 
 def dial(G):
@@ -722,8 +738,8 @@ def baffle(G):
 
 
 def hopper(G):
-    """The hopper, printed PETG (translucent, so the balls show): a Ø102 tube from the dial housing to z = 70 in the
-    cartridge frame (about 0.3 L above the dial: 30 balls), the exit baffle in its bottom (see baffle()), three lugs
+    """The hopper, printed PETG (translucent, so the balls show): a Ø102 tube from the dial housing to z = 100 in the
+    cartridge frame (30 balls with the dial's pockets: sim/turret_feed.py fills it in physics), the exit baffle in its bottom (see baffle()), three lugs
     that screw to the housing (M3), and two Ø5 holes for the hopper-full IR beam near the top. Printed standing on its
     bottom rim and the baffle."""
     r_in, r_out = G.dial_wall_r, G.dial_wall_r + 2.0
@@ -1348,7 +1364,7 @@ def render(T, L, out):
         ('dial (8 pockets) on the M2006', p((-G.rp, 0, G.dial_z0 + 10))),
         ('exit hole: the ball drops ...', p((G.exit_x, 0, G.floor_z))),
         ('... and the chute turns it forward', p((G.chute_cx - 15, 0, 3))),
-        ('flywheel nip (crush 2.7 mm)', p((G.wheel_x, 4, 0))),
+        (f'flywheel nip (crush {G.crush * G.ball:.1f} mm)', p((G.wheel_x, 4, 0))),
         (f'barrel, bore Ø{G.bore:.1f}', p((G.barrel_x0 + 50, 0, G.br))),
         (f'tilt axis ({G.tilt_x:.0f} mm ahead of the dial axis)', p((G.tilt_x, 0, G.tilt_c))),
         ('M2006 + C610 under the dial floor', p((-25, 0, -5))),
