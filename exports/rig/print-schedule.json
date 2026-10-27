@@ -1,0 +1,249 @@
+{
+ "plates": [
+  {
+   "phase": "A",
+   "title": "Fit coupons and test blocks",
+   "plate": "A1",
+   "material": "pa6-cf",
+   "parts": {
+    "coupon_frame_ring_nom": 1,
+    "coupon_frame_ring_m01": 1,
+    "coupon_frame_ring_p01": 1,
+    "coupon_apex_eye_m01": 1,
+    "coupon_knee_eye_m01": 1
+   },
+   "grams": 209,
+   "hours": 13.8,
+   "start_h": 0.0,
+   "why": "first: every seat and insert dialled in on PA6-CF before any big part (the leg waits on them); B3 and B4 run on these"
+  },
+  {
+   "phase": "A",
+   "title": "Fit coupons and test blocks",
+   "plate": "A2",
+   "material": "pa6-cf",
+   "parts": {
+    "coupon_apex_eye_nom": 1,
+    "coupon_apex_eye_p01": 1,
+    "coupon_hub_face_m01": 1,
+    "coupon_hub_face_nom": 1,
+    "coupon_hub_face_p01": 1,
+    "coupon_hub_stub_m01": 1,
+    "coupon_hub_stub_nom": 1,
+    "coupon_hub_stub_p01": 1,
+    "coupon_knee_eye_nom": 1
+   },
+   "grams": 218,
+   "hours": 14.1,
+   "start_h": 14.3,
+   "why": "first: every seat and insert dialled in on PA6-CF before any big part (the leg waits on them); B3 and B4 run on these"
+  },
+  {
+   "phase": "A",
+   "title": "Fit coupons and test blocks",
+   "plate": "A3",
+   "material": "pa6-cf",
+   "parts": {
+    "insert_coupon": 2,
+    "coupon_knee_boss_m01": 1,
+    "coupon_knee_boss_nom": 1,
+    "coupon_knee_boss_p01": 1,
+    "sleeve_anvil": 1,
+    "coupon_knee_eye_p01": 1,
+    "sleeve_block": 1
+   },
+   "grams": 246,
+   "hours": 16.0,
+   "start_h": 28.9,
+   "why": "first: every seat and insert dialled in on PA6-CF before any big part (the leg waits on them); B3 and B4 run on these"
+  },
+  {
+   "phase": "B",
+   "title": "The dyno and the tyre cradle",
+   "plate": "B1",
+   "material": "petg",
+   "parts": {
+    "tyre_cradle": 1,
+    "dyno_lug_plate": 2
+   },
+   "grams": 648,
+   "hours": 25.9,
+   "start_h": 45.4,
+   "why": "ready before the motors land (1-3 weeks): B1 and B2 start that day"
+  },
+  {
+   "phase": "B",
+   "title": "The dyno and the tyre cradle",
+   "plate": "B2",
+   "material": "petg",
+   "parts": {
+    "dyno_hub": 2
+   },
+   "grams": 292,
+   "hours": 11.7,
+   "start_h": 71.8,
+   "why": "ready before the motors land (1-3 weeks): B1 and B2 start that day"
+  },
+  {
+   "phase": "C",
+   "title": "TPU",
+   "plate": "C1",
+   "material": "tpu95",
+   "parts": {
+    "dyno_spider": 2,
+    "bumper_tpu": 4,
+    "stop_sleeve": 6
+   },
+   "grams": 396,
+   "hours": 40.4,
+   "start_h": 84.0,
+   "why": "the dyno's spider, B3's sleeves, the rig's bumpers (R0 picks their infill)"
+  },
+  {
+   "phase": "D",
+   "title": "Upper links",
+   "plate": "D1",
+   "material": "pa6-cf",
+   "parts": {
+    "upper_link": 2
+   },
+   "grams": 728,
+   "hours": 47.7,
+   "start_h": 124.9,
+   "why": "with the coupons' seat sizes"
+  },
+  {
+   "phase": "E",
+   "title": "Front link",
+   "plate": "E1",
+   "material": "pa6-cf",
+   "parts": {
+    "front_link": 1
+   },
+   "grams": 442,
+   "hours": 29.0,
+   "start_h": 173.1,
+   "why": "turned on the bed"
+  },
+  {
+   "phase": "F",
+   "title": "Wheel link",
+   "plate": "F1",
+   "material": "pa6-cf",
+   "parts": {
+    "wheel_link": 1
+   },
+   "grams": 615,
+   "hours": 40.3,
+   "start_h": 202.6,
+   "why": "turned on the bed"
+  },
+  {
+   "phase": "G",
+   "title": "The rig's printed parts",
+   "plate": "G1",
+   "material": "petg",
+   "parts": {
+    "pod": 1
+   },
+   "grams": 475,
+   "hours": 19.0,
+   "start_h": 243.4,
+   "why": "the rig's frame goes together from bought parts meanwhile; these finish it before the first power-up"
+  },
+  {
+   "phase": "G",
+   "title": "The rig's printed parts",
+   "plate": "G2",
+   "material": "petg",
+   "parts": {
+    "pod_lid": 1,
+    "top_stop_bracket": 1
+   },
+   "grams": 251,
+   "hours": 10.0,
+   "start_h": 262.9,
+   "why": "the rig's frame goes together from bought parts meanwhile; these finish it before the first power-up"
+  },
+  {
+   "phase": "G",
+   "title": "The rig's printed parts",
+   "plate": "G3",
+   "material": "petg",
+   "parts": {
+    "drop_bracket": 1,
+    "tof_arm": 1,
+    "bumper_base": 2,
+    "bumper_cap": 4,
+    "load_cell_mount": 2
+   },
+   "grams": 450,
+   "hours": 18.1,
+   "start_h": 273.4,
+   "why": "the rig's frame goes together from bought parts meanwhile; these finish it before the first power-up"
+  },
+  {
+   "phase": "G",
+   "title": "The rig's printed parts",
+   "plate": "G4",
+   "material": "petg",
+   "parts": {
+    "pendant_clip": 1,
+    "load_cell_mount": 2
+   },
+   "grams": 23,
+   "hours": 0.9,
+   "start_h": 292.0,
+   "why": "the rig's frame goes together from bought parts meanwhile; these finish it before the first power-up"
+  },
+  {
+   "phase": "H",
+   "title": "Small leg parts and spares",
+   "plate": "H1",
+   "material": "pa6-cf",
+   "parts": {
+    "apex_spacer": 1
+   },
+   "grams": 14,
+   "hours": 0.9,
+   "start_h": 293.4,
+   "why": ""
+  },
+  {
+   "phase": "I",
+   "title": "Hip frame",
+   "plate": "I1",
+   "material": "pa6-cf",
+   "parts": {
+    "hip_frame": 1
+   },
+   "grams": 782,
+   "hours": 51.2,
+   "start_h": 294.8,
+   "why": "last: 274 x 148 x 81 turned 45 deg; a 150 x 150 PA6-CF test slab first if the P1S has not held PA6-CF flat at that size"
+  }
+ ],
+ "total_print_hours": 339.0,
+ "calendar_days_at_20h": 17.3,
+ "by_material": {
+  "pa6-cf": {
+   "grams": 3254,
+   "hours": 213.0,
+   "plates": 8
+  },
+  "petg": {
+   "grams": 2139,
+   "hours": 85.6,
+   "plates": 6
+  },
+  "tpu95": {
+   "grams": 396,
+   "hours": 40.4,
+   "plates": 1
+  }
+ },
+ "machined_not_printed": [
+  "output_adapter"
+ ],
+ "made_by": "tools/print_schedule.py"
+}
