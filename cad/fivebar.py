@@ -286,6 +286,7 @@ def knee_cartridge_cut(y0, y1):
 # ----------------------------------------------------------------------------------- printed parts
 
 RS04_LUG0, RS04_DOWELS = -15.0, (3.0, 183.0)     # in the vendor STEP's own frame: first M4 lug, the two Ø5 locating holes
+RS04_HARNESS = 75.0                              # ... and the harness grommet: a radial Ø7.3 exit near the rear cover (r 58)
 
 
 def lug_angles(front: bool = True):
@@ -295,18 +296,36 @@ def lug_angles(front: bool = True):
     return a if front else [180.0 - v for v in a]
 
 
-def dowel_angles(front: bool = True):
-    """The motor's two Ø5 locating holes (deg) at the same clocking: a placed STEP angle a shows at -(a + turn)."""
-    th0, _ = lug_clock()
-    turn = -RS04_LUG0 - th0
-    a = [-(d + turn) for d in RS04_DOWELS]
-    return a if front else [180.0 - v for v in a]
+DOWEL_POST_GAP = 16.0                            # mm, a dowel hole's centre to a stop post's: Ø5 hole, Ø22 boss, 2.5 wall
 
 
+@functools.lru_cache(maxsize=2)
 def step_turn(front: bool = True):
-    """How far to turn the vendor STEP about its own axis so its lugs land on lug_angles()."""
-    th0 = lug_angles(front)[0]
-    return -RS04_LUG0 - th0
+    """How far to turn the vendor STEP about its own axis: its lugs on lug_angles() (any of ten turns, 36 deg apart),
+    and of those the one whose harness grommet points out nearest level, the front motor forwards and the rear one
+    backwards (away from the frame's flanges), with its two dowel holes clear of the stop posts. Both motors are the
+    same part turned, never mirrored: a placed STEP angle a shows at -(a + turn)."""
+    base = -RS04_LUG0 - lug_angles(front)[0]
+    want = 0.0 if front else 180.0
+    (ax, _), (bx, _) = motors()
+    mx, rp = (ax if front else bx), gmi.motor_interface(MOTOR)['case']['bolts']['pcd'] / 2
+    posts = stop_posts()
+
+    def clear(turn):
+        return all(math.hypot(mx + rp * math.cos(math.radians(-(d + turn))) - px, rp * math.sin(math.radians(-(d + turn))) - pz) >= DOWEL_POST_GAP
+                   for d in RS04_DOWELS for px, pz in posts)
+    turns = sorted((base + 36 * k for k in range(10)), key=lambda t: abs((-(RS04_HARNESS + t) - want + 180) % 360 - 180))
+    return next(t for t in turns if clear(t)) % 360
+
+
+def dowel_angles(front: bool = True):
+    """The motor's two Ø5 locating holes (deg) where its turn puts them (the frame's dowel holes fix that turn)."""
+    return [-(d + step_turn(front)) for d in RS04_DOWELS]
+
+
+def harness_angle(front: bool = True) -> float:
+    """Where the motor's harness leaves it (deg, from +x in x-z, about its own axis)."""
+    return (-(RS04_HARNESS + step_turn(front)) + 180) % 360 - 180
 
 
 @functools.lru_cache(maxsize=1)
@@ -351,7 +370,9 @@ def stop_post_angles():
     return P['knee_out_deg'] + half, P['knee_in_deg'] - half
 
 
-FLANGE_T, FLANGE_X = 7.0, 95.0                   # the hip frame's top and bottom flanges: thickness, half-length (mm)
+FLANGE_T, FLANGE_X = 13.0, 95.0                  # the hip frame's top and bottom flanges: thickness, half-length (mm).
+                                                 # They carry the leg to the body across the print's layers (it prints
+                                                 # web-down): 7 mm gave SF 0.75 in a landing across the layers, 13 about 1.3
 
 
 def frame_ring_r() -> float:
@@ -436,6 +457,10 @@ def stop_posts():
     return pts
 
 
+HUB_HEAD_CB = (10.0, 5.5)    # the upper links' hub counterbores for the M5 x 40 heads (Ø8.5 x 5): Ø, depth; 15.5 mm of
+                             # each screw then goes into the adapter's 16 mm threads
+
+
 def upper_link():
     """Upper link (printed PA6-CF, flat): the AO-L face at the motor (8 x M5 from the outer face, heads proud), and
     at the knee an eye boss standing EYE_BOSS proud of the inner face: two steel sleeves end to end for the knee's
@@ -446,8 +471,11 @@ def upper_link():
     u = yslab(out, 0.0, t).union(ycyl(UPPER_EYE_R - 0.5, -EYE_BOSS, 0.01, l1, 0))   # inside the outline's polygon: no slivers
     u = u.union(boss_fillet(out, 0.0, -1, r=UPPER_EYE_R - 0.5, f=5.0, cx=l1, arm_dir=-1))   # where the arm meets the boss
     u = u.cut(gmi.place(gmi.std_face_mate('L', depth=t + 2), (0, 0, 0), (0, 1, 0)))
-    # the 8 M5 heads sit proud on the hub's outer face (no lower link ever passes over a hub: build_leg's clash
-    # sweep), so the hub keeps its full thickness where the leg's out-of-plane moment is largest
+    # the 8 M5 heads sit in counterbores, below the hub's outer face: at the knee-out stops the front link passes
+    # over the front hub, 2 mm off that face (review M1: proud heads were hit below a 106 mm leg)
+    ao = STD['AO-L']
+    for (x, y) in gmi.circle_pts(ao['pcd'], angles=gmi.ao_bolt_deg(ao)):         # motor frame (x, y) -> link (x, -y)
+        u = u.cut(ycyl(HUB_HEAD_CB[0] / 2, t - HUB_HEAD_CB[1], t + 1, x, -y))
     u = u.cut(ycyl(EYE_SLEEVE[0] / 2 - 0.02, eye_sleeve_end(), t + 1, l1, 0))   # the steel sleeves, pressed in from outside
                                                                               # (the inner one's end in the nut pocket: the nut clamps steel)
     u = u.cut(ycyl(6.03, -EYE_BOSS - 1, t + 1, l1, 0))                     # the shoulder: 12 mm (through the nut pocket)
@@ -457,7 +485,7 @@ def upper_link():
         if cv is not None:                                                   # the wheel's cable (used on the rear link)
             u = u.cut(cq.Workplane('XY').box(CABLE_EXIT[0], t / 2, CABLE_EXIT[1]).translate((l1 - UPPER_EYE_R - 14.0, t * 0.75, 0)))
             u = u.cut(cq.Workplane('XY').box(CABLE_EXIT[0], t / 2, CABLE_EXIT[1]).translate((CABLE_OUT_R, t * 0.25, 0)))
-    top = eye_sleeve_end() + 0.5                                           # the pocket reaches just past the sleeve's end
+    top = eye_sleeve_end() + 1.5                                           # the pocket reaches 1.5 past the sleeves' end: the nut on steel for a short stack (review S2)
     hexa = cq.Workplane('XZ', origin=(0, top, 0)).center(l1, 0).polygon(6, M10_NUT[0] / math.cos(math.pi / 6) + 0.3).extrude(top + EYE_BOSS + 0.5)
     return u.cut(hexa)
 
@@ -491,6 +519,10 @@ def front_link():
     return f
 
 
+WHEEL_BOSS_FILLET = 10.0     # mm: where the wheel link's knee boss leaves its inner face, the link's peak in a landing's
+                             # full axle spike (cad/leg_studies.py R1w; 6 mm gave SF 1.13 at 14.75 kg)
+
+
 def wheel_link():
     """Wheel link (printed PA6-CF, flat on its outer face): the knee boss with two 6201s reaching in over the front
     link's layer, a 24 mm body, and the apex foot: the BotWheel's Ø50 boss in a recess in the outer face, its 4 x M6 x 40
@@ -504,7 +536,7 @@ def wheel_link():
     r_foot = 42.0
     outline = link_outline((0, 0), (l2, 0), P['wheel_w1'], P['wheel_w0'], KC['hub_od'] / 2, r_foot)
     k = yslab(outline, y0, y1)
-    k = k.union(ycyl(KC['hub_od'] / 2, kb0, kb1)).union(boss_fillet(outline, y0, -1))   # the boss reaches in, filleted
+    k = k.union(ycyl(KC['hub_od'] / 2, kb0, kb1)).union(boss_fillet(outline, y0, -1, f=WHEEL_BOSS_FILLET))   # the boss reaches in, filleted
     k = k.cut(knee_cartridge_cut(kb0, kb1))
     h0, h1 = Y['hub']
     ab0, ab1 = Y['apex_bearing']
@@ -620,8 +652,9 @@ def cable_check(heights=(105, 130, 170, 220, 270, 320, 370, 390), min_mm3=5.0):
 
 
 KNEE_PIN_STOCK = (50, 55, 60, 70, 80, 90, 100)             # ISO 7379 Ø12 shoulder lengths McMaster stocks (mm)
-LUG_CB = 10.0                                            # the hip frame's M4 counterbores: an M4 x 20 then takes 5.9 mm of
-                                                         # the RS-04's 7 mm lug threads (8 mm left it 3.9)
+LUG_CB = 11.0                                            # the hip frame's M4 counterbores: an M4 x 20 then takes 4.9 mm
+                                                         # (1.2 d) of the RS-04's lug threads, which its drawing guarantees
+                                                         # only 5 deep (drilled 7 in the STEP): 5.9 could bottom (review M4)
 
 
 def knee_pin_length():
@@ -683,7 +716,8 @@ def leg_parts() -> Leg:
 
     ad, adi = gmi.output_adapter(MOTOR, 'L')
     add('hip_frame', hip_frame(), 'pa6-cf', 1, 'printed PA6-CF web-down (turned 45 deg on the bed), 100 % solid; '
-        '20 x M4 into the motors, 2 x 61812 pressed in from the motor side onto a 2 mm lip (no retainers), 6 x M5 inserts in the flange ends, 4 x M8 inserts for the stop posts')
+        '20 x M4 into the motors, 2 x 61812 pressed in from the motor side onto a 2 mm lip (no retainers), 6 x M5 inserts in the flange ends, 4 x M8 inserts for the stop posts',
+        fea='pa6_cf_z')                          # judged across the layers: web-down, its flanges carry the leg along print-z
     add('output_adapter', gmi.place(ad, (0, Y['motor_out'], 0), (0, 1, 0)), adi['material'], 2, adi['note'],
         fea='al6061' if adi['made'] == 'cnc' else 'pa6_cf_z', made=adi['made'], machining=(ad, adi['spec']) if adi['made'] == 'cnc' else None)
     add('upper_link', upper_link(), 'pa6-cf', 2, f"printed PA6-CF flat, {P['upper_t']:.0f} mm, 100 % solid; 8 x M5 into the adapter; "
@@ -771,7 +805,7 @@ def screw(d, length, head_d, head_h, at, axis_y_sign, x, z):
 
 SCREWS = {   # what each screw group is, its size, and where its head seats (catalog/hardware.json keys)
     'lugs': ('screw_m4x20', 'M4 x 20 into the motors\' lugs, heads 10 mm down in the hip frame'),
-    'links': ('screw_m5x40', 'M5 x 40 through the upper links\' hubs into the adapters\' tapped holes, heads proud'),
+    'links': ('screw_m5x40', 'M5 x 40 through the upper links\' hubs into the adapters\' tapped holes, heads in counterbores'),
     'outputs': ('screw_m5x25', 'M5 x 25 through the adapters into the motors\' output flanges, heads in pockets below the standard face'),
     'wheel': ('screw_m6x30', 'M6 x 30 from inside the hub into the BotWheel\'s flange'),
 }
@@ -799,7 +833,7 @@ def screw_groups(fr, j):
     for key in ('upper_front', 'upper_rear'):
         hub = None
         for (x, y) in gmi.circle_pts(ao['pcd'], angles=gmi.ao_bolt_deg(ao)):
-            sc = screw(5.0, 40.0, 8.5, 5.0, P['upper_t'], -1, x, -y)
+            sc = screw(5.0, 40.0, 8.5, 5.0, P['upper_t'] - HUB_HEAD_CB[1], -1, x, -y)
             hub = sc if hub is None else hub.union(sc)
         links = place(hub, *fr[key]) if links is None else links.union(place(hub, *fr[key]))
         ring = None
@@ -867,41 +901,60 @@ STATIC = ('hip_frame', 'output_adapter', 'motor_', 'bearing_61812', 'stop_')    
                                                                                  # in place: mated to their motors)
 
 
-def clashes(heights=(130, 200, 260, 320, 380), leans=(-20, 0, 20), min_mm3=5.0, with_bought=True):
-    """Pairs of parts that overlap at a set of stances. Returns [[a, b, mm3, (height, lean)], ...]. The motors are
-    their envelopes here (the vendor model is slow to intersect and nothing that moves comes near them); two fixed
-    parts are checked once."""
+def stop_travel() -> float:
+    """How far (rad) an upper link can squeeze its stop sleeve before it meets steel: the post's Ø16 head sits inside
+    the link's thickness, so the R13 sleeve gives 5 mm there, not its 8 mm wall (review M6); 0.5 mm left unsqueezed."""
+    steel = min(TPU_SLEEVE[0] - TPU_SLEEVE[1], TPU_SLEEVE[0] - ISO7379_HEAD[10][0]) / 2
+    return (steel - 0.5) / P['stop_r']
+
+
+def stop_poses():
+    """(label, phi1, phi2) at the stops: both knees out (the shortest leg), both in (the longest), the two leans
+    between, and the two symmetric ones with the sleeves squeezed to steel (a power cut lands there)."""
+    fo, fi, ro, ri = stop_angles()
+    s = stop_travel()
+    return [('knees out', fo, ro), ('knees in', fi, ri), ('front out, rear in', fo, ri), ('front in, rear out', fi, ro),
+            ('knees out, squeezed', fo + s, ro - s), ('knees in, squeezed', fi - s, ri + s)]
+
+
+def clashes(heights=(130, 200, 260, 320, 380), leans=(-20, 0, 20), min_mm3=5.0, with_bought=True, poses=()):
+    """Pairs of parts that overlap at a set of stances (heights x leans) and at named poses ((label, phi1, phi2), e.g.
+    stop_poses()). Returns [[a, b, mm3, (height, lean) or label], ...]. The motors are their envelopes here (the vendor
+    model is slow to intersect and nothing that moves comes near them); two fixed parts are checked once."""
     import itertools
-    out = []
+    out, todo = [], []
+    fo, fi, ro, ri = stop_angles()
+    for h in heights:
+        for lean in (leans if 200 <= h <= 340 else (0,)):
+            phi = stance(h, lean)
+            if phi is None or not (fi <= phi[0] <= fo) or not (ro <= phi[1] <= ri):
+                out.append(['out of range', '', 0, (h, lean)])           # past a stop: the stop is doing its job
+            else:
+                todo.append(((h, lean), phi))
+    todo += [(label, (p1, p2)) for label, p1, p2 in poses]
     real = gmi.STEP_FRAMES.pop(MOTOR, None)
     motor_model.cache_clear()
     try:
         first = True
-        for h in heights:
-            for lean in (leans if 200 <= h <= 340 else (0,)):
-                phi = stance(h, lean)
-                fo, fi, ro, ri = stop_angles()
-                if phi is None or not (fi <= phi[0] <= fo) or not (ro <= phi[1] <= ri):
-                    out.append(['out of range', '', 0, (h, lean)])       # past a stop: the stop is doing its job
+        for key, phi in todo:
+            asm = {n: s for n, (s, _) in assembly(*phi, with_bought=with_bought).items()
+                   if s is not None and n != 'wheel_cable'}                  # the cable has its own check: cable_check()
+            boxes = {n: (s.val() if hasattr(s, 'val') else s).BoundingBox() for n, s in asm.items()}
+            for (n1, s1), (n2, s2) in itertools.combinations(asm.items(), 2):
+                if not first and n1.startswith(STATIC) and n2.startswith(STATIC):
                     continue
-                asm = {n: s for n, (s, _) in assembly(*phi, with_bought=with_bought).items()
-                       if s is not None and n != 'wheel_cable'}                  # the cable has its own check: cable_check()
-                boxes = {n: (s.val() if hasattr(s, 'val') else s).BoundingBox() for n, s in asm.items()}
-                for (n1, s1), (n2, s2) in itertools.combinations(asm.items(), 2):
-                    if not first and n1.startswith(STATIC) and n2.startswith(STATIC):
-                        continue
-                    b1, b2 = boxes[n1], boxes[n2]
-                    if b1.xmax < b2.xmin or b2.xmax < b1.xmin or b1.ymax < b2.ymin or b2.ymax < b1.ymin or b1.zmax < b2.zmin or b2.zmax < b1.zmin:
-                        continue
-                    if _mated(n1, n2):
-                        continue
-                    try:
-                        v = s1.intersect(s2).val().Volume()
-                    except Exception:
-                        v = 0.0
-                    if v > min_mm3:
-                        out.append([n1, n2, round(v, 1), (h, lean)])
-                first = False
+                b1, b2 = boxes[n1], boxes[n2]
+                if b1.xmax < b2.xmin or b2.xmax < b1.xmin or b1.ymax < b2.ymin or b2.ymax < b1.ymin or b1.zmax < b2.zmin or b2.zmax < b1.zmin:
+                    continue
+                if _mated(n1, n2):
+                    continue
+                try:
+                    v = s1.intersect(s2).val().Volume()
+                except Exception:
+                    v = 0.0
+                if v > min_mm3:
+                    out.append([n1, n2, round(v, 1), key])
+            first = False
     finally:
         if real:
             gmi.STEP_FRAMES[MOTOR] = real
@@ -919,7 +972,8 @@ MATES = [('output_adapter_front', 'motor_front'), ('output_adapter_rear', 'motor
          ('output_adapter', 'screws_outputs'), ('motor_', 'screws_outputs'),
          ('wheel_link', 'wheel_cable'),
          ('wheel_hub', 'wheel_cable'),
-         ('upper_link', 'eye_sleeve'), ('eye_sleeve', 'knee_pin')]
+         ('upper_link', 'eye_sleeve'), ('eye_sleeve', 'knee_pin'),
+         ('upper_link', 'stop_sleeve')]          # they meet at the stops; at stop_poses()' squeezed ones the TPU is working
 
 
 def _mated(a, b):

@@ -172,6 +172,11 @@ def output_adapter(part_id: str, size: str = 'L'):
         body = body.cut(_cyl(s['dowel_d'] / 2, z_face - 8, z_face + 0.01, x, y))
     if cnc and c.get('bore_d'):                                                             # mass: a blind bore from the motor side
         body = body.cut(_cyl(c['bore_d'] / 2, -1, c['bore_depth']))
+    if cnc:                                                                                  # a 0.5 x 45 lead-in on the journal's face end
+        r = s['journal_d'] / 2
+        ring = (cq.Workplane('XZ').polyline([(r - 0.5, z_face + 0.01), (r + 1.0, z_face + 0.01), (r + 1.0, z_face - 1.0), (r, z_face - 0.5)])
+                .close().revolve(360, (0, 0, 0), (0, 1, 0)))
+        body = body.cut(ring)
     pins = (f"sockets for the motor's {o['dowels']['count']} x Ø{o['dowels']['d']:g} pins" + (' (H7)' if cnc else '') if o['dowels'] and o['dowels']['installed']
             else f"{o['dowels']['count']} x Ø{o['dowels']['d']:g} x 20 steel dowels into the motor" if o['dowels'] else 'no dowels: torque by clamp')
     screws = f"{b['count']} x {b['thread']} x {hd.get('length', 25):g} {hd['kind']}s into the motor, heads in pockets {hd['below_face']:g} mm below the face"
@@ -185,7 +190,10 @@ def output_adapter(part_id: str, size: str = 'L'):
     spec = None
     if cnc:                     # the callouts a CNC order needs beyond the STEP (motor frame: the motor face at z = 0, +z to the link)
         spec = [f"Material {c['material']}; {c['finish']}; general tolerance {c['general']}; threads 6H",
-                f"Ø{s['journal_d']:g} {c['journal_fit']} journal, z {z_j0:g} to {z_face:g}: the support bearing's inner ring (61812), fitted with retaining compound",
+                f"Datums: A = the Ø{s['journal_d']:g} journal's axis; the contact face (z 0) square to A within 0.02; the standard face "
+                f"(z {z_face:g}) parallel to the contact face within 0.02; the dowel holes and the motor's pin sockets at position Ø0.05 to A",
+                f"Ø{s['journal_d']:g} {c['journal_fit']} journal, z {z_j0:g} to {z_face:g}, with a 0.5 x 45 deg lead-in at the face end: the "
+                f"support bearing's inner ring (61812), fitted with retaining compound",
                 f"Ø{s['shoulder_d']:g} shoulder, its face at z {z_j0:g} square to the axis within 0.02: seats the bearing's inner ring",
                 f"Contact face at z 0 (Ø{o['flange_d'] - 1:g}) flat within 0.02; {relief:g} mm relief outside it",
                 f"{s['bolts']} x {s['thread']} tapped {c['thread_depth']:g} deep (drill Ø{FAST[s['thread']]['tap']:g} x {c['drill_depth']:g}) from the face (z {z_face:g}), "
@@ -196,7 +204,10 @@ def output_adapter(part_id: str, size: str = 'L'):
                 *([f"{o['dowels']['count']} x Ø{o['dowels']['d']:g} H7 x {(o['dowels']['protrusion'] or 3.0) + 0.5:g} deep from the motor face, PCD {o['dowels']['pcd']:g} "
                    f"at {deg(o['dowels']['angles'])} deg (the motor's own pins)"] if o['dowels'] and o['dowels']['installed'] else []),
                 f"Ø{c['bore_d']:g} x {c['bore_depth']:g} blind bore from the motor face (mass)",
-                f"Ø{s['spigot_d']:g} -0.02/-0.05 spigot, {s['spigot_h']:g} tall: locates the link"]
+                f"Ø{s['spigot_d']:g} spigot, {s['spigot_h']:g} tall (general tolerance: the dowels locate the link; the spigot is three lobes "
+                f"between the counterbores and a lead into the link's recess)",
+                "Walls of 1.4 mm (1.0 mm to the thread's major diameter) between the counterbores and the face's tapped and dowel holes, "
+                "15 deg apart: intended, fine in 6061"]
     return body, {'part': part_id, 'z_face': z_face, 'z_journal': (z_j0, z_face), 'z_head_seat': z_pk, 'head': hd,
                   'material': 'al6061' if cnc else 'pa6-cf', 'made': 'cnc' if cnc else 'print', 'note': note, 'spec': spec, 'assumed': mi['assumed']}
 

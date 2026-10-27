@@ -378,6 +378,9 @@ def run(mesh, anim=True, only=None):
         r = st.solve()
         if not record:
             return st
+        free = ~st._touches_bc                              # where the design stress is: the element it comes from
+        i = int(np.argmax(np.where(free, st.vm_elem, -1.0)))
+        r['design_peak_at_mm'] = [round(float(v), 1) for v in st._m.p[:, st._m.t[:, i]].mean(axis=1)]
         png = OUT / f'{part}-{case}.png'
         disp = r['probe_displacement_mm'] and round(math.hypot(*r['probe_displacement_mm']), 2)
         st.render(png, view=VIEWS.get(part, (25, -60)), title=f"{part} {case} ({MATERIALS[mat].name}): SF {r['safety_factor']}, {disp} mm at the load")

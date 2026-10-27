@@ -103,8 +103,9 @@ radial rate. Then stand, squat, jump, drop, and the power cut last, with the bum
 
 Module frame as in `cad/fivebar.py`: x forward, y outwards (+y is the linkage and wheel side), z up, y = 0 the
 motors' output face. Numbers from `fivebar.Y` and `hip_frame()`: the frame's flange ends and its six M5 insert bosses
-are flush on the plane **y = -82.3 mm** (the robot's centre plane), inserts at **(x, z) = (-83, +-67), (0, +-67),
-(+83, +-67)**, flanges 7 mm thick (z 62-69) spanning x +-95; the motors' rear faces are at y = -80.3 (2 mm inboard of
+are flush on the plane **y = -82.3 mm** (the robot's centre plane), inserts at **(x, z) = (-83, +-70), (0, +-70),
+(+83, +-70)** (`fivebar.frame_mounts()`, the source of truth), flanges 13 mm thick (z 62-75; 7 mm until the 2026-10-27
+review: too weak across the print's layers) spanning x +-95; the motors' rear faces are at y = -80.3 (2 mm inboard of
 that plane), their 310 mm harnesses exit radially from the O94 rear covers; the stop posts are at (+-108.8, +47.2) and
 (+-25.6, -30.4). Knees reach x +-225 (z +8) at the 101.5 mm crouch and x +-60 (z -149) at 392 mm; the wheel axle is at
 (0, -L), and (+-103, -282) at +-20 deg of lean at 300 mm; the tyre's mid-plane is y = 104.6 (tyre y 82-127).
@@ -477,23 +478,33 @@ instant price read at upload. Everything else on the rig is extrusion, bought ha
 
 ### 6.4 Assembly order (torques from B4; threadlocker on every screw into steel; never a hard press into PA6-CF)
 
+0. On receipt (review M7): each O5 dowel must slip into the RS-04's locating holes by hand (drawn Ø5 0/-0.01; an m6 pin
+   is +0.004/+0.012). If one does not, polish its motor end or buy -0.01 pins: the pins are pressed into the frame
+   only, never into both. Depth-gauge one motor's lug threads too: the M4 x 20s take 4.9 mm (the drawing promises 5).
 1. Hip frame: M5 inserts (6) and M8 inserts (4) set with the soldering iron at the coupon-proven temperature; the
    two 61812s pressed in from the motor side onto the lip (light fit + retaining compound if the coupon says so);
-   O5 dowels into the frame's locating holes.
+   O5 dowels pressed into the frame's locating holes (the motor then slides onto them).
 2. Output adapters (machined) onto the motors: the motor's 3 pins into the adapter's sockets, 9 x M5 x 25 (no
    washers: the heads sit in the pockets), threadlocker, the motor maker's torque; two O5 x 16 dowels pressed into
    each adapter's face (H7 holes, 8 mm in). Then each motor into the frame on its 2 dowels and 10 x M4 x 20 (heads
-   10 mm down in the counterbores), the adapter's j6 journal into the frame's 61812 with retaining compound (Loctite
-   641: it comes apart); check the harness exits clear the flanges and the carriage plate's slot.
-3. Upper links: two eye sleeves pressed end to end from the outer face; the link onto the adapter's face (over its
-   2 dowels and spigot, 8 x M5 x 40 into the tapped holes, B4 torque: the printed link under the heads sets the limit).
-4. Knees: two 6201s and the 28 mm spacer tube into each lower link's boss, a DIN 433 washer each side, the 12 x 90
+   11 mm down in the counterbores), the adapter's j6 journal into the frame's 61812 with retaining compound (Loctite
+   641: it comes apart). The frame's dowel holes set each motor's turn so its harness leaves level and outwards
+   (the front one forwards, 25 deg up; the rear one backwards, 11 deg down): check both clear the flanges.
+3. Upper links: two eye sleeves pressed end to end from the outer face until the outer one is flush with that face
+   (the press stops there: there is no floor under them; review S2); the link onto the adapter's face (over its 2
+   dowels and spigot, 8 x M5 x 40 into the tapped holes, heads in the hub's counterbores, B4 torque: the printed
+   link under the heads sets the limit).
+4. Knees: two 6201s and the spacer tube into each lower link's boss (cut each spacer to that boss's measured
+   seat-to-seat distance + 0.03 mm, not to the nominal 28: review S4), a DIN 433 washer each side, the 12 x 90
    shoulder screw from the outer side through the eye, the M10 nyloc in the pocket torqued onto the steel sleeve.
-5. Apex: inner 61812 pressed into the front link from the inside, the apex spacer, the wheel link's hub through from
-   the outside, the outer 61812, the DIN 471-60 circlip.
+5. Apex (review M5: the hub's Ø64 shoulder is outboard of the outer bearing, so the bearings go in before the hub):
+   the inner 61812 pressed into the front link from the inside, the apex spacer, the outer 61812 pressed from the
+   outside against the web, then the wheel link's hub through both from the outside, the DIN 471-60 circlip.
 6. Wheel: 4 x M6 x 30 from inside the hub (measure the flange's thread depth first; bom.json note), cable taped along
    the wheel link and rear upper link.
-7. Stop posts with their TPU sleeves into the M8 inserts; swing the leg by hand to both stops: no clash, free knees.
+7. Stop posts with their TPU sleeves into the M8 inserts, last: four of the lug screws sit under the sleeves (front
+   43/223 deg, rear 137/-43 deg), so a lug re-torque means the posts come out first (review S8). Swing the leg by hand
+   to both stops: no clash, free knees.
 8. Carriage plate: blocks on (16 x M4), rods on, plate onto the frame's six inserts (M5 x 16); carriage onto the rails
    from the top, end caps on, tethers on; bumpers set at the 115 mm position, ballast plates to the rig.json figure.
 9. Electrics: pod, fuse, contactor, pendant, CAN chain with both terminators, VBUS read on the laptop before any enable.
@@ -511,7 +522,7 @@ session's (requests to them are the **F** items at the end). Estimates are worki
 | # | Task | Files | Acceptance | Est. |
 |---|---|---|---|---|
 | T1 | **Order list** so purchasing starts today: every bought part of section 6.1 with price, link, date checked, primary and backup, quantity, and the TODO prices filled (MISUMI configurator, holder, timer, contactor backup) | `docs/leg-rig-orders.md`, `catalog/rig.json` (items in the catalog schema) | every line has a price and a buy link read on the day, or a printed/SendCutSend note; totals per vendor | 0.5 |
-| T2 | **Rig CAD and checks**: post, rails and blocks (envelopes), carriage plate, rods, bumpers and brackets, base frame, deck, brace, pod; the checks of section 2.2 | `cad/rig_parts.py`, `cad/build_rig.py` -> `exports/rig/{*.step,*.stl,rig.json,print-plan.json,bom.json,renders}` | clearance sweep >= 10 mm at 14 lengths x 3 leans; carriage mass and the plate figure in rig.json; block loads and post stress printed; renders of the rig with the leg at 130/300/392 mm and the jump apex; read the frame's insert positions from `fivebar.Y` and `hip_frame()`'s constants (fl_x 95, 12 mm inset, z +-67) without editing fivebar | 2 |
+| T2 | **Rig CAD and checks**: post, rails and blocks (envelopes), carriage plate, rods, bumpers and brackets, base frame, deck, brace, pod; the checks of section 2.2 | `cad/rig_parts.py`, `cad/build_rig.py` -> `exports/rig/{*.step,*.stl,rig.json,print-plan.json,bom.json,renders}` | clearance sweep >= 10 mm at 14 lengths x 3 leans; carriage mass and the plate figure in rig.json; block loads and post stress printed; renders of the rig with the leg at 130/300/392 mm and the jump apex; read the frame's insert positions and mount plane from `fivebar.frame_mounts()` (z +-70 since the 13 mm flanges) without editing fivebar | 2 |
 | T3 | **Carriage plate DXF and SendCutSend sheet** | `exports/rig/sendcutsend/carriage_plate.dxf`, `exports/rig/sendcutsend/README.md` | DXF re-imports with the hole table of section 2.1; the instant price recorded | 0.5 |
 | T4 | **Bench fixtures CAD**: dyno lug plates and coupler, insert coupon, sleeve block, tyre cradle, the six fit coupons | `cad/rig_bench.py` -> `exports/rig/bench/` | each a valid solid, fits the bed, STL + STEP; coupon seat diameters parameterised +-0.1 mm in three steps | 1 |
 | T5 | **Print schedule** from the two print plans (leg + rig) in the order of section 6.2 with drying windows | `tools/print_schedule.py` -> `exports/rig/print-schedule.md` | the table of section 6.2 regenerated from the JSON, total hours, the hip frame last | 0.5 |
