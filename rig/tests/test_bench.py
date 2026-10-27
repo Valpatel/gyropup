@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import json
 import math
+from pathlib import Path
 
 import pytest
 
@@ -194,3 +195,22 @@ def test_jitter_counts_every_tick_and_stops_the_motors():
     vb.handlers[1] = lambda cid, data, ext=True: [] if (cid >> 24) == P.MIT else real(cid, data, ext)
     tm = jitter.run(P.RS04Bus(vb.port()), [1, 2], rate=500.0, seconds=0.02, clock=clk, sleep=clk.sleep)
     assert tm.missed == 10 and len(tm.rtt_ms) == 0
+
+
+# ----------------------------------------------------------------------------------- the rig node's firmware
+
+def test_the_node_firmware_packs_frames_as_the_laptop_reads_them():
+    import importlib.util
+    from rig import node as N
+    spec = importlib.util.spec_from_file_location('rig_frames', Path(__file__).resolve().parents[1] / 'firmware' / 'feather_rig' / 'rig_frames.py')
+    F = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(F)
+    assert (F.RUN, F.SENSE, F.VBUS, F.HOST, F.RUN_CLOSED) == (N.RUN, N.SENSE, N.VBUS, N.HOST, N.RUN_CLOSED)
+    for args in ((True, 7, 0b1011), (False, 300, 0)):
+        assert F.pack_run(*args) == N.pack_run(*args)
+    for args in ((412, 0, 151.26, 9), (70000, 4, -4000.0, 260), (0, 255, 3276.8, 1)):
+        assert F.pack_sense(*args) == N.pack_sense(*args)
+    assert F.pack_vbus(57.9, 50.1, 54.04, 3) == N.pack_vbus(57.9, 50.1, 54.04, 3)
+    st = N.NodeState()
+    assert st.take(F.SENSE, F.pack_sense(412, 0, 151.26, 9), 1.0) and st.height_mm == 412 and st.force_n == pytest.approx(151.3)
+    assert st.take(F.RUN, F.pack_run(True, 1, 1), 1.0) and st.run_fresh(1.02)
