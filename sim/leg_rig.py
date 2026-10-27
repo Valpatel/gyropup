@@ -356,6 +356,11 @@ def run(sc: Scenario, half_mass: float, video: Path | None = None, meshes: dict 
     every = max(1, int(round(1 / (FPS * m.opt.timestep))))
     rail0 = d.qpos[leg.q['rail']]
     top = rail0
+    gear = {'motor_f': 0.0, 'motor_r': 0.0}          # the gearboxes' peak torque, every step (a landing's spike is ~ms)
+    over = {'motor_f': 0.0, 'motor_r': 0.0}          # and the time each spends past the RS-04's peak rating
+    joint = {'knee_f': 0.0, 'knee_r': 0.0, 'hip_f': 0.0, 'hip_r': 0.0, 'apex': 0.0}   # the joints' real forces, every step: in a landing
+    jb = {'knee_f': m.body('lower_f').id, 'knee_r': m.body('lower_r').id,  # the links' own inertia takes much of the axle's
+          'hip_f': m.body('upper_f').id, 'hip_r': m.body('upper_r').id}    # spike, so statics on the axle force overstates them
     for k in range(steps):
         t = k * m.opt.timestep
         L_cmd, mode = command(sc, t, state)
@@ -386,6 +391,16 @@ def run(sc: Scenario, half_mass: float, video: Path | None = None, meshes: dict 
             state['stop_' + n] = ts
         mujoco.mj_step(m, d)
         top = max(top, d.qpos[leg.q['rail']])
+        for n in gear:                                # the gearbox carries the motor's torque less what turns its rotor
+            v = leg.v[n]
+            tg = abs(float(d.actuator_force[leg.a[n]] - m.dof_armature[v] * d.qacc[v] - m.dof_damping[v] * d.qvel[v]))
+            gear[n] = max(gear[n], tg)
+            over[n] += m.opt.timestep if tg > LEG_PEAK else 0.0
+        mujoco.mj_rnePostConstraint(m, d)
+        for n, b in jb.items():                       # the force from the parent through the joint (world frame)
+            joint[n] = max(joint[n], float(np.linalg.norm(d.cfrc_int[b][3:6])))
+        fa = [d.efc_force[i] for i in range(d.nefc) if d.efc_type[i] == mujoco.mjtConstraint.mjCNSTR_EQUALITY]
+        joint['apex'] = max(joint['apex'], float(np.linalg.norm(fa)) if fa else 0.0)   # the apex's connect: the lower links' push
         if k % 4 == 0:
             rec.append(sample(m, d, leg, t, state))
         if vw and k % every == 0:
@@ -394,6 +409,9 @@ def run(sc: Scenario, half_mass: float, video: Path | None = None, meshes: dict 
         vw.close()
     res = summarise(sc, rec, info)
     res['jump_height_mm'] = round((top - rail0) * 1000, 1) if sc.name.startswith('jump') else None
+    res['peak_gearbox_nm'] = round(max(gear.values()), 1)          # the rotor's inertia shows here, not in the motor torque
+    res['gearbox_over_peak_ms'] = round(max(over.values()) * 1000, 1)
+    res['peak_joint_force_n'] = {k: round(v, 1) for k, v in joint.items()}          # dynamic, every step
     return res
 
 
@@ -528,8 +546,8 @@ def main():
             continue
         r = run(sc, a.half_mass, OUT / f'rig_{name}.mp4' if a.video else None, meshes)
         results[name] = r
-        print(f"{name:10} motor {r['peak_motor_nm']:6.1f} N m  wheel {r['peak_wheel_force_n']:7.1f} N  axle {r['peak_axle_force_n']:7.1f} N  front link {r['peak_front_link_n']:7.1f} N  "
-              f"knee pin {r['peak_knee_pin_n']:7.1f} N  stop {r['peak_stop_nm']:6.1f} N m  L {r['L_range_mm']}"
+        print(f"{name:10} gearbox {r['peak_gearbox_nm']:6.1f} N m ({r['gearbox_over_peak_ms']:.1f} ms > {LEG_PEAK} N m)  motor {r['peak_motor_nm']:6.1f} N m  wheel {r['peak_wheel_force_n']:7.1f} N  axle {r['peak_axle_force_n']:7.1f} N  front link {r['peak_front_link_n']:7.1f} N  "
+              f"knee pin {r['peak_knee_pin_n']:7.1f} N (dynamic {max(r['peak_joint_force_n']['knee_f'], r['peak_joint_force_n']['knee_r']):.0f})  stop {r['peak_stop_nm']:6.1f} N m  L {r['L_range_mm']}"
               + (f"  jump {r['jump_height_mm']} mm" if r.get('jump_height_mm') is not None else ''))
     f.write_text(json.dumps({'half_mass_kg': a.half_mass, 'model': {'leg_peak_nm': LEG_PEAK, 'leg_cap_nm': LEG_CAP, 'leg_omega_rad_s': round(LEG_OMEGA, 2),
                                                                      'armature_kg_m2': round(ARMATURE, 5), 'stop_k_nm_per_rad': round(STOP_K)},

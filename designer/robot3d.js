@@ -218,11 +218,14 @@ export function buildRobot(design, catalog, { eyes, mech, cad } = {}) {
       const pod = new THREE.Group();
       const can = new THREE.Mesh(new THREE.CylinderGeometry(17 * M, 19 * M, 22 * M, 24), mat(0x2a2d33, { roughness: 0.35 }));
       can.rotation.x = Math.PI / 2;
-      const lens = new THREE.Mesh(new THREE.CircleGeometry(15 * M, 24), new THREE.MeshStandardMaterial({ color: 0xffffff, emissive: 0xfff4d6, emissiveIntensity: 1.6 }));
-      lens.position.z = 11.2 * M;
+      // the lens: a 3 mm plate half sunk in the can's 11 mm front cap, so its glowing face is 1.5 mm proud of the cap
+      // (a disc laid on the cap itself z-fights with it)
+      const lens = new THREE.Mesh(new THREE.CylinderGeometry(15 * M, 15 * M, 3 * M, 24), new THREE.MeshStandardMaterial({ color: 0xffffff, emissive: 0xfff4d6, emissiveIntensity: 1.6 }));
+      lens.rotation.x = Math.PI / 2;
+      lens.position.z = 11 * M;
       const spot = new THREE.SpotLight(0xfff1d8, 70, 12, 0.42, 0.45, 1.6);   // physical units: a bright LED pod (pages dim it in daylight)
       spot.userData.full = 70;
-      spot.position.z = 12 * M;
+      spot.position.z = 13 * M;
       const aimAt = new THREE.Object3D();
       aimAt.position.set(0, -0.35, 3);
       spot.target = aimAt;
@@ -273,7 +276,7 @@ export function buildRobot(design, catalog, { eyes, mech, cad } = {}) {
     for (const [s, tex] of [[-1, eyes?.left?.texture], [1, eyes?.right?.texture]]) {
       const screen = new THREE.Mesh(new THREE.CircleGeometry(0.0095, 40),
         new THREE.MeshBasicMaterial({ map: tex ?? null, color: tex ? 0xffffff : 0x55e9ff }));
-      screen.position.set(s * 0.0155, eyeY, z + 0.0022);
+      screen.position.set(s * 0.0155, eyeY, z + 0.003);            // 1 mm proud of the bezel's face
       const lens = new THREE.Mesh(new THREE.SphereGeometry(0.0105, 24, 12, 0, Math.PI * 2, 0, Math.PI / 2.6),
         new THREE.MeshPhysicalMaterial({ color: 0xffffff, transmission: 1, roughness: 0.02, thickness: 0.004, transparent: true, opacity: 0.35 }));
       lens.rotation.x = Math.PI / 2;
@@ -337,7 +340,9 @@ export function buildRobot(design, catalog, { eyes, mech, cad } = {}) {
     if (mounts.headlights) lights.forEach((l, i) => {
       const pod = l.spot.parent;
       pod.children.forEach((c) => { if (c.isMesh && c !== l.lens) c.visible = false; });   // the CAD has the pod's body
-      pod.position.copy(at(mounts.headlights[i]));
+      pod.position.copy(at(mounts.headlights[i]));                    // the CAD pod's front face
+      l.lens.position.z = 0;                                          // half sunk in it, 1.5 mm proud
+      l.spot.position.z = 2 * M;
     });
     // the turret: the CAD's meshes in the procedural turret's moving groups, at the CAD's pivots; the procedural
     // stand-in meshes hide, its muzzle (shots, laser) moves to the CAD's barrel tip

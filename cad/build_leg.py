@@ -48,11 +48,11 @@ BOUGHT = [
     ('bearing_61812', 4, 'support bearings round the two output adapters; two at the apex on the wheel link\'s hub'),
     ('bearing_6201', 4, 'two in each knee'),
     ('circlip_60', 1, 'holds the apex 61812 on the wheel link\'s hub'),
-    ('knee_pin_70', 2, 'knee shoulder screws, 12 mm x 70, M10 (cad/fivebar.py knee_pin_length)'),
+    ('knee_pin', 2, 'knee shoulder screws, 12 mm x 90, M10 (cad/fivebar.py knee_pin_length)'),
     ('nut_m10_nyloc', 2, 'knee pins, in the upper links\' pockets'),
     ('washer_m12_thin', 4, 'each side of each knee\'s bearing stack'),
     ('knee_spacer', 2, 'between each knee\'s two inner races (28 mm)'),
-    ('eye_sleeve', 2, 'steel sleeve pressed into each upper link\'s knee eye: spreads the pin\'s load on the plastic'),
+    ('eye_sleeve', 4, 'steel sleeves, two end to end in each upper link\'s knee eye: spread the pin\'s load on the plastic'),
     ('stop_post', 4, 'stop posts (TPU sleeves over them)'),
     ('insert_m8', 4, 'stop posts, in the hip frame'),
     ('screw_m4x20', 20, 'motor lugs (10 per motor), heads 10 mm down in the hip frame: 5.9 mm into the 7 mm threads'),
@@ -60,9 +60,6 @@ BOUGHT = [
     ('screw_m5x30', 18, 'motor outputs into the output adapters (9 per motor)'),
     ('screw_m5x40', 16, 'upper links onto the output adapters (8 each), heads proud'),
     ('insert_m5', 22, 'the adapters\' standard faces (16), the frame\'s flange ends (6)'),
-    ('screw_m3x6', 6, 'bearing retainers on the hip frame'),
-    ('washer_m3_large', 6, 'under the retainer screws, over the outer races'),
-    ('insert_m3', 6, 'for the retainer screws'),
     ('screw_m6x30', 4, 'the BotWheel\'s flange, from inside the wheel link\'s hub (M6 x 40 bottoms out unless its threads are > 15 deep: measure)'),
 ]
 
@@ -193,6 +190,7 @@ def main():
         'mass_g': {'printed': round(printed_g), 'bought': round(bought_g), 'total': round(printed_g + bought_g), 'printed_parts': masses},
         'print': {'too_big': too_big, 'hours': round(sum(p['hours'] for p in plan.values()), 1)},
         'clashes': clashes,
+        'cable_route': None if a.no_clash else fb.cable_check(),
         'bought_to_source': missing,
     }
     if not a.no_render:

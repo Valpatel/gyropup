@@ -480,8 +480,8 @@
    "https://www.mcmaster.com/92981A411/"
   ],
   "confidence": "product page",
-  "used_for": "knee pin (KC): through the thigh end, a 15 mm gap and the shin's two 6001s",
-  "qty_per_robot": 2,
+  "used_for": "leg v2 knee pin: head on the lower link's outer washer, through its two 6201s and the upper link's two eye sleeves, to the M10 nyloc in the eye boss's pocket (cad/fivebar.py knee_pin_length)",
+  "qty_per_robot": 4,
   "notes": "Shoulder must span thigh 44 + gap 15 + shin 28 = 87 mm (cad/leg.py stack), not 40: 90 mm is the stocked length; take up the 3 mm with 12 mm ID shims, and the 15 mm gap needs a spacer (12 mm ID)."
  },
  {
@@ -5095,5 +5095,698 @@
   "used_for": "leg v2: the BotWheel's stator flange, 4 x M6 from inside the wheel link's hub (4 per leg)",
   "qty_per_robot": 8,
   "notes": "Head on the foot's inner face (y = 54), inside the hub's Ø48 bore (the Ø10 heads on the 36 PCD reach r = 23); grip to the BotWheel's boss face (y = 74.8) 20.8 mm, so 9.2 mm into the wheel's M6 (1.5 d). The BotWheel's thread depth is not published (catalog/interfaces.json case.bolts.depth is null): measure it; screw_m6x40 (91290A336), listed for this joint before, would go 19.2 mm in. Fully threaded. The only 91290A M6 x 30 (US origin); same family as screw_m6x35 / screw_m6x40. One pack of 50 covers six robots."
+ },
+ {
+  "id": "mcmaster-96990a403",
+  "key": "eye_sleeve",
+  "category": "fastener",
+  "vendor": "McMaster-Carr",
+  "model": "96990A403",
+  "name": "Metric Press-Fit Drill Bushing, 12 mm ID, 18 mm OD, 20 mm Long, Chamfer on One End",
+  "price_usd": 16.11,
+  "price_note": "McMaster-Carr: $16.11 each (price_usd is per piece)",
+  "price_checked": "2026-10-26",
+  "pack_qty": 1,
+  "pack_price_usd": 16.11,
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/96990A403/",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "id_mm": 12.0,
+   "od_mm": 18.0,
+   "length_mm": 20.0,
+   "id_tol_mm": [
+    0.016,
+    0.034
+   ],
+   "od_tol_mm": [
+    0.012,
+    0.023
+   ],
+   "mass_g": 22.2,
+   "mass_basis": "estimate (no CAD yet): nominal 12 x 18 x 20 tube (chamfer left out) x 7.85 g/cm3",
+   "material": "Steel",
+   "mcmaster": {
+    "raw": {
+     "ID": "12 mm",
+     "OD": "18 mm",
+     "Length": "20 mm",
+     "Internal Chamfer": "One End",
+     "For Drill Bit Size": "12 mm",
+     "For Drill Bit Size Decimal Equivalent": "0.4724\"",
+     "Tolerance ID": "0.016 mm to 0.034 mm",
+     "Tolerance OD": "0.012 mm to 0.023 mm",
+     "Tolerance Length": "-0.2 mm to 0.2 mm",
+     "Drill Bushing Type": "PM",
+     "Material": "Steel",
+     "Hardness": "Rockwell C61",
+     "Specifications Met": "DIN 179",
+     "Drill Bushing Texture": "Smooth",
+     "Installation Permanence": "Permanent",
+     "Country of Origin": "Germany",
+     "DFARS Compliance": "Specialty Metals COTS-Exempt",
+     "Export Control Classification Number (ECCN)": "EAR99",
+     "REACH Compliance": "Not Compliant",
+     "RoHS Compliance": "RoHS 3 (2015/863/EU) Compliant with Exemptions",
+     "RoHS Exemptions": "6(a)-I",
+     "Schedule B Number": "846620.8035",
+     "U.S.–Mexico–Canada Agreement (USMCA) Qualifying": "No"
+    },
+    "parsed": {
+     "ID": {
+      "value": 12.0,
+      "unit": "mm"
+     },
+     "OD": {
+      "value": 18.0,
+      "unit": "mm"
+     },
+     "Length": {
+      "value": 20.0,
+      "unit": "mm"
+     },
+     "For Drill Bit Size": {
+      "value": 12.0,
+      "unit": "mm"
+     },
+     "For Drill Bit Size Decimal Equivalent": {
+      "value": 11.99896,
+      "unit": "mm"
+     },
+     "Tolerance ID": {
+      "min": 0.016,
+      "max": 0.034,
+      "unit": "mm"
+     },
+     "Tolerance OD": {
+      "min": 0.012,
+      "max": 0.023,
+      "unit": "mm"
+     },
+     "Tolerance Length": {
+      "min": -0.2,
+      "max": 0.2,
+      "unit": "mm"
+     }
+    }
+   }
+  },
+  "cad": {
+   "file": null,
+   "kind": "spacer",
+   "frame": "axis +Z, centred on the axis; the larger end (flange, head, collar) at z = 0 and the part on +z; when both ends are the same size, the heavier end at z = 0",
+   "available": true,
+   "step_url": "https://www.mcmaster.com/96990A403/",
+   "bbox_mm": null,
+   "volume_mm3": null,
+   "pending": "STEP not downloaded yet: on 2026-10-26 McMaster-Carr asked for a login before CAD downloads ('Please log in and reload the page to download CAD', then downloads cancelled). Finish with .venv/bin/python tools/mcmaster_cad.py --catalog --only eye_sleeve bearing_61810 bearing_mr126 circlip_50 shoulder_6x12_m5 (logged in, or once the anonymous limit resets), or save the STEP from a logged-in browser as references/vendor/mcmaster/96990A403/96990A403.step and run the same command offline."
+  },
+  "frame": "axis +Z, centred on the axis; the larger end (flange, head, collar) at z = 0 and the part on +z; when both ends are the same size, the heavier end at z = 0",
+  "sources": [
+   "https://www.mcmaster.com/96990A403/"
+  ],
+  "confidence": "product page",
+  "used_for": "leg v2 knee eyes: a hardened steel sleeve pressed into each upper link's knee eye, on the knee pin's 12 mm shoulder (1 per upper link, 2 per leg)",
+  "qty_per_robot": 4,
+  "notes": "DIN 179 press-fit drill bushing (type PM, headless, chamfer at one end), steel hardened to Rockwell C61, used as the knee eye's sleeve: bore 12 +0.016/+0.034 (F7) on the knee pin's 12 mm shoulder (-0.072/-0.010) is a 0.026-0.106 slip fit; OD 18 +0.012/+0.023 for the press fit; 20 ±0.2 long. Size compromise: McMaster stocks no 12 x 16 at 16 or 20 mm. Its 12 mm bore press-fit bushings are 16 x 10 (96990A240, DIN 179, $37.07 each, $31.53 at 6-11), 18 x 12 (8486A94), 18 x 20 (this one), 18 x 25 (8486A99) and 22 x 16 / 28 / 36, and its metric 12 mm ID steel sleeve bearings are all drill bushings (no other hardened sleeve). CAD change (cad/fivebar.py): EYE_SLEEVE = (18.0, 12.0) and the eye's press bore Ø17.96 x 20 deep (y 10.0..30.0, was 19.0 from y 11.0). The sleeve's inner end then stands 0.5 mm into the M10 nyloc's pocket (ceiling y = 10.5), so the nut seats on steel at y = 10.0 instead of on 0.5 mm of PA6-CF, and the knee pin's clamp runs nut, sleeve, washer, 6201 inner races and spacer, washer, head all in steel. knee_pin_70 still clamps (its shoulder ends 2.0 short of the nut, was 1.5) with the nut's whole 10 mm on the M10 x 16 thread. The Ø18 leaves 11 mm of wall in the Ø40 eye, and washer_m12_thin (13 x 20) bears on the sleeve's end out to r 9. To keep the Ø16 bore instead: two 96990A240 end to end in the same 20 deep bore, 8 per robot at $31.53 ($252 a robot, against $64 for four of these). Price breaks: $16.11 each for 1-5, $13.70 for 6-11, $12.04 for 12 and up."
+ },
+ {
+  "id": "mcmaster-4668k273",
+  "key": "bearing_61810",
+  "category": "bearing",
+  "vendor": "McMaster-Carr",
+  "model": "4668K273",
+  "name": "Permanently Lubricated 440C Stainless Steel Ball Bearing, Sealed, Trade No. 6810-2RS, for 50 mm Shaft Diameter",
+  "price_usd": 194.88,
+  "price_note": "McMaster-Carr: $194.88 each (price_usd is per piece)",
+  "price_checked": "2026-10-26",
+  "pack_qty": 1,
+  "pack_price_usd": 194.88,
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/4668K273/",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "id_mm": 50.0,
+   "od_mm": 65.0,
+   "width_mm": 7.0,
+   "dynamic_load_c_n": 6449.9,
+   "static_load_c0_n": 6005.1,
+   "mass_g": 48.27,
+   "mass_basis": "estimate (no CAD yet): 6656K236's CAD (6812-2Z, the same thin 618xx series) fills 0.636 of its 60 x 78 x 10 envelope; the same fill of 50 x 65 x 7 x 8.0 g/cm3",
+   "material": "440C Stainless Steel",
+   "mcmaster": {
+    "raw": {
+     "For Shaft Type": "Round",
+     "Bearing Seal Type": "Sealed",
+     "Material": "440C Stainless Steel",
+     "For Shaft Diameter": "50 mm",
+     "For Housing ID": "65 mm",
+     "Width": "7 mm",
+     "Width Tolerance": "-0.12 mm to 0 mm",
+     "ABEC Rating": "1",
+     "Dynamic Radial Load Capacity": "1,450 lb.",
+     "Maximum Rotation Speed": "5,000 rpm",
+     "Temperature Range Minimum": "-10° F",
+     "Temperature Range Max.": "200° F",
+     "Inner Ring Type": "Standard",
+     "Bearing Trade Number": "6810-2RS",
+     "Ball Bearing Profile": "Standard",
+     "Ball Material": "440C Stainless Steel",
+     "Bearing Construction": "Single Row",
+     "Bearing Type": "Ball",
+     "Cage Material": "304 Stainless Steel",
+     "For Load Direction": "Radial",
+     "ID": "50 mm",
+     "ID Tolerance": "-0.012 mm to 0 mm",
+     "Lubricant": "Solid Polymer",
+     "Lubrication": "Lubricated",
+     "OD": "65 mm",
+     "OD Tolerance": "-0.013 mm to 0 mm",
+     "Performance": "Corrosion Resistant, Permanently Lubricated",
+     "Radial Clearance": "0.008 mm to 0.018 mm",
+     "Radial Clearance Trade Number": "C0",
+     "Seal Material": "Buna-N",
+     "Shaft Mount Type": "Press Fit",
+     "Static Radial Load Capacity": "1,350 lb.",
+     "System of Measurement": "Metric",
+     "Country of Origin": "Japan",
+     "DFARS Compliance": "Specialty Metals COTS-Exempt",
+     "Export Control Classification Number (ECCN)": "1C999",
+     "REACH Compliance": "REACH (EC 1907/2006) (02/04/2026, 253 SVHC) Compliant",
+     "RoHS Compliance": "RoHS 3 (2015/863/EU) Compliant",
+     "Schedule B Number": "848210.5044",
+     "U.S.–Mexico–Canada Agreement (USMCA) Qualifying": "No"
+    },
+    "parsed": {
+     "For Shaft Diameter": {
+      "value": 50.0,
+      "unit": "mm"
+     },
+     "For Housing ID": {
+      "value": 65.0,
+      "unit": "mm"
+     },
+     "Width": {
+      "value": 7.0,
+      "unit": "mm"
+     },
+     "Width Tolerance": {
+      "min": -0.12,
+      "max": 0.0,
+      "unit": "mm"
+     },
+     "Dynamic Radial Load Capacity": {
+      "value": 6449.92132,
+      "unit": "N"
+     },
+     "Maximum Rotation Speed": {
+      "value": 5000.0,
+      "unit": "rpm"
+     },
+     "Temperature Range Minimum": {
+      "value": -23.333333,
+      "unit": "degC"
+     },
+     "Temperature Range Max.": {
+      "value": 93.333333,
+      "unit": "degC"
+     },
+     "ID": {
+      "value": 50.0,
+      "unit": "mm"
+     },
+     "ID Tolerance": {
+      "min": -0.012,
+      "max": 0.0,
+      "unit": "mm"
+     },
+     "OD": {
+      "value": 65.0,
+      "unit": "mm"
+     },
+     "OD Tolerance": {
+      "min": -0.013,
+      "max": 0.0,
+      "unit": "mm"
+     },
+     "Radial Clearance": {
+      "min": 0.008,
+      "max": 0.018,
+      "unit": "mm"
+     },
+     "Static Radial Load Capacity": {
+      "value": 6005.09916,
+      "unit": "N"
+     }
+    }
+   }
+  },
+  "cad": {
+   "file": null,
+   "kind": "bearing",
+   "frame": "axis +Z, centred on the axis; the larger end (flange, head, collar) at z = 0 and the part on +z; when both ends are the same size, the heavier end at z = 0",
+   "available": true,
+   "step_url": "https://www.mcmaster.com/4668K273/",
+   "bbox_mm": null,
+   "volume_mm3": null,
+   "pending": "STEP not downloaded yet: on 2026-10-26 McMaster-Carr asked for a login before CAD downloads ('Please log in and reload the page to download CAD', then downloads cancelled). Finish with .venv/bin/python tools/mcmaster_cad.py --catalog --only eye_sleeve bearing_61810 bearing_mr126 circlip_50 shoulder_6x12_m5 (logged in, or once the anonymous limit resets), or save the STEP from a logged-in browser as references/vendor/mcmaster/4668K273/4668K273.step and run the same command offline."
+  },
+  "frame": "axis +Z, centred on the axis; the larger end (flange, head, collar) at z = 0 and the part on +z; when both ends are the same size, the heavier end at z = 0",
+  "sources": [
+   "https://www.mcmaster.com/4668K273/"
+  ],
+  "confidence": "product page",
+  "used_for": "turret pan bearing (cad/turret.py BRG): outer race in the pan_base seat under the pan_clamp, the pan_ring's Ø50 journal through the inner race",
+  "qty_per_robot": 1,
+  "notes": "6810-2RS = 61810-2RS, 50 x 65 x 7, sealed both sides (Buna-N), 440C stainless rings and balls, 304 stainless cage, ABEC 1, C0 clearance, solid polymer lubricant (McMaster). It is McMaster's only sealed 50 x 65 x 7. Ratings (McMaster): dynamic C 1,450 lb = 6.45 kN, static C0 1,350 lb = 6.0 kN, 5,000 rpm, -10 to 200 F. At $194.88: if shields will do here, as at the apex (bearing_61812 is a 6812-2Z), the steel 6810-2Z 6656K229 ($33.29, the same family as bearing_61812, 9,600 rpm) or the open 6810 6656K142 ($29.97) fits the same seat. cad/turret.py BRG is 50 x 65 x 7 (52 g, SKF): the pan_base seat is Ø65 on a Ø62 shoulder, the pan_clamp's Ø61 bore holds the outer race down, and the pan_ring sits on the inner race with a Ø56 shoulder and runs its Ø50 journal through it. The inner race turns with the pan ring: once the CAD is in, check that the Ø56 shoulder (top face) and circlip_50 (bottom face) touch only the inner ring, not the seals."
+ },
+ {
+  "id": "mcmaster-7804k112",
+  "key": "bearing_mr126",
+  "category": "bearing",
+  "vendor": "McMaster-Carr",
+  "model": "7804K112",
+  "name": "Corrosion-Resistant 440C Stainless Steel Ball Bearing, Shielded, Trade No. 126-2Z, for 6 mm Shaft Diameter",
+  "price_usd": 8.89,
+  "price_note": "McMaster-Carr: $8.89 each (price_usd is per piece)",
+  "price_checked": "2026-10-26",
+  "pack_qty": 1,
+  "pack_price_usd": 8.89,
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/7804K112/",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "id_mm": 6.0,
+   "od_mm": 12.0,
+   "width_mm": 4.0,
+   "dynamic_load_c_n": 711.7,
+   "static_load_c0_n": 244.7,
+   "mass_g": 1.75,
+   "mass_basis": "estimate (no CAD yet): 5972K82's CAD (6001-2RS) fills 0.646 of its 12 x 28 x 8 envelope; the same fill of 6 x 12 x 4 x 8.0 g/cm3",
+   "material": "440C Stainless Steel",
+   "mcmaster": {
+    "raw": {
+     "For Shaft Type": "Round",
+     "Bearing Seal Type": "Shielded",
+     "Material": "440C Stainless Steel",
+     "For Shaft Diameter": "6 mm",
+     "For Housing ID": "12 mm",
+     "Width": "4 mm",
+     "Width Tolerance": "-0.005 mm to 0 mm",
+     "ABEC Rating": "5",
+     "Dynamic Radial Load Capacity": "160 lb.",
+     "Maximum Rotation Speed": "50,000 rpm",
+     "Temperature Range Minimum": "-40° F",
+     "Temperature Range Max.": "240° F",
+     "Inner Ring Type": "Standard",
+     "Bearing Trade Number": "126-2Z",
+     "Ball Bearing Profile": "Standard",
+     "Ball Material": "440C Stainless Steel",
+     "Bearing Construction": "Single Row",
+     "Bearing Type": "Ball",
+     "Cage Material": "400 Series Stainless Steel",
+     "For Load Direction": "Radial",
+     "ID": "6 mm",
+     "ID Tolerance": "-0.005 mm to 0 mm",
+     "Lubricant": "Oil",
+     "Lubrication": "Lubricated",
+     "OD": "12 mm",
+     "OD Tolerance": "-0.005 mm to 0 mm",
+     "Performance": "Corrosion Resistant, Precision",
+     "Radial Clearance": "0.005 mm to 0.01 mm",
+     "Radial Clearance Trade Number": "MC3",
+     "Shaft Mount Type": "Press Fit",
+     "Shield Material": "300 Series Stainless Steel",
+     "Static Radial Load Capacity": "55 lb.",
+     "System of Measurement": "Metric",
+     "Country of Origin": "United States, China",
+     "DFARS Compliance": "Specialty Metals COTS-Exempt",
+     "Export Control Classification Number (ECCN)": "1C999",
+     "REACH Compliance": "REACH (EC 1907/2006) (02/04/2026, 253 SVHC) Compliant",
+     "RoHS Compliance": "RoHS 3 (2015/863/EU) Compliant",
+     "Schedule B Number": "848210.5044",
+     "U.S.–Mexico–Canada Agreement (USMCA) Qualifying": "No"
+    },
+    "parsed": {
+     "For Shaft Diameter": {
+      "value": 6.0,
+      "unit": "mm"
+     },
+     "For Housing ID": {
+      "value": 12.0,
+      "unit": "mm"
+     },
+     "Width": {
+      "value": 4.0,
+      "unit": "mm"
+     },
+     "Width Tolerance": {
+      "min": -0.005,
+      "max": 0.0,
+      "unit": "mm"
+     },
+     "Dynamic Radial Load Capacity": {
+      "value": 711.715456,
+      "unit": "N"
+     },
+     "Maximum Rotation Speed": {
+      "value": 50000.0,
+      "unit": "rpm"
+     },
+     "Temperature Range Minimum": {
+      "value": -40.0,
+      "unit": "degC"
+     },
+     "Temperature Range Max.": {
+      "value": 115.555556,
+      "unit": "degC"
+     },
+     "ID": {
+      "value": 6.0,
+      "unit": "mm"
+     },
+     "ID Tolerance": {
+      "min": -0.005,
+      "max": 0.0,
+      "unit": "mm"
+     },
+     "OD": {
+      "value": 12.0,
+      "unit": "mm"
+     },
+     "OD Tolerance": {
+      "min": -0.005,
+      "max": 0.0,
+      "unit": "mm"
+     },
+     "Radial Clearance": {
+      "min": 0.005,
+      "max": 0.01,
+      "unit": "mm"
+     },
+     "Static Radial Load Capacity": {
+      "value": 244.652188,
+      "unit": "N"
+     }
+    }
+   }
+  },
+  "cad": {
+   "file": null,
+   "kind": "bearing",
+   "frame": "axis +Z, centred on the axis; the larger end (flange, head, collar) at z = 0 and the part on +z; when both ends are the same size, the heavier end at z = 0",
+   "available": true,
+   "step_url": "https://www.mcmaster.com/7804K112/",
+   "bbox_mm": null,
+   "volume_mm3": null,
+   "pending": "STEP not downloaded yet: on 2026-10-26 McMaster-Carr asked for a login before CAD downloads ('Please log in and reload the page to download CAD', then downloads cancelled). Finish with .venv/bin/python tools/mcmaster_cad.py --catalog --only eye_sleeve bearing_61810 bearing_mr126 circlip_50 shoulder_6x12_m5 (logged in, or once the anonymous limit resets), or save the STEP from a logged-in browser as references/vendor/mcmaster/7804K112/7804K112.step and run the same command offline."
+  },
+  "frame": "axis +Z, centred on the axis; the larger end (flange, head, collar) at z = 0 and the part on +z; when both ends are the same size, the heavier end at z = 0",
+  "sources": [
+   "https://www.mcmaster.com/7804K112/"
+  ],
+  "confidence": "product page",
+  "used_for": "turret tilt bearing (cad/turret.py MR126): in the tilt yoke's -y arm, on the tilt pivot's shoulder screw (shoulder_6x12_m5)",
+  "qty_per_robot": 1,
+  "notes": "126-2Z (MR126 size) 6 x 12 x 4, shielded both sides (300-series stainless shields), 440C stainless, ABEC 5, MC3 clearance (0.005-0.010), oil-lubricated (McMaster). McMaster stocks no sealed 6 x 12 x 4: its 6 mm bore trade numbers have no 126-2RS / MR126-2RS. This one is the same envelope, so the yoke's seat stays as drawn. The nearest sealed size is 686-2RS, 6 x 13 x 5 (4668K231, 440C, $28.74), which would need a Ø13 x 5 seat. Ratings (McMaster): dynamic C 160 lb = 712 N, static C0 55 lb = 245 N, 50,000 rpm, -40 to 240 F. It carries the -y side of the cradle and cartridge (the tilt servo's horn carries the +y side). On shoulder_6x12_m5's 6 mm shoulder (-0.072/-0.010) its 6 (-0.005/0) bore is a 0.005-0.072 slip fit. cad/turret.py seats it in a Ø12 x 4 pocket in the -y arm's inner face, on a 4 mm floor with the Ø6.5 hole for the screw; the cradle's Ø8 x 1 spacer meets the inner race on the other face. The inner race turns with the cradle, and as drawn the floor reaches in to r 3.25, under the inner ring's face: relieve it between the two rings' lands (sized from the CAD) so only the outer ring sits on it, and check that the Ø8 spacer stays on the inner ring's land. Flanged version: 7804K142 ($9.08, flange Ø13.6 x 0.8)."
+ },
+ {
+  "id": "mcmaster-98541a167",
+  "key": "circlip_50",
+  "category": "fastener",
+  "vendor": "McMaster-Carr",
+  "model": "98541A167",
+  "name": "External Retaining Ring, for 50 mm OD, Black-Phosphate Spring Steel",
+  "price_usd": 3.1,
+  "price_note": "McMaster-Carr: $15.50 per pack of 5 (price_usd is per piece)",
+  "price_checked": "2026-10-26",
+  "pack_qty": 5,
+  "pack_price_usd": 15.5,
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/98541A167/",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "shaft_d_mm": 50.0,
+   "groove_d_mm": 47.0,
+   "groove_d_tol_mm": [
+    -0.25,
+    0.0
+   ],
+   "groove_width_mm": 2.15,
+   "ring_id_mm": 45.8,
+   "thickness_mm": 2.0,
+   "mass_g": 11.43,
+   "mass_basis": "estimate (no CAD yet): a 47 x 56 x 2 annulus (circlip_60's estimate, the groove diameter plus 4.5 mm of radial width, on the 47 mm groove) x 7.85 g/cm3",
+   "material": "Phosphate-Coated Carbon Steel",
+   "mcmaster": {
+    "raw": {
+     "Retaining Ring Type": "External",
+     "Material": "Phosphate-Coated Carbon Steel",
+     "For OD": "50 mm",
+     "For Groove Diameter": "47 mm",
+     "For Groove Diameter Tolerance": "-0.25 mm to 0 mm",
+     "For Groove Width": "2.15 mm",
+     "Ring ID": "45.8 mm",
+     "Ring ID Tolerance": "-0.9 mm to 0.39 mm",
+     "Ring Thk.": "2 mm",
+     "Ring Thk. Tolerance": "-0.07 mm to 0 mm",
+     "Thrust Load Capacity": "16,400 lbf",
+     "Minimum Hardness": "Rockwell C44",
+     "Specifications Met": "DIN 471",
+     "Certificate Form": "Digital",
+     "Certificate Type": "Material Certificate with Traceable Lot Number",
+     "Color": "Black",
+     "Magnetic Properties": "Magnetic",
+     "Retaining Ring Style": "Tapered",
+     "System of Measurement": "Metric",
+     "Country of Origin": "United States",
+     "DFARS Compliance": "Specialty Metals COTS-Exempt",
+     "Export Control Classification Number (ECCN)": "EAR99",
+     "REACH Compliance": "REACH (EC 1907/2006) (02/04/2026, 253 SVHC) Compliant",
+     "RoHS Compliance": "RoHS 3 (2015/863/EU) Compliant",
+     "Schedule B Number": "731824.0000",
+     "U.S.–Mexico–Canada Agreement (USMCA) Qualifying": "Yes",
+     "Related Product": "Pliers"
+    },
+    "parsed": {
+     "For OD": {
+      "value": 50.0,
+      "unit": "mm"
+     },
+     "For Groove Diameter": {
+      "value": 47.0,
+      "unit": "mm"
+     },
+     "For Groove Diameter Tolerance": {
+      "min": -0.25,
+      "max": 0.0,
+      "unit": "mm"
+     },
+     "For Groove Width": {
+      "value": 2.15,
+      "unit": "mm"
+     },
+     "Ring ID": {
+      "value": 45.8,
+      "unit": "mm"
+     },
+     "Ring ID Tolerance": {
+      "min": -0.9,
+      "max": 0.39,
+      "unit": "mm"
+     },
+     "Ring Thk.": {
+      "value": 2.0,
+      "unit": "mm"
+     },
+     "Ring Thk. Tolerance": {
+      "min": -0.07,
+      "max": 0.0,
+      "unit": "mm"
+     },
+     "Thrust Load Capacity": {
+      "value": 72950.83424,
+      "unit": "N"
+     }
+    }
+   }
+  },
+  "cad": {
+   "file": null,
+   "kind": "washer",
+   "frame": "axis +Z, centred on the axis; the larger end (flange, head, collar) at z = 0 and the part on +z; when both ends are the same size, the heavier end at z = 0",
+   "available": true,
+   "step_url": "https://www.mcmaster.com/98541A167/",
+   "bbox_mm": null,
+   "volume_mm3": null,
+   "pending": "STEP not downloaded yet: on 2026-10-26 McMaster-Carr asked for a login before CAD downloads ('Please log in and reload the page to download CAD', then downloads cancelled). Finish with .venv/bin/python tools/mcmaster_cad.py --catalog --only eye_sleeve bearing_61810 bearing_mr126 circlip_50 shoulder_6x12_m5 (logged in, or once the anonymous limit resets), or save the STEP from a logged-in browser as references/vendor/mcmaster/98541A167/98541A167.step and run the same command offline."
+  },
+  "frame": "axis +Z, centred on the axis; the larger end (flange, head, collar) at z = 0 and the part on +z; when both ends are the same size, the heavier end at z = 0",
+  "sources": [
+   "https://www.mcmaster.com/98541A167/"
+  ],
+  "confidence": "product page",
+  "used_for": "turret pan ring: DIN 471-50 ring in the journal's groove under the 61810's inner race (holds the turntable down on the bearing)",
+  "qty_per_robot": 1,
+  "notes": "DIN 471 external ring for a 50 mm shaft, phosphate-coated carbon spring steel (black), tapered, Rockwell C44 min (McMaster): groove Ø47 (-0.25/0) x 2.15 wide, ring 2 (-0.07/0) thick, 45.8 (-0.9/+0.39) free ID. Thrust rating 16,400 lbf = 73 kN, for a steel groove. Same family and finish as circlip_60 (98541A174), but sold in packs of 5 ($15.50, $3.10 a ring): one pack covers five robots. Single rings: zinc-plated 90154A768 ($3.37), 1.4122 stainless 90967A350 ($5.59). Fit it with circlip_60's external ring pliers (5449A82, $33.48). cad/turret.py's pan_ring cuts exactly this groove (Ø47 x 2.15, z 28.85..31.0), right under the 61810's lower face (z = 31), so the ring holds the turntable down on the inner race. Edge margin: the printed journal ends at z = 26 (brg_z - 5), 2.85 mm below the groove, where DIN 471 asks for at least 4.5 mm (3 x the 1.5 mm groove depth) on steel. Lengthen the journal by 1.7 mm or more (more in PA6-CF), or the lip can shear off when the turret is lifted or lands upside down. The ring turns with the pan ring: once the CAD is in, check that its lugs (they stand out beyond the ring's back) clear the 61810's seal and outer ring (flush at z = 31) and the pan_base's Ø62 shoulder (z 29..31)."
+ },
+ {
+  "id": "mcmaster-92981a101",
+  "key": "shoulder_6x12_m5",
+  "category": "fastener",
+  "vendor": "McMaster-Carr",
+  "model": "92981A101",
+  "name": "Alloy Steel Shoulder Screws, 6 mm Shoulder Diameter, 12 mm Shoulder Length, M5 x 0.8 mm Thread",
+  "price_usd": 2.82,
+  "price_note": "McMaster-Carr: $2.82 each (price_usd is per piece)",
+  "price_checked": "2026-10-26",
+  "pack_qty": 1,
+  "pack_price_usd": 2.82,
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/92981A101/",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "shoulder_d_mm": 6.0,
+   "shoulder_length_mm": 12.0,
+   "thread": "M5x0.8",
+   "thread_length_mm": 10.0,
+   "head_d_mm": 10.0,
+   "head_height_mm": 5.0,
+   "mass_g": 6.66,
+   "mass_basis": "estimate (no CAD yet): nominal head + shoulder + thread less 41 mm3 for the hex socket and chamfers (scaled with the hex size from 92981A205's CAD) x 7.85 g/cm3",
+   "material": "Black-Oxide Alloy Steel",
+   "mcmaster": {
+    "raw": {
+     "Shoulder Fit": "Standard",
+     "Thread Direction": "Right Hand",
+     "Socket Head Profile": "Standard",
+     "Fastener Head Type": "Socket",
+     "Drive Style": "Hex",
+     "Material": "Black-Oxide Alloy Steel",
+     "Shoulder Diameter": "6 mm",
+     "Shoulder Diameter Tolerance": "-0.072 mm to -0.01 mm",
+     "Shoulder Length": "12 mm",
+     "Shoulder Length Tolerance": "0 mm to 0.25 mm",
+     "Thread Size": "M5 × 0.8 mm",
+     "Thread Length": "10 mm",
+     "Head Diameter": "10 mm",
+     "Head Height": "5 mm",
+     "Drive Size": "3 mm",
+     "Tensile Strength": "140,000 psi",
+     "Material Certificate Form": "Digital",
+     "Certificate Type": "Material Certificate with Traceable Lot Number",
+     "Hardness": "Rockwell C32",
+     "Head Texture": "Knurled",
+     "Minimum Shear Strength": "84,000 psi",
+     "Performance": "High Strength, Wear Resistant",
+     "Relative Thread Length": "Standard",
+     "Relative Thread Size": "Standard",
+     "System of Measurement": "Metric",
+     "Thread Fit": "Metric Class 5g6g",
+     "Thread Spacing": "Coarse",
+     "Thread Type": "Metric",
+     "Country of Origin": "United States, Belgium, Canada, China, France, Germany, India, Indonesia, Italy, Japan, Malaysia, Mexico, Philippines, Poland, South Korea, Switzerland, Taiwan, Thailand, Vietnam",
+     "DFARS Compliance": "Not Specialty Metals Compliant",
+     "Export Control Classification Number (ECCN)": "EAR99",
+     "REACH Compliance": "REACH (EC 1907/2006) (02/04/2026, 253 SVHC) Compliant",
+     "RoHS Compliance": "RoHS 3 (2015/863/EU) Compliant",
+     "Schedule B Number": "731815.9000",
+     "U.S.–Mexico–Canada Agreement (USMCA) Qualifying": "No"
+    },
+    "parsed": {
+     "Shoulder Diameter": {
+      "value": 6.0,
+      "unit": "mm"
+     },
+     "Shoulder Diameter Tolerance": {
+      "min": -0.072,
+      "max": -0.01,
+      "unit": "mm"
+     },
+     "Shoulder Length": {
+      "value": 12.0,
+      "unit": "mm"
+     },
+     "Shoulder Length Tolerance": {
+      "min": 0.0,
+      "max": 0.25,
+      "unit": "mm"
+     },
+     "Thread Size": {
+      "thread": "M5x0.8",
+      "d": 5.0,
+      "pitch": 0.8,
+      "unit": "mm"
+     },
+     "Thread Length": {
+      "value": 10.0,
+      "unit": "mm"
+     },
+     "Head Diameter": {
+      "value": 10.0,
+      "unit": "mm"
+     },
+     "Head Height": {
+      "value": 5.0,
+      "unit": "mm"
+     },
+     "Drive Size": {
+      "value": 3.0,
+      "unit": "mm"
+     },
+     "Tensile Strength": {
+      "value": 965.2664,
+      "unit": "MPa"
+     },
+     "Minimum Shear Strength": {
+      "value": 579.15984,
+      "unit": "MPa"
+     }
+    }
+   }
+  },
+  "cad": {
+   "file": null,
+   "kind": "shoulder_screw",
+   "frame": "axis +Z, centred on the axis, underside of the head at z = 0, head on +z, shoulder and thread towards -z",
+   "available": true,
+   "step_url": "https://www.mcmaster.com/92981A101/",
+   "bbox_mm": null,
+   "volume_mm3": null,
+   "pending": "STEP not downloaded yet: on 2026-10-26 McMaster-Carr asked for a login before CAD downloads ('Please log in and reload the page to download CAD', then downloads cancelled). Finish with .venv/bin/python tools/mcmaster_cad.py --catalog --only eye_sleeve bearing_61810 bearing_mr126 circlip_50 shoulder_6x12_m5 (logged in, or once the anonymous limit resets), or save the STEP from a logged-in browser as references/vendor/mcmaster/92981A101/92981A101.step and run the same command offline."
+  },
+  "frame": "axis +Z, centred on the axis, underside of the head at z = 0, head on +z, shoulder and thread towards -z",
+  "sources": [
+   "https://www.mcmaster.com/92981A101/"
+  ],
+  "confidence": "product page",
+  "used_for": "turret tilt pivot (-y side): through the tilt yoke's -y arm and the MR126 into the cradle's M5 insert",
+  "qty_per_robot": 1,
+  "notes": "Shoulder 6 (-0.072/-0.010) x 12 (0/+0.25), M5 x 0.8 x 10 thread (5g6g), knurled socket head 10 x 5, 3 mm hex, black-oxide alloy steel, Rockwell C32, 140,000 psi tensile, 84,000 psi minimum shear (McMaster). A material certificate is available. Same family as the knee pins and stop posts (92981A); this page has no 'Specifications Met' row, where the 10 and 12 mm sizes give ISO 7379. Size check: cad/turret.py (tilt_yoke, cradle, MADE) asks for an 'ISO 7379 6 x 12 shoulder screw (M5)', and this is that size; a 6.5 mm shoulder would not pass the MR126's 6 mm bore. Role: turret.py uses it as the tilt pivot on the -y side, through the -y arm's Ø6.5 hole and the MR126 into the cradle's M5 insert. It is not the cartridge latch (CT: a captive M4 thumbscrew up through the cradle rail at CT_LATCH into an insert in the cartridge base, not catalogued). Stack (y on the tilt axis): the shoulder seats on the cradle's Ø8 x 1 spacer and the insert at y = -64.99 and runs through the MR126 (4) and the arm's 4 mm floor. The head's underside is then at -76.99, 4.0 mm clear of the arm's outer face (-72.99), which it needs because it turns with the cradle against the fixed arm (a 10 mm shoulder, 92981A100, would leave 2.0; an 8 would rub). Thread: 10 mm into insert_m5 (94459A775, 7.9 long) in the cradle's 9.0 mm through pilot, so all 7.9 is engaged; the tip ends 1.0 past the cheek's inner face (y = -54.99), 3.4 mm from the cartridge body (CadQuery check on turret.py)."
  }
 ]

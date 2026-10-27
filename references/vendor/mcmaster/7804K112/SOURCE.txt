@@ -1,0 +1,6 @@
+McMaster-Carr parts. McMaster-Carr CAD, for design use; not redistributed.
+Files per part: <PN>.step (as downloaded), <PN>.norm.step (moved into the frame for its kind), <PN>.page.json (the product page's data).
+
+7804K112 Corrosion-Resistant 440C Stainless Steel Ball Bearing, Shielded, Trade No. 126-2Z, for 6 mm Shaft Diameter
+URL: https://www.mcmaster.com/7804K112/
+Downloaded: 2026-10-26

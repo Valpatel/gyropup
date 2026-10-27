@@ -1,0 +1,6 @@
+McMaster-Carr parts. McMaster-Carr CAD, for design use; not redistributed.
+Files per part: <PN>.step (as downloaded), <PN>.norm.step (moved into the frame for its kind), <PN>.page.json (the product page's data).
+
+98541A167 External Retaining Ring, for 50 mm OD, Black-Phosphate Spring Steel
+URL: https://www.mcmaster.com/98541A167/
+Downloaded: 2026-10-26

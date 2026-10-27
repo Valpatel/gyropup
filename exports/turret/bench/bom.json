@@ -6,7 +6,7 @@
    "qty": 1,
    "for": "pan_servo",
    "price_usd_each": 21.99,
-   "mass_g_each": 89.0
+   "mass_g_each": 60.0
   },
   {
    "item": "STS3215 / ST3215 12 V 30 kg-cm serial bus servo",
@@ -14,7 +14,7 @@
    "qty": 1,
    "for": "tilt_servo",
    "price_usd_each": 21.99,
-   "mass_g_each": 89.0
+   "mass_g_each": 60.0
   },
   {
    "item": "Snail 2305 friction-wheel motor (+ C615 ESC)",
@@ -62,7 +62,7 @@
    "qty": 1,
    "for": "feed_esc",
    "price_usd_each": null,
-   "mass_g_each": 13.3
+   "mass_g_each": 17.0
   },
   {
    "item": "Picotronic DD520-1-24(12x40), 520 nm Class 2",
@@ -78,7 +78,7 @@
    "qty": 1,
    "for": "pan_bearing",
    "price_usd_each": null,
-   "mass_g_each": 52.0
+   "mass_g_each": 37.0
   },
   {
    "item": "MR126-2RS (6 x 12 x 4)",
@@ -86,7 +86,7 @@
    "qty": 1,
    "for": "tilt_bearing",
    "price_usd_each": null,
-   "mass_g_each": 2.0
+   "mass_g_each": 1.3125
   },
   {
    "item": "TE Deutsch DT04-12PA-L012 flange receptacle",
@@ -94,7 +94,7 @@
    "qty": 1,
    "for": "dt_receptacle",
    "price_usd_each": null,
-   "mass_g_each": 15.0
+   "mass_g_each": 20.0
   },
   {
    "item": "TE Deutsch DT06-12SA plug + W12S wedge + 12 x 0462-201-16141 sockets",
@@ -175,7 +175,7 @@
   "24 -> 12 V buck": 10,
   "chronograph emitters/receivers + hopper-full beam": 10,
   "LEDs and buzzer": 15,
-  "screws, inserts, dowels, circlips, shoulder screw, springs": 35,
+  "screws, inserts, dowels, springs": 17,
   "CT pogo connector pair": 10
  },
  "price_usd_known": 283.95,

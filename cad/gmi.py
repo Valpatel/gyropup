@@ -112,7 +112,7 @@ def output_adapter(part_id: str, size: str = 'L'):
     z_sh0 = relief
     z_face = z_sh0 + s['shoulder_len'] + s['journal_len'] + PRINT['journal_extra']   # longer: room for a thicker printed plate
     bw = STD[f'AC-{size}']['bearing_w']
-    z_j0 = z_face - 1.0 - bw                       # the bearing sits at the top (the plate's leg-side face, its retainers)
+    z_j0 = z_face - 1.0 - STD[f'AC-{size}']['seat_lip'] - bw   # the bearing sits under the plate's lip at its leg-side face
     body = (_cyl(o['flange_d'] / 2 - 0.5, 0, relief + 0.01)                                # contact boss on the flange only
             .union(_cyl(s['shoulder_d'] / 2, z_sh0, z_j0))                                  # shoulder: seats the inner ring
             .union(_cyl(s['journal_d'] / 2, z_j0, z_face))                                  # bearing journal
@@ -172,8 +172,8 @@ def motor_plate(part_id: str, size: str = 'L', thick_extra: float = 1.0):
     z_bear0 = j0
     z_bear1 = j0 + s['bearing_w']
     z_top = j1 - 1.0                                                                       # 1 mm short of the AO face: the link clears it
-    if z_top < z_bear1:
-        raise ValueError('journal shorter than the bearing')
+    if z_top < z_bear1 + s['seat_lip'] - 1e-6:
+        raise ValueError('journal shorter than the bearing and its lip')
     b = c['bolts']
     ring_r = max(b['pcd'] / 2 + clear(b['thread']) + 4.5, s['bearing_od'] / 2 + 6)
     t_arm = z_top - lug_z                                                                   # printed: arms the plate's full thickness
@@ -208,12 +208,12 @@ def motor_plate(part_id: str, size: str = 'L', thick_extra: float = 1.0):
     for (x, y) in circle_pts(b['pcd'], angles=b['angles']):
         p = p.cut(_cyl(clear(b['thread']) / 2, lug_z - 1, z_top + 1, x, y))
         p = p.cut(_cyl(clear(b['thread']) * 0.95, z_top - PRINT['lug_counterbore'], z_top + 1, x, y))   # deep: a stocked length engages
-    # the bore: clears the rotating shoulder (lip), then the bearing seat
-    p = p.cut(_cyl(s['lip_d'] / 2, lug_z - 1, z_top + 1))
-    p = p.cut(_cyl(s['bearing_od'] / 2, z_bear0, z_top + 1))                              # printed seat: line-to-line, sanded to fit
-    for k in range(3):                                                                     # 3 x M3 + washers hold the outer race in
-        x, y = (s['bearing_od'] / 2 + 4.5) * math.cos(math.radians(60 + 120 * k)), (s['bearing_od'] / 2 + 4.5) * math.sin(math.radians(60 + 120 * k))
-        p = p.cut(_cyl(FAST['M3']['insert_pilot'] / 2, z_top - 6, z_top + 1, x, y))
+    # the bore: the bearing goes in from the motor side and stops on a lip at the leg-side face. Its outer ring only ever
+    # takes outward thrust (the adapter's shoulder lifts the inner ring; nothing pushes the inner ring in), which the lip
+    # carries, so no retainers: the leg-side face stays flat, 1 mm from the link
+    p = p.cut(_cyl(s['bearing_od'] / 2 + 0.3, lug_z - 1, z_bear0))                        # a clearance lead-in from the motor side,
+    p = p.cut(_cyl(s['bearing_od'] / 2, z_bear0 - 0.01, z_bear1))                         # then the seat: line-to-line, sanded to fit
+    p = p.cut(_cyl(s['lip_d'] / 2, z_bear1 - 0.01, z_top + 1))
     # lightening pockets in the ring between the lug screws, from the motor side, 6 mm deep (the lug faces, the bearing
     # seat and the leg-side face stay whole)
     r_in, r_out = s['bearing_od'] / 2 + 3.0, ring_r - 3.0
@@ -236,7 +236,7 @@ def motor_plate(part_id: str, size: str = 'L', thick_extra: float = 1.0):
                       .close().extrude(min(6.0, z_bear0 - lug_z + 4.0)))
             p = p.cut(sector)
     return p, {'part': part_id, 'z': (lug_z, z_top), 'bearing_z': (z_bear0, z_bear1), 'tab_z': (lug_z, z_top), 'tab_top': tab_top, 'ring_r': ring_r, 'material': 'pa6-cf',
-               'note': f"printed PA6-CF, 100 % solid, flat; {s['bearing']} support bearing pressed in, held by 3 x M3 + washers; "
+               'note': f"printed PA6-CF, 100 % solid, flat; {s['bearing']} support bearing pressed in from the motor side against a {s['seat_lip']:g} mm lip; "
                        f"{s['bracket_bolts']} x {s['bracket_thread']} inserts for the yoke", 'assumed': mi['assumed']}
 
 

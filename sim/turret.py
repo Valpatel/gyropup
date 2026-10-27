@@ -16,6 +16,10 @@
 - **Hits:** ball-to-target contacts, each ball counted once. A target is done when its plate is knocked over.
 - **Laser:** off at the start and while slewing between targets; on once the turret is close to on target, and it stays
   on for a moment before the first shot (a visible "about to fire" warning). Off again when the target goes down.
+- **Depression limit by pan (v2):** with a table (`tilt_max`, from the model: the lidar in front of the turret) the
+  barrel never depresses past it: the tilt command is capped by the lowest limit between the pan now and the pan asked
+  for, and the pan waits until the barrel is high enough for the angles ahead. A target that needs more depression than
+  its pan allows is not fired at; the robot crouches (`duck`, taken off the commanded height) until it is in reach.
 """
 from __future__ import annotations
 
@@ -125,9 +129,19 @@ class TurretController:
     kd_tilt: float = 0.4
     rate_hz: float = 5.0
     tol_rad: float = 0.012
+    tilt_max: Optional[list] = None  # [[pan, most depression], ...] (rad, + = barrel down), or none: the hard stop only
+    lim_margin: float = 0.009        # rad kept below the table (0.5 deg)
+    duck_rate: float = 0.25          # height fraction per second while a target is out of the barrel's reach
+    duck_max: float = 0.6
 
     def __post_init__(self):
         m = self.model
+        self.duck = 0.0
+        self.blocked = False
+        self.blocked_targets = set()
+        if self.tilt_max is not None:
+            t = np.array(sorted(self.tilt_max))
+            self._lim_p, self._lim_t = t[:, 0], t[:, 1]
         self.has = all(n in [m.joint(i).name for i in range(m.njnt)] for n in ('turret_pan', 'turret_tilt'))
         if not self.has:
             return
@@ -193,7 +207,15 @@ class TurretController:
             self.unreachable.add(target.name)                       # would need an upward shot: track it, but hold fire
             elev = 0.0
         # tilt joint: + = barrel down relative to the body; world elevation = -(tilt + body pitch)
-        return pan, -elev - pitch
+        tilt = -elev - pitch
+        self.blocked = self.tilt_max is not None and tilt > self.tilt_limit(pan) - self.lim_margin
+        if self.blocked:
+            self.blocked_targets.add(target.name)
+        return pan, tilt
+
+    def tilt_limit(self, pan: float) -> float:
+        """The most the barrel may depress at this pan (rad); the hard stop when the model gives no table."""
+        return math.inf if self.tilt_max is None else float(np.interp(pan, self._lim_p, self._lim_t))
 
     pause_after_down_s: float = 0.6  # a beat between targets (laser off) after one goes down
 
@@ -214,6 +236,21 @@ class TurretController:
             self.pan_cmd, self.tilt_cmd = self.aim(tg)
         else:
             self.pan_cmd, self.tilt_cmd = 0.0, 0.05
+            self.blocked = False
+        if self.tilt_max is not None:
+            # never ask for more depression than the pan sweep ahead allows; the pan waits for the barrel to come up
+            p0, t0 = d.qpos[self.pan_q], d.qpos[self.tilt_q]
+            sweep = np.linspace(p0, self.pan_cmd, 24)
+            lim = np.interp(sweep, self._lim_p, self._lim_t)
+            self.tilt_cmd = min(self.tilt_cmd, float(lim.min()) - self.lim_margin)
+            ahead = np.nonzero(lim < t0)[0]
+            if len(ahead):
+                self.pan_cmd = float(sweep[max(0, ahead[0] - 1)])
+            # out of reach over the lidar: crouch (the scenario takes `duck` off its height) until the aim fits
+            if tg is not None and self.blocked:
+                self.duck = min(self.duck_max, self.duck + self.duck_rate * dt)
+            elif tg is None:
+                self.duck = max(0.0, self.duck - 0.5 * self.duck_rate * dt)
         pe = self.pan_cmd - d.qpos[self.pan_q]
         te = self.tilt_cmd - d.qpos[self.tilt_q]
         # PD plus the model's gravity and coriolis terms, so the launcher does not sag off target
@@ -224,11 +261,12 @@ class TurretController:
         if name != self.engaged:                                  # new target (or none): laser off while slewing
             self.set_laser(t, False)
             self.engaged = name
-        if tg is not None and not self.laser and self.aim_err < self.laser_near_rad and self.in_range:
+        if tg is not None and not self.laser and self.aim_err < self.laser_near_rad and self.in_range and not self.blocked:
             self.set_laser(t, True, tg.name)
         settled = self.aim_err < self.tol_rad and abs(d.qvel[self.pan_v]) < 0.1 and abs(d.qvel[self.tilt_v]) < 0.1
         warned = self.laser and t - self.laser_since >= self.laser_warn_s
-        if tg is not None and settled and warned and self.in_range and t - self.last_shot >= 1.0 / self.rate_hz and self.next_ball < len(self.balls):
+        if (tg is not None and settled and warned and self.in_range and not self.blocked and t - self.last_shot >= 1.0 / self.rate_hz
+                and self.next_ball < len(self.balls)):
             self.fire(t, tg)
         # recoil: the reaction impulse on the launcher, spread over a 2 ms shot
         d.xfrc_applied[self.tilt_body] = 0
@@ -310,4 +348,5 @@ class TurretController:
         return {'shots': shots, 'hits': len(self.hits), 'hit_rate': round(len(self.hits) / shots, 3) if shots else 0.0,
                 'by_target': {t.name: {'shots': self.fired[t.name], 'hits': self.hits.count(t.name), 'knocked_down_s': self.down.get(t.name)} for t in self.targets},
                 'knocked_down': len(self.down), 'targets': len(self.targets),
-                'out_of_range_at_times': sorted(self.unreachable)}
+                'out_of_range_at_times': sorted(self.unreachable),
+                **({'over_lidar_needed_crouch': sorted(self.blocked_targets)} if self.tilt_max is not None else {})}

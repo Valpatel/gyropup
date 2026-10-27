@@ -1,0 +1,6 @@
+McMaster-Carr parts. McMaster-Carr CAD, for design use; not redistributed.
+Files per part: <PN>.step (as downloaded), <PN>.norm.step (moved into the frame for its kind), <PN>.page.json (the product page's data).
+
+92981A101 Alloy Steel Shoulder Screws, 6 mm Shoulder Diameter, 12 mm Shoulder Length, M5 x 0.8 mm Thread
+URL: https://www.mcmaster.com/92981A101/
+Downloaded: 2026-10-26

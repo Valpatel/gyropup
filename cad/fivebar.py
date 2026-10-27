@@ -53,7 +53,8 @@ PARAMS = {
     'gap': 2.0,                                          # between layers (a DIN 433 M12 washer at each knee)
     'knee_out_deg': 3.0, 'knee_in_deg': -97.0,           # the front upper link's stops (from +x, ccw); the rear mirrors
     'stop_r': 58.0,                                      # stop posts: radius from the motor axis (between the lug screws)
-    'hollow': True, 'skin': 5.0,                         # links as closed boxes: a cavity inside, 'skin' mm walls all round
+    'hollow': False, 'skin': 5.0,                        # links as closed boxes (cavity, 'skin' walls): tried 2026-10-26, it
+                                                         # weakened the wheel link and the leg too much (cad/leg_studies.py); solid
 }
 if os.environ.get('GYROPUP_LEG_PARAMS'):
     PARAMS.update(json.loads(Path(os.environ['GYROPUP_LEG_PARAMS']).read_text()))
@@ -66,7 +67,15 @@ FAST = STD['fasteners']
 ISO7379_HEAD = {12: (18.0, 9.0), 10: (16.0, 7.0)}       # shoulder d: head diameter, head height (McMaster 92981A408 / A303)
 M10_NUT = (17.0, 10.0)                                   # nyloc M10: across flats, height (DIN 985 is 10 mm)
 TPU_SLEEVE = (18.0, 10.0)                                # stop sleeve OD on a 10 mm shoulder
-EYE_SLEEVE = (16.0, 12.0)                                # steel sleeve pressed into each upper link's knee eye (OD, ID)
+EYE_SLEEVE = (18.0, 12.0, 20.0)                          # the steel sleeves pressed into each upper link's knee eye: OD, ID,
+                                                         # length (McMaster 96990A403, DIN 179 12 x 18 x 20, HRC 61)
+EYE_SLEEVES = 2                                          # two, end to end, 40 mm: the knee pin cantilevers out to the lower
+                                                         # link's bearings (their mid-plane 46 mm from the sleeves' middle),
+                                                         # so the eye carries that moment as bearing pressure along the sleeves;
+                                                         # one 20 mm sleeve put 110 MPa on the plastic in a collapse onto the
+                                                         # stops (1.8 kN at the knee), two 31 MPa (cad/leg_studies.py)
+EYE_BOSS = 20.0                                          # the eye stands this proud of the link's inner face (the sleeves, then
+                                                         # the nut's pocket)
 
 
 # ----------------------------------------------------------------------------------- kinematics
@@ -196,6 +205,20 @@ def ycyl(r, y0, y1, x=0.0, z=0.0):
 def yslab(points, y0, y1):
     """A prism from an x-z outline, from y0 to y1."""
     return cq.Workplane('XZ', origin=(0, y1, 0)).polyline(points).close().extrude(y1 - y0)
+
+
+def boss_fillet(outline, face_y, side, r=None, f=6.0):
+    """A fillet ring where a lower link's knee boss (radius r, round the origin) stands out of the link's face at face_y
+    and runs on towards side = -1 (smaller y) or +1: that sharp inside corner carried the wheel link's peak stress
+    (cad/leg_studies.py, R1). Clipped to the link's outline, so it is only where the face is."""
+    r = KC['hub_od'] / 2 if r is None else r
+    s = side
+    ring = (cq.Workplane('XY').moveTo(r, face_y + s * f).lineTo(r, face_y).lineTo(r + f, face_y)
+            .threePointArc((r + 0.2929 * f, face_y + s * 0.2929 * f), (r, face_y + s * f)).close()
+            .revolve(360, (0, 0, 0), (0, 1, 0)))
+    lo, hi = sorted((face_y, face_y + s * f))
+    arm = cq.Workplane('XY').box(r + f + 2, hi - lo + 0.02, 2 * (r + f + 2)).translate(((r + f + 2) / 2, (lo + hi) / 2, 0))
+    return ring.intersect(yslab(outline, lo - 0.01, hi + 0.01)).intersect(arm)     # the arm's side only (x > 0)
 
 
 def link_outline(p0, p1, w0, w1, r0, r1, n=24):
@@ -364,12 +387,9 @@ def hip_frame():
         for a in dowel_angles(front):                        # Ø5 steel dowels into the motor's locating holes
             x, z = mx + b['pcd'] / 2 * math.cos(math.radians(a)), b['pcd'] / 2 * math.sin(math.radians(a))
             web = web.cut(ycyl(2.5 - 0.03, yf0 - 1, yf0 + 12.0, x, z))
-        web = web.cut(ycyl(AC['lip_d'] / 2, yf0 - 1, yf1 + 1, mx))
-        web = web.cut(ycyl(AC['bearing_od'] / 2, Y['bearing'][0], yf1 + 1, mx))
-        for k in range(3):                                    # 3 x M3 + washers hold the 61812's outer race
-            a = math.radians(60 + 120 * k)
-            web = web.cut(ycyl(FAST['M3']['insert_pilot'] / 2, yf1 - 6, yf1 + 1, mx + (AC['bearing_od'] / 2 + 4.5) * math.cos(a),
-                               (AC['bearing_od'] / 2 + 4.5) * math.sin(a)))
+        web = web.cut(ycyl(AC['bearing_od'] / 2 + 0.3, yf0 - 1, Y['bearing'][0], mx))          # the 61812 slides in from the
+        web = web.cut(ycyl(AC['bearing_od'] / 2, Y['bearing'][0] - 0.01, Y['bearing'][1], mx))   # motor side, is pressed for its
+        web = web.cut(ycyl(AC['lip_d'] / 2, Y['bearing'][1] - 0.01, yf1 + 1, mx))              # last 10 mm, stops on the lip
     # stop posts: M8 heat-set inserts for 10 mm shoulder screws, at the four stop positions
     for (px, pz) in stop_posts():
         web = web.cut(ycyl(4.8, yf1 - 16.0, yf1 + 1, px, pz))        # M8 insert (94459A778, 12.7 long): Ø9.6, 16 deep
@@ -390,25 +410,33 @@ def stop_posts():
 
 
 def upper_link():
-    """Upper link (printed PA6-CF, flat): the AO-L face at the motor (8 x M5 from the outer face, heads proud),
-    a 12 mm bore for the knee's shoulder screw and a pocket for its M10 nyloc on the inner face. Built for the front
-    motor, pointing along +x from the origin (the rear one is the same part)."""
+    """Upper link (printed PA6-CF, flat): the AO-L face at the motor (8 x M5 from the outer face, heads proud), and
+    at the knee an eye boss standing EYE_BOSS proud of the inner face: two steel sleeves end to end for the knee's
+    shoulder screw, then a pocket for its M10 nyloc. Built for the front motor, pointing along +x from the origin (the
+    rear one is the same part)."""
     l1, t = P['l1'], P['upper_t']
     out = link_outline((0, 0), (l1, 0), P['upper_w0'], P['upper_w1'], UPPER_HUB_R, UPPER_EYE_R)
-    u = yslab(out, 0.0, t)
+    u = yslab(out, 0.0, t).union(ycyl(UPPER_EYE_R - 0.5, -EYE_BOSS, 0.01, l1, 0))   # inside the outline's polygon: no slivers
     u = u.cut(gmi.place(gmi.std_face_mate('L', depth=t + 2), (0, 0, 0), (0, 1, 0)))
     # the 8 M5 heads sit proud on the hub's outer face (no lower link ever passes over a hub: build_leg's clash
     # sweep), so the hub keeps its full thickness where the leg's out-of-plane moment is largest
-    u = u.cut(ycyl(EYE_SLEEVE[0] / 2 - 0.02, NUT_POCKET + 0.5, t + 1, l1, 0))   # the steel sleeve, pressed in from outside
-    u = u.cut(ycyl(6.03, -1, t + 1, l1, 0))                                # the shoulder: 12 mm (through the nut pocket)
+    u = u.cut(ycyl(EYE_SLEEVE[0] / 2 - 0.02, eye_sleeve_end(), t + 1, l1, 0))   # the steel sleeves, pressed in from outside
+                                                                              # (the inner one's end in the nut pocket: the nut clamps steel)
+    u = u.cut(ycyl(6.03, -EYE_BOSS - 1, t + 1, l1, 0))                     # the shoulder: 12 mm (through the nut pocket)
     if P['hollow']:
         cv = cavity(l1, UPPER_HUB_R, UPPER_EYE_R, 0.0, t, UPPER_HUB_R + 10.0, UPPER_EYE_R + 10.0)
         u = u.cut(cv) if cv is not None else u
         if cv is not None:                                                   # the wheel's cable (used on the rear link)
             u = u.cut(cq.Workplane('XY').box(CABLE_EXIT[0], t / 2, CABLE_EXIT[1]).translate((l1 - UPPER_EYE_R - 14.0, t * 0.75, 0)))
             u = u.cut(cq.Workplane('XY').box(CABLE_EXIT[0], t / 2, CABLE_EXIT[1]).translate((CABLE_OUT_R, t * 0.25, 0)))
-    hexa = cq.Workplane('XZ', origin=(0, NUT_POCKET, 0)).center(l1, 0).polygon(6, M10_NUT[0] / math.cos(math.pi / 6) + 0.3).extrude(NUT_POCKET + 0.5)
+    top = eye_sleeve_end() + 0.5                                           # the pocket reaches just past the sleeve's end
+    hexa = cq.Workplane('XZ', origin=(0, top, 0)).center(l1, 0).polygon(6, M10_NUT[0] / math.cos(math.pi / 6) + 0.3).extrude(top + EYE_BOSS + 0.5)
     return u.cut(hexa)
+
+
+def eye_sleeve_end():
+    """y of the inner end of an upper link's eye sleeves: where the knee's nut bears."""
+    return P['upper_t'] - EYE_SLEEVES * EYE_SLEEVE[2]
 
 
 def front_link():
@@ -421,8 +449,9 @@ def front_link():
     e0, e1 = Y['apex_eye']
     kb0, kb1 = Y['knee_boss']
     r_eye = AC['bearing_od'] / 2 + 6.0
-    f = yslab(link_outline((0, 0), (l2, 0), P['front_w'], P['front_w'] + 12, KC['hub_od'] / 2, r_eye), y0, y1)
-    f = f.union(ycyl(KC['hub_od'] / 2, kb0, kb1)).union(ycyl(r_eye, e0, e1, l2))
+    outline = link_outline((0, 0), (l2, 0), P['front_w'], P['front_w'] + 12, KC['hub_od'] / 2, r_eye)
+    f = yslab(outline, y0, y1)
+    f = f.union(ycyl(KC['hub_od'] / 2, kb0, kb1)).union(boss_fillet(outline, y1, +1)).union(ycyl(r_eye, e0, e1, l2))
     f = f.cut(knee_cartridge_cut(kb0, kb1))
     ao, ai = Y['apex_bearing'], Y['apex_bearing_in']
     f = f.cut(ycyl(36.0, e0 - 1, e1 + 1, l2, 0))                            # Ø72 web between the seats: the outer races' shoulders
@@ -445,8 +474,9 @@ def wheel_link():
     kb0, kb1 = Y['knee_boss']
     w = gmi.motor_interface(WHEEL)
     r_foot = 42.0
-    k = yslab(link_outline((0, 0), (l2, 0), P['wheel_w1'], P['wheel_w0'], KC['hub_od'] / 2, r_foot), y0, y1)
-    k = k.union(ycyl(KC['hub_od'] / 2, kb0, kb1))
+    outline = link_outline((0, 0), (l2, 0), P['wheel_w1'], P['wheel_w0'], KC['hub_od'] / 2, r_foot)
+    k = yslab(outline, y0, y1)
+    k = k.union(ycyl(KC['hub_od'] / 2, kb0, kb1)).union(boss_fillet(outline, y0, -1))   # the boss reaches in, filleted
     k = k.cut(knee_cartridge_cut(kb0, kb1))
     h0, h1 = Y['hub']
     ab0, ab1 = Y['apex_bearing']
@@ -482,43 +512,94 @@ CABLE_D = 9.0                                             # the two leads togeth
 CABLE_PASS = 18.0                                         # the channel from the foot's centre hole into the wheel link's cavity
 CABLE_EXIT = (22.0, 16.0)                                 # slots through a link's wall (along the link, across it)
 CABLE_EXIT_X = 23.0 + 22.0                                # the wheel link's exit, from the knee
-CABLE_OUT_R = 75.0                                        # the upper link's exit, from the hub: just past the frame's edge (62)
+CABLE_OUT_R = 90.0                                        # where the cable leaves the rear upper link for the body: past
+                                                         # the stop posts (58) and the frame's edge (62)
 
 
 def cable(phi1: float, phi2: float):
-    """The wheel's cable at a pose, as a swept tube: out of the BotWheel's centre, along the inside of the wheel link,
-    a loop round the rear knee, along the inside of the rear upper link, and into the body past the hip frame."""
+    """The wheel's cable at a pose, as a swept tube clipped along the outside of the loop: out of the hub's inner end
+    at the axle, out under the apex eye, along the wheel link's outer edge, round the outside of the rear knee (on the
+    bisector of the knee's outside angle, clear of both eyes at any knee angle), along the rear upper link's outer edge,
+    and into the body 90 mm from the hip axis (past the stop posts and the frame's edge). The wrap at the knee and the
+    loop at the hip take the joints' swing: a route to try on the rig."""
     fr, j = link_frames(phi1, phi2)
+    loop = [j[k] for k in 'ACEDB']                                  # the loop's outline, x-z
+    area = sum(p[0] * q[1] - q[0] * p[1] for p, q in zip(loop, loop[1:] + loop[:1]))
+    turn = 1.0 if area > 0 else -1.0                                # +1: counter-clockwise in x-z
 
-    def at(link, x, y, z=0.0):
-        (ox, oz), rot = fr[link]
-        a = math.radians(-rot)
-        return cq.Vector(ox + x * math.cos(a) - z * math.sin(a), y, oz + x * math.sin(a) + z * math.cos(a))
+    def unit(v):
+        n = math.hypot(*v)
+        return (v[0] / n, v[1] / n)
+
+    def outward(p, q):
+        """The outward normal of the loop's edge p -> q (the side away from the loop's inside)."""
+        d = unit((q[0] - p[0], q[1] - p[1]))
+        return (turn * d[1], -turn * d[0]), d
+
+    E, D, B = j['E'], j['D'], j['B']
+    n_w, d_w = outward(E, D)                                        # the wheel link, traversed apex -> knee
+    n_u, d_u = outward(D, B)                                        # the rear upper link, knee -> hip
+    bis = (n_w[0] + n_u[0], n_w[1] + n_u[1])
+    if math.hypot(*bis) < 0.3:                                      # folded flat: straight past the knee's tip
+        bis = (d_w[0] - d_u[0], d_w[1] - d_u[1])
+    bis = unit(bis)
     l1, l2 = P['l1'], P['l2']
     w0, w1 = Y['wheel_link']
-    yc = (w0 + w1) / 2
-    t = P['upper_t']
-    pts = [at('wheel_link', l2, Y['wheel_boss'] - 2), at('wheel_link', l2 - 6, yc), at('wheel_link', l2 - 60, yc),
-           at('wheel_link', CABLE_EXIT_X + 30, yc), at('wheel_link', CABLE_EXIT_X, (w0 + yc) / 2),
-           at('wheel_link', CABLE_EXIT_X - 6, w0 - 9), at('upper_rear', l1 - UPPER_EYE_R - 14.0 + 8, t + 6),
-           at('upper_rear', l1 - UPPER_EYE_R - 22.0, t / 2), at('upper_rear', CABLE_OUT_R + 20, t / 2),
-           at('upper_rear', CABLE_OUT_R, t * 0.25), at('upper_rear', CABLE_OUT_R - 4, -14.0),
-           at('upper_rear', CABLE_OUT_R - 8, -45.0)]
+    wm = (w0 + w1) / 2
+    hw = lambda x: KC['hub_od'] / 2 + (42.0 - KC['hub_od'] / 2) * x / l2     # the wheel link's half-width, x from the knee
+    r = CABLE_D / 2 + 2.0
+    r_knee = max(KC['hub_od'] / 2, UPPER_EYE_R) + r + 4.0           # round the knee, clear of the boss and the eye
+
+    def on(p0, d, s, n, off, y):
+        return cq.Vector(p0[0] + s * d[0] + off * n[0], y, p0[1] + s * d[1] + off * n[1])
+    y_hub = Y['hub'][0] - 4.0
+    pts = [cq.Vector(E[0], y_hub, E[1]),
+           on(E, d_w, 0.0, n_w, AC['bearing_od'] / 2 + 12.0, y_hub),
+           on(E, d_w, 30.0, n_w, hw(l2 - 30) + r, wm),
+           on(E, d_w, l2 / 2, n_w, hw(l2 / 2) + r, wm),
+           on(E, d_w, l2 - 45.0, n_w, hw(45.0) + r, wm),
+           on(D, d_w, 0.0, n_w, r_knee, wm),
+           on(D, d_w, 0.0, bis, r_knee, (Y['upper'][1] + w0) / 2),
+           on(D, d_u, 0.0, n_u, r_knee, P['upper_t'] / 2),
+           on(D, d_u, 40.0, n_u, upper_half_width(l1 - 40.0) + r, P['upper_t'] / 2),
+           on(D, d_u, l1 - CABLE_OUT_R - 10.0, n_u, upper_half_width(CABLE_OUT_R + 10.0) + r, P['upper_t'] / 2),
+           on(D, d_u, l1 - CABLE_OUT_R - 5.0, n_u, upper_half_width(CABLE_OUT_R + 5.0) + r, -20.0),
+           on(D, d_u, l1 - CABLE_OUT_R, n_u, upper_half_width(CABLE_OUT_R) + r, -60.0)]
     path = cq.Workplane('XY').spline([(p.x, p.y, p.z) for p in pts], includeCurrent=False)
     prof = cq.Workplane(cq.Plane(origin=pts[0], xDir=cq.Vector(1, 0, 0), normal=(pts[1] - pts[0]).normalized())).circle(CABLE_D / 2)
     return prof.sweep(path, transition='round')
 
 
+def cable_check(heights=(105, 130, 170, 220, 270, 320, 370, 390), min_mm3=5.0):
+    """Where the drawn cable route runs into a part, at a few stances: {height: [[part, mm3], ...]}. A real cable gives
+    way a little; a route that cuts through a link at some stance needs moving there."""
+    out = {}
+    for h in heights:
+        phi = stance(h)
+        c = cable(*phi)
+        hits = []
+        for n, (sh, _) in assembly(*phi).items():
+            if sh is None or n in ('wheel_cable', 'wheel_hub') or n.startswith('motor'):
+                continue
+            try:
+                v = c.intersect(sh).val().Volume()
+            except Exception:
+                v = 0.0
+            if v > min_mm3:
+                hits.append([n, round(v)])
+        out[h] = hits
+    return out
+
+
 KNEE_PIN_STOCK = (50, 55, 60, 70, 80, 90, 100)             # ISO 7379 Ø12 shoulder lengths McMaster stocks (mm)
-NUT_POCKET = 10.5                                        # the M10 nut's pocket in the upper link's eye, from its inner face
 LUG_CB = 10.0                                            # the hip frame's M4 counterbores: an M4 x 20 then takes 5.9 mm of
                                                          # the RS-04's 7 mm lug threads (8 mm left it 3.9)
 
 
 def knee_pin_length():
     """The knee's shoulder screw: the longest stocked shoulder that still lets the nut clamp the stack (head on the
-    outer washer, nut on its pocket's ceiling), and how far its end sits from the pocket (the thread must reach the nut)."""
-    room = Y['knee_boss'][1] + 2.0 - NUT_POCKET
+    outer washer, nut on the eye sleeve's end), and how far the shoulder's end sits from the nut (the thread reaches through it)."""
+    room = Y['knee_boss'][1] + 2.0 - eye_sleeve_end()                 # from the head's washer to the nut's face (the sleeves' end)
     L = max(l for l in KNEE_PIN_STOCK if l <= room - 0.5)
     return L, round(room - L, 2)
 
@@ -662,7 +743,6 @@ SCREWS = {   # what each screw group is, its size, and where its head seats (cat
     'links': ('screw_m5x40', 'M5 x 40 through the upper links\' hubs into the adapters\' inserts, heads proud'),
     'outputs': ('screw_m5x30', 'M5 x 30 through the adapters into the motors\' output flanges'),
     'wheel': ('screw_m6x30', 'M6 x 30 from inside the hub into the BotWheel\'s flange'),
-    'retainers': ('screw_m3x6', 'M3 x 6 + washers holding the hip 61812s\' outer races'),
 }
 
 
@@ -693,14 +773,6 @@ def screw_groups(fr, j):
         sc = screw(6.0, 30.0, 10.0, 6.0, Y['wheel_link'][0], 1, ex + x, ez + z)
         wheel = sc if wheel is None else wheel.union(sc)
     out['screws_wheel'] = wheel
-    ret = None
-    for mx in (ax, bx):
-        for k in range(3):
-            a = math.radians(60 + 120 * k)
-            x, z = mx + (AC['bearing_od'] / 2 + 4.5) * math.cos(a), (AC['bearing_od'] / 2 + 4.5) * math.sin(a)
-            sc = screw(3.0, 6.0, 9.0, 3.5, yf1, 1, x, z)            # washer + low head, proud of the frame's face
-            ret = sc if ret is None else ret.union(sc)
-    out['screws_retainers'] = ret
     return out
 
 
@@ -724,10 +796,12 @@ def bought_parts(fr, j):
     for key in ('upper_front', 'upper_rear'):                       # the steel sleeves in the upper links' knee eyes
         (ox, oz), rot = fr[key]
         a = math.radians(-rot)
-        out[f'eye_sleeve_{key[6:]}'] = (bearing(EYE_SLEEVE[1], EYE_SLEEVE[0], P['upper_t'] - NUT_POCKET - 0.5, NUT_POCKET + 0.5,
+        out[f'eye_sleeve_{key[6:]}'] = (bearing(EYE_SLEEVE[1], EYE_SLEEVE[0], EYE_SLEEVES * EYE_SLEEVE[2], eye_sleeve_end(),
                                                 ox + P['l1'] * math.cos(a), oz + P['l1'] * math.sin(a)), 'bought')
-        out[f'knee_nut_{key}'] = (cq.Workplane('XZ', origin=(0, 10.5, 0)).center(x, z).polygon(6, M10_NUT[0] / math.cos(math.pi / 6)).extrude(10.0)
-                                  .cut(ycyl(5.0, 0, 11, x, z)), 'bought')
+        nut_face = eye_sleeve_end()                                    # the nut bears on the sleeves' end, steel on steel
+        nut = (cq.Workplane('XZ', origin=(0, nut_face, 0)).center(P['l1'], 0).polygon(6, M10_NUT[0] / math.cos(math.pi / 6))
+               .extrude(M10_NUT[1]).cut(ycyl(5.0, nut_face - M10_NUT[1] - 1, nut_face + 1, P['l1'], 0)))
+        out[f'knee_nut_{key}'] = (place(nut, (ox, oz), rot), 'bought')   # in its link's hex pocket, turned with it
     ex, ez = j['E']
     out['apex_61812'] = (bearing(60, 78, 10, Y['apex_bearing'][0], ex, ez).union(bearing(60, 78, 10, Y['apex_bearing_in'][0], ex, ez)), 'bought')
     out['apex_circlip'] = (bearing(57.0, 66.0, 2.0, Y['circlip'][0] + 0.05, ex, ez), 'bought')
@@ -768,7 +842,8 @@ def clashes(heights=(130, 200, 260, 320, 380), leans=(-20, 0, 20), min_mm3=5.0, 
                 if phi is None or not (fi <= phi[0] <= fo) or not (ro <= phi[1] <= ri):
                     out.append(['out of range', '', 0, (h, lean)])       # past a stop: the stop is doing its job
                     continue
-                asm = {n: s for n, (s, _) in assembly(*phi, with_bought=with_bought).items() if s is not None}
+                asm = {n: s for n, (s, _) in assembly(*phi, with_bought=with_bought).items()
+                       if s is not None and n != 'wheel_cable'}                  # the cable has its own check: cable_check()
                 boxes = {n: (s.val() if hasattr(s, 'val') else s).BoundingBox() for n, s in asm.items()}
                 for (n1, s1), (n2, s2) in itertools.combinations(asm.items(), 2):
                     if not first and n1.startswith(STATIC) and n2.startswith(STATIC):
@@ -799,8 +874,8 @@ MATES = [('output_adapter_front', 'motor_front'), ('output_adapter_rear', 'motor
          ('wheel_link', 'apex_spacer'), ('apex_spacer', 'apex_61812'),
          ('hip_frame', 'stop_posts'), ('stop_sleeve', 'stop_posts'), ('hip_frame', 'screws_lugs'), ('motor_', 'screws_lugs'),
          ('upper_link', 'screws_links'), ('output_adapter', 'screws_links'), ('wheel_link', 'screws_wheel'), ('wheel_hub', 'screws_wheel'),
-         ('hip_frame', 'screws_retainers'), ('bearing_61812', 'screws_retainers'), ('wheel_link', 'wheel_cable'),
-         ('upper_link_rear', 'wheel_cable'), ('wheel_hub', 'wheel_cable'), ('wheel_tyre', 'wheel_cable'),
+         ('wheel_link', 'wheel_cable'),
+         ('wheel_hub', 'wheel_cable'),
          ('upper_link', 'eye_sleeve'), ('eye_sleeve', 'knee_pin')]
 
 

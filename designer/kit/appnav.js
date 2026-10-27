@@ -9,7 +9,11 @@ background:rgba(6,6,9,.94);backdrop-filter:blur(10px);border-bottom:1px solid #2
 .appnav a.tab{font:500 12px 'JetBrains Mono',ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;color:#8892a4;
 text-decoration:none;padding:6px 10px;border-radius:6px;white-space:nowrap}
 .appnav a.tab:hover{color:#00f0ff}.appnav a.tab.on{color:#00f0ff;background:rgba(0,240,255,.06);box-shadow:inset 0 -2px 0 #00f0ff}
-body.has-appnav{--appnav-h:46px}`;
+body.has-appnav{--appnav-h:46px}
+.appnav{scrollbar-width:none;-webkit-overflow-scrolling:touch;padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}
+.appnav::-webkit-scrollbar{display:none}
+@media (max-width:640px){.appnav{gap:2px;height:44px;padding-left:max(8px,env(safe-area-inset-left));padding-right:max(8px,env(safe-area-inset-right))}
+.appnav .brand{font-size:14px;margin-right:4px}.appnav a.tab{font-size:11px;letter-spacing:.04em;padding:12px 8px}body.has-appnav{--appnav-h:44px}}`;
 
 // root must be a plain relative path (../../, ./, designer/): it goes into links and the nav.json URL
 const ROOT_OK = /^(?:\.\.?\/)*(?:[A-Za-z0-9_-][A-Za-z0-9._-]*\/)*$/;
@@ -36,6 +40,7 @@ export async function mountAppNav({ root = '../', current = '' } = {}) {
       + `href="${esc(href(n.href))}">${esc(n.title)}</a>`).join('');
   document.body.prepend(nav);
   document.body.classList.add('has-appnav');
+  nav.querySelector('a.tab.on')?.scrollIntoView({ inline: 'center', block: 'nearest' });   // a phone: the current tab in view
   liveReload();
   return nav;
 }

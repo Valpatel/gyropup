@@ -1,0 +1,77 @@
+/* The 3D game page's layout on top of kit/hud.css. The orbit hint: small, in a corner, gone after a few seconds or the
+   first drag (sim.js adds .faded). */
+.hud-hint { left: 14px; bottom: 12px; font-size: 9.5px; opacity: 0.7; transition: opacity 1.4s ease; pointer-events: none; }
+.hud-hint.faded { opacity: 0; }
+
+/* Phones and small tablets (the pattern of the Moxie simulator's style.css):
+   under 900 px the side panel is a glass drawer along the bottom, closed by default, over a full-screen 3D view; the
+   talk dock sits just above the drawer's handle and steps aside while the drawer is open; touch targets are 40-48 px;
+   the iPhone's safe areas are respected. A short landscape screen (<= 520 px tall) floats the drawer bottom-left. */
+
+#drawer-handle { display: none; }
+
+@media (max-width: 899px) {
+  #hud { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr) auto;
+    grid-template-areas: "topbar" "stage" "panel"; }
+  .hud-panel-tab, #topbar .panel-pill, #topbar .hud-tag, #summary { display: none !important; }
+  .hud-hint { top: 8px; bottom: auto; left: 10px; }                  /* under the top bar, clear of the drawer and dock */
+
+  /* the top bar: the two pickers on one row, the pills under them (a phone held upright has no room for both) */
+  #topbar { flex-wrap: wrap; gap: 6px; min-height: 48px; row-gap: 6px;
+    padding: 6px max(8px, env(safe-area-inset-left)) 6px max(8px, env(safe-area-inset-right)); }
+  #topbar .spacer { display: none; }
+  #design-select, #run-select { min-height: 40px; max-width: none; font-size: 13px; flex: 1 1 40%; min-width: 0; }
+  #topbar .hud-pill { min-height: 40px; padding: 6px 10px; font-size: 10px; letter-spacing: .06em; flex: 1 1 0; justify-content: center; }
+
+  /* Gyropup's speech bubble: smaller, so it does not cover the robot */
+  body .gp-bubble { max-width: min(72vw, 300px); padding: 7px 10px; }
+  body .gp-bubble .gp-text { font-size: 14px; line-height: 1.3; }
+  body .gp-bubble .gp-label { font-size: 9px; }
+
+  #panel { margin: 0 8px max(8px, env(safe-area-inset-bottom)); max-height: 42vh; padding: 0 12px 12px;
+    background: rgba(9, 12, 19, 0.42); backdrop-filter: blur(22px) saturate(1.15); -webkit-backdrop-filter: blur(22px) saturate(1.15);
+    border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 14px; overscroll-behavior: contain; }
+  #drawer-handle { display: flex; align-items: center; justify-content: center; gap: 10px; position: sticky; top: 0; z-index: 2;
+    width: calc(100% + 24px); margin: 0 -12px 6px; min-height: 48px; border: 0; border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    background: rgba(9, 12, 19, 0.55); color: var(--text, #e8edf5); font: 600 11px var(--font-mono, ui-monospace, monospace);
+    letter-spacing: .14em; text-transform: uppercase; border-radius: 14px 14px 0 0; cursor: pointer; touch-action: manipulation; }
+  #drawer-handle .grip { width: 36px; height: 4px; border-radius: 2px; background: rgba(255, 255, 255, 0.28); }
+  #drawer-handle .caret { width: 8px; height: 8px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor;
+    transform: rotate(45deg); margin-top: -4px; transition: transform .15s; }
+  #hud.drawer-closed #drawer-handle .caret { transform: rotate(-135deg); margin-top: 4px; }
+  #hud.drawer-closed #panel { overflow: hidden; padding-bottom: 0; }
+  #hud.drawer-closed #panel > :not(#drawer-handle) { display: none; }
+  #hud.drawer-closed #drawer-handle { margin-bottom: 0; border-bottom: 0; border-radius: 14px; }
+
+  /* comfortable touch targets in the drawer */
+  #panel button, #panel .hud-btn { min-height: 44px; }
+  #panel input[type=range] { height: 32px; }
+  #panel input[type=range]::-webkit-slider-thumb { width: 22px; height: 22px; }
+  #panel input[type=range]::-moz-range-thumb { width: 22px; height: 22px; }
+  #panel label { min-height: 40px; display: flex; align-items: center; }
+
+  /* the talk dock: its Talk tab in the bottom-right corner just above the drawer's handle, the dock opening up from
+     it across the width, compact; out of the way while the drawer is open */
+  body .gp-dock { left: max(8px, env(safe-area-inset-left)) !important; right: max(8px, env(safe-area-inset-right)) !important;
+    width: auto !important; bottom: calc(var(--drawer-h, 56px) + 10px + env(safe-area-inset-bottom)) !important; }
+  body .gp-dock-tab { min-height: 40px; padding: 6px 14px; }
+  body .gp-dock .gp-chips, body .gp-dock .gp-status, body .gp-dock .gp-hint { display: none; }
+  body .gp-dock-body { padding: 6px 8px; }
+  body .gp-dock-head { margin-bottom: 4px; }
+  body .gp-row input[type=text] { font-size: 16px; }            /* 16 px: iOS Safari does not zoom into the field */
+  body.drawer-open .gp-dock { display: none; }
+}
+
+/* a short screen (a phone on its side): the drawer floats over the bottom-left of the 3D, the dock takes the right */
+@media (max-width: 899px) and (max-height: 520px) {
+  #hud { grid-template-rows: auto minmax(0, 1fr); grid-template-areas: "topbar" "stage"; }
+  #panel { position: absolute; left: max(8px, env(safe-area-inset-left)); bottom: max(8px, env(safe-area-inset-bottom));
+    width: min(58%, 420px); max-height: calc(100% - 64px); margin: 0; z-index: 30; }
+  #hud.drawer-closed #panel { width: auto; min-width: 200px; }
+  body .gp-dock { left: auto !important; width: min(40%, 340px); bottom: max(8px, env(safe-area-inset-bottom)) !important; }
+  body.drawer-open .gp-dock { display: flex; }
+  /* one row again: narrower pickers, compact pills */
+  #topbar { flex-wrap: nowrap; min-height: 44px; padding-top: 4px; padding-bottom: 4px; }
+  #design-select, #run-select { flex: 1 1 26%; }
+  #topbar .hud-pill { flex: 0 0 auto; padding: 6px 8px; }
+}
