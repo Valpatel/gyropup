@@ -453,7 +453,7 @@ def t_power_up(tt, b, r):
     # inputs (none may exceed 3.3 V: the SAMD51 is not 5 V tolerant)
     hz = b.ask('pulse_hz', 'Scope, pendant held: the 555\'s frequency at ring 7 (Hz)', lambda: 986.0, stand_in=True)
     r8 = b.ask('r8_drop_v', 'Scope, pendant held: the peak drop across R8 on level 1 (V)', lambda: 4.4, stand_in=True)
-    vpin = b.ask('max_input_v', 'Scope: the highest level on D0, D9, D10, D11, D12, A0, A1, A4 (V)', lambda: 3.3, stand_in=True)
+    vpin = b.ask('max_input_v', 'Scope: the highest level on D0, D9, D10, D11, D12, A0, A1, A3 (V)', lambda: 3.3, stand_in=True)
     r.reading('heartbeat_after_s', r1(hb_s, 3))
     r.reading('pan_servo_rail_v', pan_v)
     r.reading('tilt_servo_rail_v', tilt_v)
@@ -465,7 +465,7 @@ def t_power_up(tt, b, r):
     r.check('12 V MAIN at the tilt servo', tilt_v, 11.5 <= tilt_v <= 12.5, '11.5-12.5 V')
     r.check('5 V', v5, 4.75 <= v5 <= 5.25, '4.75-5.25 V')
     r.check('3.3 V', v33, 3.2 <= v33 <= 3.4, '3.2-3.4 V')
-    r.check('the pulse train', hz, 930.0 <= hz <= 1045.0, '930-1,045 Hz (986 nominal; the firmware accepts 900-1,100)')
+    r.check('the pulse train', hz, 900.0 <= hz <= 1075.0, '900-1,075 Hz (986 nominal; the firmware accepts 870-1,176)')
     r.check('the opto LED\'s current (R8 2.2 k)', r8, 3.5 <= r8 <= 5.3, '3.5-5.3 V: 1.6-2.4 mA')
     r.check('no Feather input above 3.3 V', vpin, vpin <= 3.4, '<= 3.4 V')
     r.check('no fuse blown', fuses, fuses, 'all whole')
@@ -556,8 +556,10 @@ def t_trip(tt, b, r):
         rows.append({'pair_ms': ms, 'pair_fps': round(C.GATE_SPACING_M / (ms / 1000.0) / C.FPS, 1),
                      'latched': bool(tt.flags() & M.H_TRIP), 'arm_while_latched': bool(tt.flags() & M.H_ARM),
                      'firmware_interval_ms': round(C.GATE_SPACING_M / (fps * C.FPS) * 1000, 3) if fps else None})
-    # the latch holds until the button
+    # the latch holds until the button: a slower ball after the trip (its gate 2 outside the window) must not clear it
     b.do('One gate pair, 1.3 ms apart', lambda: b.hw.gate_pair(0.0013))
+    tt.wait(0.3)
+    b.do('Then one gate pair, 3.5 ms apart (a slower ball after the trip)', lambda: b.hw.gate_pair(0.0035))
     tt.wait(1.0)
     held = bool(tt.flags() & M.H_TRIP)
     arm_low = not tt.flags() & M.H_ARM
@@ -581,7 +583,8 @@ def t_trip(tt, b, r):
         if x['firmware_interval_ms'] is not None:
             r.check(f"firmware times the {x['pair_ms']} ms pair", x['firmware_interval_ms'],
                     abs(x['firmware_interval_ms'] - x['pair_ms']) <= 0.02, '+-0.02 ms')
-    r.check('the latch holds until the button', held and arm_low, held and arm_low, 'latched, ARM low after 1 s')
+    r.check('the latch holds until the button (a slower pair after the trip does not clear it)', held and arm_low, held and arm_low,
+            'latched, ARM low after 1 s')
     r.check('the button clears it and ARM returns', cleared, cleared, 'cleared')
     r.note('Judged on the 60 mm gates\' window (2.98 ms = 66 fps): latch at <= 2.9 ms, none at >= 3.1 ms, 3.0 ms is '
            'inside the R selection band. The plan\'s "latched at <= 2.4 ms, not at >= 2.6 ms" is the 50 mm gates\' '
@@ -621,11 +624,11 @@ def t_brake_timing(tt, b, r):
     for i, x in enumerate(rows):
         r.check(f'release {i + 1}: BRAKE rises after ARM falls', x['brake_on_after_arm_off_ms'],
                 5.0 <= x['brake_on_after_arm_off_ms'] <= 14.0, '5-14 ms')
-        r.check(f're-arm {i + 1}: BRAKE falls within 1 ms of ARM rising', x['brake_off_after_arm_on_ms'],
-                x['brake_off_after_arm_on_ms'] <= 1.0, '<= 1 ms (the ESCs drive nothing for 0.5 s after 12 V FLY returns)')
+        r.check(f're-arm {i + 1}: BRAKE falls within 2 ms of ARM rising', x['brake_off_after_arm_on_ms'],
+                x['brake_off_after_arm_on_ms'] <= 2.0, '<= 2 ms (0.6-1.4 ms drawn; the ESCs drive nothing for 0.5 s after 12 V FLY returns)')
     r.note('As drawn (docs/turret-wiring.md 3.3: ARM through 6.8 k into 1 uF and one 74HCT14 inverter on the cartridge '
            'board) BRAKE rises 6.8 ms x ln(3.3 / V_T-) = 5-14 ms (about 8) after ARM falls; D3 and 1 k fill the capacitor '
-           'when ARM rises, so BRAKE falls within ~0.2 ms, before the 2815 has the ESCs up.')
+           '(tau 0.9 ms) when ARM rises, so BRAKE falls 0.6-1.4 ms later, long before the ESCs can drive.')
 
 
 @test('3.5', 'Homing: 50 power-ups at random pans; 10 continuous turns each way and back', 'homing_bench')
@@ -1091,6 +1094,49 @@ def t_ring_temperature(tt, b, r):
     r.reading('ring_rise_k', rise)
     r.reading('carrier_rise_k', carrier)
     r.check('ring body rise', rise, rise <= 20.0, '<= 20 K')
+
+
+@test('3.10', "The gates' light: each collector clear and cut, one clean edge per gate (operator readings)", 'gates',
+      ct_unplugged=True)
+def t_gate_optics(tt, b, r):
+    boot(tt, b)
+    rows = []
+    for g in (1, 2):
+        clear = b.ask(f'clear_v_{g}', f'Gate {g}: Q{7 + g} collector with the beam clear (V)', lambda: 0.3, stand_in=True)
+        cut = b.ask(f'cut_v_{g}', f'Gate {g}: the collector with a 22 mm rod in the barrel (V)', lambda: 4.8, stand_in=True)
+        edges = b.ask(f'edges_{g}', f'Gate {g}: edges on the output for one ball pushed through by hand', lambda: 2,
+                      stand_in=True, kind=int)
+        rows.append({'gate': g, 'clear_v': clear, 'cut_v': cut, 'edges': edges})
+    r.reading('gates', rows)
+    for x in rows:
+        r.check(f"gate {x['gate']}: clear under 1 V", x['clear_v'], x['clear_v'] < 1.0, '< 1 V (else R41/R42 to 39 k)')
+        r.check(f"gate {x['gate']}: cut over 4 V", x['cut_v'], x['cut_v'] > 4.0, '> 4 V')
+        r.check(f"gate {x['gate']}: one clean pulse", x['edges'], x['edges'] == 2, 'one rise and one fall, no chatter')
+
+
+@test('4.10', "The brake FETs while driving, and no energy into the 12 V rails (operator readings)", 'rails', hopper=0)
+def t_rails(tt, b, r):
+    boot(tt, b)
+    arm(tt, b)
+    t0 = tt.now()
+    tt.cmd(M.CMD_BENCH_SPIN_SPEED, a=520, b=100)
+    tt.wait_for(lambda: tt.state() == 'READY', 3.0)
+    kick = b.ask('fet_gate_peak_v', "Scope: Q2's gate, peak while the wheels run at the set speed (V)", lambda: 0.12, stand_in=True)
+    tt.cmd(M.CMD_BENCH_SPIN_SPEED, a=350, b=100)
+    tt.wait(1.0)
+    tt.cmd(M.CMD_BENCH_SPIN_SPEED, a=520, b=100)
+    tt.wait(1.0)
+    fly = b.ask('fly_peak_v', 'Scope: 12 V FLY, highest through the step down, up and the stop (V)', lambda: 12.2, stand_in=True)
+    main = b.ask('main_peak_v', 'Scope: 12 V MAIN, highest through the same (V)', lambda: 12.1, stand_in=True)
+    bench_done(tt, t0, 10.0)
+    disarm(tt, b)
+    fets = b.ask('fet_temp_c_running', 'IR: the brake FETs after a minute at the set speed (C)', lambda: 27.0, stand_in=True)
+    r.reading('fet_gate_peak_v', kick)
+    r.reading('rail_peaks_v', {'fly': fly, 'main': main})
+    r.check("a brake FET's gate while the ESC drives", kick, kick < 0.5, '< 0.5 V peak')
+    r.check('12 V FLY through a step down and a stop', fly, fly < 13.0, '< 13 V')
+    r.check('12 V MAIN through the same', main, main < 13.0, '< 13 V')
+    r.check('the brake FETs stay cold while driving', fets, fets < 40.0, '< 40 C')
 
 
 # ===================================================================================== 5.5 feeding

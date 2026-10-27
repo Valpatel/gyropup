@@ -45,7 +45,7 @@
  "sim": {
   "seed": 1066,
   "simulated_s": 259.2,
-  "wall_s": 15.6,
+  "wall_s": 11.1,
   "stand_ins": [
    "esc_c",
    "motor_c",

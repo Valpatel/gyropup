@@ -1,7 +1,7 @@
 """A simulated turret for the firmware reference and `bench_host.py --sim`. Not firmware; kept simple and stated.
 
 Each model, and where its numbers come from:
-  safety line  the base 555 at 1 kHz (+-1 %) while the pendant is held; at the turret the 4N35 and the 74HC123
+  safety line  the base 555 at 1 kHz (+-1 %) while the pendant is held; at the turret the 4N35 and the CD74HC423E
                retriggerable monostable (18 ms +-10 %): ARM = pulses AND /TRIP, as drawn (docs/turret-wiring.md 3.1).
                Ring faults replace the train: open, short to GND (no edges), short to +24 V or a DC level (one edge,
                then none), 300 Hz, 3 kHz and 50 Hz hum (edges at that rate)
@@ -177,7 +177,8 @@ class SimTurret(HAL):
 
     def dshot(self, frames):
         for k, f in enumerate(frames):
-            self._esc_frame(k, f)
+            if f is not None:                                # None: no frame, the pin held low (ESCs unpowered)
+                self._esc_frame(k, f)
 
     def servo_txn(self, pkt: bytes):
         self.bus_txn += 1
@@ -301,10 +302,10 @@ class SimTurret(HAL):
                     e.update(on_t=t, armed=False, zero_since=None)
                 else:
                     e.update(on_t=None, armed=False, zero_since=None, edt=False)
-        # the brake's RC (docs/turret-wiring.md 3.3): high ~8 ms after ARM falls (5-14 ms over the parts), low ~0.2 ms
-        # after it rises (D3 and 1 k fill the capacitor)
+        # the brake's RC (docs/turret-wiring.md 3.3): high ~8 ms after ARM falls (5-14 ms over the parts), low ~1 ms
+        # after it rises (D3 and 1 k fill the capacitor: 0.6-1.4 ms)
         want = not arm
-        lag = 0.0080 if want else 0.0002
+        lag = 0.0080 if want else 0.0010
         if want != self.brake and t - self._arm_change >= lag:
             self.brake = want
             self.timeline.append((t, 'brake_on' if want else 'brake_off'))

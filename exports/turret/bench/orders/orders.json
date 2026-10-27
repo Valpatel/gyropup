@@ -16,8 +16,7 @@
   "Out of Darts",
   "Jameco",
   "IWISS",
-  "FYSETC",
-  "Master Electronics"
+  "FYSETC"
  ],
  "totals": {
   "Waveshare": 70.96,
@@ -26,8 +25,8 @@
   "Pololu": 196.14,
   "Adafruit": 34.95,
   "SparkFun": 56.95,
-  "Digi-Key": 157.08,
-  "Mouser": 49.34,
+  "Digi-Key": 156.09,
+  "Mouser": 88.02,
   "McMaster-Carr": 476.8,
   "VXB Bearings": 74.98,
   "SendCutSend": 0,
@@ -36,14 +35,12 @@
   "Out of Darts": 44.97,
   "Jameco": 33.09,
   "IWISS": 24.99,
-  "FYSETC": 8.0,
-  "Master Electronics": 6.95
+  "FYSETC": 8.0
  },
- "grand_total_usd": 1579.15,
- "lines": 118,
+ "grand_total_usd": 1609.89,
+ "lines": 125,
  "off_rule_sellers": [
   "Jameco",
-  "Master Electronics",
   "Out of Darts"
  ],
  "no_backup": []

@@ -33,7 +33,7 @@
  "sim": {
   "seed": 1061,
   "simulated_s": 12.0,
-  "wall_s": 0.8,
+  "wall_s": 0.5,
   "stand_ins": [
    "boresight_group",
    "dot_to_group_cm"

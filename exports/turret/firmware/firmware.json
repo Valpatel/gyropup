@@ -76,6 +76,12 @@
   "one_bad_frame_no_trip": {
    "pass_": true
   },
+  "set_point_changes_ramp": {
+   "max_throttle_step_per_ms": 0.00281,
+   "limit_per_ms": 0.00433,
+   "no_frames_while_off": true,
+   "pass_": true
+  },
   "ball_over_66fps_latches_safe": {
    "firmware": true,
    "hardware_trip": true,
@@ -89,7 +95,7 @@
   },
   "feed_servo_drop_off_and_reinit": {
    "offline_on_release": true,
-   "back_ms_after_arm": 320,
+   "back_ms_after_arm": 319,
    "registers_rewritten": true,
    "balls_after": 3,
    "pass_": true

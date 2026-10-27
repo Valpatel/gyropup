@@ -81,6 +81,8 @@ class Flywheels:
         self.edt_left = 0
         self.rpm_set = 0.0
         self.throttle_set = 0.0
+        self.rpm_from = 0.0                             # a change of set point ramps from here over RAMP_S: never a step,
+        self.thr_from = 0.0                             # up (the ring's current) or down (no braking into the 12 V rail)
         self.t0 = 0.0
         self.ready_since: Optional[float] = None
         self.hist: deque = deque()
@@ -98,23 +100,34 @@ class Flywheels:
     def esc_armed(self) -> bool:
         return self.mode in ('idle', 'speed', 'throttle')
 
+    def _rpm_now(self, t: float) -> float:
+        return self.rpm_from + (self.rpm_set - self.rpm_from) * min(1.0, (t - self.t0) / C.RAMP_S)
+
+    def _thr_now(self, t: float) -> float:
+        return self.thr_from + (self.throttle_set - self.thr_from) * min(1.0, (t - self.t0) / C.RAMP_S)
+
     def spin_speed(self, t: float, rpm: float):
         if not self.esc_armed():
             return False
         if self.mode != 'speed':
-            self.t0 = t
+            self.t0, self.rpm_from = t, 0.0
             for w in self.w:
                 w.integral, w.trim = 0.0, 0.0
             self.ready_since = None
+        elif rpm != self.rpm_set:                       # a new set speed while spinning: ramp to it (the trim carries on)
+            self.rpm_from, self.t0, self.ready_since = self._rpm_now(t), t, None
         self.mode, self.rpm_set = 'speed', rpm
         return True
 
     def spin_throttle(self, t: float, throttle: float):
         if not self.esc_armed():
             return False
+        throttle = max(0.0, min(1.0, throttle))
         if self.mode != 'throttle':
-            self.t0, self.ready_since = t, None
-        self.mode, self.throttle_set = 'throttle', max(0.0, min(1.0, throttle))
+            self.t0, self.ready_since, self.thr_from = t, None, 0.0
+        elif throttle != self.throttle_set:
+            self.thr_from, self.t0, self.ready_since = self._thr_now(t), t, None
+        self.mode, self.throttle_set = 'throttle', throttle
         return True
 
     def stop(self, t: float):
@@ -157,11 +170,14 @@ class Flywheels:
             any(w.erpm is None or t - w.t > C.TELEMETRY_LOST_S for w in self.w)
 
     # ------------------------------------------------------------------ the loop
-    def update(self, t: float) -> Tuple[int, int]:
-        """The two 16-bit DShot frames for this tick."""
+    def update(self, t: float) -> Tuple[Optional[int], Optional[int]]:
+        """The two 16-bit DShot frames for this tick; None while the ESCs are unpowered (ARM low): no frame, the pins held
+        low, so nothing is fed into an unpowered ESC (docs/turret-wiring.md 3.6)."""
         if self.mode == 'arming' and t - self.esc_on_t >= C.ESC_ARM_S:
             self.mode = 'idle'
-        if self.mode in ('off', 'arming'):
+        if self.mode == 'off':
+            return None, None
+        if self.mode == 'arming':
             return dshot.frame(0), dshot.frame(0)
         if self.mode == 'idle':
             if self.edt_left > 0:                       # extended telemetry on (temperatures), once per power-up
@@ -173,10 +189,10 @@ class Flywheels:
         out = []
         for w in self.w:
             if self.mode == 'throttle':
-                thr = min(self.throttle_set, el / C.RAMP_S)
+                thr = self._thr_now(t)
             else:
                 frac = min(1.0, el / C.RAMP_S)
-                thr = self.cfg.throttle_for(self.rpm_set * frac)
+                thr = self.cfg.throttle_for(self._rpm_now(t))
                 if frac >= 1.0 and w.erpm is not None and self.rpm_set > 0:
                     e = (self.rpm_set - w.rpm) / self.rpm_set
                     w.integral = max(-C.TRIM_MAX, min(C.TRIM_MAX, w.integral + C.TRIM_KI * e * 0.001))

@@ -21,7 +21,7 @@
  "sim": {
   "seed": 1049,
   "simulated_s": 122.8,
-  "wall_s": 4.1,
+  "wall_s": 3.2,
   "stand_ins": [
    "carrier_rise_k",
    "rise_k"

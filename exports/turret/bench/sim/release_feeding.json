@@ -8,7 +8,7 @@
  "checks": [
   {
    "check": "no ball above 20 fps after a release",
-   "value": 8.9,
+   "value": 11.7,
    "limit": "<= 20 fps",
    "pass": true
   }
@@ -150,10 +150,10 @@
     "release_s_into_burst": 2.37,
     "balls_after_release": 1,
     "fps_after_release": [
-     8.9
+     11.7
     ],
     "nip_ms_after_release": [
-     17
+     15
     ],
     "resting_at_the_nip": 0
    },
@@ -175,8 +175,8 @@
     ]
    }
   ],
-  "fastest_after_release_fps": 8.9,
-  "fastest_reaching_the_nip_15ms_after_release_fps": 8.9
+  "fastest_after_release_fps": 11.7,
+  "fastest_reaching_the_nip_15ms_after_release_fps": null
  },
  "notes": [
   "A ball already at the nip, or reaching it within ~10 ms of the release, leaves fast whatever the brake does (the physics' own table: 36 fps at 0-10 ms). The firmware cuts the throttle on the PULSE_MON gap (4 ms) and AM32 brakes on stop before the rail drops at ~20 ms, which narrows that window but cannot close it."
@@ -184,7 +184,7 @@
  "sim": {
   "seed": 1067,
   "simulated_s": 120.3,
-  "wall_s": 5.6,
+  "wall_s": 4.3,
   "stand_ins": [],
   "shortened": {},
   "warning": "simulated turret (firmware/turret/sim_turret.py): not a bench reading"

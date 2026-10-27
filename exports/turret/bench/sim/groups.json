@@ -71,7 +71,7 @@
  "sim": {
   "seed": 1062,
   "simulated_s": 26.4,
-  "wall_s": 1.9,
+  "wall_s": 1.6,
   "stand_ins": [
    "2m_group",
    "4m_group"

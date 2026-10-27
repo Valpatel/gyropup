@@ -115,7 +115,7 @@
  "sim": {
   "seed": 1037,
   "simulated_s": 219.9,
-  "wall_s": 7.7,
+  "wall_s": 5.1,
   "stand_ins": [
    "dropout_us_15",
    "dropout_us_2",

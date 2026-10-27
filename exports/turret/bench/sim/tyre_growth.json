@@ -27,7 +27,7 @@
  "sim": {
   "seed": 1048,
   "simulated_s": 23.7,
-  "wall_s": 1.2,
+  "wall_s": 1.0,
   "stand_ins": [
    "creep",
    "growth_mm"

@@ -20,7 +20,7 @@
    "file": "trip.json",
    "pass": true,
    "failed": [],
-   "simulated_s": 7.4
+   "simulated_s": 7.7
   },
   {
    "test": "3.4",
@@ -83,7 +83,7 @@
    "file": "speed_map.json",
    "pass": true,
    "failed": [],
-   "simulated_s": 36.4
+   "simulated_s": 36.7
   },
   {
    "test": "4.4",
@@ -126,6 +126,20 @@
    "pass": true,
    "failed": [],
    "simulated_s": 122.8
+  },
+  {
+   "test": "3.10",
+   "file": "gates.json",
+   "pass": true,
+   "failed": [],
+   "simulated_s": 2.6
+  },
+  {
+   "test": "4.10",
+   "file": "rails.json",
+   "pass": true,
+   "failed": [],
+   "simulated_s": 16.1
   },
   {
    "test": "5.1",

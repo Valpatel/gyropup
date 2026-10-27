@@ -480,10 +480,10 @@
    ],
    "fits": true,
    "placement": "straight",
-   "grams_each": 378,
-   "grams": 378,
+   "grams_each": 377,
+   "grams": 377,
    "hours": 8.4,
-   "cost_usd": 5.28,
+   "cost_usd": 5.27,
    "infill": "2 mm walls, 40 % gyroid",
    "how": "printed PETG upside down; 4 x M5 + 4 x M3 inserts",
    "sliced": true,
@@ -540,14 +540,14 @@
    "parts": 2
   },
   "petg": {
-   "grams": 646,
+   "grams": 645,
    "hours": 17.6,
-   "cost_usd": 9.01,
+   "cost_usd": 9.0,
    "parts": 8
   }
  },
  "too_big": [],
  "total_hours": 50.0,
- "total_grams": 1292,
+ "total_grams": 1291,
  "note": "the bench turret (cad/turret.py, v0: no bumper, no fill flap) and its stand; grams and hours are Bambu Studio's where the part is sliced (sliced: true, cad/turret_print.py), rough otherwise"
 }

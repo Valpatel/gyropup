@@ -8,7 +8,8 @@ Protocols    STS3215 packets and sign-magnitude fields; DShot frames (bidirectio
 Numbers      52 fps on Ø34 = 8,855 rpm = 61,985 eRPM; the limit 81,312 eRPM; Ø36 refused
 Safety       the tilt never above level at any command, through homing, the stray-ball depression and the lift rule;
              no spin and no dial step without ARM, the 1 kHz train, a fresh heartbeat and the host's re-arm; zero
-             throttle in the same millisecond a condition is lost; the 300 ms ramp never steps; SAFE within 100 ms of
+             throttle in the same millisecond a condition is lost; the 300 ms ramp never steps, nor does a new set
+             speed while spinning; no DShot frame while the ESCs are unpowered; SAFE within 100 ms of
              the first eRPM read over the limit on a 24 V rail, latched until cleared with the line released; one
              corrupt telemetry frame is not a fault; a ball over 66 fps latches SAFE; pan and tilt live and under
              100 deg/s while disarmed; the feed servo leaves the bus on a release and is re-initialised on the next arm
@@ -45,7 +46,7 @@ class Host:
         orig = self.hw.dshot
 
         def spy(frames):
-            self.dshot_log.append((self.hw.t, [dshot.value_throttle((dshot.unframe(f) or (0, 0))[0]) for f in frames]))
+            self.dshot_log.append((self.hw.t, [dshot.value_throttle((dshot.unframe(f) or (0, 0))[0]) if f is not None else 0.0 for f in frames]))
             orig(frames)
         self.hw.dshot = spy
 
@@ -268,6 +269,34 @@ def t_ramp_and_guard(out):
     check(out, 'one_bad_frame_no_trip', not any(tripped) and not gd.tripped)
 
 
+def t_set_point_ramps(out):
+    # a new set speed (or throttle) while spinning ramps over RAMP_S: never a step up (the ring's current) or down (with
+    # the ESC's complementary PWM a step down brakes into the 12 V rail; docs/turret-wiring.md 3.6); no frame while off
+    import flywheel
+    fl = flywheel.Flywheels(C.Config())
+    off_frames = fl.update(0.0)
+    fl.esc_power(0.0, True)
+    t, outs = 0.0, []
+    while t < C.ESC_ARM_S + 0.01:
+        fl.update(t)
+        t += 0.001
+    fl.spin_speed(t, 8855.0)
+    for target_t, rpm in ((t + 0.8, 6000.0), (t + 1.6, 8855.0)):
+        while t < target_t:
+            fl.update(t)
+            outs.append(fl.w[0].out)
+            t += 0.001
+        fl.spin_speed(t, rpm)
+    while t < target_t + 0.8:
+        fl.update(t)
+        outs.append(fl.w[0].out)
+        t += 0.001
+    steps = [abs(b - a) for a, b in zip(outs, outs[1:])]
+    lim = 1.0 / (C.RAMP_S * 1000) + C.TRIM_SLEW + 0.0005
+    check(out, 'set_point_changes_ramp', max(steps) <= lim and off_frames == (None, None),
+          max_throttle_step_per_ms=round(max(steps), 5), limit_per_ms=round(lim, 5), no_frames_while_off=off_frames == (None, None))
+
+
 def t_overspeed(out):
     rig = SimRig(seed=51, hopper=10)
     h = Host(rig)
@@ -337,8 +366,8 @@ def main():
     ap.add_argument('--out', default=str(R / 'exports' / 'turret' / 'firmware'))
     a = ap.parse_args()
     out = {}
-    for fn in (t_protocols, t_numbers, t_tilt, t_arm_conditions, t_ramp_and_guard, t_overspeed, t_aim_disarmed,
-               t_feed_release):
+    for fn in (t_protocols, t_numbers, t_tilt, t_arm_conditions, t_ramp_and_guard, t_set_point_ramps, t_overspeed,
+               t_aim_disarmed, t_feed_release):
         fn(out)
     ok = all(v['pass_'] for v in out.values())
     res = {'pass': ok, 'cases': out, 'scope': __doc__.split('\n\n')[1].strip()}

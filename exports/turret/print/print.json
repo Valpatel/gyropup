@@ -29,9 +29,9 @@
     100.0
    ],
    "ok": true,
-   "grams": 377.64,
-   "minutes": 502.9,
-   "filament_m": 122.66,
+   "grams": 377.49,
+   "minutes": 503.4,
+   "filament_m": 122.61,
    "error": null,
    "exit_code": 0,
    "log_tail": null
@@ -534,7 +534,7 @@
    "hours": 31.8
   },
   "petg": {
-   "grams": 604.2,
+   "grams": 604.1,
    "hours": 16.0
   },
   "petg-clear": {
@@ -546,7 +546,7 @@
    "hours": 0.6
   }
  },
- "total_grams": 1291.1,
+ "total_grams": 1291.0,
  "total_hours": 50.1,
  "not_printed_v0": {
   "bumper_ring": "v1 (the robot): no bumper on the bench",

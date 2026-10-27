@@ -127,7 +127,7 @@
    "pass": true
   },
   {
-   "check": "the latch holds until the button",
+   "check": "the latch holds until the button (a slower pair after the trip does not clear it)",
    "value": true,
    "limit": "latched, ARM low after 1 s",
    "pass": true
@@ -209,7 +209,7 @@
  ],
  "sim": {
   "seed": 1033,
-  "simulated_s": 7.4,
+  "simulated_s": 7.7,
   "wall_s": 0.2,
   "stand_ins": [],
   "shortened": {},

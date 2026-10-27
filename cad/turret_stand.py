@@ -6,7 +6,7 @@ is that face (z = 0); the stand is a printed PETG box under it:
   stand_box (PETG, printed upside down)  the top plate with the turret's TM pattern (4 x M5 inserts on 80 x 80,
                                           2 x Ø5 dowel holes, the Ø45 cable hole), four walls, corner bosses with M3
                                           inserts for the bottom; the front panel has the 24 V XT60E-M inlet, a rocker
-                                          switch, a 5 x 20 mm fuse holder and a 3.5 mm jack for the hold-to-run pendant;
+                                          switch, a 5 x 20 mm fuse holder and a keyed mini-XLR socket for the hold-to-run pendant;
                                           the back has a slot for the USB-CAN adapter's USB-C; the -y wall a notch with
                                           a grommet for the turret's DT12 harness, which leaves the turret's plug and
                                           turns down outside the stand
@@ -56,7 +56,9 @@ PANEL = [('xt60', -50.0, -40.0, ('rect', 16.6, 8.6), WALL),         # Amass XT60
                                                                      # RA1-1A-DC-2-B-1 the same with a 2.2 mm key notch, 2-3 mm
          ('fuse', 28.0, -40.0, ('d', 12.75, 12.13), WALL),          # Littelfuse 345 panel holder: Ø12.70-12.83, a flat at
                                                                      # 12.07-12.19
-         ('pendant', 60.0, -40.0, ('round', 6.35), 2.0)]            # Switchcraft 35PM2A 3.5 mm jack: Ø6.35 in a 2 mm panel
+         ('pendant', 60.0, -40.0, ('d', 11.3, 10.3), 2.0)]          # Switchcraft TB3M mini-XLR panel socket: its 7/16-32 bushing
+                                                                     # (Ø11.10, a flat 10.2 across) in a D hole, nut and washer;
+                                                                     # keyed, so no audio plug (headphones) can close the loop
 
 
 def stand_box():
@@ -132,10 +134,10 @@ def bought():
     out['terminal_board'] = (_box(-62.0, 8.0, -25.0, 25.0, -H + 12.0, -H + 13.6), 30.0,
                              '70 x 50 board: 24 V terminal block, fuse/switch wiring to the DT12 plug, the pendant loop')
     for name, y, z, cut, _t in PANEL:
-        d = {'xt60': (18.0, 30.0, 11.0), 'switch': (25.0, 24.0, 24.0), 'fuse': (35.0, 16.0, 16.0), 'pendant': (14.0, 9.0, 9.0)}[name]
+        d = {'xt60': (18.0, 30.0, 11.0), 'switch': (25.0, 24.0, 24.0), 'fuse': (35.0, 16.0, 16.0), 'pendant': (24.0, 12.5, 12.5)}[name]
         out[f'panel_{name}'] = (_box(x1 - WALL - d[0], x1 + 3.0, y - d[1] / 2, y + d[1] / 2, z - d[2] / 2, z + d[2] / 2), 10.0,
                                 {'xt60': 'Amass XT60E-M panel plug (24 V in)', 'switch': 'DC rocker switch, Ø20.2 snap-in, 10 A 28 VDC (Bulgin R13244AAAA)',
-                                 'fuse': '5 x 20 mm panel fuse holder + a DC-rated 5 A time-lag fuse', 'pendant': '3.5 mm panel jack (pendant)'}[name])
+                                 'fuse': '5 x 20 mm panel fuse holder + a DC-rated 5 A time-lag fuse', 'pendant': 'TB3M mini-XLR panel socket (pendant; keyed, no audio plug fits)'}[name])
     for k, (x, y) in enumerate(((-W / 2 + 22, -D / 2 + 22), (W / 2 - 22, -D / 2 + 22), (-W / 2 + 22, D / 2 - 22), (W / 2 - 22, D / 2 - 22))):
         out[f'foot_{k + 1}'] = (_cyl_z(5.6, -H - BOT - 4.1, -H - BOT + 1.0, x, y), 2.0, 'rubber bumper foot, 3M SJ5003 Ø11.2 x 5.1')
     return out

@@ -78,7 +78,7 @@ TURRET_BOUGHT = {
     'el_mcu': ('adafruit-feather-m4-can-4759', 1), 'el_flywheel_regulator': ('pololu-d24v150f12-2885', 1),
     'el_12v_regulators': ('pololu-d36v50f12-4095', 1), 'el_5v_regulator': ('pololu-d36v28f5-3782', 1),
     'el_safety_switch': ('pololu-2815', 1), 'el_capacitors': ('panasonic-eeu-fr1v102', 2),
-    'el_555': ('ti-ne555p', 1), 'el_opto': ('vishay-4n35', 1), 'el_monostables': ('ti-cd74hc123e', 1),
+    'el_555': ('ti-ne555p', 1), 'el_opto': ('vishay-4n35', 1), 'el_monostables': ('ti-cd74hc423e', 1), 'el_supervisor': ('microchip-mcp120', 1),
     'el_trip_latch': ('ti-sn74hc74n', 1), 'el_and': ('ti-sn74hc08n', 1), 'el_brake_driver': ('ti-sn74hct14n', 1), 'el_bus_buffer': ('ti-sn74ahct125n', 1),
     'el_gate_comparator': ('ti-lm393p', 1), 'el_brake_fets': ('infineon-irlz44npbf', 6), 'el_gate_emitters': ('vishay-tsal4400', 2),
     'el_gate_receivers': ('vishay-teft4300', 2),
@@ -102,7 +102,8 @@ def _passive_line(key: str) -> str:
         return 'el_r_' + key.rsplit('-', 1)[1]
     return {'yageo-rsf100jb-73-2k2': 'el_r_2k2_1w', 'cap-film-100n-5pct': 'el_c_100n_film', 'cap-mlcc-100n-50v': 'el_c_100n',
             'cap-mlcc-1u-50v': 'el_c_1u', 'panasonic-ecq-e1105kf': 'el_c_1u_film', 'onsemi-1n4148': 'el_d_1n4148',
-            'omron-b3f-1000': 'el_sw_reset'}.get(key, 'el_' + key)
+            'omron-b3f-1000': 'el_sw_reset', 'vishay-bat85': 'el_d_bat85', 'schottky-1n5817': 'el_d_1n5817',
+            'schottky-1n5822': 'el_d_1n5822', 'tvs-p6ke15a': 'el_d_tvs15', 'bourns-mf-r010': 'el_polyfuse_loop'}.get(key, 'el_' + key)
 
 
 # the boards' resistors, capacitors, diodes and the reset button, counted from cad/turret_boards.py COMPONENTS (the
@@ -120,7 +121,8 @@ V1_ONLY = {
 V1_PRINTED = ('bumper_ring', 'hopper_flap')
 # the bench stand (cad/turret_stand.py), its supply, the reference chronograph and the ammunition: [(key, qty)]
 BENCH_BOUGHT = [('amass-xt60e-m', 1), ('turret_screw_m2_5x8', 2), ('turret_nut_m2_5', 2), ('bulgin-r13244aaaa', 1),
-                ('fuse-holder-5x20-panel', 1), ('littelfuse-0477005-mxp', 2), ('jack-3.5mm-panel', 1), ('pendant-hold-to-run', 1),
+                ('fuse-holder-5x20-panel', 1), ('littelfuse-0477005-mxp', 2), ('switchcraft-tb3m', 1), ('switchcraft-ta3flx', 1),
+                ('pendant-hold-to-run', 1),
                 ('usb-can-canable2', 1), ('proto-board-70x50', 1), ('bumper-feet-12.7', 4), ('insert_m5', 4), ('insert_m3', 8),
                 ('turret_screw_m3x8', 4), ('meanwell-lrs-350-24', 1), ('caldwell-ballistic-precision-chronograph-bt', 1),
                 ('worker-cheetah-rival-rounds-100', 3)]

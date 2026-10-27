@@ -285,6 +285,34 @@
     ],
     "tall_mm": 1.0,
     "note": "+24 V and GND from the bank (level 1)"
+   },
+   {
+    "label": "D9 TVS (12 V MAIN)",
+    "footprint": "group",
+    "at_mm": [
+     6.5,
+     42.0
+    ],
+    "size_mm": [
+     12.7,
+     4.0
+    ],
+    "tall_mm": 4.0,
+    "note": "P6KE15A across 12 V MAIN: Pololu's TVS at the 2815's input"
+   },
+   {
+    "label": "D10 1N5822 (12 V FLY)",
+    "footprint": "group",
+    "at_mm": [
+     30.5,
+     42.0
+    ],
+    "size_mm": [
+     15.2,
+     5.5
+    ],
+    "tall_mm": 5.5,
+    "note": "across 12 V FLY: Pololu's Schottky at the 2815's output"
    }
   ],
   "components": [
@@ -311,6 +339,18 @@
     "value": "100 k",
     "key": "yageo-mfr-25fbf52-100k",
     "does": "Q1's gate to GND"
+   },
+   {
+    "ref": "D9",
+    "value": "P6KE15A",
+    "key": "tvs-p6ke15a",
+    "does": "across 12 V MAIN and GND (cathode to 12 V): the 2815's input"
+   },
+   {
+    "ref": "D10",
+    "value": "1N5822",
+    "key": "schottky-1n5822",
+    "does": "across 12 V FLY and GND (cathode to 12 V FLY): the 2815's output when it opens on a running load"
    }
   ],
   "problems": []
@@ -399,7 +439,7 @@
     "note": ""
    },
    {
-    "label": "CD74HC123E (U7, both one-shots)",
+    "label": "CD74HC423E (U7, both one-shots)",
     "footprint": "DIP-16",
     "at_mm": [
      31.2,
@@ -410,7 +450,7 @@
      20.3
     ],
     "tall_mm": 4.5,
-    "note": "on 3.3 V. A: the 18 ms retriggerable pulse detector (R10 39 k, C6 1 uF); B: the 2.98 ms trip window (R11 66.5 k as selected at bench test 3.3, C7 100 nF film)"
+    "note": "on 3.3 V. A: the 18.5 ms retriggerable pulse detector (R10 39 k, C6 1 uF); B: the 3.0 ms trip window (R11 63.4 k to start, selected at bench test 3.3, C7 100 nF film)"
    },
    {
     "label": "4N35 opto (U6)",
@@ -469,7 +509,7 @@
     "note": "one-shot B's timing (R11 chosen from 60.4-73.2 k at bench test 3.3) and U7's decoupling"
    },
    {
-    "label": "R9 R20 R21 C13",
+    "label": "R9 R20 R21 R50 C13",
     "footprint": "group",
     "at_mm": [
      32.4,
@@ -479,8 +519,8 @@
      13.2,
      5.7
     ],
-    "tall_mm": 6.0,
-    "note": "PULSE's pull-up; BUS_V, the +24 V through 91 k / 10 k to the Feather's A0"
+    "tall_mm": 11.0,
+    "note": "standing: PULSE's 39 k pull-up and its 100 k to the Feather; BUS_V, the +24 V through 91 k / 10 k to the Feather's A0"
    }
   ],
   "components": [
@@ -488,7 +528,7 @@
     "ref": "U4",
     "value": "Pololu 2815",
     "key": "pololu-2815",
-    "does": "12 V MAIN in, 12 V FLY out, ON = ARM; the slide switch OFF"
+    "does": "12 V MAIN in, 12 V FLY out, ON = ARM; the slide switch OFF (glue it there)"
    },
    {
     "ref": "U5",
@@ -534,21 +574,27 @@
    },
    {
     "ref": "R9",
-    "value": "10 k",
-    "key": "yageo-mfr-25fbf52-10k",
-    "does": "PULSE to 3.3 V"
+    "value": "39 k",
+    "key": "yageo-mfr-25fbf52-39k",
+    "does": "PULSE to 3.3 V (0.085 mA: the 4N35 at 2 mA sinks over 0.36 mA even hot)"
+   },
+   {
+    "ref": "R50",
+    "value": "100 k",
+    "key": "yageo-mfr-25fbf52-100k",
+    "does": "PULSE to the Feather's A3 (PULSE_MON): the Feather can read PULSE but not drive it"
    },
    {
     "ref": "U7",
-    "value": "CD74HC123E",
-    "key": "ti-cd74hc123e",
-    "does": "on 3.3 V. 1A (1) = PULSE, 1B (2) = 3.3 V, 1/CLR (3) = /CLR_PU, 1Q (13) = Q_A; 2A (9) = GND, 2B (10) = GATE_1, 2/CLR (11) = 3.3 V, 2Q (5) = Q_B"
+    "value": "CD74HC423E",
+    "key": "ti-cd74hc423e",
+    "does": "on 3.3 V. 1A (1) = PULSE, 1B (2) = 3.3 V, 1/R (3) = /CLR_PU, 1Q (13) = Q_A; 2A (9) = GND, 2B (10) = GATE_1, 2/R (11) = 3.3 V, 2Q (5) = Q_B. The 423 (not the 123): a rising /R never triggers it"
    },
    {
     "ref": "R10",
     "value": "39 k 1 %",
     "key": "yageo-mfr-25fbf52-39k",
-    "does": "3.3 V to pin 15: one-shot A, 0.45 x 39 k x 1 uF = 18 ms (16-22 ms with the HC123's K at 3.3 V and the capacitor's 10 %)"
+    "does": "3.3 V to pin 15: one-shot A, K x 39 k x 1 uF = 18.5 ms (16-21 ms; K = 0.475 at 3.3 V)"
    },
    {
     "ref": "C6",
@@ -558,9 +604,9 @@
    },
    {
     "ref": "R11",
-    "value": "66.5 k 1 % (from 60.4-73.2 k)",
-    "key": "yageo-mfr-25fbf52-66k5",
-    "does": "3.3 V to pin 7: one-shot B, 0.45 x 66.5 k x 100 nF = 2.99 ms (bench test 3.3 picks it)"
+    "value": "63.4 k 1 % (from 60.4-73.2 k)",
+    "key": "yageo-mfr-25fbf52-63k4",
+    "does": "3.3 V to pin 7: one-shot B, 0.475 x 63.4 k x 100 nF = 3.01 ms (bench test 3.3 picks it)"
    },
    {
     "ref": "R11a",
@@ -570,8 +616,8 @@
    },
    {
     "ref": "R11b",
-    "value": "63.4 k 1 %",
-    "key": "yageo-mfr-25fbf52-63k4",
+    "value": "66.5 k 1 %",
+    "key": "yageo-mfr-25fbf52-66k5",
     "does": "one-shot B's choice"
    },
    {
@@ -703,7 +749,7 @@
     "note": "on 5 V: the Feather's TX onto the half-duplex servo bus (direction on D4), R14 4.7 k pull-up"
    },
    {
-    "label": "R12-R15 C10",
+    "label": "R12 R13 R14 U14 D6",
     "footprint": "group",
     "at_mm": [
      7.0,
@@ -714,7 +760,7 @@
      10.2
     ],
     "tall_mm": 6.0,
-    "note": "the trip's power-up RC (R12, C10), DIR pull-up R13, the bus pull-up R14, the RX divider R15/R16"
+    "note": "the power-up reset (U14) and its pull-up R12, DIR's pull-up R13, the bus pull-up R14, the RX diode D6"
    },
    {
     "label": "R16-R18",
@@ -728,10 +774,10 @@
      2.5
     ],
     "tall_mm": 2.5,
-    "note": "resistors lying: the RX divider's 10 k, the gates' pull-ups to 3.3 V"
+    "note": "resistors lying: RX's pull-up, the gates' 1 k pull-ups to 3.3 V"
    },
    {
-    "label": "R19 R22 R23 R49",
+    "label": "R19 R49 R53",
     "footprint": "group",
     "at_mm": [
      7.0,
@@ -742,7 +788,7 @@
      2.6
     ],
     "tall_mm": 2.5,
-    "note": "the hall's pull-up; the camera pair's 100 k to GND; LASER_EN's pull-down"
+    "note": "the hall's pull-up; LASER_EN's pull-down; ARM's 100 k to the Feather"
    },
    {
     "label": "C9 C11",
@@ -792,13 +838,25 @@
     "ref": "U8",
     "value": "Feather M4 CAN",
     "key": "adafruit-feather-m4-can-4759",
-    "does": "USB pin from 5 V; 3V pin = the logic's 3.3 V (U7, U9, U10 and the pull-ups); CAN to ring 5/6"
+    "does": "USB pin from 5 V through D7; 3V pin = the logic's 3.3 V (U7, U9, U10, U14 and the pull-ups); CAN to ring 5/6 (its own 120 R)"
    },
    {
     "ref": "U9",
     "value": "SN74HC74N",
     "key": "ti-sn74hc74n",
-    "does": "on 3.3 V. 1D (2) = Q_B, 1CLK (3) = GATE_2, 1/PRE (4) = 3.3 V, 1/CLR (1) = /CLR_PU, 1Q (5) = TRIP to A1, 1/Q (6) = /TRIP; the second flip-flop's D and CLK to GND, /PRE and /CLR to 3.3 V"
+    "does": "on 3.3 V, a set-only latch. 1D (2) = 3.3 V, 1CLK (3) = TRIP_CLK, 1/PRE (4) = 3.3 V, 1/CLR (1) = /CLR_PU, 1Q (5) = TRIP to A1 (TRIP_IN, polled), 1/Q (6) = /TRIP; the second flip-flop's D and CLK to GND, /PRE and /CLR to 3.3 V"
+   },
+   {
+    "ref": "U10",
+    "value": "SN74HC08N",
+    "key": "ti-sn74hc08n",
+    "does": "on 3.3 V. 1A = Q_A, 1B = /TRIP, 1Y = ARM (to U4 ON, CT signal 5, and D12 through R53); 2A = GATE_2, 2B = Q_B, 2Y = TRIP_CLK (gate 2 while the window is open clocks the latch); 3 and 4: inputs to GND"
+   },
+   {
+    "ref": "U14",
+    "value": "MCP120 (3.0 V)",
+    "key": "microchip-mcp120",
+    "does": "the power-up reset: VDD 3.3 V, its open-drain output = /CLR_PU, held low until 3.3 V is up"
    },
    {
     "ref": "R12",
@@ -807,22 +865,16 @@
     "does": "/CLR_PU to 3.3 V (also U7 pin 3)"
    },
    {
-    "ref": "C10",
-    "value": "1 uF X7R",
-    "key": "cap-mlcc-1u-50v",
-    "does": "/CLR_PU to GND: a power-up clears TRIP and holds one-shot A for 10 ms"
-   },
-   {
     "ref": "SW1",
     "value": "B3F-1000",
     "key": "omron-b3f-1000",
     "does": "/CLR_PU to GND: the recessed RESET"
    },
    {
-    "ref": "U10",
-    "value": "SN74HC08N",
-    "key": "ti-sn74hc08n",
-    "does": "on 3.3 V. 1A = Q_A, 1B = /TRIP, 1Y = ARM to U4 ON, D12 (ARM_IN) and CT signal 5; the other inputs to GND"
+    "ref": "R53",
+    "value": "100 k",
+    "key": "yageo-mfr-25fbf52-100k",
+    "does": "ARM to the Feather's D12 (ARM_IN): the Feather can read ARM but not drive it"
    },
    {
     "ref": "U11",
@@ -849,27 +901,27 @@
     "does": "SERVO_BUS to 5 V"
    },
    {
-    "ref": "R15",
-    "value": "6.8 k",
-    "key": "yageo-mfr-25fbf52-6k8",
-    "does": "SERVO_BUS to RX (D0)"
+    "ref": "D6",
+    "value": "BAT85",
+    "key": "vishay-bat85",
+    "does": "RX (D0, anode) to SERVO_BUS (cathode): the bus pulls RX low; a high bus (3.3 or 5 V) leaves R16's 3.3 V"
    },
    {
     "ref": "R16",
     "value": "10 k",
     "key": "yageo-mfr-25fbf52-10k",
-    "does": "RX (D0) to GND: the 5 V bus reads 3.0 V at the Feather"
+    "does": "RX (D0) to 3.3 V"
    },
    {
     "ref": "R17",
-    "value": "10 k",
-    "key": "yageo-mfr-25fbf52-10k",
-    "does": "GATE_1 to 3.3 V"
+    "value": "1 k",
+    "key": "yageo-mfr-25fbf52-1k",
+    "does": "GATE_1 to 3.3 V (fast edges into the latch's clock and the one-shot)"
    },
    {
     "ref": "R18",
-    "value": "10 k",
-    "key": "yageo-mfr-25fbf52-10k",
+    "value": "1 k",
+    "key": "yageo-mfr-25fbf52-1k",
     "does": "GATE_2 to 3.3 V"
    },
    {
@@ -877,18 +929,6 @@
     "value": "10 k",
     "key": "yageo-mfr-25fbf52-10k",
     "does": "PAN_INDEX to 3.3 V"
-   },
-   {
-    "ref": "R22",
-    "value": "100 k",
-    "key": "yageo-mfr-25fbf52-100k",
-    "does": "CAM+ (ring 11) to GND"
-   },
-   {
-    "ref": "R23",
-    "value": "100 k",
-    "key": "yageo-mfr-25fbf52-100k",
-    "does": "CAM- (ring 12) to GND"
    },
    {
     "ref": "C9",
@@ -1079,7 +1119,7 @@
     "note": "the gates: emitters 100 R from 5 V, receivers 4.7 k pull-ups, 10 k into the comparator, 10 k / 10 k reference, 100 k hysteresis"
    },
    {
-    "label": "R27-R38",
+    "label": "R27-R38 C17-C22",
     "footprint": "group",
     "at_mm": [
      20.0,
@@ -1087,10 +1127,38 @@
     ],
     "size_mm": [
      18.0,
-     8.0
+     9.0
     ],
-    "tall_mm": 2.5,
-    "note": "the FETs' 6 x 1 k gate resistors and 6 x 10 k gate-to-GND"
+    "tall_mm": 6.0,
+    "note": "the FETs' 6 x 1 k gate resistors, 6 x 100 k and 6 x 100 nF gate to GND (the capacitors right at each FET's gate and source legs)"
+   },
+   {
+    "label": "R55-R57",
+    "footprint": "group",
+    "at_mm": [
+     30.7,
+     6.8
+    ],
+    "size_mm": [
+     8.6,
+     5.6
+    ],
+    "tall_mm": 11.0,
+    "note": "standing: 1 k in series in ESC_L, ESC_R and FEED_TTL at the cartridge end"
+   },
+   {
+    "label": "D11 TVS (12 V FLY)",
+    "footprint": "group",
+    "at_mm": [
+     19.5,
+     40.2
+    ],
+    "size_mm": [
+     12.7,
+     3.6
+    ],
+    "tall_mm": 4.0,
+    "note": "P6KE15A across 12 V FLY at the pigtail pads"
    },
    {
     "label": "R24-R26 D3 C14 C15",
@@ -1126,7 +1194,7 @@
     "ref": "U12",
     "value": "SN74HCT14N",
     "key": "ti-sn74hct14n",
-    "does": "on 5 V (CT signal 6). 1A (1) = BRK_RC, 1Y (2) = BRAKE; the other inputs to GND"
+    "does": "on 5 V (CT signal 6). 1A, 2A, 3A (1, 3, 5) all = BRK_RC; 1Y, 2Y, 3Y (2, 4, 6) = BRAKE_A, _B, _C, each driving two gates; 4A-6A to GND"
    },
    {
     "ref": "R24",
@@ -1150,7 +1218,7 @@
     "ref": "R26",
     "value": "1 k",
     "key": "yageo-mfr-25fbf52-1k",
-    "does": "D3 to BRK_RC"
+    "does": "D3 to BRK_RC (the short opens 0.6-1.4 ms after ARM rises)"
    },
    {
     "ref": "C15",
@@ -1163,6 +1231,30 @@
     "value": "100 nF X7R",
     "key": "cap-mlcc-100n-50v",
     "does": "U12 decoupling"
+   },
+   {
+    "ref": "D11",
+    "value": "P6KE15A",
+    "key": "tvs-p6ke15a",
+    "does": "across 12 V FLY and GND at the pigtail pads (cathode to 12 V FLY)"
+   },
+   {
+    "ref": "R55",
+    "value": "1 k",
+    "key": "yageo-mfr-25fbf52-1k",
+    "does": "ESC_L (CT signal 1) to the left ESC's signal lead"
+   },
+   {
+    "ref": "R56",
+    "value": "1 k",
+    "key": "yageo-mfr-25fbf52-1k",
+    "does": "ESC_R (CT signal 2) to the right ESC's signal lead"
+   },
+   {
+    "ref": "R57",
+    "value": "1 k",
+    "key": "yageo-mfr-25fbf52-1k",
+    "does": "FEED_TTL (CT signal 3) to the feed servo's signal: an unpowered servo is not fed from the bus"
    },
    {
     "ref": "Q2",
@@ -1204,73 +1296,109 @@
     "ref": "R27",
     "value": "1 k",
     "key": "yageo-mfr-25fbf52-1k",
-    "does": "BRAKE to Q2's gate"
+    "does": "BRAKE_A to Q2's gate"
    },
    {
     "ref": "R28",
     "value": "1 k",
     "key": "yageo-mfr-25fbf52-1k",
-    "does": "BRAKE to Q3's gate"
+    "does": "BRAKE_A to Q3's gate"
    },
    {
     "ref": "R29",
     "value": "1 k",
     "key": "yageo-mfr-25fbf52-1k",
-    "does": "BRAKE to Q4's gate"
+    "does": "BRAKE_B to Q4's gate"
    },
    {
     "ref": "R30",
     "value": "1 k",
     "key": "yageo-mfr-25fbf52-1k",
-    "does": "BRAKE to Q5's gate"
+    "does": "BRAKE_B to Q5's gate"
    },
    {
     "ref": "R31",
     "value": "1 k",
     "key": "yageo-mfr-25fbf52-1k",
-    "does": "BRAKE to Q6's gate"
+    "does": "BRAKE_C to Q6's gate"
    },
    {
     "ref": "R32",
     "value": "1 k",
     "key": "yageo-mfr-25fbf52-1k",
-    "does": "BRAKE to Q7's gate"
+    "does": "BRAKE_C to Q7's gate"
    },
    {
     "ref": "R33",
-    "value": "10 k",
-    "key": "yageo-mfr-25fbf52-10k",
+    "value": "100 k",
+    "key": "yageo-mfr-25fbf52-100k",
     "does": "Q2's gate to GND"
    },
    {
     "ref": "R34",
-    "value": "10 k",
-    "key": "yageo-mfr-25fbf52-10k",
+    "value": "100 k",
+    "key": "yageo-mfr-25fbf52-100k",
     "does": "Q3's gate to GND"
    },
    {
     "ref": "R35",
-    "value": "10 k",
-    "key": "yageo-mfr-25fbf52-10k",
+    "value": "100 k",
+    "key": "yageo-mfr-25fbf52-100k",
     "does": "Q4's gate to GND"
    },
    {
     "ref": "R36",
-    "value": "10 k",
-    "key": "yageo-mfr-25fbf52-10k",
+    "value": "100 k",
+    "key": "yageo-mfr-25fbf52-100k",
     "does": "Q5's gate to GND"
    },
    {
     "ref": "R37",
-    "value": "10 k",
-    "key": "yageo-mfr-25fbf52-10k",
+    "value": "100 k",
+    "key": "yageo-mfr-25fbf52-100k",
     "does": "Q6's gate to GND"
    },
    {
     "ref": "R38",
-    "value": "10 k",
-    "key": "yageo-mfr-25fbf52-10k",
+    "value": "100 k",
+    "key": "yageo-mfr-25fbf52-100k",
     "does": "Q7's gate to GND"
+   },
+   {
+    "ref": "C17",
+    "value": "100 nF X7R",
+    "key": "cap-mlcc-100n-50v",
+    "does": "Q2's gate to source: the ESC's phase edges cannot lift the gate"
+   },
+   {
+    "ref": "C18",
+    "value": "100 nF X7R",
+    "key": "cap-mlcc-100n-50v",
+    "does": "Q3's gate to source: the ESC's phase edges cannot lift the gate"
+   },
+   {
+    "ref": "C19",
+    "value": "100 nF X7R",
+    "key": "cap-mlcc-100n-50v",
+    "does": "Q4's gate to source: the ESC's phase edges cannot lift the gate"
+   },
+   {
+    "ref": "C20",
+    "value": "100 nF X7R",
+    "key": "cap-mlcc-100n-50v",
+    "does": "Q5's gate to source: the ESC's phase edges cannot lift the gate"
+   },
+   {
+    "ref": "C21",
+    "value": "100 nF X7R",
+    "key": "cap-mlcc-100n-50v",
+    "does": "Q6's gate to source: the ESC's phase edges cannot lift the gate"
+   },
+   {
+    "ref": "C22",
+    "value": "100 nF X7R",
+    "key": "cap-mlcc-100n-50v",
+    "does": "Q7's gate to source: the ESC's phase edges cannot lift the gate"
    },
    {
     "ref": "F3",
@@ -1316,14 +1444,14 @@
    },
    {
     "ref": "R41",
-    "value": "4.7 k",
-    "key": "yageo-mfr-25fbf52-4k7",
-    "does": "5 V to Q8's collector"
+    "value": "10 k",
+    "key": "yageo-mfr-25fbf52-10k",
+    "does": "5 V to Q8's collector (39 k if bench test 3.4's lit level stays over 1 V)"
    },
    {
     "ref": "R42",
-    "value": "4.7 k",
-    "key": "yageo-mfr-25fbf52-4k7",
+    "value": "10 k",
+    "key": "yageo-mfr-25fbf52-10k",
     "does": "5 V to Q9's collector"
    },
    {
@@ -1430,7 +1558,7 @@
      2.5
     ],
     "tall_mm": 1.0,
-    "note": "the 3.5 mm jack's tip and sleeve to DT06 pins 7 and 8 (the dry loop)"
+    "note": "the pendant socket's (TB3M mini-XLR) pins 1 and 2 to DT06 pins 7 and 8 (the dry loop)"
    },
    {
     "label": "CAN pads",
@@ -1451,24 +1579,29 @@
   "problems": []
  },
  "passive_counts": {
-  "yageo-mfr-25fbf52-1k": 8,
-  "yageo-mfr-25fbf52-6k8": 3,
+  "yageo-mfr-25fbf52-1k": 13,
+  "yageo-mfr-25fbf52-6k8": 2,
   "cap-film-100n-5pct": 2,
-  "cap-mlcc-100n-50v": 8,
-  "cap-mlcc-1u-50v": 4,
+  "cap-mlcc-100n-50v": 15,
+  "cap-mlcc-1u-50v": 3,
   "onsemi-1n4148": 3,
   "yageo-rsf100jb-73-2k2": 2,
+  "bourns-mf-r010": 1,
+  "schottky-1n5822": 2,
   "yageo-mfr-25fbf52-100r": 3,
-  "yageo-mfr-25fbf52-100k": 7,
-  "yageo-mfr-25fbf52-10k": 18,
-  "yageo-mfr-25fbf52-39k": 1,
-  "yageo-mfr-25fbf52-66k5": 1,
-  "yageo-mfr-25fbf52-60k4": 1,
+  "yageo-mfr-25fbf52-100k": 13,
+  "tvs-p6ke15a": 2,
+  "yageo-mfr-25fbf52-39k": 2,
   "yageo-mfr-25fbf52-63k4": 1,
+  "yageo-mfr-25fbf52-60k4": 1,
+  "yageo-mfr-25fbf52-66k5": 1,
   "yageo-mfr-25fbf52-69k8": 1,
   "yageo-mfr-25fbf52-73k2": 1,
   "yageo-mfr-25fbf52-91k": 1,
+  "yageo-mfr-25fbf52-10k": 11,
+  "schottky-1n5817": 1,
   "omron-b3f-1000": 1,
-  "yageo-mfr-25fbf52-4k7": 3
+  "yageo-mfr-25fbf52-4k7": 1,
+  "vishay-bat85": 1
  }
 }

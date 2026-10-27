@@ -8,8 +8,8 @@
  "checks": [
   {
    "check": "ESC rail off after the last pulse",
-   "value": 20.6,
-   "limit": "<= 21 ms",
+   "value": 18.5,
+   "limit": "<= 25 ms (the one-shot is 16-22 ms)",
    "pass": true
   },
   {
@@ -23,7 +23,7 @@
   },
   {
    "check": "speed by +50 ms (after the rail off)",
-   "value": 0.5,
+   "value": 0.6,
    "limit": "<= 5 %",
    "pass": true
   },
@@ -37,143 +37,143 @@
  "readings": {
   "releases": [
    {
-    "rail_off_after_last_pulse_ms": 19.8,
+    "rail_off_after_last_pulse_ms": 17.8,
     "short_after_rail_off_ms": 8.0,
-    "speed_pct_at_rail_off_plus_50ms": 0.5,
-    "speed_pct_at_release_plus_50ms": 2.3,
+    "speed_pct_at_rail_off_plus_50ms": 0.6,
+    "speed_pct_at_release_plus_50ms": 2.6,
     "firmware_zero_throttle_ms": 4.0
    },
    {
-    "rail_off_after_last_pulse_ms": 20.4,
+    "rail_off_after_last_pulse_ms": 18.4,
     "short_after_rail_off_ms": 9.0,
-    "speed_pct_at_rail_off_plus_50ms": 0.4,
-    "speed_pct_at_release_plus_50ms": 2.2,
+    "speed_pct_at_rail_off_plus_50ms": 0.6,
+    "speed_pct_at_release_plus_50ms": 2.5,
     "firmware_zero_throttle_ms": 4.0
    },
    {
-    "rail_off_after_last_pulse_ms": 20.6,
+    "rail_off_after_last_pulse_ms": 17.6,
     "short_after_rail_off_ms": 8.0,
-    "speed_pct_at_rail_off_plus_50ms": 0.4,
-    "speed_pct_at_release_plus_50ms": 2.2,
+    "speed_pct_at_rail_off_plus_50ms": 0.6,
+    "speed_pct_at_release_plus_50ms": 2.6,
     "firmware_zero_throttle_ms": 4.0
    },
    {
-    "rail_off_after_last_pulse_ms": 20.2,
+    "rail_off_after_last_pulse_ms": 18.2,
     "short_after_rail_off_ms": 9.0,
-    "speed_pct_at_rail_off_plus_50ms": 0.4,
-    "speed_pct_at_release_plus_50ms": 2.2,
+    "speed_pct_at_rail_off_plus_50ms": 0.6,
+    "speed_pct_at_release_plus_50ms": 2.5,
     "firmware_zero_throttle_ms": 4.0
    },
    {
-    "rail_off_after_last_pulse_ms": 20.2,
+    "rail_off_after_last_pulse_ms": 18.2,
     "short_after_rail_off_ms": 9.0,
-    "speed_pct_at_rail_off_plus_50ms": 0.4,
-    "speed_pct_at_release_plus_50ms": 2.2,
+    "speed_pct_at_rail_off_plus_50ms": 0.6,
+    "speed_pct_at_release_plus_50ms": 2.5,
     "firmware_zero_throttle_ms": 4.0
    },
    {
-    "rail_off_after_last_pulse_ms": 20.5,
+    "rail_off_after_last_pulse_ms": 18.5,
     "short_after_rail_off_ms": 9.0,
-    "speed_pct_at_rail_off_plus_50ms": 0.4,
-    "speed_pct_at_release_plus_50ms": 2.2,
+    "speed_pct_at_rail_off_plus_50ms": 0.6,
+    "speed_pct_at_release_plus_50ms": 2.5,
     "firmware_zero_throttle_ms": 4.0
    },
    {
-    "rail_off_after_last_pulse_ms": 20.3,
+    "rail_off_after_last_pulse_ms": 18.3,
     "short_after_rail_off_ms": 9.0,
-    "speed_pct_at_rail_off_plus_50ms": 0.4,
-    "speed_pct_at_release_plus_50ms": 2.2,
+    "speed_pct_at_rail_off_plus_50ms": 0.6,
+    "speed_pct_at_release_plus_50ms": 2.5,
     "firmware_zero_throttle_ms": 4.0
    },
    {
-    "rail_off_after_last_pulse_ms": 20.0,
+    "rail_off_after_last_pulse_ms": 18.0,
     "short_after_rail_off_ms": 8.0,
-    "speed_pct_at_rail_off_plus_50ms": 0.4,
-    "speed_pct_at_release_plus_50ms": 2.2,
+    "speed_pct_at_rail_off_plus_50ms": 0.6,
+    "speed_pct_at_release_plus_50ms": 2.5,
     "firmware_zero_throttle_ms": 4.0
    },
    {
-    "rail_off_after_last_pulse_ms": 20.2,
+    "rail_off_after_last_pulse_ms": 18.2,
     "short_after_rail_off_ms": 8.0,
-    "speed_pct_at_rail_off_plus_50ms": 0.4,
-    "speed_pct_at_release_plus_50ms": 2.2,
+    "speed_pct_at_rail_off_plus_50ms": 0.6,
+    "speed_pct_at_release_plus_50ms": 2.5,
     "firmware_zero_throttle_ms": 4.0
    },
    {
-    "rail_off_after_last_pulse_ms": 20.2,
+    "rail_off_after_last_pulse_ms": 18.2,
     "short_after_rail_off_ms": 8.0,
-    "speed_pct_at_rail_off_plus_50ms": 0.4,
-    "speed_pct_at_release_plus_50ms": 2.2,
+    "speed_pct_at_rail_off_plus_50ms": 0.6,
+    "speed_pct_at_release_plus_50ms": 2.5,
     "firmware_zero_throttle_ms": 4.0
    },
    {
-    "rail_off_after_last_pulse_ms": 20.0,
+    "rail_off_after_last_pulse_ms": 18.0,
     "short_after_rail_off_ms": 8.0,
-    "speed_pct_at_rail_off_plus_50ms": 0.4,
-    "speed_pct_at_release_plus_50ms": 2.2,
+    "speed_pct_at_rail_off_plus_50ms": 0.6,
+    "speed_pct_at_release_plus_50ms": 2.5,
     "firmware_zero_throttle_ms": 4.0
    },
    {
-    "rail_off_after_last_pulse_ms": 20.3,
+    "rail_off_after_last_pulse_ms": 18.3,
     "short_after_rail_off_ms": 8.0,
-    "speed_pct_at_rail_off_plus_50ms": 0.4,
-    "speed_pct_at_release_plus_50ms": 2.2,
+    "speed_pct_at_rail_off_plus_50ms": 0.6,
+    "speed_pct_at_release_plus_50ms": 2.5,
     "firmware_zero_throttle_ms": 4.0
    },
    {
-    "rail_off_after_last_pulse_ms": 19.9,
+    "rail_off_after_last_pulse_ms": 17.9,
     "short_after_rail_off_ms": 8.0,
-    "speed_pct_at_rail_off_plus_50ms": 0.5,
-    "speed_pct_at_release_plus_50ms": 2.3,
+    "speed_pct_at_rail_off_plus_50ms": 0.6,
+    "speed_pct_at_release_plus_50ms": 2.6,
     "firmware_zero_throttle_ms": 4.0
    },
    {
-    "rail_off_after_last_pulse_ms": 20.0,
+    "rail_off_after_last_pulse_ms": 18.0,
     "short_after_rail_off_ms": 8.0,
-    "speed_pct_at_rail_off_plus_50ms": 0.5,
-    "speed_pct_at_release_plus_50ms": 2.3,
+    "speed_pct_at_rail_off_plus_50ms": 0.6,
+    "speed_pct_at_release_plus_50ms": 2.6,
     "firmware_zero_throttle_ms": 4.0
    },
    {
-    "rail_off_after_last_pulse_ms": 19.9,
+    "rail_off_after_last_pulse_ms": 17.9,
     "short_after_rail_off_ms": 8.0,
-    "speed_pct_at_rail_off_plus_50ms": 0.5,
-    "speed_pct_at_release_plus_50ms": 2.3,
+    "speed_pct_at_rail_off_plus_50ms": 0.6,
+    "speed_pct_at_release_plus_50ms": 2.6,
     "firmware_zero_throttle_ms": 4.0
    },
    {
-    "rail_off_after_last_pulse_ms": 20.4,
+    "rail_off_after_last_pulse_ms": 18.4,
     "short_after_rail_off_ms": 8.0,
-    "speed_pct_at_rail_off_plus_50ms": 0.4,
-    "speed_pct_at_release_plus_50ms": 2.2,
+    "speed_pct_at_rail_off_plus_50ms": 0.6,
+    "speed_pct_at_release_plus_50ms": 2.5,
     "firmware_zero_throttle_ms": 4.0
    },
    {
-    "rail_off_after_last_pulse_ms": 19.9,
+    "rail_off_after_last_pulse_ms": 17.9,
     "short_after_rail_off_ms": 8.0,
-    "speed_pct_at_rail_off_plus_50ms": 0.5,
-    "speed_pct_at_release_plus_50ms": 2.3,
+    "speed_pct_at_rail_off_plus_50ms": 0.6,
+    "speed_pct_at_release_plus_50ms": 2.6,
     "firmware_zero_throttle_ms": 4.0
    },
    {
-    "rail_off_after_last_pulse_ms": 19.9,
+    "rail_off_after_last_pulse_ms": 17.9,
     "short_after_rail_off_ms": 8.0,
-    "speed_pct_at_rail_off_plus_50ms": 0.5,
-    "speed_pct_at_release_plus_50ms": 2.3,
+    "speed_pct_at_rail_off_plus_50ms": 0.6,
+    "speed_pct_at_release_plus_50ms": 2.6,
     "firmware_zero_throttle_ms": 4.0
    },
    {
-    "rail_off_after_last_pulse_ms": 19.8,
+    "rail_off_after_last_pulse_ms": 17.8,
     "short_after_rail_off_ms": 8.0,
-    "speed_pct_at_rail_off_plus_50ms": 0.5,
-    "speed_pct_at_release_plus_50ms": 2.3,
+    "speed_pct_at_rail_off_plus_50ms": 0.6,
+    "speed_pct_at_release_plus_50ms": 2.6,
     "firmware_zero_throttle_ms": 4.0
    },
    {
-    "rail_off_after_last_pulse_ms": 20.4,
+    "rail_off_after_last_pulse_ms": 18.4,
     "short_after_rail_off_ms": 8.0,
-    "speed_pct_at_rail_off_plus_50ms": 0.4,
-    "speed_pct_at_release_plus_50ms": 2.2,
+    "speed_pct_at_rail_off_plus_50ms": 0.6,
+    "speed_pct_at_release_plus_50ms": 2.5,
     "firmware_zero_throttle_ms": 4.0
    }
   ],
@@ -185,7 +185,7 @@
  "sim": {
   "seed": 1047,
   "simulated_s": 174.2,
-  "wall_s": 6.3,
+  "wall_s": 4.7,
   "stand_ins": [
    "fet_temp_c"
   ],

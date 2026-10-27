@@ -7421,5 +7421,533 @@
   "used_for": "the turret's boards (cad/turret_boards.py COMPONENTS)",
   "qty_per_robot": 1,
   "notes": "One-shot A's timing resistor (0.45 x 39 k x 1 uF = 18 ms). Size: axial, body 2.4 mm dia x 6.3 mm long (Yageo MFR-25)."
+ },
+ {
+  "id": "ti-cd74hc423e",
+  "key": "ti-cd74hc423e",
+  "category": "turret",
+  "vendor": "Texas Instruments",
+  "model": "CD74HC423E",
+  "name": "Dual retriggerable monostable, 74HC423 (no trigger on a rising reset), PDIP-16",
+  "price_usd": 1.25,
+  "price_note": "Mouser 595-CD74HC423E $1.25, 453 in stock (read 2026-10-27); Digi-Key 296-9229-5-ND $1.22",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/595-CD74HC423E",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "595-CD74HC423E",
+    "price_usd": 1.25,
+    "pack_qty": 1,
+    "stock": 453,
+    "read_on": "2026-10-27"
+   },
+   {
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/detail/texas-instruments/CD74HC423E/376955",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "296-9229-5-ND",
+    "price_usd": 1.22,
+    "pack_qty": 1,
+    "stock": 296,
+    "read_on": "2026-10-27"
+   }
+  ],
+  "specs": {
+   "lifecycle": "ACTIVE. ti.com/product/CD74HC423 and ti.com/product/CD74HC423/part-details/CD74HC423E (fetched 2026-10-27) both say ACTIVE; thepartsdirect page heading says 'Part Status: Active'.",
+   "package": "PDIP (N) 16, 25 per tube, RoHS yes (TI part-details page)",
+   "supply_v": "2 to 6 (HC types)",
+   "temp_c": "-55 to 125",
+   "function": "dual retriggerable one-shot with resets; the 423 types are NOT triggered by a rising edge on reset (the 123 types are)",
+   "datasheet": "TI SCHS142F, https://www.ti.com/lit/ds/symlink/cd74hc423.pdf (page 1 read from the copy already in /mnt/storage-10tb/claude-scratch/gyropup/turret/elec_review/ds/cd74hc123.pdf; its ordering table lists CD74HC423E as 16 Ld PDIP)",
+   "ti_store_stock": "TI.com part-details page shows 'Out of stock' for buying direct from TI; distributor stock is separate",
+   "other_in_stock_seen": "TME 242 at $1.48 qty 1 (oemstrade.com 2026-10-27)"
+  },
+  "sources": [
+   "https://www.mouser.com/ProductDetail/595-CD74HC423E",
+   "https://www.digikey.com/en/products/detail/texas-instruments/CD74HC423E/376955"
+  ],
+  "confidence": "product page",
+  "used_for": "the arm chain's two one-shots (U7, on 3.3 V)",
+  "qty_per_robot": 1,
+  "notes": "CONFIRMED active and in stock at both sellers on 2026-10-27 (Mouser 453, Digi-Key 296). Manufacturer lead time shown on the aggregator page is 20 weeks, so order soon rather than assume restock. The Mouser and Digi-Key live pages could not be read directly; numbers are from a dated aggregator. Size: PDIP (N) 16: TI lists 9.4 x 19.3 mm (W x L)"
+ },
+ {
+  "id": "microchip-mcp120",
+  "key": "microchip-mcp120",
+  "category": "turret",
+  "vendor": "Microchip",
+  "model": "MCP120-300DI/TO",
+  "name": "Voltage supervisor 2.93 V, open-drain active-low reset, TO-92",
+  "price_usd": 0.6,
+  "price_note": "Mouser 579-MCP120-300DI/TO $0.60, 894 in stock (read 2026-10-27); Digi-Key MCP120-300DI/TO-ND $0.60",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/579-MCP120-300DI/TO",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "579-MCP120-300DI/TO",
+    "price_usd": 0.6,
+    "pack_qty": 1,
+    "stock": 894,
+    "read_on": "2026-10-27"
+   },
+   {
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/detail/microchip-technology/MCP120-300DI-TO/275231",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "MCP120-300DI/TO-ND",
+    "price_usd": 0.6,
+    "pack_qty": 1,
+    "stock": 1901,
+    "read_on": "2026-10-27"
+   }
+  ],
+  "specs": {
+   "vtrip_v": {
+    "min": 2.85,
+    "typ": 2.925,
+    "max": 3.0,
+    "note": "MCP1X0-300 row of the datasheet table, VDD falling; hysteresis 50 mV typ"
+   },
+   "reset_timeout_tRPU_ms": {
+    "min": 150,
+    "typ": 350,
+    "max": 700,
+    "note": "table 'VDD detect to RESET inactive'; typ values are at 25 C and VDD = 5.0 V. Fig. 2-3 (tRPU vs temperature) shows roughly 290-300 ms at VDD = 3 V and 25 C (read off the graph, approximate)."
+   },
+   "output": "open drain, active-low RST (needs an external pull-up; the MCP130 variant has an internal 5 kOhm). Leakage 1 uA typ. VOL max 0.4 V at IOL = 3.2 mA.",
+   "vdd_range_v": "1.0 to 5.5 (RESET asserted valid down to VDD = 1.0 V)",
+   "idd_ua": {
+    "typ": 45,
+    "max": 60,
+    "note": "at VDD = 5.5 V, no load"
+   },
+   "tRPD_us_typ": 10,
+   "temp_c": "-40 to +85 (Industrial, 'I')",
+   "pinout_D_bondout": "-DI/TO = 'D' bondout: RST, VDD, VSS on pins 1, 2, 3 (flat face toward you, leads down) as drawn on datasheet page 1 - check the figure before wiring",
+   "datasheet": "Microchip DS11184D (2001) MCP120/130, https://ww1.microchip.com/downloads/en/DeviceDoc/11184d.pdf (downloaded and read)",
+   "alternate": {
+    "mfr_pn": "MCP120-315DI/TO",
+    "mouser": "579-MCP120-315DI/TO",
+    "mouser_stock": 1867,
+    "mouser_price_usd": 0.6,
+    "vtrip_v": "3.00 min / 3.075 typ / 3.15 max",
+    "source": "oemstrade.com/search/MCP120-315DI%2FTO 2026-10-27"
+   }
+  },
+  "sources": [
+   "https://www.mouser.com/ProductDetail/579-MCP120-300DI/TO",
+   "https://www.digikey.com/en/products/detail/microchip-technology/MCP120-300DI-TO/275231"
+  ],
+  "confidence": "product page",
+  "used_for": "the power-up reset of the trip latch and one-shot A (U14)",
+  "qty_per_robot": 1,
+  "notes": "Picked -300 over -315: its worst-case trip (3.00 V max) stays below 3.3 V -5% = 3.135 V, so it cannot false-reset on an in-spec rail; the -315 tops out at 3.15 V, above 3.135 V. Both have Mouser stock at the same price (-315: 1,867). Design for a hold time anywhere in 150-700 ms. Live Mouser/Digi-Key pages not read directly; numbers come from dated aggregators. Size: TO-92-3: height-to-flat A 3.30-3.94 mm, width E1 4.45-4.95 mm, length D 4.32-4.95 mm, lead pitch 1.27 mm, lead length 12.70-15.49 mm, lead 0.41-0.56 x 0.36-0.51 mm (datasheet page 7)"
+ },
+ {
+  "id": "vishay-bat85",
+  "key": "vishay-bat85",
+  "category": "turret",
+  "vendor": "Vishay",
+  "model": "BAT85S-TAP",
+  "name": "Schottky diode 30 V 200 mA, DO-35 (BAT85S)",
+  "price_usd": 0.5,
+  "price_note": "Mouser 78-BAT85S-TAP $0.50, 41,995 in stock (read 2026-10-27); Digi-Key BAT85S-TAPCT-ND $0.50",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/78-BAT85S-TAP",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "78-BAT85S-TAP",
+    "price_usd": 0.5,
+    "pack_qty": 1,
+    "stock": 41995,
+    "read_on": "2026-10-27"
+   },
+   {
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/result?keywords=BAT85S-TAP",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "BAT85S-TAPCT-ND",
+    "price_usd": 0.5,
+    "pack_qty": 1,
+    "stock": 61329,
+    "read_on": "2026-10-27"
+   }
+  ],
+  "specs": {
+   "vf_at_1mA_max_V": 0.32,
+   "vf_at_1mA_typ_V": "about 0.25 (read off Fig. 1, Tj = 25 C curve; approximate, the table gives no typ column)",
+   "vf_max_table_mV": {
+    "0.1 mA": 240,
+    "1 mA": 320,
+    "10 mA": 400,
+    "30 mA": 500,
+    "100 mA": 800
+   },
+   "vr_v": 30,
+   "if_cont_mA": 200,
+   "ifrm_mA": 300,
+   "ifsm_A": "5 (tp <= 10 ms)",
+   "ir_uA_max": "2 at VR = 25 V",
+   "cd_pF_max": "10 at VR = 1 V, 1 MHz",
+   "trr_ns_max": 5,
+   "tj_max_c": 125,
+   "datasheet": "Vishay document 85513, Rev. 2.2 (07-Nov-2024), https://www.vishay.com/docs/85513/bat85s.pdf (downloaded and read)"
+  },
+  "sources": [
+   "https://www.mouser.com/ProductDetail/78-BAT85S-TAP",
+   "https://www.digikey.com/en/products/result?keywords=BAT85S-TAP"
+  ],
+  "confidence": "product page",
+  "used_for": "the servo bus's RX (D6)",
+  "qty_per_robot": 1,
+  "notes": "Used BAT85S: no plain Vishay BAT85-TAP/TR exists in oemstrade (no results for BAT85-TAP), and the Vishay DO-35 part is BAT85S. The 1 mA Vf in the datasheet table is a MAXIMUM (320 mV); there is no typical column. Manufacturer lead time on the aggregator page is 28 weeks, but both sellers hold tens of thousands. Size: DO-35 (DO-204AH): body 3.1-3.9 mm long x 1.3-1.7 mm dia, leads 0.4-0.6 mm dia, 26 mm min length, black cathode band; ammopack (TAP) 10k per pack"
+ },
+ {
+  "id": "schottky-1n5817",
+  "key": "schottky-1n5817",
+  "category": "turret",
+  "vendor": "Diodes Inc",
+  "model": "1N5817-T",
+  "name": "Schottky rectifier 1 A 20 V, DO-41 (1N5817)",
+  "price_usd": 0.37,
+  "price_note": "Mouser 621-1N5817 $0.37, 15,381 in stock (read 2026-10-27); Digi-Key 1N5817DICT-ND $0.37",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/621-1N5817",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "621-1N5817",
+    "price_usd": 0.37,
+    "pack_qty": 1,
+    "stock": 15381,
+    "read_on": "2026-10-27"
+   },
+   {
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/result?keywords=1N5817-T",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "1N5817DICT-ND",
+    "price_usd": 0.37,
+    "pack_qty": 1,
+    "stock": 28734,
+    "read_on": "2026-10-27"
+   }
+  ],
+  "specs": {
+   "vrrm_v": 20,
+   "io_A": "1.0 at TL = 90 C",
+   "ifsm_A": "25 (8.3 ms half sine)",
+   "vf_V": "0.450 at 1.0 A; 0.750 at 3.0 A (table values, listed under 'Maximum Ratings and Electrical Characteristics')",
+   "ir": "1.0 mA at 25 C, 10 mA at 100 C (at rated VR)",
+   "ct_pF_typ": 110,
+   "tj_c": "-65 to +125",
+   "packing": "1N5817-T = 5k per 13 inch tape & reel",
+   "datasheet": "Diodes Inc DS23001 Rev. 10-2 (Apr 2023), https://www.diodes.com/assets/Datasheets/ds23001.pdf (downloaded and read)"
+  },
+  "sources": [
+   "https://www.mouser.com/ProductDetail/621-1N5817",
+   "https://www.digikey.com/en/products/result?keywords=1N5817-T"
+  ],
+  "confidence": "product page",
+  "used_for": "the Feather's USB pin feed (D7)",
+  "qty_per_robot": 1,
+  "notes": "Cheapest qty-1 among the three makers named at Mouser (same row on 2026-10-27): Diodes Inc $0.37, onsemi 1N5817G (863-1N5817G) $0.67 with 14132 in stock, Vishay 1N5817-E3/54 (625-1N5817-E3) $0.72 with 20514 in stock (oemstrade). Cathode = banded end. Size: DO-41: body 4.06-5.21 mm long x 2.00-2.72 mm dia; leads 0.71-0.864 mm dia, 25.4 mm min length"
+ },
+ {
+  "id": "schottky-1n5822",
+  "key": "schottky-1n5822",
+  "category": "turret",
+  "vendor": "onsemi",
+  "model": "1N5822G",
+  "name": "Schottky rectifier 3 A 40 V, DO-201AD (1N5822)",
+  "price_usd": 0.83,
+  "price_note": "Mouser 863-1N5822G $0.83, 15,695 in stock (read 2026-10-27); Digi-Key 1N5822-E3/54GICT-ND $0.91",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/863-1N5822G",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "863-1N5822G",
+    "price_usd": 0.83,
+    "pack_qty": 1,
+    "stock": 15695,
+    "read_on": "2026-10-27"
+   },
+   {
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/result?keywords=1N5822-E3%2F54",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "1N5822-E3/54GICT-ND",
+    "price_usd": 0.91,
+    "pack_qty": 1,
+    "stock": 7531,
+    "read_on": "2026-10-27"
+   }
+  ],
+  "specs": {
+   "vrrm_v": 40,
+   "io_A": "3.0",
+   "ifsm_A": "80 (one cycle)",
+   "vf_max_V": {
+    "1 A": 0.39,
+    "3 A": 0.525,
+    "9.4 A": 0.95
+   },
+   "ir_max_mA": "2.0 at 25 C, 20 at 100 C (rated VR)",
+   "tj_c": "-65 to +125",
+   "rthja_c_per_w": 28,
+   "datasheet": "onsemi 1N5820/D Rev. 11 (Nov 2023), https://www.onsemi.com/pdf/datasheet/1n5820-d.pdf (downloaded and read)"
+  },
+  "sources": [
+   "https://www.mouser.com/ProductDetail/863-1N5822G",
+   "https://www.digikey.com/en/products/result?keywords=1N5822-E3%2F54"
+  ],
+  "confidence": "product page",
+  "used_for": "the reverse-polarity diode after the 5 A fuse (D8) and across the 2815's output (D10)",
+  "qty_per_robot": 1,
+  "notes": "onsemi 1N5822G is the cheapest of the named makers at Mouser (Vishay 1N5822-E3/54 = 625-1N5822-E3, $0.91, 3292 in stock). Cheaper non-listed makers exist at Mouser (Taiwan Semiconductor 821-1N5822 $0.71, 1985 in stock) but were not chosen. The same aggregator page also shows Digi-Key 2156-1N5822G-ND with 11,879 in stock at $0.32; the seller of that listing could not be verified, so it is not used. Size: DO-201AD (case 267-05): body 7.30-9.50 mm long x 4.80-5.30 mm dia; leads 1.20-1.30 mm dia, 25.4 mm min length; cathode = polarity band"
+ },
+ {
+  "id": "tvs-p6ke15a",
+  "key": "tvs-p6ke15a",
+  "category": "turret",
+  "vendor": "Vishay",
+  "model": "P6KE15A-E3/54",
+  "name": "TVS diode 600 W unidirectional, 12.8 V standoff, 21.2 V clamp, DO-15 (P6KE15A)",
+  "price_usd": 0.96,
+  "price_note": "Mouser 625-P6KE15A-E3 $0.96, 2,378 in stock (read 2026-10-27); Digi-Key P6KE15A-E3/54GICT-ND $0.96",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/625-P6KE15A-E3",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "625-P6KE15A-E3",
+    "price_usd": 0.96,
+    "pack_qty": 1,
+    "stock": 2378,
+    "read_on": "2026-10-27"
+   },
+   {
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/result?keywords=P6KE15A-E3%2F54",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "P6KE15A-E3/54GICT-ND",
+    "price_usd": 0.96,
+    "pack_qty": 1,
+    "stock": 1054,
+    "read_on": "2026-10-27"
+   }
+  ],
+  "specs": {
+   "VRWM_V": 12.8,
+   "VBR_V": {
+    "min": 14.3,
+    "max": 15.8,
+    "at_IT_mA": 1.0,
+    "note": "15 V nominal by part number; the table gives min/max only"
+   },
+   "VC_max_V": 21.2,
+   "IPP_A": "28.3 (10/1000 us, the current at which VC = 21.2 V max applies)",
+   "ID_uA_max_at_VWM": 1.0,
+   "PPPM_W": "600 (10/1000 us)",
+   "IFSM_A": 100,
+   "polarity": "unidirectional; color band = cathode (CA suffix would be bidirectional)",
+   "tempco_pct_per_c": 0.084,
+   "datasheet": "Vishay document 88369 (P6KE6.8A thru P6KE540A), Revision 27-Sep-2021, https://www.vishay.com/docs/88369/p6ke.pdf (downloaded and read). Values are the common 600 W P6KE series values; the Littelfuse PDF returned 403 and was not read."
+  },
+  "sources": [
+   "https://www.mouser.com/ProductDetail/625-P6KE15A-E3",
+   "https://www.digikey.com/en/products/result?keywords=P6KE15A-E3%2F54"
+  ],
+  "confidence": "product page",
+  "used_for": "across 12 V MAIN at the 2815 (D9) and 12 V FLY at the cartridge (D11)",
+  "qty_per_robot": 1,
+  "notes": "Littelfuse P6KE15A: no in-stock Mouser row found (oemstrade shows Mouser 576-P6KE15A-B with stock 0; thepartsdirect has no Mouser row; an older WebSearch snippet claiming 7,217 in stock is stale). Digi-Key Littelfuse P6KE15ALFCT-ND has 6,742 in stock at $0.70 qty 1 (thepartsdirect 10/27/26, https://www.digikey.com/en/products/detail/littelfuse-inc/P6KE15A/285926) and is the cheaper alternative if the BOM allows any maker. No Bourns P6KE15A found at Mouser or Digi-Key. A Digi-Key listing snippet gives Littelfuse IPP as 28.8 A versus 28.3 A on the Vishay sheet (unverified; VC = 21.2 V in both). Size: DO-15 (DO-204AC): body 6.15-6.55 mm long x 3.3-3.5 mm dia; leads 0.71-0.86 mm dia, 25.4 mm min length"
+ },
+ {
+  "id": "bourns-mf-r010",
+  "key": "bourns-mf-r010",
+  "category": "turret",
+  "vendor": "Bourns",
+  "model": "MF-R010",
+  "name": "Resettable PTC fuse 0.10 A hold, 60 V, radial (MF-R010)",
+  "price_usd": 0.33,
+  "price_note": "Mouser 652-MFR010 $0.33, 11,219 in stock (read 2026-10-27); Digi-Key MF-R010-ND $0.40",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/652-MFR010",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "652-MFR010",
+    "price_usd": 0.33,
+    "pack_qty": 1,
+    "stock": 11219,
+    "read_on": "2026-10-27"
+   },
+   {
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/detail/bourns-inc/MF-R010/259959",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "MF-R010-ND",
+    "price_usd": 0.4,
+    "pack_qty": 1,
+    "stock": 7433,
+    "read_on": "2026-10-27"
+   }
+  ],
+  "specs": {
+   "ihold_A": 0.1,
+   "itrip_A": "0.20 at 23 C",
+   "vmax_V": 60,
+   "imax_A": 40,
+   "resistance_ohm": "2.50 min / 4.50 max initial; 7.50 max one hour after trip",
+   "max_time_to_trip": "4.0 s at 0.5 A (23 C)",
+   "tripped_power_W_typ": 0.38,
+   "derating_ihold_itrip_A": {
+    "-40 C": "0.16 / 0.32",
+    "0 C": "0.12 / 0.24",
+    "23 C": "0.10 / 0.20",
+    "40 C": "0.08 / 0.16",
+    "60 C": "0.06 / 0.12",
+    "85 C": "0.04 / 0.08"
+   },
+   "style": "radial leaded, Bourns 'Style 1', lead Sn/NiCu",
+   "datasheet": "Bourns MF-R Series, https://www.bourns.com/docs/product-datasheets/mfr.pdf (PDF created May 2026, downloaded and read)"
+  },
+  "sources": [
+   "https://www.mouser.com/ProductDetail/652-MFR010",
+   "https://www.digikey.com/en/products/detail/bourns-inc/MF-R010/259959"
+  ],
+  "confidence": "product page",
+  "used_for": "the pendant loop's feed (F4)",
+  "qty_per_robot": 1,
+  "notes": "Other readable sellers on 2026-10-27: Newark 38K5104 has 12,502 in stock at $0.256 qty 1 (thepartsdirect), cheaper than both. Hold current drops to 0.08 A at 40 C, so check the real operating temperature. Size: Bourns MF-R010 outline (Style 1), all maximum unless noted: A width 7.4 mm, B height 12.7 mm, E thickness 3.1 mm; C lead spacing 5.1 mm nominal (+/-0.7 mm); D lead length 7.6 mm min; lead dia 0.51 mm"
+ },
+ {
+  "id": "switchcraft-tb3m",
+  "key": "switchcraft-tb3m",
+  "category": "turret",
+  "vendor": "Switchcraft",
+  "model": "TB3M",
+  "name": "Mini-XLR 3-pin male panel receptacle (TB3M), latching, keyed",
+  "price_usd": 13.1,
+  "price_note": "Mouser 502-TB3M $13.10, 2,619 in stock (read 2026-10-27); Digi-Key TB3M-ND $13.24",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/502-TB3M",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "502-TB3M",
+    "price_usd": 13.1,
+    "pack_qty": 1,
+    "stock": 2619,
+    "read_on": "2026-10-27"
+   },
+   {
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/detail/switchcraft-inc/TB3M/137715",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "TB3M-ND",
+    "price_usd": 13.24,
+    "pack_qty": 1,
+    "stock": 1488,
+    "read_on": "2026-10-27"
+   }
+  ],
+  "specs": {
+   "type": "3-pin male chassis/panel receptacle, solder terminals, latch-lock, keyed (polarizing groove), pins fully recessed ('scoop-proof'), nickel housing",
+   "fixing": "7/16-32 UNS-2A threaded bushing; hex nut and flat washer supplied ('mounting hardware supplied'); no screws, no snap",
+   "max_panel_thickness_mm": 6.4,
+   "audio_plug_safe": "yes - male receptacle with recessed pins and a latch, cannot take a 3.5 mm or 6.35 mm audio plug",
+   "ratings_catalog": "receptacles: 1.5 A, 125 VAC carry-only, 250 V rms dielectric, 2000 operations; distributor listings quote 5 A for the TB3M",
+   "wire": "28 AWG stranded (catalog, receptacles)",
+   "datasheet": "Switchcraft Tini Q-G catalog pages 31-37 (TB(*)M outline on page 33), https://datasheet.octopart.com/TB3M-Switchcraft-datasheet-111022410.pdf (downloaded and read; dimensions marked 'for reference only'). switchcraft.com product pages are empty to WebFetch."
+  },
+  "sources": [
+   "https://www.mouser.com/ProductDetail/502-TB3M",
+   "https://www.digikey.com/en/products/detail/switchcraft-inc/TB3M/137715"
+  ],
+  "confidence": "product page",
+  "used_for": "the stand's pendant socket: keyed, takes no audio plug",
+  "qty_per_robot": 1,
+  "notes": "MATES WITH the cable plug TA3FLX in the next entry (also with TA3FX / TA3F female cord plugs). Chosen pair is the cheapest I could confirm in stock at Mouser or Digi-Key: Mouser TB3M $13.10 + TA3FLX $14.22 = $27.32 (Digi-Key $13.24 + $14.22 = $27.46). The 11.4 mm hole is inferred: the catalog drawing gives only the 7/16-32 thread and 11.10 mm major dia, and the 0.45 in hole figure comes from the catalog's note for the TBA adapters that use the same 7/16 inch thread - test-print the cutout. TB3MW did not appear in the oemstrade TB3M results; the Mouser rows there are TB3M, TB3MB (black housing, 502-TB3MB, $16.47, 79 in stock) and TB3MS (sealed, 502-TB3MS, $22.52, 0 in stock). Alternatives checked and rejected: (1) Same Sky mini-DIN: the panel part MD-30PL100 (25 x 14 mm flange, 2 x 2.1 mm screw holes 19 mm apart, about 12 mm body, 10 cm leads, about $2-4) and cable plug MD-30 (44 mm long, strain-relief end 5.0 mm dia) have no Mouser or Digi-Key stock rows on oemstrade or thepartsdirect (stocked at Future, Master, Onlinecomponents, Verical with 20-25 piece minimums); Mouser only has PCB-mount MD-30SM $1.92 and MD-30SV $2.00, which are not panel-mount; Digi-Key has a page for the MD-30 plug (CP-2030-ND, undated search-snippet price $2.38 qty 1) but no stock row was found for it; the MD-30CV panel jack is marked discontinued and the MD-30SP datasheet carries a DISCONTINUED watermark. So it is cheaper on paper but not confirmable in stock at either seller. (2) Bulgin Buccaneer: Mouser 167-PX0412/03S panel socket $13.29 (450) plus 177-PX0410/03P/3035 plug $16.20 (21 in stock), about $29.49, more expensive. Size: PANEL CUTOUT: circular hole, 11.4 mm dia (0.45 in; for the 3D-printed panel use 11.4-11.5 mm). Optional 'D' hole: the bushing is 11.10 mm (0.437 in) dia with a 0.89 mm (0.035 in) flat, i.e. about 10.2 mm across the flat. Max panel thickness 6.4 mm (0.25 in), so 2-4 mm is fine. Front lip 11.9 mm (0.468 in) dia. Washer 15.9 mm dia x 0.5 mm; nut 2.3 mm thick. Drawing also shows 12.4 mm and 9.9 mm body/thread length dimensions and 4.2 mm solder tails at the rear (reference-only drawing; check against a sample before fixing the enclosure depth)."
+ },
+ {
+  "id": "switchcraft-ta3flx",
+  "key": "switchcraft-ta3flx",
+  "category": "turret",
+  "vendor": "Switchcraft",
+  "model": "TA3FLX",
+  "name": "Mini-XLR 3-pin female cable plug (TA3FLX), latching, cable <= 4.32 mm",
+  "price_usd": 14.22,
+  "price_note": "Mouser 502-TA3FLX $14.22, 323 in stock (read 2026-10-27); Digi-Key TA3FLX-ND $14.22",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/502-TA3FLX",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "502-TA3FLX",
+    "price_usd": 14.22,
+    "pack_qty": 1,
+    "stock": 323,
+    "read_on": "2026-10-27"
+   },
+   {
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/detail/switchcraft-inc/TA3FLX/TA3FLX-ND/1290022",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "TA3FLX-ND",
+    "price_usd": 14.22,
+    "pack_qty": 1,
+    "stock": 631,
+    "read_on": "2026-10-27"
+   }
+  ],
+  "specs": {
+   "type": "3-contact straight female cord plug, solder cups, internal clamp strain relief, latch-lock, flex relief omitted (L variant)",
+   "cable_diameter_range": "up to 4.32 mm (0.170 in) without flex relief (TA3FL series). Minimum is not stated by Switchcraft. With a flex-relief boot (TA3F / TA3FX) the recommended maximum is 2.92 mm (0.115 in).",
+   "housing_dia_mm": "10.5 (0.413 in)",
+   "wire_gauge": "#22 solid or #24 stranded max in the solder cups (catalog, 3-5 pin cord mount)",
+   "ratings_catalog": "3-5 pin cord plug: 5 A, 125 VAC carry-only, 5000 operations",
+   "datasheet": "Switchcraft Tini Q-G catalog pages 31-37, https://datasheet.octopart.com/TB3M-Switchcraft-datasheet-111022410.pdf (downloaded and read)"
+  },
+  "sources": [
+   "https://www.mouser.com/ProductDetail/502-TA3FLX",
+   "https://www.digikey.com/en/products/detail/switchcraft-inc/TA3FLX/TA3FLX-ND/1290022"
+  ],
+  "confidence": "product page",
+  "used_for": "the pendant's plug (the switch's 3.5 mm plug cut off, this soldered on)",
+  "qty_per_robot": 1,
+  "notes": "MATES WITH the panel receptacle TB3M in the previous entry. Chosen over TA3FX (flex relief, cable <= 2.92 mm): TA3FX is out of stock at Mouser (502-TA3FX, stock 0, $13.98); Digi-Key TA3FX-ND has 1,461 at $14.59 qty 1 (thepartsdirect 10/27/26, https://www.digikey.com/en/products/detail/switchcraft-inc/TA3FX/1290046) if a thin cable and a boot are wanted. TA3F-ND at Digi-Key is on order, non-RoHS, not usable. Pair cost: Mouser $27.32, Digi-Key $27.46. Size: Housing 10.5 mm (0.413 in) dia; cable OD 4.32 mm max (no flex relief). Weight about 7 g."
  }
 ]

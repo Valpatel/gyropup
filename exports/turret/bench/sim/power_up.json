@@ -85,7 +85,7 @@
  "sim": {
   "seed": 1031,
   "simulated_s": 2.0,
-  "wall_s": 0.1,
+  "wall_s": 0.0,
   "stand_ins": [
    "fuses_whole",
    "max_input_v",

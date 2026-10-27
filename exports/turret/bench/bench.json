@@ -1,7 +1,7 @@
 {
  "too_big": [],
  "print_hours": 50.0,
- "printed_g": 1292,
+ "printed_g": 1291,
  "stand_mm": [
   180.0,
   200.0,
@@ -9,7 +9,7 @@
  ],
  "note": "printed_g and print_hours are print-plan.json's (the slicer's where sliced); sliced is cad/turret_print.py's own total",
  "sliced": {
-  "grams": 1291.1,
+  "grams": 1291.0,
   "hours": 50.1,
   "by_material": {
    "pa6-cf": {
@@ -17,7 +17,7 @@
     "hours": 31.8
    },
    "petg": {
-    "grams": 604.2,
+    "grams": 604.1,
     "hours": 16.0
    },
    "petg-clear": {
@@ -49,10 +49,9 @@
    "Out of Darts",
    "Jameco",
    "IWISS",
-   "FYSETC",
-   "Master Electronics"
+   "FYSETC"
   ],
-  "grand_total_usd": 1579.15,
-  "lines": 118
+  "grand_total_usd": 1609.89,
+  "lines": 125
  }
 }

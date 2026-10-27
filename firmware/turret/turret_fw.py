@@ -42,11 +42,11 @@ class HAL:
 
     def arm_in(self) -> bool: raise NotImplementedError                      # D12
     def trip_in(self) -> bool: raise NotImplementedError                     # A1
-    def pulse_edges(self) -> List[float]: raise NotImplementedError          # A4 rising edges since the last call
+    def pulse_edges(self) -> List[float]: raise NotImplementedError          # A3 falling edges (opto on) since the last call
     def hall_edges(self) -> List[Tuple[float, bool]]: raise NotImplementedError   # D11 (time, rising)
     def gate_edges(self) -> List[Tuple[float, int]]: raise NotImplementedError    # D9/D10 (time, 1 or 2)
     def esc_frames(self) -> List[Tuple[int, float, int]]: raise NotImplementedError  # (wheel, time, 16-bit word)
-    def dshot(self, frames: Tuple[int, int]): raise NotImplementedError      # D5/D6, one frame per wheel per tick
+    def dshot(self, frames: Tuple[int, int]): raise NotImplementedError      # D5/D6, one frame per wheel per tick; None: pin low
     def servo_txn(self, pkt: bytes) -> Optional[bytes]: raise NotImplementedError   # Serial1 + D4
     def can_recv(self) -> List[Tuple[int, bytes]]: raise NotImplementedError
     def can_send(self, cid: int, data: bytes): raise NotImplementedError

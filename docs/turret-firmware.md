@@ -27,7 +27,7 @@ v0 is the turret as drawn, with the slip ring, continuous pan and the pulse-trai
 availability (docs/turret-prototype-plan.md section 0). For the firmware:
 
 - **Feed.** The DJI M2006 + C610 are gone. A third STS3215 (bus ID 3) steps the dial 45 deg (512 counts) on the same
-  servo bus. Its power is 12 V FEED, from the switched rail, so it leaves the bus on every release and is
+  servo bus. Its power is 12 V FLY, the switched rail, so it leaves the bus on every release and is
   re-initialised when it answers again. Its rate is paced on gate 1 (section 5), at most 3 balls/s; the feed rerun
   rules out 4/s. The C610's CAN frames (0x200/0x201) and the 24 V dial rail have gone with it.
 - **Flywheels.** Two SunnySky X2216 880 KV (7 pole pairs) run on AM32 ESCs on the fixed 12 V rail, with Ø34 tyres
@@ -40,25 +40,28 @@ availability (docs/turret-prototype-plan.md section 0). For the firmware:
   the host's request after the line is held (the re-arm, section 2).
 - **CAN.** POSE now fits classic CAN's 8 bytes, a new 0x317 EVENT frame carries per-event data, COMMAND gains bench
   codes, and the fields of CONFIG, FIRE, FEED and POWER are pinned down (section 6).
-- **Not fitted in v0.** The hopper-full beam (A2) and the NeoPixel ring (A3) come in v1.
+- **Not fitted in v0.** The hopper-full beam (A2) and the NeoPixel ring (SDA) come in v1.
+- **Inputs.** Every input pin runs with the SAMD51's own pull-ups and pull-downs off (the boards have theirs); ARM_IN and
+  PULSE_MON come through 100 k, so the Feather cannot drive the arm chain even if a pin is set wrong
+  (docs/turret-wiring.md 3.1, 3.5).
 - **Homing** is unchanged.
 
 ## 1. Pin map (Feather M4 CAN Express)
 
 | Pin | Use | Notes |
 |---|---|---|
-| D0 / D1 (Serial1) | the Feetech servo bus: pan (ID 1) in the base across ring circuit 9, tilt (ID 2) on the +y arm, feed (ID 3) through CT signal pin 3 | half-duplex through the 74AHCT125, 500 kbit/s (margin over the ring) |
+| D0 / D1 (Serial1) | the Feetech servo bus: pan (ID 1) in the base across ring circuit 9, tilt (ID 2) on the +y arm, feed (ID 3) through CT signal pin 3 | half-duplex: TX through the 74AHCT125, RX through a Schottky with a 10 k pull-up (it echoes TX); 500 kbit/s (margin over the ring) |
 | D4 | SERVO_DIR | the buffer's direction |
-| D5, D6 | ESC_L, ESC_R | bidirectional DShot300 (timer channels), eRPM and EDT telemetry back on the same pin |
-| D9, D10 | GATE_1, GATE_2 | the chronograph comparators; interrupts with microsecond timestamps |
-| D11 | PAN_INDEX | the hall switch (A1120, open drain, pull-up to 3.3 V); interrupt on both edges |
-| D12 | ARM_IN | the arm chain's output (read only) |
-| A1 | TRIP_IN | the trip latch (read only) |
-| A4 | PULSE_MON | the 4N35's output: interrupt on rising edges; the train's frequency, the release, the ring-drop counter |
+| D5, D6 | ESC_L, ESC_R | bidirectional DShot300 (timer channels), eRPM and EDT telemetry back on the same pin; held low (no frames) while ARM_IN is low, so nothing feeds an unpowered ESC |
+| D9, D10 | GATE_1, GATE_2 | the chronograph comparators; interrupts (EXTINT 3, 4) with microsecond timestamps |
+| D11 | PAN_INDEX | the hall switch (A1120, open drain, pull-up to 3.3 V); interrupt (EXTINT 5) on both edges |
+| D12 | ARM_IN | the arm chain's output through 100 k (read only; interrupt EXTINT 6) |
+| A1 | TRIP_IN | the trip latch (read only), **polled**: A1 shares EXTINT 5 with D11 |
+| A3 | PULSE_MON | the 4N35's output through 100 k: interrupt (EXTINT 9) on falling edges (the opto turning on: the fast edge); the train's period (0.85-1.15 ms), the release, the ring-drop counter. Not A4: A4 shares EXTINT 4 with D10 |
 | A5 | LASER_EN | through the 2N7000 (Quarton VLM-650-03 LPT, Class 2); not D13, which also lights the red LED and which the bootloader pulses on a reset (the laser would flash) |
 | A2 | HOPPER_BEAM | v1 (not fitted in v0) |
-| A3 | NEOPIXEL | v1 (not fitted in v0) |
-| A0 | BUS_V | the ring's +24 V through a 10:1 divider |
+| SDA | NEOPIXEL | v1 (not fitted in v0); SCL spare |
+| A0 | BUS_V | the ring's +24 V through 91 k / 10 k (10.1 : 1) |
 | CAN (on-board transceiver) | the turret's CAN segment | 1 Mbit/s classic; only the turret and the host are on it now |
 
 ## 2. States
@@ -88,7 +91,7 @@ BOOT -> HOMING -> IDLE <-> ARMED -> SPIN_UP -> READY <-> FIRING
   back to the aim. **READY.** Both wheels are within 5 % of the set speed for 50 ms. **FIRING.** Section 5.
 - **SAFE.** Entered when any arming condition is lost while armed: zero throttle in the same millisecond, the dial
   stopped, the burst ended, and an EVENT with the cause and its latency. The hardware has already cut 12 V FLY and
-  12 V FEED and braked, or will within 20 ms. SAFE goes to IDLE once the wheels have stopped, or to FAULT if a
+  the feed servo and braked, or will within 25 ms. SAFE goes to IDLE once the wheels have stopped, or to FAULT if a
   latched fault remains (eRPM limit, overspeed, trip, CONFIG mismatch).
 - **FAULT.** Aim only. The eRPM and overspeed latches clear on COMMAND CLEAR_FAULTS, and only with the safety line
   released. TRIP clears only with its recessed button. A homing failure clears with a successful re-home.
@@ -179,7 +182,7 @@ index re-check. Results are in exports/turret/firmware/homing.json: 1,000 of 1,0
   FEED_FAULT) and the dial holds; a clean step resets the count.
 - **Lost replies.** A relative step is never re-sent blindly, because a lost reply can hide an applied step and a
   doubled step can drop two balls. An unacknowledged step is re-sent only if the dial has not moved 40 ms later.
-- **The release.** The feed servo's 12 V FEED is cut with ARM. The firmware forgets it on ARM_IN falling (or after 5
+- **The release.** The feed servo's 12 V FLY is cut with ARM. The firmware forgets it on ARM_IN falling (or after 5
   failed reads), pings it at 20 Hz without counting those pings as bus errors, and on its answer verifies its EEPROM
   (step mode), rewrites the RAM registers (torque limit, acceleration, speed), enables torque, and rests it where it
   stands. A step interrupted by the release is completed by the next one. EVENTs SERVO_LOST and SERVO_BACK report it.
@@ -286,21 +289,22 @@ writes its readings and pass/fail to `exports/turret/bench/<file>.json` (`--list
 |---|---|---|
 | `test_homing.py` | homing and turn counting, 1,000 random starts | unchanged: 1,000 / 1,000, max 6.7 s, repeatability 0.07 deg |
 | `test_feed.py` | the feed driver against a simulated STS3215 through the real packet code: 3/s with a jam injected and recovered; three jams fault; the load catches a jam before the timeout; the drop-off on release and the re-init; lost replies never double a step; the step time; the gate-paced burst with hung balls freed by the dither, the 5-ball hopper at -25 deg, the empty hopper | all pass: jam caught 68 ms after contact (load), reversed, retried, recovered; clean steps 229 ms mean, 236 max; 6 of 6 hung balls freed by a dither, 0 by a step, 0 doubles; 335 ms step to step |
-| `test_firmware.py` | protocols; 8,855 rpm / 61,985 eRPM; Ø36 refused; the tilt never above level; no spin without ARM; the re-arm; zero throttle when the heartbeat goes; a 300 Hz train refused though the hardware stays armed; the ramp never steps; the 24 V guard; one bad frame no trip; a 75 fps pair latches SAFE; aim live and capped while disarmed; the feed servo's drop-off and re-init through the firmware | all 18 pass |
-| `bench_host.py --sim` | every bench test runs end to end | 29 of 31 pass; 3.2 and 3.4 fail on the hardware as drawn (section 9) |
+| `test_firmware.py` | protocols; 8,855 rpm / 61,985 eRPM; Ø36 refused; the tilt never above level; no spin without ARM; the re-arm; zero throttle when the heartbeat goes; a 300 Hz train refused though the hardware stays armed; the ramp never steps; the 24 V guard; one bad frame no trip; a 75 fps pair latches SAFE; aim live and capped while disarmed; the feed servo's drop-off and re-init through the firmware; a new set speed ramps; no DShot frame while the ESCs are unpowered | all 19 pass |
+| `bench_host.py --sim` | every bench test runs end to end | 33 of 33 pass on the circuit as drawn now (docs/turret-wiring.md 3, D47) |
 
 ## 9. Open items found while building v0 (for the hardware and the plan)
 
-- **The pulse train's frequency is not checked in hardware (3.2).** A 20 ms retriggerable 74HC123 stays triggered by
+- **The pulse train's frequency is not checked in hardware (3.2).** An 18.5 ms retriggerable one-shot (CD74HC423E) stays triggered by
   any train faster than ~50 Hz. As drawn, a 300 Hz or 3 kHz train holds the rails on, and 50 Hz hum sits at the
   monostable's own period. The firmware refuses on PULSE_MON within 1-6 ms. Making "only the genuine 1 kHz train
   arms" true of the rails needs a frequency window in hardware, for example a second one-shot that rejects early
   edges, or a tone decoder.
-- **The brake's RC is symmetric (3.4).** BRAKE falls ~11 ms after ARM rises, while the 2815 restores 12 V FLY at
-  once. That is harmless with AM32 (`am32_settings.md`), but it fails the test as written. A diode across the 10 k
-  makes it fall within ~1 ms.
-- **Test 3.3's numbers are the 50 mm gates'.** With 60 mm gates the window is 2.98 ms, so a 2.6 ms pair (75.7 fps)
-  must latch. The bench host judges the boundary between 2.9 and 3.1 ms.
+- **Resolved in the hardware (docs/turret-wiring.md 3, D47):** the brake's release is now immediate (D3 and 1 k: 0.6-
+  1.4 ms), test 3.3 judges the 60 mm gates' window, and the trip latch is set-only (a slower ball after a trip cannot
+  clear it). One-shot A is 18.5 ms (16-21), inside test 4.7's 25 ms.
+- **Firmware duties the hardware now relies on:** DShot pins held low while ARM_IN is low (`flywheel.update()` returns no
+  frame); a new set speed or throttle while spinning ramps over 300 ms (never a step down: AM32's complementary PWM is
+  off, but a step down would still be a hard brake; never a step up: the ring's current); the inputs' own pulls off;
+  PULSE_MON on A3, TRIP_IN polled.
 - **Test 6.7 cannot hold for a ball already at the nip.** A ball at the nip at the release, or reaching it within
   ~10 ms, leaves fast (the physics' own table). The early zero throttle narrows that window and cannot close it.
-- **Test 4.7's 21 ms has no margin.** A 20 ms +-5 % monostable gives 19-21 ms. Select its R as for the trip window.

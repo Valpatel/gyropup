@@ -244,7 +244,7 @@
  "sim": {
   "seed": 1068,
   "simulated_s": 47.8,
-  "wall_s": 2.4,
+  "wall_s": 1.5,
   "stand_ins": [
    "clear_0",
    "clear_10",

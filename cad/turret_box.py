@@ -55,7 +55,11 @@ def _j501():
                   'lid_screws': E['lid_screw_centers'], 'counterbore_d': E['lid_counterbore_diameter'], 'screw_head_z': E['lid_screw_head_z'],
                   'lid_screw_len': float(E['lid_screw'].split('x')[1].split()[0]),
                   'fan_xy': [C['center_in_pcb'][0] + E['pcb_margin'], C['center_in_pcb'][1] + E['pcb_margin']],
-                  'ring_d': E['fan_duct']['inner_diameter'], 'ring_wall': E['fan_duct']['wall'], 'hex_field': E['hex_field'],
+                  # Rev 0.9 replaced the fan duct's ring by a flush grille: keep the Rev 0.8 ring's sizes when the duct is gone
+                  # (the adapter's intake shroud was drawn round that ring; flagged in box.json's j501 source)
+                  'ring_d': (E.get('fan_duct') or {}).get('inner_diameter', p['ring_d']),
+                  'ring_wall': (E.get('fan_duct') or {}).get('wall', p['ring_wall']), 'hex_field': E.get('hex_field', p['hex_field']),
+                  'fan_duct_in_source': 'fan_duct' in E,
                   'bulkheads': [[b['side'], b['y']] for b in ab['positions']], 'bulkhead_z': ab['z'],
                   'revision': P.get('revision'), 'source': str(f)})
     return p

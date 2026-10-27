@@ -34,7 +34,7 @@ only in recent ones). Where a version names a row differently, set the behaviour
 | Extended DShot telemetry (EDT) | allowed, if the version shows the option | The firmware turns EDT on with DShot command 13 at every power-up. The temperature frames then arrive interleaved with eRPM and go into the WHEELS frame and test 6.6 |
 | Brake on stop | **on** | Zero throttle shorts the phases through the ESC's low-side FETs. That is every ordinary stop, and the firmware's reaction to a release: it sees the 1 kHz train stop on PULSE_MON within 4 ms and commands zero, so the ESC brakes ~16 ms before the monostable cuts 12 V FLY |
 | Drag brake strength | 10 (full) | The braking above is as strong as the ESC can make it |
-| Complementary PWM | on (default) | Active freewheeling; needed for the brake and for smooth speed control at partial throttle |
+| Complementary PWM | **off** | With it on, a slowing ESC rectifies the wheel's energy back into its supply (3 J a wheel at 8,855 rpm), and the fixed 12 V regulator is a buck that cannot take it: 0.3 J would lift the rail to ~27 V. Off, a slowing wheel coasts or brakes in its own windings (brake on stop is a separate setting and still works). The speed loop's feed-forward map comes from bench test 4.3 with this setting (docs/turret-wiring.md 3.6) |
 | Variable PWM frequency | on (default) | |
 | PWM frequency | 24 kHz (default) | |
 | Timing advance | default (level 2, ~15 deg) | A 14-pole 22xx runs well at the default; auto advance off |
@@ -68,14 +68,14 @@ only in recent ones). Where a version names a row differently, set the behaviour
            300 ms ramp                                                                 ball leaves at ~6 fps
 ```
 
-- **The overlap on re-arm.** As drawn, the brake's RC is symmetric, so the hardware short stays closed for ~11 ms
-  after 12 V FLY returns (test 3.4 flags this). It is harmless with these settings. AM32 drives nothing until it has
-  armed on 0.5 s of zero throttle, and its own brake on stop puts the low-side FETs in parallel with the external
-  short, which is the same short. Nothing on the ESC may drive a high-side FET in its first ~20 ms. Do not enable an
-  option that runs the motor at power-up; the default arming beeps play later than that.
+- **Re-arm.** The brake's RC opens the hardware short 0.6-1.4 ms after ARM rises (D3 and 1 k), while AM32 drives
+  nothing until it has armed on 0.5 s of zero throttle; its own brake on stop puts the low-side FETs in parallel with
+  the external short, which is the same short. Do not enable an option that runs the motor at power-up; the default
+  arming beeps play later than that.
 - **Never a stepped start.** The firmware ramps the set speed over 300 ms (100 % throttle over 300 ms in the bench's
-  open-loop modes). It never writes a step: a stepped start is 12 A at the ring's 2 A circuits. `max_ramp` and the
-  10 A limit are the second and third lines.
+  open-loop modes), and a new set speed while spinning ramps from the old one over 300 ms too. It never writes a
+  step: a stepped start is 12 A at the ring's 2 A circuits. `max_ramp` and the 10 A limit are the second and third
+  lines.
 - **The speed trim is bounded.** The firmware's speed loop adds at most +-8 % throttle to the feed-forward and moves at
   most 0.05 % a millisecond. A doubled rail (24 V on the ESCs) therefore runs the wheels away, and the eRPM limit trips
   within 3 telemetry reads. Do not enable an ESC-side closed-loop speed mode if a version offers one: it would hold

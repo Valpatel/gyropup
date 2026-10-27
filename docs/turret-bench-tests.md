@@ -22,7 +22,7 @@ for test 5.3.
 
 | # | Test | Accept | JSON |
 |---|---|---|---|
-| 1.1 | Printed sizes: the bearing seat Ø65.0, the journal Ø50.0, the carrier's Ø65 opening, the tyre bore 26.9, the CT dowel holes, the hub's bore after reaming (5.00 on the X2216's pilot) | a light press for the seat, a slip fit for the journal, the hub a close slip fit on the pilot and flat on the adapter's flange | fits.json |
+| 1.1 | Printed sizes: the bearing seat Ø65.0, the journal Ø50.0, the carrier's Ø65 opening, the tyre bore 26.9, the CT dowel holes, the hub's bore after reaming (5.00 on the X2216's pilot); the stand's panel cutouts with the parts in hand (the rocker, the fuse holder, the TB3M pendant socket's D hole: its 11.3 mm is from Switchcraft's drawing, not measured) | a light press for the seat, a slip fit for the journal, the hub a close slip fit on the pilot and flat on the adapter's flange; each panel part seats and does not turn | fits.json |
 | 1.2 | Inserts: pull an M3 and an M4 insert from a PA6-CF coupon | > 300 N (M3), > 500 N (M4) | fits.json |
 | 1.3 | Gear mesh: dial-indicator backlash at the turntable's rim; two full turns by hand at tilt 0 and -25° | 0.2-0.4 mm; no binding; nothing touches; the ring's leads do not wind | fits.json |
 | 1.4 | Tilt stops by hand | hard stop at 0° (level) and -25°; nothing else touches at any pan | fits.json |
@@ -41,21 +41,22 @@ for test 5.3.
 
 ## 3. Electrics without motors (the ESC and feed rails unplugged at the CT)
 
-**Before the first power-up:** the Pololu 2815's slide switch is OFF (docs/turret-wiring.md: with it ON the safety line
-cannot cut the flywheels), the in-line fuse is the 5 A MINI, the Feather's Trm jumper is closed (its 120 R is the
+**Before the first power-up:** the Pololu 2815's slide switch is OFF and glued there (docs/turret-wiring.md: with it ON
+the safety line cannot cut the flywheels), the in-line fuse is the 5 A MINI, the Feather's Trm jumper is closed (its 120 R is the
 turret's only CAN terminator), and the CT power plug is out (the signal plug goes in for 3.4).
 
 | # | Test | Accept | JSON |
 |---|---|---|---|
-| 3.1 | Power-up: 5 V, 3.3 V, 12 V MAIN and 12 V PAN present; the Feather's heartbeat on CAN; the pan and tilt servos answer their IDs. With the pendant held: the 555's train at ring 7, the drop across R8, and every Feather input on the scope (D0, D9-D12, A0, A1, A4) | all within 2 s; no fuse or polyfuse opens; 930-1,045 Hz (986 nominal); R8's drop 3.5-5.3 V peak (1.6-2.4 mA in the opto's LED); no Feather pin above 3.4 V | electrics.json |
+| 3.1 | Power-up: 5 V, 3.3 V, 12 V MAIN and 12 V PAN present; the Feather's heartbeat on CAN; the pan and tilt servos answer their IDs. With the pendant held: the 555's train at ring 7, the drop across R8, and every Feather input on the scope (D0, D9-D12, A0, A1, A3) | all within 2 s; no fuse or polyfuse opens; 900-1,075 Hz (986 nominal); R8's drop 3.5-5.3 V peak (1.6-2.4 mA in the opto's LED); no Feather pin above 3.4 V | electrics.json |
 | 3.2 | The pulse-train safety line with a 12 V lamp on 12 V FLY: pendant held -> lamp on; released -> off; the SAFETY pair opened at the ring, shorted to GND, shorted to +24 V, held at a DC level. Then a 300 Hz and a 3 kHz train and 50 Hz hum from a generator, with the wheels' throttle commanded | the hardware faults turn the lamp off within 25 ms (scope on the 2815's output); the wrong-frequency trains leave the lamp on (the one-shot sees edges) and the firmware zeroes the throttle and refuses to feed within 10 ms (PULSE_MON) | safety_line.json |
-| 3.3 | The trip latch with simulated gate pairs from a generator at 1.3, 2.6, 2.9, 3.1 and 3.5 ms (60 mm gates: 2.98 ms is 66 fps) | latched at <= 2.9 ms (>= 67.9 fps), not at >= 3.1 ms (<= 63.5 fps); it holds until the button; ARM cannot rise while latched. Select one-shot B's R (60-73 k) here | trip.json |
-| 3.4 | Brake timing: the cartridge's signal plug in, its power plug out (no motor powered); scope ARM (CT signal 5), BRAKE (U12 pin 2) and 12 V FLY; release and re-arm 5 times | BRAKE rises 5-14 ms after ARM falls (6.8 ms x ln(3.3 / V_T-)); falls within 1 ms of ARM rising (D3 and R26; the ESCs drive nothing for 0.5 s after 12 V FLY returns, AM32 arming on zero throttle); each FET gate at >= 4.3 V while BRAKE is high | brake_timing.json |
+| 3.3 | The trip latch with simulated gate pairs from a generator at 1.3, 2.6, 2.9, 3.1 and 3.5 ms (60 mm gates: 2.98 ms is 66 fps); then a 2.6 ms pair followed by a 3.5 ms pair (a slower ball after a trip) | latched at <= 2.9 ms (>= 67.9 fps), not at >= 3.1 ms (<= 63.5 fps); the slower pair after a trip leaves it latched; it holds until the button; ARM cannot rise while latched. Select one-shot B's R (start 63.4 k; 60.4-73.2 k) here | trip.json |
+| 3.4 | Brake timing: the cartridge's signal plug in, its power plug out (no motor powered); scope ARM (CT signal 5), BRAKE (U12 pin 2) and 12 V FLY; release and re-arm 5 times | BRAKE rises 5-14 ms after ARM falls (6.8 ms x ln(3.3 / V_T-)); falls within 2 ms of ARM rising (0.6-1.4 ms drawn, D3 and R26; the ESCs drive nothing for 0.5 s after 12 V FLY returns, AM32 arming on zero throttle); each FET gate at >= 4.6 V while BRAKE is high | brake_timing.json |
 | 3.5 | Homing: 50 power-ups at random pans | every home within 7 s; the index centre's spread <= 0.1°; 10 continuous turns each way and back within 0.2° | homing_bench.json |
 | 3.6 | The servo bus over the ring: 1 h of 100 Hz reads and writes to the pan servo at 500 kbit/s while panning | checksum retries < 0.1 %; no command lost (position within 2 counts) | ring_bus.json |
 | 3.7 | Ring contact resistance and dropouts: 5 A through the paralleled pairs at 12 pan positions, then panning at 15 and 2 rpm, scope at 1 MHz | <= 60 mOhm per paralleled pair; no dropout > 100 us; variation <= 60 mOhm | ring_contacts.json |
 | 3.8 | CAN over the ring: 1,000 frames/s at 15 rpm for 1 h, then at 2 rpm for 1 h | 0 bus-off; error frames < 1 in 10^6; no lost telemetry second | ring_can.json |
 | 3.9 | The feed servo alone (12 V from the bench through CT power pins 1-3, the ESCs unplugged): 200 steps of 45° under an empty hopper, then a full one | settled within 2° in <= 250 ms (the model: 232-246 ms); the load reading repeatable; a pencil in a pocket detected within 300 ms and reversed | feed_servo.json |
+| 3.10 | The gates' light: each phototransistor's collector (Q8, Q9) with the beam clear and with a 22 mm rod in the barrel, and both gates' outputs on the scope while a ball is pushed through by hand | clear < 1 V, cut > 4 V (R41/R42 10 k; if a clear level stays over 1 V, 39 k); one clean edge per gate, no chatter | gates.json |
 
 ## 4. Flywheels: the ceiling before anything else
 
@@ -63,13 +64,14 @@ turret's only CAN terminator), and the CT power plug is out (the signal plug goe
 |---|---|---|---|
 | 4.1 | **No-load speed at 100 % throttle on the 12 V rail**, no balls, both wheels (eRPM telemetry / 7; confirm first that each ESC returns bidirectional-DShot eRPM, which the pre-feed check needs: firmware/turret/am32_settings.md) | **<= 11,180 rpm (78,260 eRPM)** for the Ø34 tyres: at or under that every ball stays under 66 fps by the model (the worst-corner motor and rail make 11,461); the rail 12.0 ± 0.5 V under load. Above it: stop, a lower-KV motor | ceiling.json |
 | 4.2 | **Ceiling with balls**: 20 balls at 100 % throttle, Ø34 tyres | every ball <= 66 fps on both chronographs. Any ball over 66: this motor and tyre are rejected (Ø32 cannot be used: it does not grip). Ø36 is not fitted with the X2216 (70.7 fps at the worst corner) | ceiling.json |
-| 4.3 | Speed at every throttle: 10 balls each at 60, 70, 80, 90 and 100 % | a monotonic table, SD <= 1.5 fps at each: the firmware's throttle-to-speed map | speed_map.json |
+| 4.3 | Speed at every throttle (AM32's complementary PWM off, as set): 10 balls each at 60, 70, 80, 90 and 100 % | a monotonic table, SD <= 1.5 fps at each: the firmware's throttle-to-speed map | speed_map.json |
 | 4.4 | Set speed: 50 balls of one brand at the set speed for 52 fps (8,855 rpm, 61,985 eRPM) | mean within ± 2 fps of 52, SD <= 2.5 fps (the model's one-brand spread is ~2), none over 60 | set_speed.json |
 | 4.5 | Spin-up current at the ring's shunt with the **300 ms ramp** (never a stepped start on this ring) and burst recovery (8 balls at 3/s) | peak <= 3 A at 24 V (the model: 2.5 A); the bus never below 16 V at the board; no ESC reset; every shot of the burst within ± 3 fps of the set speed | power.json |
 | 4.6 | **The 24 V fault, simulated without a ball**: (a) hopper empty, muzzle into the catch box, the feed servo unplugged, no balls anywhere on the bench: feed the ESC rail from the bench supply at 24 V through the CT power plug only, read the no-load eRPM (expect ~21,000 rpm) and confirm the firmware's pre-feed check goes SAFE and refuses to step; (b) the trip latch with a 1.3-1.6 ms simulated gate pair (test 3.3). Never a ball at 24 V | (a) SAFE within 100 ms of the first eRPM read over the limit; (b) latched | fault_24v.json |
 | 4.7 | Release braking: wheels at speed, no ball; release; scope one phase through the 100:1 probe and read eRPM | the ESC rail off <= 25 ms after the last pulse (the one-shot: 18 ms, 16-22); the short closed 5-14 ms after the rail off; speed <= 5 % by +50 ms after the rail off (the model: the short alone reaches 5 % ~48 ms after ARM falls; AM32's brake on stop, from ~4 ms, makes it sooner); the FETs < 60 °C after 20 releases in 2 min | release.json |
 | 4.8 | Tyre growth and creep: the OD at the set speed by strobe or video; the tyres after 500 balls | growth <= +0.7 mm on the diameter; no creep on the rim | tyres.json |
 | 4.9 | Ring temperature: 5 A for 1 h at 15 rpm, a thermocouple on the ring's body and the carrier | rise <= 20 K | ring_temperature.json |
+| 4.10 | With the wheels at the set speed: scope a brake FET's gate (Q2) and 12 V FLY and 12 V MAIN; then command 8,855 -> 6,000 rpm and back, and a stop | the FET's gate under 0.5 V peak (the ESC's phase edges do not lift it) and the FETs cold after a minute; 12 V FLY and 12 V MAIN under 13 V throughout (AM32's complementary PWM off, the firmware's ramp) | rails.json |
 
 ## 5. Feeding
 

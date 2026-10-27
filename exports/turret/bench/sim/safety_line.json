@@ -8,7 +8,7 @@
  "checks": [
   {
    "check": "release: rail off (2815 output)",
-   "value": 20.0,
+   "value": 19.0,
    "limit": "<= 25 ms",
    "pass": true
   },
@@ -20,7 +20,7 @@
   },
   {
    "check": "open at the ring: rail off (2815 output)",
-   "value": 21.0,
+   "value": 19.0,
    "limit": "<= 25 ms",
    "pass": true
   },
@@ -32,7 +32,7 @@
   },
   {
    "check": "short to GND: rail off (2815 output)",
-   "value": 20.0,
+   "value": 18.0,
    "limit": "<= 25 ms",
    "pass": true
   },
@@ -44,7 +44,7 @@
   },
   {
    "check": "short to +24 V: rail off (2815 output)",
-   "value": 21.0,
+   "value": 19.0,
    "limit": "<= 25 ms",
    "pass": true
   },
@@ -56,7 +56,7 @@
   },
   {
    "check": "DC level: rail off (2815 output)",
-   "value": 21.0,
+   "value": 19.0,
    "limit": "<= 25 ms",
    "pass": true
   },
@@ -108,7 +108,7 @@
    {
     "case": "release",
     "lamp_on_before": true,
-    "rail_off_ms": 20.0,
+    "rail_off_ms": 19.0,
     "firmware_safe_ms": 4.0,
     "firmware_causes": [
      "safety pulses bad"
@@ -118,7 +118,7 @@
    {
     "case": "open at the ring",
     "lamp_on_before": true,
-    "rail_off_ms": 21.0,
+    "rail_off_ms": 19.0,
     "firmware_safe_ms": 4.0,
     "firmware_causes": [
      "safety pulses bad"
@@ -128,7 +128,7 @@
    {
     "case": "short to GND",
     "lamp_on_before": true,
-    "rail_off_ms": 20.0,
+    "rail_off_ms": 18.0,
     "firmware_safe_ms": 4.0,
     "firmware_causes": [
      "safety pulses bad"
@@ -138,7 +138,7 @@
    {
     "case": "short to +24 V",
     "lamp_on_before": true,
-    "rail_off_ms": 21.0,
+    "rail_off_ms": 19.0,
     "firmware_safe_ms": 1.0,
     "firmware_causes": [
      "safety pulses bad"
@@ -148,7 +148,7 @@
    {
     "case": "DC level",
     "lamp_on_before": true,
-    "rail_off_ms": 21.0,
+    "rail_off_ms": 19.0,
     "firmware_safe_ms": 1.0,
     "firmware_causes": [
      "safety pulses bad"
@@ -178,7 +178,7 @@
    {
     "case": "50 Hz hum",
     "lamp_on_before": true,
-    "rail_off_ms": null,
+    "rail_off_ms": 19.0,
     "firmware_safe_ms": 5.0,
     "firmware_causes": [
      "safety pulses bad"
@@ -188,7 +188,7 @@
   ],
   "300 Hz train: rail off (2815 output), ms (expected: stays on)": null,
   "3 kHz train: rail off (2815 output), ms (expected: stays on)": null,
-  "50 Hz hum: rail off (2815 output), ms (expected: stays on)": null
+  "50 Hz hum: rail off (2815 output), ms (expected: stays on)": 19.0
  },
  "notes": [
   "The 20 ms retriggerable one-shot is kept triggered by any train faster than ~50 Hz: a 300 Hz or 3 kHz train (and 50 Hz hum at the one-shot's own period) holds the rails on, as docs/turret-wiring.md 3.1 says. The firmware refuses on PULSE_MON (periods outside 0.85-1.15 ms); the hardware frequency window (a 74HC221 pair) is a v1 item."
@@ -196,7 +196,7 @@
  "sim": {
   "seed": 1032,
   "simulated_s": 16.4,
-  "wall_s": 0.6,
+  "wall_s": 0.4,
   "stand_ins": [],
   "shortened": {},
   "warning": "simulated turret (firmware/turret/sim_turret.py): not a bench reading"

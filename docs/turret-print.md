@@ -6,7 +6,7 @@ From `cad/turret_print.py`: every printed part of the bench turret and its stand
 
 | Part | Material (Bambu profile) | Copies | On the bed | Settings | g each | h each | Note |
 |---|---|---|---|---|---|---|---|
-| [stand_box](../exports/turret/print/stand_box.3mf) | petg (Bambu PETG HF @BBL P1S 0.4 nozzle) | 1 | upside down, on its top plate | 3 walls, 20% gyroid, tree supports | 377.64 | 8.4 | the stand first: it needs no decision |
+| [stand_box](../exports/turret/print/stand_box.3mf) | petg (Bambu PETG HF @BBL P1S 0.4 nozzle) | 1 | upside down, on its top plate | 3 walls, 20% gyroid, tree supports | 377.49 | 8.4 | the stand first: it needs no decision |
 | [stand_bottom](../exports/turret/print/stand_bottom.3mf) | petg (Bambu PETG HF @BBL P1S 0.4 nozzle) | 1 | flat | 3 walls, 20% gyroid | 103.86 | 2.5 |  |
 | [pan_base](../exports/turret/print/pan_base.3mf) | pa6-cf (Bambu PA6-CF @BBL X1C) | 1 | on its foot | 4 walls, 40% gyroid, tree supports | 133.44 | 6.4 | 40 % gyroid inside 4 perimeters (the FEA case) |
 | [pan_ring](../exports/turret/print/pan_ring.3mf) | pa6-cf (Bambu PA6-CF @BBL X1C) | 1 | upside down: the gear teeth flat on the bed | 4 walls, 100% zig-zag, tree supports | 78.21 | 3.8 |  |
@@ -26,7 +26,7 @@ From `cad/turret_print.py`: every printed part of the bench turret and its stand
 | [board_bay](../exports/turret/print/board_bay.3mf) | petg (Bambu PETG HF @BBL P1S 0.4 nozzle) | 1 | on its back | 5 walls, 40% gyroid | 24.36 | 0.9 |  |
 | [flywheel_tyre](../exports/turret/print/flywheel_tyre.3mf) | tpu95 (Bambu TPU 95A @BBL X1C) | 2 | flat | 3 walls, 100% zig-zag | 4.43 | 0.3 | Ø34 mounted (printed 4 % under the Ø28 rim): the only tyre for the X2216 (D42) |
 
-**Totals:** 1291.1 g of filament, 50.1 h on one printer: pa6-cf 637.0 g / 31.8 h, petg 604.2 g / 16.0 h, petg-clear 41.0 g / 1.7 h, tpu95 8.9 g / 0.6 h.
+**Totals:** 1291.0 g of filament, 50.1 h on one printer: pa6-cf 637.0 g / 31.8 h, petg 604.1 g / 16.0 h, petg-clear 41.0 g / 1.7 h, tpu95 8.9 g / 0.6 h.
 
 ## The schedule
 

@@ -108,7 +108,7 @@
  "sim": {
   "seed": 1039,
   "simulated_s": 142.3,
-  "wall_s": 5.7,
+  "wall_s": 4.4,
   "stand_ins": [],
   "shortened": {},
   "warning": "simulated turret (firmware/turret/sim_turret.py): not a bench reading"
