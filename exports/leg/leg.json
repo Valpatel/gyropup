@@ -99,42 +99,48 @@
    ]
   ]
  },
- "lug_clock_deg": 25.0,
+ "lug_clock_deg": 7.0,
  "stop_posts_mm": [
   [
-   114.0,
-   42.9
+   108.8,
+   47.2
   ],
   [
-   -114.0,
-   42.9
+   -108.8,
+   47.2
   ],
   [
-   29.5,
-   -36.0
+   25.6,
+   -30.4
   ],
   [
-   -29.5,
-   -36.0
+   -25.6,
+   -30.4
   ]
  ],
  "mass_g": {
-  "printed": 2740,
-  "bought": 6388,
-  "total": 9127,
+  "printed": 2610,
+  "machined": 308,
+  "bought": 6365,
+  "total": 9282,
   "printed_parts": {
-   "hip_frame": 781.9,
-   "output_adapter": 71.5,
-   "upper_link": 363.8,
+   "hip_frame": 771.9,
+   "upper_link": 362.5,
    "front_link": 442.5,
    "wheel_link": 614.8,
    "apex_spacer": 13.7,
-   "stop_sleeve": 4.0
+   "stop_sleeve": 10.4
+  },
+  "machined_parts": {
+   "output_adapter": 153.8
   }
+ },
+ "made_to_order": {
+  "output_adapter": "exports/leg/cnc/output_adapter.step"
  },
  "print": {
   "too_big": [],
-  "hours": 180.1
+  "hours": 172.6
  },
  "clashes": [],
  "cable_route": {

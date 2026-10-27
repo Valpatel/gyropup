@@ -33,6 +33,7 @@ import numpy as np  # noqa: E402
 R = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(R / 'cad'))
 import fivebar as fb  # noqa: E402
+from sim.leg_control import Gains, clip_motor, polar, vmc_from_state  # noqa: E402  (the controller, simulator-free)
 
 OUT = R / 'exports' / 'leg'
 G = 9.81
@@ -41,7 +42,9 @@ CAT = {it['id']: it for f in ('leg_actuators.json', 'wheel_motors.json') for it 
 MOTOR = CAT[fb.MOTOR]['specs']
 WHEEL = CAT[fb.WHEEL]['specs']
 BUS_V = 54.0                                     # FLEXVOLT in 60 V mode, nominal
-HALF_MASS = 13.1                                   # kg one leg carries: half the v2 robot (26.2 kg, sim/robot_v2.py).
+HALF_MASS = 14.75                                  # kg one leg carries: half the robot's 29.5 kg (docs/body-plan.md's
+                                                   # budget with its real parts; 28.5 kg is the target; sim/robot_v2.py
+                                                   # had 26.2 with an interim body).
                                                    # The ballast is its own welded body: the carriage's explicit
                                                    # <inertial> made MuJoCo drop a geom mass there (the rig carried 8.5 kg
                                                    # of a meant 11 until 2026-10-27; found by the spring study)
@@ -53,15 +56,18 @@ WHEEL_R = (fb.gmi.motor_interface(fb.WHEEL)['od'] or 171.3) / 2000
 # RS-04 rotor inertia is not published (the manual has none): ~3e-4 kg m^2 (a ~150 g rotor ring at r 45 mm, an
 # estimate) x 9^2 reflected. It sets how hard a landing is: the motors' rotors are most of the leg's moving mass.
 ARMATURE = 3.0e-4 * MOTOR['gear_ratio'] ** 2
-# the stop: a TPU 95A sleeve (4 mm wall, ~18 x 8 mm contact) at 58 mm: k = E A / t, as a joint stiffness k r^2
+# the stop: a TPU 95A sleeve (fivebar.TPU_SLEEVE: an 8 mm wall, ~18 x 11 mm contact) at 58 mm: k = E A / t, as a joint
+# stiffness k r^2; E is the filament maker's (catalog/materials.json tpu95: Bambu TPU 95A HF, 9.8 MPa). Until
+# 2026-10-27 the rig used an unsourced 40 MPa and a 4 mm wall: four times too stiff, with too little travel.
 # the BotWheel's tyre: solid rubber with a tread (estimate ~150-250 N/mm radially): MuJoCo's contact as a 7.7 ms,
 # 0.7-damped spring on the few kg behind it
 TYRE_SOLREF = '0.0077 0.7'
-TPU_E = 40e6
+TPU_E = json.loads((R / 'catalog/materials.json').read_text())['tpu95']['modulus_gpa'] * 1e9
 OFF_DAMPING = 0.2 * (MOTOR['kt_nm_per_a'] / MOTOR['gear_ratio']) ** 2 / 0.15 * MOTOR['gear_ratio'] ** 2   # N m s/rad, see run()
-STOP_TRAVEL = 0.06                 # rad: the TPU sleeve's 3.5 mm at 58 mm; then the steel post (a hard limit)
-STOP_B = 0.6 * math.sqrt(4844.0 * 0.1)   # N m s/rad: ~0.3 of critical for ~0.1 kg m^2 behind the stop
-STOP_K = TPU_E * (18e-3 * 8e-3) / 4e-3 * (fb.P['stop_r'] / 1000) ** 2
+TPU_WALL = (fb.TPU_SLEEVE[0] - fb.TPU_SLEEVE[1]) / 2 / 1000          # m
+STOP_TRAVEL = (TPU_WALL - 0.5e-3) / (fb.P['stop_r'] / 1000)          # rad: the sleeve squeezed to 0.5 mm; then the steel post
+STOP_K = TPU_E * (18e-3 * 11e-3) / TPU_WALL * (fb.P['stop_r'] / 1000) ** 2
+STOP_B = 0.6 * math.sqrt(STOP_K * 0.1)   # N m s/rad: ~0.3 of critical for ~0.1 kg m^2 behind the stop
 
 
 # ----------------------------------------------------------------------------------- the model
@@ -70,15 +76,17 @@ STOP_K = TPU_E * (18e-3 * 8e-3) / 4e-3 * (fb.P['stop_r'] / 1000) ** 2
 def mass_props():
     """Body of every moving group in its own link frame (SI), from the CAD solids."""
     from cadagent.robot import Body, solid_mass_properties, cylinder_body, combine
-    dens = json.loads((R / 'catalog/materials.json').read_text())['pa6-cf']['density_g_cm3']
+    mats = json.loads((R / 'catalog/materials.json').read_text())
     L = fb.leg_parts()
-    sm = lambda name: solid_mass_properties(L.parts[name].val(), dens, 1.0, name)
+    sm = lambda name: solid_mass_properties(L.parts[name].val(), mats[L.meta[name]['material']]['density_g_cm3'], 1.0, name)
     l2 = fb.P['l2'] / 1000
     yb = fb.Y
     # bearings, pins, nuts (datasheet masses): 6001 22 g, 61812 110 g, ISO 7379 12x60 75 g, M10 nyloc 11 g
     kc = Body(2 * 0.022 + 0.075 + 0.011 + 0.008, (0.0, 0.05, 0.0), name='knee cartridge')
-    ad = sm('output_adapter')                                    # built on the motor axis: already in the link frame
-    upper = combine([sm('upper_link'), ad, Body(0.008 * 8, (0.0, 0.015, 0.0), name='M5 x 8')])
+    ad = sm('output_adapter')                                    # built on the motor axis: already in the link frame (6061, D46)
+    head_y = (fb.Y['motor_out'] + fb.gmi.output_adapter(fb.MOTOR, 'L')[1]['z_head_seat']) / 1000
+    upper = combine([sm('upper_link'), ad, Body(0.008 * 8, (0.0, 0.015, 0.0), name='M5 x 8'),
+                     Body(0.005 * 9, (0.0, head_y - 0.010, 0.0), name='9 x M5 x 25 into the motor')])
     front = combine([sm('front_link'), Body(0.110, (l2, 0.062, 0.0), name='61812'), kc])
     stator_kg = WHEEL['mass_g'] / 1000 * (1 - ROTOR_SHARE)
     wheel_link = combine([sm('wheel_link'), kc, Body(stator_kg, (l2, yb['wheel'] / 1000, 0.0), name='BotWheel stator'),
@@ -231,16 +239,7 @@ class Leg:
     def polar(self, d):
         """Virtual leg: length (m), lean (rad, + = wheel forward), their rates, the Jacobian d(x,z)/d(phi) (m/rad)."""
         p1, p2 = self.phi(d)
-        E = fb.fk(p1, p2)['E']
-        J = np.array(fb.jacobian(p1, p2)) / 1000.0
-        x, z = E[0] / 1000, E[1] / 1000
-        dphi = np.array([d.qvel[self.v['motor_f']], d.qvel[self.v['motor_r']]])
-        dx, dz = J @ dphi
-        L = math.hypot(x, z)
-        th = math.atan2(x, -z)
-        dL = (x * dx + z * dz) / L
-        dth = (-z * dx + x * dz) / (L * L)
-        return L, th, dL, dth, J, (x, z)
+        return polar(p1, p2, d.qvel[self.v['motor_f']], d.qvel[self.v['motor_r']])
 
     def set_height(self, d, h_mm, rail_z=None):
         """Put the leg at a length (joints consistent with the closed loop) and the carriage on the floor (or at rail_z)."""
@@ -268,30 +267,10 @@ def stop_torque(phi, omega, lo, hi):
     return 0.0
 
 
-def clip_motor(tau, omega, peak, omega_max, cap=None):
-    lim = peak if tau * omega <= 0 else peak * max(0.0, 1.0 - abs(omega) / omega_max)
-    if cap:
-        lim = min(lim, cap)
-    return max(-lim, min(lim, tau))
-
-
-@dataclass
-class Gains:
-    kp_L: float = 3000.0          # N/m on the virtual leg's length
-    kd_L: float = 250.0
-    kp_th: float = 150.0          # N m/rad on its lean
-    kd_th: float = 6.0
-
-
 def vmc(leg: Leg, d, L_cmd, th_cmd=0.0, ff=0.0, g: Gains = Gains(), force=None):
-    """Motor torques for a virtual spring-damper leg (or a straight force push, force=N along the leg)."""
-    L, th, dL, dth, J, _ = leg.polar(d)
-    F = force if force is not None else g.kp_L * (L_cmd - L) - g.kd_L * dL + ff
-    T = g.kp_th * (th_cmd - th) - g.kd_th * dth
-    uL = np.array([math.sin(th), -math.cos(th)])
-    uth = np.array([math.cos(th), math.sin(th)])
-    FE = F * uL + (T / L) * uth                                  # the force the leg puts on the ground at the axle
-    return J.T @ FE
+    """Motor torques for a virtual spring-damper leg (or a straight force push, force=N along the leg): the
+    simulator-free law (sim/leg_control.py) on the simulated hips' angles and rates."""
+    return vmc_from_state(leg.phi(d), (d.qvel[leg.v['motor_f']], d.qvel[leg.v['motor_r']]), L_cmd, th_cmd, ff, g, force)
 
 
 # ----------------------------------------------------------------------------------- scenarios

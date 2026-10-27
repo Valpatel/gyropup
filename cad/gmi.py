@@ -104,46 +104,101 @@ def _cyl(r, z0, z1, x=0.0, y=0.0):
 
 # ----------------------------------------------------------------------------------- the output adapter (AO)
 
+def ao_bolt_deg(s) -> list:
+    """The standard face's bolt angles (deg, motor frame): the standard's bolt_deg, else evenly spaced from half a
+    pitch."""
+    return s.get('bolt_deg') or [360.0 / s['bolts'] * (k + 0.5) for k in range(s['bolts'])]
+
+
+def _arc_slot(r, w, a0, a1, z0, z1):
+    """A pocket of width w along the arc of radius r from a0 to a1 (deg), round-ended, from z0 to z1."""
+    ri, ro = r - w / 2, r + w / 2
+    p = lambda rr, a: (rr * math.cos(math.radians(a)), rr * math.sin(math.radians(a)))
+    am = (a0 + a1) / 2
+    sector = (cq.Workplane('XY').workplane(offset=z0).moveTo(*p(ri, a0)).lineTo(*p(ro, a0)).threePointArc(p(ro, am), p(ro, a1))
+              .lineTo(*p(ri, a1)).threePointArc(p(ri, am), p(ri, a0)).close().extrude(z1 - z0))
+    return sector.union(_cyl(w / 2, z0, z1, *p(r, a0))).union(_cyl(w / 2, z0, z1, *p(r, a1)))
+
+
 def output_adapter(part_id: str, size: str = 'L'):
-    """Output adapter, motor frame (output face z = 0). Returns (solid, info with the axial positions)."""
+    """Output adapter, motor frame (output face z = 0). Returns (solid, info with the axial positions).
+
+    The standard's 'made' says how it is made: 'cnc' (6061-T6 from an instant-price CNC service: the face's holes
+    tapped, a blind bore from the motor side for mass) or printed (PA6-CF, heat-set inserts in the face). Either way the
+    motor's screws sit in pockets with their heads below the face, where the link sits (the standard's 'head'); where
+    two pockets would leave a sliver of the spigot between them, the spigot is cut away between them."""
     mi, s = motor_interface(part_id), STD[f'AO-{size}']
+    cnc = s.get('made') == 'cnc'
     o = mi['output']
     relief = s['relief']
     z_sh0 = relief
     z_face = z_sh0 + s['shoulder_len'] + s['journal_len'] + PRINT['journal_extra']   # longer: room for a thicker printed plate
+    z_top = z_face + s['spigot_h']
     bw = STD[f'AC-{size}']['bearing_w']
     z_j0 = z_face - 1.0 - STD[f'AC-{size}']['seat_lip'] - bw   # the bearing sits under the plate's lip at its leg-side face
     body = (_cyl(o['flange_d'] / 2 - 0.5, 0, relief + 0.01)                                # contact boss on the flange only
             .union(_cyl(s['shoulder_d'] / 2, z_sh0, z_j0))                                  # shoulder: seats the inner ring
             .union(_cyl(s['journal_d'] / 2, z_j0, z_face))                                  # bearing journal
-            .union(_cyl(s['spigot_d'] / 2, z_face, z_face + s['spigot_h'])))                 # standard spigot
-    # the motor's screws: clearance through, heads in counterbores under the spigot face
+            .union(_cyl(s['spigot_d'] / 2, z_face, z_top)))                                 # standard spigot
+    # the motor's screws: clearance through, heads in pockets in the spigot
     b = o['bolts']
+    hd = s.get('head') or {'kind': 'socket head', 'd': 8.5, 'h': 5.0, 'pocket_d': 10.0, 'below_face': 0.6}
+    pr = hd['pocket_d'] / 2
+    z_pk = z_face - hd['below_face'] - hd['h']                                              # the pockets' floor: the heads' seat
     for (x, y) in circle_pts(b['pcd'], angles=b['angles']):
-        d = clear(b['thread'])
-        body = body.cut(_cyl(d / 2, -1, z_face + s['spigot_h'] + 1, x, y))
-        body = body.cut(_cyl(d * 0.92, z_face + s['spigot_h'] - 4.5, z_face + s['spigot_h'] + 1, x, y))
+        body = body.cut(_cyl(clear(b['thread']) / 2, -1, z_top + 1, x, y))
+        body = body.cut(_cyl(pr, z_pk, z_top + 1, x, y))
+    angs = sorted(b['angles'])
+    for a0, a1 in zip(angs, angs[1:] + [angs[0] + 360.0]):
+        if b['pcd'] * math.sin(math.radians(a1 - a0) / 2) < 2 * pr + 3.0:                 # under 3 mm of spigot between them
+            body = body.cut(_arc_slot(b['pcd'] / 2, 2 * pr, a0, a1, z_face, z_top + 1))     # (the spigot only: the face's holes are below it)
     if o['dowels']:
         dw = o['dowels']
         for (x, y) in circle_pts(dw['pcd'], angles=dw['angles']):
             if dw['installed']:                                                             # the motor's own pins: sockets
-                body = body.cut(_cyl(dw['d'] / 2 + 0.03, -1, (dw['protrusion'] or 3.0) + 0.5, x, y))
+                body = body.cut(_cyl(dw['d'] / 2 + (0.0 if cnc else 0.03), -1, (dw['protrusion'] or 3.0) + 0.5, x, y))
             else:                                                                           # steel pins pressed in, into the motor
                 body = body.cut(_cyl(dw['d'] / 2 - 0.05, -1, 16, x, y))                     # 16 mm in the plastic: low bearing stress
     if o['pilot_d']:                                                                        # locating boss into the motor's recess
         body = body.union(_cyl(o['pilot_d'] / 2 - 0.05, -2.0, 0.01))
-    # the standard face: heat-set inserts on the PCD, dowel holes, all clear of the motor screw counterbores
-    for (x, y) in circle_pts(s['pcd'], s['bolts'], 360.0 / s['bolts'] / 2):
-        body = body.cut(_cyl(FAST[s['thread']]['insert_pilot'] / 2, z_face - PRINT['insert_depth_ao'], z_face + 0.01, x, y))
-    for a in s['dowel_deg']:
-        x, y = s['pcd'] / 2 * math.cos(math.radians(a)), s['pcd'] / 2 * math.sin(math.radians(a))
+    # the standard face: tapped (cnc) or heat-set inserts (printed) on the PCD, dowel holes
+    c = s.get('cnc', {})
+    for (x, y) in circle_pts(s['pcd'], angles=ao_bolt_deg(s)):
+        if cnc:
+            body = body.cut(_cyl(FAST[s['thread']]['tap'] / 2, z_face - c['drill_depth'], z_face + 0.01, x, y))
+        else:
+            body = body.cut(_cyl(FAST[s['thread']]['insert_pilot'] / 2, z_face - PRINT['insert_depth_ao'], z_face + 0.01, x, y))
+    for (x, y) in circle_pts(s['pcd'], angles=s['dowel_deg']):
         body = body.cut(_cyl(s['dowel_d'] / 2, z_face - 8, z_face + 0.01, x, y))
-    return body, {'part': part_id, 'z_face': z_face, 'z_journal': (z_j0, z_face), 'material': 'pa6-cf',
-                  'note': f"printed PA6-CF, 100 % solid; {s['bolts']} x {s['thread']} heat-set inserts in the face; "
-                          + (f"sockets for the motor's {o['dowels']['count']} x Ø{o['dowels']['d']:g} pins" if o['dowels'] and o['dowels']['installed']
-                             else f"{o['dowels']['count']} x Ø{o['dowels']['d']:g} x 20 steel dowels into the motor" if o['dowels'] else 'no dowels: torque by clamp')
-                          + f"; {b['count']} x {b['thread']} 12.9 screws with washers into the motor",
-                  'assumed': mi['assumed']}
+    if cnc and c.get('bore_d'):                                                             # mass: a blind bore from the motor side
+        body = body.cut(_cyl(c['bore_d'] / 2, -1, c['bore_depth']))
+    pins = (f"sockets for the motor's {o['dowels']['count']} x Ø{o['dowels']['d']:g} pins" + (' (H7)' if cnc else '') if o['dowels'] and o['dowels']['installed']
+            else f"{o['dowels']['count']} x Ø{o['dowels']['d']:g} x 20 steel dowels into the motor" if o['dowels'] else 'no dowels: torque by clamp')
+    screws = f"{b['count']} x {b['thread']} x {hd.get('length', 25):g} {hd['kind']}s into the motor, heads in pockets {hd['below_face']:g} mm below the face"
+    if cnc:
+        note = (f"CNC {c['material']} (instant price: JLCCNC, backup Xometry; exports/leg/cnc/); {s['bolts']} x {s['thread']} tapped "
+                f"{c['thread_depth']:g} deep and {s['dowels']} x Ø{s['dowel_d']:g} {c['dowel_fit']} dowel holes in the face; {pins}; {screws}; "
+                f"Ø{s['journal_d']:g} {c['journal_fit']} journal for the support bearing; a Ø{c['bore_d']:g} x {c['bore_depth']:g} blind bore from the motor side")
+    else:
+        note = f"printed PA6-CF, 100 % solid; {s['bolts']} x {s['thread']} heat-set inserts in the face; {pins}; {screws}"
+    deg = lambda angs: ', '.join(f'{a:g}' for a in angs)
+    spec = None
+    if cnc:                     # the callouts a CNC order needs beyond the STEP (motor frame: the motor face at z = 0, +z to the link)
+        spec = [f"Material {c['material']}; {c['finish']}; general tolerance {c['general']}; threads 6H",
+                f"Ø{s['journal_d']:g} {c['journal_fit']} journal, z {z_j0:g} to {z_face:g}: the support bearing's inner ring (61812), fitted with retaining compound",
+                f"Ø{s['shoulder_d']:g} shoulder, its face at z {z_j0:g} square to the axis within 0.02: seats the bearing's inner ring",
+                f"Contact face at z 0 (Ø{o['flange_d'] - 1:g}) flat within 0.02; {relief:g} mm relief outside it",
+                f"{s['bolts']} x {s['thread']} tapped {c['thread_depth']:g} deep (drill Ø{FAST[s['thread']]['tap']:g} x {c['drill_depth']:g}) from the face (z {z_face:g}), "
+                f"PCD {s['pcd']:g} at {deg(ao_bolt_deg(s))} deg",
+                f"{s['dowels']} x Ø{s['dowel_d']:g} {c['dowel_fit']} x 8 deep from the face, PCD {s['pcd']:g} at {deg(s['dowel_deg'])} deg (Ø{s['dowel_d']:g} m6 dowel pins pressed in)",
+                f"{b['count']} x Ø{clear(b['thread']):g} through, PCD {b['pcd']:g} at {deg(b['angles'])} deg, each with a Ø{hd['pocket_d']:g} counterbore from the top "
+                f"to z {z_pk:g} ({z_face - z_pk:g} below the face); the spigot is cut away between counterbores closer than 3 mm",
+                *([f"{o['dowels']['count']} x Ø{o['dowels']['d']:g} H7 x {(o['dowels']['protrusion'] or 3.0) + 0.5:g} deep from the motor face, PCD {o['dowels']['pcd']:g} "
+                   f"at {deg(o['dowels']['angles'])} deg (the motor's own pins)"] if o['dowels'] and o['dowels']['installed'] else []),
+                f"Ø{c['bore_d']:g} x {c['bore_depth']:g} blind bore from the motor face (mass)",
+                f"Ø{s['spigot_d']:g} -0.02/-0.05 spigot, {s['spigot_h']:g} tall: locates the link"]
+    return body, {'part': part_id, 'z_face': z_face, 'z_journal': (z_j0, z_face), 'z_head_seat': z_pk, 'head': hd,
+                  'material': 'al6061' if cnc else 'pa6-cf', 'made': 'cnc' if cnc else 'print', 'note': note, 'spec': spec, 'assumed': mi['assumed']}
 
 
 def std_face_mate(size: str = 'L', depth: float = 12.0):
@@ -151,7 +206,7 @@ def std_face_mate(size: str = 'L', depth: float = 12.0):
     clearances, dowel holes."""
     s = STD[f'AO-{size}']
     c = _cyl(s['spigot_d'] / 2 + 0.05, -0.01, s['spigot_h'] + 0.3)
-    for (x, y) in circle_pts(s['pcd'], s['bolts'], 360.0 / s['bolts'] / 2):
+    for (x, y) in circle_pts(s['pcd'], angles=ao_bolt_deg(s)):
         c = c.union(_cyl(clear(s['thread']) / 2, -0.01, depth, x, y))
     for a in s['dowel_deg']:
         x, y = s['pcd'] / 2 * math.cos(math.radians(a)), s['pcd'] / 2 * math.sin(math.radians(a))
