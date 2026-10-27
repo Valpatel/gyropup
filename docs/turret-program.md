@@ -53,6 +53,11 @@ Tick with a link to the evidence (file, picture, result JSON). Unticked = open.
 - [ ] Every printed part: orientation, supports, bed fit, print time; tolerances for bearings, inserts and the gear.
 - [ ] Every bought part with a real part number and price; nothing left as "estimate" that can be sourced.
 - [ ] Wiring: power (24 V → 12 V buck for the servos/laser), the ESCs, the M2006 + C610, CAN, the DT12 pinout.
+      **On hold (coordinator, 2026-10-27):** the user wants a high-quality electrical slip ring in the pan joint; a
+      separate planner is researching the ring and the electrical architecture across the pan axis
+      (docs/turret-plan.md, research/turret-slip-ring.md in the main checkout). Until that lands: keep the pan axis
+      and the centre hole free for a ring, add no hard pan stops that would rule out continuous rotation, and do not
+      finalise the pan joint's cable path, the wiring or the DT12 pinout.
 - [ ] Assembly order with pictures; a bench test plan (chronograph, accuracy, jam rate, the pendant).
 
 **Awesome**
@@ -66,3 +71,6 @@ Newest last. One entry per agent run: what it did, what it proved, what is next.
 - 2026-10-26: charter written. The turret exists in CAD (cad/turret.py), on a bench stand (cad/turret_stand.py,
   cad/build_turret.py), in the physics (sim/turret.py: balls at 70 fps from a 30-ball hopper). Nothing above is
   validated yet.
+- 2026-10-27 (in progress): the coordinator passed on the user's request for a high-quality electrical slip ring in
+  the pan joint. A separate planner is researching it. The pan joint's cable path, the wiring and the DT12 pinout
+  wait for its plan; the pan axis and centre hole stay free, and no new hard pan stops go in.
