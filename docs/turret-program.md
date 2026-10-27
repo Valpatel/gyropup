@@ -43,6 +43,24 @@ Tick with a link to the evidence (file, picture, result JSON). Unticked = open.
       impossible, the dial parks safe with the motor off.
 - [ ] Rate of fire: dial speed vs flywheel recovery between shots.
 
+**From the turret-on-Orin-box scene (coordinator, 2026-10-27; cad/turret_box.py on main)**
+- [ ] Hardware speed ceiling that holds at 100 % throttle (safety, highest priority): at full speed on 24 V the
+      Snails would throw ~37 m/s (123 fps). The design answer here: the flywheel ESCs on their own regulated 12 V
+      rail and Ø36 tyres at 25 % crush, so the motors' no-load speed caps the ball (sim/turret_launch.py: worst ball
+      66.4 fps at 100 %, on a +5 % motor and a +4 % rail); the chronograph lockout is the backup. The physics agent
+      is quantifying the options; the 12 V flywheel regulator must be in the BOM and the wiring.
+- [ ] ARM release is not instant: a dropped ball still fires ~96 ms after ARM is released and the wheels coast
+      ~1.4 s. Enable active braking in the ESCs (AM32), and add a fail-safe gate that holds the dropped ball at the
+      chute (spring-closed, opened only while armed). The same gate pre-stages the next ball (item below).
+- [ ] Command to muzzle takes 146 ms, 86 ms of it the ball's drop through the chute: pre-stage a ball at the gate.
+- [ ] Firing backwards: at pan 140 deg the muzzle clears the deck's rear corner by 3 mm, where the operator stands.
+      Add a pan keep-out behind and check the muzzle's clearance at every pan and tilt (a general obstacle check,
+      as for the lidar).
+- [ ] Torque caps: the tilt holds with a 15x margin and slewing is speed-limited (~100x torque margin). Cap both
+      servos' torque in firmware to protect the printed gear and fingers (the pinion is the weak tooth: see the FEA).
+- [ ] Box-specific, for cad/turret_box.py when the turret's base changes: the antennas collide at full depression,
+      the stack tips at a 10.6 N push, the shroud costs ~7 % of the fan's airflow (est).
+
 **Structure and motion**
 - [ ] Strength of every printed load path (pan ring and gear teeth, yoke, cradle, cartridge, barrel mount) under
       slewing, recoil, a drop of the robot and handling, with the cad-agent FEA and its overload videos.
