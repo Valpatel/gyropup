@@ -1,0 +1,143 @@
+[
+ {
+  "step": 1,
+  "title": "The pan base and its inserts",
+  "adds": [
+   "pan_base"
+  ],
+  "how": "Heat-set inserts first, with the base on its foot: 5 x M3 in the clamp ears, 3 x M3 in the carrier bosses (from below), 4 x M3 in the base-board bosses, 4 x M4 in the DT pad, 5 short M3 in the bumper tabs.",
+  "picture": "exports/turret/assembly/step-01.png"
+ },
+ {
+  "step": 2,
+  "title": "The pan servo, its pinion and the DT12 receptacle",
+  "adds": [
+   "pan_servo",
+   "pan_pinion",
+   "dt_receptacle"
+  ],
+  "how": "The STS3215 drops into its pocket, bus plugs down, on its four posts: 4 x M2 x 20 up through the foot. The pinion on its horn: 4 x M3 x 16 (heads sunk). The DT04-12PA on the pad: 4 x M4 x 10; its 12 pins and the W12P wedge with the harness to the base board.",
+  "picture": "exports/turret/assembly/step-02.png"
+ },
+ {
+  "step": 3,
+  "title": "The base board and the index magnet",
+  "adds": [
+   "base_board",
+   "index_magnet"
+  ],
+  "how": "The base board (the 555, the 12 V pan regulator, the 10 A main fuse, the ring's stator plug) on its four bosses: 4 x M3 x 6. The 3/16 in magnet glued on the housing's top at pan 0 (the clamp ring has its hole).",
+  "picture": "exports/turret/assembly/step-03.png"
+ },
+ {
+  "step": 4,
+  "title": "The pan bearing and its clamp",
+  "adds": [
+   "pan_bearing",
+   "pan_bearing_inner",
+   "pan_clamp"
+  ],
+  "how": "The 6810-2RS pressed into its seat onto the \u00d862 shoulder; the aluminium clamp ring (SendCutSend) over it: 5 x M3 x 8.",
+  "picture": "exports/turret/assembly/step-04.png"
+ },
+ {
+  "step": 5,
+  "title": "The turntable, its spacer and the circlip",
+  "adds": [
+   "pan_ring",
+   "hall_switch",
+   "pan_spacer",
+   "circlip_50"
+  ],
+  "how": "Before it goes in: 4 x M4 inserts in its top, the hall switch glued in the pocket underneath (leads up its hole). Its journal down through the inner race, the gear in mesh with the pinion; from below, through the foot's \u00d865 opening, the spacer and the DIN 471-50 circlip in its groove (circlip pliers).",
+  "picture": "exports/turret/assembly/step-05.png"
+ },
+ {
+  "step": 6,
+  "title": "The ring driver and the slip ring on its carrier",
+  "adds": [
+   "ring_driver",
+   "slip_ring",
+   "slip_ring_rotor",
+   "ring_coupling",
+   "ring_carrier"
+  ],
+  "how": "The driver pressed into the top of the turntable's bore (three crush ribs and a drop of CA). The ring screwed to its carrier (3 x M3 x 8 with washers), a 25 mm length of the 5/16 in tube on its rotor stub, its rotor leads gathered; from below, the ring goes up the bore, the tube into the driver's socket and the leads out through the driver's crescent; the carrier's tabs into their pockets: 3 x M3 x 10 flat heads.",
+  "picture": "exports/turret/assembly/step-06.png"
+ },
+ {
+  "step": 7,
+  "title": "The tilt yoke and the turret-board bay",
+  "adds": [
+   "tilt_yoke",
+   "ring_leads_rotor",
+   "board_bay",
+   "turret_board"
+  ],
+  "how": "The rotor leads through the yoke's slot, the yoke on the turntable: 4 x M4 x 10. 4 x M3 inserts in the -y arm, the bay on them: 4 x M3 x 8 flat heads; the three boards on their standoffs (12 and 14 mm); the ring's rotor plug and the hall into level 2.",
+  "picture": "exports/turret/assembly/step-07.png"
+ },
+ {
+  "step": 8,
+  "title": "The tilt servo and the cradle",
+  "adds": [
+   "tilt_servo",
+   "tilt_bearing",
+   "tilt_bearing_inner",
+   "cradle",
+   "shoulder_screw"
+  ],
+  "how": "The STS3215 into its pocket on the +y arm, 4 x M2 x 10 from the arm's inner face. The MR126 into the -y arm's seat. The cradle: its hub onto the servo's horn (4 x M3 x 12), the ISO 7379 shoulder screw through the -y arm and the bearing into the cradle's M5 insert. Check the 0 and -25 deg stops by hand before anything else.",
+  "picture": "exports/turret/assembly/step-08.png"
+ },
+ {
+  "step": 9,
+  "title": "The laser",
+  "adds": [
+   "laser_mount",
+   "laser"
+  ],
+  "how": "The mount on the cradle's tab: 2 x M3 x 10 up through it; the laser in the mount on three nylon-tip M3 set screws (boresight them on the bench).",
+  "picture": "exports/turret/assembly/step-09.png"
+ },
+ {
+  "step": 10,
+  "title": "The cartridge: feed motor, dial, ESCs and wheels",
+  "adds": [
+   "cartridge_body",
+   "feed_motor",
+   "feed_esc",
+   "dial",
+   "flywheel_motor_l",
+   "flywheel_motor_r",
+   "esc_l",
+   "esc_r",
+   "flywheel",
+   "flywheel_tyre"
+  ],
+  "how": "On the bench, not on the turret: the M2006 under the dial floor (3 x M3 x 6 flat), the dial on its D shaft (M3 x 8 and a washer from the top of the cone); the C610 on the base plate with two cable ties; the Snails up under the cage plate (4 x M3 x 6 each), each wheel on its bell (3 x M2 x 8 and two 1/16 in pins), the tyres stretched on (a drop of CA if they creep); the AM32 ESCs and the brake board on the plate.",
+  "picture": "exports/turret/assembly/step-10.png"
+ },
+ {
+  "step": 11,
+  "title": "The barrel, the hopper and the lid",
+  "adds": [
+   "barrel",
+   "hopper",
+   "hopper_lid",
+   "hopper_flap"
+  ],
+  "how": "The barrel into its socket (a nylon-tip M3 set screw through the socket's insert), the gates' emitters and receivers in its bosses; the hopper on the housing (3 x M3 x 8); the lid; the flap on its 2 mm pin and spring.",
+  "picture": "exports/turret/assembly/step-11.png"
+ },
+ {
+  "step": 12,
+  "title": "The cartridge on the cradle, the bumper, the mount",
+  "adds": [
+   "ct_thumbscrew",
+   "bumper_ring"
+  ],
+  "how": "The cartridge down onto the cradle's two dowels, the knurled thumbscrew up into its insert (its O-ring keeps it in the rail); the two CT plugs (2 x 3 power, 2 x 6 signal). The bumper ring on its tabs: 5 x M3 x 20 and oversized washers. Then the turret on its stand or head ring: 2 x \u00d85 dowels, 4 x M5 x 16, and the DT12 plug.",
+  "picture": "exports/turret/assembly/step-12.png"
+ }
+]

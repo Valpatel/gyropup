@@ -751,8 +751,8 @@
    "https://www.mcmaster.com/91290A113/"
   ],
   "confidence": "product page",
-  "used_for": "pan clamp to the housing ears (3), the slip ring's flange to the carrier with washers (3), the hopper lugs (3), the dial on the M2006 shaft with a washer (1)",
-  "qty_per_robot": 10
+  "used_for": "the aluminium pan clamp (5), the slip ring's flange to the carrier with washers (3), the hopper lugs (3), the dial on the M2006 shaft with a washer (1)",
+  "qty_per_robot": 12
  },
  {
   "id": "mcmaster-91290a115",
@@ -2162,28 +2162,28 @@
   "qty_per_robot": 2
  },
  {
-  "id": "mcmaster-5862k103",
+  "id": "mcmaster-5862k102",
   "key": "turret_magnet_disc",
   "category": "fastener",
   "vendor": "McMaster-Carr",
-  "model": "5862K103",
-  "name": "Neodymium Magnet, Magnetized Through Thickness, 1/8\" Thick, 1/4\" OD",
-  "price_usd": 1.03,
-  "price_note": "McMaster-Carr: $1.03 each (price_usd is per piece)",
+  "model": "5862K102",
+  "name": "Neodymium Magnet, Magnetized Through Thickness, 1/8\" Thick, 3/16\" OD",
+  "price_usd": 1.0,
+  "price_note": "McMaster-Carr: $1.00 each (price_usd is per piece)",
   "price_checked": "2026-10-27",
   "pack_qty": 1,
-  "pack_price_usd": 1.03,
+  "pack_price_usd": 1.0,
   "buy": [
    {
     "seller": "McMaster-Carr",
-    "url": "https://www.mcmaster.com/5862K103/",
+    "url": "https://www.mcmaster.com/5862K102/",
     "in_stock": null,
     "ships_from": "US"
    }
   ],
   "specs": {
    "thickness_mm": 3.175,
-   "od_mm": 6.35,
+   "od_mm": 4.7625,
    "mass_g": null,
    "mass_basis": "unknown",
    "material": "Nickel-Plated Neodymium",
@@ -2192,9 +2192,9 @@
      "Mount Type": "Plain Back",
      "Thickness": "1/8\"",
      "Thickness Tolerance": "-0.005\" to 0.005\"",
-     "OD": "1/4\"",
+     "OD": "3/16\"",
      "OD Tolerance": "-0.005\" to 0.005\"",
-     "Maximum Pull": "2.8 lbf",
+     "Maximum Pull": "1.6 lbf",
      "Temperature Minimum": "Not Rated",
      "Temperature Maximum": "175° F",
      "Magnet Grade": "N52",
@@ -2202,9 +2202,9 @@
      "Color": "Silver",
      "Fabrication": "Sintered",
      "Material": "Nickel-Plated Neodymium",
-     "Flux Density": "5,250 G",
+     "Flux Density": "5,390 G",
      "Magnet Type": "Rare Earth",
-     "Magnetic Pull Rating": "Light",
+     "Magnetic Pull Rating": "Super Light",
      "Maximum Energy Product": "414 kJ/m³",
      "Performance": "Strong Hold",
      "Relative Size": "Compact",
@@ -2230,7 +2230,7 @@
       "unit": "mm"
      },
      "OD": {
-      "value": 6.35,
+      "value": 4.7625,
       "unit": "mm"
      },
      "OD Tolerance": {
@@ -2239,7 +2239,7 @@
       "unit": "mm"
      },
      "Maximum Pull": {
-      "value": 12.45502,
+      "value": 7.117155,
       "unit": "N"
      },
      "Temperature Maximum": {
@@ -2254,17 +2254,17 @@
    "kind": "spacer",
    "frame": "axis +Z, centred on the axis; the larger end (flange, head, collar) at z = 0 and the part on +z; when both ends are the same size, the heavier end at z = 0",
    "available": true,
-   "step_url": "https://www.mcmaster.com/5862K103/",
+   "step_url": "https://www.mcmaster.com/5862K102/",
    "bbox_mm": null,
    "volume_mm3": null,
-   "pending": "STEP not downloaded yet: McMaster-Carr asks for a login before CAD downloads (the product page itself reads without one). Finish with .venv/bin/python tools/mcmaster_cad.py --catalog --file catalog/turret.json --only turret_magnet_disc once logged in, or save the STEP from a logged-in browser as references/vendor/mcmaster/5862K103/5862K103.step and run the same command."
+   "pending": "STEP not downloaded yet: McMaster-Carr asks for a login before CAD downloads (the product page itself reads without one). Finish with .venv/bin/python tools/mcmaster_cad.py --catalog --file catalog/turret.json --only turret_magnet_disc once logged in, or save the STEP from a logged-in browser as references/vendor/mcmaster/5862K102/5862K102.step and run the same command."
   },
   "frame": "axis +Z, centred on the axis; the larger end (flange, head, collar) at z = 0 and the part on +z; when both ends are the same size, the heavier end at z = 0",
   "sources": [
-   "https://www.mcmaster.com/5862K103/"
+   "https://www.mcmaster.com/5862K102/"
   ],
   "confidence": "product page",
-  "used_for": "the pan index magnet in the clamp ring at pan 0 (1, and a spare)",
+  "used_for": "the pan index magnet: through the clamp ring on the housing's top at pan 0 (1, and a spare); 2.1 mm of ring is left beside its Ø4.8 hole",
   "qty_per_robot": 2
  },
  {
@@ -3013,41 +3013,9 @@
    "https://www.sparkfun.com/products/13065"
   ],
   "confidence": "product page",
-  "used_for": "the bench slip ring (tier C): 12 x 2 A, rings 1-4 +24 V, 5-8 GND, 9-10 CAN, 11-12 safety pulses (docs/turret-plan.md 2.2)",
+  "used_for": "the slip ring on the bench and on the robot (D2, decided 2026-10-27): 12 x 2 A; 1-2 +24 V, 3-4 GND, 5-6 CAN, 7-8 safety pulses, 9 servo TTL, 10 signal ground, 11-12 kept for a camera (docs/turret-wiring.md 1.2)",
   "qty_per_robot": 1,
   "notes": "cad/turret.py RING_MODELS sparkfun_rob13065. The flange hole pattern is not published: measure the ring and drill the carrier to suit."
- },
- {
-  "id": "senring-m220-0210-12s",
-  "key": "senring-m220-0210-12s",
-  "category": "turret",
-  "vendor": "Senring",
-  "model": "M220-0210-12S",
-  "name": "Capsule slip ring, 2 x 10 A + 12 x 2 A, Ø22 x 40",
-  "price_usd": null,
-  "price_note": "quote (est $60-120, docs/turret-plan.md 5.1): 300 mm leads, power rings at the flange end, the CAN pair adjacent",
-  "price_checked": "2026-10-27",
-  "buy": [
-   {
-    "seller": "Senring (sales@senring.com, quote)",
-    "url": "https://www.senring.com/",
-    "in_stock": null,
-    "ships_from": null
-   }
-  ],
-  "specs": {
-   "body_d_mm": 22,
-   "body_l_mm": 40,
-   "flange_d_mm": 44.5,
-   "circuits": 14
-  },
-  "sources": [
-   "https://www.senring.com/"
-  ],
-  "confidence": "estimate",
-  "used_for": "the robot slip ring (tier B): +24 V and GND on the 10 A rings, CAN, safety, servo TTL on the signal rings",
-  "qty_per_robot": 1,
-  "notes": "RING_MODEL default in cad/turret.py; the quote text is docs/turret-plan.md 5.2."
  },
  {
   "id": "allegro-a1120lua-t",
@@ -3732,70 +3700,6 @@
   "qty_per_robot": 1
  },
  {
-  "id": "molex-43025-0800",
-  "key": "molex-43025-0800",
-  "category": "wiring",
-  "vendor": "Molex",
-  "model": "43025-0800",
-  "name": "Micro-Fit 3.0 receptacle housing, dual row, 8 circuits",
-  "price_usd": 0.5,
-  "price_note": "est",
-  "price_checked": "2026-10-27",
-  "buy": [
-   {
-    "seller": "Heilind",
-    "url": "https://heilind.com/mol43025-0800.html",
-    "in_stock": null,
-    "ships_from": "US"
-   },
-   {
-    "seller": "Mouser / Digi-Key",
-    "url": "https://www.mouser.com/c/?q=43025-0800",
-    "in_stock": null,
-    "ships_from": null
-   }
-  ],
-  "specs": {},
-  "sources": [
-   "https://heilind.com/mol43025-0800.html"
-  ],
-  "confidence": "datasheet",
-  "used_for": "the ring's stator and rotor connectors (receptacles, on the ring's leads)",
-  "qty_per_robot": 2
- },
- {
-  "id": "molex-43020-0800",
-  "key": "molex-43020-0800",
-  "category": "wiring",
-  "vendor": "Molex",
-  "model": "43020-0800",
-  "name": "Micro-Fit 3.0 plug housing, dual row, 8 circuits",
-  "price_usd": 0.5,
-  "price_note": "est",
-  "price_checked": "2026-10-27",
-  "buy": [
-   {
-    "seller": "Heilind",
-    "url": "https://heilind.com/mol43020-0800.html",
-    "in_stock": null,
-    "ships_from": "US"
-   },
-   {
-    "seller": "Mouser / Digi-Key",
-    "url": "https://www.mouser.com/c/?q=43020-0800",
-    "in_stock": null,
-    "ships_from": null
-   }
-  ],
-  "specs": {},
-  "sources": [
-   "https://heilind.com/mol43020-0800.html"
-  ],
-  "confidence": "datasheet",
-  "used_for": "the base board's and the turret bay's mating plugs for the ring",
-  "qty_per_robot": 2
- },
- {
   "id": "molex-43030-0038",
   "key": "molex-43030-0038",
   "category": "wiring",
@@ -4451,8 +4355,8 @@
    "https://heilind.com/mol43025-1200.html"
   ],
   "confidence": "datasheet",
-  "used_for": "the CT signal connector, cartridge side",
-  "qty_per_robot": 1
+  "used_for": "the slip ring's stator and rotor connectors (receptacles on the ring's leads, 2 x 6: docs/turret-wiring.md 1.3)",
+  "qty_per_robot": 2
  },
  {
   "id": "molex-43020-1200",
@@ -4483,7 +4387,159 @@
    "https://heilind.com/mol43020-1200.html"
   ],
   "confidence": "datasheet",
-  "used_for": "the CT signal connector, cradle side",
+  "used_for": "the base board's and the turret bay's mating plugs for the ring",
+  "qty_per_robot": 2
+ },
+ {
+  "id": "molex-43025-1000",
+  "key": "molex-43025-1000",
+  "category": "wiring",
+  "vendor": "Molex",
+  "model": "43025-1000",
+  "name": "Micro-Fit 3.0 receptacle housing, dual row, 10 circuits",
+  "price_usd": null,
+  "price_note": "see the price sourcing note",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Heilind",
+    "url": "https://heilind.com/mol43025-1000.html",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {},
+  "sources": [
+   "https://heilind.com/mol43025-1000.html"
+  ],
+  "confidence": "datasheet",
+  "used_for": "the CT signal connector, cartridge side (2 x 5)",
+  "qty_per_robot": 1
+ },
+ {
+  "id": "molex-43020-1000",
+  "key": "molex-43020-1000",
+  "category": "wiring",
+  "vendor": "Molex",
+  "model": "43020-1000",
+  "name": "Micro-Fit 3.0 plug housing, dual row, 10 circuits",
+  "price_usd": null,
+  "price_note": "see the price sourcing note",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Heilind",
+    "url": "https://heilind.com/mol43020-1000.html",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {},
+  "sources": [
+   "https://heilind.com/mol43020-1000.html"
+  ],
+  "confidence": "datasheet",
+  "used_for": "the CT signal connector, cradle side (2 x 5)",
+  "qty_per_robot": 1
+ },
+ {
+  "id": "vxb-6810-2rs",
+  "key": "vxb-6810-2rs",
+  "category": "bearing",
+  "vendor": "VXB Bearings",
+  "model": "Kit7458 (6810-2RS)",
+  "name": "6810-2RS Bearing 50x65x7mm - Sealed Ball Bearing - Thin Section (chrome steel)",
+  "price_usd": 24.99,
+  "price_note": "one unit, VXB store (decided 2026-10-27: the chrome-steel sealed 6810-2RS, not the $194.88 stainless)",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "VXB Bearings",
+    "url": "https://vxb.com/products/6810-2rs-bearing-50x65x7mm-sealed",
+    "in_stock": true,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "bore_mm": 50,
+   "od_mm": 65,
+   "width_mm": 7,
+   "mass_g": 52,
+   "seal": "2RS"
+  },
+  "sources": [
+   "https://vxb.com/products/6810-2rs-bearing-50x65x7mm-sealed"
+  ],
+  "confidence": "product page",
+  "used_for": "the pan bearing (cad/turret.py BRG): outer race in the pan base's seat under the clamp, inner race on the turntable's journal",
+  "qty_per_robot": 1
+ },
+ {
+  "id": "quarton-vlm-520-73-lpt",
+  "key": "quarton-vlm-520-73-lpt",
+  "category": "turret",
+  "vendor": "Quarton",
+  "model": "VLM-520-73 LPT",
+  "name": "Green dot laser module 520 nm, < 1 mW (Class 2), 3-6 V DC, Ø7 x 26.1 mm",
+  "price_usd": 41.82,
+  "price_note": "Digi-Key 100-VLM-520-73LPT-ND, one unit (0 in stock, 4 weeks lead, read 2026-10-27)",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/detail/quarton-inc/VLM-520-73-LPT/10523439",
+    "in_stock": false,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "diameter_mm": 7.0,
+   "length_mm": 26.1,
+   "mass_g": 3.8,
+   "voltage_v": [
+    3,
+    6
+   ],
+   "class": "2"
+  },
+  "sources": [
+   "https://wmsc.lcsc.com/wmsc/upload/file/pdf/v2/lcsc/2404171146_Quarton--Inc--VLM-520-73-LPT_C5997388.pdf"
+  ],
+  "confidence": "datasheet",
+  "used_for": "the aiming laser in its mount on the cradle (Class 2, under 1 mW: kid-safe), on the 5 V rail through a logic MOSFET",
+  "qty_per_robot": 1,
+  "notes": "Replaces the Picotronic DD520-1-24 (EUR 320, maker's store in Germany only): the same green dot class at an eighth of the price, listed at Digi-Key and LCSC (C5997388)."
+ },
+ {
+  "id": "sendcutsend-pan-clamp",
+  "key": "sendcutsend-pan-clamp",
+  "category": "turret",
+  "vendor": "SendCutSend",
+  "model": "pan_clamp.dxf (6061-T6, 0.125 in)",
+  "name": "Pan clamp ring, laser-cut 6061-T6 aluminium 0.125 in, 86 x 87 mm, 7 holes",
+  "price_usd": null,
+  "price_note": "instant price on upload of exports/turret/pan_clamp.dxf at sendcutsend.com (no quote): est $8-15 for one in 6061-T6 0.125 in",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "SendCutSend",
+    "url": "https://sendcutsend.com/materials/6061-t6-aluminum/",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "material": "6061-T6 aluminium",
+   "thickness_in": 0.125,
+   "thickness_mm": 3.175,
+   "mass_g": 17.8,
+   "drawing": "exports/turret/pan_clamp.dxf"
+  },
+  "sources": [
+   "https://sendcutsend.com/materials/6061-t6-aluminum/"
+  ],
+  "confidence": "estimate",
+  "used_for": "holds the pan bearing's outer race down (5 x M3 x 8 into the housing ears); FEA SF 3.1 on the lift case",
   "qty_per_robot": 1
  }
 ]

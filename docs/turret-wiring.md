@@ -40,52 +40,40 @@ TE Deutsch DT04-12PA-L012 receptacle on the pan base (`te-dt04-12pa-l012`, W12P 
 
 ### 1.2 The slip ring
 
-Robot ring, Senring M220-0210-12S (`senring-m220-0210-12s`): two 10 A power rings (17 AWG leads) and twelve 2 A signal
-rings (26 AWG). Ask the vendor for the power rings at the flange end and the CAN rings adjacent (docs/turret-plan.md 5.2).
+SparkFun ROB-13065 (`sparkfun-rob-13065`: twelve 2 A gold-on-gold circuits, 28 AWG leads, Ø22 x 26.5, flange
+Ø44.5) on the bench and on the robot (decided 2026-10-27, docs/decisions.yaml D41: D2). Two circuits in parallel for
+each power rail, two kept for a camera (D6):
 
-| Ring | Signal | Lead | Notes |
-|---|---|---|---|
-| P1 | +24 V (fused in the base) | 17 AWG | |
-| P2 | GND | 17 AWG | the only power return |
-| S1, S2 | CAN_H, CAN_L | 26 AWG, adjacent rings | twisted on both sides of the ring |
-| S3, S4 | SAFETY+, SAFETY- | 26 AWG, adjacent | the 1 kHz pulse loop (section 3.1) |
-| S5 | SERVO_TTL | 26 AWG | the Feetech half-duplex bus to the pan servo in the base |
-| S6 | SIG_GND | 26 AWG | the TTL and pulse reference, tied to GND on the turret board only |
-| S7, S8 | CAM+, CAM- | 26 AWG | reserved; both ends to GND through 100 k |
-| S9-S12 | spare | | |
+| Circuit | Signal | Notes |
+|---|---|---|
+| 1, 2 | +24 V (fused in the base) | in parallel |
+| 3, 4 | GND | in parallel, the only power return |
+| 5, 6 | CAN_H, CAN_L | adjacent circuits, twisted on both sides of the ring |
+| 7, 8 | SAFETY+, SAFETY- | the 1 kHz pulse loop (section 3.1) |
+| 9 | SERVO_TTL | the Feetech half-duplex bus to the pan servo in the base (D4) |
+| 10 | SIG_GND | the TTL and pulse reference, tied to GND on the turret board only |
+| 11, 12 | CAM+, CAM- | kept for a camera (D6); both ends to GND through 100 k until then |
 
-Bench ring, SparkFun ROB-13065 (`sparkfun-rob-13065`, twelve 2 A rings, 28 AWG): rings 1-3 +24 V, 4-6 GND (three in
-parallel each way: 6 A), 7-8 CAN_H/L, 9-10 SAFETY+/-, 11 SERVO_TTL, 12 SIG_GND. With only 6 A per side the flywheels'
-200 ms soft spin-up is mandatory on the bench ring (2.2 A peak at the ring against 12 A for a stepped start,
-docs/turret-physics.md section 9); the firmware refuses a stepped start when it reads the bench-ring flag from its
-configuration.
+With 2 A per circuit and two in parallel, the power rails carry 4 A. The flywheels' 200 ms soft start is therefore
+mandatory everywhere (2.2 A peak at the ring, 1.1 A a circuit: docs/turret-physics.md section 9); the firmware never
+steps them (a stepped start is 12 A). A burst at 10 balls/s pulses the ring to 4.9 A for ~3 ms per shot (2.4 A a
+circuit, RMS 0.6 A): inside a capsule ring's short-term capability, and the bench's contact test (docs/turret-plan.md
+6.1) measures it; the firmware's default is 3 balls/s. The dial's step (1.5 A at the ring for 100 ms) never coincides
+with a flywheel recovery: the dial steps only when the wheels are back at speed.
 
-### 1.3 The ring's two connectors: Micro-Fit 3.0, 2 x 4
+### 1.3 The ring's two connectors: Micro-Fit 3.0, 2 x 6
 
-Both ends of the ring end in a Molex Micro-Fit 3.0 dual-row 8-way pair, so the ring is changed by unplugging two
+Both ends of the ring end in a Molex Micro-Fit 3.0 dual-row 12-way pair, so the ring is changed by unplugging two
 connectors: the stator side at the base board, the rotor side at the turret bay's level-2 board. The ring's leads carry
-the receptacle (`molex-43025-0800`, female contacts `molex-43030-0038` for 17-18 AWG, `molex-43030-0001` for 24-26 AWG);
-the boards' harnesses the plug (`molex-43020-0800`, male `molex-43031-0021` / `molex-43031-0001`). 8.5 A per contact.
-
-| Pin | Rotor and stator connector (same pinout both ends) |
-|---|---|
-| 1 | +24 V |
-| 2 | GND |
-| 3 | CAN_H |
-| 4 | CAN_L |
-| 5 | SAFETY+ |
-| 6 | SAFETY- |
-| 7 | SERVO_TTL |
-| 8 | SIG_GND |
-
-On the bench ring the three paralleled +24 V leads share pin 1 and the three GND leads pin 2 (crimp the 28 AWG
-triplets into one 18 AWG contact with a short 18 AWG pigtail and a solder sleeve).
+the receptacle (`molex-43025-1200`, female contacts `molex-43030-0001`), the boards' harnesses the plug
+(`molex-43020-1200`, male `molex-43031-0001`); the ring's 28 AWG leads are doubled into each power contact. The pinout
+is the circuit table above (pin n = circuit n), the same at both ends.
 
 ### 1.4 The CT connectors (turret to cartridge): power 2 x 3 and signal 2 x 6
 
 The cartridge brings a 150 mm pigtail with two plugs; the cradle carries the two receptacles on its -y rail (behind the
-latch) on the harness from the turret bay. The two connectors have different sizes, so neither can go into the other's
-place, and Micro-Fit housings are polarised. The 12 V flywheel rail and the 24 V dial rail are on fixed pins of the
+latch) on the harness from the turret bay. The three Micro-Fit sizes in the turret (2 x 3 power, 2 x 5 signal, 2 x 6
+ring) cannot go into each other's places, and Micro-Fit housings are polarised. The 12 V flywheel rail and the 24 V dial rail are on fixed pins of the
 power connector, and on the cartridge the 24 V pin is wired to the C610 alone: no plug-in error can put 24 V on an ESC.
 
 Power, Micro-Fit 3.0 2 x 3 (43025-0600 / 43020-0600 class, the 6-way of the same family), 18 AWG, 8.5 A per contact:
@@ -96,7 +84,7 @@ Power, Micro-Fit 3.0 2 x 3 (43025-0600 / 43020-0600 class, the 6-way of the same
 | 3 | +24 V DIAL | the C610 alone (10 A for the ~100 ms of a dial step: physics finding 2) |
 | 4, 5, 6 | GND | both rails' return |
 
-Signal, Micro-Fit 3.0 2 x 6 (24-26 AWG), so it cannot mate with the 2 x 3:
+Signal, Micro-Fit 3.0 2 x 5 (`molex-43025-1000` / `molex-43020-1000`, 24-26 AWG):
 
 | Pin | Signal | Notes |
 |---|---|---|
@@ -109,7 +97,6 @@ Signal, Micro-Fit 3.0 2 x 6 (24-26 AWG), so it cannot mate with the 2 x 3:
 | 8 | GATE_2 | second gate |
 | 9 | BEAM | hopper-full beam |
 | 10 | SIG_GND | |
-| 11, 12 | spare | |
 
 ### 1.5 Small connectors on the turret
 
@@ -117,7 +104,7 @@ Signal, Micro-Fit 3.0 2 x 6 (24-26 AWG), so it cannot mate with the 2 x 3:
 |---|---|---|---|
 | Tilt servo | turret bay level 1 (the 74AHCT125 bus buffer, 12 V AUX) | STS3215 on the +y arm | the servo's own 3-pin lead (Feetech 5264-type), 200 mm extension |
 | Pan servo | base board (12 V PAN, the TTL from ring S5) | STS3215 in the base | its own 3-pin lead |
-| Laser | level 1 (12 V AUX through a logic MOSFET switched by the Feather's LASER_EN) | the laser on the cradle tab | 2-pin, 24 AWG, across the tilt loop |
+| Laser | level 1 (5 V through a logic MOSFET switched by the Feather's LASER_EN) | the Quarton VLM-520-73 LPT (3-6 V, < 150 mA) on the cradle tab | 2-pin, 24 AWG, across the tilt loop |
 | Hall index | level 2 (5 V, GND, PAN_INDEX) | A1120LUA-T in the turntable's underside | 3 x 26 AWG up the Ø2.8 hole beside it |
 | Lights | level 2 (5 V, GND, NEOPIXEL) | the 12-LED ring | 3-pin |
 
@@ -127,8 +114,8 @@ Signal, Micro-Fit 3.0 2 x 6 (24-26 AWG), so it cannot mate with the 2 x 3:
 |---|---|---|---|---|
 | Robot / stand harness to DT12 | 2 + 2 power, 3 pairs | 16 AWG, 22-24 AWG pairs | robot's | the DT06's backshell (TE 1011-248-1205 class) |
 | DT12 to the base board | +24 V, GND, CAN pair, safety pair | 16 AWG, 24 AWG pairs | 120 mm round the housing | cable tie to the base's housing at 60 mm |
-| Base board to the ring's stator plug | 8 (section 1.3) | 18 AWG power, 24 AWG signals | 100 mm | the carrier (the ring's leads), a tie at the board |
-| Ring rotor leads to the turret bay | the ring's own leads | 17 + 26 AWG (robot ring), 28 AWG (bench) | 160 mm: up the Ø40 bore beside the coupling, through the yoke's slot and the -y arm's window | tied to the driver disc's crescent (rule: within 30 mm of the connector, docs/mechanical-interfaces.md rule 5) |
+| Base board to the ring's stator plug | 12 (section 1.3) | 18 AWG power, 24 AWG signals | 100 mm | the carrier (the ring's leads), a tie at the board |
+| Ring rotor leads to the turret bay | the ring's own 250 mm leads | 28 AWG | 160 mm: up the Ø40 bore beside the coupling, through the yoke's slot and the -y arm's window | tied to the driver disc's crescent (rule: within 30 mm of the connector, docs/mechanical-interfaces.md rule 5) |
 | Turret bay to the CT receptacles on the cradle | 2 x 3 power, 2 x 6 signal | 18 AWG, 24-26 AWG | 220 mm with the 40 mm tilt loop | a tie at the yoke arm, one at the cradle rail |
 | Cartridge pigtail | the same | 18 AWG, 26 AWG | 150 mm | a tie at the cartridge's base plate |
 | Turret bay to the tilt servo | 3 | the servo's own | 200 mm across the bridge | ties on the bridge |
@@ -211,8 +198,8 @@ ball cuts a 1 mm beam in 47-60 us: well inside the comparator's microsecond resp
 | +24 V ring | turret | ring P1 | the 2815 switch, the aux and logic regulators | (the base's 10 A) |
 | 12 V FLY | turret level 0 | D24V150F12 (`pololu-d24v150f12-2885`) behind the 2815 | the two AM32 ESCs only | 15 A MINI (`littelfuse-0297015-wxnv`) at the regulator's input |
 | +24 V DIAL | turret level 0 | behind the 2815 | the C610 only | 10 A MINI (`littelfuse-0297010-wxnv`) |
-| 12 V AUX | turret level 0 | D36V50F12, upstream of the 2815 | the tilt STS3215, the laser | 3 A polyfuse |
-| 5 V | turret level 1 | D36V28F5 (`pololu-d36v28f5-3782`), upstream of the 2815 | the Feather (USB/VBUS), the bus buffer, the hall, the lights, the gates | 2 A polyfuse (`bourns-mf-r200`) |
+| 12 V AUX | turret level 0 | D36V50F12, upstream of the 2815 | the tilt STS3215 | 3 A polyfuse |
+| 5 V | turret level 1 | D36V28F5 (`pololu-d36v28f5-3782`), upstream of the 2815 | the Feather (USB/VBUS), the bus buffer, the hall, the lights, the gates, the laser | 2 A polyfuse (`bourns-mf-r200`) |
 | Bank | turret level 1 | 3 x 1000 uF 35 V low ESR (`panasonic-eeu-fr1v102`) at the regulators' input | rides a 2 ms contact bounce at 11 A with 8 V droop | |
 
 Every fuse is DC-rated (32 V blade). The 2815's own reverse-voltage protection covers a reversed supply on the motor

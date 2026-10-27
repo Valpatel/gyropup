@@ -1,0 +1,1977 @@
+{
+ "scene": "robot",
+ "obstacles": [
+  {
+   "name": "VLP-16",
+   "kind": "cyl",
+   "x": 147.65,
+   "y": 0.0,
+   "r": 51.65,
+   "z0": -30.0,
+   "z1": 41.7,
+   "ball": true
+  }
+ ],
+ "margin_mm": 10.0,
+ "ball": {
+  "d_mm": 22.8,
+  "wild_deg": 2.0,
+  "slowest_m_s": 11.0
+ },
+ "turret": {
+  "tilt_axis_above_tm_mm": 140.0,
+  "ball_path_above_tm_mm": 125,
+  "muzzle_ahead_of_pan_axis_mm": 155.0,
+  "tilt_range_deg": [
+   -25.0,
+   0.0
+  ]
+ },
+ "fixed_parts_to_obstacles_mm": {
+  "pan_base / VLP-16": 10.0,
+  "pan_pinion / VLP-16": 134.8,
+  "bumper_ring / VLP-16": 10.0,
+  "ring_carrier / VLP-16": 63.8,
+  "pan_servo / VLP-16": 136.3,
+  "pan_bearing / VLP-16": 63.5,
+  "pan_clamp / VLP-16": 47.3,
+  "slip_ring / VLP-16": 73.8,
+  "base_board / VLP-16": 48.0,
+  "index_magnet / VLP-16": 58.9,
+  "dt_receptacle / VLP-16": 85.9
+ },
+ "limited_pan_window_deg": [
+  -26.0,
+  26.0
+ ],
+ "worst": {
+  "pan": -6.0,
+  "max_depression_deg": -16.0,
+  "closest_at_limit": [
+   "ball path / VLP-16",
+   11.8
+  ]
+ },
+ "firmware_table": [
+  {
+   "pan_deg": -180,
+   "min_tilt_deg": -25.0
+  },
+  {
+   "pan_deg": -175,
+   "min_tilt_deg": -25.0
+  },
+  {
+   "pan_deg": -170,
+   "min_tilt_deg": -25.0
+  },
+  {
+   "pan_deg": -165,
+   "min_tilt_deg": -25.0
+  },
+  {
+   "pan_deg": -160,
+   "min_tilt_deg": -25.0
+  },
+  {
+   "pan_deg": -155,
+   "min_tilt_deg": -25.0
+  },
+  {
+   "pan_deg": -150,
+   "min_tilt_deg": -25.0
+  },
+  {
+   "pan_deg": -145,
+   "min_tilt_deg": -25.0
+  },
+  {
+   "pan_deg": -140,
+   "min_tilt_deg": -25.0
+  },
+  {
+   "pan_deg": -135,
+   "min_tilt_deg": -25.0
+  },
+  {
+   "pan_deg": -130,
+   "min_tilt_deg": -25.0
+  },
+  {
+   "pan_deg": -125,
+   "min_tilt_deg": -25.0
+  },
+  {
+   "pan_deg": -120,
+   "min_tilt_deg": -25.0
+  },
+  {
+   "pan_deg": -115,
+   "min_tilt_deg": -25.0
+  },
+  {
+   "pan_deg": -110,
+   "min_tilt_deg": -25.0
+  },
+  {
+   "pan_deg": -105,
+   "min_tilt_deg": -25.0
+  },
+  {
+   "pan_deg": -100,
+   "min_tilt_deg": -25.0
+  },
+  {
+   "pan_deg": -95,
+   "min_tilt_deg": -25.0
+  },
+  {
+   "pan_deg": -90,
+   "min_tilt_deg": -25.0
+  },
+  {
+   "pan_deg": -85,
+   "min_tilt_deg": -25.0
+  },
+  {
+   "pan_deg": -80,
+   "min_tilt_deg": -25.0
+  },
+  {
+   "pan_deg": -75,
+   "min_tilt_deg": -25.0
+  },
+  {
+   "pan_deg": -70,
+   "min_tilt_deg": -25.0
+  },
+  {
+   "pan_deg": -65,
+   "min_tilt_deg": -25.0
+  },
+  {
+   "pan_deg": -60,
+   "min_tilt_deg": -25.0
+  },
+  {
+   "pan_deg": -55,
+   "min_tilt_deg": -25.0
+  },
+  {
+   "pan_deg": -50,
+   "min_tilt_deg": -25.0
+  },
+  {
+   "pan_deg": -45,
+   "min_tilt_deg": -25.0
+  },
+  {
+   "pan_deg": -40,
+   "min_tilt_deg": -25.0
+  },
+  {
+   "pan_deg": -35,
+   "min_tilt_deg": -25.0
+  },
+  {
+   "pan_deg": -30,
+   "min_tilt_deg": -23.5
+  },
+  {
+   "pan_deg": -25,
+   "min_tilt_deg": -19.5
+  },
+  {
+   "pan_deg": -20,
+   "min_tilt_deg": -18.0
+  },
+  {
+   "pan_deg": -15,
+   "min_tilt_deg": -16.5
+  },
+  {
+   "pan_deg": -10,
+   "min_tilt_deg": -16.0
+  },
+  {
+   "pan_deg": -5,
+   "min_tilt_deg": -16.0
+  },
+  {
+   "pan_deg": 0,
+   "min_tilt_deg": -16.0
+  },
+  {
+   "pan_deg": 5,
+   "min_tilt_deg": -16.0
+  },
+  {
+   "pan_deg": 10,
+   "min_tilt_deg": -16.0
+  },
+  {
+   "pan_deg": 15,
+   "min_tilt_deg": -16.5
+  },
+  {
+   "pan_deg": 20,
+   "min_tilt_deg": -18.0
+  },
+  {
+   "pan_deg": 25,
+   "min_tilt_deg": -19.5
+  },
+  {
+   "pan_deg": 30,
+   "min_tilt_deg": -23.5
+  },
+  {
+   "pan_deg": 35,
+   "min_tilt_deg": -25.0
+  },
+  {
+   "pan_deg": 40,
+   "min_tilt_deg": -25.0
+  },
+  {
+   "pan_deg": 45,
+   "min_tilt_deg": -25.0
+  },
+  {
+   "pan_deg": 50,
+   "min_tilt_deg": -25.0
+  },
+  {
+   "pan_deg": 55,
+   "min_tilt_deg": -25.0
+  },
+  {
+   "pan_deg": 60,
+   "min_tilt_deg": -25.0
+  },
+  {
+   "pan_deg": 65,
+   "min_tilt_deg": -25.0
+  },
+  {
+   "pan_deg": 70,
+   "min_tilt_deg": -25.0
+  },
+  {
+   "pan_deg": 75,
+   "min_tilt_deg": -25.0
+  },
+  {
+   "pan_deg": 80,
+   "min_tilt_deg": -25.0
+  },
+  {
+   "pan_deg": 85,
+   "min_tilt_deg": -25.0
+  },
+  {
+   "pan_deg": 90,
+   "min_tilt_deg": -25.0
+  },
+  {
+   "pan_deg": 95,
+   "min_tilt_deg": -25.0
+  },
+  {
+   "pan_deg": 100,
+   "min_tilt_deg": -25.0
+  },
+  {
+   "pan_deg": 105,
+   "min_tilt_deg": -25.0
+  },
+  {
+   "pan_deg": 110,
+   "min_tilt_deg": -25.0
+  },
+  {
+   "pan_deg": 115,
+   "min_tilt_deg": -25.0
+  },
+  {
+   "pan_deg": 120,
+   "min_tilt_deg": -25.0
+  },
+  {
+   "pan_deg": 125,
+   "min_tilt_deg": -25.0
+  },
+  {
+   "pan_deg": 130,
+   "min_tilt_deg": -25.0
+  },
+  {
+   "pan_deg": 135,
+   "min_tilt_deg": -25.0
+  },
+  {
+   "pan_deg": 140,
+   "min_tilt_deg": -25.0
+  },
+  {
+   "pan_deg": 145,
+   "min_tilt_deg": -25.0
+  },
+  {
+   "pan_deg": 150,
+   "min_tilt_deg": -25.0
+  },
+  {
+   "pan_deg": 155,
+   "min_tilt_deg": -25.0
+  },
+  {
+   "pan_deg": 160,
+   "min_tilt_deg": -25.0
+  },
+  {
+   "pan_deg": 165,
+   "min_tilt_deg": -25.0
+  },
+  {
+   "pan_deg": 170,
+   "min_tilt_deg": -25.0
+  },
+  {
+   "pan_deg": 175,
+   "min_tilt_deg": -25.0
+  },
+  {
+   "pan_deg": 180,
+   "min_tilt_deg": -25.0
+  }
+ ],
+ "keep_out_fire_pan_deg": [],
+ "per_pan": [
+  {
+   "pan": -180.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    200.8
+   ]
+  },
+  {
+   "pan": -178.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    200.7
+   ]
+  },
+  {
+   "pan": -176.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    200.6
+   ]
+  },
+  {
+   "pan": -174.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    200.4
+   ]
+  },
+  {
+   "pan": -172.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    200.1
+   ]
+  },
+  {
+   "pan": -170.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    199.7
+   ]
+  },
+  {
+   "pan": -168.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    199.3
+   ]
+  },
+  {
+   "pan": -166.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    198.8
+   ]
+  },
+  {
+   "pan": -164.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    198.2
+   ]
+  },
+  {
+   "pan": -162.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    197.5
+   ]
+  },
+  {
+   "pan": -160.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    196.8
+   ]
+  },
+  {
+   "pan": -158.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    196.0
+   ]
+  },
+  {
+   "pan": -156.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    195.1
+   ]
+  },
+  {
+   "pan": -154.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    194.1
+   ]
+  },
+  {
+   "pan": -152.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    193.1
+   ]
+  },
+  {
+   "pan": -150.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    192.0
+   ]
+  },
+  {
+   "pan": -148.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    190.8
+   ]
+  },
+  {
+   "pan": -146.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    189.6
+   ]
+  },
+  {
+   "pan": -144.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    188.3
+   ]
+  },
+  {
+   "pan": -142.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    186.9
+   ]
+  },
+  {
+   "pan": -140.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    185.5
+   ]
+  },
+  {
+   "pan": -138.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    183.9
+   ]
+  },
+  {
+   "pan": -136.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    182.4
+   ]
+  },
+  {
+   "pan": -134.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    180.7
+   ]
+  },
+  {
+   "pan": -132.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    178.9
+   ]
+  },
+  {
+   "pan": -130.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    177.1
+   ]
+  },
+  {
+   "pan": -128.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    175.1
+   ]
+  },
+  {
+   "pan": -126.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    173.2
+   ]
+  },
+  {
+   "pan": -124.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    171.1
+   ]
+  },
+  {
+   "pan": -122.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    169.0
+   ]
+  },
+  {
+   "pan": -120.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    166.8
+   ]
+  },
+  {
+   "pan": -118.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    164.6
+   ]
+  },
+  {
+   "pan": -116.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    162.3
+   ]
+  },
+  {
+   "pan": -114.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    159.9
+   ]
+  },
+  {
+   "pan": -112.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    157.5
+   ]
+  },
+  {
+   "pan": -110.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    155.0
+   ]
+  },
+  {
+   "pan": -108.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    152.4
+   ]
+  },
+  {
+   "pan": -106.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    149.8
+   ]
+  },
+  {
+   "pan": -104.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    147.1
+   ]
+  },
+  {
+   "pan": -102.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    144.4
+   ]
+  },
+  {
+   "pan": -100.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    141.6
+   ]
+  },
+  {
+   "pan": -98.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    138.7
+   ]
+  },
+  {
+   "pan": -96.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    135.8
+   ]
+  },
+  {
+   "pan": -94.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    132.8
+   ]
+  },
+  {
+   "pan": -92.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    129.7
+   ]
+  },
+  {
+   "pan": -90.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    126.6
+   ]
+  },
+  {
+   "pan": -88.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    123.5
+   ]
+  },
+  {
+   "pan": -86.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    120.3
+   ]
+  },
+  {
+   "pan": -84.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    117.0
+   ]
+  },
+  {
+   "pan": -82.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    113.7
+   ]
+  },
+  {
+   "pan": -80.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    110.3
+   ]
+  },
+  {
+   "pan": -78.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    106.9
+   ]
+  },
+  {
+   "pan": -76.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    103.5
+   ]
+  },
+  {
+   "pan": -74.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    100.0
+   ]
+  },
+  {
+   "pan": -72.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    96.4
+   ]
+  },
+  {
+   "pan": -70.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    92.8
+   ]
+  },
+  {
+   "pan": -68.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    89.1
+   ]
+  },
+  {
+   "pan": -66.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    85.4
+   ]
+  },
+  {
+   "pan": -64.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    81.7
+   ]
+  },
+  {
+   "pan": -62.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    77.9
+   ]
+  },
+  {
+   "pan": -60.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    74.1
+   ]
+  },
+  {
+   "pan": -58.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    70.3
+   ]
+  },
+  {
+   "pan": -56.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    66.3
+   ]
+  },
+  {
+   "pan": -54.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    62.4
+   ]
+  },
+  {
+   "pan": -52.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    58.5
+   ]
+  },
+  {
+   "pan": -50.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    54.5
+   ]
+  },
+  {
+   "pan": -48.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    50.6
+   ]
+  },
+  {
+   "pan": -46.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    46.6
+   ]
+  },
+  {
+   "pan": -44.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    42.6
+   ]
+  },
+  {
+   "pan": -42.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    38.6
+   ]
+  },
+  {
+   "pan": -40.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    34.4
+   ]
+  },
+  {
+   "pan": -38.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    30.3
+   ]
+  },
+  {
+   "pan": -36.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    26.2
+   ]
+  },
+  {
+   "pan": -34.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    22.2
+   ]
+  },
+  {
+   "pan": -32.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    18.5
+   ]
+  },
+  {
+   "pan": -30.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    15.0
+   ]
+  },
+  {
+   "pan": -28.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    11.9
+   ]
+  },
+  {
+   "pan": -26.0,
+   "max_depression_deg": -23.5,
+   "closest_at_limit": [
+    "ball path / VLP-16",
+    10.3
+   ]
+  },
+  {
+   "pan": -24.0,
+   "max_depression_deg": -21.5,
+   "closest_at_limit": [
+    "ball path / VLP-16",
+    11.0
+   ]
+  },
+  {
+   "pan": -22.0,
+   "max_depression_deg": -20.5,
+   "closest_at_limit": [
+    "ball path / VLP-16",
+    10.4
+   ]
+  },
+  {
+   "pan": -20.0,
+   "max_depression_deg": -19.5,
+   "closest_at_limit": [
+    "ball path / VLP-16",
+    10.3
+   ]
+  },
+  {
+   "pan": -18.0,
+   "max_depression_deg": -18.5,
+   "closest_at_limit": [
+    "ball path / VLP-16",
+    10.9
+   ]
+  },
+  {
+   "pan": -16.0,
+   "max_depression_deg": -18.0,
+   "closest_at_limit": [
+    "ball path / VLP-16",
+    10.7
+   ]
+  },
+  {
+   "pan": -14.0,
+   "max_depression_deg": -17.5,
+   "closest_at_limit": [
+    "ball path / VLP-16",
+    10.5
+   ]
+  },
+  {
+   "pan": -12.0,
+   "max_depression_deg": -17.0,
+   "closest_at_limit": [
+    "ball path / VLP-16",
+    11.0
+   ]
+  },
+  {
+   "pan": -10.0,
+   "max_depression_deg": -16.5,
+   "closest_at_limit": [
+    "ball path / VLP-16",
+    11.5
+   ]
+  },
+  {
+   "pan": -8.0,
+   "max_depression_deg": -16.5,
+   "closest_at_limit": [
+    "ball path / VLP-16",
+    10.5
+   ]
+  },
+  {
+   "pan": -6.0,
+   "max_depression_deg": -16.0,
+   "closest_at_limit": [
+    "ball path / VLP-16",
+    11.8
+   ]
+  },
+  {
+   "pan": -4.0,
+   "max_depression_deg": -16.0,
+   "closest_at_limit": [
+    "ball path / VLP-16",
+    11.5
+   ]
+  },
+  {
+   "pan": -2.0,
+   "max_depression_deg": -16.0,
+   "closest_at_limit": [
+    "ball path / VLP-16",
+    11.0
+   ]
+  },
+  {
+   "pan": 0.0,
+   "max_depression_deg": -16.0,
+   "closest_at_limit": [
+    "ball path / VLP-16",
+    10.9
+   ]
+  },
+  {
+   "pan": 2.0,
+   "max_depression_deg": -16.0,
+   "closest_at_limit": [
+    "ball path / VLP-16",
+    11.0
+   ]
+  },
+  {
+   "pan": 4.0,
+   "max_depression_deg": -16.0,
+   "closest_at_limit": [
+    "ball path / VLP-16",
+    11.5
+   ]
+  },
+  {
+   "pan": 6.0,
+   "max_depression_deg": -16.0,
+   "closest_at_limit": [
+    "ball path / VLP-16",
+    11.8
+   ]
+  },
+  {
+   "pan": 8.0,
+   "max_depression_deg": -16.5,
+   "closest_at_limit": [
+    "ball path / VLP-16",
+    10.5
+   ]
+  },
+  {
+   "pan": 10.0,
+   "max_depression_deg": -16.5,
+   "closest_at_limit": [
+    "ball path / VLP-16",
+    11.5
+   ]
+  },
+  {
+   "pan": 12.0,
+   "max_depression_deg": -17.0,
+   "closest_at_limit": [
+    "ball path / VLP-16",
+    11.0
+   ]
+  },
+  {
+   "pan": 14.0,
+   "max_depression_deg": -17.5,
+   "closest_at_limit": [
+    "ball path / VLP-16",
+    10.5
+   ]
+  },
+  {
+   "pan": 16.0,
+   "max_depression_deg": -18.0,
+   "closest_at_limit": [
+    "ball path / VLP-16",
+    10.7
+   ]
+  },
+  {
+   "pan": 18.0,
+   "max_depression_deg": -18.5,
+   "closest_at_limit": [
+    "ball path / VLP-16",
+    10.9
+   ]
+  },
+  {
+   "pan": 20.0,
+   "max_depression_deg": -19.5,
+   "closest_at_limit": [
+    "ball path / VLP-16",
+    10.3
+   ]
+  },
+  {
+   "pan": 22.0,
+   "max_depression_deg": -20.5,
+   "closest_at_limit": [
+    "ball path / VLP-16",
+    10.4
+   ]
+  },
+  {
+   "pan": 24.0,
+   "max_depression_deg": -21.5,
+   "closest_at_limit": [
+    "ball path / VLP-16",
+    11.0
+   ]
+  },
+  {
+   "pan": 26.0,
+   "max_depression_deg": -23.5,
+   "closest_at_limit": [
+    "ball path / VLP-16",
+    10.3
+   ]
+  },
+  {
+   "pan": 28.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    11.9
+   ]
+  },
+  {
+   "pan": 30.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    15.0
+   ]
+  },
+  {
+   "pan": 32.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    18.5
+   ]
+  },
+  {
+   "pan": 34.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    22.2
+   ]
+  },
+  {
+   "pan": 36.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    26.2
+   ]
+  },
+  {
+   "pan": 38.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    30.3
+   ]
+  },
+  {
+   "pan": 40.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    34.4
+   ]
+  },
+  {
+   "pan": 42.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    38.6
+   ]
+  },
+  {
+   "pan": 44.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    42.6
+   ]
+  },
+  {
+   "pan": 46.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    46.6
+   ]
+  },
+  {
+   "pan": 48.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    50.6
+   ]
+  },
+  {
+   "pan": 50.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    54.5
+   ]
+  },
+  {
+   "pan": 52.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    58.5
+   ]
+  },
+  {
+   "pan": 54.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    62.4
+   ]
+  },
+  {
+   "pan": 56.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    66.3
+   ]
+  },
+  {
+   "pan": 58.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    70.3
+   ]
+  },
+  {
+   "pan": 60.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    74.1
+   ]
+  },
+  {
+   "pan": 62.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    77.9
+   ]
+  },
+  {
+   "pan": 64.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    81.7
+   ]
+  },
+  {
+   "pan": 66.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    85.4
+   ]
+  },
+  {
+   "pan": 68.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    89.1
+   ]
+  },
+  {
+   "pan": 70.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    92.8
+   ]
+  },
+  {
+   "pan": 72.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    96.4
+   ]
+  },
+  {
+   "pan": 74.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    100.0
+   ]
+  },
+  {
+   "pan": 76.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    103.5
+   ]
+  },
+  {
+   "pan": 78.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    106.9
+   ]
+  },
+  {
+   "pan": 80.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    110.3
+   ]
+  },
+  {
+   "pan": 82.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    113.7
+   ]
+  },
+  {
+   "pan": 84.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    117.0
+   ]
+  },
+  {
+   "pan": 86.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    120.3
+   ]
+  },
+  {
+   "pan": 88.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    123.5
+   ]
+  },
+  {
+   "pan": 90.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    126.6
+   ]
+  },
+  {
+   "pan": 92.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    129.7
+   ]
+  },
+  {
+   "pan": 94.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    132.8
+   ]
+  },
+  {
+   "pan": 96.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    135.8
+   ]
+  },
+  {
+   "pan": 98.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    138.7
+   ]
+  },
+  {
+   "pan": 100.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    141.6
+   ]
+  },
+  {
+   "pan": 102.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    144.4
+   ]
+  },
+  {
+   "pan": 104.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    147.1
+   ]
+  },
+  {
+   "pan": 106.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    149.8
+   ]
+  },
+  {
+   "pan": 108.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    152.4
+   ]
+  },
+  {
+   "pan": 110.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    155.0
+   ]
+  },
+  {
+   "pan": 112.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    157.5
+   ]
+  },
+  {
+   "pan": 114.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    159.9
+   ]
+  },
+  {
+   "pan": 116.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    162.3
+   ]
+  },
+  {
+   "pan": 118.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    164.6
+   ]
+  },
+  {
+   "pan": 120.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    166.8
+   ]
+  },
+  {
+   "pan": 122.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    169.0
+   ]
+  },
+  {
+   "pan": 124.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    171.1
+   ]
+  },
+  {
+   "pan": 126.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    173.2
+   ]
+  },
+  {
+   "pan": 128.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    175.1
+   ]
+  },
+  {
+   "pan": 130.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    177.1
+   ]
+  },
+  {
+   "pan": 132.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    178.9
+   ]
+  },
+  {
+   "pan": 134.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    180.7
+   ]
+  },
+  {
+   "pan": 136.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    182.4
+   ]
+  },
+  {
+   "pan": 138.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    183.9
+   ]
+  },
+  {
+   "pan": 140.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    185.5
+   ]
+  },
+  {
+   "pan": 142.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    186.9
+   ]
+  },
+  {
+   "pan": 144.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    188.3
+   ]
+  },
+  {
+   "pan": 146.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    189.6
+   ]
+  },
+  {
+   "pan": 148.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    190.8
+   ]
+  },
+  {
+   "pan": 150.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    192.0
+   ]
+  },
+  {
+   "pan": 152.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    193.1
+   ]
+  },
+  {
+   "pan": 154.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    194.1
+   ]
+  },
+  {
+   "pan": 156.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    195.1
+   ]
+  },
+  {
+   "pan": 158.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    196.0
+   ]
+  },
+  {
+   "pan": 160.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    196.8
+   ]
+  },
+  {
+   "pan": 162.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    197.5
+   ]
+  },
+  {
+   "pan": 164.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    198.2
+   ]
+  },
+  {
+   "pan": 166.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    198.8
+   ]
+  },
+  {
+   "pan": 168.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    199.3
+   ]
+  },
+  {
+   "pan": 170.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    199.7
+   ]
+  },
+  {
+   "pan": 172.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    200.1
+   ]
+  },
+  {
+   "pan": 174.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    200.4
+   ]
+  },
+  {
+   "pan": 176.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    200.6
+   ]
+  },
+  {
+   "pan": 178.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    200.7
+   ]
+  },
+  {
+   "pan": 180.0,
+   "max_depression_deg": -25.0,
+   "closest_at_limit": [
+    "barrel / VLP-16",
+    200.8
+   ]
+  }
+ ],
+ "points": {
+  "sampled": 4890982,
+  "near_enough_to_check": {
+   "barrel": 42370
+  }
+ },
+ "how": "surface samples of every panning and tilting part (~1.2 mm apart), the ones that can come within the margin at some pose kept (a lower bound over pan and tilt), and the ball path; the limit is the deepest tilt in 0.5 deg steps that keeps the margin",
+ "seconds": 196,
+ "lidar": {
+  "d": 103.3,
+  "h": 71.7,
+  "model": "Velodyne VLP-16 (Puck)",
+  "source": "VLP-16 user manual: \u00d8103.3 x 71.7 mm",
+  "centre_x_mm": 147.7,
+  "top_above_tm_mm": 41.7,
+  "base_above_tm_mm": -30.0
+ },
+ "placement_map": {
+  "x_mm": [
+   120,
+   140,
+   160,
+   180,
+   200,
+   220,
+   240,
+   260
+  ],
+  "top_above_tm_mm": [
+   -40,
+   -30,
+   -20,
+   -10,
+   0,
+   10,
+   20,
+   30,
+   40,
+   50,
+   60,
+   70,
+   80
+  ],
+  "worst_pan_limit_deg": [
+   [
+    -25.0,
+    -25.0,
+    -25.0,
+    -25.0,
+    -25.0,
+    -25.0,
+    -24.0,
+    -22.0
+   ],
+   [
+    -25.0,
+    -25.0,
+    -25.0,
+    -25.0,
+    -25.0,
+    -24.0,
+    -22.0,
+    -21.0
+   ],
+   [
+    -25.0,
+    -25.0,
+    -25.0,
+    -25.0,
+    -24.0,
+    -22.0,
+    -21.0,
+    -19.0
+   ],
+   [
+    -25.0,
+    -25.0,
+    -25.0,
+    -24.0,
+    -22.0,
+    -21.0,
+    -19.0,
+    -18.0
+   ],
+   [
+    -25.0,
+    -25.0,
+    -24.0,
+    -22.0,
+    -20.0,
+    -19.0,
+    -17.0,
+    -16.0
+   ],
+   [
+    -25.0,
+    -24.0,
+    -22.0,
+    -20.0,
+    -18.0,
+    -17.0,
+    -16.0,
+    -15.0
+   ],
+   [
+    -24.0,
+    -22.0,
+    -20.0,
+    -18.0,
+    -17.0,
+    -15.0,
+    -14.0,
+    -13.0
+   ],
+   [
+    -21.0,
+    -19.0,
+    -17.0,
+    -16.0,
+    -15.0,
+    -13.0,
+    -12.0,
+    -11.0
+   ],
+   [
+    -19.0,
+    -17.0,
+    -15.0,
+    -14.0,
+    -13.0,
+    -11.0,
+    -11.0,
+    -10.0
+   ],
+   [
+    -16.0,
+    -14.0,
+    -13.0,
+    -12.0,
+    -10.0,
+    -10.0,
+    -9.0,
+    -8.0
+   ],
+   [
+    -13.0,
+    -12.0,
+    -10.0,
+    -9.0,
+    -8.0,
+    -8.0,
+    -7.0,
+    -6.0
+   ],
+   [
+    -10.0,
+    -9.0,
+    -8.0,
+    -7.0,
+    -6.0,
+    -6.0,
+    -5.0,
+    -4.0
+   ],
+   [
+    -7.0,
+    -6.0,
+    -5.0,
+    -5.0,
+    -4.0,
+    -3.0,
+    -3.0,
+    -3.0
+   ]
+  ],
+  "note": "the depression the worst pan in -30..30 deg allows (1 deg steps); -25 = no limit"
+ }
+}

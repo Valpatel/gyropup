@@ -28,6 +28,16 @@ built. The Snail 2305 is 875 rpm/V; a drone 2306 at 1700-2600 rpm/V on 12 V woul
 motor is never a drop-in replacement: its rail comes down in proportion (about 6 V at 1700 rpm/V) and the map is
 rerun before it is fitted.
 
+Parts rule (the user, docs/decisions.yaml D40): every part is off the shelf with a listed price and a buy link
+(McMaster-Carr first; Digi-Key, Mouser, SparkFun, Adafruit, Pololu; the makers' stores for motors and servos), or 3D
+printed, or ordered to our drawing at an instant online price (SendCutSend for laser-cut, bent or machined sheet and
+plate; Xometry or JLCCNC for CNC; JLCPCB or PCBWay for boards). Nothing that needs a quote. The plan's choices D1-D10
+are decided (D41, docs/turret-plan.md section 1): continuous pan; the SparkFun ROB-13065 ring on the bench and the
+robot; the Feather M4 CAN; the servo bus across the ring; one fixed 12 V regulator as the speed ceiling; two ring
+circuits kept for a camera; the line cuts the wheels and the dial in hardware, pan and tilt stay live and capped at
+100 deg/s; a phase-short brake with brake-on-stop; a 66 fps chronograph trip. The turret stands on a 30 mm printed riser
+on the top deck.
+
 ## Where it sits
 
 - On the robot (body not designed yet): behind the VLP-16 lidar on the top deck, firing over it (user, 2026-10-26).
@@ -73,9 +83,12 @@ Tick with a link to the evidence (file, picture, result JSON). Unticked = open.
       ~1.4 s. Enable active braking in the ESCs (AM32), and add a fail-safe gate that holds the dropped ball at the
       chute (spring-closed, opened only while armed). The same gate pre-stages the next ball (item below).
 - [ ] Command to muzzle takes 146 ms, 86 ms of it the ball's drop through the chute: pre-stage a ball at the gate.
-- [ ] Firing backwards: at pan 140 deg the muzzle clears the deck's rear corner by 3 mm, where the operator stands.
+- [x] Firing backwards: at pan 140 deg the muzzle clears the deck's rear corner by 3 mm, where the operator stands.
       Add a pan keep-out behind and check the muzzle's clearance at every pan and tilt (a general obstacle check,
-      as for the lidar).
+      as for the lidar). Evidence: cad/turret_lidar.py is now that general check (obstacles as cylinders and boxes,
+      the ball path at the slowest stray-ball speed); `--scene box` finds every pose clear of the deck and the antennas
+      and keeps firing out within 60 deg of straight back (exports/turret/lidar/box.json `keep_out_fire_pan_deg`;
+      docs/turret-firmware.md section 5).
 - [ ] Torque caps: the tilt holds with a 15x margin and slewing is speed-limited (~100x torque margin). Cap both
       servos' torque in firmware to protect the printed gear and fingers (the pinion is the weak tooth: see the FEA).
 - [ ] Box-specific, for cad/turret_box.py when the turret's base changes: the antennas collide at full depression,
@@ -88,10 +101,13 @@ Tick with a link to the evidence (file, picture, result JSON). Unticked = open.
       Evidence: exports/turret/motion.json (cad/turret_motion.py, with the slip ring and the boards): tilt move 5.9,
       hold 47.6, world-frame 21.9; pan 90 deg in 1.2 s with a margin of 10.0 at the 50 % torque cap, yaw 104; the
       pinion (16 mm face, full-round roots) SF 2.52 at the cap and 1.26 at stall by FEA of one tooth.
-- [ ] Clearances and stops over the whole pan/tilt range, including the lidar in front and the DT12 harness. The
+- [x] Clearances and stops over the whole pan/tilt range, including the lidar in front and the DT12 harness. The
       turret itself is clear: no overlap and nothing moving within 1 mm but the designed tilt stops, at pans 0-350
       every 10 deg x tilts 0 and -25 (exports/turret/clash-sweep.json), and every degree where the cradle passes over
-      the pan pinion at full depression (2.5 mm, exports/turret/t1-fine-checks.json). The lidar table is rerun next.
+      the pan pinion at full depression (exports/turret/t1-fine-checks.json). Over the lidar (cad/turret_lidar.py, the
+      30 mm riser): limited only within pan +-26 deg, to -16 deg at worst (exports/turret/lidar/lidar.json, a firmware
+      table every 5 deg). On the Orin box: no limit, firing kept out within 60 deg of straight back
+      (exports/turret/lidar/box.json). The DT plug's 30 mm withdrawal path is clear of the fixed parts.
 - [ ] Mass: 1.594 kg with a full hopper (exports/turret/turret.json) against the head payload's 1.5 kg
       (docs/head-payload.md): the slip ring, its carrier and driver, and the two board bays added ~250 g. Cut at least
       100 g (infill where the FEA allows, a lighter carrier and bay) or agree a new budget with the leg's sizing.
@@ -101,11 +117,13 @@ Tick with a link to the evidence (file, picture, result JSON). Unticked = open.
 - [ ] Every bought part with a real part number and price; nothing left as "estimate" that can be sourced.
       Each line carries a catalogue key, part number and source URL, so the BOM can show its thumbnail and its
       alternates: done for every line (exports/turret/bench/bom.json, `not_in_a_catalogue` empty; cad/build_turret.py
-      calls cad/bom_media.py enrich()). Open: the electronics' prices are estimates until ordered; the robot ring
-      (Senring M220-0210-12S) is a quote. Hard to buy (catalog/sourcing.json risk): the Snail 2305 (DJI delisted it;
-      backorder) and the M2006 and C610 (out of stock; the Damiao DM-2325 with its own driver is the alternate and
-      needs a new dial-motor mount); the Picotronic laser ships only from Germany. No buyable alternate within the
-      speed rule yet for the Snail: a drone motor needs its own lower rail (hard rules).
+      calls cad/bom_media.py enrich()). Every part follows the parts rule (D40): the pan bearing is VXB's chrome-steel
+      6810-2RS ($24.99), the ring the SparkFun ROB-13065 everywhere, the laser a Quarton VLM-520-73 LPT from Digi-Key
+      (Class 2, $41.82), the pan clamp a SendCutSend 6061-T6 part (exports/turret/pan_clamp.dxf, instant price on
+      upload); `no_listed_price` in bom.json lists what still lacks a read price. Hard to buy (catalog/sourcing.json
+      risk): the Snail 2305 (DJI delisted it; backorder) and the M2006 and C610 (out of stock; the Damiao DM-2325 with
+      its own driver is the alternate and needs a new dial-motor mount). No buyable alternate within the speed rule yet
+      for the Snail: a drone motor needs its own lower rail (hard rules).
 - [ ] Wiring: power (24 V → 12 V buck for the servos/laser), the ESCs, the M2006 + C610, CAN, the DT12 pinout. The
       slip-ring hold is lifted (docs/turret-plan.md, main 5f09bd9): the ring, its carrier and driver, the index and
       both board bays are in the CAD; the wiring page (plan task T2) is next.
@@ -204,3 +222,38 @@ Newest last. One entry per agent run: what it did, what it proved, what is next.
     are out of stock. The speed-ceiling rule is now a hard rule above: no drone motor goes on the 12 V rail.
   - Next: the FEA of every printed part on this geometry; the lidar table and the box's keep-outs with the new
     obstacle check; cutting 100 g; the assembly order with pictures and the bench test plan (T5 needs the parts).
+- 2026-10-27 (later): the parts rule (D40) and the decided choices (D41) applied, every printed load path analysed and
+  strengthened where the FEA asked, the clearance study generalised, the assembly order drawn.
+  - D40/D41: the SparkFun ROB-13065 ring on the bench and the robot (RING_MODELS keeps it and the Adafruit 1196 as its
+    alternate; the quote-only rings are gone), mapped 2+2 power, CAN, safety, servo TTL, signal ground, two kept for a
+    camera (docs/turret-wiring.md 1.2), on 2 x 6 Micro-Fit connectors; the CT signal connector is now 2 x 5, so the
+    three Micro-Fit sizes cannot cross-mate. The pan bearing is VXB's chrome-steel 6810-2RS ($24.99); the laser a
+    Quarton VLM-520-73 LPT from Digi-Key ($41.82, Class 2, Ø7 x 26, on 5 V); the pan clamp is a SendCutSend part in
+    0.125 in 6061-T6 (exports/turret/pan_clamp.dxf and .step, instant price on upload). The lidar study puts the TM face
+    on the 30 mm riser. No quote text is left in the turret's files.
+  - FEA (cad/turret_studies.py; the last full run was stopped at the wrap-up, so its pictures and summary.json are not
+    committed): on the final geometry the yoke is SF 2.53 / 2.35 / 1.99 in the 30 g falls and 1.72 in the everyday push at
+    the muzzle (target 2; the peak sits at the relief's step, p99 12 MPa), the turntable 3.59 down; from the targeted
+    runs, the pan base 7.2 / 1.61 (falls) and 2.52 / 1.26 (servo cap / stall), the aluminium clamp 3.1, the pinion 2.7 /
+    1.35, the turntable's teeth 3.2 / 1.6; the cradle 1.0 / 0.83 / 0.81 against the across-layer strength (1.7-2.1 along
+    the layers, p99 SF 1.7-2.0). Not run yet: the cartridge (fall and recoil) and the dial (jam).
+  - What the FEA changed: the clamp ring (printed, 3 ears) failed the lift case at SF 0.18 and became aluminium with
+    five ears (SF 3.1); the yoke's bridge, once its underside was relieved for the pinion, carried the arms as thin
+    windowed beams (SF 0.6): it is now 10 mm, solid, and the relief steps up in three 0.5 mm steps from r 35; the
+    cradle's rails and cheeks bent (SF 0.27-0.5 at first): 2 mm deeper rails behind the front dowel, filleted gussets
+    at the cheeks, 6 mm cheeks, a Ø18 boss round the pivot insert and a deeper-rooted stop lug; the pan base's servo
+    pocket wall now runs into the housing tube (its notch was the side-fall peak).
+  - Mass: 1.556 kg with 30 balls, 1.502 kg empty (exports/turret/turret.json), down from 1.594: still 56 g over the head
+    payload's 1.5 kg with a full hopper. Saved: the bumper 4 mm with screw lugs, the carrier and the turntable pocketed,
+    the bay's walls 1.2 mm, the lid 2 mm, the hopper's wall 1.6 mm, the pan base at 40 % gyroid, a 3.8 g laser. Added by
+    the FEA: the 10 mm solid bridge, 6 mm cheeks, deeper rails, the aluminium clamp.
+  - Motion (exports/turret/motion.json): tilt move 5.8, hold 42.9, world-frame 21.8; pan 9.2 at the 50 % cap, yaw 96.7;
+    the tilting group's centre 8-11 mm behind the axis empty to full (nose-up preload kept).
+  - Clearance (cad/turret_lidar.py, now a general obstacle check with point pruning, ~2 min a scene): on the robot, the VLP-16 148 mm ahead with its top 41.7 mm above the TM face, the depression is limited only within pan +-26 deg, to -16 deg at worst (the ball path binds, 11.8 mm clear; the firmware table every 5 deg is in exports/turret/lidar/lidar.json); on the Orin box nothing limits it (the deck and the antennas clear at full depression), and firing is kept out within 60 deg of straight back, where the operator stands (exports/turret/lidar/box.json).
+  - Assembly (cad/turret_assembly.py, docs/turret-assembly.md): twelve steps with an exploded picture each from the
+    CAD and the hardware table from the parts list. Bench tests: docs/turret-bench-tests.md (fits, strength, the
+    electrics without motors, the speed ceiling first, the feed, accuracy).
+  - Not done at the wrap-up (2026-10-27): the full FEA rerun (cartridge, dial, summary.json); the electronics' listed
+    prices (a research agent was gathering them; `no_listed_price` in exports/turret/bench/bom.json lists what is
+    missing, with the bench stand's rocker and feet); the last 56 g.
+  - Next: the prototype plan the planner is writing (main's docs/turret-prototype-plan.md) becomes the task list.

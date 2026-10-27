@@ -106,7 +106,7 @@ M2006 = {'d': 24.4, 'gear_l': 25.0, 'fixed_l': 30.7, 'body_l': 43.8, 'hub': (6.0
          'flat': 5.5, 'shaft_l': 17.0, 'pcd': 19.0, 'lead': (25.7, 32.7, 22.9), 'mass_g': 90.0}
 C610 = {'size': (22.0, 50.0, 7.3), 'mass_g': 17.0}                    # x, y, z: DJI C610 user guide, 50 x 22 x 7.3, 17 g
 AM32 = {'size': (25.0, 13.0, 5.0), 'mass_g': 5.0}                     # catalog repeat-robotics-am32-35a-esc
-LASER = {'d': 12.0, 'L': 40.0, 'mass_g': 16.0}                        # Picotronic DD520-1-24(12x40)
+LASER = {'d': 7.0, 'L': 26.1, 'mass_g': 3.8}                         # Quarton VLM-520-73 LPT: 520 nm, < 1 mW (Class 2), 3-6 V
 # Deutsch DT04-12PA-L012 flange receptacle and its DT06-12SA plug (est; check against the TE drawings)
 # TE Deutsch DT04-12PA-L012 flange receptacle (TE drawing DT04-12PX-L012 rev D2): flange 55.12 x 35.56 x 5.08, 4 x Ø4.29 on
 # 44.96 x 23.88 (M4), panel cutout 41.83 x 23.52 R6.35, shroud 40.56 x 22.25 standing 19.81 proud, ~21 behind the panel.
@@ -121,18 +121,15 @@ NOT_MODELLED_G = {'wiring and the cable loops': 50, 'chronograph emitters/receiv
 # share the Ø22 body and the Ø44-44.5 flange (one carrier); the driver reaches each rotor stub through the tube.
 # Flange hole patterns other than Servotecnica's (3 x Ø5.5 on Ø35) are not published: measure the ring in hand.
 RING_MODELS = {
-    'sparkfun_rob13065': {'name': 'SparkFun ROB-13065 (Senring M220-12): 12 x 2 A, the bench ring', 'body_l': 26.5,
+    'sparkfun_rob13065': {'name': 'SparkFun ROB-13065 (Senring M220 series): 12 x 2 A, Ø22 x 26.5, flange Ø44.5', 'body_l': 26.5,
                           'stub': (6.0, 5.0), 'flange': (44.5, 2.5), 'pcd': 35.0, 'mass_g': 25.0},
-    'senring_m220_0210_12s': {'name': 'Senring M220-0210-12S: 2 x 10 A + 12 x 2 A, the robot ring', 'body_l': 40.0,
-                              'stub': (6.0, 5.0), 'flange': (44.5, 2.5), 'pcd': 35.0, 'mass_g': 35.0},
-    'moflon_mc330_p0308_s06': {'name': 'Moflon MC330-P0308-S06: 3 x 8 A + 6 x 2 A', 'body_l': 33.0, 'stub': (6.0, 5.0),
-                               'flange': (44.0, 2.5), 'pcd': 35.0, 'mass_g': 30.0},
-    'servotecnica_a03_0406': {'name': 'Servotecnica SVTS A 03-S-A-04/06: 4 x 6 A + 6 x 2 A', 'body_l': 41.2, 'stub': (7.8, 9.0),
-                              'flange': (44.0, 2.4), 'pcd': 35.0, 'mass_g': 40.0},
+    'adafruit_1196': {'name': 'Adafruit 1196 (Prosper SRC022A-12): 12 x 2 A, Ø22, flange Ø44', 'body_l': 26.0,
+                      'stub': (6.0, 5.0), 'flange': (44.0, 2.5), 'pcd': 35.0, 'mass_g': 20.0},
 }
-RING_MODEL = 'senring_m220_0210_12s'
-# D1 (the user decides): True = slip ring and endless pan; False = the stop post and finger come back (+-170 deg with a
-# cable loop through the centre)
+# D2 (decided 2026-10-27, docs/decisions.yaml D41): the SparkFun ring on the bench and on the robot; the 200 ms soft
+# start keeps every circuit under 2 A (2.2 A peak at the ring, two circuits per power rail)
+RING_MODEL = 'sparkfun_rob13065'
+# D1 (decided): continuous pan through the ring. False brings back the stop post and finger (+-170 deg on a cable loop)
 CONTINUOUS_PAN = True
 # the carrier drops into the foot's Ø65 opening from below (the opening is that big so the DIN 471 circlip can pass,
 # its d4 install space being Ø64.5) and is held by 3 x M3 x 10 flat heads through tabs sunk flush in the foot's
@@ -140,7 +137,7 @@ CONTINUOUS_PAN = True
 CARRIER = {'r': 32.25, 'h': 12.0, 'tab_angles': (60.0, 135.0, 300.0), 'tab_r': 38.5, 'tab_t': 4.0, 'screw_r': 35.75,
            'flange_seat': 2.6, 'bore': 23.1}
 TUBE = {'id': 7.94, 'od': 11.11, 'note': 'soft silicone tubing 5/16 in ID x 7/16 in OD'}
-MAGNET = {'d': 6.35, 'h': 3.18, 'r': 35.0, 'note': 'N42 neodymium disc 1/4 x 1/8 in, the pan index (est 1060 G at the hall)'}
+MAGNET = {'d': 4.76, 'h': 3.18, 'r': 35.0, 'note': 'neodymium disc 3/16 x 1/8 in (McMaster 5862K102), the pan index: ~760 G at the hall\'s element 3.5 mm over it (Br 1.32 T, on-axis formula), 4x the A1120\'s highest operate point'}
 HALL = {'size': (4.1, 3.0, 1.6), 'note': 'Allegro A1120LUA-T unipolar hall switch (UA package), on the turntable'}
 DENS = {k: v['density_g_cm3'] for k, v in json.loads((R / 'catalog/materials.json').read_text()).items()}
 PRINT_RATE_CM3_H = {'pa6-cf': 14.0, 'petg': 20.0, 'tpu95': 8.0}       # same rates as build.py's print plan
@@ -214,7 +211,7 @@ class Geo:
         # in front of it (it was 32-35 mm ahead with the axis on the dial axis). The axis stays on the pan axis, so the
         # dial and hopper sit tilt_x behind it.
         self.tilt_x = 40.0
-        self.cheek_y = (self.cage_y + 1.5, self.cage_y + 6.5)
+        self.cheek_y = (self.cage_y + 1.5, self.cage_y + 7.5)              # 6 mm cheeks (FEA: the stop and the side load)
         self.arm_y = (self.cheek_y[1] + 4.0, self.cheek_y[1] + 12.0)
         self.rail_y = (self.cage_y - 10.5, self.cheek_y[1])
         self.rail_z = (self.base_z0 - 5.0, self.base_z0)
@@ -231,12 +228,12 @@ class Geo:
         # the pan servo stands on four posts with its idler face 12 mm over the foot: its bus plugs go in from below
         self.servo_z0 = self.foot_t + SERVO['plug_room']
         self.base_r = 72.0
-        self.bridge_z = (self.turntable_z[1], self.turntable_z[1] + 8.0)
+        self.bridge_z = (self.turntable_z[1], self.turntable_z[1] + 10.0)      # 10 mm: the arms' push and fall loads (FEA)
         self.post_r = (68.5, 74.0)
         self.post_top = 62.0
         self.dt_y = 73.0                                         # DT pad face (flange seat)
-        self.bumper_r = (80.0, 86.0)
-        self.bumper_z = (6.0, 22.0)                              # on 6 mm tabs: the M3 x 4.3 inserts need 5.1 mm
+        self.bumper_r = (82.0, 86.0)                             # 4 mm of TPU 95A (mass: it was 6)
+        self.bumper_z = (6.0, 20.0)                              # on 6 mm tabs: the M3 x 4.3 inserts need 5.1 mm
         # height of the ball path above the mount face. Two limits: the M2006's spinning rotor hub (under the dial,
         # tilt_x behind the pan axis) 3 mm over the turntable; and, binding, the front of the cradle (the laser tab and
         # the laser mount's screw heads under it) at full depression passing over the pan pinion, whose 16 mm face
@@ -380,14 +377,14 @@ def pan_base(G):
     s = s.union(ring_z(G.base_r, G.base_r - 2.5, 0, 18))                                    # drip skirt
     s = s.union(ring_z(35.5, 32.5, 0, G.brg_z - 2))                                         # housing tube
     s = s.union(ring_z(G.housing_r_out, BRG['D_land'] / 2, G.brg_z - 2, hz1))               # bearing seat ring
-    for a in (0, 90, 270):                                                                  # clamp ears
+    for a in CLAMP_EARS:                                                                    # clamp ears
         ear = box(G.housing_r_out - 0.5, 42.0, -7, 7, hz1 - 4, hz1).rotate((0, 0, 0), (0, 0, 1), a)
         s = s.union(ear).union(cyl_z(7.0, hz1 - 4, hz1, *polar(42.0, math.radians(a))))
     # pan servo pocket (walls 3 mm up to 25 mm over its idler face, servo + 0.3 mm) and the four posts it stands on
     sx, sy = G.servo_pan_xy
     W, L, sft = SERVO['W'], SERVO['L'], SERVO['shaft_from_end']
     px0, px1, py0, py1 = sx - W / 2 - 0.3, sx + W / 2 + 0.3, sy - sft - 0.3, sy + L - sft + 0.3
-    s = s.union(box(px0 - 3, px1 + 5.5, py0 - 3, py1 + 3, 0, G.servo_z0 + 25))   # inner wall runs into the housing tube
+    s = s.union(box(px0 - 3, px1 + 9.0, py0 - 3, py1 + 3, 0, G.servo_z0 + 25))   # inner wall runs well into the housing tube
     s = s.cut(box(px0, px1, py0, py1, t, G.servo_z0 + 40))
     posts = [(sx + sgn * SERVO['holes_x'], sy + d) for sgn in (1, -1) for d in SERVO['holes_idler']]
     for (x, y) in posts:
@@ -402,10 +399,10 @@ def pan_base(G):
     for (y, z) in BB['holes']:                                                              # and its 4 standoff bosses
         s = s.union(cyl_x(3.5, BB['x0'] - BB['standoff'], BB['x0'] + 0.01, y, z))
     for a in BUMPER_TABS:
-        s = s.union(box(G.base_r - 1, G.bumper_r[1], -6, 6, 0, G.bumper_z[0]).rotate((0, 0, 0), (0, 0, 1), a))
+        s = s.union(box(G.base_r - 1, BUMPER_LUG[1], -6, 6, 0, G.bumper_z[0]).rotate((0, 0, 0), (0, 0, 1), a))
     # --- cuts
     s = s.cut(cyl_z(BRG['D'] / 2, G.brg_z, hz1 + 1))                                       # bearing seat
-    s = s.cut(cyl_z(32.5, -1, t + 1))                                                      # centre opening
+    s = s.cut(cyl_z(32.5, -1, G.brg_z - 2 + 0.01))                                         # centre opening and the tube's bore
     for (x, y) in TM_BOLTS:
         s = s.cut(through_z(x, y, FAST['M5']['clear'], -1, 60)).cut(cyl_z(5.0, t - 0.01, 60, x, y))
     for (x, y) in TM_DOWELS:
@@ -418,7 +415,7 @@ def pan_base(G):
         s = s.cut(cyl_z(FAST['M3']['insert_pilot'] / 2, C['tab_t'] - 0.1, C['tab_t'] + 7.0, x, y))     # M3 insert from below
     for (y, z) in BB['holes']:                                                              # 4 x M3 inserts for the board
         s = s.cut(cyl_x(FAST['M3']['insert_pilot'] / 2, BB['x0'] - BB['standoff'] - 0.1, BB['x0'] - BB['standoff'] + 6.0, y, z))
-    for a in (0, 90, 270):
+    for a in CLAMP_EARS:
         x, y = polar(42.0, math.radians(a))
         s = s.cut(insert_hole(x, y, hz1, 'M3', 6.0))
     for (x, y) in posts:                                                                    # M2 up into the servo
@@ -432,12 +429,15 @@ def pan_base(G):
             s = s.cut(cyl_y(FAST['M4']['insert_pilot'] / 2, -G.dt_y - 0.1, -G.dt_y + 8.0, x, z))     # 4 x M4 inserts
     s = s.cut(box(-10, 10, -40, 0, t, t + 18))                                              # cable window (-y)
     for a in BUMPER_TABS:
-        x, y = polar(sum(G.bumper_r) / 2, math.radians(a))
+        x, y = polar(BUMPER_BOLT_R, math.radians(a))
         s = s.cut(insert_hole(x, y, G.bumper_z[0], 'M3', 5.5))                             # short insert, 4.3 mm
     return s
 
 
-BUMPER_TABS = (0, 60, 120, 240, 300)
+BUMPER_TABS = (30.0, 90.0, 150.0, 210.0, 330.0)   # none straight ahead: the lidar is 10 mm from the bumper there
+# the 4 mm bumper is widened to a lug at each tab (r 80..87.5) for its screw and washer
+BUMPER_LUG = (80.0, 87.5)
+BUMPER_BOLT_R = 84.0
 DT_Z = 19.0
 # the base-board bay (docs/turret-plan.md 3.3): the 555 safety-pulse oscillator, the pan servo's 12 V regulator, the
 # ring's stator connector; a 50 x 35 board standing on 5 mm standoffs on the wall's inner face, components inwards
@@ -455,16 +455,20 @@ def sector_z(r0, r1, a0, a1, z0, z1, n=16):
 
 
 def pan_clamp(G):
-    """Printed PA6-CF clamp ring, 3 mm: its Ø61 bore overlaps the 61810's outer race by 1.5 mm and holds it down
-    (3 x M3 x 8 into the housing ears); the turntable's shoulder passes through it with 2.5 mm to spare. The pan index
-    magnet (1/4 x 1/8 in disc) sits in a pocket on its top at pan 0, under the hall switch in the turntable."""
+    """The clamp ring, laser-cut by SendCutSend from 0.125 in (3.175 mm) 6061-T6 aluminium (exports/turret/pan_clamp.dxf):
+    Ø61 to Ø74, its bore over the 6810's outer race by 1.5 mm, holding it down with 5 x M3 x 8 into the housing ears at
+    CLAMP_EARS (none at 180 deg, where the pan servo stands); its Ø74 outside keeps 1.25 mm from the pinion's tips. A
+    printed ring of the same outline needed 5 mm of PA6-CF and still only just passed (FEA); aluminium is four times as
+    strong and 1.8 mm thinner. The turntable's shoulder passes through it with 2.5 mm to spare. The pan index
+    magnet (3/16 x 1/8 in disc) sits through it on the housing's top at pan 0, under the hall switch in the turntable."""
     z0 = G.brg_z + BRG['B']
-    s = ring_z(39.0, 30.5, z0, z0 + 3)
-    for a in (0, 90, 270):
-        lug = box(0, 46.0, -7, 7, z0, z0 + 3).rotate((0, 0, 0), (0, 0, 1), a)
-        s = s.union(lug.cut(cyl_z(39.0, z0 - 1, z0 + 4)).union(cyl_z(7.0, z0, z0 + 3, *polar(42.0, math.radians(a)))))
+    t = CLAMP_T
+    s = ring_z(G.housing_r_out, 30.5, z0, z0 + t)
+    for a in CLAMP_EARS:
+        lug = box(0, 46.0, -7, 7, z0, z0 + t).rotate((0, 0, 0), (0, 0, 1), a)
+        s = s.union(lug.cut(cyl_z(G.housing_r_out, z0 - 1, z0 + t + 1)).union(cyl_z(7.0, z0, z0 + t, *polar(42.0, math.radians(a)))))
         s = s.cut(through_z(*polar(42.0, math.radians(a)), FAST['M3']['clear']))
-    s = s.cut(cyl_z(30.5, z0 - 1, z0 + 4))
+    s = s.cut(cyl_z(30.5, z0 - 1, z0 + t + 1))
     s = s.cut(cyl_z(MAGNET['d'] / 2 + 0.05, z0 - 1, z0 + 4, MAGNET['r'], 0.0))      # the pan index magnet: on the housing's top, through the clamp
     return s
 
@@ -488,12 +492,15 @@ def pan_pinion(G):
 
 
 def bumper_ring(G):
-    """TPU 95A ring, 6 mm wide and 16 mm tall, around the pan base on its five tabs (M3 screws with washers); a gap
+    """TPU 95A ring, 4 mm wide and 14 mm tall, widened to a lug at each of the base's five tabs for its M3 screw and
+    washer; a gap
     on -y lets the DT plug in. It takes the knocks before the pan base does."""
     s = ring_z(G.bumper_r[1], G.bumper_r[0], *G.bumper_z)
+    for a in BUMPER_TABS:
+        s = s.union(sector_z(BUMPER_LUG[0], BUMPER_LUG[1], a - 7.0, a + 7.0, *G.bumper_z))
     s = s.cut(box(-31, 31, -120, -50, 0, 40))
     for a in BUMPER_TABS:
-        s = s.cut(through_z(*polar(sum(G.bumper_r) / 2, math.radians(a)), FAST['M3']['clear']))
+        s = s.cut(through_z(*polar(BUMPER_BOLT_R, math.radians(a)), FAST['M3']['clear']))
     return s
 
 
@@ -527,6 +534,9 @@ def pan_ring(G):
     s = s.cut(ring_z(28.5, BRG['d_land'] / 2, G.brg_z + BRG['B'] - 0.1, G.brg_z + BRG['B'] + 1.0))   # shield relief
     for (x, y) in YOKE_BOLTS:
         s = s.cut(insert_hole(x, y, z1, 'M4'))
+    for k in range(6):                                                                      # lightening pockets from below
+        a = 30.0 + 60.0 * k
+        s = s.cut(sector_z(23.0, 34.0, a - 20.0, a + 20.0, z0 - 1, z0 + 7.0))           # 1 mm under the yoke's insert pilots
     hx, hy, hz = HALL['size']
     s = s.cut(box(MAGNET['r'] - hx / 2 - 0.2, MAGNET['r'] + hx / 2 + 0.2, -hy / 2 - 0.2, hy / 2 + 0.2, z0 - 1, z0 + hz + 0.3))  # hall switch
     s = s.cut(cyl_z(1.4, z0, z1 + 1, MAGNET['r'] - 3.5, 0.0))                              # its 3 leads up through
@@ -544,7 +554,16 @@ def pan_spacer(G):
 
 
 YOKE_BOLTS = [(10.0, 28.0), (-10.0, 28.0), (10.0, -28.0), (-10.0, -28.0)]
-YOKE_RELIEF = {'r': 37.0, 'h': 1.5}
+# sheet stock for the parts ordered from SendCutSend (D40), by their catalogue names
+SHEET = {'al6061': {'name': '6061-T6 aluminium', 'thickness_mm': 3.175, 'thickness_in': 0.125, 'density_g_cm3': 2.70,
+                    'vendor': 'SendCutSend', 'url': 'https://sendcutsend.com/materials/6061-t6-aluminum/'}}
+SHEET_PARTS = {'pan_clamp': 'al6061'}
+CLAMP_EARS = (0.0, 60.0, 120.0, 240.0, 300.0)      # the pan servo stands at 180 deg
+CLAMP_T = 3.175                                   # SendCutSend 6061-T6 aluminium, 0.125 in
+YOKE_RELIEF = {'r': 35.0, 'h': 1.5, 'chamfer': 3.0}    # the bridge bears on the turntable inside r 35; 1.5 mm up from r 38
+# printed with 4 perimeters, 5 top and bottom layers and 40 % gyroid instead of solid (mass): the pan base's walls are
+# all perimeter at that, and its FEA peaks sit in them (cad/turret_studies.py)
+PARTIAL_FILL = {'pan_base'}
 PINION_FACE = 16.0
 
 
@@ -583,6 +602,11 @@ def ring_carrier(G):
         x, y = polar(C['screw_r'], math.radians(a))
         s = s.cut(through_z(x, y, FAST['M3']['clear'], -1, C['tab_t'] + 1))
         s = s.cut(cq.Workplane('XY').circle(3.4).workplane(offset=1.9).circle(1.7).loft().translate((x, y, -0.01)))   # countersink
+    for k in range(3):                                                                      # pockets from below, between the
+        a = 90 + 120 * k + 60                                                               # flange inserts, off the tabs
+        if any(abs(((a - t + 180) % 360) - 180) < 22 for t in C['tab_angles']) or abs(((a - 270 + 180) % 360) - 180) < 25:
+            continue
+        s = s.cut(sector_z(C['bore'] / 2 + 2.0, C['r'] - 3.0, a - 32, a + 32, -1, rg['seat'] - 2.0))
     return s
 
 
@@ -612,9 +636,9 @@ def ring_driver(G):
 # bank lying down; level 2 (on 14 mm standoffs) the Feather M4 CAN (50.8 x 22.8, terminal block up) and the
 # connectors. The tray reaches y -115 at x +-29 (r 118.6): the tilt servo on the other arm already sweeps r 112, and
 # nothing fixed stands above z 69 out there (the pinion's top), so it clears every pan.
-TB = {'x': 29.0, 'z': (71.0, 128.0), 'y_out': 115.0, 'wall': 2.0, 'back': 3.0, 'board': (52.0, 50.0, 1.6), 'boss': 5.0,
+TB = {'x': 29.0, 'z': (71.0, 128.0), 'y_out': 115.0, 'wall': 1.2, 'back': 3.0, 'board': (52.0, 50.0, 1.6), 'boss': 5.0,
       'levels': ((11.0, 12.0), (12.5, 14.0), (8.5, None)),        # (tallest part, standoff to the next board) per level
-      'screws': ((10.0, 78.0), (-10.0, 78.0), (10.0, 121.0), (-10.0, 121.0)), 'mass_g': 110.0}
+      'screws': ((10.0, 78.0), (-10.0, 78.0), (10.0, 121.0), (-10.0, 121.0)), 'mass_g': 100.0}
 
 
 def bay_boards(G):
@@ -687,7 +711,6 @@ def tilt_yoke(G):
     # holes
     for sgn in (1, -1):
         s = s.cut(box(-12, 12, sgn * (a0 - 1) if sgn > 0 else -a1 - 1, sgn * (a1 + 1) if sgn > 0 else -a0 + 1, b1 + 6, zt - 41.0))
-        s = s.cut(box(-12, 12, sgn * 36 if sgn > 0 else -57, sgn * 57 if sgn > 0 else -36, b0 - 1, b1 + 1))
     s = s.cut(cyl_y(13.0, a0 - 1, a1 + 1, 0, zt))                                           # servo horn
     s = s.cut(cyl_y(MR126['D'] / 2, -a0 - MR126['B'], -a0 + 3, 0, zt))                      # MR126 seat (inner face)
     s = s.cut(cyl_y(4.7, -a0 - MR126['B'] - 1.3, -a0 - MR126['B'] + 0.01, 0, zt))          # relief: only the outer race sits
@@ -696,7 +719,11 @@ def tilt_yoke(G):
     s = s.cut(box(-rl, rl, -LEADS['r'] - rl, -LEADS['r'] + rl, b0 - 1, b1 + 1))
     # the pinion's top is level with the turntable's (z 69): outside the turntable's gear (r 37 up) the bridge and the
     # arms' feet stand 1.5 mm clear of that plane, so the pinion passes under them at every pan
-    s = s.cut(ring_z(100.0, YOKE_RELIEF['r'], b0 - 1.0, b0 + YOKE_RELIEF['h']))
+    # ... in three 0.5 mm steps over 3 mm instead of one, so the bridge's root has no deep notch (FEA)
+    r0r, hr, ch = YOKE_RELIEF['r'], YOKE_RELIEF['h'], YOKE_RELIEF['chamfer']
+    n = 3
+    for i in range(n):
+        s = s.cut(ring_z(110.0, r0r + ch * i / (n - 1), b0 - 1.0, b0 + hr * (i + 1) / n))
     for (x, z) in TB['screws']:                                                             # the turret-board bay's inserts
         s = s.cut(cyl_y(FAST['M3']['insert_pilot'] / 2, -a1 - 0.1, -a1 + 6.0, x, z))
     for (x, y) in YOKE_BOLTS:
@@ -727,11 +754,25 @@ def cradle(G):
         part = cheek.union(rail)
         s = part if s is None else s.union(part)
     s = s.union(box(xr0, xr0 + 8, -r1, r1, z0, z1))                                              # rear cross bar
+    # the rails and the cross bar 2 mm deeper behind the front dowel (the rails carry the cartridge to the cheeks: FEA),
+    # and a 10 mm gusset where each cheek meets its rail, front and back
+    for sgn in (1, -1):
+        ra, rb = (r0, r1) if sgn > 0 else (-r1, -r0)
+        s = s.union(box(xr0, RAIL_DEEP['x1'], ra, rb, z0 - RAIL_DEEP['dz'], z0 + 0.01))
+        ya, yb = (c0, c1) if sgn > 0 else (-c1, -c0)
+        for xe, d in ((xt - 22, -1), (xt + 22, 1)):
+            # a fillet, not a triangle: the concave quarter-circle meets the rail and the cheek's edge tangentially
+            rg = RAIL_DEEP['gusset']
+            arc = [(xe + d * (rg - rg * math.sin(math.radians(a))), z1 + rg - rg * math.cos(math.radians(a))) for a in range(0, 91, 10)]
+            g = cq.Workplane('XZ').polyline([(xe, z1 - 0.01)] + [(arc[0][0], z1 - 0.01)] + arc[1:-1] + [(xe, z1 + rg)]).close() \
+                .extrude(-(yb - ya)).translate((0, ya, 0))
+            s = s.union(g)
+    s = s.union(box(xr0, xr0 + 8, -r1, r1, z0 - RAIL_DEEP['dz'], z0 + 0.01))
     s = s.union(box(xr1 - 8, LASER_X[1] + 2, -r1 + 7, -22.0, z0, z1))                            # laser tab
     s = s.union(cyl_y(10.0, c1, G.arm_y[1] - SERVO['horn_t'], xt, zt))                            # servo hub, on the horn's face
-    s = s.union(cyl_y(5.5, -G.arm_y[0] + 1.0, -c1, xt, zt))                                        # insert boss
+    s = s.union(cyl_y(9.0, -G.arm_y[0] + 1.0, -c1, xt, zt))                                        # insert boss (Ø18: spreads a side load)
     s = s.union(cyl_y(MR126['d_land'] / 2 - 0.2, -G.arm_y[0], -G.arm_y[0] + 1.0, xt, zt))         # spacer on the inner race
-    s = s.union(sector_y(G.stop_r[0], G.stop_r[1], -97.5, -82.5, -c1 - 2.5, -c1, xt, zt))         # stop lug
+    s = s.union(sector_y(G.stop_r[0] - 6.0, G.stop_r[1], -97.5, -82.5, -c1 - 2.5, -c1, xt, zt))   # stop lug (rooted 6 mm deeper)
     # holes
     s = s.cut(cyl_y(FAST['M5']['insert_pilot'] / 2, -G.arm_y[0] - 1, -c0 + 0.01, xt, zt))
     s = s.cut(cyl_y(3.25, c0 - 1, G.arm_y[1], xt, zt))                                            # over the horn's centre screw
@@ -741,8 +782,8 @@ def cradle(G):
         s = s.cut(cyl_y(FAST['M3']['clear'] / 2, c0 - 1, G.arm_y[1], xt + hx, zt + hz)).cut(cyl_y(2.9, c0 - 1, G.arm_y[1] - SERVO['horn_t'] - 9.5, xt + hx, zt + hz))
     ct_dowels, ct_latch = ct_points(G)
     for (x, y) in ct_dowels:
-        s = s.cut(cyl_z(2.0, z0 - 1, z1 + 1, x, y))
-    s = s.cut(through_z(*ct_latch, FAST['M4']['clear'], z0 - 1, z1 + 1))
+        s = s.cut(cyl_z(2.0, z0 - RAIL_DEEP['dz'] - 1, z1 + 1, x, y))
+    s = s.cut(through_z(*ct_latch, FAST['M4']['clear'], z0 - RAIL_DEEP['dz'] - 1, z1 + 1))
     s = s.cut(cyl_z(THUMB['oring_seat'][0] / 2, z1 - THUMB['oring_seat'][1], z1 + 1, *ct_latch))      # the captive O-ring
     for x in (LASER_X[0] + 4, LASER_X[1] - 4):
         s = s.cut(through_z(x, LASER_Y, FAST['M3']['clear'], z0 - 1, z1 + 1))
@@ -754,11 +795,12 @@ def cradle(G):
             win = (xa - half, xa + half, yc - 3, yc + 3)
             if any(win[0] - 6 < hx < win[1] + 6 and abs(hy - yc) < 9 for hx, hy in holes):
                 continue
-            s = s.cut(box(win[0], win[1], win[2], win[3], z0 - 1, z1 + 1))
+            s = s.cut(box(win[0], win[1], win[2], win[3], z0 - RAIL_DEEP['dz'] - 1, z1 + 1))
     return s
 
 
 RAIL_WINDOWS = [(-38.0, 8.0), (2.0, 8.0), (82.0, 4.0)]             # (centre x, half length); C frame
+RAIL_DEEP = {'x1': 80.0, 'dz': 2.0, 'gusset': 10.0}                 # deeper rails behind the front dowel; cheek gussets
 def ct_points(G):
     """The CT interface (cradle <-> cartridge), C frame: two Ø4 x 8 dowels and the M4 captive thumbscrew up through the
     cradle's rail into an insert in the cartridge's base, 6 mm inside the cartridge's sides."""
@@ -982,7 +1024,7 @@ def hopper(G):
     cartridge frame (30 balls with the dial's pockets: sim/turret_feed.py fills it in physics), the exit baffle in its bottom (see baffle()), three lugs
     that screw to the housing (M3), and two Ø5 holes for the hopper-full IR beam near the top. Printed standing on its
     bottom rim and the baffle."""
-    r_in, r_out = G.dial_wall_r, G.dial_wall_r + 2.0
+    r_in, r_out = G.dial_wall_r, G.dial_wall_r + 1.6
     z0, z1 = G.housing_top, G.hopper_top
     s = ring_z(r_out, r_in, z0, z1).union(baffle(G))
     for a in HOPPER_LUGS:
@@ -995,15 +1037,15 @@ def hopper(G):
 
 
 def hopper_lid(G):
-    """Lid, printed PETG: a 3 mm disc with a spigot into the hopper, a Ø32 fill port where the dock's spout pushes the
+    """Lid, printed PETG: a 2 mm disc with a spigot into the hopper, a Ø32 fill port where the dock's spout pushes the
     sprung flap open, and two hinge lugs for the flap (Ø2 steel pin, torsion spring)."""
     z1 = G.hopper_top
     r = G.dial_wall_r + 2.0
-    s = cyl_z(r, z1, z1 + 3).union(ring_z(G.dial_wall_r - 0.1, G.dial_wall_r - 2.1, z1 - 4, z1 + 0.01))
+    s = cyl_z(r, z1, z1 + 2).union(ring_z(G.dial_wall_r - 0.1, G.dial_wall_r - 2.1, z1 - 4, z1 + 0.01))
     s = s.cut(sector_z(12.0, G.dial_wall_r - 3, 30, 150, z1 - 1, z1 + 1.0)).cut(sector_z(12.0, G.dial_wall_r - 3, 210, 330, z1 - 1, z1 + 1.0))
     s = s.cut(cyl_z(16.0, z1 - 5, z1 + 4, FILL_PORT[0], 0))
     for y in (-12.0, 9.0):
-        s = s.union(box(FILL_PORT[0] - 22, FILL_PORT[0] - 16, y, y + 3, z1 + 3, z1 + 9))
+        s = s.union(box(FILL_PORT[0] - 22, FILL_PORT[0] - 16, y, y + 3, z1 + 2 - 0.01, z1 + 9))
     s = s.cut(cyl_y(1.05, -15, 15, FILL_PORT[0] - 19, z1 + 6))
     return s
 
@@ -1044,13 +1086,13 @@ def barrel(G):
 
 
 def laser_mount(G):
-    """Laser holder, printed PETG: a ring round the Ø12 laser (Ø16 bore with an O-ring at the back) and three M3
+    """Laser holder, printed PETG: a ring round the Ø7 laser (Ø11 bore with an O-ring at the back) and three M3
     boresight screws at 120 deg (tapped), on a foot screwed to the cradle's tab (2 x M3). It stays on the cradle when
     a cartridge is swapped, so the boresight holds."""
     x0, x1 = LASER_X
     y = LASER_Y
-    s = cyl_x(11.0, x0, x1, y, 0).union(box(x0, x1, y - 11, y + 11, G.rail_z[1], -4))
-    s = s.cut(cyl_x(8.0, x0 - 1, x1 + 1, y, 0))
+    s = cyl_x(9.0, x0, x1, y, 0).union(box(x0, x1, y - 9, y + 9, G.rail_z[1], -4))
+    s = s.cut(cyl_x(5.5, x0 - 1, x1 + 1, y, 0))
     for k in range(3):
         s = s.cut(_radial_hole(G, (x0 + x1) / 2, y, math.radians(90 + 120 * k)))
     for x in (x0 + 4, x1 - 4):
@@ -1104,6 +1146,10 @@ def bought_parts(G):
     r0, rb, ra = CIRCLIP['d2'] / 2, CIRCLIP['d2'] / 2 + CIRCLIP['b'], CIRCLIP['d2'] / 2 + CIRCLIP['a']
     clip = ring_z(rb, r0, cz0, cz1).union(sector_z(r0, ra, 75.0, 105.0, cz0, cz1))          # back b 5.1, lugs a 6.9
     out['circlip_50'] = (clip, 'pan', CIRCLIP['mass_g'], 'DIN 471-50 external ring under the pan_spacer; McMaster 98541A167')
+    # parts ordered to our drawing (D40: an instant online price, not printed): the pan clamp from SendCutSend
+    clamp = pan_clamp(G)
+    out['pan_clamp'] = (clamp, 'base', round(clamp.val().Volume() / 1000 * SHEET['al6061']['density_g_cm3'], 1),
+                        'pan clamp ring, SendCutSend 6061-T6 aluminium 0.125 in (exports/turret/pan_clamp.dxf)')
     # the pan joint: the slip ring (stator in the carrier; its rotor stub turns with pan), the tube coupling, the rotor
     # leads (beside the coupling, then up the axis through the yoke and along its bridge to the -y arm's bay)
     rg = ring_geom(G)
@@ -1184,7 +1230,7 @@ def bought_parts(G):
     lead = box(-M['lead'][2], -11.0, -4.0, 4.0, fz0 - M['lead'][1], fz0 - M['lead'][0])            # leads and strain relief, rearwards
     out['feed_motor'] = (m2.union(lead), 'tilt', M['mass_g'], 'DJI M2006 P36 (DJI drawing) under the dial; its rear 17 mm turns')
     (lx, ly) = ct_points(G)[1]
-    z0r = G.rail_z[0]
+    z0r = G.rail_z[0] - RAIL_DEEP['dz']                                                     # the rail is deeper there
     hd, hh = THUMB['head']
     cd, ch = THUMB['collar']
     thumb = cyl_z(cd / 2, z0r - ch, z0r + 0.01, lx, ly).union(cyl_z(hd / 2, z0r - ch - hh, z0r - ch + 0.01, lx, ly))
@@ -1227,7 +1273,6 @@ def balls(G, n_hopper=22):
 MADE = [
     # name, function, frame, material, qty, print rotation, note
     ('pan_base', pan_base, 'base', 'pa6-cf', 1, None, 'PA6-CF on its foot; 4 x M5 x 16 into the head ring, 2 x Ø5 dowels'),
-    ('pan_clamp', pan_clamp, 'base', 'pa6-cf', 1, None, 'PA6-CF; 3 x M3 x 8 into inserts'),
     ('pan_ring', pan_ring, 'pan', 'pa6-cf', 1, ((1, 0, 0), 180), 'PA6-CF upside down; DIN 471-50 circlip; 4 x M4 inserts'),
     ('pan_spacer', pan_spacer, 'pan', 'pa6-cf', 1, ((1, 0, 0), 180), 'PA6-CF on its wide end; between the 61810 inner race and the circlip'),
     ('pan_pinion', pan_pinion, 'pinion', 'pa6-cf', 1, None, 'PA6-CF; 4 x M2 to the horn; turns -3 x pan about the servo axis'),
@@ -1262,7 +1307,7 @@ class Turret:
         for name, fn, frame, mat, qty, rot, note in MADE:
             self.local[name] = fn(self.G)
             self.frame[name] = frame
-            self.meta[name] = {'material': mat, 'qty': qty, 'note': note, 'solid': mat == 'pa6-cf', 'frame': frame,
+            self.meta[name] = {'material': mat, 'qty': qty, 'note': note, 'solid': mat == 'pa6-cf' and name not in PARTIAL_FILL, 'frame': frame,
                                'print_rotation': rot, 'doc': (fn.__doc__ or '').split('\n')[0].strip()}
         self.bought = bought_parts(self.G)
         for name, (shape, frame, _, _) in self.bought.items():
@@ -1557,6 +1602,20 @@ def main():
         bought_g += mass
         summary['bought'][name] = {'mass_g': mass, 'note': note, 'frame': frame}
         cq.exporters.export(T.pose_shape(shape, frame, robot=True).val(), str(out / f'asm_{name}.step'))
+    # the parts ordered from SendCutSend: a DXF of the outline (mm, 1:1, its holes as closed contours) and a STEP
+    summary['sheet'] = {}
+    for name, stock in SHEET_PARTS.items():
+        shape = T.local[name]
+        flat = shape.faces('<Z').val()
+        flat = flat.translate(cq.Vector(0, 0, -flat.Center().z))
+        cq.exporters.export(cq.Workplane('XY').add(flat), str(out / f'{name}.dxf'), exportType='DXF')
+        cq.exporters.export(shape.val(), str(out / f'{name}.step'))
+        bb = shape.val().BoundingBox()
+        st = SHEET[stock]
+        summary['sheet'][name] = {'dxf': f'exports/turret/{name}.dxf', 'step': f'exports/turret/{name}.step', 'vendor': st['vendor'],
+                                  'material': st['name'], 'thickness_in': st['thickness_in'], 'thickness_mm': st['thickness_mm'],
+                                  'size_mm': [round(bb.xlen, 1), round(bb.ylen, 1)], 'mass_g': T.bought[name][2], 'order': st['url']}
+        print(f'  {name}: {st["vendor"]} {st["name"]} {st["thickness_in"]} in, {bb.xlen:.0f} x {bb.ylen:.0f} mm -> {name}.dxf')
     nm = sum(NOT_MODELLED_G.values())
     print(f'  {"not modelled":18} {nm:6.1f} g  ' + ', '.join(f'{k} {v}' for k, v in NOT_MODELLED_G.items()))
     cq.exporters.export(head_ring_tm(L).val(), str(out / 'head_ring_tm.step'))

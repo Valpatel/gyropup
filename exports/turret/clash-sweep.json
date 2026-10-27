@@ -42,7 +42,7 @@
   -25.0
  ],
  "continuous_pan": true,
- "ring_model": "senring_m220_0210_12s",
+ "ring_model": "sparkfun_rob13065",
  "clashes": [],
  "gaps_under_1mm": [
   [
@@ -62,5 +62,5 @@
    "the tilt hard stop, touching by design"
   ]
  ],
- "seconds": 245
+ "seconds": 850
 }

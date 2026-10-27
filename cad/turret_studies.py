@@ -9,17 +9,19 @@ both x0.6 for humidity and x0.8 for print defects on Bambu's dry data) or PETG (
 material is chosen per part and case by how the part is printed and which way its peak stress runs. Targets as for
 the leg (cad/leg_studies.py): SF 2 for everyday loads, 1.2 for rare ones.
 
-Loads (masses from cad/turret.py's build: the tilting group 640 g with 30 balls, the panning group 1.05 kg, the
-turret 1.34 kg):
+Loads (masses from cad/turret.py's mass_properties at run time, written to summary.json):
   E-cap    everyday: the pan servo at its firmware cap, 50 % of its 2.94 N m stall, through the 21:63 gears
   E-push   everyday: a hand pushes the muzzle up or down with 50 N; the cradle's lug meets the 0 or -25 deg stop
            (a push sideways back-drives the pan servo at its cap: E-cap)
   R-stall  rare: the pan servo at its full stall (the cap failed, or it is forced)
   R-fall   rare: 30 g on everything (the TM interface's design load, docs/cad-plan.md section 5): straight down, and
            sideways (the robot falling over), each part loaded by what it carries
-Writes exports/turret/fea/<part>-<case>.png (+ .mp4 overload video and .json for the interactive viewer) and
-summary.json. Parts too small or simple for a mesh (the barrel tube, the flywheel hub at speed, the journal's lip
-under the circlip, the fasteners) are checked by hand in hand_checks() with their inputs.
+Parts: the tilt yoke, the turntable and its teeth, the pinion, the pan base, the cradle, the cartridge, the dial (and
+the pan clamp, which is 6061-T6 aluminium from SendCutSend). Each result also gives where its peak is and the 99th
+percentile of the element stresses (p99): a peak at a sharp re-entrant corner of the model is softened in a print.
+Writes exports/turret/fea/<part>-<case>.png (+ .mp4 overload video and .json for the interactive viewer, unless
+--no-anim) and summary.json. Parts too small or simple for a mesh (the barrel tube, the flywheel hub at speed, the
+journal's lip under the circlip, the fasteners, the board bay) are checked by hand in hand_checks() with their inputs.
 """
 from __future__ import annotations
 
@@ -46,6 +48,7 @@ CAP = 0.5                          # the firmware's torque cap on the pan servo
 PUSH_N = 50.0                      # a hand on the muzzle
 VIEWS = {'tilt_yoke': (20, -35), 'pan_ring': (35, -60), 'pan_pinion': (40, -60), 'pan_base': (30, -60), 'cradle': (25, -50),
          'cartridge_body': (30, -60), 'pan_clamp': (40, -60), 'dial': (40, -60)}
+# what each study reads from the build (masses) is the turret as built now: cad/turret.py's mass_properties
 
 
 def masses():
@@ -96,11 +99,15 @@ def run(mesh, anim=True, only=None):
             r['animation'] = str(st.animate(OUT / f'{part}-{case}.mp4', view=VIEWS.get(part, (25, -60)), title=f'{part} {case}: {MATERIALS[mat].name}').relative_to(R))
             r['viewer'] = str(st.export_viewer(OUT / f'{part}-{case}.json').relative_to(R))
         target = TARGETS['sf_rare' if rare else 'sf']
+        free = ~st._touches_bc
+        k = int(np.argmax(np.where(free, st.vm_elem, -1.0)))
+        r['peak_at_mm'] = [round(float(c), 1) for c in st.points[st.tets[k]].mean(axis=0)]          # where the design stress is
+        r['p99_mpa'] = round(float(np.percentile(st.vm_elem[free], 99.0)), 2) if free.any() else None
         r.update(part=part, case=case, material_id=mat, load_from=why, png=str(png.relative_to(R)), target=target,
                  ok=r['safety_factor'] >= target, seconds=round(time.time() - t0, 1))
         results.append(r)
-        print(f"  {part:15} {case:12} {mat:9} SF {r['safety_factor']:6} (>= {target})  {r['von_mises_design_mpa']:7} MPa  "
-              f"{disp} mm  ({r['mesh']['tets']} tets, {r['seconds']} s)", flush=True)
+        print(f"  {part:15} {case:12} {mat:9} SF {r['safety_factor']:6} (>= {target})  {r['von_mises_design_mpa']:7} MPa at {r['peak_at_mm']} "
+              f"(p99 {r['p99_mpa']})  {disp} mm  ({r['mesh']['tets']} tets, {r['seconds']} s)", flush=True)
         return r
 
     near = lambda v, w, t=0.6: abs(v - w) < t
@@ -189,6 +196,119 @@ def run(mesh, anim=True, only=None):
               rare, f'the pan servo at {frac * 100:.0f} % of its stall: {Ft:.0f} N on one tooth at the pitch line (+{Fr:.0f} N radial); '
                     f'held by its 4 M3 screws and its flange on the horn', mesh_mm=0.6)
 
+    # ---------------------------------------------------------------- the pan base (T frame, printed on its foot)
+    base = tu.pan_base(G)
+    foot = lambda f: f.kind == 'Plane' and near(f.bbox[2], 0.0, 0.05) and near(f.bbox[5], 0.0, 0.05)
+    shoulder = lambda f: f.kind == 'Plane' and near(f.bbox[2], G.brg_z, 0.05) and near(f.bbox[5], G.brg_z, 0.05) and f.bbox[3] < 33.5
+    seat = lambda f: cyl(f, tu.BRG['D'] / 2) and f.bbox[2] >= G.brg_z - 0.1
+    m_pan = M['pan_kg']
+    Fp = m_pan * G0 * FALL_G
+    hb = M['pan_group_com_z_mm'] - (G.brg_z + tu.BRG['B'] / 2)
+    study('pan_base', 'R-fall-down', base, 'pa6_cf_xy',
+          lambda st: (st.fix(foot), st.force(shoulder, (0, 0, -Fp))),
+          True, f'30 g down: the panning group ({m_pan:.2f} kg) {Fp:.0f} N through the 6810\'s outer race onto the Ø62 shoulder; the foot on the head ring')
+    study('pan_base', 'R-fall-side', base, 'pa6_cf_z',
+          lambda st: (st.fix(foot), st.force(seat, (Fp, 0, 0)), st.torque(seat, (0, 0, G.brg_z), (0, 1, 0), Fp * hb / 1000, probe=False)),
+          True, f'30 g sideways: {Fp:.0f} N at the bearing seat and {Fp * hb / 1000:.1f} N m (the panning mass {hb:.0f} mm above the bearing); '
+                f'the housing tube bends across its layers')
+    sx, sy = G.servo_pan_xy
+    W, L, sft = tu.SERVO['W'], tu.SERVO['L'], tu.SERVO['shaft_from_end']
+    px0, py1 = sx - W / 2 - 0.3, sy + L - sft + 0.3
+    end_wall = lambda f: f.kind == 'Plane' and near(f.center[1], py1, 0.1) and px0 - 0.1 < f.center[0] < sx + W / 2 + 0.4
+    out_wall = lambda f: f.kind == 'Plane' and near(f.center[0], px0, 0.1) and sy - sft - 0.4 < f.center[1] < py1 + 0.1
+    for case, frac, rare in (('E-cap', CAP, False), ('R-stall', 1.0, True)):
+        Ft = frac * SERVO_STALL / (G.gear['m'] * G.gear['z_pinion'] / 2000)
+        Fr = Ft * math.tan(math.radians(20.0))
+        study('pan_base', f'{case}-servo', base, 'pa6_cf_xy',
+              lambda st, Ft=Ft, Fr=Fr: (st.fix(foot), st.force(end_wall, (0, Ft, 0)), st.force(out_wall, (-Fr, 0, 0), probe=False)),
+              rare, f'the pan servo at {frac * 100:.0f} % of its stall pushes its pocket: {Ft:.0f} N along it (the mesh\'s tangential force) '
+                    f'and {Fr:.0f} N outwards (the separating force)')
+
+    # ---------------------------------------------------------------- the pan clamp (T frame)
+    clamp = tu.pan_clamp(G)
+    ear_holes = lambda f: cyl(f, tu.FAST['M3']['clear'] / 2)
+    clamp_bore = lambda f: cyl(f, 30.5)
+    study('pan_clamp', 'R-fall-up', clamp, 'al6061',
+          lambda st: (st.fix(ear_holes), st.force(clamp_bore, (0, 0, Fp))),
+          True, f'30 g with the turret upside down (or the robot lifted by its turret): the panning group\'s {Fp:.0f} N lifts the '
+                f'6810\'s outer race against the clamp (SendCutSend 6061-T6, 0.125 in), held by its 5 M3 screws (the load on the bore\'s '
+                f'edge, where the race bears)', mesh_mm=1.0)
+
+    # ---------------------------------------------------------------- the cradle (C frame, printed flat)
+    xt, zc = G.tilt_x, G.tilt_c
+    c0, c1 = G.cheek_y
+    cradle = tu.cradle(G)
+    hub_end = lambda f: f.kind == 'Plane' and near(f.center[1], G.arm_y[1] - tu.SERVO['horn_t'], 0.1) and abs(f.center[0] - xt) < 11
+    hub_screws = lambda f: cyl(f, tu.FAST['M3']['clear'] / 2) and c0 < f.center[1] < G.arm_y[1] and math.hypot(f.center[0] - xt, f.center[2] - zc) < 9
+    pivot = lambda f: cyl(f, tu.FAST['M5']['insert_pilot'] / 2) and f.center[1] < -c0 + 1
+    rail_top = lambda f: f.kind == 'Plane' and near(f.bbox[2], G.rail_z[1], 0.05) and near(f.bbox[5], G.rail_z[1], 0.05)
+    ct_d, ct_l = tu.ct_points(G)
+    front_dowel = lambda f: cyl(f, 2.0) and near(f.center[0], ct_d[1][0], 0.5) and near(f.center[1], ct_d[1][1], 0.5)
+
+    def lug_face(f):
+        if f.kind != 'Plane' or not (-c1 - 2.6 < f.center[1] < -c1 + 0.1):
+            return False
+        a = math.degrees(math.atan2(f.center[2] - zc, f.center[0] - xt))
+        return abs(a - (-82.5)) < 3.0 and 23 < math.hypot(f.center[0] - xt, f.center[2] - zc) < 33
+    m_cart = M['cartridge_kg']
+    Fc = m_cart * G0 * FALL_G
+    ct_holes = lambda f: (cyl(f, 2.0) and f.center[2] < zc) or (cyl(f, tu.FAST['M4']['clear'] / 2) and near(f.center[0], ct_l[0], 0.5))
+    study('cradle', 'R-fall-down', cradle, 'pa6_cf_z',
+          lambda st: (st.fix(lambda f: hub_end(f) or hub_screws(f) or pivot(f)), st.force(ct_holes, (0, 0, -Fc))),
+          True, f'30 g down: the cartridge ({m_cart:.2f} kg with 30 balls) {Fc:.0f} N through its CT dowels and latch (a stiff body '
+                f'located there); the cradle hangs from the servo horn (+y) and the shoulder screw (-y)')
+    study('cradle', 'R-fall-side', cradle, 'pa6_cf_z',
+          lambda st: (st.fix(lambda f: hub_end(f) or hub_screws(f) or pivot(f)), st.force(lambda f: cyl(f, 2.0) and f.center[2] < zc, (0, -Fc, 0))),
+          True, f'30 g sideways (-y): the cartridge\'s {Fc:.0f} N through the two CT dowels')
+    arm_push = G.barrel_x1 - G.tilt_x
+    d_front, d_rear = ct_d[1][0] - xt, xt - ct_d[0][0]
+    # the cartridge passes the push's moment to the cradle as a couple on its two dowels: up at the front, down at the rear
+    F_front = (PUSH_N * arm_push + PUSH_N * d_rear) / (d_front + d_rear)
+    F_rear = F_front - PUSH_N
+    rear_dowel = lambda f: cyl(f, 2.0) and near(f.center[0], ct_d[0][0], 0.5) and near(f.center[1], ct_d[0][1], 0.5)
+    study('cradle', 'E-push-up', cradle, 'pa6_cf_z',
+          lambda st: (st.fix(lambda f: lug_face(f) or pivot(f) or hub_end(f)), st.force(front_dowel, (0, 0, F_front)),
+                      st.force(rear_dowel, (0, 0, -F_rear), probe=False)),
+          False, f'{PUSH_N:.0f} N up at the muzzle ({arm_push:.0f} mm from the tilt axis) reaches the cradle through the cartridge as '
+                 f'{F_front:.0f} N up at the front CT dowel and {F_rear:.0f} N down at the rear one; the lug holds against the 0 deg stop')
+
+    # ---------------------------------------------------------------- the cartridge (C frame, printed on its base)
+    cart = tu.cartridge_body(G)
+    ct_fix = lambda f: (cyl(f, 2.0) and f.center[2] < G.base_z0 + 3) or (cyl(f, tu.FAST['M4']['insert_pilot'] / 2) and near(f.center[0], ct_l[0], 0.5))
+    snail_holes = lambda f: cyl(f, tu.FAST['M3']['clear'] / 2) and G.plate_z0 - 0.5 < f.center[2] < G.plate_z1 + 0.5 and abs(f.center[0] - G.wheel_x) < 12
+    m2006_holes = lambda f: cyl(f, tu.FAST['M3']['clear'] / 2) and G.floor_z - G.floor_t - 1 < f.center[2] < G.floor_z + 0.5 and math.hypot(*f.center[:2]) < 11
+    housing_top = lambda f: f.kind == 'Plane' and near(f.bbox[2], G.housing_top, 0.05) and near(f.bbox[5], G.housing_top, 0.05)
+    g30 = G0 * FALL_G / 1000
+    F_sn, F_m2, F_hop = 2 * (27.8 + 6.8 + 5.9) * g30, (90.0 + 46.8) * g30, (54.8 + 26.0 + 3.1 + 55.0) * g30
+    study('cartridge_body', 'R-fall-down', cart, 'pa6_cf_z',
+          lambda st: (st.fix(ct_fix), st.force(snail_holes, (0, 0, -F_sn)), st.force(m2006_holes, (0, 0, -F_m2), probe=False),
+                      st.force(housing_top, (0, 0, -F_hop), probe=False)),
+          True, f'30 g down on what the cartridge carries: the Snails and wheels {F_sn:.0f} N under the cage plate, the M2006 and dial '
+                f'{F_m2:.0f} N under the floor, the hopper, lid and 30 balls {F_hop:.0f} N on the housing; held at the CT dowels and latch')
+    left = lambda f: snail_holes(f) and f.center[1] > 0
+    right = lambda f: snail_holes(f) and f.center[1] < 0
+    study('cartridge_body', 'E-recoil', cart, 'pa6_cf_z',
+          lambda st: (st.fix(ct_fix), st.force(left, (-28.5, 41.0, 0)), st.force(right, (-28.5, -41.0, 0), probe=False)),
+          False, 'a shot (docs/turret-physics.md section 4): 41 N squeezing each tyre apart and 57 N of recoil, on the motors\' mounts')
+
+    # ---------------------------------------------------------------- the dial (C frame, PETG)
+    dial = tu.dial(G)
+    shaft = lambda f: (cyl(f, tu.M2006['shaft_d'] / 2 + 0.05)) or (f.kind == 'Plane' and abs(f.center[0] - (tu.M2006['flat'] - tu.M2006['shaft_d'] / 2 + 0.05)) < 0.1 and abs(f.center[1]) < 3.5)
+    a_sp = math.radians(22.5)
+
+    def spoke_face(f):
+        if f.kind != 'Plane':
+            return False
+        r = math.hypot(f.center[0], f.center[1])
+        a = math.degrees(math.atan2(f.center[1], f.center[0]))
+        return G.dial_hub_r + 2 < r < G.dial_wall_r - 2 and 22.5 - 6.0 < a < 22.5 - 1.0 and G.dial_z0 + 2 < f.center[2] < G.dial_z0 + G.dial_h - 3
+    T_jam = 1.8
+    F_jam = T_jam / (G.rp / 1000)
+    study('dial', 'R-jam', dial, 'petg',
+          lambda st: (st.fix(shaft), st.force(spoke_face, (-F_jam * math.sin(a_sp), F_jam * math.cos(a_sp), 0))),
+          True, f'a jam: the M2006 at the C610\'s 10 A ({T_jam} N m) stalls with one spoke on a ball, {F_jam:.0f} N at the pocket radius '
+                f'{G.rp} mm; held on its D shaft', mesh_mm=1.5)
+
     summary = {'targets': TARGETS, 'mesh_mm': mesh, 'masses': M, 'results': results}
     if not only:
         summary['hand_checks'] = hand_checks(G, M)
@@ -232,6 +352,49 @@ def hand_checks(G, M):
     sig = 100.0 * Lb / Z
     out['barrel'] = {'case': 'R: 100 N down at the muzzle', 'section_modulus_mm3': round(Z), 'lever_mm': Lb, 'stress_mpa': round(sig, 2),
                      'allowable_mpa': MATERIALS['petg'].strength_mpa, 'sf': round(MATERIALS['petg'].strength_mpa / sig, 1)}
+    # the flywheel hub's rim at speed: a thin rotating ring, sigma = rho w^2 r^2; the no-load speed on a +5 % motor and +4 % rail
+    rho = tu.DENS['pa6-cf'] * 1000
+    w = 875 * 12 * 1.05 * 1.04 * 2 * math.pi / 60
+    r_rim = (G.wheel_d / 2 - G.tyre_t) / 1000
+    sig_rim = rho * w ** 2 * r_rim ** 2 / 1e6
+    # the stretched tyre squeezes the rim: hoop tension sigma_t = E eps over its thickness, a pressure p = sigma_t t / r
+    E_tpu, eps = 30.0, tu.TYRE_STRETCH
+    p_tyre = E_tpu * eps * G.tyre_t / (r_rim * 1000)
+    sig_hoop = p_tyre * r_rim * 1000 / 3.0
+    # how far the tyre's bore grows at that speed (TPU 95A, soft end E 10 MPa): the grip left of the 4 % stretch
+    grow = tu.DENS['tpu95'] * 1000 * w ** 2 * (r_rim) ** 2 / 10e6
+    out['flywheel_hub'] = {'case': 'R: the no-load speed on a fast motor and a high rail', 'rpm': round(w * 60 / (2 * math.pi)),
+                           'rim_radius_mm': r_rim * 1000, 'rim_hoop_stress_mpa': round(sig_rim, 2), 'tyre_squeeze_on_rim_mpa': round(sig_hoop, 2),
+                           'allowable_mpa': MATERIALS['pa6_cf_xy'].strength_mpa, 'sf': round(MATERIALS['pa6_cf_xy'].strength_mpa / (sig_rim + sig_hoop), 1),
+                           'tyre_bore_growth_pct': round(grow * 100, 1), 'stretch_pct': round(eps * 100, 1),
+                           'grip_left': grow < eps, 'note': 'TPU E 10-30 MPa (docs/turret-physics.md finding 5); the bore grows less than the stretch'}
+    # the journal's lip under the DIN 471 circlip: shear of the lip (6 mm long) over the groove's Ø47 when the turret hangs
+    # upside down at 30 g (the panning group pulls the turntable out of the bearing)
+    F_up = M['pan_kg'] * G0 * FALL_G
+    A_lip = math.pi * 47.0 * tu.JOURNAL_LIP
+    tau = F_up / A_lip
+    out['journal_lip'] = {'case': 'R: 30 g with the turret upside down', 'force_n': round(F_up), 'shear_area_mm2': round(A_lip), 'shear_mpa': round(tau, 2),
+                          'allowable_mpa': round(0.5 * MATERIALS['pa6_cf_z'].strength_mpa, 1), 'sf': round(0.5 * MATERIALS['pa6_cf_z'].strength_mpa / tau, 1),
+                          'note': 'shear allowable taken as half the across-layer tensile strength'}
+    # the TM bolts: the sideways fall's moment over the 80 x 80 pattern, two bolts in tension
+    F_side = M['total_kg'] * G0 * FALL_G
+    mom = F_side * M['com_mm'][2] / 1000
+    T_bolt = mom / (0.080 * 2)
+    out['tm_bolts'] = {'case': 'R: 30 g sideways on the whole turret', 'moment_nm': round(mom, 1), 'tension_per_bolt_n': round(T_bolt),
+                       'm5_insert_pullout_n_est': 1500, 'sf': round(1500 / T_bolt, 1), 'note': 'M5 heat-set insert in PA6-CF/PETG: ~1.5 kN pull-out (est, CNC Kitchen tests)'}
+    # the yoke's four M4 inserts in the turntable: the upper panning group's sideways fall
+    m_up = M['pan_kg'] - M['pan_ring_kg']
+    mom_y = m_up * G0 * FALL_G * (M['pan_group_com_z_mm'] - G.turntable_z[1]) / 1000
+    T_y = mom_y / (0.056 * 2)
+    out['yoke_inserts'] = {'case': 'R: 30 g sideways on the yoke and all it carries', 'moment_nm': round(mom_y, 1), 'tension_per_insert_n': round(T_y),
+                           'm4_insert_pullout_n_est': 1100, 'sf': round(1100 / T_y, 1)}
+    # the turret bay: the boards and tray hanging off the -y arm at 30 g, on 4 x M3 flat heads 43 mm apart
+    m_bay = (tu.TB['mass_g'] + 37.4) / 1000
+    F_bay = m_bay * G0 * FALL_G
+    arm_bay = (tu.TB['y_out'] - G.arm_y[1]) / 2 / 1000
+    T_bay = F_bay * arm_bay / 0.043 / 2
+    out['board_bay'] = {'case': 'R: 30 g down on the bay', 'force_n': round(F_bay), 'tension_per_screw_n': round(T_bay),
+                        'm3_insert_pullout_n_est': 700, 'sf': round(700 / max(T_bay, 1e-6), 1)}
     return out
 
 

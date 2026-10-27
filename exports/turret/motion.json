@@ -29,86 +29,86 @@
    {
     "balls": 0,
     "tilt_deg": 0.0,
-    "mass_g": 589.6,
+    "mass_g": 575.6,
     "com_from_axis_mm": [
-     -6.8,
-     -2.6,
-     -1.0
+     -8.1,
+     -2.1,
+     -3.9
     ],
-    "I_yy_kg_m2": 0.002188,
-    "gravity_torque_nm": -0.039
+    "I_yy_kg_m2": 0.001993,
+    "gravity_torque_nm": -0.0459
    },
    {
     "balls": 0,
     "tilt_deg": -12.5,
-    "mass_g": 589.6,
+    "mass_g": 575.6,
     "com_from_axis_mm": [
-     -6.8,
-     -2.6,
-     0.5
+     -8.8,
+     -2.1,
+     -2.1
     ],
-    "I_yy_kg_m2": 0.002188,
-    "gravity_torque_nm": -0.0394
+    "I_yy_kg_m2": 0.001993,
+    "gravity_torque_nm": -0.0496
    },
    {
     "balls": 0,
     "tilt_deg": -25.0,
-    "mass_g": 589.6,
+    "mass_g": 575.6,
     "com_from_axis_mm": [
-     -6.5,
-     -2.6,
-     1.9
+     -9.0,
+     -2.1,
+     -0.1
     ],
-    "I_yy_kg_m2": 0.002188,
-    "gravity_torque_nm": -0.0379
+    "I_yy_kg_m2": 0.001993,
+    "gravity_torque_nm": -0.0509
    },
    {
     "balls": 30,
     "tilt_deg": 0.0,
-    "mass_g": 644.5,
+    "mass_g": 630.5,
     "com_from_axis_mm": [
-     -9.8,
-     -2.4,
-     2.3
+     -11.1,
+     -1.9,
+     -0.3
     ],
-    "I_yy_kg_m2": 0.002414,
-    "gravity_torque_nm": -0.0618
+    "I_yy_kg_m2": 0.002219,
+    "gravity_torque_nm": -0.0686
    },
    {
     "balls": 30,
     "tilt_deg": -12.5,
-    "mass_g": 644.5,
+    "mass_g": 630.5,
     "com_from_axis_mm": [
-     -9.0,
-     -2.4,
-     4.4
+     -10.9,
+     -1.9,
+     2.1
     ],
-    "I_yy_kg_m2": 0.002414,
-    "gravity_torque_nm": -0.0572
+    "I_yy_kg_m2": 0.002219,
+    "gravity_torque_nm": -0.0674
    },
    {
     "balls": 30,
     "tilt_deg": -25.0,
-    "mass_g": 644.5,
+    "mass_g": 630.5,
     "com_from_axis_mm": [
-     -7.9,
-     -2.4,
-     6.2
+     -10.2,
+     -1.9,
+     4.4
     ],
-    "I_yy_kg_m2": 0.002414,
-    "gravity_torque_nm": -0.0498
+    "I_yy_kg_m2": 0.002219,
+    "gravity_torque_nm": -0.0629
    }
   ],
   "margins": {
-   "inertia_kg_m2": 0.002414,
-   "gravity_torque_max_nm": 0.0618,
+   "inertia_kg_m2": 0.002219,
+   "gravity_torque_max_nm": 0.0686,
    "move": "25 deg in 0.25 s: peak 200 deg/s, 28 rad/s^2",
-   "move_torque_nm": 0.129,
+   "move_torque_nm": 0.131,
    "available_at_peak_speed_nm": 0.762,
-   "move_margin": 5.9,
-   "hold_margin": 47.6,
-   "world_frame_against_body_pitch_nm": 0.134,
-   "world_frame_margin": 21.9,
+   "move_margin": 5.8,
+   "hold_margin": 42.9,
+   "world_frame_against_body_pitch_nm": 0.135,
+   "world_frame_margin": 21.8,
    "max_speed_deg_s": 270
   }
  },
@@ -116,26 +116,26 @@
   "rows": [
    {
     "tilt_deg": 0.0,
-    "mass_g": 1108.4,
-    "I_zz_kg_m2": 0.003742
+    "mass_g": 1135.1,
+    "I_zz_kg_m2": 0.00414
    },
    {
     "tilt_deg": -25.0,
-    "mass_g": 1108.4,
-    "I_zz_kg_m2": 0.003399
+    "mass_g": 1135.1,
+    "I_zz_kg_m2": 0.003864
    }
   ],
   "pinion_I_kg_m2": 7.564159325045226e-07,
   "margins": {
-   "inertia_at_turret_kg_m2": 0.003742,
-   "inertia_at_servo_kg_m2": 0.0004165,
+   "inertia_at_turret_kg_m2": 0.00414,
+   "inertia_at_servo_kg_m2": 0.0004608,
    "move": "90 deg in 1.2 s: a trapezoid to 81 deg/s at the turret (243 at the servo), 15.9 rad/s^2 for 89 ms",
    "torque_cap": "50% of stall in firmware (the printed pinion's strength)",
-   "move_torque_at_servo_nm": 0.0295,
+   "move_torque_at_servo_nm": 0.0318,
    "available_at_peak_speed_nm": 0.294,
-   "move_margin": 10.0,
-   "against_body_yaw_nm": 0.0282,
-   "yaw_margin": 104.3,
+   "move_margin": 9.2,
+   "against_body_yaw_nm": 0.0304,
+   "yaw_margin": 96.7,
    "max_speed_deg_s_at_turret": 90.0,
    "fastest_90_deg_s": 1.0
   }

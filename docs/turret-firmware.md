@@ -32,9 +32,9 @@ BOOT -> HOMING -> IDLE <-> ARMED -> SPIN_UP -> READY <-> FIRING
                     +---- SAFE <---------+---------+---------+   (ARM low, heartbeat older than 200 ms, TRIP, a fault)
 ```
 
-- **BOOT**: read the configuration (bench ring or robot ring, tyre size, the depression table and the keep-out sectors
-  for the mount in use), set the servos' torque limits (pan 50 %: the printed pinion is SF 2.52 there; tilt 50 %),
-  their speed limits, and their protection current.
+- **BOOT**: read the configuration (tyre size, the depression table and the keep-out sectors for the mount in use),
+  set the servos' torque limits (pan 50 %: the printed pinion is SF 2.52 there; tilt 50 %), their speed limits (both
+  axes at most 100 deg/s: D7; the pan can do 90 at most anyway), and their protection current.
 - **HOMING**: section 3. Nothing else moves until it is done; the host sees HOMING in the heartbeat.
 - **IDLE**: aims and holds; the laser may be on; the wheels and the dial are off (their rails are cut anyway unless
   the hardware is armed).
@@ -75,7 +75,7 @@ exports/turret/firmware/homing.json.
 - **Set speed**: 9,408 rpm for 55 fps on Ø36 tyres (docs/turret-physics.md section 4); 50-57 fps is the usable range
   on 12 V. The tyre in use (Ø34 or Ø36, cad/turret.py `TYRE_SET`) is in the configuration; the set speed scales with it.
 - **Soft spin-up**: the set speed ramps from 0 over 200 ms (2.2 A at the ring instead of 12 A); AM32's own `max_ramp`
-  is the second limiter. Mandatory on the bench ring (six 2 A rings each way).
+  is the second limiter. Mandatory: the ring's power rails are two 2 A circuits each (D2).
 - **Pre-feed RPM check**: before the first ball and at every ball, both wheels' eRPM (DShot telemetry) within 5 % of
   the set speed and **below 11,500 rpm**. A 24 V fault on the ESC rail spins them at ~21,000: refuse to feed and go
   SAFE (the chronograph trip is the backstop after one ball; this check is what stops the first).
@@ -102,7 +102,8 @@ exports/turret/firmware/homing.json.
   last command (the 240 ms from command to muzzle outlasts a moving aim: physics findings 8 and 10).
 - **One-sided approach**: every pan move ends in +pan (overshoot 1 deg and come back when arriving from above), so the
   gear's backlash is always taken up the same way (physics finding 6).
-- **Laser**: on at least 0.35 s before the first shot at a target (the simulator's rule).
+- **Laser**: on at least 0.35 s before the first shot at a target (the simulator's rule). The laser (Class 2, under
+  1 mW) and the servos stay live when the safety line is released (D7); only the wheels and the dial lose power.
 
 ## 6. CAN message set
 
@@ -133,5 +134,5 @@ table, the laser before shots, fire only when settled, and report shots; the hos
 
 On the stand (cad/turret_stand.py): 24 V through the XT60E-M inlet, the rocker switch and the DC-rated 5 A fuse to
 DT12 pins 1-4; the hold-to-run pendant's dry loop to pins 7-8; the USB-CAN adapter (`usb-can-canable2`) on pins 5-6 to
-the laptop, terminating the far end. The laptop runs the host side of section 6. The bench ring map and its mandatory
-soft start are in docs/turret-wiring.md section 1.2.
+the laptop, terminating the far end. The laptop runs the host side of section 6. The ring map and its mandatory soft
+start are in docs/turret-wiring.md section 1.2.

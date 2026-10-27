@@ -52,8 +52,8 @@ TURRET_BOUGHT = {
     'flywheel_motor_l': ('dji-robomaster-snail-2305', 1), 'flywheel_motor_r': ('dji-robomaster-snail-2305', 1),
     'esc_l': ('repeat-robotics-am32-35a-esc', 1), 'esc_r': ('repeat-robotics-am32-35a-esc', 1),
     'feed_motor': ('dji-robomaster-m2006-p36', 1), 'feed_esc': ('dji-c610-esc', 1),
-    'laser': ('picotronic-dd520-1-24-12x40', 1),
-    'pan_bearing': ('bearing_61810', 1), 'pan_bearing_inner': ('bearing_61810', 0),
+    'laser': ('quarton-vlm-520-73-lpt', 1), 'pan_clamp': ('sendcutsend-pan-clamp', 1),
+    'pan_bearing': ('vxb-6810-2rs', 1), 'pan_bearing_inner': ('vxb-6810-2rs', 0),
     'tilt_bearing': ('bearing_mr126', 1), 'tilt_bearing_inner': ('bearing_mr126', 0),
     'circlip_50': ('circlip_50', 1), 'shoulder_screw': ('shoulder_6x12_m5', 1),
     'dt_receptacle': ('te-dt04-12pa-l012', 1), 'dt_plug': ('te-dt06-12sa-kit', 1),
@@ -64,7 +64,7 @@ TURRET_BOUGHT = {
     # hardware
     'hw_tm_screws': ('screw_m5x16', 4), 'hw_tm_dowels': ('dowel_5x16', 2),
     'hw_screw_m2x8': ('turret_screw_m2x8', 6), 'hw_screw_m2x10': ('turret_screw_m2x10', 4), 'hw_screw_m2x20': ('turret_screw_m2x20', 4),
-    'hw_screw_m3x6': ('screw_m3x6', 16), 'hw_screw_m3x8': ('turret_screw_m3x8', 10), 'hw_screw_m3x10': ('turret_screw_m3x10', 2),
+    'hw_screw_m3x6': ('screw_m3x6', 16), 'hw_screw_m3x8': ('turret_screw_m3x8', 12), 'hw_screw_m3x10': ('turret_screw_m3x10', 2),
     'hw_screw_m3x12': ('turret_screw_m3x12', 4), 'hw_screw_m3x16': ('turret_screw_m3x16', 4), 'hw_screw_m3x20': ('turret_screw_m3x20', 5),
     'hw_screw_m4x10': ('turret_screw_m4x10', 8), 'hw_flat_m3x6': ('turret_screw_m3x6_flat', 3), 'hw_flat_m3x8': ('turret_screw_m3x8_flat', 4),
     'hw_flat_m3x10': ('turret_screw_m3x10_flat', 3), 'hw_setscrew_m3x6': ('turret_setscrew_m3x6_nylon', 4),
@@ -81,9 +81,9 @@ TURRET_BOUGHT = {
     'el_trip_latch': ('ti-sn74hc74n', 1), 'el_and': ('ti-sn74hc08n', 1), 'el_inverter': ('ti-sn74hc14n', 1), 'el_bus_buffer': ('ti-sn74ahct125n', 1),
     'el_gate_comparator': ('ti-lm393p', 1), 'el_brake_fets': ('infineon-irlz44npbf', 6), 'el_gate_emitters': ('vishay-tsal4400', 2),
     'el_gate_receivers': ('vishay-teft4300', 2), 'el_hopper_beam': ('adafruit-2167', 1), 'el_lights': ('adafruit-neopixel-ring-12-1643', 1),
-    'el_ring_receptacles': ('molex-43025-0800', 2), 'el_ring_plugs': ('molex-43020-0800', 2),
+    'el_ring_receptacles': ('molex-43025-1200', 2), 'el_ring_plugs': ('molex-43020-1200', 2),
     'el_ct_power_receptacle': ('molex-43025-0600', 1), 'el_ct_power_plug': ('molex-43020-0600', 1),
-    'el_ct_signal_receptacle': ('molex-43025-1200', 1), 'el_ct_signal_plug': ('molex-43020-1200', 1),
+    'el_ct_signal_receptacle': ('molex-43025-1000', 1), 'el_ct_signal_plug': ('molex-43020-1000', 1),
     'el_microfit_f18': ('molex-43030-0038', 12), 'el_microfit_m18': ('molex-43031-0021', 12),
     'el_microfit_f24': ('molex-43030-0001', 30), 'el_microfit_m24': ('molex-43031-0001', 30),
     'el_fuse_holders': ('keystone-3557-2', 3), 'el_fuse_main': ('littelfuse-0287010-pxcn', 2), 'el_fuse_flywheel': ('littelfuse-0297015-wxnv', 2),
@@ -96,8 +96,6 @@ BENCH_BOUGHT = [('amass-xt60e-m', 1), ('turret_screw_m2_5x8', 2), ('turret_nut_m
                 ('fuse-holder-5x20-panel', 1), ('littelfuse-0477005-mxp', 1), ('jack-3.5mm-panel', 1), ('pendant-hold-to-run', 1),
                 ('usb-can-canable2', 1), ('proto-board-70x50', 1), ('bumper-feet-12.7', 4), ('insert_m5', 4), ('insert_m3', 8),
                 ('turret_screw_m3x8', 4), ('worker-cheetah-rival-rounds-100', 1)]
-# the robot ring that replaces the bench ring once quoted (docs/turret-plan.md 5.1-5.2)
-LATER = [('senring-m220-0210-12s', 1)]
 
 
 def main():
@@ -134,21 +132,22 @@ def main():
         bench.append({'item': it.get('name') or it.get('model') or key, 'id': key, 'key': key, 'qty': qty,
                       'for': 'ammo' if key.startswith('worker-') else 'bench stand', 'part_number': it.get('model'), 'vendor': it.get('vendor'),
                       'url': ((it.get('buy') or [{}])[0]).get('url'), 'price_usd_each': it.get('price_usd'), 'mass_g_each': None})
-    later = [{'item': (CAT.get(k) or {}).get('name') or k, 'id': k, 'key': k, 'qty': q, 'for': 'slip_ring (robot)',
-              'price_usd_each': (CAT.get(k) or {}).get('price_usd')} for k, q in LATER]
-    missing = sorted({r['key'] for r in rows + bench + later if r['key'] not in CAT})
+    missing = sorted({r['key'] for r in rows + bench if r['key'] not in CAT})
+    unpriced = sorted({r['key'] for r in rows + bench if r['qty'] and r.get('price_usd_each') is None})
     try:
         from bom_media import enrich                     # the pictures and alternates (catalog/images.json, alternates.json)
-        rows, bench, later = enrich(rows), enrich(bench), enrich(later)
+        rows, bench = enrich(rows), enrich(bench)
     except ImportError:
         pass
     priced = lambda rs: round(sum((r['price_usd_each'] or 0) * r['qty'] for r in rs), 2)
-    (OUT / 'bom.json').write_text(json.dumps({'bench_turret': rows, 'bench_stand': bench, 'later': later, 'not_modelled': tu.NOT_MODELLED_G,
+    sheet = {n: {'drawing': f'exports/turret/{n}.dxf', **tu.SHEET[st], 'thickness_in': tu.SHEET[st]['thickness_in']} for n, st in tu.SHEET_PARTS.items()}
+    (OUT / 'bom.json').write_text(json.dumps({'bench_turret': rows, 'bench_stand': bench, 'not_modelled': tu.NOT_MODELLED_G,
                                               'price_usd_known': {'turret': priced(rows), 'bench_stand': priced(bench)},
-                                              'not_in_a_catalogue': missing,
-                                              'note': 'every line names a catalogue key (catalog/turret.json, hardware.json, sourcing.json); '
-                                                      'qty is per turret; packs are bought whole (each item\'s pack_qty); thumbnails and alternates '
-                                                      'from cad/bom_media.py'}, indent=1) + '\n')
+                                              'not_in_a_catalogue': missing, 'no_listed_price': unpriced, 'ordered_to_drawing': sheet,
+                                              'note': 'every line names a catalogue key (catalog/turret.json, hardware.json, sourcing.json): off '
+                                                      'the shelf with a listed price, printed, or ordered to our drawing at an instant online price '
+                                                      '(docs/decisions.yaml D40); qty is per turret; packs are bought whole (each item\'s pack_qty); '
+                                                      'thumbnails and alternates from cad/bom_media.py'}, indent=1) + '\n')
     summary = {'too_big': too_big, 'print_hours': round(sum(p['hours'] for p in plan.values()), 1),
                'printed_g': sum(p['grams'] for p in plan.values()), 'stand_mm': [ts.W, ts.D, ts.H]}
     if not a.no_render:
