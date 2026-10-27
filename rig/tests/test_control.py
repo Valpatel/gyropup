@@ -1,0 +1,146 @@
+"""The controller port against sim/leg_rig.py (the copies must not drift), T7's reproduction, the supervisor's aborts
+(T8) and the CAN path on the HIL stand-in.
+
+    .venv/bin/python -m pytest rig/tests -q          # ~1-3 min: it runs MuJoCo
+"""
+from __future__ import annotations
+
+import json
+import math
+import random
+from pathlib import Path
+
+import numpy as np
+import pytest
+
+from rig import leg_control as lc
+from rig.bus import Pack
+
+lr = pytest.importorskip('sim.leg_rig')
+R = Path(__file__).resolve().parents[2]
+REF = json.loads((R / 'exports' / 'leg' / 'rig-results.json').read_text())
+
+
+# ----------------------------------------------------------------------------------- the port is sim/leg_rig.py's
+
+def test_gains_clip_scenarios_are_sim_leg_rigs():
+    assert lc.Gains().__dict__ == lr.Gains().__dict__
+    assert lc.LEG_CAP == lr.LEG_CAP and lc.LEG_PEAK == lr.LEG_PEAK
+    rnd = random.Random(2)
+    for _ in range(2000):
+        t, w = rnd.uniform(-150, 150), rnd.uniform(-30, 30)
+        for cap in (None, 60.0):
+            assert lc.clip_motor(t, w, 120.0, 23.56, cap) == lr.clip_motor(t, w, 120.0, 23.56, cap)
+    assert set(lc.SCENARIOS) == set(lr.SCENARIOS)
+    for k, s in lc.SCENARIOS.items():
+        assert s.__dict__ == lr.SCENARIOS[k].__dict__
+    for k in lc.SCENARIOS:
+        for st in ({}, {'pushed': True}):
+            for t in np.arange(0.0, 3.0, 0.013):
+                assert lc.command(lc.SCENARIOS[k], t, dict(st)) == lr.command(lr.SCENARIOS[k], t, dict(st))
+
+
+@pytest.fixture(scope='module')
+def model():
+    import mujoco
+    xml, info = lr.mjcf(13.1)
+    m = mujoco.MjModel.from_xml_string(xml)
+    return m, mujoco.MjData(m), lr.Leg(m)
+
+
+def test_polar_and_vmc_equal_sim_leg_rig(model):
+    m, d, leg = model
+    rnd = random.Random(5)
+    for _ in range(60):
+        h = rnd.uniform(120, 380)
+        leg.set_height(d, h)
+        d.qvel[leg.v['motor_f']], d.qvel[leg.v['motor_r']] = rnd.uniform(-10, 10), rnd.uniform(-10, 10)
+        p1, p2 = leg.phi(d)
+        w1, w2 = d.qvel[leg.v['motor_f']], d.qvel[leg.v['motor_r']]
+        a, b = lc.polar(p1, p2, w1, w2), leg.polar(d)
+        for x, y in zip(a[:4], b[:4]):
+            assert x == pytest.approx(y, rel=1e-9, abs=1e-12)
+        L_cmd, ff = rnd.uniform(0.15, 0.35), rnd.uniform(0, 150)
+        assert np.allclose(lc.vmc(a, L_cmd, 0.0, ff), lr.vmc(leg, d, L_cmd, 0.0, ff), rtol=1e-9, atol=1e-9)
+        assert np.allclose(lc.vmc(a, None, 0.0, force=5000.0), lr.vmc(leg, d, None, 0.0, force=5000.0), rtol=1e-9)
+
+
+# ----------------------------------------------------------------------------------- T7
+
+def _run(name, rate=500.0, pack=Pack(54.0, 0.0), latency=0, **kw):
+    from rig.run import run_sim
+    return run_sim(name, REF['half_mass_kg'], rate, pack, latency, save=False, **kw)['results']
+
+
+@pytest.mark.parametrize('name', ['stand_up', 'squat'])
+def test_t7_stand_up_and_squat_peaks_within_5_percent(name):
+    r, a = _run(name), REF['scenarios'][name]
+    for k in ('peak_motor_nm', 'peak_motor_speed_rad_s', 'peak_wheel_force_n', 'peak_axle_force_n', 'peak_gearbox_nm', 'peak_knee_pin_n'):
+        assert abs(r[k] - a[k]) <= 0.05 * abs(a[k]), k
+
+
+def test_t7_jump_height_within_10_mm():
+    r, a = _run('jump'), REF['scenarios']['jump']
+    assert abs(r['jump_height_mm'] - a['jump_height_mm']) <= 10.0
+    assert abs(r['peak_wheel_force_n'] - a['peak_wheel_force_n']) <= 0.05 * a['peak_wheel_force_n']
+
+
+def test_at_the_simulations_own_rate_with_its_contact_the_port_is_exact():
+    r, a = _run('jump', rate=2000.0, contact_truth=True), REF['scenarios']['jump']
+    for k in ('jump_height_mm', 'peak_motor_nm', 'peak_wheel_force_n', 'peak_gearbox_nm', 'peak_knee_pin_n'):
+        assert r[k] == pytest.approx(a[k], abs=0.051), k
+
+
+# ----------------------------------------------------------------------------------- T8: the supervisor
+
+@pytest.mark.parametrize('kind', ['run', 'vbus_high', 'hot', 'window', 'silent', 'fault'])
+def test_every_fault_aborts_as_designed(kind):
+    from rig.faults import EXPECT
+    from rig.run import run_sim
+    o = run_sim('squat', 14.75, 500.0, Pack(54.0, 0.25), 1, save=False, inject=(kind, 1.0))
+    log = o['log']
+    assert log.aborts and log.aborts[0][1].startswith(EXPECT[kind]), log.aborts
+    assert log.aborts[0][0] <= 1.0 + 0.0061                       # within three ticks
+    a = log.arrays()
+    stopped = a['phase'] == 8
+    assert stopped.any() and np.all(a['tau_cmd_f'][stopped] == 0) and np.all(a['tau_cmd_r'][stopped] == 0)
+
+
+def test_sitdown_ends_near_150_mm():
+    from rig.run import run_sim
+    a = run_sim('squat', 14.75, 500.0, Pack(54.0, 0.25), 1, save=False, inject=('run', 2.0))['log'].arrays()
+    i = np.flatnonzero(a['phase'] == 8)[0]
+    assert a['L'][i] == pytest.approx(0.150, abs=0.012)
+
+
+def test_power_cut_tests_hold_until_the_cut_and_never_sit_down():
+    from rig.run import run_sim
+    o = run_sim('power_off_damped', 14.75, 500.0, Pack(54.0, 0.25), 1, save=False, inject=('run', 0.3))
+    assert not o['log'].aborts                                    # the pendant's release is how the power is cut
+    assert o['results']['L_range_mm'][0] < 120                     # and the leg folds once it goes
+
+
+# ----------------------------------------------------------------------------------- the CAN path, without hardware
+
+def test_hil_squat_matches_the_simulation_with_one_tick_of_latency():
+    from rig.run import run_hil, run_sim
+    h = run_hil('squat', 14.75, 500.0, Pack(54.0, 0.25))
+    s = run_sim('squat', 14.75, 500.0, Pack(54.0, 0.25), 1, save=False)['results']
+    for k in ('peak_motor_nm', 'peak_wheel_force_n', 'peak_knee_pin_n'):
+        assert h['results'][k] == pytest.approx(s[k], rel=0.02), k
+    assert h['bus'].startup['front']['limit_torque'] == 60.0 and h['bus'].startup['front']['damper'] == 0
+    for p in h['paths'].values():
+        p.unlink()
+
+
+def test_hil_jump_survives_the_speed_fields_rail():
+    """The push passes 15 rad/s, where the feedback's speed field saturates: the backend switches to the angle's
+    rate and the jump still matches the simulation."""
+    from rig.run import run_hil, run_sim
+    h = run_hil('jump', 14.75, 500.0, Pack(50.0, 0.25))
+    s = run_sim('jump', 14.75, 500.0, Pack(50.0, 0.25), 1, save=False)['results']
+    w = h['log'].arrays()['w_f']
+    assert np.max(np.abs(w)) > 15.0                                # seen past the rail
+    assert h['results']['jump_height_mm'] == pytest.approx(s['jump_height_mm'], abs=5.0)
+    for p in h['paths'].values():
+        p.unlink()

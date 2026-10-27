@@ -570,6 +570,36 @@ class Motor:
         return self.write_check('canTimeout', int(round(seconds * TIMEOUT_TICKS_PER_S)))
 
 
+# The rig's motor settings, written and read back at every start-up (plan 4.2: configuration, not control).
+RIG_CONFIG = {'run_mode': 0,            # operation (MIT) mode: the laptop sends torque only (Kp = Kd = 0)
+              'limit_torque': 60.0,     # N m: D38's cap, in the motor, independent of the laptop
+              'canTimeout': 2000,       # 0.1 s: a hung laptop or a pulled CAN lead stops the motor (3.3.6)
+              'zero_sta': 1}            # power-on angle in -pi..pi (with 0 a link below its zero would read ~2pi)
+# Read and logged at every start-up. 'damper' (0x702A, uint8) is the power-off anti-backdrive protection (manual
+# 4.2.5): 0 = on (the factory default), 1 = off. It is a switch, not a level: B1 measures the back-drive torque
+# against speed at both settings, and the run log records which one was in the motor.
+LOGGED = ('damper', 'run_mode', 'limit_torque', 'canTimeout', 'zero_sta', 'EPScan_time', 'add_offset', 'VBUS', 'mechPos')
+
+
+def configure(m: Motor, config: Optional[dict] = None, damper: Optional[int] = None, version: bool = True) -> dict:
+    """Stop the motor, write the rig's settings (and the damper switch when given: B1), read every one back, and
+    return what the motor holds plus its firmware version and uid: the start-up record of every run. Raises if a
+    written value does not read back."""
+    m.stop()
+    for k, v in (RIG_CONFIG if config is None else config).items():
+        m.write_check(k, v)
+    if damper is not None:
+        if damper not in (0, 1):
+            raise ValueError('damper is a switch: 0 = power-off anti-backdrive protection on (default), 1 = off')
+        m.write_check('damper', damper)
+    out = {k: m.read(k) for k in LOGGED}
+    out['uid'] = m.uid().hex()
+    if version:
+        out['firmware'] = m.version()
+    out['damper_meaning'] = 'protection on' if out['damper'] == 0 else 'protection off'
+    return out
+
+
 # ----------------------------------------------------------------------------------- command line
 
 def _transport(a):
@@ -611,6 +641,9 @@ def main(argv: Optional[Sequence[str]] = None, transport=None, out=print) -> int
     sub.add_parser('zero', help='the present angle becomes zero (motor idle, not in PP mode)')
     sub.add_parser('save', help='keep the written parameters over a power cycle')
     sub.add_parser('version', help='firmware version (stops the motor)')
+    su = sub.add_parser('setup', help="write the rig's settings (limit_torque 60, canTimeout 0.1 s, zero_sta 1, MIT mode), "
+                                      'read them back with the damper switch')
+    su.add_argument('--damper', type=int, choices=(0, 1), help='also set the power-off anti-backdrive switch: 0 on, 1 off')
     sid = sub.add_parser('setid')
     sid.add_argument('new_id', type=int)
     pp = sub.add_parser('param', help='read every parameter, read one, or write one')
@@ -648,6 +681,10 @@ def main(argv: Optional[Sequence[str]] = None, transport=None, out=print) -> int
             out(_fmt_fb(m.save()))
         elif a.cmd == 'version':
             out(f'motor {a.id}: firmware {m.version()}')
+        elif a.cmd == 'setup':
+            for k, v in configure(m, damper=a.damper).items():
+                out(f'motor {a.id}: {k} = {_val(v)}')
+            out(f'motor {a.id}: written values are volatile; "save" keeps them (zero_sta must be saved to act at power-on)')
         elif a.cmd == 'setid':
             out(f'motor {a.id} is now motor {m.set_id(a.new_id)}')
         elif a.cmd == 'param':

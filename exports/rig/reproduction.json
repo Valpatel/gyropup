@@ -1,0 +1,374 @@
+{
+ "scenarios": {
+  "stand_up": {
+   "peak_motor_nm": {
+    "ref": 12.1,
+    "run": 12.1,
+    "diff_pct": 0.0
+   },
+   "peak_motor_speed_rad_s": {
+    "ref": 1.01,
+    "run": 1.01,
+    "diff_pct": 0.0
+   },
+   "peak_wheel_force_n": {
+    "ref": 140.0,
+    "run": 140.0,
+    "diff_pct": 0.0
+   },
+   "peak_axle_force_n": {
+    "ref": 127.0,
+    "run": 127.0,
+    "diff_pct": 0.0
+   },
+   "peak_gearbox_nm": {
+    "ref": 12.0,
+    "run": 12.0,
+    "diff_pct": 0.0
+   },
+   "peak_knee_pin_n": {
+    "ref": 140.2,
+    "run": 140.2,
+    "diff_pct": 0.0
+   },
+   "peak_stop_nm": {
+    "ref": 0.0,
+    "run": 0.0,
+    "diff_pct": null
+   },
+   "L_range_mm": {
+    "ref": [
+     140.0,
+     303.4
+    ],
+    "run": [
+     140.0,
+     303.4
+    ]
+   },
+   "verdict": [
+    {
+     "what": "peaks within 5 %",
+     "ok": true,
+     "outside": []
+    }
+   ]
+  },
+  "squat": {
+   "peak_motor_nm": {
+    "ref": 12.2,
+    "run": 12.2,
+    "diff_pct": 0.0
+   },
+   "peak_motor_speed_rad_s": {
+    "ref": 1.0,
+    "run": 1.0,
+    "diff_pct": 0.0
+   },
+   "peak_wheel_force_n": {
+    "ref": 139.1,
+    "run": 139.2,
+    "diff_pct": 0.07
+   },
+   "peak_axle_force_n": {
+    "ref": 126.2,
+    "run": 126.2,
+    "diff_pct": 0.0
+   },
+   "peak_gearbox_nm": {
+    "ref": 12.1,
+    "run": 12.1,
+    "diff_pct": 0.0
+   },
+   "peak_knee_pin_n": {
+    "ref": 132.1,
+    "run": 132.2,
+    "diff_pct": 0.08
+   },
+   "peak_stop_nm": {
+    "ref": 0.0,
+    "run": 0.0,
+    "diff_pct": null
+   },
+   "L_range_mm": {
+    "ref": [
+     157.0,
+     302.4
+    ],
+    "run": [
+     157.0,
+     302.4
+    ]
+   },
+   "verdict": [
+    {
+     "what": "peaks within 5 %",
+     "ok": true,
+     "outside": []
+    }
+   ]
+  },
+  "jump": {
+   "peak_motor_nm": {
+    "ref": 60.0,
+    "run": 60.0,
+    "diff_pct": 0.0
+   },
+   "peak_motor_speed_rad_s": {
+    "ref": 16.67,
+    "run": 16.67,
+    "diff_pct": 0.0
+   },
+   "peak_wheel_force_n": {
+    "ref": 3700.0,
+    "run": 3672.0,
+    "diff_pct": -0.76
+   },
+   "peak_axle_force_n": {
+    "ref": 2513.5,
+    "run": 2494.5,
+    "diff_pct": -0.76
+   },
+   "peak_gearbox_nm": {
+    "ref": 97.6,
+    "run": 87.5,
+    "diff_pct": -10.35
+   },
+   "peak_knee_pin_n": {
+    "ref": 2009.3,
+    "run": 1994.1,
+    "diff_pct": -0.76
+   },
+   "jump_height_mm": {
+    "ref": 278.9,
+    "run": 278.9,
+    "diff_pct": 0.0
+   },
+   "peak_stop_nm": {
+    "ref": 0.0,
+    "run": 0.0,
+    "diff_pct": null
+   },
+   "L_range_mm": {
+    "ref": [
+     156.3,
+     344.7
+    ],
+    "run": [
+     156.3,
+     344.2
+    ]
+   },
+   "verdict": [
+    {
+     "what": "jump height within 10 mm",
+     "ok": true,
+     "diff_mm": 0.0
+    }
+   ]
+  },
+  "jump_peak": {
+   "peak_motor_nm": {
+    "ref": 120.0,
+    "run": 120.0,
+    "diff_pct": 0.0
+   },
+   "peak_motor_speed_rad_s": {
+    "ref": 17.69,
+    "run": 17.69,
+    "diff_pct": 0.0
+   },
+   "peak_wheel_force_n": {
+    "ref": 3335.4,
+    "run": 3920.2,
+    "diff_pct": 17.53
+   },
+   "peak_axle_force_n": {
+    "ref": 2375.1,
+    "run": 2663.1,
+    "diff_pct": 12.13
+   },
+   "peak_gearbox_nm": {
+    "ref": 105.5,
+    "run": 105.4,
+    "diff_pct": -0.09
+   },
+   "peak_knee_pin_n": {
+    "ref": 1883.3,
+    "run": 2129.9,
+    "diff_pct": 13.09
+   },
+   "jump_height_mm": {
+    "ref": 307.8,
+    "run": 311.8,
+    "diff_pct": 1.3
+   },
+   "peak_stop_nm": {
+    "ref": 0.0,
+    "run": 0.0,
+    "diff_pct": null
+   },
+   "L_range_mm": {
+    "ref": [
+     156.3,
+     340.9
+    ],
+    "run": [
+     156.3,
+     342.8
+    ]
+   },
+   "verdict": []
+  },
+  "drop_150": {
+   "peak_motor_nm": {
+    "ref": 35.5,
+    "run": 36.1,
+    "diff_pct": 1.69
+   },
+   "peak_motor_speed_rad_s": {
+    "ref": 7.72,
+    "run": 7.86,
+    "diff_pct": 1.81
+   },
+   "peak_wheel_force_n": {
+    "ref": 2309.5,
+    "run": 2313.2,
+    "diff_pct": 0.16
+   },
+   "peak_axle_force_n": {
+    "ref": 1719.4,
+    "run": 1722.1,
+    "diff_pct": 0.16
+   },
+   "peak_gearbox_nm": {
+    "ref": 66.5,
+    "run": 66.8,
+    "diff_pct": 0.45
+   },
+   "peak_knee_pin_n": {
+    "ref": 1079.0,
+    "run": 1080.9,
+    "diff_pct": 0.18
+   },
+   "peak_stop_nm": {
+    "ref": 0.0,
+    "run": 0.0,
+    "diff_pct": null
+   },
+   "L_range_mm": {
+    "ref": [
+     283.7,
+     330.5
+    ],
+    "run": [
+     283.3,
+     330.6
+    ]
+   },
+   "verdict": []
+  },
+  "power_off": {
+   "peak_motor_nm": {
+    "ref": 10.8,
+    "run": 10.8,
+    "diff_pct": 0.0
+   },
+   "peak_motor_speed_rad_s": {
+    "ref": 12.17,
+    "run": 12.17,
+    "diff_pct": 0.0
+   },
+   "peak_wheel_force_n": {
+    "ref": 2609.8,
+    "run": 2609.2,
+    "diff_pct": -0.02
+   },
+   "peak_axle_force_n": {
+    "ref": 2609.2,
+    "run": 2608.6,
+    "diff_pct": -0.02
+   },
+   "peak_gearbox_nm": {
+    "ref": 75.0,
+    "run": 74.9,
+    "diff_pct": -0.13
+   },
+   "peak_knee_pin_n": {
+    "ref": 2978.7,
+    "run": 2978.0,
+    "diff_pct": -0.02
+   },
+   "peak_stop_nm": {
+    "ref": 222.9,
+    "run": 222.9,
+    "diff_pct": 0.0
+   },
+   "L_range_mm": {
+    "ref": [
+     97.1,
+     302.7
+    ],
+    "run": [
+     97.1,
+     302.7
+    ]
+   },
+   "verdict": []
+  },
+  "power_off_damped": {
+   "peak_motor_nm": {
+    "ref": 10.8,
+    "run": 10.8,
+    "diff_pct": 0.0
+   },
+   "peak_motor_speed_rad_s": {
+    "ref": 1.74,
+    "run": 1.74,
+    "diff_pct": 0.0
+   },
+   "peak_wheel_force_n": {
+    "ref": 283.6,
+    "run": 283.5,
+    "diff_pct": -0.04
+   },
+   "peak_axle_force_n": {
+    "ref": 270.9,
+    "run": 270.8,
+    "diff_pct": -0.04
+   },
+   "peak_gearbox_nm": {
+    "ref": 10.8,
+    "run": 10.8,
+    "diff_pct": 0.0
+   },
+   "peak_knee_pin_n": {
+    "ref": 314.5,
+    "run": 314.2,
+    "diff_pct": -0.1
+   },
+   "peak_stop_nm": {
+    "ref": 19.0,
+    "run": 19.0,
+    "diff_pct": 0.0
+   },
+   "L_range_mm": {
+    "ref": [
+     101.1,
+     302.7
+    ],
+    "run": [
+     101.1,
+     302.7
+    ]
+   },
+   "verdict": []
+  }
+ },
+ "all_ok": true,
+ "rate_hz": 500.0,
+ "half_mass_kg": 13.1,
+ "bus": "ideal 54 V, no latency (as sim/leg_rig.py)",
+ "controller": "rig/leg_control.py (the rig's port) on rig/sim_bus.py",
+ "note": "peak_gearbox_nm in the jump is the landing spike: the rig detects touchdown from the leg 2-4 ms after MuJoCo's contact, so its feed-forward returns that much later (with the simulator's contact flag the port reproduces it: python -m rig.run --backend sim --test jump --contact-truth)"
+}

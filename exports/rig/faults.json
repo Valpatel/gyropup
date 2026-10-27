@@ -1,0 +1,94 @@
+{
+ "test": "squat",
+ "half_mass_kg": 14.75,
+ "made_by": "python -m rig.run --faults",
+ "faults": {
+  "run": {
+   "injected_at_s": 1.0,
+   "abort": "sitdown: safety line open",
+   "abort_at_s": 1.0,
+   "reaction_ms": 0.0,
+   "expected": "sitdown",
+   "ok": true,
+   "leg_at_stop_mm": 155.5,
+   "torque_after_stop_nm": 0.0,
+   "lowest_leg_after_mm": 111.4
+  },
+  "vbus_high": {
+   "injected_at_s": 1.0,
+   "abort": "limp: VBUS 59.0 V > 58",
+   "abort_at_s": 1.0,
+   "reaction_ms": 0.0,
+   "expected": "limp",
+   "ok": true,
+   "leg_at_stop_mm": 172.8,
+   "torque_after_stop_nm": 0.0,
+   "lowest_leg_after_mm": 107.8
+  },
+  "vbus_low": {
+   "injected_at_s": 1.0,
+   "abort": "sitdown: VBUS 46.0 V (mean) < 46",
+   "abort_at_s": 2.604,
+   "reaction_ms": 1604.0,
+   "expected": "sitdown",
+   "ok": true,
+   "leg_at_stop_mm": 152.6,
+   "torque_after_stop_nm": 0.0,
+   "lowest_leg_after_mm": 111.4
+  },
+  "hot": {
+   "injected_at_s": 1.0,
+   "abort": "sitdown: motor 90 C > 80",
+   "abort_at_s": 1.0,
+   "reaction_ms": 0.0,
+   "expected": "sitdown",
+   "ok": true,
+   "leg_at_stop_mm": 155.5,
+   "torque_after_stop_nm": 0.0,
+   "lowest_leg_after_mm": 111.4
+  },
+  "window": {
+   "injected_at_s": 1.0,
+   "abort": "limp: leg 90 mm outside 95-395",
+   "abort_at_s": 1.0,
+   "reaction_ms": 0.0,
+   "expected": "limp",
+   "ok": true,
+   "leg_at_stop_mm": 90.0,
+   "torque_after_stop_nm": 0.0,
+   "lowest_leg_after_mm": 90.0
+  },
+  "silent": {
+   "injected_at_s": 1.0,
+   "abort": "limp: no feedback",
+   "abort_at_s": 1.004,
+   "reaction_ms": 4.0,
+   "expected": "limp",
+   "ok": true,
+   "leg_at_stop_mm": 172.1,
+   "torque_after_stop_nm": 0.0,
+   "lowest_leg_after_mm": 107.9
+  },
+  "fault": {
+   "injected_at_s": 1.0,
+   "abort": "limp: motor fault over-current",
+   "abort_at_s": 1.0,
+   "reaction_ms": 0.0,
+   "expected": "limp",
+   "ok": true,
+   "leg_at_stop_mm": 172.8,
+   "torque_after_stop_nm": 0.0,
+   "lowest_leg_after_mm": 107.8
+  },
+  "rate_limit": {
+   "limit_nm_per_tick": 5.0,
+   "largest_step_nm": 5.0,
+   "ok": true,
+   "stand_up_still_holds": [
+    140.0,
+    303.5
+   ]
+  }
+ },
+ "all_ok": true
+}

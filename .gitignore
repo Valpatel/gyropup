@@ -4,6 +4,7 @@ __pycache__/
 node_modules/
 exports/*.log
 runs/
+!exports/rig/runs/
 site/
 preview/site-url.txt
 build/

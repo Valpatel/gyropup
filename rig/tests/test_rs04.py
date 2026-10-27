@@ -291,3 +291,28 @@ def test_command_line_on_the_software_bus():
     assert P.main(['--id', '1', 'stop'], transport=t, out=lines.append) == 0 and emu[1].mode == 0
     assert P.main(['--id', '1', 'param'], transport=t, out=lines.append) == 0
     assert P.main(['--id', '9', 'enable'], transport=t, out=lines.append) == 2 and lines[-1].startswith('error: no reply')
+
+
+def test_configure_writes_reads_back_and_logs_the_damper():
+    vb, bus, emu = rig_bus(ids=(1,))
+    m = bus.motor(1)
+    rec = P.configure(m)
+    assert rec['limit_torque'] == 60.0 and rec['canTimeout'] == 2000 and rec['zero_sta'] == 1 and rec['run_mode'] == 0
+    assert rec['damper'] == 0 and rec['damper_meaning'] == 'protection on'            # the factory default, logged
+    assert rec['firmware'] == '0.4.1.24' and rec['uid'] == emu[1].uid.hex() and rec['VBUS'] == pytest.approx(48.0)
+    assert P.configure(m, damper=1)['damper'] == 1 and emu[1].params['damper'] == 1     # B1's second setting
+    with pytest.raises(ValueError):
+        P.configure(m, damper=5)
+
+
+def test_configure_refuses_a_value_that_does_not_read_back():
+    vb, bus, emu = rig_bus(ids=(1,))
+    real = emu[1].handle
+
+    def stubborn(cid, data, ext=True):                     # a motor that keeps its own limit_torque
+        out = real(cid, data, ext)
+        emu[1].params['limit_torque'] = 120.0
+        return out
+    vb.handlers[0] = stubborn
+    with pytest.raises(RuntimeError, match='read back'):
+        P.configure(bus.motor(1))
