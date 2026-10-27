@@ -1,0 +1,229 @@
+{
+ "test": "3.3",
+ "title": "Trip latch with simulated gate pairs",
+ "plan": "docs/turret-prototype-plan.md section 5",
+ "mode": "sim",
+ "date": "2026-10-27",
+ "pass": true,
+ "checks": [
+  {
+   "check": "1.3 ms (151.4 fps) latches",
+   "value": true,
+   "limit": "latched",
+   "pass": true
+  },
+  {
+   "check": "ARM held low while latched (1.3 ms)",
+   "value": false,
+   "limit": "ARM low",
+   "pass": true
+  },
+  {
+   "check": "firmware times the 1.3 ms pair",
+   "value": 1.3,
+   "limit": "+-0.02 ms",
+   "pass": true
+  },
+  {
+   "check": "2.2 ms (89.5 fps) latches",
+   "value": true,
+   "limit": "latched",
+   "pass": true
+  },
+  {
+   "check": "ARM held low while latched (2.2 ms)",
+   "value": false,
+   "limit": "ARM low",
+   "pass": true
+  },
+  {
+   "check": "firmware times the 2.2 ms pair",
+   "value": 2.199,
+   "limit": "+-0.02 ms",
+   "pass": true
+  },
+  {
+   "check": "2.4 ms (82.0 fps) latches",
+   "value": true,
+   "limit": "latched",
+   "pass": true
+  },
+  {
+   "check": "ARM held low while latched (2.4 ms)",
+   "value": false,
+   "limit": "ARM low",
+   "pass": true
+  },
+  {
+   "check": "firmware times the 2.4 ms pair",
+   "value": 2.401,
+   "limit": "+-0.02 ms",
+   "pass": true
+  },
+  {
+   "check": "2.6 ms (75.7 fps) latches",
+   "value": true,
+   "limit": "latched",
+   "pass": true
+  },
+  {
+   "check": "ARM held low while latched (2.6 ms)",
+   "value": false,
+   "limit": "ARM low",
+   "pass": true
+  },
+  {
+   "check": "firmware times the 2.6 ms pair",
+   "value": 2.6,
+   "limit": "+-0.02 ms",
+   "pass": true
+  },
+  {
+   "check": "2.9 ms (67.9 fps) latches",
+   "value": true,
+   "limit": "latched",
+   "pass": true
+  },
+  {
+   "check": "ARM held low while latched (2.9 ms)",
+   "value": false,
+   "limit": "ARM low",
+   "pass": true
+  },
+  {
+   "check": "firmware times the 2.9 ms pair",
+   "value": 2.899,
+   "limit": "+-0.02 ms",
+   "pass": true
+  },
+  {
+   "check": "firmware times the 3.0 ms pair",
+   "value": 3.001,
+   "limit": "+-0.02 ms",
+   "pass": true
+  },
+  {
+   "check": "3.1 ms (63.5 fps) does not",
+   "value": false,
+   "limit": "not latched",
+   "pass": true
+  },
+  {
+   "check": "firmware times the 3.1 ms pair",
+   "value": 3.1,
+   "limit": "+-0.02 ms",
+   "pass": true
+  },
+  {
+   "check": "3.3 ms (59.7 fps) does not",
+   "value": false,
+   "limit": "not latched",
+   "pass": true
+  },
+  {
+   "check": "firmware times the 3.3 ms pair",
+   "value": 3.297,
+   "limit": "+-0.02 ms",
+   "pass": true
+  },
+  {
+   "check": "the latch holds until the button (a slower pair after the trip does not clear it)",
+   "value": true,
+   "limit": "latched, ARM low after 1 s",
+   "pass": true
+  },
+  {
+   "check": "the button clears it and ARM returns",
+   "value": true,
+   "limit": "cleared",
+   "pass": true
+  }
+ ],
+ "readings": {
+  "window_ms_for_66fps_over_60mm": 2.983,
+  "pairs": [
+   {
+    "pair_ms": 1.3,
+    "pair_fps": 151.4,
+    "latched": true,
+    "arm_while_latched": false,
+    "firmware_interval_ms": 1.3
+   },
+   {
+    "pair_ms": 2.2,
+    "pair_fps": 89.5,
+    "latched": true,
+    "arm_while_latched": false,
+    "firmware_interval_ms": 2.199
+   },
+   {
+    "pair_ms": 2.4,
+    "pair_fps": 82.0,
+    "latched": true,
+    "arm_while_latched": false,
+    "firmware_interval_ms": 2.401
+   },
+   {
+    "pair_ms": 2.6,
+    "pair_fps": 75.7,
+    "latched": true,
+    "arm_while_latched": false,
+    "firmware_interval_ms": 2.6
+   },
+   {
+    "pair_ms": 2.9,
+    "pair_fps": 67.9,
+    "latched": true,
+    "arm_while_latched": false,
+    "firmware_interval_ms": 2.899
+   },
+   {
+    "pair_ms": 3.0,
+    "pair_fps": 65.6,
+    "latched": false,
+    "arm_while_latched": true,
+    "firmware_interval_ms": 3.001
+   },
+   {
+    "pair_ms": 3.1,
+    "pair_fps": 63.5,
+    "latched": false,
+    "arm_while_latched": true,
+    "firmware_interval_ms": 3.1
+   },
+   {
+    "pair_ms": 3.3,
+    "pair_fps": 59.7,
+    "latched": false,
+    "arm_while_latched": true,
+    "firmware_interval_ms": 3.297
+   }
+  ],
+  "boundary_ms": {
+   "largest_latched": 2.9,
+   "smallest_not_latched": 3.0
+  }
+ },
+ "notes": [
+  "Judged on the 60 mm gates' window (2.98 ms = 66 fps): latch at <= 2.9 ms, none at >= 3.1 ms, 3.0 ms is inside the R selection band. The plan's \"latched at <= 2.4 ms, not at >= 2.6 ms\" is the 50 mm gates' boundary (2.49 ms): with 60 mm gates a 2.6 ms pair is 75.7 fps and must latch."
+ ],
+ "sim": {
+  "seed": 1033,
+  "simulated_s": 7.7,
+  "wall_s": 0.2,
+  "stand_ins": [],
+  "shortened": {},
+  "warning": "simulated turret (firmware/turret/sim_turret.py): not a bench reading"
+ },
+ "firmware": {
+  "build": "v0",
+  "servo_baud": 500000,
+  "motor": "SunnySky X2216 880KV V3",
+  "kv": 880.0,
+  "pole_pairs": 7,
+  "erpm_limit": 81312,
+  "tyre_mm": 34,
+  "set_rpm_52fps": 8855,
+  "ramp_s": 0.3
+ }
+}

@@ -47,19 +47,19 @@ G0 = 9.81
 
 ROLE = {
     'pan_base': 'The fixed base: bolts to the TM face (4 x M5, 2 dowels) and holds the pan bearing, the pan servo, the DT12 socket and the pan stop post.',
-    'pan_clamp': 'Clamps the pan bearing\'s outer race into the base (3 x M3).',
-    'pan_ring': 'The turntable: a 63-tooth gear on the bearing\'s inner race; the yoke bolts on top. A finger meets the base\'s post at +-173.5 deg.',
+    'pan_clamp': 'Aluminium ring (SendCutSend, 3.2 mm 6061-T6): clamps the pan bearing\'s outer race into the base (5 x M3).',
+    'pan_ring': 'The turntable: a 63-tooth gear on the bearing\'s inner race; the yoke bolts on top. It turns without a stop: power and signals cross on the slip ring.',
     'pan_pinion': '21-tooth pinion on the pan servo\'s horn. 63 / 21 = 3, so the servo turns three times for every turn of the turret.',
     'tilt_yoke': 'Two arms up to the tilt axis: the tilt servo on the left, a bearing on the right, hard stops at 0 and -25 deg (it cannot point above level).',
     'cradle': 'Swings on the tilt axis. Its two rails carry the ball cartridge (2 dowels + a thumbscrew) and the laser.',
     'cartridge_body': 'One printed block: the dial housing, the drop chute, the flywheel cage and the barrel socket. It lifts off the cradle as a unit.',
-    'flywheel': 'Flywheel hub on the Snail motor\'s shaft (grub screw). Two of them spin opposite ways.',
-    'flywheel_tyre': 'TPU tyre: the 22.7 mm ball is squeezed 2.7 mm between two of them and leaves at their surface speed.',
-    'dial': 'The feed dial: 8 pockets on the M2006. Each 45 deg step drops one ball through the exit hole; parked, a spoke covers the hole.',
+    'flywheel': 'Flywheel hub on the X2216\'s prop adapter (a washer and an M5 nut). Two of them spin opposite ways.',
+    'flywheel_tyre': 'TPU tyre: the 22.7 mm ball is squeezed between two of them and leaves at nearly their surface speed.',
+    'dial': 'The feed dial: 8 pockets on the feed servo\'s horn. Each 45 deg step drops one ball through the exit hole; parked, a spoke covers the hole.',
     'hopper': 'Clear tube over the dial: 30 balls fall into the pockets by gravity; the cone on the dial stirs them.',
     'hopper_lid': 'The hopper lid, with the fill port for the dock\'s spout.',
     'hopper_flap': 'Sprung flap over the fill port: the dock\'s spout pushes it open.',
-    'barrel': '100 mm barrel, bore 1.5 mm over the ball: it only guides. Two IR gates 50 mm apart time every shot. Blaze-orange tip.',
+    'barrel': '100 mm barrel, bore 2 mm over the ball after the wheels: it only guides. Two IR gates 60 mm apart time every shot. Blaze-orange tip.',
     'laser_mount': 'Holds the aiming laser parallel to the barrel (three boresight screws). It stays on the cradle when the cartridge comes off.',
     'bumper_ring': 'TPU ring round the base: it takes the knocks.',
     'pan_servo': 'Feetech STS3215 (12 V serial bus, 2.94 N.m stall, 45 rpm, 12-bit encoder): drives the pinion.',
@@ -68,13 +68,13 @@ ROLE = {
     'dt_plug': 'The host\'s DT12 plug (a 90 deg boot turns the harness down).',
     'tilt_servo': 'STS3215 on the yoke\'s left arm: tilts the cradle directly.',
     'tilt_bearing': 'MR126 bearing round the M5 shoulder screw: the cradle\'s second pivot.',
-    'flywheel_motor_l': 'DJI Snail 2305 (875 rpm/V, 21,000 rpm at 24 V): hangs under the cage plate.',
-    'flywheel_motor_r': 'DJI Snail 2305, spinning the other way.',
-    'esc_l': 'AM32 35 A ESC for the left flywheel motor.',
-    'esc_r': 'AM32 35 A ESC for the right flywheel motor.',
-    'feed_motor': 'DJI M2006 P36 geared motor (36:1, 416 rpm rated) under the dial floor.',
-    'feed_esc': 'DJI C610: the M2006\'s speed controller on CAN.',
-    'laser': 'Picotronic 520 nm Class 2 green laser: the aiming dot, parallel to the barrel.',
+    'flywheel_motor_l': 'SunnySky X2216 (880 rpm/V) on the fixed 12 V rail: 10,560 rpm at most, which caps the ball speed. Hangs under the cage plate.',
+    'flywheel_motor_r': 'SunnySky X2216, spinning the other way.',
+    'esc_l': 'AM32 35 A ESC for the left flywheel motor, on the cartridge board.',
+    'esc_r': 'AM32 35 A ESC for the right flywheel motor, on the cartridge board.',
+    'cartridge_board': 'The cartridge board: six FETs that short the motors\' phases about 8 ms after the safety line drops (the brake), their driver and the gates\' comparator; the two ESCs lie under it on the cage plate.',
+    'feed_motor': 'Feetech STS3215 servo (bus ID 3) under the dial floor: steps the dial 45 deg per ball and feels a jam in its load reading.',
+    'laser': 'Quarton 650 nm Class 2 red laser (under 1 mW): the aiming dot, parallel to the barrel.',
     'box_deck': 'The adapter: carries the TM face 44 mm above the J501\'s roof on four legs at the lid\'s screw corners; the control pod hangs at the back.',
     'intake_shroud': 'Keeps the J501 fan\'s intake apart from its exhaust: the fan breathes through the front grille, not its own hot air.',
     'pod_cover': 'Closes the control pod from below.',
@@ -90,7 +90,7 @@ TITLE = {'pan_base': 'Pan base', 'pan_clamp': 'Bearing clamp', 'pan_ring': 'Pan 
          'laser_mount': 'Laser mount', 'bumper_ring': 'Bumper ring', 'pan_servo': 'Pan servo', 'pan_bearing': 'Pan bearing',
          'dt_receptacle': 'DT12 socket', 'dt_plug': 'DT12 plug', 'tilt_servo': 'Tilt servo', 'tilt_bearing': 'Tilt bearing',
          'flywheel_motor_l': 'Flywheel motor L', 'flywheel_motor_r': 'Flywheel motor R', 'esc_l': 'ESC L', 'esc_r': 'ESC R',
-         'feed_motor': 'Feed motor (M2006)', 'feed_esc': 'Feed ESC (C610)', 'laser': 'Aiming laser', 'box_deck': 'Box adapter',
+         'feed_motor': 'Feed servo (STS3215)', 'cartridge_board': 'Cartridge board', 'laser': 'Aiming laser', 'box_deck': 'Box adapter',
          'intake_shroud': 'Intake shroud', 'pod_cover': 'Pod cover', 'pod_xt60': '24 V in (XT60)', 'pod_switch': 'Power switch',
          'pod_fuse': 'Fuse', 'pod_pendant': 'Pendant jack', 'pod_usb': 'USB-CAN', 'pod_wago': 'Wiring', 'base': 'J501 base',
          'cover': 'J501 lid', 'front_no_gmsl': 'J501 front plate', 'rear_io': 'J501 rear plate', 'side_hatch': 'J501 side hatch'}
@@ -103,7 +103,7 @@ EXPLODE = {'box_deck': (0, 0, 60), 'intake_shroud': (0, 0, 28), 'pod_cover': (0,
            'pan_bearing': (0, 0, 125), 'pan_clamp': (0, 0, 145), 'pan_pinion': (0, 0, 120), 'pan_ring': (0, 0, 165), 'tilt_yoke': (0, 0, 195),
            'tilt_servo': (0, 45, 195), 'tilt_bearing': (0, -30, 195), 'cradle': (0, 0, 215), 'cartridge_body': (0, 0, 250),
            'flywheel': (0, 0, 250), 'flywheel_tyre': (0, 0, 250), 'flywheel_motor': (0, 0, 290), 'esc_': (0, 0, 320), 'feed_motor': (0, 0, 210),
-           'feed_esc': (-30, 0, 230), 'dial': (0, 0, 300), 'hopper': (0, 0, 350), 'hopper_lid': (0, 0, 390), 'hopper_flap': (0, 0, 400),
+           'cartridge_board': (0, 0, 330), 'dial': (0, 0, 300), 'hopper': (0, 0, 350), 'hopper_lid': (0, 0, 390), 'hopper_flap': (0, 0, 400),
            'barrel': (70, 0, 250), 'laser_mount': (25, -35, 230), 'laser': (25, -35, 230)}
 
 
@@ -213,15 +213,18 @@ def flight(v0=21.3, z0=0.55, pitch_deg=0.0, cd=0.5, d=0.0227, m=0.00183, dt=2e-4
 
 def mechanics(T, rows, groups):
     G = T.G
-    sn, m2, sv = CAT['dji-robomaster-snail-2305']['specs'], CAT['dji-robomaster-m2006-p36']['specs'], CAT['feetech-sts3215-c018-12v']['specs']
-    ball = {'d_mm': G.ball, 'mass_g': 1.83, 'speed_mps': 21.3, 'fps': 70, 'bore_mm': G.bore}
+    sn, sv = CAT['sunnysky-x2216-880kv-v3']['specs'], CAT['feetech-sts3215-c018-12v']['specs']
+    l3 = json.loads((R / 'exports/turret/launch/launch3d.json').read_text())['design']          # the physics' set speed (sim/turret_launch3d.py)
+    ball = {'d_mm': G.ball, 'mass_g': 1.83, 'speed_mps': round(l3['set_fps_nominal'] * 0.3048, 2), 'fps': l3['set_fps_nominal'], 'bore_mm': G.bore_out,
+            'cap_fps': 70}
     ball['energy_j'] = round(0.5 * ball['mass_g'] * M * ball['speed_mps'] ** 2, 3)
-    # flywheels: hub + tyre from the CAD (about the wheel's axis), the Snail's rotor from the catalogue
+    # flywheels: hub + tyre from the CAD (about the wheel's axis), the X2216's rotor from the catalogue (est)
     hub = solid_mass_properties(T.local['flywheel'].val(), tu.DENS['pa6-cf'], 1.0)
     tyre = solid_mass_properties(T.local['flywheel_tyre'].val(), tu.DENS['tpu95'], 1.0)
     i_wheel = (hub.inertia[2][2] + tyre.inertia[2][2]) * 1e6 + sn['rotor_inertia_kg_mm2']           # kg mm2
-    eta = 0.85                                                     # exit speed / tyre surface speed (assumed; bench it)
-    rpm = ball['speed_mps'] / (eta * math.pi * G.wheel_d * M) * 60
+    wheel_d = tu.TYRE_SET[0]                                       # the v0 tyre (Ø34: D42)
+    rpm = float(l3['set_rpm'])                                     # the ESC set speed for the nominal ball (launch3d.json)
+    eta = round(ball['speed_mps'] / (rpm / 60 * math.pi * wheel_d * M), 3)   # exit speed / tyre surface speed at that speed
     w = rpm * 2 * math.pi / 60
     e_wheel = 0.5 * i_wheel * 1e-6 * w ** 2
     loss = 0.3                                                     # foam hysteresis per shot, share of the ball's energy (assumed)
@@ -232,19 +235,19 @@ def mechanics(T, rows, groups):
     recover_ms = 1000 * i_wheel * 1e-6 * (w * drop / 100) / torque
     spin_ms = 1000 * i_wheel * 1e-6 * w / torque
     coast_s = i_wheel * 1e-6 * w / (sn['kt_nm_per_a'] * sn['no_load_current_a'])
-    crush = G.ball + G.wheel_d - G.wheel_c
-    fly = {'d_mm': G.wheel_d, 'centres_mm': round(G.wheel_c, 2), 'crush_mm': round(crush, 2), 'crush_pct': round(100 * crush / G.ball, 1),
-           'rpm': round(rpm, -1), 'surface_mps': round(rpm / 60 * math.pi * G.wheel_d * M, 1), 'efficiency_assumed': eta,
+    crush = G.ball + wheel_d - G.wheel_c
+    fly = {'d_mm': wheel_d, 'centres_mm': round(G.wheel_c, 2), 'crush_mm': round(crush, 2), 'crush_pct': round(100 * crush / G.ball, 1),
+           'rpm': round(rpm, -1), 'surface_mps': round(rpm / 60 * math.pi * wheel_d * M, 1), 'efficiency_assumed': eta,
            'throttle_pct': round(100 * rpm / sn['no_load_speed_rpm']), 'motor_kv': sn['kv_rpm_per_v'], 'no_load_rpm': sn['no_load_speed_rpm'],
            'inertia_kg_mm2': round(i_wheel, 2), 'energy_j_each': round(e_wheel, 2), 'speed_drop_per_shot_pct': round(drop, 1),
            'recovery_ms': round(recover_ms, 1), 'spin_up_ms_motor_limit': round(spin_ms), 'coast_down_s': round(coast_s, 1),
-           'current_limit_a': i_lim, 'note': 'rpm for 21.3 m/s with exit = 0.85 x surface speed (assumed); foam loss 30 % (assumed); '
-                                            'the chronograph gates in the barrel measure the real speed'}
-    # feed: one ball per 45 deg of the dial
-    rate = 10.0
-    dial_rpm = rate / G.n_pockets * 60
-    feed = {'pockets': G.n_pockets, 'motor': 'DJI M2006 P36', 'ratio': m2['gear_ratio'], 'rated_rpm': m2['rated_speed_rpm'],
-            'dial_rpm_at_10_per_s': round(dial_rpm), 'max_rate_per_s': round(m2['rated_speed_rpm'] / 60 * G.n_pockets),
+           'current_limit_a': i_lim, 'note': 'the set speed for the nominal ball at the physics\' set fps (sim/turret_launch3d.py); foam loss 30 % '
+                                            '(assumed); the chronograph gates in the barrel measure the real speed'}
+    # feed: one ball per 45 deg of the dial, stepped by the STS3215 (45 rpm at 12 V with no load: 167 ms per step at full
+    # speed, ~200-250 ms settled with its ramps, est until bench test 3.9 measures it)
+    step_ms = 235.0                                                # exports/turret/feed/feed_dyn.json: settled in 232-246 ms
+    feed = {'pockets': G.n_pockets, 'motor': 'Feetech STS3215 serial bus servo (ID 3)', 'ratio': 345, 'no_load_rpm': sv['no_load_speed_rpm'],
+            'step_deg': 360 / G.n_pockets, 'step_ms_est': step_ms, 'rate_per_s': 3, 'max_rate_per_s': 3,
             'pitch_radius_mm': G.rp, 'exit_x_mm': G.exit_x, 'park_deg': 360 / G.n_pockets / 2}
     # the drop from the pocket through the chute to the nip: gravity along the bend (radius chute_r), from rest
     t, s, v, dt = 0.0, 0.0, 0.0, 1e-5
@@ -257,7 +260,7 @@ def mechanics(T, rows, groups):
     chute_ms, v_nip = 1000 * t, v
     run_ms = 1000 * ((G.wheel_x - 7.25 - G.chute_cx) * M) / max(v_nip, 0.1)
     barrel_ms = 1000 * (G.barrel_x1 - G.wheel_x) * M / ball['speed_mps']
-    timing = {'dial_to_exit_ms': round(1000 * (feed['park_deg'] / 360) / (dial_rpm / 60)), 'chute_ms': round(chute_ms), 'to_nip_ms': round(run_ms),
+    timing = {'dial_to_exit_ms': round(step_ms), 'chute_ms': round(chute_ms), 'to_nip_ms': round(run_ms),
               'nip_to_muzzle_ms': round(barrel_ms, 1), 'speed_into_nip_mps': round(v_nip, 2)}
     timing['trigger_to_muzzle_ms'] = round(timing['dial_to_exit_ms'] + chute_ms + run_ms + barrel_ms)
     # pan and tilt
@@ -520,15 +523,26 @@ def main():
            'note': 'J501: 368 g printed (its slice report) + 1.0 kg Orin, carrier and cooler (est); a sideways push at the tilt axis that '
                    'lifts the box off its narrow edge'}
     fl = mech['flywheel']
-    vmax = fl['no_load_rpm'] / 60 * math.pi * G.wheel_d * M * fl['efficiency_assumed']
-    overspeed = {'max_exit_mps': round(vmax, 1), 'max_fps': round(vmax / 0.3048), 'cap_mps': mech['ball']['speed_mps'],
-                 'note': f'at the Snails\' full no-load speed ({fl["no_load_rpm"]} rpm at 24 V) a ball would leave at about {vmax:.0f} m/s: '
-                         f'the {mech["ball"]["fps"]} fps cap is only the throttle limit in firmware, so the barrel\'s chronograph gates '
-                         f'should open the safety line on any ball over the cap'}
+    vmax = fl['no_load_rpm'] / 60 * math.pi * fl['d_mm'] * M * fl['efficiency_assumed']
+    # the physics' ceiling (sim/turret_launch3d.py: the fastest swept ball at 100 % throttle, +5 % KV, +4 % rail, runout, tyre growth)
+    l3 = json.loads((R / 'exports/turret/launch/launch3d.json').read_text())
+    ceil = next((c for c in l3.get('ceiling_map', []) if c['rail_v'] == 12.0 and abs(c['wheel_d_mm'] - fl['d_mm']) < 0.1), None)
+    ceil_txt = (f'{ceil["ceiling_fps"]} fps on Ø{fl["d_mm"]:.0f} tyres, docs/turret-physics.md section 4' if ceil else
+                'docs/turret-physics.md section 4')
+    overspeed = {'max_exit_mps': round(vmax, 1), 'max_fps': round(vmax / 0.3048), 'cap_mps': round(mech['ball']['cap_fps'] * 0.3048, 2),
+                 'physics_ceiling_fps': ceil['ceiling_fps'] if ceil else None,
+                 'note': f'the fixed 12 V flywheel rail is the ceiling: at the X2216s\' full no-load speed on it ({fl["no_load_rpm"]} rpm) a ball '
+                         f'leaves at about {vmax:.0f} m/s by this page\'s rough model (the physics\' fastest ball at 100 % throttle on a fast '
+                         f'motor and a high rail: {ceil_txt}), under the {mech["ball"]["cap_fps"]} fps cap; the barrel\'s two gates trip the '
+                         f'safety line on any ball over 66 fps, and 24 V must never reach the ESCs'}
     tmg = mech['timing']
+    rel = l3.get('release_phase_short') or {}
+    b5 = round(rel.get('speed_5pct_at_ms') or 48)
     release = {'after_drop_ms': round(tmg['trigger_to_muzzle_ms'] - tmg['dial_to_exit_ms']), 'coast_s': fl['coast_down_s'],
                'note': f'a ball that has already dropped still fires up to {tmg["trigger_to_muzzle_ms"] - tmg["dial_to_exit_ms"]:.0f} ms after ARM '
-                       f'is released, and the unbraked flywheels keep {fl["coast_down_s"]} s of speed: brake them (AM32 active braking) on release'}
+                       f'is released; the phase-short brake (six FETs on the cartridge board, 5-14 ms after the line drops) stops the wheels to 5 % '
+                       f'about {b5} ms after release (docs/turret-physics.md section 5), where unbraked they would coast {fl["coast_down_s"]} s',
+               'brake_to_5pct_ms': b5, 'brake_tau_ms': rel.get('tau_ms_model')}
     checks = {'clearance': sw, 'muzzle_outside_deck_mm': ball_clear(T), 'airflow': air, 'tipping': tip, 'overspeed': overspeed, 'release': release,
               'lid_screw': f'M3 x {tb.LID_SCREW_LEN:.0f} ISO 4762, tip at z {tb.LID_SCREW_TIP:.0f} (as the J501\'s own M3 x {tb.J["lid_screw_len"]:.0f})',
               'too_big': too_big}
@@ -592,26 +606,27 @@ def main():
     journey = [
         {'id': 'hopper', 'title': '1  Hopper', 'parts': ['hopper', 'hopper_lid', 'hopper_flap'], 'focus': [0.0, 0.0, round((G.dial_z0 + G.hopper_top) / 2 - tc, 1)],
          'text': f'Thirty balls (Ø{G.ball}, 1.83 g) wait in the clear hopper. Gravity drops them into the dial\'s pockets; the cone on top of the dial stirs the pile so they cannot bridge.'},
-        {'id': 'dial', 'title': '2  Feed dial', 'parts': ['dial', 'feed_motor', 'feed_esc'], 'focus': [0.0, 0.0, round(G.ball_z_dial - tc, 1)],
-         'text': f'The M2006 ({fd["ratio"]}:1) turns the dial 45 deg per ball: {fd["dial_rpm_at_10_per_s"]} rpm at 10 balls/s, '
-                 f'{fd["max_rate_per_s"]} balls/s at its rated speed. Parked, a spoke sits over the exit hole, so no ball can reach the wheels with the motor off.'},
+        {'id': 'dial', 'title': '2  Feed dial', 'parts': ['dial', 'feed_motor'], 'focus': [0.0, 0.0, round(G.ball_z_dial - tc, 1)],
+         'text': f'A servo under the dial (the same STS3215 as pan and tilt) steps it 45 deg per ball in about {fd["step_ms_est"]:.0f} ms: '
+                 f'{fd["rate_per_s"]} balls/s, {fd["max_rate_per_s"]} at most. It reads its own load, so it feels a jam and backs off. Parked, a spoke sits '
+                 f'over the exit hole, so no ball can reach the wheels, powered or not.'},
         {'id': 'exit', 'title': '3  Exit hole', 'parts': ['cartridge_body', 'dial'], 'focus': [round(G.exit_x, 1), 0.0, round(G.ball_z_dial - tc, 1)],
          'text': f'At the front of the housing ({G.exit_x:.0f} mm ahead of the dial axis) a pocket passes over a hole in the floor and its ball drops out. '
-                 f'{tm["dial_to_exit_ms"]} ms from the command at 10 balls/s.'},
+                 f'About {tm["dial_to_exit_ms"]} ms from the command (the servo\'s step).'},
         {'id': 'chute', 'title': '4  Chute', 'parts': ['cartridge_body'], 'focus': [round(G.chute_cx - 8, 1), 0.0, round(G.chute_r / 2 - tc, 1)],
          'text': f'A quarter bend of radius {G.chute_r:.1f} mm turns the falling ball forward onto the path, {G.tilt_c:.0f} mm under the tilt axis. '
                  f'It takes about {tm["chute_ms"]} ms and reaches the wheels at {tm["speed_into_nip_mps"]} m/s.'},
-        {'id': 'nip', 'title': '5  Flywheels', 'parts': ['flywheel', 'flywheel_tyre', 'flywheel_motor_l', 'flywheel_motor_r', 'esc_l', 'esc_r'],
+        {'id': 'nip', 'title': '5  Flywheels', 'parts': ['flywheel', 'flywheel_tyre', 'flywheel_motor_l', 'flywheel_motor_r', 'esc_l', 'esc_r', 'cartridge_board'],
          'focus': [round(G.wheel_x, 1), 0.0, round(-tc, 1)],
          'text': f'Two Ø{G.wheel_d:.0f} wheels {fl["centres_mm"]:.0f} mm apart spin opposite ways at about {fl["rpm"]:,.0f} rpm ({fl["throttle_pct"]} % of the '
-                 f'Snail\'s no-load speed). The gap is {fl["crush_mm"]} mm narrower than the ball ({fl["crush_pct"]} % squeeze), so it leaves at the tyres\' '
+                 f'X2216\'s no-load speed on the 12 V rail). The gap is {fl["crush_mm"]} mm narrower than the ball ({fl["crush_pct"]} % squeeze), so it leaves at the tyres\' '
                  f'surface speed. Each wheel stores {fl["energy_j_each"]} J; a shot costs about {fl["speed_drop_per_shot_pct"]} % of its speed, back in '
                  f'{fl["recovery_ms"]} ms at a {fl["current_limit_a"]:.0f} A current limit.'},
         {'id': 'barrel', 'title': '6  Barrel', 'parts': ['barrel'], 'focus': [round(G.barrel_x0 + 50, 1), 0.0, round(-tc, 1)],
-         'text': f'{G.barrel_len:.0f} mm long, bore Ø{G.bore:.1f}: 1.5 mm over the ball, so it only guides. Two IR gates 50 mm apart time every ball '
+         'text': f'{G.barrel_len:.0f} mm long, bore Ø{G.bore_out:.1f}: 2 mm over the ball, so it only guides. Two IR gates 60 mm apart time every ball '
                  f'(a built-in chronograph); {tm["nip_to_muzzle_ms"]} ms from the nip to the muzzle.'},
         {'id': 'muzzle', 'title': '7  Muzzle', 'parts': ['barrel', 'laser', 'laser_mount'], 'focus': [round(G.barrel_x1, 1), 0.0, round(-tc, 1)],
-         'text': f'{mech["ball"]["speed_mps"]} m/s ({mech["ball"]["fps"]} fps, the kid-safety cap), {mech["ball"]["energy_j"]} J. The barrel can never point above '
+         'text': f'{mech["ball"]["speed_mps"]} m/s ({mech["ball"]["fps"]} fps nominal; the kid-safety cap is {mech["ball"]["cap_fps"]}), {mech["ball"]["energy_j"]} J. The barrel can never point above '
                  f'level: hard stops at 0 and {G.tilt_min:.0f} deg in the yoke. About {tm["trigger_to_muzzle_ms"]} ms from the command to here.'},
         {'id': 'flight', 'title': '8  Flight', 'parts': [], 'focus': None,
          'text': f'Air drag and gravity: a level shot from the bench has dropped {at3[2]} mm at {at3[0]:.0f} m and slowed to {at3[3]} m/s. The laser is parallel to '

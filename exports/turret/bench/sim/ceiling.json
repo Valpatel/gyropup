@@ -1,0 +1,88 @@
+{
+ "test": "4.2",
+ "title": "Ceiling with balls: 20 balls at 100 % throttle, \u00d834",
+ "plan": "docs/turret-prototype-plan.md section 5",
+ "mode": "sim",
+ "date": "2026-10-27",
+ "pass": true,
+ "checks": [
+  {
+   "check": "20 balls",
+   "value": 20,
+   "limit": "20",
+   "pass": true
+  },
+  {
+   "check": "every ball <= 66 fps on the barrel gates",
+   "value": 65.0,
+   "limit": "<= 66 fps",
+   "pass": true
+  },
+  {
+   "check": "every ball <= 66 fps on the reference",
+   "value": 64.76558555480601,
+   "limit": "<= 66 fps",
+   "pass": true
+  }
+ ],
+ "readings": {
+  "gates_fps": {
+   "n": 20,
+   "mean": 62.23,
+   "sd": 1.23,
+   "min": 59.8,
+   "max": 65.0
+  },
+  "reference_fps": {
+   "n": 20,
+   "mean": 61.87,
+   "sd": 1.25,
+   "min": 59.77,
+   "max": 64.77
+  },
+  "gates_each": [
+   63.2,
+   65.0,
+   62.5,
+   63.5,
+   62.9,
+   62.7,
+   62.5,
+   62.2,
+   62.6,
+   61.3,
+   61.5,
+   61.2,
+   60.6,
+   59.8,
+   61.2,
+   61.4,
+   62.9,
+   62.9,
+   64.0,
+   60.7
+  ]
+ },
+ "notes": [
+  "\u00d834 is the only v0 tyre: \u00d836 reaches 70.7 fps at the worst corner on this motor (the launch rerun), so the plan's \"if all <= 60 fps, repeat with \u00d836\" does not apply to the X2216."
+ ],
+ "sim": {
+  "seed": 1042,
+  "simulated_s": 15.7,
+  "wall_s": 0.6,
+  "stand_ins": [],
+  "shortened": {},
+  "warning": "simulated turret (firmware/turret/sim_turret.py): not a bench reading"
+ },
+ "firmware": {
+  "build": "v0",
+  "servo_baud": 500000,
+  "motor": "SunnySky X2216 880KV V3",
+  "kv": 880.0,
+  "pole_pairs": 7,
+  "erpm_limit": 81312,
+  "tyre_mm": 34,
+  "set_rpm_52fps": 8855,
+  "ramp_s": 0.3
+ }
+}

@@ -1,0 +1,1218 @@
+{
+ "targets": {
+  "sf": 2.0,
+  "sf_rare": 1.2
+ },
+ "mesh_mm": 2.5,
+ "masses": {
+  "tilt_kg": 0.7077374999999999,
+  "pan_kg": 1.21795,
+  "total_kg": 1.63925,
+  "cartridge_kg": 0.6139000000000001,
+  "com_mm": [
+   -5.580607803403156,
+   -4.879495730088708,
+   95.53395921376664
+  ],
+  "pan_group_com_z_mm": 123.0951769769268,
+  "mass_g_with_balls": 1639.2,
+  "pan_ring_kg": 0.07790000000000001
+ },
+ "results": [
+  {
+   "part": "tilt_yoke",
+   "material": "PA6-CF along the layers (humid)",
+   "material_note": "Bambu PA6-CF TDS 102 MPa dry in the layers, x0.6 humid, x0.8 print: for parts printed so their main stress runs in the layers",
+   "mesh": {
+    "nodes": 14069,
+    "tets": 53395,
+    "size_mm": 2.5,
+    "element": "P2 tetrahedra"
+   },
+   "loads": [
+    {
+     "kind": "force",
+     "n": [
+      0.0,
+      0.0,
+      -104.14357312499999
+     ],
+     "area_mm2": 150.1
+    },
+    {
+     "kind": "force",
+     "n": [
+      0.0,
+      0.0,
+      -104.14357312499999
+     ],
+     "area_mm2": 1496.0
+    }
+   ],
+   "max_displacement_mm": 2.6907,
+   "probe_displacement_mm": [
+    -0.0,
+    -0.3808,
+    -0.1979
+   ],
+   "max_von_mises_mpa": 20.12,
+   "von_mises_design_mpa": 17.61,
+   "safety_factor": 2.78,
+   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
+   "stiffness_n_per_mm": 526.2,
+   "peak_at_mm": [
+    12.4,
+    67.7,
+    98.3
+   ],
+   "p99_mpa": 8.29,
+   "case": "R-fall-down",
+   "material_id": "pa6_cf_xy",
+   "load_from": "30 g down on the tilting group (0.71 kg): 208 N, half at each arm (the MR126 bore, the servo pocket)",
+   "png": "exports/turret/fea/tilt_yoke-R-fall-down.png",
+   "target": 1.2,
+   "ok": true,
+   "seconds": 94.8
+  },
+  {
+   "part": "tilt_yoke",
+   "material": "PA6-CF along the layers (humid)",
+   "material_note": "Bambu PA6-CF TDS 102 MPa dry in the layers, x0.6 humid, x0.8 print: for parts printed so their main stress runs in the layers",
+   "mesh": {
+    "nodes": 14069,
+    "tets": 53395,
+    "size_mm": 2.5,
+    "element": "P2 tetrahedra"
+   },
+   "loads": [
+    {
+     "kind": "force",
+     "n": [
+      0.0,
+      -208.28714624999998,
+      0.0
+     ],
+     "area_mm2": 427.9
+    }
+   ],
+   "max_displacement_mm": 3.899,
+   "probe_displacement_mm": [
+    0.0,
+    -1.0092,
+    -0.4175
+   ],
+   "max_von_mises_mpa": 29.36,
+   "von_mises_design_mpa": 23.85,
+   "safety_factor": 2.05,
+   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
+   "stiffness_n_per_mm": 206.4,
+   "peak_at_mm": [
+    13.9,
+    -61.0,
+    80.0
+   ],
+   "p99_mpa": 12.32,
+   "case": "R-fall-side",
+   "material_id": "pa6_cf_xy",
+   "load_from": "30 g sideways (-y): the tilting group 208 N through the cradle spacer and the MR126 into its seat floor",
+   "png": "exports/turret/fea/tilt_yoke-R-fall-side.png",
+   "target": 1.2,
+   "ok": true,
+   "seconds": 65.9
+  },
+  {
+   "part": "tilt_yoke",
+   "material": "PA6-CF along the layers (humid)",
+   "material_note": "Bambu PA6-CF TDS 102 MPa dry in the layers, x0.6 humid, x0.8 print: for parts printed so their main stress runs in the layers",
+   "mesh": {
+    "nodes": 14069,
+    "tets": 53395,
+    "size_mm": 2.5,
+    "element": "P2 tetrahedra"
+   },
+   "loads": [
+    {
+     "kind": "force",
+     "n": [
+      0.0,
+      208.28714624999998,
+      0.0
+     ],
+     "area_mm2": 248.9
+    }
+   ],
+   "max_displacement_mm": 2.9749,
+   "probe_displacement_mm": [
+    -0.0001,
+    0.6064,
+    -0.0631
+   ],
+   "max_von_mises_mpa": 27.58,
+   "von_mises_design_mpa": 27.58,
+   "safety_factor": 1.78,
+   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
+   "stiffness_n_per_mm": 343.5,
+   "peak_at_mm": [
+    -12.4,
+    61.4,
+    85.7
+   ],
+   "p99_mpa": 10.66,
+   "case": "R-fall-side+",
+   "material_id": "pa6_cf_xy",
+   "load_from": "30 g sideways (+y): 208 N pulls the tilt servo off the arm, on its 4 M2 screw heads",
+   "png": "exports/turret/fea/tilt_yoke-R-fall-side+.png",
+   "target": 1.2,
+   "ok": true,
+   "seconds": 65.9
+  },
+  {
+   "part": "tilt_yoke",
+   "material": "PA6-CF along the layers (humid)",
+   "material_note": "Bambu PA6-CF TDS 102 MPa dry in the layers, x0.6 humid, x0.8 print: for parts printed so their main stress runs in the layers",
+   "mesh": {
+    "nodes": 14069,
+    "tets": 53395,
+    "size_mm": 2.5,
+    "element": "P2 tetrahedra"
+   },
+   "loads": [
+    {
+     "kind": "force",
+     "n": [
+      260.2542761106252,
+      0.0,
+      34.26312545776357
+     ],
+     "area_mm2": 20.0
+    },
+    {
+     "kind": "force",
+     "n": [
+      -260.2542761106252,
+      0.0,
+      15.736874542236428
+     ],
+     "area_mm2": 150.1
+    }
+   ],
+   "max_displacement_mm": 1.8853,
+   "probe_displacement_mm": [
+    -0.7473,
+    0.0945,
+    0.1682
+   ],
+   "max_von_mises_mpa": 32.62,
+   "von_mises_design_mpa": 26.97,
+   "safety_factor": 1.82,
+   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
+   "stiffness_n_per_mm": 344.9,
+   "peak_at_mm": [
+    18.9,
+    -61.0,
+    79.8
+   ],
+   "p99_mpa": 11.2,
+   "case": "E-push-up",
+   "material_id": "pa6_cf_xy",
+   "load_from": "50 N up at the muzzle (147 mm from the tilt axis) holds the cradle on the 0 deg stop: 262 N on the stop sector at r 28",
+   "png": "exports/turret/fea/tilt_yoke-E-push-up.png",
+   "target": 2.0,
+   "ok": false,
+   "seconds": 66.1
+  },
+  {
+   "part": "pan_ring",
+   "material": "PA6-CF across the layers (humid)",
+   "material_note": "Bambu PA6-CF TDS 48 MPa dry across the layers, x0.6 humid, x0.8 print: the safe value when the stress crosses the layers",
+   "mesh": {
+    "nodes": 36275,
+    "tets": 131649,
+    "size_mm": 2.5,
+    "element": "P2 tetrahedra"
+   },
+   "loads": [
+    {
+     "kind": "force",
+     "n": [
+      0.0,
+      0.0,
+      -335.51671500000003
+     ],
+     "area_mm2": 556.8
+    }
+   ],
+   "max_displacement_mm": 0.0175,
+   "probe_displacement_mm": [
+    -0.0,
+    -0.0,
+    -0.009
+   ],
+   "max_von_mises_mpa": 4.11,
+   "von_mises_design_mpa": 2.74,
+   "safety_factor": 8.38,
+   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
+   "stiffness_n_per_mm": 37455.0,
+   "peak_at_mm": [
+    -9.9,
+    -27.0,
+    53.9
+   ],
+   "p99_mpa": 0.95,
+   "case": "R-fall-down",
+   "material_id": "pa6_cf_z",
+   "load_from": "30 g down: what stands on the turntable (1.14 kg) pushes 336 N on the yoke bolts; the bearing holds the land and journal",
+   "png": "exports/turret/fea/pan_ring-R-fall-down.png",
+   "target": 1.2,
+   "ok": true,
+   "seconds": 235.2
+  },
+  {
+   "part": "pan_ring",
+   "material": "PA6-CF across the layers (humid)",
+   "material_note": "Bambu PA6-CF TDS 48 MPa dry across the layers, x0.6 humid, x0.8 print: the safe value when the stress crosses the layers",
+   "mesh": {
+    "nodes": 36275,
+    "tets": 131649,
+    "size_mm": 2.5,
+    "element": "P2 tetrahedra"
+   },
+   "loads": [
+    {
+     "kind": "force",
+     "n": [
+      335.51671500000003,
+      0.0,
+      0.0
+     ],
+     "area_mm2": 556.8
+    },
+    {
+     "kind": "torque",
+     "nm": 18.14983607664211,
+     "axis": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "point_mm": [
+      0.0,
+      0.0,
+      69.0
+     ],
+     "about_centroid_mm": [
+      0.003,
+      0.001,
+      65.0
+     ],
+     "area_mm2": 556.8
+    }
+   ],
+   "max_displacement_mm": 0.0581,
+   "probe_displacement_mm": [
+    0.0257,
+    0.0,
+    -0.0002
+   ],
+   "max_von_mises_mpa": 13.66,
+   "von_mises_design_mpa": 10.49,
+   "safety_factor": 2.19,
+   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
+   "stiffness_n_per_mm": 13078.0,
+   "torsional_stiffness_nm_per_deg": 101.91,
+   "peak_at_mm": [
+    18.8,
+    21.8,
+    53.3
+   ],
+   "p99_mpa": 4.22,
+   "case": "R-fall-side",
+   "material_id": "pa6_cf_z",
+   "load_from": "30 g sideways: 336 N at the yoke bolts and its 18.1 N m about the turntable top (the panning mass 54 mm above it); the bearing holds the journal, the land and the circlip groove",
+   "png": "exports/turret/fea/pan_ring-R-fall-side.png",
+   "target": 1.2,
+   "ok": true,
+   "seconds": 181.8
+  },
+  {
+   "part": "pan_ring",
+   "material": "PA6-CF along the layers (humid)",
+   "material_note": "Bambu PA6-CF TDS 102 MPa dry in the layers, x0.6 humid, x0.8 print: for parts printed so their main stress runs in the layers",
+   "mesh": {
+    "nodes": 13935,
+    "tets": 62398,
+    "size_mm": 0.7,
+    "element": "P2 tetrahedra"
+   },
+   "loads": [
+    {
+     "kind": "force",
+     "n": [
+      40.764666237814666,
+      112.0,
+      0.0
+     ],
+     "area_mm2": 106.5
+    }
+   ],
+   "max_displacement_mm": 0.0185,
+   "probe_displacement_mm": [
+    0.0025,
+    0.0108,
+    -0.0005
+   ],
+   "max_von_mises_mpa": 14.79,
+   "von_mises_design_mpa": 14.79,
+   "safety_factor": 3.31,
+   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
+   "stiffness_n_per_mm": 10816.3,
+   "peak_at_mm": [
+    -37.6,
+    3.2,
+    64.4
+   ],
+   "p99_mpa": 7.1,
+   "case": "E-cap-teeth",
+   "material_id": "pa6_cf_xy",
+   "load_from": "the pan servo at 50 % of its stall: 112 N on the tooth at the mesh (+41 N radial, 20 deg); a +-15 deg sector of the ring held at its cuts",
+   "png": "exports/turret/fea/pan_ring-E-cap-teeth.png",
+   "target": 2.0,
+   "ok": true,
+   "seconds": 95.4
+  },
+  {
+   "part": "pan_ring",
+   "material": "PA6-CF along the layers (humid)",
+   "material_note": "Bambu PA6-CF TDS 102 MPa dry in the layers, x0.6 humid, x0.8 print: for parts printed so their main stress runs in the layers",
+   "mesh": {
+    "nodes": 13935,
+    "tets": 62398,
+    "size_mm": 0.7,
+    "element": "P2 tetrahedra"
+   },
+   "loads": [
+    {
+     "kind": "force",
+     "n": [
+      81.52933247562933,
+      224.0,
+      0.0
+     ],
+     "area_mm2": 106.5
+    }
+   ],
+   "max_displacement_mm": 0.037,
+   "probe_displacement_mm": [
+    0.005,
+    0.0216,
+    -0.001
+   ],
+   "max_von_mises_mpa": 29.58,
+   "von_mises_design_mpa": 29.58,
+   "safety_factor": 1.66,
+   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
+   "stiffness_n_per_mm": 10816.3,
+   "peak_at_mm": [
+    -37.6,
+    3.2,
+    64.4
+   ],
+   "p99_mpa": 14.21,
+   "case": "R-stall-teeth",
+   "material_id": "pa6_cf_xy",
+   "load_from": "the pan servo at 100 % of its stall: 224 N on the tooth at the mesh (+82 N radial, 20 deg); a +-15 deg sector of the ring held at its cuts",
+   "png": "exports/turret/fea/pan_ring-R-stall-teeth.png",
+   "target": 1.2,
+   "ok": true,
+   "seconds": 68.1
+  },
+  {
+   "part": "pan_pinion",
+   "material": "PA6-CF along the layers (humid)",
+   "material_note": "Bambu PA6-CF TDS 102 MPa dry in the layers, x0.6 humid, x0.8 print: for parts printed so their main stress runs in the layers",
+   "mesh": {
+    "nodes": 62015,
+    "tets": 290519,
+    "size_mm": 0.6,
+    "element": "P2 tetrahedra"
+   },
+   "loads": [
+    {
+     "kind": "force",
+     "n": [
+      -40.764666237814666,
+      -112.0,
+      0.0
+     ],
+     "area_mm2": 94.8
+    }
+   ],
+   "max_displacement_mm": 0.0313,
+   "probe_displacement_mm": [
+    -0.0017,
+    -0.0178,
+    0.0005
+   ],
+   "max_von_mises_mpa": 24.23,
+   "von_mises_design_mpa": 18.18,
+   "safety_factor": 2.7,
+   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
+   "stiffness_n_per_mm": 6883.0,
+   "peak_at_mm": [
+    -41.1,
+    -1.3,
+    68.1
+   ],
+   "p99_mpa": 5.7,
+   "case": "E-cap",
+   "material_id": "pa6_cf_xy",
+   "load_from": "the pan servo at 50 % of its stall: 112 N on one tooth at the pitch line (+41 N radial); held by its 4 M3 screws and its flange on the horn",
+   "png": "exports/turret/fea/pan_pinion-E-cap.png",
+   "target": 2.0,
+   "ok": true,
+   "seconds": 634.4
+  },
+  {
+   "part": "pan_pinion",
+   "material": "PA6-CF along the layers (humid)",
+   "material_note": "Bambu PA6-CF TDS 102 MPa dry in the layers, x0.6 humid, x0.8 print: for parts printed so their main stress runs in the layers",
+   "mesh": {
+    "nodes": 62015,
+    "tets": 290519,
+    "size_mm": 0.6,
+    "element": "P2 tetrahedra"
+   },
+   "loads": [
+    {
+     "kind": "force",
+     "n": [
+      -81.52933247562933,
+      -224.0,
+      0.0
+     ],
+     "area_mm2": 94.8
+    }
+   ],
+   "max_displacement_mm": 0.0626,
+   "probe_displacement_mm": [
+    -0.0034,
+    -0.0356,
+    0.0011
+   ],
+   "max_von_mises_mpa": 48.46,
+   "von_mises_design_mpa": 36.35,
+   "safety_factor": 1.35,
+   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
+   "stiffness_n_per_mm": 6883.0,
+   "peak_at_mm": [
+    -41.1,
+    -1.3,
+    68.1
+   ],
+   "p99_mpa": 11.39,
+   "case": "R-stall",
+   "material_id": "pa6_cf_xy",
+   "load_from": "the pan servo at 100 % of its stall: 224 N on one tooth at the pitch line (+82 N radial); held by its 4 M3 screws and its flange on the horn",
+   "png": "exports/turret/fea/pan_pinion-R-stall.png",
+   "target": 1.2,
+   "ok": true,
+   "seconds": 711.9
+  },
+  {
+   "part": "pan_base",
+   "material": "PA6-CF along the layers (humid)",
+   "material_note": "Bambu PA6-CF TDS 102 MPa dry in the layers, x0.6 humid, x0.8 print: for parts printed so their main stress runs in the layers",
+   "mesh": {
+    "nodes": 27771,
+    "tets": 94228,
+    "size_mm": 2.5,
+    "element": "P2 tetrahedra"
+   },
+   "loads": [
+    {
+     "kind": "force",
+     "n": [
+      0.0,
+      0.0,
+      -358.44268500000004
+     ],
+     "area_mm2": 299.3
+    }
+   ],
+   "max_displacement_mm": 0.024,
+   "probe_displacement_mm": [
+    -0.0002,
+    -0.0023,
+    -0.0112
+   ],
+   "max_von_mises_mpa": 8.01,
+   "von_mises_design_mpa": 8.01,
+   "safety_factor": 6.12,
+   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
+   "stiffness_n_per_mm": 31932.7,
+   "peak_at_mm": [
+    10.3,
+    -33.7,
+    6.2
+   ],
+   "p99_mpa": 1.61,
+   "case": "R-fall-down",
+   "material_id": "pa6_cf_xy",
+   "load_from": "30 g down: the panning group (1.22 kg) 358 N through the 6810's outer race onto the \u00d862 shoulder; the foot on the head ring",
+   "png": "exports/turret/fea/pan_base-R-fall-down.png",
+   "target": 1.2,
+   "ok": true,
+   "seconds": 140.2
+  },
+  {
+   "part": "pan_base",
+   "material": "PA6-CF across the layers (humid)",
+   "material_note": "Bambu PA6-CF TDS 48 MPa dry across the layers, x0.6 humid, x0.8 print: the safe value when the stress crosses the layers",
+   "mesh": {
+    "nodes": 27771,
+    "tets": 94228,
+    "size_mm": 2.5,
+    "element": "P2 tetrahedra"
+   },
+   "loads": [
+    {
+     "kind": "force",
+     "n": [
+      358.44268500000004,
+      0.0,
+      0.0
+     ],
+     "area_mm2": 1429.2
+    },
+    {
+     "kind": "torque",
+     "nm": 28.530308948659826,
+     "axis": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "point_mm": [
+      0.0,
+      0.0,
+      40.0
+     ],
+     "about_centroid_mm": [
+      0.0,
+      -0.0,
+      43.5
+     ],
+     "area_mm2": 1429.2
+    }
+   ],
+   "max_displacement_mm": 0.1506,
+   "probe_displacement_mm": [
+    0.0731,
+    0.0072,
+    -0.0036
+   ],
+   "max_von_mises_mpa": 16.68,
+   "von_mises_design_mpa": 16.68,
+   "safety_factor": 1.38,
+   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
+   "stiffness_n_per_mm": 4906.3,
+   "torsional_stiffness_nm_per_deg": 331.15,
+   "peak_at_mm": [
+    10.3,
+    -33.7,
+    6.2
+   ],
+   "p99_mpa": 4.64,
+   "case": "R-fall-side",
+   "material_id": "pa6_cf_z",
+   "load_from": "30 g sideways: 358 N at the bearing seat and 28.5 N m (the panning mass 80 mm above the bearing); the housing tube bends across its layers",
+   "png": "exports/turret/fea/pan_base-R-fall-side.png",
+   "target": 1.2,
+   "ok": true,
+   "seconds": 131.6
+  },
+  {
+   "part": "pan_base",
+   "material": "PA6-CF along the layers (humid)",
+   "material_note": "Bambu PA6-CF TDS 102 MPa dry in the layers, x0.6 humid, x0.8 print: for parts printed so their main stress runs in the layers",
+   "mesh": {
+    "nodes": 27771,
+    "tets": 94228,
+    "size_mm": 2.5,
+    "element": "P2 tetrahedra"
+   },
+   "loads": [
+    {
+     "kind": "force",
+     "n": [
+      0.0,
+      112.0,
+      0.0
+     ],
+     "area_mm2": 829.2
+    },
+    {
+     "kind": "force",
+     "n": [
+      -40.764666237814666,
+      0.0,
+      0.0
+     ],
+     "area_mm2": 1628.2
+    }
+   ],
+   "max_displacement_mm": 0.6463,
+   "probe_displacement_mm": [
+    0.0095,
+    0.1116,
+    0.0097
+   ],
+   "max_von_mises_mpa": 60.34,
+   "von_mises_design_mpa": 21.72,
+   "safety_factor": 2.26,
+   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
+   "stiffness_n_per_mm": null,
+   "peak_at_mm": [
+    -57.7,
+    39.2,
+    17.0
+   ],
+   "p99_mpa": 2.68,
+   "case": "E-cap-servo",
+   "material_id": "pa6_cf_xy",
+   "load_from": "the pan servo at 50 % of its stall pushes its pocket: 112 N along it (the mesh's tangential force) and 41 N outwards (the separating force)",
+   "png": "exports/turret/fea/pan_base-E-cap-servo.png",
+   "target": 2.0,
+   "ok": true,
+   "seconds": 137.9
+  },
+  {
+   "part": "pan_base",
+   "material": "PA6-CF along the layers (humid)",
+   "material_note": "Bambu PA6-CF TDS 102 MPa dry in the layers, x0.6 humid, x0.8 print: for parts printed so their main stress runs in the layers",
+   "mesh": {
+    "nodes": 27771,
+    "tets": 94228,
+    "size_mm": 2.5,
+    "element": "P2 tetrahedra"
+   },
+   "loads": [
+    {
+     "kind": "force",
+     "n": [
+      0.0,
+      224.0,
+      0.0
+     ],
+     "area_mm2": 829.2
+    },
+    {
+     "kind": "force",
+     "n": [
+      -81.52933247562933,
+      0.0,
+      0.0
+     ],
+     "area_mm2": 1628.2
+    }
+   ],
+   "max_displacement_mm": 1.2926,
+   "probe_displacement_mm": [
+    0.0191,
+    0.2231,
+    0.0193
+   ],
+   "max_von_mises_mpa": 120.68,
+   "von_mises_design_mpa": 43.44,
+   "safety_factor": 1.13,
+   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
+   "stiffness_n_per_mm": null,
+   "peak_at_mm": [
+    -57.7,
+    39.2,
+    17.0
+   ],
+   "p99_mpa": 5.36,
+   "case": "R-stall-servo",
+   "material_id": "pa6_cf_xy",
+   "load_from": "the pan servo at 100 % of its stall pushes its pocket: 224 N along it (the mesh's tangential force) and 82 N outwards (the separating force)",
+   "png": "exports/turret/fea/pan_base-R-stall-servo.png",
+   "target": 1.2,
+   "ok": false,
+   "seconds": 114.6
+  },
+  {
+   "part": "pan_clamp",
+   "material": "Aluminium 6061-T6",
+   "material_note": "yield strength",
+   "mesh": {
+    "nodes": 10752,
+    "tets": 39740,
+    "size_mm": 1.0,
+    "element": "P2 tetrahedra"
+   },
+   "loads": [
+    {
+     "kind": "force",
+     "n": [
+      0.0,
+      0.0,
+      358.44268500000004
+     ],
+     "area_mm2": 608.4
+    }
+   ],
+   "max_displacement_mm": 0.1141,
+   "probe_displacement_mm": [
+    -0.0,
+    0.0,
+    0.0298
+   ],
+   "max_von_mises_mpa": 107.93,
+   "von_mises_design_mpa": 95.4,
+   "safety_factor": 2.89,
+   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
+   "stiffness_n_per_mm": 12032.2,
+   "peak_at_mm": [
+    -24.2,
+    -28.3,
+    49.8
+   ],
+   "p99_mpa": 40.69,
+   "case": "R-fall-up",
+   "material_id": "al6061",
+   "load_from": "30 g with the turret upside down (or the robot lifted by its turret): the panning group's 358 N lifts the 6810's outer race against the clamp (SendCutSend 6061-T6, 0.125 in), held by its 5 M3 screws (the load on the bore's edge, where the race bears)",
+   "png": "exports/turret/fea/pan_clamp-R-fall-up.png",
+   "target": 1.2,
+   "ok": true,
+   "seconds": 42.4
+  },
+  {
+   "part": "cradle",
+   "material": "PA6-CF across the layers (humid)",
+   "material_note": "Bambu PA6-CF TDS 48 MPa dry across the layers, x0.6 humid, x0.8 print: the safe value when the stress crosses the layers",
+   "mesh": {
+    "nodes": 11508,
+    "tets": 40321,
+    "size_mm": 2.5,
+    "element": "P2 tetrahedra"
+   },
+   "loads": [
+    {
+     "kind": "force",
+     "n": [
+      0.0,
+      0.0,
+      -180.67077000000006
+     ],
+     "area_mm2": 243.8
+    }
+   ],
+   "max_displacement_mm": 3.9547,
+   "probe_displacement_mm": [
+    0.0658,
+    -0.1942,
+    -0.9364
+   ],
+   "max_von_mises_mpa": 29.56,
+   "von_mises_design_mpa": 29.56,
+   "safety_factor": 0.78,
+   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
+   "stiffness_n_per_mm": 192.9,
+   "peak_at_mm": [
+    20.8,
+    51.3,
+    -14.2
+   ],
+   "p99_mpa": 14.62,
+   "case": "R-fall-down",
+   "material_id": "pa6_cf_z",
+   "load_from": "30 g down: the cartridge (0.61 kg with 30 balls) 181 N through its CT dowels and latch (a stiff body located there); the cradle hangs from the servo horn (+y) and the shoulder screw (-y)",
+   "png": "exports/turret/fea/cradle-R-fall-down.png",
+   "target": 1.2,
+   "ok": false,
+   "seconds": 46.6
+  },
+  {
+   "part": "cradle",
+   "material": "PA6-CF across the layers (humid)",
+   "material_note": "Bambu PA6-CF TDS 48 MPa dry across the layers, x0.6 humid, x0.8 print: the safe value when the stress crosses the layers",
+   "mesh": {
+    "nodes": 11508,
+    "tets": 40321,
+    "size_mm": 2.5,
+    "element": "P2 tetrahedra"
+   },
+   "loads": [
+    {
+     "kind": "force",
+     "n": [
+      0.0,
+      -180.67077000000006,
+      0.0
+     ],
+     "area_mm2": 174.0
+    }
+   ],
+   "max_displacement_mm": 1.7625,
+   "probe_displacement_mm": [
+    0.078,
+    -1.0351,
+    -0.1314
+   ],
+   "max_von_mises_mpa": 37.11,
+   "von_mises_design_mpa": 37.11,
+   "safety_factor": 0.62,
+   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
+   "stiffness_n_per_mm": 174.5,
+   "peak_at_mm": [
+    39.4,
+    56.4,
+    9.3
+   ],
+   "p99_mpa": 12.26,
+   "case": "R-fall-side",
+   "material_id": "pa6_cf_z",
+   "load_from": "30 g sideways (-y): the cartridge's 181 N through the two CT dowels",
+   "png": "exports/turret/fea/cradle-R-fall-side.png",
+   "target": 1.2,
+   "ok": false,
+   "seconds": 42.7
+  },
+  {
+   "part": "cradle",
+   "material": "PA6-CF across the layers (humid)",
+   "material_note": "Bambu PA6-CF TDS 48 MPa dry across the layers, x0.6 humid, x0.8 print: the safe value when the stress crosses the layers",
+   "mesh": {
+    "nodes": 11508,
+    "tets": 40321,
+    "size_mm": 2.5,
+    "element": "P2 tetrahedra"
+   },
+   "loads": [
+    {
+     "kind": "force",
+     "n": [
+      0.0,
+      0.0,
+      113.15789473684211
+     ],
+     "area_mm2": 87.0
+    },
+    {
+     "kind": "force",
+     "n": [
+      0.0,
+      0.0,
+      -63.15789473684211
+     ],
+     "area_mm2": 87.0
+    }
+   ],
+   "max_displacement_mm": 3.9339,
+   "probe_displacement_mm": [
+    0.0316,
+    0.0084,
+    0.2021
+   ],
+   "max_von_mises_mpa": 75.63,
+   "von_mises_design_mpa": 30.04,
+   "safety_factor": 0.77,
+   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
+   "stiffness_n_per_mm": null,
+   "peak_at_mm": [
+    50.2,
+    -56.3,
+    -17.2
+   ],
+   "p99_mpa": 13.61,
+   "case": "E-push-up",
+   "material_id": "pa6_cf_z",
+   "load_from": "50 N up at the muzzle (147 mm from the tilt axis) reaches the cradle through the cartridge as 113 N up at the front CT dowel and 63 N down at the rear one; the lug holds against the 0 deg stop",
+   "png": "exports/turret/fea/cradle-E-push-up.png",
+   "target": 2.0,
+   "ok": false,
+   "seconds": 55.6
+  },
+  {
+   "part": "cartridge_body",
+   "material": "PA6-CF across the layers (humid)",
+   "material_note": "Bambu PA6-CF TDS 48 MPa dry across the layers, x0.6 humid, x0.8 print: the safe value when the stress crosses the layers",
+   "mesh": {
+    "nodes": 26936,
+    "tets": 83682,
+    "size_mm": 2.5,
+    "element": "P2 tetrahedra"
+   },
+   "loads": [
+    {
+     "kind": "force",
+     "n": [
+      0.0,
+      0.0,
+      -48.088620000000006
+     ],
+     "area_mm2": 296.2
+    },
+    {
+     "kind": "force",
+     "n": [
+      0.0,
+      0.0,
+      -31.7844
+     ],
+     "area_mm2": 34.6
+    },
+    {
+     "kind": "force",
+     "n": [
+      0.0,
+      0.0,
+      -34.22709
+     ],
+     "area_mm2": 977.3
+    },
+    {
+     "kind": "force",
+     "n": [
+      0.0,
+      0.0,
+      -11.772
+     ],
+     "area_mm2": 97.0
+    }
+   ],
+   "max_displacement_mm": 0.5928,
+   "probe_displacement_mm": [
+    0.1197,
+    0.2693,
+    -0.2771
+   ],
+   "max_von_mises_mpa": 33.33,
+   "von_mises_design_mpa": 14.61,
+   "safety_factor": 1.57,
+   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
+   "stiffness_n_per_mm": 42.5,
+   "peak_at_mm": [
+    77.5,
+    -45.4,
+    -13.2
+   ],
+   "p99_mpa": 4.05,
+   "case": "R-fall-down",
+   "material_id": "pa6_cf_z",
+   "load_from": "30 g down on what the cartridge carries: the X2216s and wheels 48 N under the cage plate, the feed servo and dial 32 N on the floor's four M2 holes, the hopper, lid and 30 balls 34 N on the housing, the cartridge board and ESCs 12 N on its posts; held at the CT dowels and latch",
+   "png": "exports/turret/fea/cartridge_body-R-fall-down.png",
+   "target": 1.2,
+   "ok": true,
+   "seconds": 114.7
+  },
+  {
+   "part": "cartridge_body",
+   "material": "PA6-CF across the layers (humid)",
+   "material_note": "Bambu PA6-CF TDS 48 MPa dry across the layers, x0.6 humid, x0.8 print: the safe value when the stress crosses the layers",
+   "mesh": {
+    "nodes": 26936,
+    "tets": 83682,
+    "size_mm": 2.5,
+    "element": "P2 tetrahedra"
+   },
+   "loads": [
+    {
+     "kind": "force",
+     "n": [
+      -17.896153846153844,
+      24.242307692307694,
+      0.0
+     ],
+     "area_mm2": 148.1
+    },
+    {
+     "kind": "force",
+     "n": [
+      -17.896153846153844,
+      -24.242307692307694,
+      0.0
+     ],
+     "area_mm2": 148.1
+    }
+   ],
+   "max_displacement_mm": 0.3481,
+   "probe_displacement_mm": [
+    -0.1963,
+    -0.0828,
+    0.1261
+   ],
+   "max_von_mises_mpa": 29.74,
+   "von_mises_design_mpa": 14.64,
+   "safety_factor": 1.57,
+   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
+   "stiffness_n_per_mm": 164.5,
+   "peak_at_mm": [
+    55.0,
+    -10.4,
+    7.1
+   ],
+   "p99_mpa": 2.05,
+   "case": "E-recoil",
+   "material_id": "pa6_cf_z",
+   "load_from": "a shot at 66 fps (the bench's trip line; the launch physics at 52 fps x 66 / 52): 24 N squeezing each tyre apart and 36 N of recoil, on the motors' mounts",
+   "png": "exports/turret/fea/cartridge_body-E-recoil.png",
+   "target": 2.0,
+   "ok": false,
+   "seconds": 82.8
+  },
+  {
+   "part": "dial",
+   "material": "PETG",
+   "material_note": "Bambu PETG Basic: Z (layer) strength used",
+   "mesh": {
+    "nodes": 17140,
+    "tets": 62845,
+    "size_mm": 1.5,
+    "element": "P2 tetrahedra"
+   },
+   "loads": [
+    {
+     "kind": "force",
+     "n": [
+      -9.122345603946195,
+      22.023290477701483,
+      0.0
+     ],
+     "area_mm2": 423.5
+    }
+   ],
+   "max_displacement_mm": 0.0511,
+   "probe_displacement_mm": [
+    -0.0033,
+    0.0125,
+    0.0029
+   ],
+   "max_von_mises_mpa": 3.48,
+   "von_mises_design_mpa": 3.48,
+   "safety_factor": 5.75,
+   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
+   "stiffness_n_per_mm": 1861.6,
+   "peak_at_mm": [
+    23.1,
+    11.5,
+    28.5
+   ],
+   "p99_mpa": 0.71,
+   "case": "E-jam-capped",
+   "material_id": "petg",
+   "load_from": "a jam at the firmware's 30 % torque limit (docs/turret-firmware.md) (0.88 N m) with one spoke on a ball: 24 N at the pocket radius 37 mm; held on the horn (its four M3 screws and the boss's face)",
+   "png": "exports/turret/fea/dial-E-jam-capped.png",
+   "target": 2.0,
+   "ok": true,
+   "seconds": 80.7
+  },
+  {
+   "part": "dial",
+   "material": "PETG",
+   "material_note": "Bambu PETG Basic: Z (layer) strength used",
+   "mesh": {
+    "nodes": 17140,
+    "tets": 62845,
+    "size_mm": 1.5,
+    "element": "P2 tetrahedra"
+   },
+   "loads": [
+    {
+     "kind": "force",
+     "n": [
+      -30.40781867982065,
+      73.41096825900495,
+      0.0
+     ],
+     "area_mm2": 423.5
+    }
+   ],
+   "max_displacement_mm": 0.1703,
+   "probe_displacement_mm": [
+    -0.011,
+    0.0416,
+    0.0098
+   ],
+   "max_von_mises_mpa": 11.6,
+   "von_mises_design_mpa": 11.6,
+   "safety_factor": 1.72,
+   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
+   "stiffness_n_per_mm": 1861.6,
+   "peak_at_mm": [
+    23.1,
+    11.5,
+    28.5
+   ],
+   "p99_mpa": 2.35,
+   "case": "R-jam-stall",
+   "material_id": "petg",
+   "load_from": "a jam at the servo's full stall (the torque limit not set) (2.94 N m) with one spoke on a ball: 79 N at the pocket radius 37 mm; held on the horn (its four M3 screws and the boss's face)",
+   "png": "exports/turret/fea/dial-R-jam-stall.png",
+   "target": 1.2,
+   "ok": true,
+   "seconds": 67.0
+  }
+ ],
+ "hand_checks": {
+  "barrel": {
+   "case": "R: 100 N down at the muzzle",
+   "section_modulus_mm3": 1528,
+   "lever_mm": 86.0,
+   "stress_mpa": 5.63,
+   "allowable_mpa": 20,
+   "sf": 3.6
+  },
+  "flywheel_hub": {
+   "case": "R: the no-load speed on a fast motor and a high rail",
+   "rpm": 11466,
+   "rim_radius_mm": 14.0,
+   "rim_hoop_stress_mpa": 0.31,
+   "tyre_squeeze_on_rim_mpa": 1.6,
+   "allowable_mpa": 49,
+   "sf": 25.7,
+   "tyre_bore_growth_pct": 3.4,
+   "stretch_pct": 4.0,
+   "grip_left": true,
+   "note": "TPU E 10-30 MPa (docs/turret-physics.md finding 5); the bore grows less than the stretch"
+  },
+  "journal_lip": {
+   "case": "R: 30 g with the turret upside down",
+   "force_n": 358,
+   "shear_area_mm2": 886,
+   "shear_mpa": 0.4,
+   "allowable_mpa": 11.5,
+   "sf": 28.4,
+   "note": "shear allowable taken as half the across-layer tensile strength"
+  },
+  "tm_bolts": {
+   "case": "R: 30 g sideways on the whole turret",
+   "moment_nm": 46.1,
+   "tension_per_bolt_n": 288,
+   "m5_insert_pullout_n_est": 1500,
+   "sf": 5.2,
+   "note": "M5 heat-set insert in PA6-CF/PETG: ~1.5 kN pull-out (est, CNC Kitchen tests)"
+  },
+  "yoke_inserts": {
+   "case": "R: 30 g sideways on the yoke and all it carries",
+   "moment_nm": 18.1,
+   "tension_per_insert_n": 162,
+   "m4_insert_pullout_n_est": 1100,
+   "sf": 6.8
+  },
+  "board_bay": {
+   "case": "R: 30 g down on the bay",
+   "force_n": 40,
+   "tension_per_screw_n": 11,
+   "m3_insert_pullout_n_est": 700,
+   "sf": 64.0
+  }
+ },
+ "verdict": {
+  "min_sf_everyday": 0.77,
+  "min_sf_rare": 0.62,
+  "all_ok": false,
+  "weakest": "cradle E-push-up"
+ }
+}

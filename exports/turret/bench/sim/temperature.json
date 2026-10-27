@@ -1,0 +1,74 @@
+{
+ "test": "6.6",
+ "title": "Temperature: 100 balls in 2 min, then 10 min at speed",
+ "plan": "docs/turret-prototype-plan.md section 5",
+ "mode": "sim",
+ "date": "2026-10-27",
+ "pass": true,
+ "checks": [
+  {
+   "check": "ESCs",
+   "value": 30.0,
+   "limit": "<= 80 C",
+   "pass": true
+  },
+  {
+   "check": "motors",
+   "value": 29.8,
+   "limit": "<= 70 C",
+   "pass": true
+  },
+  {
+   "check": "flywheel regulator",
+   "value": 24.6,
+   "limit": "<= 60 C",
+   "pass": true
+  },
+  {
+   "check": "servos",
+   "value": 41.0,
+   "limit": "<= 60 C",
+   "pass": true
+  }
+ ],
+ "readings": {
+  "balls": 100,
+  "esc_telemetry_max_c": 41,
+  "ir": {
+   "esc_c": 30.0,
+   "motor_c": 29.8,
+   "regulator_c": 24.6,
+   "servo_c": 41.0
+  }
+ },
+ "notes": [],
+ "sim": {
+  "seed": 1066,
+  "simulated_s": 259.2,
+  "wall_s": 11.1,
+  "stand_ins": [
+   "esc_c",
+   "motor_c",
+   "regulator_c",
+   "servo_c"
+  ],
+  "shortened": {
+   "at_speed": {
+    "plan_s": 600.0,
+    "sim_s": 120.0
+   }
+  },
+  "warning": "simulated turret (firmware/turret/sim_turret.py): not a bench reading"
+ },
+ "firmware": {
+  "build": "v0",
+  "servo_baud": 500000,
+  "motor": "SunnySky X2216 880KV V3",
+  "kv": 880.0,
+  "pole_pairs": 7,
+  "erpm_limit": 81312,
+  "tyre_mm": 34,
+  "set_rpm_52fps": 8855,
+  "ramp_s": 0.3
+ }
+}

@@ -256,7 +256,7 @@
   },
   {
    "test": "Jam-rate counts",
-   "how": "300 balls through the feed at each pose (tilt 0 and -25, the robot leaned +-10 deg pitch, +-15 deg roll on a tilting bench), at 3/s and at the maximum rate; count misses, doubles, stalls (C610 current), reverses; repeat with worn and damp balls and with the 30-ball and 5-ball hopper",
+   "how": "300 balls through the feed at each pose (tilt 0 and -25, the robot leaned +-10 deg pitch, +-15 deg roll on a tilting bench), at 3/s and at the maximum rate; count misses, doubles, stalls (the feed servo's load reading), reverses; repeat with worn and damp balls and with the 30-ball and 5-ball hopper",
    "gives": "the feed reliability per pose and condition",
    "feeds": "feed.json / feed_dyn.json checks (model: 0 doubles, misses only by bridging)"
   },

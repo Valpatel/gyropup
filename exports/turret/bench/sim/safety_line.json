@@ -1,0 +1,215 @@
+{
+ "test": "3.2",
+ "title": "The pulse-train safety line with a lamp on 12 V FLY: release and the ring faults",
+ "plan": "docs/turret-prototype-plan.md section 5",
+ "mode": "sim",
+ "date": "2026-10-27",
+ "pass": true,
+ "checks": [
+  {
+   "check": "release: rail off (2815 output)",
+   "value": 19.0,
+   "limit": "<= 25 ms",
+   "pass": true
+  },
+  {
+   "check": "release: firmware zero throttle (SAFE)",
+   "value": 4.0,
+   "limit": "<= 25 ms",
+   "pass": true
+  },
+  {
+   "check": "open at the ring: rail off (2815 output)",
+   "value": 19.0,
+   "limit": "<= 25 ms",
+   "pass": true
+  },
+  {
+   "check": "open at the ring: firmware zero throttle (SAFE)",
+   "value": 4.0,
+   "limit": "<= 25 ms",
+   "pass": true
+  },
+  {
+   "check": "short to GND: rail off (2815 output)",
+   "value": 18.0,
+   "limit": "<= 25 ms",
+   "pass": true
+  },
+  {
+   "check": "short to GND: firmware zero throttle (SAFE)",
+   "value": 4.0,
+   "limit": "<= 25 ms",
+   "pass": true
+  },
+  {
+   "check": "short to +24 V: rail off (2815 output)",
+   "value": 19.0,
+   "limit": "<= 25 ms",
+   "pass": true
+  },
+  {
+   "check": "short to +24 V: firmware zero throttle (SAFE)",
+   "value": 1.0,
+   "limit": "<= 25 ms",
+   "pass": true
+  },
+  {
+   "check": "DC level: rail off (2815 output)",
+   "value": 19.0,
+   "limit": "<= 25 ms",
+   "pass": true
+  },
+  {
+   "check": "DC level: firmware zero throttle (SAFE)",
+   "value": 1.0,
+   "limit": "<= 25 ms",
+   "pass": true
+  },
+  {
+   "check": "300 Hz train: firmware zero throttle (SAFE)",
+   "value": 6.0,
+   "limit": "<= 10 ms",
+   "pass": true
+  },
+  {
+   "check": "3 kHz train: firmware zero throttle (SAFE)",
+   "value": 1.0,
+   "limit": "<= 10 ms",
+   "pass": true
+  },
+  {
+   "check": "50 Hz hum: firmware zero throttle (SAFE)",
+   "value": 5.0,
+   "limit": "<= 10 ms",
+   "pass": true
+  },
+  {
+   "check": "genuine train arms the hardware again",
+   "value": true,
+   "limit": "armed",
+   "pass": true
+  },
+  {
+   "check": "firmware waits for the host re-arm",
+   "value": true,
+   "limit": "not ARMED until the request cycles",
+   "pass": true
+  },
+  {
+   "check": "host re-arm accepted",
+   "value": true,
+   "limit": "ARMED",
+   "pass": true
+  }
+ ],
+ "readings": {
+  "cases": [
+   {
+    "case": "release",
+    "lamp_on_before": true,
+    "rail_off_ms": 19.0,
+    "firmware_safe_ms": 4.0,
+    "firmware_causes": [
+     "safety pulses bad"
+    ],
+    "state_after": "IDLE"
+   },
+   {
+    "case": "open at the ring",
+    "lamp_on_before": true,
+    "rail_off_ms": 19.0,
+    "firmware_safe_ms": 4.0,
+    "firmware_causes": [
+     "safety pulses bad"
+    ],
+    "state_after": "SAFE"
+   },
+   {
+    "case": "short to GND",
+    "lamp_on_before": true,
+    "rail_off_ms": 18.0,
+    "firmware_safe_ms": 4.0,
+    "firmware_causes": [
+     "safety pulses bad"
+    ],
+    "state_after": "SAFE"
+   },
+   {
+    "case": "short to +24 V",
+    "lamp_on_before": true,
+    "rail_off_ms": 19.0,
+    "firmware_safe_ms": 1.0,
+    "firmware_causes": [
+     "safety pulses bad"
+    ],
+    "state_after": "SAFE"
+   },
+   {
+    "case": "DC level",
+    "lamp_on_before": true,
+    "rail_off_ms": 19.0,
+    "firmware_safe_ms": 1.0,
+    "firmware_causes": [
+     "safety pulses bad"
+    ],
+    "state_after": "IDLE"
+   },
+   {
+    "case": "300 Hz train",
+    "lamp_on_before": true,
+    "rail_off_ms": null,
+    "firmware_safe_ms": 6.0,
+    "firmware_causes": [
+     "safety pulses bad"
+    ],
+    "state_after": "SAFE"
+   },
+   {
+    "case": "3 kHz train",
+    "lamp_on_before": true,
+    "rail_off_ms": null,
+    "firmware_safe_ms": 1.0,
+    "firmware_causes": [
+     "safety pulses bad"
+    ],
+    "state_after": "IDLE"
+   },
+   {
+    "case": "50 Hz hum",
+    "lamp_on_before": true,
+    "rail_off_ms": 19.0,
+    "firmware_safe_ms": 5.0,
+    "firmware_causes": [
+     "safety pulses bad"
+    ],
+    "state_after": "SAFE"
+   }
+  ],
+  "300 Hz train: rail off (2815 output), ms (expected: stays on)": null,
+  "3 kHz train: rail off (2815 output), ms (expected: stays on)": null,
+  "50 Hz hum: rail off (2815 output), ms (expected: stays on)": 19.0
+ },
+ "notes": [
+  "The 20 ms retriggerable one-shot is kept triggered by any train faster than ~50 Hz: a 300 Hz or 3 kHz train (and 50 Hz hum at the one-shot's own period) holds the rails on, as docs/turret-wiring.md 3.1 says. The firmware refuses on PULSE_MON (periods outside 0.85-1.15 ms); the hardware frequency window (a 74HC221 pair) is a v1 item."
+ ],
+ "sim": {
+  "seed": 1032,
+  "simulated_s": 16.4,
+  "wall_s": 0.4,
+  "stand_ins": [],
+  "shortened": {},
+  "warning": "simulated turret (firmware/turret/sim_turret.py): not a bench reading"
+ },
+ "firmware": {
+  "build": "v0",
+  "servo_baud": 500000,
+  "motor": "SunnySky X2216 880KV V3",
+  "kv": 880.0,
+  "pole_pairs": 7,
+  "erpm_limit": 81312,
+  "tyre_mm": 34,
+  "set_rpm_52fps": 8855,
+  "ramp_s": 0.3
+ }
+}

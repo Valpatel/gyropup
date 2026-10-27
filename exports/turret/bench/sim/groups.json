@@ -1,0 +1,93 @@
+{
+ "test": "6.2",
+ "title": "Groups at 2 and 4 m: 20 shots each, level",
+ "plan": "docs/turret-prototype-plan.md section 5",
+ "mode": "sim",
+ "date": "2026-10-27",
+ "pass": true,
+ "checks": [
+  {
+   "check": "2m: 68 % radius",
+   "value": 1.24,
+   "limit": "<= 1.5 cm",
+   "pass": true
+  },
+  {
+   "check": "2m: 20 shots",
+   "value": 20,
+   "limit": "20",
+   "pass": true
+  },
+  {
+   "check": "4m: 68 % radius",
+   "value": 3.36,
+   "limit": "<= 5.0 cm",
+   "pass": true
+  },
+  {
+   "check": "4m: 20 shots",
+   "value": 20,
+   "limit": "20",
+   "pass": true
+  }
+ ],
+ "readings": {
+  "groups": {
+   "2m": {
+    "balls": 20,
+    "r68_cm": 1.24,
+    "centre_right_cm": 0.04,
+    "centre_drop_cm": 8.59,
+    "fps": {
+     "n": 20,
+     "mean": 51.63,
+     "sd": 0.98,
+     "min": 49.8,
+     "max": 53.2
+    },
+    "limit_cm": 1.5
+   },
+   "4m": {
+    "balls": 20,
+    "r68_cm": 3.36,
+    "centre_right_cm": -0.2,
+    "centre_drop_cm": 37.8,
+    "fps": {
+     "n": 20,
+     "mean": 52.16,
+     "sd": 0.88,
+     "min": 50.8,
+     "max": 53.9
+    },
+    "limit_cm": 5.0
+   }
+  },
+  "drop_table_cm": {
+   "2m": 8.59,
+   "4m": 37.8
+  }
+ },
+ "notes": [],
+ "sim": {
+  "seed": 1062,
+  "simulated_s": 26.4,
+  "wall_s": 1.6,
+  "stand_ins": [
+   "2m_group",
+   "4m_group"
+  ],
+  "shortened": {},
+  "warning": "simulated turret (firmware/turret/sim_turret.py): not a bench reading"
+ },
+ "firmware": {
+  "build": "v0",
+  "servo_baud": 500000,
+  "motor": "SunnySky X2216 880KV V3",
+  "kv": 880.0,
+  "pole_pairs": 7,
+  "erpm_limit": 81312,
+  "tyre_mm": 34,
+  "set_rpm_52fps": 8855,
+  "ramp_s": 0.3
+ }
+}

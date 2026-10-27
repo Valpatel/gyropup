@@ -4,8 +4,8 @@
 
 MuJoCo, in the cartridge frame of cad/turret.py (x along the barrel, z up through the dial axis; metres), with the
 CAD's own numbers (cad/turret.py Geo): the dial-housing floor with its exit opening under the front pocket, the
-housing and hopper wall, the lid, the dial (hub, stirring cone, 8 spokes) on a hinge driven like the M2006 (a stiff
-position loop), the exit baffle in the hopper's bottom, and 30 balls (Ø22.7, 1.83 g). Below the opening the
+housing and hopper wall, the lid, the dial (hub, stirring cone, 8 spokes) on a hinge driven like the feed servo (a
+stiff position loop; sim/turret_feed_dyn.py has the STS3215's own profile and torque line), the exit baffle in the hopper's bottom, and 30 balls (Ø22.7, 1.83 g). Below the opening the
 chute's bend (its outer wall as plates on the CAD's arc) and the straight run to the flywheels; a ball is counted (and
 taken away) when it reaches the tyres, where the spinning wheels take it.
 
@@ -193,7 +193,7 @@ class Feed:
                 d.ctrl[0] = d.qpos[self.model.jnt_qposadr[self.dial_j]]
                 self.model.actuator_gainprm[0, 0] = 0.0
                 self.model.actuator_biasprm[0, 1] = 0.0
-                self.model.dof_frictionloss[self.model.jnt_dofadr[self.dial_j]] = 0.02     # the M2006 gearbox, est
+                self.model.dof_frictionloss[self.model.jnt_dofadr[self.dial_j]] = 0.02     # the gearbox's drag, est
             else:
                 self.model.actuator_gainprm[0, 0] = 20.0
                 self.model.actuator_biasprm[0, 1] = -20.0

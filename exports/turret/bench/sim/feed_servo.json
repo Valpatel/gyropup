@@ -1,0 +1,127 @@
+{
+ "test": "3.9",
+ "title": "Feed servo alone: 200 steps empty, 200 full, a deliberate jam",
+ "plan": "docs/turret-prototype-plan.md section 5",
+ "mode": "sim",
+ "date": "2026-10-27",
+ "pass": true,
+ "checks": [
+  {
+   "check": "empty hopper: 200 steps",
+   "value": 200,
+   "limit": "200",
+   "pass": true
+  },
+  {
+   "check": "empty hopper: settled within 2 deg",
+   "value": 234,
+   "limit": "<= 250 ms",
+   "pass": true
+  },
+  {
+   "check": "empty hopper: load reading repeatable",
+   "value": 0.019,
+   "limit": "SD <= 15 % of the mean",
+   "pass": true
+  },
+  {
+   "check": "full hopper: 200 steps",
+   "value": 200,
+   "limit": "200",
+   "pass": true
+  },
+  {
+   "check": "full hopper: settled within 2 deg",
+   "value": 240,
+   "limit": "<= 250 ms",
+   "pass": true
+  },
+  {
+   "check": "full hopper: load reading repeatable",
+   "value": 0.007,
+   "limit": "SD <= 15 % of the mean",
+   "pass": true
+  },
+  {
+   "check": "deliberate jam detected",
+   "value": 171,
+   "limit": "<= 300 ms after the step command",
+   "pass": true
+  },
+  {
+   "check": "jam reversed and the step completed",
+   "value": true,
+   "limit": "reversed, retried, settled",
+   "pass": true
+  }
+ ],
+ "readings": {
+  "runs": {
+   "empty hopper": {
+    "steps": 200,
+    "clean": 200,
+    "settle_ms": {
+     "n": 200,
+     "mean": 230.13,
+     "sd": 1.72,
+     "min": 227,
+     "max": 234
+    },
+    "load_mean_0p1pct": {
+     "n": 200,
+     "mean": 177.66,
+     "sd": 3.45,
+     "min": 169,
+     "max": 188
+    },
+    "jams": 0
+   },
+   "full hopper": {
+    "steps": 200,
+    "clean": 200,
+    "settle_ms": {
+     "n": 200,
+     "mean": 239.81,
+     "sd": 1.2,
+     "min": 227,
+     "max": 240
+    },
+    "load_mean_0p1pct": {
+     "n": 200,
+     "mean": 241.75,
+     "sd": 1.68,
+     "min": 222,
+     "max": 242
+    },
+    "jams": 0
+   }
+  },
+  "deliberate_jam": {
+   "detected": true,
+   "detect_ms_after_command": 171,
+   "cause": "load",
+   "recovered": true,
+   "steps_after": 3
+  }
+ },
+ "notes": [],
+ "sim": {
+  "seed": 1039,
+  "simulated_s": 142.3,
+  "wall_s": 4.4,
+  "stand_ins": [],
+  "shortened": {},
+  "warning": "simulated turret (firmware/turret/sim_turret.py): not a bench reading"
+ },
+ "firmware": {
+  "build": "v0",
+  "servo_baud": 500000,
+  "motor": "SunnySky X2216 880KV V3",
+  "kv": 880.0,
+  "pole_pairs": 7,
+  "erpm_limit": 81312,
+  "tyre_mm": 34,
+  "set_rpm_52fps": 8855,
+  "ramp_s": 0.3
+ }
+}
