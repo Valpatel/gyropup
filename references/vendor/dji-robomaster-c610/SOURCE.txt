@@ -1,0 +1,10 @@
+Vendor: DJI RoboMaster
+Model: C610 brushless DC motor speed controller (CAN, for the M2006 P36)
+Retrieved: 2026-10-26
+Files:
+  RoboMaster_C610_User_Guide.pdf  <-  https://rm-static.djicdn.com/tem/17348/RoboMaster%20C610%20Brushless%20DC%20Motor%20Speed%20Controller%20User%20Guide.pdf
+  RoboMaster_C610.STEP            <-  https://rm-static.djicdn.com/tem/17348/RoboMaster%20C610.STEP
+Product page: DJI Store item 62711
+Facts used: 50 x 22 x 7.3 (PCB 44.8 x 22), 2 x R1 notches for M2 22 apart 22.5 from the cable end, 17 g, 10 A continuous, CAN 1 Mbps,
+  IDs 1-8, command 0x200/0x1FF (-10000..10000 = -10..10 A), feedback 0x200+n at 1 kHz (rotor angle, rpm, current).
+Licence/terms: published by DJI without login; no licence stated. Local reference copy only.

@@ -1,0 +1,11 @@
+Vendor: DJI RoboMaster
+Model: Snail 2305 brushless DC motor (RoboMaster version, 875 rpm/V, 24 V; launched Dec 2019, not the older 2400 rpm/V racing motor)
+Retrieved: 2026-10-26
+Files:
+  RoboMaster_Snail_2305_User_Guide.pdf  <-  https://rm-static.djicdn.com/tem/17348/RoboMaster%20Snail%202305%20Brushless%20DC%20Motor%20User%20Guide.pdf
+  snail_2305_brushless_dc_motor.stp     <-  https://rm-static.djicdn.com/tem/17348/snail_2305_brushless_dc_motor.stp
+Product page: https://www.robomaster.com/en-US/products/components/detail/2397
+Used in: cad/turret.py SNAIL (bell Ø29, mount face to bell top 17.3, bell 10.4, shaft Ø2.95 x 10 on the bell side, 4 x M3 x 3
+  on a 16/19 cross, wheel seat on the bell top: 3 x M2 + 2 x Ø1.6 pins on Ø10.3), sim/turret_launch.py (875 rpm/V, 181.5 mOhm,
+  10.9 mN m/A, rotor 1.84 kg mm^2).
+Licence/terms: published by DJI for RoboMaster teams without login; no licence stated. Local reference copy only.

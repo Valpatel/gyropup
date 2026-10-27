@@ -43,6 +43,24 @@ Tick with a link to the evidence (file, picture, result JSON). Unticked = open.
       impossible, the dial parks safe with the motor off.
 - [ ] Rate of fire: dial speed vs flywheel recovery between shots.
 
+**From the turret-on-Orin-box scene (coordinator, 2026-10-27; cad/turret_box.py on main)**
+- [ ] Hardware speed ceiling that holds at 100 % throttle (safety, highest priority): at full speed on 24 V the
+      Snails would throw ~37 m/s (123 fps). The design answer here: the flywheel ESCs on their own regulated 12 V
+      rail and Ø36 tyres at 25 % crush, so the motors' no-load speed caps the ball (sim/turret_launch.py: worst ball
+      66.4 fps at 100 %, on a +5 % motor and a +4 % rail); the chronograph lockout is the backup. The physics agent
+      is quantifying the options; the 12 V flywheel regulator must be in the BOM and the wiring.
+- [ ] ARM release is not instant: a dropped ball still fires ~96 ms after ARM is released and the wheels coast
+      ~1.4 s. Enable active braking in the ESCs (AM32), and add a fail-safe gate that holds the dropped ball at the
+      chute (spring-closed, opened only while armed). The same gate pre-stages the next ball (item below).
+- [ ] Command to muzzle takes 146 ms, 86 ms of it the ball's drop through the chute: pre-stage a ball at the gate.
+- [ ] Firing backwards: at pan 140 deg the muzzle clears the deck's rear corner by 3 mm, where the operator stands.
+      Add a pan keep-out behind and check the muzzle's clearance at every pan and tilt (a general obstacle check,
+      as for the lidar).
+- [ ] Torque caps: the tilt holds with a 15x margin and slewing is speed-limited (~100x torque margin). Cap both
+      servos' torque in firmware to protect the printed gear and fingers (the pinion is the weak tooth: see the FEA).
+- [ ] Box-specific, for cad/turret_box.py when the turret's base changes: the antennas collide at full depression,
+      the stack tips at a 10.6 N push, the shroud costs ~7 % of the fan's airflow (est).
+
 **Structure and motion**
 - [ ] Strength of every printed load path (pan ring and gear teeth, yoke, cradle, cartridge, barrel mount) under
       slewing, recoil, a drop of the robot and handling, with the cad-agent FEA and its overload videos.
@@ -52,7 +70,16 @@ Tick with a link to the evidence (file, picture, result JSON). Unticked = open.
 **Build**
 - [ ] Every printed part: orientation, supports, bed fit, print time; tolerances for bearings, inserts and the gear.
 - [ ] Every bought part with a real part number and price; nothing left as "estimate" that can be sourced.
+      Each line carries a catalogue key, part number and source URL, so the BOM can show its thumbnail and its
+      alternates (coordinator, 2026-10-27: tools/part_images.py and cad/bom_media.py enrich() are being built in
+      the main checkout; call enrich() in the turret's BOM once it lands). Parts with no buyable source or no
+      alternate are listed here.
 - [ ] Wiring: power (24 V → 12 V buck for the servos/laser), the ESCs, the M2006 + C610, CAN, the DT12 pinout.
+      **On hold (coordinator, 2026-10-27):** the user wants a high-quality electrical slip ring in the pan joint; a
+      separate planner is researching the ring and the electrical architecture across the pan axis
+      (docs/turret-plan.md, research/turret-slip-ring.md in the main checkout). Until that lands: keep the pan axis
+      and the centre hole free for a ring, add no hard pan stops that would rule out continuous rotation, and do not
+      finalise the pan joint's cable path, the wiring or the DT12 pinout.
 - [ ] Assembly order with pictures; a bench test plan (chronograph, accuracy, jam rate, the pendant).
 
 **Awesome**
@@ -66,3 +93,26 @@ Newest last. One entry per agent run: what it did, what it proved, what is next.
 - 2026-10-26: charter written. The turret exists in CAD (cad/turret.py), on a bench stand (cad/turret_stand.py,
   cad/build_turret.py), in the physics (sim/turret.py: balls at 70 fps from a 30-ball hopper). Nothing above is
   validated yet.
+- 2026-10-27 (in progress): the coordinator passed on the user's request for a high-quality electrical slip ring in
+  the pan joint. A separate planner is researching it. The pan joint's cable path, the wiring and the DT12 pinout
+  wait for its plan; the pan axis and centre hole stay free, and no new hard pan stops go in.
+- 2026-10-27 (in progress): physics handed to a dedicated physics agent (coordinator), which now owns sim/turret_*.py
+  and builds sim/turret_e2e.py; its "Findings for the CAD" in docs/turret-physics.md feed the CAD. Committed as they
+  stood, for it to build on:
+  - sim/turret_launch.py: a one-shot flywheel model (Hertz foam contact with Hunt-Crossley damping, Coulomb tyre
+    friction, the Snail's DJI motor constants behind an ESC current limit). It found that 12 % crush makes the speed
+    swing with the foam (efficiency 0.36-0.89), while 25 % gives 0.66-0.92 with no rejections. Ø36 TPU tyres on a
+    regulated 12 V flywheel rail: 55 fps at 90 % of no-load, 54.7 +- 1.0 fps over 400 balls (sourced size and mass
+    spread, foam and grip swept); at 100 % throttle on a +5 % motor and a +4 % rail the worst ball reaches 66.4 fps (a
+    3.6 fps ceiling margin); 8-ball bursts at 10/s hold speed; recoil 0.031 N s, 0.045 at the cap. The model's
+    efficiency (~0.95) is above what hobby Rival blasters measure (0.40-0.75 at higher wheel speeds), so the bench picks
+    the tyre from a printed set: the fastest ball at 100 % stays at or under 66 fps.
+  - sim/turret_feed.py: MuJoCo, the dial, housing, baffle and chute from the CAD's numbers with 30 balls. Found: the
+    hopper held only 15-16 balls under the old lid (raised to 100 mm, which fits 34); the parked dial never lets a ball
+    out (tilt 0 and -25 deg, shaken at 5 m/s^2, powered or not); feeding is 30/30 at 0 deg and 27-30/30 down to -25 deg
+    in 40 steps. Below about -12 deg the last balls of a magazine collect on the baffle (the front is the hopper's low
+    side), so the firmware lifts to 0 deg for 0.4 s after an empty step. The one "double" traced so far was a ball that
+    stalled at the top of the chute for a step and then reached the wheels with the next, not two out of the dial.
+- 2026-10-27 (in progress): the user asked for thumbnail pictures of every BOM part, to be sure each can be ordered
+  and to keep alternates in mind. Every turret bought part gets a catalogue key with a real part number and source
+  URL; the turret BOM calls cad/bom_media.py enrich() once it is on main.
