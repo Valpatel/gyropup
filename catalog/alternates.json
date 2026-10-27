@@ -165,11 +165,11 @@
    "price": "$4.56",
    "price_usd_each": 4.56,
    "pack_qty": 1,
-   "stock": "In stock (646)",
+   "stock": "In stock - 646 available",
    "drop_in": true,
    "changes": null,
    "checked": "2026-10-27",
-   "evidence": "curl of product page: 'MR126-2RS Mini Ball Bearing 6x12x4 Sealed R1260-2RS', chrome steel, rubber sealed. MR126-ZZ is also $4.56."
+   "evidence": "6x12x4 mm, same envelope as McMaster 7804K112. Differs: rubber-sealed (2RS) instead of metal-shielded (2Z/ZZ), and the page does not state 440C stainless - treat as chrome steel unless confirmed (2RS adds a little drag). Volume: 10-24 5% off, 25-49 10% off, 50+ 15% off, 100+ quote. Second backup: VXB MR126-2RS (not re-opened today)."
   },
   {
    "supplier": "VXB Bearings",
@@ -224,6 +224,19 @@
   }
  ],
  "circlip_50": [
+  {
+   "supplier": "Metric Specialties",
+   "part_number": "50NCRE",
+   "url": "https://metricspecialties.com/products/50ncre",
+   "price": "$0.71",
+   "price_usd_each": 0.71,
+   "pack_qty": 1,
+   "stock": "available (Add to cart enabled; no count shown)",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "DIN 471 external ring for 50 mm shaft (page: 'DIN 471', diameter 50). Differs/verify: finish not stated and the spec line reads 'Strength/Plating: UNHARDENED' (odd for a spring-steel ring; confirm it is spring steel, phosphate or plain, before relying on it). $0.71 each. Belmetric's stock DIN 471 is stainless only and skips 50 mm (its in-stock list stops at 39 mm; the M52-M100 page starts at 52)."
+  },
   {
    "supplier": "Aspen Fasteners",
    "part_number": "ME304-50-00050",
@@ -403,21 +416,21 @@
    "evidence": "Shopify .js variants (13999/15299/16399 cents) and description table: 10:1, V3 3/7 N·m, V4 3.5/12.5 N·m, rated 120 rpm, no-load 200 rpm (24 V V3), 57 x 46 mm, ~306 g, 2 x 14-bit encoders (V3)."
   }
  ],
- "dji-robomaster-snail-2305": [
-  {
-   "supplier": "RaceDayQuads",
-   "part_number": "IFLI-XE10382 (iFlight XING-E Pro 2306 1700Kv)",
-   "url": "https://www.racedayquads.com/products/iflight-xing-e-pro-2306-1700kv-motor",
-   "price": "$19.49",
-   "price_usd_each": 19.49,
-   "stock": "Orderable",
-   "drop_in": false,
-   "changes": "The shaft is a 5 mm (M5) prop shaft with a nut, on a 4 mm hollow steel inner shaft, instead of the Snail's 2.95 mm output shaft, so the flywheel hub must be redesigned (M5 bore or prop-adapter clamp). The mount is listed as 'Φ16mm' (iFlight 2306s use M3), so redraw the motor plate if the Snail plate differs. It is 33.8 g vs 27.8 g, stator 23 x 6 vs 23 x 5. Kv is 1700 vs the Snail's 875 rpm/V, about 2x faster, so on a 24 V (6S) bus cap throttle or rpm at about 50% in the ESC or firmware, or run it from a lower-voltage rail, then re-tune flywheel speed for ball exit velocity. It takes 2-6S at up to 36.66 A continuous and runs from the AM32 35 A ESC (no C615).",
-   "checked": "2026-10-27",
-   "evidence": "Shopify .js 1949 cents, SKU IFLI-XE10382; description: 'Shaft Diameter: 5 mm', 'Mounting Pattern: Φ16mm', 'Weight (w/ wires): 33.8 g', 'Input Voltage: 2-6 S', 'Max Continuous Current: 36.66 A', 'M3 shaft screw', '4mm high strength hollow steel shaft'."
-  }
- ],
+ "dji-robomaster-snail-2305": [],
  "dowel_5x16": [
+  {
+   "supplier": "WDS Components",
+   "part_number": "662-20316",
+   "url": "https://www.wdscomponents.com/en-us/5mm-x-16mm-steel-precision-dowel-pin",
+   "price": "$0.60",
+   "price_usd_each": 0.6,
+   "pack_qty": 1,
+   "stock": "Stock Guaranteed; stock availability < 500",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "5 x 16 mm, steel BS970 230M07, 'hardened and ground' precision dowel; the page names no standard and no tolerance class, so ISO 8734 / DIN 6325 m6 is NOT confirmed (230M07 is a case-hardening free-cutting steel, closer to ISO 8734 type B than through-hardened alloy). $0.60 each; 50+ $0.51; 1000+ $0.48. Belmetric only lists DIN 7 (unhardened) pins; Fastenermart (DIN 6325 5x16) and Ametric are behin"
+  },
   {
    "supplier": "Aspen Fasteners",
    "part_number": "ME397-5X16-00300",
@@ -585,6 +598,19 @@
  ],
  "insert_m3": [
   {
+   "supplier": "ruthex",
+   "part_number": "RX-M3x5.7 (SKU GE-M3x57-001)",
+   "url": "https://www.ruthex.de/products/ruthex-gewindeeinsatz-m3-100-stuck-rx-m3x5-7-messing-gewindebuchsen",
+   "price": null,
+   "price_usd_each": null,
+   "pack_qty": 100,
+   "stock": "InStock (schema.org availability)",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "Brass M3 heat-set insert, 5.7 mm long - same length as McMaster 94459A140. Only EUR shown: EUR 8.99 per pack of 100 (German store, VAT incl.; 50 packs EUR 449.50). No ruthex US-dollar store found. Alternative maker store: CNC Kitchen 'Heat Set Insert M3 x 5.7' EUR 9.40 per 100, 'Auf Lager' (in stock), https://cnckitchen.store/products/heat-set-insert-m3-x-5-7-100-pieces . Hole size not re-read tod"
+  },
+  {
    "supplier": "3DJake",
    "part_number": "CNC-X001FCE4M5",
    "url": "https://www.3djake.com/cnc-kitchen/threaded-inserts-m3-standard",
@@ -596,21 +622,22 @@
    "changes": null,
    "checked": "2026-10-27",
    "evidence": "curl of the 3DJake page: 'CNC Kitchen Threaded Inserts M3 Standard, M3 x 5.7 (100 pieces)', InStock. The dimension table lists M3: L 5.7, hole D3 4.0, min wall 1.6, matching the 4.0 mm hole and 5.7 mm length. Also sold direct at cnckitchen.store as TC-M3x5.7, 100 pcs, 9.40 EUR, InStock."
-  },
-  {
-   "supplier": "ruthex",
-   "part_number": "RX-M3x5.7 (set GE-M3x57-001)",
-   "url": "https://www.ruthex.de/products/ruthex-gewindeeinsatz-m3-100-stuck-rx-m3x5-7-messing-gewindebuchsen",
-   "price": "8.99 EUR / 100 pcs",
-   "pack_qty": 100,
-   "stock": "In stock",
-   "drop_in": true,
-   "changes": null,
-   "checked": "2026-10-27",
-   "evidence": "curl of product page (Germany, EUR): 'RX-M3x5,7 ... Länge von 5,7 mm', SKU GE-M3x57-001. The hole size is not in the page text; Ruthex's own drill-set listing names a 4.0 mm drill for its small inserts. Treat the 4.0 mm hole as very likely but not seen on this page."
   }
  ],
  "insert_m5": [
+  {
+   "supplier": "ruthex",
+   "part_number": "RX-M5x9.5 (SKU GE-M5x95-001)",
+   "url": "https://www.ruthex.de/products/ruthex-gewindeeinsatz-m5-50-stuck-rx-m5x9-5-messing-gewindebuchsen",
+   "price": null,
+   "price_usd_each": null,
+   "pack_qty": 50,
+   "stock": "InStock (schema.org availability)",
+   "drop_in": false,
+   "changes": "NOT drop-in: 9.5 mm long vs McMaster 7.9 mm (1.6 mm longer). The short version RX-M5Sx5.8 (and CNC Kitchen 'M5 x 5.8 short', also listed) is 2.1 mm shorter. No 7.9 mm M5 at ruthex or CNC Kitchen. EUR 9.99 per 50 (VAT incl.), no USD price.",
+   "checked": "2026-10-27",
+   "evidence": "NOT drop-in: 9.5 mm long vs McMaster 7.9 mm (1.6 mm longer). The short version RX-M5Sx5.8 (and CNC Kitchen 'M5 x 5.8 short', also listed) is 2.1 mm shorter. No 7.9 mm M5 at ruthex or CNC Kitchen. EUR 9.99 per 50 (VAT incl.), no USD price."
+  },
   {
    "supplier": "3DJake",
    "part_number": "CNC-B09FXM8ZMV",
@@ -623,18 +650,6 @@
    "changes": "5.8 mm long instead of 7.9 mm, so 2.1 mm less thread engagement and pull-out strength. Same 6.4 mm hole per CNC Kitchen's table. It fits the existing 6.4 mm hole without a CAD change and sits flush with spare depth below.",
    "checked": "2026-10-27",
    "evidence": "curl of the 3DJake page: 'CNC Kitchen Threaded Inserts M5 Short, M5 x 5.8 (50 pieces)', InStock. The dimension table lists M5 Short: L 5.8, hole D3 6.4, and M5: L 9.5, hole D3 6.4. 3DJake also sells the M5 x 9.5 (CNC-X001FCE5ZB) at $11.18/50, 75 left. Direct from cnckitchen.store: TC-M5x5.8 and TC-M5x9.5, 50 pcs, 9.90 EUR each, InStock. No 7.9 mm-long M5 was found at either."
-  },
-  {
-   "supplier": "ruthex",
-   "part_number": "RX-M5x9.5 (set GE-M5x95-001)",
-   "url": "https://www.ruthex.de/products/ruthex-gewindeeinsatz-m5-50-stuck-rx-m5x9-5-messing-gewindebuchsen",
-   "price": "9.99 EUR / 50 pcs",
-   "pack_qty": 50,
-   "stock": "In stock",
-   "drop_in": false,
-   "changes": "9.5 mm long instead of 7.9 mm (1.6 mm longer): the hole must be at least 1.6 mm deeper and the boss longer. Hole diameter is presumably 6.4 mm (see evidence). Ruthex also sells RX-M5Sx5.8 (5.8 mm long, 8.99 EUR / 50), which fits the existing hole depth but gives less engagement.",
-   "checked": "2026-10-27",
-   "evidence": "curl of product page (Germany, EUR): 'Länge von 9,5 mm', SKU GE-M5x95-001. The hole size is not in the page text. Ruthex's own insert drill set (same site, product handle) lists 3.2/4.0/5.6/6.4/8.0 mm drills for its M2-M6 inserts, which implies a 6.4 mm hole for M5."
   }
  ],
  "insert_m8": [
@@ -861,6 +876,19 @@
  ],
  "pendant-hold-to-run": [
   {
+   "supplier": "Adafruit",
+   "part_number": "Product ID 423 (+ Product ID 2790 plug)",
+   "url": "https://www.adafruit.com/product/423",
+   "price": "$10.00",
+   "price_usd_each": 10.0,
+   "pack_qty": 1,
+   "stock": "both 'In stock' (423: $7.50; 2790: $2.50)",
+   "drop_in": false,
+   "changes": "a foot switch (Adafruit 423, momentary, 250 VAC 10 A) wired to an Adafruit 2790 3.5 mm plug: $10 for both",
+   "checked": "2026-10-27",
+   "evidence": "Truly momentary: a spring pedal over a snap-action switch that returns when released; SPDT, so wire the NO pair. Switch rated 250 VAC 10 A. The cable is bare-ended: screw it into the Adafruit 2790 3.5 mm plug terminal block (https://www.adafruit.com/product/2790, no soldering) using tip and sleeve only (the stand's jack is mono). $10.00 is 423 + 2790. Chosen over Amazon because Amazon pages could "
+  },
+  {
    "supplier": "AbleNet",
    "part_number": "Jelly Bean (SKU 10033400, mpn 1.3.0001)",
    "url": "https://www.ablenetinc.com/jelly-bean",
@@ -1065,11 +1093,11 @@
    "price": "$0.12",
    "price_usd_each": 0.12,
    "pack_qty": 1,
-   "stock": "In stock",
+   "stock": "in stock",
    "drop_in": true,
    "changes": null,
    "checked": "2026-10-27",
-   "evidence": "Product 'M3X0.5 Socket Head Cap Screw - DIN 912 Class 12.9', variant BSH3X6 = M3X0.5, 6 mm, black oxide, full thread. Price and stock from Belmetric's site-search index (curl)."
+   "evidence": "Same screw as the M3x6 socket cap line (DIN 912, 12.9, black oxide, M3x0.5 x 6). $0.12 each; 100-999 $0.08; 1000+ $0.07."
   }
  ],
  "screw_m4x20": [
@@ -1265,6 +1293,32 @@
  ],
  "usb-can-canable2": [
   {
+   "supplier": "BIQU / BIGTREETECH",
+   "part_number": "1030000107 (variant 39762747949154, '1 Pc / U2C V2.1 -3 CAN Output')",
+   "url": "https://biqu.equipment/products/bigtreetech-ebb36-42-can-bus-u2c-v2-1-klipper-board?variant=39762747949154",
+   "price": "$23.99",
+   "price_usd_each": 23.99,
+   "pack_qty": 1,
+   "stock": "available: true (Shopify; no count exposed)",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "Select Quantity '1 Pc' and Option 'U2C V2.1 -3 CAN Output'. 2 pcs = $32.59. Also candleLight/gs_usb; not isolated."
+  },
+  {
+   "supplier": "Amazon",
+   "part_number": "ASIN B0956NV6CM (UPC 781520762707)",
+   "url": "https://www.amazon.com/dp/B0956NV6CM",
+   "price": "$29.99",
+   "price_usd_each": 29.99,
+   "pack_qty": 1,
+   "stock": "Only 15 left in stock - order soon",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "ISOLATED: 'Provides 3000V voltage isolation and 2500V ESD isolated protection on signal pins', 120R by jumper, SocketCAN (gs_usb). The preferred adapter for the Orin box. Alternative isolated Innomaker: the USB-CAN cable B09K3LL93Q, $47.99, In Stock, FBA (same isolation spec)."
+  },
+  {
    "supplier": "Openlight Labs",
    "part_number": "CANable 2.0 (SKU PF-CANABLE-2.0)",
    "url": "https://openlightlabs.com/products/canable-2-0",
@@ -1335,11 +1389,11 @@
    "price": "$0.08",
    "price_usd_each": 0.08,
    "pack_qty": 1,
-   "stock": "In stock",
+   "stock": "in stock",
    "drop_in": true,
    "changes": null,
    "checked": "2026-10-27",
-   "evidence": "Variant fields on the product page (curl): 'M3X9 Oversize Washer - A2 Stainless DIN 9021', inner diameter 3.2 mm, outer diameter 9 mm, thickness 0.8 mm, A2. DIN 9021 has the same 3.2 x 9 x 0.8 dimensions as ISO 7093 M3. Price and stock from Belmetric's site-search index."
+   "evidence": "Same spec: DIN 9021, A2 stainless (18-8 equivalent), M3 = 3.2 ID x 9 OD (select M3, 9mm, Plain). $0.08 each; 25-99 $0.04; 100-999 $0.03; 1000+ $0.02."
   },
   {
    "supplier": "Aspen Fasteners",
@@ -1355,16 +1409,476 @@
  ],
  "worker-cheetah-rival-rounds-100": [
   {
-   "supplier": "Out of Darts",
-   "part_number": "AMMO DZN POWERSTRIKE_5306_200P (Dart Zone BallistixOps Powerstrike Rounds 200-Pack)",
-   "url": "https://outofdarts.com/products/dart-zone-ballistix-ops-powerstrike-rounds-rival-compatible-ammo-200-pack",
-   "price": "$29.99 per 200-pack (Yellow-Green or Orange)",
-   "price_usd_each": 15.0,
-   "stock": "Orderable",
-   "drop_in": false,
-   "changes": "The ball is 22.8 mm vs 22.7 mm and 1.85 g vs 1.75 g (+6%), made of medium-density polyurethane instead of ultra-soft EVA. It is firmer and more durable, so re-check the flywheel gap and compression and re-tune flywheel speed. The hopper and feeder should take it, since it is Rival HIR-compatible.",
+   "supplier": "Amazon",
+   "part_number": "ASIN B071SC9QYG",
+   "url": "https://www.amazon.com/dp/B071SC9QYG",
+   "price": "$14.99",
+   "price_usd_each": 0.1499,
+   "pack_qty": 100,
+   "stock": "orderable (Add to cart shown); Amazon's Choice 'Overall Pick', 4.7 stars (8.9K), '400+ bought in past month'",
+   "drop_in": true,
+   "changes": null,
    "checked": "2026-10-27",
-   "evidence": "Shopify .js 2999 cents per 200-pack; description: '22.8mm diameter and 1.85-gram weight', 'medium-density polyurethane foam'. price_usd_each is per 100 rounds (29.99/2), to match this catalogue line's 100-pack unit. For comparison, the Worker listing says '22.7mm diameter', '1.75g each', EVA foam, $14.99 per 100 (SKU AMMO WOR CHEETAH 100PK_W0701), available."
+   "evidence": "Read from Amazon's search-results page (price, delivery, rating); the product page itself served a captcha to a plain fetch (not bypassed), and its page title (via WebFetch) names the brand 'Little Valentine', so this is NOT the official Hasbro refill. The official Hasbro Nerf Rival 100-round refill was not found at Amazon or Target today: Amazon lists only the official 25-pack (Nerf B1589FR6, ASI"
+  }
+ ],
+ "sunnysky-x2216-880kv-v3": [
+  {
+   "supplier": "ReadyMadeRC",
+   "part_number": "SunnySky X2216 V3 short shaft 880KV",
+   "url": "https://www.readymaderc.com/products/details/sunny-sky-x2216-brushless-motor-short-shaft-880kv",
+   "price": "$22.99",
+   "price_usd_each": 22.99,
+   "pack_qty": 1,
+   "stock": "In Stock",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "Page read 2026-10-27: $22.99, In Stock; in the box the motor, an X-mount bracket with screws and a prop adapter; 67.5 g, 89 mOhm, 0.5 A/10 V."
+  },
+  {
+   "supplier": "Amazon (FBA)",
+   "part_number": "B0BR4VV3FG",
+   "url": "https://www.amazon.com/dp/B0BR4VV3FG",
+   "price": "$26.99",
+   "price_usd_each": 26.99,
+   "pack_qty": 1,
+   "stock": "only 3 left (2026-10-27)",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "docs/turret-prototype-plan.md 3.1 (page)."
+  },
+  {
+   "supplier": "RobotShop",
+   "part_number": "T-Motor MN2212 V2 920KV",
+   "url": "https://www.robotshop.com/products/t-motor-navigator-mn2212-v2-920kv-brushless-motor",
+   "price": "$55.90",
+   "price_usd_each": 55.9,
+   "pack_qty": 1,
+   "stock": "In stock",
+   "drop_in": false,
+   "changes": "920 KV: Ø34 tyres only and at the 66 fps bench limit (the ceiling test decides); a 4 mm shaft and its own stack height: a new hub and cage plate height",
+   "checked": "2026-10-27",
+   "evidence": "docs/turret-prototype-plan.md 3.1 (page)."
+  }
+ ],
+ "quarton-vlm-650-03-lpt": [
+  {
+   "supplier": "Digi-Key",
+   "part_number": "Quarton VLM-650-28 LPT",
+   "url": null,
+   "price": null,
+   "price_usd_each": null,
+   "pack_qty": 1,
+   "stock": "63 (snippet)",
+   "drop_in": null,
+   "changes": "check its diameter and length against the Ø7 bore before ordering",
+   "checked": "2026-10-27",
+   "evidence": "docs/turret-prototype-plan.md 3.3 (snippet)."
+  },
+  {
+   "supplier": "Digi-Key",
+   "part_number": "Quarton VLM-520-73 LPT (green, Class 2)",
+   "url": "https://www.digikey.com/en/products/detail/quarton-inc/VLM-520-73-LPT/10523439",
+   "price": "$43.49",
+   "price_usd_each": 43.49,
+   "pack_qty": 1,
+   "stock": "189 (Octopart 2026-10-26)",
+   "drop_in": false,
+   "changes": "Ø7 x 26.1: 5 mm longer than the red one; the mount holds it as drawn for v1",
+   "checked": "2026-10-26",
+   "evidence": "Octopart feed via the price research of 2026-10-26."
+  }
+ ],
+ "turret_thumbscrew_m4x12": [
+  {
+   "supplier": "Belmetric",
+   "part_number": "BTHUMB4X12SS",
+   "url": "https://belmetric.com/m4x0-7-thumb-screw-knurled-a2-stainless-din-464-high-type/",
+   "price": "$2.46",
+   "price_usd_each": 2.46,
+   "pack_qty": 1,
+   "stock": "in stock",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "DIN 464 knurled high-head thumb screw, M4x0.7 x 12 mm, A2 stainless (brief allows stainless; McMaster part is steel). $2.46 each; 25-99 $2.07; 100-249 $1.98; 250+ $1.72."
+  }
+ ],
+ "turret_oring_ct": [
+  {
+   "supplier": "The O-Ring Store LLC",
+   "part_number": "B70006",
+   "url": "https://www.theoringstore.com/store/index.php?main_page=product_info&products_id=1102",
+   "price": "$0.03",
+   "price_usd_each": 0.03,
+   "pack_qty": 1,
+   "stock": "368780 in Stock",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "Same spec: AS568-006, nitrile (NBR) 70 durometer, black, actual 0.114 in ID x 0.070 in CS (2.9 x 1.78 mm). Priced per piece: $0.030 at 100-3,999; $0.012 at 4,000+. Min Qty 100 per item (so $3.00), and a $10 store minimum order; shipping from $9.95."
+  }
+ ],
+ "turret_magnet_disc": [
+  {
+   "supplier": "K&J Magnetics",
+   "part_number": "D32-N52",
+   "url": "https://www.kjmagnetics.com/d32-n52-neodymium-disc-magnet",
+   "price": "$0.35",
+   "price_usd_each": 0.35,
+   "pack_qty": 1,
+   "stock": "In Stock",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "Confirmed: 3/16 in dia x 1/8 in thick (4.76 x 3.17 mm), grade N52, axially magnetized (through the thickness), NdFeB, Ni-Cu-Ni (nickel) coating, max 80 C, +/-0.004 in. Price breaks: $0.35 at 1-49, $0.34 at 50-249, $0.32 at 250-499, $0.31 at 500-2,499, lower beyond."
+  }
+ ],
+ "screw_m5x16": [
+  {
+   "supplier": "Belmetric",
+   "part_number": "BSH5X16",
+   "url": "https://belmetric.com/m5x0-8-socket-head-cap-screw-din-912-class-12-9/",
+   "price": "$0.17",
+   "price_usd_each": 0.17,
+   "pack_qty": 1,
+   "stock": "in stock",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "Same spec: DIN 912, class 12.9, black oxide, M5x0.8 x 16 mm full thread (select Length=16mm). $0.17 each; 25-99 $0.11; 100-999 $0.10; 1000+ $0.08."
+  }
+ ],
+ "turret_screw_m2x8": [
+  {
+   "supplier": "The Nutty Company",
+   "part_number": "MSHC28",
+   "url": "https://www.nutty.com/m2-x-0-4-x-8-socket-head-cap-screw-12-9-din-912-blk-ox/",
+   "price": "$0.13",
+   "price_usd_each": 0.134,
+   "pack_qty": 1,
+   "stock": "in stock (no count shown; 'Current Stock' loads by script)",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "Same spec: DIN 912, class 12.9, black oxide, M2-0.40 x 8 mm full thread. Sold singly at $0.134 each but minimum order 25 units (about $3.35); bulk pricing available. Belmetric lists no M2 DIN 912 (12.9 starts at M3); Bolt Depot is behind a bot check, so not used."
+  }
+ ],
+ "turret_screw_m2x10": [
+  {
+   "supplier": "The Nutty Company",
+   "part_number": "MSHC210",
+   "url": "https://www.nutty.com/m2-x-0-4-x-10-socket-head-cap-screw-12-9-din-912-blk-ox/",
+   "price": "$0.13",
+   "price_usd_each": 0.134,
+   "pack_qty": 1,
+   "stock": "in stock (no count shown)",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "Same spec: DIN 912, class 12.9, black oxide, M2-0.40 x 10 mm. $0.134 each, minimum order 25 units; bulk pricing available."
+  }
+ ],
+ "turret_screw_m2x20": [
+  {
+   "supplier": "The Nutty Company",
+   "part_number": "MSHC220",
+   "url": "https://www.nutty.com/m2-x-0-4-x-20-socket-head-cap-screw-12-9-din-912-blk-ox/",
+   "price": "$0.18",
+   "price_usd_each": 0.181,
+   "pack_qty": 1,
+   "stock": "in stock (no count shown)",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "Same spec: DIN 912, class 12.9, black oxide, M2-0.40 x 20 mm, listed as fully threaded (FT). $0.181 each, minimum order 25 units; bulk pricing available."
+  }
+ ],
+ "turret_screw_m2_5x8": [
+  {
+   "supplier": "The Nutty Company",
+   "part_number": "MSHC2.58",
+   "url": "https://www.nutty.com/m2-5-x-0-45-x-8-socket-head-cap-screw-12-9-din-912-blk-ox/",
+   "price": "$0.12",
+   "price_usd_each": 0.125,
+   "pack_qty": 1,
+   "stock": "in stock (no count shown)",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "Same spec: DIN 912, class 12.9, black oxide, M2.5-0.45 x 8 mm FT. $0.125 each, minimum order 25 units. Alternative: Belmetric BSH2.5X8SS (A2 stainless DIN 912) $0.13 each, in stock (25-99 $0.08), https://belmetric.com/m2-5x0-45-a2-stainless-din-912-allen-socket-head-cap-screw/ ; Belmetric has no 12.9 below M3."
+  }
+ ],
+ "turret_screw_m3x8": [
+  {
+   "supplier": "Belmetric",
+   "part_number": "BSH3X8",
+   "url": "https://belmetric.com/m3x0-5-socket-head-cap-screw-din-912-class-12-9/",
+   "price": "$0.13",
+   "price_usd_each": 0.13,
+   "pack_qty": 1,
+   "stock": "in stock",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "Same spec, 8 mm (select Length=8mm). $0.13 each; 25-99 $0.10; 100-999 $0.09; 1000+ $0.08."
+  }
+ ],
+ "turret_screw_m3x10": [
+  {
+   "supplier": "Belmetric",
+   "part_number": "BSH3X10",
+   "url": "https://belmetric.com/m3x0-5-socket-head-cap-screw-din-912-class-12-9/",
+   "price": "$0.14",
+   "price_usd_each": 0.14,
+   "pack_qty": 1,
+   "stock": "in stock",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "Same spec, 10 mm (select Length=10mm). $0.14 each; 25-99 $0.10; 100-999 $0.09; 1000+ $0.08."
+  }
+ ],
+ "turret_screw_m3x12": [
+  {
+   "supplier": "Belmetric",
+   "part_number": "BSH3X12",
+   "url": "https://belmetric.com/m3x0-5-socket-head-cap-screw-din-912-class-12-9/",
+   "price": "$0.16",
+   "price_usd_each": 0.16,
+   "pack_qty": 1,
+   "stock": "in stock",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "Same spec, 12 mm (select Length=12mm). $0.16 each; 25-99 $0.10; 100-999 $0.09; 1000+ $0.08."
+  }
+ ],
+ "turret_screw_m3x16": [
+  {
+   "supplier": "Belmetric",
+   "part_number": "BSH3X16",
+   "url": "https://belmetric.com/m3x0-5-socket-head-cap-screw-din-912-class-12-9/",
+   "price": "$0.16",
+   "price_usd_each": 0.16,
+   "pack_qty": 1,
+   "stock": "in stock",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "Same spec, 16 mm (select Length=16mm). $0.16 each; 25-99 $0.10; 100-999 $0.09; 1000+ $0.08."
+  }
+ ],
+ "turret_screw_m3x20": [
+  {
+   "supplier": "Belmetric",
+   "part_number": "BSH3X20",
+   "url": "https://belmetric.com/m3x0-5-socket-head-cap-screw-din-912-class-12-9/",
+   "price": "$0.19",
+   "price_usd_each": 0.19,
+   "pack_qty": 1,
+   "stock": "in stock",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "Same spec, 20 mm full thread (select Length=20mm, Full Thread). $0.19 each; 25-99 $0.12; 100-999 $0.11; 1000+ $0.09."
+  }
+ ],
+ "turret_screw_m4x10": [
+  {
+   "supplier": "Belmetric",
+   "part_number": "BSH4X10",
+   "url": "https://belmetric.com/m4x0-7-socket-head-cap-screw-din-912-class-12-9/",
+   "price": "$0.14",
+   "price_usd_each": 0.14,
+   "pack_qty": 1,
+   "stock": "in stock",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "Same spec: DIN 912, class 12.9, black oxide, M4x0.7 x 10 mm full thread (select Length=10mm). $0.14 each; 25-99 $0.10; 100-999 $0.09; 1000+ $0.08."
+  }
+ ],
+ "turret_screw_m3x6_flat": [
+  {
+   "supplier": "Belmetric",
+   "part_number": "SF3X6",
+   "url": "https://belmetric.com/m3x0-5-flat-head-cap-screw-steel-10-9-din-7991/",
+   "price": "$0.18",
+   "price_usd_each": 0.18,
+   "pack_qty": 1,
+   "stock": "in stock",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "Same spec: DIN 7991 / ISO 10642, class 10.9 steel, black oxide (select Finish=Black Oxide, Length=6mm; a zinc-plated option exists on the same page). Length is overall incl. head, as McMaster. $0.18 each; 25-99 $0.11; 100-999 $0.10; 1000+ $0.08."
+  }
+ ],
+ "turret_screw_m3x8_flat": [
+  {
+   "supplier": "Belmetric",
+   "part_number": "SF3X8",
+   "url": "https://belmetric.com/m3x0-5-flat-head-cap-screw-steel-10-9-din-7991/",
+   "price": "$0.18",
+   "price_usd_each": 0.18,
+   "pack_qty": 1,
+   "stock": "in stock",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "Same spec, 8 mm, black oxide 10.9 (select Black Oxide, 8mm). $0.18 each; 25-99 $0.11; 100-999 $0.10; 1000+ $0.08."
+  }
+ ],
+ "turret_screw_m3x10_flat": [
+  {
+   "supplier": "Belmetric",
+   "part_number": "SF3X10",
+   "url": "https://belmetric.com/m3x0-5-flat-head-cap-screw-steel-10-9-din-7991/",
+   "price": "$0.18",
+   "price_usd_each": 0.18,
+   "pack_qty": 1,
+   "stock": "in stock",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "Same spec, 10 mm, black oxide 10.9 (select Black Oxide, 10mm). $0.18 each; 25-99 $0.11; 100-999 $0.10; 1000+ $0.08."
+  }
+ ],
+ "turret_setscrew_m3x6_nylon": [
+  {
+   "supplier": "Belmetric",
+   "part_number": "SS3X6NYTPSS",
+   "url": "https://belmetric.com/m3x0-5-nylon-point-allen-set-screw-stainless/",
+   "price": "$3.25",
+   "price_usd_each": 3.25,
+   "pack_qty": 1,
+   "stock": "in stock",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "M3x0.5 x 6 mm hex-socket set screw with nylon tip (Belmetric calls it 'Nylon Dog Point'), stainless steel (grade not stated; McMaster is 18-8). Select Length=6mm. $3.25 each; 10+ $2.85 - much dearer than typical; check the tip style suits the bearing seat."
+  }
+ ],
+ "turret_insert_m3_short": [
+  {
+   "supplier": "ruthex",
+   "part_number": "RX-M3Sx4.0 (SKU GE-M3Sx40-002)",
+   "url": "https://www.ruthex.de/products/ruthex-gewindeeinsatz-m3s-100stuck-rx-m3x4-0-short-messing-gewindebuchsen-fur-3d-druck",
+   "price": null,
+   "price_usd_each": null,
+   "pack_qty": 100,
+   "stock": "InStock (schema.org availability)",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "Length differs: 4.0 mm vs McMaster 4.3 mm (0.3 mm shorter); brass M3 short insert. EUR 8.99 per 100 (VAT incl.), no USD price. CNC Kitchen's short M3 is 3.0 mm (further off)."
+  }
+ ],
+ "turret_insert_m4": [
+  {
+   "supplier": "ruthex",
+   "part_number": "RX-M4x8.1 (SKU GE-M4x81-001)",
+   "url": "https://www.ruthex.de/products/ruthex-gewindeeinsatz-m4-50-stuck-rx-m4x8-1-messing-gewindebuchsen",
+   "price": null,
+   "price_usd_each": null,
+   "pack_qty": 50,
+   "stock": "InStock (schema.org availability)",
+   "drop_in": false,
+   "changes": "NOT drop-in: 8.1 mm long vs McMaster 6.4 mm (1.7 mm longer, needs a deeper boss). The other ruthex option, RX-M4Sx4.0 short, is 2.4 mm shorter (page not opened). Neither ruthex nor CNC Kitchen (M4x8.1 / M4x4) sells a 6.4 mm M4. EUR 9.49 per 50 (VAT incl.), no USD price.",
+   "checked": "2026-10-27",
+   "evidence": "NOT drop-in: 8.1 mm long vs McMaster 6.4 mm (1.7 mm longer, needs a deeper boss). The other ruthex option, RX-M4Sx4.0 short, is 2.4 mm shorter (page not opened). Neither ruthex nor CNC Kitchen (M4x8.1 / M4x4) sells a 6.4 mm M4. EUR 9.49 per 50 (VAT incl.), no USD price."
+  }
+ ],
+ "turret_washer_m3": [
+  {
+   "supplier": "Belmetric",
+   "part_number": "WF3SS",
+   "url": "https://belmetric.com/flat-washer-a2-stainless-din-125a/",
+   "price": "$0.07",
+   "price_usd_each": 0.07,
+   "pack_qty": 1,
+   "stock": "in stock",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "Same spec: DIN 125A (ISO 7089), A2 stainless, M3 = 3.2 ID x 7 OD (select M3, 7mm, Plain). $0.07 each; 25-99 $0.03; 100-999 $0.02; 1000+ $0.01."
+  }
+ ],
+ "turret_dowel_4x8": [
+  {
+   "supplier": "WDS Components",
+   "part_number": "662-20208",
+   "url": "https://www.wdscomponents.com/en-us/4mm-x-8mm-steel-precision-dowel-pin",
+   "price": "$0.49",
+   "price_usd_each": 0.49,
+   "pack_qty": 1,
+   "stock": "stock availability < 500",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "4 x 8 mm, steel, hardened and ground (WDS 662 range, BS970 230M07); the page names no standard or tolerance class, so ISO 8734 / DIN 6325 m6 is NOT confirmed. $0.49 each; 50+ $0.44; 250+ $0.42; 500+ $0.39. Belmetric lists only DIN 7 (unhardened); Fastenermart and Ametric are behind bot walls; metric-threaded.com needs a login for price."
+  }
+ ],
+ "turret_nut_m2_5": [
+  {
+   "supplier": "Belmetric",
+   "part_number": "NR2.5SS",
+   "url": "https://belmetric.com/hex-nut-a2-stainless-din-934/",
+   "price": "$0.06",
+   "price_usd_each": 0.06,
+   "pack_qty": 1,
+   "stock": "in stock",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "Same spec: DIN 934, A2 stainless, M2.5x0.45 (select M2.5X0.45, Plain). $0.06 each; 100-999 $0.03; 1000+ $0.02."
+  }
+ ],
+ "nut_m5_nyloc": [
+  {
+   "supplier": "Belmetric",
+   "part_number": "NN5CLZ",
+   "url": "https://belmetric.com/nylon-locking-nut-class-8-steel-din-985/",
+   "price": "$0.09",
+   "price_usd_each": 0.09,
+   "pack_qty": 1,
+   "stock": "in stock",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "DIN 985 (= ISO 10511 thin nyloc), M5x0.8, zinc plated (select Zinc Plated, M5X0.8). Class 8 steel; McMaster calls its part 'high-strength steel' - if that is class 10, Belmetric also lists a class 10 DIN 985 page (not opened). $0.09 each; 25-99 $0.06; 100-999 $0.04; 1000+ $0.03."
+  }
+ ],
+ "washer_m5": [
+  {
+   "supplier": "Belmetric",
+   "part_number": "WF5SS",
+   "url": "https://belmetric.com/flat-washer-a2-stainless-din-125a/",
+   "price": "$0.07",
+   "price_usd_each": 0.07,
+   "pack_qty": 1,
+   "stock": "in stock",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "Same spec: DIN 125A (ISO 7089), A2 stainless, M5 = 5.3 ID x 10 OD (select M5, 10mm, Plain). $0.07 each; 25-99 $0.03; 100-999 $0.02; 1000+ $0.01."
+  }
+ ],
+ "turret_tube_coupling": [
+  {
+   "supplier": "Zoro",
+   "part_number": "Zoro Select ZUSA-HT-3487 (Zoro # G8076328)",
+   "url": "https://www.zoro.com/zoro-select-tubing-silicone-516-in-id-716-in-od-zusa-ht-3487/i/G8076328/",
+   "price": "$12.49",
+   "price_usd_each": 12.49,
+   "pack_qty": 1,
+   "stock": null,
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "Silicone tubing, 5/16 in ID x 7/16 in OD (1/16 in wall) - same bore and wall as McMaster 51225K32 (TPV). Price read today from Zoro's search results page; product page is bot-blocked (403), so sale length, durometer and stock are NOT confirmed (a second listing, ZUSA-HT-3479, same size, is $20.79 - likely a longer coil). US Plastic's search is script-only. Treat as a lead, not a confirmed backup."
   }
  ]
 }

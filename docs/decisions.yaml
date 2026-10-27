@@ -299,4 +299,10 @@
   why: "The user asked not to wait on them for decisions."
   status: decided
   source: {kind: user, quote: "You don't need to wait on anything for me"}
-
+- id: D42
+  date: "2026-10-27"
+  title: "The first bench turret (v0): the turret as drawn, with three part swaps forced by stock"
+  decision: "v0 is the turret as drawn on main (the slip ring and continuous pan, the SendCutSend aluminium clamp, the pulse-train safety line, the two chronograph gates and the hardware trip, the phase-short brake, the hard tilt stops, the ball + 2.0 bore) on its printed bench stand, with three swaps. (1) Two SunnySky X2216 880KV V3 short-shaft outrunners replace the delisted DJI Snail 2305s, on the same fixed 12 V flywheel rail: Ø34 tyres first (worst-corner ball 64.1 fps), Ø36 only if every ball of the bench ceiling test on Ø34 stays under 60 fps; each hub clamps on the motor's own bolt-on prop adapter (M5 stud, Ø5 pilot, Ø17 flange) under the bell. (2) A third Feetech STS3215 on the servo bus steps the dial, replacing the DJI M2006 + C610 (out of stock; the C610 is $250-320 elsewhere); it takes the switched 12 V rail through a 3 A polyfuse, so the safety line still cuts it, and neither 24 V nor a CAN node reaches the cartridge. (3) The red Quarton VLM-650-03 LPT (Class 2, under 1 mW, Ø7 x 21) replaces the green VLM-520-73 LPT (0 stock, 4 weeks). Not fitted on the bench: the TPU bumper, the fill flap and its spring, the lights and buzzer, the hopper-full beam. The stand's rocker is the DC-rated Switch Components RA1-1A-DC-2-B-1 (Ø20.2 round snap-in). The +-170 deg cable loop stays the documented fallback if the ring fails its bench tests (docs/turret-prototype-plan.md 2.4). D41 stands for the robot."
+  why: "The DJI parts and the green laser cannot be bought today. The substitutes are in stock at US sellers, sit inside the cage's KV band on the fixed 12 V rail (790-910 rpm/V), and reuse what the turret already has (one servo type on one bus). Everything else is built, swept and documented, so the bench turret is the robot's turret."
+  status: decided
+  source: {kind: user, quote: "full steam ahead, finish our plans and get this ready for first prototype manufacturing"}

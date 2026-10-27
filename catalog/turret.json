@@ -42,7 +42,7 @@
    "https://aifitlab.com/products/dji-robomaster-snail-2305-motor-c615-speed-controller"
   ],
   "confidence": "seller listing",
-  "notes": "RoboMaster's 17 mm friction-wheel launcher motor. The listing gives KV both as 2400 and as 875 rpm/V; 21000 rpm at 24 V matches 875. Listing links STEP files and user guides. C615 max 26 V is below a 7S pack's 29.4 V full charge, so it needs a regulated rail. Not a foam-dart part: flywheels and cage would be custom (2.95 mm shaft).",
+  "notes": "RoboMaster's 17 mm friction-wheel launcher motor. The listing gives KV both as 2400 and as 875 rpm/V; 21000 rpm at 24 V matches 875. Listing links STEP files and user guides. C615 max 26 V is below a 7S pack's 29.4 V full charge, so it needs a regulated rail. Not a foam-dart part: flywheels and cage would be custom (2.95 mm shaft). Replaced in v0 by the SunnySky X2216 880KV V3 (D42): delisted, backorder only.",
   "key": "dji-robomaster-snail-2305"
  },
  {
@@ -86,20 +86,56 @@
   "model": "STS3215 / ST3215 12 V 30 kg-cm serial bus servo",
   "preferred": true,
   "price_usd": 21.99,
-  "price_note": "Waveshare SKU 22414, 1 unit (tiers to ~$20.63); RobotShop US $49.22 out of stock",
-  "price_checked": "2026-10-25",
+  "price_note": "Waveshare SKU 22414 $21.99 (2: $21.19, 3: $20.79, 4+: $20.63), InStock; ships in ~3 business days, UPS 3-7 / DHL 3-8 working days to the US, duties paid by the buyer (page 2026-10-27). Amazon B0CFY52HVV $30.99; Feetech's own Amazon 2-pack B0FMXVR77Y $48.99 (Nov 5-8)",
+  "price_checked": "2026-10-27",
   "buy": [
    {
     "seller": "Waveshare",
     "url": "https://www.waveshare.com/st3215-servo.htm?sku=22414",
-    "in_stock": null,
-    "ships_from": "CN"
+    "in_stock": true,
+    "ships_from": null,
+    "seller_pn": "22414",
+    "price_usd": 21.99,
+    "pack_qty": 1,
+    "stock": "schema.org availability InStock; SKU 22414 'unsaleable': false (no count shown)",
+    "read_on": "2026-10-27",
+    "how_read": "page"
    },
    {
-    "seller": "RobotShop",
-    "url": "https://robotshop.com/products/feetech-12v-30kgcm-magnetic-encoding-servo-sts3215",
-    "in_stock": false,
-    "ships_from": null
+    "seller": "Amazon",
+    "url": "https://www.amazon.com/dp/B0CFY52HVV",
+    "in_stock": true,
+    "ships_from": null,
+    "seller_pn": "ASIN B0CFY52HVV",
+    "price_usd": 30.99,
+    "pack_qty": 1,
+    "stock": "In Stock (quantity selector to 20+)",
+    "read_on": "2026-10-27",
+    "how_read": "page"
+   },
+   {
+    "seller": "Amazon",
+    "url": "https://www.amazon.com/dp/B0B6P9271Q",
+    "in_stock": true,
+    "ships_from": null,
+    "seller_pn": "ASIN B0B6P9271Q",
+    "price_usd": 30.9,
+    "pack_qty": 1,
+    "stock": "Only 1 left in stock - order soon",
+    "read_on": "2026-10-27",
+    "how_read": "page"
+   },
+   {
+    "seller": "Amazon",
+    "url": "https://www.amazon.com/dp/B0FMXVR77Y",
+    "in_stock": null,
+    "ships_from": null,
+    "seller_pn": "ASIN B0FMXVR77Y",
+    "price_usd": 48.99,
+    "pack_qty": 2,
+    "stock": "orderable: Add to Cart with a quantity selector (1-8+); the availability line is blank",
+    "read_on": "2026-10-27",
+    "how_read": "page"
    }
   ],
   "specs": {
@@ -3024,15 +3060,31 @@
   "vendor": "Allegro MicroSystems",
   "model": "A1120LUA-T",
   "name": "Unipolar hall-effect switch, 3-24 V, SIP-3 (UA)",
-  "price_usd": 2.41,
-  "price_note": "one unit, before shipping",
+  "price_usd": 1.79,
+  "price_note": "Digi-Key 620-1330-ND: $1.79 (read 2026-10-27)",
   "price_checked": "2026-10-27",
   "buy": [
    {
-    "seller": "Cytech Systems (also RS Components 724-4660)",
-    "url": "https://www.cytechsystems.com/fr/product/a1120lua-t",
-    "in_stock": null,
-    "ships_from": null
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/detail/allegro-microsystems/A1120LUA-T/2075330",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "620-1330-ND",
+    "price_usd": 1.79,
+    "pack_qty": 1,
+    "stock": 22190,
+    "read_on": "2026-10-27"
+   },
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/250-A1120LUA-T",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "250-A1120LUA-T",
+    "price_usd": 1.79,
+    "pack_qty": 1,
+    "stock": 2262,
+    "read_on": "2026-10-27"
    }
   ],
   "specs": {
@@ -3241,15 +3293,31 @@
   "vendor": "Panasonic",
   "model": "EEU-FR1V102",
   "name": "Aluminium electrolytic, 1000 uF, 35 V, low ESR (FR)",
-  "price_usd": 1.2,
-  "price_note": "est",
+  "price_usd": 1.67,
+  "price_note": "Digi-Key P14445-ND: $1.67 (read 2026-10-27)",
   "price_checked": "2026-10-27",
   "buy": [
    {
-    "seller": "Mouser / Digi-Key",
-    "url": "https://www.mouser.com/c/?q=EEU-FR1V102",
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/detail/panasonic-industry/EEU-FR1V102/2433579",
     "in_stock": null,
-    "ships_from": null
+    "ships_from": "US",
+    "seller_pn": "P14445-ND",
+    "price_usd": 1.67,
+    "pack_qty": 1,
+    "stock": null,
+    "read_on": "2026-10-27"
+   },
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/667-EEU-FR1V102",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "667-EEU-FR1V102",
+    "price_usd": 1.66,
+    "pack_qty": 1,
+    "stock": 5834,
+    "read_on": "2026-10-27"
    }
   ],
   "specs": {},
@@ -3294,21 +3362,31 @@
   "vendor": "Texas Instruments",
   "model": "NE555P",
   "name": "Precision timer, DIP-8",
-  "price_usd": 0.45,
-  "price_note": "est",
+  "price_usd": 0.59,
+  "price_note": "Digi-Key 296-NE555P-ND: $0.59 (read 2026-10-27)",
   "price_checked": "2026-10-27",
   "buy": [
    {
-    "seller": "Texas Instruments (TI store)",
-    "url": "https://www.ti.com/product/NE555/part-details/NE555P",
-    "in_stock": null,
-    "ships_from": "US"
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/detail/texas-instruments/NE555P/277057",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "296-NE555P-ND",
+    "price_usd": 0.59,
+    "pack_qty": 1,
+    "stock": 28579,
+    "read_on": "2026-10-27"
    },
    {
-    "seller": "Mouser / Digi-Key",
-    "url": "https://www.mouser.com/c/?q=NE555P",
-    "in_stock": null,
-    "ships_from": null
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/595-NE555P",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "595-NE555P",
+    "price_usd": 0.59,
+    "pack_qty": 1,
+    "stock": 61909,
+    "read_on": "2026-10-27"
    }
   ],
   "specs": {},
@@ -3326,21 +3404,31 @@
   "vendor": "Texas Instruments",
   "model": "UA78L05ACLP",
   "name": "5 V 100 mA linear regulator, TO-92",
-  "price_usd": 0.4,
-  "price_note": "est",
+  "price_usd": 2.05,
+  "price_note": "Digi-Key 296-1365-ND: $2.05 (read 2026-10-27)",
   "price_checked": "2026-10-27",
   "buy": [
    {
-    "seller": "Texas Instruments (TI store)",
-    "url": "https://www.ti.com/product/UA78L05/part-details/UA78L05ACLP",
-    "in_stock": null,
-    "ships_from": "US"
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/result?keywords=296-1365-ND",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "296-1365-ND",
+    "price_usd": 2.05,
+    "pack_qty": 1,
+    "stock": 9,
+    "read_on": "2026-10-27"
    },
    {
-    "seller": "Mouser / Digi-Key",
-    "url": "https://www.mouser.com/c/?q=UA78L05ACLP",
-    "in_stock": null,
-    "ships_from": null
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/595-UA78L05ACLP",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "595-UA78L05ACLP",
+    "price_usd": 1.94,
+    "pack_qty": 1,
+    "stock": 2195,
+    "read_on": "2026-10-27"
    }
   ],
   "specs": {},
@@ -3358,15 +3446,31 @@
   "vendor": "Vishay",
   "model": "4N35",
   "name": "Optocoupler, phototransistor output, DIP-6",
-  "price_usd": 0.6,
-  "price_note": "est",
+  "price_usd": 1.58,
+  "price_note": "Digi-Key 4N35-ND: $1.58 (read 2026-10-27)",
   "price_checked": "2026-10-27",
   "buy": [
    {
-    "seller": "Mouser / Digi-Key",
-    "url": "https://www.mouser.com/c/?q=4N35",
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/detail/vishay-semiconductor-opto-division/4N35/1738522",
     "in_stock": null,
-    "ships_from": null
+    "ships_from": "US",
+    "seller_pn": "4N35-ND",
+    "price_usd": 1.58,
+    "pack_qty": 1,
+    "stock": null,
+    "read_on": "2026-10-27"
+   },
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/859-4N35",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "859-4N35",
+    "price_usd": 0.64,
+    "pack_qty": 1,
+    "stock": 9390,
+    "read_on": "2026-10-27"
    }
   ],
   "specs": {},
@@ -3416,21 +3520,31 @@
   "vendor": "Texas Instruments",
   "model": "SN74HC74N",
   "name": "Dual D flip-flop, DIP-14",
-  "price_usd": 0.6,
-  "price_note": "est",
+  "price_usd": 1.13,
+  "price_note": "Digi-Key 296-1602-5-ND: $1.13 (read 2026-10-27)",
   "price_checked": "2026-10-27",
   "buy": [
    {
-    "seller": "Texas Instruments (TI store)",
-    "url": "https://www.ti.com/product/SN74HC74/part-details/SN74HC74N",
-    "in_stock": null,
-    "ships_from": "US"
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/detail/texas-instruments/SN74HC74N/277248",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "296-1602-5-ND",
+    "price_usd": 1.13,
+    "pack_qty": 1,
+    "stock": 9538,
+    "read_on": "2026-10-27"
    },
    {
-    "seller": "Mouser / Digi-Key",
-    "url": "https://www.mouser.com/c/?q=SN74HC74N",
-    "in_stock": null,
-    "ships_from": null
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/595-SN74HC74N",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "595-SN74HC74N",
+    "price_usd": 1.11,
+    "pack_qty": 1,
+    "stock": 10808,
+    "read_on": "2026-10-27"
    }
   ],
   "specs": {},
@@ -3448,21 +3562,31 @@
   "vendor": "Texas Instruments",
   "model": "SN74HC08N",
   "name": "Quad 2-input AND, DIP-14",
-  "price_usd": 0.5,
-  "price_note": "est",
+  "price_usd": 0.79,
+  "price_note": "Digi-Key 296-1570-5-ND: $0.79 (read 2026-10-27)",
   "price_checked": "2026-10-27",
   "buy": [
    {
-    "seller": "Texas Instruments (TI store)",
-    "url": "https://www.ti.com/product/SN74HC08/part-details/SN74HC08N",
-    "in_stock": null,
-    "ships_from": "US"
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/detail/texas-instruments/SN74HC08N/277216",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "296-1570-5-ND",
+    "price_usd": 0.79,
+    "pack_qty": 1,
+    "stock": 22274,
+    "read_on": "2026-10-27"
    },
    {
-    "seller": "Mouser / Digi-Key",
-    "url": "https://www.mouser.com/c/?q=SN74HC08N",
-    "in_stock": null,
-    "ships_from": null
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/595-SN74HC08N",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "595-SN74HC08N",
+    "price_usd": 0.78,
+    "pack_qty": 1,
+    "stock": 8674,
+    "read_on": "2026-10-27"
    }
   ],
   "specs": {},
@@ -3480,21 +3604,31 @@
   "vendor": "Texas Instruments",
   "model": "SN74HC14N",
   "name": "Hex Schmitt inverter, DIP-14",
-  "price_usd": 0.5,
-  "price_note": "est",
+  "price_usd": 1.15,
+  "price_note": "Digi-Key 296-1577-5-ND: $1.15 (read 2026-10-27)",
   "price_checked": "2026-10-27",
   "buy": [
    {
-    "seller": "Texas Instruments (TI store)",
-    "url": "https://www.ti.com/product/SN74HC14/part-details/SN74HC14N",
-    "in_stock": null,
-    "ships_from": "US"
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/detail/texas-instruments/SN74HC14N/277223",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "296-1577-5-ND",
+    "price_usd": 1.15,
+    "pack_qty": 1,
+    "stock": 23031,
+    "read_on": "2026-10-27"
    },
    {
-    "seller": "Mouser / Digi-Key",
-    "url": "https://www.mouser.com/c/?q=SN74HC14N",
-    "in_stock": null,
-    "ships_from": null
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/595-SN74HC14N",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "595-SN74HC14N",
+    "price_usd": 1.22,
+    "pack_qty": 1,
+    "stock": 15473,
+    "read_on": "2026-10-27"
    }
   ],
   "specs": {},
@@ -3512,21 +3646,31 @@
   "vendor": "Texas Instruments",
   "model": "SN74AHCT125N",
   "name": "Quad buffer, 3-state, TTL inputs, DIP-14",
-  "price_usd": 0.6,
-  "price_note": "est",
+  "price_usd": 0.95,
+  "price_note": "Digi-Key 296-4655-5-ND: $0.95 (read 2026-10-27)",
   "price_checked": "2026-10-27",
   "buy": [
    {
-    "seller": "Texas Instruments (TI store)",
-    "url": "https://www.ti.com/product/SN74AHCT125/part-details/SN74AHCT125N",
-    "in_stock": null,
-    "ships_from": "US"
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/detail/texas-instruments/SN74AHCT125N/375798",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "296-4655-5-ND",
+    "price_usd": 0.95,
+    "pack_qty": 1,
+    "stock": 1674,
+    "read_on": "2026-10-27"
    },
    {
-    "seller": "Mouser / Digi-Key",
-    "url": "https://www.mouser.com/c/?q=SN74AHCT125N",
-    "in_stock": null,
-    "ships_from": null
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/595-SN74AHCT125N",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "595-SN74AHCT125N",
+    "price_usd": 0.98,
+    "pack_qty": 1,
+    "stock": 3136,
+    "read_on": "2026-10-27"
    }
   ],
   "specs": {},
@@ -3544,21 +3688,31 @@
   "vendor": "Texas Instruments",
   "model": "LM393P",
   "name": "Dual comparator, DIP-8",
-  "price_usd": 0.45,
-  "price_note": "est",
+  "price_usd": 0.53,
+  "price_note": "Digi-Key 296-1398-5-ND: $0.53 (read 2026-10-27)",
   "price_checked": "2026-10-27",
   "buy": [
    {
-    "seller": "Texas Instruments (TI store)",
-    "url": "https://www.ti.com/product/LM393/part-details/LM393P",
-    "in_stock": null,
-    "ships_from": "US"
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/detail/texas-instruments/LM393P/277045",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "296-1398-5-ND",
+    "price_usd": 0.53,
+    "pack_qty": 1,
+    "stock": 8592,
+    "read_on": "2026-10-27"
    },
    {
-    "seller": "Mouser / Digi-Key",
-    "url": "https://www.mouser.com/c/?q=LM393P",
-    "in_stock": null,
-    "ships_from": null
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/595-LM393P",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "595-LM393P",
+    "price_usd": 0.53,
+    "pack_qty": 1,
+    "stock": 23356,
+    "read_on": "2026-10-27"
    }
   ],
   "specs": {},
@@ -3576,15 +3730,31 @@
   "vendor": "Infineon",
   "model": "IRLZ44NPBF",
   "name": "Logic-level N-MOSFET 55 V 47 A, TO-220",
-  "price_usd": 1.6,
-  "price_note": "est",
+  "price_usd": 1.8,
+  "price_note": "Mouser 942-IRLZ44NPBF: $1.8 (read 2026-10-27; the primary seller's price was not readable)",
   "price_checked": "2026-10-27",
   "buy": [
    {
-    "seller": "Mouser / Digi-Key",
-    "url": "https://www.mouser.com/c/?q=IRLZ44NPBF",
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/detail/infineon-technologies/IRLZ44NPBF/811808",
     "in_stock": null,
-    "ships_from": null
+    "ships_from": "US",
+    "seller_pn": "IRLZ44NPBF-ND",
+    "price_usd": null,
+    "pack_qty": 1,
+    "stock": null,
+    "read_on": "2026-10-27"
+   },
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/942-IRLZ44NPBF",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "942-IRLZ44NPBF",
+    "price_usd": 1.8,
+    "pack_qty": 1,
+    "stock": 77849,
+    "read_on": "2026-10-27"
    }
   ],
   "specs": {},
@@ -3602,15 +3772,31 @@
   "vendor": "Vishay",
   "model": "TSAL4400",
   "name": "IR emitting diode 940 nm, T-1 (3 mm)",
-  "price_usd": 0.4,
-  "price_note": "est",
+  "price_usd": 0.48,
+  "price_note": "Digi-Key 751-1201-ND: $0.48 (read 2026-10-27)",
   "price_checked": "2026-10-27",
   "buy": [
    {
-    "seller": "Mouser / Digi-Key",
-    "url": "https://www.mouser.com/c/?q=TSAL4400",
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/detail/vishay-semiconductor-opto-division/TSAL4400/1681336",
     "in_stock": null,
-    "ships_from": null
+    "ships_from": "US",
+    "seller_pn": "751-1201-ND",
+    "price_usd": 0.48,
+    "pack_qty": 1,
+    "stock": null,
+    "read_on": "2026-10-27"
+   },
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/782-TSAL4400",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "782-TSAL4400",
+    "price_usd": 0.48,
+    "pack_qty": 1,
+    "stock": 18862,
+    "read_on": "2026-10-27"
    }
   ],
   "specs": {},
@@ -3628,15 +3814,31 @@
   "vendor": "Vishay",
   "model": "TEFT4300",
   "name": "Silicon NPN phototransistor, T-1 (3 mm)",
-  "price_usd": 0.45,
-  "price_note": "est",
+  "price_usd": 0.7,
+  "price_note": "Digi-Key 751-1041-ND: $0.7 (read 2026-10-27)",
   "price_checked": "2026-10-27",
   "buy": [
    {
-    "seller": "Mouser / Digi-Key",
-    "url": "https://www.mouser.com/c/?q=TEFT4300",
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/detail/vishay-semiconductor-opto-division/TEFT4300/1681175",
     "in_stock": null,
-    "ships_from": null
+    "ships_from": "US",
+    "seller_pn": "751-1041-ND",
+    "price_usd": 0.7,
+    "pack_qty": 1,
+    "stock": null,
+    "read_on": "2026-10-27"
+   },
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/782-TEFT4300",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "782-TEFT4300",
+    "price_usd": 0.7,
+    "pack_qty": 1,
+    "stock": 2446,
+    "read_on": "2026-10-27"
    }
   ],
   "specs": {},
@@ -3706,15 +3908,31 @@
   "vendor": "Molex",
   "model": "43030-0038",
   "name": "Micro-Fit 3.0 female crimp terminal, 18 AWG, tin, 8.5 A",
-  "price_usd": 0.15,
-  "price_note": "est",
+  "price_usd": 0.16,
+  "price_note": "Mouser 538-43030-0038-LP: $0.16 (read 2026-10-27; the primary seller's price was not readable)",
   "price_checked": "2026-10-27",
   "buy": [
    {
-    "seller": "Heilind",
-    "url": "https://heilind.com/mol43030-0038.html",
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/detail/molex/0430300038/6098602",
     "in_stock": null,
-    "ships_from": null
+    "ships_from": "US",
+    "seller_pn": "WM13070CT-ND",
+    "price_usd": null,
+    "pack_qty": 1,
+    "stock": null,
+    "read_on": "2026-10-27"
+   },
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/538-43030-0038-LP",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "538-43030-0038-LP",
+    "price_usd": 0.16,
+    "pack_qty": 1,
+    "stock": 79499,
+    "read_on": "2026-10-27"
    }
   ],
   "specs": {},
@@ -3732,21 +3950,31 @@
   "vendor": "Molex",
   "model": "43031-0021",
   "name": "Micro-Fit 3.0 male crimp terminal, 18 AWG, tin, 8.5 A",
-  "price_usd": 0.15,
-  "price_note": "est",
+  "price_usd": 0.16,
+  "price_note": "Mouser 538-43031-0021-LP: $0.16 (read 2026-10-27; the primary seller's price was not readable)",
   "price_checked": "2026-10-27",
   "buy": [
    {
-    "seller": "Heilind",
-    "url": "https://heilind.com/mol43031-0021.html",
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/detail/molex/0430310021/9520956",
     "in_stock": null,
-    "ships_from": "US"
+    "ships_from": "US",
+    "seller_pn": "WM22521CT-ND",
+    "price_usd": null,
+    "pack_qty": 1,
+    "stock": null,
+    "read_on": "2026-10-27"
    },
    {
-    "seller": "Molex (distributors)",
-    "url": "https://www.molex.com/ja-jp/products/part-detail/430310021",
-    "in_stock": null,
-    "ships_from": null
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/538-43031-0021-LP",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "538-43031-0021-LP",
+    "price_usd": 0.16,
+    "pack_qty": 1,
+    "stock": 9188,
+    "read_on": "2026-10-27"
    }
   ],
   "specs": {},
@@ -3764,21 +3992,31 @@
   "vendor": "Molex",
   "model": "43030-0001",
   "name": "Micro-Fit 3.0 female crimp terminal, 20-24 AWG, tin",
-  "price_usd": 0.12,
-  "price_note": "est",
+  "price_usd": 0.075,
+  "price_note": "Mouser 538-43030-0001-CT: $7.5 per 100 (read 2026-10-27; the primary seller's price was not readable)",
   "price_checked": "2026-10-27",
   "buy": [
    {
-    "seller": "Heilind",
-    "url": "https://heilind.com/mol43030-0001.html",
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/detail/molex/0430300001/467796",
     "in_stock": null,
-    "ships_from": "US"
+    "ships_from": "US",
+    "seller_pn": "WM1837CT-ND",
+    "price_usd": null,
+    "pack_qty": 1,
+    "stock": null,
+    "read_on": "2026-10-27"
    },
    {
-    "seller": "Mouser / Digi-Key",
-    "url": "https://www.mouser.com/c/?q=43030-0001",
-    "in_stock": null,
-    "ships_from": null
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/538-43030-0001-CT",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "538-43030-0001-CT",
+    "price_usd": 7.5,
+    "pack_qty": 100,
+    "stock": 257100,
+    "read_on": "2026-10-27"
    }
   ],
   "specs": {},
@@ -3796,21 +4034,31 @@
   "vendor": "Molex",
   "model": "43031-0001",
   "name": "Micro-Fit 3.0 male crimp terminal, 20-24 AWG, tin",
-  "price_usd": 0.12,
-  "price_note": "est",
+  "price_usd": 0.085,
+  "price_note": "Mouser 538-43031-0001-CT: $8.5 per 100 (read 2026-10-27; the primary seller's price was not readable)",
   "price_checked": "2026-10-27",
   "buy": [
    {
-    "seller": "Heilind",
-    "url": "https://heilind.com/mol43031-0001.html",
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/detail/molex/0430310001/467798",
     "in_stock": null,
-    "ships_from": "US"
+    "ships_from": "US",
+    "seller_pn": "WM1841CT-ND",
+    "price_usd": null,
+    "pack_qty": 1,
+    "stock": null,
+    "read_on": "2026-10-27"
    },
    {
-    "seller": "Mouser / Digi-Key",
-    "url": "https://www.mouser.com/c/?q=43031-0001",
-    "in_stock": null,
-    "ships_from": null
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/538-43031-0001-CT",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "538-43031-0001-CT",
+    "price_usd": 8.5,
+    "pack_qty": 100,
+    "stock": 5000,
+    "read_on": "2026-10-27"
    }
   ],
   "specs": {},
@@ -3828,15 +4076,31 @@
   "vendor": "Keystone Electronics",
   "model": "3557-2",
   "name": "PCB fuse holder for ATO or MINI blade fuses",
-  "price_usd": 0.9,
-  "price_note": "est",
+  "price_usd": 1.31,
+  "price_note": "Digi-Key 36-3557-2-ND $1.31 (live digikey.com search, 2026-10-25); takes ATO/ATC blades (the base board's 10 A ATO)",
   "price_checked": "2026-10-27",
   "buy": [
    {
-    "seller": "JLCPCB parts / Farnell",
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/detail/keystone-electronics/3557-2/2137305",
+    "in_stock": false,
+    "ships_from": "US",
+    "seller_pn": "36-3557-2-ND",
+    "price_usd": 1.31,
+    "pack_qty": 1,
+    "stock": null,
+    "read_on": "2026-10-27"
+   },
+   {
+    "seller": "JLCPCB parts",
     "url": "https://jlcpcb.com/partdetail/3557-2/C352820",
-    "in_stock": null,
-    "ships_from": null
+    "in_stock": false,
+    "ships_from": "US",
+    "seller_pn": "C352820",
+    "price_usd": null,
+    "pack_qty": 1,
+    "stock": null,
+    "read_on": "2026-10-27"
    }
   ],
   "specs": {},
@@ -3854,15 +4118,31 @@
   "vendor": "Littelfuse",
   "model": "0287010.PXCN",
   "name": "ATO blade fuse 10 A, 32 V DC",
-  "price_usd": 0.4,
-  "price_note": "est",
+  "price_usd": 0.36,
+  "price_note": "Mouser 576-0287010.PXCN: $0.36 (read 2026-10-27; the primary seller's price was not readable)",
   "price_checked": "2026-10-27",
   "buy": [
    {
-    "seller": "Mouser / Digi-Key",
-    "url": "https://www.mouser.com/c/?q=0287010.PXCN",
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/detail/littelfuse-inc/0287010-PXCN/2519807",
     "in_stock": null,
-    "ships_from": null
+    "ships_from": "US",
+    "seller_pn": "F4199-ND",
+    "price_usd": null,
+    "pack_qty": 1,
+    "stock": null,
+    "read_on": "2026-10-27"
+   },
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/576-0287010.PXCN",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "576-0287010.PXCN",
+    "price_usd": 0.36,
+    "pack_qty": 1,
+    "stock": 58274,
+    "read_on": "2026-10-27"
    }
   ],
   "specs": {},
@@ -3880,15 +4160,31 @@
   "vendor": "Littelfuse",
   "model": "0297015.WXNV",
   "name": "MINI blade fuse 15 A, 32 V DC",
-  "price_usd": 0.35,
-  "price_note": "est",
+  "price_usd": 0.33,
+  "price_note": "Mouser 576-0297015.WXNV: $0.33 (read 2026-10-27; the primary seller's price was not readable)",
   "price_checked": "2026-10-27",
   "buy": [
    {
-    "seller": "Mouser / Digi-Key",
-    "url": "https://www.mouser.com/c/?q=0297015.WXNV",
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/detail/littelfuse-inc/0297015-WXNV/146594",
     "in_stock": null,
-    "ships_from": null
+    "ships_from": "US",
+    "seller_pn": "F992-ND",
+    "price_usd": null,
+    "pack_qty": 1,
+    "stock": null,
+    "read_on": "2026-10-27"
+   },
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/576-0297015.WXNV",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "576-0297015.WXNV",
+    "price_usd": 0.33,
+    "pack_qty": 1,
+    "stock": 20780,
+    "read_on": "2026-10-27"
    }
   ],
   "specs": {},
@@ -3906,15 +4202,31 @@
   "vendor": "Littelfuse",
   "model": "0297010.WXNV",
   "name": "MINI blade fuse 10 A, 32 V DC",
-  "price_usd": 0.35,
-  "price_note": "est",
+  "price_usd": 0.33,
+  "price_note": "Mouser 576-0297010.WXNV: $0.33 (read 2026-10-27; the primary seller's price was not readable)",
   "price_checked": "2026-10-27",
   "buy": [
    {
-    "seller": "Mouser / Digi-Key",
-    "url": "https://www.mouser.com/c/?q=0297010.WXNV",
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/detail/littelfuse-inc/0297010-WXNV/146591",
     "in_stock": null,
-    "ships_from": null
+    "ships_from": "US",
+    "seller_pn": "F991-ND",
+    "price_usd": null,
+    "pack_qty": 1,
+    "stock": null,
+    "read_on": "2026-10-27"
+   },
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/576-0297010.WXNV",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "576-0297010.WXNV",
+    "price_usd": 0.33,
+    "pack_qty": 1,
+    "stock": 47007,
+    "read_on": "2026-10-27"
    }
   ],
   "specs": {},
@@ -3933,14 +4245,30 @@
   "model": "MF-R300",
   "name": "Resettable PTC fuse, 3 A hold, 30 V",
   "price_usd": 0.5,
-  "price_note": "est",
+  "price_note": "Mouser 652-MFR300: $0.5 (read 2026-10-27; the primary seller's price was not readable)",
   "price_checked": "2026-10-27",
   "buy": [
    {
-    "seller": "Mouser / Digi-Key",
-    "url": "https://www.mouser.com/c/?q=MF-R300",
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/detail/bourns-inc/MF-R300/259975",
     "in_stock": null,
-    "ships_from": null
+    "ships_from": "US",
+    "seller_pn": "MF-R300-ND",
+    "price_usd": null,
+    "pack_qty": 1,
+    "stock": null,
+    "read_on": "2026-10-27"
+   },
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/652-MFR300",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "652-MFR300",
+    "price_usd": 0.5,
+    "pack_qty": 1,
+    "stock": 5353,
+    "read_on": "2026-10-27"
    }
   ],
   "specs": {},
@@ -3984,15 +4312,31 @@
   "vendor": "TE Connectivity (Deutsch)",
   "model": "W12P",
   "name": "DT wedgelock for the 12-way receptacle",
-  "price_usd": 1.2,
-  "price_note": "est",
+  "price_usd": 0.88,
+  "price_note": "Mouser 571-W12P-P004: $0.88 (read 2026-10-27; the primary seller's price was not readable)",
   "price_checked": "2026-10-27",
   "buy": [
    {
-    "seller": "Mouser / Digi-Key",
-    "url": "https://www.mouser.com/c/?q=W12P",
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/detail/te-connectivity-deutsch-ict-connectors/W12P/6566598",
     "in_stock": null,
-    "ships_from": null
+    "ships_from": "US",
+    "seller_pn": "1734-1034-ND",
+    "price_usd": null,
+    "pack_qty": 1,
+    "stock": null,
+    "read_on": "2026-10-27"
+   },
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/571-W12P-P004",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "571-W12P-P004",
+    "price_usd": 0.88,
+    "pack_qty": 1,
+    "stock": 2620,
+    "read_on": "2026-10-27"
    }
   ],
   "specs": {},
@@ -4010,15 +4354,31 @@
   "vendor": "TE Connectivity (Deutsch)",
   "model": "0460-202-16141",
   "name": "DT size 16 pin contact, nickel, 14-16 AWG",
-  "price_usd": 0.3,
-  "price_note": "est",
+  "price_usd": 0.45,
+  "price_note": "Mouser 571-0460-202-16141: $0.45 (read 2026-10-27; the primary seller's price was not readable)",
   "price_checked": "2026-10-27",
   "buy": [
    {
-    "seller": "Mouser / Digi-Key",
-    "url": "https://www.mouser.com/c/?q=0460-202-16141",
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/detail/te-connectivity-deutsch-ict-connectors/0460-202-16141/7200926",
     "in_stock": null,
-    "ships_from": null
+    "ships_from": "US",
+    "seller_pn": "1734-1328-ND",
+    "price_usd": null,
+    "pack_qty": 1,
+    "stock": null,
+    "read_on": "2026-10-27"
+   },
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/571-0460-202-16141",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "571-0460-202-16141",
+    "price_usd": 0.45,
+    "pack_qty": 1,
+    "stock": 267161,
+    "read_on": "2026-10-27"
    }
   ],
   "specs": {},
@@ -4207,21 +4567,31 @@
   "vendor": "Amass",
   "model": "XT60E-M",
   "name": "XT60E-M panel-mount plug (male), 2 screw holes",
-  "price_usd": 1.5,
-  "price_note": "est; sellers list it singly or in pairs",
+  "price_usd": 0.99,
+  "price_note": "Jameco 2844431 $0.99 each (search 2026-10-27); PyroDrone 10-pack with screws $11.99, in stock. No Digi-Key or Mouser listing for the Amass part",
   "price_checked": "2026-10-27",
   "buy": [
    {
-    "seller": "Maplin (UK)",
-    "url": "https://pro.maplin.co.uk/products/male-xt60e-panel-mount-gold-plated-connector-20a-amass",
-    "in_stock": null,
-    "ships_from": "UK"
+    "seller": "Jameco",
+    "url": "https://www.jameco.com/z/XT60E-M-Amass-XT60-Socket-Male-Terminals-30A-500V-2-Pin-Flanged-for-Panel-Mount_2844431.html",
+    "in_stock": false,
+    "ships_from": "US",
+    "seller_pn": "2844431",
+    "price_usd": 0.99,
+    "pack_qty": 1,
+    "stock": null,
+    "read_on": "2026-10-27"
    },
    {
-    "seller": "Probots (IN)",
-    "url": "https://probots.co.in/xt60e-m-male-panel-mount-connector-for-lipo-battery-esc-brushless-motor.html",
-    "in_stock": null,
-    "ships_from": "IN"
+    "seller": "PyroDrone",
+    "url": "https://pyrodrone.com/collections/electronics/products/amass-xt60e-m-mountable-xt60-male-plug-w-mounting-screws-choose-color",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "F3-13155-BLK",
+    "price_usd": 11.99,
+    "pack_qty": 10,
+    "stock": "in stock",
+    "read_on": "2026-10-27"
    }
   ],
   "specs": {},
@@ -4269,21 +4639,31 @@
   "vendor": "Molex",
   "model": "43025-0600",
   "name": "Micro-Fit 3.0 receptacle housing, dual row, 6 circuits",
-  "price_usd": 0.6,
-  "price_note": "est",
+  "price_usd": 0.51,
+  "price_note": "Mouser 538-43025-0600: $0.51 (read 2026-10-27; the primary seller's price was not readable)",
   "price_checked": "2026-10-27",
   "buy": [
    {
-    "seller": "Heilind",
-    "url": "https://heilind.com/mol43025-0600.html",
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/detail/molex/0430250600/252498",
     "in_stock": null,
-    "ships_from": "US"
+    "ships_from": "US",
+    "seller_pn": "WM1785-ND",
+    "price_usd": null,
+    "pack_qty": 1,
+    "stock": null,
+    "read_on": "2026-10-27"
    },
    {
-    "seller": "Mouser / Digi-Key",
-    "url": "https://www.mouser.com/c/?q=43025-0600",
-    "in_stock": null,
-    "ships_from": null
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/538-43025-0600",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "538-43025-0600",
+    "price_usd": 0.51,
+    "pack_qty": 1,
+    "stock": 207720,
+    "read_on": "2026-10-27"
    }
   ],
   "specs": {},
@@ -4301,21 +4681,31 @@
   "vendor": "Molex",
   "model": "43020-0600",
   "name": "Micro-Fit 3.0 plug housing, dual row, 6 circuits",
-  "price_usd": 0.6,
-  "price_note": "est",
+  "price_usd": 0.4,
+  "price_note": "Mouser 538-43020-0600: $0.4 (read 2026-10-27; the primary seller's price was not readable)",
   "price_checked": "2026-10-27",
   "buy": [
    {
-    "seller": "Heilind",
-    "url": "https://heilind.com/mol43020-0600.html",
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/detail/molex/0430200600/252492",
     "in_stock": null,
-    "ships_from": "US"
+    "ships_from": "US",
+    "seller_pn": "WM1779-ND",
+    "price_usd": null,
+    "pack_qty": 1,
+    "stock": null,
+    "read_on": "2026-10-27"
    },
    {
-    "seller": "Mouser / Digi-Key",
-    "url": "https://www.mouser.com/c/?q=43020-0600",
-    "in_stock": null,
-    "ships_from": null
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/538-43020-0600",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "538-43020-0600",
+    "price_usd": 0.4,
+    "pack_qty": 1,
+    "stock": 12657,
+    "read_on": "2026-10-27"
    }
   ],
   "specs": {},
@@ -4333,21 +4723,31 @@
   "vendor": "Molex",
   "model": "43025-1200",
   "name": "Micro-Fit 3.0 receptacle housing, dual row, 12 circuits",
-  "price_usd": 0.6,
-  "price_note": "est",
+  "price_usd": 0.81,
+  "price_note": "Mouser 538-43025-1200: $0.81 (read 2026-10-27; the primary seller's price was not readable)",
   "price_checked": "2026-10-27",
   "buy": [
    {
-    "seller": "Heilind",
-    "url": "https://heilind.com/mol43025-1200.html",
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/detail/molex/0430251200/252501",
     "in_stock": null,
-    "ships_from": "US"
+    "ships_from": "US",
+    "seller_pn": "WM1788-ND",
+    "price_usd": null,
+    "pack_qty": 1,
+    "stock": null,
+    "read_on": "2026-10-27"
    },
    {
-    "seller": "Mouser / Digi-Key",
-    "url": "https://www.mouser.com/c/?q=43025-1200",
-    "in_stock": null,
-    "ships_from": null
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/538-43025-1200",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "538-43025-1200",
+    "price_usd": 0.81,
+    "pack_qty": 1,
+    "stock": 75541,
+    "read_on": "2026-10-27"
    }
   ],
   "specs": {},
@@ -4365,21 +4765,31 @@
   "vendor": "Molex",
   "model": "43020-1200",
   "name": "Micro-Fit 3.0 plug housing, dual row, 12 circuits",
-  "price_usd": 0.6,
-  "price_note": "est",
+  "price_usd": 0.82,
+  "price_note": "Mouser 538-43020-1200: $0.82 (read 2026-10-27; the primary seller's price was not readable)",
   "price_checked": "2026-10-27",
   "buy": [
    {
-    "seller": "Heilind",
-    "url": "https://heilind.com/mol43020-1200.html",
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/detail/molex/0430201200/252495",
     "in_stock": null,
-    "ships_from": "US"
+    "ships_from": "US",
+    "seller_pn": "WM1782-ND",
+    "price_usd": null,
+    "pack_qty": 1,
+    "stock": null,
+    "read_on": "2026-10-27"
    },
    {
-    "seller": "Mouser / Digi-Key",
-    "url": "https://www.mouser.com/c/?q=43020-1200",
-    "in_stock": null,
-    "ships_from": null
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/538-43020-1200",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "538-43020-1200",
+    "price_usd": 0.82,
+    "pack_qty": 1,
+    "stock": 13814,
+    "read_on": "2026-10-27"
    }
   ],
   "specs": {},
@@ -4397,15 +4807,31 @@
   "vendor": "Molex",
   "model": "43025-1000",
   "name": "Micro-Fit 3.0 receptacle housing, dual row, 10 circuits",
-  "price_usd": null,
-  "price_note": "see the price sourcing note",
+  "price_usd": 0.75,
+  "price_note": "Mouser 538-43025-1000: $0.75 (read 2026-10-27; the primary seller's price was not readable)",
   "price_checked": "2026-10-27",
   "buy": [
    {
-    "seller": "Heilind",
-    "url": "https://heilind.com/mol43025-1000.html",
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/detail/molex/0430251000/252500",
     "in_stock": null,
-    "ships_from": "US"
+    "ships_from": "US",
+    "seller_pn": "WM1787-ND",
+    "price_usd": null,
+    "pack_qty": 1,
+    "stock": null,
+    "read_on": "2026-10-27"
+   },
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/538-43025-1000",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "538-43025-1000",
+    "price_usd": 0.75,
+    "pack_qty": 1,
+    "stock": 131360,
+    "read_on": "2026-10-27"
    }
   ],
   "specs": {},
@@ -4423,15 +4849,31 @@
   "vendor": "Molex",
   "model": "43020-1000",
   "name": "Micro-Fit 3.0 plug housing, dual row, 10 circuits",
-  "price_usd": null,
-  "price_note": "see the price sourcing note",
+  "price_usd": 0.97,
+  "price_note": "Mouser 538-43020-1000: $0.97 (read 2026-10-27; the primary seller's price was not readable)",
   "price_checked": "2026-10-27",
   "buy": [
    {
-    "seller": "Heilind",
-    "url": "https://heilind.com/mol43020-1000.html",
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/detail/molex/0430201000/252494",
     "in_stock": null,
-    "ships_from": "US"
+    "ships_from": "US",
+    "seller_pn": "WM1781-ND",
+    "price_usd": null,
+    "pack_qty": 1,
+    "stock": null,
+    "read_on": "2026-10-27"
+   },
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/538-43020-1000",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "538-43020-1000",
+    "price_usd": 0.97,
+    "pack_qty": 1,
+    "stock": 20449,
+    "read_on": "2026-10-27"
    }
   ],
   "specs": {},
@@ -4481,14 +4923,14 @@
   "vendor": "Quarton",
   "model": "VLM-520-73 LPT",
   "name": "Green dot laser module 520 nm, < 1 mW (Class 2), 3-6 V DC, Ø7 x 26.1 mm",
-  "price_usd": 41.82,
-  "price_note": "Digi-Key 100-VLM-520-73LPT-ND, one unit (0 in stock, 4 weeks lead, read 2026-10-27)",
+  "price_usd": 43.49,
+  "price_note": "Digi-Key 100-VLM-520-73LPT-ND, one unit, 189 in stock, 4-week standard lead (Octopart, 2026-10-26)",
   "price_checked": "2026-10-27",
   "buy": [
    {
     "seller": "Digi-Key",
     "url": "https://www.digikey.com/en/products/detail/quarton-inc/VLM-520-73-LPT/10523439",
-    "in_stock": false,
+    "in_stock": true,
     "ships_from": "US"
    }
   ],
@@ -4508,7 +4950,7 @@
   "confidence": "datasheet",
   "used_for": "the aiming laser in its mount on the cradle (Class 2, under 1 mW: kid-safe), on the 5 V rail through a logic MOSFET",
   "qty_per_robot": 1,
-  "notes": "Replaces the Picotronic DD520-1-24 (EUR 320, maker's store in Germany only): the same green dot class at an eighth of the price, listed at Digi-Key and LCSC (C5997388)."
+  "notes": "Replaces the Picotronic DD520-1-24 (EUR 320, maker's store in Germany only): the same green dot class at an eighth of the price, listed at Digi-Key and LCSC (C5997388). v0 uses the red VLM-650-03 LPT (D42); this green one is the v1 option (Digi-Key $43.49, 189 in stock per Octopart 2026-10-26)."
  },
  {
   "id": "sendcutsend-pan-clamp",
@@ -4541,5 +4983,1340 @@
   "confidence": "estimate",
   "used_for": "holds the pan bearing's outer race down (5 x M3 x 8 into the housing ears); FEA SF 3.1 on the lift case",
   "qty_per_robot": 1
+ },
+ {
+  "id": "sunnysky-x2216-880kv-v3",
+  "key": "sunnysky-x2216-880kv-v3",
+  "category": "turret",
+  "preferred": true,
+  "vendor": "SunnySky",
+  "model": "X2216 V3 880KV, short shaft (SKU SS-XV3-X2216-S-880-V3)",
+  "name": "SunnySky X2216 880KV V3 outrunner, short shaft, with its bolt-on prop adapter and X-mount",
+  "price_usd": 24.99,
+  "price_note": "SunnySky USA, V3, one unit (V2 $18.99), read 2026-10-27 (docs/turret-prototype-plan.md 3.1)",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "SunnySky USA",
+    "url": "https://sunnyskyusa.com/products/sunnysky-x2216?variant=15890897469534",
+    "in_stock": true,
+    "ships_from": null,
+    "seller_pn": "SS-XV3-X2216-S-880-V3 (variant 15890897469534, '880 Short')",
+    "price_usd": 24.99,
+    "pack_qty": 1,
+    "stock": "available: true (Shopify; no count exposed)",
+    "read_on": "2026-10-27",
+    "how_read": "json"
+   },
+   {
+    "seller": "ReadyMadeRC",
+    "url": "https://www.readymaderc.com/products/details/sunny-sky-x2216-brushless-motor-short-shaft-880kv",
+    "in_stock": true,
+    "ships_from": null,
+    "seller_pn": "SS-XV3-X2216-S-880-V3 (RMRC 84776, GTIN 680306447725)",
+    "price_usd": 22.99,
+    "pack_qty": 1,
+    "stock": "In Stock (no quantity shown)",
+    "read_on": "2026-10-27",
+    "how_read": "page"
+   },
+   {
+    "seller": "Amazon",
+    "url": "https://www.amazon.com/dp/B0BR4VV3FG",
+    "in_stock": true,
+    "ships_from": null,
+    "seller_pn": "ASIN B0BR4VV3FG",
+    "price_usd": 26.99,
+    "pack_qty": 1,
+    "stock": "Only 3 left in stock - order soon",
+    "read_on": "2026-10-27",
+    "how_read": "page"
+   }
+  ],
+  "specs": {
+   "kv_rpm_per_v": 880,
+   "poles": 14,
+   "slots": 12,
+   "pole_pairs": 7,
+   "stator_mm": "22 x 16",
+   "diameter_mm": 27.7,
+   "length_mount_face_to_bell_face_mm": 32.0,
+   "length_with_front_boss_mm": 34.0,
+   "length_overall_mm": 36.5,
+   "shaft_diameter_mm": 3.175,
+   "front_boss_mm": "Ø9 x 2.0",
+   "mount": "4 x M3 x 0.5, 2.8 deep, on the diagonals 45 deg either side of the lead exit: 19 apart on one, 16 on the other",
+   "prop_adapter": "bolt-on: Ø17 x 4 flange on 3 x M2 into the bell on Ø12 (Ø9 recess over the boss), Ø5 (0/-0.03) pilot 5.5 long, M5 x 0.8 stud 13 long; washer Ø14.8 x 2 (Ø5.1)",
+   "mass_g": 72,
+   "mass_note": "72 g with leads (SunnySky's table); 67.5 g (RMRC)",
+   "resistance_ohm": 0.117,
+   "resistance_note": "117 mOhm (SunnySky's table); 89 mOhm (RMRC)",
+   "no_load_current_a": 0.5,
+   "no_load_current_at_v": 10.0,
+   "kt_nm_per_a": 0.01085,
+   "no_load_speed_rpm": 10560,
+   "no_load_speed_note": "880 rpm/V x 12 V, the fixed flywheel rail (D5, D42)",
+   "rotor_inertia_kg_mm2": 4.8,
+   "rotor_inertia_note": "est from the drawing (not published): steel can Ø27.7 x 0.8 x 24.5 (13.4 g at r 13.45) + 14 magnets ~15 g at r 12 + end cap: 4.8 kg mm2 +-30 %",
+   "max_continuous_a": 30,
+   "leads": "18 AWG x 100-110 mm with connectors",
+   "voltage_range_v": [
+    7.4,
+    14.8
+   ]
+  },
+  "cad": {
+   "step_url": null,
+   "available": false,
+   "drawing_url": "http://www.rcsunnysky.com/Uploads/ueditor/image/20190903/6370311669556908787898053.jpg"
+  },
+  "sources": [
+   "https://en.rcsunnysky.com/x-fixedwingseries/1102.html",
+   "http://www.rcsunnysky.com/Uploads/ueditor/image/20190903/6370311669556908787898053.jpg",
+   "https://www.readymaderc.com/products/details/sunny-sky-x2216-brushless-motor-short-shaft-880kv"
+  ],
+  "confidence": "datasheet",
+  "used_for": "the two flywheel motors (D42), hanging bell-down under the cartridge's cage plate; the hub clamps on the bolt-on prop adapter",
+  "qty_per_robot": 2,
+  "notes": "Replaces the delisted DJI Snail 2305 (D42). 880 rpm/V sits in the cage's band on the fixed 12 V rail with Ø34 tyres (worst-corner ball 64.1 fps, docs/turret-prototype-plan.md 3.1). The drawing gives the stack and the 16/19 cross; the cage plate's radial slots take the cross in any quarter turn. Screws into the mount face must not reach past 2.8 mm (M3 x 6 through the 3.5 mm plate). The box has the bolt-on prop adapter, its washer and an X-mount (not used)."
+ },
+ {
+  "id": "tmotor-mn2212-v2-920kv",
+  "key": "tmotor-mn2212-v2-920kv",
+  "category": "turret",
+  "vendor": "T-Motor",
+  "model": "MN2212 V2 920KV (Navigator)",
+  "name": "T-Motor MN2212 V2 920KV outrunner (the flywheel motor's backup part)",
+  "price_usd": 55.9,
+  "price_note": "RobotShop US, one unit, 'In stock' (page, 2026-10-27); T-Motor store $46.90 (China)",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "RobotShop",
+    "url": "https://www.robotshop.com/products/t-motor-navigator-mn2212-v2-920kv-brushless-motor",
+    "in_stock": true,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "kv_rpm_per_v": 920,
+   "mass_g": 54,
+   "mass_with_leads_g": 65,
+   "shaft_diameter_mm": 4.0,
+   "mount": "16 x 19 and 19 x 25 M3 patterns (RobotShop listing)"
+  },
+  "cad": {
+   "step_url": null,
+   "available": false
+  },
+  "sources": [
+   "https://www.robotshop.com/products/t-motor-navigator-mn2212-v2-920kv-brushless-motor"
+  ],
+  "confidence": "seller listing",
+  "used_for": "backup for the X2216 only if no 880 KV motor can be had: Ø34 tyres only",
+  "qty_per_robot": 2,
+  "notes": "At the KV edge: worst-corner ball 67.0 fps on Ø34, over the 66 fps bench limit by the formula, so the bench ceiling test (4.2) decides; a 4 mm shaft and a different stack height, so its hub and cage plate are a CAD change (not drop-in)."
+ },
+ {
+  "id": "lumenier-razor-pro-f4-45a-am32",
+  "key": "lumenier-razor-pro-f4-45a-am32",
+  "category": "turret",
+  "vendor": "Lumenier",
+  "model": "Razor Pro F4 45A 2-6S AM32 ESC (single)",
+  "name": "Lumenier Razor Pro F4 45A 2-6S AM32 single ESC (the flywheel ESC's backup)",
+  "price_usd": 31.49,
+  "price_note": "RaceDayQuads, one unit, available: true (page, 2026-10-27); GetFPV $23.99 (stock unconfirmed)",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "RaceDayQuads",
+    "url": "https://www.racedayquads.com/products/lumenier-razor-pro-f4-45a-2-6s-am32-esc",
+    "in_stock": true,
+    "ships_from": null,
+    "seller_pn": "22300 (UPC 724376363650)",
+    "price_usd": 31.49,
+    "pack_qty": 1,
+    "stock": "available: true (Shopify; no count exposed)",
+    "read_on": "2026-10-27",
+    "how_read": "json"
+   },
+   {
+    "seller": "GetFPV",
+    "url": "https://www.getfpv.com/lumenier-razor-pro-f4-45a-2-6s-am32-esc.html",
+    "in_stock": null,
+    "ships_from": null,
+    "seller_pn": "not read",
+    "price_usd": 31.49,
+    "pack_qty": 1,
+    "stock": "unknown (page returns 403 to automated reads)",
+    "read_on": "2026-10-27",
+    "how_read": "snippet"
+   }
+  ],
+  "specs": {
+   "size_mm": [
+    28,
+    12,
+    5
+   ],
+   "mass_g": 3,
+   "continuous_current_a": 45,
+   "burst_current_a": 60,
+   "cells_s": [
+    2,
+    6
+   ],
+   "firmware": "AM32",
+   "bec": false,
+   "signal_wire_mm": 150
+  },
+  "cad": {
+   "step_url": null,
+   "available": false
+  },
+  "sources": [
+   "https://www.getfpv.com/lumenier-razor-pro-f4-45a-2-6s-am32-esc.html",
+   "https://www.racedayquads.com/products/lumenier-razor-pro-f4-45a-2-6s-am32-esc"
+  ],
+  "confidence": "product page",
+  "used_for": "backup for the Repeat Robotics AM32 35A flywheel ESCs: same place on the cartridge board",
+  "qty_per_robot": 2,
+  "notes": "Stock AM32 with bidirectional DShot and a telemetry pad; needs the same AM32 configurator settings (firmware/turret/am32_settings.md)."
+ },
+ {
+  "id": "quarton-vlm-650-03-lpt",
+  "key": "quarton-vlm-650-03-lpt",
+  "category": "turret",
+  "preferred": true,
+  "vendor": "Quarton",
+  "model": "VLM-650-03 LPT",
+  "name": "Red dot laser module 650 nm, < 1 mW (Class 2), 2.6-6 V, Ø7 x 22.5 mm",
+  "price_usd": 25.03,
+  "price_note": "Digi-Key VLM-650-03-LPT-ND $25.03 at 1, 966 in stock (Octopart 2026-10-27); backup VLM-635-03 LPT (Ø7, Class II) $28.91, 36",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/detail/quarton-inc/VLM-650-03-LPT/1010454",
+    "in_stock": true,
+    "ships_from": null,
+    "seller_pn": "VLM-650-03-LPT-ND",
+    "price_usd": 25.03,
+    "pack_qty": 1,
+    "stock": "966 (authorized; Octopart data updated 2026-10-26 12:48 UTC)",
+    "read_on": "2026-10-27",
+    "how_read": "octopart"
+   },
+   {
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/result?keywords=VLM-635-03LPT-ND",
+    "in_stock": null,
+    "ships_from": null,
+    "seller_pn": "VLM-635-03LPT-ND",
+    "price_usd": 28.91,
+    "pack_qty": 1,
+    "stock": "36 (authorized; Octopart data updated 2026-10-26 12:48 UTC)",
+    "read_on": "2026-10-27",
+    "how_read": "octopart"
+   }
+  ],
+  "specs": {
+   "wavelength_nm": 650,
+   "power_mw": 1.0,
+   "class": "2",
+   "diameter_mm": 7.0,
+   "length_mm": 22.5,
+   "voltage_v": [
+    2.6,
+    6.0
+   ],
+   "current_ma_max": 35,
+   "mass_g": 3.0
+  },
+  "cad": {
+   "step_url": null,
+   "available": false
+  },
+  "sources": [
+   "https://www.digikey.com/en/products/detail/quarton-inc/VLM-650-03-LPT/1010454"
+  ],
+  "confidence": "product page",
+  "used_for": "the aiming laser in its mount on the cradle (D42), on 5 V through the 2N7000",
+  "qty_per_robot": 1,
+  "notes": "Replaces the green VLM-520-73 LPT (0 stock, 4-week lead) in the same Ø7 bore. The LPA variants are 2.5 mW Class IIIa: not allowed (kid-safety). Quarton's datasheet gives the body Ø7.00 x 22.50 (the plan said 21). The VLM-650-28 LPT the plan named as a backup is a line laser (Ø9, Class I): not a backup."
+ },
+ {
+  "id": "ti-cd74hc123e",
+  "key": "ti-cd74hc123e",
+  "category": "turret",
+  "vendor": "Texas Instruments",
+  "model": "CD74HC123E",
+  "name": "Dual retriggerable monostable, 74HC123, PDIP-16",
+  "price_usd": 0.99,
+  "price_note": "Digi-Key 296-9171-5-ND $0.99 (Octopart feed 2026-10-27); Mouser 595-CD74HC123E $1.03",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/detail/texas-instruments/CD74HC123E/376825",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "296-9171-5-ND",
+    "price_usd": 0.99,
+    "pack_qty": 1,
+    "stock": 2808,
+    "read_on": "2026-10-27"
+   },
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/595-CD74HC123E",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "595-CD74HC123E",
+    "price_usd": 1.03,
+    "pack_qty": 1,
+    "stock": 2680,
+    "read_on": "2026-10-27"
+   }
+  ],
+  "specs": {
+   "package": "PDIP-16",
+   "supply_v": [
+    2,
+    6
+   ],
+   "timing": "tw = 0.45 Rx Cx (CD74HC123 data sheet, for Cx > 10 nF; TI SCHS142)"
+  },
+  "cad": {
+   "step_url": null,
+   "available": false
+  },
+  "sources": [
+   "https://www.digikey.com/en/products/detail/texas-instruments/CD74HC123E/376825",
+   "https://www.mouser.com/ProductDetail/595-CD74HC123E"
+  ],
+  "confidence": "product page",
+  "used_for": "both one-shots of the safety chain in one package: the 20 ms retriggerable pulse detector and the 2.98 ms trip window (level 1)",
+  "qty_per_robot": 1,
+  "notes": "Replaces the SN74HC123N (broker stock only). The pulse width formula differs from the SN74HC123's: the R and C of both one-shots are chosen for the CD74HC123 (docs/turret-wiring.md), and bench test 3.3 selects the trip window's R."
+ },
+ {
+  "id": "bourns-mf-r250",
+  "key": "bourns-mf-r250",
+  "category": "turret",
+  "vendor": "Bourns",
+  "model": "MF-R250",
+  "name": "PTC resettable fuse, 30 V, 2.5 A hold, 5.0 A trip, radial",
+  "price_usd": 0.49,
+  "price_note": "Mouser 652-MFR250 $0.49, 8,520 in stock (oemstrade 2026-10-27); Digi-Key MF-R250-ND (price not readable)",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/detail/bourns-inc/MF-R250/1232772",
+    "in_stock": null,
+    "ships_from": "US",
+    "seller_pn": "MF-R250-ND",
+    "price_usd": null,
+    "pack_qty": 1,
+    "stock": null,
+    "read_on": "2026-10-27"
+   },
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/652-MFR250",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "652-MFR250",
+    "price_usd": 0.49,
+    "pack_qty": 1,
+    "stock": 8520,
+    "read_on": "2026-10-27"
+   }
+  ],
+  "specs": {
+   "hold_a": 2.5,
+   "trip_a": 5.0,
+   "v_max": 30,
+   "pitch_mm": 5.1
+  },
+  "cad": {
+   "step_url": null,
+   "available": false
+  },
+  "sources": [
+   "https://www.digikey.com/en/products/detail/bourns-inc/MF-R250/1232772",
+   "https://www.mouser.com/ProductDetail/652-MFR250"
+  ],
+  "confidence": "product page",
+  "used_for": "the polyfuse on the 5 V logic rail (level 1)",
+  "qty_per_robot": 1,
+  "notes": "MF-R200 does not exist (Bourns' MF-R series goes from MF-R185 to MF-R250); the MF-R250 is the same body and pitch as the MF-R300, about 2.1 A hold at 40 C."
+ },
+ {
+  "id": "onsemi-2n7000",
+  "key": "onsemi-2n7000",
+  "category": "turret",
+  "vendor": "onsemi",
+  "model": "2N7000",
+  "name": "N-channel MOSFET 60 V 200 mA, TO-92",
+  "price_usd": 1.23,
+  "price_note": "Mouser 512-2N7000 $1.23, 95,079 in stock (oemstrade 2026-10-27); Digi-Key 2N7000FS-ND about $0.66 (search copy, not confirmed)",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/detail/onsemi/2N7000/244278",
+    "in_stock": null,
+    "ships_from": "US",
+    "seller_pn": "2N7000FS-ND",
+    "price_usd": null,
+    "pack_qty": 1,
+    "stock": null,
+    "read_on": "2026-10-27"
+   },
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/512-2N7000",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "512-2N7000",
+    "price_usd": 1.23,
+    "pack_qty": 1,
+    "stock": 95079,
+    "read_on": "2026-10-27"
+   }
+  ],
+  "specs": {
+   "package": "TO-92",
+   "vds_v": 60,
+   "id_ma": 200
+  },
+  "cad": {
+   "step_url": null,
+   "available": false
+  },
+  "sources": [
+   "https://www.digikey.com/en/products/detail/onsemi/2N7000/244278",
+   "https://www.mouser.com/ProductDetail/512-2N7000"
+  ],
+  "confidence": "product page",
+  "used_for": "the laser's low-side switch on level 1 (gate from the Feather's LASER_EN)",
+  "qty_per_robot": 1,
+  "notes": ""
+ },
+ {
+  "id": "keystone-3568",
+  "key": "keystone-3568",
+  "category": "turret",
+  "vendor": "Keystone Electronics",
+  "model": "3568",
+  "name": "PCB holder for MINI (297) blade fuses, fully insulated, 30 A 500 VAC",
+  "price_usd": 1.41,
+  "price_note": "Mouser 534-3568-15 (the blue 15 A colour) $1.41, 2,411 in stock (oemstrade 2026-10-27); Digi-Key 36-3568-ND (price not readable)",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/detail/keystone-electronics/3568/2137306",
+    "in_stock": null,
+    "ships_from": "US",
+    "seller_pn": "36-3568-ND",
+    "price_usd": null,
+    "pack_qty": 1,
+    "stock": null,
+    "read_on": "2026-10-27"
+   },
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/534-3568-15",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "534-3568-15",
+    "price_usd": 1.41,
+    "pack_qty": 1,
+    "stock": 2411,
+    "read_on": "2026-10-27"
+   }
+  ],
+  "specs": {
+   "body_mm": [
+    16.0,
+    6.73,
+    7.37
+   ],
+   "pins": "4 x Ø1.57 on 9.9 x 3.40 mm, in Ø1.6 holes (not on the 0.1 in grid: drill the perfboard)"
+  },
+  "cad": {
+   "step_url": null,
+   "available": false
+  },
+  "sources": [
+   "https://www.digikey.com/en/products/detail/keystone-electronics/3568/2137306",
+   "https://www.mouser.com/ProductDetail/534-3568-15"
+  ],
+  "confidence": "product page",
+  "used_for": "the 15 A MINI fuse at the flywheel regulator's input (level 0)",
+  "qty_per_robot": 1,
+  "notes": "The Keystone 3557-2 takes ATO and low-profile MINI blades only, not MINI 297 (Keystone catalogue p. 41-42): the base board's 10 A ATO stays in a 3557-2, the level-0 MINI in this."
+ },
+ {
+  "id": "molex-43030-0010",
+  "key": "molex-43030-0010",
+  "category": "turret",
+  "vendor": "Molex",
+  "model": "43030-0010",
+  "name": "Micro-Fit 3.0 female crimp terminal, tin, 26-30 AWG",
+  "price_usd": 0.2,
+  "price_note": "Mouser 538-43030-0010 $0.20 (1), $0.153 (25), 287,656 in stock (oemstrade 2026-10-27)",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/538-43030-0010",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "538-43030-0010",
+    "price_usd": 0.2,
+    "pack_qty": 1,
+    "stock": 287656,
+    "read_on": "2026-10-27"
+   }
+  ],
+  "specs": {
+   "awg": [
+    26,
+    30
+   ],
+   "plating": "tin"
+  },
+  "cad": {
+   "step_url": null,
+   "available": false
+  },
+  "sources": [
+   "https://www.mouser.com/ProductDetail/538-43030-0010"
+  ],
+  "confidence": "product page",
+  "used_for": "the slip ring's own 28 AWG leads into the two 2 x 6 receptacles (43025-1200), one per lead",
+  "qty_per_robot": 24,
+  "notes": "The 20-24 AWG crimps (43030-0001) do not hold a 28 AWG lead; the board side of each ring connector is the plug (43020-1200) with 43031-0001 males on 24 AWG."
+ },
+ {
+  "id": "pololu-ul1007-24awg-60ft",
+  "key": "pololu-ul1007-24awg-60ft",
+  "category": "turret",
+  "vendor": "Pololu",
+  "model": "2630 (black), 2632 (red), 2634 (yellow), 2639 (white)",
+  "name": "Stranded hook-up wire, 24 AWG UL1007, 60 ft spool",
+  "price_usd": 10.95,
+  "price_note": "Pololu $10.95 per 60 ft spool (2630 black: 441 in stock, page 2026-10-27)",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Pololu",
+    "url": "https://www.pololu.com/product/2630",
+    "in_stock": null,
+    "ships_from": "US",
+    "seller_pn": "2630",
+    "price_usd": 10.95,
+    "pack_qty": 60,
+    "stock": "InStock (page data-available-stock=441); category page showed some colours as out of stock/backorder",
+    "read_on": "2026-10-27"
+   },
+   {
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/detail/remington-industries/24UL1007STRKIT/11613669",
+    "in_stock": null,
+    "ships_from": "US",
+    "seller_pn": null,
+    "price_usd": 31.63,
+    "pack_qty": 6,
+    "stock": null,
+    "read_on": "2026-10-27"
+   }
+  ],
+  "specs": {
+   "awg": 24,
+   "strands": "11 x 0.16 mm",
+   "od_mm": 1.4,
+   "insulation": "PVC UL1007"
+  },
+  "cad": {
+   "step_url": null,
+   "available": false
+  },
+  "sources": [
+   "https://www.pololu.com/product/2630",
+   "https://www.digikey.com/en/products/detail/remington-industries/24UL1007STRKIT/11613669"
+  ],
+  "confidence": "product page",
+  "used_for": "every 24 AWG signal and logic run; fits the Micro-Fit 20-24 AWG crimps (1.85 mm insulation at most)",
+  "qty_per_robot": 4,
+  "notes": "One spool per colour: black 2630, red 2632, yellow 2634, white 2639 (Pololu); 26 AWG is outside the 43030-0001's range."
+ },
+ {
+  "id": "remington-18ptfestr-25ft",
+  "key": "remington-18ptfestr-25ft",
+  "category": "turret",
+  "vendor": "Remington Industries",
+  "model": "18PTFESTRBLA25 (black) / 18PTFESTRRED25 (red)",
+  "name": "Hook-up wire 18 AWG stranded PTFE, 600 V, 25 ft",
+  "price_usd": 64.56,
+  "price_note": "Digi-Key $64.56 per 25 ft spool (search result page 2026-10-27)",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/detail/remington-industries/18PTFESTRBLA25/11613433",
+    "in_stock": null,
+    "ships_from": "US",
+    "seller_pn": null,
+    "price_usd": 64.56,
+    "pack_qty": 25,
+    "stock": null,
+    "read_on": "2026-10-27"
+   },
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/602-6825-100-02",
+    "in_stock": null,
+    "ships_from": "US",
+    "seller_pn": "602-6825-100-02",
+    "price_usd": 120.87,
+    "pack_qty": 100,
+    "stock": "2 (Mouser, via oemstrade feed today)",
+    "read_on": "2026-10-27"
+   }
+  ],
+  "specs": {
+   "awg": 18,
+   "strands": 19,
+   "od_mm": 1.75,
+   "insulation": "PTFE"
+  },
+  "cad": {
+   "step_url": null,
+   "available": false
+  },
+  "sources": [
+   "https://www.digikey.com/en/products/detail/remington-industries/18PTFESTRBLA25/11613433",
+   "https://www.mouser.com/ProductDetail/602-6825-100-02"
+  ],
+  "confidence": "product page",
+  "used_for": "the CT power cable and pigtail (12 V FLY, 12 V FEED, GND) and the stand's 24 V runs",
+  "qty_per_robot": 1,
+  "notes": "The Micro-Fit 18 AWG crimp (43030-0038) takes insulation up to 1.85 mm (Molex 43030-0040 data sheet); no 18 AWG silicone wire at the allowed sellers fits (2.41 mm and up). One black spool, with red heat-shrink markers on the + conductors. Backup: Alpha Wire 6825 (mPPE, 1.57 mm) at Mouser, 0 in stock today."
+ },
+ {
+  "id": "turret_screw_m2x6_flat",
+  "key": "turret_screw_m2x6_flat",
+  "category": "fastener",
+  "vendor": "McMaster-Carr",
+  "model": "92125A052",
+  "name": "18-8 Stainless Steel Hex-Drive Flat Head Screw, M2 x 0.4 mm Thread Size, 6 mm Long",
+  "price_usd": 0.24,
+  "price_note": "McMaster-Carr: $12.00 per pack of 50 (price_usd is per piece; product page read 2026-10-27)",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/92125A052/",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "thread": "M2 x 0.4",
+   "length_mm": 6,
+   "head": "90 deg flat, hex drive",
+   "material": "18-8 stainless steel"
+  },
+  "cad": {
+   "step_url": "https://www.mcmaster.com/92125A052/",
+   "available": false,
+   "pending": "STEP not downloaded yet: McMaster-Carr asks for a login before CAD downloads."
+  },
+  "sources": [
+   "https://www.mcmaster.com/92125A052/"
+  ],
+  "confidence": "product page",
+  "used_for": "the feed servo under the dial floor: 4 x M2 x 6 countersunk from above through the 3 mm floor, 3 mm into the servo's output face",
+  "qty_per_robot": 4,
+  "notes": "",
+  "pack_qty": 50,
+  "pack_price_usd": 12.0
+ },
+ {
+  "id": "bulgin-r13244aaaa",
+  "key": "bulgin-r13244aaaa",
+  "category": "turret",
+  "vendor": "Bulgin",
+  "model": "R13244AAAA",
+  "name": "Round snap-in rocker switch, DPST, 10 A 28 VDC (UL), Ø20.2 panel hole, panels to 3 mm",
+  "price_usd": 4.58,
+  "price_note": "Digi-Key 708-3111-ND $4.58, 866 in stock; Mouser 167-R13244AAAA $4.13, 347 (Octopart 2026-10-27)",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/result?keywords=708-3111-ND",
+    "in_stock": true,
+    "ships_from": null,
+    "seller_pn": "708-3111-ND",
+    "price_usd": 4.58,
+    "pack_qty": 1,
+    "stock": "866 (Octopart, updated 2026-10-26 12:48 UTC)",
+    "read_on": "2026-10-27",
+    "how_read": "octopart"
+   },
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/167-R13244AAAA",
+    "in_stock": true,
+    "ships_from": null,
+    "seller_pn": "167-R13244AAAA",
+    "price_usd": 4.13,
+    "pack_qty": 1,
+    "stock": "347 (Octopart, updated 2026-10-26 21:01 UTC)",
+    "read_on": "2026-10-27",
+    "how_read": "octopart"
+   }
+  ],
+  "specs": {
+   "poles": 2,
+   "rating": "10 A 28 VDC",
+   "panel_hole_mm": 20.2,
+   "panel_max_mm": 3.0
+  },
+  "cad": {
+   "step_url": null,
+   "available": false
+  },
+  "sources": [
+   "https://www.digikey.com/en/products/result?keywords=708-3111-ND",
+   "https://www.mouser.com/ProductDetail/167-R13244AAAA"
+  ],
+  "confidence": "product page",
+  "used_for": "the bench stand's power switch on the 24 V input",
+  "qty_per_robot": 1,
+  "notes": "The DC-rated rocker sold by Digi-Key and Mouser. Same Ø20.2 hole as the Switch Components RA1-1A-DC-2-B-1 (the plan's choice: RS Americas $1.54, 7 in stock; TME $1.98), which is the backup."
+ },
+ {
+  "id": "switchcomponents-ra1-1a-dc-2-b-1",
+  "key": "switchcomponents-ra1-1a-dc-2-b-1",
+  "category": "turret",
+  "vendor": "Switch Components",
+  "model": "RA1-1A-DC-2-B-1",
+  "name": "Round snap-in rocker switch, SPST, 10 A 28 VDC, Ø20.2 hole with a 2.2 mm key notch, panel 2.0-3.0 mm",
+  "price_usd": 1.54,
+  "price_note": "RS Americas 74355352 $1.54, 7 in stock; TME $1.98, 178 (Octopart 2026-10-27); Jameco 2337967 (not confirmed)",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "RS Americas",
+    "url": "https://us.rs-online.com/product/switch-components-inc/ra1-1a-dc-2-b-1/74355352/",
+    "in_stock": null,
+    "ships_from": null,
+    "seller_pn": "74355352",
+    "price_usd": 1.54,
+    "pack_qty": 1,
+    "stock": "7 (Octopart, updated 2026-10-26 19:45 UTC; oemstrade also shows 7)",
+    "read_on": "2026-10-27",
+    "how_read": "octopart"
+   },
+   {
+    "seller": "TME",
+    "url": "https://www.tme.eu/en/details/ra1-1a-dc-2-b-1/",
+    "in_stock": true,
+    "ships_from": null,
+    "seller_pn": "RA1-1A-DC-2-B-1",
+    "price_usd": 1.98,
+    "pack_qty": 1,
+    "stock": "178 (Octopart updated 2026-10-27 12:31 UTC; oemstrade also 178)",
+    "read_on": "2026-10-27",
+    "how_read": "octopart"
+   },
+   {
+    "seller": "Jameco",
+    "url": "https://www.jameco.com/webapp/wcs/stores/servlet/ProductDisplay?langId=-1&storeId=10001&catalogId=10001&productId=2337967",
+    "in_stock": true,
+    "ships_from": null,
+    "seller_pn": "2337967",
+    "price_usd": 1.54,
+    "pack_qty": 1,
+    "stock": "not confirmed today (planner's snippet: 1,222 in stock; $1.54 at 10+, NCNR)",
+    "read_on": "2026-10-27",
+    "how_read": "snippet"
+   }
+  ],
+  "specs": {
+   "poles": 1,
+   "rating": "10 A 28 VDC",
+   "panel_hole_mm": 20.2,
+   "key_notch_mm": 2.2,
+   "panel_mm": [
+    2.0,
+    3.0
+   ]
+  },
+  "cad": {
+   "step_url": null,
+   "available": false
+  },
+  "sources": [
+   "https://us.rs-online.com/product/switch-components-inc/ra1-1a-dc-2-b-1/74355352/",
+   "https://www.tme.eu/en/details/ra1-1a-dc-2-b-1/",
+   "https://www.jameco.com/webapp/wcs/stores/servlet/ProductDisplay?langId=-1&storeId=10001&catalogId=10001&productId=2337967"
+  ],
+  "confidence": "product page",
+  "used_for": "backup for the stand's rocker",
+  "qty_per_robot": 1,
+  "notes": "Not sold by Digi-Key or Mouser today: the Bulgin R13244AAAA is the primary."
+ },
+ {
+  "id": "meanwell-lrs-350-24",
+  "key": "meanwell-lrs-350-24",
+  "category": "turret",
+  "vendor": "Mean Well",
+  "model": "LRS-350-24",
+  "name": "Enclosed AC-DC supply, 24 V 14.6 A, 350 W",
+  "price_usd": 32.1,
+  "price_note": "Jameco 2219823 $32.10, 245 in stock (Octopart 2026-10-27); TRC Electronics $34.81, 2,902 in stock (page)",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Jameco",
+    "url": "https://www.jameco.com/webapp/wcs/stores/servlet/ProductDisplay?langId=-1&storeId=10001&catalogId=10001&productId=2219823",
+    "in_stock": true,
+    "ships_from": null,
+    "seller_pn": "2219823",
+    "price_usd": 32.1,
+    "pack_qty": 1,
+    "stock": "245 (Octopart, updated 2026-10-27 06:18 UTC)",
+    "read_on": "2026-10-27",
+    "how_read": "octopart"
+   },
+   {
+    "seller": "TRC Electronics",
+    "url": "https://www.trcelectronics.com/products/mean-well-lrs-350-24",
+    "in_stock": true,
+    "ships_from": null,
+    "seller_pn": "LRS-350-24",
+    "price_usd": 34.81,
+    "pack_qty": 1,
+    "stock": "In Stock: 2,902 can ship now",
+    "read_on": "2026-10-27",
+    "how_read": "page"
+   }
+  ],
+  "specs": {
+   "v_out": 24,
+   "i_out_a": 14.6,
+   "w": 350
+  },
+  "cad": {
+   "step_url": null,
+   "available": false
+  },
+  "sources": [
+   "https://www.jameco.com/webapp/wcs/stores/servlet/ProductDisplay?langId=-1&storeId=10001&catalogId=10001&productId=2219823",
+   "https://www.trcelectronics.com/products/mean-well-lrs-350-24"
+  ],
+  "confidence": "product page",
+  "used_for": "the bench's 24 V supply (current limit set on the bench, test plan)",
+  "qty_per_robot": 1,
+  "notes": "Backup part LRS-200-24 (8.8 A): TRC $27.22, Jameco and Master Electronics $25.10. Digi-Key and Mouser do not list either today."
+ },
+ {
+  "id": "caldwell-ballistic-precision-chronograph-bt",
+  "key": "caldwell-ballistic-precision-chronograph-bt",
+  "category": "turret",
+  "vendor": "Caldwell",
+  "model": "4001147",
+  "name": "Ballistic Precision chronograph with Bluetooth (optical)",
+  "price_usd": 168.99,
+  "price_note": "Caldwell's store $168.99, In Stock (page 2026-10-27)",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Caldwell",
+    "url": "https://www.caldwellshooting.com/range-gear/range-essentials/chronographs/ballistic-precision-chronograph-with-bluetooth/4001147.html",
+    "in_stock": true,
+    "ships_from": null,
+    "seller_pn": "SKU 4001147",
+    "price_usd": 168.99,
+    "pack_qty": 1,
+    "stock": "Availability: In Stock",
+    "read_on": "2026-10-27",
+    "how_read": "page"
+   },
+   {
+    "seller": "Competition Electronics",
+    "url": "https://competitionelectronics.com/products/prochrono-dlx",
+    "in_stock": true,
+    "ships_from": null,
+    "seller_pn": "CEI-3820",
+    "price_usd": 139.95,
+    "pack_qty": 1,
+    "stock": "available: true",
+    "read_on": "2026-10-27",
+    "how_read": "json"
+   },
+   {
+    "seller": "Graf & Sons",
+    "url": "https://grafs.com/products/competition-electronics-prochrono-dlx-chronograph",
+    "in_stock": true,
+    "ships_from": null,
+    "seller_pn": "CE3820 (Shopify variant 46624058671235)",
+    "price_usd": 136.99,
+    "pack_qty": 1,
+    "stock": "available: true",
+    "read_on": "2026-10-27",
+    "how_read": "json"
+   }
+  ],
+  "specs": {
+   "type": "optical gates"
+  },
+  "cad": {
+   "step_url": null,
+   "available": false
+  },
+  "sources": [
+   "https://www.caldwellshooting.com/range-gear/range-essentials/chronographs/ballistic-precision-chronograph-with-bluetooth/4001147.html",
+   "https://competitionelectronics.com/products/prochrono-dlx",
+   "https://grafs.com/products/competition-electronics-prochrono-dlx-chronograph"
+  ],
+  "confidence": "product page",
+  "used_for": "the reference chronograph 1 m out beside the barrel's own gates (bench tests 4.2-4.4)",
+  "qty_per_robot": 1,
+  "notes": "Backup: Competition Electronics ProChrono DLX, $139.95 at the maker, $136.99 at grafs.com (both available). Optical gates read foam balls."
+ },
+ {
+  "id": "waveshare-bus-servo-adapter-a",
+  "key": "waveshare-bus-servo-adapter-a",
+  "category": "turret",
+  "vendor": "Waveshare",
+  "model": "Bus Servo Adapter (A), SKU 25514",
+  "name": "USB / UART adapter for Feetech serial bus servos",
+  "price_usd": 4.99,
+  "price_note": "Waveshare $4.99, In stock (page 2026-10-27); Amazon B0CJ6TP3TP $12.99",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Waveshare",
+    "url": "https://www.waveshare.com/bus-servo-adapter-a.htm",
+    "in_stock": true,
+    "ships_from": null,
+    "seller_pn": "25514 (MPN 'Bus Servo Adapter (A)')",
+    "price_usd": 4.99,
+    "pack_qty": 1,
+    "stock": "schema.org availability InStock",
+    "read_on": "2026-10-27",
+    "how_read": "page"
+   },
+   {
+    "seller": "Amazon",
+    "url": "https://www.amazon.com/dp/B0CJ6TP3TP",
+    "in_stock": true,
+    "ships_from": null,
+    "seller_pn": "ASIN B0CJ6TP3TP",
+    "price_usd": 12.99,
+    "pack_qty": 1,
+    "stock": "In Stock",
+    "read_on": "2026-10-27",
+    "how_read": "page"
+   }
+  ],
+  "specs": {},
+  "cad": {
+   "step_url": null,
+   "available": false
+  },
+  "sources": [
+   "https://www.waveshare.com/bus-servo-adapter-a.htm",
+   "https://www.amazon.com/dp/B0CJ6TP3TP"
+  ],
+  "confidence": "product page",
+  "used_for": "tool: sets each STS3215's bus ID (1 pan, 2 tilt, 3 feed) before assembly",
+  "qty_per_robot": 1,
+  "notes": "A tool, bought once."
+ },
+ {
+  "id": "tool-reamer-5mm",
+  "key": "tool-reamer-5mm",
+  "category": "turret",
+  "vendor": "McMaster-Carr",
+  "model": "8851A18",
+  "name": "Chucking reamer, 5 mm, turned by hand in a tap wrench (tool)",
+  "price_usd": 26.23,
+  "price_note": "McMaster-Carr 8851A18 chucking reamer $26.23 (page 2026-10-27), turned in a tap wrench; backup the 2822A37 hand reamer $106.53",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/8851A18/",
+    "in_stock": null,
+    "ships_from": null,
+    "seller_pn": "8851A18",
+    "price_usd": 26.23,
+    "pack_qty": 1,
+    "stock": "listed in the category table (product page not opened)",
+    "read_on": "2026-10-27",
+    "how_read": "page"
+   },
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/2822A37/",
+    "in_stock": null,
+    "ships_from": null,
+    "seller_pn": "2822A37",
+    "price_usd": 106.53,
+    "pack_qty": 1,
+    "stock": "'Delivers tomorrow 7-9 am'",
+    "read_on": "2026-10-27",
+    "how_read": "page"
+   }
+  ],
+  "specs": {},
+  "cad": {
+   "step_url": null,
+   "available": false
+  },
+  "sources": [
+   "https://www.mcmaster.com/2822A37/",
+   "https://www.mcmaster.com/8851A18/"
+  ],
+  "confidence": "product page",
+  "used_for": "tool: 5 mm hand reamer",
+  "qty_per_robot": 1,
+  "notes": "The only 5 mm hand reamer McMaster lists (category https://www.mcmaster.com/products/hand-reamers/). Far above the plan's ~$10 estimate: a cheaper 5 mm H7 hand or chucking reamer from Amazon could not be read today (Amazon bot checks / 503). Turn it in a tap wrench."
+ },
+ {
+  "id": "tool-am32-usb-linker",
+  "key": "tool-am32-usb-linker",
+  "category": "turret",
+  "vendor": "VXB",
+  "model": "VXB0FNQW93SR (Shopify variant 48952943968491)",
+  "name": "USB linker / ESC programming card for AM32 and BLHeli_32 ESCs (tool)",
+  "price_usd": 49.99,
+  "price_note": "VXB VXB0FNQW93SR (Shopify variant 48952943968491) $49.99 (json, 2026-10-27); backup Amazon ASIN B0FNQW93SR $None",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "VXB",
+    "url": "https://vxb.com/products/usb-linker-esc-programming-card-for-am32-bl32-brus",
+    "in_stock": true,
+    "ships_from": null,
+    "seller_pn": "VXB0FNQW93SR (Shopify variant 48952943968491)",
+    "price_usd": 49.99,
+    "pack_qty": 1,
+    "stock": "available: true",
+    "read_on": "2026-10-27",
+    "how_read": "json"
+   },
+   {
+    "seller": "Amazon",
+    "url": "https://www.amazon.com/dp/B0FNQW93SR",
+    "in_stock": null,
+    "ships_from": null,
+    "seller_pn": "ASIN B0FNQW93SR",
+    "price_usd": null,
+    "pack_qty": 1,
+    "stock": "not shown to this reader",
+    "read_on": "2026-10-27",
+    "how_read": "page"
+   }
+  ],
+  "specs": {},
+  "cad": {
+   "step_url": null,
+   "available": false
+  },
+  "sources": [
+   "https://vxb.com/products/usb-linker-esc-programming-card-for-am32-bl32-brus",
+   "https://www.amazon.com/dp/B0FNQW93SR"
+  ],
+  "confidence": "product page",
+  "used_for": "tool: AM32 USB linker",
+  "qty_per_robot": 1,
+  "notes": "Read from the Shopify product .js. VXB's vendor field is 'Amazon' and its SKU embeds ASIN B0FNQW93SR: this is the Amazon GOUPRC linker resold at a markup. The listing names AM32/BL32 configuration and firmware upgrades from a PC; it does not name esc-configurator.com, so treat compatibility with the"
+ },
+ {
+  "id": "tool-deutsch-crimper-iwd1620",
+  "key": "tool-deutsch-crimper-iwd1620",
+  "category": "turret",
+  "vendor": "IWISS",
+  "model": "IWD-1620 (Shopify variant 40373778415729)",
+  "name": "IWISS IWD-1620 crimper for Deutsch DT size-16 solid contacts, 16-20 AWG (tool)",
+  "price_usd": 24.99,
+  "price_note": "IWISS IWD-1620 (Shopify variant 40373778415729) $24.99 (json, 2026-10-27); backup McMaster-Carr 6084T3 $64.98",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "IWISS",
+    "url": "https://www.iwiss.com/products/iwd-1620-deutsch-size-16-crimper-solid-barrel-contact-circular-connector-contacts-crimping-tool-8-indents-wire-crimper-awg16-20",
+    "in_stock": true,
+    "ships_from": null,
+    "seller_pn": "IWD-1620 (Shopify variant 40373778415729)",
+    "price_usd": 24.99,
+    "pack_qty": 1,
+    "stock": "available: true",
+    "read_on": "2026-10-27",
+    "how_read": "json"
+   },
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/6084T3/",
+    "in_stock": null,
+    "ships_from": null,
+    "seller_pn": "6084T3",
+    "price_usd": 64.98,
+    "pack_qty": 1,
+    "stock": "'Delivers tomorrow 7-9 am'",
+    "read_on": "2026-10-27",
+    "how_read": "page"
+   }
+  ],
+  "specs": {},
+  "cad": {
+   "step_url": null,
+   "available": false
+  },
+  "sources": [
+   "https://www.iwiss.com/products/iwd-1620-deutsch-size-16-crimper-solid-barrel-contact-circular-connector-contacts-crimping-tool-8-indents-wire-crimper-awg16-20",
+   "https://www.mcmaster.com/6084T3/"
+  ],
+  "confidence": "product page",
+  "used_for": "tool: IWISS",
+  "qty_per_robot": 1,
+  "notes": "Read from the Shopify product .js (vendor field 'iCrimp', IWISS's brand). 4-indent / 8-impression crimp for Deutsch DT solid contacts and Amphenol AT pins, 16-20 AWG: right for the DT12 size-16 pins (0460-202-16141). A second iwiss.com store search was met by a 'Verifying your connection' check and "
+ },
+ {
+  "id": "tool-microfit-crimper",
+  "key": "tool-microfit-crimper",
+  "category": "turret",
+  "vendor": "Adafruit",
+  "model": "Product ID 1213",
+  "name": "Ratcheting crimper for open-barrel contacts, 18-28 AWG (Adafruit 1213): Micro-Fit 3.0 terminals (tool)",
+  "price_usd": 10.0,
+  "price_note": "Adafruit Product ID 1213 $10.0 (page, 2026-10-27); backup Adafruit Product ID 350 $49.95; backup Mouser 538-63819-0000 (Molex 63819-0000) $501.22",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Adafruit",
+    "url": "https://www.adafruit.com/product/1213",
+    "in_stock": true,
+    "ships_from": null,
+    "seller_pn": "Product ID 1213",
+    "price_usd": 10.0,
+    "pack_qty": 1,
+    "stock": "'In stock'; 'On Sale' $10.00 (struck-through $34.95; qty-break table still shows $34.95 for 1-9)",
+    "read_on": "2026-10-27",
+    "how_read": "page"
+   },
+   {
+    "seller": "Adafruit",
+    "url": "https://www.adafruit.com/product/350",
+    "in_stock": true,
+    "ships_from": null,
+    "seller_pn": "Product ID 350",
+    "price_usd": 49.95,
+    "pack_qty": 1,
+    "stock": "'In stock'",
+    "read_on": "2026-10-27",
+    "how_read": "page"
+   },
+   {
+    "seller": "Mouser",
+    "url": "https://www.oemstrade.com/search/638190000",
+    "in_stock": true,
+    "ships_from": null,
+    "seller_pn": "538-63819-0000 (Molex 63819-0000)",
+    "price_usd": 501.22,
+    "pack_qty": 1,
+    "stock": "40 in stock (Mouser); Heilind 42 in stock at $463.32",
+    "read_on": "2026-10-27",
+    "how_read": "oemstrade"
+   }
+  ],
+  "specs": {},
+  "cad": {
+   "step_url": null,
+   "available": false
+  },
+  "sources": [
+   "https://www.adafruit.com/product/1213",
+   "https://www.adafruit.com/product/350",
+   "https://www.oemstrade.com/search/638190000"
+  ],
+  "confidence": "product page",
+  "used_for": "tool: Micro-Fit 3.0 crimper",
+  "qty_per_robot": 1,
+  "notes": "A ratcheting open-barrel crimper of the IWS-3220M class, and the only one read today that reaches 18 AWG: it covers both the 18 AWG and the 24 AWG Micro-Fit crimps in the plan. The IWS-3220M itself tops out at AWG 20 (0.03-0.5 mm2), so it would not do the 18 AWG crimps; iwiss.com answered with a 'Ve"
+ },
+ {
+  "id": "tool-dial-indicator",
+  "key": "tool-dial-indicator",
+  "category": "turret",
+  "vendor": "McMaster-Carr",
+  "model": "5518N11",
+  "name": "Dial indicator with a jointed-arm magnetic base (tool)",
+  "price_usd": 79.62,
+  "price_note": "McMaster-Carr 5518N11 $79.62 (page, 2026-10-27); backup McMaster-Carr 6302N12 $84.93",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/products/dial-indicators/economy-dial-plunger-variance-indicators-with-jointed-arm-magnetic-base-holder~~/",
+    "in_stock": null,
+    "ships_from": null,
+    "seller_pn": "5518N11",
+    "price_usd": 79.62,
+    "pack_qty": 1,
+    "stock": "'Delivers tomorrow 7-9 am'",
+    "read_on": "2026-10-27",
+    "how_read": "page"
+   },
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/products/dial-indicators/economy-dial-plunger-variance-indicators-with-flexible-arm-magnetic-base-holder~~/",
+    "in_stock": null,
+    "ships_from": null,
+    "seller_pn": "6302N12",
+    "price_usd": 84.93,
+    "pack_qty": 1,
+    "stock": "'Delivers tomorrow 7-9 am'",
+    "read_on": "2026-10-27",
+    "how_read": "page"
+   }
+  ],
+  "specs": {},
+  "cad": {
+   "step_url": null,
+   "available": false
+  },
+  "sources": [
+   "https://www.mcmaster.com/products/dial-indicators/economy-dial-plunger-variance-indicators-with-jointed-arm-magnetic-base-holder~~/",
+   "https://www.mcmaster.com/products/dial-indicators/economy-dial-plunger-variance-indicators-with-flexible-arm-magnetic-base-holder~~/"
+  ],
+  "confidence": "product page",
+  "used_for": "tool: dial indicator",
+  "qty_per_robot": 1,
+  "notes": "Indicator and base sold as one kit. Inch reading: 0.001 in = 0.025 mm, fine for the 0.15 mm (0.006 in) runout limit of test 1.5. Other McMaster kits on https://www.mcmaster.com/products/dial-indicators/ (rigid-arm, flexible-arm, Mitutoyo) were not priced."
+ },
+ {
+  "id": "tool-circlip-pliers",
+  "key": "tool-circlip-pliers",
+  "category": "turret",
+  "vendor": "McMaster-Carr",
+  "model": "5449A83",
+  "name": "External retaining-ring pliers for a 50 mm ring (tool)",
+  "price_usd": 37.25,
+  "price_note": "McMaster-Carr 5449A83 $37.25 (page, 2026-10-27); backup McMaster-Carr 5449A82 $33.48",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/5449A83/",
+    "in_stock": null,
+    "ships_from": null,
+    "seller_pn": "5449A83",
+    "price_usd": 37.25,
+    "pack_qty": 1,
+    "stock": "'Delivers tomorrow 7-9 am' (McMaster's in-stock wording)",
+    "read_on": "2026-10-27",
+    "how_read": "page"
+   },
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/5449A82/",
+    "in_stock": null,
+    "ships_from": null,
+    "seller_pn": "5449A82",
+    "price_usd": 33.48,
+    "pack_qty": 1,
+    "stock": "listed in the category table (not opened; McMaster stocks the family)",
+    "read_on": "2026-10-27",
+    "how_read": "page"
+   }
+  ],
+  "specs": {},
+  "cad": {
+   "step_url": null,
+   "available": false
+  },
+  "sources": [
+   "https://www.mcmaster.com/5449A83/",
+   "https://www.mcmaster.com/5449A82/"
+  ],
+  "confidence": "product page",
+  "used_for": "tool: external circlip",
+  "qty_per_robot": 1,
+  "notes": "Read in headless Chrome, one page. A DIN 471-50 ring (50 mm shaft) sits mid-range; the 0.090 in (2.3 mm) tips suit the ring's ~2.5 mm lug holes. Spring-assisted jaws."
+ },
+ {
+  "id": "tool-insert-tips",
+  "key": "tool-insert-tips",
+  "category": "turret",
+  "vendor": "McMaster-Carr",
+  "model": "8915N111",
+  "name": "Heat-set insert installation tip set, M2-M8, for a Hakko 900M-style iron (tool)",
+  "price_usd": 22.66,
+  "price_note": "McMaster-Carr 8915N111 $22.66 (page, 2026-10-27); backup McMaster-Carr 97338A140 $74.43; backup McMaster-Carr 92160A315 + 92160A323 + 92160A327 $28.14",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/8915N111/",
+    "in_stock": null,
+    "ships_from": null,
+    "seller_pn": "8915N111",
+    "price_usd": 22.66,
+    "pack_qty": 1,
+    "stock": "'Delivers tomorrow 7-9 am'",
+    "read_on": "2026-10-27",
+    "how_read": "page"
+   },
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/97338A140/",
+    "in_stock": null,
+    "ships_from": null,
+    "seller_pn": "97338A140",
+    "price_usd": 74.43,
+    "pack_qty": 1,
+    "stock": "'Delivers tomorrow 7-9 am'",
+    "read_on": "2026-10-27",
+    "how_read": "page"
+   },
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/heat-set-insert-installation-tips/",
+    "in_stock": null,
+    "ships_from": null,
+    "seller_pn": "92160A315 + 92160A323 + 92160A327",
+    "price_usd": 28.14,
+    "pack_qty": 3,
+    "stock": "listed in the category table (product pages not opened)",
+    "read_on": "2026-10-27",
+    "how_read": "page"
+   }
+  ],
+  "specs": {},
+  "cad": {
+   "step_url": null,
+   "available": false
+  },
+  "sources": [
+   "https://www.mcmaster.com/8915N111/",
+   "https://www.mcmaster.com/97338A140/",
+   "https://www.mcmaster.com/heat-set-insert-installation-tips/"
+  ],
+  "confidence": "product page",
+  "used_for": "tool: heat-set",
+  "qty_per_robot": 1,
+  "notes": "Covers M3, M4 and M5. Fits a Hakko 900M-series iron (e.g. a Hakko FX-888D-class iron, or any iron taking 900M tips); check the bench iron before ordering. Found on https://www.mcmaster.com/heat-set-insert-installation-tips/ (headless Chrome)."
  }
 ]
