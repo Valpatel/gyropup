@@ -1,0 +1,174 @@
+{
+ "servo": {
+  "stall_nm": 2.94,
+  "no_load_rad_s": 4.71238898038469,
+  "source": "catalog feetech-sts3215-c018-12v (Waveshare ST3215: 30 kg.cm, 45 rpm at 12 V)"
+ },
+ "gear": {
+  "ratio": 3.0,
+  "efficiency": 0.9,
+  "note": "printed spur pair, dry PA6-CF on PA6-CF: 0.90 assumed"
+ },
+ "body": {
+  "pitch_acc_rad_s2": 30.0,
+  "yaw_acc_rad_s2": 15.0,
+  "note": "est for a balancing robot: catching a shove pitches the body at up to ~30 rad/s^2; a hard turn yaws it at ~15 rad/s^2"
+ },
+ "moves": {
+  "pan_90": {
+   "deg": 90.0,
+   "s": 1.2
+  },
+  "tilt_25": {
+   "deg": 25.0,
+   "s": 0.25
+  }
+ },
+ "tilt": {
+  "rows": [
+   {
+    "balls": 0,
+    "tilt_deg": 0.0,
+    "mass_g": 589.6,
+    "com_from_axis_mm": [
+     -6.8,
+     -2.6,
+     -1.0
+    ],
+    "I_yy_kg_m2": 0.002188,
+    "gravity_torque_nm": -0.039
+   },
+   {
+    "balls": 0,
+    "tilt_deg": -12.5,
+    "mass_g": 589.6,
+    "com_from_axis_mm": [
+     -6.8,
+     -2.6,
+     0.5
+    ],
+    "I_yy_kg_m2": 0.002188,
+    "gravity_torque_nm": -0.0394
+   },
+   {
+    "balls": 0,
+    "tilt_deg": -25.0,
+    "mass_g": 589.6,
+    "com_from_axis_mm": [
+     -6.5,
+     -2.6,
+     1.9
+    ],
+    "I_yy_kg_m2": 0.002188,
+    "gravity_torque_nm": -0.0379
+   },
+   {
+    "balls": 30,
+    "tilt_deg": 0.0,
+    "mass_g": 644.5,
+    "com_from_axis_mm": [
+     -9.8,
+     -2.4,
+     2.3
+    ],
+    "I_yy_kg_m2": 0.002414,
+    "gravity_torque_nm": -0.0618
+   },
+   {
+    "balls": 30,
+    "tilt_deg": -12.5,
+    "mass_g": 644.5,
+    "com_from_axis_mm": [
+     -9.0,
+     -2.4,
+     4.4
+    ],
+    "I_yy_kg_m2": 0.002414,
+    "gravity_torque_nm": -0.0572
+   },
+   {
+    "balls": 30,
+    "tilt_deg": -25.0,
+    "mass_g": 644.5,
+    "com_from_axis_mm": [
+     -7.9,
+     -2.4,
+     6.2
+    ],
+    "I_yy_kg_m2": 0.002414,
+    "gravity_torque_nm": -0.0498
+   }
+  ],
+  "margins": {
+   "inertia_kg_m2": 0.002414,
+   "gravity_torque_max_nm": 0.0618,
+   "move": "25 deg in 0.25 s: peak 200 deg/s, 28 rad/s^2",
+   "move_torque_nm": 0.129,
+   "available_at_peak_speed_nm": 0.762,
+   "move_margin": 5.9,
+   "hold_margin": 47.6,
+   "world_frame_against_body_pitch_nm": 0.134,
+   "world_frame_margin": 21.9,
+   "max_speed_deg_s": 270
+  }
+ },
+ "pan": {
+  "rows": [
+   {
+    "tilt_deg": 0.0,
+    "mass_g": 1108.4,
+    "I_zz_kg_m2": 0.003742
+   },
+   {
+    "tilt_deg": -25.0,
+    "mass_g": 1108.4,
+    "I_zz_kg_m2": 0.003399
+   }
+  ],
+  "pinion_I_kg_m2": 7.564159325045226e-07,
+  "margins": {
+   "inertia_at_turret_kg_m2": 0.003742,
+   "inertia_at_servo_kg_m2": 0.0004165,
+   "move": "90 deg in 1.2 s: a trapezoid to 81 deg/s at the turret (243 at the servo), 15.9 rad/s^2 for 89 ms",
+   "torque_cap": "50% of stall in firmware (the printed pinion's strength)",
+   "move_torque_at_servo_nm": 0.0295,
+   "available_at_peak_speed_nm": 0.294,
+   "move_margin": 10.0,
+   "against_body_yaw_nm": 0.0282,
+   "yaw_margin": 104.3,
+   "max_speed_deg_s_at_turret": 90.0,
+   "fastest_90_deg_s": 1.0
+  }
+ },
+ "gears": {
+  "module": 1.25,
+  "teeth": [
+   21,
+   63
+  ],
+  "face_mm": [
+   16.0,
+   16.0
+  ],
+  "rows": [
+   {
+    "case": "stall 2.94 N m",
+    "tooth_force_n": 224.0,
+    "pinion_mpa": 34.1,
+    "ring_mpa": 26.4,
+    "pinion_sf_xy": 1.44,
+    "ring_sf_xy": 1.86
+   },
+   {
+    "case": "cap 50 %",
+    "tooth_force_n": 112.0,
+    "pinion_mpa": 17.1,
+    "ring_mpa": 13.2,
+    "pinion_sf_xy": 2.87,
+    "ring_sf_xy": 3.72
+   }
+  ],
+  "allowable": "PA6-CF along the layers, humid: 49 MPa (teeth printed flat: the root bending runs in the layers)",
+  "method": "Lewis, load at the tooth tip on one tooth (conservative), Y for 20 deg full depth; it does not see the pinion's full-round roots, which the FEA of one tooth does (cad/turret_studies.py: SF 1.26 at stall, 2.52 at the cap)"
+ }
+}

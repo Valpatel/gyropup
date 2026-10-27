@@ -3,7 +3,7 @@
     .venv/bin/python cad/turret_motion.py
 
 Every part of cad/turret.py becomes a rigid body (cadagent.robot: printed parts by their print fill, bought parts with
-their catalogue mass spread over their envelope, the 30 balls in the hopper, the not-modelled 127 g at the turntable).
+their catalogue mass spread over their envelope, the 30 balls in the hopper, the not-modelled grams at the turntable).
 From those:
   - the tilting group's inertia about the tilt axis and its gravity torque over 0..-25 deg, empty and full;
   - the panning group's inertia about the pan axis (at tilt 0 and -25), seen by the pan servo through 63:21;
@@ -35,7 +35,8 @@ from cadagent.robot import Body, combine, printed_part_body, solid_mass_properti
 OUT = R / 'exports' / 'turret'
 SERVO = {'stall_nm': 2.94, 'no_load_rad_s': 45 * 2 * math.pi / 60, 'source': 'catalog feetech-sts3215-c018-12v (Waveshare ST3215: 30 kg.cm, 45 rpm at 12 V)'}
 GEAR = {'ratio': 63 / 21, 'efficiency': 0.90, 'note': 'printed spur pair, dry PA6-CF on PA6-CF: 0.90 assumed'}
-BRG_FRICTION_NM = 0.02          # the 6810-2Z (shielded, light load) plus the harness loop through the centre: est
+BRG_FRICTION_NM = 0.02          # the 6810-2Z (shielded, light load) plus the slip ring's drag (est)
+PAN_CAP = 0.5                   # the pan servo's firmware torque cap (cad/turret.py pan_pinion: the printed teeth)
 G = 9.81
 # what the game asks of the axes (S15: pan at most 100 deg/s near people; the hardware cannot exceed 90 deg/s anyway)
 MOVES = {'pan_90': {'deg': 90.0, 's': 1.2}, 'tilt_25': {'deg': 25.0, 's': 0.25}}
@@ -146,20 +147,25 @@ def main():
     n, eta = GEAR['ratio'], GEAR['efficiency']
     I_servo = I_p / n ** 2 + I_pin                        # seen at the servo output
     a, tmove = math.radians(MOVES['pan_90']['deg']), MOVES['pan_90']['s']
-    w_pk, acc = 2 * a / tmove, 4 * a / tmove ** 2      # at the turret
+    # the pan servo is speed-limited (45 rpm through 3:1 is 90 deg/s at the turret), so the move is a trapezoid: up to
+    # 90 % of that speed, cruise, and down, with the acceleration that finishes it in the time asked
+    w_pk = 0.9 * SERVO['no_load_rad_s'] / n                                      # at the turret
+    t_acc = tmove - a / w_pk
+    acc = w_pk / t_acc if t_acc > 0 else float('inf')
     need = (I_p * acc + BRG_FRICTION_NM) / (n * eta) + I_pin * acc * n
-    avail = SERVO['stall_nm'] * (1 - w_pk * n / SERVO['no_load_rad_s'])
+    avail = min(SERVO['stall_nm'] * (1 - w_pk * n / SERVO['no_load_rad_s']), PAN_CAP * SERVO['stall_nm'])   # worst: at the cruise speed
     yaw = (I_p * BODY['yaw_acc_rad_s2'] + BRG_FRICTION_NM) / (n * eta)
     res['pan'] = {'rows': pan_rows, 'pinion_I_kg_m2': I_pin, 'margins': {
         'inertia_at_turret_kg_m2': I_p, 'inertia_at_servo_kg_m2': round(I_servo, 7),
-        'move': f"{MOVES['pan_90']['deg']:.0f} deg in {tmove} s: peak {math.degrees(w_pk):.0f} deg/s at the turret ({math.degrees(w_pk * n):.0f} at the servo), {acc:.1f} rad/s^2",
+        'move': f"{MOVES['pan_90']['deg']:.0f} deg in {tmove} s: a trapezoid to {math.degrees(w_pk):.0f} deg/s at the turret ({math.degrees(w_pk * n):.0f} at the servo), {acc:.1f} rad/s^2 for {t_acc * 1000:.0f} ms",
+        'torque_cap': f'{PAN_CAP:.0%} of stall in firmware (the printed pinion\'s strength)',
         'move_torque_at_servo_nm': round(need, 4), 'available_at_peak_speed_nm': round(avail, 3), 'move_margin': round(avail / need, 1) if avail > 0 else 0.0,
         'against_body_yaw_nm': round(yaw, 4), 'yaw_margin': round(SERVO['stall_nm'] / yaw, 1),
         'max_speed_deg_s_at_turret': round(math.degrees(SERVO['no_load_rad_s'] / n), 1),
         'fastest_90_deg_s': round(fastest(a, I_servo * n ** 2, SERVO['stall_nm'] * n * eta, SERVO['no_load_rad_s'] / n, BRG_FRICTION_NM), 2),
     }}
     # ---- gears (Lewis, tip load) at the servo's stall and at a 50 % firmware cap
-    mm, face = Gg.gear['m'], 12.0
+    mm, face = Gg.gear['m'], tu.PINION_FACE
     rows = []
     for label, tq in (('stall 2.94 N m', SERVO['stall_nm']), ('cap 50 %', 0.5 * SERVO['stall_nm'])):
         s_p, Ft, y = lewis(mm, Gg.gear['z_pinion'], face, tq)
@@ -168,7 +174,8 @@ def main():
                      'pinion_sf_xy': round(MATERIALS['pa6_cf_xy'].strength_mpa / s_p, 2), 'ring_sf_xy': round(MATERIALS['pa6_cf_xy'].strength_mpa / s_r, 2)})
     res['gears'] = {'module': mm, 'teeth': [Gg.gear['z_pinion'], Gg.gear['z_ring']], 'face_mm': [face, 16.0], 'rows': rows,
                     'allowable': f"PA6-CF along the layers, humid: {MATERIALS['pa6_cf_xy'].strength_mpa} MPa (teeth printed flat: the root bending runs in the layers)",
-                    'method': 'Lewis, load at the tooth tip on one tooth (conservative), Y for 20 deg full depth'}
+                    'method': 'Lewis, load at the tooth tip on one tooth (conservative), Y for 20 deg full depth; it does not see the '
+                              'pinion\'s full-round roots, which the FEA of one tooth does (cad/turret_studies.py: SF 1.26 at stall, 2.52 at the cap)'}
     (OUT / 'motion.json').write_text(json.dumps(res, indent=1) + '\n')
     print(json.dumps({k: v for k, v in res.items() if k in ('tilt', 'pan', 'gears')}, indent=1))
 

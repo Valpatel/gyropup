@@ -1,15 +1,10 @@
 {
  "too_big": [],
- "print_hours": 55.9,
- "printed_g": 1017,
+ "print_hours": 60.1,
+ "printed_g": 1085,
  "stand_mm": [
   180.0,
   200.0,
   100.0
- ],
- "pictures": [
-  "turret-bench-level-iso.png",
-  "turret-bench-level-front.png",
-  "turret-bench-aimed-iso.png"
  ]
 }

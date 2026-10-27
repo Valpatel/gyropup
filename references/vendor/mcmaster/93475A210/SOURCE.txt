@@ -1,0 +1,6 @@
+McMaster-Carr parts. McMaster-Carr CAD, for design use; not redistributed.
+Files per part: <PN>.step (as downloaded), <PN>.norm.step (moved into the frame for its kind), <PN>.page.json (the product page's data).
+
+93475A210 18-8 Stainless Steel General Purpose Washer, for M3 Screw Size, 3.2 mm ID, 7.0 mm OD
+URL: https://www.mcmaster.com/93475A210/
+Downloaded: 2026-10-27

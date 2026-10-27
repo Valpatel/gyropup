@@ -2,7 +2,7 @@
  "adapter": [
   {
    "item": "pod_xt60",
-   "note": "Amass XT60E-F panel socket: 24 V in (the J501 takes 12-36 V, so one 24 V supply can feed both)",
+   "note": "Amass XT60E-M panel plug: 24 V in (the J501 takes 12-36 V, so one 24 V supply can feed both)",
    "mass_g": 10.0
   },
   {
