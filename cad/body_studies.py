@@ -2,13 +2,13 @@
 
     .venv/bin/python cad/body_studies.py [--mesh 4] [--no-anim] [--only S1 D1]
 
-Loads come from the leg rig (exports/leg/rig-results.json): the largest axle force of any scenario is the leg's force on
-the body in a rare event. It acts at the wheel's mid-plane, 187 mm outboard of the cheek's face, so each cheek also
-takes a roll moment F x 187 mm, and a 10 % sideways grip at the contact patch adds F_y x (leg + wheel radius). The
-spine is checked one leg against the other: the right cheek's frame interface clamped, the whole leg load on the left
-one, so every newton of it crosses the box (in a real landing each leg's vertical force is met by the body's own
-inertia between them: this is conservative by about 2 for the shear, exact for the roll moments, which the two legs
-apply equal and opposite).
+Loads come from the leg rig at the body's real half mass (cad/body_legloads.py -> exports/body/leg-loads.json, D49):
+each leg's vertical force and roll moment where it enters the body, at the hip frame's mount plane, taken every step
+by d'Alembert on the leg module (the axle's peak is mostly the wheel and links decelerating on the ground, and never
+reaches the body). The rare case is the largest roll moment of the jumps and the drop, with that scenario's largest
+vertical force; the fault case the undamped power cut (D39); both with a 10 % sideways grip of the ground force at the
+contact patch. In S1 both legs land and the payload's inertia reacts on the tray and the belly; in S1b one leg's load
+crosses the box to the other cheek, clamped (a bound).
 
 The parts are bonded where they bolt (the M5 joints at 4-5 kN of preload do not slip under these loads: friction
 0.3 x preload is above the largest bolt shear found); the cheeks, tray and belly plate are one solid for the mesher.
@@ -17,7 +17,7 @@ yield at the rare peaks for every sheet part (5052-H32 193 MPa is used for the w
 the deck <= 0.5 mm under a 300 N hand load, the twist between the two hip faces <= 0.1 deg under one leg's 80 N m.
 
 Cases
-  S1 landing   the rig's largest axle force on one leg, 10 % fore-aft, 10 % sideways at the contact patch (rare)
+  S1 landing   both legs at the rare load (above); S1F the same at the fault load (SF >= 1.2); S1b one leg, the other clamped
   S2 twist     one leg's 80 N m roll moment (the HM budget, docs/mechanical-interfaces.md): stiffness and twist
   S3 pitch     the two motors' 60 N m caps reacted as one 120 N m couple about y, plus the HM budget's 600 N fore-aft
   D1 hand      300 N down on the deck at its front edge over the lidar (the cantilever) and at the riser
@@ -64,25 +64,28 @@ def _wheel_r_mm():
 
 
 def rare_leg_load(kind='rare'):
-    """The leg's force on the body for a case: 'rare' (the largest axle force of the jumps and the drop) or 'fault' (the
-    undamped power cut), from exports/body/leg-loads.json (the rig at the body's real half mass, cad/body_legloads.py);
-    the leg's own exports/leg/rig-results.json (13.1 kg) if that is missing."""
+    """The leg's load on the body for a case: 'rare' (the jumps and the drop) or 'fault' (the undamped power cut), from
+    exports/body/leg-loads.json (the rig at the body's real half mass, cad/body_legloads.py). What reaches the body is
+    taken at the hip frame's mount plane (the leg's own mass decelerates on the ground force directly): the largest
+    roll moment of the case's scenarios, with the largest vertical force of the same scenario (the two peaks combined),
+    plus a 10 % sideways grip of the ground force at the contact patch. Returns the vertical force and the robot y of
+    the line it acts on (left leg) so that it carries the roll moment."""
     f = R / 'exports/body/leg-loads.json'
-    if f.exists():
-        d = json.loads(f.read_text())
-        Fz, name = d[kind]
-        worst = d['scenarios'][name]
-        hm = d['half_mass_kg']
-    else:
-        rig = json.loads((R / 'exports/leg/rig-results.json').read_text())['scenarios']
-        name, worst = max(rig.items(), key=lambda kv: kv[1].get('peak_axle_force_n') or 0.0)
-        Fz, hm = worst['peak_axle_force_n'], 13.1
+    d = json.loads(f.read_text())
     fb = bp._fivebar()
-    L = worst['pose_at_peak_axle_force']['L_mm']
-    y_wheel = bp.y_off() + fb.Y['wheel']                     # robot y of the wheel's mid-plane (left leg)
-    return {'scenario': name, 'Fz': Fz, 'L_mm': L, 'y_wheel': y_wheel, 'z_patch': -(L + _wheel_r_mm()), 'Fx': 0.10 * Fz, 'Fy': 0.10 * Fz,
-            'half_mass_kg': hm, 'kind': kind,
-            'from': f"rig '{name}' at {hm} kg a leg: {Fz:.0f} N on the axle at {L:.0f} mm, plus 10 % fore-aft and 10 % sideways at the contact patch"}
+    M, name = d[kind + '_body']
+    sc = d['scenarios'][name]
+    b = sc['body']
+    Fz = max(b['peak_vertical_n'], b['with_vertical_n'])
+    y_mount = bp.to_robot((0.0, fb.Y['centre_plane'], 0.0), 'left')[1]
+    L = b['at_L_mm']
+    hm = d['half_mass_kg']
+    Fg = b['with_ground_n']
+    return {'scenario': name, 'Fz': Fz, 'M_roll': M, 'y_line': y_mount + 1000.0 * M / Fz, 'L_mm': L,
+            'y_wheel': bp.y_off() + fb.Y['wheel'], 'z_patch': -(L + _wheel_r_mm()), 'Fx': 0.0, 'Fy': 0.10 * Fg,
+            'half_mass_kg': hm, 'kind': kind, 'axle_n': sc['peak_axle_force_n'],
+            'from': (f"rig '{name}' at {hm} kg a leg (axle {sc['peak_axle_force_n']:.0f} N): {M:.0f} N m roll and {Fz:.0f} N up at "
+                     f"the hip frame's mount plane, plus 10 % of the {Fg:.0f} N ground force sideways at the contact patch")}
 
 
 # ------------------------------------------------------------------------------------------- the models
@@ -94,7 +97,7 @@ def spine_box():
     parts = bf.frame_parts()
     s = parts['cheek_left'].shape.union(parts['cheek_right'].shape)
     for x, z in bf.SPACERS_XZ:
-        s = s.union(bf.hexagon_y(7.0, -bf.GAP_Y - 0.5, bf.GAP_Y + 0.5, x, z))
+        s = s.union(bf.hexagon_y(bf.SPACER_HEX, -bf.GAP_Y - 0.5, bf.GAP_Y + 0.5, x, z))
     zt = bf.ZT
     ttr, tbe = bp.STOCK[bp.TRAY]['t'], bp.STOCK[bp.BELLY]['t']
     x0, x1 = bp.SPINE_X[0] - 30.0, bp.SPINE_X[1] + 30.0
@@ -154,7 +157,7 @@ def symmetric_landing(st, leg):
     and its pitch moment are S3's (here only the anchor would react them)."""
     for side, sy in (('left', 1.0), ('right', -1.0)):
         h, f, _ = iface(side)
-        force_at(st, any_of(h, f), (0.0, 0.0, leg['Fz']), (0.0, sy * leg['y_wheel'], 0.0), probe=(side == 'left'))
+        force_at(st, any_of(h, f), (0.0, 0.0, leg['Fz']), (0.0, sy * leg['y_line'], 0.0), probe=(side == 'left'))
         force_at(st, any_of(h, f), (0.0, sy * leg['Fy'], 0.0), (0.0, sy * leg['y_wheel'], leg['z_patch']), probe=False)
     zt, tt, tb = bf.ZT, bp.STOCK[bp.TRAY]['t'], bp.STOCK[bp.BELLY]['t']
     share = PAYLOAD_BELLY_SHARE
@@ -209,6 +212,8 @@ def force_at(st, sel, F_n, P_mm, probe=True):
 def run(mesh=4.0, anim=True, only=None):
     OUT.mkdir(parents=True, exist_ok=True)
     results = {}
+    if only and (OUT / 'summary.json').exists():          # a partial rerun keeps the other cases' results
+        results = {k: v for k, v in json.loads((OUT / 'summary.json').read_text()).get('results', {}).items() if k.split('-')[0] not in only}
 
     def record(case, st, rare, why, extra=None, view=(25, -60)):
         r = st.solve()
@@ -261,7 +266,7 @@ def run(mesh=4.0, anim=True, only=None):
         hr, fr, _ = iface('right')
         st.fix(any_of(hr, fr))
         hl, fl, holes = iface('left')
-        force_at(st, any_of(hl, fl), (0.0, 0.0, leg['Fz']), (0.0, leg['y_wheel'], 0.0))
+        force_at(st, any_of(hl, fl), (0.0, 0.0, leg['Fz']), (0.0, leg['y_line'], 0.0))
         force_at(st, any_of(hl, fl), (leg['Fx'], leg['Fy'], 0.0), (0.0, leg['y_wheel'], leg['z_patch']), probe=False)
         record('S1b-one-leg-bound', st, True, leg['from'] + ' on ONE leg, the other cheek clamped: every newton crosses the gap '
                '(a bound: in a one-wheel landing the body\'s inertia takes most of it)', away_from_spacers)
@@ -293,13 +298,18 @@ def run(mesh=4.0, anim=True, only=None):
     return results
 
 
+LOAD_PAD_T = 1.0      # a 1 mm disc the size of the lidar's foot, bonded on the deck: the D1 hand load's patch
+
+
 def deck_cases(record, mesh, want):
     """The deck on its four posts (clamped at the posts' tops), with the riser bonded on."""
     parts = bf.frame_parts()
     deck = parts['deck'].shape
     t = bp.tm()
     ris = parts['riser'].shape
-    model = deck.union(ris).clean()
+    lid = bp.lidar()
+    pad = bf.cyl_z(lid['d'] / 2 - 2.0, bp.TOP, bp.TOP + LOAD_PAD_T, lid['x'], 0.0)     # the lidar's foot: where a hand's push lands
+    model = deck.union(ris).union(pad).clean()
     zd = bp.TOP - bp.STOCK[bp.DECK]['t']
     posts = any_of(*[in_box((x - bp.POST_W / 2 - 0.5, y - bp.POST_W / 2 - 0.5, zd - 0.1), (x + bp.POST_W / 2 + 0.5, y + bp.POST_W / 2 + 0.5, zd + 0.1))
                      for x, y in bp.POSTS])
@@ -312,8 +322,7 @@ def deck_cases(record, mesh, want):
             st = Study(model, AL5052, mesh_mm=mesh, name=f'deck D1 {tag}')
             st.fix(post_faces)
             if tag == 'front':
-                sel = lambda f, x=x, y=y, r=r: (f.kind == 'Plane' and abs(f.bbox[5] - bp.TOP) < 0.05 and abs(f.bbox[2] - bp.TOP) < 0.05
-                                                and abs(f.center[0] - x) < 60 and abs(f.center[1] - y) < 60)
+                sel = lambda f: (f.kind == 'Plane' and abs(f.bbox[5] - (bp.TOP + LOAD_PAD_T)) < 0.05 and abs(f.bbox[2] - (bp.TOP + LOAD_PAD_T)) < 0.05)
             else:
                 sel = lambda f: f.kind == 'Plane' and abs(f.bbox[2] - (bp.TOP + bp.RISER_H)) < 0.05 and abs(f.bbox[5] - (bp.TOP + bp.RISER_H)) < 0.05
             st.force(sel, (0.0, 0.0, -300.0))
@@ -334,29 +343,50 @@ def deck_cases(record, mesh, want):
         record('D2-turret-fall', st, True, f'a 30 g fall of the {m:.2f} kg turret at 45 deg, its centre {hcom:.0f} mm above the TM face', view=(30, -50))
 
 
+def body_g():
+    """The body's peak load factor in a landing (g): both legs' largest vertical force at the mount plane over the
+    body's own mass (the ledger's robot less its legs), plus gravity's 1 g already in it."""
+    d = json.loads((R / 'exports/body/leg-loads.json').read_text())
+    _, name = d['rare_body']
+    F = d['scenarios'][name]['body']['peak_vertical_n']
+    m = json.loads((R / 'exports/body/mass.json').read_text())['P3']
+    return round(2 * F / (m['body_and_head_kg'] * G), 2)
+
+
 def tray_case(record, mesh):
-    """The floor tray on the cheeks' upper flanges (clamped round the eight screws), the cassette's and the compute's
-    weight at 5 g spread over their footprints."""
+    """The floor tray on the cheeks' upper flanges (clamped round their screws), with what stands on it at the landing's
+    load factor: the compute through its four isolators, the power skid through its four posts, the DDR-120C on its
+    rail, the deck, lidar and turret through the four deck posts."""
+    import body_layout as bl
     parts = bf.frame_parts()
     st = Study(parts['floor_tray'].shape, AL5052, mesh_mm=mesh, name='tray T1')
     zt = bf.ZT
     st.fix(any_of(*[cylinder_at((x, sy * bf.PEM_Y, zt), (0, 0, 1), radius_max=3.0, tol=0.6) for x in bf.FLANGE_NUT_X for sy in (1, -1)]))
     top = bp.z_tray_top()
-    try:
-        import body_layout
-        L = body_layout.layout()
-        loads = [(it['name'], it['box'], it['mass_g']) for it in L['items'] if it.get('group') == 'tray' and it.get('mass_g')]
-    except Exception:
-        loads = [('cassette (est)', (37.0, 132.0, -80.0, 80.0, top, top + 100.0), 2500.0),
-                 ('compute (est)', (-150.0, 26.0, -81.5, 81.5, top, top + 80.0), 1250.0)]
-    for name, (x0, x1, y0, y1, *_), g in loads:
-        sel = lambda f, x0=x0, x1=x1, y0=y0, y1=y1: (f.kind == 'Plane' and abs(f.bbox[5] - top) < 0.05 and abs(f.bbox[2] - top) < 0.05
-                                                     and x0 - 1 <= f.center[0] <= x1 + 1 and y0 - 1 <= f.center[1] <= y1 + 1)
-        try:
-            st.force(sel, (0.0, 0.0, -5 * G * g / 1000.0))
-        except ValueError:
-            continue
-    record('T1-tray', st, True, 'the items on the floor tray at 5 g (a landing), the tray held by its eight screws', view=(30, -50))
+    n_g = body_g()
+    L = bl.layout()
+    mass = {it.name: it.mass_g for it in L['items'] if not it.keepout}
+    fm = json.loads((R / 'exports/body/body.json').read_text())['mass_g']['frame_parts']          # the frame parts' CAD masses
+    part_g = lambda n: fm.get(n) or 0.0
+    compute = sum(g for n, g in mass.items() if n.startswith(('j501', 'agx'))) + part_g('compute_pallet')
+    skid = sum(g for n, g in mass.items() if n.startswith('plate_')) + part_g('power_plate') + 400.0     # + its wiring
+    deck = sum(g for n, g in mass.items() if n in ('vlp16', 'turret', 'lidar_box', 'lidar_coil')) + part_g('deck') + part_g('riser')
+    supports = [('compute', compute, [(x, y, bf.ISOLATOR_D / 2) for x, y in bf.ISOLATORS]),
+                ('power skid', skid, [(x, y, bf.PLATE_POST_W / 2) for x, y in bf.PLATE_STANDOFFS]),
+                ('deck, lidar, turret', deck, [(x, y, bp.POST_W / 2) for x, y in bp.POSTS])]
+    d = next(i for i in L['items'] if i.name == 'ddr120c_24')
+    supports.append(('DDR-120C-24', d.mass_g, [((d.box[0] + d.box[1]) / 2, (d.box[2] + d.box[3]) / 2, 17.5)]))
+    for name, g, pts in supports:
+        for (x, y, r) in pts:
+            sel = lambda f, x=x, y=y, r=r: (f.kind == 'Plane' and abs(f.bbox[5] - top) < 0.05 and abs(f.bbox[2] - top) < 0.05
+                                            and abs(f.center[0] - x) <= r + 6 and abs(f.center[1] - y) <= r + 6)
+            try:
+                st.force(sel, (0.0, 0.0, -n_g * G * g / 1000.0 / len(pts)), probe=False)
+            except ValueError:
+                continue
+    record('T1-tray', st, True, f'what stands on the floor tray at {n_g} g (the body\'s landing peak from the rig): the compute '
+           f'{compute / 1000:.2f} kg on its isolators, the power skid {skid / 1000:.2f} kg on its posts, the deck with the lidar and '
+           f'turret {deck / 1000:.2f} kg on the deck posts, the DDR-120C; the tray held by its screws', view=(30, -50))
 
 
 def main():

@@ -146,10 +146,17 @@ def bay_parts(b: Brick):
         if name == 'bay_rear':                          # the rear wall
             tub = tub.union(cq.Workplane('XY').box(wall, y1 - y0, z1 - zf, centered=False).translate((a, y0, zf)))
         parts[name] = tub
-    door = cq.Workplane('XY').box(DOOR_T, y1 - y0 + 2 * flange_w, z1 - zf, centered=False).translate((x1 - DOOR_T, y0 - flange_w, zf))
-    door = door.cut(cq.Workplane('YZ', origin=(x1 - DOOR_T - 1, 0, 0)).center(0, (zf + z1) / 2 - 8).rect(16.6, 8.6).extrude(DOOR_T + 2))   # XT60E-F
+    # the door: only 6 mm wider than the tub each side (the knee pins pass 29 mm from its edges at the 320 mm stance:
+    # ISO 13854's 25 mm for fingers), held by two M3 thumbscrews into inserts in bosses inside the tub's front corners
+    ear = 6.0
+    door = cq.Workplane('XY').box(DOOR_T, y1 - y0 + 2 * ear, z1 - zf, centered=False).translate((x1 - DOOR_T, y0 - ear, zf))
+    door = door.cut(cq.Workplane('YZ', origin=(x1 - DOOR_T - 1, 0, 0)).center(0, (zf + z1) / 2 - 8).rect(16.6, 8.6).extrude(DOOR_T + 2))   # XT60
+    zb = (zf + z1) / 2 + 12.0
     for sy in (1, -1):
-        door = door.cut(cq.Workplane('YZ', origin=(x1 - DOOR_T - 1, 0, 0)).center(sy * (y1 + flange_w / 2), (zf + z1) / 2).circle(2.2).extrude(DOOR_T + 2))
+        door = door.cut(cq.Workplane('YZ', origin=(x1 - DOOR_T - 1, 0, 0)).center(sy * (y1 - wall - 4.0), zb).circle(1.7).extrude(DOOR_T + 2))
+        boss = (cq.Workplane('YZ', origin=(x1 - DOOR_T - 12.0, 0, 0)).center(sy * (y1 - wall - 4.0), zb).circle(4.5).extrude(12.0)
+                .cut(cq.Workplane('YZ', origin=(x1 - DOOR_T - 7.0, 0, 0)).center(sy * (y1 - wall - 4.0), zb).circle(2.0).extrude(8.0)))
+        parts['bay_front'] = parts['bay_front'].union(boss)
     parts['bay_door'] = door
     half = (x1 - x0 - 12) / 2                           # TPU skids under the floor: two per side (the bed is 256 mm)
     for k, sy in enumerate((1, -1)):

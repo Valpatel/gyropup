@@ -126,7 +126,7 @@ def mass_com(rows):
 BUS_XY = []                      # the bus bars' corners on the power plate (+, -), set by layout()
 SLOT_X = (40.0, 135.0)          # the tray slot over the spine's front end and the front chase
 SLOT_HALF = 15.0
-PLATE_H = 50.0                   # the power plate's underside above the tray's top (M5 x 50 standoffs)
+PLATE_H = 42.0                   # the power plate's underside above the tray's top (printed PA6-CF posts, M5 inserts both ends)
 PLATE_X = (28.0, 152.0)
 PLATE_Y = (-120.0, 86.0)
 FUSES = {'kind': 'provisional', 'box': (120.0, 42.0, 32.0), 'mass_g': 90.0,
@@ -207,21 +207,21 @@ def layout(cell=None):
     items = j501_items()
     # ---------------- the power bay. The cables from the belly and the spine's gap come up through the tray slot over the
     # spine's front end (x 40..135, |y| <= 15). The DDR-120C stands on the tray in the left strip; everything else is on
-    # the POWER PLATE (5052-H32 0.100 in, PEM nuts for every part) on four M5 x 50 standoffs: the P0 power skid, built
+    # the POWER PLATE (5052-H32 0.100 in, PEM nuts for every part) on four printed posts: the P0 power skid, built
     # and tested on the bench as one plate, then dropped in.
     items.append(Item('tray_slot', (SLOT_X[0], SLOT_X[1], -SLOT_HALF, SLOT_HALF, zt - 20.0, zt + 12.0), 0, '', 'power', keepout=True,
                       note='the cables\' way up from the spine\'s gap and the front chase'))
-    items.append(Item('ddr120c_24', box_xyz(-22.0, 89.0, zt, 125.2, 32.0, 112.3), 450.0, 'estimate (datasheet packs 0.51 kg with its carton)',
+    items.append(Item('ddr120c_24', box_xyz(-22.0, 89.0, zt + 7.5, 125.2, 32.0, 104.8), 450.0, 'estimate (datasheet packs 0.51 kg with its carton)',
                       'power', 'P0', 'meanwell-ddr-120c-24', '24 V 5 A, isolated: the J501 and the turret; on a TS35 rail across y in the '
                       'left strip, past the carrier\'s USB-C; output terminals at its rear end, input at the front', (0.62, 0.64, 0.68)))
     pz = zt + PLATE_H                                   # the power plate's underside
     pt = bp.STOCK['5052-0.100']['t']
     items.append(Item('power_plate', (PLATE_X[0], PLATE_X[1], PLATE_Y[0], PLATE_Y[1], pz, pz + pt), 0, '', 'frame', 'P0',
-                      keepout=True, owner='plate', note='5052-H32 0.100 in, on four M5 x 50 hex standoffs from the tray'))
+                      keepout=True, owner='plate', note='5052-H32 0.100 in, on four printed PA6-CF posts from the tray'))
     # hanging under the plate (fins and leads down), screws up into the plate's nuts
-    items.append(Item('plate_vesc_r', box_xyz(34.0, -68.0, pz - 35.0, 108.0, 50.7, 35.0), 230.0, 'catalogue (estimate)', 'power', 'P0', 'flipsky-75100',
+    items.append(Item('plate_vesc_r', box_xyz(37.0, -68.0, pz - 35.0, 108.0, 50.7, 35.0), 230.0, 'catalogue (estimate)', 'power', 'P0', 'flipsky-75100',
                       'Flipsky 75100, the right wheel, hung under the plate on its four M5 flange holes; leads out of its rear end', (0.17, 0.42, 0.69)))
-    items.append(Item('plate_vesc_l', box_xyz(34.0, 17.3, pz - 35.0, 108.0, 50.7, 35.0), 230.0, 'catalogue (estimate)', 'power', 'P0', 'flipsky-75100',
+    items.append(Item('plate_vesc_l', box_xyz(37.0, 17.3, pz - 35.0, 108.0, 50.7, 35.0), 230.0, 'catalogue (estimate)', 'power', 'P0', 'flipsky-75100',
                       'Flipsky 75100, the left wheel', (0.17, 0.42, 0.69)))
     items.append(Item('plate_main_switch', box_xyz(52.0, -116.0, pz - 16.5, 60.0, 45.0, 16.5), 110.0, 'estimate (metal case 60 x 45 x 16.5)', 'power', 'P0',
                       'flipsky-antispark-smart-enhanced-v2', 'Flipsky Anti Spark Switch Smart Enhanced 300A V2.0 (12-84 V, 100 A), low side, '
@@ -230,7 +230,7 @@ def layout(cell=None):
                       'blue-sea-150a-50mv-shunt', 'the current shunt in the negative lead (the switch\'s load side to the - bus)',
                       (0.7, 0.7, 0.72)))
     # on the plate
-    items.append(Item('plate_ddr60l_12', box_xyz(34.0, -118.0, pz + pt, 90.0, 52.5, 62.5), 216.0, 'datasheet (TRC: 216 g)', 'power', 'P0',
+    items.append(Item('plate_ddr60l_12', box_xyz(34.0, -118.0, pz + pt + 7.5, 90.0, 52.5, 55.0), 216.0, 'datasheet (TRC: 216 g)', 'power', 'P0',
                       'meanwell-ddr-60l-12', '12 V 5 A (18-75 V in, isolated): lidar, lights, eyes, the 5 V buck; on a TS35 rail across y',
                       (0.62, 0.64, 0.68)))
     BUS_XY.clear()
@@ -242,9 +242,9 @@ def layout(cell=None):
                       'power', 'P0', 'littelfuse-0997-mini-58v', 'the ten branch fuses: Littelfuse MINI 58V in inline holders, bundled on the plate',
                       (0.85, 0.75, 0.2)))
     items.append(Item('plate_mcu_board', box_xyz(32.0, 64.0, pz + pt, 85.0, 22.0, 72.0), 75.0,
-                      'estimate (Nucleo-G474RE 48 g + 3 CAN Pal + INA228 + isolator + carrier)', 'power', 'P0', 'st-nucleo-g474re',
-                      'balance MCU: the Nucleo-G474RE standing on edge in a printed carrier with three CAN Pal, the INA228 and the '
-                      'BMS UART isolator', (0.16, 0.5, 0.3)))
+                      'estimate (Nucleo-G474RE 48 g + 4 CAN Pal + INA228 + QT Py ESP32-S3 + carrier)', 'power', 'P0', 'st-nucleo-g474re',
+                      'balance MCU: the Nucleo-G474RE standing on edge in a printed carrier with four CAN Pal, the INA228 and a QT Py '
+                      'ESP32-S3 that reads the BMS over Bluetooth (no wire to the BMS: its UART ground is B-)', (0.16, 0.5, 0.3)))
     items.append(Item('plate_buck_5v', box_xyz(124.0, 64.0, pz + pt, 20.0, 20.0, 12.0), 4.0, 'catalogue (Pololu D36V28F5)', 'power', 'P0',
                       'pololu-d36v28f5', '5 V 3.6 A from the 12 V rail: MCU, VN-100, CAN boards, radio-stop receiver', (0.16, 0.5, 0.3)))
     # ---------------- the IMU, rigid on the tray near the hip axis, under the carrier's front
@@ -299,7 +299,7 @@ def mounts_for(items, B):
     T, BE, D, PL = m['tray'], m['belly'], m['deck'], m['plate']
     # ---- tray
     for x, y in bf.PLATE_STANDOFFS:
-        T.append((x, y, 5.5, 'power plate standoff, M5 x 10 ISO 7380 from below'))
+        T.append((x, y, 5.5, 'power plate post, M5 x 10 ISO 7380 up from below into its insert'))
     T.append(('slot', (SLOT_X[0] + SLOT_X[1]) / 2, 0.0, SLOT_X[1] - SLOT_X[0], 2 * SLOT_HALF, 6.0, 'cables up from the gap and the front chase'))
     for x, y in bf.ISOLATORS:
         T.append(('pem', x, y, 'S-M4-0', 'compute pallet isolator stud'))
@@ -342,14 +342,14 @@ def mounts_for(items, B):
     for name, (bx, by) in zip(('bus_pos', 'bus_neg'), BUS_XY):
         yc = by + bf.BUS_W / 2
         for u in (bf.BUS_INS[0] + 22.5, bf.BUS_INS[1] - 22.5):
-            PL.append((bx + u, yc, 4.5, f'{name} insulator, M4 x 10 from below'))
+            PL.append((bx + u, yc, 3.4, f'{name} insulator, M3 x 8 up from below into its insert'))
     mr = _get(items, 'plate_mrbf_block')
     PL.append(((mr.box[0] + mr.box[1]) / 2, mr.box[2] + 9.5, 14.0, 'MRBF block\'s M8 post in a printed insulating bushing'))
     sh = _get(items, 'plate_shunt')
-    for x in (sh.box[0] + 6.0, sh.box[1] - 6.0):
+    for x in (sh.box[0] + 10.0, sh.box[1] - 6.0):      # the first 12.8 mm from the left VESC's flange nut
         PL.append(('pem', x, (sh.box[2] + sh.box[3]) / 2, 'F-M5-2', 'shunt base'))
     mc = _get(items, 'plate_mcu_board')
-    for x in (mc.box[0] + 12.0, mc.box[1] - 12.0):
+    for x in (mc.box[0] + 25.0, mc.box[1] - 12.0):      # the first clear of the plate's post at (44, 80)
         PL.append(('pem', x, (mc.box[2] + mc.box[3]) / 2, 'F-M4-2', 'MCU carrier'))
     bk = _get(items, 'plate_buck_5v')
     PL.append(((bk.box[0] + bk.box[1]) / 2, (bk.box[2] + bk.box[3]) / 2, 3.4, '5 V buck on an M3 standoff'))
@@ -367,6 +367,10 @@ def frame_boxes():
     zd = bp.TOP - bp.STOCK[bp.DECK]['t']
     for k, (x, y) in enumerate(bp.POSTS):
         out.append((f'post_{k + 1}', (x - bp.POST_W / 2, x + bp.POST_W / 2, y - bp.POST_W / 2, y + bp.POST_W / 2, zt, zd)))
+    out.append(('deck', (bp.BODY_X[0], bp.BODY_X[1], -bp.BODY_HALF_Y, bp.BODY_HALF_Y, zd - 1.0, bp.TOP)))   # 1 mm under it kept clear
+    for k, (x, y) in enumerate(__import__('body_frame').PLATE_STANDOFFS):
+        w = __import__('body_frame').PLATE_POST_W
+        out.append((f'plate_post_{k + 1}', (x - w / 2, x + w / 2, y - w / 2, y + w / 2, zt, zt + PLATE_H)))
     return out
 
 
@@ -380,22 +384,23 @@ if __name__ == '__main__':
 
 # ------------------------------------------------------------------------------------------- mass and centre of mass
 
-LEG_EXTRA_G = 150.0              # per leg until exports/leg/leg.json carries the CNC output adapters (the main session,
-                                 # 2026-10-27: two 6061 adapters per leg, ~70 g heavier each)
 HARDWARE_G = 300.0               # frame screws, standoffs, PEM nuts, inserts, cable ties (est)
-HARNESS_G = 400.0                # every wire and connector of the body (est; docs/body-wiring.md lists them)
+HARNESS_G = 400.0                # every wire and connector of the body (est; docs/body-electrical.md lists them)
+LEG_STOPS_EXTRA_G = 200.0        # per leg: the hip frame's 13 mm flanges and the stop redesign (main cdda86d, 2026-10-27: 'roughly
+                                 # 0.2 kg' over leg.json's 9.28 kg) until exports/leg/leg.json carries them
 
 
 def leg_rows(h_mm=300.0):
-    """Each leg's parts at a stance (robot frame): printed parts from their solids (PA6-CF, 100 %), bought parts from
-    exports/leg/bom.json's masses at their posed envelopes' centres. Both legs; [(name, g, (x, y, z))]."""
+    """Each leg's parts at a stance (robot frame): printed parts from their solids (PA6-CF, 100 %), the machined output
+    adapters and bought parts from exports/leg/leg.json and bom.json, at their posed envelopes' centres; whatever of
+    leg.json's total (mass_g.total) is left over goes in at the leg's centre. Both legs; [(name, g, (x, y, z))]."""
     import body_frame as bf
     from cadagent.robot import solid_mass_properties
     fb = bp._fivebar()
     dens = json.loads((R / 'catalog/materials.json').read_text())['pa6-cf']['density_g_cm3']
     legs = bf.legs(h_mm)
     bom = {r['key']: r for r in json.loads((R / 'exports/leg/bom.json').read_text())['per_leg']}
-    each = lambda k: bom[k]['mass_g_each']
+    each = lambda k: bom[k]['mass_g_each'] if k in bom else 0.0
     bought = {'motor_front': each('robstride-rs-04'), 'motor_rear': each('robstride-rs-04'),
               'wheel_tyre': each('odrive-botwheel') * 0.55, 'wheel_hub': each('odrive-botwheel') * 0.45,
               'bearing_61812_front': each('bearing_61812'), 'bearing_61812_rear': each('bearing_61812'),
@@ -404,6 +409,8 @@ def leg_rows(h_mm=300.0):
               'knee_pin_rear': each('knee_pin'), 'stop_posts': 4 * each('stop_post'), 'apex_circlip': each('circlip_60'),
               'eye_sleeve_front': 2 * each('eye_sleeve'), 'eye_sleeve_rear': 2 * each('eye_sleeve'),
               'screws_lugs': 20 * each('screw_m4x20'), 'screws_links': 16 * each('screw_m5x40'), 'screws_wheel': 4 * each('screw_m6x30')}
+    leg_json = json.loads((R / 'exports/leg/leg.json').read_text())['mass_g']
+    machined = leg_json.get('machined_parts', {})
     rows = []
     for name, shape in legs.items():
         side, part = name.split('.', 1)
@@ -411,6 +418,10 @@ def leg_rows(h_mm=300.0):
         c = v.Center()
         if part in bought:
             g = bought[part]
+        elif part.startswith('output_adapter') and 'output_adapter' in machined:
+            g = machined['output_adapter']
+            c = solid_mass_properties(v, 1.0, 1.0, part)
+            c = tuple(x * 1000 for x in c.com)
         elif part.startswith(('hip_frame', 'output_adapter', 'upper_link', 'front_link', 'wheel_link', 'apex_spacer', 'stop_sleeve')):
             g = solid_mass_properties(v, dens if not part.startswith('stop_sleeve') else 1.22, 1.0, part).mass * 1000
             c = solid_mass_properties(v, 1.0, 1.0, part)
@@ -421,10 +432,14 @@ def leg_rows(h_mm=300.0):
             c = (c.x, c.y, c.z)
         rows.append((name, g, tuple(c)))
     rest = {k: bom[k]['mass_g_each'] * bom[k]['qty'] for k in ('nut_m10_nyloc', 'washer_m12_thin', 'knee_spacer', 'insert_m8', 'dowel_5x16',
-                                                              'screw_m5x30', 'insert_m5')}
+                                                              'screw_m5x25', 'screw_m5x30', 'insert_m5') if k in bom}
     for side, sy in (('L', 1.0), ('R', -1.0)):
         rows.append((f'{side}.small_hardware', sum(rest.values()), (0.0, sy * (bp.y_off() + 30.0), 0.0)))
-        rows.append((f'{side}.cnc_adapter_extra', LEG_EXTRA_G, (0.0, sy * (bp.y_off() - 10.0), 0.0)))
+    for side, sy in (('L', 1.0), ('R', -1.0)):            # to leg.json's total (its own count of every part)
+        placed = sum(g for n, g, _ in rows if n.startswith(side + '.'))
+        left = leg_json['total'] + LEG_STOPS_EXTRA_G - placed
+        if abs(left) > 1.0:
+            rows.append((f'{side}.rest_of_leg_json', left, (0.0, sy * (bp.y_off() + 30.0), -100.0)))
     return rows
 
 

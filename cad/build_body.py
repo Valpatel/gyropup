@@ -122,7 +122,7 @@ def body_shapes(parts, items=None):
     return out
 
 
-def clash_sweep(parts, items=None, quick=False, min_mm3=1.0, near_mm=12.0):
+def clash_sweep(parts, items=None, quick=False, min_mm3=1.0, near_mm=25.0):
     """Every leg part (both legs) against every body part at each stance: intersections over min_mm3, and the nearest
     approach of the moving parts to the body (measured where their boxes come within near_mm)."""
     body = body_shapes(parts, items)
@@ -317,7 +317,9 @@ def main():
             printed_done[base] = {'qty': 1, 'part': p, 'name': n}
     for base, d in printed_done.items():
         p = d['part']
-        local = bf.post() if base == 'post' else bf.riser() if base == 'riser' else bf.bus_insulator() if base == 'bus_insulator' else _v(p.shape)
+        local = (bf.post() if base == 'post' else bf.riser() if base == 'riser' else bf.bus_insulator() if base == 'bus_insulator'
+                 else bf.plate_post() if base == 'plate_post' else bf.isolator() if base == 'isolator'
+                 else bf.din_rail(*bf.din_rails(lay['raw']['items'])[base][:2]) if base.startswith('din_rail') else _v(p.shape))
         cq.exporters.export(_v(local), str(OUT / f'{base}.step'))
         export_print_stl(_v(local), OUT / f'{base}.stl', rotation=p.print_rotation)
         plan[base] = printplan.row(_v(local), p.print_rotation, p.material, d['qty'], masses[d['name']], p.material == 'pa6-cf', p.note)

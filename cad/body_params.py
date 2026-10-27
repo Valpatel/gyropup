@@ -181,17 +181,18 @@ def _measure_frame(fb, key) -> dict:
 
 # ------------------------------------------------------------------------------------------- the spine
 
-CHEEK = os.environ.get('GYROPUP_BODY_CHEEK', '5052-0.125')
-SPACER_L = float(os.environ.get('GYROPUP_BODY_SPACER_L', 35.0))     # hex standoffs between the cheeks' inner faces
-SPINE_W = SPACER_L + 2 * STOCK[CHEEK]['t']          # between the two hip frames' centre-plane faces (41.35)
+CHEEK = os.environ.get('GYROPUP_BODY_CHEEK', '5052-0.187')       # 3/16 in: 1/8 in fails the landing (cad/body_studies.py S1)
+SPACER_L = float(os.environ.get('GYROPUP_BODY_SPACER_L', 31.0))     # hex standoffs between the cheeks' inner faces: McMaster's
+                                    # 6 mm hex M4 F-F series has 30, 31 and 37 (no 35); 31 keeps the track at ~414 (the plan's 415.8)
+SPINE_W = SPACER_L + 2 * STOCK[CHEEK]['t']          # between the two hip frames' centre-plane faces (40.5)
 SPINE_X = (-92.0, 92.0)             # the cheeks' length: just inside the hip frames' flange ends (x +-95), so each front
                                     # RS-04's harness (it leaves its rear cover downwards at x ~ 95) drops past the cheek's
                                     # end into the belly, and the spine weighs 0.57 kg, not 0.93
-CHEEK_FLANGE = float(os.environ.get('GYROPUP_BODY_CHEEK_FLANGE', 22.0))   # outward flanges (OML): an SS-M5-0 nut needs 7.6 mm (half die) from the bend and
+CHEEK_FLANGE = float(os.environ.get('GYROPUP_BODY_CHEEK_FLANGE', 30.0))   # outward flanges (OML): an SS-M5-0 nut needs 7.6 mm (half die) from the bend and
                                     # 7.1 mm (K) to the edge, beyond the 6.35 mm setback
 FRAME_SCREW = {'size': 'M5', 'length': 12.0, 'head': 'ISO 7380 button head, 3 mm hex', 'torque_nm': 3.0,
-               'why': 'through the 3.175 mm cheek it engages 8.8 mm (the 7.9 mm insert plus 0.9), and stays 2.2 mm short '
-                      'of the pilot\'s 11 mm bottom; the plan\'s M5 x 16 would bottom out'}
+               'why': f'through the {STOCK[CHEEK]["t"]:.2f} mm cheek it engages {12.0 - STOCK[CHEEK]["t"]:.1f} mm of the 7.9 mm insert and stays '
+                      f'{11.0 - (12.0 - STOCK[CHEEK]["t"]):.1f} mm short of the pilot\'s 11 mm bottom; M5 x 16 would bottom out'}
 
 
 def y_off() -> float:

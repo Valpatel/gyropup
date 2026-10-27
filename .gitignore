@@ -27,3 +27,8 @@ exports/leg/rig_meshes/
 
 # the spring study's every-step results (48 MB): rebuilt by sim/leg_spring_study.py
 exports/leg/springs/results*.json
+
+# the body's assembly STEP (12 MB, rebuilt by cad/build_body.py) and the FEA viewer files (3 MB each)
+exports/body/body_stand.step
+exports/body/fea/*.json
+!exports/body/fea/summary.json

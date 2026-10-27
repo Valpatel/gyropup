@@ -1,0 +1,2229 @@
+[
+ {
+  "id": "molicel-inr18650-p30b",
+  "key": "cell_p30b",
+  "category": "battery_cell",
+  "vendor": "Molicel",
+  "model": "INR-18650-P30B",
+  "name": "Molicel INR-18650-P30B 18650 Li-ion cell, 3.0 Ah, 36 A continuous, flat top",
+  "price_usd": 5.5,
+  "price_checked": "2026-10-27",
+  "price_note": "Li-ion Wholesale: $5.50 each, read 2026-10-27",
+  "buy": [
+   {
+    "seller": "Li-ion Wholesale",
+    "url": "https://liionwholesale.com/products/molicel-npe-inr-18650-p30b-36a-3000mah-flat-top-18650-battery-authorized-distributor",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 5.5,
+    "stock": "available (store JSON)"
+   },
+   {
+    "seller": "IMR Batteries",
+    "url": "https://www.imrbatteries.com/products/molicel-p30b-18650-3000mah-30a-battery",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 6.99,
+    "stock": "available (store JSON)"
+   },
+   {
+    "seller": "18650BatteryStore",
+    "url": "https://18650batterystore.com/products/molicel-p30b-18650-3000mah-36a-battery",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 8.99,
+    "stock": "available (store JSON)"
+   }
+  ],
+  "backup": {
+   "what": "same cell, other US seller",
+   "seller": "IMR Batteries",
+   "price_usd": 6.99
+  },
+  "specs": {
+   "diameter_mm": 18.6,
+   "length_mm": 65.2,
+   "mass_g": 47.0,
+   "capacity_ah": 3.0,
+   "continuous_a": 36,
+   "charge_v_max": 4.2,
+   "dimensions_basis": "maximum envelope (datasheet class); the brick is sized from cad/body_battery.py CELLS"
+  },
+  "sources": [
+   "https://www.molicel.com/product/inr-18650-p30b/"
+  ]
+ },
+ {
+  "id": "daly-k-13s-100a-bt-uart",
+  "key": "bms_daly_13s",
+  "category": "bms",
+  "vendor": "Daly",
+  "model": "G08-RK-89704",
+  "name": "Daly K-series smart BMS, Li-ion 13S 48 V, 100 A, Bluetooth + UART (common port, negative side)",
+  "price_usd": 60.6,
+  "price_checked": "2026-10-27",
+  "price_note": "Daly (official store): $60.60 each, read 2026-10-27",
+  "buy": [
+   {
+    "seller": "Daly (official store)",
+    "url": "https://bmsdaly.com/products/daly-smart-lifepo4-bms-k-board-4s-12v-7s-8s-24v-16s-48v-li-ion-3s-12v-6s-7s-24v-100a-60a-40a-bms-for-18650-battery-pack-1",
+    "in_stock": true,
+    "ships_from": "CN",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 60.6,
+    "stock": "available (variant \"Li-ion 13S 48V / 100A / BT+UART\"); ships after 3-5 days, 7-20 business days in transit",
+    "seller_pn": "G08-RK-89704"
+   },
+   {
+    "seller": "DalyElec on Amazon",
+    "url": "https://www.amazon.com/dp/B0CXLYVP5B",
+    "in_stock": true,
+    "ships_from": "CN",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 95.47,
+    "stock": "In Stock (sold and shipped by DalyElec), delivery quoted Nov 5-13"
+   }
+  ],
+  "backup": {
+   "what": "same BMS",
+   "seller": "DalyElec on Amazon",
+   "price_usd": 95.47
+  },
+  "specs": {
+   "size_mm": [
+    98,
+    65,
+    14
+   ],
+   "length_with_tabs_mm": 123,
+   "tab_pitch_mm": 26,
+   "mass_g_estimate": 110,
+   "balance": "100 mA passive",
+   "ports": "UART x 2 (one taken by the Bluetooth dongle), CAN/485, KEY, DIO, NTC-A, NTC-B",
+   "switching": "common port, B-/P- (negative side)",
+   "uart_ground": "B- (isolate it from the robot ground)",
+   "cell_ovp_settable": true
+  },
+  "sources": [
+   "https://bmsdaly.com/products/daly-smart-lifepo4-bms-k-board-4s-12v-7s-8s-24v-16s-48v-li-ion-3s-12v-6s-7s-24v-100a-60a-40a-bms-for-18650-battery-pack-1",
+   "https://www.amazon.com/dp/B0CXLYVP5B"
+  ]
+ },
+ {
+  "id": "imr-18650-2p-nickel-0p15x18p5",
+  "key": "nickel_2p_18650",
+  "category": "battery_build",
+  "vendor": "IMR Batteries",
+  "model": "18650 2P nickel 0.15 x 18.5 x 5 m",
+  "name": "Pure nickel strip, 18650 2P pre-shaped, 0.15 x 18.5 mm, 5 m roll",
+  "price_usd": 39.99,
+  "price_checked": "2026-10-27",
+  "price_note": "IMR Batteries: $39.99 each, read 2026-10-27",
+  "buy": [
+   {
+    "seller": "IMR Batteries",
+    "url": "https://www.imrbatteries.com/products/18650-2p-pure-nickel-strip-roll-0-15mm-x-18-5mm-5m-16-4-feet",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 39.99,
+    "stock": "available (store JSON)"
+   },
+   {
+    "seller": "Li-ion Wholesale",
+    "url": "https://liionwholesale.com/products/pure-nickel-strip-roll-0-15mm-0-2mm-thickness-6mm-10mm-widths",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 10.34,
+    "stock": "0.2 x 8 mm x 20 ft available on 2026-10-27 (the sourcing report); straight strip, two side by side per link"
+   }
+  ],
+  "backup": {
+   "what": "straight 0.2 x 8 mm pure nickel, two strips per link",
+   "seller": "Li-ion Wholesale",
+   "price_usd": 10.34
+  },
+  "specs": {
+   "thickness_mm": 0.15,
+   "width_mm": 18.5,
+   "length_m": 5
+  },
+  "sources": [
+   "https://www.imrbatteries.com/products/18650-2p-pure-nickel-strip-roll-0-15mm-x-18-5mm-5m-16-4-feet",
+   "https://liionwholesale.com/products/pure-nickel-strip-roll-0-15mm-0-2mm-thickness-6mm-10mm-widths"
+  ]
+ },
+ {
+  "id": "imr-18650-fish-paper-20",
+  "key": "fish_paper_18650",
+  "category": "battery_build",
+  "vendor": "IMR Batteries",
+  "model": "18650 fish paper rings 20 pcs",
+  "name": "18650 terminal insulator rings, fish paper, 20 pcs",
+  "price_usd": 0.0495,
+  "price_checked": "2026-10-27",
+  "pack_qty": 20,
+  "pack_price_usd": 0.99,
+  "price_note": "IMR Batteries: $0.99 per 20-pack, read 2026-10-27",
+  "buy": [
+   {
+    "seller": "IMR Batteries",
+    "url": "https://www.imrbatteries.com/products/18650-terminal-insulators-fish-paper-20pcs-green-round-rings-solid",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 0.99,
+    "pack_qty": 20,
+    "stock": "available"
+   },
+   {
+    "seller": "Li-ion Wholesale",
+    "url": "https://liionwholesale.com/products/18650-flat-top-battery-terminal-insulators-5pcs-matte-black",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 0.25,
+    "pack_qty": 5,
+    "stock": "available (5 pcs)"
+   }
+  ],
+  "backup": {
+   "what": "flat-top insulators, 5 pcs",
+   "seller": "Li-ion Wholesale",
+   "price_usd": 0.25
+  },
+  "specs": {
+   "pcs": 20
+  },
+  "sources": [
+   "https://www.imrbatteries.com/products/18650-terminal-insulators-fish-paper-20pcs-green-round-rings-solid",
+   "https://liionwholesale.com/products/18650-flat-top-battery-terminal-insulators-5pcs-matte-black"
+  ]
+ },
+ {
+  "id": "imr-kapton-20mm",
+  "key": "kapton_20",
+  "category": "battery_build",
+  "vendor": "IMR Batteries",
+  "model": "Polyimide tape 20 mm x 30 m",
+  "name": "Polyimide (Kapton) electrical tape, 20 mm x 30 m",
+  "price_usd": 6.99,
+  "price_checked": "2026-10-27",
+  "price_note": "IMR Batteries: $6.99 each, read 2026-10-27",
+  "buy": [
+   {
+    "seller": "IMR Batteries",
+    "url": "https://www.imrbatteries.com/products/polyimide-electrical-tape-20mm-x-30m-kapton-tape",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 6.99,
+    "stock": "available"
+   },
+   {
+    "seller": "IMR Batteries",
+    "url": "https://www.imrbatteries.com/products/polyimide-electrical-tape-50mm-x-30m-kapton-tape",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 8.99,
+    "stock": "available (50 mm)"
+   }
+  ],
+  "backup": {
+   "what": "50 mm roll",
+   "seller": "IMR Batteries",
+   "price_usd": 8.99
+  },
+  "specs": {},
+  "sources": [
+   "https://www.imrbatteries.com/products/polyimide-electrical-tape-20mm-x-30m-kapton-tape",
+   "https://www.imrbatteries.com/products/polyimide-electrical-tape-50mm-x-30m-kapton-tape"
+  ]
+ },
+ {
+  "id": "amass-xt90s-5pair",
+  "key": "xt90s_pair",
+  "category": "connector",
+  "vendor": "Amass",
+  "model": "XT90-S",
+  "name": "Amass XT90-S anti-spark connector, male + female, 5 pairs",
+  "price_usd": 2.596,
+  "price_checked": "2026-10-27",
+  "pack_qty": 5,
+  "pack_price_usd": 12.98,
+  "price_note": "Sky RC Hobby on Amazon: $12.98 per 5-pack, read 2026-10-27",
+  "buy": [
+   {
+    "seller": "Sky RC Hobby on Amazon",
+    "url": "https://www.amazon.com/dp/B074PTHZ3M",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 12.98,
+    "pack_qty": 5,
+    "stock": "In Stock (ships from Amazon)"
+   },
+   {
+    "seller": "FLYRC on Amazon",
+    "url": "https://www.amazon.com/dp/B08L3S2ZK8",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 14.99,
+    "pack_qty": 3,
+    "stock": "In Stock; 3 pairs with 150 mm 10 AWG pigtails"
+   }
+  ],
+  "backup": {
+   "what": "3 pairs with pigtails",
+   "seller": "FLYRC on Amazon",
+   "price_usd": 14.99
+  },
+  "specs": {
+   "rating_a": 90
+  },
+  "sources": [
+   "https://www.amazon.com/dp/B074PTHZ3M",
+   "https://www.amazon.com/dp/B08L3S2ZK8"
+  ]
+ },
+ {
+  "id": "amass-xt60h-f-5",
+  "key": "xt60h_f",
+  "category": "connector",
+  "vendor": "Amass",
+  "model": "XT60H-F",
+  "name": "Amass XT60H female (charge port, held in a printed bezel), 5-pack",
+  "price_usd": 0.798,
+  "price_checked": "2026-10-27",
+  "pack_qty": 5,
+  "pack_price_usd": 3.99,
+  "price_note": "Pyrodrone: $3.99 per 5-pack, read 2026-10-27",
+  "buy": [
+   {
+    "seller": "Pyrodrone",
+    "url": "https://www.pyrodrone.com/products/amass-xt60h-connector-5pcs-female",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 3.99,
+    "pack_qty": 5,
+    "stock": "available"
+   },
+   {
+    "seller": "RaceDayQuads",
+    "url": "https://www.racedayquads.com/products/xt60-connector-1pc-choose-your-version",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 0.99,
+    "stock": "available (single)"
+   }
+  ],
+  "backup": {
+   "what": "single XT60",
+   "seller": "RaceDayQuads",
+   "price_usd": 0.99
+  },
+  "specs": {},
+  "sources": [
+   "https://www.pyrodrone.com/products/amass-xt60h-connector-5pcs-female",
+   "https://www.racedayquads.com/products/xt60-connector-1pc-choose-your-version"
+  ]
+ },
+ {
+  "id": "luna-charger-48v-advanced",
+  "key": "charger_13s",
+  "category": "charger",
+  "vendor": "Luna Cycle",
+  "model": "Luna Charger 48V Advanced 300W",
+  "name": "Luna Charger 48V Advanced 300 W (13S): 1-5 A and 80/90/100 % knobs; charge at 90 % (to be metered: 53.3 V wanted)",
+  "price_usd": 99.95,
+  "price_checked": "2026-10-27",
+  "price_note": "Luna Cycle: $99.95 each, read 2026-10-27",
+  "buy": [
+   {
+    "seller": "Luna Cycle",
+    "url": "https://lunacycle.com/luna-charger-48v-advanced-300w-ebike-charger/",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 99.95,
+    "stock": "Add to Cart active (El Segundo, CA)"
+   },
+   {
+    "seller": "Grin Technologies on Amazon",
+    "url": "https://www.amazon.com/dp/B0FLYNYC6N",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 329.99,
+    "stock": "In Stock; Grin Standard Satiator, programmable 24-63 V: 53.3 V set directly"
+   }
+  ],
+  "backup": {
+   "what": "Grin Standard Satiator (exact 53.3 V)",
+   "seller": "Grin Technologies on Amazon",
+   "price_usd": 329.99
+  },
+  "specs": {
+   "output_connector": "XT60 male or 2.1 mm barrel (choose XT60)",
+   "size_mm": [
+    184,
+    89,
+    51
+   ],
+   "mass_g": 1130,
+   "note": "the 90 % setting voltage is not published: meter it before the first charge; the BMS cell over-voltage at 4.15 V is the backstop"
+  },
+  "sources": [
+   "https://lunacycle.com/luna-charger-48v-advanced-300w-ebike-charger/",
+   "https://www.amazon.com/dp/B0FLYNYC6N"
+  ]
+ },
+ {
+  "id": "flipsky-antispark-smart-enhanced-v2",
+  "key": "main_switch",
+  "category": "switch",
+  "vendor": "Flipsky",
+  "model": "ANSIFS20SH",
+  "name": "Flipsky Anti Spark Switch Smart Enhanced 300A V2.0, 12-84 V (3-20S), 100 A continuous, 16 mm button",
+  "price_usd": 52.0,
+  "price_checked": "2026-10-27",
+  "price_note": "Flipsky: $52.00 each, read 2026-10-27",
+  "buy": [
+   {
+    "seller": "Flipsky",
+    "url": "https://flipsky.net/products/flipsky-anti-spark-switch-smart-enhanced-300a-v2-0-for-electric-skateboard-ebike-scooter-robots",
+    "in_stock": true,
+    "ships_from": "CN",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 52.0,
+    "stock": "available"
+   },
+   {
+    "seller": "Flipsky",
+    "url": "https://flipsky.net/products/flipsky-antispark-switch-pro-with-aluminum-pcb-case-200a-for-electric-skateboard-ebike-scooter-robots",
+    "in_stock": true,
+    "ships_from": "CN",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 48.0,
+    "stock": "available; Antispark Pro V3.0 (AWAPFS14SH), 12-60 V: 53.3 V full is inside it"
+   }
+  ],
+  "backup": {
+   "what": "Antispark Pro V3.0 (60 V max, latching button)",
+   "seller": "Flipsky",
+   "price_usd": 48.0
+  },
+  "specs": {
+   "size_mm": [
+    60,
+    45,
+    16.5
+   ],
+   "voltage_range_v": [
+    12,
+    84
+   ],
+   "continuous_a": 100,
+   "mode": "momentary (hold 0.3 s on, 1 s off); smart mode OFF"
+  },
+  "sources": [
+   "https://flipsky.net/products/flipsky-anti-spark-switch-smart-enhanced-300a-v2-0-for-electric-skateboard-ebike-scooter-robots",
+   "https://flipsky.net/products/flipsky-antispark-switch-pro-with-aluminum-pcb-case-200a-for-electric-skateboard-ebike-scooter-robots"
+  ]
+ },
+ {
+  "id": "blue-sea-5181-mrbf-80a",
+  "key": "mrbf_80a",
+  "category": "fuse",
+  "vendor": "Blue Sea Systems",
+  "model": "5181",
+  "name": "Blue Sea 5181 MRBF terminal fuse 80 A, 58 V DC, 2 kA at 58 V",
+  "price_usd": 20.5,
+  "price_checked": "2026-10-27",
+  "price_note": "go2marine: $20.50 each, read 2026-10-27",
+  "buy": [
+   {
+    "seller": "go2marine",
+    "url": "https://www.go2marine.com/products/mrbf-terminal-fuses-30-to-300-amps",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 20.5,
+    "stock": "available"
+   },
+   {
+    "seller": "go2marine",
+    "url": "https://www.go2marine.com/products/mrbf-terminal-fuse-80-a-retail-pack",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 13.5,
+    "stock": "available; Egis MRBF 80 A, 58 V DC"
+   }
+  ],
+  "backup": {
+   "what": "Egis MRBF 80 A",
+   "seller": "go2marine",
+   "price_usd": 13.5
+  },
+  "specs": {
+   "rating_a": 80,
+   "voltage_v_dc": 58,
+   "interrupt_a_at_58v": 2000
+  },
+  "sources": [
+   "https://www.go2marine.com/products/mrbf-terminal-fuses-30-to-300-amps",
+   "https://www.go2marine.com/products/mrbf-terminal-fuse-80-a-retail-pack"
+  ]
+ },
+ {
+  "id": "egis-mrbf-block-single",
+  "key": "mrbf_block_backup",
+  "category": "fuse",
+  "vendor": "Egis",
+  "model": "MRBF block single output (UPC 850053879548)",
+  "name": "Egis MRBF terminal fuse block, single output, 58 V DC, M8 stud",
+  "price_usd": 17.25,
+  "price_checked": "2026-10-27",
+  "price_note": "go2marine: $17.25 each, read 2026-10-27",
+  "buy": [
+   {
+    "seller": "go2marine",
+    "url": "https://www.go2marine.com/products/mrbf-terminal-fuse-block-single-output-30-300-a-retail-pack",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 17.25,
+    "stock": "available"
+   },
+   {
+    "seller": "go2marine",
+    "url": "https://www.go2marine.com/products/mrbf-terminal-fuse-block-30-to-300a",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 31.5,
+    "stock": "available; Blue Sea 5191"
+   }
+  ],
+  "backup": {
+   "what": "Blue Sea 5191",
+   "seller": "go2marine",
+   "price_usd": 31.5
+  },
+  "specs": {
+   "voltage_v_dc": 58
+  },
+  "sources": [
+   "https://www.go2marine.com/products/mrbf-terminal-fuse-block-single-output-30-300-a-retail-pack",
+   "https://www.go2marine.com/products/mrbf-terminal-fuse-block-30-to-300a"
+  ]
+ },
+ {
+  "id": "littelfuse-0997020",
+  "key": "fuse_mini58_20a",
+  "category": "fuse",
+  "vendor": "Littelfuse",
+  "model": "0997020.WXN",
+  "name": "Littelfuse MINI 58V blade fuse 20 A (the RS-04 branches)",
+  "price_usd": 0.61,
+  "price_checked": "2026-10-27",
+  "price_note": "LCSC: $0.61 each (10+: $0.50), read 2026-10-27",
+  "buy": [
+   {
+    "seller": "LCSC",
+    "url": "https://www.lcsc.com/product-detail/C207028.html",
+    "in_stock": true,
+    "ships_from": "CN",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 0.61,
+    "stock": "1,609",
+    "seller_pn": "C207028"
+   },
+   {
+    "seller": "element14",
+    "url": "https://nz.element14.com/littelfuse/0997020-wxn/auto-blade-fuse-2a-58v/dp/2748837",
+    "in_stock": true,
+    "ships_from": "SG",
+    "read_on": "2026-10-27",
+    "source": "snippet",
+    "stock": "listed (snippet)"
+   }
+  ],
+  "backup": {
+   "what": "same fuse",
+   "seller": "element14 / Farnell",
+   "price_usd": null
+  },
+  "specs": {
+   "rating_a": 20,
+   "voltage_v_dc": 58,
+   "interrupt_a_at_58v": 1000
+  },
+  "sources": [
+   "https://www.lcsc.com/product-detail/C207028.html",
+   "https://nz.element14.com/littelfuse/0997020-wxn/auto-blade-fuse-2a-58v/dp/2748837"
+  ]
+ },
+ {
+  "id": "littelfuse-0997030",
+  "key": "fuse_mini58_30a",
+  "category": "fuse",
+  "vendor": "Littelfuse",
+  "model": "0997030.WXN",
+  "name": "Littelfuse MINI 58V blade fuse 30 A (the VESC branches)",
+  "price_usd": 0.44,
+  "price_checked": "2026-10-27",
+  "price_note": "LCSC: $0.44 each (10+: $0.35), read 2026-10-27",
+  "buy": [
+   {
+    "seller": "LCSC",
+    "url": "https://www.lcsc.com/product-detail/C207030.html",
+    "in_stock": true,
+    "ships_from": "CN",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 0.44,
+    "stock": "2,894",
+    "seller_pn": "C207030"
+   },
+   {
+    "seller": "LCSC",
+    "url": "https://www.lcsc.com/product-detail/C207029.html",
+    "in_stock": true,
+    "ships_from": "CN",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 0.49,
+    "stock": "1,743 (25 A)",
+    "seller_pn": "C207029"
+   }
+  ],
+  "backup": {
+   "what": "25 A of the same series (the VESC limit is set in firmware)",
+   "seller": "LCSC",
+   "price_usd": 0.49
+  },
+  "specs": {
+   "rating_a": 30,
+   "voltage_v_dc": 58
+  },
+  "sources": [
+   "https://www.lcsc.com/product-detail/C207030.html",
+   "https://www.lcsc.com/product-detail/C207029.html"
+  ]
+ },
+ {
+  "id": "littelfuse-0997010",
+  "key": "fuse_mini58_10a",
+  "category": "fuse",
+  "vendor": "Littelfuse",
+  "model": "0997010.WXN",
+  "name": "Littelfuse MINI 58V blade fuse 10 A (DDR-120C-24 input, the charge port)",
+  "price_usd": 0.41,
+  "price_checked": "2026-10-27",
+  "price_note": "LCSC: $0.41 each, read 2026-10-27",
+  "buy": [
+   {
+    "seller": "LCSC",
+    "url": "https://www.lcsc.com/product-detail/C207026.html",
+    "in_stock": true,
+    "ships_from": "CN",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 0.41,
+    "stock": "3,724",
+    "seller_pn": "C207026"
+   },
+   {
+    "seller": "LCSC",
+    "url": "https://www.lcsc.com/product-detail/C207027.html",
+    "in_stock": true,
+    "ships_from": "CN",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 0.66,
+    "stock": "2,950 (15 A)",
+    "seller_pn": "C207027"
+   }
+  ],
+  "backup": {
+   "what": "15 A of the same series",
+   "seller": "LCSC",
+   "price_usd": 0.66
+  },
+  "specs": {
+   "rating_a": 10,
+   "voltage_v_dc": 58
+  },
+  "sources": [
+   "https://www.lcsc.com/product-detail/C207026.html",
+   "https://www.lcsc.com/product-detail/C207027.html"
+  ]
+ },
+ {
+  "id": "littelfuse-0997005",
+  "key": "fuse_mini58_5a",
+  "category": "fuse",
+  "vendor": "Littelfuse",
+  "model": "0997005.WXN",
+  "name": "Littelfuse MINI 58V blade fuse 5 A (DDR-60L-12 input; the 24 V J501 and turret branches)",
+  "price_usd": 0.98,
+  "price_checked": "2026-10-27",
+  "price_note": "Farnell: $0.98 each, read 2026-10-27",
+  "buy": [
+   {
+    "seller": "Farnell",
+    "url": "https://il.farnell.com/littelfuse/0997005-wxn/auto-blade-fuse-5a-58v/dp/2748834",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "snippet",
+    "price_usd": 0.98,
+    "stock": "5,995 in stock, 10-14 business days from US stock (search result, 2026-10-27)"
+   },
+   {
+    "seller": "Dasenic",
+    "url": "https://www.dasenic.com/product/littelfuse-0997005wxn",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "snippet",
+    "price_usd": 0.39,
+    "stock": "17,902 in stock, $0.3878 at 25+ (search result, 2026-10-27)"
+   }
+  ],
+  "backup": {
+   "what": "same fuse",
+   "seller": "Dasenic",
+   "price_usd": 0.39
+  },
+  "specs": {
+   "rating_a": 5,
+   "voltage_v_dc": 58
+  },
+  "sources": [
+   "https://il.farnell.com/littelfuse/0997005-wxn/auto-blade-fuse-5a-58v/dp/2748834",
+   "https://www.dasenic.com/product/littelfuse-0997005wxn"
+  ]
+ },
+ {
+  "id": "bussmann-hhm",
+  "key": "fuse_holder_mini_inline",
+  "category": "fuse",
+  "vendor": "Eaton Bussmann",
+  "model": "HHM",
+  "name": "Bussmann HHM inline MINI fuse holder, 2-30 A (rated 32 V DC: the 58 V fuse does the interrupting; label it \"58 V fuses only\")",
+  "price_usd": 2.28,
+  "price_checked": "2026-10-27",
+  "price_note": "RockAuto: $2.28 each, read 2026-10-27",
+  "buy": [
+   {
+    "seller": "RockAuto",
+    "url": "https://www.rockauto.com/en/moreinfo.php?pk=1474944",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 2.28,
+    "stock": "Add to Cart"
+   },
+   {
+    "seller": "LCSC",
+    "url": "https://www.lcsc.com/product-detail/C3207515.html",
+    "in_stock": true,
+    "ships_from": "CN",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 0.3,
+    "stock": "0 (Keystone 3570 PCB holder: the fuse-board upgrade)"
+   }
+  ],
+  "backup": {
+   "what": "Keystone 3568/3570 PCB MINI holders on a JLCPCB fuse board (P3)",
+   "seller": "LCSC",
+   "price_usd": 0.3
+  },
+  "specs": {
+   "rating_v_dc": 32,
+   "rating_a": 30
+  },
+  "sources": [
+   "https://www.rockauto.com/en/moreinfo.php?pk=1474944",
+   "https://www.lcsc.com/product-detail/C3207515.html"
+  ]
+ },
+ {
+  "id": "meanwell-ddr-60l-12",
+  "key": "ddr60l_12",
+  "category": "dc_dc",
+  "vendor": "Mean Well",
+  "model": "DDR-60L-12",
+  "name": "Mean Well DDR-60L-12 DIN-rail DC-DC, 18-75 V in, 12 V 5 A, isolated",
+  "price_usd": 34.2,
+  "price_checked": "2026-10-27",
+  "price_note": "Bravo Electro: $34.20 each, read 2026-10-27",
+  "buy": [
+   {
+    "seller": "Bravo Electro",
+    "url": "https://www.bravoelectro.com/ddr-60l-12.html",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 34.2,
+    "stock": "listed (no quantity shown)"
+   },
+   {
+    "seller": "TRC Electronics",
+    "url": "https://www.trcelectronics.com/products/mean-well-ddr-60l-12",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 43.82,
+    "stock": "40"
+   }
+  ],
+  "backup": {
+   "what": "same part",
+   "seller": "TRC Electronics",
+   "price_usd": 43.82
+  },
+  "specs": {
+   "size_mm": [
+    52.5,
+    90,
+    54.5
+   ],
+   "mass_g": 216,
+   "input_v": [
+    18,
+    75
+   ],
+   "output": "12 V 5 A",
+   "efficiency": 0.91
+  },
+  "sources": [
+   "https://www.bravoelectro.com/ddr-60l-12.html",
+   "https://www.trcelectronics.com/products/mean-well-ddr-60l-12"
+  ]
+ },
+ {
+  "id": "pololu-d36v28f5",
+  "key": "buck_5v",
+  "category": "dc_dc",
+  "vendor": "Pololu",
+  "model": "D36V28F5 (#3782)",
+  "name": "Pololu 5 V 3.2 A step-down regulator D36V28F5 (from the 12 V rail)",
+  "price_usd": 23.95,
+  "price_checked": "2026-10-27",
+  "price_note": "Pololu: $23.95 each, read 2026-10-27",
+  "buy": [
+   {
+    "seller": "Pololu",
+    "url": "https://www.pololu.com/product/3782",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 23.95,
+    "stock": "Rationed (active and preferred)"
+   },
+   {
+    "seller": "Pololu",
+    "url": "https://www.pololu.com/product/2858",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 26.95,
+    "stock": "Rationed; D24V22F5 5 V 2.5 A, 5.3-36 V in"
+   }
+  ],
+  "backup": {
+   "what": "D24V22F5 (5 V 2.5 A)",
+   "seller": "Pololu",
+   "price_usd": 26.95
+  },
+  "specs": {
+   "size_mm": [
+    17.8,
+    20.3,
+    8.8
+   ],
+   "input_v": [
+    5.3,
+    50
+   ],
+   "output": "5 V 3.2 A"
+  },
+  "sources": [
+   "https://www.pololu.com/product/3782",
+   "https://www.pololu.com/product/2858"
+  ]
+ },
+ {
+  "id": "blue-sea-150a-50mv-shunt",
+  "key": "shunt_150a",
+  "category": "sensor",
+  "vendor": "Blue Sea Systems",
+  "model": "analog meter shunt 150 A / 50 mV (UPC 632085092313)",
+  "name": "Blue Sea meter shunt 150 A / 50 mV (manganin), in the battery negative",
+  "price_usd": 48.74,
+  "price_checked": "2026-10-27",
+  "price_note": "go2marine: $48.74 each, read 2026-10-27",
+  "buy": [
+   {
+    "seller": "go2marine",
+    "url": "https://www.go2marine.com/products/analog-meter-shunt-150a-50mv",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 48.74,
+    "stock": "available"
+   },
+   {
+    "seller": "The Solar Store",
+    "url": "https://www.thesolarstore.com/products/shunt-mkb-100-100-100amp-100mv-shunt",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 59.0,
+    "stock": "available; Deltec MKB-100-100 (100 A / 100 mV)"
+   }
+  ],
+  "backup": {
+   "what": "Deltec MKB-100-100",
+   "seller": "The Solar Store",
+   "price_usd": 59.0
+  },
+  "specs": {
+   "rating": "150 A / 50 mV",
+   "continuous": "66 % of rating",
+   "size_note": "not listed: the plate keeps an 85 x 30 x 25 envelope"
+  },
+  "sources": [
+   "https://www.go2marine.com/products/analog-meter-shunt-150a-50mv",
+   "https://www.thesolarstore.com/products/shunt-mkb-100-100-100amp-100mv-shunt"
+  ]
+ },
+ {
+  "id": "adafruit-ina228-5832",
+  "key": "ina228",
+  "category": "sensor",
+  "vendor": "Adafruit",
+  "model": "5832",
+  "name": "Adafruit INA228 85 V 20-bit power monitor breakout (remove its 15 mOhm shunt; wire it to the external shunt)",
+  "price_usd": 14.95,
+  "price_checked": "2026-10-27",
+  "price_note": "Adafruit: $14.95 each, read 2026-10-27",
+  "buy": [
+   {
+    "seller": "Adafruit",
+    "url": "https://www.adafruit.com/product/5832",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 14.95,
+    "stock": "58 in stock"
+   },
+   {
+    "seller": "Adafruit",
+    "url": "https://www.adafruit.com/product/6349",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 10.95,
+    "stock": "In stock; INA238 (16-bit), same board"
+   }
+  ],
+  "backup": {
+   "what": "INA238 breakout",
+   "seller": "Adafruit",
+   "price_usd": 10.95
+  },
+  "specs": {
+   "size_mm": [
+    25.8,
+    20.2,
+    10.1
+   ],
+   "mass_g": 3.3
+  },
+  "sources": [
+   "https://www.adafruit.com/product/5832",
+   "https://www.adafruit.com/product/6349"
+  ]
+ },
+ {
+  "id": "victron-vbb115040020",
+  "key": "busbar_victron_4p",
+  "category": "busbar",
+  "vendor": "Victron Energy",
+  "model": "VBB115040020",
+  "name": "Victron Busbar 150 A 4P with cover, 70 V DC, 4 x M6 studs (drop-in for a C110 bar)",
+  "price_usd": 17.82,
+  "price_checked": "2026-10-27",
+  "price_note": "Portlandia Electric: $17.82 each, read 2026-10-27",
+  "buy": [
+   {
+    "seller": "Portlandia Electric",
+    "url": "https://www.portlandiaelectric.supply/products/victron-energy-vbb115040020",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 17.82,
+    "stock": "available"
+   },
+   {
+    "seller": "DRSA",
+    "url": "https://www.drsa.com/products/victron-busbar-150a-4p-cover-4x-1-4-terminals-vbb115040020",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 20.4,
+    "stock": "available"
+   }
+  ],
+  "backup": {
+   "what": "same part",
+   "seller": "DRSA",
+   "price_usd": 20.4
+  },
+  "specs": {
+   "size_mm": [
+    152.4,
+    31.8,
+    45
+   ],
+   "mass_g": 200,
+   "voltage_v_dc": 70,
+   "studs": "4 x M6 (1/4 in)"
+  },
+  "sources": [
+   "https://www.portlandiaelectric.supply/products/victron-energy-vbb115040020",
+   "https://www.drsa.com/products/victron-busbar-150a-4p-cover-4x-1-4-terminals-vbb115040020"
+  ]
+ },
+ {
+  "id": "st-nucleo-g474re",
+  "key": "nucleo_g474re",
+  "category": "mcu",
+  "vendor": "STMicroelectronics",
+  "model": "NUCLEO-G474RE",
+  "name": "ST Nucleo-64 NUCLEO-G474RE (the balance and power MCU: 3 FDCAN)",
+  "price_usd": 19.9,
+  "price_checked": "2026-10-27",
+  "price_note": "ST eStore: $19.90 each, read 2026-10-27",
+  "buy": [
+   {
+    "seller": "ST eStore",
+    "url": "https://estore.st.com/en/nucleo-g474re-cpn.html",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 19.9,
+    "stock": "In stock (1-2 per order)"
+   },
+   {
+    "seller": "SparkFun",
+    "url": "https://www.sparkfun.com/teensy-4-1.html",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 31.5,
+    "stock": "In stock; Teensy 4.1 (3 CAN) as the backup MCU"
+   }
+  ],
+  "backup": {
+   "what": "Teensy 4.1",
+   "seller": "SparkFun",
+   "price_usd": 31.5
+  },
+  "specs": {
+   "can": 3
+  },
+  "sources": [
+   "https://estore.st.com/en/nucleo-g474re-cpn.html",
+   "https://www.sparkfun.com/teensy-4-1.html"
+  ]
+ },
+ {
+  "id": "adafruit-can-pal-5708",
+  "key": "can_pal",
+  "category": "can",
+  "vendor": "Adafruit",
+  "model": "5708",
+  "name": "Adafruit CAN Pal (TJA1051T/3) CAN transceiver, switchable 120 Ohm",
+  "price_usd": 3.95,
+  "price_checked": "2026-10-27",
+  "price_note": "Adafruit: $3.95 each, read 2026-10-27",
+  "buy": [
+   {
+    "seller": "Adafruit",
+    "url": "https://www.adafruit.com/product/5708",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 3.95,
+    "stock": "In stock"
+   },
+   {
+    "seller": "Waveshare",
+    "url": "https://www.waveshare.com/sn65hvd230-can-board.htm",
+    "in_stock": true,
+    "ships_from": "CN",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 4.99,
+    "stock": "InStock; SN65HVD230 board"
+   }
+  ],
+  "backup": {
+   "what": "Waveshare SN65HVD230 board",
+   "seller": "Waveshare",
+   "price_usd": 4.99
+  },
+  "specs": {
+   "pcb_mm": [
+    20.3,
+    20.3
+   ]
+  },
+  "sources": [
+   "https://www.adafruit.com/product/5708",
+   "https://www.waveshare.com/sn65hvd230-can-board.htm"
+  ]
+ },
+ {
+  "id": "bntechgo-8awg-black-10ft",
+  "key": "wire_8awg",
+  "category": "wire",
+  "vendor": "BNTECHGO",
+  "model": "8 AWG silicone black 10 ft",
+  "name": "BNTECHGO 8 AWG silicone wire, black, 10 ft (the pack leads, the MRBF, the shunt, the switch, the bus bars; red heat-shrink on every + end)",
+  "price_usd": 17.98,
+  "price_checked": "2026-10-27",
+  "price_note": "BNTECHGO: $17.98 each, read 2026-10-27",
+  "buy": [
+   {
+    "seller": "BNTECHGO",
+    "url": "https://bntechgo.com/bntechgo-8-gauge-silicone-wire-black-10-feet-ultra-flexible-high-temp-200-c-600v-8-awg-silicone-rubber-wire-with-1650-strands-of-tinned-copper-wire-stranded-wire-for-model-battery/",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 17.98,
+    "stock": "not shown"
+   },
+   {
+    "seller": "BNTECHGO",
+    "url": "https://bntechgo.com/bntechgo-10-gauge-silicone-wire-spool-black-25-feet-ultra-flexible-high-temp-200-c-600v-10-awg-silicone-rubber-wire-with-1050-strands-of-tinned-copper-wire-stranded-wire-for-model-battery/",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 24.98,
+    "stock": "not shown; 10 AWG 25 ft: carries the 80 A pulses, 55 A continuous (the MCU then caps the bus at 50 A)"
+   }
+  ],
+  "backup": {
+   "what": "10 AWG with a 50 A continuous cap in firmware",
+   "seller": "BNTECHGO",
+   "price_usd": 24.98
+  },
+  "specs": {
+   "awg": 8,
+   "strands": 1650
+  },
+  "sources": [
+   "https://bntechgo.com/bntechgo-8-gauge-silicone-wire-black-10-feet-ultra-flexible-high-temp-200-c-600v-8-awg-silicone-rubber-wire-with-1650-strands-of-tinned-copper-wire-stranded-wire-for-model-battery/",
+   "https://bntechgo.com/bntechgo-10-gauge-silicone-wire-spool-black-25-feet-ultra-flexible-high-temp-200-c-600v-10-awg-silicone-rubber-wire-with-1050-strands-of-tinned-copper-wire-stranded-wire-for-model-battery/"
+  ]
+ },
+ {
+  "id": "bntechgo-12awg-rb",
+  "key": "wire_12awg",
+  "category": "wire",
+  "vendor": "BNTECHGO",
+  "model": "12 AWG silicone red + black 25 + 25 ft",
+  "name": "BNTECHGO 12 AWG silicone wire, red and black (VESC leads)",
+  "price_usd": 32.98,
+  "price_checked": "2026-10-27",
+  "price_note": "BNTECHGO: $32.98 each, read 2026-10-27",
+  "buy": [
+   {
+    "seller": "BNTECHGO",
+    "url": "https://bntechgo.com/",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 32.98,
+    "stock": "not shown"
+   },
+   {
+    "seller": "RaceDayQuads",
+    "url": "https://www.racedayquads.com/products/silicone-wire-2-ft-red-and-black-pair",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 2.99,
+    "stock": "12 AWG sold out on 2026-10-27; 16/18/20 AWG in stock"
+   }
+  ],
+  "backup": {
+   "what": "1 ft pairs",
+   "seller": "RaceDayQuads",
+   "price_usd": 2.99
+  },
+  "specs": {
+   "awg": 12
+  },
+  "sources": [
+   "https://bntechgo.com/",
+   "https://www.racedayquads.com/products/silicone-wire-2-ft-red-and-black-pair"
+  ]
+ },
+ {
+  "id": "bntechgo-14awg-rb",
+  "key": "wire_14awg",
+  "category": "wire",
+  "vendor": "BNTECHGO",
+  "model": "14 AWG silicone red + black 25 + 25 ft",
+  "name": "BNTECHGO 14 AWG silicone wire, red and black (RS-04 branches)",
+  "price_usd": 24.98,
+  "price_checked": "2026-10-27",
+  "price_note": "BNTECHGO: $24.98 each, read 2026-10-27",
+  "buy": [
+   {
+    "seller": "BNTECHGO",
+    "url": "https://bntechgo.com/",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 24.98,
+    "stock": "not shown"
+   },
+   {
+    "seller": "RaceDayQuads",
+    "url": "https://www.racedayquads.com/products/silicone-wire-2-ft-red-and-black-pair",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 2.99,
+    "stock": "14 AWG sold out on 2026-10-27"
+   }
+  ],
+  "backup": {
+   "what": "1 ft pairs",
+   "seller": "RaceDayQuads",
+   "price_usd": 2.99
+  },
+  "specs": {
+   "awg": 14
+  },
+  "sources": [
+   "https://bntechgo.com/",
+   "https://www.racedayquads.com/products/silicone-wire-2-ft-red-and-black-pair"
+  ]
+ },
+ {
+  "id": "bntechgo-18awg-rb",
+  "key": "wire_18awg",
+  "category": "wire",
+  "vendor": "BNTECHGO",
+  "model": "18 AWG silicone red + black 10 + 10 ft",
+  "name": "BNTECHGO 18 AWG silicone wire, red and black (converters, 24 V and 12 V)",
+  "price_usd": 9.48,
+  "price_checked": "2026-10-27",
+  "price_note": "BNTECHGO: $9.48 each, read 2026-10-27",
+  "buy": [
+   {
+    "seller": "BNTECHGO",
+    "url": "https://bntechgo.com/",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 9.48,
+    "stock": "not shown"
+   },
+   {
+    "seller": "RaceDayQuads",
+    "url": "https://www.racedayquads.com/products/silicone-wire-2-ft-red-and-black-pair",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 1.99,
+    "stock": "18 AWG in stock"
+   }
+  ],
+  "backup": {
+   "what": "1 ft pairs",
+   "seller": "RaceDayQuads",
+   "price_usd": 1.99
+  },
+  "specs": {
+   "awg": 18
+  },
+  "sources": [
+   "https://bntechgo.com/",
+   "https://www.racedayquads.com/products/silicone-wire-2-ft-red-and-black-pair"
+  ]
+ },
+ {
+  "id": "bntechgo-22awg-rb",
+  "key": "wire_22awg",
+  "category": "wire",
+  "vendor": "BNTECHGO",
+  "model": "22 AWG silicone red + black 25 + 25 ft",
+  "name": "BNTECHGO 22 AWG silicone wire, red and black (5 V, signals; twist the CAN pairs by hand)",
+  "price_usd": 11.48,
+  "price_checked": "2026-10-27",
+  "price_note": "BNTECHGO: $11.48 each, read 2026-10-27",
+  "buy": [
+   {
+    "seller": "BNTECHGO",
+    "url": "https://bntechgo.com/",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 11.48,
+    "stock": "not shown"
+   },
+   {
+    "seller": "RaceDayQuads",
+    "url": "https://www.racedayquads.com/products/silicone-wire-2-ft-red-and-black-pair",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 1.99,
+    "stock": "22 AWG sold out on 2026-10-27; 20 AWG in stock"
+   }
+  ],
+  "backup": {
+   "what": "20 AWG 1 ft pairs",
+   "seller": "RaceDayQuads",
+   "price_usd": 1.99
+  },
+  "specs": {
+   "awg": 22
+  },
+  "sources": [
+   "https://bntechgo.com/",
+   "https://www.racedayquads.com/products/silicone-wire-2-ft-red-and-black-pair"
+  ]
+ },
+ {
+  "id": "selterm-md0814p-10",
+  "key": "lug_8awg_m6",
+  "category": "terminal",
+  "vendor": "Selterm",
+  "model": "MD0814P",
+  "name": "Selterm tinned copper lug 8 AWG, 1/4 in (M6) stud, 10 pcs (crimped on 10 AWG with a sleeve)",
+  "price_usd": 1.501,
+  "price_checked": "2026-10-27",
+  "pack_qty": 10,
+  "pack_price_usd": 15.01,
+  "price_note": "Selterm: $15.01 per 10-pack, read 2026-10-27",
+  "buy": [
+   {
+    "seller": "Selterm",
+    "url": "https://selterm.com/products/8-awg-1-4-stud-tinned-copper-battery-cable-ends-wire-lugs-marine-grade-md0814p",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 15.01,
+    "pack_qty": 10,
+    "stock": "available"
+   },
+   {
+    "seller": "go2marine",
+    "url": "https://www.go2marine.com/products/ring-terminals-adhesive-lined-heat-shrink-ancor",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 4.95,
+    "pack_qty": 3,
+    "stock": "available; Ancor adhesive heat-shrink rings 12-10 AWG M6"
+   }
+  ],
+  "backup": {
+   "what": "Ancor 12-10 AWG M6 rings",
+   "seller": "go2marine",
+   "price_usd": 4.95
+  },
+  "specs": {},
+  "sources": [
+   "https://selterm.com/products/8-awg-1-4-stud-tinned-copper-battery-cable-ends-wire-lugs-marine-grade-md0814p",
+   "https://www.go2marine.com/products/ring-terminals-adhesive-lined-heat-shrink-ancor"
+  ]
+ },
+ {
+  "id": "selterm-md0856p-10",
+  "key": "lug_8awg_m8",
+  "category": "terminal",
+  "vendor": "Selterm",
+  "model": "MD0856P",
+  "name": "Selterm tinned copper lug 8 AWG, 5/16 in (M8) stud, 10 pcs (the MRBF block)",
+  "price_usd": 1.615,
+  "price_checked": "2026-10-27",
+  "pack_qty": 10,
+  "pack_price_usd": 16.15,
+  "price_note": "Selterm: $16.15 per 10-pack, read 2026-10-27",
+  "buy": [
+   {
+    "seller": "Selterm",
+    "url": "https://selterm.com/products/8-awg-5-16-stud-tinned-copper-battery-cable-ends-wire-lugs-marine-grade-md0856p",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 16.15,
+    "pack_qty": 10,
+    "stock": "available"
+   },
+   {
+    "seller": "go2marine",
+    "url": "https://www.go2marine.com/products/ring-terminals-adhesive-lined-heat-shrink-ancor",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 4.95,
+    "pack_qty": 3,
+    "stock": "available; Ancor 12-10 AWG M8"
+   }
+  ],
+  "backup": {
+   "what": "Ancor 12-10 AWG M8 rings",
+   "seller": "go2marine",
+   "price_usd": 4.95
+  },
+  "specs": {},
+  "sources": [
+   "https://selterm.com/products/8-awg-5-16-stud-tinned-copper-battery-cable-ends-wire-lugs-marine-grade-md0856p",
+   "https://www.go2marine.com/products/ring-terminals-adhesive-lined-heat-shrink-ancor"
+  ]
+ },
+ {
+  "id": "amass-xt30u-m-8",
+  "key": "xt30_m",
+  "category": "connector",
+  "vendor": "Amass",
+  "model": "XT30U-M 8-pack",
+  "name": "Amass XT30U male, 8-pack (12 V and 24 V branches)",
+  "price_usd": 0.3738,
+  "price_checked": "2026-10-27",
+  "pack_qty": 8,
+  "pack_price_usd": 2.99,
+  "price_note": "Pyrodrone: $2.99 per 8-pack, read 2026-10-27",
+  "buy": [
+   {
+    "seller": "Pyrodrone",
+    "url": "https://www.pyrodrone.com/products/yellow-xt30u-m-8-pack-male-device",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 2.99,
+    "pack_qty": 8,
+    "stock": "available"
+   },
+   {
+    "seller": "RaceDayQuads",
+    "url": "https://www.racedayquads.com/products/xt30-connector-male-or-female",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 0.99,
+    "stock": "available (single)"
+   }
+  ],
+  "backup": {
+   "what": "single",
+   "seller": "RaceDayQuads",
+   "price_usd": 0.99
+  },
+  "specs": {},
+  "sources": [
+   "https://www.pyrodrone.com/products/yellow-xt30u-m-8-pack-male-device",
+   "https://www.racedayquads.com/products/xt30-connector-male-or-female"
+  ]
+ },
+ {
+  "id": "amass-xt30u-f-8",
+  "key": "xt30_f",
+  "category": "connector",
+  "vendor": "Amass",
+  "model": "XT30U-F 8-pack",
+  "name": "Amass XT30U female, 8-pack",
+  "price_usd": 0.3738,
+  "price_checked": "2026-10-27",
+  "pack_qty": 8,
+  "pack_price_usd": 2.99,
+  "price_note": "Pyrodrone: $2.99 per 8-pack, read 2026-10-27",
+  "buy": [
+   {
+    "seller": "Pyrodrone",
+    "url": "https://www.pyrodrone.com/products/yellow-xt30u-f-8-pack-female-battery",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 2.99,
+    "pack_qty": 8,
+    "stock": "available"
+   },
+   {
+    "seller": "RaceDayQuads",
+    "url": "https://www.racedayquads.com/products/xt30-connector-male-or-female",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 0.99,
+    "stock": "available (single)"
+   }
+  ],
+  "backup": {
+   "what": "single",
+   "seller": "RaceDayQuads",
+   "price_usd": 0.99
+  },
+  "specs": {},
+  "sources": [
+   "https://www.pyrodrone.com/products/yellow-xt30u-f-8-pack-female-battery",
+   "https://www.racedayquads.com/products/xt30-connector-male-or-female"
+  ]
+ },
+ {
+  "id": "amass-xt60h-m-5",
+  "key": "xt60h_m",
+  "category": "connector",
+  "vendor": "Amass",
+  "model": "XT60H-M 5-pack",
+  "name": "Amass XT60H male, 5-pack (RS-04 and VESC branches)",
+  "price_usd": 0.798,
+  "price_checked": "2026-10-27",
+  "pack_qty": 5,
+  "pack_price_usd": 3.99,
+  "price_note": "Pyrodrone: $3.99 per 5-pack, read 2026-10-27",
+  "buy": [
+   {
+    "seller": "Pyrodrone",
+    "url": "https://www.pyrodrone.com/products/xt60h-male-xt60-upgrade-amass",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 3.99,
+    "pack_qty": 5,
+    "stock": "available"
+   },
+   {
+    "seller": "RaceDayQuads",
+    "url": "https://www.racedayquads.com/products/xt60-connector-1pc-choose-your-version",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 0.99,
+    "stock": "available (single)"
+   }
+  ],
+  "backup": {
+   "what": "single",
+   "seller": "RaceDayQuads",
+   "price_usd": 0.99
+  },
+  "specs": {},
+  "sources": [
+   "https://www.pyrodrone.com/products/xt60h-male-xt60-upgrade-amass",
+   "https://www.racedayquads.com/products/xt60-connector-1pc-choose-your-version"
+  ]
+ },
+ {
+  "id": "jst-aghgh28k305",
+  "key": "gh_lead_2p_300",
+  "category": "connector",
+  "vendor": "JST",
+  "model": "AGHGH28K305",
+  "name": "JST GH 1.25 pre-crimped lead, socket to socket, 300 mm (CAN, UART)",
+  "price_usd": 0.52,
+  "price_checked": "2026-10-27",
+  "price_note": "TLC Electronics: $0.52 each, read 2026-10-27",
+  "buy": [
+   {
+    "seller": "TLC Electronics",
+    "url": "https://tlcelectronics.com/products/detail/JST/AGHGH28K305",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 0.52,
+    "stock": "12,900"
+   },
+   {
+    "seller": "TLC Electronics",
+    "url": "https://tlcelectronics.com/products/detail/JST/AGHGH28K152",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 0.48,
+    "stock": "6,000 (150 mm)"
+   }
+  ],
+  "backup": {
+   "what": "150 mm",
+   "seller": "TLC Electronics",
+   "price_usd": 0.48
+  },
+  "specs": {},
+  "sources": [
+   "https://tlcelectronics.com/products/detail/JST/AGHGH28K305",
+   "https://tlcelectronics.com/products/detail/JST/AGHGH28K152"
+  ]
+ },
+ {
+  "id": "haisstronica-hx1574",
+  "key": "ferrule_crimper",
+  "category": "tool",
+  "vendor": "Haisstronica",
+  "model": "HX1574",
+  "name": "Haisstronica ratcheting ferrule crimper, AWG 24-8",
+  "price_usd": 33.99,
+  "price_checked": "2026-10-27",
+  "price_note": "Haisstronica: $33.99 each, read 2026-10-27",
+  "buy": [
+   {
+    "seller": "Haisstronica",
+    "url": "https://www.haisstronica.com/products/ferrule-crimping-tool-awg-24-8",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 33.99,
+    "stock": "available"
+   },
+   {
+    "seller": "Haisstronica",
+    "url": "https://www.haisstronica.com/products/5000pcs-wire-ferrules-awg-22-7",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 65.99,
+    "stock": "available (the ferrule kit)"
+   }
+  ],
+  "backup": {
+   "what": "with the 5000-ferrule kit",
+   "seller": "Haisstronica",
+   "price_usd": 65.99
+  },
+  "specs": {},
+  "sources": [
+   "https://www.haisstronica.com/products/ferrule-crimping-tool-awg-24-8",
+   "https://www.haisstronica.com/products/5000pcs-wire-ferrules-awg-22-7"
+  ]
+ },
+ {
+  "id": "haisstronica-ferrules-5000",
+  "key": "ferrules",
+  "category": "terminal",
+  "vendor": "Haisstronica",
+  "model": "5000 pcs AWG 22-7",
+  "name": "Wire ferrules, 5000 pcs, AWG 22-7 (every screw terminal)",
+  "price_usd": 65.99,
+  "price_checked": "2026-10-27",
+  "price_note": "Haisstronica: $65.99 each, read 2026-10-27",
+  "buy": [
+   {
+    "seller": "Haisstronica",
+    "url": "https://www.haisstronica.com/products/5000pcs-wire-ferrules-awg-22-7",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 65.99,
+    "stock": "available"
+   },
+   {
+    "seller": "Haisstronica",
+    "url": "https://www.haisstronica.com/products/ferrule-crimping-tool-awg-24-8",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 33.99,
+    "stock": "available (the tool)"
+   }
+  ],
+  "backup": {
+   "what": "tool + kit",
+   "seller": "Haisstronica",
+   "price_usd": 33.99
+  },
+  "specs": {},
+  "sources": [
+   "https://www.haisstronica.com/products/5000pcs-wire-ferrules-awg-22-7",
+   "https://www.haisstronica.com/products/ferrule-crimping-tool-awg-24-8"
+  ]
+ },
+ {
+  "id": "glitter-801d",
+  "key": "spot_welder",
+  "category": "tool",
+  "vendor": "GLITTER",
+  "model": "801D",
+  "name": "GLITTER 801D capacitor spot welder (pure-nickel strip), one box",
+  "price_usd": 289.99,
+  "price_checked": "2026-10-27",
+  "price_note": "Amazon: $289.99 each, read 2026-10-27",
+  "buy": [
+   {
+    "seller": "Amazon",
+    "url": "https://www.amazon.com/dp/B0F659GYFJ",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 289.99,
+    "stock": "Only 13 left (ships from Amazon)"
+   },
+   {
+    "seller": "Grid Rewired",
+    "url": "https://gridrewired.com/products/kweld-spot-welder-kit",
+    "in_stock": true,
+    "ships_from": "CA",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 252.0,
+    "stock": "available; kWeld complete kit (needs a kCap or a LiPo, ~$203 more)"
+   }
+  ],
+  "backup": {
+   "what": "kWeld complete kit + kCap",
+   "seller": "Grid Rewired",
+   "price_usd": 252.0
+  },
+  "specs": {},
+  "sources": [
+   "https://www.amazon.com/dp/B0F659GYFJ",
+   "https://gridrewired.com/products/kweld-spot-welder-kit"
+  ]
+ },
+ {
+  "id": "mcmaster-91239a228",
+  "key": "screw_m5x12_button",
+  "category": "fastener",
+  "vendor": "McMaster-Carr",
+  "model": "91239A228",
+  "name": "Black-oxide class 10.9 button head hex drive screw, ISO 7380, M5 x 0.8 x 12 mm (the hip frames into the cheeks)",
+  "price_usd": 0.1206,
+  "price_checked": "2026-10-27",
+  "pack_qty": 100,
+  "pack_price_usd": 12.06,
+  "price_note": "McMaster-Carr: $12.06 per 100-pack (read 2026-10-27; price_usd is per piece)",
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/91239A228/",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 12.06,
+    "pack_qty": 100,
+    "stock": "product page read (McMaster ships next day)",
+    "seller_pn": "91239A228"
+   },
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/91239A224/",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 11.79,
+    "pack_qty": 100,
+    "stock": "M5 x 10 of the same series (engages 5.3 mm: only if the 12 is out)",
+    "seller_pn": "91239A224"
+   }
+  ],
+  "backup": {
+   "what": "M5 x 10 of the same series (engages 5.3 mm: only if the 12 is out)",
+   "seller": "McMaster-Carr",
+   "part_number": "91239A224",
+   "price_usd": 11.79
+  },
+  "specs": {
+   "thread": "M5",
+   "length_mm": 12,
+   "head_d_mm": 9.5,
+   "head_h_mm": 2.75,
+   "drive": "3 mm hex",
+   "class": "10.9"
+  },
+  "sources": [
+   "https://www.mcmaster.com/91239A228/",
+   "https://www.mcmaster.com/91239A224/"
+  ]
+ },
+ {
+  "id": "mcmaster-91239a224",
+  "key": "screw_m5x10_button",
+  "category": "fastener",
+  "vendor": "McMaster-Carr",
+  "model": "91239A224",
+  "name": "Black-oxide class 10.9 button head hex drive screw, ISO 7380, M5 x 0.8 x 10 mm (tray, belly, posts, VESCs, bay)",
+  "price_usd": 0.1179,
+  "price_checked": "2026-10-27",
+  "pack_qty": 100,
+  "pack_price_usd": 11.79,
+  "price_note": "McMaster-Carr: $11.79 per 100-pack (read 2026-10-27; price_usd is per piece)",
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/91239A224/",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 11.79,
+    "pack_qty": 100,
+    "stock": "product page read (McMaster ships next day)",
+    "seller_pn": "91239A224"
+   },
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/91239A228/",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 12.06,
+    "pack_qty": 100,
+    "stock": "M5 x 12 of the same series",
+    "seller_pn": "91239A228"
+   }
+  ],
+  "backup": {
+   "what": "M5 x 12 of the same series",
+   "seller": "McMaster-Carr",
+   "part_number": "91239A228",
+   "price_usd": 12.06
+  },
+  "specs": {
+   "thread": "M5",
+   "length_mm": 10,
+   "head_d_mm": 9.5,
+   "drive": "3 mm hex",
+   "class": "10.9"
+  },
+  "sources": [
+   "https://www.mcmaster.com/91239A224/",
+   "https://www.mcmaster.com/91239A228/"
+  ]
+ },
+ {
+  "id": "mcmaster-91294a190",
+  "key": "screw_m4x10_flat",
+  "category": "fastener",
+  "vendor": "McMaster-Carr",
+  "model": "91294A190",
+  "name": "Black-oxide alloy steel flat head hex drive screw, 90 deg, M4 x 0.7 x 10 mm (the spine standoffs, flush on the frame side)",
+  "price_usd": 0.0638,
+  "price_checked": "2026-10-27",
+  "pack_qty": 100,
+  "pack_price_usd": 6.38,
+  "price_note": "McMaster-Carr: $6.38 per 100-pack (read 2026-10-27; price_usd is per piece)",
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/91294A190/",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 6.38,
+    "pack_qty": 100,
+    "stock": "product page read (McMaster ships next day)",
+    "seller_pn": "91294A190"
+   },
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/91294A188/",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 6.25,
+    "pack_qty": 100,
+    "stock": "M4 x 8 of the same series (engages 3.3 mm in the standoff)",
+    "seller_pn": "91294A188"
+   }
+  ],
+  "backup": {
+   "what": "M4 x 8 of the same series (engages 3.3 mm in the standoff)",
+   "seller": "McMaster-Carr",
+   "part_number": "91294A188",
+   "price_usd": 6.25
+  },
+  "specs": {
+   "thread": "M4",
+   "length_mm": 10,
+   "head_d_mm": 8.0,
+   "drive": "2.5 mm hex"
+  },
+  "sources": [
+   "https://www.mcmaster.com/91294A190/",
+   "https://www.mcmaster.com/91294A188/"
+  ]
+ },
+ {
+  "id": "mcmaster-95947a065",
+  "key": "standoff_m4x31_ff",
+  "category": "standoff",
+  "vendor": "McMaster-Carr",
+  "model": "95947A065",
+  "name": "Lightweight aluminium female-threaded hex standoff, 6 mm hex, M4 x 31 mm (the spine: between the cheeks)",
+  "price_usd": 1.46,
+  "price_checked": "2026-10-27",
+  "price_note": "McMaster-Carr: $1.46 each (read 2026-10-27; price_usd is per piece)",
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/95947A065/",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 1.46,
+    "stock": "product page read (McMaster ships next day)",
+    "seller_pn": "95947A065"
+   },
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/95947A062/",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 1.35,
+    "stock": "M4 x 30 of the same series, with a printed 1 mm washer at one end",
+    "seller_pn": "95947A062"
+   }
+  ],
+  "backup": {
+   "what": "M4 x 30 of the same series, with a printed 1 mm washer at one end",
+   "seller": "McMaster-Carr",
+   "part_number": "95947A062",
+   "price_usd": 1.35
+  },
+  "specs": {
+   "thread": "M4",
+   "length_mm": 31,
+   "hex_mm": 6
+  },
+  "sources": [
+   "https://www.mcmaster.com/95947A065/",
+   "https://www.mcmaster.com/95947A062/"
+  ]
+ },
+ {
+  "id": "mcmaster-91290a113",
+  "key": "screw_m3x8_socket",
+  "category": "fastener",
+  "vendor": "McMaster-Carr",
+  "model": "91290A113",
+  "name": "Black-oxide alloy steel socket head screw, M3 x 0.5 x 8 mm (the bus bars to their insulators, the insulators to the plate)",
+  "price_usd": 0.1328,
+  "price_checked": "2026-10-27",
+  "pack_qty": 100,
+  "pack_price_usd": 13.28,
+  "price_note": "McMaster-Carr: $13.28 per 100-pack (read 2026-10-27; price_usd is per piece)",
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/91290A113/",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 13.28,
+    "pack_qty": 100,
+    "stock": "product page read (McMaster ships next day)",
+    "seller_pn": "91290A113"
+   },
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/91290A115/",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 13.23,
+    "pack_qty": 100,
+    "stock": "M3 x 10 of the same series",
+    "seller_pn": "91290A115"
+   }
+  ],
+  "backup": {
+   "what": "M3 x 10 of the same series",
+   "seller": "McMaster-Carr",
+   "part_number": "91290A115",
+   "price_usd": 13.23
+  },
+  "specs": {
+   "thread": "M3",
+   "length_mm": 8
+  },
+  "sources": [
+   "https://www.mcmaster.com/91290A113/",
+   "https://www.mcmaster.com/91290A115/"
+  ]
+ },
+ {
+  "id": "mcmaster-95947a048",
+  "key": "standoff_m3x16_ff",
+  "category": "standoff",
+  "vendor": "McMaster-Carr",
+  "model": "95947A048",
+  "name": "Lightweight aluminium female-threaded hex standoff, 6 mm hex, M3 x 16 mm (the J501 carrier on the pallet)",
+  "price_usd": 0.81,
+  "price_checked": "2026-10-27",
+  "price_note": "McMaster-Carr: $0.81 each (read 2026-10-27; price_usd is per piece)",
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/95947A048/",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 0.81,
+    "stock": "product page read (McMaster ships next day)",
+    "seller_pn": "95947A048"
+   },
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/95947A051/",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 0.81,
+    "stock": "M3 x 19 of the same series (the carrier 3 mm higher)",
+    "seller_pn": "95947A051"
+   }
+  ],
+  "backup": {
+   "what": "M3 x 19 of the same series (the carrier 3 mm higher)",
+   "seller": "McMaster-Carr",
+   "part_number": "95947A051",
+   "price_usd": 0.81
+  },
+  "specs": {
+   "thread": "M3",
+   "length_mm": 16,
+   "hex_mm": 6
+  },
+  "sources": [
+   "https://www.mcmaster.com/95947A048/",
+   "https://www.mcmaster.com/95947A051/"
+  ]
+ },
+ {
+  "id": "adafruit-qt-py-esp32-s3-5426",
+  "key": "qtpy_esp32s3",
+  "category": "mcu",
+  "vendor": "Adafruit",
+  "model": "5426",
+  "name": "Adafruit QT Py ESP32-S3 (reads the Daly BMS over Bluetooth and puts it on CAN bus C: no wire to the BMS, whose UART ground is B-)",
+  "price_usd": 12.5,
+  "price_checked": "2026-10-27",
+  "price_note": "Adafruit: $12.50 each, read 2026-10-27",
+  "buy": [
+   {
+    "seller": "Adafruit",
+    "url": "https://www.adafruit.com/product/5426",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 12.5,
+    "stock": "In stock"
+   },
+   {
+    "seller": "Waveshare",
+    "url": "https://www.waveshare.com/esp32-s3-zero.htm",
+    "in_stock": true,
+    "ships_from": "CN",
+    "read_on": "2026-10-27",
+    "source": "plan",
+    "price_usd": 5.49,
+    "stock": "listed $5.49-7.99 (the body plan, 2026-10-27)"
+   }
+  ],
+  "backup": {
+   "what": "Waveshare ESP32-S3-Zero",
+   "seller": "Waveshare",
+   "price_usd": 5.49
+  },
+  "specs": {
+   "size_mm": [
+    21.7,
+    17.8,
+    5.7
+   ],
+   "mass_g": 1.2
+  },
+  "sources": [
+   "https://www.adafruit.com/product/5426",
+   "https://www.waveshare.com/esp32-s3-zero.htm"
+  ]
+ },
+ {
+  "id": "radiomaster-er3c-i",
+  "key": "radio_stop_rx",
+  "category": "radio",
+  "vendor": "RadioMaster",
+  "model": "ER3C-i 2.4 GHz ELRS PWM",
+  "name": "RadioMaster ER3C-i ExpressLRS 2.4 GHz PWM receiver (the radio stop, D37: one PWM channel drives the RC relay switch)",
+  "price_usd": 16.99,
+  "price_checked": "2026-10-27",
+  "price_note": "RadioMaster: $16.99 each, read 2026-10-27",
+  "buy": [
+   {
+    "seller": "RadioMaster",
+    "url": "https://radiomasterrc.com/products/er3c-i-2-4ghz-elrs-pwm-receiver",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 16.99,
+    "stock": "available (store JSON)"
+   },
+   {
+    "seller": "RadioMaster",
+    "url": "https://radiomasterrc.com/products/rp1-expresslrs-2-4ghz-nano-receiver",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 18.99,
+    "stock": "available; RP1 V2 nano, PWM on its UART pads (ELRS 3 setting)"
+   }
+  ],
+  "backup": {
+   "what": "RP1 V2 with PWM output",
+   "seller": "RadioMaster",
+   "price_usd": 18.99
+  },
+  "specs": {
+   "protocol": "ExpressLRS 2.4 GHz",
+   "output": "PWM x 3"
+  },
+  "sources": [
+   "https://radiomasterrc.com/products/er3c-i-2-4ghz-elrs-pwm-receiver",
+   "https://radiomasterrc.com/products/rp1-expresslrs-2-4ghz-nano-receiver"
+  ]
+ },
+ {
+  "id": "pololu-rc-switch-relay-2804",
+  "key": "radio_stop_relay",
+  "category": "radio",
+  "vendor": "Pololu",
+  "model": "2804",
+  "name": "Pololu RC switch with relay (the radio stop: its dry contact is the STOP loop to the MCU; D37 calls this the simplest non-rated version)",
+  "price_usd": 19.95,
+  "price_checked": "2026-10-27",
+  "price_note": "Pololu: $19.95 each, read 2026-10-27",
+  "buy": [
+   {
+    "seller": "Pololu",
+    "url": "https://www.pololu.com/product/2804",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "plan",
+    "price_usd": 19.95,
+    "stock": "listed (the body plan, read 2026-10-27)"
+   },
+   {
+    "seller": "Pololu",
+    "url": "https://www.pololu.com/product/2803",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "plan",
+    "stock": "the digital-output version (no relay): backup through a MOSFET on the MCU board"
+   }
+  ],
+  "backup": {
+   "what": "Pololu RC switch, digital output (#2803)",
+   "seller": "Pololu",
+   "price_usd": null
+  },
+  "specs": {},
+  "sources": [
+   "https://www.pololu.com/product/2804",
+   "https://www.pololu.com/product/2803"
+  ]
+ }
+]

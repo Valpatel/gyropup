@@ -37,10 +37,11 @@ def test_frame_mounts_from_the_frame():
     assert m['depth'] >= 10.0, m['depth']
     # when the leg publishes its interface (fivebar.frame_mounts), the solid must agree with it
     assert sorted(tuple(round(v, 2) for v in h) for h in m['measured_holes']) == sorted(tuple(round(v, 2) for v in h) for h in holes)
-    # the frame screw engages the insert fully and does not bottom out
+    # the frame screw engages at least 90 % of the 7.9 mm insert (7.1 mm, 1.4 d of M5 thread: the insert's grip in the
+    # plastic, not the thread, sets the pull-out) and does not bottom out in the 11 mm pilot
     t = bp.STOCK[bp.CHEEK]['t']
     engage = bp.FRAME_SCREW['length'] - t
-    assert 7.9 <= engage <= m['depth'] - 1.0, (engage, m['depth'])
+    assert 0.9 * 7.9 <= engage <= m['depth'] - 1.0, (engage, m['depth'])
 
 
 def test_tm_pattern_is_the_turrets():
@@ -142,6 +143,59 @@ def test_no_clash_with_the_legs():
 def test_printed_parts_fit_the_bed():
     b = _body()
     assert b['print']['too_big'] == []
+
+
+def test_no_internal_clashes():
+    b = _body()
+    assert b['internal_clashes'] == [], b['internal_clashes']
+
+
+# ------------------------------------------------------------------------------------------- T5, T8: parts list, wiring
+
+def test_every_bought_line_has_a_price_and_a_backup():
+    f = R / 'exports' / 'body' / 'bom.json'
+    if not f.exists():
+        import pytest
+        pytest.skip('exports/body/bom.json not built yet (cad/body_bom.py)')
+    bom = json.loads(f.read_text())
+    bad = []
+    for k, rows in bom.items():
+        if not isinstance(rows, list) or k.startswith(('to_source', 'made_to_order', 'not_')):
+            continue
+        for r in rows:
+            s = r.get('sellers') or []
+            if len(s) < 2 or not s[0].get('url') or (s[0].get('price_usd') is None and r.get('price_usd_each') is None):
+                bad.append((k, r.get('key')))
+    for m in bom['made_to_order']:
+        if not (m.get('step') and m.get('dxf') and m.get('backup') and m.get('price_estimate_usd_each')):
+            bad.append(('made_to_order', m['key']))
+    assert not bad, bad
+
+
+AMPACITY_A = {8: 85, 10: 55, 12: 41, 14: 32, 18: 16, 22: 7}       # silicone, bundled in free air (the BNTECHGO class, 200 C)
+
+
+def test_every_fuse_protects_its_wire():
+    """No fuse on a wire is larger than the wire carries (docs/body-electrical.md)."""
+    import re
+    w = json.loads((R / 'exports' / 'body' / 'wiring.json').read_text())
+    bad = []
+    for r in w['wires']:
+        m = re.search(r'(\d+(?:\.\d+)?) A', r['fuse'] or '')
+        if m and not r['fuse'].startswith('('):
+            if float(m.group(1)) > AMPACITY_A[r['awg']]:
+                bad.append((r['id'], r['fuse'], r['awg']))
+    assert not bad, bad
+
+
+def test_body_loads_from_the_mount_plane():
+    f = R / 'exports' / 'body' / 'leg-loads.json'
+    d = json.loads(f.read_text())
+    for k in ('rare_body', 'fault_body'):
+        M, name = d[k]
+        b = d['scenarios'][name]['body']
+        assert 0 < b['peak_vertical_n'] < d['scenarios'][name]['peak_axle_force_n']
+        assert abs(b['peak_vertical_n'] - b['peak_vertical_check_ballast_n']) < 0.05 * b['peak_vertical_n'] + 10, b
 
 
 if __name__ == '__main__':
