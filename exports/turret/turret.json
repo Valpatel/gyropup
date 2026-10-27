@@ -41,12 +41,29 @@
    "solid": true,
    "frame": "pan",
    "doc": "The turntable, printed PA6-CF upside down (100 % solid): a 63 T module 1.25 spur gear (16 mm face) with a",
-   "mass_g_each": 79.6,
-   "print_h": 5.2,
+   "mass_g_each": 84.7,
+   "print_h": 5.6,
    "bed_mm": [
     114.6,
     81.2,
-    34.0
+    41.2
+   ],
+   "fits_bed": true,
+   "valid_single_solid": true
+  },
+  "pan_spacer": {
+   "material": "pa6-cf",
+   "qty": 1,
+   "note": "PA6-CF on its wide end; between the 61810 inner race and the circlip",
+   "solid": true,
+   "frame": "pan",
+   "doc": "Printed PA6-CF thrust ring (100 % solid) between the 61810's inner race and the DIN 471-50 circlip: it slides",
+   "mass_g_each": 2.6,
+   "print_h": 0.2,
+   "bed_mm": [
+    59.0,
+    59.0,
+    4.0
    ],
    "fits_bed": true,
    "valid_single_solid": true
@@ -280,9 +297,19 @@
    "frame": "base"
   },
   "pan_bearing": {
-   "mass_g": 52.0,
-   "note": "61810-2RS (50 x 65 x 7)",
+   "mass_g": 37.0,
+   "note": "6810-2Z (= 61810-2Z, 50 x 65 x 7): outer race and shields; McMaster 6656K229",
    "frame": "base"
+  },
+  "pan_bearing_inner": {
+   "mass_g": 15.0,
+   "note": "the 6810-2Z's inner race (turns with the pan ring; bought with pan_bearing)",
+   "frame": "pan"
+  },
+  "circlip_50": {
+   "mass_g": 11.4,
+   "note": "DIN 471-50 external ring under the pan_spacer; McMaster 98541A167",
+   "frame": "pan"
   },
   "dt_receptacle": {
    "mass_g": 15.0,
@@ -300,9 +327,19 @@
    "frame": "pan"
   },
   "tilt_bearing": {
-   "mass_g": 2.0,
-   "note": "MR126-2RS (6 x 12 x 4)",
+   "mass_g": 1.3125,
+   "note": "126-2Z (MR126 size, 6 x 12 x 4): outer race and shields; McMaster 7804K112",
    "frame": "pan"
+  },
+  "tilt_bearing_inner": {
+   "mass_g": 0.4375,
+   "note": "the 126-2Z's inner race (turns with the cradle; bought with tilt_bearing)",
+   "frame": "tilt"
+  },
+  "shoulder_screw": {
+   "mass_g": 6.7,
+   "note": "ISO 7379 shoulder screw 6 x 12, M5 x 10: the tilt pivot (-y); McMaster 92981A101",
+   "frame": "tilt"
   },
   "flywheel_motor_l": {
    "mass_g": 27.8,
@@ -398,13 +435,13 @@
    170.0
   ],
   "pan_hard_stop_deg": 173.5,
-  "mass_estimate_g": 1375.4,
+  "mass_estimate_g": 1383.0,
   "com": [
    10.3,
-   5.3,
-   294.8
+   4.9,
+   294.5
   ],
-  "com_above_mount_mm": 80.8,
+  "com_above_mount_mm": 80.5,
   "ball_d": 22.7,
   "bore": 24.2,
   "pose": {
@@ -429,12 +466,12 @@
    -25.0
   ]
  ],
- "mass_g_with_balls": 1375.4,
- "mass_g_empty": 1320.5,
+ "mass_g_with_balls": 1383.0,
+ "mass_g_empty": 1328.0,
  "com_from_mount_mm": [
   10.3,
-  5.3,
-  80.8
+  4.9,
+  80.5
  ],
  "not_modelled_g": {
   "wiring and the cable loops": 50,
@@ -442,9 +479,9 @@
   "24 -> 12 V buck": 10,
   "chronograph emitters/receivers + hopper-full beam": 10,
   "LEDs and buzzer": 15,
-  "screws, inserts, dowels, circlips, shoulder screw, springs": 35,
+  "screws, inserts, dowels, springs": 17,
   "CT pogo connector pair": 10
  },
- "print_hours": 47.7,
- "made_g": 743.6
+ "print_hours": 48.2,
+ "made_g": 751.3
 }

@@ -59,9 +59,21 @@ SADDLE_T = 8.0            # proposed head ring thickness (M5 inserts need 8 mm)
 TM_BOLTS = [(40.0, 40.0), (-40.0, 40.0), (-40.0, -40.0), (40.0, -40.0)]      # 4 x M5 on 80 x 80
 TM_DOWELS = [(52.0, 0.0), (0.0, -52.0)]                                     # 2 x Ø5, not symmetric: one way only
 TM_HOLE = 45.0
-# 61810-2RS (SKF): 50 x 65 x 7, 52 g. MR126-2RS: 6 x 12 x 4.
-BRG = {'d': 50.0, 'D': 65.0, 'B': 7.0, 'mass_g': 52.0}
-MR126 = {'d': 6.0, 'D': 12.0, 'B': 4.0, 'mass_g': 2.0}
+# 6810-2Z (= 61810-2Z, McMaster 6656K229): 50 x 65 x 7, 52 g. Anything turning with the inner ring may bear on it only
+# inside Ø52.5 and anything fixed on the outer ring only outside Ø62 (NSK 6810ZZ abutments: da 52..52.5, Da max 63); the
+# shields between are recessed (0.2 mm, est).
+BRG = {'d': 50.0, 'D': 65.0, 'B': 7.0, 'mass_g': 52.0, 'd_land': 52.4, 'D_land': 62.0, 'shield_recess': 0.2}
+# 126-2Z (MR126 size, McMaster 7804K112): 6 x 12 x 4; lands est for a 6 x 12 miniature (inner ring to Ø7.2, outer
+# ring from Ø10.6): check on the bearing in hand
+MR126 = {'d': 6.0, 'D': 12.0, 'B': 4.0, 'mass_g': 1.75, 'd_land': 7.2, 'D_land': 10.6, 'shield_recess': 0.1}
+# DIN 471-50 external ring (McMaster 98541A167; DIN 471:2011 table): groove Ø47 x 2.15, ring 2 thick, section b 5.1 at
+# the back, lugs a 6.9 (to r 30.4 fitted), edge margin n >= 4.5 on steel. Its back and lugs overhang the 6810's shield,
+# so it sits under a printed spacer (pan_spacer), 4 mm below the bearing, and the journal runs 6 mm past its groove.
+CIRCLIP = {'d2': 47.0, 'm': 2.15, 's': 2.0, 'b': 5.1, 'a': 6.9, 'n_min': 4.5, 'mass_g': 11.4}
+JOURNAL_LIP = 6.0
+SPACER = {'h': 4.0, 'land_h': 1.0, 'r_out': 29.5}          # pan_spacer under the 61810's inner ring
+# ISO 7379 shoulder screw 6 x 12, M5 x 10 (McMaster 92981A101): the tilt pivot on the -y side
+SHOULDER = {'d': 6.0, 'L': 12.0, 'head_d': 10.0, 'head_h': 5.0, 'thread_d': 5.0, 'thread_L': 10.0, 'mass_g': 6.7}
 # Feetech STS3215 (catalog feetech-sts3215-c018-12v): case 45.2 x 24.7 x 35; output centred on the 24.7 width,
 # 12.35 from one end (est from the drawing: verify on a real servo); disc horn Ø20 x 3 (est).
 SERVO = {'L': 45.2, 'W': 24.7, 'H': 35.0, 'shaft_from_end': 12.35, 'horn_d': 20.0, 'horn_t': 3.0, 'mass_g': 89.0}
@@ -77,7 +89,7 @@ DT = {'flange': (46.0, 3.2, 30.0), 'body': (35.0, 22.0, 22.0), 'front': (33.0, 2
       'sweep': 30.0, 'mass_g': 15.0}
 NOT_MODELLED_G = {'wiring and the cable loops': 50, 'head MCU + IMU + CAN transceiver': 15, '24 -> 12 V buck': 10,
                   'chronograph emitters/receivers + hopper-full beam': 10, 'LEDs and buzzer': 15,
-                  'screws, inserts, dowels, circlips, shoulder screw, springs': 35, 'CT pogo connector pair': 10}
+                  'screws, inserts, dowels, springs': 17, 'CT pogo connector pair': 10}
 DENS = {k: v['density_g_cm3'] for k, v in json.loads((R / 'catalog/materials.json').read_text()).items()}
 PRINT_RATE_CM3_H = {'pa6-cf': 14.0, 'petg': 20.0, 'tpu95': 8.0}       # same rates as build.py's print plan
 
@@ -260,7 +272,7 @@ def pan_base(G):
     s = cyl_z(G.base_r, 0, t)
     s = s.union(ring_z(G.base_r, G.base_r - 2.5, 0, 18))                                    # drip skirt
     s = s.union(ring_z(35.5, 32.5, 0, G.brg_z - 2))                                         # housing tube
-    s = s.union(ring_z(G.housing_r_out, (BRG['D'] - 3) / 2, G.brg_z - 2, hz1))              # bearing seat ring
+    s = s.union(ring_z(G.housing_r_out, BRG['D_land'] / 2, G.brg_z - 2, hz1))               # bearing seat ring
     for a in (0, 90, 270):                                                                  # clamp ears
         ear = box(G.housing_r_out - 0.5, 42.0, -7, 7, hz1 - 4, hz1).rotate((0, 0, 0), (0, 0, 1), a)
         s = s.union(ear).union(cyl_z(7.0, hz1 - 4, hz1, *polar(42.0, math.radians(a))))
@@ -350,23 +362,43 @@ def bumper_ring(G):
 
 # ------------------------------------------------------------------------------------------------ pan parts (turn with pan)
 
+def circlip_z(G):
+    """(bottom, top) of the DIN 471-50 ring: it pushes the pan_spacer up into the 61810's inner race."""
+    top = G.brg_z - SPACER['h']
+    return top - CIRCLIP['s'], top
+
+
 def pan_ring(G):
     """The turntable, printed PA6-CF upside down (100 % solid): a 63 T module 1.25 spur gear (16 mm face) with a
-    Ø40 open centre, a shoulder that sits on the 61810's inner race, a Ø50 journal through it with a DIN 471-50
-    circlip groove under the race, 4 x M4 inserts for the tilt yoke, and the pan stop finger at the rear (reaches over
-    the pinion and meets the base's post at +-173.5 deg; software limit +-170)."""
+    Ø40 open centre, a shoulder that sits on the 61810's inner race (only inside Ø52.4: a 1 mm relief keeps it off
+    the shield), a Ø50 journal through it, the pan_spacer and a DIN 471-50 circlip below the race (the journal runs
+    6 mm past the groove), 4 x M4 inserts for the tilt yoke, and the pan stop finger at the rear (reaches over the
+    pinion and meets the base's post at +-173.5 deg; software limit +-170)."""
     z0, z1 = G.turntable_z
     m = G.gear
     s = spur(m['m'], m['z_ring'], z0, z1)
     s = s.union(ring_z(28.0, 20.0, G.brg_z + BRG['B'], z0 + 0.01))                         # shoulder on the inner race
-    s = s.union(ring_z(BRG['d'] / 2, 20.0, G.brg_z - 5.0, G.brg_z + BRG['B'] + 0.01))       # journal
+    cz0, cz1 = circlip_z(G)
+    groove0 = cz1 - CIRCLIP['m']
+    s = s.union(ring_z(BRG['d'] / 2, 20.0, groove0 - JOURNAL_LIP, G.brg_z + BRG['B'] + 0.01))   # journal
     s = s.union(box(-G.post_r[1], -30.0, -4, 4, z1 - 3.5, z1))                              # stop finger: arm over the pinion
     s = s.union(box(-G.post_r[1], -G.post_r[0], -4, 4, z0, z1))                             # ... and down beside it
     s = s.cut(cyl_z(20.0, z0 - 30, z1 + 1))
-    s = s.cut(ring_z(BRG['d'] / 2 + 1, 23.5, G.brg_z - 2.15, G.brg_z))                     # circlip groove
+    s = s.cut(ring_z(BRG['d'] / 2 + 1, CIRCLIP['d2'] / 2, groove0, cz1))                   # circlip groove
+    s = s.cut(ring_z(28.5, BRG['d_land'] / 2, G.brg_z + BRG['B'] - 0.1, G.brg_z + BRG['B'] + 1.0))   # shield relief
     for (x, y) in YOKE_BOLTS:
         s = s.cut(insert_hole(x, y, z1, 'M4'))
     return s
+
+
+def pan_spacer(G):
+    """Printed PA6-CF thrust ring (100 % solid) between the 61810's inner race and the DIN 471-50 circlip: it slides
+    up the journal (Ø50.3 bore), bears on the race only inside Ø52.4 (a 1 mm land) and holds the circlip, whose back
+    and lugs reach Ø60.8, 4 mm below the bearing's shield. Print it standing on its wide end."""
+    z1 = G.brg_z
+    z0 = z1 - SPACER['h']
+    s = ring_z(SPACER['r_out'], BRG['d'] / 2 + 0.15, z0, z1 - SPACER['land_h'])
+    return s.union(ring_z(BRG['d_land'] / 2, BRG['d'] / 2 + 0.15, z1 - SPACER['land_h'] - 0.01, z1))
 
 
 YOKE_BOLTS = [(10.0, 28.0), (-10.0, 28.0), (10.0, -28.0), (-10.0, -28.0)]
@@ -375,8 +407,9 @@ YOKE_BOLTS = [(10.0, 28.0), (-10.0, 28.0), (10.0, -28.0), (-10.0, -28.0)]
 def tilt_yoke(G):
     """Printed PA6-CF on its back (layers run along the arms): an 8 mm bridge on the turntable (4 x M4) and two 8 mm
     arms up to the tilt axis. +y arm: a pocket for the STS3215 tilt servo on its outer face (2 x M2.5 each side, est),
-    its horn through a Ø26 hole. -y arm: the MR126 seat on the inner face, a Ø6.5 hole for the ISO 7379 6 x 12
-    shoulder screw. The hard stop: two sectors on the -y arm's inner face that the cradle's lug hits at tilt 0
+    its horn through a Ø26 hole. -y arm: the MR126 seat on the inner face (a Ø9.4 x 1 relief in its floor, so only
+    the fixed outer race sits on it, not the inner race that turns with the cradle), a Ø6.5 hole for the ISO 7379
+    6 x 12 shoulder screw. The hard stop: two sectors on the -y arm's inner face that the cradle's lug hits at tilt 0
     (barrel horizontal; it cannot go above) and at -25 deg."""
     zt = G.tilt_t
     b0, b1 = G.bridge_z
@@ -404,6 +437,7 @@ def tilt_yoke(G):
         s = s.cut(box(-12, 12, sgn * 36 if sgn > 0 else -57, sgn * 57 if sgn > 0 else -36, b0 - 1, b1 + 1))
     s = s.cut(cyl_y(13.0, a0 - 1, a1 + 1, 0, zt))                                           # servo horn
     s = s.cut(cyl_y(MR126['D'] / 2, -a0 - MR126['B'], -a0 + 3, 0, zt))                      # MR126 seat (inner face)
+    s = s.cut(cyl_y(4.7, -a0 - MR126['B'] - 1.0, -a0 - MR126['B'] + 0.01, 0, zt))          # relief: only the outer race sits
     s = s.cut(cyl_y(3.25, -a1 - 1, -a0, 0, zt))
     s = s.cut(cyl_z(15.0, b0 - 1, b1 + 1))                                                  # cable
     for (x, y) in YOKE_BOLTS:
@@ -416,7 +450,7 @@ def tilt_yoke(G):
 def cradle(G):
     """Printed PA6-CF flat (100 % solid). Two 5 mm cheeks on the tilt axis and two 17 mm rails under the cartridge,
     joined by a rear cross bar (the latched cartridge ties the front; nothing hangs low at the nose when it tilts). +y cheek: a Ø20 hub bolted to the tilt servo's horn (4 x M2, est). -y cheek: an M5 insert
-    for the shoulder screw through the MR126, a Ø8 spacer on the inner race, and the hard-stop lug. Rails: the CT
+    for the shoulder screw through the MR126, a Ø6.8 x 1 spacer on its inner race (inside the shield), and the hard-stop lug. Rails: the CT
     interface (2 x Ø4 dowel holes and an M4 insert for the captive thumbscrew from below). A tab at the front left
     carries the laser mount (2 x M3 inserts)."""
     zt = G.tilt_c
@@ -436,7 +470,7 @@ def cradle(G):
     s = s.union(box(xr1 - 8, LASER_X[1] + 2, -r1 + 7, -22.0, z0, z1))                            # laser tab
     s = s.union(cyl_y(10.0, c1, G.arm_y[0] + 1.0, 0, zt))                                         # servo hub
     s = s.union(cyl_y(5.5, -G.arm_y[0] + 1.0, -c1, 0, zt))                                         # insert boss
-    s = s.union(cyl_y(4.0, -G.arm_y[0], -G.arm_y[0] + 1.0, 0, zt))                                 # spacer on the race
+    s = s.union(cyl_y(MR126['d_land'] / 2 - 0.2, -G.arm_y[0], -G.arm_y[0] + 1.0, 0, zt))          # spacer on the inner race
     s = s.union(sector_y(G.stop_r[0], G.stop_r[1], -97.5, -82.5, -c1 - 2.5, -c1, 0, zt))          # stop lug
     # holes
     s = s.cut(cyl_y(FAST['M5']['insert_pilot'] / 2, -G.arm_y[0] - 1, -c0 + 0.01, 0, zt))
@@ -688,7 +722,18 @@ def bought_parts(G):
     sx, sy = G.servo_pan_xy
     out['pan_servo'] = (servo_envelope(G, (sx, sy, G.servo_z0 + SERVO['H']), '+z'), 'base', SERVO['mass_g'],
                         'Feetech STS3215 12 V; horn up, pinion on the horn')
-    out['pan_bearing'] = (ring_z(BRG['D'] / 2, BRG['d'] / 2, G.brg_z, G.brg_z + BRG['B']), 'base', BRG['mass_g'], '61810-2RS (50 x 65 x 7)')
+    # the bearings in two pieces: the outer race with its shields stays with its seat, the inner race turns with the
+    # shaft, so the clash sweep sees every rotating part that comes near a shield
+    z0, z1 = G.brg_z, G.brg_z + BRG['B']
+    rec = BRG['shield_recess']
+    outer = ring_z(BRG['D'] / 2, BRG['D_land'] / 2, z0, z1).union(ring_z(BRG['D_land'] / 2 + 0.01, BRG['d_land'] / 2 + 0.4, z0 + rec, z1 - rec))
+    out['pan_bearing'] = (outer, 'base', BRG['mass_g'] - 15.0, '6810-2Z (= 61810-2Z, 50 x 65 x 7): outer race and shields; McMaster 6656K229')
+    out['pan_bearing_inner'] = (ring_z(BRG['d_land'] / 2 + 0.3, BRG['d'] / 2, z0, z1), 'pan', 15.0,
+                                "the 6810-2Z's inner race (turns with the pan ring; bought with pan_bearing)")
+    cz0, cz1 = circlip_z(G)
+    r0, rb, ra = CIRCLIP['d2'] / 2, CIRCLIP['d2'] / 2 + CIRCLIP['b'], CIRCLIP['d2'] / 2 + CIRCLIP['a']
+    clip = ring_z(rb, r0, cz0, cz1).union(sector_z(r0, ra, 75.0, 105.0, cz0, cz1))          # back b 5.1, lugs a 6.9
+    out['circlip_50'] = (clip, 'pan', CIRCLIP['mass_g'], 'DIN 471-50 external ring under the pan_spacer; McMaster 98541A167')
     yb = G.dt_y
     f, b, fr, pl = DT['flange'], DT['body'], DT['front'], DT['plug']
     zc = DT_Z
@@ -701,9 +746,18 @@ def bought_parts(G):
                       'DT06-12SA plug on the robot harness (robot side; use a 90 deg boot so the harness turns down)')
     a0, a1 = G.arm_y
     out['tilt_servo'] = (servo_envelope(G, (0, a1, G.tilt_t), '-y'), 'pan', SERVO['mass_g'], 'Feetech STS3215 12 V on the +y arm')
-    out['tilt_bearing'] = (ring_z(MR126['D'] / 2, MR126['d'] / 2, 0, MR126['B']).rotate((0, 0, 0), (1, 0, 0), 90)
-                           .translate((0, -a0, G.tilt_t)), 'pan', MR126['mass_g'], 'MR126-2RS (6 x 12 x 4)')
+    B, rec = MR126['B'], MR126['shield_recess']
+    on_y = lambda w, zc: w.rotate((0, 0, 0), (1, 0, 0), 90).translate((0, -a0, zc))      # ring_z from z 0..B -> y -a0..-a0-B
+    t_outer = ring_z(MR126['D'] / 2, MR126['D_land'] / 2, 0, B).union(ring_z(MR126['D_land'] / 2 + 0.01, MR126['d_land'] / 2 + 0.1, rec, B - rec))
+    out['tilt_bearing'] = (on_y(t_outer, G.tilt_t), 'pan', MR126['mass_g'] * 0.75, '126-2Z (MR126 size, 6 x 12 x 4): outer race and shields; McMaster 7804K112')
+    out['tilt_bearing_inner'] = (on_y(ring_z(MR126['d_land'] / 2, MR126['d'] / 2, 0, B), G.tilt_c), 'tilt', MR126['mass_g'] * 0.25,
+                                 "the 126-2Z's inner race (turns with the cradle; bought with tilt_bearing)")
     # tilting (C frame)
+    S = SHOULDER
+    ys = -a0                                                   # the shoulder's end seats on the cradle's spacer
+    sh = cyl_y(S['d'] / 2, ys - S['L'], ys, 0, G.tilt_c).union(cyl_y(S['head_d'] / 2, ys - S['L'] - S['head_h'], ys - S['L'], 0, G.tilt_c))
+    sh = sh.union(cyl_y(S['thread_d'] / 2 - 0.4, ys, ys + S['thread_L'], 0, G.tilt_c))
+    out['shoulder_screw'] = (sh, 'tilt', S['mass_g'], 'ISO 7379 shoulder screw 6 x 12, M5 x 10: the tilt pivot (-y); McMaster 92981A101')
     for sgn, nm in ((1, 'flywheel_motor_l'), (-1, 'flywheel_motor_r')):
         x, y = G.wheel_x, sgn * G.wheel_y
         m = cyl_z(SNAIL['d'] / 2, G.bell_z0, G.bell_z0 + SNAIL['bell_h'], x, y)
@@ -756,6 +810,7 @@ MADE = [
     ('pan_base', pan_base, 'base', 'pa6-cf', 1, None, 'PA6-CF on its foot; 4 x M5 x 16 into the head ring, 2 x Ø5 dowels'),
     ('pan_clamp', pan_clamp, 'base', 'pa6-cf', 1, None, 'PA6-CF; 3 x M3 x 8 into inserts'),
     ('pan_ring', pan_ring, 'pan', 'pa6-cf', 1, ((1, 0, 0), 180), 'PA6-CF upside down; DIN 471-50 circlip; 4 x M4 inserts'),
+    ('pan_spacer', pan_spacer, 'pan', 'pa6-cf', 1, ((1, 0, 0), 180), 'PA6-CF on its wide end; between the 61810 inner race and the circlip'),
     ('pan_pinion', pan_pinion, 'pinion', 'pa6-cf', 1, None, 'PA6-CF; 4 x M2 to the horn; turns -3 x pan about the servo axis'),
     ('tilt_yoke', tilt_yoke, 'pan', 'pa6-cf', 1, ((0, 1, 0), 90), 'PA6-CF on its back; 4 x M4 x 12 to the turntable'),
     ('cradle', cradle, 'tilt', 'pa6-cf', 1, None, 'PA6-CF flat; ISO 7379 6 x 12 shoulder screw (M5) in an insert'),
@@ -824,8 +879,15 @@ class Turret:
 SKIP_PAIRS = {frozenset(p) for p in [('dt_plug', 'dt_receptacle')]}
 # parts in different motion groups that touch by design: bearings on their journals and spacers, the horns on the
 # pinion and on the cradle hub, the gear mesh (0.15 mm backlash per flank)
-DESIGNED_CONTACTS = {frozenset(p) for p in [('pan_bearing', 'pan_ring'), ('tilt_bearing', 'cradle'), ('tilt_servo', 'cradle'),
-                                            ('pan_ring', 'pan_pinion'), ('pan_servo', 'pan_pinion')]}
+# (the outer races and shields are checked against everything that turns; the inner races turn with their shafts)
+DESIGNED_CONTACTS = {frozenset(p) for p in [('pan_bearing', 'pan_bearing_inner'), ('tilt_bearing', 'tilt_bearing_inner'),
+                                            ('tilt_servo', 'cradle'), ('pan_ring', 'pan_pinion'), ('pan_servo', 'pan_pinion'),
+                                            ('shoulder_screw', 'tilt_yoke'),            # the Ø6 shoulder turns in the arm's Ø6.5 hole
+                                            ('shoulder_screw', 'tilt_bearing')]}        # inside the inner race, which turns with it
+# turning parts that bear on an inner race inside its abutment limit (6810: Ø52.5, NSK; 126: Ø7.2, est) pass the
+# shield closer than the usual 1 mm: these pairs are flagged only under the gap given
+PAIR_MIN_GAP = {frozenset(('pan_spacer', 'pan_bearing')): 0.3, frozenset(('pan_ring', 'pan_bearing')): 0.3,
+                frozenset(('cradle', 'tilt_bearing')): 0.2}
 
 
 def clashes(T: Turret, tilts=(0.0, -20.0, -25.0), pans=(0.0, 90.0, -90.0, 170.0, -170.0), min_mm3=10.0, verbose=False,
@@ -888,14 +950,15 @@ def clashes(T: Turret, tilts=(0.0, -20.0, -25.0), pans=(0.0, 90.0, -90.0, 170.0,
                 checked.add(key)
                 a, ba = get(n1, key[2], key[3])
                 b, bb = get(n2, key[2], key[3])
-                g = min_gap if gaps is not None and frame[n1] != frame[n2] and frozenset((n1, n2)) not in DESIGNED_CONTACTS else 0.0
+                g = PAIR_MIN_GAP.get(frozenset((n1, n2)), min_gap) if gaps is not None and frame[n1] != frame[n2] and \
+                    frozenset((n1, n2)) not in DESIGNED_CONTACTS else 0.0
                 if ba.xmax + g < bb.xmin or bb.xmax + g < ba.xmin or ba.ymax + g < bb.ymin or bb.ymax + g < ba.ymin or \
                         ba.zmax + g < bb.zmin or bb.zmax + g < ba.zmin:
                     continue
                 v = vol(a, b)
                 if g and v <= min_mm3:                    # moving past each other: how close?
                     dmin = a.distance(b)
-                    if dmin < min_gap:
+                    if dmin < g:
                         gaps.append([n1, n2, round(dmin, 2), key[2], key[3]])
                 if verbose and v > 0.5:
                     print(f'    {n1} x {n2}: {v:.1f} mm3 at pan {key[2]}, tilt {key[3]}')
@@ -1084,6 +1147,8 @@ COL = {
     'barrel': (0.95, 0.45, 0.10), 'laser_mount': (0.30, 0.65, 0.35), 'bumper_ring': (0.15, 0.15, 0.17),
     'pan_servo': (0.12, 0.12, 0.14), 'tilt_servo': (0.12, 0.12, 0.14), 'pan_bearing': (0.75, 0.75, 0.78),
     'tilt_bearing': (0.75, 0.75, 0.78), 'dt_receptacle': (0.55, 0.55, 0.20), 'dt_plug': (0.55, 0.55, 0.20, 0.5),
+    'pan_bearing_inner': (0.80, 0.80, 0.83), 'tilt_bearing_inner': (0.80, 0.80, 0.83), 'circlip_50': (0.10, 0.10, 0.11),
+    'shoulder_screw': (0.10, 0.10, 0.11), 'pan_spacer': (0.85, 0.42, 0.10),
     'flywheel_motor_l': (0.65, 0.15, 0.15), 'flywheel_motor_r': (0.65, 0.15, 0.15), 'esc_l': (0.1, 0.35, 0.15), 'esc_r': (0.1, 0.35, 0.15),
     'feed_motor': (0.25, 0.25, 0.60), 'feed_esc': (0.1, 0.35, 0.15), 'laser': (0.15, 0.6, 0.15),
     'head_ring': (0.80, 0.82, 0.85, 0.5), 'j501_top': (0.80, 0.82, 0.85, 0.25), 'ball': (0.98, 0.55, 0.10),
