@@ -137,7 +137,7 @@ def predict(half_mass: float = DESIGN_KG, rate: float = 500.0, r_int: float = 0.
     """The rig's predicted numbers: its controller, rate and latency, the design mass, the FLEXVOLT pack as the start
     rule leaves it, the bumpers where cad/build_rig.py puts them."""
     tests = {}
-    cases = [(t, t, None) for t in RIG_TESTS] + [('power_off_S6', 'power_off', 0.074), ('power_off_damped_S6', 'power_off_damped', 0.074)]
+    cases = [(t, t, None) for t in RIG_TESTS if t in lc.SCENARIOS] + [('power_off_S6', 'power_off', 0.074), ('power_off_damped_S6', 'power_off_damped', 0.074)]
     for key, test, rail in cases:
         if rail is None:
             rail = BUMPER_CONTACT_M                                   # the bottom bumpers in place (S6: removed, the deck)
@@ -237,6 +237,15 @@ def run_can(a) -> int:
     for k, v in bus.startup.items():
         print(f"  {k}: damper {v['damper']} ({v['damper_meaning']}), limit_torque {v['limit_torque']}, canTimeout {v['canTimeout']}, "
               f"VBUS {v['VBUS']:.2f} V, firmware {v.get('firmware')}")
+    t_end = time.monotonic() + 0.2                         # the rig node's frames for 0.2 s (it never falls silent)
+    while time.monotonic() < t_end:
+        bus.bus.drain(0.0)
+        time.sleep(0.005)
+    nd, now = bus.node, bus.clock()
+    print(f"  rig node: RUN {'held' if nd.run_fresh(now, 0.1) else 'NOT held'}; frames {nd.counts}; VBUS {nd.vbus_mean} V; "
+          f"load plate {nd.force_n} N; carriage height {nd.height_mm} mm")
+    if bus.require_node and not nd.run_fresh(now, 0.1):
+        print('  hold the pendant before arming: without the RUN frames the leg sits down at once')
     vb = min(v['VBUS'] for v in bus.startup.values())
     vmax = v_start_max(a.r_int) if a.test in DYNAMIC else 56.0
     if vb > vmax:

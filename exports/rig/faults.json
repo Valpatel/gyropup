@@ -12,7 +12,7 @@
    "ok": true,
    "leg_at_stop_mm": 155.5,
    "torque_after_stop_nm": 0.0,
-   "lowest_leg_after_mm": 111.4
+   "lowest_leg_after_mm": 111.3
   },
   "vbus_high": {
    "injected_at_s": 1.0,
@@ -23,7 +23,7 @@
    "ok": true,
    "leg_at_stop_mm": 172.8,
    "torque_after_stop_nm": 0.0,
-   "lowest_leg_after_mm": 107.8
+   "lowest_leg_after_mm": 107.7
   },
   "vbus_low": {
    "injected_at_s": 1.0,
@@ -45,7 +45,7 @@
    "ok": true,
    "leg_at_stop_mm": 155.5,
    "torque_after_stop_nm": 0.0,
-   "lowest_leg_after_mm": 111.4
+   "lowest_leg_after_mm": 111.3
   },
   "window": {
    "injected_at_s": 1.0,
@@ -78,7 +78,7 @@
    "ok": true,
    "leg_at_stop_mm": 172.8,
    "torque_after_stop_nm": 0.0,
-   "lowest_leg_after_mm": 107.8
+   "lowest_leg_after_mm": 107.7
   },
   "rate_limit": {
    "limit_nm_per_tick": 5.0,

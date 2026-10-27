@@ -53,10 +53,10 @@
      "from_s": 2.0
     },
     {
-     "what": "load plate 100-150 N steady (13.1 kg; 14.75 kg: 120-170 N)",
+     "what": "load plate 120-170 N steady (14.75 kg carried: about 145 N)",
      "kind": "range",
      "signal": "force_n",
-     "min": 100.0,
+     "min": 120.0,
      "max": 170.0,
      "from_s": 2.0,
      "needs": "force_n"

@@ -2,8 +2,8 @@
  "meta": {
   "backend": "sim",
   "test": "jump",
-  "started": "2026-10-27T11:23:58",
-  "commit": "1b323fd",
+  "started": "2026-10-27T14:21:27",
+  "commit": "990e43d",
   "half_mass_kg": 14.75,
   "rate_hz": 500.0,
   "latency_ticks": 1,
@@ -70,7 +70,7 @@
    "cap_nm": 60.0,
    "peak_motor_nm": 60.0,
    "peak_motor_speed_rad_s": 15.28,
-   "peak_wheel_force_n": 3428.3,
+   "peak_wheel_force_n": 3458.6,
    "pose_at_peak_wheel_force": {
     "L_mm": 251.6,
     "phi_deg": [
@@ -78,10 +78,10 @@
      -141.8
     ]
    },
-   "peak_axle_force_n": 2330.8,
+   "peak_axle_force_n": 2351.8,
    "axle_force_at_peak_n": [
-    -47.9,
-    2330.3
+    -48.4,
+    2351.3
    ],
    "pose_at_peak_axle_force": {
     "L_mm": 251.6,
@@ -90,10 +90,10 @@
      -141.8
     ]
    },
-   "peak_front_link_n": 1801.5,
-   "front_link_compression_n": 1801.5,
-   "front_link_tension_n": 116.6,
-   "peak_knee_pin_n": 1863.5,
+   "peak_front_link_n": 1817.7,
+   "front_link_compression_n": 1817.7,
+   "front_link_tension_n": 116.5,
+   "peak_knee_pin_n": 1880.3,
    "peak_stop_nm": 0.0,
    "stop_hits": false,
    "L_range_mm": [
@@ -102,12 +102,12 @@
    ],
    "rig": {
     "half_mass_kg": 14.75,
-    "dummy_kg": 6.206,
-    "moving_kg": 4.702,
-    "frame_kg": 3.842,
-    "carriage_kg": 10.048,
+    "dummy_kg": 5.964,
+    "moving_kg": 4.954,
+    "frame_kg": 3.832,
+    "carriage_kg": 9.796,
     "armature": 0.0243,
-    "stop_k_nm_per_rad": 4844,
+    "stop_k_nm_per_rad": 816,
     "ref": {
      "phi1": -0.88798,
      "phi2": -2.25361,
@@ -116,14 +116,14 @@
     }
    },
    "jump_height_mm": 245.3,
-   "peak_gearbox_nm": 79.6,
+   "peak_gearbox_nm": 80.2,
    "gearbox_over_peak_ms": 0.0,
    "peak_joint_force_n": {
-    "knee_f": 587.2,
-    "knee_r": 634.1,
-    "hip_f": 557.7,
-    "hip_r": 554.1,
-    "apex": 936.2
+    "knee_f": 593.1,
+    "knee_r": 640.4,
+    "hip_f": 555.1,
+    "hip_r": 557.3,
+    "apex": 945.0
    }
   }
  },
@@ -132,7 +132,7 @@
    "id": "S3",
    "what": "the push and the flight follow the prediction within 20 mm (to the landing)",
    "ok": true,
-   "value": 2.53,
+   "value": 2.51,
    "limit": 20.0
   },
   {
@@ -176,13 +176,13 @@
  "metrics": {
   "peak_motor_nm": 60.0,
   "vbus_range_v": [
-   42.4788703918457,
-   56.87720489501953
+   42.478694915771484,
+   56.87643051147461
   ],
-  "jump_height_mm": 245.34945678710938,
+  "jump_height_mm": 245.2938995361328,
   "touchdown_s": 1.172,
   "settle_s": 0.19800000000000018
  },
  "prediction_from": "exports/rig/predictions.json (14.75 kg, the rig's controller)",
- "plot": "/home/scubasonar/Code/gyropup-legrig/exports/rig/runs/2026-10-27-112403-sim-jump-prediction.png"
+ "plot": "/home/scubasonar/Code/gyropup-legrig/exports/rig/runs/2026-10-27-142128-sim-jump-prediction.png"
 }
