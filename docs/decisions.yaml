@@ -285,3 +285,18 @@
   why: "The gearboxes peak at 64-106 N·m in every rig event (under the RS-04's 120). A spring between the upper links, the survey's first answer, cannot be built: in 3D its line passes through the hips below a 250 mm leg. The knee-to-knee spring clears the CAD and holds the unpowered robot up, but costs brackets, a guide and a boot (0.45-0.6 kg per leg), a steady 8 N·m on each knee bolt and 7 mm to the tyre at full crouch; for landings the tyre and firmware matter more than any spring."
   status: decided
   source: {kind: user, quote: "do our legs need springs or anything like that as basically a suspension system and to set them at a good resting middle positon?"}
+- id: D40
+  date: "2026-10-27"
+  title: "Every part is bought off the shelf, printed, or ordered online as a custom part: no quotes"
+  decision: "Each part of Gyropup is one of three kinds. (1) Off the shelf, with a listed price and a buy link: McMaster-Carr first for hardware and bearings; Digi-Key, Mouser, SparkFun, Adafruit and Pololu for electronics; the makers' own stores for motors, servos and the wheel. (2) 3D printed: PA6-CF for structure, PETG, TPU. (3) Custom parts ordered online from our drawings at an instant price: SendCutSend (laser-cut, bent or machined sheet and plate), Xometry or JLCCNC (CNC), JLCPCB or PCBWay (boards). Nothing needs a request for quote: a part sold only on quote is replaced by one of these. So the turret's slip ring is the SparkFun ROB-13065 (Senring, 12 circuits x 2 A, $27.95, in stock) on the bench and on the robot; the 200 ms flywheel soft start keeps every circuit under 2 A (docs/turret-physics.md V3: 2.2 A peak with the ramp), with power circuits paralleled."
+  why: "The user wants a robot anyone can order and build: off-the-shelf parts, printed parts and SendCutSend-style parts; vendor quotes (the plan's robot-grade slip rings from Moog, Servotecnica, Senring and Moflon) are not needed."
+  status: decided
+  source: {kind: user, quote: "why do we need to send a vendor quote requests? We should use mostly off the shelf parts, 3d printed parts, and sendcutsend or similar parts?"}
+- id: D41
+  date: "2026-10-27"
+  title: "The turret plan's open choices, decided"
+  decision: "docs/turret-plan.md section 1, as its planner recommended, except where D40 overrides it. D1: continuous pan through the slip ring (the plus or minus 170 deg cable loop stays a CAD option). D2: the SparkFun ROB-13065, no quotes (D40). D3: an Adafruit Feather M4 CAN Express on the turret. D4: the pan servo's bus crosses the ring. D5: one fixed 12 V regulator for the flywheels (Pololu D24V150F12 class), which is the speed ceiling. D6: two ring circuits reserved for a camera. D7: the safety line cuts the flywheels and the dial in hardware; pan and tilt stay live, capped at 100 deg/s while disarmed. D8: dropped (no quotes). D9: a phase-short brake on release plus the ESCs' brake-on-stop. D10: a hardware chronograph trip at 66 fps. Also: the turret stands on a 30 mm printed riser on the top deck (14 deg of depression facing forward over the lidar, the full 25 deg outside plus or minus 56 deg of pan), and the pan bearing is a chrome-steel 6810-2RS from an off-the-shelf seller, not McMaster's $195 stainless one."
+  why: "The user asked not to wait on them for decisions."
+  status: decided
+  source: {kind: user, quote: "You don't need to wait on anything for me"}
+
