@@ -45,6 +45,14 @@ def seller_name(b: dict | None) -> str:
     return SAME_SELLER.get(s, s)
 
 
+def _for_label(f: str) -> str:
+    """What a parts-list line is for, short: the boards' passives by kind (their designators are in parts.md)."""
+    for pre, lab in (('el_r_', 'boards: resistors'), ('el_c_', 'boards: capacitors'), ('el_d_', 'boards: diodes'), ('el_sw_', 'boards: reset')):
+        if f.startswith(pre):
+            return lab
+    return f.replace('el_', '').replace('hw_', '').replace('_', ' ')
+
+
 def money(x) -> str:
     return '' if x is None else f'${x:,.2f}'
 
@@ -72,7 +80,11 @@ def lines_from_bom(bom: dict, cat: dict, alts: dict) -> list[dict]:
         if it.get('pack_price_usd') is not None:
             pack_price = it['pack_price_usd']
         elif prim.get('price_usd') is not None and (prim.get('pack_qty') or 1) > 1 and 'ft' not in str(it.get('name', '')).lower():
-            pack_price = prim['price_usd']
+            # the seller's price is either the pack's or each piece's (a pad of 56 Bumpons at $0.128 each): whichever the
+            # item's own unit price is nearer to
+            pp = prim['price_usd']
+            each_like = unit is not None and abs(pp - unit) < abs(pp - unit * pack)
+            pack_price = pp * pack if each_like else pp
         else:
             pack_price = None if unit is None else unit * pack
         if pack > 1 and 'wire' in str(it.get('name', '')).lower():   # wire: the price is per spool, qty is in spools
@@ -106,7 +118,7 @@ def write(bom_path: Path = BENCH / 'bom.json') -> dict:
         rs = sorted(by[s], key=lambda r: (r['section'] != 'bench_turret', r['name']))
         tot = round(sum(r['cost'] or 0 for r in rs), 2)
         totals[s] = tot
-        md = [f'# Order {n}: {s}', '', WHEN.get(s, ''), '',
+        md = [f'# Order {n}: {s}', ''] + ([WHEN[s], ''] if s in WHEN else []) + [
               f'{len(rs)} lines, **{money(tot)}** before shipping and tax (whole packs). Prices as the catalogue read them (the date is per line in '
               '`catalog/*.json`); check the cart against this sheet. Each line has a backup seller in the last column.', '',
               '| # | Part | Seller part no. | For | Need | Buy | Each | Line | Backup |', '|---|---|---|---|---|---|---|---|---|']
@@ -114,9 +126,11 @@ def write(bom_path: Path = BENCH / 'bom.json') -> dict:
             buy = f"{r['packs']} x {r['pack']}" if r['pack'] > 1 else str(r['packs'])
             link = f"[{r['name']}]({r['url']})" if r['url'] else r['name']
             b = r['backup']
-            bk = '' if not b else (f"[{b['seller']} {b.get('pn') or ''}]({b['url']})" if b.get('url') else f"{b['seller']} {b.get('pn') or ''}") + \
+            bpn = b.get('pn') if b else None
+            blab = '' if not b else (f"{b['seller']} {bpn}" if bpn else f"{b['seller']} (search)")
+            bk = '' if not b else (f"[{blab}]({b['url']})" if b.get('url') else blab) + \
                 (f" {money(b['price'])}" if b.get('price') is not None else '') + (f" (not a drop-in: {b['changes'][:80]})" if b.get('changes') else '')
-            fors = ', '.join(sorted(set(f.replace('el_', '').replace('hw_', '').replace('_', ' ') for f in r['for'])))[:60]
+            fors = ', '.join(sorted(set(_for_label(f) for f in r['for'])))[:60]
             line_cost = money(r['cost']) if r['cost'] is not None else ('instant price on upload' if s == 'SendCutSend' else 'not listed')
             md.append(f"| {k} | {link} | {r['seller_pn'] or ''} | {fors} | {r['qty']} | {buy} | {money(r['unit'])} | {line_cost} | {bk or 'none found'} |")
         (OUT / f'{n:02d}-{slug(s)}.md').write_text('\n'.join(md) + '\n')

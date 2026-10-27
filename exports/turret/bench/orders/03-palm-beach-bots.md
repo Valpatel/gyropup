@@ -1,7 +1,5 @@
 # Order 3: Palm Beach Bots
 
-
-
 1 lines, **$49.98** before shipping and tax (whole packs). Prices as the catalogue read them (the date is per line in `catalog/*.json`); check the cart against this sheet. Each line has a backup seller in the last column.
 
 | # | Part | Seller part no. | For | Need | Buy | Each | Line | Backup |

@@ -21,6 +21,7 @@ R = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(R / 'cad'))
 import printplan  # noqa: E402
 import turret as tu  # noqa: E402
+import turret_boards as tbd  # noqa: E402
 import turret_stand as ts  # noqa: E402
 from cadagent.geometry import export_print_stl  # noqa: E402
 from cadagent.robot import solid_mass_properties  # noqa: E402
@@ -77,8 +78,8 @@ TURRET_BOUGHT = {
     'el_mcu': ('adafruit-feather-m4-can-4759', 1), 'el_flywheel_regulator': ('pololu-d24v150f12-2885', 1),
     'el_12v_regulators': ('pololu-d36v50f12-4095', 1), 'el_5v_regulator': ('pololu-d36v28f5-3782', 1),
     'el_safety_switch': ('pololu-2815', 1), 'el_capacitors': ('panasonic-eeu-fr1v102', 2),
-    'el_555': ('ti-ne555p', 1), 'el_78l05': ('ti-ua78l05aclp', 1), 'el_opto': ('vishay-4n35', 1), 'el_monostables': ('ti-cd74hc123e', 1),
-    'el_trip_latch': ('ti-sn74hc74n', 1), 'el_and': ('ti-sn74hc08n', 1), 'el_inverter': ('ti-sn74hc14n', 1), 'el_bus_buffer': ('ti-sn74ahct125n', 1),
+    'el_555': ('ti-ne555p', 1), 'el_opto': ('vishay-4n35', 1), 'el_monostables': ('ti-cd74hc123e', 1),
+    'el_trip_latch': ('ti-sn74hc74n', 1), 'el_and': ('ti-sn74hc08n', 1), 'el_brake_driver': ('ti-sn74hct14n', 1), 'el_bus_buffer': ('ti-sn74ahct125n', 1),
     'el_gate_comparator': ('ti-lm393p', 1), 'el_brake_fets': ('infineon-irlz44npbf', 6), 'el_gate_emitters': ('vishay-tsal4400', 2),
     'el_gate_receivers': ('vishay-teft4300', 2),
     'el_ring_receptacles': ('molex-43025-1200', 2), 'el_ring_plugs': ('molex-43020-1200', 2),
@@ -93,6 +94,22 @@ TURRET_BOUGHT = {
     'el_dt_wedge': ('te-w12p', 1), 'el_dt_pins': ('te-0460-202-16141', 12),
     'el_wire_24awg': ('pololu-ul1007-24awg-60ft', 4), 'el_wire_18awg': ('remington-18ptfestr-25ft', 1),
 }
+
+
+def _passive_line(key: str) -> str:
+    """The parts list's line name for one of the boards' passives: el_r_10k, el_c_100n, el_c_1u_film, el_d_1n4148, ..."""
+    if key.startswith('yageo-mfr-25fbf52-'):
+        return 'el_r_' + key.rsplit('-', 1)[1]
+    return {'yageo-rsf100jb-73-2k2': 'el_r_2k2_1w', 'cap-film-100n-5pct': 'el_c_100n_film', 'cap-mlcc-100n-50v': 'el_c_100n',
+            'cap-mlcc-1u-50v': 'el_c_1u', 'panasonic-ecq-e1105kf': 'el_c_1u_film', 'onsemi-1n4148': 'el_d_1n4148',
+            'omron-b3f-1000': 'el_sw_reset'}.get(key, 'el_' + key)
+
+
+# the boards' resistors, capacitors, diodes and the reset button, counted from cad/turret_boards.py COMPONENTS (the
+# circuit in docs/turret-wiring.md section 3), with a spare or two of each (one per five)
+for _k, _n in sorted(tbd.passive_counts().items()):
+    TURRET_BOUGHT[_passive_line(_k)] = (_k, _n + max(1, -(-_n // 5)))
+
 # not fitted on the bench (D42): the robot's (v1) lines, listed apart in bom.json and left out of the v0 order sheets
 V1_ONLY = {
     'hw_bumper_screws': ('turret_screw_m3x20', 5), 'hw_bumper_washers': ('washer_m3_large', 5), 'hw_bumper_inserts': ('turret_insert_m3_short', 5),
@@ -174,7 +191,13 @@ def main():
                                                       '(docs/decisions.yaml D40); qty is per turret; packs are bought whole (each item\'s pack_qty); '
                                                       'thumbnails and alternates from cad/bom_media.py'}, indent=1) + '\n')
     summary = {'too_big': too_big, 'print_hours': round(sum(p['hours'] for p in plan.values()), 1),
-               'printed_g': sum(p['grams'] for p in plan.values()), 'stand_mm': [ts.W, ts.D, ts.H]}
+               'printed_g': sum(p['grams'] for p in plan.values()), 'stand_mm': [ts.W, ts.D, ts.H],
+               'note': 'printed_g and print_hours are print-plan.json\'s rough estimates; sliced is Bambu Studio\'s (cad/turret_print.py)'}
+    pj = R / 'exports' / 'turret' / 'print' / 'print.json'
+    if pj.exists():                                       # the slicer's own grams and hours for the v0 parts (cad/turret_print.py)
+        pr = json.loads(pj.read_text())
+        summary['sliced'] = {'grams': pr.get('total_grams'), 'hours': pr.get('total_hours'), 'by_material': pr.get('by_material'),
+                             'file': 'exports/turret/print/print.json'}
     if not a.no_render:
         from cadagent.render import Renderer
         r = Renderer(OUT, subtitle='GYROPUP TURRET | ON ITS BENCH STAND')
@@ -196,7 +219,9 @@ def main():
     import turret_orders                                  # the order sheets from bom.json and the catalogue
     summary['orders'] = {k: v for k, v in turret_orders.write(OUT / 'bom.json').items() if k in ('grand_total_usd', 'lines', 'sellers')}
     (OUT / 'bench.json').write_text(json.dumps(summary, indent=1) + '\n')
-    print(f"bench turret: {summary['printed_g'] / 1000:.2f} kg printed, ~{summary['print_hours']} h; stand {ts.W:.0f} x {ts.D:.0f} x {ts.H:.0f} mm"
+    sl = summary.get('sliced') or {}
+    print(f"bench turret: {summary['printed_g'] / 1000:.2f} kg printed, ~{summary['print_hours']} h (rough)"
+          + (f"; sliced {sl['grams'] / 1000:.2f} kg, {sl['hours']} h" if sl.get('grams') else '') + f"; stand {ts.W:.0f} x {ts.D:.0f} x {ts.H:.0f} mm"
           f"{'; TOO BIG: ' + ', '.join(too_big) if too_big else ''}; {time.time() - t0:.0f} s")
 
 

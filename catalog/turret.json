@@ -6476,5 +6476,950 @@
   "used_for": "the turret's +24 V fuse in the in-line holder (one spare)",
   "qty_per_robot": 2,
   "notes": ""
+ },
+ {
+  "id": "yageo-mfr-25fbf52-100r",
+  "key": "yageo-mfr-25fbf52-100r",
+  "category": "turret",
+  "vendor": "Yageo",
+  "model": "MFR-25FBF52-100R",
+  "name": "Resistor 100 R 1 % 1/4 W metal film (Yageo MFR-25FBF52)",
+  "price_usd": 0.1,
+  "price_note": "Mouser 603-MFR-25FBF52-100R $0.10, 49,654 in stock (its row on oemstrade.com, read 2026-10-27); Digi-Key 100XBK-ND (price not read: the page returns 403)",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-100R",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "603-MFR-25FBF52-100R",
+    "price_usd": 0.1,
+    "pack_qty": 1,
+    "stock": 49654,
+    "read_on": "2026-10-27"
+   },
+   {
+    "seller": "Digi-Key",
+    "url": "https://digikey.com/product-detail/en/yageo/MFR-25FBF52-100R/100XBK-ND/12795",
+    "in_stock": null,
+    "ships_from": "US",
+    "seller_pn": "100XBK-ND",
+    "price_usd": null,
+    "pack_qty": 1,
+    "stock": null,
+    "read_on": "2026-10-27"
+   }
+  ],
+  "specs": {
+   "value": "100 R",
+   "tolerance": "1 %",
+   "power_w": 0.25,
+   "package": "axial, 6.3 x 2.4 mm body"
+  },
+  "sources": [
+   "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-100R",
+   "https://digikey.com/product-detail/en/yageo/MFR-25FBF52-100R/100XBK-ND/12795"
+  ],
+  "confidence": "product page",
+  "used_for": "the turret's boards (cad/turret_boards.py COMPONENTS)",
+  "qty_per_robot": 3,
+  "notes": "Size: Axial through-hole, body 2.4 mm dia (+-0.2) x 6.3 mm long (+-0.5), lead dia 0.55 mm; 1/4 W, +-1 %, +-100 ppm/C (Yageo MFR datasheet, MFR-25 row; Digi-Key lists 0.094 in x 0.248 in)."
+ },
+ {
+  "id": "yageo-mfr-25fbf52-1k",
+  "key": "yageo-mfr-25fbf52-1k",
+  "category": "turret",
+  "vendor": "Yageo",
+  "model": "MFR-25FBF52-1K",
+  "name": "Resistor 1.00 k 1 % 1/4 W metal film (Yageo MFR-25FBF52)",
+  "price_usd": 0.1,
+  "price_note": "Mouser 603-MFR-25FBF52-1K $0.10, 51,348 in stock (its row on oemstrade.com, read 2026-10-27); Digi-Key 1.00KXBK-ND $0.10",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-1K",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "603-MFR-25FBF52-1K",
+    "price_usd": 0.1,
+    "pack_qty": 1,
+    "stock": 51348,
+    "read_on": "2026-10-27"
+   },
+   {
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/detail/yageo/MFR-25FBF52-1K/1.00KXBK-ND/13011",
+    "in_stock": null,
+    "ships_from": "US",
+    "seller_pn": "1.00KXBK-ND",
+    "price_usd": 0.1,
+    "pack_qty": 1,
+    "stock": null,
+    "read_on": "2026-10-27"
+   }
+  ],
+  "specs": {
+   "value": "1.00 k",
+   "tolerance": "1 %",
+   "power_w": 0.25,
+   "package": "axial, 6.3 x 2.4 mm body"
+  },
+  "sources": [
+   "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-1K",
+   "https://www.digikey.com/en/products/detail/yageo/MFR-25FBF52-1K/1.00KXBK-ND/13011"
+  ],
+  "confidence": "product page",
+  "used_for": "the turret's boards (cad/turret_boards.py COMPONENTS)",
+  "qty_per_robot": 8,
+  "notes": "Size: Axial through-hole, body 2.4 mm dia (+-0.2) x 6.3 mm long (+-0.5), lead dia 0.55 mm; 1/4 W, +-1 %, +-100 ppm/C (Yageo MFR datasheet, MFR-25 row; Digi-Key lists 0.094 in x 0.248 in)."
+ },
+ {
+  "id": "yageo-mfr-25fbf52-4k7",
+  "key": "yageo-mfr-25fbf52-4k7",
+  "category": "turret",
+  "vendor": "Yageo",
+  "model": "MFR-25FBF52-4K7",
+  "name": "Resistor 4.7 k 1 % 1/4 W metal film (Yageo MFR-25FBF52)",
+  "price_usd": 0.11,
+  "price_note": "Mouser 603-MFR-25FBF52-4K7 $0.11, 12,937 in stock (its row on oemstrade.com, read 2026-10-27); Digi-Key search link (price not read: the page returns 403)",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-4K7",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "603-MFR-25FBF52-4K7",
+    "price_usd": 0.11,
+    "pack_qty": 1,
+    "stock": 12937,
+    "read_on": "2026-10-27"
+   },
+   {
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/result?keywords=MFR-25FBF52-4K7",
+    "in_stock": null,
+    "ships_from": "US",
+    "seller_pn": null,
+    "price_usd": null,
+    "pack_qty": 1,
+    "stock": null,
+    "read_on": "2026-10-27"
+   }
+  ],
+  "specs": {
+   "value": "4.7 k",
+   "tolerance": "1 %",
+   "power_w": 0.25,
+   "package": "axial, 6.3 x 2.4 mm body"
+  },
+  "sources": [
+   "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-4K7",
+   "https://www.digikey.com/en/products/result?keywords=MFR-25FBF52-4K7"
+  ],
+  "confidence": "product page",
+  "used_for": "the turret's boards (cad/turret_boards.py COMPONENTS)",
+  "qty_per_robot": 3,
+  "notes": "4K7 is the one value whose Mouser price is $0.11 (4.7k is an E24 value, not E96). Same value in other packing codes at Mouser: 603-MFR-25FRF52-4K7 (FRF52) $0.10, 19,849 in stock; 603-MFR-25FTF52-4K7 (FTF52) $0.11, 5,893 in stock. Size: Axial through-hole, body 2.4 mm dia (+-0.2) x 6.3 mm long (+-0.5), lead dia 0.55 mm; 1/4 W, +-1 %, +-100 ppm/C (Yageo MFR datasheet, MFR-25 row; Digi-Key lists 0.094 in x 0.248 in)."
+ },
+ {
+  "id": "yageo-mfr-25fbf52-6k8",
+  "key": "yageo-mfr-25fbf52-6k8",
+  "category": "turret",
+  "vendor": "Yageo",
+  "model": "MFR-25FBF52-6K8",
+  "name": "Resistor 6.8 k 1 % 1/4 W metal film (Yageo MFR-25FBF52)",
+  "price_usd": 0.1,
+  "price_note": "Mouser 603-MFR-25FBF52-6K8 $0.10, 12,179 in stock (its row on oemstrade.com, read 2026-10-27); Digi-Key 13-MFR-25FRF52-6K8CT-ND $0.10",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-6K8",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "603-MFR-25FBF52-6K8",
+    "price_usd": 0.1,
+    "pack_qty": 1,
+    "stock": 12179,
+    "read_on": "2026-10-27"
+   },
+   {
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/detail/yageo/MFR-25FRF52-6K8/MFR-25FRF52-6K8-ND/9139107",
+    "in_stock": null,
+    "ships_from": "US",
+    "seller_pn": "13-MFR-25FRF52-6K8CT-ND",
+    "price_usd": 0.1,
+    "pack_qty": 1,
+    "stock": null,
+    "read_on": "2026-10-27"
+   }
+  ],
+  "specs": {
+   "value": "6.8 k",
+   "tolerance": "1 %",
+   "power_w": 0.25,
+   "package": "axial, 6.3 x 2.4 mm body"
+  },
+  "sources": [
+   "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-6K8",
+   "https://www.digikey.com/en/products/detail/yageo/MFR-25FRF52-6K8/MFR-25FRF52-6K8-ND/9139107"
+  ],
+  "confidence": "product page",
+  "used_for": "the turret's boards (cad/turret_boards.py COMPONENTS)",
+  "qty_per_robot": 3,
+  "notes": "6.8k is an E24 value; Mouser also has the E96 neighbour 603-MFR-25FBF52-6K81 (6.81k) at $0.10, 12,199 in stock. Size: Axial through-hole, body 2.4 mm dia (+-0.2) x 6.3 mm long (+-0.5), lead dia 0.55 mm; 1/4 W, +-1 %, +-100 ppm/C (Yageo MFR datasheet, MFR-25 row; Digi-Key lists 0.094 in x 0.248 in)."
+ },
+ {
+  "id": "yageo-mfr-25fbf52-10k",
+  "key": "yageo-mfr-25fbf52-10k",
+  "category": "turret",
+  "vendor": "Yageo",
+  "model": "MFR-25FBF52-10K",
+  "name": "Resistor 10 k 1 % 1/4 W metal film (Yageo MFR-25FBF52)",
+  "price_usd": 0.1,
+  "price_note": "Mouser 603-MFR-25FBF52-10K $0.10, 114,923 in stock (its row on oemstrade.com, read 2026-10-27); Digi-Key 10.0KXBK-ND $0.10",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-10K",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "603-MFR-25FBF52-10K",
+    "price_usd": 0.1,
+    "pack_qty": 1,
+    "stock": 114923,
+    "read_on": "2026-10-27"
+   },
+   {
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/detail/yageo/MFR-25FBF52-10K/13219",
+    "in_stock": null,
+    "ships_from": "US",
+    "seller_pn": "10.0KXBK-ND",
+    "price_usd": 0.1,
+    "pack_qty": 1,
+    "stock": null,
+    "read_on": "2026-10-27"
+   }
+  ],
+  "specs": {
+   "value": "10 k",
+   "tolerance": "1 %",
+   "power_w": 0.25,
+   "package": "axial, 6.3 x 2.4 mm body"
+  },
+  "sources": [
+   "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-10K",
+   "https://www.digikey.com/en/products/detail/yageo/MFR-25FBF52-10K/13219"
+  ],
+  "confidence": "product page",
+  "used_for": "the turret's boards (cad/turret_boards.py COMPONENTS)",
+  "qty_per_robot": 18,
+  "notes": "FAMILY RESULT. Mouser qty-1 price is $0.10 for 12 of the 13 values (100R, 1K, 6K8, 10K, 44K2, 60K4, 63K4, 66K5, 69K8, 73K2, 91K, 100K); 4K7 is the exception at $0.11. Mouser URL pattern: https://www.mouser.com/ProductDetail/603-MFR-25FBF52-<value>, value written as in the part number (-100R, -1K, -4K7, -6K8, -10K, -44K2, -60K4, -63K4, -66K5, -69K8, -73K2, -91K, -100K). DIGI-KEY PART NUMBERS for this resistor come in these styles: (a) bulk FBF52 parts, legacy style '<value>XBK-ND' with the value to 3 significant figures (10.0KXBK-ND, 1.00KXBK-ND confirmed by exact-match search; 44.2KXBK-ND, 66.5KXBK-ND, 100XBK-ND, 100KXBK-ND seen in Digi-Key URLs); (b) bulk FBF52 parts, newer style '13-MFR-25FBF52-<value>-ND' (read for 69K8 and 73K2; also seen on aggregator pages for 510K and 5K9); (c) the reel-pack FRF52 version of the same resistor, sold as cut tape: '13-MFR-25FRF52-<value>CT-ND' (confirmed in page copies for 6K8 and 63K4, $0.10 at 1; reel = ...TR-ND). The '13-...CT-ND' style in the request is style (c), i.e. the FRF52 code, not FBF52. Digi-Key qty-1 price was read live for two FBF52 values, 10K and 1K: $0.10 each; 6K8 and 63K4 ($0.10) come from cached page copies of the FRF52 version. 4K7 and 91K: no Digi-Key listing confirmed at all. Size: Axial through-hole, body 2.4 mm dia (+-0.2) x 6.3 mm long (+-0.5), lead dia 0.55 mm; 1/4 W, +-1 %, +-100 ppm/C (Yageo MFR datasheet, MFR-25 row; Digi-Key lists 0.094 in x 0.248 in)."
+ },
+ {
+  "id": "yageo-mfr-25fbf52-60k4",
+  "key": "yageo-mfr-25fbf52-60k4",
+  "category": "turret",
+  "vendor": "Yageo",
+  "model": "MFR-25FBF52-60K4",
+  "name": "Resistor 60.4 k 1 % 1/4 W metal film (Yageo MFR-25FBF52)",
+  "price_usd": 0.1,
+  "price_note": "Mouser 603-MFR-25FBF52-60K4 $0.10, 12,929 in stock (its row on oemstrade.com, read 2026-10-27); Digi-Key 60.4KXBK-ND (price not read: the page returns 403)",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-60K4",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "603-MFR-25FBF52-60K4",
+    "price_usd": 0.1,
+    "pack_qty": 1,
+    "stock": 12929,
+    "read_on": "2026-10-27"
+   },
+   {
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/detail/yageo/MFR-25FBF52-60K4/13430",
+    "in_stock": null,
+    "ships_from": "US",
+    "seller_pn": "60.4KXBK-ND",
+    "price_usd": null,
+    "pack_qty": 1,
+    "stock": null,
+    "read_on": "2026-10-27"
+   }
+  ],
+  "specs": {
+   "value": "60.4 k",
+   "tolerance": "1 %",
+   "power_w": 0.25,
+   "package": "axial, 6.3 x 2.4 mm body"
+  },
+  "sources": [
+   "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-60K4",
+   "https://www.digikey.com/en/products/detail/yageo/MFR-25FBF52-60K4/13430"
+  ],
+  "confidence": "product page",
+  "used_for": "the turret's boards (cad/turret_boards.py COMPONENTS)",
+  "qty_per_robot": 1,
+  "notes": "Size: Axial through-hole, body 2.4 mm dia (+-0.2) x 6.3 mm long (+-0.5), lead dia 0.55 mm; 1/4 W, +-1 %, +-100 ppm/C (Yageo MFR datasheet, MFR-25 row; Digi-Key lists 0.094 in x 0.248 in)."
+ },
+ {
+  "id": "yageo-mfr-25fbf52-63k4",
+  "key": "yageo-mfr-25fbf52-63k4",
+  "category": "turret",
+  "vendor": "Yageo",
+  "model": "MFR-25FBF52-63K4",
+  "name": "Resistor 63.4 k 1 % 1/4 W metal film (Yageo MFR-25FBF52)",
+  "price_usd": 0.1,
+  "price_note": "Mouser 603-MFR-25FBF52-63K4 $0.10, 8,863 in stock (its row on oemstrade.com, read 2026-10-27); Digi-Key search link (price not read: the page returns 403)",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-63K4",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "603-MFR-25FBF52-63K4",
+    "price_usd": 0.1,
+    "pack_qty": 1,
+    "stock": 8863,
+    "read_on": "2026-10-27"
+   },
+   {
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/result?keywords=MFR-25FBF52-63K4",
+    "in_stock": null,
+    "ships_from": "US",
+    "seller_pn": null,
+    "price_usd": null,
+    "pack_qty": 1,
+    "stock": null,
+    "read_on": "2026-10-27"
+   }
+  ],
+  "specs": {
+   "value": "63.4 k",
+   "tolerance": "1 %",
+   "power_w": 0.25,
+   "package": "axial, 6.3 x 2.4 mm body"
+  },
+  "sources": [
+   "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-63K4",
+   "https://www.digikey.com/en/products/result?keywords=MFR-25FBF52-63K4"
+  ],
+  "confidence": "product page",
+  "used_for": "the turret's boards (cad/turret_boards.py COMPONENTS)",
+  "qty_per_robot": 1,
+  "notes": "Size: Axial through-hole, body 2.4 mm dia (+-0.2) x 6.3 mm long (+-0.5), lead dia 0.55 mm; 1/4 W, +-1 %, +-100 ppm/C (Yageo MFR datasheet, MFR-25 row; Digi-Key lists 0.094 in x 0.248 in)."
+ },
+ {
+  "id": "yageo-mfr-25fbf52-66k5",
+  "key": "yageo-mfr-25fbf52-66k5",
+  "category": "turret",
+  "vendor": "Yageo",
+  "model": "MFR-25FBF52-66K5",
+  "name": "Resistor 66.5 k 1 % 1/4 W metal film (Yageo MFR-25FBF52)",
+  "price_usd": 0.1,
+  "price_note": "Mouser 603-MFR-25FBF52-66K5 $0.10, 19,592 in stock (its row on oemstrade.com, read 2026-10-27); Digi-Key 66.5KXBK-ND (price not read: the page returns 403)",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-66K5",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "603-MFR-25FBF52-66K5",
+    "price_usd": 0.1,
+    "pack_qty": 1,
+    "stock": 19592,
+    "read_on": "2026-10-27"
+   },
+   {
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/product-detail/en/yageo/MFR-25FBF52-66K5/66.5KXBK-ND/13437",
+    "in_stock": null,
+    "ships_from": "US",
+    "seller_pn": "66.5KXBK-ND",
+    "price_usd": null,
+    "pack_qty": 1,
+    "stock": null,
+    "read_on": "2026-10-27"
+   }
+  ],
+  "specs": {
+   "value": "66.5 k",
+   "tolerance": "1 %",
+   "power_w": 0.25,
+   "package": "axial, 6.3 x 2.4 mm body"
+  },
+  "sources": [
+   "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-66K5",
+   "https://www.digikey.com/product-detail/en/yageo/MFR-25FBF52-66K5/66.5KXBK-ND/13437"
+  ],
+  "confidence": "product page",
+  "used_for": "the turret's boards (cad/turret_boards.py COMPONENTS)",
+  "qty_per_robot": 1,
+  "notes": "Size: Axial through-hole, body 2.4 mm dia (+-0.2) x 6.3 mm long (+-0.5), lead dia 0.55 mm; 1/4 W, +-1 %, +-100 ppm/C (Yageo MFR datasheet, MFR-25 row; Digi-Key lists 0.094 in x 0.248 in)."
+ },
+ {
+  "id": "yageo-mfr-25fbf52-69k8",
+  "key": "yageo-mfr-25fbf52-69k8",
+  "category": "turret",
+  "vendor": "Yageo",
+  "model": "MFR-25FBF52-69K8",
+  "name": "Resistor 69.8 k 1 % 1/4 W metal film (Yageo MFR-25FBF52)",
+  "price_usd": 0.1,
+  "price_note": "Mouser 603-MFR-25FBF52-69K8 $0.10, 14,226 in stock (its row on oemstrade.com, read 2026-10-27); Digi-Key 13-MFR-25FBF52-69K8-ND (price not read: the page returns 403)",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-69K8",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "603-MFR-25FBF52-69K8",
+    "price_usd": 0.1,
+    "pack_qty": 1,
+    "stock": 14226,
+    "read_on": "2026-10-27"
+   },
+   {
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/detail/yageo/MFR-25FBF52-69K8/13442",
+    "in_stock": null,
+    "ships_from": "US",
+    "seller_pn": "13-MFR-25FBF52-69K8-ND",
+    "price_usd": null,
+    "pack_qty": 1,
+    "stock": null,
+    "read_on": "2026-10-27"
+   }
+  ],
+  "specs": {
+   "value": "69.8 k",
+   "tolerance": "1 %",
+   "power_w": 0.25,
+   "package": "axial, 6.3 x 2.4 mm body"
+  },
+  "sources": [
+   "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-69K8",
+   "https://www.digikey.com/en/products/detail/yageo/MFR-25FBF52-69K8/13442"
+  ],
+  "confidence": "product page",
+  "used_for": "the turret's boards (cad/turret_boards.py COMPONENTS)",
+  "qty_per_robot": 1,
+  "notes": "That Digi-Key page lists MFR-25FRF52-69K8 (reel-pack version, 13-MFR-25FRF52-69K8TR-ND) as parametric substitute: $0.10, 9,562 in stock in the cached copy; I found no cut-tape number for it. Size: Axial through-hole, body 2.4 mm dia (+-0.2) x 6.3 mm long (+-0.5), lead dia 0.55 mm; 1/4 W, +-1 %, +-100 ppm/C (Yageo MFR datasheet, MFR-25 row; Digi-Key lists 0.094 in x 0.248 in)."
+ },
+ {
+  "id": "yageo-mfr-25fbf52-73k2",
+  "key": "yageo-mfr-25fbf52-73k2",
+  "category": "turret",
+  "vendor": "Yageo",
+  "model": "MFR-25FBF52-73K2",
+  "name": "Resistor 73.2 k 1 % 1/4 W metal film (Yageo MFR-25FBF52)",
+  "price_usd": 0.1,
+  "price_note": "Mouser 603-MFR-25FBF52-73K2 $0.10, 8,644 in stock (its row on oemstrade.com, read 2026-10-27); Digi-Key 13-MFR-25FBF52-73K2-ND (price not read: the page returns 403)",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-73K2",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "603-MFR-25FBF52-73K2",
+    "price_usd": 0.1,
+    "pack_qty": 1,
+    "stock": 8644,
+    "read_on": "2026-10-27"
+   },
+   {
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/detail/yageo/MFR-25FBF52-73K2/13447",
+    "in_stock": null,
+    "ships_from": "US",
+    "seller_pn": "13-MFR-25FBF52-73K2-ND",
+    "price_usd": null,
+    "pack_qty": 1,
+    "stock": null,
+    "read_on": "2026-10-27"
+   }
+  ],
+  "specs": {
+   "value": "73.2 k",
+   "tolerance": "1 %",
+   "power_w": 0.25,
+   "package": "axial, 6.3 x 2.4 mm body"
+  },
+  "sources": [
+   "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-73K2",
+   "https://www.digikey.com/en/products/detail/yageo/MFR-25FBF52-73K2/13447"
+  ],
+  "confidence": "product page",
+  "used_for": "the turret's boards (cad/turret_boards.py COMPONENTS)",
+  "qty_per_robot": 1,
+  "notes": "That Digi-Key page lists MFR-25FRF52-73K2 (reel-pack version, 13-MFR-25FRF52-73K2TR-ND) as parametric substitute: $0.10, 9,114 in stock in the cached copy; I found no cut-tape number for it. Size: Axial through-hole, body 2.4 mm dia (+-0.2) x 6.3 mm long (+-0.5), lead dia 0.55 mm; 1/4 W, +-1 %, +-100 ppm/C (Yageo MFR datasheet, MFR-25 row; Digi-Key lists 0.094 in x 0.248 in)."
+ },
+ {
+  "id": "yageo-mfr-25fbf52-91k",
+  "key": "yageo-mfr-25fbf52-91k",
+  "category": "turret",
+  "vendor": "Yageo",
+  "model": "MFR-25FBF52-91K",
+  "name": "Resistor 91 k 1 % 1/4 W metal film (Yageo MFR-25FBF52)",
+  "price_usd": 0.1,
+  "price_note": "Mouser 603-MFR-25FBF52-91K $0.10, 13,902 in stock (its row on oemstrade.com, read 2026-10-27); Digi-Key search link (price not read: the page returns 403)",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-91K",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "603-MFR-25FBF52-91K",
+    "price_usd": 0.1,
+    "pack_qty": 1,
+    "stock": 13902,
+    "read_on": "2026-10-27"
+   },
+   {
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/result?keywords=MFR-25FBF52-91K",
+    "in_stock": null,
+    "ships_from": "US",
+    "seller_pn": null,
+    "price_usd": null,
+    "pack_qty": 1,
+    "stock": null,
+    "read_on": "2026-10-27"
+   }
+  ],
+  "specs": {
+   "value": "91 k",
+   "tolerance": "1 %",
+   "power_w": 0.25,
+   "package": "axial, 6.3 x 2.4 mm body"
+  },
+  "sources": [
+   "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-91K",
+   "https://www.digikey.com/en/products/result?keywords=MFR-25FBF52-91K"
+  ],
+  "confidence": "product page",
+  "used_for": "the turret's boards (cad/turret_boards.py COMPONENTS)",
+  "qty_per_robot": 1,
+  "notes": "91k is an E24 value (the E96 neighbour is 90.9k). Size: Axial through-hole, body 2.4 mm dia (+-0.2) x 6.3 mm long (+-0.5), lead dia 0.55 mm; 1/4 W, +-1 %, +-100 ppm/C (Yageo MFR datasheet, MFR-25 row; Digi-Key lists 0.094 in x 0.248 in)."
+ },
+ {
+  "id": "yageo-mfr-25fbf52-100k",
+  "key": "yageo-mfr-25fbf52-100k",
+  "category": "turret",
+  "vendor": "Yageo",
+  "model": "MFR-25FBF52-100K",
+  "name": "Resistor 100 k 1 % 1/4 W metal film (Yageo MFR-25FBF52)",
+  "price_usd": 0.1,
+  "price_note": "Mouser 603-MFR-25FBF52-100K $0.10, 15,007 in stock (its row on oemstrade.com, read 2026-10-27); Digi-Key 100KXBK-ND (price not read: the page returns 403)",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-100K",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "603-MFR-25FBF52-100K",
+    "price_usd": 0.1,
+    "pack_qty": 1,
+    "stock": 15007,
+    "read_on": "2026-10-27"
+   },
+   {
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/detail/yageo/MFR-25FBF52-100K/100KXBK-ND/13473",
+    "in_stock": null,
+    "ships_from": "US",
+    "seller_pn": "100KXBK-ND",
+    "price_usd": null,
+    "pack_qty": 1,
+    "stock": null,
+    "read_on": "2026-10-27"
+   }
+  ],
+  "specs": {
+   "value": "100 k",
+   "tolerance": "1 %",
+   "power_w": 0.25,
+   "package": "axial, 6.3 x 2.4 mm body"
+  },
+  "sources": [
+   "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-100K",
+   "https://www.digikey.com/en/products/detail/yageo/MFR-25FBF52-100K/100KXBK-ND/13473"
+  ],
+  "confidence": "product page",
+  "used_for": "the turret's boards (cad/turret_boards.py COMPONENTS)",
+  "qty_per_robot": 7,
+  "notes": "Size: Axial through-hole, body 2.4 mm dia (+-0.2) x 6.3 mm long (+-0.5), lead dia 0.55 mm; 1/4 W, +-1 %, +-100 ppm/C (Yageo MFR datasheet, MFR-25 row; Digi-Key lists 0.094 in x 0.248 in)."
+ },
+ {
+  "id": "yageo-rsf100jb-73-2k2",
+  "key": "yageo-rsf100jb-73-2k2",
+  "category": "turret",
+  "vendor": "Yageo",
+  "model": "RSF100JB-73-2K2",
+  "name": "Resistor 2.2k 1 W 5 % metal oxide (RSF100)",
+  "price_usd": 0.2,
+  "price_note": "Mouser 603-RSF100JB-73-2K2 $0.20, 9,082 in stock (its row on oemstrade.com, read 2026-10-27); Digi-Key 2.2KW-1-ND (price not read: the page returns 403)",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/603-RSF100JB-73-2K2",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "603-RSF100JB-73-2K2",
+    "price_usd": 0.2,
+    "pack_qty": 1,
+    "stock": 9082,
+    "read_on": "2026-10-27"
+   },
+   {
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/product-detail/en/yageo/RSF100JB-73-2K2/2.2KW-1-ND/18091",
+    "in_stock": null,
+    "ships_from": "US",
+    "seller_pn": "2.2KW-1-ND",
+    "price_usd": null,
+    "pack_qty": 1,
+    "stock": null,
+    "read_on": "2026-10-27"
+   }
+  ],
+  "specs": {},
+  "sources": [
+   "https://www.mouser.com/ProductDetail/603-RSF100JB-73-2K2",
+   "https://www.digikey.com/product-detail/en/yageo/RSF100JB-73-2K2/2.2KW-1-ND/18091"
+  ],
+  "confidence": "product page",
+  "used_for": "the turret's boards (cad/turret_boards.py COMPONENTS)",
+  "qty_per_robot": 2,
+  "notes": "Ordering code per the Yageo RSF spec: J = +-5 %, B = bulk packing, -73- = forming code. Other sellers at qty 1: Arrow V99:2348_17669645 lists $0.036 but only 1 pc in stock; Newark 49AK7743 / 49AK7744 have 0 stock and a 6,000 minimum; TTI starts at 500 pcs. So Mouser and Digi-Key are the only practical sellers for a few pieces. Size: Axial body 4.5 mm dia (+-0.5) x 11.5 mm long (+-1.0); lead dia 0.8 mm (+-0.05); 1 W at 70 C, 350 V max working voltage, +-300 ppm/C, +-5 % (Yageo RSF product specification 16-Aug-2021 V.0, RSF100 row; Digi-Key lists 4.50 mm x 11.50 mm = 0.177 in x 0.453 in; Future Electronics and Avnet agree)."
+ },
+ {
+  "id": "cap-mlcc-100n-50v",
+  "key": "cap-mlcc-100n-50v",
+  "category": "turret",
+  "vendor": "Vishay (BCcomponents)",
+  "model": "K104K15X7RF53L2",
+  "name": "Capacitor 100 nF 50 V X7R radial ceramic, 2.5 mm leads",
+  "price_usd": 0.25,
+  "price_note": "Mouser 594-K104K15X7RF53L2 $0.25, 57,498 in stock (its row on oemstrade.com, read 2026-10-27); Digi-Key BC3324-ND $0.29",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/594-K104K15X7RF53L2",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "594-K104K15X7RF53L2",
+    "price_usd": 0.25,
+    "pack_qty": 1,
+    "stock": 57498,
+    "read_on": "2026-10-27"
+   },
+   {
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/detail/vishay-beyschlag-draloric-bc-components/K104K15X7RF53L2/2820506",
+    "in_stock": null,
+    "ships_from": "US",
+    "seller_pn": "BC3324-ND",
+    "price_usd": 0.29,
+    "pack_qty": 1,
+    "stock": null,
+    "read_on": "2026-10-27"
+   }
+  ],
+  "specs": {},
+  "sources": [
+   "https://www.mouser.com/ProductDetail/594-K104K15X7RF53L2",
+   "https://www.digikey.com/en/products/detail/vishay-beyschlag-draloric-bc-components/K104K15X7RF53L2/2820506"
+  ],
+  "confidence": "product page",
+  "used_for": "the turret's boards (cad/turret_boards.py COMPONENTS)",
+  "qty_per_robot": 8,
+  "notes": "I picked the +-10 % K version over the K104M15X7RF53L2 (+-20 %) you named: same body, cheaper and deeper stock. The M part is confirmed too: Mouser 594-K104M15X7RF53L2 is $0.27 with 16,944 in stock today (oemstrade), so the snippet's $0.25 / 21,341 for it was stale; Digi-Key BC5142-ND shows $0.27 in a cached copy. Other candidates: KEMET C320C104K5R5TA is 2.54 mm but 7.36 mm tall seated per Digi-Key (an RS listing for a related KEMET 100 nF / 50 V GoldMax 300 part gives 6.6 mm), so it is over the 6 mm limit either way, and Mouser carries only the ammo-pack C320C104K5R5TA7301 (about $0.32); Digi-Key 399-4264-ND. TDK FG18X7R1H104KNT06: Mouser 810-FG18X7R1H104KNT6 $0.27, 5,747 in stock, 2.5 mm, body about 4 x 2.5 x 5.5 mm (also fine). Vishay K104K10X7RF5UH5 decodes (per the datasheet) to size 10, 5.0 mm lead spacing, flat crimp, ammo pack: Mouser 594-K104K10X7RF5UH5 $0.30, 112,541 in stock, but 5.0 mm, not 2.54 mm. Size: Vishay K series size code 15: body 4.0 mm W x 4.0 mm H x 2.6 mm T (all max); lead spacing 2.5 mm +-0.8 (straight 'L2' leads, so it fits 2.54 mm holes); lead dia 0.5 mm; max seating height 1.6 mm, so the top of the body is at most 4.0 + 1.6 = 5.6 mm above the board (Vishay K Series datasheet 45171, rev 05-Sep-2025, which I rendered and read)."
+ },
+ {
+  "id": "cap-mlcc-1u-50v",
+  "key": "cap-mlcc-1u-50v",
+  "category": "turret",
+  "vendor": "TDK",
+  "model": "FG24X7R1H105KRT06",
+  "name": "Capacitor 1 uF 50 V X7R radial ceramic, 5 mm leads",
+  "price_usd": 0.54,
+  "price_note": "Mouser 810-FG24X7R1H105KRT6 $0.54, 11,666 in stock (its row on oemstrade.com, read 2026-10-27); Digi-Key 445-173374-1-ND $0.51",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/810-FG24X7R1H105KRT6",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "810-FG24X7R1H105KRT6",
+    "price_usd": 0.54,
+    "pack_qty": 1,
+    "stock": 11666,
+    "read_on": "2026-10-27"
+   },
+   {
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/detail/tdk/FG24X7R1H105KRT06/5802988",
+    "in_stock": null,
+    "ships_from": "US",
+    "seller_pn": "445-173374-1-ND",
+    "price_usd": 0.51,
+    "pack_qty": 1,
+    "stock": null,
+    "read_on": "2026-10-27"
+   }
+  ],
+  "specs": {},
+  "sources": [
+   "https://www.mouser.com/ProductDetail/810-FG24X7R1H105KRT6",
+   "https://www.digikey.com/en/products/detail/tdk/FG24X7R1H105KRT06/5802988"
+  ],
+  "confidence": "product page",
+  "used_for": "the turret's boards (cad/turret_boards.py COMPONENTS)",
+  "qty_per_robot": 4,
+  "notes": "TDK's 50 V 1 uF part is the FG24 (5 mm spacing), not the FG18X7R1H105KRT06 you listed: oemstrade finds no such part and TDK's FG18 1 uF is only the 25 V FG18X7R1E105KRT06. Other candidates: KEMET C320C105K5R5TA (2.54 mm) is Mouser 80-C320C105K5R5TA $1.34 with 0 stock. Vishay K105K15X7RF5UH5 is not a catalogue code (K105 exists only in size 20); K105K20X7RF5UH5 is Mouser 594-K105K20X7RF5UH5 $1.06, 8,397 in stock, 5 mm spacing but about 7.5 mm tall (Unikey lists 5 x 3.2 x 7.54 mm), so it misses the 7 mm limit. KEMET C322C105K5R5TA (5.08 mm): Mouser $1.78, 521 in stock. Size: Body 4.5 mm W x 3.0 mm T x 5.5 mm H (5.5 mm is the max seated height); lead spacing 5.0 mm (fits 5.08 mm holes); +-10 %, X7R, 125 C (Digi-Key listing; Element14, TME and Future Electronics give the same 4.5 x 3 x 5.5 mm)."
+ },
+ {
+  "id": "cap-film-100n-5pct",
+  "key": "cap-film-100n-5pct",
+  "category": "turret",
+  "vendor": "WIMA",
+  "model": "MKS2C031001A00JSSD",
+  "name": "Capacitor 100 nF 63 V +-5 % PET film, 5 mm leads",
+  "price_usd": 0.7,
+  "price_note": "Mouser 505-MKS2.1/63/5 $0.70, 2,166 in stock (its row on oemstrade.com, read 2026-10-27); Newark 46T6775 $0.45",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/WIMA/MKS2-1-63-5/?qs=ISKKXg98%252B1lWN2VQKHfGJg%3D%3D",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "505-MKS2.1/63/5",
+    "price_usd": 0.7,
+    "pack_qty": 1,
+    "stock": 2166,
+    "read_on": "2026-10-27"
+   },
+   {
+    "seller": "Newark",
+    "url": "https://www.newark.com/search?st=46T6775",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "46T6775",
+    "price_usd": 0.452,
+    "pack_qty": 1,
+    "stock": 9338,
+    "read_on": "2026-10-27"
+   }
+  ],
+  "specs": {},
+  "sources": [
+   "https://www.mouser.com/ProductDetail/WIMA/MKS2-1-63-5/?qs=ISKKXg98%252B1lWN2VQKHfGJg%3D%3D",
+   "https://www.newark.com/search?st=46T6775"
+  ],
+  "confidence": "product page",
+  "used_for": "the turret's boards (cad/turret_boards.py COMPONENTS)",
+  "qty_per_robot": 2,
+  "notes": "The exact code you named is out of stock at Mouser (505-MKS20.1/63/5, 0 in stock); Mouser's in-stock 505-MKS2.1/63/5 is listed under WIMA's older short code MKS2-.1/63/5 and has the same electrical and size data (0.1 uF, 63 VDC, +-5 %, 5 mm, 7.2 x 2.5 x 6.5 mm). I could not confirm from a WIMA datasheet that the two codes are the identical SKU (lead length / packing), so check the lead-length option on the Mouser page. Digi-Key lists only the +-10 % MKS2C031001A00KSSD (DK 1928-MKS2C031001A00KSSD-ND, $0.64 at 1 in a cached copy). KEMET R82EC3100DQ50J returns no result at any seller (R82EC3100DQ60J is at Mouser with 0 stock). Panasonic ECQ-E1104JF is not a current part: oemstrade shows only OEM/CM brokers for it, no Mouser or Digi-Key listing turned up in search, Panasonic's current ECQE(F) 100 V range starts at 0.56 uF (datasheet 01-Sep-25) and the older 100 V ECQ-E1104KZ is marked obsolete at Digi-Key. Size: Body 7.2 mm L x 2.5 mm T x 6.5 mm H, lead spacing 5 mm, lead dia 0.5 mm, 63 VDC / 40 VAC, PET (Mouser listing via web search; TME, Unikey, Verical and Anglia rows agree)."
+ },
+ {
+  "id": "onsemi-1n4148",
+  "key": "onsemi-1n4148",
+  "category": "turret",
+  "vendor": "onsemi",
+  "model": "1N4148",
+  "name": "Diode 1N4148 (DO-35)",
+  "price_usd": 0.1,
+  "price_note": "Mouser 512-1N4148 $0.10, 1,090,369 in stock (its row on oemstrade.com, read 2026-10-27); Digi-Key 1N4148FS-ND $0.10",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/512-1N4148",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "512-1N4148",
+    "price_usd": 0.1,
+    "pack_qty": 1,
+    "stock": 1090369,
+    "read_on": "2026-10-27"
+   },
+   {
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/detail/onsemi/1N4148/458603",
+    "in_stock": null,
+    "ships_from": "US",
+    "seller_pn": "1N4148FS-ND",
+    "price_usd": 0.1,
+    "pack_qty": 1,
+    "stock": null,
+    "read_on": "2026-10-27"
+   }
+  ],
+  "specs": {},
+  "sources": [
+   "https://www.mouser.com/ProductDetail/512-1N4148",
+   "https://www.digikey.com/en/products/detail/onsemi/1N4148/458603"
+  ],
+  "confidence": "product page",
+  "used_for": "the turret's boards (cad/turret_boards.py COMPONENTS)",
+  "qty_per_robot": 3,
+  "notes": "Body dimensions not looked up (not requested). Digi-Key's onsemi listing is the 100 V / 200 mA part; the Diotec, SMC and similar 1N4148s on Digi-Key are 75 V parts. Also on Digi-Key: 1N4148TR (cut tape / reel, $0.10 at 1)."
+ },
+ {
+  "id": "omron-b3f-1000",
+  "key": "omron-b3f-1000",
+  "category": "turret",
+  "vendor": "Omron (now sold as Aratas, formerly Omron Components)",
+  "model": "B3F-1000",
+  "name": "Tactile switch 6x6 mm, 4.3 mm, 100 gf (B3F-1000)",
+  "price_usd": 0.35,
+  "price_note": "Mouser 653-B3F-1000 $0.35, 25,871 in stock (its row on oemstrade.com, read 2026-10-27); Digi-Key SW400-ND $0.35",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/653-B3F-1000",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "653-B3F-1000",
+    "price_usd": 0.35,
+    "pack_qty": 1,
+    "stock": 25871,
+    "read_on": "2026-10-27"
+   },
+   {
+    "seller": "Digi-Key",
+    "url": "https://digikey.com/product-detail/en/B3F-1000/SW400-ND/33150",
+    "in_stock": null,
+    "ships_from": "US",
+    "seller_pn": "SW400-ND",
+    "price_usd": 0.35,
+    "pack_qty": 1,
+    "stock": null,
+    "read_on": "2026-10-27"
+   }
+  ],
+  "specs": {},
+  "sources": [
+   "https://www.mouser.com/ProductDetail/653-B3F-1000",
+   "https://digikey.com/product-detail/en/B3F-1000/SW400-ND/33150"
+  ],
+  "confidence": "product page",
+  "used_for": "the turret's boards (cad/turret_boards.py COMPONENTS)",
+  "qty_per_robot": 1,
+  "notes": "Other heights in the series: B3F-1020 is 5.0 mm, B3F-1060 7.0 mm, B3F-1070 9.5 mm (same datasheet). Size: Height 4.3 mm +-0.2 above the board (body 3.4 mm; plunger 3.5 mm dia); body 6 mm x 6 mm (+-0.2); terminals 3.5 mm long below the body; PCB holes 4 x 1.0 mm dia on a 6.5 x 4.5 mm (+-0.1) rectangle; SPST-NO, 0.98 N (100 gf) operating force, 1-50 mA at 3-24 VDC (Omron B3F datasheet, dimension drawing rendered and read)."
+ },
+ {
+  "id": "ti-sn74hct14n",
+  "key": "ti-sn74hct14n",
+  "category": "turret",
+  "vendor": "Texas Instruments",
+  "model": "SN74HCT14N",
+  "name": "Hex Schmitt-trigger inverter SN74HCT14N (DIP-14)",
+  "price_usd": 0.92,
+  "price_note": "Mouser 595-SN74HCT14N $0.92, 3,467 in stock (its row on oemstrade.com, read 2026-10-27); Digi-Key 296-8394-5-ND $0.87",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/595-SN74HCT14N",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "595-SN74HCT14N",
+    "price_usd": 0.92,
+    "pack_qty": 1,
+    "stock": 3467,
+    "read_on": "2026-10-27"
+   },
+   {
+    "seller": "Digi-Key",
+    "url": "https://digikey.com/product-detail/en/texas-instruments/SN74HCT14N/296-8394-5-ND/376852",
+    "in_stock": null,
+    "ships_from": "US",
+    "seller_pn": "296-8394-5-ND",
+    "price_usd": 0.87,
+    "pack_qty": 1,
+    "stock": null,
+    "read_on": "2026-10-27"
+   }
+  ],
+  "specs": {},
+  "sources": [
+   "https://www.mouser.com/ProductDetail/595-SN74HCT14N",
+   "https://digikey.com/product-detail/en/texas-instruments/SN74HCT14N/296-8394-5-ND/376852"
+  ],
+  "confidence": "product page",
+  "used_for": "the turret's boards (cad/turret_boards.py COMPONENTS)",
+  "qty_per_robot": 1,
+  "notes": "Digi-Key is $0.05 cheaper than Mouser at qty 1 and has more stock. Package is 14-PDIP (through-hole DIP-14); body size not looked up (not requested)."
+ },
+ {
+  "id": "yageo-mfr-25fbf52-39k",
+  "key": "yageo-mfr-25fbf52-39k",
+  "category": "turret",
+  "vendor": "Yageo",
+  "model": "MFR-25FBF52-39K",
+  "name": "Resistor 39 k 1 % 1/4 W metal film (Yageo MFR-25FBF52)",
+  "price_usd": 0.1,
+  "price_note": "Mouser 603-MFR-25FBF52-39K $0.10, 5,471 in stock (its row on oemstrade.com, read 2026-10-27); Digi-Key 39.0KXBK-ND (price not read: the page returns 403)",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-39K",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "603-MFR-25FBF52-39K",
+    "price_usd": 0.1,
+    "pack_qty": 1,
+    "stock": 5471,
+    "read_on": "2026-10-27"
+   },
+   {
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/result?keywords=MFR-25FBF52-39K",
+    "in_stock": null,
+    "ships_from": "US",
+    "seller_pn": "39.0KXBK-ND",
+    "price_usd": null,
+    "pack_qty": 1,
+    "stock": null,
+    "read_on": "2026-10-27"
+   }
+  ],
+  "specs": {
+   "value": "39 k",
+   "tolerance": "1 %",
+   "power_w": 0.25,
+   "package": "axial, 6.3 x 2.4 mm body"
+  },
+  "sources": [
+   "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-39K",
+   "https://www.digikey.com/en/products/result?keywords=MFR-25FBF52-39K"
+  ],
+  "confidence": "product page",
+  "used_for": "the turret's boards (cad/turret_boards.py COMPONENTS)",
+  "qty_per_robot": 1,
+  "notes": "One-shot A's timing resistor (0.45 x 39 k x 1 uF = 18 ms). Size: axial, body 2.4 mm dia x 6.3 mm long (Yageo MFR-25)."
  }
 ]

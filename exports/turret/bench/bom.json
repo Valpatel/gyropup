@@ -3085,46 +3085,6 @@
    "alternates": []
   },
   {
-   "item": "5 V 100 mA linear regulator, TO-92",
-   "id": "ti-ua78l05aclp",
-   "key": "ti-ua78l05aclp",
-   "qty": 1,
-   "for": "el_78l05",
-   "part_number": "UA78L05ACLP",
-   "vendor": "Texas Instruments",
-   "url": "https://www.digikey.com/en/products/result?keywords=296-1365-ND",
-   "price_usd_each": 2.05,
-   "mass_g_each": null,
-   "note": null,
-   "pack_qty": null,
-   "sellers": [
-    {
-     "seller": "Digi-Key",
-     "url": "https://www.digikey.com/en/products/result?keywords=296-1365-ND",
-     "seller_pn": "296-1365-ND",
-     "price_usd": 2.05,
-     "pack_qty": 1,
-     "in_stock": true,
-     "stock": 9,
-     "read_on": "2026-10-27"
-    },
-    {
-     "seller": "Mouser",
-     "url": "https://www.mouser.com/ProductDetail/595-UA78L05ACLP",
-     "seller_pn": "595-UA78L05ACLP",
-     "price_usd": 1.94,
-     "pack_qty": 1,
-     "in_stock": true,
-     "stock": 2195,
-     "read_on": "2026-10-27"
-    }
-   ],
-   "media_key": "ti-ua78l05aclp",
-   "thumb": null,
-   "thumb_from": null,
-   "alternates": []
-  },
-  {
    "item": "Optocoupler, phototransistor output, DIP-6",
    "id": "vishay-4n35",
    "key": "vishay-4n35",
@@ -3285,41 +3245,41 @@
    "alternates": []
   },
   {
-   "item": "Hex Schmitt inverter, DIP-14",
-   "id": "ti-sn74hc14n",
-   "key": "ti-sn74hc14n",
+   "item": "Hex Schmitt-trigger inverter SN74HCT14N (DIP-14)",
+   "id": "ti-sn74hct14n",
+   "key": "ti-sn74hct14n",
    "qty": 1,
-   "for": "el_inverter",
-   "part_number": "SN74HC14N",
+   "for": "el_brake_driver",
+   "part_number": "SN74HCT14N",
    "vendor": "Texas Instruments",
-   "url": "https://www.digikey.com/en/products/detail/texas-instruments/SN74HC14N/277223",
-   "price_usd_each": 1.15,
+   "url": "https://www.mouser.com/ProductDetail/595-SN74HCT14N",
+   "price_usd_each": 0.92,
    "mass_g_each": null,
    "note": null,
    "pack_qty": null,
    "sellers": [
     {
-     "seller": "Digi-Key",
-     "url": "https://www.digikey.com/en/products/detail/texas-instruments/SN74HC14N/277223",
-     "seller_pn": "296-1577-5-ND",
-     "price_usd": 1.15,
+     "seller": "Mouser",
+     "url": "https://www.mouser.com/ProductDetail/595-SN74HCT14N",
+     "seller_pn": "595-SN74HCT14N",
+     "price_usd": 0.92,
      "pack_qty": 1,
      "in_stock": true,
-     "stock": 23031,
+     "stock": 3467,
      "read_on": "2026-10-27"
     },
     {
-     "seller": "Mouser",
-     "url": "https://www.mouser.com/ProductDetail/595-SN74HC14N",
-     "seller_pn": "595-SN74HC14N",
-     "price_usd": 1.22,
+     "seller": "Digi-Key",
+     "url": "https://digikey.com/product-detail/en/texas-instruments/SN74HCT14N/296-8394-5-ND/376852",
+     "seller_pn": "296-8394-5-ND",
+     "price_usd": 0.87,
      "pack_qty": 1,
-     "in_stock": true,
-     "stock": 15473,
+     "in_stock": null,
+     "stock": null,
      "read_on": "2026-10-27"
     }
    ],
-   "media_key": "ti-sn74hc14n",
+   "media_key": "ti-sn74hct14n",
    "thumb": null,
    "thumb_from": null,
    "alternates": []
@@ -4324,6 +4284,766 @@
     }
    ],
    "media_key": "remington-18ptfestr-25ft",
+   "thumb": null,
+   "thumb_from": null,
+   "alternates": []
+  },
+  {
+   "item": "Capacitor 100 nF 63 V +-5 % PET film, 5 mm leads",
+   "id": "cap-film-100n-5pct",
+   "key": "cap-film-100n-5pct",
+   "qty": 3,
+   "for": "el_c_100n_film",
+   "part_number": "MKS2C031001A00JSSD",
+   "vendor": "WIMA",
+   "url": "https://www.mouser.com/ProductDetail/WIMA/MKS2-1-63-5/?qs=ISKKXg98%252B1lWN2VQKHfGJg%3D%3D",
+   "price_usd_each": 0.7,
+   "mass_g_each": null,
+   "note": null,
+   "pack_qty": null,
+   "sellers": [
+    {
+     "seller": "Mouser",
+     "url": "https://www.mouser.com/ProductDetail/WIMA/MKS2-1-63-5/?qs=ISKKXg98%252B1lWN2VQKHfGJg%3D%3D",
+     "seller_pn": "505-MKS2.1/63/5",
+     "price_usd": 0.7,
+     "pack_qty": 1,
+     "in_stock": true,
+     "stock": 2166,
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "Newark",
+     "url": "https://www.newark.com/search?st=46T6775",
+     "seller_pn": "46T6775",
+     "price_usd": 0.452,
+     "pack_qty": 1,
+     "in_stock": true,
+     "stock": 9338,
+     "read_on": "2026-10-27"
+    }
+   ],
+   "media_key": "cap-film-100n-5pct",
+   "thumb": null,
+   "thumb_from": null,
+   "alternates": []
+  },
+  {
+   "item": "Capacitor 100 nF 50 V X7R radial ceramic, 2.5 mm leads",
+   "id": "cap-mlcc-100n-50v",
+   "key": "cap-mlcc-100n-50v",
+   "qty": 10,
+   "for": "el_c_100n",
+   "part_number": "K104K15X7RF53L2",
+   "vendor": "Vishay (BCcomponents)",
+   "url": "https://www.mouser.com/ProductDetail/594-K104K15X7RF53L2",
+   "price_usd_each": 0.25,
+   "mass_g_each": null,
+   "note": null,
+   "pack_qty": null,
+   "sellers": [
+    {
+     "seller": "Mouser",
+     "url": "https://www.mouser.com/ProductDetail/594-K104K15X7RF53L2",
+     "seller_pn": "594-K104K15X7RF53L2",
+     "price_usd": 0.25,
+     "pack_qty": 1,
+     "in_stock": true,
+     "stock": 57498,
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "Digi-Key",
+     "url": "https://www.digikey.com/en/products/detail/vishay-beyschlag-draloric-bc-components/K104K15X7RF53L2/2820506",
+     "seller_pn": "BC3324-ND",
+     "price_usd": 0.29,
+     "pack_qty": 1,
+     "in_stock": null,
+     "stock": null,
+     "read_on": "2026-10-27"
+    }
+   ],
+   "media_key": "cap-mlcc-100n-50v",
+   "thumb": null,
+   "thumb_from": null,
+   "alternates": []
+  },
+  {
+   "item": "Capacitor 1 uF 50 V X7R radial ceramic, 5 mm leads",
+   "id": "cap-mlcc-1u-50v",
+   "key": "cap-mlcc-1u-50v",
+   "qty": 5,
+   "for": "el_c_1u",
+   "part_number": "FG24X7R1H105KRT06",
+   "vendor": "TDK",
+   "url": "https://www.mouser.com/ProductDetail/810-FG24X7R1H105KRT6",
+   "price_usd_each": 0.54,
+   "mass_g_each": null,
+   "note": null,
+   "pack_qty": null,
+   "sellers": [
+    {
+     "seller": "Mouser",
+     "url": "https://www.mouser.com/ProductDetail/810-FG24X7R1H105KRT6",
+     "seller_pn": "810-FG24X7R1H105KRT6",
+     "price_usd": 0.54,
+     "pack_qty": 1,
+     "in_stock": true,
+     "stock": 11666,
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "Digi-Key",
+     "url": "https://www.digikey.com/en/products/detail/tdk/FG24X7R1H105KRT06/5802988",
+     "seller_pn": "445-173374-1-ND",
+     "price_usd": 0.51,
+     "pack_qty": 1,
+     "in_stock": null,
+     "stock": null,
+     "read_on": "2026-10-27"
+    }
+   ],
+   "media_key": "cap-mlcc-1u-50v",
+   "thumb": null,
+   "thumb_from": null,
+   "alternates": []
+  },
+  {
+   "item": "Tactile switch 6x6 mm, 4.3 mm, 100 gf (B3F-1000)",
+   "id": "omron-b3f-1000",
+   "key": "omron-b3f-1000",
+   "qty": 2,
+   "for": "el_sw_reset",
+   "part_number": "B3F-1000",
+   "vendor": "Omron (now sold as Aratas, formerly Omron Components)",
+   "url": "https://www.mouser.com/ProductDetail/653-B3F-1000",
+   "price_usd_each": 0.35,
+   "mass_g_each": null,
+   "note": null,
+   "pack_qty": null,
+   "sellers": [
+    {
+     "seller": "Mouser",
+     "url": "https://www.mouser.com/ProductDetail/653-B3F-1000",
+     "seller_pn": "653-B3F-1000",
+     "price_usd": 0.35,
+     "pack_qty": 1,
+     "in_stock": true,
+     "stock": 25871,
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "Digi-Key",
+     "url": "https://digikey.com/product-detail/en/B3F-1000/SW400-ND/33150",
+     "seller_pn": "SW400-ND",
+     "price_usd": 0.35,
+     "pack_qty": 1,
+     "in_stock": null,
+     "stock": null,
+     "read_on": "2026-10-27"
+    }
+   ],
+   "media_key": "omron-b3f-1000",
+   "thumb": null,
+   "thumb_from": null,
+   "alternates": []
+  },
+  {
+   "item": "Diode 1N4148 (DO-35)",
+   "id": "onsemi-1n4148",
+   "key": "onsemi-1n4148",
+   "qty": 4,
+   "for": "el_d_1n4148",
+   "part_number": "1N4148",
+   "vendor": "onsemi",
+   "url": "https://www.mouser.com/ProductDetail/512-1N4148",
+   "price_usd_each": 0.1,
+   "mass_g_each": null,
+   "note": null,
+   "pack_qty": null,
+   "sellers": [
+    {
+     "seller": "Mouser",
+     "url": "https://www.mouser.com/ProductDetail/512-1N4148",
+     "seller_pn": "512-1N4148",
+     "price_usd": 0.1,
+     "pack_qty": 1,
+     "in_stock": true,
+     "stock": 1090369,
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "Digi-Key",
+     "url": "https://www.digikey.com/en/products/detail/onsemi/1N4148/458603",
+     "seller_pn": "1N4148FS-ND",
+     "price_usd": 0.1,
+     "pack_qty": 1,
+     "in_stock": null,
+     "stock": null,
+     "read_on": "2026-10-27"
+    }
+   ],
+   "media_key": "onsemi-1n4148",
+   "thumb": null,
+   "thumb_from": null,
+   "alternates": []
+  },
+  {
+   "item": "Resistor 100 k 1 % 1/4 W metal film (Yageo MFR-25FBF52)",
+   "id": "yageo-mfr-25fbf52-100k",
+   "key": "yageo-mfr-25fbf52-100k",
+   "qty": 9,
+   "for": "el_r_100k",
+   "part_number": "MFR-25FBF52-100K",
+   "vendor": "Yageo",
+   "url": "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-100K",
+   "price_usd_each": 0.1,
+   "mass_g_each": null,
+   "note": null,
+   "pack_qty": null,
+   "sellers": [
+    {
+     "seller": "Mouser",
+     "url": "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-100K",
+     "seller_pn": "603-MFR-25FBF52-100K",
+     "price_usd": 0.1,
+     "pack_qty": 1,
+     "in_stock": true,
+     "stock": 15007,
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "Digi-Key",
+     "url": "https://www.digikey.com/en/products/detail/yageo/MFR-25FBF52-100K/100KXBK-ND/13473",
+     "seller_pn": "100KXBK-ND",
+     "price_usd": null,
+     "pack_qty": 1,
+     "in_stock": null,
+     "stock": null,
+     "read_on": "2026-10-27"
+    }
+   ],
+   "media_key": "yageo-mfr-25fbf52-100k",
+   "thumb": null,
+   "thumb_from": null,
+   "alternates": []
+  },
+  {
+   "item": "Resistor 100 R 1 % 1/4 W metal film (Yageo MFR-25FBF52)",
+   "id": "yageo-mfr-25fbf52-100r",
+   "key": "yageo-mfr-25fbf52-100r",
+   "qty": 4,
+   "for": "el_r_100r",
+   "part_number": "MFR-25FBF52-100R",
+   "vendor": "Yageo",
+   "url": "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-100R",
+   "price_usd_each": 0.1,
+   "mass_g_each": null,
+   "note": null,
+   "pack_qty": null,
+   "sellers": [
+    {
+     "seller": "Mouser",
+     "url": "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-100R",
+     "seller_pn": "603-MFR-25FBF52-100R",
+     "price_usd": 0.1,
+     "pack_qty": 1,
+     "in_stock": true,
+     "stock": 49654,
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "Digi-Key",
+     "url": "https://digikey.com/product-detail/en/yageo/MFR-25FBF52-100R/100XBK-ND/12795",
+     "seller_pn": "100XBK-ND",
+     "price_usd": null,
+     "pack_qty": 1,
+     "in_stock": null,
+     "stock": null,
+     "read_on": "2026-10-27"
+    }
+   ],
+   "media_key": "yageo-mfr-25fbf52-100r",
+   "thumb": null,
+   "thumb_from": null,
+   "alternates": []
+  },
+  {
+   "item": "Resistor 10 k 1 % 1/4 W metal film (Yageo MFR-25FBF52)",
+   "id": "yageo-mfr-25fbf52-10k",
+   "key": "yageo-mfr-25fbf52-10k",
+   "qty": 22,
+   "for": "el_r_10k",
+   "part_number": "MFR-25FBF52-10K",
+   "vendor": "Yageo",
+   "url": "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-10K",
+   "price_usd_each": 0.1,
+   "mass_g_each": null,
+   "note": null,
+   "pack_qty": null,
+   "sellers": [
+    {
+     "seller": "Mouser",
+     "url": "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-10K",
+     "seller_pn": "603-MFR-25FBF52-10K",
+     "price_usd": 0.1,
+     "pack_qty": 1,
+     "in_stock": true,
+     "stock": 114923,
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "Digi-Key",
+     "url": "https://www.digikey.com/en/products/detail/yageo/MFR-25FBF52-10K/13219",
+     "seller_pn": "10.0KXBK-ND",
+     "price_usd": 0.1,
+     "pack_qty": 1,
+     "in_stock": null,
+     "stock": null,
+     "read_on": "2026-10-27"
+    }
+   ],
+   "media_key": "yageo-mfr-25fbf52-10k",
+   "thumb": null,
+   "thumb_from": null,
+   "alternates": []
+  },
+  {
+   "item": "Resistor 1.00 k 1 % 1/4 W metal film (Yageo MFR-25FBF52)",
+   "id": "yageo-mfr-25fbf52-1k",
+   "key": "yageo-mfr-25fbf52-1k",
+   "qty": 10,
+   "for": "el_r_1k",
+   "part_number": "MFR-25FBF52-1K",
+   "vendor": "Yageo",
+   "url": "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-1K",
+   "price_usd_each": 0.1,
+   "mass_g_each": null,
+   "note": null,
+   "pack_qty": null,
+   "sellers": [
+    {
+     "seller": "Mouser",
+     "url": "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-1K",
+     "seller_pn": "603-MFR-25FBF52-1K",
+     "price_usd": 0.1,
+     "pack_qty": 1,
+     "in_stock": true,
+     "stock": 51348,
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "Digi-Key",
+     "url": "https://www.digikey.com/en/products/detail/yageo/MFR-25FBF52-1K/1.00KXBK-ND/13011",
+     "seller_pn": "1.00KXBK-ND",
+     "price_usd": 0.1,
+     "pack_qty": 1,
+     "in_stock": null,
+     "stock": null,
+     "read_on": "2026-10-27"
+    }
+   ],
+   "media_key": "yageo-mfr-25fbf52-1k",
+   "thumb": null,
+   "thumb_from": null,
+   "alternates": []
+  },
+  {
+   "item": "Resistor 39 k 1 % 1/4 W metal film (Yageo MFR-25FBF52)",
+   "id": "yageo-mfr-25fbf52-39k",
+   "key": "yageo-mfr-25fbf52-39k",
+   "qty": 2,
+   "for": "el_r_39k",
+   "part_number": "MFR-25FBF52-39K",
+   "vendor": "Yageo",
+   "url": "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-39K",
+   "price_usd_each": 0.1,
+   "mass_g_each": null,
+   "note": null,
+   "pack_qty": null,
+   "sellers": [
+    {
+     "seller": "Mouser",
+     "url": "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-39K",
+     "seller_pn": "603-MFR-25FBF52-39K",
+     "price_usd": 0.1,
+     "pack_qty": 1,
+     "in_stock": true,
+     "stock": 5471,
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "Digi-Key",
+     "url": "https://www.digikey.com/en/products/result?keywords=MFR-25FBF52-39K",
+     "seller_pn": "39.0KXBK-ND",
+     "price_usd": null,
+     "pack_qty": 1,
+     "in_stock": null,
+     "stock": null,
+     "read_on": "2026-10-27"
+    }
+   ],
+   "media_key": "yageo-mfr-25fbf52-39k",
+   "thumb": null,
+   "thumb_from": null,
+   "alternates": []
+  },
+  {
+   "item": "Resistor 4.7 k 1 % 1/4 W metal film (Yageo MFR-25FBF52)",
+   "id": "yageo-mfr-25fbf52-4k7",
+   "key": "yageo-mfr-25fbf52-4k7",
+   "qty": 4,
+   "for": "el_r_4k7",
+   "part_number": "MFR-25FBF52-4K7",
+   "vendor": "Yageo",
+   "url": "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-4K7",
+   "price_usd_each": 0.11,
+   "mass_g_each": null,
+   "note": null,
+   "pack_qty": null,
+   "sellers": [
+    {
+     "seller": "Mouser",
+     "url": "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-4K7",
+     "seller_pn": "603-MFR-25FBF52-4K7",
+     "price_usd": 0.11,
+     "pack_qty": 1,
+     "in_stock": true,
+     "stock": 12937,
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "Digi-Key",
+     "url": "https://www.digikey.com/en/products/result?keywords=MFR-25FBF52-4K7",
+     "seller_pn": null,
+     "price_usd": null,
+     "pack_qty": 1,
+     "in_stock": null,
+     "stock": null,
+     "read_on": "2026-10-27"
+    }
+   ],
+   "media_key": "yageo-mfr-25fbf52-4k7",
+   "thumb": null,
+   "thumb_from": null,
+   "alternates": []
+  },
+  {
+   "item": "Resistor 60.4 k 1 % 1/4 W metal film (Yageo MFR-25FBF52)",
+   "id": "yageo-mfr-25fbf52-60k4",
+   "key": "yageo-mfr-25fbf52-60k4",
+   "qty": 2,
+   "for": "el_r_60k4",
+   "part_number": "MFR-25FBF52-60K4",
+   "vendor": "Yageo",
+   "url": "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-60K4",
+   "price_usd_each": 0.1,
+   "mass_g_each": null,
+   "note": null,
+   "pack_qty": null,
+   "sellers": [
+    {
+     "seller": "Mouser",
+     "url": "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-60K4",
+     "seller_pn": "603-MFR-25FBF52-60K4",
+     "price_usd": 0.1,
+     "pack_qty": 1,
+     "in_stock": true,
+     "stock": 12929,
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "Digi-Key",
+     "url": "https://www.digikey.com/en/products/detail/yageo/MFR-25FBF52-60K4/13430",
+     "seller_pn": "60.4KXBK-ND",
+     "price_usd": null,
+     "pack_qty": 1,
+     "in_stock": null,
+     "stock": null,
+     "read_on": "2026-10-27"
+    }
+   ],
+   "media_key": "yageo-mfr-25fbf52-60k4",
+   "thumb": null,
+   "thumb_from": null,
+   "alternates": []
+  },
+  {
+   "item": "Resistor 63.4 k 1 % 1/4 W metal film (Yageo MFR-25FBF52)",
+   "id": "yageo-mfr-25fbf52-63k4",
+   "key": "yageo-mfr-25fbf52-63k4",
+   "qty": 2,
+   "for": "el_r_63k4",
+   "part_number": "MFR-25FBF52-63K4",
+   "vendor": "Yageo",
+   "url": "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-63K4",
+   "price_usd_each": 0.1,
+   "mass_g_each": null,
+   "note": null,
+   "pack_qty": null,
+   "sellers": [
+    {
+     "seller": "Mouser",
+     "url": "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-63K4",
+     "seller_pn": "603-MFR-25FBF52-63K4",
+     "price_usd": 0.1,
+     "pack_qty": 1,
+     "in_stock": true,
+     "stock": 8863,
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "Digi-Key",
+     "url": "https://www.digikey.com/en/products/result?keywords=MFR-25FBF52-63K4",
+     "seller_pn": null,
+     "price_usd": null,
+     "pack_qty": 1,
+     "in_stock": null,
+     "stock": null,
+     "read_on": "2026-10-27"
+    }
+   ],
+   "media_key": "yageo-mfr-25fbf52-63k4",
+   "thumb": null,
+   "thumb_from": null,
+   "alternates": []
+  },
+  {
+   "item": "Resistor 66.5 k 1 % 1/4 W metal film (Yageo MFR-25FBF52)",
+   "id": "yageo-mfr-25fbf52-66k5",
+   "key": "yageo-mfr-25fbf52-66k5",
+   "qty": 2,
+   "for": "el_r_66k5",
+   "part_number": "MFR-25FBF52-66K5",
+   "vendor": "Yageo",
+   "url": "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-66K5",
+   "price_usd_each": 0.1,
+   "mass_g_each": null,
+   "note": null,
+   "pack_qty": null,
+   "sellers": [
+    {
+     "seller": "Mouser",
+     "url": "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-66K5",
+     "seller_pn": "603-MFR-25FBF52-66K5",
+     "price_usd": 0.1,
+     "pack_qty": 1,
+     "in_stock": true,
+     "stock": 19592,
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "Digi-Key",
+     "url": "https://www.digikey.com/product-detail/en/yageo/MFR-25FBF52-66K5/66.5KXBK-ND/13437",
+     "seller_pn": "66.5KXBK-ND",
+     "price_usd": null,
+     "pack_qty": 1,
+     "in_stock": null,
+     "stock": null,
+     "read_on": "2026-10-27"
+    }
+   ],
+   "media_key": "yageo-mfr-25fbf52-66k5",
+   "thumb": null,
+   "thumb_from": null,
+   "alternates": []
+  },
+  {
+   "item": "Resistor 69.8 k 1 % 1/4 W metal film (Yageo MFR-25FBF52)",
+   "id": "yageo-mfr-25fbf52-69k8",
+   "key": "yageo-mfr-25fbf52-69k8",
+   "qty": 2,
+   "for": "el_r_69k8",
+   "part_number": "MFR-25FBF52-69K8",
+   "vendor": "Yageo",
+   "url": "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-69K8",
+   "price_usd_each": 0.1,
+   "mass_g_each": null,
+   "note": null,
+   "pack_qty": null,
+   "sellers": [
+    {
+     "seller": "Mouser",
+     "url": "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-69K8",
+     "seller_pn": "603-MFR-25FBF52-69K8",
+     "price_usd": 0.1,
+     "pack_qty": 1,
+     "in_stock": true,
+     "stock": 14226,
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "Digi-Key",
+     "url": "https://www.digikey.com/en/products/detail/yageo/MFR-25FBF52-69K8/13442",
+     "seller_pn": "13-MFR-25FBF52-69K8-ND",
+     "price_usd": null,
+     "pack_qty": 1,
+     "in_stock": null,
+     "stock": null,
+     "read_on": "2026-10-27"
+    }
+   ],
+   "media_key": "yageo-mfr-25fbf52-69k8",
+   "thumb": null,
+   "thumb_from": null,
+   "alternates": []
+  },
+  {
+   "item": "Resistor 6.8 k 1 % 1/4 W metal film (Yageo MFR-25FBF52)",
+   "id": "yageo-mfr-25fbf52-6k8",
+   "key": "yageo-mfr-25fbf52-6k8",
+   "qty": 4,
+   "for": "el_r_6k8",
+   "part_number": "MFR-25FBF52-6K8",
+   "vendor": "Yageo",
+   "url": "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-6K8",
+   "price_usd_each": 0.1,
+   "mass_g_each": null,
+   "note": null,
+   "pack_qty": null,
+   "sellers": [
+    {
+     "seller": "Mouser",
+     "url": "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-6K8",
+     "seller_pn": "603-MFR-25FBF52-6K8",
+     "price_usd": 0.1,
+     "pack_qty": 1,
+     "in_stock": true,
+     "stock": 12179,
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "Digi-Key",
+     "url": "https://www.digikey.com/en/products/detail/yageo/MFR-25FRF52-6K8/MFR-25FRF52-6K8-ND/9139107",
+     "seller_pn": "13-MFR-25FRF52-6K8CT-ND",
+     "price_usd": 0.1,
+     "pack_qty": 1,
+     "in_stock": null,
+     "stock": null,
+     "read_on": "2026-10-27"
+    }
+   ],
+   "media_key": "yageo-mfr-25fbf52-6k8",
+   "thumb": null,
+   "thumb_from": null,
+   "alternates": []
+  },
+  {
+   "item": "Resistor 73.2 k 1 % 1/4 W metal film (Yageo MFR-25FBF52)",
+   "id": "yageo-mfr-25fbf52-73k2",
+   "key": "yageo-mfr-25fbf52-73k2",
+   "qty": 2,
+   "for": "el_r_73k2",
+   "part_number": "MFR-25FBF52-73K2",
+   "vendor": "Yageo",
+   "url": "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-73K2",
+   "price_usd_each": 0.1,
+   "mass_g_each": null,
+   "note": null,
+   "pack_qty": null,
+   "sellers": [
+    {
+     "seller": "Mouser",
+     "url": "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-73K2",
+     "seller_pn": "603-MFR-25FBF52-73K2",
+     "price_usd": 0.1,
+     "pack_qty": 1,
+     "in_stock": true,
+     "stock": 8644,
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "Digi-Key",
+     "url": "https://www.digikey.com/en/products/detail/yageo/MFR-25FBF52-73K2/13447",
+     "seller_pn": "13-MFR-25FBF52-73K2-ND",
+     "price_usd": null,
+     "pack_qty": 1,
+     "in_stock": null,
+     "stock": null,
+     "read_on": "2026-10-27"
+    }
+   ],
+   "media_key": "yageo-mfr-25fbf52-73k2",
+   "thumb": null,
+   "thumb_from": null,
+   "alternates": []
+  },
+  {
+   "item": "Resistor 91 k 1 % 1/4 W metal film (Yageo MFR-25FBF52)",
+   "id": "yageo-mfr-25fbf52-91k",
+   "key": "yageo-mfr-25fbf52-91k",
+   "qty": 2,
+   "for": "el_r_91k",
+   "part_number": "MFR-25FBF52-91K",
+   "vendor": "Yageo",
+   "url": "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-91K",
+   "price_usd_each": 0.1,
+   "mass_g_each": null,
+   "note": null,
+   "pack_qty": null,
+   "sellers": [
+    {
+     "seller": "Mouser",
+     "url": "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-91K",
+     "seller_pn": "603-MFR-25FBF52-91K",
+     "price_usd": 0.1,
+     "pack_qty": 1,
+     "in_stock": true,
+     "stock": 13902,
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "Digi-Key",
+     "url": "https://www.digikey.com/en/products/result?keywords=MFR-25FBF52-91K",
+     "seller_pn": null,
+     "price_usd": null,
+     "pack_qty": 1,
+     "in_stock": null,
+     "stock": null,
+     "read_on": "2026-10-27"
+    }
+   ],
+   "media_key": "yageo-mfr-25fbf52-91k",
+   "thumb": null,
+   "thumb_from": null,
+   "alternates": []
+  },
+  {
+   "item": "Resistor 2.2k 1 W 5 % metal oxide (RSF100)",
+   "id": "yageo-rsf100jb-73-2k2",
+   "key": "yageo-rsf100jb-73-2k2",
+   "qty": 3,
+   "for": "el_r_2k2_1w",
+   "part_number": "RSF100JB-73-2K2",
+   "vendor": "Yageo",
+   "url": "https://www.mouser.com/ProductDetail/603-RSF100JB-73-2K2",
+   "price_usd_each": 0.2,
+   "mass_g_each": null,
+   "note": null,
+   "pack_qty": null,
+   "sellers": [
+    {
+     "seller": "Mouser",
+     "url": "https://www.mouser.com/ProductDetail/603-RSF100JB-73-2K2",
+     "seller_pn": "603-RSF100JB-73-2K2",
+     "price_usd": 0.2,
+     "pack_qty": 1,
+     "in_stock": true,
+     "stock": 9082,
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "Digi-Key",
+     "url": "https://www.digikey.com/product-detail/en/yageo/RSF100JB-73-2K2/2.2KW-1-ND/18091",
+     "seller_pn": "2.2KW-1-ND",
+     "price_usd": null,
+     "pack_qty": 1,
+     "in_stock": null,
+     "stock": null,
+     "read_on": "2026-10-27"
+    }
+   ],
+   "media_key": "yageo-rsf100jb-73-2k2",
    "thumb": null,
    "thumb_from": null,
    "alternates": []
@@ -5776,7 +6496,7 @@
   "CT connector pair (Micro-Fit 3.0 class)": 12
  },
  "price_usd_known": {
-  "turret": 692.5,
+  "turret": 705.97,
   "bench_stand": 362.5,
   "tools": 255.73
  },

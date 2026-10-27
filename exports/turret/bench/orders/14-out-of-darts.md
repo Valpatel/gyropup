@@ -1,7 +1,5 @@
 # Order 14: Out of Darts
 
-
-
 1 lines, **$44.97** before shipping and tax (whole packs). Prices as the catalogue read them (the date is per line in `catalog/*.json`); check the cart against this sheet. Each line has a backup seller in the last column.
 
 | # | Part | Seller part no. | For | Need | Buy | Each | Line | Backup |
