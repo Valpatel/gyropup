@@ -309,14 +309,14 @@ def deck_cases(record, mesh, want):
     ris = parts['riser'].shape
     lid = bp.lidar()
     pad = bf.cyl_z(lid['d'] / 2 - 2.0, bp.TOP, bp.TOP + LOAD_PAD_T, lid['x'], 0.0)     # the lidar's foot: where a hand's push lands
-    model = deck.union(ris).union(pad).clean()
     zd = bp.TOP - bp.STOCK[bp.DECK]['t']
-    posts = any_of(*[in_box((x - bp.POST_W / 2 - 0.5, y - bp.POST_W / 2 - 0.5, zd - 0.1), (x + bp.POST_W / 2 + 0.5, y + bp.POST_W / 2 + 0.5, zd + 0.1))
-                     for x, y in bp.POSTS])
-    lid = bp.lidar()
+    for x, y in bp.POSTS:              # the posts' tops as 1 mm pads under the deck: their undersides are the supports
+        pad = pad.union(bf.box(x - bp.POST_W / 2, x + bp.POST_W / 2, y - bp.POST_W / 2, y + bp.POST_W / 2, zd - LOAD_PAD_T, zd))
+    model = deck.union(ris).union(pad).clean()
 
     def post_faces(f):
-        return f.kind == 'Plane' and abs(f.bbox[2] - zd) < 0.05 and abs(f.bbox[5] - zd) < 0.05 and posts(f)
+        return (f.kind == 'Plane' and abs(f.bbox[2] - (zd - LOAD_PAD_T)) < 0.05 and abs(f.bbox[5] - (zd - LOAD_PAD_T)) < 0.05
+                and any(abs(f.center[0] - x) < bp.POST_W and abs(f.center[1] - y) < bp.POST_W for x, y in bp.POSTS))
     if want('D1'):
         for tag, (x, y, r) in (('front', (lid['x'], 0.0, 30.0)), ('riser', (t['pan_x'], 0.0, 50.0))):
             st = Study(model, AL5052, mesh_mm=mesh, name=f'deck D1 {tag}')
@@ -335,9 +335,7 @@ def deck_cases(record, mesh, want):
         st = Study(model, AL5052, mesh_mm=mesh, name='deck D2 turret fall')
         st.fix(post_faces)
         tm_face = lambda f: f.kind == 'Plane' and abs(f.bbox[2] - (bp.TOP + bp.RISER_H)) < 0.05 and abs(f.bbox[5] - (bp.TOP + bp.RISER_H)) < 0.05
-        tj = json.loads((R / 'exports/turret/turret.json').read_text())
-        m = tj['mass_g_with_balls'] / 1000
-        hcom = tj['info']['com'][2] - tj['info']['mount']['point'][2]
+        m, hcom = t['mass_kg'], t['com_above_face_mm']      # the head budget (1.70 kg, 100 mm), or the turret's mount.json
         F = 30 * G * m
         Gc = force_at(st, tm_face, (F * 0.7071, 0.0, -F * 0.7071), (t['pan_x'], 0.0, bp.TOP + bp.RISER_H + hcom))
         record('D2-turret-fall', st, True, f'a 30 g fall of the {m:.2f} kg turret at 45 deg, its centre {hcom:.0f} mm above the TM face', view=(30, -50))
@@ -359,9 +357,7 @@ def tray_case(record, mesh):
     rail, the deck, lidar and turret through the four deck posts."""
     import body_layout as bl
     parts = bf.frame_parts()
-    st = Study(parts['floor_tray'].shape, AL5052, mesh_mm=mesh, name='tray T1')
     zt = bf.ZT
-    st.fix(any_of(*[cylinder_at((x, sy * bf.PEM_Y, zt), (0, 0, 1), radius_max=3.0, tol=0.6) for x in bf.FLANGE_NUT_X for sy in (1, -1)]))
     top = bp.z_tray_top()
     n_g = body_g()
     L = bl.layout()
@@ -375,15 +371,18 @@ def tray_case(record, mesh):
                 ('power skid', skid, [(x, y, bf.PLATE_POST_W / 2) for x, y in bf.PLATE_STANDOFFS]),
                 ('deck, lidar, turret', deck, [(x, y, bp.POST_W / 2) for x, y in bp.POSTS])]
     d = next(i for i in L['items'] if i.name == 'ddr120c_24')
-    supports.append(('DDR-120C-24', d.mass_g, [((d.box[0] + d.box[1]) / 2, (d.box[2] + d.box[3]) / 2, 17.5)]))
+    supports.append(('DDR-120C-24', d.mass_g, [((d.box[0] + d.box[1]) / 2, (d.box[2] + d.box[3]) / 2, 12.0)]))
+    model = parts['floor_tray'].shape                  # each support as a 1 mm pad on the tray: its top face takes the load
+    for _, _, pts in supports:
+        for (x, y, r) in pts:
+            model = model.union(bf.cyl_z(r, top, top + LOAD_PAD_T, x, y))
+    st = Study(model.clean(), AL5052, mesh_mm=mesh, name='tray T1')
+    st.fix(any_of(*[cylinder_at((x, sy * bf.PEM_Y, zt), (0, 0, 1), radius_max=3.0, tol=0.6) for x in bf.FLANGE_NUT_X for sy in (1, -1)]))
     for name, g, pts in supports:
         for (x, y, r) in pts:
-            sel = lambda f, x=x, y=y, r=r: (f.kind == 'Plane' and abs(f.bbox[5] - top) < 0.05 and abs(f.bbox[2] - top) < 0.05
-                                            and abs(f.center[0] - x) <= r + 6 and abs(f.center[1] - y) <= r + 6)
-            try:
-                st.force(sel, (0.0, 0.0, -n_g * G * g / 1000.0 / len(pts)), probe=False)
-            except ValueError:
-                continue
+            sel = lambda f, x=x, y=y, r=r: (f.kind == 'Plane' and abs(f.bbox[5] - (top + LOAD_PAD_T)) < 0.05 and abs(f.bbox[2] - (top + LOAD_PAD_T)) < 0.05
+                                            and math.hypot(f.center[0] - x, f.center[1] - y) < r)
+            st.force(sel, (0.0, 0.0, -n_g * G * g / 1000.0 / len(pts)), probe=False)
     record('T1-tray', st, True, f'what stands on the floor tray at {n_g} g (the body\'s landing peak from the rig): the compute '
            f'{compute / 1000:.2f} kg on its isolators, the power skid {skid / 1000:.2f} kg on its posts, the deck with the lidar and '
            f'turret {deck / 1000:.2f} kg on the deck posts, the DDR-120C; the tray held by its screws', view=(30, -50))

@@ -252,11 +252,14 @@ def layout(cell=None):
                       'vectornav-vn-100-rugged', 'VN-100 Rugged on 2 x M3 + 2 dowels in the tray; its connector faces +x', (0.8, 0.2, 0.2)))
     # ---------------- the lidar's interface box behind the cooler (the G48R's fins blow out at +-y and its fan draws from
     # the deck, so the strip behind its heat pipes' bends is the free one), its cable coiled flat under the deck beside it
-    items.append(Item('lidar_box', (-157.0, -122.0, -80.0, 5.0, zt + 45.0, zd - 2.0), 120.0, 'estimate (Polycase LP-41 class, plan 90 g + gland)',
-                      'compute', 'P1', '', 'VLP-16 interface box standing on edge on a printed bracket behind the cooler; RJ45 '
-                      'down to the J501 1GbE on the carrier\'s right edge', (0.3, 0.3, 0.33)))
-    items.append(Item('lidar_coil', (-157.0, -122.0, 12.0, 95.0, zd - 16.0, zd - 2.0), 230.0, 'estimate (3 m of the VLP-16 cable)', 'compute', 'P1', '',
-                      'the VLP-16\'s 3 m cable, coiled flat under the deck behind the cooler', (0.3, 0.3, 0.33)))
+    items.append(Item('lidar_box', (-157.0, -122.0, 10.0, 95.0, zt + 53.0, zd - 2.0), 120.0, 'estimate (Polycase LP-41 class, plan 90 g + gland)',
+                      'compute', 'P1', '', 'VLP-16 interface box standing on edge on a printed bracket behind the cooler, left; RJ45 '
+                      'over the carrier to its 1GbE on the right edge', (0.3, 0.3, 0.33)))
+    items.append(Item('lidar_coil', (-157.0, -122.0, -48.0, 5.0, zd - 16.0, zd - 2.0), 230.0, 'estimate (3 m of the VLP-16 cable)', 'compute', 'P1', '',
+                      'the VLP-16\'s 3 m cable, coiled flat under the deck behind the cooler, clear of the turret harness\'s drop', (0.3, 0.3, 0.33)))
+    gx, gy = bp.TURRET_GROMMET
+    items.append(Item('turret_harness_drop', (gx - 12.0, gx + 12.0, gy - 12.0, gy + 12.0, zt + 45.0, zd), 0, '', 'deck', keepout=True,
+                      owner='turret', note='the turret\'s 300 mm pigtail down through its grommet (docs/turret-next-plan.md 3.1)'))
     # ---------------- the deck: lidar, riser, turret (P2), harness passes
     lid = bp.lidar()
     t = bp.tm()
@@ -264,10 +267,10 @@ def layout(cell=None):
                       'catalogue (830 g without cable)', 'deck', 'P1', 'velodyne-vlp-16', 'VLP-16 on the deck', (0.17, 0.18, 0.2),
                       cyl=(lid['x'], 0.0, lid['d'] / 2)))
     tj = json.loads((R / 'exports/turret/turret.json').read_text())
-    tm = tj['mass_g_with_balls']
-    tz = tj['info']['com'][2] - tj['info']['mount']['point'][2]
-    items.append(Item('turret', (t['pan_x'] - t['bumper_r'], t['pan_x'] + t['bumper_r'], -t['bumper_r'], t['bumper_r'], t['face_z'], t['face_z'] + 2 * tz),
-                      tm, 'CAD (exports/turret/turret.json, with 30 balls)', 'deck', 'P2', '', 'the foam-ball turret on the riser (P1: a 1.5 kg dummy)',
+    hz = t['com_above_face_mm']                       # the head budget: 1.70 kg with its centre 100 mm above the TM face
+    items.append(Item('turret', (t['pan_x'] - t['bumper_r'], t['pan_x'] + t['bumper_r'], -t['bumper_r'], t['bumper_r'], t['face_z'], t['face_z'] + 2 * hz),
+                      1000.0 * t['mass_kg'], f"budget {t['mass_kg']} kg (turret.json: {tj['mass_g_with_balls'] / 1000:.3f} kg with 30 balls); "
+                      + t['mass_basis'], 'deck', 'P2', '', 'the foam-ball turret on the riser (P1: a dummy of the budget mass)',
                       (0.55, 0.57, 0.6), cyl=(t['pan_x'], 0.0, t['bumper_r'])))
     # ---------------- the battery in the belly
     b = bb.brick(cell)
@@ -328,7 +331,7 @@ def mounts_for(items, B):
             D.append((x, y, 4.5, f'{what}, M4 from above'))
     lid = bp.lidar()
     D.append((lid['x'] - 30.0, 88.0, 28.0, 'VLP-16 cable pass: split printed grommet'))
-    D.append((-108.0, 78.0, 16.0, 'turret harness grommet (DT06 plug on a 300 mm pigtail)'))
+    D.append((bp.TURRET_GROMMET[0], bp.TURRET_GROMMET[1], 17.5, 'turret harness grommet, right rear (the DT12 plug is on the turret\'s right)'))
     # ---- power plate
     for name in ('plate_vesc_r', 'plate_vesc_l'):
         for x, y in vesc_holes(_get(items, name)):

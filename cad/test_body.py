@@ -198,6 +198,18 @@ def test_body_loads_from_the_mount_plane():
         assert abs(b['peak_vertical_n'] - b['peak_vertical_check_ballast_n']) < 0.05 * b['peak_vertical_n'] + 10, b
 
 
+def test_lidar_ahead_of_the_pan_axis_by_143():
+    """The turret's depression table is computed for the lidar's axis 143 mm ahead of the pan axis
+    (docs/turret-next-plan.md 3.1): the body keeps that number."""
+    assert abs(bp.lidar()['x'] - bp.tm()['pan_x'] - 143.0) < 1e-6
+
+
+def test_turret_grommet_on_the_right_rear():
+    """The turret's DT12 plug is on its right (-y): its pigtail drops through the deck at the right rear."""
+    x, y = bp.TURRET_GROMMET
+    assert x < bp.tm()['pan_x'] and y < 0
+
+
 if __name__ == '__main__':
     import pytest
     sys.exit(pytest.main([__file__, '-q', '-s']))

@@ -1,0 +1,464 @@
+{
+ "pack": {
+  "cells": "13S2P Molicel INR-18650-P30B (26 cells)",
+  "v_nom": 48.1,
+  "v_full": 53.3,
+  "v_full_per_cell": 4.1,
+  "v_empty": 39.0,
+  "ah": 6.0,
+  "wh_at_4v10": 256,
+  "peak_a": 80,
+  "cont_a": 72,
+  "bms": "Daly K 13S 100 A, BT + UART, common port (B-/P-)",
+  "bms_settings": {
+   "cell_ovp_v": 4.15,
+   "cell_ovp_release_v": 4.1,
+   "cell_uvp_v": 3.0,
+   "cell_uvp_release_v": 3.2,
+   "charge_ocp_a": 6,
+   "discharge_ocp_a": 100,
+   "charge_temp_c": [
+    0,
+    45
+   ],
+   "discharge_temp_c": [
+    -10,
+    60
+   ],
+   "balance_start_v": 3.9,
+   "balance_delta_mv": 15
+  }
+ },
+ "wires": [
+  {
+   "id": "W1",
+   "from": "pack B+ (group 13 +)",
+   "to": "XT90-S female (pack lead)",
+   "awg": 8,
+   "colour": "red",
+   "termination": "XT90-S solder cup",
+   "fuse": "MRBF 80 A (on the robot side)",
+   "why": "80 A pulses, 72 A cells"
+  },
+  {
+   "id": "W2",
+   "from": "BMS P-",
+   "to": "XT90-S female (pack lead)",
+   "awg": 8,
+   "colour": "black",
+   "termination": "XT90-S solder cup",
+   "fuse": "-",
+   "why": "the BMS switches the negative"
+  },
+  {
+   "id": "W3",
+   "from": "XT90-S male (robot)",
+   "to": "MRBF block, battery stud (M8)",
+   "awg": 8,
+   "colour": "red",
+   "termination": "lug M8",
+   "fuse": "-",
+   "why": "unfused until the MRBF: keep it short (<150 mm)"
+  },
+  {
+   "id": "W4",
+   "from": "MRBF block, load stud (M8)",
+   "to": "+ bus bar, tap 1 (M6)",
+   "awg": 8,
+   "colour": "red",
+   "termination": "lugs M8 / M6",
+   "fuse": "MRBF 80 A",
+   "why": "the whole robot"
+  },
+  {
+   "id": "W5",
+   "from": "XT90-S male (robot)",
+   "to": "shunt, battery side (M8)",
+   "awg": 8,
+   "colour": "black",
+   "termination": "lug M8",
+   "fuse": "-",
+   "why": "the battery negative"
+  },
+  {
+   "id": "W6",
+   "from": "shunt, load side (M8)",
+   "to": "main switch IN- (B-)",
+   "awg": 8,
+   "colour": "black",
+   "termination": "ferrule / its lead",
+   "fuse": "-",
+   "why": "Flipsky draws the switch on the negative: check its card"
+  },
+  {
+   "id": "W7",
+   "from": "main switch OUT- (P-)",
+   "to": "- bus bar, tap 1 (M6)",
+   "awg": 8,
+   "colour": "black",
+   "termination": "lug M6",
+   "fuse": "-",
+   "why": "the switched negative: everything below is off with it"
+  },
+  {
+   "id": "W8",
+   "from": "charge port XT60H-F +",
+   "to": "MRBF block, battery stud (M8)",
+   "awg": 18,
+   "colour": "red",
+   "termination": "XT60 / lug M8",
+   "fuse": "MINI 58V 10 A (inline, at the stud)",
+   "why": "charger 2-3 A; the fuse guards the lead against a pack short"
+  },
+  {
+   "id": "W9",
+   "from": "charge port XT60H-F -",
+   "to": "shunt, load side (M8)",
+   "awg": 18,
+   "colour": "black",
+   "termination": "XT60 / lug M8",
+   "fuse": "-",
+   "why": "after the shunt (it counts the charge), before the switch (the robot can be off)"
+  },
+  {
+   "id": "W10",
+   "from": "+ bus tap 2",
+   "to": "RS-04 left front (XT60H)",
+   "awg": 14,
+   "colour": "red",
+   "termination": "lug M6 / XT60H-M",
+   "fuse": "MINI 58V 20 A",
+   "why": "~12 A at a jump, 25 A peaks: 14 AWG silicone"
+  },
+  {
+   "id": "W11",
+   "from": "+ bus tap 2",
+   "to": "RS-04 left rear (XT60H)",
+   "awg": 14,
+   "colour": "red",
+   "termination": "lug M6 / XT60H-M",
+   "fuse": "MINI 58V 20 A",
+   "why": "as W10 (two lugs share the tap)"
+  },
+  {
+   "id": "W12",
+   "from": "+ bus tap 3",
+   "to": "RS-04 right front (XT60H)",
+   "awg": 14,
+   "colour": "red",
+   "termination": "lug M6 / XT60H-M",
+   "fuse": "MINI 58V 20 A",
+   "why": "as W10"
+  },
+  {
+   "id": "W13",
+   "from": "+ bus tap 3",
+   "to": "RS-04 right rear (XT60H)",
+   "awg": 14,
+   "colour": "red",
+   "termination": "lug M6 / XT60H-M",
+   "fuse": "MINI 58V 20 A",
+   "why": "as W10"
+  },
+  {
+   "id": "W14",
+   "from": "+ bus tap 4",
+   "to": "VESC left (Flipsky 75100) +",
+   "awg": 12,
+   "colour": "red",
+   "termination": "lug M6 / XT60H-M",
+   "fuse": "MINI 58V 30 A",
+   "why": "the wheel: firmware limits it to 25 A"
+  },
+  {
+   "id": "W15",
+   "from": "+ bus tap 4",
+   "to": "VESC right +",
+   "awg": 12,
+   "colour": "red",
+   "termination": "lug M6 / XT60H-M",
+   "fuse": "MINI 58V 30 A",
+   "why": "as W14"
+  },
+  {
+   "id": "W16",
+   "from": "+ bus tap 5",
+   "to": "DDR-120C-24 Vin+",
+   "awg": 18,
+   "colour": "red",
+   "termination": "lug M6 / ferrule",
+   "fuse": "MINI 58V 10 A",
+   "why": "120 W out: 3.3 A in at 40 V, plus its inrush"
+  },
+  {
+   "id": "W17",
+   "from": "+ bus tap 5",
+   "to": "DDR-60L-12 Vin+",
+   "awg": 18,
+   "colour": "red",
+   "termination": "lug M6 / ferrule",
+   "fuse": "MINI 58V 5 A",
+   "why": "60 W out: 1.7 A in at 40 V"
+  },
+  {
+   "id": "W18",
+   "from": "- bus taps 2-3",
+   "to": "RS-04 x 4 (XT60H)",
+   "awg": 14,
+   "colour": "black",
+   "termination": "lug M6 / XT60H-M",
+   "fuse": "-",
+   "why": "returns, one per motor"
+  },
+  {
+   "id": "W19",
+   "from": "- bus tap 4",
+   "to": "VESC left, right -",
+   "awg": 12,
+   "colour": "black",
+   "termination": "lug M6 / XT60H-M",
+   "fuse": "-",
+   "why": "returns"
+  },
+  {
+   "id": "W20",
+   "from": "- bus tap 5",
+   "to": "DDR-120C-24 Vin-, DDR-60L-12 Vin-",
+   "awg": 18,
+   "colour": "black",
+   "termination": "lug M6 / ferrule",
+   "fuse": "-",
+   "why": "returns"
+  },
+  {
+   "id": "W21",
+   "from": "DDR-120C-24 +V",
+   "to": "J501 DC-IN (XT30)",
+   "awg": 18,
+   "colour": "red",
+   "termination": "ferrule / XT30-M",
+   "fuse": "MINI 5 A",
+   "why": "the J501: 60 W peak, 2.5 A"
+  },
+  {
+   "id": "W22",
+   "from": "DDR-120C-24 +V",
+   "to": "stop relay, pole B (in)",
+   "awg": 18,
+   "colour": "red",
+   "termination": "ferrule / screw terminal",
+   "fuse": "MINI 5 A",
+   "why": "the turret's branch: 60 W peaks (its own fuse stays in the turret too)"
+  },
+  {
+   "id": "W23",
+   "from": "DDR-120C-24 -V",
+   "to": "J501 and turret returns; star point",
+   "awg": 18,
+   "colour": "black",
+   "termination": "ferrule / XT30-M",
+   "fuse": "-",
+   "why": "one tie from -V to the - bus (the CAN reference)"
+  },
+  {
+   "id": "W24",
+   "from": "DDR-60L-12 +V",
+   "to": "lidar interface box (XT30)",
+   "awg": 18,
+   "colour": "red",
+   "termination": "ferrule / XT30-M",
+   "fuse": "(the converter's 5 A limit)",
+   "why": "VLP-16: 8 W, 3 A at spin-up"
+  },
+  {
+   "id": "W25",
+   "from": "DDR-60L-12 +V",
+   "to": "5 V buck VIN (Pololu D36V28F5)",
+   "awg": 22,
+   "colour": "red",
+   "termination": "ferrule / solder",
+   "fuse": "(the converter's 5 A limit)",
+   "why": "~0.6 A at 12 V"
+  },
+  {
+   "id": "W26",
+   "from": "DDR-60L-12 +V",
+   "to": "radio-stop jack pin 3 (+12 V)",
+   "awg": 22,
+   "colour": "red",
+   "termination": "ferrule / jack",
+   "fuse": "(the converter's 5 A limit)",
+   "why": "D37: the jack offers 12 V"
+  },
+  {
+   "id": "W27",
+   "from": "DDR-60L-12 -V",
+   "to": "lidar box, buck, jack GND; star point",
+   "awg": 18,
+   "colour": "black",
+   "termination": "ferrule",
+   "fuse": "-",
+   "why": "one tie to the - bus"
+  },
+  {
+   "id": "W28",
+   "from": "5 V buck VOUT",
+   "to": "Nucleo E5V, 4 CAN Pal, QT Py 5V, VN-100, radio receiver",
+   "awg": 22,
+   "colour": "red",
+   "termination": "solder / GH",
+   "fuse": "(the buck's 3.2 A limit)",
+   "why": "~1 A in all"
+  },
+  {
+   "id": "W29",
+   "from": "5 V buck GND",
+   "to": "the same, GND",
+   "awg": 22,
+   "colour": "black",
+   "termination": "solder / GH",
+   "fuse": "-",
+   "why": ""
+  },
+  {
+   "id": "W30",
+   "from": "shunt sense + (battery side screw)",
+   "to": "INA228 IN+",
+   "awg": 22,
+   "colour": "white",
+   "termination": "ring / screw terminal",
+   "fuse": "-",
+   "why": "Kelvin pair, twisted, away from the 10 AWG"
+  },
+  {
+   "id": "W31",
+   "from": "shunt sense - (load side screw)",
+   "to": "INA228 IN-",
+   "awg": 22,
+   "colour": "white",
+   "termination": "ring / screw terminal",
+   "fuse": "-",
+   "why": "the INA228's own 15 mOhm shunt is removed"
+  },
+  {
+   "id": "W32",
+   "from": "+ bus (via the DDR-60L tap)",
+   "to": "INA228 VBUS",
+   "awg": 22,
+   "colour": "red",
+   "termination": "ring",
+   "fuse": "MINI 58V 5 A (shared with W17)",
+   "why": "pack voltage, 85 V input"
+  },
+  {
+   "id": "W33",
+   "from": "frame (a tray PEM stud)",
+   "to": "- bus star point",
+   "awg": 18,
+   "colour": "green",
+   "termination": "ring M5 / lug M6",
+   "fuse": "-",
+   "why": "a + short to the frame blows a fuse, not leaves it live"
+  },
+  {
+   "id": "W34",
+   "from": "stop relay, pole B (out)",
+   "to": "DT06-12SA pins 1, 2",
+   "awg": 18,
+   "colour": "red",
+   "termination": "size-16 sockets",
+   "fuse": "MINI 5 A (W22)",
+   "why": "two pins in parallel, as the turret asks; dead whenever the stop relay is open"
+  },
+  {
+   "id": "W35",
+   "from": "W23 (24 V return)",
+   "to": "DT06-12SA pins 3, 4",
+   "awg": 18,
+   "colour": "black",
+   "termination": "size-16 sockets",
+   "fuse": "-",
+   "why": ""
+  },
+  {
+   "id": "W36",
+   "from": "J501 can1 (H, L)",
+   "to": "DT06-12SA pins 5, 6",
+   "awg": 22,
+   "colour": "white",
+   "termination": "twisted pair, size-16 sockets",
+   "fuse": "-",
+   "why": "the turret terminates its end; the J501 its own"
+  },
+  {
+   "id": "W37",
+   "from": "stop relay, pole A (closed = run)",
+   "to": "DT12 pins 7, 8 (SAFETY_A, SAFETY_B)",
+   "awg": 22,
+   "colour": "white",
+   "termination": "twisted pair",
+   "fuse": "-",
+   "why": "the turret's dry safety loop (12 V at 2 mA; D41 D7: it cuts the flywheels and the dial in hardware)"
+  },
+  {
+   "id": "W38",
+   "from": "stop relay coil, + side",
+   "to": "MCU STOP sense (divider 12 V to 3.3 V)",
+   "awg": 22,
+   "colour": "white",
+   "termination": "GH",
+   "fuse": "-",
+   "why": "12 V on the coil = the radio says run: the MCU sits the robot down when it drops (D37)"
+  },
+  {
+   "id": "W39",
+   "from": "12 V rail via the RC switch's contact",
+   "to": "stop relay coil, + side",
+   "awg": 22,
+   "colour": "red",
+   "termination": "solder / screw terminal",
+   "fuse": "(the converter's 5 A limit)",
+   "why": "the coil (12 V, 33 mA) is fed only while the radio says run; its - side through the MCU's MOSFET (MCU_RUN), a diode across it"
+  }
+ ],
+ "can": [
+  {
+   "bus": "A",
+   "master": "MCU FDCAN1 (CAN Pal 1, 120 Ohm on)",
+   "nodes": [
+    "RS-04 left front",
+    "RS-04 left rear (120 Ohm at its plug)"
+   ],
+   "note": "1 Mbit/s, the left leg"
+  },
+  {
+   "bus": "B",
+   "master": "MCU FDCAN2 (CAN Pal 2, 120 Ohm on)",
+   "nodes": [
+    "RS-04 right front",
+    "RS-04 right rear (120 Ohm at its plug)"
+   ],
+   "note": "1 Mbit/s, the right leg"
+  },
+  {
+   "bus": "C",
+   "master": "MCU FDCAN3 (CAN Pal 3, 120 Ohm on)",
+   "nodes": [
+    "VESC left",
+    "VESC right",
+    "QT Py ESP32-S3 (CAN Pal 4, off): the BMS over Bluetooth",
+    "J501 can0 (its own 120 Ohm on)"
+   ],
+   "note": "1 Mbit/s: wheels, battery, the computer"
+  },
+  {
+   "bus": "T",
+   "master": "J501 can1",
+   "nodes": [
+    "the turret (its own bus)"
+   ],
+   "note": "the turret workstream's"
+  }
+ ],
+ "stop": "The radio stop (D37, D48): the ER3C-i receiver (failsafe: no pulses) drives one Pololu RC relay switch; its contact feeds the coil of the stop relay (Omron G2RL-2, DPDT, 12 V), whose other end goes to ground through the MCU's MOSFET. The relay holds only while the radio says run AND the MCU says run. Pole A is the turret's dry safety loop (TM pins 7, 8: the turret cuts its flywheels and dial in 20 ms), pole B is in the turret's 24 V branch (the independent cut); the MCU senses the coil voltage and sits the robot down when the radio drops, and opens the relay itself when the robot sits. The main switch is the hard off."
+}

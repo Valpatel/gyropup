@@ -225,7 +225,8 @@ def build():
             L('can_pal', 4, 'CAN transceivers: three for the MCU\'s buses A, B, C, one for the QT Py on bus C'),
             L('qtpy_esp32s3', 1, 'reads the BMS over Bluetooth and puts it on CAN bus C (no wire to the BMS: its UART ground is B-)'),
             L('radio_stop_rx', 1, 'the radio stop\'s receiver (D37), on the 5 V rail'),
-            L('radio_stop_relay', 2, 'its relays: one the MCU\'s STOP loop, one the turret\'s SAFETY loop (closed = run, both open on failsafe)'),
+            L('radio_stop_relay', 1, 'the radio\'s switch: its contact feeds the stop relay\'s coil (closed = run, open on the failsafe)'),
+            L('stop_relay_dpdt', 2, 'the stop relay (one spare): pole A the turret\'s safety loop, pole B its 24 V branch; on the MCU board'),
         ],
         'p0_wiring': [
             L('wire_8awg', 1, 'the pack leads, the MRBF, the shunt, the switch and the bus bars (about 1.5 m; red heat-shrink on the + runs)'),

@@ -1,0 +1,220 @@
+{
+ "bed_mm": [
+  256,
+  256,
+  256
+ ],
+ "parts": {
+  "post": {
+   "material": "pa6-cf",
+   "qty": 4,
+   "size_mm": [
+    22,
+    22,
+    120
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 62,
+   "grams": 247,
+   "hours": 16.2,
+   "cost_usd": 19.74,
+   "infill": "100 %",
+   "how": "PA6-CF, 100 % solid, printed standing; 2 x M5 inserts"
+  },
+  "riser": {
+   "material": "pa6-cf",
+   "qty": 1,
+   "size_mm": [
+    144,
+    144,
+    30
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 166,
+   "grams": 166,
+   "hours": 10.9,
+   "cost_usd": 13.25,
+   "infill": "100 %",
+   "how": "PA6-CF, 100 % solid, printed on its top face; 8 x M5 inserts, 2 x \u00d85 dowels"
+  },
+  "isolator": {
+   "material": "tpu95",
+   "qty": 4,
+   "size_mm": [
+    16,
+    16,
+    15
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 2,
+   "grams": 9,
+   "hours": 0.9,
+   "cost_usd": 0.39,
+   "infill": "2 mm walls, 40 % gyroid",
+   "how": "TPU 95A: the pallet's isolator foot, neck and cap"
+  },
+  "din_rail_24v": {
+   "material": "pa6-cf",
+   "qty": 1,
+   "size_mm": [
+    35,
+    26,
+    8
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 2,
+   "grams": 2,
+   "hours": 0.1,
+   "cost_usd": 0.17,
+   "infill": "100 %",
+   "how": "PA6-CF TS35 rail piece; 2 x M4 x 10 flat heads into the nuts below"
+  },
+  "din_rail_12v": {
+   "material": "pa6-cf",
+   "qty": 1,
+   "size_mm": [
+    60,
+    35,
+    8
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 5,
+   "grams": 5,
+   "hours": 0.3,
+   "cost_usd": 0.4,
+   "infill": "100 %",
+   "how": "PA6-CF TS35 rail piece; 2 x M4 x 10 flat heads into the nuts below"
+  },
+  "plate_post": {
+   "material": "pa6-cf",
+   "qty": 4,
+   "size_mm": [
+    16,
+    16,
+    42
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 11,
+   "grams": 43,
+   "hours": 2.8,
+   "cost_usd": 3.42,
+   "infill": "100 %",
+   "how": "PA6-CF, 100 %; M5 inserts both ends; printed standing"
+  },
+  "bus_insulator": {
+   "material": "pa6-cf",
+   "qty": 2,
+   "size_mm": [
+    110,
+    20,
+    10
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 22,
+   "grams": 43,
+   "hours": 2.8,
+   "cost_usd": 3.47,
+   "infill": "100 %",
+   "how": "PA6-CF, 100 %; 4 x M3 inserts"
+  },
+  "bay_rear": {
+   "material": "petg",
+   "qty": 1,
+   "size_mm": [
+    152,
+    110,
+    66
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 157,
+   "grams": 157,
+   "hours": 6.3,
+   "cost_usd": 2.2,
+   "infill": "2 mm walls, 40 % gyroid",
+   "how": "PETG, 3 mm walls; 4 x M5 x 10 up into the belly plate's nuts each side"
+  },
+  "bay_front": {
+   "material": "petg",
+   "qty": 1,
+   "size_mm": [
+    152,
+    110,
+    66
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 140,
+   "grams": 140,
+   "hours": 5.6,
+   "cost_usd": 1.96,
+   "infill": "2 mm walls, 40 % gyroid",
+   "how": "PETG, 3 mm walls; 4 x M5 x 10 up into the belly plate's nuts each side"
+  },
+  "bay_door": {
+   "material": "petg",
+   "qty": 1,
+   "size_mm": [
+    98,
+    4,
+    66
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 31,
+   "grams": 31,
+   "hours": 1.3,
+   "cost_usd": 0.44,
+   "infill": "2 mm walls, 40 % gyroid",
+   "how": "PETG, 3 mm walls; 4 x M5 x 10 up into the belly plate's nuts each side"
+  },
+  "bay_skid": {
+   "material": "tpu95",
+   "qty": 4,
+   "size_mm": [
+    148,
+    14,
+    3
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 8,
+   "grams": 30,
+   "hours": 3.1,
+   "cost_usd": 1.28,
+   "infill": "2 mm walls, 40 % gyroid",
+   "how": "TPU 95A skid"
+  }
+ },
+ "by_material": {
+  "pa6-cf": {
+   "grams": 506,
+   "hours": 33.1,
+   "cost_usd": 40.45,
+   "parts": 13
+  },
+  "tpu95": {
+   "grams": 39,
+   "hours": 4.0,
+   "cost_usd": 1.67,
+   "parts": 8
+  },
+  "petg": {
+   "grams": 328,
+   "hours": 13.2,
+   "cost_usd": 4.6,
+   "parts": 3
+  }
+ },
+ "too_big": [],
+ "total_hours": 50.3,
+ "total_grams": 873,
+ "note": "body P1: hours are rough (grams / density / a strength-holding rate)"
+}

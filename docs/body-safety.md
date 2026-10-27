@@ -20,7 +20,7 @@ behind it), touch temperatures 48 °C on metal and 60 °C on plastic, SELV below
 | 4 | The leg's own pinch points: knee scissor, the lower-link V, stop posts, wheel against its link | the legs | the plan's measures: people-near mode, TPU wedge and apex fillet, post fairings | the leg workstream's CAD and T7 |
 | 5 | The J501's fan | 21.7 mm under the deck, under the turret's riser | the deck's intake field: 8 mm square cells on an 11 mm pitch within 46 mm of the fan's axis (a fingertip only, 21.7 mm from the blades: ISO 13857's 15 mm for a ≤ 8 mm slot is met) | in the CAD (`intake_cells()`, `INTAKE_CELL`); a test-finger check on P1 |
 | 6 | The wheels | the BotWheel's tyre against the ground and anything in its path | people-near mode (≤ 0.5 m/s), the radio stop; the shell does not cover the tyres | procedure + firmware (T9) |
-| 7 | The turret | pan ring, flywheels, projectiles | the turret's own plan (D41: the safety line cuts the flywheels and the dial in hardware); the body wires its SAFETY loop to its own radio relay (W37) | in the wiring |
+| 7 | The turret | pan ring, flywheels, projectiles | the turret's own plan (D41: the safety line cuts the flywheels and the dial in hardware); the body's stop relay opens its safety loop and cuts its 24 V (W34, W37) | in the wiring |
 
 ## 2. Electrical
 
@@ -33,7 +33,7 @@ behind it), touch temperatures 48 °C on metal and 60 °C on plastic, SELV below
 | 12 | A fuse holder rated 32 V on a 53 V bus | the eleven inline MINI holders | the MINI 58V fuse interrupts (1 kA at 58 V); each holder is labelled "58 V fuses only" (a 32 V fuse fits the same socket); fuses are pulled only with the pack unplugged; a fuse board with PCB holders in P3 | procedure + in the wiring (D48) |
 | 13 | A spark at the pack plug | the XT90 | the XT90-S's anti-spark resistor; the main switch off before plugging | procedure |
 | 14 | The BMS bypassed through its data ground | the BMS's UART (its ground is B-) | nothing is wired to the BMS's data ports: the BMS is read over Bluetooth (D47) | in the wiring |
-| 15 | No stop when the radio drops | the radio stop | the ER3C-i's failsafe opens both relays: the MCU sits the robot down, the turret's safety line cuts its flywheels (D37) | in the wiring; test: transmitter off opens both loops within 0.5 s (bring-up step 5) |
+| 15 | No stop when the radio drops | the radio stop | the ER3C-i's failsafe (no pulses) drops the RC switch, which drops the DPDT stop relay: its pole A opens the turret's safety loop (flywheels and dial cut in 20 ms), its pole B cuts the turret's 24 V, and the MCU, sensing the coil, sits the robot down (D37, D48) | in the wiring; test: transmitter off opens the relay within 0.5 s (bring-up step 5) |
 
 ## 3. Battery and charging
 

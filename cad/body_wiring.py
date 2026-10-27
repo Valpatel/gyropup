@@ -54,7 +54,7 @@ WIRES = [
     ('W20', '- bus tap 5', 'DDR-120C-24 Vin-, DDR-60L-12 Vin-', 18, 'black', 'lug M6 / ferrule', '-', 'returns'),
     # ---- 24 V (isolated; its - tied to the - bus at the star point)
     ('W21', 'DDR-120C-24 +V', 'J501 DC-IN (XT30)', 18, 'red', 'ferrule / XT30-M', 'MINI 5 A', 'the J501: 60 W peak, 2.5 A'),
-    ('W22', 'DDR-120C-24 +V', 'turret (XT30)', 18, 'red', 'ferrule / XT30-M', 'MINI 5 A', 'the turret: 60 W peak (its own stand fuse stays in the turret)'),
+    ('W22', 'DDR-120C-24 +V', 'stop relay, pole B (in)', 18, 'red', 'ferrule / screw terminal', 'MINI 5 A', 'the turret\'s branch: 60 W peaks (its own fuse stays in the turret too)'),
     ('W23', 'DDR-120C-24 -V', 'J501 and turret returns; star point', 18, 'black', 'ferrule / XT30-M', '-', 'one tie from -V to the - bus (the CAN reference)'),
     # ---- 12 V (isolated; its - to the star point)
     ('W24', 'DDR-60L-12 +V', 'lidar interface box (XT30)', 18, 'red', 'ferrule / XT30-M', '(the converter\'s 5 A limit)', 'VLP-16: 8 W, 3 A at spin-up'),
@@ -70,13 +70,15 @@ WIRES = [
     ('W32', '+ bus (via the DDR-60L tap)', 'INA228 VBUS', 22, 'red', 'ring', 'MINI 58V 5 A (shared with W17)', 'pack voltage, 85 V input'),
     ('W33', 'frame (a tray PEM stud)', '- bus star point', 18, 'green', 'ring M5 / lug M6', '-', 'a + short to the frame blows a fuse, not leaves it live'),
     # ---- the turret's TM connector (DT06-12SA on the body's harness; docs/turret-wiring.md 1.1)
-    ('W34', 'W22 (24 V, fused 5 A)', 'DT06-12SA pins 1, 2', 18, 'red', 'size-16 sockets', 'MINI 5 A (W22)', 'two pins in parallel, as the turret asks'),
+    ('W34', 'stop relay, pole B (out)', 'DT06-12SA pins 1, 2', 18, 'red', 'size-16 sockets', 'MINI 5 A (W22)', 'two pins in parallel, as the turret asks; dead whenever the stop relay is open'),
     ('W35', 'W23 (24 V return)', 'DT06-12SA pins 3, 4', 18, 'black', 'size-16 sockets', '-', ''),
     ('W36', 'J501 can1 (H, L)', 'DT06-12SA pins 5, 6', 22, 'white', 'twisted pair, size-16 sockets', '-', 'the turret terminates its end; the J501 its own'),
-    ('W37', 'radio relay 2 contact (closed = run)', 'DT06-12SA pins 7, 8 (SAFETY_A, SAFETY_B)', 22, 'white', 'twisted pair', '-',
-     'the turret\'s own safety line (D41 D7: it cuts the flywheels and the dial in hardware)'),
-    ('W38', 'radio relay 1 contact (closed = run)', 'MCU STOP input (pull-up, debounced)', 22, 'white', 'twisted pair / GH', '-',
-     'the MCU sits the robot down on an open loop (D37); the main switch is the hard off'),
+    ('W37', 'stop relay, pole A (closed = run)', 'DT12 pins 7, 8 (SAFETY_A, SAFETY_B)', 22, 'white', 'twisted pair', '-',
+     'the turret\'s dry safety loop (12 V at 2 mA; D41 D7: it cuts the flywheels and the dial in hardware)'),
+    ('W38', 'stop relay coil, + side', 'MCU STOP sense (divider 12 V to 3.3 V)', 22, 'white', 'GH', '-',
+     '12 V on the coil = the radio says run: the MCU sits the robot down when it drops (D37)'),
+    ('W39', '12 V rail via the RC switch\'s contact', 'stop relay coil, + side', 22, 'red', 'solder / screw terminal', '(the converter\'s 5 A limit)',
+     'the coil (12 V, 33 mA) is fed only while the radio says run; its - side through the MCU\'s MOSFET (MCU_RUN), a diode across it'),
 ]
 
 CAN = [
@@ -87,10 +89,12 @@ CAN = [
     ('T', 'J501 can1', ['the turret (its own bus)'], 'the turret workstream\'s'),
 ]
 
-STOP = ('The radio stop (D37): the ER3C-i receiver drives two Pololu RC relay switches from two of its PWM outputs (both open on '
-        'the receiver\'s failsafe). Relay 1 is a dry loop to the MCU (closed = run): on an open loop it stops the wheels and sits the robot '
-        'down on its legs. Relay 2 is the turret\'s SAFETY loop (TM pins 7, 8): it cuts the flywheels and the dial in the turret\'s '
-        'hardware. The main switch is the hard off.')
+STOP = ('The radio stop (D37, D48): the ER3C-i receiver (failsafe: no pulses) drives one Pololu RC relay switch; its contact feeds '
+        'the coil of the stop relay (Omron G2RL-2, DPDT, 12 V), whose other end goes to ground through the MCU\'s MOSFET. The relay '
+        'holds only while the radio says run AND the MCU says run. Pole A is the turret\'s dry safety loop (TM pins 7, 8: the turret '
+        'cuts its flywheels and dial in 20 ms), pole B is in the turret\'s 24 V branch (the independent cut); the MCU senses the coil '
+        'voltage and sits the robot down when the radio drops, and opens the relay itself when the robot sits. The main switch is the '
+        'hard off.')
 
 
 def svg() -> str:
@@ -161,7 +165,7 @@ def svg() -> str:
     box(1180, 320, 130, 30, 'Turret', [], fill='#e8f0ff')
     wire([(1100, 315), (1125, 315), (1125, 285), (1180, 285)], 'red', 'W21 18', 2, 18, -5, width=2)
     fuse(1125, 300, '5 A')
-    wire([(1100, 340), (1180, 335)], 'red', 'W22 18', 0, 6, 16, width=2)
+    wire([(1100, 340), (1180, 335)], 'red', 'W22 W34 18 (via the stop relay)', 0, 6, 16, width=2)
     fuse(1132, 337, '5 A')
     box(1180, 380, 150, 30, 'Lidar box (VLP-16)', [], fill='#e8f0ff')
     box(1180, 420, 150, 30, '5 V buck D36V28F5', [], fill='#e8f0ff')

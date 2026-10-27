@@ -303,7 +303,7 @@ def intake_cells():
                 continue
             if math.hypot(x - t['pan_x'], y) + half > t['foot_r'] - 12.0:
                 continue
-            if any(math.hypot(x - (t['pan_x'] + a), y - b) < RISER_LEG_R + 4.0 + half for a, b in RISER_FEET):
+            if any(math.hypot(x - (t['pan_x'] + a), y - b) < RISER_FOOT_R + 3.0 + half for a, b in RISER_FEET):
                 continue
             out.append((round(x, 2), round(y, 2)))
     return out
@@ -435,6 +435,8 @@ def din_rails(items):
 
 
 RISER_LEG_R = 9.0
+RISER_FOOT_R = 18.0         # each leg ends in a Ø36 x 4 foot: it spreads the turret's fall load on the 0.100 in deck (D2)
+RISER_FOOT_T = 4.0
 RISER_TOP_T = 9.0
 
 
@@ -449,7 +451,7 @@ def riser():
     ring = cyl_z(ro, H - RISER_TOP_T, H).cut(cyl_z(30.0, H - RISER_TOP_T - 1, H + 1))
     s = ring
     for (x, y) in RISER_FEET:
-        s = s.union(cyl_z(RISER_LEG_R, 0.0, H - RISER_TOP_T + 0.01, x, y))
+        s = s.union(cyl_z(RISER_LEG_R, 0.0, H - RISER_TOP_T + 0.01, x, y)).union(cyl_z(RISER_FOOT_R, 0.0, RISER_FOOT_T, x, y))
     for (x, y) in t['bolts']:
         s = s.cut(cyl_z(3.2, H - 9.5, H + 1.0, x, y))                          # M5 insert from the top (the turret)
     for (x, y) in RISER_FEET:

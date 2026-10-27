@@ -98,13 +98,13 @@ are cut to the plate in P0 and recorded.
 
 | Wire | From | To | AWG | Colour | Ends | Fuse | Why |
 |---|---|---|---|---|---|---|---|
-| W1 | pack B+ (group 13 +) | XT90-S female (pack lead) | 10 | red | XT90-S solder cup | MRBF 80 A (on the robot side) | 80 A pulses, 72 A cells |
-| W2 | BMS P- | XT90-S female (pack lead) | 10 | black | XT90-S solder cup | - | the BMS switches the negative |
-| W3 | XT90-S male (robot) | MRBF block, battery stud (M8) | 10 | red | lug M8 | - | unfused until the MRBF: keep it short (<150 mm) |
-| W4 | MRBF block, load stud (M8) | + bus bar, tap 1 (M6) | 10 | red | lugs M8 / M6 | MRBF 80 A | the whole robot |
-| W5 | XT90-S male (robot) | shunt, battery side (M8) | 10 | black | lug M8 | - | the battery negative |
-| W6 | shunt, load side (M8) | main switch IN- (B-) | 10 | black | ferrule / its lead | - | Flipsky draws the switch on the negative: check its card |
-| W7 | main switch OUT- (P-) | - bus bar, tap 1 (M6) | 10 | black | lug M6 | - | the switched negative: everything below is off with it |
+| W1 | pack B+ (group 13 +) | XT90-S female (pack lead) | 8 | red | XT90-S solder cup | MRBF 80 A (on the robot side) | 80 A pulses, 72 A cells |
+| W2 | BMS P- | XT90-S female (pack lead) | 8 | black | XT90-S solder cup | - | the BMS switches the negative |
+| W3 | XT90-S male (robot) | MRBF block, battery stud (M8) | 8 | red | lug M8 | - | unfused until the MRBF: keep it short (<150 mm) |
+| W4 | MRBF block, load stud (M8) | + bus bar, tap 1 (M6) | 8 | red | lugs M8 / M6 | MRBF 80 A | the whole robot |
+| W5 | XT90-S male (robot) | shunt, battery side (M8) | 8 | black | lug M8 | - | the battery negative |
+| W6 | shunt, load side (M8) | main switch IN- (B-) | 8 | black | ferrule / its lead | - | Flipsky draws the switch on the negative: check its card |
+| W7 | main switch OUT- (P-) | - bus bar, tap 1 (M6) | 8 | black | lug M6 | - | the switched negative: everything below is off with it |
 | W8 | charge port XT60H-F + | MRBF block, battery stud (M8) | 18 | red | XT60 / lug M8 | MINI 58V 10 A (inline, at the stud) | charger 2-3 A; the fuse guards the lead against a pack short |
 | W9 | charge port XT60H-F - | shunt, load side (M8) | 18 | black | XT60 / lug M8 | - | after the shunt (it counts the charge), before the switch (the robot can be off) |
 | W10 | + bus tap 2 | RS-04 left front (XT60H) | 14 | red | lug M6 / XT60H-M | MINI 58V 20 A | ~12 A at a jump, 25 A peaks: 14 AWG silicone |
@@ -119,7 +119,7 @@ are cut to the plate in P0 and recorded.
 | W19 | - bus tap 4 | VESC left, right - | 12 | black | lug M6 / XT60H-M | - | returns |
 | W20 | - bus tap 5 | DDR-120C-24 Vin-, DDR-60L-12 Vin- | 18 | black | lug M6 / ferrule | - | returns |
 | W21 | DDR-120C-24 +V | J501 DC-IN (XT30) | 18 | red | ferrule / XT30-M | MINI 5 A | the J501: 60 W peak, 2.5 A |
-| W22 | DDR-120C-24 +V | turret (XT30) | 18 | red | ferrule / XT30-M | MINI 5 A | the turret: 60 W peak (its own stand fuse stays in the turret) |
+| W22 | DDR-120C-24 +V | stop relay, pole B (in) | 18 | red | ferrule / screw terminal | MINI 5 A | the turret's branch: 60 W peaks (its own fuse stays in the turret too) |
 | W23 | DDR-120C-24 -V | J501 and turret returns; star point | 18 | black | ferrule / XT30-M | - | one tie from -V to the - bus (the CAN reference) |
 | W24 | DDR-60L-12 +V | lidar interface box (XT30) | 18 | red | ferrule / XT30-M | (the converter's 5 A limit) | VLP-16: 8 W, 3 A at spin-up |
 | W25 | DDR-60L-12 +V | 5 V buck VIN (Pololu D36V28F5) | 22 | red | ferrule / solder | (the converter's 5 A limit) | ~0.6 A at 12 V |
@@ -131,11 +131,12 @@ are cut to the plate in P0 and recorded.
 | W31 | shunt sense - (load side screw) | INA228 IN- | 22 | white | ring / screw terminal | - | the INA228's own 15 mOhm shunt is removed |
 | W32 | + bus (via the DDR-60L tap) | INA228 VBUS | 22 | red | ring | MINI 58V 5 A (shared with W17) | pack voltage, 85 V input |
 | W33 | frame (a tray PEM stud) | - bus star point | 18 | green | ring M5 / lug M6 | - | a + short to the frame blows a fuse, not leaves it live |
-| W34 | W22 (24 V, fused 5 A) | DT06-12SA pins 1, 2 | 18 | red | size-16 sockets | MINI 5 A (W22) | two pins in parallel, as the turret asks |
+| W34 | stop relay, pole B (out) | DT06-12SA pins 1, 2 | 18 | red | size-16 sockets | MINI 5 A (W22) | two pins in parallel, as the turret asks; dead whenever the stop relay is open |
 | W35 | W23 (24 V return) | DT06-12SA pins 3, 4 | 18 | black | size-16 sockets | - |  |
 | W36 | J501 can1 (H, L) | DT06-12SA pins 5, 6 | 22 | white | twisted pair, size-16 sockets | - | the turret terminates its end; the J501 its own |
-| W37 | radio relay 2 contact (closed = run) | DT06-12SA pins 7, 8 (SAFETY_A, SAFETY_B) | 22 | white | twisted pair | - | the turret's own safety line (D41 D7: it cuts the flywheels and the dial in hardware) |
-| W38 | radio relay 1 contact (closed = run) | MCU STOP input (pull-up, debounced) | 22 | white | twisted pair / GH | - | the MCU sits the robot down on an open loop (D37); the main switch is the hard off |
+| W37 | stop relay, pole A (closed = run) | DT12 pins 7, 8 (SAFETY_A, SAFETY_B) | 22 | white | twisted pair | - | the turret's dry safety loop (12 V at 2 mA; D41 D7: it cuts the flywheels and the dial in hardware) |
+| W38 | stop relay coil, + side | MCU STOP sense (divider 12 V to 3.3 V) | 22 | white | GH | - | 12 V on the coil = the radio says run: the MCU sits the robot down when it drops (D37) |
+| W39 | 12 V rail via the RC switch's contact | stop relay coil, + side | 22 | red | solder / screw terminal | (the converter's 5 A limit) | the coil (12 V, 33 mA) is fed only while the radio says run; its - side through the MCU's MOSFET (MCU_RUN), a diode across it |
 
 ### 3.2 The rails
 
@@ -167,10 +168,13 @@ board (`ip link`), the turret moves to an isolated USB-CAN adapter as on its ben
 
 ## 5. The radio stop and the switches
 
-The radio stop (D37): the ER3C-i receiver drives two Pololu RC relay switches from two of its PWM outputs (both open on the receiver's failsafe). Relay 1 is a dry loop to the MCU (closed = run): on an open loop it stops the wheels and sits the robot down on its legs. Relay 2 is the turret's SAFETY loop (TM pins 7, 8): it cuts the flywheels and the dial in the turret's hardware. The main switch is the hard off.
+The radio stop (D37, D48): the ER3C-i receiver (failsafe: no pulses) drives one Pololu RC relay switch; its contact feeds the coil of the stop relay (Omron G2RL-2, DPDT, 12 V), whose other end goes to ground through the MCU's MOSFET. The relay holds only while the radio says run AND the MCU says run. Pole A is the turret's dry safety loop (TM pins 7, 8: the turret cuts its flywheels and dial in 20 ms), pole B is in the turret's 24 V branch (the independent cut); the MCU senses the coil voltage and sits the robot down when the radio drops, and opens the relay itself when the robot sits. The main switch is the hard off.
 
 No contactor, no e-stop button on the robot (D37): the radio stop sits the robot down, and the main switch on the
-belly is the hard off for a person standing at the robot.
+belly is the hard off for a person standing at the robot. The stop relay, its MOSFET (a logic-level N-channel on
+MCU_RUN), the flyback diode and the 12 V-to-3.3 V divider for the sense sit on the MCU carrier's protoboard. The
+turret's interface is docs/turret-next-plan.md 3.1-3.2 (TM pins 1-2 +24 V, 3-4 GND, 5-6 CAN, 7-8 the dry safety
+loop): plug its DT12 only with the stop relay open (its three 1,000 µF capacitors charge through the plug otherwise).
 
 ## 6. Bring-up (P0, on the bench, before the plate goes into the robot)
 
@@ -184,8 +188,9 @@ on its four posts.
 4. **Switch on** (hold the button 0.3 s): the bus at pack voltage. Fit the converter fuses only: the 24 V, 12 V and
    5 V rails within 2 % of nominal; their -V to the - bus 0 V.
 5. **MCU**: the INA228 reads the pack within 0.2 V of a meter and the current within 0.1 A at a 2 A dummy load on the
-   24 V rail; the QT Py relays the 13 cell voltages from the BMS onto bus C; the radio stop opens both relays on
-   failsafe (transmitter off) within 0.5 s and the MCU logs it.
+   24 V rail; the QT Py relays the 13 cell voltages from the BMS onto bus C; with the transmitter switched off the
+   stop relay opens within 0.5 s (the receiver's failsafe: no pulses), the turret's pins 7-8 read open and 1-2 dead,
+   and the MCU logs the stop; MCU_RUN low opens it too.
 6. **Branches**: fit the RS-04 and VESC fuses one at a time with nothing plugged; then each motor on its own (the leg
    workstream's bring-up) at a 10 A current limit.
 7. **Switch off with the buses loaded**: no spark at the XT90 (the switch takes it); the rails fall in order.

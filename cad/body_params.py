@@ -261,17 +261,37 @@ def z_belly_top() -> float:
 # ------------------------------------------------------------------------------------------- the turret (TM)
 
 
+HEAD_BUDGET = {'mass_kg': 1.70, 'com_above_face_mm': 100.0,      # the turret plan's head payload budget (docs/turret-next-plan.md:
+               'basis': 'docs/turret-next-plan.md 3.1 (proposed head payload budget)'}   # 1.639 kg with 30 balls today)
+TURRET_GROMMET = (-130.0, -60.0)    # the turret harness through the deck, right rear: the turret's DT12 plug is on its right
+
+
 @functools.lru_cache(maxsize=1)
 def tm() -> dict:
     """The turret's mounting face (cad/turret.py): bolts, dowels, centre hole, the foot and bumper, and where the
-    pan axis stands on the body (docs/body-plan.md 1.5: 143 mm behind the lidar's axis)."""
+    pan axis stands on the body (docs/body-plan.md 1.5: 143 mm behind the lidar's axis, the turret's depression table
+    is computed for that). The turret's interface file exports/turret/mount.json (docs/turret-next-plan.md N5) wins for
+    the mass and centre when it exists; until then the head budget (1.70 kg, centre <= 100 mm above the face)."""
     import sys
     sys.path.insert(0, str(R / 'cad'))
     import turret as tu
     G = tu.Geo()
-    return {'bolts': [tuple(p) for p in tu.TM_BOLTS], 'dowels': [tuple(p) for p in tu.TM_DOWELS], 'hole_d': tu.TM_HOLE,
-            'bolt': 'M5', 'dowel_d': 5.0, 'foot_r': G.base_r, 'bumper_r': G.bumper_r[1], 'pan_x': lidar()['x'] - LIDAR_TO_PAN,
-            'face_z': TOP + RISER_H}
+    out = {'bolts': [tuple(p) for p in tu.TM_BOLTS], 'dowels': [tuple(p) for p in tu.TM_DOWELS], 'hole_d': tu.TM_HOLE,
+           'bolt': 'M5', 'dowel_d': 5.0, 'foot_r': G.base_r, 'bumper_r': G.bumper_r[1], 'pan_x': lidar()['x'] - LIDAR_TO_PAN,
+           'face_z': TOP + RISER_H, 'mass_kg': HEAD_BUDGET['mass_kg'], 'com_above_face_mm': HEAD_BUDGET['com_above_face_mm'],
+           'mass_basis': HEAD_BUDGET['basis'], 'grommet_xy': TURRET_GROMMET}
+    f = R / 'exports' / 'turret' / 'mount.json'
+    if f.exists():
+        m = json.loads(f.read_text())
+        mk = m.get('mass_kg') or ((m.get('mass_g') or 0) / 1000.0) or None
+        com = m.get('com_mm') or m.get('centre_mm')
+        if mk:
+            out['mass_kg'] = max(mk, HEAD_BUDGET['mass_kg'])
+            out['mass_basis'] = 'exports/turret/mount.json (the budget when larger)'
+        if com:
+            out['com_above_face_mm'] = max(float(com[2]), HEAD_BUDGET['com_above_face_mm'])
+        out['mount_json'] = m
+    return out
 
 
 # ------------------------------------------------------------------------------------------- the lidar (VLP-16)

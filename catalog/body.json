@@ -2185,6 +2185,57 @@
   ]
  },
  {
+  "id": "omron-g2rl-2-dc12",
+  "key": "stop_relay_dpdt",
+  "category": "relay",
+  "vendor": "Omron",
+  "model": "G2RL-2-DC12",
+  "name": "Omron G2RL-2 DC12 power relay, DPDT, 12 V coil, 8 A at 30 V DC (the stop relay: the turret's safety loop and its 24 V branch)",
+  "price_usd": 4.14,
+  "price_checked": "2026-10-27",
+  "price_note": "DigiKey: $4.14 each, read 2026-10-27",
+  "buy": [
+   {
+    "seller": "DigiKey",
+    "url": "https://www.digikey.com/en/products/detail/omron-electronics-inc-emc-div/G2RL-2-DC12/368870",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "snippet",
+    "price_usd": 4.14,
+    "stock": "1,078 immediate (search result, 2026-10-27; the live page to confirm)"
+   },
+   {
+    "seller": "LCSC",
+    "url": "https://www.lcsc.com/product-detail/C61458.html",
+    "in_stock": true,
+    "ships_from": "CN",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "stock": "listed as C61458 (price shown on the live page)"
+   }
+  ],
+  "backup": {
+   "what": "same relay",
+   "seller": "LCSC",
+   "price_usd": null
+  },
+  "specs": {
+   "contacts": "DPDT (2 Form C)",
+   "rating": "8 A at 30 V DC",
+   "coil": "12 V DC",
+   "size_mm": [
+    28.8,
+    12.5,
+    15.7
+   ]
+  },
+  "sources": [
+   "https://www.digikey.com/en/products/detail/omron-electronics-inc-emc-div/G2RL-2-DC12/368870",
+   "https://www.lcsc.com/product-detail/C61458.html"
+  ]
+ },
+ {
   "id": "pololu-rc-switch-relay-2804",
   "key": "radio_stop_relay",
   "category": "radio",
