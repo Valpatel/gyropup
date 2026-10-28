@@ -34,25 +34,36 @@ The stiffness studies, the cable routes and the open weight work are in [`../doc
 ## The turret on the Orin AGX compute box
 
 [`turret_box.py`](turret_box.py) mounts the turret ([`turret.py`](turret.py)) on the lid of the J501 enclosure
-(`~/Code/j501-agx`, Rev 0.8), so it can be aimed and fired from the computer that will drive it. Nothing is drilled in
-the box: four legs stand on the lid's screw corners and longer screws (M3 × 35 for M3 × 16) clamp leg, lid and base
-into the same inserts. The J501's fan breathes in through the roof cells inside its Ø80 ring and exhausts through the
-cells around it, so the deck stands 44 mm up and an intake shroud keeps the two apart.
+(`~/Code/j501-agx`, Rev 0.9 with the tower cooler: the Seeed reComputer mini J501 heatsink, its 9215 fan under a flush
+grille in a 97 mm roof), so it can be aimed and fired from the computer that will drive it (D50). Nothing is drilled in
+the box: four legs stand on the lid's screw corners and longer screws (M3 × 40 for the J501's M3 × 16) clamp leg, lid
+and base into the same inserts. The fan breathes in through the grille and the hex cells round it let the exhaust
+out, so the deck stands 44 mm up (the TM face at 141 mm) and an intake shroud keeps the two apart: a Ø104 collar round
+the grille, sealed on the roof's solid band by a foam ring under its floor's lip, fed by a 160 mm duct from the front.
 
 ```
-.venv/bin/python cad/build_turret_box.py     # exports/turret/box/ (parts, print plan, checks) and exports/sim/turret_box/
+.venv/bin/python cad/build_turret_box.py     # exports/turret/box/ (parts, print plan, parts list, checks) and exports/sim/turret_box/
+.venv/bin/python cad/turret_lidar.py --scene box   # the 3D clearance study the box checks read (exports/turret/lidar/box.json)
 ```
 
 The second folder is the scene for the 3D game page: pick **Turret on the Orin AGX box** in the simulator's design
-list (`designer/sim.html?design=turret-box`). The build reads the J501's sizes from its `cad/parameters.json` and its
-meshes from its `exports/view/` (set `J501_DIR` if the repo is elsewhere), so rebuild after either project changes.
+list (`designer/sim.html?design=turret-box`). The build reads the J501's sizes from its `cad/parameters.json`, its fan
+curve and CFD operating point from its `thermal` parameters and `exports/thermal/cooled-<rev>.json`, and its meshes from
+its `exports/view/` (or its `exports/*.step` when the view meshes lag its parameters); set `J501_DIR` if the repo is
+elsewhere, and rebuild after either project changes. It prints a warning when the J501's revision is not the one the
+adapter was drawn for (`turret_box.BUILT_FOR`, "0.9-g48r") or its parameters are not committed there, and records the
+revision and the file's git state in `box.json`: rebuild when Rev 0.9 is tagged, and print only once the J501's own
+Rev 0.9 cover fits its cooler. Rev 0.8's parameters still build (the collar on its Ø80 duct ring), as the fallback.
 
 | Part | Qty | Made | Notes |
 |---|---|---|---|
-| `box_deck` | 1 | printed PETG, upside down | The TM face (4 × M5 inserts, 2 dowels), four hollow legs with spigots in the lid's counterbores, the front skirt, the control pod at the back (24 V XT60, switch, fuse, pendant jack, USB-CAN out) |
-| `intake_shroud` | 1 | printed PETG, on its floor | Collar over the J501's intake cells, a duct flaring to a grille at the front; 6 × M3 into the deck |
-| `pod_cover` | 1 | printed PETG | Closes the pod from below |
+| `box_deck` | 1 | printed PETG, upside down | The TM face (4 × M5 inserts in bosses deep enough for the turret's M5 × 16, 2 × Ø5 × 10 dowels), four hollow legs with spigots in the lid's counterbores, the front skirt, the control pod at the back with the bench stand's panel (XT60E-M 24 V inlet, Ø20.2 keyed DC rocker, 5 × 20 fuse holder, TB3M mini-XLR pendant socket, USB-CAN cable out) |
+| `intake_shroud` | 1 | printed PETG, on its floor | Ø104 collar on the grille's outline, a 160 mm duct to a grille of 2 mm bars at the front, the floor's lip on 3 mm of foam tape; 6 × M3 × 10 up into the deck |
+| `pod_cover` | 1 | printed PETG | Closes the pod from below (4 × M3 × 6 flat heads) |
 
 `exports/turret/box/box.json` has the checks: the moving turret against the deck and against upright antennas on the
-J501's RP-SMA bulkheads, the shroud's cost to the J501's fan (a hand estimate for its CFD to check), tipping, the top
-ball speed if the throttle limit fails, and how long a ball can still fire after ARM is released.
+J501's RP-SMA bulkheads (and the 3D ball path from `cad/turret_lidar.py --scene box`), the shroud's fit to the legs and
+the TM bosses, where the foam ring sits on the roof, the shroud's cost to the J501's fan (a hand estimate with its
+method and sensitivity; the thermometer on the box is the proof), tipping, the top ball speed if the throttle limit
+fails, and how long a ball can still fire after ARM is released. `bom.json` is what to buy for it, every line a
+catalogue key with a listed price.

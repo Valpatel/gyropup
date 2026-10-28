@@ -294,24 +294,114 @@
    "note": "antennas: upright swivel dipoles on all four RP-SMA bulkheads (none chosen yet: typical 2.4 GHz swivel dipole, \u00d810 x 108 (est; none chosen))"
   },
   "muzzle_outside_deck_mm": -30.9,
+  "ball_path": {
+   "file": "exports/turret/lidar/box.json",
+   "current": true,
+   "margin_mm": 10.0,
+   "limited_pan_window_deg": null,
+   "clear": true,
+   "no_fire_from_pan_deg": 120.0,
+   "note": "every pan and tilt clear of the deck, the box and upright antennas by the margin; no firing within 60 deg of straight back (the operator's side)"
+  },
   "airflow": {
    "mouth_mm": [
-    124,
+    160,
     33
    ],
    "throat_mm": [
-    80,
+    160,
     33
    ],
-   "air_speed_mps": {
-    "grille": 1.17,
-    "throat": 1.36
+   "grille": {
+    "bars": 11,
+    "bar_mm": 2.0,
+    "pitch_mm": 14.0,
+    "gap_mm": 12.0,
+    "open_fraction": 0.863
    },
-   "loss_pa": 1.94,
-   "flow_before_m3h": 12.94,
-   "flow_after_m3h": 12.06,
-   "flow_drop_pct": 6.8,
-   "note": "hand estimate (K = 1 at the grille, K = 1 for the turn into the collar; a linear 8015 fan curve, 15.2 Pa / 38.9 m3/h, through the J501 CFD operating point); the J501 CFD (tools/thermal.py there) should check it with the deck and shroud in the domain"
+   "air_speed_mps": {
+    "mouth": 1.92,
+    "grille": 2.23,
+    "throat": 1.92
+   },
+   "losses_pa": {
+    "grille": 2.98,
+    "turn": 2.22
+   },
+   "loss_pa": 5.19,
+   "flow_before_m3h": 36.53,
+   "flow_after_m3h": 32.98,
+   "flow_drop_pct": 9.7,
+   "fan_fraction_of_free_air_after": 0.351,
+   "limit_pct": 10.0,
+   "ok": true,
+   "fan": {
+    "model": "9215-Y: 12 V, 0-4000 rpm PWM, 14.1-55.26 CFM, 0.84-2.87 mmH2O, 0.24-2.28 W, 4-pin 2510 (S06 p.2, drawing p.11)",
+    "dp0_pa": 28.1,
+    "q_free_m3h": 93.9,
+    "note": "9215-Y at full speed (12 V, 4000 rpm): 55.26 CFM free air, 2.87 mmH2O at zero flow (S06 p.2); straight-line curve between the two; blowing down into the fins."
+   },
+   "operating_point": {
+    "q_m3h": 36.53,
+    "dp_pa": 17.17,
+    "fraction_of_free_air": 0.389,
+    "air_into_fan_c": 26.94,
+    "converged": false,
+    "case_revision": "0.9-g48r",
+    "source": "/home/scubasonar/Code/j501-agx/exports/thermal/cooled-0.9.json",
+    "note": "the J501's CFD of the bare box at 40 W in 25 C air"
+   },
+   "method": "losses K x 0.5 rho v^2 (rho 1.2): K = 1 through the grille's gaps (the entry and the bars), K = 1 for the turn down into the fan on the whole flow across the duct over the fan's centre; the box's own resistance as k q^2 through the J501 CFD's operating point; the fan's straight-line curve from its J501 parameters (dp0, q_free); the new flow where the two meet",
+   "sensitivity_flow_drop_pct": {
+    "the plan's duct: a 124 mm mouth flaring from the \u00d8104 collar, 2 mm bars on 8": 18.6,
+    "a 124 mm mouth with this grille, as wide back to the fan": 14.7,
+    "K = 1.5 for the turn": 11.4,
+    "Idelchik: a sharp inlet (0.5) and the bars by Kirschmer (0.22) on the mouth speed, the turn K = 1": 7.4,
+    "with the roof cells the floor covers, as if all the air left through the roof (upper bound)": 12.2,
+    "at the J501's first Rev 0.9 point (27.5 m3/h at 19.9 Pa, the plan's)": 5.6,
+    "the plan's duct at that point": 11.5
+   },
+   "not_modelled": "the open roof cells the shroud's floor covers (they vent through the 1 mm under it: intake_seal; bounded in the sensitivity), the deck over the exhaust, the fan's swirl",
+   "bench_proof": "the thermometer, as the J501's own criterion: the box at 40 W (a 40 W nvpmodel under load) with the adapter on and the turret parked, a thermocouple in the collar 10 mm over the grille and one in the room 0.5 m away at the same height, logged for 30 min: the intake within 3 K of the room, and the module's temperatures from tegrastats no worse than for the same 30 min without the adapter (task N17)",
+   "note": "hand estimate on the J501 0.9-g48r fan and its CFD's operating point (not converged: rerun this build when it settles); the mouth is as wide as the deck's front legs allow"
+  },
+  "intake_seal": {
+   "hole_r_mm": 46.46,
+   "tape_r_mm": [
+    46.96,
+    49.96
+   ],
+   "collar_r_mm": 51.92,
+   "collar_d_mm": 103.8,
+   "intake": "grille",
+   "grille_open_r_mm": 44.52,
+   "first_open_cell_r_mm": 55.34,
+   "tape_margin_mm": {
+    "to_the_grille_openings": 2.44,
+    "to_the_first_open_cell": 5.38
+   },
+   "open_cells": 110,
+   "open_cells_under_the_shroud": 45,
+   "note": "the J501 roof is solid on top from the grille's openings out to its first open hex cell (the grille's rim, the skirt's top, a band of cells closed by a 1.2 mm skin: its cad/build.py); the foam ring lies in the middle of that band, so no exhaust cell opens inside it. The open cells under the shroud's floor vent through the 1 mm under it"
+  },
+  "shroud_fit": {
+   "legs_mm": {
+    "leg_1": 4.22,
+    "leg_2": 44.3,
+    "leg_3": 4.22,
+    "leg_4": 44.3
+   },
+   "tm_bosses_mm": {
+    "tm_boss_1": 27.5,
+    "tm_boss_2": 3.5,
+    "tm_boss_3": 3.5,
+    "tm_boss_4": 27.5
+   },
+   "least_mm": 3.5,
+   "required_mm": 3.0,
+   "ok": true,
+   "shroud_over_the_roof_mm": 1.0,
+   "how": "the BRepExtrema distance between the intake shroud and each leg (the deck cut round it, under the deck plate) and each TM insert boss (the deck cut round it, under the deck plate)"
   },
   "tipping": {
    "total_kg": 3.35,
@@ -336,6 +426,12 @@
    "brake_tau_ms": 10.16
   },
   "lid_screw": "M3 x 40 ISO 4762, tip at z 62 (as the J501's own M3 x 16)",
+  "heights_mm": {
+   "roof": 97.0,
+   "deck_underside": 133.0,
+   "tm_face": 141.0,
+   "antenna_tops_over_tm_face": 29.0
+  },
   "too_big": []
  },
  "mechanics": {
@@ -466,13 +562,42 @@
  },
  "masses_g": {
   "turret_with_balls": 1639,
-  "adapter": 338,
+  "adapter": 347,
   "j501_printed": 368.2,
   "j501_inside_est": 1000.0
  },
  "z_tm_mm": 141.0,
  "j501": {
   "revision": "0.9-g48r",
-  "source": "/home/scubasonar/Code/j501-agx/cad/parameters.json"
+  "built_for": "0.9-g48r",
+  "source": "/home/scubasonar/Code/j501-agx/cad/parameters.json",
+  "parameters_git": {
+   "state": "modified (uncommitted)",
+   "head": "0a6c28ac5ef514bafa5cbc1b5950059867de764c",
+   "branch": "rev0.8-thermal",
+   "tags_at_head": [
+    "rev0.8"
+   ],
+   "file": "cad/parameters.json"
+  },
+  "warning": "the J501 parameters (0.9-g48r) are modified (uncommitted) in the J501 repo: rebuild this adapter when Rev 0.9 is tagged there, before printing it",
+  "cooler": "Seeed reComputer mini J501 heatsink with fan (SKU 100099421): a G48R heat-pipe tower (Li Yang Peng) on a 2 mm copper spreader, 9215 fan 92 x 92 x 15 mm, 12 V",
+  "fan": "9215-Y: 12 V, 0-4000 rpm PWM, 14.1-55.26 CFM, 0.84-2.87 mmH2O, 0.24-2.28 W, 4-pin 2510 (S06 p.2, drawing p.11)",
+  "fan_xy_box_mm": [
+   10.5,
+   0.0
+  ],
+  "roof_z_mm": 97.0,
+  "intake": {
+   "kind": "grille",
+   "frame": 92.0,
+   "corner_chamfer": 17.5,
+   "clearance": 3.0,
+   "skirt_wall": 2.4,
+   "thickness": 3.0,
+   "hub_d": 20.0,
+   "open_r": 44.519999999999996
+  },
+  "meshes": "exports/*.step (its view meshes do not match its parameters yet)"
  }
 }

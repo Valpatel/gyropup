@@ -1,95 +1,524 @@
 {
  "adapter": [
   {
+   "item": "XT60E-M panel-mount plug (male), 2 screw holes",
+   "key": "amass-xt60e-m",
+   "qty": 1,
+   "for": "pod: 24 V in",
+   "part_number": "XT60E-M",
+   "vendor": "Amass",
+   "url": "https://www.jameco.com/z/XT60E-M-Amass-XT60-Socket-Male-Terminals-30A-500V-2-Pin-Flanged-for-Panel-Mount_2844431.html",
+   "price_usd_each": 0.99,
+   "pack_qty": null,
+   "sellers": [
+    {
+     "seller": "Jameco",
+     "url": "https://www.jameco.com/z/XT60E-M-Amass-XT60-Socket-Male-Terminals-30A-500V-2-Pin-Flanged-for-Panel-Mount_2844431.html",
+     "price_usd": 0.99,
+     "pack_qty": 1,
+     "in_stock": false
+    },
+    {
+     "seller": "PyroDrone",
+     "url": "https://pyrodrone.com/collections/electronics/products/amass-xt60e-m-mountable-xt60-male-plug-w-mounting-screws-choose-color",
+     "price_usd": 11.99,
+     "pack_qty": 10,
+     "in_stock": true
+    }
+   ]
+  },
+  {
+   "item": "Black-Oxide Alloy Steel Socket Head Screw, US Origin, M2.5 x 0.45 mm Thread Size, 8 mm Long",
+   "key": "turret_screw_m2_5x8",
+   "qty": 2,
+   "for": "pod: the XT60E-M's two screws",
+   "part_number": "91290A102",
+   "vendor": "McMaster-Carr",
+   "url": "https://www.mcmaster.com/91290A102/",
+   "price_usd_each": 0.246,
+   "pack_qty": 50,
+   "sellers": [
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/91290A102/",
+     "price_usd": null,
+     "pack_qty": null,
+     "in_stock": null
+    }
+   ]
+  },
+  {
+   "item": "Corrosion-Resistant 18-8 Stainless Steel Hex Nut, M2.5 x 0.45 mm Thread Size",
+   "key": "turret_nut_m2_5",
+   "qty": 2,
+   "for": "pod: their nuts",
+   "part_number": "91828A113",
+   "vendor": "McMaster-Carr",
+   "url": "https://www.mcmaster.com/91828A113/",
+   "price_usd_each": 0.071,
+   "pack_qty": 100,
+   "sellers": [
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/91828A113/",
+     "price_usd": null,
+     "pack_qty": null,
+     "in_stock": null
+    }
+   ]
+  },
+  {
+   "item": "Round snap-in rocker switch, DPST, 10 A 28 VDC (UL), \u00d820.2 panel hole, panels to 3 mm",
+   "key": "bulgin-r13244aaaa",
+   "qty": 1,
+   "for": "pod: turret power",
+   "part_number": "R13244AAAA",
+   "vendor": "Bulgin",
+   "url": "https://www.digikey.com/en/products/result?keywords=708-3111-ND",
+   "price_usd_each": 4.58,
+   "pack_qty": null,
+   "sellers": [
+    {
+     "seller": "Digi-Key",
+     "url": "https://www.digikey.com/en/products/result?keywords=708-3111-ND",
+     "price_usd": 4.58,
+     "pack_qty": 1,
+     "in_stock": true
+    },
+    {
+     "seller": "Mouser",
+     "url": "https://www.mouser.com/ProductDetail/167-R13244AAAA",
+     "price_usd": 4.13,
+     "pack_qty": 1,
+     "in_stock": true
+    }
+   ]
+  },
+  {
+   "item": "FUSE HLDR CART 250V 10A PNL MNT - 345 series shock-safe panel holder, 5 x 20 mm, low-profile body, screwdriver-slot knob, 3/16 in right-angle dual-purpose solder/QC terminals",
+   "key": "fuse-holder-5x20-panel",
+   "qty": 1,
+   "for": "pod: the fuse",
+   "part_number": "03455LS1H",
+   "vendor": "Littelfuse",
+   "url": "https://www.digikey.com/en/products/detail/littelfuse-inc/03455LS1H/553826",
+   "price_usd_each": 7.16,
+   "pack_qty": null,
+   "sellers": [
+    {
+     "seller": "Digi-Key",
+     "url": "https://www.digikey.com/en/products/detail/littelfuse-inc/03455LS1H/553826",
+     "price_usd": null,
+     "pack_qty": null,
+     "in_stock": null
+    }
+   ]
+  },
+  {
+   "item": "5 x 20 mm time-lag fuse, 5 A, 500 V AC / 400 V DC (477 series)",
+   "key": "littelfuse-0477005-mxp",
+   "qty": 2,
+   "for": "pod: 5 A time-lag, one spare",
+   "part_number": "0477005.MXP",
+   "vendor": "Littelfuse",
+   "url": "https://www.mouser.com/ProductDetail/576-0477005.MXP",
+   "price_usd_each": 1.0,
+   "pack_qty": null,
+   "sellers": [
+    {
+     "seller": "Mouser",
+     "url": "https://www.mouser.com/ProductDetail/576-0477005.MXP",
+     "price_usd": 2.18,
+     "pack_qty": 1,
+     "in_stock": true
+    },
+    {
+     "seller": "Digi-Key",
+     "url": "https://www.digikey.com/en/products/detail/littelfuse-inc/0477005-MXP/1979192",
+     "price_usd": null,
+     "pack_qty": null,
+     "in_stock": null
+    }
+   ]
+  },
+  {
+   "item": "Mini-XLR 3-pin male panel receptacle (TB3M), latching, keyed",
+   "key": "switchcraft-tb3m",
+   "qty": 1,
+   "for": "pod: the hold-to-run pendant's socket",
+   "part_number": "TB3M",
+   "vendor": "Switchcraft",
+   "url": "https://www.mouser.com/ProductDetail/502-TB3M",
+   "price_usd_each": 13.1,
+   "pack_qty": null,
+   "sellers": [
+    {
+     "seller": "Mouser",
+     "url": "https://www.mouser.com/ProductDetail/502-TB3M",
+     "price_usd": 13.1,
+     "pack_qty": 1,
+     "in_stock": true
+    },
+    {
+     "seller": "Digi-Key",
+     "url": "https://www.digikey.com/en/products/detail/switchcraft-inc/TB3M/137715",
+     "price_usd": 13.24,
+     "pack_qty": 1,
+     "in_stock": true
+    }
+   ]
+  },
+  {
+   "item": "UCAN Board Based on STM32F072 USB to CAN Adapter Support with CAnable / CandleLight / Klipper firmware",
+   "key": "usb-can-canable2",
+   "qty": 1,
+   "for": "pod: CAN to the turret, USB to the J501",
+   "part_number": "UCAN (SKU MM-U2CAN-0001)",
+   "vendor": "FYSETC",
+   "url": "https://www.fysetc.com/products/fysetc-ucan-board",
+   "price_usd_each": 8.0,
+   "pack_qty": null,
+   "sellers": [
+    {
+     "seller": "FYSETC",
+     "url": "https://www.fysetc.com/products/fysetc-ucan-board",
+     "price_usd": 8.0,
+     "pack_qty": 1,
+     "in_stock": true
+    }
+   ]
+  },
+  {
+   "item": "WAGO 221-413 LEVER-NUTS compact splicing connector, 3 conductors, 24-12 AWG, 32 A / 450 V, transparent housing",
+   "key": "wago-221-413",
+   "qty": 4,
+   "for": "pod: +24 V and 0 V to the DT12's power pins, the pendant loop to its safety pins",
+   "part_number": "221-413",
+   "vendor": "WAGO",
+   "url": "https://www.newark.com/wago/221-413/terminal-block-pluggable-3pos/dp/71Y8329",
+   "price_usd_each": 0.84,
+   "pack_qty": 1,
+   "sellers": [
+    {
+     "seller": "Newark",
+     "url": "https://www.newark.com/wago/221-413/terminal-block-pluggable-3pos/dp/71Y8329",
+     "price_usd": 0.84,
+     "pack_qty": 1,
+     "in_stock": null
+    },
+    {
+     "seller": "Del City",
+     "url": "https://www.delcity.net/store/wire-connectors-quick-splices/wago-connectors/221-lever-nut-3-conductor/",
+     "price_usd": 0.57,
+     "pack_qty": 1,
+     "in_stock": true
+    }
+   ]
+  },
+  {
+   "item": "M3-0.5 x 40 mm socket head cap screw, class 12.9 alloy steel, black oxide, partial thread (DIN 912 / ISO 4762)",
+   "key": "turret_screw_m3x40",
+   "qty": 4,
+   "for": "the lid screws through the legs, in place of the J501's M3 x 16",
+   "part_number": "SHCS - B12.9 M03 x 040(PT)",
+   "vendor": "Monster Bolts",
+   "url": "https://monsterbolts.com/products/socket-cap-b12-9-m3",
+   "price_usd_each": 0.281,
+   "pack_qty": 10,
+   "sellers": [
+    {
+     "seller": "Monster Bolts",
+     "url": "https://monsterbolts.com/products/socket-cap-b12-9-m3",
+     "price_usd": 2.81,
+     "pack_qty": 10,
+     "in_stock": true
+    }
+   ]
+  },
+  {
+   "item": "Heat-Set Threaded Inserts for Plastic, Standard, Brass, M5 x 0.8 mm Thread Size, 7.9 mm Installed Length",
+   "key": "insert_m5",
+   "qty": 4,
+   "for": "deck: the TM face (the turret's own 4 x M5 x 16)",
+   "part_number": "94459A775",
+   "vendor": "McMaster-Carr",
+   "url": "https://www.mcmaster.com/94459A775/",
+   "price_usd_each": 0.2728,
+   "pack_qty": 25,
+   "sellers": [
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/94459A775/",
+     "price_usd": null,
+     "pack_qty": null,
+     "in_stock": null
+    }
+   ]
+  },
+  {
+   "item": "Dowel Pin, 52100 Alloy Steel, 5 mm Diameter, 10 mm Long",
+   "key": "turret_dowel_5x10",
+   "qty": 2,
+   "for": "deck: the TM face's dowels",
+   "part_number": "91595A340",
+   "vendor": "McMaster-Carr",
+   "url": "https://www.mcmaster.com/91595A340/",
+   "price_usd_each": 0.4612,
+   "pack_qty": 25,
+   "sellers": [
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/91595A340/",
+     "price_usd": null,
+     "pack_qty": null,
+     "in_stock": null
+    }
+   ]
+  },
+  {
+   "item": "Heat-Set Threaded Inserts for Plastic, Standard, Brass, M3 x 0.5 mm Thread Size, 4.3 mm Installed Length",
+   "key": "turret_insert_m3_short",
+   "qty": 6,
+   "for": "deck: the shroud's tabs",
+   "part_number": "94459A130",
+   "vendor": "McMaster-Carr",
+   "url": "https://www.mcmaster.com/94459A130/",
+   "price_usd_each": 0.2182,
+   "pack_qty": 50,
+   "sellers": [
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/94459A130/",
+     "price_usd": null,
+     "pack_qty": null,
+     "in_stock": null
+    }
+   ]
+  },
+  {
+   "item": "Black-Oxide Alloy Steel Socket Head Screw, US Origin, M3 x 0.5 mm Thread Size, 10 mm Long",
+   "key": "turret_screw_m3x10",
+   "qty": 6,
+   "for": "shroud: its tabs up into the deck",
+   "part_number": "91290A115",
+   "vendor": "McMaster-Carr",
+   "url": "https://www.mcmaster.com/91290A115/",
+   "price_usd_each": 0.1323,
+   "pack_qty": 100,
+   "sellers": [
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/91290A115/",
+     "price_usd": null,
+     "pack_qty": null,
+     "in_stock": null
+    }
+   ]
+  },
+  {
+   "item": "Heat-Set Threaded Inserts for Plastic, Standard, Brass, M3 x 0.5 mm Thread Size, 5.7 mm Installed Length",
+   "key": "insert_m3",
+   "qty": 4,
+   "for": "deck: the pod cover",
+   "part_number": "94459A140",
+   "vendor": "McMaster-Carr",
+   "url": "https://www.mcmaster.com/94459A140/",
+   "price_usd_each": 0.2182,
+   "pack_qty": 50,
+   "sellers": [
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/94459A140/",
+     "price_usd": null,
+     "pack_qty": null,
+     "in_stock": null
+    }
+   ]
+  },
+  {
+   "item": "Black-Oxide Alloy Steel Hex-Drive Flat Head Screw, 90 Degree Countersink, M3 x 0.5 mm Thread Size, 6 mm Long",
+   "key": "turret_screw_m3x6_flat",
+   "qty": 4,
+   "for": "pod cover",
+   "part_number": "91294A126",
+   "vendor": "McMaster-Carr",
+   "url": "https://www.mcmaster.com/91294A126/",
+   "price_usd_each": 0.0545,
+   "pack_qty": 100,
+   "sellers": [
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/91294A126/",
+     "price_usd": null,
+     "pack_qty": null,
+     "in_stock": null
+    }
+   ]
+  },
+  {
+   "item": "Closed-cell neoprene/EPDM/SBR foam strip, 1/16 in thick x 3/8 in wide x 50 ft, rubber adhesive one side (P8106UL series, SC42UL)",
+   "key": "preson-p8106ul-3-8in",
+   "qty": 1,
+   "for": "shroud: a 3 mm strip cut from the roll, the ring under the floor's lip on the J501 roof's solid band",
+   "part_number": "P8106ULRL00.38XOH",
+   "vendor": "Pres-On (Presbond)",
+   "url": "https://presbond.com/products/1-16-thick-neoprene-foam-strip-3-8-width-x-50-length-black-rubber-adhesive",
+   "price_usd_each": 10.95,
+   "pack_qty": 1,
+   "sellers": [
+    {
+     "seller": "Presbond",
+     "url": "https://presbond.com/products/1-16-thick-neoprene-foam-strip-3-8-width-x-50-length-black-rubber-adhesive",
+     "price_usd": 10.95,
+     "pack_qty": 1,
+     "in_stock": true
+    }
+   ]
+  }
+ ],
+ "shared_with_the_bench_stand": [
+  {
+   "item": "Specs IC switch - 1 3/8 in (3.5 cm) momentary button, 3.5 mm mono plug, 6 ft (183 cm) cord",
+   "key": "pendant-hold-to-run",
+   "qty": 0,
+   "for": "the bench stand's pendant, plugged into the pod instead",
+   "part_number": "Specs IC (SKU 10000114)",
+   "vendor": "AbleNet",
+   "url": "https://www.ablenetinc.com/specs-ic/",
+   "price_usd_each": 75.0,
+   "pack_qty": null,
+   "sellers": [
+    {
+     "seller": "AbleNet",
+     "url": "https://www.ablenetinc.com/specs-ic/",
+     "price_usd": 75.0,
+     "pack_qty": 1,
+     "in_stock": true
+    }
+   ],
+   "note": "not bought again"
+  },
+  {
+   "item": "Mini-XLR 3-pin female cable plug (TA3FLX), latching, cable <= 4.32 mm",
+   "key": "switchcraft-ta3flx",
+   "qty": 0,
+   "for": "on the pendant's lead",
+   "part_number": "TA3FLX",
+   "vendor": "Switchcraft",
+   "url": "https://www.mouser.com/ProductDetail/502-TA3FLX",
+   "price_usd_each": 14.22,
+   "pack_qty": null,
+   "sellers": [
+    {
+     "seller": "Mouser",
+     "url": "https://www.mouser.com/ProductDetail/502-TA3FLX",
+     "price_usd": 14.22,
+     "pack_qty": 1,
+     "in_stock": true
+    },
+    {
+     "seller": "Digi-Key",
+     "url": "https://www.digikey.com/en/products/detail/switchcraft-inc/TA3FLX/TA3FLX-ND/1290022",
+     "price_usd": 14.22,
+     "pack_qty": 1,
+     "in_stock": true
+    }
+   ],
+   "note": "not bought again"
+  },
+  {
+   "item": "Enclosed AC-DC supply, 24 V 14.6 A, 350 W",
+   "key": "meanwell-lrs-350-24",
+   "qty": 0,
+   "for": "the bench supply: 24 V for the J501 and the turret",
+   "part_number": "LRS-350-24",
+   "vendor": "Mean Well",
+   "url": "https://www.jameco.com/webapp/wcs/stores/servlet/ProductDisplay?langId=-1&storeId=10001&catalogId=10001&productId=2219823",
+   "price_usd_each": 32.1,
+   "pack_qty": null,
+   "sellers": [
+    {
+     "seller": "Jameco",
+     "url": "https://www.jameco.com/webapp/wcs/stores/servlet/ProductDisplay?langId=-1&storeId=10001&catalogId=10001&productId=2219823",
+     "price_usd": 32.1,
+     "pack_qty": 1,
+     "in_stock": true
+    },
+    {
+     "seller": "TRC Electronics",
+     "url": "https://www.trcelectronics.com/products/mean-well-lrs-350-24",
+     "price_usd": 34.81,
+     "pack_qty": 1,
+     "in_stock": true
+    }
+   ],
+   "note": "not bought again"
+  }
+ ],
+ "price_usd_known": 57.11,
+ "not_in_a_catalogue": [],
+ "no_listed_price": [],
+ "modelled": [
+  {
    "item": "pod_xt60",
-   "note": "Amass XT60E-M panel plug: 24 V in (the J501 takes 12-36 V, so one 24 V supply can feed both)",
+   "key": "amass-xt60e-m",
+   "note": "Amass XT60E-M panel plug: 24 V in (the supply's lead carries the female, so no live pin is ever bare; the J501 takes 12-36 V, so one 24 V supply can feed both)",
    "mass_g": 10.0
   },
   {
    "item": "pod_switch",
-   "note": "KCD1 rocker switch, 16 A",
+   "key": "bulgin-r13244aaaa",
+   "note": "Bulgin R13244AAAA DC rocker (D42): \u00d820.2 snap-in with a key notch, 10 A 28 VDC: turret power",
    "mass_g": 10.0
   },
   {
    "item": "pod_fuse",
-   "note": "5 x 20 mm panel fuse holder, 5 A slow-blow",
+   "key": "fuse-holder-5x20-panel",
+   "note": "Littelfuse 345 panel holder with a DC-rated 5 A time-lag fuse (0477005.MXP)",
    "mass_g": 10.0
   },
   {
    "item": "pod_pendant",
-   "note": "3.5 mm panel jack: the hold-to-run pendant (the safety line: nothing spins or feeds unless it is held)",
+   "key": "switchcraft-tb3m",
+   "note": "Switchcraft TB3M mini-XLR socket (D47) for the hold-to-run pendant: the safety line, nothing spins or feeds unless it is held; keyed, so no audio plug (headphones) can close the loop",
    "mass_g": 10.0
   },
   {
    "item": "pod_usb",
+   "key": "usb-can-canable2",
    "note": "USB-CAN adapter (CANable 2.0 class): CAN to the turret, USB to the J501's rear USB-A",
    "mass_g": 20.0
   },
   {
    "item": "pod_wago",
+   "key": "wago-221-413",
    "note": "WAGO 221 lever connectors: 24 V and 0 V to the DT12 power pins, the pendant loop to its safety pins",
    "mass_g": 15.0
   },
   {
    "item": "lid_screw_1",
+   "key": "turret_screw_m3x40",
    "note": "M3 x 40 ISO 4762 socket head, in place of the J501's M3 x 16",
    "mass_g": 1.5
   },
   {
    "item": "lid_screw_2",
+   "key": "turret_screw_m3x40",
    "note": "M3 x 40 ISO 4762 socket head, in place of the J501's M3 x 16",
    "mass_g": 1.5
   },
   {
    "item": "lid_screw_3",
+   "key": "turret_screw_m3x40",
    "note": "M3 x 40 ISO 4762 socket head, in place of the J501's M3 x 16",
    "mass_g": 1.5
   },
   {
    "item": "lid_screw_4",
+   "key": "turret_screw_m3x40",
    "note": "M3 x 40 ISO 4762 socket head, in place of the J501's M3 x 16",
    "mass_g": 1.5
-  },
-  {
-   "item": "M3 x 4 heat-set inserts",
-   "qty": 6,
-   "for": "intake shroud"
-  },
-  {
-   "item": "M3 x 8 button head",
-   "qty": 6,
-   "for": "intake shroud"
-  },
-  {
-   "item": "M3 x 8 heat-set inserts",
-   "qty": 4,
-   "for": "pod cover"
-  },
-  {
-   "item": "M3 x 6 button head",
-   "qty": 4,
-   "for": "pod cover"
-  },
-  {
-   "item": "M5 x 8 heat-set inserts",
-   "qty": 4,
-   "for": "the TM face (the turret's 4 x M5 x 16)"
-  },
-  {
-   "item": "\u00d85 x 12 dowel pins",
-   "qty": 2,
-   "for": "the TM face"
-  },
-  {
-   "item": "closed-cell foam tape 3 x 1.5 mm",
-   "qty": 1,
-   "for": "under the shroud floor, round the \u00d880 hole"
-  },
-  {
-   "item": "grommet for the DT12 harness, \u00d813 hole",
-   "qty": 1,
-   "for": "the pod's -y wall"
   }
  ],
- "note": "the turret's own parts: exports/turret/bench/bom.json"
+ "note": "what to buy for the box adapter (cad/turret_box.py): every line a catalogue key (catalog/turret.json, hardware.json, sourcing.json) with a listed price (D40); qty per adapter, packs bought whole; modelled: the envelopes the 3D page shows; the turret's own parts: exports/turret/bench/bom.json"
 }
