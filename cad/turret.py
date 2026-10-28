@@ -1040,7 +1040,8 @@ THUMB = {'head': (16.0, 3.5), 'collar': (8.0, 6.0), 'l': 12.0, 'oring_seat': (8.
 LASER_X = (112.0, 132.0)       # the holder's ring (C frame x); the laser from LASER_X[0] - 2
 LASER_Y = 0.0
 LASER_Z = 29.5
-LASER_FOOT = {'x0': 99.0, 'half_w': 9.0, 'screws': ((108.0, 7.0), (108.0, -7.0))}   # x 108: the hex key clears the
+LASER_FOOT = {'x0': 99.0, 'half_w': 12.5, 'screws': ((108.0, 9.0), (108.0, -9.0))}   # y +-9: the heads clear the
+#                                                    laser's Ø11 bore (at +-7 the fastener gate found them over its edge)   # x 108: the hex key clears the
 #                                                                                     cartridge board's front edge (x 104)
 LASER_SCREW = {'d': 3.0, 'l': 6.0, 'mass_g': 0.3,
                'name': '3 x McMaster 93285A115 M3 x 6 nylon-tip set screws (18-8): the laser\'s boresight, in its holder\'s tapped ring'}

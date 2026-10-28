@@ -504,10 +504,14 @@ def motion_mechanisms(T, cache):
                           'axis': (_pt(G, 'tilt', (G.wheel_x, -G.wheel_y, 0)), (0, 0, 1)), 'range': [0.0, 360.0], 'unit': 'deg',
                           'samples': 13},
               'flap': {'kind': 'revolute', 'moving': 'hopper_flap', 'fixed': 'hopper_lid',
-                       'axis': (hinge, (0, 1, 0)), 'range': [-70.0, 0.0], 'unit': 'deg', 'samples': 8},
+                       'axis': (hinge, (0, 1, 0)), 'range': [-50.0, 0.0], 'unit': 'deg', 'samples': 6},   # its knuckle
+                       # meets the lid at 51 deg (the motion gate's onset, 2026-10-28): that is the flap's stop
               'pan_drive': {'kind': 'revolute', 'moving': 'pan_pinion', 'fixed': 'pan_servo',
                             'axis': ((sx, sy, 0.0), (0, 0, 1)), 'range': [0.0, 360.0], 'unit': 'deg', 'samples': 13}}
+    hub = 'each hub\'s bore on its X2216\'s prop adapter: a 0.008 mm^3 modelling overlap where the two envelopes meet (a slip fit)'
     return motion_gate(asm, joints, tol=CONNECT_TOL, cache=cache, max_step_deg=30.0, intended_contacts=MOTION_CONTACTS,
+                       intended_overlaps=[{'parts': ['flywheel', 'flywheel_motor_l'], 'reason': hub},
+                                          {'parts': ['flywheel_m', 'flywheel_motor_r'], 'reason': hub}],
                        ignore_pairs=[('pan_pinion', 'pan_ring')], out=VERDICTS / 'motion_mechanisms.json')
 
 
@@ -538,8 +542,10 @@ def fasteners(T, asm, cache):
     """cadagent.gates.fasteners on the screws cad/turret.py places with their receivers (GATED_SCREWS): seat, stack,
     holes, engagement in the modelled insert, tip, length, and the hex key's straight reach. The steps: the screws go in
     before the cartridge board and its ESCs (the board's front edge is over the front hopper lug)."""
-    steps = [{'order': 1, 'fit': ['hopper', 'laser_mount'], 'fasteners': list(tu.GATED_SCREWS), 'tool': 'hex 2.5'},
-             {'order': 2, 'fit': ['cartridge_board', 'esc_l', 'esc_r']}]
+    steps = [{'order': 1, 'fit': 'hopper', 'onto': 'cartridge_body', 'fasteners': ['hopper_screws'], 'tool': 'hex 2.5'},
+             {'order': 2, 'fit': 'laser_mount', 'onto': 'cartridge_body', 'fasteners': ['laser_foot_screws'], 'tool': 'hex 2.5'},
+             {'order': 3, 'fit': 'esc_l', 'onto': 'cartridge_body'}, {'order': 4, 'fit': 'esc_r', 'onto': 'cartridge_body'},
+             {'order': 5, 'fit': 'cartridge_board', 'onto': 'cartridge_body'}]
     return fastener_gate(asm, fastener_specs(T), steps=steps, tools=TOOLS, tol=CONNECT_TOL, cache=cache,
                          out=VERDICTS / 'fasteners.json')
 
