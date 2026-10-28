@@ -518,24 +518,63 @@ def stop_posts():
 
 HUB_HEAD_CB = (10.0, 5.5)    # the upper links' hub counterbores for the M5 x 40 heads (Ø8.5 x 5): Ø, depth; 15.5 mm of
                              # each screw then goes into the adapter's 16 mm threads
-STOP_DOG_R = 72.0            # the upper link's stop faces reach this far from the motor's axis: past the sleeve's contact
-                             # (stop_arm(), 57.8 mm) by more than the squeezed patch's half-width
+STOP_DOG_R = 70.0            # the upper link's stop faces run flat out to this radius from the motor's axis: past the
+                             # sleeve's contact (stop_arm(), 57.8 mm) by more than the squeezed patch's half-width
+STOP_DOG_TAPER_X = 110.0     # ... and their backs taper straight into the link's edge here, along its axis (a shallow
+                             # 16 deg step: an arc meeting the edge square made a notch that cost the link's landing case
+                             # 15 %, cad/leg_studies.py R1)
+STOP_DOG_FILLET = 10.0       # the faces' roots, where they leave the link's edge, rounded (mm)
+
+
+def _arc_pts(c, r, a0, a1, n=8):
+    """Points on a circle (centre c, radius r) from angle a0 to a1 (rad), the ends included."""
+    return [(c[0] + r * math.cos(a0 + (a1 - a0) * k / n), c[1] + r * math.sin(a0 + (a1 - a0) * k / n)) for k in range(n + 1)]
 
 
 def stop_dogs():
     """The upper link's two stop faces (D53), in its own frame: by the hub on each edge, a radial face at
-    +-stop_dog_angle() from its axis, from inside the hub out to STOP_DOG_R, filled in to the link's own edge (a wedge
-    about 15 mm wide at the tip). A post's sleeve is pushed square to the face, so the stop's force acts stop_arm() from
-    the motor's axis and the face does not slide on the TPU. One part is both the front and the rear link (turned, not
-    mirrored), and each face is the knee-out stop of one and the knee-in stop of the other: the two faces mirror."""
-    a, back = math.radians(stop_dog_angle()), math.radians(15.0)     # 'back': well inside the link's own outline
-    r0, r1, c = 30.0, STOP_DOG_R, 2.0                                 # c: the outer corner rounded, no edge into the TPU
+    +-stop_dog_angle() from its axis out to STOP_DOG_R, its tip rounded, its back a straight taper into the link's edge
+    at STOP_DOG_TAPER_X, its root filleted into the edge. A post's sleeve is pushed square to the face, so the stop's
+    force acts stop_arm() from the motor's axis and the face does not slide on the TPU. One part is both the front and
+    the rear link (turned, not mirrored), and each face is the knee-out stop of one and the knee-in stop of the other:
+    the two faces mirror."""
+    a = math.radians(stop_dog_angle())
+    f = (math.cos(a), math.sin(a))                                   # along the face, outwards
+    tip_r = 3.0                                                      # the tip's round: no edge into the TPU
+    t_far = (STOP_DOG_TAPER_X, upper_half_width(STOP_DOG_TAPER_X) - 1.0)   # the taper ends 1 mm inside the edge
+    # the tip: a round of tip_r tangent to the face and to the taper
+    p_end = (STOP_DOG_R * f[0], STOP_DOG_R * f[1])
+    g = (t_far[0] - p_end[0], t_far[1] - p_end[1])
+    g = (g[0] / math.hypot(*g), g[1] / math.hypot(*g))               # along the taper, outwards
+    turn = math.acos(max(-1.0, min(1.0, f[0] * g[0] + f[1] * g[1])))
+    back = tip_r * math.tan(turn / 2)                                # the round's tangent points sit this far from the corner
+    n_in = (f[1], -f[0])                                             # the face's inward normal (towards the link's axis)
+    t1 = (p_end[0] - back * f[0], p_end[1] - back * f[1])
+    ctr = (t1[0] + tip_r * n_in[0], t1[1] + tip_r * n_in[1])
+    tip = _arc_pts(ctr, tip_r, math.atan2(-n_in[1], -n_in[0]), math.atan2(-n_in[1], -n_in[0]) - turn)
+    # the root: a fillet between the link's edge (towards the hub) and the face (outwards) where the face leaves the edge
+    sb = (UPPER_HUB_R - UPPER_EYE_R) / P['l1']
+    e = (-math.sqrt(1 - sb * sb), sb)                                # the edge's direction towards the hub
+    z0 = UPPER_HUB_R / math.sqrt(1 - sb * sb)                        # the edge line: z = z0 + e_z / e_x * x
+    x0 = z0 / (math.tan(a) + sb / math.sqrt(1 - sb * sb))           # where the face's line meets the edge's
+    X0 = (x0, x0 * math.tan(a))
+    half = math.acos(max(-1.0, min(1.0, e[0] * f[0] + e[1] * f[1]))) / 2     # half the open angle between them
+    dt = STOP_DOG_FILLET / math.tan(half)
+    T1, T2 = (X0[0] + dt * e[0], X0[1] + dt * e[1]), (X0[0] + dt * f[0], X0[1] + dt * f[1])
+    bis = (e[0] + f[0], e[1] + f[1])
+    bis = (bis[0] / math.hypot(*bis), bis[1] / math.hypot(*bis))
+    C = (X0[0] + STOP_DOG_FILLET / math.sin(half) * bis[0], X0[1] + STOP_DOG_FILLET / math.sin(half) * bis[1])
+    a1, a2 = math.atan2(T1[1] - C[1], T1[0] - C[0]), math.atan2(T2[1] - C[1], T2[0] - C[0])
+    if a2 - a1 > math.pi:
+        a2 -= 2 * math.pi
+    elif a1 - a2 > math.pi:
+        a2 += 2 * math.pi
+    root = _arc_pts(C, STOP_DOG_FILLET, a1, a2)
+    inside = [(STOP_DOG_TAPER_X - 20.0, 0.0), (20.0, 0.0)]           # back along the link's axis, inside it
     out = None
     for s in (1, -1):
-        pol = [(r0, a), (r1 - c, a), (r1 - 0.3 * c, a - 0.3 * c / r1)]
-        pol += [(r1, a - c / r1 - (a - c / r1 - back) * k / 8) for k in range(9)]
-        pol.append((r0, back))
-        dog = yslab([(r * math.cos(q), s * r * math.sin(q)) for r, q in pol], 0.0, P['upper_t'])
+        pol = root + tip + [t_far] + inside
+        dog = yslab([(x, s * z) for x, z in pol], 0.0, P['upper_t'])
         out = dog if out is None else out.union(dog)
     return out
 
