@@ -1,0 +1,889 @@
+{
+  "schema": "cadagent.gate/1",
+  "gate": "dossier-lint",
+  "pass": false,
+  "status": "fail",
+  "counts": {
+    "pass": 31,
+    "warn": 2,
+    "fail": 18
+  },
+  "checks": [
+    {
+      "id": "unknown-check@dossier/project.yaml:44",
+      "status": "fail",
+      "message": "R6: check 'gate:turret-ammo' does not resolve: no gate 'turret-ammo' (known: wall, connectivity, containment, fasteners, motion, assembly)",
+      "evidence": {
+        "code": "unknown-check",
+        "file": "dossier/project.yaml",
+        "line": 44,
+        "item": "R6"
+      }
+    },
+    {
+      "id": "unknown-check@dossier/project.yaml:62",
+      "status": "fail",
+      "message": "R8: check 'gate:turret-path' does not resolve: no gate 'turret-path' (known: wall, connectivity, containment, fasteners, motion, assembly)",
+      "evidence": {
+        "code": "unknown-check",
+        "file": "dossier/project.yaml",
+        "line": 62,
+        "item": "R8"
+      }
+    },
+    {
+      "id": "section-below-gated@dossier/sections/S1-base.yaml:3",
+      "status": "fail",
+      "message": "section 'S1-base' is built, below gated: pan_base: gate:assembly fail (failing: step:53:insert); turret-fea fail (verdict.all_ok is False); gate:wall fail (failing: wall:pan_base); pan_clamp: gate:assembly fail (failing: step:50:insert); pan_bearing: gate:assembly fail (failing: step:50:insert); pan_bearing_inner: gate:assembly fail (failing: step:50:insert); gate:motion unrun (exports/gates/motion.json not written yet)",
+      "parts": [
+        "circlip_50",
+        "hall_switch",
+        "pan_base",
+        "pan_bearing",
+        "pan_bearing_inner",
+        "pan_clamp",
+        "pan_pinion",
+        "pan_ring",
+        "pan_spacer"
+      ],
+      "evidence": {
+        "code": "section-below-gated",
+        "file": "dossier/sections/S1-base.yaml",
+        "line": 3,
+        "item": "S1-base"
+      }
+    },
+    {
+      "id": "section-below-gated@dossier/sections/S2-tilt.yaml:3",
+      "status": "fail",
+      "message": "section 'S2-tilt' is built, below gated: tilt_yoke: gate:assembly fail (failing: step:29:insert, step:31:insert, step:32:insert, step:50:insert); gate:motion unrun (exports/gates/motion.json not written yet); turret-fea fail (verdict.all_ok is False); gate:wall fail (failing: wall:tilt_yoke); cradle: gate:motion unrun (exports/gates/motion.json not written yet); turret-fea fail (verdict.all_ok is False); gate:wall fail (failing: wall:cradle); cradle_plate_l: gate:motion unrun (exports/gates/motion.json not written yet); turret-fea fail (verdict.all_ok is False); cradle_plate_r: gate:motion unrun (exports/gates/motion.json not written yet); turret-fea fail (verdict.all_ok is False)",
+      "parts": [
+        "cradle",
+        "cradle_plate_l",
+        "cradle_plate_r",
+        "ct_thumbscrew",
+        "horn_boss",
+        "pivot_spacer",
+        "shoulder_screw",
+        "stop_lug",
+        "tilt_bearing",
+        "tilt_bearing_inner",
+        "tilt_servo",
+        "tilt_yoke"
+      ],
+      "evidence": {
+        "code": "section-below-gated",
+        "file": "dossier/sections/S2-tilt.yaml",
+        "line": 3,
+        "item": "S2-tilt"
+      }
+    },
+    {
+      "id": "section-below-gated@dossier/sections/S3-feed.yaml:3",
+      "status": "fail",
+      "message": "section 'S3-feed' is draft, below gated: dial: 1 lint error(s): unknown-check",
+      "parts": [
+        "ball",
+        "dial",
+        "feed_motor",
+        "hopper",
+        "hopper_flap",
+        "hopper_inserts",
+        "hopper_lid"
+      ],
+      "evidence": {
+        "code": "section-below-gated",
+        "file": "dossier/sections/S3-feed.yaml",
+        "line": 3,
+        "item": "S3-feed"
+      }
+    },
+    {
+      "id": "unknown-check@dossier/sections/S3-feed.yaml:55",
+      "status": "fail",
+      "message": "dial: check 'gate:turret-ammo' does not resolve: no gate 'turret-ammo' (known: wall, connectivity, containment, fasteners, motion, assembly)",
+      "parts": [
+        "dial"
+      ],
+      "evidence": {
+        "code": "unknown-check",
+        "file": "dossier/sections/S3-feed.yaml",
+        "line": 55,
+        "item": "dial"
+      }
+    },
+    {
+      "id": "section-below-gated@dossier/sections/S4-launcher.yaml:3",
+      "status": "fail",
+      "message": "section 'S4-launcher' is draft, below gated: cartridge_body: 2 lint error(s): unknown-check; flywheel_tyre: 2 lint error(s): unknown-check; flywheel_tyre_m: 2 lint error(s): unknown-check",
+      "parts": [
+        "cartridge_board",
+        "cartridge_body",
+        "esc_l",
+        "esc_r",
+        "flywheel",
+        "flywheel_m",
+        "flywheel_motor_l",
+        "flywheel_motor_r",
+        "flywheel_tyre",
+        "flywheel_tyre_m"
+      ],
+      "evidence": {
+        "code": "section-below-gated",
+        "file": "dossier/sections/S4-launcher.yaml",
+        "line": 3,
+        "item": "S4-launcher"
+      }
+    },
+    {
+      "id": "unknown-check@dossier/sections/S4-launcher.yaml:112",
+      "status": "fail",
+      "message": "cartridge_body: check 'gate:turret-path' does not resolve: no gate 'turret-path' (known: wall, connectivity, containment, fasteners, motion, assembly)",
+      "parts": [
+        "cartridge_body"
+      ],
+      "evidence": {
+        "code": "unknown-check",
+        "file": "dossier/sections/S4-launcher.yaml",
+        "line": 112,
+        "item": "cartridge_body"
+      }
+    },
+    {
+      "id": "unknown-check@dossier/sections/S4-launcher.yaml:112#2",
+      "status": "fail",
+      "message": "cartridge_body: check 'gate:turret-ammo' does not resolve: no gate 'turret-ammo' (known: wall, connectivity, containment, fasteners, motion, assembly)",
+      "parts": [
+        "cartridge_body"
+      ],
+      "evidence": {
+        "code": "unknown-check",
+        "file": "dossier/sections/S4-launcher.yaml",
+        "line": 112,
+        "item": "cartridge_body"
+      }
+    },
+    {
+      "id": "unknown-check@dossier/sections/S4-launcher.yaml:172",
+      "status": "fail",
+      "message": "flywheel_tyre: check 'gate:turret-path' does not resolve: no gate 'turret-path' (known: wall, connectivity, containment, fasteners, motion, assembly)",
+      "parts": [
+        "flywheel_tyre"
+      ],
+      "evidence": {
+        "code": "unknown-check",
+        "file": "dossier/sections/S4-launcher.yaml",
+        "line": 172,
+        "item": "flywheel_tyre"
+      }
+    },
+    {
+      "id": "unknown-check@dossier/sections/S4-launcher.yaml:172#2",
+      "status": "fail",
+      "message": "flywheel_tyre: check 'gate:turret-ammo' does not resolve: no gate 'turret-ammo' (known: wall, connectivity, containment, fasteners, motion, assembly)",
+      "parts": [
+        "flywheel_tyre"
+      ],
+      "evidence": {
+        "code": "unknown-check",
+        "file": "dossier/sections/S4-launcher.yaml",
+        "line": 172,
+        "item": "flywheel_tyre"
+      }
+    },
+    {
+      "id": "unknown-check@dossier/sections/S4-launcher.yaml:187",
+      "status": "fail",
+      "message": "flywheel_tyre_m: check 'gate:turret-path' does not resolve: no gate 'turret-path' (known: wall, connectivity, containment, fasteners, motion, assembly)",
+      "parts": [
+        "flywheel_tyre_m"
+      ],
+      "evidence": {
+        "code": "unknown-check",
+        "file": "dossier/sections/S4-launcher.yaml",
+        "line": 187,
+        "item": "flywheel_tyre_m"
+      }
+    },
+    {
+      "id": "unknown-check@dossier/sections/S4-launcher.yaml:187#2",
+      "status": "fail",
+      "message": "flywheel_tyre_m: check 'gate:turret-ammo' does not resolve: no gate 'turret-ammo' (known: wall, connectivity, containment, fasteners, motion, assembly)",
+      "parts": [
+        "flywheel_tyre_m"
+      ],
+      "evidence": {
+        "code": "unknown-check",
+        "file": "dossier/sections/S4-launcher.yaml",
+        "line": 187,
+        "item": "flywheel_tyre_m"
+      }
+    },
+    {
+      "id": "decision-open@dossier/sections/S4-launcher.yaml:304",
+      "status": "warn",
+      "message": "decision 'T4.7' is open; section 'S4-launcher' cannot be signed off until it is decided",
+      "evidence": {
+        "code": "decision-open",
+        "file": "dossier/sections/S4-launcher.yaml",
+        "line": 304,
+        "item": "S4-launcher"
+      }
+    },
+    {
+      "id": "section-below-gated@dossier/sections/S5-barrel.yaml:3",
+      "status": "fail",
+      "message": "section 'S5-barrel' is draft, below gated: barrel: 2 lint error(s): unknown-check",
+      "parts": [
+        "barrel",
+        "laser",
+        "laser_inserts",
+        "laser_mount",
+        "laser_screws"
+      ],
+      "evidence": {
+        "code": "section-below-gated",
+        "file": "dossier/sections/S5-barrel.yaml",
+        "line": 3,
+        "item": "S5-barrel"
+      }
+    },
+    {
+      "id": "unknown-check@dossier/sections/S5-barrel.yaml:42",
+      "status": "fail",
+      "message": "barrel: check 'gate:turret-path' does not resolve: no gate 'turret-path' (known: wall, connectivity, containment, fasteners, motion, assembly)",
+      "parts": [
+        "barrel"
+      ],
+      "evidence": {
+        "code": "unknown-check",
+        "file": "dossier/sections/S5-barrel.yaml",
+        "line": 42,
+        "item": "barrel"
+      }
+    },
+    {
+      "id": "unknown-check@dossier/sections/S5-barrel.yaml:42#2",
+      "status": "fail",
+      "message": "barrel: check 'gate:turret-ammo' does not resolve: no gate 'turret-ammo' (known: wall, connectivity, containment, fasteners, motion, assembly)",
+      "parts": [
+        "barrel"
+      ],
+      "evidence": {
+        "code": "unknown-check",
+        "file": "dossier/sections/S5-barrel.yaml",
+        "line": 42,
+        "item": "barrel"
+      }
+    },
+    {
+      "id": "section-below-gated@dossier/sections/S6-wiring.yaml:3",
+      "status": "fail",
+      "message": "section 'S6-wiring' is built, below gated: slip_ring_rotor: gate:assembly fail (failing: step:50:insert); gate:motion unrun (exports/gates/motion.json not written yet); ring_carrier: gate:wall fail (failing: wall:ring_carrier); ring_driver: gate:assembly fail (failing: step:50:insert); gate:motion unrun (exports/gates/motion.json not written yet); ring_coupling: gate:motion unrun (exports/gates/motion.json not written yet)",
+      "parts": [
+        "base_board",
+        "board_bay",
+        "board_bay_lid",
+        "ring_carrier",
+        "ring_coupling",
+        "ring_driver",
+        "slip_ring_rotor",
+        "turret_board"
+      ],
+      "evidence": {
+        "code": "section-below-gated",
+        "file": "dossier/sections/S6-wiring.yaml",
+        "line": 3,
+        "item": "S6-wiring"
+      }
+    },
+    {
+      "id": "section-below-gated@dossier/sections/S7-compute.yaml:3",
+      "status": "fail",
+      "message": "section 'S7-compute' is built, below gated: compute_shell: gate:wall fail (failing: wall:compute_shell)",
+      "parts": [
+        "compute_shell"
+      ],
+      "evidence": {
+        "code": "section-below-gated",
+        "file": "dossier/sections/S7-compute.yaml",
+        "line": 3,
+        "item": "S7-compute"
+      }
+    },
+    {
+      "id": "decision-open@dossier/sections/S8-stand.yaml:212",
+      "status": "warn",
+      "message": "decision 'T8.2' is open; section 'S8-stand' cannot be signed off until it is decided",
+      "evidence": {
+        "code": "decision-open",
+        "file": "dossier/sections/S8-stand.yaml",
+        "line": 212,
+        "item": "S8-stand"
+      }
+    },
+    {
+      "id": "rule:card-no-function",
+      "status": "pass",
+      "message": "a part card states its function"
+    },
+    {
+      "id": "rule:card-no-interfaces",
+      "status": "pass",
+      "message": "a part card lists its interfaces (free parts, and a one-part dossier, excepted)"
+    },
+    {
+      "id": "rule:card-no-decision",
+      "status": "pass",
+      "message": "a part card, or another card or the section it is in, records a decision"
+    },
+    {
+      "id": "rule:interface-not-party",
+      "status": "pass",
+      "message": "a card lists only interfaces whose `between` names the part or its section"
+    },
+    {
+      "id": "rule:interface-one-sided",
+      "status": "pass",
+      "message": "an interface between two parts is listed on both parts' cards"
+    },
+    {
+      "id": "rule:interface-datum-conflict",
+      "status": "pass",
+      "message": "the two sections that declare an interface agree on its datum (\u00a75.4)"
+    },
+    {
+      "id": "rule:interface-conflict",
+      "status": "pass",
+      "message": "the two declarations of an interface agree on its other fields"
+    },
+    {
+      "id": "rule:fastener-via-mismatch",
+      "status": "pass",
+      "message": "a card's fastener runs `via` an interface between this part and `to`"
+    },
+    {
+      "id": "rule:exemption-unknown-party",
+      "status": "pass",
+      "message": "a gates.intended_overlaps or ignore_pairs entry names parts, part instances or fasteners the build registered"
+    },
+    {
+      "id": "rule:wall-undeclared",
+      "status": "pass",
+      "message": "a card checked by gate:wall (an error) or made by an additive process (a warning) declares material.wall_mm"
+    },
+    {
+      "id": "rule:decision-incomplete",
+      "status": "pass",
+      "message": "a decided decision has a `why` and at least one alternative"
+    },
+    {
+      "id": "rule:alternative-no-reason",
+      "status": "pass",
+      "message": "every alternative says why it was rejected"
+    },
+    {
+      "id": "rule:requirement-untraced",
+      "status": "pass",
+      "message": "every requirement is referenced by a section"
+    },
+    {
+      "id": "rule:requirement-unchecked",
+      "status": "pass",
+      "message": "every requirement has a check (its own, or one on a card of its sections)"
+    },
+    {
+      "id": "rule:waiver-no-rationale",
+      "status": "pass",
+      "message": "a waived requirement says why in `rationale`"
+    },
+    {
+      "id": "rule:requirement-status-ignored",
+      "status": "pass",
+      "message": "a requirement's status is computed; only `waived` belongs in YAML"
+    },
+    {
+      "id": "rule:section-no-requirements",
+      "status": "pass",
+      "message": "a section names the requirements it serves"
+    },
+    {
+      "id": "rule:section-no-parts",
+      "status": "pass",
+      "message": "a section has part cards"
+    },
+    {
+      "id": "rule:status-not-earned",
+      "status": "pass",
+      "message": "a card claims reviewed/signed_off only with a current reviewer record"
+    },
+    {
+      "id": "rule:status-overclaimed",
+      "status": "pass",
+      "message": "a card's YAML status is not above the computed one"
+    },
+    {
+      "id": "rule:review-invalid",
+      "status": "pass",
+      "message": "a reviewer record is valid (cadagent.dossier.review.validate_record: its fields, each answer with evidence, a sign-off consistent with its findings and answers)"
+    },
+    {
+      "id": "rule:review-unknown-section",
+      "status": "pass",
+      "message": "a reviewer record names a section of the dossier"
+    },
+    {
+      "id": "rule:review-same-actor",
+      "status": "pass",
+      "message": "a review is by an actor who neither built nor wrote any part of the section, and not `unknown` (gates: require_separate_reviewer)"
+    },
+    {
+      "id": "rule:review-builder-unknown",
+      "status": "pass",
+      "message": "a current review of a section whose parts were built by a known actor (else nobody can be shown to be someone else, and it does not count)"
+    },
+    {
+      "id": "rule:review-incomplete",
+      "status": "pass",
+      "message": "a current review judges every decision and traces every requirement of its section, and answers exactly the questions of the packet on disk (else it does not count; cadagent.dossier.review.check_record)"
+    },
+    {
+      "id": "rule:review-stale",
+      "status": "pass",
+      "message": "the latest review still matches the geometry (else its sign-off is void)"
+    },
+    {
+      "id": "rule:signoff-open-decision",
+      "status": "pass",
+      "message": "a section with an open decision is not signed off"
+    },
+    {
+      "id": "rule:geometry-missing",
+      "status": "pass",
+      "message": "the build's geometry record exists, so cards can be joined to shapes"
+    },
+    {
+      "id": "rule:geometry-invalid",
+      "status": "pass",
+      "message": "the geometry record is readable JSON"
+    },
+    {
+      "id": "rule:verdict-invalid",
+      "status": "pass",
+      "message": "a gate verdict is readable JSON"
+    },
+    {
+      "id": "rule:verdict-stale",
+      "status": "pass",
+      "message": "a gate verdict was computed from the current geometry record (its inputs match)"
+    }
+  ],
+  "findings": [
+    {
+      "id": "unknown-check@dossier/project.yaml:44",
+      "status": "fail",
+      "message": "R6: check 'gate:turret-ammo' does not resolve: no gate 'turret-ammo' (known: wall, connectivity, containment, fasteners, motion, assembly)",
+      "evidence": {
+        "code": "unknown-check",
+        "file": "dossier/project.yaml",
+        "line": 44,
+        "item": "R6"
+      }
+    },
+    {
+      "id": "unknown-check@dossier/project.yaml:62",
+      "status": "fail",
+      "message": "R8: check 'gate:turret-path' does not resolve: no gate 'turret-path' (known: wall, connectivity, containment, fasteners, motion, assembly)",
+      "evidence": {
+        "code": "unknown-check",
+        "file": "dossier/project.yaml",
+        "line": 62,
+        "item": "R8"
+      }
+    },
+    {
+      "id": "section-below-gated@dossier/sections/S1-base.yaml:3",
+      "status": "fail",
+      "message": "section 'S1-base' is built, below gated: pan_base: gate:assembly fail (failing: step:53:insert); turret-fea fail (verdict.all_ok is False); gate:wall fail (failing: wall:pan_base); pan_clamp: gate:assembly fail (failing: step:50:insert); pan_bearing: gate:assembly fail (failing: step:50:insert); pan_bearing_inner: gate:assembly fail (failing: step:50:insert); gate:motion unrun (exports/gates/motion.json not written yet)",
+      "parts": [
+        "circlip_50",
+        "hall_switch",
+        "pan_base",
+        "pan_bearing",
+        "pan_bearing_inner",
+        "pan_clamp",
+        "pan_pinion",
+        "pan_ring",
+        "pan_spacer"
+      ],
+      "evidence": {
+        "code": "section-below-gated",
+        "file": "dossier/sections/S1-base.yaml",
+        "line": 3,
+        "item": "S1-base"
+      }
+    },
+    {
+      "id": "section-below-gated@dossier/sections/S2-tilt.yaml:3",
+      "status": "fail",
+      "message": "section 'S2-tilt' is built, below gated: tilt_yoke: gate:assembly fail (failing: step:29:insert, step:31:insert, step:32:insert, step:50:insert); gate:motion unrun (exports/gates/motion.json not written yet); turret-fea fail (verdict.all_ok is False); gate:wall fail (failing: wall:tilt_yoke); cradle: gate:motion unrun (exports/gates/motion.json not written yet); turret-fea fail (verdict.all_ok is False); gate:wall fail (failing: wall:cradle); cradle_plate_l: gate:motion unrun (exports/gates/motion.json not written yet); turret-fea fail (verdict.all_ok is False); cradle_plate_r: gate:motion unrun (exports/gates/motion.json not written yet); turret-fea fail (verdict.all_ok is False)",
+      "parts": [
+        "cradle",
+        "cradle_plate_l",
+        "cradle_plate_r",
+        "ct_thumbscrew",
+        "horn_boss",
+        "pivot_spacer",
+        "shoulder_screw",
+        "stop_lug",
+        "tilt_bearing",
+        "tilt_bearing_inner",
+        "tilt_servo",
+        "tilt_yoke"
+      ],
+      "evidence": {
+        "code": "section-below-gated",
+        "file": "dossier/sections/S2-tilt.yaml",
+        "line": 3,
+        "item": "S2-tilt"
+      }
+    },
+    {
+      "id": "section-below-gated@dossier/sections/S3-feed.yaml:3",
+      "status": "fail",
+      "message": "section 'S3-feed' is draft, below gated: dial: 1 lint error(s): unknown-check",
+      "parts": [
+        "ball",
+        "dial",
+        "feed_motor",
+        "hopper",
+        "hopper_flap",
+        "hopper_inserts",
+        "hopper_lid"
+      ],
+      "evidence": {
+        "code": "section-below-gated",
+        "file": "dossier/sections/S3-feed.yaml",
+        "line": 3,
+        "item": "S3-feed"
+      }
+    },
+    {
+      "id": "unknown-check@dossier/sections/S3-feed.yaml:55",
+      "status": "fail",
+      "message": "dial: check 'gate:turret-ammo' does not resolve: no gate 'turret-ammo' (known: wall, connectivity, containment, fasteners, motion, assembly)",
+      "parts": [
+        "dial"
+      ],
+      "evidence": {
+        "code": "unknown-check",
+        "file": "dossier/sections/S3-feed.yaml",
+        "line": 55,
+        "item": "dial"
+      }
+    },
+    {
+      "id": "section-below-gated@dossier/sections/S4-launcher.yaml:3",
+      "status": "fail",
+      "message": "section 'S4-launcher' is draft, below gated: cartridge_body: 2 lint error(s): unknown-check; flywheel_tyre: 2 lint error(s): unknown-check; flywheel_tyre_m: 2 lint error(s): unknown-check",
+      "parts": [
+        "cartridge_board",
+        "cartridge_body",
+        "esc_l",
+        "esc_r",
+        "flywheel",
+        "flywheel_m",
+        "flywheel_motor_l",
+        "flywheel_motor_r",
+        "flywheel_tyre",
+        "flywheel_tyre_m"
+      ],
+      "evidence": {
+        "code": "section-below-gated",
+        "file": "dossier/sections/S4-launcher.yaml",
+        "line": 3,
+        "item": "S4-launcher"
+      }
+    },
+    {
+      "id": "unknown-check@dossier/sections/S4-launcher.yaml:112",
+      "status": "fail",
+      "message": "cartridge_body: check 'gate:turret-path' does not resolve: no gate 'turret-path' (known: wall, connectivity, containment, fasteners, motion, assembly)",
+      "parts": [
+        "cartridge_body"
+      ],
+      "evidence": {
+        "code": "unknown-check",
+        "file": "dossier/sections/S4-launcher.yaml",
+        "line": 112,
+        "item": "cartridge_body"
+      }
+    },
+    {
+      "id": "unknown-check@dossier/sections/S4-launcher.yaml:112#2",
+      "status": "fail",
+      "message": "cartridge_body: check 'gate:turret-ammo' does not resolve: no gate 'turret-ammo' (known: wall, connectivity, containment, fasteners, motion, assembly)",
+      "parts": [
+        "cartridge_body"
+      ],
+      "evidence": {
+        "code": "unknown-check",
+        "file": "dossier/sections/S4-launcher.yaml",
+        "line": 112,
+        "item": "cartridge_body"
+      }
+    },
+    {
+      "id": "unknown-check@dossier/sections/S4-launcher.yaml:172",
+      "status": "fail",
+      "message": "flywheel_tyre: check 'gate:turret-path' does not resolve: no gate 'turret-path' (known: wall, connectivity, containment, fasteners, motion, assembly)",
+      "parts": [
+        "flywheel_tyre"
+      ],
+      "evidence": {
+        "code": "unknown-check",
+        "file": "dossier/sections/S4-launcher.yaml",
+        "line": 172,
+        "item": "flywheel_tyre"
+      }
+    },
+    {
+      "id": "unknown-check@dossier/sections/S4-launcher.yaml:172#2",
+      "status": "fail",
+      "message": "flywheel_tyre: check 'gate:turret-ammo' does not resolve: no gate 'turret-ammo' (known: wall, connectivity, containment, fasteners, motion, assembly)",
+      "parts": [
+        "flywheel_tyre"
+      ],
+      "evidence": {
+        "code": "unknown-check",
+        "file": "dossier/sections/S4-launcher.yaml",
+        "line": 172,
+        "item": "flywheel_tyre"
+      }
+    },
+    {
+      "id": "unknown-check@dossier/sections/S4-launcher.yaml:187",
+      "status": "fail",
+      "message": "flywheel_tyre_m: check 'gate:turret-path' does not resolve: no gate 'turret-path' (known: wall, connectivity, containment, fasteners, motion, assembly)",
+      "parts": [
+        "flywheel_tyre_m"
+      ],
+      "evidence": {
+        "code": "unknown-check",
+        "file": "dossier/sections/S4-launcher.yaml",
+        "line": 187,
+        "item": "flywheel_tyre_m"
+      }
+    },
+    {
+      "id": "unknown-check@dossier/sections/S4-launcher.yaml:187#2",
+      "status": "fail",
+      "message": "flywheel_tyre_m: check 'gate:turret-ammo' does not resolve: no gate 'turret-ammo' (known: wall, connectivity, containment, fasteners, motion, assembly)",
+      "parts": [
+        "flywheel_tyre_m"
+      ],
+      "evidence": {
+        "code": "unknown-check",
+        "file": "dossier/sections/S4-launcher.yaml",
+        "line": 187,
+        "item": "flywheel_tyre_m"
+      }
+    },
+    {
+      "id": "decision-open@dossier/sections/S4-launcher.yaml:304",
+      "status": "warn",
+      "message": "decision 'T4.7' is open; section 'S4-launcher' cannot be signed off until it is decided",
+      "evidence": {
+        "code": "decision-open",
+        "file": "dossier/sections/S4-launcher.yaml",
+        "line": 304,
+        "item": "S4-launcher"
+      }
+    },
+    {
+      "id": "section-below-gated@dossier/sections/S5-barrel.yaml:3",
+      "status": "fail",
+      "message": "section 'S5-barrel' is draft, below gated: barrel: 2 lint error(s): unknown-check",
+      "parts": [
+        "barrel",
+        "laser",
+        "laser_inserts",
+        "laser_mount",
+        "laser_screws"
+      ],
+      "evidence": {
+        "code": "section-below-gated",
+        "file": "dossier/sections/S5-barrel.yaml",
+        "line": 3,
+        "item": "S5-barrel"
+      }
+    },
+    {
+      "id": "unknown-check@dossier/sections/S5-barrel.yaml:42",
+      "status": "fail",
+      "message": "barrel: check 'gate:turret-path' does not resolve: no gate 'turret-path' (known: wall, connectivity, containment, fasteners, motion, assembly)",
+      "parts": [
+        "barrel"
+      ],
+      "evidence": {
+        "code": "unknown-check",
+        "file": "dossier/sections/S5-barrel.yaml",
+        "line": 42,
+        "item": "barrel"
+      }
+    },
+    {
+      "id": "unknown-check@dossier/sections/S5-barrel.yaml:42#2",
+      "status": "fail",
+      "message": "barrel: check 'gate:turret-ammo' does not resolve: no gate 'turret-ammo' (known: wall, connectivity, containment, fasteners, motion, assembly)",
+      "parts": [
+        "barrel"
+      ],
+      "evidence": {
+        "code": "unknown-check",
+        "file": "dossier/sections/S5-barrel.yaml",
+        "line": 42,
+        "item": "barrel"
+      }
+    },
+    {
+      "id": "section-below-gated@dossier/sections/S6-wiring.yaml:3",
+      "status": "fail",
+      "message": "section 'S6-wiring' is built, below gated: slip_ring_rotor: gate:assembly fail (failing: step:50:insert); gate:motion unrun (exports/gates/motion.json not written yet); ring_carrier: gate:wall fail (failing: wall:ring_carrier); ring_driver: gate:assembly fail (failing: step:50:insert); gate:motion unrun (exports/gates/motion.json not written yet); ring_coupling: gate:motion unrun (exports/gates/motion.json not written yet)",
+      "parts": [
+        "base_board",
+        "board_bay",
+        "board_bay_lid",
+        "ring_carrier",
+        "ring_coupling",
+        "ring_driver",
+        "slip_ring_rotor",
+        "turret_board"
+      ],
+      "evidence": {
+        "code": "section-below-gated",
+        "file": "dossier/sections/S6-wiring.yaml",
+        "line": 3,
+        "item": "S6-wiring"
+      }
+    },
+    {
+      "id": "section-below-gated@dossier/sections/S7-compute.yaml:3",
+      "status": "fail",
+      "message": "section 'S7-compute' is built, below gated: compute_shell: gate:wall fail (failing: wall:compute_shell)",
+      "parts": [
+        "compute_shell"
+      ],
+      "evidence": {
+        "code": "section-below-gated",
+        "file": "dossier/sections/S7-compute.yaml",
+        "line": 3,
+        "item": "S7-compute"
+      }
+    },
+    {
+      "id": "decision-open@dossier/sections/S8-stand.yaml:212",
+      "status": "warn",
+      "message": "decision 'T8.2' is open; section 'S8-stand' cannot be signed off until it is decided",
+      "evidence": {
+        "code": "decision-open",
+        "file": "dossier/sections/S8-stand.yaml",
+        "line": 212,
+        "item": "S8-stand"
+      }
+    }
+  ],
+  "exclusions": [],
+  "limits": {
+    "required_section_status": "gated"
+  },
+  "assumptions": [
+    "declarations only: the lint checks that the dossier is complete and agrees with the build's geometry record, not that the geometry is right (the gates) or meets the requirements (the reviewer)",
+    "a gate verdict counts only when its inputs match the current geometry record and, for a project, the gate's declarations and options (verdict-stale otherwise)"
+  ],
+  "physical_fit_verified": false,
+  "sections": {
+    "S1-base": "built",
+    "S2-tilt": "built",
+    "S3-feed": "draft",
+    "S4-launcher": "draft",
+    "S5-barrel": "draft",
+    "S6-wiring": "built",
+    "S7-compute": "built",
+    "S8-stand": "gated"
+  },
+  "parts": {
+    "pan_base": "built",
+    "pan_clamp": "built",
+    "pan_bearing": "built",
+    "pan_bearing_inner": "built",
+    "pan_ring": "built",
+    "pan_spacer": "built",
+    "circlip_50": "built",
+    "pan_pinion": "built",
+    "pan_servo": "gated",
+    "bumper_ring": "gated",
+    "index_magnet": "gated",
+    "hall_switch": "built",
+    "tilt_yoke": "built",
+    "cradle": "built",
+    "cradle_plate_l": "built",
+    "cradle_plate_r": "built",
+    "stop_lug": "built",
+    "horn_boss": "built",
+    "pivot_spacer": "built",
+    "tilt_servo": "built",
+    "tilt_bearing": "built",
+    "tilt_bearing_inner": "built",
+    "shoulder_screw": "built",
+    "ct_thumbscrew": "built",
+    "dial": "draft",
+    "hopper": "built",
+    "hopper_lid": "built",
+    "hopper_flap": "built",
+    "feed_motor": "built",
+    "hopper_inserts": "built",
+    "ball": "built",
+    "cartridge_body": "draft",
+    "flywheel": "built",
+    "flywheel_m": "built",
+    "flywheel_tyre": "draft",
+    "flywheel_tyre_m": "draft",
+    "flywheel_motor_l": "built",
+    "flywheel_motor_r": "built",
+    "esc_l": "built",
+    "esc_r": "built",
+    "cartridge_board": "built",
+    "barrel": "draft",
+    "laser_mount": "built",
+    "laser": "built",
+    "laser_screws": "built",
+    "laser_inserts": "built",
+    "slip_ring": "gated",
+    "slip_ring_rotor": "built",
+    "ring_carrier": "built",
+    "ring_driver": "built",
+    "ring_coupling": "built",
+    "board_bay": "built",
+    "board_bay_lid": "built",
+    "turret_board": "built",
+    "base_board": "built",
+    "dt_receptacle": "gated",
+    "dt_plug": "gated",
+    "compute_tray": "gated",
+    "compute_shell": "built",
+    "compute": "gated",
+    "eth_jack": "gated",
+    "xt30_input": "gated",
+    "input_fuses": "gated",
+    "stand_box": "gated",
+    "stand_bottom": "gated",
+    "stand_foot": "gated",
+    "dock": "gated",
+    "pack": "gated",
+    "terminal_board": "gated",
+    "usb_can": "gated",
+    "panel_switch": "gated",
+    "panel_pendant": "gated"
+  }
+}

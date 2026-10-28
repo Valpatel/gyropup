@@ -14,13 +14,13 @@
    "section": "S1-base",
    "grounded": false,
    "free": false,
-   "sha256": "5e0db5f9f2f1d5b338ded2414d628053029f9c4ddabc44f9b3d486e2281fb831",
+   "sha256": "2f94b77c52ad989d301a1eb6edd68be10ee950fa8cae5acc745012a70f6aa762",
    "count": 1,
    "instances": [
     {
      "key": "pan_base",
-     "sha256": "e7c2cc1ab5ae859d07840820e2ba002e4b953793c0f3f27117493424e88d727b",
-     "file": "dossier-shapes/e7c2cc1ab5ae859d07840820e2ba002e4b953793c0f3f27117493424e88d727b.brep",
+     "sha256": "e3ab8a9a83f46cdf630fbbcefaa90410f82d3a5d574693809731429599a3027d",
+     "file": "dossier-shapes/e3ab8a9a83f46cdf630fbbcefaa90410f82d3a5d574693809731429599a3027d.brep",
      "bbox": {
       "min": [
        -78.777223,
@@ -44,13 +44,13 @@
    "section": "S1-base",
    "grounded": false,
    "free": false,
-   "sha256": "12aae115c08106b6f808d9b1cb845371077d019e8dfe47efcd513cd429734e5d",
+   "sha256": "a1dc9238be93b88ac09c9df39c4a3d3ce2eb29a50da6db8a42969ae7d969a69f",
    "count": 1,
    "instances": [
     {
      "key": "pan_ring",
-     "sha256": "ef574242a0fa4f39643c5c3b52748b2f36ffe5ae3c2cb943fa9ccd0e676a4214",
-     "file": "dossier-shapes/ef574242a0fa4f39643c5c3b52748b2f36ffe5ae3c2cb943fa9ccd0e676a4214.brep",
+     "sha256": "f6e98b4fb1d08325a8a7026fba95b01576b23cd148a2c35b90aa5bf4e6eb1397",
+     "file": "dossier-shapes/f6e98b4fb1d08325a8a7026fba95b01576b23cd148a2c35b90aa5bf4e6eb1397.brep",
      "bbox": {
       "min": [
        -40.593077,
@@ -74,13 +74,13 @@
    "section": "S1-base",
    "grounded": false,
    "free": false,
-   "sha256": "f745d9eaee4682e53c1b1c2cd3f6aec4db7bf0e87465cf86cf1490528e7dadb6",
+   "sha256": "3be2d4d9f623d428bfe6e29b6c0065f24d0b8282ba38b94a6789a89e24538d12",
    "count": 1,
    "instances": [
     {
      "key": "pan_spacer",
-     "sha256": "d03c5aa8bf5cfe4900b033a04631b8409c33bca2ca29510f12475dbaddd617bb",
-     "file": "dossier-shapes/d03c5aa8bf5cfe4900b033a04631b8409c33bca2ca29510f12475dbaddd617bb.brep",
+     "sha256": "ac07f0f05892c702b83f4de3c4d10bfebbfedab51fa9c7af6266b083b8a25622",
+     "file": "dossier-shapes/ac07f0f05892c702b83f4de3c4d10bfebbfedab51fa9c7af6266b083b8a25622.brep",
      "bbox": {
       "min": [
        -29.5,
@@ -104,13 +104,13 @@
    "section": "S1-base",
    "grounded": false,
    "free": false,
-   "sha256": "48717fddb15d00e3e1ce7bc3b275fac33cf71b68961039a24da13f55ff9cbb9c",
+   "sha256": "91301efa3164f21a1f192d67ab4af8e86b1d1d2c7aa66ed9004ea5180ab11318",
    "count": 1,
    "instances": [
     {
      "key": "pan_pinion",
-     "sha256": "a95c35b76c6a9d3adabf299f525dd86416f1ad27aa39d08fb695457e56ab5656",
-     "file": "dossier-shapes/a95c35b76c6a9d3adabf299f525dd86416f1ad27aa39d08fb695457e56ab5656.brep",
+     "sha256": "f67a4f24a2cb9eb960063acc400866b6fe61792f57a9c11a69577be7e479f40d",
+     "file": "dossier-shapes/f67a4f24a2cb9eb960063acc400866b6fe61792f57a9c11a69577be7e479f40d.brep",
      "bbox": {
       "min": [
        -66.913111,
@@ -134,13 +134,13 @@
    "section": "S2-tilt",
    "grounded": false,
    "free": false,
-   "sha256": "fb831d3bfdfd7009b67dfd3b11d73fe4f2af2041a272b458ac9682444fce1329",
+   "sha256": "e572877223315673055b9fb9c922a5627e09e55527a4a3fc6520005107b77192",
    "count": 1,
    "instances": [
     {
      "key": "tilt_yoke",
-     "sha256": "88bf05d2ffe256559bd3d80a041512c64be93730b0286759cf3925d6594bf444",
-     "file": "dossier-shapes/88bf05d2ffe256559bd3d80a041512c64be93730b0286759cf3925d6594bf444.brep",
+     "sha256": "ad7b9c1545c1bbba883d78d1cfed7f9c1bc27d10d4a3e4e51b5d5f3f080bdbfe",
+     "file": "dossier-shapes/ad7b9c1545c1bbba883d78d1cfed7f9c1bc27d10d4a3e4e51b5d5f3f080bdbfe.brep",
      "bbox": {
       "min": [
        -20.0,
@@ -164,13 +164,13 @@
    "section": "S2-tilt",
    "grounded": false,
    "free": false,
-   "sha256": "b9aeedd8f9e13eaa037a4162a7305031399560fa1f7d8baf76de54300dd8a810",
+   "sha256": "b8b24a50e197a20b0cbad1e6f41d3e4129d156083f334082e18a050ac654a4a7",
    "count": 1,
    "instances": [
     {
      "key": "cradle",
-     "sha256": "bf86b112c4c4caedf04bf9d510609048ecae3c5ddc244df04efa44c84a35ed08",
-     "file": "dossier-shapes/bf86b112c4c4caedf04bf9d510609048ecae3c5ddc244df04efa44c84a35ed08.brep",
+     "sha256": "d06851e7f6c4499bd281cc3ac92ff2701830d56fe746a7fbd51b1dc16e6538cf",
+     "file": "dossier-shapes/d06851e7f6c4499bd281cc3ac92ff2701830d56fe746a7fbd51b1dc16e6538cf.brep",
      "bbox": {
       "min": [
        -101.6,
@@ -194,13 +194,13 @@
    "section": "S2-tilt",
    "grounded": false,
    "free": false,
-   "sha256": "74ac4f1f2e60b98586614b23290fa2365a44d873d7851d26c067010b0f5d08c6",
+   "sha256": "0af40d2c920c80ed44d3b1f9d3098f9435ef217faf9e6bcf767010cf69f81215",
    "count": 1,
    "instances": [
     {
      "key": "horn_boss",
-     "sha256": "836e08d68826906b2e7ecef19dfa37ca167d0da02e662071d5b74f7ea2b6de84",
-     "file": "dossier-shapes/836e08d68826906b2e7ecef19dfa37ca167d0da02e662071d5b74f7ea2b6de84.brep",
+     "sha256": "6705056118088b16e66be2eda682010594a755ca7fc2a9c6ec891051dcc70ae7",
+     "file": "dossier-shapes/6705056118088b16e66be2eda682010594a755ca7fc2a9c6ec891051dcc70ae7.brep",
      "bbox": {
       "min": [
        -10.0,
@@ -224,13 +224,13 @@
    "section": "S2-tilt",
    "grounded": false,
    "free": false,
-   "sha256": "0a5d0439a7da196e1176450be8b246fe921b483a92216506c177fddbdc7901f5",
+   "sha256": "dfc9d94831e5510cefb7ee8d304a302e33a6bf82135634ccc6c9257ed029eb94",
    "count": 1,
    "instances": [
     {
      "key": "pivot_spacer",
-     "sha256": "dbc06b364b4af331b819de8d5a2a3deea0460ecfd47bd8cf8e183559a8fd3920",
-     "file": "dossier-shapes/dbc06b364b4af331b819de8d5a2a3deea0460ecfd47bd8cf8e183559a8fd3920.brep",
+     "sha256": "f32dec7018eb00fb17326fc94c7fc195897dfded7fb60f76d63cbedd457424ff",
+     "file": "dossier-shapes/f32dec7018eb00fb17326fc94c7fc195897dfded7fb60f76d63cbedd457424ff.brep",
      "bbox": {
       "min": [
        -9.0,
@@ -254,13 +254,13 @@
    "section": "S4-launcher",
    "grounded": false,
    "free": false,
-   "sha256": "0b6b97d085b61525d10b631570058d87507ff69201f58e98663bdd6e6352c011",
+   "sha256": "a87da64730ba9a420d65fe4f5161037a644b8d3362563095672df4ff135f39f4",
    "count": 1,
    "instances": [
     {
      "key": "cartridge_body",
-     "sha256": "22b0a38478281274146d14a2c7e6dd53475997db0adf3cab13d26ad06e1b52ce",
-     "file": "dossier-shapes/22b0a38478281274146d14a2c7e6dd53475997db0adf3cab13d26ad06e1b52ce.brep",
+     "sha256": "83cb0fee3e9ac1311432b62bfc131d8bcf12cb39ddaf18483916d6c5c20e0302",
+     "file": "dossier-shapes/83cb0fee3e9ac1311432b62bfc131d8bcf12cb39ddaf18483916d6c5c20e0302.brep",
      "bbox": {
       "min": [
        -101.6,
@@ -273,7 +273,7 @@
        188.5
       ]
      },
-     "volume_mm3": 152605.622188,
+     "volume_mm3": 152966.601568,
      "solids": 1,
      "valid": true
     }
@@ -404,13 +404,13 @@
    "section": "S3-feed",
    "grounded": false,
    "free": false,
-   "sha256": "0bcd23ba9a51365d8e00d7459035bef49d168c8fd2454bfb1d1e8012e22639ce",
+   "sha256": "328e1e113df65f7738ed930fd4e37fda7306c64aa4706b5a928557e394729cc8",
    "count": 1,
    "instances": [
     {
      "key": "dial",
-     "sha256": "6f32432d70fc693e1726ea6a4a46c1fec7b8d3ff25329e7b505366fd48702d16",
-     "file": "dossier-shapes/6f32432d70fc693e1726ea6a4a46c1fec7b8d3ff25329e7b505366fd48702d16.brep",
+     "sha256": "1bb91abbb7f8c46f22ed7c8899356aeb94c477002eb5f9b0d91071bd71cbfbf8",
+     "file": "dossier-shapes/1bb91abbb7f8c46f22ed7c8899356aeb94c477002eb5f9b0d91071bd71cbfbf8.brep",
      "bbox": {
       "min": [
        -96.35,
@@ -434,26 +434,26 @@
    "section": "S3-feed",
    "grounded": false,
    "free": false,
-   "sha256": "1a083a309adfa8334d974dcad5ad94e4e91b113f9b97a4219e00d8ac51b2f527",
+   "sha256": "396885c3c023898d91df62daeb1d7e631f43aaaa4a29f385a61168d64eb3c876",
    "count": 1,
    "instances": [
     {
      "key": "hopper",
-     "sha256": "ea9c400474d69b54144d6b82dcc9315430ee89811fa91581f9b4b7bfa7c2d408",
-     "file": "dossier-shapes/ea9c400474d69b54144d6b82dcc9315430ee89811fa91581f9b4b7bfa7c2d408.brep",
+     "sha256": "bfc93c60bd5926acbb4898a30326c88cce75a85fcc1d50fb77c49c5e196c1087",
+     "file": "dossier-shapes/bfc93c60bd5926acbb4898a30326c88cce75a85fcc1d50fb77c49c5e196c1087.brep",
      "bbox": {
       "min": [
-       -98.7,
+       -100.718,
        -50.7,
        160.0
       ],
       "max": [
-       12.1,
+       2.7,
        50.7,
        225.0
       ]
      },
-     "volume_mm3": 35608.829309,
+     "volume_mm3": 35608.826965,
      "solids": 1,
      "valid": true
     }
@@ -464,13 +464,13 @@
    "section": "S3-feed",
    "grounded": false,
    "free": false,
-   "sha256": "e58ba9b25972f64e26d788a858c6b691e83b5352f3d90c533c2b1c0429d44fac",
+   "sha256": "f972d3be4372c4e808a3a8fe9c3db03fc69e4b2b22e61d833d8c6f3e6bf69cc4",
    "count": 1,
    "instances": [
     {
      "key": "hopper_lid",
-     "sha256": "7a715aaae1d4ab8cadbad5c3b9b159c76dd3aa17c2e8fa2ddaa07179e3a385f6",
-     "file": "dossier-shapes/7a715aaae1d4ab8cadbad5c3b9b159c76dd3aa17c2e8fa2ddaa07179e3a385f6.brep",
+     "sha256": "d694d917f175f67060b4f5c6fa92b92f9d5d80eae63f047a91b2230b92885c26",
+     "file": "dossier-shapes/d694d917f175f67060b4f5c6fa92b92f9d5d80eae63f047a91b2230b92885c26.brep",
      "bbox": {
       "min": [
        -99.1,
@@ -494,13 +494,13 @@
    "section": "S3-feed",
    "grounded": false,
    "free": false,
-   "sha256": "40aafcf41d0c08b86c55572d998b728d78e4e38eadee7036a47f93d5cd2d50e8",
+   "sha256": "895061561f469900f662c01d3ee73a2d554ea024097f80a99961e11f4f7ebcd3",
    "count": 1,
    "instances": [
     {
      "key": "hopper_flap",
-     "sha256": "75721a1397d031cffff31837be46532638e0dbda7f97dda05ae2846510af70eb",
-     "file": "dossier-shapes/75721a1397d031cffff31837be46532638e0dbda7f97dda05ae2846510af70eb.brep",
+     "sha256": "e2a894672535e11447b7d39c5b35030fe6076fe4816e30a793822cc4c794383f",
+     "file": "dossier-shapes/e2a894672535e11447b7d39c5b35030fe6076fe4816e30a793822cc4c794383f.brep",
      "bbox": {
       "min": [
        -90.0,
@@ -524,13 +524,13 @@
    "section": "S5-barrel",
    "grounded": false,
    "free": false,
-   "sha256": "3ef922ca7c148b56da15ae8ce556edc0460b4524bd60bb25ae9b93dd03f4ea7b",
+   "sha256": "220e4ddeb0a4b462a2734d8435803e861c826fee5879533220d8244b8b9cb8ee",
    "count": 1,
    "instances": [
     {
      "key": "barrel",
-     "sha256": "60700cc5fa5b87d02453bd40ad563f5b3a916b3bed85ffa85a0f70ef1f0e2303",
-     "file": "dossier-shapes/60700cc5fa5b87d02453bd40ad563f5b3a916b3bed85ffa85a0f70ef1f0e2303.brep",
+     "sha256": "ffdc798a409ecf39e33751b2934d98ed2fc711e89476fc7f36dfda50374cc940",
+     "file": "dossier-shapes/ffdc798a409ecf39e33751b2934d98ed2fc711e89476fc7f36dfda50374cc940.brep",
      "bbox": {
       "min": [
        50.0,
@@ -543,7 +543,7 @@
        140.0
       ]
      },
-     "volume_mm3": 23307.345531,
+     "volume_mm3": 23307.345533,
      "solids": 1,
      "valid": true
     }
@@ -554,13 +554,13 @@
    "section": "S5-barrel",
    "grounded": false,
    "free": false,
-   "sha256": "6e1294438f51524e7c921539c0f272de45df4a4b38c35b02acabdaba895a7613",
+   "sha256": "992c5f8656b9802dc70bee24f0bd4a69d0b88a77a9ef462ca138747edbc96946",
    "count": 1,
    "instances": [
     {
      "key": "laser_mount",
-     "sha256": "3036dce1bae3e00c1d077d3656fd8c12a42b90fc2d6a8b95d019a729dcc77200",
-     "file": "dossier-shapes/3036dce1bae3e00c1d077d3656fd8c12a42b90fc2d6a8b95d019a729dcc77200.brep",
+     "sha256": "934ffd01d50a86b557764968147cd3597e93edff772f7854a72a17d862cbeea9",
+     "file": "dossier-shapes/934ffd01d50a86b557764968147cd3597e93edff772f7854a72a17d862cbeea9.brep",
      "bbox": {
       "min": [
        51.0,
@@ -584,13 +584,13 @@
    "section": "S1-base",
    "grounded": false,
    "free": false,
-   "sha256": "ae658ac6cbef46d4665032770b19796fc5a6a66ea59dfa19f451d7a9ace0e512",
+   "sha256": "a51e045c0b814862b4a1439422f499d499bdfa4a55e918c796538b194d15730c",
    "count": 1,
    "instances": [
     {
      "key": "bumper_ring",
-     "sha256": "218e6d979a349993a010fd43281c6e1136f1f26093c6d1f8383bda6c4a67d458",
-     "file": "dossier-shapes/218e6d979a349993a010fd43281c6e1136f1f26093c6d1f8383bda6c4a67d458.brep",
+     "sha256": "91e6d1c7230c669727e96f0542d43cab7bd264aaccc5f5d6fde45da3b5a42ebc",
+     "file": "dossier-shapes/91e6d1c7230c669727e96f0542d43cab7bd264aaccc5f5d6fde45da3b5a42ebc.brep",
      "bbox": {
       "min": [
        -86.0,
@@ -614,13 +614,13 @@
    "section": "S6-wiring",
    "grounded": false,
    "free": false,
-   "sha256": "07a278b5cd54eb060642c2c3f430871ba12052a09310f638b79c682050ea1a93",
+   "sha256": "18e61fd9ce2d6bd3bd6b1c245ba4bf21d764563e1b8f56655ab8cae894e6f133",
    "count": 1,
    "instances": [
     {
      "key": "ring_carrier",
-     "sha256": "2488a441c41dec70969eb98c541d3013dfdaa440ab50d1cd59655850d6f2570c",
-     "file": "dossier-shapes/2488a441c41dec70969eb98c541d3013dfdaa440ab50d1cd59655850d6f2570c.brep",
+     "sha256": "74127d526bc7ba5fdd4d2ae07b94552d4cd42fde8b3614e20475c3c48b49b008",
+     "file": "dossier-shapes/74127d526bc7ba5fdd4d2ae07b94552d4cd42fde8b3614e20475c3c48b49b008.brep",
      "bbox": {
       "min": [
        -32.288817,
@@ -644,13 +644,13 @@
    "section": "S6-wiring",
    "grounded": false,
    "free": false,
-   "sha256": "92e6fcf17e60e8b86c0a566df37f2a01072e7b2323fac17758b3853d4f931d18",
+   "sha256": "8b214af14d3e87043acb717428d70aaafb2491c5b50dd1e624ace8513050e153",
    "count": 1,
    "instances": [
     {
      "key": "ring_driver",
-     "sha256": "8a7deaf022dfd59aacd76d431654fbf3b8bdb7b693d2e15fa8bdb4c391cab105",
-     "file": "dossier-shapes/8a7deaf022dfd59aacd76d431654fbf3b8bdb7b693d2e15fa8bdb4c391cab105.brep",
+     "sha256": "ce570693a041534fc0cd02830c7e3aedbc3c622ae526cd00d94f299825e62169",
+     "file": "dossier-shapes/ce570693a041534fc0cd02830c7e3aedbc3c622ae526cd00d94f299825e62169.brep",
      "bbox": {
       "min": [
        -19.7,
@@ -674,13 +674,13 @@
    "section": "S6-wiring",
    "grounded": false,
    "free": false,
-   "sha256": "a8f0d9a9652f8e954597434bb921ebf8a923cf43becb34df9aa2168995c33795",
+   "sha256": "afd99ebd5407b09aa6a52f55020d286083c517768a566fd296bcac40d312042e",
    "count": 1,
    "instances": [
     {
      "key": "board_bay",
-     "sha256": "5f90abf625df99a2eeac57d3fc23e4b029630d0b4619940b491793ab66f29a8a",
-     "file": "dossier-shapes/5f90abf625df99a2eeac57d3fc23e4b029630d0b4619940b491793ab66f29a8a.brep",
+     "sha256": "fac6f89b4e1affe822af20a1dfb5174bbd7460740bca930039ff2fccc19e3c47",
+     "file": "dossier-shapes/fac6f89b4e1affe822af20a1dfb5174bbd7460740bca930039ff2fccc19e3c47.brep",
      "bbox": {
       "min": [
        -29.0,
@@ -734,13 +734,13 @@
    "section": "S7-compute",
    "grounded": true,
    "free": false,
-   "sha256": "729675b4e259ab9c4d5a11f3d10b4de00ad701b7bc612f57f5ffa0d62bde91b1",
+   "sha256": "1a5de244388039fd45758d40c9dac5ff14c098e03d85317599de73790dfb636d",
    "count": 1,
    "instances": [
     {
      "key": "compute_tray",
-     "sha256": "d9d9507b135fd9ee7b4a9b87249d39dae9c6fd7695a03fd6da57c974de46aae9",
-     "file": "dossier-shapes/d9d9507b135fd9ee7b4a9b87249d39dae9c6fd7695a03fd6da57c974de46aae9.brep",
+     "sha256": "8cc9d05e5583e83ea2fc9327f8809c737d4975ae429f7207f7b9cc0143932589",
+     "file": "dossier-shapes/8cc9d05e5583e83ea2fc9327f8809c737d4975ae429f7207f7b9cc0143932589.brep",
      "bbox": {
       "min": [
        -78.0,
@@ -764,13 +764,13 @@
    "section": "S7-compute",
    "grounded": false,
    "free": false,
-   "sha256": "39545b3ade9f9e71123220afcd6f7d1ff19ddd37008e029dc61799a6e28bd3f0",
+   "sha256": "73cb7682d2a7698a8a53c04670128fb8c7dee9d94b4ac588be21aa0826843478",
    "count": 1,
    "instances": [
     {
      "key": "compute_shell",
-     "sha256": "58a6322367627389480a29b330682f49f83064aa7add01b7576aa581c2bcb3c9",
-     "file": "dossier-shapes/58a6322367627389480a29b330682f49f83064aa7add01b7576aa581c2bcb3c9.brep",
+     "sha256": "345c2945ae2ff0c20ffa748e89ae1797f36a9b81a763b042542bbac8a9d6ea04",
+     "file": "dossier-shapes/345c2945ae2ff0c20ffa748e89ae1797f36a9b81a763b042542bbac8a9d6ea04.brep",
      "bbox": {
       "min": [
        -78.0,
@@ -783,7 +783,7 @@
        0.0
       ]
      },
-     "volume_mm3": 149661.924851,
+     "volume_mm3": 149661.924859,
      "solids": 1,
      "valid": true
     }
@@ -914,13 +914,13 @@
    "section": "S1-base",
    "grounded": false,
    "free": false,
-   "sha256": "d2185cbac5a0aae73f8b2091bdef32da93ae62404348bfb8742d54c20e4bcd57",
+   "sha256": "385db056f41489e54b12777c0cb7f29acb932d5239f0d7d527ddf239891d62a6",
    "count": 1,
    "instances": [
     {
      "key": "pan_servo",
-     "sha256": "624a95d0c00c383ca7509bfe8b16974f052f789d8ecdf34ece9d740403a88f3e",
-     "file": "dossier-shapes/624a95d0c00c383ca7509bfe8b16974f052f789d8ecdf34ece9d740403a88f3e.brep",
+     "sha256": "33d2ecab1a490de17d78e743ea0acb7f01f67698a324c9b34bd3ae365da3cb14",
+     "file": "dossier-shapes/33d2ecab1a490de17d78e743ea0acb7f01f67698a324c9b34bd3ae365da3cb14.brep",
      "bbox": {
       "min": [
        -65.0,
@@ -944,13 +944,13 @@
    "section": "S1-base",
    "grounded": false,
    "free": false,
-   "sha256": "426d0121d099c3409292f2bbd2594f0f53e5e2103aa924c33c7966183e05b695",
+   "sha256": "ae4a7a2ab8515dc527456a3a705d086e92bfe5917444a879ae0cffc8bb2a9b70",
    "count": 1,
    "instances": [
     {
      "key": "pan_bearing",
-     "sha256": "23d3f28fd2ac10e8c1e6b0bb04bce6bed117a9c0e73ed2dd985ed613ae559403",
-     "file": "dossier-shapes/23d3f28fd2ac10e8c1e6b0bb04bce6bed117a9c0e73ed2dd985ed613ae559403.brep",
+     "sha256": "b3ecd75d87d4786da6a6ad989bb010f3cf73c8e81947e29373431b61379943c8",
+     "file": "dossier-shapes/b3ecd75d87d4786da6a6ad989bb010f3cf73c8e81947e29373431b61379943c8.brep",
      "bbox": {
       "min": [
        -32.5,
@@ -974,13 +974,13 @@
    "section": "S1-base",
    "grounded": false,
    "free": false,
-   "sha256": "ccff94fef824f2dc9ab17024258c6444e46df2d6088088a3a928e6d69bb3db39",
+   "sha256": "606f23bae49af7e976223f231808862675403eee57c6d0269a6e50c11b43300c",
    "count": 1,
    "instances": [
     {
      "key": "pan_bearing_inner",
-     "sha256": "ebcf31b6dd7f3387ad60fda575294156ba76e13e5415de7a11de5f322723ad22",
-     "file": "dossier-shapes/ebcf31b6dd7f3387ad60fda575294156ba76e13e5415de7a11de5f322723ad22.brep",
+     "sha256": "fa6405bae408a522df79b4f92adcfece1d11d9a272c362a68c6f0ec70f73d5cf",
+     "file": "dossier-shapes/fa6405bae408a522df79b4f92adcfece1d11d9a272c362a68c6f0ec70f73d5cf.brep",
      "bbox": {
       "min": [
        -26.5,
@@ -1004,13 +1004,13 @@
    "section": "S1-base",
    "grounded": false,
    "free": false,
-   "sha256": "91102121c6e736a1ef2c0563c955e8c5cc0a9d07847e122b5a4c403f6ad6fb6c",
+   "sha256": "d752916a43f277eee131fef4f73ca80d2f8f9a90412aa9a193dc2fd23c87a374",
    "count": 1,
    "instances": [
     {
      "key": "circlip_50",
-     "sha256": "9de6236d8254413942b7c287d953165f1bc4ba3deee7247c46c2a194eb17521a",
-     "file": "dossier-shapes/9de6236d8254413942b7c287d953165f1bc4ba3deee7247c46c2a194eb17521a.brep",
+     "sha256": "4732d3026f49ca83f9a7f37e06851f2f2778306fb7f5d6e0cadce35b92b6ab57",
+     "file": "dossier-shapes/4732d3026f49ca83f9a7f37e06851f2f2778306fb7f5d6e0cadce35b92b6ab57.brep",
      "bbox": {
       "min": [
        -28.6,
@@ -1034,13 +1034,13 @@
    "section": "S1-base",
    "grounded": false,
    "free": false,
-   "sha256": "7c65452525ee03e5b3d799857a64b2cdf5c66ede18eb86de057c0f18ceba8e39",
+   "sha256": "889a97b0dabc0797d83795e5dd1fbef055e2d1b7a18f4f1a4c5cf18197f45bc7",
    "count": 1,
    "instances": [
     {
      "key": "pan_clamp",
-     "sha256": "dcdbaaca546602c49f8b2c4466ab51a650f2be57ff5b1e8460908ce85207c90b",
-     "file": "dossier-shapes/dcdbaaca546602c49f8b2c4466ab51a650f2be57ff5b1e8460908ce85207c90b.brep",
+     "sha256": "f740503a7e3b5f178b8db7bbf524392bdf2e5d17f672139ed040393d226da80e",
+     "file": "dossier-shapes/f740503a7e3b5f178b8db7bbf524392bdf2e5d17f672139ed040393d226da80e.brep",
      "bbox": {
       "min": [
        -37.0,
@@ -1064,13 +1064,13 @@
    "section": "S2-tilt",
    "grounded": false,
    "free": false,
-   "sha256": "e2d3de5740d4ab57b1efccc754a36a2cd9b0b142603c14715dcf25f0e196083a",
+   "sha256": "641eaa33268c1b8ee5f6b324604b4a3ab55580536c1e100708e1714f4bdff8db",
    "count": 1,
    "instances": [
     {
      "key": "cradle_plate_l",
-     "sha256": "7ee05821fe47b5c1e25e2a8911abe5ce9c408259c72077ad010aca1212cbb2f8",
-     "file": "dossier-shapes/7ee05821fe47b5c1e25e2a8911abe5ce9c408259c72077ad010aca1212cbb2f8.brep",
+     "sha256": "ac28d6c0c439676eaf1fc2adb35db7bd45ef1b0966861e4a4c1c975becc0fd56",
+     "file": "dossier-shapes/ac28d6c0c439676eaf1fc2adb35db7bd45ef1b0966861e4a4c1c975becc0fd56.brep",
      "bbox": {
       "min": [
        -58.0,
@@ -1094,13 +1094,13 @@
    "section": "S2-tilt",
    "grounded": false,
    "free": false,
-   "sha256": "0ffa65cc1e0abd0c7577d182e3fee1d287037ad5f427d3de36eee1cc0d838d9d",
+   "sha256": "e276825af707e1036a63014d0a2c06b2c9364b186ab1ba6298f2d61bee813ccf",
    "count": 1,
    "instances": [
     {
      "key": "cradle_plate_r",
-     "sha256": "48a39f3aba8bd7ae01ea6e0bd848ce22d530f0fa6d5530ce7392e72b172b7aee",
-     "file": "dossier-shapes/48a39f3aba8bd7ae01ea6e0bd848ce22d530f0fa6d5530ce7392e72b172b7aee.brep",
+     "sha256": "32469157ddfff0bcd9f3b0e18858f613a42c7427149d61a639c8e5f3902c7052",
+     "file": "dossier-shapes/32469157ddfff0bcd9f3b0e18858f613a42c7427149d61a639c8e5f3902c7052.brep",
      "bbox": {
       "min": [
        -58.0,
@@ -1124,13 +1124,13 @@
    "section": "S2-tilt",
    "grounded": false,
    "free": false,
-   "sha256": "e67cbddaf2a140a113be0f64e6566b7a19d8b07c97b22a8dc46f0a329291e268",
+   "sha256": "ffb54ed98b83cceb844244d1e59e6d81664210a1133343d850a015a0644e1067",
    "count": 1,
    "instances": [
     {
      "key": "stop_lug",
-     "sha256": "70d88df3ae77e482414d14494d117c5fffd90fdd6652872a4285bf6e1c2178b8",
-     "file": "dossier-shapes/70d88df3ae77e482414d14494d117c5fffd90fdd6652872a4285bf6e1c2178b8.brep",
+     "sha256": "9c4122602635954c8540a91e0d802f9677f98835f62e0638fbfcd3a8170be25b",
+     "file": "dossier-shapes/9c4122602635954c8540a91e0d802f9677f98835f62e0638fbfcd3a8170be25b.brep",
      "bbox": {
       "min": [
        -11.923183,
@@ -1154,13 +1154,13 @@
    "section": "S6-wiring",
    "grounded": false,
    "free": false,
-   "sha256": "6485cbc215e7d6dbf7aded2d6d6bdb699b9607d484a9a30d1588391740fd0250",
+   "sha256": "83907976574d980ca71236348268fc242de875296015a50e8c8a4d77c6e78588",
    "count": 1,
    "instances": [
     {
      "key": "slip_ring",
-     "sha256": "6c5a4470416ccce962ce134da8f44ac7592492942e6690272a91adcaa2acb4e4",
-     "file": "dossier-shapes/6c5a4470416ccce962ce134da8f44ac7592492942e6690272a91adcaa2acb4e4.brep",
+     "sha256": "f77ab054fa727ff8ad8a2e61e68593dbfdd325fc135ac9443fa5f43cea6d0a29",
+     "file": "dossier-shapes/f77ab054fa727ff8ad8a2e61e68593dbfdd325fc135ac9443fa5f43cea6d0a29.brep",
      "bbox": {
       "min": [
        -22.25,
@@ -1184,13 +1184,13 @@
    "section": "S6-wiring",
    "grounded": false,
    "free": false,
-   "sha256": "858cac418445bf4dca42e6a36bd3510ec2f3267be5ee1d9e426b92e82c2018c9",
+   "sha256": "de49f198cc3f3f73f55edb5f73b1a95f7581170c5fa05604504a6d9fa1341b2f",
    "count": 1,
    "instances": [
     {
      "key": "slip_ring_rotor",
-     "sha256": "93d5b9416ff7aa350a20249e3e3ed18fc6e46b51d47a9a8d8a989dc686eec053",
-     "file": "dossier-shapes/93d5b9416ff7aa350a20249e3e3ed18fc6e46b51d47a9a8d8a989dc686eec053.brep",
+     "sha256": "c616abbe4fd2b61a15769b9393a8af23a50ff906524c7ecfade4d46262ee5694",
+     "file": "dossier-shapes/c616abbe4fd2b61a15769b9393a8af23a50ff906524c7ecfade4d46262ee5694.brep",
      "bbox": {
       "min": [
        -3.75,
@@ -1214,13 +1214,13 @@
    "section": "S6-wiring",
    "grounded": false,
    "free": false,
-   "sha256": "08b9369f10d406c6ec9edf1ddec9c4acb4753fadf1980bec1bec7155817ac106",
+   "sha256": "51551cea6fa0d1bf2cc90d548c5e582f4636be82156024e1a3cbf04b0bfc4eb4",
    "count": 1,
    "instances": [
     {
      "key": "ring_coupling",
-     "sha256": "7364eb295695bc60c1af175531b096b9a196ab59308b53dc1a40ffccebe5c43a",
-     "file": "dossier-shapes/7364eb295695bc60c1af175531b096b9a196ab59308b53dc1a40ffccebe5c43a.brep",
+     "sha256": "d6517f3eee6025d83ff8d29a91f0d7916742d032db0671e8ea160387fafd0154",
+     "file": "dossier-shapes/d6517f3eee6025d83ff8d29a91f0d7916742d032db0671e8ea160387fafd0154.brep",
      "bbox": {
       "min": [
        -4.369954,
@@ -1304,13 +1304,13 @@
    "section": "S1-base",
    "grounded": false,
    "free": false,
-   "sha256": "60216c2886a7f97125823b60d0f1fdb26ef40fde9b2df3596e8aa4a9067e8232",
+   "sha256": "105937f27a0143ef781fa99d6eb9583e5d248cf5ac44cfb24e6015aff5f55c1a",
    "count": 1,
    "instances": [
     {
      "key": "index_magnet",
-     "sha256": "a88c96da6c52b63c745d6c9701da4fb30158663accd3c442d6bc64cf9b4c01a8",
-     "file": "dossier-shapes/a88c96da6c52b63c745d6c9701da4fb30158663accd3c442d6bc64cf9b4c01a8.brep",
+     "sha256": "325cc63fa0300a24127b730a1b52c5f736fb73ef5d1575525d734aad8017c590",
+     "file": "dossier-shapes/325cc63fa0300a24127b730a1b52c5f736fb73ef5d1575525d734aad8017c590.brep",
      "bbox": {
       "min": [
        32.62,
@@ -1425,13 +1425,13 @@
    "section": "S2-tilt",
    "grounded": false,
    "free": false,
-   "sha256": "4ec62ef0a89e51333c97f2167a3a3fc4f4dd87464fb124729cd578ada2682808",
+   "sha256": "785d64a60ecd3f7e0a2bfd6c109b628f40d82512ea3ed13fc9d4d2ef5d60bde2",
    "count": 1,
    "instances": [
     {
      "key": "tilt_servo",
-     "sha256": "f420d21b28a6b22181e11ae4b5971ef9501bb0bee1eec7a80e6e66ea8485e1a0",
-     "file": "dossier-shapes/f420d21b28a6b22181e11ae4b5971ef9501bb0bee1eec7a80e6e66ea8485e1a0.brep",
+     "sha256": "5bb7c0a100f381bb15202d9cc7b57b41faf5e568c374df2dedb2fdb21c758129",
+     "file": "dossier-shapes/5bb7c0a100f381bb15202d9cc7b57b41faf5e568c374df2dedb2fdb21c758129.brep",
      "bbox": {
       "min": [
        -12.35,
@@ -1455,13 +1455,13 @@
    "section": "S2-tilt",
    "grounded": false,
    "free": false,
-   "sha256": "45fb6a0b262efee977717b2ed30e9f6c4c77a07b03de8ee974af8ddfbae987e4",
+   "sha256": "81c84fe7a4ce76a1d937ef6bebe015a3e940cf231b0d10988a263d8f38afe852",
    "count": 1,
    "instances": [
     {
      "key": "tilt_bearing",
-     "sha256": "5bdc2c0c886eb86f3ce664a2e069b26f91b16019e977259fd8f1721afbbaf2df",
-     "file": "dossier-shapes/5bdc2c0c886eb86f3ce664a2e069b26f91b16019e977259fd8f1721afbbaf2df.brep",
+     "sha256": "bf9047f7aeccd6e7ec1033ff43613dc29cc4ecc73fa0727383f78f846e648333",
+     "file": "dossier-shapes/bf9047f7aeccd6e7ec1033ff43613dc29cc4ecc73fa0727383f78f846e648333.brep",
      "bbox": {
       "min": [
        -6.0,
@@ -1515,13 +1515,13 @@
    "section": "S2-tilt",
    "grounded": false,
    "free": false,
-   "sha256": "ec69eb030ae9ce9d51d75f0fa446856126cf5bc088957da0d83481549708af8b",
+   "sha256": "82837b5b28c4b5d1cd9b82b678534f5da43226ac107b7d7042e67b23c5e7edd0",
    "count": 1,
    "instances": [
     {
      "key": "shoulder_screw",
-     "sha256": "6142238f076267023472828dfadfaa8120b8973fc1e7085012ad5a83037d5d6d",
-     "file": "dossier-shapes/6142238f076267023472828dfadfaa8120b8973fc1e7085012ad5a83037d5d6d.brep",
+     "sha256": "1fc799385bf1184cb28e4857175675d9380fb92a02fda004961f5ea2f1936d7d",
+     "file": "dossier-shapes/1fc799385bf1184cb28e4857175675d9380fb92a02fda004961f5ea2f1936d7d.brep",
      "bbox": {
       "min": [
        -5.0,
@@ -1695,13 +1695,13 @@
    "section": "S3-feed",
    "grounded": false,
    "free": false,
-   "sha256": "bfa9f8ce62583751f0309c17d636eac43605dd7de389ec320ee55f860c1962f9",
+   "sha256": "4a1d10edf6663e103169d5920d05ad8d4b1581e24da4bb55906114f323522b22",
    "count": 1,
    "instances": [
     {
      "key": "feed_motor",
-     "sha256": "3255e97656ca1f8f185d1e9ce6c1bcdebaaa43c4c889014e7ca1f9a6c5a4c59f",
-     "file": "dossier-shapes/3255e97656ca1f8f185d1e9ce6c1bcdebaaa43c4c889014e7ca1f9a6c5a4c59f.brep",
+     "sha256": "85e7b10529e831292e8ef016f3d48c6f40705e50d8a3f255482645cc6db7a746",
+     "file": "dossier-shapes/85e7b10529e831292e8ef016f3d48c6f40705e50d8a3f255482645cc6db7a746.brep",
      "bbox": {
       "min": [
        -83.09,
@@ -1755,13 +1755,13 @@
    "section": "S5-barrel",
    "grounded": false,
    "free": false,
-   "sha256": "ff6c53566d4ef4e905353f1d8beb6423403283372e9994033ea6544234336f60",
+   "sha256": "a962c7aa46432620a71ca525f3188e46fe55f1f042ff0a97e72363086479467a",
    "count": 1,
    "instances": [
     {
      "key": "laser",
-     "sha256": "100d28c3474820fe84f680953660579093e2facc25eb806a53b05fdf4ed0bf02",
-     "file": "dossier-shapes/100d28c3474820fe84f680953660579093e2facc25eb806a53b05fdf4ed0bf02.brep",
+     "sha256": "695162186a4e2a06a514809cff63624efe4299109be32a31c764187c7972499c",
+     "file": "dossier-shapes/695162186a4e2a06a514809cff63624efe4299109be32a31c764187c7972499c.brep",
      "bbox": {
       "min": [
        62.0,
@@ -1785,13 +1785,13 @@
    "section": "S5-barrel",
    "grounded": false,
    "free": false,
-   "sha256": "28223482260e1cc370497f8a4d187ffd05c8bad6edff7bdea3ef062cc55588cd",
+   "sha256": "566f4b532996917cda2a86fbdf37c8f0a74c05ea030dabb2c411eb85c00ed864",
    "count": 1,
    "instances": [
     {
      "key": "laser_screws",
-     "sha256": "068b9bc9d1bb06c3c5459ecbf85ef86d4a78b575e8eadb5f014a85621b25be8f",
-     "file": "dossier-shapes/068b9bc9d1bb06c3c5459ecbf85ef86d4a78b575e8eadb5f014a85621b25be8f.brep",
+     "sha256": "2ac3f2b3f0a6b44373fa2f05017b97b716dd76ed2a0bfca401de7114e97e8baa",
+     "file": "dossier-shapes/2ac3f2b3f0a6b44373fa2f05017b97b716dd76ed2a0bfca401de7114e97e8baa.brep",
      "bbox": {
       "min": [
        72.5,
@@ -1845,21 +1845,21 @@
    "section": "S3-feed",
    "grounded": false,
    "free": false,
-   "sha256": "2eb28c5397f69054b17179791fd8dced6f9cb0fdeff2e5b353157e37c594373b",
+   "sha256": "7db7373b90197f24806eb01cc9217bb1e683500b0530654beaeb8f7ce3dc83b2",
    "count": 1,
    "instances": [
     {
      "key": "hopper_inserts",
-     "sha256": "b90939790b2cb3a1efc96f0264e6edfc2a8dd16056de8807e155df5ca83be06c",
-     "file": "dossier-shapes/b90939790b2cb3a1efc96f0264e6edfc2a8dd16056de8807e155df5ca83be06c.brep",
+     "sha256": "c24c13e0f2422e6983760178a64171984af561cd3c122c45f478b6c1f1139a54",
+     "file": "dossier-shapes/c24c13e0f2422e6983760178a64171984af561cd3c122c45f478b6c1f1139a54.brep",
      "bbox": {
       "min": [
-       -88.961584,
-       -40.961584,
+       -97.718,
+       -29.55,
        154.3
       ],
       "max": [
-       9.1,
+       -7.038416,
        40.961584,
        160.0
       ]
@@ -2486,13 +2486,13 @@
    "section": "S8-stand",
    "grounded": false,
    "free": false,
-   "sha256": "a071617ab2ed33a314630f5d07d16ec1f3c3c9195714d845307e5365d1123f2d",
+   "sha256": "94ab6afcbb8db4945e549b1c11e50922c7a743891b560190c4a9efb7a64f97c9",
    "count": 1,
    "instances": [
     {
      "key": "stand_box",
-     "sha256": "c3b0496eec81fa90b3ba6ec5a8c4d500c77541901c6a460dafcb952c5a22cefe",
-     "file": "dossier-shapes/c3b0496eec81fa90b3ba6ec5a8c4d500c77541901c6a460dafcb952c5a22cefe.brep",
+     "sha256": "3ed1d579d2bc6e4bcb56d64d9ba876ff70545e70c2084ad7fb4d713b138051cc",
+     "file": "dossier-shapes/3ed1d579d2bc6e4bcb56d64d9ba876ff70545e70c2084ad7fb4d713b138051cc.brep",
      "bbox": {
       "min": [
        -100.0,
@@ -2510,19 +2510,19 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:137"
+   "declared_at": "cad/turret_dossier.py:139"
   },
   "stand_bottom": {
    "section": "S8-stand",
    "grounded": false,
    "free": false,
-   "sha256": "e09d29ff11d6a8543abc701a5072457e553aa02fdfd04126be62eb5afa7a0262",
+   "sha256": "b89b46cf6a329af86e1698c8c47b801726392d11815a7458d69c91946f794ea7",
    "count": 1,
    "instances": [
     {
      "key": "stand_bottom",
-     "sha256": "2859cd669858378186a5337791d25ed8e8dec58fa31b05a1bdb51b14d7d2f54c",
-     "file": "dossier-shapes/2859cd669858378186a5337791d25ed8e8dec58fa31b05a1bdb51b14d7d2f54c.brep",
+     "sha256": "14afdd1ed648276eb975a7f6e6329b07243e98b62c2f0a9625c52d13798b6658",
+     "file": "dossier-shapes/14afdd1ed648276eb975a7f6e6329b07243e98b62c2f0a9625c52d13798b6658.brep",
      "bbox": {
       "min": [
        -100.0,
@@ -2540,7 +2540,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:137"
+   "declared_at": "cad/turret_dossier.py:139"
   },
   "stand_foot": {
    "section": "S8-stand",
@@ -2630,29 +2630,29 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:139"
+   "declared_at": "cad/turret_dossier.py:141"
   },
   "usb_can": {
    "section": "S8-stand",
    "grounded": false,
    "free": false,
-   "sha256": "b761d735f07d8ad7da7d091c8bc919912801c7b95c28b742275596e2ef3a2a59",
+   "sha256": "fb3ff046c9d387ee6688ca4b611a0fb03f22a5a79b5f775a1207550282de80e1",
    "count": 1,
    "instances": [
     {
      "key": "usb_can",
-     "sha256": "42c4cb107521a9360689d50414517caed97ec389ecc293aa98398077e84ad884",
-     "file": "dossier-shapes/42c4cb107521a9360689d50414517caed97ec389ecc293aa98398077e84ad884.brep",
+     "sha256": "84b85b023467dde090a46adce7a6c7d48f3b33046c6d129809c38b10b693ac8f",
+     "file": "dossier-shapes/84b85b023467dde090a46adce7a6c7d48f3b33046c6d129809c38b10b693ac8f.brep",
      "bbox": {
       "min": [
-       -95.0,
+       -96.0,
        -80.0,
-       -222.0
+       -236.0
       ],
       "max": [
-       -45.0,
+       -46.0,
        -60.0,
-       -210.0
+       -224.0
       ]
      },
      "volume_mm3": 12000.0,
@@ -2660,7 +2660,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:141"
+   "declared_at": "cad/turret_dossier.py:143"
   },
   "terminal_board": {
    "section": "S8-stand",
@@ -2690,7 +2690,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:141"
+   "declared_at": "cad/turret_dossier.py:143"
   },
   "dock": {
    "section": "S8-stand",
@@ -2720,7 +2720,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:141"
+   "declared_at": "cad/turret_dossier.py:143"
   },
   "pack": {
    "section": "S8-stand",
@@ -2750,7 +2750,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:141"
+   "declared_at": "cad/turret_dossier.py:143"
   },
   "panel_switch": {
    "section": "S8-stand",
@@ -2780,7 +2780,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:141"
+   "declared_at": "cad/turret_dossier.py:143"
   },
   "panel_pendant": {
    "section": "S8-stand",
@@ -2810,14 +2810,14 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:141"
+   "declared_at": "cad/turret_dossier.py:143"
   }
  },
  "cavities": {
   "hopper_cavity": {
    "part": "hopper",
-   "sha256": "51bb06a6711a5087972d6faab6b53922983617f761f6a715a1c759ba1cafcc99",
-   "file": "dossier-shapes/51bb06a6711a5087972d6faab6b53922983617f761f6a715a1c759ba1cafcc99.brep",
+   "sha256": "065686cd5c709350ee7b20697adf17e0125faeb6ad00dcacffc18bfc65eabb29",
+   "file": "dossier-shapes/065686cd5c709350ee7b20697adf17e0125faeb6ad00dcacffc18bfc65eabb29.brep",
    "bbox": {
     "min": [
      -97.1,
@@ -2830,10 +2830,10 @@
      225.0
     ]
    },
-   "volume_mm3": 638369.00781,
+   "volume_mm3": 638369.006134,
    "solids": 2,
    "valid": true,
-   "declared_at": "cad/turret_dossier.py:132"
+   "declared_at": "cad/turret_dossier.py:134"
   }
  },
  "joints": {
@@ -2877,7 +2877,7 @@
     ]
    ],
    "samples": 35,
-   "declared_at": "cad/turret_dossier.py:144"
+   "declared_at": "cad/turret_dossier.py:146"
   },
   "I-tilt": {
    "kind": "revolute",
@@ -2931,7 +2931,7 @@
     ]
    ],
    "samples": 6,
-   "declared_at": "cad/turret_dossier.py:149"
+   "declared_at": "cad/turret_dossier.py:151"
   },
   "I-feed": {
    "kind": "revolute",
@@ -2961,7 +2961,7 @@
     ]
    ],
    "samples": 16,
-   "declared_at": "cad/turret_dossier.py:155"
+   "declared_at": "cad/turret_dossier.py:157"
   },
   "I-wheel-l": {
    "kind": "revolute",
@@ -2991,7 +2991,7 @@
     ]
    ],
    "samples": 13,
-   "declared_at": "cad/turret_dossier.py:158"
+   "declared_at": "cad/turret_dossier.py:160"
   },
   "I-wheel-r": {
    "kind": "revolute",
@@ -3021,7 +3021,7 @@
     ]
    ],
    "samples": 13,
-   "declared_at": "cad/turret_dossier.py:158"
+   "declared_at": "cad/turret_dossier.py:160"
   },
   "I-flap": {
    "kind": "revolute",
@@ -3051,7 +3051,7 @@
     ]
    ],
    "samples": 6,
-   "declared_at": "cad/turret_dossier.py:160"
+   "declared_at": "cad/turret_dossier.py:162"
   },
   "I-pan-drive": {
    "kind": "revolute",
@@ -3081,7 +3081,7 @@
     ]
    ],
    "samples": 13,
-   "declared_at": "cad/turret_dossier.py:164"
+   "declared_at": "cad/turret_dossier.py:166"
   },
   "I-turntable": {
    "kind": "fixed",
@@ -3103,7 +3103,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:168"
+   "declared_at": "cad/turret_dossier.py:170"
   },
   "I-spacer": {
    "kind": "fixed",
@@ -3125,7 +3125,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:168"
+   "declared_at": "cad/turret_dossier.py:170"
   },
   "I-circlip": {
    "kind": "fixed",
@@ -3147,7 +3147,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:168"
+   "declared_at": "cad/turret_dossier.py:170"
   },
   "I-yoke": {
    "kind": "fixed",
@@ -3169,7 +3169,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:168"
+   "declared_at": "cad/turret_dossier.py:170"
   },
   "I-driver": {
    "kind": "fixed",
@@ -3191,7 +3191,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:168"
+   "declared_at": "cad/turret_dossier.py:170"
   },
   "I-coupling": {
    "kind": "fixed",
@@ -3213,7 +3213,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:168"
+   "declared_at": "cad/turret_dossier.py:170"
   },
   "I-rotor": {
    "kind": "fixed",
@@ -3235,7 +3235,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:168"
+   "declared_at": "cad/turret_dossier.py:170"
   },
   "I-hall": {
    "kind": "fixed",
@@ -3257,7 +3257,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:168"
+   "declared_at": "cad/turret_dossier.py:170"
   },
   "I-bay": {
    "kind": "fixed",
@@ -3279,7 +3279,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:168"
+   "declared_at": "cad/turret_dossier.py:170"
   },
   "I-bay-lid": {
    "kind": "fixed",
@@ -3301,7 +3301,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:168"
+   "declared_at": "cad/turret_dossier.py:170"
   },
   "I-boards": {
    "kind": "fixed",
@@ -3323,7 +3323,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:168"
+   "declared_at": "cad/turret_dossier.py:170"
   },
   "I-tilt-servo": {
    "kind": "fixed",
@@ -3345,7 +3345,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:168"
+   "declared_at": "cad/turret_dossier.py:170"
   },
   "I-tilt-outer": {
    "kind": "fixed",
@@ -3367,7 +3367,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:168"
+   "declared_at": "cad/turret_dossier.py:170"
   },
   "I-ct": {
    "kind": "fixed",
@@ -3389,7 +3389,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:168"
+   "declared_at": "cad/turret_dossier.py:170"
   },
   "I-plate-l": {
    "kind": "fixed",
@@ -3411,7 +3411,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:168"
+   "declared_at": "cad/turret_dossier.py:170"
   },
   "I-plate-r": {
    "kind": "fixed",
@@ -3433,7 +3433,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:168"
+   "declared_at": "cad/turret_dossier.py:170"
   },
   "I-horn-boss": {
    "kind": "fixed",
@@ -3455,7 +3455,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:168"
+   "declared_at": "cad/turret_dossier.py:170"
   },
   "I-pivot-spacer": {
    "kind": "fixed",
@@ -3477,7 +3477,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:168"
+   "declared_at": "cad/turret_dossier.py:170"
   },
   "I-shoulder": {
    "kind": "fixed",
@@ -3499,7 +3499,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:168"
+   "declared_at": "cad/turret_dossier.py:170"
   },
   "I-tilt-inner": {
    "kind": "fixed",
@@ -3521,7 +3521,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:168"
+   "declared_at": "cad/turret_dossier.py:170"
   },
   "I-stop-lug": {
    "kind": "fixed",
@@ -3543,7 +3543,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:168"
+   "declared_at": "cad/turret_dossier.py:170"
   },
   "I-thumbscrew": {
    "kind": "fixed",
@@ -3565,7 +3565,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:168"
+   "declared_at": "cad/turret_dossier.py:170"
   },
   "I-hopper-inserts": {
    "kind": "fixed",
@@ -3587,7 +3587,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:168"
+   "declared_at": "cad/turret_dossier.py:170"
   },
   "I-lid": {
    "kind": "fixed",
@@ -3609,7 +3609,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:168"
+   "declared_at": "cad/turret_dossier.py:170"
   },
   "I-barrel": {
    "kind": "fixed",
@@ -3631,7 +3631,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:168"
+   "declared_at": "cad/turret_dossier.py:170"
   },
   "I-laser-inserts": {
    "kind": "fixed",
@@ -3653,7 +3653,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:168"
+   "declared_at": "cad/turret_dossier.py:170"
   },
   "I-set-screws": {
    "kind": "fixed",
@@ -3675,7 +3675,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:168"
+   "declared_at": "cad/turret_dossier.py:170"
   },
   "I-laser": {
    "kind": "fixed",
@@ -3697,7 +3697,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:168"
+   "declared_at": "cad/turret_dossier.py:170"
   },
   "I-feed-servo": {
    "kind": "fixed",
@@ -3719,7 +3719,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:168"
+   "declared_at": "cad/turret_dossier.py:170"
   },
   "I-motor-l": {
    "kind": "fixed",
@@ -3741,7 +3741,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:168"
+   "declared_at": "cad/turret_dossier.py:170"
   },
   "I-motor-r": {
    "kind": "fixed",
@@ -3763,7 +3763,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:168"
+   "declared_at": "cad/turret_dossier.py:170"
   },
   "I-esc-l": {
    "kind": "fixed",
@@ -3785,7 +3785,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:168"
+   "declared_at": "cad/turret_dossier.py:170"
   },
   "I-esc-r": {
    "kind": "fixed",
@@ -3807,7 +3807,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:168"
+   "declared_at": "cad/turret_dossier.py:170"
   },
   "I-cart-board": {
    "kind": "fixed",
@@ -3829,7 +3829,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:168"
+   "declared_at": "cad/turret_dossier.py:170"
   },
   "I-pile": {
    "kind": "fixed",
@@ -3851,7 +3851,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:168"
+   "declared_at": "cad/turret_dossier.py:170"
   },
   "I-tyre-l": {
    "kind": "fixed",
@@ -3873,7 +3873,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:168"
+   "declared_at": "cad/turret_dossier.py:170"
   },
   "I-tyre-r": {
    "kind": "fixed",
@@ -3895,7 +3895,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:168"
+   "declared_at": "cad/turret_dossier.py:170"
   }
  },
  "fasteners": {
@@ -3972,7 +3972,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:172"
+   "declared_at": "cad/turret_dossier.py:174"
   },
   "hopper_screws": {
    "key": "turret_screw_m3x8",
@@ -3989,8 +3989,8 @@
     {
      "key": "hopper_screws#0",
      "origin": [
-      7.1,
-      0.0,
+      -9.038416,
+      38.961584,
       163.0
      ],
      "direction": [
@@ -3998,17 +3998,17 @@
       0.0,
       -1.0
      ],
-     "sha256": "fab9e1969782f5cda82028cbc7e3a59af4543c16754e5fff7d245cb8ffee346f",
-     "file": "dossier-shapes/fab9e1969782f5cda82028cbc7e3a59af4543c16754e5fff7d245cb8ffee346f.brep",
+     "sha256": "53b5fe777e051c88c7d6521bd9e5d3b134cb9b64f9b6f24e0db16d00a7c6d94c",
+     "file": "dossier-shapes/53b5fe777e051c88c7d6521bd9e5d3b134cb9b64f9b6f24e0db16d00a7c6d94c.brep",
      "bbox": {
       "min": [
-       4.35,
-       -2.75,
+       -11.788416,
+       36.211584,
        155.0
       ],
       "max": [
-       9.85,
-       2.75,
+       -6.288416,
+       41.711584,
        166.0
       ]
      },
@@ -4019,8 +4019,8 @@
     {
      "key": "hopper_screws#1",
      "origin": [
-      -86.961584,
-      38.961584,
+      -95.718,
+      27.55,
       163.0
      ],
      "direction": [
@@ -4028,17 +4028,17 @@
       0.0,
       -1.0
      ],
-     "sha256": "537dac9d53ce6acd0e02823ba4518eff0b90bbb7d05d916acbd9b1f396ae9fa1",
-     "file": "dossier-shapes/537dac9d53ce6acd0e02823ba4518eff0b90bbb7d05d916acbd9b1f396ae9fa1.brep",
+     "sha256": "0bfc468fd0b58556b346fbf12b7fa86609d4c5b124ccc58f50350f95985901e5",
+     "file": "dossier-shapes/0bfc468fd0b58556b346fbf12b7fa86609d4c5b124ccc58f50350f95985901e5.brep",
      "bbox": {
       "min": [
-       -89.711584,
-       36.211584,
+       -98.468,
+       24.8,
        155.0
       ],
       "max": [
-       -84.211584,
-       41.711584,
+       -92.968,
+       30.3,
        166.0
       ]
      },
@@ -4049,8 +4049,8 @@
     {
      "key": "hopper_screws#2",
      "origin": [
-      -86.961584,
-      -38.961584,
+      -95.718,
+      -27.55,
       163.0
      ],
      "direction": [
@@ -4058,17 +4058,17 @@
       0.0,
       -1.0
      ],
-     "sha256": "492752e11b66888f51c57344cdc8dc6268e3bd1d41658cfbe1ad8abb4df3f599",
-     "file": "dossier-shapes/492752e11b66888f51c57344cdc8dc6268e3bd1d41658cfbe1ad8abb4df3f599.brep",
+     "sha256": "1438cf69e3399d57a655cde3ac22c0160f1237d800a7a249fa029094d0de4c5d",
+     "file": "dossier-shapes/1438cf69e3399d57a655cde3ac22c0160f1237d800a7a249fa029094d0de4c5d.brep",
      "bbox": {
       "min": [
-       -89.711584,
-       -41.711584,
+       -98.468,
+       -30.3,
        155.0
       ],
       "max": [
-       -84.211584,
-       -36.211584,
+       -92.968,
+       -24.8,
        166.0
       ]
      },
@@ -4077,7 +4077,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:172"
+   "declared_at": "cad/turret_dossier.py:174"
   }
  },
  "assembly": {
@@ -4087,7 +4087,7 @@
     "fit": "cartridge_body",
     "onto": [],
     "direction": "-Z",
-    "declared_at": "cad/turret_dossier.py:178"
+    "declared_at": "cad/turret_dossier.py:180"
    },
    {
     "order": 2,
@@ -4096,7 +4096,7 @@
      "cartridge_body"
     ],
     "direction": "+Z",
-    "declared_at": "cad/turret_dossier.py:178"
+    "declared_at": "cad/turret_dossier.py:180"
    },
    {
     "order": 3,
@@ -4105,7 +4105,7 @@
      "cartridge_body"
     ],
     "direction": "+Z",
-    "declared_at": "cad/turret_dossier.py:178"
+    "declared_at": "cad/turret_dossier.py:180"
    },
    {
     "order": 4,
@@ -4114,7 +4114,7 @@
      "cartridge_body"
     ],
     "direction": "+Z",
-    "declared_at": "cad/turret_dossier.py:178"
+    "declared_at": "cad/turret_dossier.py:180"
    },
    {
     "order": 5,
@@ -4123,7 +4123,7 @@
      "flywheel_motor_l"
     ],
     "direction": "+Z",
-    "declared_at": "cad/turret_dossier.py:178"
+    "declared_at": "cad/turret_dossier.py:180"
    },
    {
     "order": 6,
@@ -4132,7 +4132,7 @@
      "flywheel"
     ],
     "direction": "+Z",
-    "declared_at": "cad/turret_dossier.py:178"
+    "declared_at": "cad/turret_dossier.py:180"
    },
    {
     "order": 7,
@@ -4141,7 +4141,7 @@
      "flywheel_motor_r"
     ],
     "direction": "+Z",
-    "declared_at": "cad/turret_dossier.py:178"
+    "declared_at": "cad/turret_dossier.py:180"
    },
    {
     "order": 8,
@@ -4150,7 +4150,7 @@
      "flywheel_m"
     ],
     "direction": "+Z",
-    "declared_at": "cad/turret_dossier.py:178"
+    "declared_at": "cad/turret_dossier.py:180"
    },
    {
     "order": 9,
@@ -4159,7 +4159,7 @@
      "feed_motor"
     ],
     "direction": "-Z",
-    "declared_at": "cad/turret_dossier.py:178"
+    "declared_at": "cad/turret_dossier.py:180"
    },
    {
     "order": 10,
@@ -4168,7 +4168,7 @@
      "cartridge_body"
     ],
     "direction": "-Z",
-    "declared_at": "cad/turret_dossier.py:178"
+    "declared_at": "cad/turret_dossier.py:180"
    },
    {
     "order": 11,
@@ -4181,7 +4181,7 @@
     "fasteners": [
      "hopper_screws"
     ],
-    "declared_at": "cad/turret_dossier.py:178"
+    "declared_at": "cad/turret_dossier.py:180"
    },
    {
     "order": 12,
@@ -4190,7 +4190,7 @@
      "dial"
     ],
     "direction": "-Z",
-    "declared_at": "cad/turret_dossier.py:178"
+    "declared_at": "cad/turret_dossier.py:180"
    },
    {
     "order": 13,
@@ -4199,7 +4199,7 @@
      "hopper"
     ],
     "direction": "-Z",
-    "declared_at": "cad/turret_dossier.py:178"
+    "declared_at": "cad/turret_dossier.py:180"
    },
    {
     "order": 14,
@@ -4208,7 +4208,7 @@
      "hopper_lid"
     ],
     "direction": "-Z",
-    "declared_at": "cad/turret_dossier.py:178"
+    "declared_at": "cad/turret_dossier.py:180"
    },
    {
     "order": 15,
@@ -4217,7 +4217,7 @@
      "cartridge_body"
     ],
     "direction": "-X",
-    "declared_at": "cad/turret_dossier.py:178"
+    "declared_at": "cad/turret_dossier.py:180"
    },
    {
     "order": 16,
@@ -4226,7 +4226,7 @@
      "cartridge_body"
     ],
     "direction": "-Z",
-    "declared_at": "cad/turret_dossier.py:178"
+    "declared_at": "cad/turret_dossier.py:180"
    },
    {
     "order": 17,
@@ -4239,7 +4239,7 @@
     "fasteners": [
      "laser_foot_screws"
     ],
-    "declared_at": "cad/turret_dossier.py:178"
+    "declared_at": "cad/turret_dossier.py:180"
    },
    {
     "order": 18,
@@ -4248,7 +4248,7 @@
      "laser_mount"
     ],
     "direction": "-Z",
-    "declared_at": "cad/turret_dossier.py:178"
+    "declared_at": "cad/turret_dossier.py:180"
    },
    {
     "order": 19,
@@ -4257,7 +4257,7 @@
      "laser_mount"
     ],
     "direction": "-X",
-    "declared_at": "cad/turret_dossier.py:178"
+    "declared_at": "cad/turret_dossier.py:180"
    },
    {
     "order": 20,
@@ -4266,7 +4266,7 @@
      "cartridge_body"
     ],
     "direction": "-Z",
-    "declared_at": "cad/turret_dossier.py:178"
+    "declared_at": "cad/turret_dossier.py:180"
    },
    {
     "order": 21,
@@ -4275,7 +4275,7 @@
      "cartridge_body"
     ],
     "direction": "-Z",
-    "declared_at": "cad/turret_dossier.py:178"
+    "declared_at": "cad/turret_dossier.py:180"
    },
    {
     "order": 22,
@@ -4284,7 +4284,7 @@
      "cartridge_body"
     ],
     "direction": "-Z",
-    "declared_at": "cad/turret_dossier.py:178"
+    "declared_at": "cad/turret_dossier.py:180"
    },
    {
     "order": 23,
@@ -4293,7 +4293,7 @@
      "cartridge_body"
     ],
     "direction": "+Z",
-    "declared_at": "cad/turret_dossier.py:178"
+    "declared_at": "cad/turret_dossier.py:180"
    },
    {
     "order": 24,
@@ -4302,7 +4302,7 @@
      "cradle"
     ],
     "direction": "+Z",
-    "declared_at": "cad/turret_dossier.py:178"
+    "declared_at": "cad/turret_dossier.py:180"
    },
    {
     "order": 25,
@@ -4311,7 +4311,7 @@
      "cradle"
     ],
     "direction": "-Y",
-    "declared_at": "cad/turret_dossier.py:178"
+    "declared_at": "cad/turret_dossier.py:180"
    },
    {
     "order": 26,
@@ -4320,7 +4320,7 @@
      "cradle_plate_l"
     ],
     "direction": "-Y",
-    "declared_at": "cad/turret_dossier.py:178"
+    "declared_at": "cad/turret_dossier.py:180"
    },
    {
     "order": 27,
@@ -4329,7 +4329,7 @@
      "cradle"
     ],
     "direction": "+Y",
-    "declared_at": "cad/turret_dossier.py:178"
+    "declared_at": "cad/turret_dossier.py:180"
    },
    {
     "order": 28,
@@ -4338,7 +4338,7 @@
      "cradle_plate_r"
     ],
     "direction": "+Y",
-    "declared_at": "cad/turret_dossier.py:178"
+    "declared_at": "cad/turret_dossier.py:180"
    },
    {
     "order": 29,
@@ -4347,7 +4347,7 @@
      "cradle"
     ],
     "direction": "+Z",
-    "declared_at": "cad/turret_dossier.py:178"
+    "declared_at": "cad/turret_dossier.py:180"
    },
    {
     "order": 30,
@@ -4356,7 +4356,7 @@
      "tilt_yoke"
     ],
     "direction": "-Y",
-    "declared_at": "cad/turret_dossier.py:178"
+    "declared_at": "cad/turret_dossier.py:180"
    },
    {
     "order": 31,
@@ -4365,7 +4365,7 @@
      "tilt_yoke"
     ],
     "direction": "+Y",
-    "declared_at": "cad/turret_dossier.py:178"
+    "declared_at": "cad/turret_dossier.py:180"
    },
    {
     "order": 32,
@@ -4374,7 +4374,7 @@
      "tilt_bearing"
     ],
     "direction": "+Y",
-    "declared_at": "cad/turret_dossier.py:178"
+    "declared_at": "cad/turret_dossier.py:180"
    },
    {
     "order": 33,
@@ -4383,7 +4383,7 @@
      "cradle_plate_r"
     ],
     "direction": "-Z",
-    "declared_at": "cad/turret_dossier.py:178"
+    "declared_at": "cad/turret_dossier.py:180"
    },
    {
     "order": 34,
@@ -4392,7 +4392,7 @@
      "cradle_plate_r"
     ],
     "direction": "+Y",
-    "declared_at": "cad/turret_dossier.py:178"
+    "declared_at": "cad/turret_dossier.py:180"
    },
    {
     "order": 35,
@@ -4401,7 +4401,7 @@
      "tilt_yoke"
     ],
     "direction": "+Y",
-    "declared_at": "cad/turret_dossier.py:178"
+    "declared_at": "cad/turret_dossier.py:180"
    },
    {
     "order": 36,
@@ -4410,7 +4410,7 @@
      "board_bay"
     ],
     "direction": "+Y",
-    "declared_at": "cad/turret_dossier.py:178"
+    "declared_at": "cad/turret_dossier.py:180"
    },
    {
     "order": 37,
@@ -4419,7 +4419,7 @@
      "board_bay"
     ],
     "direction": "+Y",
-    "declared_at": "cad/turret_dossier.py:178"
+    "declared_at": "cad/turret_dossier.py:180"
    },
    {
     "order": 38,
@@ -4428,7 +4428,7 @@
      "tilt_yoke"
     ],
     "direction": "+Z",
-    "declared_at": "cad/turret_dossier.py:178"
+    "declared_at": "cad/turret_dossier.py:180"
    },
    {
     "order": 39,
@@ -4437,7 +4437,7 @@
      "pan_ring"
     ],
     "direction": "+Z",
-    "declared_at": "cad/turret_dossier.py:178"
+    "declared_at": "cad/turret_dossier.py:180"
    },
    {
     "order": 40,
@@ -4446,7 +4446,7 @@
      "ring_driver"
     ],
     "direction": "+Z",
-    "declared_at": "cad/turret_dossier.py:178"
+    "declared_at": "cad/turret_dossier.py:180"
    },
    {
     "order": 41,
@@ -4455,7 +4455,7 @@
      "pan_ring"
     ],
     "direction": "+Z",
-    "declared_at": "cad/turret_dossier.py:178"
+    "declared_at": "cad/turret_dossier.py:180"
    },
    {
     "order": 42,
@@ -4464,7 +4464,7 @@
      "pan_ring"
     ],
     "direction": "+Z",
-    "declared_at": "cad/turret_dossier.py:178"
+    "declared_at": "cad/turret_dossier.py:180"
    },
    {
     "order": 43,
@@ -4473,7 +4473,7 @@
      "pan_ring"
     ],
     "direction": "+Z",
-    "declared_at": "cad/turret_dossier.py:178"
+    "declared_at": "cad/turret_dossier.py:180"
    },
    {
     "order": 44,
@@ -4482,7 +4482,7 @@
      "pan_bearing_inner"
     ],
     "direction": "+Z",
-    "declared_at": "cad/turret_dossier.py:178"
+    "declared_at": "cad/turret_dossier.py:180"
    },
    {
     "order": 45,
@@ -4491,7 +4491,7 @@
      "pan_clamp"
     ],
     "direction": "+Z",
-    "declared_at": "cad/turret_dossier.py:178"
+    "declared_at": "cad/turret_dossier.py:180"
    },
    {
     "order": 46,
@@ -4500,7 +4500,7 @@
      "pan_bearing_inner"
     ],
     "direction": "+Z",
-    "declared_at": "cad/turret_dossier.py:178"
+    "declared_at": "cad/turret_dossier.py:180"
    },
    {
     "order": 47,
@@ -4509,79 +4509,79 @@
      "pan_ring"
     ],
     "direction": "+Z",
-    "declared_at": "cad/turret_dossier.py:178"
+    "declared_at": "cad/turret_dossier.py:180"
    },
    {
     "order": 48,
-    "fit": "pan_base",
-    "onto": [
-     "pan_bearing"
-    ],
-    "direction": "+Z",
-    "declared_at": "cad/turret_dossier.py:178"
-   },
-   {
-    "order": 49,
-    "fit": "bumper_ring",
-    "onto": [
-     "pan_base"
-    ],
-    "direction": "+Z",
-    "declared_at": "cad/turret_dossier.py:178"
-   },
-   {
-    "order": 50,
     "fit": "pan_pinion",
     "onto": [
      "pan_ring"
     ],
     "direction": "+Z",
-    "declared_at": "cad/turret_dossier.py:178"
+    "declared_at": "cad/turret_dossier.py:180"
    },
    {
-    "order": 51,
+    "order": 49,
     "fit": "pan_servo",
     "onto": [
-     "pan_base"
+     "pan_pinion"
     ],
     "direction": "+Z",
-    "declared_at": "cad/turret_dossier.py:178"
+    "declared_at": "cad/turret_dossier.py:180"
    },
    {
-    "order": 52,
-    "fit": "ring_carrier",
-    "onto": [
-     "pan_base"
-    ],
-    "direction": "+Z",
-    "declared_at": "cad/turret_dossier.py:178"
-   },
-   {
-    "order": 53,
-    "fit": "slip_ring",
-    "onto": [
-     "ring_carrier"
-    ],
-    "direction": "+Z",
-    "declared_at": "cad/turret_dossier.py:178"
-   },
-   {
-    "order": 54,
+    "order": 50,
     "fit": "slip_ring_rotor",
     "onto": [
      "ring_coupling"
     ],
     "direction": "+Z",
-    "declared_at": "cad/turret_dossier.py:178"
+    "declared_at": "cad/turret_dossier.py:180"
    },
    {
-    "order": 55,
+    "order": 51,
+    "fit": "slip_ring",
+    "onto": [
+     "slip_ring_rotor"
+    ],
+    "direction": "+Z",
+    "declared_at": "cad/turret_dossier.py:180"
+   },
+   {
+    "order": 52,
     "fit": "base_board",
+    "onto": [
+     "pan_bearing"
+    ],
+    "direction": "+Z",
+    "declared_at": "cad/turret_dossier.py:180"
+   },
+   {
+    "order": 53,
+    "fit": "pan_base",
+    "onto": [
+     "pan_bearing"
+    ],
+    "direction": "+Z",
+    "declared_at": "cad/turret_dossier.py:180"
+   },
+   {
+    "order": 54,
+    "fit": "ring_carrier",
     "onto": [
      "pan_base"
     ],
     "direction": "+Z",
-    "declared_at": "cad/turret_dossier.py:178"
+    "declared_at": "cad/turret_dossier.py:180"
+   },
+   {
+    "order": 55,
+    "fit": "bumper_ring",
+    "onto": [
+     "pan_base"
+    ],
+    "direction": "+Z",
+    "declared_at": "cad/turret_dossier.py:180"
    },
    {
     "order": 56,
@@ -4590,7 +4590,7 @@
      "pan_base"
     ],
     "direction": "+Y",
-    "declared_at": "cad/turret_dossier.py:178"
+    "declared_at": "cad/turret_dossier.py:180"
    },
    {
     "order": 57,
@@ -4599,7 +4599,7 @@
      "pan_base"
     ],
     "direction": "+Z",
-    "declared_at": "cad/turret_dossier.py:178"
+    "declared_at": "cad/turret_dossier.py:180"
    },
    {
     "order": 58,
@@ -4608,7 +4608,7 @@
      "compute_shell"
     ],
     "direction": "+Z",
-    "declared_at": "cad/turret_dossier.py:178"
+    "declared_at": "cad/turret_dossier.py:180"
    },
    {
     "order": 59,
@@ -4617,7 +4617,7 @@
      "compute_shell"
     ],
     "direction": "+Z",
-    "declared_at": "cad/turret_dossier.py:178"
+    "declared_at": "cad/turret_dossier.py:180"
    },
    {
     "order": 60,
@@ -4626,7 +4626,7 @@
      "compute_shell"
     ],
     "direction": "+X",
-    "declared_at": "cad/turret_dossier.py:178"
+    "declared_at": "cad/turret_dossier.py:180"
    },
    {
     "order": 61,
@@ -4635,7 +4635,7 @@
      "compute_shell"
     ],
     "direction": "+X",
-    "declared_at": "cad/turret_dossier.py:178"
+    "declared_at": "cad/turret_dossier.py:180"
    },
    {
     "order": 62,
@@ -4644,7 +4644,7 @@
      "compute_shell"
     ],
     "direction": "+Z",
-    "declared_at": "cad/turret_dossier.py:178"
+    "declared_at": "cad/turret_dossier.py:180"
    },
    {
     "order": 63,
@@ -4653,7 +4653,7 @@
      "compute_tray"
     ],
     "direction": "+Z",
-    "declared_at": "cad/turret_dossier.py:178"
+    "declared_at": "cad/turret_dossier.py:180"
    },
    {
     "order": 64,
@@ -4662,7 +4662,7 @@
      "stand_box"
     ],
     "direction": "+Z",
-    "declared_at": "cad/turret_dossier.py:178"
+    "declared_at": "cad/turret_dossier.py:180"
    },
    {
     "order": 65,
@@ -4671,7 +4671,7 @@
      "stand_box"
     ],
     "direction": "+Z",
-    "declared_at": "cad/turret_dossier.py:178"
+    "declared_at": "cad/turret_dossier.py:180"
    },
    {
     "order": 66,
@@ -4680,7 +4680,7 @@
      "stand_box"
     ],
     "direction": "+Z",
-    "declared_at": "cad/turret_dossier.py:178"
+    "declared_at": "cad/turret_dossier.py:180"
    },
    {
     "order": 67,
@@ -4689,7 +4689,7 @@
      "stand_box"
     ],
     "direction": "-X",
-    "declared_at": "cad/turret_dossier.py:178"
+    "declared_at": "cad/turret_dossier.py:180"
    },
    {
     "order": 68,
@@ -4698,7 +4698,7 @@
      "stand_box"
     ],
     "direction": "-X",
-    "declared_at": "cad/turret_dossier.py:178"
+    "declared_at": "cad/turret_dossier.py:180"
    },
    {
     "order": 69,
@@ -4707,7 +4707,7 @@
      "stand_box"
     ],
     "direction": "+Z",
-    "declared_at": "cad/turret_dossier.py:178"
+    "declared_at": "cad/turret_dossier.py:180"
    },
    {
     "order": 70,
@@ -4716,7 +4716,7 @@
      "stand_bottom"
     ],
     "direction": "+Z",
-    "declared_at": "cad/turret_dossier.py:178"
+    "declared_at": "cad/turret_dossier.py:180"
    },
    {
     "order": 71,
@@ -4725,7 +4725,7 @@
      "stand_bottom"
     ],
     "direction": "+X",
-    "declared_at": "cad/turret_dossier.py:178"
+    "declared_at": "cad/turret_dossier.py:180"
    },
    {
     "order": 72,
@@ -4734,7 +4734,7 @@
      "dt_receptacle"
     ],
     "direction": "+Y",
-    "declared_at": "cad/turret_dossier.py:178"
+    "declared_at": "cad/turret_dossier.py:180"
    }
   ]
  },

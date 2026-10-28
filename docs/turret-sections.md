@@ -75,6 +75,19 @@ the bearing's (I-tilt 39 mm, I-flap 69 mm, the wheels 4 and 1.5 mm); the bearing
 horns) are the joints' intended contacts. The 37 fixed joints are the mounts of the moving parts, each an interface in
 the dossier. The settled load rides with the hopper (I-pile, T0.2), so the motion gate sweeps it with the tilt frame.
 
+**Results (run 3, gb10-01, 2026-10-28; the record built at d627004 + the merges of dd96792 and dd02fcd):**
+
+| Gate | Result | What is open |
+|---|---|---|
+| connectivity | 137 pass, 1 warn, 2 fail | I-wheel-r's declared clearance (1.5 mm) is under the right hub's gap since dd96792 moved the CT dowel's boss (3.5 mm, as the left): set it to 4 mm and rerun. The warning: index_magnet on pan_clamp (a line contact through the clamp's hole), undeclared |
+| containment | 64 pass, 1 warn | the support check (report only: balls held in an arch) |
+| fasteners | 35 pass | |
+| motion | running at the push (pan 35 x tilt 6 x dial 3 x flap 3 x wheels 2; run 2 coarsened found the flap's knuckle on the lid at 51.1 deg and the hub overlaps, both fixed) | |
+| assembly | 220 pass, 6 fail | stop_lug: the cradle cannot be lowered into the yoke with the lug on its plate (the upper stop sector, 8.2 mm before its seat); base_board: drawn in a closed pocket of pan_base (no straight way in); both open mechanical items for the next round. The poured load, the rotor's leads (a cable) and the MR126's races (pressed in from inside before the cradle) are not straight insertions |
+| wall | 16 pass, 12 fail | features under 0.8 mm, mostly boolean sliver skins: cartridge_body and ring_carrier 0.002 mm, pan_ring 0.025, pan_base 0.07, compute_shell 0.10, laser_mount 0.12, tilt_yoke 0.15, cradle 0.20; dial 0.64, hopper 0.62, hopper_lid 0.70, pivot_spacer 0.75 |
+| turret-path, turret-ammo | not yet bound to this record | they bind only to a record their own machine reproduces (the GB10's hashes differ from the workstation's): run `cad/turret_gates.py --dossier` on gb10-01 |
+| dossier lint | sections: S8 gated, S1, S2, S6, S7 built, S3, S4, S5 draft until turret-path and turret-ammo exist | T4.7 (the cartridge's recoil SF) and T8.2 (the stand's switch cut-out) open |
+
 ---
 
 ## 1. Base and pan drive
