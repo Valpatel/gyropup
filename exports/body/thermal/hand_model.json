@@ -35,8 +35,8 @@
    }
   },
   "deck_cells": {
-   "n": 31,
-   "area_mm2": 1924.1,
+   "n": 27,
+   "area_mm2": 1675.9,
    "phi": 0.513,
    "cell_mm": 8.0,
    "pitch_mm": 11.0
@@ -67,15 +67,11 @@
   "louvre_pitch_mm": 7.0,
   "louvres_needed_for_half_the_budget_mm2": 2605.0,
   "louvres_where": "the body's air inlet: each side wall's rear half beside the cooler's fins (x -112..-21), z 148..194 (under the deck's lip), above the J501's port hatch; 4 mm slots: ISO 13857 admits no finger (cad/body_shell.py LOUVRE)",
-  "rev_b_deck_cells_open_mm2": 1986.2,
-  "rev_b_deck_cells_n": 32,
+  "rev_b_deck_cells_open_mm2": 1613.8,
+  "rev_b_deck_cells_n": 26,
   "rev_b_deck_cells_xy": [
    [
     -91.62,
-    -12.08
-   ],
-   [
-    -91.62,
     -1.54
    ],
    [
@@ -84,10 +80,6 @@
    ],
    [
     -81.08,
-    -12.08
-   ],
-   [
-    -81.08,
     -1.54
    ],
    [
@@ -96,10 +88,6 @@
    ],
    [
     -70.54,
-    -12.08
-   ],
-   [
-    -70.54,
     -1.54
    ],
    [
@@ -117,10 +105,6 @@
    [
     -60.0,
     9.0
-   ],
-   [
-    -60.0,
-    19.54
    ],
    [
     -49.46,
@@ -145,10 +129,6 @@
    [
     -49.46,
     30.08
-   ],
-   [
-    -49.46,
-    40.62
    ],
    [
     -38.92,
@@ -193,62 +173,58 @@
    [
     -28.38,
     19.54
-   ],
-   [
-    -28.38,
-    30.08
    ]
   ],
-  "plenum_cells_open_mm2": 3537.9,
-  "plenum_cells_n": 57,
+  "plenum_cells_open_mm2": 2731.0,
+  "plenum_cells_n": 44,
   "rev_b_deck_cells": "cells 8 mm square on a 10.54 mm pitch (2.54 mm webs: the sheet's thickness, SendCutSend's minimum) over the fan's whole circle (r 46), clear of the riser's feet; the turret plate's opening follows it",
   "fan_duct": "a printed PETG duct from the fan frame (2 mm clear of the fan, the J501's minimum_fan_clearance) up to the turret plate's opening, so the fan's exhaust leaves through the deck and does not spill back into the body to come round through the fins again (the J501 box re-breathed +3.5 K without its skirt)",
   "flow_direction": "up: louvres -> body -> fins -> fan -> duct -> deck cells -> riser sides (j501-agx 94da39d)"
  },
  "cases": {
   "P1 deck as cut, P3 louvres": {
-   "q_m3h": 21.9,
-   "q_cfm": 12.89,
-   "fan_pa": 21.54,
-   "cooler_pa": 12.56,
-   "body_pa": 8.98,
-   "deck_outlet_pa": 7.3,
-   "louvre_inlet_pa": 1.68,
-   "cooler_inlet_rise_k": 2.49,
-   "air_rise_through_cooler_k": 5.63,
-   "exhaust_at_riser_c": 33.1,
+   "q_m3h": 21.1,
+   "q_cfm": 12.42,
+   "fan_pa": 21.79,
+   "cooler_pa": 11.65,
+   "body_pa": 10.14,
+   "deck_outlet_pa": 8.58,
+   "louvre_inlet_pa": 1.56,
+   "cooler_inlet_rise_k": 2.59,
+   "air_rise_through_cooler_k": 5.85,
+   "exhaust_at_riser_c": 33.4,
    "budget_pa": 5.0,
    "pass_budget": false,
    "pass_inlet": true,
    "pass_exhaust": true
   },
   "Rev B deck (lever 3), P3 louvres": {
-   "q_m3h": 22.4,
-   "q_cfm": 13.19,
-   "fan_pa": 21.4,
-   "cooler_pa": 13.14,
-   "body_pa": 8.26,
-   "deck_outlet_pa": 6.5,
-   "louvre_inlet_pa": 1.76,
-   "cooler_inlet_rise_k": 2.44,
-   "air_rise_through_cooler_k": 5.51,
-   "exhaust_at_riser_c": 32.9,
+   "q_m3h": 21.27,
+   "q_cfm": 12.52,
+   "fan_pa": 21.73,
+   "cooler_pa": 11.85,
+   "body_pa": 9.89,
+   "deck_outlet_pa": 8.3,
+   "louvre_inlet_pa": 1.58,
+   "cooler_inlet_rise_k": 2.57,
+   "air_rise_through_cooler_k": 5.8,
+   "exhaust_at_riser_c": 33.4,
    "budget_pa": 5.0,
    "pass_budget": false,
    "pass_inlet": true,
    "pass_exhaust": true
   },
   "Rev B deck with a plenum to r 60, P3 louvres": {
-   "q_m3h": 24.25,
-   "q_cfm": 14.27,
-   "fan_pa": 20.84,
-   "cooler_pa": 15.39,
-   "body_pa": 5.45,
-   "deck_outlet_pa": 3.4,
-   "louvre_inlet_pa": 2.06,
-   "cooler_inlet_rise_k": 2.25,
-   "air_rise_through_cooler_k": 5.09,
-   "exhaust_at_riser_c": 32.3,
+   "q_m3h": 23.62,
+   "q_cfm": 13.9,
+   "fan_pa": 21.03,
+   "cooler_pa": 14.61,
+   "body_pa": 6.43,
+   "deck_outlet_pa": 4.47,
+   "louvre_inlet_pa": 1.95,
+   "cooler_inlet_rise_k": 2.31,
+   "air_rise_through_cooler_k": 5.22,
+   "exhaust_at_riser_c": 32.5,
    "budget_pa": 5.0,
    "pass_budget": false,
    "pass_inlet": true,
@@ -256,7 +232,7 @@
   }
  },
  "plate": {
-  "ttp_estimate_c": 60.3,
+  "ttp_estimate_c": 60.5,
   "limit_c": 70.0,
   "r_heatsink_k_per_w": 0.6,
   "r_tim_k_per_w": 0.15,

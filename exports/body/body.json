@@ -316,8 +316,8 @@
    "rule_violations": [],
    "step": "exports/body/sendcutsend/deck_5052-H32_0.100in_x1.step",
    "dxf": "exports/body/sendcutsend/deck_5052-H32_0.100in_x1.dxf",
-   "mass_g_each": 647.3,
-   "features": 50,
+   "mass_g_each": 649.0,
+   "features": 46,
    "stage": "P1"
   },
   "compute_pallet": {
@@ -362,7 +362,7 @@
    "rule_violations": [],
    "step": "exports/body/sendcutsend/turret_plate_6061-T6_0.125in_x1.step",
    "dxf": "exports/body/sendcutsend/turret_plate_6061-T6_0.125in_x1.dxf",
-   "mass_g_each": 132.5,
+   "mass_g_each": 134.5,
    "features": 13,
    "stage": "P2"
   },
@@ -462,7 +462,7 @@
  },
  "print": {
   "too_big": [],
-  "hours": 93.4,
+  "hours": 94.0,
   "parts": {
    "post": {
     "material": "pa6-cf",
@@ -491,10 +491,10 @@
     ],
     "fits": true,
     "placement": "straight",
-    "grams_each": 165,
-    "grams": 165,
-    "hours": 10.8,
-    "cost_usd": 13.22,
+    "grams_each": 174,
+    "grams": 174,
+    "hours": 11.4,
+    "cost_usd": 13.93,
     "infill": "100 %",
     "how": "PA6-CF, 100 % solid, printed on its top face; 8 x M5 inserts, 2 x \u00d85 dowels"
    },
@@ -693,14 +693,14 @@
    "cheek_right": 491.9,
    "floor_tray": 752.6,
    "belly_plate": 247.4,
-   "deck": 647.3,
+   "deck": 649.0,
    "compute_pallet": 228.7,
    "post_1": 43.5,
    "post_2": 43.5,
    "post_3": 43.5,
    "post_4": 43.5,
-   "riser": 165.3,
-   "turret_plate": 132.5,
+   "riser": 174.1,
+   "turret_plate": 134.5,
    "turret_plate_nuts": 0.0,
    "isolator_1": 2.1,
    "isolator_2": 2.1,
@@ -755,7 +755,7 @@
    "d435_rear": 0.0,
    "eyes_board": 0.0
   },
-  "frame_total": 5241.1
+  "frame_total": 5253.6
  },
  "internal_clashes": [],
  "shell": {
@@ -828,7 +828,7 @@
  },
  "in_keepouts": [],
  "turret_plate": {
-  "cells": 31,
+  "cells": 27,
   "cells_covered": 0,
   "covered_mm2": 0.0,
   "deck_holes_to_drill": [
@@ -1880,31 +1880,31 @@
  "mass": {
   "P1": {
    "stage": "P1",
-   "total_kg": 33.81,
+   "total_kg": 33.82,
    "com_mm": [
     3.3,
     -1.1,
-    -76.8
+    -76.7
    ],
    "groups_kg": {
     "legs": 21.624,
-    "frame": 4.835,
+    "frame": 4.846,
     "compute": 1.513,
     "power": 1.739,
     "deck": 0.83,
     "battery": 3.27
    },
    "legs_kg": 21.62,
-   "body_and_head_kg": 12.19,
+   "body_and_head_kg": 12.2,
    "budget": {
-    "robot_kg": 35.0,
+    "robot_kg": 37.0,
     "legs_kg_each": 10.85,
-    "body_and_head_kg": 13.3,
-    "design_mass_kg": 35.5,
-    "design_half_mass_kg": 17.75,
+    "body_and_head_kg": 15.3,
+    "design_mass_kg": 37.5,
+    "design_half_mass_kg": 18.75,
     "com_x_mm": 10.0,
     "com_y_mm": 5.0,
-    "basis": "D69 (35.0 kg as built, 35.5 kg design; it replaces D57's 32.0 / 32.5 kg); legs 2 x 10.85 kg (leg.json + D53 stops + the D69 wheel at its listed 3.53 kg + the clamp hardware), body and head 13.3 kg"
+    "basis": "D71 (37.0 kg as built, 37.5 kg design; it replaces D69's 35.0 / 35.5 kg); legs 2 x 10.85 kg (leg.json + D53 stops + the D69 wheel at its listed 3.53 kg + the clamp hardware), body and head 15.3 kg"
    },
    "leg_extra": "leg.json 9282 g + 200 g announced for the stops and flanges (D53)",
    "levers": [
@@ -2092,15 +2092,15 @@
   },
   "P3": {
    "stage": "P3",
-   "total_kg": 36.75,
+   "total_kg": 36.77,
    "com_mm": [
     1.4,
     -1.0,
-    -49.9
+    -49.8
    ],
    "groups_kg": {
     "legs": 21.624,
-    "frame": 4.968,
+    "frame": 4.98,
     "shell": 1.11,
     "compute": 1.513,
     "power": 1.739,
@@ -2108,16 +2108,16 @@
     "battery": 3.27
    },
    "legs_kg": 21.62,
-   "body_and_head_kg": 15.13,
+   "body_and_head_kg": 15.14,
    "budget": {
-    "robot_kg": 35.0,
+    "robot_kg": 37.0,
     "legs_kg_each": 10.85,
-    "body_and_head_kg": 13.3,
-    "design_mass_kg": 35.5,
-    "design_half_mass_kg": 17.75,
+    "body_and_head_kg": 15.3,
+    "design_mass_kg": 37.5,
+    "design_half_mass_kg": 18.75,
     "com_x_mm": 10.0,
     "com_y_mm": 5.0,
-    "basis": "D69 (35.0 kg as built, 35.5 kg design; it replaces D57's 32.0 / 32.5 kg); legs 2 x 10.85 kg (leg.json + D53 stops + the D69 wheel at its listed 3.53 kg + the clamp hardware), body and head 13.3 kg"
+    "basis": "D71 (37.0 kg as built, 37.5 kg design; it replaces D69's 35.0 / 35.5 kg); legs 2 x 10.85 kg (leg.json + D53 stops + the D69 wheel at its listed 3.53 kg + the clamp hardware), body and head 15.3 kg"
    },
    "leg_extra": "leg.json 9282 g + 200 g announced for the stops and flanges (D53)",
    "levers": [
@@ -2303,21 +2303,21 @@
     }
    ],
    "gate": {
-    "ceiling_kg": 35.0,
-    "gap_kg": 1.75,
+    "ceiling_kg": 37.0,
+    "gap_kg": -0.23,
     "open_scheduled_g": -500,
-    "with_scheduled_levers_kg": 36.25,
-    "body_and_head_with_levers_kg": 14.63,
+    "with_scheduled_levers_kg": 36.27,
+    "body_and_head_with_levers_kg": 14.64,
     "leg_each_kg": 10.81,
-    "pass": false,
+    "pass": true,
     "on_call_next": [
      "cheeks_rev_b",
      "alu_standoffs",
      "cooler_34mm"
     ],
-    "margin_kg": -1.25,
+    "margin_kg": 0.73,
     "on_call_open_g": -2301,
-    "rule": "the P3 ledger with every scheduled lever taken (the open ones at the plan's grams) under the 35.0 kg ceiling, each leg under 10.85 kg and the body and head under 13.3 kg (D69); over it, the on-call levers go in order before the next order, each with the user's or the coordinator's word"
+    "rule": "the P3 ledger with every scheduled lever taken (the open ones at the plan's grams) under the 37.0 kg ceiling, each leg under 10.85 kg and the body and head under 15.3 kg (D71); over it, the on-call levers go in order before the next order, each with the user's or the coordinator's word"
    }
   }
  }
