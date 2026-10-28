@@ -29,7 +29,7 @@ here (one heavy solver at a time; the shared machines are loaded).
 | Deck outlet (P1 deck as cut) | 31 cells, 8 mm square on an 11 mm pitch: 1,924 mm², open ratio 0.51, ζ = 1.39 on the cells' velocity | CAD (`body_frame.intake_cells`, round the fan at robot (-60, 9)); Idel'chik thin perforated plate |
 | Riser's open sides (out) | 4 x 62 x 21 mm = 5,208 mm², ζ 1.5 (a 90° turn and out) | CAD; ζ assumed |
 | Inlet louvres | 14 slots 4 x 46 mm a side (2,528 mm²), ζ 2.0 | CAD (`body_shell.LOUVRE`); Idel'chik grilles (1.6-2.4) |
-| Heat into the body | 57.5 W: the module 40, the carrier 5, the DDR-120C-24 6, the DDR-60L-12 2.5, the VESCs and boards 4 | J501 power modes; Mean Well efficiency curves; the rest assumed |
+| Heat into the body | 57.7 W: the module 40, the carrier 5, the TRACO TEP 150-4812WI 8.7 (70 W out at 89 %), the VESCs and boards 4 | J501 power modes; TRACO efficiency; the rest assumed |
 | Plate | 0.6 K/W heatsink + 0.15 K/W pad and spreader | assumed (Seeed publishes no G48R curve) |
 
 The room's air comes in through the louvres in the side walls' rear halves (beside the cooler's fins, above the

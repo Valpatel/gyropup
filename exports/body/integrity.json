@@ -14,6 +14,7 @@
    ],
    "bom": "screw_m5x12_button",
    "note": "the hip frame to its cheek, heads in the gap",
+   "screw_part": "frame_screws_left",
    "grip_mm": [
     4.75
    ],
@@ -36,6 +37,7 @@
    ],
    "bom": "screw_m4x10_flat",
    "note": "the cheeks on the eight standoffs, flush in the countersinks",
+   "screw_part": "spacer_screws",
    "grip_mm": [
     4.75
    ],
@@ -59,6 +61,7 @@
    ],
    "bom": "screw_m5x12_button",
    "note": "the tray on the cheeks' upper flanges",
+   "screw_part": null,
    "grip_mm": [
     7.92
    ],
@@ -82,6 +85,7 @@
    ],
    "bom": "screw_m5x12_button",
    "note": "the belly plate under the cheeks' lower flanges",
+   "screw_part": null,
    "grip_mm": [
     7.29
    ],
@@ -104,6 +108,7 @@
    ],
    "bom": "screw_m5x12_button",
    "note": "the hip frame to its cheek, heads in the gap",
+   "screw_part": "frame_screws_right",
    "grip_mm": [
     4.75
    ],
@@ -126,6 +131,7 @@
    ],
    "bom": "screw_m4x10_flat",
    "note": "the cheeks on the eight standoffs, flush in the countersinks",
+   "screw_part": "spacer_screws",
    "grip_mm": [
     4.75
    ],
@@ -149,6 +155,7 @@
    ],
    "bom": "screw_m5x12_button",
    "note": "the tray on the cheeks' upper flanges",
+   "screw_part": null,
    "grip_mm": [
     7.92
    ],
@@ -172,6 +179,7 @@
    ],
    "bom": "screw_m5x12_button",
    "note": "the belly plate under the cheeks' lower flanges",
+   "screw_part": null,
    "grip_mm": [
     7.29
    ],
@@ -194,6 +202,7 @@
    ],
    "bom": "screw_m5x12_button",
    "note": "a deck post on the tray, from below",
+   "screw_part": null,
    "grip_mm": [
     3.17
    ],
@@ -216,6 +225,7 @@
    ],
    "bom": "screw_m5x12_button",
    "note": "the deck on a post, from above",
+   "screw_part": null,
    "grip_mm": [
     2.54
    ],
@@ -238,6 +248,7 @@
    ],
    "bom": "screw_m5x12_button",
    "note": "a deck post on the tray, from below",
+   "screw_part": null,
    "grip_mm": [
     3.17
    ],
@@ -260,6 +271,7 @@
    ],
    "bom": "screw_m5x12_button",
    "note": "the deck on a post, from above",
+   "screw_part": null,
    "grip_mm": [
     2.54
    ],
@@ -282,6 +294,7 @@
    ],
    "bom": "screw_m5x12_button",
    "note": "a deck post on the tray, from below",
+   "screw_part": null,
    "grip_mm": [
     3.17
    ],
@@ -304,6 +317,7 @@
    ],
    "bom": "screw_m5x12_button",
    "note": "the deck on a post, from above",
+   "screw_part": null,
    "grip_mm": [
     2.54
    ],
@@ -326,6 +340,7 @@
    ],
    "bom": "screw_m5x12_button",
    "note": "a deck post on the tray, from below",
+   "screw_part": null,
    "grip_mm": [
     3.17
    ],
@@ -348,6 +363,7 @@
    ],
    "bom": "screw_m5x12_button",
    "note": "the deck on a post, from above",
+   "screw_part": null,
    "grip_mm": [
     2.54
    ],
@@ -370,6 +386,7 @@
    ],
    "bom": "screw_m5x12_button",
    "note": "the riser on the deck (P1, no turret plate)",
+   "screw_part": null,
    "grip_mm": [
     2.54
    ],
@@ -393,6 +410,7 @@
    ],
    "bom": "screw_m4x20",
    "note": "a TPU isolator (snug, not tight): an M4 x 20 and a washer through its cap and foot into the tray's nut",
+   "screw_part": null,
    "grip_mm": [
     17.15
    ],
@@ -416,6 +434,7 @@
    ],
    "bom": "screw_m4x20",
    "note": "a TPU isolator (snug, not tight): an M4 x 20 and a washer through its cap and foot into the tray's nut",
+   "screw_part": null,
    "grip_mm": [
     17.15
    ],
@@ -439,6 +458,7 @@
    ],
    "bom": "screw_m4x20",
    "note": "a TPU isolator (snug, not tight): an M4 x 20 and a washer through its cap and foot into the tray's nut",
+   "screw_part": null,
    "grip_mm": [
     17.15
    ],
@@ -462,6 +482,7 @@
    ],
    "bom": "screw_m4x20",
    "note": "a TPU isolator (snug, not tight): an M4 x 20 and a washer through its cap and foot into the tray's nut",
+   "screw_part": null,
    "grip_mm": [
     17.15
    ],
@@ -484,6 +505,7 @@
    ],
    "bom": "screw_m5x10_button",
    "note": "a power-plate post on the tray",
+   "screw_part": null,
    "grip_mm": [
     3.17
    ],
@@ -506,6 +528,7 @@
    ],
    "bom": "screw_m5x10_button",
    "note": "the power plate on a post",
+   "screw_part": null,
    "grip_mm": [
     2.54
    ],
@@ -528,6 +551,7 @@
    ],
    "bom": "screw_m5x10_button",
    "note": "a power-plate post on the tray",
+   "screw_part": null,
    "grip_mm": [
     3.17
    ],
@@ -550,6 +574,7 @@
    ],
    "bom": "screw_m5x10_button",
    "note": "the power plate on a post",
+   "screw_part": null,
    "grip_mm": [
     2.54
    ],
@@ -572,6 +597,7 @@
    ],
    "bom": "screw_m5x10_button",
    "note": "a power-plate post on the tray",
+   "screw_part": null,
    "grip_mm": [
     3.17
    ],
@@ -594,6 +620,7 @@
    ],
    "bom": "screw_m5x10_button",
    "note": "the power plate on a post",
+   "screw_part": null,
    "grip_mm": [
     2.54
    ],
@@ -616,6 +643,7 @@
    ],
    "bom": "screw_m5x10_button",
    "note": "a power-plate post on the tray",
+   "screw_part": null,
    "grip_mm": [
     3.17
    ],
@@ -638,6 +666,7 @@
    ],
    "bom": "screw_m5x10_button",
    "note": "the power plate on a post",
+   "screw_part": null,
    "grip_mm": [
     2.54
    ],
@@ -661,6 +690,7 @@
    ],
    "bom": "screw_m3x6",
    "note": "the converter's base flange (its slots) on the bracket's upright",
+   "screw_part": null,
    "grip_mm": [
     8.0
    ],
@@ -684,6 +714,7 @@
    ],
    "bom": "screw_m4x12_socket",
    "note": "the converter's bracket down into the plate's flush nuts (the switch hangs 3 mm under the plate)",
+   "screw_part": null,
    "grip_mm": [
     6.54
    ],
@@ -706,6 +737,7 @@
    ],
    "bom": "screw_m3x8_socket",
    "note": "a bus bar's insulator up from under the plate",
+   "screw_part": null,
    "grip_mm": [
     2.54
    ],
@@ -728,6 +760,7 @@
    ],
    "bom": "screw_m3x8_socket",
    "note": "a bus bar down onto its insulator",
+   "screw_part": null,
    "grip_mm": [
     3.17
    ],
@@ -750,6 +783,7 @@
    ],
    "bom": "screw_m3x8_socket",
    "note": "a bus bar's insulator up from under the plate",
+   "screw_part": null,
    "grip_mm": [
     2.54
    ],
@@ -772,6 +806,7 @@
    ],
    "bom": "screw_m3x8_socket",
    "note": "a bus bar down onto its insulator",
+   "screw_part": null,
    "grip_mm": [
     3.17
    ],
@@ -795,6 +830,7 @@
    ],
    "bom": "screw_m5x10_button",
    "note": "a VESC hung under the power plate by its flange",
+   "screw_part": null,
    "grip_mm": [
     6.54
    ],
@@ -818,6 +854,7 @@
    ],
    "bom": "screw_m5x10_button",
    "note": "a VESC hung under the power plate by its flange",
+   "screw_part": null,
    "grip_mm": [
     6.54
    ],
@@ -841,6 +878,7 @@
    ],
    "bom": "screw_m4x20",
    "note": "a bay rail up into the belly's nuts, beyond the cheeks' ends",
+   "screw_part": null,
    "grip_mm": [
     12.54
    ],
@@ -864,6 +902,7 @@
    ],
    "bom": "screw_m3x6",
    "note": "a side plate into the floor's flange nuts",
+   "screw_part": null,
    "grip_mm": [
     3.25
    ],
@@ -886,6 +925,7 @@
    ],
    "bom": "screw_m3x6",
    "note": "a side plate into its rail's inserts",
+   "screw_part": null,
    "grip_mm": [
     1.6
    ],
@@ -909,6 +949,7 @@
    ],
    "bom": "screw_m4x20",
    "note": "a bay rail up into the belly's nuts, beyond the cheeks' ends",
+   "screw_part": null,
    "grip_mm": [
     12.54
    ],
@@ -932,6 +973,7 @@
    ],
    "bom": "screw_m3x6",
    "note": "a side plate into the floor's flange nuts",
+   "screw_part": null,
    "grip_mm": [
     3.25
    ],
@@ -954,6 +996,7 @@
    ],
    "bom": "screw_m3x6",
    "note": "a side plate into its rail's inserts",
+   "screw_part": null,
    "grip_mm": [
     1.6
    ],
@@ -977,6 +1020,7 @@
    ],
    "bom": "screw_m4x12_socket",
    "note": "a pack adapter's printed plate up into the belly's nuts (heads counterbored 1.5 mm)",
+   "screw_part": null,
    "grip_mm": [
     5.04
    ],
@@ -999,6 +1043,7 @@
    ],
    "bom": "thumbscrew_m3x10",
    "note": "a door's knurled thumbscrew into its rail's end (tool-free)",
+   "screw_part": null,
    "grip_mm": [
     4.0
    ],
@@ -1021,6 +1066,7 @@
    ],
    "bom": "thumbscrew_m3x10",
    "note": "a door's knurled thumbscrew into its rail's end (tool-free)",
+   "screw_part": null,
    "grip_mm": [
     4.0
    ],
@@ -1044,6 +1090,7 @@
    ],
    "bom": "screw_m4x12_socket",
    "note": "a pack adapter's printed plate up into the belly's nuts (heads counterbored 1.5 mm)",
+   "screw_part": null,
    "grip_mm": [
     5.04
    ],
@@ -1066,6 +1113,7 @@
    ],
    "bom": "thumbscrew_m3x10",
    "note": "a door's knurled thumbscrew into its rail's end (tool-free)",
+   "screw_part": null,
    "grip_mm": [
     4.0
    ],
@@ -1088,6 +1136,7 @@
    ],
    "bom": "thumbscrew_m3x10",
    "note": "a door's knurled thumbscrew into its rail's end (tool-free)",
+   "screw_part": null,
    "grip_mm": [
     4.0
    ],
@@ -1111,6 +1160,7 @@
    ],
    "bom": "screw_m5x16_button",
    "note": "the riser through the turret plate and the deck (D59)",
+   "screw_part": null,
    "grip_mm": [
     5.71
    ],
@@ -1134,6 +1184,7 @@
    ],
    "bom": "screw_m5x10_button",
    "note": "the turret plate's ends up against the deck",
+   "screw_part": null,
    "grip_mm": [
     5.71
    ],
@@ -1156,6 +1207,7 @@
    ],
    "bom": "screw_m5x12_button",
    "note": "the hip frame to its cheek, heads in the gap",
+   "screw_part": "frame_screws_left",
    "grip_mm": [
     4.75
    ],
@@ -1178,6 +1230,7 @@
    ],
    "bom": "screw_m4x10_flat",
    "note": "the cheeks on the eight standoffs, flush in the countersinks",
+   "screw_part": "spacer_screws",
    "grip_mm": [
     4.75
    ],
@@ -1201,6 +1254,7 @@
    ],
    "bom": "screw_m5x12_button",
    "note": "the tray on the cheeks' upper flanges",
+   "screw_part": null,
    "grip_mm": [
     7.92
    ],
@@ -1224,6 +1278,7 @@
    ],
    "bom": "screw_m5x12_button",
    "note": "the belly plate under the cheeks' lower flanges",
+   "screw_part": null,
    "grip_mm": [
     7.29
    ],
@@ -1246,6 +1301,7 @@
    ],
    "bom": "screw_m5x12_button",
    "note": "the hip frame to its cheek, heads in the gap",
+   "screw_part": "frame_screws_right",
    "grip_mm": [
     4.75
    ],
@@ -1268,6 +1324,7 @@
    ],
    "bom": "screw_m4x10_flat",
    "note": "the cheeks on the eight standoffs, flush in the countersinks",
+   "screw_part": "spacer_screws",
    "grip_mm": [
     4.75
    ],
@@ -1291,6 +1348,7 @@
    ],
    "bom": "screw_m5x12_button",
    "note": "the tray on the cheeks' upper flanges",
+   "screw_part": null,
    "grip_mm": [
     7.92
    ],
@@ -1314,6 +1372,7 @@
    ],
    "bom": "screw_m5x12_button",
    "note": "the belly plate under the cheeks' lower flanges",
+   "screw_part": null,
    "grip_mm": [
     7.29
    ],
@@ -1336,6 +1395,7 @@
    ],
    "bom": "screw_m5x12_button",
    "note": "a deck post on the tray, from below",
+   "screw_part": null,
    "grip_mm": [
     3.17
    ],
@@ -1358,6 +1418,7 @@
    ],
    "bom": "screw_m5x12_button",
    "note": "the deck on a post, from above",
+   "screw_part": null,
    "grip_mm": [
     2.54
    ],
@@ -1380,6 +1441,7 @@
    ],
    "bom": "screw_m5x12_button",
    "note": "a deck post on the tray, from below",
+   "screw_part": null,
    "grip_mm": [
     3.17
    ],
@@ -1402,6 +1464,7 @@
    ],
    "bom": "screw_m5x12_button",
    "note": "the deck on a post, from above",
+   "screw_part": null,
    "grip_mm": [
     2.54
    ],
@@ -1424,6 +1487,7 @@
    ],
    "bom": "screw_m5x12_button",
    "note": "a deck post on the tray, from below",
+   "screw_part": null,
    "grip_mm": [
     3.17
    ],
@@ -1446,6 +1510,7 @@
    ],
    "bom": "screw_m5x12_button",
    "note": "the deck on a post, from above",
+   "screw_part": null,
    "grip_mm": [
     2.54
    ],
@@ -1468,6 +1533,7 @@
    ],
    "bom": "screw_m5x12_button",
    "note": "a deck post on the tray, from below",
+   "screw_part": null,
    "grip_mm": [
     3.17
    ],
@@ -1490,6 +1556,7 @@
    ],
    "bom": "screw_m5x12_button",
    "note": "the deck on a post, from above",
+   "screw_part": null,
    "grip_mm": [
     2.54
    ],
@@ -1513,6 +1580,7 @@
    ],
    "bom": "screw_m5x16_button",
    "note": "the riser through the turret plate and the deck (D59)",
+   "screw_part": null,
    "grip_mm": [
     5.71
    ],
@@ -1536,6 +1604,7 @@
    ],
    "bom": "screw_m5x10_button",
    "note": "the turret plate's ends up against the deck",
+   "screw_part": null,
    "grip_mm": [
     5.71
    ],
@@ -1559,6 +1628,7 @@
    ],
    "bom": "screw_m4x20",
    "note": "a TPU isolator (snug, not tight): an M4 x 20 and a washer through its cap and foot into the tray's nut",
+   "screw_part": null,
    "grip_mm": [
     17.15
    ],
@@ -1582,6 +1652,7 @@
    ],
    "bom": "screw_m4x20",
    "note": "a TPU isolator (snug, not tight): an M4 x 20 and a washer through its cap and foot into the tray's nut",
+   "screw_part": null,
    "grip_mm": [
     17.15
    ],
@@ -1605,6 +1676,7 @@
    ],
    "bom": "screw_m4x20",
    "note": "a TPU isolator (snug, not tight): an M4 x 20 and a washer through its cap and foot into the tray's nut",
+   "screw_part": null,
    "grip_mm": [
     17.15
    ],
@@ -1628,6 +1700,7 @@
    ],
    "bom": "screw_m4x20",
    "note": "a TPU isolator (snug, not tight): an M4 x 20 and a washer through its cap and foot into the tray's nut",
+   "screw_part": null,
    "grip_mm": [
     17.15
    ],
@@ -1650,6 +1723,7 @@
    ],
    "bom": "screw_m5x10_button",
    "note": "a power-plate post on the tray",
+   "screw_part": null,
    "grip_mm": [
     3.17
    ],
@@ -1672,6 +1746,7 @@
    ],
    "bom": "screw_m5x10_button",
    "note": "the power plate on a post",
+   "screw_part": null,
    "grip_mm": [
     2.54
    ],
@@ -1694,6 +1769,7 @@
    ],
    "bom": "screw_m5x10_button",
    "note": "a power-plate post on the tray",
+   "screw_part": null,
    "grip_mm": [
     3.17
    ],
@@ -1716,6 +1792,7 @@
    ],
    "bom": "screw_m5x10_button",
    "note": "the power plate on a post",
+   "screw_part": null,
    "grip_mm": [
     2.54
    ],
@@ -1738,6 +1815,7 @@
    ],
    "bom": "screw_m5x10_button",
    "note": "a power-plate post on the tray",
+   "screw_part": null,
    "grip_mm": [
     3.17
    ],
@@ -1760,6 +1838,7 @@
    ],
    "bom": "screw_m5x10_button",
    "note": "the power plate on a post",
+   "screw_part": null,
    "grip_mm": [
     2.54
    ],
@@ -1782,6 +1861,7 @@
    ],
    "bom": "screw_m5x10_button",
    "note": "a power-plate post on the tray",
+   "screw_part": null,
    "grip_mm": [
     3.17
    ],
@@ -1804,6 +1884,7 @@
    ],
    "bom": "screw_m5x10_button",
    "note": "the power plate on a post",
+   "screw_part": null,
    "grip_mm": [
     2.54
    ],
@@ -1827,6 +1908,7 @@
    ],
    "bom": "screw_m3x6",
    "note": "the converter's base flange (its slots) on the bracket's upright",
+   "screw_part": null,
    "grip_mm": [
     8.0
    ],
@@ -1850,6 +1932,7 @@
    ],
    "bom": "screw_m4x12_socket",
    "note": "the converter's bracket down into the plate's flush nuts (the switch hangs 3 mm under the plate)",
+   "screw_part": null,
    "grip_mm": [
     6.54
    ],
@@ -1872,6 +1955,7 @@
    ],
    "bom": "screw_m3x8_socket",
    "note": "a bus bar's insulator up from under the plate",
+   "screw_part": null,
    "grip_mm": [
     2.54
    ],
@@ -1894,6 +1978,7 @@
    ],
    "bom": "screw_m3x8_socket",
    "note": "a bus bar down onto its insulator",
+   "screw_part": null,
    "grip_mm": [
     3.17
    ],
@@ -1916,6 +2001,7 @@
    ],
    "bom": "screw_m3x8_socket",
    "note": "a bus bar's insulator up from under the plate",
+   "screw_part": null,
    "grip_mm": [
     2.54
    ],
@@ -1938,6 +2024,7 @@
    ],
    "bom": "screw_m3x8_socket",
    "note": "a bus bar down onto its insulator",
+   "screw_part": null,
    "grip_mm": [
     3.17
    ],
@@ -1961,6 +2048,7 @@
    ],
    "bom": "screw_m5x10_button",
    "note": "a VESC hung under the power plate by its flange",
+   "screw_part": null,
    "grip_mm": [
     6.54
    ],
@@ -1984,6 +2072,7 @@
    ],
    "bom": "screw_m5x10_button",
    "note": "a VESC hung under the power plate by its flange",
+   "screw_part": null,
    "grip_mm": [
     6.54
    ],
@@ -2007,6 +2096,7 @@
    ],
    "bom": "screw_m4x20",
    "note": "a bay rail up into the belly's nuts, beyond the cheeks' ends",
+   "screw_part": null,
    "grip_mm": [
     12.54
    ],
@@ -2030,6 +2120,7 @@
    ],
    "bom": "screw_m3x6",
    "note": "a side plate into the floor's flange nuts",
+   "screw_part": null,
    "grip_mm": [
     3.25
    ],
@@ -2052,6 +2143,7 @@
    ],
    "bom": "screw_m3x6",
    "note": "a side plate into its rail's inserts",
+   "screw_part": null,
    "grip_mm": [
     1.6
    ],
@@ -2075,6 +2167,7 @@
    ],
    "bom": "screw_m4x20",
    "note": "a bay rail up into the belly's nuts, beyond the cheeks' ends",
+   "screw_part": null,
    "grip_mm": [
     12.54
    ],
@@ -2098,6 +2191,7 @@
    ],
    "bom": "screw_m3x6",
    "note": "a side plate into the floor's flange nuts",
+   "screw_part": null,
    "grip_mm": [
     3.25
    ],
@@ -2120,6 +2214,7 @@
    ],
    "bom": "screw_m3x6",
    "note": "a side plate into its rail's inserts",
+   "screw_part": null,
    "grip_mm": [
     1.6
    ],
@@ -2143,6 +2238,7 @@
    ],
    "bom": "screw_m4x12_socket",
    "note": "a pack adapter's printed plate up into the belly's nuts (heads counterbored 1.5 mm)",
+   "screw_part": null,
    "grip_mm": [
     5.04
    ],
@@ -2165,6 +2261,7 @@
    ],
    "bom": "thumbscrew_m3x10",
    "note": "a door's knurled thumbscrew into its rail's end (tool-free)",
+   "screw_part": null,
    "grip_mm": [
     4.0
    ],
@@ -2187,6 +2284,7 @@
    ],
    "bom": "thumbscrew_m3x10",
    "note": "a door's knurled thumbscrew into its rail's end (tool-free)",
+   "screw_part": null,
    "grip_mm": [
     4.0
    ],
@@ -2210,6 +2308,7 @@
    ],
    "bom": "screw_m4x12_socket",
    "note": "a pack adapter's printed plate up into the belly's nuts (heads counterbored 1.5 mm)",
+   "screw_part": null,
    "grip_mm": [
     5.04
    ],
@@ -2232,6 +2331,7 @@
    ],
    "bom": "thumbscrew_m3x10",
    "note": "a door's knurled thumbscrew into its rail's end (tool-free)",
+   "screw_part": null,
    "grip_mm": [
     4.0
    ],
@@ -2254,6 +2354,7 @@
    ],
    "bom": "thumbscrew_m3x10",
    "note": "a door's knurled thumbscrew into its rail's end (tool-free)",
+   "screw_part": null,
    "grip_mm": [
     4.0
    ],
@@ -2276,6 +2377,7 @@
    ],
    "bom": "screw_m3x16",
    "note": "a side wall into its corner post's side inserts",
+   "screw_part": null,
    "grip_mm": [
     9.4
    ],
@@ -2298,6 +2400,7 @@
    ],
    "bom": "screw_m3x16",
    "note": "a side wall into its corner post's side inserts",
+   "screw_part": null,
    "grip_mm": [
     9.4
    ],
@@ -2321,6 +2424,7 @@
    ],
    "bom": "screw_m3x8_socket",
    "note": "the side wall's halves: through the front half into a nut held in the rear half's tab",
+   "screw_part": null,
    "grip_mm": [
     3.0
    ],
@@ -2344,6 +2448,7 @@
    ],
    "bom": "screw_m5x14_socket",
    "note": "an ear bracket through the wall, nyloc nuts inside",
+   "screw_part": null,
    "grip_mm": [
     8.0
    ],
@@ -2366,6 +2471,7 @@
    ],
    "bom": "screw_m3x16",
    "note": "a side wall into its corner post's side inserts",
+   "screw_part": null,
    "grip_mm": [
     9.4
    ],
@@ -2388,6 +2494,7 @@
    ],
    "bom": "screw_m3x16",
    "note": "a side wall into its corner post's side inserts",
+   "screw_part": null,
    "grip_mm": [
     9.4
    ],
@@ -2411,6 +2518,7 @@
    ],
    "bom": "screw_m3x8_socket",
    "note": "the side wall's halves: through the front half into a nut held in the rear half's tab",
+   "screw_part": null,
    "grip_mm": [
     3.0
    ],
@@ -2434,6 +2542,7 @@
    ],
    "bom": "screw_m5x14_socket",
    "note": "an ear bracket through the wall, nyloc nuts inside",
+   "screw_part": null,
    "grip_mm": [
     8.0
    ],
@@ -2456,6 +2565,7 @@
    ],
    "bom": "screw_m3x16",
    "note": "a face into its post's end inserts",
+   "screw_part": null,
    "grip_mm": [
     9.4
    ],
@@ -2478,6 +2588,7 @@
    ],
    "bom": "screw_m3x16",
    "note": "a face into its post's end inserts",
+   "screw_part": null,
    "grip_mm": [
     9.4
    ],
@@ -2500,6 +2611,7 @@
    ],
    "bom": "screw_m3x8_socket",
    "note": "the camera's cradle to the apron, from outside",
+   "screw_part": null,
    "grip_mm": [
     2.0
    ],
@@ -2522,6 +2634,7 @@
    ],
    "bom": "screw_m3x8_socket",
    "note": "the D435 on its two back M3 threads (4 mm in: check the camera's maximum screw depth on arrival)",
+   "screw_part": null,
    "grip_mm": [
     4.0
    ],
@@ -2544,6 +2657,7 @@
    ],
    "bom": "screw_m3x16",
    "note": "a face into its post's end inserts",
+   "screw_part": null,
    "grip_mm": [
     9.4
    ],
@@ -2566,6 +2680,7 @@
    ],
    "bom": "screw_m3x16",
    "note": "a face into its post's end inserts",
+   "screw_part": null,
    "grip_mm": [
     9.4
    ],
@@ -2588,6 +2703,7 @@
    ],
    "bom": "screw_m3x8_socket",
    "note": "the camera's cradle to the apron, from outside",
+   "screw_part": null,
    "grip_mm": [
     2.0
    ],
@@ -2610,6 +2726,7 @@
    ],
    "bom": "screw_m3x8_socket",
    "note": "the D435 on its two back M3 threads (4 mm in: check the camera's maximum screw depth on arrival)",
+   "screw_part": null,
    "grip_mm": [
     4.0
    ],
@@ -2632,6 +2749,7 @@
    ],
    "bom": "screw_m3x6",
    "note": "the eyes' clip into the face's bosses",
+   "screw_part": null,
    "grip_mm": [
     2.0
    ],
@@ -2655,6 +2773,7 @@
    ],
    "bom": "screw_m3x8_socket",
    "note": "the service door into the nuts held in the wall's pads",
+   "screw_part": null,
    "grip_mm": [
     5.0
    ],
@@ -2678,6 +2797,7 @@
    ],
    "bom": "screw_m3x8_socket",
    "note": "the J501 hatch into the nuts held in the wall's rim",
+   "screw_part": null,
    "grip_mm": [
     5.0
    ],
@@ -2701,6 +2821,7 @@
    ],
    "bom": "screw_m3x6",
    "note": "the fan duct up into the turret plate's tapped holes",
+   "screw_part": null,
    "grip_mm": [
     6.17
    ],

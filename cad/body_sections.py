@@ -56,7 +56,7 @@ TEXT = {
             'the floor tray: the power plate\'s four printed posts (M5 inserts both ends); the tray slot (x 40..135) for the cables',
             'the legs: four XT60H-F sockets for the RS-04 pigtails; the wheels\' VESCs under the plate',
             'the J501: 12 V on an XT30 (W21); CAN bus C (the MCU)',
-            'the turret (D66): its XT30 on a 10 A branch of the bus through the stop relay\'s pole B; its dry safety loop',
+            'the turret (D66): its XT30 on a 7.5 A branch of the bus through the stop relay\'s pole B; its dry safety loop',
         ],
         'decisions': [
             ('D65', 'Two DCB609 FLEXVOLT packs in 20 V mode, in series (10S3P)',
@@ -270,8 +270,8 @@ def main():
           'that every live end on the body is a socket.', '',
           f"- {len(w.get('wires', []))} runs: " + ', '.join(f'{n} at {a} AWG' for a, n in sorted(by_awg.items(), key=lambda x: (x[0] is None, x[0] or 0))),
           '- the main path 8 AWG (MRBF 80 A); the packs\' own adapter leads 10 AWG (unfused, as every pack lead: kept to 300 mm)',
-          '- the branches: RS-04 14 AWG on 20 A, VESCs 12 AWG on 30 A (their battery limit 20 A), the converter and the turret '
-          '10 A, the J501 16 AWG on 10 A, the 12 V loads 18 AWG on 10 A, the INA228\'s VBUS 22 AWG on 5 A',
+          '- the branches: RS-04 14 AWG on 20 A, VESCs 12 AWG on 30 A (their battery limit 20 A), the converter 18 AWG on '
+          '10 A, the turret 16 AWG on 7.5 A, the J501 16 AWG on 10 A, the 12 V loads 16 AWG on 7.5 A, the INA228\'s VBUS 22 AWG on 5 A',
           '- CAN: A and B the legs, C the wheels and the J501 (1 Mbit/s each, twisted 22 AWG)', '',
           '| | Choice | Why | Turned down |', '|---|---|---|---|',
           '| D58 | Sockets on every live end of the body | a child touching a plug touches no live pin | pins on the body |',

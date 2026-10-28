@@ -36,8 +36,7 @@ BUDGET_PA = 5.0                            # D61 / the plan: the body may add at
 ROOM_C = 25.0
 LOADS_W = {'agx_module': (40.0, 'the AGX Orin at its 40 W mode (J501 thermal.module.power_modes_w)'),
            'j501_carrier': (5.0, 'assumed: the carrier\'s regulators, NVMe, Ethernet'),
-           'ddr120c_24': (6.0, 'the DDR-120C-24 at <= 50 % load (60 W out, about 91 % efficient: datasheet curve)'),
-           'ddr60l_12': (2.5, 'the DDR-60L-12 at about 25 W out (lidar, lights at 50 %, 5 V rail), about 91 % efficient'),
+           'tep150_12': (8.7, 'the TRACO TEP 150-4812WI at about 70 W out (the J501 45 W, lidar, lights at 50 %, 5 V rail), 89 % efficient (D65)'),
            'vescs_mcu': (4.0, 'assumed: two Flipsky 75100 idling and driving gently, the MCU board, the VN-100')}
 
 

@@ -25,13 +25,9 @@
     "w": 5.0,
     "basis": "assumed: the carrier's regulators, NVMe, Ethernet"
    },
-   "ddr120c_24": {
-    "w": 6.0,
-    "basis": "the DDR-120C-24 at <= 50 % load (60 W out, about 91 % efficient: datasheet curve)"
-   },
-   "ddr60l_12": {
-    "w": 2.5,
-    "basis": "the DDR-60L-12 at about 25 W out (lidar, lights at 50 %, 5 V rail), about 91 % efficient"
+   "tep150_12": {
+    "w": 8.7,
+    "basis": "the TRACO TEP 150-4812WI at about 70 W out (the J501 45 W, lidar, lights at 50 %, 5 V rail), 89 % efficient (D65)"
    },
    "vescs_mcu": {
     "w": 4.0,
@@ -218,7 +214,7 @@
    "body_pa": 8.98,
    "deck_outlet_pa": 7.3,
    "louvre_inlet_pa": 1.68,
-   "cooler_inlet_rise_k": 2.47,
+   "cooler_inlet_rise_k": 2.49,
    "air_rise_through_cooler_k": 5.63,
    "exhaust_at_riser_c": 33.1,
    "budget_pa": 5.0,
@@ -234,7 +230,7 @@
    "body_pa": 8.26,
    "deck_outlet_pa": 6.5,
    "louvre_inlet_pa": 1.76,
-   "cooler_inlet_rise_k": 2.41,
+   "cooler_inlet_rise_k": 2.44,
    "air_rise_through_cooler_k": 5.51,
    "exhaust_at_riser_c": 32.9,
    "budget_pa": 5.0,
@@ -250,7 +246,7 @@
    "body_pa": 5.45,
    "deck_outlet_pa": 3.4,
    "louvre_inlet_pa": 2.06,
-   "cooler_inlet_rise_k": 2.23,
+   "cooler_inlet_rise_k": 2.25,
    "air_rise_through_cooler_k": 5.09,
    "exhaust_at_riser_c": 32.3,
    "budget_pa": 5.0,
