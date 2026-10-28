@@ -61,7 +61,11 @@ void gp_config_default(gp_config *c, uint8_t profile)
     c->vesc_id[1] = GP_VESC_ID_RIGHT;
     c->wheel_dir[0] = 1;
     c->wheel_dir[1] = -1; /* the right hub motor is the left one turned round */
+#ifdef GP_SHUNT_OHM
+    c->r_shunt = GP_SHUNT_OHM; /* the build's choice (cmake -DGP_SHUNT=blue_sea for P0-P2) */
+#else
     c->r_shunt = GP_SHUNT_FUSE_BOARD_OHM;
+#endif
     c->ina_sign = -1.0f;
     c->r_pack = GP_R_PACK_OHM;
     if (profile == GP_PROFILE_ROBOT) {

@@ -71,6 +71,10 @@ set(GP_PROFILE "robot" CACHE STRING "robot | rig: the firmware's default profile
 if(GP_PROFILE STREQUAL "rig")
     target_compile_definitions(balance.elf PRIVATE GP_DEFAULT_PROFILE=1)
 endif()
+set(GP_SHUNT "fuse_board" CACHE STRING "fuse_board (1 mOhm, P3) | blue_sea (0.333 mOhm, P0-P2): the INA228's shunt")
+if(GP_SHUNT STREQUAL "blue_sea")
+    target_compile_definitions(balance.elf PRIVATE GP_SHUNT_OHM=0.000333f)
+endif()
 target_link_options(balance.elf PRIVATE
     -T${CMAKE_CURRENT_SOURCE_DIR}/src/mcu/STM32G474RETX_FLASH.ld
     -Wl,-Map=${CMAKE_BINARY_DIR}/balance.map -Wl,--print-memory-usage
