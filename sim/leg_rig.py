@@ -1,6 +1,6 @@
 """Single-leg test rig: one five-bar leg module (cad/fivebar.py) on a vertical rail, in MuJoCo.
 
-    python -m sim.leg_rig [--video] [--only stand_up squat jump drop_150 power_off] [--half-mass 11]
+    python -m sim.leg_rig [--video] [--only stand_up squat jump drop_150 power_off] [--half-mass 18.75] [--bus-v 36]
 
 The rig is what we will build first: a carriage on a vertical rail (one slide joint, a rubber stop at the bottom)
 carries the hip frame, both RS-04s and a dummy mass for half the body; the leg stands on the floor and can crouch,
@@ -40,33 +40,50 @@ G = 9.81
 FPS = 30
 CAT = {it['id']: it for f in ('leg_actuators.json', 'wheel_motors.json') for it in json.loads((R / 'catalog' / f).read_text())}
 MOTOR = CAT[fb.MOTOR]['specs']
-WHEEL = CAT[fb.WHEEL]['specs']
-BUS_V = 54.0                                     # FLEXVOLT in 60 V mode, nominal
-HALF_MASS = 14.75                                  # kg one leg carries: half the robot's 29.5 kg (docs/body-plan.md's
-                                                   # budget with its real parts; 28.5 kg is the target; sim/robot_v2.py
-                                                   # had 26.2 with an interim body).
+# The wheel (D69): a 10 in hoverboard-class hub motor, 10 x 2.125 pneumatic tyre at 30-35 psi (docs/wheel-change-plan.md,
+# research/air-tyre-hub-wheels.md). Listed 3.53 kg; taken at 4.0 kg (the tube, a heavier tyre, margin). Its mass, radius
+# and tyre are the rig's; the CAD still carries the BotWheel's interface (fivebar.WHEEL: its boss in the wheel link's foot,
+# its mid-plane fb.Y['wheel']) until W2 designs the 45 mm split D-clamp foot (issue #25). The motor's own numbers are the
+# study's estimates (sim/wheel_candidates.json 'hb10') until W1 measures two.
+WHEEL = dict(CAT[fb.WHEEL]['specs'])
+WHEEL.update({'title': '10 in hoverboard hub motor, 10 x 2.125 pneumatic (D69)', 'mass_g': 4000, 'od_mm': 254.0, 'tyre_width_mm': 54.0,
+              'peak_torque_nm': 15.0, 'rated_torque_nm': 5.0, 'no_load_speed_rpm': 330, 'voltage_nominal_v': 36,
+              'kt_nm_per_a': 1.0, 'peak_current_a': 15})
+BUS_V = 36.0                                     # D65: two DCB609 FLEXVOLTs in 20 V mode in series, a 10S bus at 30-41 V
+                                                 # (36 V nominal). The rig's own pack: rig/run.py pack_for()
+HALF_MASS = 18.75                                  # kg one leg carries, its own parts and its wheel included: half the robot's
+                                                   # 37.5 kg design mass (D71; the ledger's gate is 37.0 kg; D69's was 35.5).
                                                    # The ballast is its own welded body: the carriage's explicit
                                                    # <inertial> made MuJoCo drop a geom mass there (the rig carried 8.5 kg
                                                    # of a meant 11 until 2026-10-27; found by the spring study)
 LEG_PEAK = MOTOR['peak_torque_nm']               # 120 N m
 LEG_CAP = 60.0                                   # firmware cap (designs/default.json leg_torque_limit_nm)
 LEG_OMEGA = MOTOR['no_load_speed_rpm'] * BUS_V / MOTOR['voltage_nominal_v'] * 2 * math.pi / 60
-ROTOR_SHARE = 0.6                                # of the BotWheel's mass that spins (estimate, as sim/model.py)
-WHEEL_R = (fb.gmi.motor_interface(fb.WHEEL)['od'] or 171.3) / 2000
+ROTOR_SHARE = 0.6                                # of the wheel's mass that spins (estimate, as sim/model.py and the wheel study)
+WHEEL_R = WHEEL['od_mm'] / 2000                  # 127 mm (the BotWheel was 85.65)
+WHEEL_W = WHEEL['tyre_width_mm'] / 1000
 # RS-04 rotor inertia is not published (the manual has none): ~3e-4 kg m^2 (a ~150 g rotor ring at r 45 mm, an
 # estimate) x 9^2 reflected. It sets how hard a landing is: the motors' rotors are most of the leg's moving mass.
 ARMATURE = 3.0e-4 * MOTOR['gear_ratio'] ** 2
-# the stop: a TPU 95A sleeve (fivebar.TPU_SLEEVE: an 8 mm wall, ~18 x 11 mm contact) at 58 mm: k = E A / t, as a joint
-# stiffness k r^2; E is the filament maker's (catalog/materials.json tpu95: Bambu TPU 95A HF, 9.8 MPa). Until
-# 2026-10-27 the rig used an unsourced 40 MPa and a 4 mm wall: four times too stiff, with too little travel.
-# the BotWheel's tyre: solid rubber with a tread (estimate ~150-250 N/mm radially): MuJoCo's contact as a 7.7 ms,
-# 0.7-damped spring on the few kg behind it
-TYRE_SOLREF = '0.0077 0.7'
+# the stop: each upper link's radial stop face (cad/fivebar.py stop_dogs) presses square on a TPU 95A sleeve
+# (fivebar.TPU_SLEEVE: Ø32 on the Ø16 stop pin, an 8 mm wall), its contact the sleeve's 19 mm above the link's inner
+# face (fivebar.stop_contact_h) x ~11 mm across, at fivebar.stop_arm() = 57.8 mm from the motor's axis: k = E A / t, as
+# a joint stiffness k arm^2 (855 N m/rad); E is the filament maker's (catalog/materials.json tpu95: Bambu TPU 95A HF,
+# 9.8 MPa). Its travel is the wall less 0.5 mm, 7.4 deg, then the pin. Until 2026-10-27 the rig used an unsourced 40 MPa
+# and a 4 mm wall (four times too stiff), then a shoulder-screw post whose head stopped the TPU after 5 mm (review M6);
+# and the link's straight edge met that post 31 mm from the axis, not the 58 mm the model took (D53).
+# the tyre: MuJoCo's contact is a spring-damper with time constant tau on the mass behind it, so k goes as 1/tau^2. The
+# BotWheel's solid tyre (an estimated 150-250 N/mm) was 7.7 ms / 0.7; a 10 x 2.125 pneumatic at 30-35 psi is about
+# 60 N/mm (research/air-tyre-hub-wheels.md 3.1-3.2: membrane model x 0.75, calibrated on measured bicycle and e-scooter
+# tyres), tau = 7.7 ms x sqrt(200 / 60) = 14.1 ms, damping 0.5. At 50 psi (90 N/mm) the landings' axle spike is about
+# 15 % higher: run the tyres at 30-35 psi (the bench test measures k at 25-40 psi, W6)
+TYRE_SOLREF = '0.0141 0.5'
 TPU_E = json.loads((R / 'catalog/materials.json').read_text())['tpu95']['modulus_gpa'] * 1e9
 OFF_DAMPING = 0.2 * (MOTOR['kt_nm_per_a'] / MOTOR['gear_ratio']) ** 2 / 0.15 * MOTOR['gear_ratio'] ** 2   # N m s/rad, see run()
 TPU_WALL = (fb.TPU_SLEEVE[0] - fb.TPU_SLEEVE[1]) / 2 / 1000          # m
-STOP_TRAVEL = fb.stop_travel()             # rad of sleeve squeeze before the link meets the post's steel head (5 mm at R58)
-STOP_K = TPU_E * (18e-3 * 11e-3) / TPU_WALL * (fb.P['stop_r'] / 1000) ** 2
+STOP_ARM = fb.stop_arm() / 1000                                       # m: the stop force's lever about the motor's axis
+STOP_TRAVEL = fb.stop_travel()             # rad of sleeve squeeze before the stop face meets the pin (7.5 mm at 57.8 mm)
+STOP_K = TPU_E * (fb.stop_contact_h() * 1e-3 * 11e-3) / TPU_WALL * STOP_ARM ** 2
 STOP_B = 0.6 * math.sqrt(STOP_K * 0.1)   # N m s/rad: ~0.3 of critical for ~0.1 kg m^2 behind the stop
 
 
@@ -89,10 +106,10 @@ def mass_props():
                      Body(0.005 * 9, (0.0, head_y - 0.010, 0.0), name='9 x M5 x 25 into the motor')])
     front = combine([sm('front_link'), Body(0.110, (l2, 0.062, 0.0), name='61812'), kc])
     stator_kg = WHEEL['mass_g'] / 1000 * (1 - ROTOR_SHARE)
-    wheel_link = combine([sm('wheel_link'), kc, Body(stator_kg, (l2, yb['wheel'] / 1000, 0.0), name='BotWheel stator'),
+    wheel_link = combine([sm('wheel_link'), kc, Body(stator_kg, (l2, yb['wheel'] / 1000, 0.0), name='wheel stator and shaft'),
                           Body(4 * 0.015, (l2, 0.05, 0.0), name='M6 x 40')])
-    rotor = cylinder_body(WHEEL['mass_g'] / 1000 * ROTOR_SHARE, WHEEL_R, 0.0446, axis='y', hollow_radius=0.6 * WHEEL_R,
-                          center=(0.0, yb['wheel'] / 1000, 0.0), name='BotWheel rotor')
+    rotor = cylinder_body(WHEEL['mass_g'] / 1000 * ROTOR_SHARE, WHEEL_R, WHEEL_W, axis='y', hollow_radius=0.6 * WHEEL_R,
+                          center=(0.0, yb['wheel'] / 1000, 0.0), name='wheel rotor and tyre')
     frame = combine([sm('hip_frame'), Body(2 * MOTOR['mass_g'] / 1000, (0.0, (yb['motor'][0] + yb['motor'][1]) / 2000, 0.0), name='2 x RS-04'),
                      Body(2 * 0.110, (0.0, -0.006, 0.0), name='2 x 61812')])
     return {'upper': upper, 'front': front, 'wheel_link': wheel_link, 'rotor': rotor, 'frame': frame}
@@ -184,10 +201,10 @@ def mjcf(half_mass: float, meshes: dict | None = None, rail_low: float = 0.115) 
           <body name="wheel" pos="{l2} 0 0">
             <joint name="wheel" type="hinge" axis="0 -1 0" damping="0.01"/>
             {_inertial(mp['rotor'])}
-            <geom name="tyre" type="cylinder" size="{WHEEL_R:.4f} 0.0223" pos="0 {yw:.4f} 0" euler="1.5708 0 0" rgba=".1 .1 .11 1" mass="0"
+            <geom name="tyre" type="cylinder" size="{WHEEL_R:.4f} {WHEEL_W / 2:.4f}" pos="0 {yw:.4f} 0" euler="1.5708 0 0" rgba=".1 .1 .11 1" mass="0"
                   solref="{TYRE_SOLREF}"/>
-            <geom type="cylinder" size="{WHEEL_R - 0.016:.4f} 0.0226" pos="0 {yw:.4f} 0" euler="1.5708 0 0" rgba=".33 .35 .38 1" contype="0" conaffinity="0" mass="0"/>
-            <geom type="box" size="0.05 0.0228 0.006" pos="0 {yw:.4f} 0" rgba=".8 .3 .1 1" contype="0" conaffinity="0" mass="0"/>
+            <geom type="cylinder" size="{WHEEL_R - 0.027:.4f} {WHEEL_W / 2 + 0.0003:.4f}" pos="0 {yw:.4f} 0" euler="1.5708 0 0" rgba=".33 .35 .38 1" contype="0" conaffinity="0" mass="0"/>
+            <geom type="box" size="0.05 {WHEEL_W / 2 + 0.0005:.4f} 0.006" pos="0 {yw:.4f} 0" rgba=".8 .3 .1 1" contype="0" conaffinity="0" mass="0"/>
           </body>
         </body>
       </body>
@@ -516,11 +533,14 @@ class VideoWriter:
 
 
 def main():
+    global BUS_V, LEG_OMEGA
     ap = argparse.ArgumentParser()
     ap.add_argument('--only', nargs='*')
     ap.add_argument('--video', action='store_true')
     ap.add_argument('--half-mass', type=float, default=HALF_MASS, help='what one leg carries, kg (half the robot)')
+    ap.add_argument('--bus-v', type=float, default=BUS_V, help=f'the motors\' bus, V (default the robot\'s {BUS_V}; the rig\'s FLEXVOLT is 54)')
     a = ap.parse_args()
+    BUS_V, LEG_OMEGA = a.bus_v, MOTOR['no_load_speed_rpm'] * a.bus_v / MOTOR['voltage_nominal_v'] * 2 * math.pi / 60
     OUT.mkdir(parents=True, exist_ok=True)
     meshes = export_meshes(OUT / 'rig_meshes') if a.video else None
     results = {}
@@ -535,7 +555,7 @@ def main():
         print(f"{name:10} gearbox {r['peak_gearbox_nm']:6.1f} N m ({r['gearbox_over_peak_ms']:.1f} ms > {LEG_PEAK} N m)  motor {r['peak_motor_nm']:6.1f} N m  wheel {r['peak_wheel_force_n']:7.1f} N  axle {r['peak_axle_force_n']:7.1f} N  front link {r['peak_front_link_n']:7.1f} N  "
               f"knee pin {r['peak_knee_pin_n']:7.1f} N (dynamic {max(r['peak_joint_force_n']['knee_f'], r['peak_joint_force_n']['knee_r']):.0f})  stop {r['peak_stop_nm']:6.1f} N m  L {r['L_range_mm']}"
               + (f"  jump {r['jump_height_mm']} mm" if r.get('jump_height_mm') is not None else ''))
-    f.write_text(json.dumps({'half_mass_kg': a.half_mass, 'model': {'leg_peak_nm': LEG_PEAK, 'leg_cap_nm': LEG_CAP, 'leg_omega_rad_s': round(LEG_OMEGA, 2),
+    f.write_text(json.dumps({'half_mass_kg': a.half_mass, 'bus_v': BUS_V, 'model': {'leg_peak_nm': LEG_PEAK, 'leg_cap_nm': LEG_CAP, 'leg_omega_rad_s': round(LEG_OMEGA, 2),
                                                                      'armature_kg_m2': round(ARMATURE, 5), 'stop_k_nm_per_rad': round(STOP_K)},
                              'scenarios': results}, indent=1) + '\n')
 

@@ -1633,15 +1633,15 @@
   "material": "petg",
   "bom": "turret"
  },
- "stop_post": {
-  "source_url": "https://www.mcmaster.com/92981A303/",
-  "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/929/92981A303_97815f97-87bd-4a14-914d-c238428e8ebc1770817912@4x_j4jcz_1770817916.png?ver=ImageNotFound",
+ "stop_pin": {
+  "source_url": "https://www.mcmaster.com/98432A386/",
+  "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/984/98432A386_60c66a92-06d7-44e7-86a0-72899af31396@2x_hqdsd_1718826495.png?ver=ImageNotFound",
   "fetched": "2026-10-27",
-  "path": "references/vendor/thumbs/stop_post.jpg",
+  "path": "references/vendor/thumbs/stop_pin.jpg",
   "kind": "mcmaster",
   "seller": "McMaster-Carr",
-  "part_number": "92981A303",
-  "availability": "Delivers tomorrow 7-9 am"
+  "part_number": "98432A386",
+  "availability": "Delivers Thursday"
  },
  "stop_sleeve": {
   "source_url": "exports/leg/stop_sleeve.stl",

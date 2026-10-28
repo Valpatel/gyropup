@@ -63,7 +63,7 @@ def leg_lines() -> list:
         r = dict(r)
         if d46 and r['key'] == 'screw_m5x30':
             continue                                              # replaced by the M5 x 25 in catalog/rig.json (D46)
-        if d46 and r['key'] == 'dowel_5x16':
+        if d46 and r['key'] == 'dowel_5x16' and not any(x['key'] == 'dowel_5x20' for x in bom):   # the adapters' own (#5)
             r['qty'], r['for'] = 8, r['for'] + '; D46: two more per adapter face (8 per leg)'
         if d46 and r['key'] == 'insert_m5':
             r['qty'], r['for'] = 6, 'the frame\'s flange ends (D46: the adapters are tapped aluminium)'
