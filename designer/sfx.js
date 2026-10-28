@@ -213,7 +213,7 @@ export function createSfx({ key = 'gyropup-sfx', volume = 1.0 } = {}) {
     tv.mesh.am.connect(out);
     tv.grit = { f: filt('bandpass', 3000, 2), g: amp() };
     loop().connect(tv.grit.f).connect(tv.grit.g).connect(out);
-    // the feed dial's M2006 (36:1): a short gear buzz each step
+    // the feed servo (STS3215): a short gear buzz each step
     tv.feed = voice('sawtooth', 90, filt('bandpass', 1200, 1.5), out);
     tv.feed2 = voice('square', 180, filt('lowpass', 2600), out);
     return tv;

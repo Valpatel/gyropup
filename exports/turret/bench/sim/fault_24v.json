@@ -1,0 +1,66 @@
+{
+ "test": "4.6",
+ "title": "The 24 V fault without a ball: the pre-feed check, and the trip with a 1.3-1.6 ms pair",
+ "plan": "docs/turret-prototype-plan.md section 5",
+ "mode": "sim",
+ "date": "2026-10-27",
+ "pass": true,
+ "checks": [
+  {
+   "check": "(a) SAFE on the eRPM limit",
+   "value": true,
+   "limit": "cause: eRPM over the limit",
+   "pass": true
+  },
+  {
+   "check": "(a) within 100 ms of the first eRPM read above the limit",
+   "value": 3,
+   "limit": "<= 100 ms",
+   "pass": true
+  },
+  {
+   "check": "(a) refuses to step the dial",
+   "value": true,
+   "limit": "no step",
+   "pass": true
+  },
+  {
+   "check": "(b) trip latched on a 1.45 ms pair",
+   "value": true,
+   "limit": "latched",
+   "pass": true
+  }
+ ],
+ "readings": {
+  "safe_event": {
+   "latency_ms": 3,
+   "causes": [
+    "eRPM over the limit"
+   ],
+   "erpm_at_trip": 82870
+  },
+  "max_rpm_reported": 9119
+ },
+ "notes": [
+  "The eRPM never reaches the 24 V no-load (~21,000 rpm): the ramp passes the limit (11,616 rpm) a fifth of a second in and the turret is SAFE three telemetry reads later."
+ ],
+ "sim": {
+  "seed": 1046,
+  "simulated_s": 5.4,
+  "wall_s": 0.1,
+  "stand_ins": [],
+  "shortened": {},
+  "warning": "simulated turret (firmware/turret/sim_turret.py): not a bench reading"
+ },
+ "firmware": {
+  "build": "v0",
+  "servo_baud": 500000,
+  "motor": "SunnySky X2216 880KV V3",
+  "kv": 880.0,
+  "pole_pairs": 7,
+  "erpm_limit": 81312,
+  "tyre_mm": 34,
+  "set_rpm_52fps": 8855,
+  "ramp_s": 0.3
+ }
+}

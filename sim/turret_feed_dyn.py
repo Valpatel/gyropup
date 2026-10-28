@@ -1,15 +1,16 @@
-"""The feed under motion: the dial driven like the real M2006 + C610, the cartridge slewing, jolted and shaken, and the
+"""The feed under motion: the dial driven like the real feed servo (an STS3215 since D42), the cartridge slewing, jolted and shaken, and the
 ball's state when it first touches the tyres (what the launch stage starts from).
 
     .venv/bin/python sim/turret_feed_dyn.py [--quick] [--video]     # writes exports/turret/feed/feed_dyn.json, plots, mp4
 
 Built on sim/turret_feed.py (the program agent's MuJoCo feed: hopper, dial, baffle, chute from cad/turret.py's Geo;
 imported unchanged). This file adds:
-  - the dial motor as the M2006 P36 on a C610 sees it: a position/speed loop in Python whose torque is clipped by the
-    C610's 10 A (1.8 N m at 0.18 N m/A) and by the voltage line through (416 rpm, 1 N m) and (500 rpm, 0), the rotor's
-    inertia reflected through 36:1 on the joint (DJI publishes the mechanical time constant, not the inertia: est from
-    it), and the gearbox's friction. The step time and the ball's drop latency follow from that, not from an assumed
-    40 ms move;
+  - the dial motor as the Feetech STS3215 servo (12 V, 345:1) sees it: the servo's own move profile (the firmware's goal
+    speed and acceleration) tracked by a stiff position loop in Python whose torque is clipped by the servo's
+    torque-speed line (2.94 N m stall, 45 rpm no-load at 12 V) and by the firmware's torque limit, its motor's inertia
+    reflected through 345:1 on the joint (not published: est from a typical rotor, swept), and the gear train's
+    friction. The step time and the ball's drop latency follow from that, not from an assumed move. (It replaced the
+    DJI M2006 + C610, which stepped in ~100 ms but cannot be bought: docs/decisions.yaml D42);
   - the cartridge frame moving: a pan slew (rate W(t) about the world-up axis through the pan axis, which passes
     through the tilt axis point (tilt_x, 0, tilt_c) of the C frame) puts centrifugal, Euler and Coriolis forces on
     every ball (applied as xfrc each step); the robot's body catching a shove (a pitch acceleration of 30 rad/s^2,
@@ -46,21 +47,22 @@ import turret_common as tc  # noqa: E402
 OUT = R / 'exports' / 'turret' / 'feed'
 TIMESTEP = None                                    # taken from sim/turret_feed.py at run time
 
-M2006 = {
-    'ratio': 36, 'kt_out_nm_a': 0.18, 'no_load_rad_s': 500 * 2 * math.pi / 60, 'rated_rad_s': 416 * 2 * math.pi / 60, 'rated_nm': 1.0,
-    'i_max_c610_a': 10.0, 'R_ohm': 0.461, 'tau_m_s': 0.05278, 'i0_a': 0.6,
-    'source': 'DJI M2006 P36 manual V1.0 2018.01 pp. 8-9 (references/vendor/dji-robomaster-m2006-p36; checked 2026-10-27): with the C610 500 rpm no-load at 0.6 A, '
-              '416 rpm at 1 N m (max continuous) and 3 A; 0.18 N m/A; 32.96 rpm/V; mechanical time constant 52.78 ms; 461 mOhm; 36:1. C610: 10 A continuous, '
-              'commands -10..10 A (references/vendor/dji-robomaster-c610)',
-    'rotor_I_kg_m2': 3.5e-6,
-    'rotor_I_note': 'not published. est: tau_m = J R / (kt ke) with the output constants scaled to the rotor gives 4.6e-6; the bell (Ø24 x 13, ~18 g at r 11 mm) gives '
-                    '2.2e-6; 3.5e-6 used, both ends swept (feed_dyn.json rotor_inertia_sensitivity)',
-    'friction_coulomb_nm': 0.03, 'friction_viscous_nms': 0.0021,
-    'friction_note': 'est: the 0.6 A no-load current at 500 rpm is 0.11 N m of loss at the output; split into a Coulomb part and a viscous part',
-    'loop': {'kp_nm_rad': 40.0, 'kd_nms_rad': 0.5, 'note': 'a 1 kHz position + speed loop on the C610 (DJI examples use a cascaded PID); 94 rad/s, zeta 0.6 on the reflected inertia'},
+SERVO = {
+    'name': 'Feetech STS3215 12 V (Waveshare ST3215), bus ID 3', 'ratio': 345, 'stall_nm': 2.94, 'no_load_rad_s': 45 * 2 * math.pi / 60,
+    'torque_cap': 0.5, 'goal_speed_rad_s': 4.0, 'acc_rad_s2': 60.0,
+    'source': 'Feetech STS3215 C018 data (catalog feetech-sts3215-c018-12v; references/vendor/feetech-sts3215): 30 kg cm (2.94 N m) stall and 45 rpm no-load '
+              'at 12 V, 345:1, 12-bit position; the firmware sets the goal speed (85 % of no-load), the acceleration and the torque limit (50 %) '
+              '(docs/turret-firmware.md, firmware/turret)',
+    'rotor_I_kg_m2': 2.4e-8,
+    'rotor_I_note': 'not published. est: a small iron-core 12 V motor, ~3 g of rotor at r 4 mm (m r^2 / 2): 2.4e-8, reflected through 345:1 = 2.9e-3 kg m^2, '
+                    'which dominates the dial (~1e-4); swept 1e-8 .. 5e-8 (feed_dyn.json rotor_inertia_sensitivity)',
+    'friction_coulomb_nm': 0.08, 'friction_viscous_nms': 0.02,
+    'friction_note': 'est: a 345:1 spur train with no published no-load current; its back-driving torque (the parked dial holds) is larger than the M2006\'s',
+    'loop': {'kp_nm_rad': 60.0, 'kd_nms_rad': 1.5, 'note': 'the servo\'s internal position loop, modelled as a stiff P-D on the profile (est)'},
 }
-JAM_RULE = {'stall_speed_rad_s': 1.0, 'stall_time_s': 0.7, 'reverse_time_s': 0.5,
-            'source': 'DJI Development-Board-C-Examples 20.standard_robot shoot.h: BLOCK_TRIGGER_SPEED 1.0 rad/s, BLOCK_TIME 700, REVERSE_TIME 500 (ticks of 1 ms); checked 2026-10-27'}
+JAM_RULE = {'not_settled_s': 0.3, 'reverse_deg': 20.0, 'stop_after': 3,
+            'source': 'docs/turret-prototype-plan.md T7: a step not settled (within 23 counts) in 300 ms, or the load reading over a threshold, reverses 20 deg '
+                      'and retries; three in a row stops the feed'}
 BODY_JOLT = {'a_m_s2': 13.5, 'dt_s': 0.05, 'note': 'est: a 30 rad/s^2 pitch catch (cad/turret_motion.py BODY) at 0.45 m from the hip axis, 50 ms each way'}
 SHAKE = {'a_m_s2': 5.0, 'f_hz': (8.0, 15.0, 25.0), 'note': 'sim/turret_feed.py park test: driving over rough ground'}
 STEP_DEG = 45.0
@@ -71,23 +73,23 @@ def feed_module():
 
 
 def i_reflected(rotor_I=None):
-    rotor_I = M2006['rotor_I_kg_m2'] if rotor_I is None else rotor_I
-    return rotor_I * M2006['ratio'] ** 2
+    rotor_I = SERVO['rotor_I_kg_m2'] if rotor_I is None else rotor_I
+    return rotor_I * SERVO['ratio'] ** 2
 
 
-def tau_limit(om, i_max=None):
-    """What the M2006 + C610 can push at output speed om (rad/s): the current limit, then the voltage line."""
-    i_max = M2006['i_max_c610_a'] if i_max is None else i_max
-    peak = M2006['kt_out_nm_a'] * i_max
-    w0, wr, tr = M2006['no_load_rad_s'], M2006['rated_rad_s'], M2006['rated_nm']
-    stall_v = tr * w0 / (w0 - wr)                          # the voltage line's torque at zero speed
-    return max(0.0, min(peak, stall_v * (1 - abs(om) / w0)))
+def tau_limit(om, cap=None):
+    """What the servo can push at output speed om (rad/s): its torque-speed line at 12 V, then the firmware's torque limit
+    (a fraction of the stall torque)."""
+    cap = SERVO['torque_cap'] if cap is None else cap
+    line = SERVO['stall_nm'] * (1 - abs(om) / SERVO['no_load_rad_s'])
+    return max(0.0, min(cap * SERVO['stall_nm'], line))
 
 
 class DynFeed:
     """sim/turret_feed.py's Feed with the real dial motor, a moving frame and the launch hand-over."""
 
     def __init__(self, G, tu, mu=0.7, n_balls=30, seed=0, rotor_I=None, i_max=None, pose=(0.0, 0.0, 0.0)):
+        # i_max: the servo's torque limit as a fraction of its stall torque (None: SERVO torque_cap)
         import mujoco
         global TIMESTEP
         self.mj = mujoco
@@ -150,8 +152,8 @@ class DynFeed:
         self.d.xfrc_applied[self.bodies[idx], :3] = self.ball_m * a
 
     def run(self, seconds, theta_ref=None, omega_ref=None, powered=True, slew=None, jolt=None, shake=None, frame_every=None, t0=None):
-        """Advance. theta_ref(t), omega_ref(t): the dial's reference (rad, rad/s); powered False: the C610 off (the
-        gearbox's friction alone holds the dial). slew: (Om(t), al(t)) callables; jolt: a(t) -> (ax, ay, az) m/s^2 on
+        """Advance. theta_ref(t), omega_ref(t): the dial's reference (rad, rad/s); powered False: the servo unpowered (the
+        safety line released: the gear train's friction alone holds the dial). slew: (Om(t), al(t)) callables; jolt: a(t) -> (ax, ay, az) m/s^2 on
         the frame; shake: (amplitude, f) as sim/turret_feed.py. Records entries (first touch) and clearing times."""
         mj, d, m = self.mj, self.d, self.m
         n = int(round(seconds / TIMESTEP))
@@ -162,15 +164,15 @@ class DynFeed:
             t = d.time
             th, om = d.qpos[self.dial_q], d.qvel[self.dial_v]
             if powered and theta_ref is not None:
-                tau = M2006['loop']['kp_nm_rad'] * (theta_ref(t) - th) + M2006['loop']['kd_nms_rad'] * ((omega_ref(t) if omega_ref else 0.0) - om)
+                tau = SERVO['loop']['kp_nm_rad'] * (theta_ref(t) - th) + SERVO['loop']['kd_nms_rad'] * ((omega_ref(t) if omega_ref else 0.0) - om)
                 lim = tau_limit(om, self.i_max)
                 tau = max(-lim, min(lim, tau))
-                fr = M2006['friction_coulomb_nm'] * math.tanh(om / 0.5) + M2006['friction_viscous_nms'] * om
+                fr = SERVO['friction_coulomb_nm'] * math.tanh(om / 0.5) + SERVO['friction_viscous_nms'] * om
                 d.ctrl[0] = tau - fr
                 m.dof_frictionloss[self.dial_v] = 0.0
             else:
                 d.ctrl[0] = 0.0
-                m.dof_frictionloss[self.dial_v] = 0.02                          # unpowered: the gearbox's own drag (est)
+                m.dof_frictionloss[self.dial_v] = SERVO['friction_coulomb_nm']   # unpowered: the gear train's own drag (est)
             g = g0.copy()
             if shake:
                 amp, f = shake
@@ -280,7 +282,46 @@ def jolt_profile(t_start, a=None, dt=None, axis=0):
 
 # ------------------------------------------------------------------------------------------------ cases
 
-def burst(DF: DynFeed, n_shots, period, move_s=0.08, slew=None, jolt=None, shake=None, wait_ready=True, frame_every=None, tail_s=0.5):
+def servo_step(t0, a0, da, v=None, acc=None):
+    """The servo's own move profile for one step: a trapezoid at the goal speed v (rad/s) with the acceleration acc
+    (rad/s^2), as the firmware sets them (SERVO). Returns (theta(t), omega(t))."""
+    v = SERVO['goal_speed_rad_s'] if v is None else v
+    acc = SERVO['acc_rad_s2'] if acc is None else acc
+    sgn = 1.0 if da >= 0 else -1.0
+    D = abs(da)
+    ta = v / acc
+    if acc * ta * ta >= D:                                 # never reaches v: a triangle
+        ta = math.sqrt(D / acc)
+        v = acc * ta
+        tc = 0.0
+    else:
+        tc = (D - acc * ta * ta) / v
+    T = 2 * ta + tc
+
+    def pos(s):
+        if s <= 0:
+            return 0.0
+        if s < ta:
+            return 0.5 * acc * s * s
+        if s < ta + tc:
+            return 0.5 * acc * ta * ta + v * (s - ta)
+        if s < T:
+            r = T - s
+            return D - 0.5 * acc * r * r
+        return D
+
+    def vel(s):
+        if s <= 0 or s >= T:
+            return 0.0
+        if s < ta:
+            return acc * s
+        if s < ta + tc:
+            return v
+        return acc * (T - s)
+    return (lambda t: a0 + sgn * pos(t - t0)), (lambda t: sgn * vel(t - t0))
+
+
+def burst(DF: DynFeed, n_shots, period, move_s=None, slew=None, jolt=None, shake=None, wait_ready=True, frame_every=None, tail_s=0.5):
     """n_shots dial steps, one every `period` s (or as soon as the dial is settled when the period is shorter than the
     step takes and wait_ready). Each ball is attributed to the step during whose window it dropped out of the dial
     (its clearing time), so a ball that arrives at the tyres after the next step's command still counts for the step
@@ -292,7 +333,7 @@ def burst(DF: DynFeed, n_shots, period, move_s=0.08, slew=None, jolt=None, shake
     for k in range(n_shots):
         t0 = DF.d.time
         t0s.append(t0)
-        th, om = cosine_step(t0, a, math.radians(STEP_DEG), move_s)
+        th, om = cosine_step(t0, a, math.radians(STEP_DEG), move_s) if move_s else servo_step(t0, a, math.radians(STEP_DEG))
         a += math.radians(STEP_DEG)
         n_log = len(DF.dial_log)
         DF.run(period, th, om, slew=slew, jolt=jolt, shake=shake, frame_every=frame_every)
@@ -367,7 +408,7 @@ def study(quick=False, video=False):
     G = tu.Geo()
     OUT.mkdir(parents=True, exist_ok=True)
     t_start = time.time()
-    res = {'m2006': M2006, 'jam_rule': JAM_RULE, 'body_jolt': BODY_JOLT, 'shake': SHAKE, 'dial_inertia_reflected_kg_m2': i_reflected(),
+    res = {'servo': SERVO, 'jam_rule': JAM_RULE, 'body_jolt': BODY_JOLT, 'shake': SHAKE, 'dial_inertia_reflected_kg_m2': i_reflected(),
            'first_touch_x_mm': round(G.wheel_x - 1000 * (G.wheel_x / 1000 - DynFeed.__dict__.get('x_touch', 0)) if False else G.wheel_x - math.sqrt((G.wheel_d / 2 + G.ball / 2) ** 2 - (G.wheel_c / 2) ** 2), 2),
            'geometry': {'ball_mm': G.ball, 'bore_mm': G.bore, 'exit_x_mm': G.exit_x, 'wheel_x_mm': G.wheel_x, 'floor_z_mm': G.floor_z, 'chute_r_mm': G.chute_r}}
     poses = ['level', 'down25'] if quick else list(POSES)
@@ -386,9 +427,9 @@ def study(quick=False, video=False):
     res['steps_at_3_per_s'] = base
     res['entry_states_all'] = entry_stats(all_entries)
     res['entries'] = [{k: (round(v, 5) if isinstance(v, float) else v) for k, v in e.items()} for e in all_entries]
-    # 2. the step time against the rotor inertia and the current limit (what the motor allows)
+    # 2. the step time against the motor's (unpublished) inertia and the firmware's torque limit (what the servo allows)
     sens = {}
-    for label, rI, imax in (('rotor_2.2e-6', 2.2e-6, None), ('rotor_4.6e-6', 4.6e-6, None), ('rated_1Nm_only', None, 1.0 / M2006['kt_out_nm_a']), ('plan_3A_cap', None, 3.0)):
+    for label, rI, imax in (('rotor_1e-8', 1e-8, None), ('rotor_5e-8', 5e-8, None), ('torque_limit_30pct', None, 0.3), ('torque_limit_100pct', None, 1.0)):
         DF = DynFeed(G, tu, 0.7, 30, seed=1, rotor_I=rI, i_max=imax, pose=POSES['level'])
         rows = burst(DF, 3, 1.0 / rate)
         s = summarize(rows)
@@ -397,7 +438,7 @@ def study(quick=False, video=False):
     res['rotor_inertia_sensitivity'] = sens
     # 3. the rate of fire: stepping faster and faster, then continuous rotation
     rates = {}
-    for rz in ((5.0, 8.0) if quick else (4.0, 5.0, 6.0, 8.0, 10.0)):
+    for rz in ((2.5, 3.0) if quick else (2.0, 2.5, 3.0, 4.0, 6.0)):      # the servo's step (~235 ms) puts the limit near 3/s
         DF = DynFeed(G, tu, 0.7, 30, seed=2, pose=POSES['down25'])
         rows = burst(DF, 6 if quick else 8, 1.0 / rz, wait_ready=True)
         s = summarize(rows)
@@ -481,7 +522,7 @@ def study(quick=False, video=False):
         ax[0].axvline((e['t'] - t0) * 1000, color='#c2410c', ls=':', lw=1)
     ax[0].set_xlim(0, 700)
     ax[0].set_xlabel('ms from the step command (dotted: a ball touches the tyres)')
-    ax[0].set_title('M2006 + C610 stepping the dial 45 deg (10 A, 1.8 N m)', fontsize=9)
+    ax[0].set_title(f"STS3215 stepping the dial 45 deg ({SERVO['goal_speed_rad_s']:.1f} rad/s goal, {int(SERVO['torque_cap'] * 100)} % torque limit)", fontsize=9)
     ax[0].legend(fontsize=7)
     ax[0].grid(alpha=0.3)
     lat_all = [l for r in base_rows for l in r['latency_ms']]

@@ -1,15 +1,57 @@
 {
  "too_big": [],
- "print_hours": 54.5,
- "printed_g": 998,
+ "print_hours": 50.0,
+ "printed_g": 1291,
  "stand_mm": [
   180.0,
   200.0,
   100.0
  ],
- "pictures": [
-  "turret-bench-level-iso.png",
-  "turret-bench-level-front.png",
-  "turret-bench-aimed-iso.png"
- ]
+ "note": "printed_g and print_hours are print-plan.json's (the slicer's where sliced); sliced is cad/turret_print.py's own total",
+ "sliced": {
+  "grams": 1291.0,
+  "hours": 50.1,
+  "by_material": {
+   "pa6-cf": {
+    "grams": 637.0,
+    "hours": 31.8
+   },
+   "petg": {
+    "grams": 604.1,
+    "hours": 16.0
+   },
+   "petg-clear": {
+    "grams": 41.0,
+    "hours": 1.7
+   },
+   "tpu95": {
+    "grams": 8.9,
+    "hours": 0.6
+   }
+  },
+  "file": "exports/turret/print/print.json"
+ },
+ "orders": {
+  "sellers": [
+   "Waveshare",
+   "SunnySky USA",
+   "Palm Beach Bots",
+   "Pololu",
+   "Adafruit",
+   "SparkFun",
+   "Digi-Key",
+   "Mouser",
+   "McMaster-Carr",
+   "VXB Bearings",
+   "SendCutSend",
+   "Caldwell",
+   "AbleNet",
+   "Out of Darts",
+   "Jameco",
+   "IWISS",
+   "FYSETC"
+  ],
+  "grand_total_usd": 1609.89,
+  "lines": 125
+ }
 }

@@ -1,0 +1,58 @@
+{
+ "test": "5.4",
+ "title": "Parked safe: dial parked, rail off, the stand shaken and knocked at tilt 0 and -25",
+ "plan": "docs/turret-prototype-plan.md section 5",
+ "mode": "sim",
+ "date": "2026-10-27",
+ "pass": true,
+ "checks": [
+  {
+   "check": "tilt 0: no ball reaches the wheels",
+   "value": 0,
+   "limit": "0",
+   "pass": true
+  },
+  {
+   "check": "tilt -25: no ball reaches the wheels",
+   "value": 0,
+   "limit": "0",
+   "pass": true
+  }
+ ],
+ "readings": {
+  "poses": [
+   {
+    "tilt_deg": 0.0,
+    "balls_at_the_gates": 0
+   },
+   {
+    "tilt_deg": -25.0,
+    "balls_at_the_gates": 0
+   }
+  ]
+ },
+ "notes": [
+  "The simulation cannot shake the stand: the parked dial holds by construction (the physics' feed_dyn case is the model evidence)."
+ ],
+ "sim": {
+  "seed": 1054,
+  "simulated_s": 9.6,
+  "wall_s": 0.2,
+  "stand_ins": [
+   "shaking"
+  ],
+  "shortened": {},
+  "warning": "simulated turret (firmware/turret/sim_turret.py): not a bench reading"
+ },
+ "firmware": {
+  "build": "v0",
+  "servo_baud": 500000,
+  "motor": "SunnySky X2216 880KV V3",
+  "kv": 880.0,
+  "pole_pairs": 7,
+  "erpm_limit": 81312,
+  "tyre_mm": 34,
+  "set_rpm_52fps": 8855,
+  "ramp_s": 0.3
+ }
+}

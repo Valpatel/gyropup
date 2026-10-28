@@ -1,0 +1,66 @@
+{
+ "test": "4.10",
+ "title": "The brake FETs while driving, and no energy into the 12 V rails (operator readings)",
+ "plan": "docs/turret-prototype-plan.md section 5",
+ "mode": "sim",
+ "date": "2026-10-27",
+ "pass": true,
+ "checks": [
+  {
+   "check": "a brake FET's gate while the ESC drives",
+   "value": 0.12,
+   "limit": "< 0.5 V peak",
+   "pass": true
+  },
+  {
+   "check": "12 V FLY through a step down and a stop",
+   "value": 12.2,
+   "limit": "< 13 V",
+   "pass": true
+  },
+  {
+   "check": "12 V MAIN through the same",
+   "value": 12.1,
+   "limit": "< 13 V",
+   "pass": true
+  },
+  {
+   "check": "the brake FETs stay cold while driving",
+   "value": 27.0,
+   "limit": "< 40 C",
+   "pass": true
+  }
+ ],
+ "readings": {
+  "fet_gate_peak_v": 0.12,
+  "rail_peaks_v": {
+   "fly": 12.2,
+   "main": 12.1
+  }
+ },
+ "notes": [],
+ "sim": {
+  "seed": 1410,
+  "simulated_s": 16.1,
+  "wall_s": 0.6,
+  "stand_ins": [
+   "fet_gate_peak_v",
+   "fet_temp_c_running",
+   "fly_peak_v",
+   "main_peak_v"
+  ],
+  "shortened": {},
+  "warning": "simulated turret (firmware/turret/sim_turret.py): not a bench reading"
+ },
+ "firmware": {
+  "build": "v0",
+  "servo_baud": 500000,
+  "motor": "SunnySky X2216 880KV V3",
+  "kv": 880.0,
+  "pole_pairs": 7,
+  "erpm_limit": 81312,
+  "tyre_mm": 34,
+  "set_rpm_52fps": 8855,
+  "ramp_s": 0.3
+ }
+}

@@ -275,25 +275,40 @@ def run(mesh, anim=True, only=None):
     # ---------------------------------------------------------------- the cartridge (C frame, printed on its base)
     cart = tu.cartridge_body(G)
     ct_fix = lambda f: (cyl(f, 2.0) and f.center[2] < G.base_z0 + 3) or (cyl(f, tu.FAST['M4']['insert_pilot'] / 2) and near(f.center[0], ct_l[0], 0.5))
-    snail_holes = lambda f: cyl(f, tu.FAST['M3']['clear'] / 2) and G.plate_z0 - 0.5 < f.center[2] < G.plate_z1 + 0.5 and abs(f.center[0] - G.wheel_x) < 12
-    m2006_holes = lambda f: cyl(f, tu.FAST['M3']['clear'] / 2) and G.floor_z - G.floor_t - 1 < f.center[2] < G.floor_z + 0.5 and math.hypot(*f.center[:2]) < 11
+    motor_holes = lambda f: cyl(f, tu.FAST['M3']['clear'] / 2) and G.plate_z0 - 0.5 < f.center[2] < G.plate_z1 + 0.5 and abs(f.center[0] - G.wheel_x) < 12
+    servo_holes = lambda f: cyl(f, 1.2) and G.floor_z - G.floor_t - 1 < f.center[2] < G.floor_z + 0.5 and math.hypot(*f.center[:2]) < 32
     housing_top = lambda f: f.kind == 'Plane' and near(f.bbox[2], G.housing_top, 0.05) and near(f.bbox[5], G.housing_top, 0.05)
+    post_tops = lambda f: f.kind == 'Plane' and near(f.bbox[2], G.plate_z1 + tu.CART_BOARD['boss_h'] + tu.CART_BOARD['standoff'], 0.05)
     g30 = G0 * FALL_G / 1000
-    F_sn, F_m2, F_hop = 2 * (27.8 + 6.8 + 5.9) * g30, (90.0 + 46.8) * g30, (54.8 + 26.0 + 3.1 + 55.0) * g30
+    hub_tyre_g = 5.2 + 4.5                                          # the hub and the Ø34 tyre (cad/turret.py mass_properties)
+    F_mot = 2 * (tu.MOTOR['mass_g'] + hub_tyre_g) * g30              # the X2216s with their adapters, hubs and tyres
+    F_feed = (tu.SERVO['mass_g'] + 48.0) * g30                      # the feed servo and the dial
+    F_hop = (44.5 + 16.8 + 55.0) * g30                              # the hopper, its lid and 30 balls
+    F_brd = (tu.CART_BOARD['mass_g'] + 2 * tu.AM32['mass_g']) * g30  # the cartridge board and the two ESCs on its posts
     study('cartridge_body', 'R-fall-down', cart, 'pa6_cf_z',
-          lambda st: (st.fix(ct_fix), st.force(snail_holes, (0, 0, -F_sn)), st.force(m2006_holes, (0, 0, -F_m2), probe=False),
-                      st.force(housing_top, (0, 0, -F_hop), probe=False)),
-          True, f'30 g down on what the cartridge carries: the Snails and wheels {F_sn:.0f} N under the cage plate, the M2006 and dial '
-                f'{F_m2:.0f} N under the floor, the hopper, lid and 30 balls {F_hop:.0f} N on the housing; held at the CT dowels and latch')
-    left = lambda f: snail_holes(f) and f.center[1] > 0
-    right = lambda f: snail_holes(f) and f.center[1] < 0
+          lambda st: (st.fix(ct_fix), st.force(motor_holes, (0, 0, -F_mot)), st.force(servo_holes, (0, 0, -F_feed), probe=False),
+                      st.force(housing_top, (0, 0, -F_hop), probe=False), st.force(post_tops, (0, 0, -F_brd), probe=False)),
+          True, f'30 g down on what the cartridge carries: the X2216s and wheels {F_mot:.0f} N under the cage plate, the feed servo and dial '
+                f'{F_feed:.0f} N on the floor\'s four M2 holes, the hopper, lid and 30 balls {F_hop:.0f} N on the housing, the cartridge board '
+                f'and ESCs {F_brd:.0f} N on its posts; held at the CT dowels and latch')
+    left = lambda f: motor_holes(f) and f.center[1] > 0
+    right = lambda f: motor_holes(f) and f.center[1] < 0
+    # a shot's loads from the launch physics (sim/turret_launch3d.py at the set speed), scaled to the fastest ball the
+    # bench lets through (the chronograph's 66 fps line): the nip's squeeze on each tyre and the recoil on the cage
+    rec = json.loads((R / 'exports/turret/launch/launch3d.json').read_text())['recoil']
+    k_fast = 66.0 / 52.0
+    F_sq = rec['peak_normal_per_tyre_n'] * k_fast
+    F_rc = rec['peak_force_on_cage_n'] * k_fast / 2
     study('cartridge_body', 'E-recoil', cart, 'pa6_cf_z',
-          lambda st: (st.fix(ct_fix), st.force(left, (-28.5, 41.0, 0)), st.force(right, (-28.5, -41.0, 0), probe=False)),
-          False, 'a shot (docs/turret-physics.md section 4): 41 N squeezing each tyre apart and 57 N of recoil, on the motors\' mounts')
+          lambda st: (st.fix(ct_fix), st.force(left, (-F_rc, F_sq, 0)), st.force(right, (-F_rc, -F_sq, 0), probe=False)),
+          False, f'a shot at 66 fps (the bench\'s trip line; the launch physics at 52 fps x 66 / 52): {F_sq:.0f} N squeezing each tyre apart '
+                 f'and {2 * F_rc:.0f} N of recoil, on the motors\' mounts')
 
-    # ---------------------------------------------------------------- the dial (C frame, PETG)
+    # ---------------------------------------------------------------- the dial (C frame, PETG), on the feed servo's horn
     dial = tu.dial(G)
-    shaft = lambda f: (cyl(f, tu.M2006['shaft_d'] / 2 + 0.05)) or (f.kind == 'Plane' and abs(f.center[0] - (tu.M2006['flat'] - tu.M2006['shaft_d'] / 2 + 0.05)) < 0.1 and abs(f.center[1]) < 3.5)
+    horn_z = G.feed_face + tu.SERVO['horn_t']
+    on_horn = lambda f: (cyl(f, tu.FAST['M3']['clear'] / 2) and math.hypot(*f.center[:2]) < 9) or \
+        (f.kind == 'Plane' and near(f.bbox[2], horn_z, 0.05) and near(f.bbox[5], horn_z, 0.05) and math.hypot(*f.center[:2]) < 11.5)
     a_sp = math.radians(22.5)
 
     def spoke_face(f):
@@ -302,12 +317,14 @@ def run(mesh, anim=True, only=None):
         r = math.hypot(f.center[0], f.center[1])
         a = math.degrees(math.atan2(f.center[1], f.center[0]))
         return G.dial_hub_r + 2 < r < G.dial_wall_r - 2 and 22.5 - 6.0 < a < 22.5 - 1.0 and G.dial_z0 + 2 < f.center[2] < G.dial_z0 + G.dial_h - 3
-    T_jam = 1.8
-    F_jam = T_jam / (G.rp / 1000)
-    study('dial', 'R-jam', dial, 'petg',
-          lambda st: (st.fix(shaft), st.force(spoke_face, (-F_jam * math.sin(a_sp), F_jam * math.cos(a_sp), 0))),
-          True, f'a jam: the M2006 at the C610\'s 10 A ({T_jam} N m) stalls with one spoke on a ball, {F_jam:.0f} N at the pocket radius '
-                f'{G.rp} mm; held on its D shaft', mesh_mm=1.5)
+    stall = 2.94                                                       # STS3215 at 12 V
+    for case, T_jam, rare, why in (('E-jam-capped', 0.3 * stall, False, 'the firmware\'s 30 % torque limit (docs/turret-firmware.md)'),
+                                   ('R-jam-stall', stall, True, 'the servo\'s full stall (the torque limit not set)')):
+        F_jam = T_jam / (G.rp / 1000)
+        study('dial', case, dial, 'petg',
+              lambda st, F_jam=F_jam: (st.fix(on_horn), st.force(spoke_face, (-F_jam * math.sin(a_sp), F_jam * math.cos(a_sp), 0))),
+              rare, f'a jam at {why} ({T_jam:.2f} N m) with one spoke on a ball: {F_jam:.0f} N at the pocket radius {G.rp} mm; '
+                    f'held on the horn (its four M3 screws and the boss\'s face)', mesh_mm=1.5)
 
     summary = {'targets': TARGETS, 'mesh_mm': mesh, 'masses': M, 'results': results}
     if not only:

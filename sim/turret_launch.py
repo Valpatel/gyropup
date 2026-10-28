@@ -13,13 +13,13 @@ v_in and is squeezed in the gap c - 2R < 2r. On each side:
   - friction along the tyre's surface is Coulomb with coefficient mu (regularised over 0.05 m/s of slip), pulling the
     ball forward while the tyre moves faster than the ball and holding it back once the ball is the faster;
   - the normal force pushes the ball back on the way in and forward on the way out.
-The two sides are symmetric, so the ball does not spin. Each wheel (the Snail's rotor, the printed hub and the tyre)
+The two sides are symmetric, so the ball does not spin. Each wheel (the motor's rotor, the printed hub and the tyre)
 is driven by its motor through an ESC: duty 0..1 of the supply V on the motor's back-EMF, phase-to-phase resistance,
 a current limit, the motor's own friction; a PI loop holds the set speed, or the duty is 1 (100 % throttle: the
 hardware ceiling). The shot ends when the ball loses both contacts; its speed then is the muzzle speed (the barrel
 and the air take a little more off over the next 0.1 m; that is ignored, which is the conservative side).
 
-Everything the model needs is in BALLS, SNAIL, WHEEL and the study's sweeps, each with its source; the foam's
+Everything the model needs is in BALLS, MOTOR, WHEEL and the study's sweeps, each with its source; the foam's
 stiffness and the tyre-foam friction are not published for Rival balls, so they are swept over a wide range and the
 design is chosen to hold the cap at the worst corner of it.
 """
@@ -39,8 +39,13 @@ FPS = 0.3048
 CAP_FPS = 70.0
 CAP = CAP_FPS * FPS                          # 21.336 m/s
 
-# DJI RoboMaster Snail 2305 user guide (references/vendor/dji-robomaster-snail-2305)
-SNAIL = {'kv_rpm_v': 875.0, 'kt': 0.0109, 'r_phase': 0.1815, 'rotor_kg_m2': 1.84e-6, 'i0_a': 0.4, 'i0_at_rpm': 21000.0}
+# The flywheel motor (D42): SunnySky X2216 880KV V3 (SunnySky's table and drawing, en.rcsunnysky.com X2216 page;
+# references/vendor/sunnysky-x2216): 880 rpm/V, kt = 60 / (2 pi KV); 117 mOhm between two leads (two phases in series,
+# so r_phase is half of it); 0.5 A at no load at 10 V (8,800 rpm). The rotor's inertia is not published: est 4.8 kg mm^2
+# (+-30 %) from the drawing (the steel can Ø27.7 x 0.8 x 24.5, 13.4 g at r 13.45; 14 magnets ~15 g at r 12; the end
+# cap). It replaces the DJI Snail 2305 (875 rpm/V, 0.1815 Ohm a phase, 1.84 kg mm^2, 0.4 A at 21,000 rpm).
+MOTOR = {'name': 'SunnySky X2216 880KV V3', 'kv_rpm_v': 880.0, 'kt': 60.0 / (2 * math.pi * 880.0), 'r_phase': 0.0585, 'rotor_kg_m2': 4.8e-6,
+         'i0_a': 0.5, 'i0_at_rpm': 8800.0, 'pole_pairs': 7}
 
 
 @dataclass
@@ -60,7 +65,7 @@ class Launcher:
     gap_mm: float = 19.98         # c - 2R: cad/turret.py crushes the 22.7 mm ball 12 % (to 19.98 mm)
     crown_r_mm: float = 1e3       # the tyre's crown radius across its width (flat tyre: large)
     supply_v: float = 12.0
-    r_eff_ohm: float = 2 * SNAIL['r_phase']   # two phases conduct (AM32 drives trapezoidally)
+    r_eff_ohm: float = 2 * MOTOR['r_phase']   # two phases conduct (AM32 drives trapezoidally)
     i_max_a: float = 10.0         # the ESC's current limit (set in AM32)
     wheel_I: float = 4.6e-6       # rotor + hub + tyre about the axis (kg m^2): from cad/turret.py's parts
     kp: float = 2e-3              # speed loop: A per rad/s ...
@@ -70,12 +75,12 @@ class Launcher:
 
 def no_load_speed(L: Launcher, kv_scale=1.0, v_scale=1.0):
     """rad/s at 100 % duty: back-EMF + friction balance the supply."""
-    ke = 60.0 / (2 * math.pi * SNAIL['kv_rpm_v'] * kv_scale)
+    ke = 60.0 / (2 * math.pi * MOTOR['kv_rpm_v'] * kv_scale)
     w0 = L.supply_v * v_scale / ke
     # friction from the no-load current (0.4 A at 21000 rpm, taken proportional to speed)
-    tf_per_w = SNAIL['kt'] * SNAIL['i0_a'] / (SNAIL['i0_at_rpm'] * 2 * math.pi / 60)
+    tf_per_w = MOTOR['kt'] * MOTOR['i0_a'] / (MOTOR['i0_at_rpm'] * 2 * math.pi / 60)
     # V - ke w = R i, kt i = tf_per_w w  ->  w = V / (ke + R tf_per_w / kt)
-    return L.supply_v * v_scale / (ke + L.r_eff_ohm * tf_per_w / SNAIL['kt'])
+    return L.supply_v * v_scale / (ke + L.r_eff_ohm * tf_per_w / MOTOR['kt'])
 
 
 def shot(ball: Ball, L: Launcher, w_set=None, full_throttle=False, kv_scale=1.0, v_scale=1.0, dt=1e-6, record=False):
@@ -93,9 +98,9 @@ def shot(ball: Ball, L: Launcher, w_set=None, full_throttle=False, kv_scale=1.0,
     K = 4.0 / 3.0 * Es * math.sqrt(Reff)
     # Hunt-Crossley alpha for restitution e at 3 m/s (alpha ~ 3(1-e)/(2 v))
     alpha = 3 * (1 - ball.e) / (2 * 3.0)
-    ke = 60.0 / (2 * math.pi * SNAIL['kv_rpm_v'] * kv_scale)
-    kt = SNAIL['kt'] / kv_scale
-    tf_per_w = SNAIL['kt'] * SNAIL['i0_a'] / (SNAIL['i0_at_rpm'] * 2 * math.pi / 60)
+    ke = 60.0 / (2 * math.pi * MOTOR['kv_rpm_v'] * kv_scale)
+    kt = MOTOR['kt'] / kv_scale
+    tf_per_w = MOTOR['kt'] * MOTOR['i0_a'] / (MOTOR['i0_at_rpm'] * 2 * math.pi / 60)
     V = L.supply_v * v_scale
     w0 = no_load_speed(L, kv_scale, v_scale)
     w = w0 if full_throttle else w_set
@@ -187,8 +192,18 @@ BALL_M = (1.53, 2.10)
 BALL_E = (0.75, 3.0)            # MPa, the foam's effective modulus (Hertz fit; Hasbro's '1.5-2.1 kg' hardness brackets it)
 BALL_MU = (0.6, 1.0)            # TPU 95A on foam
 REAL_ETA = (0.40, 0.75)         # ball speed / wheel surface speed measured on Rival flywheel blasters (hobby builds, Hasbro)
-DESIGN = {'wheel_d_mm': 36.0, 'crush': 0.25, 'supply_v': 12.0, 'set_fps': 55.0, 'nominal': Ball('nominal Rival', 22.9, 1.85, 1.5, 0.2, 0.5, 0.8)}
-TOL = {'kv': 1.05, 'v': 1.04, 'note': 'motor KV +5 % (DJI gives no tolerance: est), the Pololu regulator +4 % (est from its data sheet class)'}
+# the cage (cad/turret.py Geo): the two motors' axes 53.0 mm apart, so a tyre's diameter sets its crush; v0 starts on
+# Ø34 tyres (16.3 % on the 22.7 mm ball) at 52 fps (docs/turret-prototype-plan.md 3.1, D42); Ø36 (25 %) only if the bench
+# ceiling test allows
+CAGE_C_MM = 53.0
+DESIGN = {'wheel_d_mm': 34.0, 'crush': round(1 - (CAGE_C_MM - 34.0) / 22.7, 4), 'supply_v': 12.0, 'set_fps': 52.0,
+          'nominal': Ball('nominal Rival', 22.9, 1.85, 1.5, 0.2, 0.5, 0.8)}
+TOL = {'kv': 1.05, 'v': 1.04, 'note': 'motor KV +5 % (SunnySky gives no tolerance: est), the Pololu regulator +4 % (est from its data sheet class)'}
+
+
+def cage_crush(wheel_d, ball_d=22.7):
+    """The crush a tyre of this diameter gives on this cage (the axes CAGE_C_MM apart)."""
+    return 1 - (CAGE_C_MM - wheel_d) / ball_d
 
 
 def launcher_for(wheel_d, crush, ball_d=22.7, supply_v=12.0, wheel_I=None):
@@ -201,14 +216,18 @@ TYRE_T = 4.0                    # mm of TPU 95A on the printed hub's rim (cad/tu
 
 
 def wheel_inertia(wheel_d):
-    """The Snail's rotor (DJI: 1.84 kg mm^2) + the printed PA6-CF hub (its rim 3 mm under the tyre, ~7 g, cad/turret.py)
-    + the TPU tyre (TYRE_T thick, 12 mm wide, 1.22 g/cm^3)."""
+    """The motor's rotor (MOTOR) + its bolt-on prop adapter, washer and nut (aluminium flange Ø17 and steel, ~4 g inside
+    r 8.5: 0.13 kg mm^2, est) + the printed PA6-CF hub (cad/turret.py flywheel: a Ø28/Ø22 x 12 rim and a Ø22.2 x 5.5 web,
+    1.25 g/cm^3) + the TPU tyre (TYRE_T thick, 12 mm wide, 1.22 g/cm^3)."""
     rt = wheel_d / 2000
     ri = rt - TYRE_T / 1000
     m_t = 1.22e3 * math.pi * (rt ** 2 - ri ** 2) * 0.012
     I_t = 0.5 * m_t * (rt ** 2 + ri ** 2)
-    I_h = 0.5 * 0.007 * (ri - 0.0015) ** 2               # the hub: most of its mass in the rim
-    return SNAIL['rotor_kg_m2'] + I_h + I_t
+    r_o, r_i, r_w = 0.014, 0.011, 0.0111
+    m_rim = 1.25e3 * math.pi * (r_o ** 2 - r_i ** 2) * 0.012
+    m_web = 1.25e3 * math.pi * r_w ** 2 * 0.0055
+    I_h = 0.5 * m_rim * (r_o ** 2 + r_i ** 2) + 0.5 * m_web * r_w ** 2
+    return MOTOR['rotor_kg_m2'] + 0.13e-6 + I_h + I_t
 
 
 def population(n=400, seed=1):
@@ -228,7 +247,7 @@ def study():
     matplotlib.use('Agg')
     import matplotlib.pyplot as plt
     OUT.mkdir(parents=True, exist_ok=True)
-    res = {'model': __doc__.split('\n\n')[1], 'snail': SNAIL, 'tolerances': TOL, 'cap_fps': CAP_FPS,
+    res = {'model': __doc__.split('\n\n')[1], 'motor': MOTOR, 'tolerances': TOL, 'cap_fps': CAP_FPS,
            'ball_ranges': {'d_mm': BALL_D, 'm_g': BALL_M, 'E_mpa': BALL_E, 'mu': BALL_MU, 'restitution': 0.5},
            'measured_eta_on_rival_blasters': REAL_ETA}
     # 1. efficiency against crush, foam and grip (the 12 V, Ø40 wheel the CAD first had)
@@ -250,11 +269,11 @@ def study():
     #    on a fast motor and a high regulator
     worst = Ball('worst', BALL_D[1], BALL_M[0], BALL_E[1], 0.2, 0.5, BALL_MU[1])
     ceil = []
-    for wd in (34.0, 36.0, 38.0, 40.0, 42.0):
-        L = launcher_for(wd, DESIGN['crush'], ball_d=22.7)
+    for wd in (32.0, 34.0, 36.0, 38.0):
+        L = launcher_for(wd, cage_crush(wd), ball_d=22.7)
         r = shot(worst, L, full_throttle=True, kv_scale=TOL['kv'], v_scale=TOL['v'])
         rn = shot(DESIGN['nominal'], L, full_throttle=True)
-        ceil.append({'wheel_d_mm': wd, 'worst_fps_at_full_throttle': round(r['fps'], 1), 'nominal_fps_at_full_throttle': round(rn['fps'], 1),
+        ceil.append({'wheel_d_mm': wd, 'crush_on_this_cage': round(cage_crush(wd), 3), 'worst_fps_at_full_throttle': round(r['fps'], 1), 'nominal_fps_at_full_throttle': round(rn['fps'], 1),
                      'no_load_rpm': round(no_load_speed(L) * 60 / (2 * math.pi))})
     res['ceiling_by_wheel'] = ceil
     # 3. the design: set speed for the nominal ball at set_fps; the population at that speed; the worst case at 100 %
@@ -346,11 +365,11 @@ def study():
 
 
 def recover(L, w, w_set, seconds, dt=1e-5):
-    ke = 60.0 / (2 * math.pi * SNAIL['kv_rpm_v'])
-    tf_per_w = SNAIL['kt'] * SNAIL['i0_a'] / (SNAIL['i0_at_rpm'] * 2 * math.pi / 60)
+    ke = 60.0 / (2 * math.pi * MOTOR['kv_rpm_v'])
+    tf_per_w = MOTOR['kt'] * MOTOR['i0_a'] / (MOTOR['i0_at_rpm'] * 2 * math.pi / 60)
     for _ in range(int(seconds / dt)):
         i = min(L.i_max_a, (L.supply_v - ke * w) / L.r_eff_ohm, max(0.0, (w_set - w) * L.kp * 1000 + 1.0))
-        w += (SNAIL['kt'] * i - tf_per_w * w) / L.wheel_I * dt
+        w += (MOTOR['kt'] * i - tf_per_w * w) / L.wheel_I * dt
         w = min(w, w_set * 1.002)
     return w
 

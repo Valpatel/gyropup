@@ -54,10 +54,10 @@ Tick with a link to the evidence (file, picture, result JSON). Unticked = open.
       dial clearances checked against the spread. Evidence: docs/turret-physics.md section 2, exports/turret/launch/ball.json;
       the bore study (section 6) made the channel after the nip and the barrel ball + 2.0 (cad/turret.py `bore_out`).
 - [x] Flywheel launch model: wheel speed, crush, contact time, slip → muzzle speed; at or under 70 fps at the motors'
-      set speed with margin, and how the speed varies with ball size and wear. Evidence: docs/turret-physics.md
-      section 4 (55.8 +- 1.3 fps at the set speed; 68.0 fps the fastest ball at 100 % on Ø36, 2.0 fps under the cap),
-      and the same map on this cartridge's fixed 53.0 mm wheel spacing (Ø34 at 16.2 % crush 64.5 fps, Ø36 67.5,
-      Ø38 69.7: cad/turret.py `TYRE_SET` prints Ø34 and Ø36, not Ø38).
+      set speed with margin, and how the speed varies with ball size and wear. Evidence (v0, the X2216 880KV on Ø34,
+      D42): docs/turret-physics.md section 4: 52 fps nominal at 8,855 rpm, the population 48.9 +- 5.0 fps; the fastest
+      swept ball at 100 % on a +5 % motor and a +4 % rail 67.6 fps (2.3 under the cap; exports/turret/launch/launch3d.json);
+      on this cage's 53.0 mm spacing Ø36 would reach 70.7, so `TYRE_SET` prints Ø34 only.
 - [x] Trajectory and accuracy: drop and drift at 1-5 m, spin (matched wheels: none), dispersion budget. Evidence:
       docs/turret-physics.md sections 6-7, exports/turret/flight/flight.json.
 - [x] Recoil per shot and per burst, on the robot (feeds sim/turret.py and the head-payload budget). Evidence:
@@ -65,24 +65,32 @@ Tick with a link to the evidence (file, picture, result JSON). Unticked = open.
 
 **Feed**
 - [ ] Hopper → dial → chute → wheels: no jam in any pan/tilt pose (gravity direction at -25 deg tilt), double-feed
-      impossible, the dial parks safe with the motor off. Parked-safe passes; the end-to-end run had 3 doubles in 108
-      steps and 24 % empty steps with the M2006's real 100 ms step (docs/turret-physics.md section 3, finding 1). CAD
-      answer: the dial's hub is now a 30 deg cone with four fins that stir the pile at every step
-      (cad/turret.py `DIAL_CONE`); the physics agent reruns sim/turret_feed_dyn.py on it.
-- [x] Rate of fire: dial speed vs flywheel recovery between shots. Evidence: docs/turret-physics.md sections 4 and 11
-      (4 balls/s clean by stepping; the wheels recover their 7 % in ~3 ms at 10 A).
+      impossible, the dial parks safe with the motor off. v0 (the STS3215 feed, docs/turret-physics.md section 3):
+      parked-safe passes powered and unpowered; nothing sticks in the chute; on a fixed period 3/s level and 2.5/s at
+      -25 deg feed without a double (a hung ball at -25 deg and 3/s came down with the next ball), about 1 step in 8
+      empty with rigid balls. The firmware's answer: each step paced on gate 1, a dither instead of a step when no ball
+      arrives (docs/turret-firmware.md). Open until bench test 5.1 counts it with real foam.
+- [x] Rate of fire: dial speed vs flywheel recovery between shots. Evidence (v0, the STS3215 feed):
+      docs/turret-physics.md section 3: a step settles in 232-246 ms; 3 balls/s level and 2.5 at -25 deg on a fixed
+      period, so the firmware paces each step on gate 1 (docs/turret-firmware.md); the X2216's wheels lose 1.3 % a shot
+      and recover between shots at every rate.
 
 **From the turret-on-Orin-box scene (coordinator, 2026-10-27; cad/turret_box.py on main)**
 - [x] Hardware speed ceiling that holds at 100 % throttle (safety, highest priority): at full speed on 24 V the
-      Snails would throw ~37 m/s (123 fps). The design answer here: the flywheel ESCs on their own regulated 12 V
-      rail and Ø36 tyres at 25 % crush, so the motors' no-load speed caps the ball; the chronograph lockout is the
-      backup. Evidence: docs/turret-physics.md section 4 (68.0 fps the fastest swept ball, Ø34 64.5 on this cage);
-      the fixed 12 V regulator is on the parts list (exports/turret/bench/bom.json el_flywheel_regulator, Pololu 2885)
-      and the rule is in the hard rules above. The bench's V13 test (100 % throttle on the real rail) confirms it.
-- [ ] ARM release is not instant: a dropped ball still fires ~96 ms after ARM is released and the wheels coast
-      ~1.4 s. Enable active braking in the ESCs (AM32), and add a fail-safe gate that holds the dropped ball at the
-      chute (spring-closed, opened only while armed). The same gate pre-stages the next ball (item below).
-- [ ] Command to muzzle takes 146 ms, 86 ms of it the ball's drop through the chute: pre-stage a ball at the gate.
+      flywheels would throw 123-140 fps. The design answer: the ESCs only on the fixed 12 V regulator's output and
+      Ø34 tyres, so the motors' no-load speed caps the ball; the chronograph trip is the backup. Evidence (v0):
+      docs/turret-physics.md section 4 (67.6 fps the fastest swept ball with the X2216); the bench keeps every ball
+      under 66 fps by test 4.1 (no-load at most 11,180 rpm on the rail before any ball: docs/turret-bench-tests.md);
+      the 12 V regulator is the parts list's el_flywheel_regulator (Pololu 2885).
+- [x] ARM release is not instant: a dropped ball still fires ~96 ms after ARM is released and the wheels coast
+      ~1.4 s. The design answer (D9) is the phase-short brake, not a gate: six FETs short the motors' phases to GND
+      5-14 ms after the line drops (through the FETs and the winding's inductance: tau 10.2 ms at low speed, 5 % speed
+      ~48 ms after release, nothing left before a dropped ball reaches the nip at 96 ms), plus AM32's brake_on_stop,
+      which the firmware triggers first. Evidence: docs/turret-physics.md section 5; docs/turret-wiring.md 3.3; bench
+      test 4.7.
+- [ ] Command to muzzle: ~340 ms with the servo-stepped dial in v0 (the step ~235 ms, the drop and chute ~90 ms, the
+      nip and bore ~12 ms: docs/turret-physics.md section 3). Pre-staging a ball is not in v0; the firmware leads its
+      shots by the measured latency.
 - [x] Firing backwards: at pan 140 deg the muzzle clears the deck's rear corner by 3 mm, where the operator stands.
       Add a pan keep-out behind and check the muzzle's clearance at every pan and tilt (a general obstacle check,
       as for the lidar). Evidence: cad/turret_lidar.py is now that general check (obstacles as cylinders and boxes,
@@ -96,7 +104,11 @@ Tick with a link to the evidence (file, picture, result JSON). Unticked = open.
 
 **Structure and motion**
 - [ ] Strength of every printed load path (pan ring and gear teeth, yoke, cradle, cartridge, barrel mount) under
-      slewing, recoil, a drop of the robot and handling, with the cad-agent FEA and its overload videos.
+      slewing, recoil, a drop of the robot and handling, with the cad-agent FEA and its overload videos. v0 (plan T9,
+      exports/turret/fea/summary.json): every part meets SF 2 everyday and 1.2 in the 30 g falls, or has its peak at a
+      modelled corner (yoke push 1.82, cartridge recoil 1.57, pan base at a servo stall 1.13; p99 SF 4-11), except the
+      **cradle**, whose cheeks bend across the layers (0.78 / 0.62 in the falls, 0.77 under a 50 N push on the
+      muzzle): named for v1 (plan T16); on the bench no pushing on the barrel. Open until the cradle is fixed.
 - [x] Servo torque margins (STS3215 pan through 63:21, tilt direct) for the turret's inertia at the wanted slew rates.
       Evidence: exports/turret/motion.json (cad/turret_motion.py, with the slip ring and the boards): tilt move 5.9,
       hold 47.6, world-frame 21.9; pan 90 deg in 1.2 s with a margin of 10.0 at the 50 % torque cap, yaw 104; the
@@ -108,26 +120,31 @@ Tick with a link to the evidence (file, picture, result JSON). Unticked = open.
       30 mm riser): limited only within pan +-26 deg, to -16 deg at worst (exports/turret/lidar/lidar.json, a firmware
       table every 5 deg). On the Orin box: no limit, firing kept out within 60 deg of straight back
       (exports/turret/lidar/box.json). The DT plug's 30 mm withdrawal path is clear of the fixed parts.
-- [ ] Mass: 1.594 kg with a full hopper (exports/turret/turret.json) against the head payload's 1.5 kg
+- [ ] Mass: 1.639 kg with a full hopper in v0 (the X2216s, the cartridge board and the taller cage: exports/turret/turret.json; it was 1.594 before D42) against the head payload's 1.5 kg
       (docs/head-payload.md): the slip ring, its carrier and driver, and the two board bays added ~250 g. Cut at least
       100 g (infill where the FEA allows, a lighter carrier and bay) or agree a new budget with the leg's sizing.
 
 **Build**
-- [ ] Every printed part: orientation, supports, bed fit, print time; tolerances for bearings, inserts and the gear.
-- [ ] Every bought part with a real part number and price; nothing left as "estimate" that can be sourced.
-      Each line carries a catalogue key, part number and source URL, so the BOM can show its thumbnail and its
-      alternates: done for every line (exports/turret/bench/bom.json, `not_in_a_catalogue` empty; cad/build_turret.py
-      calls cad/bom_media.py enrich()). Every part follows the parts rule (D40): the pan bearing is VXB's chrome-steel
-      6810-2RS ($24.99), the ring the SparkFun ROB-13065 everywhere, the laser a Quarton VLM-520-73 LPT from Digi-Key
-      (Class 2, $41.82), the pan clamp a SendCutSend 6061-T6 part (exports/turret/pan_clamp.dxf, instant price on
-      upload); `no_listed_price` in bom.json lists what still lacks a read price. Hard to buy (catalog/sourcing.json
-      risk): the Snail 2305 (DJI delisted it; backorder) and the M2006 and C610 (out of stock; the Damiao DM-2325 with
-      its own driver is the alternate and needs a new dial-motor mount). No buyable alternate within the speed rule yet
-      for the Snail: a drone motor needs its own lower rail (hard rules).
-- [ ] Wiring: power (24 V → 12 V buck for the servos/laser), the ESCs, the M2006 + C610, CAN, the DT12 pinout. The
-      slip-ring hold is lifted (docs/turret-plan.md, main 5f09bd9): the ring, its carrier and driver, the index and
-      both board bays are in the CAD; the wiring page (plan task T2) is next.
-- [ ] Assembly order with pictures; a bench test plan (chronograph, accuracy, jam rate, the pendant).
+- [x] Every printed part: orientation, supports, bed fit, print time; tolerances for bearings, inserts and the gear.
+      Evidence: exports/turret/print/*.3mf (each part in its print orientation) and print.json, sliced by Bambu Studio
+      for a P1S (1,291 g, 50 h); docs/turret-print.md (settings, schedule); the fits are bench test 1.1.
+- [x] Every bought part with a real part number and price; nothing left as "estimate" that can be sourced. Evidence
+      (v0): exports/turret/bench/bom.json (`not_in_a_catalogue`, `no_listed_price` and `no_second_source` empty) and the
+      order sheets exports/turret/bench/orders/ (118 lines, 18 sellers, a backup seller on every line, $1,579 in whole
+      packs with the stand and the tools, the servos and motors first; the boards' resistors, capacitors and diodes
+      counted from exports/turret/wiring/parts.md). Each line carries a catalogue key, part number and source URL
+      (thumbnails and alternates through cad/bom_media.py). Every part follows the parts rule (D40): the pan bearing is
+      VXB's chrome-steel 6810-2RS, the ring the SparkFun ROB-13065, the laser Quarton's red VLM-650-03 LPT (D42), the pan
+      clamp a SendCutSend 6061-T6 part (exports/turret/pan_clamp.dxf, instant price on upload). The DJI Snail, M2006
+      and C610 are out of v0 (D42: the X2216 880KV and a third STS3215); the longest lead is the servos from Waveshare
+      (1-3 weeks).
+- [x] Wiring (v0): docs/turret-wiring.md (every connector, conductor and crimp; the +24 V traced to each ESC phase;
+      the arm chain drawn with a designator on every part and exports/turret/wiring/parts.md listing each part's value,
+      catalogue key and pins; the boards laid out and checked by cad/turret_boards.py). The plan's 5 V logic, 5 V 555,
+      floating brake star and 3.3 V laser gate were corrected before anything was soldered (D47).
+- [x] Assembly order with pictures; a bench test plan (chronograph, accuracy, jam rate, the pendant). Evidence:
+      docs/turret-assembly.md (twelve steps, a picture each from the CAD, the v0 cartridge), docs/turret-bench-tests.md
+      (the v0 procedure with its numbers).
 
 **Awesome**
 - [ ] Sounds, look and feedback (the laser, lights) on the 3D page match the real thing.
@@ -257,3 +274,94 @@ Newest last. One entry per agent run: what it did, what it proved, what is next.
     prices (a research agent was gathering them; `no_listed_price` in exports/turret/bench/bom.json lists what is
     missing, with the bench stand's rocker and feet); the last 56 g.
   - Next: the prototype plan the planner is writing (main's docs/turret-prototype-plan.md) becomes the task list.
+- 2026-10-27 (evening): v0 ready to order, print and build (docs/turret-prototype-plan.md T0-T5, T8 and the build
+  package; decision D42).
+  - T0: main as merged builds clean (1.556 kg with 30 balls, 1.502 empty; 0 clashes; tilt 5.8, pan 9.2).
+  - T1: D42 recorded (the X2216 880KV motors, the STS3215 feed, the red Class 2 laser, the bench items not fitted).
+    The catalogue has every v0 part with a listed price, a buy link and a second seller (three research passes:
+    Digi-Key and Mouser for the electronics, a second seller for the McMaster hardware, the bench kit and the tools);
+    `not_in_a_catalogue`, `no_listed_price` and `no_second_source` are empty in exports/turret/bench/bom.json. Found on
+    the way: the MF-R200 does not exist (MF-R250), the SN74HC123N is broker-only (CD74HC123E), the 3557-2 takes ATO not
+    MINI blades, no 18 AWG silicone wire fits the Micro-Fit crimp (1.85 mm insulation at most: 1.75 mm PTFE), the
+    ring's 28 AWG leads need the 26-30 AWG crimp (43030-0010), the plan's backup laser is a line laser, there is no
+    Worker 200-pack, the Micro-Fit crimpers the plan named stop at 20 AWG. Order sheets: exports/turret/bench/orders/
+    (cad/turret_orders.py: 100 lines, 18 sellers, $1,559 in whole packs; the servos and motors first).
+  - T2: the X2216 drawn from SunnySky's own drawing (cad/turret.py `MOTOR`): bell-down under the cage plate (radial
+    slots take its 16/19 cross in any quarter turn), the hub a PA6-CF disc on the motor's bolt-on prop adapter (Ø5
+    pilot, M5 stud, washer and nylon-insert nut); the cage plate rises 13.7 mm (plate_z0 42). The heavier motors moved
+    the tilting group's centre ahead of the axis when empty, so the tilt axis is now 48 mm ahead of the dial axis
+    (`tilt_x`): 8.5 mm behind with 30 balls, 5.2 empty; motion margins tilt 5.9, pan 8.9 (exports/turret/motion.json).
+  - T3 (the launch physics rerun here, the physics agent having finished): with the X2216's constants the ceiling on Ø34
+    is 67.6 fps at the worst corner (2.3 under the cap), Ø36 70.7 (over): `TYRE_SET` is Ø34 only; the bench keeps every
+    ball under 66 fps by checking the no-load speed first (<= 11,180 rpm). The set speed is 8,855 rpm for 52 fps; the
+    brake's tau 6.9 ms; the soft start 300 ms (2.5 A at the ring). docs/turret-physics.md sections 0, 4, 5, 9.
+  - T4: the feed servo under the dial floor (its face 0.75 mm up in a pocket so the dial sits flat on its horn, 4 x
+    M2 x 6 countersunk), the dial on the horn with 4 x M3 x 8 from the top; the M2006 and C610 features gone.
+    T5: the feed physics on the servo: a step settles in 232-246 ms; 3 balls/s level and 2.5 at -25 deg on a fixed
+    period, so the firmware paces each step on gate 1 (a dither, never a step, if no ball arrives); parked-safe passes.
+  - Build package: the print files (exports/turret/print/*.3mf in their print orientations, sliced by Bambu Studio
+    for a P1S: 1,291 g, 50 h; docs/turret-print.md with the settings and the schedule); the SendCutSend clamp
+    (exports/turret/pan_clamp.dxf, 6061-T6 0.125 in, in the order sheets); the wiring (docs/turret-wiring.md, rewritten
+    for v0, with the boards laid out and checked by cad/turret_boards.py); the assembly order regenerated; the bench
+    test procedure (docs/turret-bench-tests.md) with the v0 numbers.
+  - T8 changed three things in the plan's wiring, each with its reason in docs/turret-wiring.md: the flywheel regulator
+    is always on and the 2815 switches its 12 V output (the tilt servo on the always-on 12 V; one regulator fewer: the
+    bay's boards could not hold the plan's parts); one 5 A MINI fuse in line in the base protects the ring's 2 A circuits
+    (no PCB blade holder fits the heights); and **the 2815's slide switch must be OFF**: with it ON the MOSFET stays on
+    whatever ARM does (Pololu's page), so the plan's "slide switch left ON" would have defeated the safety line.
+  - Also: the turntable's lightening pockets moved off the shoulder's root (the side-fall peak, SF 1.12); the stand's
+    rocker cutout is the Ø20.2 round of the DC-rated Bulgin / Switch Components rockers.
+  - Firmware v0 (T7) is with a separate agent in firmware/turret/ (the servo bus with the feed, the gate-paced feed,
+    CONFIG from the physics, the AM32 settings, the bench host script).
+  - Next: the FEA rerun on this geometry (running: cad/turret_studies.py, summary.json); measure the X2216, a servo and
+    the ring in hand (T6); order; print the stand and the pan stack; then T10-T15.
+- 2026-10-27 (late): the electrics made buildable part by part and reviewed, the brake modelled as built, and the FEA
+  on the v0 geometry (plan T8, T9; decision D47).
+  - Four faults in the plan's wiring, fixed first (docs/turret-wiring.md section 3, every part with a designator;
+    exports/turret/wiring/parts.md lists them and cad/turret_boards.py counts the parts list's passives from them): the
+    arm chain ran on 5 V and fed the Feather's pins, which are not 5 V tolerant (it runs on the Feather's 3.3 V now); a
+    5 V 555 drove the opto's LED at about 0.5 mA (the 555 runs on the pendant loop's 12 V: 2 mA); the brake FETs to a
+    floating star could stay off (each phase is shorted to GND, as AM32's own brake does); the laser's 2N7000 had
+    3.3 V on its gate against a threshold of up to 3 V (the bus buffer's spare channel drives it at 5 V, from A5).
+  - Then an independent review of the drawn circuit against the datasheets (a separate agent) found two blockers and
+    nine more, all fixed: the trip latch could be cleared by the next slower ball (now set-only); the Feather could
+    raise ARM through its own pins (it reads ARM and the pulse train through 100 k); a '123 one-shot fires on a rising
+    reset (the CD74HC423E does not; an MCP120 makes the power-up reset); the ESC's phase edges would lift the brake FETs'
+    gates (100 nF gate to source); complementary PWM would push the wheels' energy into the buck-fed 12 V rail (off,
+    plus TVS diodes, Pololu's Schottky at the 2815 and ramps between set speeds); the RX divider had no margin (a
+    Schottky); A4 shares an interrupt line with D10 (PULSE_MON on A3); the Feather's USB pin is its USB-C VBUS (fed
+    through a 1N5817); signals into the unpowered ESCs and feed servo (1 k series, DShot low while disarmed); a reversed
+    supply (a 1N5822 after the fuse); and any headphone plug would have closed the pendant's 3.5 mm loop (a keyed
+    Switchcraft mini-XLR now, and a 0.1 A polyfuse). Also from it: K = 0.475 at 3.3 V (R11 starts at 63.4 k), R9 39 k
+    for the 4N35's margin, 1 k gate pull-ups, a bench check of the gates' light (3.10), the hall's bypass capacitor.
+  - The firmware and its bench host follow the circuit: 19 firmware tests pass (a new set speed ramps; no DShot frame
+    while the ESCs are unpowered) and 33 of 33 simulated bench tests (3.1 reads the 555's frequency, the opto's current
+    and every Feather input; 3.3 a slower pair after a trip stays latched; 3.10 the gates' light; 4.10 no FET gate kick
+    and no rail over 13 V through a step down).
+  - The brake as built: two FETs and the taps make the short 173 mOhm (tau 10.2 ms at low speed, 6.9 for the motor
+    alone), and the winding's inductance (not published; 35 uH est, swept 0-50) weakens it at speed: 5 % speed 40-57
+    ms after release (48 at 35 uH; it read 30 before), nothing left at the 96 ms when a ball in the chute could arrive.
+  - FEA (T9: cad/turret_studies.py on the final geometry, exports/turret/fea/summary.json). Targets: 2 everyday, 1.2 rare.
+
+    | Part | Falls (30 g) | Everyday | Stall / jam |
+    |---|---|---|---|
+    | tilt yoke | 2.78 / 2.05 / 1.78 | 1.82 (50 N push up at the muzzle; p99 SF 4.4) | |
+    | turntable, its teeth | 8.38 / 2.19 | 3.31 (servo cap) | 1.66 |
+    | pinion | | 2.7 | 1.35 |
+    | pan base | 6.12 / 1.38 | 2.26 (servo cap) | 1.13 (p99 SF 9) |
+    | aluminium clamp | 2.89 (lift) | | |
+    | **cradle** (across the layers) | **0.78 / 0.62** | **0.77** (the push) | |
+    | cartridge | 1.57 | 1.57 (recoil at 66 fps; p99 SF 11) | |
+    | dial (PETG) | | 5.75 (jam at the 30 % cap) | 1.72 |
+
+    Changes from it: the yoke's stepped relief is a cone (its 30 g down case 2.25 -> 2.78; the sweep still clean); the
+    cartridge's recoil takes the X2216's own loads at 66 fps. Named for v1 (T16): the cradle's cheeks bend across the
+    layers (0.77 under a 50 N push with humid PA6-CF, about 1.6 dry): on the bench no pushing on the barrel, keep it
+    dry, print a spare.
+  - The bench print plan holds v0's parts only with the slicer's numbers (19 parts, 1,292 g, 50 h; the build page reads
+    it). The order sheets: 125 lines from 17 sellers, $1,609.89 with the stand and the tools; the boards' passives 94
+    pieces for $15.74; every line priced with a second seller.
+  - cad/turret_box.py now tolerates the J501's Rev 0.9 parameters (its fan duct became a flush grille); the adapter's
+    intake shroud was drawn round the Rev 0.8 duct and needs a look when Rev 0.9 lands.
+  - Next: order (the servos and the X2216s first: Waveshare ships from China); print the stand and the pan stack; test-
+    fit the TB3M's panel hole; T6's measurements on the parts in hand; then T10-T15.

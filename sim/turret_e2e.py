@@ -5,10 +5,10 @@ current CAD, one stage's exit the next stage's input.
 
 The chain, per shot (R = reduced model solved outside MuJoCo; M = MuJoCo):
   1. the ball            sim/turret_ball.py            the sourced size/mass spread, the swept foam unknowns
-  2. the feed       M    sim/turret_feed_dyn.py        the hopper, dial (M2006 + C610), baffle and chute from cad/turret.py at the
+  2. the feed       M    sim/turret_feed_dyn.py        the hopper, dial (on its STS3215 servo), baffle and chute from cad/turret.py at the
                                                        engagement's tilt, with the pan slew's fictitious forces; out: the ball's
                                                        state at first touch on the tyres and the latency from the step command
-  3. the launch     R    sim/turret_launch3d.py        6-DOF ball between the two tyres, each on its own Snail + ESC loop, the
+  3. the launch     R    sim/turret_launch3d.py        6-DOF ball between the two tyres, each on its own X2216 + ESC loop, the
                                                        burst's wheel-speed recovery between shots; out: velocity and spin at the nip exit
   4. the barrel     R    sim/turret_flight.py          wall contacts down the bore; out: the muzzle state (cartridge frame)
   5. the flight     M    this file                     the muzzle state rotated by the turret's pose at that instant plus the
@@ -23,7 +23,7 @@ The chain, per shot (R = reduced model solved outside MuJoCo; M = MuJoCo):
                                                        sim/turret_dynamics.py (not in the MuJoCo joints: reported)
 Two firing modes: 'settled' (fire when the aim error is under 0.3 deg and the pan rate under 5 deg/s) and 'panning'
 (fire as soon as the aim error is under 2 deg, while the pan servo is still finishing its move). Two set speeds: the
-program's 55 fps and the research default 65 fps (both under the 70 fps cap).
+program's set speed (52 fps on Ø34 tyres since D42) and 95 % of the rail's no-load speed (both under the 70 fps cap).
 Writes exports/turret/e2e/e2e.json (checks keyed to docs/turret-program.md's checklist), e2e.png, e2e.mp4 and frames.
 """
 from __future__ import annotations
