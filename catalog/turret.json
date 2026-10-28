@@ -3409,7 +3409,7 @@
    "https://www.digikey.com/en/ptm/t/tdk-lambda-americas-inc/i6a-series-of-non-isolated-dc-dc-converters"
   ],
   "confidence": "datasheet",
-  "used_for": "the flywheel rail (D68): the turret's 15-42 V input in, ~11.5 V out (10.9-12.0 V, one fixed trim resistor chosen at the bench so the faster motor's no-load speed is 15,930 rpm): the only supply the flywheel ESCs ever see, and the hardware speed ceiling",
+  "used_for": "the flywheel rail (D68): the turret's 15-42 V input in, ~11.3 V out (10.8-11.9 V, one fixed trim resistor chosen at the bench so the faster motor's no-load speed is 15,722 rpm): the only supply the flywheel ESCs ever see, and the hardware speed ceiling",
   "qty_per_robot": 1,
   "notes": "A buck: the rail sits 3 V under one DCB609 at its loaded 15 V, so no buck-boost is needed (the 1400 KV motor is what makes the rail low enough). 9-53 V in covers the 15-20.5 V pack and the 30-42 V 10S bus; D66's 54 V input ceiling is 1 V over its 53 V, which no supply reaches. Its +-4 % set point and the motors' KV spread are measured out by the per-turret trim; what remains (line 0.3 %, load 1.2 % over 0-20 A, temperature) is in the ceiling stack. A fixed resistor, not a pot: soldered, sealed and recorded with the trim. The negative-logic ON/OFF pin can take the arm chain. Pololu's D42V110F12 (12 V fixed, 9 A, 60 V in, $59.95) is the fallback without a trim (it fails D68's stack: sim/turret_launch.py trim.untrimmed)."
  },
@@ -5412,8 +5412,8 @@
    "no_load_current_a": 1.3,
    "no_load_current_at_v": 10.0,
    "kt_nm_per_a": 0.00682,
-   "no_load_speed_rpm": 15930,
-   "no_load_speed_note": "the trimmed flywheel rail (D68): each turret's rail set so the faster motor turns 15,930 rpm at 100 % throttle, warm (11.46 V for a nominal 1400 KV; 10.9-12.0 V for KV +-5 %)",
+   "no_load_speed_rpm": 15722,
+   "no_load_speed_note": "the trimmed flywheel rail (D68): each turret's rail set so the faster motor turns 15,722 rpm at 100 % throttle, warm (11.31 V for a nominal 1400 KV; 10.8-11.9 V for KV +-5 %)",
    "rotor_inertia_kg_mm2": 4.8,
    "rotor_inertia_note": "est from the drawing (not published): steel can Ø27.7 x 0.8 x 24.5 (13.4 g at r 13.45) + 14 magnets ~15 g at r 12 + end cap: 4.8 kg mm2 +-30 %",
    "max_continuous_a": 33,
@@ -5423,8 +5423,8 @@
     16.8
    ],
    "max_continuous_note": "33 A for 30 s, 540 W (SunnySky's table); 40 A ESC recommended",
-   "voltage_note": "2-4S LiPo (SunnySky); the D68 rail is 10.9-12.0 V (3S), inside it",
-   "bearing_rpm_note": "bearings not published; the same can and bearings are sold as the 2600 KV for 3-4S (~40,000 rpm no-load), so 16,500 rpm is well inside them"
+   "voltage_note": "2-4S LiPo (SunnySky); the D68 rail is 10.8-11.9 V (3S), inside it",
+   "bearing_rpm_note": "bearings not published; the same can and bearings are sold as the 2600 KV for 3-4S (~40,000 rpm no-load), so 16,330 rpm (the trim with every tolerance) is well inside them"
   },
   "cad": {
    "step_url": null,
@@ -5439,7 +5439,7 @@
   "confidence": "datasheet",
   "used_for": "the two flywheel motors (D68), hanging bell-down under the cartridge's cage plate; the hub clamps on the bolt-on prop adapter",
   "qty_per_robot": 2,
-  "notes": "D68: replaces the 880 KV (D42). The 880 KV would need ~18.2 V for the same speed (5S, over its 2-4S rating, and a buck-boost from a 15 V pack); the 1400 KV gets there on ~11.5 V, inside its rating and within a buck's reach of one DCB609 at 15 V. Same can, stator, shaft and prop adapter, so the cage, hub and drawing are unchanged. Screws into the mount face must not reach past 2.8 mm (M3 x 6 through the 3.5 mm plate)."
+  "notes": "D68: replaces the 880 KV (D42). The 880 KV would need ~18.0 V for the same speed (5S, over its 2-4S rating, and a buck-boost from a 15 V pack); the 1400 KV gets there on ~11.3 V, inside its rating and within a buck's reach of one DCB609 at 15 V. Same can, stator, shaft and prop adapter, so the cage, hub and drawing are unchanged. Screws into the mount face must not reach past 2.8 mm (M3 x 6 through the 3.5 mm plate)."
  },
  {
   "id": "tmotor-mn2212-v2-920kv",
