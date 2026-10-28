@@ -47,7 +47,7 @@ def geo():
     return G, tu
 
 
-def xml(G, tu, mu=0.7, n_balls=30, wall_n=40, seed=0, baffle='flat', tent=None):
+def xml(G, tu, mu=0.7, n_balls=30, wall_n=40, seed=0, baffle='flat', tent=None, dial_top='discs'):
     tent = tent or {'r_in': 14.0, 'slope_deg': 35.0}
     m = lambda v: v / 1000.0
     r = G.ball / 2
@@ -114,8 +114,25 @@ def xml(G, tu, mu=0.7, n_balls=30, wall_n=40, seed=0, baffle='flat', tent=None):
     d = []
     d.append(f'<geom type="cylinder" size="{m(G.dial_hub_r)} {m(G.dial_h) / 2}" pos="0 0 {m(G.dial_z0 + G.dial_h / 2)}" rgba=".95 .8 .2 1"/>')
     zc = G.dial_z0 + G.dial_h
-    for k, rr in enumerate((G.dial_hub_r * 0.8, G.dial_hub_r * 0.55, 8.0)):
-        d.append(f'<geom type="cylinder" size="{m(rr)} 0.001" pos="0 0 {m(zc + 1 + 2 * k)}" rgba=".95 .8 .2 1"/>')
+    if dial_top == 'cad':
+        # the dial's top as cad/turret.py draws it: the 30 deg cone (a convex frustum) and its four stirring fins
+        C = tu.DIAL_CONE
+        ring = lambda rr, z: [(rr * math.cos(2 * math.pi * k / 32), rr * math.sin(2 * math.pi * k / 32), z) for k in range(32)]
+        cone = ring(G.dial_hub_r, zc) + ring(C['r_top'], zc + C['h'])
+        assets += '<asset><mesh name="cone" vertex="' + ' '.join(f'{m(x)} {m(y)} {m(z)}' for x, y, z in cone) + '"/>'
+        r0, t2 = C['r_top'] - 1.0, C['fin_t'] / 2
+        prof = [(r0, zc), (18.0, zc), (18.0, zc + 3.5), (r0, zc + C['fin_top'])]
+        for k in range(C['fins']):
+            a = math.radians(22.5 + 90 * k)
+            ca, sa = math.cos(a), math.sin(a)
+            vs = [(rr * ca - w * sa, rr * sa + w * ca, z) for rr, z in prof for w in (-t2, t2)]
+            assets += f'<mesh name="fin{k}" vertex="' + ' '.join(f'{m(x)} {m(y)} {m(z)}' for x, y, z in vs) + '"/>'
+        assets += '</asset>'
+        d.append('<geom type="mesh" mesh="cone" rgba=".95 .8 .2 1"/>')
+        d += [f'<geom type="mesh" mesh="fin{k}" rgba=".95 .8 .2 1"/>' for k in range(C['fins'])]
+    else:
+        for k, rr in enumerate((G.dial_hub_r * 0.8, G.dial_hub_r * 0.55, 8.0)):
+            d.append(f'<geom type="cylinder" size="{m(rr)} 0.001" pos="0 0 {m(zc + 1 + 2 * k)}" rgba=".95 .8 .2 1"/>')
     for k in range(G.n_pockets):
         a = math.radians((k + 0.5) * 360 / G.n_pockets)
         r0, r1 = G.dial_hub_r - 1, G.dial_wall_r - 0.75
@@ -154,11 +171,11 @@ def xml(G, tu, mu=0.7, n_balls=30, wall_n=40, seed=0, baffle='flat', tent=None):
 
 
 class Feed:
-    def __init__(self, G, tu, mu=0.7, n_balls=30, seed=0, baffle='flat', tent=None):
+    def __init__(self, G, tu, mu=0.7, n_balls=30, seed=0, baffle='flat', tent=None, dial_top='discs'):
         import mujoco
         self.mj = mujoco
         self.G = G
-        self.model = mujoco.MjModel.from_xml_string(xml(G, tu, mu, n_balls, seed=seed, baffle=baffle, tent=tent))
+        self.model = mujoco.MjModel.from_xml_string(xml(G, tu, mu, n_balls, seed=seed, baffle=baffle, tent=tent, dial_top=dial_top))
         self.data = mujoco.MjData(self.model)
         self.balls = [self.model.body(f'b{i}').id for i in range(n_balls)]
         self.qadr = [self.model.jnt_qposadr[self.model.body_jntadr[b]] for b in self.balls]
@@ -315,7 +332,55 @@ def park_test(G, tu, pose, mu, powered=True, seed=0, n_balls=30):
 POSES = [(0, 0, 0), (-25, 0, 0), (0, -10, 0), (-25, 10, 0), (0, 0, 15), (-25, 0, -15), (-12.5, 10, 15)]
 
 
+def write_pile(seed=0, n_balls=30):
+    """A full hopper as it really settles, for the pictures and the pages: 30 balls dropped through the fill tube onto
+    the dial (its cone and fins as cad/turret.py draws them) parked with a spoke over the exit hole, the lid brought
+    down, everything left to rest. Writes exports/turret/feed/pile.json: every ball's centre in the cartridge frame (mm),
+    split into the dial's pockets (they turn with it; given in the dial's own frame, at its zero) and the pile above."""
+    G, tu = geo()
+    f = Feed(G, tu, n_balls=n_balls, seed=seed, dial_top='cad')
+    park = math.radians(360.0 / G.n_pockets / 2)
+    f.data.qpos[f.model.jnt_qposadr[f.dial_j]] = park
+    f.data.ctrl[0] = park
+    # a hopper that has been fed from: a ball seated in each of the eight pockets (the dial has turned since filling;
+    # a pile dropped on a still dial leaves pockets empty), the other balls dropped onto them
+    for k, qa in enumerate(f.qadr[:G.n_pockets]):
+        a = park + 2 * math.pi * k / G.n_pockets
+        f.data.qpos[qa:qa + 3] = (G.rp * math.cos(a) / 1000.0, G.rp * math.sin(a) / 1000.0, (G.ball_z_dial + 0.2) / 1000.0)
+        f.data.qpos[qa + 3:qa + 7] = (1, 0, 0, 0)
+    left = f.settle(2.5)
+    left += f.run(1.0, lambda t: park)
+    zp = G.ball_z_dial
+    pockets, pile = [], []
+    for i, qa in enumerate(f.qadr):
+        if i in f.gone:
+            continue
+        x, y, z = (float(v) * 1000.0 for v in f.data.qpos[qa:qa + 3])
+        if z < zp + G.ball / 2 and math.hypot(x, y) < G.dial_wall_r:
+            a = math.atan2(y, x) - park                      # into the dial's frame at its zero
+            rr = math.hypot(x, y)
+            pockets.append([round(rr * math.cos(a), 2), round(rr * math.sin(a), 2), round(z, 2)])
+        else:
+            pile.append([round(x, 2), round(y, 2), round(z, 2)])
+    speed = max(float(np.linalg.norm(f.data.qvel[va:va + 3])) for i, va in enumerate(f.vadr) if i not in f.gone)
+    out = {'what': 'the full hopper at rest (sim/turret_feed.py write_pile): MuJoCo, the dial parked with a spoke over the exit hole',
+           'frame': 'cartridge frame C (mm): x along the barrel, the dial axis at x = y = 0; pockets in the dial\'s frame at its zero '
+                    '(the page turns them by the park angle)',
+           'park_deg': round(math.degrees(park), 2), 'ball_d_mm': G.ball, 'seed': seed, 'balls': n_balls,
+           'pockets': pockets, 'pile': pile, 'fed_or_lost': [i for i, _ in left] + [i for i, _ in f.escaped],
+           'max_speed_mps_at_rest': round(speed, 4)}
+    p = R / 'exports' / 'turret' / 'feed' / 'pile.json'
+    p.parent.mkdir(parents=True, exist_ok=True)
+    p.write_text(json.dumps(out, indent=1) + '\n')
+    print(f'pile: {len(pockets)} in pockets, {len(pile)} above, {len(out["fed_or_lost"])} fed or lost, '
+          f'slowest-settled speed {speed:.4f} m/s -> {p}')
+    return out
+
+
 def main():
+    if '--pile' in sys.argv:
+        write_pile()
+        return
     ap = argparse.ArgumentParser()
     ap.add_argument('--quick', action='store_true')
     ap.add_argument('--video', action='store_true')

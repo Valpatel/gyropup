@@ -33,6 +33,7 @@ import cadquery as cq  # noqa: E402
 import printplan  # noqa: E402
 import turret as tu  # noqa: E402
 import turret_box as tb  # noqa: E402
+import turret_gates as tg  # noqa: E402
 from cadagent.geometry import export_print_stl  # noqa: E402
 from cadagent.robot import Body, combine, printed_part_body, solid_mass_properties  # noqa: E402
 
@@ -467,6 +468,7 @@ def main():
     SCENE.mkdir(parents=True, exist_ok=True)
     for f in SCENE.glob('*.stl'):
         f.unlink()
+    tg.stored()                                                    # fail fast: the design gates pass and are current
     T = tu.Turret({'bodyTop': tb.Z_TM - 20.0 - tu.SADDLE_T})        # its TM face on the deck
     G = T.G
     g = tb.J.get('git') or {}
@@ -511,8 +513,12 @@ def main():
 
     tz = tb.Z_TM + G.tilt_t
     pan_o, tilt_o = (0.0, 0.0, tb.Z_TM), (0.0, 0.0, tz)
-    flap_hinge = (tu.FILL_PORT[0] - 19.0, 0.0, G.hopper_top + 6.0 - G.tilt_c)      # tilt frame
-    wheel = {'wheel_l': (G.wheel_x, G.wheel_y, 0.0), 'wheel_r': (G.wheel_x, -G.wheel_y, 0.0)}
+    # the scene's tilt frame has its origin on the tilt axis: a point of the cartridge frame C (the parts' build frame:
+    # the dial axis at x = y = 0, the ball path at z = 0) is at C - (tilt_x, 0, tilt_c) in it
+    tx, tc = G.tilt_x, G.tilt_c
+    flap_hinge = (tu.FILL_PORT[0] - 19.0 - tx, 0.0, G.hopper_top + 6.0 - tc)       # tilt frame
+    wheel = {'wheel_l': (G.wheel_x - tx, G.wheel_y, 0.0), 'wheel_r': (G.wheel_x - tx, -G.wheel_y, 0.0)}
+    dial_o = (-tx, 0.0, 0.0)                                                         # the dial turns about its own axis
     group_pts = {'pan': [], 'tilt': []}
     for name, m in T.meta.items():
         fr = T.frame[name]
@@ -535,8 +541,8 @@ def main():
                     tris = add(name, side, sh, hexcol(col), op, mirror=mir, offset=(wx, wy, tz), extra=info)
                     group_pts['tilt'].append(tris + [wx, wy, 0.0])
             elif name == 'dial':
-                tris = add(name, 'dial', posed, hexcol(col), op, offset=tilt_o, extra=info)
-                group_pts['tilt'].append(tris)
+                tris = add(name, 'dial', posed, hexcol(col), op, offset=(dial_o[0], 0.0, tz), extra=info)
+                group_pts['tilt'].append(tris + [dial_o[0], 0.0, 0.0])
             elif name == 'hopper_flap':
                 tris = add(name, 'flap', posed, hexcol(col), op, offset=(flap_hinge[0], 0.0, tz + flap_hinge[2]), extra=info)
                 group_pts['tilt'].append(tris + [flap_hinge[0], 0.0, flap_hinge[2]])
@@ -614,7 +620,7 @@ def main():
                 v = v.translate(cq.Vector(0, 0, -G.tilt_t))
             bodies.append(solid_mass_properties(v, mass / (v.Volume() / 1000.0), 1.0, name))
         if gname == 'tilt':
-            bodies.append(Body(30 * 0.00183, (0.0, 0.0, (G.path_t + (G.dial_z0 + G.hopper_top) / 2 - 8 - G.tilt_t) * M), name='30 balls'))
+            bodies.append(Body(30 * 0.00183, (-G.tilt_x * M, 0.0, (G.path_t + (G.dial_z0 + G.hopper_top) / 2 - 8 - G.tilt_t) * M), name='30 balls'))
         return combine(bodies, gname)
     groups = {g: group_body(g) for g in ('pan', 'tilt')}
     mech = mechanics(T, rows, groups)
@@ -661,7 +667,14 @@ def main():
                        f'is released; the phase-short brake (six FETs on the cartridge board, 5-14 ms after the line drops) stops the wheels to 5 % '
                        f'about {b5} ms after release (docs/turret-physics.md section 5), where unbraked they would coast {fl["coast_down_s"]} s',
                'brake_to_5pct_ms': b5, 'brake_tau_ms': rel.get('tau_ms_model')}
+    # the design gates (cad/turret_gates.py, run on a GB10): the build stops here when they fail or are stale
+    gd = tg.stored()
+    gsum = {k: {'ok': v['ok'], **{m: v[m] for m in ('worst_overlap_mm', 'spheres', 'poses') if m in v}} for k, v in gd['gates'].items()}
+    gsum['connected']['bodies'] = {g: x['bodies'] for g, x in gd['gates']['connected']['groups'].items()}
+    gate_info = {'file': 'exports/turret/gates.json', 'fingerprint': gd['fingerprint'], 'ok': gd['ok'], 'gates': gsum}
+    print(f'  design gates: {", ".join(k for k in gsum)} all pass (exports/turret/gates.json, fingerprint {gd["fingerprint"]})')
     checks = {'clearance': sw, 'muzzle_outside_deck_mm': ball_clear(T), 'ball_path': path_out, 'airflow': air, 'intake_seal': seal,
+              'design_gates': gate_info,
               'shroud_fit': fit, 'tipping': tip, 'overspeed': overspeed, 'release': release,
               'lid_screw': f'M3 x {tb.LID_SCREW_LEN:.0f} ISO 4762, tip at z {tb.LID_SCREW_TIP:.0f} (as the J501\'s own M3 x {tb.J["lid_screw_len"]:.0f})',
               'heights_mm': {'roof': tb.ROOF, 'deck_underside': tb.DECK_Z0, 'tm_face': tb.Z_TM,
@@ -683,25 +696,20 @@ def main():
           f'back in {mech["flywheel"]["recovery_ms"]} ms; trigger to muzzle {mech["timing"]["trigger_to_muzzle_ms"]} ms; tilt hold '
           f'{mech["tilt"]["holding_nm"]} N.m ({mech["tilt"]["margin"]}x)')
 
-    # ---- the ball's way through the turret (tilt frame, mm) and the balls in a full hopper
-    tc = G.tilt_c
-    path = [[round(G.exit_x, 2), 0.0, round(G.ball_z_dial - tc, 2)]]
+    # ---- the ball's way through the turret (tilt frame, mm) and the balls in a full hopper: the pile as it really
+    # settles (sim/turret_feed.py --pile, MuJoCo on the dial's cone and fins), checked in the CAD by cad/turret_gates.py
+    def tf(x, y, z):
+        return [round(x - tx, 2), round(y, 2), round(z - tc, 2)]
+    path = [tf(G.exit_x, 0.0, G.ball_z_dial)]
     for k in range(1, 13):
         th = math.pi + k * (math.pi / 2) / 12
-        path.append([round(G.chute_cx + G.chute_r * math.cos(th), 2), 0.0, round(G.chute_r + G.chute_r * math.sin(th) - tc, 2)])
+        path.append(tf(G.chute_cx + G.chute_r * math.cos(th), 0.0, G.chute_r + G.chute_r * math.sin(th)))
     for x in (G.wheel_x - 7.25, G.wheel_x, G.wheel_x + 7.25, G.socket_x0, G.barrel_x0 + 30, G.barrel_x0 + 80, G.barrel_x1):
-        path.append([round(x, 2), 0.0, round(-tc, 2)])
+        path.append(tf(x, 0.0, 0.0))
     rb = G.ball / 2
-    pockets = [[round(G.rp * math.cos(math.radians(45 * k)), 2), round(G.rp * math.sin(math.radians(45 * k)), 2), round(G.ball_z_dial - tc, 2)]
-               for k in range(G.n_pockets)]                                    # dial frame: pocket k at 45k deg
-    pile = []
-    z1 = G.dial_z0 + G.dial_h + rb + 0.5
-    for z, rings in ((z1, ((13.0, 3, 0.0), (36.5, 9, 0.0))), (z1 + 17.0, ((0.0, 1, 0.0), (26.0, 7, 0.3), (37.0, 3, 0.9)))):
-        for rr, n, a0 in rings:
-            for k in range(n):
-                ang = a0 + 2 * math.pi * k / n
-                pile.append([round(rr * math.cos(ang), 2), round(rr * math.sin(ang), 2), round(z - tc, 2)])
-    pile = pile[:30 - (G.n_pockets - 1)]
+    settled = tg.load_pile(G)
+    pockets = [[round(x, 2), round(y, 2), round(z - tc, 2)] for x, y, z in settled['pockets']]   # dial frame, at its zero
+    pile = [tf(*p) for p in settled['pile']]
 
     # ---- callout anchors (in each part's group frame) and the ball's journey
     by = {p['name']: p for p in parts}
@@ -712,10 +720,10 @@ def main():
         if side == '-y':
             y = b[1] + dy
         return [round(x, 1), round(y, 1), round(b[5] + dz, 1)]
-    anchors = {'hopper': top_of('hopper', -30, 0, -20, '-y'), 'dial': [-G.rp, -6.0, round(G.dial_z0 + 15 - tc, 1)],
-               'feed_motor': [0.0, -12.0, round(G.floor_z - G.floor_t - 25 - tc, 1)], 'cartridge_body': [round(G.wheel_x, 1), round(-G.cage_y, 1), round(10 - tc, 1)],
-               'flywheel_tyre': [0.0, 20.0, 0.0], 'barrel': [round(G.barrel_x1 - 20, 1), -15.0, round(-tc, 1)],
-               'laser': [round(tu.LASER_X[1] + 12, 1), round(tu.LASER_Y, 1), round(-tc, 1)], 'cradle': [40.0, round(-G.cheek_y[1], 1), round(G.rail_z[0] + 2 - tc, 1)],
+    anchors = {'hopper': top_of('hopper', -30, 0, -20, '-y'), 'dial': [-G.rp, -6.0, round(G.dial_z0 + 15 - tc, 1)],          # dial frame
+               'feed_motor': tf(0.0, -12.0, G.floor_z - G.floor_t - 25), 'cartridge_body': tf(G.wheel_x, -G.cage_y, 10),
+               'flywheel_tyre': [0.0, 20.0, 0.0], 'barrel': tf(G.barrel_x1 - 20, -15.0, 0.0),
+               'laser': tf(tu.LASER_X[1] + 12, tu.LASER_Y, 0.0), 'cradle': tf(40.0, -G.cheek_y[1], G.rail_z[0] + 2),
                'tilt_servo': [0.0, round(G.arm_y[1] + 15, 1), round(G.tilt_t, 1)], 'tilt_yoke': [0.0, round(-G.arm_y[1], 1), round(G.tilt_t - 40, 1)],
                'pan_ring': [0.0, -40.0, round(G.turntable_z[1] - 6, 1)], 'pan_pinion': [round(G.servo_pan_xy[0], 1), -14.0, round(G.turntable_z[1] - 4 + tb.Z_TM, 1)],
                'pan_servo': [round(G.servo_pan_xy[0], 1), 25.0, round(tb.Z_TM + 20, 1)], 'pan_bearing': [0.0, -32.0, round(tb.Z_TM + G.brg_z + 3, 1)],
@@ -733,28 +741,28 @@ def main():
     fl_rows = mech['flight_level']['rows']
     at3 = next((r for r in fl_rows if r[0] == 3.0), fl_rows[-1])
     journey = [
-        {'id': 'hopper', 'title': '1  Hopper', 'parts': ['hopper', 'hopper_lid', 'hopper_flap'], 'focus': [0.0, 0.0, round((G.dial_z0 + G.hopper_top) / 2 - tc, 1)],
+        {'id': 'hopper', 'title': '1  Hopper', 'parts': ['hopper', 'hopper_lid', 'hopper_flap'], 'focus': tf(0.0, 0.0, (G.dial_z0 + G.hopper_top) / 2),
          'text': f'Thirty balls (Ø{G.ball}, 1.83 g) wait in the clear hopper. Gravity drops them into the dial\'s pockets; the cone on top of the dial stirs the pile so they cannot bridge.'},
-        {'id': 'dial', 'title': '2  Feed dial', 'parts': ['dial', 'feed_motor'], 'focus': [0.0, 0.0, round(G.ball_z_dial - tc, 1)],
+        {'id': 'dial', 'title': '2  Feed dial', 'parts': ['dial', 'feed_motor'], 'focus': tf(0.0, 0.0, G.ball_z_dial),
          'text': f'A servo under the dial (the same STS3215 as pan and tilt) steps it 45 deg per ball in about {fd["step_ms_est"]:.0f} ms: '
                  f'{fd["rate_per_s"]} balls/s, {fd["max_rate_per_s"]} at most. It reads its own load, so it feels a jam and backs off. Parked, a spoke sits '
                  f'over the exit hole, so no ball can reach the wheels, powered or not.'},
-        {'id': 'exit', 'title': '3  Exit hole', 'parts': ['cartridge_body', 'dial'], 'focus': [round(G.exit_x, 1), 0.0, round(G.ball_z_dial - tc, 1)],
+        {'id': 'exit', 'title': '3  Exit hole', 'parts': ['cartridge_body', 'dial'], 'focus': tf(G.exit_x, 0.0, G.ball_z_dial),
          'text': f'At the front of the housing ({G.exit_x:.0f} mm ahead of the dial axis) a pocket passes over a hole in the floor and its ball drops out. '
                  f'About {tm["dial_to_exit_ms"]} ms from the command (the servo\'s step).'},
-        {'id': 'chute', 'title': '4  Chute', 'parts': ['cartridge_body'], 'focus': [round(G.chute_cx - 8, 1), 0.0, round(G.chute_r / 2 - tc, 1)],
+        {'id': 'chute', 'title': '4  Chute', 'parts': ['cartridge_body'], 'focus': tf(G.chute_cx - 8, 0.0, G.chute_r / 2),
          'text': f'A quarter bend of radius {G.chute_r:.1f} mm turns the falling ball forward onto the path, {G.tilt_c:.0f} mm under the tilt axis. '
                  f'It takes about {tm["chute_ms"]} ms and reaches the wheels at {tm["speed_into_nip_mps"]} m/s.'},
         {'id': 'nip', 'title': '5  Flywheels', 'parts': ['flywheel', 'flywheel_tyre', 'flywheel_motor_l', 'flywheel_motor_r', 'esc_l', 'esc_r', 'cartridge_board'],
-         'focus': [round(G.wheel_x, 1), 0.0, round(-tc, 1)],
+         'focus': tf(G.wheel_x, 0.0, 0.0),
          'text': f'Two Ø{G.wheel_d:.0f} wheels {fl["centres_mm"]:.0f} mm apart spin opposite ways at about {fl["rpm"]:,.0f} rpm ({fl["throttle_pct"]} % of the '
                  f'X2216\'s no-load speed on the 12 V rail). The gap is {fl["crush_mm"]} mm narrower than the ball ({fl["crush_pct"]} % squeeze), so it leaves at the tyres\' '
                  f'surface speed. Each wheel stores {fl["energy_j_each"]} J; a shot costs about {fl["speed_drop_per_shot_pct"]} % of its speed, back in '
                  f'{fl["recovery_ms"]} ms at a {fl["current_limit_a"]:.0f} A current limit.'},
-        {'id': 'barrel', 'title': '6  Barrel', 'parts': ['barrel'], 'focus': [round(G.barrel_x0 + 50, 1), 0.0, round(-tc, 1)],
+        {'id': 'barrel', 'title': '6  Barrel', 'parts': ['barrel'], 'focus': tf(G.barrel_x0 + 50, 0.0, 0.0),
          'text': f'{G.barrel_len:.0f} mm long, bore Ø{G.bore_out:.1f}: 2 mm over the ball, so it only guides. Two IR gates 60 mm apart time every ball '
                  f'(a built-in chronograph); {tm["nip_to_muzzle_ms"]} ms from the nip to the muzzle.'},
-        {'id': 'muzzle', 'title': '7  Muzzle', 'parts': ['barrel', 'laser', 'laser_mount'], 'focus': [round(G.barrel_x1, 1), 0.0, round(-tc, 1)],
+        {'id': 'muzzle', 'title': '7  Muzzle', 'parts': ['barrel', 'laser', 'laser_mount'], 'focus': tf(G.barrel_x1, 0.0, 0.0),
          'text': f'{mech["ball"]["speed_mps"]} m/s ({mech["ball"]["fps"]} fps nominal; the kid-safety cap is {mech["ball"]["cap_fps"]}), {mech["ball"]["energy_j"]} J. The barrel can never point above '
                  f'level: hard stops at 0 and {G.tilt_min:.0f} deg in the yoke. About {tm["trigger_to_muzzle_ms"]} ms from the command to here.'},
         {'id': 'flight', 'title': '8  Flight', 'parts': [], 'focus': None,
@@ -776,11 +784,11 @@ def main():
            'fan': {'xy': list(tb.FAN), 'z': tb.ROOF, 'r': tb.COLLAR_R, 'collar_r': tb.COLLAR_R, 'hole_r': tb.HOLE_R, 'intake': tb.J['intake']['kind'],
                    'grille_x': tb.FRONT_X, 'mouth_half': tb.MOUTH_HALF, 'duct_z': [tb.SH_Z0 + tb.SH_FLOOR_T, tb.DECK_Z0], 'model': tb.J['fan_model']},
            'pivots': {'pan': list(pan_o), 'tilt': [0.0, 0.0, G.tilt_t], 'pinion': [G.servo_pan_xy[0], G.servo_pan_xy[1], tb.Z_TM],
-                      'pinion_ratio': -G.gear['z_ring'] / G.gear['z_pinion'], 'dial': [0.0, 0.0, 0.0], 'wheel_l': list(wheel['wheel_l']),
+                      'pinion_ratio': -G.gear['z_ring'] / G.gear['z_pinion'], 'dial': list(dial_o), 'wheel_l': list(wheel['wheel_l']),
                       'wheel_r': list(wheel['wheel_r']), 'flap': list(flap_hinge)},
            'limits': {'pan_deg': [-170.0, 170.0], 'tilt_deg': [G.tilt_min, 0.0], 'pan_rate_deg_s': mech['pan']['max_deg_s'],
                       'tilt_rate_deg_s': mech['tilt']['max_deg_s']},
-           'muzzle': [G.barrel_x1, 0.0, -tc], 'laser': [tu.LASER_X[0] - 2 + tu.LASER['L'], tu.LASER_Y, -tc],
+           'muzzle': tf(G.barrel_x1, 0.0, 0.0), 'laser': tf(tu.LASER_X[0] - 2 + tu.LASER['L'], tu.LASER_Y, 0.0),
            'ball_path': path, 'pockets': pockets, 'pile': pile, 'ball_r': rb, 'dial_park_deg': fd['park_deg'],
            'antennas': [{'name': n, 'base': list(b), 'top': list(t), 'd': d} for n, b, t, d in tb.antennas()],
            'parts': parts, 'journey': journey, 'mechanics': mech, 'checks': checks,

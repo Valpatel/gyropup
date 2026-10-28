@@ -1,0 +1,567 @@
+{
+ "fingerprint": "d3e0198c2c3916e6",
+ "pile": "exports/turret/feed/pile.json",
+ "seconds": 53,
+ "ok": true,
+ "gates": {
+  "hopper_in_cavity": {
+   "ok": true,
+   "spheres": 30,
+   "radius_mm": 11.35,
+   "max_mm3": 1.0,
+   "violations": [],
+   "tightest": [
+    {
+     "sphere": "pocket 1",
+     "solid": "cartridge_body",
+     "gap_mm": 0.0
+    },
+    {
+     "sphere": "pocket 4",
+     "solid": "cartridge_body",
+     "gap_mm": 0.0
+    },
+    {
+     "sphere": "pile 7",
+     "solid": "hopper",
+     "gap_mm": 0.0
+    },
+    {
+     "sphere": "pile 8",
+     "solid": "hopper",
+     "gap_mm": 0.0
+    },
+    {
+     "sphere": "pile 9",
+     "solid": "hopper",
+     "gap_mm": 0.0
+    }
+   ],
+   "allowed_contacts": []
+  },
+  "hopper_overlap": {
+   "ok": true,
+   "tol_mm": 0.1,
+   "worst_overlap_mm": 0.069,
+   "violations": []
+  },
+  "path_in_cavity": {
+   "ok": true,
+   "spheres": 86,
+   "radius_mm": 11.35,
+   "max_mm3": 1.0,
+   "violations": [],
+   "tightest": [
+    {
+     "sphere": "path x 37 z 21",
+     "solid": "dial",
+     "gap_mm": 0.75
+    },
+    {
+     "sphere": "path x 37 z 19",
+     "solid": "cartridge_body",
+     "gap_mm": 0.75
+    },
+    {
+     "sphere": "path x 37 z 17",
+     "solid": "cartridge_body",
+     "gap_mm": 0.75
+    },
+    {
+     "sphere": "path x 38 z 16",
+     "solid": "cartridge_body",
+     "gap_mm": 0.75
+    },
+    {
+     "sphere": "path x 38 z 14",
+     "solid": "cartridge_body",
+     "gap_mm": 0.75
+    }
+   ],
+   "allowed_contacts": [
+    [
+     17,
+     "flywheel"
+    ],
+    [
+     17,
+     "flywheel_m"
+    ],
+    [
+     17,
+     "flywheel_tyre"
+    ],
+    [
+     17,
+     "flywheel_tyre_m"
+    ],
+    [
+     18,
+     "flywheel"
+    ],
+    [
+     18,
+     "flywheel_m"
+    ],
+    [
+     18,
+     "flywheel_tyre"
+    ],
+    [
+     18,
+     "flywheel_tyre_m"
+    ],
+    [
+     19,
+     "flywheel"
+    ],
+    [
+     19,
+     "flywheel_m"
+    ],
+    [
+     19,
+     "flywheel_tyre"
+    ],
+    [
+     19,
+     "flywheel_tyre_m"
+    ],
+    [
+     20,
+     "flywheel"
+    ],
+    [
+     20,
+     "flywheel_m"
+    ],
+    [
+     20,
+     "flywheel_tyre"
+    ],
+    [
+     20,
+     "flywheel_tyre_m"
+    ],
+    [
+     21,
+     "flywheel"
+    ],
+    [
+     21,
+     "flywheel_m"
+    ],
+    [
+     21,
+     "flywheel_tyre"
+    ],
+    [
+     21,
+     "flywheel_tyre_m"
+    ],
+    [
+     22,
+     "flywheel"
+    ],
+    [
+     22,
+     "flywheel_m"
+    ],
+    [
+     22,
+     "flywheel_tyre"
+    ],
+    [
+     22,
+     "flywheel_tyre_m"
+    ],
+    [
+     23,
+     "flywheel"
+    ],
+    [
+     23,
+     "flywheel_m"
+    ],
+    [
+     23,
+     "flywheel_tyre"
+    ],
+    [
+     23,
+     "flywheel_tyre_m"
+    ],
+    [
+     24,
+     "flywheel"
+    ],
+    [
+     24,
+     "flywheel_m"
+    ],
+    [
+     24,
+     "flywheel_tyre"
+    ],
+    [
+     24,
+     "flywheel_tyre_m"
+    ],
+    [
+     25,
+     "flywheel"
+    ],
+    [
+     25,
+     "flywheel_m"
+    ],
+    [
+     25,
+     "flywheel_tyre"
+    ],
+    [
+     25,
+     "flywheel_tyre_m"
+    ],
+    [
+     26,
+     "flywheel"
+    ],
+    [
+     26,
+     "flywheel_m"
+    ],
+    [
+     26,
+     "flywheel_tyre"
+    ],
+    [
+     26,
+     "flywheel_tyre_m"
+    ],
+    [
+     27,
+     "flywheel"
+    ],
+    [
+     27,
+     "flywheel_m"
+    ],
+    [
+     27,
+     "flywheel_tyre"
+    ],
+    [
+     27,
+     "flywheel_tyre_m"
+    ],
+    [
+     28,
+     "flywheel"
+    ],
+    [
+     28,
+     "flywheel_m"
+    ],
+    [
+     28,
+     "flywheel_tyre"
+    ],
+    [
+     28,
+     "flywheel_tyre_m"
+    ],
+    [
+     29,
+     "flywheel"
+    ],
+    [
+     29,
+     "flywheel_m"
+    ],
+    [
+     29,
+     "flywheel_tyre"
+    ],
+    [
+     29,
+     "flywheel_tyre_m"
+    ],
+    [
+     30,
+     "flywheel"
+    ],
+    [
+     30,
+     "flywheel_m"
+    ],
+    [
+     30,
+     "flywheel_tyre"
+    ],
+    [
+     30,
+     "flywheel_tyre_m"
+    ],
+    [
+     31,
+     "flywheel"
+    ],
+    [
+     31,
+     "flywheel_m"
+    ],
+    [
+     31,
+     "flywheel_tyre"
+    ],
+    [
+     31,
+     "flywheel_tyre_m"
+    ],
+    [
+     32,
+     "flywheel"
+    ],
+    [
+     32,
+     "flywheel_m"
+    ],
+    [
+     32,
+     "flywheel_tyre"
+    ],
+    [
+     32,
+     "flywheel_tyre_m"
+    ],
+    [
+     33,
+     "flywheel"
+    ],
+    [
+     33,
+     "flywheel_m"
+    ],
+    [
+     33,
+     "flywheel_tyre"
+    ],
+    [
+     33,
+     "flywheel_tyre_m"
+    ],
+    [
+     34,
+     "flywheel"
+    ],
+    [
+     34,
+     "flywheel_m"
+    ],
+    [
+     34,
+     "flywheel_tyre"
+    ],
+    [
+     34,
+     "flywheel_tyre_m"
+    ],
+    [
+     35,
+     "flywheel"
+    ],
+    [
+     35,
+     "flywheel_m"
+    ],
+    [
+     35,
+     "flywheel_tyre"
+    ],
+    [
+     35,
+     "flywheel_tyre_m"
+    ],
+    [
+     36,
+     "flywheel"
+    ],
+    [
+     36,
+     "flywheel_m"
+    ],
+    [
+     36,
+     "flywheel_tyre"
+    ],
+    [
+     36,
+     "flywheel_tyre_m"
+    ],
+    [
+     37,
+     "flywheel"
+    ],
+    [
+     37,
+     "flywheel_m"
+    ],
+    [
+     37,
+     "flywheel_tyre"
+    ],
+    [
+     37,
+     "flywheel_tyre_m"
+    ],
+    [
+     38,
+     "flywheel"
+    ],
+    [
+     38,
+     "flywheel_m"
+    ],
+    [
+     38,
+     "flywheel_tyre"
+    ],
+    [
+     38,
+     "flywheel_tyre_m"
+    ]
+   ]
+  },
+  "connected": {
+   "ok": true,
+   "touch_mm": 0.05,
+   "groups": {
+    "base": {
+     "parts": 10,
+     "bodies": 1,
+     "floating": []
+    },
+    "pan": {
+     "parts": 14,
+     "bodies": 1,
+     "floating": []
+    },
+    "pinion": {
+     "parts": 1,
+     "bodies": 1,
+     "floating": []
+    },
+    "tilt": {
+     "parts": 21,
+     "bodies": 1,
+     "floating": []
+    },
+    "wheel_l": {
+     "parts": 2,
+     "bodies": 1,
+     "floating": []
+    },
+    "wheel_r": {
+     "parts": 2,
+     "bodies": 1,
+     "floating": []
+    },
+    "dial": {
+     "parts": 1,
+     "bodies": 1,
+     "floating": []
+    },
+    "flap": {
+     "parts": 1,
+     "bodies": 1,
+     "floating": []
+    }
+   },
+   "joints": [
+    {
+     "a": "pan_bearing",
+     "b": "pan_bearing_inner",
+     "how": "the 61810 pan bearing (outer race in the base, inner on the turntable)",
+     "gap_mm": 0.1,
+     "ok": true
+    },
+    {
+     "a": "pan_pinion",
+     "b": "pan_servo",
+     "how": "the pinion on the pan servo's horn",
+     "gap_mm": 0.0,
+     "ok": true
+    },
+    {
+     "a": "pan_pinion",
+     "b": "pan_ring",
+     "how": "the gear mesh (0.15 mm backlash a flank)",
+     "gap_mm": 0.195,
+     "ok": true
+    },
+    {
+     "a": "tilt_bearing",
+     "b": "tilt_bearing_inner",
+     "how": "the MR126 tilt bearing (outer in the yoke, inner on the shoulder screw)",
+     "gap_mm": 0.1,
+     "ok": true
+    },
+    {
+     "a": "tilt_servo",
+     "b": "horn_boss",
+     "how": "the tilt servo's horn on the cradle's horn boss",
+     "gap_mm": 0.0,
+     "ok": true
+    },
+    {
+     "a": "dial",
+     "b": "feed_motor",
+     "how": "the dial on the feed servo's horn",
+     "gap_mm": 0.0,
+     "ok": true
+    },
+    {
+     "a": "flywheel",
+     "b": "flywheel_motor_l",
+     "how": "the left flywheel on its X2216's prop adapter",
+     "gap_mm": 0.0,
+     "ok": true
+    },
+    {
+     "a": "flywheel_m",
+     "b": "flywheel_motor_r",
+     "how": "the right flywheel on its X2216's prop adapter",
+     "gap_mm": 0.0,
+     "ok": true
+    },
+    {
+     "a": "hopper_flap",
+     "b": "hopper_lid",
+     "how": "the fill flap on its hinge pin in the lid's lugs",
+     "gap_mm": 0.358,
+     "ok": true
+    }
+   ],
+   "joint_mm": 0.5,
+   "links": [
+    [
+     "laser",
+     "laser_mount",
+     "three M3 nylon-tip boresight screws hold it 2 mm clear of the ring's bore (it is aimed by them)"
+    ],
+    [
+     "ring_leads_rotor",
+     "slip_ring_rotor",
+     "the rotor's own leads: one bought part with the ring's rotor"
+    ]
+   ]
+  },
+  "sweep_with_balls": {
+   "ok": true,
+   "poses": 40,
+   "max_mm3": 1.0,
+   "violations": []
+  }
+ }
+}

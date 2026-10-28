@@ -2439,38 +2439,38 @@
   "qty_per_robot": 2
  },
  {
-  "id": "mcmaster-51225k32",
+  "id": "mcmaster-51225k24",
   "key": "turret_tube_coupling",
   "category": "fastener",
   "vendor": "McMaster-Carr",
-  "model": "51225K32",
-  "name": "Continuous-Flex Tpv Rubber Tube for Chemicals, 5/16\" ID, 7/16\" OD",
-  "price_usd": 0.94,
-  "price_note": "McMaster-Carr: $0.94 per ft. (price_usd is per piece)",
+  "model": "51225K24",
+  "name": "Continuous-Flex Tpv Rubber Tube for Chemicals, 3/16\" ID, 5/16\" OD",
+  "price_usd": 0.62,
+  "price_note": "McMaster-Carr: $0.62 per ft. (price_usd is per piece)",
   "price_checked": "2026-10-27",
   "pack_qty": 1,
-  "pack_price_usd": 0.94,
+  "pack_price_usd": 0.62,
   "buy": [
    {
     "seller": "McMaster-Carr",
-    "url": "https://www.mcmaster.com/51225K32/",
+    "url": "https://www.mcmaster.com/51225K24/",
     "in_stock": null,
     "ships_from": "US"
    }
   ],
   "specs": {
-   "id_mm": 7.9375,
-   "od_mm": 11.1125,
+   "id_mm": 4.7625,
+   "od_mm": 7.9375,
    "mass_g": null,
    "mass_basis": "unknown",
    "material": "TPV",
    "mcmaster": {
     "raw": {
      "Tube Hardness Rating": "Soft",
-     "ID": "5/16\"",
-     "OD": "7/16\"",
+     "ID": "3/16\"",
+     "OD": "5/16\"",
      "Wall Thickness": "1/16\"",
-     "Bend Radius": "2 5/8\"",
+     "Bend Radius": "1 7/8\"",
      "Hardness": "Durometer 65A",
      "Maximum Pressure @ Temperature": "Not Rated",
      "Temperature Range": "-70° F to 245° F",
@@ -2478,7 +2478,7 @@
      "Flexibility": "Continuous Flex",
      "Clarity": "Opaque",
      "Color": "Black",
-     "Chemical Resistance (Excellent)": "Deionized Water, Methanol (Methyl Alcohol), Sodium Hypochlorite (Bleach), Acetic Acid (White Vinegar) (10% Concentration), Ethylene Glycol (50% Concentration), Hydrochloric Acid (10% Concentration), Hydrochloric Acid (30% Concentration), Hydrogen Peroxide (10% Concentration), Hydrogen Peroxide (30% Concentration), Sodium Hydroxide (Caustic Soda) (10% Concentration), Sodium Hydroxide (Caustic Soda) (30% Concentration), Sulfuric Acid (10% Concentration), Sulfuric Acid (30% Concentration)",
+     "Chemical Resistance (Excellent)": "Deionized Water, Methanol (Methyl Alcohol), Sodium Hypochlorite (Bleach), Acetic Acid (White Vinegar) (10% Concentration), Acetic Acid (White Vinegar) (30% Concentration), Ethylene Glycol (50% Concentration), Hydrochloric Acid (10% Concentration), Hydrochloric Acid (30% Concentration), Hydrogen Peroxide (10% Concentration), Hydrogen Peroxide (30% Concentration), Sodium Hydroxide (Caustic Soda) (10% Concentration), Sodium Hydroxide (Caustic Soda) (30% Concentration), Sulfuric Acid (10% Concentration), Sulfuric Acid (30% Concentration)",
      "Chemical Resistance (Moderate)": "Methyl Ethyl Ketone (MEK)",
      "Chemical Resistance (Not Recommended)": "Acetone, Diesel Fuel, Fuel Oil, Gasoline, Hydraulic Fluid, Isopropyl Alcohol, Synthetic Oil, Phosphoric Acid (25% Concentration), Phosphoric Acid (85% Concentration)",
      "Connects To": "Tube",
@@ -2500,11 +2500,11 @@
     },
     "parsed": {
      "ID": {
-      "value": 7.9375,
+      "value": 4.7625,
       "unit": "mm"
      },
      "OD": {
-      "value": 11.1125,
+      "value": 7.9375,
       "unit": "mm"
      },
      "Wall Thickness": {
@@ -2512,7 +2512,7 @@
       "unit": "mm"
      },
      "Bend Radius": {
-      "value": 66.675,
+      "value": 47.625,
       "unit": "mm"
      },
      "Temperature Range": {
@@ -2528,20 +2528,20 @@
    "kind": "rod",
    "frame": "axis +Z, centred on the axis; the larger end (flange, head, collar) at z = 0 and the part on +z; when both ends are the same size, the heavier end at z = 0",
    "available": true,
-   "step_url": "https://www.mcmaster.com/51225K32/",
+   "step_url": "https://www.mcmaster.com/51225K24/",
    "bbox_mm": null,
    "volume_mm3": null,
-   "pending": "STEP not downloaded yet: McMaster-Carr asks for a login before CAD downloads (the product page itself reads without one). Finish with .venv/bin/python tools/mcmaster_cad.py --catalog --file catalog/turret.json --only turret_tube_coupling once logged in, or save the STEP from a logged-in browser as references/vendor/mcmaster/51225K32/51225K32.step and run the same command."
+   "pending": "STEP not downloaded yet: McMaster-Carr asks for a login before CAD downloads (the product page itself reads without one). Finish with .venv/bin/python tools/mcmaster_cad.py --catalog --file catalog/turret.json --only turret_tube_coupling once logged in, or save the STEP from a logged-in browser as references/vendor/mcmaster/51225K24/51225K24.step and run the same command."
   },
   "frame": "axis +Z, centred on the axis; the larger end (flange, head, collar) at z = 0 and the part on +z; when both ends are the same size, the heavier end at z = 0",
   "sources": [
-   "https://www.mcmaster.com/51225K32/"
+   "https://www.mcmaster.com/51225K24/"
   ],
   "confidence": "product page",
   "used_for": "the slip ring's rotor coupling: a 25 mm length from the 1 ft sold",
   "qty_per_robot": 1,
   "options": [
-   "Choose a Length, ft. 10 25 50",
+   "Choose a Length, ft. 25 50",
    "Choose a Length, ft."
   ]
  },

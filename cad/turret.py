@@ -147,7 +147,10 @@ CONTINUOUS_PAN = True
 # underside into inserted bosses on the housing tube; the head ring (Ø60 hole) or the stand's top then traps it too
 CARRIER = {'r': 32.25, 'h': 12.0, 'tab_angles': (60.0, 135.0, 300.0), 'tab_r': 38.5, 'tab_t': 4.0, 'screw_r': 35.75,
            'flange_seat': 2.6, 'bore': 23.1}
-TUBE = {'id': 7.94, 'od': 11.11, 'note': 'soft silicone tubing 5/16 in ID x 7/16 in OD'}
+# the rotor coupling (McMaster 51225K24, 65A TPV): 3/16 in ID stretched 26 % over the ring's Ø6 rotor stub, so it grips
+# it (the 5/16 in tube first drawn here sat 1 mm loose round the stub: cad/turret_gates.py found the rotor floating);
+# its far end pushed into the driver's socket, 0.3 mm under its OD
+TUBE = {'id': 4.76, 'od': 7.94, 'socket_d': 7.64, 'note': 'soft TPV rubber tube 3/16 in ID x 5/16 in OD (McMaster 51225K24)'}
 MAGNET = {'d': 4.76, 'h': 3.18, 'r': 35.0, 'note': 'neodymium disc 3/16 x 1/8 in (McMaster 5862K102), the pan index: ~760 G at the hall\'s element 3.5 mm over it (Br 1.32 T, on-axis formula), 4x the A1120\'s highest operate point'}
 HALL = {'size': (4.1, 3.0, 1.6), 'note': 'Allegro A1120LUA-T unipolar hall switch (UA package), on the turntable'}
 DENS = {k: v['density_g_cm3'] for k, v in json.loads((R / 'catalog/materials.json').read_text()).items()}
@@ -571,7 +574,7 @@ def pan_ring(G):
         # peaked (FEA: SF 1.12); 1 mm under the yoke's insert pilots
         s = s.cut(sector_z(29.0, 34.0, a - 20.0, a + 20.0, z0 - 0.01, z0 + 7.0))
     hx, hy, hz = HALL['size']
-    s = s.cut(box(MAGNET['r'] - hx / 2 - 0.2, MAGNET['r'] + hx / 2 + 0.2, -hy / 2 - 0.2, hy / 2 + 0.2, z0 - 1, z0 + hz + 0.3))  # hall switch
+    s = s.cut(box(MAGNET['r'] - hx / 2 - 0.2, MAGNET['r'] + hx / 2 + 0.2, -hy / 2 - 0.2, hy / 2 + 0.2, z0 - 1, z0 + 0.1 + hz))  # hall switch: CA'd up against the pocket's roof
     s = s.cut(cyl_z(1.4, z0, z1 + 1, MAGNET['r'] - 3.5, 0.0))                              # its 3 leads up through
     return s
 
@@ -683,7 +686,7 @@ def ring_carrier(G):
 
 def ring_driver(G):
     """The slip ring's driver, printed PA6-CF: a Ø39.6 x 6 disc held in the top of the turntable's Ø40 bore (three
-    crush ribs, a drop of CA), a socket under it (Ø10.8 inside, 8 deep) that grips the silicone tube coupling the
+    crush ribs, a drop of CA), a socket under it (Ø7.64 inside, 8 deep) that grips the rubber tube coupling the
     ring's rotor stub (the tube pushed in), and a crescent slot beside it for the rotor leads. It turns the ring's rotor with the
     turntable and never pushes on it: the tube takes the misalignment."""
     rg = ring_geom(G)
@@ -692,8 +695,8 @@ def ring_driver(G):
     s = cyl_z(19.7, d0, d1)
     for k in range(3):
         s = s.union(cyl_z(0.5, d0, d1, *polar(19.7, math.radians(30 + 120 * k))))             # crush ribs (0.2 mm interference)
-    s = s.union(ring_z(7.0, TUBE['od'] / 2, k0, d0 + 0.01))                                  # the socket (the tube pushed in)
-    s = s.cut(cyl_z(TUBE['od'] / 2, k0 - 1, d1 - 2.0))
+    s = s.union(ring_z(7.0, TUBE['socket_d'] / 2, k0, d0 + 0.01))                            # the socket (the tube pushed in)
+    s = s.cut(cyl_z(TUBE['socket_d'] / 2, k0 - 1, d1 - 2.0))
     s = s.cut(sector_z(LEADS['r'] - LEADS['d'] / 2 - 0.75, LEADS['r'] + LEADS['d'] / 2 + 0.75, 230.0, 310.0, d0 - 1, d1 + 1))   # the leads' crescent
     return s
 
@@ -1395,7 +1398,11 @@ def bought_parts(G):
     out['slip_ring'] = (stator, 'base', M['mass_g'], M['name'] + ' (envelope from the vendor sheets; flange holes to measure)')
     out['slip_ring_rotor'] = (cyl_z(M['stub'][0] / 2, rg['top'] - 0.01, rg['stub_top']), 'pan', 0.0, 'the ring\'s rotor stub (bought with the ring)')
     k0, k1 = rg['socket']
-    out['ring_coupling'] = (ring_z(TUBE['od'] / 2, TUBE['id'] / 2, rg['top'] + 0.3, k0 + 6.0), 'pan', 2.0, TUBE['note'] + ', coupling the rotor to the driver')
+    stub_r = M['stub'][0] / 2
+    od_on = math.sqrt(stub_r ** 2 + (TUBE['od'] / 2) ** 2 - (TUBE['id'] / 2) ** 2)           # stretched over the stub (same area)
+    tube = ring_z(od_on, stub_r, rg['top'] + 0.3, rg['stub_top']).union(
+        ring_z(TUBE['socket_d'] / 2, TUBE['id'] / 2, rg['stub_top'] - 0.01, k0 + 6.0))          # free, then squeezed in the socket
+    out['ring_coupling'] = (tube, 'pan', 1.0, TUBE['note'] + ', coupling the rotor to the driver')
     rl, zl = LEADS['d'] / 2, LEADS['z_run']
     leads = cyl_z(rl, rg['top'] + 0.3, zl + rl, 0.0, -LEADS['r']).union(cyl_y(rl, -G.arm_y[1] - 3.0, -LEADS['r'], 0.0, zl))
     out['ring_leads_rotor'] = (leads, 'pan', 0.0, 'the ring\'s rotor leads, a Ø7.5 bundle (12 x 26 AWG + 2 x 17 AWG): beside the coupling, up '
