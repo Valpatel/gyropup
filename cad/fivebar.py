@@ -431,8 +431,12 @@ GUSSET_RUNOUT = 12.0                             # mm: the frame's gussets betwe
                                                  # its root (x 93, z -63). Tried there and dropped (2026-10-28, 17.75 kg): a
                                                  # 6 mm root fillet trimmed round the motors (a step: SF 1.20 against 1.77
                                                  # without), the web blended from the flange's corner into the ring (1.40:
-                                                 # a stiffer end draws more), and a backing block like the knee-out ears'
-                                                 # (a knife edge under the flange: 0.51)
+                                                 # a stiffer end draws more), a backing block like the knee-out ears' (a
+                                                 # knife edge under the flange: 0.51) and the flanges 1.5 mm thicker
+                                                 # towards the motors (1.51); a 15 x 5 mm snipe at the bottom flange's ends
+                                                 # gave 1.81 but took the landing case (R1) from 1.6 to 1.35. Whatever
+                                                 # stiffens the flange's end draws more into that corner; a sharp re-entrant
+                                                 # corner, whose 4 mm value moves 10-15 % with small changes nearby
 FLANGE_T, FLANGE_X = 13.0, 95.0                  # the hip frame's top and bottom flanges: thickness, half-length (mm).
                                                  # They carry the leg to the body across the print's layers (it prints
                                                  # web-down): 7 mm gave SF 0.75 in a landing across the layers, 13 about 1.3
