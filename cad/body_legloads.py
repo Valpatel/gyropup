@@ -80,14 +80,14 @@ def _probe(lr, fb, log):
 def tyre_y_mm() -> float:
     """The tyre's centre plane in the left module's frame: D69's 10 in tyre (sim/robot_v2.py use_d69_wheel())."""
     from sim import robot_v2
-    return robot_v2.use_d69_wheel()['y_mm']
+    return robot_v2.use_d69_wheel(ledger_mass=False)['y_mm']
 
 
 def run(half_mass: float, bus_v: float = BUS_V) -> dict:
     import math
     from sim import leg_rig as lr
     from sim import robot_v2
-    robot_v2.use_d69_wheel()                        # D69's 10 in hub wheel in the rig's module state (as sim/wheel_study.py)
+    robot_v2.use_d69_wheel(ledger_mass=False)       # D69's 10 in hub wheel at the leg's own 4.0 kg (its strength cases')
     fb = lr.fb
     rig_v = lr.BUS_V
     lr.BUS_V = bus_v                                # the motors' speed line at this bus (LEG_OMEGA is read when run() runs)
