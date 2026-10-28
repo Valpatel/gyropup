@@ -242,7 +242,8 @@
    "step": "exports/body/sendcutsend/cheek_5052-H32_0.187in_x2.step",
    "dxf": "exports/body/sendcutsend/cheek_5052-H32_0.187in_x2.dxf",
    "mass_g_each": 491.9,
-   "features": 23
+   "features": 23,
+   "stage": "P1"
   },
   "floor_tray": {
    "material": "5052-H32 aluminium",
@@ -268,7 +269,8 @@
    "step": "exports/body/sendcutsend/floor_tray_5052-H32_0.125in_x1.step",
    "dxf": "exports/body/sendcutsend/floor_tray_5052-H32_0.125in_x1.dxf",
    "mass_g_each": 752.2,
-   "features": 25
+   "features": 25,
+   "stage": "P1"
   },
   "belly_plate": {
    "material": "6061-T6 aluminium",
@@ -290,7 +292,8 @@
    "step": "exports/body/sendcutsend/belly_plate_6061-T6_0.100in_x1.step",
    "dxf": "exports/body/sendcutsend/belly_plate_6061-T6_0.100in_x1.dxf",
    "mass_g_each": 239.7,
-   "features": 22
+   "features": 22,
+   "stage": "P1"
   },
   "deck": {
    "material": "5052-H32 aluminium",
@@ -313,8 +316,9 @@
    "rule_violations": [],
    "step": "exports/body/sendcutsend/deck_5052-H32_0.100in_x1.step",
    "dxf": "exports/body/sendcutsend/deck_5052-H32_0.100in_x1.dxf",
-   "mass_g_each": 648.9,
-   "features": 45
+   "mass_g_each": 647.6,
+   "features": 48,
+   "stage": "P1"
   },
   "compute_pallet": {
    "material": "6061-T6 aluminium",
@@ -336,7 +340,31 @@
    "step": "exports/body/sendcutsend/compute_pallet_6061-T6_0.125in_x1.step",
    "dxf": "exports/body/sendcutsend/compute_pallet_6061-T6_0.125in_x1.dxf",
    "mass_g_each": 228.7,
-   "features": 12
+   "features": 12,
+   "stage": "P1"
+  },
+  "turret_plate": {
+   "material": "6061-T6 aluminium",
+   "thickness_in": 0.125,
+   "thickness_mm": 3.175,
+   "qty": 1,
+   "flat_mm": [
+    160.0,
+    140.0
+   ],
+   "bends": 0,
+   "bend_spec": null,
+   "hardware": {
+    "SS-M5-0": 2
+   },
+   "countersinks": {},
+   "note": "flat; under the deck at the riser (D59); PEM SS-M5-0 pressed from its underside, their bodies down",
+   "rule_violations": [],
+   "step": "exports/body/sendcutsend/turret_plate_6061-T6_0.125in_x1.step",
+   "dxf": "exports/body/sendcutsend/turret_plate_6061-T6_0.125in_x1.dxf",
+   "mass_g_each": 132.6,
+   "features": 10,
+   "stage": "P2"
   },
   "power_plate": {
    "material": "5052-H32 aluminium",
@@ -359,7 +387,8 @@
    "step": "exports/body/sendcutsend/power_plate_5052-H32_0.100in_x1.step",
    "dxf": "exports/body/sendcutsend/power_plate_5052-H32_0.100in_x1.dxf",
    "mass_g_each": 161.7,
-   "features": 30
+   "features": 30,
+   "stage": "P1"
   },
   "bus_bar": {
    "material": "C110 copper",
@@ -379,12 +408,61 @@
    "step": "exports/body/sendcutsend/bus_bar_C110_0.125in_x2.step",
    "dxf": "exports/body/sendcutsend/bus_bar_C110_0.125in_x2.dxf",
    "mass_g_each": 57.4,
-   "features": 7
+   "features": 7,
+   "stage": "P1"
+  },
+  "tub_floor": {
+   "material": "5052-H32 aluminium",
+   "thickness_in": 0.063,
+   "thickness_mm": 1.6,
+   "qty": 1,
+   "flat_mm": [
+    302.0,
+    116.9
+   ],
+   "bends": 2,
+   "bend_spec": {
+    "inside_radius_in": 0.035,
+    "k_factor": 0.42,
+    "bend_deduction_in": 0.096
+   },
+   "hardware": {
+    "S-M3-0": 10
+   },
+   "countersinks": {},
+   "note": "the battery tub's floor: flanges up; PEM S-M3-0 pressed from the inside",
+   "rule_violations": [],
+   "step": "exports/body/sendcutsend/tub_floor_5052-H32_0.063in_x1.step",
+   "dxf": "exports/body/sendcutsend/tub_floor_5052-H32_0.063in_x1.dxf",
+   "mass_g_each": 150.0,
+   "features": 24,
+   "stage": "P3"
+  },
+  "tub_side": {
+   "material": "5052-H32 aluminium",
+   "thickness_in": 0.063,
+   "thickness_mm": 1.6,
+   "qty": 2,
+   "flat_mm": [
+    302.0,
+    64.6
+   ],
+   "bends": 0,
+   "bend_spec": null,
+   "hardware": {},
+   "countersinks": {},
+   "note": "flat; the two sides are the same part",
+   "rule_violations": [],
+   "step": "exports/body/sendcutsend/tub_side_5052-H32_0.063in_x2.step",
+   "dxf": "exports/body/sendcutsend/tub_side_5052-H32_0.063in_x2.dxf",
+   "mass_g_each": 83.3,
+   "features": 10,
+   "stage": "P3"
   }
  },
  "print": {
   "too_big": [],
-  "hours": 51.2,
+  "hours": 46.5,
   "parts": {
    "post": {
     "material": "pa6-cf",
@@ -396,10 +474,10 @@
     ],
     "fits": true,
     "placement": "straight",
-    "grams_each": 61,
-    "grams": 246,
-    "hours": 16.1,
-    "cost_usd": 19.65,
+    "grams_each": 44,
+    "grams": 174,
+    "hours": 11.4,
+    "cost_usd": 13.95,
     "infill": "100 %",
     "how": "PA6-CF, 100 % solid, printed standing; 2 x M5 inserts"
    },
@@ -581,13 +659,15 @@
    "cheek_right": 491.9,
    "floor_tray": 752.2,
    "belly_plate": 239.7,
-   "deck": 648.9,
+   "deck": 647.6,
    "compute_pallet": 228.7,
-   "post_1": 61.4,
-   "post_2": 61.4,
-   "post_3": 61.4,
-   "post_4": 61.4,
+   "post_1": 43.6,
+   "post_2": 43.6,
+   "post_3": 43.6,
+   "post_4": 43.6,
    "riser": 165.6,
+   "turret_plate": 132.6,
+   "turret_plate_nuts": 0.0,
    "isolator_1": 2.3,
    "isolator_2": 2.3,
    "isolator_3": 2.3,
@@ -615,11 +695,139 @@
    "frame_screws_left": 0.0,
    "cheek_nuts_left": 0.0,
    "frame_screws_right": 0.0,
-   "cheek_nuts_right": 0.0
+   "cheek_nuts_right": 0.0,
+   "shell_side_l_front": 62.6,
+   "shell_side_l_rear": 51.0,
+   "ear_bracket_l": 34.1,
+   "shell_side_r_front": 46.3,
+   "shell_side_r_rear": 57.1,
+   "ear_bracket_r": 34.1,
+   "shell_front": 96.2,
+   "shell_rear": 96.1,
+   "shell_door": 27.4,
+   "shell_hatch": 10.1,
+   "xt60_bezel": 2.9,
+   "receiver_bay": 9.6,
+   "d435_cradle_front": 16.5,
+   "d435_cradle_rear": 16.5,
+   "intake_shroud": 8.9,
+   "tub_floor": 150.0,
+   "tub_side_l": 83.3,
+   "tub_rail_l": 34.4,
+   "tub_side_r": 83.3,
+   "tub_rail_r": 34.4,
+   "tub_cap_front": 23.6,
+   "tub_cap_rear": 23.6,
+   "tub_skid_1": 7.4,
+   "tub_skid_2": 7.4,
+   "tub_skid_3": 7.4,
+   "tub_skid_4": 7.4,
+   "ear_pod_l": 0.0,
+   "ear_pod_r": 0.0,
+   "d435_front": 0.0,
+   "d435_rear": 0.0,
+   "eyes_board": 0.0
   },
-  "frame_total": 4016.4
+  "frame_total": 5108.1
  },
  "internal_clashes": [],
+ "shell": {
+  "ports_pass": true,
+  "ports": {
+   "hdmi": {
+    "sweep_mm3": {
+     "left rear wall": 0.0
+    },
+    "clearance_mm3": {
+     "left rear wall": 0.0
+    },
+    "min_margin_mm": 3.25
+   },
+   "usb_a": {
+    "sweep_mm3": {
+     "left rear wall": 0.0
+    },
+    "clearance_mm3": {
+     "left rear wall": 0.0
+    },
+    "min_margin_mm": 5.678
+   },
+   "usb_c": {
+    "sweep_mm3": {
+     "left rear wall": 0.0
+    },
+    "clearance_mm3": {
+     "left rear wall": 0.0
+    },
+    "min_margin_mm": 3.25
+   }
+  },
+  "hatch_window_mm": [
+   -84.56,
+   -10.25,
+   112.27,
+   145.18
+  ],
+  "ear_beam_margin_mm": 4.32,
+  "parts": [
+   "d435_cradle_front",
+   "d435_cradle_rear",
+   "d435_front",
+   "d435_rear",
+   "ear_bracket_l",
+   "ear_bracket_r",
+   "ear_pod_l",
+   "ear_pod_r",
+   "eyes_board",
+   "intake_shroud",
+   "receiver_bay",
+   "shell_door",
+   "shell_front",
+   "shell_hatch",
+   "shell_rear",
+   "shell_side_l_front",
+   "shell_side_l_rear",
+   "shell_side_r_front",
+   "shell_side_r_rear",
+   "tub_cap_front",
+   "tub_cap_rear",
+   "tub_floor",
+   "tub_rail_l",
+   "tub_rail_r",
+   "tub_side_l",
+   "tub_side_r",
+   "tub_skid_1",
+   "tub_skid_2",
+   "tub_skid_3",
+   "tub_skid_4",
+   "xt60_bezel"
+  ],
+  "shell_group_prefixes": [
+   "shell_",
+   "ear_bracket",
+   "xt60_bezel",
+   "receiver_bay",
+   "d435_cradle",
+   "intake_shroud"
+  ]
+ },
+ "in_keepouts": [],
+ "turret_plate": {
+  "cells": 31,
+  "cells_covered": 0,
+  "covered_mm2": 0.0,
+  "deck_holes_to_drill": [
+   [
+    -110.0,
+    0.0
+   ],
+   [
+    30.0,
+    0.0
+   ]
+  ],
+  "deck_holes_note": "two \u00d85.5 holes for the plate's end screws: drilled by hand in the P1 deck (spot through the plate's PEM nuts with an M5 transfer punch, the plate held on the riser's four screws), cut in a Rev B deck"
+ },
  "clash_sweep": {
   "poses_checked": [
    [
@@ -770,6 +978,24 @@
    ],
    [
     "knee_pin_front",
+    "tub_rail_l",
+    30.83,
+    [
+     320.0,
+     0.0
+    ]
+   ],
+   [
+    "knee_pin_rear",
+    "tub_rail_r",
+    30.83,
+    [
+     320.0,
+     0.0
+    ]
+   ],
+   [
+    "knee_pin_front",
     "bay_front",
     30.97,
     [
@@ -803,8 +1029,81 @@
      300.0,
      0.0
     ]
+   ],
+   [
+    "knee_pin_front",
+    "tub_rail_r",
+    32.83,
+    [
+     320.0,
+     0.0
+    ]
+   ],
+   [
+    "knee_pin_rear",
+    "tub_rail_l",
+    32.83,
+    [
+     320.0,
+     0.0
+    ]
+   ],
+   [
+    "upper_link_front",
+    "shell_front",
+    44.73,
+    [
+     102.0,
+     0.0
+    ]
+   ],
+   [
+    "upper_link_front",
+    "shell_rear",
+    44.73,
+    [
+     102.0,
+     0.0
+    ]
+   ],
+   [
+    "upper_link_rear",
+    "shell_rear",
+    44.73,
+    [
+     102.0,
+     0.0
+    ]
+   ],
+   [
+    "upper_link_rear",
+    "shell_front",
+    44.73,
+    [
+     102.0,
+     0.0
+    ]
+   ],
+   [
+    "front_link",
+    "shell_front",
+    65.79,
+    [
+     102.0,
+     0.0
+    ]
+   ],
+   [
+    "front_link",
+    "shell_rear",
+    65.79,
+    [
+     102.0,
+     0.0
+    ]
    ]
   ],
+  "shell_gaps": [],
   "note": "both legs (the right one is the left turned 180 deg about z), motors as envelopes; intersections over 1.0 mm3 are clashes; nearest approaches of the moving leg parts to the body within 25.0 mm"
  },
  "layout": {
@@ -850,10 +1149,10 @@
    {
     "name": "agx_module",
     "box": [
-     -112.0,
-     -12.0,
-     -54.5,
-     32.5,
+     -110.0,
+     -10.0,
+     -34.5,
+     52.5,
      122.43,
      142.11
     ],
@@ -868,10 +1167,10 @@
    {
     "name": "agx_spreader",
     "box": [
-     -110.0,
-     -10.0,
-     -54.5,
-     55.5,
+     -109.5,
+     -9.5,
+     -56.5,
+     53.5,
      142.11,
      144.11
     ],
@@ -886,10 +1185,10 @@
    {
     "name": "agx_cooler",
     "box": [
-     -113.0,
-     -11.0,
-     -59.5,
-     37.5,
+     -111.0,
+     -9.0,
+     -39.5,
+     57.5,
      144.11,
      192.41
     ],
@@ -904,10 +1203,10 @@
    {
     "name": "fan_intake",
     "box": [
-     -108.0,
-     -16.0,
-     -57.0,
-     35.0,
+     -106.0,
+     -14.0,
+     -37.0,
+     55.0,
      192.41,
      213.46
     ],
@@ -922,10 +1221,10 @@
    {
     "name": "cooler_exhaust_left",
     "box": [
-     -104.0,
-     -20.0,
-     35.5,
-     65.5,
+     -102.0,
+     -18.0,
+     55.5,
+     85.5,
      144.11,
      177.41
     ],
@@ -940,10 +1239,10 @@
    {
     "name": "cooler_exhaust_right",
     "box": [
-     -104.0,
-     -20.0,
-     -87.5,
-     -57.5,
+     -102.0,
+     -18.0,
+     -67.5,
+     -37.5,
      144.11,
      177.41
     ],
@@ -1478,6 +1777,24 @@
     "keepout": true
    },
    {
+    "name": "turret_plug_sweep",
+    "box": [
+     -62.0,
+     -18.0,
+     -153.08,
+     -78.08,
+     251.0,
+     279.0
+    ],
+    "mass_g": 0,
+    "basis": "",
+    "group": "deck",
+    "stage": "P1",
+    "catalog": "",
+    "note": "the turret's DT06-12SA plug and the 30 mm it withdraws (cad/turret.py DT, DT_Z and Geo.dt_y (until exports/turret/mount.json, N5))",
+    "keepout": true
+   },
+   {
     "name": "vlp16",
     "box": [
      51.35,
@@ -1554,55 +1871,382 @@
  "mass": {
   "P1": {
    "stage": "P1",
-   "total_kg": 29.18,
+   "total_kg": 29.11,
    "com_mm": [
-    3.4,
-    0.5,
-    -43.9
+    3.5,
+    0.9,
+    -44.4
    ],
    "groups_kg": {
     "legs": 18.964,
-    "frame": 4.316,
+    "frame": 4.244,
     "compute": 1.513,
     "power": 2.015,
     "deck": 0.83,
     "battery": 1.542
    },
    "legs_kg": 18.96,
-   "body_and_head_kg": 10.22,
+   "body_and_head_kg": 10.14,
    "budget": {
-    "robot_kg": 28.5,
-    "body_and_head_kg": 10.3,
+    "robot_kg": 32.0,
+    "legs_kg_each": 9.6,
+    "body_and_head_kg": 12.8,
+    "design_mass_kg": 32.5,
+    "design_half_mass_kg": 16.25,
     "com_x_mm": 10.0,
     "com_y_mm": 5.0,
-    "basis": "docs/body-plan.md 1.8"
-   }
+    "basis": "D57, docs/body-next-plan.md 2.4 (the 28.5 / 10.3 kg budget of docs/body-plan.md 1.8 is retired)"
+   },
+   "leg_extra": "leg.json 9282 g + 200 g announced for the stops and flanges (D53)",
+   "levers": [
+    {
+     "key": "shell_2mm",
+     "n": 1,
+     "grams": -240,
+     "cost_usd": 0.0,
+     "stage": "P3",
+     "kind": "scheduled",
+     "what": "shell panels in 2 mm PETG with 1.6 mm ribs instead of 3 mm (PA6-CF at the ear-pod bosses)",
+     "status": "taken"
+    },
+    {
+     "key": "tray_cutouts",
+     "n": 2,
+     "grams": -150,
+     "cost_usd": 62.0,
+     "stage": "P3",
+     "kind": "scheduled",
+     "what": "floor tray Rev B: lightening cutouts where nothing bolts and T1 is low (1/8 in stays)",
+     "status": "open"
+    },
+    {
+     "key": "deck_cutouts",
+     "n": 3,
+     "grams": -120,
+     "cost_usd": 65.0,
+     "stage": "P3",
+     "kind": "scheduled",
+     "what": "deck Rev B: cutouts outside the lidar, the TM pattern and the intake field",
+     "status": "open"
+    },
+    {
+     "key": "turret_plate",
+     "n": 4,
+     "grams": 135,
+     "cost_usd": 25.0,
+     "stage": "P2",
+     "kind": "scheduled",
+     "what": "the turret mount plate under the deck at the riser, 6061-T6 0.125 in, pocketed (D59)",
+     "status": "taken"
+    },
+    {
+     "key": "hollow_posts",
+     "n": 5,
+     "grams": -100,
+     "cost_usd": 0.0,
+     "stage": "P2",
+     "kind": "scheduled",
+     "what": "deck posts printed hollow (22 mm square, 4 mm walls) instead of solid",
+     "status": "taken"
+    },
+    {
+     "key": "pallet_cutouts",
+     "n": 6,
+     "grams": -60,
+     "cost_usd": 30.0,
+     "stage": "P3",
+     "kind": "scheduled",
+     "what": "compute pallet cutouts under the module between the tie-down and the standoffs",
+     "status": "open"
+    },
+    {
+     "key": "fuse_board",
+     "n": 7,
+     "grams": -35,
+     "cost_usd": 20.0,
+     "stage": "P3",
+     "kind": "scheduled",
+     "what": "the fuse board (D60) instead of ten inline MINI holders and their leads",
+     "status": "open"
+    },
+    {
+     "key": "board_shunt",
+     "n": 8,
+     "grams": -75,
+     "cost_usd": 3.0,
+     "stage": "P3",
+     "kind": "scheduled",
+     "what": "the 1 mOhm shunt on the fuse board instead of the 85 g Blue Sea 150 A block",
+     "status": "open"
+    },
+    {
+     "key": "harness_10awg",
+     "n": 9,
+     "grams": -60,
+     "cost_usd": 25.0,
+     "stage": "P2",
+     "kind": "scheduled",
+     "what": "the main path in 10 AWG, the VESC leads in 14 AWG, lengths cut to P0's measurements",
+     "status": "open"
+    },
+    {
+     "key": "pololu_12v",
+     "n": 10,
+     "grams": -200,
+     "cost_usd": 69.95,
+     "stage": "P3",
+     "kind": "on call",
+     "what": "Pololu D42V110F12 instead of the 216 g DDR-60L-12 (when Pololu restocks it)",
+     "status": "open"
+    },
+    {
+     "key": "cheeks_rev_b",
+     "n": 11,
+     "grams": -150,
+     "cost_usd": 120.0,
+     "stage": "P3",
+     "kind": "on call",
+     "what": "cheeks Rev B: lightening holes where S1 < 40 MPa (-150), or 1/8 in with more standoffs (-330)",
+     "status": "open"
+    },
+    {
+     "key": "alu_standoffs",
+     "n": 12,
+     "grams": -80,
+     "cost_usd": 30.0,
+     "stage": "P3",
+     "kind": "on call",
+     "what": "aluminium M5 x 120 hex standoffs in place of the printed deck posts",
+     "status": "open"
+    },
+    {
+     "key": "cooler_34mm",
+     "n": 13,
+     "grams": -200,
+     "cost_usd": 49.0,
+     "stage": "P3",
+     "kind": "on call",
+     "what": "the 34 mm WS-RDN-601 cooler instead of the fitted G48R (the user's call after the thermal test)",
+     "status": "open"
+    },
+    {
+     "key": "lidar_cable_1m",
+     "n": 14,
+     "grams": -150,
+     "cost_usd": 0.0,
+     "stage": "P3",
+     "kind": "on call",
+     "what": "the VLP-16 cable shortened to 1 m (the user's call: a Velodyne waiver)",
+     "status": "open"
+    },
+    {
+     "key": "turret_levers",
+     "n": 15,
+     "grams": -51,
+     "cost_usd": 0.0,
+     "stage": "P2",
+     "kind": "on call",
+     "what": "the turret's own: a 24-ball hopper, a one-board bay (its plan, not scheduled here)",
+     "status": "open"
+    }
+   ]
   },
   "P3": {
    "stage": "P3",
-   "total_kg": 32.28,
+   "total_kg": 32.15,
    "com_mm": [
-    1.3,
-    0.4,
-    -15.8
+    1.2,
+    0.8,
+    -16.9
    ],
    "groups_kg": {
     "legs": 18.964,
-    "frame": 4.316,
+    "frame": 4.48,
+    "shell": 1.106,
     "compute": 1.513,
     "power": 2.015,
     "deck": 2.53,
-    "battery": 1.542,
-    "shell": 1.397
+    "battery": 1.542
    },
    "legs_kg": 18.96,
-   "body_and_head_kg": 13.31,
+   "body_and_head_kg": 13.19,
    "budget": {
-    "robot_kg": 28.5,
-    "body_and_head_kg": 10.3,
+    "robot_kg": 32.0,
+    "legs_kg_each": 9.6,
+    "body_and_head_kg": 12.8,
+    "design_mass_kg": 32.5,
+    "design_half_mass_kg": 16.25,
     "com_x_mm": 10.0,
     "com_y_mm": 5.0,
-    "basis": "docs/body-plan.md 1.8"
+    "basis": "D57, docs/body-next-plan.md 2.4 (the 28.5 / 10.3 kg budget of docs/body-plan.md 1.8 is retired)"
+   },
+   "leg_extra": "leg.json 9282 g + 200 g announced for the stops and flanges (D53)",
+   "levers": [
+    {
+     "key": "shell_2mm",
+     "n": 1,
+     "grams": -240,
+     "cost_usd": 0.0,
+     "stage": "P3",
+     "kind": "scheduled",
+     "what": "shell panels in 2 mm PETG with 1.6 mm ribs instead of 3 mm (PA6-CF at the ear-pod bosses)",
+     "status": "taken"
+    },
+    {
+     "key": "tray_cutouts",
+     "n": 2,
+     "grams": -150,
+     "cost_usd": 62.0,
+     "stage": "P3",
+     "kind": "scheduled",
+     "what": "floor tray Rev B: lightening cutouts where nothing bolts and T1 is low (1/8 in stays)",
+     "status": "open"
+    },
+    {
+     "key": "deck_cutouts",
+     "n": 3,
+     "grams": -120,
+     "cost_usd": 65.0,
+     "stage": "P3",
+     "kind": "scheduled",
+     "what": "deck Rev B: cutouts outside the lidar, the TM pattern and the intake field",
+     "status": "open"
+    },
+    {
+     "key": "turret_plate",
+     "n": 4,
+     "grams": 135,
+     "cost_usd": 25.0,
+     "stage": "P2",
+     "kind": "scheduled",
+     "what": "the turret mount plate under the deck at the riser, 6061-T6 0.125 in, pocketed (D59)",
+     "status": "taken"
+    },
+    {
+     "key": "hollow_posts",
+     "n": 5,
+     "grams": -100,
+     "cost_usd": 0.0,
+     "stage": "P2",
+     "kind": "scheduled",
+     "what": "deck posts printed hollow (22 mm square, 4 mm walls) instead of solid",
+     "status": "taken"
+    },
+    {
+     "key": "pallet_cutouts",
+     "n": 6,
+     "grams": -60,
+     "cost_usd": 30.0,
+     "stage": "P3",
+     "kind": "scheduled",
+     "what": "compute pallet cutouts under the module between the tie-down and the standoffs",
+     "status": "open"
+    },
+    {
+     "key": "fuse_board",
+     "n": 7,
+     "grams": -35,
+     "cost_usd": 20.0,
+     "stage": "P3",
+     "kind": "scheduled",
+     "what": "the fuse board (D60) instead of ten inline MINI holders and their leads",
+     "status": "open"
+    },
+    {
+     "key": "board_shunt",
+     "n": 8,
+     "grams": -75,
+     "cost_usd": 3.0,
+     "stage": "P3",
+     "kind": "scheduled",
+     "what": "the 1 mOhm shunt on the fuse board instead of the 85 g Blue Sea 150 A block",
+     "status": "open"
+    },
+    {
+     "key": "harness_10awg",
+     "n": 9,
+     "grams": -60,
+     "cost_usd": 25.0,
+     "stage": "P2",
+     "kind": "scheduled",
+     "what": "the main path in 10 AWG, the VESC leads in 14 AWG, lengths cut to P0's measurements",
+     "status": "open"
+    },
+    {
+     "key": "pololu_12v",
+     "n": 10,
+     "grams": -200,
+     "cost_usd": 69.95,
+     "stage": "P3",
+     "kind": "on call",
+     "what": "Pololu D42V110F12 instead of the 216 g DDR-60L-12 (when Pololu restocks it)",
+     "status": "open"
+    },
+    {
+     "key": "cheeks_rev_b",
+     "n": 11,
+     "grams": -150,
+     "cost_usd": 120.0,
+     "stage": "P3",
+     "kind": "on call",
+     "what": "cheeks Rev B: lightening holes where S1 < 40 MPa (-150), or 1/8 in with more standoffs (-330)",
+     "status": "open"
+    },
+    {
+     "key": "alu_standoffs",
+     "n": 12,
+     "grams": -80,
+     "cost_usd": 30.0,
+     "stage": "P3",
+     "kind": "on call",
+     "what": "aluminium M5 x 120 hex standoffs in place of the printed deck posts",
+     "status": "open"
+    },
+    {
+     "key": "cooler_34mm",
+     "n": 13,
+     "grams": -200,
+     "cost_usd": 49.0,
+     "stage": "P3",
+     "kind": "on call",
+     "what": "the 34 mm WS-RDN-601 cooler instead of the fitted G48R (the user's call after the thermal test)",
+     "status": "open"
+    },
+    {
+     "key": "lidar_cable_1m",
+     "n": 14,
+     "grams": -150,
+     "cost_usd": 0.0,
+     "stage": "P3",
+     "kind": "on call",
+     "what": "the VLP-16 cable shortened to 1 m (the user's call: a Velodyne waiver)",
+     "status": "open"
+    },
+    {
+     "key": "turret_levers",
+     "n": 15,
+     "grams": -51,
+     "cost_usd": 0.0,
+     "stage": "P2",
+     "kind": "on call",
+     "what": "the turret's own: a 24-ball hopper, a one-board bay (its plan, not scheduled here)",
+     "status": "open"
+    }
+   ],
+   "gate": {
+    "ceiling_kg": 32.0,
+    "gap_kg": 0.15,
+    "open_scheduled_g": -500,
+    "with_scheduled_levers_kg": 31.65,
+    "body_and_head_with_levers_kg": 12.69,
+    "leg_each_kg": 9.48,
+    "pass": true,
+    "on_call_next": [
+     "pololu_12v",
+     "cheeks_rev_b",
+     "alu_standoffs"
+    ],
+    "rule": "the P3 ledger with every scheduled lever taken (the open ones at the plan's grams) under the ceiling, each leg under 9.6 kg and the body and head under 12.8 kg; over it, the on-call levers go in order before the next order (D57)"
    }
   }
  },
@@ -1613,6 +2257,10 @@
   "body-p1-rear.png",
   "body-frame-iso.png",
   "body-spine-iso.png",
+  "body-p3-iso.png",
+  "body-p3-front.png",
+  "body-p3-rear.png",
+  "body-p3-side.png",
   "body-p1-crouch-side.png",
   "body-p1-tall-side.png",
   "flat-cheek.png",
@@ -1620,7 +2268,10 @@
   "flat-belly_plate.png",
   "flat-deck.png",
   "flat-compute_pallet.png",
+  "flat-turret_plate.png",
   "flat-power_plate.png",
-  "flat-bus_bar.png"
+  "flat-bus_bar.png",
+  "flat-tub_floor.png",
+  "flat-tub_side.png"
  ]
 }

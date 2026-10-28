@@ -1,22 +1,22 @@
 {
  "P1": {
   "stage": "P1",
-  "total_kg": 29.18,
+  "total_kg": 29.11,
   "com_mm": [
-   3.4,
-   0.5,
-   -43.9
+   3.5,
+   0.9,
+   -44.4
   ],
   "groups_kg": {
    "legs": 18.964,
-   "frame": 4.316,
+   "frame": 4.244,
    "compute": 1.513,
    "power": 2.015,
    "deck": 0.83,
    "battery": 1.542
   },
   "legs_kg": 18.96,
-  "body_and_head_kg": 10.22,
+  "body_and_head_kg": 10.14,
   "rows": [
    {
     "group": "legs",
@@ -573,7 +573,7 @@
     "name": "L.apex_circlip",
     "mass_g": 13.7,
     "com_mm": [
-     0.0,
+     -0.0,
      104.4,
      -300.0
     ],
@@ -619,7 +619,7 @@
     "com_mm": [
      -0.0,
      85.1,
-     -0.0
+     0.0
     ],
     "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
    },
@@ -630,7 +630,7 @@
     "com_mm": [
      -0.0,
      -85.1,
-     -0.0
+     0.0
     ],
     "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
    },
@@ -639,9 +639,9 @@
     "name": "L.screws_links",
     "mass_g": 117.4,
     "com_mm": [
-     -0.0,
+     0.0,
      113.0,
-     0.0
+     -0.0
     ],
     "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
    },
@@ -652,7 +652,7 @@
     "com_mm": [
      -0.0,
      -113.0,
-     0.0
+     -0.0
     ],
     "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
    },
@@ -771,9 +771,9 @@
     "name": "frame.cheek_left",
     "mass_g": 491.9,
     "com_mm": [
-     -0.0,
+     0.0,
      21.4,
-     0.0
+     -0.0
     ],
     "basis": "CAD (sheet and printed solids)"
    },
@@ -782,9 +782,9 @@
     "name": "frame.cheek_right",
     "mass_g": 491.9,
     "com_mm": [
-     0.0,
+     -0.0,
      -21.4,
-     0.0
+     -0.0
     ],
     "basis": "CAD (sheet and printed solids)"
    },
@@ -805,7 +805,7 @@
     "mass_g": 239.7,
     "com_mm": [
      -1.0,
-     0.0,
+     -0.0,
      -91.8
     ],
     "basis": "CAD (sheet and printed solids)"
@@ -813,10 +813,10 @@
    {
     "group": "frame",
     "name": "frame.deck",
-    "mass_g": 648.9,
+    "mass_g": 647.6,
     "com_mm": [
-     0.9,
-     -0.3,
+     1.0,
+     -0.5,
      212.7
     ],
     "basis": "CAD (sheet and printed solids)"
@@ -835,44 +835,44 @@
    {
     "group": "frame",
     "name": "frame.post_1",
-    "mass_g": 61.4,
+    "mass_g": 43.6,
     "com_mm": [
      142.0,
      109.0,
-     153.6
+     153.4
     ],
     "basis": "CAD (sheet and printed solids)"
    },
    {
     "group": "frame",
     "name": "frame.post_2",
-    "mass_g": 61.4,
+    "mass_g": 43.6,
     "com_mm": [
      142.0,
      -109.0,
-     153.6
+     153.4
     ],
     "basis": "CAD (sheet and printed solids)"
    },
    {
     "group": "frame",
     "name": "frame.post_3",
-    "mass_g": 61.4,
+    "mass_g": 43.6,
     "com_mm": [
      -142.0,
      109.0,
-     153.6
+     153.4
     ],
     "basis": "CAD (sheet and printed solids)"
    },
    {
     "group": "frame",
     "name": "frame.post_4",
-    "mass_g": 61.4,
+    "mass_g": 43.6,
     "com_mm": [
      -142.0,
      -109.0,
-     153.6
+     153.4
     ],
     "basis": "CAD (sheet and printed solids)"
    },
@@ -1058,7 +1058,7 @@
     "mass_g": 156.9,
     "com_mm": [
      -82.9,
-     -0.0,
+     0.0,
      -131.5
     ],
     "basis": "CAD (sheet and printed solids)"
@@ -1145,8 +1145,8 @@
     "name": "agx_module",
     "mass_g": 280.0,
     "com_mm": [
-     -62.0,
-     -11.0,
+     -60.0,
+     9.0,
      132.3
     ],
     "basis": "estimate (NVIDIA publishes none; 100 x 87 x 16 module with its thermal plate)"
@@ -1156,8 +1156,8 @@
     "name": "agx_spreader",
     "mass_g": 200.0,
     "com_mm": [
-     -60.0,
-     0.5,
+     -59.5,
+     -1.5,
      143.1
     ],
     "basis": "CAD volume x copper 8.96 g/cm3 (100 x 110 x 2 mm)"
@@ -1167,8 +1167,8 @@
     "name": "agx_cooler",
     "mass_g": 450.0,
     "com_mm": [
-     -62.0,
-     -11.0,
+     -60.0,
+     9.0,
      168.3
     ],
     "basis": "estimate (G48R: five 6 mm copper heat pipes, 6063 fins, 9215 fan; Seeed publishes no mass)"
@@ -1425,7 +1425,7 @@
     "stage": "P3",
     "kind": "scheduled",
     "what": "shell panels in 2 mm PETG with 1.6 mm ribs instead of 3 mm (PA6-CF at the ear-pod bosses)",
-    "status": "open"
+    "status": "taken"
    },
    {
     "key": "tray_cutouts",
@@ -1455,7 +1455,7 @@
     "stage": "P2",
     "kind": "scheduled",
     "what": "the turret mount plate under the deck at the riser, 6061-T6 0.125 in, pocketed (D59)",
-    "status": "open"
+    "status": "taken"
    },
    {
     "key": "hollow_posts",
@@ -1465,7 +1465,7 @@
     "stage": "P2",
     "kind": "scheduled",
     "what": "deck posts printed hollow (22 mm square, 4 mm walls) instead of solid",
-    "status": "open"
+    "status": "taken"
    },
    {
     "key": "pallet_cutouts",
@@ -1571,23 +1571,23 @@
  },
  "P3": {
   "stage": "P3",
-  "total_kg": 32.28,
+  "total_kg": 32.15,
   "com_mm": [
-   1.3,
-   0.4,
-   -15.8
+   1.2,
+   0.8,
+   -16.9
   ],
   "groups_kg": {
    "legs": 18.964,
-   "frame": 4.316,
+   "frame": 4.48,
+   "shell": 1.106,
    "compute": 1.513,
    "power": 2.015,
    "deck": 2.53,
-   "battery": 1.542,
-   "shell": 1.397
+   "battery": 1.542
   },
   "legs_kg": 18.96,
-  "body_and_head_kg": 13.31,
+  "body_and_head_kg": 13.19,
   "rows": [
    {
     "group": "legs",
@@ -2144,7 +2144,7 @@
     "name": "L.apex_circlip",
     "mass_g": 13.7,
     "com_mm": [
-     0.0,
+     -0.0,
      104.4,
      -300.0
     ],
@@ -2190,7 +2190,7 @@
     "com_mm": [
      -0.0,
      85.1,
-     -0.0
+     0.0
     ],
     "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
    },
@@ -2201,7 +2201,7 @@
     "com_mm": [
      -0.0,
      -85.1,
-     -0.0
+     0.0
     ],
     "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
    },
@@ -2210,9 +2210,9 @@
     "name": "L.screws_links",
     "mass_g": 117.4,
     "com_mm": [
-     -0.0,
+     0.0,
      113.0,
-     0.0
+     -0.0
     ],
     "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
    },
@@ -2223,7 +2223,7 @@
     "com_mm": [
      -0.0,
      -113.0,
-     0.0
+     -0.0
     ],
     "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
    },
@@ -2342,9 +2342,9 @@
     "name": "frame.cheek_left",
     "mass_g": 491.9,
     "com_mm": [
-     -0.0,
+     0.0,
      21.4,
-     0.0
+     -0.0
     ],
     "basis": "CAD (sheet and printed solids)"
    },
@@ -2353,9 +2353,9 @@
     "name": "frame.cheek_right",
     "mass_g": 491.9,
     "com_mm": [
-     0.0,
+     -0.0,
      -21.4,
-     0.0
+     -0.0
     ],
     "basis": "CAD (sheet and printed solids)"
    },
@@ -2376,7 +2376,7 @@
     "mass_g": 239.7,
     "com_mm": [
      -1.0,
-     0.0,
+     -0.0,
      -91.8
     ],
     "basis": "CAD (sheet and printed solids)"
@@ -2384,10 +2384,10 @@
    {
     "group": "frame",
     "name": "frame.deck",
-    "mass_g": 648.9,
+    "mass_g": 647.6,
     "com_mm": [
-     0.9,
-     -0.3,
+     1.0,
+     -0.5,
      212.7
     ],
     "basis": "CAD (sheet and printed solids)"
@@ -2406,44 +2406,44 @@
    {
     "group": "frame",
     "name": "frame.post_1",
-    "mass_g": 61.4,
+    "mass_g": 43.6,
     "com_mm": [
      142.0,
      109.0,
-     153.6
+     153.4
     ],
     "basis": "CAD (sheet and printed solids)"
    },
    {
     "group": "frame",
     "name": "frame.post_2",
-    "mass_g": 61.4,
+    "mass_g": 43.6,
     "com_mm": [
      142.0,
      -109.0,
-     153.6
+     153.4
     ],
     "basis": "CAD (sheet and printed solids)"
    },
    {
     "group": "frame",
     "name": "frame.post_3",
-    "mass_g": 61.4,
+    "mass_g": 43.6,
     "com_mm": [
      -142.0,
      109.0,
-     153.6
+     153.4
     ],
     "basis": "CAD (sheet and printed solids)"
    },
    {
     "group": "frame",
     "name": "frame.post_4",
-    "mass_g": 61.4,
+    "mass_g": 43.6,
     "com_mm": [
      -142.0,
      -109.0,
-     153.6
+     153.4
     ],
     "basis": "CAD (sheet and printed solids)"
    },
@@ -2455,6 +2455,17 @@
      -40.1,
      0.1,
      237.7
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "frame",
+    "name": "frame.turret_plate",
+    "mass_g": 132.6,
+    "com_mm": [
+     -37.6,
+     -2.9,
+     211.9
     ],
     "basis": "CAD (sheet and printed solids)"
    },
@@ -2624,79 +2635,288 @@
     "basis": "CAD (sheet and printed solids)"
    },
    {
-    "group": "frame",
-    "name": "frame.bay_rear",
-    "mass_g": 156.9,
+    "group": "shell",
+    "name": "shell.shell_side_l_front",
+    "mass_g": 62.6,
     "com_mm": [
-     -82.9,
+     81.3,
+     128.3,
+     146.2
+    ],
+    "basis": "CAD (cad/body_shell.py, printed)"
+   },
+   {
+    "group": "shell",
+    "name": "shell.shell_side_l_rear",
+    "mass_g": 51.0,
+    "com_mm": [
+     -90.3,
+     128.0,
+     147.8
+    ],
+    "basis": "CAD (cad/body_shell.py, printed)"
+   },
+   {
+    "group": "shell",
+    "name": "shell.ear_bracket_l",
+    "mass_g": 34.1,
+    "com_mm": [
+     24.5,
+     143.4,
+     111.7
+    ],
+    "basis": "CAD (cad/body_shell.py, printed)"
+   },
+   {
+    "group": "shell",
+    "name": "shell.shell_side_r_front",
+    "mass_g": 46.3,
+    "com_mm": [
+     68.9,
+     -128.2,
+     148.5
+    ],
+    "basis": "CAD (cad/body_shell.py, printed)"
+   },
+   {
+    "group": "shell",
+    "name": "shell.shell_side_r_rear",
+    "mass_g": 57.1,
+    "com_mm": [
+     -85.6,
+     -128.0,
+     145.9
+    ],
+    "basis": "CAD (cad/body_shell.py, printed)"
+   },
+   {
+    "group": "shell",
+    "name": "shell.ear_bracket_r",
+    "mass_g": 34.1,
+    "com_mm": [
+     24.5,
+     -143.4,
+     111.7
+    ],
+    "basis": "CAD (cad/body_shell.py, printed)"
+   },
+   {
+    "group": "shell",
+    "name": "shell.shell_front",
+    "mass_g": 96.2,
+    "com_mm": [
+     161.4,
+     0.0,
+     140.5
+    ],
+    "basis": "CAD (cad/body_shell.py, printed)"
+   },
+   {
+    "group": "shell",
+    "name": "shell.shell_rear",
+    "mass_g": 96.1,
+    "com_mm": [
+     -161.4,
+     1.9,
+     141.6
+    ],
+    "basis": "CAD (cad/body_shell.py, printed)"
+   },
+   {
+    "group": "shell",
+    "name": "shell.shell_door",
+    "mass_g": 27.4,
+    "com_mm": [
+     109.0,
+     -130.6,
+     145.0
+    ],
+    "basis": "CAD (cad/body_shell.py, printed)"
+   },
+   {
+    "group": "shell",
+    "name": "shell.shell_hatch",
+    "mass_g": 10.1,
+    "com_mm": [
+     -52.3,
+     130.6,
+     123.8
+    ],
+    "basis": "CAD (cad/body_shell.py, printed)"
+   },
+   {
+    "group": "shell",
+    "name": "shell.xt60_bezel",
+    "mass_g": 2.9,
+    "com_mm": [
+     -159.2,
+     -86.0,
+     140.0
+    ],
+    "basis": "CAD (cad/body_shell.py, printed)"
+   },
+   {
+    "group": "shell",
+    "name": "shell.receiver_bay",
+    "mass_g": 9.6,
+    "com_mm": [
+     -145.6,
+     -86.0,
+     169.8
+    ],
+    "basis": "CAD (cad/body_shell.py, printed)"
+   },
+   {
+    "group": "shell",
+    "name": "shell.d435_cradle_front",
+    "mass_g": 16.5,
+    "com_mm": [
+     138.2,
+     0.0,
+     50.5
+    ],
+    "basis": "CAD (cad/body_shell.py, printed)"
+   },
+   {
+    "group": "shell",
+    "name": "shell.d435_cradle_rear",
+    "mass_g": 16.5,
+    "com_mm": [
+     -138.2,
      -0.0,
-     -131.5
+     50.5
     ],
-    "basis": "CAD (sheet and printed solids)"
+    "basis": "CAD (cad/body_shell.py, printed)"
+   },
+   {
+    "group": "shell",
+    "name": "shell.intake_shroud",
+    "mass_g": 8.9,
+    "com_mm": [
+     -57.5,
+     10.5,
+     202.2
+    ],
+    "basis": "CAD (cad/body_shell.py, printed)"
    },
    {
     "group": "frame",
-    "name": "frame.bay_front",
-    "mass_g": 139.8,
+    "name": "frame.tub_floor",
+    "mass_g": 150.0,
     "com_mm": [
-     78.8,
+     4.9,
      -0.0,
-     -132.2
+     -153.7
     ],
     "basis": "CAD (sheet and printed solids)"
    },
    {
     "group": "frame",
-    "name": "frame.bay_door",
-    "mass_g": 31.4,
+    "name": "frame.tub_side_l",
+    "mass_g": 83.3,
     "com_mm": [
-     156.0,
-     -0.0,
-     -125.9
+     4.0,
+     42.0,
+     -125.4
     ],
     "basis": "CAD (sheet and printed solids)"
    },
    {
     "group": "frame",
-    "name": "frame.bay_skid_1",
-    "mass_g": 7.6,
+    "name": "frame.tub_rail_l",
+    "mass_g": 34.4,
     "com_mm": [
-     -71.0,
-     31.8,
-     -160.5
+     3.0,
+     48.8,
+     -97.9
     ],
     "basis": "CAD (sheet and printed solids)"
    },
    {
     "group": "frame",
-    "name": "frame.bay_skid_2",
-    "mass_g": 7.6,
+    "name": "frame.tub_side_r",
+    "mass_g": 83.3,
     "com_mm": [
-     79.0,
-     31.8,
-     -160.5
+     4.0,
+     -42.0,
+     -125.4
     ],
     "basis": "CAD (sheet and printed solids)"
    },
    {
     "group": "frame",
-    "name": "frame.bay_skid_3",
-    "mass_g": 7.6,
+    "name": "frame.tub_rail_r",
+    "mass_g": 34.4,
     "com_mm": [
-     -71.0,
-     -31.8,
-     -160.5
+     3.0,
+     -48.8,
+     -97.9
     ],
     "basis": "CAD (sheet and printed solids)"
    },
    {
     "group": "frame",
-    "name": "frame.bay_skid_4",
-    "mass_g": 7.6,
+    "name": "frame.tub_cap_front",
+    "mass_g": 23.6,
     "com_mm": [
-     79.0,
-     -31.8,
-     -160.5
+     156.5,
+     0.0,
+     -125.3
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "frame",
+    "name": "frame.tub_cap_rear",
+    "mass_g": 23.6,
+    "com_mm": [
+     -148.5,
+     0.0,
+     -125.3
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "frame",
+    "name": "frame.tub_skid_1",
+    "mass_g": 7.4,
+    "com_mm": [
+     -69.5,
+     33.0,
+     -159.1
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "frame",
+    "name": "frame.tub_skid_2",
+    "mass_g": 7.4,
+    "com_mm": [
+     77.5,
+     33.0,
+     -159.1
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "frame",
+    "name": "frame.tub_skid_3",
+    "mass_g": 7.4,
+    "com_mm": [
+     -69.5,
+     -33.0,
+     -159.1
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "frame",
+    "name": "frame.tub_skid_4",
+    "mass_g": 7.4,
+    "com_mm": [
+     77.5,
+     -33.0,
+     -159.1
     ],
     "basis": "CAD (sheet and printed solids)"
    },
@@ -2716,8 +2936,8 @@
     "name": "agx_module",
     "mass_g": 280.0,
     "com_mm": [
-     -62.0,
-     -11.0,
+     -60.0,
+     9.0,
      132.3
     ],
     "basis": "estimate (NVIDIA publishes none; 100 x 87 x 16 module with its thermal plate)"
@@ -2727,8 +2947,8 @@
     "name": "agx_spreader",
     "mass_g": 200.0,
     "com_mm": [
-     -60.0,
-     0.5,
+     -59.5,
+     -1.5,
      143.1
     ],
     "basis": "CAD volume x copper 8.96 g/cm3 (100 x 110 x 2 mm)"
@@ -2738,8 +2958,8 @@
     "name": "agx_cooler",
     "mass_g": 450.0,
     "com_mm": [
-     -62.0,
-     -11.0,
+     -60.0,
+     9.0,
      168.3
     ],
     "basis": "estimate (G48R: five 6 mm copper heat pipes, 6063 fins, 9215 fan; Seeed publishes no mass)"
@@ -2988,47 +3208,36 @@
    },
    {
     "group": "shell",
-    "name": "shell_panels",
-    "mass_g": 800.0,
-    "com_mm": [
-     0.0,
-     0.0,
-     150.0
-    ],
-    "basis": "estimate (PETG 3 mm side, front and rear walls, the door and hatches)"
-   },
-   {
-    "group": "shell",
     "name": "depth_camera_front",
     "mass_g": 75.0,
     "com_mm": [
-     147.0,
-     0.0,
-     188.0
+     150.1,
+     -0.0,
+     52.5
     ],
-    "basis": "catalogue (D435 75 g)"
+    "basis": "catalogue (D435 75 g), cad/body_shell.py"
    },
    {
     "group": "shell",
     "name": "depth_camera_rear",
     "mass_g": 75.0,
     "com_mm": [
-     -147.0,
-     0.0,
-     188.0
+     -150.1,
+     -0.0,
+     52.5
     ],
-    "basis": "catalogue (D435 75 g)"
+    "basis": "catalogue (D435 75 g), cad/body_shell.py"
    },
    {
     "group": "shell",
     "name": "eyes",
     "mass_g": 11.0,
     "com_mm": [
-     157.0,
+     157.1,
      0.0,
-     200.0
+     182.0
     ],
-    "basis": "catalogue (DualEye 11 g)"
+    "basis": "catalogue (DualEye 11 g), cad/body_shell.py"
    },
    {
     "group": "shell",
@@ -3037,7 +3246,7 @@
     "com_mm": [
      150.0,
      0.0,
-     195.0
+     170.0
     ],
     "basis": "catalogue (QT Py ESP32-S3)"
    },
@@ -3046,33 +3255,33 @@
     "name": "ear_pod_l",
     "mass_g": 154.0,
     "com_mm": [
-     20.0,
+     24.5,
      155.0,
-     165.0
+     160.0
     ],
-    "basis": "catalogue (SSC1 154 g each)"
+    "basis": "catalogue (SSC1 154 g each), cad/body_shell.py"
    },
    {
     "group": "shell",
     "name": "ear_pod_r",
     "mass_g": 154.0,
     "com_mm": [
-     20.0,
+     24.5,
      -155.0,
-     165.0
+     160.0
     ],
-    "basis": "catalogue (SSC1 154 g each)"
+    "basis": "catalogue (SSC1 154 g each), cad/body_shell.py"
    },
    {
     "group": "shell",
-    "name": "belly_box_skids",
-    "mass_g": 120.0,
+    "name": "shell_hardware",
+    "mass_g": 60.0,
     "com_mm": [
      0.0,
      0.0,
-     -150.0
+     150.0
     ],
-    "basis": "estimate (TPU skids, the bay door)"
+    "basis": "estimate (M3/M5 screws, nuts, inserts of the shell and tub)"
    }
   ],
   "budget": {
@@ -3095,7 +3304,7 @@
     "stage": "P3",
     "kind": "scheduled",
     "what": "shell panels in 2 mm PETG with 1.6 mm ribs instead of 3 mm (PA6-CF at the ear-pod bosses)",
-    "status": "open"
+    "status": "taken"
    },
    {
     "key": "tray_cutouts",
@@ -3125,7 +3334,7 @@
     "stage": "P2",
     "kind": "scheduled",
     "what": "the turret mount plate under the deck at the riser, 6061-T6 0.125 in, pocketed (D59)",
-    "status": "open"
+    "status": "taken"
    },
    {
     "key": "hollow_posts",
@@ -3135,7 +3344,7 @@
     "stage": "P2",
     "kind": "scheduled",
     "what": "deck posts printed hollow (22 mm square, 4 mm walls) instead of solid",
-    "status": "open"
+    "status": "taken"
    },
    {
     "key": "pallet_cutouts",
@@ -3240,10 +3449,10 @@
   ],
   "gate": {
    "ceiling_kg": 32.0,
-   "gap_kg": 0.28,
-   "open_scheduled_g": -705,
-   "with_scheduled_levers_kg": 31.575,
-   "body_and_head_with_levers_kg": 12.605,
+   "gap_kg": 0.15,
+   "open_scheduled_g": -500,
+   "with_scheduled_levers_kg": 31.65,
+   "body_and_head_with_levers_kg": 12.69,
    "leg_each_kg": 9.48,
    "pass": true,
    "on_call_next": [

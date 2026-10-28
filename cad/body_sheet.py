@@ -30,7 +30,7 @@ EDGES = ('S', 'N', 'W', 'E')
 
 @dataclass
 class Feature:
-    kind: str                     # 'hole' | 'pem' | 'csk' | 'slot' | 'relief'
+    kind: str                     # 'hole' | 'pem' | 'csk' | 'slot' | 'relief' | 'cutout'
     panel: str                    # 'base' or an edge name
     at: tuple                     # panel coordinates of the centre
     d: float = 0.0                # hole diameter (pem: drawn at the PEM H size; csk: the through hole)
@@ -38,6 +38,7 @@ class Feature:
     spec: str = ''                # pem: 'SS-M5-0'; csk: 'M3'
     note: str = ''
     side: str = 'z0'              # csk: the face the countersink opens on ('z0' the base's outer face, 'z1' the inner)
+    make: object = None           # cutout (base panel only): make(t) -> a cq solid in base coordinates through the sheet
 
 
 @dataclass
@@ -143,6 +144,8 @@ class SheetPart:
 
     def _feature_cut(self, ft: Feature):
         t = self.t
+        if ft.kind == 'cutout':
+            return ft.make(t)
         (x, y, z), n = self.to3d(ft)
         depth = t + 2.0
         if ft.kind == 'slot':
@@ -233,6 +236,9 @@ class SheetPart:
         for c in self.corners():
             s = s.cut(cq.Workplane('XY').center(*c).circle(self.t).extrude(t + 2).translate((0, 0, -1)))
         for ft in self.features:
+            if ft.kind == 'cutout':                                 # base-panel cutouts: the flat is the base there
+                s = s.cut(ft.make(t))
+                continue
             x, y = self.to_flat(ft)
             if ft.kind == 'slot':
                 L, Wd, rc = ft.size
@@ -301,8 +307,9 @@ class SheetPart:
         lines = self.bend_lines()
         hd = s.get('half_die', 0.0)
         bend_regs = [r for n, r in regs if n.startswith('bend_')]
+        bad += self._cutout_checks()
         for ft in self.features:
-            if ft.kind == 'relief':
+            if ft.kind in ('relief', 'cutout'):
                 continue
             x, y = self.to_flat(ft)
             rad = (max(ft.size[0], ft.size[1]) / 2 if ft.kind == 'slot' else ft.d / 2)
@@ -319,7 +326,13 @@ class SheetPart:
             # inside the blank, with a web of at least the thickness to the cut edge
             reg = next(r for n, r in regs if n == ft.panel)
             edge = min(x - reg[0], reg[1] - x, y - reg[2], reg[3] - y) if not self.outline else _poly_edge_dist((x, y), self.outline)
-            if ft.panel != 'base' or not self.flanges:
+            if ft.kind == 'slot' and ft.panel == 'base' and not self.flanges:     # a slot's own outline, not a circle round it
+                pts = _slot_outline((x, y), ft.size)
+                web = min((_poly_edge_dist(q, self.outline) if self.outline else min(q[0] - reg[0], reg[1] - q[0], q[1] - reg[2], reg[3] - q[1]))
+                          for q in pts)
+                if web < t - 1e-6:
+                    bad.append(f'slot at {ft.at} on base: web to the edge {web:.2f} mm < t')
+            elif ft.panel != 'base' or not self.flanges:
                 if edge - rad < t - 1e-6:
                     bad.append(f'{ft.kind} at {ft.at} on {ft.panel}: web to the edge {edge - rad:.2f} mm < t')
             else:                                                       # base features: the base's outer cut edges only
@@ -359,6 +372,36 @@ class SheetPart:
                 (p, r1, _), (q, r2, _) = holes[i], holes[j]
                 if math.dist(p, q) - r1 - r2 < min(t, 2.0) - 1e-6:
                     bad.append(f'holes at {p} and {q}: web {math.dist(p, q) - r1 - r2:.2f} mm < t')
+        return bad
+
+    def _cutout_checks(self) -> list:
+        """A cutout keeps a web of at least the thickness to the part's outline and to every hole, PEM and slot."""
+        cuts = [f for f in self.features if f.kind == 'cutout']
+        if not cuts:
+            return []
+        t, bad = self.t, []
+        u0, u1, v0, v1 = self.flat_box()
+        if self.outline:
+            prism = cq.Workplane('XY').polyline(self.outline).close().extrude(t)
+        else:
+            prism = cq.Workplane('XY').box(u1 - u0, v1 - v0, t, centered=False).translate((u0, v0, 0))
+        big = cq.Workplane('XY').box(u1 - u0 + 200, v1 - v0 + 200, t, centered=False).translate((u0 - 100, v0 - 100, 0))
+        outside = big.cut(prism).val()
+        others = [f for f in self.features if f.kind in ('hole', 'pem', 'csk', 'slot')]
+        for c in cuts:
+            cs = c.make(t).val()
+            d = cs.distance(outside)
+            if d < t - 1e-6:
+                bad.append(f'cutout {c.note!r}: web to the outline {d:.2f} mm < t')
+            for o in others:
+                do = cs.distance(self._feature_cut(o).val())
+                if do < min(t, 2.0) - 1e-6:
+                    bad.append(f'cutout {c.note!r}: web to the {o.kind} at {o.at} {do:.2f} mm < t')
+                if o.kind == 'pem':                                  # a PEM nut's centre K from any cut edge
+                    k = bp.PEM[o.spec]['K']
+                    dc = cs.distance(cq.Vertex.makeVertex(o.at[0], o.at[1], t / 2))
+                    if dc < k - 1e-6:
+                        bad.append(f'PEM {o.spec} at {o.at}: {dc:.2f} mm to the cutout < K {k:.2f}')
         return bad
 
     def flat_size(self):
@@ -417,6 +460,20 @@ def _box_dist(p, box):
     dx = max(a - p[0], 0.0, p[0] - b)
     dy = max(c - p[1], 0.0, p[1] - d)
     return math.hypot(dx, dy)
+
+
+def _slot_outline(c, size, n=8):
+    """Points on a base slot's rounded-rectangle outline (its corners' arcs sampled), centre c, size (L, W, r)."""
+    L, Wd, rc = size
+    rc = max(0.0, min(rc, Wd / 2 - 0.01, L / 2 - 0.01))
+    out = []
+    for sx, sy in ((1, 1), (-1, 1), (-1, -1), (1, -1)):
+        cx, cy = c[0] + sx * (L / 2 - rc), c[1] + sy * (Wd / 2 - rc)
+        a0 = math.atan2(sy, sx)
+        for k in range(n + 1):
+            a = a0 - math.pi / 4 + (math.pi / 2) * k / n
+            out.append((cx + rc * math.cos(a), cy + rc * math.sin(a)))
+    return out
 
 
 def _poly_edge_dist(p, poly):

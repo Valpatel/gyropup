@@ -143,13 +143,14 @@ def hardware_counts():
     tray_m4 = sum(1 for r in m['tray'] if r[0] == 'pem' and r[3] == 'S-M4-0')
     posts = 2 * len(bf.bp.POSTS)
     plate_posts = 2 * len(bf.PLATE_STANDOFFS)
-    riser = 4                                                # the riser's four legs into the deck, from below
+    riser = len(bf.RISER_FEET)                               # the riser's four feet into the deck, from below (P1: the deck alone)
     spacers = len(bf.SPACERS_XZ)
     return {
-        'screw_m5x12_button': (12, 'the hip frames to the cheeks: six each, from inside the gap (3 N m)'),
-        'screw_m5x10_button': (cheek_nuts + bay + posts + plate_posts + riser + plate_m5,
+        'screw_m5x12_button': (12 + riser, f'the hip frames to the cheeks: six each, from inside the gap (3 N m); {riser} the riser\'s feet '
+                                           'up through the deck into its inserts (P1; M5 x 16 through the P2 mount plate)'),
+        'screw_m5x10_button': (cheek_nuts + bay + posts + plate_posts + plate_m5,
                                f'{cheek_nuts} tray and belly into the cheeks\' flange nuts, {bay} battery bay into the belly, {posts} deck posts, '
-                               f'{plate_posts} plate posts, {riser} riser legs, {plate_m5} VESC flanges and shunt into the plate\'s nuts'),
+                               f'{plate_posts} plate posts, {plate_m5} VESC flanges and shunt into the plate\'s nuts'),
         'screw_m4x10_flat': (2 * spacers + plate_m4 + 2, f'{2 * spacers} the spine standoffs (flush on the frame side), {plate_m4} switch cradle, MCU '
                                                        'carrier and DIN rail into the plate\'s nuts, 2 the DDR-120C rail into the tray'),
         'standoff_m4x31_ff': (spacers, 'the spine: between the cheeks in the hip frames\' bolt rows'),
@@ -169,13 +170,36 @@ def hardware_counts():
 PRICES = R / 'exports' / 'body' / 'sendcutsend' / 'prices.json'      # tools/sendcutsend_quote.py: SendCutSend's instant prices
 
 
+def p3_shell(L):
+    """P3's bought hardware (cad/body_shell.py): counted from the shell's CAD."""
+    import body_frame as bf
+    import body_shell as bs3
+    walls = 4 * len(bs3.POST_Z_SIDE) + 2 * 2 * len(bs3.POST_Z_FACE)            # the walls and faces into the posts' inserts
+    door, hatch, splice = 4, len(bs3.hatch_screws()), 2 * len(bs3.SPLICE_SCREWS_Z)
+    ear = 2 * 4
+    rails, rail_m3 = 2 * 6, 2 * 5
+    return [
+        L('screw_m3x16', walls + door + hatch + splice + 2 * 2, f'P3: {walls} walls and faces into the posts\' side inserts, {door} the '
+                                                                 f'door, {hatch} the hatch, {splice} the side walls\' splices, 4 the D435 cradles'),
+        L('insert_m3', walls + rail_m3, f'P3: {walls} in the hollow posts\' sides (reprinted with their bosses), {rail_m3} in the tub rails '
+                                        '(from P1\'s 50-pack: 8 used)', from_pack_of='p1_frame_hardware'),
+        L('nut_m3', door + hatch + splice, 'P3: held in the walls\' nut pads (door, hatch, splices)'),
+        L('screw_m5x16', ear + rails, f'P3: {ear} the ear brackets through the side walls, {rails} the tub rails up into the belly plate\'s nuts '
+                                      '(from P2\'s 100-pack)', from_pack_of='p2_head'),
+        L('nut_m5_nyloc', ear, 'P3: inside the side walls behind the ear brackets'),
+        L('screw_m3x8_socket', 2 * 10 + 8 + 2 * 2, 'P3: the tub\'s side plates (20), the skids (8), the dock pads\' insulators (4) '
+                                                  '(from P1\'s 100-pack)', from_pack_of='p1_frame_hardware'),
+    ]
+
+
 def made_to_order(body, prices=None):
     """The SendCutSend parts from exports/body/body.json, with the order's callouts and SendCutSend's instant price each,
     read in its app from the uploaded DXF (tools/sendcutsend_quote.py -> exports/body/sendcutsend/prices.json); a part
     not priced yet keeps an estimate and says what to upload."""
     if prices is None:
         prices = json.loads(PRICES.read_text()) if PRICES.exists() else {}
-    est = {'cheek': 60.0, 'floor_tray': 62.0, 'belly_plate': 33.0, 'deck': 65.0, 'compute_pallet': 30.0, 'power_plate': 39.0, 'bus_bar': 17.0}
+    est = {'cheek': 60.0, 'floor_tray': 62.0, 'belly_plate': 33.0, 'deck': 65.0, 'compute_pallet': 30.0, 'power_plate': 39.0, 'bus_bar': 17.0,
+           'turret_plate': 25.0, 'tub_floor': 45.0, 'tub_side': 30.0}
     out = []
     for name, s in body['sheet'].items():
         spec = [f"{s['material']}, {s['thickness_in']} in ({s['thickness_mm']} mm); qty {s['qty']}; flat {s['flat_mm'][0]} x {s['flat_mm'][1]} mm"]
@@ -214,6 +238,7 @@ def made_to_order(body, prices=None):
             row.update({'price_usd_each': None,
                         'price_note': ('an estimate until the instant price is read: run tools/sendcutsend_quote.py --only ' + name
                                        + (f" (last read: {pr.get('refused') or pr.get('error')})" if pr else ''))})
+        row['stage'] = s.get('stage', 'P1')
         out.append(row)
     return out
 
@@ -279,6 +304,13 @@ def build():
             L('te-dt06-12sa-kit', 1, 'the turret\'s TM plug on the body\'s harness (docs/turret-wiring.md 1.1): 24 V, CAN (J501 can1), SAFETY'),
         ],
         'p1_frame_hardware': [L(k, q, why) for k, (q, why) in hardware_counts().items()],
+        'p3_shell': p3_shell(L),
+        'p2_head': [                                            # D59: the turret mount plate under the deck (made_to_order: turret_plate)
+            L('screw_m5x16', len(__import__('body_frame').RISER_FEET), 'P2: the riser\'s feet up through the turret mount plate and the deck '
+                                                                      'into the riser\'s inserts (D59; they replace P1\'s M5 x 12)'),
+            L('screw_m5x10_button', 2, 'P2: the mount plate\'s two ends: down through the deck (two Ø5.5 holes drilled in the P1 deck) into '
+                                       'its PEM nuts (from P1\'s 100-pack, which has the spares)', from_pack_of='p1_frame_hardware'),
+        ],
         'tools': [
             L('spot_welder', 1, 'welding the pack\'s nickel (once)'),
             L('ferrule_crimper', 1, 'the ferrules (once)'),
@@ -291,6 +323,12 @@ def build():
                      'BSH3X35 on its M3 page, belmetric.com/m3x0-5-socket-head-cap-screw-din-912-class-12-9/) with its head under the pallet, '
                      'in the 8 mm the isolators leave'},
             {'item': '1/4-20 UNC x 3/8 in socket button head (the VLP-16 to the deck)', 'qty': 1, 'for': 'the lidar', 'note': 'any hardware store'},
+            {'item': '5/16-18 nylon-insert locknut (the SSC1 pods\' feet in the ear brackets, P3)', 'qty': 2, 'for': 'the ears',
+             'note': 'McMaster\'s 95615A (grade 5, zinc) has it; the product page for 5/16-18 is still to read (A120 is 1/4-20, A140 3/8-16)'},
+            {'item': 'Switchcraft TB4M mini-XLR 4-pin panel receptacle (the radio-stop jack, P3: STOP A/B, +12 V, GND)', 'qty': 1, 'for': 'the rear face',
+             'note': 'a listed part (DigiKey, Mouser); price to read; the turret\'s pendant uses its 3-pin TB3M (catalog/turret.json)'},
+            {'item': 'RP-SMA bulkhead pigtails x 4 (the J501\'s radios to the rear face, P3)', 'qty': 4, 'for': 'the rear face\'s D-flat holes',
+             'note': 'with the J501\'s Wi-Fi module when it is chosen (the j501-agx project\'s antenna note)'},
             {'item': 'Ø4 x 10 mm dowel pin (the VLP-16\'s two locating holes)', 'qty': 2, 'for': 'the lidar', 'note': 'McMaster 98381A series'},
         ],
         'not_in_this_order_sensors_compute': [
@@ -302,11 +340,18 @@ def build():
             L('flipsky-75100', 2, 'the wheels\' drivers, hung under the power plate: on the leg workstream\'s order (docs/body-plan.md 8)'),
         ],
     }
-    priced = [r for k, v in bom.items() if isinstance(v, list) and not k.startswith(('not_', 'to_source', 'made_to_order')) for r in v]
-    bom['price_usd_known'] = round(sum(_line_cost(r) for r in priced), 2)
-    bom['made_to_order_estimate_usd'] = round(sum((m['price_estimate_usd_each'] or 0) * m['qty'] for m in bom['made_to_order']), 2)
+    priced = [r for k, v in bom.items() if isinstance(v, list) and not k.startswith(('not_', 'to_source', 'made_to_order', 'p2_', 'p3_')) for r in v]
+    bom['price_usd_known'] = round(sum(_line_cost(r) for r in priced), 2)             # P0 + P1's bought parts
+    bom['p2_usd'] = round(sum(_line_cost(r) for r in bom.get('p2_head', []) if not r.get('from_pack_of'))
+                          + sum((m['price_usd_each'] if m['price_usd_each'] is not None else (m['price_estimate_usd_each'] or 0)) * m['qty']
+                                for m in bom['made_to_order'] if m.get('stage') == 'P2'), 2)
+    bom['made_to_order_estimate_usd'] = round(sum((m['price_estimate_usd_each'] or 0) * m['qty'] for m in bom['made_to_order']
+                                                  if m.get('stage', 'P1') in ('P0', 'P1')), 2)
+    bom['p3_usd'] = round(sum(_line_cost(r) for r in bom.get('p3_shell', []) if not r.get('from_pack_of'))
+                          + sum((m['price_usd_each'] if m['price_usd_each'] is not None else (m['price_estimate_usd_each'] or 0)) * m['qty']
+                                for m in bom['made_to_order'] if m.get('stage') == 'P3'), 2)
     bom['made_to_order_usd'] = round(sum((m['price_usd_each'] if m['price_usd_each'] is not None else (m['price_estimate_usd_each'] or 0))
-                                         * m['qty'] for m in bom['made_to_order']), 2)
+                                         * m['qty'] for m in bom['made_to_order'] if m.get('stage', 'P1') in ('P0', 'P1')), 2)
     bom['made_to_order_priced'] = all(m['price_usd_each'] is not None for m in bom['made_to_order'])
     return bom
 
@@ -336,7 +381,10 @@ def write_orders(bom, path=R / 'docs' / 'body-orders.md'):
         n = math.ceil(r['qty'] / pack)
         return n, pack, p, round(n * p, 2)
     groups = collections.OrderedDict()
-    lists = [k for k, v in bom.items() if isinstance(v, list) and not k.startswith(('not_', 'to_source', 'made_to_order'))]
+    lists = [k for k, v in bom.items() if isinstance(v, list) and not k.startswith(('not_', 'to_source', 'made_to_order', 'p2_', 'p3_'))]
+    made01 = [m for m in bom['made_to_order'] if m.get('stage', 'P1') in ('P0', 'P1')]
+    made2 = [m for m in bom['made_to_order'] if m.get('stage') == 'P2']
+    made3 = [m for m in bom['made_to_order'] if m.get('stage') == 'P3']
     for lst in lists:
         for r in bom[lst]:
             groups.setdefault((r.get('sellers') or [{}])[0].get('seller') or r.get('vendor') or '?', []).append((lst, r))
@@ -361,7 +409,7 @@ How to order:
 """, "## 1. SendCutSend (T2: the frame and the power plate): custom parts at an instant price\n",
            "| Part | Qty | Material | Flat (mm) | Operations | Files | Price each | Line |", "|---|---|---|---|---|---|---|---|"]
     tot_m, read = 0.0, []
-    for m in bom['made_to_order']:
+    for m in made01:
         ops = '; '.join(x for x in m['spec'][1:] if not x.startswith('deburr'))
         each = m['price_usd_each'] if m['price_usd_each'] is not None else m['price_estimate_usd_each']
         tot_m += (each or 0) * m['qty']
@@ -371,7 +419,7 @@ How to order:
                  else f"~${m['price_estimate_usd_each']:.0f} (estimate)")
         out.append(f"| {m['key']} | {m['qty']} | {m['material']} | {m['size_mm'][0]} x {m['size_mm'][1]} | {ops} | "
                    f"[DXF](../{m['dxf']}), [STEP](../{m['step']}) | {price} | ${(each or 0) * m['qty']:.2f} |")
-    est_all = sum((m['price_estimate_usd_each'] or 0) * m['qty'] for m in bom['made_to_order'])
+    est_all = sum((m['price_estimate_usd_each'] or 0) * m['qty'] for m in made01)
     out.append(f"\n**SendCutSend: ${tot_m:.2f}** for the set" + (f" (instant prices read {min(read)} in SendCutSend's app)" if read else '')
                + f"; the plan's estimate was ~${est_all:.0f}. Shipping is free over SendCutSend's threshold. Backup: OSH Cut "
                "(oshcut.com), which prices the same DXF instantly and also bends and inserts PEM nuts. The bus bars can instead be two "
@@ -414,12 +462,62 @@ How to order:
     fil = sum(v.get('cost_usd', 0) for v in bm.values())
     out.append("\nBy material: " + '; '.join(f"{m} {v.get('grams', 0) / 1000:.2f} kg, {v.get('hours', 0):.1f} h, ${v.get('cost_usd', 0):.2f}"
                                             for m, v in bm.items()) + f". STLs beside the plan in `exports/body/`.\n")
-    priced = all(m['price_usd_each'] is not None for m in bom['made_to_order'])
-    out.append(f"## 6. Totals\n\n| | |\n|---|---|\n| Bought (section 2) | ${grand:.2f} |\n"
+    priced = all(m['price_usd_each'] is not None for m in made01)
+    # ---- the P2 cart: the head, ordered once P1 balances on its tether (D59)
+    p2 = 0.0
+    if made2 or bom.get('p2_head'):
+        out += ["## 6. The P2 cart (the head: order it once P1 balances on its tether)\n",
+                "The turret's mount plate (D59) goes under the deck at the riser: the riser's four screws grow to M5 x 16 through it, "
+                "and its two ends are screwed down through the deck into its PEM nuts. **In the P1 deck, drill the two Ø5.5 holes "
+                "by hand** at (x, y) = " + ' and '.join(f'({x:.0f}, {y:.0f})' for x, y in __import__('body_frame').turret_plate_end_holes())
+                + " mm (robot frame): hold the plate on the riser's four screws and spot through its PEM nuts with an M5 transfer punch. "
+                "A Rev B deck (lever 3) gets them cut.\n",
+                "| Part | Qty | Made | Price each | Line | For |", "|---|---|---|---|---|---|"]
+        for m in made2:
+            each = m['price_usd_each'] if m['price_usd_each'] is not None else m['price_estimate_usd_each']
+            p2 += (each or 0) * m['qty']
+            price = (f"${m['price_usd_each']:.2f} (read {m['price_read_on']})" if m['price_usd_each'] is not None
+                     else f"~${m['price_estimate_usd_each'] or 0:.0f} (estimate)")
+            out.append(f"| [{m['key']}](../{m['dxf']}) | {m['qty']} | SendCutSend: {m['material']}, {'; '.join(x for x in m['spec'][1:] if not x.startswith('deburr'))} "
+                       f"| {price} | ${(each or 0) * m['qty']:.2f} | {m.get('note', 'D59')} |")
+        for r in bom.get('p2_head', []):
+            n, pack, pr, c = cost(r)
+            if r.get('from_pack_of'):                       # already bought with an earlier stage's pack
+                n, c = 0, 0.0
+            p2 += c
+            s0 = (r.get('sellers') or [{}])[0]
+            out.append(f"| [{r.get('part_number') or r['key']}]({s0.get('url')}): {(r.get('name') or r['key'])[:70]} | {r['qty']} | "
+                       f"{s0.get('seller')} ({f'{n} x {pack}-pack' if pack != 1 else n}) | ${pr:.2f} | ${c:.2f} | {r['for'][:110]} |")
+        out.append(f"\n**P2 cart: ${p2:.2f}** (whole packs; a line marked as taken from an earlier pack costs nothing here).\n")
+    p3 = 0.0
+    if made3 or bom.get('p3_shell'):
+        out += ["## 6b. The P3 cart (the shell, the tub, the guards: order it with P3)\n",
+                "The shell and the tub's printed parts are in `exports/body/shell/` with their own print plan; the leg's knee wedges and "
+                "apex fillets are envelopes for the leg workstream (`exports/body/shell/*_envelope.step`).\n",
+                "| Part | Qty | Made | Price each | Line | For |", "|---|---|---|---|---|---|"]
+        for m in made3:
+            each = m['price_usd_each'] if m['price_usd_each'] is not None else m['price_estimate_usd_each']
+            p3 += (each or 0) * m['qty']
+            price = (f"${m['price_usd_each']:.2f} (read {m['price_read_on']})" if m['price_usd_each'] is not None
+                     else f"~${m['price_estimate_usd_each'] or 0:.0f} (estimate)")
+            out.append(f"| [{m['key']}](../{m['dxf']}) | {m['qty']} | SendCutSend: {m['material']}, {'; '.join(x for x in m['spec'][1:] if not x.startswith('deburr'))} "
+                       f"| {price} | ${(each or 0) * m['qty']:.2f} | the battery tub (D61) |")
+        for r in bom.get('p3_shell', []):
+            n, pack, pr, c = cost(r)
+            if r.get('from_pack_of'):
+                n, c = 0, 0.0
+            p3 += c
+            s0 = (r.get('sellers') or [{}])[0]
+            out.append(f"| [{r.get('part_number') or r['key']}]({s0.get('url')}): {(r.get('name') or r['key'])[:70]} | {r['qty']} | "
+                       f"{s0.get('seller')} ({f'{n} x {pack}-pack' if pack != 1 else n}) | ${pr:.2f} | ${c:.2f} | {r['for'][:110]} |")
+        out.append(f"\n**P3 cart: ${p3:.2f}** (whole packs; the bought shell parts (the SSC1 pods, the D435s, the DualEye) are in the "
+                   "sensor head's order).\n")
+    out.append(f"## 7. Totals\n\n| | |\n|---|---|\n| Bought (section 2) | ${grand:.2f} |\n"
                f"| SendCutSend (section 1{', instant prices' if priced else ', partly estimated'}) | ${tot_m:.2f} |\n"
-               f"| Filament used (section 5) | ${fil:.2f} |\n| **Body P0 + P1** | **${grand + tot_m + fil:.2f}** |\n\n"
+               f"| Filament used (section 5) | ${fil:.2f} |\n| **Body P0 + P1** | **${grand + tot_m + fil:.2f}** |\n"
+               f"| P2 cart (section 6) | ${p2:.2f} |\n| P3 cart (section 6b) | ${p3:.2f} |\n\n"
                "Not included: the compute and sensors (section 3, R13), the legs and their VESCs (the leg workstream's order), the turret "
-               "(the turret workstream's), the shell and head (P3, T7), shipping and tax.\n")
+               "(the turret workstream's), the shell (P3), shipping and tax.\n")
     path.write_text('\n'.join(out))
     return grand, tot_m
 
@@ -429,7 +527,8 @@ def main():
     OUT.write_text(json.dumps(bom, indent=1) + '\n')
     write_orders(bom)
     n = sum(len(v) for k, v in bom.items() if isinstance(v, list))
-    print(f"exports/body/bom.json: {n} lines; bought ${bom['price_usd_known']:.2f} + made to order ${bom['made_to_order_usd']:.2f} "
+    print(f"exports/body/bom.json: {n} lines; P0 + P1: bought ${bom['price_usd_known']:.2f} + made to order ${bom['made_to_order_usd']:.2f}; "
+          f"the P2 cart ${bom['p2_usd']:.2f} "
           f"({'every price read' if bom['made_to_order_priced'] else 'some estimated'}; the estimate was ${bom['made_to_order_estimate_usd']:.2f})")
 
 

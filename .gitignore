@@ -32,3 +32,6 @@ exports/leg/springs/results*.json
 exports/body/body_stand.step
 exports/body/fea/*.json
 !exports/body/fea/summary.json
+
+# B10: the J501 project's parameters, vendored on purpose (our own project; cad/body_params.py --snapshot-j501)
+!references/vendor/j501/*.json

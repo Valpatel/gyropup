@@ -253,7 +253,8 @@ def main():
     import body_frame as bf
     body = json.loads(Path(a.body).read_text())
     parts = {'cheek': bf.cheek_part, 'floor_tray': bf.tray_part, 'belly_plate': bf.belly_part, 'deck': bf.deck_part,
-             'compute_pallet': bf.pallet_part, 'power_plate': bf.power_plate_part, 'bus_bar': bf.bus_bar_part}
+             'compute_pallet': bf.pallet_part, 'power_plate': bf.power_plate_part, 'bus_bar': bf.bus_bar_part,
+             'turret_plate': bf.turret_plate_part}
     outf = Path(a.out)
     res = json.loads(outf.read_text()) if outf.exists() else {}
     today = datetime.date.today().isoformat()
@@ -264,7 +265,7 @@ def main():
             feats = []
             if name in parts:
                 import body_layout as bl
-                sp = parts[name](bl.layout()['mounts']) if name not in ('cheek', 'bus_bar') else parts[name]()
+                sp = parts[name](bl.layout()['mounts']) if name not in ('cheek', 'bus_bar', 'turret_plate') else parts[name]()
                 feats = [{'d': f.d, 'note': f.note, 'kind': f.kind} for f in sp.features]
             o = order_of(s, feats)
             app = App(p, Path(a.shots) / name if a.shots else None)

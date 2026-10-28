@@ -54,7 +54,7 @@ def test_tm_pattern_is_the_turrets():
 
 
 def test_j501_from_its_project():
-    P = json.loads((bp.J501_DIR / 'cad' / 'parameters.json').read_text())
+    P = bp.j501_params()
     j = bp.j501()
     assert j['holes'] == [tuple(h) for h in P['pcb']['mount_holes']]
     assert j['module_holes'] == [tuple(h) for h in P['pcb']['module_mount_centers']]
@@ -63,6 +63,35 @@ def test_j501_from_its_project():
     xs = sorted({h[0] for h in j['module_holes']})
     ys = sorted({h[1] for h in j['module_holes']})
     assert (xs[-1] - xs[0], ys[-1] - ys[0]) == (92, 79)
+
+
+def test_j501_snapshot_is_the_live_file():
+    """B10: the body builds from references/vendor/j501/ when the j501-agx project is not on the machine (CI, the
+    GB10s); when it is, every part of it the body reads must equal the snapshot, so a moved cooler centre or a changed
+    port fails here until the snapshot is updated on purpose (.venv/bin/python cad/body_params.py --snapshot-j501)."""
+    snap = json.loads(bp.J501_SNAPSHOT.read_text())
+    src = json.loads(bp.J501_SNAPSHOT_SOURCE.read_text())
+    import hashlib
+    assert hashlib.sha1(bp.J501_SNAPSHOT.read_bytes()).hexdigest() == src['sha1'], 'the snapshot was edited by hand'
+    live = bp.J501_DIR / 'cad' / 'parameters.json'
+    if not live.exists():
+        import pytest
+        pytest.skip('the j501-agx project is not on this machine: the body uses the snapshot')
+    a, b = bp.j501_used(json.loads(live.read_text())), bp.j501_used(snap)
+    changed = [k for k in a if a[k] != b[k]]
+    assert not changed, f'the J501 project changed {changed} since the snapshot of {src["copied_on"]} ({src["commit"][:8]}): check the body, then snapshot'
+
+
+def test_j501_without_the_project():
+    """The body's J501 numbers are the same from the snapshot alone (a fresh interpreter with J501_DIR pointing nowhere)."""
+    import os
+    import subprocess
+    code = ('import sys, json; sys.path.insert(0, "cad"); import body_params as bp; '
+            'print(json.dumps({"src": bp.j501()["source"], "stack": bp.j501_stack(), "holes": bp.j501()["holes"]}))')
+    env = dict(os.environ, J501_DIR='/nonexistent-j501')
+    out = json.loads(subprocess.run([sys.executable, '-c', code], cwd=R, env=env, capture_output=True, text=True, check=True).stdout)
+    assert out['src'].startswith('references/vendor/j501/'), out['src']
+    assert out['stack'] == json.loads(json.dumps(bp.j501_stack())) and out['holes'] == json.loads(json.dumps(bp.j501()['holes']))
 
 
 def test_lidar_from_the_catalogue():
@@ -80,7 +109,7 @@ def test_lidar_from_the_catalogue():
 def test_sendcutsend_bend_numbers():
     for key, s in bp.STOCK.items():
         if s['bend']:
-            assert abs(s['bd'] / bp.IN - s['bd_in']) < 0.003, (key, s['bd'] / bp.IN)
+            assert abs(s['bd'] / bp.IN - s['bd_in']) < 0.004, (key, s['bd'] / bp.IN)      # SendCutSend's table rounds
 
 
 def test_spine_top_rules():
@@ -148,6 +177,43 @@ def test_printed_parts_fit_the_bed():
 def test_no_internal_clashes():
     b = _body()
     assert b['internal_clashes'] == [], b['internal_clashes']
+
+
+def test_frame_out_of_the_keepouts():
+    """No frame part in a keep-out zone: the J501's plugs, the cooler's exhaust, the turret's plug and its sweep, its
+    harness drop, the cable slot (build_body.FRAME_ZONE_OK lists the contacts that are by design)."""
+    b = _body()
+    if 'in_keepouts' not in b:
+        import pytest
+        pytest.skip('body.json from before the keep-out check')
+    assert b['in_keepouts'] == [], b['in_keepouts']
+
+
+def test_turret_plate():
+    """D59: the turret mount plate passes the sheet rules (test_sheet_rules), covers none of the deck's intake cells,
+    and adds no more than the plan's 135 g to the ledger."""
+    b = _body()
+    if 'turret_plate' not in b['sheet']:
+        import pytest
+        pytest.skip('body.json from before the turret plate')
+    tp = b['turret_plate']
+    assert tp['cells'] > 0 and tp['cells_covered'] == 0, tp
+    assert b['mass_g']['frame_parts']['turret_plate'] <= 135.0, b['mass_g']['frame_parts']['turret_plate']
+    assert b['sheet']['turret_plate']['hardware'] == {'SS-M5-0': 2}
+
+
+def test_frame_strength_cases():
+    """Every strength case of cad/body_studies.py passes its target (exports/body/fea/summary.json): SF >= 2 on yield
+    in the rare landings, 1.2 in the fault cases, D2 (the turret's tip-over) >= 2.0 with the mount plate (D59), the deck
+    <= 0.5 mm under a hand at the load, the twist <= 0.1 deg; the loads at the design mass (D57)."""
+    s = json.loads((R / 'exports' / 'body' / 'fea' / 'summary.json').read_text())['results']
+    bad = {k: (r.get('sf_by_part') or r.get('sf_away_from_spacer_ends') or r['safety_factor'], r.get('target_sf'))
+           for k, r in s.items() if not r['pass'] or r.get('pass_deflection') is False or r.get('pass_twist') is False}
+    assert not bad, bad
+    d2 = s['D2-turret-fall']
+    assert d2['target_sf'] >= 2.0, d2['target_sf']
+    loads = json.loads((R / 'exports' / 'body' / 'leg-loads.json').read_text())
+    assert loads['half_mass_kg'] >= 16.25 - 1e-9, loads['half_mass_kg']
 
 
 # ------------------------------------------------------------------------------------------- T5, T8: parts list, wiring

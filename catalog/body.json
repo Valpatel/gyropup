@@ -2276,5 +2276,108 @@
    "https://www.pololu.com/product/2804",
    "https://www.pololu.com/product/2803"
   ]
+ },
+ {
+  "id": "mcmaster-91290a120",
+  "key": "screw_m3x16",
+  "category": "fastener",
+  "vendor": "McMaster-Carr",
+  "model": "91290A120",
+  "name": "Black-Oxide Alloy Steel Socket Head Screw, M3 x 0.5 x 16 mm (the P3 shell: walls and faces into the posts' inserts, the door, hatch and splices)",
+  "price_usd": 0.1222,
+  "price_checked": "2026-10-27",
+  "pack_qty": 100,
+  "pack_price_usd": 12.22,
+  "price_note": "McMaster-Carr: $12.22 per 100-pack (read 2026-10-27, one product page; price_usd is per piece)",
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/91290A120/",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 12.22,
+    "pack_qty": 100,
+    "stock": "product page read (McMaster ships next day)",
+    "seller_pn": "91290A120"
+   },
+   {
+    "seller": "Belmetric",
+    "url": "https://belmetric.com/m3x0-5-socket-head-cap-screw-din-912-class-12-9/",
+    "price_usd": 0.16,
+    "seller_pn": "BSH3X16",
+    "read_on": "2026-10-27",
+    "stock": "in stock: DIN 912 12.9 black, the same screw; $0.10 each from 25"
+   }
+  ],
+  "backup": {
+   "what": "in stock: DIN 912 12.9 black, the same screw; $0.10 each from 25",
+   "seller": "Belmetric",
+   "part_number": "BSH3X16",
+   "price_usd": 0.16
+  },
+  "specs": {
+   "thread": "M3",
+   "length_mm": 16,
+   "head_d_mm": 5.5,
+   "mass_g": 1.6
+  },
+  "sources": [
+   "https://www.mcmaster.com/91290A120/",
+   "https://belmetric.com/m3x0-5-socket-head-cap-screw-din-912-class-12-9/"
+  ]
+ },
+ {
+  "id": "mcmaster-90592a085",
+  "key": "nut_m3",
+  "category": "fastener",
+  "vendor": "McMaster-Carr",
+  "model": "90592A085",
+  "name": "Steel Hex Nut, Medium-Strength, Class 8, M3 x 0.5 mm (held in the P3 shell's nut pads)",
+  "price_usd": 0.0294,
+  "price_checked": "2026-10-27",
+  "pack_qty": 100,
+  "pack_price_usd": 2.94,
+  "price_note": "McMaster-Carr: $2.94 per 100-pack (read 2026-10-27, one product page; price_usd is per piece)",
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/90592A085/",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 2.94,
+    "pack_qty": 100,
+    "stock": "product page read (McMaster ships next day)",
+    "seller_pn": "90592A085"
+   },
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/91828A211/",
+    "price_usd": 5.68,
+    "pack_qty": 100,
+    "seller_pn": "91828A211",
+    "read_on": "2026-10-27",
+    "stock": "18-8 stainless M3 hex nut, the same size"
+   }
+  ],
+  "backup": {
+   "what": "18-8 stainless M3 hex nut, the same size",
+   "seller": "McMaster-Carr",
+   "part_number": "91828A211",
+   "price_usd": 5.68
+  },
+  "specs": {
+   "thread": "M3",
+   "width_mm": 5.5,
+   "height_mm": 2.4,
+   "mass_g": 0.4
+  },
+  "sources": [
+   "https://www.mcmaster.com/90592A085/",
+   "https://www.mcmaster.com/91828A211/"
+  ]
  }
 ]

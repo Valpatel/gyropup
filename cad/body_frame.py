@@ -49,6 +49,8 @@ class Part:
     note: str = ''
     colour: tuple = (0.6, 0.6, 0.6)
     print_rotation: tuple = None  # printed parts: rotation onto the bed (axis, deg)
+    stage: str = 'P1'             # P0 skid, P1 open frame, P2 head, P3 shell: the ledger counts a part from its stage on
+    until: str = None             # the last stage it is on the robot (the PETG bay until P2: the P3 tub replaces it)
 
 
 # ------------------------------------------------------------------------------------------- helpers
@@ -273,7 +275,8 @@ def deck_part(mounts=None) -> bs.SheetPart:
         feats.append(bs.Feature('hole', 'base', tray_uv(x, y), 3.95, note='VLP-16 locating pin 5/32 in (ream to a light press)'))
     t = bp.tm()
     for (x, y) in RISER_FEET:
-        feats.append(bs.Feature('hole', 'base', tray_uv(t['pan_x'] + x, y), 5.5, note='riser, M5 x 12 from below into its insert'))
+        feats.append(bs.Feature('hole', 'base', tray_uv(t['pan_x'] + x, y), 5.5,
+                                note='riser, M5 x 16 from below through the turret plate (D59) into its insert'))
     for (x, y) in intake_cells():
         feats.append(bs.Feature('slot', 'base', tray_uv(x, y), size=(INTAKE_CELL, INTAKE_CELL, 1.5), note='fan intake'))
     feats += _mount_features((mounts or {}).get('deck', []), tray_uv)
@@ -370,14 +373,35 @@ def post_height():
     return bp.TOP - bp.STOCK[bp.DECK]['t'] - bp.z_tray_top()
 
 
+POST_END = 14.0              # solid at each end round the M5 insert (11 deep)
+POST_WALL = 4.0              # lever 5: hollow between the ends (the inserts need 4 mm walls)
+
+
 def post():
-    """A deck post (PA6-CF, 100 % solid): square POST_W, M5 heat-set inserts (94459A775, Ø6.4 x 11 pilot) both ends,
-    the edges rounded; printed standing (layers across the post: the post is in compression and the inserts pull
-    along it, so the pull-out crosses the layers: M3's coupon test covers it)."""
+    """A deck post (PA6-CF, 100 %): square POST_W, hollow between solid ends (lever 5: 4 mm walls; it carries 290 N at
+    the landing's 8.65 g), M5 heat-set inserts (94459A775, Ø6.4 x 11 pilot) both ends; M3 inserts (94459A140) for the
+    P3 shell in bosses: on its +-y faces at the side walls' screw heights, on its +-x faces at the front and rear
+    faces' (every corner uses one of each). Printed standing: the pull-out crosses the layers (the coupon test)."""
+    import body_shell as bs3
     h = post_height()
     w = bp.POST_W
+    zt = bp.z_tray_top()
     s = box(-w / 2, w / 2, -w / 2, w / 2, 0.0, h).edges('|Z').fillet(3.0)
+    core = box(-w / 2 + POST_WALL, w / 2 - POST_WALL, -w / 2 + POST_WALL, w / 2 - POST_WALL, POST_END, h - POST_END)
+    for z in bs3.POST_Z_SIDE:                                # a boss behind each M3 insert (7.5 deep from the face)
+        for sy in (1, -1):
+            core = core.cut(box(-4.5, 4.5, *sorted((sy * w / 2, sy * (w / 2 - 7.5))), z - zt - 4.5, z - zt + 4.5))
+    for z in bs3.POST_Z_FACE:
+        for sx in (1, -1):
+            core = core.cut(box(*sorted((sx * w / 2, sx * (w / 2 - 7.5))), -4.5, 4.5, z - zt - 4.5, z - zt + 4.5))
+    s = s.cut(core)
     s = s.cut(cyl_z(3.2, -1.0, 11.0)).cut(cyl_z(3.2, h - 11.0, h + 1.0))
+    for z in bs3.POST_Z_SIDE:
+        for sy in (1, -1):
+            s = s.cut(cyl_y(2.0, *sorted((sy * w / 2, sy * (w / 2 - 6.5))), 0.0, z - zt))
+    for z in bs3.POST_Z_FACE:
+        for sx in (1, -1):
+            s = s.cut(cq.Workplane('YZ', origin=(min(sx * w / 2, sx * (w / 2 - 6.5)), 0, 0)).center(0.0, z - zt).circle(2.0).extrude(6.5))
     return s
 
 
@@ -432,6 +456,80 @@ def din_rails(items):
     yc, yd = dd.box[2] + 8.0, dd.box[3] - 8.0                     # the plate's two F-M4-2 nuts under the 12 V rail
     return {'din_rail_24v': (26.0, (yb - ya) / 2, ((d.box[0] + d.box[1]) / 2, (ya + yb) / 2, d.box[4] - 7.5)),
             'din_rail_12v': (60.0, (yd - yc) / 2, ((dd.box[0] + dd.box[1]) / 2, (yc + yd) / 2, dd.box[4] - 7.5))}
+
+
+# ------------------------------------------------------------------------------------------- the turret mount plate (D59)
+
+TURRET_PLATE = {'stock': '6061-0.125', 'L': 160.0, 'W': 140.0,      # under the deck at the riser, centred on the pan axis
+                'end_pem_x': 10.0,                                   # its two PEM SS-M5-0 this far in from its +-x ends, on y = 0
+                'foot_pad_r': 20.0,                                  # the plate stays whole round each riser foot (its screw)
+                'notch': (4.0, 26.0)}                                # the rear-right corner cut away (x, y) for the turret harness's drop
+TURRET_PLATE_POCKETS = [(23.0, 55.0, 24.0, 22.0), (23.0, -55.0, 24.0, 22.0),   # (x, y, length, width) robot: the front corners
+                        (-108.0, 56.0, 16.0, 20.0)]                           # and the rear-left one (the rear-right is the notch)
+
+
+def turret_plate_xy():
+    """The plate's corner (x0, y0) in the robot frame and its size: centred on the turret's pan axis."""
+    t = bp.tm()
+    P = TURRET_PLATE
+    return t['pan_x'] - P['L'] / 2, -P['W'] / 2, P['L'], P['W']
+
+
+def plate_t_uv(x, y):
+    x0, y0, L, W = turret_plate_xy()
+    return (x - x0, W / 2 - y)
+
+
+def turret_plate_part(mounts=None) -> bs.SheetPart:
+    """D59: the turret mount plate, SendCutSend 6061-T6 0.125 in, flat, bolted under the deck at the riser: the riser's
+    four M5 screws come up through it and the deck into the riser's feet (M5 x 16 now: 3.2 mm longer), and two M5
+    screws go down through the deck into its two PEM SS-M5-0 nuts at its +-x ends. Two plates in bending under the
+    riser's feet take the turret's tip-over (D2) from SF 1.3 to over 2. It is open over the J501 fan's intake field
+    (the deck's cells, 1 mm clear: the intersection of the fan's field and the riser's ring, less a 20 mm pad round each
+    riser foot) and notched at its rear-right corner, where the turret's harness drops through the deck."""
+    import cadquery as cq
+    x0, y0, L, W = turret_plate_xy()
+    P = TURRET_PLATE
+    t = bp.tm()
+    fx, fy = bp.j501_stack()['fan_xy']
+    fan_uv = plate_t_uv(fx, fy)
+    pan_uv = plate_t_uv(t['pan_x'], 0.0)
+    feet_uv = [plate_t_uv(t['pan_x'] + a, b) for a, b in RISER_FEET]
+    r_field = INTAKE_R + 1.0                            # the cells' corners are within INTAKE_R of the fan's axis
+    r_ring = t['foot_r'] - 12.0 + 1.0                   # and within the riser's ring less 12 mm
+
+    def opening(th):
+        o = (cq.Workplane('XY').center(*fan_uv).circle(r_field).extrude(th + 2).translate((0, 0, -1))
+             .intersect(cq.Workplane('XY').center(*pan_uv).circle(r_ring).extrude(th + 2).translate((0, 0, -1))))
+        for f in feet_uv:
+            o = o.cut(cq.Workplane('XY').center(*f).circle(P['foot_pad_r']).extrude(th + 4).translate((0, 0, -2)))
+        return o
+    feats = [bs.Feature('cutout', 'base', fan_uv, make=opening, note='open over the J501 fan\'s intake field')]
+    for (u, v) in feet_uv:
+        feats.append(bs.Feature('hole', 'base', (u, v), 5.5, note='riser foot: M5 x 16 up through the plate and the deck into its insert'))
+    for u in (P['end_pem_x'], L - P['end_pem_x']):
+        feats.append(bs.Feature('pem', 'base', (u, W / 2), bp.PEM['SS-M5-0']['H'], spec='SS-M5-0',
+                                note='M5 x 10 ISO 7380 down through the deck into this nut'))
+    for (x, y, lx, ly) in TURRET_PLATE_POCKETS:          # lightening, where neither a riser foot nor a nut needs the plate
+        feats.append(bs.Feature('slot', 'base', plate_t_uv(x, y), size=(lx, ly, 5.0), note='lightening pocket'))
+    nx, ny = P['notch']
+    outline = [(0.0, 0.0), (L, 0.0), (L, W), (nx, W), (nx, W - ny), (0.0, W - ny)]     # v = W is y = -W/2: the right side
+    return bs.SheetPart('turret_plate', P['stock'], L, W, features=feats, outline=outline,
+                        note='flat; under the deck at the riser (D59); PEM SS-M5-0 pressed from its underside, their bodies down')
+
+
+def place_turret_plate(shape):
+    """Flat part (u, v, 0..t) -> robot: its top face against the deck's underside (part z = 0 up after the turn)."""
+    x0, y0, L, W = turret_plate_xy()
+    zd = bp.TOP - bp.STOCK[bp.DECK]['t']
+    return shape.rotate((0, 0, 0), (1, 0, 0), 180).translate((x0, W / 2, zd))
+
+
+def turret_plate_end_holes():
+    """The two Ø5.5 holes the plate's end screws need in the deck (robot x, y): drilled by hand in the P1 deck, cut in a
+    Rev B deck."""
+    x0, y0, L, W = turret_plate_xy()
+    return [(x0 + TURRET_PLATE['end_pem_x'], 0.0), (x0 + L - TURRET_PLATE['end_pem_x'], 0.0)]
 
 
 RISER_LEG_R = 9.0
@@ -550,6 +648,12 @@ def frame_parts(mounts=None) -> dict:
     out['riser'] = Part('riser', 'printed', riser().translate((t['pan_x'], 0.0, bp.TOP)), 1, material='pa6-cf',
                         colour=(0.25, 0.27, 0.30), note='PA6-CF, 100 % solid, printed on its top face; 8 x M5 inserts, 2 x Ø5 dowels',
                         print_rotation=((1, 0, 0), 180))
+    tp = turret_plate_part(mounts)                                     # D59: under the deck at the riser, ordered with P2
+    tl = tp.solid()
+    out['turret_plate'] = Part('turret_plate', 'sheet', place_turret_plate(tl), 1, tp, tl, tp.s['material'], colour=(0.78, 0.80, 0.84),
+                               note=tp.note, stage='P2')
+    out['turret_plate_nuts'] = Part('turret_plate_nuts', 'bought', pem_bodies(tp, place_turret_plate), 2, colour=(0.6, 0.6, 0.62),
+                                    note='PEM SS-M5-0 (pressed by SendCutSend)', stage='P2')
     iso = isolator()
     for k, (x, y) in enumerate(ISOLATORS):
         out[f'isolator_{k + 1}'] = Part(f'isolator_{k + 1}', 'printed', iso.translate((x, y, zt)), 1, material='tpu95',
@@ -584,7 +688,8 @@ def frame_parts(mounts=None) -> dict:
     for n, sh in bb.bay_parts(bb.brick()).items():
         mat = 'tpu95' if 'skid' in n else 'petg'
         out[n] = Part(n, 'printed', sh, 1, material=mat, colour=(0.15, 0.15, 0.17) if 'skid' in n else (0.85, 0.55, 0.15),
-                      note='TPU 95A skid' if 'skid' in n else 'PETG, 3 mm walls; 4 x M5 x 10 up into the belly plate\'s nuts each side')
+                      note='TPU 95A skid' if 'skid' in n else 'PETG, 3 mm walls; 4 x M5 x 10 up into the belly plate\'s nuts each side',
+                      until='P2')
     out['spacers'] = Part('spacers', 'bought', spacers(), len(SPACERS_XZ), colour=(0.8, 0.8, 0.82), note='M4 x 31 hex standoff, 6 mm hex, female-female, aluminium (95947A065)')
     out['spacer_screws'] = Part('spacer_screws', 'bought', spacer_screws(), 2 * len(SPACERS_XZ), colour=(0.15, 0.15, 0.17), note='M4 x 10 ISO 10642 flat head')
     for side in ('left', 'right'):
@@ -592,6 +697,23 @@ def frame_parts(mounts=None) -> dict:
                                            note='M5 x 12 ISO 7380 into the hip frame\'s inserts')
         out[f'cheek_nuts_{side}'] = Part(f'cheek_nuts_{side}', 'bought', pem_bodies(cp, lambda s, sd=side: place_cheek(s, sd)), 8,
                                          colour=(0.6, 0.6, 0.62), note='PEM SS-M5-0 (pressed by SendCutSend)')
+    return out
+
+
+STAGES = ('P0', 'P1', 'P2', 'P3')
+
+
+def on_robot(p, stage) -> bool:
+    """Whether a part is on the robot at a stage (its stage .. its until)."""
+    i = STAGES.index(stage)
+    return STAGES.index(getattr(p, 'stage', 'P1')) <= i and (getattr(p, 'until', None) is None or i <= STAGES.index(p.until))
+
+
+def all_parts(mounts=None) -> dict:
+    """The frame's parts and the P3 shell's (cad/body_shell.py): every part of every stage."""
+    import body_shell as bs3
+    out = frame_parts(mounts)
+    out.update(bs3.shell_parts())
     return out
 
 

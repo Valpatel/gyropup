@@ -1322,8 +1322,8 @@
   {
    "key": "screw_m5x12_button",
    "id": "mcmaster-91239a228",
-   "qty": 12,
-   "for": "the hip frames to the cheeks: six each, from inside the gap (3 N m)",
+   "qty": 16,
+   "for": "the hip frames to the cheeks: six each, from inside the gap (3 N m); 4 the riser's feet up through the deck into its inserts (P1; M5 x 16 through the P2 mount plate)",
    "vendor": "McMaster-Carr",
    "part_number": "91239A228",
    "name": "Black-oxide class 10.9 button head hex drive screw, ISO 7380, M5 x 0.8 x 12 mm (the hip frames into the cheeks)",
@@ -1359,8 +1359,8 @@
   {
    "key": "screw_m5x10_button",
    "id": "mcmaster-91239a224",
-   "qty": 58,
-   "for": "16 tray and belly into the cheeks' flange nuts, 12 battery bay into the belly, 8 deck posts, 8 plate posts, 4 riser legs, 10 VESC flanges and shunt into the plate's nuts",
+   "qty": 54,
+   "for": "16 tray and belly into the cheeks' flange nuts, 12 battery bay into the belly, 8 deck posts, 8 plate posts, 10 VESC flanges and shunt into the plate's nuts",
    "vendor": "McMaster-Carr",
    "part_number": "91239A224",
    "name": "Black-oxide class 10.9 button head hex drive screw, ISO 7380, M5 x 0.8 x 10 mm (tray, belly, posts, VESCs, bay)",
@@ -1804,6 +1804,290 @@
    ]
   }
  ],
+ "p3_shell": [
+  {
+   "key": "screw_m3x16",
+   "id": "mcmaster-91290a120",
+   "qty": 30,
+   "for": "P3: 16 walls and faces into the posts' side inserts, 4 the door, 2 the hatch, 4 the side walls' splices, 4 the D435 cradles",
+   "vendor": "McMaster-Carr",
+   "part_number": "91290A120",
+   "name": "Black-Oxide Alloy Steel Socket Head Screw, M3 x 0.5 x 16 mm (the P3 shell: walls and faces into the posts' inserts, the door, hatch and splices)",
+   "mass_g_each": 1.6,
+   "price_usd_each": 0.1222,
+   "url": "https://www.mcmaster.com/91290A120/",
+   "pack_qty": 100,
+   "sellers": [
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/91290A120/",
+     "in_stock": true,
+     "ships_from": "US",
+     "stock": "product page read (McMaster ships next day)",
+     "read_on": "2026-10-27",
+     "price_usd": 12.22,
+     "pack_qty": 100,
+     "seller_pn": "91290A120"
+    },
+    {
+     "seller": "Belmetric",
+     "url": "https://belmetric.com/m3x0-5-socket-head-cap-screw-din-912-class-12-9/",
+     "stock": "in stock: DIN 912 12.9 black, the same screw; $0.10 each from 25",
+     "read_on": "2026-10-27",
+     "price_usd": 0.16,
+     "seller_pn": "BSH3X16"
+    }
+   ]
+  },
+  {
+   "key": "insert_m3",
+   "id": "mcmaster-94459a140",
+   "qty": 26,
+   "for": "P3: 16 in the hollow posts' sides (reprinted with their bosses), 10 in the tub rails (from P1's 50-pack: 8 used)",
+   "vendor": "McMaster-Carr",
+   "part_number": "94459A140",
+   "name": "Heat-Set Threaded Inserts for Plastic, Standard, Brass, M3 x 0.5 mm Thread Size, 5.7 mm Installed Length",
+   "mass_g_each": 0.358,
+   "price_usd_each": 0.2182,
+   "url": "https://www.mcmaster.com/94459A140/",
+   "pack_qty": 50,
+   "sellers": [
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/94459A140/",
+     "in_stock": null,
+     "ships_from": "US",
+     "price_usd": 10.91,
+     "pack_qty": 50
+    },
+    {
+     "seller": "3DJake",
+     "url": "https://www.3djake.com/cnc-kitchen/threaded-inserts-m3-standard",
+     "stock": "In stock",
+     "read_on": "2026-10-27",
+     "seller_pn": "CNC-X001FCE4M5",
+     "price_usd": 11.18,
+     "pack_qty": 100
+    },
+    {
+     "seller": "ruthex",
+     "url": "https://www.ruthex.de/products/ruthex-gewindeeinsatz-m3-100-stuck-rx-m3x5-7-messing-gewindebuchsen",
+     "stock": "InStock (schema.org availability)",
+     "read_on": "2026-10-27",
+     "seller_pn": "RX-M3x5.7 (SKU GE-M3x57-001)",
+     "pack_qty": 100
+    }
+   ],
+   "from_pack_of": "p1_frame_hardware"
+  },
+  {
+   "key": "nut_m3",
+   "id": "mcmaster-90592a085",
+   "qty": 10,
+   "for": "P3: held in the walls' nut pads (door, hatch, splices)",
+   "vendor": "McMaster-Carr",
+   "part_number": "90592A085",
+   "name": "Steel Hex Nut, Medium-Strength, Class 8, M3 x 0.5 mm (held in the P3 shell's nut pads)",
+   "mass_g_each": 0.4,
+   "price_usd_each": 0.0294,
+   "url": "https://www.mcmaster.com/90592A085/",
+   "pack_qty": 100,
+   "sellers": [
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/90592A085/",
+     "in_stock": true,
+     "ships_from": "US",
+     "stock": "product page read (McMaster ships next day)",
+     "read_on": "2026-10-27",
+     "price_usd": 2.94,
+     "pack_qty": 100,
+     "seller_pn": "90592A085"
+    },
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/91828A211/",
+     "stock": "18-8 stainless M3 hex nut, the same size",
+     "read_on": "2026-10-27",
+     "price_usd": 5.68,
+     "pack_qty": 100,
+     "seller_pn": "91828A211"
+    }
+   ]
+  },
+  {
+   "key": "screw_m5x16",
+   "id": "mcmaster-91290a232",
+   "qty": 20,
+   "for": "P3: 8 the ear brackets through the side walls, 12 the tub rails up into the belly plate's nuts (from P2's 100-pack)",
+   "vendor": "McMaster-Carr",
+   "part_number": "91290A232",
+   "name": "Black-Oxide Alloy Steel Socket Head Screw, US Origin, M5 x 0.8 mm Thread Size, 16 mm Long",
+   "mass_g_each": 3.731,
+   "price_usd_each": 0.1727,
+   "url": "https://www.mcmaster.com/91290A232/",
+   "pack_qty": 100,
+   "sellers": [
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/91290A232/",
+     "in_stock": null,
+     "ships_from": "US",
+     "price_usd": 17.27,
+     "pack_qty": 100
+    },
+    {
+     "seller": "Belmetric",
+     "url": "https://belmetric.com/m5x0-8-socket-head-cap-screw-din-912-class-12-9/",
+     "stock": "in stock",
+     "read_on": "2026-10-27",
+     "seller_pn": "BSH5X16",
+     "price_usd": 0.17
+    }
+   ],
+   "from_pack_of": "p2_head"
+  },
+  {
+   "key": "nut_m5_nyloc",
+   "id": "mcmaster-94645a102",
+   "qty": 8,
+   "for": "P3: inside the side walls behind the ear brackets",
+   "vendor": "McMaster-Carr",
+   "part_number": "94645A102",
+   "name": "High-Strength Steel Nylon-Insert Locknut, Zinc Plated, M5 x 0.8 mm Thread Size",
+   "mass_g_each": 1.308,
+   "price_usd_each": 0.1566,
+   "url": "https://www.mcmaster.com/94645A102/",
+   "pack_qty": 100,
+   "sellers": [
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/94645A102/",
+     "in_stock": null,
+     "ships_from": "US",
+     "price_usd": 15.66,
+     "pack_qty": 100
+    },
+    {
+     "seller": "Belmetric",
+     "url": "https://belmetric.com/nylon-locking-nut-class-8-steel-din-985/",
+     "stock": "in stock",
+     "read_on": "2026-10-27",
+     "seller_pn": "NN5CLZ",
+     "price_usd": 0.09
+    }
+   ]
+  },
+  {
+   "key": "screw_m3x8_socket",
+   "id": "mcmaster-91290a113",
+   "qty": 32,
+   "for": "P3: the tub's side plates (20), the skids (8), the dock pads' insulators (4) (from P1's 100-pack)",
+   "vendor": "McMaster-Carr",
+   "part_number": "91290A113",
+   "name": "Black-oxide alloy steel socket head screw, M3 x 0.5 x 8 mm (the bus bars to their insulators, the insulators to the plate)",
+   "mass_g_each": null,
+   "price_usd_each": 0.1328,
+   "url": "https://www.mcmaster.com/91290A113/",
+   "pack_qty": 100,
+   "sellers": [
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/91290A113/",
+     "in_stock": true,
+     "ships_from": "US",
+     "stock": "product page read (McMaster ships next day)",
+     "read_on": "2026-10-27",
+     "price_usd": 13.28,
+     "pack_qty": 100,
+     "seller_pn": "91290A113"
+    },
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/91290A115/",
+     "in_stock": true,
+     "ships_from": "US",
+     "stock": "M3 x 10 of the same series",
+     "read_on": "2026-10-27",
+     "price_usd": 13.23,
+     "pack_qty": 100,
+     "seller_pn": "91290A115"
+    }
+   ],
+   "from_pack_of": "p1_frame_hardware"
+  }
+ ],
+ "p2_head": [
+  {
+   "key": "screw_m5x16",
+   "id": "mcmaster-91290a232",
+   "qty": 4,
+   "for": "P2: the riser's feet up through the turret mount plate and the deck into the riser's inserts (D59; they replace P1's M5 x 12)",
+   "vendor": "McMaster-Carr",
+   "part_number": "91290A232",
+   "name": "Black-Oxide Alloy Steel Socket Head Screw, US Origin, M5 x 0.8 mm Thread Size, 16 mm Long",
+   "mass_g_each": 3.731,
+   "price_usd_each": 0.1727,
+   "url": "https://www.mcmaster.com/91290A232/",
+   "pack_qty": 100,
+   "sellers": [
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/91290A232/",
+     "in_stock": null,
+     "ships_from": "US",
+     "price_usd": 17.27,
+     "pack_qty": 100
+    },
+    {
+     "seller": "Belmetric",
+     "url": "https://belmetric.com/m5x0-8-socket-head-cap-screw-din-912-class-12-9/",
+     "stock": "in stock",
+     "read_on": "2026-10-27",
+     "seller_pn": "BSH5X16",
+     "price_usd": 0.17
+    }
+   ]
+  },
+  {
+   "key": "screw_m5x10_button",
+   "id": "mcmaster-91239a224",
+   "qty": 2,
+   "for": "P2: the mount plate's two ends: down through the deck (two \u00d85.5 holes drilled in the P1 deck) into its PEM nuts (from P1's 100-pack, which has the spares)",
+   "vendor": "McMaster-Carr",
+   "part_number": "91239A224",
+   "name": "Black-oxide class 10.9 button head hex drive screw, ISO 7380, M5 x 0.8 x 10 mm (tray, belly, posts, VESCs, bay)",
+   "mass_g_each": null,
+   "price_usd_each": 0.1179,
+   "url": "https://www.mcmaster.com/91239A224/",
+   "pack_qty": 100,
+   "sellers": [
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/91239A224/",
+     "in_stock": true,
+     "ships_from": "US",
+     "stock": "product page read (McMaster ships next day)",
+     "read_on": "2026-10-27",
+     "price_usd": 11.79,
+     "pack_qty": 100,
+     "seller_pn": "91239A224"
+    },
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/91239A228/",
+     "in_stock": true,
+     "ships_from": "US",
+     "stock": "M5 x 12 of the same series",
+     "read_on": "2026-10-27",
+     "price_usd": 12.06,
+     "pack_qty": 100,
+     "seller_pn": "91239A228"
+    }
+   ],
+   "from_pack_of": "p1_frame_hardware"
+  }
+ ],
  "tools": [
   {
    "key": "spot_welder",
@@ -1906,7 +2190,8 @@
     "1000": 23.32
    },
    "ships_by": "Nov 3",
-   "price_note": "SendCutSend's instant price, read in its app on 2026-10-27 from the uploaded DXF (tools/sendcutsend_quote.py): 5052-H32 aluminium 0.187 in, bending 2 bends found in the DXF's BEND layer, each 90 deg UP, countersinking 1, hardware 1, deburred, qty 2; cutting alone $54.25 each"
+   "price_note": "SendCutSend's instant price, read in its app on 2026-10-27 from the uploaded DXF (tools/sendcutsend_quote.py): 5052-H32 aluminium 0.187 in, bending 2 bends found in the DXF's BEND layer, each 90 deg UP, countersinking 1, hardware 1, deburred, qty 2; cutting alone $54.25 each",
+   "stage": "P1"
   },
   {
    "key": "floor_tray",
@@ -1943,7 +2228,8 @@
     "1000": 23.49
    },
    "ships_by": "Nov 3",
-   "price_note": "SendCutSend's instant price, read in its app on 2026-10-27 from the uploaded DXF (tools/sendcutsend_quote.py): 5052-H32 aluminium 0.125 in, bending 4 bends found in the DXF's BEND layer, each 90 deg UP, tapping 1, hardware 1, deburred, qty 1; cutting alone $50.62 each"
+   "price_note": "SendCutSend's instant price, read in its app on 2026-10-27 from the uploaded DXF (tools/sendcutsend_quote.py): 5052-H32 aluminium 0.125 in, bending 4 bends found in the DXF's BEND layer, each 90 deg UP, tapping 1, hardware 1, deburred, qty 1; cutting alone $50.62 each",
+   "stage": "P1"
   },
   {
    "key": "belly_plate",
@@ -1978,7 +2264,8 @@
     "1000": 20.53
    },
    "ships_by": "Nov 4",
-   "price_note": "SendCutSend's instant price, read in its app on 2026-10-27 from the uploaded DXF (tools/sendcutsend_quote.py): 6061-T6 aluminium 0.1 in, hardware 1, deburred, qty 1; cutting alone $51.21 each"
+   "price_note": "SendCutSend's instant price, read in its app on 2026-10-27 from the uploaded DXF (tools/sendcutsend_quote.py): 6061-T6 aluminium 0.1 in, hardware 1, deburred, qty 1; cutting alone $51.21 each",
+   "stage": "P1"
   },
   {
    "key": "deck",
@@ -1986,7 +2273,7 @@
    "vendor": "SendCutSend (sendcutsend.com: upload the DXF, pick the material, add the services above)",
    "backup": "OSH Cut (oshcut.com: instant price from the DXF or STEP; bends and PEM nuts)",
    "material": "5052-H32 aluminium 0.1 in",
-   "mass_g_each": 648.9,
+   "mass_g_each": 647.6,
    "size_mm": [
     350.3,
     284.3,
@@ -2002,18 +2289,19 @@
    ],
    "rules": "SendCutSend rules checked: none broken",
    "price_estimate_usd_each": 65.0,
-   "price_usd_each": 78.94,
+   "price_usd_each": 80.04,
    "price_read_on": "2026-10-27",
-   "price_usd_line": 78.94,
+   "price_usd_line": 80.04,
    "price_breaks_usd_each": {
-    "2": 58.49,
-    "10": 41.79,
-    "50": 33.81,
-    "100": 28.19,
-    "1000": 23.63
+    "2": 59.37,
+    "10": 42.49,
+    "50": 34.41,
+    "100": 28.69,
+    "1000": 23.91
    },
    "ships_by": "Nov 2",
-   "price_note": "SendCutSend's instant price, read in its app on 2026-10-27 from the uploaded DXF (tools/sendcutsend_quote.py): 5052-H32 aluminium 0.1 in, bending 4 bends found in the DXF's BEND layer, each 90 deg UP, deburred, qty 1; cutting alone $62.63 each"
+   "price_note": "SendCutSend's instant price, read in its app on 2026-10-27 from the uploaded DXF (tools/sendcutsend_quote.py): 5052-H32 aluminium 0.1 in, bending 4 bends found in the DXF's BEND layer, each 90 deg UP, deburred, qty 1; cutting alone $63.73 each",
+   "stage": "P1"
   },
   {
    "key": "compute_pallet",
@@ -2048,7 +2336,44 @@
     "1000": 16.23
    },
    "ships_by": "Nov 2",
-   "price_note": "SendCutSend's instant price, read in its app on 2026-10-27 from the uploaded DXF (tools/sendcutsend_quote.py): 6061-T6 aluminium 0.125 in, countersinking 1, deburred, qty 1; cutting alone $30.62 each"
+   "price_note": "SendCutSend's instant price, read in its app on 2026-10-27 from the uploaded DXF (tools/sendcutsend_quote.py): 6061-T6 aluminium 0.125 in, countersinking 1, deburred, qty 1; cutting alone $30.62 each",
+   "stage": "P1"
+  },
+  {
+   "key": "turret_plate",
+   "qty": 1,
+   "vendor": "SendCutSend (sendcutsend.com: upload the DXF, pick the material, add the services above)",
+   "backup": "OSH Cut (oshcut.com: instant price from the DXF or STEP; bends and PEM nuts)",
+   "material": "6061-T6 aluminium 0.125 in",
+   "mass_g_each": 132.6,
+   "size_mm": [
+    160.0,
+    140.0,
+    3.175
+   ],
+   "step": "exports/body/sendcutsend/turret_plate_6061-T6_0.125in_x1.step",
+   "dxf": "exports/body/sendcutsend/turret_plate_6061-T6_0.125in_x1.dxf",
+   "drawing": "exports/body/sendcutsend/turret_plate_6061-T6_0.125in_x1.dxf",
+   "spec": [
+    "6061-T6 aluminium, 0.125 in (3.175 mm); qty 1; flat 160.0 x 140.0 mm",
+    "2 x PEM SS-M5-0 pressed by SendCutSend (hardware insertion), positions as the STEP",
+    "deburr (SendCutSend's deburring); no finish needed"
+   ],
+   "rules": "SendCutSend rules checked: none broken",
+   "price_estimate_usd_each": 25.0,
+   "price_usd_each": 36.62,
+   "price_read_on": "2026-10-27",
+   "price_usd_line": 36.62,
+   "price_breaks_usd_each": {
+    "2": 25.42,
+    "10": 19.38,
+    "50": 15.67,
+    "100": 14.04,
+    "1000": 10.69
+   },
+   "ships_by": "Nov 2",
+   "price_note": "SendCutSend's instant price, read in its app on 2026-10-27 from the uploaded DXF (tools/sendcutsend_quote.py): 6061-T6 aluminium 0.125 in, hardware 1, deburred, qty 1; cutting alone $26.81 each",
+   "stage": "P2"
   },
   {
    "key": "power_plate",
@@ -2084,7 +2409,8 @@
     "1000": 15.89
    },
    "ships_by": "Nov 2",
-   "price_note": "SendCutSend's instant price, read in its app on 2026-10-27 from the uploaded DXF (tools/sendcutsend_quote.py): 5052-H32 aluminium 0.1 in, hardware 2, deburred, qty 1; cutting alone $28.87 each"
+   "price_note": "SendCutSend's instant price, read in its app on 2026-10-27 from the uploaded DXF (tools/sendcutsend_quote.py): 5052-H32 aluminium 0.1 in, hardware 2, deburred, qty 1; cutting alone $28.87 each",
+   "stage": "P1"
   },
   {
    "key": "bus_bar",
@@ -2119,7 +2445,80 @@
     "1000": 11.4
    },
    "ships_by": "Nov 3",
-   "price_note": "SendCutSend's instant price, read in its app on 2026-10-27 from the uploaded DXF (tools/sendcutsend_quote.py): C110 copper 0.125 in, cut only, deburred, qty 2; cutting alone $23.56 each"
+   "price_note": "SendCutSend's instant price, read in its app on 2026-10-27 from the uploaded DXF (tools/sendcutsend_quote.py): C110 copper 0.125 in, cut only, deburred, qty 2; cutting alone $23.56 each",
+   "stage": "P1"
+  },
+  {
+   "key": "tub_floor",
+   "qty": 1,
+   "vendor": "SendCutSend (sendcutsend.com: upload the DXF, pick the material, add the services above)",
+   "backup": "OSH Cut (oshcut.com: instant price from the DXF or STEP; bends and PEM nuts)",
+   "material": "5052-H32 aluminium 0.063 in",
+   "mass_g_each": 150.0,
+   "size_mm": [
+    302.0,
+    116.9,
+    1.6
+   ],
+   "step": "exports/body/sendcutsend/tub_floor_5052-H32_0.063in_x1.step",
+   "dxf": "exports/body/sendcutsend/tub_floor_5052-H32_0.063in_x1.dxf",
+   "drawing": "exports/body/sendcutsend/tub_floor_5052-H32_0.063in_x1.dxf",
+   "spec": [
+    "5052-H32 aluminium, 0.063 in (1.6 mm); qty 1; flat 302.0 x 116.9 mm",
+    "2 bends, 90 deg, SendCutSend's 0.035 in radius (K 0.42, bend deduction 0.096 in): the DXF's BEND layer marks the lines (the app reads them; each 90 deg UP); flanges as the STEP",
+    "10 x PEM S-M3-0 pressed by SendCutSend (hardware insertion), positions as the STEP",
+    "deburr (SendCutSend's deburring); no finish needed"
+   ],
+   "rules": "SendCutSend rules checked: none broken",
+   "price_estimate_usd_each": 45.0,
+   "price_usd_each": 50.06,
+   "price_read_on": "2026-10-27",
+   "price_usd_line": 50.06,
+   "price_breaks_usd_each": {
+    "2": 34.23,
+    "10": 23.2,
+    "50": 17.09,
+    "100": 14.9,
+    "1000": 12.09
+   },
+   "ships_by": "Nov 2",
+   "price_note": "SendCutSend's instant price, read in its app on 2026-10-27 from the uploaded DXF (tools/sendcutsend_quote.py): 5052-H32 aluminium 0.063 in, bending 2 bends found in the DXF's BEND layer, each 90 deg UP, hardware 1, deburred, qty 1; cutting alone $26.48 each",
+   "stage": "P3"
+  },
+  {
+   "key": "tub_side",
+   "qty": 2,
+   "vendor": "SendCutSend (sendcutsend.com: upload the DXF, pick the material, add the services above)",
+   "backup": "OSH Cut (oshcut.com: instant price from the DXF or STEP; bends and PEM nuts)",
+   "material": "5052-H32 aluminium 0.063 in",
+   "mass_g_each": 83.3,
+   "size_mm": [
+    302.0,
+    64.6,
+    1.6
+   ],
+   "step": "exports/body/sendcutsend/tub_side_5052-H32_0.063in_x2.step",
+   "dxf": "exports/body/sendcutsend/tub_side_5052-H32_0.063in_x2.dxf",
+   "drawing": "exports/body/sendcutsend/tub_side_5052-H32_0.063in_x2.dxf",
+   "spec": [
+    "5052-H32 aluminium, 0.063 in (1.6 mm); qty 2; flat 302.0 x 64.6 mm",
+    "deburr (SendCutSend's deburring); no finish needed"
+   ],
+   "rules": "SendCutSend rules checked: none broken",
+   "price_estimate_usd_each": 30.0,
+   "price_usd_each": 12.98,
+   "price_read_on": "2026-10-27",
+   "price_usd_line": 25.96,
+   "price_breaks_usd_each": {
+    "2": 12.98,
+    "10": 8.71,
+    "50": 5.96,
+    "100": 5.15,
+    "1000": 4.23
+   },
+   "ships_by": "Nov 2",
+   "price_note": "SendCutSend's instant price, read in its app on 2026-10-27 from the uploaded DXF (tools/sendcutsend_quote.py): 5052-H32 aluminium 0.063 in, cut only, deburred, qty 2; cutting alone $15.53 each",
+   "stage": "P3"
   }
  ],
  "to_source": [
@@ -2134,6 +2533,24 @@
    "qty": 1,
    "for": "the lidar",
    "note": "any hardware store"
+  },
+  {
+   "item": "5/16-18 nylon-insert locknut (the SSC1 pods' feet in the ear brackets, P3)",
+   "qty": 2,
+   "for": "the ears",
+   "note": "McMaster's 95615A (grade 5, zinc) has it; the product page for 5/16-18 is still to read (A120 is 1/4-20, A140 3/8-16)"
+  },
+  {
+   "item": "Switchcraft TB4M mini-XLR 4-pin panel receptacle (the radio-stop jack, P3: STOP A/B, +12 V, GND)",
+   "qty": 1,
+   "for": "the rear face",
+   "note": "a listed part (DigiKey, Mouser); price to read; the turret's pendant uses its 3-pin TB3M (catalog/turret.json)"
+  },
+  {
+   "item": "RP-SMA bulkhead pigtails x 4 (the J501's radios to the rear face, P3)",
+   "qty": 4,
+   "for": "the rear face's D-flat holes",
+   "note": "with the J501's Wi-Fi module when it is chosen (the j501-agx project's antenna note)"
   },
   {
    "item": "\u00d84 x 10 mm dowel pin (the VLP-16's two locating holes)",
@@ -2242,7 +2659,9 @@
   }
  ],
  "price_usd_known": 1584.15,
+ "p2_usd": 53.89,
  "made_to_order_estimate_usd": 383.0,
- "made_to_order_usd": 482.07,
+ "p3_usd": 106.84,
+ "made_to_order_usd": 483.17,
  "made_to_order_priced": true
 }
