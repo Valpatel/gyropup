@@ -1,0 +1,17 @@
+{
+  "name": "gyropup-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node tools/build-site.mjs",
+    "dev": "npm run build && node tools/serve-site.mjs",
+    "deploy": "npm run build && wrangler pages deploy dist --project-name gyropup --branch main",
+    "test:web": "node tools/test-site.mjs"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.56.1",
+    "marked": "16.4.1",
+    "yaml": "2.8.1",
+    "wrangler": "4.86.0"
+  }
+}

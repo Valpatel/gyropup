@@ -1,0 +1,1170 @@
+{
+ "units": "mm",
+ "frame": "robot: x forward, y left, z up, origin on the hip axis between the legs",
+ "note": "interim body (placeholder until M5)",
+ "body": [
+  {
+   "file": "body__hip_frame_l.stl",
+   "name": "hip_frame_l",
+   "color": "#5f6670",
+   "opacity": 1.0
+  },
+  {
+   "file": "body__hip_frame_r_m.stl",
+   "name": "hip_frame_r",
+   "color": "#5f6670",
+   "opacity": 1.0
+  },
+  {
+   "file": "body__motor_f_l.stl",
+   "name": "motor_f_l",
+   "color": "#2a2d33",
+   "opacity": 1.0
+  },
+  {
+   "file": "body__motor_f_r_m.stl",
+   "name": "motor_f_r",
+   "color": "#2a2d33",
+   "opacity": 1.0
+  },
+  {
+   "file": "body__adapter_f_l.stl",
+   "name": "adapter_f_l",
+   "color": "#c9ced6",
+   "opacity": 1.0
+  },
+  {
+   "file": "body__adapter_f_r_m.stl",
+   "name": "adapter_f_r",
+   "color": "#c9ced6",
+   "opacity": 1.0
+  },
+  {
+   "file": "body__motor_r_l.stl",
+   "name": "motor_r_l",
+   "color": "#2a2d33",
+   "opacity": 1.0
+  },
+  {
+   "file": "body__motor_r_r_m.stl",
+   "name": "motor_r_r",
+   "color": "#2a2d33",
+   "opacity": 1.0
+  },
+  {
+   "file": "body__adapter_r_l.stl",
+   "name": "adapter_r_l",
+   "color": "#c9ced6",
+   "opacity": 1.0
+  },
+  {
+   "file": "body__adapter_r_r_m.stl",
+   "name": "adapter_r_r",
+   "color": "#c9ced6",
+   "opacity": 1.0
+  },
+  {
+   "file": "body__interim_body.stl",
+   "name": "interim_body",
+   "color": "#9fb4c7",
+   "opacity": 0.35
+  },
+  {
+   "file": "body__battery.stl",
+   "name": "battery",
+   "color": "#fdb913",
+   "opacity": 1.0
+  },
+  {
+   "file": "body__compute.stl",
+   "name": "compute",
+   "color": "#5a6b7c",
+   "opacity": 1.0
+  },
+  {
+   "file": "body__dcdc_compute.stl",
+   "name": "dcdc_compute",
+   "color": "#8f9aa7",
+   "opacity": 1.0
+  },
+  {
+   "file": "body__regen_clamp.stl",
+   "name": "regen_clamp",
+   "color": "#8f9aa7",
+   "opacity": 1.0
+  },
+  {
+   "file": "body__motor_driver_r.stl",
+   "name": "motor_driver_r",
+   "color": "#2b6cb0",
+   "opacity": 1.0
+  },
+  {
+   "file": "body__motor_driver_l.stl",
+   "name": "motor_driver_l",
+   "color": "#2b6cb0",
+   "opacity": 1.0
+  },
+  {
+   "file": "body__dcdc_12v.stl",
+   "name": "dcdc_12v",
+   "color": "#8f9aa7",
+   "opacity": 1.0
+  },
+  {
+   "file": "body__power_switch.stl",
+   "name": "power_switch",
+   "color": "#8f9aa7",
+   "opacity": 1.0
+  },
+  {
+   "file": "body__electronics_small.stl",
+   "name": "electronics_small",
+   "color": "#2b6cb0",
+   "opacity": 1.0
+  },
+  {
+   "file": "body__fuse.stl",
+   "name": "fuse",
+   "color": "#8f9aa7",
+   "opacity": 1.0
+  },
+  {
+   "file": "body__camera_front.stl",
+   "name": "camera_front",
+   "color": "#2a2d33",
+   "opacity": 1.0
+  },
+  {
+   "file": "body__camera_rear.stl",
+   "name": "camera_rear",
+   "color": "#2a2d33",
+   "opacity": 1.0
+  },
+  {
+   "file": "body__eyes.stl",
+   "name": "eyes",
+   "color": "#2a2d33",
+   "opacity": 1.0
+  },
+  {
+   "file": "body__headlight_l.stl",
+   "name": "headlight_l",
+   "color": "#3a3f47",
+   "opacity": 1.0
+  },
+  {
+   "file": "body__headlight_r.stl",
+   "name": "headlight_r",
+   "color": "#3a3f47",
+   "opacity": 1.0
+  },
+  {
+   "file": "body__lidar.stl",
+   "name": "lidar",
+   "color": "#2a2d33",
+   "opacity": 1.0
+  },
+  {
+   "file": "body__turret_pan_base_0.stl",
+   "name": "turret_pan_base_0",
+   "color": "#4a5058",
+   "opacity": 1.0
+  },
+  {
+   "file": "body__turret_pan_clamp_1.stl",
+   "name": "turret_pan_clamp_1",
+   "color": "#4a5058",
+   "opacity": 1.0
+  },
+  {
+   "file": "body__turret_pan_pinion_2.stl",
+   "name": "turret_pan_pinion_2",
+   "color": "#4a5058",
+   "opacity": 1.0
+  },
+  {
+   "file": "body__turret_bumper_ring_3.stl",
+   "name": "turret_bumper_ring_3",
+   "color": "#4a5058",
+   "opacity": 1.0
+  },
+  {
+   "file": "body__turret_pan_servo_4.stl",
+   "name": "turret_pan_servo_4",
+   "color": "#2a2d33",
+   "opacity": 1.0
+  },
+  {
+   "file": "body__turret_pan_bearing_5.stl",
+   "name": "turret_pan_bearing_5",
+   "color": "#2a2d33",
+   "opacity": 1.0
+  },
+  {
+   "file": "body__turret_dt_receptacle_6.stl",
+   "name": "turret_dt_receptacle_6",
+   "color": "#2a2d33",
+   "opacity": 1.0
+  },
+  {
+   "file": "body__turret_dt_plug_7.stl",
+   "name": "turret_dt_plug_7",
+   "color": "#2a2d33",
+   "opacity": 1.0
+  }
+ ],
+ "links": {
+  "upper": [
+   {
+    "file": "link__upper_link.stl",
+    "name": "upper_link",
+    "color": "#f5b82e",
+    "opacity": 1.0
+   }
+  ],
+  "front": [
+   {
+    "file": "link__front_link.stl",
+    "name": "front_link",
+    "color": "#f5b82e",
+    "opacity": 1.0
+   }
+  ],
+  "wheel_link": [
+   {
+    "file": "link__wheel_link.stl",
+    "name": "wheel_link",
+    "color": "#e9a21f",
+    "opacity": 1.0
+   }
+  ],
+  "wheel": [
+   {
+    "file": "link__tyre.stl",
+    "name": "tyre",
+    "color": "#1b1d21",
+    "opacity": 1.0
+   },
+   {
+    "file": "link__hub.stl",
+    "name": "hub",
+    "color": "#4a5058",
+    "opacity": 1.0
+   }
+  ]
+ },
+ "turret": {
+  "pan": [
+   {
+    "file": "turret__pan_0_pan_ring.stl",
+    "name": "pan_0_pan_ring",
+    "color": "#4a5058",
+    "opacity": 1.0
+   },
+   {
+    "file": "turret__pan_1_tilt_yoke.stl",
+    "name": "pan_1_tilt_yoke",
+    "color": "#4a5058",
+    "opacity": 1.0
+   },
+   {
+    "file": "turret__pan_2_tilt_servo.stl",
+    "name": "pan_2_tilt_servo",
+    "color": "#2a2d33",
+    "opacity": 1.0
+   },
+   {
+    "file": "turret__pan_3_tilt_bearing.stl",
+    "name": "pan_3_tilt_bearing",
+    "color": "#2a2d33",
+    "opacity": 1.0
+   }
+  ],
+  "tilt": [
+   {
+    "file": "turret__tilt_0_cradle.stl",
+    "name": "tilt_0_cradle",
+    "color": "#4a5058",
+    "opacity": 1.0
+   },
+   {
+    "file": "turret__tilt_1_cartridge_body.stl",
+    "name": "tilt_1_cartridge_body",
+    "color": "#4a5058",
+    "opacity": 1.0
+   },
+   {
+    "file": "turret__tilt_2_flywheel.stl",
+    "name": "tilt_2_flywheel",
+    "color": "#4a5058",
+    "opacity": 1.0
+   },
+   {
+    "file": "turret__tilt_3_flywheel.stl",
+    "name": "tilt_3_flywheel",
+    "color": "#4a5058",
+    "opacity": 1.0
+   },
+   {
+    "file": "turret__tilt_4_flywheel_tyre.stl",
+    "name": "tilt_4_flywheel_tyre",
+    "color": "#4a5058",
+    "opacity": 1.0
+   },
+   {
+    "file": "turret__tilt_5_flywheel_tyre.stl",
+    "name": "tilt_5_flywheel_tyre",
+    "color": "#4a5058",
+    "opacity": 1.0
+   },
+   {
+    "file": "turret__tilt_6_dial.stl",
+    "name": "tilt_6_dial",
+    "color": "#4a5058",
+    "opacity": 1.0
+   },
+   {
+    "file": "turret__tilt_7_hopper.stl",
+    "name": "tilt_7_hopper",
+    "color": "#9cc7e8",
+    "opacity": 1.0
+   },
+   {
+    "file": "turret__tilt_8_hopper_lid.stl",
+    "name": "tilt_8_hopper_lid",
+    "color": "#9cc7e8",
+    "opacity": 1.0
+   },
+   {
+    "file": "turret__tilt_9_hopper_flap.stl",
+    "name": "tilt_9_hopper_flap",
+    "color": "#9cc7e8",
+    "opacity": 1.0
+   },
+   {
+    "file": "turret__tilt_10_barrel.stl",
+    "name": "tilt_10_barrel",
+    "color": "#ff6a13",
+    "opacity": 1.0
+   },
+   {
+    "file": "turret__tilt_11_laser_mount.stl",
+    "name": "tilt_11_laser_mount",
+    "color": "#4a5058",
+    "opacity": 1.0
+   },
+   {
+    "file": "turret__tilt_12_flywheel_motor_l.stl",
+    "name": "tilt_12_flywheel_motor_l",
+    "color": "#2a2d33",
+    "opacity": 1.0
+   },
+   {
+    "file": "turret__tilt_13_flywheel_motor_r.stl",
+    "name": "tilt_13_flywheel_motor_r",
+    "color": "#2a2d33",
+    "opacity": 1.0
+   },
+   {
+    "file": "turret__tilt_14_esc_l.stl",
+    "name": "tilt_14_esc_l",
+    "color": "#2a2d33",
+    "opacity": 1.0
+   },
+   {
+    "file": "turret__tilt_15_esc_r.stl",
+    "name": "tilt_15_esc_r",
+    "color": "#2a2d33",
+    "opacity": 1.0
+   },
+   {
+    "file": "turret__tilt_16_feed_motor.stl",
+    "name": "tilt_16_feed_motor",
+    "color": "#2a2d33",
+    "opacity": 1.0
+   },
+   {
+    "file": "turret__tilt_17_feed_esc.stl",
+    "name": "tilt_17_feed_esc",
+    "color": "#2a2d33",
+    "opacity": 1.0
+   },
+   {
+    "file": "turret__tilt_18_laser.stl",
+    "name": "tilt_18_laser",
+    "color": "#2a2d33",
+    "opacity": 1.0
+   }
+  ],
+  "pan_mm": [
+   -54.650000000000006,
+   0.0,
+   216.0
+  ],
+  "tilt_mm": [
+   -54.650000000000006,
+   0.0,
+   339.0
+  ],
+  "muzzle_mm": [
+   139.35,
+   0.0,
+   324.0
+  ]
+ },
+ "fivebar": {
+  "D_mm": 150.0,
+  "l1_mm": 150.0,
+  "l2_mm": 250.0,
+  "ref": {
+   "phi1": -0.8879823170668525,
+   "phi2": -2.2536103365229407,
+   "af": -2.3166337839143796,
+   "aw": -0.8249588696754138
+  },
+  "ref_h_mm": 300.0,
+  "h_range_mm": [
+   150.0,
+   375.0
+  ],
+  "stops_rad": [
+   0.05235987755982989,
+   -1.6929693744344996,
+   -3.193952531149623,
+   -1.4486232791552935
+  ],
+  "y_off_mm": 82.30000000000001,
+  "stop_k": 4844.160000000001,
+  "stop_b": 13.205453418947796
+ },
+ "wheel_r_mm": 85.65,
+ "track_mm": 373.8,
+ "body_top_mm": 216.0,
+ "mounts": {
+  "eyes": [
+   140.0,
+   0.0,
+   173.0
+  ],
+  "headlights": [
+   [
+    125.0,
+    155.4,
+    175.6
+   ],
+   [
+    125.0,
+    -155.4,
+    175.6
+   ]
+  ],
+  "camera_front": [
+   141.0,
+   0.0,
+   109.0
+  ],
+  "lidar": [
+   88.35,
+   0.0,
+   216.0
+  ]
+ },
+ "deck": {
+  "tilt_max_forward_deg": 4.6,
+  "lidar_hidden_deg": 76,
+  "tilt_max_deg": [
+   [
+    -170.0,
+    25.0
+   ],
+   [
+    -168.0,
+    25.0
+   ],
+   [
+    -166.0,
+    25.0
+   ],
+   [
+    -164.0,
+    25.0
+   ],
+   [
+    -162.0,
+    25.0
+   ],
+   [
+    -160.0,
+    25.0
+   ],
+   [
+    -158.0,
+    25.0
+   ],
+   [
+    -156.0,
+    25.0
+   ],
+   [
+    -154.0,
+    25.0
+   ],
+   [
+    -152.0,
+    25.0
+   ],
+   [
+    -150.0,
+    25.0
+   ],
+   [
+    -148.0,
+    25.0
+   ],
+   [
+    -146.0,
+    25.0
+   ],
+   [
+    -144.0,
+    25.0
+   ],
+   [
+    -142.0,
+    25.0
+   ],
+   [
+    -140.0,
+    25.0
+   ],
+   [
+    -138.0,
+    25.0
+   ],
+   [
+    -136.0,
+    25.0
+   ],
+   [
+    -134.0,
+    25.0
+   ],
+   [
+    -132.0,
+    25.0
+   ],
+   [
+    -130.0,
+    25.0
+   ],
+   [
+    -128.0,
+    25.0
+   ],
+   [
+    -126.0,
+    25.0
+   ],
+   [
+    -124.0,
+    25.0
+   ],
+   [
+    -122.0,
+    25.0
+   ],
+   [
+    -120.0,
+    25.0
+   ],
+   [
+    -118.0,
+    25.0
+   ],
+   [
+    -116.0,
+    25.0
+   ],
+   [
+    -114.0,
+    25.0
+   ],
+   [
+    -112.0,
+    25.0
+   ],
+   [
+    -110.0,
+    25.0
+   ],
+   [
+    -108.0,
+    25.0
+   ],
+   [
+    -106.0,
+    25.0
+   ],
+   [
+    -104.0,
+    25.0
+   ],
+   [
+    -102.0,
+    25.0
+   ],
+   [
+    -100.0,
+    25.0
+   ],
+   [
+    -98.0,
+    25.0
+   ],
+   [
+    -96.0,
+    25.0
+   ],
+   [
+    -94.0,
+    25.0
+   ],
+   [
+    -92.0,
+    25.0
+   ],
+   [
+    -90.0,
+    25.0
+   ],
+   [
+    -88.0,
+    25.0
+   ],
+   [
+    -86.0,
+    25.0
+   ],
+   [
+    -84.0,
+    25.0
+   ],
+   [
+    -82.0,
+    25.0
+   ],
+   [
+    -80.0,
+    25.0
+   ],
+   [
+    -78.0,
+    25.0
+   ],
+   [
+    -76.0,
+    25.0
+   ],
+   [
+    -74.0,
+    25.0
+   ],
+   [
+    -72.0,
+    25.0
+   ],
+   [
+    -70.0,
+    25.0
+   ],
+   [
+    -68.0,
+    25.0
+   ],
+   [
+    -66.0,
+    25.0
+   ],
+   [
+    -64.0,
+    25.0
+   ],
+   [
+    -62.0,
+    25.0
+   ],
+   [
+    -60.0,
+    25.0
+   ],
+   [
+    -58.0,
+    25.0
+   ],
+   [
+    -56.0,
+    24.7
+   ],
+   [
+    -54.0,
+    6.5
+   ],
+   [
+    -52.0,
+    6.5
+   ],
+   [
+    -50.0,
+    6.5
+   ],
+   [
+    -48.0,
+    6.5
+   ],
+   [
+    -46.0,
+    6.5
+   ],
+   [
+    -44.0,
+    6.5
+   ],
+   [
+    -42.0,
+    6.5
+   ],
+   [
+    -40.0,
+    6.5
+   ],
+   [
+    -38.0,
+    6.5
+   ],
+   [
+    -36.0,
+    6.5
+   ],
+   [
+    -34.0,
+    6.5
+   ],
+   [
+    -32.0,
+    6.5
+   ],
+   [
+    -30.0,
+    6.5
+   ],
+   [
+    -28.0,
+    6.5
+   ],
+   [
+    -26.0,
+    6.5
+   ],
+   [
+    -24.0,
+    6.0
+   ],
+   [
+    -22.0,
+    5.6
+   ],
+   [
+    -20.0,
+    5.4
+   ],
+   [
+    -18.0,
+    5.2
+   ],
+   [
+    -16.0,
+    5.0
+   ],
+   [
+    -14.0,
+    4.9
+   ],
+   [
+    -12.0,
+    4.6
+   ],
+   [
+    -10.0,
+    4.6
+   ],
+   [
+    -8.0,
+    4.6
+   ],
+   [
+    -6.0,
+    4.6
+   ],
+   [
+    -4.0,
+    4.6
+   ],
+   [
+    -2.0,
+    4.6
+   ],
+   [
+    0.0,
+    4.6
+   ],
+   [
+    2.0,
+    4.6
+   ],
+   [
+    4.0,
+    4.6
+   ],
+   [
+    6.0,
+    4.6
+   ],
+   [
+    8.0,
+    4.6
+   ],
+   [
+    10.0,
+    4.6
+   ],
+   [
+    12.0,
+    4.6
+   ],
+   [
+    14.0,
+    4.6
+   ],
+   [
+    16.0,
+    4.6
+   ],
+   [
+    18.0,
+    4.6
+   ],
+   [
+    20.0,
+    4.6
+   ],
+   [
+    22.0,
+    4.6
+   ],
+   [
+    24.0,
+    4.6
+   ],
+   [
+    26.0,
+    4.6
+   ],
+   [
+    28.0,
+    4.6
+   ],
+   [
+    30.0,
+    4.6
+   ],
+   [
+    32.0,
+    4.6
+   ],
+   [
+    34.0,
+    4.6
+   ],
+   [
+    36.0,
+    4.6
+   ],
+   [
+    38.0,
+    4.6
+   ],
+   [
+    40.0,
+    4.6
+   ],
+   [
+    42.0,
+    4.6
+   ],
+   [
+    44.0,
+    4.6
+   ],
+   [
+    46.0,
+    4.6
+   ],
+   [
+    48.0,
+    4.9
+   ],
+   [
+    50.0,
+    5.6
+   ],
+   [
+    52.0,
+    6.5
+   ],
+   [
+    54.0,
+    6.5
+   ],
+   [
+    56.0,
+    24.7
+   ],
+   [
+    58.0,
+    25.0
+   ],
+   [
+    60.0,
+    25.0
+   ],
+   [
+    62.0,
+    25.0
+   ],
+   [
+    64.0,
+    25.0
+   ],
+   [
+    66.0,
+    25.0
+   ],
+   [
+    68.0,
+    25.0
+   ],
+   [
+    70.0,
+    25.0
+   ],
+   [
+    72.0,
+    25.0
+   ],
+   [
+    74.0,
+    25.0
+   ],
+   [
+    76.0,
+    25.0
+   ],
+   [
+    78.0,
+    25.0
+   ],
+   [
+    80.0,
+    25.0
+   ],
+   [
+    82.0,
+    25.0
+   ],
+   [
+    84.0,
+    25.0
+   ],
+   [
+    86.0,
+    25.0
+   ],
+   [
+    88.0,
+    25.0
+   ],
+   [
+    90.0,
+    25.0
+   ],
+   [
+    92.0,
+    25.0
+   ],
+   [
+    94.0,
+    25.0
+   ],
+   [
+    96.0,
+    25.0
+   ],
+   [
+    98.0,
+    25.0
+   ],
+   [
+    100.0,
+    25.0
+   ],
+   [
+    102.0,
+    25.0
+   ],
+   [
+    104.0,
+    25.0
+   ],
+   [
+    106.0,
+    25.0
+   ],
+   [
+    108.0,
+    25.0
+   ],
+   [
+    110.0,
+    25.0
+   ],
+   [
+    112.0,
+    25.0
+   ],
+   [
+    114.0,
+    25.0
+   ],
+   [
+    116.0,
+    25.0
+   ],
+   [
+    118.0,
+    25.0
+   ],
+   [
+    120.0,
+    25.0
+   ],
+   [
+    122.0,
+    25.0
+   ],
+   [
+    124.0,
+    25.0
+   ],
+   [
+    126.0,
+    25.0
+   ],
+   [
+    128.0,
+    25.0
+   ],
+   [
+    130.0,
+    25.0
+   ],
+   [
+    132.0,
+    25.0
+   ],
+   [
+    134.0,
+    25.0
+   ],
+   [
+    136.0,
+    25.0
+   ],
+   [
+    138.0,
+    25.0
+   ],
+   [
+    140.0,
+    25.0
+   ],
+   [
+    142.0,
+    25.0
+   ],
+   [
+    144.0,
+    25.0
+   ],
+   [
+    146.0,
+    25.0
+   ],
+   [
+    148.0,
+    25.0
+   ],
+   [
+    150.0,
+    25.0
+   ],
+   [
+    152.0,
+    25.0
+   ],
+   [
+    154.0,
+    25.0
+   ],
+   [
+    156.0,
+    25.0
+   ],
+   [
+    158.0,
+    25.0
+   ],
+   [
+    160.0,
+    25.0
+   ],
+   [
+    162.0,
+    25.0
+   ],
+   [
+    164.0,
+    25.0
+   ],
+   [
+    166.0,
+    25.0
+   ],
+   [
+    168.0,
+    25.0
+   ],
+   [
+    170.0,
+    25.0
+   ]
+  ]
+ },
+ "height_mm": 376.0,
+ "mass_kg": 26.195,
+ "mass_split_kg": {
+  "base (hip modules, interim body, electronics, lidar, turret base)": 15.649,
+  "legs (links, adapters, bearings, wheels)": 9.525,
+  "turret pan + tilt": 1.021
+ }
+}

@@ -1,0 +1,2704 @@
+{
+ "design": "designs/default.json",
+ "name": "Gyropup",
+ "mass_kg": 26.354,
+ "mass_reconciles": true,
+ "scenarios": {
+  "stand": {
+   "scenario": "stand",
+   "title": "Stand and balance",
+   "seconds": 8.0,
+   "pass": true,
+   "reasons": [],
+   "max_theta_deg": 0.08,
+   "max_roll_deg": 0.0,
+   "roll_rms_window_deg": 0.0,
+   "theta_rms_deg": 0.026,
+   "speed_rms_mps": 0.004,
+   "x_max_m": 0.009,
+   "top_speed_mps": 0.01,
+   "speed_limit_mps": 2.11,
+   "motors": {
+    "hip_l": {
+     "peak_torque_nm": 12.61,
+     "of_peak": 0.21,
+     "of_rated": 0.315,
+     "saturated_s": 0.0,
+     "energy_j": 0.0
+    },
+    "knee_l": {
+     "peak_torque_nm": 14.44,
+     "of_peak": 0.241,
+     "of_rated": 0.361,
+     "saturated_s": 0.0,
+     "energy_j": 0.1
+    },
+    "wheel_l": {
+     "peak_torque_nm": 0.04,
+     "of_peak": 0.003,
+     "of_rated": 0.007,
+     "saturated_s": 0.0,
+     "energy_j": 0.0
+    },
+    "hip_r": {
+     "peak_torque_nm": 12.66,
+     "of_peak": 0.211,
+     "of_rated": 0.317,
+     "saturated_s": 0.0,
+     "energy_j": 0.0
+    },
+    "knee_r": {
+     "peak_torque_nm": 14.48,
+     "of_peak": 0.241,
+     "of_rated": 0.362,
+     "saturated_s": 0.0,
+     "energy_j": 0.1
+    },
+    "wheel_r": {
+     "peak_torque_nm": 0.04,
+     "of_peak": 0.003,
+     "of_rated": 0.007,
+     "saturated_s": 0.0,
+     "energy_j": 0.0
+    }
+   },
+   "energy_j": 0.2,
+   "lqr": {
+    "mass_body": 23.0541,
+    "com_height": 0.3037,
+    "inertia_body": 0.51
+   },
+   "video": "stand.mp4",
+   "events": [],
+   "fell_at": null,
+   "lidar_clearance_mm": 279.2,
+   "body_impact_peak_n": 0,
+   "lidar_touched_at": null,
+   "turret": {
+    "shots": 0,
+    "hits": 0,
+    "hit_rate": 0.0,
+    "by_target": {},
+    "knocked_down": 0,
+    "targets": 0,
+    "out_of_range_at_times": []
+   },
+   "qpos_layout": {
+    "base_free": 0,
+    "hip_l": 7,
+    "knee_l": 8,
+    "wheel_l": 9,
+    "hip_r": 10,
+    "knee_r": 11,
+    "wheel_r": 12,
+    "turret_pan": 13,
+    "turret_tilt": 14
+   },
+   "props": [],
+   "movers": [],
+   "physical_test": false,
+   "wall_s": 5.04
+  },
+  "squat": {
+   "scenario": "squat",
+   "title": "Squat sweep: stand tall, crouch deep, stand again",
+   "seconds": 10.0,
+   "pass": true,
+   "reasons": [],
+   "max_theta_deg": 0.24,
+   "max_roll_deg": 0.0,
+   "roll_rms_window_deg": 0.0,
+   "theta_rms_deg": 0.074,
+   "speed_rms_mps": 0.008,
+   "x_max_m": 0.011,
+   "top_speed_mps": 0.03,
+   "speed_limit_mps": 2.11,
+   "motors": {
+    "hip_l": {
+     "peak_torque_nm": 20.65,
+     "of_peak": 0.344,
+     "of_rated": 0.516,
+     "saturated_s": 0.0,
+     "energy_j": 22.5
+    },
+    "knee_l": {
+     "peak_torque_nm": 22.44,
+     "of_peak": 0.374,
+     "of_rated": 0.561,
+     "saturated_s": 0.0,
+     "energy_j": 27.4
+    },
+    "wheel_l": {
+     "peak_torque_nm": 0.18,
+     "of_peak": 0.013,
+     "of_rated": 0.036,
+     "saturated_s": 0.0,
+     "energy_j": 0.1
+    },
+    "hip_r": {
+     "peak_torque_nm": 20.7,
+     "of_peak": 0.345,
+     "of_rated": 0.518,
+     "saturated_s": 0.0,
+     "energy_j": 22.5
+    },
+    "knee_r": {
+     "peak_torque_nm": 22.49,
+     "of_peak": 0.375,
+     "of_rated": 0.562,
+     "saturated_s": 0.0,
+     "energy_j": 27.5
+    },
+    "wheel_r": {
+     "peak_torque_nm": 0.18,
+     "of_peak": 0.013,
+     "of_rated": 0.037,
+     "saturated_s": 0.0,
+     "energy_j": 0.1
+    }
+   },
+   "energy_j": 100.1,
+   "lqr": {
+    "mass_body": 23.0541,
+    "com_height": 0.3624,
+    "inertia_body": 0.587
+   },
+   "video": "squat.mp4",
+   "events": [],
+   "fell_at": null,
+   "lidar_clearance_mm": 161.7,
+   "body_impact_peak_n": 0,
+   "lidar_touched_at": null,
+   "turret": {
+    "shots": 0,
+    "hits": 0,
+    "hit_rate": 0.0,
+    "by_target": {},
+    "knocked_down": 0,
+    "targets": 0,
+    "out_of_range_at_times": []
+   },
+   "qpos_layout": {
+    "base_free": 0,
+    "hip_l": 7,
+    "knee_l": 8,
+    "wheel_l": 9,
+    "hip_r": 10,
+    "knee_r": 11,
+    "wheel_r": 12,
+    "turret_pan": 13,
+    "turret_tilt": 14
+   },
+   "props": [],
+   "movers": [],
+   "physical_test": false,
+   "wall_s": 5.87
+  },
+  "push": {
+   "scenario": "push",
+   "title": "Push recovery, front and back",
+   "seconds": 9.0,
+   "pass": true,
+   "reasons": [],
+   "max_theta_deg": 7.2,
+   "max_roll_deg": 0.01,
+   "roll_rms_window_deg": 0.0,
+   "theta_rms_deg": 2.529,
+   "speed_rms_mps": 0.237,
+   "x_max_m": 0.37,
+   "top_speed_mps": 0.89,
+   "speed_limit_mps": 2.11,
+   "motors": {
+    "hip_l": {
+     "peak_torque_nm": 15.78,
+     "of_peak": 0.263,
+     "of_rated": 0.395,
+     "saturated_s": 0.0,
+     "energy_j": 4.0
+    },
+    "knee_l": {
+     "peak_torque_nm": 22.55,
+     "of_peak": 0.376,
+     "of_rated": 0.564,
+     "saturated_s": 0.0,
+     "energy_j": 9.0
+    },
+    "wheel_l": {
+     "peak_torque_nm": 3.91,
+     "of_peak": 0.274,
+     "of_rated": 0.783,
+     "saturated_s": 0.0,
+     "energy_j": 11.9
+    },
+    "hip_r": {
+     "peak_torque_nm": 15.76,
+     "of_peak": 0.263,
+     "of_rated": 0.394,
+     "saturated_s": 0.0,
+     "energy_j": 4.0
+    },
+    "knee_r": {
+     "peak_torque_nm": 22.55,
+     "of_peak": 0.376,
+     "of_rated": 0.564,
+     "saturated_s": 0.0,
+     "energy_j": 9.1
+    },
+    "wheel_r": {
+     "peak_torque_nm": 3.91,
+     "of_peak": 0.273,
+     "of_rated": 0.782,
+     "saturated_s": 0.0,
+     "energy_j": 12.0
+    }
+   },
+   "energy_j": 50.1,
+   "lqr": {
+    "mass_body": 23.0541,
+    "com_height": 0.3037,
+    "inertia_body": 0.51
+   },
+   "video": "push.mp4",
+   "events": [
+    {
+     "t": 2.0,
+     "type": "push"
+    },
+    {
+     "t": 5.5,
+     "type": "push"
+    }
+   ],
+   "fell_at": null,
+   "lidar_clearance_mm": 272.7,
+   "body_impact_peak_n": 0,
+   "lidar_touched_at": null,
+   "turret": {
+    "shots": 0,
+    "hits": 0,
+    "hit_rate": 0.0,
+    "by_target": {},
+    "knocked_down": 0,
+    "targets": 0,
+    "out_of_range_at_times": []
+   },
+   "qpos_layout": {
+    "base_free": 0,
+    "hip_l": 7,
+    "knee_l": 8,
+    "wheel_l": 9,
+    "hip_r": 10,
+    "knee_r": 11,
+    "wheel_r": 12,
+    "turret_pan": 13,
+    "turret_tilt": 14
+   },
+   "props": [],
+   "movers": [],
+   "physical_test": false,
+   "wall_s": 5.2
+  },
+  "drive": {
+   "scenario": "drive",
+   "title": "Drive course: accelerate, turn, stop, reverse",
+   "seconds": 14.0,
+   "pass": true,
+   "reasons": [],
+   "max_theta_deg": 5.34,
+   "max_roll_deg": 0.81,
+   "roll_rms_window_deg": 0.0,
+   "theta_rms_deg": 2.765,
+   "speed_rms_mps": 0.211,
+   "x_max_m": 2.917,
+   "top_speed_mps": 1.21,
+   "speed_limit_mps": 2.11,
+   "motors": {
+    "hip_l": {
+     "peak_torque_nm": 16.9,
+     "of_peak": 0.282,
+     "of_rated": 0.422,
+     "saturated_s": 0.0,
+     "energy_j": 4.0
+    },
+    "knee_l": {
+     "peak_torque_nm": 18.32,
+     "of_peak": 0.305,
+     "of_rated": 0.458,
+     "saturated_s": 0.0,
+     "energy_j": 7.7
+    },
+    "wheel_l": {
+     "peak_torque_nm": 2.76,
+     "of_peak": 0.193,
+     "of_rated": 0.552,
+     "saturated_s": 0.0,
+     "energy_j": 41.9
+    },
+    "hip_r": {
+     "peak_torque_nm": 17.3,
+     "of_peak": 0.288,
+     "of_rated": 0.433,
+     "saturated_s": 0.0,
+     "energy_j": 4.2
+    },
+    "knee_r": {
+     "peak_torque_nm": 21.39,
+     "of_peak": 0.357,
+     "of_rated": 0.535,
+     "saturated_s": 0.0,
+     "energy_j": 9.1
+    },
+    "wheel_r": {
+     "peak_torque_nm": 2.97,
+     "of_peak": 0.208,
+     "of_rated": 0.594,
+     "saturated_s": 0.0,
+     "energy_j": 65.1
+    }
+   },
+   "energy_j": 132.0,
+   "lqr": {
+    "mass_body": 23.0541,
+    "com_height": 0.3037,
+    "inertia_body": 0.51
+   },
+   "video": "drive.mp4",
+   "events": [],
+   "fell_at": null,
+   "lidar_clearance_mm": 277.2,
+   "body_impact_peak_n": 0,
+   "lidar_touched_at": null,
+   "turret": {
+    "shots": 0,
+    "hits": 0,
+    "hit_rate": 0.0,
+    "by_target": {},
+    "knocked_down": 0,
+    "targets": 0,
+    "out_of_range_at_times": []
+   },
+   "qpos_layout": {
+    "base_free": 0,
+    "hip_l": 7,
+    "knee_l": 8,
+    "wheel_l": 9,
+    "hip_r": 10,
+    "knee_r": 11,
+    "wheel_r": 12,
+    "turret_pan": 13,
+    "turret_tilt": 14
+   },
+   "props": [],
+   "movers": [],
+   "physical_test": false,
+   "wall_s": 7.84
+  },
+  "slope": {
+   "scenario": "slope",
+   "title": "Climb a 10\u00b0 ramp and hold on it",
+   "seconds": 12.0,
+   "pass": true,
+   "reasons": [],
+   "max_theta_deg": 6.6,
+   "max_roll_deg": 0.04,
+   "roll_rms_window_deg": 0.0,
+   "theta_rms_deg": 2.4,
+   "speed_rms_mps": 0.141,
+   "x_max_m": 3.179,
+   "top_speed_mps": 0.69,
+   "speed_limit_mps": 2.11,
+   "motors": {
+    "hip_l": {
+     "peak_torque_nm": 16.59,
+     "of_peak": 0.277,
+     "of_rated": 0.415,
+     "saturated_s": 0.0,
+     "energy_j": 1.8
+    },
+    "knee_l": {
+     "peak_torque_nm": 17.04,
+     "of_peak": 0.284,
+     "of_rated": 0.426,
+     "saturated_s": 0.0,
+     "energy_j": 3.0
+    },
+    "wheel_l": {
+     "peak_torque_nm": 2.35,
+     "of_peak": 0.164,
+     "of_rated": 0.47,
+     "saturated_s": 0.0,
+     "energy_j": 53.7
+    },
+    "hip_r": {
+     "peak_torque_nm": 16.62,
+     "of_peak": 0.277,
+     "of_rated": 0.415,
+     "saturated_s": 0.0,
+     "energy_j": 1.7
+    },
+    "knee_r": {
+     "peak_torque_nm": 17.07,
+     "of_peak": 0.284,
+     "of_rated": 0.427,
+     "saturated_s": 0.0,
+     "energy_j": 3.0
+    },
+    "wheel_r": {
+     "peak_torque_nm": 2.36,
+     "of_peak": 0.165,
+     "of_rated": 0.471,
+     "saturated_s": 0.0,
+     "energy_j": 53.8
+    }
+   },
+   "energy_j": 116.9,
+   "lqr": {
+    "mass_body": 23.0541,
+    "com_height": 0.3037,
+    "inertia_body": 0.51
+   },
+   "video": "slope.mp4",
+   "events": [],
+   "fell_at": null,
+   "lidar_clearance_mm": 278.4,
+   "body_impact_peak_n": 0,
+   "lidar_touched_at": null,
+   "turret": {
+    "shots": 0,
+    "hits": 0,
+    "hit_rate": 0.0,
+    "by_target": {},
+    "knocked_down": 0,
+    "targets": 0,
+    "out_of_range_at_times": []
+   },
+   "qpos_layout": {
+    "base_free": 0,
+    "hip_l": 7,
+    "knee_l": 8,
+    "wheel_l": 9,
+    "hip_r": 10,
+    "knee_r": 11,
+    "wheel_r": 12,
+    "turret_pan": 13,
+    "turret_tilt": 14
+   },
+   "props": [
+    {
+     "name": "ramp",
+     "type": 6,
+     "size": [
+      1.0,
+      1.5,
+      0.05
+     ],
+     "pos": [
+      1.7935,
+      0.0,
+      0.1244
+     ],
+     "quat": [
+      0.99619,
+      0.0,
+      -0.08716,
+      0.0
+     ],
+     "rgba": [
+      0.55,
+      0.5,
+      0.42,
+      1.0
+     ]
+    },
+    {
+     "name": "plateau",
+     "type": 6,
+     "size": [
+      1.5,
+      1.5,
+      0.1736
+     ],
+     "pos": [
+      4.2696,
+      0.0,
+      0.1736
+     ],
+     "quat": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "rgba": [
+      0.55,
+      0.5,
+      0.42,
+      1.0
+     ]
+    }
+   ],
+   "movers": [],
+   "physical_test": false,
+   "wall_s": 7.24
+  },
+  "curb": {
+   "scenario": "curb",
+   "title": "Drive up a 25 mm kerb",
+   "seconds": 9.0,
+   "pass": true,
+   "reasons": [],
+   "max_theta_deg": 6.7,
+   "max_roll_deg": 0.01,
+   "roll_rms_window_deg": 0.0,
+   "theta_rms_deg": 2.498,
+   "speed_rms_mps": 0.19,
+   "x_max_m": 3.181,
+   "top_speed_mps": 1.07,
+   "speed_limit_mps": 2.11,
+   "motors": {
+    "hip_l": {
+     "peak_torque_nm": 31.54,
+     "of_peak": 0.526,
+     "of_rated": 0.788,
+     "saturated_s": 0.0,
+     "energy_j": 3.9
+    },
+    "knee_l": {
+     "peak_torque_nm": 35.01,
+     "of_peak": 0.584,
+     "of_rated": 0.875,
+     "saturated_s": 0.0,
+     "energy_j": 9.8
+    },
+    "wheel_l": {
+     "peak_torque_nm": 6.5,
+     "of_peak": 0.455,
+     "of_rated": 1.3,
+     "saturated_s": 0.0,
+     "energy_j": 23.1
+    },
+    "hip_r": {
+     "peak_torque_nm": 32.0,
+     "of_peak": 0.533,
+     "of_rated": 0.8,
+     "saturated_s": 0.0,
+     "energy_j": 4.1
+    },
+    "knee_r": {
+     "peak_torque_nm": 35.42,
+     "of_peak": 0.59,
+     "of_rated": 0.885,
+     "saturated_s": 0.0,
+     "energy_j": 10.0
+    },
+    "wheel_r": {
+     "peak_torque_nm": 6.42,
+     "of_peak": 0.449,
+     "of_rated": 1.285,
+     "saturated_s": 0.0,
+     "energy_j": 22.9
+    }
+   },
+   "energy_j": 73.8,
+   "lqr": {
+    "mass_body": 23.0541,
+    "com_height": 0.3037,
+    "inertia_body": 0.51
+   },
+   "video": "curb.mp4",
+   "events": [],
+   "fell_at": null,
+   "lidar_clearance_mm": 273.3,
+   "body_impact_peak_n": 0,
+   "lidar_touched_at": null,
+   "turret": {
+    "shots": 0,
+    "hits": 0,
+    "hit_rate": 0.0,
+    "by_target": {},
+    "knocked_down": 0,
+    "targets": 0,
+    "out_of_range_at_times": []
+   },
+   "qpos_layout": {
+    "base_free": 0,
+    "hip_l": 7,
+    "knee_l": 8,
+    "wheel_l": 9,
+    "hip_r": 10,
+    "knee_r": 11,
+    "wheel_r": 12,
+    "turret_pan": 13,
+    "turret_tilt": 14
+   },
+   "props": [
+    {
+     "name": "curb",
+     "type": 6,
+     "size": [
+      1.5,
+      1.5,
+      0.0125
+     ],
+     "pos": [
+      2.3,
+      0.0,
+      0.0125
+     ],
+     "quat": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "rgba": [
+      0.6,
+      0.6,
+      0.62,
+      1.0
+     ]
+    }
+   ],
+   "movers": [],
+   "physical_test": false,
+   "wall_s": 5.27
+  },
+  "recoil": {
+   "scenario": "recoil",
+   "title": "Recoil: empty a 24-shot magazine in bursts of 8, standing then driving",
+   "seconds": 10.599,
+   "pass": true,
+   "reasons": [],
+   "max_theta_deg": 6.76,
+   "max_roll_deg": 0.0,
+   "roll_rms_window_deg": 0.0,
+   "theta_rms_deg": 2.208,
+   "speed_rms_mps": 0.165,
+   "x_max_m": 2.602,
+   "top_speed_mps": 0.74,
+   "speed_limit_mps": 2.11,
+   "motors": {
+    "hip_l": {
+     "peak_torque_nm": 13.0,
+     "of_peak": 0.217,
+     "of_rated": 0.325,
+     "saturated_s": 0.0,
+     "energy_j": 1.3
+    },
+    "knee_l": {
+     "peak_torque_nm": 15.16,
+     "of_peak": 0.253,
+     "of_rated": 0.379,
+     "saturated_s": 0.0,
+     "energy_j": 2.4
+    },
+    "wheel_l": {
+     "peak_torque_nm": 1.16,
+     "of_peak": 0.081,
+     "of_rated": 0.231,
+     "saturated_s": 0.0,
+     "energy_j": 9.2
+    },
+    "hip_r": {
+     "peak_torque_nm": 13.04,
+     "of_peak": 0.217,
+     "of_rated": 0.326,
+     "saturated_s": 0.0,
+     "energy_j": 1.3
+    },
+    "knee_r": {
+     "peak_torque_nm": 15.21,
+     "of_peak": 0.253,
+     "of_rated": 0.38,
+     "saturated_s": 0.0,
+     "energy_j": 2.4
+    },
+    "wheel_r": {
+     "peak_torque_nm": 1.16,
+     "of_peak": 0.081,
+     "of_rated": 0.232,
+     "saturated_s": 0.0,
+     "energy_j": 9.2
+    }
+   },
+   "energy_j": 25.7,
+   "lqr": {
+    "mass_body": 23.0541,
+    "com_height": 0.3037,
+    "inertia_body": 0.51
+   },
+   "video": "recoil.mp4",
+   "events": [
+    {
+     "t": 2.0,
+     "type": "shot"
+    },
+    {
+     "t": 2.1,
+     "type": "shot"
+    },
+    {
+     "t": 2.2,
+     "type": "shot"
+    },
+    {
+     "t": 2.3,
+     "type": "shot"
+    },
+    {
+     "t": 2.4,
+     "type": "shot"
+    },
+    {
+     "t": 2.5,
+     "type": "shot"
+    },
+    {
+     "t": 2.6,
+     "type": "shot"
+    },
+    {
+     "t": 2.7,
+     "type": "shot"
+    },
+    {
+     "t": 4.2,
+     "type": "shot"
+    },
+    {
+     "t": 4.3,
+     "type": "shot"
+    },
+    {
+     "t": 4.4,
+     "type": "shot"
+    },
+    {
+     "t": 4.5,
+     "type": "shot"
+    },
+    {
+     "t": 4.6,
+     "type": "shot"
+    },
+    {
+     "t": 4.7,
+     "type": "shot"
+    },
+    {
+     "t": 4.8,
+     "type": "shot"
+    },
+    {
+     "t": 4.9,
+     "type": "shot"
+    },
+    {
+     "t": 6.4,
+     "type": "shot"
+    },
+    {
+     "t": 6.5,
+     "type": "shot"
+    },
+    {
+     "t": 6.6,
+     "type": "shot"
+    },
+    {
+     "t": 6.7,
+     "type": "shot"
+    },
+    {
+     "t": 6.8,
+     "type": "shot"
+    },
+    {
+     "t": 6.9,
+     "type": "shot"
+    },
+    {
+     "t": 7.0,
+     "type": "shot"
+    },
+    {
+     "t": 7.1,
+     "type": "shot"
+    }
+   ],
+   "fell_at": null,
+   "lidar_clearance_mm": 277.3,
+   "body_impact_peak_n": 0,
+   "lidar_touched_at": null,
+   "turret": {
+    "shots": 0,
+    "hits": 0,
+    "hit_rate": 0.0,
+    "by_target": {},
+    "knocked_down": 0,
+    "targets": 0,
+    "out_of_range_at_times": []
+   },
+   "qpos_layout": {
+    "base_free": 0,
+    "hip_l": 7,
+    "knee_l": 8,
+    "wheel_l": 9,
+    "hip_r": 10,
+    "knee_r": 11,
+    "wheel_r": 12,
+    "turret_pan": 13,
+    "turret_tilt": 14
+   },
+   "props": [],
+   "movers": [],
+   "physical_test": false,
+   "wall_s": 5.83
+  },
+  "targets": {
+   "scenario": "targets",
+   "title": "Knock-down range: five foam targets, standing then driving",
+   "seconds": 16.0,
+   "pass": true,
+   "reasons": [],
+   "max_theta_deg": 4.18,
+   "max_roll_deg": 0.03,
+   "roll_rms_window_deg": 0.0,
+   "theta_rms_deg": 1.064,
+   "speed_rms_mps": 0.093,
+   "x_max_m": 1.288,
+   "top_speed_mps": 0.6,
+   "speed_limit_mps": 2.11,
+   "motors": {
+    "hip_l": {
+     "peak_torque_nm": 39.59,
+     "of_peak": 0.66,
+     "of_rated": 0.99,
+     "saturated_s": 0.0,
+     "energy_j": 75.1
+    },
+    "knee_l": {
+     "peak_torque_nm": 28.43,
+     "of_peak": 0.474,
+     "of_rated": 0.711,
+     "saturated_s": 0.0,
+     "energy_j": 35.0
+    },
+    "wheel_l": {
+     "peak_torque_nm": 2.46,
+     "of_peak": 0.172,
+     "of_rated": 0.493,
+     "saturated_s": 0.0,
+     "energy_j": 8.6
+    },
+    "hip_r": {
+     "peak_torque_nm": 39.72,
+     "of_peak": 0.662,
+     "of_rated": 0.993,
+     "saturated_s": 0.0,
+     "energy_j": 75.2
+    },
+    "knee_r": {
+     "peak_torque_nm": 28.34,
+     "of_peak": 0.472,
+     "of_rated": 0.708,
+     "saturated_s": 0.0,
+     "energy_j": 35.2
+    },
+    "wheel_r": {
+     "peak_torque_nm": 2.44,
+     "of_peak": 0.171,
+     "of_rated": 0.488,
+     "saturated_s": 0.0,
+     "energy_j": 8.9
+    }
+   },
+   "energy_j": 238.1,
+   "lqr": {
+    "mass_body": 23.0541,
+    "com_height": 0.3356,
+    "inertia_body": 0.5496
+   },
+   "video": "targets.mp4",
+   "events": [
+    {
+     "t": 2.056,
+     "type": "laser_on",
+     "target": "target_a"
+    },
+    {
+     "t": 2.458,
+     "type": "shot",
+     "target": "target_a",
+     "ball": "ball_0"
+    },
+    {
+     "t": 2.619,
+     "type": "hit",
+     "target": "target_a",
+     "ball": "ball_0"
+    },
+    {
+     "t": 2.679,
+     "type": "shot",
+     "target": "target_a",
+     "ball": "ball_1"
+    },
+    {
+     "t": 2.837,
+     "type": "down",
+     "target": "target_a"
+    },
+    {
+     "t": 2.838,
+     "type": "laser_off"
+    },
+    {
+     "t": 2.847,
+     "type": "hit",
+     "target": "target_a",
+     "ball": "ball_1"
+    },
+    {
+     "t": 3.454,
+     "type": "laser_on",
+     "target": "target_b"
+    },
+    {
+     "t": 3.859,
+     "type": "shot",
+     "target": "target_b",
+     "ball": "ball_2"
+    },
+    {
+     "t": 4.028,
+     "type": "hit",
+     "target": "target_b",
+     "ball": "ball_2"
+    },
+    {
+     "t": 4.081,
+     "type": "shot",
+     "target": "target_b",
+     "ball": "ball_3"
+    },
+    {
+     "t": 4.236,
+     "type": "down",
+     "target": "target_b"
+    },
+    {
+     "t": 4.237,
+     "type": "laser_off"
+    },
+    {
+     "t": 4.259,
+     "type": "hit",
+     "target": "target_b",
+     "ball": "ball_3"
+    },
+    {
+     "t": 4.884,
+     "type": "laser_on",
+     "target": "target_c"
+    },
+    {
+     "t": 5.289,
+     "type": "shot",
+     "target": "target_c",
+     "ball": "ball_4"
+    },
+    {
+     "t": 5.455,
+     "type": "hit",
+     "target": "target_c",
+     "ball": "ball_4"
+    },
+    {
+     "t": 5.507,
+     "type": "shot",
+     "target": "target_c",
+     "ball": "ball_5"
+    },
+    {
+     "t": 5.67,
+     "type": "down",
+     "target": "target_c"
+    },
+    {
+     "t": 5.671,
+     "type": "laser_off"
+    },
+    {
+     "t": 5.68,
+     "type": "hit",
+     "target": "target_c",
+     "ball": "ball_5"
+    },
+    {
+     "t": 9.06,
+     "type": "laser_on",
+     "target": "target_d"
+    },
+    {
+     "t": 9.411,
+     "type": "shot",
+     "target": "target_d",
+     "ball": "ball_6"
+    },
+    {
+     "t": 9.633,
+     "type": "hit",
+     "target": "target_d",
+     "ball": "ball_6"
+    },
+    {
+     "t": 9.812,
+     "type": "shot",
+     "target": "target_d",
+     "ball": "ball_7"
+    },
+    {
+     "t": 9.957,
+     "type": "down",
+     "target": "target_d"
+    },
+    {
+     "t": 9.958,
+     "type": "laser_off"
+    },
+    {
+     "t": 10.597,
+     "type": "laser_on",
+     "target": "target_e"
+    },
+    {
+     "t": 11.027,
+     "type": "shot",
+     "target": "target_e",
+     "ball": "ball_8"
+    },
+    {
+     "t": 11.222,
+     "type": "hit",
+     "target": "target_e",
+     "ball": "ball_8"
+    },
+    {
+     "t": 11.243,
+     "type": "shot",
+     "target": "target_e",
+     "ball": "ball_9"
+    },
+    {
+     "t": 11.437,
+     "type": "hit",
+     "target": "target_e",
+     "ball": "ball_9"
+    },
+    {
+     "t": 11.488,
+     "type": "shot",
+     "target": "target_e",
+     "ball": "ball_10"
+    },
+    {
+     "t": 11.502,
+     "type": "down",
+     "target": "target_e"
+    },
+    {
+     "t": 11.503,
+     "type": "laser_off"
+    }
+   ],
+   "fell_at": null,
+   "lidar_clearance_mm": 279.2,
+   "body_impact_peak_n": 0,
+   "lidar_touched_at": null,
+   "turret": {
+    "shots": 11,
+    "hits": 9,
+    "hit_rate": 0.818,
+    "by_target": {
+     "target_a": {
+      "shots": 2,
+      "hits": 2,
+      "knocked_down_s": 2.837
+     },
+     "target_b": {
+      "shots": 2,
+      "hits": 2,
+      "knocked_down_s": 4.236
+     },
+     "target_c": {
+      "shots": 2,
+      "hits": 2,
+      "knocked_down_s": 5.67
+     },
+     "target_d": {
+      "shots": 2,
+      "hits": 1,
+      "knocked_down_s": 9.957
+     },
+     "target_e": {
+      "shots": 3,
+      "hits": 2,
+      "knocked_down_s": 11.502
+     }
+    },
+    "knocked_down": 5,
+    "targets": 5,
+    "out_of_range_at_times": []
+   },
+   "qpos_layout": {
+    "base_free": 0,
+    "hip_l": 7,
+    "knee_l": 8,
+    "wheel_l": 9,
+    "hip_r": 10,
+    "knee_r": 11,
+    "wheel_r": 12,
+    "turret_pan": 13,
+    "turret_tilt": 14,
+    "target_a_hinge": 15,
+    "target_b_hinge": 16,
+    "target_c_hinge": 17,
+    "target_d_hinge": 18,
+    "target_e_hinge": 19,
+    "ball_0": 20,
+    "ball_1": 27,
+    "ball_2": 34,
+    "ball_3": 41,
+    "ball_4": 48,
+    "ball_5": 55,
+    "ball_6": 62,
+    "ball_7": 69,
+    "ball_8": 76,
+    "ball_9": 83,
+    "ball_10": 90,
+    "ball_11": 97,
+    "ball_12": 104,
+    "ball_13": 111,
+    "ball_14": 118,
+    "ball_15": 125,
+    "ball_16": 132,
+    "ball_17": 139,
+    "ball_18": 146,
+    "ball_19": 153,
+    "ball_20": 160,
+    "ball_21": 167,
+    "ball_22": 174,
+    "ball_23": 181,
+    "ball_24": 188,
+    "ball_25": 195,
+    "ball_26": 202,
+    "ball_27": 209,
+    "ball_28": 216,
+    "ball_29": 223
+   },
+   "props": [
+    {
+     "name": "target_a_post",
+     "type": 6,
+     "size": [
+      0.015,
+      0.015,
+      0.09
+     ],
+     "pos": [
+      3.0275,
+      1.3119,
+      0.09
+     ],
+     "quat": [
+      -0.20303,
+      0.0,
+      0.0,
+      0.97917
+     ],
+     "rgba": [
+      0.08,
+      0.08,
+      0.09,
+      1.0
+     ]
+    },
+    {
+     "name": "target_a_foot",
+     "type": 6,
+     "size": [
+      0.08,
+      0.08,
+      0.006
+     ],
+     "pos": [
+      3.0275,
+      1.3119,
+      0.006
+     ],
+     "quat": [
+      -0.20303,
+      0.0,
+      0.0,
+      0.97917
+     ],
+     "rgba": [
+      0.95,
+      0.8,
+      0.05,
+      1.0
+     ]
+    },
+    {
+     "name": "target_a",
+     "type": 6,
+     "size": [
+      0.006,
+      0.12,
+      0.12
+     ],
+     "pos": [
+      2.9963,
+      1.2984,
+      0.3
+     ],
+     "quat": [
+      -0.20303,
+      0.0,
+      0.0,
+      0.97917
+     ],
+     "rgba": [
+      1.0,
+      0.3,
+      0.0,
+      1.0
+     ]
+    },
+    {
+     "name": "target_a_ring",
+     "type": 5,
+     "size": [
+      0.085,
+      0.0015,
+      0.0
+     ],
+     "pos": [
+      2.9904,
+      1.2958,
+      0.3
+     ],
+     "quat": [
+      -0.14357,
+      -0.69238,
+      -0.14357,
+      0.69238
+     ],
+     "rgba": [
+      0.03,
+      0.03,
+      0.04,
+      1.0
+     ]
+    },
+    {
+     "name": "target_a_bull",
+     "type": 5,
+     "size": [
+      0.035,
+      0.002,
+      0.0
+     ],
+     "pos": [
+      2.9897,
+      1.2955,
+      0.3
+     ],
+     "quat": [
+      -0.14357,
+      -0.69238,
+      -0.14357,
+      0.69238
+     ],
+     "rgba": [
+      1.0,
+      0.98,
+      0.9,
+      1.0
+     ]
+    },
+    {
+     "name": "target_b_post",
+     "type": 6,
+     "size": [
+      0.015,
+      0.015,
+      0.09
+     ],
+     "pos": [
+      3.4299,
+      0.2018,
+      0.09
+     ],
+     "quat": [
+      -0.02937,
+      0.0,
+      0.0,
+      0.99957
+     ],
+     "rgba": [
+      0.08,
+      0.08,
+      0.09,
+      1.0
+     ]
+    },
+    {
+     "name": "target_b_foot",
+     "type": 6,
+     "size": [
+      0.08,
+      0.08,
+      0.006
+     ],
+     "pos": [
+      3.4299,
+      0.2018,
+      0.006
+     ],
+     "quat": [
+      -0.02937,
+      0.0,
+      0.0,
+      0.99957
+     ],
+     "rgba": [
+      0.95,
+      0.8,
+      0.05,
+      1.0
+     ]
+    },
+    {
+     "name": "target_b",
+     "type": 6,
+     "size": [
+      0.006,
+      0.12,
+      0.12
+     ],
+     "pos": [
+      3.396,
+      0.1998,
+      0.3
+     ],
+     "quat": [
+      -0.02937,
+      0.0,
+      0.0,
+      0.99957
+     ],
+     "rgba": [
+      1.0,
+      0.3,
+      0.0,
+      1.0
+     ]
+    },
+    {
+     "name": "target_b_ring",
+     "type": 5,
+     "size": [
+      0.085,
+      0.0015,
+      0.0
+     ],
+     "pos": [
+      3.3895,
+      0.1994,
+      0.3
+     ],
+     "quat": [
+      -0.02077,
+      -0.7068,
+      -0.02077,
+      0.7068
+     ],
+     "rgba": [
+      0.03,
+      0.03,
+      0.04,
+      1.0
+     ]
+    },
+    {
+     "name": "target_b_bull",
+     "type": 5,
+     "size": [
+      0.035,
+      0.002,
+      0.0
+     ],
+     "pos": [
+      3.3888,
+      0.1993,
+      0.3
+     ],
+     "quat": [
+      -0.02077,
+      -0.7068,
+      -0.02077,
+      0.7068
+     ],
+     "rgba": [
+      1.0,
+      0.98,
+      0.9,
+      1.0
+     ]
+    },
+    {
+     "name": "target_c_post",
+     "type": 6,
+     "size": [
+      0.015,
+      0.015,
+      0.09
+     ],
+     "pos": [
+      3.2286,
+      -1.0089,
+      0.09
+     ],
+     "quat": [
+      0.15086,
+      0.0,
+      0.0,
+      0.98855
+     ],
+     "rgba": [
+      0.08,
+      0.08,
+      0.09,
+      1.0
+     ]
+    },
+    {
+     "name": "target_c_foot",
+     "type": 6,
+     "size": [
+      0.08,
+      0.08,
+      0.006
+     ],
+     "pos": [
+      3.2286,
+      -1.0089,
+      0.006
+     ],
+     "quat": [
+      0.15086,
+      0.0,
+      0.0,
+      0.98855
+     ],
+     "rgba": [
+      0.95,
+      0.8,
+      0.05,
+      1.0
+     ]
+    },
+    {
+     "name": "target_c",
+     "type": 6,
+     "size": [
+      0.006,
+      0.12,
+      0.12
+     ],
+     "pos": [
+      3.1962,
+      -0.9988,
+      0.3
+     ],
+     "quat": [
+      0.15086,
+      0.0,
+      0.0,
+      0.98855
+     ],
+     "rgba": [
+      1.0,
+      0.3,
+      0.0,
+      1.0
+     ]
+    },
+    {
+     "name": "target_c_ring",
+     "type": 5,
+     "size": [
+      0.085,
+      0.0015,
+      0.0
+     ],
+     "pos": [
+      3.19,
+      -0.9969,
+      0.3
+     ],
+     "quat": [
+      0.10668,
+      -0.69901,
+      0.10668,
+      0.69901
+     ],
+     "rgba": [
+      0.03,
+      0.03,
+      0.04,
+      1.0
+     ]
+    },
+    {
+     "name": "target_c_bull",
+     "type": 5,
+     "size": [
+      0.035,
+      0.002,
+      0.0
+     ],
+     "pos": [
+      3.1893,
+      -0.9967,
+      0.3
+     ],
+     "quat": [
+      0.10668,
+      -0.69901,
+      0.10668,
+      0.69901
+     ],
+     "rgba": [
+      1.0,
+      0.98,
+      0.9,
+      1.0
+     ]
+    },
+    {
+     "name": "target_d_post",
+     "type": 6,
+     "size": [
+      0.015,
+      0.015,
+      0.09
+     ],
+     "pos": [
+      3.8265,
+      -2.014,
+      0.09
+     ],
+     "quat": [
+      0.23988,
+      0.0,
+      0.0,
+      0.9708
+     ],
+     "rgba": [
+      0.08,
+      0.08,
+      0.09,
+      1.0
+     ]
+    },
+    {
+     "name": "target_d_foot",
+     "type": 6,
+     "size": [
+      0.08,
+      0.08,
+      0.006
+     ],
+     "pos": [
+      3.8265,
+      -2.014,
+      0.006
+     ],
+     "quat": [
+      0.23988,
+      0.0,
+      0.0,
+      0.9708
+     ],
+     "rgba": [
+      0.95,
+      0.8,
+      0.05,
+      1.0
+     ]
+    },
+    {
+     "name": "target_d",
+     "type": 6,
+     "size": [
+      0.006,
+      0.12,
+      0.12
+     ],
+     "pos": [
+      3.7965,
+      -1.9981,
+      0.3
+     ],
+     "quat": [
+      0.23988,
+      0.0,
+      0.0,
+      0.9708
+     ],
+     "rgba": [
+      1.0,
+      0.3,
+      0.0,
+      1.0
+     ]
+    },
+    {
+     "name": "target_d_ring",
+     "type": 5,
+     "size": [
+      0.085,
+      0.0015,
+      0.0
+     ],
+     "pos": [
+      3.7907,
+      -1.9951,
+      0.3
+     ],
+     "quat": [
+      0.16962,
+      -0.68646,
+      0.16962,
+      0.68646
+     ],
+     "rgba": [
+      0.03,
+      0.03,
+      0.04,
+      1.0
+     ]
+    },
+    {
+     "name": "target_d_bull",
+     "type": 5,
+     "size": [
+      0.035,
+      0.002,
+      0.0
+     ],
+     "pos": [
+      3.7901,
+      -1.9948,
+      0.3
+     ],
+     "quat": [
+      0.16962,
+      -0.68646,
+      0.16962,
+      0.68646
+     ],
+     "rgba": [
+      1.0,
+      0.98,
+      0.9,
+      1.0
+     ]
+    },
+    {
+     "name": "target_e_post",
+     "type": 6,
+     "size": [
+      0.015,
+      0.015,
+      0.09
+     ],
+     "pos": [
+      4.2293,
+      0.9063,
+      0.09
+     ],
+     "quat": [
+      -0.10535,
+      0.0,
+      0.0,
+      0.99444
+     ],
+     "rgba": [
+      0.08,
+      0.08,
+      0.09,
+      1.0
+     ]
+    },
+    {
+     "name": "target_e_foot",
+     "type": 6,
+     "size": [
+      0.08,
+      0.08,
+      0.006
+     ],
+     "pos": [
+      4.2293,
+      0.9063,
+      0.006
+     ],
+     "quat": [
+      -0.10535,
+      0.0,
+      0.0,
+      0.99444
+     ],
+     "rgba": [
+      0.95,
+      0.8,
+      0.05,
+      1.0
+     ]
+    },
+    {
+     "name": "target_e",
+     "type": 6,
+     "size": [
+      0.006,
+      0.12,
+      0.12
+     ],
+     "pos": [
+      4.1961,
+      0.8992,
+      0.3
+     ],
+     "quat": [
+      -0.10535,
+      0.0,
+      0.0,
+      0.99444
+     ],
+     "rgba": [
+      1.0,
+      0.3,
+      0.0,
+      1.0
+     ]
+    },
+    {
+     "name": "target_e_ring",
+     "type": 5,
+     "size": [
+      0.085,
+      0.0015,
+      0.0
+     ],
+     "pos": [
+      4.1897,
+      0.8978,
+      0.3
+     ],
+     "quat": [
+      -0.07449,
+      -0.70317,
+      -0.07449,
+      0.70317
+     ],
+     "rgba": [
+      0.03,
+      0.03,
+      0.04,
+      1.0
+     ]
+    },
+    {
+     "name": "target_e_bull",
+     "type": 5,
+     "size": [
+      0.035,
+      0.002,
+      0.0
+     ],
+     "pos": [
+      4.189,
+      0.8977,
+      0.3
+     ],
+     "quat": [
+      -0.07449,
+      -0.70317,
+      -0.07449,
+      0.70317
+     ],
+     "rgba": [
+      1.0,
+      0.98,
+      0.9,
+      1.0
+     ]
+    }
+   ],
+   "movers": [
+    {
+     "body": "target_a_plate",
+     "qpos": 15,
+     "pivot": [
+      3.0,
+      1.3,
+      0.18
+     ],
+     "axis": [
+      0.3976,
+      -0.9176,
+      0.0
+     ],
+     "geoms": [
+      "target_a",
+      "target_a_ring",
+      "target_a_bull"
+     ]
+    },
+    {
+     "body": "target_b_plate",
+     "qpos": 16,
+     "pivot": [
+      3.4,
+      0.2,
+      0.18
+     ],
+     "axis": [
+      0.0587,
+      -0.9983,
+      0.0
+     ],
+     "geoms": [
+      "target_b",
+      "target_b_ring",
+      "target_b_bull"
+     ]
+    },
+    {
+     "body": "target_c_plate",
+     "qpos": 17,
+     "pivot": [
+      3.2,
+      -1.0,
+      0.18
+     ],
+     "axis": [
+      -0.2983,
+      -0.9545,
+      0.0
+     ],
+     "geoms": [
+      "target_c",
+      "target_c_ring",
+      "target_c_bull"
+     ]
+    },
+    {
+     "body": "target_d_plate",
+     "qpos": 18,
+     "pivot": [
+      3.8,
+      -2.0,
+      0.18
+     ],
+     "axis": [
+      -0.4657,
+      -0.8849,
+      0.0
+     ],
+     "geoms": [
+      "target_d",
+      "target_d_ring",
+      "target_d_bull"
+     ]
+    },
+    {
+     "body": "target_e_plate",
+     "qpos": 19,
+     "pivot": [
+      4.2,
+      0.9,
+      0.18
+     ],
+     "axis": [
+      0.2095,
+      -0.9778,
+      0.0
+     ],
+     "geoms": [
+      "target_e",
+      "target_e_ring",
+      "target_e_bull"
+     ]
+    }
+   ],
+   "physical_test": false,
+   "wall_s": 67.01
+  },
+  "look": {
+   "scenario": "look",
+   "title": "Look up: lean back 15\u00b0 on the legs, hold, then look ahead again",
+   "seconds": 9.0,
+   "pass": true,
+   "reasons": [],
+   "max_theta_deg": 0.35,
+   "max_roll_deg": 0.0,
+   "roll_rms_window_deg": 0.0,
+   "theta_rms_deg": 0.08,
+   "speed_rms_mps": 0.01,
+   "x_max_m": 0.007,
+   "top_speed_mps": 0.03,
+   "speed_limit_mps": 2.11,
+   "motors": {
+    "hip_l": {
+     "peak_torque_nm": 16.01,
+     "of_peak": 0.267,
+     "of_rated": 0.4,
+     "saturated_s": 0.0,
+     "energy_j": 7.6
+    },
+    "knee_l": {
+     "peak_torque_nm": 17.55,
+     "of_peak": 0.292,
+     "of_rated": 0.439,
+     "saturated_s": 0.0,
+     "energy_j": 9.4
+    },
+    "wheel_l": {
+     "peak_torque_nm": 0.25,
+     "of_peak": 0.018,
+     "of_rated": 0.051,
+     "saturated_s": 0.0,
+     "energy_j": 0.0
+    },
+    "hip_r": {
+     "peak_torque_nm": 16.04,
+     "of_peak": 0.267,
+     "of_rated": 0.401,
+     "saturated_s": 0.0,
+     "energy_j": 7.6
+    },
+    "knee_r": {
+     "peak_torque_nm": 17.58,
+     "of_peak": 0.293,
+     "of_rated": 0.439,
+     "saturated_s": 0.0,
+     "energy_j": 9.4
+    },
+    "wheel_r": {
+     "peak_torque_nm": 0.26,
+     "of_peak": 0.018,
+     "of_rated": 0.052,
+     "saturated_s": 0.0,
+     "energy_j": 0.0
+    }
+   },
+   "energy_j": 34.1,
+   "lqr": {
+    "mass_body": 23.0541,
+    "com_height": 0.3088,
+    "inertia_body": 0.5156
+   },
+   "video": "look.mp4",
+   "events": [],
+   "fell_at": null,
+   "lidar_clearance_mm": 279.7,
+   "body_impact_peak_n": 0,
+   "lidar_touched_at": null,
+   "turret": {
+    "shots": 0,
+    "hits": 0,
+    "hit_rate": 0.0,
+    "by_target": {},
+    "knocked_down": 0,
+    "targets": 0,
+    "out_of_range_at_times": []
+   },
+   "qpos_layout": {
+    "base_free": 0,
+    "hip_l": 7,
+    "knee_l": 8,
+    "wheel_l": 9,
+    "hip_r": 10,
+    "knee_r": 11,
+    "wheel_r": 12,
+    "turret_pan": 13,
+    "turret_tilt": 14
+   },
+   "props": [],
+   "movers": [],
+   "physical_test": false,
+   "wall_s": 5.07
+  },
+  "fall_front": {
+   "scenario": "fall_front",
+   "title": "Motors cut while standing, nudged forwards: how it lands",
+   "seconds": 2.398,
+   "pass": true,
+   "reasons": [],
+   "max_theta_deg": 93.72,
+   "max_roll_deg": 0.09,
+   "roll_rms_window_deg": 0.0,
+   "theta_rms_deg": 55.826,
+   "speed_rms_mps": 0.192,
+   "x_max_m": 0.078,
+   "top_speed_mps": 0.37,
+   "speed_limit_mps": 2.11,
+   "motors": {
+    "hip_l": {
+     "peak_torque_nm": 12.61,
+     "of_peak": 0.21,
+     "of_rated": 0.315,
+     "saturated_s": 1.045,
+     "energy_j": 0.0
+    },
+    "knee_l": {
+     "peak_torque_nm": 14.44,
+     "of_peak": 0.241,
+     "of_rated": 0.361,
+     "saturated_s": 0.926,
+     "energy_j": 0.0
+    },
+    "wheel_l": {
+     "peak_torque_nm": 0.02,
+     "of_peak": 0.001,
+     "of_rated": 0.004,
+     "saturated_s": 1.191,
+     "energy_j": 0.0
+    },
+    "hip_r": {
+     "peak_torque_nm": 12.66,
+     "of_peak": 0.211,
+     "of_rated": 0.317,
+     "saturated_s": 1.044,
+     "energy_j": 0.0
+    },
+    "knee_r": {
+     "peak_torque_nm": 14.48,
+     "of_peak": 0.241,
+     "of_rated": 0.362,
+     "saturated_s": 0.924,
+     "energy_j": 0.0
+    },
+    "wheel_r": {
+     "peak_torque_nm": 0.02,
+     "of_peak": 0.001,
+     "of_rated": 0.004,
+     "saturated_s": 1.19,
+     "energy_j": 0.0
+    }
+   },
+   "energy_j": 0.1,
+   "lqr": {
+    "mass_body": 23.0541,
+    "com_height": 0.3037,
+    "inertia_body": 0.51
+   },
+   "video": "fall_front.mp4",
+   "events": [
+    {
+     "t": 1.0,
+     "type": "push"
+    },
+    {
+     "t": 1.273,
+     "type": "fall"
+    }
+   ],
+   "fell_at": 1.396,
+   "lidar_clearance_mm": 10.0,
+   "body_impact_peak_n": 1177,
+   "lidar_touched_at": null,
+   "turret": {
+    "shots": 0,
+    "hits": 0,
+    "hit_rate": 0.0,
+    "by_target": {},
+    "knocked_down": 0,
+    "targets": 0,
+    "out_of_range_at_times": []
+   },
+   "qpos_layout": {
+    "base_free": 0,
+    "hip_l": 7,
+    "knee_l": 8,
+    "wheel_l": 9,
+    "hip_r": 10,
+    "knee_r": 11,
+    "wheel_r": 12,
+    "turret_pan": 13,
+    "turret_tilt": 14
+   },
+   "props": [],
+   "movers": [],
+   "physical_test": false,
+   "wall_s": 8.68
+  },
+  "fall_back": {
+   "scenario": "fall_back",
+   "title": "Motors cut while standing, nudged backwards: how it lands",
+   "seconds": 2.892,
+   "pass": true,
+   "reasons": [],
+   "max_theta_deg": 58.99,
+   "max_roll_deg": 0.03,
+   "roll_rms_window_deg": 0.0,
+   "theta_rms_deg": 39.185,
+   "speed_rms_mps": 0.108,
+   "x_max_m": 0.078,
+   "top_speed_mps": 0.71,
+   "speed_limit_mps": 2.11,
+   "motors": {
+    "hip_l": {
+     "peak_torque_nm": 12.61,
+     "of_peak": 0.21,
+     "of_rated": 0.315,
+     "saturated_s": 1.834,
+     "energy_j": 0.0
+    },
+    "knee_l": {
+     "peak_torque_nm": 14.44,
+     "of_peak": 0.241,
+     "of_rated": 0.361,
+     "saturated_s": 1.816,
+     "energy_j": 0.0
+    },
+    "wheel_l": {
+     "peak_torque_nm": 0.02,
+     "of_peak": 0.001,
+     "of_rated": 0.004,
+     "saturated_s": 1.719,
+     "energy_j": 0.0
+    },
+    "hip_r": {
+     "peak_torque_nm": 12.66,
+     "of_peak": 0.211,
+     "of_rated": 0.317,
+     "saturated_s": 1.834,
+     "energy_j": 0.0
+    },
+    "knee_r": {
+     "peak_torque_nm": 14.48,
+     "of_peak": 0.241,
+     "of_rated": 0.362,
+     "saturated_s": 1.817,
+     "energy_j": 0.0
+    },
+    "wheel_r": {
+     "peak_torque_nm": 0.02,
+     "of_peak": 0.001,
+     "of_rated": 0.004,
+     "saturated_s": 1.719,
+     "energy_j": 0.0
+    }
+   },
+   "energy_j": 0.1,
+   "lqr": {
+    "mass_body": 23.0541,
+    "com_height": 0.3037,
+    "inertia_body": 0.51
+   },
+   "video": "fall_back.mp4",
+   "events": [
+    {
+     "t": 1.0,
+     "type": "push"
+    },
+    {
+     "t": 1.213,
+     "type": "fall"
+    }
+   ],
+   "fell_at": 1.89,
+   "lidar_clearance_mm": 91.1,
+   "body_impact_peak_n": 0,
+   "lidar_touched_at": null,
+   "turret": {
+    "shots": 0,
+    "hits": 0,
+    "hit_rate": 0.0,
+    "by_target": {},
+    "knocked_down": 0,
+    "targets": 0,
+    "out_of_range_at_times": []
+   },
+   "qpos_layout": {
+    "base_free": 0,
+    "hip_l": 7,
+    "knee_l": 8,
+    "wheel_l": 9,
+    "hip_r": 10,
+    "knee_r": 11,
+    "wheel_r": 12,
+    "turret_pan": 13,
+    "turret_tilt": 14
+   },
+   "props": [],
+   "movers": [],
+   "physical_test": false,
+   "wall_s": 2.27
+  },
+  "fall_side": {
+   "scenario": "fall_side",
+   "title": "Motors cut while standing, pushed sideways: how it lands",
+   "seconds": 4.0,
+   "pass": true,
+   "reasons": [],
+   "max_theta_deg": 36.43,
+   "max_roll_deg": 5.35,
+   "roll_rms_window_deg": 0.0,
+   "theta_rms_deg": 27.846,
+   "speed_rms_mps": 0.095,
+   "x_max_m": 0.129,
+   "top_speed_mps": 0.43,
+   "speed_limit_mps": 2.11,
+   "motors": {
+    "hip_l": {
+     "peak_torque_nm": 12.61,
+     "of_peak": 0.21,
+     "of_rated": 0.315,
+     "saturated_s": 0.291,
+     "energy_j": 0.0
+    },
+    "knee_l": {
+     "peak_torque_nm": 14.44,
+     "of_peak": 0.241,
+     "of_rated": 0.361,
+     "saturated_s": 2.936,
+     "energy_j": 0.0
+    },
+    "wheel_l": {
+     "peak_torque_nm": 0.02,
+     "of_peak": 0.001,
+     "of_rated": 0.004,
+     "saturated_s": 2.609,
+     "energy_j": 0.0
+    },
+    "hip_r": {
+     "peak_torque_nm": 12.66,
+     "of_peak": 0.211,
+     "of_rated": 0.317,
+     "saturated_s": 2.771,
+     "energy_j": 0.0
+    },
+    "knee_r": {
+     "peak_torque_nm": 14.48,
+     "of_peak": 0.241,
+     "of_rated": 0.362,
+     "saturated_s": 2.904,
+     "energy_j": 0.0
+    },
+    "wheel_r": {
+     "peak_torque_nm": 0.02,
+     "of_peak": 0.001,
+     "of_rated": 0.004,
+     "saturated_s": 2.63,
+     "energy_j": 0.0
+    }
+   },
+   "energy_j": 0.1,
+   "lqr": {
+    "mass_body": 23.0541,
+    "com_height": 0.3037,
+    "inertia_body": 0.51
+   },
+   "video": "fall_side.mp4",
+   "events": [
+    {
+     "t": 1.0,
+     "type": "push"
+    }
+   ],
+   "fell_at": null,
+   "lidar_clearance_mm": 92.7,
+   "body_impact_peak_n": 0,
+   "lidar_touched_at": null,
+   "turret": {
+    "shots": 0,
+    "hits": 0,
+    "hit_rate": 0.0,
+    "by_target": {},
+    "knocked_down": 0,
+    "targets": 0,
+    "out_of_range_at_times": []
+   },
+   "qpos_layout": {
+    "base_free": 0,
+    "hip_l": 7,
+    "knee_l": 8,
+    "wheel_l": 9,
+    "hip_r": 10,
+    "knee_r": 11,
+    "wheel_r": 12,
+    "turret_pan": 13,
+    "turret_tilt": 14
+   },
+   "props": [],
+   "movers": [],
+   "physical_test": false,
+   "wall_s": 8.3
+  },
+  "kerb_drop": {
+   "scenario": "kerb_drop",
+   "title": "Drive off a 50 mm kerb at 0.8 m/s",
+   "seconds": 7.0,
+   "pass": true,
+   "reasons": [],
+   "max_theta_deg": 8.48,
+   "max_roll_deg": 0.49,
+   "roll_rms_window_deg": 0.0,
+   "theta_rms_deg": 3.363,
+   "speed_rms_mps": 0.249,
+   "x_max_m": 3.377,
+   "top_speed_mps": 1.03,
+   "speed_limit_mps": 2.11,
+   "motors": {
+    "hip_l": {
+     "peak_torque_nm": 38.6,
+     "of_peak": 0.643,
+     "of_rated": 0.965,
+     "saturated_s": 0.0,
+     "energy_j": 5.5
+    },
+    "knee_l": {
+     "peak_torque_nm": 33.38,
+     "of_peak": 0.556,
+     "of_rated": 0.835,
+     "saturated_s": 0.0,
+     "energy_j": 12.2
+    },
+    "wheel_l": {
+     "peak_torque_nm": 2.15,
+     "of_peak": 0.15,
+     "of_rated": 0.43,
+     "saturated_s": 0.0,
+     "energy_j": 17.4
+    },
+    "hip_r": {
+     "peak_torque_nm": 44.4,
+     "of_peak": 0.74,
+     "of_rated": 1.11,
+     "saturated_s": 0.0,
+     "energy_j": 7.1
+    },
+    "knee_r": {
+     "peak_torque_nm": 36.27,
+     "of_peak": 0.604,
+     "of_rated": 0.907,
+     "saturated_s": 0.0,
+     "energy_j": 14.3
+    },
+    "wheel_r": {
+     "peak_torque_nm": 1.5,
+     "of_peak": 0.105,
+     "of_rated": 0.299,
+     "saturated_s": 0.0,
+     "energy_j": 15.7
+    }
+   },
+   "energy_j": 72.1,
+   "lqr": {
+    "mass_body": 23.0541,
+    "com_height": 0.3037,
+    "inertia_body": 0.51
+   },
+   "video": "kerb_drop.mp4",
+   "events": [],
+   "fell_at": null,
+   "lidar_clearance_mm": 263.9,
+   "body_impact_peak_n": 0,
+   "lidar_touched_at": null,
+   "turret": {
+    "shots": 0,
+    "hits": 0,
+    "hit_rate": 0.0,
+    "by_target": {},
+    "knocked_down": 0,
+    "targets": 0,
+    "out_of_range_at_times": []
+   },
+   "qpos_layout": {
+    "base_free": 0,
+    "hip_l": 7,
+    "knee_l": 8,
+    "wheel_l": 9,
+    "hip_r": 10,
+    "knee_r": 11,
+    "wheel_r": 12,
+    "turret_pan": 13,
+    "turret_tilt": 14
+   },
+   "props": [
+    {
+     "name": "platform",
+     "type": 6,
+     "size": [
+      1.5,
+      1.5,
+      0.025
+     ],
+     "pos": [
+      -0.9,
+      0.0,
+      0.025
+     ],
+     "quat": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "rgba": [
+      0.6,
+      0.6,
+      0.62,
+      1.0
+     ]
+    }
+   ],
+   "movers": [],
+   "physical_test": false,
+   "wall_s": 4.13
+  },
+  "landing": {
+   "scenario": "landing",
+   "title": "Dropped from 80 mm while balancing: land and stay up",
+   "seconds": 5.0,
+   "pass": true,
+   "reasons": [],
+   "max_theta_deg": 1.42,
+   "max_roll_deg": 0.01,
+   "roll_rms_window_deg": 0.0,
+   "theta_rms_deg": 0.225,
+   "speed_rms_mps": 0.031,
+   "x_max_m": 0.007,
+   "top_speed_mps": 0.22,
+   "speed_limit_mps": 2.11,
+   "motors": {
+    "hip_l": {
+     "peak_torque_nm": 49.73,
+     "of_peak": 0.829,
+     "of_rated": 1.243,
+     "saturated_s": 0.0,
+     "energy_j": 6.4
+    },
+    "knee_l": {
+     "peak_torque_nm": 44.96,
+     "of_peak": 0.749,
+     "of_rated": 1.124,
+     "saturated_s": 0.0,
+     "energy_j": 17.1
+    },
+    "wheel_l": {
+     "peak_torque_nm": 2.97,
+     "of_peak": 0.208,
+     "of_rated": 0.594,
+     "saturated_s": 0.0,
+     "energy_j": 1.5
+    },
+    "hip_r": {
+     "peak_torque_nm": 49.84,
+     "of_peak": 0.831,
+     "of_rated": 1.246,
+     "saturated_s": 0.0,
+     "energy_j": 6.4
+    },
+    "knee_r": {
+     "peak_torque_nm": 45.03,
+     "of_peak": 0.75,
+     "of_rated": 1.126,
+     "saturated_s": 0.0,
+     "energy_j": 17.1
+    },
+    "wheel_r": {
+     "peak_torque_nm": 3.0,
+     "of_peak": 0.209,
+     "of_rated": 0.599,
+     "saturated_s": 0.0,
+     "energy_j": 1.5
+    }
+   },
+   "energy_j": 50.0,
+   "lqr": {
+    "mass_body": 23.0541,
+    "com_height": 0.3037,
+    "inertia_body": 0.51
+   },
+   "video": "landing.mp4",
+   "events": [],
+   "fell_at": null,
+   "lidar_clearance_mm": 255.5,
+   "body_impact_peak_n": 0,
+   "lidar_touched_at": null,
+   "turret": {
+    "shots": 0,
+    "hits": 0,
+    "hit_rate": 0.0,
+    "by_target": {},
+    "knocked_down": 0,
+    "targets": 0,
+    "out_of_range_at_times": []
+   },
+   "qpos_layout": {
+    "base_free": 0,
+    "hip_l": 7,
+    "knee_l": 8,
+    "wheel_l": 9,
+    "hip_r": 10,
+    "knee_r": 11,
+    "wheel_r": 12,
+    "turret_pan": 13,
+    "turret_tilt": 14
+   },
+   "props": [],
+   "movers": [],
+   "physical_test": false,
+   "wall_s": 3.21
+  },
+  "side_kerb": {
+   "scenario": "side_kerb",
+   "title": "One wheel up a 30 mm plank, along it and off: the body stays level",
+   "seconds": 11.0,
+   "pass": true,
+   "reasons": [],
+   "max_theta_deg": 8.64,
+   "max_roll_deg": 2.79,
+   "roll_rms_window_deg": 0.26,
+   "theta_rms_deg": 2.424,
+   "speed_rms_mps": 0.142,
+   "x_max_m": 3.325,
+   "top_speed_mps": 0.84,
+   "speed_limit_mps": 2.11,
+   "motors": {
+    "hip_l": {
+     "peak_torque_nm": 38.96,
+     "of_peak": 0.649,
+     "of_rated": 0.974,
+     "saturated_s": 0.0,
+     "energy_j": 15.2
+    },
+    "knee_l": {
+     "peak_torque_nm": 27.77,
+     "of_peak": 0.463,
+     "of_rated": 0.694,
+     "saturated_s": 0.0,
+     "energy_j": 29.4
+    },
+    "wheel_l": {
+     "peak_torque_nm": 8.59,
+     "of_peak": 0.601,
+     "of_rated": 1.719,
+     "saturated_s": 0.002,
+     "energy_j": 32.4
+    },
+    "hip_r": {
+     "peak_torque_nm": 17.83,
+     "of_peak": 0.297,
+     "of_rated": 0.446,
+     "saturated_s": 0.0,
+     "energy_j": 10.0
+    },
+    "knee_r": {
+     "peak_torque_nm": 23.0,
+     "of_peak": 0.383,
+     "of_rated": 0.575,
+     "saturated_s": 0.0,
+     "energy_j": 21.0
+    },
+    "wheel_r": {
+     "peak_torque_nm": 6.31,
+     "of_peak": 0.442,
+     "of_rated": 1.263,
+     "saturated_s": 0.0,
+     "energy_j": 24.7
+    }
+   },
+   "energy_j": 132.7,
+   "lqr": {
+    "mass_body": 23.0541,
+    "com_height": 0.3037,
+    "inertia_body": 0.51
+   },
+   "video": "side_kerb.mp4",
+   "events": [],
+   "fell_at": null,
+   "lidar_clearance_mm": 276.2,
+   "body_impact_peak_n": 0,
+   "lidar_touched_at": null,
+   "turret": {
+    "shots": 0,
+    "hits": 0,
+    "hit_rate": 0.0,
+    "by_target": {},
+    "knocked_down": 0,
+    "targets": 0,
+    "out_of_range_at_times": []
+   },
+   "qpos_layout": {
+    "base_free": 0,
+    "hip_l": 7,
+    "knee_l": 8,
+    "wheel_l": 9,
+    "hip_r": 10,
+    "knee_r": 11,
+    "wheel_r": 12,
+    "turret_pan": 13,
+    "turret_tilt": 14
+   },
+   "props": [
+    {
+     "name": "side_plank",
+     "type": 6,
+     "size": [
+      1.0,
+      0.725,
+      0.015
+     ],
+     "pos": [
+      1.8,
+      0.775,
+      0.015
+     ],
+     "quat": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "rgba": [
+      0.6,
+      0.6,
+      0.62,
+      1.0
+     ]
+    }
+   ],
+   "movers": [],
+   "physical_test": false,
+   "wall_s": 6.19
+  }
+ },
+ "passed": 15,
+ "total": 15,
+ "estimates": [
+  "hub motor rotor/stator split",
+  "leg actuator rotor inertia (armature)",
+  "printed part masses (CAD at 2 mm walls, 40 % infill)",
+  "joint damping and friction"
+ ],
+ "physical_test": false
+}

@@ -38,3 +38,11 @@ exports/body/fea/*.json
 !references/vendor/j501/*.json
 # the whole rig as one STEP (5.8 MB): rebuilt by cad/build_rig.py
 exports/rig/rig_300.step
+
+# The local preview and Cloudflare Pages use the same generated bundle.
+dist/
+.wrangler/
+test-results/
+# Public browser simulation snapshot; no RL policies or private run directories.
+!exports/sim/
+!exports/sim/**
