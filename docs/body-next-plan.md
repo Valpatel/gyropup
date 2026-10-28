@@ -450,3 +450,97 @@ docs/body-orders.md 4).
   The packs then carry that load into their rail adapters. Options (issue #10): crush-pad skids (a 10 mm TPU 85A
   lattice, modelled with its stiffness in the sim's contact), a shallower bay (packs lying on their side need 122 mm
   across, more than the 116 mm between the knees: no), or the leg's stops raised to 140 mm (the leg workstream's).
+
+## 10. D69 in the body (2026-10-28; issues #10, #19, #14, #20)
+
+D69 swaps the BotWheel for a 10 in hoverboard-class hub motor with a 10 x 2.125 pneumatic tyre. It moves the mass gate
+to 35.0 kg as built, with a 35.5 kg design mass (17.75 kg a leg).
+
+### 10.1 Where the body sees the wheel
+
+Until the leg's foot change lands (#25), the body draws D69's wheel in the BotWheel's place (cad/body_params.py
+`_fivebar()`), using the same solid as sim/wheel_study.py: a 254 x 64 tyre ring, a Ø165 x 65 drum and the Ø17 shaft. The
+sim (sim/robot_v2.py `use_d69_wheel()`), the legs' loads (cad/body_legloads.py) and the firmware header
+(firmware/balance/tools/gen_model.py) put the same wheel into sim.leg_rig's state, at the ledger's 3.53 kg. No leg file
+is edited.
+
+### 10.2 The mass gate (issue #10)
+
+The P3 ledger is 36.73 kg: 36.23 kg with the scheduled levers, which is 1.23 kg over 35.0. That includes the
+crush pads' 0.21 kg (10.3); before the pads it was 36.55 / 36.05 kg. The gate is not relaxed:
+`test_the_mass_ledger_under_the_ceiling` stays a strict xfail. The levers that could close the gap are listed in
+docs/body-sections.md 6. The body-only ones are worth 0.8-1.0 kg, which is not enough alone. The rest are:
+
+- the wheel weighing in under its listing;
+- the 8.5 in backup wheel;
+- lighter packs;
+- a ceiling of about 36.1 kg, which needs the leg to re-run its cases at about 18.3 kg a leg.
+
+D69's 35.0 kg came from a ledger taken before D65's packs.
+
+### 10.3 Crush pads and the lowest leg (issue #19)
+
+The bay's four pads are printed TPU 95A gyroid:
+
+| Property | Value |
+|---|---|
+| Free height | 45 mm |
+| Stroke | 27 mm |
+| Crush plateau | 600 N a pad |
+| Ground clearance needed | 40 mm |
+
+To keep the 40 mm, the lowest controlled leg rises from 160 to 180 mm (sim/robot_v2.py `H_RANGE`, the firmware's
+`GP_H_MIN_M`). The leg's stops do not move.
+
+Results across the three falls and their pushes at x0.6 to x1.4:
+- the worst body impact is 2,691-2,728 N, against a 3,000 N limit;
+- no 25 mm or 35 mm pad passes all nine cases at any plateau.
+
+The robot sits on the pads under a 140 mm leg; they are D69's parking brake. Evidence: sim/bay_pad_study.py,
+exports/body/bay-pad-study.json and bay-pad-depth.json. Still to do: the coupon test for the plateau, the onset
+stiffness and the rebound.
+
+### 10.4 Track, stance and the wheel's connectors
+
+| | BotWheel | D69 10 in |
+|---|---|---|
+| Track (tyre centres) | 414.3 mm | 433.7 mm |
+| Tyre band from the cheek's face (y, robot) | 184.9-229.4 mm | 184.9-248.9 mm |
+| Hip height at the 0.6 stance | 375 mm (289 mm leg) | 424 mm (297 mm leg: the range is now 180-375) |
+| Pads under the floor at 300 mm | - | 160 mm |
+| 15 robot scenarios (tools/simulate.py --v2) | 14/15 (fall_side 3,408 N) | **15/15** at 36.73 kg |
+
+Each wheel connects at the cheek's end, where its lead enters the cable chase beside the RS-04 harnesses. The body
+carries the sockets and the wheel's lead carries the pins:
+
+| Wire | Signals | Body side | Wheel side | Contacts |
+|---|---|---|---|---|
+| W50, W52 | phases, 14 AWG | DTP06-4S | DTP04-4P | size 12, 25 A |
+| W51, W53 | halls and NTC, 20 AWG shielded | DT06-6S | DT04-6P | size 16 |
+
+Prices are still to read. Mouser timed out for an automated read on 2026-10-28. The BOM gets these lines once their
+prices are read (D40).
+
+### 10.5 IP54 (D69: splashes, puddles to 40 mm)
+
+The sealed volume is the shell, the deck and the belly plate. The bay sits outside it: the packs are DeWalt's
+jobsite-rated tools, and their adapters face up under the belly plate.
+
+| Opening | Seal | Status |
+|---|---|---|
+| Shell panels to the belly plate, deck and each other | 3 mm closed-cell EPDM foam gasket in the joints, compressed by the panels' screws | design (B16) |
+| Rear louvres (14 x 4 x 46 mm a side, the J501's air inlet) and the TRACO vent | a drip lip over each bank, slots angled down, 30 ppi filter foam behind | **open**: the foam's pressure drop is not in B7's hand model; it must keep the fan's extra back-pressure under 5 Pa, else the louvres grow |
+| Port hatch, door | the same gasket; the hatch closed while it rains | design |
+| Wheel and RS-04 leads at the cheeks' ends (the cable chase) | a split grommet per lead; Deutsch DT/DTP connectors are IP67 when mated | design |
+| The pack leads through the belly's slot | a grommet round the two 10 AWG leads | design |
+| Breathing | one vent plug (ePTFE, M12) in the rear wall; the VESCs dump heat into the plate, so the box is not sealed tight | design |
+| The bay's side plates (three lightening windows each) | splash reaches the adapters' terminals from the side: close the windows (the plate gets heavier) or add printed covers | **open**: decide with the pack's measured interface (#20) |
+| Hubs | the wheel workstream's seal procedure (W8) | the leg's |
+
+### 10.6 Still open
+
+- The DCB609 and the Terrafirma adapter are envelopes until they are measured (#20). Their rows say so, and a test
+  keeps them labelled.
+- Re-run the body's loads and strength cases at 17.75 kg with the 10 in wheel on a GB10. The run is recorded on #10.
+- Price the Deutsch connectors, the grommets, the vent plug and the gasket.
+- Open B7's louvre filter.

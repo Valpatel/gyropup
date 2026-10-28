@@ -178,7 +178,7 @@ def held(parts_names, joints, holds):
             if n in parts_names:
                 role = 'head side' if n == j['stack'][0] else ('thread' if n == j['receiver'][1] else 'clamped')
                 out[n].append(f"{j['count']} x {j['screw']} ({j['joint'].replace('_', ' ')}, {role})")
-    for a, b, why in holds:
+    for a, b, why, *_ in holds:
         for n, m in ((a, b), (b, a)):
             if n in parts_names:
                 out[n].append(f'{why} (to {m})')
@@ -205,6 +205,7 @@ def main():
     L = bbd._layout()
     parts = bf.all_parts(L['mounts'])
     body, integ, mass, fea = _j('body.json'), _j('integrity.json'), _j('mass.json'), json.loads((EX / 'fea' / 'summary.json').read_text())
+    load_hm = (_j('leg-loads.json') or {}).get('half_mass_kg', '?')     # the legs' loads the FEA ran on
     pm = (body.get('mass_g') or {}).get('frame_parts', {})
     info = {}
     for n, p in parts.items():
@@ -258,10 +259,10 @@ def main():
                   f"{b['clearance_at_lowest_leg_mm']} mm under them at the lowest controlled leg ({pad.get('lowest_leg_mm')} mm), "
                   f"{b['clearance_at_300_mm']} at 300; {b['knee_gap_mm']} mm from the knee eyes. The pads (issue #19): printed TPU 95A "
                   f"gyroid, {pad.get('h')} mm, a {pad.get('plateau_n')} N crush plateau each over {pad.get('stroke')} mm "
-                  '(sim/bay_pad_study.py, exports/body/bay-pad-study.json and bay-pad-depth.json)."]
+                  '(sim/bay_pad_study.py, exports/body/bay-pad-study.json and bay-pad-depth.json).']
         if k == 'frame':
             r = fea.get('results', {})
-            o += ['', 'Strength (cad/body_studies.py at 16.25 kg a leg): ' + '; '.join(
+            o += ['', f"Strength (cad/body_studies.py at {load_hm} kg a leg): " + '; '.join(
                 f"{n} SF {v.get('sf_by_part') or v.get('sf_away_from_spacer_ends') or v['safety_factor']} ({'pass' if v['pass'] else 'FAIL'})"
                 for n, v in r.items()) + '.']
         o.append('')

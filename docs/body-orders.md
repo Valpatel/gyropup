@@ -222,9 +222,9 @@ How to order:
 | bay_door_front | 1 | petg | 128 x 102 x 4 | 66 | 2.6 | PETG; two knurled M3 x 10 thumbscrews into the rails' ends |
 | adapter_plate_rear | 1 | pa6-cf | 102 x 72 x 4 | 31 | 2.1 | PA6-CF; four M4 x 8 up into the belly's nuts; the adapter's screws into inserts set on arrival |
 | bay_door_rear | 1 | petg | 128 x 102 x 4 | 66 | 2.6 | PETG; two knurled M3 x 10 thumbscrews into the rails' ends |
-| bay_skid | 4 | tpu95 | 149 x 14 x 3 | 8 | 3.1 | TPU 95A skid on 3M VHB tape (no screw: under the packs there is 1 mm): the robot sits on these |
+| bay_skid | 4 | tpu95-gyroid | 149 x 24 x 45 | 53 | 42.9 | crush pad (#19): TPU 95A HF gyroid lattice, 45 mm free, 27 mm stroke, 600 N plateau, on 3M VHB tape (no screw: under the packs there is 1 mm); the robot sits on these |
 
-By material: pa6-cf 0.56 kg, 36.6 h, $44.61; tpu95 0.04 kg, 4.0 h, $1.63; petg 0.21 kg, 8.2 h, $2.91. STLs beside the plan in `exports/body/`.
+By material: pa6-cf 0.56 kg, 36.6 h, $44.61; tpu95 0.01 kg, 0.9 h, $0.35; petg 0.21 kg, 8.2 h, $2.91; tpu95-gyroid 0.21 kg, 42.9 h, $8.92. STLs beside the plan in `exports/body/`.
 
 ## 6. The P2 cart (the head: order it once P1 balances on its tether)
 
@@ -260,8 +260,8 @@ The shell and the tub's printed parts are in `exports/body/shell/` with their ow
 |---|---|
 | Bought (section 2) | $1608.60 |
 | SendCutSend (section 1, instant prices) | $579.63 |
-| Filament used (section 5) | $49.15 |
-| **Body P0 + P1** | **$2237.38** |
+| Filament used (section 5) | $56.79 |
+| **Body P0 + P1** | **$2245.02** |
 | P2 cart (section 6) | $62.63 |
 | P3 cart (section 6b) | $84.03 |
 

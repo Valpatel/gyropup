@@ -462,7 +462,7 @@
  },
  "print": {
   "too_big": [],
-  "hours": 48.8,
+  "hours": 88.6,
   "parts": {
    "post": {
     "material": "pa6-cf",
@@ -669,21 +669,21 @@
     "how": "PETG; two knurled M3 x 10 thumbscrews into the rails' ends"
    },
    "bay_skid": {
-    "material": "tpu95",
+    "material": "tpu95-gyroid",
     "qty": 4,
     "size_mm": [
      149,
-     14,
-     3
+     24,
+     45
     ],
     "fits": true,
     "placement": "straight",
-    "grams_each": 8,
-    "grams": 30,
-    "hours": 3.1,
-    "cost_usd": 1.28,
+    "grams_each": 53,
+    "grams": 212,
+    "hours": 42.9,
+    "cost_usd": 8.92,
     "infill": "2 mm walls, 40 % gyroid",
-    "how": "TPU 95A skid on 3M VHB tape (no screw: under the packs there is 1 mm): the robot sits on these"
+    "how": "crush pad (#19): TPU 95A HF gyroid lattice, 45 mm free, 27 mm stroke, 600 N plateau, on 3M VHB tape (no screw: under the packs there is 1 mm); the robot sits on these"
    }
   }
  },
@@ -725,10 +725,10 @@
    "bay_door_front": 65.5,
    "adapter_plate_rear": 31.4,
    "bay_door_rear": 65.5,
-   "bay_skid_1": 7.6,
-   "bay_skid_2": 7.6,
-   "bay_skid_3": 7.6,
-   "bay_skid_4": 7.6,
+   "bay_skid_1": 53.1,
+   "bay_skid_2": 53.1,
+   "bay_skid_3": 53.1,
+   "bay_skid_4": 53.1,
    "spacers": 0.0,
    "spacer_screws": 0.0,
    "frame_screws_left": 0.0,
@@ -755,7 +755,7 @@
    "d435_rear": 0.0,
    "eyes_board": 0.0
   },
-  "frame_total": 5035.5
+  "frame_total": 5217.5
  },
  "internal_clashes": [],
  "shell": {
@@ -848,6 +848,11 @@
   "screws": 183,
   "joints_with_problems": [],
   "floating": {},
+  "connectivity_pass": {
+   "P1": true,
+   "P2": true,
+   "P3": true
+  },
   "clashes": 0
  },
  "clash_sweep": {
@@ -1859,7 +1864,7 @@
      159.0,
      -51.2,
      51.2,
-     -224.64,
+     -266.64,
      -93.04
     ],
     "mass_g": 0,
@@ -1875,31 +1880,31 @@
  "mass": {
   "P1": {
    "stage": "P1",
-   "total_kg": 30.86,
+   "total_kg": 33.79,
    "com_mm": [
-    3.7,
-    -1.2,
-    -56.9
+    3.3,
+    -1.1,
+    -76.7
    ],
    "groups_kg": {
-    "legs": 18.964,
-    "frame": 4.63,
+    "legs": 21.624,
+    "frame": 4.812,
     "compute": 1.513,
-    "power": 1.649,
+    "power": 1.739,
     "deck": 0.83,
     "battery": 3.27
    },
-   "legs_kg": 18.96,
-   "body_and_head_kg": 11.89,
+   "legs_kg": 21.62,
+   "body_and_head_kg": 12.16,
    "budget": {
-    "robot_kg": 32.0,
-    "legs_kg_each": 9.6,
-    "body_and_head_kg": 12.8,
-    "design_mass_kg": 32.5,
-    "design_half_mass_kg": 16.25,
+    "robot_kg": 35.0,
+    "legs_kg_each": 10.85,
+    "body_and_head_kg": 13.3,
+    "design_mass_kg": 35.5,
+    "design_half_mass_kg": 17.75,
     "com_x_mm": 10.0,
     "com_y_mm": 5.0,
-    "basis": "D57, docs/body-next-plan.md 2.4 (the 28.5 / 10.3 kg budget of docs/body-plan.md 1.8 is retired)"
+    "basis": "D69 (35.0 kg as built, 35.5 kg design; it replaces D57's 32.0 / 32.5 kg); legs 2 x 10.85 kg (leg.json + D53 stops + the D69 wheel at its listed 3.53 kg + the clamp hardware), body and head 13.3 kg"
    },
    "leg_extra": "leg.json 9282 g + 200 g announced for the stops and flanges (D53)",
    "levers": [
@@ -1996,11 +2001,11 @@
     {
      "key": "pololu_12v",
      "n": 10,
-     "grams": -200,
-     "cost_usd": 69.95,
+     "grams": 0,
+     "cost_usd": 0.0,
      "stage": "P3",
-     "kind": "on call",
-     "what": "Pololu D42V110F12 instead of the 216 g DDR-60L-12 (when Pololu restocks it)",
+     "kind": "retired",
+     "what": "Pololu D42V110F12 instead of the DDR-60L-12: moot since D65 (the TRACO TEP 150 replaced the DDR-60L-12)",
      "status": "open"
     },
     {
@@ -2051,38 +2056,68 @@
      "stage": "P2",
      "kind": "on call",
      "what": "the turret's own: a 24-ball hopper, a one-board bay (its plan, not scheduled here)",
+     "status": "open"
+    },
+    {
+     "key": "packs_weighed",
+     "n": 16,
+     "grams": -210,
+     "cost_usd": 0.0,
+     "stage": "P3",
+     "kind": "on call",
+     "what": "the two DCB609 weighed: DeWalt's DCB547-XJ sheet says 1.46 kg against the 1.565 kg (3.45 lb) carried",
+     "status": "open"
+    },
+    {
+     "key": "wheel_8in5",
+     "n": 17,
+     "grams": -460,
+     "cost_usd": 0.0,
+     "stage": "P1",
+     "kind": "on call",
+     "what": "D69's backup wheel, the 8.5 in of the same family (about 3.3 kg each, unverified): jump +15 mm, kerb 35 mm",
+     "status": "open"
+    },
+    {
+     "key": "packs_6ah",
+     "n": 18,
+     "grams": -1000,
+     "cost_usd": 0.0,
+     "stage": "P1",
+     "kind": "on call",
+     "what": "two DCB606 FLEXVOLT 6.0 Ah in the same bay and adapters (about 1.0 kg lighter the pair, 2/3 the energy: masses to read from DeWalt)",
      "status": "open"
     }
    ]
   },
   "P3": {
    "stage": "P3",
-   "total_kg": 33.8,
+   "total_kg": 36.73,
    "com_mm": [
-    1.6,
-    -1.1,
-    -29.4
+    1.4,
+    -1.0,
+    -49.8
    ],
    "groups_kg": {
-    "legs": 18.964,
-    "frame": 4.762,
+    "legs": 21.624,
+    "frame": 4.944,
     "shell": 1.11,
     "compute": 1.513,
-    "power": 1.649,
+    "power": 1.739,
     "deck": 2.53,
     "battery": 3.27
    },
-   "legs_kg": 18.96,
-   "body_and_head_kg": 14.83,
+   "legs_kg": 21.62,
+   "body_and_head_kg": 15.11,
    "budget": {
-    "robot_kg": 32.0,
-    "legs_kg_each": 9.6,
-    "body_and_head_kg": 12.8,
-    "design_mass_kg": 32.5,
-    "design_half_mass_kg": 16.25,
+    "robot_kg": 35.0,
+    "legs_kg_each": 10.85,
+    "body_and_head_kg": 13.3,
+    "design_mass_kg": 35.5,
+    "design_half_mass_kg": 17.75,
     "com_x_mm": 10.0,
     "com_y_mm": 5.0,
-    "basis": "D57, docs/body-next-plan.md 2.4 (the 28.5 / 10.3 kg budget of docs/body-plan.md 1.8 is retired)"
+    "basis": "D69 (35.0 kg as built, 35.5 kg design; it replaces D57's 32.0 / 32.5 kg); legs 2 x 10.85 kg (leg.json + D53 stops + the D69 wheel at its listed 3.53 kg + the clamp hardware), body and head 13.3 kg"
    },
    "leg_extra": "leg.json 9282 g + 200 g announced for the stops and flanges (D53)",
    "levers": [
@@ -2179,11 +2214,11 @@
     {
      "key": "pololu_12v",
      "n": 10,
-     "grams": -200,
-     "cost_usd": 69.95,
+     "grams": 0,
+     "cost_usd": 0.0,
      "stage": "P3",
-     "kind": "on call",
-     "what": "Pololu D42V110F12 instead of the 216 g DDR-60L-12 (when Pololu restocks it)",
+     "kind": "retired",
+     "what": "Pololu D42V110F12 instead of the DDR-60L-12: moot since D65 (the TRACO TEP 150 replaced the DDR-60L-12)",
      "status": "open"
     },
     {
@@ -2235,47 +2270,55 @@
      "kind": "on call",
      "what": "the turret's own: a 24-ball hopper, a one-board bay (its plan, not scheduled here)",
      "status": "open"
+    },
+    {
+     "key": "packs_weighed",
+     "n": 16,
+     "grams": -210,
+     "cost_usd": 0.0,
+     "stage": "P3",
+     "kind": "on call",
+     "what": "the two DCB609 weighed: DeWalt's DCB547-XJ sheet says 1.46 kg against the 1.565 kg (3.45 lb) carried",
+     "status": "open"
+    },
+    {
+     "key": "wheel_8in5",
+     "n": 17,
+     "grams": -460,
+     "cost_usd": 0.0,
+     "stage": "P1",
+     "kind": "on call",
+     "what": "D69's backup wheel, the 8.5 in of the same family (about 3.3 kg each, unverified): jump +15 mm, kerb 35 mm",
+     "status": "open"
+    },
+    {
+     "key": "packs_6ah",
+     "n": 18,
+     "grams": -1000,
+     "cost_usd": 0.0,
+     "stage": "P1",
+     "kind": "on call",
+     "what": "two DCB606 FLEXVOLT 6.0 Ah in the same bay and adapters (about 1.0 kg lighter the pair, 2/3 the energy: masses to read from DeWalt)",
+     "status": "open"
     }
    ],
    "gate": {
-    "ceiling_kg": 32.0,
-    "gap_kg": 1.8,
+    "ceiling_kg": 35.0,
+    "gap_kg": 1.73,
     "open_scheduled_g": -500,
-    "with_scheduled_levers_kg": 33.3,
-    "body_and_head_with_levers_kg": 14.33,
-    "leg_each_kg": 9.48,
+    "with_scheduled_levers_kg": 36.23,
+    "body_and_head_with_levers_kg": 14.61,
+    "leg_each_kg": 10.81,
     "pass": false,
     "on_call_next": [
-     "pololu_12v",
      "cheeks_rev_b",
-     "alu_standoffs"
+     "alu_standoffs",
+     "cooler_34mm"
     ],
-    "rule": "the P3 ledger with every scheduled lever taken (the open ones at the plan's grams) under the ceiling, each leg under 9.6 kg and the body and head under 12.8 kg; over it, the on-call levers go in order before the next order (D57)"
+    "margin_kg": -1.23,
+    "on_call_open_g": -2301,
+    "rule": "the P3 ledger with every scheduled lever taken (the open ones at the plan's grams) under the 35.0 kg ceiling, each leg under 10.85 kg and the body and head under 13.3 kg (D69); over it, the on-call levers go in order before the next order, each with the user's or the coordinator's word"
    }
   }
- },
- "pictures": [
-  "body-p1-iso.png",
-  "body-p1-front.png",
-  "body-p1-side.png",
-  "body-p1-rear.png",
-  "body-frame-iso.png",
-  "body-spine-iso.png",
-  "body-p3-iso.png",
-  "body-p3-front.png",
-  "body-p3-rear.png",
-  "body-p3-side.png",
-  "body-p1-crouch-side.png",
-  "body-p1-tall-side.png",
-  "flat-cheek.png",
-  "flat-floor_tray.png",
-  "flat-belly_plate.png",
-  "flat-deck.png",
-  "flat-compute_pallet.png",
-  "flat-turret_plate.png",
-  "flat-power_plate.png",
-  "flat-bus_bar.png",
-  "flat-bay_floor.png",
-  "flat-bay_side.png"
- ]
+ }
 }

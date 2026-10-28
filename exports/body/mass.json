@@ -1,22 +1,22 @@
 {
  "P1": {
   "stage": "P1",
-  "total_kg": 33.61,
+  "total_kg": 33.79,
   "com_mm": [
    3.3,
    -1.1,
-   -75.8
+   -76.7
   ],
   "groups_kg": {
    "legs": 21.624,
-   "frame": 4.63,
+   "frame": 4.812,
    "compute": 1.513,
    "power": 1.739,
    "deck": 0.83,
    "battery": 3.27
   },
   "legs_kg": 21.62,
-  "body_and_head_kg": 11.98,
+  "body_and_head_kg": 12.16,
   "rows": [
    {
     "group": "legs",
@@ -683,7 +683,7 @@
     "name": "L.wheel_tyre",
     "mass_g": 2118.0,
     "com_mm": [
-     0.0,
+     -0.0,
      216.8,
      -300.0
     ],
@@ -694,7 +694,7 @@
     "name": "R.wheel_tyre",
     "mass_g": 2118.0,
     "com_mm": [
-     -0.0,
+     0.0,
      -216.8,
      -300.0
     ],
@@ -1143,44 +1143,44 @@
    {
     "group": "frame",
     "name": "frame.bay_skid_1",
-    "mass_g": 7.6,
+    "mass_g": 53.1,
     "com_mm": [
      -75.5,
-     41.6,
-     -223.1
+     36.6,
+     -244.1
     ],
     "basis": "CAD (sheet and printed solids)"
    },
    {
     "group": "frame",
     "name": "frame.bay_skid_2",
-    "mass_g": 7.6,
+    "mass_g": 53.1,
     "com_mm": [
      75.5,
-     41.6,
-     -223.1
+     36.6,
+     -244.1
     ],
     "basis": "CAD (sheet and printed solids)"
    },
    {
     "group": "frame",
     "name": "frame.bay_skid_3",
-    "mass_g": 7.6,
+    "mass_g": 53.1,
     "com_mm": [
      -75.5,
-     -41.6,
-     -223.1
+     -36.6,
+     -244.1
     ],
     "basis": "CAD (sheet and printed solids)"
    },
    {
     "group": "frame",
     "name": "frame.bay_skid_4",
-    "mass_g": 7.6,
+    "mass_g": 53.1,
     "com_mm": [
      75.5,
-     -41.6,
-     -223.1
+     -36.6,
+     -244.1
     ],
     "basis": "CAD (sheet and printed solids)"
    },
@@ -1424,7 +1424,7 @@
      0.0,
      -170.5
     ],
-    "basis": "DeWalt DCB547-XJ datasheet (138 x 87 x 97 mm incl. the rail tower); DeWalt US 3.45 lb = 1565 g (the conservative of 1.46-1.57 kg): weigh one"
+    "basis": "ENVELOPE, blocked on issue #20 (measure a real pack): a box from the DeWalt DCB547-XJ datasheet (138 x 87 x 97 mm incl. the rail tower); DeWalt US 3.45 lb = 1565 g (the conservative of 1.46-1.57 kg). No rail, latch, button or terminal is modelled and none is guessed"
    },
    {
     "group": "battery",
@@ -1435,7 +1435,7 @@
      0.0,
      -170.5
     ],
-    "basis": "DeWalt DCB547-XJ datasheet (138 x 87 x 97 mm incl. the rail tower); DeWalt US 3.45 lb = 1565 g (the conservative of 1.46-1.57 kg): weigh one"
+    "basis": "ENVELOPE, blocked on issue #20 (measure a real pack): a box from the DeWalt DCB547-XJ datasheet (138 x 87 x 97 mm incl. the rail tower); DeWalt US 3.45 lb = 1565 g (the conservative of 1.46-1.57 kg). No rail, latch, button or terminal is modelled and none is guessed"
    },
    {
     "group": "battery",
@@ -1446,7 +1446,7 @@
      0.0,
      -109.5
     ],
-    "basis": "envelope estimate: Terrafirma publishes no drawing"
+    "basis": "ENVELOPE, blocked on issue #20 (measure a real adapter): a guessed box; Terrafirma publishes no drawing, so its rail, catch, holes and lead exit are not modelled"
    },
    {
     "group": "battery",
@@ -1457,7 +1457,7 @@
      0.0,
      -109.5
     ],
-    "basis": "envelope estimate: Terrafirma publishes no drawing"
+    "basis": "ENVELOPE, blocked on issue #20 (measure a real adapter): a guessed box; Terrafirma publishes no drawing, so its rail, catch, holes and lead exit are not modelled"
    },
    {
     "group": "frame",
@@ -1700,15 +1700,15 @@
  },
  "P3": {
   "stage": "P3",
-  "total_kg": 36.55,
+  "total_kg": 36.73,
   "com_mm": [
    1.4,
    -1.0,
-   -48.8
+   -49.8
   ],
   "groups_kg": {
    "legs": 21.624,
-   "frame": 4.762,
+   "frame": 4.944,
    "shell": 1.11,
    "compute": 1.513,
    "power": 1.739,
@@ -1716,7 +1716,7 @@
    "battery": 3.27
   },
   "legs_kg": 21.62,
-  "body_and_head_kg": 14.92,
+  "body_and_head_kg": 15.11,
   "rows": [
    {
     "group": "legs",
@@ -2383,7 +2383,7 @@
     "name": "L.wheel_tyre",
     "mass_g": 2118.0,
     "com_mm": [
-     0.0,
+     -0.0,
      216.8,
      -300.0
     ],
@@ -2394,7 +2394,7 @@
     "name": "R.wheel_tyre",
     "mass_g": 2118.0,
     "com_mm": [
-     -0.0,
+     0.0,
      -216.8,
      -300.0
     ],
@@ -2854,44 +2854,44 @@
    {
     "group": "frame",
     "name": "frame.bay_skid_1",
-    "mass_g": 7.6,
+    "mass_g": 53.1,
     "com_mm": [
      -75.5,
-     41.6,
-     -223.1
+     36.6,
+     -244.1
     ],
     "basis": "CAD (sheet and printed solids)"
    },
    {
     "group": "frame",
     "name": "frame.bay_skid_2",
-    "mass_g": 7.6,
+    "mass_g": 53.1,
     "com_mm": [
      75.5,
-     41.6,
-     -223.1
+     36.6,
+     -244.1
     ],
     "basis": "CAD (sheet and printed solids)"
    },
    {
     "group": "frame",
     "name": "frame.bay_skid_3",
-    "mass_g": 7.6,
+    "mass_g": 53.1,
     "com_mm": [
      -75.5,
-     -41.6,
-     -223.1
+     -36.6,
+     -244.1
     ],
     "basis": "CAD (sheet and printed solids)"
    },
    {
     "group": "frame",
     "name": "frame.bay_skid_4",
-    "mass_g": 7.6,
+    "mass_g": 53.1,
     "com_mm": [
      75.5,
-     -41.6,
-     -223.1
+     -36.6,
+     -244.1
     ],
     "basis": "CAD (sheet and printed solids)"
    },
@@ -3300,7 +3300,7 @@
      0.0,
      -170.5
     ],
-    "basis": "DeWalt DCB547-XJ datasheet (138 x 87 x 97 mm incl. the rail tower); DeWalt US 3.45 lb = 1565 g (the conservative of 1.46-1.57 kg): weigh one"
+    "basis": "ENVELOPE, blocked on issue #20 (measure a real pack): a box from the DeWalt DCB547-XJ datasheet (138 x 87 x 97 mm incl. the rail tower); DeWalt US 3.45 lb = 1565 g (the conservative of 1.46-1.57 kg). No rail, latch, button or terminal is modelled and none is guessed"
    },
    {
     "group": "battery",
@@ -3311,7 +3311,7 @@
      0.0,
      -170.5
     ],
-    "basis": "DeWalt DCB547-XJ datasheet (138 x 87 x 97 mm incl. the rail tower); DeWalt US 3.45 lb = 1565 g (the conservative of 1.46-1.57 kg): weigh one"
+    "basis": "ENVELOPE, blocked on issue #20 (measure a real pack): a box from the DeWalt DCB547-XJ datasheet (138 x 87 x 97 mm incl. the rail tower); DeWalt US 3.45 lb = 1565 g (the conservative of 1.46-1.57 kg). No rail, latch, button or terminal is modelled and none is guessed"
    },
    {
     "group": "battery",
@@ -3322,7 +3322,7 @@
      0.0,
      -109.5
     ],
-    "basis": "envelope estimate: Terrafirma publishes no drawing"
+    "basis": "ENVELOPE, blocked on issue #20 (measure a real adapter): a guessed box; Terrafirma publishes no drawing, so its rail, catch, holes and lead exit are not modelled"
    },
    {
     "group": "battery",
@@ -3333,7 +3333,7 @@
      0.0,
      -109.5
     ],
-    "basis": "envelope estimate: Terrafirma publishes no drawing"
+    "basis": "ENVELOPE, blocked on issue #20 (measure a real adapter): a guessed box; Terrafirma publishes no drawing, so its rail, catch, holes and lead exit are not modelled"
    },
    {
     "group": "frame",
@@ -3652,10 +3652,10 @@
   ],
   "gate": {
    "ceiling_kg": 35.0,
-   "gap_kg": 1.55,
+   "gap_kg": 1.73,
    "open_scheduled_g": -500,
-   "with_scheduled_levers_kg": 36.05,
-   "body_and_head_with_levers_kg": 14.42,
+   "with_scheduled_levers_kg": 36.23,
+   "body_and_head_with_levers_kg": 14.61,
    "leg_each_kg": 10.81,
    "pass": false,
    "on_call_next": [
@@ -3663,7 +3663,7 @@
     "alu_standoffs",
     "cooler_34mm"
    ],
-   "margin_kg": -1.05,
+   "margin_kg": -1.23,
    "on_call_open_g": -2301,
    "rule": "the P3 ledger with every scheduled lever taken (the open ones at the plan's grams) under the 35.0 kg ceiling, each leg under 10.85 kg and the body and head under 13.3 kg (D69); over it, the on-call levers go in order before the next order, each with the user's or the coordinator's word"
   }
