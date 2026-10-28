@@ -1,9 +1,9 @@
 {
  "test": "4.2",
- "title": "Ceiling with balls: 20 balls at 100 % throttle, \u00d834",
+ "title": "Ceiling with balls: 20 balls at 100 % throttle, \u00d838",
  "plan": "docs/turret-prototype-plan.md section 5",
  "mode": "sim",
- "date": "2026-10-27",
+ "date": "2026-10-28",
  "pass": true,
  "checks": [
   {
@@ -13,62 +13,62 @@
    "pass": true
   },
   {
-   "check": "every ball <= 66 fps on the barrel gates",
-   "value": 65.0,
-   "limit": "<= 66 fps",
+   "check": "every ball <= 105 fps on the barrel gates",
+   "value": 102.2,
+   "limit": "<= 105 fps",
    "pass": true
   },
   {
-   "check": "every ball <= 66 fps on the reference",
-   "value": 64.76558555480601,
-   "limit": "<= 66 fps",
+   "check": "every ball <= 105 fps on the reference",
+   "value": 102.03800134474206,
+   "limit": "<= 105 fps",
    "pass": true
   }
  ],
  "readings": {
   "gates_fps": {
    "n": 20,
-   "mean": 62.23,
-   "sd": 1.23,
-   "min": 59.8,
-   "max": 65.0
+   "mean": 97.86,
+   "sd": 2.03,
+   "min": 93.8,
+   "max": 102.2
   },
   "reference_fps": {
    "n": 20,
-   "mean": 61.87,
-   "sd": 1.25,
-   "min": 59.77,
-   "max": 64.77
+   "mean": 97.51,
+   "sd": 1.94,
+   "min": 94.11,
+   "max": 102.04
   },
   "gates_each": [
-   63.2,
-   65.0,
-   62.5,
-   63.5,
-   62.9,
-   62.7,
-   62.5,
-   62.2,
-   62.6,
-   61.3,
-   61.5,
-   61.2,
-   60.6,
-   59.8,
-   61.2,
-   61.4,
-   62.9,
-   62.9,
-   64.0,
-   60.7
+   99.1,
+   102.2,
+   98.4,
+   99.7,
+   99.4,
+   98.7,
+   97.7,
+   98.0,
+   99.0,
+   96.5,
+   96.6,
+   96.5,
+   94.9,
+   93.8,
+   96.4,
+   96.4,
+   99.5,
+   98.5,
+   100.8,
+   95.2
   ]
  },
  "notes": [
-  "\u00d834 is the only v0 tyre: \u00d836 reaches 70.7 fps at the worst corner on this motor (the launch rerun), so the plan's \"if all <= 60 fps, repeat with \u00d836\" does not apply to the X2216."
+  "D68: \u00d838 at 40 % crush is the only tyre. Hasbro rounds should read 95-100 fps here (the launch model: 98.4 fps); repeat with the lightest accepted off-brand rounds (1.6 g): every one at or under 105, or the trim comes down a step."
  ],
  "sim": {
   "seed": 1042,
-  "simulated_s": 15.7,
+  "simulated_s": 16.2,
   "wall_s": 0.6,
   "stand_ins": [],
   "shortened": {},
@@ -77,12 +77,12 @@
  "firmware": {
   "build": "v0",
   "servo_baud": 500000,
-  "motor": "SunnySky X2216 880KV V3",
-  "kv": 880.0,
+  "motor": "SunnySky X2216 1400KV V3",
+  "kv": 1400.0,
   "pole_pairs": 7,
-  "erpm_limit": 81312,
-  "tyre_mm": 34,
-  "set_rpm_52fps": 8855,
-  "ramp_s": 0.3
+  "erpm_limit": 116550,
+  "tyre_mm": 38,
+  "set_rpm_95fps": 15269,
+  "ramp_s": 0.8
  }
 }

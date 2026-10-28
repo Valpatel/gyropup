@@ -3,12 +3,12 @@
  "title": "Release braking: 20 releases at the set speed, no ball",
  "plan": "docs/turret-prototype-plan.md section 5",
  "mode": "sim",
- "date": "2026-10-27",
+ "date": "2026-10-28",
  "pass": true,
  "checks": [
   {
    "check": "ESC rail off after the last pulse",
-   "value": 18.5,
+   "value": 18.3,
    "limit": "<= 25 ms (the one-shot is 16-22 ms)",
    "pass": true
   },
@@ -23,7 +23,7 @@
   },
   {
    "check": "speed by +50 ms (after the rail off)",
-   "value": 0.6,
+   "value": 3.2,
    "limit": "<= 5 %",
    "pass": true
   },
@@ -37,143 +37,143 @@
  "readings": {
   "releases": [
    {
-    "rail_off_after_last_pulse_ms": 17.8,
+    "rail_off_after_last_pulse_ms": 17.6,
     "short_after_rail_off_ms": 8.0,
-    "speed_pct_at_rail_off_plus_50ms": 0.6,
-    "speed_pct_at_release_plus_50ms": 2.6,
+    "speed_pct_at_rail_off_plus_50ms": 3.2,
+    "speed_pct_at_release_plus_50ms": 6.7,
     "firmware_zero_throttle_ms": 4.0
    },
    {
-    "rail_off_after_last_pulse_ms": 18.4,
-    "short_after_rail_off_ms": 9.0,
-    "speed_pct_at_rail_off_plus_50ms": 0.6,
-    "speed_pct_at_release_plus_50ms": 2.5,
+    "rail_off_after_last_pulse_ms": 18.3,
+    "short_after_rail_off_ms": 8.0,
+    "speed_pct_at_rail_off_plus_50ms": 2.8,
+    "speed_pct_at_release_plus_50ms": 6.1,
     "firmware_zero_throttle_ms": 4.0
    },
    {
     "rail_off_after_last_pulse_ms": 17.6,
     "short_after_rail_off_ms": 8.0,
-    "speed_pct_at_rail_off_plus_50ms": 0.6,
-    "speed_pct_at_release_plus_50ms": 2.6,
+    "speed_pct_at_rail_off_plus_50ms": 3.2,
+    "speed_pct_at_release_plus_50ms": 6.7,
+    "firmware_zero_throttle_ms": 4.0
+   },
+   {
+    "rail_off_after_last_pulse_ms": 17.8,
+    "short_after_rail_off_ms": 9.0,
+    "speed_pct_at_rail_off_plus_50ms": 3.2,
+    "speed_pct_at_release_plus_50ms": 6.7,
     "firmware_zero_throttle_ms": 4.0
    },
    {
     "rail_off_after_last_pulse_ms": 18.2,
     "short_after_rail_off_ms": 9.0,
-    "speed_pct_at_rail_off_plus_50ms": 0.6,
-    "speed_pct_at_release_plus_50ms": 2.5,
+    "speed_pct_at_rail_off_plus_50ms": 2.8,
+    "speed_pct_at_release_plus_50ms": 6.1,
     "firmware_zero_throttle_ms": 4.0
    },
    {
     "rail_off_after_last_pulse_ms": 18.2,
     "short_after_rail_off_ms": 9.0,
-    "speed_pct_at_rail_off_plus_50ms": 0.6,
-    "speed_pct_at_release_plus_50ms": 2.5,
+    "speed_pct_at_rail_off_plus_50ms": 2.8,
+    "speed_pct_at_release_plus_50ms": 6.1,
     "firmware_zero_throttle_ms": 4.0
    },
    {
-    "rail_off_after_last_pulse_ms": 18.5,
+    "rail_off_after_last_pulse_ms": 17.9,
     "short_after_rail_off_ms": 9.0,
-    "speed_pct_at_rail_off_plus_50ms": 0.6,
-    "speed_pct_at_release_plus_50ms": 2.5,
+    "speed_pct_at_rail_off_plus_50ms": 3.2,
+    "speed_pct_at_release_plus_50ms": 6.7,
     "firmware_zero_throttle_ms": 4.0
    },
    {
-    "rail_off_after_last_pulse_ms": 18.3,
-    "short_after_rail_off_ms": 9.0,
-    "speed_pct_at_rail_off_plus_50ms": 0.6,
-    "speed_pct_at_release_plus_50ms": 2.5,
+    "rail_off_after_last_pulse_ms": 18.2,
+    "short_after_rail_off_ms": 8.0,
+    "speed_pct_at_rail_off_plus_50ms": 2.8,
+    "speed_pct_at_release_plus_50ms": 6.1,
     "firmware_zero_throttle_ms": 4.0
    },
    {
     "rail_off_after_last_pulse_ms": 18.0,
     "short_after_rail_off_ms": 8.0,
-    "speed_pct_at_rail_off_plus_50ms": 0.6,
-    "speed_pct_at_release_plus_50ms": 2.5,
-    "firmware_zero_throttle_ms": 4.0
-   },
-   {
-    "rail_off_after_last_pulse_ms": 18.2,
-    "short_after_rail_off_ms": 8.0,
-    "speed_pct_at_rail_off_plus_50ms": 0.6,
-    "speed_pct_at_release_plus_50ms": 2.5,
-    "firmware_zero_throttle_ms": 4.0
-   },
-   {
-    "rail_off_after_last_pulse_ms": 18.2,
-    "short_after_rail_off_ms": 8.0,
-    "speed_pct_at_rail_off_plus_50ms": 0.6,
-    "speed_pct_at_release_plus_50ms": 2.5,
+    "speed_pct_at_rail_off_plus_50ms": 3.2,
+    "speed_pct_at_release_plus_50ms": 6.7,
     "firmware_zero_throttle_ms": 4.0
    },
    {
     "rail_off_after_last_pulse_ms": 18.0,
     "short_after_rail_off_ms": 8.0,
-    "speed_pct_at_rail_off_plus_50ms": 0.6,
-    "speed_pct_at_release_plus_50ms": 2.5,
-    "firmware_zero_throttle_ms": 4.0
-   },
-   {
-    "rail_off_after_last_pulse_ms": 18.3,
-    "short_after_rail_off_ms": 8.0,
-    "speed_pct_at_rail_off_plus_50ms": 0.6,
-    "speed_pct_at_release_plus_50ms": 2.5,
-    "firmware_zero_throttle_ms": 4.0
-   },
-   {
-    "rail_off_after_last_pulse_ms": 17.9,
-    "short_after_rail_off_ms": 8.0,
-    "speed_pct_at_rail_off_plus_50ms": 0.6,
-    "speed_pct_at_release_plus_50ms": 2.6,
-    "firmware_zero_throttle_ms": 4.0
-   },
-   {
-    "rail_off_after_last_pulse_ms": 18.0,
-    "short_after_rail_off_ms": 8.0,
-    "speed_pct_at_rail_off_plus_50ms": 0.6,
-    "speed_pct_at_release_plus_50ms": 2.6,
-    "firmware_zero_throttle_ms": 4.0
-   },
-   {
-    "rail_off_after_last_pulse_ms": 17.9,
-    "short_after_rail_off_ms": 8.0,
-    "speed_pct_at_rail_off_plus_50ms": 0.6,
-    "speed_pct_at_release_plus_50ms": 2.6,
-    "firmware_zero_throttle_ms": 4.0
-   },
-   {
-    "rail_off_after_last_pulse_ms": 18.4,
-    "short_after_rail_off_ms": 8.0,
-    "speed_pct_at_rail_off_plus_50ms": 0.6,
-    "speed_pct_at_release_plus_50ms": 2.5,
-    "firmware_zero_throttle_ms": 4.0
-   },
-   {
-    "rail_off_after_last_pulse_ms": 17.9,
-    "short_after_rail_off_ms": 8.0,
-    "speed_pct_at_rail_off_plus_50ms": 0.6,
-    "speed_pct_at_release_plus_50ms": 2.6,
-    "firmware_zero_throttle_ms": 4.0
-   },
-   {
-    "rail_off_after_last_pulse_ms": 17.9,
-    "short_after_rail_off_ms": 8.0,
-    "speed_pct_at_rail_off_plus_50ms": 0.6,
-    "speed_pct_at_release_plus_50ms": 2.6,
+    "speed_pct_at_rail_off_plus_50ms": 3.2,
+    "speed_pct_at_release_plus_50ms": 6.7,
     "firmware_zero_throttle_ms": 4.0
    },
    {
     "rail_off_after_last_pulse_ms": 17.8,
     "short_after_rail_off_ms": 8.0,
-    "speed_pct_at_rail_off_plus_50ms": 0.6,
-    "speed_pct_at_release_plus_50ms": 2.6,
+    "speed_pct_at_rail_off_plus_50ms": 3.2,
+    "speed_pct_at_release_plus_50ms": 6.7,
     "firmware_zero_throttle_ms": 4.0
    },
    {
-    "rail_off_after_last_pulse_ms": 18.4,
+    "rail_off_after_last_pulse_ms": 18.1,
     "short_after_rail_off_ms": 8.0,
-    "speed_pct_at_rail_off_plus_50ms": 0.6,
-    "speed_pct_at_release_plus_50ms": 2.5,
+    "speed_pct_at_rail_off_plus_50ms": 2.8,
+    "speed_pct_at_release_plus_50ms": 6.1,
+    "firmware_zero_throttle_ms": 4.0
+   },
+   {
+    "rail_off_after_last_pulse_ms": 17.7,
+    "short_after_rail_off_ms": 8.0,
+    "speed_pct_at_rail_off_plus_50ms": 3.2,
+    "speed_pct_at_release_plus_50ms": 6.7,
+    "firmware_zero_throttle_ms": 4.0
+   },
+   {
+    "rail_off_after_last_pulse_ms": 17.8,
+    "short_after_rail_off_ms": 8.0,
+    "speed_pct_at_rail_off_plus_50ms": 3.2,
+    "speed_pct_at_release_plus_50ms": 6.7,
+    "firmware_zero_throttle_ms": 4.0
+   },
+   {
+    "rail_off_after_last_pulse_ms": 17.6,
+    "short_after_rail_off_ms": 8.0,
+    "speed_pct_at_rail_off_plus_50ms": 3.2,
+    "speed_pct_at_release_plus_50ms": 6.7,
+    "firmware_zero_throttle_ms": 4.0
+   },
+   {
+    "rail_off_after_last_pulse_ms": 18.2,
+    "short_after_rail_off_ms": 8.0,
+    "speed_pct_at_rail_off_plus_50ms": 2.8,
+    "speed_pct_at_release_plus_50ms": 6.1,
+    "firmware_zero_throttle_ms": 4.0
+   },
+   {
+    "rail_off_after_last_pulse_ms": 17.7,
+    "short_after_rail_off_ms": 8.0,
+    "speed_pct_at_rail_off_plus_50ms": 3.2,
+    "speed_pct_at_release_plus_50ms": 6.7,
+    "firmware_zero_throttle_ms": 4.0
+   },
+   {
+    "rail_off_after_last_pulse_ms": 17.7,
+    "short_after_rail_off_ms": 8.0,
+    "speed_pct_at_rail_off_plus_50ms": 3.2,
+    "speed_pct_at_release_plus_50ms": 6.7,
+    "firmware_zero_throttle_ms": 4.0
+   },
+   {
+    "rail_off_after_last_pulse_ms": 17.6,
+    "short_after_rail_off_ms": 8.0,
+    "speed_pct_at_rail_off_plus_50ms": 3.2,
+    "speed_pct_at_release_plus_50ms": 6.7,
+    "firmware_zero_throttle_ms": 4.0
+   },
+   {
+    "rail_off_after_last_pulse_ms": 18.2,
+    "short_after_rail_off_ms": 8.0,
+    "speed_pct_at_rail_off_plus_50ms": 2.8,
+    "speed_pct_at_release_plus_50ms": 6.1,
     "firmware_zero_throttle_ms": 4.0
    }
   ],
@@ -184,8 +184,8 @@
  ],
  "sim": {
   "seed": 1047,
-  "simulated_s": 174.2,
-  "wall_s": 4.7,
+  "simulated_s": 184.4,
+  "wall_s": 5.0,
   "stand_ins": [
    "fet_temp_c"
   ],
@@ -195,12 +195,12 @@
  "firmware": {
   "build": "v0",
   "servo_baud": 500000,
-  "motor": "SunnySky X2216 880KV V3",
-  "kv": 880.0,
+  "motor": "SunnySky X2216 1400KV V3",
+  "kv": 1400.0,
   "pole_pairs": 7,
-  "erpm_limit": 81312,
-  "tyre_mm": 34,
-  "set_rpm_52fps": 8855,
-  "ramp_s": 0.3
+  "erpm_limit": 116550,
+  "tyre_mm": 38,
+  "set_rpm_95fps": 15269,
+  "ramp_s": 0.8
  }
 }

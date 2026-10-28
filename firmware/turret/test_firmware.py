@@ -5,13 +5,13 @@ end on the simulated turret (sim_turret.py). Writes exports/turret/firmware/firm
 
 Protocols    STS3215 packets and sign-magnitude fields; DShot frames (bidirectional checksum), eRPM telemetry and its
              GCR line code, EDT frames; every CAN frame packs into 8 bytes and back
-Numbers      52 fps on Ø34 = 8,855 rpm = 61,985 eRPM; the limit 81,312 eRPM; Ø36 refused
+Numbers      95 fps on Ø38 = 15,269 rpm = 106,883 eRPM; the limit 116,550 eRPM (D68: n_105); Ø36 refused
 Safety       the tilt never above level at any command, through homing, the stray-ball depression and the lift rule;
              no spin and no dial step without ARM, the 1 kHz train, a fresh heartbeat and the host's re-arm; zero
-             throttle in the same millisecond a condition is lost; the 300 ms ramp never steps, nor does a new set
+             throttle in the same millisecond a condition is lost; the 800 ms ramp never steps, nor does a new set
              speed while spinning; no DShot frame while the ESCs are unpowered; SAFE within 100 ms of
-             the first eRPM read over the limit on a 24 V rail, latched until cleared with the line released; one
-             corrupt telemetry frame is not a fault; a ball over 66 fps latches SAFE; pan and tilt live and under
+             the first eRPM read over the limit with the converter bypassed (20.5 V), latched until cleared with the
+             line released; one corrupt telemetry frame is not a fault; a ball over 105 fps latches SAFE; pan and tilt live and under
              100 deg/s while disarmed; the feed servo leaves the bus on a release and is re-initialised on the next arm
 Host         host.py end to end with mount robot: homing, no arming before the mount's table is loaded, the CONFIG rows
              in the firmware, an aim, 24 balls, and people near: fire refused, pan and tilt held to 50 deg/s
@@ -140,23 +140,25 @@ def t_protocols(out):
 
 
 def t_numbers(out):
-    rpm = C.set_rpm(52.0, 34)
-    check(out, 'set_speed', abs(rpm - 8855) < 1 and round(rpm * C.POLE_PAIRS) == 61985, rpm=round(rpm, 1),
+    rpm = C.set_rpm(95.0, 38)
+    check(out, 'set_speed', abs(rpm - 15269) < 1 and round(rpm * C.POLE_PAIRS) == 106883, rpm=round(rpm, 1),
           erpm=round(rpm * C.POLE_PAIRS), throttle=round(C.Config().throttle_for(rpm), 3))
-    check(out, 'erpm_limit', C.ERPM_LIMIT == 81312, erpm=C.ERPM_LIMIT, rpm=C.ERPM_LIMIT / C.POLE_PAIRS)
+    check(out, 'erpm_limit', C.ERPM_LIMIT == 116550 and C.NO_LOAD_RPM_TRIM * 1.018 * 1.020 < C.NO_LOAD_RPM_105 and
+          C.TRIP_FPS == C.CAP_FPS == 105.0, erpm=C.ERPM_LIMIT, rpm=C.ERPM_LIMIT / C.POLE_PAIRS,
+          trimmed_rpm_warm_high_rail=round(C.NO_LOAD_RPM_TRIM * 1.018 * 1.020))
     rig = SimRig(seed=11)
     h = Host(rig)
     h.boot()
     h.send('CONFIG', kind=M.CF_TYRE, a=36)
     h.run(0.2)
-    refused = bool(h.fw.latched & M.F_CONFIG_MISMATCH) and h.fw.cfg.tyre_mm == 34
+    refused = bool(h.fw.latched & M.F_CONFIG_MISMATCH) and h.fw.cfg.tyre_mm == 38
     no_arm = not h.arm_up()
-    h.send('CONFIG', kind=M.CF_TYRE, a=34)
+    h.send('CONFIG', kind=M.CF_TYRE, a=38)
     h.arm = False
     h.run(0.3)
     h.arm = True
     back = h.run(3.0, lambda: h.fw.state == 'ARMED')
-    check(out, 'tyre_36_refused', refused and no_arm and back, refused=refused, arming_refused=no_arm, arms_on_34=back)
+    check(out, 'tyre_36_refused', refused and no_arm and back, refused=refused, arming_refused=no_arm, arms_on_38=back)
 
 
 def t_tilt(out):
@@ -200,7 +202,7 @@ def t_arm_conditions(out):
     check(out, 'rearm_needs_the_request_to_cycle', waits and armed, waited=waits, armed_after=armed)
     # the heartbeat stops while spinning: zero throttle in the same millisecond SAFE is entered
     h.run(0.8)
-    h.send('COMMAND', code=M.CMD_BENCH_SPIN_SPEED, a=520, b=100)
+    h.send('COMMAND', code=M.CMD_BENCH_SPIN_SPEED, a=950, b=100)
     h.run(3.0, lambda: h.fw.state == 'READY')
     t_stop = rig.hw.t
     h.hb_on = False
@@ -222,7 +224,7 @@ def t_arm_conditions(out):
     rig.hw.set_ring_fault('f300')
     h.run(0.5)
     hw_armed = rig.hw.arm
-    h.send('COMMAND', code=M.CMD_BENCH_SPIN_SPEED, a=520, b=100)
+    h.send('COMMAND', code=M.CMD_BENCH_SPIN_SPEED, a=950, b=100)
     h.run(1.0)
     spun = max((max(v) for t, v in h.dshot_log if t >= t0), default=0.0)
     safe = h.events(M.EV_SAFE, t0)
@@ -233,8 +235,9 @@ def t_arm_conditions(out):
 
 
 def t_ramp_and_guard(out):
-    # the ramp never steps; on 24 V the guard trips within 100 ms of the first read over the limit and latches
-    rig = SimRig(seed=41, rail_v=24.0, hopper=0)
+    # the ramp never steps; with the converter bypassed (the ESCs on the 20.5 V pack) the guard trips within 100 ms of
+    # the first read over the limit and latches
+    rig = SimRig(seed=41, rail_v=20.5, hopper=0)
     rig.hw.feed_unplugged = True
     h = Host(rig)
     h.boot()
@@ -261,13 +264,13 @@ def t_ramp_and_guard(out):
     cleared = not h.fw.latched & M.F_ERPM_LIMIT
     check(out, 'ramp_never_steps', max(steps) <= 1.0 / (C.RAMP_S * 1000) + 0.002,
           max_throttle_step_per_ms=round(max(steps), 5), ramp_slope_per_ms=round(1.0 / (C.RAMP_S * 1000), 5))
-    check(out, 'erpm_guard_24v', lat is not None and lat <= 0.100 and all(max(v) == 0 for v in zero_after) and
+    check(out, 'erpm_guard_bypassed_converter', lat is not None and lat <= 0.100 and all(max(v) == 0 for v in zero_after) and
           still and held and cleared, latency_ms=round(lat * 1000, 1) if lat is not None else None,
           trip_erpm=round(g_trip_erpm), max_erpm=round(g_max), dial_refused=still, latched_while_armed=held,
           cleared_when_released=cleared)
     # one corrupt frame over the limit is not a fault
     gd = h.fw.fly.guard.__class__()
-    tripped = [gd.check(0, 0.001 * k, 150000.0 if k == 5 else 60000.0) for k in range(20)]
+    tripped = [gd.check(0, 0.001 * k, 190000.0 if k == 5 else 106000.0) for k in range(20)]
     check(out, 'one_bad_frame_no_trip', not any(tripped) and not gd.tripped)
 
 
@@ -282,8 +285,8 @@ def t_set_point_ramps(out):
     while t < C.ESC_ARM_S + 0.01:
         fl.update(t)
         t += 0.001
-    fl.spin_speed(t, 8855.0)
-    for target_t, rpm in ((t + 0.8, 6000.0), (t + 1.6, 8855.0)):
+    fl.spin_speed(t, 15269.0)
+    for target_t, rpm in ((t + 0.8, 10000.0), (t + 1.6, 15269.0)):
         while t < target_t:
             fl.update(t)
             outs.append(fl.w[0].out)
@@ -304,13 +307,13 @@ def t_overspeed(out):
     h = Host(rig)
     h.boot()
     h.arm_up()
-    h.send('COMMAND', code=M.CMD_BENCH_SPIN_SPEED, a=520, b=100)
+    h.send('COMMAND', code=M.CMD_BENCH_SPIN_SPEED, a=950, b=100)
     h.run(3.0, lambda: h.fw.state == 'READY')
     t0 = rig.hw.t
-    rig.hw.gate_pair(0.0026)                                   # 75.7 fps
+    rig.hw.gate_pair(0.0017)                                   # 115.8 fps
     h.run(0.5)
     safe = h.events(M.EV_SAFE, t0)
-    check(out, 'ball_over_66fps_latches_safe', bool(safe and safe[0][1]['a'] & M.F_OVERSPEED) and
+    check(out, 'ball_over_105fps_latches_safe', bool(safe and safe[0][1]['a'] & M.F_OVERSPEED) and
           bool(h.fw.latched & M.F_OVERSPEED) and rig.hw.trip_q, firmware=bool(safe), hardware_trip=rig.hw.trip_q)
 
 
@@ -360,12 +363,12 @@ def t_feed_release(out):
           back_ms_after_arm=round((back[0][0] - t1) * 1000) if back else None, registers_rewritten=regs,
           balls_after=len(fired))
     fast = [f['fps_d'] / 10 for _, f in h.shots(t0)]
-    check(out, 'every_ball_under_66fps', max(fast) <= C.TRIP_FPS, fastest_fps=max(fast), balls=len(fast))
+    check(out, 'every_ball_under_105fps', max(fast) <= C.TRIP_FPS, fastest_fps=max(fast), balls=len(fast))
 
 
 def t_host_bridge(out):
     """host.py end to end on the simulated turret, mount robot: it homes; arming is refused before the mount's table is
-    loaded; the CONFIG rows land in the firmware (N5's lidar table, the mount, Ø34, the launch ratio); an aim; 24 balls;
+    loaded; the CONFIG rows land in the firmware (N5's lidar table, the mount, Ø38, the launch ratio); an aim; 24 balls;
     then people near: a FIRE refused, and the pan held to 50 deg/s, both for an aim already under way and a new one."""
     import tempfile
     import host as H
@@ -380,7 +383,7 @@ def t_host_bridge(out):
         fw = rig.fw.cfg
         table = [(round(a / 10.0, 1), round(b / 100.0, 2)) for k, i, a, b in hb.setup['rows'] if k == M.CF_DEPRESSION]
         robot = H.table_rows(H.LIDAR_JSON) or list(C.ROBOT_DEPRESSION)
-        landed = (cfg['ok'] and fw.mount == 'robot' and fw.tyre_mm == 34 and not rig.fw.cfg_bad and
+        landed = (cfg['ok'] and fw.mount == 'robot' and fw.tyre_mm == 38 and not rig.fw.cfg_bad and
                   [(round(p, 1), round(m, 2)) for p, m in fw.depression] == table == [(round(p, 1), round(m, 2)) for p, m in robot] and
                   abs(fw.launch_ratio - round(C.LAUNCH_RATIO * 10000) / 10000.0) < 1e-9 and
                   sorted(fw.throttle_map) == sorted((t / 1000.0, float(r)) for t, r in hb.setup['throttle_map']))

@@ -2,11 +2,12 @@
 changes, and the runtime CONFIG the host may set over CAN (0x304), inside limits the firmware enforces.
 
 v0 is the bench build of docs/turret-prototype-plan.md: the slip ring and continuous pan as drawn, the pulse-train
-safety line, two SunnySky X2216 880 KV flywheel motors on AM32 ESCs on the fixed 12 V rail, and a third STS3215 (ID 3)
-stepping the dial. Pure Python, no dependencies; the Feather port copies these numbers.
+safety line, two SunnySky X2216 1400 KV flywheel motors on AM32 ESCs on the trimmed flywheel rail (D68: a Hasbro
+Rival round at 95-100 fps, every accepted ball under 105 fps by the rail itself), and a third STS3215 (ID 3) stepping
+the dial. Pure Python, no dependencies; the Feather port copies these numbers.
 
-The safety numbers are build-time on purpose: the motor's KV, its pole pairs and the rail set the pre-feed eRPM limit,
-and no CAN frame can raise it.
+The safety numbers are build-time on purpose: the motor, its pole pairs and the bench's trimmed no-load speed set the
+pre-feed eRPM limit, and no CAN frame can raise it. None of them is the ceiling: the rail is (docs/turret-plan.md 2.10).
 """
 from __future__ import annotations
 
@@ -84,31 +85,41 @@ HOPPER_EMPTY_STEPS = 4         # four empty steps in a row (each after two dithe
 RATE_DEFAULT, RATE_MAX = 3.0, 3.0   # balls per second: 3/s is the maximum (step ~235 ms + 100 ms rest = 335 ms)
 
 # ---------------------------------------------------------------- the flywheels
-MOTOR = 'SunnySky X2216 880KV V3'
-MOTOR_KV = 880.0               # rpm/V
+MOTOR = 'SunnySky X2216 1400KV V3'
+MOTOR_KV = 1400.0              # rpm/V
 POLE_PAIRS = 7                 # 12N14P
-RAIL_V = 12.0                  # the fixed 12 V FLY regulator: the physical ceiling
-ERPM_LIMIT = round(1.10 * MOTOR_KV * RAIL_V * POLE_PAIRS)   # 81,312 eRPM = 11,616 rpm: above it, SAFE and no feed
+RAIL_V = 11.46                 # the flywheel rail for a nominal 1400 KV (TDK i6A4W, one fixed trim resistor per turret:
+#                                10.9-12.0 V for KV +-5 %): the physical ceiling. The firmware cannot change it
+# D68 (exports/turret/launch/launch.json 'trim', launch3d.json 'ceiling'): the bench trims the rail so the faster motor,
+# warm, turns NO_LOAD_RPM_TRIM at 100 % throttle; the Hasbro ball then leaves at 98.4 fps flat out and the worst accepted
+# ball (1.6 g, stiff, grippy) at 104.3 with the magnets 15 C warmer and the rail 2 % high (16,540 rpm). At
+# NO_LOAD_RPM_105 that ball would reach 105 fps: the eRPM guard sits there
+NO_LOAD_RPM_TRIM = 15930.0     # 111,510 eRPM: the trim target, and test 4.1's limit (the faster motor, warm, at 100 %)
+NO_LOAD_RPM_MAX = NO_LOAD_RPM_TRIM   # bench limit for test 4.1: above it the trim resistor is changed, never a ball fired
+NO_LOAD_RPM_105 = 16650.0      # n_105 (launch3d.json ceiling): the no-load speed at which the worst accepted ball leaves at 105
+ERPM_LIMIT = round(NO_LOAD_RPM_105 * POLE_PAIRS)   # 116,550 eRPM: above it, SAFE and no feed (a wrong rail or motor)
 ERPM_LIMIT_READS = 3           # consecutive telemetry reads over the limit (one corrupt frame is not a fault)
-# the launch rerun on the X2216 (exports/turret/launch/launch.json 'design'): 52 fps on Ø34 at 8,855 rpm (61,985 eRPM),
-# 84 % of the nominal 12 V no-load 10,499 rpm; the worst corner (KV +5 %, rail +4 %) no-load is 11,461 rpm
-SET_RPM_DESIGN, SET_FPS_DESIGN, TYRE_DESIGN_MM = 8855.0, 52.0, 34
-NO_LOAD_RPM_NOMINAL = 10499.0
-NO_LOAD_RPM_MAX_D34 = 11180.0  # bench limit for test 4.1 (78,260 eRPM): above it a ball could pass 66 fps on Ø34
-LAUNCH_RATIO = SET_FPS_DESIGN * 0.3048 / (SET_RPM_DESIGN * math.pi * TYRE_DESIGN_MM / 1000.0 / 60.0)   # 1.0054:
-#                                ball speed / nominal tyre surface speed at the design point (the launch model's 0.945
-#                                is per the grown, crushed contact); CONFIG carries the bench's value after test 4.4
-TYRES_MM = (34,)               # Ø34 only: Ø36 reaches 70.7 fps at the worst corner, over the cap; others are refused
-SET_FPS_DEFAULT = {34: 52.0}
-SET_FPS_MIN, SET_FPS_MAX = 40.0, 56.0   # 56 fps = 9,536 rpm = 91 % of no-load: the trim keeps its 8 % headroom
-RAMP_S = 0.300                 # spin-up ramp, 0 to the set speed: 2.51 A on the ring's +24 V pair (200 ms: 3.56 A,
-#                                over test 4.5's 3 A; a stepped start: 12 A). The firmware never steps
+# the design point (exports/turret/launch/launch.json 'design'): 95 fps for the Hasbro ball on Ø38 at 15,269 rpm
+# (106,883 eRPM), 96 % of the trimmed no-load speed
+SET_RPM_DESIGN, SET_FPS_DESIGN, TYRE_DESIGN_MM = 15269.0, 95.0, 38
+FULL_THROTTLE_FPS = 98.4       # the Hasbro ball at 100 % on the trimmed rail
+LAUNCH_RATIO = SET_FPS_DESIGN * 0.3048 / (SET_RPM_DESIGN * math.pi * TYRE_DESIGN_MM / 1000.0 / 60.0)   # 0.953:
+#                                ball speed / tyre surface speed at the design point; CONFIG carries the bench's value
+#                                after test 4.4
+TYRES_MM = (38,)               # Ø38 only (D68: 40 % crush on this cage); others are refused (Ø40 crushes 49 % and
+#                                reaches 110 fps at the worst corner; Ø36 leaves a Hasbro ball at 82)
+SET_FPS_DEFAULT = {38: 95.0}
+SET_FPS_MIN, SET_FPS_MAX = 40.0, 100.0  # 100 fps asks for more than the rail gives a Hasbro ball (98.4): the wheels run
+#                                flat out on the rail, which is the ceiling, and READY holds (within 5 %)
+RAMP_S = 0.800                 # spin-up ramp, 0 to the set speed: the wheels hold 3.2 times the energy they did at 52 fps
+#                                (19.4 J for the pair at 95 fps); 0.8 s keeps the peak at ~98 W from the input (6.5 A from
+#                                one DCB609 at 15 V, 2.7 A from the 10S bus; 0.3 s would be ~190 W). The firmware never steps
 READY_TOL = 0.05               # READY: both wheels within 5 % of the set speed ...
 READY_HOLD_S = 0.050           # ... for this long
 TRIM_MAX = 0.08                # the speed loop's throttle trim is bounded: a doubled rail cannot hide under it
 TRIM_KP, TRIM_KI = 0.3, 2.0    # on the relative speed error (1, 1/s)
 TRIM_SLEW = 0.0005             # the trim changes at most 0.05 % throttle a millisecond (bumpless at the ramp's end)
-K_NL = NO_LOAD_RPM_NOMINAL / (MOTOR_KV * RAIL_V)   # 0.994: no-load / (KV x rail); test 4.3's map replaces it
+K_NL = NO_LOAD_RPM_TRIM / (MOTOR_KV * RAIL_V)   # 0.993: no-load / (KV x rail); test 4.3's map replaces it
 ESC_ARM_S = 0.600              # zero throttle after the ESC rail comes up before any spin (AM32 arms after ~0.5 s)
 TELEMETRY_STALE_S = 0.020      # no dial step on an eRPM older than this
 TELEMETRY_LOST_S = 0.200       # spinning with no eRPM this long: SAFE
@@ -118,12 +129,13 @@ DSHOT_RATE_HZ = 1000           # DShot300 frames (and eRPM telemetry back) per w
 
 # the hardware the firmware only reports (it neither drives nor can override it)
 BRAKE_DELAY_S = 0.008          # the phase-short closes ~8 ms after ARM falls (5-14 ms: 74HCT14 + 6.8 k / 1 uF) ...
-BRAKE_TAU_S = 0.0127           # ... and the wheel decays with an effective tau of 12.7 ms: the X2216's short through two FETs
-                               # and the taps (tau 10.2 ms at low speed) and its winding's inductance at speed (35 uH est):
-                               # 5 % about 48 ms after ARM falls on the short alone (docs/turret-physics.md section 5)
+BRAKE_TAU_S = 0.0233           # ... and the wheel decays with an effective tau of 23 ms: the 1400 KV's short through two FETs
+                               # and the taps (tau 18 ms at low speed: the FETs' and taps' 56 mOhm are now half the loop)
+                               # and its winding's inductance at speed (14 uH est): 5 % about 80 ms after ARM falls on the
+                               # short alone, from 15,269 rpm (docs/turret-physics.md section 5)
 GATE_SPACING_M = 0.060
-TRIP_FPS = 66.0                # the latch's 2.98 ms window over 60 mm; the firmware's own per-shot check uses it too
-CAP_FPS = 70.0                 # the hard rule
+TRIP_FPS = 105.0               # D68: the latch's 1.87 ms window over 60 mm; the firmware's own per-shot check uses it too
+CAP_FPS = 105.0                # D68: the ceiling, held by the trimmed rail (no accepted ball leaves faster)
 GATE_PAIR_MAX_S = 0.050        # gate 2 later than this after gate 1 is not the same ball (60 mm at 4 fps)
 AFTER_RELEASE_FPS = 20.0       # a ball faster than this after a release fails test 6.7
 
@@ -163,7 +175,7 @@ def rpm_to_fps(rpm: float, tyre_mm: float, launch_ratio: float = LAUNCH_RATIO) -
 @dataclass
 class Config:
     """The runtime CONFIG (0x304 rows). Everything here is bounded by the build constants above."""
-    tyre_mm: int = 34
+    tyre_mm: int = 38
     launch_ratio: float = LAUNCH_RATIO
     mount: str = 'bench'                                         # 'bench' | 'robot' | 'box' (bench commands: 'bench')
     ring: bool = CONTINUOUS_PAN                                  # must equal the build's flag, else CONFIG_MISMATCH
@@ -213,4 +225,4 @@ class Config:
                 if r0 <= rpm <= r1:
                     return t0 + (t1 - t0) * (rpm - r0) / (r1 - r0) if r1 > r0 else t0
             return 1.0
-        return min(1.0, rpm / (MOTOR_KV * RAIL_V * K_NL))
+        return min(1.0, rpm / NO_LOAD_RPM_TRIM)

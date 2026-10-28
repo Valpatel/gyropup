@@ -3,7 +3,7 @@
  "title": "Feed with 50 worn and 50 damp balls, level, 3/s (information)",
  "plan": "docs/turret-prototype-plan.md section 5",
  "mode": "sim",
- "date": "2026-10-27",
+ "date": "2026-10-28",
  "pass": true,
  "checks": [
   {
@@ -34,10 +34,10 @@
     "ball_rate_per_s": 2.27,
     "fps": {
      "n": 50,
-     "mean": 52.06,
-     "sd": 1.01,
-     "min": 49.5,
-     "max": 54.0
+     "mean": 94.61,
+     "sd": 1.93,
+     "min": 89.7,
+     "max": 98.3
     },
     "step_rate_per_s": 2.27,
     "empty_after_dither_pct": 0.0,
@@ -56,10 +56,10 @@
     "ball_rate_per_s": 2.08,
     "fps": {
      "n": 50,
-     "mean": 51.94,
-     "sd": 0.98,
-     "min": 50.0,
-     "max": 54.7
+     "mean": 94.5,
+     "sd": 1.89,
+     "min": 90.5,
+     "max": 99.9
     },
     "step_rate_per_s": 2.09,
     "empty_after_dither_pct": 1.96,
@@ -72,8 +72,8 @@
  ],
  "sim": {
   "seed": 1053,
-  "simulated_s": 54.3,
-  "wall_s": 3.0,
+  "simulated_s": 54.8,
+  "wall_s": 2.9,
   "stand_ins": [],
   "shortened": {},
   "warning": "simulated turret (firmware/turret/sim_turret.py): not a bench reading"
@@ -81,12 +81,12 @@
  "firmware": {
   "build": "v0",
   "servo_baud": 500000,
-  "motor": "SunnySky X2216 880KV V3",
-  "kv": 880.0,
+  "motor": "SunnySky X2216 1400KV V3",
+  "kv": 1400.0,
   "pole_pairs": 7,
-  "erpm_limit": 81312,
-  "tyre_mm": 34,
-  "set_rpm_52fps": 8855,
-  "ramp_s": 0.3
+  "erpm_limit": 116550,
+  "tyre_mm": 38,
+  "set_rpm_95fps": 15269,
+  "ramp_s": 0.8
  }
 }

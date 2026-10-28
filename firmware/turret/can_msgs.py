@@ -38,7 +38,7 @@ F_ERPM_LIMIT, F_OVERSPEED, F_TRIP, F_TELEMETRY = 1 << 4, 1 << 5, 1 << 6, 1 << 7
 F_PULSE, F_PAN_MISSING, F_TILT_MISSING, F_SERVO_CONFIG = 1 << 8, 1 << 9, 1 << 10, 1 << 11
 F_HEARTBEAT, F_HOPPER_EMPTY, F_CONFIG_MISMATCH, F_ARM_LOW = 1 << 12, 1 << 13, 1 << 14, 1 << 15
 FAULT_NAMES = {F_HOME_FAILED: 'home failed', F_REHOME: 're-home asked', F_FEED_JAM: 'feed jammed 3x',
-               F_FEED_MISSING: 'feed servo missing', F_ERPM_LIMIT: 'eRPM over the limit', F_OVERSPEED: 'ball > 66 fps',
+               F_FEED_MISSING: 'feed servo missing', F_ERPM_LIMIT: 'eRPM over the limit', F_OVERSPEED: 'ball > 105 fps',
                F_TRIP: 'trip latched', F_TELEMETRY: 'eRPM telemetry lost', F_PULSE: 'safety pulses bad',
                F_PAN_MISSING: 'pan servo missing', F_TILT_MISSING: 'tilt servo missing',
                F_SERVO_CONFIG: 'servo EEPROM wrong', F_HEARTBEAT: 'host heartbeat stale',

@@ -3,7 +3,7 @@
  "title": "Feed at the firmware's maximum rate",
  "plan": "docs/turret-prototype-plan.md section 5",
  "mode": "sim",
- "date": "2026-10-27",
+ "date": "2026-10-28",
  "pass": true,
  "checks": [
   {
@@ -25,15 +25,15 @@
    "empty_after_dither": 0,
    "lifts": 0,
    "bursts": 4,
-   "ball_rate_per_s": 2.45,
+   "ball_rate_per_s": 2.47,
    "fps": {
     "n": 100,
-    "mean": 51.98,
-    "sd": 1.1,
-    "min": 49.1,
-    "max": 54.7
+    "mean": 94.86,
+    "sd": 2.1,
+    "min": 89.0,
+    "max": 100.2
    },
-   "step_rate_per_s": 2.45,
+   "step_rate_per_s": 2.46,
    "empty_after_dither_pct": 0.0,
    "jams_per_100": 0.0
   }
@@ -43,8 +43,8 @@
  ],
  "sim": {
   "seed": 1052,
-  "simulated_s": 48.7,
-  "wall_s": 2.9,
+  "simulated_s": 49.0,
+  "wall_s": 2.4,
   "stand_ins": [],
   "shortened": {},
   "warning": "simulated turret (firmware/turret/sim_turret.py): not a bench reading"
@@ -52,12 +52,12 @@
  "firmware": {
   "build": "v0",
   "servo_baud": 500000,
-  "motor": "SunnySky X2216 880KV V3",
-  "kv": 880.0,
+  "motor": "SunnySky X2216 1400KV V3",
+  "kv": 1400.0,
   "pole_pairs": 7,
-  "erpm_limit": 81312,
-  "tyre_mm": 34,
-  "set_rpm_52fps": 8855,
-  "ramp_s": 0.3
+  "erpm_limit": 116550,
+  "tyre_mm": 38,
+  "set_rpm_95fps": 15269,
+  "ramp_s": 0.8
  }
 }

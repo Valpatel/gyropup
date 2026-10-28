@@ -1,20 +1,20 @@
 {
  "test": "4.5",
- "title": "Spin-up current with the 300 ms ramp, and burst recovery (8 balls at 3/s)",
+ "title": "Spin-up current with the 800 ms ramp, and burst recovery (8 balls at 3/s)",
  "plan": "docs/turret-prototype-plan.md section 5",
  "mode": "sim",
- "date": "2026-10-27",
+ "date": "2026-10-28",
  "pass": true,
  "checks": [
   {
    "check": "ring peak with the ramp",
-   "value": 2.59,
-   "limit": "<= 3 A at 24 V",
+   "value": 3.05,
+   "limit": "<= 4 A at 24 V (D68: ~96 W at the input)",
    "pass": true
   },
   {
    "check": "bus at the board",
-   "value": 23.8,
+   "value": 23.49,
    "limit": ">= 16 V",
    "pass": true
   },
@@ -31,32 +31,32 @@
    "pass": true
   },
   {
-   "check": "every shot within 3 fps of the set speed",
-   "value": 1.6000000000000014,
-   "limit": "52 +- 3 fps",
+   "check": "every shot within 6 % of the set speed",
+   "value": 2.4000000000000057,
+   "limit": "95 +- 6 %",
    "pass": true
   }
  ],
  "readings": {
-  "ring_peak_a": 2.59,
-  "burst_recovery_peak_a": 3.26,
-  "bus_min_v": 23.8,
+  "ring_peak_a": 3.05,
+  "burst_recovery_peak_a": 8.43,
+  "bus_min_v": 23.49,
   "burst_fps": [
-   51.3,
-   51.4,
-   52.1,
-   53.0,
-   51.0,
-   51.5,
-   51.1,
-   53.6
+   92.6,
+   92.9,
+   95.5,
+   96.7,
+   93.3,
+   94.5,
+   92.8,
+   97.3
   ]
  },
  "notes": [],
  "sim": {
   "seed": 1045,
-  "simulated_s": 9.7,
-  "wall_s": 0.3,
+  "simulated_s": 10.1,
+  "wall_s": 0.4,
   "stand_ins": [],
   "shortened": {},
   "warning": "simulated turret (firmware/turret/sim_turret.py): not a bench reading"
@@ -64,12 +64,12 @@
  "firmware": {
   "build": "v0",
   "servo_baud": 500000,
-  "motor": "SunnySky X2216 880KV V3",
-  "kv": 880.0,
+  "motor": "SunnySky X2216 1400KV V3",
+  "kv": 1400.0,
   "pole_pairs": 7,
-  "erpm_limit": 81312,
-  "tyre_mm": 34,
-  "set_rpm_52fps": 8855,
-  "ramp_s": 0.3
+  "erpm_limit": 116550,
+  "tyre_mm": 38,
+  "set_rpm_95fps": 15269,
+  "ramp_s": 0.8
  }
 }

@@ -11,7 +11,7 @@ The rules it holds, whatever the host sends:
     200 ms, the host's arm request (seen low after the line is held: the pendant alone never arms, and nothing re-arms
     by itself after a SAFE), no trip and no latched fault; losing any of them is zero throttle and a stopped dial in
     the same millisecond;
-  - no dial step without both wheels' eRPM fresh, under 1.10 x KV x 12 V x 7 and READY (the pre-feed check);
+  - no dial step without both wheels' eRPM fresh, under NO_LOAD_RPM_105 x 7 and READY (the pre-feed check);
   - pan and tilt stay live when disarmed, at most 100 deg/s; homing (homing.py, unchanged) before anything moves on
     command.
 """

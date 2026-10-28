@@ -3,7 +3,7 @@
  "title": "The 5-ball hopper at -25 deg: the lift-to-0 rule empties it",
  "plan": "docs/turret-prototype-plan.md section 5",
  "mode": "sim",
- "date": "2026-10-27",
+ "date": "2026-10-28",
  "pass": true,
  "checks": [
   {
@@ -36,7 +36,7 @@
  "notes": [],
  "sim": {
   "seed": 1055,
-  "simulated_s": 17.8,
+  "simulated_s": 18.3,
   "wall_s": 0.8,
   "stand_ins": [],
   "shortened": {},
@@ -45,12 +45,12 @@
  "firmware": {
   "build": "v0",
   "servo_baud": 500000,
-  "motor": "SunnySky X2216 880KV V3",
-  "kv": 880.0,
+  "motor": "SunnySky X2216 1400KV V3",
+  "kv": 1400.0,
   "pole_pairs": 7,
-  "erpm_limit": 81312,
-  "tyre_mm": 34,
-  "set_rpm_52fps": 8855,
-  "ramp_s": 0.3
+  "erpm_limit": 116550,
+  "tyre_mm": 38,
+  "set_rpm_95fps": 15269,
+  "ramp_s": 0.8
  }
 }

@@ -3,7 +3,7 @@
  "title": "Feed: 100 balls per pose at 3/s (level, -25 deg, level while panning at 60 deg/s)",
  "plan": "docs/turret-prototype-plan.md section 5",
  "mode": "sim",
- "date": "2026-10-27",
+ "date": "2026-10-28",
  "pass": true,
  "checks": [
   {
@@ -91,15 +91,15 @@
     "empty_after_dither": 0,
     "lifts": 0,
     "bursts": 4,
-    "ball_rate_per_s": 2.4,
+    "ball_rate_per_s": 2.41,
     "fps": {
      "n": 100,
-     "mean": 51.98,
-     "sd": 1.2,
-     "min": 49.2,
-     "max": 54.1
+     "mean": 94.83,
+     "sd": 2.3,
+     "min": 89.6,
+     "max": 99.2
     },
-    "step_rate_per_s": 2.4,
+    "step_rate_per_s": 2.41,
     "empty_after_dither_pct": 0.0,
     "jams_per_100": 1.0
    },
@@ -113,15 +113,15 @@
     "empty_after_dither": 0,
     "lifts": 2,
     "bursts": 4,
-    "ball_rate_per_s": 2.2,
+    "ball_rate_per_s": 2.21,
     "fps": {
      "n": 100,
-     "mean": 51.94,
-     "sd": 1.05,
-     "min": 49.8,
-     "max": 54.5
+     "mean": 94.79,
+     "sd": 2.02,
+     "min": 90.8,
+     "max": 99.6
     },
-    "step_rate_per_s": 2.2,
+    "step_rate_per_s": 2.21,
     "empty_after_dither_pct": 0.0,
     "jams_per_100": 0.0
    },
@@ -135,15 +135,15 @@
     "empty_after_dither": 1,
     "lifts": 0,
     "bursts": 4,
-    "ball_rate_per_s": 2.05,
+    "ball_rate_per_s": 1.99,
     "fps": {
      "n": 100,
-     "mean": 52.15,
-     "sd": 1.05,
-     "min": 49.5,
-     "max": 54.6
+     "mean": 95.2,
+     "sd": 2.03,
+     "min": 90.5,
+     "max": 99.9
     },
-    "step_rate_per_s": 2.08,
+    "step_rate_per_s": 2.02,
     "empty_after_dither_pct": 0.99,
     "jams_per_100": 1.0
    }
@@ -154,8 +154,8 @@
  ],
  "sim": {
   "seed": 1051,
-  "simulated_s": 145.3,
-  "wall_s": 8.0,
+  "simulated_s": 146.4,
+  "wall_s": 7.9,
   "stand_ins": [],
   "shortened": {},
   "warning": "simulated turret (firmware/turret/sim_turret.py): not a bench reading"
@@ -163,12 +163,12 @@
  "firmware": {
   "build": "v0",
   "servo_baud": 500000,
-  "motor": "SunnySky X2216 880KV V3",
-  "kv": 880.0,
+  "motor": "SunnySky X2216 1400KV V3",
+  "kv": 1400.0,
   "pole_pairs": 7,
-  "erpm_limit": 81312,
-  "tyre_mm": 34,
-  "set_rpm_52fps": 8855,
-  "ramp_s": 0.3
+  "erpm_limit": 116550,
+  "tyre_mm": 38,
+  "set_rpm_95fps": 15269,
+  "ramp_s": 0.8
  }
 }

@@ -3,7 +3,7 @@
  "title": "Power-up: 5 V, 3.3 V, 12 V MAIN, 12 V PAN, the heartbeat, the servos, the pulse train and the 3.3 V inputs",
  "plan": "docs/turret-prototype-plan.md section 5",
  "mode": "sim",
- "date": "2026-10-27",
+ "date": "2026-10-28",
  "pass": true,
  "checks": [
   {
@@ -51,7 +51,7 @@
   {
    "check": "the pulse train",
    "value": 986.0,
-   "limit": "930-1,045 Hz (986 nominal; the firmware accepts 900-1,100)",
+   "limit": "900-1,075 Hz (986 nominal; the firmware accepts 870-1,176)",
    "pass": true
   },
   {
@@ -100,12 +100,12 @@
  "firmware": {
   "build": "v0",
   "servo_baud": 500000,
-  "motor": "SunnySky X2216 880KV V3",
-  "kv": 880.0,
+  "motor": "SunnySky X2216 1400KV V3",
+  "kv": 1400.0,
   "pole_pairs": 7,
-  "erpm_limit": 81312,
-  "tyre_mm": 34,
-  "set_rpm_52fps": 8855,
-  "ramp_s": 0.3
+  "erpm_limit": 116550,
+  "tyre_mm": 38,
+  "set_rpm_95fps": 15269,
+  "ramp_s": 0.8
  }
 }
