@@ -78,12 +78,17 @@ is the backstop if the charger is mis-set.
 
 ## 3. The main path and the branches
 
-On the power plate (`exports/body/sendcutsend/power_plate_*.dxf`; the layout in `cad/body_layout.py`): the pack's +
-lead goes to the MRBF block's battery stud (its M8 post sits in a printed insulating bushing in the plate), the 80 A
-fuse to the + bus bar; the pack's - lead to the shunt, then the main switch (Flipsky Smart Enhanced V2.0, momentary
-mode: hold 0.3 s on, 1 s off; its smart mode off), then the - bus bar. **Flipsky draws its switch on the negative:
-read the wiring card that comes with it before the first wire, and if it is high side, swap the switch and the shunt
-into the + lead in the drawing.** The bus bars are SendCutSend C110 copper (0.125 in, cut only, five Ø6.4 holes each)
+On the power plate (`exports/body/sendcutsend/power_plate_*.dxf`; the layout in `cad/body_layout.py`): the bay's +
+lead goes to the MRBF block's battery stud (its M8 post sits in a printed PETG insulating bushing in the plate, the
+block on 3 mm PETG spacers), the 80 A fuse to the **shunt in the + lead**, then the + bus bar; the bay's - lead goes to
+the main switch (Flipsky Smart Enhanced V2.0, momentary mode: hold 0.3 s on, 1 s off; its smart mode off), then the
+- bus bar. **The shunt is on the + side on purpose (issue #11, docs/body-fuse-board.md 1):** the INA228's inputs may
+not go more than 0.3 V below its ground (the MCU's, the switched - bus). With the shunt in the - lead ahead of the
+low-side switch, opening the switch lets the - bus float up toward + while the INA228's inputs stay at the pack's -:
+the chip dies and its input clamps carry the load round the open switch. High side, its inputs sit 30-41 V above its
+ground whether the switch is on or off, inside its 85 V common mode. **Flipsky draws its switch on the negative: read
+the wiring card that comes with it before the first wire; if it is high side, the switch moves into the + lead after
+the shunt.** The bus bars are SendCutSend C110 copper (0.125 in, cut only, five Ø6.4 holes each)
 on printed insulators: each lug stack is an M6 x 16 socket head down through the lug(s) and the bar into a DIN 985
 nyloc nut held in a hex pocket of the insulator, its tip 1.5 mm above the insulator's floor, so no screw of a bar
 reaches the plate. (SendCutSend does no service, tapping included, on a part under 1 in wide: its app refused the
@@ -185,23 +190,35 @@ loop): plug its DT12 only with the stop relay open (its three 1,000 µF capacito
 ## 6. Bring-up (P0, on the bench, before the plate goes into the robot)
 
 The whole power skid is one plate: it is built and tested on the bench with dummy loads, then dropped into the body
-on its four posts.
+on its four posts. The packs are two DeWalt DCB609 in 20 V mode, in series (D65): the robot is their only protection,
+so the firmware's cut-off and current limit (docs/body-firmware.md 5) are tested here before any motor runs.
 
 1. **Continuity, unpowered**: every W-row end to end; no + to - or + to plate (> 1 MOhm); the frame bond to the - bus
-   (< 0.1 Ohm). Fuses out.
-2. **Pack alone**: 46-49 V at the XT90 after the build; the BMS app shows all 13 cells within 15 mV.
-3. **Plug in, switch off**: the bus reads 0 V (the low-side switch is open); the charge port reads the pack.
-4. **Switch on** (hold the button 0.3 s): the bus at pack voltage. Fit the converter fuses only: the 24 V, 12 V and
-   5 V rails within 2 % of nominal; their -V to the - bus 0 V.
-5. **MCU**: the INA228 reads the pack within 0.2 V of a meter and the current within 0.1 A at a 2 A dummy load on the
-   24 V rail; the QT Py relays the 13 cell voltages from the BMS onto bus C; with the transmitter switched off the
-   stop relay opens within 0.5 s (the receiver's failsafe: no pulses), the turret's pins 7-8 read open and 1-2 dead,
-   and the MCU logs the stop; MCU_RUN low opens it too.
-6. **Branches**: fit the RS-04 and VESC fuses one at a time with nothing plugged; then each motor on its own (the leg
-   workstream's bring-up) at a 10 A current limit.
-7. **Switch off with the buses loaded**: no spark at the XT90 (the switch takes it); the rails fall in order.
-8. **Charge**: the charger metered at 53.3 V; the first charge watched to the end: the charger stops at 53.3 V, the
-   BMS does not trip.
+   (< 0.1 Ohm, W33 14 AWG). Fuses out. **The bus-bar insulators: > 10 MOhm at 50 V from every lug screw to the plate**
+   (they are PETG: a carbon-filled print conducts).
+2. **Packs alone**: each DCB609 18-20.5 V on its adapter's leads (the FLEXVOLT slider must stay out: 20 V mode); the
+   pair 36-41 V at the bay's XT90 with the series link plugged, 0 V across the link's open XT90 with it unplugged.
+3. **Plug in, switch off**: the bus reads 0 V (the low-side switch is open).
+4. **Before the INA228 is wired**: the shunt is in the **+ lead** (W5 MRBF load stud to the shunt, W6 the shunt to the
+   + bus), the switch in the - lead (W7, W8), and nothing of the INA228 is connected to the - lead. If the plate was
+   wired from the 13S drawing (the shunt in the - lead), move the shunt first, or leave the INA228's VIN+ and VIN-
+   unconnected until it is moved: switching off would destroy the INA228 and bypass the switch through its sense lead.
+5. **Switch on** (hold the button 0.3 s): the bus at pack voltage. Fit the converter's fuse only: the 12 V and 5 V
+   rails within 2 % of nominal; the 12 V -V to the - bus 0 V.
+6. **MCU**: the INA228 reads the pack within 0.2 V of a meter and the current within 0.1 A at a 2 A dummy load on the
+   12 V rail (high side: discharge reads negative); switching the main switch off and on with the INA228 wired leaves
+   it reading (the check of step 4); with the transmitter switched off the stop relay opens within 0.5 s (the
+   receiver's failsafe), the turret's safety loop reads open and its XT30 dead, and the MCU logs the stop; MCU_RUN low
+   opens it too.
+7. **The firmware's windows on a bench supply** in place of the packs (current-limited, 30-45 V): warn at 35.0 V, no
+   jump under 34.0, sit at 32.0, the latched cut-off at 30.0 V under load, the over-charge latch at 44.0 V, no arming
+   over 42.0 V (docs/body-firmware.md 5).
+8. **Branches**: fit the RS-04 and VESC fuses one at a time with nothing plugged; then each motor on its own (the leg
+   workstream's bring-up) at a 10 A current limit. The VESCs' battery current limit set to 20 A in VESC Tool (the fuse
+   board's FL1 holders carry 22 A).
+9. **Switch off with the buses loaded**: no spark at the XT90 (the switch takes it); the rails fall in order.
+10. **An 80 A, 0.3 s pulse** (the two RS-04s stalled at a current limit, or an electronic load) on a fresh pair: the
+    12 V rail stays up (the TRACO runs down to 18 V), the adapters' contacts under 60 C after ten pulses (B12).
 
 ## 7. Open items
 
