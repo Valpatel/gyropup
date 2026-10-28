@@ -54,6 +54,8 @@ TURRET_BOUGHT = {
     'esc_l': ('repeat-robotics-am32-35a-esc', 1), 'esc_r': ('repeat-robotics-am32-35a-esc', 1),
     'feed_motor': ('feetech-sts3215-c018-12v', 1), 'cartridge_board': ('proto-board-52x50', 1),
     'laser': ('quarton-vlm-650-03-lpt', 1), 'pan_clamp': ('sendcutsend-pan-clamp', 1),
+    # the cradle's aluminium (D48): the same SendCutSend cart as the clamp
+    'cradle_plate_l': ('sendcutsend-cradle-plate-l', 1), 'cradle_plate_r': ('sendcutsend-cradle-plate-r', 1), 'stop_lug': ('sendcutsend-stop-lug', 1),
     'pan_bearing': ('vxb-6810-2rs', 1), 'pan_bearing_inner': ('vxb-6810-2rs', 0),
     'tilt_bearing': ('bearing_mr126', 1), 'tilt_bearing_inner': ('bearing_mr126', 0),
     'circlip_50': ('circlip_50', 1), 'shoulder_screw': ('shoulder_6x12_m5', 1),
@@ -66,11 +68,12 @@ TURRET_BOUGHT = {
     'hw_tm_screws': ('screw_m5x16', 4), 'hw_tm_dowels': ('dowel_5x16', 2),
     'hw_screw_m2x10': ('turret_screw_m2x10', 4), 'hw_screw_m2x20': ('turret_screw_m2x20', 4), 'hw_flat_m2x6': ('turret_screw_m2x6_flat', 4),
     'hw_screw_m3x6': ('screw_m3x6', 20), 'hw_screw_m3x8': ('turret_screw_m3x8', 15), 'hw_screw_m3x10': ('turret_screw_m3x10', 2),
-    'hw_screw_m3x12': ('turret_screw_m3x12', 4), 'hw_screw_m3x16': ('turret_screw_m3x16', 4),
+    'hw_screw_m3x16': ('turret_screw_m3x16', 4),
+    'hw_flat_m3x14': ('turret_screw_m3x14_flat_ss', 4), 'hw_button_m3x8': ('turret_screw_m3x8_button', 8), 'hw_flat_m3x6': ('turret_screw_m3x6_flat', 2),
     'hw_screw_m4x10': ('turret_screw_m4x10', 8), 'hw_flat_m3x8': ('turret_screw_m3x8_flat', 4),
     'hw_flat_m3x10': ('turret_screw_m3x10_flat', 3), 'hw_setscrew_m3x6': ('turret_setscrew_m3x6_nylon', 4),
-    'hw_insert_m3': ('insert_m3', 29), 'hw_insert_m4': ('turret_insert_m4', 9),
-    'hw_insert_m5': ('insert_m5', 1), 'hw_washer_m3_large': ('washer_m3_large', 3),
+    'hw_insert_m3': ('insert_m3', 37), 'hw_insert_m4': ('turret_insert_m4', 9),
+    'hw_washer_m3_large': ('washer_m3_large', 3),
     'hw_dowel_4x8': ('turret_dowel_4x8', 2), 'hw_oring_ct': ('turret_oring_ct', 1), 'hw_standoff_m3x12': ('turret_standoff_m3x12', 4),
     'hw_hub_nuts': ('nut_m5_nyloc', 2),
     'hw_standoff_m3x14': ('turret_standoff_m3x14', 4),
@@ -199,7 +202,8 @@ def main():
     no_backup = sorted({r['key'] for r in rows + bench + tools if r['qty'] and len(r.get('sellers') or []) < 2 and not r.get('alternates')
                         and r['key'] not in drawn})
     priced = lambda rs: round(sum((r['price_usd_each'] or 0) * r['qty'] for r in rs), 2)
-    sheet = {n: {'drawing': f'exports/turret/{n}.dxf', **tu.SHEET[st], 'thickness_in': tu.SHEET[st]['thickness_in']} for n, st in tu.SHEET_PARTS.items()}
+    sheet = {n: {'drawing': f'exports/turret/{n}.dxf', **tu.SHEET[st], 'thickness_in': tu.SHEET[st]['thickness_in'],
+                 'operations': tu.SHEET_OPS.get(n, 'none')} for n, st in tu.SHEET_PARTS.items()}
     (OUT / 'bom.json').write_text(json.dumps({'bench_turret': rows, 'bench_stand': bench, 'tools': tools, 'v1_only': v1, 'not_modelled': tu.NOT_MODELLED_G,
                                               'price_usd_known': {'turret': priced(rows), 'bench_stand': priced(bench), 'tools': priced(tools)},
                                               'not_in_a_catalogue': missing, 'no_listed_price': unpriced, 'no_second_source': no_backup,

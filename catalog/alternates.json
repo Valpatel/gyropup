@@ -2058,5 +2058,80 @@
    "checked": "2026-10-27",
    "evidence": "Littelfuse MINI 5 A, the same part; price not readable (Digi-Key blocks automated reads)"
   }
+ ],
+ "turret_screw_m3x14_flat_ss": [
+  {
+   "supplier": "Belmetric",
+   "part_number": "SF3X14CLZ",
+   "url": "https://belmetric.com/m3x0-5-flat-head-cap-screw-steel-10-9-din-7991/",
+   "price": "$0.18",
+   "price_usd_each": 0.18,
+   "pack_qty": 1,
+   "stock": "in stock",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "Same geometry: DIN 7991 / ISO 10642 M3 x 14 (overall length, as McMaster), head Ø6; class 10.9 steel, zinc plated (14 mm is listed only as SF3X14CLZ); 'Starts At: $0.18' each on the page's Length selector."
+  }
+ ],
+ "turret_screw_m3x8_button": [
+  {
+   "supplier": "Fastener Superstore",
+   "part_number": "227258",
+   "url": "https://www.fastenersuperstore.com/products/227258/button-head-socket-cap-screws",
+   "price": "$31.01 / carton of 100",
+   "price_usd_each": 0.31,
+   "pack_qty": 100,
+   "stock": "not shown",
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "M3-0.5 x 8 mm button head socket cap screw, alloy steel, black oxide: $31.01 per carton of 100 (1-2 cartons)."
+  }
+ ],
+ "sendcutsend-cradle-plate-l": [
+  {
+   "supplier": "Xometry",
+   "part_number": "cradle_plate_l.dxf, 6061-T6 0.125 in, sheet cutting",
+   "url": "https://www.xometry.com/capabilities/sheet-metal-manufacturing/",
+   "price": "instant price on upload",
+   "price_usd_each": null,
+   "pack_qty": 1,
+   "stock": null,
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "the same DXF, material and thickness, uploaded for Xometry's instant sheet-cutting price (tapping and countersinks as finishing options), as the pan clamp's backup"
+  }
+ ],
+ "sendcutsend-cradle-plate-r": [
+  {
+   "supplier": "Xometry",
+   "part_number": "cradle_plate_r.dxf, 6061-T6 0.125 in, sheet cutting",
+   "url": "https://www.xometry.com/capabilities/sheet-metal-manufacturing/",
+   "price": "instant price on upload",
+   "price_usd_each": null,
+   "pack_qty": 1,
+   "stock": null,
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "the same DXF, material and thickness, uploaded for Xometry's instant sheet-cutting price (tapping and countersinks as finishing options), as the pan clamp's backup"
+  }
+ ],
+ "sendcutsend-stop-lug": [
+  {
+   "supplier": "Xometry",
+   "part_number": "stop_lug.dxf, 6061-T6 0.100 in, sheet cutting",
+   "url": "https://www.xometry.com/capabilities/sheet-metal-manufacturing/",
+   "price": "instant price on upload",
+   "price_usd_each": null,
+   "pack_qty": 1,
+   "stock": null,
+   "drop_in": true,
+   "changes": null,
+   "checked": "2026-10-27",
+   "evidence": "the same DXF, material and thickness, uploaded for Xometry's instant sheet-cutting price (tapping and countersinks as finishing options), as the pan clamp's backup"
+  }
  ]
 }

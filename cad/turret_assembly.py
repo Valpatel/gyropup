@@ -53,11 +53,19 @@ STEPS = [
      'The rotor leads through the yoke\'s slot, the yoke on the turntable: 4 x M4 x 10. 4 x M3 inserts in the -y arm, the '
      'bay on them: 4 x M3 x 8 flat heads; the three boards on their standoffs (12 and 14 mm); the ring\'s rotor plug and '
      'the hall into level 2.'),
-    ('The tilt servo and the cradle', ['tilt_servo', 'tilt_bearing', 'tilt_bearing_inner', 'cradle', 'shoulder_screw'],
-     {'tilt_servo': (0, 40, 0), 'cradle': 40, 'shoulder_screw': (0, -40, 0)}, (0.5, -1.0, 0.5),
-     'The STS3215 into its pocket on the +y arm, 4 x M2 x 10 from the arm\'s inner face. The MR126 into the -y arm\'s '
-     'seat. The cradle: its hub onto the servo\'s horn (4 x M3 x 12), the ISO 7379 shoulder screw through the -y arm and '
-     'the bearing into the cradle\'s M5 insert. Check the 0 and -25 deg stops by hand before anything else.'),
+    ('The tilt servo and the cradle on its aluminium cheeks',
+     ['tilt_servo', 'tilt_bearing', 'tilt_bearing_inner', 'cradle', 'cradle_plate_l', 'cradle_plate_r', 'stop_lug', 'horn_boss', 'pivot_spacer',
+      'shoulder_screw'],
+     {'tilt_servo': (0, 40, 0), 'cradle': 55, 'cradle_plate_l': (0, 22, 55), 'cradle_plate_r': (0, -22, 55), 'stop_lug': (0, -38, 55),
+      'horn_boss': (0, 14, 0), 'pivot_spacer': (0, -14, 0), 'shoulder_screw': (0, -40, 0)}, (0.5, -1.0, 0.5),
+     'On the bench first (D48): 8 x M3 inserts into the rail frame\'s two rebates, put in from the side; the aluminium stop lug onto the -y '
+     'plate\'s outer face, 2 x M3 x 6 flat heads from the plate\'s inner face into its tapped holes, a drop of CA gel under it; each plate '
+     'into its rail\'s rebate, 4 x M3 x 8 button heads. Then the STS3215 into its pocket on the +y arm, 4 x M2 x 10 from the arm\'s inner '
+     'face, and the MR126 into the -y arm\'s seat. The cradle between the arms: the horn boss between the +y plate and the servo\'s horn, '
+     '4 x M3 x 14 flat heads from the plate\'s inner face into the horn (snug: 1.8 mm of thread); on the -y side the pivot spacer, its land '
+     'against the bearing, and the ISO 7379 shoulder screw through the arm, the bearing and the spacer into the plate\'s tapped hole (snug, '
+     'about 0.15 N m, a drop of CA gel on the thread). Check the 0 and -25 deg stops by hand before anything else: the lug meets the '
+     'yoke\'s two sectors, and the barrel cannot be pushed above level.'),
     ('The laser', ['laser_mount', 'laser'], {'laser_mount': -30, 'laser': -30}, (0.7, -1.0, 0.4),
      'The mount on the cradle\'s tab: 2 x M3 x 10 up through it; the laser in the mount on three nylon-tip M3 set screws '
      '(boresight them on the bench).'),

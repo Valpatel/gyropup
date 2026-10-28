@@ -1432,8 +1432,8 @@
    "https://www.mcmaster.com/91294A126/"
   ],
   "confidence": "product page",
-  "used_for": "the M2006 under the dial-housing floor, countersunk flush on Ø19",
-  "qty_per_robot": 3
+  "used_for": "the cradle's stop lug (D48): 2 x from the -y cheek plate's countersinks into the lug's tapped holes",
+  "qty_per_robot": 2
  },
  {
   "id": "mcmaster-91294a130",
@@ -7949,5 +7949,327 @@
   "used_for": "the pendant's plug (the switch's 3.5 mm plug cut off, this soldered on)",
   "qty_per_robot": 1,
   "notes": "MATES WITH the panel receptacle TB3M in the previous entry. Chosen over TA3FX (flex relief, cable <= 2.92 mm): TA3FX is out of stock at Mouser (502-TA3FX, stock 0, $13.98); Digi-Key TA3FX-ND has 1,461 at $14.59 qty 1 (thepartsdirect 10/27/26, https://www.digikey.com/en/products/detail/switchcraft-inc/TA3FX/1290046) if a thin cable and a boot are wanted. TA3F-ND at Digi-Key is on order, non-RoHS, not usable. Pair cost: Mouser $27.32, Digi-Key $27.46. Size: Housing 10.5 mm (0.413 in) dia; cable OD 4.32 mm max (no flex relief). Weight about 7 g."
+ },
+ {
+  "id": "mcmaster-92125a133",
+  "key": "turret_screw_m3x14_flat_ss",
+  "category": "fastener",
+  "vendor": "McMaster-Carr",
+  "model": "92125A133",
+  "name": "18-8 Stainless Steel Hex-Drive Flat Head Screw, M3 x 0.5 mm Thread Size, 14 mm Long",
+  "price_usd": 0.1065,
+  "price_note": "McMaster-Carr: $10.65 per pack of 100 (price_usd is per piece)",
+  "price_checked": "2026-10-27",
+  "pack_qty": 100,
+  "pack_price_usd": 10.65,
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/92125A133/",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "thread": "M3x0.5",
+   "length_mm": 14.0,
+   "head_d_mm": 6.0,
+   "head_height_mm": 1.7,
+   "mass_g": null,
+   "mass_basis": "unknown",
+   "material": "18-8 Stainless Steel",
+   "mcmaster": {
+    "raw": {
+     "Thread Direction": "Right Hand",
+     "Drive Style": "Hex",
+     "Tip Type": "Flat",
+     "Thread Size": "M3 × 0.5 mm",
+     "Length": "14 mm",
+     "Countersink Angle": "90°",
+     "Flat Head Profile": "Standard",
+     "Head Diameter": "6 mm",
+     "Head Height": "1.7 mm",
+     "Threading": "Fully Threaded",
+     "Tensile Strength": "70,000 psi",
+     "Certificate Form": "Digital",
+     "Certificate Type": "Material Certificate with Traceable Lot Number",
+     "Drive Size": "2 mm",
+     "Fastener Head Type": "Flat",
+     "Hardness": "Not Rated",
+     "Material": "18-8 Stainless Steel",
+     "Passivation": "Passivated",
+     "Performance": "Corrosion Resistant",
+     "Specifications Met": "DIN 7991, ISO 10642",
+     "System of Measurement": "Metric",
+     "Thread Fit": "Metric Class 6g",
+     "Thread Spacing": "Coarse",
+     "Thread Type": "Metric",
+     "Country of Origin": "Brazil, China, India, Taiwan, Thailand",
+     "DFARS Compliance": "Not Specialty Metals Compliant",
+     "Export Control Classification Number (ECCN)": "EAR99",
+     "REACH Compliance": "REACH (EC 1907/2006) (02/04/2026, 253 SVHC) Compliant",
+     "RoHS Compliance": "RoHS 3 (2015/863/EU) Compliant",
+     "Schedule B Number": "731815.9000",
+     "U.S.–Mexico–Canada Agreement (USMCA) Qualifying": "No"
+    },
+    "parsed": {
+     "Thread Size": {
+      "thread": "M3x0.5",
+      "d": 3.0,
+      "pitch": 0.5,
+      "unit": "mm"
+     },
+     "Length": {
+      "value": 14.0,
+      "unit": "mm"
+     },
+     "Head Diameter": {
+      "value": 6.0,
+      "unit": "mm"
+     },
+     "Head Height": {
+      "value": 1.7,
+      "unit": "mm"
+     },
+     "Tensile Strength": {
+      "value": 482.6332,
+      "unit": "MPa"
+     },
+     "Drive Size": {
+      "value": 2.0,
+      "unit": "mm"
+     }
+    }
+   }
+  },
+  "cad": {
+   "file": null,
+   "kind": "screw",
+   "frame": "axis +Z, centred on the axis, head on +z and shank towards -z; z = 0 at the underside of the head (socket, button, pan, hex and flanged heads) or at the top face of a countersunk (flat) head",
+   "available": true,
+   "step_url": "https://www.mcmaster.com/92125A133/",
+   "bbox_mm": null,
+   "volume_mm3": null,
+   "pending": "STEP not downloaded yet: McMaster-Carr asks for a login before CAD downloads (the product page itself reads without one). Finish with .venv/bin/python tools/mcmaster_cad.py --catalog --file catalog/turret.json --only turret_screw_m3x14_flat_ss once logged in, or save the STEP from a logged-in browser as references/vendor/mcmaster/92125A133/92125A133.step and run the same command."
+  },
+  "frame": "axis +Z, centred on the axis, head on +z and shank towards -z; z = 0 at the underside of the head (socket, button, pan, hex and flanged heads) or at the top face of a countersunk (flat) head",
+  "sources": [
+   "https://www.mcmaster.com/92125A133/"
+  ],
+  "confidence": "product page",
+  "used_for": "the cradle's horn (D48): 4 x through the +y cheek plate's countersinks and the printed horn boss into the tilt servo's horn, 1.8 mm of thread in its 2.5 mm flange (M3 x 14 is the only length that reaches the horn without touching the servo; not made in black-oxide alloy steel: 91294A132 is 12 mm and 91294A134 16 mm)",
+  "qty_per_robot": 4
+ },
+ {
+  "id": "mcmaster-91239a113",
+  "key": "turret_screw_m3x8_button",
+  "category": "fastener",
+  "vendor": "McMaster-Carr",
+  "model": "91239A113",
+  "name": "Class 10.9 Screw, M3 x 0.5 mm Thread Size, 8 mm Long",
+  "price_usd": 0.0982,
+  "price_note": "McMaster-Carr: $9.82 per pack of 100 (price_usd is per piece)",
+  "price_checked": "2026-10-27",
+  "pack_qty": 100,
+  "pack_price_usd": 9.82,
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/91239A113/",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "thread": "M3x0.5",
+   "head_height_mm": 1.65,
+   "head_d_mm": 5.7,
+   "length_mm": 8.0,
+   "mass_g": null,
+   "mass_basis": "unknown",
+   "material": "Black-Oxide Alloy Steel",
+   "mcmaster": {
+    "raw": {
+     "Thread Size": "M3 × 0.5 mm",
+     "Thread Direction": "Right Hand",
+     "Thread Spacing": "Coarse",
+     "Thread Type": "Metric",
+     "Thread Fit": "Metric Class 6g",
+     "Tip Type": "Flat",
+     "Fastener Head Type": "Rounded",
+     "Head Style": "Button",
+     "Head Profile": "Standard",
+     "Head Height": "1.65 mm",
+     "Head Diameter": "5.7 mm",
+     "Drive Style": "Hex",
+     "Drive Size": "2 mm",
+     "Length": "8 mm",
+     "Threading": "Fully Threaded",
+     "Tensile Strength": "120,000 psi",
+     "Certificate Form": "Digital",
+     "Certificate Type": "Material Certificate with Traceable Lot Number",
+     "Fastener Strength Grade/Class": "Class 10.9",
+     "Hardness": "Rockwell C32",
+     "Material": "Black-Oxide Alloy Steel",
+     "Performance": "High Strength",
+     "Specifications Met": "ISO 7380",
+     "System of Measurement": "Metric",
+     "Country of Origin": "United States, Belgium, Canada, China, France, Germany, India, Indonesia, Italy, Japan, Malaysia, Mexico, Philippines, Poland, South Korea, Switzerland, Taiwan, Thailand, Vietnam",
+     "DFARS Compliance": "Not Specialty Metals Compliant",
+     "Export Control Classification Number (ECCN)": "EAR99",
+     "REACH Compliance": "REACH (EC 1907/2006) (02/04/2026, 253 SVHC) Compliant",
+     "RoHS Compliance": "RoHS 3 (2015/863/EU) Compliant",
+     "Schedule B Number": "731815.9000",
+     "U.S.–Mexico–Canada Agreement (USMCA) Qualifying": "No"
+    },
+    "parsed": {
+     "Thread Size": {
+      "thread": "M3x0.5",
+      "d": 3.0,
+      "pitch": 0.5,
+      "unit": "mm"
+     },
+     "Head Height": {
+      "value": 1.65,
+      "unit": "mm"
+     },
+     "Head Diameter": {
+      "value": 5.7,
+      "unit": "mm"
+     },
+     "Drive Size": {
+      "value": 2.0,
+      "unit": "mm"
+     },
+     "Length": {
+      "value": 8.0,
+      "unit": "mm"
+     },
+     "Tensile Strength": {
+      "value": 827.3712,
+      "unit": "MPa"
+     }
+    }
+   }
+  },
+  "cad": {
+   "file": null,
+   "kind": "screw",
+   "frame": "axis +Z, centred on the axis, head on +z and shank towards -z; z = 0 at the underside of the head (socket, button, pan, hex and flanged heads) or at the top face of a countersunk (flat) head",
+   "available": true,
+   "step_url": "https://www.mcmaster.com/91239A113/",
+   "bbox_mm": null,
+   "volume_mm3": null,
+   "pending": "STEP not downloaded yet: McMaster-Carr asks for a login before CAD downloads (the product page itself reads without one). Finish with .venv/bin/python tools/mcmaster_cad.py --catalog --file catalog/turret.json --only turret_screw_m3x8_button once logged in, or save the STEP from a logged-in browser as references/vendor/mcmaster/91239A113/91239A113.step and run the same command."
+  },
+  "frame": "axis +Z, centred on the axis, head on +z and shank towards -z; z = 0 at the underside of the head (socket, button, pan, hex and flanged heads) or at the top face of a countersunk (flat) head",
+  "sources": [
+   "https://www.mcmaster.com/91239A113/"
+  ],
+  "confidence": "product page",
+  "used_for": "the cradle's cheek plates on the rail frame (D48): 8 x into M3 inserts in the rails' rebates; button heads (1.65 mm) keep 2.3 mm from the yoke's arms",
+  "qty_per_robot": 8
+ },
+ {
+  "id": "sendcutsend-cradle-plate-l",
+  "key": "sendcutsend-cradle-plate-l",
+  "category": "turret",
+  "vendor": "SendCutSend",
+  "model": "cradle_plate_l.dxf (6061-T6, 0.125 in)",
+  "name": "Cradle cheek plate, +y (the servo's side), laser-cut 6061-T6 aluminium 0.125 in, 90 x 62 mm, 9 holes, 4 countersunk",
+  "price_usd": null,
+  "price_note": "instant price on upload of exports/turret/cradle_plate_l.dxf at sendcutsend.com (no quote): est $10-18 for one in 6061-T6 0.125 in with 4 countersinks (90 deg, Ø6.4) on the face drawn",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "SendCutSend",
+    "url": "https://sendcutsend.com/materials/6061-t6-aluminum/",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "material": "6061-T6 aluminium",
+   "thickness_in": 0.125,
+   "thickness_mm": 3.175,
+   "mass_g": 21.5,
+   "drawing": "exports/turret/cradle_plate_l.dxf"
+  },
+  "sources": [
+   "https://sendcutsend.com/materials/6061-t6-aluminum/",
+   "https://sendcutsend.com/services/tapping/",
+   "https://sendcutsend.com/services/countersinking/"
+  ],
+  "confidence": "estimate",
+  "used_for": "the cradle's +y cheek (D48): the tilt servo's horn through the horn boss (4 x M3 x 14 flat heads), on the rail frame by 4 x M3 x 8",
+  "qty_per_robot": 1
+ },
+ {
+  "id": "sendcutsend-cradle-plate-r",
+  "key": "sendcutsend-cradle-plate-r",
+  "category": "turret",
+  "vendor": "SendCutSend",
+  "model": "cradle_plate_r.dxf (6061-T6, 0.125 in)",
+  "name": "Cradle cheek plate, -y (the pivot's side), laser-cut 6061-T6 aluminium 0.125 in, 90 x 62 mm, 7 holes, 1 tapped M5, 2 countersunk",
+  "price_usd": null,
+  "price_note": "instant price on upload of exports/turret/cradle_plate_r.dxf at sendcutsend.com (no quote): est $12-20 for one in 6061-T6 0.125 in with the M5 tap and 2 countersinks (90 deg, Ø6.4) on the face drawn",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "SendCutSend",
+    "url": "https://sendcutsend.com/materials/6061-t6-aluminum/",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "material": "6061-T6 aluminium",
+   "thickness_in": 0.125,
+   "thickness_mm": 3.175,
+   "mass_g": 21.9,
+   "drawing": "exports/turret/cradle_plate_r.dxf"
+  },
+  "sources": [
+   "https://sendcutsend.com/materials/6061-t6-aluminum/",
+   "https://sendcutsend.com/services/tapping/",
+   "https://sendcutsend.com/services/countersinking/"
+  ],
+  "confidence": "estimate",
+  "used_for": "the cradle's -y cheek (D48): the ISO 7379 shoulder screw in its tapped M5 hole, the stop lug on its outer face, on the rail frame by 4 x M3 x 8",
+  "qty_per_robot": 1
+ },
+ {
+  "id": "sendcutsend-stop-lug",
+  "key": "sendcutsend-stop-lug",
+  "category": "turret",
+  "vendor": "SendCutSend",
+  "model": "stop_lug.dxf (6061-T6, 0.100 in)",
+  "name": "Tilt hard-stop lug, laser-cut 6061-T6 aluminium 0.100 in, 24 x 23 mm, 2 holes tapped M3",
+  "price_usd": null,
+  "price_note": "instant price on upload of exports/turret/stop_lug.dxf at sendcutsend.com (no quote): est $6-10 for one in 6061-T6 0.100 in with 2 M3 taps",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "SendCutSend",
+    "url": "https://sendcutsend.com/materials/6061-t6-aluminum/",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "material": "6061-T6 aluminium",
+   "thickness_in": 0.1,
+   "thickness_mm": 2.54,
+   "mass_g": 2.0,
+   "drawing": "exports/turret/stop_lug.dxf"
+  },
+  "sources": [
+   "https://sendcutsend.com/materials/6061-t6-aluminum/",
+   "https://sendcutsend.com/services/tapping/",
+   "https://sendcutsend.com/services/countersinking/"
+  ],
+  "confidence": "estimate",
+  "used_for": "the barrel's hard stops at 0 and -25 deg (D48): on the -y cheek plate's outer face, 2 x M3 x 6 flat heads from its inner face and a drop of CA gel",
+  "qty_per_robot": 1
  }
 ]
