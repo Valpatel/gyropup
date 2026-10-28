@@ -90,6 +90,7 @@ def run_firmware(seconds: float = 8.0) -> dict:
     from rig.rs04_emu import EmulatedRS04
     p = Plant()
     rb, m, d, mj = p.rb, p.m, p.d, p.mj
+    imu = m.site('imu').id
     fw = fwlib.Firmware.load()
     fo, _, ro, _ = lr.fb.stop_angles()
     cal = [(1, fwlib.BUS_A, -1, fo + 0.05), (2, fwlib.BUS_A, -1, ro - 0.05), (3, fwlib.BUS_B, 1, fo - 0.03), (4, fwlib.BUS_B, 1, ro + 0.02)]
@@ -111,7 +112,7 @@ def run_firmware(seconds: float = 8.0) -> dict:
     seq = 0
     now = 0
     running = False
-    log = {k: [] for k in ('t', 'theta', 'x', 'v', 'L', 'fw_theta', 'mode')}
+    log = {k: [] for k in ('t', 'theta', 'x', 'v', 'L', 'fw_theta', 'mode', 'imu_pitch', 'imu_q')}
     t0 = None
     while True:
         t = (now / 1e6 - t0) if running else 0.0
@@ -134,10 +135,14 @@ def run_firmware(seconds: float = 8.0) -> dict:
             seq = (seq + 1) & 0xFF
             sp = int(round(v * 1000)).to_bytes(2, 'little', signed=True) + bytes(2) + bytes((int(round(h * 200)), 0, 1, seq))
             devices.send(0x110, sp, False)
-        R = d.xmat[rb.base].reshape(3, 3)
+        # the VN-100 at the model's 'imu' site (the base's frame: x fwd, y left, z up). Not mjOBJ_BODY: a body's
+        # 'local' velocity is in its principal-inertia frame (ximat), 81 deg about z from the base's frame on B3's
+        # model, which turned most of the pitch rate into roll rate.
+        R = d.site_xmat[imu].reshape(3, 3)
         roll, pitch, yaw = math.atan2(R[2, 1], R[2, 2]), math.asin(-R[2, 0]), math.atan2(R[1, 0], R[0, 0])
         av = np.zeros(6)
-        mj.mj_objectVelocity(m, d, mj.mjtObj.mjOBJ_BODY, rb.base, av, 1)       # local frame: x fwd, y left, z up
+        mj.mj_objectVelocity(m, d, mj.mjtObj.mjOBJ_SITE, imu, av, 1)
+        imu_now = (pitch, av[1])
         fw.vn100(-math.degrees(yaw), -math.degrees(pitch), math.degrees(roll), av[0], -av[1], -av[2], now)
         for bus, port in enumerate(ports):
             while (f := port.recv(0)) is not None:
@@ -171,6 +176,8 @@ def run_firmware(seconds: float = 8.0) -> dict:
             log['L'].append(sum(tr['L']) / 2)
             log['fw_theta'].append(s.theta)
             log['mode'].append(s.mode)
+            log['imu_pitch'].append(imu_now[0])
+            log['imu_q'].append(imu_now[1])
         elif now > 2_000_000:
             raise RuntimeError(f'the firmware did not arm: {fwlib.MODES[s.mode]}, boot {s.boot_mask:#x}')
         now += 1000
@@ -184,6 +191,11 @@ def summary(fwl: dict, pyl: dict) -> dict:
            'worst_theta_deg_python': float(np.degrees(np.max(np.abs(pyl['theta'])))),
            'theta_estimate_error_deg': float(np.degrees(np.max(np.abs(np.asarray(fwl['fw_theta']) - np.asarray(fwl['theta']))))),
            'final_mode': fwlib.MODES[fwl['mode'][-1]]}
+    # the emulated VN-100 is self-consistent: its pitch rate is its pitch angle's rate (B3's model caught a gyro read in
+    # the base's principal-inertia frame: 1/6 of the true pitch rate)
+    dp = np.diff(fwl['imu_pitch']) / np.diff(fwl['t'])
+    q = 0.5 * (np.asarray(fwl['imu_q'][1:]) + np.asarray(fwl['imu_q'][:-1]))
+    out['imu_pitch_rate_error'] = float(np.max(np.abs(dp - q)))
     for key, scale in (('x', 1.0), ('v', 1.0), ('L', 1.0), ('theta', 180 / math.pi)):
         a = np.interp(t, fwl['t'], fwl[key]) * scale
         b = np.asarray(pyl[key]) * scale

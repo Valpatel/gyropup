@@ -236,4 +236,5 @@ def test_robot_balances_like_the_simulations_controller():
     assert not res['fell'] and res['final_mode'] == 'run'
     assert res['worst_diff_x'] < 0.05 and res['worst_diff_v'] < 0.05 and res['worst_diff_L'] < 0.005
     assert res['worst_diff_theta'] < 1.0 and res['theta_estimate_error_deg'] < 0.2
+    assert res['imu_pitch_rate_error'] < 0.05                # rad/s: the emulated gyro agrees with its own attitude
     assert res['at_3.9s']['v_fw'] > 0.4                     # it drove forward when asked to
