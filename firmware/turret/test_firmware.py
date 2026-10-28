@@ -5,7 +5,7 @@ end on the simulated turret (sim_turret.py). Writes exports/turret/firmware/firm
 
 Protocols    STS3215 packets and sign-magnitude fields; DShot frames (bidirectional checksum), eRPM telemetry and its
              GCR line code, EDT frames; every CAN frame packs into 8 bytes and back
-Numbers      95 fps on Ø38 = 15,269 rpm = 106,883 eRPM; the limit 116,550 eRPM (D68: n_105); Ø36 refused
+Numbers      95 fps on Ø38 = 15,286 rpm = 107,002 eRPM; the limit 114,730 eRPM (D68: n_astm); Ø36 refused
 Safety       the tilt never above level at any command, through homing, the stray-ball depression and the lift rule;
              no spin and no dial step without ARM, the 1 kHz train, a fresh heartbeat and the host's re-arm; zero
              throttle in the same millisecond a condition is lost; the 800 ms ramp never steps, nor does a new set
@@ -141,9 +141,9 @@ def t_protocols(out):
 
 def t_numbers(out):
     rpm = C.set_rpm(95.0, 38)
-    check(out, 'set_speed', abs(rpm - 15269) < 1 and round(rpm * C.POLE_PAIRS) == 106883, rpm=round(rpm, 1),
+    check(out, 'set_speed', abs(rpm - 15286) < 1 and round(rpm * C.POLE_PAIRS) == 107002, rpm=round(rpm, 1),
           erpm=round(rpm * C.POLE_PAIRS), throttle=round(C.Config().throttle_for(rpm), 3))
-    check(out, 'erpm_limit', C.ERPM_LIMIT == 116550 and C.NO_LOAD_RPM_TRIM * 1.018 * 1.020 < C.NO_LOAD_RPM_105 and
+    check(out, 'erpm_limit', C.ERPM_LIMIT == 114730 and C.NO_LOAD_RPM_TRIM * 1.018 * 1.020 < min(C.NO_LOAD_RPM_105, C.NO_LOAD_RPM_ASTM) and
           C.TRIP_FPS == C.CAP_FPS == 105.0, erpm=C.ERPM_LIMIT, rpm=C.ERPM_LIMIT / C.POLE_PAIRS,
           trimmed_rpm_warm_high_rail=round(C.NO_LOAD_RPM_TRIM * 1.018 * 1.020))
     rig = SimRig(seed=11)
@@ -285,8 +285,8 @@ def t_set_point_ramps(out):
     while t < C.ESC_ARM_S + 0.01:
         fl.update(t)
         t += 0.001
-    fl.spin_speed(t, 15269.0)
-    for target_t, rpm in ((t + 0.8, 10000.0), (t + 1.6, 15269.0)):
+    fl.spin_speed(t, 15286.0)
+    for target_t, rpm in ((t + 0.8, 10000.0), (t + 1.6, 15286.0)):
         while t < target_t:
             fl.update(t)
             outs.append(fl.w[0].out)

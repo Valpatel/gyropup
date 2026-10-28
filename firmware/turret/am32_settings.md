@@ -9,8 +9,8 @@ telemetry its pre-feed check depends on.
   (crawler) build: bidirectional 3D mode, stall protection, crawler timing. Flash the stock AM32 release for its target
   first, then write the settings below.
 - **Backup ESC:** Lumenier Razor Pro F4 45A AM32. It ships with stock AM32; write the same settings.
-- **Motors:** SunnySky X2216 1400 KV, 12N14P (14 poles), on the trimmed FLY rail (D68: 10.9-12.0 V, set per turret at
-  bench test 4.1 so the faster motor turns 15,930 rpm at 100 % throttle; that rail is the 105 fps ceiling).
+- **Motors:** SunnySky X2216 1400 KV, 12N14P (14 poles), on the trimmed FLY rail (D68: 10.8-11.9 V, set per turret at
+  bench test 4.1 so the faster motor turns 15,722 rpm at 100 % throttle; that rail is the 105 fps ceiling).
 
 ## How to write them
 
@@ -31,11 +31,11 @@ only in recent ones). Where a version names a row differently, set the behaviour
 |---|---|---|
 | Motor direction reversed | L: off, R: on, then check by hand at 5 % | The two wheels counter-rotate so both tyre surfaces move toward the muzzle at the nip. Check with the bench host's spin at low throttle and a finger-light paper strip, before any ball |
 | Bi-directional (3D) mode | **off** | The firmware's throttle is 0-100 % forward (DShot 48-2047). In 3D mode the lower half of the range runs the wheel backwards. The Repeat build ships with 3D mode on |
-| Input / ESC protocol | Auto (DShot) | The Feather sends DShot300. Bidirectional DShot is the controller's choice (inverted frames) and AM32 answers on the same wire with eRPM. The pre-feed check (16,650 rpm x 7 = 116,550 eRPM: where the worst accepted ball would reach 105 fps) needs that telemetry: with no eRPM the firmware never steps the dial |
+| Input / ESC protocol | Auto (DShot) | The Feather sends DShot300. Bidirectional DShot is the controller's choice (inverted frames) and AM32 answers on the same wire with eRPM. The pre-feed check (16,390 rpm x 7 = 114,730 eRPM: where the densest accepted ball would reach 2,500 J/m^2, just under where the fastest would reach 105 fps) needs that telemetry: with no eRPM the firmware never steps the dial |
 | Extended DShot telemetry (EDT) | allowed, if the version shows the option | The firmware turns EDT on with DShot command 13 at every power-up. The temperature frames then arrive interleaved with eRPM and go into the WHEELS frame and test 6.6 |
 | Brake on stop | **on** | Zero throttle shorts the phases through the ESC's low-side FETs. That is every ordinary stop, and the firmware's reaction to a release: it sees the 1 kHz train stop on PULSE_MON within 4 ms and commands zero, so the ESC brakes ~16 ms before the monostable cuts the FLY rail |
 | Drag brake strength | 10 (full) | The braking above is as strong as the ESC can make it |
-| Complementary PWM | **off** | With it on, a slowing ESC rectifies the wheel's energy back into its supply (9.7 J a wheel at 15,269 rpm), and the flywheel rail's converter is a buck that cannot take it: 0.3 J would lift the rail to ~27 V. Off, a slowing wheel coasts or brakes in its own windings (brake on stop is a separate setting and still works). The speed loop's feed-forward map comes from bench test 4.3 with this setting (docs/turret-wiring.md 3.6) |
+| Complementary PWM | **off** | With it on, a slowing ESC rectifies the wheel's energy back into its supply (9.7 J a wheel at 15,286 rpm), and the flywheel rail's converter is a buck that cannot take it: 0.3 J would lift the rail to ~27 V. Off, a slowing wheel coasts or brakes in its own windings (brake on stop is a separate setting and still works). The speed loop's feed-forward map comes from bench test 4.3 with this setting (docs/turret-wiring.md 3.6) |
 | Variable PWM frequency | on (default) | |
 | PWM frequency | 24 kHz (default) | |
 | Timing advance | default (level 2, ~15 deg) | A 14-pole 22xx runs well at the default; auto advance off |
@@ -57,7 +57,7 @@ only in recent ones). Where a version names a row differently, set the behaviour
 
 ```
  release   firmware          ESC (AM32)                   hardware arm chain           wheel
- t = 0     -                 driving at the set speed     pulses stop                  15,269 rpm
+ t = 0     -                 driving at the set speed     pulses stop                  15,286 rpm
  ~4 ms     PULSE_MON gap:    brake on stop: low-side      monostable still high        braking
            zero throttle     FETs short the phases
  ~20 ms    -                 FLY rail gone, ESC off       ARM falls, 2815 opens        brake gone for 10 ms
@@ -87,6 +87,6 @@ only in recent ones). Where a version names a row differently, set the behaviour
 1. Both wheels turn the right way at 5 % throttle.
 2. The WHEELS frame shows rpm from both ESCs (eRPM telemetry works); with EDT, the temperatures are not 0.
 3. Brake on stop: from the set speed, the bench host's `--tests 4.7` releases stop the wheel to 5 % by 50 ms after the
-   rail drops (AM32's brake first; the hardware short alone takes ~80 ms from 15,269 rpm), and a plain zero-throttle stop takes well under 0.5 s.
+   rail drops (AM32's brake first; the hardware short alone takes ~80 ms from 15,286 rpm), and a plain zero-throttle stop takes well under 0.5 s.
 4. Test 4.1 (no-load at 100 % throttle) and test 4.5 (spin-up current at the shunt) run before any other powered
    flywheel test.

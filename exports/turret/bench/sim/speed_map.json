@@ -9,18 +9,18 @@
   {
    "check": "monotonic",
    "value": [
-    57.68,
-    67.96,
-    78.05,
-    87.08,
-    96.49
+    56.88,
+    66.99,
+    76.95,
+    85.84,
+    95.33
    ],
    "limit": "each step faster",
    "pass": true
   },
   {
    "check": "SD at 60 %",
-   "value": 1.22,
+   "value": 1.18,
    "limit": "<= 3 fps (3 %)",
    "pass": true
   },
@@ -32,7 +32,7 @@
   },
   {
    "check": "SD at 70 %",
-   "value": 0.68,
+   "value": 0.65,
    "limit": "<= 3 fps (3 %)",
    "pass": true
   },
@@ -44,7 +44,7 @@
   },
   {
    "check": "SD at 80 %",
-   "value": 1.43,
+   "value": 1.38,
    "limit": "<= 3 fps (3 %)",
    "pass": true
   },
@@ -56,7 +56,7 @@
   },
   {
    "check": "SD at 90 %",
-   "value": 0.78,
+   "value": 0.74,
    "limit": "<= 3 fps (3 %)",
    "pass": true
   },
@@ -68,7 +68,7 @@
   },
   {
    "check": "SD at 100 %",
-   "value": 1.92,
+   "value": 1.9,
    "limit": "<= 3 fps (3 %)",
    "pass": true
   },
@@ -85,85 +85,85 @@
     "throttle": 0.6,
     "fps": {
      "n": 10,
-     "mean": 57.68,
-     "sd": 1.22,
-     "min": 55.5,
-     "max": 60.2
+     "mean": 56.88,
+     "sd": 1.18,
+     "min": 54.8,
+     "max": 59.3
     },
-    "rpm_before_first_ball": 9320
+    "rpm_before_first_ball": 9190
    },
    {
     "throttle": 0.7,
     "fps": {
      "n": 10,
-     "mean": 67.96,
-     "sd": 0.68,
-     "min": 67.0,
-     "max": 69.3
+     "mean": 66.99,
+     "sd": 0.65,
+     "min": 66.1,
+     "max": 68.3
     },
-    "rpm_before_first_ball": 10881
+    "rpm_before_first_ball": 10732
    },
    {
     "throttle": 0.8,
     "fps": {
      "n": 10,
-     "mean": 78.05,
-     "sd": 1.43,
-     "min": 74.8,
-     "max": 80.7
+     "mean": 76.95,
+     "sd": 1.38,
+     "min": 73.8,
+     "max": 79.5
     },
-    "rpm_before_first_ball": 12426
+    "rpm_before_first_ball": 12267
    },
    {
     "throttle": 0.9,
     "fps": {
      "n": 10,
-     "mean": 87.08,
-     "sd": 0.78,
-     "min": 85.8,
-     "max": 88.4
+     "mean": 85.84,
+     "sd": 0.74,
+     "min": 84.6,
+     "max": 87.1
     },
-    "rpm_before_first_ball": 13987
+    "rpm_before_first_ball": 13807
    },
    {
     "throttle": 1.0,
     "fps": {
      "n": 10,
-     "mean": 96.49,
-     "sd": 1.92,
-     "min": 93.6,
-     "max": 99.1
+     "mean": 95.33,
+     "sd": 1.9,
+     "min": 92.4,
+     "max": 97.9
     },
-    "rpm_before_first_ball": 15533
+    "rpm_before_first_ball": 15340
    }
   ],
   "config_throttle_map_rows": [
    {
     "throttle_permille": 600,
-    "rpm": 9320
+    "rpm": 9190
    },
    {
     "throttle_permille": 700,
-    "rpm": 10881
+    "rpm": 10732
    },
    {
     "throttle_permille": 800,
-    "rpm": 12426
+    "rpm": 12267
    },
    {
     "throttle_permille": 900,
-    "rpm": 13987
+    "rpm": 13807
    },
    {
     "throttle_permille": 1000,
-    "rpm": 15533
+    "rpm": 15340
    }
   ]
  },
  "notes": [],
  "sim": {
   "seed": 1043,
-  "simulated_s": 39.1,
+  "simulated_s": 39.0,
   "wall_s": 1.7,
   "stand_ins": [],
   "shortened": {},
@@ -175,9 +175,9 @@
   "motor": "SunnySky X2216 1400KV V3",
   "kv": 1400.0,
   "pole_pairs": 7,
-  "erpm_limit": 116550,
+  "erpm_limit": 114730,
   "tyre_mm": 38,
-  "set_rpm_95fps": 15269,
+  "set_rpm_95fps": 15286,
   "ramp_s": 0.8
  }
 }

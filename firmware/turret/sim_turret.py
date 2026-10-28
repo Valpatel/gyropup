@@ -21,14 +21,14 @@ Each model, and where its numbers come from:
                p_jam (0.003) 10-35 deg in, and a 20 deg reverse clears it with p 0.9
   wheels       per wheel an AM32 ESC: arms after 0.5 s of zero throttle, answers every DShot frame with eRPM (and
                EDT temperatures), drives rpm toward throttle x KV (1400 +-3 %) x rail x 0.993, the rail trimmed at the
-               bench so the faster motor's no-load is at or under 15,930 rpm (one resistor step, 0-1 % under; 20.5 V
+               bench so the faster motor's no-load is at or under 15,722 rpm (one resistor step, 0-1 % under; 20.5 V
                for test 4.6: the converter bypassed), tau 15 ms, accel capped by the 10 A limit on 7.6e-6 kg m^2 (the
                D68 launch run); brake on stop (the low-side FETs on) tau 8 ms; unpowered it coasts (tau 2 s) until the
                phase short (tau 23 ms effective); a ball takes 6 % of each wheel's speed
   balls        from the pocket reaching the hole to the nip in 105 +- 12 ms (+10 ms at -25 deg: the feed rerun's
                300-330 ms from the step's command to first touch); launched at the D68 launch run's speed for the
-               Hasbro ball: 95 fps at 15,269 rpm on Ø38, 98.4 at the trimmed no-load 15,930 (linear between in rpm,
-               the ratio falling 0.7 %), +- 2 %; below 1,400 rpm it rests at the nip and leaves at 2.9 fps when the
+               Hasbro ball: 95 fps at 15,286 rpm on Ø38, 97.1 at the trimmed no-load 15,722 (linear between in rpm,
+               the ratio falling 0.6 %), +- 2 %; below 1,400 rpm it rests at the nip and leaves at 2.9 fps when the
                wheels pass it (the stray ball); gate 1 30 mm past the nip, gate 2 60 mm on, +-30 us edge jitter; the
                reference chronograph 1 m out reads 0.4 fps less +- 0.2
   stand-ins    ring resistance, CAN error frames, temperatures, paper groups, plates: plausible numbers for the
@@ -50,7 +50,7 @@ from turret_fw import HAL
 DT = 0.001
 
 
-FALL = 1.0 - (C.FULL_THROTTLE_FPS / C.SET_FPS_DESIGN) / (C.NO_LOAD_RPM_TRIM / C.SET_RPM_DESIGN)   # 0.7 %
+FALL = 1.0 - (C.FULL_THROTTLE_FPS / C.SET_FPS_DESIGN) / (C.NO_LOAD_RPM_TRIM / C.SET_RPM_DESIGN)   # 0.6 %
 
 
 def launch_fps(rpm: float) -> float:

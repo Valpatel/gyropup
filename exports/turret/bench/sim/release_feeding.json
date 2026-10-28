@@ -8,7 +8,7 @@
  "checks": [
   {
    "check": "no ball above 20 fps after a release",
-   "value": 9.3,
+   "value": 14.3,
    "limit": "<= 20 fps",
    "pass": true
   }
@@ -30,7 +30,7 @@
     "resting_at_the_nip": 0
    },
    {
-    "release_s_into_burst": 1.77,
+    "release_s_into_burst": 1.78,
     "balls_after_release": 0,
     "fps_after_release": [],
     "nip_ms_after_release": [],
@@ -61,83 +61,52 @@
     "resting_at_the_nip": 0
    },
    {
-    "release_s_into_burst": 2.09,
+    "release_s_into_burst": 2.08,
+    "balls_after_release": 0,
+    "fps_after_release": [],
+    "nip_ms_after_release": [],
+    "resting_at_the_nip": 1,
+    "stray_fps": [
+     0.0
+    ]
+   },
+   {
+    "release_s_into_burst": 2.56,
+    "balls_after_release": 0,
+    "fps_after_release": [],
+    "nip_ms_after_release": [],
+    "resting_at_the_nip": 0
+   },
+   {
+    "release_s_into_burst": 2.33,
+    "balls_after_release": 0,
+    "fps_after_release": [],
+    "nip_ms_after_release": [],
+    "resting_at_the_nip": 0
+   },
+   {
+    "release_s_into_burst": 1.94,
+    "balls_after_release": 0,
+    "fps_after_release": [],
+    "nip_ms_after_release": [],
+    "resting_at_the_nip": 0
+   },
+   {
+    "release_s_into_burst": 3.04,
+    "balls_after_release": 0,
+    "fps_after_release": [],
+    "nip_ms_after_release": [],
+    "resting_at_the_nip": 0
+   },
+   {
+    "release_s_into_burst": 2.11,
     "balls_after_release": 1,
     "fps_after_release": [
-     9.3
+     14.3
     ],
     "nip_ms_after_release": [
-     38
+     19
     ],
-    "resting_at_the_nip": 0
-   },
-   {
-    "release_s_into_burst": 2.2,
-    "balls_after_release": 0,
-    "fps_after_release": [],
-    "nip_ms_after_release": [],
-    "resting_at_the_nip": 0
-   },
-   {
-    "release_s_into_burst": 2.39,
-    "balls_after_release": 0,
-    "fps_after_release": [],
-    "nip_ms_after_release": [],
-    "resting_at_the_nip": 1,
-    "stray_fps": [
-     0.0
-    ]
-   },
-   {
-    "release_s_into_burst": 2.04,
-    "balls_after_release": 0,
-    "fps_after_release": [],
-    "nip_ms_after_release": [],
-    "resting_at_the_nip": 0
-   },
-   {
-    "release_s_into_burst": 2.51,
-    "balls_after_release": 0,
-    "fps_after_release": [],
-    "nip_ms_after_release": [],
-    "resting_at_the_nip": 0
-   },
-   {
-    "release_s_into_burst": 2.22,
-    "balls_after_release": 0,
-    "fps_after_release": [],
-    "nip_ms_after_release": [],
-    "resting_at_the_nip": 0
-   },
-   {
-    "release_s_into_burst": 2.75,
-    "balls_after_release": 0,
-    "fps_after_release": [],
-    "nip_ms_after_release": [],
-    "resting_at_the_nip": 1,
-    "stray_fps": [
-     0.0
-    ]
-   },
-   {
-    "release_s_into_burst": 2.64,
-    "balls_after_release": 0,
-    "fps_after_release": [],
-    "nip_ms_after_release": [],
-    "resting_at_the_nip": 0
-   },
-   {
-    "release_s_into_burst": 2.98,
-    "balls_after_release": 0,
-    "fps_after_release": [],
-    "nip_ms_after_release": [],
-    "resting_at_the_nip": 0
-   },
-   {
-    "release_s_into_burst": 1.53,
-    "balls_after_release": 0,
-    "fps_after_release": [],
-    "nip_ms_after_release": [],
     "resting_at_the_nip": 0
    },
    {
@@ -148,40 +117,69 @@
     "resting_at_the_nip": 0
    },
    {
-    "release_s_into_burst": 2.7,
+    "release_s_into_burst": 2.57,
+    "balls_after_release": 1,
+    "fps_after_release": [
+     12.4
+    ],
+    "nip_ms_after_release": [
+     20
+    ],
+    "resting_at_the_nip": 0
+   },
+   {
+    "release_s_into_burst": 3.36,
     "balls_after_release": 0,
     "fps_after_release": [],
     "nip_ms_after_release": [],
     "resting_at_the_nip": 0
    },
    {
-    "release_s_into_burst": 1.56,
+    "release_s_into_burst": 1.38,
     "balls_after_release": 0,
     "fps_after_release": [],
     "nip_ms_after_release": [],
     "resting_at_the_nip": 0
    },
    {
-    "release_s_into_burst": 2.4,
+    "release_s_into_burst": 2.77,
     "balls_after_release": 0,
     "fps_after_release": [],
     "nip_ms_after_release": [],
-    "resting_at_the_nip": 1,
-    "stray_fps": [
-     0.0
-    ]
+    "resting_at_the_nip": 0
+   },
+   {
+    "release_s_into_burst": 2.67,
+    "balls_after_release": 0,
+    "fps_after_release": [],
+    "nip_ms_after_release": [],
+    "resting_at_the_nip": 0
+   },
+   {
+    "release_s_into_burst": 1.95,
+    "balls_after_release": 0,
+    "fps_after_release": [],
+    "nip_ms_after_release": [],
+    "resting_at_the_nip": 0
+   },
+   {
+    "release_s_into_burst": 2.3,
+    "balls_after_release": 0,
+    "fps_after_release": [],
+    "nip_ms_after_release": [],
+    "resting_at_the_nip": 0
    }
   ],
-  "fastest_after_release_fps": 9.3,
-  "fastest_reaching_the_nip_15ms_after_release_fps": 9.3
+  "fastest_after_release_fps": 14.3,
+  "fastest_reaching_the_nip_15ms_after_release_fps": 14.3
  },
  "notes": [
   "A ball already at the nip, or reaching it within ~10 ms of the release, leaves fast whatever the brake does (the physics' own table: 36 fps at 0-10 ms). The firmware cuts the throttle on the PULSE_MON gap (4 ms) and AM32 brakes on stop before the rail drops at ~20 ms, which narrows that window but cannot close it."
  ],
  "sim": {
   "seed": 1067,
-  "simulated_s": 127.4,
-  "wall_s": 4.4,
+  "simulated_s": 121.5,
+  "wall_s": 4.5,
   "stand_ins": [],
   "shortened": {},
   "warning": "simulated turret (firmware/turret/sim_turret.py): not a bench reading"
@@ -192,9 +190,9 @@
   "motor": "SunnySky X2216 1400KV V3",
   "kv": 1400.0,
   "pole_pairs": 7,
-  "erpm_limit": 116550,
+  "erpm_limit": 114730,
   "tyre_mm": 38,
-  "set_rpm_95fps": 15269,
+  "set_rpm_95fps": 15286,
   "ramp_s": 0.8
  }
 }

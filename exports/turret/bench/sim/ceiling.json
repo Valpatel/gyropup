@@ -14,13 +14,13 @@
   },
   {
    "check": "every ball <= 105 fps on the barrel gates",
-   "value": 102.2,
+   "value": 101.0,
    "limit": "<= 105 fps",
    "pass": true
   },
   {
    "check": "every ball <= 105 fps on the reference",
-   "value": 102.03800134474206,
+   "value": 100.76540445323036,
    "limit": "<= 105 fps",
    "pass": true
   }
@@ -28,43 +28,43 @@
  "readings": {
   "gates_fps": {
    "n": 20,
-   "mean": 97.86,
-   "sd": 2.03,
-   "min": 93.8,
-   "max": 102.2
+   "mean": 96.66,
+   "sd": 2.0,
+   "min": 92.7,
+   "max": 101.0
   },
   "reference_fps": {
    "n": 20,
-   "mean": 97.51,
-   "sd": 1.94,
-   "min": 94.11,
-   "max": 102.04
+   "mean": 96.3,
+   "sd": 1.92,
+   "min": 92.94,
+   "max": 100.77
   },
   "gates_each": [
-   99.1,
-   102.2,
-   98.4,
-   99.7,
-   99.4,
-   98.7,
-   97.7,
-   98.0,
-   99.0,
-   96.5,
-   96.6,
-   96.5,
-   94.9,
-   93.8,
-   96.4,
-   96.4,
-   99.5,
+   97.9,
+   101.0,
+   97.2,
    98.5,
-   100.8,
-   95.2
+   98.1,
+   97.5,
+   96.6,
+   96.8,
+   97.8,
+   95.3,
+   95.4,
+   95.3,
+   93.7,
+   92.7,
+   95.2,
+   95.2,
+   98.2,
+   97.3,
+   99.5,
+   94.0
   ]
  },
  "notes": [
-  "D68: \u00d838 at 40 % crush is the only tyre. Hasbro rounds should read 95-100 fps here (the launch model: 98.4 fps); repeat with the lightest accepted off-brand rounds (1.6 g): every one at or under 105, or the trim comes down a step."
+  "D68: \u00d838 at 40 % crush is the only tyre. Hasbro rounds should read 95-100 fps here (the launch model: 97.1 fps); repeat with the lightest accepted off-brand rounds (1.6 g): every one at or under 105, or the trim comes down a step."
  ],
  "sim": {
   "seed": 1042,
@@ -80,9 +80,9 @@
   "motor": "SunnySky X2216 1400KV V3",
   "kv": 1400.0,
   "pole_pairs": 7,
-  "erpm_limit": 116550,
+  "erpm_limit": 114730,
   "tyre_mm": 38,
-  "set_rpm_95fps": 15269,
+  "set_rpm_95fps": 15286,
   "ramp_s": 0.8
  }
 }

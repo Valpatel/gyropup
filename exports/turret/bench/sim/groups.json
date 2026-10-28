@@ -20,7 +20,7 @@
   },
   {
    "check": "4m: 68 % radius",
-   "value": 3.17,
+   "value": 3.18,
    "limit": "<= 5.0 cm",
    "pass": true
   },
@@ -37,41 +37,41 @@
     "balls": 20,
     "r68_cm": 1.22,
     "centre_right_cm": 0.04,
-    "centre_drop_cm": 2.49,
+    "centre_drop_cm": 2.52,
     "fps": {
      "n": 20,
-     "mean": 94.28,
+     "mean": 93.67,
      "sd": 1.84,
-     "min": 90.9,
-     "max": 97.6
+     "min": 90.5,
+     "max": 97.0
     },
     "limit_cm": 1.5
    },
    "4m": {
     "balls": 20,
-    "r68_cm": 3.17,
+    "r68_cm": 3.18,
     "centre_right_cm": -0.2,
-    "centre_drop_cm": 11.6,
+    "centre_drop_cm": 11.74,
     "fps": {
      "n": 20,
-     "mean": 95.14,
+     "mean": 94.5,
      "sd": 1.55,
-     "min": 92.4,
-     "max": 97.7
+     "min": 91.8,
+     "max": 97.1
     },
     "limit_cm": 5.0
    }
   },
   "drop_table_cm": {
-   "2m": 2.49,
-   "4m": 11.6
+   "2m": 2.52,
+   "4m": 11.74
   }
  },
  "notes": [],
  "sim": {
   "seed": 1062,
   "simulated_s": 27.1,
-  "wall_s": 1.3,
+  "wall_s": 1.4,
   "stand_ins": [
    "2m_group",
    "4m_group"
@@ -85,9 +85,9 @@
   "motor": "SunnySky X2216 1400KV V3",
   "kv": 1400.0,
   "pole_pairs": 7,
-  "erpm_limit": 116550,
+  "erpm_limit": 114730,
   "tyre_mm": 38,
-  "set_rpm_95fps": 15269,
+  "set_rpm_95fps": 15286,
   "ramp_s": 0.8
  }
 }

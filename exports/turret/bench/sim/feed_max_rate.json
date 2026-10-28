@@ -28,12 +28,12 @@
    "ball_rate_per_s": 2.47,
    "fps": {
     "n": 100,
-    "mean": 94.86,
-    "sd": 2.1,
-    "min": 89.0,
-    "max": 100.2
+    "mean": 94.99,
+    "sd": 2.09,
+    "min": 89.2,
+    "max": 100.4
    },
-   "step_rate_per_s": 2.46,
+   "step_rate_per_s": 2.47,
    "empty_after_dither_pct": 0.0,
    "jams_per_100": 0.0
   }
@@ -43,7 +43,7 @@
  ],
  "sim": {
   "seed": 1052,
-  "simulated_s": 49.0,
+  "simulated_s": 48.9,
   "wall_s": 2.4,
   "stand_ins": [],
   "shortened": {},
@@ -55,9 +55,9 @@
   "motor": "SunnySky X2216 1400KV V3",
   "kv": 1400.0,
   "pole_pairs": 7,
-  "erpm_limit": 116550,
+  "erpm_limit": 114730,
   "tyre_mm": 38,
-  "set_rpm_95fps": 15269,
+  "set_rpm_95fps": 15286,
   "ramp_s": 0.8
  }
 }

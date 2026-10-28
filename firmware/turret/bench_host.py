@@ -866,7 +866,7 @@ def t_ceiling_noload(tt, b, r):
     r.check('the faster wheel at or under the trim (warm, after a 3 minute spin)', mx,
             mx is not None and mx <= C.NO_LOAD_RPM_MAX,
             f'<= {C.NO_LOAD_RPM_MAX:.0f} rpm (no_load_rpm_max): else change the trim resistor down a step, never fire')
-    r.check('the FLY rail under load', rail, 10.85 <= rail <= 12.1, '10.9-12.0 V (the trim for KV +-5 %)')
+    r.check('the FLY rail under load', rail, 10.7 <= rail <= 12.0, '10.8-11.9 V (the trim for KV +-5 %)')
 
 
 @test('4.2', 'Ceiling with balls: 20 balls at 100 % throttle, Ø38', 'ceiling', hopper=25)

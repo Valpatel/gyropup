@@ -83,14 +83,14 @@
    "file": "speed_map.json",
    "pass": true,
    "failed": [],
-   "simulated_s": 39.1
+   "simulated_s": 39.0
   },
   {
    "test": "4.4",
    "file": "set_speed.json",
    "pass": true,
    "failed": [],
-   "simulated_s": 26.3
+   "simulated_s": 26.5
   },
   {
    "test": "4.5",
@@ -146,21 +146,21 @@
    "file": "feed.json",
    "pass": true,
    "failed": [],
-   "simulated_s": 146.4
+   "simulated_s": 146.3
   },
   {
    "test": "5.2",
    "file": "feed_max_rate.json",
    "pass": true,
    "failed": [],
-   "simulated_s": 49.0
+   "simulated_s": 48.9
   },
   {
    "test": "5.3",
    "file": "feed_worn_damp.json",
    "pass": true,
    "failed": [],
-   "simulated_s": 54.8
+   "simulated_s": 55.2
   },
   {
    "test": "5.4",
@@ -202,7 +202,7 @@
    "file": "fire_while_panning.json",
    "pass": true,
    "failed": [],
-   "simulated_s": 16.0
+   "simulated_s": 16.1
   },
   {
    "test": "6.5",
@@ -223,7 +223,7 @@
    "file": "release_feeding.json",
    "pass": true,
    "failed": [],
-   "simulated_s": 127.4
+   "simulated_s": 121.5
   },
   {
    "test": "6.8",

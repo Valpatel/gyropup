@@ -6,9 +6,10 @@ throttle map (test 4.3) or the no-load model, plus a PI trim bounded to +-8 % so
 the loop: with the converter bypassed (the ESCs on the 20.5 V pack) the wheels run away, the trim saturates, and the
 eRPM passes the limit.
 
-The pre-feed check is the guard: every eRPM read of either wheel above NO_LOAD_RPM_105 x 7 pole pairs (116,760 eRPM,
-16,680 rpm for the X2216 1400 KV on Ø38: the no-load speed at which the worst accepted ball would leave at 105 fps; the
-trimmed rail gives 15,930, 16,540 with the magnets warm and the rail at its drift) counts, three in a row trip it, and
+The pre-feed check is the guard: every eRPM read of either wheel above ERPM_LIMIT (114,730 eRPM, 16,390 rpm for the
+X2216 1400 KV on Ø38: the no-load speed at which the densest accepted ball would reach ASTM's 2,500 J/m^2, just under
+the 16,496 at which the fastest would leave at 105 fps; the trimmed rail gives 15,722, 16,330 with the magnets warm and
+the rail at its drift) counts, three in a row trip it, and
 a tripped guard latches SAFE: zero throttle and no dial step until the host clears it with the safety line released. A
 dial step also needs both wheels' eRPM fresher than 20 ms, under the limit and READY.
 

@@ -94,10 +94,10 @@
     "ball_rate_per_s": 2.41,
     "fps": {
      "n": 100,
-     "mean": 94.83,
-     "sd": 2.3,
+     "mean": 94.96,
+     "sd": 2.31,
      "min": 89.6,
-     "max": 99.2
+     "max": 99.4
     },
     "step_rate_per_s": 2.41,
     "empty_after_dither_pct": 0.0,
@@ -116,10 +116,10 @@
     "ball_rate_per_s": 2.21,
     "fps": {
      "n": 100,
-     "mean": 94.79,
-     "sd": 2.02,
-     "min": 90.8,
-     "max": 99.6
+     "mean": 94.9,
+     "sd": 2.01,
+     "min": 91.0,
+     "max": 99.7
     },
     "step_rate_per_s": 2.21,
     "empty_after_dither_pct": 0.0,
@@ -138,10 +138,10 @@
     "ball_rate_per_s": 1.99,
     "fps": {
      "n": 100,
-     "mean": 95.2,
-     "sd": 2.03,
+     "mean": 95.28,
+     "sd": 2.02,
      "min": 90.5,
-     "max": 99.9
+     "max": 100.1
     },
     "step_rate_per_s": 2.02,
     "empty_after_dither_pct": 0.99,
@@ -154,8 +154,8 @@
  ],
  "sim": {
   "seed": 1051,
-  "simulated_s": 146.4,
-  "wall_s": 7.9,
+  "simulated_s": 146.3,
+  "wall_s": 7.7,
   "stand_ins": [],
   "shortened": {},
   "warning": "simulated turret (firmware/turret/sim_turret.py): not a bench reading"
@@ -166,9 +166,9 @@
   "motor": "SunnySky X2216 1400KV V3",
   "kv": 1400.0,
   "pole_pairs": 7,
-  "erpm_limit": 116550,
+  "erpm_limit": 114730,
   "tyre_mm": 38,
-  "set_rpm_95fps": 15269,
+  "set_rpm_95fps": 15286,
   "ramp_s": 0.8
  }
 }

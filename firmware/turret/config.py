@@ -88,28 +88,30 @@ RATE_DEFAULT, RATE_MAX = 3.0, 3.0   # balls per second: 3/s is the maximum (step
 MOTOR = 'SunnySky X2216 1400KV V3'
 MOTOR_KV = 1400.0              # rpm/V
 POLE_PAIRS = 7                 # 12N14P
-RAIL_V = 11.46                 # the flywheel rail for a nominal 1400 KV (TDK i6A4W, one fixed trim resistor per turret:
-#                                10.9-12.0 V for KV +-5 %): the physical ceiling. The firmware cannot change it
+RAIL_V = 11.31                 # the flywheel rail for a nominal 1400 KV (TDK i6A4W, one fixed trim resistor per turret:
+#                                10.8-11.9 V for KV +-5 %): the physical ceiling. The firmware cannot change it
 # D68 (exports/turret/launch/launch.json 'trim', launch3d.json 'ceiling'): the bench trims the rail so the faster motor,
-# warm, turns NO_LOAD_RPM_TRIM at 100 % throttle; the Hasbro ball then leaves at 98.4 fps flat out and the worst accepted
-# ball (1.6 g, stiff, grippy) at 104.3 with the magnets 15 C warmer and the rail 2 % high (16,540 rpm). At
-# NO_LOAD_RPM_105 that ball would reach 105 fps: the eRPM guard sits there
-NO_LOAD_RPM_TRIM = 15930.0     # 111,510 eRPM: the trim target, and test 4.1's limit (the faster motor, warm, at 100 %)
+# warm, turns NO_LOAD_RPM_TRIM at 100 % throttle; the Hasbro ball then leaves at 97.1 fps flat out, and with the magnets
+# 15 C warmer and the rail 2 % high (16,330 rpm) the fastest accepted ball at 103.9 and the densest (2.0 g on 22.2 mm)
+# at 2,480 J/m^2, under ASTM F963's 2,500 (that limit binds first). At NO_LOAD_RPM_ASTM the densest ball would reach
+# 2,500 J/m^2 and at NO_LOAD_RPM_105 the fastest 105 fps: the eRPM guard sits at the lower
+NO_LOAD_RPM_TRIM = 15722.0     # 110,054 eRPM: the trim target, and test 4.1's limit (the faster motor, warm, at 100 %)
 NO_LOAD_RPM_MAX = NO_LOAD_RPM_TRIM   # bench limit for test 4.1: above it the trim resistor is changed, never a ball fired
-NO_LOAD_RPM_105 = 16650.0      # n_105 (launch3d.json ceiling): the no-load speed at which the worst accepted ball leaves at 105
-ERPM_LIMIT = round(NO_LOAD_RPM_105 * POLE_PAIRS)   # 116,550 eRPM: above it, SAFE and no feed (a wrong rail or motor)
+NO_LOAD_RPM_105 = 16496.0      # n_105 (launch3d.json ceiling): the no-load speed at which the fastest accepted ball leaves at 105
+NO_LOAD_RPM_ASTM = 16390.0     # n_astm (launch3d.json ceiling): ... and the densest reaches 2,500 J/m^2
+ERPM_LIMIT = round(min(NO_LOAD_RPM_105, NO_LOAD_RPM_ASTM) * POLE_PAIRS)   # 114,730 eRPM: above it, SAFE and no feed
 ERPM_LIMIT_READS = 3           # consecutive telemetry reads over the limit (one corrupt frame is not a fault)
-# the design point (exports/turret/launch/launch.json 'design'): 95 fps for the Hasbro ball on Ø38 at 15,269 rpm
-# (106,883 eRPM), 96 % of the trimmed no-load speed
-SET_RPM_DESIGN, SET_FPS_DESIGN, TYRE_DESIGN_MM = 15269.0, 95.0, 38
-FULL_THROTTLE_FPS = 98.4       # the Hasbro ball at 100 % on the trimmed rail
-LAUNCH_RATIO = SET_FPS_DESIGN * 0.3048 / (SET_RPM_DESIGN * math.pi * TYRE_DESIGN_MM / 1000.0 / 60.0)   # 0.953:
+# the design point (exports/turret/launch/launch.json 'design'): 95 fps for the Hasbro ball on Ø38 at 15,286 rpm
+# (107,002 eRPM), 97 % of the trimmed no-load speed
+SET_RPM_DESIGN, SET_FPS_DESIGN, TYRE_DESIGN_MM = 15286.0, 95.0, 38
+FULL_THROTTLE_FPS = 97.1       # the Hasbro ball at 100 % on the trimmed rail
+LAUNCH_RATIO = SET_FPS_DESIGN * 0.3048 / (SET_RPM_DESIGN * math.pi * TYRE_DESIGN_MM / 1000.0 / 60.0)   # 0.952:
 #                                ball speed / tyre surface speed at the design point; CONFIG carries the bench's value
 #                                after test 4.4
 TYRES_MM = (38,)               # Ø38 only (D68: 40 % crush on this cage); others are refused (Ø40 crushes 49 % and
-#                                reaches 110 fps at the worst corner; Ø36 leaves a Hasbro ball at 82)
+#                                reaches 108.5 fps at the worst corner; Ø36 leaves a Hasbro ball at 82)
 SET_FPS_DEFAULT = {38: 95.0}
-SET_FPS_MIN, SET_FPS_MAX = 40.0, 100.0  # 100 fps asks for more than the rail gives a Hasbro ball (98.4): the wheels run
+SET_FPS_MIN, SET_FPS_MAX = 40.0, 100.0  # 100 fps asks for more than the rail gives a Hasbro ball (97.1): the wheels run
 #                                flat out on the rail, which is the ceiling, and READY holds (within 5 %)
 RAMP_S = 0.800                 # spin-up ramp, 0 to the set speed: the wheels hold 3.2 times the energy they did at 52 fps
 #                                (19.4 J for the pair at 95 fps); 0.8 s keeps the peak at ~98 W from the input (6.5 A from
@@ -132,7 +134,7 @@ BRAKE_DELAY_S = 0.008          # the phase-short closes ~8 ms after ARM falls (5
 BRAKE_TAU_S = 0.0233           # ... and the wheel decays with an effective tau of 23 ms: the 1400 KV's short through two FETs
                                # and the taps (tau 18 ms at low speed: the FETs' and taps' 56 mOhm are now half the loop)
                                # and its winding's inductance at speed (14 uH est): 5 % about 80 ms after ARM falls on the
-                               # short alone, from 15,269 rpm (docs/turret-physics.md section 5)
+                               # short alone, from 15,286 rpm (docs/turret-physics.md section 5)
 GATE_SPACING_M = 0.060
 TRIP_FPS = 105.0               # D68: the latch's 1.87 ms window over 60 mm; the firmware's own per-shot check uses it too
 CAP_FPS = 105.0                # D68: the ceiling, held by the trimmed rail (no accepted ball leaves faster)

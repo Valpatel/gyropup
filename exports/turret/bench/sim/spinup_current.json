@@ -8,7 +8,7 @@
  "checks": [
   {
    "check": "ring peak with the ramp",
-   "value": 3.05,
+   "value": 3.09,
    "limit": "<= 4 A at 24 V (D68: ~96 W at the input)",
    "pass": true
   },
@@ -38,8 +38,8 @@
   }
  ],
  "readings": {
-  "ring_peak_a": 3.05,
-  "burst_recovery_peak_a": 8.43,
+  "ring_peak_a": 3.09,
+  "burst_recovery_peak_a": 8.46,
   "bus_min_v": 23.49,
   "burst_fps": [
    92.6,
@@ -48,15 +48,15 @@
    96.7,
    93.3,
    94.5,
-   92.8,
-   97.3
+   92.9,
+   97.4
   ]
  },
  "notes": [],
  "sim": {
   "seed": 1045,
   "simulated_s": 10.1,
-  "wall_s": 0.4,
+  "wall_s": 0.3,
   "stand_ins": [],
   "shortened": {},
   "warning": "simulated turret (firmware/turret/sim_turret.py): not a bench reading"
@@ -67,9 +67,9 @@
   "motor": "SunnySky X2216 1400KV V3",
   "kv": 1400.0,
   "pole_pairs": 7,
-  "erpm_limit": 116550,
+  "erpm_limit": 114730,
   "tyre_mm": 38,
-  "set_rpm_95fps": 15269,
+  "set_rpm_95fps": 15286,
   "ramp_s": 0.8
  }
 }

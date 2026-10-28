@@ -31,15 +31,15 @@
     "empty_after_dither": 0,
     "lifts": 0,
     "bursts": 2,
-    "ball_rate_per_s": 2.27,
+    "ball_rate_per_s": 2.25,
     "fps": {
      "n": 50,
-     "mean": 94.61,
-     "sd": 1.93,
-     "min": 89.7,
-     "max": 98.3
+     "mean": 94.03,
+     "sd": 1.94,
+     "min": 89.1,
+     "max": 97.7
     },
-    "step_rate_per_s": 2.27,
+    "step_rate_per_s": 2.25,
     "empty_after_dither_pct": 0.0,
     "jams_per_100": 2.0
    },
@@ -53,15 +53,15 @@
     "empty_after_dither": 1,
     "lifts": 0,
     "bursts": 2,
-    "ball_rate_per_s": 2.08,
+    "ball_rate_per_s": 2.06,
     "fps": {
      "n": 50,
-     "mean": 94.5,
+     "mean": 93.87,
      "sd": 1.89,
-     "min": 90.5,
-     "max": 99.9
+     "min": 89.8,
+     "max": 99.3
     },
-    "step_rate_per_s": 2.09,
+    "step_rate_per_s": 2.07,
     "empty_after_dither_pct": 1.96,
     "jams_per_100": 2.0
    }
@@ -72,7 +72,7 @@
  ],
  "sim": {
   "seed": 1053,
-  "simulated_s": 54.8,
+  "simulated_s": 55.2,
   "wall_s": 2.9,
   "stand_ins": [],
   "shortened": {},
@@ -84,9 +84,9 @@
   "motor": "SunnySky X2216 1400KV V3",
   "kv": 1400.0,
   "pole_pairs": 7,
-  "erpm_limit": 116550,
+  "erpm_limit": 114730,
   "tyre_mm": 38,
-  "set_rpm_95fps": 15269,
+  "set_rpm_95fps": 15286,
   "ramp_s": 0.8
  }
 }
