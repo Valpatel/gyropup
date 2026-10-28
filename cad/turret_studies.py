@@ -357,9 +357,13 @@ def run(mesh, anim=True, only=None):
     Fc = m_cart * G0 * FALL_G
     arm_push = G.barrel_x1 - G.tilt_x
     d_front, d_rear = ct_d[1][0] - xt, xt - ct_d[0][0]
-    # the cartridge passes the push's moment to the cradle as a couple on its two dowels: up at the front, down at the rear
-    F_front = (PUSH_N * arm_push + PUSH_N * d_rear) / (d_front + d_rear)
-    F_rear = F_front - PUSH_N
+    # the cartridge passes the push to the cradle through what can carry it vertically: the dowels locate it in x-y only
+    # (a slip fit), so the nose-up moment is the CT thumbscrew pulling up on the frame at the latch and the cartridge's
+    # base bearing down on the rails' rear cross bar (2026-10-28: it was a vertical couple on the two dowels, which a
+    # slip-fit dowel cannot carry, and which read 1.36 once the front dowel moved to x 50, next to the tilt axis)
+    xr_c = -(G.housing_r + 2.0) + 4.0                       # the cross bar's middle (cradle(): xr0 .. xr0 + 8)
+    C_rear = PUSH_N * (G.barrel_x1 - ct_l[0]) / (ct_l[0] - xr_c)
+    T_latch = PUSH_N + C_rear
     # the rail frame (printed flat: its layers are x-y planes), held where the plates hold it, loaded through the CT
     # The frame is held by its eight M3 x 8: clamped under each screw (a Ø9 spot of the rebate's face round each insert,
     # imprinted as a 0.3 mm pad so it can be held) and at the insert; the rest of the rebate face is left free. Holding
@@ -385,11 +389,16 @@ def run(mesh, anim=True, only=None):
     study('cradle', 'R-fall-side', frame, 'pa6_cf_xy',
           lambda st: (st.fix(held), st.force(dowels, (0, -Fc, 0))),
           True, f'30 g sideways (-y): the cartridge\'s {Fc:.0f} N through the two CT dowels; the frame held by the plates')
-    study('cradle', 'E-push-up', frame, 'pa6_cf_xy',
-          lambda st: (st.fix(held), st.force(front_dowel, (0, 0, F_front)), st.force(rear_dowel, (0, 0, -F_rear), probe=False)),
+    xr0c = -(G.housing_r + 2.0)
+    # the cartridge bears on the cross bar's top: a 0.3 mm pad imprinted there so the load has a face of its own
+    r1c = G.rail_y[1]
+    frame_p = frame.union(tu.box(xr0c, xr0c + 8.0, -r1c, r1c, G.rail_z[1] - 0.01, G.rail_z[1] + 0.3))
+    cross_top = lambda f: f.kind == 'Plane' and near(f.bbox[2], G.rail_z[1] + 0.3, 0.05) and near(f.bbox[5], G.rail_z[1] + 0.3, 0.05)
+    study('cradle', 'E-push-up', frame_p, 'pa6_cf_xy',
+          lambda st: (st.fix(held), st.force(latch, (0, 0, T_latch)), st.force(cross_top, (0, 0, -C_rear), probe=False)),
           False, f'{PUSH_N:.0f} N up at the muzzle ({arm_push:.0f} mm from the tilt axis) reaches the frame through the cartridge as '
-                 f'{F_front:.0f} N up at the front CT dowel and {F_rear:.0f} N down at the rear one; the plates hold the frame (the lug '
-                 f'on the -y plate holds the 0 deg stop)')
+                 f'{T_latch:.0f} N up at the CT thumbscrew and {C_rear:.0f} N down on the rails\' rear cross bar (the dowels only '
+                 f'locate); the plates hold the frame (the lug on the -y plate holds the 0 deg stop)')
     # each cheek plate (SendCutSend 6061-T6, 0.125 in), held at its joint at the tilt axis and loaded at its foot's three
     # screws with the cartridge's whole 30 g load (the two plates share it: one carrying all of it is the bound). The joint
     # is what clamps the plate: on the +y plate the horn boss's Ø20 face and its 4 x M3 x 14; on the -y plate the pivot
