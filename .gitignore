@@ -4,6 +4,7 @@ __pycache__/
 node_modules/
 exports/*.log
 runs/
+!exports/rig/runs/
 site/
 preview/site-url.txt
 build/
@@ -32,3 +33,6 @@ exports/leg/springs/results*.json
 exports/body/body_stand.step
 exports/body/fea/*.json
 !exports/body/fea/summary.json
+
+# the whole rig as one STEP (5.8 MB): rebuilt by cad/build_rig.py
+exports/rig/rig_300.step

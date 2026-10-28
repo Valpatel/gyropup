@@ -1,0 +1,188 @@
+{
+ "meta": {
+  "backend": "sim",
+  "test": "jump",
+  "started": "2026-10-27T14:21:27",
+  "commit": "990e43d",
+  "half_mass_kg": 14.75,
+  "rate_hz": 500.0,
+  "latency_ticks": 1,
+  "pack": {
+   "v_oc": 50.8,
+   "r_int": 0.25
+  },
+  "rail_low_m": 0.14,
+  "ff_n": 123.44,
+  "limits": {
+   "vbus_max": 58.0,
+   "vbus_min": 46.0,
+   "vbus_floor": 36.0,
+   "vbus_tau": 1.0,
+   "temp_max": 80.0,
+   "L_min": 0.095,
+   "L_max": 0.395,
+   "cap": 60.0,
+   "rate": null,
+   "regen_w": null,
+   "miss_max": 3,
+   "sit_s": 0.3,
+   "sit_to": 0.15
+  },
+  "flight": {
+   "min_air": 0.12,
+   "dL": -0.6,
+   "dz": 0.0,
+   "t_off": 0.7000000000000001,
+   "t_land": 1.172
+  }
+ },
+ "phases": [
+  "",
+  "track",
+  "push",
+  "air",
+  "land",
+  "off",
+  "sitdown",
+  "limp",
+  "stopped"
+ ],
+ "measured": {
+  "peak_motor_nm": 60.0,
+  "peak_motor_speed_rad_s": 15.61,
+  "L_range_mm": [
+   155.1,
+   344.7
+  ],
+  "vbus_range_v": [
+   42.48,
+   56.88
+  ],
+  "temp_rise_c": 0.06,
+  "ticks": 1501,
+  "missed_ticks": 0,
+  "aborts": []
+ },
+ "summary": {
+  "sim": {
+   "scenario": "jump",
+   "title": "Crouch, push off at the 60 N m cap, tuck in the air, land",
+   "cap_nm": 60.0,
+   "peak_motor_nm": 60.0,
+   "peak_motor_speed_rad_s": 15.28,
+   "peak_wheel_force_n": 3458.6,
+   "pose_at_peak_wheel_force": {
+    "L_mm": 251.6,
+    "phi_deg": [
+     -38.1,
+     -141.8
+    ]
+   },
+   "peak_axle_force_n": 2351.8,
+   "axle_force_at_peak_n": [
+    -48.4,
+    2351.3
+   ],
+   "pose_at_peak_axle_force": {
+    "L_mm": 251.6,
+    "phi_deg": [
+     -38.1,
+     -141.8
+    ]
+   },
+   "peak_front_link_n": 1817.7,
+   "front_link_compression_n": 1817.7,
+   "front_link_tension_n": 116.5,
+   "peak_knee_pin_n": 1880.3,
+   "peak_stop_nm": 0.0,
+   "stop_hits": false,
+   "L_range_mm": [
+    155.1,
+    344.7
+   ],
+   "rig": {
+    "half_mass_kg": 14.75,
+    "dummy_kg": 5.964,
+    "moving_kg": 4.954,
+    "frame_kg": 3.832,
+    "carriage_kg": 9.796,
+    "armature": 0.0243,
+    "stop_k_nm_per_rad": 816,
+    "ref": {
+     "phi1": -0.88798,
+     "phi2": -2.25361,
+     "af": -2.31663,
+     "aw": -0.82496
+    }
+   },
+   "jump_height_mm": 245.3,
+   "peak_gearbox_nm": 80.2,
+   "gearbox_over_peak_ms": 0.0,
+   "peak_joint_force_n": {
+    "knee_f": 593.1,
+    "knee_r": 640.4,
+    "hip_f": 555.1,
+    "hip_r": 557.3,
+    "apex": 945.0
+   }
+  }
+ },
+ "verdict": [
+  {
+   "id": "S3",
+   "what": "the push and the flight follow the prediction within 20 mm (to the landing)",
+   "ok": true,
+   "value": 2.51,
+   "limit": 20.0
+  },
+  {
+   "id": "S3",
+   "what": "jump height 200-320 mm",
+   "ok": true,
+   "value": 245.3,
+   "limit": [
+    200.0,
+    320.0
+   ]
+  },
+  {
+   "id": "S3",
+   "what": "motor torque feedback <= 70 N m",
+   "ok": true,
+   "value": 60.0,
+   "limit": 70.0
+  },
+  {
+   "id": "S3",
+   "what": "settles to 250 +- 15 mm within 0.5 s of landing",
+   "ok": true,
+   "value": 0.198,
+   "limit": 0.5
+  },
+  {
+   "id": "S3",
+   "what": "VBUS inside 40-58 V (a push sags it, the tuck and landing lift it)",
+   "ok": true,
+   "value": [
+    42.48,
+    56.88
+   ],
+   "limit": [
+    40.0,
+    58.0
+   ]
+  }
+ ],
+ "metrics": {
+  "peak_motor_nm": 60.0,
+  "vbus_range_v": [
+   42.478694915771484,
+   56.87643051147461
+  ],
+  "jump_height_mm": 245.2938995361328,
+  "touchdown_s": 1.172,
+  "settle_s": 0.19800000000000018
+ },
+ "prediction_from": "exports/rig/predictions.json (14.75 kg, the rig's controller)",
+ "plot": "/home/scubasonar/Code/gyropup-legrig/exports/rig/runs/2026-10-27-142128-sim-jump-prediction.png"
+}

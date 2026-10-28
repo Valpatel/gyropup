@@ -1,0 +1,526 @@
+{
+ "bed_mm": [
+  256,
+  256,
+  256
+ ],
+ "parts": {
+  "dyno_lug_plate": {
+   "material": "petg",
+   "qty": 2,
+   "size_mm": [
+    150,
+    74,
+    156
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 211,
+   "grams": 422,
+   "hours": 16.9,
+   "cost_usd": 5.9,
+   "infill": "2 mm walls, 40 % gyroid",
+   "how": "PETG, 6 walls, 60 % gyroid; on a 19 mm plywood board, 4 x M6 through bolts each (B1, B2)"
+  },
+  "dyno_hub": {
+   "material": "petg",
+   "qty": 2,
+   "size_mm": [
+    90,
+    90,
+    44
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 146,
+   "grams": 292,
+   "hours": 11.7,
+   "cost_usd": 4.09,
+   "infill": "100 %",
+   "how": "PETG, 100 %; 9 x M5 x 25 into the output (the leg's D46 screw), 3 pin sockets"
+  },
+  "dyno_spider": {
+   "material": "tpu95",
+   "qty": 2,
+   "size_mm": [
+    87,
+    80,
+    20
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 34,
+   "grams": 68,
+   "hours": 7.0,
+   "cost_usd": 2.86,
+   "infill": "100 %",
+   "how": "TPU 95A, 100 %; one spare"
+  },
+  "press_cage": {
+   "material": "petg",
+   "qty": 1,
+   "size_mm": [
+    242,
+    94,
+    50
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 335,
+   "grams": 335,
+   "hours": 13.4,
+   "cost_usd": 4.69,
+   "infill": "2 mm walls, 40 % gyroid",
+   "how": "PETG, 6 walls, 40 % gyroid; flat (B3, B4)"
+  },
+  "press_base": {
+   "material": "petg",
+   "qty": 1,
+   "size_mm": [
+    73,
+    20,
+    50
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 48,
+   "grams": 48,
+   "hours": 1.9,
+   "cost_usd": 0.68,
+   "infill": "2 mm walls, 40 % gyroid",
+   "how": "PETG, 6 walls, 40 % gyroid (B3)"
+  },
+  "press_slider": {
+   "material": "petg",
+   "qty": 1,
+   "size_mm": [
+    73,
+    10,
+    70
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 29,
+   "grams": 29,
+   "hours": 1.1,
+   "cost_usd": 0.4,
+   "infill": "2 mm walls, 40 % gyroid",
+   "how": "PETG, 6 walls, 40 % gyroid (B3)"
+  },
+  "sleeve_block": {
+   "material": "pa6-cf",
+   "qty": 1,
+   "size_mm": [
+    62,
+    40,
+    40
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 60,
+   "grams": 60,
+   "hours": 3.9,
+   "cost_usd": 4.82,
+   "infill": "100 %",
+   "how": "PA6-CF, 100 %; an M8 insert, a real stop post and TPU sleeve (B3)"
+  },
+  "sleeve_anvil": {
+   "material": "pa6-cf",
+   "qty": 1,
+   "size_mm": [
+    30,
+    18,
+    30
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 13,
+   "grams": 13,
+   "hours": 0.9,
+   "cost_usd": 1.06,
+   "infill": "100 %",
+   "how": "PA6-CF, 100 %, face down (B3)"
+  },
+  "puller_m5": {
+   "material": "pa6-cf",
+   "qty": 3,
+   "size_mm": [
+    73,
+    30,
+    60
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 38,
+   "grams": 115,
+   "hours": 7.5,
+   "cost_usd": 9.17,
+   "infill": "2 mm walls, 40 % gyroid",
+   "how": "PA6-CF, 6 walls, 60 % gyroid, insert face up (B4: two to 3.5 kN, one for the head test)"
+  },
+  "puller_m8": {
+   "material": "pa6-cf",
+   "qty": 1,
+   "size_mm": [
+    73,
+    30,
+    60
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 38,
+   "grams": 38,
+   "hours": 2.5,
+   "cost_usd": 3.0,
+   "infill": "2 mm walls, 40 % gyroid",
+   "how": "PA6-CF, 6 walls, 60 % gyroid, insert face up (B4)"
+  },
+  "bearing_disc": {
+   "material": "pa6-cf",
+   "qty": 3,
+   "size_mm": [
+    20,
+    20,
+    6
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 2,
+   "grams": 6,
+   "hours": 0.4,
+   "cost_usd": 0.46,
+   "infill": "100 %",
+   "how": "PA6-CF, 100 %, flat (B4: the link under an M5 head)"
+  },
+  "coupon_frame_ring_m01": {
+   "material": "pa6-cf",
+   "qty": 1,
+   "size_mm": [
+    90,
+    90,
+    14
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 25,
+   "grams": 25,
+   "hours": 1.7,
+   "cost_usd": 2.03,
+   "infill": "100 %",
+   "how": "PA6-CF, 100 %, dried; the seat at -0.1 mm on the leg's"
+  },
+  "coupon_frame_ring_nom": {
+   "material": "pa6-cf",
+   "qty": 1,
+   "size_mm": [
+    124,
+    124,
+    14
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 109,
+   "grams": 109,
+   "hours": 7.2,
+   "cost_usd": 8.76,
+   "infill": "100 %",
+   "how": "PA6-CF, 100 %, dried; the seat at 0 mm on the leg's"
+  },
+  "coupon_frame_ring_p01": {
+   "material": "pa6-cf",
+   "qty": 1,
+   "size_mm": [
+    90,
+    90,
+    14
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 25,
+   "grams": 25,
+   "hours": 1.6,
+   "cost_usd": 2.01,
+   "infill": "100 %",
+   "how": "PA6-CF, 100 %, dried; the seat at +0.1 mm on the leg's"
+  },
+  "coupon_hub_face_m01": {
+   "material": "pa6-cf",
+   "qty": 1,
+   "size_mm": [
+    72,
+    72,
+    6
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 21,
+   "grams": 21,
+   "hours": 1.4,
+   "cost_usd": 1.65,
+   "infill": "100 %",
+   "how": "PA6-CF, 100 %, dried; the seat at -0.1 mm on the leg's"
+  },
+  "coupon_hub_face_nom": {
+   "material": "pa6-cf",
+   "qty": 1,
+   "size_mm": [
+    72,
+    72,
+    6
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 21,
+   "grams": 21,
+   "hours": 1.3,
+   "cost_usd": 1.65,
+   "infill": "100 %",
+   "how": "PA6-CF, 100 %, dried; the seat at 0 mm on the leg's"
+  },
+  "coupon_hub_face_p01": {
+   "material": "pa6-cf",
+   "qty": 1,
+   "size_mm": [
+    72,
+    72,
+    6
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 21,
+   "grams": 21,
+   "hours": 1.3,
+   "cost_usd": 1.64,
+   "infill": "100 %",
+   "how": "PA6-CF, 100 %, dried; the seat at +0.1 mm on the leg's"
+  },
+  "coupon_knee_eye_m01": {
+   "material": "pa6-cf",
+   "qty": 1,
+   "size_mm": [
+    40,
+    40,
+    22
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 25,
+   "grams": 25,
+   "hours": 1.7,
+   "cost_usd": 2.03,
+   "infill": "100 %",
+   "how": "PA6-CF, 100 %, dried; the seat at -0.1 mm on the leg's"
+  },
+  "coupon_knee_eye_nom": {
+   "material": "pa6-cf",
+   "qty": 1,
+   "size_mm": [
+    40,
+    40,
+    22
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 25,
+   "grams": 25,
+   "hours": 1.7,
+   "cost_usd": 2.02,
+   "infill": "100 %",
+   "how": "PA6-CF, 100 %, dried; the seat at 0 mm on the leg's"
+  },
+  "coupon_knee_eye_p01": {
+   "material": "pa6-cf",
+   "qty": 1,
+   "size_mm": [
+    40,
+    40,
+    22
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 25,
+   "grams": 25,
+   "hours": 1.7,
+   "cost_usd": 2.01,
+   "infill": "100 %",
+   "how": "PA6-CF, 100 %, dried; the seat at +0.1 mm on the leg's"
+  },
+  "coupon_knee_boss_m01": {
+   "material": "pa6-cf",
+   "qty": 1,
+   "size_mm": [
+    58,
+    46,
+    12
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 13,
+   "grams": 13,
+   "hours": 0.8,
+   "cost_usd": 1.03,
+   "infill": "100 %",
+   "how": "PA6-CF, 100 %, dried; the seat at -0.1 mm on the leg's"
+  },
+  "coupon_knee_boss_nom": {
+   "material": "pa6-cf",
+   "qty": 1,
+   "size_mm": [
+    58,
+    46,
+    12
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 13,
+   "grams": 13,
+   "hours": 0.8,
+   "cost_usd": 1.03,
+   "infill": "100 %",
+   "how": "PA6-CF, 100 %, dried; the seat at 0 mm on the leg's"
+  },
+  "coupon_knee_boss_p01": {
+   "material": "pa6-cf",
+   "qty": 1,
+   "size_mm": [
+    58,
+    46,
+    12
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 13,
+   "grams": 13,
+   "hours": 0.8,
+   "cost_usd": 1.02,
+   "infill": "100 %",
+   "how": "PA6-CF, 100 %, dried; the seat at +0.1 mm on the leg's"
+  },
+  "coupon_apex_eye_m01": {
+   "material": "pa6-cf",
+   "qty": 1,
+   "size_mm": [
+    90,
+    90,
+    13
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 25,
+   "grams": 25,
+   "hours": 1.6,
+   "cost_usd": 1.99,
+   "infill": "100 %",
+   "how": "PA6-CF, 100 %, dried; the seat at -0.1 mm on the leg's"
+  },
+  "coupon_apex_eye_nom": {
+   "material": "pa6-cf",
+   "qty": 1,
+   "size_mm": [
+    90,
+    90,
+    13
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 25,
+   "grams": 25,
+   "hours": 1.6,
+   "cost_usd": 1.98,
+   "infill": "100 %",
+   "how": "PA6-CF, 100 %, dried; the seat at 0 mm on the leg's"
+  },
+  "coupon_apex_eye_p01": {
+   "material": "pa6-cf",
+   "qty": 1,
+   "size_mm": [
+    90,
+    90,
+    13
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 25,
+   "grams": 25,
+   "hours": 1.6,
+   "cost_usd": 1.96,
+   "infill": "100 %",
+   "how": "PA6-CF, 100 %, dried; the seat at +0.1 mm on the leg's"
+  },
+  "coupon_hub_stub_m01": {
+   "material": "pa6-cf",
+   "qty": 1,
+   "size_mm": [
+    64,
+    64,
+    23
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 26,
+   "grams": 26,
+   "hours": 1.7,
+   "cost_usd": 2.11,
+   "infill": "100 %",
+   "how": "PA6-CF, 100 %, dried; the seat at -0.1 mm on the leg's"
+  },
+  "coupon_hub_stub_nom": {
+   "material": "pa6-cf",
+   "qty": 1,
+   "size_mm": [
+    64,
+    64,
+    23
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 27,
+   "grams": 27,
+   "hours": 1.7,
+   "cost_usd": 2.13,
+   "infill": "100 %",
+   "how": "PA6-CF, 100 %, dried; the seat at 0 mm on the leg's"
+  },
+  "coupon_hub_stub_p01": {
+   "material": "pa6-cf",
+   "qty": 1,
+   "size_mm": [
+    64,
+    64,
+    23
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 27,
+   "grams": 27,
+   "hours": 1.8,
+   "cost_usd": 2.14,
+   "infill": "100 %",
+   "how": "PA6-CF, 100 %, dried; the seat at +0.1 mm on the leg's"
+  }
+ },
+ "by_material": {
+  "petg": {
+   "grams": 1126,
+   "hours": 45.0,
+   "cost_usd": 15.76,
+   "parts": 7
+  },
+  "tpu95": {
+   "grams": 68,
+   "hours": 7.0,
+   "cost_usd": 2.86,
+   "parts": 2
+  },
+  "pa6-cf": {
+   "grams": 723,
+   "hours": 47.2,
+   "cost_usd": 57.7,
+   "parts": 27
+  }
+ },
+ "too_big": [],
+ "total_hours": 99.2,
+ "total_grams": 1917,
+ "note": "bench fixtures and fit coupons (task T4)"
+}

@@ -1,0 +1,237 @@
+{
+ "blocks": {
+  "pack": {
+   "title": "FLEXVOLT DCB609 (60 V mode)",
+   "notes": [
+    "15S, 54 V nom, 60 V full",
+    "dock adapter, 12 AWG leads",
+    "XT60H female on its lead"
+   ]
+  },
+  "fuse": {
+   "title": "Class CC fuse 30 A",
+   "notes": [
+    "Littelfuse KLDR030",
+    "in LPSC0001Z (DIN)",
+    "300 VDC"
+   ]
+  },
+  "cont": {
+   "title": "Contactor (hold-to-run)",
+   "notes": [
+    "TE LEV100A4ANG",
+    "+ terminal to the fuse",
+    "12 V coil, 0.36 A"
+   ]
+  },
+  "motors": {
+   "title": "RS-04 x 2 (ids 1, 2)",
+   "notes": [
+    "XT30 Y-splice on the carriage",
+    "XT30UW-F leads, 310 mm",
+    "CAN on GH1.25-2P plugs"
+   ]
+  },
+  "dcdc": {
+   "title": "12 V rail",
+   "notes": [
+    "Mean Well DDR-30L-12",
+    "18-75 V in, 12 V 2.5 A",
+    "input fuse 5 A (5x20, DC)"
+   ]
+  },
+  "timer": {
+   "title": "Off-delay relay",
+   "notes": [
+    "ProSense T2R-M1-ADJ-240U",
+    "OFF DELAY, 1.0 s (DIP A off, B on;",
+    "C, D on: 0.1-10 s; E, F on: knob)"
+   ]
+  },
+  "pendant": {
+   "title": "Pendant (hold to run)",
+   "notes": [
+    "AbleNet Specs IC, N.O.",
+    "3.5 mm jack on the pod"
+   ]
+  },
+  "node": {
+   "title": "Rig node: Feather M4 CAN",
+   "notes": [
+    "D5: pendant (10k / 2.2k divider)",
+    "A2: VBUS (100k / 4.7k)",
+    "I2C: VL53L1X (STEMMA QT)",
+    "D6, D9: HX711 (load plate)",
+    "USB-C: laptop (power, log)"
+   ]
+  },
+  "u2c": {
+   "title": "USB-CAN: BTT U2C V2.1",
+   "notes": [
+    "candleLight -> SocketCAN",
+    "120 ohm jumper ON (bus end)"
+   ]
+  },
+  "laptop": {
+   "title": "Laptop",
+   "notes": [
+    "python -m rig.run",
+    "can0 at 1 Mbit/s"
+   ]
+  },
+  "junction": {
+   "title": "CAN junction (carriage)",
+   "notes": [
+    "FeatherWing Proto",
+    "2 x JST GH 2-pin headers",
+    "120 ohm H-L (bus end)"
+   ]
+  }
+ },
+ "wires": [
+  {
+   "from": "pack",
+   "to": "fuse",
+   "what": "pack +",
+   "gauge": "12 AWG",
+   "colour": "#d33",
+   "length_m": 0.6,
+   "ends": "adapter + -> XT60H (F) -> pod inlet XT60E-M + -> fuse holder line"
+  },
+  {
+   "from": "fuse",
+   "to": "cont",
+   "what": "fused +",
+   "gauge": "12 AWG",
+   "colour": "#d33",
+   "length_m": 0.15,
+   "ends": "fuse holder load -> contactor + terminal (M5, 4 N m)"
+  },
+  {
+   "from": "cont",
+   "to": "motors",
+   "what": "switched +",
+   "gauge": "12 AWG",
+   "colour": "#d33",
+   "length_m": 1.6,
+   "ends": "contactor - terminal -> pod outlet XT60E-F + -> service loop -> Y-splice + -> 2 x XT30 (M) +"
+  },
+  {
+   "from": "pack",
+   "to": "motors",
+   "what": "pack -",
+   "gauge": "12 AWG",
+   "colour": "#222",
+   "length_m": 1.9,
+   "ends": "adapter - -> XT60 - -> pod outlet - -> service loop -> Y-splice - -> 2 x XT30 (M) -"
+  },
+  {
+   "from": "fuse",
+   "to": "dcdc",
+   "what": "fused + to the 12 V rail",
+   "gauge": "18 AWG",
+   "colour": "#d33",
+   "length_m": 0.2,
+   "ends": "fuse holder load -> panel 5x20 holder -> DDR-30L-12 +Vin; -Vin to pack -"
+  },
+  {
+   "from": "dcdc",
+   "to": "timer",
+   "what": "+12 V supply",
+   "gauge": "22 AWG",
+   "colour": "#e80",
+   "length_m": 0.2,
+   "ends": "DDR +Vo -> T2R supply + (and its relay common, a jumper); -Vo -> T2R supply -"
+  },
+  {
+   "from": "timer",
+   "to": "cont",
+   "what": "coil",
+   "gauge": "22 AWG",
+   "colour": "#e80",
+   "length_m": 0.15,
+   "ends": "T2R N.O. contact -> contactor coil + (flying lead); coil - -> 0 V; 1N4001 across the coil, cathode to +"
+  },
+  {
+   "from": "dcdc",
+   "to": "pendant",
+   "what": "+12 V to the pendant",
+   "gauge": "22 AWG",
+   "colour": "#e80",
+   "length_m": 0.2,
+   "ends": "DDR +Vo -> 3.5 mm jack tip"
+  },
+  {
+   "from": "pendant",
+   "to": "timer",
+   "what": "trigger",
+   "gauge": "22 AWG",
+   "colour": "#e80",
+   "length_m": 0.2,
+   "ends": "jack sleeve -> T2R pin 5 (trigger: the switch between pin 5 and input +, the insert's Fig. D)"
+  },
+  {
+   "from": "pendant",
+   "to": "node",
+   "what": "pendant sense",
+   "gauge": "22 AWG",
+   "colour": "#e80",
+   "length_m": 0.2,
+   "ends": "jack sleeve -> 10k -> Feather D5 -> 2.2k -> GND (12 V reads 2.2 V)"
+  },
+  {
+   "from": "cont",
+   "to": "node",
+   "what": "VBUS sense",
+   "gauge": "22 AWG",
+   "colour": "#d33",
+   "length_m": 0.2,
+   "ends": "contactor - terminal -> 100k -> Feather A2 -> 4.7k -> GND (60 V reads 2.7 V)"
+  },
+  {
+   "from": "u2c",
+   "to": "node",
+   "what": "CAN (pod)",
+   "gauge": "twisted pair + GND",
+   "colour": "#36c",
+   "length_m": 0.3,
+   "ends": "U2C H, L, GND -> Feather CAN terminal H, L, G"
+  },
+  {
+   "from": "node",
+   "to": "junction",
+   "what": "CAN trunk",
+   "gauge": "Quabbin Q0357-1, shield at the pod end",
+   "colour": "#36c",
+   "length_m": 1.6,
+   "ends": "Feather H, L, G -> service loop -> junction H, L, GND"
+  },
+  {
+   "from": "junction",
+   "to": "motors",
+   "what": "CAN stubs",
+   "gauge": "motor leads (GH1.25)",
+   "colour": "#36c",
+   "length_m": 0.35,
+   "ends": "junction GH headers -> each motor's GH plug (blue CAN_H, brown CAN_L)"
+  },
+  {
+   "from": "laptop",
+   "to": "u2c",
+   "what": "USB",
+   "gauge": "USB-C",
+   "colour": "#888",
+   "length_m": 1.0,
+   "ends": "laptop -> U2C"
+  },
+  {
+   "from": "laptop",
+   "to": "node",
+   "what": "USB",
+   "gauge": "USB-C",
+   "colour": "#888",
+   "length_m": 1.0,
+   "ends": "laptop -> Feather (power and its log)"
+  }
+ ]
+}

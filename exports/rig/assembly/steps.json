@@ -1,0 +1,202 @@
+[
+ {
+  "step": 1,
+  "title": "The base frame",
+  "adds": [
+   "side_left",
+   "side_right",
+   "front_member",
+   "wheel_member",
+   "bumper_member",
+   "post_member",
+   "rear_member"
+  ],
+  "how": "On the rubber mat: the two 900 mm sides, the four 620 mm cross members (front; the wheel member at y +104.6, under where the tyre lands; the bumper member against the post member; the rear) and the 4080 lying flat as the post's member. Two corner brackets per joint on the vertical faces (MISUMI HBLTS8, their own screws and drop-in nuts), square by the diagonals (equal to 1 mm), every screw 20 N m.",
+  "picture": "exports/rig/assembly/step-01.png"
+ },
+ {
+  "step": 2,
+  "title": "The post and the brace",
+  "adds": [
+   "post",
+   "brace",
+   "brace_hinges"
+  ],
+  "how": "The 8080 on its member, square to it (a machinist's square both ways), four corner brackets at its foot, two on each side face. The 720 mm brace from the post's back face 668 mm above the deck's top (686 above the frame) to the rear member's top, a free-angle bracket at each end on both side faces (four in all). Tighten the brace last, with the post plumb.",
+  "picture": "exports/rig/assembly/step-02.png"
+ },
+ {
+  "step": 3,
+  "title": "The rails",
+  "adds": [
+   "rails"
+  ],
+  "how": "Both HGR15 rails on the post's front slots (x = +-20), M4 x 16 into drop-in nuts at every hole, their bottom ends 1 mm above where the deck's top will be (a 19 mm block on the frame while tightening). Snug them, run a block along both by hand, then tighten from the middle outwards (4 N m) while a second block rides the other rail: the carriage must slide its whole travel with no tight spot.",
+  "picture": "exports/rig/assembly/step-03.png"
+ },
+ {
+  "step": 4,
+  "title": "The deck and the ToF sensor",
+  "adds": [
+   "deck",
+   "tof_mount"
+  ],
+  "how": "The 600 x 400 plywood from the post's front face forwards on the bumper, wheel and front members: 8 x M6 x 30 with oversized washers into drop-in nuts, none under the tyre's landing (x within +-130 at y 60-150). The VL53L1X in its mount, facing up, at x -212 under the carriage's target: two wood screws; its STEMMA QT lead to the pod.",
+  "picture": "exports/rig/assembly/step-04.png"
+ },
+ {
+  "step": 5,
+  "title": "The carriage",
+  "adds": [
+   "carriage_plate",
+   "blocks",
+   "ballast_posts",
+   "tof_arm"
+  ],
+  "how": "Off the rig: the four HGH15CA blocks onto the plate's back (16 x M4 x 10, no washers: 3.65 mm into their 5 mm threads; 3 N m); the two ballast posts (3/8-16 x 1 in and a washer from the front, 25 N m); the ToF target arm (2 x M4 x 10). Then slide the blocks onto the rails from the top (their plastic retainers stay in until the block meets the rail) and fit the rails' end caps.",
+  "picture": "exports/rig/assembly/step-05.png"
+ },
+ {
+  "step": 6,
+  "title": "The bumpers and the top stop",
+  "adds": [
+   "bumper_base_left",
+   "bumper_base_right",
+   "bumper_tpu_left",
+   "bumper_tpu_right",
+   "bumper_cap_left",
+   "bumper_cap_right",
+   "top_stop_bracket",
+   "top_tpu_left",
+   "top_tpu_right"
+  ],
+  "how": "The bases on the deck at x = +-75 under the plate's bottom edge: 2 x M6 x 35 each through the deck into drop-in nuts in the bumper member; a TPU block in each pocket, a cap on each (R0 in docs/leg-bench-tests.md picks the infill first). The top stop on the post's front above the rails' ends: 4 x M8 x 16 into drop-in nuts, its two TPU blocks in its cups. Lower the carriage onto the bumpers: the plate's edge lands on both caps at once (shim a base if not).",
+  "picture": "exports/rig/assembly/step-06.png"
+ },
+ {
+  "step": 7,
+  "title": "The pod",
+  "adds": [
+   "pod",
+   "pod_lid",
+   "pendant_clip"
+  ],
+  "how": "Wired on the bench first (docs/leg-rig-wiring.md): the contactor on its two M4 inserts (2.3 N m), the relay on its one, the Class CC fuse holder and the 12 V converter on the printed rail, the U2C in its pocket, the Feather on its FeatherWing on the -y wall; the panel's XT60s, jack and fuse holder. Then on the post's back face: 4 x M8 x 16 into drop-in nuts. The pendant's clip on its side.",
+  "picture": "exports/rig/assembly/step-07.png"
+ },
+ {
+  "step": 8,
+  "title": "The hip frame and the motors (bench)",
+  "adds": [
+   "leg_hip_frame",
+   "leg_bearing_61812_front",
+   "leg_bearing_61812_rear",
+   "leg_motor_front",
+   "leg_motor_rear",
+   "leg_screws_lugs",
+   "leg_stop_posts"
+  ],
+  "how": "The frame's inserts at the coupon-proven temperature: 6 x M5 in the flange ends, 4 x M8 for the stop posts. The two 61812s pressed in from the motor side onto the lip (the fit the frame coupon proved; Loctite 641 if it was a slip fit). The motors (each with its machined adapter already on, D46: 9 x M5 x 25, no washers, threadlocker, the adapter's journal into the 61812 with Loctite 641) onto their two \u00d85 dowels, 10 x M4 x 20 each (heads 10 mm down in the counterbores; 2.5 N m). The four stop posts BARE (no TPU sleeves yet): the zero is set against the steel.",
+  "picture": "exports/rig/assembly/step-08.png"
+ },
+ {
+  "step": 9,
+  "title": "The upper links (bench)",
+  "adds": [
+   "leg_eye_sleeve_front",
+   "leg_eye_sleeve_rear",
+   "leg_upper_link_front",
+   "leg_upper_link_rear",
+   "leg_screws_links"
+  ],
+  "how": "Two DIN 179 sleeves pressed end to end into each link's knee eye from the outer face (the eye coupon's fit). Each link onto its adapter's face: the two \u00d85 dowels, 8 x M5 x 40 into the adapter's threads (D46: tapped aluminium), at the B4 torque (1.5 N m until B4 has run: the printed link under the heads sets it, for the 1,200 N per screw cad/leg_studies.py assumes). Both links swing freely to their bare posts.",
+  "picture": "exports/rig/assembly/step-09.png"
+ },
+ {
+  "step": 10,
+  "title": "The leg's upper half onto the carriage",
+  "adds": [
+   "leg_hip_frame",
+   "leg_motor_front",
+   "leg_motor_rear",
+   "leg_upper_link_front",
+   "leg_upper_link_rear",
+   "leg_output_adapter_front",
+   "leg_output_adapter_rear"
+  ],
+  "how": "The carriage resting on its bumpers. Each motor's lead through its slot in the plate first (XT30 and GH plug together), then the frame's flange ends onto the plate's front: 6 x M5 x 16 with washers into the inserts (the B4 torque). On the plate's back: the two XT30s into the Y-splice, the two GH plugs into the CAN junction, the service loop up to the post's top (cable-tied to the plate's top edge).",
+  "picture": "exports/rig/assembly/step-10.png"
+ },
+ {
+  "step": 11,
+  "title": "Zero the motors",
+  "adds": [],
+  "how": "The bench supply (48 V; docs/leg-bench-tests.md, commissioning C1-C5): set each motor's id (127 -> 1 front, 2 rear), `python -m rig.rs04 --id N setup`, save. Then python -m rig.calibrate: hold each upper link on its bare knee-out post, it zeroes the motor there, you swing the link to the knee-in post, it checks the 125 deg between the bare posts and the direction and writes rig/calibration.json. Power off.",
+  "picture": "exports/rig/assembly/step-11.png"
+ },
+ {
+  "step": 12,
+  "title": "The knees",
+  "adds": [
+   "leg_front_link",
+   "leg_wheel_link",
+   "leg_knee_6201_front_in",
+   "leg_knee_6201_front_out",
+   "leg_knee_6201_rear_in",
+   "leg_knee_6201_rear_out",
+   "leg_knee_spacer_front",
+   "leg_knee_spacer_rear",
+   "leg_knee_washer_front",
+   "leg_knee_washer_rear",
+   "leg_knee_pin_front",
+   "leg_knee_pin_rear",
+   "leg_knee_nut_upper_front",
+   "leg_knee_nut_upper_rear"
+  ],
+  "how": "Two 6201s and the 28 mm spacer tube into each lower link's knee boss (the boss coupon's fit), a DIN 433 washer each side; the 12 x 90 shoulder screw from the outer side through the lower link, the washers and the eye sleeves; the M10 nyloc in the upper link's pocket onto the sleeves (20 N m: steel on steel). The knees turn freely.",
+  "picture": "exports/rig/assembly/step-12.png"
+ },
+ {
+  "step": 13,
+  "title": "The apex",
+  "adds": [
+   "leg_apex_61812",
+   "leg_apex_spacer",
+   "leg_apex_circlip"
+  ],
+  "how": "The inner 61812 into the front link's apex eye from the inside, the outer from the outside (the apex coupon's fit); the wheel link's hub through both from the outside with the printed spacer between the inner races; the DIN 471-60 circlip in its groove (circlip pliers). The loop now closes: the leg folds and stretches by hand from stop to stop.",
+  "picture": "exports/rig/assembly/step-13.png"
+ },
+ {
+  "step": 14,
+  "title": "The wheel",
+  "adds": [
+   "leg_wheel_tyre",
+   "leg_wheel_hub",
+   "leg_screws_wheel"
+  ],
+  "how": "Measure the BotWheel's flange threads first (bom.json's note: M6 x 30 for a 15 mm thread). Its boss into the wheel link's recess, 4 x M6 x 30 from inside the hub (8 N m, threadlocker). Its phase and hall leads taped along the wheel link and the rear upper link (not driven on the rig: plan section 1.3).",
+  "picture": "exports/rig/assembly/step-14.png"
+ },
+ {
+  "step": 15,
+  "title": "The stop sleeves",
+  "adds": [
+   "leg_stop_sleeve_1",
+   "leg_stop_sleeve_2",
+   "leg_stop_sleeve_3",
+   "leg_stop_sleeve_4"
+  ],
+  "how": "One post at a time: out, its TPU sleeve on, back in (the B4 torque into the M8 insert, 5 N m until B4). Swing the leg by hand to both stops: no part touches another; the knees stay free.",
+  "picture": "exports/rig/assembly/step-15.png"
+ },
+ {
+  "step": 16,
+  "title": "Ballast and tethers",
+  "adds": [
+   "ballast_plates"
+  ],
+  "how": "Weigh the plates. For 14.75 kg: one 2.5 lb plate per post and the trim washers exports/rig/rig.json lists, retained by the 2 in washer and a 3/8-16 x 3/4 in screw (25 N m). The carriage tether: the endless sling girth-hitched round the post under the top stop, a screwgate through the plate's tether hole, 150 mm slack above the highest jump. The link tether: a sling round the wheel link next to its knee boss to the same hole, slack over the whole range (sweep by hand).",
+  "picture": "exports/rig/assembly/step-16.png"
+ }
+]
