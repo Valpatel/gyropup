@@ -509,11 +509,24 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
     S.flapT = 1.2;
     sfx.reload();
   }
+  let targetReset = null;
   function resetTargets() {
-    for (const p of plates) { p.th = -4 * D2R; p.w = 0; p.down = false; p.hinge.rotation.x = -p.th; }
-    for (const c of cans) { c.dyn = false; c.rest = false; c.m.position.copy(c.home); c.m.rotation.set(0, 0, 0); c.v.set(0, 0, 0); c.w.set(0, 0, 0); }
+    // Re-rack the existing range. Keep the scene, flying balls and conversation alive.
+    targetReset = { elapsed: 0, duration: matchMedia('(prefers-reduced-motion: reduce)').matches ? .18 : .85,
+      plates: plates.map(p => p.th), cans: cans.map(c => ({ position: c.m.position.clone(), quaternion: c.m.quaternion.clone() })) };
+    for (const p of plates) { p.w = 0; p.down = false; }
+    for (const c of cans) { c.dyn = false; c.rest = false; c.v.set(0, 0, 0); c.w.set(0, 0, 0); }
     paper.clear();
     S.hits = 0;
+  }
+  function stepTargetReset(dt) {
+    const reset = targetReset;
+    if (!reset) return;
+    reset.elapsed += dt;
+    const x = Math.min(1, reset.elapsed / reset.duration), a = x * x * (3 - 2 * x);
+    plates.forEach((p, i) => { p.th = THREE.MathUtils.lerp(reset.plates[i], -4 * D2R, a); p.hinge.rotation.x = -p.th; });
+    cans.forEach((c, i) => { c.m.position.lerpVectors(reset.cans[i].position, c.home, a); c.m.quaternion.copy(reset.cans[i].quaternion).slerp(new THREE.Quaternion(), a); });
+    if (x === 1) targetReset = null;
   }
   function clearBalls() { for (const b of S.flying) scene.remove(b.g, b.streak); S.flying = []; }
 
@@ -948,6 +961,7 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
     p.w += (J * lever) / p.I;
   }
   function stepPlates(dt) {
+    if (targetReset) return;
     for (const p of plates) {
       if (p.down) continue;
       const beta = Math.atan2(0.004, 0.12), L = Math.hypot(0.004, 0.12);
@@ -972,6 +986,7 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
     if (!b.hitOnce) { b.hitOnce = true; S.hits += 1; sfx.turret.hit('can', vn / 15); }
   }
   function wake(c, v) {
+    if (targetReset) return;
     if (c.dyn) { c.v.add(v); return; }
     c.dyn = true;
     c.v.copy(v);
@@ -979,6 +994,7 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
     for (const o of cans) if (o.on.includes(c)) setTimeout(() => wake(o, new THREE.Vector3((Math.random() - 0.5) * 0.4, 0.1, (Math.random() - 0.5) * 0.4)), 40);
   }
   function stepCans(dt) {
+    if (targetReset) return;
     for (const c of cans) {
       if (!c.dyn || c.rest) continue;
       c.v.y -= 9.81 * dt;
@@ -1265,6 +1281,7 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
     flapPivot.rotation.x = -Math.min(1, S.flapT * 2) * 1.1;
     stepTransit(dt);
     stepBalls(dt);
+    stepTargetReset(dtReal);
     stepPlates(dt);
     stepCans(dt);
     stepFx(dtReal);
@@ -1387,7 +1404,7 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
     get active() { return S.active; },
     // for tests and screenshots
     api: {
-      state: S, arm(on) { if (on) S.arm.add('api'); else S.arm.delete('api'); }, fire(n = 1) { S.queue += n; },
+      state: S, get targets() { return { plates, cans, resetting: !!targetReset }; }, arm(on) { if (on) S.arm.add('api'); else S.arm.delete('api'); }, fire(n = 1) { S.queue += n; },
       aim(panDeg, tiltDeg) { S.panCmd = panDeg * D2R; S.tiltCmd = tiltDeg * D2R; S.pan = S.panCmd; S.tilt = S.tiltCmd; panSl.set(panDeg); tiltSl.set(tiltDeg); },
       view: setView, journey: (i = 0) => { startJourney(); if (i) gotoStep(i); }, select: (name) => select(parts.find((p) => p.e.part === name) ?? null, true),
       labels(on) { S.labels = on; labelsT.checked = on; }, airflow(on) { S.airflow = on; flowGroup.visible = on; }, antennas(on) { S.antennas = on; antennas.visible = on; },

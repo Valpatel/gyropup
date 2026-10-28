@@ -6,11 +6,16 @@
     "build": "node tools/build-site.mjs",
     "dev": "npm run build && node tools/serve-site.mjs",
     "deploy": "npm run build && wrangler pages deploy dist --project-name gyropup --branch main",
-    "test:web": "node tools/test-site.mjs"
+    "test:web": "node tools/test-site.mjs",
+    "test:markdown": "node --test tools/test-markdown.mjs",
+    "test:sim": "node tools/test-sim-transitions.mjs"
   },
   "devDependencies": {
     "@playwright/test": "1.56.1",
+    "linkedom": "0.18.14",
     "marked": "16.4.1",
+    "turndown": "7.2.4",
+    "turndown-plugin-gfm": "1.0.2",
     "wrangler": "4.154.0",
     "yaml": "2.9.1"
   },

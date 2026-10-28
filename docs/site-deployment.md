@@ -89,3 +89,66 @@ simulator drawer, replay, pose, firing and turret; required network assets,
 downloads, document anchors and genuine 404s. It writes screenshots and the
 result matrix to ignored `test-results/`. This is viewport/touch emulation, not
 a claim to have tested every physical phone or Safari version.
+
+## Public launch and brand evidence
+
+`gyropup.com` became active with a valid Cloudflare-managed certificate on
+2026-10-28. The proxied apex CNAME points to `gyropup.pages.dev`. DNS propagation
+can leave a local resolver with a negative cache briefly after creation; verify
+against a public resolver and validate normal TLS rather than redeploying.
+
+The landing page presents a 50-pound-class robot family as the ambition. Current
+CAD uses37.5kg (see decision D71); do not turn the brand ambition into a verified
+product specification. Tritium is a design requirement (D19). The Tritium,
+Graphlings, and GraphDone cards describe the integration roadmap, not a running
+connected robot. GraphDone coordinates development work, not onboard control.
+
+`web/playground.png` is a browser capture of the committed target-practice
+snapshot, taken2026-10-28. Regenerate it from the simulator when that snapshot
+changes; do not use a screenshot of an obsolete landing page as the video poster.
+
+## Markdown for agents
+
+Every production build generates `/index.md`, `/llms.txt`, and a `.md` counterpart
+for each public HTML page. HTML includes a `rel="alternate"` link with
+`type="text/markdown"`. Use `/designer/sim.md`, `/designer/progress.md`,
+`/designer/build.md`, and `/site/index.md` as entry points. Original CAD, JSON,
+media, and document downloads keep their URLs.
+
+`tools/site-markdown.mjs` converts published HTML. Progress and Build reuse their
+trusted browser renderers against only the published bundle, so Markdown contains
+current report and parts data instead of empty client-rendered placeholders. A
+missing data snapshot fails the build. No separately maintained copy is needed.
+`npm run test:markdown` checks content parity, tables, MIME, downloads, and404s;
+`SITE_URL=https://gyropup.com npm run test:markdown` checks hosted routes too.
+
+This uses explicit static routes on the existing Cloudflare Pages plan. It does
+not negotiate `Accept: text/markdown` on the HTML URL. Cloudflare's native
+[Markdown for Agents](https://developers.cloudflare.com/fundamentals/reference/markdown-for-agents/)
+feature requires an eligible plan and Zone Settings Edit permission. Do not
+silently purchase a plan or expand a DNS token to enable it.
+
+## Continuous simulator experience
+
+Ordinary replay/activity changes preserve the renderer, world, character, and
+conversation. Targets and robot poses blend into the next activity, including
+recording loops; the previous activity stays visible during loading. Late
+requests cannot replace a newer selection. Hardware previews and replay props
+are reused, and the turret re-racks its existing targets in place.
+
+On2026-10-28, stage greetings were found to call `talk.say` directly, bypassing
+the conversation's reaction cooldown. Use `talk.announce` for background stage
+chatter and honor `talk.isBusy()` for expressions. Never interrupt a pending
+answer, listening, or an answer still being presented. A stage change must not
+recreate the talk panel, history, voice, or character.
+
+Phone sliders previously inherited `#panel label { display:flex }`, squeezing
+the label/value/track onto one line. Keep `.hud-slider` a grid with its track
+below the label, a contrasting track, and a touch-sized thumb. Pooled inactive
+target geometry must be hidden after its transition and excluded from raycasts.
+
+Run `SITE_URL=http://127.0.0.1:8764 npm run test:sim` after the build; set
+`PLAYWRIGHT_BROWSER=webkit` for WebKit. This checks an in-flight mocked reply
+across stage changes, conversation and scene identity, loop blending, stale
+fetches, cached models, target re-racking, and phone slider layouts. The mock
+verifies browser continuity without claiming a production AI backend is online.
