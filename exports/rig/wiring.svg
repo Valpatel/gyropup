@@ -34,10 +34,10 @@
 <path d="M1060,410 L940,410 L940,310 L820,310" fill="none" stroke="#888" stroke-width="1.6" opacity="0.8"/>
 <text x="944" y="357" font-size="9" fill="#888">USB (USB-C)</text>
 <rect x="20" y="40" width="170" height="70" rx="6" fill="#f4f6f8" stroke="#142b38" stroke-width="1.2"/>
-<text x="28" y="56" font-size="11" font-weight="bold" fill="#142b38">FLEXVOLT DCB609 (60 V mode)</text>
-<text x="28" y="71" font-size="9.5" fill="#333">15S, 54 V nom, 60 V full</text>
-<text x="28" y="83" font-size="9.5" fill="#333">dock adapter, 12 AWG leads</text>
-<text x="28" y="95" font-size="9.5" fill="#333">XT60H female on its lead</text>
+<text x="28" y="56" font-size="11" font-weight="bold" fill="#142b38">2 x DCB609, 20 V mode, in series</text>
+<text x="28" y="71" font-size="9.5" fill="#333">10S, 36 V nom, 41 V full (D65)</text>
+<text x="28" y="83" font-size="9.5" fill="#333">two 20 V dock adapters, 12 AWG</text>
+<text x="28" y="95" font-size="9.5" fill="#333">XT60H female on the pair's lead</text>
 <rect x="260" y="40" width="150" height="70" rx="6" fill="#f4f6f8" stroke="#142b38" stroke-width="1.2"/>
 <text x="268" y="56" font-size="11" font-weight="bold" fill="#142b38">Class CC fuse 30 A</text>
 <text x="268" y="71" font-size="9.5" fill="#333">Littelfuse KLDR030</text>

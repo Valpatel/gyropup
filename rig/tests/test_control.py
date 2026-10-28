@@ -92,7 +92,7 @@ def test_at_the_simulations_own_rate_with_its_contact_the_port_is_exact():
 def test_every_fault_aborts_as_designed(kind):
     from rig.faults import EXPECT
     from rig.run import run_sim
-    o = run_sim('squat', 14.75, 500.0, Pack(54.0, 0.25), 1, save=False, inject=(kind, 1.0))
+    o = run_sim('squat', 14.75, 500.0, Pack(38.0, 0.10), 1, save=False, inject=(kind, 1.0))
     log = o['log']
     assert log.aborts and log.aborts[0][1].startswith(EXPECT[kind]), log.aborts
     assert log.aborts[0][0] <= 1.0 + 0.0061                       # within three ticks
@@ -103,14 +103,14 @@ def test_every_fault_aborts_as_designed(kind):
 
 def test_sitdown_ends_near_150_mm():
     from rig.run import run_sim
-    a = run_sim('squat', 14.75, 500.0, Pack(54.0, 0.25), 1, save=False, inject=('run', 2.0))['log'].arrays()
+    a = run_sim('squat', 14.75, 500.0, Pack(38.0, 0.10), 1, save=False, inject=('run', 2.0))['log'].arrays()
     i = np.flatnonzero(a['phase'] == 8)[0]
     assert a['L'][i] == pytest.approx(0.150, abs=0.012)
 
 
 def test_power_cut_tests_hold_until_the_cut_and_never_sit_down():
     from rig.run import run_sim
-    o = run_sim('power_off_damped', 14.75, 500.0, Pack(54.0, 0.25), 1, save=False, inject=('run', 0.3))
+    o = run_sim('power_off_damped', 14.75, 500.0, Pack(38.0, 0.10), 1, save=False, inject=('run', 0.3))
     assert not o['log'].aborts                                    # the pendant's release is how the power is cut
     assert o['results']['L_range_mm'][0] < 120                     # and the leg folds once it goes
 
@@ -119,8 +119,8 @@ def test_power_cut_tests_hold_until_the_cut_and_never_sit_down():
 
 def test_hil_squat_matches_the_simulation_with_one_tick_of_latency():
     from rig.run import run_hil, run_sim
-    h = run_hil('squat', 14.75, 500.0, Pack(54.0, 0.25))
-    s = run_sim('squat', 14.75, 500.0, Pack(54.0, 0.25), 1, save=False)['results']
+    h = run_hil('squat', 14.75, 500.0, Pack(38.0, 0.10))
+    s = run_sim('squat', 14.75, 500.0, Pack(38.0, 0.10), 1, save=False)['results']
     for k in ('peak_motor_nm', 'peak_wheel_force_n', 'peak_knee_pin_n'):
         assert h['results'][k] == pytest.approx(s[k], rel=0.02), k
     assert h['bus'].startup['front']['limit_torque'] == 60.0 and h['bus'].startup['front']['damper'] == 0
@@ -132,8 +132,9 @@ def test_hil_jump_survives_the_speed_fields_rail():
     """The push passes 15 rad/s, where the feedback's speed field saturates: the backend switches to the angle's
     rate and the jump still matches the simulation."""
     from rig.run import run_hil, run_sim
-    h = run_hil('jump', 14.75, 500.0, Pack(50.0, 0.25))
-    s = run_sim('jump', 14.75, 500.0, Pack(50.0, 0.25), 1, save=False)['results']
+    # the ideal 54 V bus: fast enough to run past the feedback's 15 rad/s field (on D65's 36 V packs it rarely is)
+    h = run_hil('jump', 14.75, 500.0, Pack(54.0, 0.0))
+    s = run_sim('jump', 14.75, 500.0, Pack(54.0, 0.0), 1, save=False)['results']
     w = h['log'].arrays()['w_f']
     assert np.max(np.abs(w)) > 15.0                                # seen past the rail
     assert h['results']['jump_height_mm'] == pytest.approx(s['jump_height_mm'], abs=5.0)
@@ -152,7 +153,7 @@ def _held_leg_ticks(ctl, L_of_t, t_end, dt=0.002):
     while t <= t_end:
         phi1, phi2 = fb.ik(0.0, -L_of_t(t) * 1000.0)
         cmd = ctl.update(Tick(t, MotorState(phi1, 0.0, out[-1][1].tau_f if out else 0.0, 30.0),
-                              MotorState(phi2, 0.0, out[-1][1].tau_r if out else 0.0, 30.0), 52.0))
+                              MotorState(phi2, 0.0, out[-1][1].tau_r if out else 0.0, 30.0), 38.0))
         out.append((t, cmd))
         if cmd.stop:
             break

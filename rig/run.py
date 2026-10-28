@@ -38,14 +38,14 @@ DYNAMIC = ('jump', 'jump_peak', 'drop_150')
 DROP_RIG_S = 8.0                      # s: on the rig the operator pulls the drop pin once the leg holds 300 mm
 
 
-def v_start_max(r_int: float, i_regen: float = 27.0, v_max: float = 57.5) -> float:
+def v_start_max(r_int: float, i_regen: float = 40.0, v_max: float = 44.5) -> float:
     """The highest pack voltage a jump or a drop may start at: the regeneration spike (I_regen through the pack's
-    resistance) must stay under v_max (the supervisor limps at 58 V, the RS-04 trips at 60 V)."""
+    resistance: the 1.5 kW tuck and landing at 36 V) must stay under v_max (the supervisor limps at 45 V)."""
     return round(v_max - i_regen * r_int, 1)
 
 
-def pack_for(test: str, r_int: float = 0.25, v_dynamic: Optional[float] = None, v_static: float = 54.0) -> Pack:
-    v = v_dynamic if v_dynamic is not None else min(54.0, v_start_max(r_int))
+def pack_for(test: str, r_int: float = 0.10, v_dynamic: Optional[float] = None, v_static: float = 38.0) -> Pack:
+    v = v_dynamic if v_dynamic is not None else min(41.0, v_start_max(r_int))
     return Pack(v_oc=v if test in DYNAMIC else v_static, r_int=r_int)
 
 
@@ -95,6 +95,8 @@ def run_sim(test: str, half_mass: float, rate: float, pack: Pack, latency: int, 
         from rig.faults import FaultBus
         bus = FaultBus(bus, inject[0], inject[1])
     lim = limits or lc.Limits(cap=sc.cap or lc.LEG_PEAK)
+    if limits is None and pack.r_int == 0.0:                     # sim/leg_rig.py's ideal bus (T7): no packs, so no window
+        lim = lc.Limits(cap=sc.cap or lc.LEG_PEAK, vbus_max=1e9, vbus_min=0.0, vbus_floor=0.0)
     ctl = lc.LegController(test, bus.ff_n, lim, contact_truth=contact_truth, tick=bus.tick)
     meta = {'half_mass_kg': half_mass, 'rate_hz': round(1 / bus.tick, 1), 'latency_ticks': latency,
             'pack': {'v_oc': pack.v_oc, 'r_int': pack.r_int}, 'rail_low_m': rail_low if rail_low is not None else sc.rail_low,
@@ -120,11 +122,12 @@ def reproduce(rate: float = 500.0) -> dict:
     ref = json.loads((R / 'exports' / 'leg' / 'rig-results.json').read_text())
     results = {}
     for name in lc.SCENARIOS:
-        r = run_sim(name, ref['half_mass_kg'], rate, Pack(54.0, 0.0), 0, save=False)['results']
+        from sim import leg_rig as lr
+        r = run_sim(name, ref['half_mass_kg'], rate, Pack(lr.BUS_V, 0.0), 0, save=False)['results']
         results[name] = {k: v for k, v in r.items() if k != 'series'}
         print(f"  {name:17} jump {r['jump_height_mm']}  motor {r['peak_motor_nm']}  wheel {r['peak_wheel_force_n']}  gearbox {r['peak_gearbox_nm']}")
     rep = compare.reproduce_report(results, ref['scenarios'])
-    rep.update({'rate_hz': rate, 'half_mass_kg': ref['half_mass_kg'], 'bus': 'ideal 54 V, no latency (as sim/leg_rig.py)',
+    rep.update({'rate_hz': rate, 'half_mass_kg': ref['half_mass_kg'], 'bus': 'ideal, at sim/leg_rig.py BUS_V, no latency (as sim/leg_rig.py)',
                 'controller': 'rig/leg_control.py (the rig\'s port) on rig/sim_bus.py',
                 'note': 'peak_gearbox_nm in the jump is the landing spike: the rig detects touchdown from the leg 2-4 ms after '
                         'MuJoCo\'s contact, so its feed-forward returns that much later (with the simulator\'s contact flag '
@@ -133,7 +136,7 @@ def reproduce(rate: float = 500.0) -> dict:
     return rep
 
 
-def predict(half_mass: float = DESIGN_KG, rate: float = 500.0, r_int: float = 0.25, sample: str = 'jump') -> dict:
+def predict(half_mass: float = DESIGN_KG, rate: float = 500.0, r_int: float = 0.10, sample: str = 'jump') -> dict:
     """The rig's predicted numbers: its controller, rate and latency, the design mass, the FLEXVOLT pack as the start
     rule leaves it, the bumpers where cad/build_rig.py puts them."""
     tests = {}
@@ -166,7 +169,7 @@ def faults(test: str = 'squat', at: float = 1.0) -> dict:
     import numpy as np
     out = {}
     for kind in KINDS:
-        o = run_sim(test, DESIGN_KG, 500.0, Pack(54.0, 0.25), 1, save=False, inject=(kind, at))
+        o = run_sim(test, DESIGN_KG, 500.0, Pack(38.0, 0.10), 1, save=False, inject=(kind, at))
         log = o['log']
         a = log.arrays()
         ab = log.aborts[0] if log.aborts else None
@@ -183,7 +186,7 @@ def faults(test: str = 'squat', at: float = 1.0) -> dict:
         print(f"  {kind:10} -> {row['abort']} after {row['reaction_ms']} ms; leg {row['leg_at_stop_mm']} mm when stopped, "
               f"lowest {row['lowest_leg_after_mm']} mm  {'OK' if row['ok'] else 'NOT AS EXPECTED'}")
     # the rate limiter: the first hanging tests run with 5 N m per tick
-    o = run_sim('stand_up', DESIGN_KG, 500.0, Pack(54.0, 0.25), 1, save=False, limits=lc.Limits(rate=5.0))
+    o = run_sim('stand_up', DESIGN_KG, 500.0, Pack(38.0, 0.10), 1, save=False, limits=lc.Limits(rate=5.0))
     a = o['log'].arrays()
     d = float(max(np.max(np.abs(np.diff(a['tau_cmd_f']))), np.max(np.abs(np.diff(a['tau_cmd_r'])))))
     out['rate_limit'] = {'limit_nm_per_tick': 5.0, 'largest_step_nm': round(d, 3), 'ok': d <= 5.0 + 1e-9,
@@ -207,7 +210,10 @@ def run_hil(test: str, half_mass: float, rate: float, pack: Pack, plot: bool = F
     link = HilLink(sim, cal, cut_at=0.6 if test.startswith('power_off') else None)
     bus = CanBus(link.port, cal, tick=1 / rate, realtime=False, clock=link.clock, after_exchange=link.advance)
     link.begin()
-    ctl = lc.LegController(test, sim.ff_n, lc.Limits(cap=sc.cap or lc.LEG_PEAK), tick=1 / rate, external_cut=True)
+    lim = lc.Limits(cap=sc.cap or lc.LEG_PEAK)
+    if pack.r_int == 0.0:                                        # an ideal bus: no packs, so no voltage window
+        lim = lc.Limits(cap=sc.cap or lc.LEG_PEAK, vbus_max=1e9, vbus_min=0.0, vbus_floor=0.0)
+    ctl = lc.LegController(test, sim.ff_n, lim, tick=1 / rate, external_cut=True)
     log = RunLog('hil', test, {'half_mass_kg': half_mass, 'rate_hz': rate, 'pack': {'v_oc': pack.v_oc, 'r_int': pack.r_int}}, tag)
     loop(bus, ctl, log, sc.duration)
     log.meta['startup'] = bus.startup
@@ -247,7 +253,7 @@ def run_can(a) -> int:
     if bus.require_node and not nd.run_fresh(now, 0.1):
         print('  hold the pendant before arming: without the RUN frames the leg sits down at once')
     vb = min(v['VBUS'] for v in bus.startup.values())
-    vmax = v_start_max(a.r_int) if a.test in DYNAMIC else 56.0
+    vmax = v_start_max(a.r_int) if a.test in DYNAMIC else 42.0       # a full pair is 41 V
     if vb > vmax:
         print(f'refused: the pack is at {vb:.1f} V; {a.test} starts at {vmax} V at most (R_int {a.r_int} ohm)')
         bus.stop()
@@ -278,7 +284,7 @@ def main(argv=None):
     ap.add_argument('--test', choices=tuple(lc.SCENARIOS) + tuple(lc.BENCH_SCENARIOS), default='stand_up')
     ap.add_argument('--half-mass', type=float, default=DESIGN_KG)
     ap.add_argument('--rate', type=float, default=500.0)
-    ap.add_argument('--r-int', type=float, default=0.25, help='the pack\'s resistance, ohm (measured: docs/leg-bench-tests.md B6)')
+    ap.add_argument('--r-int', type=float, default=0.10, help='the packs\' resistance, ohm (measured: docs/leg-bench-tests.md B6)')
     ap.add_argument('--v-start', type=float, help='the pack voltage in the simulation (default: the start rule)')
     ap.add_argument('--latency', type=int, default=1)
     ap.add_argument('--contact-truth', action='store_true', help='simulation only: the controller reads MuJoCo\'s contact')

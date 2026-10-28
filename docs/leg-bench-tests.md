@@ -25,7 +25,7 @@ the main session puts back into the simulation (plan flags F1 and F2).
 | 4 | B1 back-drive | both RS-04s on the dyno, the pack for the driver | D39: the power-off damping |
 | 5 | B3 stop sleeve | the press cage, the load cell, a stop post and sleeve | STOP_K, STOP_TRAVEL |
 | 6 | B4 inserts and screws | the press cage, the load cell, the pullers | the assembly torques; HUB_PRELOAD_N |
-| 7 | B6 pack resistance | the pack, the 10 ohm resistor, a multimeter | the start voltage of jumps and drops |
+| 7 | B6 the packs' resistance | the pair, the 10 ohm resistor, a multimeter | the start voltage of jumps and drops |
 | 8 | R0 bumper calibration | the rig without the leg, ballast | the bumpers' infill |
 | 9 | C7, S1 stand-up | the leg on the rig | the first stand |
 | 10 | B5 tyre | the leg on the rig, the top stop lowered | TYRE_SOLREF |
@@ -43,27 +43,27 @@ what the simulation assumes or predicts, and how it passes.
 |---|---|---|
 | B1 | power-off drag of an RS-04 (OFF_DAMPING) | 5.88 N m s/rad, linear (the undamped case: 0) |
 | B2 | rotor inertia at the output (ARMATURE) | 0.0243 kg m^2 (3e-4 x 9^2, an estimate) |
-| B3 | stop sleeve rate (STOP_K) and travel | 243 N/mm at the post (816 N m/rad at r 58 mm), 7.5 mm before steel |
+| B3 | stop sleeve rate (STOP_K) and travel | 243 N/mm at the post (816 N m/rad at r 58 mm), 4.5 mm before steel |
 | B4 | preload per M5 in the hub joint (HUB_PRELOAD_N) | 1200 N |
 | B5 | tyre contact (TYRE_SOLREF) | solref 0.0077 0.7 (about 100-250 N/mm) |
-| B6 | pack resistance (rig/run.py --r-int) | 0.25 ohm (an estimate: 15S1P tool cells) |
+| B6 | the packs' resistance (rig/run.py --r-int) | 0.10 ohm (an estimate: two 5S3P packs in series, D65) |
 <!-- /gen:assumes -->
 
 ## The predicted numbers for the rig tests
 
 <!-- gen:predictions -->
-At 14.75 kg carried, 500 Hz with one tick of latency, the pack at its start rule (jumps and drops from 50.8 V, R_int 0.25 ohm), the bumpers meeting the carriage at a leg length of 140 mm (S6: lowered to 74 mm). From `python -m rig.run --predict`.
+At 14.75 kg carried, 500 Hz with one tick of latency, the pack at its start rule (jumps and drops from 40.5 V, R_int 0.1 ohm), the bumpers meeting the carriage at a leg length of 140 mm (S6: lowered to 74 mm). From `python -m rig.run --predict`.
 
 | Test | Motor peak N m | Gearbox peak N m | Wheel N | Knee pin N | Leg length mm | VBUS V | Jump mm | Fall s |
 |---|---|---|---|---|---|---|---|---|
-| S1 stand-up | 14.0 | 13.9 | 157 | 159 | 140-304 | 53.8-54.0 | - | - |
-| S2 squat | 14.1 | 14.0 | 157 | 151 | 157-303 | 53.8-54.0 | - | - |
-| S3 jump | 60.0 | 80.2 | 3,459 | 1,880 | 155-345 | 42.5-56.9 | 245 | - |
-| S4 drop 150 mm | 37.9 | 70.8 | 2,874 | 1,331 | 279-335 | 50.6-53.0 | - | - |
-| S5 power cut, undamped | 12.5 | 54.1 | 458 | 364 | 136-303 | 53.9-54.0 | - | 0.20 |
-| S5 power cut, damped | 12.5 | 12.5 | 159 | 160 | 139-303 | 53.9-54.0 | - | 0.42 |
-| S6 power cut onto the stops, undamped | 12.5 | 27.0 | 1,548 | 1,713 | 89-303 | 53.9-54.0 | - | 0.23 |
-| S6 power cut onto the stops, damped | 12.5 | 12.5 | 243 | 262 | 100-303 | 53.9-54.0 | - | 0.57 |
+| S1 stand-up | 14.0 | 13.9 | 157 | 159 | 140-304 | 37.9-38.0 | - | - |
+| S2 squat | 14.1 | 14.0 | 157 | 151 | 157-303 | 37.9-38.0 | - | - |
+| S3 jump | 60.0 | 76.5 | 2,259 | 1,229 | 155-338 | 37.1-43.4 | 207 | - |
+| S4 drop 150 mm | 37.9 | 70.8 | 2,874 | 1,331 | 279-335 | 40.4-41.6 | - | - |
+| S5 power cut, undamped | 12.5 | 54.1 | 459 | 365 | 136-303 | 37.9-38.0 | - | 0.20 |
+| S5 power cut, damped | 12.5 | 12.5 | 159 | 160 | 139-303 | 37.9-38.0 | - | 0.42 |
+| S6 power cut onto the stops, undamped | 12.5 | 27.1 | 1,548 | 1,713 | 89-303 | 37.9-38.0 | - | 0.23 |
+| S6 power cut onto the stops, damped | 12.5 | 12.5 | 244 | 264 | 100-303 | 37.9-38.0 | - | 0.57 |
 <!-- /gen:predictions -->
 
 ## Pass and fail for each run (`rig/criteria.json`)
@@ -79,17 +79,17 @@ compares the run with this very prediction, and "measured only" needs the load p
 | S1 stand-up | follows the prediction within 15 mm | 15 mm | (the run itself) |
 | S1 stand-up | peak motor torque <= 18 N m | 18 | 14.0 |
 | S1 stand-up | no oscillation over 5 mm peak to peak in the hold | 5 mm p-p | 0.2 |
-| S1 stand-up | load plate 120-170 N steady (14.75 kg carried: about 145 N) | 120 to 170 | - |
-| S1 stand-up | VBUS inside 46-58 V | 46 to 58 | 53.8-54.0 |
+| S1 stand-up | load plate 120-170 N steady (14.75 kg carried: about 145 N) | 120 to 170 | (measured only) |
+| S1 stand-up | VBUS inside 32-45 V | 32 to 45 | 37.9-38.0 |
 | S2 squat | follows the prediction within 15 mm (the model is right) | 15 mm | (the run itself) |
 | S2 squat | tracks the command within 35 mm (the VMC lags a 0.5 Hz squat by design: 26 mm predicted) | 35 mm | 26.5 |
 | S2 squat | peak motor torque <= 18 N m | 18 | 14.1 |
-| S2 squat | VBUS under 58 V (regeneration) | - to 58 | 53.8-54.0 |
+| S2 squat | VBUS under 45 V (regeneration) | - to 45 | 37.9-38.0 |
 | S3 jump | the push and the flight follow the prediction within 20 mm (to the landing) | 20 mm | (the run itself) |
-| S3 jump | jump height 200-320 mm | 200-320 mm | 245.3 |
+| S3 jump | jump height 200-320 mm | 200-320 mm | 207.1 |
 | S3 jump | motor torque feedback <= 70 N m | 70 | 60.0 |
 | S3 jump | settles to 250 +- 15 mm within 0.5 s of landing | 0.5 s | 0.2 |
-| S3 jump | VBUS inside 40-58 V (a push sags it, the tuck and landing lift it) | 40 to 58 | 42.5-56.9 |
+| S3 jump | VBUS inside 28-45 V (a push sags it, the tuck and landing lift it) | 28 to 45 | 37.1-43.4 |
 | S4 drop 150 mm | motor torque feedback <= 55 N m | 55 | 37.9 |
 | S4 drop 150 mm | back to 300 +- 10 mm within 0.5 s of touching down | 0.5 s | 0.1 |
 | S4 drop 150 mm | the dip within 20 % of the prediction | 20 % | 20.6 |
@@ -98,7 +98,7 @@ compares the run with this very prediction, and "measured only" needs the load p
 | B5 tyre press (on the rig) | the load plate reads the commanded force within 15 % at every step (the motors' torque constant and the leg's geometry, checked) | 15 % | - |
 | B5 tyre press (on the rig) | motor torque <= 60 N m (the cap) | 60.5 | - |
 | B5 tyre press (on the rig) | the leg stays put while pressing (within 10 mm of 360) | 345 to 372 mm | - |
-| B5 tyre press (on the rig) | VBUS inside 46-58 V | 46 to 58 | - |
+| B5 tyre press (on the rig) | VBUS inside 32-45 V | 32 to 45 | - |
 <!-- /gen:criteria -->
 
 ## Instruments
@@ -137,7 +137,7 @@ is the best there is (a bearing seat), the assembly uses Loctite 641 on it, as `
 ## C1-C6: commissioning, one motor on the bench supply
 
 On the dyno board (`exports/rig/bench/dyno_*`): each RS-04 on its lug plate on 10 x M4 x 20, at 2.5 N m. The bench
-supply (Mean Well LRS-600-48, 48 V) feeds the motor's XT30. Fit the CAN lead and its terminators.
+supply (Mean Well LRS-600-36, 36 V: the robot's bus, D65) feeds the motor's XT30. Fit the CAN lead and its terminators.
 
 | Step | Do | Pass |
 |---|---|---|
@@ -173,7 +173,7 @@ means the protection is on. 1 means it is off. The simulation assumes 5.88 N m s
 - Motor A (id 1) is the one tested.
 - Motor B (id 2) drives it in velocity mode, and its own torque reading is the drag.
 - B runs on the pack (through the pod's fuse and contactor). At 60 N m x 13 rad/s it can pull more than the 600 W
-  bench supply gives. Start the pack at 54 V or under, and hold the pendant through each sweep: the contactor is
+  bench supply gives. Start the pair at 40 V or under, and hold the pendant through each sweep: the contactor is
   closed only while it is held.
 - A is either unplugged or on the bench supply, as each condition says.
 
@@ -268,15 +268,15 @@ Write the rows into `sheets/b4.csv`:
 the assembly's torque table, which until then uses 1.5 N m for the M5s and 5 N m for the M8s. Send the measured
 preload to the main session (F2: `cad/leg_studies.py` reruns with it).
 
-## B6: the pack's resistance
+## B6: the packs' resistance
 
-1. Charge the pack.
-2. With nothing connected, read its terminals with a multimeter at the dock adapter's leads: V_open.
-3. Connect the 10 ohm 25 W resistor across the leads for 1 s (5.4 A; it gets warm). Read the voltage during the
+1. Charge both packs.
+2. With nothing connected, read the pair (the two packs in series in their docks) at its XT60 lead: V_open.
+3. Connect the 10 ohm 25 W resistor across the pair's leads for 1 s (about 4 A; it gets warm). Read the voltage during the
    pulse: V_loaded. A meter with min/max helps, or a video of the meter.
 4. Repeat three times, a minute apart. Write the rows into `sheets/b6.csv` (v_open, v_loaded, r_load_ohm).
 
-`fit_params` gives R_int and the start voltage for jumps and drops: 57.5 - 27 A x R_int. Pass `--r-int` to
+`fit_params` gives R_int and the start voltage for jumps and drops: 44.5 - 40 A x R_int. Pass `--r-int` to
 `rig/run.py`; it refuses a jump or a drop above that voltage.
 
 **Cross-check after S3.** The jump's push draws about 45 A for 0.3 s. Its sag in the run's VBUS log, divided by that
@@ -350,7 +350,7 @@ Each is one command. The tables above give its predicted numbers and its pass/fa
 | S5 power cut, bumper high | `... --test power_off` | standing at 300 mm; release the pendant: the leg holds for the relay's 1.0 s, then the contactor opens | the carriage lands on the bumpers; compare the fall time with both predictions (undamped and damped): which one it matches says whether the damper works in a real fall |
 | S6 onto the leg's stops | `... --test power_off` with the bumpers shimmed down to 74 mm contact | only after B1 and the main session's rerun clear it | the knees, the eye sleeves, the pins and the 6201s inspected; the stop sleeves show no permanent set |
 
-**The pack.** Jumps and drops start at or under the start voltage (B6). The runner reads the motors' VBUS before it
+**The packs.** Jumps and drops start at or under the start voltage (B6). The runner reads the motors' VBUS before it
 arms and refuses above it.
 
 ## After every run

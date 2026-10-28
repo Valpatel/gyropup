@@ -160,7 +160,7 @@ def b6(sim: dict) -> dict:
         i = x['v_loaded'] / x['r_load_ohm']
         Rs.append((x['v_open'] - x['v_loaded']) / i)
     Rint = float(np.median(Rs))
-    return {'r_int_ohm': Rint, 'v_start_max_dynamic': round(57.5 - 27.0 * Rint, 1),
+    return {'r_int_ohm': Rint, 'v_start_max_dynamic': round(44.5 - 40.0 * Rint, 1),
             'note': 'jumps and drops start at or under this; rig/run.py --r-int takes the resistance'}
 
 

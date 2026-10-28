@@ -152,17 +152,20 @@ add('carriage_plate', 'rig', 'fab_service', 'SendCutSend', 'carriage_plate.dxf, 
     note='Instant price on upload of the DXF (no quote, no account needed to see it at upload); estimate $60-90. Deburr option on.',
     alts=[alt('Xometry', 'carriage_plate.step, 6061-T6 1/4 in sheet cutting', 'https://www.xometry.com/', 'instant price on upload', None)])
 # ------------------------------------------------------------------ electronics
-add('pack_adapter_60v', 'electronics', 'power_distribution', 'Terrafirma Technology (eBay)', 'eBay 142917514402',
-    'DeWalt FLEXVOLT 60 V dock adapter, 12 AWG leads', 16.5, 1, 'https://www.ebay.com/itm/142917514402', how='search snippet', ships='US',
-    used_for='the pack into the rig (XT60 on its leads)', confidence='search snippet',
-    note='eBay blocks automated reads: price from the search snippet. Check the listing says it engages the 60 V mode (FLEXVOLT packs switch '
-         'by the tool\'s tab); measure 54-60 V open-circuit on a charged pack before wiring.',
-    alts=[alt('Newegg (heimakeji)', '1DK-013R-00A95', 'https://www.newegg.com/p/1DK-013R-00A95', 'about $23.35 (snippet)', 23.35, how='search snippet')])
-add('bench_supply_48v', 'electronics', 'dcdc', 'Bravo Electro', 'Mean Well LRS-600-48', '48 V 12.5 A enclosed supply', 61.60, 1,
-    'https://www.bravoelectro.com/lrs-600-48.html', stock='In stock', used_for='bench tests only (B1, B2, first enable): it cannot sink regeneration',
-    note='Shuts down after 3 s at 105-150 % load and latches off above 55.2-64.8 V: never on the motors in a squat, jump or drop.',
-    alts=[alt('TRC Electronics', 'LRS-600-48', 'https://www.trcelectronics.com/products/mean-well-lrs-600-48', '$66.80', 66.80, stock='210 can ship now'),
-          alt('Bravo Electro', 'LRS-600N2-48 (200 % peak)', 'https://www.bravoelectro.com/lrs-600n2-48.html', '$66.10', 66.10)])
+add('dock_adapter_20v', 'electronics', 'power_distribution', 'Amazon (CHoiKWong, sold by LIANQUAN)', 'ASIN B0B9NPZM3M',
+    'DeWalt 20 V MAX dock adapter, 12 AWG leads, switch and 30 A blade fuse', 9.99, 2, 'https://www.amazon.com/dp/B0B9NPZM3M',
+    stock='In Stock', used_for='D65: one per DCB609 in 20 V mode; the two in series (10S, 30-41 V) feed the pod',
+    note='The listing names the DCB200-206, not the DCB609: check the fit on arrival. Each adapter\'s 32 V blade fuse sees one pack; '
+         'the string is protected by the pod\'s Class CC fuse (300 VDC). Leave the adapters\' switches on: they are not rated to break '
+         'the motors\' current.',
+    alts=[alt('Amazon (Ensayeer, sold by Unsaidtech)', 'ASIN B09J4R4QZ6 (2-pack)', 'https://www.amazon.com/dp/B09J4R4QZ6', '$21.99 per 2', 11.0,
+              pack=2, stock='In Stock')])
+add('bench_supply_36v', 'electronics', 'dcdc', 'Bravo Electro', 'Mean Well LRS-600-36', '36 V 16.6 A enclosed supply', 61.60, 1,
+    'https://www.bravoelectro.com/lrs-600-36.html', used_for='bench tests only (B2, the first enable, B1\'s tested motor): the robot\'s 36 V; it cannot sink regeneration',
+    note='Shuts down on a sustained overload and latches off on over-voltage: never on the motors in a squat, jump or drop. A mains cord and '
+         'output leads to its screw terminals.',
+    alts=[alt('TRC Electronics', 'LRS-600-36', 'https://www.trcelectronics.com/View/Mean-Well/LRS-600-36.shtml', '$66.80', 66.80,
+              stock='Contact Us (lead time from 1 week)')])
 add('fuse_kldr030', 'electronics', 'power_distribution', 'Standard Electric Supply', 'Littelfuse KLDR030.TXP', 'Class CC time-delay fuse 30 A, 600 VAC / 300 VDC',
     31.70, 1, 'https://www.standardelectricsupply.com/Littelfuse-KLDR030-TXP-POWR-GARD-Time-Delay-Fuse', stock='812 In Stock',
     used_for='the pack\'s positive, before the contactor', note='300 VDC per Littelfuse\'s datasheet (self-certified; the UL listing is AC).',

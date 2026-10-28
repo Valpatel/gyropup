@@ -9,9 +9,9 @@ Everything the first leg and its single-leg test rig need that is not printed: b
 | The leg (one leg) | 19 | $1,235.06 |
 | Filament | 3 | $483.91 |
 | The rig: guide, frame, ballast, safety | 34 | $1,091.77 |
-| Electronics and wiring | 31 | $630.53 |
+| Electronics and wiring | 31 | $634.01 |
 | The bench tests (B1-B6) | 10 | $139.16 |
-| **All** | 97 | **$3,580.43** |
+| **All** | 97 | **$3,583.91** |
 
 Shipping, tax and the motors' duties are not included. Upload-priced parts count at the middle of their estimate: Output adapter (instant price on upload (est. $40 each)), Carriage plate (instant price on upload (est. $60-90 each)). Several lines buy a pack (McMaster sells screws by 25-100): the cost is the packs'.
 
@@ -33,7 +33,7 @@ Shipping, tax and the motors' duties are not included. Upload-priced parts count
 | MISUMI | 10 | $484.86 |
 | Bambu Lab | 3 | $483.91 |
 | ODrive Robotics | 1 | $269.00 |
-| Amazon | 5 | $198.03 |
+| Amazon | 6 | $218.01 |
 | Bearings Direct | 2 | $162.84 |
 | TTI, Inc. | 3 | $139.24 |
 | Bravo Electro | 2 | $89.20 |
@@ -53,7 +53,6 @@ Shipping, tax and the motors' duties are not included. Upload-priced parts count
 | Body-Solid | 2 | $19.96 |
 | SparkFun | 3 | $19.40 |
 | RaceDayQuads | 3 | $16.92 |
-| Terrafirma Technology | 1 | $16.50 |
 | BNTECHGO | 1 | $14.98 |
 | 80/20 Inc. | 1 | $9.76 |
 | Digi-Key | 2 | $9.16 |
@@ -80,10 +79,10 @@ Shipping, tax and the motors' duties are not included. Upload-priced parts count
 | Alloy Steel Shoulder Screws, 10 mm Shoulder Diameter, 20 mm Shoulder Length, M8 x 1.25 mm Thread | 4 | [McMaster-Carr 92981A303](https://www.mcmaster.com/92981A303/) | $3.50 |  | $14.00 | [Belmetric BSHLDR8X10X20/33](https://belmetric.com/m8x1-25-m10-shoulder-shoulder-bolt-12-9-iso-7379/), $4.05 | stop posts (TPU sleeves over them) |
 | Heat-Set Threaded Inserts for Plastic, Standard, Brass, M8 x 1.25mm Thread Size, 12.7mm Installed Length | 6 | [McMaster-Carr 94459A778](https://www.mcmaster.com/94459A778/) | $16.36 per 25 |  | $16.36 | [3DJake CNC-4262391010044](https://www.3djake.com/cnc-kitchen/threaded-inserts-m8-standard), $11.18 ($0.56 / pc), excl. VAT (CNC Kitchen's table gives the hole as 9.7 mm, against 9.6 mm in the CAD (0.1 mm larger). Length 12.7 mm matches. It will probably go into the existing 9.6 mm hole with slightly more interference, but that is not confirmed.) | stop posts, in the hip frame; +2 for the bench (B4: the M8 puller; B3: the sleeve block's stop post) |
 | Black-Oxide Alloy Steel Socket Head Screw, US Origin, M4 x 0.7 mm Thread Size, 20 mm Long | 20 | [McMaster-Carr 91290A168](https://www.mcmaster.com/91290A168/) | $14.47 per 100 |  | $14.47 | [Belmetric BSH4X20](https://belmetric.com/m4x0-7-socket-head-cap-screw-din-912-class-12-9/), $0.20 | motor lugs (10 per motor), heads 10 mm down in the hip frame: 5.9 mm into the 7 mm threads |
-| Dowel Pin, 52100 Alloy Steel, 5 mm Diameter, 16 mm Long | 8 | [McMaster-Carr 91595A352](https://www.mcmaster.com/91595A352/) | $19.22 per 50 |  | $19.22 | [Aspen Fasteners ME397-5X16-00300](https://www.aspenfasteners.com/m5-x-16mm-din-6325-metric-solid-dowel-pins-steel/), Now: $180.47 (Box of 300) | into each motor's two locating holes (4), and two in each adapter's standard face, pressed into its H7 holes (4) |
+| Dowel Pin, 52100 Alloy Steel, 5 mm Diameter, 16 mm Long | 8 | [McMaster-Carr 91595A352](https://www.mcmaster.com/91595A352/) | $19.22 per 50 |  | $19.22 | [WDS Components 662-20316](https://www.wdscomponents.com/en-us/5mm-x-16mm-steel-precision-dowel-pin), $0.60 | into each motor's two locating holes (4), and two in each adapter's standard face, pressed into its H7 holes (4) |
 | Black-Oxide Alloy Steel Socket Head Screw, US Origin, M5 x 0.8 mm Thread Size, 25 mm Long | 36 | [McMaster-Carr 91290A252](https://www.mcmaster.com/91290A252/) | $10.96 per 50 |  | $10.96 | [Bolt Depot 6524 (M5 x 25 class 12.9 black oxide)](https://boltdepot.com/Product-Details?product=6524), $0.15 / ea ($10.11 / 100) | motor outputs through the CNC output adapters (9 per motor), heads in pockets below the face; +18 for the bench (the dyno: each hub onto its motor's output (9 each)) |
 | Black-Oxide Alloy Steel Socket Head Screw, M5 x 0.8 mm Thread Size, 40 mm Long, Partially Threaded | 19 | [McMaster-Carr 91290A662](https://www.mcmaster.com/91290A662/) | $8.09 per 50 |  | $8.09 | [Belmetric BSH5X40](https://belmetric.com/m5x0-8-socket-head-cap-screw-din-912-class-12-9/), $0.28 | upper links onto the output adapters (8 each), heads proud; +3 for the bench (B4: the screws under test (two inserts to 3.5 kN, the link-under-the-head test)) |
-| Heat-Set Threaded Inserts for Plastic, Standard, Brass, M5 x 0.8 mm Thread Size, 7.9 mm Installed Length | 9 | [McMaster-Carr 94459A775](https://www.mcmaster.com/94459A775/) | $6.82 per 25 |  | $6.82 | [3DJake CNC-B09FXM8ZMV](https://www.3djake.com/cnc-kitchen/threaded-inserts-m5-short), $11.18 ($0.22 / pc), excl. VAT (5.8 mm long instead of 7.9 mm, so 2.1 mm less thread engagement and pull-out strength. Same 6.4 mm hole per CNC Kitchen's table. It fits the existing 6.4 mm hole without a CAD change and sits flush with spare depth below.) | the frame's flange ends (the body, or the rig's carriage); +3 for the bench (B4: one in each M5 puller) |
+| Heat-Set Threaded Inserts for Plastic, Standard, Brass, M5 x 0.8 mm Thread Size, 7.9 mm Installed Length | 9 | [McMaster-Carr 94459A775](https://www.mcmaster.com/94459A775/) | $6.82 per 25 |  | $6.82 | [ruthex RX-M5x9.5 (SKU GE-M5x95-001)](https://www.ruthex.de/products/ruthex-gewindeeinsatz-m5-50-stuck-rx-m5x9-5-messing-gewindebuchsen),  (NOT drop-in: 9.5 mm long vs McMaster 7.9 mm (1.6 mm longer). The short version RX-M5Sx5.8 (and CNC Kitchen 'M5 x 5.8 short', also listed) is 2.1 mm shorter. No 7.9 mm M5 at ruthex or CNC Kitchen. EUR 9.99 per 50 (VAT incl.), no USD price.) | the frame's flange ends (the body, or the rig's carriage); +3 for the bench (B4: one in each M5 puller) |
 | Black-Oxide Alloy Steel Socket Head Screw, US Origin, M6 x 1 mm Thread Size, 30 mm Long | 4 | [McMaster-Carr 91290A332](https://www.mcmaster.com/91290A332/) | $11.36 per 50 |  | $11.36 | [Belmetric BSH6X30](https://belmetric.com/m6x1-0-socket-head-cap-screw-din-912-class-12-9/), $0.23 | the BotWheel's flange, from inside the wheel link's hub (M6 x 40 bottoms out unless its threads are > 15 deep: measure) |
 | Output adapter, machined Aluminium 6061-T6 (machined) | 2 | [JLCCNC output_adapter.step](https://jlccnc.com/) | instant price on upload (est. $40 each) |  | $80.00 | [Xometry output_adapter.step](https://www.xometry.com/), instant price on upload | two per leg, made from `exports/leg/cnc/output_adapter.step` with the callouts in `exports/leg/cnc/README.md` (D46) (an estimate until the instant price is read on upload (D40: no quotes; JLCCNC turned-and-milled 6061, qty 4); shipping from China is extra and takes 5-10 days) |
 
@@ -138,8 +137,8 @@ Shipping, tax and the motors' duties are not included. Upload-priced parts count
 
 | Part | Qty | Buy (primary) | Price | Stock | Cost | Backup | For |
 |---|---|---|---|---|---|---|---|
-| DeWalt FLEXVOLT 60 V dock adapter, 12 AWG leads | 1 | [Terrafirma Technology (eBay) eBay 142917514402](https://www.ebay.com/itm/142917514402) | $16.50 |  | $16.50 | [Newegg (heimakeji) 1DK-013R-00A95](https://www.newegg.com/p/1DK-013R-00A95), about $23.35 (snippet) | the pack into the rig (XT60 on its leads) (eBay blocks automated reads: price from the search snippet. Check the listing says it engages the 60 V mode (FLEXVOLT packs switch by the tool's tab); measure 54-60 V open-circuit on a charged pack before wiring.) |
-| 48 V 12.5 A enclosed supply | 1 | [Bravo Electro Mean Well LRS-600-48](https://www.bravoelectro.com/lrs-600-48.html) | $61.60 | In stock | $61.60 | [TRC Electronics LRS-600-48](https://www.trcelectronics.com/products/mean-well-lrs-600-48), $66.80 | bench tests only (B1, B2, first enable): it cannot sink regeneration (Shuts down after 3 s at 105-150 % load and latches off above 55.2-64.8 V: never on the motors in a squat, jump or drop.) |
+| DeWalt 20 V MAX dock adapter, 12 AWG leads, switch and 30 A blade fuse | 2 | [Amazon (CHoiKWong, sold by LIANQUAN) ASIN B0B9NPZM3M](https://www.amazon.com/dp/B0B9NPZM3M) | $9.99 | In Stock | $19.98 | [Amazon (Ensayeer, sold by Unsaidtech) ASIN B09J4R4QZ6 (2-pack)](https://www.amazon.com/dp/B09J4R4QZ6), $21.99 per 2 | D65: one per DCB609 in 20 V mode; the two in series (10S, 30-41 V) feed the pod (The listing names the DCB200-206, not the DCB609: check the fit on arrival. Each adapter's 32 V blade fuse sees one pack; the string is protected by the pod's Class CC fuse (300 VDC). Leave the adapters' switches on: they are not rated to break the motors' current.) |
+| 36 V 16.6 A enclosed supply | 1 | [Bravo Electro Mean Well LRS-600-36](https://www.bravoelectro.com/lrs-600-36.html) | $61.60 |  | $61.60 | [TRC Electronics LRS-600-36](https://www.trcelectronics.com/View/Mean-Well/LRS-600-36.shtml), $66.80 | bench tests only (B2, the first enable, B1's tested motor): the robot's 36 V; it cannot sink regeneration (Shuts down on a sustained overload and latches off on over-voltage: never on the motors in a squat, jump or drop. A mains cord and output leads to its screw terminals.) |
 | Class CC time-delay fuse 30 A, 600 VAC / 300 VDC | 1 | [Standard Electric Supply Littelfuse KLDR030.TXP](https://www.standardelectricsupply.com/Littelfuse-KLDR030-TXP-POWR-GARD-Time-Delay-Fuse) | $31.70 | 812 In Stock | $31.70 | [Galco Littelfuse KLDR30](https://www.galco.com/kldr30-lf.html), $44.33 | the pack's positive, before the contactor (300 VDC per Littelfuse's datasheet (self-certified; the UL listing is AC).) |
 | Class CC fuse holder, 1-pole, DIN rail, 600 VAC/DC | 1 | [Galco Littelfuse LPSC0001Z](https://www.galco.com/lpsc0001z-littelfuse.html) | $28.99 | 170 In Stock | $28.99 | [Standard Electric Supply Littelfuse LFPSC0001Z](https://www.standardelectricsupply.com/Littelfuse-LFPSC0001Z-Powr-Gard-Powr-Safe-Fuse-Holder), $26.48 | holds the 30 A fuse on the pod's DIN rail |
 | Sealed DC contactor 100 A, 900 VDC, 12 V coil (5.5 W) | 1 | [TTI, Inc. TE Kilovac LEV100A4ANG (3-1618389-7)](https://www.tti.com/content/ttiinc/en/apps/part-detail.html?partsNumber=LEV100A4ANG&mfgShortname=TYC) | $86.64 | 301 In Stock | $86.64 | [TTI, Inc. TE EV200AAANA](https://www.tti.com/content/ttiinc/en/apps/part-detail.html?partsNumber=EV200AAANA&mfgShortname=TYC), $127.61 (bigger (500 A); its own coil economiser) | the hold-to-run power cut in the pack's positive (Its contacts are polarised: wire its + terminal to the pack (the main current's direction); the reverse direction (regeneration) is rated for fewer breaks. Newark lists it as no longer made; TE's own page lists it active.) |
@@ -188,7 +187,7 @@ Shipping, tax and the motors' duties are not included. Upload-priced parts count
 ## Checked on arrival
 
 - **Rails:** both blocks run smooth with no play by hand; the rail's hole pitch (60) and end distance (20) as drawn.
-- **Pack adapter:** a charged pack reads 54-60 V at its leads (the 60 V mode engaged).
+- **Dock adapters:** each DCB609 seats and reads 20-21 V on its adapter's leads (20 V mode); the pair in series reads 40-41 V.
 - **Contactor:** the + terminal goes to the pack side (its contacts are polarised).
 - **Weight plates:** weigh each; the ballast table in `exports/rig/rig.json` assumes 0.567 and 1.134 kg.
 - **Motors:** firmware version (`python -m rig.rs04 --id 127 version`); the 310 mm leads and their XT30 and GH plugs.

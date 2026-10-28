@@ -13,7 +13,7 @@ OUT = R / 'exports' / 'rig'
 
 # blocks: name -> (x, y, w, h, title, lines)
 BLOCKS = {
-    'pack': (20, 40, 170, 70, 'FLEXVOLT DCB609 (60 V mode)', ['15S, 54 V nom, 60 V full', 'dock adapter, 12 AWG leads', 'XT60H female on its lead']),
+    'pack': (20, 40, 170, 70, '2 x DCB609, 20 V mode, in series', ['10S, 36 V nom, 41 V full (D65)', 'two 20 V dock adapters, 12 AWG', 'XT60H female on the pair\'s lead']),
     'fuse': (260, 40, 150, 70, 'Class CC fuse 30 A', ['Littelfuse KLDR030', 'in LPSC0001Z (DIN)', '300 VDC']),
     'cont': (470, 40, 170, 70, 'Contactor (hold-to-run)', ['TE LEV100A4ANG', '+ terminal to the fuse', '12 V coil, 0.36 A']),
     'motors': (720, 30, 200, 90, 'RS-04 x 2 (ids 1, 2)', ['XT30 Y-splice on the carriage', 'XT30UW-F leads, 310 mm', 'CAN on GH1.25-2P plugs']),

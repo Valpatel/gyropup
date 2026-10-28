@@ -1,11 +1,11 @@
 {
  "blocks": {
   "pack": {
-   "title": "FLEXVOLT DCB609 (60 V mode)",
+   "title": "2 x DCB609, 20 V mode, in series",
    "notes": [
-    "15S, 54 V nom, 60 V full",
-    "dock adapter, 12 AWG leads",
-    "XT60H female on its lead"
+    "10S, 36 V nom, 41 V full (D65)",
+    "two 20 V dock adapters, 12 AWG",
+    "XT60H female on the pair's lead"
    ]
   },
   "fuse": {
