@@ -1201,32 +1201,32 @@
    "evidence": "Product 'M5X0.8, M6 Shoulder Shoulder Bolt 12.9 ISO 7379'. Belmetric's site-search index shows only the 10 mm shoulder length for this product, and no 12 mm option."
   }
  ],
- "stop_post": [
+ "stop_pin": [
   {
-   "supplier": "Belmetric",
-   "part_number": "BSHLDR8X10X20/33",
-   "url": "https://belmetric.com/m8x1-25-m10-shoulder-shoulder-bolt-12-9-iso-7379/",
-   "price": "$4.05",
-   "price_usd_each": 4.05,
+   "supplier": "McMaster-Carr",
+   "part_number": "91595A845",
+   "url": "https://www.mcmaster.com/91595A845/",
+   "price": "$5.01 each",
+   "price_usd_each": 5.01,
    "pack_qty": 1,
-   "stock": "In stock",
-   "drop_in": true,
-   "changes": null,
+   "stock": null,
+   "drop_in": false,
+   "changes": "The plain 52100 dowel (DIN 6325-m6, Rockwell C52, Ø16 x 40): no vent and no tapped end. Print a Ø2 vent through the hole's 1.1 mm floor at its outer edge (off the motor's face) so air and compound get out, and accept that the pin cannot be pulled out of the blind hole.",
    "checked": "2026-10-27",
-   "evidence": "Product page (curl): 'M8X1.25, M10 Shoulder Shoulder Bolt 12.9 ISO 7379', shoulder lengths 16/20/25/30 mm, class 12.9 black oxide, 'M8X1.25 will always have a taper + thread length of 13mm'. Variant SKU name 'M8X1.25X33, M10 Shoulder' (20 mm shoulder, 33 mm overall). Page price range $4.02-$4.39; the $4.05 for the 20 mm variant is from Belmetric's site-search index."
+   "evidence": "McMaster-Carr category page (Chrome): Dowel Pins, metric, 52100 alloy steel, 16 mm diameter: length 40 mm, diameter tolerance 0.007 to 0.018 mm, Rockwell C52, DIN 6325-m6 / ISO 8734, pack 1, 91595A845, $5.01."
   },
   {
    "supplier": "Aspen Fasteners",
-   "part_number": "ME343-8125X20X10-00050",
-   "url": "https://www.aspenfasteners.com/m8-1-25-x-20mm-shoulder-10mm-iso-7379-metric-hex-socket-drive-shoulder-screws-class-12-9-steel-plain/",
-   "price": "Now: $196.02 (Box of 50)",
-   "price_usd_each": 3.9204,
-   "pack_qty": 50,
+   "part_number": "ME397-16X40-00008",
+   "url": "https://www.aspenfasteners.com/m16-x-40mm-din-6325-metric-solid-dowel-pins-steel/",
+   "price": "$192.49 (box of 8)",
+   "price_usd_each": 24.06,
+   "pack_qty": 8,
    "stock": "Contact Support for Availability Info",
-   "drop_in": true,
-   "changes": null,
+   "drop_in": false,
+   "changes": "A plain DIN 6325 dowel (m6, hardened Rockwell C58-C62, rounded ends): the same changes as the plain McMaster pin; four times the price.",
    "checked": "2026-10-27",
-   "evidence": "curl of product page: 'M8-1.25 X 20mm, Shoulder=10mm ISO 7379 ... Class 12.9 Steel, Plain', heat treated, uncoated. Box-only fallback."
+   "evidence": "curl of the product page: 'M16 X 40mm DIN 6325, Metric, Solid Dowel Pins, Steel', diameter 16.007-16.018 mm, tolerance m6, hardened Rockwell C58-C62, box of 8, schema.org offer $192.49 USD."
   }
  ],
  "te-dt04-12pa-l012": [

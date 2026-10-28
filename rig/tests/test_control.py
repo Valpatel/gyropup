@@ -62,8 +62,11 @@ def test_polar_from_the_angles_equals_the_simulated_legs(model):
 
 # ----------------------------------------------------------------------------------- T7
 
-def _run(name, rate=500.0, pack=Pack(54.0, 0.0), latency=0, **kw):
+def _run(name, rate=500.0, pack=None, latency=0, **kw):
+    """rig.run's simulation of a scenario at the reference's mass, on sim/leg_rig.py's ideal bus (its BUS_V, no
+    resistance) unless a pack is given: the bus the reference (exports/leg/rig-results.json) was made on."""
     from rig.run import run_sim
+    pack = pack or Pack(REF.get('bus_v', lr.BUS_V), 0.0)
     return run_sim(name, REF['half_mass_kg'], rate, pack, latency, save=False, **kw)['results']
 
 

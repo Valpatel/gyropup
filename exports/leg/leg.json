@@ -14,7 +14,8 @@
   "gap": 2.0,
   "knee_out_deg": 3.0,
   "knee_in_deg": -97.0,
-  "stop_r": 58.0,
+  "stop_r": 60.0,
+  "stop_beta": 58.0,
   "hollow": false,
   "skin": 5.0
  },
@@ -69,12 +70,12 @@
    0.8,
    2.95
   ],
-  "wheel_boss": 74.8,
+  "wheel_boss": 75.0,
   "tyre": [
-   82.3,
-   126.9
+   82.5,
+   127.1
   ],
-  "wheel": 104.6,
+  "wheel": 104.8,
   "centre_plane": -82.30000000000001
  },
  "stack_notes": [],
@@ -82,7 +83,7 @@
   101.5,
   392.4
  ],
- "track_mm_two_legs_back_to_back": 373.8,
+ "track_mm_two_legs_back_to_back": 374.2,
  "stand_300": {
   "phi_deg": [
    -50.9,
@@ -102,37 +103,37 @@
  "lug_clock_deg": 7.0,
  "stop_posts_mm": [
   [
-   108.8,
-   47.2
+   104.1,
+   52.5
   ],
   [
-   -108.8,
-   47.2
+   -104.1,
+   52.5
   ],
   [
-   25.6,
-   -30.4
+   20.6,
+   -25.4
   ],
   [
-   -25.6,
-   -30.4
+   -20.6,
+   -25.4
   ]
  ],
  "mass_g": {
-  "printed": 2610,
-  "machined": 308,
-  "bought": 6365,
-  "total": 9282,
+  "printed": 2945,
+  "machined": 305,
+  "bought": 6459,
+  "total": 9708,
   "printed_parts": {
-   "hip_frame": 771.9,
-   "upper_link": 362.5,
-   "front_link": 442.5,
-   "wheel_link": 614.8,
+   "hip_frame": 1007.5,
+   "upper_link": 399.5,
+   "front_link": 446.4,
+   "wheel_link": 615.8,
    "apex_spacer": 13.7,
-   "stop_sleeve": 10.4
+   "stop_sleeve": 15.6
   },
   "machined_parts": {
-   "output_adapter": 153.8
+   "output_adapter": 152.5
   }
  },
  "made_to_order": {
@@ -140,18 +141,58 @@
  },
  "print": {
   "too_big": [],
-  "hours": 172.6
+  "hours": 195.4
  },
  "clashes": [],
  "cable_route": {
-  "105": [],
-  "130": [],
-  "170": [],
-  "220": [],
-  "270": [],
-  "320": [],
-  "370": [],
-  "390": []
+  "105": [
+   [
+    "upper_link_rear",
+    132
+   ]
+  ],
+  "130": [
+   [
+    "upper_link_rear",
+    128
+   ]
+  ],
+  "170": [
+   [
+    "upper_link_rear",
+    128
+   ]
+  ],
+  "220": [
+   [
+    "upper_link_rear",
+    128
+   ]
+  ],
+  "270": [
+   [
+    "upper_link_rear",
+    126
+   ]
+  ],
+  "320": [
+   [
+    "upper_link_rear",
+    123
+   ]
+  ],
+  "370": [
+   [
+    "upper_link_rear",
+    116
+   ]
+  ],
+  "390": [
+   [
+    "upper_link_rear",
+    113
+   ]
+  ]
  },
  "bought_to_source": [],
  "pictures": [
