@@ -3297,5 +3297,94 @@
   "sources": [
    "https://www.lcsc.com/product-detail/C163339.html"
   ]
+ },
+ {
+  "id": "traco-tep-150-4812wi",
+  "key": "traco-tep-150-4812wi",
+  "category": "power",
+  "vendor": "TRACO Power",
+  "model": "TEP 150-4812WI",
+  "name": "TRACO TEP 150-4812WI DC-DC converter, 18-75 V in (4:1), 12 V 12.5 A (150 W), isolated 2,250 V DC, chassis mount, screw terminals",
+  "price_usd": null,
+  "price_checked": "2026-10-27",
+  "price_note": "the 24 V twin TEP 150-4815WI is listed at TRC Electronics at $253.69 (read 2026-10-27); read the 4812WI's own listing before ordering (D40)",
+  "buy": [
+   {
+    "seller": "TRC Electronics",
+    "url": "https://www.trcelectronics.com/products/traco-power-tep-150-4812wi",
+    "read_on": "2026-10-27",
+    "stock": "listing to read (the 4815WI's page was read)"
+   },
+   {
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/detail/traco-power/TEP-150-4812WI/9343574",
+    "read_on": "2026-10-27",
+    "stock": "listed (page not read: the site refused the reader)"
+   }
+  ],
+  "specs": {
+   "vin_v": [
+    18,
+    75
+   ],
+   "vout_v": 12,
+   "iout_a": 12.5,
+   "efficiency": 0.89,
+   "size_mm": [
+    98,
+    65,
+    35.7
+   ],
+   "mass_g": 300,
+   "mount": "base flange with slots (59 mm spacing per the outline)",
+   "undervoltage_lockout_v": [
+    15.6,
+    16.8
+   ],
+   "surge_v": 100
+  },
+  "sources": [
+   "https://www.farnell.com/datasheets/1750007.pdf",
+   "https://www.trcelectronics.com/products/traco-power-tep-150-4815wi"
+  ]
+ },
+ {
+  "id": "terrafirma-dewalt-20v-adapter-10awg",
+  "key": "terrafirma-dewalt-20v-adapter-10awg",
+  "category": "power",
+  "vendor": "Terrafirma Technology",
+  "model": "4pack 10AWG Adapter for DeWALT 20V (Amazon B07HYJ628S)",
+  "name": "Terrafirma Technology DeWalt 20 V battery adapter, 10 AWG leads (1 ft), 30 A stated, no fuse or switch, 4-pack",
+  "price_usd": 64.0,
+  "price_checked": "2026-10-27",
+  "pack_qty": 4,
+  "pack_price_usd": 64.0,
+  "price_note": "Amazon listing, $64.00 for four (read 2026-10-27); its outline is not published: measure on arrival (the bay's plates are printed)",
+  "buy": [
+   {
+    "seller": "Amazon (Terrafirma Technology)",
+    "url": "https://www.amazon.com/dp/B07HYJ628S",
+    "price_usd": 64.0,
+    "pack_qty": 4,
+    "read_on": "2026-10-27",
+    "stock": "listed"
+   },
+   {
+    "seller": "Amazon (Terrafirma, 12 AWG single)",
+    "url": "https://www.amazon.com/dp/B07TQFBZ6N",
+    "price_usd": 19.0,
+    "read_on": "2026-10-27",
+    "stock": "listed; 12 AWG, M4/#6 mounting holes, current not stated",
+    "note": "not drop-in: 12 AWG"
+   }
+  ],
+  "specs": {
+   "awg": 10,
+   "current_a": 30,
+   "fits": "DeWalt 20 V MAX packs (FLEXVOLT stays in 20 V mode: check the slider on the first unit)"
+  },
+  "sources": [
+   "https://www.amazon.com/dp/B07HYJ628S"
+  ]
  }
 ]

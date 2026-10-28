@@ -55,6 +55,15 @@ def catalogue() -> dict:
 
 # extra sellers for shared catalogue items that list only one (read 2026-10-27 by the sourcing reports)
 EXTRA_SELLERS = {
+    'dewalt-dcb609': [
+        {'seller': 'The Power Tool Store', 'url': 'https://thepowertoolstore.com/products/dewalt-dcb609', 'price_usd': 259.0, 'in_stock': True,
+         'ships_from': 'US', 'read_on': '2026-10-25'},
+        {'seller': 'Ace Tool', 'url': 'https://acetool.com/Dewalt-DCB609-p/dew-dcb609.htm', 'price_usd': 259.0, 'read_on': READ, 'stock': 'listed'}],
+    'traco-tep-150-4812wi': [
+        {'seller': 'Newark', 'url': 'https://www.newark.com/search?st=TEP%20150-4812WI', 'price_usd': 275.99, 'read_on': READ,
+         'stock': '4 (as an aggregator, electronicsdatasheets.com, lists it: confirm on the order)'},
+        {'seller': 'Farnell', 'url': 'https://www.farnell.com/search?st=TEP%20150-4812WI', 'price_usd': 222.65, 'read_on': READ,
+         'stock': 'listed (via the same aggregator)'}],
     'meanwell-ddr-120c-24': [
         {'seller': 'Bravo Electro', 'url': 'https://www.bravoelectro.com/ddr-120c-24.html', 'price_usd': 69.20, 'in_stock': True, 'ships_from': 'US',
          'stock': 'listed (no quantity shown)', 'read_on': READ},
@@ -129,67 +138,58 @@ def line(cat, key, qty, why, **kw):
     return row
 
 
+def joint_hardware(stage):
+    """Every screw, insert and nut the joints of a stage add (cad/body_joints.py: the same joints the integrity checks
+    read through the CAD, so the parts list and the checked stacks cannot disagree): {key: (qty, why)}. P1 counts the
+    P0 and P1 joints; P2 and P3 only the joints that first appear there."""
+    import body_joints as bj
+    import build_body as bb
+    J = bj.joints(bb._layout()['items'])
+    first = {'P1': ('P0', 'P1'), 'P2': ('P2',), 'P3': ('P3',)}[stage]
+    out = {}
+
+    def add(key, n, why):
+        q, w = out.get(key, (0, []))
+        out[key] = (q + n, w + [why])
+    for j in J:
+        if j.stage not in first:
+            continue
+        n = len(j.at)
+        add(j.bom, n, f'{n} {j.name.replace("_", " ")}')
+        kind = j.receiver[0]
+        if kind == 'insert':
+            add(f'insert_{j.thread.lower()}', n, f'{n} {j.name.replace("_", " ")}')
+        elif kind == 'nyloc':
+            add(f'nut_{j.thread.lower()}_nyloc', n, f'{n} {j.name.replace("_", " ")}')
+        elif kind == 'nut':
+            add(f'nut_{j.thread.lower()}', n, f'{n} {j.name.replace("_", " ")}')
+    return {k: (q, f'{stage}: ' + ', '.join(w) + ' (cad/body_joints.py)') for k, (q, w) in sorted(out.items())}
+
+
 def hardware_counts():
-    """Screws, standoffs and inserts per robot, from the frame's own lists."""
-    import body_battery as bb
+    """P1's screws, inserts and nuts from the joints, and the parts that are not joints (standoffs, the grommet, the
+    lug stacks' M6 screws and nuts)."""
     import body_frame as bf
-    import body_layout as bl
-    L = bl.layout()
-    m = L['mounts']
-    cheek_nuts = 2 * sum(1 for f in bf.cheek_part().features if f.kind == 'pem')          # tray and belly screws into them
-    bay = sum(1 for r in m['belly'] if r[0] == 'pem')
-    plate_m5 = sum(1 for r in m['plate'] if r[0] == 'pem' and r[3] == 'F-M5-2')
-    plate_m4 = sum(1 for r in m['plate'] if r[0] == 'pem' and r[3] == 'F-M4-2')
-    tray_m4 = sum(1 for r in m['tray'] if r[0] == 'pem' and r[3] == 'S-M4-0')
-    posts = 2 * len(bf.bp.POSTS)
-    plate_posts = 2 * len(bf.PLATE_STANDOFFS)
-    riser = len(bf.RISER_FEET)                               # the riser's four feet into the deck, from below (P1: the deck alone)
-    spacers = len(bf.SPACERS_XZ)
-    return {
-        'screw_m5x12_button': (12 + riser, f'the hip frames to the cheeks: six each, from inside the gap (3 N m); {riser} the riser\'s feet '
-                                           'up through the deck into its inserts (P1; M5 x 16 through the P2 mount plate)'),
-        'screw_m5x10_button': (cheek_nuts + bay + posts + plate_posts + plate_m5,
-                               f'{cheek_nuts} tray and belly into the cheeks\' flange nuts, {bay} battery bay into the belly, {posts} deck posts, '
-                               f'{plate_posts} plate posts, {plate_m5} VESC flanges and shunt into the plate\'s nuts'),
-        'screw_m4x10_flat': (2 * spacers + plate_m4 + 2, f'{2 * spacers} the spine standoffs (flush on the frame side), {plate_m4} switch cradle, MCU '
-                                                       'carrier and DIN rail into the plate\'s nuts, 2 the DDR-120C rail into the tray'),
-        'standoff_m4x31_ff': (spacers, 'the spine: between the cheeks in the hip frames\' bolt rows'),
+    out = joint_hardware('P1')
+    out.update({
+        'standoff_m4x31_ff': (len(bf.SPACERS_XZ), 'the spine: between the cheeks in the hip frames\' bolt rows'),
         'standoff_m3x16_ff': (4, 'the J501 carrier on the compute pallet'),
-        'insert_m5': (posts + plate_posts + 2 * riser, f'{posts} deck posts, {plate_posts} plate posts, {2 * riser} riser (its legs, both ends)'),
-        'insert_m3': (8, 'the two bus-bar insulators (two from above, two from below each)'),
-        'screw_m4x20': (tray_m4 - 2, 'the compute pallet through its printed TPU isolators into the tray\'s nuts'),
-        'screw_m3x6': (4, 'the J501 carrier onto its standoffs'),
+        'screw_m3x6': (out.get('screw_m3x6', (0, ''))[0] + 4, (out.get('screw_m3x6', (0, ''))[1] + '; ' if 'screw_m3x6' in out else '')
+                       + '4 the J501 carrier onto its standoffs'),
         'turret_screw_m3x6_flat': (4, 'the carrier standoffs up through the pallet\'s countersinks'),
         'grommet_cable_pass': (1, 'the turret harness through the deck'),
-        'screw_m3x8_socket': (8, 'the bus bars to their insulators (4), the insulators to the plate from below (4)'),
         'screw_m6x16': (2 * len(bf.BUS_HOLES), 'the bus bars\' lug stacks: down through the lug(s) and the bar into the insulator\'s nut'),
         'nut_m6_nyloc': (2 * len(bf.BUS_HOLES), 'held in the bus insulators\' hex pockets under the bars\' holes (they cannot turn)'),
-    }
+    })
+    return out
 
 
 PRICES = R / 'exports' / 'body' / 'sendcutsend' / 'prices.json'      # tools/sendcutsend_quote.py: SendCutSend's instant prices
 
 
-def p3_shell(L):
-    """P3's bought hardware (cad/body_shell.py): counted from the shell's CAD."""
-    import body_frame as bf
-    import body_shell as bs3
-    walls = 4 * len(bs3.POST_Z_SIDE) + 2 * 2 * len(bs3.POST_Z_FACE)            # the walls and faces into the posts' inserts
-    door, hatch, splice = 4, len(bs3.hatch_screws()), 2 * len(bs3.SPLICE_SCREWS_Z)
-    ear = 2 * 4
-    rails, rail_m3 = 2 * 6, 2 * 5
-    return [
-        L('screw_m3x16', walls + door + hatch + splice + 2 * 2, f'P3: {walls} walls and faces into the posts\' side inserts, {door} the '
-                                                                 f'door, {hatch} the hatch, {splice} the side walls\' splices, 4 the D435 cradles'),
-        L('insert_m3', walls + rail_m3, f'P3: {walls} in the hollow posts\' sides (reprinted with their bosses), {rail_m3} in the tub rails '
-                                        '(from P1\'s 50-pack: 8 used)', from_pack_of='p1_frame_hardware'),
-        L('nut_m3', door + hatch + splice, 'P3: held in the walls\' nut pads (door, hatch, splices)'),
-        L('screw_m5x16', ear + rails, f'P3: {ear} the ear brackets through the side walls, {rails} the tub rails up into the belly plate\'s nuts '
-                                      '(from P2\'s 100-pack)', from_pack_of='p2_head'),
-        L('nut_m5_nyloc', ear, 'P3: inside the side walls behind the ear brackets'),
-        L('screw_m3x8_socket', 2 * 10 + 8 + 2 * 2, 'P3: the tub\'s side plates (20), the skids (8), the dock pads\' insulators (4) '
-                                                  '(from P1\'s 100-pack)', from_pack_of='p1_frame_hardware'),
-    ]
+def p3_shell(L, cat=None):
+    """P3's bought hardware: the joints that first appear in P3 (cad/body_joints.py)."""
+    return [L(k, q, why) for k, (q, why) in joint_hardware('P3').items()]
 
 
 def made_to_order(body, prices=None):
@@ -246,73 +246,68 @@ def made_to_order(body, prices=None):
 def build():
     cat = catalogue()
     body = json.loads((R / 'exports/body/body.json').read_text())
-    L = lambda key, qty, why, **kw: line(cat, key, qty, why, **kw)
-    hw = hardware_counts()
+    pending = []
+
+    def L(key, qty, why, **kw):
+        try:
+            return line(cat, key, qty, why, **kw)
+        except KeyError:                                   # specified, not yet tied to a listed product page
+            pending.append({'item': key, 'qty': qty, 'for': why, 'note': 'not in the catalogue yet: a product page to read (D40)'})
+            return None
     bom = {
         'note': 'One robot. The first seller of each line is the one to order from; the rest are backups (D40). Quantities include '
                 'spares where noted. Generated by cad/body_bom.py from the CAD (cad/body_frame.py, cad/body_layout.py) and '
                 'catalog/body.json; docs/body-orders.md is the order list by seller, docs/body-electrical.md the wiring.',
         'p0_power_skid': [
-            L('main_switch', 1, 'the main switch: low side, between the shunt and the - bus; momentary mode (D54)'),
-            L('blue-sea-5191-mrbf-terminal-fuse-block', 1, 'the main fuse\'s block on the battery + lead (its M8 post insulated from the plate)'),
+            L('main_switch', 1, 'the main switch: low side, between the bay\'s - and the - bus; momentary mode (D54)'),
+            L('blue-sea-5191-mrbf-terminal-fuse-block', 1, 'the main fuse\'s block on the bay\'s + lead (on 3 mm printed PETG spacers; its M8 post insulated from the plate)'),
             L('mrbf_80a', 2, 'the main fuse (80 A, 58 V DC, 2 kA at 58 V); one spare'),
             L('fuse_mini58_20a', 8, 'the four RS-04 branches (14 AWG); four spares'),
-            L('fuse_mini58_30a', 4, 'the two VESC branches (12 AWG); two spares'),
-            L('fuse_mini58_10a', 4, 'the DDR-120C-24 input and the charge port (18 AWG); two spares'),
-            L('fuse_mini58_5a', 6, 'the DDR-60L-12 input, and the 24 V J501 and turret branches (18 AWG); three spares'),
-            L('fuse_holder_mini_inline', 12, 'one per branch (11) and a spare: labelled "58 V fuses only"; pull only with the pack unplugged'),
-            L('meanwell-ddr-120c-24', 2, '24 V 5 A, isolated: the J501 and the turret; on a printed TS35 rail on the tray. Two: '
-                                         'Master Electronics flags it no longer manufactured; the SD-100C-24 is its successor (D58)'),
-            L('ddr60l_12', 1, '12 V 5 A, isolated: the lidar interface box, the 5 V buck, the radio-stop jack (and the P3 lights and eyes)'),
-            L('buck_5v', 1, '5 V from the 12 V rail: the MCU, VN-100, CAN transceivers, QT Py, radio receiver'),
-            L('shunt_150a', 1, 'the current shunt in the battery negative (before the switch: it sees charge and discharge)'),
+            L('fuse_mini58_30a', 4, 'the two VESC branches (12 AWG; the VESCs\' battery current limit 20 A); two spares'),
+            L('fuse_mini58_10a', 8, 'the TRACO input (W16), the turret\'s branch (W17), the J501 (W21) and the 12 V loads (W22); four spares'),
+            L('fuse_mini58_5a', 2, 'the INA228\'s VBUS sense lead (W32, 22 AWG); one spare'),
+            L('fuse_holder_mini_inline', 12, 'one per branch (11) and a spare: labelled "58 V fuses only"; pull only with the packs out'),
+            L('traco-tep-150-4812wi', 1, '12 V 12.5 A, 18-75 V in, isolated (D65): the J501 and the 12 V rail, in place of the DDR-120C-24 '
+                                        'and the DDR-60L-12 (both start too high or are too small for 30-41 V)'),
+            L('buck_5v', 1, '5 V from the 12 V rail: the MCU, VN-100, CAN transceivers, radio receiver'),
+            L('shunt_150a', 1, 'the current shunt in the + lead after the MRBF (high side: the INA228 survives the switch opening)'),
             L('ina228', 1, 'pack voltage and current to the MCU over I2C (its own 15 mOhm shunt removed, wired to the external shunt)'),
         ],
         'p0_battery': [
-            L('cell_p30b', 28, 'the 13S2P brick (26) and two spares'),
-            L('bms_daly_13s', 1, 'the pack\'s BMS (common port, negative side); cell over-voltage set to 4.15 V, the charger stops at 4.10 V'),
-            L('nickel_2p_18650', 1, 'the 2P groups and the series links (doubled on every series link)'),
-            L('fish_paper_18650', 26, 'one ring on every cell\'s + end'),
-            L('kapton_20', 1, 'between the layers, over every weld, round the BMS'),
-            L('xt90s_pair', 1, 'the pack\'s anti-spark plug: female on the pack lead, male on the robot (5-pair pack)'),
-            L('charger_13s', 1, 'the charger: XT60 output, set to 90 % and metered to 53.3 V before the first charge, 2-3 A'),
+            L('dewalt-dcb609', 2, 'the battery (D65): two FLEXVOLT 9.0 Ah packs in 20 V mode, in series (10S, 30-41 V); '
+                                  'the user\'s own packs and chargers serve'),
+            L('terrafirma-dewalt-20v-adapter-10awg', 1, 'the packs\' rail adapters (4-pack: two used, two spare): 10 AWG leads, 30 A stated'),
+            L('xt90s_pair', 2, 'the bay\'s lead (anti-spark: female on the bay, male on the robot) and the series link between the packs'),
+            L('thumbscrew_m3x10', 4, 'the bay\'s two doors (two each, into the rails\' end inserts): tool-free'),
+            L('vhb_tape_25mm', 1, 'the bay\'s TPU skids (3M VHB 5952, 25 mm)'),
         ],
         'p0_control': [
             L('nucleo_g474re', 1, 'the balance and power MCU (three FDCAN: buses A, B, C)'),
-            L('can_pal', 4, 'CAN transceivers: three for the MCU\'s buses A, B, C, one for the QT Py on bus C'),
-            L('qtpy_esp32s3', 1, 'reads the BMS over Bluetooth and puts it on CAN bus C (no wire to the BMS: its UART ground is B-)'),
+            L('can_pal', 3, 'CAN transceivers for the MCU\'s buses A, B, C'),
             L('radio_stop_rx', 1, 'the radio stop\'s receiver (D37), on the 5 V rail'),
             L('radio_stop_relay', 1, 'the radio\'s switch: its contact feeds the stop relay\'s coil (closed = run, open on the failsafe)'),
-            L('stop_relay_dpdt', 2, 'the stop relay (one spare): pole A the turret\'s safety loop, pole B its 24 V branch; on the MCU board'),
+            L('stop_relay_dpdt', 2, 'the stop relay (one spare): pole A the turret\'s safety loop, pole B its bus branch (D66); on the MCU board'),
         ],
         'p0_wiring': [
-            L('wire_8awg', 1, 'the pack leads, the MRBF, the shunt, the switch and the bus bars (about 1.5 m; red heat-shrink on the + runs)'),
+            L('wire_8awg', 1, 'the bay\'s lead to the MRBF, the shunt, the switch and the bus bars (about 1.5 m; red heat-shrink on the + runs)'),
             L('wire_12awg', 1, 'the two VESC branches (about 1.2 m red + black)'),
-            L('wire_14awg', 1, 'the four RS-04 branches (about 3 m red + black)'),
-            L('wire_18awg', 1, 'the converters\' inputs, the 24 V and 12 V outputs, the charge port (about 3 m red + black)'),
+            L('wire_14awg', 1, 'the four RS-04 branches, the frame bond (W33), the turret\'s branch and the J501\'s 12 V (about 4 m red + black)'),
+            L('wire_18awg', 1, 'the converter\'s input, the 12 V loads (about 2 m red + black)'),
             L('wire_22awg', 1, '5 V and signal wiring; the CAN pairs twisted by hand (about 6 m)'),
             L('lug_8awg_m6', 10, 'the bus bars\' M6 taps'),
             L('lug_8awg_m8', 4, 'the MRBF block\'s M8 studs and the shunt'),
-            L('ferrules', 1, 'every screw terminal (the converters, the switch)'),
-            L('xt60h_f', 7, 'sockets on the robot, no live pins (D58, hazard 11): the charge port in its printed bezel and the six 48 V '
-                            'branch leads\' ends (W10-W15)'),
+            L('ferrules', 1, 'every screw terminal (the converter, the switch)'),
+            L('xt60h_f', 6, 'sockets on the robot, no live pins (D58, hazard 11): the six bus branch leads\' ends (W10-W15)'),
             L('xt60h_m', 2, 'the two VESC leads\' plugs (the devices carry the pins; the RS-04 pigtails\' XT60H-M come with the leg\'s '
                             'pigtails, docs/body-next-plan.md 5.1 item 5)'),
-            L('xt30_f', 4, 'sockets on the robot: the 24 V and 12 V branch leads\' ends (W21 the J501, W24 the lidar box), two spare'),
+            L('xt30_f', 4, 'sockets on the robot: the J501 (W21), the lidar box (W24), the turret (W34); one spare'),
             L('xt30_m', 4, 'the devices\' pins: the J501\'s DC-IN and the lidar box\'s adapter leads, two spare'),
             L('gh_lead_2p_300', 8, 'CAN and I2C leads to the transceivers and the INA228'),
-            L('te-dt06-12sa-kit', 1, 'the turret\'s TM plug on the body\'s harness (docs/turret-wiring.md 1.1): 24 V, CAN (J501 can1), SAFETY'),
         ],
         'p1_frame_hardware': [L(k, q, why) for k, (q, why) in hardware_counts().items()],
         'p3_shell': p3_shell(L),
-        'p2_head': [                                            # D59: the turret mount plate under the deck (made_to_order: turret_plate)
-            L('screw_m5x16', len(__import__('body_frame').RISER_FEET), 'P2: the riser\'s feet up through the turret mount plate and the deck '
-                                                                      'into the riser\'s inserts (D59; they replace P1\'s M5 x 12)'),
-            L('screw_m5x10_button', 2, 'P2: the mount plate\'s two ends: down through the deck (two Ø5.5 holes drilled in the P1 deck) into '
-                                       'its PEM nuts (from P1\'s 100-pack, which has the spares)', from_pack_of='p1_frame_hardware'),
-        ],
+        'p2_head': [L(k, q, why) for k, (q, why) in joint_hardware('P2').items()],
         'tools': [
-            L('spot_welder', 1, 'welding the pack\'s nickel (once)'),
             L('ferrule_crimper', 1, 'the ferrules (once)'),
         ],
         'made_to_order': made_to_order(body),
@@ -340,6 +335,10 @@ def build():
             L('flipsky-75100', 2, 'the wheels\' drivers, hung under the power plate: on the leg workstream\'s order (docs/body-plan.md 8)'),
         ],
     }
+    for k, v in list(bom.items()):
+        if isinstance(v, list):
+            bom[k] = [r for r in v if r is not None]
+    bom['to_source'] += pending
     priced = [r for k, v in bom.items() if isinstance(v, list) and not k.startswith(('not_', 'to_source', 'made_to_order', 'p2_', 'p3_')) for r in v]
     bom['price_usd_known'] = round(sum(_line_cost(r) for r in priced), 2)             # P0 + P1's bought parts
     bom['p2_usd'] = round(sum(_line_cost(r) for r in bom.get('p2_head', []) if not r.get('from_pack_of'))

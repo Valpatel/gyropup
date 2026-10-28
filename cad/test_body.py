@@ -238,7 +238,7 @@ def test_every_bought_line_has_a_price_and_a_backup():
     assert not bad, bad
 
 
-AMPACITY_A = {8: 85, 10: 55, 12: 41, 14: 32, 18: 16, 22: 7}       # silicone, bundled in free air (the BNTECHGO class, 200 C)
+AMPACITY_A = {8: 85, 10: 55, 12: 41, 14: 32, 16: 22, 18: 16, 22: 7}       # silicone, bundled in free air (the BNTECHGO class, 200 C)
 
 
 def test_every_fuse_protects_its_wire():
@@ -256,8 +256,8 @@ def test_every_fuse_protects_its_wire():
 
 def test_no_live_pins_on_the_body():
     """Every connector on the body's side of a lead that is live with the pack in is a socket (hazard 11, D58): the
-    charge port, the 48 V branch leads (XT60H-F) and the 24 V and 12 V ones (XT30U-F); the devices' leads carry the
-    pins. The pack's XT90-S is the one exception: its female is on the pack, the robot's male is dead with the pack out.
+    bus branch leads (XT60H-F, the turret's XT30U-F) and the 12 V ones (XT30U-F); the devices' leads carry the
+    pins. The bay's XT90-S: its female is on the bay's lead, the robot's male is dead with the packs out.
     The order buys the sockets the wire list needs."""
     import re
     w = json.loads((R / 'exports' / 'body' / 'wiring.json').read_text())
@@ -272,15 +272,15 @@ def test_no_live_pins_on_the_body():
     assert not bad, bad
     ends = {r['id']: r['termination'] for r in w['wires']}
     assert all('XT60H-F' in ends[k] for k in ('W10', 'W11', 'W12', 'W13', 'W14', 'W15')), ends
-    assert all('XT30U-F' in ends[k] for k in ('W21', 'W24')), ends
+    assert all('XT30U-F' in ends[k] for k in ('W21', 'W24', 'W34')), ends
     f = R / 'exports' / 'body' / 'bom.json'
     if f.exists():
         bom = json.loads(f.read_text())
         qty = {r['key']: r['qty'] for k, rows in bom.items() if isinstance(rows, list) and not k.startswith(('not_', 'to_source', 'made_to'))
                for r in rows if isinstance(r, dict) and 'key' in r}
-        sockets_60 = 1 + sum(1 for k in ('W10', 'W11', 'W12', 'W13', 'W14', 'W15') if 'XT60H-F' in ends[k])     # + the charge port
+        sockets_60 = sum(1 for k in ('W10', 'W11', 'W12', 'W13', 'W14', 'W15') if 'XT60H-F' in ends[k])     # D65: no charge port
         assert qty.get('xt60h_f', 0) >= sockets_60, (qty.get('xt60h_f'), sockets_60)
-        assert qty.get('xt30_f', 0) >= 2, qty.get('xt30_f')
+        assert qty.get('xt30_f', 0) >= 3, qty.get('xt30_f')
 
 
 def test_body_loads_from_the_mount_plane():
@@ -336,3 +336,14 @@ def test_turret_grommet_on_the_right_rear():
 if __name__ == '__main__':
     import pytest
     sys.exit(pytest.main([__file__, '-q', '-s']))
+
+
+def test_integrity_every_joint_and_no_floating_part():
+    """cad/body_joints.py (run by cad/build_body.py): every screw's stack reads true through the CAD (the head on its face,
+    the stack touching, the holes, the thread engaged, the tip clear), every part on the robot reaches the cheeks, and
+    no two body parts interfere."""
+    f = R / 'exports' / 'body' / 'integrity.json'
+    d = json.loads(f.read_text())['summary']
+    assert not d['joints_with_problems'], d['joints_with_problems']
+    assert not d['floating'], d['floating']
+    assert not d.get('clashes'), d.get('clashes')

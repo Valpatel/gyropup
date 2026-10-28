@@ -421,6 +421,7 @@ def plate_post():
 
 
 ISOLATOR_D = 16.0
+ISOLATOR_CAP_T = 1.5         # an M4 x 20 and its washer then engage 3.6 mm of the tray's S-M4-0 (cad/body_joints.py)
 
 
 def isolator():
@@ -429,7 +430,7 @@ def isolator():
     both into the tray's S-M4-0 nut, snug, not tight: the pallet touches only TPU."""
     h = bp.ISOLATOR_H
     foot = cyl_z(ISOLATOR_D / 2, 0.0, h).union(cyl_z(3.8, h, h + bp.STOCK[bp.PALLET]['t'] - 0.2))
-    cap = cyl_z(6.0, h + bp.STOCK[bp.PALLET]['t'] + 0.5, h + bp.STOCK[bp.PALLET]['t'] + 3.5)      # Ø12: clear of the carrier's standoffs
+    cap = cyl_z(6.0, h + bp.STOCK[bp.PALLET]['t'] + 0.5, h + bp.STOCK[bp.PALLET]['t'] + 0.5 + ISOLATOR_CAP_T)      # Ø12: clear of the carrier's standoffs
     return foot.union(cap).cut(cyl_z(2.3, -1.0, h + 10.0))
 
 
@@ -468,7 +469,7 @@ def dcdc_bracket_holes():
     """The converter's bracket: two M4 down into the plate's flush nuts on its inner side (robot x, y)."""
     import body_layout as bl
     d = bl.DCDC
-    return [(50.0, d['y'][1] + 3.0), (110.0, d['y'][1] + 3.0)]
+    return [(40.0, d['y'][1] + 3.0), (120.0, d['y'][1] + 3.0)]     # beyond the switch under the plate (x 52..112)
 
 
 def dcdc_screws():
@@ -727,8 +728,10 @@ def frame_parts(mounts=None) -> dict:
         for k, (bx, by) in enumerate(mounts['_bus_xy']):
             out[f'bus_bar_{k + 1}'] = Part(f'bus_bar_{k + 1}', 'sheet', bloc.translate((bx, by, zp + BUS_INS_H)), 1, bus if k == 0 else None, bloc,
                                            bus.s['material'], colour=(0.85, 0.45, 0.2) if k == 0 else (0.25, 0.25, 0.27), note=bus.note)
-            out[f'bus_insulator_{k + 1}'] = Part(f'bus_insulator_{k + 1}', 'printed', ins.translate((bx, by, zp)), 1, material='pa6-cf',
-                                                 colour=(0.2, 0.2, 0.22), note='PA6-CF, 100 %; 4 x M3 inserts')
+            out[f'bus_insulator_{k + 1}'] = Part(f'bus_insulator_{k + 1}', 'printed', ins.translate((bx, by, zp)), 1, material='petg',
+                                                 colour=(0.2, 0.2, 0.22), note='PETG, 100 % (never a carbon-filled filament: carbon '
+                                                 'conducts, and the plate is bonded to the - bus); 4 x M3 inserts; test: > 10 MOhm at 50 V '
+                                                 'from every lug screw to the plate before power')
     out['dcdc_bracket'] = Part('dcdc_bracket', 'printed', dcdc_bracket(), 1, material='pa6-cf', colour=(0.25, 0.27, 0.30),
                                note='PA6-CF; two M4 x 10 down into the tray\'s nuts; the converter on four M3 x 8 through its upright')
     # ---- the battery bay under the belly plate (D65: two DeWalt packs; cad/body_battery.py)
@@ -847,7 +850,7 @@ BUS_INS = (21.25, 88.75)
 
 
 def bus_insulator():
-    """The printed PA6-CF block a bus bar sits on: 110 x 20 x BUS_INS_H, four M3 heat-set inserts (94459A140, Ø4.0 x
+    """The printed PETG block a bus bar sits on (not PA6-CF: carbon fibre conducts and the plate is bonded to the - bus): 110 x 20 x BUS_INS_H, four M3 heat-set inserts (94459A140, Ø4.0 x
     6.5: two from above for the bar, two from below for the plate's screws, offset so they never meet) and, under each
     of the bar's five holes, a hex pocket for the lug screw's nyloc nut (it cannot turn) with the screw's tip hole
     below it. The bar's potential never reaches the plate: every screw ends in plastic, BUS_FLOOR above the plate (an

@@ -122,10 +122,10 @@ def frame_joints():
     J.append(Joint('turret_plate_ends', 'M5', 10.0, 'button', [_z(x, y, zd) for x, y in bf.turret_plate_end_holes()], (0.0, 0.0, -1.0),
                    ('deck', 'turret_plate'), ('pem', 'turret_plate'), pem='SS-M5-0', nut_parts=('turret_plate_nuts',), stage='P2', bom='screw_m5x10_button',
                    note='the turret plate\'s ends up against the deck'))
-    hi = bp.ISOLATOR_H + bp.STOCK[bp.PALLET]['t'] + 3.5
+    hi = bp.ISOLATOR_H + bp.STOCK[bp.PALLET]['t'] + 0.5 + bf.ISOLATOR_CAP_T
     for k, (x, y) in enumerate(bf.ISOLATORS):
         J.append(Joint(f'isolator_{k + 1}', 'M4', ISOLATOR_SCREW_L, 'socket', [_z(x, y, zt + hi + 0.8)], (0.0, 0.0, -1.0), (f'isolator_{k + 1}', 'floor_tray'),
-                       ('pem', 'floor_tray'), pem='S-M4-0', washer=0.8, bom='screw_m4x25',
+                       ('pem', 'floor_tray'), pem='S-M4-0', washer=0.8, bom='screw_m4x20',
                        note='a TPU isolator (snug, not tight): an M4 x 20 and a washer through its cap and foot into the tray\'s nut'))
     import body_layout as bl
     pt = bp.STOCK['5052-0.100']['t']
@@ -139,10 +139,10 @@ def frame_joints():
     L_ = bl.layout()['items']
     d = bl.DCDC
     J.append(Joint('power_dcdc', 'M3', 6.0, 'pan', [_z(x, d['y'][0] + DCDC_FLANGE_T, z) for x, z in bf.dcdc_screws()], (0.0, -1.0, 0.0),
-                   ('item.power_dcdc', 'dcdc_bracket'), ('insert', 'dcdc_bracket'), envelope=('item.power_dcdc',), bom='screw_m3x6_pan',
+                   ('item.power_dcdc', 'dcdc_bracket'), ('insert', 'dcdc_bracket'), envelope=('item.power_dcdc',), bom='screw_m3x6',
                    note='the converter\'s base flange (its slots) on the bracket\'s upright'))
-    J.append(Joint('dcdc_bracket', 'M4', 8.0, 'socket', [_z(x, y, pz + pt + bf.DCDC_FOOT_T) for x, y in bf.dcdc_bracket_holes()], (0.0, 0.0, -1.0),
-                   ('dcdc_bracket', 'power_plate'), ('pem', 'power_plate'), pem='F-M4-2', bom='screw_m4x8',
+    J.append(Joint('dcdc_bracket', 'M4', 12.0, 'socket', [_z(x, y, pz + pt + bf.DCDC_FOOT_T) for x, y in bf.dcdc_bracket_holes()], (0.0, 0.0, -1.0),
+                   ('dcdc_bracket', 'power_plate'), ('pem', 'power_plate'), pem='F-M4-2', bom='screw_m4x12_socket',
                    note='the converter\'s bracket down into the plate\'s flush nuts (the switch hangs 3 mm under the plate)'))
     # the bus bars on their insulators, the insulators on the plate (M3 x 8 into heat-set inserts both ways)
     for k, (bx, by) in enumerate(bl.BUS_XY):
@@ -177,7 +177,7 @@ def _item_joints(items_by_name):
 VESC_FLANGE_T = 4.0          # the Flipsky 75100's mounting flange (assumed: measure on arrival)
 DCDC_FLANGE_T = 2.0          # the TRACO's base flange (assumed)
 VESC_SCREW_L = 8.0           # 4 mm of flange and the 2.54 mm plate's flush nut: 1.5 mm stands up through it
-ISOLATOR_SCREW_L = 25.0      # an M4 x 20 left 2.1 mm of the tray's S-M4-0 thread engaged
+ISOLATOR_SCREW_L = 20.0      # with the isolator's cap 1.5 mm thick (3.0 left 2.1 mm of the nut's thread)
 
 
 class _It:
@@ -192,20 +192,20 @@ def bay_joints():
     g = bb.geometry()
     J = []
     for side, sy in (('l', 1.0), ('r', -1.0)):
-        J.append(Joint(f'bay_rail_{side}', 'M4', 16.0, 'socket', [_z(x, sy * yc, g['rail_z'][0]) for x, yc in bb.rail_holes()], (0.0, 0.0, 1.0),
-                       (f'bay_rail_{side}', 'belly_plate'), ('pem', 'belly_plate'), pem='S-M4-0', bom='screw_m4x16',
+        J.append(Joint(f'bay_rail_{side}', 'M4', 20.0, 'socket', [_z(x, sy * yc, g['rail_z'][0]) for x, yc in bb.rail_holes()], (0.0, 0.0, 1.0),
+                       (f'bay_rail_{side}', 'belly_plate'), ('pem', 'belly_plate'), pem='S-M4-0', bom='screw_m4x20',
                        note='a bay rail up into the belly\'s nuts, beyond the cheeks\' ends'))
         J.append(Joint(f'bay_side_{side}_low', 'M3', 6.0, 'button', [_z(x, sy * g['side_out'], g['z_floor'] + 12.0) for x in bb.SIDE_SCREWS_X],
-                       (0.0, -sy, 0.0), (f'bay_side_{side}', 'bay_floor'), ('pem', 'bay_floor'), pem='S-M3-0', bom='screw_m3x6_button',
+                       (0.0, -sy, 0.0), (f'bay_side_{side}', 'bay_floor'), ('pem', 'bay_floor'), pem='S-M3-0', bom='screw_m3x6',
                        note='a side plate into the floor\'s flange nuts'))
         J.append(Joint(f'bay_side_{side}_high', 'M3', 6.0, 'button', [_z(x, sy * g['side_out'], g['z_belly'] - bb.RAIL_H / 2) for x in bb.SIDE_SCREWS_X],
-                       (0.0, -sy, 0.0), (f'bay_side_{side}',), ('insert', f'bay_rail_{side}'), bom='screw_m3x6_button',
+                       (0.0, -sy, 0.0), (f'bay_side_{side}',), ('insert', f'bay_rail_{side}'), bom='screw_m3x6',
                        note='a side plate into its rail\'s inserts'))
     yc = (g['rail_y'][0] + g['rail_y'][1]) / 2
     zc = sum(g['rail_z']) / 2
     for k, sx in (('front', 1.0), ('rear', -1.0)):
-        J.append(Joint(f'adapter_plate_{k}', 'M4', 8.0, 'socket', [_z(x, y, g['z_belly'] - bb.PLATE_T + 1.5) for x, y in bb.plate_holes(k)],
-                       (0.0, 0.0, 1.0), (f'adapter_plate_{k}', 'belly_plate'), ('pem', 'belly_plate'), pem='S-M4-0', bom='screw_m4x8',
+        J.append(Joint(f'adapter_plate_{k}', 'M4', 12.0, 'socket', [_z(x, y, g['z_belly'] - bb.PLATE_T + 1.5) for x, y in bb.plate_holes(k)],
+                       (0.0, 0.0, 1.0), (f'adapter_plate_{k}', 'belly_plate'), ('pem', 'belly_plate'), pem='S-M4-0', bom='screw_m4x12_socket',
                        note='a pack adapter\'s printed plate up into the belly\'s nuts (heads counterbored 1.5 mm)'))
         for side, sy in (('l', 1.0), ('r', -1.0)):
             J.append(Joint(f'bay_door_{k}_{side}', 'M3', bb.THUMB['length'], 'thumb', [_z(sx * g['x_out'][1], sy * yc, zc)], (-sx, 0.0, 0.0),
@@ -227,12 +227,12 @@ def shell_joints():
                            (f'shell_side_{side}_{half}',), ('insert', post[(px, sy * 109.0)]), stage='P3', bom='screw_m3x16',
                            note='a side wall into its corner post\'s side inserts'))
         J.append(Joint(f'splice_{side}', 'M3', 8.0, 'pan', [_z(W.SPLIT_X + 7.0, sy * W.YO, z) for z in W.SPLICE_SCREWS_Z], (0.0, -sy, 0.0),
-                       (f'shell_side_{side}_front', f'shell_side_{side}_rear'), ('nut', f'shell_side_{side}_rear'), nut_at=W.WALL_T + 1.0, stage='P3', bom='screw_m3x8_pan',
+                       (f'shell_side_{side}_front', f'shell_side_{side}_rear'), ('nut', f'shell_side_{side}_rear'), nut_at=W.WALL_T + 1.0, stage='P3', bom='screw_m3x8_socket',
                        note='the side wall\'s halves: through the front half into a nut held in the rear half\'s tab'))
         x0, x1 = W.EAR['x']
         J.append(Joint(f'ear_bracket_{side}', 'M5', 14.0, 'button',
                        [_z(x, sy * (W.YO + W.EAR['plate_t']), z) for x in (x0 + 10.0, x1 - 10.0) for z in W.EAR['bolts_z']], (0.0, -sy, 0.0),
-                       (f'ear_bracket_{side}', f'shell_side_{side}_front'), ('nyloc', None), stage='P3', bom='screw_m5x14_button',
+                       (f'ear_bracket_{side}', f'shell_side_{side}_front'), ('nyloc', None), stage='P3', bom='screw_m5x14_socket',
                        note='an ear bracket through the wall, nyloc nuts inside'))
     for front, sx in ((True, 1.0), (False, -1.0)):
         face = 'shell_front' if front else 'shell_rear'
@@ -241,7 +241,7 @@ def shell_joints():
                            (face,), ('insert', post[(sx * 142.0, y)]), stage='P3', bom='screw_m3x16', note='a face into its post\'s end inserts'))
         cr = f'd435_cradle_{"front" if front else "rear"}'
         J.append(Joint(f'{cr}_feet', 'M3', 8.0, 'pan', [_z(sx * W.XO, y, z) for y, z in W.cradle_screws()], (-sx, 0.0, 0.0), (face,),
-                       ('insert', cr), stage='P3', bom='screw_m3x8_pan', note='the camera\'s cradle to the apron, from outside'))
+                       ('insert', cr), stage='P3', bom='screw_m3x8_socket', note='the camera\'s cradle to the apron, from outside'))
         L_, Wd, H = W.D435['size']
         xb = sx * (W.XO - L_)
         zc = sum(W.D435['z']) / 2
@@ -250,17 +250,17 @@ def shell_joints():
                        (sx, 0.0, 0.0), (cr,), ('tapped', cam), envelope=(cam,), stage='P3', bom='screw_m3x8_socket',
                        note='the D435 on its two back M3 threads (4 mm in: check the camera\'s maximum screw depth on arrival)'))
     J.append(Joint('eyes_clip', 'M3', 6.0, 'socket', [_z(W.XI - W.EYES['board'][2] - 2.0, y, z) for y, z in W.eyes_clip_screws()], (1.0, 0.0, 0.0),
-                   ('eyes_clip',), ('insert', 'shell_front'), stage='P3', bom='screw_m3x6_socket', note='the eyes\' clip into the face\'s bosses'))
+                   ('eyes_clip',), ('insert', 'shell_front'), stage='P3', bom='screw_m3x6', note='the eyes\' clip into the face\'s bosses'))
     ds = 1.0 if W.DOOR_SIDE == 'l' else -1.0
     J.append(Joint('shell_door', 'M3', 8.0, 'pan', [_z(x, ds * (W.YO + W.WALL_T), z) for x, z in W.door_screws()],
-                   (0.0, -ds, 0.0), ('shell_door', f'shell_side_{W.DOOR_SIDE}_front'), ('nut', f'shell_side_{W.DOOR_SIDE}_front'), nut_at=2 * W.WALL_T + 1.0, stage='P3', bom='screw_m3x8_pan',
+                   (0.0, -ds, 0.0), ('shell_door', f'shell_side_{W.DOOR_SIDE}_front'), ('nut', f'shell_side_{W.DOOR_SIDE}_front'), nut_at=2 * W.WALL_T + 1.0, stage='P3', bom='screw_m3x8_socket',
                    note='the service door into the nuts held in the wall\'s pads'))
     J.append(Joint('shell_hatch', 'M3', 8.0, 'pan', [_z(x, W.YO + W.WALL_T, z) for x, z in W.hatch_screws()], (0.0, -1.0, 0.0),
-                   ('shell_hatch', 'shell_side_l_rear'), ('nut', 'shell_side_l_rear'), nut_at=2 * W.WALL_T + 1.0, stage='P3', bom='screw_m3x8_pan',
+                   ('shell_hatch', 'shell_side_l_rear'), ('nut', 'shell_side_l_rear'), nut_at=2 * W.WALL_T + 1.0, stage='P3', bom='screw_m3x8_socket',
                    note='the J501 hatch into the nuts held in the wall\'s rim'))
     zp = bp.TOP - bp.STOCK[bp.DECK]['t'] - bp.STOCK[bf.TURRET_PLATE['stock']]['t']
-    J.append(Joint('fan_duct', 'M3', 5.0, 'socket', [_z(x, y, zp - W.DUCT_TAB_T) for x, y in W.duct_tabs()], (0.0, 0.0, 1.0),
-                   ('fan_duct', 'turret_plate'), ('tapped', 'turret_plate'), stage='P3', bom='screw_m3x5_socket',
+    J.append(Joint('fan_duct', 'M3', 6.0, 'socket', [_z(x, y, zp - W.DUCT_TAB_T) for x, y in W.duct_tabs()], (0.0, 0.0, 1.0),
+                   ('fan_duct', 'turret_plate'), ('tapped', 'turret_plate'), stage='P3', bom='screw_m3x6',
                    note='the fan duct up into the turret plate\'s tapped holes'))
     return J
 

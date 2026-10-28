@@ -105,45 +105,43 @@ written by `cad/body_wiring.py` from its wire list; `cad/test_body.py` checks th
 
 | Wire | From | To | AWG | Colour | Ends | Fuse | Why |
 |---|---|---|---|---|---|---|---|
-| W1 | pack B+ (group 13 +) | XT90-S female (pack lead) | 8 | red | XT90-S solder cup | MRBF 80 A (on the robot side) | 80 A pulses, 72 A cells |
-| W2 | BMS P- | XT90-S female (pack lead) | 8 | black | XT90-S solder cup | - | the BMS switches the negative |
-| W3 | XT90-S male (robot) | MRBF block, battery stud (M8) | 8 | red | lug M8 | - | unfused until the MRBF: keep it short (<150 mm) |
-| W4 | MRBF block, load stud (M8) | + bus bar, tap 1 (M6) | 8 | red | lugs M8 / M6 | MRBF 80 A | the whole robot |
-| W5 | XT90-S male (robot) | shunt, battery side (M8) | 8 | black | lug M8 | - | the battery negative |
-| W6 | shunt, load side (M8) | main switch IN- (B-) | 8 | black | ferrule / its lead | - | Flipsky draws the switch on the negative: check its card |
-| W7 | main switch OUT- (P-) | - bus bar, tap 1 (M6) | 8 | black | lug M6 | - | the switched negative: everything below is off with it |
-| W8 | charge port XT60H-F + | MRBF block, battery stud (M8) | 18 | red | XT60 / lug M8 | MINI 58V 10 A (inline, at the stud) | charger 2-3 A; the fuse guards the lead against a pack short |
-| W9 | charge port XT60H-F - | shunt, load side (M8) | 18 | black | XT60 / lug M8 | - | after the shunt (it counts the charge), before the switch (the robot can be off) |
+| W1 | front adapter + (its 10 AWG lead) | XT90-S female (the bay's lead) + | 10 | red | XT90-S solder cup | - | the adapter's own lead (Terrafirma, 10 AWG, 30 A stated): on the pack's side of the MRBF, unfused as every pack lead; keep it to its 300 mm |
+| W2 | front adapter - | rear adapter + (the series link) | 10 | black | XT90-S pair (in the bay's middle) | - | the two packs in series: the link unplugs so each half is 18 V when the bay is serviced |
+| W3 | rear adapter - | XT90-S female (the bay's lead) - | 10 | black | XT90-S solder cup | - | the pair's negative |
+| W4 | XT90-S male (robot) + | MRBF block, battery stud (M8) | 8 | red | lug M8 | - | unfused until the MRBF: keep it short (<150 mm) |
+| W5 | MRBF block, load stud (M8) | shunt, battery side (M8) | 8 | red | lugs M8 | MRBF 80 A | the shunt on the + side: the INA228 reads it high side (docs/body-fuse-board.md 1); its base insulates it from the plate |
+| W6 | shunt, load side (M8) | + bus bar, tap 1 (M6) | 8 | red | lugs M8 / M6 | MRBF 80 A | the whole robot |
+| W7 | XT90-S male (robot) - | main switch IN- (B-) | 8 | black | ferrule / its lead | - | Flipsky draws the switch on the negative: check its card |
+| W8 | main switch OUT- (P-) | - bus bar, tap 1 (M6) | 8 | black | lug M6 | - | the switched negative: everything below is off with it |
 | W10 | + bus tap 2 | RS-04 left front (XT60H) | 14 | red | lug M6 / XT60H-F | MINI 58V 20 A | ~12 A at a jump, 25 A peaks: 14 AWG silicone; the motor's 450 mm pigtail carries the XT60H-M |
 | W11 | + bus tap 2 | RS-04 left rear (XT60H) | 14 | red | lug M6 / XT60H-F | MINI 58V 20 A | as W10 (two lugs share the tap) |
 | W12 | + bus tap 3 | RS-04 right front (XT60H) | 14 | red | lug M6 / XT60H-F | MINI 58V 20 A | as W10 |
 | W13 | + bus tap 3 | RS-04 right rear (XT60H) | 14 | red | lug M6 / XT60H-F | MINI 58V 20 A | as W10 |
-| W14 | + bus tap 4 | VESC left (Flipsky 75100) + | 12 | red | lug M6 / XT60H-F | MINI 58V 30 A | the wheel: firmware limits it to 25 A; the VESC's own lead carries the XT60H-M |
+| W14 | + bus tap 4 | VESC left (Flipsky 75100) + | 12 | red | lug M6 / XT60H-F | MINI 58V 30 A | the wheel: its battery current limit 20 A in VESC Tool (the fuse board's FL1 holders carry 22 A); its own lead carries the XT60H-M |
 | W15 | + bus tap 4 | VESC right + | 12 | red | lug M6 / XT60H-F | MINI 58V 30 A | as W14 |
-| W16 | + bus tap 5 | DDR-120C-24 Vin+ | 18 | red | lug M6 / ferrule | MINI 58V 10 A | 120 W out: 3.3 A in at 40 V, plus its inrush |
-| W17 | + bus tap 5 | DDR-60L-12 Vin+ | 18 | red | lug M6 / ferrule | MINI 58V 5 A | 60 W out: 1.7 A in at 40 V |
+| W16 | + bus tap 5 | TRACO TEP 150-4812WI Vin+ | 18 | red | lug M6 / ferrule | MINI 58V 10 A | 150 W out: 5.6 A in at 30 V |
+| W17 | + bus tap 5 | stop relay, pole B (in): the turret's branch | 16 | red | lug M6 / screw terminal | MINI 58V 10 A | D66: the turret's own robot on the bus (its Orin NX ~40 W, flywheel bursts to ~140 W: 4.7 A at 30 V); the stop relay cuts it |
 | W18 | - bus taps 2-3 | RS-04 x 4 (XT60H) | 14 | black | lug M6 / XT60H-F | - | returns, one per motor (the - of W10-W13's plugs) |
 | W19 | - bus tap 4 | VESC left, right - | 12 | black | lug M6 / XT60H-F | - | returns (the - of W14-W15's plugs) |
-| W20 | - bus tap 5 | DDR-120C-24 Vin-, DDR-60L-12 Vin- | 18 | black | lug M6 / ferrule | - | returns |
-| W21 | DDR-120C-24 +V | J501 DC-IN (XT30) | 18 | red | ferrule / XT30U-F | MINI 5 A | the J501: 60 W peak, 2.5 A; its DC-IN adapter lead carries the XT30U-M |
-| W22 | DDR-120C-24 +V | stop relay, pole B (in) | 18 | red | ferrule / screw terminal | MINI 5 A | the turret's branch: 60 W peaks (its own fuse stays in the turret too) |
-| W23 | DDR-120C-24 -V | J501 and turret returns; star point | 18 | black | ferrule / XT30U-F | - | one tie from -V to the - bus (the CAN reference) |
-| W24 | DDR-60L-12 +V | lidar interface box (XT30) | 18 | red | ferrule / XT30U-F | (the converter's 5 A limit) | VLP-16: 8 W, 3 A at spin-up; the box's lead carries the XT30U-M |
-| W25 | DDR-60L-12 +V | 5 V buck VIN (Pololu D36V28F5) | 22 | red | ferrule / solder | (the converter's 5 A limit) | ~0.6 A at 12 V |
-| W26 | DDR-60L-12 +V | radio-stop jack pin 3 (+12 V) | 22 | red | ferrule / jack | (the converter's 5 A limit) | D37: the jack offers 12 V |
-| W27 | DDR-60L-12 -V | lidar box, buck, jack GND; star point | 18 | black | ferrule | - | one tie to the - bus |
-| W28 | 5 V buck VOUT | Nucleo E5V, 4 CAN Pal, QT Py 5V, VN-100, radio receiver | 22 | red | solder / GH | (the buck's 3.2 A limit) | ~1 A in all |
+| W20 | - bus tap 5 | TRACO Vin-, the turret's XT30U-F - | 16 | black | lug M6 / ferrule / XT30 | - | returns |
+| W21 | TRACO +V | J501 DC-IN (XT30) | 16 | red | ferrule / XT30U-F | MINI 10 A (inline) | the J501 at 12 V (12-36 V in): 60 W peak, 5 A; its DC-IN adapter lead carries the XT30U-M |
+| W22 | TRACO +V | 12 V loads: lidar box, buck, jack, lights, eyes | 18 | red | ferrule / Wago 221 | MINI 7.5 A (inline) | about 40 W: the VLP-16 8 W (3 A at spin-up), the SSC1 pods, the eyes, the 5 V buck |
+| W23 | TRACO -V | J501 return; star point | 16 | black | ferrule / XT30U-F | - | one tie from -V to the - bus (the CAN reference) |
+| W24 | 12 V loads (W22) | lidar interface box (XT30) | 18 | red | Wago 221 / XT30U-F | (W22's 7.5 A) | the box's lead carries the XT30U-M |
+| W25 | 12 V loads (W22) | 5 V buck VIN (Pololu D36V28F5) | 22 | red | Wago 221 / solder | (W22's 7.5 A) | ~0.6 A at 12 V |
+| W26 | 12 V loads (W22) | radio-stop jack pin 3 (+12 V) | 22 | red | Wago 221 / jack | (W22's 7.5 A) | D37: the jack offers 12 V |
+| W27 | TRACO -V | lidar box, buck, jack GND | 18 | black | ferrule | - | the 12 V loads' returns |
+| W28 | 5 V buck VOUT | Nucleo E5V, 3 CAN Pal, VN-100, radio receiver | 22 | red | solder / GH | (the buck's 3.2 A limit) | ~1 A in all |
 | W29 | 5 V buck GND | the same, GND | 22 | black | solder / GH | - |  |
-| W30 | shunt sense + (battery side screw) | INA228 IN+ | 22 | white | ring / screw terminal | - | Kelvin pair, twisted, away from the 10 AWG |
+| W30 | shunt sense + (battery side screw) | INA228 IN+ | 22 | white | ring / screw terminal | - | Kelvin pair, twisted, away from the 8 AWG; high side: 30-41 V above the INA228's ground, inside its 85 V |
 | W31 | shunt sense - (load side screw) | INA228 IN- | 22 | white | ring / screw terminal | - | the INA228's own 15 mOhm shunt is removed |
-| W32 | + bus (via the DDR-60L tap) | INA228 VBUS | 22 | red | ring | MINI 58V 5 A (shared with W17) | pack voltage, 85 V input |
-| W33 | frame (a tray PEM stud) | - bus star point | 18 | green | ring M5 / lug M6 | - | a + short to the frame blows a fuse, not leaves it live |
-| W34 | stop relay, pole B (out) | DT06-12SA pins 1, 2 | 18 | red | size-16 sockets | MINI 5 A (W22) | two pins in parallel, as the turret asks; dead whenever the stop relay is open |
-| W35 | W23 (24 V return) | DT06-12SA pins 3, 4 | 18 | black | size-16 sockets | - |  |
-| W36 | J501 can1 (H, L) | DT06-12SA pins 5, 6 | 22 | white | twisted pair, size-16 sockets | - | the turret terminates its end; the J501 its own |
-| W37 | stop relay, pole A (closed = run) | DT12 pins 7, 8 (SAFETY_A, SAFETY_B) | 22 | white | twisted pair | - | the turret's dry safety loop (12 V at 2 mA; D41 D7: it cuts the flywheels and the dial in hardware) |
+| W32 | + bus tap 5 | INA228 VBUS | 22 | red | lug M6 / ring | MINI 58V 5 A (its own inline holder) | pack voltage, 85 V input; 22 AWG carries 7 A |
+| W33 | frame (a tray PEM stud) | - bus star point | 14 | green | ring M5 / lug M6 | - | a + short to the frame blows a fuse, not leaves it live; 14 AWG: a + lead chafed ahead of its branch fuse puts the MRBF's let-through on it |
+| W34 | stop relay, pole B (out) | the turret's XT30U-F + | 16 | red | screw terminal / XT30U-F | MINI 58V 10 A (W17) | dead whenever the stop relay is open; the turret's lead carries the XT30U-M |
+| W36 | J501 Ethernet (its second port or a switch) | the turret's RJ45 | None | blue | Cat 6, 0.5 m | - | D66: the turret's link (it had can1) |
+| W37 | stop relay, pole A (closed = run) | the turret's safety loop (SAFETY_A, SAFETY_B) | 22 | white | twisted pair | - | the turret's dry safety loop (12 V at 2 mA; D41 D7: it cuts the flywheels and the dial in hardware) |
 | W38 | stop relay coil, + side | MCU STOP sense (divider 12 V to 3.3 V) | 22 | white | GH | - | 12 V on the coil = the radio says run: the MCU sits the robot down when it drops (D37) |
-| W39 | 12 V rail via the RC switch's contact | stop relay coil, + side | 22 | red | solder / screw terminal | (the converter's 5 A limit) | the coil (12 V, 33 mA) is fed only while the radio says run; its - side through the MCU's MOSFET (MCU_RUN), a diode across it |
+| W39 | 12 V loads (W22) via the RC switch's contact | stop relay coil, + side | 22 | red | solder / screw terminal | (W22's 7.5 A) | the coil (12 V, 33 mA) is fed only while the radio says run; its - side through the MCU's MOSFET (MCU_RUN), a diode across it |
 
 ### 3.2 The rails
 

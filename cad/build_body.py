@@ -430,6 +430,10 @@ def main():
         'in_keepouts': frame_vs_keepouts(parts, lay['raw']),
         'turret_plate': turret_plate_intake(),
     }
+    import body_joints as bj                                     # the integrity checks: every screw's stack, no floating part
+    integ = bj.run(parts, items, clashes=len(summary['internal_clashes']))
+    bj.OUT.write_text(json.dumps(integ, indent=1) + '\n')
+    summary['integrity'] = integ['summary']
     if not a.no_clash:
         summary['clash_sweep'] = clash_sweep(parts, items, quick=a.quick)
     if lay:
@@ -453,6 +457,9 @@ def main():
     print('  frame to cheek:', summary['interface']['frame_to_cheek'])
     print('  internal clashes:', summary['internal_clashes'] or 'none')
     print('  frame parts in keep-outs:', summary['in_keepouts'] or 'none')
+    ig = summary['integrity']
+    print(f"  integrity: {ig['joints']} joints, {ig['screws']} screws; joints with problems: {ig['joints_with_problems'] or 'none'}; "
+          f"floating: {ig['floating'] or 'none'}; internal clashes {ig['clashes']}")
     print('  turret plate over the intake cells:', summary['turret_plate'])
     print('  shell:', {k: v for k, v in summary['shell'].items() if k not in ('parts', 'ports')}, summary['shell']['ports'])
     if 'clash_sweep' in summary:

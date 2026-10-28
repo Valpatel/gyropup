@@ -403,7 +403,7 @@ def eyes_board():
 
 # ------------------------------------------------------------------------------------------- the fan duct
 
-DUCT_TAB_T = 2.0
+DUCT_TAB_T = 3.0                              # an M3 x 6 then ends 0.2 mm under the deck
 DUCT_TAB_ANGLES = (90.0, 210.0, 330.0)        # clear of the plate's nuts, the riser's screws and the plate's opening
 
 

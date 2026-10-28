@@ -36,9 +36,9 @@ import body_params as bp
 
 # The pack (the DeWalt sheet for its EU twin DCB547-XJ: 138 x 87 x 97 mm, 1.46 kg; Ace Tool lists the DCB609 at 3.2 lb.
 # DeWalt publishes no US outline: measure one pack before the bay is printed). The rail runs along L on the top face.
-PACK = {'name': 'DeWalt DCB609 FLEXVOLT 20V/60V MAX 9.0 Ah (20 V mode: 5S3P)', 'L': 138.0, 'W': 87.0, 'H': 97.0, 'mass_g': 1460.0,
+PACK = {'name': 'DeWalt DCB609 FLEXVOLT 20V/60V MAX 9.0 Ah (20 V mode: 5S3P)', 'L': 138.0, 'W': 87.0, 'H': 97.0, 'mass_g': 1565.0,
         'wh_rated': 180.0, 'ah': 9.0, 'series': 5,
-        'source': 'DeWalt DCB547-XJ datasheet (138 x 87 x 97 mm, 1.46 kg); Ace Tool DCB609 3.2 lb; measure on arrival'}
+        'source': 'DeWalt DCB547-XJ datasheet (138 x 87 x 97 mm incl. the rail tower); DeWalt US 3.45 lb = 1565 g (the conservative of 1.46-1.57 kg): weigh one'}
 # The rail adapter (Terrafirma Technology "4pack 10AWG Adapter for DeWALT 20V", Amazon B07HYJ628S, $64.00 the four, 30 A
 # stated). Its outline is not published: this envelope is a guess to be measured on arrival (the bay's plates are printed).
 ADAPTER = {'L': 100.0, 'W': 72.0, 'H': 25.0, 'mass_g': 70.0, 'basis': 'envelope estimate: Terrafirma publishes no drawing'}
