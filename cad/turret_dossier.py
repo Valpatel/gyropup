@@ -129,7 +129,9 @@ def register(reg, T, pile):
     r = G.ball / 2
     reg.add_part('ball', tg.sphere(r), section=SECTION_OF['ball'], place=[c_to_t(G, c) for c in tg.hopper_balls(pile)],
                  free=True, reason=FREE['ball'])
-    reg.add_cavity('hopper', 'hopper_cavity', tg.hopper_cavity(T, park))
+    # a function, called by build() after every part is hashed: the cavity's cuts raise the cut parts' tolerances in
+    # place (OCCT), which would change their content hashes if they ran first
+    reg.add_cavity('hopper', 'hopper_cavity', lambda: tg.hopper_cavity(T, park))
 
     # the stand under the plinth: its top (z 0 in turret_stand) carries the plinth's floor (D66)
     down = (0.0, 0.0, -tu.PLINTH['h'])

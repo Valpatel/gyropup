@@ -624,22 +624,21 @@ def dossier_gates(cache=None):
     so `cad-agent check` and the dossier lint (gate:turret-path, gate:turret-ammo) read them like the toolkit's gates
     and fail them when the record changes. Refuses to bind unless the record is the geometry cad/turret_dossier.py
     registers from this turret (the same digest, rebuilt here without writing)."""
-    from cadagent import dossier as cd
+    import subprocess
     from cadagent.gates.run import write_outputs
     from cadagent.gates.verdict import bind_inputs, geometry_digest
-    import turret_dossier as td
     if not DOSSIER_RECORD.exists():
         raise GateFailure(f'no geometry record ({DOSSIER_RECORD.relative_to(R)}): run cad-agent gates --build first')
     record = json.loads(DOSSIER_RECORD.read_text())
-    # a fresh Turret: the hopper cavity's cuts raise the cut parts' tolerances in place (OCCT), which changes their BREP
-    # text and so their content hashes, so shapes already registered once never hash the same again
-    T = td.turret()
-    pile = load_pile(T.G)
-    with cd.use_registry() as reg:
-        td.register(reg, T, pile)
-        mine = reg.build(write=False, root=R).geometry
-    if geometry_digest(mine) != geometry_digest(record):
+    # the record must be what this source registers: rebuilt (not written) in a fresh process, as cad-agent gates builds
+    # it, because building in this process would reuse shapes whose tolerances the hopper cavity's cuts have changed
+    probe = ('import json, sys; from cadagent.dossier import build_module; from cadagent.gates.verdict import geometry_digest; '
+             'print(geometry_digest(build_module("cad/turret_dossier.py", root=".", write=False).geometry))')
+    mine = subprocess.run([sys.executable, '-c', probe], cwd=R, capture_output=True, text=True, check=True).stdout.split()[-1]
+    if mine != geometry_digest(record):
         raise GateFailure(f'{DOSSIER_RECORD.relative_to(R)} is not the turret this source builds: rerun cad-agent gates --build')
+    T = tu.Turret({'bodyTop': 100.0})
+    pile = load_pile(T.G)
     cache = cache or PairCache(CACHE)
     DOSSIER_GATES.mkdir(parents=True, exist_ok=True)
     out = {}
