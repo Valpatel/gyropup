@@ -131,7 +131,7 @@ V1_ONLY = {
 # the robot's printed parts the bench leaves off (D42; cad/turret_print.py NOT_PRINTED): out of the bench's print plan
 V1_PRINTED = ('bumper_ring', 'hopper_flap')
 # the bench stand (cad/turret_stand.py), its supply, the reference chronograph and the ammunition: [(key, qty)]
-BENCH_BOUGHT = [('amass-xt60e-m', 1), ('turret_screw_m2_5x8', 2), ('turret_nut_m2_5', 2), ('bulgin-r13244aaaa', 1),
+BENCH_BOUGHT = [('amass-xt60e-m', 1), ('turret_screw_m2_5x8', 2), ('turret_nut_m2_5', 2), ('blue-sea-6006', 1),
                 ('fuse-holder-5x20-panel', 1), ('littelfuse-0477005-mxp', 2), ('switchcraft-tb3m', 1), ('switchcraft-ta3flx', 1),
                 ('pendant-hold-to-run', 1),
                 ('usb-can-canable2', 1), ('proto-board-70x50', 1), ('bumper-feet-12.7', 4), ('insert_m5', 4), ('insert_m3', 8),
@@ -142,6 +142,41 @@ BENCH_BOUGHT = [('amass-xt60e-m', 1), ('turret_screw_m2_5x8', 2), ('turret_nut_m
                 # the ammo (D67): a third-party Rival-compatible pack and the official Nerf Rival refill, side by side,
                 # cheapest a round first (any round 22.2-22.8 mm, 1.6-2.0 g: cad/turret_gates.py ammo_range)
                 ('worker-cheetah-rival-rounds-100', 2), ('hasbro-nerf-rival-accu-round-60', 1)]
+# D67's ammo side by side: the official Hasbro packs and third-party Rival-compatible ones, a round's price from the
+# catalogue (prices read 2026-10-25..27; catalog/turret.json, catalog/alternates.json), each against D67's accepted range
+# (22.2-22.8 mm, 1.6-2.0 g: the feed's and bore's `ammo_range` gate and the launch ceiling's corners). Sizes and masses:
+# docs/turret-physics.md 2 (Out of Darts records, BlasterHub's weighing). 'bought' marks the BOM's lines
+AMMO_SIDE_BY_SIDE = [
+    {'pack': 'Worker Cheetah Rival-compatible rounds, 100', 'maker': 'Worker (third party)', 'rounds': 100, 'seller': 'Out of Darts',
+     'price_usd': 14.99, 'diameter_mm': 22.7, 'mass_g': 1.75, 'key': 'worker-cheetah-rival-rounds-100', 'bought': 2},
+    {'pack': 'Rival-compatible rounds, 100 (Amazon ASIN B071SC9QYG; its page names the brand Little Valentine)', 'maker': 'third party',
+     'rounds': 100, 'seller': 'Amazon', 'price_usd': 14.99, 'diameter_mm': None, 'mass_g': None, 'key': 'worker-cheetah-rival-rounds-100',
+     'bought': 0, 'note': 'size and mass not published: weigh and gauge 10 before use (the bench\'s ammo check)'},
+    {'pack': 'Nerf Rival 50-Round Refill', 'maker': 'Hasbro (official)', 'rounds': 50, 'seller': 'Walmart', 'price_usd': 15.95,
+     'diameter_mm': 22.7, 'mass_g': 1.83, 'key': 'hasbro-nerf-rival-accu-round-60', 'bought': 0},
+    {'pack': 'Nerf Rival 60 Accu-Round Refill (F5052)', 'maker': 'Hasbro (official)', 'rounds': 60, 'seller': 'eBay', 'price_usd': 16.95,
+     'diameter_mm': 22.7, 'mass_g': 1.83, 'key': 'hasbro-nerf-rival-accu-round-60', 'bought': 0},
+    {'pack': 'Nerf Rival 60 Accu-Round Refill (F5052)', 'maker': 'Hasbro (official)', 'rounds': 60, 'seller': 'Walmart', 'price_usd': 19.99,
+     'diameter_mm': 22.7, 'mass_g': 1.83, 'key': 'hasbro-nerf-rival-accu-round-60', 'bought': 1},
+    {'pack': 'Dart Zone Powerstrike rounds', 'maker': 'Dart Zone (third party)', 'rounds': None, 'seller': None, 'price_usd': None,
+     'diameter_mm': 22.8, 'mass_g': 1.85, 'key': None, 'bought': 0, 'note': 'accepted by D67; no price read: not on the order sheets'},
+    {'pack': 'Adventure Force rounds', 'maker': 'Adventure Force (Walmart\'s own, third party)', 'rounds': None, 'seller': 'Walmart',
+     'price_usd': None, 'diameter_mm': 22.8, 'mass_g': 1.88, 'key': None, 'bought': 0, 'note': 'accepted by D67; no price read'},
+]
+
+
+def ammo_side_by_side():
+    """The ammo table with a round's price and D67's verdict, cheapest a round first (unpriced last)."""
+    out = []
+    for a in AMMO_SIDE_BY_SIDE:
+        r = dict(a)
+        r['usd_per_round'] = round(a['price_usd'] / a['rounds'], 3) if a['price_usd'] and a['rounds'] else None
+        d, m = a['diameter_mm'], a['mass_g']
+        r['within_d67'] = None if d is None or m is None else (22.2 <= d <= 22.8 and 1.6 <= m <= 2.0)
+        out.append(r)
+    return sorted(out, key=lambda r: (r['usd_per_round'] is None, r['usd_per_round'] or 0.0))
+
+
 # bought once for the build (docs/turret-assembly.md's tools): [(key, qty)]
 TOOLS = [('waveshare-bus-servo-adapter-a', 1), ('tool-deutsch-crimper-iwd1620', 1), ('tool-microfit-crimper', 1), ('tool-am32-usb-linker', 1),
          ('tool-circlip-pliers', 1), ('tool-insert-tips', 1), ('tool-reamer-5mm', 1), ('tool-dial-indicator', 1)]
@@ -218,6 +253,7 @@ def main():
     sheet = {n: {'drawing': f'exports/turret/{n}.dxf', **tu.SHEET[st], 'thickness_in': tu.SHEET[st]['thickness_in'],
                  'operations': tu.SHEET_OPS.get(n, 'none')} for n, st in tu.SHEET_PARTS.items()}
     (OUT / 'bom.json').write_text(json.dumps({'bench_turret': rows, 'bench_stand': bench, 'tools': tools, 'v1_only': v1, 'not_modelled': tu.NOT_MODELLED_G,
+                                              'ammo_side_by_side': ammo_side_by_side(),
                                               'price_usd_known': {'turret': priced(rows), 'bench_stand': priced(bench), 'tools': priced(tools)},
                                               'not_in_a_catalogue': missing, 'no_listed_price': unpriced, 'no_second_source': no_backup,
                                               'ordered_to_drawing': sheet,

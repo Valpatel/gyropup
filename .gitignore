@@ -38,3 +38,4 @@ exports/body/fea/*.json
 !references/vendor/j501/*.json
 # the whole rig as one STEP (5.8 MB): rebuilt by cad/build_rig.py
 exports/rig/rig_300.step
+/.cadagent-cache/

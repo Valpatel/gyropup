@@ -508,7 +508,7 @@ the pan, tilt and feed servos moving (0.6 A each at 12 V), the J4012 at 48 W (40
 the logic at 5 W; **worst**, every servo that can move at its 50 % torque cap at once (1.5 A each: 2.7 A stall, est).
 The ring's busiest circuit carries 42 % of the ring's current (its contact at 10 mOhm, the other two at 60). A spin-up is
 judged by its 100 ms peak (the ramp's top lasts ~0.2 s); a burst by its worst 1 s RMS (each shot's recovery pulse, both
-ESCs at 10 A on the rail, lasts ~10 ms); the ring's 2 A and the rocker's 10 A are heating ratings.
+ESCs at 10 A on the rail, lasts ~10 ms); the ring's 2 A and the stand switch's rating are heating ratings.
 
 | At the turret's input | 15 V (pack empty) | 20.5 V (pack full) | 30 V (bus low) | 42 V (bus full) |
 |---|---|---|---|---|
@@ -545,12 +545,12 @@ that coincidence is the open margin on the stand. The real fix is more ring: the
 circuits, docs/turret-plan.md 2.2) or a boost to ~36 V in the stand, so the stand looks like the bus to the turret;
 neither is in this change (the ring carrier and the stand are other sections' CAD).
 
-**The stand's rocker** (Bulgin R13244AAAA, 10 A 28 V DC; the stand reaches 20.5 V, inside its 28 V): at 15 V with the
-firmware's 800 ms and 10/s it would carry 11.2 A at the top of a spin-up and 11.3 A RMS through a burst (play), 13.1 /
-13.7 A worst: **over its 10 A**. With the stand profile it carries 8.7 / 8.3 A (play): within; with every servo at its
-cap 10.5 / 10.9 A: 9 % over, and 8.8 / 9.3 A with the J4012 in its 25 W mode. So on the stand the J4012 runs its 25 W
-mode (it then never makes the peak), and a 15 A or larger DC switch in the stand is the stand's own fix (open). The
-rocker switches at idle current (4.8 A at 15 V with the wheels held; less disarmed); the game average is 3.9-5.4 A.
+**The stand's power switch (D70): a Blue Sea 6006 battery switch** (48 V DC, 275 A continuous), in place of the
+Bulgin R13244AAAA rocker (10 A 28 V DC). At 15 V with the firmware's 800 ms and 10/s the stand would carry 11.2 A at
+the top of a spin-up and 11.3 A RMS through a burst (play), 13.1 / 13.7 A worst: over the rocker's 10 A. The firmware
+now runs the supply profile above (implemented and tested in firmware/turret: test_firmware `supply_*`), and the
+switch is DC-rated far above any of it; it switches at most the idle current (4.8 A at 15 V with the wheels held).
+"rocker" below means this switch.
 
 ## 6. The boards, part by part
 

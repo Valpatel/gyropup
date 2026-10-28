@@ -60,7 +60,9 @@ PLAN = {
     'servo': {'v': 12.0, 'cap_a': 1.5, 'move_a': 0.6, 'hold_a': 0.15, 'reg_eff': 0.90},
     'logic_w': {'typical': 3.0, 'peak': 5.0},
     'j4012_w': {'typical': 25.0, 'peak': 48.0},
-    'rocker': {'part': 'bulgin-r13244aaaa', 'rating_a': 10.0, 'rating_v': 28.0},
+    # D70: the stand's switch is DC-rated for 15 A or more: a Blue Sea 6006 battery switch (48 V DC, 275 A continuous)
+    # replaces the Bulgin R13244AAAA rocker (10 A 28 V DC), which the 800 ms / 10/s case put at 11-14 A on the empty pack
+    'rocker': {'part': 'blue-sea-6006', 'rating_a': 275.0, 'rating_v': 48.0, 'was': {'part': 'bulgin-r13244aaaa', 'rating_a': 10.0}},
     'game_per_min': {'arm_s': 30.0, 'spinups': 4, 'bursts': 4, 'shots_per_burst': 8, 'aim_moving_frac': 0.3, 'feed_step_s': 0.1},
     'source': 'D66 (the input), D68 (the flywheels: X2216 1400 KV, the trimmed ~11.31 V rail, AM32 10 A, the 800 ms ramp); '
               'docs/turret-wiring.md 4-5; the converters\' data sheets; est where marked',
@@ -347,7 +349,7 @@ def study():
                                     'rocker_ok': _judge(sp['input_peak_100ms_a'], bu['input_rms_1s_a'], rocker_cap)}
     res['stand_profile'] = prof
     p15 = res['supplies']['pack_15v']['summary']
-    res['rocker'] = {'part': PLAN['rocker']['part'], 'rating': '10 A 28 V DC', 'stand_v': [15.0, 20.5],
+    res['rocker'] = {'part': PLAN['rocker']['part'], 'rating': f"{PLAN['rocker']['rating_a']:.0f} A {PLAN['rocker']['rating_v']:.0f} V DC", 'stand_v': [15.0, 20.5],
                      'at_800ms_10hz_15v': {lv: {'spinup_peak_100ms_a': p15[lv]['spinup_input_peak_100ms_a'], 'burst_rms_1s_a': p15[lv]['burst_input_rms_1s_a'],
                                                 'instant_peak_a': p15[lv]['input_peak_a'], 'ok': p15[lv]['rocker_within_10a']} for lv in ('worst', 'play')},
                      'idle_at_15v_a': p15['hold_input_a'],

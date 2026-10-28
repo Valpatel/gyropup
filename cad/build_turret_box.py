@@ -468,12 +468,46 @@ def exhaust_check(T):
            'j501_intakes_top_z_mm': intakes_top, 'intakes_below_mouth_mm': round(mouth_z[0] - intakes_top, 1),
            'plinth_vents_behind_mouth_mm': round(tb.FRONT_X - vent_x, 1), 'plinth_vents_from_z_mm': round(vz0, 1),
            'fan_blows': 'up (exhaust through the lid grille; J501 thermal.fan.note)'}
-    out['ok'] = out['intakes_below_mouth_mm'] > 0 and out['plinth_vents_behind_mouth_mm'] >= 80.0
+    out['plume'] = plume_clearance(T, mouth_z)
+    out['ok'] = out['intakes_below_mouth_mm'] > 0 and out['plinth_vents_behind_mouth_mm'] >= 80.0 and out['plume']['ok']
     out['note'] = (f'the J501 exhaust leaves the deck\'s front mouth ({out["mouth_w_mm"]} mm wide, z {out["mouth_z_mm"][0]}-{out["mouth_z_mm"][1]}), '
                    f'{out["intakes_below_mouth_mm"]} mm above the J501\'s highest intake vent, with the front corners walled; the plinth '
-                   f'breathes {out["plinth_vents_behind_mouth_mm"]} mm behind the mouth. To prove on the bench: the J501\'s intake and the '
-                   'J4012\'s within 3 K of the room with both at full load (bench_proof)')
+                   f'breathes {out["plinth_vents_behind_mouth_mm"]} mm behind the mouth; no part of the turret comes within '
+                   f'{out["plume"]["least_mm"]} mm of the plume\'s keep-out ahead of the mouth at any pan or tilt. To prove on the bench: the '
+                   'J501\'s intake and the J4012\'s within 3 K of the room with both at full load (bench_proof)')
     return out
+
+
+PLUME = {'ahead_mm': 100.0, 'rise_mm': 80.0, 'side_mm': 15.0, 'min_clear_mm': 10.0}
+
+
+def plume_clearance(T, mouth_z, pans=(0.0, 30.0, -30.0, 60.0, -60.0, 90.0, -90.0, 135.0, -135.0, 180.0)):
+    """The J501's exhaust leaves the mouth forward and rises: a keep-out box ahead of the mouth (PLUME: 100 mm out,
+    the mouth's width + 15 mm a side, from the mouth's floor to 80 mm over its top) that no part of the turret may come
+    within 10 mm of, at every pan of the grid and at level and full depression (the barrel's nose is what comes
+    nearest). Distances between the posed solids and the box (BRepExtrema)."""
+    G = T.G
+    x0, x1 = tb.FRONT_X, tb.FRONT_X + PLUME['ahead_mm']
+    hw = tb.MOUTH_HALF + PLUME['side_mm']
+    z0, z1 = mouth_z[0], mouth_z[1] + PLUME['rise_mm']
+    keep = tb._box(x0, x1, -hw, hw, z0, z1).val()
+    least, at = 300.0, None                                   # nothing within 300 mm: reported as 300
+    for pan in pans:
+        for tilt in (0.0, G.tilt_min):
+            for n, sh in T.posed(pan, tilt).items():
+                v = sh.val() if hasattr(sh, 'val') else sh
+                bb = v.BoundingBox()
+                if bb.xmax < x0 - least or bb.zmin > z1 + least or bb.xmin > x1 + least or bb.ymax < -hw - least or bb.ymin > hw + least:
+                    continue
+                d = v.distance(keep)
+                if d < least:
+                    least, at = d, {'part': n, 'pan_deg': pan, 'tilt_deg': tilt}
+    least = round(least, 1)
+    return {'keep_out': {'x_mm': [round(x0, 1), round(x1, 1)], 'half_width_mm': round(hw, 1), 'z_mm': [round(z0, 1), round(z1, 1)]},
+            'least_mm': least, 'nearest': at, 'required_mm': PLUME['min_clear_mm'],
+            'ok': least >= PLUME['min_clear_mm'],
+            'how': 'the J501 fan blows up into the shroud, whose duct throws the plume forward out of the deck\'s mouth, where it rises: '
+                   'the box ahead of the mouth is kept clear of the turret at every pan of the grid, level and fully depressed'}
 
 
 def adapter_clearance(adapter):

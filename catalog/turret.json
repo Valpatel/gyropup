@@ -9471,5 +9471,66 @@
   "used_for": "R20, the BUS_V divider's top (BUS to the Feather's A0 through 182 k / 10 k)",
   "qty_per_robot": 1,
   "notes": "Size: Axial through-hole, body 2.4 mm dia (+-0.2) x 6.3 mm long (+-0.5), lead dia 0.55 mm; 1/4 W, +-1 %, +-100 ppm/C (Yageo MFR datasheet, MFR-25 row)."
+ },
+ {
+  "id": "blue-sea-6006",
+  "key": "blue-sea-6006",
+  "category": "turret",
+  "vendor": "Blue Sea Systems",
+  "model": "6006",
+  "name": "m-Series Mini ON-OFF battery switch, single circuit, 48 V DC, 275-300 A continuous (D70: the stand's DC power switch, 15 A or more)",
+  "price_usd": 34.16,
+  "price_note": "Walmart $34.16 (red knob 6006, read through a web search 2026-10-28); NavStore $27.95 on sale but sold out; Powerboat Supply $28.99 sold out; Waytek $39.96 (0 in stock)",
+  "price_checked": "2026-10-28",
+  "buy": [
+   {
+    "seller": "Walmart",
+    "url": "https://www.walmart.com/ip/Blue-Sea-6006200-Battery-Switch-Mini-ON-OFF-Black/931742861",
+    "in_stock": null,
+    "ships_from": "US",
+    "price_usd": 34.16,
+    "read_on": "2026-10-28",
+    "how_read": "web search snippet"
+   },
+   {
+    "seller": "NavStore",
+    "url": "https://navstore.com/products/blue-sea-6006-m-series-mini-battery-switch-single-circuit-on-off-red-6006",
+    "in_stock": false,
+    "ships_from": "US",
+    "price_usd": 27.95,
+    "read_on": "2026-10-28",
+    "how_read": "web search snippet"
+   },
+   {
+    "seller": "Waytek",
+    "url": "https://waytekwire.com/item/78405B/Blue-Sea-Systems-6006-m-Series-Battery-Switch-",
+    "in_stock": false,
+    "ships_from": "US",
+    "price_usd": 39.96,
+    "read_on": "2026-10-28",
+    "how_read": "web search snippet"
+   }
+  ],
+  "specs": {
+   "poles": 1,
+   "rating": "48 V DC; 275 A continuous (300 A in some listings), 455 A for 1 min",
+   "terminals": "3/8-16 (M10) studs, 120 in-lb",
+   "ip_rating": "IP66; ignition protected (ISO 8846, SAE J1171, UL 1107, UL 1500)",
+   "mass_g": 290,
+   "mounting": "surface, front-panel or rear-panel (Blue Sea's dimensioned drawing: the stand's cut-out is drawn from it on arrival)"
+  },
+  "cad": {
+   "step_url": null,
+   "available": false
+  },
+  "sources": [
+   "https://www.bluesea.com/products/6006",
+   "https://www.walmart.com/ip/Blue-Sea-6006200-Battery-Switch-Mini-ON-OFF-Black/931742861",
+   "https://navstore.com/products/blue-sea-6006-m-series-mini-battery-switch-single-circuit-on-off-red-6006"
+  ],
+  "confidence": "seller listings (web search); bluesea.com answers 403 to a plain fetch",
+  "used_for": "the stand: the turret's power switch on the FLEXVOLT's + lead (D70: up to 13.7 A at 15 V; the Bulgin rocker's 10 A was not enough)",
+  "qty_per_robot": 1,
+  "notes": "Replaces the Bulgin R13244AAAA (10 A 28 V DC) on the stand. A battery switch: it switches the pack itself, never on a load's pulse; a 15 A part would do, but no panel rocker with a DC rating of 15 A at 20.5 V or more was found in stock (Carling/E-Switch 20 A rockers are rated at 12-14 V DC)."
  }
 ]

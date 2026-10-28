@@ -30,7 +30,7 @@ laser-cut 6061-T6 from SendCutSend, D40/D48: the pan clamp, the two cradle plate
                            circlip below), 40 mm open centre for the cable, pan stop finger; the yoke bolts on top
   pan_pinion (PA6-CF)      21 T m1.25 on the pan servo's horn (63:21 = 3:1)
   tilt_yoke (PA6-CF)       bridge + two arms; tilt servo on the +y arm, MR126 on the -y arm, hard stops at 0 / -25 deg
-  cradle (PA6-CF)          the rail frame (D48): rails the cartridge sits on (CT: 2 dowels + a thumbscrew), laser tab,
+  cradle (PA6-CF)          the rail frame (D48): rails the cartridge sits on (CT: 2 dowels + a thumbscrew),
                            rebates and inserts for the two aluminium cheek plates (cradle_plate_l/r, SendCutSend 6061-T6
                            0.125 in) that carry it on the tilt axis; the hard stop is an aluminium lug (stop_lug, 0.100 in)
   horn_boss, pivot_spacer (PA6-CF)  between the plates and the tilt servo's horn (+y) and the MR126 (-y)
@@ -39,7 +39,7 @@ laser-cut 6061-T6 from SendCutSend, D40/D48: the pan clamp, the two cradle plate
   dial (PETG)              8 pockets, stirring cone, on the feed servo's horn
   hopper, hopper_lid, hopper_flap (PETG, translucent)  30 balls; fill port with a sprung flap for the dock spout
   barrel (PETG, orange tip)  Ø30 x 100, bore = ball + 1.5, two chronograph gates
-  laser_mount (PETG)       ring with three M3 boresight screws, on the cradle
+  laser_mount (PETG)       ring with three M3 boresight screws, on the cartridge's top over the barrel
   bumper_ring (TPU 95A)    around the pan base
 head_ring_tm(L) is the proposed replacement for the ring of build.py's head_saddle (see its docstring).
 """
@@ -264,9 +264,9 @@ class Geo:
         self.bumper_r = (82.0, 86.0)                             # 4 mm of TPU 95A (mass: it was 6)
         self.bumper_z = (6.0, 20.0)                              # on 6 mm tabs: the M3 x 4.3 inserts need 5.1 mm
         # height of the ball path above the mount face. Two limits: the feed servo's bus plugs (under the dial, tilt_x
-        # behind the pan axis) 3 mm over the turntable; and, binding, the front of the cradle (the laser tab and the laser
-        # mount's screw heads under it) at full depression passing over the pan pinion, whose 16 mm face reaches z 69
-        # (the clash sweep at pans 0..350 asks for 1 mm: 125 gives ~2)
+        # behind the pan axis) 3 mm over the turntable; and the front of the cradle at full depression passing over the
+        # pan pinion, whose 16 mm face reaches z 69 (it was binding with the laser tab under the cradle's front, 125
+        # giving ~2 mm; the laser is on the cartridge's top now, so 125 keeps more)
         feed_bottom = self.feed_face - SERVO['H'] - SERVO['plug_room']
         self.path_t = max(math.ceil(self.turntable_z[1] + 3.0 - feed_bottom), 125)
         self.tilt_t = self.path_t + self.tilt_c
@@ -858,8 +858,7 @@ def cradle(G):
     """The cradle's rail frame (D48), printed PA6-CF flat (100 % solid, no supports): two rails under the cartridge
     joined by a rear cross bar (the latched cartridge ties the front; nothing hangs low at the nose when it tilts), the
     CT interface on the rails as v0 (2 x Ø4 dowel holes, the captive DIN 464 M4 x 12 thumbscrew up from below on an
-    O-ring in a counterbore on the rail's top), and a tab at the front left for the laser mount (2 x M3 x 10 up through
-    it). Along the cheek plates' feet (x -10..80) each rail is 10 mm deep and its outer face is rebated 3.2 mm: the
+    O-ring in a counterbore on the rail's top). The laser is on the cartridge now (laser_mount), so no tab. Along the cheek plates' feet (x -10..80) each rail is 10 mm deep and its outer face is rebated 3.2 mm: the
     aluminium plate sits in the rebate on 4 x M3 x 8 button heads into inserts, its outer face where v0's printed cheek
     was; the latch's collar sits in a pocket under the -y rail, 7 mm under its top as before. v0's cheeks, servo hub, pivot boss and hard-stop lug are gone (cradle_plate, stop_lug, horn_boss,
     pivot_spacer): re-solved by stress direction they failed across the layers in every print orientation
@@ -878,7 +877,6 @@ def cradle(G):
         rail = rail.union(box(fx0, fx1, ra, rb, fz0, z0 + 0.01))                                # 10 mm deep along the plate's foot
         s = rail if s is None else s.union(rail)
     s = s.union(box(xr0, xr0 + 8, -r1, r1, z0 - RAIL_DEEP['dz'], z1))                          # rear cross bar
-    s = s.union(box(xr1 - 8, LASER_X[1] + 2, -r1 + 7, -22.0, z0, z1))                            # laser tab
     # the plates' rebates (0.3 mm longer than the foot at each end) and their 3 x M3 inserts, put in from the rebate
     p0 = G.plate_y[0]
     zf = (fz0 + z1) / 2
@@ -902,8 +900,6 @@ def cradle(G):
     zs = z0 - RAIL_DEEP['dz']
     s = s.cut(cyl_z(THUMB['collar'][0] / 2 + 1.0, zb, zs, lx, ly)).cut(box(lx - THUMB['collar'][0] / 2 - 1.0, lx + THUMB['collar'][0] / 2 + 1.0,
                                                                              ly, -r0 + 1.0, zb, zs))
-    for x in (LASER_X[0] + 4, LASER_X[1] - 4):
-        s = s.cut(through_z(x, LASER_Y, FAST['M3']['clear'], z0 - 1, z1 + 1))
     # lightening windows in the rails, kept 4 mm clear of every CT hole and off the plates' feet
     holes = ct_dowels + [ct_latch]
     for sgn in (1, -1):
@@ -1036,8 +1032,16 @@ def ct_points(G):
 # the CT latch: a DIN 464 knurled thumbscrew M4 x 12 (McMaster 92581A250: head Ø16 x 3.5 on a Ø8 x 6 collar) up through
 # the rail into the cartridge's M4 insert, kept in the rail by an O-ring on its thread in a counterbore on the rail's top
 THUMB = {'head': (16.0, 3.5), 'collar': (8.0, 6.0), 'l': 12.0, 'oring_seat': (8.6, 2.0), 'mass_g': 4.0}   # O-ring: AS568-006, 9452K14
-LASER_X = (106.0, 126.0)
-LASER_Y = -32.0
+# the aiming laser on the cartridge's top, over the barrel (it was on a tab at the cradle's front left, which read as a box
+# stuck on the side): its holder's foot on the barrel socket's pad (2 x M3 x 10 into inserts), its ring over the barrel
+# with the beam 29.5 mm above the bore's axis and on its plane (no sideways parallax); it comes off with the cartridge,
+# so the boresight is to the barrel it sits on
+LASER_X = (112.0, 132.0)       # the holder's ring (C frame x); the laser from LASER_X[0] - 2
+LASER_Y = 0.0
+LASER_Z = 29.5
+LASER_FOOT = {'x0': 99.0, 'half_w': 9.0, 'screws': ((105.0, 7.0), (105.0, -7.0))}
+LASER_SCREW = {'d': 3.0, 'l': 6.0, 'mass_g': 0.3,
+               'name': '3 x McMaster 93285A115 M3 x 6 nylon-tip set screws (18-8): the laser\'s boresight, in its holder\'s tapped ring'}
 
 
 def cartridge_body(G):
@@ -1085,7 +1089,7 @@ def cartridge_body(G):
     s = s.union(_slab(plate, bz0, bz0 + 3))
     s = s.union(box(G.cage_x1 - w, G.cage_x1 + 1.5, -br - w - 3, br + w + 3, bz0, br + w + 3))   # front wall
     s = s.union(cyl_x(br + 6.0, G.socket_x0 - 1.5, G.socket_x1))                            # barrel socket
-    s = s.union(box(G.socket_x0 + 3, G.socket_x0 + 11, -5, 5, 0, br + 8.5))                 # socket screw boss
+    s = s.union(box(G.socket_x0 + 1, G.socket_x1, -12.5, 12.5, 0, SOCKET_PAD_Z))           # socket pad: set screw, laser foot
     cb = CART_BOARD
     for (x, y) in cb['bosses']:                                                             # posts for the cartridge board
         s = s.union(cyl_z(3.5, G.plate_z1 - 0.01, G.plate_z1 + cb['boss_h'] + cb['standoff'], x, y))
@@ -1109,7 +1113,9 @@ def cartridge_body(G):
         s = s.cut(insert_hole(x, y, G.plate_z1 + cb['boss_h'] + cb['standoff'], 'M3', 6.0))
     s = s.cut(ball_path(G))
     s = s.cut(cyl_x(G.barrel_od / 2 + 0.1, G.socket_x0, G.socket_x1 + 1))
-    s = s.cut(insert_hole(G.socket_x0 + 7, 0, br + 8.5, 'M3', 8.0 - 0.5))
+    s = s.cut(insert_hole(G.socket_x0 + 7, 0, SOCKET_PAD_Z, 'M3', SOCKET_PAD_Z - br))       # the barrel's set screw
+    for (x, y) in LASER_FOOT['screws']:                                                     # the laser holder's 2 x M3
+        s = s.cut(insert_hole(x, y, SOCKET_PAD_Z, 'M3', 6.5))
     # the feed servo under the floor: the horn's hole, the label band's relief, 4 x M2 countersunk from above
     s = s.cut(cyl_z(10.5, fz0 - 1, fz + 1))
     L_, W_, sft = SERVO['L'], SERVO['W'], SERVO['shaft_from_end']
@@ -1131,6 +1137,7 @@ def cartridge_body(G):
 
 HOPPER_LUGS = (0.0, 135.0, 225.0)
 HOPPER_WALL = 1.6
+SOCKET_PAD_Z = 22.6            # the socket pad's top (C frame): the laser holder's foot sits on it
 
 
 def feed_servo_holes():
@@ -1338,23 +1345,51 @@ def barrel(G):
 
 
 def laser_mount(G):
-    """Laser holder, printed PETG: a ring round the Ø7 laser (Ø11 bore with an O-ring at the back) and three M3
-    boresight screws at 120 deg (tapped), on a foot screwed to the cradle's tab (2 x M3). It stays on the cradle when
-    a cartridge is swapped, so the boresight holds."""
+    """Laser holder, printed PETG: a ring round the Ø7 laser over the barrel (Ø11 bore with an O-ring at the back) and
+    three M3 boresight screws at 120 deg (tapped), on a foot that sits on the barrel socket's pad on the cartridge's top
+    (2 x M3 x 10 down into the pad's inserts). A Ø6 hole through the foot over the barrel's set screw takes the hex key;
+    the laser's leads leave the bore's open back towards the cartridge board. It comes off with the cartridge, so the
+    boresight is to the barrel it sits on."""
     x0, x1 = LASER_X
-    y = LASER_Y
-    s = cyl_x(9.0, x0, x1, y, 0).union(box(x0, x1, y - 9, y + 9, G.rail_z[1], -4))
-    s = s.cut(cyl_x(5.5, x0 - 1, x1 + 1, y, 0))
-    for k in range(3):
-        s = s.cut(_radial_hole(G, (x0 + x1) / 2, y, math.radians(90 + 120 * k)))
-    for x in (x0 + 4, x1 - 4):
-        s = s.cut(cyl_z(1.25, G.rail_z[1] - 1, G.rail_z[1] + 6, x, y))
+    y, z = LASER_Y, LASER_Z
+    hw = LASER_FOOT['half_w']
+    s = cyl_x(9.0, x0, x1, y, z).union(box(LASER_FOOT['x0'], x0 + 1.0, y - hw, y + hw, SOCKET_PAD_Z, z + 9.0))
+    s = s.cut(cyl_x(5.5, LASER_FOOT['x0'] - 1, x1 + 1, y, z))
+    for o, d in laser_screw_axes(G):
+        s = s.cut(cyl_along(1.25, o, d, -1.0, 7.0))
+    for (x, yy) in LASER_FOOT['screws']:
+        s = s.cut(through_z(x, yy, FAST['M3']['clear'], SOCKET_PAD_Z - 1, z + 10))
+        s = s.cut(cyl_z(3.1, SOCKET_PAD_Z + 6.0, z + 10, x, yy))                     # the M3 x 10 head's counterbore
+    s = s.cut(cyl_z(3.0, SOCKET_PAD_Z - 1, z + 10, G.socket_x0 + 7, 0.0))              # hex key to the barrel's set screw
     return s
 
 
-def _radial_hole(G, x, y, a):
-    d = cq.Workplane('XY').circle(1.25).extrude(12).translate((0, 0, 6))
-    return d.rotate((0, 0, 0), (1, 0, 0), math.degrees(a) - 90).translate((x, y, 0))
+def laser_screw_axes(G):
+    """The three boresight screws' seats on the ring's outside and their inward directions (C frame), at the ring's
+    middle, 90 / 210 / 330 deg about the beam (one on top, two below at the sides)."""
+    xm = (LASER_X[0] + LASER_X[1]) / 2
+    out = []
+    for k in range(3):
+        th = math.radians(120 * k)                                   # from +z, turning about +x
+        u = (0.0, -math.sin(th), math.cos(th))
+        out.append(((xm, LASER_Y + 9.0 * u[1], LASER_Z + 9.0 * u[2]), (0.0, -u[1], -u[2])))
+    return out
+
+
+def cyl_along(r, p, d, t0, t1):
+    """A cylinder of radius r on the line p + t d (d a unit vector), from t0 to t1."""
+    a = cq.Vector(*p) + cq.Vector(*d) * t0
+    return cq.Workplane('XY').add(cq.Solid.makeCylinder(r, t1 - t0, a, cq.Vector(*d)))
+
+
+def laser_screws(G):
+    """The three M3 x 6 nylon-tip set screws (McMaster 93285A115) in the ring's tapped holes, their tips on the laser."""
+    r_in = LASER['d'] / 2
+    out = []
+    for (o, d) in laser_screw_axes(G):
+        t0 = 9.0 - r_in - LASER_SCREW['l']                          # its head end 0.5 mm proud of the ring
+        out.append(cyl_along(LASER_SCREW['d'] / 2, o, d, t0, t0 + LASER_SCREW['l']).val())
+    return cq.Workplane('XY').add(cq.Compound.makeCompound(out))
 
 
 # ------------------------------------------------------------------------------------------------ the head ring (proposal)
@@ -1390,8 +1425,10 @@ J4012 = {'L': 95.0, 'W': 63.0, 'H': 66.7, 'mass_g': 462.0, 'x0': -50.0,
 PLINTH = {'h': 86.0, 'r': 78.0, 'wall': 2.5, 'tray_t': 10.0, 'col_r': 7.5, 'cbore': (9.5, 5.5), 'rib_h': 6.0,
           'tab': 8.0, 'vent': (4.0, 36.0, 6), 'eth_y': 30.0, 'xt30_y': -30.0}
 VENT_X1 = -6.0                 # the frontmost vent slot's x: everything behind the pan axis (see compute_shell)
-ETH_JACK = {'cut': (16.0, 14.0), 'ears': 25.0, 'depth': 22.0, 'note': 'Adafruit 909 panel-mount RJ-45 extension (25 cm lead to the J4012\'s port)'}
-XT30_IN = {'body': (10.2, 5.2, 16.0), 'clamp': (16.0, 11.0), 'note': 'Amass XT30U-F on 14 AWG leads, its housing clamped in the plinth\'s wall'}
+ETH_JACK = {'cut': (16.0, 14.0), 'body': (15.8, 13.8), 'ears': 25.0, 'depth': 20.0, 'boss': (28.0, 20.0), 'note': 'Adafruit 909 panel-mount RJ-45 extension (25 cm lead to the J4012\'s port)'}
+XT30_IN = {'body': (10.2, 5.2, 16.0), 'clamp': (16.0, 11.0), 'boss': (18.0, 12.0),
+           'note': 'Amass XT30U-F on 14 AWG leads, its housing held line to line in the plinth wall\'s boss (a drop of CA)'}
+CONN_BOSS_T = 8.0              # the shell's inner bosses that hold the RJ-45 jack and the XT30 (radial depth, mm)
 FUSES = {'size': (36.0, 14.0, 12.0), 'note': 'two Bussmann HHM inline MINI holders on the tray (58 V MINI fuses only): 20 A main, 5 A to the J4012'}
 
 
@@ -1424,7 +1461,9 @@ def compute_shell(G):
     """The plinth's wall, printed PETG upside down: a Ø156 x 3 ring from the tray to the pan base's foot, four columns
     under the TM bolts (an M5 insert in each top for the pan base's M5 x 16; a foot with an M4 down into the tray; a tab
     that holds the J4012 down at each top corner), ribs from the columns to the wall, vents in the +-y walls behind the pan axis (the J501 exhaust plume is in front) beside the
-    J4012's sides, and in the -x wall the Ethernet jack's window (2 x 4-40) and the XT30 input's clamp pocket."""
+    J4012's sides, and in the -x wall the Ethernet jack's window and the XT30 input's pocket, each through an 8 mm boss
+    on the wall's inside whose slot holds the connector's body line to line (the jack also by its two 4-40 screws through
+    its flange into the boss; the XT30 with a drop of CA)."""
     P = PLINTH
     zt = -P['h'] + P['tray_t']
     s = ring_z(P['r'], P['r'] - P['wall'], zt, 0.0)
@@ -1451,17 +1490,23 @@ def compute_shell(G):
             x = VENT_X1 - k * 9.0
             yw = math.sqrt(P['r'] ** 2 - x ** 2)
             s = s.cut(box(x - w / 2, x + w / 2, sy * (yw - P['wall'] - 3.0), sy * (yw + 3.0), zc - l / 2, zc + l / 2))
-    # the -x wall: the Ethernet jack (its window and two 4-40 ears) and the XT30 input's clamp pocket
-    ew, eh = ETH_JACK['cut']
+    # the -x wall: the Ethernet jack (its window, its slot in the boss, two 4-40 through its flange) and the XT30 input
     ye, ze = P['eth_y'], zt + 30.0
-    xo = -P['r'] + P['wall'] + 12.0
-    s = s.cut(box(-P['r'] - 2, xo, ye - ew / 2, ye + ew / 2, ze - eh / 2, ze + eh / 2))
+    yx = P['xt30_y']
+    ri = P['r'] - P['wall']
+    for (yc, (bw, bh)) in ((ye, ETH_JACK['boss']), (yx, XT30_IN['boss'])):
+        boss = ring_z(ri + 0.01, ri - CONN_BOSS_T, ze - bh / 2, ze + bh / 2).intersect(box(-P['r'], 0.0, yc - bw / 2, yc + bw / 2, ze - bh, ze + bh))
+        s = s.union(boss)
+    xo = -P['r'] + P['wall'] + 20.0
+    ew, eh = ETH_JACK['cut']
+    jw, jh = ETH_JACK['body']
+    s = s.cut(box(-P['r'] - 2, -ri + 1.0, ye - ew / 2, ye + ew / 2, ze - eh / 2, ze + eh / 2))          # the wall's window
+    s = s.cut(box(-P['r'] - 2, xo, ye - jw / 2, ye + jw / 2, ze - jh / 2, ze + jh / 2))                # the boss's slot
     for d in (-1, 1):
         s = s.cut(cyl_x(1.4, -P['r'] - 2, xo, ye + d * ETH_JACK['ears'] / 2, ze))
-    cw, ch = XT30_IN['clamp']
-    yx = P['xt30_y']
-    s = s.cut(box(-P['r'] - 2, xo, yx - XT30_IN['body'][0] / 2 - 0.2, yx + XT30_IN['body'][0] / 2 + 0.2,
-                  ze - XT30_IN['body'][1] / 2 - 0.2, ze + XT30_IN['body'][1] / 2 + 0.2))
+    bx, by, _ = XT30_IN['body']
+    s = s.cut(box(-P['r'] - 2, -ri + 1.0, yx - bx / 2 - 0.2, yx + bx / 2 + 0.2, ze - by / 2 - 0.2, ze + by / 2 + 0.2))
+    s = s.cut(box(-P['r'] - 2, xo, yx - bx / 2, yx + bx / 2, ze - by / 2, ze + by / 2))
     return s
 
 
@@ -1475,7 +1520,8 @@ def compute_parts(G):
                       'wall\'s jack, CAN to the slip ring, its own fan and heat sink')
     ye, ze = P['eth_y'], zt + 30.0
     xw = -math.sqrt(P['r'] ** 2 - ye ** 2)                                    # the wall's outer face at the jack
-    out['eth_jack'] = (box(xw, J['x0'] - 0.01, ye - 7.9, ye + 7.9, ze - 6.9, ze + 6.9), 'base', 15.0, ETH_JACK['note'])
+    jw, jh = ETH_JACK['body']
+    out['eth_jack'] = (box(xw, xw + ETH_JACK['depth'], ye - jw / 2, ye + jw / 2, ze - jh / 2, ze + jh / 2), 'base', 15.0, ETH_JACK['note'])
     yx = P['xt30_y']
     bx, by, bz = XT30_IN['body']
     xw = -math.sqrt(P['r'] ** 2 - yx ** 2)
@@ -1617,8 +1663,9 @@ def bought_parts(G):
     cd, ch = THUMB['collar']
     thumb = cyl_z(cd / 2, z0r - ch, z0r + 0.01, lx, ly).union(cyl_z(hd / 2, z0r - ch - hh, z0r - ch + 0.01, lx, ly))
     out['ct_thumbscrew'] = (thumb, 'tilt', THUMB['mass_g'], 'DIN 464 knurled thumbscrew M4 x 12 (McMaster 92581A250), the CT latch, under the rail')
-    out['laser'] = (cyl_x(LASER['d'] / 2, LASER_X[0] - 2, LASER_X[0] - 2 + LASER['L'], LASER_Y, 0), 'tilt', LASER['mass_g'],
-                    LASER['name'] + ' (D42)')
+    out['laser'] = (cyl_x(LASER['d'] / 2, LASER_X[0] - 2, LASER_X[0] - 2 + LASER['L'], LASER_Y, LASER_Z), 'tilt', LASER['mass_g'],
+                    LASER['name'] + ' (D42): over the barrel, in its holder on the cartridge')
+    out['laser_screws'] = (laser_screws(G), 'tilt', 3 * LASER_SCREW['mass_g'], LASER_SCREW['name'])
     return out
 
 
@@ -1666,7 +1713,7 @@ MADE = [
     ('hopper_lid', hopper_lid, 'tilt', 'petg', 1, ((1, 0, 0), 180), 'PETG'),
     ('hopper_flap', hopper_flap, 'tilt', 'petg', 1, None, 'PETG; Ø2 pin + torsion spring'),
     ('barrel', barrel, 'tilt', 'petg', 1, ((0, 1, 0), -90), 'PETG standing; last 15 mm blaze orange'),
-    ('laser_mount', laser_mount, 'tilt', 'petg', 1, None, 'PETG; 3 x M3 boresight, 2 x M3 to the cradle'),
+    ('laser_mount', laser_mount, 'tilt', 'petg', 1, None, 'PETG; 3 x M3 boresight, 2 x M3 x 10 to the socket pad'),
     ('bumper_ring', bumper_ring, 'base', 'tpu95', 1, None, 'TPU 95A; 5 x M3 with washers'),
     ('ring_carrier', ring_carrier, 'base', 'pa6-cf', 1, ((1, 0, 0), 180), 'PA6-CF on its top face; 3 x M3 x 10 flat heads up into the base; 3 x M3 inserts for the ring'),
     ('ring_driver', ring_driver, 'pan', 'pa6-cf', 1, ((1, 0, 0), 180), 'PA6-CF on its top face; in the turntable\'s bore (ribs + CA)'),
@@ -1938,7 +1985,7 @@ def turret_parts(L, ball_d=22.7, pan=0.0, tilt=0.0):
         'tilt_axis': {'point': list(T.point((G.tilt_x, 0, G.tilt_c), 'tilt', pan, 0.0)), 'dir': [-math.sin(rad(pan)), math.cos(rad(pan)), 0.0]},
         'muzzle': list(T.point((G.barrel_x1, 0, 0), 'tilt', pan, tilt)),
         'muzzle_dir': [round(c, 4) for c in d],
-        'laser_origin': list(T.point((LASER_X[1], LASER_Y, 0), 'tilt', pan, tilt)),
+        'laser_origin': list(T.point((LASER_X[1], LASER_Y, LASER_Z), 'tilt', pan, tilt)),
         'tilt_range_deg': [G.tilt_min, 0.0], 'pan_range_deg': [-170.0, 170.0], 'pan_hard_stop_deg': 173.5,
         'mass_estimate_g': round(tot, 1),
         'com': [round(c, 1) for c in (com[0], com[1], com[2] + T.mount_z)],
@@ -2179,7 +2226,7 @@ def render(T, L, out):
         ('X2216 motors hang under this plate; cartridge board and ESCs on posts above', p((G.wheel_x, -G.wheel_y, G.plate_z1))),
         ('cartridge: dial housing, chute, flywheel cage', p((G.wheel_x, -G.cage_y, 10))),
         ('barrel: bore ball + 2.0, 2 gates', p((G.barrel_x1 - 20, -G.barrel_od / 2, 0))),
-        ('aiming laser (on the cradle)', p((LASER_X[1] + 10, LASER_Y - 6, 0))),
+        ('aiming laser (over the barrel, on the cartridge)', p((LASER_X[1] + 10, LASER_Y, LASER_Z + 10))),
         ('cradle: cartridge on 2 dowels + thumbscrew', p((40, -G.cheek_y[1], G.rail_z[0] + 2))),
         ('turntable: 63 T gear on the 6810-2Z', (0, -40, mz + 52)),
         ('turret-board bay (three boards, PETG tray)', (0, -(G.arm_y[1] + TB['y_out']) / 2 - 5, mz + sum(TB['z']) / 2 + 20)),

@@ -86,7 +86,13 @@ bore (section 6).
 `turret.pinion_check()`; the clash sweep; `connected` (base, pan, pinion one body each; joints: the 61810's races, the
 pinion on its horn, the mesh). The pan servo's pocket end wall is 8 mm (it was 3: the FEA's layer-aware post-process
 found it bending across its layers, 0.57 at a full stall; now 1.91, and 3.81 at the 50 % cap). Open: `pan_pinion
-R-stall` reads 1.05 layer-aware against 1.2 (isotropic 1.2), its peak at the edge of the one-tooth model's load patch.
+R-stall` read 1.05 layer-aware against 1.2 at 100 % of the servo's stall; its peak is at the tooth's root fillet
+(x -41.1 = the root circle), not a load-patch artefact. Fix (2026-10-28): the pan servo's own EEPROM torque ceiling
+(register 16) is set to 80 % by the setup tool and verified by the firmware at every init (it refuses a pan servo set
+higher: SERVO_CONFIG, tested); the servo starts every power-up at it, so with the firmware's 50 % cap lost the mesh
+sees 80 %. R-stall now loads 80 % (cad/turret_studies.py CEILING) for the pinion, the ring's teeth (1.2 at 100 %) and
+the servo pocket. *Rejected:* a profile shift (it moves strength from the ring's teeth, which are at 1.2 themselves),
+a wider face (the ring's face sets the mesh), a metal pinion against a printed ring (wear).
 
 ## 2. Tilt yoke and cradle
 
@@ -272,14 +278,22 @@ Hasbro recommends for Rival.
 safety line over 105 fps), and show the aim with a laser parallel to the bore.
 
 **Parts.** `barrel` (PETG, standing; Ø30 x 100, bore 24.7 from the nip on, the last 15 mm blaze orange),
-`laser_mount` (PETG ring on the cradle's laser tab, 2 x M3), `laser` (Quarton VLM-650-03, < 1 mW, Class 2) held by
-three M3 nylon-tip boresight screws, 2 mm clear of the ring's bore.
+`laser_mount` (PETG: a ring over the barrel on a foot that sits on the barrel socket's pad on the cartridge's top,
+2 x M3 x 10 into the pad's inserts; a Ø6 hole through the foot over the barrel's set screw for the hex key), `laser`
+(Quarton VLM-650-03, < 1 mW, Class 2) 29.5 mm above the bore's axis and on its plane, held by `laser_screws` (three
+McMaster 93285A115 M3 x 6 nylon-tip set screws at 120 deg, modelled: their tips on the laser, their threads in the
+ring), 2 mm clear of the ring's bore.
 
 **Decisions.** *Bore ball + 2.0 past the nip* (finding 14: the ball rides the floor and rolls to a steady topspin;
-pitch scatter 11.5 to 5 mrad); *the laser on the cradle, not on the barrel*, so the barrel can be swapped without
-re-boresighting.
+pitch scatter 11.5 to 5 mrad); *the laser on the cartridge's top, over the barrel* (2026-10-28): on the cradle's
+front-left tab, 32 mm beside the barrel, it read as a box stuck on the side and put 32 mm of sideways parallax on
+the aim; over the barrel it is on the bore's vertical plane, it comes off with the cartridge so its boresight is to
+the barrel it sits on, and the cradle loses its tab (which bound the path height over the pan pinion). *Rejected:*
+the laser in the barrel (the barrel is a swap part and a ball path), the laser under the barrel (in the depression
+arc over the deck).
 
-**Checks.** `path_in_cavity` through the barrel; `connected` (the laser fastened through its boresight screws);
+**Checks.** `path` through the barrel; `connectivity` (the laser held through its modelled set screws: the
+fastener touches the laser and threads into the ring);
 the box build's `ball_path` (the ball's way out at every pan and tilt clear of the deck and antennas, 10 mm margin).
 
 ## 6. Wiring and slip ring
@@ -410,11 +424,12 @@ shot's recovery; the J4012 up to 48 W. **The slip ring (2 A a circuit) holds on 
 once at 15 V: the open margin). The real fix is more ring (the plan's two-10-A-circuit robot ring) or a boost in the
 stand; not in this change.
 
-**The stand's rocker** (Bulgin R13244AAAA, 10 A 28 V DC; 20.5 V at most, inside 28 V): **over its 10 A** at 15 V with
-the firmware's 800 ms and 10/s (11.2-11.3 A in play, 13.1-13.7 A worst); within it on the stand profile in play (8.7 A),
-and at the worst coincidence with the J4012 in its 25 W mode (9.3 A, against 10.9 A at 48 W). So on the stand the J4012
-runs its 25 W mode, and a 15 A or larger DC switch is the stand's own fix (section 8, open). It switches at most the
-idle current (4.8 A at 15 V with the wheels held).
+**The stand's switch (D70): a Blue Sea 6006 battery switch** (48 V DC, 275 A continuous; Walmart US$34.16,
+NavStore and Waytek as backups). The Bulgin R13244AAAA rocker it replaces (10 A 28 V DC) was **over its 10 A** at
+15 V with the firmware's 800 ms and 10/s (11.2-11.3 A in play, 13.1-13.7 A worst, 24.6 A instant). No panel rocker
+with a DC rating of 15 A at 20.5 V or more was found in stock (the 20 A rockers are rated at 12-14 V DC), so a marine
+battery switch: it switches the pack itself and never breaks a load's pulse. The firmware's supply profile
+(firmware/turret/config.py, D70) is implemented and tested: the ring sets it, the switch no longer does.
 
 **Run time** on one DCB609 (about 160 Wh in 20 V mode): ~5 h idle (the J4012 at 25 W, nothing moving: ~32 W), ~2.8 h
 at the game average (58 W), ~2.0 h with the J4012 flat out (81 W).
@@ -427,14 +442,15 @@ bench and for play without Gyropup.
 **Parts and decisions.** `stand_box` (PETG, 200 x 200 x 150, printed upside down) and `stand_bottom`
 (cad/turret_stand.py): the turret's TM pattern on the top plate (M5 inserts); the DCB609 slides in from the back
 onto a 20 V MAX dock adapter (12 AWG; Walmart US$12.95, Etsy US$13.50) fixed under the top plate, as onto a drill,
-and rests on two ribs on the floor; its leads go through a 20 A MINI 58 V fuse and the rocker switch to an XT30 lead
+and rests on two ribs on the floor; its leads go through a 20 A MINI 58 V fuse and the power switch to an XT30 lead
 out of the top plate's rear notch to the plinth. The pendant's socket and the rocker stay on the front panel; the
 terminal board moves to the +y wall; the USB-CAN adapter sits beside the pack. *Rejected:* the dock on the top plate
 behind the turret (in the barrel's arc at pan 180, and the turret then stands on a narrower stand), a 24 V mains supply (the turret is meant
 to run untethered).
 
-Open: the rocker is a 10 A 28 VDC part; with section 4's new flywheel rail, the stand's peak current is to be checked
-against it.
+The power switch is a Blue Sea 6006 battery switch (D70: DC-rated for 15 A or more; section 7). Open: the stand's
+front panel still has the Bulgin rocker's Ø20.2 hole; the 6006's cut-out and screw holes are drawn from Blue Sea's
+dimensioned drawing when the switch arrives (bluesea.com refuses a plain fetch), not guessed from a box.
 
 ---
 

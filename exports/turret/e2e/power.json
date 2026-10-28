@@ -57,9 +57,13 @@
    "peak": 48.0
   },
   "rocker": {
-   "part": "bulgin-r13244aaaa",
-   "rating_a": 10.0,
-   "rating_v": 28.0
+   "part": "blue-sea-6006",
+   "rating_a": 275.0,
+   "rating_v": 48.0,
+   "was": {
+    "part": "bulgin-r13244aaaa",
+    "rating_a": 10.0
+   }
   },
   "game_per_min": {
    "arm_s": 30.0,
@@ -3256,7 +3260,7 @@
      "bank_v_min": 11.58,
      "rail_held": false,
      "ring_within_2a": false,
-     "rocker_within_10a": false
+     "rocker_within_10a": true
     },
     "play": {
      "spinup_input_peak_100ms_a": 11.18,
@@ -3273,7 +3277,7 @@
      "bank_v_min": 11.66,
      "rail_held": false,
      "ring_within_2a": false,
-     "rocker_within_10a": false
+     "rocker_within_10a": true
     },
     "time_to_95pct_speed_s": 0.76,
     "hold_input_a": 4.77,
@@ -12839,7 +12843,7 @@
    "flywheel_in_peak_100ms_w": 84.6,
    "time_to_95pct_speed_s": 0.76,
    "within_2a_per_circuit": false,
-   "within_rocker": false
+   "within_rocker": true
   },
   {
    "supply": "pack_15v",
@@ -12851,7 +12855,7 @@
    "flywheel_in_peak_100ms_w": 75.5,
    "time_to_95pct_speed_s": 0.95,
    "within_2a_per_circuit": false,
-   "within_rocker": false
+   "within_rocker": true
   },
   {
    "supply": "pack_15v",
@@ -13152,7 +13156,7 @@
    "rail_held": false,
    "bank_v_min": 11.66,
    "within_2a_per_circuit": false,
-   "within_rocker": false
+   "within_rocker": true
   },
   {
    "supply": "pack_15v",
@@ -13163,7 +13167,7 @@
    "rail_held": false,
    "bank_v_min": 11.66,
    "within_2a_per_circuit": false,
-   "within_rocker": false
+   "within_rocker": true
   },
   {
    "supply": "pack_15v",
@@ -13478,9 +13482,9 @@
   "pack_15v": {
    "play": {
     "ramp_s_for_ring": 2.4,
-    "ramp_s_for_rocker": 1.2,
+    "ramp_s_for_rocker": 0.8,
     "burst_hz_for_ring": 1.0,
-    "burst_hz_for_rocker": 4.0
+    "burst_hz_for_rocker": 10.0
    },
    "play_j25": {
     "ramp_s_for_ring": 2.4,
@@ -13555,7 +13559,7 @@
    "time_to_95pct_speed_s": 2.28,
    "rail_held": false,
    "ring_ok": false,
-   "rocker_ok": false
+   "rocker_ok": true
   },
   "at_15v_worst_j25": {
    "spinup_ring_per_circuit_100ms_a": 2.38,
@@ -13569,8 +13573,8 @@
   }
  },
  "rocker": {
-  "part": "bulgin-r13244aaaa",
-  "rating": "10 A 28 V DC",
+  "part": "blue-sea-6006",
+  "rating": "275 A 48 V DC",
   "stand_v": [
    15.0,
    20.5
@@ -13580,13 +13584,13 @@
     "spinup_peak_100ms_a": 13.11,
     "burst_rms_1s_a": 13.65,
     "instant_peak_a": 24.64,
-    "ok": false
+    "ok": true
    },
    "play": {
     "spinup_peak_100ms_a": 11.18,
     "burst_rms_1s_a": 11.27,
     "instant_peak_a": 20.71,
-    "ok": false
+    "ok": true
    }
   },
   "idle_at_15v_a": 4.77,
@@ -13597,7 +13601,7 @@
   "voltage_ok": true,
   "with_the_stand_profile": {
    "play": true,
-   "worst": false,
+   "worst": true,
    "worst_j25": true
   }
  },
