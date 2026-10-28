@@ -64,29 +64,37 @@ WHEEL_KEY = 'hb10'                                  # D69: sim/wheel_candidates.
 _WHEEL = {}
 
 
-def use_d69_wheel() -> dict:
-    """D69's wheel in place of the BotWheel. sim/leg_rig.py and cad/fivebar.py (the leg core) carry the BotWheel until the
-    leg's foot change (issue #25); the body's model puts the 10 in hub motor into their module state before it builds, as
-    sim/wheel_study.py does: its motor and pneumatic tyre from sim/wheel_candidates.json, its mass the ledger's
-    (cad/body_layout.py wheel_g(), so the model's mass reconciles). Called once, after the ledger is read (the ledger
-    places the tyre's band itself)."""
+_LEG_WHEEL = id(lr.WHEEL)                           # the leg core's own wheel dict: a caller that swaps it (wheel_study) is left alone
+
+
+def use_d69_wheel(ledger_mass: bool = True) -> dict:
+    """D69's wheel in the body's model. Since leg/stops (main 983e47e) sim/leg_rig.py carries the 10 in hub motor itself,
+    at a conservative 4.0 kg for the leg's own strength cases; the robot's model takes the LEDGER's wheel mass instead
+    (cad/body_layout.py wheel_g(): the listed 3.53 kg until W1, #24, weighs a real motor), so the robot model and the
+    ledger agree (mass_reconciles). ledger_mass=False keeps the leg's 4.0 kg (cad/body_legloads.py: the body's loads match
+    the leg's cases). A wheel a caller put in sim.leg_rig itself (sim/wheel_study.py's candidates) is used as it is. Before
+    leg/stops (the BotWheel in the leg core) it put the study's 10 in wheel in, as sim/wheel_study.py does. Called once."""
     if _WHEEL:
         return _WHEEL
     import body_layout as bl
     from sim import wheel_study as ws
-    if lr.WHEEL.get('mass_g') != 2200 or abs(lr.WHEEL_R - 0.08565) > 1e-4:
-        # the caller has set a wheel already (sim/wheel_study.py's candidates), or the leg core now carries its own
-        # wheel (#25): use it as it is, never overwrite it
-        _WHEEL.update(dict(lr.WHEEL, od_mm=lr.WHEEL_R * 2000, tyre_width_mm=bl.D69_WHEEL['tyre_width_mm'],
-                           y_mm=fb.Y['wheel_boss'] + 7.5 + bl.D69_WHEEL['tyre_width_mm'] / 2, preset=True))
-        return _WHEEL
-    w = dict(ws.CANDIDATES[WHEEL_KEY])
-    w.update(mass_g=bl.wheel_g(), od_mm=bl.D69_WHEEL['od_mm'], tyre_width_mm=bl.D69_WHEEL['tyre_width_mm'],
-             rotor_share=bl.D69_WHEEL['rotor_share'])
-    ws.patch_rig(w)
-    ws._patch_cad(w)
-    _WHEEL.update(w)
-    _WHEEL['y_mm'] = fb.Y['wheel_boss'] + 7.5 + w['tyre_width_mm'] / 2      # the tyre's centre plane (left module frame)
+    botwheel = lr.WHEEL.get('mass_g') == 2200 and abs(lr.WHEEL_R - 0.08565) < 1e-4
+    if botwheel:
+        w = dict(ws.CANDIDATES[WHEEL_KEY])
+        w.update(mass_g=bl.wheel_g(), od_mm=bl.D69_WHEEL['od_mm'], tyre_width_mm=bl.D69_WHEEL['tyre_width_mm'],
+                 rotor_share=bl.D69_WHEEL['rotor_share'])
+        ws.patch_rig(w)
+        ws._patch_cad(w)
+        _WHEEL.update(w)
+    else:
+        caller_set = id(lr.WHEEL) != _LEG_WHEEL
+        if ledger_mass and not caller_set:
+            lr.WHEEL = dict(lr.WHEEL, mass_g=bl.wheel_g(), basis_body='the ledger\'s wheel mass (cad/body_layout.py wheel_g())')
+            if hasattr(lr, 'mass_props') and hasattr(lr.mass_props, 'cache_clear'):
+                lr.mass_props.cache_clear()
+        _WHEEL.update(dict(lr.WHEEL, od_mm=lr.WHEEL_R * 2000, tyre_width_mm=lr.WHEEL.get('tyre_width_mm', bl.D69_WHEEL['tyre_width_mm']),
+                           preset=caller_set))
+    _WHEEL['y_mm'] = fb.Y['wheel_boss'] + 7.5 + _WHEEL['tyre_width_mm'] / 2      # the tyre's centre plane (left module frame)
     return _WHEEL
 
 

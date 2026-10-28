@@ -426,7 +426,7 @@ BUDGET = {'robot_kg': 37.0, 'legs_kg_each': 10.85, 'body_and_head_kg': 15.3, 'de
 # wheel's solids (cad/body_params.py _fivebar() draws D69's wheel in the leg's place). The mass is the one listed number read on a
 # seller's page; D69 brackets 3.5-4.0 kg and two motors are weighed before the foot is cut (W1): GYROPUP_WHEEL_CHANGE_G adds
 # a change per wheel on top (e.g. 470 for the 4.0 kg the leg rig simulated).
-D69_WHEEL = {'key': 'hoverboard-10in-36v-350w', 'mass_g': 3530.0, 'od_mm': 254.0, 'tyre_width_mm': 64.0, 'rotor_share': 0.6,
+D69_WHEEL = {'key': 'hoverboard-10in-36v-350w', 'mass_g': 3530.0, 'od_mm': 254.0, 'tyre_width_mm': 54.0, 'rotor_share': 0.6,
              'botwheel_width_mm': 44.6, 'sim_upper_mass_g': 4000.0,
              'basis': 'D69 wheel: e-gizmo 230300029 lists 3.53 kg with the 10 x 2.125 pneumatic tyre (research/air-tyre-hub-wheels.md 3); '
                       'weigh two before the foot is cut (docs/wheel-change-plan.md W1)'}

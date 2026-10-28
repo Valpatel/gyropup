@@ -139,9 +139,8 @@ def _fivebar():
 
 
 D69_WHEEL_KEY = 'hb10'                       # sim/wheel_candidates.json
-D69_WHEEL_CAD = {'od_mm': 254.0, 'tyre_width_mm': 64.0}     # D69's tyre is a 10 x 2.125 (54 mm); it is drawn 64 mm wide, as
-                                                             # the wheel study drew its 10 x 2.5 candidate: the wider band is
-                                                             # the conservative one for clearance and the roll lever
+D69_WHEEL_CAD = {'od_mm': 254.0, 'tyre_width_mm': 54.0}     # D69's 10 x 2.125 tyre, 54 mm wide, as sim/leg_rig.py has it
+                                                             # since leg/stops (main 983e47e); the study drew a 64 mm 10 x 2.5
 
 
 @functools.lru_cache(maxsize=1)

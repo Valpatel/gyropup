@@ -2,7 +2,7 @@
  "numbers": {
   "spine_w_mm": 40.5,
   "y_off_mm": 102.55,
-  "track_mm": 433.7,
+  "track_mm": 424.1,
   "z_spine_top_mm": 90.5,
   "z_tray_top_mm": 93.675,
   "top_mm": 216.635,
@@ -14,7 +14,7 @@
   "tm_face_z_mm": 246.635,
   "pan_axis_x_mm": -40.3,
   "lidar_axis_x_mm": 102.7,
-  "wheel_y_module_mm": 114.3,
+  "wheel_y_module_mm": 109.5,
   "centre_plane_module_mm": -82.30000000000001
  },
  "interface": {
@@ -1006,7 +1006,7 @@
    [
     "upper_link_front",
     "shell_front",
-    44.73,
+    38.42,
     [
      102.0,
      0.0
@@ -1015,7 +1015,7 @@
    [
     "upper_link_front",
     "shell_rear",
-    44.73,
+    38.42,
     [
      102.0,
      0.0
@@ -1024,7 +1024,7 @@
    [
     "upper_link_rear",
     "shell_rear",
-    44.73,
+    38.42,
     [
      102.0,
      0.0
@@ -1033,7 +1033,7 @@
    [
     "upper_link_rear",
     "shell_front",
-    44.73,
+    38.42,
     [
      102.0,
      0.0
@@ -1880,22 +1880,22 @@
  "mass": {
   "P1": {
    "stage": "P1",
-   "total_kg": 33.49,
+   "total_kg": 33.94,
    "com_mm": [
-    4.0,
+    3.9,
     -1.0,
-    -76.8
+    -77.2
    ],
    "groups_kg": {
-    "legs": 21.624,
+    "legs": 22.076,
     "frame": 4.875,
     "compute": 1.36,
     "power": 1.739,
     "deck": 0.83,
     "battery": 3.06
    },
-   "legs_kg": 21.62,
-   "body_and_head_kg": 11.86,
+   "legs_kg": 22.08,
+   "body_and_head_kg": 11.87,
    "budget": {
     "robot_kg": 37.0,
     "legs_kg_each": 10.85,
@@ -1906,7 +1906,7 @@
     "com_y_mm": 5.0,
     "basis": "D71 (37.0 kg as built, 37.5 kg design; it replaces D69's 35.0 / 35.5 kg); legs 2 x 10.85 kg (leg.json + D53 stops + the D69 wheel at its listed 3.53 kg + the clamp hardware), body and head 15.3 kg"
    },
-   "leg_extra": "leg.json 9282 g + 200 g announced for the stops and flanges (D53)",
+   "leg_extra": "leg.json 9708 g (published with the stops in)",
    "levers": [
     {
      "key": "shell_2mm",
@@ -2092,14 +2092,14 @@
   },
   "P3": {
    "stage": "P3",
-   "total_kg": 37.3,
+   "total_kg": 37.75,
    "com_mm": [
     1.0,
     -0.9,
-    -43.9
+    -44.6
    ],
    "groups_kg": {
-    "legs": 21.624,
+    "legs": 22.076,
     "frame": 5.009,
     "shell": 1.112,
     "compute": 1.36,
@@ -2107,7 +2107,7 @@
     "deck": 3.391,
     "battery": 3.06
    },
-   "legs_kg": 21.62,
+   "legs_kg": 22.08,
    "body_and_head_kg": 15.67,
    "budget": {
     "robot_kg": 37.0,
@@ -2119,7 +2119,7 @@
     "com_y_mm": 5.0,
     "basis": "D71 (37.0 kg as built, 37.5 kg design; it replaces D69's 35.0 / 35.5 kg); legs 2 x 10.85 kg (leg.json + D53 stops + the D69 wheel at its listed 3.53 kg + the clamp hardware), body and head 15.3 kg"
    },
-   "leg_extra": "leg.json 9282 g + 200 g announced for the stops and flanges (D53)",
+   "leg_extra": "leg.json 9708 g (published with the stops in)",
    "levers": [
     {
      "key": "shell_2mm",
@@ -2304,18 +2304,18 @@
    ],
    "gate": {
     "ceiling_kg": 37.0,
-    "gap_kg": 0.3,
+    "gap_kg": 0.75,
     "open_scheduled_g": -500,
-    "with_scheduled_levers_kg": 36.8,
+    "with_scheduled_levers_kg": 37.25,
     "body_and_head_with_levers_kg": 15.17,
-    "leg_each_kg": 10.81,
-    "pass": true,
+    "leg_each_kg": 11.04,
+    "pass": false,
     "on_call_next": [
      "alu_standoffs",
      "cooler_34mm",
      "turret_levers"
     ],
-    "margin_kg": 0.2,
+    "margin_kg": -0.25,
     "on_call_open_g": -1791,
     "rule": "the P3 ledger with every scheduled lever taken (the open ones at the plan's grams) under the 37.0 kg ceiling, each leg under 10.85 kg and the body and head under 15.3 kg (D71); over it, the on-call levers go in order before the next order, each with the user's or the coordinator's word"
    }
