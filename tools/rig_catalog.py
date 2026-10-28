@@ -60,7 +60,7 @@ for key, pn, L, qty, price, a_price, used in (
                   'per mm + cut charge', a_price, drop_in=False,
                   changes="80/20's own 40-series slot: MISUMI's brackets and nuts are not verified to fit; switch the whole frame and its fasteners together")])
 add('bracket_corner_8', 'rig', 'fastener', 'MISUMI', 'HBLTS8-C-SEP', 'Corner bracket, 8 series, with 2 x M8 screws + 2 drop-in spring nuts', 4.42, 24,
-    f'{MIS}110300450470/?HissuCode=HBLTS8-C-SEP', stock='Ship Date Same Day', used_for='the base\'s 10 joints (2 each) and the post\'s foot (4)',
+    f'{MIS}110300450470/?HissuCode=HBLTS8-C-SEP', stock='Ship Date Same Day', used_for='the base\'s 16 free joint faces and the post\'s foot (4); 4 spare',
     specs={'allowable_load_n': 2058, 'mass_g': 65.8}, note='Each bracket brings its own two screws and drop-in nuts.',
     alts=[alt('MISUMI', 'HBLTS8-C-SEC', f'{MIS}110300450470/?HissuCode=HBLTS8-C-SEC', '$5.24', 5.24, changes='another screw set'),
           alt('80/20 Inc.', '40-4376 + 3 x 75-3422', 'https://8020.net/40-4376.html', '$7.48 + 3 x $1.14', 10.90, drop_in=False, changes='80/20 slot system')])
@@ -86,8 +86,8 @@ add('screw_m4x16_rail', 'rig', 'fastener', 'McMaster-Carr', '91292A118', '18-8 s
     pack=100, pack_price=11.63, used_for='the rails into the drop-in nuts (HIWIN\'s M4 x 16)',
     note='7 mm head fits the rail\'s 7.5 mm counterbore; a flanged head would not.',
     alts=[alt('Bolt Depot', '23082 (class 12.9, zinc)', 'https://boltdepot.com/', '$0.19 each', 0.19)])
-add('screw_m4x10_block', 'rig', 'fastener', 'McMaster-Carr', '91290A144', 'Black-oxide alloy steel socket head screw M4 x 10', 0.1355, 16,
-    f'{MCM}91290A144/', pack=100, pack_price=13.55, used_for='the four blocks onto the plate: 3.65 mm into the 5 mm threads (0.9 d, steel)',
+add('screw_m4x10_block', 'rig', 'fastener', 'McMaster-Carr', '91290A144', 'Black-oxide alloy steel socket head screw M4 x 10', 0.1355, 20,
+    f'{MCM}91290A144/', pack=100, pack_price=13.55, used_for='the four blocks onto the plate (16: 3.65 mm into the 5 mm threads, 0.9 d); the pendant clip (2) and the ToF arm (2) into inserts',
     note='Same part as catalog/turret.json turret_screw_m4x10. No washer (a washer would leave 2.9 mm of thread).')
 add('screw_m5x16_plate', 'rig', 'fastener', 'McMaster-Carr', '91290A232', 'Black-oxide alloy steel socket head screw M5 x 16', 0.1727, 6,
     f'{MCM}91290A232/', pack=100, pack_price=17.27, used_for='the plate onto the hip frame\'s six M5 inserts (with washers)',
@@ -265,8 +265,8 @@ add('resistor_kit', 'electronics', 'wiring', 'SparkFun', 'COM-10969', 'Resistor 
     'the motors\' bus 100k/4.7k (60 V -> 2.7 V)')
 add('featherwing_proto', 'electronics', 'wiring', 'Adafruit', '2884', 'FeatherWing Proto', 4.95, 2, 'https://www.adafruit.com/product/2884',
     stock='In Stock', used_for='one under the Feather (the dividers, the sensors\' plugs); one as the carriage\'s CAN junction (the GH headers)')
-add('pod_insert_m4', 'rig', 'fastener', 'McMaster-Carr', '94459A160', 'Heat-set insert M4 (brass)', 0.2346, 3, f'{MCM}94459A160/', pack=50, pack_price=11.73,
-    used_for='the pod: the contactor (2), the relay (1)', note='Same part as catalog/turret.json turret_insert_m4.')
+add('pod_insert_m4', 'rig', 'fastener', 'McMaster-Carr', '94459A160', 'Heat-set insert M4 (brass)', 0.2346, 7, f'{MCM}94459A160/', pack=50, pack_price=11.73,
+    used_for='the pod: the contactor (2), the relay (1), the pendant clip (2); the ToF target arm (2)', note='Same part as catalog/turret.json turret_insert_m4.')
 add('screw_m2_5x8', 'electronics', 'fastener', 'McMaster-Carr', '91290A102', 'Socket head screw M2.5 x 8', 0.246, 4, f'{MCM}91290A102/', pack=50, pack_price=12.30,
     used_for='the Feather\'s FeatherWing into the pod\'s bosses (self-tapping into PETG)', note='Same part as catalog/turret.json turret_screw_m2_5x8.')
 add('xt60e_m_panel', 'electronics', 'wiring', 'Maplin (UK)', 'Amass XT60E-M', 'XT60 male panel plug (the pack\'s inlet)', 1.50, 1,

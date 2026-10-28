@@ -44,7 +44,8 @@ HG15 = {'H': 28.0, 'H1': 4.3, 'W': 34.0, 'B': 26.0, 'C': 26.0, 'L': 61.4, 'threa
 PROFILES = {'8080': {'w': 80.0, 'h': 80.0, 'kg_m': 4.57, 'A_mm2': 1691.0, 'I_mm4': 1.291e6},      # MISUMI HFS8-8080
             '4040': {'w': 40.0, 'h': 40.0, 'kg_m': 1.73, 'A_mm2': 640.0, 'I_mm4': 1.04e5},       # HFS8-4040
             '4080': {'w': 40.0, 'h': 80.0, 'kg_m': 3.00, 'A_mm2': 1109.0, 'I_strong_mm4': 7.19e5, 'I_weak_mm4': 1.98e5}}   # HFS8-4080
-SLOT_W, SLOT_D = 10.2, 3.0          # the slot opening and the depth drawn (an envelope: the T-groove is not modelled)
+SLOT_W, SLOT_D = 10.2, 3.0          # the slot's opening and its lip (the wall a drop-in nut pulls against)
+GROOVE_W, GROOVE_D = 16.5, 12.0     # the T-groove behind the lip, to this depth from the face (an envelope)
 E_AL = 69e3                          # MPa, 6063-T5 / 6061-T6
 YIELD_6063 = 145.0                   # MPa, 6063-T5 (MISUMI's profile alloy is 6063-T5 or 6N01)
 
@@ -158,23 +159,27 @@ def extrusion(kind: str, axis: str, length: float, at=(0.0, 0.0, 0.0), flat: boo
             c = centre - span / 2 + 20 + 40 * k
             sgn = 1 if pos > (x if normal == 'x' else y if normal == 'y' else z) else -1
             d0, d1 = (pos - SLOT_D, pos + 1) if sgn > 0 else (pos - 1, pos + SLOT_D)
-            if axis == 'z':
-                g = box(d0, d1, c - SLOT_W / 2, c + SLOT_W / 2, z - 1, z + length + 1) if normal == 'x' else \
-                    box(c - SLOT_W / 2, c + SLOT_W / 2, d0, d1, z - 1, z + length + 1)
-            elif axis == 'y':
-                g = box(d0, d1, y - 1, y + length + 1, c - SLOT_W / 2, c + SLOT_W / 2) if normal == 'x' else \
-                    box(c - SLOT_W / 2, c + SLOT_W / 2, y - 1, y + length + 1, d0, d1)
-            else:
-                g = box(x - 1, x + length + 1, d0, d1, c - SLOT_W / 2, c + SLOT_W / 2) if normal == 'y' else \
-                    box(x - 1, x + length + 1, c - SLOT_W / 2, c + SLOT_W / 2, d0, d1)
-            b = b.cut(g)
+            g0, g1 = (pos - GROOVE_D, pos - SLOT_D) if sgn > 0 else (pos + SLOT_D, pos + GROOVE_D)
+            for (e0, e1), wd in (((d0, d1), SLOT_W), ((g0, g1), GROOVE_W)):
+                if axis == 'z':
+                    g = box(e0, e1, c - wd / 2, c + wd / 2, z - 1, z + length + 1) if normal == 'x' else \
+                        box(c - wd / 2, c + wd / 2, e0, e1, z - 1, z + length + 1)
+                elif axis == 'y':
+                    g = box(e0, e1, y - 1, y + length + 1, c - wd / 2, c + wd / 2) if normal == 'x' else \
+                        box(c - wd / 2, c + wd / 2, y - 1, y + length + 1, e0, e1)
+                else:
+                    g = box(x - 1, x + length + 1, e0, e1, c - wd / 2, c + wd / 2) if normal == 'y' else \
+                        box(x - 1, x + length + 1, c - wd / 2, c + wd / 2, e0, e1)
+                b = b.cut(g)
     return b
 
 
 # ----------------------------------------------------------------------------------- the carriage plate (SendCutSend)
 
-BALLAST_X, BALLAST_Z = 125.0, 20.0        # the two ballast posts (behind the plate, -y): plates of Ø150 at most
-                                          # stay 10 mm off the post and above the bottom bumpers' reach
+BALLAST_X, BALLAST_Z = 138.0, 40.0        # the two ballast posts (behind the plate, -y). Their screw heads sit on the
+                                          # plate's front, where the motors' rear covers are 2 mm away: out here the
+                                          # head and washer clear the Ø120 covers (75 mm from a motor's axis) and the
+                                          # hole keeps 6.75 mm of web to the plate's edge
 DROP_PIN = (125.0, 140.0, 10.2)           # x, z, hole: a 3/8 in ball-lock pin (McMaster 92384A274) into the drop bracket
 TETHER = (-125.0, 140.0, 12.5)            # the safety tether's shackle
 TOF_HOLES = ((-138.0, -104.0), (-138.0, -136.0))   # the ToF arm (2 x M4)
@@ -257,18 +262,37 @@ WEIGHT_PLATE = {'d': 129.5, 't': 20.3, 'bore': 27.0}   # Body-Solid RPB 2.5 lb s
                                                        # 4 x 0.4 in; the 5 lb (6.7 in) would reach the post: not used
 
 
-def ballast(n_plates: int = 2):
-    """The two ballast posts and n plates on each (module frame), pointing back (-y) from the plate."""
+BALLAST_SPACER = {'len': 9.0, 'od': 40.0}   # holds the first plate off the hip frame's M5 heads on the plate's back
+
+
+def ballast_spacer():
+    """PETG ring on each ballast post against the plate's back: the first weight plate (Ø129.5) would otherwise sit on
+    the heads of the hip frame's outer M5s (5 mm + a 1 mm washer at x = +-83, z = 67)."""
+    return (cyl(BALLAST_SPACER['od'] / 2, 'y', Y_PLATE_BACK - BALLAST_SPACER['len'], Y_PLATE_BACK)
+            .cut(cyl(SHAFT['d'] / 2 + 0.05, 'y', Y_PLATE_BACK - BALLAST_SPACER['len'] - 1, Y_PLATE_BACK + 1)))
+
+
+def ballast(n_plates: int = 1):
+    """The two ballast posts and n plates on each (module frame), pointing back (-y) from the plate: one shape (the
+    renders' and the mass's); ballast_parts() gives them one by one."""
     out = None
+    for s in ballast_parts(n_plates).values():
+        out = s if out is None else out.union(s)
+    return out
+
+
+def ballast_parts(n_plates: int = 1) -> dict:
+    """{name: shape}: each post (a 1 in shaft, 6 in long) and its plates, the first plate against the plate's back."""
+    out = {}
     for sx in (-1, 1):
         x = sx * BALLAST_X
-        s = cyl(SHAFT['d'] / 2, 'y', Y_PLATE_BACK - SHAFT['len'], Y_PLATE_BACK, x, BALLAST_Z)
-        y = Y_PLATE_BACK - 2.0
-        for _ in range(n_plates):
-            s = s.union(cyl(WEIGHT_PLATE['d'] / 2, 'y', y - WEIGHT_PLATE['t'], y, x, BALLAST_Z)
-                        .cut(cyl(WEIGHT_PLATE['bore'] / 2, 'y', y - WEIGHT_PLATE['t'] - 1, y + 1, x, BALLAST_Z)))
-            y -= WEIGHT_PLATE['t'] + 1.0
-        out = s if out is None else out.union(s)
+        out[f'ballast_shaft_{sx:+d}'] = cyl(SHAFT['d'] / 2, 'y', Y_PLATE_BACK - SHAFT['len'], Y_PLATE_BACK, x, BALLAST_Z)
+        out[f'ballast_spacer_{sx:+d}'] = ballast_spacer().translate((x, 0.0, BALLAST_Z))
+        y = Y_PLATE_BACK - BALLAST_SPACER['len']
+        for k in range(n_plates):
+            out[f'weight_plate_{sx:+d}_{k}'] = (cyl(WEIGHT_PLATE['d'] / 2, 'y', y - WEIGHT_PLATE['t'], y, x, BALLAST_Z)
+                                                .cut(cyl(WEIGHT_PLATE['bore'] / 2, 'y', y - WEIGHT_PLATE['t'] - 1, y + 1, x, BALLAST_Z)))
+            y -= WEIGHT_PLATE['t']
     return out
 
 
@@ -277,6 +301,7 @@ def ballast(n_plates: int = 2):
 BUMPER = {'w': 60.0, 'd': 60.0, 'tpu_h': 40.0, 'cap_t': 5.0, 'skirt': 8.0, 'wall': 3.0, 'crush': 25.0,
           'contact_leg_mm': 140.0, 'x': 75.0}     # bottom bumpers at x = +-75: 8 mm beside the lower blocks (x <= 37)
 BUMPER['y'] = (Y_PLATE_BACK + Y_PLATE_FRONT) / 2   # centred under the plate's edge
+BUMPER_SLOT_Y = Y_POST_FRONT + 20.0                # the bumper member's top slot (its centre line), where the base's screws go
 
 
 def bumper_contact_z(leg_mm: float = BUMPER['contact_leg_mm']) -> float:
@@ -303,9 +328,10 @@ def bumper_base():
     pocket = b['skirt']
     s = box(-b['w'] / 2, b['w'] / 2, -b['d'] / 2, b['d'] / 2, 0.0, hb + pocket).edges('|Z').fillet(4.0)
     s = s.cut(box(-b['w'] / 2 + b['wall'], b['w'] / 2 - b['wall'], -b['d'] / 2 + b['wall'], b['d'] / 2 - b['wall'], hb, hb + pocket + 1))
+    dy = BUMPER_SLOT_Y - b['y']                                   # over the bumper member's top slot, not the bumper's centre
     for dx in (-15.0, 15.0):                                      # M6 x 35 SHCS: counterbored 14 deep from the pocket's floor,
-        s = s.cut(cyl(3.3, 'z', -1, hb + 1, dx, 0.0))             # so 6.65 mm of base + the deck + the slot's lip leave 7 mm
-        s = s.cut(cyl(5.6, 'z', hb - 14.0, hb + 1, dx, 0.0))     # in the drop-in nut
+        s = s.cut(cyl(3.3, 'z', -1, hb + 1, dx, dy))              # so 6.65 mm of base + the deck + the slot's lip leave 7 mm
+        s = s.cut(cyl(5.6, 'z', hb - 14.0, hb + 1, dx, dy))      # in the drop-in nut
     return s
 
 
@@ -370,6 +396,7 @@ def drop_bracket():
     return s
 
 
+TOF_MOUNT_SCREWS_X = (-20.5, 20.5)
 TOF = {'x': -212.0, 'target_below_plate': 15.0, 'target': 50.0}   # the target's centre x, how far below the plate's edge
 
 
@@ -381,29 +408,31 @@ def tof_arm():
     x_end = TOF['x'] - TOF['target'] / 2
     s = box(x_end, -PLATE_W / 2 + 26.0, Y_PLATE_FRONT, Y_PLATE_FRONT + 6.0, z_t, -90.0)          # the arm on the plate
     s = s.union(box(x_end, x_end + TOF['target'], Y_PLATE_FRONT - 22.0, Y_PLATE_FRONT + 28.0, z_t, z_t + 4.0))   # the target
-    for (x, z) in TOF_HOLES:
-        s = s.cut(cyl(2.25, 'y', Y_PLATE_FRONT - 1, Y_PLATE_FRONT + 7, x, z))
+    for (x, z) in TOF_HOLES:                                       # bosses for M4 heat-set inserts: M4 x 10 from the plate's back
+        s = s.union(cyl(5.0, 'y', Y_PLATE_FRONT, Y_PLATE_FRONT + 10.0, x, z))
+        s = s.cut(cyl(FAST['M4']['insert_pilot'] / 2, 'y', Y_PLATE_FRONT - 1, Y_PLATE_FRONT + 9.4, x, z))
     return s
 
 
 def tof_mount():
     """PETG: holds the VL53L1X breakout (Adafruit 3967, 25.4 x 17.8 mm, 2 x M2.5 holes 20.3 mm apart) facing up on the
     deck under the carriage's target, its cable (STEMMA QT) to the pod. Two wood screws into the deck."""
-    s = box(-22.0, 22.0, -16.0, 16.0, 0.0, 4.0)
+    s = box(-26.0, 26.0, -16.0, 16.0, 0.0, 4.0)
     s = s.union(box(-15.0, 15.0, -12.0, 12.0, 4.0, 9.0)).cut(box(-13.2, 13.2, -9.4, 9.4, 6.0, 10.0))
     for dx in (-10.15, 10.15):
         s = s.cut(cyl(1.1, 'z', 3.0, 10.0, dx, 0.0))
-    for dx in (-18.0, 18.0):
+    for dx in TOF_MOUNT_SCREWS_X:                                  # clear of the raised seat (x +-15) with the heads' 3.5 mm
         s = s.cut(cyl(2.2, 'z', -1, 5, dx, 0.0)).cut(cyl(4.2, 'z', 2.5, 5, dx, 0.0))
     return s
 
 
-POD = {'w': 140.0, 'd': 200.0, 'h': 230.0, 'wall': 4.0}   # the electrics pod on the post's back face: depth off the post
+POD = {'w': 140.0, 'd': 200.0, 'h': 230.0, 'wall': 4.0, 'pad': 6.0}   # the electrics pod on the post's back face: depth off the post
                                                           # (w), width across it (d), height
 # what goes inside (makers' drawings): the contactor bottom-mounted on 2 x M4 46.3 mm apart (TE LEV100: a Ø39.5 can 58 mm
 # tall, its M5 load terminals 17.78 apart on top); the off-delay relay (ProSense T2R, 2 in square, one central screw);
 # the Class CC fuse holder and the 12 V DC-DC on a 35 mm top-hat rail printed on the inside of the post wall; the rig
 # node (Feather M4 CAN on a FeatherWing Proto, 4 x M2.5) and the USB-CAN adapter in a pocket
+PENDANT_AT = (-70.0, 80.0)                # the clip's lower screw on the pod's -y wall (pod frame x, z)
 POD_PARTS = {'contactor': {'x': -70.0, 'y': -50.0, 'holes': 46.3, 'can_d': 39.5, 'h': 58.0},
              'timer': {'x': -70.0, 'y': 45.0, 'size': 51.0, 'h': 45.0},
              'din_rail': {'z': 150.0, 'y0': -90.0, 'y1': 90.0},
@@ -420,8 +449,12 @@ def pod():
     s = box(-w, 0.0, -d / 2, d / 2, 0.0, h).edges('|X').fillet(6.0)
     s = s.cut(box(-w + t, -t, -d / 2 + t, d / 2 + 1.0, t, h - t))
     for z in (40.0, h - 40.0):
-        for y in (-20.0, 20.0):
-            s = s.cut(cyl(4.3, 'x', -t - 1, 1, y, z))                             # M8 into the post's back slots
+        for y in (-20.0, 20.0):                                                   # 6 mm pads under the M8 x 16 heads: the
+            s = s.union(cyl(9.0, 'x', -POD['pad'], -t + 0.01, y, z))             # 4 mm wall would let the tip reach the groove
+            s = s.cut(cyl(4.3, 'x', -POD['pad'] - 1, 1, y, z))                    # M8 into the post's back slots
+    for z in (PENDANT_AT[1] + PENDANT_SCREWS_Z[0], PENDANT_AT[1] + PENDANT_SCREWS_Z[1]):   # the pendant clip's two M4 inserts, in
+        s = s.union(cyl(5.0, 'y', -d / 2 + t - 0.01, -d / 2 + t + 4.0, PENDANT_AT[0], z))   # bosses on the -y wall's inside
+        s = s.cut(cyl(FAST['M4']['insert_pilot'] / 2, 'y', -d / 2 - 1, -d / 2 + t + 3.0, PENDANT_AT[0], z))
     # the top-hat rail (35 x 7.5) on the post wall's inside, along y
     r = P['din_rail']
     rail = box(-t - 7.5, -t, r['y0'], r['y1'], r['z'] - 17.5, r['z'] + 17.5)
@@ -475,16 +508,18 @@ def pod_lid():
 
 
 PENDANT_HOLDER = {'d': 36.0}              # the AbleNet Specs is a 35 mm button
+PENDANT_SCREWS_Z = (-9.0, 53.0)           # the clip's two M4s (clip frame z): clear of the cup (z 1-43) and its heads
 
 
 def pendant_clip():
     """PETG: parks the pendant on the pod's side when nobody holds it (cup Ø36, a slot for its cord)."""
     d = PENDANT_HOLDER['d']
-    s = box(-d / 2 - 4, d / 2 + 4, 0.0, 6.0, -10.0, d + 14.0)
+    z0, z1 = PENDANT_SCREWS_Z
+    s = box(-d / 2 - 4, d / 2 + 4, 0.0, 6.0, z0 - 7.0, z1 + 7.0)
     cup = cyl(d / 2 + 3, 'y', 6.0, 22.0, 0.0, d / 2 + 4).cut(cyl(d / 2 + 0.5, 'y', 8.0, 23.0, 0.0, d / 2 + 4))
     s = s.union(cup).cut(box(-4.0, 4.0, 5.0, 23.0, d / 2 + 4, d + 30.0))
-    for z in (0.0, d + 6.0):
-        s = s.cut(cyl(2.0, 'y', -1, 7, 0.0, z))
+    for z in (z0, z1):                                            # below and above the cup, where a key reaches the heads
+        s = s.cut(cyl(2.2, 'y', -1, 7, 0.0, z))
     return s
 
 
@@ -515,6 +550,7 @@ PRINTED = {
     'tof_mount': (tof_mount, 'petg', 1, 'PETG; the VL53L1X on 2 x M2.5 x 8, two wood screws into the deck', None),
     'pod': (pod, 'petg', 1, 'PETG, 3 walls, 25 % infill; 4 x M8 x 16 into the post\'s back slots; 3 x M4 inserts (contactor, relay)', ((0, 1, 0), 90)),
     'pod_lid': (pod_lid, 'petg', 1, 'PETG; 4 x M3 x 10 into the pod\'s inserts', ((1, 0, 0), 90)),
-    'pendant_clip': (pendant_clip, 'petg', 1, 'PETG; 2 x M4 to the pod', ((1, 0, 0), -90)),
+    'pendant_clip': (pendant_clip, 'petg', 1, 'PETG; 2 x M4 x 10 into the pod\'s inserts', ((1, 0, 0), -90)),
+    'ballast_spacer': (ballast_spacer, 'petg', 2, 'PETG, 100 %; on each ballast post against the plate', None),
     'load_cell_mount': (load_cell_mount, 'petg', 4, 'PETG; under the load plate\'s corners (stand and squat only)', None),
 }

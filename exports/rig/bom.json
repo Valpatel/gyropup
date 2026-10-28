@@ -237,7 +237,7 @@
   {
    "key": "bracket_corner_8",
    "qty": 24,
-   "for": "the base's 10 joints (2 each) and the post's foot (4)",
+   "for": "the base's 16 free joint faces and the post's foot (4); 4 spare",
    "name": "Corner bracket, 8 series, with 2 x M8 screws + 2 drop-in spring nuts",
    "vendor": "MISUMI",
    "part_number": "HBLTS8-C-SEP",
@@ -505,8 +505,8 @@
   },
   {
    "key": "turret_screw_m4x10",
-   "qty": 16,
-   "for": "the four blocks onto the plate: 3.65 mm into the 5 mm threads (0.9 d, steel)",
+   "qty": 20,
+   "for": "the four blocks onto the plate (16: 3.65 mm into the 5 mm threads, 0.9 d); the pendant clip (2) and the ToF arm (2) into inserts",
    "name": "Black-oxide alloy steel socket head screw M4 x 10",
    "vendor": "McMaster-Carr",
    "part_number": "91290A144",
@@ -1170,8 +1170,8 @@
   },
   {
    "key": "turret_insert_m4",
-   "qty": 3,
-   "for": "the pod: the contactor (2), the relay (1)",
+   "qty": 7,
+   "for": "the pod: the contactor (2), the relay (1), the pendant clip (2); the ToF target arm (2)",
    "name": "Heat-set insert M4 (brass)",
    "vendor": "McMaster-Carr",
    "part_number": "94459A160",

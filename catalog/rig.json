@@ -355,7 +355,7 @@
    "https://us.misumi-ec.com/vona2/detail/110300450470/?HissuCode=HBLTS8-C-SEP"
   ],
   "confidence": "product page",
-  "used_for": "the base's 10 joints (2 each) and the post's foot (4)",
+  "used_for": "the base's 16 free joint faces and the post's foot (4); 4 spare",
   "qty": 24,
   "notes": "Each bracket brings its own two screws and drop-in nuts.",
   "alternates": [
@@ -703,8 +703,8 @@
    "https://www.mcmaster.com/91290A144/"
   ],
   "confidence": "product page",
-  "used_for": "the four blocks onto the plate: 3.65 mm into the 5 mm threads (0.9 d, steel)",
-  "qty": 16,
+  "used_for": "the four blocks onto the plate (16: 3.65 mm into the 5 mm threads, 0.9 d); the pendant clip (2) and the ToF arm (2) into inserts",
+  "qty": 20,
   "notes": "Same part as catalog/turret.json turret_screw_m4x10. No washer (a washer would leave 2.9 mm of thread).",
   "alternates": [
    {
@@ -2927,8 +2927,8 @@
    "https://www.mcmaster.com/94459A160/"
   ],
   "confidence": "product page",
-  "used_for": "the pod: the contactor (2), the relay (1)",
-  "qty": 3,
+  "used_for": "the pod: the contactor (2), the relay (1), the pendant clip (2); the ToF target arm (2)",
+  "qty": 7,
   "notes": "Same part as catalog/turret.json turret_insert_m4.",
   "alternates": [
    {

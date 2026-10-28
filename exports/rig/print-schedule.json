@@ -144,8 +144,8 @@
    "parts": {
     "pod": 1
    },
-   "grams": 491,
-   "hours": 19.6,
+   "grams": 493,
+   "hours": 19.7,
    "start_h": 231.1,
    "why": "the rig's frame goes together from bought parts meanwhile; these finish it before the first power-up"
   },
@@ -160,7 +160,7 @@
    },
    "grams": 251,
    "hours": 10.0,
-   "start_h": 251.2,
+   "start_h": 251.3,
    "why": "the rig's frame goes together from bought parts meanwhile; these finish it before the first power-up"
   },
   {
@@ -177,7 +177,7 @@
    },
    "grams": 473,
    "hours": 19.0,
-   "start_h": 261.7,
+   "start_h": 261.8,
    "why": "the rig's frame goes together from bought parts meanwhile; these finish it before the first power-up"
   },
   {
@@ -189,9 +189,9 @@
     "pendant_clip": 1,
     "load_cell_mount": 2
    },
-   "grams": 23,
-   "hours": 0.9,
-   "start_h": 281.2,
+   "grams": 26,
+   "hours": 1.0,
+   "start_h": 281.3,
    "why": "the rig's frame goes together from bought parts meanwhile; these finish it before the first power-up"
   },
   {
@@ -204,7 +204,7 @@
    },
    "grams": 14,
    "hours": 0.9,
-   "start_h": 282.6,
+   "start_h": 282.8,
    "why": ""
   },
   {
@@ -217,7 +217,7 @@
    },
    "grams": 772,
    "hours": 50.6,
-   "start_h": 284.0,
+   "start_h": 284.2,
    "why": "last: 274 x 148 x 81 turned 45 deg; a 150 x 150 PA6-CF test slab first if the P1S has not held PA6-CF flat at that size"
   },
   {
@@ -228,9 +228,35 @@
    "parts": {
     "tof_mount": 1
    },
-   "grams": 5,
+   "grams": 6,
    "hours": 0.2,
-   "start_h": 335.1,
+   "start_h": 335.3,
+   "why": ""
+  },
+  {
+   "phase": "Z",
+   "title": "Other",
+   "plate": "Z-ballast_spacer",
+   "material": "petg",
+   "parts": {
+    "ballast_spacer": 1
+   },
+   "grams": 8,
+   "hours": 0.35,
+   "start_h": 336.0,
+   "why": ""
+  },
+  {
+   "phase": "Z",
+   "title": "Other",
+   "plate": "Z-ballast_spacer",
+   "material": "petg",
+   "parts": {
+    "ballast_spacer": 1
+   },
+   "grams": 8,
+   "hours": 0.35,
+   "start_h": 336.8,
    "why": ""
   },
   {
@@ -243,7 +269,7 @@
    },
    "grams": 335,
    "hours": 13.4,
-   "start_h": 335.8,
+   "start_h": 337.7,
    "why": ""
   },
   {
@@ -256,7 +282,7 @@
    },
    "grams": 48,
    "hours": 1.9,
-   "start_h": 349.7,
+   "start_h": 351.6,
    "why": ""
   },
   {
@@ -269,7 +295,7 @@
    },
    "grams": 29,
    "hours": 1.1,
-   "start_h": 352.1,
+   "start_h": 354.0,
    "why": ""
   },
   {
@@ -282,7 +308,7 @@
    },
    "grams": 38,
    "hours": 2.5,
-   "start_h": 353.7,
+   "start_h": 355.6,
    "why": ""
   },
   {
@@ -295,7 +321,7 @@
    },
    "grams": 38,
    "hours": 2.5,
-   "start_h": 356.7,
+   "start_h": 358.6,
    "why": ""
   },
   {
@@ -308,7 +334,7 @@
    },
    "grams": 38,
    "hours": 2.5,
-   "start_h": 359.7,
+   "start_h": 361.6,
    "why": ""
   },
   {
@@ -321,7 +347,7 @@
    },
    "grams": 38,
    "hours": 2.5,
-   "start_h": 362.7,
+   "start_h": 364.6,
    "why": ""
   },
   {
@@ -334,7 +360,7 @@
    },
    "grams": 2,
    "hours": 0.13,
-   "start_h": 365.7,
+   "start_h": 367.6,
    "why": ""
   },
   {
@@ -347,7 +373,7 @@
    },
    "grams": 2,
    "hours": 0.13,
-   "start_h": 366.3,
+   "start_h": 368.2,
    "why": ""
   },
   {
@@ -360,12 +386,12 @@
    },
    "grams": 2,
    "hours": 0.13,
-   "start_h": 367.0,
+   "start_h": 368.9,
    "why": ""
   }
  ],
- "total_print_hours": 354.6,
- "calendar_days_at_20h": 18.4,
+ "total_print_hours": 355.5,
+ "calendar_days_at_20h": 18.5,
  "by_material": {
   "pa6-cf": {
    "grams": 3289,
@@ -373,9 +399,9 @@
    "plates": 15
   },
   "petg": {
-   "grams": 2369,
-   "hours": 94.7,
-   "plates": 10
+   "grams": 2391,
+   "hours": 95.5,
+   "plates": 12
   },
   "tpu95": {
    "grams": 432,
