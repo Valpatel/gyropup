@@ -23,6 +23,19 @@ for (const file of tracked) {
 }
 for (const file of ['index.html', 'LICENSE', 'README.md']) await cp(path.join(root, file), path.join(out, file));
 await cp(path.join(root, 'web'), path.join(out, 'web'), { recursive: true });
+// The full local CAD workflow can use licensed vendor downloads. The shared static bundle cannot.
+// Mark the legacy rig unavailable as a whole, so its complete procedural model is used instead.
+const legacy = JSON.parse(await read('exports/links/manifest.json'));
+if (Object.values(legacy.links).flat().some(p => !tracked.includes('exports/links/'+p.file))) {
+  legacy.available = false;
+  legacy.note = 'Legacy preview uses the procedural model; licensed vendor meshes stay local.';
+}
+await writeFile(path.join(out,'exports/links/manifest.json'), JSON.stringify(legacy));
+const images = JSON.parse(await read('catalog/images.json'));
+for (const image of Object.values(images)) {
+  if (image.path && !tracked.includes(image.path)) image.path = null;
+}
+await writeFile(path.join(out,'catalog/images.json'),JSON.stringify(images));
 await mkdir(path.join(out, 'site/pages'), { recursive: true });
 const nav = [
   {id:'home', title:'Home', href:''}, {id:'simulate',title:'Play',href:'designer/sim.html'},
@@ -56,9 +69,11 @@ for (const file of documents) {
     const [pathname, ...hash] = url.split('#');
     const resolved = pathname.startsWith('/') ? pathname.slice(1) : path.posix.normalize(path.posix.join(path.posix.dirname(file), pathname));
     const published = roots.some(r => resolved.startsWith(r)) && resolved !== 'docs/handoff.md';
-    const target = documents.includes(resolved) ? pagePath(resolved) : (published && (tracked.includes(resolved) || tracked.some(f => f.startsWith(resolved.replace(/\/$/, '')+'/'))) ? '/' + resolved : `https://github.com/Valpatel/gyropup/blob/main/${resolved}`;
+    const exists = tracked.includes(resolved) || tracked.some(f => f.startsWith(resolved.replace(/\/$/, '')+'/'));
+    const target = documents.includes(resolved) ? pagePath(resolved) : published && exists ? '/' + resolved : `https://github.com/Valpatel/gyropup/blob/main/${resolved}`;
     return `${attr}="${esc(target)}${hash.length ? '#'+esc(hash.join('#')) : ''}"`;
   });
+  html = html.replace(/<a href="https:\/\/github\.com\/Valpatel\/gyropup\/blob\/main\/(catalog\/(?:availability|lfp_batteries)\.json)">(.*?)<\/a>/g, '<span title="Historical file, not part of this revision">$2 (historical file)</span>');
   html = html.replace(/<table>/g,'<div class="table-scroll"><table>').replace(/<\/table>/g,'</table></div>');
   await writeFile(path.join(out, pagePath(file)), frame(title, `<article>${html}</article>`));
   docs.push({title,file});

@@ -84,6 +84,8 @@ drawerBtn.type = 'button';
 drawerBtn.innerHTML = '<span class="grip"></span>CONTROLS<span class="caret"></span>';
 $('#panel').prepend(drawerBtn);
 function setDrawer(open) {
+  // A desktop collapse preference must never hide the only controls on a phone.
+  if (phone.matches && panelFold.collapsed()) panelFold.set(false);
   hud.classList.toggle('drawer-closed', !open);
   document.body.classList.toggle('drawer-open', open && phone.matches);
   drawerBtn.setAttribute('aria-expanded', String(open));

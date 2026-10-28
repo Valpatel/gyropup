@@ -45,6 +45,15 @@ try {
   await page.setViewportSize({width:390,height:844});
   await page.screenshot({path:`test-results/${route==='/'?'landing':route.replaceAll('/','-')}-phone.png`,fullPage:route==='/'});
  }
+ // A saved desktop collapse must not strand phone users without controls.
+ await page.setViewportSize({width:1280,height:800});
+ await page.goto(base+'/designer/sim.html?run=none&sound=0',{waitUntil:'networkidle'});
+ await page.waitForFunction(()=>document.body.dataset.ready==='1');
+ await page.getByRole('button',{name:'HIDE PANEL',exact:true}).click();
+ await page.setViewportSize({width:390,height:844});
+ await page.locator('#drawer-handle').waitFor({state:'visible'});
+ await page.reload({waitUntil:'networkidle'});
+ await page.locator('#drawer-handle').waitFor({state:'visible'});
  // Exercise actual simulator behavior: replay, live pose, shots, and the standalone turret.
  await page.goto(base+'/designer/sim.html?run=none&sound=0',{waitUntil:'networkidle'});
  await page.waitForFunction(()=>document.body.dataset.ready==='1');
@@ -56,9 +65,11 @@ try {
  await page.waitForFunction(()=>window.__sim.state.replay===null);
  await page.locator('#drawer-handle').click();
  const turretSection=page.locator('details').filter({has:page.locator('summary',{hasText:'Turret'})}).first();
- if(await turretSection.count() && !await turretSection.getAttribute('open')) await turretSection.locator('summary').click();
+ if(await turretSection.count() && (await turretSection.getAttribute('open'))===null) await turretSection.locator('summary').click();
  await page.getByRole('button',{name:'FIRE',exact:true}).click();
  await page.locator('#drawer-handle').click();
+ await page.selectOption('#design-select','designs/default.json');
+ await page.waitForFunction(()=>window.__sim.state.v2===false && window.__sim.state.robot?.info);
  await page.selectOption('#design-select','turret-box');
  await page.waitForFunction(()=>window.__sim.state.bench===true);
  await page.screenshot({path:'test-results/turret-phone.png'});

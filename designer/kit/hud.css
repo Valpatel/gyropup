@@ -123,3 +123,6 @@ main.prog .portal-intro { border-left: 3px solid var(--cyan); background: #edf1d
 main.prog .portal-intro strong { display: block; margin-bottom: 3px; }
 main.prog .portal-footer { border-top: 1px solid var(--hairline); padding-top: 22px; margin-top: 40px; font-size: 11px; color: var(--muted); }
 @media(max-width:600px) { main.prog h1 { font-size: 27px; } main.prog .sec { letter-spacing: .06em; line-height: 1.5; } }
+
+.thumb.source { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; background: #eff1e4; color: #536947; text-decoration: none; border: 1px solid #d8decc; font: 10px/1.3 var(--font-ui); }
+.thumb.source span { font-size: 22px; }

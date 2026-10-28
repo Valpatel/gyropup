@@ -42,12 +42,18 @@ async function showRobot() {
     };
     preview.querySelector('img').hidden = true;
     preview.append(renderer.domElement); resize(); new ResizeObserver(resize).observe(preview);
-    document.querySelector('#preview-hint').textContent = 'Drag to say hello · interactive CAD preview';
+    document.querySelector('#preview-hint').textContent = 'Drag to explore · interactive CAD preview';
     let visible = true;
     new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; }).observe(preview);
     controls.addEventListener('start', () => { controls.autoRotate = false; });
     reduceMotion.addEventListener('change', () => { controls.autoRotate = !reduceMotion.matches; });
-    renderer.setAnimationLoop(() => { if (!visible || document.hidden) return; controls.update(); renderer.render(scene, camera); });
+    let previous = performance.now();
+    renderer.setAnimationLoop(now => {
+      const dt = Math.min((now-previous)/1000, .05); previous = now;
+      if (!visible || document.hidden) return;
+      if (!reduceMotion.matches) { eyes.step(now/1000,dt); robot.setPose({height:.6+.02*Math.sin(now/1400)}); }
+      eyes.draw(); controls.update(); renderer.render(scene, camera);
+    });
     preview.dataset.ready = 'true';
   } catch (error) {
     console.warn('3D preview unavailable; showing the CAD illustration.', error.message);

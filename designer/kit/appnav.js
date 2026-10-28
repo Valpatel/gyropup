@@ -4,7 +4,7 @@
 const NAV_CSS = `
 .appnav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;gap:8px;padding:0 24px;height:64px;background:rgba(255,250,242,.97);backdrop-filter:blur(12px);border-bottom:1px solid #d9ddcf;font-family:'Inter',system-ui,sans-serif;color:#263e35}
 .appnav .brand{font-weight:800;letter-spacing:-.8px;margin-right:auto;white-space:nowrap;display:flex;align-items:center;gap:8px;color:#263e35;text-decoration:none;font-size:22px}
-.appnav .brand img{width:28px;height:28px}.appnav .nav-links{display:flex;align-items:center;gap:4px}
+.appnav .brand img{width:28px;height:28px}.appnav .brand small{display:block;font:9px/1.2 'Inter',system-ui,sans-serif;letter-spacing:0;color:#626e64}.appnav .nav-links{display:flex;align-items:center;gap:4px}
 .appnav a.tab{font:600 12px 'Inter',system-ui,sans-serif;color:#526457;text-decoration:none;padding:12px 14px;border-radius:30px;white-space:nowrap}
 .appnav a.tab:hover{color:#ad421b;background:#f5ead8}.appnav a.tab.on{color:#a93c14;background:#f4e7d3}
 .appnav .menu-toggle{display:none;align-items:center;justify-content:center;min-height:44px;border:1px solid #cbd3c1;border-radius:24px;background:#fffaf2;padding:10px 17px;color:#263e35;font:600 12px 'Inter',system-ui,sans-serif;cursor:pointer}
@@ -33,7 +33,7 @@ export async function mountAppNav({ root = '../', current = '' } = {}) {
     return h.startsWith('//') ? null : root + h;
   };
   nav.setAttribute('aria-label', 'Gyropup navigation');
-  nav.innerHTML = `<a class="brand" href="${esc(root)}"><img src="${esc(root)}web/icon.svg" alt="">${esc(cfg.title)}</a>`
+  nav.innerHTML = `<a class="brand" href="${esc(root)}"><img src="${esc(root)}web/icon.svg" alt=""><span>${esc(cfg.title)}${current === 'simulate' ? '<small>Prototype · demo snapshot</small>' : ''}</span></a>`
     + '<button type="button" class="menu-toggle" aria-expanded="false" aria-controls="portal-nav-links">Menu ☰</button>'
     + '<div class="nav-links" id="portal-nav-links">'
     + cfg.nav.filter((n) => href(n?.href) !== null).map((n) => `<a class="tab${(n.id ?? n.href) === current ? ' on' : ''}" `

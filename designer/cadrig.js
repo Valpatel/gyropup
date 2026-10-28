@@ -29,7 +29,7 @@ export async function loadCadRig(root, designFile) {
     if (!r.ok) return null;
     man = await r.json();
   } catch { return null; }
-  if (man.design !== designFile) return null;
+  if (man.design !== designFile || man.available === false) return null;
   const loader = new STLLoader();
   const geo = {};
   await Promise.all(Object.values(man.links).flat().map(async (p) => {

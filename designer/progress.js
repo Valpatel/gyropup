@@ -120,7 +120,7 @@ const showMissing = (sec) => {
   const el = $(`${sec}-nopic`);
   const ks = [...(noPic.get(sec) || [])];
   if (el) el.innerHTML = ks.length ? `<span class="tag fail">${ks.length} WITHOUT A PICTURE</span> ${esc(ks.join(', '))}`
-    + ' <span style="color:var(--dim)">(tools/part_images.py fetches and renders them)</span>' : '';
+    + ' <span style="color:var(--dim)">(previews pending)</span>' : '';
 };
 const markMissing = (sec, key, now = false) => {
   if (!noPic.has(sec)) noPic.set(sec, new Set());
@@ -131,16 +131,19 @@ window.__thumbMissing = (img) => {
   const a = img.closest('.thumb');
   a.classList.add('missing');
   a.removeAttribute('href');
-  a.title = `No picture for ${a.dataset.key} on this machine (bought parts' photos are not in git): run tools/part_images.py`;
+  a.title = `No picture for ${a.dataset.key} on this machine (bought parts' photos are not in git): preview pending`;
   markMissing(a.dataset.sec, a.dataset.key, true);
   img.remove();
 };
 const thumb = (sec, key, label, small = false) => {
   const im = key ? media.images[key] : null;
   const cls = `thumb${small ? ' sm' : ''}`;
+  if (im?.kind === 'vendor' && !im.path && /^https?:\/\//.test(im.source_url || '')) {
+    return `<a class="${cls} source" href="${esc(im.source_url)}" aria-label="${esc('View '+(label || key)+' at its supplier')}"><span aria-hidden="true">↗</span>View part</a>`;
+  }
   if (!im || !im.path) {
     markMissing(sec, key || label);
-    return `<div class="${cls} missing" title="${esc(`No picture for ${key || label}: run tools/part_images.py`)}"></div>`;
+    return `<div class="${cls} missing" title="${esc(`No picture for ${key || label}: preview pending`)}"></div>`;
   }
   const href = im.kind === 'render' ? `../${im.path}` : (im.source_url || `../${im.path}`);
   const tip = im.kind === 'render' ? `${key}: a render of our CAD (${im.source_url})` : `${key}: picture from ${im.seller || ''} ${im.source_url} (${im.fetched})`;
