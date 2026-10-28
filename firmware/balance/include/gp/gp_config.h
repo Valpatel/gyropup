@@ -46,6 +46,14 @@
 #define GP_UVLO_STAND_V 33.0f           /* 3.30 V a cell, resting: no arming below this (and after a UVLO sit) */
 #define GP_CUTOFF_V 30.0f               /* 3.00 V a cell UNDER LOAD: legs down, motors off, latched until power cycle */
 #define GP_CUTOFF_TAU_S 0.1f            /* the cut-off's filter on the loaded bus: PWM ripple and spikes, not sag */
+#define GP_REGEN_START_V 41.5f          /* 4.15 V a cell on the bus: the regen clamp starts (charging current limited, D65: no BMS) */
+#define GP_REGEN_ZERO_V 42.5f           /* 4.25 V a cell: no charging current allowed */
+#define GP_REGEN_I_A 15.0f              /* A of charging allowed at 41.5 V, falling to 0 at 42.5 V: (42.5 - 41.0) V / 0.100 ohm, a full pack's */
+#define GP_REGEN_GAIN 5.0f              /* /(A s): the braking factor's fall per amp of charging over the allowance (52 A: 2 samples to 0) */
+#define GP_REGEN_RECOVER 10.0f          /* /s: the factor back up to 1 */
+#define GP_OVERCHARGE_V 44.0f           /* 4.40 V a cell on the bus: sit and stop, latched until power cycle */
+#define GP_OVERCHARGE_TAU_S 0.02f       /* the over-charge latch's filter: one sample's spike is not a charger */
+#define GP_ARM_MAX_V 42.0f              /* 4.20 V a cell, resting: no arming over it (an over-full or wrong pack: the clamp would take the braking) */
 #define GP_JUMP_MIN_V 34.0f             /* 3.40 V a cell, resting: no jump below this */
 #define GP_JUMP_FLOOR_V 31.0f           /* the bus floor in the push: 1 V over the cut-off (the 24 V converter is rated lower, D65) */
 #define GP_JUMP_FULL_V 38.2f            /* the full push at and above this, resting: its 7.2 V sag (HIL, 72 A x 0.1 ohm) reaches the floor */
@@ -55,9 +63,9 @@
 /* ---------------------------------------------------------------- the bus current limit (D65), from the INA228
  * Not a trip: every motor's current command is scaled down (one factor, legs and wheels) while the bus is over the
  * limit. The limit is GP_BUS_I_PEAK_A for at most GP_BUS_I_PEAK_S at a time, else GP_BUS_I_CONT_A, and GP_BUS_I_CONT_A
- * whenever the 1 s average is over it. Provisional until the dock adapters' ratings are confirmed. */
-#define GP_BUS_I_CONT_A 40.0f           /* A, the 1 s average */
-#define GP_BUS_I_PEAK_A 80.0f           /* A, at most GP_BUS_I_PEAK_S at a time (the 80 A MRBF main fuse, D55) */
+ * whenever the 1 s average is over it. B12 checks the adapters' contact temperature after ten jumps. */
+#define GP_BUS_I_CONT_A 30.0f           /* A, the 1 s average: the Terrafirma 10 AWG DeWalt 20 V dock adapters' stated 30 A */
+#define GP_BUS_I_PEAK_A 80.0f           /* A, at most GP_BUS_I_PEAK_S at a time: the jump's push (the 80 A MRBF main fuse, D55) */
 #define GP_BUS_I_PEAK_S 0.5f
 #define GP_BUS_I_AVG_S 1.0f             /* the average's window (first order) */
 #define GP_BUS_SCALE_MIN 0.5f           /* the factor never goes under this: balance and the legs' weight need torque */

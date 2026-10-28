@@ -6,7 +6,7 @@
   "mode_after": "run",
   "ms_over_the_limit": 35,
   "reason": "none",
-  "rise_above_standing_mm": 175.0
+  "rise_above_standing_mm": 178.0
  },
  "conditions": {
   "bus_v": 36.0,
@@ -72,11 +72,23 @@
    "mode_after": "run",
    "push_bus_current_limit_a": 72.0,
    "refused": null,
-   "rise_above_standing_mm": 194.8,
+   "rise_above_standing_mm": 199.2,
    "scale": 1.0
   }
  },
  "made_by": "python -m pytest firmware/balance/hil (firmware/balance/hil/test_hil.py)",
+ "overcharge": {
+  "leg_at_stop_mm": 137.7,
+  "leg_min_in_the_sit_mm": 137.7,
+  "mcu_run_at_end": false,
+  "mode_at_end": "idle",
+  "motors_stopped_ms": 1196.0,
+  "reason": "over-charge",
+  "regen_scale_min": 0.744,
+  "trip_after_step_ms": 46.0,
+  "vhigh_at_trip": 44.005,
+  "vhigh_tick_before": 43.96
+ },
  "people_near": {
   "jump_refused": "people near",
   "reason": "people",
@@ -87,6 +99,19 @@
   "mcu_run_open_ms": 1.0,
   "motors_stopped_ms": 451.0,
   "reason": "stop"
+ },
+ "regen_clamp": {
+  "bus_v_max": 46.19,
+  "charge_a_max": 51.9,
+  "leg_min_mm": 153.9,
+  "mode_after": "run",
+  "ms_over_42_5_v_in_the_landing": 27,
+  "ms_over_42_5_v_outside_the_landing": 5,
+  "overcharge": false,
+  "overcharge_filter_max_v": 42.929,
+  "pack_v": 41.0,
+  "regen_scale_min": 0.0,
+  "rise_above_standing_mm": 199.2
  },
  "robot_sil": {
   "at_3.9s": {

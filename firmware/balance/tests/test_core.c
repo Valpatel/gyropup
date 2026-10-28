@@ -435,33 +435,91 @@ static void test_supervisor(void)
     boot_and_stand(36.0f); /* gp_app_init: the power cycle */
     CHECK(!A.cutoff);
 
-    /* the bus current limit (D65): 80 A for at most 0.5 s, else 40 A; one factor on every motor's command */
+    /* the bus current limit (D65, the dock adapters' 30 A): 80 A for at most 0.5 s, else 30 A; one factor on every
+     * motor's command */
     boot_and_stand(36.0f);
-    env.ibus = 39.0f;
+    env.ibus = 29.0f;
     tick(5000);
-    CHECK(A.bus_scale == 1.0f && A.ilimit == GP_BUS_I_PEAK_A); /* 39 A held: under the continuous limit */
-    env.ibus = 10.0f;
+    CHECK(A.bus_scale == 1.0f && A.ilimit == GP_BUS_I_PEAK_A); /* 29 A held: under the continuous limit */
+    env.ibus = 5.0f;
     tick(4000);
-    env.ibus = 60.0f; /* over the continuous, under the peak (the average stays under 40 A: 33 A at 0.6 s) */
+    env.ibus = 50.0f; /* over the continuous, under the peak (the average stays under 30 A: 23 A at 0.5 s) */
     tick(400);
     CHECK(A.bus_scale == 1.0f && A.ilimit == GP_BUS_I_PEAK_A);
     tick(200);
     CHECK(A.ilimit == GP_BUS_I_CONT_A && A.bus_scale < 1.0f && A.bus_scale >= GP_BUS_SCALE_MIN);
     CHECK(A.mode == GP_MODE_RUN); /* scaled, not tripped */
-    env.ibus = 20.0f;
-    tick(1000);
+    env.ibus = 10.0f;
+    tick(1500);
     CHECK(A.bus_scale == 1.0f && A.ilimit == GP_BUS_I_PEAK_A);
     env.ibus = 100.0f; /* over the peak: down by 80/100 at once */
     tick(2);
     NEAR(A.bus_scale, 0.8, 1e-5);
     tick(100);
     NEAR(A.bus_scale, GP_BUS_SCALE_MIN, 0); /* this test's current does not follow the factor: it sits at its floor */
-    env.ibus = 30.0f;
+    env.ibus = 20.0f;
     tick(2000);
     CHECK(A.bus_scale == 1.0f);
-    env.ibus = 45.0f; /* the 1 s average over 40 A takes the peak away even inside the 0.5 s */
+    env.ibus = 35.0f; /* the 1 s average over 30 A takes the peak away even inside the 0.5 s */
     tick(1500);
     CHECK(A.ilimit == GP_BUS_I_CONT_A);
+    /* the regen clamp (D65): the charging current allowed falls from 15 A at 41.5 V to 0 at 42.5 V on the bus; over
+     * it the braking factor falls 5 /(A s) of excess, and recovers at 10 /s */
+    boot_and_stand(40.0f);
+    env.vbus = 42.0f; /* 7.5 A allowed */
+    env.ibus = -5.0f;
+    tick(20);
+    NEAR(A.regen_scale, 1.0, 0);
+    env.ibus = -12.0f; /* 4.5 A over: 0.045 a sample */
+    tick(10);
+    NEAR(A.regen_scale, 1.0 - 5.0 * 0.045, 1e-4);
+    env.vbus = 42.6f; /* none allowed: 52 A takes it to 0 in two samples */
+    env.ibus = -52.0f;
+    tick(4);
+    NEAR(A.regen_scale, 0.0, 0);
+    env.vbus = 41.4f; /* under 41.5 V: no limit, up at 10 a second */
+    env.ibus = -30.0f;
+    tick(50);
+    NEAR(A.regen_scale, 0.5, 0.02);
+    tick(60);
+    NEAR(A.regen_scale, 1.0, 0);
+    env.vbus = 43.0f; /* high but discharging (an over-full pack holding the legs): not regeneration */
+    env.ibus = 5.0f;
+    tick(10);
+    NEAR(A.regen_scale, 1.0, 0);
+    CHECK(A.mode == GP_MODE_RUN && !A.overcharge);
+    /* the over-charge latch: 44.0 V on the bus (20 ms filter); a 6 ms spike to 46 V is not one */
+    boot_and_stand(40.0f);
+    env.vbus = 46.0f;
+    tick(6);
+    env.vbus = 40.0f;
+    tick(200);
+    CHECK(A.mode == GP_MODE_RUN && !A.overcharge);
+    env.vbus = 44.5f;
+    tick(100);
+    CHECK(A.overcharge && A.reason == GP_R_OVERCHARGE);
+    tick(2000);
+    CHECK(A.mode == GP_MODE_IDLE && !A.mcu_run);
+    env.vbus = 40.0f; /* only a power cycle clears it */
+    env.run = false;
+    tick(3000);
+    env.run = true;
+    tick(200);
+    CHECK(A.mode == GP_MODE_IDLE && A.overcharge);
+    /* no arming over 42.0 V resting (an over-full or wrong pack) */
+    boot_and_stand(40.0f);
+    env.run = false;
+    env.vbus = 42.1f;
+    tick(4000);
+    env.run = true;
+    tick(200);
+    CHECK(A.mode == GP_MODE_IDLE && !A.overcharge);
+    env.vbus = 41.9f;
+    env.run = false;
+    tick(4000);
+    env.run = true;
+    tick(50);
+    CHECK(A.mode == GP_MODE_RUN);
     {
         gp_app_snapshot(&A, &s);
         NEAR(s.bus_scale, A.bus_scale, 0);

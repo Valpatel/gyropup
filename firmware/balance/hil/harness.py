@@ -238,7 +238,8 @@ class Hil:
         from sim.leg_control import polar
         log: Dict[str, List[float]] = {k: [] for k in ('t', 'L', 'lean', 'L_r', 'lean_r', 'rail_mm', 'mode', 'flags', 'reason',
                                                        'vrest', 'vbus', 'v_oc', 'jump_phase', 'tau_f', 'tau_r', 'mcu_run',
-                                                       'vload', 'cutoff', 'bus_scale', 'ibus')}
+                                                       'vload', 'cutoff', 'bus_scale', 'ibus', 'vhigh', 'overcharge',
+                                                       'regen_scale')}
         boot_ticks = 0
         while not self.running:
             s = self.tick()
@@ -261,7 +262,8 @@ class Hil:
             log['L_r'].append(pl[1][0])
             log['lean_r'].append(pl[1][1])
             log['rail_mm'].append(tk[0].extra['rail_mm'])
-            for k in ('mode', 'flags', 'reason', 'vrest', 'vbus', 'jump_phase', 'mcu_run', 'vload', 'cutoff', 'bus_scale', 'ibus'):
+            for k in ('mode', 'flags', 'reason', 'vrest', 'vbus', 'jump_phase', 'mcu_run', 'vload', 'cutoff', 'bus_scale', 'ibus',
+                      'vhigh', 'overcharge', 'regen_scale'):
                 log[k].append(getattr(s, k))
             log['v_oc'].append(self.v_oc)
             log['tau_f'].append(s.tau[0])

@@ -97,6 +97,7 @@ void gp_app_init(gp_app *a, const gp_config *cfg, uint32_t now_us)
     a->mode = GP_MODE_BOOT;
     a->t_boot_retry = now_us;
     a->bus_scale = 1.0f;
+    a->regen_scale = 1.0f;
     a->ilimit = cfg->i_peak;
 }
 
@@ -158,6 +159,7 @@ void gp_app_can_rx(gp_app *a, uint8_t bus, const gp_can_frame *f, uint32_t now_u
                 a->ibus = 0.0f;
                 a->vrest = a->have_vbus ? a->vrest + dt / GP_VREST_TAU_S * (mean - a->vrest) : mean;
                 a->vload = a->have_vbus ? a->vload + fminf(dt / GP_CUTOFF_TAU_S, 1.0f) * (mean - a->vload) : mean;
+                a->vhigh = a->have_vbus ? a->vhigh + fminf(dt / GP_OVERCHARGE_TAU_S, 1.0f) * (vmax - a->vhigh) : vmax;
                 a->t_vbus = now_us;
                 a->have_vbus = true;
             }
@@ -244,6 +246,20 @@ static void bus_limit(gp_app *a, float i, float dt)
     } else {
         a->bus_scale = fminf(1.0f, a->bus_scale + GP_BUS_SCALE_RECOVER * dt);
     }
+    /* the regen clamp: the charging current allowed falls from GP_REGEN_I_A at 41.5 V on the bus to none at 42.5 V
+     * (no limit under 41.5 V); over it the braking torques' factor comes down in proportion to the excess
+     * (GP_REGEN_GAIN), back up at GP_REGEN_RECOVER a second. A limit on the charging current, not on the voltage: a
+     * bus that is high with the pack discharging (an over-full pack, the legs held) is left alone, and a brief
+     * small regeneration trims the braking rather than cutting it (cutting the legs' braking drops the robot). */
+    const float chg = -i;
+    const bool over = a->vbus > GP_REGEN_START_V &&
+                      chg > GP_REGEN_I_A * clampf((GP_REGEN_ZERO_V - a->vbus) / (GP_REGEN_ZERO_V - GP_REGEN_START_V), 0.0f, 1.0f);
+    if (over) {
+        const float allowed = GP_REGEN_I_A * clampf((GP_REGEN_ZERO_V - a->vbus) / (GP_REGEN_ZERO_V - GP_REGEN_START_V), 0.0f, 1.0f);
+        a->regen_scale = fmaxf(0.0f, a->regen_scale - GP_REGEN_GAIN * (chg - allowed) * dt);
+    } else {
+        a->regen_scale = fminf(1.0f, a->regen_scale + GP_REGEN_RECOVER * dt);
+    }
     /* the jump's push: its own limit, s(V) x GP_JUMP_I_FULL_A, so the sag stays above GP_JUMP_FLOOR_V; on the legs only
      * (no floor: the push may be cut to nothing, the balance is not) */
     if (a->jump_phase == GP_JP_PUSH) {
@@ -266,8 +282,9 @@ void gp_app_ina228(gp_app *a, const uint8_t vbus[3], const uint8_t current[3], u
     const float dt = a->have_vbus ? fminf(secs(now_us - a->t_vbus), 0.1f) : 0.0f;
     a->vrest = a->have_vbus ? a->vrest + dt / GP_VREST_TAU_S * (rest - a->vrest) : rest;
     a->vload = a->have_vbus ? a->vload + fminf(dt / GP_CUTOFF_TAU_S, 1.0f) * (v - a->vload) : v; /* under load */
-    bus_limit(a, i, dt);
+    a->vhigh = a->have_vbus ? a->vhigh + fminf(dt / GP_OVERCHARGE_TAU_S, 1.0f) * (v - a->vhigh) : v;
     a->vbus = v;
+    bus_limit(a, i, dt);
     a->ibus = i;
     a->t_vbus = now_us;
     a->have_vbus = true;
@@ -471,6 +488,7 @@ static void update_flags(gp_app *a)
         if (a->vrest < GP_UVLO_SIT_V) a->uvlo_sat = true;
         else if (a->vrest >= GP_UVLO_STAND_V) a->uvlo_sat = false;
         if (a->vload < GP_CUTOFF_V) a->cutoff = true; /* 3.0 V a cell under load: nothing but a power cycle clears it */
+        if (a->vhigh > GP_OVERCHARGE_V) a->overcharge = true; /* 4.4 V a cell: regeneration the clamp did not hold */
     }
     /* people near: the caps hold while the flag is up; 2 s of it sits the robot */
     const bool people = a->have_sp && a->sp.people_near && link_ok(a);
@@ -487,7 +505,7 @@ static uint8_t jump_refusal(const gp_app *a)
     if (a->mode != GP_MODE_RUN) return GP_J_NOT_RUNNING;
     if (!link_ok(a)) return GP_J_LINK;
     if (a->people) return GP_J_PEOPLE;
-    if (!vbus_fresh(a) || a->cutoff || gp_jump_scale(a->vrest) <= 0.0f) return GP_J_VOLTAGE;
+    if (!vbus_fresh(a) || a->cutoff || a->overcharge || gp_jump_scale(a->vrest) <= 0.0f) return GP_J_VOLTAGE;
     if (a->sp.jump_height == 0) return GP_J_HEIGHT_ZERO;
     return GP_J_OK;
 }
@@ -536,7 +554,8 @@ static void supervise(gp_app *a)
         }
         const bool stop_ok = a->stop_run && since(a, a->t_stop_high) >= GP_RUN_HOLD_US;
         if (a->run_rise && link_ok(a) && a->sp.run && stop_ok && !a->latched && all_configured(a) && vbus_fresh(a) &&
-            !a->uvlo_sat && !a->cutoff && a->vrest >= GP_UVLO_STAND_V && !a->people &&
+            !a->uvlo_sat && !a->cutoff && !a->overcharge && a->vrest >= GP_UVLO_STAND_V && a->vrest <= GP_ARM_MAX_V &&
+            !a->people &&
             (!a->cfg.imu_required || imu_fresh(a))) {
             a->run_rise = false;
             a->reason = GP_R_NONE;
@@ -560,6 +579,8 @@ static void supervise(gp_app *a)
             start_sit(a, GP_R_STOP, true);
         } else if (a->cutoff) {
             start_sit(a, GP_R_CUTOFF, false);
+        } else if (a->overcharge) {
+            start_sit(a, GP_R_OVERCHARGE, false);
         } else if (all_run) {
             const float h = gp_ctl_height_frac(0.5f * (leg_length(a, 0) + leg_length(a, 1)));
             gp_ctl_reset(&a->ctl, h);
@@ -576,6 +597,7 @@ static void supervise(gp_app *a)
         bool fast = false;
         if (!a->stop_run) { why = GP_R_STOP; fast = true; }
         else if (a->cutoff) why = GP_R_CUTOFF;
+        else if (a->overcharge) why = GP_R_OVERCHARGE;
         else if (!vbus_fresh(a)) why = GP_R_VBUS_STALE;
         else if (a->uvlo_sat) why = GP_R_UVLO;
         else if (!link_ok(a) && since(a, a->t_link) >= GP_HEARTBEAT_LOST_US + GP_HEARTBEAT_HOLD_US) why = GP_R_LINK;
@@ -822,7 +844,7 @@ static void tx_state(gp_app *a)
         }
         f.data[4] = (uint8_t)((a->have_vesc[0] ? 1u : 0u) | (a->have_vesc[1] ? 2u : 0u) | (imu_fresh(a) ? 4u : 0u) |
                               (vbus_fresh(a) ? 8u : 0u) | (a->latched ? 16u : 0u) | (a->cutoff ? 32u : 0u) |
-                              (a->bus_scale < 1.0f ? 64u : 0u));
+                              (a->bus_scale < 1.0f || a->regen_scale < 1.0f ? 64u : 0u) | (a->overcharge ? 128u : 0u));
         f.data[5] = (uint8_t)lroundf(100.0f * gp_jump_scale(a->vrest)); /* the push's bus current allowed now, % of 72 A */
         f.data[6] = a->jump_refusal;
         f.data[7] = (uint8_t)(a->tick / 100u);
@@ -892,10 +914,23 @@ void gp_app_tick(gp_app *a, uint32_t now_us, const gp_inputs *in, gp_outputs *ou
     /* the motors */
     if (drive) {
         const float legs = a->bus_scale * (a->jump_phase == GP_JP_PUSH ? a->push_scale : 1.0f);
+        /* the regen clamp's factor (bus_limit(): D65, no BMS stops a full pack being charged) on every braking torque
+         * (against the motor's own speed). Not on the legs while they lower the robot onto its stops (the jump's
+         * landing, a sit, the settle): that energy goes into the pack or into the stops, and taking the braking away
+         * feeds itself (the legs fall faster, braking x speed regenerates more). HIL: a clamped full-pack landing
+         * reached 110 mm of leg against 154, a clamped over-charge sit 112 mm against the sit's 150. The 44.0 V latch
+         * is their backstop. */
+        const float r = a->regen_scale;
+        const bool lowering = a->mode == GP_MODE_SIT || a->mode == GP_MODE_SETTLE ||
+                              (a->mode == GP_MODE_JUMP && a->jump_phase == GP_JP_LAND);
+        const float r_legs = lowering ? 1.0f : r;
         for (int side = 0; side < 2; side++) { /* the bus current limit: every motor's command scaled together */
-            a->out.tau[side][0] *= legs;
-            a->out.tau[side][1] *= legs;
+            for (int m = 0; m < 2; m++) {
+                a->out.tau[side][m] *= legs;
+                if (a->out.tau[side][m] * s.dphi[side][m] < 0.0f) a->out.tau[side][m] *= r_legs;
+            }
             a->out.wheel[side] *= a->bus_scale;
+            if (a->out.wheel[side] * s.wheel_w[side] < 0.0f) a->out.wheel[side] *= r;
         }
         for (int i = 0; i < 4; i++) {
             gp_can_frame f;
@@ -951,7 +986,7 @@ void gp_app_snapshot(const gp_app *a, gp_snapshot *s)
     s->uvlo_warn = a->uvlo_warn;
     s->uvlo_sat = a->uvlo_sat;
     s->latched = a->latched;
-    const bool jump_ok = a->mode == GP_MODE_RUN && s->link_ok && !a->people && vbus_fresh(a) && !a->cutoff &&
+    const bool jump_ok = a->mode == GP_MODE_RUN && s->link_ok && !a->people && vbus_fresh(a) && !a->cutoff && !a->overcharge &&
                          gp_jump_scale(a->vrest) > 0.0f;
     s->flags = (a->stop_run ? GP_JF_STOP_RUN : 0u) | (a->mcu_run ? GP_JF_MCU_RUN : 0u) | (s->link_ok ? GP_JF_LINK_OK : 0u) |
                (a->people ? GP_JF_PEOPLE : 0u) | (a->uvlo_warn ? GP_JF_UVLO_WARN : 0u) | (a->uvlo_sat ? GP_JF_UVLO_SIT : 0u) |
@@ -995,4 +1030,7 @@ void gp_app_snapshot(const gp_app *a, gp_snapshot *s)
     s->bus_scale = a->bus_scale;
     s->push_ilimit = a->push_ilimit;
     s->push_scale = a->push_scale;
+    s->overcharge = a->overcharge;
+    s->vhigh = a->vhigh;
+    s->regen_scale = a->regen_scale;
 }

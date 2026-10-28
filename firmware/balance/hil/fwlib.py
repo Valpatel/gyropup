@@ -20,7 +20,7 @@ REPO = FW.parents[1]
 ROBOT, RIG = 0, 1
 BUS_A, BUS_B, BUS_C = 0, 1, 2
 MODES = ('boot', 'idle', 'arming', 'run', 'jump', 'sit', 'settle', 'limp')
-REASONS = {0: 'none', 1: 'stop', 2: 'link', 3: 'people', 4: 'uvlo', 5: 'jetson', 6: 'vbus stale', 7: 'cut-off', 10: 'motor missing',
+REASONS = {0: 'none', 1: 'stop', 2: 'link', 3: 'people', 4: 'uvlo', 5: 'jetson', 6: 'vbus stale', 7: 'cut-off', 8: 'over-charge', 10: 'motor missing',
            11: 'motor fault', 12: 'leg window', 13: 'over-voltage', 14: 'imu', 15: 'fallen', 16: 'arm timeout'}
 JUMP_REFUSALS = {0: 'ok', 1: 'people near', 2: 'voltage', 3: 'not running', 4: 'link', 5: 'height 0'}
 FLAG_JUMP_OK, FLAG_UVLO_WARN, FLAG_UVLO_SIT = 0x40, 0x10, 0x20
@@ -41,7 +41,8 @@ class Snapshot(C.Structure):
                 + [(n, F) for n in ('theta', 'theta_dot', 'v', 'x_err', 'height')]
                 + [('phi', F * 4), ('w', F * 4), ('misses', U * 4)]
                 + [(n, U) for n in ('tx_drops', 'can_rx', 'imu_packets', 'imu_crc_errors', 'cutoff')]
-                + [(n, F) for n in ('vload', 'iavg', 'ilimit', 'bus_scale', 'push_ilimit', 'push_scale')])
+                + [(n, F) for n in ('vload', 'iavg', 'ilimit', 'bus_scale', 'push_ilimit', 'push_scale')]
+                + [('overcharge', U), ('vhigh', F), ('regen_scale', F)])
 
 
 def library_candidates() -> list:

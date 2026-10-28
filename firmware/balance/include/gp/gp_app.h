@@ -41,6 +41,7 @@ enum { /* why the robot last sat or limped (STATUS b6) */
     GP_R_JETSON = 5,        /* the Jetson asked (RUN = 0) */
     GP_R_VBUS_STALE = 6,
     GP_R_CUTOFF = 7,        /* the bus under load under 30.0 V (3.0 V a cell): latched until power cycle */
+    GP_R_OVERCHARGE = 8,    /* the bus over 44.0 V (4.4 V a cell, regeneration past the clamp): latched until power cycle */
     GP_R_MOTOR_MISSING = 10,
     GP_R_MOTOR_FAULT = 11,
     GP_R_LEG_WINDOW = 12,
@@ -115,6 +116,8 @@ typedef struct {
     uint32_t cutoff;                         /* the 3.0 V a cell cut-off latched (until power cycle) */
     float vload, iavg, ilimit, bus_scale;    /* the cut-off's filtered bus; the current limit's average, limit, factor */
     float push_ilimit, push_scale;           /* the jump push's bus current limit and its factor on the legs */
+    uint32_t overcharge;                     /* the 4.4 V a cell latch */
+    float vhigh, regen_scale;                /* the over-charge latch's filtered bus; the regen clamp's factor now */
 } gp_snapshot;
 
 typedef struct {
@@ -143,6 +146,9 @@ typedef struct {
     bool have_vbus, uvlo_warn, uvlo_sat;
     float vload;          /* the bus under load, the cut-off's short filter */
     bool cutoff;          /* latched: only a power cycle (gp_app_init) clears it */
+    float vhigh;          /* the bus, the over-charge latch's short filter */
+    bool overcharge;      /* latched like the cut-off */
+    float regen_scale;    /* the regen clamp's factor on braking torques (1 under 41.5 V, 0 at 42.5 V) */
     /* the bus current limit */
     float iavg, ilimit, peak_used, bus_scale;
     float push_ilimit, push_scale; /* the jump's push: s(V) x GP_JUMP_I_FULL_A, a factor on the leg torques only */

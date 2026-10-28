@@ -7,6 +7,7 @@ RS-04s and MuJoCo rig (hil/harness.py).
   1. stand_up replayed within 5 % of leg length and lean of sim/leg_rig.py run() at 16.25 kg and 36 V;
   2. the 10S windows (D65, gp_config.h) on a falling pack: the warning at 35.0 V, the jump gate closing at 34.0 V, the
      sit at 32.0 V (resting), the cut-off at 30.0 V (under load, latched); and the cut-off on a sudden drop while standing;
+     the regen clamp on a full-pack jump (41.5-42.5 V while charging) and the 44.0 V over-charge latch;
   3. the jump gate: full jumps at 41.0 V, a current-limited one at 36.0 and 34.1 V (the bus kept over the 31 V floor),
      none at 33.9 V; the bus current limit holding a jump's push under a lowered peak;
   4. the radio stop, the Jetson's heartbeat, people near;
@@ -148,6 +149,77 @@ def test_cutoff_under_load_sits_and_latches_until_power_cycle():
     assert log['vrest'][cut] > 32.0                            # the resting estimate had not sat it yet
     assert res['reason'] == 'cut-off' and res['leg_at_stop_mm'] < 165.0
     assert res['mode_at_end'] == 'idle' and not res['mcu_run_at_end'] and log['cutoff'][-1]
+
+
+def test_regen_clamp_on_a_full_pack_jump():
+    """D65's regen clamp on a full pack (41.0 V): the tuck after take-off brakes the extending legs hard (52 A of
+    regeneration: the bus to 46 V for the INA228's first samples), and the clamp takes that braking away within a
+    sample; the landing keeps its braking (its 25-38 A lift the bus over 42.5 V for some 30 ms) and the 44.0 V
+    latch (20 ms) rides it out. Unclamped landings bottom at 154 mm of leg; clamped they reached 110 mm."""
+    st, cur = {}, []
+
+    def each(h, t, _):
+        if t >= 2.0 and 'k' not in st:
+            st['k'] = len(seen)
+            h.jetson.jump(15)
+        seen.append(t)
+        cur.append(h.ibus)
+
+    seen = []
+    h = harness.Hil('stand_up', bus_v=41.0)
+    log = h.run(4.2, each=each)
+    k = st['k']
+    s = h.fw.snapshot()
+    LAND = 4
+    over_out = sum(1 for j in range(k, len(log['t'])) if log['vbus'][j] > 42.5 and log['jump_phase'][j] != LAND)
+    over_land = sum(1 for j in range(k, len(log['t'])) if log['vbus'][j] > 42.5 and log['jump_phase'][j] == LAND)
+    res = {'pack_v': 41.0, 'bus_v_max': round(max(log['vbus'][k:]), 2), 'charge_a_max': round(-min(cur[k:]), 1),
+           'ms_over_42_5_v_outside_the_landing': over_out, 'ms_over_42_5_v_in_the_landing': over_land,
+           'regen_scale_min': round(min(log['regen_scale'][k:]), 3), 'overcharge_filter_max_v': round(max(log['vhigh'][k:]), 3),
+           'leg_min_mm': round(min(log['L'][k:]) * 1000, 1), 'rise_above_standing_mm': round(max(log['rail_mm'][k:]) - log['rail_mm'][k], 1),
+           'overcharge': bool(s.overcharge), 'mode_after': fwlib.MODES[s.mode]}
+    record('regen_clamp', res)
+    assert res['regen_scale_min'] < 0.1                      # the clamp acted
+    assert over_out <= 6                                      # a sample to see it, two to cut it, a tick: no more
+    assert res['leg_min_mm'] > 140.0                          # the landing kept its braking
+    assert not s.overcharge and res['overcharge_filter_max_v'] < 43.5 and res['mode_after'] == 'run'
+
+
+def test_overcharge_sits_and_latches_until_power_cycle():
+    """The bus held at 44.5 V while standing (regeneration the clamp did not hold, a charger, a wrong pack): over
+    44.0 V on the 20 ms filter the robot sits, controlled (the pack discharging: the clamp leaves the legs' holding
+    torque alone), stops the motors and stays latched through a normal pack and a new RUN."""
+    st = {}
+
+    def each(h, t, _):
+        if t >= 2.0 and 'k' not in st:
+            h.v_oc = 44.5
+            st['k'] = len(seen)
+        if t >= 4.0 and 'back' not in st:
+            h.v_oc = 40.0
+            h.jetson.run = False
+            st['back'] = True
+        if t >= 5.0 and 'rerun' not in st:
+            h.jetson.run = True
+            st['rerun'] = True
+        seen.append(t)
+
+    seen = []
+    h = harness.Hil('stand_up', bus_v=40.0)
+    log = h.run(6.5, each=each)
+    k = st['k']
+    trip = first(log, lambda j: log['overcharge'][j], k)
+    idle = first(log, lambda j: log['mode'][j] == MODE['idle'], k)
+    res = {'trip_after_step_ms': round((log['t'][trip] - log['t'][k]) * 1000, 1), 'vhigh_at_trip': round(log['vhigh'][trip], 3),
+           'vhigh_tick_before': round(log['vhigh'][trip - 1], 3), 'reason': fwlib.REASONS[log['reason'][idle]],
+           'motors_stopped_ms': round((log['t'][idle] - log['t'][k]) * 1000, 1), 'leg_at_stop_mm': round(log['L'][idle] * 1000, 1),
+           'leg_min_in_the_sit_mm': round(min(log['L'][k:idle + 1]) * 1000, 1), 'regen_scale_min': round(min(log['regen_scale'][k:]), 3),
+           'mode_at_end': fwlib.MODES[log['mode'][-1]], 'mcu_run_at_end': bool(log['mcu_run'][-1])}
+    record('overcharge', res)
+    assert log['vhigh'][trip] > 44.0 >= log['vhigh'][trip - 1]
+    assert res['reason'] == 'over-charge' and res['leg_at_stop_mm'] < 165.0
+    assert res['leg_min_in_the_sit_mm'] > 130.0                # sat, not dropped
+    assert res['mode_at_end'] == 'idle' and not res['mcu_run_at_end'] and log['overcharge'][-1]
 
 
 # ---------------------------------------------------------------------------------------------- 3. the jump gate
