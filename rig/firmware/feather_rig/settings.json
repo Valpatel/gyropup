@@ -1,0 +1,2 @@
+{"vbus_ratio": 22.2766, "vbus_trim": 1.0, "load_n_per_count": 0.0, "load_sign": 1,
+ "_note": "vbus_ratio = (100k + 4.7k) / 4.7k; trim it so 'S ... vbus' matches a multimeter at the pod's outlet. load_n_per_count: hang a known weight, divide its newtons by the change in 'raw' (S lines); 0 sends 0 N."}
