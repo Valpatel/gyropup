@@ -3,26 +3,26 @@
   "R1": {
    "title": "landing",
    "rare": true,
-   "h": 335.0,
+   "h": 338.9,
    "Fw3": [
-    123.57254200874705,
-    123.57254200874705,
-    1235.7254200874704
+    125.20925239516255,
+    125.20925239516255,
+    1252.0925239516255
    ],
-   "gearbox_nm": 101.5,
-   "from": "the rig's landings (drop_150, the capped jump): knees at 780 N, as 1236 N on the axle at 335 mm (statics on the 2065 N spike gives 1303), plus 10 % fore-aft and 10 % sideways"
+   "gearbox_nm": 100.7,
+   "from": "the rig's landings (drop_150, the capped jump): knees at 773 N, as 1252 N on the axle at 339 mm (statics on the 2064 N spike gives 1273), plus 10 % fore-aft and 10 % sideways"
   },
   "R1w": {
    "title": "landing, the wheel link",
    "rare": true,
-   "h": 335.0,
+   "h": 338.9,
    "Fw3": [
-    206.53000000000003,
-    206.53000000000003,
-    2065.3
+    206.37,
+    206.37,
+    2063.7
    ],
-   "from": "rig 'drop_150': the full 2065 N axle spike on the wheel link, plus 10 % fore-aft and 10 % sideways",
-   "gearbox_nm": 101.5
+   "from": "rig 'drop_150': the full 2064 N axle spike on the wheel link, plus 10 % fore-aft and 10 % sideways",
+   "gearbox_nm": 100.7
   },
   "E1": {
    "title": "turn",
@@ -30,23 +30,23 @@
    "h": 300.0,
    "Fw3": [
     0.0,
-    144.69750000000002,
-    361.74375000000003
+    159.4125,
+    398.53125
    ],
-   "from": "standing: 2.5 x 145 N vertical, 0.5 g of a 30 kg robot sideways"
+   "from": "standing: 2.5 x 159 N vertical, 0.5 g of a 32 kg robot sideways"
   },
   "R3": {
    "title": "collapse",
    "rare": "fault",
-   "stop_nm": 106.9,
+   "stop_nm": 117.9,
    "h": 102.0,
-   "gearbox_nm": 27.1,
+   "gearbox_nm": 28.2,
    "Fw3": [
     0.0,
-    153.21,
-    1532.1
+    176.11,
+    1761.1
    ],
-   "from": "rig 'power_off' (no motor damping): folded onto the stops, 107 N m on a stop post and 1532 N on the axle (quasi-static: the knees' real force matches statics), plus 10 % sideways"
+   "from": "rig 'power_off' (no motor damping): folded onto the stops, 118 N m on a stop post and 1761 N on the axle (quasi-static: the knees' real force matches statics), plus 10 % sideways"
   }
  },
  "targets": {
@@ -63,8 +63,8 @@
    "material": "PA6-CF along the layers (humid)",
    "material_note": "Bambu PA6-CF TDS 102 MPa dry in the layers, x0.6 humid, x0.8 print: for parts printed so their main stress runs in the layers",
    "mesh": {
-    "nodes": 57464,
-    "tets": 272606,
+    "nodes": 56936,
+    "tets": 267216,
     "size_mm": 4.0,
     "element": "P2 tetrahedra"
    },
@@ -72,49 +72,49 @@
     {
      "kind": "force",
      "n": [
-      123.57254200874705,
+      125.20925239516255,
       0.0,
-      1235.7254200874704
+      1252.0925239516255
      ],
      "area_mm2": 2277.0
     },
     {
      "kind": "torque",
-     "nm": 35.66663974594563,
+     "nm": 36.1390420998326,
      "axis": [
       1.0,
       0.0,
       0.0
      ],
      "point_mm": [
-      3.323064282826784e-13,
+      2.962926443522071e-13,
       75.73708339558073,
-      -335.00000000000347
+      -338.90000000000344
      ],
      "about_centroid_mm": [
       0.0,
       75.733,
-      -335.0
+      -338.9
      ],
      "area_mm2": 2277.0
     },
     {
      "kind": "torque",
-     "nm": -3.5666639745945625,
+     "nm": -3.6139042099832603,
      "axis": [
       0.0,
       0.0,
       1.0
      ],
      "point_mm": [
-      3.323064282826784e-13,
+      2.962926443522071e-13,
       75.73708339558073,
-      -335.00000000000347
+      -338.90000000000344
      ],
      "about_centroid_mm": [
       0.0,
       75.733,
-      -335.0
+      -338.9
      ],
      "area_mm2": 2277.0
     },
@@ -122,60 +122,65 @@
      "kind": "force",
      "n": [
       0.0,
-      123.57254200874705,
+      125.20925239516255,
       0.0
      ],
      "area_mm2": 2277.0
     },
     {
      "kind": "torque",
-     "nm": 10.583988223048767,
+     "nm": 10.72417246764525,
      "axis": [
       1.0,
       0.0,
       0.0
      ],
      "point_mm": [
-      3.323064282826784e-13,
+      2.962926443522071e-13,
       75.73708339558073,
-      -335.00000000000347
+      -338.90000000000344
      ],
      "about_centroid_mm": [
       0.0,
       75.733,
-      -335.0
+      -338.9
      ],
      "area_mm2": 2277.0
     }
    ],
-   "max_displacement_mm": 17.3655,
+   "max_displacement_mm": 17.1311,
    "probe_displacement_mm": [
-    0.8529,
-    13.6217,
-    3.1808
+    0.8548,
+    13.4255,
+    3.0775
    ],
-   "max_von_mises_mpa": 77.25,
-   "von_mises_design_mpa": 22.72,
-   "safety_factor": 2.16,
+   "max_von_mises_mpa": 75.79,
+   "von_mises_design_mpa": 27.57,
+   "safety_factor": 1.78,
    "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
-   "stiffness_n_per_mm": 9.1,
+   "stiffness_n_per_mm": 9.3,
    "torsional_stiffness_nm_per_deg": null,
-   "safety_factor_with_joint_plugs": 0.63,
+   "design_peak_at_mm": [
+    -134.9,
+    30.3,
+    -120.1
+   ],
+   "safety_factor_with_joint_plugs": 0.65,
    "case": "R1",
    "material_id": "pa6_cf_xy",
-   "load_from": "the rig's landings (drop_150, the capped jump): knees at 780 N, as 1236 N on the axle at 335 mm (statics on the 2065 N spike gives 1303), plus 10 % fore-aft and 10 % sideways; the whole loop, joints bonded (the knees' 6201 pairs and the apex's 61812 pair carry moment)",
+   "load_from": "the rig's landings (drop_150, the capped jump): knees at 773 N, as 1252 N on the axle at 339 mm (statics on the 2064 N spike gives 1273), plus 10 % fore-aft and 10 % sideways; the whole loop, joints bonded (the knees' 6201 pairs and the apex's 61812 pair carry moment)",
    "png": "exports/leg/fea/leg-R1.png",
    "target": 1.2,
    "ok": true,
-   "seconds": 487.8
+   "seconds": 2130.0
   },
   {
    "part": "leg",
    "material": "PA6-CF along the layers (humid)",
    "material_note": "Bambu PA6-CF TDS 102 MPa dry in the layers, x0.6 humid, x0.8 print: for parts printed so their main stress runs in the layers",
    "mesh": {
-    "nodes": 57178,
-    "tets": 271022,
+    "nodes": 56803,
+    "tets": 266491,
     "size_mm": 4.0,
     "element": "P2 tetrahedra"
    },
@@ -185,22 +190,22 @@
      "n": [
       0.0,
       0.0,
-      361.74375000000003
+      398.53125
      ],
      "area_mm2": 2277.0
     },
     {
      "kind": "torque",
-     "nm": 10.440979688419889,
+     "nm": 11.502774233004965,
      "axis": [
       1.0,
       0.0,
       0.0
      ],
      "point_mm": [
-      3.158806860970664e-13,
-      75.73708339558074,
-      -300.00000000000347
+      3.1360842972505696e-13,
+      75.73708339558073,
+      -300.0000000000034
      ],
      "about_centroid_mm": [
       0.0,
@@ -213,23 +218,23 @@
      "kind": "force",
      "n": [
       0.0,
-      144.69750000000002,
+      159.4125,
       0.0
      ],
      "area_mm2": 2277.0
     },
     {
      "kind": "torque",
-     "nm": 12.393340874999495,
+     "nm": 13.653680624999451,
      "axis": [
       1.0,
       0.0,
       0.0
      ],
      "point_mm": [
-      3.158806860970664e-13,
-      75.73708339558074,
-      -300.00000000000347
+      3.1360842972505696e-13,
+      75.73708339558073,
+      -300.0000000000034
      ],
      "about_centroid_mm": [
       0.0,
@@ -239,34 +244,39 @@
      "area_mm2": 2277.0
     }
    ],
-   "max_displacement_mm": 8.3577,
+   "max_displacement_mm": 8.8108,
    "probe_displacement_mm": [
-    0.267,
-    6.4654,
-    1.5814
+    0.2874,
+    6.7932,
+    1.65
    ],
-   "max_von_mises_mpa": 32.96,
-   "von_mises_design_mpa": 12.28,
-   "safety_factor": 3.99,
+   "max_von_mises_mpa": 37.55,
+   "von_mises_design_mpa": 14.03,
+   "safety_factor": 3.49,
    "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
-   "stiffness_n_per_mm": 22.4,
+   "stiffness_n_per_mm": 23.5,
    "torsional_stiffness_nm_per_deg": null,
-   "safety_factor_with_joint_plugs": 1.49,
+   "design_peak_at_mm": [
+    -172.2,
+    30.5,
+    -101.0
+   ],
+   "safety_factor_with_joint_plugs": 1.3,
    "case": "E1",
    "material_id": "pa6_cf_xy",
-   "load_from": "standing: 2.5 x 145 N vertical, 0.5 g of a 30 kg robot sideways; the whole loop, joints bonded (the knees' 6201 pairs and the apex's 61812 pair carry moment)",
+   "load_from": "standing: 2.5 x 159 N vertical, 0.5 g of a 32 kg robot sideways; the whole loop, joints bonded (the knees' 6201 pairs and the apex's 61812 pair carry moment)",
    "png": "exports/leg/fea/leg-E1.png",
    "target": 2.0,
    "ok": true,
-   "seconds": 660.6
+   "seconds": 1522.0
   },
   {
    "part": "leg",
    "material": "PA6-CF along the layers (humid)",
    "material_note": "Bambu PA6-CF TDS 102 MPa dry in the layers, x0.6 humid, x0.8 print: for parts printed so their main stress runs in the layers",
    "mesh": {
-    "nodes": 57636,
-    "tets": 273414,
+    "nodes": 57109,
+    "tets": 268503,
     "size_mm": 4.0,
     "element": "P2 tetrahedra"
    },
@@ -276,22 +286,22 @@
      "n": [
       0.0,
       0.0,
-      1532.1
+      1761.1
      ],
      "area_mm2": 2277.0
     },
     {
      "kind": "torque",
-     "nm": 44.22087452963076,
+     "nm": 50.83048243204277,
      "axis": [
       1.0,
       0.0,
       0.0
      ],
      "point_mm": [
-      5.515791885951855e-13,
+      5.505873895299671e-13,
       75.73708339558073,
-      -102.00000000000236
+      -102.00000000000237
      ],
      "about_centroid_mm": [
       0.0,
@@ -304,23 +314,23 @@
      "kind": "force",
      "n": [
       0.0,
-      153.21,
+      176.11,
       0.0
      ],
      "area_mm2": 2277.0
     },
     {
      "kind": "torque",
-     "nm": 13.122436499999646,
+     "nm": 15.083821499999589,
      "axis": [
       1.0,
       0.0,
       0.0
      ],
      "point_mm": [
-      5.515791885951855e-13,
+      5.505873895299671e-13,
       75.73708339558073,
-      -102.00000000000236
+      -102.00000000000237
      ],
      "about_centroid_mm": [
       0.0,
@@ -330,34 +340,39 @@
      "area_mm2": 2277.0
     }
    ],
-   "max_displacement_mm": 11.4822,
+   "max_displacement_mm": 12.4629,
    "probe_displacement_mm": [
-    0.1346,
-    7.2381,
-    3.8786
+    0.1548,
+    7.8464,
+    4.1597
    ],
-   "max_von_mises_mpa": 94.87,
-   "von_mises_design_mpa": 22.15,
-   "safety_factor": 2.21,
+   "max_von_mises_mpa": 88.88,
+   "von_mises_design_mpa": 24.89,
+   "safety_factor": 1.97,
    "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
-   "stiffness_n_per_mm": 21.2,
+   "stiffness_n_per_mm": 22.4,
    "torsional_stiffness_nm_per_deg": null,
-   "safety_factor_with_joint_plugs": 0.52,
+   "design_peak_at_mm": [
+    -217.1,
+    30.3,
+    -6.4
+   ],
+   "safety_factor_with_joint_plugs": 0.55,
    "case": "R3",
    "material_id": "pa6_cf_xy",
-   "load_from": "rig 'power_off' (no motor damping): folded onto the stops, 107 N m on a stop post and 1532 N on the axle (quasi-static: the knees' real force matches statics), plus 10 % sideways; the whole loop, joints bonded (the knees' 6201 pairs and the apex's 61812 pair carry moment)",
+   "load_from": "rig 'power_off' (no motor damping): folded onto the stops, 118 N m on a stop post and 1761 N on the axle (quasi-static: the knees' real force matches statics), plus 10 % sideways; the whole loop, joints bonded (the knees' 6201 pairs and the apex's 61812 pair carry moment)",
    "png": "exports/leg/fea/leg-R3.png",
    "target": 1.0,
    "ok": true,
-   "seconds": 636.7
+   "seconds": 1365.7
   },
   {
    "part": "upper_link",
    "material": "PA6-CF along the layers (humid)",
    "material_note": "Bambu PA6-CF TDS 102 MPa dry in the layers, x0.6 humid, x0.8 print: for parts printed so their main stress runs in the layers",
    "mesh": {
-    "nodes": 15636,
-    "tets": 73307,
+    "nodes": 14504,
+    "tets": 66109,
     "size_mm": 4.0,
     "element": "P2 tetrahedra"
    },
@@ -365,15 +380,15 @@
     {
      "kind": "force",
      "n": [
-      -287.12666285111726,
-      94.285849552674,
-      -589.3143462373005
+      -309.0903350950762,
+      96.16070583948485,
+      -575.6789412940711
      ],
-     "area_mm2": 2235.6
+     "area_mm2": 2209.3
     },
     {
      "kind": "torque",
-     "nm": -27.0404200794541,
+     "nm": -26.28458348468347,
      "axis": [
       1.0,
       0.0,
@@ -381,19 +396,19 @@
      ],
      "point_mm": [
       149.99999999999943,
-      10.115455949606773,
-      3.4566848362157027e-16
+      10.34159285799435,
+      1.86908703354824e-16
      ],
      "about_centroid_mm": [
-      149.986,
-      10.101,
-      -0.002
+      149.99,
+      10.328,
+      -0.0
      ],
-     "area_mm2": 2235.6
+     "area_mm2": 2209.3
     },
     {
      "kind": "torque",
-     "nm": 13.174676009634547,
+     "nm": 14.112572363430003,
      "axis": [
       0.0,
       0.0,
@@ -401,19 +416,19 @@
      ],
      "point_mm": [
       149.99999999999943,
-      10.115455949606773,
-      3.4566848362157027e-16
+      10.34159285799435,
+      1.86908703354824e-16
      ],
      "about_centroid_mm": [
-      149.986,
-      10.101,
-      -0.002
+      149.99,
+      10.328,
+      -0.0
      ],
-     "area_mm2": 2235.6
+     "area_mm2": 2209.3
     },
     {
      "kind": "torque",
-     "nm": -35.46415160361164,
+     "nm": -34.65260284749178,
      "axis": [
       1.0,
       0.0,
@@ -421,19 +436,19 @@
      ],
      "point_mm": [
       149.99999999999943,
-      10.115455949606773,
-      3.4566848362157027e-16
+      10.34159285799435,
+      1.86908703354824e-16
      ],
      "about_centroid_mm": [
-      149.986,
-      10.101,
-      -0.002
+      149.99,
+      10.328,
+      -0.0
      ],
-     "area_mm2": 2235.6
+     "area_mm2": 2209.3
     },
     {
      "kind": "torque",
-     "nm": 78.77502312026256,
+     "nm": 81.44665148317252,
      "axis": [
       0.0,
       0.0,
@@ -441,45 +456,50 @@
      ],
      "point_mm": [
       149.99999999999943,
-      10.115455949606773,
-      3.4566848362157027e-16
+      10.34159285799435,
+      1.86908703354824e-16
      ],
      "about_centroid_mm": [
-      149.986,
-      10.101,
-      -0.002
+      149.99,
+      10.328,
+      -0.0
      ],
-     "area_mm2": 2235.6
+     "area_mm2": 2209.3
     }
    ],
-   "max_displacement_mm": 3.564,
+   "max_displacement_mm": 3.3996,
    "probe_displacement_mm": [
-    0.328,
-    2.4217,
-    -0.2121
+    0.2876,
+    2.34,
+    -0.1731
    ],
-   "max_von_mises_mpa": 93.45,
-   "von_mises_design_mpa": 33.96,
-   "safety_factor": 1.44,
+   "max_von_mises_mpa": 101.74,
+   "von_mises_design_mpa": 34.48,
+   "safety_factor": 1.42,
    "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
-   "stiffness_n_per_mm": 1692.7,
-   "torsional_stiffness_nm_per_deg": 90.25,
-   "safety_factor_with_pad_rim": 1.04,
+   "stiffness_n_per_mm": 1849.8,
+   "torsional_stiffness_nm_per_deg": 47.85,
+   "design_peak_at_mm": [
+    29.9,
+    0.6,
+    5.5
+   ],
+   "safety_factor_with_pad_rim": 1.02,
    "case": "R1",
    "material_id": "pa6_cf_xy",
-   "load_from": "the rig's landings (drop_150, the capped jump): knees at 780 N, as 1236 N on the axle at 335 mm (statics on the 2065 N spike gives 1303), plus 10 % fore-aft and 10 % sideways; the rear upper link at -118 deg, 76% of the out-of-plane load",
+   "load_from": "the rig's landings (drop_150, the capped jump): knees at 773 N, as 1252 N on the axle at 339 mm (statics on the 2064 N spike gives 1273), plus 10 % fore-aft and 10 % sideways; the rear upper link at -117 deg, 77% of the out-of-plane load",
    "png": "exports/leg/fea/upper_link-R1.png",
    "target": 1.2,
    "ok": true,
-   "seconds": 127.0
+   "seconds": 24.6
   },
   {
    "part": "upper_link",
    "material": "PA6-CF along the layers (humid)",
    "material_note": "Bambu PA6-CF TDS 102 MPa dry in the layers, x0.6 humid, x0.8 print: for parts printed so their main stress runs in the layers",
    "mesh": {
-    "nodes": 15636,
-    "tets": 73307,
+    "nodes": 14504,
+    "tets": 66109,
     "size_mm": 4.0,
     "element": "P2 tetrahedra"
    },
@@ -487,15 +507,15 @@
     {
      "kind": "force",
      "n": [
-      -379.7702737685106,
-      83.16432077188676,
-      779.461121387737
+      -412.71957406772685,
+      84.14061760954924,
+      768.6877927695961
      ],
-     "area_mm2": 2235.6
+     "area_mm2": 2209.3
     },
     {
      "kind": "torque",
-     "nm": 35.76521815988452,
+     "nm": 35.09706020736389,
      "axis": [
       1.0,
       0.0,
@@ -503,19 +523,19 @@
      ],
      "point_mm": [
       149.99999999999943,
-      10.115455949606773,
-      3.4566848362157027e-16
+      10.34159285799435,
+      1.86908703354824e-16
      ],
      "about_centroid_mm": [
-      149.986,
-      10.101,
-      -0.002
+      149.99,
+      10.328,
+      -0.0
      ],
-     "area_mm2": 2235.6
+     "area_mm2": 2209.3
     },
     {
      "kind": "torque",
-     "nm": 17.425585855761167,
+     "nm": 18.844118348259478,
      "axis": [
       0.0,
       0.0,
@@ -523,19 +543,19 @@
      ],
      "point_mm": [
       149.99999999999943,
-      10.115455949606773,
-      3.4566848362157027e-16
+      10.34159285799435,
+      1.86908703354824e-16
      ],
      "about_centroid_mm": [
-      149.986,
-      10.101,
-      -0.002
+      149.99,
+      10.328,
+      -0.0
      ],
-     "area_mm2": 2235.6
+     "area_mm2": 2209.3
     },
     {
      "kind": "torque",
-     "nm": 34.77834485017296,
+     "nm": 33.93686757717779,
      "axis": [
       1.0,
       0.0,
@@ -543,19 +563,19 @@
      ],
      "point_mm": [
       149.99999999999943,
-      10.115455949606773,
-      3.4566848362157027e-16
+      10.34159285799435,
+      1.86908703354824e-16
      ],
      "about_centroid_mm": [
-      149.986,
-      10.101,
-      -0.002
+      149.99,
+      10.328,
+      -0.0
      ],
-     "area_mm2": 2235.6
+     "area_mm2": 2209.3
     },
     {
      "kind": "torque",
-     "nm": 59.08411401246088,
+     "nm": 60.57471414554768,
      "axis": [
       0.0,
       0.0,
@@ -563,45 +583,50 @@
      ],
      "point_mm": [
       149.99999999999943,
-      10.115455949606773,
-      3.4566848362157027e-16
+      10.34159285799435,
+      1.86908703354824e-16
      ],
      "about_centroid_mm": [
-      149.986,
-      10.101,
-      -0.002
+      149.99,
+      10.328,
+      -0.0
      ],
-     "area_mm2": 2235.6
+     "area_mm2": 2209.3
     }
    ],
-   "max_displacement_mm": 3.1048,
+   "max_displacement_mm": 2.9168,
    "probe_displacement_mm": [
-    0.2701,
-    2.0256,
-    0.3212
+    0.234,
+    1.9493,
+    0.2642
    ],
-   "max_von_mises_mpa": 102.13,
-   "von_mises_design_mpa": 32.48,
-   "safety_factor": 1.51,
+   "max_von_mises_mpa": 101.52,
+   "von_mises_design_mpa": 31.33,
+   "safety_factor": 1.56,
    "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
-   "stiffness_n_per_mm": 2399.0,
-   "torsional_stiffness_nm_per_deg": 81.48,
-   "safety_factor_with_pad_rim": 0.93,
+   "stiffness_n_per_mm": 2839.9,
+   "torsional_stiffness_nm_per_deg": 43.51,
+   "design_peak_at_mm": [
+    27.6,
+    0.8,
+    -13.7
+   ],
+   "safety_factor_with_pad_rim": 0.95,
    "case": "R1F",
    "material_id": "pa6_cf_xy",
-   "load_from": "the rig's landings (drop_150, the capped jump): knees at 780 N, as 1236 N on the axle at 335 mm (statics on the 2065 N spike gives 1303), plus 10 % fore-aft and 10 % sideways; the front upper link at -62 deg, 67% of the out-of-plane load",
+   "load_from": "the rig's landings (drop_150, the capped jump): knees at 773 N, as 1252 N on the axle at 339 mm (statics on the 2064 N spike gives 1273), plus 10 % fore-aft and 10 % sideways; the front upper link at -63 deg, 67% of the out-of-plane load",
    "png": "exports/leg/fea/upper_link-R1F.png",
    "target": 1.2,
    "ok": true,
-   "seconds": 67.2
+   "seconds": 22.9
   },
   {
    "part": "upper_link",
    "material": "PA6-CF along the layers (humid)",
    "material_note": "Bambu PA6-CF TDS 102 MPa dry in the layers, x0.6 humid, x0.8 print: for parts printed so their main stress runs in the layers",
    "mesh": {
-    "nodes": 15636,
-    "tets": 73307,
+    "nodes": 14504,
+    "tets": 66109,
     "size_mm": 4.0,
     "element": "P2 tetrahedra"
    },
@@ -609,15 +634,15 @@
     {
      "kind": "force",
      "n": [
-      -34.884713932621054,
-      104.03750250000002,
-      -243.76151505970847
+      -38.432311959667246,
+      115.5740625,
+      -268.55082167595003
      ],
-     "area_mm2": 2235.6
+     "area_mm2": 2209.3
     },
     {
      "kind": "torque",
-     "nm": -11.184885975547786,
+     "nm": -12.261602754400682,
      "axis": [
       1.0,
       0.0,
@@ -625,19 +650,19 @@
      ],
      "point_mm": [
       149.99999999999943,
-      10.115455949606773,
-      3.4566848362157027e-16
+      10.34159285799435,
+      1.86908703354824e-16
      ],
      "about_centroid_mm": [
-      149.986,
-      10.101,
-      -0.002
+      149.99,
+      10.328,
+      -0.0
      ],
-     "area_mm2": 2235.6
+     "area_mm2": 2209.3
     },
     {
      "kind": "torque",
-     "nm": 1.6006691931267762,
+     "nm": 1.754758146863126,
      "axis": [
       0.0,
       0.0,
@@ -645,19 +670,19 @@
      ],
      "point_mm": [
       149.99999999999943,
-      10.115455949606773,
-      3.4566848362157027e-16
+      10.34159285799435,
+      1.86908703354824e-16
      ],
      "about_centroid_mm": [
-      149.986,
-      10.101,
-      -0.002
+      149.99,
+      10.328,
+      -0.0
      ],
-     "area_mm2": 2235.6
+     "area_mm2": 2209.3
     },
     {
      "kind": "torque",
-     "nm": -36.79677574690272,
+     "nm": -40.948827250200026,
      "axis": [
       1.0,
       0.0,
@@ -665,19 +690,19 @@
      ],
      "point_mm": [
       149.99999999999943,
-      10.115455949606773,
-      3.4566848362157027e-16
+      10.34159285799435,
+      1.86908703354824e-16
      ],
      "about_centroid_mm": [
-      149.986,
-      10.101,
-      -0.002
+      149.99,
+      10.328,
+      -0.0
      ],
-     "area_mm2": 2235.6
+     "area_mm2": 2209.3
     },
     {
      "kind": "torque",
-     "nm": 25.744892404755923,
+     "nm": 28.60996713429673,
      "axis": [
       0.0,
       0.0,
@@ -685,45 +710,50 @@
      ],
      "point_mm": [
       149.99999999999943,
-      10.115455949606773,
-      3.4566848362157027e-16
+      10.34159285799435,
+      1.86908703354824e-16
      ],
      "about_centroid_mm": [
-      149.986,
-      10.101,
-      -0.002
+      149.99,
+      10.328,
+      -0.0
      ],
-     "area_mm2": 2235.6
+     "area_mm2": 2209.3
     }
    ],
-   "max_displacement_mm": 1.4613,
+   "max_displacement_mm": 1.4868,
    "probe_displacement_mm": [
-    0.116,
-    0.889,
-    -0.0017
+    0.1087,
+    0.9208,
+    -0.0008
    ],
-   "max_von_mises_mpa": 45.31,
-   "von_mises_design_mpa": 16.73,
-   "safety_factor": 2.93,
+   "max_von_mises_mpa": 49.7,
+   "von_mises_design_mpa": 18.54,
+   "safety_factor": 2.64,
    "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
-   "stiffness_n_per_mm": 804.2,
-   "torsional_stiffness_nm_per_deg": 91.14,
-   "safety_factor_with_pad_rim": 2.03,
+   "stiffness_n_per_mm": 848.7,
+   "torsional_stiffness_nm_per_deg": 45.46,
+   "design_peak_at_mm": [
+    23.6,
+    1.2,
+    20.7
+   ],
+   "safety_factor_with_pad_rim": 1.88,
    "case": "E1",
    "material_id": "pa6_cf_xy",
-   "load_from": "standing: 2.5 x 145 N vertical, 0.5 g of a 30 kg robot sideways; the rear upper link at -129 deg, 72% of the out-of-plane load",
+   "load_from": "standing: 2.5 x 159 N vertical, 0.5 g of a 32 kg robot sideways; the rear upper link at -129 deg, 72% of the out-of-plane load",
    "png": "exports/leg/fea/upper_link-E1.png",
    "target": 2.0,
    "ok": true,
-   "seconds": 69.9
+   "seconds": 23.9
   },
   {
    "part": "upper_link",
    "material": "PA6-CF along the layers (humid)",
    "material_note": "Bambu PA6-CF TDS 102 MPa dry in the layers, x0.6 humid, x0.8 print: for parts printed so their main stress runs in the layers",
    "mesh": {
-    "nodes": 15636,
-    "tets": 73307,
+    "nodes": 14504,
+    "tets": 66109,
     "size_mm": 4.0,
     "element": "P2 tetrahedra"
    },
@@ -731,15 +761,15 @@
     {
      "kind": "force",
      "n": [
-      -34.884713932621054,
-      102.73522500000001,
-      243.76151505970847
+      -38.432311959667246,
+      111.58874999999999,
+      268.55082167595003
      ],
-     "area_mm2": 2235.6
+     "area_mm2": 2209.3
     },
     {
      "kind": "torque",
-     "nm": 11.184885975547786,
+     "nm": 12.261602754400682,
      "axis": [
       1.0,
       0.0,
@@ -747,19 +777,19 @@
      ],
      "point_mm": [
       149.99999999999943,
-      10.115455949606773,
-      3.4566848362157027e-16
+      10.34159285799435,
+      1.86908703354824e-16
      ],
      "about_centroid_mm": [
-      149.986,
-      10.101,
-      -0.002
+      149.99,
+      10.328,
+      -0.0
      ],
-     "area_mm2": 2235.6
+     "area_mm2": 2209.3
     },
     {
      "kind": "torque",
-     "nm": 1.6006691931267756,
+     "nm": 1.7547581468631235,
      "axis": [
       0.0,
       0.0,
@@ -767,19 +797,19 @@
      ],
      "point_mm": [
       149.99999999999943,
-      10.115455949606773,
-      3.4566848362157027e-16
+      10.34159285799435,
+      1.86908703354824e-16
      ],
      "about_centroid_mm": [
-      149.986,
-      10.101,
-      -0.002
+      149.99,
+      10.328,
+      -0.0
      ],
-     "area_mm2": 2235.6
+     "area_mm2": 2209.3
     },
     {
      "kind": "torque",
-     "nm": 36.238536111215204,
+     "nm": 39.240466783171385,
      "axis": [
       1.0,
       0.0,
@@ -787,19 +817,19 @@
      ],
      "point_mm": [
       149.99999999999943,
-      10.115455949606773,
-      3.4566848362157027e-16
+      10.34159285799435,
+      1.86908703354824e-16
      ],
      "about_centroid_mm": [
-      149.986,
-      10.101,
-      -0.002
+      149.99,
+      10.328,
+      -0.0
      ],
-     "area_mm2": 2235.6
+     "area_mm2": 2209.3
     },
     {
      "kind": "torque",
-     "nm": 25.40866037519347,
+     "nm": 27.581008475089625,
      "axis": [
       0.0,
       0.0,
@@ -807,45 +837,50 @@
      ],
      "point_mm": [
       149.99999999999943,
-      10.115455949606773,
-      3.4566848362157027e-16
+      10.34159285799435,
+      1.86908703354824e-16
      ],
      "about_centroid_mm": [
-      149.986,
-      10.101,
-      -0.002
+      149.99,
+      10.328,
+      -0.0
      ],
-     "area_mm2": 2235.6
+     "area_mm2": 2209.3
     }
    ],
-   "max_displacement_mm": 1.4468,
+   "max_displacement_mm": 1.4411,
    "probe_displacement_mm": [
-    0.1159,
-    0.8875,
-    0.0018
+    0.1056,
+    0.8947,
+    0.0039
    ],
-   "max_von_mises_mpa": 52.29,
-   "von_mises_design_mpa": 17.54,
-   "safety_factor": 2.79,
+   "max_von_mises_mpa": 56.38,
+   "von_mises_design_mpa": 17.75,
+   "safety_factor": 2.76,
    "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
-   "stiffness_n_per_mm": 813.0,
-   "torsional_stiffness_nm_per_deg": 90.12,
-   "safety_factor_with_pad_rim": 1.84,
+   "stiffness_n_per_mm": 888.7,
+   "torsional_stiffness_nm_per_deg": 45.86,
+   "design_peak_at_mm": [
+    27.6,
+    0.8,
+    -13.7
+   ],
+   "safety_factor_with_pad_rim": 1.71,
    "case": "E1F",
    "material_id": "pa6_cf_xy",
-   "load_from": "standing: 2.5 x 145 N vertical, 0.5 g of a 30 kg robot sideways; the front upper link at -51 deg, 71% of the out-of-plane load",
+   "load_from": "standing: 2.5 x 159 N vertical, 0.5 g of a 32 kg robot sideways; the front upper link at -51 deg, 70% of the out-of-plane load",
    "png": "exports/leg/fea/upper_link-E1F.png",
    "target": 2.0,
    "ok": true,
-   "seconds": 67.0
+   "seconds": 26.0
   },
   {
    "part": "upper_link",
    "material": "PA6-CF along the layers (humid)",
    "material_note": "Bambu PA6-CF TDS 102 MPa dry in the layers, x0.6 humid, x0.8 print: for parts printed so their main stress runs in the layers",
    "mesh": {
-    "nodes": 15636,
-    "tets": 73307,
+    "nodes": 14504,
+    "tets": 66109,
     "size_mm": 4.0,
     "element": "P2 tetrahedra"
    },
@@ -853,15 +888,15 @@
     {
      "kind": "force",
      "n": [
-      1610.6876139517735,
-      115.67355,
-      -688.0261560833018
+      1851.433951393818,
+      134.01971,
+      -790.8640842492673
      ],
-     "area_mm2": 2235.6
+     "area_mm2": 2209.3
     },
     {
      "kind": "torque",
-     "nm": -31.569766466626987,
+     "nm": -36.1095943526425,
      "axis": [
       1.0,
       0.0,
@@ -869,19 +904,19 @@
      ],
      "point_mm": [
       149.99999999999943,
-      10.115455949606773,
-      3.4566848362157027e-16
+      10.34159285799435,
+      1.86908703354824e-16
      ],
      "about_centroid_mm": [
-      149.986,
-      10.101,
-      -0.002
+      149.99,
+      10.328,
+      -0.0
      ],
-     "area_mm2": 2235.6
+     "area_mm2": 2209.3
     },
     {
      "kind": "torque",
-     "nm": -73.90566677379284,
+     "nm": -84.53352514927117,
      "axis": [
       0.0,
       0.0,
@@ -889,19 +924,19 @@
      ],
      "point_mm": [
       149.99999999999943,
-      10.115455949606773,
-      3.4566848362157027e-16
+      10.34159285799435,
+      1.86908703354824e-16
      ],
      "about_centroid_mm": [
-      149.986,
-      10.101,
-      -0.002
+      149.99,
+      10.328,
+      -0.0
      ],
-     "area_mm2": 2235.6
+     "area_mm2": 2209.3
     },
     {
      "kind": "torque",
-     "nm": -92.35968438171818,
+     "nm": -107.2093181847379,
      "axis": [
       1.0,
       0.0,
@@ -909,19 +944,19 @@
      ],
      "point_mm": [
       149.99999999999943,
-      10.115455949606773,
-      3.4566848362157027e-16
+      10.34159285799435,
+      1.86908703354824e-16
      ],
      "about_centroid_mm": [
-      149.986,
-      10.101,
-      -0.002
+      149.99,
+      10.328,
+      -0.0
      ],
-     "area_mm2": 2235.6
+     "area_mm2": 2209.3
     },
     {
      "kind": "torque",
-     "nm": 19.89919244447801,
+     "nm": 22.58443375404378,
      "axis": [
       0.0,
       0.0,
@@ -929,45 +964,50 @@
      ],
      "point_mm": [
       149.99999999999943,
-      10.115455949606773,
-      3.4566848362157027e-16
+      10.34159285799435,
+      1.86908703354824e-16
      ],
      "about_centroid_mm": [
-      149.986,
-      10.101,
-      -0.002
+      149.99,
+      10.328,
+      -0.0
      ],
-     "area_mm2": 2235.6
+     "area_mm2": 2209.3
     }
    ],
-   "max_displacement_mm": 2.3214,
+   "max_displacement_mm": 2.4076,
    "probe_displacement_mm": [
-    -0.0882,
-    -0.9573,
-    -0.044
+    -0.0801,
+    -1.0303,
+    -0.0393
    ],
-   "max_von_mises_mpa": 94.44,
-   "von_mises_design_mpa": 38.71,
-   "safety_factor": 1.27,
+   "max_von_mises_mpa": 116.2,
+   "von_mises_design_mpa": 42.38,
+   "safety_factor": 1.16,
    "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
    "stiffness_n_per_mm": null,
    "torsional_stiffness_nm_per_deg": null,
-   "safety_factor_with_pad_rim": 1.0,
+   "design_peak_at_mm": [
+    25.6,
+    1.0,
+    -17.2
+   ],
+   "safety_factor_with_pad_rim": 0.9,
    "case": "R3K",
    "material_id": "pa6_cf_xy",
-   "load_from": "rig 'power_off' (no motor damping): folded onto the stops, 107 N m on a stop post and 1532 N on the axle (quasi-static: the knees' real force matches statics), plus 10 % sideways; the rear upper link at 177 deg, 76% of the out-of-plane load",
+   "load_from": "rig 'power_off' (no motor damping): folded onto the stops, 118 N m on a stop post and 1761 N on the axle (quasi-static: the knees' real force matches statics), plus 10 % sideways; the rear upper link at 177 deg, 76% of the out-of-plane load",
    "png": "exports/leg/fea/upper_link-R3K.png",
    "target": 1.0,
    "ok": true,
-   "seconds": 73.5
+   "seconds": 27.3
   },
   {
    "part": "upper_link",
    "material": "PA6-CF along the layers (humid)",
    "material_note": "Bambu PA6-CF TDS 102 MPa dry in the layers, x0.6 humid, x0.8 print: for parts printed so their main stress runs in the layers",
    "mesh": {
-    "nodes": 15636,
-    "tets": 73307,
+    "nodes": 14504,
+    "tets": 66109,
     "size_mm": 4.0,
     "element": "P2 tetrahedra"
    },
@@ -975,15 +1015,15 @@
     {
      "kind": "force",
      "n": [
-      1610.6876139517735,
-      101.57823,
-      688.026156083301
+      1851.4339513938182,
+      116.23260000000002,
+      790.8640842492667
      ],
-     "area_mm2": 2235.6
+     "area_mm2": 2209.3
     },
     {
      "kind": "torque",
-     "nm": 31.56976646662695,
+     "nm": 36.10959435264248,
      "axis": [
       1.0,
       0.0,
@@ -991,19 +1031,19 @@
      ],
      "point_mm": [
       149.99999999999943,
-      10.115455949606773,
-      3.4566848362157027e-16
+      10.34159285799435,
+      1.86908703354824e-16
      ],
      "about_centroid_mm": [
-      149.986,
-      10.101,
-      -0.002
+      149.99,
+      10.328,
+      -0.0
      ],
-     "area_mm2": 2235.6
+     "area_mm2": 2209.3
     },
     {
      "kind": "torque",
-     "nm": -73.90566677379286,
+     "nm": -84.53352514927118,
      "axis": [
       0.0,
       0.0,
@@ -1011,19 +1051,19 @@
      ],
      "point_mm": [
       149.99999999999943,
-      10.115455949606773,
-      3.4566848362157027e-16
+      10.34159285799435,
+      1.86908703354824e-16
      ],
      "about_centroid_mm": [
-      149.986,
-      10.101,
-      -0.002
+      149.99,
+      10.328,
+      -0.0
      ],
-     "area_mm2": 2235.6
+     "area_mm2": 2209.3
     },
     {
      "kind": "torque",
-     "nm": 78.42241290274163,
+     "nm": 89.62165214406488,
      "axis": [
       1.0,
       0.0,
@@ -1031,19 +1071,19 @@
      ],
      "point_mm": [
       149.99999999999943,
-      10.115455949606773,
-      3.4566848362157027e-16
+      10.34159285799435,
+      1.86908703354824e-16
      ],
      "about_centroid_mm": [
-      149.986,
-      10.101,
-      -0.002
+      149.99,
+      10.328,
+      -0.0
      ],
-     "area_mm2": 2235.6
+     "area_mm2": 2209.3
     },
     {
      "kind": "torque",
-     "nm": 23.755005200215788,
+     "nm": 27.450145609163837,
      "axis": [
       0.0,
       0.0,
@@ -1051,45 +1091,50 @@
      ],
      "point_mm": [
       149.99999999999943,
-      10.115455949606773,
-      3.4566848362157027e-16
+      10.34159285799435,
+      1.86908703354824e-16
      ],
      "about_centroid_mm": [
-      149.986,
-      10.101,
-      -0.002
+      149.99,
+      10.328,
+      -0.0
      ],
-     "area_mm2": 2235.6
+     "area_mm2": 2209.3
     }
    ],
-   "max_displacement_mm": 2.1332,
+   "max_displacement_mm": 2.19,
    "probe_displacement_mm": [
-    -0.074,
-    -0.872,
-    0.103
+    -0.0669,
+    -0.944,
+    0.1009
    ],
-   "max_von_mises_mpa": 70.87,
-   "von_mises_design_mpa": 32.69,
-   "safety_factor": 1.5,
+   "max_von_mises_mpa": 90.21,
+   "von_mises_design_mpa": 37.04,
+   "safety_factor": 1.32,
    "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
    "stiffness_n_per_mm": null,
    "torsional_stiffness_nm_per_deg": null,
-   "safety_factor_with_pad_rim": 1.16,
+   "design_peak_at_mm": [
+    16.8,
+    0.4,
+    -25.5
+   ],
+   "safety_factor_with_pad_rim": 0.99,
    "case": "R3KF",
    "material_id": "pa6_cf_xy",
-   "load_from": "rig 'power_off' (no motor damping): folded onto the stops, 107 N m on a stop post and 1532 N on the axle (quasi-static: the knees' real force matches statics), plus 10 % sideways; the front upper link at 3 deg, 66% of the out-of-plane load",
+   "load_from": "rig 'power_off' (no motor damping): folded onto the stops, 118 N m on a stop post and 1761 N on the axle (quasi-static: the knees' real force matches statics), plus 10 % sideways; the front upper link at 3 deg, 66% of the out-of-plane load",
    "png": "exports/leg/fea/upper_link-R3KF.png",
    "target": 1.0,
    "ok": true,
-   "seconds": 71.7
+   "seconds": 26.1
   },
   {
    "part": "upper_link",
    "material": "PA6-CF along the layers (humid)",
    "material_note": "Bambu PA6-CF TDS 102 MPa dry in the layers, x0.6 humid, x0.8 print: for parts printed so their main stress runs in the layers",
    "mesh": {
-    "nodes": 15636,
-    "tets": 73307,
+    "nodes": 14504,
+    "tets": 66109,
     "size_mm": 4.0,
     "element": "P2 tetrahedra"
    },
@@ -1115,33 +1160,38 @@
      "area_mm2": 2819.4
     }
    ],
-   "max_displacement_mm": 2.4289,
+   "max_displacement_mm": 2.1812,
    "probe_displacement_mm": [
-    0.0029,
+    0.001,
     -0.0006,
-    1.7758
+    1.6036
    ],
-   "max_von_mises_mpa": 44.36,
-   "von_mises_design_mpa": 27.85,
-   "safety_factor": 1.76,
+   "max_von_mises_mpa": 47.61,
+   "von_mises_design_mpa": 29.91,
+   "safety_factor": 1.64,
    "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
-   "torsional_stiffness_nm_per_deg": 95.62,
-   "safety_factor_with_pad_rim": 1.76,
+   "torsional_stiffness_nm_per_deg": 174.49,
+   "design_peak_at_mm": [
+    10.0,
+    0.4,
+    18.0
+   ],
+   "safety_factor_with_pad_rim": 1.64,
    "case": "R2",
    "material_id": "pa6_cf_xy",
    "load_from": "a motor at 120 N m against a stalled leg",
    "png": "exports/leg/fea/upper_link-R2.png",
    "target": 1.2,
    "ok": true,
-   "seconds": 121.5
+   "seconds": 81.8
   },
   {
    "part": "upper_link",
    "material": "PA6-CF along the layers (humid)",
    "material_note": "Bambu PA6-CF TDS 102 MPa dry in the layers, x0.6 humid, x0.8 print: for parts printed so their main stress runs in the layers",
    "mesh": {
-    "nodes": 15636,
-    "tets": 73307,
+    "nodes": 14504,
+    "tets": 66109,
     "size_mm": 4.0,
     "element": "P2 tetrahedra"
    },
@@ -1167,33 +1217,38 @@
      "area_mm2": 2819.4
     }
    ],
-   "max_displacement_mm": 1.2145,
+   "max_displacement_mm": 1.0906,
    "probe_displacement_mm": [
-    0.0015,
+    0.0005,
     -0.0003,
-    0.8879
+    0.8018
    ],
-   "max_von_mises_mpa": 22.18,
-   "von_mises_design_mpa": 13.92,
-   "safety_factor": 3.52,
+   "max_von_mises_mpa": 23.81,
+   "von_mises_design_mpa": 14.95,
+   "safety_factor": 3.28,
    "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
-   "torsional_stiffness_nm_per_deg": 95.62,
-   "safety_factor_with_pad_rim": 3.52,
+   "torsional_stiffness_nm_per_deg": 174.49,
+   "design_peak_at_mm": [
+    10.0,
+    0.4,
+    18.0
+   ],
+   "safety_factor_with_pad_rim": 3.28,
    "case": "E2",
    "material_id": "pa6_cf_xy",
    "load_from": "a motor at 60 N m against a stalled leg",
    "png": "exports/leg/fea/upper_link-E2.png",
    "target": 2.0,
    "ok": true,
-   "seconds": 79.0
+   "seconds": 79.4
   },
   {
    "part": "upper_link",
    "material": "PA6-CF along the layers (humid)",
    "material_note": "Bambu PA6-CF TDS 102 MPa dry in the layers, x0.6 humid, x0.8 print: for parts printed so their main stress runs in the layers",
    "mesh": {
-    "nodes": 15636,
-    "tets": 73307,
+    "nodes": 14504,
+    "tets": 66109,
     "size_mm": 4.0,
     "element": "P2 tetrahedra"
    },
@@ -1201,40 +1256,106 @@
     {
      "kind": "force",
      "n": [
+      701.4269682558754,
       0.0,
-      0.0,
-      -800.0
+      -764.5621178994
      ],
-     "area_mm2": 6579.1
+     "area_mm2": 564.2
+    },
+    {
+     "kind": "torque",
+     "nm": 4.205091648446702,
+     "axis": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "point_mm": [
+      43.230592753945665,
+      15.000000000000002,
+      39.70149297074669
+     ],
+     "about_centroid_mm": [
+      43.231,
+      15.0,
+      39.701
+     ],
+     "area_mm2": 564.2
+    },
+    {
+     "kind": "torque",
+     "nm": -0.9001714037059514,
+     "axis": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "point_mm": [
+      43.230592753945665,
+      15.000000000000002,
+      39.70149297074669
+     ],
+     "about_centroid_mm": [
+      43.231,
+      15.0,
+      39.701
+     ],
+     "area_mm2": 564.2
+    },
+    {
+     "kind": "torque",
+     "nm": 3.857848325407316,
+     "axis": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "point_mm": [
+      43.230592753945665,
+      15.000000000000002,
+      39.70149297074669
+     ],
+     "about_centroid_mm": [
+      43.231,
+      15.0,
+      39.701
+     ],
+     "area_mm2": 564.2
     }
    ],
-   "max_displacement_mm": 0.255,
+   "max_displacement_mm": 0.1781,
    "probe_displacement_mm": [
-    0.0261,
-    0.0012,
-    -0.0921
+    0.0534,
+    -0.0141,
+    -0.0422
    ],
-   "max_von_mises_mpa": 16.51,
-   "von_mises_design_mpa": 4.52,
-   "safety_factor": 10.85,
+   "max_von_mises_mpa": 22.9,
+   "von_mises_design_mpa": 6.66,
+   "safety_factor": 7.36,
    "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
-   "stiffness_n_per_mm": 8682.2,
-   "safety_factor_with_pad_rim": 5.25,
+   "stiffness_n_per_mm": 15435.8,
+   "torsional_stiffness_nm_per_deg": 88.52,
+   "design_peak_at_mm": [
+    29.9,
+    0.6,
+    5.5
+   ],
+   "safety_factor_with_pad_rim": 3.83,
    "case": "E3",
    "material_id": "pa6_cf_xy",
-   "load_from": "a motor at its 60 N m cap driving the link into a stop post at 58 mm",
+   "load_from": "a motor at its 60 N m cap driving the link into a stop post: 1038 N square on its stop face, 57.8 mm from the hub's axis",
    "png": "exports/leg/fea/upper_link-E3.png",
    "target": 2.0,
    "ok": true,
-   "seconds": 152.6
+   "seconds": 24.5
   },
   {
    "part": "upper_link",
    "material": "PA6-CF along the layers (humid)",
    "material_note": "Bambu PA6-CF TDS 102 MPa dry in the layers, x0.6 humid, x0.8 print: for parts printed so their main stress runs in the layers",
    "mesh": {
-    "nodes": 15636,
-    "tets": 73307,
+    "nodes": 14504,
+    "tets": 66109,
     "size_mm": 4.0,
     "element": "P2 tetrahedra"
    },
@@ -1242,32 +1363,98 @@
     {
      "kind": "force",
      "n": [
+      1378.3039926227955,
       0.0,
-      0.0,
-      -1425.3333333333335
+      -1502.364561672321
      ],
-     "area_mm2": 6579.1
+     "area_mm2": 564.2
+    },
+    {
+     "kind": "torque",
+     "nm": 8.263005089197769,
+     "axis": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "point_mm": [
+      43.230592753945665,
+      15.000000000000002,
+      39.70149297074669
+     ],
+     "about_centroid_mm": [
+      43.231,
+      15.0,
+      39.701
+     ],
+     "area_mm2": 564.2
+    },
+    {
+     "kind": "torque",
+     "nm": -1.7688368082821948,
+     "axis": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "point_mm": [
+      43.230592753945665,
+      15.000000000000002,
+      39.70149297074669
+     ],
+     "about_centroid_mm": [
+      43.231,
+      15.0,
+      39.701
+     ],
+     "area_mm2": 564.2
+    },
+    {
+     "kind": "torque",
+     "nm": 7.580671959425377,
+     "axis": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "point_mm": [
+      43.230592753945665,
+      15.000000000000002,
+      39.70149297074669
+     ],
+     "about_centroid_mm": [
+      43.231,
+      15.0,
+      39.701
+     ],
+     "area_mm2": 564.2
     }
    ],
-   "max_displacement_mm": 0.4543,
+   "max_displacement_mm": 0.3499,
    "probe_displacement_mm": [
-    0.0465,
-    0.0022,
-    -0.1642
+    0.1049,
+    -0.0278,
+    -0.083
    ],
-   "max_von_mises_mpa": 29.42,
-   "von_mises_design_mpa": 8.05,
-   "safety_factor": 6.09,
+   "max_von_mises_mpa": 45.0,
+   "von_mises_design_mpa": 13.09,
+   "safety_factor": 3.74,
    "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
-   "stiffness_n_per_mm": 8682.2,
-   "safety_factor_with_pad_rim": 2.95,
+   "stiffness_n_per_mm": 15435.8,
+   "torsional_stiffness_nm_per_deg": 88.52,
+   "design_peak_at_mm": [
+    29.9,
+    0.6,
+    5.5
+   ],
+   "safety_factor_with_pad_rim": 1.95,
    "case": "R3",
    "material_id": "pa6_cf_xy",
-   "load_from": "rig 'power_off' (no motor damping): folded onto the stops, 107 N m on a stop post and 1532 N on the axle (quasi-static: the knees' real force matches statics), plus 10 % sideways",
+   "load_from": "rig 'power_off' (no motor damping): folded onto the stops, 118 N m on a stop post and 1761 N on the axle (quasi-static: the knees' real force matches statics), plus 10 % sideways",
    "png": "exports/leg/fea/upper_link-R3.png",
    "target": 1.0,
    "ok": true,
-   "seconds": 76.5
+   "seconds": 23.6
   },
   {
    "part": "front_link",
@@ -1275,7 +1462,7 @@
    "material_note": "Bambu PA6-CF TDS 102 MPa dry in the layers, x0.6 humid, x0.8 print: for parts printed so their main stress runs in the layers",
    "mesh": {
     "nodes": 9479,
-    "tets": 36620,
+    "tets": 36625,
     "size_mm": 4.0,
     "element": "P2 tetrahedra"
    },
@@ -1283,15 +1470,15 @@
     {
      "kind": "force",
      "n": [
-      -867.0554195628083,
-      83.16432077188676,
-      0.0
+      -872.4782917480751,
+      84.14061760954924,
+      -1.7053025658242404e-13
      ],
      "area_mm2": 12327.2
     },
     {
      "kind": "torque",
-     "nm": -1.7928157836643883,
+     "nm": -1.8040286895838777,
      "axis": [
       0.0,
       0.0,
@@ -1305,13 +1492,13 @@
      "about_centroid_mm": [
       250.001,
       26.068,
-      -0.0
+      0.0
      ],
      "area_mm2": 12327.2
     },
     {
      "kind": "torque",
-     "nm": -37.882224686340784,
+     "nm": -37.31512186660254,
      "axis": [
       1.0,
       0.0,
@@ -1325,13 +1512,13 @@
      "about_centroid_mm": [
       250.001,
       26.068,
-      -0.0
+      0.0
      ],
      "area_mm2": 12327.2
     },
     {
      "kind": "torque",
-     "nm": 64.09839675292407,
+     "nm": 65.43830240760389,
      "axis": [
       0.0,
       0.0,
@@ -1345,30 +1532,35 @@
      "about_centroid_mm": [
       250.001,
       26.068,
-      -0.0
+      0.0
      ],
      "area_mm2": 12327.2
     }
    ],
-   "max_displacement_mm": 20.9296,
+   "max_displacement_mm": 21.3491,
    "probe_displacement_mm": [
-    1.6149,
-    14.3472,
-    0.6742
+    1.6577,
+    14.6671,
+    0.6668
    ],
-   "max_von_mises_mpa": 40.5,
-   "von_mises_design_mpa": 40.5,
-   "safety_factor": 1.21,
+   "max_von_mises_mpa": 41.01,
+   "von_mises_design_mpa": 41.01,
+   "safety_factor": 1.19,
    "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
    "stiffness_n_per_mm": null,
-   "torsional_stiffness_nm_per_deg": 8.74,
+   "torsional_stiffness_nm_per_deg": 8.67,
+   "design_peak_at_mm": [
+    21.3,
+    53.7,
+    10.4
+   ],
    "case": "R1",
    "material_id": "pa6_cf_xy",
-   "load_from": "the rig's landings (drop_150, the capped jump): knees at 780 N, as 1236 N on the axle at 335 mm (statics on the 2065 N spike gives 1303), plus 10 % fore-aft and 10 % sideways; axial 867 N, 67% of the out-of-plane load at the apex",
+   "load_from": "the rig's landings (drop_150, the capped jump): knees at 773 N, as 1252 N on the axle at 339 mm (statics on the 2064 N spike gives 1273), plus 10 % fore-aft and 10 % sideways; axial 872 N, 67% of the out-of-plane load at the apex",
    "png": "exports/leg/fea/front_link-R1.png",
    "target": 1.2,
-   "ok": true,
-   "seconds": 54.2
+   "ok": false,
+   "seconds": 185.0
   },
   {
    "part": "front_link",
@@ -1376,7 +1568,7 @@
    "material_note": "Bambu PA6-CF TDS 102 MPa dry in the layers, x0.6 humid, x0.8 print: for parts printed so their main stress runs in the layers",
    "mesh": {
     "nodes": 9479,
-    "tets": 36620,
+    "tets": 36625,
     "size_mm": 4.0,
     "element": "P2 tetrahedra"
    },
@@ -1384,15 +1576,15 @@
     {
      "kind": "force",
      "n": [
-      -246.24503952438369,
-      102.73522500000001,
-      -5.684341886080802e-14
+      -271.2869079505922,
+      111.58874999999999,
+      -2.842170943040401e-14
      ],
      "area_mm2": 12327.2
     },
     {
      "kind": "torque",
-     "nm": -0.5091623713407141,
+     "nm": -0.5609415955448535,
      "axis": [
       0.0,
       0.0,
@@ -1406,13 +1598,13 @@
      "about_centroid_mm": [
       250.001,
       26.068,
-      -0.0
+      0.0
      ],
      "area_mm2": 12327.2
     },
     {
      "kind": "torque",
-     "nm": -20.018606639302128,
+     "nm": -21.74377183309255,
      "axis": [
       1.0,
       0.0,
@@ -1426,13 +1618,13 @@
      "about_centroid_mm": [
       250.001,
       26.068,
-      -0.0
+      0.0
      ],
      "area_mm2": 12327.2
     },
     {
      "kind": "torque",
-     "nm": 21.668644629127588,
+     "nm": 23.53600693782061,
      "axis": [
       0.0,
       0.0,
@@ -1446,38 +1638,43 @@
      "about_centroid_mm": [
       250.001,
       26.068,
-      -0.0
+      0.0
      ],
      "area_mm2": 12327.2
     }
    ],
-   "max_displacement_mm": 11.1251,
+   "max_displacement_mm": 12.0609,
    "probe_displacement_mm": [
-    0.8496,
-    7.8051,
-    0.3563
+    0.9226,
+    8.4588,
+    0.3885
    ],
-   "max_von_mises_mpa": 23.38,
-   "von_mises_design_mpa": 23.38,
-   "safety_factor": 2.1,
+   "max_von_mises_mpa": 25.3,
+   "von_mises_design_mpa": 25.3,
+   "safety_factor": 1.94,
    "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
-   "stiffness_n_per_mm": 120.1,
-   "torsional_stiffness_nm_per_deg": 5.79,
+   "stiffness_n_per_mm": 124.1,
+   "torsional_stiffness_nm_per_deg": 5.76,
+   "design_peak_at_mm": [
+    21.3,
+    53.7,
+    10.4
+   ],
    "case": "E1",
    "material_id": "pa6_cf_xy",
-   "load_from": "standing: 2.5 x 145 N vertical, 0.5 g of a 30 kg robot sideways; axial 246 N, 71% of the out-of-plane load at the apex",
+   "load_from": "standing: 2.5 x 159 N vertical, 0.5 g of a 32 kg robot sideways; axial 271 N, 70% of the out-of-plane load at the apex",
    "png": "exports/leg/fea/front_link-E1.png",
    "target": 2.0,
-   "ok": true,
-   "seconds": 44.9
+   "ok": false,
+   "seconds": 206.7
   },
   {
    "part": "wheel_link",
    "material": "PA6-CF along the layers (humid)",
    "material_note": "Bambu PA6-CF TDS 102 MPa dry in the layers, x0.6 humid, x0.8 print: for parts printed so their main stress runs in the layers",
    "mesh": {
-    "nodes": 12513,
-    "tets": 51836,
+    "nodes": 12552,
+    "tets": 52134,
     "size_mm": 4.0,
     "element": "P2 tetrahedra"
    },
@@ -1485,15 +1682,15 @@
     {
      "kind": "force",
      "n": [
-      -930.7097190909519,
-      123.57254200874705,
-      822.2328780695285
+      -955.8623384573001,
+      125.20925239516255,
+      818.3765852832358
      ],
      "area_mm2": 2277.0
     },
     {
      "kind": "torque",
-     "nm": 29.91547634186915,
+     "nm": 29.750140439031732,
      "axis": [
       1.0,
       0.0,
@@ -1502,18 +1699,18 @@
      "point_mm": [
       250.0000000000009,
       75.73708339558073,
-      -2.4089962465159106e-13
+      -2.411000400151058e-13
      ],
      "about_centroid_mm": [
       250.0,
       75.733,
-      -0.0
+      0.0
      ],
      "area_mm2": 2277.0
     },
     {
      "kind": "torque",
-     "nm": -10.583988223048676,
+     "nm": -10.724172467645149,
      "axis": [
       0.0,
       1.0,
@@ -1522,18 +1719,18 @@
      "point_mm": [
       250.0000000000009,
       75.73708339558073,
-      -2.4089962465159106e-13
+      -2.411000400151058e-13
      ],
      "about_centroid_mm": [
       250.0,
       75.733,
-      -0.0
+      0.0
      ],
      "area_mm2": 2277.0
     },
     {
      "kind": "torque",
-     "nm": 35.452869484332204,
+     "nm": 36.388876419784125,
      "axis": [
       0.0,
       0.0,
@@ -1542,36 +1739,36 @@
      "point_mm": [
       250.0000000000009,
       75.73708339558073,
-      -2.4089962465159106e-13
+      -2.411000400151058e-13
      ],
      "about_centroid_mm": [
       250.0,
       75.733,
-      -0.0
+      0.0
      ],
      "area_mm2": 2277.0
     },
     {
      "kind": "force",
      "n": [
-      275.1693929468496,
-      -29.286692456073048,
-      -822.2328780695284
+      302.453524085586,
+      -29.04854655567771,
+      -818.3765852832357
      ],
      "area_mm2": 9203.0
     },
     {
      "kind": "torque",
-     "nm": -3.062228358204778,
+     "nm": -3.0478664305287055,
      "axis": [
       1.0,
       0.0,
       0.0
      ],
      "point_mm": [
-      249.9999999999986,
-      20.27571647901699,
-      -4.607917978073197e-16
+      249.99999999999855,
+      20.275716479016985,
+      -9.344869549807464e-16
      ],
      "about_centroid_mm": [
       250.0,
@@ -1582,16 +1779,16 @@
     },
     {
      "kind": "torque",
-     "nm": -1.0248088356308915,
+     "nm": -1.1264226756152296,
      "axis": [
       0.0,
       0.0,
       1.0
      ],
      "point_mm": [
-      249.9999999999986,
-      20.27571647901699,
-      -4.607917978073197e-16
+      249.99999999999855,
+      20.275716479016985,
+      -9.344869549807464e-16
      ],
      "about_centroid_mm": [
       250.0,
@@ -1602,16 +1799,16 @@
     },
     {
      "kind": "torque",
-     "nm": -17.171931536058356,
+     "nm": -16.725009474750493,
      "axis": [
       1.0,
       0.0,
       0.0
      ],
      "point_mm": [
-      249.9999999999986,
-      20.27571647901699,
-      -4.607917978073197e-16
+      249.99999999999855,
+      20.275716479016985,
+      -9.344869549807464e-16
      ],
      "about_centroid_mm": [
       250.0,
@@ -1622,16 +1819,16 @@
     },
     {
      "kind": "torque",
-     "nm": -19.814402973610363,
+     "nm": -19.915438177904694,
      "axis": [
       0.0,
       0.0,
       1.0
      ],
      "point_mm": [
-      249.9999999999986,
-      20.27571647901699,
-      -4.607917978073197e-16
+      249.99999999999855,
+      20.275716479016985,
+      -9.344869549807464e-16
      ],
      "about_centroid_mm": [
       250.0,
@@ -1641,33 +1838,38 @@
      "area_mm2": 9203.0
     }
    ],
-   "max_displacement_mm": 8.1524,
+   "max_displacement_mm": 8.3762,
    "probe_displacement_mm": [
-    -0.3835,
-    5.4677,
-    0.6056
+    -0.3995,
+    5.6501,
+    0.595
    ],
-   "max_von_mises_mpa": 25.9,
-   "von_mises_design_mpa": 25.9,
-   "safety_factor": 1.89,
+   "max_von_mises_mpa": 22.59,
+   "von_mises_design_mpa": 22.59,
+   "safety_factor": 2.17,
    "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
    "stiffness_n_per_mm": null,
-   "torsional_stiffness_nm_per_deg": -37.72,
+   "torsional_stiffness_nm_per_deg": -36.39,
+   "design_peak_at_mm": [
+    27.1,
+    54.8,
+    -16.2
+   ],
    "case": "R1",
    "material_id": "pa6_cf_xy",
-   "load_from": "the rig's landings (drop_150, the capped jump): knees at 780 N, as 1236 N on the axle at 335 mm (statics on the 2065 N spike gives 1303), plus 10 % fore-aft and 10 % sideways; the front link's 867 N on the hub; it keeps 76% of the out-of-plane load",
+   "load_from": "the rig's landings (drop_150, the capped jump): knees at 773 N, as 1252 N on the axle at 339 mm (statics on the 2064 N spike gives 1273), plus 10 % fore-aft and 10 % sideways; the front link's 872 N on the hub; it keeps 77% of the out-of-plane load",
    "png": "exports/leg/fea/wheel_link-R1.png",
    "target": 1.2,
    "ok": true,
-   "seconds": 102.9
+   "seconds": 281.6
   },
   {
    "part": "wheel_link",
    "material": "PA6-CF along the layers (humid)",
    "material_note": "Bambu PA6-CF TDS 102 MPa dry in the layers, x0.6 humid, x0.8 print: for parts printed so their main stress runs in the layers",
    "mesh": {
-    "nodes": 12513,
-    "tets": 51836,
+    "nodes": 12552,
+    "tets": 52134,
     "size_mm": 4.0,
     "element": "P2 tetrahedra"
    },
@@ -1675,15 +1877,15 @@
     {
      "kind": "force",
      "n": [
-      -1555.5193343052547,
-      206.53000000000003,
-      1374.2191715670895
+      -1575.4531475427466,
+      206.37,
+      1348.8490081538603
      ],
      "area_mm2": 2277.0
     },
     {
      "kind": "torque",
-     "nm": 49.99851284477823,
+     "nm": 49.034207656048416,
      "axis": [
       1.0,
       0.0,
@@ -1692,18 +1894,18 @@
      "point_mm": [
       250.0000000000009,
       75.73708339558073,
-      -2.4089962465159106e-13
+      -2.411000400151058e-13
      ],
      "about_centroid_mm": [
       250.0,
       75.733,
-      -0.0
+      0.0
      ],
      "area_mm2": 2277.0
     },
     {
      "kind": "torque",
-     "nm": -17.689294499999146,
+     "nm": -17.675590499999117,
      "axis": [
       0.0,
       1.0,
@@ -1712,18 +1914,18 @@
      "point_mm": [
       250.0000000000009,
       75.73708339558073,
-      -2.4089962465159106e-13
+      -2.411000400151058e-13
      ],
      "about_centroid_mm": [
       250.0,
       75.733,
-      -0.0
+      0.0
      ],
      "area_mm2": 2277.0
     },
     {
      "kind": "torque",
-     "nm": 59.25330187090299,
+     "nm": 59.97617814257457,
      "axis": [
       0.0,
       0.0,
@@ -1732,36 +1934,36 @@
      "point_mm": [
       250.0000000000009,
       75.73708339558073,
-      -2.4089962465159106e-13
+      -2.411000400151058e-13
      ],
      "about_centroid_mm": [
       250.0,
       75.733,
-      -0.0
+      0.0
      ],
      "area_mm2": 2277.0
     },
     {
      "kind": "force",
      "n": [
-      459.8977556137844,
-      -48.947610000000005,
-      -1374.2191715670895
+      498.50416460080936,
+      -47.87784,
+      -1348.8490081538603
      ],
      "area_mm2": 9203.0
     },
     {
      "kind": "torque",
-     "nm": -5.117981814886237,
+     "nm": -5.023496133361705,
      "axis": [
       1.0,
       0.0,
       0.0
      ],
      "point_mm": [
-      249.9999999999986,
-      20.27571647901699,
-      -4.607917978073197e-16
+      249.99999999999855,
+      20.275716479016985,
+      -9.344869549807464e-16
      ],
      "about_centroid_mm": [
       250.0,
@@ -1772,16 +1974,16 @@
     },
     {
      "kind": "torque",
-     "nm": -1.7127896325695575,
+     "nm": -1.856570845364268,
      "axis": [
       0.0,
       0.0,
       1.0
      ],
      "point_mm": [
-      249.9999999999986,
-      20.27571647901699,
-      -4.607917978073197e-16
+      249.99999999999855,
+      20.275716479016985,
+      -9.344869549807464e-16
      ],
      "about_centroid_mm": [
       250.0,
@@ -1792,16 +1994,16 @@
     },
     {
      "kind": "torque",
-     "nm": -28.699895320524305,
+     "nm": -27.566175336716643,
      "axis": [
       1.0,
       0.0,
       0.0
      ],
      "point_mm": [
-      249.9999999999986,
-      20.27571647901699,
-      -4.607917978073197e-16
+      249.99999999999855,
+      20.275716479016985,
+      -9.344869549807464e-16
      ],
      "about_centroid_mm": [
       250.0,
@@ -1812,16 +2014,16 @@
     },
     {
      "kind": "torque",
-     "nm": -33.11632648821029,
+     "nm": -32.82464273329516,
      "axis": [
       0.0,
       0.0,
       1.0
      ],
      "point_mm": [
-      249.9999999999986,
-      20.27571647901699,
-      -4.607917978073197e-16
+      249.99999999999855,
+      20.275716479016985,
+      -9.344869549807464e-16
      ],
      "about_centroid_mm": [
       250.0,
@@ -1831,33 +2033,38 @@
      "area_mm2": 9203.0
     }
    ],
-   "max_displacement_mm": 13.6254,
+   "max_displacement_mm": 13.8057,
    "probe_displacement_mm": [
-    -0.6409,
-    9.1383,
-    1.0121
+    -0.6584,
+    9.3125,
+    0.9807
    ],
-   "max_von_mises_mpa": 43.29,
-   "von_mises_design_mpa": 43.29,
-   "safety_factor": 1.13,
+   "max_von_mises_mpa": 37.23,
+   "von_mises_design_mpa": 37.23,
+   "safety_factor": 1.32,
    "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
    "stiffness_n_per_mm": null,
-   "torsional_stiffness_nm_per_deg": -37.72,
+   "torsional_stiffness_nm_per_deg": -36.39,
+   "design_peak_at_mm": [
+    27.1,
+    54.8,
+    -16.2
+   ],
    "case": "R1w",
    "material_id": "pa6_cf_xy",
-   "load_from": "rig 'drop_150': the full 2065 N axle spike on the wheel link, plus 10 % fore-aft and 10 % sideways; the front link's 1449 N on the hub; it keeps 76% of the out-of-plane load",
+   "load_from": "rig 'drop_150': the full 2064 N axle spike on the wheel link, plus 10 % fore-aft and 10 % sideways; the front link's 1438 N on the hub; it keeps 77% of the out-of-plane load",
    "png": "exports/leg/fea/wheel_link-R1w.png",
    "target": 1.2,
-   "ok": false,
-   "seconds": 62.8
+   "ok": true,
+   "seconds": 212.6
   },
   {
    "part": "wheel_link",
    "material": "PA6-CF along the layers (humid)",
    "material_note": "Bambu PA6-CF TDS 102 MPa dry in the layers, x0.6 humid, x0.8 print: for parts printed so their main stress runs in the layers",
    "mesh": {
-    "nodes": 12513,
-    "tets": 51836,
+    "nodes": 12552,
+    "tets": 52134,
     "size_mm": 4.0,
     "element": "P2 tetrahedra"
    },
@@ -1865,15 +2072,15 @@
     {
      "kind": "force",
      "n": [
-      -265.70797307595035,
-      144.69750000000002,
-      245.47467019619882
+      -292.72912288028425,
+      159.4125,
+      270.43819597886306
      ],
      "area_mm2": 2277.0
     },
     {
      "kind": "torque",
-     "nm": 15.495077135291949,
+     "nm": 17.070847691423328,
      "axis": [
       1.0,
       0.0,
@@ -1882,18 +2089,18 @@
      "point_mm": [
       250.0000000000009,
       75.73708339558073,
-      -2.4089962465159106e-13
+      -2.411000400151058e-13
      ],
      "about_centroid_mm": [
       250.0,
       75.733,
-      -0.0
+      0.0
      ],
      "area_mm2": 2277.0
     },
     {
      "kind": "torque",
-     "nm": 16.772262225602365,
+     "nm": 18.477916011256838,
      "axis": [
       0.0,
       0.0,
@@ -1902,36 +2109,36 @@
      "point_mm": [
       250.0000000000009,
       75.73708339558073,
-      -2.4089962465159106e-13
+      -2.411000400151058e-13
      ],
      "about_centroid_mm": [
       250.0,
       75.733,
-      -0.0
+      0.0
      ],
      "area_mm2": 2277.0
     },
     {
      "kind": "force",
      "n": [
-      19.462933551566664,
-      -40.65999750000001,
-      -245.47467019619882
+      21.44221492969207,
+      -43.838437500000005,
+      -270.43819597886306
      ],
      "area_mm2": 9203.0
     },
     {
      "kind": "torque",
-     "nm": -0.9142172690304428,
+     "nm": -1.0071885167284547,
      "axis": [
       1.0,
       0.0,
       0.0
      ],
      "point_mm": [
-      249.9999999999986,
-      20.27571647901699,
-      -4.607917978073197e-16
+      249.99999999999855,
+      20.275716479016985,
+      -9.344869549807464e-16
      ],
      "about_centroid_mm": [
       250.0,
@@ -1942,16 +2149,16 @@
     },
     {
      "kind": "torque",
-     "nm": -0.0724854826961437,
+     "nm": -0.0798568877160917,
      "axis": [
       0.0,
       0.0,
       1.0
      ],
      "point_mm": [
-      249.9999999999986,
-      20.27571647901699,
-      -4.607917978073197e-16
+      249.99999999999855,
+      20.275716479016985,
+      -9.344869549807464e-16
      ],
      "about_centroid_mm": [
       250.0,
@@ -1962,16 +2169,16 @@
     },
     {
      "kind": "torque",
-     "nm": -7.922856993864644,
+     "nm": -8.54219607728636,
      "axis": [
       1.0,
       0.0,
       0.0
      ],
      "point_mm": [
-      249.9999999999986,
-      20.27571647901699,
-      -4.607917978073197e-16
+      249.99999999999855,
+      20.275716479016985,
+      -9.344869549807464e-16
      ],
      "about_centroid_mm": [
       250.0,
@@ -1982,16 +2189,16 @@
     },
     {
      "kind": "torque",
-     "nm": -8.575900198288526,
+     "nm": -9.246288439858096,
      "axis": [
       0.0,
       0.0,
       1.0
      ],
      "point_mm": [
-      249.9999999999986,
-      20.27571647901699,
-      -4.607917978073197e-16
+      249.99999999999855,
+      20.275716479016985,
+      -9.344869549807464e-16
      ],
      "about_centroid_mm": [
       250.0,
@@ -2001,33 +2208,38 @@
      "area_mm2": 9203.0
     }
    ],
-   "max_displacement_mm": 4.2132,
+   "max_displacement_mm": 4.6244,
    "probe_displacement_mm": [
-    -0.1943,
-    3.0443,
-    0.122
+    -0.2151,
+    3.3331,
+    0.1307
    ],
-   "max_von_mises_mpa": 12.62,
-   "von_mises_design_mpa": 12.62,
-   "safety_factor": 3.88,
+   "max_von_mises_mpa": 12.26,
+   "von_mises_design_mpa": 12.26,
+   "safety_factor": 4.0,
    "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
    "stiffness_n_per_mm": null,
-   "torsional_stiffness_nm_per_deg": -31.93,
+   "torsional_stiffness_nm_per_deg": -31.14,
+   "design_peak_at_mm": [
+    27.7,
+    54.2,
+    -7.3
+   ],
    "case": "E1",
    "material_id": "pa6_cf_xy",
-   "load_from": "standing: 2.5 x 145 N vertical, 0.5 g of a 30 kg robot sideways; the front link's 246 N on the hub; it keeps 72% of the out-of-plane load",
+   "load_from": "standing: 2.5 x 159 N vertical, 0.5 g of a 32 kg robot sideways; the front link's 271 N on the hub; it keeps 72% of the out-of-plane load",
    "png": "exports/leg/fea/wheel_link-E1.png",
    "target": 2.0,
    "ok": true,
-   "seconds": 52.3
+   "seconds": 197.0
   },
   {
    "part": "hip_frame",
-   "material": "PA6-CF along the layers (humid)",
-   "material_note": "Bambu PA6-CF TDS 102 MPa dry in the layers, x0.6 humid, x0.8 print: for parts printed so their main stress runs in the layers",
+   "material": "PA6-CF across the layers (humid)",
+   "material_note": "Bambu PA6-CF TDS 48 MPa dry across the layers, x0.6 humid, x0.8 print: the safe value when the stress crosses the layers",
    "mesh": {
-    "nodes": 29563,
-    "tets": 124591,
+    "nodes": 33587,
+    "tets": 143759,
     "size_mm": 4.0,
     "element": "P2 tetrahedra"
    },
@@ -2035,24 +2247,24 @@
     {
      "kind": "force",
      "n": [
-      506.55601227350155,
-      83.16432077188676,
-      703.6946120461673
+      498.6653364453268,
+      84.14061760954924,
+      715.9268480784251
      ],
      "area_mm2": 2449.6
     },
     {
      "kind": "force",
      "n": [
-      -382.9834702647545,
-      94.285849552674,
-      532.0308080413031
+      -373.45608405016424,
+      96.16070583948485,
+      536.1656758732004
      ],
      "area_mm2": 2449.6
     },
     {
      "kind": "torque",
-     "nm": 145.82720921064322,
+     "nm": 149.10198243941323,
      "axis": [
       1.0,
       0.0,
@@ -2072,7 +2284,7 @@
     },
     {
      "kind": "torque",
-     "nm": -3.5451479431805417,
+     "nm": -3.615642539564629,
      "axis": [
       0.0,
       0.0,
@@ -2092,7 +2304,7 @@
     },
     {
      "kind": "torque",
-     "nm": 128.62609672183865,
+     "nm": 130.4642346344866,
      "axis": [
       1.0,
       0.0,
@@ -2106,13 +2318,13 @@
      "about_centroid_mm": [
       75.001,
       -8.0,
-      0.0
+      -0.0
      ],
      "area_mm2": 2449.6
     },
     {
      "kind": "torque",
-     "nm": -3.126978461022942,
+     "nm": -3.1636872221190506,
      "axis": [
       0.0,
       0.0,
@@ -2126,78 +2338,83 @@
      "about_centroid_mm": [
       75.001,
       -8.0,
-      0.0
+      -0.0
      ],
      "area_mm2": 2449.6
     },
     {
      "kind": "torque",
-     "nm": -116.9191682081605,
+     "nm": -115.30316891543941,
      "axis": [
       0.0,
       1.0,
       0.0
      ],
      "point_mm": [
-      74.9999999999987,
-      -11.72047125107272,
-      1.7419829955591534e-12
+      74.99999999999892,
+      -11.715054957053429,
+      1.4882820696101735e-12
      ],
      "about_centroid_mm": [
-      75.003,
-      -11.721,
-      0.0
+      75.01,
+      -11.716,
+      -0.001
      ],
-     "area_mm2": 4992.3
+     "area_mm2": 5120.4
     },
     {
      "kind": "torque",
-     "nm": -88.39715193559505,
+     "nm": -86.35184119411068,
      "axis": [
       0.0,
       1.0,
       0.0
      ],
      "point_mm": [
-      -74.99999999997829,
-      -11.72047125107272,
-      1.742343058187421e-12
+      -74.999999999979,
+      -11.715054957053429,
+      1.4863503760684965e-12
      ],
      "about_centroid_mm": [
-      -74.994,
-      -11.721,
-      -0.002
+      -74.992,
+      -11.716,
+      -0.0
      ],
-     "area_mm2": 4992.6
+     "area_mm2": 5120.4
     }
    ],
-   "max_displacement_mm": 0.5591,
+   "max_displacement_mm": 0.41,
    "probe_displacement_mm": [
-    0.0117,
-    0.0042,
-    0.3743
+    0.0071,
+    0.0382,
+    0.0672
    ],
-   "max_von_mises_mpa": 30.62,
-   "von_mises_design_mpa": 30.62,
-   "safety_factor": 1.6,
+   "max_von_mises_mpa": 19.76,
+   "von_mises_design_mpa": 19.76,
+   "safety_factor": 1.16,
    "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
-   "stiffness_n_per_mm": 2249.2,
+   "stiffness_n_per_mm": 11766.7,
    "torsional_stiffness_nm_per_deg": null,
+   "design_peak_at_mm": [
+    -89.2,
+    -25.2,
+    61.7
+   ],
    "case": "R1",
-   "material_id": "pa6_cf_xy",
-   "load_from": "the rig's landings (drop_150, the capped jump): knees at 780 N, as 1236 N on the axle at 335 mm (statics on the 2065 N spike gives 1303), plus 10 % fore-aft and 10 % sideways; both upper links' pin forces, the out-of-plane moment 76% rear / 67% front",
+   "material_id": "pa6_cf_z",
+   "load_from": "the rig's landings (drop_150, the capped jump): knees at 773 N, as 1252 N on the axle at 339 mm (statics on the 2064 N spike gives 1273), plus 10 % fore-aft and 10 % sideways; both upper links' pin forces, the out-of-plane moment 77% rear / 67% front",
    "png": "exports/leg/fea/hip_frame-R1.png",
    "target": 1.2,
-   "ok": true,
-   "seconds": 285.7
+   "ok": false,
+   "seconds": 72.9
   },
   {
    "part": "hip_frame",
-   "material": "PA6-CF along the layers (humid)",
-   "material_note": "Bambu PA6-CF TDS 102 MPa dry in the layers, x0.6 humid, x0.8 print: for parts printed so their main stress runs in the layers",
+   "material": "PA6-CF across the layers (humid)",
+   "material_note": "Bambu PA6-CF TDS 48 MPa dry across the layers, x0.6 humid, x0.8 print: the safe value when the stress crosses the layers",
    "mesh": {
-    "nodes": 29563,
-    "tets": 124591,
+    "nodes": 33587,
+    "tets": 143759,
     "size_mm": 4.0,
     "element": "P2 tetrahedra"
    },
@@ -2205,24 +2422,24 @@
     {
      "kind": "force",
      "n": [
-      167.09872627985422,
-      102.73522500000001,
-      180.87187500000002
+      184.091817087975,
+      111.58874999999999,
+      199.265625
      ],
      "area_mm2": 2449.6
     },
     {
      "kind": "force",
      "n": [
-      -167.09872627985422,
-      104.03750250000002,
-      180.87187500000002
+      -184.091817087975,
+      115.5740625,
+      199.265625
      ],
      "area_mm2": 2449.6
     },
     {
      "kind": "torque",
-     "nm": 69.408619792875,
+     "nm": 77.10523579687501,
      "axis": [
       1.0,
       0.0,
@@ -2242,7 +2459,7 @@
     },
     {
      "kind": "torque",
-     "nm": 7.802812687500001,
+     "nm": 8.6680546875,
      "axis": [
       0.0,
       0.0,
@@ -2262,7 +2479,7 @@
     },
     {
      "kind": "torque",
-     "nm": 68.53980535875,
+     "nm": 74.44643456249999,
      "axis": [
       1.0,
       0.0,
@@ -2276,13 +2493,13 @@
      "about_centroid_mm": [
       75.001,
       -8.0,
-      0.0
+      -0.0
      ],
      "area_mm2": 2449.6
     },
     {
      "kind": "torque",
-     "nm": 7.705141875000001,
+     "nm": 8.36915625,
      "axis": [
       0.0,
       0.0,
@@ -2296,85 +2513,708 @@
      "about_centroid_mm": [
       75.001,
       -8.0,
-      0.0
+      -0.0
      ],
      "area_mm2": 2449.6
     },
     {
      "kind": "torque",
-     "nm": -36.564227258956265,
+     "nm": -40.282623251392494,
      "axis": [
       0.0,
       1.0,
       0.0
      ],
      "point_mm": [
-      74.9999999999987,
-      -11.72047125107272,
-      1.7419829955591534e-12
+      74.99999999999892,
+      -11.715054957053429,
+      1.4882820696101735e-12
      ],
      "about_centroid_mm": [
-      75.003,
-      -11.721,
-      0.0
+      75.01,
+      -11.716,
+      -0.001
      ],
-     "area_mm2": 4992.3
+     "area_mm2": 5120.4
     },
     {
      "kind": "torque",
-     "nm": -36.564227258956265,
+     "nm": -40.282623251392494,
      "axis": [
       0.0,
       1.0,
       0.0
      ],
      "point_mm": [
-      -74.99999999997829,
-      -11.72047125107272,
-      1.742343058187421e-12
+      -74.999999999979,
+      -11.715054957053429,
+      1.4863503760684965e-12
      ],
      "about_centroid_mm": [
-      -74.994,
-      -11.721,
-      -0.002
+      -74.992,
+      -11.716,
+      -0.0
      ],
-     "area_mm2": 4992.6
+     "area_mm2": 5120.4
     }
    ],
-   "max_displacement_mm": 0.2024,
+   "max_displacement_mm": 0.2199,
    "probe_displacement_mm": [
-    -0.0054,
-    0.0405,
-    0.0813
+    -0.0043,
+    0.0449,
+    -0.0162
    ],
-   "max_von_mises_mpa": 12.75,
-   "von_mises_design_mpa": 12.75,
-   "safety_factor": 3.84,
+   "max_von_mises_mpa": 13.6,
+   "von_mises_design_mpa": 13.6,
+   "safety_factor": 1.69,
    "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
-   "stiffness_n_per_mm": 3607.5,
-   "torsional_stiffness_nm_per_deg": null,
+   "stiffness_n_per_mm": 31675.3,
+   "torsional_stiffness_nm_per_deg": -5826.57,
+   "design_peak_at_mm": [
+    -0.9,
+    -25.1,
+    28.0
+   ],
    "case": "E1",
-   "material_id": "pa6_cf_xy",
-   "load_from": "standing: 2.5 x 145 N vertical, 0.5 g of a 30 kg robot sideways; both upper links' pin forces, the out-of-plane moment 72% rear / 71% front",
+   "material_id": "pa6_cf_z",
+   "load_from": "standing: 2.5 x 159 N vertical, 0.5 g of a 32 kg robot sideways; both upper links' pin forces, the out-of-plane moment 72% rear / 70% front",
    "png": "exports/leg/fea/hip_frame-E1.png",
    "target": 2.0,
+   "ok": false,
+   "seconds": 76.4
+  },
+  {
+   "part": "hip_frame",
+   "material": "PA6-CF across the layers (humid)",
+   "material_note": "Bambu PA6-CF TDS 48 MPa dry across the layers, x0.6 humid, x0.8 print: the safe value when the stress crosses the layers",
+   "mesh": {
+    "nodes": 33679,
+    "tets": 144279,
+    "size_mm": 4.0,
+    "element": "P2 tetrahedra"
+   },
+   "loads": [
+    {
+     "kind": "force",
+     "n": [
+      -1464.923141544692,
+      0.0,
+      1437.8686738157446
+     ],
+     "area_mm2": 339.5
+    },
+    {
+     "kind": "torque",
+     "nm": 3.236112261454648,
+     "axis": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "point_mm": [
+      100.43118876357646,
+      -7.751893939390001,
+      56.067025562670835
+     ],
+     "about_centroid_mm": [
+      100.479,
+      -7.751,
+      56.019
+     ],
+     "area_mm2": 339.5
+    },
+    {
+     "kind": "torque",
+     "nm": 3.297001893685411,
+     "axis": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "point_mm": [
+      100.43118876357646,
+      -7.751893939390001,
+      56.067025562670835
+     ],
+     "about_centroid_mm": [
+      100.479,
+      -7.751,
+      56.019
+     ],
+     "area_mm2": 339.5
+    },
+    {
+     "kind": "force",
+     "n": [
+      724.4433650236205,
+      -0.0,
+      -711.0642128451553
+     ],
+     "area_mm2": 238.7
+    },
+    {
+     "kind": "torque",
+     "nm": 1.125402766166186,
+     "axis": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "point_mm": [
+      107.74596566598429,
+      -19.25189393939,
+      48.88733929405793
+     ],
+     "about_centroid_mm": [
+      107.697,
+      -19.252,
+      48.936
+     ],
+     "area_mm2": 238.7
+    },
+    {
+     "kind": "torque",
+     "nm": 1.1465779773476859,
+     "axis": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "point_mm": [
+      107.74596566598429,
+      -19.25189393939,
+      48.88733929405793
+     ],
+     "about_centroid_mm": [
+      107.697,
+      -19.252,
+      48.936
+     ],
+     "area_mm2": 238.7
+    },
+    {
+     "kind": "force",
+     "n": [
+      740.4797765210716,
+      -0.0,
+      -726.8044609705893
+     ],
+     "area_mm2": 2449.6
+    },
+    {
+     "kind": "torque",
+     "nm": -12.719078066985311,
+     "axis": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "point_mm": [
+      74.99999999999892,
+      -11.715054957053429,
+      1.4882820696101735e-12
+     ],
+     "about_centroid_mm": [
+      75.01,
+      -11.716,
+      -0.0
+     ],
+     "area_mm2": 5120.4
+    },
+    {
+     "kind": "torque",
+     "nm": 59.999999999998145,
+     "axis": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "point_mm": [
+      74.99999999999892,
+      -11.715054957053429,
+      1.4882820696101735e-12
+     ],
+     "about_centroid_mm": [
+      75.01,
+      -11.716,
+      -0.0
+     ],
+     "area_mm2": 5120.4
+    },
+    {
+     "kind": "torque",
+     "nm": -12.958396089118752,
+     "axis": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "point_mm": [
+      74.99999999999892,
+      -11.715054957053429,
+      1.4882820696101735e-12
+     ],
+     "about_centroid_mm": [
+      75.01,
+      -11.716,
+      -0.0
+     ],
+     "area_mm2": 5120.4
+    }
+   ],
+   "max_displacement_mm": 0.1616,
+   "probe_displacement_mm": [
+    -0.0384,
+    0.0473,
+    0.0949
+   ],
+   "max_von_mises_mpa": 32.57,
+   "von_mises_design_mpa": 9.65,
+   "safety_factor": 2.38,
+   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
+   "stiffness_n_per_mm": null,
+   "torsional_stiffness_nm_per_deg": -108.82,
+   "design_peak_at_mm": [
+    112.5,
+    -3.2,
+    55.0
+   ],
+   "safety_factor_with_pin_band": 1.56,
+   "von_mises_with_pin_band_mpa": 14.73,
+   "case": "E3o",
+   "material_id": "pa6_cf_z",
+   "load_from": "a motor at its cap into a stop: 60 N m, 1038 N on the front motor's knee-out post, in its ear past the motor's ring (10.5 mm above the frame's face), the pin bearing as a contact (2053 N by the mouth, 1015 N back at depth), the motor's hub and lugs taking it back",
+   "png": "exports/leg/fea/hip_frame-E3o.png",
+   "target": 2.0,
    "ok": true,
-   "seconds": 176.3
+   "seconds": 63.7
+  },
+  {
+   "part": "hip_frame",
+   "material": "PA6-CF across the layers (humid)",
+   "material_note": "Bambu PA6-CF TDS 48 MPa dry across the layers, x0.6 humid, x0.8 print: the safe value when the stress crosses the layers",
+   "mesh": {
+    "nodes": 33662,
+    "tets": 144242,
+    "size_mm": 4.0,
+    "element": "P2 tetrahedra"
+   },
+   "loads": [
+    {
+     "kind": "force",
+     "n": [
+      -1332.1782253330323,
+      0.0,
+      1561.655310791197
+     ],
+     "area_mm2": 339.5
+    },
+    {
+     "kind": "torque",
+     "nm": 3.5147103427783324,
+     "axis": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "point_mm": [
+      17.295560842412577,
+      -7.751893939390001,
+      -21.458201669340365
+     ],
+     "about_centroid_mm": [
+      17.34,
+      -7.753,
+      -21.51
+     ],
+     "area_mm2": 339.5
+    },
+    {
+     "kind": "torque",
+     "nm": 2.9982420286009797,
+     "axis": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "point_mm": [
+      17.295560842412577,
+      -7.751893939390001,
+      -21.458201669340365
+     ],
+     "about_centroid_mm": [
+      17.34,
+      -7.753,
+      -21.51
+     ],
+     "area_mm2": 339.5
+    },
+    {
+     "kind": "force",
+     "n": [
+      658.7974815892509,
+      -0.0,
+      -772.2799894905394
+     ],
+     "area_mm2": 238.7
+    },
+    {
+     "kind": "torque",
+     "nm": 1.222289099531312,
+     "axis": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "point_mm": [
+      23.947504713190238,
+      -19.25189393939,
+      -29.255989739538943
+     ],
+     "about_centroid_mm": [
+      23.902,
+      -19.252,
+      -29.203
+     ],
+     "area_mm2": 238.7
+    },
+    {
+     "kind": "torque",
+     "nm": 1.0426801050179042,
+     "axis": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "point_mm": [
+      23.947504713190238,
+      -19.25189393939,
+      -29.255989739538943
+     ],
+     "about_centroid_mm": [
+      23.902,
+      -19.252,
+      -29.203
+     ],
+     "area_mm2": 238.7
+    },
+    {
+     "kind": "force",
+     "n": [
+      673.3807437437814,
+      -0.0,
+      -789.3753213006577
+     ],
+     "area_mm2": 2449.6
+    },
+    {
+     "kind": "torque",
+     "nm": -13.81406812276151,
+     "axis": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "point_mm": [
+      74.99999999999892,
+      -11.715054957053429,
+      1.4882820696101735e-12
+     ],
+     "about_centroid_mm": [
+      75.009,
+      -11.716,
+      -0.0
+     ],
+     "area_mm2": 5120.3
+    },
+    {
+     "kind": "torque",
+     "nm": -60.00000000000202,
+     "axis": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "point_mm": [
+      74.99999999999892,
+      -11.715054957053429,
+      1.4882820696101735e-12
+     ],
+     "about_centroid_mm": [
+      75.009,
+      -11.716,
+      -0.0
+     ],
+     "area_mm2": 5120.3
+    },
+    {
+     "kind": "torque",
+     "nm": -11.784163015516175,
+     "axis": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "point_mm": [
+      74.99999999999892,
+      -11.715054957053429,
+      1.4882820696101735e-12
+     ],
+     "about_centroid_mm": [
+      75.009,
+      -11.716,
+      -0.0
+     ],
+     "area_mm2": 5120.3
+    }
+   ],
+   "max_displacement_mm": 0.14,
+   "probe_displacement_mm": [
+    -0.0333,
+    0.0004,
+    0.0239
+   ],
+   "max_von_mises_mpa": 25.56,
+   "von_mises_design_mpa": 8.45,
+   "safety_factor": 2.72,
+   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
+   "stiffness_n_per_mm": null,
+   "torsional_stiffness_nm_per_deg": -4668.14,
+   "design_peak_at_mm": [
+    16.8,
+    -4.7,
+    -33.5
+   ],
+   "safety_factor_with_pin_band": 2.43,
+   "von_mises_with_pin_band_mpa": 9.46,
+   "case": "E3i",
+   "material_id": "pa6_cf_z",
+   "load_from": "a motor at its cap into a stop: 60 N m, 1038 N on the front motor's knee-in post, between the motors (10.5 mm above the frame's face), the pin bearing as a contact (2053 N by the mouth, 1015 N back at depth), the motor's hub and lugs taking it back",
+   "png": "exports/leg/fea/hip_frame-E3i.png",
+   "target": 2.0,
+   "ok": true,
+   "seconds": 62.7
+  },
+  {
+   "part": "hip_frame",
+   "material": "PA6-CF across the layers (humid)",
+   "material_note": "Bambu PA6-CF TDS 48 MPa dry across the layers, x0.6 humid, x0.8 print: the safe value when the stress crosses the layers",
+   "mesh": {
+    "nodes": 33679,
+    "tets": 144279,
+    "size_mm": 4.0,
+    "element": "P2 tetrahedra"
+   },
+   "loads": [
+    {
+     "kind": "force",
+     "n": [
+      -2878.573973135321,
+      0.0,
+      2825.411944047939
+     ],
+     "area_mm2": 339.5
+    },
+    {
+     "kind": "torque",
+     "nm": 6.358960593758382,
+     "axis": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "point_mm": [
+      100.43118876357646,
+      -7.751893939390001,
+      56.067025562670835
+     ],
+     "about_centroid_mm": [
+      100.479,
+      -7.751,
+      56.019
+     ],
+     "area_mm2": 339.5
+    },
+    {
+     "kind": "torque",
+     "nm": 6.478608721091832,
+     "axis": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "point_mm": [
+      100.43118876357646,
+      -7.751893939390001,
+      56.067025562670835
+     ],
+     "about_centroid_mm": [
+      100.479,
+      -7.751,
+      56.019
+     ],
+     "area_mm2": 339.5
+    },
+    {
+     "kind": "force",
+     "n": [
+      1423.5312122714151,
+      -0.0,
+      -1397.2411782407312
+     ],
+     "area_mm2": 238.7
+    },
+    {
+     "kind": "torque",
+     "nm": 2.2114164355165573,
+     "axis": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "point_mm": [
+      107.74596566598429,
+      -19.25189393939,
+      48.88733929405793
+     ],
+     "about_centroid_mm": [
+      107.697,
+      -19.252,
+      48.936
+     ],
+     "area_mm2": 238.7
+    },
+    {
+     "kind": "torque",
+     "nm": 2.253025725488204,
+     "axis": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "point_mm": [
+      107.74596566598429,
+      -19.25189393939,
+      48.88733929405793
+     ],
+     "about_centroid_mm": [
+      107.697,
+      -19.252,
+      48.936
+     ],
+     "area_mm2": 238.7
+    },
+    {
+     "kind": "force",
+     "n": [
+      1455.0427608639059,
+      -0.0,
+      -1428.170765807208
+     ],
+     "area_mm2": 2449.6
+    },
+    {
+     "kind": "torque",
+     "nm": -24.99298840162614,
+     "axis": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "point_mm": [
+      74.99999999999892,
+      -11.715054957053429,
+      1.4882820696101735e-12
+     ],
+     "about_centroid_mm": [
+      75.01,
+      -11.716,
+      -0.0
+     ],
+     "area_mm2": 5120.4
+    },
+    {
+     "kind": "torque",
+     "nm": 117.89999999999637,
+     "axis": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "point_mm": [
+      74.99999999999892,
+      -11.715054957053429,
+      1.4882820696101735e-12
+     ],
+     "about_centroid_mm": [
+      75.01,
+      -11.716,
+      -0.0
+     ],
+     "area_mm2": 5120.4
+    },
+    {
+     "kind": "torque",
+     "nm": -25.463248315118353,
+     "axis": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "point_mm": [
+      74.99999999999892,
+      -11.715054957053429,
+      1.4882820696101735e-12
+     ],
+     "about_centroid_mm": [
+      75.01,
+      -11.716,
+      -0.0
+     ],
+     "area_mm2": 5120.4
+    }
+   ],
+   "max_displacement_mm": 0.3176,
+   "probe_displacement_mm": [
+    -0.0755,
+    0.093,
+    0.1865
+   ],
+   "max_von_mises_mpa": 64.01,
+   "von_mises_design_mpa": 18.95,
+   "safety_factor": 1.21,
+   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
+   "stiffness_n_per_mm": null,
+   "torsional_stiffness_nm_per_deg": -108.82,
+   "design_peak_at_mm": [
+    112.5,
+    -3.2,
+    55.0
+   ],
+   "safety_factor_with_pin_band": 0.79,
+   "von_mises_with_pin_band_mpa": 28.95,
+   "case": "R3o",
+   "material_id": "pa6_cf_z",
+   "load_from": "rig 'power_off' (no motor damping): folded onto the stops, 118 N m on a stop post and 1761 N on the axle (quasi-static: the knees' real force matches statics), plus 10 % sideways: 118 N m, 2039 N on the front motor's knee-out post, in its ear past the motor's ring (10.5 mm above the frame's face), the pin bearing as a contact (4034 N by the mouth, 1995 N back at depth), the motor's hub and lugs taking it back",
+   "png": "exports/leg/fea/hip_frame-R3o.png",
+   "target": 1.0,
+   "ok": true,
+   "seconds": 64.3
   },
   {
    "part": "output_adapter",
    "material": "Aluminium 6061-T6",
    "material_note": "yield strength",
    "mesh": {
-    "nodes": 6678,
-    "tets": 27631,
+    "nodes": 7235,
+    "tets": 30226,
     "size_mm": 4.0,
     "element": "P2 tetrahedra"
    },
    "loads": [
     {
      "kind": "torque",
-     "nm": 101.5,
+     "nm": 100.7,
      "axis": [
       0.0,
       1.0,
@@ -2386,69 +3226,74 @@
       0.0
      ],
      "about_centroid_mm": [
-      -0.624,
-      -7.02,
-      -2.341
+      -0.508,
+      -8.887,
+      -1.902
      ],
-     "area_mm2": 1814.1
+     "area_mm2": 2231.4
     },
     {
      "kind": "torque",
-     "nm": 145.87029519440804,
+     "nm": 149.14581468595424,
      "axis": [
       1.0,
       0.0,
       0.0
      ],
      "point_mm": [
-      -0.626755828397696,
-      -7.02054794520548,
-      -2.3390845955211264
+      -0.5095008404568746,
+      -8.887527839643651,
+      -1.9014830230850788
      ],
      "about_centroid_mm": [
-      -0.624,
-      -7.02,
-      -2.341
+      -0.508,
+      -8.887,
+      -1.902
      ],
-     "area_mm2": 1814.1
+     "area_mm2": 2231.4
     },
     {
      "kind": "force",
      "n": [
       0.0,
       0.0,
-      867.0554195628084
+      872.4782917480752
      ],
-     "area_mm2": 1814.1
+     "area_mm2": 2231.4
     }
    ],
-   "max_displacement_mm": 0.0068,
+   "max_displacement_mm": 0.0067,
    "probe_displacement_mm": [
-    -0.0002,
-    0.0002,
-    0.0025
+    -0.0001,
+    0.0001,
+    0.0023
    ],
-   "max_von_mises_mpa": 64.92,
-   "von_mises_design_mpa": 36.68,
-   "safety_factor": 7.52,
+   "max_von_mises_mpa": 64.42,
+   "von_mises_design_mpa": 32.17,
+   "safety_factor": 8.58,
    "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
-   "torsional_stiffness_nm_per_deg": 18394.16,
-   "stiffness_n_per_mm": 340691.7,
+   "torsional_stiffness_nm_per_deg": 16852.08,
+   "stiffness_n_per_mm": 371312.5,
+   "design_peak_at_mm": [
+    10.3,
+    -22.5,
+    23.3
+   ],
    "case": "R1",
    "material_id": "al6061",
-   "load_from": "motor torque 102 N m with an out-of-plane moment of 146 N m and 867 N radial",
+   "load_from": "motor torque 101 N m with an out-of-plane moment of 149 N m and 872 N radial",
    "png": "exports/leg/fea/output_adapter-R1.png",
    "target": 1.2,
    "ok": true,
-   "seconds": 43.3
+   "seconds": 8.9
   },
   {
    "part": "output_adapter",
    "material": "Aluminium 6061-T6",
    "material_note": "yield strength",
    "mesh": {
-    "nodes": 6678,
-    "tets": 27631,
+    "nodes": 7235,
+    "tets": 30226,
     "size_mm": 4.0,
     "element": "P2 tetrahedra"
    },
@@ -2467,39 +3312,44 @@
       0.0
      ],
      "about_centroid_mm": [
-      -0.624,
-      -7.02,
-      -2.341
+      -0.508,
+      -8.887,
+      -1.902
      ],
-     "area_mm2": 1814.1
+     "area_mm2": 2231.4
     }
    ],
-   "max_displacement_mm": 0.003,
+   "max_displacement_mm": 0.0028,
    "probe_displacement_mm": [
-    -0.0002,
+    -0.0001,
     -0.0,
     0.0
    ],
-   "max_von_mises_mpa": 32.33,
-   "von_mises_design_mpa": 17.48,
-   "safety_factor": 15.79,
+   "max_von_mises_mpa": 32.39,
+   "von_mises_design_mpa": 17.88,
+   "safety_factor": 15.44,
    "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
-   "torsional_stiffness_nm_per_deg": 23905.29,
+   "torsional_stiffness_nm_per_deg": 27314.64,
+   "design_peak_at_mm": [
+    1.2,
+    -23.4,
+    -25.5
+   ],
    "case": "R2",
    "material_id": "al6061",
    "load_from": "motor torque 120 N m against a stalled leg (a fault)",
    "png": "exports/leg/fea/output_adapter-R2.png",
    "target": 1.2,
    "ok": true,
-   "seconds": 26.7
+   "seconds": 8.9
   },
   {
    "part": "output_adapter",
    "material": "Aluminium 6061-T6",
    "material_note": "yield strength",
    "mesh": {
-    "nodes": 6678,
-    "tets": 27631,
+    "nodes": 7235,
+    "tets": 30226,
     "size_mm": 4.0,
     "element": "P2 tetrahedra"
    },
@@ -2518,231 +3368,236 @@
       0.0
      ],
      "about_centroid_mm": [
-      -0.624,
-      -7.02,
-      -2.341
+      -0.508,
+      -8.887,
+      -1.902
      ],
-     "area_mm2": 1814.1
+     "area_mm2": 2231.4
     },
     {
      "kind": "torque",
-     "nm": 36.46757379860201,
+     "nm": 37.28645367148856,
      "axis": [
       1.0,
       0.0,
       0.0
      ],
      "point_mm": [
-      -0.626755828397696,
-      -7.02054794520548,
-      -2.3390845955211264
+      -0.5095008404568746,
+      -8.887527839643651,
+      -1.9014830230850788
      ],
      "about_centroid_mm": [
-      -0.624,
-      -7.02,
-      -2.341
+      -0.508,
+      -8.887,
+      -1.902
      ],
-     "area_mm2": 1814.1
+     "area_mm2": 2231.4
     },
     {
      "kind": "force",
      "n": [
       0.0,
       0.0,
-      216.7638548907021
+      218.1195729370188
      ],
-     "area_mm2": 1814.1
+     "area_mm2": 2231.4
     }
    ],
-   "max_displacement_mm": 0.0023,
+   "max_displacement_mm": 0.0022,
    "probe_displacement_mm": [
     -0.0001,
     0.0,
     0.0006
    ],
-   "max_von_mises_mpa": 21.57,
-   "von_mises_design_mpa": 12.33,
-   "safety_factor": 22.38,
+   "max_von_mises_mpa": 21.13,
+   "von_mises_design_mpa": 11.64,
+   "safety_factor": 23.71,
    "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
-   "torsional_stiffness_nm_per_deg": 18026.04,
-   "stiffness_n_per_mm": 335750.4,
+   "torsional_stiffness_nm_per_deg": 15606.3,
+   "stiffness_n_per_mm": 365765.4,
+   "design_peak_at_mm": [
+    10.3,
+    -22.5,
+    23.3
+   ],
    "case": "E1",
    "material_id": "al6061",
-   "load_from": "motor torque 60 N m with an out-of-plane moment of 36 N m and 867 N radial",
+   "load_from": "motor torque 60 N m with an out-of-plane moment of 37 N m and 872 N radial",
    "png": "exports/leg/fea/output_adapter-E1.png",
    "target": 2.0,
    "ok": true,
-   "seconds": 38.0
+   "seconds": 8.6
   }
  ],
  "front_link_buckling": {
   "P_cr_n": 9475,
-  "R1_compression_n": 867,
-  "sf": 10.93,
+  "R1_compression_n": 872,
+  "sf": 10.86,
   "note": "30 x 20 mm section, E 3000 MPa, pinned ends, 250 mm"
  },
  "joints": {
   "R1": {
    "case": "R1",
    "shares": {
-    "rear": 0.763,
-    "front": 0.673
+    "rear": 0.768,
+    "front": 0.672
    },
    "knee_rear": {
-    "out_of_plane_share": 0.76,
-    "pin_force_n": 656,
-    "moment_at_boss_nm": 86.4,
-    "moment_at_sleeve_nm": 111.2,
+    "out_of_plane_share": 0.77,
+    "pin_force_n": 653,
+    "moment_at_boss_nm": 88.5,
+    "moment_at_sleeve_nm": 113.5,
     "6201": {
-     "load_n": 2297,
+     "load_n": 2352,
      "C0_n": 3100,
-     "sf": 1.35,
+     "sf": 1.32,
      "target": 1.0,
      "note": "s0 = C0 / P0"
     },
     "pin": {
-     "stress_mpa": 590,
+     "stress_mpa": 603,
      "yield_mpa": 1080,
-     "sf": 1.83,
+     "sf": 1.79,
      "note": "ISO 7379 class 12.9, at the eye's face"
     },
     "eye_pressure": {
-     "mpa": 24.1,
+     "mpa": 24.6,
      "allowable_mpa": 40.0,
-     "sf": 1.66,
+     "sf": 1.63,
      "note": "PA6-CF, humid, sustained; linear along the \u00d818 x 40 steel sleeve"
     }
    },
    "knee_front": {
     "out_of_plane_share": 0.67,
-    "pin_force_n": 867,
-    "moment_at_boss_nm": 68.6,
-    "moment_at_sleeve_nm": 104.2,
+    "pin_force_n": 872,
+    "moment_at_boss_nm": 69.4,
+    "moment_at_sleeve_nm": 105.5,
     "6201": {
-     "load_n": 1856,
+     "load_n": 1879,
      "C0_n": 3100,
-     "sf": 1.67,
+     "sf": 1.65,
      "target": 1.0,
      "note": "s0 = C0 / P0"
     },
     "pin": {
-     "stress_mpa": 520,
+     "stress_mpa": 527,
      "yield_mpa": 1080,
-     "sf": 2.08,
+     "sf": 2.05,
      "note": "ISO 7379 class 12.9, at the eye's face"
     },
     "eye_pressure": {
-     "mpa": 22.9,
+     "mpa": 23.2,
      "allowable_mpa": 40.0,
-     "sf": 1.75,
+     "sf": 1.72,
      "note": "PA6-CF, humid, sustained; linear along the \u00d818 x 40 steel sleeve"
     }
    },
    "apex_61812": {
-    "load_n": 2367,
+    "load_n": 2394,
     "C0_n": 10200,
-    "sf": 4.31,
+    "sf": 4.26,
     "target": 1.0,
     "note": "s0 = C0 / P0"
    },
    "hub_rear": {
-    "out_of_plane_nm": 145.9,
+    "out_of_plane_nm": 149.1,
     "edge_lifts_at_nm": 104.0,
     "tips_at_nm": 288.0,
-    "sf_tip": 1.97,
-    "torque_nm": 101.5,
+    "sf_tip": 1.93,
+    "torque_nm": 100.7,
     "torque_from": "rig: gearbox torque, every step",
     "friction_nm": 36.5,
-    "dowel_force_n": 1300,
-    "dowel_bearing_mpa": 32.5,
+    "dowel_force_n": 1284,
+    "dowel_bearing_mpa": 32.1,
     "allowable_mpa": 40.0,
-    "sf_dowel": 1.23,
+    "sf_dowel": 1.25,
     "assumes": "1200 N preload per screw (estimate: bench torque-tension coupon), friction 0.15, 8 mm of each dowel engaged"
    },
    "hub_front": {
-    "out_of_plane_nm": 128.7,
+    "out_of_plane_nm": 130.5,
     "edge_lifts_at_nm": 104.0,
     "tips_at_nm": 288.0,
-    "sf_tip": 2.24,
-    "torque_nm": 101.5,
+    "sf_tip": 2.21,
+    "torque_nm": 100.7,
     "torque_from": "rig: gearbox torque, every step",
     "friction_nm": 36.5,
-    "dowel_force_n": 1300,
-    "dowel_bearing_mpa": 32.5,
+    "dowel_force_n": 1284,
+    "dowel_bearing_mpa": 32.1,
     "allowable_mpa": 40.0,
-    "sf_dowel": 1.23,
+    "sf_dowel": 1.25,
     "assumes": "1200 N preload per screw (estimate: bench torque-tension coupon), friction 0.15, 8 mm of each dowel engaged"
    }
   },
   "R3": {
    "case": "R3",
    "shares": {
-    "rear": 0.755,
-    "front": 0.663
+    "rear": 0.761,
+    "front": 0.66
    },
    "knee_rear": {
     "out_of_plane_share": 0.76,
-    "pin_force_n": 1751,
-    "moment_at_boss_nm": 94.5,
-    "moment_at_sleeve_nm": 135.3,
+    "pin_force_n": 2013,
+    "moment_at_boss_nm": 109.6,
+    "moment_at_sleeve_nm": 156.6,
     "6201": {
-     "load_n": 2636,
+     "load_n": 3054,
      "C0_n": 3100,
-     "sf": 1.18,
+     "sf": 1.02,
      "target": 1.0,
      "note": "s0 = C0 / P0"
     },
     "pin": {
-     "stress_mpa": 663,
+     "stress_mpa": 768,
      "yield_mpa": 1080,
-     "sf": 1.63,
+     "sf": 1.41,
      "note": "ISO 7379 class 12.9, at the eye's face"
     },
     "eye_pressure": {
-     "mpa": 30.6,
+     "mpa": 35.4,
      "allowable_mpa": 40.0,
-     "sf": 1.31,
+     "sf": 1.13,
      "note": "PA6-CF, humid, sustained; linear along the \u00d818 x 40 steel sleeve"
     }
    },
    "knee_front": {
     "out_of_plane_share": 0.66,
-    "pin_force_n": 1751,
-    "moment_at_boss_nm": 81.9,
-    "moment_at_sleeve_nm": 121.0,
+    "pin_force_n": 2013,
+    "moment_at_boss_nm": 93.7,
+    "moment_at_sleeve_nm": 138.6,
     "6201": {
-     "load_n": 2327,
+     "load_n": 2664,
      "C0_n": 3100,
-     "sf": 1.33,
+     "sf": 1.16,
      "target": 1.0,
      "note": "s0 = C0 / P0"
     },
     "pin": {
-     "stress_mpa": 578,
+     "stress_mpa": 661,
      "yield_mpa": 1080,
-     "sf": 1.87,
+     "sf": 1.63,
      "note": "ISO 7379 class 12.9, at the eye's face"
     },
     "eye_pressure": {
-     "mpa": 27.6,
+     "mpa": 31.7,
      "allowable_mpa": 40.0,
-     "sf": 1.45,
+     "sf": 1.26,
      "note": "PA6-CF, humid, sustained; linear along the \u00d818 x 40 steel sleeve"
     }
    },
    "apex_61812": {
-    "load_n": 2963,
+    "load_n": 3392,
     "C0_n": 10200,
-    "sf": 3.44,
+    "sf": 3.01,
     "target": 1.0,
     "note": "s0 = C0 / P0"
    },
    "hub_rear": {
-    "out_of_plane_nm": 152.2,
+    "out_of_plane_nm": 176.3,
     "edge_lifts_at_nm": 104.0,
     "tips_at_nm": 288.0,
-    "sf_tip": 1.89,
-    "torque_nm": 27.1,
+    "sf_tip": 1.63,
+    "torque_nm": 28.2,
     "torque_from": "rig: gearbox torque, every step",
     "friction_nm": 36.5,
     "dowel_force_n": 0,
@@ -2752,11 +3607,11 @@
     "assumes": "1200 N preload per screw (estimate: bench torque-tension coupon), friction 0.15, 8 mm of each dowel engaged"
    },
    "hub_front": {
-    "out_of_plane_nm": 133.7,
+    "out_of_plane_nm": 152.9,
     "edge_lifts_at_nm": 104.0,
     "tips_at_nm": 288.0,
-    "sf_tip": 2.15,
-    "torque_nm": 27.1,
+    "sf_tip": 1.88,
+    "torque_nm": 28.2,
     "torque_from": "rig: gearbox torque, every step",
     "friction_nm": 36.5,
     "dowel_force_n": 0,
@@ -2764,6 +3619,50 @@
     "allowable_mpa": 40.0,
     "sf_dowel": null,
     "assumes": "1200 N preload per screw (estimate: bench torque-tension coupon), friction 0.15, 8 mm of each dowel engaged"
+   }
+  },
+  "stop_post": {
+   "E3": {
+    "stop_nm": 60.0,
+    "arm_mm": 57.8,
+    "force_n": 1038,
+    "lever_mm": 10.5,
+    "from": "a motor at its 60 N m cap into a stop",
+    "bearing": {
+     "mpa": 19.0,
+     "allowable_mpa": 40.0,
+     "sf": 2.11,
+     "target": 2.0,
+     "note": "\u00d816 pin 23 mm into the PA6-CF web (humid, sustained): p = F/(dL) (4 + 6e/L) at the mouth"
+    },
+    "pin": {
+     "mpa": 27,
+     "yield_mpa": 1500.0,
+     "sf": 55.4,
+     "target": 2.0,
+     "note": "52100 dowel in bending at the frame's face"
+    }
+   },
+   "R3": {
+    "stop_nm": 117.9,
+    "arm_mm": 57.8,
+    "force_n": 2039,
+    "lever_mm": 10.5,
+    "from": "rig 'power_off' (no motor damping): folded onto the stops, 118 N m on a stop post and 1761 N on the axle (quasi-static: the knees' real force matches statics), plus 10 % sideways",
+    "bearing": {
+     "mpa": 37.3,
+     "allowable_mpa": 40.0,
+     "sf": 1.07,
+     "target": 1.0,
+     "note": "\u00d816 pin 23 mm into the PA6-CF web (humid, sustained): p = F/(dL) (4 + 6e/L) at the mouth"
+    },
+    "pin": {
+     "mpa": 53,
+     "yield_mpa": 1500.0,
+     "sf": 28.2,
+     "target": 1.0,
+     "note": "52100 dowel in bending at the frame's face"
+    }
    }
   },
   "checks": [
@@ -2771,7 +3670,7 @@
     "case": "R1",
     "joint": "knee_rear",
     "check": "6201 s0",
-    "sf": 1.35,
+    "sf": 1.32,
     "target": 1.0,
     "ok": true
    },
@@ -2779,7 +3678,7 @@
     "case": "R1",
     "joint": "knee_rear",
     "check": "pin",
-    "sf": 1.83,
+    "sf": 1.79,
     "target": 1.2,
     "ok": true
    },
@@ -2787,7 +3686,7 @@
     "case": "R1",
     "joint": "knee_rear",
     "check": "eye pressure",
-    "sf": 1.66,
+    "sf": 1.63,
     "target": 1.2,
     "ok": true
    },
@@ -2795,7 +3694,7 @@
     "case": "R1",
     "joint": "knee_front",
     "check": "6201 s0",
-    "sf": 1.67,
+    "sf": 1.65,
     "target": 1.0,
     "ok": true
    },
@@ -2803,7 +3702,7 @@
     "case": "R1",
     "joint": "knee_front",
     "check": "pin",
-    "sf": 2.08,
+    "sf": 2.05,
     "target": 1.2,
     "ok": true
    },
@@ -2811,7 +3710,7 @@
     "case": "R1",
     "joint": "knee_front",
     "check": "eye pressure",
-    "sf": 1.75,
+    "sf": 1.72,
     "target": 1.2,
     "ok": true
    },
@@ -2819,7 +3718,7 @@
     "case": "R1",
     "joint": "apex_61812",
     "check": "s0",
-    "sf": 4.31,
+    "sf": 4.26,
     "target": 1.0,
     "ok": true
    },
@@ -2827,7 +3726,7 @@
     "case": "R1",
     "joint": "hub_rear",
     "check": "tipping",
-    "sf": 1.97,
+    "sf": 1.93,
     "target": 1.2,
     "ok": true
    },
@@ -2835,7 +3734,7 @@
     "case": "R1",
     "joint": "hub_rear",
     "check": "dowel bearing",
-    "sf": 1.23,
+    "sf": 1.25,
     "target": 1.2,
     "ok": true
    },
@@ -2843,15 +3742,15 @@
     "case": "R1",
     "joint": "hub_front",
     "check": "tipping",
-    "sf": 2.24,
+    "sf": 2.21,
     "target": 1.2,
-    "ok": "True"
+    "ok": true
    },
    {
     "case": "R1",
     "joint": "hub_front",
     "check": "dowel bearing",
-    "sf": 1.23,
+    "sf": 1.25,
     "target": 1.2,
     "ok": true
    },
@@ -2859,13 +3758,37 @@
     "case": "R3",
     "joint": "knee_rear",
     "check": "6201 s0",
-    "sf": 1.18,
+    "sf": 1.02,
     "target": 1.0,
     "ok": true
    },
    {
     "case": "R3",
     "joint": "knee_rear",
+    "check": "pin",
+    "sf": 1.41,
+    "target": 1.0,
+    "ok": true
+   },
+   {
+    "case": "R3",
+    "joint": "knee_rear",
+    "check": "eye pressure",
+    "sf": 1.13,
+    "target": 1.0,
+    "ok": true
+   },
+   {
+    "case": "R3",
+    "joint": "knee_front",
+    "check": "6201 s0",
+    "sf": 1.16,
+    "target": 1.0,
+    "ok": true
+   },
+   {
+    "case": "R3",
+    "joint": "knee_front",
     "check": "pin",
     "sf": 1.63,
     "target": 1.0,
@@ -2873,33 +3796,9 @@
    },
    {
     "case": "R3",
-    "joint": "knee_rear",
-    "check": "eye pressure",
-    "sf": 1.31,
-    "target": 1.0,
-    "ok": true
-   },
-   {
-    "case": "R3",
-    "joint": "knee_front",
-    "check": "6201 s0",
-    "sf": 1.33,
-    "target": 1.0,
-    "ok": true
-   },
-   {
-    "case": "R3",
-    "joint": "knee_front",
-    "check": "pin",
-    "sf": 1.87,
-    "target": 1.0,
-    "ok": true
-   },
-   {
-    "case": "R3",
     "joint": "knee_front",
     "check": "eye pressure",
-    "sf": 1.45,
+    "sf": 1.26,
     "target": 1.0,
     "ok": true
    },
@@ -2907,7 +3806,7 @@
     "case": "R3",
     "joint": "apex_61812",
     "check": "s0",
-    "sf": 3.44,
+    "sf": 3.01,
     "target": 1.0,
     "ok": true
    },
@@ -2915,7 +3814,7 @@
     "case": "R3",
     "joint": "hub_rear",
     "check": "tipping",
-    "sf": 1.89,
+    "sf": 1.63,
     "target": 1.0,
     "ok": true
    },
@@ -2923,130 +3822,162 @@
     "case": "R3",
     "joint": "hub_front",
     "check": "tipping",
-    "sf": 2.15,
+    "sf": 1.88,
     "target": 1.0,
-    "ok": "True"
+    "ok": true
+   },
+   {
+    "case": "E3",
+    "joint": "stop_post",
+    "check": "pin bearing in the web",
+    "sf": 2.11,
+    "target": 2.0,
+    "ok": true
+   },
+   {
+    "case": "E3",
+    "joint": "stop_post",
+    "check": "pin bending",
+    "sf": 55.4,
+    "target": 2.0,
+    "ok": true
+   },
+   {
+    "case": "R3",
+    "joint": "stop_post",
+    "check": "pin bearing in the web",
+    "sf": 1.07,
+    "target": 1.0,
+    "ok": true
+   },
+   {
+    "case": "R3",
+    "joint": "stop_post",
+    "check": "pin bending",
+    "sf": 28.2,
+    "target": 1.0,
+    "ok": true
    }
   ],
   "worst": {
-   "case": "R1",
-   "joint": "hub_rear",
-   "check": "dowel bearing",
-   "sf": 1.23,
-   "target": 1.2
+   "case": "R3",
+   "joint": "knee_rear",
+   "check": "6201 s0",
+   "sf": 1.02,
+   "target": 1.0
   },
   "all_ok": true
  },
  "shares": {
   "R1": {
    "measured": {
-    "moment": 0.613,
-    "sideways_force": 0.477,
+    "moment": 0.618,
+    "sideways_force": 0.478,
     "hub_moments_nm": {
      "front": [
-      -59.0,
-      5.7,
-      -1.3
+      -59.1,
+      7.5,
+      -0.5
      ],
      "rear": [
-      -92.6,
-      8.1,
-      11.7
+      -94.9,
+      7.6,
+      11.0
      ]
     },
     "hub_forces_n": {
      "front": [
-      10.9,
-      -64.6,
-      91.6
+      2.8,
+      -65.3,
+      100.2
      ],
      "rear": [
-      -10.9,
-      -58.9,
-      -91.6
+      -2.8,
+      -59.9,
+      -100.2
      ]
     }
    },
-   "rear": 0.763,
-   "front": 0.673
+   "rear": 0.768,
+   "front": 0.672
   },
   "E1": {
    "measured": {
-    "moment": 0.569,
-    "sideways_force": 0.44,
+    "moment": 0.575,
+    "sideways_force": 0.45,
     "hub_moments_nm": {
      "front": [
-      -36.6,
-      1.9,
-      -4.0
+      -39.7,
+      3.3,
+      -3.8
      ],
      "rear": [
-      -48.4,
-      3.1,
-      5.3
+      -53.9,
+      2.4,
+      5.0
      ]
     },
     "hub_forces_n": {
      "front": [
-      6.4,
-      -81.0,
-      33.1
+      -1.1,
+      -87.7,
+      37.6
      ],
      "rear": [
-      -6.4,
-      -63.7,
-      -33.1
+      1.1,
+      -71.7,
+      -37.6
      ]
     }
    },
-   "rear": 0.719,
-   "front": 0.71
+   "rear": 0.725,
+   "front": 0.7
   },
   "R3": {
    "measured": {
-    "moment": 0.605,
-    "sideways_force": 0.487,
+    "moment": 0.611,
+    "sideways_force": 0.49,
     "hub_moments_nm": {
      "front": [
-      -59.9,
-      4.3,
-      -8.7
+      -67.8,
+      5.2,
+      -10.2
      ],
      "rear": [
-      -92.4,
-      3.3,
-      9.0
+      -107.2,
+      4.0,
+      10.4
      ]
     },
     "hub_forces_n": {
      "front": [
-      1.5,
-      -78.6,
-      50.8
+      3.6,
+      -89.7,
+      61.5
      ],
      "rear": [
-      -1.5,
-      -74.6,
-      -50.8
+      -3.6,
+      -86.4,
+      -61.5
      ]
     }
    },
-   "rear": 0.755,
-   "front": 0.663
+   "rear": 0.761,
+   "front": 0.66
   }
  },
  "verdict": {
-  "min_sf_everyday": 2.1,
-  "min_sf_rare": 1.13,
-  "min_sf_fault": 1.27,
+  "min_sf_everyday": 1.69,
+  "min_sf_rare": 1.16,
+  "min_sf_fault": 1.16,
   "all_ok": false,
   "joints_worst": {
-   "case": "R1",
-   "joint": "hub_rear",
-   "check": "dowel bearing",
-   "sf": 1.23,
-   "target": 1.2
+   "case": "R3",
+   "joint": "knee_rear",
+   "check": "6201 s0",
+   "sf": 1.02,
+   "target": 1.0
   },
-  "weakest": "wheel_link R1w"
+  "weakest": "hip_frame E1"
  }
 }
