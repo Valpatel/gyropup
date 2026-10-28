@@ -213,7 +213,8 @@ def test_frame_strength_cases():
     d2 = s['D2-turret-fall']
     assert d2['target_sf'] >= 2.0, d2['target_sf']
     loads = json.loads((R / 'exports' / 'body' / 'leg-loads.json').read_text())
-    assert loads['half_mass_kg'] >= 16.25 - 1e-9, loads['half_mass_kg']
+    import body_layout as bl
+    assert loads['half_mass_kg'] >= bl.BUDGET['design_half_mass_kg'] - 1e-9, loads['half_mass_kg']      # D69: 17.75 kg a leg
 
 
 # ------------------------------------------------------------------------------------------- T5, T8: parts list, wiring
