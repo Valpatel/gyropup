@@ -164,7 +164,9 @@ export function mountTalk({ stage, getHead, eyes, root = '../', chips, brain, do
   void root;
   if (!document.querySelector('link[data-gyropup-talk]')) {
     const link = document.createElement('link');
-    link.rel = 'stylesheet'; link.href = new URL('./talk.css', import.meta.url).href; link.dataset.gyropupTalk = '';
+    const stylesheet = new URL('./talk.css', import.meta.url);
+    stylesheet.search = new URL(import.meta.url).search; // carry the built module's cache key
+    link.rel = 'stylesheet'; link.href = stylesheet.href; link.dataset.gyropupTalk = '';
     document.head.appendChild(link);
   }
 

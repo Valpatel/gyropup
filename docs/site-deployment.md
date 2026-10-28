@@ -53,6 +53,36 @@ and push the source first. `/version.json` records the source revision so a
 published artifact can be matched to GitHub. `wrangler.toml` declares the output
 folder; keep it aligned with the dashboard configuration.
 
+### Returning browsers and local edits
+
+All published files explicitly revalidate (`Cache-Control: public, no-cache,
+max-age=0, must-revalidate`). The local preview uses the same policy and ETags,
+so unchanged bytes can return304. Cloudflare Pages applies this through the
+generated `_headers` file; its [header rules override the default response](https://developers.cloudflare.com/pages/configuration/headers/).
+
+On2026-10-28, production CSS/JS responses had a four-hour freshness lifetime.
+A real browser test showed that an ordinary reload refreshed HTML while keeping
+old entry modules, nested modules and CSS, even after the server policy changed.
+Headers alone cannot evict bytes that a returning browser still considers fresh.
+The build now derives a cache key from the published content, versions asset
+references, and adds exact import-map entries for nested and dynamic modules.
+Existing Three.js aliases remain available. CSS imports/fonts and the character's
+runtime stylesheet carry the same key. Static JSON fetches in the simulator and
+navigation revalidate; conversation requests keep their existing behavior.
+
+The key changes for local edits before a commit and is recorded as `assets` in
+`version.json`. Run `npm run build`, then reload normally. Already loaded tabs
+are not forcibly reloaded, so an update cannot interrupt an active conversation.
+This is not a service worker or an automatic refresh mechanism.
+
+`npm run test:cache` uses an actual browser HTTP cache: it first reproduces the
+old four-hour behavior, then checks ordinary reloads through two new builds and
+conditional304 reuse. Use `PLAYWRIGHT_BROWSER=webkit npm run test:cache` for
+WebKit. After publication, check both HTML and a nested asset on the custom
+domain for the explicit policy and verify `version.json`; a dashboard cache rule
+must not replace the response policy. Do not rely on a CDN purge to clear browser
+caches.
+
 Cloudflare OAuth should be refreshed with `npx wrangler whoami` before treating
 an expired token as a blocker. Pages deployment permission does **not** imply DNS
 edit permission. For the custom domain, Pages must register `gyropup.com` and the

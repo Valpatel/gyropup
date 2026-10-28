@@ -5,6 +5,7 @@ import path from 'node:path';
 import { marked } from 'marked';
 import YAML from 'yaml';
 import { writeMarkdownSite } from './site-markdown.mjs';
+import { SITE_CACHE_CONTROL, versionSiteAssets } from './site-cache.mjs';
 const root = path.resolve(import.meta.dirname, '..');
 const out = path.join(root, 'dist');
 const read = (p) => readFile(path.join(root, p), 'utf8');
@@ -99,10 +100,12 @@ for (const [dir, files] of directories) {
   await writeFile(path.join(out,dir,'index.html'), frame('Design files',body).replace("root:'../../'", `root:'${depth}'`));
 }
 await writeFile(path.join(out,'404.html'), frame('Page not found', '<h1>This part is still taking shape.</h1><p>The page or file could not be found.</p><a href="/">Back to Gyropup →</a>').replace("root:'../../'", "root:'./'"));
-const markdownPages = await writeMarkdownSite(out);
-await writeFile(path.join(out,'_headers'), '/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n/*.md\n  Content-Type: text/markdown; charset=utf-8\n/llms.txt\n  Content-Type: text/plain; charset=utf-8\n');
+await writeFile(path.join(out,'_headers'), `/*\n  Cache-Control: ${SITE_CACHE_CONTROL}\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n/*.md\n  Content-Type: text/markdown; charset=utf-8\n/llms.txt\n  Content-Type: text/plain; charset=utf-8\n`);
 await writeFile(path.join(out,'robots.txt'),'User-agent: *\nAllow: /\nSitemap: https://gyropup.com/sitemap.xml\n');
 await writeFile(path.join(out,'sitemap.xml'), '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+['/','/designer/sim.html','/designer/progress.html','/designer/build.html','/site/'].map(p=>`<url><loc>https://gyropup.com${p}</loc></url>`).join('')+'</urlset>');
 const revision = execFileSync('git',['rev-parse','HEAD'],{cwd:root}).toString().trim();
-await writeFile(path.join(out,'version.json'),JSON.stringify({revision,built:new Date().toISOString()},null,2));
+const assets = await versionSiteAssets(out);
+// Markdown records final HTML hashes, so asset URL migration must precede it.
+const markdownPages = await writeMarkdownSite(out);
+await writeFile(path.join(out,'version.json'),JSON.stringify({revision,assets,built:new Date().toISOString()},null,2));
 console.log(`Built dist: landing page, simulator, portal, ${documents.length} documents, ${markdownPages.length} Markdown pages and committed design assets. Revision ${revision.slice(0,12)}`);
