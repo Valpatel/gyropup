@@ -18,7 +18,14 @@ async function showRobot() {
     const eyes = createEyes({ iris: '#70d8cc' });
     const robot = await buildRobotV2('/', { eyes });
     scene.add(robot.group); robot.setPose({ height: .6 });
-    const box = new THREE.Box3().setFromObject(robot.group);
+    // Hidden FOV and laser helpers extend metres beyond the body; frame only visible meshes.
+    robot.group.updateMatrixWorld(true);
+    const box = new THREE.Box3();
+    robot.group.traverseVisible(object => {
+      if (!object.isMesh) return;
+      object.geometry.computeBoundingBox();
+      box.union(object.geometry.boundingBox.clone().applyMatrix4(object.matrixWorld));
+    });
     const size = box.getSize(new THREE.Vector3()), center = box.getCenter(new THREE.Vector3());
     const camera = new THREE.PerspectiveCamera(34, 1, .01, 100);
     const controls = new OrbitControls(camera, renderer.domElement);
@@ -29,7 +36,7 @@ async function showRobot() {
     const resize = () => {
       const w = preview.clientWidth, h = preview.clientHeight;
       renderer.setSize(w, h); camera.aspect = w/h;
-      const distance = Math.max(size.y, size.x/camera.aspect) / (2*Math.tan(17*Math.PI/180)) * 1.4;
+      const distance = Math.max(size.y, size.x/camera.aspect) / (2*Math.tan(17*Math.PI/180)) * 1.15;
       camera.position.copy(center).add(new THREE.Vector3(1.2,.5,1.8).normalize().multiplyScalar(distance));
       camera.updateProjectionMatrix(); controls.update();
     };

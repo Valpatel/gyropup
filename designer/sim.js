@@ -48,7 +48,7 @@ const state = { height: 0.6, pitch: 0, rollMM: 0, speed: 0, wheel: 0, alive: tru
 const terrain = new THREE.Group();
 stage.root.add(terrain);
 // an outdoor yard: ground that takes light (headlight pools, the laser dot) and a few props
-const yard = new THREE.Mesh(new THREE.CircleGeometry(18, 72), new THREE.MeshStandardMaterial({ color: 0x24302a, roughness: 1 }));
+const yard = new THREE.Mesh(new THREE.CircleGeometry(18, 72), new THREE.MeshStandardMaterial({ color: 0xb8cba0, roughness: 1 }));
 yard.rotation.x = -Math.PI / 2;
 yard.position.y = 0.0004;
 yard.receiveShadow = true;
@@ -201,7 +201,7 @@ async function loadDesign(value) {
 // ---- replays of physics runs (exports/sim/<design>/<scenario>.json)
 async function listRuns(value) {
   stopReplay();
-  runSel.innerHTML = '<option value="">Live pose (no replay)</option>';
+  runSel.innerHTML = '<option value="">Drive & play (live controls)</option>';
   if (value === '@designer') return;
   const stem = value.split('/').pop().replace(/\.json$/, '');
   try {

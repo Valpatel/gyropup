@@ -21,8 +21,13 @@ electronics.
 **Status:** leg v2 is in CAD and simulation; nothing is built yet. The old serial-leg robot (`cad/build.py`,
 `cad/leg.py`, `sim/model.py`, the 3D game page) stays only until leg v2 is on the full robot.
 
-**Dashboard:** `.venv/bin/cad-agent site --serve --port 8642`, then
-[http://127.0.0.1:8642/designer/progress.html](http://127.0.0.1:8642/designer/progress.html).
+**Website & playground:** [gyropup.com](https://gyropup.com). The same landing page,
+simulator and engineering portal run locally: `nvm use && npm ci && npm run dev`.
+Reviewed changes on `main` publish automatically through Cloudflare Pages.
+[Development, deployment and browser checks](docs/site-deployment.md).
+
+**CAD dashboard:** `.venv/bin/cad-agent site --serve --port 8642` remains available
+for the original local CAD workflow.
 
 | Folder | What is in it |
 |---|---|

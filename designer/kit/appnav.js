@@ -2,18 +2,15 @@
 // same tabs as the project site, so every page of the app shares one navigation.
 //   mountAppNav({ root: '../', current: 'simulate' })   // root: path from this page to the project root
 const NAV_CSS = `
-.appnav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;gap:4px;padding:0 16px;height:46px;
-background:rgba(6,6,9,.94);backdrop-filter:blur(10px);border-bottom:1px solid #2a303c;overflow-x:auto;font-family:'Inter',system-ui,sans-serif}
-.appnav .brand{font-weight:700;margin-right:12px;white-space:nowrap;display:flex;align-items:center;gap:8px;color:#e8edf5;text-decoration:none;font-size:15px}
-.appnav .brand i{width:9px;height:9px;background:#00f0ff;transform:rotate(45deg);box-shadow:0 0 10px rgba(0,240,255,.3)}
-.appnav a.tab{font:500 12px 'JetBrains Mono',ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;color:#8892a4;
-text-decoration:none;padding:6px 10px;border-radius:6px;white-space:nowrap}
-.appnav a.tab:hover{color:#00f0ff}.appnav a.tab.on{color:#00f0ff;background:rgba(0,240,255,.06);box-shadow:inset 0 -2px 0 #00f0ff}
-body.has-appnav{--appnav-h:46px}
-.appnav{scrollbar-width:none;-webkit-overflow-scrolling:touch;padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}
-.appnav::-webkit-scrollbar{display:none}
-@media (max-width:640px){.appnav{gap:2px;height:44px;padding-left:max(8px,env(safe-area-inset-left));padding-right:max(8px,env(safe-area-inset-right))}
-.appnav .brand{font-size:14px;margin-right:4px}.appnav a.tab{font-size:11px;letter-spacing:.04em;padding:12px 8px}body.has-appnav{--appnav-h:44px}}`;
+.appnav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;gap:8px;padding:0 24px;height:64px;background:rgba(255,250,242,.97);backdrop-filter:blur(12px);border-bottom:1px solid #d9ddcf;font-family:'Inter',system-ui,sans-serif;color:#263e35}
+.appnav .brand{font-weight:800;letter-spacing:-.8px;margin-right:auto;white-space:nowrap;display:flex;align-items:center;gap:8px;color:#263e35;text-decoration:none;font-size:22px}
+.appnav .brand img{width:28px;height:28px}.appnav .nav-links{display:flex;align-items:center;gap:4px}
+.appnav a.tab{font:600 12px 'Inter',system-ui,sans-serif;color:#526457;text-decoration:none;padding:12px 14px;border-radius:30px;white-space:nowrap}
+.appnav a.tab:hover{color:#ad421b;background:#f5ead8}.appnav a.tab.on{color:#a93c14;background:#f4e7d3}
+.appnav .menu-toggle{display:none;align-items:center;justify-content:center;min-height:44px;border:1px solid #cbd3c1;border-radius:24px;background:#fffaf2;padding:10px 17px;color:#263e35;font:600 12px 'Inter',system-ui,sans-serif;cursor:pointer}
+body.has-appnav{--appnav-h:64px}.appnav a:focus-visible,.appnav button:focus-visible{outline:3px solid #187a79;outline-offset:3px}
+@media(max-width:760px){.appnav{height:56px;padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}.appnav .brand{font-size:21px}.appnav .menu-toggle{display:flex}.appnav .nav-links{display:none;position:absolute;top:56px;left:0;right:0;background:#fffaf2;box-shadow:0 12px 20px #263e3515;padding:12px 16px 18px;grid-template-columns:repeat(2,minmax(0,1fr));border-bottom:1px solid #d9ddcf}.appnav.menu-open .nav-links{display:grid}.appnav a.tab{min-height:44px}body.has-appnav{--appnav-h:56px}}
+`;
 
 // root must be a plain relative path (../../, ./, designer/): it goes into links and the nav.json URL
 const ROOT_OK = /^(?:\.\.?\/)*(?:[A-Za-z0-9_-][A-Za-z0-9._-]*\/)*$/;
@@ -35,12 +32,19 @@ export async function mountAppNav({ root = '../', current = '' } = {}) {
     if (/^[a-z][a-z0-9+.-]*:/i.test(h)) return /^(https?:|mailto:)/i.test(h) ? h : null;
     return h.startsWith('//') ? null : root + h;
   };
-  nav.innerHTML = `<a class="brand" href="${esc(root)}site/"><i></i>${esc(cfg.title)}</a>`
+  nav.setAttribute('aria-label', 'Gyropup navigation');
+  nav.innerHTML = `<a class="brand" href="${esc(root)}"><img src="${esc(root)}web/icon.svg" alt="">${esc(cfg.title)}</a>`
+    + '<button type="button" class="menu-toggle" aria-expanded="false" aria-controls="portal-nav-links">Menu ☰</button>'
+    + '<div class="nav-links" id="portal-nav-links">'
     + cfg.nav.filter((n) => href(n?.href) !== null).map((n) => `<a class="tab${(n.id ?? n.href) === current ? ' on' : ''}" `
-      + `href="${esc(href(n.href))}">${esc(n.title)}</a>`).join('');
+      + `${(n.id ?? n.href) === current ? 'aria-current="page" ' : ''}href="${esc(href(n.href))}">${esc(n.title)}</a>`).join('') + '</div>';
+  const menu = nav.querySelector('.menu-toggle');
+  const setMenu = open => { nav.classList.toggle('menu-open', open); menu.setAttribute('aria-expanded', String(open)); };
+  menu.addEventListener('click', () => setMenu(!nav.classList.contains('menu-open')));
+  nav.addEventListener('keydown', e => { if (e.key === 'Escape') { setMenu(false); menu.focus(); } });
+  nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
   document.body.prepend(nav);
   document.body.classList.add('has-appnav');
-  nav.querySelector('a.tab.on')?.scrollIntoView({ inline: 'center', block: 'nearest' });   // a phone: the current tab in view
   liveReload();
   return nav;
 }

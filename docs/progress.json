@@ -1,241 +1,241 @@
 {
- "updated": "2026-10-26 22:20",
- "status": [
-  {
-   "title": "Focus",
-   "value": "one leg + the turret",
-   "note": "one design (D36); the parts explorer goes to cad-agent; snapshot tag explorer-snapshot-2026-10-26"
-  },
-  {
-   "title": "Leg v2",
-   "value": "five-bar, 2 x RS-04",
-   "note": "both motors in one printed hip frame; leg 101-392 mm; track 374 mm (was 692); hollow box links"
-  },
-  {
-   "title": "Leg mass",
-   "value": "8.1 kg",
-   "note": "2.4 kg printed PA6-CF (to be lightened by the strength results) + motors, wheel, bearings"
-  },
-  {
-   "title": "Clashes",
-   "value": "0",
-   "note": "swept crouch to full height, +-20 deg lean: every part incl. bearings, pins, screws, the wheel cable"
-  },
-  {
-   "title": "Test rig (physics)",
-   "value": "7 scenarios",
-   "note": "stand up on 9 N m, 245 mm jump, 150 mm drop (1.6 kN on the axle), power loss with and without the motors' damping"
-  },
-  {
-   "title": "Strength",
-   "value": "everyday pass",
-   "note": "everyday SF >= 2.08 on every part; rare events: the whole leg 1.48, three spots being fixed (eye sleeve, frame share, hollow links)"
-  },
-  {
-   "title": "Hardware",
-   "value": "11 new McMaster PNs",
-   "note": "shoulder screws, 6201s, 61812s, circlip, inserts, screws; CAD for them waits on a McMaster login"
-  },
-  {
-   "title": "E-stop",
-   "value": "none on the robot",
-   "note": "a radio stop is designed separately (D37)"
-  },
-  {
-   "title": "Turret",
-   "value": "on a bench stand",
-   "note": "XT60 24 V in, fuse, switch, USB-CAN, hold-to-run pendant; 1.0 kg printed"
-  }
- ],
- "log": [
-  {
-   "time": "10-25 22:00",
-   "title": "Overnight loop, aluminium version",
-   "text": "340 candidates on the RTX 4090; every passing design used the RS-03 on one 60 V pack. Superseded: the robot is now printed."
-  },
-  {
-   "time": "10-26 05:00",
-   "title": "Decision: print everything",
-   "text": "All custom parts printed; PA6-CF on the work printer's hardened nozzle for structure. RS-04 chosen because it ships sooner; four needed either way (hip and knee on each leg)."
-  },
-  {
-   "time": "10-26 05:30",
-   "title": "Breaking animations in every strength report",
-   "text": "cad-agent's FEA now writes an overload video per load case: the load ramps past the design load to first failure and beyond, the overstressed region in black.",
-   "links": [
+  "updated": "2026-10-28",
+  "status": [
     {
-     "title": "strength section",
-     "href": "#fea"
-    }
-   ]
-  },
-  {
-   "time": "10-26 05:40",
-   "title": "How the two motors work",
-   "text": "Annotated renders and an animation of the leg module with two RS-04s.",
-   "links": []
-  },
-  {
-   "title": "Printed parts, first pass",
-   "time": "10-26 06:10",
-   "text": "PA6-CF allowables for humid air (x0.6) and print defects (x0.8). First printed leg failed: thin thigh, hollow shin foot, pockets in the motor plate, windows in the yoke. Fixed: bigger thigh flaring into its hub, solid foot, no pockets or windows. Thigh and shin now pass; leg flex 3.9 mm at the wheel."
-  },
-  {
-   "time": "10-26 06:40",
-   "title": "Studied RobStride's open-source robots",
-   "text": "K-Bot, LeRobot Humanoid, Berkeley Humanoid Lite and others: no hard press-fits in prints, torque through screw clamp not the RS-04's short pins, ~70 % torque caps, printed mounts derate the motor thermally.",
-   "links": [
-    {
-     "title": "report",
-     "href": "../site/pages/research-robstride-open-source-2026-10-26-md.html"
-    }
-   ]
-  },
-  {
-   "time": "10-26 07:05",
-   "title": "This page",
-   "text": "Progress, designs, strength videos, simulation videos, print plan and the motor order in one place; it reloads itself as files change."
-  },
-  {
-   "time": "10-26 07:40",
-   "title": "Every printed part passes (just)",
-   "text": "Fixed the last weak spots: notch-free motor-plate shoulders, retainer screws moved off the bearing seat, taller tabs so the yoke screws sit clear of every edge, 3 mm thicker plates, 8 mm yoke walls, a deeper thigh. Strength now within 4 % of target everywhere; the loop takes it from here."
-  },
-  {
-   "time": "10-26 07:55",
-   "title": "Design loop restarted for printed parts",
-   "text": "On the RTX 4090: RS-04 or RS-03, printed section sizes, plate thickness and tab height, crank; objectives mass, print hours, motor load and width; any part too big for the bed fails.",
-   "links": []
-  },
-  {
-   "time": "10-26 08:10",
-   "title": "No hip in/out joint needed: body levelling",
-   "text": "The controller now shortens the leg on the high side, as Diablo does. New scenario side_kerb: one wheel up a 30 mm plank, along it and off; body level to 0.14° rms (2.7° without levelling).",
-   "links": [
-    {
-     "title": "watch it in 3D",
-     "href": "sim.html?run=side_kerb"
-    }
-   ]
-  },
-  {
-   "time": "10-26 08:00",
-   "title": "The whole robot, every part, in the CAD and the physics",
-   "text": "Every made, bought and electronic part is placed on the link it moves with; the physics takes each link's mass and inertia from the CAD and draws the real meshes (vendor models where we have them, the J501 box's own shells). The electronics did not fit the tub, so a printed front bay holds them (138 mm deep, packed in 3D). Model mass 25.2 kg (the designer's estimate was 20.4).",
-   "links": [
-    {
-     "title": "3D",
-     "href": "sim.html"
-    }
-   ]
-  },
-  {
-   "time": "10-26 08:05",
-   "title": "Real parts for every electronic slot",
-   "text": "Datasheet sizes, masses and mounts for all electronics; real parts for the placeholders (maxon DSR 70/30 regen clamp, Diode Dynamics SSC1 lights, Waveshare CAN boards, WeAct G474). Found: the Blue Sea fuse block is rated 58 V, the anti-spark switch 60 V (14S), the 12 V converter 30 W for ~39 W of load."
-  },
-  {
-   "time": "10-26 08:10",
-   "title": "McMaster hardware and the turret CAD under way",
-   "text": "Real McMaster STEP models with part numbers for every bearing, screw, insert, pin and rod end (one at a time, like an engineer); the turret's printed CAD from the launcher study; an interactive strength viewer in cad-agent."
-  },
-  {
-   "time": "10-26 09:00",
-   "title": "McMaster hardware",
-   "text": "31 part numbers with their STEP models and full spec tables, fetched one at a time; cad-agent mcmaster + skill (PR #5). The real parts showed eight CAD dimensions that had to change; all fixed."
-  },
-  {
-   "time": "10-26 10:30",
-   "title": "The turret's real CAD",
-   "text": "16 printed parts, a 30-ball hopper, dial feed, twin flywheels, hard stops that keep the barrel at or below horizontal; in the physics and the 3D page.",
-   "links": [
-    {
-     "title": "picture",
-     "href": "../exports/turret/turret.png"
+      "title": "Project stage",
+      "value": "CAD + simulation",
+      "note": "A working browser playground and evolving hardware design. No assembled robot yet."
     },
     {
-     "title": "section",
-     "href": "../exports/turret/turret-section.png"
-    }
-   ]
-  },
-  {
-   "time": "10-26 11:00",
-   "title": "Interactive strength viewer",
-   "text": "Every strength case opens in 3D: load slider past failure, hot spots with the load each fails at and why (hole edge, fillet, corner), section cut, readouts (cad-agent PR #6). It found the thigh's weak spot: a hollow hub, now solid with screw pockets.",
-   "links": [
+      "title": "Leg v2",
+      "value": "bench tests next",
+      "note": "Five-bar legs with two RS-04 actuators per leg. Two load cases require physical validation (issue #29)."
+    },
     {
-     "title": "strength section",
-     "href": "#fea"
+      "title": "Turret",
+      "value": "mechanical refinement",
+      "note": "The standalone foam-ball turret is being refined and checked before the first physical build."
+    },
+    {
+      "title": "Body + wheels",
+      "value": "prototype development",
+      "note": "Frame, power, and 10-inch wheel integration are in progress; measurements and validation remain."
+    },
+    {
+      "title": "The playground",
+      "value": "browser demo",
+      "note": "Interactive CAD and recorded physics runs. Demo snapshots may predate the latest hardware revisions."
+    },
+    {
+      "title": "Built by",
+      "value": "autonomous systems",
+      "note": "AI-assisted code, CAD, simulation, and documentation, with human direction and independent review."
     }
-   ]
-  },
-  {
-   "time": "10-26 11:40",
-   "title": "Where it stands",
-   "text": "26.35 kg, clash-free, 15/15 scenarios, everyday strength passes; the thigh is short in a sideways fall. Next: TPU bumpers so the body lands first, a compliant tyre/bumper contact model, and the knee hard stop."
-  },
-  {
-   "time": "10-26 19:00",
-   "title": "One great design",
-   "text": "The parts explorer, design variants, optimiser loop, 305 alternative catalogue parts and their images are gone from this repo (kept at the tag explorer-snapshot-2026-10-26); a generic comparison framework for cad-agent is being built from them as a PR."
-  },
-  {
-   "title": "Leg v2: a five-bar",
-   "time": "10-26 19:30",
-   "text": "A sweep of 330 printable geometries (36 feasible) picked motors 150 mm apart, 150 mm upper links, 250 mm lower links meeting at the wheel axle: 467 N of push anywhere at the 60 N m cap, joints 33 deg or more from a dead point, every link printable. Both RS-04s live in one hip frame; the track drops from 692 to 360 mm."
-  },
-  {
-   "time": "10-26 20:30",
-   "title": "Test rig in physics",
-   "text": "One leg on a vertical rail with half the robot's mass: it stands up on 9 N m, jumps 252 mm at the 60 N m cap, and lands with 1.8 kN on the axle. Losing power folds it onto its TPU stops: 159 N m on a stop without the motors' damping, a slow sink with it."
-  },
-  {
-   "time": "10-26 20:45",
-   "title": "Balls and a Piper voice",
-   "text": "The 3D game page fires 22.7 mm foam balls from a 30-ball hopper, and Gyropup speaks with Piper (en_US-hfc_female, two semitones up) from tools/tts_server.py."
-  },
-  {
-   "time": "10-26 21:00",
-   "title": "Leg v2 reworked by its own numbers",
-   "text": "The wheel link moved next to the wheel (its out-of-plane lever fell from 58 to 37 mm); the apex now carries moment on two 61812s so both sides of the loop share the wheel's sideways load; 6201 knees; links 30/20/26 mm thick, then hollowed into closed boxes; the wheel's cable runs inside the links."
-  },
-  {
-   "time": "10-26 21:30",
-   "title": "Site, LAN, game page",
-   "text": "Dead tabs gone; the site and Piper voice serve the LAN and the tailnet; the game page frames its first shot before it shows (no camera jump), plays every run in turn in DEMO mode, and the turret now sounds louder than the voice, with a kick in the motors."
-  },
-  {
-   "time": "10-26 22:00",
-   "title": "Turret on a bench stand",
-   "text": "cad/turret_stand.py: the turret on its own with a 24 V inlet, fuse, switch, USB-CAN and a hold-to-run pendant, so it can be built and tested before the robot exists."
+  ],
+  "log": [
+    {
+      "time": "10-25 22:00",
+      "title": "Overnight loop, aluminium version",
+      "text": "340 candidates on the RTX 4090; every passing design used the RS-03 on one 60 V pack. Superseded: the robot is now printed."
+    },
+    {
+      "time": "10-26 05:00",
+      "title": "Decision: print everything",
+      "text": "All custom parts printed; PA6-CF on the work printer's hardened nozzle for structure. RS-04 chosen because it ships sooner; four needed either way (hip and knee on each leg)."
+    },
+    {
+      "time": "10-26 05:30",
+      "title": "Breaking animations in every strength report",
+      "text": "cad-agent's FEA now writes an overload video per load case: the load ramps past the design load to first failure and beyond, the overstressed region in black.",
+      "links": [
+        {
+          "title": "strength section",
+          "href": "#fea"
+        }
+      ]
+    },
+    {
+      "time": "10-26 05:40",
+      "title": "How the two motors work",
+      "text": "Annotated renders and an animation of the leg module with two RS-04s.",
+      "links": []
+    },
+    {
+      "title": "Printed parts, first pass",
+      "time": "10-26 06:10",
+      "text": "PA6-CF allowables for humid air (x0.6) and print defects (x0.8). First printed leg failed: thin thigh, hollow shin foot, pockets in the motor plate, windows in the yoke. Fixed: bigger thigh flaring into its hub, solid foot, no pockets or windows. Thigh and shin now pass; leg flex 3.9 mm at the wheel."
+    },
+    {
+      "time": "10-26 06:40",
+      "title": "Studied RobStride's open-source robots",
+      "text": "K-Bot, LeRobot Humanoid, Berkeley Humanoid Lite and others: no hard press-fits in prints, torque through screw clamp not the RS-04's short pins, ~70 % torque caps, printed mounts derate the motor thermally.",
+      "links": [
+        {
+          "title": "report",
+          "href": "../site/pages/research-robstride-open-source-2026-10-26-md.html"
+        }
+      ]
+    },
+    {
+      "time": "10-26 07:05",
+      "title": "This page",
+      "text": "Progress, designs, strength videos, simulation videos, print plan and the motor order in one place; it reloads itself as files change."
+    },
+    {
+      "time": "10-26 07:40",
+      "title": "Every printed part passes (just)",
+      "text": "Fixed the last weak spots: notch-free motor-plate shoulders, retainer screws moved off the bearing seat, taller tabs so the yoke screws sit clear of every edge, 3 mm thicker plates, 8 mm yoke walls, a deeper thigh. Strength now within 4 % of target everywhere; the loop takes it from here."
+    },
+    {
+      "time": "10-26 07:55",
+      "title": "Design loop restarted for printed parts",
+      "text": "On the RTX 4090: RS-04 or RS-03, printed section sizes, plate thickness and tab height, crank; objectives mass, print hours, motor load and width; any part too big for the bed fails.",
+      "links": []
+    },
+    {
+      "time": "10-26 08:10",
+      "title": "No hip in/out joint needed: body levelling",
+      "text": "The controller now shortens the leg on the high side, as Diablo does. New scenario side_kerb: one wheel up a 30 mm plank, along it and off; body level to 0.14\u00b0 rms (2.7\u00b0 without levelling).",
+      "links": [
+        {
+          "title": "watch it in 3D",
+          "href": "sim.html?run=side_kerb"
+        }
+      ]
+    },
+    {
+      "time": "10-26 08:00",
+      "title": "The whole robot, every part, in the CAD and the physics",
+      "text": "Every made, bought and electronic part is placed on the link it moves with; the physics takes each link's mass and inertia from the CAD and draws the real meshes (vendor models where we have them, the J501 box's own shells). The electronics did not fit the tub, so a printed front bay holds them (138 mm deep, packed in 3D). Model mass 25.2 kg (the designer's estimate was 20.4).",
+      "links": [
+        {
+          "title": "3D",
+          "href": "sim.html"
+        }
+      ]
+    },
+    {
+      "time": "10-26 08:05",
+      "title": "Real parts for every electronic slot",
+      "text": "Datasheet sizes, masses and mounts for all electronics; real parts for the placeholders (maxon DSR 70/30 regen clamp, Diode Dynamics SSC1 lights, Waveshare CAN boards, WeAct G474). Found: the Blue Sea fuse block is rated 58 V, the anti-spark switch 60 V (14S), the 12 V converter 30 W for ~39 W of load."
+    },
+    {
+      "time": "10-26 08:10",
+      "title": "McMaster hardware and the turret CAD under way",
+      "text": "Real McMaster STEP models with part numbers for every bearing, screw, insert, pin and rod end (one at a time, like an engineer); the turret's printed CAD from the launcher study; an interactive strength viewer in cad-agent."
+    },
+    {
+      "time": "10-26 09:00",
+      "title": "McMaster hardware",
+      "text": "31 part numbers with their STEP models and full spec tables, fetched one at a time; cad-agent mcmaster + skill (PR #5). The real parts showed eight CAD dimensions that had to change; all fixed."
+    },
+    {
+      "time": "10-26 10:30",
+      "title": "The turret's real CAD",
+      "text": "16 printed parts, a 30-ball hopper, dial feed, twin flywheels, hard stops that keep the barrel at or below horizontal; in the physics and the 3D page.",
+      "links": [
+        {
+          "title": "picture",
+          "href": "../exports/turret/turret.png"
+        },
+        {
+          "title": "section",
+          "href": "../exports/turret/turret-section.png"
+        }
+      ]
+    },
+    {
+      "time": "10-26 11:00",
+      "title": "Interactive strength viewer",
+      "text": "Every strength case opens in 3D: load slider past failure, hot spots with the load each fails at and why (hole edge, fillet, corner), section cut, readouts (cad-agent PR #6). It found the thigh's weak spot: a hollow hub, now solid with screw pockets.",
+      "links": [
+        {
+          "title": "strength section",
+          "href": "#fea"
+        }
+      ]
+    },
+    {
+      "time": "10-26 11:40",
+      "title": "Where it stands",
+      "text": "26.35 kg, clash-free, 15/15 scenarios, everyday strength passes; the thigh is short in a sideways fall. Next: TPU bumpers so the body lands first, a compliant tyre/bumper contact model, and the knee hard stop."
+    },
+    {
+      "time": "10-26 19:00",
+      "title": "One great design",
+      "text": "The parts explorer, design variants, optimiser loop, 305 alternative catalogue parts and their images are gone from this repo (kept at the tag explorer-snapshot-2026-10-26); a generic comparison framework for cad-agent is being built from them as a PR."
+    },
+    {
+      "title": "Leg v2: a five-bar",
+      "time": "10-26 19:30",
+      "text": "A sweep of 330 printable geometries (36 feasible) picked motors 150 mm apart, 150 mm upper links, 250 mm lower links meeting at the wheel axle: 467 N of push anywhere at the 60 N m cap, joints 33 deg or more from a dead point, every link printable. Both RS-04s live in one hip frame; the track drops from 692 to 360 mm."
+    },
+    {
+      "time": "10-26 20:30",
+      "title": "Test rig in physics",
+      "text": "One leg on a vertical rail with half the robot's mass: it stands up on 9 N m, jumps 252 mm at the 60 N m cap, and lands with 1.8 kN on the axle. Losing power folds it onto its TPU stops: 159 N m on a stop without the motors' damping, a slow sink with it."
+    },
+    {
+      "time": "10-26 20:45",
+      "title": "Balls and a Piper voice",
+      "text": "The 3D game page fires 22.7 mm foam balls from a 30-ball hopper, and Gyropup speaks with Piper (en_US-hfc_female, two semitones up) from tools/tts_server.py."
+    },
+    {
+      "time": "10-26 21:00",
+      "title": "Leg v2 reworked by its own numbers",
+      "text": "The wheel link moved next to the wheel (its out-of-plane lever fell from 58 to 37 mm); the apex now carries moment on two 61812s so both sides of the loop share the wheel's sideways load; 6201 knees; links 30/20/26 mm thick, then hollowed into closed boxes; the wheel's cable runs inside the links."
+    },
+    {
+      "time": "10-26 21:30",
+      "title": "Site, LAN, game page",
+      "text": "Dead tabs gone; the site and Piper voice serve the LAN and the tailnet; the game page frames its first shot before it shows (no camera jump), plays every run in turn in DEMO mode, and the turret now sounds louder than the voice, with a kick in the motors."
+    },
+    {
+      "time": "10-26 22:00",
+      "title": "Turret on a bench stand",
+      "text": "cad/turret_stand.py: the turret on its own with a 24 V inlet, fuse, switch, USB-CAN and a hold-to-run pendant, so it can be built and tested before the robot exists."
+    },
+    {
+      "time": "2026-10-28",
+      "title": "The workshop is going online",
+      "text": "Gyropup.com brings the playground, build files, and progress reports together. The robot remains a development project; current hardware status is recorded in the program handoff and individual workstreams.",
+      "links": [
+        {
+          "title": "Program status",
+          "href": "https://github.com/Valpatel/gyropup/issues/31"
+        },
+        {
+          "title": "Leg validation",
+          "href": "https://github.com/Valpatel/gyropup/issues/29"
+        }
+      ]
+    }
+  ],
+  "shopping": {
+    "note": "Prices and stock from 2026-10-25; Seeed's pages block automated reads, so confirm in the cart. The wheels (ODrive BotWheel pair, $269) and their Flipsky 75100 drivers are not sold by Seeed.",
+    "items": [
+      {
+        "item": "RobStride RS-04 actuator",
+        "href": "https://www.seeedstudio.com/Robostride-04-Actuator-p-6775.html",
+        "qty": "4 + 1 spare",
+        "each": "$255",
+        "total": "$1,275",
+        "notes": "11 on hand (CN), 80 due Nov 14; hip + knee on each leg"
+      },
+      {
+        "item": "RobStride USB-to-CAN debug adapter",
+        "qty": "1",
+        "each": "~$25",
+        "total": "~$25",
+        "notes": "motor IDs, zeroing, firmware and the 60 N\u00b7m cap in RobStride's tool"
+      },
+      {
+        "item": "XT30 (2+2) motor leads",
+        "qty": "5",
+        "each": "~$3",
+        "total": "~$15",
+        "notes": "if not in the box"
+      }
+    ]
   }
- ],
- "shopping": {
-  "note": "Prices and stock from 2026-10-25; Seeed's pages block automated reads, so confirm in the cart. The wheels (ODrive BotWheel pair, $269) and their Flipsky 75100 drivers are not sold by Seeed.",
-  "items": [
-   {
-    "item": "RobStride RS-04 actuator",
-    "href": "https://www.seeedstudio.com/Robostride-04-Actuator-p-6775.html",
-    "qty": "4 + 1 spare",
-    "each": "$255",
-    "total": "$1,275",
-    "notes": "11 on hand (CN), 80 due Nov 14; hip + knee on each leg"
-   },
-   {
-    "item": "RobStride USB-to-CAN debug adapter",
-    "qty": "1",
-    "each": "~$25",
-    "total": "~$25",
-    "notes": "motor IDs, zeroing, firmware and the 60 N·m cap in RobStride's tool"
-   },
-   {
-    "item": "XT30 (2+2) motor leads",
-    "qty": "5",
-    "each": "~$3",
-    "total": "~$15",
-    "notes": "if not in the box"
-   }
-  ]
- }
 }
