@@ -1,30 +1,30 @@
 """Gyropup v2 for the physics and the 3D game page: two five-bar legs (cad/fivebar.py), the foam-ball turret
-(cad/turret.py) and an INTERIM BODY, a placeholder until the real body is designed (milestone M5).
+(cad/turret.py) and the REAL BODY of milestone M5 (cad/body_*.py), as built (D62).
 
     python -m sim.robot_v2        # build/sim/v2/robot.xml + model.json; exports/sim/v2/rig/ (meshes + manifest.json)
 
 Robot frame: x forward, y left, z up, origin on the hip axis between the two legs. The left leg is cad/fivebar.py's
-module as built, its frame shifted out by -Y['centre_plane'] (the two hip frames meet back to back at y = 0); the right
-leg is its mirror image. Every leg joint is a hinge about the robot's y axis, so the leg kinematics in the x-z plane are
-the same on both sides. Each five-bar is closed by an equality constraint at the wheel axle (as sim/leg_rig.py); the
-TPU stops are spring torques in the controller (sim/controller_v2.py); the RS-04s carry their reflected rotor inertia.
+module as built, its frame shifted out by the body's Y_OFF (cad/body_params.py: its centre-plane face on the left
+cheek, the spine 40.5 mm wide); the right leg is its mirror image. Every leg joint is a hinge about the robot's y axis,
+so the leg kinematics in the x-z plane are the same on both sides. Each five-bar is closed by an equality constraint at
+the wheel axle (as sim/leg_rig.py); the TPU stops are spring torques in the controller (sim/controller_v2.py); the
+RS-04s carry their reflected rotor inertia; the motors' speeds are the 10S pair's at its 36 V nominal (BUS_V, D65).
 
-The interim body is a translucent printed shell over the hip frames (280 x 260 x 140 mm, its floor just above the
-frames) holding the electronics' masses where they could sit, none overlapping: the battery low at the back right, the
-Orin carrier low at the front left, the DIN-rail converters standing in the back left, the regen clamp and the motor
-drivers on a shelf over the carrier, the switch, fuse and small boards in the front right; the depth cameras and the
-eyes flush in the end walls; the two headlights on the side walls at the top front, facing forward like ears. On the
-top deck the VLP-16 sits at the front edge and the turret's TM face behind it (the user's layout, 2026-10-26): the
-turret fires over the lidar, the lidar loses the sector behind it, and over the lidar the turret's depression is
-limited by pan (computed here from the meshes; model.json turret.tilt_max_deg). Masses: the design's parts list
-(tools/derive.mjs), the CAD for everything that has CAD.
+The body is cad/body_layout.py's P3 ledger, row for row (every mass and centre the body's own build writes to
+exports/body/mass.json): the frame parts from their CAD solids (inertia included), each bought part as its box, the
+estimates (harness, hardware, the shell's panels) where the ledger puts them; the legs carry exports/leg/leg.json's
+total; the turret's moving groups come from cad/turret.py and the rest of the head budget (body_params.tm()) sits at
+the head's centre, so the model's mass is the ledger's (mass_reconciles). It collides with the ground as the real
+parts would: the cheeks, the floor tray, the deck with its lips, the belly plate, the battery bay (the lowest part),
+the ear pods and the lidar. On the deck the VLP-16 and the turret's pan axis are where the body puts them (143 mm
+apart, the turret on its 30 mm riser); over the lidar the turret's depression is limited by pan (computed here from
+the meshes; model.json turret.tilt_max_deg).
 """
 from __future__ import annotations
 
 import json
 import math
 import struct
-import subprocess
 import sys
 from pathlib import Path
 
@@ -41,31 +41,26 @@ import gmi  # noqa: E402
 from cadagent.robot import Body, combine, cylinder_body, box_body, solid_mass_properties  # noqa: E402
 from sim import leg_rig as lr  # noqa: E402
 
+import body_params as bp  # noqa: E402
+
 M = 0.001
 OUT_BUILD = R / 'build' / 'sim' / 'v2'
 OUT_RIG = R / 'exports' / 'sim' / 'v2' / 'rig'
 DESIGN = R / 'designs' / 'default.json'
-Y_OFF = -fb.Y['centre_plane']                       # the left module's y = 0 is the robot's y = Y_OFF (mm)
-BODY_X = (-140.0, 140.0)                            # the interim shell: as long as the hip frames plus its walls (mm)
-BODY_W = 130.0                                      # its half-width
-BODY_H = 140.0
-SHELL_T = 3.0
-FLOOR_GAP = 2.0                                     # its floor this far above the hip frames' top
+Y_OFF = bp.y_off()                                  # the left module's y = 0 is the robot's y = Y_OFF (mm): the body's spine
+BODY_X = bp.BODY_X                                  # the floor tray and deck (mm)
+BUS_V = 36.0                                        # D65: two DCB609 packs in series, 10S, 36 V nominal: the motors' speed lines
 GAP = 5.0                                           # kept between the lidar and any part of the turret, at any pan/tilt
-EAR = {'size': (61.0, 50.8, 50.8), 'back': 15.0}    # headlight pod (x, y, z) and its front face behind the body's
+EAR = {'size': (61.0, 50.8, 50.8), 'x': (-10.0, 51.0), 'top': 193.0}   # SSC1 pod (x, y, z) on each side wall (docs/body-plan.md 1.9)
 TILT_STOP_DEG = 25.0                                # cad/turret.py's hard stops: 0 .. -25 deg (here + = barrel down)
 PAN_STOP_DEG = 170.0
 REF_H = 300.0                                       # the model's joints are zero standing at this leg length
-H_RANGE = (150.0, 375.0)                            # leg length (mm) for the controller's height 0..1
+H_RANGE = (160.0, 375.0)                            # leg length (mm) for the controller's height 0..1; D65: the battery bay's skids
+                                                    # touch the floor under a 139 mm leg, so the lowest height keeps 21 mm
 COLORS = {'body': '#9fb4c7', 'frame': '#5f6670', 'motor': '#2a2d33', 'link': '#f5b82e', 'wheel_link': '#e9a21f',
           'adapter': '#c9ced6', 'tyre': '#1b1d21', 'hub': '#4a5058', 'battery': '#fdb913', 'compute': '#5a6b7c',
           'driver': '#2b6cb0', 'power': '#8f9aa7', 'lidar': '#2a2d33', 'camera': '#2a2d33', 'light': '#3a3f47',
           'turret': '#4a5058', 'barrel': '#ff6a13', 'hopper': '#9cc7e8'}
-
-
-def derive_lines():
-    out = subprocess.run(['node', str(R / 'tools/derive.mjs'), str(DESIGN)], capture_output=True, text=True, check=True)
-    return {l['slot']: l for l in json.loads(out.stdout)['lines']}
 
 
 def lidar_spec():
@@ -123,80 +118,86 @@ def surface_points(tris, step=6.0, grid=2.0):
     return np.unique(np.round(np.concatenate(out) / grid) * grid, axis=0)
 
 
-# ----------------------------------------------------------------------------------- the interim body
+# ----------------------------------------------------------------------------------- the real body (M5)
 
-def body_box(frame):
-    """The interim shell's box (mm): its floor FLOOR_GAP above the hip frames' top, so new frame sizes flow through."""
-    z0 = float(math.ceil(frame.val().BoundingBox().zmax + FLOOR_GAP))
-    return {'x': BODY_X, 'y': (-BODY_W, BODY_W), 'z': (z0, z0 + BODY_H)}
+def _hex(rgb):
+    return '#' + ''.join(f'{int(round(255 * max(0.0, min(1.0, c)))):02x}' for c in rgb)
 
 
-def body_items(lines, B, ear_top):
-    """What the interim body holds: (name, size xyz mm, centre xyz mm, mass g, colour, note). Hand-placed in the
-    shell's inside (B less SHELL_T; check_layout proves nothing overlaps): x from the front wall's pocket for the depth
-    camera (x <= 114) back to the rear camera's (x >= -114), y across the 254 mm inside, z up from the floor."""
-    g = lambda s: (lines.get(s) or {}).get('mass_g') or 0.0
-    x0, x1 = B['x']
-    W = B['y'][1]
-    zf, zc = B['z'][0] + SHELL_T, B['z'][1] - SHELL_T             # the floor's top, the deck's underside
-
-    def box(name, lo, size, mass, kind, note):
-        return (name, tuple(size), tuple(round(l + s / 2, 2) for l, s in zip(lo, size)), mass, kind, note)
-    ex, ey, ez = EAR['size']
-    return [
-        box('battery', (-114.0, -126.0, zf), (138.0, 87.0, 127.0), g('battery') + g('battery_adapter'), 'battery',
-            'DeWalt FLEXVOLT in its dock, low at the back right'),
-        box('compute', (-62.0, -37.0, zf), (176.0, 163.0, 60.0), 975.0, 'compute',
-            "Orin AGX module + J501 carrier + cooler, low at the front left, no J501 box (est: the catalogue's 1.5 kg includes the box)"),
-        box('dcdc_compute', (-112.0, 0.0, zf), (32.0, 125.0, 102.0), g('dcdc_compute'), 'power',
-            'Mean Well DDR-120C-24 on its DIN-rail side, standing in the back left'),
-        box('regen_clamp', (-66.0, 23.0, zf + 62.0), (180.0, 103.0, 26.0), g('regen_clamp'), 'power', 'maxon DSR 70/30, on a shelf over the carrier'),
-        box('motor_driver_r', (6.0, -36.0, zf + 62.0), (108.0, 51.0, 35.0), g('motor_driver'), 'driver', 'Flipsky 75100 (right wheel), on the shelf'),
-        box('motor_driver_l', (6.0, 70.0, zf + 90.0), (108.0, 51.0, 35.0), g('motor_driver'), 'driver', 'Flipsky 75100 (left wheel), over the regen clamp'),
-        box('dcdc_12v', (-60.0, 30.0, zf + 90.0), (54.5, 90.0, 35.0), g('dcdc_12v'), 'power', 'Mean Well DDR-30L-12, over the regen clamp'),
-        box('power_switch', (28.0, -125.0, zf), (83.9, 45.0, 17.0), g('power_switch'), 'power', 'Flipsky anti-spark switch, front right'),
-        box('electronics_small', (28.0, -125.0, zf + 19.0), (60.0, 50.0, 20.0), g('imu') + g('balance_mcu') + 2 * g('can_transceiver'),
-            'driver', 'IMU, balance MCU, CAN transceivers, over the switch'),
-        box('fuse', (28.0, -60.0, zf), (60.9, 20.0, 44.5), g('fuse'), 'power', 'Blue Sea 5191 fuse block, front right'),
-        box('camera_front', (x1 + 1.0 - 25.0, -45.0, zf + 17.5), (25.0, 90.0, 25.0), g('depth_front'), 'camera',
-            'RealSense D435 in the front wall, its face 1 mm proud'),
-        box('camera_rear', (x0 - 1.0, -45.0, zf + 17.5), (25.0, 90.0, 25.0), g('depth_rear'), 'camera', 'RealSense D435 in the rear wall'),
-        box('eyes', (x1 - 0.5 - 7.0, -25.5, zc - 50.0), (7.0, 51.0, 20.0), g('eyes'), 'camera',
-            'DualEye LCD behind the front wall, the only thing on the face'),
-        box('headlight_l', (x1 - EAR['back'] - ex, W, ear_top - ez), EAR['size'], g('headlights') / 2, 'light',
-            'Diode Dynamics SSC1 pod on the left side wall at the top front, facing forward (an ear)'),
-        box('headlight_r', (x1 - EAR['back'] - ex, -W - ey, ear_top - ez), EAR['size'], g('headlights') / 2, 'light',
-            'Diode Dynamics SSC1 pod on the right side wall at the top front, facing forward (an ear)'),
-    ]
+def ear_boxes():
+    """The two SSC1 pods on their brackets (cad/body_shell.py): [(name, (x0, x1, y0, y1, z0, z1))]."""
+    import body_shell as bs3
+    out = []
+    for side in ('l', 'r'):
+        b = bs3._v(bs3.ear_pod(side)).BoundingBox()
+        out.append((f'ear_{side}', (b.xmin, b.xmax, b.ymin, b.ymax, b.zmin, b.zmax)))
+    return out
 
 
-def check_layout(items, B):
-    """Nothing overlaps (a placeholder still may not put two parts in one place), and the inside parts are inside."""
-    inside = {'battery', 'compute', 'dcdc_compute', 'regen_clamp', 'motor_driver_r', 'motor_driver_l', 'dcdc_12v',
-              'power_switch', 'electronics_small', 'fuse'}
-    lo_in = (B['x'][0] + SHELL_T, B['y'][0] + SHELL_T, B['z'][0] + SHELL_T)
-    hi_in = (B['x'][1] - SHELL_T, B['y'][1] - SHELL_T, B['z'][1] - SHELL_T)
-    span = {n: ([c - s / 2 for c, s in zip(cen, size)], [c + s / 2 for c, s in zip(cen, size)]) for n, size, cen, *_ in items}
-    bad = []
-    names = list(span)
-    for i, a in enumerate(names):
-        for b in names[i + 1:]:
-            if all(span[a][0][k] < span[b][1][k] - 1e-6 and span[b][0][k] < span[a][1][k] - 1e-6 for k in range(3)):
-                bad.append(f'{a} overlaps {b}')
-    for n in inside:
-        if any(span[n][0][k] < lo_in[k] - 1e-6 or span[n][1][k] > hi_in[k] + 1e-6 for k in range(3)):
-            bad.append(f'{n} is not inside the shell')
-    if bad:
-        raise ValueError('interim body layout: ' + '; '.join(bad))
+def real_body():
+    """The body as cad/body_*.py builds it: the layout's items, the frame parts, the P3 ledger, and the boxes the model
+    collides with. {'L', 'parts', 'ledger', 'collide': [(name, box)], 'B', 'bay'}"""
+    import body_battery as bb
+    import body_frame as bf
+    import body_layout as bl
+    import body_shell as bs3
+    L = bl.layout()
+    parts = {n: p for n, p in bf.all_parts(L['mounts']).items() if bf.on_robot(p, 'P3')}     # the robot as P3 builds it
+    led = bl.ledger(L, parts, stage='P3')
+    zt, zs = bp.z_tray_top(), bf.ZT
+    tg = bb.geometry()
+    tb, db, be = bp.STOCK[bp.TRAY]['t'], bp.STOCK[bp.DECK]['t'], bp.STOCK[bp.BELLY]['t']
+    X, HY = bp.BODY_X, bp.BODY_HALF_Y
+    collide = [
+        ('cheek_l', (bp.SPINE_X[0], bp.SPINE_X[1], bf.GAP_Y, bf.GAP_Y + bp.CHEEK_FLANGE, -zs, zs)),
+        ('cheek_r', (bp.SPINE_X[0], bp.SPINE_X[1], -bf.GAP_Y - bp.CHEEK_FLANGE, -bf.GAP_Y, -zs, zs)),
+        ('floor_tray', (X[0], X[1], -HY, HY, zt - bp.TRAY_LIP, zt)),
+        ('deck', (X[0], X[1], -HY, HY, bp.TOP - bp.DECK_LIP, bp.TOP)),
+        ('belly_plate', (X[0], X[1], -bp.BELLY_HALF_Y, bp.BELLY_HALF_Y, -zs - be, -zs)),
+        ('battery_bay', (tg['x_out'][0], tg['x_out'][1], -tg['side_out'], tg['side_out'], tg['z_bottom'], tg['z_belly'])),
+        ('shell_l', (-bs3.XO, bs3.XO, bs3.YI, bs3.YO, bs3.ZB, bs3.ZT)), ('shell_r', (-bs3.XO, bs3.XO, -bs3.YO, -bs3.YI, bs3.ZB, bs3.ZT)),
+        ('shell_front', (bs3.XI, bs3.XO, -bs3.YI, bs3.YI, bs3.APRON['z0'], bs3.ZT)),
+        ('shell_rear', (-bs3.XO, -bs3.XI, -bs3.YI, bs3.YI, bs3.APRON['z0'], bs3.ZT)),
+    ] + ear_boxes()
+    B = {'x': tuple(X), 'y': (-HY, HY), 'z': (round(tg['z_bottom'], 2), bp.TOP)}
+    return {'L': L, 'parts': parts, 'ledger': led, 'collide': collide, 'B': B}
 
 
-def shell_shape(B):
-    x0, x1 = B['x']
-    y0, y1 = B['y']
-    z0, z1 = B['z']
-    outer = cq.Workplane('XY').box(x1 - x0, y1 - y0, z1 - z0).translate(((x0 + x1) / 2, 0, (z0 + z1) / 2)).edges().fillet(12.0)
-    inner = cq.Workplane('XY').box(x1 - x0 - 2 * SHELL_T, y1 - y0 - 2 * SHELL_T, z1 - z0 - 2 * SHELL_T).translate(((x0 + x1) / 2, 0, (z0 + z1) / 2))
-    return outer.cut(inner)
+def body_bodies(rb, x_p, turret_extra):
+    """The base's rigid bodies from the P3 ledger, row for row (SI): frame parts from their solids, items as their
+    boxes, everything else a point mass where the ledger puts it; the turret's ledger row is left out (the turret's
+    groups and turret_extra stand for it). Returns [Body]."""
+    import body_layout as bl
+    mats = json.loads((R / 'catalog/materials.json').read_text())
+    items = {it.name: it for it in rb['L']['items'] if not it.keepout}
+    out = []
+    for r in rb['ledger']['rows']:
+        if r['group'] == 'legs' or r['name'] == 'turret':
+            continue
+        g, c = r['mass_g'] / 1000.0, tuple(v * M for v in r['com_mm'])
+        name = r['name']
+        pn = name.split('.', 1)[1] if name.startswith(('frame.', 'shell.')) else None
+        if pn in rb['parts']:
+            p = rb['parts'][pn]
+            v = p.shape.val() if hasattr(p.shape, 'val') else p.shape
+            dens = (next(st['density'] for st in bp.STOCK.values() if st['material'] == p.material) if p.kind == 'sheet'
+                    else mats[p.material]['density_g_cm3'])
+            b = solid_mass_properties(v, dens, 1.0, name)
+            out.append(Body(g, b.com, b.inertia, name))           # the ledger's mass, the solid's centre and inertia
+        elif name in items and not items[name].cyl:
+            x0, x1, y0, y1, z0, z1 = items[name].box
+            out.append(box_body(g, ((x1 - x0) * M, (y1 - y0) * M, (z1 - z0) * M), center=c, name=name))
+        elif name in items:
+            cx, cy, rr = items[name].cyl
+            z0, z1 = items[name].box[4:]
+            out.append(cylinder_body(g, rr * M, (z1 - z0) * M, axis='z', center=c, name=name))
+        elif name == 'shell_panels':                              # the shell's walls round the body (a box: an estimate)
+            out.append(box_body(g, ((bp.BODY_X[1] - bp.BODY_X[0]) * M, 2 * bp.BODY_HALF_Y * M, 0.3), center=c, name=name))
+        else:
+            out.append(Body(g, c, name=name))
+    if turret_extra[0] > 1e-6:
+        out.append(Body(turret_extra[0], turret_extra[1], name='head budget beyond the turret\'s CAD'))
+    return out
 
 
 def lidar_shape(lid, at):
@@ -219,7 +220,12 @@ def leg_bodies():
     l1, l2 = fb.P['l1'] / 1000, fb.P['l2'] / 1000
     yk = sum(fb.Y['knee_boss']) / 2000
     pin = Body(0.075 + 0.011, (l1, 0.03, 0.0), name='knee pin + nut')            # rides with the upper link
-    upper = combine([sm('upper_link'), sm('output_adapter'), Body(8 * 0.006, (0.0, 0.03, 0.0), name='8 x M5'), pin], 'upper')
+    ad = sm('output_adapter')
+    mach = json.loads((R / 'exports/leg/leg.json').read_text())['mass_g'].get('machined_parts', {}).get('output_adapter')
+    if mach:                                                      # machined 6061 (D46): its mass, the solid's shape
+        k = mach / 1000.0 / ad.mass
+        ad = Body(mach / 1000.0, ad.com, tuple(tuple(v * k for v in row) for row in ad.inertia), 'output adapter (machined 6061)')
+    upper = combine([sm('upper_link'), ad, Body(8 * 0.006, (0.0, 0.03, 0.0), name='8 x M5'), pin], 'upper')
     knee_brg = Body(2 * 0.037 + 0.006, (0.0, yk, 0.0), name='2 x 6201 + washers')
     n_apex = 2 if 'apex_bearing_in' in fb.Y else 1
     front = combine([sm('front_link'), knee_brg, Body(n_apex * 0.097, (l2, 0.025, 0.0), name=f'{n_apex} x 61812')], 'front')
@@ -291,11 +297,12 @@ def _rot_pan(p, ps):
     return np.stack([p[..., 0] * c - p[..., 1] * s, p[..., 0] * s + p[..., 1] * c, p[..., 2]], axis=-1)
 
 
-def turret_clearance(pts, T, lid):
+def turret_clearance(pts, T, lid, lidar_z=None):
     """How far ahead of the pan axis the lidar's axis has to be (mm) for its cylinder to keep GAP from the turret's
-    fixed base, from the pan group as it turns, and from the tilt group at tilt 0 as it turns."""
+    fixed base, from the pan group as it turns, and from the tilt group at tilt 0 as it turns. lidar_z: the lidar's
+    base (the deck; the turret's TM face stands on the riser above it)."""
     r = lid['d'] / 2 + GAP
-    top = T.mount_z + lid['h'] + GAP
+    top = (T.mount_z if lidar_z is None else lidar_z) + lid['h'] + GAP
     b = pts['base'][pts['base'][:, 2] <= top]
     b = b[np.abs(b[:, 1]) < r]
     out = {'base': float(np.max(b[:, 0] + np.sqrt(r * r - b[:, 1] ** 2))) if len(b) else 0.0}
@@ -461,12 +468,13 @@ def export_turret(T, tshapes):
     return base, groups, pts
 
 
-def export_rig(items, B, lid, lid_at, turret_base, turret_groups_):
-    """STL meshes (mm) per moving group + the manifest, for MuJoCo's visuals and the 3D page."""
+def export_rig(rb, lid, lid_at, turret_base, turret_groups_):
+    """STL meshes (mm) per moving group + the manifest, for MuJoCo's visuals and the 3D page: the hip modules, the body's
+    frame parts (one mesh per colour), each bought part as its box, the ear pods, the lidar, the turret's fixed parts."""
     L = fb.leg_parts()
     man = {'units': 'mm', 'frame': 'robot: x forward, y left, z up, origin on the hip axis between the legs',
-           'note': 'interim body (placeholder until M5)', 'body': [], 'links': {}, 'turret': dict(turret_groups_)}
-    # the body: both hip frames and motors, the interim shell, the electronics, the lidar, the turret's fixed parts
+           'note': 'the body as built (milestone M5, cad/body_*.py): the P3 ledger\'s frame and parts; the shell is not drawn yet',
+           'body': [], 'links': {}, 'turret': dict(turret_groups_)}
     frame = L.parts['hip_frame'].translate((0, Y_OFF, 0))
     man['body'].append(_put('body', 'hip_frame_l', frame, COLORS['frame']))
     man['body'].append(_put('body', 'hip_frame_r', frame, COLORS['frame'], mirror=True))
@@ -479,9 +487,19 @@ def export_rig(items, B, lid, lid_at, turret_base, turret_groups_):
         ad = gmi.place(gmi.output_adapter(fb.MOTOR, 'L')[0], (x, fb.Y['motor_out'] + Y_OFF, 0), (0, 1, 0))
         man['body'].append(_put('body', f'adapter_{"f" if x > 0 else "r"}_l', ad, COLORS['adapter']))
         man['body'].append(_put('body', f'adapter_{"f" if x > 0 else "r"}_r', ad, COLORS['adapter'], mirror=True))
-    man['body'].append(_put('body', 'interim_body', shell_shape(B), COLORS['body'], opacity=0.35))
-    for (name, size, centre, mass, kind, note) in items:
-        man['body'].append(_put('body', name, _box_shape(size, centre), COLORS[kind]))
+    by_colour = {}                                               # the frame: one mesh per colour (fewer files to load)
+    for n, prt in rb['parts'].items():
+        if prt.shape is None:
+            continue
+        by_colour.setdefault(_hex(prt.colour), []).append(prt.shape.val() if hasattr(prt.shape, 'val') else prt.shape)
+    for k, (c, shapes) in enumerate(sorted(by_colour.items())):
+        man['body'].append(_put('body', f'frame_{k}', cq.Compound.makeCompound(shapes), c))
+    for it in rb['L']['items']:                                  # the bought parts as their envelopes
+        if it.keepout or not it.mass_g or it.name in ('vlp16', 'turret'):
+            continue
+        x0, x1, y0, y1, z0, z1 = it.box
+        man['body'].append(_put('body', f'part_{it.name}', _box_shape((x1 - x0, y1 - y0, z1 - z0), ((x0 + x1) / 2, (y0 + y1) / 2, (z0 + z1) / 2)),
+                                _hex(it.rgb)))
     man['body'].append(_put('body', 'lidar', lidar_shape(lid, lid_at), COLORS['lidar']))
     man['body'] += turret_base
     # the leg links in their own frames (left as built; the page mirrors them for the right, MuJoCo uses _m copies)
@@ -502,66 +520,66 @@ def build():
     """Write the MJCF and model.json (build/sim/v2/) and the 3D page's rig (exports/sim/v2/rig/). Returns the info."""
     import turret as tu
     OUT_BUILD.mkdir(parents=True, exist_ok=True)
-    lines = derive_lines()
     design = json.loads(DESIGN.read_text())
     lid = lidar_spec()
-    if (lines.get('lidar') or {}).get('mass_g'):
-        lid['mass_g'] = lines['lidar']['mass_g']
-    frame_shape = fb.leg_parts().parts['hip_frame'].translate((0, Y_OFF, 0))
-    fbb = frame_shape.val().BoundingBox()
-    B = body_box(frame_shape)
-    TOP = B['z'][1]                                                 # the top deck: the turret's TM face and the lidar
-    T = tu.Turret({'bodyTop': TOP - 20.0 - tu.SADDLE_T})            # mount face on the top deck
+    lp, tmd = bp.lidar(), bp.tm()
+    rb = real_body()
+    B = rb['B']
+    TOP = bp.TOP                                                     # the deck's top face (the lidar stands on it)
+    T = tu.Turret({'bodyTop': tmd['face_z'] - 20.0 - tu.SADDLE_T})  # its TM face on the 30 mm riser (D41)
     tb, tshapes = turret_groups(T)
     turret_base, tgroups, tpts = export_turret(T, tshapes)
-    # ---- the top deck: the lidar flush with the front edge, the turret's pan axis as close behind it as the turret
-    # allows (GAP from its fixed base, from what turns under the lidar's top); the rear overhang, if any, is reported
-    need = turret_clearance(tpts, T, lid)
-    d_lp = math.ceil(2 * max(need.values())) / 2
-    x_l = B['x'][1] - lid['d'] / 2
-    x_p = x_l - d_lp
+    # ---- the deck as the body builds it: the lidar 5.2 mm behind the front edge, the pan axis 143 mm behind it
+    # (cad/body_params.py); the turret's own clearance needs are reported against that
+    need = turret_clearance(tpts, T, lid, lidar_z=TOP)
+    x_l, x_p = lp['x'], tmd['pan_x']
+    d_lp = round(x_l - x_p, 2)
     lid_at = (x_l, 0.0, TOP)
     for p in turret_base:
         stl_shift(OUT_RIG / p['file'], (x_p, 0.0, 0.0))
     rear_overhang = max(0.0, B['x'][0] - (x_p + float(tpts['base'][:, 0].min())))     # the bumper ring past the deck's back
-    # ---- the ears: below the lidar's lowest beam (-15 deg) over the pod's top face, 3 mm to spare
-    ex, ey, ez = EAR['size']
-    ear_x = (B['x'][1] - EAR['back'] - ex, B['x'][1] - EAR['back'])
-    far = max(math.hypot(x - x_l, y) for x in ear_x for y in (B['y'][1], B['y'][1] + ey))
-    ear_top = min(TOP, math.floor(TOP + lid['oc'] - far * math.tan(math.radians(-lid['fov_v'][0])) - 3.0))
-    items = body_items(lines, B, ear_top)
-    check_layout(items, B)
-    man = export_rig(items, B, lid, lid_at, turret_base, tgroups)
+    # ---- the ears (SSC1 pods on the side walls): under the lidar's lowest beam (-15 deg)?
+    ears_b = ear_boxes()
+    oc_z = TOP + lid['oc']
+    ear_margin = min(oc_z - math.hypot(max(abs(x - x_l) for x in b[:2]), max(abs(b[2]), abs(b[3]))) * math.tan(math.radians(-lid['fov_v'][0])) - b[5]
+                     for _, b in ears_b)
+    man = export_rig(rb, lid, lid_at, turret_base, tgroups)
     # ---- over the lidar: how far the barrel may depress by pan; what the turret hides from the lidar
-    ears = [(n, size, c) for n, size, c, *_ in items if n.startswith('headlight')]
+    ears = [(n, (b[1] - b[0], b[3] - b[2], b[5] - b[4]), ((b[0] + b[1]) / 2, (b[2] + b[3]) / 2, (b[4] + b[5]) / 2)) for n, b in ears_b]
     obs = [{'kind': 'cyl', 'c': (x_l, 0.0), 'r': lid['d'] / 2, 'z': (TOP, TOP + lid['h']), 'name': 'lidar'},
-           {'kind': 'box', 'lo': (B['x'][0], B['y'][0], B['z'][0]), 'hi': (B['x'][1], B['y'][1], TOP), 'name': 'deck'}]
+           {'kind': 'box', 'lo': (B['x'][0], B['y'][0], bp.z_tray_top()), 'hi': (B['x'][1], B['y'][1], TOP), 'name': 'deck'}]
     obs += [{'kind': 'box', 'lo': tuple(c[k] - s[k] / 2 for k in range(3)), 'hi': tuple(c[k] + s[k] / 2 for k in range(3)), 'name': n}
             for n, s, c in ears]
     table = tilt_limits(tpts['tilt'], T, x_p, obs)
     limited = [p for p, t in table if t < TILT_STOP_DEG - 1e-6]
     fwd = next(t for p, t in table if p == 0.0)
-    # what a riser under the TM face would buy facing forward (the lidar stays on the deck)
-    riser = {h: tilt_limits(tpts['tilt'], T, x_p, obs, pans=[0.0], dz=float(h))[0][1] for h in (10, 20, 30, 40, 50, 60, 70)}
+    # what a taller riser under the TM face would buy facing forward (the lidar stays on the deck)
+    riser = {h: tilt_limits(tpts['tilt'], T, x_p, obs, pans=[0.0], dz=float(h))[0][1] for h in (10, 20, 30, 40)}
     view = lidar_view(tpts, T, x_p, lid, lid_at, B)
-    # ---- the base: both hip modules, the shell, everything in it, the lidar, the turret's fixed parts, hardware
+    # ---- the base: the body's P3 ledger row for row, both hip modules, the turret's fixed parts
     lb = leg_bodies()
-    parts = [shift_y(lb['frame'], Y_OFF * M), mirror_body(shift_y(lb['frame'], Y_OFF * M))]
-    shell_kg = 1.4                                                  # PETG shell + brackets (est; the real body is M5)
-    x0, x1 = B['x']
-    parts.append(box_body(shell_kg, ((x1 - x0) * M, (B['y'][1] - B['y'][0]) * M, (B['z'][1] - B['z'][0]) * M),
-                          center=((x0 + x1) / 2 * M, 0.0, (B['z'][0] + B['z'][1]) / 2 * M), name='interim body shell'))
-    for (name, size, centre, mass, kind, note) in items:
-        parts.append(box_body(mass / 1000, tuple(s * M for s in size), center=tuple(c * M for c in centre), name=name))
-    parts.append(cylinder_body(lid['mass_g'] / 1000, lid['d'] / 2000, lid['h'] / 1000, axis='z',
-                               center=(x_l * M, 0.0, (TOP + lid['h'] / 2) * M), name='lidar'))
-    parts.append(Body(0.25, (0.0, 0.0, 0.1), name='body hardware (est)'))
     tb = {k: shift_x(v, x_p * M) for k, v in tb.items()}
-    parts.append(tb['base'])
+    turret_cad_kg = tb['base'].mass + tb['pan'].mass + tb['tilt'].mass
+    extra = (max(0.0, tmd['mass_kg'] - turret_cad_kg), (x_p * M, 0.0, (tmd['face_z'] + tmd['com_above_face_mm']) * M))
+    parts = body_bodies(rb, x_p, extra)
+    hip = [shift_y(lb['frame'], Y_OFF * M), mirror_body(shift_y(lb['frame'], Y_OFF * M))]
+    leg_side = lb['frame'].mass + 2 * lb['upper'].mass + lb['front'].mass + lb['wheel_link'].mass + lb['rotor'].mass
+    led = rb['ledger']
+    led_kg = sum(r['mass_g'] for r in led['rows']) / 1000.0
+    led_legs_side = sum(r['mass_g'] for r in led['rows'] if r['group'] == 'legs') / 2000.0
+    leg_rest = led_legs_side - leg_side                            # leg.json counts parts the model leaves out (screws, ...)
+    if abs(leg_rest) > 1e-4:                                       # at each hip module, where the ledger puts its own rest
+        hip += [Body(leg_rest, (0.0, (Y_OFF + 30.0) * M, -0.1), name='rest of leg.json (left)'),
+                Body(leg_rest, (0.0, -(Y_OFF + 30.0) * M, -0.1), name='rest of leg.json (right)')]
+    parts += hip + [tb['base']]
     base = combine(parts, 'base')
     leg_kg = 2 * (2 * lb['upper'].mass + lb['front'].mass + lb['wheel_link'].mass + lb['rotor'].mass)
     total = base.mass + leg_kg + tb['pan'].mass + tb['tilt'].mass
+    reconciles = abs(total - led_kg) <= 0.002 * led_kg            # the model carries the ledger's mass
     rp = ref_pose()
+    frame_shape = fb.leg_parts().parts['hip_frame'].translate((0, Y_OFF, 0))
+    fbb = frame_shape.val().BoundingBox()
+    leg_omega = lr.MOTOR['no_load_speed_rpm'] * BUS_V / lr.MOTOR['voltage_nominal_v'] * 2 * math.pi / 60
     # ---- MJCF
     l1, l2 = fb.P['l1'] / 1000, fb.P['l2'] / 1000
     ax = fb.P['D'] / 2000
@@ -621,9 +639,9 @@ def build():
     pan_o = (x_p * M, 0.0, T.mount_z * M)
     body_vis = ''.join(vis(p['file'], p['color'], p['opacity']) for p in man['body'])
     hb = (max(abs(fbb.xmin), abs(fbb.xmax)) / 1000, max(abs(fbb.ymin), abs(fbb.ymax)) / 1000, max(abs(fbb.zmin), abs(fbb.zmax)) / 1000)
-    ear_geoms = ''.join(f'<geom name="{n}" type="box" size="{s[0] / 2000:.4f} {s[1] / 2000:.4f} {s[2] / 2000:.4f}" '
-                        f'pos="{c[0] / 1000:.4f} {c[1] / 1000:.4f} {c[2] / 1000:.4f}" contype="2" conaffinity="1" rgba="0 0 0 0" mass="0"/>'
-                        for n, s, c in ears)
+    body_geoms = ''.join(f'<geom name="{n}" type="box" size="{(b[1] - b[0]) / 2000:.4f} {(b[3] - b[2]) / 2000:.4f} {(b[5] - b[4]) / 2000:.4f}" '
+                         f'pos="{(b[0] + b[1]) / 2000:.4f} {(b[2] + b[3]) / 2000:.4f} {(b[4] + b[5]) / 2000:.4f}" contype="2" conaffinity="1" '
+                         f'rgba="0 0 0 0" mass="0"/>' for n, b in rb['collide'])
     xml = f"""<mujoco model="gyropup_v2">
   <compiler angle="radian" autolimits="true" meshdir="{OUT_RIG}"/>
   <option timestep="0.001" gravity="0 0 -9.81" integrator="implicitfast"/>
@@ -639,12 +657,10 @@ def build():
     <body name="base" pos="0 0 {z0:.4f}">
       <freejoint name="root"/>
       {_inertial(base)}
-      <geom name="body_shell" type="box" size="{(x1 - x0) / 2000:.4f} {(B['y'][1] - B['y'][0]) / 2000:.4f} {(B['z'][1] - B['z'][0]) / 2000:.4f}"
-            pos="{(x0 + x1) / 2000:.4f} 0 {(B['z'][0] + B['z'][1]) / 2000:.4f}" contype="2" conaffinity="1" rgba="0 0 0 0" mass="0"/>
       <geom name="hip_block" type="box" size="{hb[0]:.4f} {hb[1]:.4f} {hb[2]:.4f}" contype="2" conaffinity="1" rgba="0 0 0 0" mass="0"/>
       <geom name="lidar" type="cylinder" size="{lid['d'] / 2000:.4f} {lid['h'] / 2000:.4f}" pos="{x_l / 1000:.4f} 0 {(TOP + lid['h'] / 2) / 1000:.4f}"
             contype="2" conaffinity="1" rgba="0 0 0 0" mass="0"/>
-      {ear_geoms}
+      {body_geoms}
       {body_vis}
       <site name="imu" pos="0 0 0.1"/>
       {leg(1, 'l')}
@@ -692,26 +708,30 @@ def build():
         mujoco.mj_forward(mm, dd)
         b = mm.body('base').id
         return [round(float(v) * 1000, 1) for v in dd.subtree_com[b] - dd.xpos[b]]
-    bus_v = 54.0
-    wheel_omega = lr.WHEEL['no_load_speed_rpm'] * bus_v / lr.WHEEL['voltage_nominal_v'] * 2 * math.pi / 60
-    lowest = round(fbb.zmin, 1)
+    wheel_omega = lr.WHEEL['no_load_speed_rpm'] * BUS_V / lr.WHEEL['voltage_nominal_v'] * 2 * math.pi / 60
+    lowest = round(B['z'][0], 1)                                    # the battery bay's skids
     span = f'{min(limited):.0f} .. {max(limited):.0f}' if limited else 'none'
     blocked = view['pan0_any'][0] if view['pan0_any'] else None
     tilt_note = (f'over the lidar the barrel may depress at most {fwd:.1f} deg facing forward (the stops allow {TILT_STOP_DEG:.0f}): the '
                  f'cradle\'s front edge and the barrel come within {GAP:.0f} mm of the lidar\'s top; limited between pan {span} deg '
                  f'(turret.tilt_max_deg); the controller lifts the barrel before panning over the lidar and the robot crouches to '
-                 f'shoot ahead; a riser under the TM face would give ' + ', '.join(f'{h} mm -> {v:.1f} deg' for h, v in riser.items()))
+                 f'shoot ahead; a riser taller by ' + ', '.join(f'{h} mm -> {v:.1f} deg' for h, v in riser.items()))
     view_note = (f'the turret hides azimuth {blocked[0]} .. {blocked[1]} deg ({blocked[2]} deg) from the lidar at pan 0 '
                  f'(all 16 beams over {sum(a[2] for a in view["pan0_all"])} deg of it); up to {sum(a[2] for a in view["any_pan_any"])} deg '
                  f'as the turret pans' if blocked else 'the turret hides nothing from the lidar')
     info = {
         'kind': 'fivebar', 'design': 'v2', 'name': 'Gyropup v2 (five-bar)', 'total_mass_kg': round(total, 3),
-        'mass_split_kg': {'base (hip modules, interim body, electronics, lidar, turret base)': round(base.mass, 3),
+        'mass_split_kg': {'base (hip modules, frame, electronics, battery, lidar, shell, turret base)': round(base.mass, 3),
                           'legs (links, adapters, bearings, wheels)': round(leg_kg, 3),
                           'turret pan + tilt': round(tb['pan'].mass + tb['tilt'].mass, 3)},
-        'mass_reconciles': True,
+        'mass_reconciles': reconciles,
+        'ledger': {'stage': 'P3', 'total_kg': round(led_kg, 3), 'groups_kg': led['groups_kg'], 'com_mm': led['com_mm'],
+                   'source': 'cad/body_layout.py ledger() P3 (exports/body/mass.json); the legs to exports/leg/leg.json\'s total; '
+                             'the head to body_params.tm()', 'legs_rest_kg_each': round(leg_rest, 4),
+                   'head_beyond_turret_cad_kg': round(extra[0], 4)},
+        'bus_v': BUS_V,
         'com_mm': com_at_reference(),
-        'leg_actuator': {'peak_nm': leg_peak, 'rated_nm': lr.MOTOR['rated_torque_nm'], 'omega_max': lr.LEG_OMEGA, 'armature': lr.ARMATURE,
+        'leg_actuator': {'peak_nm': leg_peak, 'rated_nm': lr.MOTOR['rated_torque_nm'], 'omega_max': leg_omega, 'armature': lr.ARMATURE,
                          'cap_nm': float(design.get('leg_torque_limit_nm') or lr.LEG_CAP)},
         'wheel_motor': {'peak_nm': wheel_peak, 'rated_nm': lr.WHEEL['rated_torque_nm'], 'omega_max': wheel_omega},
         'fivebar': {'D_mm': fb.P['D'], 'l1_mm': fb.P['l1'], 'l2_mm': fb.P['l2'], 'ref': rp, 'ref_h_mm': REF_H, 'h_range_mm': H_RANGE,
@@ -730,25 +750,31 @@ def build():
         'layout_mm': {'trayBottom': lowest + 80.0, 'lidarMount': 'top', 'wheelR': wr * 1000, 'bodyTop': TOP},
         'lowest_point_mm': lowest,
         'track_mm': round(2 * (fb.Y['wheel'] + Y_OFF), 1),
-        'notes': ['interim body (placeholder until M5): a translucent shell over the hip frames; the electronics placed so none overlap',
-                  f'top deck (the user\'s layout): the VLP-16 at the front edge (axis x = {x_l:.1f} mm), the turret\'s pan axis {d_lp:.1f} mm behind it '
-                  f'(x = {x_p:.1f} mm), {GAP:.0f} mm between them at any pan; the turret base overhangs the rear by {rear_overhang:.1f} mm',
+        'notes': [f'the body as built (M5): the P3 ledger, {led_kg:.2f} kg (cad/body_layout.py; the model {total:.2f} kg), the spine 40.5 mm wide '
+                  f'(track {2 * (fb.Y["wheel"] + Y_OFF):.1f} mm), the deck at z {TOP:.0f}, the battery bay\'s skids at z {lowest} (the lowest part)',
+                  f'the deck: the VLP-16 at x = {x_l:.1f} mm, the turret\'s pan axis {d_lp:.1f} mm behind it (x = {x_p:.1f} mm) on the 30 mm riser '
+                  f'(TM face z {tmd["face_z"]:.0f}); the turret\'s clearance needs {max(need.values()):.1f} mm; its base overhangs the rear by {rear_overhang:.1f} mm',
                   tilt_note, view_note,
-                  'headlights: on the side walls at the top front, facing forward (ears), under the lidar\'s lowest beam; the eyes alone on the face',
-                  'compute 975 g without the J501 box (est)', 'RS-04 rotor inertia, the tyre stiffness and the shell mass are estimates'],
-        'estimates': ['RS-04 rotor inertia (armature)', 'BotWheel tyre stiffness', 'interim body shell and wiring masses', 'compute mass without its box'],
+                  f'the ears (SSC1 pods on the side walls, x {EAR["x"][0]:.0f}..{EAR["x"][1]:.0f}, tops at z {EAR["top"]:.0f}) are {ear_margin:.1f} mm under '
+                  'the lidar\'s lowest beam; the eyes alone on the face',
+                  f'the motors\' speed lines at the 10S pair\'s {BUS_V} V nominal (D65)',
+                  'RS-04 rotor inertia, the tyre stiffness, the harness, hardware and shell masses are estimates (the ledger says which)'],
+        'estimates': ['RS-04 rotor inertia (armature)', 'BotWheel tyre stiffness', 'the harness, hardware and shell panels (the ledger\'s estimate rows)',
+                      'the G48R cooler\'s mass (450 g est)'],
     }
     (OUT_BUILD / 'model.json').write_text(json.dumps(info, indent=1) + '\n')
     hl = [[c[0] + s[0] / 2, c[1], c[2]] for n, s, c in sorted(ears, key=lambda e: -e[2][1])]
-    cam = next(c for n, s, c, *_ in items if n == 'camera_front')
+    import body_layout as bl
+    shell = {n: c for n, g, c, b in bl.SHELL_ITEMS}                 # the P3 ledger's eyes and front camera
+    top = max(float(tpts['base'][:, 2].max()), T.mount_z + float(tpts['pan'][:, 2].max()), T.mount_z + T.G.tilt_t + float(tpts['tilt'][:, 2].max()))
     man.update({'fivebar': info['fivebar'], 'wheel_r_mm': wr * 1000, 'track_mm': info['track_mm'], 'body_top_mm': TOP,
-                'mounts': {'eyes': [B['x'][1], 0.0, next(c for n, s, c, *_ in items if n == 'eyes')[2]],
-                           'headlights': hl, 'camera_front': [B['x'][1] + 1.0, 0.0, cam[2]],
+                'mounts': {'eyes': [B['x'][1] + 2.0, 0.0, shell['eyes'][2]],
+                           'headlights': hl, 'camera_front': [B['x'][1] + 2.0, 0.0, shell['depth_camera_front'][2]],
                            'lidar': [x_l, 0.0, TOP]},
                 'turret': {**man['turret'], 'pan_mm': [x_p, 0.0, T.mount_z], 'tilt_mm': [x_p, 0.0, T.mount_z + T.G.tilt_t],
                            'muzzle_mm': [x_p + v if i == 0 else v for i, v in enumerate(T.point((T.G.barrel_x1, 0, 0), 'tilt', 0.0, 0.0))]},
                 'deck': {'tilt_max_forward_deg': fwd, 'lidar_hidden_deg': sum(a[2] for a in view['pan0_all']), 'tilt_max_deg': table},
-                'height_mm': TOP + 160.0, 'mass_kg': info['total_mass_kg'], 'mass_split_kg': info['mass_split_kg']})
+                'height_mm': round(top, 1), 'mass_kg': info['total_mass_kg'], 'mass_split_kg': info['mass_split_kg']})
     (OUT_RIG / 'manifest.json').write_text(json.dumps(man, indent=1) + '\n')
     return info
 

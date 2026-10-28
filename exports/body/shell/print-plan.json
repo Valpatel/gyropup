@@ -1,0 +1,265 @@
+{
+ "bed_mm": [
+  256,
+  256,
+  256
+ ],
+ "parts": {
+  "shell_side_l_front": {
+   "material": "petg",
+   "qty": 1,
+   "size_mm": [
+    171,
+    138,
+    9
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 53,
+   "grams": 53,
+   "hours": 2.1,
+   "cost_usd": 0.74,
+   "infill": "2 mm walls, 40 % gyroid",
+   "how": "PETG, 2 mm with 1.6 mm ribs; printed on its outer face"
+  },
+  "shell_side_l_rear": {
+   "material": "petg",
+   "qty": 1,
+   "size_mm": [
+    169,
+    138,
+    9
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 51,
+   "grams": 51,
+   "hours": 2.0,
+   "cost_usd": 0.71,
+   "infill": "2 mm walls, 40 % gyroid",
+   "how": "PETG, 2 mm with 1.6 mm ribs; printed on its outer face"
+  },
+  "ear_bracket_l": {
+   "material": "pa6-cf",
+   "qty": 1,
+   "size_mm": [
+    61,
+    41,
+    42
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 34,
+   "grams": 34,
+   "hours": 2.2,
+   "cost_usd": 2.73,
+   "infill": "100 %",
+   "how": "PA6-CF; four M5 x 14 through the wall, nyloc nuts inside"
+  },
+  "shell_side_r_front": {
+   "material": "petg",
+   "qty": 1,
+   "size_mm": [
+    171,
+    138,
+    9
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 63,
+   "grams": 63,
+   "hours": 2.5,
+   "cost_usd": 0.88,
+   "infill": "2 mm walls, 40 % gyroid",
+   "how": "PETG, 2 mm with 1.6 mm ribs; printed on its outer face"
+  },
+  "shell_side_r_rear": {
+   "material": "petg",
+   "qty": 1,
+   "size_mm": [
+    169,
+    138,
+    9
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 57,
+   "grams": 57,
+   "hours": 2.3,
+   "cost_usd": 0.8,
+   "infill": "2 mm walls, 40 % gyroid",
+   "how": "PETG, 2 mm with 1.6 mm ribs; printed on its outer face"
+  },
+  "ear_bracket_r": {
+   "material": "pa6-cf",
+   "qty": 1,
+   "size_mm": [
+    61,
+    41,
+    42
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 34,
+   "grams": 34,
+   "hours": 2.2,
+   "cost_usd": 2.73,
+   "infill": "100 %",
+   "how": "PA6-CF; four M5 x 14 through the wall, nyloc nuts inside"
+  },
+  "shell_front": {
+   "material": "petg",
+   "qty": 1,
+   "size_mm": [
+    248,
+    181,
+    9
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 97,
+   "grams": 97,
+   "hours": 3.9,
+   "cost_usd": 1.36,
+   "infill": "2 mm walls, 40 % gyroid",
+   "how": "PETG, 2 mm with ribs; printed on its outer face"
+  },
+  "shell_rear": {
+   "material": "petg",
+   "qty": 1,
+   "size_mm": [
+    248,
+    181,
+    32
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 106,
+   "grams": 106,
+   "hours": 4.3,
+   "cost_usd": 1.49,
+   "infill": "2 mm walls, 40 % gyroid",
+   "how": "PETG, 2 mm with ribs, the receiver's bay with it; printed on its outer face"
+  },
+  "shell_door": {
+   "material": "petg",
+   "qty": 1,
+   "size_mm": [
+    110,
+    77,
+    2
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 21,
+   "grams": 21,
+   "hours": 0.8,
+   "cost_usd": 0.29,
+   "infill": "2 mm walls, 40 % gyroid",
+   "how": "PETG; four M3 x 16 into the wall's nuts"
+  },
+  "shell_hatch": {
+   "material": "petg",
+   "qty": 1,
+   "size_mm": [
+    87,
+    47,
+    2
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 10,
+   "grams": 10,
+   "hours": 0.4,
+   "cost_usd": 0.14,
+   "infill": "2 mm walls, 40 % gyroid",
+   "how": "PETG; two M3 x 16 into the wall's nuts"
+  },
+  "d435_cradle_front": {
+   "material": "pa6-cf",
+   "qty": 1,
+   "size_mm": [
+    106,
+    27,
+    29
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 16,
+   "grams": 16,
+   "hours": 1.1,
+   "cost_usd": 1.3,
+   "infill": "100 %",
+   "how": "PA6-CF; the D435 on its two back M3"
+  },
+  "d435_cradle_rear": {
+   "material": "pa6-cf",
+   "qty": 1,
+   "size_mm": [
+    106,
+    27,
+    29
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 16,
+   "grams": 16,
+   "hours": 1.1,
+   "cost_usd": 1.3,
+   "infill": "100 %",
+   "how": "PA6-CF; the D435 on its two back M3"
+  },
+  "fan_duct": {
+   "material": "petg",
+   "qty": 1,
+   "size_mm": [
+    107,
+    103,
+    16
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 10,
+   "grams": 10,
+   "hours": 0.4,
+   "cost_usd": 0.14,
+   "infill": "2 mm walls, 40 % gyroid",
+   "how": "PETG: the fan's exhaust goes only out through the deck; three M3 x 5 up into the turret plate"
+  },
+  "eyes_clip": {
+   "material": "petg",
+   "qty": 1,
+   "size_mm": [
+    73,
+    2,
+    24
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 4,
+   "grams": 4,
+   "hours": 0.2,
+   "cost_usd": 0.06,
+   "infill": "2 mm walls, 40 % gyroid",
+   "how": "PETG: holds the DualEye board in its window; two M3 x 6 into the face's bosses"
+  }
+ },
+ "by_material": {
+  "petg": {
+   "grams": 472,
+   "hours": 18.9,
+   "cost_usd": 6.61,
+   "parts": 10
+  },
+  "pa6-cf": {
+   "grams": 100,
+   "hours": 6.6,
+   "cost_usd": 8.06,
+   "parts": 4
+  }
+ },
+ "too_big": [],
+ "total_hours": 25.5,
+ "total_grams": 572,
+ "note": "body P3, the shell's printed parts: hours are rough"
+}

@@ -8,129 +8,107 @@ seller in `bom.json`, shown in the last column.
 
 How to order:
 
-1. **SendCutSend** (section 1): upload each DXF from `exports/body/sendcutsend/`, pick the material and thickness in
-   its file name, add the bends, PEM nuts, countersinks and tapping listed, and read the instant price. No quotes.
+1. **SendCutSend** (section 1): upload each DXF from `exports/body/sendcutsend/` at app.sendcutsend.com, pick the
+   material and thickness in its file name, add the bends (the app reads the DXF's BEND layer: 90 deg, UP), PEM nuts,
+   countersinks and tapping listed, deburring, and the quantity. The prices below were read that way in the app
+   (`tools/sendcutsend_quote.py`, no account needed for a price); re-read them before the cart goes.
 2. **McMaster-Carr** (section 2, first table): one cart, next-day.
 3. **The other sellers** (section 2): the ones that ship from China first (LCSC, Daly, Flipsky): one to three weeks.
 4. **Print** (section 5) while the orders arrive.
 
 ## 1. SendCutSend (T2: the frame and the power plate): custom parts at an instant price
 
-| Part | Qty | Material | Flat (mm) | Operations | Files | Estimate |
-|---|---|---|---|---|---|---|
-| cheek | 2 | 5052-H32 aluminium 0.187 in | 184.0 x 223.0 | 2 bends, 90 deg, SendCutSend's 0.25 in radius (K 0.43, bend deduction 0.356 in): the DXF's BEND layer marks the lines; flanges as the STEP; 8 x PEM SS-M5-0 pressed by SendCutSend (hardware insertion), positions as the STEP; 8 x 90 deg countersinks for M4 flat heads (SendCutSend countersinking), the side the STEP shows | [DXF](../exports/body/sendcutsend/cheek_5052-H32_0.187in_x2.dxf), [STEP](../exports/body/sendcutsend/cheek_5052-H32_0.187in_x2.step) | ~$60 each |
-| floor_tray | 1 | 5052-H32 aluminium 0.125 in | 339.0 x 273.0 | 4 bends, 90 deg, SendCutSend's 0.125 in radius (K 0.44, bend deduction 0.216 in): the DXF's BEND layer marks the lines; flanges as the STEP; 6 x PEM S-M4-0 pressed by SendCutSend (hardware insertion), positions as the STEP; tapping: the two Ø2.5 holes M3 x 0.5 (the VN-100) | [DXF](../exports/body/sendcutsend/floor_tray_5052-H32_0.125in_x1.dxf), [STEP](../exports/body/sendcutsend/floor_tray_5052-H32_0.125in_x1.step) | ~$62 each |
-| belly_plate | 1 | 6061-T6 aluminium 0.1 in | 320.0 x 116.0 | 12 x PEM SS-M5-0 pressed by SendCutSend (hardware insertion), positions as the STEP | [DXF](../exports/body/sendcutsend/belly_plate_6061-T6_0.100in_x1.dxf), [STEP](../exports/body/sendcutsend/belly_plate_6061-T6_0.100in_x1.step) | ~$33 each |
-| deck | 1 | 5052-H32 aluminium 0.1 in | 350.3 x 284.3 | 4 bends, 90 deg, SendCutSend's 0.125 in radius (K 0.4, bend deduction 0.191 in): the DXF's BEND layer marks the lines; flanges as the STEP | [DXF](../exports/body/sendcutsend/deck_5052-H32_0.100in_x1.dxf), [STEP](../exports/body/sendcutsend/deck_5052-H32_0.100in_x1.step) | ~$65 each |
-| compute_pallet | 1 | 6061-T6 aluminium 0.125 in | 194.0 x 158.0 | 8 x 90 deg countersinks for M3 flat heads (SendCutSend countersinking), the side the STEP shows | [DXF](../exports/body/sendcutsend/compute_pallet_6061-T6_0.125in_x1.dxf), [STEP](../exports/body/sendcutsend/compute_pallet_6061-T6_0.125in_x1.step) | ~$30 each |
-| power_plate | 1 | 5052-H32 aluminium 0.1 in | 124.0 x 206.0 | 10 x PEM F-M5-2 pressed by SendCutSend (hardware insertion), positions as the STEP; 6 x PEM F-M4-2 pressed by SendCutSend (hardware insertion), positions as the STEP | [DXF](../exports/body/sendcutsend/power_plate_5052-H32_0.100in_x1.dxf), [STEP](../exports/body/sendcutsend/power_plate_5052-H32_0.100in_x1.step) | ~$39 each |
-| bus_bar | 2 | C110 copper 0.125 in | 110.0 x 20.0 | tapping: the five Ø5.0 holes M6 x 1.0 (SendCutSend tapping) | [DXF](../exports/body/sendcutsend/bus_bar_C110_0.125in_x2.dxf), [STEP](../exports/body/sendcutsend/bus_bar_C110_0.125in_x2.step) | ~$17 each |
+| Part | Qty | Material | Flat (mm) | Operations | Files | Price each | Line |
+|---|---|---|---|---|---|---|---|
+| cheek | 2 | 5052-H32 aluminium 0.187 in | 184.0 x 223.0 | 2 bends, 90 deg, SendCutSend's 0.25 in radius (K 0.43, bend deduction 0.356 in): the DXF's BEND layer marks the lines (the app reads them; each 90 deg UP); flanges as the STEP; 8 x PEM SS-M5-0 pressed by SendCutSend (hardware insertion), positions as the STEP; 8 x 90 deg countersinks for M4 flat heads (SendCutSend countersinking), the side the STEP shows | [DXF](../exports/body/sendcutsend/cheek_5052-H32_0.187in_x2.dxf), [STEP](../exports/body/sendcutsend/cheek_5052-H32_0.187in_x2.step) | $63.87 (read 2026-10-27) | $127.74 |
+| floor_tray | 1 | 5052-H32 aluminium 0.125 in | 339.0 x 273.0 | 4 bends, 90 deg, SendCutSend's 0.125 in radius (K 0.44, bend deduction 0.216 in): the DXF's BEND layer marks the lines (the app reads them; each 90 deg UP); flanges as the STEP; 4 x PEM S-M4-0 pressed by SendCutSend (hardware insertion), positions as the STEP; tapping: the two Ø2.5 holes M3 x 0.5 (the VN-100) | [DXF](../exports/body/sendcutsend/floor_tray_5052-H32_0.125in_x1.dxf), [STEP](../exports/body/sendcutsend/floor_tray_5052-H32_0.125in_x1.step) | $80.62 (read 2026-10-27) | $80.62 |
+| belly_plate | 1 | 6061-T6 aluminium 0.1 in | 320.0 x 116.0 | 16 x PEM S-M4-0 pressed by SendCutSend (hardware insertion), positions as the STEP | [DXF](../exports/body/sendcutsend/belly_plate_6061-T6_0.100in_x1.dxf), [STEP](../exports/body/sendcutsend/belly_plate_6061-T6_0.100in_x1.step) | $62.16 (read 2026-10-27) | $62.16 |
+| deck | 1 | 5052-H32 aluminium 0.1 in | 350.3 x 284.3 | 4 bends, 90 deg, SendCutSend's 0.125 in radius (K 0.4, bend deduction 0.191 in): the DXF's BEND layer marks the lines (the app reads them; each 90 deg UP); flanges as the STEP | [DXF](../exports/body/sendcutsend/deck_5052-H32_0.100in_x1.dxf), [STEP](../exports/body/sendcutsend/deck_5052-H32_0.100in_x1.step) | $80.57 (read 2026-10-27) | $80.57 |
+| compute_pallet | 1 | 6061-T6 aluminium 0.125 in | 194.0 x 158.0 | 8 x 90 deg countersinks for M3 flat heads (SendCutSend countersinking), the side the STEP shows | [DXF](../exports/body/sendcutsend/compute_pallet_6061-T6_0.125in_x1.dxf), [STEP](../exports/body/sendcutsend/compute_pallet_6061-T6_0.125in_x1.step) | $49.40 (read 2026-10-27) | $49.40 |
+| power_plate | 1 | 5052-H32 aluminium 0.1 in | 124.0 x 206.0 | 10 x PEM F-M5-2 pressed by SendCutSend (hardware insertion), positions as the STEP; 6 x PEM F-M4-2 pressed by SendCutSend (hardware insertion), positions as the STEP | [DXF](../exports/body/sendcutsend/power_plate_5052-H32_0.100in_x1.dxf), [STEP](../exports/body/sendcutsend/power_plate_5052-H32_0.100in_x1.step) | $47.48 (read 2026-10-27) | $47.48 |
+| bus_bar | 2 | C110 copper 0.125 in | 110.0 x 20.0 | cut only: the five Ø6.4 holes take the lugs' M6 screws into nuts held in the printed insulator (SendCutSend does no service on a part under 1 in wide) | [DXF](../exports/body/sendcutsend/bus_bar_C110_0.125in_x2.dxf), [STEP](../exports/body/sendcutsend/bus_bar_C110_0.125in_x2.step) | $18.22 (read 2026-10-27) | $36.44 |
+| bay_floor | 1 | 5052-H32 aluminium 0.063 in | 310.0 x 134.0 | 2 bends, 90 deg, SendCutSend's 0.035 in radius (K 0.42, bend deduction 0.096 in): the DXF's BEND layer marks the lines (the app reads them; each 90 deg UP); flanges as the STEP; 10 x PEM S-M3-0 pressed by SendCutSend (hardware insertion), positions as the STEP | [DXF](../exports/body/sendcutsend/bay_floor_5052-H32_0.063in_x1.dxf), [STEP](../exports/body/sendcutsend/bay_floor_5052-H32_0.063in_x1.step) | $51.12 (read 2026-10-27) | $51.12 |
+| bay_side | 2 | 5052-H32 aluminium 0.063 in | 310.0 x 128.6 |  | [DXF](../exports/body/sendcutsend/bay_side_5052-H32_0.063in_x2.dxf), [STEP](../exports/body/sendcutsend/bay_side_5052-H32_0.063in_x2.step) | $22.05 (read 2026-10-27) | $44.10 |
 
-Estimate ~$383 for the set until the instant prices are read. Backup: OSH Cut (oshcut.com), which prices the same DXF instantly and also bends and inserts PEM nuts. The bus bars can instead be two Victron VBB115040020 (150 A, 70 V, $17.82 each, in catalog/body.json), which need no insulators.
+**SendCutSend: $579.63** for the set (instant prices read 2026-10-27 in SendCutSend's app); the plan's estimate was ~$459. Shipping is free over SendCutSend's threshold. Backup: OSH Cut (oshcut.com), which prices the same DXF instantly and also bends and inserts PEM nuts. The bus bars can instead be two Victron VBB115040020 (150 A, 70 V, $17.82 each, in catalog/body.json), which need no insulators.
 
 ## 2. Bought parts, by seller
 
-### McMaster-Carr (mcmaster.com): $118.49
+### McMaster-Carr (mcmaster.com): $158.46
 
 | Task | Part | Used | Order | Price | Line | For | Backup |
 |---|---|---|---|---|---|---|---|
-| T2 | [91239A228](https://www.mcmaster.com/91239A228/): Black-oxide class 10.9 button head hex drive screw, ISO 7380, M5 x 0.8 x 12 mm (the hip fr | 12 | 1 x 100-pack | $12.06 | $12.06 | the hip frames to the cheeks: six each, from inside the gap (3 N m) | McMaster-Carr $11.79 ([link](https://www.mcmaster.com/91239A224/)): M5 x 10 of the same series (engages 5.3 mm: only if the 12 is out) |
-| T2 | [91239A224](https://www.mcmaster.com/91239A224/): Black-oxide class 10.9 button head hex drive screw, ISO 7380, M5 x 0.8 x 10 mm (tray, bell | 58 | 1 x 100-pack | $11.79 | $11.79 | 16 tray and belly into the cheeks' flange nuts, 12 battery bay into the belly, 8 deck posts, 8 plate | McMaster-Carr $12.06 ([link](https://www.mcmaster.com/91239A228/)): M5 x 12 of the same series |
-| T2 | [91294A190](https://www.mcmaster.com/91294A190/): Black-oxide alloy steel flat head hex drive screw, 90 deg, M4 x 0.7 x 10 mm (the spine sta | 24 | 1 x 100-pack | $6.38 | $6.38 | 16 the spine standoffs (flush on the frame side), 6 switch cradle, MCU carrier and DIN rail into the | McMaster-Carr $6.25 ([link](https://www.mcmaster.com/91294A188/)): M4 x 8 of the same series (engages 3.3 mm in the standoff) |
+| T2 | [94459A140](https://www.mcmaster.com/94459A140/): Heat-Set Threaded Inserts for Plastic, Standard, Brass, M3 x 0.5 mm Thread Size, 5.7 mm In | 26 | 1 x 50-pack | $10.91 | $10.91 | P1: 4 power dcdc, 2 bus insulator 1, 2 bus bar 1, 2 bus insulator 2, 2 bus bar 2, 5 bay side l high, | 3DJake $11.18 ([link](https://www.3djake.com/cnc-kitchen/threaded-inserts-m3-standard)): In stock |
+| T2 | [94459A775](https://www.mcmaster.com/94459A775/): Heat-Set Threaded Inserts for Plastic, Standard, Brass, M5 x 0.8 mm Thread Size, 7.9 mm In | 32 | 2 x 25-pack | $6.82 | $13.64 | P1: 6 hip frame left, 6 hip frame right, 1 post 1 foot, 1 post 1 head, 1 post 2 foot, 1 post 2 head, | 3DJake $11.18 ([link](https://www.3djake.com/cnc-kitchen/threaded-inserts-m5-short)): In stock |
+| T2 | [91290A111](https://www.mcmaster.com/91290A111/): Black-Oxide Alloy Steel Socket Head Screw, US Origin, M3 x 0.5 mm Thread Size, 6 mm Long | 28 | 1 x 100-pack | $11.59 | $11.59 | P1: 4 power dcdc, 5 bay side l low, 5 bay side l high, 5 bay side r low, 5 bay side r high (cad/body | Belmetric $0.12 ([link](https://belmetric.com/m3x0-5-socket-head-cap-screw-din-912-class-12-9/)): in stock |
+| T2 | [91290A113](https://www.mcmaster.com/91290A113/): Black-oxide alloy steel socket head screw, M3 x 0.5 x 8 mm (the bus bars to their insulato | 8 | 1 x 100-pack | $13.28 | $13.28 | P1: 2 bus insulator 1, 2 bus bar 1, 2 bus insulator 2, 2 bus bar 2 (cad/body_joints.py) | McMaster-Carr $13.23 ([link](https://www.mcmaster.com/91290A115/)): M3 x 10 of the same series |
+| T2 | [91294A190](https://www.mcmaster.com/91294A190/): Black-oxide alloy steel flat head hex drive screw, 90 deg, M4 x 0.7 x 10 mm (the spine sta | 16 | 1 x 100-pack | $6.38 | $6.38 | P1: 8 standoff left, 8 standoff right (cad/body_joints.py) | McMaster-Carr $6.25 ([link](https://www.mcmaster.com/91294A188/)): M4 x 8 of the same series (engages 3.3 mm in the standoff) |
+| T2 | [91290A148](https://www.mcmaster.com/91290A148/): Black-oxide alloy steel socket head screw, M4 x 0.7 x 12 mm (the fuse board's M4 studs, do | 10 | 1 x 100-pack | $12.30 | $12.30 | P1: 2 dcdc bracket, 4 adapter plate front, 4 adapter plate rear (cad/body_joints.py) | McMaster-Carr $14.23 ([link](https://www.mcmaster.com/91290A150/)): M4 x 14 of the same series (a stack of three lugs) |
+| T2 | [91290A168](https://www.mcmaster.com/91290A168/): Black-Oxide Alloy Steel Socket Head Screw, US Origin, M4 x 0.7 mm Thread Size, 20 mm Long | 12 | 1 x 100-pack | $14.47 | $14.47 | P1: 1 isolator 1, 1 isolator 2, 1 isolator 3, 1 isolator 4, 4 bay rail l, 4 bay rail r (cad/body_joi | Belmetric $0.20 ([link](https://belmetric.com/m4x0-7-socket-head-cap-screw-din-912-class-12-9/)): In stock |
+| T2 | [91239A224](https://www.mcmaster.com/91239A224/): Black-oxide class 10.9 button head hex drive screw, ISO 7380, M5 x 0.8 x 10 mm (tray, bell | 16 | 1 x 100-pack | $11.79 | $11.79 | P1: 1 plate post 1 foot, 1 plate post 1 head, 1 plate post 2 foot, 1 plate post 2 head, 1 plate post | McMaster-Carr $12.06 ([link](https://www.mcmaster.com/91239A228/)): M5 x 12 of the same series |
+| T2 | [91239A228](https://www.mcmaster.com/91239A228/): Black-oxide class 10.9 button head hex drive screw, ISO 7380, M5 x 0.8 x 12 mm (the hip fr | 40 | 1 x 100-pack | $12.06 | $12.06 | P1: 6 hip frame left, 4 tray flange left, 4 belly flange left, 6 hip frame right, 4 tray flange righ | McMaster-Carr $11.79 ([link](https://www.mcmaster.com/91239A224/)): M5 x 10 of the same series (engages 5.3 mm: only if the 12 is out) |
 | T2 | [95947A065](https://www.mcmaster.com/95947A065/): Lightweight aluminium female-threaded hex standoff, 6 mm hex, M4 x 31 mm (the spine: betwe | 8 | 8 | $1.46 | $11.68 | the spine: between the cheeks in the hip frames' bolt rows | McMaster-Carr $1.35 ([link](https://www.mcmaster.com/95947A062/)): M4 x 30 of the same series, with a printed 1 mm washer at one end |
 | T2 | [95947A048](https://www.mcmaster.com/95947A048/): Lightweight aluminium female-threaded hex standoff, 6 mm hex, M3 x 16 mm (the J501 carrier | 4 | 4 | $0.81 | $3.24 | the J501 carrier on the compute pallet | McMaster-Carr $0.81 ([link](https://www.mcmaster.com/95947A051/)): M3 x 19 of the same series (the carrier 3 mm higher) |
-| T2 | [94459A775](https://www.mcmaster.com/94459A775/): Heat-Set Threaded Inserts for Plastic, Standard, Brass, M5 x 0.8 mm Thread Size, 7.9 mm In | 24 | 1 x 25-pack | $6.82 | $6.82 | 8 deck posts, 8 plate posts, 8 riser (its legs, both ends) | 3DJake $11.18 ([link](https://www.3djake.com/cnc-kitchen/threaded-inserts-m5-short)): In stock |
-| T2 | [94459A140](https://www.mcmaster.com/94459A140/): Heat-Set Threaded Inserts for Plastic, Standard, Brass, M3 x 0.5 mm Thread Size, 5.7 mm In | 8 | 1 x 50-pack | $10.91 | $10.91 | the two bus-bar insulators (two from above, two from below each) | 3DJake $11.18 ([link](https://www.3djake.com/cnc-kitchen/threaded-inserts-m3-standard)): In stock |
-| T2 | [91290A168](https://www.mcmaster.com/91290A168/): Black-Oxide Alloy Steel Socket Head Screw, US Origin, M4 x 0.7 mm Thread Size, 20 mm Long | 4 | 1 x 100-pack | $14.47 | $14.47 | the compute pallet through its printed TPU isolators into the tray's nuts | Belmetric $0.20 ([link](https://belmetric.com/m4x0-7-socket-head-cap-screw-din-912-class-12-9/)): In stock |
-| T2 | [91290A111](https://www.mcmaster.com/91290A111/): Black-Oxide Alloy Steel Socket Head Screw, US Origin, M3 x 0.5 mm Thread Size, 6 mm Long | 4 | 1 x 100-pack | $11.59 | $11.59 | the J501 carrier onto its standoffs | Belmetric $0.12 ([link](https://belmetric.com/m3x0-5-socket-head-cap-screw-din-912-class-12-9/)): In stock |
-| T2 | [91294A126](https://www.mcmaster.com/91294A126/): Black-Oxide Alloy Steel Hex-Drive Flat Head Screw, 90 Degree Countersink, M3 x 0.5 mm Thre | 4 | 1 x 100-pack | $5.45 | $5.45 | the carrier standoffs up through the pallet's countersinks | McMaster-Carr $5.82 ([link](https://www.mcmaster.com/91294A128/)): M3 x 8 of the same series (4.8 mm into the standoff) |
+| T2 | [91294A126](https://www.mcmaster.com/91294A126/): Black-Oxide Alloy Steel Hex-Drive Flat Head Screw, 90 Degree Countersink, M3 x 0.5 mm Thre | 4 | 1 x 100-pack | $5.45 | $5.45 | the carrier standoffs up through the pallet's countersinks | Belmetric $0.18 ([link](https://belmetric.com/m3x0-5-flat-head-cap-screw-steel-10-9-din-7991/)): in stock |
 | T2 | [9307K884](https://www.mcmaster.com/9307K884/): Buna-N Rubber Grommet, for 11/16" Hole Diameter and 1/4" Material Thickness, 7/16" ID | 1 | 1 x 10-pack | $10.82 | $10.82 | the turret harness through the deck | printed $0.00 ([link](https://www.mcmaster.com/9307K884/)): print a split TPU 95A grommet (as the deck's lidar pass) |
-| T2 | [91290A113](https://www.mcmaster.com/91290A113/): Black-oxide alloy steel socket head screw, M3 x 0.5 x 8 mm (the bus bars to their insulato | 8 | 1 x 100-pack | $13.28 | $13.28 | the bus bars to their insulators (4), the insulators to the plate from below (4) | McMaster-Carr $13.23 ([link](https://www.mcmaster.com/91290A115/)): M3 x 10 of the same series |
+| T2 | [91290A667](https://www.mcmaster.com/91290A667/): Black-Oxide Alloy Steel Socket Head Screw, M6 x 1 mm Thread Size, 16 mm Long, Fully Thread | 10 | 1 x 100-pack | $8.59 | $8.59 | the bus bars' lug stacks: down through the lug(s) and the bar into the insulator's nut | Belmetric $0.20 ([link](https://belmetric.com/m6x1-0-socket-head-cap-screw-din-912-class-12-9/)): in stock: DIN 912 class 12.9, black oxide, fully threaded (the |
+| T2 | [94645A205](https://www.mcmaster.com/94645A205/): High-Strength Steel Nylon-Insert Locknut, Zinc Plated, M6 x 1 mm Thread Size | 10 | 1 x 100-pack | $12.26 | $12.26 | held in the bus insulators' hex pockets under the bars' holes (they cannot turn) | Global Industrial $25.95 ([link](https://www.globalindustrial.com/p/m6-x-1-0-nylon-insert-lock-nut-304-stainless-steel-din-985-pkg-of-100)): ships in 2 business |
 
-### Amazon (amazon.com): $289.99
-
-| Task | Part | Used | Order | Price | Line | For | Backup |
-|---|---|---|---|---|---|---|---|
-| T5 | [801D](https://www.amazon.com/dp/B0F659GYFJ): GLITTER 801D capacitor spot welder (pure-nickel strip), one box | 1 | 1 | $289.99 | $289.99 | welding the pack's nickel (once) | Grid Rewired $252.00 ([link](https://gridrewired.com/products/kweld-spot-welder-kit)): available; kWeld complete kit (needs a kCap or a LiPo, ~$203 more) |
-
-### Li-ion Wholesale (liionwholesale.com): $154.00
+### The Power Tool Store (thepowertoolstore.com): $518.00
 
 | Task | Part | Used | Order | Price | Line | For | Backup |
 |---|---|---|---|---|---|---|---|
-| T5 | [INR-18650-P30B](https://liionwholesale.com/products/molicel-npe-inr-18650-p30b-36a-3000mah-flat-top-18650-battery-authorized-distributor): Molicel INR-18650-P30B 18650 Li-ion cell, 3.0 Ah, 36 A continuous, flat top | 28 | 28 | $5.50 | $154.00 | the 13S2P brick (26) and two spares | IMR Batteries $6.99 ([link](https://www.imrbatteries.com/products/molicel-p30b-18650-3000mah-30a-battery)): available (store JSON) |
+| T5 | [DCB609 FLEXVOLT 20V/60V MAX 9.0Ah](https://thepowertoolstore.com/products/dewalt-dcb609): DeWalt DCB609 FLEXVOLT 20V/60V MAX 9.0Ah | 2 | 2 | $259.00 | $518.00 | the battery (D65): two FLEXVOLT 9.0 Ah packs in 20 V mode, in series (10S, 30-41 V); the user's own  | Ace Tool $259.00 ([link](https://acetool.com/Dewalt-DCB609-p/dew-dcb609.htm)): listed |
+
+### Newark (newark.com): $275.99
+
+| Task | Part | Used | Order | Price | Line | For | Backup |
+|---|---|---|---|---|---|---|---|
+| T5 | [TEP 150-4812WI](https://www.newark.com/search?st=TEP%20150-4812WI): TRACO TEP 150-4812WI DC-DC converter, 18-75 V in (4:1), 12 V 12.5 A (150 W), isolated 2,25 | 1 | 1 | $275.99 | $275.99 | 12 V 12.5 A, 18-75 V in, isolated (D65): the J501 and the 12 V rail, in place of the DDR-120C-24 and | Farnell $222.65 ([link](https://www.farnell.com/search?st=TEP%20150-4812WI)): listed (via the same aggregator) |
 
 ### go2marine (go2marine.com): $121.24
 
 | Task | Part | Used | Order | Price | Line | For | Backup |
 |---|---|---|---|---|---|---|---|
-| T5 | [5191 MRBF Terminal Fuse Block 30-300A](https://www.go2marine.com/products/mrbf-terminal-fuse-block-30-to-300a): Blue Sea Systems 5191 MRBF Terminal Fuse Block 30-300A | 1 | 1 | $31.50 | $31.50 | the main fuse's block on the battery + lead (its M8 post insulated from the plate) | go2marine $17.25 ([link](https://www.go2marine.com/products/mrbf-terminal-fuse-block-single-output-30-300-a-retail-pack)): available; Egis MRBF block, single ou |
+| T5 | [5191 MRBF Terminal Fuse Block 30-300A](https://www.go2marine.com/products/mrbf-terminal-fuse-block-30-to-300a): Blue Sea Systems 5191 MRBF Terminal Fuse Block 30-300A | 1 | 1 | $31.50 | $31.50 | the main fuse's block on the bay's + lead (on 3 mm printed PETG spacers; its M8 post insulated from  | go2marine $17.25 ([link](https://www.go2marine.com/products/mrbf-terminal-fuse-block-single-output-30-300-a-retail-pack)): available; Egis MRBF block, single ou |
 | T5 | [5181](https://www.go2marine.com/products/mrbf-terminal-fuses-30-to-300-amps): Blue Sea 5181 MRBF terminal fuse 80 A, 58 V DC, 2 kA at 58 V | 2 | 2 | $20.50 | $41.00 | the main fuse (80 A, 58 V DC, 2 kA at 58 V); one spare | go2marine $13.50 ([link](https://www.go2marine.com/products/mrbf-terminal-fuse-80-a-retail-pack)): available; Egis MRBF 80 A, 58 V DC |
-| T5 | [analog meter shunt 150 A / 50 mV (UPC 632085092313)](https://www.go2marine.com/products/analog-meter-shunt-150a-50mv): Blue Sea meter shunt 150 A / 50 mV (manganin), in the battery negative | 1 | 1 | $48.74 | $48.74 | the current shunt in the battery negative (before the switch: it sees charge and discharge) | The Solar Store $59.00 ([link](https://www.thesolarstore.com/products/shunt-mkb-100-100-100amp-100mv-shunt)): available; Deltec MKB-100-100 (100 A / 100 mV) |
-
-### Bravo Electro (bravoelectro.com): $103.40
-
-| Task | Part | Used | Order | Price | Line | For | Backup |
-|---|---|---|---|---|---|---|---|
-| T5 | [DDR-120C-24](https://www.bravoelectro.com/ddr-120c-24.html): Mean Well DDR-120C-24 | 1 | 1 | $69.20 | $69.20 | 24 V 5 A, isolated: the J501 and the turret; on a printed TS35 rail on the tray | TRC Electronics $88.66 ([link](https://www.trcelectronics.com/products/mean-well-ddr-120c-24)): 156 can ship now |
-| T5 | [DDR-60L-12](https://www.bravoelectro.com/ddr-60l-12.html): Mean Well DDR-60L-12 DIN-rail DC-DC, 18-75 V in, 12 V 5 A, isolated | 1 | 1 | $34.20 | $34.20 | 12 V 5 A, isolated: the lidar interface box, the 5 V buck, the radio-stop jack (and the P3 lights an | TRC Electronics $43.82 ([link](https://www.trcelectronics.com/products/mean-well-ddr-60l-12)): 40 |
+| T5 | [analog meter shunt 150 A / 50 mV (UPC 632085092313)](https://www.go2marine.com/products/analog-meter-shunt-150a-50mv): Blue Sea meter shunt 150 A / 50 mV (manganin), in the battery negative | 1 | 1 | $48.74 | $48.74 | the current shunt in the + lead after the MRBF (high side: the INA228 survives the switch opening) | The Solar Store $59.00 ([link](https://www.thesolarstore.com/products/shunt-mkb-100-100-100amp-100mv-shunt)): available; Deltec MKB-100-100 (100 A / 100 mV) |
 
 ### Haisstronica (haisstronica.com): $99.98
 
 | Task | Part | Used | Order | Price | Line | For | Backup |
 |---|---|---|---|---|---|---|---|
-| T5 | [5000 pcs AWG 22-7](https://www.haisstronica.com/products/5000pcs-wire-ferrules-awg-22-7): Wire ferrules, 5000 pcs, AWG 22-7 (every screw terminal) | 1 | 1 | $65.99 | $65.99 | every screw terminal (the converters, the switch) | Haisstronica $33.99 ([link](https://www.haisstronica.com/products/ferrule-crimping-tool-awg-24-8)): available (the tool) |
+| T5 | [5000 pcs AWG 22-7](https://www.haisstronica.com/products/5000pcs-wire-ferrules-awg-22-7): Wire ferrules, 5000 pcs, AWG 22-7 (every screw terminal) | 1 | 1 | $65.99 | $65.99 | every screw terminal (the converter, the switch) | Haisstronica $33.99 ([link](https://www.haisstronica.com/products/ferrule-crimping-tool-awg-24-8)): available (the tool) |
 | T5 | [HX1574](https://www.haisstronica.com/products/ferrule-crimping-tool-awg-24-8): Haisstronica ratcheting ferrule crimper, AWG 24-8 | 1 | 1 | $33.99 | $33.99 | the ferrules (once) | Haisstronica $65.99 ([link](https://www.haisstronica.com/products/5000pcs-wire-ferrules-awg-22-7)): available (the ferrule kit) |
-
-### Luna Cycle (lunacycle.com): $99.95
-
-| Task | Part | Used | Order | Price | Line | For | Backup |
-|---|---|---|---|---|---|---|---|
-| T5 | [Luna Charger 48V Advanced 300W](https://lunacycle.com/luna-charger-48v-advanced-300w-ebike-charger/): Luna Charger 48V Advanced 300 W (13S): 1-5 A and 80/90/100 % knobs; charge at 90 % (to be  | 1 | 1 | $99.95 | $99.95 | the charger: XT60 output, set to 90 % and metered to 53.3 V before the first charge, 2-3 A | Grin Technologies on Amazon $329.99 ([link](https://www.amazon.com/dp/B0FLYNYC6N)): In Stock; Grin Standard Satiator, programmable 24-63 V: 53.3 V set directly |
 
 ### BNTECHGO (bntechgo.com): $96.90
 
 | Task | Part | Used | Order | Price | Line | For | Backup |
 |---|---|---|---|---|---|---|---|
-| T5 | [8 AWG silicone black 10 ft](https://bntechgo.com/bntechgo-8-gauge-silicone-wire-black-10-feet-ultra-flexible-high-temp-200-c-600v-8-awg-silicone-rubber-wire-with-1650-strands-of-tinned-copper-wire-stranded-wire-for-model-battery/): BNTECHGO 8 AWG silicone wire, black, 10 ft (the pack leads, the MRBF, the shunt, the switc | 1 | 1 | $17.98 | $17.98 | the pack leads, the MRBF, the shunt, the switch and the bus bars (about 1.5 m; red heat-shrink on th | BNTECHGO $24.98 ([link](https://bntechgo.com/bntechgo-10-gauge-silicone-wire-spool-black-25-feet-ultra-flexible-high-temp-200-c-600v-10-awg-silicone-rubber-wire |
+| T5 | [8 AWG silicone black 10 ft](https://bntechgo.com/bntechgo-8-gauge-silicone-wire-black-10-feet-ultra-flexible-high-temp-200-c-600v-8-awg-silicone-rubber-wire-with-1650-strands-of-tinned-copper-wire-stranded-wire-for-model-battery/): BNTECHGO 8 AWG silicone wire, black, 10 ft (the pack leads, the MRBF, the shunt, the switc | 1 | 1 | $17.98 | $17.98 | the bay's lead to the MRBF, the shunt, the switch and the bus bars (about 1.5 m; red heat-shrink on  | BNTECHGO $24.98 ([link](https://bntechgo.com/bntechgo-10-gauge-silicone-wire-spool-black-25-feet-ultra-flexible-high-temp-200-c-600v-10-awg-silicone-rubber-wire |
 | T5 | [12 AWG silicone red + black 25 + 25 ft](https://bntechgo.com/): BNTECHGO 12 AWG silicone wire, red and black (VESC leads) | 1 | 1 | $32.98 | $32.98 | the two VESC branches (about 1.2 m red + black) | RaceDayQuads $2.99 ([link](https://www.racedayquads.com/products/silicone-wire-2-ft-red-and-black-pair)): 12 AWG sold out on 2026-10-27; 16/18/20 AWG in stock |
-| T5 | [14 AWG silicone red + black 25 + 25 ft](https://bntechgo.com/): BNTECHGO 14 AWG silicone wire, red and black (RS-04 branches) | 1 | 1 | $24.98 | $24.98 | the four RS-04 branches (about 3 m red + black) | RaceDayQuads $2.99 ([link](https://www.racedayquads.com/products/silicone-wire-2-ft-red-and-black-pair)): 14 AWG sold out on 2026-10-27 |
-| T5 | [18 AWG silicone red + black 10 + 10 ft](https://bntechgo.com/): BNTECHGO 18 AWG silicone wire, red and black (converters, 24 V and 12 V) | 1 | 1 | $9.48 | $9.48 | the converters' inputs, the 24 V and 12 V outputs, the charge port (about 3 m red + black) | RaceDayQuads $1.99 ([link](https://www.racedayquads.com/products/silicone-wire-2-ft-red-and-black-pair)): 18 AWG in stock |
+| T5 | [14 AWG silicone red + black 25 + 25 ft](https://bntechgo.com/): BNTECHGO 14 AWG silicone wire, red and black (RS-04 branches) | 1 | 1 | $24.98 | $24.98 | the four RS-04 branches, the frame bond (W33), the turret's branch and the J501's 12 V (about 4 m re | RaceDayQuads $2.99 ([link](https://www.racedayquads.com/products/silicone-wire-2-ft-red-and-black-pair)): 14 AWG sold out on 2026-10-27 |
+| T5 | [18 AWG silicone red + black 10 + 10 ft](https://bntechgo.com/): BNTECHGO 18 AWG silicone wire, red and black (converters, 24 V and 12 V) | 1 | 1 | $9.48 | $9.48 | the converter's input, the 12 V loads (about 2 m red + black) | RaceDayQuads $1.99 ([link](https://www.racedayquads.com/products/silicone-wire-2-ft-red-and-black-pair)): 18 AWG in stock |
 | T5 | [22 AWG silicone red + black 25 + 25 ft](https://bntechgo.com/): BNTECHGO 22 AWG silicone wire, red and black (5 V, signals; twist the CAN pairs by hand) | 1 | 1 | $11.48 | $11.48 | 5 V and signal wiring; the CAN pairs twisted by hand (about 6 m) | RaceDayQuads $1.99 ([link](https://www.racedayquads.com/products/silicone-wire-2-ft-red-and-black-pair)): 22 AWG sold out on 2026-10-27; 20 AWG in stock |
 
-### Daly (official store) (bmsdaly.com): $60.60
+### Amazon (Terrafirma Technology) (amazon.com): $64.00
 
 | Task | Part | Used | Order | Price | Line | For | Backup |
 |---|---|---|---|---|---|---|---|
-| T5 | [G08-RK-89704](https://bmsdaly.com/products/daly-smart-lifepo4-bms-k-board-4s-12v-7s-8s-24v-16s-48v-li-ion-3s-12v-6s-7s-24v-100a-60a-40a-bms-for-18650-battery-pack-1): Daly K-series smart BMS, Li-ion 13S 48 V, 100 A, Bluetooth + UART (common port, negative s | 1 | 1 | $60.60 | $60.60 | the pack's BMS (common port, negative side); cell over-voltage set to 4.15 V, the charger stops at 4 | DalyElec on Amazon $95.47 ([link](https://www.amazon.com/dp/B0CXLYVP5B)): In Stock (sold and shipped by DalyElec), delivery quoted Nov 5-13 |
+| T5 | [4pack 10AWG Adapter for DeWALT 20V (Amazon B07HYJ628S)](https://www.amazon.com/dp/B07HYJ628S): Terrafirma Technology DeWalt 20 V battery adapter, 10 AWG leads (1 ft), 30 A stated, no fu | 1 | 1 x 4-pack | $64.00 | $64.00 | the packs' rail adapters (4-pack: two used, two spare): 10 AWG leads, 30 A stated | Amazon (Terrafirma, 12 AWG single) $19.00 ([link](https://www.amazon.com/dp/B07TQFBZ6N)): listed; 12 AWG, M4/#6 mounting holes, current not stated |
 
 ### Flipsky (flipsky.net): $52.00
 
 | Task | Part | Used | Order | Price | Line | For | Backup |
 |---|---|---|---|---|---|---|---|
-| T5 | [ANSIFS20SH](https://flipsky.net/products/flipsky-anti-spark-switch-smart-enhanced-300a-v2-0-for-electric-skateboard-ebike-scooter-robots): Flipsky Anti Spark Switch Smart Enhanced 300A V2.0, 12-84 V (3-20S), 100 A continuous, 16  | 1 | 1 | $52.00 | $52.00 | the main switch: low side, between the shunt and the - bus; momentary mode (D54) | Flipsky $48.00 ([link](https://flipsky.net/products/flipsky-antispark-switch-pro-with-aluminum-pcb-case-200a-for-electric-skateboard-ebike-scooter-robots)): ava |
-
-### IMR Batteries (imrbatteries.com): $48.96
-
-| Task | Part | Used | Order | Price | Line | For | Backup |
-|---|---|---|---|---|---|---|---|
-| T5 | [18650 2P nickel 0.15 x 18.5 x 5 m](https://www.imrbatteries.com/products/18650-2p-pure-nickel-strip-roll-0-15mm-x-18-5mm-5m-16-4-feet): Pure nickel strip, 18650 2P pre-shaped, 0.15 x 18.5 mm, 5 m roll | 1 | 1 | $39.99 | $39.99 | the 2P groups and the series links (doubled on every series link) | Li-ion Wholesale $10.34 ([link](https://liionwholesale.com/products/pure-nickel-strip-roll-0-15mm-0-2mm-thickness-6mm-10mm-widths)): 0.2 x 8 mm x 20 ft availabl |
-| T5 | [18650 fish paper rings 20 pcs](https://www.imrbatteries.com/products/18650-terminal-insulators-fish-paper-20pcs-green-round-rings-solid): 18650 terminal insulator rings, fish paper, 20 pcs | 26 | 2 x 20-pack | $0.99 | $1.98 | one ring on every cell's + end | Li-ion Wholesale $0.25 ([link](https://liionwholesale.com/products/18650-flat-top-battery-terminal-insulators-5pcs-matte-black)): available (5 pcs) |
-| T5 | [Polyimide tape 20 mm x 30 m](https://www.imrbatteries.com/products/polyimide-electrical-tape-20mm-x-30m-kapton-tape): Polyimide (Kapton) electrical tape, 20 mm x 30 m | 1 | 1 | $6.99 | $6.99 | between the layers, over every weld, round the BMS | IMR Batteries $8.99 ([link](https://www.imrbatteries.com/products/polyimide-electrical-tape-50mm-x-30m-kapton-tape)): available (50 mm) |
+| T5 | [ANSIFS20SH](https://flipsky.net/products/flipsky-anti-spark-switch-smart-enhanced-300a-v2-0-for-electric-skateboard-ebike-scooter-robots): Flipsky Anti Spark Switch Smart Enhanced 300A V2.0, 12-84 V (3-20S), 100 A continuous, 16  | 1 | 1 | $52.00 | $52.00 | the main switch: low side, between the bay's - and the - bus; momentary mode (D54) | Flipsky $48.00 ([link](https://flipsky.net/products/flipsky-antispark-switch-pro-with-aluminum-pcb-case-200a-for-electric-skateboard-ebike-scooter-robots)): ava |
 
 ### Pololu (pololu.com): $43.90
 
 | Task | Part | Used | Order | Price | Line | For | Backup |
 |---|---|---|---|---|---|---|---|
-| T5 | [D36V28F5 (#3782)](https://www.pololu.com/product/3782): Pololu 5 V 3.2 A step-down regulator D36V28F5 (from the 12 V rail) | 1 | 1 | $23.95 | $23.95 | 5 V from the 12 V rail: the MCU, VN-100, CAN transceivers, QT Py, radio receiver | Pololu $26.95 ([link](https://www.pololu.com/product/2858)): Rationed; D24V22F5 5 V 2.5 A, 5.3-36 V in |
+| T5 | [D36V28F5 (#3782)](https://www.pololu.com/product/3782): Pololu 5 V 3.2 A step-down regulator D36V28F5 (from the 12 V rail) | 1 | 1 | $23.95 | $23.95 | 5 V from the 12 V rail: the MCU, VN-100, CAN transceivers, radio receiver | Pololu $26.95 ([link](https://www.pololu.com/product/2858)): Rationed; D24V22F5 5 V 2.5 A, 5.3-36 V in |
 | T5 | [2804](https://www.pololu.com/product/2804): Pololu RC switch with relay (the radio stop: its dry contact is the STOP loop to the MCU;  | 1 | 1 | $19.95 | $19.95 | the radio's switch: its contact feeds the stop relay's coil (closed = run, open on the failsafe) | Pololu ([link](https://www.pololu.com/product/2803)): the digital-output version (no relay): backup through a MOSFET on the MCU board |
-
-### Adafruit (adafruit.com): $43.25
-
-| Task | Part | Used | Order | Price | Line | For | Backup |
-|---|---|---|---|---|---|---|---|
-| T5 | [5832](https://www.adafruit.com/product/5832): Adafruit INA228 85 V 20-bit power monitor breakout (remove its 15 mOhm shunt; wire it to t | 1 | 1 | $14.95 | $14.95 | pack voltage and current to the MCU over I2C (its own 15 mOhm shunt removed, wired to the external s | Adafruit $10.95 ([link](https://www.adafruit.com/product/6349)): In stock; INA238 (16-bit), same board |
-| T5 | [5708](https://www.adafruit.com/product/5708): Adafruit CAN Pal (TJA1051T/3) CAN transceiver, switchable 120 Ohm | 4 | 4 | $3.95 | $15.80 | CAN transceivers: three for the MCU's buses A, B, C, one for the QT Py on bus C | Waveshare $4.99 ([link](https://www.waveshare.com/sn65hvd230-can-board.htm)): InStock; SN65HVD230 board |
-| T5 | [5426](https://www.adafruit.com/product/5426): Adafruit QT Py ESP32-S3 (reads the Daly BMS over Bluetooth and puts it on CAN bus C: no wi | 1 | 1 | $12.50 | $12.50 | reads the BMS over Bluetooth and puts it on CAN bus C (no wire to the BMS: its UART ground is B-) | Waveshare $5.49 ([link](https://www.waveshare.com/esp32-s3-zero.htm)): listed $5.49-7.99 (the body plan, 2026-10-27) |
 
 ### Selterm (selterm.com): $31.16
 
@@ -143,7 +121,14 @@ Estimate ~$383 for the set until the instant prices are read. Backup: OSH Cut (o
 
 | Task | Part | Used | Order | Price | Line | For | Backup |
 |---|---|---|---|---|---|---|---|
-| T5 | [HHM](https://www.rockauto.com/en/moreinfo.php?pk=1474944): Bussmann HHM inline MINI fuse holder, 2-30 A (rated 32 V DC: the 58 V fuse does the interr | 12 | 12 | $2.28 | $27.36 | one per branch (11) and a spare: labelled "58 V fuses only"; pull only with the pack unplugged | LCSC $0.30 ([link](https://www.lcsc.com/product-detail/C3207515.html)): 0 (Keystone 3570 PCB holder: the fuse-board upgrade) |
+| T5 | [HHM](https://www.rockauto.com/en/moreinfo.php?pk=1474944): Bussmann HHM inline MINI fuse holder, 2-30 A (rated 32 V DC: the 58 V fuse does the interr | 12 | 12 | $2.28 | $27.36 | one per branch (11) and a spare: labelled "58 V fuses only"; pull only with the packs out | LCSC $0.30 ([link](https://www.lcsc.com/product-detail/C3207515.html)): 0 (Keystone 3570 PCB holder: the fuse-board upgrade) |
+
+### Adafruit (adafruit.com): $26.80
+
+| Task | Part | Used | Order | Price | Line | For | Backup |
+|---|---|---|---|---|---|---|---|
+| T5 | [5832](https://www.adafruit.com/product/5832): Adafruit INA228 85 V 20-bit power monitor breakout (remove its 15 mOhm shunt; wire it to t | 1 | 1 | $14.95 | $14.95 | pack voltage and current to the MCU over I2C (its own 15 mOhm shunt removed, wired to the external s | Adafruit $10.95 ([link](https://www.adafruit.com/product/6349)): In stock; INA238 (16-bit), same board |
+| T5 | [5708](https://www.adafruit.com/product/5708): Adafruit CAN Pal (TJA1051T/3) CAN transceiver, switchable 120 Ohm | 3 | 3 | $3.95 | $11.85 | CAN transceivers for the MCU's buses A, B, C | Waveshare $4.99 ([link](https://www.waveshare.com/sn65hvd230-can-board.htm)): InStock; SN65HVD230 board |
 
 ### ST eStore (estore.st.com): $19.90
 
@@ -155,10 +140,10 @@ Estimate ~$383 for the set until the instant prices are read. Backup: OSH Cut (o
 
 | Task | Part | Used | Order | Price | Line | For | Backup |
 |---|---|---|---|---|---|---|---|
-| T5 | [XT60H-F](https://www.pyrodrone.com/products/amass-xt60h-connector-5pcs-female): Amass XT60H female (charge port, held in a printed bezel), 5-pack | 1 | 1 x 5-pack | $3.99 | $3.99 | the charge port on the robot (female: no live pins), held in a printed bezel in the belly | RaceDayQuads $0.99 ([link](https://www.racedayquads.com/products/xt60-connector-1pc-choose-your-version)): available (single) |
-| T5 | [XT60H-M 5-pack](https://www.pyrodrone.com/products/xt60h-male-xt60-upgrade-amass): Amass XT60H male, 5-pack (RS-04 and VESC branches) | 6 | 2 x 5-pack | $3.99 | $7.98 | the RS-04 and VESC branch plugs | RaceDayQuads $0.99 ([link](https://www.racedayquads.com/products/xt60-connector-1pc-choose-your-version)): available (single) |
-| T5 | [XT30U-M 8-pack](https://www.pyrodrone.com/products/yellow-xt30u-m-8-pack-male-device): Amass XT30U male, 8-pack (12 V and 24 V branches) | 6 | 1 x 8-pack | $2.99 | $2.99 | the 24 V and 12 V branch plugs (J501, turret, lidar box, radio jack, two spare) | RaceDayQuads $0.99 ([link](https://www.racedayquads.com/products/xt30-connector-male-or-female)): available (single) |
-| T5 | [XT30U-F 8-pack](https://www.pyrodrone.com/products/yellow-xt30u-f-8-pack-female-battery): Amass XT30U female, 8-pack | 6 | 1 x 8-pack | $2.99 | $2.99 | their mating sockets | RaceDayQuads $0.99 ([link](https://www.racedayquads.com/products/xt30-connector-male-or-female)): available (single) |
+| T5 | [XT60H-F](https://www.pyrodrone.com/products/amass-xt60h-connector-5pcs-female): Amass XT60H female, 5-pack (the robot's live ends: the charge port and the 48 V branch lea | 6 | 2 x 5-pack | $3.99 | $7.98 | sockets on the robot, no live pins (D58, hazard 11): the six bus branch leads' ends (W10-W15) | RaceDayQuads $0.99 ([link](https://www.racedayquads.com/products/xt60-connector-1pc-choose-your-version)): available (single) |
+| T5 | [XT60H-M 5-pack](https://www.pyrodrone.com/products/xt60h-male-xt60-upgrade-amass): Amass XT60H male, 5-pack (the devices' end: the VESC leads; D58) | 2 | 1 x 5-pack | $3.99 | $3.99 | the two VESC leads' plugs (the devices carry the pins; the RS-04 pigtails' XT60H-M come with the leg | RaceDayQuads $0.99 ([link](https://www.racedayquads.com/products/xt60-connector-1pc-choose-your-version)): available (single) |
+| T5 | [XT30U-F 8-pack](https://www.pyrodrone.com/products/yellow-xt30u-f-8-pack-female-battery): Amass XT30U female, 8-pack (the robot's live ends: the 24 V and 12 V branch leads; D58) | 4 | 1 x 8-pack | $2.99 | $2.99 | sockets on the robot: the J501 (W21), the lidar box (W24), the turret (W34); one spare | RaceDayQuads $0.99 ([link](https://www.racedayquads.com/products/xt30-connector-male-or-female)): available (single) |
+| T5 | [XT30U-M 8-pack](https://www.pyrodrone.com/products/yellow-xt30u-m-8-pack-male-device): Amass XT30U male, 8-pack (the devices' end: the J501 and lidar box adapter leads; D58) | 4 | 1 x 8-pack | $2.99 | $2.99 | the devices' pins: the J501's DC-IN and the lidar box's adapter leads, two spare | RaceDayQuads $0.99 ([link](https://www.racedayquads.com/products/xt30-connector-male-or-female)): available (single) |
 
 ### RadioMaster (radiomasterrc.com): $16.99
 
@@ -170,33 +155,22 @@ Estimate ~$383 for the set until the instant prices are read. Backup: OSH Cut (o
 
 | Task | Part | Used | Order | Price | Line | For | Backup |
 |---|---|---|---|---|---|---|---|
-| T5 | [XT90-S](https://www.amazon.com/dp/B074PTHZ3M): Amass XT90-S anti-spark connector, male + female, 5 pairs | 1 | 1 x 5-pack | $12.98 | $12.98 | the pack's anti-spark plug: female on the pack lead, male on the robot (5-pair pack) | FLYRC on Amazon $14.99 ([link](https://www.amazon.com/dp/B08L3S2ZK8)): In Stock; 3 pairs with 150 mm 10 AWG pigtails |
+| T5 | [XT90-S](https://www.amazon.com/dp/B074PTHZ3M): Amass XT90-S anti-spark connector, male + female, 5 pairs | 2 | 1 x 5-pack | $12.98 | $12.98 | the bay's lead (anti-spark: female on the bay, male on the robot) and the series link between the pa | FLYRC on Amazon $14.99 ([link](https://www.amazon.com/dp/B08L3S2ZK8)): In Stock; 3 pairs with 150 mm 10 AWG pigtails |
 
-### Digi-Key (digikey.com): $8.50
-
-| Task | Part | Used | Order | Price | Line | For | Backup |
-|---|---|---|---|---|---|---|---|
-| T5 | [DT06-12SA (+ W12S wedge + 12 x 0462-201-16141 sockets)](https://www.digikey.com/en/products/detail/te-connectivity-deutsch-ict-connectors/DT06-12SA/6566568): CONN PLUG HSG 12POS - DT 12-way plug (socket side), key A | 1 | 1 | $8.50 | $8.50 | the turret's TM plug on the body's harness (docs/turret-wiring.md 1.1): 24 V, CAN (J501 can1), SAFET | Chief Enterprises $3.22 ([link](https://www.chiefenterprises.com/amphenol-sine-at06-12sa-12pos-plug-connector)): Orderable |
-
-### LCSC (lcsc.com): $8.28
+### LCSC (lcsc.com): $10.59
 
 | Task | Part | Used | Order | Price | Line | For | Backup |
 |---|---|---|---|---|---|---|---|
 | T5 | [0997020.WXN](https://www.lcsc.com/product-detail/C207028.html): Littelfuse MINI 58V blade fuse 20 A (the RS-04 branches) | 8 | 8 | $0.61 | $4.88 | the four RS-04 branches (14 AWG); four spares | element14 ([link](https://nz.element14.com/littelfuse/0997020-wxn/auto-blade-fuse-2a-58v/dp/2748837)): listed (snippet) |
-| T5 | [0997030.WXN](https://www.lcsc.com/product-detail/C207030.html): Littelfuse MINI 58V blade fuse 30 A (the VESC branches) | 4 | 4 | $0.44 | $1.76 | the two VESC branches (12 AWG); two spares | LCSC $0.49 ([link](https://www.lcsc.com/product-detail/C207029.html)): 1,743 (25 A) |
-| T5 | [0997010.WXN](https://www.lcsc.com/product-detail/C207026.html): Littelfuse MINI 58V blade fuse 10 A (DDR-120C-24 input, the charge port) | 4 | 4 | $0.41 | $1.64 | the DDR-120C-24 input and the charge port (18 AWG); two spares | LCSC $0.66 ([link](https://www.lcsc.com/product-detail/C207027.html)): 2,950 (15 A) |
+| T5 | [0997030.WXN](https://www.lcsc.com/product-detail/C207030.html): Littelfuse MINI 58V blade fuse 30 A (the VESC branches) | 4 | 4 | $0.44 | $1.76 | the two VESC branches (12 AWG; the VESCs' battery current limit 20 A); two spares | LCSC $0.49 ([link](https://www.lcsc.com/product-detail/C207029.html)): 1,743 (25 A) |
+| T5 | [0997010.WXN](https://www.lcsc.com/product-detail/C207026.html): Littelfuse MINI 58V blade fuse 10 A (DDR-120C-24 input, the charge port) | 4 | 4 | $0.41 | $1.64 | the TRACO input (W16) and the J501 (W21); two spares | LCSC $0.66 ([link](https://www.lcsc.com/product-detail/C207027.html)): 2,950 (15 A) |
+| T5 | [099707.5WXN](https://www.lcsc.com/product-detail/C2680610.html): Littelfuse MINI 58V blade fuse 7.5 A (the turret's feed W22 and the 12 V rail W43, D66) | 4 | 4 | $0.58 | $2.31 | the turret's branch (W22: the stop relay's contact carries 8 A) and the 12 V loads (W43); two spares | LCSC (other suppliers) $0.31 ([link](https://www.lcsc.com/product-detail/C2680610.html)): 3,000 (5-7 business days) |
 
 ### DigiKey (digikey.com): $8.28
 
 | Task | Part | Used | Order | Price | Line | For | Backup |
 |---|---|---|---|---|---|---|---|
-| T5 | [G2RL-2-DC12](https://www.digikey.com/en/products/detail/omron-electronics-inc-emc-div/G2RL-2-DC12/368870): Omron G2RL-2 DC12 power relay, DPDT, 12 V coil, 8 A at 30 V DC (the stop relay: the turret | 2 | 2 | $4.14 | $8.28 | the stop relay (one spare): pole A the turret's safety loop, pole B its 24 V branch; on the MCU boar | LCSC ([link](https://www.lcsc.com/product-detail/C61458.html)): listed as C61458 (price shown on the live page) |
-
-### Farnell (il.farnell.com): $5.88
-
-| Task | Part | Used | Order | Price | Line | For | Backup |
-|---|---|---|---|---|---|---|---|
-| T5 | [0997005.WXN](https://il.farnell.com/littelfuse/0997005-wxn/auto-blade-fuse-5a-58v/dp/2748834): Littelfuse MINI 58V blade fuse 5 A (DDR-60L-12 input; the 24 V J501 and turret branches) | 6 | 6 | $0.98 | $5.88 | the DDR-60L-12 input, and the 24 V J501 and turret branches (18 AWG); three spares | Dasenic $0.39 ([link](https://www.dasenic.com/product/littelfuse-0997005wxn)): 17,902 in stock, $0.3878 at 25+ (search result, 2026-10-27) |
+| T5 | [G2RL-2-DC12](https://www.digikey.com/en/products/detail/omron-electronics-inc-emc-div/G2RL-2-DC12/368870): Omron G2RL-2 DC12 power relay, DPDT, 12 V coil, 8 A at 30 V DC (the stop relay: the turret | 2 | 2 | $4.14 | $8.28 | the stop relay (one spare): pole A the turret's safety loop, pole B its bus branch (D66); on the MCU | LCSC ([link](https://www.lcsc.com/product-detail/C61458.html)): listed as C61458 (price shown on the live page) |
 
 ### TLC Electronics (tlcelectronics.com): $4.16
 
@@ -204,7 +178,13 @@ Estimate ~$383 for the set until the instant prices are read. Backup: OSH Cut (o
 |---|---|---|---|---|---|---|---|
 | T5 | [AGHGH28K305](https://tlcelectronics.com/products/detail/JST/AGHGH28K305): JST GH 1.25 pre-crimped lead, socket to socket, 300 mm (CAN, UART) | 8 | 8 | $0.52 | $4.16 | CAN and I2C leads to the transceivers and the INA228 | TLC Electronics $0.48 ([link](https://tlcelectronics.com/products/detail/JST/AGHGH28K152)): 6,000 (150 mm) |
 
-**Bought parts: $1494.10** (whole packs at the first seller's price; shipping and tax extra).
+### Farnell (il.farnell.com): $1.96
+
+| Task | Part | Used | Order | Price | Line | For | Backup |
+|---|---|---|---|---|---|---|---|
+| T5 | [0997005.WXN](https://il.farnell.com/littelfuse/0997005-wxn/auto-blade-fuse-5a-58v/dp/2748834): Littelfuse MINI 58V blade fuse 5 A (DDR-60L-12 input; the 24 V J501 and turret branches) | 2 | 2 | $0.98 | $1.96 | the INA228's VBUS sense lead (W32, 22 AWG); one spare | Dasenic $0.39 ([link](https://www.dasenic.com/product/littelfuse-0997005wxn)): 17,902 in stock, $0.3878 at 25+ (search result, 2026-10-27) |
+
+**Bought parts: $1608.60** (whole packs at the first seller's price; shipping and tax extra).
 
 ## 3. Listed, not in this order
 
@@ -217,33 +197,72 @@ Estimate ~$383 for the set until the instant prices are read. Backup: OSH Cut (o
 
 - M3 x 35 flat head, ISO 10642 (the cooler tie-down: the j501-agx rule, 4 mm into the module-to-heatsink standoffs) x 4: the J501 cooler tie-down up through the pallet. McMaster's 91294A flat heads stop at M3 x 25 (91294A138); the fallback is an M3 x 35 socket head (DIN 912: Belmetric BSH3X35 on its M3 page, belmetric.com/m3x0-5-socket-head-cap-screw-din-912-class-12-9/) with its head under the pallet, in the 8 mm the isolators leave
 - 1/4-20 UNC x 3/8 in socket button head (the VLP-16 to the deck) x 1: the lidar. any hardware store
+- 5/16-18 nylon-insert locknut (the SSC1 pods' feet in the ear brackets, P3) x 2: the ears. McMaster's 95615A (grade 5, zinc) has it; the product page for 5/16-18 is still to read (A120 is 1/4-20, A140 3/8-16)
+- Switchcraft TB4M mini-XLR 4-pin panel receptacle (the radio-stop jack, P3: STOP A/B, +12 V, GND) x 1: the rear face. a listed part (DigiKey, Mouser); price to read; the turret's pendant uses its 3-pin TB3M (catalog/turret.json)
+- RP-SMA bulkhead pigtails x 4 (the J501's radios to the rear face, P3) x 4: the rear face's D-flat holes. with the J501's Wi-Fi module when it is chosen (the j501-agx project's antenna note)
 - Ø4 x 10 mm dowel pin (the VLP-16's two locating holes) x 2: the lidar. McMaster 98381A series
+- thumbscrew_m3x10 x 4: the bay's two doors (two each, into the rails' end inserts): tool-free. not in the catalogue yet: a product page to read (D40)
+- vhb_tape_25mm x 1: the bay's TPU skids (3M VHB 5952, 25 mm). not in the catalogue yet: a product page to read (D40)
+- thumbscrew_m3x10 x 4: P1: 1 bay door front l, 1 bay door front r, 1 bay door rear l, 1 bay door rear r (cad/body_joints.py). not in the catalogue yet: a product page to read (D40)
+- screw_m5x16_button x 4: P2: 4 riser (cad/body_joints.py). not in the catalogue yet: a product page to read (D40)
 
 ## 5. Printed (Bambu P1S, 256 mm bed)
 
 | Part | Qty | Material | Size (mm) | g each | Hours | How |
 |---|---|---|---|---|---|---|
-| post | 4 | pa6-cf | 22 x 22 x 120 | 61 | 16.1 | PA6-CF, 100 % solid, printed standing; 2 x M5 inserts |
-| riser | 1 | pa6-cf | 144 x 144 x 30 | 166 | 10.9 | PA6-CF, 100 % solid, printed on its top face; 8 x M5 inserts, 2 x Ø5 dowels |
-| isolator | 4 | tpu95 | 16 x 16 x 15 | 2 | 0.9 | TPU 95A: the pallet's isolator foot, neck and cap |
-| din_rail_24v | 1 | pa6-cf | 35 x 26 x 8 | 2 | 0.1 | PA6-CF TS35 rail piece; 2 x M4 x 10 flat heads into the nuts below |
-| din_rail_12v | 1 | pa6-cf | 60 x 35 x 8 | 5 | 0.3 | PA6-CF TS35 rail piece; 2 x M4 x 10 flat heads into the nuts below |
+| post | 4 | pa6-cf | 22 x 22 x 120 | 44 | 11.4 | PA6-CF, 100 % solid, printed standing; 2 x M5 inserts |
+| riser | 1 | pa6-cf | 144 x 144 x 30 | 165 | 10.8 | PA6-CF, 100 % solid, printed on its top face; 8 x M5 inserts, 2 x Ø5 dowels |
+| isolator | 4 | tpu95 | 16 x 16 x 13 | 2 | 0.9 | TPU 95A: the pallet's isolator foot, neck and cap |
 | plate_post | 4 | pa6-cf | 16 x 16 x 42 | 11 | 2.8 | PA6-CF, 100 %; M5 inserts both ends; printed standing |
-| bus_insulator | 2 | pa6-cf | 110 x 20 x 10 | 22 | 2.8 | PA6-CF, 100 %; 4 x M3 inserts |
-| bay_rear | 1 | petg | 152 x 110 x 66 | 157 | 6.3 | PETG, 3 mm walls; 4 x M5 x 10 up into the belly plate's nuts each side |
-| bay_front | 1 | petg | 152 x 110 x 66 | 140 | 5.6 | PETG, 3 mm walls; 4 x M5 x 10 up into the belly plate's nuts each side |
-| bay_door | 1 | petg | 98 x 4 x 66 | 31 | 1.3 | PETG, 3 mm walls; 4 x M5 x 10 up into the belly plate's nuts each side |
-| bay_skid | 4 | tpu95 | 148 x 14 x 3 | 8 | 3.1 | TPU 95A skid |
+| bus_insulator | 2 | petg | 110 x 20 x 16 | 38 | 3.0 | PETG, 100 % (never a carbon-filled filament: carbon conducts, and the plate is bonded to the - bus); 4 x M3 inserts; test: > 10 MOhm at 50 V from every lug screw to the plate before power |
+| dcdc_bracket | 1 | pa6-cf | 98 x 48 x 69 | 61 | 4.0 | PA6-CF; two M4 x 10 down into the tray's nuts; the converter on four M3 x 8 through its upright |
+| bay_rail_l | 1 | pa6-cf | 310 x 8 x 10 | 26 | 1.7 | PA6-CF; four M4 x 16 up into the belly's nuts, five M3 inserts, two in its ends |
+| bay_rail_r | 1 | pa6-cf | 310 x 8 x 10 | 26 | 1.7 | PA6-CF; four M4 x 16 up into the belly's nuts, five M3 inserts, two in its ends |
+| adapter_plate_front | 1 | pa6-cf | 102 x 72 x 4 | 31 | 2.1 | PA6-CF; four M4 x 8 up into the belly's nuts; the adapter's screws into inserts set on arrival |
+| bay_door_front | 1 | petg | 128 x 102 x 4 | 66 | 2.6 | PETG; two knurled M3 x 10 thumbscrews into the rails' ends |
+| adapter_plate_rear | 1 | pa6-cf | 102 x 72 x 4 | 31 | 2.1 | PA6-CF; four M4 x 8 up into the belly's nuts; the adapter's screws into inserts set on arrival |
+| bay_door_rear | 1 | petg | 128 x 102 x 4 | 66 | 2.6 | PETG; two knurled M3 x 10 thumbscrews into the rails' ends |
+| bay_skid | 4 | tpu95 | 149 x 14 x 3 | 8 | 3.1 | TPU 95A skid on 3M VHB tape (no screw: under the packs there is 1 mm): the robot sits on these |
 
-By material: pa6-cf 0.51 kg, 33.0 h, $40.36; tpu95 0.04 kg, 4.0 h, $1.67; petg 0.33 kg, 13.2 h, $4.60. STLs beside the plan in `exports/body/`.
+By material: pa6-cf 0.56 kg, 36.6 h, $44.61; tpu95 0.04 kg, 4.0 h, $1.63; petg 0.21 kg, 8.2 h, $2.91. STLs beside the plan in `exports/body/`.
 
-## 6. Totals
+## 6. The P2 cart (the head: order it once P1 balances on its tether)
+
+The turret's mount plate (D59) goes under the deck at the riser: the riser's four screws grow to M5 x 16 through it, and its two ends are screwed down through the deck into its PEM nuts. **In the P1 deck, drill the two Ø5.5 holes by hand** at (x, y) = (-110, 0) and (30, 0) mm (robot frame): hold the plate on the riser's four screws and spot through its PEM nuts with an M5 transfer punch. A Rev B deck (lever 3) gets them cut.
+
+| Part | Qty | Made | Price each | Line | For |
+|---|---|---|---|---|---|
+| [turret_plate](../exports/body/sendcutsend/turret_plate_6061-T6_0.125in_x1.dxf) | 1 | SendCutSend: 6061-T6 aluminium 0.125 in, 2 x PEM SS-M5-0 pressed by SendCutSend (hardware insertion), positions as the STEP | $44.02 (read 2026-10-27) | $44.02 | D59 |
+| [94459A775](https://www.mcmaster.com/94459A775/): Heat-Set Threaded Inserts for Plastic, Standard, Brass, M5 x 0.8 mm Th | 4 | McMaster-Carr (1 x 25-pack) | $6.82 | $6.82 | P2: 4 riser (cad/body_joints.py) |
+| [91239A224](https://www.mcmaster.com/91239A224/): Black-oxide class 10.9 button head hex drive screw, ISO 7380, M5 x 0.8 | 2 | McMaster-Carr (1 x 100-pack) | $11.79 | $11.79 | P2: 2 turret plate ends (cad/body_joints.py) |
+
+**P2 cart: $62.63** (whole packs; a line marked as taken from an earlier pack costs nothing here).
+
+## 6b. The P3 cart (the shell, the tub, the guards: order it with P3)
+
+The shell and the tub's printed parts are in `exports/body/shell/` with their own print plan; the leg's knee wedges and apex fillets are envelopes for the leg workstream (`exports/body/shell/*_envelope.step`).
+
+| Part | Qty | Made | Price each | Line | For |
+|---|---|---|---|---|---|
+| [94459A140](https://www.mcmaster.com/94459A140/): Heat-Set Threaded Inserts for Plastic, Standard, Brass, M3 x 0.5 mm Th | 22 | McMaster-Carr (1 x 50-pack) | $10.91 | $10.91 | P3: 2 wall l front, 2 wall l rear, 2 wall r front, 2 wall r rear, 2 shell front post l, 2 shell front post r,  |
+| [90592A085](https://www.mcmaster.com/90592A085/): Steel Hex Nut, Medium-Strength, Class 8, M3 x 0.5 mm (held in the P3 s | 10 | McMaster-Carr (1 x 100-pack) | $2.94 | $2.94 | P3: 2 splice l, 2 splice r, 4 shell door, 2 shell hatch (cad/body_joints.py) |
+| [94645A102](https://www.mcmaster.com/94645A102/): High-Strength Steel Nylon-Insert Locknut, Zinc Plated, M5 x 0.8 mm Thr | 8 | McMaster-Carr (1 x 100-pack) | $15.66 | $15.66 | P3: 4 ear bracket l, 4 ear bracket r (cad/body_joints.py) |
+| [91290A120](https://www.mcmaster.com/91290A120/): Black-Oxide Alloy Steel Socket Head Screw, M3 x 0.5 x 16 mm (the P3 sh | 16 | McMaster-Carr (1 x 100-pack) | $12.22 | $12.22 | P3: 2 wall l front, 2 wall l rear, 2 wall r front, 2 wall r rear, 2 shell front post l, 2 shell front post r,  |
+| [91290A111](https://www.mcmaster.com/91290A111/): Black-Oxide Alloy Steel Socket Head Screw, US Origin, M3 x 0.5 mm Thre | 5 | McMaster-Carr (1 x 100-pack) | $11.59 | $11.59 | P3: 2 eyes clip, 3 fan duct (cad/body_joints.py) |
+| [91290A113](https://www.mcmaster.com/91290A113/): Black-oxide alloy steel socket head screw, M3 x 0.5 x 8 mm (the bus ba | 18 | McMaster-Carr (1 x 100-pack) | $13.28 | $13.28 | P3: 2 splice l, 2 splice r, 2 d435 cradle front feet, 2 d435 front back, 2 d435 cradle rear feet, 2 d435 rear  |
+| [91290A230](https://www.mcmaster.com/91290A230/): Black-oxide alloy steel socket head screw, M5 x 0.8 x 14 mm (the fuse  | 8 | McMaster-Carr (1 x 100-pack) | $17.43 | $17.43 | P3: 4 ear bracket l, 4 ear bracket r (cad/body_joints.py) |
+
+**P3 cart: $84.03** (whole packs; the bought shell parts (the SSC1 pods, the D435s, the DualEye) are in the sensor head's order).
+
+## 7. Totals
 
 | | |
 |---|---|
-| Bought (section 2) | $1494.10 |
-| SendCutSend (section 1, estimate) | ~$383 |
-| Filament used (section 5) | $46.63 |
-| **Body P0 + P1** | **~$1924** |
+| Bought (section 2) | $1608.60 |
+| SendCutSend (section 1, instant prices) | $579.63 |
+| Filament used (section 5) | $49.15 |
+| **Body P0 + P1** | **$2237.38** |
+| P2 cart (section 6) | $62.63 |
+| P3 cart (section 6b) | $84.03 |
 
-Not included: the compute and sensors (section 3, R13), the legs and their VESCs (the leg workstream's order), the turret (the turret workstream's), the shell and head (P3, T7), shipping and tax.
+Not included: the compute and sensors (section 3, R13), the legs and their VESCs (the leg workstream's order), the turret (the turret workstream's), the shell (P3), shipping and tax.

@@ -1,0 +1,42 @@
+# B8: the balance firmware (firmware/balance) builds for the Nucleo-G474RE, and its control core builds and passes its
+# unit tests on the host. The HIL (firmware/balance/hil) needs MuJoCo, CadQuery and the leg rig's `rig` package, so it is
+# not run here: run it locally (docs/body-firmware.md 7).
+name: body-firmware
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  firmware:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Toolchain
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends gcc-arm-none-eabi libnewlib-arm-none-eabi cmake make gcc
+          arm-none-eabi-gcc --version | head -1
+          cmake --version | head -1
+
+      - name: MCU firmware (STM32 HAL fetched at configure time)
+        run: |
+          cmake -S firmware/balance -B build/fw-mcu -DCMAKE_TOOLCHAIN_FILE="$PWD/firmware/balance/cmake/arm-none-eabi.cmake"
+          cmake --build build/fw-mcu -j
+          arm-none-eabi-size build/fw-mcu/balance.elf
+
+      - name: Host library and unit tests
+        run: |
+          cmake -S firmware/balance -B build/fw-host
+          cmake --build build/fw-host -j
+          ctest --test-dir build/fw-host --output-on-failure
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: balance-firmware
+          path: |
+            build/fw-mcu/balance.elf
+            build/fw-mcu/balance.bin
+            build/fw-mcu/balance.hex
+            build/fw-mcu/balance.map

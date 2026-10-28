@@ -1,0 +1,10 @@
+{
+ "from": "~/Code/j501-agx/cad/parameters.json (the j501-agx project, read only)",
+ "commit": "94da39d894c5157fe8aef5f1cdef00647d1e02ee",
+ "branch": "rev0.9-g48r",
+ "dirty": false,
+ "sha1": "4f7bd7b10daab5f2aa4fbd36f3fd50d93d657246",
+ "revision": "0.9-g48r",
+ "copied_on": "2026-10-27",
+ "photo_note": "the G48R cooler's centre on the PCB is from the user's photos (IMG_1852-1854), about +-3 mm: measure the fan centre from the PCB edges when the carrier is on the pallet (B14) and update the J501 project, then this copy"
+}

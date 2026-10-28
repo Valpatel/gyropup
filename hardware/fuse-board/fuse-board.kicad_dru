@@ -1,0 +1,38 @@
+(version 1)
+# Gyropup fuse board: clearances by net class (generate.py writes this file). JLCPCB's 2 oz minimums
+# (https://jlcpcb.com/capabilities/pcb-capabilities, read 2026-10-27) are the floor in fuse-board.kicad_pro; these rules add the voltage
+# clearances. IPC-2221B table 6-1 for 51-100 V: B2 (external, uncoated) 0.6 mm, B4 (external, permanent polymer
+# coating) 0.13 mm; the bus (D65, 10S) is 41 V charged and under 60 V in regen. 1.0 mm is used between every pair of different
+# power nets (a blown branch's output sits at 0 V beside a 53 V neighbour).
+
+(rule "between classes"
+  (condition "A.NetClass != B.NetClass && A.NetName != '' && B.NetName != ''")
+  (constraint clearance (min 1.0mm)))
+
+(rule "between battery-bus branch outputs"
+  (condition "A.NetClass == 'OUT48' && B.NetClass == 'OUT48' && A.NetName != B.NetName")
+  (constraint clearance (min 1.0mm)))
+
+(rule "between 12 V branch outputs"
+  (condition "A.NetClass == 'OUT12' && B.NetClass == 'OUT12' && A.NetName != B.NetName")
+  (constraint clearance (min 1.0mm)))
+
+# the shunt's two sides and its sense lines differ by at most the shunt drop (0.08 V at 80 A)
+(rule "shunt group"
+  (condition "(A.NetClass == 'BUS48' || A.NetClass == 'SENSE') && (B.NetClass == 'BUS48' || B.NetClass == 'SENSE')")
+  (constraint clearance (min 0.2mm)))
+
+# the INA228's own pins put IN-, VBUS and GND 0.2 mm apart (TI DGS, 85 V rated); the sense lines' escape from them
+# keeps 0.25 mm under solder mask (IPC-2221B B4: 0.13 mm at 51-100 V). These nets carry no current (VBUS through
+# 4.7 kOhm, IN+/IN- through 10 Ohm).
+(rule "sense lines beside the logic at the INA228"
+  (condition "A.NetClass == 'SENSE' && (B.NetClass == 'GND' || B.NetClass == 'LV')")
+  (constraint clearance (min 0.25mm)))
+
+(rule "the INA228's own pin pitch"
+  (condition "A.memberOfFootprint('U1') && B.memberOfFootprint('U1')")
+  (constraint clearance (min 0.15mm)))
+
+(rule "logic beside ground"
+  (condition "A.NetClass == 'LV' && B.NetClass == 'GND'")
+  (constraint clearance (min 0.2mm)))

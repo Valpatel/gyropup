@@ -49,6 +49,11 @@ STOCK = {
     '5052-0.187': {'material': '5052-H32 aluminium', 't_in': 0.187, 'bend': True, 'r_in': 0.250, 'k': 0.43, 'bd_in': 0.356,
                    'min_flange_in': 0.798, 'die_in': 0.984, 'countersink': True, 'hardware': True, 'density': 2.68,
                    'yield_mpa': 193.0, 'E_mpa': 70300.0},
+    # sendcutsend.com/bending-calculator, read 2026-10-27 (B6's battery tub): its table rounds, so the bend deduction computed
+    # from its radius and K is 0.0995 in against the 0.096 it states (cad/test_body.py allows 0.004 in)
+    '5052-0.063': {'material': '5052-H32 aluminium', 't_in': 0.063, 'bend': True, 'r_in': 0.035, 'k': 0.42, 'bd_in': 0.096,
+                   'min_flange_in': 0.303, 'die_in': 0.472, 'countersink': False, 'hardware': True, 'density': 2.68,
+                   'yield_mpa': 193.0, 'E_mpa': 70300.0},
     '5052-0.100': {'material': '5052-H32 aluminium', 't_in': 0.100, 'bend': True, 'r_in': 0.125, 'k': 0.40, 'bd_in': 0.191,
                    'min_flange_in': 0.463, 'die_in': 0.630, 'countersink': False, 'hardware': True, 'density': 2.68,
                    'yield_mpa': 193.0, 'E_mpa': 70300.0},
@@ -76,6 +81,10 @@ SCS_RULES = {
     'channel_base_to_flange': 2.0,           # "U/C-channel base must be at least 2x flange length for sheet metal"
     'max_bend_deg': 130.0,
     'box_flange_max_in_with_hardware': 3.0,
+    # app.sendcutsend.com refuses every service (bending, countersinking, hardware, tapping) on a part narrower than
+    # this: "This design does not meet our minimum width for this operation. The minimum width for this operation is
+    # 1 in." (read on the 20 mm bus bar, 2026-10-27, with tools/sendcutsend_quote.py)
+    'min_width_for_services_in': 1.0,
 }
 # PEM self-clinching nuts SendCutSend presses (catalogue: H hole to draw, K centre to cut edge, N centre to the edge
 # of the bend allowance, M centre to centre for the same part; min sheet), inches
@@ -190,6 +199,8 @@ SPINE_X = (-92.0, 92.0)             # the cheeks' length: just inside the hip fr
                                     # end into the belly, and the spine weighs 0.57 kg, not 0.93
 CHEEK_FLANGE = float(os.environ.get('GYROPUP_BODY_CHEEK_FLANGE', 30.0))   # outward flanges (OML): an SS-M5-0 nut needs 7.6 mm (half die) from the bend and
                                     # 7.1 mm (K) to the edge, beyond the 6.35 mm setback
+FLANGE_SCREW = {'size': 'M5', 'length': 12.0, 'key': 'screw_m5x12_button'}   # the tray and belly into the cheeks' flange nuts
+# (an M5 x 10 left 2.8 mm of the SS-M5-0's thread engaged under the 3.2 mm tray: cad/body_joints.py)
 FRAME_SCREW = {'size': 'M5', 'length': 12.0, 'head': 'ISO 7380 button head, 3 mm hex', 'torque_nm': 3.0,
                'why': f'through the {STOCK[CHEEK]["t"]:.2f} mm cheek it engages {12.0 - STOCK[CHEEK]["t"]:.1f} mm of the 7.9 mm insert and stays '
                       f'{11.0 - (12.0 - STOCK[CHEEK]["t"]):.1f} mm short of the pilot\'s 11 mm bottom; M5 x 16 would bottom out'}
@@ -294,6 +305,28 @@ def tm() -> dict:
     return out
 
 
+def turret_plug_box() -> dict:
+    """The turret's DT06-12SA plug and its withdrawal, as a box in the robot frame (x0, x1, y0, y1, z0, z1): from
+    exports/turret/mount.json's plug sweep box when the turret publishes it (docs/turret-next-plan.md N5), else from
+    cad/turret.py's receptacle (DT, DT_Z, the base's -y pad at dt_y): the plug 44 x 28 standing from the flange face and
+    sweeping 30 mm further out to withdraw. Nothing of the body may enter it (B6 keeps the shell out of it)."""
+    import sys
+    t = tm()
+    m = t.get('mount_json') or {}
+    box = m.get('plug_sweep_box_mm') or m.get('plug_box_mm')
+    if box:                                                           # the turret's own, in the TM frame (pan axis, TM face)
+        x0, x1, y0, y1, z0, z1 = box
+        return {'box': (t['pan_x'] + x0, t['pan_x'] + x1, y0, y1, t['face_z'] + z0, t['face_z'] + z1), 'source': 'exports/turret/mount.json'}
+    sys.path.insert(0, str(R / 'cad'))
+    import turret as tu
+    G = tu.Geo()
+    pl, f = tu.DT['plug'], tu.DT['flange']
+    y_in = -(G.dt_y + f[1])                                           # the flange's outer face: where the plug seats
+    y_out = y_in - pl[1] - tu.DT['sweep']
+    return {'box': (t['pan_x'] - pl[0] / 2, t['pan_x'] + pl[0] / 2, y_out, y_in, t['face_z'] + tu.DT_Z - pl[2] / 2, t['face_z'] + tu.DT_Z + pl[2] / 2),
+            'source': 'cad/turret.py DT, DT_Z and Geo.dt_y (until exports/turret/mount.json, N5)'}
+
+
 # ------------------------------------------------------------------------------------------- the lidar (VLP-16)
 
 
@@ -322,11 +355,53 @@ def lidar() -> dict:
 # ------------------------------------------------------------------------------------------- the J501 (read only)
 
 
+J501_SNAPSHOT = R / 'references' / 'vendor' / 'j501' / 'parameters-0.9-g48r.json'      # B10: a dated copy, so the body
+J501_SNAPSHOT_SOURCE = J501_SNAPSHOT.with_name('SOURCE.json')                            # builds without the J501 project
+
+
+def j501_used(P: dict) -> dict:
+    """The parts of the J501 project's parameters.json the body reads: a change in any of them is a change to the body."""
+    enc = P['enclosure']
+    return {'revision': P.get('revision'), 'pcb': P['pcb'], 'cooler': P['cooler'], 'ports': P['ports'],
+            'underside_envelopes': P.get('underside_envelopes'), 'thermal_fan': (P.get('thermal') or {}).get('fan'),
+            'board_support_height': enc['board_support_height'], 'heatsink_screw': enc['heatsink_screw']}
+
+
+@functools.lru_cache(maxsize=1)
+def j501_params() -> dict:
+    """The J501's parameters: the live file of the j501-agx project when it is on this machine (J501_DIR), else the
+    snapshot vendored in this repo (references/vendor/j501/, with its git hash in SOURCE.json). cad/test_body.py fails
+    when the two differ in anything the body reads, until the snapshot is updated on purpose (cad/body_params.py
+    --snapshot-j501)."""
+    live = J501_DIR / 'cad' / 'parameters.json'
+    f = live if live.exists() else J501_SNAPSHOT
+    P = json.loads(f.read_text())
+    P['_source'] = str(f) if f == live else str(f.relative_to(R))
+    return P
+
+
+def snapshot_j501():
+    """Copy the live J501 parameters into references/vendor/j501/ with where they came from (B10)."""
+    import datetime
+    import subprocess
+    live = J501_DIR / 'cad' / 'parameters.json'
+    git = lambda *a: subprocess.run(['git', '-C', str(J501_DIR), *a], capture_output=True, text=True).stdout.strip()
+    J501_SNAPSHOT.parent.mkdir(parents=True, exist_ok=True)
+    J501_SNAPSHOT.write_bytes(live.read_bytes())
+    src = {'from': '~/Code/j501-agx/cad/parameters.json (the j501-agx project, read only)', 'commit': git('rev-parse', 'HEAD'),
+           'branch': git('rev-parse', '--abbrev-ref', 'HEAD'), 'dirty': bool(git('status', '--short', 'cad/parameters.json')),
+           'sha1': hashlib.sha1(live.read_bytes()).hexdigest(), 'revision': json.loads(live.read_text()).get('revision'),
+           'copied_on': datetime.date.today().isoformat(),
+           'photo_note': 'the G48R cooler\'s centre on the PCB is from the user\'s photos (IMG_1852-1854), about +-3 mm: measure the fan '
+                         'centre from the PCB edges when the carrier is on the pallet (B14) and update the J501 project, then this copy'}
+    J501_SNAPSHOT_SOURCE.write_text(json.dumps(src, indent=1) + '\n')
+    return src
+
+
 @functools.lru_cache(maxsize=1)
 def j501() -> dict:
     """The J501 carrier, the AGX module's tie-down and the cooler, from the j501-agx project (read only)."""
-    f = J501_DIR / 'cad' / 'parameters.json'
-    P = json.loads(f.read_text())
+    P = j501_params()
     pcb, cool, enc = P['pcb'], P['cooler'], P['enclosure']
     return {'pcb': (pcb['width'], pcb['depth'], pcb['thickness']), 'holes': [tuple(h) for h in pcb['mount_holes']],
             'module_holes': [tuple(h) for h in pcb['module_mount_centers']], 'cooler': tuple(cool['size']),
@@ -336,7 +411,7 @@ def j501() -> dict:
             'aux_fins': cool.get('aux_fins'), 'fins': (cool.get('heatsink') or {}).get('fins'),
             'standoff_h': enc['board_support_height'],
             'tie_screw': enc['heatsink_screw'], 'lowest_component': pcb['lowest_component'],
-            'revision': P.get('revision'), 'source': str(f), 'ports': P['ports']}
+            'revision': P.get('revision'), 'source': P['_source'], 'ports': P['ports']}
 
 
 # The carrier's X runs along the robot's x and its port edges face the sides: its front edge (DC-IN, LAN, audio) is the
@@ -379,4 +454,8 @@ def summary() -> dict:
 
 
 if __name__ == '__main__':
-    print(json.dumps(summary(), indent=1))
+    import sys
+    if '--snapshot-j501' in sys.argv:
+        print(json.dumps(snapshot_j501(), indent=1))
+    else:
+        print(json.dumps(summary(), indent=1))

@@ -15,10 +15,10 @@
    ],
    "fits": true,
    "placement": "straight",
-   "grams_each": 61,
-   "grams": 246,
-   "hours": 16.1,
-   "cost_usd": 19.65,
+   "grams_each": 44,
+   "grams": 174,
+   "hours": 11.4,
+   "cost_usd": 13.92,
    "infill": "100 %",
    "how": "PA6-CF, 100 % solid, printed standing; 2 x M5 inserts"
   },
@@ -32,10 +32,10 @@
    ],
    "fits": true,
    "placement": "straight",
-   "grams_each": 166,
-   "grams": 166,
-   "hours": 10.9,
-   "cost_usd": 13.25,
+   "grams_each": 165,
+   "grams": 165,
+   "hours": 10.8,
+   "cost_usd": 13.22,
    "infill": "100 %",
    "how": "PA6-CF, 100 % solid, printed on its top face; 8 x M5 inserts, 2 x \u00d85 dowels"
   },
@@ -45,50 +45,16 @@
    "size_mm": [
     16,
     16,
-    15
+    13
    ],
    "fits": true,
    "placement": "straight",
    "grams_each": 2,
-   "grams": 9,
+   "grams": 8,
    "hours": 0.9,
-   "cost_usd": 0.39,
+   "cost_usd": 0.35,
    "infill": "2 mm walls, 40 % gyroid",
    "how": "TPU 95A: the pallet's isolator foot, neck and cap"
-  },
-  "din_rail_24v": {
-   "material": "pa6-cf",
-   "qty": 1,
-   "size_mm": [
-    35,
-    26,
-    8
-   ],
-   "fits": true,
-   "placement": "straight",
-   "grams_each": 2,
-   "grams": 2,
-   "hours": 0.1,
-   "cost_usd": 0.17,
-   "infill": "100 %",
-   "how": "PA6-CF TS35 rail piece; 2 x M4 x 10 flat heads into the nuts below"
-  },
-  "din_rail_12v": {
-   "material": "pa6-cf",
-   "qty": 1,
-   "size_mm": [
-    60,
-    35,
-    8
-   ],
-   "fits": true,
-   "placement": "straight",
-   "grams_each": 5,
-   "grams": 5,
-   "hours": 0.3,
-   "cost_usd": 0.4,
-   "infill": "100 %",
-   "how": "PA6-CF TS35 rail piece; 2 x M4 x 10 flat heads into the nuts below"
   },
   "plate_post": {
    "material": "pa6-cf",
@@ -108,78 +74,146 @@
    "how": "PA6-CF, 100 %; M5 inserts both ends; printed standing"
   },
   "bus_insulator": {
-   "material": "pa6-cf",
+   "material": "petg",
    "qty": 2,
    "size_mm": [
     110,
     20,
-    10
+    16
    ],
    "fits": true,
    "placement": "straight",
-   "grams_each": 22,
-   "grams": 43,
-   "hours": 2.8,
-   "cost_usd": 3.47,
-   "infill": "100 %",
-   "how": "PA6-CF, 100 %; 4 x M3 inserts"
-  },
-  "bay_rear": {
-   "material": "petg",
-   "qty": 1,
-   "size_mm": [
-    152,
-    110,
-    66
-   ],
-   "fits": true,
-   "placement": "straight",
-   "grams_each": 157,
-   "grams": 157,
-   "hours": 6.3,
-   "cost_usd": 2.2,
+   "grams_each": 38,
+   "grams": 76,
+   "hours": 3.0,
+   "cost_usd": 1.07,
    "infill": "2 mm walls, 40 % gyroid",
-   "how": "PETG, 3 mm walls; 4 x M5 x 10 up into the belly plate's nuts each side"
+   "how": "PETG, 100 % (never a carbon-filled filament: carbon conducts, and the plate is bonded to the - bus); 4 x M3 inserts; test: > 10 MOhm at 50 V from every lug screw to the plate before power"
   },
-  "bay_front": {
-   "material": "petg",
-   "qty": 1,
-   "size_mm": [
-    152,
-    110,
-    66
-   ],
-   "fits": true,
-   "placement": "straight",
-   "grams_each": 140,
-   "grams": 140,
-   "hours": 5.6,
-   "cost_usd": 1.96,
-   "infill": "2 mm walls, 40 % gyroid",
-   "how": "PETG, 3 mm walls; 4 x M5 x 10 up into the belly plate's nuts each side"
-  },
-  "bay_door": {
-   "material": "petg",
+  "dcdc_bracket": {
+   "material": "pa6-cf",
    "qty": 1,
    "size_mm": [
     98,
-    4,
-    66
+    48,
+    69
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 61,
+   "grams": 61,
+   "hours": 4.0,
+   "cost_usd": 4.91,
+   "infill": "100 %",
+   "how": "PA6-CF; two M4 x 10 down into the tray's nuts; the converter on four M3 x 8 through its upright"
+  },
+  "bay_rail_l": {
+   "material": "pa6-cf",
+   "qty": 1,
+   "size_mm": [
+    310,
+    8,
+    10
+   ],
+   "fits": true,
+   "placement": "turned",
+   "grams_each": 26,
+   "grams": 26,
+   "hours": 1.7,
+   "cost_usd": 2.06,
+   "infill": "100 %",
+   "how": "PA6-CF; four M4 x 16 up into the belly's nuts, five M3 inserts, two in its ends"
+  },
+  "bay_rail_r": {
+   "material": "pa6-cf",
+   "qty": 1,
+   "size_mm": [
+    310,
+    8,
+    10
+   ],
+   "fits": true,
+   "placement": "turned",
+   "grams_each": 26,
+   "grams": 26,
+   "hours": 1.7,
+   "cost_usd": 2.06,
+   "infill": "100 %",
+   "how": "PA6-CF; four M4 x 16 up into the belly's nuts, five M3 inserts, two in its ends"
+  },
+  "adapter_plate_front": {
+   "material": "pa6-cf",
+   "qty": 1,
+   "size_mm": [
+    102,
+    72,
+    4
    ],
    "fits": true,
    "placement": "straight",
    "grams_each": 31,
    "grams": 31,
-   "hours": 1.3,
-   "cost_usd": 0.44,
+   "hours": 2.1,
+   "cost_usd": 2.51,
+   "infill": "100 %",
+   "how": "PA6-CF; four M4 x 8 up into the belly's nuts; the adapter's screws into inserts set on arrival"
+  },
+  "bay_door_front": {
+   "material": "petg",
+   "qty": 1,
+   "size_mm": [
+    128,
+    102,
+    4
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 66,
+   "grams": 66,
+   "hours": 2.6,
+   "cost_usd": 0.92,
    "infill": "2 mm walls, 40 % gyroid",
-   "how": "PETG, 3 mm walls; 4 x M5 x 10 up into the belly plate's nuts each side"
+   "how": "PETG; two knurled M3 x 10 thumbscrews into the rails' ends"
+  },
+  "adapter_plate_rear": {
+   "material": "pa6-cf",
+   "qty": 1,
+   "size_mm": [
+    102,
+    72,
+    4
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 31,
+   "grams": 31,
+   "hours": 2.1,
+   "cost_usd": 2.51,
+   "infill": "100 %",
+   "how": "PA6-CF; four M4 x 8 up into the belly's nuts; the adapter's screws into inserts set on arrival"
+  },
+  "bay_door_rear": {
+   "material": "petg",
+   "qty": 1,
+   "size_mm": [
+    128,
+    102,
+    4
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 66,
+   "grams": 66,
+   "hours": 2.6,
+   "cost_usd": 0.92,
+   "infill": "2 mm walls, 40 % gyroid",
+   "how": "PETG; two knurled M3 x 10 thumbscrews into the rails' ends"
   },
   "bay_skid": {
    "material": "tpu95",
    "qty": 4,
    "size_mm": [
-    148,
+    149,
     14,
     3
    ],
@@ -190,31 +224,31 @@
    "hours": 3.1,
    "cost_usd": 1.28,
    "infill": "2 mm walls, 40 % gyroid",
-   "how": "TPU 95A skid"
+   "how": "TPU 95A skid on 3M VHB tape (no screw: under the packs there is 1 mm): the robot sits on these"
   }
  },
  "by_material": {
   "pa6-cf": {
-   "grams": 505,
-   "hours": 33.0,
-   "cost_usd": 40.36,
-   "parts": 13
+   "grams": 557,
+   "hours": 36.6,
+   "cost_usd": 44.61,
+   "parts": 14
   },
   "tpu95": {
-   "grams": 39,
+   "grams": 38,
    "hours": 4.0,
-   "cost_usd": 1.67,
+   "cost_usd": 1.63,
    "parts": 8
   },
   "petg": {
-   "grams": 328,
-   "hours": 13.2,
-   "cost_usd": 4.6,
-   "parts": 3
+   "grams": 208,
+   "hours": 8.2,
+   "cost_usd": 2.91,
+   "parts": 4
   }
  },
  "too_big": [],
- "total_hours": 50.2,
- "total_grams": 872,
- "note": "body P1: hours are rough (grams / density / a strength-holding rate)"
+ "total_hours": 48.8,
+ "total_grams": 803,
+ "note": "body P0-P2: hours are rough (grams / density / a strength-holding rate)"
 }
