@@ -5,7 +5,7 @@
     python -m rig.run --backend hil --test jump                      # the CAN path on two software RS-04s + MuJoCo
     python -m rig.run --backend can --iface can0 --test stand_up     # the rig itself (pendant held, ARM typed)
     python -m rig.run --reproduce        # T7: every scenario as sim/leg_rig.py ran it -> exports/rig/reproduction.json
-    python -m rig.run --predict          # the rig as built: 14.75 kg, the FLEXVOLT pack, a tick of latency, at 500 Hz
+    python -m rig.run --predict          # the rig as built: D71's 18.75 kg, D65's 10S pair, a tick of latency, at 500 Hz
                                          # -> exports/rig/predictions.json (the numbers docs/leg-bench-tests.md quotes)
 
 Every run writes exports/rig/runs/<stamp>-<backend>-<test>.npz/.json (rig/log.py) and its verdict (rig/compare.py).
@@ -30,9 +30,9 @@ from rig.bus import Pack  # noqa: E402
 from rig.log import RunLog  # noqa: E402
 
 OUT = R / 'exports' / 'rig'
-DESIGN_KG = 14.75                     # half the 29.5 kg robot of the body plan (coordinator, 2026-10-27)
+DESIGN_KG = 18.75                   # kg a leg carries, its own parts and wheel included (D71)
 REF_KG = 13.1                         # what exports/leg/rig-results.json was run at
-RIG_TESTS = ('stand_up', 'squat', 'jump', 'drop_150', 'power_off', 'power_off_damped', 'tyre_press')
+RIG_TESTS = ('stand_up', 'stand_up_low', 'squat', 'jump', 'drop_150', 'power_off', 'power_off_damped', 'tyre_press')
 BUMPER_CONTACT_M = 0.140              # the bottom bumpers meet the carriage at this leg length (cad/build_rig.py)
 DYNAMIC = ('jump', 'jump_peak', 'drop_150')
 DROP_RIG_S = 8.0                      # s: on the rig the operator pulls the drop pin once the leg holds 300 mm
@@ -86,10 +86,11 @@ def loop(bus, ctl, log: RunLog, duration: float, verbose: bool = False):
 
 def run_sim(test: str, half_mass: float, rate: float, pack: Pack, latency: int, rail_low: Optional[float] = None,
             contact_truth: bool = False, limits: Optional[lc.Limits] = None, video: Optional[Path] = None,
-            tag: str = '', save: bool = True, plot: bool = False, inject: Optional[tuple] = None):
+            tag: str = '', save: bool = True, plot: bool = False, inject: Optional[tuple] = None, rig: bool = True):
+    """rig=True: the rig's run of that name (crouching to D71's 185 mm); rig=False: sim/leg_rig.py's own (T7)."""
     from rig.sim_bus import SimBus
-    sc = lc.SCENARIOS[test]
-    bus = SimBus(test, half_mass=half_mass, tick=1 / rate, cap=sc.cap, rail_low=rail_low, pack=pack,
+    sc = lc.scenario_of(test, rig)
+    bus = SimBus(sc if rig else test, half_mass=half_mass, tick=1 / rate, cap=sc.cap, rail_low=rail_low, pack=pack,
                  latency_ticks=latency, video=video)
     if inject:
         from rig.faults import FaultBus
@@ -97,7 +98,7 @@ def run_sim(test: str, half_mass: float, rate: float, pack: Pack, latency: int, 
     lim = limits or lc.Limits(cap=sc.cap or lc.LEG_PEAK)
     if limits is None and pack.r_int == 0.0:                     # sim/leg_rig.py's ideal bus (T7): no packs, so no window
         lim = lc.Limits(cap=sc.cap or lc.LEG_PEAK, vbus_max=1e9, vbus_min=0.0, vbus_floor=0.0)
-    ctl = lc.LegController(test, bus.ff_n, lim, contact_truth=contact_truth, tick=bus.tick)
+    ctl = lc.LegController(test, bus.ff_n, lim, contact_truth=contact_truth, tick=bus.tick, rig=rig)
     meta = {'half_mass_kg': half_mass, 'rate_hz': round(1 / bus.tick, 1), 'latency_ticks': latency,
             'pack': {'v_oc': pack.v_oc, 'r_int': pack.r_int}, 'rail_low_m': rail_low if rail_low is not None else sc.rail_low,
             'ff_n': round(bus.ff_n, 2), 'limits': lim.__dict__, 'flight': ctl.flight.__dict__}
@@ -123,7 +124,7 @@ def reproduce(rate: float = 500.0) -> dict:
     results = {}
     for name in lc.SCENARIOS:
         from sim import leg_rig as lr
-        r = run_sim(name, ref['half_mass_kg'], rate, Pack(lr.BUS_V, 0.0), 0, save=False)['results']
+        r = run_sim(name, ref['half_mass_kg'], rate, Pack(lr.BUS_V, 0.0), 0, save=False, rig=False)['results']
         results[name] = {k: v for k, v in r.items() if k != 'series'}
         print(f"  {name:17} jump {r['jump_height_mm']}  motor {r['peak_motor_nm']}  wheel {r['peak_wheel_force_n']}  gearbox {r['peak_gearbox_nm']}")
     rep = compare.reproduce_report(results, ref['scenarios'])
@@ -140,7 +141,7 @@ def predict(half_mass: float = DESIGN_KG, rate: float = 500.0, r_int: float = 0.
     """The rig's predicted numbers: its controller, rate and latency, the design mass, the FLEXVOLT pack as the start
     rule leaves it, the bumpers where cad/build_rig.py puts them."""
     tests = {}
-    cases = [(t, t, None) for t in RIG_TESTS if t in lc.SCENARIOS] + [('power_off_S6', 'power_off', 0.074), ('power_off_damped_S6', 'power_off_damped', 0.074)]
+    cases = [(t, t, None) for t in RIG_TESTS if t in lc.RIG_SCENARIOS] + [('power_off_S6', 'power_off', 0.074), ('power_off_damped_S6', 'power_off_damped', 0.074)]
     for key, test, rail in cases:
         if rail is None:
             rail = BUMPER_CONTACT_M                                   # the bottom bumpers in place (S6: removed, the deck)
@@ -203,10 +204,10 @@ def run_hil(test: str, half_mass: float, rate: float, pack: Pack, plot: bool = F
     from rig.hil import HilLink
     from rig.sim_bus import SimBus
     import fivebar as fb
-    sc = lc.SCENARIOS[test]
+    sc = lc.scenario_of(test)
     fo, _, ro, _ = fb.stop_angles()
     cal = Calibration(MotorCal(1, -1, fo + 0.05), MotorCal(2, -1, ro - 0.05), 'HIL: both motors reversed, zero offset')
-    sim = SimBus(test, half_mass=half_mass, tick=1 / rate, cap=sc.cap, pack=pack, latency_ticks=0)
+    sim = SimBus(sc, half_mass=half_mass, tick=1 / rate, cap=sc.cap, pack=pack, latency_ticks=0)
     link = HilLink(sim, cal, cut_at=0.6 if test.startswith('power_off') else None)
     bus = CanBus(link.port, cal, tick=1 / rate, realtime=False, clock=link.clock, after_exchange=link.advance)
     link.begin()
@@ -281,7 +282,7 @@ def _ff_masses():
 def main(argv=None):
     ap = argparse.ArgumentParser(prog='python -m rig.run', description=__doc__.split('\n\n')[0])
     ap.add_argument('--backend', choices=('sim', 'hil', 'can'), default='sim')
-    ap.add_argument('--test', choices=tuple(lc.SCENARIOS) + tuple(lc.BENCH_SCENARIOS), default='stand_up')
+    ap.add_argument('--test', choices=tuple(lc.RIG_SCENARIOS) + tuple(lc.BENCH_SCENARIOS), default='stand_up')
     ap.add_argument('--half-mass', type=float, default=DESIGN_KG)
     ap.add_argument('--rate', type=float, default=500.0)
     ap.add_argument('--r-int', type=float, default=0.10, help='the packs\' resistance, ohm (measured: docs/leg-bench-tests.md B6)')

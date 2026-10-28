@@ -74,6 +74,36 @@ SCENARIOS = {
 }
 
 
+# The rig's own runs (D71): the robot's lowest controlled leg is 185 mm, so the stand, the squats and the jump crouch
+# there; the stops' low case (from the bumpers at 140 mm, below the controlled range) is kept as its own run. The
+# simulation's own table above (crouching to 140-150 mm) is what the reproduction (T7) runs against rig-results.json.
+CROUCH_MM = 185.0                  # D71: the lowest controlled leg
+LOW_MM = 140.0                     # the bumpers' contact: the stops' low case
+
+
+@dataclass
+class RigScenario(Scenario):
+    crouch: float = CROUCH_MM
+
+
+def _rig(sc: Scenario, **kw) -> RigScenario:
+    d = dict(sc.__dict__)
+    d.update(kw)
+    return RigScenario(**d)
+
+
+RIG_SCENARIOS = {
+    'stand_up': _rig(SCENARIOS['stand_up'], title='Stand up from the lowest controlled leg (185 mm) in 1 s and hold', start_h=CROUCH_MM),
+    'stand_up_low': _rig(SCENARIOS['stand_up'], name='stand_up_low', start_h=LOW_MM, crouch=LOW_MM,
+                         title='Stand up from the bumpers (140 mm, under the controlled range: the stops\' low case) and hold'),
+    'squat': _rig(SCENARIOS['squat'], title='Three squats, 300 to 185 mm at 0.5 Hz'),
+    'jump': _rig(SCENARIOS['jump'], title='Crouch to 185 mm, push off at the 60 N m cap, tuck in the air, land'),
+    'jump_peak': _rig(SCENARIOS['jump_peak'], title='The same jump at the motors\' full 120 N m (no cap)'),
+    'drop_150': _rig(SCENARIOS['drop_150']),
+    'power_off': _rig(SCENARIOS['power_off']),
+    'power_off_damped': _rig(SCENARIOS['power_off_damped']),
+}
+
 # Bench runs on the rig that the simulation has no counterpart for (not in the reproduction).
 BENCH_SCENARIOS = {
     'tyre_press': Scenario('tyre_press', 'B5: the carriage held down by the lowered top stop, the leg presses the wheel '
@@ -91,7 +121,10 @@ def press_force(t: float) -> Optional[float]:
     return float(PRESS_STEPS[k]) if 0 <= k < len(PRESS_STEPS) else None
 
 
-def scenario_of(name: str) -> Scenario:
+def scenario_of(name: str, rig: bool = True) -> Scenario:
+    """The rig's run of that name (rig=True), or the simulation's own (rig=False: the reproduction)."""
+    if rig and name in RIG_SCENARIOS:
+        return RIG_SCENARIOS[name]
     return SCENARIOS[name] if name in SCENARIOS else BENCH_SCENARIOS[name]
 
 
@@ -102,13 +135,15 @@ def smooth(t):
 
 def command(sc: Scenario, t: float, state: dict):
     """(L_cmd mm, mode) for a scenario at time t; mode 'pd', 'push', 'off' (sim.leg_rig.command)."""
-    if sc.name == 'stand_up':
-        return 140 + (300 - 140) * smooth((t - 0.3) / 1.0), 'pd'
+    if sc.name in ('stand_up', 'stand_up_low'):
+        lo = getattr(sc, 'crouch', 140.0)
+        return lo + (300 - lo) * smooth((t - 0.3) / 1.0), 'pd'
     if sc.name == 'squat':
-        return 225 + 75 * math.cos(2 * math.pi * 0.5 * max(0.0, t - 0.25)), 'pd'
+        lo = getattr(sc, 'crouch', 150.0)
+        return (300 + lo) / 2 + (300 - lo) / 2 * math.cos(2 * math.pi * 0.5 * max(0.0, t - 0.25)), 'pd'
     if sc.name in ('jump', 'jump_peak'):
         if t < 0.6:
-            return 300 - 150 * smooth(t / 0.5), 'pd'
+            return 300 - (300 - getattr(sc, 'crouch', 150.0)) * smooth(t / 0.5), 'pd'
         if not state.get('pushed'):
             return None, 'push'
         return 250, 'pd'
@@ -194,8 +229,8 @@ class LegController:
 
     def __init__(self, scenario: str, ff_n: float, limits: Limits = Limits(), gains: Gains = Gains(),
                  flight: Optional[Flight] = None, contact_truth: bool = False, tick: Optional[float] = None,
-                 external_cut: bool = False):
-        self.sc = scenario_of(scenario)
+                 external_cut: bool = False, rig: bool = True):
+        self.sc = scenario_of(scenario, rig)
         self.tick = tick                            # None: measured from the ticks themselves
         self._t_prev: Optional[float] = None
         self.ff = ff_n

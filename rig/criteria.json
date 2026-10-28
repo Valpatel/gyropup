@@ -234,6 +234,57 @@
      "max": 45.0
     }
    ]
+  },
+  "stand_up_low": {
+   "id": "S1-low",
+   "checks": [
+    {
+     "what": "holds 300 +- 10 mm",
+     "kind": "hold",
+     "signal": "L",
+     "target": 0.3,
+     "tol": 0.01,
+     "from_s": 2.0
+    },
+    {
+     "what": "follows the prediction within 15 mm",
+     "kind": "follow",
+     "signal": "L",
+     "tol": 0.015
+    },
+    {
+     "what": "peak motor torque <= 18 N m",
+     "kind": "max_abs",
+     "signal": [
+      "tau_f",
+      "tau_r"
+     ],
+     "max": 18.0
+    },
+    {
+     "what": "no oscillation over 5 mm peak to peak in the hold",
+     "kind": "pp",
+     "signal": "L",
+     "max": 0.005,
+     "from_s": 2.0
+    },
+    {
+     "what": "load plate 120-170 N steady (14.75 kg carried: about 145 N)",
+     "kind": "range",
+     "signal": "force_n",
+     "min": 120.0,
+     "max": 170.0,
+     "from_s": 2.0,
+     "needs": "force_n"
+    },
+    {
+     "what": "VBUS inside 32-45 V",
+     "kind": "range",
+     "signal": "vbus",
+     "min": 32.0,
+     "max": 45.0
+    }
+   ]
   }
  }
 }

@@ -59,7 +59,11 @@ POST_LEN = 1200.0
 RAIL_LEN = 1000.0
 RAIL_Z0 = 1.0                        # the rails' bottom end just above the deck (the blocks reach 4.3 mm above the
                                      # deck at the carriage's lowest possible point: the plate on the deck)
-WHEEL_R = (gmi.motor_interface(fb.WHEEL)['od'] or 171.3) / 2
+# The wheel is D69's 10 in hoverboard hub motor (a 10 x 2.125 pneumatic, 254 mm): sim/leg_rig.py's WHEEL. The leg's CAD
+# still carries the BotWheel's mount until W2 (#25), so the rig draws the new wheel as an envelope (wheel_envelope())
+# on the old one's axle and mid-plane; rig/tests check this radius against the simulation's.
+WHEEL = {'od': 254.0, 'tyre_w': 54.0, 'rim_d': 165.0, 'hub_w': 70.0}
+WHEEL_R = WHEEL['od'] / 2
 
 
 def frame_mounts() -> dict:
@@ -535,6 +539,16 @@ def load_cell_mount():
     s = s.cut(cyl(11.0, 'z', 1.0, 7.0))                                            # room for the cell's flexure to move
     s = s.cut(box(-3.0, 3.0, w / 2 - 2, w / 2 + 6, 3.0, 7.0))                    # the leads
     return s
+
+
+def wheel_envelope():
+    """The 10 in hub wheel (module frame, axle on the x-z origin... the leg places it): the tyre (Ø254 x 54) round a
+    Ø165 rim, and the motor's hub (Ø165 x 70), centred on the BotWheel's tyre mid-plane y = fivebar.Y['wheel']."""
+    yw = fb.Y['wheel']
+    w = WHEEL
+    tyre = cyl(w['od'] / 2, 'y', yw - w['tyre_w'] / 2, yw + w['tyre_w'] / 2).cut(cyl(w['rim_d'] / 2 - 0.5, 'y', yw - w['tyre_w'], yw + w['tyre_w']))
+    hub = cyl(w['rim_d'] / 2, 'y', yw - w['hub_w'] / 2, yw + w['hub_w'] / 2)
+    return tyre, hub
 
 
 PRINTED = {

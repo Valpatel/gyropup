@@ -32,7 +32,7 @@ from cadagent.geometry import export_print_stl  # noqa: E402
 OUT = R / 'exports' / 'rig'
 SCS = OUT / 'sendcutsend'
 MATERIALS = json.loads((R / 'catalog/materials.json').read_text())
-DESIGN_KG = 14.75
+DESIGN_KG = 18.75                   # kg a leg carries, its own parts and wheel included (D71)
 STEEL = 7.85                          # g/cm3
 AL6061 = 2.70
 
@@ -198,10 +198,14 @@ def leg_parts(L_mm: float, lean: float, zh: float) -> dict:
         fb.motor_model.cache_clear()
     out = {}
     for n, (s, _) in asm.items():
-        if s is None or n == 'wheel_cable':
+        if s is None or n in ('wheel_cable', 'wheel_tyre', 'wheel_hub'):     # the BotWheel: D69 replaced it (envelope below)
             continue
         static = n.startswith(fb.STATIC) or n in ('screws_lugs', 'screws_outputs')   # the output screws ride with the adapters
         out['leg_' + n] = ((s.val() if hasattr(s, 'val') else s).translate(cq.Vector(0, 0, zh)), 'static' if static else 'moving')
+    E = fb.fk(*phi)['E']                                        # the axle (x, z) in the leg's frame
+    tyre, hub = rp.wheel_envelope()
+    for n, sh in (('leg_wheel_tyre', tyre), ('leg_wheel_hub', hub)):
+        out[n] = (sh.val().translate(cq.Vector(E[0], 0, E[1] + zh)), 'moving')
     return out
 
 
@@ -664,7 +668,7 @@ def render(jump_zh: float) -> list:
         r.render(f'rig-{tag}.png', shapes=scene(L), view=view, caption=f'Rig, the leg at {L:.0f} mm (wheel on the deck)')
         made.append(f'rig-{tag}.png')
     r.render('rig-jump-apex.png', shapes=scene(250.0, zh=jump_zh), view=(1.0, 0.85, 0.45),
-             caption=f'Rig at the jump\'s apex (14.75 kg): the hip {jump_zh:.0f} mm over the deck, the leg tucked to 250 mm')
+             caption=f'Rig at the jump\'s apex ({DESIGN_KG:g} kg): the hip {jump_zh:.0f} mm over the deck, the leg tucked to 250 mm')
     made.append('rig-jump-apex.png')
     r.render('rig-side.png', shapes=scene(300.0), view=(1.0, 0.0, 0.05), caption='Rig from the side (+x): post, rails, carriage, brace')
     made.append('rig-side.png')
@@ -755,7 +759,7 @@ def main():
     Mx = abs(bl_j['moment_on_rails_nm'][0])
     posts = [post_check(Mx, zh, braced, foot) for zh in (zh_on_deck(160.0), zh_on_deck(250.0), 600.0)
              for braced, foot in ((False, 'fixed'), (True, 'fixed'), (True, 'pinned'))]
-    summary['loads'] = {'source': 'exports/rig/predictions.json (rig/run.py --predict, 14.75 kg)', 'carriage_com_y_mm': round(y_cm, 1),
+    summary['loads'] = {'source': f'exports/rig/predictions.json (rig/run.py --predict, {DESIGN_KG:g} kg)', 'carriage_com_y_mm': round(y_cm, 1),
                         'jump': bl_j, 'drop_150': bl_d, 'post': posts,
                         'post_worst': max(posts, key=lambda p: p['stress_mpa']),
                         'brace': brace()[2]}
