@@ -277,6 +277,8 @@ def deck_part(mounts=None) -> bs.SheetPart:
     for (x, y) in RISER_FEET:
         feats.append(bs.Feature('hole', 'base', tray_uv(t['pan_x'] + x, y), 5.5,
                                 note='riser, M5 x 16 from below through the turret plate (D59) into its insert'))
+    for (x, y) in turret_plate_end_holes():
+        feats.append(bs.Feature('hole', 'base', tray_uv(x, y), 5.5, note='the turret plate\'s ends (P2): M5 x 10 down into its PEM nuts'))
     for (x, y) in intake_cells():
         feats.append(bs.Feature('slot', 'base', tray_uv(x, y), size=(INTAKE_CELL, INTAKE_CELL, 1.5), note='fan intake'))
     feats += _mount_features((mounts or {}).get('deck', []), tray_uv)
@@ -375,6 +377,7 @@ def post_height():
 
 POST_END = 14.0              # solid at each end round the M5 insert (11 deep)
 POST_WALL = 4.0              # lever 5: hollow between the ends (the inserts need 4 mm walls)
+POST_M3_PILOT = 8.0          # the shell's M3 inserts: through the 7.5 mm boss into the hollow (an M3 x 16 goes 6.4 mm in)
 
 
 def post():
@@ -398,10 +401,10 @@ def post():
     s = s.cut(cyl_z(3.2, -1.0, 11.0)).cut(cyl_z(3.2, h - 11.0, h + 1.0))
     for z in bs3.POST_Z_SIDE:
         for sy in (1, -1):
-            s = s.cut(cyl_y(2.0, *sorted((sy * w / 2, sy * (w / 2 - 6.5))), 0.0, z - zt))
+            s = s.cut(cyl_y(2.0, *sorted((sy * w / 2, sy * (w / 2 - POST_M3_PILOT))), 0.0, z - zt))
     for z in bs3.POST_Z_FACE:
         for sx in (1, -1):
-            s = s.cut(cq.Workplane('YZ', origin=(min(sx * w / 2, sx * (w / 2 - 6.5)), 0, 0)).center(0.0, z - zt).circle(2.0).extrude(6.5))
+            s = s.cut(cq.Workplane('YZ', origin=(min(sx * w / 2, sx * (w / 2 - POST_M3_PILOT)), 0, 0)).center(0.0, z - zt).circle(2.0).extrude(POST_M3_PILOT))
     return s
 
 
@@ -449,13 +452,52 @@ def din_rail(length, hole_off=None):
 
 
 def din_rails(items):
-    """The two rail pieces, placed on their PEM nuts (body_layout.mounts_for): {name: (length, hole_off, (x, y, z))}."""
-    get = lambda n: next(i for i in items if i.name == n)
-    d, dd = get('ddr120c_24'), get('plate_ddr60l_12')
-    ya, yb = d.box[2] + 6.0, d.box[2] + 20.0                      # the tray's two S-M4-0 nuts under the 24 V rail
-    yc, yd = dd.box[2] + 8.0, dd.box[3] - 8.0                     # the plate's two F-M4-2 nuts under the 12 V rail
-    return {'din_rail_24v': (26.0, (yb - ya) / 2, ((d.box[0] + d.box[1]) / 2, (ya + yb) / 2, d.box[4] - 7.5)),
-            'din_rail_12v': (60.0, (yd - yc) / 2, ((dd.box[0] + dd.box[1]) / 2, (yc + yd) / 2, dd.box[4] - 7.5))}
+    """D65: no DIN-rail converter is left on the body (the TRACO replaces both): {}."""
+    return {}
+
+
+DCDC_FOOT_T, DCDC_WALL_T = 4.0, 6.0      # the upright at y -124..-118: the P3 wall's ribs start at -124.1
+
+
+def _plate_top():
+    import body_layout as bl
+    return bp.z_tray_top() + bl.PLATE_H + bp.STOCK['5052-0.100']['t']
+
+
+def dcdc_bracket_holes():
+    """The converter's bracket: two M4 down into the plate's flush nuts on its inner side (robot x, y)."""
+    import body_layout as bl
+    d = bl.DCDC
+    return [(50.0, d['y'][1] + 3.0), (110.0, d['y'][1] + 3.0)]
+
+
+def dcdc_screws():
+    """The converter's four M3 through its base flange's slots into inserts in the bracket's upright (robot x, z)."""
+    import body_layout as bl
+    d = bl.DCDC
+    z0 = _plate_top() + DCDC_FOOT_T
+    return [(x, z) for x in (d['x'][0] + 5.0, d['x'][1] - 5.0) for z in (z0 + 3.0, z0 + d['h'] - 3.0)]
+
+
+def dcdc_bracket():
+    """The TRACO TEP 150-4815WI's bracket (PA6-CF): a foot on the tray under the converter, screwed down beyond its ends,
+    and an upright on its inner side its baseplate bolts to (four M3 from the carrier's side: the converter goes on the
+    bracket first, then the bracket on the tray). The converter's outer face stays at |y| 121: the left ear bracket's
+    nyloc nuts stand inside the wall to 122.6."""
+    import body_layout as bl
+    d = bl.DCDC
+    zp = _plate_top()
+    x0, x1 = d['x'][0], d['x'][1]
+    yw = d['y'][0] - DCDC_WALL_T
+    s = box(x0, x1, yw, d['y'][1] + 6.0, zp, zp + DCDC_FOOT_T)
+    s = s.union(box(x0, x1, yw, d['y'][0], zp, zp + DCDC_FOOT_T + d['h']))
+    for x, y in dcdc_bracket_holes():
+        s = s.cut(cyl_z(2.25, zp - 1, zp + DCDC_FOOT_T + 1, x, y))
+    for x, z in dcdc_screws():                                    # M3 inserts through the upright
+        s = s.cut(cyl_y(2.0, yw - 1, d['y'][0] + 1, x, z))
+    for x, y in [(44.0, -96.0)]:                                  # the plate post's screw head under the foot
+        s = s.cut(cyl_z(5.5, zp - 1, zp + 3.0, x, y))
+    return s
 
 
 # ------------------------------------------------------------------------------------------- the turret mount plate (D59)
@@ -510,6 +552,9 @@ def turret_plate_part(mounts=None) -> bs.SheetPart:
     for u in (P['end_pem_x'], L - P['end_pem_x']):
         feats.append(bs.Feature('pem', 'base', (u, W / 2), bp.PEM['SS-M5-0']['H'], spec='SS-M5-0',
                                 note='M5 x 10 ISO 7380 down through the deck into this nut'))
+    import body_shell as bs3
+    for (x, y) in bs3.duct_tabs():                       # P3: the fan duct hangs from three tapped holes
+        feats.append(bs.Feature('hole', 'base', plate_t_uv(x, y), 2.5, note='tap M3 x 0.5: the fan duct\'s tab (M3 x 5 from below)'))
     for (x, y, lx, ly) in TURRET_PLATE_POCKETS:          # lightening, where neither a riser foot nor a nut needs the plate
         feats.append(bs.Feature('slot', 'base', plate_t_uv(x, y), size=(lx, ly, 5.0), note='lightening pocket'))
     nx, ny = P['notch']
@@ -536,6 +581,7 @@ RISER_LEG_R = 9.0
 RISER_FOOT_R = 18.0         # each leg ends in a Ø36 x 4 foot: it spreads the turret's fall load on the 0.100 in deck (D2)
 RISER_FOOT_T = 4.0
 RISER_TOP_T = 9.0
+RISER_FOOT_PILOT = 12.0     # the feet's insert pilots: an M5 x 16 through the turret plate and deck reaches 10.3 mm in
 
 
 def riser():
@@ -553,7 +599,7 @@ def riser():
     for (x, y) in t['bolts']:
         s = s.cut(cyl_z(3.2, H - 9.5, H + 1.0, x, y))                          # M5 insert from the top (the turret)
     for (x, y) in RISER_FEET:
-        s = s.cut(cyl_z(3.2, -1.0, 9.5, x, y))                                  # M5 insert from below (the deck)
+        s = s.cut(cyl_z(3.2, -1.0, RISER_FOOT_PILOT, x, y))                     # M5 insert from below (the deck; P2's M5 x 16 goes 10.3 in)
     for (x, y) in t['dowels']:
         s = s.cut(cyl_z(2.5 - 0.03, H - 8.0, H + 1.0, x, y))
     s = s.cut(cyl_z(t['hole_d'] / 2, H - RISER_TOP_T - 1, H + 1))
@@ -683,13 +729,11 @@ def frame_parts(mounts=None) -> dict:
                                            bus.s['material'], colour=(0.85, 0.45, 0.2) if k == 0 else (0.25, 0.25, 0.27), note=bus.note)
             out[f'bus_insulator_{k + 1}'] = Part(f'bus_insulator_{k + 1}', 'printed', ins.translate((bx, by, zp)), 1, material='pa6-cf',
                                                  colour=(0.2, 0.2, 0.22), note='PA6-CF, 100 %; 4 x M3 inserts')
-    # ---- the battery bay under the belly plate (printed PETG, TPU skids)
+    out['dcdc_bracket'] = Part('dcdc_bracket', 'printed', dcdc_bracket(), 1, material='pa6-cf', colour=(0.25, 0.27, 0.30),
+                               note='PA6-CF; two M4 x 10 down into the tray\'s nuts; the converter on four M3 x 8 through its upright')
+    # ---- the battery bay under the belly plate (D65: two DeWalt packs; cad/body_battery.py)
     import body_battery as bb
-    for n, sh in bb.bay_parts(bb.brick()).items():
-        mat = 'tpu95' if 'skid' in n else 'petg'
-        out[n] = Part(n, 'printed', sh, 1, material=mat, colour=(0.15, 0.15, 0.17) if 'skid' in n else (0.85, 0.55, 0.15),
-                      note='TPU 95A skid' if 'skid' in n else 'PETG, 3 mm walls; 4 x M5 x 10 up into the belly plate\'s nuts each side',
-                      until='P2')
+    out.update(bb.bay_parts())
     out['spacers'] = Part('spacers', 'bought', spacers(), len(SPACERS_XZ), colour=(0.8, 0.8, 0.82), note='M4 x 31 hex standoff, 6 mm hex, female-female, aluminium (95947A065)')
     out['spacer_screws'] = Part('spacer_screws', 'bought', spacer_screws(), 2 * len(SPACERS_XZ), colour=(0.15, 0.15, 0.17), note='M4 x 10 ISO 10642 flat head')
     for side in ('left', 'right'):
@@ -780,8 +824,9 @@ def power_plate_part(mounts=None) -> bs.SheetPart:
 
 BUS_L, BUS_W = 110.0, 20.0
 BUS_HOLES = [10.0, 32.5, 55.0, 77.5, 100.0]         # along the bar: M6 clearance (the input, then the branches)
-BUS_INS_H = 14.0                                    # the insulator: the M6 nut's pocket and the screw's tip both in plastic
-BUS_FLOOR = 1.5                                     # plastic left under the deepest screw tip
+BUS_INS_H = 16.0                                    # the insulator: the M6 nut's pocket and the screw's tip both in plastic
+BUS_FLOOR = 3.5                                     # plastic left under the deepest screw tip: the VESCs' M5 x 8 tips stand
+                                                    # 1.5 mm up through the plate in 2.5 mm pockets under it, 1 mm of PA6-CF apart
 BUS_NUT = {'af': 10.0, 'h': 6.0, 'key': 'nut_m6_nyloc'}        # DIN 985 M6 nyloc (McMaster 94645A205): 10 mm A/F, 6 mm tall
 BUS_SCREW = {'d': 6.0, 'length': 16.0, 'key': 'screw_m6x16'}   # ISO 4762 M6 x 16 (91290A667), through the lugs and the bar
 
@@ -816,4 +861,21 @@ def bus_insulator():
     for u in BUS_HOLES:
         s = s.cut(hexagon_z(BUS_NUT['af'] + 0.3, H - BUS_NUT['h'] - 0.3, H + 0.1, u, BUS_W / 2))     # the nut, held
         s = s.cut(cyl_z(3.3, BUS_FLOOR, H - BUS_NUT['h'], u, BUS_W / 2))   # the screw's tip: BUS_FLOOR of plastic stays
+    for u, v in bus_insulator_reliefs():                  # the VESCs' flange screws come 3.5 mm up through the plate under it
+        s = s.cut(cyl_z(4.5, -0.1, 2.5, u, v))
     return s
+
+
+@functools.lru_cache(maxsize=1)
+def bus_insulator_reliefs():
+    """Where the VESCs' flange screws' tips stand under either insulator (its own frame): one part for both, so the
+    pockets of both."""
+    import body_layout as bl
+    items = bl.layout()['items']
+    out = set()
+    for bx, by in bl.BUS_XY:
+        for it in ('plate_vesc_r', 'plate_vesc_l'):
+            for x, y in bl.vesc_holes(bl._get(items, it)):
+                if bx - 4 < x < bx + BUS_L + 4 and by - 4 < y < by + BUS_W + 4:
+                    out.add((round(x - bx, 2), round(y - by, 2)))
+    return sorted(out)

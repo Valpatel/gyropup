@@ -195,7 +195,7 @@ def body_internal_clashes(parts, items=None, min_mm3=1.0):
 # a square zone; the frame screws' heads stand 1 mm into the cable slot's lowest band; the front-right deck post passes the
 # power plate's box where the plate is notched round it; the fan's column is the deck's cells' business (turret_plate_intake)
 FRAME_ZONE_OK = {('power_plate', 'power_plate'), ('battery_bay', 'bay_'), ('fan_column', 'turret_plate'), ('tray_slot', 'floor_tray'),
-                 ('tray_slot', 'frame_screws'), ('power_plate', 'post_'), ('battery_bay', 'tub_')}   # the P3 tub replaces the P1 bay
+                 ('tray_slot', 'frame_screws'), ('power_plate', 'post_'), ('battery_bay', 'adapter_plate')}
 
 
 def frame_vs_keepouts(parts, L, min_mm3=1.0):
@@ -313,7 +313,7 @@ def render(parts, items, out: Path):
     made.append('body-spine-iso.png')
     legsh3 = [(_v(s), colour(n)) for n, s in legs.items()]
     for v in ('iso', 'front', 'rear', 'side'):                          # P3: the shell on (the items inside hidden by it)
-        r.render(f'body-p3-{v}.png', shapes=p3 + its + legsh3, view=views[v], caption=f'P3: the shell, the tub and both legs at 300 mm, {v}')
+        r.render(f'body-p3-{v}.png', shapes=p3 + its + legsh3, view=views[v], caption=f'P3: the shell, the battery bay and both legs at 300 mm, {v}')
         made.append(f'body-p3-{v}.png')
     for h, tag in ((102, 'crouch'), (392, 'tall')):
         lg = bf.legs(float(h))
@@ -411,7 +411,7 @@ def main():
         (plan3 if p3 else plan)[base] = printplan.row(_v(local), p.print_rotation, p.material, d['qty'], masses[d['name']],
                                                       p.material == 'pa6-cf', p.note)
     too_big = printplan.write(OUT / 'print-plan.json', plan, note='body P0-P2: hours are rough (grams / density / a strength-holding rate)')
-    too_big += printplan.write(SH / 'print-plan.json', plan3, note='body P3, the shell and the tub\'s printed parts: hours are rough')
+    too_big += printplan.write(SH / 'print-plan.json', plan3, note='body P3, the shell\'s printed parts: hours are rough')
     legs = bf.legs(300.0)
     comp = cq.Compound.makeCompound([_v(p.shape) for p in parts.values() if p.shape is not None] + [_v(s) for s in legs.values()]
                                     + [_v(it['shape']) for it in items if it.get('shape') is not None])

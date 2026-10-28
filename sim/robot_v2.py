@@ -8,14 +8,14 @@ module as built, its frame shifted out by the body's Y_OFF (cad/body_params.py: 
 cheek, the spine 40.5 mm wide); the right leg is its mirror image. Every leg joint is a hinge about the robot's y axis,
 so the leg kinematics in the x-z plane are the same on both sides. Each five-bar is closed by an equality constraint at
 the wheel axle (as sim/leg_rig.py); the TPU stops are spring torques in the controller (sim/controller_v2.py); the
-RS-04s carry their reflected rotor inertia; the motors' speeds are the 13S pack's at its 48.1 V nominal (BUS_V).
+RS-04s carry their reflected rotor inertia; the motors' speeds are the 10S pair's at its 36 V nominal (BUS_V, D65).
 
 The body is cad/body_layout.py's P3 ledger, row for row (every mass and centre the body's own build writes to
 exports/body/mass.json): the frame parts from their CAD solids (inertia included), each bought part as its box, the
 estimates (harness, hardware, the shell's panels) where the ledger puts them; the legs carry exports/leg/leg.json's
 total; the turret's moving groups come from cad/turret.py and the rest of the head budget (body_params.tm()) sits at
 the head's centre, so the model's mass is the ledger's (mass_reconciles). It collides with the ground as the real
-parts would: the cheeks, the floor tray, the deck with its lips, the belly plate, the battery tub (the lowest part),
+parts would: the cheeks, the floor tray, the deck with its lips, the belly plate, the battery bay (the lowest part),
 the ear pods and the lidar. On the deck the VLP-16 and the turret's pan axis are where the body puts them (143 mm
 apart, the turret on its 30 mm riser); over the lidar the turret's depression is limited by pan (computed here from
 the meshes; model.json turret.tilt_max_deg).
@@ -49,13 +49,14 @@ OUT_RIG = R / 'exports' / 'sim' / 'v2' / 'rig'
 DESIGN = R / 'designs' / 'default.json'
 Y_OFF = bp.y_off()                                  # the left module's y = 0 is the robot's y = Y_OFF (mm): the body's spine
 BODY_X = bp.BODY_X                                  # the floor tray and deck (mm)
-BUS_V = 48.1                                        # the 13S2P pack's nominal voltage (D43, D57): the motors' speed lines
+BUS_V = 36.0                                        # D65: two DCB609 packs in series, 10S, 36 V nominal: the motors' speed lines
 GAP = 5.0                                           # kept between the lidar and any part of the turret, at any pan/tilt
 EAR = {'size': (61.0, 50.8, 50.8), 'x': (-10.0, 51.0), 'top': 193.0}   # SSC1 pod (x, y, z) on each side wall (docs/body-plan.md 1.9)
 TILT_STOP_DEG = 25.0                                # cad/turret.py's hard stops: 0 .. -25 deg (here + = barrel down)
 PAN_STOP_DEG = 170.0
 REF_H = 300.0                                       # the model's joints are zero standing at this leg length
-H_RANGE = (150.0, 375.0)                            # leg length (mm) for the controller's height 0..1
+H_RANGE = (160.0, 375.0)                            # leg length (mm) for the controller's height 0..1; D65: the battery bay's skids
+                                                    # touch the floor under a 139 mm leg, so the lowest height keeps 21 mm
 COLORS = {'body': '#9fb4c7', 'frame': '#5f6670', 'motor': '#2a2d33', 'link': '#f5b82e', 'wheel_link': '#e9a21f',
           'adapter': '#c9ced6', 'tyre': '#1b1d21', 'hub': '#4a5058', 'battery': '#fdb913', 'compute': '#5a6b7c',
           'driver': '#2b6cb0', 'power': '#8f9aa7', 'lidar': '#2a2d33', 'camera': '#2a2d33', 'light': '#3a3f47',
@@ -144,7 +145,7 @@ def real_body():
     parts = {n: p for n, p in bf.all_parts(L['mounts']).items() if bf.on_robot(p, 'P3')}     # the robot as P3 builds it
     led = bl.ledger(L, parts, stage='P3')
     zt, zs = bp.z_tray_top(), bf.ZT
-    tg = bs3.tub_geometry()
+    tg = bb.geometry()
     tb, db, be = bp.STOCK[bp.TRAY]['t'], bp.STOCK[bp.DECK]['t'], bp.STOCK[bp.BELLY]['t']
     X, HY = bp.BODY_X, bp.BODY_HALF_Y
     collide = [
@@ -153,7 +154,7 @@ def real_body():
         ('floor_tray', (X[0], X[1], -HY, HY, zt - bp.TRAY_LIP, zt)),
         ('deck', (X[0], X[1], -HY, HY, bp.TOP - bp.DECK_LIP, bp.TOP)),
         ('belly_plate', (X[0], X[1], -bp.BELLY_HALF_Y, bp.BELLY_HALF_Y, -zs - be, -zs)),
-        ('battery_tub', (bs3.TUB_X[0], bs3.TUB_X[1], -tg['side_out'] - 12.0, tg['side_out'] + 12.0, tg['z_bottom'], tg['z_belly'])),
+        ('battery_bay', (tg['x_out'][0], tg['x_out'][1], -tg['side_out'], tg['side_out'], tg['z_bottom'], tg['z_belly'])),
         ('shell_l', (-bs3.XO, bs3.XO, bs3.YI, bs3.YO, bs3.ZB, bs3.ZT)), ('shell_r', (-bs3.XO, bs3.XO, -bs3.YO, -bs3.YI, bs3.ZB, bs3.ZT)),
         ('shell_front', (bs3.XI, bs3.XO, -bs3.YI, bs3.YI, bs3.APRON['z0'], bs3.ZT)),
         ('shell_rear', (-bs3.XO, -bs3.XI, -bs3.YI, bs3.YI, bs3.APRON['z0'], bs3.ZT)),
@@ -708,7 +709,7 @@ def build():
         b = mm.body('base').id
         return [round(float(v) * 1000, 1) for v in dd.subtree_com[b] - dd.xpos[b]]
     wheel_omega = lr.WHEEL['no_load_speed_rpm'] * BUS_V / lr.WHEEL['voltage_nominal_v'] * 2 * math.pi / 60
-    lowest = round(B['z'][0], 1)                                    # the battery tub's skids
+    lowest = round(B['z'][0], 1)                                    # the battery bay's skids
     span = f'{min(limited):.0f} .. {max(limited):.0f}' if limited else 'none'
     blocked = view['pan0_any'][0] if view['pan0_any'] else None
     tilt_note = (f'over the lidar the barrel may depress at most {fwd:.1f} deg facing forward (the stops allow {TILT_STOP_DEG:.0f}): the '
@@ -750,13 +751,13 @@ def build():
         'lowest_point_mm': lowest,
         'track_mm': round(2 * (fb.Y['wheel'] + Y_OFF), 1),
         'notes': [f'the body as built (M5): the P3 ledger, {led_kg:.2f} kg (cad/body_layout.py; the model {total:.2f} kg), the spine 40.5 mm wide '
-                  f'(track {2 * (fb.Y["wheel"] + Y_OFF):.1f} mm), the deck at z {TOP:.0f}, the battery tub\'s skids at z {lowest} (the lowest part)',
+                  f'(track {2 * (fb.Y["wheel"] + Y_OFF):.1f} mm), the deck at z {TOP:.0f}, the battery bay\'s skids at z {lowest} (the lowest part)',
                   f'the deck: the VLP-16 at x = {x_l:.1f} mm, the turret\'s pan axis {d_lp:.1f} mm behind it (x = {x_p:.1f} mm) on the 30 mm riser '
                   f'(TM face z {tmd["face_z"]:.0f}); the turret\'s clearance needs {max(need.values()):.1f} mm; its base overhangs the rear by {rear_overhang:.1f} mm',
                   tilt_note, view_note,
                   f'the ears (SSC1 pods on the side walls, x {EAR["x"][0]:.0f}..{EAR["x"][1]:.0f}, tops at z {EAR["top"]:.0f}) are {ear_margin:.1f} mm under '
                   'the lidar\'s lowest beam; the eyes alone on the face',
-                  f'the motors\' speed lines at the 13S pack\'s {BUS_V} V nominal',
+                  f'the motors\' speed lines at the 10S pair\'s {BUS_V} V nominal (D65)',
                   'RS-04 rotor inertia, the tyre stiffness, the harness, hardware and shell masses are estimates (the ledger says which)'],
         'estimates': ['RS-04 rotor inertia (armature)', 'BotWheel tyre stiffness', 'the harness, hardware and shell panels (the ledger\'s estimate rows)',
                       'the G48R cooler\'s mass (450 g est)'],

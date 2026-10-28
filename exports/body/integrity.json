@@ -1,0 +1,2961 @@
+{
+ "joints": [
+  {
+   "joint": "hip_frame_left",
+   "stage": "P1",
+   "screw": "M5 x 12 button",
+   "count": 6,
+   "stack": [
+    "cheek_left"
+   ],
+   "receiver": [
+    "insert",
+    "leg.left_hip_frame"
+   ],
+   "bom": "screw_m5x12_button",
+   "note": "the hip frame to its cheek, heads in the gap",
+   "grip_mm": [
+    4.75
+   ],
+   "engagement_mm": [
+    7.25
+   ],
+   "problems": []
+  },
+  {
+   "joint": "standoff_left",
+   "stage": "P1",
+   "screw": "M4 x 10 flat",
+   "count": 8,
+   "stack": [
+    "cheek_left"
+   ],
+   "receiver": [
+    "standoff",
+    "spacers"
+   ],
+   "bom": "screw_m4x10_flat",
+   "note": "the cheeks on the eight standoffs, flush in the countersinks",
+   "grip_mm": [
+    4.75
+   ],
+   "engagement_mm": [
+    5.25
+   ],
+   "problems": []
+  },
+  {
+   "joint": "tray_flange_left",
+   "stage": "P1",
+   "screw": "M5 x 12 button",
+   "count": 4,
+   "stack": [
+    "floor_tray",
+    "cheek_left"
+   ],
+   "receiver": [
+    "pem",
+    "cheek_left"
+   ],
+   "bom": "screw_m5x12_button",
+   "note": "the tray on the cheeks' upper flanges",
+   "grip_mm": [
+    7.92
+   ],
+   "engagement_mm": [
+    4.84
+   ],
+   "problems": []
+  },
+  {
+   "joint": "belly_flange_left",
+   "stage": "P1",
+   "screw": "M5 x 12 button",
+   "count": 4,
+   "stack": [
+    "belly_plate",
+    "cheek_left"
+   ],
+   "receiver": [
+    "pem",
+    "cheek_left"
+   ],
+   "bom": "screw_m5x12_button",
+   "note": "the belly plate under the cheeks' lower flanges",
+   "grip_mm": [
+    7.29
+   ],
+   "engagement_mm": [
+    5.36
+   ],
+   "problems": []
+  },
+  {
+   "joint": "hip_frame_right",
+   "stage": "P1",
+   "screw": "M5 x 12 button",
+   "count": 6,
+   "stack": [
+    "cheek_right"
+   ],
+   "receiver": [
+    "insert",
+    "leg.right_hip_frame"
+   ],
+   "bom": "screw_m5x12_button",
+   "note": "the hip frame to its cheek, heads in the gap",
+   "grip_mm": [
+    4.75
+   ],
+   "engagement_mm": [
+    7.25
+   ],
+   "problems": []
+  },
+  {
+   "joint": "standoff_right",
+   "stage": "P1",
+   "screw": "M4 x 10 flat",
+   "count": 8,
+   "stack": [
+    "cheek_right"
+   ],
+   "receiver": [
+    "standoff",
+    "spacers"
+   ],
+   "bom": "screw_m4x10_flat",
+   "note": "the cheeks on the eight standoffs, flush in the countersinks",
+   "grip_mm": [
+    4.75
+   ],
+   "engagement_mm": [
+    5.25
+   ],
+   "problems": []
+  },
+  {
+   "joint": "tray_flange_right",
+   "stage": "P1",
+   "screw": "M5 x 12 button",
+   "count": 4,
+   "stack": [
+    "floor_tray",
+    "cheek_right"
+   ],
+   "receiver": [
+    "pem",
+    "cheek_right"
+   ],
+   "bom": "screw_m5x12_button",
+   "note": "the tray on the cheeks' upper flanges",
+   "grip_mm": [
+    7.92
+   ],
+   "engagement_mm": [
+    4.84
+   ],
+   "problems": []
+  },
+  {
+   "joint": "belly_flange_right",
+   "stage": "P1",
+   "screw": "M5 x 12 button",
+   "count": 4,
+   "stack": [
+    "belly_plate",
+    "cheek_right"
+   ],
+   "receiver": [
+    "pem",
+    "cheek_right"
+   ],
+   "bom": "screw_m5x12_button",
+   "note": "the belly plate under the cheeks' lower flanges",
+   "grip_mm": [
+    7.29
+   ],
+   "engagement_mm": [
+    5.36
+   ],
+   "problems": []
+  },
+  {
+   "joint": "post_1_foot",
+   "stage": "P1",
+   "screw": "M5 x 12 button",
+   "count": 1,
+   "stack": [
+    "floor_tray"
+   ],
+   "receiver": [
+    "insert",
+    "post_1"
+   ],
+   "bom": "screw_m5x12_button",
+   "note": "a deck post on the tray, from below",
+   "grip_mm": [
+    3.17
+   ],
+   "engagement_mm": [
+    8.82
+   ],
+   "problems": []
+  },
+  {
+   "joint": "post_1_head",
+   "stage": "P1",
+   "screw": "M5 x 12 button",
+   "count": 1,
+   "stack": [
+    "deck"
+   ],
+   "receiver": [
+    "insert",
+    "post_1"
+   ],
+   "bom": "screw_m5x12_button",
+   "note": "the deck on a post, from above",
+   "grip_mm": [
+    2.54
+   ],
+   "engagement_mm": [
+    9.46
+   ],
+   "problems": []
+  },
+  {
+   "joint": "post_2_foot",
+   "stage": "P1",
+   "screw": "M5 x 12 button",
+   "count": 1,
+   "stack": [
+    "floor_tray"
+   ],
+   "receiver": [
+    "insert",
+    "post_2"
+   ],
+   "bom": "screw_m5x12_button",
+   "note": "a deck post on the tray, from below",
+   "grip_mm": [
+    3.17
+   ],
+   "engagement_mm": [
+    8.82
+   ],
+   "problems": []
+  },
+  {
+   "joint": "post_2_head",
+   "stage": "P1",
+   "screw": "M5 x 12 button",
+   "count": 1,
+   "stack": [
+    "deck"
+   ],
+   "receiver": [
+    "insert",
+    "post_2"
+   ],
+   "bom": "screw_m5x12_button",
+   "note": "the deck on a post, from above",
+   "grip_mm": [
+    2.54
+   ],
+   "engagement_mm": [
+    9.46
+   ],
+   "problems": []
+  },
+  {
+   "joint": "post_3_foot",
+   "stage": "P1",
+   "screw": "M5 x 12 button",
+   "count": 1,
+   "stack": [
+    "floor_tray"
+   ],
+   "receiver": [
+    "insert",
+    "post_3"
+   ],
+   "bom": "screw_m5x12_button",
+   "note": "a deck post on the tray, from below",
+   "grip_mm": [
+    3.17
+   ],
+   "engagement_mm": [
+    8.82
+   ],
+   "problems": []
+  },
+  {
+   "joint": "post_3_head",
+   "stage": "P1",
+   "screw": "M5 x 12 button",
+   "count": 1,
+   "stack": [
+    "deck"
+   ],
+   "receiver": [
+    "insert",
+    "post_3"
+   ],
+   "bom": "screw_m5x12_button",
+   "note": "the deck on a post, from above",
+   "grip_mm": [
+    2.54
+   ],
+   "engagement_mm": [
+    9.46
+   ],
+   "problems": []
+  },
+  {
+   "joint": "post_4_foot",
+   "stage": "P1",
+   "screw": "M5 x 12 button",
+   "count": 1,
+   "stack": [
+    "floor_tray"
+   ],
+   "receiver": [
+    "insert",
+    "post_4"
+   ],
+   "bom": "screw_m5x12_button",
+   "note": "a deck post on the tray, from below",
+   "grip_mm": [
+    3.17
+   ],
+   "engagement_mm": [
+    8.82
+   ],
+   "problems": []
+  },
+  {
+   "joint": "post_4_head",
+   "stage": "P1",
+   "screw": "M5 x 12 button",
+   "count": 1,
+   "stack": [
+    "deck"
+   ],
+   "receiver": [
+    "insert",
+    "post_4"
+   ],
+   "bom": "screw_m5x12_button",
+   "note": "the deck on a post, from above",
+   "grip_mm": [
+    2.54
+   ],
+   "engagement_mm": [
+    9.46
+   ],
+   "problems": []
+  },
+  {
+   "joint": "riser_p1",
+   "stage": "P1",
+   "screw": "M5 x 12 button",
+   "count": 4,
+   "stack": [
+    "deck"
+   ],
+   "receiver": [
+    "insert",
+    "riser"
+   ],
+   "bom": "screw_m5x12_button",
+   "note": "the riser on the deck (P1, no turret plate)",
+   "grip_mm": [
+    2.54
+   ],
+   "engagement_mm": [
+    9.46
+   ],
+   "problems": []
+  },
+  {
+   "joint": "isolator_1",
+   "stage": "P1",
+   "screw": "M4 x 25 socket",
+   "count": 1,
+   "stack": [
+    "isolator_1",
+    "floor_tray"
+   ],
+   "receiver": [
+    "pem",
+    "floor_tray"
+   ],
+   "bom": "screw_m4x25",
+   "note": "a TPU isolator (snug, not tight): an M4 x 20 and a washer through its cap and foot into the tray's nut",
+   "grip_mm": [
+    18.65
+   ],
+   "engagement_mm": [
+    4.76
+   ],
+   "problems": []
+  },
+  {
+   "joint": "isolator_2",
+   "stage": "P1",
+   "screw": "M4 x 25 socket",
+   "count": 1,
+   "stack": [
+    "isolator_2",
+    "floor_tray"
+   ],
+   "receiver": [
+    "pem",
+    "floor_tray"
+   ],
+   "bom": "screw_m4x25",
+   "note": "a TPU isolator (snug, not tight): an M4 x 20 and a washer through its cap and foot into the tray's nut",
+   "grip_mm": [
+    18.65
+   ],
+   "engagement_mm": [
+    4.76
+   ],
+   "problems": []
+  },
+  {
+   "joint": "isolator_3",
+   "stage": "P1",
+   "screw": "M4 x 25 socket",
+   "count": 1,
+   "stack": [
+    "isolator_3",
+    "floor_tray"
+   ],
+   "receiver": [
+    "pem",
+    "floor_tray"
+   ],
+   "bom": "screw_m4x25",
+   "note": "a TPU isolator (snug, not tight): an M4 x 20 and a washer through its cap and foot into the tray's nut",
+   "grip_mm": [
+    18.65
+   ],
+   "engagement_mm": [
+    4.76
+   ],
+   "problems": []
+  },
+  {
+   "joint": "isolator_4",
+   "stage": "P1",
+   "screw": "M4 x 25 socket",
+   "count": 1,
+   "stack": [
+    "isolator_4",
+    "floor_tray"
+   ],
+   "receiver": [
+    "pem",
+    "floor_tray"
+   ],
+   "bom": "screw_m4x25",
+   "note": "a TPU isolator (snug, not tight): an M4 x 20 and a washer through its cap and foot into the tray's nut",
+   "grip_mm": [
+    18.65
+   ],
+   "engagement_mm": [
+    4.76
+   ],
+   "problems": []
+  },
+  {
+   "joint": "plate_post_1_foot",
+   "stage": "P1",
+   "screw": "M5 x 10 button",
+   "count": 1,
+   "stack": [
+    "floor_tray"
+   ],
+   "receiver": [
+    "insert",
+    "plate_post_1"
+   ],
+   "bom": "screw_m5x10_button",
+   "note": "a power-plate post on the tray",
+   "grip_mm": [
+    3.17
+   ],
+   "engagement_mm": [
+    6.83
+   ],
+   "problems": []
+  },
+  {
+   "joint": "plate_post_1_head",
+   "stage": "P1",
+   "screw": "M5 x 10 button",
+   "count": 1,
+   "stack": [
+    "power_plate"
+   ],
+   "receiver": [
+    "insert",
+    "plate_post_1"
+   ],
+   "bom": "screw_m5x10_button",
+   "note": "the power plate on a post",
+   "grip_mm": [
+    2.54
+   ],
+   "engagement_mm": [
+    7.46
+   ],
+   "problems": []
+  },
+  {
+   "joint": "plate_post_2_foot",
+   "stage": "P1",
+   "screw": "M5 x 10 button",
+   "count": 1,
+   "stack": [
+    "floor_tray"
+   ],
+   "receiver": [
+    "insert",
+    "plate_post_2"
+   ],
+   "bom": "screw_m5x10_button",
+   "note": "a power-plate post on the tray",
+   "grip_mm": [
+    3.17
+   ],
+   "engagement_mm": [
+    6.83
+   ],
+   "problems": []
+  },
+  {
+   "joint": "plate_post_2_head",
+   "stage": "P1",
+   "screw": "M5 x 10 button",
+   "count": 1,
+   "stack": [
+    "power_plate"
+   ],
+   "receiver": [
+    "insert",
+    "plate_post_2"
+   ],
+   "bom": "screw_m5x10_button",
+   "note": "the power plate on a post",
+   "grip_mm": [
+    2.54
+   ],
+   "engagement_mm": [
+    7.46
+   ],
+   "problems": []
+  },
+  {
+   "joint": "plate_post_3_foot",
+   "stage": "P1",
+   "screw": "M5 x 10 button",
+   "count": 1,
+   "stack": [
+    "floor_tray"
+   ],
+   "receiver": [
+    "insert",
+    "plate_post_3"
+   ],
+   "bom": "screw_m5x10_button",
+   "note": "a power-plate post on the tray",
+   "grip_mm": [
+    3.17
+   ],
+   "engagement_mm": [
+    6.83
+   ],
+   "problems": []
+  },
+  {
+   "joint": "plate_post_3_head",
+   "stage": "P1",
+   "screw": "M5 x 10 button",
+   "count": 1,
+   "stack": [
+    "power_plate"
+   ],
+   "receiver": [
+    "insert",
+    "plate_post_3"
+   ],
+   "bom": "screw_m5x10_button",
+   "note": "the power plate on a post",
+   "grip_mm": [
+    2.54
+   ],
+   "engagement_mm": [
+    7.46
+   ],
+   "problems": []
+  },
+  {
+   "joint": "plate_post_4_foot",
+   "stage": "P1",
+   "screw": "M5 x 10 button",
+   "count": 1,
+   "stack": [
+    "floor_tray"
+   ],
+   "receiver": [
+    "insert",
+    "plate_post_4"
+   ],
+   "bom": "screw_m5x10_button",
+   "note": "a power-plate post on the tray",
+   "grip_mm": [
+    3.17
+   ],
+   "engagement_mm": [
+    6.83
+   ],
+   "problems": []
+  },
+  {
+   "joint": "plate_post_4_head",
+   "stage": "P1",
+   "screw": "M5 x 10 button",
+   "count": 1,
+   "stack": [
+    "power_plate"
+   ],
+   "receiver": [
+    "insert",
+    "plate_post_4"
+   ],
+   "bom": "screw_m5x10_button",
+   "note": "the power plate on a post",
+   "grip_mm": [
+    2.54
+   ],
+   "engagement_mm": [
+    7.46
+   ],
+   "problems": []
+  },
+  {
+   "joint": "power_dcdc",
+   "stage": "P1",
+   "screw": "M3 x 6 pan",
+   "count": 4,
+   "stack": [
+    "item.power_dcdc",
+    "dcdc_bracket"
+   ],
+   "receiver": [
+    "insert",
+    "dcdc_bracket"
+   ],
+   "bom": "screw_m3x6_pan",
+   "note": "the converter's base flange (its slots) on the bracket's upright",
+   "grip_mm": [
+    8.0
+   ],
+   "engagement_mm": [
+    4.0
+   ],
+   "problems": []
+  },
+  {
+   "joint": "dcdc_bracket",
+   "stage": "P1",
+   "screw": "M4 x 8 socket",
+   "count": 2,
+   "stack": [
+    "dcdc_bracket",
+    "power_plate"
+   ],
+   "receiver": [
+    "pem",
+    "power_plate"
+   ],
+   "bom": "screw_m4x8",
+   "note": "the converter's bracket down into the plate's flush nuts (the switch hangs 3 mm under the plate)",
+   "grip_mm": [
+    6.54
+   ],
+   "engagement_mm": [
+    2.54
+   ],
+   "problems": []
+  },
+  {
+   "joint": "bus_insulator_1",
+   "stage": "P1",
+   "screw": "M3 x 8 socket",
+   "count": 2,
+   "stack": [
+    "power_plate"
+   ],
+   "receiver": [
+    "insert",
+    "bus_insulator_1"
+   ],
+   "bom": "screw_m3x8_socket",
+   "note": "a bus bar's insulator up from under the plate",
+   "grip_mm": [
+    2.54
+   ],
+   "engagement_mm": [
+    5.46
+   ],
+   "problems": []
+  },
+  {
+   "joint": "bus_bar_1",
+   "stage": "P1",
+   "screw": "M3 x 8 socket",
+   "count": 2,
+   "stack": [
+    "bus_bar_1"
+   ],
+   "receiver": [
+    "insert",
+    "bus_insulator_1"
+   ],
+   "bom": "screw_m3x8_socket",
+   "note": "a bus bar down onto its insulator",
+   "grip_mm": [
+    3.17
+   ],
+   "engagement_mm": [
+    4.83
+   ],
+   "problems": []
+  },
+  {
+   "joint": "bus_insulator_2",
+   "stage": "P1",
+   "screw": "M3 x 8 socket",
+   "count": 2,
+   "stack": [
+    "power_plate"
+   ],
+   "receiver": [
+    "insert",
+    "bus_insulator_2"
+   ],
+   "bom": "screw_m3x8_socket",
+   "note": "a bus bar's insulator up from under the plate",
+   "grip_mm": [
+    2.54
+   ],
+   "engagement_mm": [
+    5.46
+   ],
+   "problems": []
+  },
+  {
+   "joint": "bus_bar_2",
+   "stage": "P1",
+   "screw": "M3 x 8 socket",
+   "count": 2,
+   "stack": [
+    "bus_bar_2"
+   ],
+   "receiver": [
+    "insert",
+    "bus_insulator_2"
+   ],
+   "bom": "screw_m3x8_socket",
+   "note": "a bus bar down onto its insulator",
+   "grip_mm": [
+    3.17
+   ],
+   "engagement_mm": [
+    4.83
+   ],
+   "problems": []
+  },
+  {
+   "joint": "plate_vesc_r_flange",
+   "stage": "P1",
+   "screw": "M5 x 8 button",
+   "count": 4,
+   "stack": [
+    "item.plate_vesc_r",
+    "power_plate"
+   ],
+   "receiver": [
+    "pem",
+    "power_plate"
+   ],
+   "bom": "screw_m5x10_button",
+   "note": "a VESC hung under the power plate by its flange",
+   "grip_mm": [
+    6.54
+   ],
+   "engagement_mm": [
+    2.54
+   ],
+   "problems": []
+  },
+  {
+   "joint": "plate_vesc_l_flange",
+   "stage": "P1",
+   "screw": "M5 x 8 button",
+   "count": 4,
+   "stack": [
+    "item.plate_vesc_l",
+    "power_plate"
+   ],
+   "receiver": [
+    "pem",
+    "power_plate"
+   ],
+   "bom": "screw_m5x10_button",
+   "note": "a VESC hung under the power plate by its flange",
+   "grip_mm": [
+    6.54
+   ],
+   "engagement_mm": [
+    2.54
+   ],
+   "problems": [
+    {
+     "at": [
+      141.0,
+      29.15,
+      131.68
+     ],
+     "problems": [
+      "the tip hits item.plate_mrbf_block at 6.5 mm"
+     ]
+    }
+   ]
+  },
+  {
+   "joint": "bay_rail_l",
+   "stage": "P1",
+   "screw": "M4 x 16 socket",
+   "count": 4,
+   "stack": [
+    "bay_rail_l",
+    "belly_plate"
+   ],
+   "receiver": [
+    "pem",
+    "belly_plate"
+   ],
+   "bom": "screw_m4x16",
+   "note": "a bay rail up into the belly's nuts, beyond the cheeks' ends",
+   "grip_mm": [
+    12.54
+   ],
+   "engagement_mm": [
+    4.22
+   ],
+   "problems": []
+  },
+  {
+   "joint": "bay_side_l_low",
+   "stage": "P1",
+   "screw": "M3 x 6 button",
+   "count": 5,
+   "stack": [
+    "bay_side_l",
+    "bay_floor"
+   ],
+   "receiver": [
+    "pem",
+    "bay_floor"
+   ],
+   "bom": "screw_m3x6_button",
+   "note": "a side plate into the floor's flange nuts",
+   "grip_mm": [
+    3.25
+   ],
+   "engagement_mm": [
+    3.51
+   ],
+   "problems": []
+  },
+  {
+   "joint": "bay_side_l_high",
+   "stage": "P1",
+   "screw": "M3 x 6 button",
+   "count": 5,
+   "stack": [
+    "bay_side_l"
+   ],
+   "receiver": [
+    "insert",
+    "bay_rail_l"
+   ],
+   "bom": "screw_m3x6_button",
+   "note": "a side plate into its rail's inserts",
+   "grip_mm": [
+    1.6
+   ],
+   "engagement_mm": [
+    4.4
+   ],
+   "problems": []
+  },
+  {
+   "joint": "bay_rail_r",
+   "stage": "P1",
+   "screw": "M4 x 16 socket",
+   "count": 4,
+   "stack": [
+    "bay_rail_r",
+    "belly_plate"
+   ],
+   "receiver": [
+    "pem",
+    "belly_plate"
+   ],
+   "bom": "screw_m4x16",
+   "note": "a bay rail up into the belly's nuts, beyond the cheeks' ends",
+   "grip_mm": [
+    12.54
+   ],
+   "engagement_mm": [
+    4.22
+   ],
+   "problems": []
+  },
+  {
+   "joint": "bay_side_r_low",
+   "stage": "P1",
+   "screw": "M3 x 6 button",
+   "count": 5,
+   "stack": [
+    "bay_side_r",
+    "bay_floor"
+   ],
+   "receiver": [
+    "pem",
+    "bay_floor"
+   ],
+   "bom": "screw_m3x6_button",
+   "note": "a side plate into the floor's flange nuts",
+   "grip_mm": [
+    3.25
+   ],
+   "engagement_mm": [
+    3.51
+   ],
+   "problems": []
+  },
+  {
+   "joint": "bay_side_r_high",
+   "stage": "P1",
+   "screw": "M3 x 6 button",
+   "count": 5,
+   "stack": [
+    "bay_side_r"
+   ],
+   "receiver": [
+    "insert",
+    "bay_rail_r"
+   ],
+   "bom": "screw_m3x6_button",
+   "note": "a side plate into its rail's inserts",
+   "grip_mm": [
+    1.6
+   ],
+   "engagement_mm": [
+    4.4
+   ],
+   "problems": []
+  },
+  {
+   "joint": "adapter_plate_front",
+   "stage": "P1",
+   "screw": "M4 x 8 socket",
+   "count": 4,
+   "stack": [
+    "adapter_plate_front",
+    "belly_plate"
+   ],
+   "receiver": [
+    "pem",
+    "belly_plate"
+   ],
+   "bom": "screw_m4x8",
+   "note": "a pack adapter's printed plate up into the belly's nuts (heads counterbored 1.5 mm)",
+   "grip_mm": [
+    5.04
+   ],
+   "engagement_mm": [
+    3.72
+   ],
+   "problems": []
+  },
+  {
+   "joint": "bay_door_front_l",
+   "stage": "P1",
+   "screw": "M3 x 10 thumb",
+   "count": 1,
+   "stack": [
+    "bay_door_front"
+   ],
+   "receiver": [
+    "insert",
+    "bay_rail_l"
+   ],
+   "bom": "thumbscrew_m3x10",
+   "note": "a door's knurled thumbscrew into its rail's end (tool-free)",
+   "grip_mm": [
+    4.0
+   ],
+   "engagement_mm": [
+    6.0
+   ],
+   "problems": []
+  },
+  {
+   "joint": "bay_door_front_r",
+   "stage": "P1",
+   "screw": "M3 x 10 thumb",
+   "count": 1,
+   "stack": [
+    "bay_door_front"
+   ],
+   "receiver": [
+    "insert",
+    "bay_rail_r"
+   ],
+   "bom": "thumbscrew_m3x10",
+   "note": "a door's knurled thumbscrew into its rail's end (tool-free)",
+   "grip_mm": [
+    4.0
+   ],
+   "engagement_mm": [
+    6.0
+   ],
+   "problems": []
+  },
+  {
+   "joint": "adapter_plate_rear",
+   "stage": "P1",
+   "screw": "M4 x 8 socket",
+   "count": 4,
+   "stack": [
+    "adapter_plate_rear",
+    "belly_plate"
+   ],
+   "receiver": [
+    "pem",
+    "belly_plate"
+   ],
+   "bom": "screw_m4x8",
+   "note": "a pack adapter's printed plate up into the belly's nuts (heads counterbored 1.5 mm)",
+   "grip_mm": [
+    5.04
+   ],
+   "engagement_mm": [
+    3.72
+   ],
+   "problems": []
+  },
+  {
+   "joint": "bay_door_rear_l",
+   "stage": "P1",
+   "screw": "M3 x 10 thumb",
+   "count": 1,
+   "stack": [
+    "bay_door_rear"
+   ],
+   "receiver": [
+    "insert",
+    "bay_rail_l"
+   ],
+   "bom": "thumbscrew_m3x10",
+   "note": "a door's knurled thumbscrew into its rail's end (tool-free)",
+   "grip_mm": [
+    4.0
+   ],
+   "engagement_mm": [
+    6.0
+   ],
+   "problems": []
+  },
+  {
+   "joint": "bay_door_rear_r",
+   "stage": "P1",
+   "screw": "M3 x 10 thumb",
+   "count": 1,
+   "stack": [
+    "bay_door_rear"
+   ],
+   "receiver": [
+    "insert",
+    "bay_rail_r"
+   ],
+   "bom": "thumbscrew_m3x10",
+   "note": "a door's knurled thumbscrew into its rail's end (tool-free)",
+   "grip_mm": [
+    4.0
+   ],
+   "engagement_mm": [
+    6.0
+   ],
+   "problems": []
+  },
+  {
+   "joint": "riser",
+   "stage": "P2",
+   "screw": "M5 x 16 button",
+   "count": 4,
+   "stack": [
+    "turret_plate",
+    "deck"
+   ],
+   "receiver": [
+    "insert",
+    "riser"
+   ],
+   "bom": "screw_m5x16_button",
+   "note": "the riser through the turret plate and the deck (D59)",
+   "grip_mm": [
+    5.71
+   ],
+   "engagement_mm": [
+    10.29
+   ],
+   "problems": []
+  },
+  {
+   "joint": "turret_plate_ends",
+   "stage": "P2",
+   "screw": "M5 x 10 button",
+   "count": 2,
+   "stack": [
+    "deck",
+    "turret_plate"
+   ],
+   "receiver": [
+    "pem",
+    "turret_plate"
+   ],
+   "bom": "screw_m5x10_button",
+   "note": "the turret plate's ends up against the deck",
+   "grip_mm": [
+    5.71
+   ],
+   "engagement_mm": [
+    5.04
+   ],
+   "problems": []
+  },
+  {
+   "joint": "hip_frame_left",
+   "stage": "P3",
+   "screw": "M5 x 12 button",
+   "count": 6,
+   "stack": [
+    "cheek_left"
+   ],
+   "receiver": [
+    "insert",
+    "leg.left_hip_frame"
+   ],
+   "bom": "screw_m5x12_button",
+   "note": "the hip frame to its cheek, heads in the gap",
+   "grip_mm": [
+    4.75
+   ],
+   "engagement_mm": [
+    7.25
+   ],
+   "problems": []
+  },
+  {
+   "joint": "standoff_left",
+   "stage": "P3",
+   "screw": "M4 x 10 flat",
+   "count": 8,
+   "stack": [
+    "cheek_left"
+   ],
+   "receiver": [
+    "standoff",
+    "spacers"
+   ],
+   "bom": "screw_m4x10_flat",
+   "note": "the cheeks on the eight standoffs, flush in the countersinks",
+   "grip_mm": [
+    4.75
+   ],
+   "engagement_mm": [
+    5.25
+   ],
+   "problems": []
+  },
+  {
+   "joint": "tray_flange_left",
+   "stage": "P3",
+   "screw": "M5 x 12 button",
+   "count": 4,
+   "stack": [
+    "floor_tray",
+    "cheek_left"
+   ],
+   "receiver": [
+    "pem",
+    "cheek_left"
+   ],
+   "bom": "screw_m5x12_button",
+   "note": "the tray on the cheeks' upper flanges",
+   "grip_mm": [
+    7.92
+   ],
+   "engagement_mm": [
+    4.84
+   ],
+   "problems": []
+  },
+  {
+   "joint": "belly_flange_left",
+   "stage": "P3",
+   "screw": "M5 x 12 button",
+   "count": 4,
+   "stack": [
+    "belly_plate",
+    "cheek_left"
+   ],
+   "receiver": [
+    "pem",
+    "cheek_left"
+   ],
+   "bom": "screw_m5x12_button",
+   "note": "the belly plate under the cheeks' lower flanges",
+   "grip_mm": [
+    7.29
+   ],
+   "engagement_mm": [
+    5.36
+   ],
+   "problems": []
+  },
+  {
+   "joint": "hip_frame_right",
+   "stage": "P3",
+   "screw": "M5 x 12 button",
+   "count": 6,
+   "stack": [
+    "cheek_right"
+   ],
+   "receiver": [
+    "insert",
+    "leg.right_hip_frame"
+   ],
+   "bom": "screw_m5x12_button",
+   "note": "the hip frame to its cheek, heads in the gap",
+   "grip_mm": [
+    4.75
+   ],
+   "engagement_mm": [
+    7.25
+   ],
+   "problems": []
+  },
+  {
+   "joint": "standoff_right",
+   "stage": "P3",
+   "screw": "M4 x 10 flat",
+   "count": 8,
+   "stack": [
+    "cheek_right"
+   ],
+   "receiver": [
+    "standoff",
+    "spacers"
+   ],
+   "bom": "screw_m4x10_flat",
+   "note": "the cheeks on the eight standoffs, flush in the countersinks",
+   "grip_mm": [
+    4.75
+   ],
+   "engagement_mm": [
+    5.25
+   ],
+   "problems": []
+  },
+  {
+   "joint": "tray_flange_right",
+   "stage": "P3",
+   "screw": "M5 x 12 button",
+   "count": 4,
+   "stack": [
+    "floor_tray",
+    "cheek_right"
+   ],
+   "receiver": [
+    "pem",
+    "cheek_right"
+   ],
+   "bom": "screw_m5x12_button",
+   "note": "the tray on the cheeks' upper flanges",
+   "grip_mm": [
+    7.92
+   ],
+   "engagement_mm": [
+    4.84
+   ],
+   "problems": []
+  },
+  {
+   "joint": "belly_flange_right",
+   "stage": "P3",
+   "screw": "M5 x 12 button",
+   "count": 4,
+   "stack": [
+    "belly_plate",
+    "cheek_right"
+   ],
+   "receiver": [
+    "pem",
+    "cheek_right"
+   ],
+   "bom": "screw_m5x12_button",
+   "note": "the belly plate under the cheeks' lower flanges",
+   "grip_mm": [
+    7.29
+   ],
+   "engagement_mm": [
+    5.36
+   ],
+   "problems": []
+  },
+  {
+   "joint": "post_1_foot",
+   "stage": "P3",
+   "screw": "M5 x 12 button",
+   "count": 1,
+   "stack": [
+    "floor_tray"
+   ],
+   "receiver": [
+    "insert",
+    "post_1"
+   ],
+   "bom": "screw_m5x12_button",
+   "note": "a deck post on the tray, from below",
+   "grip_mm": [
+    3.17
+   ],
+   "engagement_mm": [
+    8.82
+   ],
+   "problems": []
+  },
+  {
+   "joint": "post_1_head",
+   "stage": "P3",
+   "screw": "M5 x 12 button",
+   "count": 1,
+   "stack": [
+    "deck"
+   ],
+   "receiver": [
+    "insert",
+    "post_1"
+   ],
+   "bom": "screw_m5x12_button",
+   "note": "the deck on a post, from above",
+   "grip_mm": [
+    2.54
+   ],
+   "engagement_mm": [
+    9.46
+   ],
+   "problems": []
+  },
+  {
+   "joint": "post_2_foot",
+   "stage": "P3",
+   "screw": "M5 x 12 button",
+   "count": 1,
+   "stack": [
+    "floor_tray"
+   ],
+   "receiver": [
+    "insert",
+    "post_2"
+   ],
+   "bom": "screw_m5x12_button",
+   "note": "a deck post on the tray, from below",
+   "grip_mm": [
+    3.17
+   ],
+   "engagement_mm": [
+    8.82
+   ],
+   "problems": []
+  },
+  {
+   "joint": "post_2_head",
+   "stage": "P3",
+   "screw": "M5 x 12 button",
+   "count": 1,
+   "stack": [
+    "deck"
+   ],
+   "receiver": [
+    "insert",
+    "post_2"
+   ],
+   "bom": "screw_m5x12_button",
+   "note": "the deck on a post, from above",
+   "grip_mm": [
+    2.54
+   ],
+   "engagement_mm": [
+    9.46
+   ],
+   "problems": []
+  },
+  {
+   "joint": "post_3_foot",
+   "stage": "P3",
+   "screw": "M5 x 12 button",
+   "count": 1,
+   "stack": [
+    "floor_tray"
+   ],
+   "receiver": [
+    "insert",
+    "post_3"
+   ],
+   "bom": "screw_m5x12_button",
+   "note": "a deck post on the tray, from below",
+   "grip_mm": [
+    3.17
+   ],
+   "engagement_mm": [
+    8.82
+   ],
+   "problems": []
+  },
+  {
+   "joint": "post_3_head",
+   "stage": "P3",
+   "screw": "M5 x 12 button",
+   "count": 1,
+   "stack": [
+    "deck"
+   ],
+   "receiver": [
+    "insert",
+    "post_3"
+   ],
+   "bom": "screw_m5x12_button",
+   "note": "the deck on a post, from above",
+   "grip_mm": [
+    2.54
+   ],
+   "engagement_mm": [
+    9.46
+   ],
+   "problems": []
+  },
+  {
+   "joint": "post_4_foot",
+   "stage": "P3",
+   "screw": "M5 x 12 button",
+   "count": 1,
+   "stack": [
+    "floor_tray"
+   ],
+   "receiver": [
+    "insert",
+    "post_4"
+   ],
+   "bom": "screw_m5x12_button",
+   "note": "a deck post on the tray, from below",
+   "grip_mm": [
+    3.17
+   ],
+   "engagement_mm": [
+    8.82
+   ],
+   "problems": []
+  },
+  {
+   "joint": "post_4_head",
+   "stage": "P3",
+   "screw": "M5 x 12 button",
+   "count": 1,
+   "stack": [
+    "deck"
+   ],
+   "receiver": [
+    "insert",
+    "post_4"
+   ],
+   "bom": "screw_m5x12_button",
+   "note": "the deck on a post, from above",
+   "grip_mm": [
+    2.54
+   ],
+   "engagement_mm": [
+    9.46
+   ],
+   "problems": []
+  },
+  {
+   "joint": "riser",
+   "stage": "P3",
+   "screw": "M5 x 16 button",
+   "count": 4,
+   "stack": [
+    "turret_plate",
+    "deck"
+   ],
+   "receiver": [
+    "insert",
+    "riser"
+   ],
+   "bom": "screw_m5x16_button",
+   "note": "the riser through the turret plate and the deck (D59)",
+   "grip_mm": [
+    5.71
+   ],
+   "engagement_mm": [
+    10.29
+   ],
+   "problems": []
+  },
+  {
+   "joint": "turret_plate_ends",
+   "stage": "P3",
+   "screw": "M5 x 10 button",
+   "count": 2,
+   "stack": [
+    "deck",
+    "turret_plate"
+   ],
+   "receiver": [
+    "pem",
+    "turret_plate"
+   ],
+   "bom": "screw_m5x10_button",
+   "note": "the turret plate's ends up against the deck",
+   "grip_mm": [
+    5.71
+   ],
+   "engagement_mm": [
+    5.04
+   ],
+   "problems": []
+  },
+  {
+   "joint": "isolator_1",
+   "stage": "P3",
+   "screw": "M4 x 25 socket",
+   "count": 1,
+   "stack": [
+    "isolator_1",
+    "floor_tray"
+   ],
+   "receiver": [
+    "pem",
+    "floor_tray"
+   ],
+   "bom": "screw_m4x25",
+   "note": "a TPU isolator (snug, not tight): an M4 x 20 and a washer through its cap and foot into the tray's nut",
+   "grip_mm": [
+    18.65
+   ],
+   "engagement_mm": [
+    4.76
+   ],
+   "problems": []
+  },
+  {
+   "joint": "isolator_2",
+   "stage": "P3",
+   "screw": "M4 x 25 socket",
+   "count": 1,
+   "stack": [
+    "isolator_2",
+    "floor_tray"
+   ],
+   "receiver": [
+    "pem",
+    "floor_tray"
+   ],
+   "bom": "screw_m4x25",
+   "note": "a TPU isolator (snug, not tight): an M4 x 20 and a washer through its cap and foot into the tray's nut",
+   "grip_mm": [
+    18.65
+   ],
+   "engagement_mm": [
+    4.76
+   ],
+   "problems": []
+  },
+  {
+   "joint": "isolator_3",
+   "stage": "P3",
+   "screw": "M4 x 25 socket",
+   "count": 1,
+   "stack": [
+    "isolator_3",
+    "floor_tray"
+   ],
+   "receiver": [
+    "pem",
+    "floor_tray"
+   ],
+   "bom": "screw_m4x25",
+   "note": "a TPU isolator (snug, not tight): an M4 x 20 and a washer through its cap and foot into the tray's nut",
+   "grip_mm": [
+    18.65
+   ],
+   "engagement_mm": [
+    4.76
+   ],
+   "problems": []
+  },
+  {
+   "joint": "isolator_4",
+   "stage": "P3",
+   "screw": "M4 x 25 socket",
+   "count": 1,
+   "stack": [
+    "isolator_4",
+    "floor_tray"
+   ],
+   "receiver": [
+    "pem",
+    "floor_tray"
+   ],
+   "bom": "screw_m4x25",
+   "note": "a TPU isolator (snug, not tight): an M4 x 20 and a washer through its cap and foot into the tray's nut",
+   "grip_mm": [
+    18.65
+   ],
+   "engagement_mm": [
+    4.76
+   ],
+   "problems": []
+  },
+  {
+   "joint": "plate_post_1_foot",
+   "stage": "P3",
+   "screw": "M5 x 10 button",
+   "count": 1,
+   "stack": [
+    "floor_tray"
+   ],
+   "receiver": [
+    "insert",
+    "plate_post_1"
+   ],
+   "bom": "screw_m5x10_button",
+   "note": "a power-plate post on the tray",
+   "grip_mm": [
+    3.17
+   ],
+   "engagement_mm": [
+    6.83
+   ],
+   "problems": []
+  },
+  {
+   "joint": "plate_post_1_head",
+   "stage": "P3",
+   "screw": "M5 x 10 button",
+   "count": 1,
+   "stack": [
+    "power_plate"
+   ],
+   "receiver": [
+    "insert",
+    "plate_post_1"
+   ],
+   "bom": "screw_m5x10_button",
+   "note": "the power plate on a post",
+   "grip_mm": [
+    2.54
+   ],
+   "engagement_mm": [
+    7.46
+   ],
+   "problems": []
+  },
+  {
+   "joint": "plate_post_2_foot",
+   "stage": "P3",
+   "screw": "M5 x 10 button",
+   "count": 1,
+   "stack": [
+    "floor_tray"
+   ],
+   "receiver": [
+    "insert",
+    "plate_post_2"
+   ],
+   "bom": "screw_m5x10_button",
+   "note": "a power-plate post on the tray",
+   "grip_mm": [
+    3.17
+   ],
+   "engagement_mm": [
+    6.83
+   ],
+   "problems": []
+  },
+  {
+   "joint": "plate_post_2_head",
+   "stage": "P3",
+   "screw": "M5 x 10 button",
+   "count": 1,
+   "stack": [
+    "power_plate"
+   ],
+   "receiver": [
+    "insert",
+    "plate_post_2"
+   ],
+   "bom": "screw_m5x10_button",
+   "note": "the power plate on a post",
+   "grip_mm": [
+    2.54
+   ],
+   "engagement_mm": [
+    7.46
+   ],
+   "problems": []
+  },
+  {
+   "joint": "plate_post_3_foot",
+   "stage": "P3",
+   "screw": "M5 x 10 button",
+   "count": 1,
+   "stack": [
+    "floor_tray"
+   ],
+   "receiver": [
+    "insert",
+    "plate_post_3"
+   ],
+   "bom": "screw_m5x10_button",
+   "note": "a power-plate post on the tray",
+   "grip_mm": [
+    3.17
+   ],
+   "engagement_mm": [
+    6.83
+   ],
+   "problems": []
+  },
+  {
+   "joint": "plate_post_3_head",
+   "stage": "P3",
+   "screw": "M5 x 10 button",
+   "count": 1,
+   "stack": [
+    "power_plate"
+   ],
+   "receiver": [
+    "insert",
+    "plate_post_3"
+   ],
+   "bom": "screw_m5x10_button",
+   "note": "the power plate on a post",
+   "grip_mm": [
+    2.54
+   ],
+   "engagement_mm": [
+    7.46
+   ],
+   "problems": []
+  },
+  {
+   "joint": "plate_post_4_foot",
+   "stage": "P3",
+   "screw": "M5 x 10 button",
+   "count": 1,
+   "stack": [
+    "floor_tray"
+   ],
+   "receiver": [
+    "insert",
+    "plate_post_4"
+   ],
+   "bom": "screw_m5x10_button",
+   "note": "a power-plate post on the tray",
+   "grip_mm": [
+    3.17
+   ],
+   "engagement_mm": [
+    6.83
+   ],
+   "problems": []
+  },
+  {
+   "joint": "plate_post_4_head",
+   "stage": "P3",
+   "screw": "M5 x 10 button",
+   "count": 1,
+   "stack": [
+    "power_plate"
+   ],
+   "receiver": [
+    "insert",
+    "plate_post_4"
+   ],
+   "bom": "screw_m5x10_button",
+   "note": "the power plate on a post",
+   "grip_mm": [
+    2.54
+   ],
+   "engagement_mm": [
+    7.46
+   ],
+   "problems": []
+  },
+  {
+   "joint": "power_dcdc",
+   "stage": "P3",
+   "screw": "M3 x 6 pan",
+   "count": 4,
+   "stack": [
+    "item.power_dcdc",
+    "dcdc_bracket"
+   ],
+   "receiver": [
+    "insert",
+    "dcdc_bracket"
+   ],
+   "bom": "screw_m3x6_pan",
+   "note": "the converter's base flange (its slots) on the bracket's upright",
+   "grip_mm": [
+    8.0
+   ],
+   "engagement_mm": [
+    4.0
+   ],
+   "problems": []
+  },
+  {
+   "joint": "dcdc_bracket",
+   "stage": "P3",
+   "screw": "M4 x 8 socket",
+   "count": 2,
+   "stack": [
+    "dcdc_bracket",
+    "power_plate"
+   ],
+   "receiver": [
+    "pem",
+    "power_plate"
+   ],
+   "bom": "screw_m4x8",
+   "note": "the converter's bracket down into the plate's flush nuts (the switch hangs 3 mm under the plate)",
+   "grip_mm": [
+    6.54
+   ],
+   "engagement_mm": [
+    2.54
+   ],
+   "problems": []
+  },
+  {
+   "joint": "bus_insulator_1",
+   "stage": "P3",
+   "screw": "M3 x 8 socket",
+   "count": 2,
+   "stack": [
+    "power_plate"
+   ],
+   "receiver": [
+    "insert",
+    "bus_insulator_1"
+   ],
+   "bom": "screw_m3x8_socket",
+   "note": "a bus bar's insulator up from under the plate",
+   "grip_mm": [
+    2.54
+   ],
+   "engagement_mm": [
+    5.46
+   ],
+   "problems": []
+  },
+  {
+   "joint": "bus_bar_1",
+   "stage": "P3",
+   "screw": "M3 x 8 socket",
+   "count": 2,
+   "stack": [
+    "bus_bar_1"
+   ],
+   "receiver": [
+    "insert",
+    "bus_insulator_1"
+   ],
+   "bom": "screw_m3x8_socket",
+   "note": "a bus bar down onto its insulator",
+   "grip_mm": [
+    3.17
+   ],
+   "engagement_mm": [
+    4.83
+   ],
+   "problems": []
+  },
+  {
+   "joint": "bus_insulator_2",
+   "stage": "P3",
+   "screw": "M3 x 8 socket",
+   "count": 2,
+   "stack": [
+    "power_plate"
+   ],
+   "receiver": [
+    "insert",
+    "bus_insulator_2"
+   ],
+   "bom": "screw_m3x8_socket",
+   "note": "a bus bar's insulator up from under the plate",
+   "grip_mm": [
+    2.54
+   ],
+   "engagement_mm": [
+    5.46
+   ],
+   "problems": []
+  },
+  {
+   "joint": "bus_bar_2",
+   "stage": "P3",
+   "screw": "M3 x 8 socket",
+   "count": 2,
+   "stack": [
+    "bus_bar_2"
+   ],
+   "receiver": [
+    "insert",
+    "bus_insulator_2"
+   ],
+   "bom": "screw_m3x8_socket",
+   "note": "a bus bar down onto its insulator",
+   "grip_mm": [
+    3.17
+   ],
+   "engagement_mm": [
+    4.83
+   ],
+   "problems": []
+  },
+  {
+   "joint": "plate_vesc_r_flange",
+   "stage": "P3",
+   "screw": "M5 x 8 button",
+   "count": 4,
+   "stack": [
+    "item.plate_vesc_r",
+    "power_plate"
+   ],
+   "receiver": [
+    "pem",
+    "power_plate"
+   ],
+   "bom": "screw_m5x10_button",
+   "note": "a VESC hung under the power plate by its flange",
+   "grip_mm": [
+    6.54
+   ],
+   "engagement_mm": [
+    2.54
+   ],
+   "problems": []
+  },
+  {
+   "joint": "plate_vesc_l_flange",
+   "stage": "P3",
+   "screw": "M5 x 8 button",
+   "count": 4,
+   "stack": [
+    "item.plate_vesc_l",
+    "power_plate"
+   ],
+   "receiver": [
+    "pem",
+    "power_plate"
+   ],
+   "bom": "screw_m5x10_button",
+   "note": "a VESC hung under the power plate by its flange",
+   "grip_mm": [
+    6.54
+   ],
+   "engagement_mm": [
+    2.54
+   ],
+   "problems": [
+    {
+     "at": [
+      141.0,
+      29.15,
+      131.68
+     ],
+     "problems": [
+      "the tip hits item.plate_mrbf_block at 6.5 mm"
+     ]
+    }
+   ]
+  },
+  {
+   "joint": "bay_rail_l",
+   "stage": "P3",
+   "screw": "M4 x 16 socket",
+   "count": 4,
+   "stack": [
+    "bay_rail_l",
+    "belly_plate"
+   ],
+   "receiver": [
+    "pem",
+    "belly_plate"
+   ],
+   "bom": "screw_m4x16",
+   "note": "a bay rail up into the belly's nuts, beyond the cheeks' ends",
+   "grip_mm": [
+    12.54
+   ],
+   "engagement_mm": [
+    4.22
+   ],
+   "problems": []
+  },
+  {
+   "joint": "bay_side_l_low",
+   "stage": "P3",
+   "screw": "M3 x 6 button",
+   "count": 5,
+   "stack": [
+    "bay_side_l",
+    "bay_floor"
+   ],
+   "receiver": [
+    "pem",
+    "bay_floor"
+   ],
+   "bom": "screw_m3x6_button",
+   "note": "a side plate into the floor's flange nuts",
+   "grip_mm": [
+    3.25
+   ],
+   "engagement_mm": [
+    3.51
+   ],
+   "problems": []
+  },
+  {
+   "joint": "bay_side_l_high",
+   "stage": "P3",
+   "screw": "M3 x 6 button",
+   "count": 5,
+   "stack": [
+    "bay_side_l"
+   ],
+   "receiver": [
+    "insert",
+    "bay_rail_l"
+   ],
+   "bom": "screw_m3x6_button",
+   "note": "a side plate into its rail's inserts",
+   "grip_mm": [
+    1.6
+   ],
+   "engagement_mm": [
+    4.4
+   ],
+   "problems": []
+  },
+  {
+   "joint": "bay_rail_r",
+   "stage": "P3",
+   "screw": "M4 x 16 socket",
+   "count": 4,
+   "stack": [
+    "bay_rail_r",
+    "belly_plate"
+   ],
+   "receiver": [
+    "pem",
+    "belly_plate"
+   ],
+   "bom": "screw_m4x16",
+   "note": "a bay rail up into the belly's nuts, beyond the cheeks' ends",
+   "grip_mm": [
+    12.54
+   ],
+   "engagement_mm": [
+    4.22
+   ],
+   "problems": []
+  },
+  {
+   "joint": "bay_side_r_low",
+   "stage": "P3",
+   "screw": "M3 x 6 button",
+   "count": 5,
+   "stack": [
+    "bay_side_r",
+    "bay_floor"
+   ],
+   "receiver": [
+    "pem",
+    "bay_floor"
+   ],
+   "bom": "screw_m3x6_button",
+   "note": "a side plate into the floor's flange nuts",
+   "grip_mm": [
+    3.25
+   ],
+   "engagement_mm": [
+    3.51
+   ],
+   "problems": []
+  },
+  {
+   "joint": "bay_side_r_high",
+   "stage": "P3",
+   "screw": "M3 x 6 button",
+   "count": 5,
+   "stack": [
+    "bay_side_r"
+   ],
+   "receiver": [
+    "insert",
+    "bay_rail_r"
+   ],
+   "bom": "screw_m3x6_button",
+   "note": "a side plate into its rail's inserts",
+   "grip_mm": [
+    1.6
+   ],
+   "engagement_mm": [
+    4.4
+   ],
+   "problems": []
+  },
+  {
+   "joint": "adapter_plate_front",
+   "stage": "P3",
+   "screw": "M4 x 8 socket",
+   "count": 4,
+   "stack": [
+    "adapter_plate_front",
+    "belly_plate"
+   ],
+   "receiver": [
+    "pem",
+    "belly_plate"
+   ],
+   "bom": "screw_m4x8",
+   "note": "a pack adapter's printed plate up into the belly's nuts (heads counterbored 1.5 mm)",
+   "grip_mm": [
+    5.04
+   ],
+   "engagement_mm": [
+    3.72
+   ],
+   "problems": []
+  },
+  {
+   "joint": "bay_door_front_l",
+   "stage": "P3",
+   "screw": "M3 x 10 thumb",
+   "count": 1,
+   "stack": [
+    "bay_door_front"
+   ],
+   "receiver": [
+    "insert",
+    "bay_rail_l"
+   ],
+   "bom": "thumbscrew_m3x10",
+   "note": "a door's knurled thumbscrew into its rail's end (tool-free)",
+   "grip_mm": [
+    4.0
+   ],
+   "engagement_mm": [
+    6.0
+   ],
+   "problems": []
+  },
+  {
+   "joint": "bay_door_front_r",
+   "stage": "P3",
+   "screw": "M3 x 10 thumb",
+   "count": 1,
+   "stack": [
+    "bay_door_front"
+   ],
+   "receiver": [
+    "insert",
+    "bay_rail_r"
+   ],
+   "bom": "thumbscrew_m3x10",
+   "note": "a door's knurled thumbscrew into its rail's end (tool-free)",
+   "grip_mm": [
+    4.0
+   ],
+   "engagement_mm": [
+    6.0
+   ],
+   "problems": []
+  },
+  {
+   "joint": "adapter_plate_rear",
+   "stage": "P3",
+   "screw": "M4 x 8 socket",
+   "count": 4,
+   "stack": [
+    "adapter_plate_rear",
+    "belly_plate"
+   ],
+   "receiver": [
+    "pem",
+    "belly_plate"
+   ],
+   "bom": "screw_m4x8",
+   "note": "a pack adapter's printed plate up into the belly's nuts (heads counterbored 1.5 mm)",
+   "grip_mm": [
+    5.04
+   ],
+   "engagement_mm": [
+    3.72
+   ],
+   "problems": []
+  },
+  {
+   "joint": "bay_door_rear_l",
+   "stage": "P3",
+   "screw": "M3 x 10 thumb",
+   "count": 1,
+   "stack": [
+    "bay_door_rear"
+   ],
+   "receiver": [
+    "insert",
+    "bay_rail_l"
+   ],
+   "bom": "thumbscrew_m3x10",
+   "note": "a door's knurled thumbscrew into its rail's end (tool-free)",
+   "grip_mm": [
+    4.0
+   ],
+   "engagement_mm": [
+    6.0
+   ],
+   "problems": []
+  },
+  {
+   "joint": "bay_door_rear_r",
+   "stage": "P3",
+   "screw": "M3 x 10 thumb",
+   "count": 1,
+   "stack": [
+    "bay_door_rear"
+   ],
+   "receiver": [
+    "insert",
+    "bay_rail_r"
+   ],
+   "bom": "thumbscrew_m3x10",
+   "note": "a door's knurled thumbscrew into its rail's end (tool-free)",
+   "grip_mm": [
+    4.0
+   ],
+   "engagement_mm": [
+    6.0
+   ],
+   "problems": []
+  },
+  {
+   "joint": "wall_l_front",
+   "stage": "P3",
+   "screw": "M3 x 16 pan",
+   "count": 2,
+   "stack": [
+    "shell_side_l_front"
+   ],
+   "receiver": [
+    "insert",
+    "post_1"
+   ],
+   "bom": "screw_m3x16",
+   "note": "a side wall into its corner post's side inserts",
+   "grip_mm": [
+    9.4
+   ],
+   "engagement_mm": [
+    6.4
+   ],
+   "problems": []
+  },
+  {
+   "joint": "wall_l_rear",
+   "stage": "P3",
+   "screw": "M3 x 16 pan",
+   "count": 2,
+   "stack": [
+    "shell_side_l_rear"
+   ],
+   "receiver": [
+    "insert",
+    "post_3"
+   ],
+   "bom": "screw_m3x16",
+   "note": "a side wall into its corner post's side inserts",
+   "grip_mm": [
+    9.4
+   ],
+   "engagement_mm": [
+    6.4
+   ],
+   "problems": []
+  },
+  {
+   "joint": "splice_l",
+   "stage": "P3",
+   "screw": "M3 x 8 pan",
+   "count": 2,
+   "stack": [
+    "shell_side_l_front",
+    "shell_side_l_rear"
+   ],
+   "receiver": [
+    "nut",
+    "shell_side_l_rear"
+   ],
+   "bom": "screw_m3x8_pan",
+   "note": "the side wall's halves: through the front half into a nut held in the rear half's tab",
+   "grip_mm": [
+    3.0
+   ],
+   "engagement_mm": [
+    5.0
+   ],
+   "problems": []
+  },
+  {
+   "joint": "ear_bracket_l",
+   "stage": "P3",
+   "screw": "M5 x 14 button",
+   "count": 4,
+   "stack": [
+    "ear_bracket_l",
+    "shell_side_l_front"
+   ],
+   "receiver": [
+    "nyloc",
+    null
+   ],
+   "bom": "screw_m5x14_button",
+   "note": "an ear bracket through the wall, nyloc nuts inside",
+   "grip_mm": [
+    8.0
+   ],
+   "engagement_mm": [
+    6.0
+   ],
+   "problems": []
+  },
+  {
+   "joint": "wall_r_front",
+   "stage": "P3",
+   "screw": "M3 x 16 pan",
+   "count": 2,
+   "stack": [
+    "shell_side_r_front"
+   ],
+   "receiver": [
+    "insert",
+    "post_2"
+   ],
+   "bom": "screw_m3x16",
+   "note": "a side wall into its corner post's side inserts",
+   "grip_mm": [
+    9.4
+   ],
+   "engagement_mm": [
+    6.4
+   ],
+   "problems": []
+  },
+  {
+   "joint": "wall_r_rear",
+   "stage": "P3",
+   "screw": "M3 x 16 pan",
+   "count": 2,
+   "stack": [
+    "shell_side_r_rear"
+   ],
+   "receiver": [
+    "insert",
+    "post_4"
+   ],
+   "bom": "screw_m3x16",
+   "note": "a side wall into its corner post's side inserts",
+   "grip_mm": [
+    9.4
+   ],
+   "engagement_mm": [
+    6.4
+   ],
+   "problems": []
+  },
+  {
+   "joint": "splice_r",
+   "stage": "P3",
+   "screw": "M3 x 8 pan",
+   "count": 2,
+   "stack": [
+    "shell_side_r_front",
+    "shell_side_r_rear"
+   ],
+   "receiver": [
+    "nut",
+    "shell_side_r_rear"
+   ],
+   "bom": "screw_m3x8_pan",
+   "note": "the side wall's halves: through the front half into a nut held in the rear half's tab",
+   "grip_mm": [
+    3.0
+   ],
+   "engagement_mm": [
+    5.0
+   ],
+   "problems": []
+  },
+  {
+   "joint": "ear_bracket_r",
+   "stage": "P3",
+   "screw": "M5 x 14 button",
+   "count": 4,
+   "stack": [
+    "ear_bracket_r",
+    "shell_side_r_front"
+   ],
+   "receiver": [
+    "nyloc",
+    null
+   ],
+   "bom": "screw_m5x14_button",
+   "note": "an ear bracket through the wall, nyloc nuts inside",
+   "grip_mm": [
+    8.0
+   ],
+   "engagement_mm": [
+    6.0
+   ],
+   "problems": []
+  },
+  {
+   "joint": "shell_front_post_l",
+   "stage": "P3",
+   "screw": "M3 x 16 pan",
+   "count": 2,
+   "stack": [
+    "shell_front"
+   ],
+   "receiver": [
+    "insert",
+    "post_1"
+   ],
+   "bom": "screw_m3x16",
+   "note": "a face into its post's end inserts",
+   "grip_mm": [
+    9.4
+   ],
+   "engagement_mm": [
+    6.4
+   ],
+   "problems": []
+  },
+  {
+   "joint": "shell_front_post_r",
+   "stage": "P3",
+   "screw": "M3 x 16 pan",
+   "count": 2,
+   "stack": [
+    "shell_front"
+   ],
+   "receiver": [
+    "insert",
+    "post_2"
+   ],
+   "bom": "screw_m3x16",
+   "note": "a face into its post's end inserts",
+   "grip_mm": [
+    9.4
+   ],
+   "engagement_mm": [
+    6.4
+   ],
+   "problems": []
+  },
+  {
+   "joint": "d435_cradle_front_feet",
+   "stage": "P3",
+   "screw": "M3 x 8 pan",
+   "count": 2,
+   "stack": [
+    "shell_front"
+   ],
+   "receiver": [
+    "insert",
+    "d435_cradle_front"
+   ],
+   "bom": "screw_m3x8_pan",
+   "note": "the camera's cradle to the apron, from outside",
+   "grip_mm": [
+    2.0
+   ],
+   "engagement_mm": [
+    6.0
+   ],
+   "problems": []
+  },
+  {
+   "joint": "d435_front_back",
+   "stage": "P3",
+   "screw": "M3 x 8 socket",
+   "count": 2,
+   "stack": [
+    "d435_cradle_front"
+   ],
+   "receiver": [
+    "tapped",
+    "d435_front"
+   ],
+   "bom": "screw_m3x8_socket",
+   "note": "the D435 on its two back M3 threads (4 mm in: check the camera's maximum screw depth on arrival)",
+   "grip_mm": [
+    4.0
+   ],
+   "engagement_mm": [
+    4.0
+   ],
+   "problems": []
+  },
+  {
+   "joint": "shell_rear_post_l",
+   "stage": "P3",
+   "screw": "M3 x 16 pan",
+   "count": 2,
+   "stack": [
+    "shell_rear"
+   ],
+   "receiver": [
+    "insert",
+    "post_3"
+   ],
+   "bom": "screw_m3x16",
+   "note": "a face into its post's end inserts",
+   "grip_mm": [
+    9.4
+   ],
+   "engagement_mm": [
+    6.4
+   ],
+   "problems": []
+  },
+  {
+   "joint": "shell_rear_post_r",
+   "stage": "P3",
+   "screw": "M3 x 16 pan",
+   "count": 2,
+   "stack": [
+    "shell_rear"
+   ],
+   "receiver": [
+    "insert",
+    "post_4"
+   ],
+   "bom": "screw_m3x16",
+   "note": "a face into its post's end inserts",
+   "grip_mm": [
+    9.4
+   ],
+   "engagement_mm": [
+    6.4
+   ],
+   "problems": []
+  },
+  {
+   "joint": "d435_cradle_rear_feet",
+   "stage": "P3",
+   "screw": "M3 x 8 pan",
+   "count": 2,
+   "stack": [
+    "shell_rear"
+   ],
+   "receiver": [
+    "insert",
+    "d435_cradle_rear"
+   ],
+   "bom": "screw_m3x8_pan",
+   "note": "the camera's cradle to the apron, from outside",
+   "grip_mm": [
+    2.0
+   ],
+   "engagement_mm": [
+    6.0
+   ],
+   "problems": []
+  },
+  {
+   "joint": "d435_rear_back",
+   "stage": "P3",
+   "screw": "M3 x 8 socket",
+   "count": 2,
+   "stack": [
+    "d435_cradle_rear"
+   ],
+   "receiver": [
+    "tapped",
+    "d435_rear"
+   ],
+   "bom": "screw_m3x8_socket",
+   "note": "the D435 on its two back M3 threads (4 mm in: check the camera's maximum screw depth on arrival)",
+   "grip_mm": [
+    4.0
+   ],
+   "engagement_mm": [
+    4.0
+   ],
+   "problems": []
+  },
+  {
+   "joint": "eyes_clip",
+   "stage": "P3",
+   "screw": "M3 x 6 socket",
+   "count": 2,
+   "stack": [
+    "eyes_clip"
+   ],
+   "receiver": [
+    "insert",
+    "shell_front"
+   ],
+   "bom": "screw_m3x6_socket",
+   "note": "the eyes' clip into the face's bosses",
+   "grip_mm": [
+    2.0
+   ],
+   "engagement_mm": [
+    4.0
+   ],
+   "problems": []
+  },
+  {
+   "joint": "shell_door",
+   "stage": "P3",
+   "screw": "M3 x 8 pan",
+   "count": 4,
+   "stack": [
+    "shell_door",
+    "shell_side_r_front"
+   ],
+   "receiver": [
+    "nut",
+    "shell_side_r_front"
+   ],
+   "bom": "screw_m3x8_pan",
+   "note": "the service door into the nuts held in the wall's pads",
+   "grip_mm": [
+    5.0
+   ],
+   "engagement_mm": [
+    3.0
+   ],
+   "problems": [
+    {
+     "at": [
+      64.0,
+      -131.6,
+      180.0
+     ],
+     "problems": [
+      "the stack also clamps ['dcdc_bracket']",
+      "the tip hits dcdc_bracket at 7.6 mm"
+     ]
+    }
+   ]
+  },
+  {
+   "joint": "shell_hatch",
+   "stage": "P3",
+   "screw": "M3 x 8 pan",
+   "count": 2,
+   "stack": [
+    "shell_hatch",
+    "shell_side_l_rear"
+   ],
+   "receiver": [
+    "nut",
+    "shell_side_l_rear"
+   ],
+   "bom": "screw_m3x8_pan",
+   "note": "the J501 hatch into the nuts held in the wall's rim",
+   "grip_mm": [
+    5.0
+   ],
+   "engagement_mm": [
+    3.0
+   ],
+   "problems": []
+  },
+  {
+   "joint": "fan_duct",
+   "stage": "P3",
+   "screw": "M3 x 5 socket",
+   "count": 3,
+   "stack": [
+    "fan_duct",
+    "turret_plate"
+   ],
+   "receiver": [
+    "tapped",
+    "turret_plate"
+   ],
+   "bom": "screw_m3x5_socket",
+   "note": "the fan duct up into the turret plate's tapped holes",
+   "grip_mm": [
+    5.17
+   ],
+   "engagement_mm": [
+    3.0
+   ],
+   "problems": []
+  }
+ ],
+ "floating": {
+  "P1": [],
+  "P2": [],
+  "P3": []
+ },
+ "holds": [
+  [
+   "cheek_nuts_left",
+   "cheek_left",
+   "PEM SS-M5-0 pressed by SendCutSend"
+  ],
+  [
+   "compute_pallet",
+   "isolator_1",
+   "captured between the isolators' feet and caps (four, each on its M4)"
+  ],
+  [
+   "item.battery_front",
+   "item.battery_adapter_front",
+   "the DeWalt rail and its latch; the door behind it"
+  ],
+  [
+   "item.battery_rear",
+   "item.battery_adapter_rear",
+   "the DeWalt rail and its latch; the door behind it"
+  ],
+  [
+   "item.battery_adapter_front",
+   "adapter_plate_front",
+   "the adapter's own screws into inserts set from its holes on arrival"
+  ],
+  [
+   "item.battery_adapter_rear",
+   "adapter_plate_rear",
+   "the adapter's own screws into inserts set from its holes on arrival"
+  ],
+  [
+   "ear_pod_l",
+   "ear_bracket_l",
+   "the SSC1's 5/16-18 foot bolt into the nut held in the bracket's shelf"
+  ],
+  [
+   "ear_pod_r",
+   "ear_bracket_r",
+   "the SSC1's 5/16-18 foot bolt into the nut held in the bracket's shelf"
+  ],
+  [
+   "eyes_board",
+   "eyes_clip",
+   "clamped between the clip and the face round its window"
+  ],
+  [
+   "bay_skid_1",
+   "bay_floor",
+   "3M VHB tape"
+  ],
+  [
+   "bay_skid_2",
+   "bay_floor",
+   "3M VHB tape"
+  ],
+  [
+   "bay_skid_3",
+   "bay_floor",
+   "3M VHB tape"
+  ],
+  [
+   "bay_skid_4",
+   "bay_floor",
+   "3M VHB tape"
+  ],
+  [
+   "cheek_nuts_right",
+   "cheek_right",
+   "PEM SS-M5-0 pressed by SendCutSend"
+  ],
+  [
+   "turret_plate_nuts",
+   "turret_plate",
+   "PEM SS-M5-0 pressed by SendCutSend"
+  ],
+  [
+   "item.j501_carrier",
+   "item.j501_standoff_15_16.5",
+   "four M3 x 6 into the hex standoffs (the J501's own holes)"
+  ],
+  [
+   "item.agx_module",
+   "item.j501_carrier",
+   "the module's connector and its two M3 screws"
+  ],
+  [
+   "item.agx_spreader",
+   "item.agx_module",
+   "clamped under the cooler"
+  ],
+  [
+   "item.agx_cooler",
+   "item.j501_carrier",
+   "the cooler's four spring screws through the carrier (j501-agx)"
+  ],
+  [
+   "item.j501_standoff_15_16.5",
+   "compute_pallet",
+   "M3 x 6 flat heads up through the pallet (body_frame.pallet_part)"
+  ],
+  [
+   "item.j501_standoff_165_16.5",
+   "compute_pallet",
+   "M3 x 6 flat heads up through the pallet (body_frame.pallet_part)"
+  ],
+  [
+   "item.j501_standoff_15_146.5",
+   "compute_pallet",
+   "M3 x 6 flat heads up through the pallet (body_frame.pallet_part)"
+  ],
+  [
+   "item.j501_standoff_165_146.5",
+   "compute_pallet",
+   "M3 x 6 flat heads up through the pallet (body_frame.pallet_part)"
+  ],
+  [
+   "item.plate_main_switch",
+   "power_plate",
+   "in its printed cradle, two M4 into the plate's F-M4-2"
+  ],
+  [
+   "item.plate_shunt",
+   "power_plate",
+   "two M5 into the plate's F-M5-2"
+  ],
+  [
+   "item.plate_mrbf_block",
+   "power_plate",
+   "its M8 post through a printed bushing in the plate"
+  ],
+  [
+   "item.plate_fuses",
+   "power_plate",
+   "cable-tied through the plate's slots"
+  ],
+  [
+   "item.plate_mcu_board",
+   "power_plate",
+   "its printed carrier on two M4 into the plate's F-M4-2"
+  ],
+  [
+   "item.plate_buck_5v",
+   "power_plate",
+   "an M3 standoff in the plate"
+  ],
+  [
+   "item.vn100",
+   "floor_tray",
+   "two M3 into tapped holes in the tray"
+  ],
+  [
+   "item.lidar_box",
+   "deck",
+   "its printed bracket on two M4 from above"
+  ],
+  [
+   "item.lidar_coil",
+   "deck",
+   "two printed clips on M4 from above"
+  ],
+  [
+   "item.vlp16",
+   "deck",
+   "its 1/4-20 from below and two locating pins"
+  ],
+  [
+   "item.turret",
+   "riser",
+   "four M5 into the riser's top inserts and two dowels (the TM pattern)"
+  ]
+ ],
+ "stages": [
+  "P1",
+  "P2",
+  "P3"
+ ],
+ "screw_count": {
+  "M3 x 10 thumb (P1+)": 4,
+  "M3 x 16 pan (P3+)": 16,
+  "M3 x 5 socket (P3+)": 3,
+  "M3 x 6 button (P1+)": 20,
+  "M3 x 6 pan (P1+)": 4,
+  "M3 x 6 socket (P3+)": 2,
+  "M3 x 8 pan (P3+)": 14,
+  "M3 x 8 socket (P1+)": 8,
+  "M3 x 8 socket (P3+)": 4,
+  "M4 x 10 flat (P1+)": 16,
+  "M4 x 16 socket (P1+)": 8,
+  "M4 x 25 socket (P1+)": 4,
+  "M4 x 8 socket (P1+)": 10,
+  "M5 x 10 button (P1+)": 8,
+  "M5 x 10 button (P2+)": 2,
+  "M5 x 12 button (P1+)": 36,
+  "M5 x 12 button (P1-P1)": 4,
+  "M5 x 14 button (P3+)": 8,
+  "M5 x 16 button (P2+)": 4,
+  "M5 x 8 button (P1+)": 8
+ },
+ "summary": {
+  "joints": 71,
+  "screws": 183,
+  "joints_with_problems": [
+   "plate_vesc_l_flange",
+   "shell_door"
+  ],
+  "floating": {},
+  "clashes": null
+ }
+}

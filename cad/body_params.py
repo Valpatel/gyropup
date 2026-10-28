@@ -199,6 +199,8 @@ SPINE_X = (-92.0, 92.0)             # the cheeks' length: just inside the hip fr
                                     # end into the belly, and the spine weighs 0.57 kg, not 0.93
 CHEEK_FLANGE = float(os.environ.get('GYROPUP_BODY_CHEEK_FLANGE', 30.0))   # outward flanges (OML): an SS-M5-0 nut needs 7.6 mm (half die) from the bend and
                                     # 7.1 mm (K) to the edge, beyond the 6.35 mm setback
+FLANGE_SCREW = {'size': 'M5', 'length': 12.0, 'key': 'screw_m5x12_button'}   # the tray and belly into the cheeks' flange nuts
+# (an M5 x 10 left 2.8 mm of the SS-M5-0's thread engaged under the 3.2 mm tray: cad/body_joints.py)
 FRAME_SCREW = {'size': 'M5', 'length': 12.0, 'head': 'ISO 7380 button head, 3 mm hex', 'torque_nm': 3.0,
                'why': f'through the {STOCK[CHEEK]["t"]:.2f} mm cheek it engages {12.0 - STOCK[CHEEK]["t"]:.1f} mm of the 7.9 mm insert and stays '
                       f'{11.0 - (12.0 - STOCK[CHEEK]["t"]):.1f} mm short of the pilot\'s 11 mm bottom; M5 x 16 would bottom out'}
