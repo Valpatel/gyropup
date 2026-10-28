@@ -1,0 +1,2967 @@
+{
+ "units": "mm",
+ "frame": "box: x forward (pan 0), y left, z up; origin on the desk under the pan axis. Each part is in its group's frame (pivots); journey focus points and the ball path are in the tilt frame (origin on the tilt axis)",
+ "built": "2026-10-27 15:37",
+ "z_tm": 141.0,
+ "roof_z": 97.0,
+ "box": {
+  "x": [
+   -90.5,
+   90.5
+  ],
+  "y": [
+   -103.0,
+   103.0
+  ],
+  "z": [
+   0.0,
+   97.0
+  ],
+  "revision": "0.9-g48r",
+  "parts": [
+   "base",
+   "cover",
+   "front_no_gmsl",
+   "rear_io",
+   "side_hatch"
+  ]
+ },
+ "deck": {
+  "x": [
+   -116.0,
+   90.5
+  ],
+  "y": [
+   -103.0,
+   103.0
+  ],
+  "z": [
+   133.0,
+   141.0
+  ]
+ },
+ "fan": {
+  "xy": [
+   10.5,
+   0.0
+  ],
+  "z": 97.0,
+  "r": 40.0,
+  "grille_x": 90.5,
+  "mouth_half": 62.0,
+  "duct_z": [
+   100.0,
+   133.0
+  ]
+ },
+ "pivots": {
+  "pan": [
+   0.0,
+   0.0,
+   141.0
+  ],
+  "tilt": [
+   0.0,
+   0.0,
+   140.0
+  ],
+  "pinion": [
+   -52.65,
+   0.0,
+   141.0
+  ],
+  "pinion_ratio": -3.0,
+  "dial": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "wheel_l": [
+   71,
+   26.5125,
+   0.0
+  ],
+  "wheel_r": [
+   71,
+   -26.5125,
+   0.0
+  ],
+  "flap": [
+   -39.0,
+   0.0,
+   91.0
+  ]
+ },
+ "limits": {
+  "pan_deg": [
+   -170.0,
+   170.0
+  ],
+  "tilt_deg": [
+   -25.0,
+   0.0
+  ],
+  "pan_rate_deg_s": 90,
+  "tilt_rate_deg_s": 270
+ },
+ "muzzle": [
+  195.0,
+  0.0,
+  -15.0
+ ],
+ "laser": [
+  126.5,
+  -32.0,
+  -15.0
+ ],
+ "ball_path": [
+  [
+   37.0,
+   0.0,
+   6.35
+  ],
+  [
+   37.18,
+   0.0,
+   3.56
+  ],
+  [
+   37.73,
+   0.0,
+   0.82
+  ],
+  [
+   38.63,
+   0.0,
+   -1.82
+  ],
+  [
+   39.86,
+   0.0,
+   -4.32
+  ],
+  [
+   41.41,
+   0.0,
+   -6.65
+  ],
+  [
+   43.25,
+   0.0,
+   -8.75
+  ],
+  [
+   45.35,
+   0.0,
+   -10.59
+  ],
+  [
+   47.67,
+   0.0,
+   -12.14
+  ],
+  [
+   50.18,
+   0.0,
+   -13.37
+  ],
+  [
+   52.82,
+   0.0,
+   -14.27
+  ],
+  [
+   55.56,
+   0.0,
+   -14.82
+  ],
+  [
+   58.35,
+   0.0,
+   -15.0
+  ],
+  [
+   63.75,
+   0.0,
+   -15.0
+  ],
+  [
+   71,
+   0.0,
+   -15.0
+  ],
+  [
+   78.25,
+   0.0,
+   -15.0
+  ],
+  [
+   95.0,
+   0.0,
+   -15.0
+  ],
+  [
+   125.0,
+   0.0,
+   -15.0
+  ],
+  [
+   175.0,
+   0.0,
+   -15.0
+  ],
+  [
+   195.0,
+   0.0,
+   -15.0
+  ]
+ ],
+ "pockets": [
+  [
+   37.0,
+   0.0,
+   6.35
+  ],
+  [
+   26.16,
+   26.16,
+   6.35
+  ],
+  [
+   0.0,
+   37.0,
+   6.35
+  ],
+  [
+   -26.16,
+   26.16,
+   6.35
+  ],
+  [
+   -37.0,
+   0.0,
+   6.35
+  ],
+  [
+   -26.16,
+   -26.16,
+   6.35
+  ],
+  [
+   -0.0,
+   -37.0,
+   6.35
+  ],
+  [
+   26.16,
+   -26.16,
+   6.35
+  ]
+ ],
+ "pile": [
+  [
+   13.0,
+   0.0,
+   27.6
+  ],
+  [
+   -6.5,
+   11.26,
+   27.6
+  ],
+  [
+   -6.5,
+   -11.26,
+   27.6
+  ],
+  [
+   36.5,
+   0.0,
+   27.6
+  ],
+  [
+   27.96,
+   23.46,
+   27.6
+  ],
+  [
+   6.34,
+   35.95,
+   27.6
+  ],
+  [
+   -18.25,
+   31.61,
+   27.6
+  ],
+  [
+   -34.3,
+   12.48,
+   27.6
+  ],
+  [
+   -34.3,
+   -12.48,
+   27.6
+  ],
+  [
+   -18.25,
+   -31.61,
+   27.6
+  ],
+  [
+   6.34,
+   -35.95,
+   27.6
+  ],
+  [
+   27.96,
+   -23.46,
+   27.6
+  ],
+  [
+   0.0,
+   0.0,
+   44.6
+  ],
+  [
+   24.84,
+   7.68,
+   44.6
+  ],
+  [
+   9.48,
+   24.21,
+   44.6
+  ],
+  [
+   -13.02,
+   22.51,
+   44.6
+  ],
+  [
+   -25.71,
+   3.85,
+   44.6
+  ],
+  [
+   -19.05,
+   -17.7,
+   44.6
+  ],
+  [
+   1.96,
+   -25.93,
+   44.6
+  ],
+  [
+   21.49,
+   -14.63,
+   44.6
+  ],
+  [
+   23.0,
+   28.98,
+   44.6
+  ],
+  [
+   -36.6,
+   5.43,
+   44.6
+  ],
+  [
+   13.6,
+   -34.41,
+   44.6
+  ]
+ ],
+ "ball_r": 11.35,
+ "dial_park_deg": 22.5,
+ "antennas": [
+  {
+   "name": "antenna_left_46.5",
+   "base": [
+    49.5,
+    -117.0,
+    62.0
+   ],
+   "top": [
+    49.5,
+    -117.0,
+    170.0
+   ],
+   "d": 10.0
+  },
+  {
+   "name": "antenna_left_145.5",
+   "base": [
+    -49.5,
+    -117.0,
+    62.0
+   ],
+   "top": [
+    -49.5,
+    -117.0,
+    170.0
+   ],
+   "d": 10.0
+  },
+  {
+   "name": "antenna_right_46.5",
+   "base": [
+    49.5,
+    117.0,
+    62.0
+   ],
+   "top": [
+    49.5,
+    117.0,
+    170.0
+   ],
+   "d": 10.0
+  },
+  {
+   "name": "antenna_right_145.5",
+   "base": [
+    -49.5,
+    117.0,
+    62.0
+   ],
+   "top": [
+    -49.5,
+    117.0,
+    170.0
+   ],
+   "d": 10.0
+  }
+ ],
+ "parts": [
+  {
+   "name": "pan_base",
+   "part": "pan_base",
+   "group": "base",
+   "file": "pan_base.stl",
+   "color": "#4c5259",
+   "opacity": 1.0,
+   "kind": "made",
+   "bbox": [
+    -78.8,
+    -73.0,
+    141.0,
+    78.8,
+    87.5,
+    188.0
+   ],
+   "title": "Pan base",
+   "role": "The fixed base: bolts to the TM face (4 x M5, 2 dowels) and holds the pan bearing, the pan servo, the DT12 socket and the pan stop post.",
+   "explode": [
+    0,
+    0,
+    95
+   ],
+   "material": "pa6-cf",
+   "mass_g": 155.5,
+   "qty": 1,
+   "how": "PA6-CF on its foot; 4 x M5 x 16 into the head ring, 2 x \u00d85 dowels",
+   "doc": "The fixed base, printed PA6-CF on its foot (100 % solid): a \u00d8144 x 5 foot on the TM pattern (4 x M5 x 16",
+   "print_h": 10.2,
+   "anchor": [
+    30.0,
+    -64.0,
+    153.0
+   ],
+   "callout": true
+  },
+  {
+   "name": "pan_ring",
+   "part": "pan_ring",
+   "group": "pan",
+   "file": "pan_ring.stl",
+   "color": "#d96b1a",
+   "opacity": 1.0,
+   "kind": "made",
+   "bbox": [
+    -40.6,
+    -40.6,
+    27.8,
+    40.6,
+    40.6,
+    69.0
+   ],
+   "title": "Pan ring (63 T)",
+   "role": "The turntable: a 63-tooth gear on the bearing's inner race; the yoke bolts on top. It turns without a stop: power and signals cross on the slip ring.",
+   "explode": [
+    0,
+    0,
+    165
+   ],
+   "material": "pa6-cf",
+   "mass_g": 77.9,
+   "qty": 1,
+   "how": "PA6-CF upside down; DIN 471-50 circlip; 4 x M4 inserts",
+   "doc": "The turntable, printed PA6-CF upside down (100 % solid): a 63 T module 1.25 spur gear (16 mm face) with a",
+   "print_h": 5.1,
+   "anchor": [
+    0.0,
+    -40.0,
+    63.0
+   ],
+   "callout": true
+  },
+  {
+   "name": "pan_spacer",
+   "part": "pan_spacer",
+   "group": "pan",
+   "file": "pan_spacer.stl",
+   "color": "#d96b1a",
+   "opacity": 1.0,
+   "kind": "made",
+   "bbox": [
+    -29.5,
+    -29.4,
+    36.0,
+    29.5,
+    29.4,
+    40.0
+   ],
+   "title": "pan spacer",
+   "role": "",
+   "explode": [
+    0,
+    0,
+    0
+   ],
+   "material": "pa6-cf",
+   "mass_g": 2.6,
+   "qty": 1,
+   "how": "PA6-CF on its wide end; between the 61810 inner race and the circlip",
+   "doc": "Printed PA6-CF thrust ring (100 % solid) between the 61810's inner race and the DIN 471-50 circlip: it slides",
+   "print_h": 0.2
+  },
+  {
+   "name": "pan_pinion",
+   "part": "pan_pinion",
+   "group": "pinion",
+   "file": "pan_pinion.stl",
+   "color": "#f29e4c",
+   "opacity": 1.0,
+   "kind": "made",
+   "bbox": [
+    -66.9,
+    -14.4,
+    193.0,
+    -38.3,
+    14.4,
+    210.0
+   ],
+   "title": "Pan pinion (21 T)",
+   "role": "21-tooth pinion on the pan servo's horn. 63 / 21 = 3, so the servo turns three times for every turn of the turret.",
+   "explode": [
+    0,
+    0,
+    120
+   ],
+   "material": "pa6-cf",
+   "mass_g": 8.0,
+   "qty": 1,
+   "how": "PA6-CF; 4 x M2 to the horn; turns -3 x pan about the servo axis",
+   "doc": "21 T module 1.25 spur pinion (printed PA6-CF, 16 mm face, full-round roots) on a \u00d820 flange that screws to the",
+   "print_h": 0.5,
+   "anchor": [
+    -52.6,
+    -14.0,
+    206.0
+   ],
+   "callout": true
+  },
+  {
+   "name": "tilt_yoke",
+   "part": "tilt_yoke",
+   "group": "pan",
+   "file": "tilt_yoke.stl",
+   "color": "#595e66",
+   "opacity": 1.0,
+   "kind": "made",
+   "bbox": [
+    -28.4,
+    -68.5,
+    69.0,
+    20.0,
+    83.5,
+    160.0
+   ],
+   "title": "Tilt yoke",
+   "role": "Two arms up to the tilt axis: the tilt servo on the left, a bearing on the right, hard stops at 0 and -25 deg (it cannot point above level).",
+   "explode": [
+    0,
+    0,
+    195
+   ],
+   "material": "pa6-cf",
+   "mass_g": 101.1,
+   "qty": 1,
+   "how": "PA6-CF on its back; 4 x M4 x 10 to the turntable (heads 4 mm down in the bridge)",
+   "doc": "Printed PA6-CF on its back (layers run along the arms): an 8 mm bridge on the turntable (4 x M4) and two 8 mm",
+   "print_h": 6.6,
+   "anchor": [
+    0.0,
+    -68.5,
+    100.0
+   ],
+   "callout": true
+  },
+  {
+   "name": "cradle",
+   "part": "cradle",
+   "group": "tilt",
+   "file": "cradle.stl",
+   "color": "#3373bf",
+   "opacity": 1.0,
+   "kind": "made",
+   "bbox": [
+    -101.6,
+    -60.5,
+    -37.1,
+    80.0,
+    65.5,
+    21.9
+   ],
+   "title": "Cradle",
+   "role": "Swings on the tilt axis. Its two rails carry the ball cartridge (2 dowels + a thumbscrew) and the laser.",
+   "explode": [
+    0,
+    0,
+    215
+   ],
+   "material": "pa6-cf",
+   "mass_g": 76.3,
+   "qty": 1,
+   "how": "PA6-CF flat; ISO 7379 6 x 12 shoulder screw (M5) in an insert",
+   "doc": "Printed PA6-CF flat (100 % solid). Two 5 mm cheeks on the tilt axis and two 17 mm rails under the cartridge,",
+   "print_h": 5.0,
+   "anchor": [
+    40.0,
+    -56.5,
+    -33.1
+   ],
+   "callout": true
+  },
+  {
+   "name": "cartridge_body",
+   "part": "cartridge_body",
+   "group": "tilt",
+   "file": "cartridge_body.stl",
+   "color": "#737880",
+   "opacity": 1.0,
+   "kind": "made",
+   "bbox": [
+    -101.6,
+    -51.6,
+    -33.1,
+    61.0,
+    51.6,
+    48.5
+   ],
+   "title": "Ball cartridge",
+   "role": "One printed block: the dial housing, the drop chute, the flywheel cage and the barrel socket. It lifts off the cradle as a unit.",
+   "explode": [
+    0,
+    0,
+    250
+   ],
+   "material": "pa6-cf",
+   "mass_g": 150.7,
+   "qty": 1,
+   "how": "PA6-CF on its base; supports under the chute",
+   "doc": "The ball cartridge, printed PA6-CF on its base (100 % solid, 2.5 mm walls): a base plate on the cradle rails",
+   "print_h": 9.9,
+   "anchor": [
+    71,
+    -49.0,
+    -5.0
+   ],
+   "callout": true
+  },
+  {
+   "name": "flywheel",
+   "part": "flywheel",
+   "group": "wheel_l",
+   "file": "flywheel.stl",
+   "color": "#404045",
+   "opacity": 1.0,
+   "kind": "made",
+   "bbox": [
+    -62.0,
+    -14.0,
+    -21.0,
+    -34.0,
+    14.0,
+    -9.0
+   ],
+   "title": "Flywheel hub",
+   "role": "Flywheel hub on the X2216's prop adapter (a washer and an M5 nut). Two of them spin opposite ways.",
+   "explode": [
+    0,
+    0,
+    250
+   ],
+   "material": "pa6-cf",
+   "mass_g": 5.2,
+   "qty": 2,
+   "how": "PA6-CF on its top face; on the X2216's prop adapter: washer + M5 nylon-insert nut; bore reamed to 5.00",
+   "doc": "Flywheel hub, printed PA6-CF (100 % solid) on its top face: a \u00d828 x 12 rim for the TPU tyre and a 5.5 mm web whose",
+   "print_h": 0.7
+  },
+  {
+   "name": "flywheel_m",
+   "part": "flywheel",
+   "group": "wheel_r",
+   "file": "flywheel_m.stl",
+   "color": "#404045",
+   "opacity": 1.0,
+   "kind": "made",
+   "bbox": [
+    -62.0,
+    -14.0,
+    -21.0,
+    -34.0,
+    14.0,
+    -9.0
+   ],
+   "title": "Flywheel hub",
+   "role": "Flywheel hub on the X2216's prop adapter (a washer and an M5 nut). Two of them spin opposite ways.",
+   "explode": [
+    0,
+    0,
+    250
+   ],
+   "material": "pa6-cf",
+   "mass_g": 5.2,
+   "qty": 2,
+   "how": "PA6-CF on its top face; on the X2216's prop adapter: washer + M5 nylon-insert nut; bore reamed to 5.00",
+   "doc": "Flywheel hub, printed PA6-CF (100 % solid) on its top face: a \u00d828 x 12 rim for the TPU tyre and a 5.5 mm web whose",
+   "print_h": 0.7
+  },
+  {
+   "name": "flywheel_tyre",
+   "part": "flywheel_tyre",
+   "group": "wheel_l",
+   "file": "flywheel_tyre.stl",
+   "color": "#1a1a1a",
+   "opacity": 1.0,
+   "kind": "made",
+   "bbox": [
+    -65.0,
+    -17.0,
+    -21.0,
+    -31.0,
+    17.0,
+    -9.0
+   ],
+   "title": "Flywheel tyre",
+   "role": "TPU tyre: the 22.7 mm ball is squeezed between two of them and leaves at nearly their surface speed.",
+   "explode": [
+    0,
+    0,
+    250
+   ],
+   "material": "tpu95",
+   "mass_g": 4.3,
+   "qty": 2,
+   "how": "TPU 95A tyre",
+   "doc": "TPU 95A tyre as mounted, \u00d834 x 12 (TYRE_SET), 3 mm thick on the hub's \u00d828 rim (the assembly; the printed blank is",
+   "print_h": 0.9,
+   "anchor": [
+    0.0,
+    20.0,
+    0.0
+   ],
+   "callout": true
+  },
+  {
+   "name": "flywheel_tyre_m",
+   "part": "flywheel_tyre",
+   "group": "wheel_r",
+   "file": "flywheel_tyre_m.stl",
+   "color": "#1a1a1a",
+   "opacity": 1.0,
+   "kind": "made",
+   "bbox": [
+    -65.0,
+    -17.0,
+    -21.0,
+    -31.0,
+    17.0,
+    -9.0
+   ],
+   "title": "Flywheel tyre",
+   "role": "TPU tyre: the 22.7 mm ball is squeezed between two of them and leaves at nearly their surface speed.",
+   "explode": [
+    0,
+    0,
+    250
+   ],
+   "material": "tpu95",
+   "mass_g": 4.3,
+   "qty": 2,
+   "how": "TPU 95A tyre",
+   "doc": "TPU 95A tyre as mounted, \u00d834 x 12 (TYRE_SET), 3 mm thick on the hub's \u00d828 rim (the assembly; the printed blank is",
+   "print_h": 0.9
+  },
+  {
+   "name": "dial",
+   "part": "dial",
+   "group": "dial",
+   "file": "dial.stl",
+   "color": "#f2cc33",
+   "opacity": 1.0,
+   "kind": "made",
+   "bbox": [
+    -93.4,
+    -45.4,
+    -4.2,
+    -2.6,
+    45.4,
+    39.8
+   ],
+   "title": "Feed dial",
+   "role": "The feed dial: 8 pockets on the feed servo's horn. Each 45 deg step drops one ball through the exit hole; parked, a spoke covers the hole.",
+   "explode": [
+    0,
+    0,
+    300
+   ],
+   "material": "petg",
+   "mass_g": 47.8,
+   "qty": 1,
+   "how": "PETG; 4 x M3 x 8 down into the feed servo's horn, from the top",
+   "doc": "The feed dial, printed PETG: a shelled \u00d850 hub (2 mm rim, 2 mm top, four ribs to a \u00d822 boss), 8 spokes 4 mm",
+   "print_h": 1.9,
+   "anchor": [
+    -37,
+    -6.0,
+    10.8
+   ],
+   "callout": true
+  },
+  {
+   "name": "hopper",
+   "part": "hopper",
+   "group": "tilt",
+   "file": "hopper.stl",
+   "color": "#b2d9f2",
+   "opacity": 0.35,
+   "kind": "made",
+   "bbox": [
+    -98.7,
+    -50.7,
+    20.0,
+    12.1,
+    50.7,
+    85.0
+   ],
+   "title": "Hopper",
+   "role": "Clear tube over the dial: 30 balls fall into the pockets by gravity; the cone on the dial stirs them.",
+   "explode": [
+    0,
+    0,
+    350
+   ],
+   "material": "petg",
+   "mass_g": 44.5,
+   "qty": 1,
+   "how": "translucent PETG; 3 x M3 to the housing",
+   "doc": "The hopper, printed PETG (translucent, so the balls show): a \u00d8102 tube from the dial housing to z = 100 in the",
+   "print_h": 1.8,
+   "anchor": [
+    -73.3,
+    -50.7,
+    65.0
+   ],
+   "callout": true
+  },
+  {
+   "name": "hopper_lid",
+   "part": "hopper_lid",
+   "group": "tilt",
+   "file": "hopper_lid.stl",
+   "color": "#b2d9f2",
+   "opacity": 0.6,
+   "kind": "made",
+   "bbox": [
+    -99.1,
+    -51.0,
+    81.0,
+    3.1,
+    51.0,
+    94.0
+   ],
+   "title": "Hopper lid",
+   "role": "The hopper lid, with the fill port for the dock's spout.",
+   "explode": [
+    0,
+    0,
+    390
+   ],
+   "material": "petg",
+   "mass_g": 16.8,
+   "qty": 1,
+   "how": "PETG",
+   "doc": "Lid, printed PETG: a 2 mm disc with a spigot into the hopper, a \u00d832 fill port where the dock's spout pushes the",
+   "print_h": 0.7
+  },
+  {
+   "name": "hopper_flap",
+   "part": "hopper_flap",
+   "group": "flap",
+   "file": "hopper_flap.stl",
+   "color": "#b2d9f2",
+   "opacity": 0.8,
+   "kind": "made",
+   "bbox": [
+    -51.0,
+    -18.0,
+    -3.0,
+    -11.0,
+    18.0,
+    3.0
+   ],
+   "title": "Fill flap",
+   "role": "Sprung flap over the fill port: the dock's spout pushes it open.",
+   "explode": [
+    0,
+    0,
+    400
+   ],
+   "material": "petg",
+   "mass_g": 3.1,
+   "qty": 1,
+   "how": "PETG; \u00d82 pin + torsion spring",
+   "doc": "The fill-port flap, printed PETG: a \u00d836 x 2 disc and a hinge knuckle between the lid's lugs.",
+   "print_h": 0.1
+  },
+  {
+   "name": "barrel",
+   "part": "barrel",
+   "group": "tilt",
+   "file": "barrel.stl",
+   "color": "#f2731a",
+   "opacity": 1.0,
+   "kind": "made",
+   "bbox": [
+    47.0,
+    -17.5,
+    -30.0,
+    147.0,
+    17.5,
+    -0.0
+   ],
+   "title": "Barrel",
+   "role": "100 mm barrel, bore 2 mm over the ball after the wheels: it only guides. Two IR gates 60 mm apart time every shot. Blaze-orange tip.",
+   "explode": [
+    70,
+    0,
+    250
+   ],
+   "material": "petg",
+   "mass_g": 29.1,
+   "qty": 1,
+   "how": "PETG standing; last 15 mm blaze orange",
+   "doc": "Barrel, printed PETG standing up: \u00d830 x 100 with a bore of ball + 2.0 mm (docs/turret-physics.md finding 14), 14 mm",
+   "print_h": 1.2,
+   "anchor": [
+    175.0,
+    -15.0,
+    -15.0
+   ],
+   "callout": true
+  },
+  {
+   "name": "laser_mount",
+   "part": "laser_mount",
+   "group": "tilt",
+   "file": "laser_mount.stl",
+   "color": "#4ca659",
+   "opacity": 1.0,
+   "kind": "made",
+   "bbox": [
+    58.0,
+    -41.0,
+    -30.1,
+    78.0,
+    -23.0,
+    -6.0
+   ],
+   "title": "Laser mount",
+   "role": "Holds the aiming laser parallel to the barrel (three boresight screws). It stays on the cradle when the cartridge comes off.",
+   "explode": [
+    25,
+    -35,
+    230
+   ],
+   "material": "petg",
+   "mass_g": 7.4,
+   "qty": 1,
+   "how": "PETG; 3 x M3 boresight, 2 x M3 to the cradle",
+   "doc": "Laser holder, printed PETG: a ring round the \u00d87 laser (\u00d811 bore with an O-ring at the back) and three M3",
+   "print_h": 0.3
+  },
+  {
+   "name": "bumper_ring",
+   "part": "bumper_ring",
+   "group": "base",
+   "file": "bumper_ring.stl",
+   "color": "#26262b",
+   "opacity": 1.0,
+   "kind": "made",
+   "bbox": [
+    -86.0,
+    -80.2,
+    147.0,
+    86.0,
+    87.5,
+    161.0
+   ],
+   "title": "Bumper ring",
+   "role": "TPU ring round the base: it takes the knocks.",
+   "explode": [
+    0,
+    0,
+    75
+   ],
+   "material": "tpu95",
+   "mass_g": 37.0,
+   "qty": 1,
+   "how": "TPU 95A; 5 x M3 with washers",
+   "doc": "TPU 95A ring, 4 mm wide and 14 mm tall, widened to a lug at each of the base's five tabs for its M3 screw and",
+   "print_h": 3.8
+  },
+  {
+   "name": "ring_carrier",
+   "part": "ring_carrier",
+   "group": "base",
+   "file": "ring_carrier.stl",
+   "color": "#4c5259",
+   "opacity": 1.0,
+   "kind": "made",
+   "bbox": [
+    -32.3,
+    -36.6,
+    141.0,
+    32.2,
+    36.6,
+    153.0
+   ],
+   "title": "ring carrier",
+   "role": "",
+   "explode": [
+    0,
+    0,
+    0
+   ],
+   "material": "pa6-cf",
+   "mass_g": 30.2,
+   "qty": 1,
+   "how": "PA6-CF on its top face; 3 x M3 x 10 flat heads up into the base; 3 x M3 inserts for the ring",
+   "doc": "The slip ring's carrier, printed PA6-CF on its top face (100 % solid): a \u00d864.5 x 12 disc in the foot's \u00d865",
+   "print_h": 2.0
+  },
+  {
+   "name": "ring_driver",
+   "part": "ring_driver",
+   "group": "pan",
+   "file": "ring_driver.stl",
+   "color": "#d96b1a",
+   "opacity": 1.0,
+   "kind": "made",
+   "bbox": [
+    -19.7,
+    -20.2,
+    55.0,
+    19.7,
+    19.7,
+    69.0
+   ],
+   "title": "ring driver",
+   "role": "",
+   "explode": [
+    0,
+    0,
+    0
+   ],
+   "material": "pa6-cf",
+   "mass_g": 7.0,
+   "qty": 1,
+   "how": "PA6-CF on its top face; in the turntable's bore (ribs + CA)",
+   "doc": "The slip ring's driver, printed PA6-CF: a \u00d839.6 x 6 disc held in the top of the turntable's \u00d840 bore (three",
+   "print_h": 0.5
+  },
+  {
+   "name": "board_bay",
+   "part": "board_bay",
+   "group": "pan",
+   "file": "board_bay.stl",
+   "color": "#8c99a6",
+   "opacity": 1.0,
+   "kind": "made",
+   "bbox": [
+    -29.0,
+    -115.0,
+    71.0,
+    29.0,
+    -68.5,
+    128.0
+   ],
+   "title": "board bay",
+   "role": "",
+   "explode": [
+    0,
+    0,
+    0
+   ],
+   "material": "petg",
+   "mass_g": 27.6,
+   "qty": 1,
+   "how": "PETG on its back; 4 x M3 x 8 flat heads to the -y yoke arm; 4 x M3 inserts for the boards",
+   "doc": "The turret-board bay, printed PETG on its back: a 58 x 57 tray with 2 mm walls out to y -115, screwed to the -y",
+   "print_h": 1.1
+  },
+  {
+   "name": "pan_servo",
+   "part": "pan_servo",
+   "group": "base",
+   "file": "pan_servo.stl",
+   "color": "#1f1f24",
+   "opacity": 1.0,
+   "kind": "bought",
+   "bbox": [
+    -65.0,
+    -10.1,
+    146.0,
+    -40.3,
+    35.1,
+    193.0
+   ],
+   "title": "Pan servo",
+   "role": "Feetech STS3215 (12 V serial bus, 2.94 N.m stall, 45 rpm, 12-bit encoder): drives the pinion.",
+   "explode": [
+    0,
+    0,
+    95
+   ],
+   "mass_g": 60.0,
+   "note": "Feetech STS3215 12 V; horn up, pinion on the horn",
+   "anchor": [
+    -52.6,
+    25.0,
+    161.0
+   ],
+   "callout": true
+  },
+  {
+   "name": "pan_bearing",
+   "part": "pan_bearing",
+   "group": "base",
+   "file": "pan_bearing.stl",
+   "color": "#bfbfc7",
+   "opacity": 1.0,
+   "kind": "bought",
+   "bbox": [
+    -32.5,
+    -32.4,
+    181.0,
+    32.5,
+    32.4,
+    188.0
+   ],
+   "title": "Pan bearing",
+   "role": "61810-2RS thin-section bearing (50 x 65 x 7): the whole upper turret turns on it, with a 40 mm open centre.",
+   "explode": [
+    0,
+    0,
+    125
+   ],
+   "mass_g": 37.0,
+   "note": "6810-2Z (= 61810-2Z, 50 x 65 x 7): outer race and shields; McMaster 6656K229",
+   "anchor": [
+    0.0,
+    -32.0,
+    184.0
+   ],
+   "callout": true
+  },
+  {
+   "name": "pan_bearing_inner",
+   "part": "pan_bearing_inner",
+   "group": "pan",
+   "file": "pan_bearing_inner.stl",
+   "color": "#ccccd4",
+   "opacity": 1.0,
+   "kind": "bought",
+   "bbox": [
+    -26.5,
+    -26.4,
+    40.0,
+    26.5,
+    26.4,
+    47.0
+   ],
+   "title": "pan bearing inner",
+   "role": "",
+   "explode": [
+    0,
+    0,
+    125
+   ],
+   "mass_g": 15.0,
+   "note": "the 6810-2Z's inner race (turns with the pan ring; bought with pan_bearing)"
+  },
+  {
+   "name": "circlip_50",
+   "part": "circlip_50",
+   "group": "pan",
+   "file": "circlip_50.stl",
+   "color": "#1a1a1c",
+   "opacity": 1.0,
+   "kind": "bought",
+   "bbox": [
+    -28.6,
+    -28.5,
+    34.0,
+    28.6,
+    30.4,
+    36.0
+   ],
+   "title": "circlip 50",
+   "role": "",
+   "explode": [
+    0,
+    0,
+    0
+   ],
+   "mass_g": 11.4,
+   "note": "DIN 471-50 external ring under the pan_spacer; McMaster 98541A167"
+  },
+  {
+   "name": "pan_clamp",
+   "part": "pan_clamp",
+   "group": "base",
+   "file": "pan_clamp.stl",
+   "color": "#666b73",
+   "opacity": 1.0,
+   "kind": "bought",
+   "bbox": [
+    -37.0,
+    -43.4,
+    188.0,
+    49.0,
+    43.4,
+    191.2
+   ],
+   "title": "Bearing clamp",
+   "role": "Aluminium ring (SendCutSend, 3.2 mm 6061-T6): clamps the pan bearing's outer race into the base (5 x M3).",
+   "explode": [
+    0,
+    0,
+    145
+   ],
+   "mass_g": 17.8,
+   "note": "pan clamp ring, SendCutSend 6061-T6 aluminium 0.125 in (exports/turret/pan_clamp.dxf)"
+  },
+  {
+   "name": "slip_ring",
+   "part": "slip_ring",
+   "group": "base",
+   "file": "slip_ring.stl",
+   "color": "#cca633",
+   "opacity": 1.0,
+   "kind": "bought",
+   "bbox": [
+    -22.2,
+    -22.2,
+    150.4,
+    22.2,
+    22.2,
+    176.9
+   ],
+   "title": "slip ring",
+   "role": "",
+   "explode": [
+    0,
+    0,
+    0
+   ],
+   "mass_g": 25.0,
+   "note": "SparkFun ROB-13065 (Senring M220 series): 12 x 2 A, \u00d822 x 26.5, flange \u00d844.5 (envelope from the vendor sheets; flange holes to measure)"
+  },
+  {
+   "name": "slip_ring_rotor",
+   "part": "slip_ring_rotor",
+   "group": "pan",
+   "file": "slip_ring_rotor.stl",
+   "color": "#cca633",
+   "opacity": 1.0,
+   "kind": "bought",
+   "bbox": [
+    -3.0,
+    -3.0,
+    35.9,
+    3.0,
+    3.0,
+    40.9
+   ],
+   "title": "slip ring rotor",
+   "role": "",
+   "explode": [
+    0,
+    0,
+    0
+   ],
+   "mass_g": 0.0,
+   "note": "the ring's rotor stub (bought with the ring)"
+  },
+  {
+   "name": "ring_coupling",
+   "part": "ring_coupling",
+   "group": "pan",
+   "file": "ring_coupling.stl",
+   "color": "#f2f2e6",
+   "opacity": 1.0,
+   "kind": "bought",
+   "bbox": [
+    -5.6,
+    -5.5,
+    36.2,
+    5.6,
+    5.5,
+    61.0
+   ],
+   "title": "ring coupling",
+   "role": "",
+   "explode": [
+    0,
+    0,
+    0
+   ],
+   "mass_g": 2.0,
+   "note": "soft silicone tubing 5/16 in ID x 7/16 in OD, coupling the rotor to the driver"
+  },
+  {
+   "name": "ring_leads_rotor",
+   "part": "ring_leads_rotor",
+   "group": "pan",
+   "file": "ring_leads_rotor.stl",
+   "color": "#bf2626",
+   "opacity": 1.0,
+   "kind": "bought",
+   "bbox": [
+    -3.8,
+    -71.5,
+    36.2,
+    3.8,
+    -9.3,
+    92.8
+   ],
+   "title": "ring leads rotor",
+   "role": "",
+   "explode": [
+    0,
+    0,
+    0
+   ],
+   "mass_g": 0.0,
+   "note": "the ring's rotor leads, a \u00d87.5 bundle (12 x 26 AWG + 2 x 17 AWG): beside the coupling, up through the driver and the yoke's slot, along the bridge and through the -y arm's window to the bay"
+  },
+  {
+   "name": "base_board",
+   "part": "base_board",
+   "group": "base",
+   "file": "base_board.stl",
+   "color": "#1a7333",
+   "opacity": 1.0,
+   "kind": "bought",
+   "bbox": [
+    36.4,
+    -25.4,
+    147.0,
+    48.0,
+    25.4,
+    177.0
+   ],
+   "title": "base board",
+   "role": "",
+   "explode": [
+    0,
+    0,
+    0
+   ],
+   "mass_g": 30.0,
+   "note": "base board (est): DT12 fuse, the 555 safety-pulse oscillator, the pan servo's 12 V regulator, the ring's stator connector"
+  },
+  {
+   "name": "turret_board",
+   "part": "turret_board",
+   "group": "pan",
+   "file": "turret_board.stl",
+   "color": "#1a7333",
+   "opacity": 1.0,
+   "kind": "bought",
+   "bbox": [
+    -26.0,
+    -115.8,
+    74.5,
+    26.0,
+    -76.5,
+    124.5
+   ],
+   "title": "turret board",
+   "role": "",
+   "explode": [
+    0,
+    0,
+    0
+   ],
+   "mass_g": 100.0,
+   "note": "turret boards (cad/turret_boards.py): level 0 the D24V150F12 12 V regulator (always on); level 1 the Pololu 2815 switch (12 V to the flywheels and the feed), the 5 V regulator, 2 x 1000 uF, the opto and the one-shots; level 2 the Feather M4 CAN, the trip latch, the ARM gate and the bus buffer"
+  },
+  {
+   "name": "index_magnet",
+   "part": "index_magnet",
+   "group": "base",
+   "file": "index_magnet.stl",
+   "color": "#9999a6",
+   "opacity": 1.0,
+   "kind": "bought",
+   "bbox": [
+    32.6,
+    -2.4,
+    188.0,
+    37.4,
+    2.4,
+    191.2
+   ],
+   "title": "index magnet",
+   "role": "",
+   "explode": [
+    0,
+    0,
+    0
+   ],
+   "mass_g": 0.8,
+   "note": "neodymium disc 3/16 x 1/8 in (McMaster 5862K102), the pan index: ~760 G at the hall's element 3.5 mm over it (Br 1.32 T, on-axis formula), 4x the A1120's highest operate point; on the housing's top, through the clamp ring (0.2 mm proud), glued"
+  },
+  {
+   "name": "hall_switch",
+   "part": "hall_switch",
+   "group": "pan",
+   "file": "hall_switch.stl",
+   "color": "#1a1a1a",
+   "opacity": 1.0,
+   "kind": "bought",
+   "bbox": [
+    33.0,
+    -1.5,
+    53.1,
+    37.0,
+    1.5,
+    54.7
+   ],
+   "title": "hall switch",
+   "role": "",
+   "explode": [
+    0,
+    0,
+    0
+   ],
+   "mass_g": 0.3,
+   "note": "Allegro A1120LUA-T unipolar hall switch (UA package), on the turntable"
+  },
+  {
+   "name": "dt_receptacle",
+   "part": "dt_receptacle",
+   "group": "base",
+   "file": "dt_receptacle.stl",
+   "color": "#8c8c33",
+   "opacity": 1.0,
+   "kind": "bought",
+   "bbox": [
+    -27.6,
+    -97.9,
+    142.2,
+    27.6,
+    -52.0,
+    177.8
+   ],
+   "title": "DT12 socket",
+   "role": "Deutsch DT 12-way socket: 24 V, CAN, the safety line and an ID pin between the turret and its host.",
+   "explode": [
+    0,
+    -30,
+    95
+   ],
+   "mass_g": 20.0,
+   "note": "TE Deutsch DT04-12PA-L012 flange receptacle (TE drawing): the TM connector",
+   "anchor": [
+    0.0,
+    -93.0,
+    160.0
+   ],
+   "callout": true
+  },
+  {
+   "name": "dt_plug",
+   "part": "dt_plug",
+   "group": "base",
+   "file": "dt_plug.stl",
+   "color": "#8c8c33",
+   "opacity": 0.5,
+   "kind": "bought",
+   "bbox": [
+    -22.0,
+    -123.1,
+    111.0,
+    22.0,
+    -78.1,
+    174.0
+   ],
+   "title": "DT12 plug",
+   "role": "The host's DT12 plug (a 90 deg boot turns the harness down).",
+   "explode": [
+    0,
+    -75,
+    95
+   ],
+   "mass_g": 0.0,
+   "note": "DT06-12SA plug on the robot harness (robot side; use a 90 deg boot so the harness turns down)"
+  },
+  {
+   "name": "tilt_servo",
+   "part": "tilt_servo",
+   "group": "pan",
+   "file": "tilt_servo.stl",
+   "color": "#1f1f24",
+   "opacity": 1.0,
+   "kind": "bought",
+   "bbox": [
+    -12.4,
+    65.5,
+    104.9,
+    12.4,
+    112.5,
+    150.1
+   ],
+   "title": "Tilt servo",
+   "role": "STS3215 on the yoke's left arm: tilts the cradle directly.",
+   "explode": [
+    0,
+    45,
+    195
+   ],
+   "mass_g": 60.0,
+   "note": "Feetech STS3215 12 V on the +y arm",
+   "anchor": [
+    0.0,
+    83.5,
+    140.0
+   ],
+   "callout": true
+  },
+  {
+   "name": "tilt_bearing",
+   "part": "tilt_bearing",
+   "group": "pan",
+   "file": "tilt_bearing.stl",
+   "color": "#bfbfc7",
+   "opacity": 1.0,
+   "kind": "bought",
+   "bbox": [
+    -6.0,
+    -64.5,
+    134.0,
+    6.0,
+    -60.5,
+    146.0
+   ],
+   "title": "Tilt bearing",
+   "role": "MR126 bearing round the M5 shoulder screw: the cradle's second pivot.",
+   "explode": [
+    0,
+    -30,
+    195
+   ],
+   "mass_g": 1.3125,
+   "note": "126-2Z (MR126 size, 6 x 12 x 4): outer race and shields; McMaster 7804K112"
+  },
+  {
+   "name": "tilt_bearing_inner",
+   "part": "tilt_bearing_inner",
+   "group": "tilt",
+   "file": "tilt_bearing_inner.stl",
+   "color": "#ccccd4",
+   "opacity": 1.0,
+   "kind": "bought",
+   "bbox": [
+    -3.6,
+    -64.5,
+    -3.6,
+    3.6,
+    -60.5,
+    3.6
+   ],
+   "title": "tilt bearing inner",
+   "role": "",
+   "explode": [
+    0,
+    -30,
+    195
+   ],
+   "mass_g": 0.4375,
+   "note": "the 126-2Z's inner race (turns with the cradle; bought with tilt_bearing)"
+  },
+  {
+   "name": "shoulder_screw",
+   "part": "shoulder_screw",
+   "group": "tilt",
+   "file": "shoulder_screw.stl",
+   "color": "#1a1a1c",
+   "opacity": 1.0,
+   "kind": "bought",
+   "bbox": [
+    -5.0,
+    -77.5,
+    -5.0,
+    5.0,
+    -50.5,
+    5.0
+   ],
+   "title": "shoulder screw",
+   "role": "",
+   "explode": [
+    0,
+    0,
+    0
+   ],
+   "mass_g": 6.7,
+   "note": "ISO 7379 shoulder screw 6 x 12, M5 x 10: the tilt pivot (-y); McMaster 92981A101"
+  },
+  {
+   "name": "flywheel_motor_l",
+   "part": "flywheel_motor_l",
+   "group": "tilt",
+   "file": "flywheel_motor_l.stl",
+   "color": "#a62626",
+   "opacity": 1.0,
+   "kind": "bought",
+   "bbox": [
+    9.2,
+    12.7,
+    -27.5,
+    36.8,
+    40.3,
+    29.5
+   ],
+   "title": "Flywheel motor L",
+   "role": "SunnySky X2216 (880 rpm/V) on the fixed 12 V rail: 10,560 rpm at most, which caps the ball speed. Hangs under the cage plate.",
+   "explode": [
+    0,
+    0,
+    290
+   ],
+   "mass_g": 72.0,
+   "note": "SunnySky X2216 880KV V3 (short shaft) (SunnySky's drawing): hangs bell-down under the cage plate (4 x M3 x 6), the hub on its prop adapter under the bell (washer + M5 nylon-insert nut)"
+  },
+  {
+   "name": "flywheel_motor_r",
+   "part": "flywheel_motor_r",
+   "group": "tilt",
+   "file": "flywheel_motor_r.stl",
+   "color": "#a62626",
+   "opacity": 1.0,
+   "kind": "bought",
+   "bbox": [
+    9.2,
+    -40.3,
+    -27.5,
+    36.8,
+    -12.7,
+    29.5
+   ],
+   "title": "Flywheel motor R",
+   "role": "SunnySky X2216, spinning the other way.",
+   "explode": [
+    0,
+    0,
+    290
+   ],
+   "mass_g": 72.0,
+   "note": "SunnySky X2216 880KV V3 (short shaft) (SunnySky's drawing): hangs bell-down under the cage plate (4 x M3 x 6), the hub on its prop adapter under the bell (washer + M5 nylon-insert nut)"
+  },
+  {
+   "name": "cartridge_board",
+   "part": "cartridge_board",
+   "group": "tilt",
+   "file": "cartridge_board.stl",
+   "color": "#1a7333",
+   "opacity": 1.0,
+   "kind": "bought",
+   "bbox": [
+    6.0,
+    -22.0,
+    48.5,
+    56.0,
+    22.0,
+    71.1
+   ],
+   "title": "Cartridge board",
+   "role": "The cartridge board: six FETs that short the motors' phases about 8 ms after the safety line drops (the brake), their driver and the gates' comparator; the two ESCs lie under it on the cage plate.",
+   "explode": [
+    0,
+    0,
+    330
+   ],
+   "mass_g": 30.0,
+   "note": "cartridge board (est): 6 x IRLZ44N phase-short brake FETs standing along its front edge, the LM393 gate comparator, the feed servo's polyfuse; on 4 printed posts over the ESCs and the cage plate"
+  },
+  {
+   "name": "esc_l",
+   "part": "esc_l",
+   "group": "tilt",
+   "file": "esc_l.stl",
+   "color": "#1a5926",
+   "opacity": 1.0,
+   "kind": "bought",
+   "bbox": [
+    14.0,
+    1.5,
+    30.5,
+    40.0,
+    14.5,
+    35.5
+   ],
+   "title": "ESC L",
+   "role": "AM32 35 A ESC for the left flywheel motor, on the cartridge board.",
+   "explode": [
+    0,
+    0,
+    320
+   ],
+   "mass_g": 5.0,
+   "note": "Repeat Robotics AM32 35 A, on the cage plate under the cartridge board (the backup Lumenier Razor Pro F4 45A AM32 is 28 x 12 x 5)"
+  },
+  {
+   "name": "esc_r",
+   "part": "esc_r",
+   "group": "tilt",
+   "file": "esc_r.stl",
+   "color": "#1a5926",
+   "opacity": 1.0,
+   "kind": "bought",
+   "bbox": [
+    14.0,
+    -14.5,
+    30.5,
+    40.0,
+    -1.5,
+    35.5
+   ],
+   "title": "ESC R",
+   "role": "AM32 35 A ESC for the right flywheel motor, on the cartridge board.",
+   "explode": [
+    0,
+    0,
+    320
+   ],
+   "mass_g": 5.0,
+   "note": "Repeat Robotics AM32 35 A, on the cage plate under the cartridge board (the backup Lumenier Razor Pro F4 45A AM32 is 28 x 12 x 5)"
+  },
+  {
+   "name": "feed_motor",
+   "part": "feed_motor",
+   "group": "tilt",
+   "file": "feed_motor.stl",
+   "color": "#1f1f24",
+   "opacity": 1.0,
+   "kind": "bought",
+   "bbox": [
+    -83.1,
+    -12.4,
+    -51.2,
+    -37.9,
+    12.4,
+    -4.2
+   ],
+   "title": "Feed servo (STS3215)",
+   "role": "Feetech STS3215 servo (bus ID 3) under the dial floor: steps the dial 45 deg per ball and feels a jam in its load reading.",
+   "explode": [
+    0,
+    0,
+    210
+   ],
+   "mass_g": 60.0,
+   "note": "Feetech STS3215 12 V (bus ID 3) under the dial floor, horn up through it; 4 x M2 x 6 countersunk from above; the dial on its horn",
+   "anchor": [
+    0.0,
+    -12.0,
+    -33.0
+   ],
+   "callout": true
+  },
+  {
+   "name": "ct_thumbscrew",
+   "part": "ct_thumbscrew",
+   "group": "tilt",
+   "file": "ct_thumbscrew.stl",
+   "color": "#1a1a1c",
+   "opacity": 1.0,
+   "kind": "bought",
+   "bbox": [
+    -36.0,
+    -51.0,
+    -46.6,
+    -20.0,
+    -35.0,
+    -37.1
+   ],
+   "title": "ct thumbscrew",
+   "role": "",
+   "explode": [
+    0,
+    0,
+    0
+   ],
+   "mass_g": 4.0,
+   "note": "DIN 464 knurled thumbscrew M4 x 12 (McMaster 92581A250), the CT latch, under the rail"
+  },
+  {
+   "name": "laser",
+   "part": "laser",
+   "group": "tilt",
+   "file": "laser.stl",
+   "color": "#269926",
+   "opacity": 1.0,
+   "kind": "bought",
+   "bbox": [
+    56.0,
+    -35.5,
+    -18.5,
+    78.5,
+    -28.5,
+    -11.5
+   ],
+   "title": "Aiming laser",
+   "role": "Quarton 650 nm Class 2 red laser (under 1 mW): the aiming dot, parallel to the barrel.",
+   "explode": [
+    25,
+    -35,
+    230
+   ],
+   "mass_g": 3.0,
+   "note": "Quarton VLM-650-03 LPT, 650 nm, < 1 mW (Class 2) (D42)",
+   "anchor": [
+    138.0,
+    -32.0,
+    -15.0
+   ],
+   "callout": true
+  },
+  {
+   "name": "box_deck",
+   "part": "box_deck",
+   "group": "adapter",
+   "file": "box_deck.stl",
+   "color": "#3d4552",
+   "opacity": 1.0,
+   "kind": "adapter",
+   "bbox": [
+    -116.0,
+    -103.0,
+    87.0,
+    90.5,
+    103.0,
+    141.0
+   ],
+   "title": "Box adapter",
+   "role": "The adapter: carries the TM face 44 mm above the J501's roof on four legs at the lid's screw corners; the control pod hangs at the back.",
+   "explode": [
+    0,
+    0,
+    60
+   ],
+   "material": "petg",
+   "mass_g": 219.7,
+   "qty": 1,
+   "how": "PETG upside down on the deck face; 4 x M5 x 8 inserts (TM), 6 + 4 x M3 inserts; no supports (the leg shelves are 7 mm bridges)",
+   "print_h": 8.8,
+   "anchor": [
+    70.0,
+    -100.0,
+    137.0
+   ],
+   "callout": true
+  },
+  {
+   "name": "intake_shroud",
+   "part": "intake_shroud",
+   "group": "adapter",
+   "file": "intake_shroud.stl",
+   "color": "#5aa9e6",
+   "opacity": 1.0,
+   "kind": "adapter",
+   "bbox": [
+    -31.9,
+    -70.6,
+    98.0,
+    89.9,
+    70.6,
+    132.8
+   ],
+   "title": "Intake shroud",
+   "role": "Keeps the J501 fan's intake apart from its exhaust: the fan breathes through the front grille, not its own hot air.",
+   "explode": [
+    0,
+    0,
+    28
+   ],
+   "material": "petg",
+   "mass_g": 24.8,
+   "qty": 1,
+   "how": "PETG on its floor; 6 x M3 x 8 button heads up into the deck; foam tape under the hole rim",
+   "print_h": 1.0,
+   "anchor": [
+    88.5,
+    30.0,
+    115.0
+   ],
+   "callout": true
+  },
+  {
+   "name": "pod_cover",
+   "part": "pod_cover",
+   "group": "adapter",
+   "file": "pod_cover.stl",
+   "color": "#3d4552",
+   "opacity": 1.0,
+   "kind": "adapter",
+   "bbox": [
+    -115.0,
+    -62.0,
+    99.0,
+    -56.0,
+    62.0,
+    102.0
+   ],
+   "title": "Pod cover",
+   "role": "Closes the control pod from below.",
+   "explode": [
+    0,
+    0,
+    48
+   ],
+   "material": "petg",
+   "mass_g": 12.2,
+   "qty": 1,
+   "how": "PETG flat; 4 x M3 x 6",
+   "print_h": 0.5
+  },
+  {
+   "name": "pod_xt60",
+   "part": "pod_xt60",
+   "group": "adapter",
+   "file": "pod_xt60.stl",
+   "color": "#1d2027",
+   "opacity": 1.0,
+   "kind": "bought",
+   "bbox": [
+    -118.0,
+    -57.0,
+    112.0,
+    -97.0,
+    -27.0,
+    123.0
+   ],
+   "title": "24 V in (XT60)",
+   "role": "XT60 socket: 24 V in. The J501 takes 12-36 V, so one 24 V supply can run both.",
+   "explode": [
+    0,
+    0,
+    60
+   ],
+   "mass_g": 10.0,
+   "note": "Amass XT60E-M panel plug: 24 V in (the J501 takes 12-36 V, so one 24 V supply can feed both)"
+  },
+  {
+   "name": "pod_switch",
+   "part": "pod_switch",
+   "group": "adapter",
+   "file": "pod_switch.stl",
+   "color": "#1d2027",
+   "opacity": 1.0,
+   "kind": "bought",
+   "bbox": [
+    -118.0,
+    -26.0,
+    108.5,
+    -90.0,
+    -2.0,
+    126.5
+   ],
+   "title": "Power switch",
+   "role": "Rocker switch: turret power.",
+   "explode": [
+    0,
+    0,
+    60
+   ],
+   "mass_g": 10.0,
+   "note": "KCD1 rocker switch, 16 A"
+  },
+  {
+   "name": "pod_fuse",
+   "part": "pod_fuse",
+   "group": "adapter",
+   "file": "pod_fuse.stl",
+   "color": "#1d2027",
+   "opacity": 1.0,
+   "kind": "bought",
+   "bbox": [
+    -118.0,
+    4.0,
+    109.5,
+    -80.0,
+    20.0,
+    125.5
+   ],
+   "title": "Fuse",
+   "role": "5 A slow-blow fuse in a panel holder.",
+   "explode": [
+    0,
+    0,
+    60
+   ],
+   "mass_g": 10.0,
+   "note": "5 x 20 mm panel fuse holder, 5 A slow-blow"
+  },
+  {
+   "name": "pod_pendant",
+   "part": "pod_pendant",
+   "group": "adapter",
+   "file": "pod_pendant.stl",
+   "color": "#1d2027",
+   "opacity": 1.0,
+   "kind": "bought",
+   "bbox": [
+    -118.0,
+    25.5,
+    113.0,
+    -101.0,
+    34.5,
+    122.0
+   ],
+   "title": "Pendant jack",
+   "role": "3.5 mm jack for the hold-to-run pendant: the safety line. Nothing spins or feeds unless it is held.",
+   "explode": [
+    0,
+    0,
+    60
+   ],
+   "mass_g": 10.0,
+   "note": "3.5 mm panel jack: the hold-to-run pendant (the safety line: nothing spins or feeds unless it is held)",
+   "anchor": [
+    -118.0,
+    30.0,
+    117.5
+   ],
+   "callout": true
+  },
+  {
+   "name": "pod_usb",
+   "part": "pod_usb",
+   "group": "adapter",
+   "file": "pod_usb.stl",
+   "color": "#1d2027",
+   "opacity": 1.0,
+   "kind": "bought",
+   "bbox": [
+    -112.0,
+    37.0,
+    111.5,
+    -62.0,
+    57.0,
+    123.5
+   ],
+   "title": "USB-CAN",
+   "role": "USB-CAN adapter: the J501 talks CAN to the turret's MCU through it.",
+   "explode": [
+    0,
+    0,
+    60
+   ],
+   "mass_g": 20.0,
+   "note": "USB-CAN adapter (CANable 2.0 class): CAN to the turret, USB to the J501's rear USB-A"
+  },
+  {
+   "name": "pod_wago",
+   "part": "pod_wago",
+   "group": "adapter",
+   "file": "pod_wago.stl",
+   "color": "#1d2027",
+   "opacity": 1.0,
+   "kind": "bought",
+   "bbox": [
+    -80.0,
+    -50.0,
+    103.0,
+    -62.0,
+    -10.0,
+    111.0
+   ],
+   "title": "Wiring",
+   "role": "WAGO lever connectors: 24 V to the DT12 power pins, the pendant loop to its safety pins.",
+   "explode": [
+    0,
+    0,
+    60
+   ],
+   "mass_g": 15.0,
+   "note": "WAGO 221 lever connectors: 24 V and 0 V to the DT12 power pins, the pendant loop to its safety pins"
+  },
+  {
+   "name": "lid_screw_1",
+   "part": "lid_screw_1",
+   "group": "adapter",
+   "file": "lid_screw_1.stl",
+   "color": "#c9ccd2",
+   "opacity": 1.0,
+   "kind": "bought",
+   "bbox": [
+    63.2,
+    -96.9,
+    62.0,
+    68.8,
+    -91.5,
+    105.0
+   ],
+   "title": "Lid screw (M3 x 40)",
+   "role": "Clamps leg, lid and base into the J501's own lid insert: the J501's M3 x 16 swapped for M3 x 40.",
+   "explode": [
+    0,
+    0,
+    120
+   ],
+   "mass_g": 1.5,
+   "note": "M3 x 40 ISO 4762 socket head, in place of the J501's M3 x 16"
+  },
+  {
+   "name": "lid_screw_2",
+   "part": "lid_screw_2",
+   "group": "adapter",
+   "file": "lid_screw_2.stl",
+   "color": "#c9ccd2",
+   "opacity": 1.0,
+   "kind": "bought",
+   "bbox": [
+    -68.8,
+    -96.9,
+    62.0,
+    -63.2,
+    -91.5,
+    105.0
+   ],
+   "title": "Lid screw (M3 x 40)",
+   "role": "Clamps leg, lid and base into the J501's own lid insert: the J501's M3 x 16 swapped for M3 x 40.",
+   "explode": [
+    0,
+    0,
+    120
+   ],
+   "mass_g": 1.5,
+   "note": "M3 x 40 ISO 4762 socket head, in place of the J501's M3 x 16"
+  },
+  {
+   "name": "lid_screw_3",
+   "part": "lid_screw_3",
+   "group": "adapter",
+   "file": "lid_screw_3.stl",
+   "color": "#c9ccd2",
+   "opacity": 1.0,
+   "kind": "bought",
+   "bbox": [
+    63.2,
+    91.5,
+    62.0,
+    68.8,
+    96.9,
+    105.0
+   ],
+   "title": "Lid screw (M3 x 40)",
+   "role": "Clamps leg, lid and base into the J501's own lid insert: the J501's M3 x 16 swapped for M3 x 40.",
+   "explode": [
+    0,
+    0,
+    120
+   ],
+   "mass_g": 1.5,
+   "note": "M3 x 40 ISO 4762 socket head, in place of the J501's M3 x 16"
+  },
+  {
+   "name": "lid_screw_4",
+   "part": "lid_screw_4",
+   "group": "adapter",
+   "file": "lid_screw_4.stl",
+   "color": "#c9ccd2",
+   "opacity": 1.0,
+   "kind": "bought",
+   "bbox": [
+    -68.8,
+    91.5,
+    62.0,
+    -63.2,
+    96.9,
+    105.0
+   ],
+   "title": "Lid screw (M3 x 40)",
+   "role": "Clamps leg, lid and base into the J501's own lid insert: the J501's M3 x 16 swapped for M3 x 40.",
+   "explode": [
+    0,
+    0,
+    120
+   ],
+   "mass_g": 1.5,
+   "note": "M3 x 40 ISO 4762 socket head, in place of the J501's M3 x 16"
+  },
+  {
+   "name": "j501_base",
+   "part": "base",
+   "group": "j501",
+   "file": "j501_base.stl",
+   "color": "#2f343c",
+   "opacity": 1.0,
+   "kind": "j501",
+   "bbox": [
+    -90.5,
+    -103.0,
+    -0.0,
+    90.5,
+    103.0,
+    76.5
+   ],
+   "title": "J501 base",
+   "role": "J501 base (P1): the floor, the walls, the board and cooler columns",
+   "explode": [
+    0,
+    0,
+    0
+   ],
+   "triangles": [
+    77472,
+    22766
+   ],
+   "source": "/home/scubasonar/Code/j501-agx/exports/view/base.stl"
+  },
+  {
+   "name": "j501_cover",
+   "part": "cover",
+   "group": "j501",
+   "file": "j501_cover.stl",
+   "color": "#3b3f46",
+   "opacity": 1.0,
+   "kind": "j501",
+   "bbox": [
+    -90.5,
+    -103.0,
+    72.0,
+    90.5,
+    103.0,
+    92.0
+   ],
+   "title": "J501 lid",
+   "role": "J501 lid (P2, Rev 0.8): hex cells inside the \u00d880 ring feed the fan, the cells round it let the exhaust out",
+   "explode": [
+    0,
+    0,
+    0
+   ],
+   "triangles": [
+    40652,
+    22358
+   ],
+   "source": "/home/scubasonar/Code/j501-agx/exports/view/cover.stl",
+   "anchor": [
+    0.0,
+    -80.0,
+    97.0
+   ],
+   "callout": true
+  },
+  {
+   "name": "j501_front_no_gmsl",
+   "part": "front_no_gmsl",
+   "group": "j501",
+   "file": "j501_front_no_gmsl.stl",
+   "color": "#8a9099",
+   "opacity": 1.0,
+   "kind": "j501",
+   "bbox": [
+    84.8,
+    -92.8,
+    4.0,
+    87.8,
+    92.8,
+    71.8
+   ],
+   "title": "J501 front plate",
+   "role": "J501 front plate (P4)",
+   "explode": [
+    0,
+    0,
+    0
+   ],
+   "triangles": [
+    18464,
+    9232
+   ],
+   "source": "/home/scubasonar/Code/j501-agx/exports/view/front_no_gmsl.stl"
+  },
+  {
+   "name": "j501_rear_io",
+   "part": "rear_io",
+   "group": "j501",
+   "file": "j501_rear_io.stl",
+   "color": "#8a9099",
+   "opacity": 1.0,
+   "kind": "j501",
+   "bbox": [
+    -87.8,
+    -92.8,
+    4.0,
+    -82.3,
+    92.8,
+    71.8
+   ],
+   "title": "J501 rear plate",
+   "role": "J501 rear plate (P5): DC in, Ethernet, USB",
+   "explode": [
+    0,
+    0,
+    0
+   ],
+   "triangles": [
+    19582,
+    9790
+   ],
+   "source": "/home/scubasonar/Code/j501-agx/exports/view/rear_io.stl"
+  },
+  {
+   "name": "j501_side_hatch",
+   "part": "side_hatch",
+   "group": "j501",
+   "file": "j501_side_hatch.stl",
+   "color": "#8a9099",
+   "opacity": 1.0,
+   "kind": "j501",
+   "bbox": [
+    -22.8,
+    99.0,
+    11.2,
+    20.8,
+    103.0,
+    71.8
+   ],
+   "title": "J501 side hatch",
+   "role": "J501 side hatch (P10)",
+   "explode": [
+    0,
+    0,
+    0
+   ],
+   "triangles": [
+    852,
+    852
+   ],
+   "source": "/home/scubasonar/Code/j501-agx/exports/view/side_hatch.stl"
+  }
+ ],
+ "journey": [
+  {
+   "id": "hopper",
+   "title": "1  Hopper",
+   "parts": [
+    "hopper",
+    "hopper_lid",
+    "hopper_flap"
+   ],
+   "focus": [
+    0.0,
+    0.0,
+    40.4
+   ],
+   "text": "Thirty balls (\u00d822.7, 1.83 g) wait in the clear hopper. Gravity drops them into the dial's pockets; the cone on top of the dial stirs the pile so they cannot bridge."
+  },
+  {
+   "id": "dial",
+   "title": "2  Feed dial",
+   "parts": [
+    "dial",
+    "feed_motor"
+   ],
+   "focus": [
+    0.0,
+    0.0,
+    6.4
+   ],
+   "text": "A servo under the dial (the same STS3215 as pan and tilt) steps it 45 deg per ball in about 235 ms: 3 balls/s, 3 at most. It reads its own load, so it feels a jam and backs off. Parked, a spoke sits over the exit hole, so no ball can reach the wheels, powered or not."
+  },
+  {
+   "id": "exit",
+   "title": "3  Exit hole",
+   "parts": [
+    "cartridge_body",
+    "dial"
+   ],
+   "focus": [
+    37.0,
+    0.0,
+    6.4
+   ],
+   "text": "At the front of the housing (37 mm ahead of the dial axis) a pocket passes over a hole in the floor and its ball drops out. About 235 ms from the command (the servo's step)."
+  },
+  {
+   "id": "chute",
+   "title": "4  Chute",
+   "parts": [
+    "cartridge_body"
+   ],
+   "focus": [
+    50.4,
+    0.0,
+    -4.3
+   ],
+   "text": "A quarter bend of radius 21.4 mm turns the falling ball forward onto the path, 15 mm under the tilt axis. It takes about 86 ms and reaches the wheels at 0.65 m/s."
+  },
+  {
+   "id": "nip",
+   "title": "5  Flywheels",
+   "parts": [
+    "flywheel",
+    "flywheel_tyre",
+    "flywheel_motor_l",
+    "flywheel_motor_r",
+    "esc_l",
+    "esc_r",
+    "cartridge_board"
+   ],
+   "focus": [
+    71,
+    0.0,
+    -15.0
+   ],
+   "text": "Two \u00d836 wheels 53 mm apart spin opposite ways at about 8,860 rpm (84 % of the X2216's no-load speed on the 12 V rail). The gap is 3.68 mm narrower than the ball (16.2 % squeeze), so it leaves at the tyres' surface speed. Each wheel stores 2.78 J; a shot costs about 2.7 % of its speed, back in 0.8 ms at a 20 A current limit."
+  },
+  {
+   "id": "barrel",
+   "title": "6  Barrel",
+   "parts": [
+    "barrel"
+   ],
+   "focus": [
+    145.0,
+    0.0,
+    -15.0
+   ],
+   "text": "100 mm long, bore \u00d824.7: 2 mm over the ball, so it only guides. Two IR gates 60 mm apart time every ball (a built-in chronograph); 7.8 ms from the nip to the muzzle."
+  },
+  {
+   "id": "muzzle",
+   "title": "7  Muzzle",
+   "parts": [
+    "barrel",
+    "laser",
+    "laser_mount"
+   ],
+   "focus": [
+    195.0,
+    0.0,
+    -15.0
+   ],
+   "text": "15.85 m/s (52.0 fps nominal; the kid-safety cap is 70), 0.23 J. The barrel can never point above level: hard stops at 0 and -25 deg in the yoke. About 338 ms from the command to here."
+  },
+  {
+   "id": "flight",
+   "title": "8  Flight",
+   "parts": [],
+   "focus": null,
+   "text": "Air drag and gravity: a level shot from the bench has dropped 112 mm at 3 m and slowed to 17.5 m/s. The laser is parallel to the barrel, so at range the ball lands under the dot."
+  }
+ ],
+ "mechanics": {
+  "ball": {
+   "d_mm": 22.7,
+   "mass_g": 1.83,
+   "speed_mps": 15.85,
+   "fps": 52.0,
+   "bore_mm": 24.7,
+   "cap_fps": 70,
+   "energy_j": 0.23
+  },
+  "flywheel": {
+   "d_mm": 34.0,
+   "centres_mm": 53.02,
+   "crush_mm": 3.68,
+   "crush_pct": 16.2,
+   "rpm": 8860.0,
+   "surface_mps": 15.8,
+   "efficiency_assumed": 1.005,
+   "throttle_pct": 84,
+   "motor_kv": 880,
+   "no_load_rpm": 10560,
+   "inertia_kg_mm2": 6.46,
+   "energy_j_each": 2.78,
+   "speed_drop_per_shot_pct": 2.7,
+   "recovery_ms": 0.8,
+   "spin_up_ms_motor_limit": 28,
+   "coast_down_s": 1.1,
+   "current_limit_a": 20.0,
+   "note": "the set speed for the nominal ball at the physics' set fps (sim/turret_launch3d.py); foam loss 30 % (assumed); the chronograph gates in the barrel measure the real speed"
+  },
+  "feed": {
+   "pockets": 8,
+   "motor": "Feetech STS3215 serial bus servo (ID 3)",
+   "ratio": 345,
+   "no_load_rpm": 45,
+   "step_deg": 45.0,
+   "step_ms_est": 235.0,
+   "rate_per_s": 3,
+   "max_rate_per_s": 3,
+   "pitch_radius_mm": 37,
+   "exit_x_mm": 37.0,
+   "park_deg": 22.5
+  },
+  "timing": {
+   "dial_to_exit_ms": 235,
+   "chute_ms": 86,
+   "to_nip_ms": 8,
+   "nip_to_muzzle_ms": 7.8,
+   "speed_into_nip_mps": 0.65,
+   "trigger_to_muzzle_ms": 338
+  },
+  "pan": {
+   "pinion_teeth": 21,
+   "ring_teeth": 63,
+   "ratio": 3.0,
+   "module_mm": 1.25,
+   "servo_stall_nm": 2.94,
+   "ring_stall_nm": 8.82,
+   "firmware_cap_pct": 50,
+   "max_deg_s": 90,
+   "range_deg": [
+    -170,
+    170
+   ],
+   "hard_stop_deg": 173.5,
+   "encoder_counts_per_turret_deg": 34.1,
+   "inertia_kg_m2": 0.00419,
+   "accel_at_cap_deg_s2": 60309,
+   "time_to_full_slew_ms": 1.5
+  },
+  "tilt": {
+   "servo_stall_nm": 2.94,
+   "max_deg_s": 270,
+   "range_deg": [
+    -25.0,
+    0.0
+   ],
+   "group_mass_g": 708,
+   "com_ahead_mm": -4.8,
+   "holding_nm": -0.03,
+   "margin": 87.8
+  },
+  "flight_level": {
+   "rows": [
+    [
+     1.0,
+     0.049,
+     11,
+     19.9
+    ],
+    [
+     2.0,
+     0.101,
+     48,
+     18.7
+    ],
+    [
+     3.0,
+     0.156,
+     112,
+     17.5
+    ],
+    [
+     4.0,
+     0.215,
+     209,
+     16.4
+    ],
+    [
+     5.0,
+     0.279,
+     342,
+     15.4
+    ],
+    [
+     6.0,
+     0.346,
+     518,
+     14.6
+    ]
+   ],
+   "from_height_m": 0.566,
+   "lands_m": 6.24,
+   "note": "a level shot from the bench (the box on a 0.3 m crate): [range m, time s, drop mm, speed m/s]; drag as a sphere, Cd 0.5"
+  }
+ },
+ "checks": {
+  "clearance": {
+   "deck_min_gap_mm": 50.7,
+   "deck_worst_pose_deg": [
+    -160.0,
+    -25.0
+   ],
+   "antenna_min_gap_mm": {
+    "antenna_left_46.5": 91.6,
+    "antenna_left_145.5": 91.6,
+    "antenna_right_46.5": 91.6,
+    "antenna_right_145.5": 91.6
+   },
+   "antenna_tilt_max_deg": [
+    [
+     -170.0,
+     25.0
+    ],
+    [
+     -165.0,
+     25.0
+    ],
+    [
+     -160.0,
+     25.0
+    ],
+    [
+     -155.0,
+     25.0
+    ],
+    [
+     -150.0,
+     25.0
+    ],
+    [
+     -145.0,
+     25.0
+    ],
+    [
+     -140.0,
+     25.0
+    ],
+    [
+     -135.0,
+     25.0
+    ],
+    [
+     -130.0,
+     25.0
+    ],
+    [
+     -125.0,
+     25.0
+    ],
+    [
+     -120.0,
+     25.0
+    ],
+    [
+     -115.0,
+     25.0
+    ],
+    [
+     -110.0,
+     25.0
+    ],
+    [
+     -105.0,
+     25.0
+    ],
+    [
+     -100.0,
+     25.0
+    ],
+    [
+     -95.0,
+     25.0
+    ],
+    [
+     -90.0,
+     25.0
+    ],
+    [
+     -85.0,
+     25.0
+    ],
+    [
+     -80.0,
+     25.0
+    ],
+    [
+     -75.0,
+     25.0
+    ],
+    [
+     -70.0,
+     25.0
+    ],
+    [
+     -65.0,
+     25.0
+    ],
+    [
+     -60.0,
+     25.0
+    ],
+    [
+     -55.0,
+     25.0
+    ],
+    [
+     -50.0,
+     25.0
+    ],
+    [
+     -45.0,
+     25.0
+    ],
+    [
+     -40.0,
+     25.0
+    ],
+    [
+     -35.0,
+     25.0
+    ],
+    [
+     -30.0,
+     25.0
+    ],
+    [
+     -25.0,
+     25.0
+    ],
+    [
+     -20.0,
+     25.0
+    ],
+    [
+     -15.0,
+     25.0
+    ],
+    [
+     -10.0,
+     25.0
+    ],
+    [
+     -5.0,
+     25.0
+    ],
+    [
+     0.0,
+     25.0
+    ],
+    [
+     5.0,
+     25.0
+    ],
+    [
+     10.0,
+     25.0
+    ],
+    [
+     15.0,
+     25.0
+    ],
+    [
+     20.0,
+     25.0
+    ],
+    [
+     25.0,
+     25.0
+    ],
+    [
+     30.0,
+     25.0
+    ],
+    [
+     35.0,
+     25.0
+    ],
+    [
+     40.0,
+     25.0
+    ],
+    [
+     45.0,
+     25.0
+    ],
+    [
+     50.0,
+     25.0
+    ],
+    [
+     55.0,
+     25.0
+    ],
+    [
+     60.0,
+     25.0
+    ],
+    [
+     65.0,
+     25.0
+    ],
+    [
+     70.0,
+     25.0
+    ],
+    [
+     75.0,
+     25.0
+    ],
+    [
+     80.0,
+     25.0
+    ],
+    [
+     85.0,
+     25.0
+    ],
+    [
+     90.0,
+     25.0
+    ],
+    [
+     95.0,
+     25.0
+    ],
+    [
+     100.0,
+     25.0
+    ],
+    [
+     105.0,
+     25.0
+    ],
+    [
+     110.0,
+     25.0
+    ],
+    [
+     115.0,
+     25.0
+    ],
+    [
+     120.0,
+     25.0
+    ],
+    [
+     125.0,
+     25.0
+    ],
+    [
+     130.0,
+     25.0
+    ],
+    [
+     135.0,
+     25.0
+    ],
+    [
+     140.0,
+     25.0
+    ],
+    [
+     145.0,
+     25.0
+    ],
+    [
+     150.0,
+     25.0
+    ],
+    [
+     155.0,
+     25.0
+    ],
+    [
+     160.0,
+     25.0
+    ],
+    [
+     165.0,
+     25.0
+    ],
+    [
+     170.0,
+     25.0
+    ]
+   ],
+   "antenna_limited_pans_deg": [],
+   "note": "antennas: upright swivel dipoles on all four RP-SMA bulkheads (none chosen yet: typical 2.4 GHz swivel dipole, \u00d810 x 108 (est; none chosen))"
+  },
+  "muzzle_outside_deck_mm": -30.9,
+  "airflow": {
+   "mouth_mm": [
+    124,
+    33
+   ],
+   "throat_mm": [
+    80,
+    33
+   ],
+   "air_speed_mps": {
+    "grille": 1.17,
+    "throat": 1.36
+   },
+   "loss_pa": 1.94,
+   "flow_before_m3h": 12.94,
+   "flow_after_m3h": 12.06,
+   "flow_drop_pct": 6.8,
+   "note": "hand estimate (K = 1 at the grille, K = 1 for the turn into the collar; a linear 8015 fan curve, 15.2 Pa / 38.9 m3/h, through the J501 CFD operating point); the J501 CFD (tools/thermal.py there) should check it with the deck and shroud in the domain"
+  },
+  "tipping": {
+   "total_kg": 3.35,
+   "com_height_mm": 145,
+   "tip_angle_deg": 32,
+   "push_to_tip_n": 10.6,
+   "push_height_mm": 281,
+   "note": "J501: 368 g printed (its slice report) + 1.0 kg Orin, carrier and cooler (est); a sideways push at the tilt axis that lifts the box off its narrow edge"
+  },
+  "overspeed": {
+   "max_exit_mps": 18.9,
+   "max_fps": 62,
+   "cap_mps": 21.34,
+   "physics_ceiling_fps": 67.6,
+   "note": "the fixed 12 V flywheel rail is the ceiling: at the X2216s' full no-load speed on it (10560 rpm) a ball leaves at about 19 m/s by this page's rough model (the physics' fastest ball at 100 % throttle on a fast motor and a high rail: 67.6 fps on \u00d834 tyres, docs/turret-physics.md section 4), under the 70 fps cap; the barrel's two gates trip the safety line on any ball over 66 fps, and 24 V must never reach the ESCs"
+  },
+  "release": {
+   "after_drop_ms": 103,
+   "coast_s": 1.1,
+   "note": "a ball that has already dropped still fires up to 103 ms after ARM is released; the phase-short brake (six FETs on the cartridge board, 5-14 ms after the line drops) stops the wheels to 5 % about 48 ms after release (docs/turret-physics.md section 5), where unbraked they would coast 1.1 s",
+   "brake_to_5pct_ms": 48,
+   "brake_tau_ms": 10.16
+  },
+  "lid_screw": "M3 x 40 ISO 4762, tip at z 62 (as the J501's own M3 x 16)",
+  "too_big": []
+ },
+ "masses_g": {
+  "turret_with_balls": 1639,
+  "adapter": 338,
+  "j501_printed": 368.2,
+  "j501_inside_est": 1000.0
+ }
+}

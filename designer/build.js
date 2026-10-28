@@ -160,20 +160,23 @@ window.__thumbMissing = (img) => {
   const a = img.closest('.thumb');
   a.classList.add('missing');
   a.removeAttribute('href');
-  a.title = `No picture for ${a.dataset.key} on this machine (bought parts' photos are not in git): run tools/part_images.py`;
+  a.title = `No picture for ${a.dataset.key} on this machine (bought parts' photos are not in git): preview pending`;
   noPic.add(a.dataset.key);
   const el = $('nopic');
   if (el) el.innerHTML = noPicNote();
   img.remove();
 };
 const noPicNote = () => (noPic.size ? `<span class="tag fail">${noPic.size} WITHOUT A PICTURE</span> <span class="dim small">${esc([...noPic].join(', '))}`
-  + ' (tools/part_images.py fetches and renders them)</span>' : '');
+  + ' (previews pending)</span>' : '');
 const thumb = (key, label, small = false) => {
   const im = key ? media.images[key] : null;
   const cls = `thumb${small ? ' sm' : ''}`;
+  if (im?.kind === 'vendor' && !im.path && /^https?:\/\//.test(im.source_url || '')) {
+    return `<a class="${cls} source" href="${esc(im.source_url)}" aria-label="${esc('View '+(label || key)+' at its supplier')}"><span aria-hidden="true">↗</span>View part</a>`;
+  }
   if (!im || !im.path) {
     noPic.add(key || label);
-    return `<div class="${cls} missing" title="${esc(`No picture for ${key || label}: run tools/part_images.py`)}"></div>`;
+    return `<div class="${cls} missing" title="${esc(`No picture for ${key || label}: preview pending`)}"></div>`;
   }
   const href = im.kind === 'render' ? `${R}${im.path}` : (im.source_url || `${R}${im.path}`);
   const tip = im.kind === 'render' ? `${key}: a render of our CAD` : `${key}: picture from ${im.seller || ''} ${im.source_url || ''} (${im.fetched || ''})`;

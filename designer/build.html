@@ -8,15 +8,15 @@
 <style>
   /* the progress page's look (designer/progress.html): the same variables, fonts, cards, tags and part rows */
   html, body { overflow-x: hidden; overflow-y: auto; height: auto; }
-  body.has-appnav main.prog { padding-top: 46px; }
+  body.has-appnav main.prog { padding-top: var(--appnav-h, 64px); }
   main.prog { position: relative; z-index: 3; padding: 0 32px 60px; max-width: 1500px; }
   main.prog h1 { font-size: 24px; margin: 26px 0 4px; letter-spacing: -0.01em; }
   .lede { color: var(--muted); margin: 0 0 18px; max-width: 90ch; }
   .lede b { color: var(--text); }
   .sec { display: flex; align-items: center; gap: 8px; margin: 34px 0 12px; font: 600 12px var(--font-mono); letter-spacing: .14em; text-transform: uppercase; }
   .sec::before { content: ""; width: 12px; height: 2px; background: var(--cyan); box-shadow: 0 0 6px var(--glow-30); flex: none; }
-  .card { background: rgba(14,14,20,.88); border: 1px solid var(--hairline); border-radius: 10px; padding: 14px 18px; margin-bottom: 14px; }
-  .status { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+  .card { background: rgba(255,255,255,.94); border: 1px solid var(--hairline); border-radius: 10px; padding: 14px 18px; margin-bottom: 14px; }
+  .status { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); gap: 12px; }
   .status .card { margin: 0; }
   .status .card b { display: block; font-size: 13px; margin-bottom: 4px; }
   .status .card span, .status .card p { color: var(--muted); font-size: 13px; }
@@ -25,8 +25,8 @@
   a { color: var(--cyan); }
   .tag { display: inline-block; padding: 1px 8px; border-radius: 99px; font: 600 11px var(--font-mono); letter-spacing: .08em; white-space: nowrap; }
   .tag.pass { color: var(--mint); background: rgba(5,255,161,.08); } .tag.fail { color: var(--magenta); background: rgba(255,42,109,.1); }
-  .tag.warn { color: #ffb020; background: rgba(255,176,32,.1); } .tag.info { color: var(--cyan); background: var(--glow-06); }
-  table.cmp { width: 100%; border-collapse: collapse; font: 12px var(--font-mono); background: rgba(18,18,26,.9); border: 1px solid var(--hairline); border-radius: 8px; overflow: hidden; }
+  .tag.warn { color: #966100; background: rgba(255,176,32,.1); } .tag.info { color: var(--cyan); background: var(--glow-06); }
+  table.cmp { width: 100%; border-collapse: collapse; font: 12px var(--font-mono); background: rgba(255,255,255,.94); border: 1px solid var(--hairline); border-radius: 8px; overflow: hidden; }
   table.cmp th, table.cmp td { padding: 7px 10px; border-bottom: 1px solid var(--hairline); text-align: left; vertical-align: top; }
   table.cmp th { color: var(--muted); font-weight: 500; }
   table.cmp td.n, table.cmp th.n { text-align: right; white-space: nowrap; }
@@ -63,7 +63,7 @@
   .seller > header h3 { margin: 0; font-size: 15px; }
   .seller > header .why { color: var(--muted); font-size: 12px; }
   .seller > header .sub { margin-left: auto; font: 600 14px var(--font-mono); color: var(--text); white-space: nowrap; }
-  .olist { background: rgba(18,18,26,.9); border: 1px solid var(--hairline); border-radius: 0 0 8px 8px; overflow: hidden; font-size: 13px; }
+  .olist { background: rgba(255,255,255,.94); border: 1px solid var(--hairline); border-radius: 0 0 8px 8px; overflow: hidden; font-size: 13px; }
   .orow { display: grid; grid-template-columns: 72px minmax(0, 2.2fr) minmax(0, 1.5fr) 92px 112px 104px minmax(0, 1.9fr);
     grid-template-areas: "thumb main pn qty unit line alts"; gap: 6px 14px; align-items: start; padding: 10px 12px; border-bottom: 1px solid var(--hairline); }
   .orow:last-child { border-bottom: 0; }
@@ -77,7 +77,7 @@
   .orow .l b { color: var(--text); font-size: 13px; }
   .orow small { display: block; color: var(--muted); font: 11px var(--font-mono); margin-top: 2px; }
   .orow .avail { display: block; color: var(--mint); font: 11px var(--font-mono); margin-top: 3px; }
-  .orow .avail.bad { color: #ffb020; }
+  .orow .avail.bad { color: #966100; }
   .orow .flags { margin-top: 4px; display: flex; flex-wrap: wrap; gap: 4px; }
   .seller > footer { display: flex; justify-content: flex-end; padding: 6px 4px 0; }
   .paste summary { cursor: pointer; color: var(--text-dim); font: 12px var(--font-mono); }
@@ -92,7 +92,7 @@
   .grow.head { color: var(--muted); font: 500 11px var(--font-mono); letter-spacing: .06em; padding: 7px 12px; align-items: end; }
   .grow .mono { font: 12px var(--font-mono); overflow-wrap: anywhere; }
   .grow b { color: var(--text); }
-  .glist { background: rgba(18,18,26,.9); border: 1px solid var(--hairline); border-radius: 8px; overflow: hidden; }
+  .glist { background: rgba(255,255,255,.94); border: 1px solid var(--hairline); border-radius: 8px; overflow: hidden; }
   .mrow { grid-template-columns: 72px minmax(0, 1.7fr) minmax(0, 1.1fr) 44px minmax(0, 1fr) minmax(0, 1.6fr); }
   .drow { grid-template-columns: 34px 48px minmax(0, 2fr) minmax(0, 1.3fr) minmax(0, 2.2fr); }
   .prow { grid-template-columns: 30px 48px minmax(0, 1.6fr) 72px 40px 70px 64px minmax(0, 1.3fr) 66px; }
@@ -129,6 +129,7 @@
 </head>
 <body>
 <main class="prog">
+  <div class="portal-intro"><strong>Built by autonomous systems · work in progress</strong>You're inside the Gyropup workshop. These are evolving design files and simulation reports; physical testing is still ahead. <a href="../#built">About the project ↗</a></div>
   <h1>Gyropup: build the first prototype</h1>
   <p class="summary" id="summary">Reading the parts lists and print plans…</p>
   <p class="lede">Everything to order and to print for the first physical prototype: one leg on its single-leg test rig (milestone M3),
@@ -154,6 +155,7 @@
   <p class="lede" id="printlede"></p>
   <div id="materials"></div>
   <div class="queue" id="queue"></div>
+<footer class="portal-footer">Created by <a href="https://valpatel.com">Valpatel Software LLC</a>. © 2026. All rights reserved. Repository materials retain their stated licenses.</footer>
 </main>
 <script type="module" src="build.js"></script>
 </body>

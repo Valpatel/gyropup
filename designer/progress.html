@@ -7,18 +7,18 @@
 <link rel="stylesheet" href="kit/hud.css">
 <style>
   html, body { overflow: auto; height: auto; }
-  body.has-appnav main.prog { padding-top: 46px; }
+  body.has-appnav main.prog { padding-top: var(--appnav-h, 64px); }
   main.prog { position: relative; z-index: 3; padding: 0 32px 60px; max-width: 1500px; }
   main.prog h1 { font-size: 24px; margin: 26px 0 4px; letter-spacing: -0.01em; }
   .lede { color: var(--muted); margin: 0 0 18px; max-width: 90ch; }
   .sec { display: flex; align-items: center; gap: 8px; margin: 34px 0 12px; font: 600 12px var(--font-mono); letter-spacing: .14em; text-transform: uppercase; }
   .sec::before { content: ""; width: 12px; height: 2px; background: var(--cyan); box-shadow: 0 0 6px var(--glow-30); }
-  .card { background: rgba(14,14,20,.88); border: 1px solid var(--hairline); border-radius: 10px; padding: 14px 18px; margin-bottom: 14px; }
-  .status { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+  .card { background: rgba(255,255,255,.94); border: 1px solid var(--hairline); border-radius: 10px; padding: 14px 18px; margin-bottom: 14px; }
+  .status { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); gap: 12px; }
   .status .card b { display: block; font-size: 13px; margin-bottom: 4px; }
   .status .card span { color: var(--muted); font-size: 13px; }
   .k { font: 600 22px var(--font-mono); color: var(--text); }
-  table.cmp { width: 100%; border-collapse: collapse; font: 12px var(--font-mono); background: rgba(18,18,26,.9); border: 1px solid var(--hairline); border-radius: 8px; overflow: hidden; }
+  table.cmp { width: 100%; border-collapse: collapse; font: 12px var(--font-mono); background: rgba(255,255,255,.94); border: 1px solid var(--hairline); border-radius: 8px; overflow: hidden; }
   table.cmp th, table.cmp td { padding: 7px 10px; border-bottom: 1px solid var(--hairline); text-align: left; vertical-align: top; }
   table.cmp th { color: var(--muted); font-weight: 500; }
   table.cmp tr.click { cursor: pointer; } table.cmp tr.click:hover td { background: rgba(0,240,255,.04); }
@@ -27,9 +27,9 @@
   #fea { overflow-x: auto; }
   .tag { display: inline-block; padding: 1px 8px; border-radius: 99px; font: 600 11px var(--font-mono); letter-spacing: .08em; }
   .tag.pass { color: var(--mint); background: rgba(5,255,161,.08); } .tag.fail { color: var(--magenta); background: rgba(255,42,109,.1); }
-  .tag.warn { color: #ffb020; background: rgba(255,176,32,.1); }
-  .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 14px; }
-  .gallery figure { margin: 0; background: rgba(14,14,20,.88); border: 1px solid var(--hairline); border-radius: 10px; overflow: hidden; }
+  .tag.warn { color: #966100; background: rgba(255,176,32,.1); }
+  .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); gap: 14px; }
+  .gallery figure { margin: 0; background: rgba(255,255,255,.94); border: 1px solid var(--hairline); border-radius: 10px; overflow: hidden; }
   .gallery img, .gallery video { width: 100%; display: block; background: #0b0d12; }
   .gallery figcaption { padding: 8px 12px; font-size: 12px; color: var(--muted); }
   .gallery figcaption b { color: var(--text); }
@@ -48,7 +48,7 @@
   .thumb.missing::after { content: "NO\A PICTURE"; white-space: pre; }
   .thumb.sm.missing { font-size: 8px; letter-spacing: 0; }
   .thumbs { display: flex; flex-direction: column; gap: 6px; }
-  .plist { background: rgba(18,18,26,.9); border: 1px solid var(--hairline); border-radius: 8px; overflow: hidden; font-size: 13px; }
+  .plist { background: rgba(255,255,255,.94); border: 1px solid var(--hairline); border-radius: 8px; overflow: hidden; font-size: 13px; }
   .prow { display: grid; grid-template-columns: 72px minmax(0, 2.1fr) minmax(0, 1.5fr) 44px 92px minmax(0, 2.3fr);
     grid-template-areas: "thumb main pn qty price alts"; gap: 6px 14px; align-items: start; padding: 10px 12px; border-bottom: 1px solid var(--hairline); }
   .prow:last-child { border-bottom: 0; }
@@ -78,9 +78,10 @@
 </head>
 <body>
 <main class="prog">
+  <div class="portal-intro"><strong>Built by autonomous systems · work in progress</strong>You're inside the Gyropup workshop. These are evolving design files and simulation reports; physical testing is still ahead. <a href="../#built">About the project ↗</a></div>
   <h1>Gyropup: progress</h1>
   <p class="lede" id="updated">One robot, built leg first: one leg on a test rig, then the foam-ball turret, then the body around two
-  legs. Everything here is CAD and simulation until parts are printed; this page refreshes itself. Everything to order and print
+  legs. Everything here is CAD and simulation until parts are printed; reports update with each published design change. Everything to order and print
   for the first prototype, by seller: <a href="build.html">Build</a>.</p>
   <div class="status" id="status"></div>
 
@@ -123,8 +124,8 @@
   <div class="sec">Motors to order (Seeed Studio)</div>
   <div id="shop"></div>
 
-  <p class="lede" style="margin-top:28px">The 3D game page (<a href="sim.html">Simulate</a>) still shows the first, serial-leg robot with
-  its voice and foam balls; it moves to leg v2 when the body is built around two legs.</p>
+  <p class="lede" style="margin-top:28px">The <a href="sim.html">playground</a> includes Gyropup v2, the earlier serial-leg design, and the turret bench. Browser demo snapshots are labeled separately from the latest engineering reports.</p>
+<footer class="portal-footer">Created by <a href="https://valpatel.com">Valpatel Software LLC</a>. © 2026. All rights reserved. Repository materials retain their stated licenses.</footer>
 </main>
 <script type="module" src="progress.js"></script>
 </body>

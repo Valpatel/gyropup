@@ -18,14 +18,15 @@ cad:
   site:
     title: Gyropup
     tagline: A friendly self-balancing wheel-legged robot for foam-ball games, built leg first
-    notice: Private. Closed source for now.
+    notice: Built by autonomous systems. Work in progress; CAD and simulation await physical validation.
     accent: "#e8892b"
     milestones: docs/milestones.yaml
     decisions: docs/decisions.yaml
     pages: [README.md, "docs/*.md", "research/*.md", catalog/SCHEMA.md]
-    theme: hud
+    theme: light
     live_reload: {watch: [designer, exports, docs, cad]}   # pages reload as these change
     nav:
+      - {id: home, title: Home, href: /}
       - {id: progress, title: Progress, href: designer/progress.html}
       - {id: build, title: Build, href: designer/build.html}
       - {id: overview, title: Overview, href: site/}
