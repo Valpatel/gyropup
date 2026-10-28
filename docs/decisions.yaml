@@ -311,7 +311,7 @@
   title: "The bus is 13S Li-ion: 48.1 V nominal, charged to 4.10 V a cell (53.3 V)"
   decision: "The robot runs from a 13S Li-ion pack on a 48.1 V bus, charged only to 4.10 V a cell (53.3 V) by a charger set to that voltage, with the BMS's cell over-voltage at 4.15 V as the backstop; empty at 3.0 V a cell (39 V). The FLEXVOLT 60 V default and the maxon regen clamp are dropped from the robot (the user's FLEXVOLT packs stay on the bench and the turret stand). Every load is rated across 39-53.3 V: the RS-04 (15-60 V), the Flipsky 75100 (14-84 V), the anti-spark switch (12-84 V), the Mean Well DDR converters (33.6-67.2 V and 18-75 V), the MINI 58V and MRBF fuses (58 V); regeneration has room to 57 V. This is docs/body-plan.md's proposed D42, renumbered."
   why: "The RS-04 faults on over-voltage at 60 V, which a FLEXVOLT pack's 60 V initial voltage reaches; the 13S bus keeps 7 V of regen headroom under that, gives the rig's jump speed, and puts a BMS's protections on the pack. 4.10 V a cell trades about 9 % of the capacity for cycle life and margin."
-  status: decided
+  status: superseded by D65
   source: {kind: user, quote: "Usage limits reset, full steam ahead, finish our plans and get this ready for first prototype manufacturing."}
 - id: D44
   date: "2026-10-27"
