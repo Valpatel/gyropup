@@ -11,11 +11,12 @@ docs/body-next-plan.md 4.1. Nothing has run on hardware yet: that is B13 (sectio
 
 | Acceptance (B8) | Result | Where |
 |---|---|---|
-| The firmware builds in CI | the Nucleo image links: **text 42,620 B, data 100 B, bss 13,064 B** (8 % of the flash, 13 % of the RAM) with Arm GNU Toolchain 13.3.rel1; also with Ubuntu's gcc-arm-none-eabi 13.2 (CI's); the host library and 185 unit checks pass | `.github/workflows/body-firmware.yml`, `tests/test_core.c` |
+| The firmware builds in CI | the Nucleo image links: **text 43,128 B, data 100 B, bss 13,072 B** (8 % of the flash, 13 % of the RAM) with Arm GNU Toolchain 13.3.rel1; also with Ubuntu's gcc-arm-none-eabi 13.2 (CI's); the host library and 204 unit checks pass | `.github/workflows/body-firmware.yml`, `tests/test_core.c` |
 | The HIL replays the sim's stand_up within 5 % of leg length and lean | **worst 0.36 mm (0.17 %) of leg length, 0.009 deg of lean** against `sim/leg_rig.py run()` at 16.25 kg and 36 V, both legs (the rig's own controller through the same HIL: 0.25 mm, 0.009 deg) | `hil/test_hil.py`, `hil/hil-results.json` |
 | UVLO and the jump gate trip at their numbers (the 10S windows, D65, section 5.1) | on a pack falling 0.2 V/s: the warning at **35.00 V**, the jump gate closing at **34.00 V**, the sit at **32.00 V** (resting, the firmware's estimate; the open-circuit voltage then 0.2 V lower, the 1 s filter's lag), the **cut-off at 30.00 V** under load (29.98 V on the wire), latched; a drop to 29.5 V while standing cuts off in 194 ms (the resting estimate still 33.2 V), sits, stops the motors and stays latched through a fresh pack and a new RUN | the same |
-| The jump scaled with the voltage | 41.0 V: **195 mm**, bus min 34.0 V, 70 A; 36.0 V: s 0.694, the push held to 50 A, **150 mm**, bus min 30.8 V; 34.1 V: s 0.431, 31 A, **104 mm**, bus min 30.9 V; 33.9 V: refused. Never through the cut-off | the same |
-| The bus current limit | a full-pack jump (72 A unlimited) with the peak lowered to 50 A: held at it (51.8 A worst, the INA228's 2 ms behind), the motors scaled to 0.74, still 175 mm, nothing trips | the same |
+| The jump scaled with the voltage | 41.0 V: **199 mm**, bus min 34.0 V, 70 A; 36.0 V: s 0.694, the push held to 50 A, **150 mm**, bus min 30.8 V; 34.1 V: s 0.431, 31 A, **104 mm**, bus min 30.9 V; 33.9 V: refused. Never through the cut-off | the same |
+| The bus current limit | a full-pack jump (72 A unlimited) with the peak lowered to 50 A: held at it (51.8 A worst, the INA228's 2 ms behind), the motors scaled to 0.74, still 178 mm, nothing trips | the same |
+| The regen clamp and the over-charge latch (no BMS) | a 41.0 V jump: the take-off tuck's 52 A of regeneration (bus 46.2 V) cut within 5 ms; the landing keeps its braking (27 ms over 42.5 V, lands at 154 mm of leg); the 44.0 V latch's filter peaks at 42.9 V. The bus stepped to 44.5 V while standing: latched in 46 ms, a normal sit (138 mm), latched through 40 V and a new RUN | the same |
 | (beyond B8) the law on the whole robot | the robot profile balances `sim/robot_v2.py`'s B3 model (32.15 kg) through the same emulated devices like `sim/controller_v2.py` does, both at 36 V: stand, 0.5 m/s, stop, crouch; never past 5.6 deg (the simulation's controller 5.6 deg), x within 12 mm, v 7 mm/s, leg length within 1.2 mm, the pendulum-angle estimate within 0.023 deg of MuJoCo's | `hil/sil_robot.py` |
 | (beyond B8) the radio stop, the heartbeat, people near | MCU_RUN open 1 ms after the coil sense drops, the legs down and the motors stopped 451 ms after; the heartbeat sit 2.198 s after the last setpoint; people near refuses the jump and sits after 2.008 s | `hil/test_hil.py` |
 
@@ -119,8 +120,8 @@ at 25 A. The right wheel's direction is -1 by default (the same motor turned rou
 | 0x111 | BENCH | on demand | b0 = 1: select bench scenario b1 (rig profile, while sat) |
 | 0x120 | STATE_A, MCU -> Jetson | 200 Hz | pitch int16 1e-4 rad (+ nose up); pitch rate int16 1e-3 rad/s; speed int16 mm/s; yaw rate int16 mrad/s |
 | 0x121 | STATE_B | 200 Hz | leg length left, right uint16 0.1 mm; lean left, right int16 1e-4 rad |
-| 0x122 | STATUS | 200 Hz | b0 mode (0 boot, 1 idle, 2 arming, 3 run, 4 jump, 5 sit, 6 settle, 7 limp); b1 flags: bit0 stop relay powered, bit1 MCU_RUN, bit2 link OK, bit3 people-near caps, bit4 UVLO warn, bit5 UVLO sat, bit6 a jump would be taken now, bit7 jumping; b2-3 bus uint16 10 mV; b4-5 bus current int16 10 mA (+ discharge); b6 reason (why it last sat or limped: 1 stop, 2 link, 3 people, 4 UVLO, 5 the Jetson, 6 no bus voltage, 7 the cut-off, 10 motor missing, 11 motor fault, 12 leg outside 95-395 mm, 13 over-voltage, 14 IMU, 15 fallen, 16 arm timeout); b7 seq |
-| 0x123 | FAULTS | 10 Hz | b0-3 each motor (LF, LR, RF, RR): bit7 present, bits0-5 its feedback faults; b4: bits0-1 VESCs present, bit2 IMU fresh, bit3 bus voltage fresh, bit4 a latched fault, bit5 the cut-off latched, bit6 the bus current limit acting; b5 the jump's push allowed now (s(V) %: its bus current, % of 72 A); b6 the last refusal (1 people, 2 voltage, 3 not running, 4 link, 5 height 0); b7 seq |
+| 0x122 | STATUS | 200 Hz | b0 mode (0 boot, 1 idle, 2 arming, 3 run, 4 jump, 5 sit, 6 settle, 7 limp); b1 flags: bit0 stop relay powered, bit1 MCU_RUN, bit2 link OK, bit3 people-near caps, bit4 UVLO warn, bit5 UVLO sat, bit6 a jump would be taken now, bit7 jumping; b2-3 bus uint16 10 mV; b4-5 bus current int16 10 mA (+ discharge); b6 reason (why it last sat or limped: 1 stop, 2 link, 3 people, 4 UVLO, 5 the Jetson, 6 no bus voltage, 7 the cut-off, 8 over-charge, 10 motor missing, 11 motor fault, 12 leg outside 95-395 mm, 13 over-voltage, 14 IMU, 15 fallen, 16 arm timeout); b7 seq |
+| 0x123 | FAULTS | 10 Hz | b0-3 each motor (LF, LR, RF, RR): bit7 present, bits0-5 its feedback faults; b4: bits0-1 VESCs present, bit2 IMU fresh, bit3 bus voltage fresh, bit4 a latched fault, bit5 the cut-off latched, bit6 the bus current limit or the regen clamp acting, bit7 the over-charge latched; b5 the jump's push allowed now (s(V) %: its bus current, % of 72 A); b6 the last refusal (1 people, 2 voltage, 3 not running, 4 link, 5 height 0); b7 seq |
 
 The state frames go one per tick (STATE_A, STATE_B, STATUS in turn: 200 Hz each).
 
@@ -135,12 +136,14 @@ takes the bus voltage from 0x702 (the 10 ms maximum, the mean for the resting es
 |---|---|---|
 | **Radio stop.** The stop relay's coil + side (12 V while the radio says run) through a divider to PC0. Low for 2 ms: STOP. Standing: MCU_RUN low at once (the turret's loop and 24 V are already cut by the relay), a fast sit (0.3 s to the sit length, 0.15 s of the feed-forward fading), then the motors stopped. A stop during a jump's push ends the push; in the air the landing completes first. | sat and stopped in 451 ms in the HIL (B13 asks for 0.5 s from the transmitter) | D37, docs/body-electrical.md 5, W38/W39 |
 | **MCU_RUN** (PC1, the relay's low-side MOSFET, a 100 k pull-down on its gate): high only while arming, standing and jumping; low at boot, sat, sitting, limp, a hard fault or a reset | | D37 |
-| **Arming** needs: the coil sense high for 100 ms, the Jetson's RUN going 0 -> 1 with the link fresh, every motor configured and read back, a fresh bus voltage with the resting estimate at 33.0 V or over, no cut-off, no people near, no latched fault, the IMU fresh (robot). The firmware never stands up by itself: after any sit the Jetson must send RUN 0 then 1 | | |
+| **Arming** needs: the coil sense high for 100 ms, the Jetson's RUN going 0 -> 1 with the link fresh, every motor configured and read back, a fresh bus voltage with the resting estimate from 33.0 to 42.0 V, no cut-off or over-charge latch, no people near, no latched fault, the IMU fresh (robot). The firmware never stands up by itself: after any sit the Jetson must send RUN 0 then 1 | | |
 | **Heartbeat.** Each setpoint with a new sequence number is a heartbeat. None for 200 ms: the link is lost; the robot holds its height and lean, the speed and turn slew to 0, no jumps; 2 s later it sits. Back within the 2 s: carry on | sit 2.2 s after the last setpoint (HIL 2.198 s) | D63 |
 | **UVLO.** Resting voltage = bus + discharge current x 0.100 ohm (the sag taken back out), filtered over 1 s. Under 35.0 V: the warning flag (clears over 35.3 V). Under 32.0 V: a sit, and no stand until 33.0 V | trips at 35.00 / 32.00 V resting in the HIL | D65; 3.50 / 3.20 / 3.30 V a cell (5.1) |
 | **The cut-off.** The bus under load (the INA228's VBUS, no sag correction) through a 0.1 s filter under 30.0 V: a sit (1 s, as UVLO's; in the air the landing first), the motors stopped, MCU_RUN low; latched until a power cycle: no RUN, no fresh pack clears it. Trips in any mode, idle too (a pack plugged in under 30 V never arms) | HIL: 30.00 V on a falling pack; a drop to 29.5 V while standing trips in 194 ms, sat 1.34 s after, still latched with 41 V back and a new RUN | D65; 3.00 V a cell |
 | **Jump gate.** Refused under 34.0 V resting, with the cut-off latched, with people near, when not standing, with the link lost, or at height 0. The push's bus current is limited to `s(V) x 72 A`, `s(V) = clamp((V - 31) / (38.2 - 31), 0, 1)` (a factor on the leg torques in the push only, down by limit / I over it): the sag is `s x 7.2 V` and the bus stays over the 31 V floor, 1 V above the cut-off. 72 A x 0.1 ohm is the full push's own sag (HIL), so at and over 38.2 V resting the push is unlimited. The take-off speed is capped at `3.2 m/s x sqrt(n/15)` for the Jetson's height n/15 | 41.0 V: 195 mm, 70 A, bus min 34.0 V; 36.0 V: s 0.694, 50 A, 150 mm, 30.8 V; 34.1 V: s 0.431, 31 A, 104 mm, 30.9 V; 33.9 V: refused | D65, docs/body-next-plan.md 1.3 |
-| **The bus current limit** (the INA228's current at 500 Hz): 80 A (`GP_BUS_I_PEAK_A`) for at most 0.5 s at a time (the allowance given back at the same rate under 40 A), else 40 A (`GP_BUS_I_CONT_A`), and 40 A whenever the 1 s average is over 40 A. Not a trip: one factor on every motor's command (legs and wheels), down by limit / I at once, back at 4 a second, never under 0.5 (balance and the legs' weight need torque) | HIL: a full jump with the peak set to 50 A held at 51.8 A worst, factor 0.74, 175 mm | D65; provisional until the dock adapters' ratings are confirmed |
+| **The bus current limit** (the INA228's current at 500 Hz): 80 A (`GP_BUS_I_PEAK_A`, the jump's push) for at most 0.5 s at a time (the allowance given back at the same rate under 30 A), else 30 A (`GP_BUS_I_CONT_A`), and 30 A whenever the 1 s average is over 30 A. Not a trip: one factor on every motor's command (legs and wheels), down by limit / I at once, back at 4 a second, never under 0.5 (balance and the legs' weight need torque) | HIL: a full jump with the peak set to 50 A held at 51.8 A worst, factor 0.74, 178 mm | D65; 30 A: the Terrafirma 10 AWG DeWalt 20 V dock adapters' stated rating; B12 checks their contacts' temperature after ten jumps |
+| **The regen clamp** (no BMS stops a full pack being charged): the charging current the INA228 sees may be 15 A at 41.5 V on the bus (what lifts a full 41.0 V pack to 42.5 V through 0.1 ohm), falling linearly to none at 42.5 V; no limit under 41.5 V. Over the allowance every braking torque (against its motor's own speed: legs and wheels) is scaled by a factor that falls 5 /(A s) of excess and comes back at 10 /s. A limit on the charging current, not on the voltage alone: a factor following the bus sample by sample chattered between all braking and none, and a bus that is high while the pack discharges is not regeneration. The legs keep their braking while lowering the robot onto its stops (the jump's landing, a sit, the settle): clamped, that energy goes into the stops and the cut feeds itself (HIL: a full-pack landing at 110 mm of leg against 154, an over-charge sit at 112 against 150) | HIL: a 41.0 V jump's take-off tuck (52 A, bus 46.2 V) cut within 5 ms; the landing kept (27 ms over 42.5 V) | D65; 4.15 / 4.25 V a cell |
+| **Over-charge.** The bus over 44.0 V on a 20 ms filter: a sit (the legs' braking kept), the motors stopped, MCU_RUN low, latched until a power cycle like the cut-off. No arming over 42.0 V resting (an over-full or wrong pack). The 58 V limp stays | HIL: 44.5 V while standing latched in 46 ms, sat to 138 mm | D65; 4.40 / 4.20 V a cell |
 | **People near** (the Jetson's flag; it decides from the lidar and both cameras): wheel speed <= 0.5 m/s, no jumps, the legs hold the height and lean they had, and after 2 s of it a sit | HIL: jump refused, sit at 2.008 s | docs/body-safety.md 24 |
 | **Limp** (no torque at once: stop frames, VESC currents 0, MCU_RUN low; latched until the Jetson's RUN goes 0): a motor missing 3 ticks running, a motor fault bit, a leg outside 95-395 mm, the bus over 58 V (regeneration: 17 V over a full 10S pack; the RS-04 trips at 60), the IMU silent 20 ms or the pendulum past 0.9 rad (robot) | HIL: a silent motor limps on the 3rd missed tick | rig/leg_control.py Limits |
 | **No bus voltage** for 50 ms: a sit, no stand | | |
@@ -159,6 +162,10 @@ cut-off and the current limit itself. Every window is a per-cell number times `G
 |---|---|---|---|---|
 | Full | 4.10 V | 41.0 V | | the HIL's full-pack runs |
 | Nominal | 3.60 V | 36.0 V | | the HIL's default; the motors' speed lines without a reading |
+| Over-charge | 4.40 V | 44.0 V | the bus, 20 ms | sit, motors off, latched until power cycle |
+| Regen: none | 4.25 V | 42.5 V | the bus | no charging current allowed (braking scaled) |
+| No arming over | 4.20 V | 42.0 V | resting, 1 s | an over-full or wrong pack |
+| Regen clamp starts | 4.15 V | 41.5 V | the bus | 15 A of charging allowed, falling to 0 at 42.5 V |
 | Warn | 3.50 V | 35.0 V (clears 35.3 V) | resting, 1 s | STATUS flag: the Jetson heads home |
 | Jump gate | 3.40 V | 34.0 V | resting, 1 s | no jump under it; the push's current scaled from the 31 V floor (above) |
 | Stand | 3.30 V | 33.0 V | resting, 1 s | no arming under it |
@@ -167,9 +174,10 @@ cut-off and the current limit itself. Every window is a per-cell number times `G
 | Push floor | 3.10 V | 31.0 V | the bus in a jump's push | the push's current limit keeps the bus over it |
 
 The pack's resistance for the resting estimate is 0.100 ohm (two packs, their docks and the leads: the figure D65's
-rig runs used; measure it at B12 with the 2 A load and a step). The bus current limit is 40 A continuous (1 s
-average) and 80 A for at most 0.5 s (`GP_BUS_I_CONT_A`, `GP_BUS_I_PEAK_A`; the 80 A MRBF main fuse of D55), placeholders
-until the dock adapters' ratings are confirmed; the robot's own jump draws 70 A at most (HIL, 16.25 kg a leg).
+rig runs used; measure it at B12 with the 2 A load and a step). The bus current limit is 30 A continuous (1 s
+average: the Terrafirma 10 AWG DeWalt 20 V dock adapters are rated 30 A) and 80 A for at most 0.5 s for the jump's
+push (`GP_BUS_I_CONT_A`, `GP_BUS_I_PEAK_A`; the 80 A MRBF main fuse of D55); the robot's own jump draws 70 A at most
+for about 0.3 s (HIL, 16.25 kg a leg), and B12 checks the adapters' contact temperature after ten jumps.
 
 The sit lengths: 110 mm on the robot (25 mm of the skids' clearance is at the stops, 101.5 mm), 150 mm on the rig.
 How the robot sits onto its skids (the wheels' torque fades, the legs fold onto the stops) is a skeleton: B13/B14 on
@@ -215,7 +223,7 @@ cmake -S firmware/balance -B build/fw-host && cmake --build build/fw-host && cte
 
 # the HIL (MuJoCo, CadQuery, the leg rig's `rig` package from this repository); the robot test also needs
 # build/sim/v2 (python -m sim.robot_v2); GP_FW_HOST_LIB points at the host library if it is not in build/fw-host
-GP_FW_HOST_LIB=build/fw-host/libgp_host.so python -m pytest firmware/balance/hil -q   # 13 tests, ~25 s on a GB10
+GP_FW_HOST_LIB=build/fw-host/libgp_host.so python -m pytest firmware/balance/hil -q   # 15 tests, ~25 s on a GB10
 python firmware/balance/hil/sil_robot.py               # the robot run on its own
 ```
 
@@ -268,17 +276,21 @@ The SIL moves both controllers' motor speed lines to 36 V (model.json is at robo
 - **The pendulum-angle trim** (`theta_trim`) and the wheels' directions are calibrated on the robot.
 - **The sit onto the skids and the robot's jump** (balance through the crouch, push, flight and landing) are skeletons:
   the rig profile's jump is the simulation's; the robot's is untested beyond the code.
-- **No regeneration governor**: over 58 V the robot limps; the P1 brake test with a scope stays the gate (body-next-plan 1.3).
-  With no BMS, braking into a full pack (41 V) charges its cells past 4.1 V for as long as it lasts; nothing limits that
-  yet but the VESCs' and RS-04s' own regeneration settings.
+- **Regeneration that the clamp leaves**: the first 5 ms of a hard brake (the INA228's sample and the cut: a jump's
+  take-off tuck lifts a full pack's bus to 46.2 V for them), and the legs while they lower the robot onto its stops (a
+  full-pack landing holds the bus over 42.5 V for 27 ms, 44.9 V at most). The 44.0 V latch (20 ms) is the backstop;
+  over 58 V the robot limps. The P1 brake test with a scope stays the gate (body-next-plan 1.3); set the VESCs' own
+  regeneration current limit (VESC Tool's battery current min) to match at B13.
 - **The cut-off is the pack's, not a cell's.** The firmware sees the 10S bus only: a weak cell can be under 3.0 V
   while the bus reads over 30 V. DeWalt's packs balance on their own chargers; check each pack's spread at B12.
-- **The battery numbers to confirm on the bench (B12)**: the pack's 0.100 ohm (it sets the resting estimate and the
-  push's 72 A), the current limits (the dock adapters' ratings), the cut-off's 0.1 s filter against the robot's real
-  sag in a brake and a jump.
+- **The battery numbers to confirm on the bench (B12)**: the pack's 0.100 ohm (it sets the resting estimate, the
+  push's 72 A and the regen clamp's 15 A), the dock adapters' contacts after ten jumps at 80 A peak, the cut-off's 0.1 s
+  filter against the robot's real sag in a brake and a jump, and a fresh DCB609 pair's voltage (over 41.5 V the clamp
+  already trims braking; over 42.0 V the robot will not stand).
 - **The 24 V converter**: the DDR-120C-24 starts at 33.6 V, inside the 10S range (D65); the body picks a replacement
   rated to 28 V or under. Nothing in the firmware depends on it now (the old jump floor did).
-- **Other owners' 13S/15S numbers**: robot_v2's `BUS_V` (48.1 V: the motors' speed lines in model.json; the SIL moves
-  them to 36 V itself), sim/leg_rig.py's `BUS_V` and rig/leg_control.py's `Limits` (the leg rig's 15S window, 46 V; the
-  HIL's cross-check of the rig's own controller passes it the 10S one).
+- **The leg rig's own limits are the main session's**: sim/leg_rig.py's `BUS_V` and rig/leg_control.py's `Limits` (the
+  leg rig's 15S window: 46 V minimum, 58 V maximum, no regen clamp). The HIL's cross-check of the rig's own controller
+  passes it the 10S minimum; the firmware's rig profile has the windows, the clamp and the latches above, but with the
+  rig node as its bus source (no current reading) the current limit and the regen clamp do not act.
 - **The gains** are the simulation's at 32.15 kg (B3's model, section 8).
