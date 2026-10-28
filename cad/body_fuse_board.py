@@ -15,7 +15,9 @@ the board's + bus), not in the pack's negative lead. The INA228's inputs may not
 (TI SLYS021A 6.1); its ground is the switched - bus (the MCU's), so with the shunt in the negative lead before the
 low-side switch, opening the switch drags the - bus up to the + bus while the INA228's inputs stay at the pack's -:
 its input protection would then carry the robot's load current round the open switch. On the high side its inputs sit
-0-57 V above its ground whether the switch is on or off.
+0-41 V (D65: 10S) above its ground whether the switch is on or off. D65 (two DCB609 packs, 10S, 30-41 V, no charge
+port) and D66 (the turret on its own fused branch; one TRACO 12 V converter for the J501 and the rail) set the
+holders of section HOLDERS.
 """
 from __future__ import annotations
 
@@ -59,7 +61,7 @@ def mass_g():
     return 132.0, 'estimate (hardware/fuse-board/analysis.py, 2026-10-27)'
 
 
-FUSE_KEY = {20: 'fuse_mini58_20a', 30: 'fuse_mini58_30a', 10: 'fuse_mini58_10a', 5: 'fuse_mini58_5a'}
+FUSE_KEY = {20: 'fuse_mini58_20a', 30: 'fuse_mini58_30a', 10: 'fuse_mini58_10a', 7.5: 'fuse_mini58_7a5', 5: 'fuse_mini58_5a'}
 
 # the holders: (ref, branch, wire it feeds, fuse A, the catalogue key of the fuse, the input it hangs off, its stud)
 HOLDERS = []
@@ -68,15 +70,12 @@ for ref, label, wire, amps, net_in, col, row in D.HOLDERS:
     HOLDERS.append({'ref': ref, 'branch': label, 'wire': wire, 'fuse_a': amps, 'fuse_key': FUSE_KEY.get(amps),
                     'input': net_in, 'stud': stud[0], 'robot_xy': to_robot(*D.holder_xy(col, row))})
 
-LUG_KEY = {20: 'ring_14awg_m4', 30: 'ring_12awg_m4', 10: 'ring_18awg_m4', 5: 'ring_18awg_m4'}
+LUG_KEY = {'J1': 'lug_8awg_m6', 'J6': 'ring_12awg_m4', 'J7': 'ring_12awg_m4', 'J8': 'ring_18awg_m4', 'J10': None, 'J11': None}  # the rest: 16-14 AWG
 
 # every stud, pad and connector a wire lands on: (ref, name, net, size, robot (x, y), [wires], lug)
 PADS = []
 for ref, label, net, x, y, size, wires in D.STUDS:
-    h = next((h for h in D.HOLDERS if D.out_net(h[0]) == net), None)
-    lug = 'lug_8awg_m6' if size == 'M6' else (LUG_KEY.get(h[3]) if h and h[3] else 'ring_18awg_m4')
-    if ref == 'J15':
-        lug = 'ring_18awg_m4 (W23, W27) + ring_14awg_m4 (W41)'
+    lug = LUG_KEY.get(ref, 'ring_14awg_m4')
     PADS.append({'ref': ref, 'name': label, 'net': net, 'stud': size, 'robot_xy': to_robot(x, y), 'wires': wires, 'lug': lug})
 PADS += [
     {'ref': D.GH[0], 'name': 'I2C (JST GH 4)', 'net': '1 GND, 2 3V3, 3 SDA, 4 SCL', 'stud': 'SM04B-GHS-TB',
@@ -100,41 +99,46 @@ STANDOFFS = {'height_mm': STANDOFF_H, 'material': 'PETG (PA6-GF if the plate run
              'keep_clear_under_board': [(to_robot(x, y), r, what) for x, y, r, what in D.UNDER_KEEPOUT]}
 
 # the P3 rows of the wire list (cad/body_wiring.py's tuple: id, from, to, AWG, colour, ends, fuse, why). The body's
-# implementer merges these; "was" says what each replaces.
+# implementer merges these; "was" says what each replaces. D65: the bus is two DCB609 packs in series (10S, 30-41 V)
+# with no charge port; D66 and the body's TRACO TEP 150-4812WI: one isolated 12 V converter for the J501 and the rail.
+_LOAD = {'W10': 'RS-04 left front (XT60H)', 'W11': 'RS-04 left rear (XT60H)', 'W12': 'RS-04 right front (XT60H)',
+         'W13': 'RS-04 right rear (XT60H)', 'W14': 'VESC left (Flipsky 75100) +', 'W15': 'VESC right +'}
 P3_WIRES = [
     ('W4', 'MRBF block, load stud (M8)', 'fuse board J1 BUS+ IN (M6 stud)', 8, 'red', 'lugs M8 / M6', 'MRBF 80 A',
      'the whole robot through the board\'s shunt; was: to the + bus bar, which carries nothing in P3 (a load there would bypass the shunt)'),
-    ('W5', 'XT90-S male (robot) -', 'main switch IN- (B-)', 8, 'black', 'lug M8 / its lead', '-',
-     'the pack\'s - straight to the switch: no shunt in the - lead in P3 (W6 goes)'),
-    ('W8', 'fuse board J10 (M4 stud)', 'charge port XT60H-F +', 18, 'red', 'ring M4 / XT60', 'MINI 58V 10 A (board F9)',
-     'fed from +BUS after the MRBF and the shunt: the charge is counted (as current into the pack) and the MRBF guards the lead too; was: from the MRBF battery stud'),
-    ('W9', 'charge port XT60H-F -', 'main switch IN- (B-), with W5', 18, 'black', 'XT60 / ring M6 or the switch\'s terminal', '-',
-     'the pack\'s side of the switch, so it charges with the switch off; was: the shunt\'s load side'),
-] + [(h['wire'], f'fuse board {h["stud"]} (M4 stud)', {'W10': 'RS-04 left front (XT60H)', 'W11': 'RS-04 left rear (XT60H)', 'W12': 'RS-04 right front (XT60H)',
-      'W13': 'RS-04 right rear (XT60H)', 'W14': 'VESC left (Flipsky 75100) +', 'W15': 'VESC right +', 'W16': 'DDR-120C-24 Vin+',
-      'W17': 'DDR-60L-12 Vin+'}[h['wire']], {20: 14, 30: 12, 10: 18, 5: 18}[h['fuse_a']], 'red',
-      'ring M4 / ' + ('XT60H-F' if h['fuse_a'] >= 20 else 'ferrule'), f'MINI 58V {h["fuse_a"]} A (board {h["ref"]})',
-      'was: from a + bus tap through an inline holder') for h in HOLDERS if h['wire'] in ('W10', 'W11', 'W12', 'W13', 'W14', 'W15', 'W16', 'W17')] + [
-    ('W21', 'fuse board J12 (M4 stud)', 'J501 DC-IN (XT30)', 18, 'red', 'ring M4 / XT30U-F', 'MINI 58V 5 A (board F11)', 'was: from the DDR-120C-24 +V through an inline holder'),
-    ('W22', 'fuse board J13 (M4 stud)', 'stop relay, pole B (in)', 18, 'red', 'ring M4 / screw terminal', 'MINI 58V 5 A (board F12)', 'was: from the DDR-120C-24 +V through an inline holder'),
-    ('W23', 'DDR-120C-24 -V', 'J501 and turret returns; fuse board J15 STAR', 18, 'black', 'ferrule / XT30U-F / ring M4', '-', 'the 24 V rail\'s one tie to the - bus, now at the board\'s star stud'),
-    ('W27', 'DDR-60L-12 -V', 'lidar box, buck, jack GND; fuse board J15 STAR', 18, 'black', 'ferrule / ring M4', '-', 'the 12 V rail\'s tie, at the star stud'),
+    ('W5', 'the packs\' - (the series pair\'s negative)', 'main switch IN- (B-)', 8, 'black', 'lug / its lead', '-',
+     'straight to the switch: no shunt in the - lead (W6 goes)'),
+] + [(h['wire'], f'fuse board {h["stud"]} (M4 stud)', _LOAD[h['wire']], {20: 14, 30: 12}[h['fuse_a']], 'red', 'ring M4 / XT60H-F',
+      f'MINI 58V {h["fuse_a"]:g} A (board {h["ref"]})', 'was: from a + bus tap through an inline holder') for h in HOLDERS if h['wire'] in _LOAD] + [
+    ('W16', 'fuse board J8 (M4 stud)', 'TRACO TEP 150-4812WI Vin+', 18, 'red', 'ring M4 / ferrule', 'MINI 58V 10 A (board F7)',
+     '150 W out: about 5.6 A in at 30 V, plus its inrush; was: the DDR-120C-24\'s input'),
+    ('W22', 'fuse board J9 (M4 stud)', 'stop relay, pole B (in); pole B (out) to the turret\'s XT30 (W34)', 16, 'red', 'ring M4 / screw terminal',
+     'MINI 58V 7.5 A (board F8)', 'D66: the turret on the 10S bus, about 40 W, bursts to about 140 W (4.7 A at 30 V); the radio stop still '
+     'cuts it (pole B, the G2RL-2: see docs/body-fuse-board.md 1 for its DC rating); was: the 24 V rail'),
+    ('W40', 'TRACO TEP 150-4812WI +V', 'fuse board J14 12V IN (M4 stud)', 14, 'red', 'ferrule / ring M4', '(the converter\'s 12.5 A limit)',
+     'new: the 12 V rail into the board\'s two holders (W21, W43 start there)'),
+    ('W21', 'fuse board J12 (M4 stud)', 'J501 DC-IN (XT30)', 16, 'red', 'ring M4 / XT30U-F', 'MINI 58V 10 A (board F11)',
+     'the J501 at 12 V (12-36 V in): 55-60 W, 5 A; was: 24 V from the DDR-120C-24'),
+    ('W43', 'fuse board J13 (M4 stud)', 'the 12 V rail: lidar box, SSC1 lights, eyes, 5 V buck', 16, 'red', 'ring M4 / per load',
+     'MINI 58V 7.5 A (board F12)', 'new: about 40 W, 3.3 A; was: the DDR-60L-12\'s +V (W24-W26)'),
+    ('W23', 'TRACO TEP 150-4812WI -V', 'the 12 V returns; fuse board J15 STAR', 14, 'black', 'ferrule / ring M4', '-',
+     'the isolated 12 V rail\'s one tie to the - bus (the CAN reference), at the board\'s star stud'),
     ('W33', 'frame (a tray PEM stud)', 'fuse board J16 FRAME (M4 stud)', 14, 'green', 'ring M5 / ring M4', '-',
      'the frame bond on its own stud; 14 AWG (was 18): a + lead chafed before its branch fuse puts the MRBF\'s let-through on this wire'),
-    ('W40', 'DDR-120C-24 +V', 'fuse board J14 24V IN (M4 stud)', 18, 'red', 'ferrule / ring M4', '(the converter\'s 5 A limit)',
-     'new: the 24 V rail into the board\'s two 5 A holders (W21, W22 start there now)'),
     ('W41', '- bus bar, tap 5 (M6)', 'fuse board J15 STAR (M4 stud)', 14, 'black', 'ring M6 / ring M4', '-',
      'new: ties the board\'s BUS- (star, frame bond, plate bond, the INA228\'s ground) to the - bus'),
     ('W42', 'fuse board J17 (JST GH 4: 1 GND, 2 3V3, 3 SDA, 4 SCL)', 'MCU carrier: Nucleo I2C1 (PB8 SCL, PB9 SDA), 3V3, GND; 4.7 kOhm pull-ups there',
      28, 'white', 'GHR-04V-S / per the carrier', '-', 'new: the INA228 on I2C (replaces W30-W32: the sense lines and VBUS are on the board)'),
 ]
 P3_REMOVED = ['W6 (shunt to the switch: the shunt is on the board, on the + side)', 'W30, W31, W32 (the Kelvin pair and VBUS: on the board)',
-              'the inline holders of W8, W10-W17, W21, W22 (on the board)']
+              'W8, W9 (D65: no charge port)', 'W17, W27 (D66: the DDR-60L-12 is gone)',
+              'the inline holders of W10-W16, W21, W22 (on the board)']
 
 # the parts to order for one board built (five bare boards come from JLCPCB): (catalogue key, qty, note)
 ORDER = [
     ('fuse_board_pcb', 1, 'one JLCPCB order of 5 boards (2 oz, 1.6 mm, lead-free HASL): fab/fuse-board-gerbers.zip'),
     ('fuse_holder_mini_pcb', 14, '12 on the board and 2 spares'),
+    ('fuse_mini58_7a5', 3, 'F8 (the turret), F12 (the 12 V rail) and a spare'),
     ('shunt_1mohm_3920', 2, 'R1 and a spare'),
     ('res_10r_0603', 20, 'R2, R3 (LCSC sells 20+)'),
     ('cap_100n_100v_0603', 50, 'C1 (LCSC sells 50+)'),
@@ -144,8 +148,8 @@ ORDER = [
     ('gh_housing_4p', 2, 'W42 at both ends'),
     ('gh_lead_2p_300', 4, 'W42\'s four pre-crimped wires'),
     ('ring_12awg_m4', 3, 'W14, W15 and a spare (3-pack)'),
-    ('ring_14awg_m4', 7, 'W10-W13, W41, W33 and a spare (3 x 3-pack)'),
-    ('ring_18awg_m4', 9, 'W8, W16, W17, W21, W22, W23, W27, W40 and a spare (3 x 3-pack)'),
+    ('ring_14awg_m4', 12, 'W10-W13, W21, W22, W43 (16 AWG), W40, W23, W41, W33 and a spare (4 x 3-pack)'),
+    ('ring_18awg_m4', 3, 'W16 and two spares (3-pack)'),
     ('screw_m4x12_socket', 15, 'the M4 studs (100-pack)'),
     ('nut_m4_nyloc', 15, 'in the standoffs\' pockets (100-pack)'),
     ('screw_m6x12_socket', 1, 'J1 (100-pack)'),
@@ -155,7 +159,7 @@ ORDER = [
     ('ina228', 0, 'reuse P0\'s Adafruit 5832 (its 15 mOhm shunt off, wired to TP1-TP3), or fit ina228_ic as U1'),
     ('ina228_ic', 0, 'optional bare INA228 for U1 (LCSC had none in stock on 2026-10-27)'),
 ]
-REUSED = ['the MINI 58V fuses of P0 (fuse_mini58_20a x 4, 30a x 2, 10a x 2, 5a x 3)', 'the Adafruit 5832 (ina228)',
+REUSED = ['the MINI 58V fuses of P0 (fuse_mini58_20a x 4, 30a x 2, 10a x 2)', 'the Adafruit 5832 (ina228)',
           'W4\'s 8 AWG M6 lug (lug_8awg_m6)']
 
 
@@ -208,7 +212,7 @@ def summary():
           f"{g:g} g ({basis})")
     print('holders (Littelfuse MINI FL1, 58 V DC, 22 A continuous; Littelfuse MINI 58V fuses only):')
     for h in HOLDERS:
-        print(f"  {h['ref']:4} {h['branch']:13} {str(h['fuse_a'] or '-'):>3} A  {h['wire'] or '-':4} from {h['input']:5} -> {h['stud']}")
+        print(f"  {h['ref']:4} {h['branch']:13} {('%g' % h['fuse_a']) if h['fuse_a'] else '-':>3} A  {h['wire'] or '-':4} from {h['input']:5} -> {h['stud']}")
     print('studs and pads:')
     for p in PADS:
         print(f"  {p['ref']:4} {p['name']:15} {p['net']:28} {p['stud']:13} at {p['robot_xy']}: {'; '.join(p['wires'])}")

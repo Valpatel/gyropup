@@ -6,12 +6,14 @@ Board-local frame (mm): x along the robot's +x (forward), y along the robot's +y
 rear-right corner; robot (x, y) = (bx + ORIGIN[0], by + ORIGIN[1]). The board lies flat on the power plate's top face
 on 8 mm printed standoffs (docs/body-fuse-board.md 6).
 
+Bus (D65): two DeWalt DCB609 packs in 20 V mode in series, 10S, 30-41 V. The 12 V rail (D66 and the body's TRACO TEP
+150-4812WI, which replaced both DDR converters) feeds the J501 and the rest of the 12 V loads through the board.
+
 Topology (docs/body-fuse-board.md 2): the shunt is on the HIGH side, between the MRBF's load stud (J1) and the
 board's + bus (+BUS), so the INA228 (85 V common mode, -0.3 V minimum) never sees its inputs below its ground; its
 ground is the switched - bus (BUS-), the same as the MCU's. Ten MINI 58V holders hang off +BUS (the four RS-04, the
-two VESCs, the two converters' inputs, the charge port, a spare); two hang off the 24 V rail (the J501, the turret).
-The charge port's fuse is fed from +BUS, after the shunt, so the charge current is counted (as TI's own high-side
-application draws it). The - star point (J15) and the frame bond (J16) are BUS-; MH1's plated M5 screw bonds the
+two VESCs, the TRACO's input, the turret's feed through the stop relay, two spares); two hang off the 12 V rail (the
+J501, the rest of the 12 V loads). D65 has no charge port: the packs charge on DeWalt's chargers. The - star point (J15) and the frame bond (J16) are BUS-; MH1's plated M5 screw bonds the
 power plate to BUS- through the plate's flush nut.
 """
 from __future__ import annotations
@@ -26,12 +28,13 @@ COPPER_OZ = 2.0
 COPPER_UM = 70.0                    # 2 oz finished outer copper
 
 # ---------------------------------------------------------------------------------------------------- nets
-# name: (domain, what). Domains set the clearances (fuse-board.kicad_dru): P48 the 48 V side, P24 the 24 V rail,
-# GND the switched - bus, LV the 3.3 V logic. Between domains (and between different P48/P24 nets) 1.0 mm.
+# name: (domain, what). Domains set the clearances (fuse-board.kicad_dru): P48 the battery bus (30-41 V, D65; the name
+# is the board's first bus), P12 the 12 V rail, GND the switched - bus, LV the 3.3 V logic. Between domains (and
+# between different power nets) 1.0 mm.
 NETS = {
     '+BAT_IN': ('P48', 'from the MRBF\'s load stud (W4), before the shunt'),
     '+BUS': ('P48', 'after the shunt: feeds ten holders'),
-    '+24V': ('P24', 'the DDR-120C-24\'s +V (W_24): feeds the J501 and turret holders'),
+    '+12V': ('P12', 'the TRACO TEP 150-4812WI\'s +V (W40, up to 12.5 A): feeds the J501 and 12 V rail holders'),
     'BUS-': ('GND', 'the switched - bus: star point, frame bond, plate bond, the INA228\'s ground'),
     'SNS_P': ('P48', 'Kelvin tap, battery side of the shunt'),
     'SNS_N': ('P48', 'Kelvin tap, bus side of the shunt'),
@@ -55,12 +58,12 @@ HOLDERS = [
     ('F4', 'RS-04 RR', 'W13', 20, '+BUS', 3, 'N'),
     ('F5', 'VESC L', 'W14', 30, '+BUS', 4, 'N'),
     ('F6', 'VESC R', 'W15', 30, '+BUS', 5, 'N'),
-    ('F7', 'DDR-120C IN', 'W16', 10, '+BUS', 0, 'S'),
-    ('F8', 'DDR-60L IN', 'W17', 5, '+BUS', 1, 'S'),
-    ('F9', 'CHARGE PORT', 'W8', 10, '+BUS', 2, 'S'),
+    ('F7', 'TRACO 12V IN', 'W16', 10, '+BUS', 0, 'S'),
+    ('F8', 'TURRET', 'W22', 7.5, '+BUS', 1, 'S'),
+    ('F9', 'SPARE', None, None, '+BUS', 2, 'S'),
     ('F10', 'SPARE', None, None, '+BUS', 3, 'S'),
-    ('F11', 'J501 24V', 'W21', 5, '+24V', 4, 'S'),
-    ('F12', 'TURRET 24V', 'W22', 5, '+24V', 5, 'S'),
+    ('F11', 'J501 12V', 'W21', 10, '+12V', 4, 'S'),
+    ('F12', '12V RAIL', 'W43', 7.5, '+12V', 5, 'S'),
 ]
 
 
@@ -77,11 +80,11 @@ def holder_pins(col, row):
 
 def out_net(ref):
     h = next(h for h in HOLDERS if h[0] == ref)
-    return f'OUT_{h[2] or "SPARE"}'
+    return f'OUT_{h[2] or "SPARE" + h[0][1:]}'
 
 
 for _h in HOLDERS:
-    NETS[out_net(_h[0])] = ('P48' if _h[4] == '+BUS' else 'P24', f'{_h[1]} after its fuse')
+    NETS[out_net(_h[0])] = ('P48' if _h[4] == '+BUS' else 'P12', f'{_h[1]} after its fuse')
 
 # ---------------------------------------------------------------------------------------------------- studs
 # Studs: the lug sits on the top pad and an M4 x 12 (M6 x 12 at J1) socket head goes down through it and the board
@@ -94,14 +97,14 @@ STUDS = [
     ('J1', 'BUS+ IN', '+BAT_IN', 7.0, 21.0, 'M6', ['W4 (8 AWG) from the MRBF load stud']),
 ] + [(f'J{2 + i}', h[2], out_net(h[0]), COLS[h[5]], N_STUD_Y, 'M4', [f'{h[2]} {h[1]}'])
      for i, h in enumerate(HOLDERS[:6])] + [
-    ('J8', 'W16', out_net('F7'), COLS[0], S_STUD_Y, 'M4', ['W16 DDR-120C-24 Vin+']),
-    ('J9', 'W17', out_net('F8'), COLS[1], S_STUD_Y, 'M4', ['W17 DDR-60L-12 Vin+']),
-    ('J10', 'W8', out_net('F9'), COLS[2], S_STUD_Y, 'M4', ['W8 charge port +']),
+    ('J8', 'W16', out_net('F7'), COLS[0], S_STUD_Y, 'M4', ['W16 TRACO TEP 150-4812WI Vin+']),
+    ('J9', 'W22', out_net('F8'), COLS[1], S_STUD_Y, 'M4', ['W22 stop relay pole B (in), then the turret\'s XT30']),
+    ('J10', 'SPARE', out_net('F9'), COLS[2], S_STUD_Y, 'M4', ['(spare)']),
     ('J11', 'SPARE', out_net('F10'), COLS[3], S_STUD_Y, 'M4', ['(spare)']),
-    ('J12', 'W21', out_net('F11'), COLS[4], S_STUD_Y, 'M4', ['W21 J501 DC-IN']),
-    ('J13', 'W22', out_net('F12'), 83.9, 18.0, 'M4', ['W22 stop relay pole B']),
-    ('J14', '24V IN', '+24V', 83.9, 30.0, 'M4', ['W40 DDR-120C-24 +V (18 AWG)']),
-    ('J15', 'STAR', 'BUS-', 83.9, 44.0, 'M4', ['W23 DDR-120C-24 -V', 'W27 DDR-60L-12 -V', 'W41 - bus bar tap 5 (14 AWG)']),
+    ('J12', 'W21', out_net('F11'), COLS[4], S_STUD_Y, 'M4', ['W21 J501 DC-IN (12 V)']),
+    ('J13', 'W43', out_net('F12'), 83.9, 18.0, 'M4', ['W43 the 12 V rail (lidar box, SSC1, eyes, 5 V buck)']),
+    ('J14', '12V IN', '+12V', 83.9, 30.0, 'M4', ['W40 TRACO TEP 150-4812WI +V (14 AWG)']),
+    ('J15', 'STAR', 'BUS-', 83.9, 44.0, 'M4', ['W23 TRACO -V (the 12 V return\'s tie)', 'W41 - bus bar tap 5 (14 AWG)']),
     ('J16', 'FRAME', 'BUS-', 83.9, 53.0, 'M4', ['W33 frame bond (14 AWG green)']),
 ]
 
@@ -138,17 +141,17 @@ TPS = [('TP1', 'INN', 8.4, 44.8, 'IN- (battery side) / Adafruit 5832 VIN-'),
 POURS = [
     ('+BAT_IN', [(0.6, 13.6), (12.6, 13.6), (12.6, 37.0), (0.6, 37.0)]),
     ('+BUS', [(15.4, 22.6), (60.0, 22.6), (60.0, 37.2), (79.0, 37.2), (79.0, 53.0), (21.2, 53.0), (21.2, 37.0), (15.4, 37.0)]),
-    ('+24V', [(61.6, 23.2), (87.4, 23.2), (87.4, 35.8), (61.6, 35.8)]),
+    ('+12V', [(61.6, 23.2), (87.4, 23.2), (87.4, 35.8), (61.6, 35.8)]),
 ]
 
 # stitching vias (0.4 / 0.95 mm) that share the main path between the layers: the shunt's pads are on the top only, so
-# half the current comes up through these beside them; the band and the 24 V pour are stitched on a grid
+# half the current comes up through these beside them; the band and the 12 V pour are stitched on a grid
 STITCH = {
     '+BAT_IN': [(x, y) for x in (1.8, 3.6) for y in (28.6, 30.4, 32.2)] + [(7.1, 30.6), (7.1, 32.4), (7.1, 34.2), (8.6, 28.4), (10.4, 28.4),
                                                                             (5.4, 28.6), (5.4, 30.4), (5.4, 32.2)],
     '+BUS': [(19.9, y) for y in (30.4, 32.2, 34.0, 35.8)] + [(16.4, 28.4), (18.2, 28.4)] + [(x, y) for x in (21.8, 23.6) for y in (23.6, 25.4, 27.2, 29.0, 30.8, 32.6, 34.4)]
             + [(x, y) for x in (31.0, 41.0, 51.0) for y in (31.0, 34.0, 41.0, 44.0)] + [(x, y) for x in (61.0, 71.0) for y in (41.0, 44.0)],
-    '+24V': [(70.5, 30.0), (80.5, 25.0), (80.5, 34.6), (71.5, 33.5)],
+    '+12V': [(70.5, 30.0), (80.5, 25.0), (80.5, 34.6), (71.5, 33.5), (66.0, 33.5), (75.5, 30.0)],
 }
 
 # ---------------------------------------------------------------------------------------------------- branch copper
