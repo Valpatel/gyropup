@@ -257,14 +257,15 @@ def z_spine_top() -> float:
 # ------------------------------------------------------------------------------------------- the box
 
 TRAY = '5052-0.125'                 # 1/8 in: at 0.100 in the landing case T1 was SF 1.55 where the tray overhangs the cheeks' ends
-DECK = '5052-0.100'
+DECK = '5052-0.125'                 # 1/8 in (it was 0.100): D2 with the turret's real 2.56 kg was SF 1.83 at 0.100 (#10)
 BELLY = '6061-0.100'
 PALLET = '6061-0.125'
 BODY_X = (-160.0, 160.0)            # the floor tray and deck, outside (OML)
 BODY_HALF_Y = 127.0                 # 254 wide: the shell's side walls go outside this (T7)
 TRAY_LIP = 15.0
 DECK_LIP = 20.0
-TOP = 216.0                         # the deck's top face (the sim's TOP)
+TOP = 216.0 + (0.125 - 0.100) * 25.4  # the deck's top face (the sim's TOP): 216 with the 0.100 in deck; the 1/8 in deck (#10, D2) keeps
+                                    # its underside where it was, so nothing under it moves
 # Four posts at the deck's corners (the battery lives in the belly, so no door path crosses the tray).
 POSTS = [(142.0, 109.0), (142.0, -109.0), (-142.0, 109.0), (-142.0, -109.0)]
 POST_W = 22.0                       # printed PA6-CF posts, square, M5 inserts at both ends

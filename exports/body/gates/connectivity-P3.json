@@ -5661,17 +5661,17 @@
         "kind": "contact",
         "state": "touching",
         "gap_mm": 0.0,
-        "contact_area_mm2": 8317.087089,
+        "contact_area_mm2": 8312.151774,
         "witness": {
           "point_a": [
-            60.525,
+            60.225,
             0.0,
-            216.0
+            216.635
           ],
           "point_b": [
-            60.525,
+            60.225,
             0.0,
-            216.0
+            216.635
           ]
         },
         "rigid": true,
@@ -5685,7 +5685,7 @@
         "kind": "contact",
         "state": "touching",
         "gap_mm": 0.0,
-        "contact_area_mm2": 444.104425,
+        "contact_area_mm2": 441.776171,
         "witness": {
           "point_a": [
             131.0,
@@ -5709,7 +5709,7 @@
         "kind": "contact",
         "state": "touching",
         "gap_mm": 0.0,
-        "contact_area_mm2": 444.104425,
+        "contact_area_mm2": 441.776171,
         "witness": {
           "point_a": [
             131.0,
@@ -5733,7 +5733,7 @@
         "kind": "contact",
         "state": "touching",
         "gap_mm": 0.0,
-        "contact_area_mm2": 444.104425,
+        "contact_area_mm2": 441.776171,
         "witness": {
           "point_a": [
             -153.0,
@@ -5757,7 +5757,7 @@
         "kind": "contact",
         "state": "touching",
         "gap_mm": 0.0,
-        "contact_area_mm2": 444.104425,
+        "contact_area_mm2": 441.776171,
         "witness": {
           "point_a": [
             -153.0,
@@ -5784,14 +5784,14 @@
         "contact_area_mm2": 5953.443742,
         "witness": {
           "point_a": [
-            -58.0,
+            -58.3,
             -40.0,
-            216.0
+            216.635
           ],
           "point_b": [
-            -58.0,
+            -58.3,
             -40.0,
-            216.0
+            216.635
           ]
         },
         "rigid": true,
@@ -5805,15 +5805,15 @@
         "kind": "contact",
         "state": "touching",
         "gap_mm": 0.0,
-        "contact_area_mm2": 15693.798177,
+        "contact_area_mm2": 15670.821832,
         "witness": {
           "point_a": [
-            -77.25,
+            -77.55,
             40.0,
             213.46
           ],
           "point_b": [
-            -77.25,
+            -77.55,
             40.0,
             213.46
           ]
@@ -6042,16 +6042,16 @@
         "kind": "contact",
         "state": "touching",
         "gap_mm": 0.0,
-        "contact_area_mm2": 682.205182,
+        "contact_area_mm2": 682.974985,
         "witness": {
           "point_a": [
-            -21.707473,
-            36.424303,
+            -22.087102,
+            36.946774,
             210.285
           ],
           "point_b": [
-            -21.707473,
-            36.424303,
+            -22.087102,
+            36.946774,
             210.285
           ]
         },
@@ -6759,14 +6759,14 @@
         "contact_area_mm2": 13291.570208,
         "witness": {
           "point_a": [
-            32.0,
+            31.7,
             0.0,
-            246.0
+            246.635
           ],
           "point_b": [
-            32.0,
+            31.7,
             0.0,
-            246.0
+            246.635
           ]
         },
         "rigid": true,
@@ -6970,17 +6970,17 @@
         "kind": "contact",
         "state": "touching",
         "gap_mm": 0.0,
-        "contact_area_mm2": 818.491594,
+        "contact_area_mm2": 819.761594,
         "witness": {
           "point_a": [
             -8.0,
             127.6,
-            216.0
+            216.635
           ],
           "point_b": [
             -8.0,
             127.6,
-            216.0
+            216.635
           ]
         },
         "rigid": true,
@@ -6994,17 +6994,17 @@
         "kind": "contact",
         "state": "touching",
         "gap_mm": 0.0,
-        "contact_area_mm2": 818.491594,
+        "contact_area_mm2": 819.761594,
         "witness": {
           "point_a": [
             -8.0,
             -129.6,
-            216.0
+            216.635
           ],
           "point_b": [
             -8.0,
             -129.6,
-            216.0
+            216.635
           ]
         },
         "rigid": true,
@@ -7046,12 +7046,12 @@
         "contact_area_mm2": 63.388347,
         "witness": {
           "point_a": [
-            -106.8123,
+            -107.1123,
             0.0,
             210.285
           ],
           "point_b": [
-            -106.8123,
+            -107.1123,
             0.0,
             210.285
           ]
@@ -9139,6 +9139,6 @@
   "relation_stats": {
     "parts": 93,
     "pairs": 4278,
-    "candidates": 214
+    "candidates": 216
   }
 }

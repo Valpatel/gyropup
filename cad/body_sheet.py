@@ -337,17 +337,18 @@ class SheetPart:
                     bad.append(f'{ft.kind} at {ft.at} on {ft.panel}: web to the edge {edge - rad:.2f} mm < t')
             else:                                                       # base features: the base's outer cut edges only
                 u0, u1, v0, v1 = self.flat_box()
+                hx, hy = (ft.size[0] / 2, ft.size[1] / 2) if ft.kind == 'slot' else (rad, rad)   # a slot by its own extent
                 outer = []
                 if not self.fl('W'):
-                    outer.append(x - u0)
+                    outer.append(x - u0 - hx)
                 if not self.fl('E'):
-                    outer.append(u1 - x)
+                    outer.append(u1 - x - hx)
                 if not self.fl('S'):
-                    outer.append(y - v0)
+                    outer.append(y - v0 - hy)
                 if not self.fl('N'):
-                    outer.append(v1 - y)
-                if outer and min(outer) - rad < t - 1e-6:
-                    bad.append(f'{ft.kind} at {ft.at}: web to the edge {min(outer) - rad:.2f} mm < t')
+                    outer.append(v1 - y - hy)
+                if outer and min(outer) < t - 1e-6:
+                    bad.append(f'{ft.kind} at {ft.at}: web to the edge {min(outer):.2f} mm < t')
             if ft.kind == 'pem':
                 P = bp.PEM[ft.spec]
                 if not s['hardware']:

@@ -261,10 +261,10 @@ def layout(cell=None):
                       'vectornav-vn-100-rugged', 'VN-100 Rugged on 2 x M3 + 2 dowels in the tray; its connector faces +x', (0.8, 0.2, 0.2)))
     # ---------------- the lidar's interface box behind the cooler (the G48R's fins draw in at +-y and its fan blows up through
     # the deck, so the strip behind its heat pipes' bends is the free one), its cable coiled flat under the deck beside it
-    items.append(Item('lidar_box', (-157.0, -122.0, 10.0, 95.0, zt + 53.0, zd - 2.0), 120.0, 'estimate (Polycase LP-41 class, plan 90 g + gland)',
+    items.append(Item('lidar_box', (-156.0, -121.0, 10.0, 95.0, zt + 53.0, zd - 2.0), 120.0, 'estimate (Polycase LP-41 class, plan 90 g + gland)',
                       'compute', 'P1', '', 'VLP-16 interface box standing on edge on a printed bracket behind the cooler, left; RJ45 '
                       'over the carrier to its 1GbE on the right edge', (0.3, 0.3, 0.33)))
-    items.append(Item('lidar_coil', (-157.0, -122.0, -48.0, 5.0, zd - 16.0, zd - 2.0), LIDAR_CABLE_G, LIDAR_CABLE_BASIS, 'compute', 'P1', '',
+    items.append(Item('lidar_coil', (-156.0, -121.0, -48.0, 5.0, zd - 16.0, zd - 2.0), LIDAR_CABLE_G, LIDAR_CABLE_BASIS, 'compute', 'P1', '',
                       'the VLP-16\'s 3 m cable, coiled flat under the deck behind the cooler, clear of the turret harness\'s drop', (0.3, 0.3, 0.33)))
     gx, gy = bp.TURRET_GROMMET
     items.append(Item('turret_harness_drop', (gx - 12.0, gx + 12.0, gy - 12.0, gy + 12.0, zt + 45.0, zd), 0, '', 'deck', keepout=True,
@@ -445,7 +445,7 @@ LEVERS = [
     ('board_shunt', 8, -75, 3.0, 'P3', 'scheduled', 'the 1 mOhm shunt on the fuse board instead of the 85 g Blue Sea 150 A block', 'board_shunt'),
     ('harness_10awg', 9, -60, 25.0, 'P2', 'scheduled', 'the main path in 10 AWG, the VESC leads in 14 AWG, lengths cut to P0\'s measurements', 'harness_10awg'),
     ('pololu_12v', 10, 0, 0.0, 'P3', 'retired', 'Pololu D42V110F12 instead of the DDR-60L-12: moot since D65 (the TRACO TEP 150 replaced the DDR-60L-12)', None),
-    ('cheeks_rev_b', 11, -150, 120.0, 'P3', 'on call', 'cheeks Rev B: lightening holes where S1 < 40 MPa (-150), or 1/8 in with more standoffs (-330)', None),
+    ('cheeks_rev_b', 11, -150, 120.0, 'P3', 'on call', 'cheeks Rev B: lightening windows where the strength envelope is under 25 MPa (taken on #10)', 'cheeks_lightened'),
     ('alu_standoffs', 12, -80, 30.0, 'P3', 'on call', 'aluminium M5 x 120 hex standoffs in place of the printed deck posts', None),
     ('cooler_34mm', 13, -200, 49.0, 'P3', 'on call', 'the 34 mm WS-RDN-601 cooler instead of the fitted G48R (the user\'s call after the thermal test)', None),
     ('lidar_cable_1m', 14, -153, 0.0, 'P3', 'on call', 'the VLP-16 cable shortened to 1 m (taken on #10; Velodyne\'s waiver to read)', 'lidar_cable_1m'),
@@ -493,8 +493,9 @@ def lever_taken(check: str, parts=None, L=None) -> bool:
             return False
         v = (p.shape.val() if hasattr(p.shape, 'val') else p.shape).Volume()
         return v < 0.9 * bp.POST_W ** 2 * bf.post_height()
-    if check in ('tray_lightened', 'deck_lightened', 'pallet_lightened'):
-        name = {'tray_lightened': 'floor_tray', 'deck_lightened': 'deck', 'pallet_lightened': 'compute_pallet'}[check]
+    if check in ('tray_lightened', 'deck_lightened', 'pallet_lightened', 'cheeks_lightened'):
+        name = {'tray_lightened': 'floor_tray', 'deck_lightened': 'deck', 'pallet_lightened': 'compute_pallet',
+                'cheeks_lightened': 'cheek_left'}[check]
         sp = parts.get(name).sheet if parts.get(name) is not None else None
         return bool(sp and any(f.note.startswith('lightening') for f in sp.features))
     names = {i.name for i in (L or {}).get('items', [])}

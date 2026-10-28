@@ -227,10 +227,10 @@
    "note": "the deck on a post, from above",
    "screw_part": null,
    "grip_mm": [
-    2.54
+    3.17
    ],
    "engagement_mm": [
-    9.46
+    8.82
    ],
    "problems": []
   },
@@ -273,10 +273,10 @@
    "note": "the deck on a post, from above",
    "screw_part": null,
    "grip_mm": [
-    2.54
+    3.17
    ],
    "engagement_mm": [
-    9.46
+    8.82
    ],
    "problems": []
   },
@@ -319,10 +319,10 @@
    "note": "the deck on a post, from above",
    "screw_part": null,
    "grip_mm": [
-    2.54
+    3.17
    ],
    "engagement_mm": [
-    9.46
+    8.82
    ],
    "problems": []
   },
@@ -365,10 +365,10 @@
    "note": "the deck on a post, from above",
    "screw_part": null,
    "grip_mm": [
-    2.54
+    3.17
    ],
    "engagement_mm": [
-    9.46
+    8.82
    ],
    "problems": []
   },
@@ -388,10 +388,10 @@
    "note": "the riser on the deck (P1, no turret plate)",
    "screw_part": null,
    "grip_mm": [
-    2.54
+    3.17
    ],
    "engagement_mm": [
-    9.46
+    8.82
    ],
    "problems": []
   },
@@ -692,7 +692,7 @@
    "note": "the converter's base flange (its slots) on the bracket's upright",
    "screw_part": null,
    "grip_mm": [
-    8.0
+    7.5
    ],
    "engagement_mm": [
     4.0
@@ -1262,10 +1262,10 @@
    "note": "the riser through the turret plate and the deck (D59)",
    "screw_part": null,
    "grip_mm": [
-    5.71
+    6.35
    ],
    "engagement_mm": [
-    10.29
+    9.65
    ],
    "problems": []
   },
@@ -1286,10 +1286,10 @@
    "note": "the turret plate's ends up against the deck",
    "screw_part": null,
    "grip_mm": [
-    5.71
+    6.35
    ],
    "engagement_mm": [
-    5.04
+    4.41
    ],
    "problems": []
   },
@@ -1520,10 +1520,10 @@
    "note": "the deck on a post, from above",
    "screw_part": null,
    "grip_mm": [
-    2.54
+    3.17
    ],
    "engagement_mm": [
-    9.46
+    8.82
    ],
    "problems": []
   },
@@ -1566,10 +1566,10 @@
    "note": "the deck on a post, from above",
    "screw_part": null,
    "grip_mm": [
-    2.54
+    3.17
    ],
    "engagement_mm": [
-    9.46
+    8.82
    ],
    "problems": []
   },
@@ -1612,10 +1612,10 @@
    "note": "the deck on a post, from above",
    "screw_part": null,
    "grip_mm": [
-    2.54
+    3.17
    ],
    "engagement_mm": [
-    9.46
+    8.82
    ],
    "problems": []
   },
@@ -1658,10 +1658,10 @@
    "note": "the deck on a post, from above",
    "screw_part": null,
    "grip_mm": [
-    2.54
+    3.17
    ],
    "engagement_mm": [
-    9.46
+    8.82
    ],
    "problems": []
   },
@@ -1682,10 +1682,10 @@
    "note": "the riser through the turret plate and the deck (D59)",
    "screw_part": null,
    "grip_mm": [
-    5.71
+    6.35
    ],
    "engagement_mm": [
-    10.29
+    9.65
    ],
    "problems": []
   },
@@ -1706,10 +1706,10 @@
    "note": "the turret plate's ends up against the deck",
    "screw_part": null,
    "grip_mm": [
-    5.71
+    6.35
    ],
    "engagement_mm": [
-    5.04
+    4.41
    ],
    "problems": []
   },
@@ -2010,7 +2010,7 @@
    "note": "the converter's base flange (its slots) on the bracket's upright",
    "screw_part": null,
    "grip_mm": [
-    8.0
+    7.5
    ],
    "engagement_mm": [
     4.0

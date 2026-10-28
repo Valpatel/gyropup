@@ -100,10 +100,10 @@
    ],
    "fits": true,
    "placement": "straight",
-   "grams_each": 61,
-   "grams": 61,
-   "hours": 4.0,
-   "cost_usd": 4.91,
+   "grams_each": 58,
+   "grams": 58,
+   "hours": 3.8,
+   "cost_usd": 4.62,
    "infill": "100 %",
    "how": "PA6-CF; two M4 x 10 down into the tray's nuts; the converter on four M3 x 8 through its upright"
   },
@@ -229,9 +229,9 @@
  },
  "by_material": {
   "pa6-cf": {
-   "grams": 566,
-   "hours": 37.2,
-   "cost_usd": 45.32,
+   "grams": 563,
+   "hours": 37.0,
+   "cost_usd": 45.03,
    "parts": 14
   },
   "tpu95": {
@@ -254,7 +254,7 @@
   }
  },
  "too_big": [],
- "total_hours": 97.5,
- "total_grams": 1035,
+ "total_hours": 97.3,
+ "total_grams": 1032,
  "note": "body P0-P2: hours are rough (grams / density / a strength-holding rate)"
 }
