@@ -4,6 +4,7 @@ __pycache__/
 node_modules/
 exports/*.log
 runs/
+!exports/rig/runs/
 site/
 preview/site-url.txt
 build/
@@ -35,3 +36,5 @@ exports/body/fea/*.json
 
 # B10: the J501 project's parameters, vendored on purpose (our own project; cad/body_params.py --snapshot-j501)
 !references/vendor/j501/*.json
+# the whole rig as one STEP (5.8 MB): rebuilt by cad/build_rig.py
+exports/rig/rig_300.step

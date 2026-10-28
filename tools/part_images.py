@@ -8,7 +8,8 @@ each line can be checked against what arrives and ordered again from somewhere e
     .venv/bin/python tools/part_images.py --list             # offline: each BOM line, its picture and alternates
     .venv/bin/python tools/part_images.py --renders          # only the printed parts (no web)
 
-Which parts: the leg's bought list (exports/leg/bom.json and cad/build_leg.py BOUGHT), the turret's (cad/build_turret.py
+Which parts: the leg's bought list (exports/leg/bom.json and cad/build_leg.py BOUGHT), the leg rig's (exports/rig/bom.json,
+its print plans exports/rig/ and exports/rig/bench/), the turret's (cad/build_turret.py
 TURRET_BOUGHT and BENCH_BOUGHT, and cad/turret.py bought_parts, read from the turret worktree ../gyropup-turret when
 it is there: --turret), and the printed parts of both (their print plans, and cad/turret.py MADE; each rendered from
 the newest STL of it in either checkout).
@@ -92,7 +93,7 @@ def catalogue() -> dict:
     catalog/sourcing.json holds that no catalogue file has yet."""
     items = {}
     files = load(CAT / 'index.json', {}).get('files', [])
-    for f in dict.fromkeys(['hardware.json', *files]):
+    for f in dict.fromkeys(['hardware.json', *files, 'rig.json']):           # rig.json: the leg's test rig (its own file)
         for it in load(CAT / f, []):
             for k in (it.get('id'), it.get('key')):
                 if k:
@@ -141,6 +142,11 @@ def bom_lines(tdir: Path) -> list:
         for key, _qty, why in literal(R / 'cad' / 'build_leg.py', 'BOUGHT'):
             if not any(o['bom'] == 'leg' and o['text'] == key for o in out):
                 add('leg', key, why, [key])
+    # the leg's test rig and its bench (tools/rig_orders.py writes exports/rig/bom.json)
+    for lst, rows in load(R / 'exports' / 'rig' / 'bom.json', {}).items():
+        if isinstance(rows, list) and lst != 'made_to_order':
+            for r in rows:
+                add('rig', r['key'], r.get('for'), [r['key']])
     # the turret on its bench stand
     bt = tdir / 'cad' / 'build_turret.py'
     if bt.exists():
@@ -173,6 +179,10 @@ def printed_parts(tdir: Path) -> dict:
     for name, c in load(R / 'exports' / 'leg' / 'cnc' / 'cnc.json', {}).items():
         if (R / c['stl']).exists():
             out[name] = {'stl': R / c['stl'], 'material': 'al6061', 'bom': 'leg'}
+    for d in (R / 'exports' / 'rig', R / 'exports' / 'rig' / 'bench'):           # the rig's printed parts and bench fixtures
+        for name, p in load(d / 'print-plan.json', {}).get('parts', {}).items():
+            if (d / f'{name}.stl').exists() and name not in out:
+                out[name] = {'stl': d / f'{name}.stl', 'material': p.get('material'), 'bom': 'rig'}
     plans = [tdir / 'exports' / 'turret' / 'bench' / 'print-plan.json', R / 'exports' / 'turret' / 'bench' / 'print-plan.json']
     tplan = next((load(p, {}) for p in plans if p.exists()), {}).get('parts', {})
     made = {}
