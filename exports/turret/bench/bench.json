@@ -31,11 +31,6 @@
   },
   "file": "exports/turret/print/print.json"
  },
- "pictures": [
-  "turret-bench-level-iso.png",
-  "turret-bench-level-front.png",
-  "turret-bench-aimed-iso.png"
- ],
  "orders": {
   "sellers": [
    "Waveshare",

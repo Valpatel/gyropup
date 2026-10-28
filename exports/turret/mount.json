@@ -2,11 +2,11 @@
  "what": "the turret's interface for the body (docs/turret-next-plan.md 3.1, task N5)",
  "frame": "the turret frame T: x forward, y left, z up (mm), the origin on the pan axis in the TM face",
  "written_by": "cad/build_turret.py through cad/turret_mount.py, from the CAD as built",
- "mass_kg": 2.5569,
+ "mass_kg": 2.5608,
  "com_mm": [
   -4.1,
   -2.8,
-  49.1
+  49.2
  ],
  "tm": {
   "bolts_mm": [
@@ -217,28 +217,28 @@
  "mass": {
   "pose": "pan 0, tilt 0 (the centre turns with pan about the pan axis)",
   "with_30_balls": {
-   "mass_g": 2556.9,
+   "mass_g": 2560.8,
    "com_mm": [
     -4.1,
     -2.8,
-    49.1
+    49.2
    ]
   },
   "empty": {
-   "mass_g": 2502.0,
+   "mass_g": 2505.9,
    "com_mm": [
-    -3.2,
-    -2.9,
-    46.4
+    -3.1,
+    -2.8,
+    46.5
    ]
   },
   "with_30_balls_at_tilt_min": {
    "tilt_deg": -25.0,
-   "mass_g": 2556.9,
+   "mass_g": 2560.8,
    "com_mm": [
     -3.2,
     -2.8,
-    49.9
+    50.0
    ]
   },
   "balls": {
@@ -247,8 +247,11 @@
    "note": "30 Rival rounds x 1.83 g"
   },
   "com_off_pan_axis_mm": 5.0,
-  "com_above_deck_on_riser_mm": 79.1,
-  "budget": "D49 (proposed): 1.70 kg with a full hopper, the centre at most 100 mm above the TM face",
+  "com_above_deck_on_riser_mm": 79.2,
+  "budget": "D71: the turret is at most 2.6 kg on Gyropup with a full hopper (the robot's 37.5 kg design mass covers it; it was D49's 1.70 kg head budget); the centre at most 100 mm above the TM face",
+  "ceiling_kg": 2.6,
+  "margin_g": 39.2,
+  "within_ceiling": true,
   "source": "cad/turret.py mass_properties() (printed parts by the printed-part model, bought parts at their catalogue masses, the not-modelled allowance at the turntable)"
  },
  "power": {

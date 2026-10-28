@@ -8035,6 +8035,19 @@
    "within_d67": true
   }
  ],
+ "turret_mass": {
+  "with_30_balls_g": 2560.8,
+  "empty_g": 2505.9,
+  "ceiling_kg": 2.6,
+  "margin_g": 39.2,
+  "within_ceiling": true,
+  "com_mm": [
+   -4.1,
+   -2.8,
+   49.2
+  ],
+  "decision": "D71 (the 37.5 kg robot covers the turret as its own robot, D66)"
+ },
  "price_usd_known": {
   "turret": 1808.94,
   "bench_stand": 660.57,

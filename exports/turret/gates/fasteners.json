@@ -1,12 +1,12 @@
 {
   "schema": "cadagent.gate/1",
   "gate": "fasteners",
-  "pass": false,
-  "status": "fail",
+  "pass": true,
+  "status": "pass",
   "counts": {
-    "pass": 32,
+    "pass": 35,
     "warn": 0,
-    "fail": 3
+    "fail": 0
   },
   "checks": [
     {
@@ -153,8 +153,8 @@
           "hopper": {
             "radius_mm": 1.7,
             "point": [
-              8.8,
-              0.0,
+              -7.3384,
+              38.9616,
               162.7
             ],
             "open_to_mm": 3.75
@@ -191,17 +191,14 @@
     {
       "id": "fastener:hopper_screws#0:tip",
       "status": "pass",
-      "message": "tip clear: 1.00 mm to cartridge_body",
+      "message": "tip clear: nothing within 10.0 mm past it",
       "parts": [
         "hopper_screws#0"
       ],
       "evidence": {
-        "next_solid": {
-          "part": "cartridge_body",
-          "t_mm": 9.0
-        },
+        "next_solid": null,
         "tip_t_mm": 8.0,
-        "tip_clearance_mm": 1.0,
+        "tip_clearance_mm": null,
         "min_tip_clearance_mm": 0.5,
         "probe_end_t_mm": 18.0
       }
@@ -209,20 +206,23 @@
     {
       "id": "fastener:hopper_screws#0:length",
       "status": "pass",
-      "message": "8 mm fits the stack (5.40..8.50)",
+      "message": "8 mm fits the stack",
       "parts": [
         "hopper_screws#0"
       ],
       "evidence": {
         "fits_mm": [
           5.4,
-          8.5
+          null
         ],
-        "limited_by": "cartridge_body",
+        "limited_by": null,
         "stock_that_fits_mm": [
           6.0,
           7.0,
-          8.0
+          8.0,
+          10.0,
+          12.0,
+          14.0
         ],
         "length_mm": 8.0,
         "record_length_mm": 8.0,
@@ -231,16 +231,15 @@
     },
     {
       "id": "fastener:hopper_screws#0:tool",
-      "status": "fail",
-      "message": "the hex 2.5 envelope hits cartridge_board 22.50 mm from the head (10.413 mm\u00b3) (at step 1)",
+      "status": "pass",
+      "message": "the hex 2.5 reaches the head at step 1",
       "parts": [
-        "hopper_screws#0",
-        "cartridge_board"
+        "hopper_screws#0"
       ],
       "evidence": {
         "tool": "hex 2.5",
         "step": 1,
-        "step_fit": "['hopper', 'laser_mount']",
+        "step_fit": "hopper",
         "envelope": {
           "segments": [
             {
@@ -253,16 +252,10 @@
           "swing": null
         },
         "start_t_mm": -3.0,
-        "blocked": [
-          {
-            "part": "cartridge_board",
-            "state": "overlapping",
-            "overlap_mm3": 10.413285,
-            "from_head_mm": 22.5
-          }
-        ],
-        "clear": false,
-        "present_count": 92
+        "blocked": [],
+        "service_blocked": [],
+        "clear": true,
+        "present_count": 88
       }
     },
     {
@@ -409,8 +402,8 @@
           "hopper": {
             "radius_mm": 1.7,
             "point": [
-              -85.2616,
-              38.9616,
+              -94.018,
+              27.55,
               162.7
             ],
             "open_to_mm": 3.75
@@ -495,7 +488,7 @@
       "evidence": {
         "tool": "hex 2.5",
         "step": 1,
-        "step_fit": "['hopper', 'laser_mount']",
+        "step_fit": "hopper",
         "envelope": {
           "segments": [
             {
@@ -509,8 +502,9 @@
         },
         "start_t_mm": -3.0,
         "blocked": [],
+        "service_blocked": [],
         "clear": true,
-        "present_count": 92
+        "present_count": 88
       }
     },
     {
@@ -657,8 +651,8 @@
           "hopper": {
             "radius_mm": 1.7,
             "point": [
-              -85.2616,
-              -38.9616,
+              -94.018,
+              -27.55,
               162.7
             ],
             "open_to_mm": 3.75
@@ -743,7 +737,7 @@
       "evidence": {
         "tool": "hex 2.5",
         "step": 1,
-        "step_fit": "['hopper', 'laser_mount']",
+        "step_fit": "hopper",
         "envelope": {
           "segments": [
             {
@@ -757,14 +751,15 @@
         },
         "start_t_mm": -3.0,
         "blocked": [],
+        "service_blocked": [],
         "clear": true,
-        "present_count": 92
+        "present_count": 88
       }
     },
     {
       "id": "fastener:laser_foot_screws#0:seat",
-      "status": "fail",
-      "message": "nothing under the head at 2 of 8 angles: it overhangs an edge or a pocket; the head stands 1.972 mm off laser_mount's face (> 0.05)",
+      "status": "pass",
+      "message": "the head bears on laser_mount all round",
       "parts": [
         "laser_foot_screws#0",
         "laser_mount"
@@ -777,11 +772,11 @@
           },
           {
             "part": "laser_mount",
-            "t_mm": 1.9725
+            "t_mm": 0.0
           },
           {
             "part": "laser_mount",
-            "t_mm": 1.9725
+            "t_mm": 0.0
           },
           {
             "part": "laser_mount",
@@ -792,12 +787,12 @@
             "t_mm": 0.0
           },
           {
-            "part": "cartridge_body",
-            "t_mm": 6.0
+            "part": "laser_mount",
+            "t_mm": 0.0
           },
           {
-            "part": "cartridge_body",
-            "t_mm": 6.0
+            "part": "laser_mount",
+            "t_mm": 0.0
           },
           {
             "part": "laser_mount",
@@ -806,7 +801,7 @@
         ],
         "seat_gap_mm": [
           0.0,
-          1.9725
+          0.0
         ],
         "head": {
           "r_mm": 2.75,
@@ -906,7 +901,7 @@
             "radius_mm": 1.7,
             "point": [
               61.7,
-              7.0,
+              9.0,
               153.0
             ],
             "open_to_mm": 3.75
@@ -983,14 +978,14 @@
     {
       "id": "fastener:laser_foot_screws#0:tool",
       "status": "pass",
-      "message": "the hex 2.5 reaches the head at step 1",
+      "message": "the hex 2.5 reaches the head at step 2",
       "parts": [
         "laser_foot_screws#0"
       ],
       "evidence": {
         "tool": "hex 2.5",
-        "step": 1,
-        "step_fit": "['hopper', 'laser_mount']",
+        "step": 2,
+        "step_fit": "laser_mount",
         "envelope": {
           "segments": [
             {
@@ -1004,14 +999,15 @@
         },
         "start_t_mm": -3.0,
         "blocked": [],
+        "service_blocked": [],
         "clear": true,
-        "present_count": 92
+        "present_count": 89
       }
     },
     {
       "id": "fastener:laser_foot_screws#1:seat",
-      "status": "fail",
-      "message": "nothing under the head at 2 of 8 angles: it overhangs an edge or a pocket; the head stands 1.972 mm off laser_mount's face (> 0.05)",
+      "status": "pass",
+      "message": "the head bears on laser_mount all round",
       "parts": [
         "laser_foot_screws#1",
         "laser_mount"
@@ -1023,12 +1019,12 @@
             "t_mm": 0.0
           },
           {
-            "part": "cartridge_body",
-            "t_mm": 6.0
+            "part": "laser_mount",
+            "t_mm": 0.0
           },
           {
-            "part": "cartridge_body",
-            "t_mm": 6.0
+            "part": "laser_mount",
+            "t_mm": 0.0
           },
           {
             "part": "laser_mount",
@@ -1040,11 +1036,11 @@
           },
           {
             "part": "laser_mount",
-            "t_mm": 1.9725
+            "t_mm": 0.0
           },
           {
             "part": "laser_mount",
-            "t_mm": 1.9725
+            "t_mm": 0.0
           },
           {
             "part": "laser_mount",
@@ -1053,7 +1049,7 @@
         ],
         "seat_gap_mm": [
           0.0,
-          1.9725
+          0.0
         ],
         "head": {
           "r_mm": 2.75,
@@ -1153,7 +1149,7 @@
             "radius_mm": 1.7,
             "point": [
               61.7,
-              -7.0,
+              -9.0,
               153.0
             ],
             "open_to_mm": 3.75
@@ -1230,14 +1226,14 @@
     {
       "id": "fastener:laser_foot_screws#1:tool",
       "status": "pass",
-      "message": "the hex 2.5 reaches the head at step 1",
+      "message": "the hex 2.5 reaches the head at step 2",
       "parts": [
         "laser_foot_screws#1"
       ],
       "evidence": {
         "tool": "hex 2.5",
-        "step": 1,
-        "step_fit": "['hopper', 'laser_mount']",
+        "step": 2,
+        "step_fit": "laser_mount",
         "envelope": {
           "segments": [
             {
@@ -1251,157 +1247,13 @@
         },
         "start_t_mm": -3.0,
         "blocked": [],
+        "service_blocked": [],
         "clear": true,
-        "present_count": 92
+        "present_count": 89
       }
     }
   ],
-  "findings": [
-    {
-      "id": "fastener:hopper_screws#0:tool",
-      "status": "fail",
-      "message": "the hex 2.5 envelope hits cartridge_board 22.50 mm from the head (10.413 mm\u00b3) (at step 1)",
-      "parts": [
-        "hopper_screws#0",
-        "cartridge_board"
-      ],
-      "evidence": {
-        "tool": "hex 2.5",
-        "step": 1,
-        "step_fit": "['hopper', 'laser_mount']",
-        "envelope": {
-          "segments": [
-            {
-              "d": 3.0,
-              "length": 60.0
-            }
-          ],
-          "start": "head",
-          "offset_mm": 0.0,
-          "swing": null
-        },
-        "start_t_mm": -3.0,
-        "blocked": [
-          {
-            "part": "cartridge_board",
-            "state": "overlapping",
-            "overlap_mm3": 10.413285,
-            "from_head_mm": 22.5
-          }
-        ],
-        "clear": false,
-        "present_count": 92
-      }
-    },
-    {
-      "id": "fastener:laser_foot_screws#0:seat",
-      "status": "fail",
-      "message": "nothing under the head at 2 of 8 angles: it overhangs an edge or a pocket; the head stands 1.972 mm off laser_mount's face (> 0.05)",
-      "parts": [
-        "laser_foot_screws#0",
-        "laser_mount"
-      ],
-      "evidence": {
-        "first_hit": [
-          {
-            "part": "laser_mount",
-            "t_mm": 0.0
-          },
-          {
-            "part": "laser_mount",
-            "t_mm": 1.9725
-          },
-          {
-            "part": "laser_mount",
-            "t_mm": 1.9725
-          },
-          {
-            "part": "laser_mount",
-            "t_mm": 0.0
-          },
-          {
-            "part": "laser_mount",
-            "t_mm": 0.0
-          },
-          {
-            "part": "cartridge_body",
-            "t_mm": 6.0
-          },
-          {
-            "part": "cartridge_body",
-            "t_mm": 6.0
-          },
-          {
-            "part": "laser_mount",
-            "t_mm": 0.0
-          }
-        ],
-        "seat_gap_mm": [
-          0.0,
-          1.9725
-        ],
-        "head": {
-          "r_mm": 2.75,
-          "h_mm": 3.0,
-          "source": "declared"
-        }
-      }
-    },
-    {
-      "id": "fastener:laser_foot_screws#1:seat",
-      "status": "fail",
-      "message": "nothing under the head at 2 of 8 angles: it overhangs an edge or a pocket; the head stands 1.972 mm off laser_mount's face (> 0.05)",
-      "parts": [
-        "laser_foot_screws#1",
-        "laser_mount"
-      ],
-      "evidence": {
-        "first_hit": [
-          {
-            "part": "laser_mount",
-            "t_mm": 0.0
-          },
-          {
-            "part": "cartridge_body",
-            "t_mm": 6.0
-          },
-          {
-            "part": "cartridge_body",
-            "t_mm": 6.0
-          },
-          {
-            "part": "laser_mount",
-            "t_mm": 0.0
-          },
-          {
-            "part": "laser_mount",
-            "t_mm": 0.0
-          },
-          {
-            "part": "laser_mount",
-            "t_mm": 1.9725
-          },
-          {
-            "part": "laser_mount",
-            "t_mm": 1.9725
-          },
-          {
-            "part": "laser_mount",
-            "t_mm": 0.0
-          }
-        ],
-        "seat_gap_mm": [
-          0.0,
-          1.9725
-        ],
-        "head": {
-          "r_mm": 2.75,
-          "h_mm": 3.0,
-          "source": "declared"
-        }
-      }
-    }
-  ],
+  "findings": [],
   "exclusions": [],
   "limits": {
     "seat_tol_mm": 0.05,
@@ -1438,8 +1290,8 @@
       ],
       "into": "hopper_inserts",
       "seat": [
-        7.1,
-        0.0,
+        -9.0384,
+        38.9616,
         163.0
       ],
       "direction": [
@@ -1448,8 +1300,8 @@
         -1.0
       ],
       "thread_start": [
-        7.1,
-        0.0,
+        -9.0384,
+        38.9616,
         160.0
       ],
       "grip_mm": 3.0,
@@ -1463,17 +1315,15 @@
       "stock": true,
       "fits_mm": [
         5.4,
-        8.5
+        null
       ],
       "thread_depth_required_mm": 5.0,
-      "tip_clearance_mm": 1.0,
+      "tip_clearance_mm": null,
       "tool": "hex 2.5",
       "step": 1,
-      "tool_clear": false,
-      "status": "fail",
-      "failed": [
-        "tool"
-      ],
+      "tool_clear": true,
+      "status": "pass",
+      "failed": [],
       "body": "tilt"
     },
     {
@@ -1486,8 +1336,8 @@
       ],
       "into": "hopper_inserts",
       "seat": [
-        -86.9616,
-        38.9616,
+        -95.718,
+        27.55,
         163.0
       ],
       "direction": [
@@ -1496,8 +1346,8 @@
         -1.0
       ],
       "thread_start": [
-        -86.9616,
-        38.9616,
+        -95.718,
+        27.55,
         160.0
       ],
       "grip_mm": 3.0,
@@ -1532,8 +1382,8 @@
       ],
       "into": "hopper_inserts",
       "seat": [
-        -86.9616,
-        -38.9616,
+        -95.718,
+        -27.55,
         163.0
       ],
       "direction": [
@@ -1542,8 +1392,8 @@
         -1.0
       ],
       "thread_start": [
-        -86.9616,
-        -38.9616,
+        -95.718,
+        -27.55,
         160.0
       ],
       "grip_mm": 3.0,
@@ -1579,7 +1429,7 @@
       "into": "laser_inserts",
       "seat": [
         60.0,
-        7.0,
+        9.0,
         153.6
       ],
       "direction": [
@@ -1589,7 +1439,7 @@
       ],
       "thread_start": [
         60.0,
-        7.0,
+        9.0,
         147.6
       ],
       "grip_mm": 6.0,
@@ -1608,12 +1458,10 @@
       "thread_depth_required_mm": 4.0,
       "tip_clearance_mm": 2.5,
       "tool": "hex 2.5",
-      "step": 1,
+      "step": 2,
       "tool_clear": true,
-      "status": "fail",
-      "failed": [
-        "seat"
-      ],
+      "status": "pass",
+      "failed": [],
       "body": "tilt"
     },
     {
@@ -1627,7 +1475,7 @@
       "into": "laser_inserts",
       "seat": [
         60.0,
-        -7.0,
+        -9.0,
         153.6
       ],
       "direction": [
@@ -1637,7 +1485,7 @@
       ],
       "thread_start": [
         60.0,
-        -7.0,
+        -9.0,
         147.6
       ],
       "grip_mm": 6.0,
@@ -1656,12 +1504,10 @@
       "thread_depth_required_mm": 4.0,
       "tip_clearance_mm": 2.5,
       "tool": "hex 2.5",
-      "step": 1,
+      "step": 2,
       "tool_clear": true,
-      "status": "fail",
-      "failed": [
-        "seat"
-      ],
+      "status": "pass",
+      "failed": [],
       "body": "tilt"
     }
   ],

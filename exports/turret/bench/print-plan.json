@@ -237,7 +237,7 @@
    "grams_each": 188,
    "grams": 188,
    "hours": 10.7,
-   "cost_usd": 15.04,
+   "cost_usd": 14.98,
    "infill": "100 %",
    "how": "PA6-CF on its base; supports under the chute",
    "sliced": true,
@@ -338,7 +338,7 @@
    "material": "petg",
    "qty": 1,
    "size_mm": [
-    111,
+    103,
     101,
     65
    ],
@@ -420,7 +420,7 @@
    "qty": 1,
    "size_mm": [
     33,
-    18,
+    25,
     18
    ],
    "fits": true,
@@ -630,7 +630,7 @@
   "pa6-cf": {
    "grams": 720,
    "hours": 37.0,
-   "cost_usd": 57.65,
+   "cost_usd": 57.59,
    "parts": 14
   },
   "tpu95": {

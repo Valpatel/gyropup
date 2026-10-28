@@ -4,14 +4,14 @@
  "pile": "exports/turret/feed/pile.json",
  "verdicts": "exports/turret/gates",
  "seconds": {
-  "connectivity": 11.4,
-  "hopper": 0.1,
-  "path": 24.9,
+  "connectivity": 15.7,
+  "hopper": 1358.0,
+  "path": 24.2,
   "sweep": 1.7,
-  "ammo_range": 25.8,
-  "fasteners": 10.7,
-  "motion_mechanisms": 48.9,
-  "motion_aim": 632.2
+  "ammo_range": 26.4,
+  "fasteners": 10.2,
+  "motion_mechanisms": 56.7,
+  "motion_aim": 723.2
  },
  "ok": true,
  "gates": {
@@ -62,7 +62,7 @@
     {
      "id": "contact:cartridge_body|cradle",
      "status": "warn",
-     "message": "cartridge_body and cradle are in contact (touching, 3.27e+03 mm2) but no interface, joint, fastener, contains or intended overlap declares it"
+     "message": "cartridge_body and cradle are in contact (touching, 3.26e+03 mm2) but no interface, joint, fastener, contains or intended overlap declares it"
     },
     {
      "id": "contact:cartridge_body|esc_l",
@@ -176,19 +176,13 @@
   },
   "fasteners": {
    "ok": true,
-   "status": "warn",
+   "status": "pass",
    "counts": {
-    "pass": 34,
-    "warn": 1,
+    "pass": 35,
+    "warn": 0,
     "fail": 0
    },
-   "findings": [
-    {
-     "id": "fastener:hopper_screws#0:tool",
-     "status": "warn",
-     "message": "the hex 2.5 reaches the head at step 1, but cartridge_board (fitted later) must come off before it can be removed"
-    }
-   ]
+   "findings": []
   },
   "motion_mechanisms": {
    "ok": true,

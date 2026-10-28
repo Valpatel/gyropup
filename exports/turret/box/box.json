@@ -320,21 +320,21 @@
     "open_fraction": 0.861
    },
    "air_speed_mps": {
-    "mouth": 1.84,
-    "grille": 2.14,
-    "throat": 1.84
+    "mouth": 1.93,
+    "grille": 2.25,
+    "throat": 1.93
    },
    "losses_pa": {
-    "grille": 2.76,
-    "turn": 2.04
+    "grille": 3.03,
+    "turn": 2.24
    },
-   "loss_pa": 4.8,
-   "flow_before_m3h": 38.82,
-   "flow_after_m3h": 35.26,
-   "flow_drop_pct": 9.2,
-   "fan_fraction_of_free_air_after": 0.375,
+   "loss_pa": 5.27,
+   "flow_before_m3h": 40.7,
+   "flow_after_m3h": 36.61,
+   "flow_drop_pct": 10.1,
+   "fan_fraction_of_free_air_after": 0.39,
    "limit_pct": 10.0,
-   "ok": true,
+   "ok": false,
    "fan": {
     "model": "9215-Y: 12 V, 0-4000 rpm PWM, 14.1-55.26 CFM, 0.84-2.87 mmH2O, 0.24-2.28 W, 4-pin 2510 (S06 p.2, drawing p.11)",
     "dp0_pa": 28.1,
@@ -342,10 +342,10 @@
     "note": "9215-Y at full speed (12 V, 4000 rpm): 55.26 CFM free air, 2.87 mmH2O at zero flow (S06 p.2); straight-line curve between the two. Blows up: it pulls air in through the fin block's open sides and out through the lid grille (user, 2026-10-27, on the fitted cooler)."
    },
    "operating_point": {
-    "q_m3h": 38.82,
-    "dp_pa": 16.48,
-    "fraction_of_free_air": 0.413,
-    "air_into_fan_c": 26.87,
+    "q_m3h": 40.7,
+    "dp_pa": 15.92,
+    "fraction_of_free_air": 0.433,
+    "air_into_fan_c": 28.12,
     "converged": true,
     "case_revision": "0.9-g48r",
     "source": "/home/scubasonar/Code/j501-agx/exports/thermal/cooled-0.9.json",
@@ -353,11 +353,11 @@
    },
    "method": "losses K x 0.5 rho v^2 (rho 1.2): K = 1 through the grille's gaps (the entry and the bars), K = 1 for the turn down into the fan on the whole flow across the duct over the fan's centre; the box's own resistance as k q^2 through the J501 CFD's operating point; the fan's straight-line curve from its J501 parameters (dp0, q_free); the new flow where the two meet",
    "sensitivity_flow_drop_pct": {
-    "the plan's duct: a 124 mm mouth flaring from the \u00d8111 collar, 2 mm bars on 8": 16.7,
-    "a 124 mm mouth with this grille, as wide back to the fan": 13.7,
-    "K = 1.5 for the turn": 10.8,
-    "Idelchik: a sharp inlet (0.5) and the bars by Kirschmer (0.22) on the mouth speed, the turn K = 1": 7.0,
-    "with the roof cells the floor covers, as if all the air left through the roof (upper bound)": 19.1,
+    "the plan's duct: a 124 mm mouth flaring from the \u00d8111 collar, 2 mm bars on 8": 18.0,
+    "a 124 mm mouth with this grille, as wide back to the fan": 14.9,
+    "K = 1.5 for the turn": 11.8,
+    "Idelchik: a sharp inlet (0.5) and the bars by Kirschmer (0.22) on the mouth speed, the turn K = 1": 7.7,
+    "with the roof cells the floor covers, as if all the air left through the roof (upper bound)": 20.6,
     "at the J501's first Rev 0.9 point (27.5 m3/h at 19.9 Pa, the plan's)": 4.7,
     "the plan's duct at that point": 9.1
    },
@@ -386,40 +386,82 @@
   },
   "design_gates": {
    "file": "exports/turret/gates.json",
-   "fingerprint": "16ecc65b1a2dbb9b",
+   "verdicts": "exports/turret/gates",
+   "toolkit": "cadagent.gates (connectivity, containment, relation table, fasteners, motion)",
+   "fingerprint": "1432c61b9714e16d",
    "ok": true,
    "gates": {
-    "hopper_in_cavity": {
+    "connectivity": {
      "ok": true,
-     "spheres": 30
-    },
-    "hopper_overlap": {
-     "ok": true,
-     "worst_overlap_mm": 0.069
-    },
-    "path_in_cavity": {
-     "ok": true,
-     "spheres": 87
-    },
-    "ammo_range": {
-     "ok": true
-    },
-    "connected": {
-     "ok": true,
-     "bodies": {
-      "base": 1,
-      "pan": 1,
-      "pinion": 1,
-      "tilt": 1,
-      "wheel_l": 1,
-      "wheel_r": 1,
-      "dial": 1,
-      "flap": 1
+     "status": "warn",
+     "counts": {
+      "pass": 29,
+      "warn": 61,
+      "fail": 0
      }
     },
-    "sweep_with_balls": {
+    "hopper": {
      "ok": true,
-     "poses": 40
+     "status": "warn",
+     "counts": {
+      "pass": 64,
+      "warn": 1,
+      "fail": 0
+     }
+    },
+    "path": {
+     "ok": true,
+     "status": "pass",
+     "counts": {
+      "pass": 410,
+      "warn": 0,
+      "fail": 0
+     }
+    },
+    "sweep": {
+     "ok": true,
+     "status": "pass",
+     "counts": {
+      "pass": 40,
+      "warn": 0,
+      "fail": 0
+     }
+    },
+    "ammo_range": {
+     "ok": true,
+     "status": "pass",
+     "counts": {
+      "pass": 6,
+      "warn": 0,
+      "fail": 0
+     }
+    },
+    "fasteners": {
+     "ok": true,
+     "status": "pass",
+     "counts": {
+      "pass": 35,
+      "warn": 0,
+      "fail": 0
+     }
+    },
+    "motion_mechanisms": {
+     "ok": true,
+     "status": "warn",
+     "counts": {
+      "pass": 5,
+      "warn": 1,
+      "fail": 0
+     }
+    },
+    "motion_aim": {
+     "ok": true,
+     "status": "pass",
+     "counts": {
+      "pass": 1,
+      "warn": 0,
+      "fail": 0
+     }
     }
    }
   },
@@ -435,8 +477,30 @@
    "plinth_vents_behind_mouth_mm": 94.5,
    "plinth_vents_from_z_mm": 170.3,
    "fan_blows": "up (exhaust through the lid grille; J501 thermal.fan.note)",
+   "plume": {
+    "keep_out": {
+     "x_mm": [
+      90.5,
+      190.5
+     ],
+     "half_width_mm": 94.0,
+     "z_mm": [
+      100.0,
+      217.0
+     ]
+    },
+    "least_mm": 12.5,
+    "nearest": {
+     "part": "compute_tray",
+     "pan_deg": 0.0,
+     "tilt_deg": 0.0
+    },
+    "required_mm": 10.0,
+    "ok": true,
+    "how": "the J501 fan blows up into the shroud, whose duct throws the plume forward out of the deck's mouth, where it rises: the box ahead of the mouth is kept clear of the turret at every pan of the grid, level and fully depressed"
+   },
    "ok": true,
-   "note": "the J501 exhaust leaves the deck's front mouth (158.0 mm wide, z 100.0-137.0), 12.0 mm above the J501's highest intake vent, with the front corners walled; the plinth breathes 94.5 mm behind the mouth. To prove on the bench: the J501's intake and the J4012's within 3 K of the room with both at full load (bench_proof)"
+   "note": "the J501 exhaust leaves the deck's front mouth (158.0 mm wide, z 100.0-137.0), 12.0 mm above the J501's highest intake vent, with the front corners walled; the plinth breathes 94.5 mm behind the mouth; no part of the turret comes within 12.5 mm of the plume's keep-out ahead of the mouth at any pan or tilt. To prove on the bench: the J501's intake and the J4012's within 3 K of the room with both at full load (bench_proof)"
   },
   "shroud_fit": {
    "legs_mm": {
@@ -458,10 +522,10 @@
    "how": "the BRepExtrema distance between the intake shroud and each leg (the deck cut round it, under the deck plate) and anything of the deck below its plate at each TM insert (none: the inserts are wholly in the 8 mm deck)"
   },
   "tipping": {
-   "total_kg": 4.27,
-   "com_height_mm": 190,
+   "total_kg": 4.29,
+   "com_height_mm": 191,
    "tip_angle_deg": 25,
-   "push_to_tip_n": 10.2,
+   "push_to_tip_n": 10.3,
    "push_height_mm": 371,
    "note": "J501: 368 g printed (its slice report) + 1.0 kg Orin, carrier and cooler (est); a sideways push at the tilt axis that lifts the box off its narrow edge"
   },
@@ -560,7 +624,7 @@
    "hard_stop_deg": 173.5,
    "encoder_counts_per_turret_deg": 34.1,
    "inertia_kg_m2": 0.00476,
-   "accel_at_cap_deg_s2": 53120,
+   "accel_at_cap_deg_s2": 53038,
    "time_to_full_slew_ms": 1.7
   },
   "tilt": {
@@ -570,10 +634,10 @@
     -25.0,
     0.0
    ],
-   "group_mass_g": 745,
-   "com_ahead_mm": -7.5,
+   "group_mass_g": 757,
+   "com_ahead_mm": -7.6,
    "holding_nm": -0.06,
-   "margin": 53.3
+   "margin": 52.1
   },
   "flight_level": {
    "rows": [
@@ -620,7 +684,7 @@
   }
  },
  "masses_g": {
-  "turret_with_balls": 2544,
+  "turret_with_balls": 2561,
   "adapter": 357,
   "j501_printed": 368.2,
   "j501_inside_est": 1000.0
@@ -632,7 +696,7 @@
   "source": "/home/scubasonar/Code/j501-agx/cad/parameters.json",
   "parameters_git": {
    "state": "committed",
-   "head": "cc4334bb73df96ea2da42277ba9c9a60af8c4483",
+   "head": "fefc79dc056ad010b8fcf5fb69ed2cf4cf9361c3",
    "branch": "rev0.9-g48r",
    "tags_at_head": [],
    "file": "cad/parameters.json"
