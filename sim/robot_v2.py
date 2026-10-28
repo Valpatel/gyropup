@@ -55,9 +55,9 @@ EAR = {'size': (61.0, 50.8, 50.8), 'x': (-10.0, 51.0), 'top': 193.0}   # SSC1 po
 TILT_STOP_DEG = 25.0                                # cad/turret.py's hard stops: 0 .. -25 deg (here + = barrel down)
 PAN_STOP_DEG = 170.0
 REF_H = 300.0                                       # the model's joints are zero standing at this leg length
-H_RANGE = (160.0, 375.0)                            # leg length (mm) for the controller's height 0..1; with D69's 10 in wheels the
-                                                    # bay's crush pads touch the floor under a ~120 mm leg (cad/body_battery.py PAD):
-                                                    # 40 mm under them at the lowest height
+H_RANGE = (180.0, 375.0)                            # leg length (mm) for the controller's height 0..1. Issue #19: the bay's 45 mm
+                                                    # crush pads (cad/body_battery.py PAD) need the lowest height at 180 mm (it was
+                                                    # 160) to keep D69's 40 mm under them; they touch the floor under a 140 mm leg
 WHEEL_KEY = 'hb10'                                  # D69: sim/wheel_candidates.json's 10 in hub motor, at the ledger's wheel mass
 _WHEEL = {}
 
@@ -201,7 +201,8 @@ def body_bodies(rb, x_p, turret_extra):
     items = {it.name: it for it in rb['L']['items'] if not it.keepout}
     out = []
     for r in rb['ledger']['rows']:
-        if r['group'] == 'legs' or r['name'] == 'turret' or r['name'].startswith('frame.bay_skid_'):   # the pads: their own bodies
+        if r['group'] == 'legs' or r['name'] == 'turret' or r['name'].startswith('frame.bay_skid_') or r['name'] == 'frame.bay_floor':
+            # the pads are bodies of their own, and the bay's floor rides on them in the model (see build())
             continue
         g, c = r['mass_g'] / 1000.0, tuple(v * M for v in r['com_mm'])
         name = r['name']
@@ -559,6 +560,7 @@ def build():
     pad_boxes, PAD = pads()
     pad_g = {r['name'].split('.', 1)[1].replace('bay_skid_', 'pad_'): r['mass_g'] / 1000.0
              for r in rb['ledger']['rows'] if r['name'].startswith('frame.bay_skid_')}
+    floor_g = next(r['mass_g'] for r in rb['ledger']['rows'] if r['name'] == 'frame.bay_floor') / 1000.0   # rides on the pads (numerics)
     B = rb['B']
     TOP = bp.TOP                                                     # the deck's top face (the lidar stands on it)
     T = tu.Turret({'bodyTop': tmd['face_z'] - 20.0 - tu.SADDLE_T})  # its TM face on the 30 mm riser (D41)
@@ -609,7 +611,7 @@ def build():
     parts += hip + [tb['base']]
     base = combine(parts, 'base')
     leg_kg = 2 * (2 * lb['upper'].mass + lb['front'].mass + lb['wheel_link'].mass + lb['rotor'].mass)
-    total = base.mass + leg_kg + tb['pan'].mass + tb['tilt'].mass + sum(max(g, 1e-3) for g in pad_g.values())
+    total = base.mass + leg_kg + tb['pan'].mass + tb['tilt'].mass + sum(pad_g.values()) + floor_g
     reconciles = abs(total - led_kg) <= 0.002 * led_kg            # the model carries the ledger's mass
     rp = ref_pose()
     frame_shape = fb.leg_parts().parts['hip_frame'].translate((0, Y_OFF, 0))
@@ -670,19 +672,24 @@ def build():
         </body>
       </body>"""
 
-    # ---- the crush pads (issue #19): each a body on a slide joint along the base's z under the bay's floor: a spring and a
-    # damper over its stroke (0 = free, + = pushed up into the floor), then its joint limit as the densified lattice (a
-    # stiff, critically damped stop); its contact with the floor is stiff, so the pad's own k and c are the compliance.
+    # ---- the crush pads (issue #19): each a body on a slide joint along the base's z under the bay's floor (0 = free, + =
+    # pushed up into the floor). The joint carries the pad's damper c; its crush law (min(k x, the plateau), the lattice's
+    # hysteresis unloading) is applied each step by sim/scenarios.py from model.json's pads; past the stroke the joint's
+    # limit is the densified lattice (a stiff, critically damped stop). The pad's floor contact is stiff, so the pad's own
+    # law is the compliance. Numerics: a 25 g pad on an 80 N/mm spring rings at 1.8 kHz, beyond the 1 ms step; the bay
+    # floor's mass (it sits right over the pads) rides on the pads in the model instead, so each pad body carries a quarter
+    # of floor and pads (the total is the ledger's).
     k_pad, c_pad, stroke = PAD['k_n_per_mm'] * 1000.0, PAD['c_ns_per_m'], PAD['stroke'] / 1000.0
+    pad_each = (sum(pad_g.values()) + floor_g) / max(len(pad_g), 1)
 
     def pad_xml(name, b):
         x0, x1, y0, y1, z0_, z1_ = (v * M for v in b)
         sx, sy, sz = (x1 - x0) / 2, (y1 - y0) / 2, (z1_ - z0_) / 2
-        m = max(pad_g.get(name, 0.01), 1e-3)
+        m = pad_each
         I = (m * (sy * sy + sz * sz) / 3, m * (sx * sx + sz * sz) / 3, m * (sx * sx + sy * sy) / 3)
         return (f'<body name="{name}" pos="{(x0 + x1) / 2:.5f} {(y0 + y1) / 2:.5f} {z1_:.5f}">'
-                f'<joint name="{name}" type="slide" axis="0 0 1" range="0 {stroke:.5f}" stiffness="{k_pad:.1f}" damping="{c_pad:.1f}" '
-                f'springref="0" solreflimit="0.002 1"/>'
+                f'<joint name="{name}" type="slide" axis="0 0 1" range="0 {stroke:.5f}" stiffness="0" damping="{c_pad:.1f}" '
+                f'solreflimit="0.002 1"/>'
                 f'<inertial pos="0 0 {-sz:.5f}" mass="{m:.4f}" diaginertia="{I[0]:.3g} {I[1]:.3g} {I[2]:.3g}"/>'
                 f'<geom name="{name}" type="box" size="{sx:.5f} {sy:.5f} {sz:.5f}" pos="0 0 {-sz:.5f}" contype="2" conaffinity="1" '
                 f'solref="0.004 1" friction="0.8 0.005 0.0001" rgba="0.15 0.15 0.17 1" group="1"/></body>')
@@ -807,7 +814,7 @@ def build():
         'wheel': {'decision': 'D69', 'key': WHEEL_KEY, 'od_mm': wd69['od_mm'], 'mass_g': wd69['mass_g'], 'tyre_width_mm': wd69['tyre_width_mm'],
                   'tyre_solref': lr.TYRE_SOLREF, 'peak_nm': wheel_peak, 'basis': 'sim/wheel_candidates.json hb10 at the ledger\'s mass'},
         'pads': {'names': [n for n, _ in pad_boxes], 'k_n_per_mm_each': PAD['k_n_per_mm'], 'c_ns_per_m_each': PAD['c_ns_per_m'],
-                 'unload_ratio': PAD['unload_ratio'],
+                 'plateau_n_each': PAD['plateau_n'], 'unload_ratio': PAD['unload_ratio'], 'body_kg_each_in_model': round(pad_each, 4),
                  'stroke_mm': PAD['stroke'], 'h_mm': PAD['h'], 'mass_kg': {n: round(g, 4) for n, g in pad_g.items()},
                  'touch_leg_mm': round(-B['z'][0] - wr * 1000, 1), 'basis': 'cad/body_battery.py PAD (issue #19)'},
         'notes': [f'the body as built (M5): the P3 ledger, {led_kg:.2f} kg (cad/body_layout.py; the model {total:.2f} kg), the spine 40.5 mm wide '

@@ -217,11 +217,12 @@ def run(xml_path: Path, info: dict, sc: Scenario, video: Optional[Path] = None, 
     # the battery bay's crush pads (sim/robot_v2.py, issue #19): bodies of their own on slide joints; what they pass to the
     # body is their floor contact (a pad is ~35 g), summed over all of them at each step: the body's impact through the pads
     pad_geoms = {g for g in range(model.ngeom) if model.body(model.geom_bodyid[g]).name.startswith('pad_')}
-    # a printed elastomer lattice gives back only part of what it stores (its hysteresis): unloading, a pad's spring pushes
-    # with unload_ratio x k x (the joint carries k and c; the rest is taken off here, smoothly in the pad's speed)
-    pad_dofs = [(int(model.jnt_qposadr[j]), int(model.jnt_dofadr[j]), float(model.jnt_stiffness[j])) for j in range(model.njnt)
-                if model.joint(j).name.startswith('pad_')]
-    unload = float((info.get('pads') or {}).get('unload_ratio', 1.0))
+    # their crush law (sim/robot_v2.py, cad/body_battery.py PAD): the elastic force min(k x, plateau) while loading, and
+    # unload_ratio of it while unloading (a lattice's hysteresis), smoothly in the pad's speed; the joint carries the damper
+    pad_dofs = [(int(model.jnt_qposadr[j]), int(model.jnt_dofadr[j])) for j in range(model.njnt) if model.joint(j).name.startswith('pad_')]
+    pinfo = info.get('pads') or {}
+    pad_k, pad_fp = 1000.0 * float(pinfo.get('k_n_per_mm_each', 0.0)), float(pinfo.get('plateau_n_each', 1e9))
+    unload = float(pinfo.get('unload_ratio', 1.0))
     peak_body_n, lidar_touch, force6 = 0.0, None, np.zeros(6)
     peak_pads_n, peak_pad_n = 0.0, 0.0
     ctl = Ctl(rb, noise=noise, delay_steps=delay_steps)
@@ -282,9 +283,10 @@ def run(xml_path: Path, info: dict, sc: Scenario, video: Optional[Path] = None, 
         st = ctl.control(data, cmd, dt)
         if sc.motors_off_at is not None and t >= sc.motors_off_at:
             data.ctrl[:] = 0.0                       # power cut: every motor goes limp
-        for qa, va, kp in pad_dofs:
-            q, v = float(data.qpos[qa]), float(data.qvel[va])
-            data.qfrc_applied[va] = (1.0 - unload) * kp * max(q, 0.0) * 0.5 * (1.0 - math.tanh(v / 0.01))
+        for qa, va in pad_dofs:
+            q, v = max(float(data.qpos[qa]), 0.0), float(data.qvel[va])
+            f_el = min(pad_k * q, pad_fp)
+            data.qfrc_applied[va] = -f_el * (1.0 - (1.0 - unload) * 0.5 * (1.0 - math.tanh(v / 0.01)))
         turret.step(t, dt)
         mujoco.mj_step(model, data)
         pads_now, each_pad = 0.0, {}

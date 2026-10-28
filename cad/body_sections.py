@@ -113,8 +113,9 @@ TEXT = {
             ('D44', 'Two bent 3/16 in 5052 cheeks on eight M4 standoffs in the hip frames\' bolt rows',
              'the standoffs carry each leg\'s roll moment straight across to the other frame', 'a one-piece 36 mm U (SendCutSend '
              'cannot bend a channel whose base is under twice its flanges); 1/8 in cheeks (SF 0.6 in the landing)'),
-            ('D57', 'The design mass 32.5 kg, 16.25 kg a leg; a 32.0 kg ledger gate', 'the leg\'s loads scale with mass; the '
-             'gate keeps the robot honest against them', 'designing to the 26.8 kg estimate'),
+            ('D69', 'The design mass 35.5 kg, 17.75 kg a leg; a 35.0 kg ledger gate (it replaces D57\'s 32.5 / 32.0 kg)',
+             'the leg\'s loads scale with mass; the gate keeps the robot honest against them; D65\'s packs and D69\'s hub wheels '
+             'are heavier', 'designing to the 26.8 kg estimate; D57\'s 32.0 kg (the packs and wheels do not fit under it)'),
             ('this page', 'The tray and belly into the cheeks\' flange nuts with M5 x 12 (was x 10)', 'the integrity check: an '
              'M5 x 10 engaged 2.8 mm of the SS-M5-0\'s thread under the 3.2 mm tray', '-'),
         ],
@@ -235,8 +236,9 @@ def main():
          'reaches the cheeks.', '',
          f"**Integrity now:** {s.get('joints')} joints, {s.get('screws')} screws; joints with problems: "
          f"{', '.join(s.get('joints_with_problems') or []) or 'none'}; floating parts: {s.get('floating') or 'none'}; "
-         f"interference between body parts: {s.get('clashes')}.", '',
-         f"**Mass (P3, the ledger):** {g3.get('total_kg')} kg against the 32.0 kg gate (D57): "
+         f"interference between body parts: {s.get('clashes')}; cad-agent's connectivity gate (issue #14): "
+         f"{', '.join(f'{k} ' + ('pass' if v else 'FAIL') for k, v in (s.get('connectivity_pass') or {}).items()) or 'not run'}.", '',
+         f"**Mass (P3, the ledger):** {g3.get('total_kg')} kg against the {(g3.get('budget') or {}).get('robot_kg')} kg gate (D69): "
          + ', '.join(f'{k} {v} kg' for k, v in (g3.get('groups_kg') or {}).items()) + '. '
          f"With the scheduled levers {((g3.get('gate') or {}).get('with_scheduled_levers_kg'))} kg: "
          f"{'passes' if (g3.get('gate') or {}).get('pass') else 'over: section 6'}.", '']
@@ -250,9 +252,13 @@ def main():
         o += ['', '**Decisions:**', '', '| | Choice | Why | Turned down |', '|---|---|---|---|']
         o += [f'| {d} | {c} | {w} | {a} |' for d, c, w, a in t['decisions']]
         if k == 'power':
-            o += ['', f"The bay: {b['bay_mm'][0]} x {b['bay_mm'][1]} x {b['bay_mm'][2]} mm, its bottom at z {b['bay_bottom_z']}; the robot "
-                  f"sits on its skids under a {b['sits_on_skids_below_leg_mm']} mm leg; {b['clearance_at_150_mm']} mm off the floor at a "
-                  f"150 mm leg, {b['clearance_at_300_mm']} at 300; {b['knee_gap_mm']} mm from the knee eyes."]
+            pad = b.get('pad') or {}
+            o += ['', f"The bay: {b['bay_mm'][0]} x {b['bay_mm'][1]} x {b['bay_mm'][2]} mm with its crush pads, their bottom at z "
+                  f"{b['bay_bottom_z']}; on D69's 10 in wheels the robot sits on the pads under a {b['sits_on_skids_below_leg_mm']} mm leg; "
+                  f"{b['clearance_at_lowest_leg_mm']} mm under them at the lowest controlled leg ({pad.get('lowest_leg_mm')} mm), "
+                  f"{b['clearance_at_300_mm']} at 300; {b['knee_gap_mm']} mm from the knee eyes. The pads (issue #19): printed TPU 95A "
+                  f"gyroid, {pad.get('h')} mm, a {pad.get('plateau_n')} N crush plateau each over {pad.get('stroke')} mm "
+                  '(sim/bay_pad_study.py, exports/body/bay-pad-study.json and bay-pad-depth.json)."]
         if k == 'frame':
             r = fea.get('results', {})
             o += ['', 'Strength (cad/body_studies.py at 16.25 kg a leg): ' + '; '.join(
@@ -280,18 +286,20 @@ def main():
           '']
     # mass
     gate = g3.get('gate') or {}
-    o += ['## 6. The mass gate after D65', '',
-          f"The P3 ledger is {g3.get('total_kg')} kg; with every scheduled lever {gate.get('with_scheduled_levers_kg')} kg against the "
-          f"32.0 kg ceiling (D57): {gate.get('gap_kg')} kg over before the levers. The battery group is "
-          f"{(g3.get('groups_kg') or {}).get('battery')} kg (two DCB609 at DeWalt US's 1565 g each, their adapters and plates; the bay's "
-          'floor, sides and rails are in the frame group). The 13S2P brick it replaces was 1.54 kg. The ceiling is not relaxed here: '
-          'where the mass can come from, in the order the plan ranks them:', '',
-          f"1. the on-call levers the gate names next: {', '.join(gate.get('on_call_next') or [])} (docs/body-frame.md 4);",
-          '2. DeWalt 20 V MAX 5.0 Ah packs (DCB205 or the PowerStack DCBP520) in the same bay and adapters: about half the mass '
-          'and half the energy of the DCB609 (their masses to read from DeWalt\'s pages before this is costed);',
-          '3. a design mass above 32.5 kg, if the leg workstream re-runs the leg\'s strength cases at the new half-mass '
-          '(the leg rig reached 60 N m at 16.25 kg on 10S: D65).', '',
-          'The choice between them is the coordinator\'s and the user\'s (issue #10).', '']
+    lv = {l['key']: l for l in (g3.get('levers') or [])}
+    oc = [l for l in (g3.get('levers') or []) if l['kind'] == 'on call' and l['status'] == 'open']
+    o += ['## 6. The mass gate after D69', '',
+          f"The P3 ledger is {g3.get('total_kg')} kg; with every scheduled lever {gate.get('with_scheduled_levers_kg')} kg against "
+          f"D69's {gate.get('ceiling_kg')} kg ceiling (35.5 kg design mass): {-(gate.get('margin_kg') or 0):+.2f} kg. The wheels are "
+          "D69's 10 in hub motors at the listed 3.53 kg each (the BotWheel was 2.2 kg); the battery group is "
+          f"{(g3.get('groups_kg') or {}).get('battery')} kg (two DCB609 at DeWalt US's 1565 g each). D69's ceiling was set from a "
+          'ledger before D65\'s packs, so it sits about 1 kg under the two decisions together. The ceiling is not relaxed here; '
+          'the on-call levers, none taken without the user\'s or the coordinator\'s word (issue #10):', '',
+          '| # | Lever | g | Stage |', '|---|---|---|---|']
+    o += [f"| {l['n']} | {l['what']} | {l['grams']} | {l['stage']} |" for l in oc]
+    o += ['', 'The body-only ones (11-14, 16) are worth 0.8-1.0 kg: not enough alone. Closing the gap needs the wheel weighing '
+          'under its listing, the 8.5 in backup, lighter packs, or the ceiling at about 36.1 kg if the leg re-runs its cases at '
+          'about 18.3 kg a leg (the wheel study\'s rig already ran 18.05 kg a leg under 120 N m).', '']
     DOC.write_text('\n'.join(o) + '\n')
     print(f'{DOC.relative_to(R)}: {sum(1 for x in o if x.startswith("| ") and "NOT HELD" in x)} parts not held')
 

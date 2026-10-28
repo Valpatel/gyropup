@@ -3,6 +3,7 @@ body's impact under 3,000 N.
 
     python -m sim.robot_v2 && python -m sim.bay_pad_study          # -> exports/body/bay-pad-study.json
     python -m sim.bay_pad_study quick                               # the pad as designed only (no sweep)
+    python -m sim.bay_pad_study depth                               # deeper pads (rebuilds the model): -> bay-pad-depth.json
 
 sim/robot_v2.py models each of the four pads (cad/body_battery.py PAD) as a body on a slide joint under the bay's floor:
 a spring k and a damper c over its stroke, then the joint's limit as the densified lattice (a stiff, critically damped
@@ -13,7 +14,8 @@ This study, on D69's robot (10 in hub wheels, the ledger's mass):
   1. the pad as designed in the three falls (front, back, side): the peak through the pads, each pad's peak, the
      deepest stroke, whether a pad bottomed, the speed at first touch, and the body's largest direct contact;
   2. a baseline with the pads made rigid (the old 3 mm skids' behaviour, at the pads' depth);
-  3. a sweep of k and c at the design stroke (fall_side and fall_back) to show the margin round the chosen pad;
+  3. a sweep of the crush plateau and c at the design k, stroke and rebound, of the rebound (unload_ratio) at the design k and c, and of
+     the falls' pushes (x0.6 to x1.4), to show the margin round the chosen pad;
   4. the chosen pad with 1.0 kg more on the base (the ledger is already over D69's 35.5 kg design mass; this covers the
      4.0 kg wheels or the turret branch's heavier head).
 """
@@ -36,9 +38,10 @@ from sim import scenarios as S  # noqa: E402
 BUILD = R / 'build' / 'sim' / 'v2'
 OUT = R / 'exports' / 'body' / 'bay-pad-study.json'
 FALLS = ('fall_front', 'fall_back', 'fall_side')
-K_SWEEP = (20.0, 40.0, 60.0, 80.0, 120.0)     # N/mm a pad
-C_SWEEP = (100.0, 150.0, 250.0, 500.0)       # N s/m a pad: a TPU lattice's hysteresis (restitution ~0.7) is ~150-300 at 40-80 N/mm
-UNLOAD_SWEEP = (0.3, 0.5, 0.7, 1.0)          # the share of k x a pad gives back unloading (1.0: no hysteresis)
+P_SWEEP = (450.0, 600.0, 750.0, 1000.0, 1e9)   # N a pad: the crush plateau (1e9: a linear pad, no plateau)
+C_SWEEP = (50.0, 100.0, 250.0)               # N s/m a pad
+UNLOAD_SWEEP = (0.0, 0.1, 0.2, 0.3, 0.5, 1.0)  # the share of k x a pad gives back unloading (1.0: an ideal spring)
+PUSHES = (0.6, 0.8, 1.2, 1.4)                # the falls' pushes scaled: how robust the landing is
 HEAVY_KG = 1.0                               # the ledger + 1.0 kg at the base's centre: the 4.0 kg wheels (+0.94) or the turret
                                              # branch's 2.55 kg head (+0.85); the ledger already exceeds D69's 35.5 kg design mass
 LIMIT_N = 3000.0
@@ -63,12 +66,10 @@ def _watch(model, data):
                 break
 
 
-def set_pad(xml: str, k=None, c=None, stroke=None) -> str:
-    """The pads' joints with another k (N/mm), c (N s/m) or stroke (mm)."""
+def set_pad(xml: str, c=None, stroke=None) -> str:
+    """The pads' joints with another damper c (N s/m) or stroke (mm)."""
     def sub(m):
         j = m.group(0)
-        if k is not None:
-            j = re.sub(r'stiffness="[^"]*"', f'stiffness="{k * 1000.0:.1f}"', j)
         if c is not None:
             j = re.sub(r'damping="[^"]*"', f'damping="{c:.1f}"', j)
         if stroke is not None:
@@ -87,7 +88,8 @@ def with_ballast(xml: str, extra_kg: float) -> str:
     return re.sub(r'(<freejoint name="root"/>\s*<inertial pos="[^"]*" )mass="([^"]*)" fullinertia="([^"]*)"/>', sub, xml, count=1)
 
 
-def fall(xml_text: str, info: dict, name: str, unload=None) -> dict:
+def fall(xml_text: str, info: dict, name: str, **pad) -> dict:
+    """One fall with the pads' law changed by pad (k_n_per_mm_each, plateau_n_each, unload_ratio); c is in the XML."""
     m = mujoco.MjModel.from_xml_string(xml_text)                   # robot.xml names its mesh folder itself
     pads = [(j, int(m.jnt_qposadr[j]), int(m.jnt_dofadr[j])) for j in range(m.njnt) if m.joint(j).name.startswith('pad_')]
     pad_geoms = {g for g in range(m.ngeom) if m.body(m.geom_bodyid[g]).name.startswith('pad_')}
@@ -99,7 +101,7 @@ def fall(xml_text: str, info: dict, name: str, unload=None) -> dict:
         _rec.clear()
         _rec.update(pads=pads, pad_geoms=pad_geoms, max_stroke=0.0, touch=None)
         mujoco.mj_step = _watch
-        inf = info if unload is None else {**info, 'pads': {**info['pads'], 'unload_ratio': unload}}
+        inf = {**info, 'pads': {**info['pads'], **pad}}
         r = S.run(p, inf, S.SCENARIOS[name])
     finally:
         mujoco.mj_step = _orig_step
@@ -110,7 +112,55 @@ def fall(xml_text: str, info: dict, name: str, unload=None) -> dict:
             'first_touch': _rec['touch']}
 
 
+DEPTHS = (25.0, 35.0, 45.0)                  # pad free height (mm); the lowest controlled leg that keeps 40 mm under it
+DEPTH_PLATEAUS = (600.0, 750.0, 900.0, 1050.0)
+DEPTH_PUSHES = (0.6, 1.0, 1.4)
+
+
+def scaled(name: str, f: float) -> str:
+    """A copy of a fall with its push scaled by f, registered under a temporary name."""
+    sc = S.SCENARIOS[name]
+    key = f'_{name}_x{f}'
+    S.SCENARIOS[key] = S.replace(sc, name=key, pushes=[S.replace(q, impulse_ns=q.impulse_ns * f) for q in sc.pushes])
+    return key
+
+
+def depth():
+    """The pad's free height against the falls: for each depth (the model rebuilt with GYROPUP_PAD_H, stroke 0.6 h), each
+    plateau at c 100 N s/m, each fall at its push x0.6, x1.0 and x1.4. A pad passes when every one of the nine stays
+    under 3,000 N with nothing else failing. The model is rebuilt as designed at the end."""
+    import os
+    import subprocess
+    out = {'limit_n': LIMIT_N, 'c_ns_per_m': 100.0, 'rows': []}
+    for h in DEPTHS:
+        env = dict(os.environ, GYROPUP_PAD_H=str(h))
+        subprocess.run([sys.executable, '-m', 'sim.robot_v2'], cwd=R, env=env, check=True, stdout=subprocess.DEVNULL)
+        xml = set_pad((BUILD / 'robot.xml').read_text(), c=100.0)
+        info = json.loads((BUILD / 'model.json').read_text())
+        lowest = 160.0 + (h - 25.0)                                    # 40 mm under the pad at the lowest controlled leg
+        for fp in DEPTH_PLATEAUS:
+            row = {'h_mm': h, 'stroke_mm': round(0.6 * h, 1), 'lowest_leg_mm': lowest, 'plateau_n': fp, 'runs': {}}
+            for n in FALLS:
+                for f in DEPTH_PUSHES:
+                    r = fall(xml, info, scaled(n, f), plateau_n_each=fp)
+                    row['runs'][f'{n} x{f}'] = {k: r[k] for k in ('pass', 'reasons', 'body_impact_peak_n', 'max_stroke_mm', 'bottomed')}
+            row['worst_n'] = max(v['body_impact_peak_n'] for v in row['runs'].values())
+            row['all_pass'] = all(v['pass'] for v in row['runs'].values())
+            row['max_stroke_mm'] = max(v['max_stroke_mm'] for v in row['runs'].values())
+            out['rows'].append(row)
+            print('depth', h, fp, row['worst_n'], row['max_stroke_mm'], row['all_pass'],
+                  [(k, v['reasons']) for k, v in row['runs'].items() if not v['pass']], flush=True)
+    subprocess.run([sys.executable, '-m', 'sim.robot_v2'], cwd=R, check=True, stdout=subprocess.DEVNULL)
+    ok = [r for r in out['rows'] if r['all_pass']]
+    out['verdict'] = {'passing': [(r['h_mm'], r['plateau_n'], r['worst_n']) for r in ok],
+                      'shallowest_passing_h_mm': min((r['h_mm'] for r in ok), default=None)}
+    (OUT.parent / 'bay-pad-depth.json').write_text(json.dumps(out, indent=1) + '\n')
+    print(out['verdict'])
+
+
 def main():
+    if 'depth' in sys.argv[1:]:
+        return depth()
     quick = 'quick' in sys.argv[1:]
     xml = (BUILD / 'robot.xml').read_text()
     info = json.loads((BUILD / 'model.json').read_text())
@@ -121,29 +171,41 @@ def main():
         out['as_designed'][name] = fall(xml, info, name)
         print('as designed', name, out['as_designed'][name], flush=True)
     if not quick:
-        rigid = set_pad(xml, k=1000.0, c=500.0, stroke=0.2)             # the pads made rigid (0.2 mm): the old skids at their depth
+        rigid = set_pad(xml, c=500.0, stroke=0.2)                       # the pads made rigid (0.2 mm), at their depth
         for name in FALLS:
-            out['rigid'][name] = fall(rigid, info, name)
+            out['rigid'][name] = fall(rigid, info, name, k_n_per_mm_each=1000.0, plateau_n_each=1e9)
             print('rigid', name, out['rigid'][name], flush=True)
-        for k in K_SWEEP:
+        for fp in P_SWEEP:
             for c in C_SWEEP:
-                x = set_pad(xml, k=k, c=c)
-                row = {'k_n_per_mm': k, 'c_ns_per_m': c}
+                x = set_pad(xml, c=c)
+                row = {'plateau_n': fp, 'c_ns_per_m': c}
                 for name in FALLS:
-                    row[name] = fall(x, info, name)
+                    row[name] = fall(x, info, name, plateau_n_each=fp)
                 row['worst_n'] = max(row[n]['body_impact_peak_n'] for n in FALLS)
                 row['bottomed'] = any(row[n]['bottomed'] for n in FALLS)
                 row['max_stroke_mm'] = max(row[n]['max_stroke_mm'] for n in FALLS)
                 row['all_pass'] = all(row[n]['pass'] for n in FALLS)
                 out['sweep'].append(row)
-                print('sweep', k, c, row['worst_n'], row['max_stroke_mm'], row['bottomed'], row['all_pass'], flush=True)
+                print('sweep', fp, c, row['worst_n'], row['max_stroke_mm'], row['bottomed'], row['all_pass'], flush=True)
         out['unload_sweep'] = []                                         # the lattice's hysteresis, the least known number
         for u in UNLOAD_SWEEP:
-            row = {'unload_ratio': u, **{n: fall(xml, info, n, unload=u) for n in FALLS}}
+            row = {'unload_ratio': u, **{n: fall(xml, info, n, unload_ratio=u) for n in FALLS}}
             row['worst_n'] = max(row[n]['body_impact_peak_n'] for n in FALLS)
             row['all_pass'] = all(row[n]['pass'] for n in FALLS)
             out['unload_sweep'].append(row)
             print('unload', u, row['worst_n'], row['all_pass'], [(n, row[n]['reasons']) for n in FALLS if not row[n]['pass']], flush=True)
+        out['push_sweep'] = []
+        for f in PUSHES:
+            row = {'push_scale': f}
+            for n in FALLS:
+                sc = S.SCENARIOS[n]
+                S.SCENARIOS['_scaled'] = S.replace(sc, name=f'{n}_x{f}', pushes=[S.replace(q, impulse_ns=q.impulse_ns * f) for q in sc.pushes])
+                row[n] = fall(xml, info, '_scaled')
+            S.SCENARIOS.pop('_scaled', None)
+            row['all_pass'] = all(row[n]['pass'] for n in FALLS)
+            row['worst_n'] = max(row[n]['body_impact_peak_n'] for n in FALLS)
+            out['push_sweep'].append(row)
+            print('push', f, row['worst_n'], row['all_pass'], [(n, row[n]['reasons']) for n in FALLS if not row[n]['pass']], flush=True)
         xb = with_ballast(xml, HEAVY_KG)
         out['heavy'] = {'kg': round(info['total_mass_kg'] + HEAVY_KG, 2), 'ballast_kg': HEAVY_KG}
         for name in FALLS:

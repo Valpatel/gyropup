@@ -11,8 +11,8 @@ Why the belly, again (the alternatives in docs/body-sections.md 1): a pack is 13
 above the belly plate has 122 mm of height free over a 138 x 87 footprint (the floor tray carries the J501 and the
 power plate; the deck has 120 mm under it and the turret over it); on the front and rear faces the packs would grow the
 body 244 mm, sit in the lidar's lowest beam and the eyes', and hang where a child grabs them. In the belly they are low
-(the robot's centre falls), boxed, and between the legs, at a price: the bay is 132 mm deep, so the robot sits on its
-skids when its legs are under 139 mm (it never runs under 150: sim/robot_v2.py H_RANGE).
+(the robot's centre falls), boxed, and between the legs, at a price: the bay is 132 mm deep, so with D69's 10 in wheels
+the robot sits on its crush pads when its legs are under 140 mm (it never runs under 180: sim/robot_v2.py H_RANGE).
 
 The bay (one design from P1 on; the 13S2P's printed P0-P2 bay and P3 tub are gone):
   - two printed PA6-CF adapter plates screwed up into the belly plate's PEM nuts (4 x M4 each); each adapter screws to
@@ -22,13 +22,14 @@ The bay (one design from P1 on; the 13S2P's printed P0-P2 bay and P3 tub are gon
     XT90 pair and the two leads' way up through the belly's slot into the spine's gap
   - a SendCutSend 5052 0.063 floor (a U, its 20 mm flanges up) and two flat side plates with lightening windows, the
     sides screwed to the floor's flange nuts and to two printed rails, the rails screwed up into the belly's nuts
-  - two PETG end doors on two knurled M3 thumbscrews each (tool-free), four TPU 95A gyroid crush pads on VHB tape under the floor
+  - two PETG end doors on two knurled M3 thumbscrews each (tool-free), four printed TPU crush pads on VHB tape under the floor
     (issue #19): the robot sits on them
 """
 from __future__ import annotations
 
 import functools
 import math
+import os
 
 import cadquery as cq
 
@@ -56,18 +57,30 @@ TUB_STOCK = '5052-0.063'
 TUB_FLANGE = 20.0
 # Issue #19: four crush pads under the floor in place of the 3 mm skids. D69's 10 in wheels lift the body 41 mm at every
 # leg length, so the old skids would never reach the floor (they touched under a 98 mm leg; the leg folds to 101.5 mm on its
-# stops): the pads reach down instead. Each pad is a printed TPU 95A HF gyroid block (the lattice's density, not the shore
-# hardness, sets its stiffness: the stock P1S filament) on VHB tape, and in sim/robot_v2.py a body
-# on a slide joint: a spring (k), a damper (c), a stroke, then the densified lattice as a stiff stop. The robot sits on
-# them (D55, D69's parking brake). Sizing: sim/bay_pad_study.py, exports/body/bay-pad-study.json.
-#   h       its free height under the floor: the floor at 65.4 mm over the ground at the lowest controlled leg (160 mm)
-#           less h keeps D69's 40 mm (puddles, the rolling step) under the pads; they touch the ground under a 119.7 mm leg
-#   stroke  0.6 h: a gyroid lattice densifies past about 60 % strain (the coupon test checks it)
-#   k, c    the pair of numbers the study sized, per pad (N/mm, N s/m)
-#   unload_ratio  the lattice's hysteresis: unloading, its spring gives back this share of k x (an elastomer lattice
-#           dissipates about half of a large compression in its first cycles; the coupon's rebound height measures it)
-PAD = {'h': 25.0, 'w': 30.0, 'stroke': 15.0, 'k_n_per_mm': 80.0, 'c_ns_per_m': 250.0, 'unload_ratio': 0.5, 'material': 'tpu95-gyroid',
-       'wheel_r': 127.0, 'basis': 'issue #19: sized by sim/bay_pad_study.py at the D69 mass; coupon drop test to confirm k and c'}
+# stops): the pads reach down instead, and the robot sits on them (D55; D69's parking brake). Each is a printed TPU 95A HF
+# gyroid block on VHB tape: a crush lattice, whose force rises to a plateau and stays there while its cells buckle, until
+# it densifies. In sim/robot_v2.py and sim/scenarios.py each pad is a body on a slide joint with that force law: min(k x,
+# the plateau) plus a damper c while it loads, unload_ratio of the elastic part while it unloads (the lattice's
+# hysteresis), the densified pad past its stroke as a stiff stop. Sizing: sim/bay_pad_study.py, exports/body/bay-pad-study.json.
+#   h       free height 45 mm. The falls need it: a pad lands either flat on all four (a gentle push) or on two (the front
+#           and back falls), and a crush pad's plateau must be low enough for four together (<= ~650 N each under
+#           3,000 N) yet absorb the two-pad landing's ~30 J within its stroke: 25 mm (at the 160 mm lowest controlled leg)
+#           and 35 mm pads fail some of the nine falls at every plateau; 45 mm with a 600 N plateau passes all nine
+#           (sim/bay_pad_study.py depth, exports/body/bay-pad-depth.json). So the lowest controlled leg rises from 160 to
+#           180 mm (sim/robot_v2.py H_RANGE; the leg's stops do not move), which keeps D69's 40 mm under the pads (puddles,
+#           the rolling step); they touch the ground under a 140 mm leg
+#   w       24 mm under each of the floor's long edges, front and rear halves of its length
+#   stroke  0.6 h: a gyroid lattice densifies past about 60 % strain
+#   k       its initial stiffness, per pad (N/mm): a crush lattice reaches its plateau within ~10 % strain;
+#           plateau_n its crush force, per pad (N); c its damper (N s/m)
+#   unload_ratio  the share of the elastic force a pad pushes back with while it unloads. The study's finding: a pad that
+#           gives back much of what it stores bounces the robot in the back fall and tips it onto its face (the lidar
+#           strikes the floor). The coupon's drop and rebound test measures it
+PAD = {'h': 45.0, 'w': 24.0, 'l': None, 'stroke': 27.0, 'k_n_per_mm': 500.0, 'plateau_n': 600.0, 'c_ns_per_m': 100.0,
+       'unload_ratio': 0.2, 'material': 'tpu95-gyroid', 'wheel_r': 127.0, 'lowest_leg_mm': 180.0,
+       'basis': 'issue #19: sized by sim/bay_pad_study.py on the D69 model; a coupon drop test to confirm k, the plateau and the rebound'}
+if os.environ.get('GYROPUP_PAD_H'):          # a study's deeper pad (sim/bay_pad_study.py depth): stroke 0.6 h
+    PAD.update(h=float(os.environ['GYROPUP_PAD_H']), stroke=0.6 * float(os.environ['GYROPUP_PAD_H']))
 SKID_T = PAD['h']
 RAIL_W, RAIL_H = 8.0, 10.0                   # the printed rails at the top, inside the side plates
 THUMB = {'thread': 'M3', 'length': 10.0}     # the doors' knurled thumbscrews into the rails' end inserts
@@ -121,7 +134,7 @@ def summary():
             'wh_rated': 2 * PACK['wh_rated'], 'packs_kg': round(2 * PACK['mass_g'] / 1000, 2),
             'bay_mm': [round(g['x_out'][1] - g['x_out'][0], 1), round(2 * g['side_out'], 1), round(g['z_belly'] - g['z_bottom'], 1)],
             'bay_bottom_z': round(g['z_bottom'], 1), 'sits_on_skids_below_leg_mm': round(sit, 1),
-            'clearance_at_150_mm': round(150 + wheel_r + g['z_bottom'], 1), 'clearance_at_160_mm': round(160 + wheel_r + g['z_bottom'], 1),
+            'clearance_at_lowest_leg_mm': round(PAD['lowest_leg_mm'] + wheel_r + g['z_bottom'], 1),
             'clearance_at_300_mm': round(300 + wheel_r + g['z_bottom'], 1), 'pad': {k: v for k, v in PAD.items() if k != 'basis'},
             'knee_gap_mm': round(83.0 - g['side_out'], 1), 'adapter': ADAPTER['basis']}
 
@@ -260,16 +273,16 @@ def door(front):
 
 
 def pad_boxes():
-    """The four crush pads' boxes (x0, x1, y0, y1, z0, z1), robot frame: under the floor's long edges, front and rear."""
+    """The four crush pads' boxes (x0, x1, y0, y1, z0, z1), robot frame: under the floor's long edges, front and rear halves."""
     g = geometry()
     W = 2 * g['side_in'] - 0.1
     half = (g['x_in'][1] - g['x_in'][0] - 12) / 2
+    ln = PAD['l'] or half
     out = []
     for sy in (1.0, -1.0):
-        for j in range(2):
-            x0 = g['x_in'][0] + 5 + j * (half + 2)
+        for x0 in (g['x_in'][0] + 5.0, g['x_in'][1] - 5.0 - ln):
             y0, y1 = sorted((sy * (W / 2 - 1.0), sy * (W / 2 - 1.0 - PAD['w'])))
-            out.append((x0, x0 + half, y0, y1, g['z_bottom'], g['z_floor']))
+            out.append((x0, x0 + ln, y0, y1, g['z_bottom'], g['z_floor']))
     return out
 
 
@@ -301,6 +314,7 @@ def bay_parts() -> dict:
                                     note='PETG; two knurled M3 x 10 thumbscrews into the rails\' ends', print_rotation=((0, 1, 0), 90))
     for i, sk in enumerate(skids()):
         out[f'bay_skid_{i + 1}'] = Part(f'bay_skid_{i + 1}', 'printed', sk, 1, material=PAD['material'], colour=(0.15, 0.15, 0.17),
-                                        note=f"crush pad (#19): TPU 95A HF gyroid, {PAD['h']:.0f} mm free, {PAD['stroke']:.0f} mm stroke, on 3M VHB "
-                                             'tape (no screw: under the packs there is 1 mm); the robot sits on these')
+                                        note=f"crush pad (#19): TPU 95A HF gyroid lattice, {PAD['h']:.0f} mm free, {PAD['stroke']:.0f} mm stroke, "
+                                             f"{PAD['plateau_n']:.0f} N plateau, on 3M VHB tape (no screw: under the packs there is 1 mm); "
+                                             'the robot sits on these')
     return out
