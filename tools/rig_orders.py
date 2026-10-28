@@ -36,6 +36,10 @@ BENCH_EXTRA = [
     ('washer_3_8', 1, 'B4: under the M8 screw under test'),
     ('hx711', 1, 'B3, B4: the load cell\'s own amplifier on the rig node'),
 ]
+# a backup for a leg line catalog/alternates.json has none for (read on the date given)
+LEG_BACKUPS = {'screw_m5x25': {'supplier': 'Bolt Depot', 'part_number': '6524 (M5 x 25 class 12.9 black oxide)',
+                               'url': 'https://boltdepot.com/Product-Details?product=6524', 'price': '$0.15 / ea ($10.11 / 100)',
+                               'price_usd_each': 0.15, 'checked': '2026-10-27'}}
 SHARED = re.compile(r'Same part as catalog/(hardware|turret)\.json ([\w.-]+?)[.;]?(?:\s|$)')
 
 
@@ -69,7 +73,7 @@ def leg_lines() -> list:
         row = {'key': r['key'], 'group': 'leg', 'qty': r['qty'], 'name': r.get('name') or r['key'], 'used_for': r.get('for', ''),
                'vendor': r.get('vendor'), 'model': r.get('part_number'), 'price_usd': r.get('price_usd_each'), 'pack_qty': pack,
                'pack_price_usd': it.get('pack_price_usd') or ((r.get('price_usd_each') or 0) * pack),
-               'url': url, 'stock': None, 'checked': it.get('price_checked'), 'alternates': list(alts.get(r['key'], [])), 'notes': ''}
+               'url': url, 'stock': None, 'checked': it.get('price_checked'), 'alternates': list(alts.get(r['key'], [])) or ([LEG_BACKUPS[r['key']]] if r['key'] in LEG_BACKUPS else []), 'notes': ''}
         if r['key'] == 'odrive-botwheel':                            # sold as a 2-pack: the second wheel is the other leg's
             row.update(qty=1, name='ODrive BotWheel BW0124, 2-pack', price_usd=269.0, pack_qty=1, pack_price_usd=269.0,
                        url='https://wwshop.odriverobotics.com/products/botwheels', stock='2-pack orderable (single sold out)')
@@ -155,7 +159,8 @@ def filament_lines() -> list:
                      'used_for': f'{g / 1000:.2f} kg of parts (leg, rig, bench fixtures and coupons) + 25 % for supports, purge and a reprint',
                      'vendor': 'Bambu Lab (US store)', 'model': names.get(m, m), 'price_usd': price, 'pack_qty': 1, 'pack_price_usd': price,
                      'url': 'https://us.store.bambulab.com/', 'stock': None, 'checked': '2026-10-25 (catalog/materials.json)',
-                     'alternates': [{'supplier': 'Gigaparts', 'price': '$79.99/kg PA6-CF, in stock (read 2026-10-27, docs/leg-prototype-plan.md 6.1)'}] if m == 'pa6-cf' else [],
+                     'alternates': [{'supplier': 'Gigaparts', 'price': '$79.99/kg PA6-CF, in stock (read 2026-10-27, docs/leg-prototype-plan.md 6.1)'}] if m == 'pa6-cf'
+                     else [{'supplier': 'any maker', 'price': f'the same material ({m}); the print plans assume Bambu\'s settings'}],
                      'notes': ''})
     return rows
 

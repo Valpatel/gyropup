@@ -244,7 +244,7 @@ F1 updates STOP_K and STOP_TRAVEL from `sim-params.json`.
 
 **Set-up:**
 - The cell hangs from the top beam.
-- An M12 x 80 stud from the cell's lower thread carries a puller. The M12 nut goes in the puller's side pocket.
+- An M12 x 75 stud (80 also fits) from the cell's lower thread carries a puller. The M12 nut goes in the puller's side pocket.
 - Screw the puller down the stud until its insert face is 5 mm above the bottom beam.
 - The puller's wings bear on the side walls, so the screw's torque never reaches the cell.
 - The screw under test comes up from below the bottom beam, into the insert.
