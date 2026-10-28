@@ -18,7 +18,8 @@ runs in a background thread, so the turret stays armed while the operator reads 
 strength) need neither firmware nor CAN and are not here.
 
 Hard rules the script never relaxes: it never asks for a tilt above level (the firmware clamps it anyway), never fires
-on 24 V (test 4.6 runs with the feed servo unplugged and no balls), and never arms without the operator's pendant.
+with the converter bypassed (test 4.6 runs with the feed servo unplugged and no balls), and never arms without
+the operator's pendant.
 """
 from __future__ import annotations
 
@@ -375,9 +376,9 @@ def r1(x, n=1):
 
 
 def boot(tt: Turret, b: Bench, timeout: float = 20.0) -> bool:
-    """Wait for the turret's heartbeat and its homing; send the bench CONFIG (Ø34, the bench mount, the ring)."""
+    """Wait for the turret's heartbeat and its homing; send the bench CONFIG (Ø38, the bench mount, the ring)."""
     ok = tt.wait_for(lambda: tt.homed() and tt.state() in ('IDLE', 'FAULT', 'ARMED'), timeout)
-    tt.config(M.CF_TYRE, a=34)
+    tt.config(M.CF_TYRE, a=C.TYRE_DESIGN_MM)
     tt.config(M.CF_MOUNT, a=M.MOUNTS.index('bench'))
     tt.config(M.CF_RING, a=1)
     tt.wait(0.1)
@@ -545,7 +546,7 @@ def t_trip(tt, b, r):
     b.pendant(True)
     win_ms = C.GATE_SPACING_M / (C.TRIP_FPS * C.FPS) * 1000.0
     rows = []
-    for ms in (1.3, 2.2, 2.4, 2.6, 2.9, 3.0, 3.1, 3.3):
+    for ms in (1.3, 1.6, 1.75, 1.8, 1.85, 1.9, 1.95, 2.1):     # D68: the window is 1.875 ms (105 fps over 60 mm)
         b.do('Press the recessed trip reset', lambda: b.hw.reset_trip())
         tt.wait(0.1)
         t0 = tt.now()
@@ -567,15 +568,15 @@ def t_trip(tt, b, r):
     tt.wait(0.2)
     cleared = not tt.flags() & M.H_TRIP and bool(tt.flags() & M.H_ARM)
     b.pendant(False)
-    r.reading('window_ms_for_66fps_over_60mm', round(win_ms, 3))
+    r.reading('window_ms_for_trip_fps_over_60mm', round(win_ms, 3))
     r.reading('pairs', rows)
     sel = [x['pair_ms'] for x in rows if x['latched']]
     r.reading('boundary_ms', {'largest_latched': max(sel) if sel else None,
                               'smallest_not_latched': min([x['pair_ms'] for x in rows if not x['latched']] or [None])})
     for x in rows:
-        if x['pair_ms'] <= 2.9:
+        if x['pair_ms'] <= 1.8:
             r.check(f"{x['pair_ms']} ms ({x['pair_fps']} fps) latches", x['latched'], x['latched'], 'latched')
-        elif x['pair_ms'] >= 3.1:
+        elif x['pair_ms'] >= 1.95:
             r.check(f"{x['pair_ms']} ms ({x['pair_fps']} fps) does not", x['latched'], not x['latched'], 'not latched')
         if x['latched']:
             r.check(f"ARM held low while latched ({x['pair_ms']} ms)", x['arm_while_latched'],
@@ -586,9 +587,8 @@ def t_trip(tt, b, r):
     r.check('the latch holds until the button (a slower pair after the trip does not clear it)', held and arm_low, held and arm_low,
             'latched, ARM low after 1 s')
     r.check('the button clears it and ARM returns', cleared, cleared, 'cleared')
-    r.note('Judged on the 60 mm gates\' window (2.98 ms = 66 fps): latch at <= 2.9 ms, none at >= 3.1 ms, 3.0 ms is '
-           'inside the R selection band. The plan\'s "latched at <= 2.4 ms, not at >= 2.6 ms" is the 50 mm gates\' '
-           'boundary (2.49 ms): with 60 mm gates a 2.6 ms pair is 75.7 fps and must latch.')
+    r.note('Judged on the 60 mm gates\' window (1.875 ms = 105 fps, D68): latch at <= 1.80 ms (109 fps), none at >= 1.95 ms '
+           '(101 fps); 1.85 and 1.9 ms are inside the band the 30 us edge jitter and a 1 % timing part allow (+-2.7 fps).')
 
 
 @test('3.4', 'Brake timing with a lamp: BRAKE after ARM falls, and before 12 V FLY returns', 'brake_timing',
@@ -842,7 +842,7 @@ def t_feed_servo(tt, b, r):
 
 
 # ===================================================================================== 5.4 flywheels
-@test('4.1', 'No-load eRPM at 100 % throttle on the 12 V rail', 'ceiling_noload', hopper=0)
+@test('4.1', 'No-load eRPM at 100 % throttle on the trimmed rail (the D68 trim)', 'ceiling_noload', hopper=0)
 def t_ceiling_noload(tt, b, r):
     boot(tt, b)
     arm(tt, b)
@@ -853,7 +853,7 @@ def t_ceiling_noload(tt, b, r):
     tail = [x for x in held if x[0] >= held[-1][0] - 1.0] if held else []
     rl = [x[1] for x in tail]
     rr = [x[2] for x in tail]
-    rail = b.ask('rail_v', 'Multimeter: 12 V FLY at the ESCs under load (V)', lambda: round(b.hw.rail_v, 2))
+    rail = b.ask('rail_v', 'Multimeter: the FLY rail at the ESCs under load (V)', lambda: round(b.hw.rail_v, 2))
     disarm(tt, b)
     lim_plan = C.ERPM_LIMIT / C.POLE_PAIRS
     r.reading('rpm_left', stats(rl))
@@ -861,15 +861,15 @@ def t_ceiling_noload(tt, b, r):
     r.reading('erpm_max', round(max(rl + rr) * C.POLE_PAIRS) if rl else None)
     r.reading('rail_v', rail)
     mx = max(rl + rr) if rl else None
-    r.check('both wheels <= 1.10 x KV x 12 V', mx, mx is not None and mx <= lim_plan,
+    r.check('both wheels under the eRPM guard (a ball at 105 fps)', mx, mx is not None and mx <= lim_plan,
             f'<= {lim_plan:.0f} rpm ({C.ERPM_LIMIT} eRPM)')
-    r.check('both wheels <= the launch model\'s bench limit for Ø34', mx,
-            mx is not None and mx <= C.NO_LOAD_RPM_MAX_D34,
-            f'<= {C.NO_LOAD_RPM_MAX_D34:.0f} rpm (no_load_rpm_max_d34)')
-    r.check('12 V FLY under load', rail, 11.5 <= rail <= 12.5, '12.0 +- 0.5 V')
+    r.check('the faster wheel at or under the trim (warm, after a 3 minute spin)', mx,
+            mx is not None and mx <= C.NO_LOAD_RPM_MAX,
+            f'<= {C.NO_LOAD_RPM_MAX:.0f} rpm (no_load_rpm_max): else change the trim resistor down a step, never fire')
+    r.check('the FLY rail under load', rail, 10.7 <= rail <= 12.0, '10.8-11.9 V (the trim for KV +-5 %)')
 
 
-@test('4.2', 'Ceiling with balls: 20 balls at 100 % throttle, Ø34', 'ceiling', hopper=25)
+@test('4.2', 'Ceiling with balls: 20 balls at 100 % throttle, Ø38', 'ceiling', hopper=25)
 def t_ceiling(tt, b, r):
     boot(tt, b)
     b.load_balls(20)
@@ -887,12 +887,13 @@ def t_ceiling(tt, b, r):
     r.reading('reference_fps', stats(ref))
     r.reading('gates_each', gates)
     r.check('20 balls', len(gates), len(gates) == 20, '20')
-    r.check('every ball <= 66 fps on the barrel gates', max(gates) if gates else None, bool(gates) and max(gates) <= 66,
-            '<= 66 fps')
-    r.check('every ball <= 66 fps on the reference', max(ref) if ref else None, bool(ref) and max(ref) <= 66,
-            '<= 66 fps')
-    r.note('Ø34 is the only v0 tyre: Ø36 reaches 70.7 fps at the worst corner on this motor (the launch rerun), so '
-           'the plan\'s "if all <= 60 fps, repeat with Ø36" does not apply to the X2216.')
+    r.check(f'every ball <= {C.TRIP_FPS:.0f} fps on the barrel gates', max(gates) if gates else None,
+            bool(gates) and max(gates) <= C.TRIP_FPS, f'<= {C.TRIP_FPS:.0f} fps')
+    r.check(f'every ball <= {C.TRIP_FPS:.0f} fps on the reference', max(ref) if ref else None,
+            bool(ref) and max(ref) <= C.TRIP_FPS, f'<= {C.TRIP_FPS:.0f} fps')
+    r.note('D68: Ø38 at 40 % crush is the only tyre. Hasbro rounds should read 95-100 fps here (the launch model: '
+           f'{C.FULL_THROTTLE_FPS} fps); repeat with the lightest accepted off-brand rounds (1.6 g): every one at or '
+           'under 105, or the trim comes down a step.')
 
 
 @test('4.3', 'Speed at every throttle: 10 balls each at 60-100 %', 'speed_map', hopper=60)
@@ -918,30 +919,30 @@ def t_speed_map(tt, b, r):
                                             'rpm': x['rpm_before_first_ball']} for x in rows])
     r.check('monotonic', means, all(b2 > a2 for a2, b2 in zip(means, means[1:])), 'each step faster')
     for x in rows:
-        r.check(f"SD at {int(x['throttle'] * 100)} %", x['fps'].get('sd'), x['fps'].get('sd', 9) <= 1.5, '<= 1.5 fps')
+        r.check(f"SD at {int(x['throttle'] * 100)} %", x['fps'].get('sd'), x['fps'].get('sd', 9) <= 3.0, '<= 3 fps (3 %)')
         r.check(f"10 balls at {int(x['throttle'] * 100)} %", x['fps']['n'], x['fps']['n'] == 10, '10')
 
 
-@test('4.4', 'Set speed: 50 balls at the set rpm for 52 fps (Ø34)', 'set_speed', hopper=55)
+@test('4.4', 'Set speed: 50 balls at the set rpm for 95 fps (Ø38)', 'set_speed', hopper=55)
 def t_set_speed(tt, b, r):
     boot(tt, b)
     b.load_balls(50)
     arm(tt, b)
     t0 = tt.now()
-    tt.fire(50, 3.0, 52.0)
+    tt.fire(50, 3.0, C.SET_FPS_DESIGN)
     burst_done(tt, t0, 60.0)
     f = fps_list(tt.shots_since(t0))
     disarm(tt, b)
     s = stats(f)
-    r.reading('set_rpm', round(C.set_rpm(52.0, 34)))
+    r.reading('set_rpm', round(C.set_rpm(C.SET_FPS_DESIGN, C.TYRE_DESIGN_MM)))
     r.reading('fps', s)
     r.check('50 balls', s['n'], s['n'] == 50, '50')
-    r.check('mean', s.get('mean'), abs(s.get('mean', 0) - 52.0) <= 2.0, '52 +- 2 fps')
-    r.check('SD', s.get('sd'), s.get('sd', 9) <= 1.5, '<= 1.5 fps')
-    r.check('none over 60 fps', s.get('max'), s.get('max', 99) <= 60.0, '<= 60 fps')
+    r.check('mean', s.get('mean'), abs(s.get('mean', 0) - C.SET_FPS_DESIGN) <= 3.0, f'{C.SET_FPS_DESIGN:.0f} +- 3 fps')
+    r.check('SD', s.get('sd'), s.get('sd', 9) <= 3.0, '<= 3 fps')
+    r.check(f'none over {C.TRIP_FPS:.0f} fps', s.get('max'), s.get('max', 999) <= C.TRIP_FPS, f'<= {C.TRIP_FPS:.0f} fps')
 
 
-@test('4.5', 'Spin-up current with the 300 ms ramp, and burst recovery (8 balls at 3/s)', 'spinup_current', hopper=10)
+@test('4.5', 'Spin-up current with the 800 ms ramp, and burst recovery (8 balls at 3/s)', 'spinup_current', hopper=10)
 def t_spinup_current(tt, b, r):
     boot(tt, b)
     b.load_balls(8)
@@ -949,7 +950,7 @@ def t_spinup_current(tt, b, r):
     if b.sim:
         b.hw.i24_peak, b.hw.bus_min = 0.0, 24.0
     t0 = tt.now()
-    tt.fire(8, 3.0, 52.0)
+    tt.fire(8, 3.0, C.SET_FPS_DESIGN)
     burst_done(tt, t0, 20.0)
     spin_peak = None
     if b.sim:                                          # the spin-up's peak: up to the first ball at the nip
@@ -966,20 +967,20 @@ def t_spinup_current(tt, b, r):
     r.reading('burst_recovery_peak_a', rec)
     r.reading('bus_min_v', bus_min)
     r.reading('burst_fps', f)
-    r.check('ring peak with the ramp', peak, peak <= 3.0, '<= 3 A at 24 V')
+    r.check('ring peak with the ramp', peak, peak <= 4.0, '<= 4 A at 24 V (D68: ~96 W at the input)')
     r.check('bus at the board', bus_min, bus_min >= 16.0, '>= 16 V')
     r.check('no ESC reset (telemetry continuous)', len(resets), not resets, 'none')
     r.check('8 balls', len(f), len(f) == 8, '8')
-    r.check('every shot within 3 fps of the set speed', max(abs(x - 52.0) for x in f) if f else None,
-            bool(f) and all(abs(x - 52.0) <= 3.0 for x in f), '52 +- 3 fps')
+    r.check('every shot within 6 % of the set speed', max(abs(x - C.SET_FPS_DESIGN) for x in f) if f else None,
+            bool(f) and all(abs(x - C.SET_FPS_DESIGN) <= 0.06 * C.SET_FPS_DESIGN for x in f), f'{C.SET_FPS_DESIGN:.0f} +- 6 %')
 
 
-@test('4.6', 'The 24 V fault without a ball: the pre-feed check, and the trip with a 1.3-1.6 ms pair', 'fault_24v',
-      rail_v=24.0, hopper=0, feed_unplugged=True)
+@test('4.6', 'The converter bypassed (the ESCs on the 20.5 V pack) without a ball: the pre-feed check, and the trip '
+            'with a 1.3-1.6 ms pair', 'fault_24v', rail_v=20.5, hopper=0, feed_unplugged=True)
 def t_fault_24v(tt, b, r):
     boot(tt, b)
-    b.say('NEVER a ball at 24 V: the hopper empty, no balls on the bench, the muzzle into a catch box.')
-    b.do('Unplug the feed servo; feed the ESC rail 24 V from the bench supply through the CT power plug ONLY')
+    b.say('NEVER a ball with the converter bypassed: the hopper empty, no balls on the bench, the muzzle into a catch box.')
+    b.do('Unplug the feed servo; feed the ESC rail 20.5 V from the bench supply through the CT power plug ONLY')
     arm(tt, b)
     t0 = tt.now()
     tt.cmd(M.CMD_BENCH_SPIN, a=1000, b=20)
@@ -993,7 +994,7 @@ def t_fault_24v(tt, b, r):
     refused = not tt.ev(M.EV_FEED_STEP, t1) and tt.state() != 'ARMED'
     b.pendant(False)
     tt.arm_req = False
-    b.do('Back to 12 V on the ESC rail', lambda: setattr(b.hw, 'rail_v', 12.0))
+    b.do('Back to the trimmed rail on the ESCs', lambda: setattr(b.hw, 'rail_v', C.RAIL_V))
     b.do('Press the recessed trip reset', lambda: b.hw.reset_trip())
     b.pendant(True)
     tt.wait(0.2)
@@ -1015,8 +1016,8 @@ def t_fault_24v(tt, b, r):
             '<= 100 ms')
     r.check('(a) refuses to step the dial', refused, refused, 'no step')
     r.check('(b) trip latched on a 1.45 ms pair', latched, latched, 'latched')
-    r.note('The eRPM never reaches the 24 V no-load (~21,000 rpm): the ramp passes the limit (11,616 rpm) a fifth of a '
-           'second in and the turret is SAFE three telemetry reads later.')
+    r.note(f'The eRPM never reaches the 20.5 V no-load (~28,500 rpm): the ramp passes the limit ({C.ERPM_LIMIT / C.POLE_PAIRS:,.0f} '
+           'rpm) about half a second in and the turret is SAFE three telemetry reads later.')
 
 
 @test('4.7', 'Release braking: 20 releases at the set speed, no ball', 'release', hopper=0)
@@ -1025,7 +1026,7 @@ def t_release(tt, b, r):
     rows = []
     for k in range(20):
         arm(tt, b)
-        tt.cmd(M.CMD_BENCH_SPIN_SPEED, a=520, b=300)
+        tt.cmd(M.CMD_BENCH_SPIN_SPEED, a=int(C.SET_FPS_DESIGN * 10), b=300)
         tt.wait_for(lambda: tt.state() == 'READY', 3.0)
         tt.wait(0.5)
         t_rel = tt.now()
@@ -1072,7 +1073,7 @@ def t_tyre_growth(tt, b, r):
     boot(tt, b)
     arm(tt, b)
     t0 = tt.now()
-    tt.cmd(M.CMD_BENCH_SPIN_SPEED, a=520, b=150)
+    tt.cmd(M.CMD_BENCH_SPIN_SPEED, a=int(C.SET_FPS_DESIGN * 10), b=150)
     tt.wait_for(lambda: tt.state() == 'READY', 3.0)
     g = b.ask('growth_mm', 'Strobe or video at the set speed: growth of the tyre OD (mm)', lambda: 0.42, stand_in=True)
     bench_done(tt, t0, 20.0)
@@ -1119,12 +1120,12 @@ def t_rails(tt, b, r):
     boot(tt, b)
     arm(tt, b)
     t0 = tt.now()
-    tt.cmd(M.CMD_BENCH_SPIN_SPEED, a=520, b=100)
+    tt.cmd(M.CMD_BENCH_SPIN_SPEED, a=int(C.SET_FPS_DESIGN * 10), b=100)
     tt.wait_for(lambda: tt.state() == 'READY', 3.0)
     kick = b.ask('fet_gate_peak_v', "Scope: Q2's gate, peak while the wheels run at the set speed (V)", lambda: 0.12, stand_in=True)
     tt.cmd(M.CMD_BENCH_SPIN_SPEED, a=350, b=100)
     tt.wait(1.0)
-    tt.cmd(M.CMD_BENCH_SPIN_SPEED, a=520, b=100)
+    tt.cmd(M.CMD_BENCH_SPIN_SPEED, a=int(C.SET_FPS_DESIGN * 10), b=100)
     tt.wait(1.0)
     fly = b.ask('fly_peak_v', 'Scope: 12 V FLY, highest through the step down, up and the stop (V)', lambda: 12.2, stand_in=True)
     main = b.ask('main_peak_v', 'Scope: 12 V MAIN, highest through the same (V)', lambda: 12.1, stand_in=True)
@@ -1159,7 +1160,7 @@ def feed_pose(tt, b, balls: int, rate: float, tilt: float = 0.0, panning: float 
                 pan_continuous(tt, panning, 1.0, tilt=tilt)
             tt.aim(tt.pan() or 0.0, tilt, 90)
         else:
-            tt.fire(n, rate, 52.0)
+            tt.fire(n, rate, C.SET_FPS_DESIGN)
             burst_done(tt, tb, n / rate * 3 + 20)
         shots = [s for s in tt.shots_since(tb) if not s[1]['flags'] & M.S_STRAY]
         left -= len(shots)
@@ -1269,7 +1270,7 @@ def t_last_balls(tt, b, r):
     tt.aim(tt.pan() or 0.0, -25.0, 90)
     tt.wait(1.0)
     t0 = tt.now()
-    tt.fire(10, 3.0, 52.0)
+    tt.fire(10, 3.0, C.SET_FPS_DESIGN)
     done = burst_done(tt, t0, 90.0)
     shots = [s for s in tt.shots_since(t0) if not s[1]['flags'] & M.S_STRAY]
     left = b.ask('balls_left', 'Balls left in the hopper and the chute', lambda: b.hw.hopper + b.hw.resting_balls(),
@@ -1287,7 +1288,7 @@ def t_last_balls(tt, b, r):
 # ===================================================================================== 5.6 accuracy and the game
 def flight_point(fps: float, d_m: float, rng: random.Random) -> tuple:
     """Stand-in impact point on a target d metres out (cm right, cm below the bore line): drag Cd 0.47 on a 22.8 mm,
-    1.75 g ball, launch angle scatter 3.8 mrad (yaw) and 6.1 mrad (pitch) SD (the launch rerun, Ø34 at 52 fps)."""
+    1.75 g ball, launch angle scatter 3.8 mrad (yaw) and 6.1 mrad (pitch) SD (the launch rerun before D68, Ø34 at 52 fps)."""
     v, x, y, vy, dt = fps * C.FPS, 0.0, 0.0, 0.0, 0.0005
     k = 0.5 * 1.2 * 0.47 * math.pi * 0.0114 ** 2 / 0.00175
     while x < d_m:
@@ -1298,8 +1299,9 @@ def flight_point(fps: float, d_m: float, rng: random.Random) -> tuple:
 
 
 def group(tt, b, d_m: float, n: int, key: str):
+    tt.wait(0.1)                                       # past the last burst's BURST_DONE, so it is not taken for this one
     t0 = tt.now()
-    tt.fire(n, 2.0, 52.0)
+    tt.fire(n, 2.0, C.SET_FPS_DESIGN)
     burst_done(tt, t0, 40.0)
     f = fps_list(tt.shots_since(t0))
     if b.sim:
@@ -1393,7 +1395,7 @@ def t_fire_panning(tt, b, r):
         tt.aim(tt.pan() or 0.0, 0.0, 90)
         tt.wait(1.0)
         t0 = tt.now()
-        tt.fire(3, 3.0, 52.0)
+        tt.fire(3, 3.0, C.SET_FPS_DESIGN)
         pan_continuous(tt, rate, 3.0)
         t_stop = tt.now()
         burst_done(tt, t0, 15.0)
@@ -1436,10 +1438,10 @@ def t_temperature(tt, b, r):
         b.hw.hopper = 110
     arm(tt, b)
     t0 = tt.now()
-    tt.fire(100, 0.85, 52.0)
+    tt.fire(100, 0.85, C.SET_FPS_DESIGN)
     burst_done(tt, t0, 200.0)
     t1 = tt.now()
-    tt.cmd(M.CMD_BENCH_SPIN_SPEED, a=520, b=int(b.duration('at_speed', 600.0) * 10))
+    tt.cmd(M.CMD_BENCH_SPIN_SPEED, a=int(C.SET_FPS_DESIGN * 10), b=int(b.duration('at_speed', 600.0) * 10))
     bench_done(tt, t1, b.duration('at_speed', 600.0) + 10)
     esc = [max(a, c) for t, _l, _r, a, c in tt.wheel_log if t >= t0]
     hw = b.hw if b.sim else None
@@ -1471,7 +1473,7 @@ def t_release_feeding(tt, b, r):
     for k in range(20):
         arm(tt, b)
         t0 = tt.now()
-        tt.fire(8, 3.0, 52.0)
+        tt.fire(8, 3.0, C.SET_FPS_DESIGN)
         tt.wait_for(lambda: bool(tt.shots_since(t0)), 5.0)
         tt.wait(rng.uniform(0.0, 2.0))
         t_rel = tt.now()
@@ -1491,7 +1493,7 @@ def t_release_feeding(tt, b, r):
         if b.sim and b.hw.resting_balls():
             arm(tt, b)
             t2 = tt.now()
-            tt.cmd(M.CMD_BENCH_SPIN_SPEED, a=520, b=10)
+            tt.cmd(M.CMD_BENCH_SPIN_SPEED, a=int(C.SET_FPS_DESIGN * 10), b=10)
             bench_done(tt, t2, 5.0)
             row['stray_fps'] = [s[1]['fps_d'] / 10.0 for s in tt.shots_since(t2)]
             tt.arm_req = False
@@ -1600,8 +1602,8 @@ def run_test(entry, args, answers) -> dict:
                       'stand_ins': sorted(set(b.stand_ins)), 'shortened': b.scaled,
                       'warning': 'simulated turret (firmware/turret/sim_turret.py): not a bench reading'}
     out['firmware'] = {'build': C.BUILD, 'servo_baud': C.SERVO_BAUD, 'motor': C.MOTOR, 'kv': C.MOTOR_KV,
-                       'pole_pairs': C.POLE_PAIRS, 'erpm_limit': C.ERPM_LIMIT, 'tyre_mm': 34,
-                       'set_rpm_52fps': round(C.set_rpm(52.0, 34)), 'ramp_s': C.RAMP_S}
+                       'pole_pairs': C.POLE_PAIRS, 'erpm_limit': C.ERPM_LIMIT, 'tyre_mm': C.TYRE_DESIGN_MM,
+                       'set_rpm_95fps': round(C.set_rpm(C.SET_FPS_DESIGN, C.TYRE_DESIGN_MM)), 'ramp_s': C.RAMP_S}
     if err:
         out['error'] = err
     folder = Path(args.out)

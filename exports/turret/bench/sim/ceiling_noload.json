@@ -1,52 +1,52 @@
 {
  "test": "4.1",
- "title": "No-load eRPM at 100 % throttle on the 12 V rail",
+ "title": "No-load eRPM at 100 % throttle on the trimmed rail (the D68 trim)",
  "plan": "docs/turret-prototype-plan.md section 5",
  "mode": "sim",
- "date": "2026-10-27",
+ "date": "2026-10-28",
  "pass": true,
  "checks": [
   {
-   "check": "both wheels <= 1.10 x KV x 12 V",
-   "value": 10530,
-   "limit": "<= 11616 rpm (81312 eRPM)",
+   "check": "both wheels under the eRPM guard (a ball at 105 fps)",
+   "value": 15641,
+   "limit": "<= 16390 rpm (114730 eRPM)",
    "pass": true
   },
   {
-   "check": "both wheels <= the launch model's bench limit for \u00d834",
-   "value": 10530,
-   "limit": "<= 11180 rpm (no_load_rpm_max_d34)",
+   "check": "the faster wheel at or under the trim (warm, after a 3 minute spin)",
+   "value": 15641,
+   "limit": "<= 15722 rpm (no_load_rpm_max): else change the trim resistor down a step, never fire",
    "pass": true
   },
   {
-   "check": "12 V FLY under load",
-   "value": 12.06,
-   "limit": "12.0 +- 0.5 V",
+   "check": "the FLY rail under load",
+   "value": 11.28,
+   "limit": "10.8-11.9 V (the trim for KV +-5 %)",
    "pass": true
   }
  ],
  "readings": {
   "rpm_left": {
    "n": 20,
-   "mean": 10377,
-   "sd": 0.0,
-   "min": 10377,
-   "max": 10377
+   "mean": 15319.05,
+   "sd": 422.6,
+   "min": 13477,
+   "max": 15416
   },
   "rpm_right": {
    "n": 20,
-   "mean": 10530,
-   "sd": 0.0,
-   "min": 10530,
-   "max": 10530
+   "mean": 15543.55,
+   "sd": 424.77,
+   "min": 13692,
+   "max": 15641
   },
-  "erpm_max": 73710,
-  "rail_v": 12.06
+  "erpm_max": 109487,
+  "rail_v": 11.28
  },
  "notes": [],
  "sim": {
   "seed": 1041,
-  "simulated_s": 8.5,
+  "simulated_s": 9.1,
   "wall_s": 0.3,
   "stand_ins": [],
   "shortened": {},
@@ -55,12 +55,12 @@
  "firmware": {
   "build": "v0",
   "servo_baud": 500000,
-  "motor": "SunnySky X2216 880KV V3",
-  "kv": 880.0,
+  "motor": "SunnySky X2216 1400KV V3",
+  "kv": 1400.0,
   "pole_pairs": 7,
-  "erpm_limit": 81312,
-  "tyre_mm": 34,
-  "set_rpm_52fps": 8855,
-  "ramp_s": 0.3
+  "erpm_limit": 114730,
+  "tyre_mm": 38,
+  "set_rpm_95fps": 15286,
+  "ramp_s": 0.8
  }
 }

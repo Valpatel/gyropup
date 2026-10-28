@@ -20,15 +20,16 @@ Each model, and where its numbers come from:
                the next dial motion (the rerun's double at -25 deg, freed alone by a dither); a step jams with
                p_jam (0.003) 10-35 deg in, and a 20 deg reverse clears it with p 0.9
   wheels       per wheel an AM32 ESC: arms after 0.5 s of zero throttle, answers every DShot frame with eRPM (and
-               EDT temperatures), drives rpm toward throttle x KV (880 +-3 %) x rail (11.8-12.3 V, or 24 V for test
-               4.6) x 0.994, tau 15 ms, accel capped by the 10 A limit on 6.9e-6 kg m^2 (the launch rerun); brake on
-               stop (the low-side FETs on) tau 8 ms; unpowered it coasts (tau 2 s) until the phase short (tau 6.9
-               ms); a ball takes 7 % of each wheel's speed
+               EDT temperatures), drives rpm toward throttle x KV (1400 +-3 %) x rail x 0.993, the rail trimmed at the
+               bench so the faster motor's no-load is at or under 15,722 rpm (one resistor step, 0-1 % under; 20.5 V
+               for test 4.6: the converter bypassed), tau 15 ms, accel capped by the 10 A limit on 7.6e-6 kg m^2 (the
+               D68 launch run); brake on stop (the low-side FETs on) tau 8 ms; unpowered it coasts (tau 2 s) until the
+               phase short (tau 23 ms effective); a ball takes 6 % of each wheel's speed
   balls        from the pocket reaching the hole to the nip in 105 +- 12 ms (+10 ms at -25 deg: the feed rerun's
-               300-330 ms from the step's command to first touch); launched at the launch rerun's speed:
-               52 fps at 8,855 rpm on Ø34, 65.4 fps at the worst corner's 11,461 rpm (linear between in rpm, the
-               ratio falling 2.7 %), +- 2 %; below 1,011 rpm it rests at the nip and leaves at 6.3 fps when the wheels
-               pass it (the stray ball); gate 1 30 mm past the nip, gate 2 60 mm on, +-30 us edge jitter; the
+               300-330 ms from the step's command to first touch); launched at the D68 launch run's speed for the
+               Hasbro ball: 95 fps at 15,286 rpm on Ø38, 97.1 at the trimmed no-load 15,722 (linear between in rpm,
+               the ratio falling 0.6 %), +- 2 %; below 1,400 rpm it rests at the nip and leaves at 2.9 fps when the
+               wheels pass it (the stray ball); gate 1 30 mm past the nip, gate 2 60 mm on, +-30 us edge jitter; the
                reference chronograph 1 m out reads 0.4 fps less +- 0.2
   stand-ins    ring resistance, CAN error frames, temperatures, paper groups, plates: plausible numbers for the
                dry run, marked 'sim stand-in' in every result
@@ -49,10 +50,14 @@ from turret_fw import HAL
 DT = 0.001
 
 
+FALL = 1.0 - (C.FULL_THROTTLE_FPS / C.SET_FPS_DESIGN) / (C.NO_LOAD_RPM_TRIM / C.SET_RPM_DESIGN)   # 0.6 %
+
+
 def launch_fps(rpm: float) -> float:
-    """The launch rerun's ball speed on Ø34: 52 fps at 8,855 rpm, 65.4 at 11,461 (a stand-in between)."""
+    """The D68 launch run's Hasbro ball on Ø38: 95 fps at 15,269 rpm, 98.4 at the trimmed no-load 15,930 (a stand-in
+    between and beyond)."""
     r = rpm / C.SET_RPM_DESIGN
-    fall = 0.027 * max(0.0, (rpm - C.SET_RPM_DESIGN) / (11461.0 - C.SET_RPM_DESIGN))
+    fall = FALL * max(0.0, (rpm - C.SET_RPM_DESIGN) / (C.NO_LOAD_RPM_TRIM - C.SET_RPM_DESIGN))
     return C.SET_FPS_DESIGN * r * (1.0 - fall)
 
 
@@ -126,7 +131,8 @@ class SimTurret(HAL):
         # -------------------------------------------------- the wheels
         self.kv = [C.MOTOR_KV * (1 + r.uniform(-0.03, 0.03)) for _ in range(2)]
         self.k_nl = [C.K_NL * (1 + r.uniform(-0.02, 0.01)) for _ in range(2)]
-        self.rail_v = opt.get('rail_v', r.uniform(11.8, 12.3))
+        # the bench's trim (test 4.1): one fixed resistor, the step under the target, for the faster motor
+        self.rail_v = opt.get('rail_v', C.NO_LOAD_RPM_TRIM / max(k * n for k, n in zip(self.kv, self.k_nl)) * r.uniform(0.99, 1.0))
         self.esc = [{'on_t': None, 'armed': False, 'zero_since': None, 'thr': 0.0, 'edt': False, 'n': 0}
                     for _ in range(2)]
         self.rpm = [0.0, 0.0]
@@ -142,7 +148,7 @@ class SimTurret(HAL):
         self.balls: List[dict] = []
         self.gate_ev: List[Tuple[float, int]] = []
         self.launched: List[dict] = []
-        self.tyre_mm = opt.get('tyre_mm', 34)
+        self.tyre_mm = opt.get('tyre_mm', C.TYRE_DESIGN_MM)
         # -------------------------------------------------- CAN
         self.to_fw: deque = deque()
         self.to_host: deque = deque()
@@ -424,7 +430,7 @@ class SimTurret(HAL):
         self.esc_frames_out.append((k, self.t, word))
 
     def _wheels(self, t: float):
-        j = 6.9e-6                                     # rotor + hub + tyre, kg m^2 (the launch rerun)
+        j = 7.6e-6                                     # rotor + hub + tyre, kg m^2 (the D68 launch run, Ø38)
         a_max = 10.0 * 60.0 / (2 * math.pi * C.MOTOR_KV) / j * 60.0 / (2 * math.pi)   # rpm/s at the 10 A limit
         p_tot = 0.0
         for k, e in enumerate(self.esc):
@@ -456,15 +462,15 @@ class SimTurret(HAL):
                 b['state'] = 'nip'
             if b['state'] == 'nip':
                 rpm = sum(self.rpm) / 2.0
-                if rpm < 1011.0:
+                if rpm < 1400.0:
                     b['stray'] = True
                     continue
                 if b.get('stray'):
-                    v = (6.3 + self.rng.gauss(0, 0.4)) * C.FPS
+                    v = (2.9 + self.rng.gauss(0, 0.4)) * C.FPS
                 else:
                     v = launch_fps(rpm) * (1 + self.rng.gauss(0, 0.02)) * C.FPS
                 for k in range(2):
-                    self.rpm[k] *= 0.93
+                    self.rpm[k] *= 0.94
                 t1 = t + 0.0048 + 0.030 / v + self.rng.uniform(-30e-6, 30e-6)
                 t2 = t1 + 0.060 / v + self.rng.uniform(-30e-6, 30e-6)
                 self._gate(t1, 1)

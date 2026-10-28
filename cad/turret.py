@@ -35,7 +35,7 @@ laser-cut 6061-T6 from SendCutSend, D40/D48: the pan clamp, the two cradle plate
                            0.125 in) that carry it on the tilt axis; the hard stop is an aluminium lug (stop_lug, 0.100 in)
   horn_boss, pivot_spacer (PA6-CF)  between the plates and the tilt servo's horn (+y) and the MR126 (-y)
   cartridge_body (PA6-CF)  dial housing, drop chute, flywheel cage (motors hang under its top plate), barrel socket
-  flywheel (PA6-CF)        hub on the X2216's prop adapter; flywheel_tyre (TPU 95A) Ø34 / Ø36 tyre over it
+  flywheel (PA6-CF)        hub on the X2216's prop adapter; flywheel_tyre (TPU 95A) Ø38 tyre bonded over it (D68)
   dial (PETG)              8 pockets, stirring cone, on the feed servo's horn
   hopper, hopper_lid, hopper_flap (PETG, translucent)  30 balls; fill port with a sprung flap for the dock spout
   barrel (PETG, orange tip)  Ø30 x 100, bore = ball + 1.5, two chronograph gates
@@ -94,7 +94,8 @@ SHOULDER = {'d': 6.0, 'L': 12.0, 'head_d': 10.0, 'head_h': 5.0, 'thread_d': 5.0,
 SERVO = {'L': 45.2, 'W': 24.7, 'H': 32.0, 'band': 1.1, 'bump': 1.9, 'shaft_from_end': 10.11, 'horn_d': 19.95, 'horn_t': 3.0,
          'horn_pcd': 14.0, 'idler_boss': (6.0, 4.1), 'holes_out': (8.30, 29.00), 'holes_idler': (8.30, 32.75), 'holes_x': 10.25,
          'plugs': (9.0, 24.0, 7.5), 'plug_room': 12.0, 'mass_g': 60.0}
-# The flywheel motor (D42): SunnySky X2216 880KV V3, short shaft (SunnySky's drawing "X2216 short shaft" on
+# The flywheel motor (D68; D42 chose the 880 KV of the same motor): SunnySky X2216 1400KV V3, short shaft. Every KV of the
+# X2216 V3 is the same can, stator, shaft and prop adapter, so this drawing holds (SunnySky's drawing "X2216 short shaft" on
 # en.rcsunnysky.com/x-fixedwingseries/1102.html, references/vendor/sunnysky-x2216). Ø27.7; 32 from the mount face (the
 # base's end) to the bell's front face, a Ø9 boss 2.0 proud of that face (34), and the Ø3.175 shaft's rear end with its
 # clip 2.5 behind the mount face (36.5 overall). The base is the first 7.5 (est from the drawing: the leads leave it
@@ -103,10 +104,11 @@ SERVO = {'L': 45.2, 'W': 24.7, 'H': 32.0, 'band': 1.1, 'bump': 1.9, 'shaft_from_
 # The bolt-on prop adapter in the box carries the hub: a Ø17 x 4 flange on 3 x M2 into the bell on Ø12 (a Ø9 recess
 # over the boss centres it), a Ø5 (0/-0.03) pilot 5.5 long, then an M5 x 0.8 stud 13 long; the Ø14.8 x 2 washer (Ø5.1)
 # and an M5 nylon-insert nut clamp the hub against the flange, as a propeller is. 72 g with its leads (SunnySky's
-# table; RMRC lists 67.5 g), 12N14P (7 pole pairs), 117 mOhm, 0.5 A at no load at 10 V.
-MOTOR = {'name': 'SunnySky X2216 880KV V3 (short shaft)', 'd': 27.7, 'len': 32.0, 'boss': (9.0, 2.0), 'stub': (7.0, 2.5),
+# table; RMRC lists 67.5 g), 12N14P (7 pole pairs). The 1400 KV: 55 mOhm between leads, 1.3 A at no load at 10 V, 2-4S
+# (the 880 KV: 117 mOhm, 0.5 A). On the trimmed ~11.3 V flywheel rail it turns 15,722 rpm (sim/turret_launch.py).
+MOTOR = {'name': 'SunnySky X2216 1400KV V3 (short shaft)', 'd': 27.7, 'len': 32.0, 'boss': (9.0, 2.0), 'stub': (7.0, 2.5),
          'base_h': 7.5, 'holes_r': (8.0, 9.5), 'flange': (17.0, 4.0), 'pilot': (5.0, 5.5), 'stud': (5.0, 13.0),
-         'washer': (14.8, 2.0), 'nut': (9.2, 5.0), 'kv': 880.0, 'pole_pairs': 7, 'R_ohm': 0.117, 'I0_a': 0.5, 'mass_g': 72.0}
+         'washer': (14.8, 2.0), 'nut': (9.2, 5.0), 'kv': 1400.0, 'pole_pairs': 7, 'R_ohm': 0.055, 'I0_a': 1.3, 'mass_g': 72.0}
 # Repeat Robotics AM32 35 A (catalog repeat-robotics-am32-35a-esc): 26 x 13 x 5, 5 g with its wires. The backup ESC,
 # the Lumenier Razor Pro F4 45A AM32, is 28 x 12 x 5 and fits the same place.
 AM32 = {'size': (26.0, 13.0, 5.0), 'mass_g': 5.0}
@@ -161,7 +163,7 @@ class Geo:
     """Every size that follows from the ball. ball_d: Rival rounds are 22.2-22.8 mm (study 2.1); 22.7 is the design
     ball. Bores and pockets are ball + 1.5 mm."""
 
-    def __init__(self, ball_d: float = 22.7, wheel_d: float = 36.0, crush: float = 0.25):
+    def __init__(self, ball_d: float = 22.7, wheel_d: float = 38.0, crush: float = 0.40):
         self.ball = ball_d
         self.bore = ball_d + 1.5
         self.br = self.bore / 2
@@ -193,19 +195,21 @@ class Geo:
         self.ball_z_dial = self.floor_z + ball_d / 2             # ball centre in a pocket
         self.chute_r = self.ball_z_dial                          # the chute turns the ball down to the path (z = 0)
         self.chute_cx = self.exit_x + self.chute_r               # centre of the turn, at (chute_cx, chute_r)
-        # flywheels (sim/turret_launch.py): Ø36 tyres squeeze the ball 25 % (to 17.0 mm); on the regulated 12 V
-        # flywheel rail their no-load speed is the hardware ceiling (the worst ball at 100 % throttle stays under 70 fps)
+        # flywheels (sim/turret_launch.py, D68): Ø38 tyres squeeze the ball 40 % (to 13.6 mm), enough that a Hasbro
+        # round catches the tyre and leaves near its surface speed (95-100 fps); on the trimmed flywheel rail their
+        # no-load speed is the hardware ceiling (every accepted ball at 100 % throttle stays under 105 fps). The cage is
+        # as wide as it was for Ø36 at 25 % (cage_y 49.3 against 49.0)
         self.wheel_d = wheel_d
         self.crush = crush
-        self.wheel_c = wheel_d + ball_d * (1 - crush)            # centre distance (53.0 for Ø36 tyres)
+        self.wheel_c = wheel_d + ball_d * (1 - crush)            # centre distance (51.62 for Ø38 tyres at 40 %)
         self.wheel_y = self.wheel_c / 2
         self.tyre_w = 12.0
         self.tyre_t = 4.0                                        # TPU 95A on the hub's rim
         nip = math.sqrt((wheel_d / 2) ** 2 - ((self.wheel_c - ball_d) / 2) ** 2)   # ball touches both wheels here
         self.wheel_x = math.ceil(self.chute_cx + nip + 2.0)
         self.cav_r = wheel_d / 2 + 2.0                           # the cage's shells are built on this radius ...
-        self.cav_cut = wheel_d / 2 + 2.5                         # ... and cut to this: the TPU tyre grows up to 1.01 mm at
-                                                                  # no-load (finding 5), so 1.5 mm stays clear
+        self.cav_cut = wheel_d / 2 + 2.5                         # ... and cut to this: the bonded TPU tyre grows 0.04 mm
+                                                                  # at no-load (2.4 mm if it came loose), so 2.5 mm stays clear
         self.cage_x0 = self.wheel_x - self.cav_r - self.wall
         self.cage_x1 = self.wheel_x + self.cav_r + self.wall
         self.cage_y = self.wheel_y + self.cav_r + self.wall      # half-width of the cartridge
@@ -1154,7 +1158,7 @@ def ball_path(G):
 
 
 def flywheel(G):
-    """Flywheel hub, printed PA6-CF (100 % solid) on its top face: a Ø28 x 12 rim for the TPU tyre and a 5.5 mm web whose
+    """Flywheel hub, printed PA6-CF (100 % solid) on its top face: a Ø30 x 12 rim for the TPU tyre and a 5.5 mm web whose
     top face sits flat on the X2216's prop-adapter flange (Ø17) under the bell, its bore on the adapter's Ø5 pilot
     (printed Ø4.9 and reamed to 5.00: a close slip fit that centres it), clamped by the adapter's Ø14.8 washer and an M5
     nylon-insert nut in the recess under the web, as a propeller is; the stud's thread starts below the web, so the bore
@@ -1172,26 +1176,25 @@ def flywheel(G):
     return s
 
 
-# the tyre's bore is printed 4 % under the hub's rim: at the set speed the TPU grows 0.17-0.52 mm radially, 1-4 % looser
-# (docs/turret-physics.md finding 5), so a line-to-line tyre would walk; stretched 4 % it stays tight. The set: the motors'
-# centre distance is fixed (53.0 mm), so a tyre's diameter sets its crush. Ceiling at 100 % throttle on the fixed 12 V
-# rail with the X2216 880KV (D42) at the worst corner (KV +5 %, rail +4 %, runout, soft-tyre growth, the ball population:
-# sim/turret_launch3d.py ceiling_map): Ø34 at 16.3 % crush 67.6 fps (under the 70 fps cap; the bench keeps every ball under
-# 66 by test 4.1's no-load limit, 11,180 rpm), Ø36 at 25 % 70.7 fps: over the cap with this motor, so v0 prints Ø34 only.
+# the tyre's bore is printed 4 % under the hub's rim and the tyre is BONDED to it (D68: a cyanoacrylate for elastomers,
+# Loctite 406 class, on the rim before the tyre is stretched on). At D68's ~15,700 rpm a free TPU ring would grow ~8 %
+# in its bore on a 10 MPa TPU (docs/turret-physics.md section 4), twice the stretch, so a stretch fit alone would
+# float the tyre (2.4 mm of growth, the crush to 61 %, the fastest ball 113 fps); bonded, the rim holds its bore and the
+# face grows 0.05 mm. The set: Ø38 at 40 % crush on this cage (D68, sim/turret_launch.py); every accepted ball at 100 %
+# throttle on the trimmed rail stays under 105 fps (sim/turret_launch3d.py ceiling_map), the Hasbro ball leaves at ~97.
 TYRE_STRETCH = 0.04
-TYRE_SET = (34.0,)
+TYRE_SET = (38.0,)
 
 
 def flywheel_tyre(G):
-    """TPU 95A tyre as mounted, Ø34 x 12 (TYRE_SET), 3 mm thick on the hub's Ø28 rim (the assembly; the printed blank is
-    flywheel_tyre_print). The cage was drawn for Ø36 (its centre distance and cavities), so a Ø34 tyre crushes the
-    ball 16.3 % and keeps 3.5 mm from the cavity's wall."""
+    """TPU 95A tyre as mounted, Ø38 x 12 (TYRE_SET), 4 mm thick on the hub's Ø30 rim and bonded to it (the assembly; the
+    printed blank is flywheel_tyre_print). It crushes the 22.7 mm ball 40 % and keeps 2.5 mm from the cavity's wall."""
     rim = G.wheel_d / 2 - G.tyre_t
     return ring_z(TYRE_SET[0] / 2, rim, -G.tyre_w / 2, G.tyre_w / 2, G.wheel_x, G.wheel_y)
 
 
 def flywheel_tyre_print(G, d=None):
-    """The tyre as printed (TPU 95A, flat on the bed): its bore TYRE_STRETCH under the Ø28 rim, its outside sized so
+    """The tyre as printed (TPU 95A, flat on the bed): its bore TYRE_STRETCH under the Ø30 rim, its outside sized so
     that stretched on the rim it is Ø d (TPU is nearly incompressible: the cross-section's area is kept)."""
     d = d or G.wheel_d
     rim = G.wheel_d / 2 - G.tyre_t

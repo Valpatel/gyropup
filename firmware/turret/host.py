@@ -15,7 +15,7 @@ What it does:
     homed, and again whenever it restarts: the depression table (robot: exports/turret/lidar/lidar.json
     `firmware_table`, made for the body's lidar position; box: exports/turret/lidar/box.json; bench: an explicit
     full-range table), the keep-outs (box: box.json's `keep_out_fire_pan_deg`; bench: within 60 deg of straight back,
-    where the operator stands; robot: none, the body's business; --keepout overrides), tyre 34, ring on, the launch
+    where the operator stands; robot: none, the body's business; --keepout overrides), tyre 38, ring on, the launch
     ratio, and the throttle map once bench test 4.3 has written one (exports/turret/bench/speed_map.json; in --sim
     the simulated one in exports/turret/bench/sim/);
   - refuses to arm until those rows have gone out since the turret's last boot and its next heartbeat has come back
@@ -184,7 +184,7 @@ def mount_setup(mount: str, sim: bool, keepouts: Optional[List[Tuple[float, floa
         ko, ko_src = list(keepouts), '--keepout'
     tmap, tmap_src = throttle_map(sim)
     rows = [(M.CF_CLEAR, 0, 1, 0), (M.CF_CLEAR, 0, 2, 0), (M.CF_CLEAR, 0, 3, 0),
-            (M.CF_TYRE, 0, 34, 0), (M.CF_RING, 0, 1 if C.CONTINUOUS_PAN else 0, 0), (M.CF_MOUNT, 0, M.MOUNTS.index(mount), 0),
+            (M.CF_TYRE, 0, C.TYRE_DESIGN_MM, 0), (M.CF_RING, 0, 1 if C.CONTINUOUS_PAN else 0, 0), (M.CF_MOUNT, 0, M.MOUNTS.index(mount), 0),
             (M.CF_LAUNCH_RATIO, 0, round(C.LAUNCH_RATIO * 10000), 0)]
     rows += [(M.CF_DEPRESSION, i, round(p * 10), round(m * 100)) for i, (p, m) in enumerate(table)]
     rows += [(M.CF_KEEPOUT, i, round(a * 10), round(b * 10)) for i, (a, b) in enumerate(ko)]
@@ -192,7 +192,7 @@ def mount_setup(mount: str, sim: bool, keepouts: Optional[List[Tuple[float, floa
     if len(table) > 255 or len(ko) > 255:
         raise HostError('a CONFIG table has more rows than its u8 index carries')
     return {'mount': mount, 'rows': rows, 'table': table, 'keepouts': ko, 'throttle_map': tmap,
-            'sources': {'depression': src, 'keepouts': ko_src, 'throttle_map': tmap_src, 'tyre_mm': 34,
+            'sources': {'depression': src, 'keepouts': ko_src, 'throttle_map': tmap_src, 'tyre_mm': C.TYRE_DESIGN_MM,
                         'ring': C.CONTINUOUS_PAN, 'launch_ratio': round(C.LAUNCH_RATIO, 4)},
             'notes': notes}
 
@@ -270,7 +270,7 @@ class TurretHost:
         self.rig = link.rig if self.sim else None
         self.mount = mount
         self.setup = mount_setup(mount, self.sim, keepouts)
-        self.cfg = C.Config(tyre_mm=34, mount=mount, depression=list(self.setup['table']), keepouts=list(self.setup['keepouts']))
+        self.cfg = C.Config(tyre_mm=C.TYRE_DESIGN_MM, mount=mount, depression=list(self.setup['table']), keepouts=list(self.setup['keepouts']))
         folder = Path(log_dir) if log_dir else (SIM_OUT if self.sim else BENCH_OUT)
         if self.sim and folder.resolve() == BENCH_OUT.resolve():
             raise HostError('a simulated log never goes to exports/turret/bench/ itself (use exports/turret/bench/sim/)')
@@ -559,7 +559,7 @@ class TurretHost:
             self.req = self.req % 255 + 1
             req, t0 = self.req, self.now()
             self.tt.fire(n, r, v, req=req)
-        out = {'ok': True, 'req': req, 'balls': n, 'rate': r, 'fps': v or C.SET_FPS_DEFAULT[34]}
+        out = {'ok': True, 'req': req, 'balls': n, 'rate': r, 'fps': v or C.SET_FPS_DEFAULT[C.TYRE_DESIGN_MM]}
         if wait:
             done = lambda: bool(self.tt.ev(M.EV_BURST_DONE, t0)) or any(f['a'] == req for _, f in self.tt.ev(M.EV_SHOT_REFUSED, t0))
             self.wait_for(done, timeout or n / 1.5 + 8.0)

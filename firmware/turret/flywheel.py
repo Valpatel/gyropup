@@ -1,17 +1,20 @@
-"""The two flywheels: set speed from CONFIG, the 200 ms ramp, a bounded speed trim, READY, and the pre-feed eRPM check
+"""The two flywheels: set speed from CONFIG, the 800 ms ramp, a bounded speed trim, READY, and the pre-feed eRPM check
 (docs/turret-firmware.md section 4).
 
 The set speed comes from the tyre and the launch ratio (config.set_rpm); the throttle is a feed-forward from the
-throttle map (test 4.3) or the no-load model, plus a PI trim bounded to +-8 % so that a doubled rail cannot hide under
-the loop: on 24 V the wheels run away, the trim saturates, and the eRPM passes the limit.
+throttle map (test 4.3) or the no-load model, plus a PI trim bounded to +-8 % so that a wrong rail cannot hide under
+the loop: with the converter bypassed (the ESCs on the 20.5 V pack) the wheels run away, the trim saturates, and the
+eRPM passes the limit.
 
-The pre-feed check is the guard: every eRPM read of either wheel above 1.10 x KV x 12 V x 7 pole pairs (81,312 eRPM,
-11,616 rpm for the X2216 880 KV) counts, three in a row trip it, and a tripped guard latches SAFE: zero throttle and no
-dial step until the host clears it with the safety line released. A dial step also needs both wheels' eRPM fresher
-than 20 ms, under the limit and READY.
+The pre-feed check is the guard: every eRPM read of either wheel above ERPM_LIMIT (114,730 eRPM, 16,390 rpm for the
+X2216 1400 KV on Ø38: the no-load speed at which the densest accepted ball would reach ASTM's 2,500 J/m^2, just under
+the 16,496 at which the fastest would leave at 105 fps; the trimmed rail gives 15,722, 16,330 with the magnets warm and
+the rail at its drift) counts, three in a row trip it, and
+a tripped guard latches SAFE: zero throttle and no dial step until the host clears it with the safety line released. A
+dial step also needs both wheels' eRPM fresher than 20 ms, under the limit and READY.
 
-What the firmware does not do (hardware, reported only): the 12 V-only rail is the ceiling; the phase-short brake
-closes 10 ms after ARM falls; the chronograph latch trips at 66 fps.
+What the firmware does not do (hardware, reported only): the trimmed rail is the ceiling (D68: 105 fps); the
+phase-short brake closes 10 ms after ARM falls; the chronograph latch trips at 105 fps.
 """
 from __future__ import annotations
 
@@ -82,7 +85,7 @@ class Flywheels:
         self.rpm_set = 0.0
         self.throttle_set = 0.0
         self.rpm_from = 0.0                             # a change of set point ramps from here over RAMP_S: never a step,
-        self.thr_from = 0.0                             # up (the ring's current) or down (no braking into the 12 V rail)
+        self.thr_from = 0.0                             # up (the ring's current) or down (no braking into the rail)
         self.t0 = 0.0
         self.ready_since: Optional[float] = None
         self.hist: deque = deque()
