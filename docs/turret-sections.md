@@ -162,31 +162,100 @@ verdict (exports/turret/feed/feed.json: double feeds 0, parked leaks 0).
 
 ## 4. Launcher: flywheel cage, motors, nip
 
-**Function.** Throw a ball at about 52 fps (15.85 m/s) and never over 70 fps, from two counter-rotating wheels that
-squeeze it 25 %.
+**Function.** Throw a Rival round like a stock Rival flywheel blaster, about 95-100 fps (29-30.5 m/s), from two
+counter-rotating wheels that squeeze it 40 %, and never let any accepted round leave above 105 fps: the ceiling is the
+hardware's, not the firmware's (D68).
 
 **Requirements.**
-- Two Ø36 tyres (TPU 95A on PA6-CF hubs), centres 53.03 apart, the gap 17.0 (25 % under the ball).
-- The 12 V flywheel rail is the hardware ceiling: at the X2216s' no-load speed the worst ball stays under 70 fps.
-- Tyre growth at no-load up to 1.01 mm: the cage is cut 1.5 mm clear (Ø41 cut, Ø40 shell).
-- Nothing spins unless ARM is held (the ESCs' supply is switched by the safety line; phase-short brake on release).
+- A Hasbro Rival round (22.7 mm, 1.83 g) leaves at 95-100 fps at full throttle.
+- No accepted round (D67: 22.2-22.8 mm, 1.6-2.0 g, any foam stiffness 0.75-3 MPa and grip 0.6-1.0) leaves above
+  105 fps at 100 % throttle, with the whole tolerance stack: the motors' KV spread, the rail's regulation, the motors
+  warm, 0.15 mm tyre runout, the tyres' growth at speed, the feed's entry offsets. The densest accepted round stays
+  under ASTM F963's 2,500 J/m² (D68's safety basis).
+- The flywheels run from a fixed regulated rail whose no-load speed is the ceiling; no firmware setting can exceed it.
+  The rail must be reachable from both supplies (D66): one DCB609 in 20 V mode (15-20.5 V under load) and Gyropup's
+  10S bus (30-42 V).
+- Every rating holds at the ceiling: the motors' voltage, current and speed, the ESCs' voltage, the tyre and the hub
+  at speed.
+- Nothing spins unless ARM is held (the ESCs' supply is switched by the safety line; phase-short brake on release);
+  the chronograph trips at 105 fps.
 
 **Interfaces.** The motors hang bell-down under the cage's top plate (z 42 to 45.5 in C), the hubs on the prop adapters
-(washer + M5 nylon-insert nut), the tyres' mid-plane on the ball path; the barrel socket at the cage's front (C x 95).
+(washer + M5 nylon-insert nut), the tyres' mid-plane on the ball path, the motors' axes at C x 73, y ±25.81 (51.62
+apart); the cage's shells on Ø42, cut to Ø43 over the Ø38 tyres; the barrel socket at the cage's front (C x 98). The
+rail: the TDK i6A4W's output to both ESCs through the safety switch, its trim resistor on the board beside it.
 
 **Parts.** `cartridge_body` (PA6-CF; the dial housing, chute, cage and barrel socket in one print), `flywheel` x 2
-(PA6-CF, reamed to 5.00), `flywheel_tyre` x 2 (TPU 95A), `flywheel_motor_l/r` (SunnySky X2216 880KV), `esc_l/r`,
-`cartridge_board`.
+(PA6-CF, a Ø30 x 12 rim, reamed to 5.00), `flywheel_tyre` x 2 (TPU 95A, Ø38 x 12, 4 mm thick, printed 4 % under the
+rim and **bonded** to it), `flywheel_motor_l/r` (SunnySky X2216 1400KV V3, short shaft, $24.99: SunnySky USA,
+ReadyMadeRC), `esc_l/r` (Repeat Robotics AM32 35 A), the flywheel rail (TDK-Lambda i6A4W020A033V-001-R, $47.46
+Digi-Key, Newark backup; catalog `tdk-lambda-i6a4w020a033v-001-r`), `cartridge_board`.
 
 **Decisions.**
 - *Horizontal wheels either side of the path*, motors above: the ball's spin axis is vertical (no lift), and the
   motors sit over the cartridge, not beside the barrel.
 - *One printed cartridge body* for the housing, chute, cage and socket: the ball's path is in one part, so nothing can
   step at a joint. Rejected: separate cage and housing (a seam across the chute).
-- *X2216 880KV on a fixed 12 V rail* (D42): the speed ceiling is physical, not firmware.
+- *40 % crush on Ø38 tyres* (sim/turret_launch.py `crush_choice`). With Coulomb friction a ball that slips through the
+  whole nip leaves at a speed set by its grip, not the wheel speed (on the old Ø34 at 16 % the Hasbro ball tops out at
+  ~48 fps on any rail); with enough crush it catches the tyre and leaves at ~0.95 of the surface speed, the regime
+  D68 needs, because the ceiling is the surface speed (the stiff, grippy light ball leaves at 0.97-0.98 of it). The
+  Hasbro ball at 100 %: 86 fps at 32 % crush, 95 at 36 %, 97 at 38-44 %; 40 % leaves room for a softer foam than the
+  model's. Ø38 at 40 % puts the axes 51.62 apart, so the cage is as wide as it was (cage_y 49.3 against 49.0); the
+  hub's rim grows to Ø30 and the wheels move 2 mm forward with the nip. Rejected: Ø36 at 31 % on the old cage (the
+  Hasbro ball 82 fps), Ø40 at 49 % (the worst corner 108.5 fps on the same rail, and more squeeze on the bearings).
+- *The X2216 1400 KV on an ~11.3 V rail, not the 880 KV on ~18 V* (sim/turret_launch.py `routes`). Both reach the
+  same no-load speed; the 880 KV needs 17.1-18.9 V (5S, over the X2216's 2-4S rating) and a buck-boost from a pack
+  that sags to 15 V; the 1100 KV (13.7-15.1 V) and 1250 KV (12.1-13.3 V) sit too close to 15 V for a buck. The
+  1400 KV needs 10.8-11.9 V: inside its rating, and a plain buck holds it from both supplies. Same can, stator, shaft
+  and prop adapter, so the hub and cage plate do not change. The cost: ~16 W of no-load loss a motor at speed.
+- *The rail trimmed per turret* (one fixed resistor on the TDK i6A4W's TRIM pin, chosen on the bench so the faster
+  motor, warm, turns 15,722 rpm at 100 % throttle). A fixed set point carries the KV spread (+5 %, est) and the
+  converter's ±4 %: then the rail either holds the worst corner at 104 fps with the Hasbro ball at 92, or gives the
+  Hasbro ball 95 and the worst corner 107 (`trim.untrimmed`): both D68 numbers at once are impossible untrimmed. The
+  trim leaves the magnets warming 15 °C past the trim (+1.8 %) and the rail's drift and the eRPM reading (+2.0 %). The
+  speed limit alone would allow 15,930 rpm (Hasbro 98.4 fps), but D67's densest round (2.0 g on 22.2 mm) would then
+  carry 2,537 J/m²; the trim aims it 1 % under ASTM's 2,500. Rejected: a Pololu D42V110F12 (fixed 12 V, ±4 %, $59.95:
+  no trim), a pot (it can be turned), KV-binned motors (SunnySky publishes no KV tolerance to bin on).
+- *The tyres bonded to the hubs* (a cyanoacrylate for elastomers over the 4 % stretch). At ~16,000 rpm a free TPU ring
+  (E 10 MPa) grows 8 % in its bore, twice the stretch: the tyre would float, grow 2.4 mm, crush the ball 61 % and
+  throw 113 fps. Bonded, the face grows 0.04 mm.
 
-**Checks.** `path_in_cavity` (only the tyres touch the ball, at the nip); `connected` (each wheel one body on its
-motor); sim/turret_launch3d.py's ceiling map; the cage FEA (recoil).
+**Numbers** (sim/turret_launch.py and sim/turret_launch3d.py, run on the GB10s 2026-10-27):
+
+| | Value |
+|---|---|
+| Hasbro ball flat out / at the 95 fps set speed | **97.1 fps** / 95.0 fps at 15,286 rpm (97 % of no-load) |
+| Fastest accepted ball, every tolerance (3D: feed offsets, runout, growth) | **103.9 fps** (1.6 g, 22.8 mm, soft and grippy): 1.1 fps under 105 |
+| Densest accepted ball (2.0 g on 22.2 mm), every tolerance | **2,480 J/m²** at ~101.6 fps (ASTM 2,500) |
+| Accepted population at the set speed / flat out | 92.4 ± 4.9 fps / 94.1 ± 5.5, max 99.3 (the tail: soft, slippery foam) |
+| Squeeze per tyre: Hasbro / stiffest corner | 71 N / 276 N for ~5 ms |
+| Wheel speed lost per shot; bursts at 3-10/s | 5.7 %; no droop |
+| Recoil | 0.052 N s a shot, 95 N peak on the cage, 1.43 N m about the tilt axis for 5 ms: a 2.1 mrad kick inside the tilt lash |
+| Firmware | eRPM guard 16,390 rpm (114,730 eRPM), trip 105 fps, set 40-100 fps (95 default), ramp 800 ms |
+
+**Ratings at the ceiling** (the trim with every tolerance: 16,330 rpm, 32.5 m/s at the tyre).
+
+| Item | Rating | At D68 | Margin |
+|---|---|---|---|
+| X2216 1400 KV voltage | 2-4S, 7.4-16.8 V (SunnySky) | 10.8-11.9 V | 4.9 V under 4S full |
+| X2216 1400 KV current | 33 A for 30 s (SunnySky) | 10 A AM32 limit; ~4 A in the 800 ms ramp | 3.3x at the limit |
+| X2216 speed and bearings | not published; the same can and bearings are sold as the 2600 KV on 3-4S (~40,000 rpm) | 16,330 rpm | ~2.5x |
+| Bearing load | not published (est 3-4 mm bore miniatures) | 71 N (Hasbro) to 276 N (stiffest ball) a tyre for 5 ms, overhung ~13 mm past the front bearing | the open item: check on the bench (runout after 1,000 shots) |
+| AM32 ESC voltage | Repeat 35 A: 9-25.2 V (3-6S); Lumenier: 2-6S | 10.8-11.9 V | 1.8 V over the minimum; 13 V under the maximum |
+| AM32 eRPM | not stated; est: AM32 runs ~2,000 KV racing motors on 6S, ~300,000 eRPM | 114,300 eRPM | ~2.5x (est) |
+| TDK i6A4W | 9-53 V in, 20 A / 250 W out, 27 A over-current | 15-42 V in; ~89 W in the ramp, 2 x 10 A x 11.3 V for a recovery pulse | 11 V over the 10S full; 2.8x / 1.1x |
+| TPU 95A tyre (Bambu: 27.3 MPa tensile, E 9.8 MPa) | | bonded: hoop ≤ 0.12 MPa, the bond's tension 0.26 MPa; free ring 1.29 MPa | 21x on the free ring; the bond (CA on TPU, est ≥ 2 MPa) ~8x |
+| PA6-CF hub (Bambu: 102 MPa; D33's humid, printed knock-down x0.6 x0.8 = 49 MPa, 23 across layers) | | rim: 0.72 MPa its own, + 1.3 MPa from the bonded tyre's pull | ≥ 11x across the layers |
+
+**Checks.** `path_in_cavity` (only the tyres touch the ball, at the nip; 0.35 mm tightest elsewhere); `connected`
+(each wheel one body on its motor); sim/turret_launch3d.py's `ceiling` (holds, under ASTM) and `ceiling_map`;
+sim/turret_dynamics.py (recoil, tilt servo margin 4.3); the cage FEA (recoil); firmware/turret's tests (the 105 fps
+trip, the eRPM guard at 16,390 rpm). On the bench, before any ball: the trim (test 4.1: the faster motor warm at or
+under 15,722 rpm on its resistor), each tyre spun at that speed, the trip pairs (1.80 ms latches, 1.95 ms does not),
+the winding's inductance (the release brake: 5 % at ~80 ms if it is 14 uH as estimated); then Hasbro rounds flat out
+(95-100 fps) and the lightest and densest off-brand rounds (all ≤ 105). Everyone in range wears eye protection, as
+Hasbro recommends for Rival.
 
 ## 5. Barrel and laser
 
