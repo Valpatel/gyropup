@@ -3,27 +3,36 @@
  "balls_from": "sim/turret_ball.py",
  "bore_r_mm": 12.1,
  "design": {
-  "wheel_d_mm": 34.0,
-  "crush": 0.163,
-  "supply_v": 12.0,
-  "set_rpm": 8855,
-  "no_load_rpm": 10499,
-  "set_fps_nominal": 52.0
+  "wheel_d_mm": 38.0,
+  "crush": 0.4,
+  "supply_v": 11.46,
+  "set_rpm": 15269,
+  "no_load_rpm": 15930,
+  "set_fps_nominal": 95.0
  },
  "handover_1d": {
-  "fps_3d": 52.0,
-  "fps_1d": 52.0,
+  "fps_3d": 95.0,
+  "fps_1d": 95.0,
   "rel_err": 0.0,
   "pass": true
  },
  "tyre_growth_mm": {
   "at_set_speed": {
-   "E_10_MPa": 0.515,
-   "E_30_MPa": 0.172
+   "E_10_MPa": 0.034,
+   "E_30_MPa": 0.011
   },
   "at_no_load_plus_tolerance": {
-   "E_10_MPa": 0.864,
-   "E_30_MPa": 0.288
+   "E_10_MPa": 0.04,
+   "E_30_MPa": 0.013
+  },
+  "if_not_bonded_at_no_load_plus_tolerance": {
+   "E_10_MPa": 2.511,
+   "E_30_MPa": 0.837
+  },
+  "bonded": true,
+  "bore_strain_free_pct_at_no_load_plus_tolerance": {
+   "E_10_MPa": 8.2,
+   "E_30_MPa": 2.7
   },
   "source": "TPU 95A: 1.22 g/cm^3; printed modulus 9.8 MPa (Bambu TPU 95A HF TDS) to 26 (NinjaTek Cheetah) and 33.6 (Polymaker PolyFlex) at low strain, 67 (Ultimaker, D3039); the growth of a spinning elastomer tyre is real (Hasbro US11719504B1: ~4 mm in diameter); sim/turret_ball.py SOURCES, checked 2026-10-27",
   "note": "radial growth per tyre; the crush grows by twice this"
@@ -32,103 +41,116 @@
   "centred_no_runout": {
    "n": 400,
    "rejected": 0,
-   "mean": 48.94,
-   "sd": 5.03,
-   "p1": 35.55,
-   "p99": 53.48,
-   "min": 32.23,
-   "max": 53.61,
+   "mean": 92.46,
+   "sd": 4.86,
+   "p1": 72.88,
+   "p99": 96.7,
+   "min": 69.05,
+   "max": 97.09,
    "yaw_mrad_sd": 0.0,
    "yaw_mrad_p99abs": 0.0,
-   "pitch_mrad_sd": 0.687,
+   "pitch_mrad_sd": 0.211,
    "spin_z_rad_s_sd": 0.0,
-   "spin_y_rad_s_mean": -0.9,
-   "spin_y_rad_s_sd": 0.2
+   "spin_y_rad_s_mean": -2.5,
+   "spin_y_rad_s_sd": 0.4
   },
   "feed_offsets_runout_0_15mm": {
    "n": 400,
    "rejected": 0,
-   "mean": 48.94,
-   "sd": 4.99,
-   "p1": 35.8,
-   "p99": 53.49,
-   "min": 32.25,
-   "max": 53.68,
-   "yaw_mrad_sd": 5.726,
-   "yaw_mrad_p99abs": 16.502,
-   "pitch_mrad_sd": 7.151,
-   "spin_z_rad_s_sd": 21.1,
-   "spin_y_rad_s_mean": 44.5,
+   "mean": 92.39,
+   "sd": 4.91,
+   "p1": 72.61,
+   "p99": 96.68,
+   "min": 69.25,
+   "max": 96.99,
+   "yaw_mrad_sd": 1.183,
+   "yaw_mrad_p99abs": 3.612,
+   "pitch_mrad_sd": 3.056,
+   "spin_z_rad_s_sd": 7.6,
+   "spin_y_rad_s_mean": 42.5,
    "spin_y_rad_s_sd": 43.5
   },
   "feed_offsets_runout_0_30mm": {
    "n": 400,
    "rejected": 0,
-   "mean": 48.95,
-   "sd": 5.18,
-   "p1": 34.87,
-   "p99": 53.58,
-   "min": 28.5,
-   "max": 53.89,
-   "yaw_mrad_sd": 8.456,
-   "yaw_mrad_p99abs": 26.595,
-   "pitch_mrad_sd": 7.374,
-   "spin_z_rad_s_sd": 22.6,
-   "spin_y_rad_s_mean": 47.3,
-   "spin_y_rad_s_sd": 43.4
+   "mean": 92.41,
+   "sd": 4.86,
+   "p1": 72.41,
+   "p99": 96.76,
+   "min": 70.16,
+   "max": 97.03,
+   "yaw_mrad_sd": 2.436,
+   "yaw_mrad_p99abs": 6.893,
+   "pitch_mrad_sd": 3.168,
+   "spin_z_rad_s_sd": 10.3,
+   "spin_y_rad_s_mean": 44.7,
+   "spin_y_rad_s_sd": 44.1
   },
   "feed_offsets_runout_soft_tyre_growth_10mpa": {
    "n": 400,
    "rejected": 0,
-   "mean": 52.04,
-   "sd": 2.05,
-   "p1": 43.9,
-   "p99": 54.01,
-   "min": 39.16,
-   "max": 54.25,
-   "yaw_mrad_sd": 3.846,
-   "yaw_mrad_p99abs": 12.272,
-   "pitch_mrad_sd": 6.109,
-   "spin_z_rad_s_sd": 6.6,
-   "spin_y_rad_s_mean": 65.0,
-   "spin_y_rad_s_sd": 27.4
+   "mean": 92.54,
+   "sd": 4.74,
+   "p1": 73.76,
+   "p99": 96.76,
+   "min": 70.57,
+   "max": 97.18,
+   "yaw_mrad_sd": 1.182,
+   "yaw_mrad_p99abs": 3.154,
+   "pitch_mrad_sd": 3.118,
+   "spin_z_rad_s_sd": 7.1,
+   "spin_y_rad_s_mean": 43.5,
+   "spin_y_rad_s_sd": 42.9
   },
-  "contact_ms_mean": 4.414
+  "contact_ms_mean": 4.825
  },
  "ceiling": {
   "population_full_throttle": {
    "n": 400,
    "rejected": 0,
-   "mean": 53.52,
-   "sd": 9.44,
-   "p1": 35.21,
-   "p99": 66.88,
-   "min": 31.64,
-   "max": 67.09
+   "mean": 97.86,
+   "sd": 7.04,
+   "p1": 73.41,
+   "p99": 103.82,
+   "min": 69.94,
+   "max": 104.32
   },
-  "worst_ball_full_throttle_fps": 65.43,
-  "population_full_throttle_soft_tyre_growth": {
+  "worst_corner_fps": 104.17,
+  "worst_corner": "d22.2-m1.6-E3-mu1-e0.75",
+  "hasbro_full_throttle_fps": 98.38,
+  "population_full_throttle_no_tolerance": {
    "n": 400,
    "rejected": 0,
-   "mean": 63.02,
-   "sd": 4.73,
-   "p1": 48.23,
-   "p99": 67.56,
-   "min": 43.81,
-   "max": 67.66
+   "mean": 95.03,
+   "sd": 5.9,
+   "p1": 73.38,
+   "p99": 100.13,
+   "min": 69.87,
+   "max": 100.53
   },
-  "worst_ball_full_throttle_soft_tyre_growth_fps": 64.84,
-  "worst_soft_ball_full_throttle_soft_tyre_growth_fps": 65.52,
-  "cap_fps": 70.0,
-  "highest_fps_any_case": 67.66,
-  "margin_fps": 2.34,
+  "untrimmed": {
+   "highest_fps": 111.37,
+   "worst_corner": "d22.2-m1.6-E3-mu1-e0.75",
+   "tolerances": "a fixed set point: KV +5 % (est) and +1.8 % warm, the converter +4 %"
+  },
+  "tyre_come_loose": {
+   "highest_fps": 114.99,
+   "worst_corner": "d22.2-m1.6-E0.75-mu1-e0.75",
+   "note": "the tyre debonded and floating on its 4 % stretch fit (the free ring, E 10 MPa): a failure the bench spin test (4.1) and the chronograph trip catch"
+  },
+  "cap_fps": 105.0,
+  "highest_fps_any_case": 104.31,
+  "margin_fps": 0.69,
   "holds": true,
-  "how_held": "the regulated 12 V rail + the SunnySky X2216 880KV V3 (880 rpm/V) + the \u00d834 tyre: 10.5 krpm no-load (18.7 m/s surface), so even 100 % throttle on a fast motor and a high rail stays at the figure above; the ESC set speed (8.9 krpm, 52 fps nominal) sits under that, and the chronograph latches SAFE on any ball over 66 fps"
+  "tolerances": "trimmed per turret: the magnets +15 C (KV +1.8 %), the rail +2.0 % (line, load, temperature, the eRPM reading)",
+  "n_trim_rpm": 15930,
+  "n_105_rpm": 16650,
+  "how_held": "the trimmed flywheel rail (11.46 V for a nominal motor; each turret's set by one fixed resistor so the faster motor turns 15,930 rpm at no load, warm) + the SunnySky X2216 1400KV V3 (1400 rpm/V) + the bonded \u00d838 tyre (31.7 m/s surface): even 100 % throttle with the magnets 15 C warmer and the rail 2 % high leaves the fastest accepted ball at the figure above; the firmware cannot raise the rail, refuses to feed above 16,650 rpm (where a ball could reach 105), and the chronograph latches SAFE on any ball over 105 fps"
  },
  "mismatch": [
   {
    "slow_wheel_pct": 0.0,
-   "fps": 52.0,
+   "fps": 95.0,
    "spin_z_rad_s": 0.0,
    "spin_rpm": 0,
    "yaw_mrad": 0.0,
@@ -136,35 +158,35 @@
   },
   {
    "slow_wheel_pct": 2.0,
-   "fps": 51.52,
-   "spin_z_rad_s": -13.6,
-   "spin_rpm": -130,
-   "yaw_mrad": 0.127,
-   "spin_parameter": 0.0099
+   "fps": 94.06,
+   "spin_z_rad_s": -26.3,
+   "spin_rpm": -251,
+   "yaw_mrad": -0.012,
+   "spin_parameter": 0.0104
   },
   {
    "slow_wheel_pct": 5.0,
-   "fps": 50.8,
-   "spin_z_rad_s": -33.9,
-   "spin_rpm": -324,
-   "yaw_mrad": 0.208,
-   "spin_parameter": 0.0251
+   "fps": 92.66,
+   "spin_z_rad_s": -65.6,
+   "spin_rpm": -627,
+   "yaw_mrad": -0.039,
+   "spin_parameter": 0.0264
   },
   {
    "slow_wheel_pct": 10.0,
-   "fps": 49.6,
-   "spin_z_rad_s": -67.8,
-   "spin_rpm": -647,
-   "yaw_mrad": 0.192,
-   "spin_parameter": 0.0513
+   "fps": 90.32,
+   "spin_z_rad_s": -131.3,
+   "spin_rpm": -1254,
+   "yaw_mrad": -0.082,
+   "spin_parameter": 0.0541
   },
   {
    "slow_wheel_pct": "one wheel at no-load, one at set",
-   "fps": 53.43,
-   "spin_z_rad_s": -42.1,
-   "spin_rpm": -402,
-   "yaw_mrad": 0.987,
-   "spin_parameter": 0.0296
+   "fps": 96.65,
+   "spin_z_rad_s": -46.1,
+   "spin_rpm": -440,
+   "yaw_mrad": -0.001,
+   "spin_parameter": 0.0178
   }
  ],
  "bursts": {
@@ -173,70 +195,70 @@
     {
      "shot": 1,
      "w_rpm": [
-      8855,
-      8855
+      15269,
+      15269
      ],
-     "fps": 52.0
+     "fps": 95.0
     },
     {
      "shot": 2,
      "w_rpm": [
-      8858,
-      8858
+      15267,
+      15267
      ],
-     "fps": 52.0
+     "fps": 95.0
     },
     {
      "shot": 3,
      "w_rpm": [
-      8858,
-      8858
+      15267,
+      15267
      ],
-     "fps": 52.0
+     "fps": 95.0
     },
     {
      "shot": 4,
      "w_rpm": [
-      8858,
-      8858
+      15267,
+      15267
      ],
-     "fps": 52.0
+     "fps": 95.0
     },
     {
      "shot": 5,
      "w_rpm": [
-      8858,
-      8858
+      15267,
+      15267
      ],
-     "fps": 52.0
+     "fps": 95.0
     },
     {
      "shot": 6,
      "w_rpm": [
-      8858,
-      8858
+      15267,
+      15267
      ],
-     "fps": 52.0
+     "fps": 95.0
     },
     {
      "shot": 7,
      "w_rpm": [
-      8858,
-      8858
+      15267,
+      15267
      ],
-     "fps": 52.0
+     "fps": 95.0
     },
     {
      "shot": 8,
      "w_rpm": [
-      8858,
-      8858
+      15267,
+      15267
      ],
-     "fps": 52.0
+     "fps": 95.0
     }
    ],
-   "fps_min": 52.0,
-   "fps_first": 52.0,
+   "fps_min": 95.0,
+   "fps_first": 95.0,
    "droop_fps": 0.0
   },
   "5_per_s": {
@@ -244,70 +266,70 @@
     {
      "shot": 1,
      "w_rpm": [
-      8855,
-      8855
+      15269,
+      15269
      ],
-     "fps": 52.0
+     "fps": 95.0
     },
     {
      "shot": 2,
      "w_rpm": [
-      8858,
-      8858
+      15267,
+      15267
      ],
-     "fps": 52.0
+     "fps": 95.0
     },
     {
      "shot": 3,
      "w_rpm": [
-      8858,
-      8858
+      15267,
+      15267
      ],
-     "fps": 52.0
+     "fps": 95.0
     },
     {
      "shot": 4,
      "w_rpm": [
-      8858,
-      8858
+      15267,
+      15267
      ],
-     "fps": 52.0
+     "fps": 95.0
     },
     {
      "shot": 5,
      "w_rpm": [
-      8858,
-      8858
+      15267,
+      15267
      ],
-     "fps": 52.0
+     "fps": 95.0
     },
     {
      "shot": 6,
      "w_rpm": [
-      8858,
-      8858
+      15267,
+      15267
      ],
-     "fps": 52.0
+     "fps": 95.0
     },
     {
      "shot": 7,
      "w_rpm": [
-      8858,
-      8858
+      15267,
+      15267
      ],
-     "fps": 52.0
+     "fps": 95.0
     },
     {
      "shot": 8,
      "w_rpm": [
-      8858,
-      8858
+      15267,
+      15267
      ],
-     "fps": 52.0
+     "fps": 95.0
     }
    ],
-   "fps_min": 52.0,
-   "fps_first": 52.0,
+   "fps_min": 95.0,
+   "fps_first": 95.0,
    "droop_fps": 0.0
   },
   "8_per_s": {
@@ -315,70 +337,70 @@
     {
      "shot": 1,
      "w_rpm": [
-      8855,
-      8855
+      15269,
+      15269
      ],
-     "fps": 52.0
+     "fps": 95.0
     },
     {
      "shot": 2,
      "w_rpm": [
-      8858,
-      8858
+      15267,
+      15267
      ],
-     "fps": 52.0
+     "fps": 95.0
     },
     {
      "shot": 3,
      "w_rpm": [
-      8858,
-      8858
+      15267,
+      15267
      ],
-     "fps": 52.0
+     "fps": 95.0
     },
     {
      "shot": 4,
      "w_rpm": [
-      8858,
-      8858
+      15267,
+      15267
      ],
-     "fps": 52.0
+     "fps": 95.0
     },
     {
      "shot": 5,
      "w_rpm": [
-      8858,
-      8858
+      15267,
+      15267
      ],
-     "fps": 52.0
+     "fps": 95.0
     },
     {
      "shot": 6,
      "w_rpm": [
-      8858,
-      8858
+      15267,
+      15267
      ],
-     "fps": 52.0
+     "fps": 95.0
     },
     {
      "shot": 7,
      "w_rpm": [
-      8858,
-      8858
+      15267,
+      15267
      ],
-     "fps": 52.0
+     "fps": 95.0
     },
     {
      "shot": 8,
      "w_rpm": [
-      8858,
-      8858
+      15267,
+      15267
      ],
-     "fps": 52.0
+     "fps": 95.0
     }
    ],
-   "fps_min": 52.0,
-   "fps_first": 52.0,
+   "fps_min": 95.0,
+   "fps_first": 95.0,
    "droop_fps": 0.0
   },
   "10_per_s": {
@@ -386,424 +408,370 @@
     {
      "shot": 1,
      "w_rpm": [
-      8855,
-      8855
+      15269,
+      15269
      ],
-     "fps": 52.0
+     "fps": 95.0
     },
     {
      "shot": 2,
      "w_rpm": [
-      8858,
-      8858
+      15267,
+      15267
      ],
-     "fps": 52.0
+     "fps": 95.0
     },
     {
      "shot": 3,
      "w_rpm": [
-      8858,
-      8858
+      15267,
+      15267
      ],
-     "fps": 52.0
+     "fps": 95.0
     },
     {
      "shot": 4,
      "w_rpm": [
-      8858,
-      8858
+      15267,
+      15267
      ],
-     "fps": 52.0
+     "fps": 95.0
     },
     {
      "shot": 5,
      "w_rpm": [
-      8858,
-      8858
+      15267,
+      15267
      ],
-     "fps": 52.0
+     "fps": 95.0
     },
     {
      "shot": 6,
      "w_rpm": [
-      8858,
-      8858
+      15267,
+      15267
      ],
-     "fps": 52.0
+     "fps": 95.0
     },
     {
      "shot": 7,
      "w_rpm": [
-      8858,
-      8858
+      15267,
+      15267
      ],
-     "fps": 52.0
+     "fps": 95.0
     },
     {
      "shot": 8,
      "w_rpm": [
-      8858,
-      8858
+      15267,
+      15267
      ],
-     "fps": 52.0
+     "fps": 95.0
     }
    ],
-   "fps_min": 52.0,
-   "fps_first": 52.0,
+   "fps_min": 95.0,
+   "fps_first": 95.0,
    "droop_fps": 0.0
   }
  },
  "recoil": {
   "impulse_ns": [
-   0.0284,
+   0.05207,
    0.0,
-   8e-05
+   9e-05
   ],
-  "peak_force_on_cage_n": 28.2,
-  "peak_normal_per_tyre_n": 19.1,
-  "contact_ms": 4.667,
-  "ball_ke_j": 0.2324,
-  "slip_loss_j": 0.3069,
+  "peak_force_on_cage_n": 95.3,
+  "peak_normal_per_tyre_n": 71.3,
+  "contact_ms": 5.084,
+  "ball_ke_j": 0.7672,
+  "slip_loss_j": 1.6554,
   "wheel_speed_drop_pct": [
-   1.31,
-   1.31
+   5.63,
+   5.63
   ]
  },
  "ceiling_map": [
   {
-   "rail_v": 10.0,
-   "wheel_d_mm": 32.0,
-   "crush": 0.075,
-   "no_load_rpm_tol": 9551,
-   "surface_m_s_tol": 16.0,
-   "ceiling_fps": 52.9,
-   "population_mean_fps": 41.0,
-   "margin_fps": 17.1,
-   "holds": true
-  },
-  {
-   "rail_v": 10.0,
-   "wheel_d_mm": 34.0,
-   "crush": 0.163,
-   "no_load_rpm_tol": 9551,
-   "surface_m_s_tol": 17.0,
-   "ceiling_fps": 56.9,
-   "population_mean_fps": 54.6,
-   "margin_fps": 13.1,
-   "holds": true
-  },
-  {
-   "rail_v": 10.0,
+   "rail_v": 10.5,
    "wheel_d_mm": 36.0,
-   "crush": 0.251,
-   "no_load_rpm_tol": 9551,
-   "surface_m_s_tol": 18.0,
-   "ceiling_fps": 60.2,
-   "population_mean_fps": 57.7,
-   "margin_fps": 9.8,
+   "crush": 0.312,
+   "no_load_rpm": 14596,
+   "no_load_rpm_tol": 15154,
+   "surface_m_s_tol": 28.56,
+   "ceiling_fps": 92.4,
+   "worst_corner": "d22.2-m1.6-E3-mu1-e0.75",
+   "hasbro_full_throttle_fps": 82.5,
+   "population_mean_fps": 84.2,
+   "margin_fps": 12.6,
    "holds": true
   },
   {
-   "rail_v": 10.0,
+   "rail_v": 10.5,
    "wheel_d_mm": 38.0,
-   "crush": 0.339,
-   "no_load_rpm_tol": 9551,
-   "surface_m_s_tol": 19.0,
-   "ceiling_fps": 62.5,
-   "population_mean_fps": 59.3,
-   "margin_fps": 7.5,
+   "crush": 0.4,
+   "no_load_rpm": 14596,
+   "no_load_rpm_tol": 15154,
+   "surface_m_s_tol": 30.15,
+   "ceiling_fps": 97.0,
+   "worst_corner": "d22.2-m1.6-E0.75-mu1-e0.75",
+   "hasbro_full_throttle_fps": 90.2,
+   "population_mean_fps": 91.6,
+   "margin_fps": 8.0,
    "holds": true
   },
   {
-   "rail_v": 11.0,
-   "wheel_d_mm": 32.0,
-   "crush": 0.075,
-   "no_load_rpm_tol": 10506,
-   "surface_m_s_tol": 17.6,
-   "ceiling_fps": 58.1,
-   "population_mean_fps": 43.8,
-   "margin_fps": 11.9,
-   "holds": true
-  },
-  {
-   "rail_v": 11.0,
-   "wheel_d_mm": 34.0,
-   "crush": 0.163,
-   "no_load_rpm_tol": 10506,
-   "surface_m_s_tol": 18.7,
-   "ceiling_fps": 62.3,
-   "population_mean_fps": 59.1,
-   "margin_fps": 7.7,
+   "rail_v": 10.5,
+   "wheel_d_mm": 40.0,
+   "crush": 0.488,
+   "no_load_rpm": 14596,
+   "no_load_rpm_tol": 15154,
+   "surface_m_s_tol": 31.74,
+   "ceiling_fps": 101.1,
+   "worst_corner": "d22.2-m1.6-E0.75-mu1-e0.75",
+   "hasbro_full_throttle_fps": 93.1,
+   "population_mean_fps": 95.3,
+   "margin_fps": 3.9,
    "holds": true
   },
   {
    "rail_v": 11.0,
    "wheel_d_mm": 36.0,
-   "crush": 0.251,
-   "no_load_rpm_tol": 10506,
-   "surface_m_s_tol": 19.8,
-   "ceiling_fps": 65.4,
-   "population_mean_fps": 63.1,
-   "margin_fps": 4.6,
+   "crush": 0.312,
+   "no_load_rpm": 15291,
+   "no_load_rpm_tol": 15875,
+   "surface_m_s_tol": 29.92,
+   "ceiling_fps": 96.5,
+   "worst_corner": "d22.2-m1.6-E3-mu1-e0.75",
+   "hasbro_full_throttle_fps": 82.5,
+   "population_mean_fps": 86.5,
+   "margin_fps": 8.5,
    "holds": true
   },
   {
    "rail_v": 11.0,
    "wheel_d_mm": 38.0,
-   "crush": 0.339,
-   "no_load_rpm_tol": 10506,
-   "surface_m_s_tol": 20.9,
-   "ceiling_fps": 68.0,
-   "population_mean_fps": 64.8,
-   "margin_fps": 2.0,
+   "crush": 0.4,
+   "no_load_rpm": 15291,
+   "no_load_rpm_tol": 15875,
+   "surface_m_s_tol": 31.59,
+   "ceiling_fps": 101.2,
+   "worst_corner": "d22.8-m1.6-E0.75-mu1-e0.75",
+   "hasbro_full_throttle_fps": 94.4,
+   "population_mean_fps": 95.3,
+   "margin_fps": 3.8,
    "holds": true
   },
   {
-   "rail_v": 12.0,
-   "wheel_d_mm": 32.0,
-   "crush": 0.075,
-   "no_load_rpm_tol": 11461,
-   "surface_m_s_tol": 19.2,
-   "ceiling_fps": 63.3,
-   "population_mean_fps": 46.6,
-   "margin_fps": 6.7,
-   "holds": true
-  },
-  {
-   "rail_v": 12.0,
-   "wheel_d_mm": 34.0,
-   "crush": 0.163,
-   "no_load_rpm_tol": 11461,
-   "surface_m_s_tol": 20.4,
-   "ceiling_fps": 67.6,
-   "population_mean_fps": 63.3,
-   "margin_fps": 2.4,
-   "holds": true
-  },
-  {
-   "rail_v": 12.0,
-   "wheel_d_mm": 36.0,
-   "crush": 0.251,
-   "no_load_rpm_tol": 11461,
-   "surface_m_s_tol": 21.6,
-   "ceiling_fps": 70.7,
-   "population_mean_fps": 68.4,
+   "rail_v": 11.0,
+   "wheel_d_mm": 40.0,
+   "crush": 0.488,
+   "no_load_rpm": 15291,
+   "no_load_rpm_tol": 15875,
+   "surface_m_s_tol": 33.25,
+   "ceiling_fps": 105.7,
+   "worst_corner": "d22.2-m1.6-E0.75-mu1-e0.75",
+   "hasbro_full_throttle_fps": 97.6,
+   "population_mean_fps": 99.7,
    "margin_fps": -0.7,
    "holds": false
   },
   {
-   "rail_v": 12.0,
-   "wheel_d_mm": 38.0,
-   "crush": 0.339,
-   "no_load_rpm_tol": 11461,
-   "surface_m_s_tol": 22.8,
-   "ceiling_fps": 73.5,
-   "population_mean_fps": 70.2,
-   "margin_fps": -3.5,
-   "holds": false
-  },
-  {
-   "rail_v": 13.0,
-   "wheel_d_mm": 32.0,
-   "crush": 0.075,
-   "no_load_rpm_tol": 12416,
-   "surface_m_s_tol": 20.8,
-   "ceiling_fps": 68.3,
-   "population_mean_fps": 49.6,
-   "margin_fps": 1.7,
+   "rail_v": 11.46,
+   "wheel_d_mm": 36.0,
+   "crush": 0.312,
+   "no_load_rpm": 15930,
+   "no_load_rpm_tol": 16539,
+   "surface_m_s_tol": 31.18,
+   "ceiling_fps": 100.3,
+   "worst_corner": "d22.2-m1.6-E3-mu1-e0.75",
+   "hasbro_full_throttle_fps": 82.5,
+   "population_mean_fps": 88.4,
+   "margin_fps": 4.7,
    "holds": true
   },
   {
-   "rail_v": 13.0,
-   "wheel_d_mm": 34.0,
-   "crush": 0.163,
-   "no_load_rpm_tol": 12416,
-   "surface_m_s_tol": 22.1,
-   "ceiling_fps": 72.8,
-   "population_mean_fps": 67.5,
-   "margin_fps": -2.8,
-   "holds": false
-  },
-  {
-   "rail_v": 13.0,
-   "wheel_d_mm": 36.0,
-   "crush": 0.251,
-   "no_load_rpm_tol": 12416,
-   "surface_m_s_tol": 23.4,
-   "ceiling_fps": 76.1,
-   "population_mean_fps": 73.6,
-   "margin_fps": -6.1,
-   "holds": false
-  },
-  {
-   "rail_v": 13.0,
+   "rail_v": 11.46,
    "wheel_d_mm": 38.0,
-   "crush": 0.339,
-   "no_load_rpm_tol": 12416,
-   "surface_m_s_tol": 24.7,
-   "ceiling_fps": 79.1,
-   "population_mean_fps": 75.7,
-   "margin_fps": -9.1,
+   "crush": 0.4,
+   "no_load_rpm": 15930,
+   "no_load_rpm_tol": 16539,
+   "surface_m_s_tol": 32.91,
+   "ceiling_fps": 104.4,
+   "worst_corner": "d22.2-m1.6-E3-mu1-e0.75",
+   "hasbro_full_throttle_fps": 98.4,
+   "population_mean_fps": 98.3,
+   "margin_fps": 0.6,
+   "holds": true
+  },
+  {
+   "rail_v": 11.46,
+   "wheel_d_mm": 40.0,
+   "crush": 0.488,
+   "no_load_rpm": 15930,
+   "no_load_rpm_tol": 16539,
+   "surface_m_s_tol": 34.64,
+   "ceiling_fps": 110.0,
+   "worst_corner": "d22.2-m1.6-E0.75-mu1-e0.75",
+   "hasbro_full_throttle_fps": 101.7,
+   "population_mean_fps": 103.6,
+   "margin_fps": -5.0,
    "holds": false
   },
   {
-   "rail_v": 14.0,
-   "wheel_d_mm": 32.0,
-   "crush": 0.075,
-   "no_load_rpm_tol": 13371,
-   "surface_m_s_tol": 22.4,
-   "ceiling_fps": 73.3,
-   "population_mean_fps": 52.6,
-   "margin_fps": -3.3,
-   "holds": false
-  },
-  {
-   "rail_v": 14.0,
-   "wheel_d_mm": 34.0,
-   "crush": 0.163,
-   "no_load_rpm_tol": 13371,
-   "surface_m_s_tol": 23.8,
-   "ceiling_fps": 78.0,
-   "population_mean_fps": 71.7,
-   "margin_fps": -8.0,
-   "holds": false
-  },
-  {
-   "rail_v": 14.0,
+   "rail_v": 12.0,
    "wheel_d_mm": 36.0,
-   "crush": 0.251,
-   "no_load_rpm_tol": 13371,
-   "surface_m_s_tol": 25.2,
-   "ceiling_fps": 81.5,
-   "population_mean_fps": 78.8,
-   "margin_fps": -11.5,
-   "holds": false
+   "crush": 0.312,
+   "no_load_rpm": 16681,
+   "no_load_rpm_tol": 17318,
+   "surface_m_s_tol": 32.64,
+   "ceiling_fps": 104.8,
+   "worst_corner": "d22.2-m1.6-E3-mu1-e0.75",
+   "hasbro_full_throttle_fps": 82.5,
+   "population_mean_fps": 90.4,
+   "margin_fps": 0.2,
+   "holds": true
   },
   {
-   "rail_v": 14.0,
+   "rail_v": 12.0,
    "wheel_d_mm": 38.0,
-   "crush": 0.339,
-   "no_load_rpm_tol": 13371,
-   "surface_m_s_tol": 26.6,
-   "ceiling_fps": 84.6,
-   "population_mean_fps": 81.2,
-   "margin_fps": -14.6,
+   "crush": 0.4,
+   "no_load_rpm": 16681,
+   "no_load_rpm_tol": 17318,
+   "surface_m_s_tol": 34.46,
+   "ceiling_fps": 109.1,
+   "worst_corner": "d22.2-m1.6-E3-mu1-e0.75",
+   "hasbro_full_throttle_fps": 103.0,
+   "population_mean_fps": 101.6,
+   "margin_fps": -4.1,
    "holds": false
   },
   {
-   "rail_v": 24.0,
-   "wheel_d_mm": 32.0,
-   "crush": 0.075,
-   "no_load_rpm_tol": 22922,
-   "surface_m_s_tol": 38.41,
-   "ceiling_fps": 122.9,
-   "population_mean_fps": 88.5,
-   "margin_fps": -52.9,
+   "rail_v": 12.0,
+   "wheel_d_mm": 40.0,
+   "crush": 0.488,
+   "no_load_rpm": 16681,
+   "no_load_rpm_tol": 17318,
+   "surface_m_s_tol": 36.27,
+   "ceiling_fps": 115.1,
+   "worst_corner": "d22.2-m1.6-E0.75-mu1-e0.75",
+   "hasbro_full_throttle_fps": 106.6,
+   "population_mean_fps": 108.2,
+   "margin_fps": -10.1,
    "holds": false
   },
   {
-   "rail_v": 24.0,
-   "wheel_d_mm": 34.0,
-   "crush": 0.163,
-   "no_load_rpm_tol": 22922,
-   "surface_m_s_tol": 40.81,
-   "ceiling_fps": 129.4,
-   "population_mean_fps": 116.7,
-   "margin_fps": -59.4,
-   "holds": false
-  },
-  {
-   "rail_v": 24.0,
+   "rail_v": 12.5,
    "wheel_d_mm": 36.0,
-   "crush": 0.251,
-   "no_load_rpm_tol": 22922,
-   "surface_m_s_tol": 43.21,
-   "ceiling_fps": 135.6,
-   "population_mean_fps": 130.1,
-   "margin_fps": -65.6,
+   "crush": 0.312,
+   "no_load_rpm": 17376,
+   "no_load_rpm_tol": 18040,
+   "surface_m_s_tol": 34.0,
+   "ceiling_fps": 109.0,
+   "worst_corner": "d22.2-m1.6-E3-mu1-e0.75",
+   "hasbro_full_throttle_fps": 82.5,
+   "population_mean_fps": 91.9,
+   "margin_fps": -4.0,
    "holds": false
   },
   {
-   "rail_v": 24.0,
+   "rail_v": 12.5,
    "wheel_d_mm": 38.0,
-   "crush": 0.339,
-   "no_load_rpm_tol": 22922,
-   "surface_m_s_tol": 45.61,
-   "ceiling_fps": 140.4,
-   "population_mean_fps": 134.9,
-   "margin_fps": -70.4,
+   "crush": 0.4,
+   "no_load_rpm": 17376,
+   "no_load_rpm_tol": 18040,
+   "surface_m_s_tol": 35.89,
+   "ceiling_fps": 113.6,
+   "worst_corner": "d22.2-m1.6-E3-mu1-e0.75",
+   "hasbro_full_throttle_fps": 104.9,
+   "population_mean_fps": 104.5,
+   "margin_fps": -8.6,
+   "holds": false
+  },
+  {
+   "rail_v": 12.5,
+   "wheel_d_mm": 40.0,
+   "crush": 0.488,
+   "no_load_rpm": 17376,
+   "no_load_rpm_tol": 18040,
+   "surface_m_s_tol": 37.78,
+   "ceiling_fps": 119.5,
+   "worst_corner": "d22.8-m1.6-E0.75-mu1-e0.75",
+   "hasbro_full_throttle_fps": 111.1,
+   "population_mean_fps": 112.1,
+   "margin_fps": -14.5,
    "holds": false
   }
  ],
  "exit_vs_wheel_speed": [
   {
    "fraction": 0.1,
-   "rpm": 886,
-   "surface_fps": 5.2,
-   "exit_fps": 5.6,
+   "rpm": 1527,
+   "surface_fps": 10.0,
+   "exit_fps": 14.7,
    "stuck": false
   },
   {
    "fraction": 0.2,
-   "rpm": 1771,
-   "surface_fps": 10.3,
-   "exit_fps": 11.1,
+   "rpm": 3054,
+   "surface_fps": 19.9,
+   "exit_fps": 22.9,
    "stuck": false
   },
   {
    "fraction": 0.3,
-   "rpm": 2657,
-   "surface_fps": 15.5,
-   "exit_fps": 16.6,
+   "rpm": 4581,
+   "surface_fps": 29.9,
+   "exit_fps": 32.0,
    "stuck": false
   },
   {
    "fraction": 0.4,
-   "rpm": 3542,
-   "surface_fps": 20.7,
-   "exit_fps": 22.1,
+   "rpm": 6108,
+   "surface_fps": 39.9,
+   "exit_fps": 40.4,
    "stuck": false
   },
   {
    "fraction": 0.5,
-   "rpm": 4428,
-   "surface_fps": 25.9,
-   "exit_fps": 27.5,
+   "rpm": 7635,
+   "surface_fps": 49.8,
+   "exit_fps": 49.0,
    "stuck": false
   },
   {
    "fraction": 0.6,
-   "rpm": 5313,
-   "surface_fps": 31.0,
-   "exit_fps": 32.7,
+   "rpm": 9162,
+   "surface_fps": 59.8,
+   "exit_fps": 58.0,
    "stuck": false
   },
   {
    "fraction": 0.7,
-   "rpm": 6199,
-   "surface_fps": 36.2,
-   "exit_fps": 37.7,
+   "rpm": 10688,
+   "surface_fps": 69.8,
+   "exit_fps": 67.1,
    "stuck": false
   },
   {
    "fraction": 0.8,
-   "rpm": 7084,
-   "surface_fps": 41.4,
-   "exit_fps": 42.5,
+   "rpm": 12215,
+   "surface_fps": 79.7,
+   "exit_fps": 76.3,
    "stuck": false
   },
   {
    "fraction": 0.9,
-   "rpm": 7970,
-   "surface_fps": 46.5,
-   "exit_fps": 47.2,
+   "rpm": 13742,
+   "surface_fps": 89.7,
+   "exit_fps": 85.6,
    "stuck": false
   },
   {
    "fraction": 1.0,
-   "rpm": 8855,
-   "surface_fps": 51.7,
-   "exit_fps": 52.0,
+   "rpm": 15269,
+   "surface_fps": 99.7,
+   "exit_fps": 95.0,
    "stuck": false
   }
  ],
@@ -813,78 +781,78 @@
    "rows": [
     {
      "latency_s": 0.05,
-     "wheel_rpm": 8486,
-     "exit_fps": 50.0,
+     "wheel_rpm": 14672,
+     "exit_fps": 91.3,
      "stuck": false
     },
     {
      "latency_s": 0.1,
-     "wheel_rpm": 8133,
-     "exit_fps": 48.1,
+     "wheel_rpm": 14098,
+     "exit_fps": 87.8,
      "stuck": false
     },
     {
      "latency_s": 0.15,
-     "wheel_rpm": 7794,
-     "exit_fps": 46.3,
+     "wheel_rpm": 13546,
+     "exit_fps": 84.4,
      "stuck": false
     },
     {
      "latency_s": 0.2,
-     "wheel_rpm": 7469,
-     "exit_fps": 44.5,
+     "wheel_rpm": 13017,
+     "exit_fps": 81.2,
      "stuck": false
     },
     {
      "latency_s": 0.3,
-     "wheel_rpm": 6860,
-     "exit_fps": 41.3,
+     "wheel_rpm": 12018,
+     "exit_fps": 75.1,
      "stuck": false
     },
     {
      "latency_s": 0.5,
-     "wheel_rpm": 5786,
-     "exit_fps": 35.4,
+     "wheel_rpm": 10245,
+     "exit_fps": 64.4,
      "stuck": false
     },
     {
      "latency_s": 1.0,
-     "wheel_rpm": 3781,
-     "exit_fps": 23.5,
+     "wheel_rpm": 6874,
+     "exit_fps": 44.7,
      "stuck": false
     },
     {
      "latency_s": 1.4,
-     "wheel_rpm": 2690,
-     "exit_fps": 16.8,
+     "wheel_rpm": 4995,
+     "exit_fps": 34.2,
      "stuck": false
     }
    ]
   },
   "brake_10A": {
-   "time_to_5pct_s": 0.057,
+   "time_to_5pct_s": 0.157,
    "rows": [
     {
      "latency_s": 0.05,
-     "wheel_rpm": 1154,
-     "exit_fps": 7.3,
+     "wheel_rpm": 10459,
+     "exit_fps": 65.7,
      "stuck": false
     },
     {
      "latency_s": 0.1,
-     "wheel_rpm": 1,
-     "exit_fps": 0.0,
-     "stuck": true
+     "wheel_rpm": 5837,
+     "exit_fps": 38.9,
+     "stuck": false
     },
     {
      "latency_s": 0.15,
-     "wheel_rpm": 0,
-     "exit_fps": 0.0,
-     "stuck": true
+     "wheel_rpm": 1396,
+     "exit_fps": 14.1,
+     "stuck": false
     },
     {
      "latency_s": 0.2,
-     "wheel_rpm": 0,
+     "wheel_rpm": 6,
      "exit_fps": 0.0,
      "stuck": true
     },
@@ -915,17 +883,17 @@
    ]
   },
   "brake_20A": {
-   "time_to_5pct_s": 0.033,
+   "time_to_5pct_s": 0.083,
    "rows": [
     {
      "latency_s": 0.05,
-     "wheel_rpm": 35,
-     "exit_fps": 0.0,
-     "stuck": true
+     "wheel_rpm": 6246,
+     "exit_fps": 41.1,
+     "stuck": false
     },
     {
      "latency_s": 0.1,
-     "wheel_rpm": 0,
+     "wheel_rpm": 113,
      "exit_fps": 0.0,
      "stuck": true
     },
@@ -970,28 +938,31 @@
   "note": "the wheels at the set speed when ARM opens; a ball already past the dial reaches the nip 0.1-0.3 s later (the feed stage's latency); coast: friction only (time constant I / (kt i0 / w0) ~ 2 s); brake: AM32 dynamic braking at the given phase current"
  },
  "validation_nuaa_mismatch": {
-  "wheel_rpm": 5085,
-  "surface_m_s": 15.97,
-  "exit_m_s_matched": 15.7,
-  "exit_m_s_mismatched": 15.7,
-  "ball_spin_rad_s_model": 183.4,
+  "wheel_rpm": 6672,
+  "surface_m_s": 20.96,
+  "exit_m_s_matched": 20.42,
+  "exit_m_s_mismatched": 20.42,
+  "ball_spin_rad_s_model": 183.3,
   "ball_spin_rad_s_no_slip_nathan": 187.0,
-  "spin_fraction_of_no_slip": 0.981,
-  "flight_time_to_15m_s": 1.24,
-  "drift_cm_at_15m_if_1000_rpm_mechanical": 81.1,
-  "drift_cm_at_15m_if_1000_rpm_is_erpm_7_pole_pairs": 12.6,
+  "spin_fraction_of_no_slip": 0.98,
+  "flight_time_to_15m_s": 0.95,
+  "drift_cm_at_15m_if_1000_rpm_mechanical": 68.3,
+  "drift_cm_at_15m_if_1000_rpm_is_erpm_7_pole_pairs": 9.8,
   "published_cm": 13.0,
   "reading": "the guide does not say whether its \"1000 rpm\" is mechanical or the ESC's electrical rpm (a 7-pole-pair motor turns 143 rpm at 1000 eRPM); the model agrees with the guide under the eRPM reading and is ~7x over under the mechanical one. Either way the chain (slip -> spin -> Magnus) is the right order of magnitude, and Gyropup's PI-matched wheels sit far below either: a 2 % mismatch is 120 rpm of ball spin",
   "source": "NUAA friction-wheel design guide (sim/turret_flight.py FLIGHT validation_sources)"
  },
- "fault_24v_on_the_esc": {
-  "population_fps": {
-   "mean": 54.4,
-   "min": 32.2,
-   "max": 77.3
-  },
-  "no_load_rpm_24v": 20997,
-  "surface_m_s": 37.4
+ "fault_input_on_the_esc": {
+  "20.5_v": {
+   "population_fps": {
+    "mean": 122.0,
+    "min": 70.5,
+    "max": 171.6
+   },
+   "no_load_rpm": 28496,
+   "no_load_erpm": 199474,
+   "surface_m_s": 56.7
+  }
  },
  "chronograph": {
   "cad_gates_from_socket_mm": [
@@ -1002,236 +973,237 @@
   "barrel_len_mm": 100.0,
   "socket_mm": 14.0,
   "orange_tip_mm": 15.0,
+  "trip_fps": 105.0,
   "spacing_50_mm": {
    "rows": {
-    "55_fps": {
-     "transit_us": 2982.6,
-     "ball_occludes_gate_us": 1413.7,
-     "beam_crossing_us": 59.7
+    "95_fps": {
+     "transit_us": 1726.8,
+     "ball_occludes_gate_us": 818.5,
+     "beam_crossing_us": 34.5
     },
-    "58_fps": {
-     "transit_us": 2828.3,
-     "ball_occludes_gate_us": 1340.6,
-     "beam_crossing_us": 56.6
+    "100_fps": {
+     "transit_us": 1640.4,
+     "ball_occludes_gate_us": 777.6,
+     "beam_crossing_us": 32.8
     },
-    "66_fps": {
-     "transit_us": 2485.5,
-     "ball_occludes_gate_us": 1178.1,
-     "beam_crossing_us": 49.7
+    "105_fps": {
+     "transit_us": 1562.3,
+     "ball_occludes_gate_us": 740.5,
+     "beam_crossing_us": 31.2
     },
-    "70_fps": {
-     "transit_us": 2343.5,
-     "ball_occludes_gate_us": 1110.8,
-     "beam_crossing_us": 46.9
+    "110_fps": {
+     "transit_us": 1491.3,
+     "ball_occludes_gate_us": 706.9,
+     "beam_crossing_us": 29.8
     },
-    "123_fps": {
-     "transit_us": 1333.7,
-     "ball_occludes_gate_us": 632.2,
-     "beam_crossing_us": 26.7
+    "175_fps": {
+     "transit_us": 937.4,
+     "ball_occludes_gate_us": 444.3,
+     "beam_crossing_us": 18.7
     }
    },
-   "trip_window_us_at_66fps": 2485.5,
-   "fps_error_from_30us_edge_jitter": 0.8,
-   "fps_error_from_5pct_rc_window": 3.3,
+   "trip_window_us": 1562.3,
+   "fps_error_from_30us_edge_jitter": 2.02,
+   "fps_error_from_1pct_rc_window": 1.05,
    "bore_loss_between_gates_fps": 0.63
   },
   "spacing_60_mm": {
    "rows": {
-    "55_fps": {
-     "transit_us": 3579.1,
-     "ball_occludes_gate_us": 1413.7,
-     "beam_crossing_us": 59.7
+    "95_fps": {
+     "transit_us": 2072.1,
+     "ball_occludes_gate_us": 818.5,
+     "beam_crossing_us": 34.5
     },
-    "58_fps": {
-     "transit_us": 3394.0,
-     "ball_occludes_gate_us": 1340.6,
-     "beam_crossing_us": 56.6
+    "100_fps": {
+     "transit_us": 1968.5,
+     "ball_occludes_gate_us": 777.6,
+     "beam_crossing_us": 32.8
     },
-    "66_fps": {
-     "transit_us": 2982.6,
-     "ball_occludes_gate_us": 1178.1,
-     "beam_crossing_us": 49.7
+    "105_fps": {
+     "transit_us": 1874.8,
+     "ball_occludes_gate_us": 740.5,
+     "beam_crossing_us": 31.2
     },
-    "70_fps": {
-     "transit_us": 2812.1,
-     "ball_occludes_gate_us": 1110.8,
-     "beam_crossing_us": 46.9
+    "110_fps": {
+     "transit_us": 1789.5,
+     "ball_occludes_gate_us": 706.9,
+     "beam_crossing_us": 29.8
     },
-    "123_fps": {
-     "transit_us": 1600.4,
-     "ball_occludes_gate_us": 632.2,
-     "beam_crossing_us": 26.7
+    "175_fps": {
+     "transit_us": 1124.9,
+     "ball_occludes_gate_us": 444.3,
+     "beam_crossing_us": 18.7
     }
    },
-   "trip_window_us_at_66fps": 2982.6,
-   "fps_error_from_30us_edge_jitter": 0.66,
-   "fps_error_from_5pct_rc_window": 3.3,
+   "trip_window_us": 1874.8,
+   "fps_error_from_30us_edge_jitter": 1.68,
+   "fps_error_from_1pct_rc_window": 1.05,
    "bore_loss_between_gates_fps": 0.76
   },
-  "recommendation": "keep the CAD's two gates but space them 60 mm (x0 + 22 and x0 + 82: 8 mm past the socket, 18 mm before the muzzle, clear of the orange tip's boss): 2.98 ms window at 66 fps, so a 30 us edge jitter is 0.7 fps and a 1 % timing part holds the trip between 65 and 67 fps; slit the \u00d83.2 cross holes to a 1 mm beam (crossed in 48 us at 21 m/s) so both gates see the same sharp edge; the 24 V fault ball crosses in 1.4 ms, unmistakable, but it has already left: the pre-feed RPM check (AM32 telemetry: refuse to feed above 11,500 rpm) is what stops the first fault ball"
+  "recommendation": "the CAD's two gates 60 mm apart (x0 + 22 and x0 + 82: 8 mm past the socket, 18 mm before the muzzle, clear of the orange tip's boss): a 1875 us window at 105 fps, so a 30 us edge jitter is 1.7 fps and a 1 % timing part 1.1 fps: the latch trips within 2.7 fps of 105 (the Hasbro ball leaves at 95-100, the worst accepted corner at 104); slit the \u00d83.2 cross holes to a 1 mm beam (crossed in 31 us at 32 m/s) so both gates see the same sharp edge. A bypassed converter (the ESCs on the 20.5 V pack) throws ~175 fps and crosses in 1.1 ms, unmistakable, but it has already left: the pre-feed eRPM check (refuse to feed above the bench's n_105) is what stops the first fault ball"
  },
  "release_phase_short": {
   "short_delay_ms": 10.0,
-  "tau_ms_model": 10.16,
-  "tau_ms_motor_only": 6.87,
+  "tau_ms_model": 18.08,
+  "tau_ms_motor_only": 8.96,
   "tau_ms_plan": 12.0,
   "circuit": {
    "r_fet_ohm": 0.025,
    "r_taps_ohm": 0.006,
-   "l_ll_h": 3.5e-05,
+   "l_ll_h": 1.3828571428571426e-05,
    "pole_pairs": 7,
-   "loop_ohm": 0.173
+   "loop_ohm": 0.111
   },
-  "speed_5pct_at_ms": 48.4,
-  "speed_at_96ms_pct": 0.043,
+  "speed_5pct_at_ms": 79.8,
+  "speed_at_96ms_pct": 2.003,
   "inductance_sensitivity": {
    "0uH": {
-    "speed_5pct_at_ms": 40.0,
-    "speed_at_96ms_pct": 0.019
+    "speed_5pct_at_ms": 63.2,
+    "speed_at_96ms_pct": 0.786
    },
    "20uH": {
-    "speed_5pct_at_ms": 42.8,
-    "speed_at_96ms_pct": 0.025
+    "speed_5pct_at_ms": 97.3,
+    "speed_at_96ms_pct": 5.373
    },
    "35uH": {
-    "speed_5pct_at_ms": 48.4,
-    "speed_at_96ms_pct": 0.043
+    "speed_5pct_at_ms": 162.3,
+    "speed_at_96ms_pct": 49.096
    },
    "50uH": {
-    "speed_5pct_at_ms": 57.1,
-    "speed_at_96ms_pct": 0.103
+    "speed_5pct_at_ms": 250.8,
+    "speed_at_96ms_pct": 72.553
    }
   },
   "rows": [
    {
     "latency_ms": 0,
-    "wheel_rpm": 8855,
-    "exit_fps": 42.3,
+    "wheel_rpm": 15269,
+    "exit_fps": 85.0,
     "rests": false
    },
    {
     "latency_ms": 10,
-    "wheel_rpm": 8780,
-    "exit_fps": 41.8,
+    "wheel_rpm": 15148,
+    "exit_fps": 84.2,
     "rests": false
    },
    {
     "latency_ms": 20,
-    "wheel_rpm": 5437,
-    "exit_fps": 21.9,
+    "wheel_rpm": 12087,
+    "exit_fps": 65.0,
     "rests": false
    },
    {
     "latency_ms": 30,
-    "wheel_rpm": 2580,
-    "exit_fps": 6.6,
+    "wheel_rpm": 8988,
+    "exit_fps": 46.2,
     "rests": false
    },
    {
     "latency_ms": 40,
-    "wheel_rpm": 1013,
-    "exit_fps": 2.0,
-    "rests": true
+    "wheel_rpm": 6119,
+    "exit_fps": 29.8,
+    "rests": false
    },
    {
     "latency_ms": 50,
-    "wheel_rpm": 377,
-    "exit_fps": 0.7,
-    "rests": true
+    "wheel_rpm": 3830,
+    "exit_fps": 16.1,
+    "rests": false
    },
    {
     "latency_ms": 60,
-    "wheel_rpm": 139,
-    "exit_fps": 0.4,
-    "rests": true
+    "wheel_rpm": 2270,
+    "exit_fps": 8.6,
+    "rests": false
    },
    {
     "latency_ms": 70,
-    "wheel_rpm": 51,
-    "exit_fps": 0.0,
+    "wheel_rpm": 1312,
+    "exit_fps": 5.2,
     "rests": true
    },
    {
     "latency_ms": 80,
-    "wheel_rpm": 19,
-    "exit_fps": 0.0,
+    "wheel_rpm": 751,
+    "exit_fps": 3.0,
     "rests": true
    },
    {
     "latency_ms": 90,
-    "wheel_rpm": 7,
-    "exit_fps": 0.0,
+    "wheel_rpm": 428,
+    "exit_fps": 1.7,
     "rests": true
    },
    {
     "latency_ms": 100,
-    "wheel_rpm": 3,
-    "exit_fps": 0.0,
+    "wheel_rpm": 244,
+    "exit_fps": 1.0,
     "rests": true
    },
    {
     "latency_ms": 110,
-    "wheel_rpm": 1,
+    "wheel_rpm": 139,
     "exit_fps": 0.0,
     "rests": true
    },
    {
     "latency_ms": 120,
-    "wheel_rpm": 0,
+    "wheel_rpm": 79,
     "exit_fps": 0.0,
     "rests": true
    },
    {
     "latency_ms": 130,
-    "wheel_rpm": 0,
+    "wheel_rpm": 45,
     "exit_fps": 0.0,
     "rests": true
    },
    {
     "latency_ms": 140,
-    "wheel_rpm": 0,
+    "wheel_rpm": 26,
     "exit_fps": 0.0,
     "rests": true
    },
    {
     "latency_ms": 150,
-    "wheel_rpm": 0,
+    "wheel_rpm": 15,
     "exit_fps": 0.0,
     "rests": true
    },
    {
     "latency_ms": 160,
-    "wheel_rpm": 0,
+    "wheel_rpm": 8,
     "exit_fps": 0.0,
     "rests": true
    },
    {
     "latency_ms": 170,
-    "wheel_rpm": 0,
+    "wheel_rpm": 5,
     "exit_fps": 0.0,
     "rests": true
    },
    {
     "latency_ms": 180,
-    "wheel_rpm": 0,
+    "wheel_rpm": 3,
     "exit_fps": 0.0,
     "rests": true
    },
    {
     "latency_ms": 190,
-    "wheel_rpm": 0,
+    "wheel_rpm": 2,
     "exit_fps": 0.0,
     "rests": true
    },
    {
     "latency_ms": 200,
-    "wheel_rpm": 0,
+    "wheel_rpm": 1,
     "exit_fps": 0.0,
     "rests": true
    },
    {
     "latency_ms": 210,
-    "wheel_rpm": 0,
+    "wheel_rpm": 1,
     "exit_fps": 0.0,
     "rests": true
    },
@@ -1290,30 +1262,30 @@
     "rests": true
    }
   ],
-  "worst_exit_fps": 42.3,
-  "worst_latency_ms": 20
+  "worst_exit_fps": 85.0,
+  "worst_latency_ms": 40
  },
  "stray_ball_rearm": {
   "ramp_200ms": {
-   "exit_fps": 6.3,
-   "leaves_after_ms": 22.9,
+   "exit_fps": 2.9,
+   "leaves_after_ms": null,
    "wheel_rpm_when_it_leaves": [
-    1011,
-    1011
+    137,
+    139
    ],
-   "rests": false
+   "rests": true
   },
   "stepped_10A_limit": {
-   "exit_fps": 11.1,
-   "leaves_after_ms": 13.7,
+   "exit_fps": 2.5,
+   "leaves_after_ms": null,
    "wheel_rpm_when_it_leaves": [
-    1811,
-    1811
+    368,
+    368
    ],
-   "rests": false
+   "rests": true
   },
   "stray_clear_at_15pct": {
-   "exit_fps": 2.4,
+   "exit_fps": 0.2,
    "note": "a deliberate low-speed clear (15 % set speed, muzzle down) before arming for real"
   },
   "dial_reverse": {
@@ -1322,7 +1294,7 @@
   }
  },
  "ramp_active_at_set_speed": {
-  "fps_max": 11.2,
+  "fps_max": 96.17,
   "note": "the first ball fired as the 200 ms ramp ends: the same set speed, so the same ceiling"
  }
 }
