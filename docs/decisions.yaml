@@ -413,3 +413,10 @@
   why: "The user asked for it: two robots, the turret and Gyropup, that combine but are independent assemblies, which also gives redundancy. A turret that carries its own computer, power input and safety can be built, tested and played with on its stand before Gyropup walks, and a fault in one does not take the other down. The reComputer Mini's 12-54 V input covers both one pack in 20 V mode and Gyropup's 10S bus with no converter in front of it."
   status: decided
   source: {kind: user, quote: "I would use a jetson orin nx 16gb. / To keep things simple the turret could have it's own ... jetson mini carrier board? That would let us basically make this design into two robots - nerf turret and gyropup. They can combined of course, but would basically be two independent assemblies, which would also give us redundancy."}
+- id: D67
+  date: "2026-10-27"
+  title: "The ammo is standard Hasbro Nerf Rival rounds"
+  decision: "The turret is designed and bought for Hasbro's own Nerf Rival rounds (22.2-22.8 mm, 1.83 g average measured; the design ball is 22.7 mm and 1.83 g, as the launch, feed and safety numbers already assume). The BOM's ammo line is an official Nerf Rival refill pack from a mainstream seller; Rival-compatible third-party rounds (Worker Cheetah) are the backup only. The 70 fps physical cap and the barrel-never-above-level rule are unchanged."
+  why: "The user asked for standard Rival rounds: they are sold everywhere, kids already have them, and they are the round the turret's physics (research/turret-launcher-study.md 2.1, BlasterHub's weighing of Hasbro rounds) was sized on. Third-party rounds vary in size and mass, which moves the speed under the cap."
+  status: decided
+  source: {kind: user, quote: "standard \"nerf rival\" foam balls should be our ammo."}
