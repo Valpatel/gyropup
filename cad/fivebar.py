@@ -434,7 +434,9 @@ GUSSET_RUNOUT = 12.0                             # mm: the frame's gussets betwe
                                                  # a stiffer end draws more), a backing block like the knee-out ears' (a
                                                  # knife edge under the flange: 0.51) and the flanges 1.5 mm thicker
                                                  # towards the motors (1.51); a 15 x 5 mm snipe at the bottom flange's ends
-                                                 # gave 1.81 but took the landing case (R1) from 1.6 to 1.35. Whatever
+                                                 # gave 1.81 but took the landing case (R1) from 1.6 to 1.35; a variable-
+                                                 # radius root fillet (6 mm, shrinking to 1 over the motors) 1.66, its peak
+                                                 # over the motor where the fillet is thinnest. Whatever
                                                  # stiffens the flange's end draws more into that corner; a sharp re-entrant
                                                  # corner, whose 4 mm value moves 10-15 % with small changes nearby
 FLANGE_T, FLANGE_X = 13.0, 95.0                  # the hip frame's top and bottom flanges: thickness, half-length (mm).
