@@ -2112,7 +2112,7 @@
    "vendor": "SendCutSend (sendcutsend.com: upload the DXF, pick the material, add the services above)",
    "backup": "OSH Cut (oshcut.com: instant price from the DXF or STEP; bends and PEM nuts)",
    "material": "5052-H32 aluminium 0.1 in",
-   "mass_g_each": 647.3,
+   "mass_g_each": 649.0,
    "size_mm": [
     350.3,
     284.3,
@@ -2128,18 +2128,18 @@
    ],
    "rules": "SendCutSend rules checked: none broken",
    "price_estimate_usd_each": 65.0,
-   "price_usd_each": 80.57,
-   "price_read_on": "2026-10-27",
-   "price_usd_line": 80.57,
+   "price_usd_each": 79.11,
+   "price_read_on": "2026-10-28",
+   "price_usd_line": 79.11,
    "price_breaks_usd_each": {
-    "2": 59.8,
-    "10": 42.83,
-    "50": 34.7,
-    "100": 28.92,
-    "1000": 24.04
+    "2": 58.62,
+    "10": 41.89,
+    "50": 33.9,
+    "100": 28.26,
+    "1000": 23.68
    },
    "ships_by": "Nov 2",
-   "price_note": "SendCutSend's instant price, read in its app on 2026-10-27 from the uploaded DXF (tools/sendcutsend_quote.py): 5052-H32 aluminium 0.1 in, bending 4 bends found in the DXF's BEND layer, each 90 deg UP, deburred, qty 1; cutting alone $64.26 each",
+   "price_note": "SendCutSend's instant price, read in its app on 2026-10-28 from the uploaded DXF (tools/sendcutsend_quote.py): 5052-H32 aluminium 0.1 in, bending 4 bends found in the DXF's BEND layer, each 90 deg UP, deburred, qty 1; cutting alone $62.8 each",
    "stage": "P1"
   },
   {
@@ -2184,7 +2184,7 @@
    "vendor": "SendCutSend (sendcutsend.com: upload the DXF, pick the material, add the services above)",
    "backup": "OSH Cut (oshcut.com: instant price from the DXF or STEP; bends and PEM nuts)",
    "material": "6061-T6 aluminium 0.125 in",
-   "mass_g_each": 132.5,
+   "mass_g_each": 134.5,
    "size_mm": [
     160.0,
     140.0,
@@ -2200,18 +2200,18 @@
    ],
    "rules": "SendCutSend rules checked: none broken",
    "price_estimate_usd_each": 25.0,
-   "price_usd_each": 44.02,
-   "price_read_on": "2026-10-27",
-   "price_usd_line": 44.02,
+   "price_usd_each": 44.11,
+   "price_read_on": "2026-10-28",
+   "price_usd_line": 44.11,
    "price_breaks_usd_each": {
-    "2": 30.17,
-    "10": 23.75,
-    "50": 18.34,
-    "100": 16.68,
+    "2": 30.22,
+    "10": 23.79,
+    "50": 18.36,
+    "100": 16.69,
     "1000": 12.52
    },
    "ships_by": "Nov 2",
-   "price_note": "SendCutSend's instant price, read in its app on 2026-10-27 from the uploaded DXF (tools/sendcutsend_quote.py): 6061-T6 aluminium 0.125 in, tapping 1, hardware 1, deburred, qty 1; cutting alone $27.36 each",
+   "price_note": "SendCutSend's instant price, read in its app on 2026-10-28 from the uploaded DXF (tools/sendcutsend_quote.py): 6061-T6 aluminium 0.125 in, tapping 1, hardware 1, deburred, qty 1; cutting alone $27.45 each",
    "stage": "P2"
   },
   {
@@ -2522,9 +2522,9 @@
   }
  ],
  "price_usd_known": 1608.6,
- "p2_usd": 62.63,
+ "p2_usd": 62.72,
  "made_to_order_estimate_usd": 459.0,
  "p3_usd": 84.03,
- "made_to_order_usd": 579.63,
+ "made_to_order_usd": 578.17,
  "made_to_order_priced": true
 }

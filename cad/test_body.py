@@ -213,7 +213,8 @@ def test_frame_strength_cases():
     d2 = s['D2-turret-fall']
     assert d2['target_sf'] >= 2.0, d2['target_sf']
     loads = json.loads((R / 'exports' / 'body' / 'leg-loads.json').read_text())
-    assert loads['half_mass_kg'] >= 16.25 - 1e-9, loads['half_mass_kg']
+    import body_layout as bl
+    assert loads['half_mass_kg'] >= bl.BUDGET['design_half_mass_kg'] - 1e-9, loads['half_mass_kg']      # D71: 18.75 kg a leg
 
 
 # ------------------------------------------------------------------------------------------- T5, T8: parts list, wiring
@@ -296,34 +297,43 @@ def test_body_loads_from_the_mount_plane():
 import pytest  # noqa: E402
 
 
-@pytest.mark.xfail(strict=True, reason='D65: the two DCB609 packs put the P3 ledger 1.8 kg over the 32.0 kg ceiling; the choice '
-                   'of where the mass comes from is open (issue #10, docs/body-sections.md 6). strict: this fails loudly once it passes')
 def test_the_mass_ledger_under_the_ceiling():
-    """D57: the robot is designed for 32.5 kg and held under 32.0 kg as built. The P3 ledger, with every scheduled lever
-    of docs/body-next-plan.md 2.3 that is not in the CAD yet taken at its planned grams, stays under 32.0 kg, each leg
-    under 9.6 and the body and head under 12.8; once every scheduled lever is in the CAD the ledger itself must be."""
+    """D71: the robot is designed for 37.5 kg and held under 37.0 kg as built. The P3 ledger, with every scheduled lever
+    of docs/body-next-plan.md 2.3 that is not in the CAD yet taken at its planned grams, stays under 37.0 kg, each leg
+    under 10.85 and the body and head under 15.3; once every scheduled lever is in the CAD the ledger itself must be."""
     m = json.loads((R / 'exports' / 'body' / 'mass.json').read_text())['P3']
     g = m['gate']
     open_ = [l['key'] for l in m['levers'] if l['kind'] == 'scheduled' and l['status'] == 'open']
     print(f"\nmass ledger P3 {m['total_kg']} kg (ceiling {g['ceiling_kg']}, gap {g['gap_kg']:+.3f} kg); legs {g['leg_each_kg']} kg each; "
           f"with the open scheduled levers {open_} ({g['open_scheduled_g']} g): {g['with_scheduled_levers_kg']} kg")
-    assert m['budget']['robot_kg'] == 32.0 and m['budget']['design_mass_kg'] == 32.5 and m['budget']['legs_kg_each'] == 9.6
+    assert m['budget']['robot_kg'] == 37.0 and m['budget']['design_mass_kg'] == 37.5 and m['budget']['legs_kg_each'] == 10.85
     assert g['pass'], g
     if not open_:
         assert m['total_kg'] <= g['ceiling_kg'], (m['total_kg'], g)
 
 
+def test_the_ledger_carries_the_d69_wheel():
+    """D69: each wheel is the 10 in hub motor at its listed mass (until the leg's BOM carries it), and the design mass is
+    37.5 kg (18.75 kg a leg, D71)."""
+    import body_layout as bl
+    m = json.loads((R / 'exports' / 'body' / 'mass.json').read_text())['P3']
+    w = {r['name']: r['mass_g'] for r in m['rows'] if r['name'].endswith(('wheel_tyre', 'wheel_hub'))}
+    assert abs(w['L.wheel_tyre'] + w['L.wheel_hub'] - bl.wheel_g()) < 1.0, w
+    assert bl.wheel_g() > 2200.0                       # heavier than the BotWheel it replaces (a weighed wheel may differ)
+    assert m['budget']['design_half_mass_kg'] == 18.75
+
+
 def test_the_gate_catches_a_ledger_over_the_ceiling():
-    """The gate itself: a ledger over 32.0 kg with every scheduled lever taken fails it, as does a leg over 9.6 kg; the
+    """The gate itself: a ledger over 37.0 kg with every scheduled lever taken fails it, as does a leg over 10.85 kg; the
     open scheduled levers' grams count toward it."""
     import body_layout as bl
     taken = [dict(l, status='taken') for l in bl.levers()]
-    assert not bl.gate({'total_kg': 32.05, 'body_and_head_kg': 12.7, 'legs_kg': 19.35, 'levers': taken})['pass']
-    assert not bl.gate({'total_kg': 31.9, 'body_and_head_kg': 12.6, 'legs_kg': 19.3, 'levers': taken})['pass']      # 9.65 a leg
-    assert bl.gate({'total_kg': 31.9, 'body_and_head_kg': 12.7, 'legs_kg': 19.2, 'levers': taken})['pass']
+    assert not bl.gate({'total_kg': 37.05, 'body_and_head_kg': 15.2, 'legs_kg': 21.6, 'levers': taken})['pass']
+    assert not bl.gate({'total_kg': 36.9, 'body_and_head_kg': 15.2, 'legs_kg': 21.72, 'levers': taken})['pass']     # 10.86 a leg
+    assert bl.gate({'total_kg': 36.9, 'body_and_head_kg': 15.25, 'legs_kg': 21.6, 'levers': taken})['pass']
     opened = [dict(l, status='open') for l in bl.levers()]                    # -705 g still to come
-    assert bl.gate({'total_kg': 32.6, 'body_and_head_kg': 13.4, 'legs_kg': 19.2, 'levers': opened})['pass']
-    assert not bl.gate({'total_kg': 32.8, 'body_and_head_kg': 13.6, 'legs_kg': 19.2, 'levers': opened})['pass']
+    assert bl.gate({'total_kg': 37.6, 'body_and_head_kg': 15.9, 'legs_kg': 21.6, 'levers': opened})['pass']
+    assert not bl.gate({'total_kg': 37.8, 'body_and_head_kg': 16.1, 'legs_kg': 21.6, 'levers': opened})['pass']
 
 
 def test_lidar_ahead_of_the_pan_axis_by_143():
@@ -343,12 +353,85 @@ if __name__ == '__main__':
     sys.exit(pytest.main([__file__, '-q', '-s']))
 
 
+# cad-agent's connectivity gate (#14) at P3: the contacts no joint or hold declares, each reviewed (touching faces of
+# parts that are also screwed or held: the bay's doors and sides, the frame screws' heads on the cheeks, the pallet on
+# its isolators and the VESCs' envelopes under it, the ear pods and the eyes board on the shell, the J501's stack)
+UNDECLARED_CONTACTS_P3 = [
+    'bay_door_front|bay_floor',
+    'bay_door_front|bay_side_l',
+    'bay_door_front|bay_side_r',
+    'bay_door_rear|bay_floor',
+    'bay_door_rear|bay_side_l',
+    'bay_door_rear|bay_side_r',
+    'bay_side_l|belly_plate',
+    'bay_side_r|belly_plate',
+    'cheek_left|frame_screws_left',
+    'cheek_right|frame_screws_right',
+    'compute_pallet|isolator_2',
+    'compute_pallet|isolator_3',
+    'compute_pallet|isolator_4',
+    'compute_pallet|item.plate_vesc_l',
+    'compute_pallet|item.plate_vesc_r',
+    'ear_pod_l|shell_side_l_front',
+    'ear_pod_r|shell_side_r_front',
+    'eyes_board|shell_front',
+    'item.agx_cooler|item.agx_spreader',
+    'item.j501_carrier|item.j501_standoff_15_146.5',
+    'item.j501_carrier|item.j501_standoff_165_146.5',
+    'item.j501_carrier|item.j501_standoff_165_16.5',
+    'item.plate_main_switch|plate_post_1',
+    'item.plate_mrbf_block|item.plate_shunt',
+    'leg.left_hip_frame|spacer_screws',
+    'leg.right_hip_frame|spacer_screws',
+]
+
+
 def test_integrity_every_joint_and_no_floating_part():
     """cad/body_joints.py (run by cad/build_body.py): every screw's stack reads true through the CAD (the head on its face,
-    the stack touching, the holes, the thread engaged, the tip clear), every part on the robot reaches the cheeks, and
-    no two body parts interfere."""
+    the stack touching, the holes, the thread engaged, the tip clear), every part on the robot reaches the cheeks through
+    cad-agent's connectivity gate (issue #14), and no two body parts interfere."""
     f = R / 'exports' / 'body' / 'integrity.json'
     d = json.loads(f.read_text())['summary']
     assert not d['joints_with_problems'], d['joints_with_problems']
     assert not d['floating'], d['floating']
     assert not d.get('clashes'), d.get('clashes')
+    assert d.get('connectivity_pass') and all(d['connectivity_pass'].values()), d.get('connectivity_pass')   # cad-agent's gate (#14)
+    # the gate counts a touching part as held: every contact no joint or hold declares is pinned here, so a new one fails
+    full = json.loads(f.read_text())['connectivity']['P3']['undeclared_contacts']
+    assert sorted(full) == sorted(UNDECLARED_CONTACTS_P3), sorted(set(full) ^ set(UNDECLARED_CONTACTS_P3))
+
+
+def test_pack_and_adapter_are_marked_envelopes_until_measured():
+    """Issue #20: the DCB609 and its rail adapter stay labelled boxes until a real pack and adapter are measured; the
+    ledger's rows say so, so nobody reads them as modelled interfaces."""
+    import body_battery as bb
+    for spec in (bb.PACK, bb.ADAPTER):
+        assert spec.get('envelope') and '#20' in spec.get('blocked_by', ''), spec
+    m = json.loads((R / 'exports' / 'body' / 'mass.json').read_text())['P3']
+    rows = [r for r in m['rows'] if r['name'].startswith('battery_')]
+    assert rows and all(r['basis'].startswith('ENVELOPE') for r in rows), [(r['name'], r['basis'][:40]) for r in rows]
+
+
+def test_the_lowest_leg_is_one_number():
+    """Issue #19: the crush pads' 40 mm under them needs the lowest controlled leg at 180 mm, set in the pad's spec, the
+    body's sim and the firmware header: one number in all three."""
+    import re
+    import body_battery as bb
+    from sim import robot_v2
+    h = robot_v2.H_RANGE[0]
+    fw = (R / 'firmware' / 'balance' / 'include' / 'gp' / 'gp_model.h').read_text()
+    hf = float(re.search(r'#define GP_H_MIN_M ([\d.]+)f', fw).group(1)) * 1000
+    assert h == bb.PAD['lowest_leg_mm'] == round(hf, 3), (h, bb.PAD['lowest_leg_mm'], hf)
+    g = bb.geometry()
+    assert bb.PAD['lowest_leg_mm'] + bb.PAD['wheel_r'] + g['z_bottom'] >= 40.0 - 1e-6       # D69: 40 mm under the pads
+
+
+def test_the_design_half_mass_is_one_number():
+    """D71: 18.75 kg a leg in the ledger's budget, the firmware generator (which reads it), the HIL and the legs' loads."""
+    import re
+    import body_layout as bl
+    hm = bl.BUDGET['design_half_mass_kg']
+    hil = (R / 'firmware' / 'balance' / 'hil' / 'harness.py').read_text()
+    assert float(re.search(r'^DESIGN_HALF_MASS = ([\d.]+)', hil, re.M).group(1)) == hm
+    fw = (R / 'firmware' / 'balance' / 'include' / 'gp' / 'gp_model.h').read_text()
+    assert abs(float(re.search(r'#define GP_RIG_HALF_MASS_KG ([\d.]+)f', fw).group(1)) - hm) < 1e-6

@@ -450,3 +450,146 @@ docs/body-orders.md 4).
   The packs then carry that load into their rail adapters. Options (issue #10): crush-pad skids (a 10 mm TPU 85A
   lattice, modelled with its stiffness in the sim's contact), a shallower bay (packs lying on their side need 122 mm
   across, more than the 116 mm between the knees: no), or the leg's stops raised to 140 mm (the leg workstream's).
+
+## 10. D69 in the body (2026-10-28; issues #10, #19, #14, #20)
+
+D69 swaps the BotWheel for a 10 in hoverboard-class hub motor with a 10 x 2.125 pneumatic tyre. It moves the mass gate
+to 35.0 kg as built, with a 35.5 kg design mass (17.75 kg a leg).
+
+### 10.1 Where the body sees the wheel
+
+Until the leg's foot change lands (#25), the body draws D69's wheel in the BotWheel's place (cad/body_params.py
+`_fivebar()`), using the same solid as sim/wheel_study.py: a 254 x 64 tyre ring, a Ø165 x 65 drum and the Ø17 shaft. The
+sim (sim/robot_v2.py `use_d69_wheel()`), the legs' loads (cad/body_legloads.py) and the firmware header
+(firmware/balance/tools/gen_model.py) put the same wheel into sim.leg_rig's state, at the ledger's 3.53 kg. No leg file
+is edited.
+
+### 10.2 The mass gate (issue #10; D71 replaces D69's numbers)
+
+**D71 (main e899d28):** 37.5 kg design (18.75 kg a leg), 37.0 kg as built. P3 is 36.75 kg, 36.25 kg with the scheduled
+levers: a 0.75 kg margin, and the test passes. The turret's 2.55 kg head (D66) would use about 0.85 kg of it. What
+follows is the state under D69.
+
+
+The P3 ledger is 36.75 kg: 36.25 kg with the scheduled levers, which is 1.25 kg over 35.0. That includes the
+crush pads' 0.23 kg (10.3); before the pads it was 36.55 / 36.05 kg. The gate is not relaxed:
+`test_the_mass_ledger_under_the_ceiling` stays a strict xfail. The levers that could close the gap are listed in
+docs/body-sections.md 6. The body-only ones are worth 0.8-1.0 kg, which is not enough alone. The rest are:
+
+- the wheel weighing in under its listing;
+- the 8.5 in backup wheel;
+- lighter packs;
+- a ceiling of about 36.1 kg, which needs the leg to re-run its cases at about 18.3 kg a leg.
+
+D69's 35.0 kg came from a ledger taken before D65's packs.
+
+### 10.3 Crush pads and the lowest leg (issue #19)
+
+The bay's four pads are printed TPU 95A gyroid:
+
+| Property | Value |
+|---|---|
+| Free height | 50 mm |
+| Stroke | 30 mm |
+| Crush plateau | 600 N a pad |
+| Ground clearance needed | 40 mm |
+
+To keep the 40 mm, the lowest controlled leg rises from 160 to 185 mm. `H_RANGE` in sim/robot_v2.py reads it from
+cad/body_battery.py PAD; the firmware's `GP_H_MIN_M` follows, and a test ties the three together. The leg's stops do
+not move.
+
+Results, with the densified pad modelled as stiff as the 1 ms step allows:
+
+| Case | Body impact (limit 3,000 N) | Stroke used |
+|---|---|---|
+| Three falls at the scenarios' push | 2,723 N worst | 22.1 of 30 mm |
+| All nine (pushes x0.6, x1.0, x1.4) | 2,724 N worst | 27.6 mm |
+| 1 kg more | 2,740 N | |
+| Rigid pads | 7,257 N | |
+
+- No 25 mm or 35 mm pad passes all nine at any plateau.
+- 45 mm works only in a 600-650 N window, too narrow to build to. The review of #21 found that 600 N reaches its
+  stroke at x1.4, and 650 N peaks at 2,909 N at x0.6.
+
+The robot sits on the pads under a 145 mm leg; they are D69's parking brake. The pads add 0.23 kg against the 30 g
+skids. Evidence: sim/bay_pad_study.py, exports/body/bay-pad-study.json and bay-pad-depth.json. Still to do:
+
+- **Issue #26, before the pads are printed:**
+  - a coupon crush test and a drop and rebound test (acceptance: a plateau of 500-700 N a pad, at most 24 mm in a
+    1.6 m/s drop, a rebound at most 50 %, a slanted drop bonded);
+  - the retention: a 3 mm lip up the floor flange's outer face, and two M3 into new PEMs in each flange. The model's
+    pads are rigid sideways, and VHB alone may peel at about 1.7 MPa.
+
+### 10.4 Track, stance and the wheel's connectors
+
+| | BotWheel | D69 10 in |
+|---|---|---|
+| Track (tyre centres) | 414.3 mm | 433.7 mm |
+| Tyre band from the cheek's face (y, robot) | 184.9-229.4 mm | 184.9-248.9 mm |
+| Hip height at the 0.6 stance | 375 mm (289 mm leg) | 426 mm (299 mm leg: the range is now 185-375) |
+| Under the pads at a 300 mm leg | - | 155 mm |
+| Tyre to the nearest body part (22 stances) | - | 72.5 mm (the ear bracket, folded leg); no 4-25 mm gap |
+| 15 robot scenarios (tools/simulate.py --v2) | 14/15 (fall_side 3,408 N) | **15/15** at 36.75 kg |
+
+Each wheel connects at the cheek's end, where its lead enters the cable chase beside the RS-04 harnesses. The body
+carries the sockets and the wheel's lead carries the pins:
+
+| Wire | Signals | Body side | Wheel side | Contacts |
+|---|---|---|---|---|
+| W50, W52 | phases, 14 AWG | DTP06-4S | DTP04-4P | size 12, 25 A |
+| W51, W53 | halls and NTC, 20 AWG shielded | DT06-6S | DT04-6P | size 16 |
+
+Prices are still to read. Mouser timed out for an automated read on 2026-10-28. The BOM gets these lines once their
+prices are read (D40).
+
+### 10.5 IP54 (D69: splashes, puddles to 40 mm)
+
+The sealed volume is the shell, the deck and the belly plate. The bay sits outside it: the packs are DeWalt's
+jobsite-rated tools, and their adapters face up under the belly plate.
+
+| Opening | Seal | Status |
+|---|---|---|
+| Shell panels to the belly plate, deck and each other | 3 mm closed-cell EPDM foam gasket in the joints, compressed by the panels' screws | design (B16) |
+| Rear louvres (14 x 4 x 46 mm a side, the J501's air inlet) and the TRACO vent | a drip lip over each bank, slots angled down, 30 ppi filter foam behind | **open**: the foam's pressure drop is not in B7's hand model; it must keep the fan's extra back-pressure under 5 Pa, else the louvres grow |
+| Port hatch, door | the same gasket; the hatch closed while it rains | design |
+| Wheel and RS-04 leads at the cheeks' ends (the cable chase) | a split grommet per lead; Deutsch DT/DTP connectors are IP67 when mated | design |
+| The pack leads through the belly's slot | a grommet round the two 10 AWG leads | design |
+| Breathing | one vent plug (ePTFE, M12) in the rear wall; the VESCs dump heat into the plate, so the box is not sealed tight | design |
+| The bay's side plates (three lightening windows each) | splash reaches the adapters' terminals from the side: close the windows (the plate gets heavier) or add printed covers | **open**: decide with the pack's measured interface (#20) |
+| Hubs | the wheel workstream's seal procedure (W8) | the leg's |
+
+### 10.6 Still open
+
+- The DCB609 and the Terrafirma adapter are envelopes until they are measured (#20). Their rows say so, and a test
+  keeps them labelled.
+- **The body's strength at D71's 18.75 kg a leg** (gb10-02 and gb10-01; exports/body/fea/summary.json, leg-loads.json;
+  41 V; the side grip at the 10 in wheel's radius and tyre plane). Every case passes:
+
+  | Case | SF | Target | Mesh |
+  |---|---|---|---|
+  | S1 landing | 2.38 | 2.0 | 4 mm |
+  | S1F collapse | 1.30 | 1.2 | 4 mm |
+  | S1b | 2.78 | 2.0 | 4 mm |
+  | S2 | 8.0 | 2.0 | 4 mm |
+  | S3 | 28 | 2.0 | 4 mm |
+  | T1 tray | 2.61 | 2.0 | 4 mm |
+  | D1 front / riser | 5.5 / 5.9 | 2.0 | 4 mm |
+  | **D2 turret fall** | **2.12** | 2.0 | 2 mm |
+
+  The 15 scenarios at 37.5 kg (0.75 kg of ballast) pass 15/15 (exports/body/sim-v2-design-mass.json).
+- **How D2 was fixed** (exports/body/fea/D2-convergence.json; tools/fea_convergence.py). With the turret plate bonded over
+  its whole face, its outer corners pried against the deck. Removing the front pockets made that worse (194-202 MPa), so
+  the corners were a model artefact, not the pocket. The plate is now modelled as the bolted joint it is: a 0.5 mm gap,
+  clamped under each riser foot (the M5's preload sandwiches the deck) and at its end nuts.
+  - With the Ø36 feet the deck's peak at the foot's rim converged to 107.6 / 104.0 / 100.4 MPa at 4 / 3 / 2 mm (SF 1.92).
+  - **The riser's feet grew to Ø44**, which gives 96.7 / 95.9 / 89.9 MPa, SF 2.15 at 2 mm. D2 now runs at 2 mm.
+  - The rigid-pad rims (the posts' corners, the clamp pads) are singular: 105 -> 375 MPa from 4 to 2 mm. Their abuse
+    check is judged at the 4 mm reference mesh only; finer meshes report them, and the bolted joint is the hand check.
+  - The wider feet cost 4 of the deck's 31 outlet cells. In the hand model the flow drops from 12.89 to 12.42 CFM, the
+    cooler's inlet rises from 2.49 to 2.59 K over the room (limit 3 K), and the plate goes from 60.3 to 60.5 C.
+  - The plate's foot pads are now r 22 (134.5 g, inside the 135 g budget).
+- **The deck's and the turret plate's SendCutSend prices are to re-read**, because their DXFs changed (the cells, the
+  plate's pads). Run `tools/sendcutsend_quote.py --only deck turret_plate`, then `cad/body_bom.py`. This session's
+  Playwright could not launch Chrome 151 headless.
+- Price the Deutsch connectors, the grommets, the vent plug and the gasket.
+- Open B7's louvre filter.

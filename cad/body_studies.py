@@ -58,9 +58,14 @@ def _rel(p):
 
 
 def _wheel_r_mm():
-    """The BotWheel's radius from the catalogue."""
-    cat = json.loads((R / 'catalog/wheel_motors.json').read_text())
-    return next(c for c in cat if c['id'] == 'odrive-botwheel')['specs']['diameter_mm'] / 2
+    """D69's 10 in tyre's radius (cad/body_params.py D69_WHEEL_CAD; the BotWheel's 85.65 mm before D69)."""
+    return bp.D69_WHEEL_CAD['od_mm'] / 2
+
+
+def _tyre_y_module_mm():
+    """D69's tyre centre plane in the left module's frame (the leg's foot face + 7.5 + half the tyre)."""
+    fb = bp._fivebar()
+    return fb.Y['wheel_boss'] + 7.5 + bp.D69_WHEEL_CAD['tyre_width_mm'] / 2
 
 
 def rare_leg_load(kind='rare'):
@@ -82,7 +87,7 @@ def rare_leg_load(kind='rare'):
     hm = d['half_mass_kg']
     Fg = b['with_ground_n']
     return {'scenario': name, 'Fz': Fz, 'M_roll': M, 'y_line': y_mount + 1000.0 * M / Fz, 'L_mm': L,
-            'y_wheel': bp.y_off() + fb.Y['wheel'], 'z_patch': -(L + _wheel_r_mm()), 'Fx': 0.0, 'Fy': 0.10 * Fg,
+            'y_wheel': bp.y_off() + _tyre_y_module_mm(), 'z_patch': -(L + _wheel_r_mm()), 'Fx': 0.0, 'Fy': 0.10 * Fg,
             'half_mass_kg': hm, 'kind': kind, 'axle_n': sc['peak_axle_force_n'],
             'from': (f"rig '{name}' at {hm} kg a leg (axle {sc['peak_axle_force_n']:.0f} N): {M:.0f} N m roll and {Fz:.0f} N up at "
                      f"the hip frame's mount plane, plus 10 % of the {Fg:.0f} N ground force sideways at the contact patch")}
@@ -232,7 +237,12 @@ def run(mesh=4.0, anim=True, only=None):
         target = TARGETS['sf_fault'] if rare == 'fault' else TARGETS['sf_turret_fall'] if rare == 'D2' else TARGETS['sf']
         sf = r.get('sf_by_part') or r.get('sf_away_from_spacer_ends') or r['safety_factor'] or 0
         r['target_sf'] = target
-        r['pass'] = bool(sf >= target and r.get('post_corner_pass', True))
+        # the rigid-pad rims (the posts' corners, the plate's clamp pads) are singular: their peak grows without bound as the
+        # mesh refines (D2's convergence run: 105 -> 375 MPa from 4 to 2 mm), so their abuse check means something only at
+        # the 4 mm mesh the rule was set on; finer, they are reported, and the bolted joint is the hand check
+        corner_ok = r.get('post_corner_pass', True) if r['mesh']['size_mm'] >= 4.0 - 1e-9 else True
+        r['corner_check'] = 'judged (4 mm reference mesh)' if r['mesh']['size_mm'] >= 4.0 - 1e-9 else 'reported only (finer than the 4 mm reference)'
+        r['pass'] = bool(sf >= target and corner_ok)
         r['hot_spots'] = hot_spots(st)
         results[case] = r
         print(f"  {case}: SF {r['safety_factor']} ({r.get('sf_away_from_spacer_ends')} away from the standoffs' ends), max {r['max_displacement_mm']} mm, design stress {r['von_mises_design_mpa']} MPa; hot {r['hot_spots'][:3]}"
@@ -315,8 +325,20 @@ def deck_cases(record, mesh, want):
         pad = pad.union(bf.box(x - bp.POST_W / 2, x + bp.POST_W / 2, y - bp.POST_W / 2, y + bp.POST_W / 2, zd - LOAD_PAD_T, zd))
     model = deck.union(ris).union(pad)
     plate = parts.get('turret_plate')
-    if plate is not None:                       # D59: the turret mount plate bonded under the deck (two plates in bending)
-        model = model.union(plate.shape)
+    # each screw joining the plates, with its clamped zone's diameter: under a riser foot the deck is sandwiched between the
+    # Ø36 foot and the plate by the M5's preload (~5 kN), so the whole foot clamps; at the plate's two end nuts, the M5's own
+    # zone (Ø14: the head's and the nut's cones)
+    plate_screws = ([(bp.tm()['pan_x'] + a, b, 2 * bf.RISER_FOOT_R - 0.5) for a, b in bf.RISER_FEET]   # a hair inside the rim (OCC)
+                    + [(x, y, PLATE_CLAMP_D) for x, y in bf.turret_plate_end_holes()])
+    if plate is not None:                       # D59: the turret mount plate under the deck (two plates in bending)
+        # A bolted joint, not a bond: the plate hangs PLATE_GAP_MM under the deck, joined only by a clamp pad (the
+        # screw's clamped zone, Ø PLATE_CLAMP_D) at each of its six screws (the riser's four feet, its two end nuts).
+        # Bonded over its whole face, its outer corners pried against the deck and their stress rose with every mesh
+        # refinement (exports/body/fea/D2-convergence.json, 2026-10-28): the real plate is free to part from the deck there.
+        t = bp.tm()
+        model = model.union(plate.shape.translate((0, 0, -PLATE_GAP_MM)))
+        for x, y, d in plate_screws:
+            model = model.union(bf.cyl_z(d / 2, zd - PLATE_GAP_MM - 0.01, zd + 0.01, x, y))
     model = model.clean()
 
     def by_part(st, r):
@@ -333,18 +355,30 @@ def deck_cases(record, mesh, want):
         near = np.zeros(len(c), bool)
         for x, y in bp.POSTS:
             near |= (np.abs(c[:, 0] - x) < h) & (np.abs(c[:, 1] - y) < h)
+        # the plate's six clamp pads (a bolted joint, see the model) are rigid discs bonded to both plates: their edges are
+        # singular in the same way (D2's convergence run: their peak rose 155 -> 191 MPa from 3 to 2 mm). The elements within
+        # POST_SKIP_MM of a pad's rim are reported apart and judged against the abuse target, like the posts' corners; the
+        # screw's own bearing and the PEM's push-out are hand checks (docs/body-next-plan.md 10.6)
+        clamp = np.zeros(len(c), bool)
+        for x, y, d in plate_screws:
+            clamp |= np.hypot(c[:, 0] - x, c[:, 1] - y) < d / 2 + POST_SKIP_MM
+        vk = float(st.vm_elem[clamp & ok].max()) if (clamp & ok).any() else 0.0
+        near |= clamp
         in_plate = (c[:, 2] < zd - 0.05) & ok & ~near
         in_deck = (c[:, 2] >= zd - 0.05) & ok & ~near
         vd = float(st.vm_elem[in_deck].max()) if in_deck.any() else 0.0
+        at_d = [round(float(v), 1) for v in c[in_deck][int(np.argmax(st.vm_elem[in_deck]))]] if in_deck.any() else None
         vp = float(st.vm_elem[in_plate].max()) if in_plate.any() else 0.0
         vc = float(st.vm_elem[near & ok].max()) if (near & ok).any() else 0.0
         sfd, sfp = (AL5052.strength_mpa / vd if vd else None), (AL6061.strength_mpa / vp if vp else None)
         sfc = AL5052.strength_mpa / vc if vc else None
         sf = min(v for v in (sfd, sfp) if v)
-        return {'deck_peak_mpa': round(vd, 1), 'deck_sf': round(sfd, 2) if sfd else None, 'plate_peak_mpa': round(vp, 1),
+        return {'deck_peak_mpa': round(vd, 1), 'deck_peak_at_mm': at_d, 'deck_sf': round(sfd, 2) if sfd else None, 'plate_peak_mpa': round(vp, 1),
                 'plate_sf': round(sfp, 2) if sfp else None, 'sf_by_part': round(sf, 2),
                 'post_corner_peak_mpa': round(vc, 1), 'post_corner_sf': round(sfc, 2) if sfc else None,
-                'post_corner_pass': bool(sfc is None or sfc >= TARGETS['sf_fault']),
+                'post_corner_pass': bool((sfc is None or sfc >= TARGETS['sf_fault'])
+                                         and (not vk or AL5052.strength_mpa / vk >= TARGETS['sf_fault'])),
+                'plate_clamp_peak_mpa': round(vk, 1), 'plate_clamp_sf': round(AL5052.strength_mpa / vk, 2) if vk else None,
                 'note_by_part': 'the deck and riser at 5052-H32\'s 193 MPa, the turret plate at 6061-T6\'s 276 MPa; the deck '
                                 f'within {POST_SKIP_MM:.0f} mm of a post pad (a rigid-clamp corner) reported apart, against the '
                                 f'abuse target {TARGETS["sf_fault"]}'}
@@ -369,7 +403,9 @@ def deck_cases(record, mesh, want):
             record(f'D1-hand-{tag}', st, False, f'300 N down on the deck at the {tag} (a child leaning on it)'
                    + (', the turret plate under the riser (D59)' if plate is not None else ''), defl, view=(30, -50))
     if want('D2'):
-        st = Study(model, AL5052, mesh_mm=mesh, name='deck D2 turret fall')
+        # D2 runs at D2_MESH_MM: its convergence run (exports/body/fea/D2-convergence.json) put the deck's peak at 96.7 /
+        # 95.9 / 89.9 MPa at 4 / 3 / 2 mm, so the 4 mm mesh is not converged for it
+        st = Study(model, AL5052, mesh_mm=min(mesh, D2_MESH_MM), name='deck D2 turret fall')
         st.fix(post_faces)
         tm_face = lambda f: f.kind == 'Plane' and abs(f.bbox[2] - (bp.TOP + bp.RISER_H)) < 0.05 and abs(f.bbox[5] - (bp.TOP + bp.RISER_H)) < 0.05
         m, hcom = t['mass_kg'], t['com_above_face_mm']      # the head budget (1.70 kg, 100 mm), or the turret's mount.json
@@ -378,6 +414,11 @@ def deck_cases(record, mesh, want):
         record('D2-turret-fall', st, 'D2', f'a 30 g fall of the {m:.2f} kg head (the turret plan\'s budget) at 45 deg, its centre {hcom:.0f} mm '
                'above the TM face: a tip-over' + (', the turret plate under the riser (D59: SF >= 2.0, the everyday target)'
                                                   if plate is not None else ' (SF >= 1.2, the abuse target)'), by_part, view=(30, -50))
+
+
+D2_MESH_MM = 2.0            # D2's converged mesh (its convergence run)
+PLATE_GAP_MM = 0.5          # D2's model: the turret plate's face this far under the deck, away from its screws
+PLATE_CLAMP_D = 14.0        # an M5's clamped zone between the plates (about 2.8 d: the head's and the nut's cone)
 
 
 def body_g():
@@ -404,13 +445,13 @@ def tray_case(record, mesh):
     fm = json.loads((R / 'exports/body/body.json').read_text())['mass_g']['frame_parts']          # the frame parts' CAD masses
     part_g = lambda n: fm.get(n) or 0.0
     compute = sum(g for n, g in mass.items() if n.startswith(('j501', 'agx'))) + part_g('compute_pallet')
-    skid = sum(g for n, g in mass.items() if n.startswith('plate_')) + part_g('power_plate') + 400.0     # + its wiring
+    skid = (sum(g for n, g in mass.items() if n.startswith('plate_') or n == 'power_dcdc') + part_g('power_plate')
+            + part_g('dcdc_bracket') + 400.0)     # + its wiring; D65's TRACO stands on the plate's bracket
     deck = sum(g for n, g in mass.items() if n in ('vlp16', 'turret', 'lidar_box', 'lidar_coil')) + part_g('deck') + part_g('riser')
     supports = [('compute', compute, [(x, y, bf.ISOLATOR_D / 2) for x, y in bf.ISOLATORS]),
                 ('power skid', skid, [(x, y, bf.PLATE_POST_W / 2) for x, y in bf.PLATE_STANDOFFS]),
                 ('deck, lidar, turret', deck, [(x, y, bp.POST_W / 2) for x, y in bp.POSTS])]
-    d = next(i for i in L['items'] if i.name == 'ddr120c_24')
-    supports.append(('DDR-120C-24', d.mass_g, [((d.box[0] + d.box[1]) / 2, (d.box[2] + d.box[3]) / 2, 12.0)]))
+    # (D65: the DDR-120C-24 that stood on the tray is gone; its TRACO successor is on the power plate, in the skid above)
     model = parts['floor_tray'].shape                  # each support as a 1 mm pad on the tray: its top face takes the load
     for _, _, pts in supports:
         for (x, y, r) in pts:

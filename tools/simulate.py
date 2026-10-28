@@ -82,8 +82,9 @@ def body_evidence(summary, info, exports):
     ev = {'date': datetime.date.today().isoformat(), 'model': 'sim/robot_v2.py (the body as built, D62)', 'mass_kg': summary['mass_kg'],
           'ledger_kg': (info.get('ledger') or {}).get('total_kg'), 'mass_reconciles': summary['mass_reconciles'], 'bus_v': info.get('bus_v'),
           'com_mm': info.get('com_mm'), 'track_mm': info.get('track_mm'), 'passed': summary['passed'], 'total': summary['total'],
+          'design_ballast_kg': info.get('design_ballast_kg', 0.0),
           'scenarios': rows, 'note': 'tools/simulate.py --v2 (the full results and videos: exports/sim/v2/, not in git)'}
-    f = exports / 'body' / 'sim-v2.json'
+    f = exports / 'body' / ('sim-v2-design-mass.json' if info.get('design_ballast_kg') else 'sim-v2.json')
     f.parent.mkdir(parents=True, exist_ok=True)
     f.write_text(json.dumps(ev, indent=1) + '\n')
 

@@ -381,6 +381,46 @@
    "termination": "solder / screw terminal",
    "fuse": "(W43's 7.5 A)",
    "why": "the coil (12 V, 33 mA) is fed only while the radio says run; its - side through the MCU's MOSFET (MCU_RUN), a diode across it"
+  },
+  {
+   "id": "W50",
+   "from": "VESC left phases A/B/C",
+   "to": "left wheel phases (its lead's DTP04-4P)",
+   "awg": 14,
+   "colour": "yellow/green/blue",
+   "termination": "DTP06-4S plug + WM-4S wedge, 3 x 0462-203-12141 sockets (4th cavity plugged, 114017)",
+   "fuse": "-",
+   "why": "D69: 30 A motor peak for 0.5 s, 10 A continuous; 14 AWG silicone, 400 mm to the cheek's gland; no fuse (the VESC limits it)"
+  },
+  {
+   "id": "W51",
+   "from": "VESC left halls (5 V, GND, H1-H3) + motor NTC",
+   "to": "left wheel sensors (its lead's DT04-6P)",
+   "awg": 20,
+   "colour": "per VESC",
+   "termination": "DT06-6S plug + W6S wedge, 6 x 0462-201-20141 sockets",
+   "fuse": "-",
+   "why": "D69: halls and the stator NTC; a shielded 6-core, shield to the VESC's GND only"
+  },
+  {
+   "id": "W52",
+   "from": "VESC right phases A/B/C",
+   "to": "right wheel phases (its lead's DTP04-4P)",
+   "awg": 14,
+   "colour": "yellow/green/blue",
+   "termination": "DTP06-4S plug + WM-4S wedge, 3 x 0462-203-12141 sockets (4th cavity plugged, 114017)",
+   "fuse": "-",
+   "why": "as W50"
+  },
+  {
+   "id": "W53",
+   "from": "VESC right halls (5 V, GND, H1-H3) + motor NTC",
+   "to": "right wheel sensors (its lead's DT04-6P)",
+   "awg": 20,
+   "colour": "per VESC",
+   "termination": "DT06-6S plug + W6S wedge, 6 x 0462-201-20141 sockets",
+   "fuse": "-",
+   "why": "as W51"
   }
  ],
  "can": [

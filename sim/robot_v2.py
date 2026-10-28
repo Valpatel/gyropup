@@ -24,6 +24,7 @@ from __future__ import annotations
 
 import json
 import math
+import os
 import struct
 import sys
 from pathlib import Path
@@ -55,8 +56,44 @@ EAR = {'size': (61.0, 50.8, 50.8), 'x': (-10.0, 51.0), 'top': 193.0}   # SSC1 po
 TILT_STOP_DEG = 25.0                                # cad/turret.py's hard stops: 0 .. -25 deg (here + = barrel down)
 PAN_STOP_DEG = 170.0
 REF_H = 300.0                                       # the model's joints are zero standing at this leg length
-H_RANGE = (160.0, 375.0)                            # leg length (mm) for the controller's height 0..1; D65: the battery bay's skids
-                                                    # touch the floor under a 139 mm leg, so the lowest height keeps 21 mm
+import body_battery as _bb  # noqa: E402
+H_RANGE = (_bb.PAD['lowest_leg_mm'], 375.0)        # leg length (mm) for the controller's height 0..1. Issue #19: the bay's 50 mm
+                                                    # crush pads (cad/body_battery.py PAD) need the lowest height at 185 mm (it was
+                                                    # 160) to keep D69's 40 mm under them; they touch the floor under a 145 mm leg
+WHEEL_KEY = 'hb10'                                  # D69: sim/wheel_candidates.json's 10 in hub motor, at the ledger's wheel mass
+_WHEEL = {}
+
+
+def use_d69_wheel() -> dict:
+    """D69's wheel in place of the BotWheel. sim/leg_rig.py and cad/fivebar.py (the leg core) carry the BotWheel until the
+    leg's foot change (issue #25); the body's model puts the 10 in hub motor into their module state before it builds, as
+    sim/wheel_study.py does: its motor and pneumatic tyre from sim/wheel_candidates.json, its mass the ledger's
+    (cad/body_layout.py wheel_g(), so the model's mass reconciles). Called once, after the ledger is read (the ledger
+    places the tyre's band itself)."""
+    if _WHEEL:
+        return _WHEEL
+    import body_layout as bl
+    from sim import wheel_study as ws
+    if lr.WHEEL.get('mass_g') != 2200 or abs(lr.WHEEL_R - 0.08565) > 1e-4:
+        # the caller has set a wheel already (sim/wheel_study.py's candidates), or the leg core now carries its own
+        # wheel (#25): use it as it is, never overwrite it
+        _WHEEL.update(dict(lr.WHEEL, od_mm=lr.WHEEL_R * 2000, tyre_width_mm=bl.D69_WHEEL['tyre_width_mm'],
+                           y_mm=fb.Y['wheel_boss'] + 7.5 + bl.D69_WHEEL['tyre_width_mm'] / 2, preset=True))
+        return _WHEEL
+    w = dict(ws.CANDIDATES[WHEEL_KEY])
+    w.update(mass_g=bl.wheel_g(), od_mm=bl.D69_WHEEL['od_mm'], tyre_width_mm=bl.D69_WHEEL['tyre_width_mm'],
+             rotor_share=bl.D69_WHEEL['rotor_share'])
+    ws.patch_rig(w)
+    ws._patch_cad(w)
+    _WHEEL.update(w)
+    _WHEEL['y_mm'] = fb.Y['wheel_boss'] + 7.5 + w['tyre_width_mm'] / 2      # the tyre's centre plane (left module frame)
+    return _WHEEL
+
+
+def pads():
+    """The battery bay's crush pads (issue #19; cad/body_battery.py PAD): [(name, box mm)], and the pad's numbers."""
+    import body_battery as bb
+    return [(f'pad_{i + 1}', b) for i, b in enumerate(bb.pad_boxes())], dict(bb.PAD)
 COLORS = {'body': '#9fb4c7', 'frame': '#5f6670', 'motor': '#2a2d33', 'link': '#f5b82e', 'wheel_link': '#e9a21f',
           'adapter': '#c9ced6', 'tyre': '#1b1d21', 'hub': '#4a5058', 'battery': '#fdb913', 'compute': '#5a6b7c',
           'driver': '#2b6cb0', 'power': '#8f9aa7', 'lidar': '#2a2d33', 'camera': '#2a2d33', 'light': '#3a3f47',
@@ -154,7 +191,7 @@ def real_body():
         ('floor_tray', (X[0], X[1], -HY, HY, zt - bp.TRAY_LIP, zt)),
         ('deck', (X[0], X[1], -HY, HY, bp.TOP - bp.DECK_LIP, bp.TOP)),
         ('belly_plate', (X[0], X[1], -bp.BELLY_HALF_Y, bp.BELLY_HALF_Y, -zs - be, -zs)),
-        ('battery_bay', (tg['x_out'][0], tg['x_out'][1], -tg['side_out'], tg['side_out'], tg['z_bottom'], tg['z_belly'])),
+        ('battery_bay', (tg['x_out'][0], tg['x_out'][1], -tg['side_out'], tg['side_out'], tg['z_floor'], tg['z_belly'])),   # the pads hang under
         ('shell_l', (-bs3.XO, bs3.XO, bs3.YI, bs3.YO, bs3.ZB, bs3.ZT)), ('shell_r', (-bs3.XO, bs3.XO, -bs3.YO, -bs3.YI, bs3.ZB, bs3.ZT)),
         ('shell_front', (bs3.XI, bs3.XO, -bs3.YI, bs3.YI, bs3.APRON['z0'], bs3.ZT)),
         ('shell_rear', (-bs3.XO, -bs3.XI, -bs3.YI, bs3.YI, bs3.APRON['z0'], bs3.ZT)),
@@ -172,7 +209,8 @@ def body_bodies(rb, x_p, turret_extra):
     items = {it.name: it for it in rb['L']['items'] if not it.keepout}
     out = []
     for r in rb['ledger']['rows']:
-        if r['group'] == 'legs' or r['name'] == 'turret':
+        if r['group'] == 'legs' or r['name'] == 'turret' or r['name'].startswith('frame.bay_skid_') or r['name'] == 'frame.bay_floor':
+            # the pads are bodies of their own, and the bay's floor rides on them in the model (see build())
             continue
         g, c = r['mass_g'] / 1000.0, tuple(v * M for v in r['com_mm'])
         name = r['name']
@@ -229,11 +267,13 @@ def leg_bodies():
     knee_brg = Body(2 * 0.037 + 0.006, (0.0, yk, 0.0), name='2 x 6201 + washers')
     n_apex = 2 if 'apex_bearing_in' in fb.Y else 1
     front = combine([sm('front_link'), knee_brg, Body(n_apex * 0.097, (l2, 0.025, 0.0), name=f'{n_apex} x 61812')], 'front')
+    w = use_d69_wheel()
+    yw = w['y_mm'] / 1000
     stator_kg = lr.WHEEL['mass_g'] / 1000 * (1 - lr.ROTOR_SHARE)
-    wheel_link = combine([sm('wheel_link'), knee_brg, Body(stator_kg, (l2, fb.Y['wheel'] / 1000, 0.0), name='BotWheel stator'),
-                          Body(4 * 0.011 + 0.010, (l2, 0.05, 0.0), name='4 x M6 x 40 + circlip')], 'wheel_link')
-    rotor = cylinder_body(lr.WHEEL['mass_g'] / 1000 * lr.ROTOR_SHARE, lr.WHEEL_R, 0.0446, axis='y', hollow_radius=0.6 * lr.WHEEL_R,
-                          center=(0.0, fb.Y['wheel'] / 1000, 0.0), name='BotWheel rotor')
+    wheel_link = combine([sm('wheel_link'), knee_brg, Body(stator_kg, (l2, yw, 0.0), name='hub motor stator and shaft (D69)'),
+                          Body(4 * 0.011 + 0.010, (l2, 0.05, 0.0), name='the foot\'s clamp screws')], 'wheel_link')
+    rotor = cylinder_body(lr.WHEEL['mass_g'] / 1000 * lr.ROTOR_SHARE, lr.WHEEL_R, w['tyre_width_mm'] / 1000, axis='y',
+                          hollow_radius=0.6 * lr.WHEEL_R, center=(0.0, yw, 0.0), name='hub motor rotor and tyre (D69)')
     frame = combine([sm('hip_frame'), Body(2 * lr.MOTOR['mass_g'] / 1000, (0.0, (fb.Y['motor'][0] + fb.Y['motor'][1]) / 2000, 0.0), name='2 x RS-04'),
                      Body(2 * 0.097, (0.0, -0.006, 0.0), name='2 x 61812'), Body(4 * 0.03, (0.0, 0.01, 0.0), name='stop posts')], 'hip module')
     return {'upper': upper, 'front': front, 'wheel_link': wheel_link, 'rotor': rotor, 'frame': frame}
@@ -524,6 +564,11 @@ def build():
     lid = lidar_spec()
     lp, tmd = bp.lidar(), bp.tm()
     rb = real_body()
+    wd69 = use_d69_wheel()                                           # after the ledger (it places the tyre's band itself)
+    pad_boxes, PAD = pads()
+    pad_g = {r['name'].split('.', 1)[1].replace('bay_skid_', 'pad_'): r['mass_g'] / 1000.0
+             for r in rb['ledger']['rows'] if r['name'].startswith('frame.bay_skid_')}
+    floor_g = next(r['mass_g'] for r in rb['ledger']['rows'] if r['name'] == 'frame.bay_floor') / 1000.0   # rides on the pads (numerics)
     B = rb['B']
     TOP = bp.TOP                                                     # the deck's top face (the lidar stands on it)
     T = tu.Turret({'bodyTop': tmd['face_z'] - 20.0 - tu.SADDLE_T})  # its TM face on the 30 mm riser (D41)
@@ -572,10 +617,21 @@ def build():
         hip += [Body(leg_rest, (0.0, (Y_OFF + 30.0) * M, -0.1), name='rest of leg.json (left)'),
                 Body(leg_rest, (0.0, -(Y_OFF + 30.0) * M, -0.1), name='rest of leg.json (right)')]
     parts += hip + [tb['base']]
+    # D71's design-mass runs (GYROPUP_DESIGN_MASS_KG, e.g. 37.5): ballast at the base's own centre of mass brings the
+    # whole robot to that mass; the model then reconciles with the ledger plus the ballast, and says so
+    target = float(os.environ.get('GYROPUP_DESIGN_MASS_KG') or 0.0)
+    ballast = 0.0
+    if target:
+        pre = combine(parts, 'base')
+        rest = sum(b_.mass for b_ in (lb['upper'], lb['upper'], lb['front'], lb['wheel_link'], lb['rotor'])) * 2 \
+            + tb['pan'].mass + tb['tilt'].mass + sum(pad_g.values()) + floor_g
+        ballast = max(0.0, target - pre.mass - rest)
+        if ballast > 0:
+            parts.append(Body(ballast, pre.com, name='design-mass ballast (D71)'))
     base = combine(parts, 'base')
     leg_kg = 2 * (2 * lb['upper'].mass + lb['front'].mass + lb['wheel_link'].mass + lb['rotor'].mass)
-    total = base.mass + leg_kg + tb['pan'].mass + tb['tilt'].mass
-    reconciles = abs(total - led_kg) <= 0.002 * led_kg            # the model carries the ledger's mass
+    total = base.mass + leg_kg + tb['pan'].mass + tb['tilt'].mass + sum(pad_g.values()) + floor_g
+    reconciles = abs(total - led_kg - ballast) <= 0.002 * led_kg  # the model carries the ledger's mass (+ a design-mass ballast)
     rp = ref_pose()
     frame_shape = fb.leg_parts().parts['hip_frame'].translate((0, Y_OFF, 0))
     fbb = frame_shape.val().BoundingBox()
@@ -590,7 +646,8 @@ def build():
     leg_peak = lr.LEG_PEAK
     wheel_peak = lr.WHEEL['peak_torque_nm']
     wr = lr.WHEEL_R
-    yw = fb.Y['wheel'] / 1000
+    yw = wd69['y_mm'] / 1000
+    tyre_half_w = wd69['tyre_width_mm'] / 2000
     z0 = REF_H / 1000 + wr + 0.002
     q = lr._q
     rgba = lambda c, a=1.0: ' '.join(f'{int(c[i:i + 2], 16) / 255:.3f}' for i in (1, 3, 5)) + f' {a}'
@@ -628,12 +685,34 @@ def build():
           <body name="wheel_{tag}" pos="{l2} 0 0">
             <joint name="wheel_{tag}" type="hinge" axis="0 1 0" damping="0.01" frictionloss="0.02"/>
             {_inertial(mir(lb['rotor']))}{lv('wheel')}
-            <geom name="tyre_{tag}" type="cylinder" size="{wr:.4f} 0.0223" pos="0 {side * yw:.4f} 0" euler="1.5708 0 0" contype="4" conaffinity="1"
-                  friction="1.0 0.02 0.001" rgba="0 0 0 0" mass="0"/>
+            <geom name="tyre_{tag}" type="cylinder" size="{wr:.4f} {tyre_half_w:.4f}" pos="0 {side * yw:.4f} 0" euler="1.5708 0 0" contype="4" conaffinity="1"
+                  friction="1.0 0.02 0.001" solref="{lr.TYRE_SOLREF}" rgba="0 0 0 0" mass="0"/>
           </body>
         </body>
       </body>"""
 
+    # ---- the crush pads (issue #19): each a body on a slide joint along the base's z under the bay's floor (0 = free, + =
+    # pushed up into the floor). The joint carries the pad's damper c; its crush law (min(k x, the plateau), the lattice's
+    # hysteresis unloading) is applied each step by sim/scenarios.py from model.json's pads; past the stroke the joint's
+    # limit is the densified lattice (a stiff, critically damped stop). The pad's floor contact is stiff, so the pad's own
+    # law is the compliance. The bay floor's mass (it sits right over the pads) rides on the pads in the model, so each
+    # pad body carries a quarter of floor and pads (the total is the ledger's). It is not needed for stability (the
+    # review of #21 ran without it); it is kept because it is mildly conservative (front fall 2,691 against 2,640 N).
+    k_pad, c_pad, stroke = PAD['k_n_per_mm'] * 1000.0, PAD['c_ns_per_m'], PAD['stroke'] / 1000.0
+    pad_each = (sum(pad_g.values()) + floor_g) / max(len(pad_g), 1)
+
+    def pad_xml(name, b):
+        x0, x1, y0, y1, z0_, z1_ = (v * M for v in b)
+        sx, sy, sz = (x1 - x0) / 2, (y1 - y0) / 2, (z1_ - z0_) / 2
+        m = pad_each
+        I = (m * (sy * sy + sz * sz) / 3, m * (sx * sx + sz * sz) / 3, m * (sx * sx + sy * sy) / 3)
+        return (f'<body name="{name}" pos="{(x0 + x1) / 2:.5f} {(y0 + y1) / 2:.5f} {z1_:.5f}">'
+                f'<joint name="{name}" type="slide" axis="0 0 1" range="0 {stroke:.5f}" stiffness="0" damping="{c_pad:.1f}" '
+                f'solreflimit="0.002 1" solimplimit="0.99 0.999 0.0005"/>'   # the densified lattice: as stiff as the 1 ms step allows
+                f'<inertial pos="0 0 {-sz:.5f}" mass="{m:.4f}" diaginertia="{I[0]:.3g} {I[1]:.3g} {I[2]:.3g}"/>'
+                f'<geom name="{name}" type="box" size="{sx:.5f} {sy:.5f} {sz:.5f}" pos="0 0 {-sz:.5f}" contype="2" conaffinity="1" '
+                f'solref="0.004 1" friction="0.8 0.005 0.0001" rgba="0.15 0.15 0.17 1" group="1"/></body>')
+    pads_xml = ''.join(pad_xml(n, b) for n, b in pad_boxes)
     tz = (T.mount_z + T.G.tilt_t) * M
     mz = [(v * M - o) for v, o in zip(T.point((T.G.barrel_x1, 0, 0), 'tilt', 0.0, 0.0), (0.0, 0.0, tz))]
     pan_o = (x_p * M, 0.0, T.mount_z * M)
@@ -665,6 +744,7 @@ def build():
       <site name="imu" pos="0 0 0.1"/>
       {leg(1, 'l')}
       {leg(-1, 'r')}
+      {pads_xml}
       <body name="turret_pan" pos="{pan_o[0]:.4f} {pan_o[1]} {pan_o[2]:.4f}">
         <joint name="turret_pan" type="hinge" axis="0 0 1" range="{math.radians(-PAN_STOP_DEG):.4f} {math.radians(PAN_STOP_DEG):.4f}" damping="0.05" frictionloss="0.02" armature="0.002"/>
         {_inertial(tb['pan'], pan_o)}
@@ -724,7 +804,7 @@ def build():
         'mass_split_kg': {'base (hip modules, frame, electronics, battery, lidar, shell, turret base)': round(base.mass, 3),
                           'legs (links, adapters, bearings, wheels)': round(leg_kg, 3),
                           'turret pan + tilt': round(tb['pan'].mass + tb['tilt'].mass, 3)},
-        'mass_reconciles': reconciles,
+        'mass_reconciles': reconciles, 'design_ballast_kg': round(ballast, 3),
         'ledger': {'stage': 'P3', 'total_kg': round(led_kg, 3), 'groups_kg': led['groups_kg'], 'com_mm': led['com_mm'],
                    'source': 'cad/body_layout.py ledger() P3 (exports/body/mass.json); the legs to exports/leg/leg.json\'s total; '
                              'the head to body_params.tm()', 'legs_rest_kg_each': round(leg_rest, 4),
@@ -749,9 +829,16 @@ def build():
                   'turret_rear_overhang_mm': round(rear_overhang, 1), 'blocked': view},
         'layout_mm': {'trayBottom': lowest + 80.0, 'lidarMount': 'top', 'wheelR': wr * 1000, 'bodyTop': TOP},
         'lowest_point_mm': lowest,
-        'track_mm': round(2 * (fb.Y['wheel'] + Y_OFF), 1),
+        'track_mm': round(2 * (wd69['y_mm'] + Y_OFF), 1),
+        'wheel': {'decision': 'D69', 'key': WHEEL_KEY, 'od_mm': wd69['od_mm'], 'mass_g': wd69['mass_g'], 'tyre_width_mm': wd69['tyre_width_mm'],
+                  'tyre_solref': lr.TYRE_SOLREF, 'peak_nm': wheel_peak, 'basis': 'sim/wheel_candidates.json hb10 at the ledger\'s mass'},
+        'pads': {'names': [n for n, _ in pad_boxes], 'k_n_per_mm_each': PAD['k_n_per_mm'], 'c_ns_per_m_each': PAD['c_ns_per_m'],
+                 'plateau_n_each': PAD['plateau_n'], 'unload_ratio': PAD['unload_ratio'], 'body_kg_each_in_model': round(pad_each, 4),
+                 'stroke_mm': PAD['stroke'], 'h_mm': PAD['h'], 'mass_kg': {n: round(g, 4) for n, g in pad_g.items()},
+                 'touch_leg_mm': round(-B['z'][0] - wr * 1000, 1), 'basis': 'cad/body_battery.py PAD (issue #19)'},
         'notes': [f'the body as built (M5): the P3 ledger, {led_kg:.2f} kg (cad/body_layout.py; the model {total:.2f} kg), the spine 40.5 mm wide '
-                  f'(track {2 * (fb.Y["wheel"] + Y_OFF):.1f} mm), the deck at z {TOP:.0f}, the battery bay\'s skids at z {lowest} (the lowest part)',
+                  f'(track {2 * (wd69["y_mm"] + Y_OFF):.1f} mm), the deck at z {TOP:.0f}, the battery bay\'s crush pads at z {lowest} (the lowest part)',
+                  f'D69\'s wheels: 10 in hub motors, {wd69["mass_g"] / 1000:.2f} kg each, a pneumatic tyre (solref {lr.TYRE_SOLREF})',
                   f'the deck: the VLP-16 at x = {x_l:.1f} mm, the turret\'s pan axis {d_lp:.1f} mm behind it (x = {x_p:.1f} mm) on the 30 mm riser '
                   f'(TM face z {tmd["face_z"]:.0f}); the turret\'s clearance needs {max(need.values()):.1f} mm; its base overhangs the rear by {rear_overhang:.1f} mm',
                   tilt_note, view_note,
@@ -759,7 +846,7 @@ def build():
                   'the lidar\'s lowest beam; the eyes alone on the face',
                   f'the motors\' speed lines at the 10S pair\'s {BUS_V} V nominal (D65)',
                   'RS-04 rotor inertia, the tyre stiffness, the harness, hardware and shell masses are estimates (the ledger says which)'],
-        'estimates': ['RS-04 rotor inertia (armature)', 'BotWheel tyre stiffness', 'the harness, hardware and shell panels (the ledger\'s estimate rows)',
+        'estimates': ['RS-04 rotor inertia (armature)', 'the 10 in tyre\'s stiffness (60 N/mm at 35 psi, a membrane model)', 'the crush pads\' k and c (the coupon test)', 'the harness, hardware and shell panels (the ledger\'s estimate rows)',
                       'the G48R cooler\'s mass (450 g est)'],
     }
     (OUT_BUILD / 'model.json').write_text(json.dumps(info, indent=1) + '\n')
