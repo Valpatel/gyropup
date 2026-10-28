@@ -425,11 +425,14 @@ STOP_EAR_BACK = 40.0                             # mm: the knee-out posts' ears 
 STOP_EAR_CLEAR = 66.0                            # ... outside this radius from the motor's axis (its case is Ø120)
 STOP_EAR_FILLET = 3.5                            # ... that face rounded into the web's back face (to 2.5 mm off the motor)
 STOP_EAR_CORNER = True                           # the knee-out lobe also blended into the flange's corner
-FLANGE_ROOT_FILLET = 6.0                         # mm: the flanges' roots on the web's motor side (the frame's turn-case
-                                                 # peak, E1, sat in that corner at the flanges' ends)
-FLANGE_FILLET_CLEAR = 61.5                       # ... trimmed to this radius round each motor's axis (its case is Ø120)
 GUSSET_RUNOUT = 12.0                             # mm: the frame's gussets between the motors run out tangent to the web
-                                                 # this far below the old triangle's tip (z 28 -> 16; the cable pass is Ø18)
+                                                 # this far below the old triangle's tip (z 28 -> 16; the cable pass is Ø18).
+                                                 # The turn case's (E1) peak then sits at the bottom flange's square end, on
+                                                 # its root (x 93, z -63). Tried there and dropped (2026-10-28, 17.75 kg): a
+                                                 # 6 mm root fillet trimmed round the motors (a step: SF 1.20 against 1.77
+                                                 # without), the web blended from the flange's corner into the ring (1.40:
+                                                 # a stiffer end draws more), and a backing block like the knee-out ears'
+                                                 # (a knife edge under the flange: 0.51)
 FLANGE_T, FLANGE_X = 13.0, 95.0                  # the hip frame's top and bottom flanges: thickness, half-length (mm).
                                                  # They carry the leg to the body across the print's layers (it prints
                                                  # web-down): 7 mm gave SF 0.75 in a landing across the layers, 13 about 1.3
@@ -484,13 +487,6 @@ def hip_frame():
                         for t in (k / 12 for k in range(1, 12))] + [p2] if GUSSET_RUNOUT > 0 else [pc])
         g = cq.Workplane('YZ', origin=(-3.5, 0, 0)).polyline([(yf0 + 0.01, s * zf)] + [(y_, s * z_) for y_, z_ in edge]).close().extrude(7.0)
         web = web.union(g)
-        if FLANGE_ROOT_FILLET > 0:                             # the flange's root on the web's motor side, rounded; trimmed
-            r_ = FLANGE_ROOT_FILLET                            # round the motors (their Ø120 cases), so it is full only where
-            yz = cq.Workplane('YZ', origin=(-fl_x, 0, 0)).moveTo(yf0 + 0.01, s * zf).lineTo(yf0 + 0.01, s * (zf - r_)) \
-                .threePointArc((yf0 - r_ * (1 - 0.7071), s * (zf - r_ * (1 - 0.7071))), (yf0 - r_, s * zf)).close().extrude(2 * fl_x)
-            for mx in (ax, bx):                                # there is room: between the motors and at the flanges' ends
-                yz = yz.cut(ycyl(FLANGE_FILLET_CLEAR, yf0 - r_ - 1, yf0 + 1, mx))
-            web = web.union(yz.translate((0, 0, s * 0.01)))
     circle = lambda cx, cz, r: [(cx + r * math.cos(2 * math.pi * k / 48), cz + r * math.sin(2 * math.pi * k / 48)) for k in range(48)]
     for k, (px, pz) in enumerate(stop_posts()):               # bosses round the stop posts; the knee-out ones stand out past
         web = web.union(ycyl(STOP_BOSS_R, yf0, yf1, px, pz))   # the motor's ring, so each is blended into the ring and the
@@ -647,8 +643,9 @@ def eye_sleeve_end():
     return P['upper_t'] - EYE_SLEEVES * EYE_SLEEVE[2]
 
 
-FRONT_KNEE_FILLET = 10.0     # mm: where the front link's knee boss stands out of its outer face into the wheel link's layer
-                             # (the link's peak in the turn case, E1: 6 mm gave SF 1.62 at 17.75 kg and the 10 in wheel)
+FRONT_KNEE_FILLET = 16.0     # mm: where the front link's knee boss stands out of its outer face into the wheel link's layer
+                             # (the link's peak in the turn case, E1, at 17.75 kg and the 10 in wheel: 6 mm SF 1.62, 10 mm 1.82,
+                             # 14 mm 2.05)
 FRONT_EYE_FILLET = 6.0       # mm: the front link's apex eye, where it stands in out of the link's inner face towards the
                              # upper links' layer, rounded into the arm (issue #5: the eye-to-arm corner)
 
