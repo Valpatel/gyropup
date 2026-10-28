@@ -80,6 +80,69 @@ stand's harness (`te-dt06-12sa-kit`). Size-16 contacts, 13 A each.
 | 7, 8 | SAFETY_A, SAFETY_B | 24 AWG twisted pair: the pendant's dry loop (closed = run) |
 | 9-12 | spare | |
 
+### 1.1b On the robot: the DT12 harness and the safety line (D52)
+
+Nothing on the turret changes for the robot: the same DT04 receptacle, the same pins, the same fuse. The stand's harness
+is replaced by the body's, and the pendant by a contact of the body's radio stop (D37). The body's half (its parts are
+the body's to order, with its build pack):
+
+- **The plug:** the DT06-12SA with its W12S wedge and 12 size-16 sockets (`te-dt06-12sa-kit`, as the stand's), in a TE
+  Deutsch 1011-248-1205 90 deg backshell that turns the harness down at the plug. The plug stands 45 mm proud of the
+  base's -y pad, its centre 19 mm above the TM face, and comes out 30 mm further: that box stays clear of the riser and
+  the deck (exports/turret/mount.json `dt12`).
+- **The pigtail:** 300 mm, from the plug down through a grommet in the top deck at the robot's **right rear, (-130, -60)**
+  in the robot frame. The receptacle is on the turret's -y side (the robot's right) and the TM dowels let the turret go
+  on one way only, so the side cannot change: from a grommet at the left rear (-130, +60), the body plan's present
+  place, 300 mm does not reach; if the body keeps it there, the pigtail is 450 mm.
+- **The other end, inside the body:**
+
+| Pin | The body's end | Wire | On the turret (unchanged) |
+|---|---|---|---|
+| 1, 2 | +24 V: the DDR-120C-24's output, through the body's 5 A fuse for this branch and **the STOP relay's power pole** (closed = run) | 18 AWG x 2 | the base's 5 A MINI and D8, then the base board and ring circuits 1-2 |
+| 3, 4 | GND: the 24 V converter's return | 18 AWG x 2 | the only power return (ring circuits 3-4) |
+| 5, 6 | CAN_H, CAN_L to the J501's can1; **one** 120 R at the body's end (the J501's own if can1 has one, else one on the body's terminal strip, never both) | 24 AWG twisted pair | the Feather's own 120 R terminates the turret's end |
+| 7, 8 | SAFETY_A, SAFETY_B: **the STOP relay's signal pole**, a dry contact, closed = run | 24 AWG twisted pair | 12 V PAN through F4 (MF-R010) to the 555 (section 3.1) |
+| 9-12 | spare | | |
+
+**The safety line on the robot.** The contact across pins 7-8 takes the pendant's place exactly: the body puts no voltage
+on it; it is closed only while the robot may fire, and it opens on the radio stop, on the receiver's failsafe (the link
+lost) and when the robot sits (D37). It carries the base's 555 and its opto loop, about 10 mA at 12 V (the NE555's own
+supply and the 2 mA through the 4N35's LED), so it must make reliably at a few milliamps: a gold-clad signal contact,
+not a bare silver power contact. Once it opens, the turret's hardware does the rest with no help from the body or the
+firmware: no 1 kHz edges, one-shot A drops ARM within 16-21 ms, the 2815 removes 12 V FLY from the ESCs and the feed
+servo, and the phase-short brake closes 5-14 ms after that (sections 3.1, 3.3). Separately, the firmware zeroes the
+throttle within 200 ms of the host's last heartbeat.
+
+**The second pole** of the same relay opens the turret's +24 V branch at the same moment: an independent cut that does
+not rely on anything inside the turret (Pololu's 2815 is a load switch, not a safety device). So a stop leaves the turret
+dark: the barrel rises to its 0 deg stop by itself (the tilting group's centre is 8 mm behind the tilt axis), the pan
+coasts free, and when the contact closes again the turret boots and homes (up to 7 s) before it can arm. This pole
+closes onto the turret's 2 x 1000 uF bank: it must be rated for that bank's inrush, or the branch gets an inrush limiter
+(an NTC thermistor in series), since the DT12's contacts and the relay's would otherwise see the full charging spike.
+
+**Plug and unplug the DT12 only with the body's 24 V branch off** (the bank would arc on the pins). The branch's 5 A
+fuse matches the turret's own; the turret draws 2.5 A at most (the 300 ms ramp: never a stepped start on the robot) and
+about 40 W on average (section 5).
+
+**+24 V from the body's fuse to each ESC phase:**
+
+| # | From | To | Through |
+|---|---|---|---|
+| 1 | the DDR-120C-24's +24 V | DT12 pins 1-2 | the body's 5 A branch fuse, the STOP relay's power pole, the pigtail's 18 AWG pair |
+| 2 | DT04 pins 1-2 (base, -y pad) | the base board | the 5 A MINI (`littelfuse-0297005-wxnv` in `littelfuse-0fhm0001zxj`), then D8 (1N5822: a reversed supply blows the fuse) |
+| 3 | the base board | 12 V PAN | the D36V50F12: the pan servo, and the 555's loop through F4 |
+| 4 | the base board | the bay (level 0-1) | the ring's stator Micro-Fit, circuits 1-2 in parallel, the rotor Micro-Fit at level 2 |
+| 5 | the ring's +24 V | 12 V MAIN | the 2 x 1000 uF bank across it; the D24V150F12 (always on): the tilt servo |
+| 6 | 12 V MAIN | 12 V FLY | the Pololu 2815, on only while ARM is high (its slide switch OFF) |
+| 7 | 12 V FLY | the cartridge | the lead loop across the tilt axis, the CT power Micro-Fit 2 x 3 (12 V FLY on 1-3, GND on 4-6) |
+| 8 | the cartridge's 12 V FLY | each AM32 ESC | the ESC's power leads; D11 (TVS) across the rail; the feed servo through F3 (MF-R300) |
+| 9 | each ESC | its X2216's phases A, B, C | the ESC's three half-bridges; on each phase a brake FET (Q2-Q7) to GND, held off while ARM is high |
+
+**The STOP contact to the 555:** base board 12 V PAN → F4 MF-R010 (0.1 A) → DT12 pin 7 → the pigtail → the STOP relay's
+signal pole → the pigtail → DT12 pin 8 → U1 NE555's VCC (C3 1 uF) → the 986 Hz train → D1 → R3 → ring circuit 7
+(SAFETY+) → R8 → the 4N35's LED → ring circuit 8 (SAFETY-) → base GND; the 4N35's transistor makes PULSE for one-shot A,
+whose Q makes ARM (section 3.1).
+
 ### 1.2 The slip ring
 
 SparkFun ROB-13065 (`sparkfun-rob-13065`: twelve 2 A gold-on-gold circuits, 28 AWG leads 250 mm, Ø22 x 26.5, flange
