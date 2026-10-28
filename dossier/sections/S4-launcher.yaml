@@ -1,0 +1,309 @@
+# The turret's dossier (cad-agent: docs/dossier.md in the toolkit). Hand-edited YAML; joined by id to the geometry
+# cad/turret_dossier.py registers (exports/dossier-geometry.json). The design story is docs/turret-sections.md.
+id: S4-launcher
+title: 'Launcher: flywheel cage, motors, nip'
+purpose: Throw a Rival round at about 95-100 fps from two counter-rotating wheels that squeeze it 40 %, and never let any
+  accepted round leave above 105 fps
+requirements:
+- R6
+- R7
+- R8
+- R9
+- R10
+- R12
+- R13
+- R14
+- R18
+author: turret-dossier agent
+interfaces:
+- id: I-wheel-l
+  between:
+  - flywheel
+  - cartridge_body
+  kind: revolute
+  datum: the left motor axis, C (wheel_x, +wheel_y, z)
+  description: 'The left hub on its X2216''s prop adapter (intended contact with flywheel_motor_l). The chain rule measures
+    it from the hub to the cartridge (3.5 mm): clearance 4 mm.'
+  clearance: 4.0
+  owner: S4-launcher
+- id: I-wheel-r
+  between:
+  - flywheel_m
+  - cartridge_body
+  kind: revolute
+  datum: the right motor axis, C (wheel_x, -wheel_y, z)
+  description: 'The right hub on its X2216''s prop adapter (intended contact with flywheel_motor_r). Measured from the hub
+    to the cartridge (1.1 mm): clearance 1.5 mm.'
+  clearance: 1.5
+  owner: S4-launcher
+- id: I-motor-l
+  between:
+  - flywheel_motor_l
+  - cartridge_body
+  kind: fastened
+  datum: under the cage's top plate
+  description: Hangs bell-down on 4 x M3 x 6.
+  owner: S4-launcher
+- id: I-motor-r
+  between:
+  - flywheel_motor_r
+  - cartridge_body
+  kind: fastened
+  datum: under the cage's top plate
+  description: Hangs bell-down on 4 x M3 x 6.
+  owner: S4-launcher
+- id: I-esc-l
+  between:
+  - esc_l
+  - cartridge_body
+  kind: contact
+  datum: the cage plate's top
+  description: 'On the cage plate under the cartridge board (drawn 0.01 mm into the plate: 3.4 mm^3, an intended overlap).'
+  owner: S4-launcher
+- id: I-esc-r
+  between:
+  - esc_r
+  - cartridge_body
+  kind: contact
+  datum: the cage plate's top
+  description: 'On the cage plate under the cartridge board (drawn 0.01 mm into the plate: 3.4 mm^3, an intended overlap).'
+  owner: S4-launcher
+- id: I-cart-board
+  between:
+  - cartridge_board
+  - cartridge_body
+  kind: fastened
+  datum: four printed posts on the cage plate
+  description: The cartridge board on its posts over the ESCs.
+  owner: S4-launcher
+- id: I-tyre-l
+  between:
+  - flywheel_tyre
+  - flywheel
+  kind: bonded
+  datum: the hub's Ø30 rim
+  description: 'The TPU tyre bonded over the rim (D68: a free tyre would grow at speed).'
+  owner: S4-launcher
+- id: I-tyre-r
+  between:
+  - flywheel_tyre_m
+  - flywheel_m
+  kind: bonded
+  datum: the hub's Ø30 rim
+  description: The TPU tyre bonded over the rim.
+  owner: S4-launcher
+- id: I-hub-l
+  between:
+  - flywheel
+  - flywheel_motor_l
+  kind: other
+  datum: the prop adapter's Ø5 pilot
+  description: The hub on the motor's prop adapter, washer and M5 nylon-insert nut (the torque path of I-wheel-l).
+  owner: S4-launcher
+- id: I-hub-r
+  between:
+  - flywheel_m
+  - flywheel_motor_r
+  kind: other
+  datum: the prop adapter's Ø5 pilot
+  description: The hub on the motor's prop adapter (the torque path of I-wheel-r).
+  owner: S4-launcher
+parts:
+- id: cartridge_body
+  function: One print for the dial housing, the drop chute, the flywheel cage (motors under its top plate) and the barrel
+    socket, so the ball's path has no joint
+  interfaces:
+  - I-tilt
+  - I-feed
+  - I-wheel-l
+  - I-wheel-r
+  - I-flap
+  - I-ct
+  - I-hopper-inserts
+  - I-barrel
+  - I-laser-inserts
+  - I-feed-servo
+  - I-motor-l
+  - I-motor-r
+  - I-esc-l
+  - I-esc-r
+  - I-cart-board
+  - I-hopper-seat
+  - I-laser-pad
+  material:
+    name: PA6-CF
+    process: FDM
+    wall_mm: 0.8
+    print_axis: +Z (supports under the chute)
+  checks:
+  - gate:connectivity
+  - gate:assembly
+  - gate:motion
+  - gate:turret-path
+  - gate:turret-ammo
+  - turret-fea
+- id: flywheel
+  function: 'The left hub: carries its tyre on the X2216''s prop adapter'
+  interfaces:
+  - I-wheel-l
+  - I-tyre-l
+  - I-hub-l
+  material: &id001
+    name: PA6-CF
+    process: FDM
+    wall_mm: 0.8
+  checks:
+  - gate:connectivity
+  - gate:assembly
+  - gate:motion
+  - turret-launch
+- id: flywheel_m
+  function: The right hub (the mirror of the left)
+  interfaces:
+  - I-wheel-r
+  - I-tyre-r
+  - I-hub-r
+  material: *id001
+  checks:
+  - gate:connectivity
+  - gate:assembly
+  - gate:motion
+  - turret-launch
+- id: flywheel_tyre
+  function: 'The left Ø38 tyre: squeezes the ball 40 % at the nip'
+  interfaces:
+  - I-tyre-l
+  material: &id002
+    name: TPU 95A
+    process: FDM
+    wall_mm: 0.8
+  checks:
+  - gate:connectivity
+  - gate:assembly
+  - gate:motion
+  - gate:turret-path
+  - gate:turret-ammo
+  - turret-launch
+- id: flywheel_tyre_m
+  function: The right Ø38 tyre
+  interfaces:
+  - I-tyre-r
+  material: *id002
+  checks:
+  - gate:connectivity
+  - gate:assembly
+  - gate:motion
+  - gate:turret-path
+  - gate:turret-ammo
+  - turret-launch
+- id: flywheel_motor_l
+  function: 'SunnySky X2216 1400KV V3: spins the left wheel'
+  interfaces:
+  - I-motor-l
+  - I-hub-l
+  material:
+    name: SunnySky X2216 1400KV V3
+    process: bought
+  checks:
+  - gate:connectivity
+  - gate:assembly
+  - gate:motion
+  - turret-launch
+- id: flywheel_motor_r
+  function: 'SunnySky X2216 1400KV V3: spins the right wheel'
+  interfaces:
+  - I-motor-r
+  - I-hub-r
+  material:
+    name: SunnySky X2216 1400KV V3
+    process: bought
+  checks:
+  - gate:connectivity
+  - gate:assembly
+  - gate:motion
+  - turret-launch
+- id: esc_l
+  function: AM32 35 A ESC for the left motor
+  interfaces:
+  - I-esc-l
+  material:
+    name: Repeat Robotics AM32 35 A
+    process: bought
+  checks:
+  - gate:connectivity
+  - gate:assembly
+  - gate:motion
+- id: esc_r
+  function: AM32 35 A ESC for the right motor
+  interfaces:
+  - I-esc-r
+  material:
+    name: Repeat Robotics AM32 35 A
+    process: bought
+  checks:
+  - gate:connectivity
+  - gate:assembly
+  - gate:motion
+- id: cartridge_board
+  function: The phase-short brake FETs, the chronograph comparator, the feed servo's polyfuse
+  interfaces:
+  - I-cart-board
+  material:
+    name: cartridge board (JLCPCB)
+    process: bought
+  checks:
+  - gate:connectivity
+  - gate:assembly
+  - gate:motion
+decisions:
+- id: T4.1
+  decision: Horizontal wheels either side of the path, the motors above
+  why: The ball's spin axis is vertical (no lift), and the motors sit over the cartridge
+  alternatives:
+  - option: Wheels above and below the path
+    rejected: 'the ball''s spin axis horizontal: lift or dip, and a motor under the barrel'
+- id: T4.2
+  decision: One printed cartridge body for the housing, chute, cage and socket
+  why: The ball's path is in one part, so nothing can step at a joint
+  alternatives:
+  - option: A separate cage and housing
+    rejected: a seam across the chute
+- id: T4.3
+  decision: 40 % crush on Ø38 tyres (sim/turret_launch.py crush_choice)
+  why: With enough crush the ball catches the tyre and leaves at about 0.95 of the surface speed, the regime D68 needs (the
+    ceiling is the surface speed)
+  alternatives:
+  - option: Ø36 at 31 % on the old cage
+    rejected: the Hasbro ball 82 fps
+  - option: Ø40 at 49 %
+    rejected: the worst corner 108.5 fps on the same rail, and more squeeze on the bearings
+- id: T4.4
+  decision: The X2216 1400 KV on an ~11.3 V rail
+  why: Inside the motor's 2-4S rating, and a plain buck holds it from both supplies
+  alternatives:
+  - option: The 880 KV on ~18 V
+    rejected: 5S, over the X2216's rating, and a buck-boost from a pack that sags to 15 V
+  - option: The 1100 or 1250 KV
+    rejected: 13.7-15.1 V and 12.1-13.3 V sit too close to 15 V for a buck
+- id: T4.5
+  decision: The flywheel rail trimmed per turret by one fixed resistor on the TDK i6A4W's TRIM pin
+  why: Untrimmed, the KV spread and the converter's +-4 % cannot meet both D68 numbers at once
+  alternatives:
+  - option: A Pololu D42V110F12
+    rejected: 'fixed 12 V +-4 %: no trim'
+  - option: A pot
+    rejected: it can be turned
+  - option: KV-binned motors
+    rejected: SunnySky publishes no KV tolerance to bin on
+- id: T4.6
+  decision: The tyres bonded to the hubs
+  why: 'At ~16,000 rpm a free TPU ring grows 8 % in its bore: it would float, crush the ball 61 % and throw 113 fps'
+  alternatives:
+  - option: A stretched, unbonded tyre
+    rejected: grows off the hub at speed
+- id: T4.7
+  status: open
+  decision: 'The cartridge body''s recoil case: layer-aware SF 1.38 against 2.0 at the 105 fps ceiling (1.53 at the 95 fps
+    set speed), its peak at the CT''s rear dowel in the 3 mm base plate. Options: Ø4 x 12 dowels in holes 6 mm into the new
+    bosses, or a second latch'
+  why: The FEA (gb10-01, 2026-10-28) found it after the cage's spine, webs and latch boss raised the fall case to 2.21

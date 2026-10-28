@@ -15,6 +15,36 @@ cad:
              knee_motor: "#3a3f47", wheel: "#1d2025", lidar: "#2a2d33", camera: "#2a2d33"}
   steps:
     - {name: leg, run: cad/build_leg.py}
+  # The design process (dossier + integrity gates) covers the turret first (docs/turret-dossier.md). `cad-agent build`
+  # still builds only the leg; the turret's geometry record is built by the gates:
+  #   .venv/bin/cad-agent gates --build          # cad/turret_dossier.py -> exports/dossier-geometry.json, every gate, the lint
+  #   .venv/bin/python cad/turret_gates.py --dossier   # the turret's own gates (path, ammo range), bound to that record
+  #   .venv/bin/cad-agent dossier                # the lint again, now with the turret's own verdicts
+  #   .venv/bin/cad-agent check                  # fails on a failing, missing or stale verdict
+  dossier: dossier/project.yaml
+  gates:
+    build: cad/turret_dossier.py
+    declarations: dossier/gate-declarations.yaml
+    jobs: 3
+    timeout_s: 7200
+    # parts drawn on their seats: 0.05 mm reads as touching; 0.2 mm^3 of integration noise on large curved booleans
+    # (turret_gates.CONNECT_TOL)
+    connectivity: {tol: {touch_mm: 0.05, volume_check_mm3: 0.2}}
+    # the physics-settled pile (turret_gates.PILE_TOL and hopper_gate): MuJoCo's soft contacts sit 0.12-0.15 mm deep;
+    # no surface probe (~30 s a ball against a cavity cut by the finned dial); support reported, not failed (a ball held
+    # in an arch by its neighbours' friction reads as resting on nothing when only straight down is tested)
+    containment: {tol: {touch_mm: 0.2, overlap_mm3: 1.0, contain_mm3: 1.0, volume_check_mm3: 0.2}, support: report,
+                  support_mm: 0.5, probe: false}
+    fasteners: {tol: {touch_mm: 0.05, volume_check_mm3: 0.2}}
+    # samples per joint are in the build (pan 35 x tilt 6 on one grid; dial 16, flywheels 13, flap 8, pinion 13);
+    # a 30 deg step bound keeps them (the pan's 10 deg step); per-pose containment off (the load rides with the hopper)
+    motion: {tol: {touch_mm: 0.05, volume_check_mm3: 0.2}, max_step_deg: 30.0, containment: false}
+    assembly: {tol: {touch_mm: 0.05, volume_check_mm3: 0.2}, max_step_mm: 2.0}
+  checks:
+    - {id: turret-fea, title: Turret FEA (layer-aware SF targets), file: exports/turret/fea/summary.json,
+       pass_key: verdict.all_ok}
+    - {id: turret-launch, title: Turret launch ceiling (D68), file: exports/turret/launch/launch3d.json,
+       pass_key: [ceiling.holds, ceiling.under_astm]}
   site:
     title: Gyropup
     tagline: A friendly self-balancing wheel-legged robot for foam-ball games, built leg first

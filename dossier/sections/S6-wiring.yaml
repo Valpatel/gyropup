@@ -1,0 +1,212 @@
+# The turret's dossier (cad-agent: docs/dossier.md in the toolkit). Hand-edited YAML; joined by id to the geometry
+# cad/turret_dossier.py registers (exports/dossier-geometry.json). The design story is docs/turret-sections.md.
+id: S6-wiring
+title: Wiring and slip ring
+purpose: Carry power, the servo bus, CAN and the safety line from the fixed base to the turning head, for continuous pan
+requirements:
+- R2
+- R9
+- R10
+- R12
+- R14
+- R17
+- R18
+author: turret-dossier agent
+interfaces:
+- id: I-coupling
+  between:
+  - ring_coupling
+  - ring_driver
+  kind: press_fit
+  datum: the driver's Ø7.64 socket
+  description: The tube pushed into the socket (0.3 mm squeeze).
+  owner: S6-wiring
+- id: I-rotor
+  between:
+  - slip_ring_rotor
+  - ring_coupling
+  kind: press_fit
+  datum: the rotor's Ø6 stub
+  description: 'The 3/16 in ID tube stretched 26 % over the stub (0.10 mm^3 shared: an intended overlap).'
+  owner: S6-wiring
+- id: I-bay-lid
+  between:
+  - board_bay_lid
+  - board_bay
+  kind: snap_fit
+  datum: the bay's open face
+  description: The lid snaps into the bay's open face.
+  owner: S6-wiring
+- id: I-boards
+  between:
+  - turret_board
+  - board_bay
+  kind: fastened
+  datum: the bay's inserts
+  description: The three boards on M3 standoffs into the bay's inserts.
+  owner: S6-wiring
+- id: I-ring-stator
+  between:
+  - slip_ring
+  - ring_carrier
+  kind: fastened
+  datum: the carrier's seat
+  description: The slip ring's flange on 3 x M3 into the carrier's inserts.
+  owner: S6-wiring
+- id: I-dt-plug
+  between:
+  - dt_plug
+  - dt_receptacle
+  kind: snap_fit
+  datum: the receptacle's face
+  description: The robot harness's DT06-12SA plug latched on the receptacle.
+  owner: S6-wiring
+- id: I-slip-ring
+  between:
+  - slip_ring_rotor
+  - slip_ring
+  kind: electrical
+  datum: the ring's axis, T (0, 0, z)
+  description: 'SparkFun ROB-13065, 12 circuits x 2 A: 12 V (three paralleled pairs each way), the servo bus, CAN, the safety
+    line. The rotor turns with pan (co-axial with I-pan, not a joint of its own).'
+  owner: S6-wiring
+parts:
+- id: slip_ring
+  function: 'Passes 12 V, the servo bus, CAN and the safety line from the base to the turning head: the stator'
+  interfaces:
+  - I-ring-stator
+  - I-slip-ring
+  material:
+    name: SparkFun ROB-13065
+    process: bought
+  checks:
+  - gate:connectivity
+  - gate:assembly
+- id: slip_ring_rotor
+  function: The ring's rotor stub and its leads to the board bay (bought with the ring)
+  interfaces:
+  - I-rotor
+  - I-slip-ring
+  material:
+    name: SparkFun ROB-13065 (rotor)
+    process: bought
+  checks:
+  - gate:connectivity
+  - gate:assembly
+  - gate:motion
+- id: ring_carrier
+  function: Holds the slip ring's stator under the pan base
+  interfaces:
+  - I-carrier
+  - I-ring-stator
+  material: &id001
+    name: PA6-CF
+    process: FDM
+    wall_mm: 0.8
+  checks:
+  - gate:connectivity
+  - gate:assembly
+- id: ring_driver
+  function: Turns the ring's rotor with the turntable, through the coupling
+  interfaces:
+  - I-driver
+  - I-coupling
+  - I-driver-yoke
+  material: *id001
+  checks:
+  - gate:connectivity
+  - gate:assembly
+  - gate:motion
+- id: ring_coupling
+  function: Couples the rotor stub to the driver and takes their misalignment (3/16 in ID TPV tube)
+  interfaces:
+  - I-coupling
+  - I-rotor
+  material:
+    name: McMaster 51225K24
+    process: bought
+  checks:
+  - gate:connectivity
+  - gate:assembly
+  - gate:motion
+- id: board_bay
+  function: Holds the three turret boards on the -y yoke arm
+  interfaces:
+  - I-bay
+  - I-bay-lid
+  - I-boards
+  material: &id002
+    name: PETG
+    process: FDM
+    wall_mm: 0.8
+  checks:
+  - gate:connectivity
+  - gate:assembly
+  - gate:motion
+- id: board_bay_lid
+  function: Closes the board bay
+  interfaces:
+  - I-bay-lid
+  material: *id002
+  checks:
+  - gate:connectivity
+  - gate:assembly
+  - gate:motion
+- id: turret_board
+  function: 'The turret boards: the regulators, the flywheel rail, the ARM switch, the Feather M4 CAN'
+  interfaces:
+  - I-boards
+  material:
+    name: turret boards (cad/turret_boards.py)
+    process: bought
+  checks:
+  - gate:connectivity
+  - gate:assembly
+  - gate:motion
+- id: base_board
+  function: 'The base board: the DT12 fuse, the safety-pulse oscillator, the pan servo''s 12 V, the ring''s stator connector'
+  interfaces:
+  - I-base-board
+  material:
+    name: base board (JLCPCB)
+    process: bought
+  checks:
+  - gate:connectivity
+  - gate:assembly
+- id: dt_receptacle
+  function: 'The TM connector: the robot harness''s power and safety loop (DT04-12PA)'
+  interfaces:
+  - I-dt
+  - I-dt-plug
+  material:
+    name: TE Deutsch DT04-12PA-L012
+    process: bought
+  checks:
+  - gate:connectivity
+  - gate:assembly
+- id: dt_plug
+  function: The robot harness's plug (DT06-12SA), on Gyropup
+  interfaces:
+  - I-dt-plug
+  material:
+    name: TE Deutsch DT06-12SA
+    process: bought
+  checks:
+  - gate:connectivity
+  - gate:assembly
+decisions:
+- id: T6.1
+  decision: A compliant tube coupling (McMaster 51225K24, 3/16 in ID) between the rotor stub and the driver
+  why: The ring is driven, never pushed, and the tube takes the misalignment between the base and the turntable; stretched
+    26 % over the stub it grips it
+  alternatives:
+  - option: The 5/16 in ID tube first chosen
+    rejected: sat 1 mm loose round the Ø6 stub and could not drive it (the connectivity gate found the rotor floating)
+  - option: A rigid coupling
+    rejected: pushes the ring's rotor with every misalignment
+- id: T6.2
+  decision: The boards on the yoke, turning with pan
+  why: Only power, the bus, CAN and the safety line cross the ring
+  alternatives:
+  - option: The boards in the base
+    rejected: 'every servo, motor and sensor line across the ring: more than its 12 circuits'

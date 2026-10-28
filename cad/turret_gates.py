@@ -24,6 +24,7 @@ Frames: the assembly is the T frame (mm, mount face z = 0, robot=False) with eve
 rigid motion (Turret.pose_shape as a gp_Trsf), so a pose only changes placements and the pair cache stays warm.
 
     .venv/bin/python cad/turret_gates.py          (exit 1 when a gate fails)
+    .venv/bin/python cad/turret_gates.py --dossier   (path + ammo range for cad-agent check: exports/gates/turret-*.json)
     gp-remote --host gb10-02 --pull exports/turret/gates.json --pull exports/turret/gates/ -- \\
         env CADAGENT_GATE_CACHE=$HOME/gyropup-compute/cache/turret-gates python -u cad/turret_gates.py
 """
@@ -605,7 +606,50 @@ def stored(require_current=True):
     return d
 
 
+DOSSIER_RECORD = R / 'exports' / 'dossier-geometry.json'
+DOSSIER_GATES = R / 'exports' / 'gates'
+
+
+def dossier_gates(cache=None):
+    """The turret's own gates for cad-agent's process (docs/turret-dossier.md): the ball path and D67's ammo range,
+    written as exports/gates/turret-path.json and turret-ammo.json (+ .md) and bound to the dossier's geometry record,
+    so `cad-agent check` and the dossier lint (gate:turret-path, gate:turret-ammo) read them like the toolkit's gates
+    and fail them when the record changes. Refuses to bind unless the record is the geometry cad/turret_dossier.py
+    registers from this turret (the same digest, rebuilt here without writing)."""
+    from cadagent import dossier as cd
+    from cadagent.gates.run import write_outputs
+    from cadagent.gates.verdict import bind_inputs, geometry_digest
+    import turret_dossier as td
+    if not DOSSIER_RECORD.exists():
+        raise GateFailure(f'no geometry record ({DOSSIER_RECORD.relative_to(R)}): run cad-agent gates --build first')
+    record = json.loads(DOSSIER_RECORD.read_text())
+    T = td.T
+    pile = load_pile(T.G)
+    with cd.use_registry() as reg:
+        td.register(reg, T, pile)
+        mine = reg.build(write=False, root=R).geometry
+    if geometry_digest(mine) != geometry_digest(record):
+        raise GateFailure(f'{DOSSIER_RECORD.relative_to(R)} is not the turret this source builds: rerun cad-agent gates --build')
+    cache = cache or PairCache(CACHE)
+    DOSSIER_GATES.mkdir(parents=True, exist_ok=True)
+    out = {}
+    for name, fn in (('turret-path', lambda: path_gate(T, cache, T.G.ball, 'path.json')),
+                     ('turret-ammo', lambda: ammo_gate(T, pile, cache))):
+        t1 = time.time()
+        data = dict(fn(), gate=name)
+        bind_inputs(data, record, record_file=str(DOSSIER_RECORD.relative_to(R)))
+        write_outputs(DOSSIER_GATES, data)
+        out[name] = data
+        print(f'  {name:12s} {data["status"]:5s} {data["counts"]} ({time.time() - t1:.1f} s) -> exports/gates/{name}.json', flush=True)
+        for c in data['findings'][:12]:
+            print(f'      {c["status"]} {c["id"]}: {c["message"][:220]}', flush=True)
+    return out
+
+
 def main():
+    if '--dossier' in sys.argv:
+        res = dossier_gates()
+        sys.exit(0 if all(v['pass'] for v in res.values()) else 1)
     d = run()
     print(f'gates {"pass" if d["ok"] else "FAIL"} in {sum(d["seconds"].values()):.0f} s -> {OUT}')
     sys.exit(0 if d['ok'] else 1)

@@ -1,0 +1,4742 @@
+{
+ "schema": "cad-agent.dossier-geometry/1",
+ "units": "mm",
+ "hash": "cadagent.evidence.shape_content_hash: sha256 of the OCCT BREP text (format version 1, no triangles, no normals) with the 7-digit shape flag lines removed",
+ "actor": "unknown",
+ "parameters": {
+  "file": "cad/parameters.json",
+  "sha256": "92cfeaa792a2466594852afeef08af70fe74335ce60f458bd976f62ec0a39e13"
+ },
+ "out_dir": "exports",
+ "shapes_dir": "exports/dossier-shapes",
+ "parts": {
+  "pan_base": {
+   "section": "S1-base",
+   "grounded": false,
+   "free": false,
+   "sha256": "5e0db5f9f2f1d5b338ded2414d628053029f9c4ddabc44f9b3d486e2281fb831",
+   "count": 1,
+   "instances": [
+    {
+     "key": "pan_base",
+     "sha256": "e7c2cc1ab5ae859d07840820e2ba002e4b953793c0f3f27117493424e88d727b",
+     "file": "dossier-shapes/e7c2cc1ab5ae859d07840820e2ba002e4b953793c0f3f27117493424e88d727b.brep",
+     "bbox": {
+      "min": [
+       -78.777223,
+       -73.0,
+       0.0
+      ],
+      "max": [
+       78.777223,
+       87.5,
+       47.0
+      ]
+     },
+     "volume_mm3": 147574.408162,
+     "solids": 1,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:126"
+  },
+  "pan_ring": {
+   "section": "S1-base",
+   "grounded": false,
+   "free": false,
+   "sha256": "12aae115c08106b6f808d9b1cb845371077d019e8dfe47efcd513cd429734e5d",
+   "count": 1,
+   "instances": [
+    {
+     "key": "pan_ring",
+     "sha256": "ef574242a0fa4f39643c5c3b52748b2f36ffe5ae3c2cb943fa9ccd0e676a4214",
+     "file": "dossier-shapes/ef574242a0fa4f39643c5c3b52748b2f36ffe5ae3c2cb943fa9ccd0e676a4214.brep",
+     "bbox": {
+      "min": [
+       -40.593077,
+       -40.620603,
+       27.85
+      ],
+      "max": [
+       40.622878,
+       40.620603,
+       69.0
+      ]
+     },
+     "volume_mm3": 71464.726736,
+     "solids": 1,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:126"
+  },
+  "pan_spacer": {
+   "section": "S1-base",
+   "grounded": false,
+   "free": false,
+   "sha256": "f745d9eaee4682e53c1b1c2cd3f6aec4db7bf0e87465cf86cf1490528e7dadb6",
+   "count": 1,
+   "instances": [
+    {
+     "key": "pan_spacer",
+     "sha256": "d03c5aa8bf5cfe4900b033a04631b8409c33bca2ca29510f12475dbaddd617bb",
+     "file": "dossier-shapes/d03c5aa8bf5cfe4900b033a04631b8409c33bca2ca29510f12475dbaddd617bb.brep",
+     "bbox": {
+      "min": [
+       -29.5,
+       -29.5,
+       36.0
+      ],
+      "max": [
+       29.5,
+       29.5,
+       40.0
+      ]
+     },
+     "volume_mm3": 2409.915725,
+     "solids": 1,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:126"
+  },
+  "pan_pinion": {
+   "section": "S1-base",
+   "grounded": false,
+   "free": false,
+   "sha256": "48717fddb15d00e3e1ce7bc3b275fac33cf71b68961039a24da13f55ff9cbb9c",
+   "count": 1,
+   "instances": [
+    {
+     "key": "pan_pinion",
+     "sha256": "a95c35b76c6a9d3adabf299f525dd86416f1ad27aa39d08fb695457e56ab5656",
+     "file": "dossier-shapes/a95c35b76c6a9d3adabf299f525dd86416f1ad27aa39d08fb695457e56ab5656.brep",
+     "bbox": {
+      "min": [
+       -66.913111,
+       -14.356999,
+       52.0
+      ],
+      "max": [
+       -38.279403,
+       14.356999,
+       69.0
+      ]
+     },
+     "volume_mm3": 7312.854571,
+     "solids": 1,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:126"
+  },
+  "tilt_yoke": {
+   "section": "S2-tilt",
+   "grounded": false,
+   "free": false,
+   "sha256": "fb831d3bfdfd7009b67dfd3b11d73fe4f2af2041a272b458ac9682444fce1329",
+   "count": 1,
+   "instances": [
+    {
+     "key": "tilt_yoke",
+     "sha256": "88bf05d2ffe256559bd3d80a041512c64be93730b0286759cf3925d6594bf444",
+     "file": "dossier-shapes/88bf05d2ffe256559bd3d80a041512c64be93730b0286759cf3925d6594bf444.brep",
+     "bbox": {
+      "min": [
+       -20.0,
+       -68.81,
+       69.0
+      ],
+      "max": [
+       20.0,
+       103.71,
+       160.0
+      ]
+     },
+     "volume_mm3": 116107.280344,
+     "solids": 1,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:126"
+  },
+  "cradle": {
+   "section": "S2-tilt",
+   "grounded": false,
+   "free": false,
+   "sha256": "b9aeedd8f9e13eaa037a4162a7305031399560fa1f7d8baf76de54300dd8a810",
+   "count": 1,
+   "instances": [
+    {
+     "key": "cradle",
+     "sha256": "bf86b112c4c4caedf04bf9d510609048ecae3c5ddc244df04efa44c84a35ed08",
+     "file": "dossier-shapes/bf86b112c4c4caedf04bf9d510609048ecae3c5ddc244df04efa44c84a35ed08.brep",
+     "bbox": {
+      "min": [
+       -101.6,
+       -56.81,
+       99.9
+      ],
+      "max": [
+       48.0,
+       56.81,
+       109.9
+      ]
+     },
+     "volume_mm3": 42084.750746,
+     "solids": 1,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:126"
+  },
+  "horn_boss": {
+   "section": "S2-tilt",
+   "grounded": false,
+   "free": false,
+   "sha256": "74ac4f1f2e60b98586614b23290fa2365a44d873d7851d26c067010b0f5d08c6",
+   "count": 1,
+   "instances": [
+    {
+     "key": "horn_boss",
+     "sha256": "836e08d68826906b2e7ecef19dfa37ca167d0da02e662071d5b74f7ea2b6de84",
+     "file": "dossier-shapes/836e08d68826906b2e7ecef19dfa37ca167d0da02e662071d5b74f7ea2b6de84.brep",
+     "bbox": {
+      "min": [
+       -10.0,
+       56.785,
+       130.0
+      ],
+      "max": [
+       10.0,
+       65.81,
+       150.0
+      ]
+     },
+     "volume_mm3": 2208.050921,
+     "solids": 1,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:126"
+  },
+  "pivot_spacer": {
+   "section": "S2-tilt",
+   "grounded": false,
+   "free": false,
+   "sha256": "0a5d0439a7da196e1176450be8b246fe921b483a92216506c177fddbdc7901f5",
+   "count": 1,
+   "instances": [
+    {
+     "key": "pivot_spacer",
+     "sha256": "dbc06b364b4af331b819de8d5a2a3deea0460ecfd47bd8cf8e183559a8fd3920",
+     "file": "dossier-shapes/dbc06b364b4af331b819de8d5a2a3deea0460ecfd47bd8cf8e183559a8fd3920.brep",
+     "bbox": {
+      "min": [
+       -9.0,
+       -60.81,
+       131.0
+      ],
+      "max": [
+       9.0,
+       -56.785,
+       149.0
+      ]
+     },
+     "volume_mm3": 717.286668,
+     "solids": 1,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:126"
+  },
+  "cartridge_body": {
+   "section": "S4-launcher",
+   "grounded": false,
+   "free": false,
+   "sha256": "2b329a8bb7678263918bcd062bef194bf6aad571548496e1778241d246dc664d",
+   "count": 1,
+   "instances": [
+    {
+     "key": "cartridge_body",
+     "sha256": "86dd009bb89f8ee621bd193932bd3b50aa39f4631fb43da5cfcbf7b37842a4bc",
+     "file": "dossier-shapes/86dd009bb89f8ee621bd193932bd3b50aa39f4631fb43da5cfcbf7b37842a4bc.brep",
+     "bbox": {
+      "min": [
+       -101.6,
+       -51.6,
+       106.9
+      ],
+      "max": [
+       64.0,
+       51.6,
+       188.5
+      ]
+     },
+     "volume_mm3": 152605.622188,
+     "solids": 1,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:126"
+  },
+  "flywheel": {
+   "section": "S4-launcher",
+   "grounded": false,
+   "free": false,
+   "sha256": "fdb9ee63ed5bd9ee987a3d116bfaa8f415e3f011d05bb2b4da3b889f07d5ff3f",
+   "count": 1,
+   "instances": [
+    {
+     "key": "flywheel",
+     "sha256": "087f82d6eadf63fd75ac32009574267901c7c1ddac031a9709548adbc6fe68f4",
+     "file": "dossier-shapes/087f82d6eadf63fd75ac32009574267901c7c1ddac031a9709548adbc6fe68f4.brep",
+     "bbox": {
+      "min": [
+       10.0,
+       10.81,
+       119.0
+      ],
+      "max": [
+       40.0,
+       40.81,
+       131.0
+      ]
+     },
+     "volume_mm3": 5435.998561,
+     "solids": 1,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:126"
+  },
+  "flywheel_m": {
+   "section": "S4-launcher",
+   "grounded": false,
+   "free": false,
+   "sha256": "356cd39c88c1047b498dfae5095c9220f675b30388acf5fe898cd4b58526a64d",
+   "count": 1,
+   "instances": [
+    {
+     "key": "flywheel_m",
+     "sha256": "1fccfda45e0f1f88794ade29044db983d03a57ebec85a2562b4b9a237913a240",
+     "file": "dossier-shapes/1fccfda45e0f1f88794ade29044db983d03a57ebec85a2562b4b9a237913a240.brep",
+     "bbox": {
+      "min": [
+       10.0,
+       -40.81,
+       119.0
+      ],
+      "max": [
+       40.0,
+       -10.81,
+       131.0
+      ]
+     },
+     "volume_mm3": 5435.998561,
+     "solids": 1,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:126"
+  },
+  "flywheel_tyre": {
+   "section": "S4-launcher",
+   "grounded": false,
+   "free": false,
+   "sha256": "2e5dc4fa663bd5878e1ff6fa2833b386ae65618cb393fc9abcc7d712b42dbee7",
+   "count": 1,
+   "instances": [
+    {
+     "key": "flywheel_tyre",
+     "sha256": "9c5dca93473c44737dc003f2695ade7119caa135640d237f8027e2f78ec2d911",
+     "file": "dossier-shapes/9c5dca93473c44737dc003f2695ade7119caa135640d237f8027e2f78ec2d911.brep",
+     "bbox": {
+      "min": [
+       6.0,
+       6.81,
+       119.0
+      ],
+      "max": [
+       44.0,
+       44.81,
+       131.0
+      ]
+     },
+     "volume_mm3": 5127.079211,
+     "solids": 1,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:126"
+  },
+  "flywheel_tyre_m": {
+   "section": "S4-launcher",
+   "grounded": false,
+   "free": false,
+   "sha256": "272f25cf11c7f7a8e9efab93a215685d96d06281b112f7283e57ce94977a7f4e",
+   "count": 1,
+   "instances": [
+    {
+     "key": "flywheel_tyre_m",
+     "sha256": "45b1129d43e3dc566c9270b6746571e18774107816fa540a8546a6b0e022029f",
+     "file": "dossier-shapes/45b1129d43e3dc566c9270b6746571e18774107816fa540a8546a6b0e022029f.brep",
+     "bbox": {
+      "min": [
+       6.0,
+       -44.81,
+       119.0
+      ],
+      "max": [
+       44.0,
+       -6.81,
+       131.0
+      ]
+     },
+     "volume_mm3": 5127.079211,
+     "solids": 1,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:126"
+  },
+  "dial": {
+   "section": "S3-feed",
+   "grounded": false,
+   "free": false,
+   "sha256": "0bcd23ba9a51365d8e00d7459035bef49d168c8fd2454bfb1d1e8012e22639ce",
+   "count": 1,
+   "instances": [
+    {
+     "key": "dial",
+     "sha256": "6f32432d70fc693e1726ea6a4a46c1fec7b8d3ff25329e7b505366fd48702d16",
+     "file": "dossier-shapes/6f32432d70fc693e1726ea6a4a46c1fec7b8d3ff25329e7b505366fd48702d16.brep",
+     "bbox": {
+      "min": [
+       -96.35,
+       -48.35,
+       135.75
+      ],
+      "max": [
+       0.35,
+       48.35,
+       179.75
+      ]
+     },
+     "volume_mm3": 38239.934042,
+     "solids": 1,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:126"
+  },
+  "hopper": {
+   "section": "S3-feed",
+   "grounded": false,
+   "free": false,
+   "sha256": "1a083a309adfa8334d974dcad5ad94e4e91b113f9b97a4219e00d8ac51b2f527",
+   "count": 1,
+   "instances": [
+    {
+     "key": "hopper",
+     "sha256": "ea9c400474d69b54144d6b82dcc9315430ee89811fa91581f9b4b7bfa7c2d408",
+     "file": "dossier-shapes/ea9c400474d69b54144d6b82dcc9315430ee89811fa91581f9b4b7bfa7c2d408.brep",
+     "bbox": {
+      "min": [
+       -98.7,
+       -50.7,
+       160.0
+      ],
+      "max": [
+       12.1,
+       50.7,
+       225.0
+      ]
+     },
+     "volume_mm3": 35608.829309,
+     "solids": 1,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:126"
+  },
+  "hopper_lid": {
+   "section": "S3-feed",
+   "grounded": false,
+   "free": false,
+   "sha256": "e58ba9b25972f64e26d788a858c6b691e83b5352f3d90c533c2b1c0429d44fac",
+   "count": 1,
+   "instances": [
+    {
+     "key": "hopper_lid",
+     "sha256": "7a715aaae1d4ab8cadbad5c3b9b159c76dd3aa17c2e8fa2ddaa07179e3a385f6",
+     "file": "dossier-shapes/7a715aaae1d4ab8cadbad5c3b9b159c76dd3aa17c2e8fa2ddaa07179e3a385f6.brep",
+     "bbox": {
+      "min": [
+       -99.1,
+       -51.1,
+       221.0
+      ],
+      "max": [
+       3.1,
+       51.1,
+       234.0
+      ]
+     },
+     "volume_mm3": 13473.147211,
+     "solids": 1,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:126"
+  },
+  "hopper_flap": {
+   "section": "S3-feed",
+   "grounded": false,
+   "free": false,
+   "sha256": "40aafcf41d0c08b86c55572d998b728d78e4e38eadee7036a47f93d5cd2d50e8",
+   "count": 1,
+   "instances": [
+    {
+     "key": "hopper_flap",
+     "sha256": "75721a1397d031cffff31837be46532638e0dbda7f97dda05ae2846510af70eb",
+     "file": "dossier-shapes/75721a1397d031cffff31837be46532638e0dbda7f97dda05ae2846510af70eb.brep",
+     "bbox": {
+      "min": [
+       -90.0,
+       -18.0,
+       228.0
+      ],
+      "max": [
+       -50.0,
+       18.0,
+       234.0
+      ]
+     },
+     "volume_mm3": 2458.510548,
+     "solids": 1,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:126"
+  },
+  "barrel": {
+   "section": "S5-barrel",
+   "grounded": false,
+   "free": false,
+   "sha256": "3ef922ca7c148b56da15ae8ce556edc0460b4524bd60bb25ae9b93dd03f4ea7b",
+   "count": 1,
+   "instances": [
+    {
+     "key": "barrel",
+     "sha256": "60700cc5fa5b87d02453bd40ad563f5b3a916b3bed85ffa85a0f70ef1f0e2303",
+     "file": "dossier-shapes/60700cc5fa5b87d02453bd40ad563f5b3a916b3bed85ffa85a0f70ef1f0e2303.brep",
+     "bbox": {
+      "min": [
+       50.0,
+       -17.5,
+       110.0
+      ],
+      "max": [
+       150.0,
+       17.5,
+       140.0
+      ]
+     },
+     "volume_mm3": 23307.345531,
+     "solids": 1,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:126"
+  },
+  "laser_mount": {
+   "section": "S5-barrel",
+   "grounded": false,
+   "free": false,
+   "sha256": "86c23a60db698f0a6ce74594fa9beb34aaa86d2b98672934439095b05e4dfa61",
+   "count": 1,
+   "instances": [
+    {
+     "key": "laser_mount",
+     "sha256": "90e32d8d4d29cb9a367347645cecd7df7f987420a72931ba75977da95ade023d",
+     "file": "dossier-shapes/90e32d8d4d29cb9a367347645cecd7df7f987420a72931ba75977da95ade023d.brep",
+     "bbox": {
+      "min": [
+       51.0,
+       -9.0,
+       145.5
+      ],
+      "max": [
+       84.0,
+       9.0,
+       163.5
+      ]
+     },
+     "volume_mm3": 4925.553207,
+     "solids": 1,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:126"
+  },
+  "bumper_ring": {
+   "section": "S1-base",
+   "grounded": false,
+   "free": false,
+   "sha256": "ae658ac6cbef46d4665032770b19796fc5a6a66ea59dfa19f451d7a9ace0e512",
+   "count": 1,
+   "instances": [
+    {
+     "key": "bumper_ring",
+     "sha256": "218e6d979a349993a010fd43281c6e1136f1f26093c6d1f8383bda6c4a67d458",
+     "file": "dossier-shapes/218e6d979a349993a010fd43281c6e1136f1f26093c6d1f8383bda6c4a67d458.brep",
+     "bbox": {
+      "min": [
+       -86.0,
+       -80.218452,
+       6.0
+      ],
+      "max": [
+       86.0,
+       87.5,
+       20.0
+      ]
+     },
+     "volume_mm3": 30360.584029,
+     "solids": 1,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:126"
+  },
+  "ring_carrier": {
+   "section": "S6-wiring",
+   "grounded": false,
+   "free": false,
+   "sha256": "07a278b5cd54eb060642c2c3f430871ba12052a09310f638b79c682050ea1a93",
+   "count": 1,
+   "instances": [
+    {
+     "key": "ring_carrier",
+     "sha256": "2488a441c41dec70969eb98c541d3013dfdaa440ab50d1cd59655850d6f2570c",
+     "file": "dossier-shapes/2488a441c41dec70969eb98c541d3013dfdaa440ab50d1cd59655850d6f2570c.brep",
+     "bbox": {
+      "min": [
+       -32.288817,
+       -36.615676,
+       0.0
+      ],
+      "max": [
+       32.25,
+       36.615676,
+       12.0
+      ]
+     },
+     "volume_mm3": 27697.191178,
+     "solids": 1,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:126"
+  },
+  "ring_driver": {
+   "section": "S6-wiring",
+   "grounded": false,
+   "free": false,
+   "sha256": "92e6fcf17e60e8b86c0a566df37f2a01072e7b2323fac17758b3853d4f931d18",
+   "count": 1,
+   "instances": [
+    {
+     "key": "ring_driver",
+     "sha256": "8a7deaf022dfd59aacd76d431654fbf3b8bdb7b693d2e15fa8bdb4c391cab105",
+     "file": "dossier-shapes/8a7deaf022dfd59aacd76d431654fbf3b8bdb7b693d2e15fa8bdb4c391cab105.brep",
+     "bbox": {
+      "min": [
+       -19.7,
+       -20.2,
+       55.0
+      ],
+      "max": [
+       19.7,
+       19.7,
+       69.0
+      ]
+     },
+     "volume_mm3": 7024.881311,
+     "solids": 1,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:126"
+  },
+  "board_bay": {
+   "section": "S6-wiring",
+   "grounded": false,
+   "free": false,
+   "sha256": "a8f0d9a9652f8e954597434bb921ebf8a923cf43becb34df9aa2168995c33795",
+   "count": 1,
+   "instances": [
+    {
+     "key": "board_bay",
+     "sha256": "5f90abf625df99a2eeac57d3fc23e4b029630d0b4619940b491793ab66f29a8a",
+     "file": "dossier-shapes/5f90abf625df99a2eeac57d3fc23e4b029630d0b4619940b491793ab66f29a8a.brep",
+     "bbox": {
+      "min": [
+       -29.0,
+       -118.0,
+       71.0
+      ],
+      "max": [
+       29.0,
+       -68.81,
+       128.0
+      ]
+     },
+     "volume_mm3": 22780.316275,
+     "solids": 1,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:126"
+  },
+  "board_bay_lid": {
+   "section": "S6-wiring",
+   "grounded": false,
+   "free": false,
+   "sha256": "f1e090ba3d914817d50806c1774dd31824ca1c925934ec3da70a857c68ff1e5b",
+   "count": 1,
+   "instances": [
+    {
+     "key": "board_bay_lid",
+     "sha256": "3f35f0e96a4a1e2874ef33bee1272c49d1e4fec22a3dc3a459cd47b2d4ef3f09",
+     "file": "dossier-shapes/3f35f0e96a4a1e2874ef33bee1272c49d1e4fec22a3dc3a459cd47b2d4ef3f09.brep",
+     "bbox": {
+      "min": [
+       -29.0,
+       -120.0,
+       71.0
+      ],
+      "max": [
+       29.0,
+       -116.5,
+       128.0
+      ]
+     },
+     "volume_mm3": 7091.184,
+     "solids": 2,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:126"
+  },
+  "compute_tray": {
+   "section": "S7-compute",
+   "grounded": true,
+   "free": false,
+   "sha256": "729675b4e259ab9c4d5a11f3d10b4de00ad701b7bc612f57f5ffa0d62bde91b1",
+   "count": 1,
+   "instances": [
+    {
+     "key": "compute_tray",
+     "sha256": "d9d9507b135fd9ee7b4a9b87249d39dae9c6fd7695a03fd6da57c974de46aae9",
+     "file": "dossier-shapes/d9d9507b135fd9ee7b4a9b87249d39dae9c6fd7695a03fd6da57c974de46aae9.brep",
+     "bbox": {
+      "min": [
+       -78.0,
+       -78.0,
+       -86.0
+      ],
+      "max": [
+       78.0,
+       78.0,
+       -70.0
+      ]
+     },
+     "volume_mm3": 189965.117661,
+     "solids": 1,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:126"
+  },
+  "compute_shell": {
+   "section": "S7-compute",
+   "grounded": false,
+   "free": false,
+   "sha256": "39545b3ade9f9e71123220afcd6f7d1ff19ddd37008e029dc61799a6e28bd3f0",
+   "count": 1,
+   "instances": [
+    {
+     "key": "compute_shell",
+     "sha256": "58a6322367627389480a29b330682f49f83064aa7add01b7576aa581c2bcb3c9",
+     "file": "dossier-shapes/58a6322367627389480a29b330682f49f83064aa7add01b7576aa581c2bcb3c9.brep",
+     "bbox": {
+      "min": [
+       -78.0,
+       -78.0,
+       -76.0
+      ],
+      "max": [
+       78.0,
+       78.0,
+       0.0
+      ]
+     },
+     "volume_mm3": 149661.924851,
+     "solids": 1,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:126"
+  },
+  "compute": {
+   "section": "S7-compute",
+   "grounded": false,
+   "free": false,
+   "sha256": "428c5e996c1e9599c070d9065804bb4baac35202da8f544cc33c18112b906a20",
+   "count": 1,
+   "instances": [
+    {
+     "key": "compute",
+     "sha256": "19df8bd0dbda8b8c5a2d5561abe550787e39ac0f85789a09dfa9d1e47cc38141",
+     "file": "dossier-shapes/19df8bd0dbda8b8c5a2d5561abe550787e39ac0f85789a09dfa9d1e47cc38141.brep",
+     "bbox": {
+      "min": [
+       -50.0,
+       -31.5,
+       -76.0
+      ],
+      "max": [
+       45.0,
+       31.5,
+       -9.3
+      ]
+     },
+     "volume_mm3": 399199.5,
+     "solids": 1,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:126"
+  },
+  "eth_jack": {
+   "section": "S7-compute",
+   "grounded": false,
+   "free": false,
+   "sha256": "92de48f41d7ed5c5f6a58eecc7c26211e70a4a0fba7754adf5b66ebfe51bc309",
+   "count": 1,
+   "instances": [
+    {
+     "key": "eth_jack",
+     "sha256": "1cecaac97930297d5b1043a4b907b38ffbb4e8beeb28bd89e5cf17f6d34499af",
+     "file": "dossier-shapes/1cecaac97930297d5b1043a4b907b38ffbb4e8beeb28bd89e5cf17f6d34499af.brep",
+     "bbox": {
+      "min": [
+       -72.0,
+       22.1,
+       -52.9
+      ],
+      "max": [
+       -52.0,
+       37.9,
+       -39.1
+      ]
+     },
+     "volume_mm3": 4360.8,
+     "solids": 1,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:126"
+  },
+  "xt30_input": {
+   "section": "S7-compute",
+   "grounded": false,
+   "free": false,
+   "sha256": "f9d5813c9d00f939c055ba58f248e32c64dcdde9e8bdd9414341a510b3c4473e",
+   "count": 1,
+   "instances": [
+    {
+     "key": "xt30_input",
+     "sha256": "aea2dbf4db68d36634d0ea180dc1dd8d3ede3df562b6c652d3ca2fc750650f95",
+     "file": "dossier-shapes/aea2dbf4db68d36634d0ea180dc1dd8d3ede3df562b6c652d3ca2fc750650f95.brep",
+     "bbox": {
+      "min": [
+       -73.0,
+       -35.1,
+       -48.6
+      ],
+      "max": [
+       -57.0,
+       -24.9,
+       -43.4
+      ]
+     },
+     "volume_mm3": 848.64,
+     "solids": 1,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:126"
+  },
+  "input_fuses": {
+   "section": "S7-compute",
+   "grounded": false,
+   "free": false,
+   "sha256": "e958401b386b302bebdab6a135507e3070b844537823390bd89e745e7c153838",
+   "count": 1,
+   "instances": [
+    {
+     "key": "input_fuses",
+     "sha256": "b534b3e5b8aed6645004cbeb8705dc572894318c7baf4da72b4f6871afe8f764",
+     "file": "dossier-shapes/b534b3e5b8aed6645004cbeb8705dc572894318c7baf4da72b4f6871afe8f764.brep",
+     "bbox": {
+      "min": [
+       47.5,
+       -18.0,
+       -76.0
+      ],
+      "max": [
+       61.5,
+       18.0,
+       -64.0
+      ]
+     },
+     "volume_mm3": 6048.0,
+     "solids": 1,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:126"
+  },
+  "pan_servo": {
+   "section": "S1-base",
+   "grounded": false,
+   "free": false,
+   "sha256": "d2185cbac5a0aae73f8b2091bdef32da93ae62404348bfb8742d54c20e4bcd57",
+   "count": 1,
+   "instances": [
+    {
+     "key": "pan_servo",
+     "sha256": "624a95d0c00c383ca7509bfe8b16974f052f789d8ecdf34ece9d740403a88f3e",
+     "file": "dossier-shapes/624a95d0c00c383ca7509bfe8b16974f052f789d8ecdf34ece9d740403a88f3e.brep",
+     "bbox": {
+      "min": [
+       -65.0,
+       -10.11,
+       5.0
+      ],
+      "max": [
+       -40.3,
+       35.09,
+       52.0
+      ]
+     },
+     "volume_mm3": 40117.257067,
+     "solids": 1,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:126"
+  },
+  "pan_bearing": {
+   "section": "S1-base",
+   "grounded": false,
+   "free": false,
+   "sha256": "426d0121d099c3409292f2bbd2594f0f53e5e2103aa924c33c7966183e05b695",
+   "count": 1,
+   "instances": [
+    {
+     "key": "pan_bearing",
+     "sha256": "23d3f28fd2ac10e8c1e6b0bb04bce6bed117a9c0e73ed2dd985ed613ae559403",
+     "file": "dossier-shapes/23d3f28fd2ac10e8c1e6b0bb04bce6bed117a9c0e73ed2dd985ed613ae559403.brep",
+     "bbox": {
+      "min": [
+       -32.5,
+       -32.5,
+       40.0
+      ],
+      "max": [
+       32.5,
+       32.5,
+       47.0
+      ]
+     },
+     "volume_mm3": 7349.6115,
+     "solids": 1,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:126"
+  },
+  "pan_bearing_inner": {
+   "section": "S1-base",
+   "grounded": false,
+   "free": false,
+   "sha256": "ccff94fef824f2dc9ab17024258c6444e46df2d6088088a3a928e6d69bb3db39",
+   "count": 1,
+   "instances": [
+    {
+     "key": "pan_bearing_inner",
+     "sha256": "ebcf31b6dd7f3387ad60fda575294156ba76e13e5415de7a11de5f322723ad22",
+     "file": "dossier-shapes/ebcf31b6dd7f3387ad60fda575294156ba76e13e5415de7a11de5f322723ad22.brep",
+     "bbox": {
+      "min": [
+       -26.5,
+       -26.5,
+       40.0
+      ],
+      "max": [
+       26.5,
+       26.5,
+       47.0
+      ]
+     },
+     "volume_mm3": 1698.816227,
+     "solids": 1,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:126"
+  },
+  "circlip_50": {
+   "section": "S1-base",
+   "grounded": false,
+   "free": false,
+   "sha256": "91102121c6e736a1ef2c0563c955e8c5cc0a9d07847e122b5a4c403f6ad6fb6c",
+   "count": 1,
+   "instances": [
+    {
+     "key": "circlip_50",
+     "sha256": "9de6236d8254413942b7c287d953165f1bc4ba3deee7247c46c2a194eb17521a",
+     "file": "dossier-shapes/9de6236d8254413942b7c287d953165f1bc4ba3deee7247c46c2a194eb17521a.brep",
+     "bbox": {
+      "min": [
+       -28.6,
+       -28.6,
+       34.0
+      ],
+      "max": [
+       28.6,
+       30.4,
+       36.0
+      ]
+     },
+     "volume_mm3": 1725.076603,
+     "solids": 1,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:126"
+  },
+  "pan_clamp": {
+   "section": "S1-base",
+   "grounded": false,
+   "free": false,
+   "sha256": "7c65452525ee03e5b3d799857a64b2cdf5c66ede18eb86de057c0f18ceba8e39",
+   "count": 1,
+   "instances": [
+    {
+     "key": "pan_clamp",
+     "sha256": "dcdbaaca546602c49f8b2c4466ab51a650f2be57ff5b1e8460908ce85207c90b",
+     "file": "dossier-shapes/dcdbaaca546602c49f8b2c4466ab51a650f2be57ff5b1e8460908ce85207c90b.brep",
+     "bbox": {
+      "min": [
+       -37.0,
+       -43.373067,
+       47.0
+      ],
+      "max": [
+       49.0,
+       43.373067,
+       50.175
+      ]
+     },
+     "volume_mm3": 6606.842051,
+     "solids": 1,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:126"
+  },
+  "cradle_plate_l": {
+   "section": "S2-tilt",
+   "grounded": false,
+   "free": false,
+   "sha256": "e2d3de5740d4ab57b1efccc754a36a2cd9b0b142603c14715dcf25f0e196083a",
+   "count": 1,
+   "instances": [
+    {
+     "key": "cradle_plate_l",
+     "sha256": "7ee05821fe47b5c1e25e2a8911abe5ce9c408259c72077ad010aca1212cbb2f8",
+     "file": "dossier-shapes/7ee05821fe47b5c1e25e2a8911abe5ce9c408259c72077ad010aca1212cbb2f8.brep",
+     "bbox": {
+      "min": [
+       -58.0,
+       53.61,
+       99.9
+      ],
+      "max": [
+       32.0,
+       56.785,
+       162.0
+      ]
+     },
+     "volume_mm3": 9113.128828,
+     "solids": 1,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:126"
+  },
+  "cradle_plate_r": {
+   "section": "S2-tilt",
+   "grounded": false,
+   "free": false,
+   "sha256": "0ffa65cc1e0abd0c7577d182e3fee1d287037ad5f427d3de36eee1cc0d838d9d",
+   "count": 1,
+   "instances": [
+    {
+     "key": "cradle_plate_r",
+     "sha256": "48a39f3aba8bd7ae01ea6e0bd848ce22d530f0fa6d5530ce7392e72b172b7aee",
+     "file": "dossier-shapes/48a39f3aba8bd7ae01ea6e0bd848ce22d530f0fa6d5530ce7392e72b172b7aee.brep",
+     "bbox": {
+      "min": [
+       -58.0,
+       -56.785,
+       99.9
+      ],
+      "max": [
+       32.0,
+       -53.61,
+       162.0
+      ]
+     },
+     "volume_mm3": 9262.792188,
+     "solids": 1,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:126"
+  },
+  "stop_lug": {
+   "section": "S2-tilt",
+   "grounded": false,
+   "free": false,
+   "sha256": "e67cbddaf2a140a113be0f64e6566b7a19d8b07c97b22a8dc46f0a329291e268",
+   "count": 1,
+   "instances": [
+    {
+     "key": "stop_lug",
+     "sha256": "70d88df3ae77e482414d14494d117c5fffd90fdd6652872a4285bf6e1c2178b8",
+     "file": "dossier-shapes/70d88df3ae77e482414d14494d117c5fffd90fdd6652872a4285bf6e1c2178b8.brep",
+     "bbox": {
+      "min": [
+       -11.923183,
+       -59.325,
+       108.0
+      ],
+      "max": [
+       11.923183,
+       -56.785,
+       130.671471
+      ]
+     },
+     "volume_mm3": 753.328232,
+     "solids": 1,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:126"
+  },
+  "slip_ring": {
+   "section": "S6-wiring",
+   "grounded": false,
+   "free": false,
+   "sha256": "6485cbc215e7d6dbf7aded2d6d6bdb699b9607d484a9a30d1588391740fd0250",
+   "count": 1,
+   "instances": [
+    {
+     "key": "slip_ring",
+     "sha256": "6c5a4470416ccce962ce134da8f44ac7592492942e6690272a91adcaa2acb4e4",
+     "file": "dossier-shapes/6c5a4470416ccce962ce134da8f44ac7592492942e6690272a91adcaa2acb4e4.brep",
+     "bbox": {
+      "min": [
+       -22.25,
+       -22.25,
+       9.4
+      ],
+      "max": [
+       22.25,
+       22.25,
+       35.9
+      ]
+     },
+     "volume_mm3": 13011.396849,
+     "solids": 1,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:126"
+  },
+  "slip_ring_rotor": {
+   "section": "S6-wiring",
+   "grounded": false,
+   "free": false,
+   "sha256": "858cac418445bf4dca42e6a36bd3510ec2f3267be5ee1d9e426b92e82c2018c9",
+   "count": 1,
+   "instances": [
+    {
+     "key": "slip_ring_rotor",
+     "sha256": "93d5b9416ff7aa350a20249e3e3ed18fc6e46b51d47a9a8d8a989dc686eec053",
+     "file": "dossier-shapes/93d5b9416ff7aa350a20249e3e3ed18fc6e46b51d47a9a8d8a989dc686eec053.brep",
+     "bbox": {
+      "min": [
+       -3.75,
+       -71.81,
+       35.89
+      ],
+      "max": [
+       3.75,
+       3.0,
+       92.75
+      ]
+     },
+     "volume_mm3": 5097.478096,
+     "solids": 2,
+     "valid": false
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:126"
+  },
+  "ring_coupling": {
+   "section": "S6-wiring",
+   "grounded": false,
+   "free": false,
+   "sha256": "08b9369f10d406c6ec9edf1ddec9c4acb4753fadf1980bec1bec7155817ac106",
+   "count": 1,
+   "instances": [
+    {
+     "key": "ring_coupling",
+     "sha256": "7364eb295695bc60c1af175531b096b9a196ab59308b53dc1a40ffccebe5c43a",
+     "file": "dossier-shapes/7364eb295695bc60c1af175531b096b9a196ab59308b53dc1a40ffccebe5c43a.brep",
+     "bbox": {
+      "min": [
+       -4.369954,
+       -4.369954,
+       36.2
+      ],
+      "max": [
+       4.369954,
+       4.369954,
+       61.0
+      ]
+     },
+     "volume_mm3": 712.952113,
+     "solids": 1,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:126"
+  },
+  "base_board": {
+   "section": "S6-wiring",
+   "grounded": false,
+   "free": false,
+   "sha256": "e752e4bd7472d66e3b9aaa13e1b616f5debc8d73cc95d7e566b2f3492751473b",
+   "count": 1,
+   "instances": [
+    {
+     "key": "base_board",
+     "sha256": "c6a7de0e8985518af4e8fe3170a99c622ba0dc8b818031aa4f61e271429feb2c",
+     "file": "dossier-shapes/c6a7de0e8985518af4e8fe3170a99c622ba0dc8b818031aa4f61e271429feb2c.brep",
+     "bbox": {
+      "min": [
+       36.4,
+       -25.4,
+       6.0
+      ],
+      "max": [
+       48.0,
+       25.4,
+       36.0
+      ]
+     },
+     "volume_mm3": 17678.4,
+     "solids": 1,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:126"
+  },
+  "turret_board": {
+   "section": "S6-wiring",
+   "grounded": false,
+   "free": false,
+   "sha256": "acdac1bec35907b2a4917af84767f6615d08cc1707f04448946eda263b635d47",
+   "count": 1,
+   "instances": [
+    {
+     "key": "turret_board",
+     "sha256": "65c4ebf5b938d79e38cc02ec284512a445dfd48dbbaaad2d9b65766467268016",
+     "file": "dossier-shapes/65c4ebf5b938d79e38cc02ec284512a445dfd48dbbaaad2d9b65766467268016.brep",
+     "bbox": {
+      "min": [
+       -26.0,
+       -116.11,
+       74.5
+      ],
+      "max": [
+       26.0,
+       -76.81,
+       124.5
+      ]
+     },
+     "volume_mm3": 97168.165692,
+     "solids": 3,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:126"
+  },
+  "index_magnet": {
+   "section": "S1-base",
+   "grounded": false,
+   "free": false,
+   "sha256": "60216c2886a7f97125823b60d0f1fdb26ef40fde9b2df3596e8aa4a9067e8232",
+   "count": 1,
+   "instances": [
+    {
+     "key": "index_magnet",
+     "sha256": "a88c96da6c52b63c745d6c9701da4fb30158663accd3c442d6bc64cf9b4c01a8",
+     "file": "dossier-shapes/a88c96da6c52b63c745d6c9701da4fb30158663accd3c442d6bc64cf9b4c01a8.brep",
+     "bbox": {
+      "min": [
+       32.62,
+       -2.38,
+       47.0
+      ],
+      "max": [
+       37.38,
+       2.38,
+       50.18
+      ]
+     },
+     "volume_mm3": 56.588855,
+     "solids": 1,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:126"
+  },
+  "hall_switch": {
+   "section": "S1-base",
+   "grounded": false,
+   "free": false,
+   "sha256": "93c71f37842a8d469f3f7311b9d49fa62814d29e8cddbf113c63c46cfd90f801",
+   "count": 1,
+   "instances": [
+    {
+     "key": "hall_switch",
+     "sha256": "29a32ceed8f0166678d1974fc6c87e78d14ca776141137dadb173592dbd531fb",
+     "file": "dossier-shapes/29a32ceed8f0166678d1974fc6c87e78d14ca776141137dadb173592dbd531fb.brep",
+     "bbox": {
+      "min": [
+       32.95,
+       -1.5,
+       53.1
+      ],
+      "max": [
+       37.05,
+       1.5,
+       54.7
+      ]
+     },
+     "volume_mm3": 19.68,
+     "solids": 1,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:126"
+  },
+  "dt_receptacle": {
+   "section": "S6-wiring",
+   "grounded": false,
+   "free": false,
+   "sha256": "b38f2c896d64639279ed4ceb444cd225eec89a51ae86f654f02cfbab2dcf2d58",
+   "count": 1,
+   "instances": [
+    {
+     "key": "dt_receptacle",
+     "sha256": "c40f8087351820986a821ead94c8f182aae7333c1ae3f5432e2acb7d5805ce24",
+     "file": "dossier-shapes/c40f8087351820986a821ead94c8f182aae7333c1ae3f5432e2acb7d5805ce24.brep",
+     "bbox": {
+      "min": [
+       -27.56,
+       -97.89,
+       1.22
+      ],
+      "max": [
+       27.56,
+       -52.0,
+       36.78
+      ]
+     },
+     "volume_mm3": 46847.853976,
+     "solids": 1,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:126"
+  },
+  "dt_plug": {
+   "section": "S6-wiring",
+   "grounded": false,
+   "free": true,
+   "free_reason": "the robot harness's plug, a separate cable plugged into the receptacle (absent on the stand)",
+   "sha256": "4e921123dea3e19c327b67fe874e4117ac54f5e6988e83550fd2f7c07f1c5ece",
+   "count": 1,
+   "instances": [
+    {
+     "key": "dt_plug",
+     "sha256": "0b4aa436ed04c60c8c3d867b566521d8331e7b6acba70f1858f3df23cbc6c708",
+     "file": "dossier-shapes/0b4aa436ed04c60c8c3d867b566521d8331e7b6acba70f1858f3df23cbc6c708.brep",
+     "bbox": {
+      "min": [
+       -22.0,
+       -123.08,
+       -30.0
+      ],
+      "max": [
+       22.0,
+       -78.08,
+       33.0
+      ]
+     },
+     "volume_mm3": 89320.0,
+     "solids": 1,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:126"
+  },
+  "tilt_servo": {
+   "section": "S2-tilt",
+   "grounded": false,
+   "free": false,
+   "sha256": "4ec62ef0a89e51333c97f2167a3a3fc4f4dd87464fb124729cd578ada2682808",
+   "count": 1,
+   "instances": [
+    {
+     "key": "tilt_servo",
+     "sha256": "f420d21b28a6b22181e11ae4b5971ef9501bb0bee1eec7a80e6e66ea8485e1a0",
+     "file": "dossier-shapes/f420d21b28a6b22181e11ae4b5971ef9501bb0bee1eec7a80e6e66ea8485e1a0.brep",
+     "bbox": {
+      "min": [
+       -12.35,
+       65.81,
+       104.91
+      ],
+      "max": [
+       12.35,
+       112.81,
+       150.11
+      ]
+     },
+     "volume_mm3": 40117.257067,
+     "solids": 1,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:126"
+  },
+  "tilt_bearing": {
+   "section": "S2-tilt",
+   "grounded": false,
+   "free": false,
+   "sha256": "45fb6a0b262efee977717b2ed30e9f6c4c77a07b03de8ee974af8ddfbae987e4",
+   "count": 1,
+   "instances": [
+    {
+     "key": "tilt_bearing",
+     "sha256": "5bdc2c0c886eb86f3ce664a2e069b26f91b16019e977259fd8f1721afbbaf2df",
+     "file": "dossier-shapes/5bdc2c0c886eb86f3ce664a2e069b26f91b16019e977259fd8f1721afbbaf2df.brep",
+     "bbox": {
+      "min": [
+       -6.0,
+       -64.81,
+       134.0
+      ],
+      "max": [
+       6.0,
+       -60.81,
+       146.0
+      ]
+     },
+     "volume_mm3": 271.307942,
+     "solids": 1,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:126"
+  },
+  "tilt_bearing_inner": {
+   "section": "S2-tilt",
+   "grounded": false,
+   "free": false,
+   "sha256": "6f70e1f7a2f27cca8dd875630b6e1dbd03fc9ba70f8556e90479c60c69aa7fdc",
+   "count": 1,
+   "instances": [
+    {
+     "key": "tilt_bearing_inner",
+     "sha256": "d8e528ff24eaaeb12b27323bc7a1a584f50a920bbd2897880040613cc0a7cf9d",
+     "file": "dossier-shapes/d8e528ff24eaaeb12b27323bc7a1a584f50a920bbd2897880040613cc0a7cf9d.brep",
+     "bbox": {
+      "min": [
+       -3.6,
+       -64.81,
+       136.4
+      ],
+      "max": [
+       3.6,
+       -60.81,
+       143.6
+      ]
+     },
+     "volume_mm3": 49.762828,
+     "solids": 1,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:126"
+  },
+  "shoulder_screw": {
+   "section": "S2-tilt",
+   "grounded": false,
+   "free": false,
+   "sha256": "ec69eb030ae9ce9d51d75f0fa446856126cf5bc088957da0d83481549708af8b",
+   "count": 1,
+   "instances": [
+    {
+     "key": "shoulder_screw",
+     "sha256": "6142238f076267023472828dfadfaa8120b8973fc1e7085012ad5a83037d5d6d",
+     "file": "dossier-shapes/6142238f076267023472828dfadfaa8120b8973fc1e7085012ad5a83037d5d6d.brep",
+     "bbox": {
+      "min": [
+       -5.0,
+       -77.81,
+       135.0
+      ],
+      "max": [
+       5.0,
+       -50.81,
+       145.0
+      ]
+     },
+     "volume_mm3": 870.535324,
+     "solids": 1,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:126"
+  },
+  "flywheel_motor_l": {
+   "section": "S4-launcher",
+   "grounded": false,
+   "free": false,
+   "sha256": "c883ce77663f2815587c140f6b270928a987de9e96e0b47b0f76dc51e2a3058c",
+   "count": 1,
+   "instances": [
+    {
+     "key": "flywheel_motor_l",
+     "sha256": "adb3422ab73a8db6101d5454d1b3fab6e8e5aa83d836a8b3e486d67bddaeb09b",
+     "file": "dossier-shapes/adb3422ab73a8db6101d5454d1b3fab6e8e5aa83d836a8b3e486d67bddaeb09b.brep",
+     "bbox": {
+      "min": [
+       11.15,
+       11.96,
+       112.5
+      ],
+      "max": [
+       38.85,
+       39.66,
+       169.5
+      ]
+     },
+     "volume_mm3": 21182.031073,
+     "solids": 1,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:126"
+  },
+  "flywheel_motor_r": {
+   "section": "S4-launcher",
+   "grounded": false,
+   "free": false,
+   "sha256": "b891c4ccb81591e44e766ae5e945fb898b6ed28384dcef1c22102dea8f75e0c3",
+   "count": 1,
+   "instances": [
+    {
+     "key": "flywheel_motor_r",
+     "sha256": "deac14529d7c19340e4e0357145f6511be0a731c25babdcb3895098132be2841",
+     "file": "dossier-shapes/deac14529d7c19340e4e0357145f6511be0a731c25babdcb3895098132be2841.brep",
+     "bbox": {
+      "min": [
+       11.15,
+       -39.66,
+       112.5
+      ],
+      "max": [
+       38.85,
+       -11.96,
+       169.5
+      ]
+     },
+     "volume_mm3": 21182.031073,
+     "solids": 1,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:126"
+  },
+  "cartridge_board": {
+   "section": "S4-launcher",
+   "grounded": false,
+   "free": false,
+   "sha256": "3bc782679ec14ce27df10d1139dc5733841162c4b9fcd30f9e7650952d2153d3",
+   "count": 1,
+   "instances": [
+    {
+     "key": "cartridge_board",
+     "sha256": "76a7fee9501317026fb599f7d6ea77493ac04f19d8fcf083621f59e2abf158c0",
+     "file": "dossier-shapes/76a7fee9501317026fb599f7d6ea77493ac04f19d8fcf083621f59e2abf158c0.brep",
+     "bbox": {
+      "min": [
+       6.0,
+       -22.0,
+       188.5
+      ],
+      "max": [
+       56.0,
+       22.0,
+       211.1
+      ]
+     },
+     "volume_mm3": 11145.52,
+     "solids": 1,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:126"
+  },
+  "esc_l": {
+   "section": "S4-launcher",
+   "grounded": false,
+   "free": false,
+   "sha256": "ca9271500390bf32aa257e1e9d5c70a1b477bba9c8daf604668c339c733f2883",
+   "count": 1,
+   "instances": [
+    {
+     "key": "esc_l",
+     "sha256": "512b249bbe269cfac70c84c75567f28984e0b3b68c7c9778450f9811343514c4",
+     "file": "dossier-shapes/512b249bbe269cfac70c84c75567f28984e0b3b68c7c9778450f9811343514c4.brep",
+     "bbox": {
+      "min": [
+       14.0,
+       1.5,
+       170.49
+      ],
+      "max": [
+       40.0,
+       14.5,
+       175.5
+      ]
+     },
+     "volume_mm3": 1693.38,
+     "solids": 1,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:126"
+  },
+  "esc_r": {
+   "section": "S4-launcher",
+   "grounded": false,
+   "free": false,
+   "sha256": "ba24ab6e5a1c5c76033a1b9d899521c3fc95852d253cb65dba0b6cc9a3d876a3",
+   "count": 1,
+   "instances": [
+    {
+     "key": "esc_r",
+     "sha256": "c4b5a23106e80e94d3ba93137ff12a5475ebf4b4132c1f64c9245a331d12df5b",
+     "file": "dossier-shapes/c4b5a23106e80e94d3ba93137ff12a5475ebf4b4132c1f64c9245a331d12df5b.brep",
+     "bbox": {
+      "min": [
+       14.0,
+       -14.5,
+       170.49
+      ],
+      "max": [
+       40.0,
+       -1.5,
+       175.5
+      ]
+     },
+     "volume_mm3": 1693.38,
+     "solids": 1,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:126"
+  },
+  "feed_motor": {
+   "section": "S3-feed",
+   "grounded": false,
+   "free": false,
+   "sha256": "bfa9f8ce62583751f0309c17d636eac43605dd7de389ec320ee55f860c1962f9",
+   "count": 1,
+   "instances": [
+    {
+     "key": "feed_motor",
+     "sha256": "3255e97656ca1f8f185d1e9ce6c1bcdebaaa43c4c889014e7ca1f9a6c5a4c59f",
+     "file": "dossier-shapes/3255e97656ca1f8f185d1e9ce6c1bcdebaaa43c4c889014e7ca1f9a6c5a4c59f.brep",
+     "bbox": {
+      "min": [
+       -83.09,
+       -12.35,
+       88.75
+      ],
+      "max": [
+       -37.89,
+       12.35,
+       135.75
+      ]
+     },
+     "volume_mm3": 40117.257067,
+     "solids": 1,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:126"
+  },
+  "ct_thumbscrew": {
+   "section": "S2-tilt",
+   "grounded": false,
+   "free": false,
+   "sha256": "f1a8a76427df9fc311b524a994386923850c578d01fbda570e69465d78ab2b18",
+   "count": 1,
+   "instances": [
+    {
+     "key": "ct_thumbscrew",
+     "sha256": "0c671c252d37f8a13364b0d6b3c9fe64c3509b9ed911d6e167f03a6e6c1e5071",
+     "file": "dossier-shapes/0c671c252d37f8a13364b0d6b3c9fe64c3509b9ed911d6e167f03a6e6c1e5071.brep",
+     "bbox": {
+      "min": [
+       -36.0,
+       -51.31,
+       93.4
+      ],
+      "max": [
+       -20.0,
+       -35.31,
+       102.91
+      ]
+     },
+     "volume_mm3": 1007.320268,
+     "solids": 1,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:126"
+  },
+  "laser": {
+   "section": "S5-barrel",
+   "grounded": false,
+   "free": false,
+   "sha256": "ff6c53566d4ef4e905353f1d8beb6423403283372e9994033ea6544234336f60",
+   "count": 1,
+   "instances": [
+    {
+     "key": "laser",
+     "sha256": "100d28c3474820fe84f680953660579093e2facc25eb806a53b05fdf4ed0bf02",
+     "file": "dossier-shapes/100d28c3474820fe84f680953660579093e2facc25eb806a53b05fdf4ed0bf02.brep",
+     "bbox": {
+      "min": [
+       62.0,
+       -3.5,
+       151.0
+      ],
+      "max": [
+       84.5,
+       3.5,
+       158.0
+      ]
+     },
+     "volume_mm3": 865.901475,
+     "solids": 1,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:126"
+  },
+  "laser_screws": {
+   "section": "S5-barrel",
+   "grounded": false,
+   "free": false,
+   "sha256": "28223482260e1cc370497f8a4d187ffd05c8bad6edff7bdea3ef062cc55588cd",
+   "count": 1,
+   "instances": [
+    {
+     "key": "laser_screws",
+     "sha256": "068b9bc9d1bb06c3c5459ecbf85ef86d4a78b575e8eadb5f014a85621b25be8f",
+     "file": "dossier-shapes/068b9bc9d1bb06c3c5459ecbf85ef86d4a78b575e8eadb5f014a85621b25be8f.brep",
+     "bbox": {
+      "min": [
+       72.5,
+       -8.977241,
+       148.450962
+      ],
+      "max": [
+       75.5,
+       8.977241,
+       164.0
+      ]
+     },
+     "volume_mm3": 127.234502,
+     "solids": 3,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:126"
+  },
+  "laser_inserts": {
+   "section": "S5-barrel",
+   "grounded": false,
+   "free": false,
+   "sha256": "127b679cad6813c8b8079fed57a1eae644b661fac8c6539316ec2dbfac31c01d",
+   "count": 1,
+   "instances": [
+    {
+     "key": "laser_inserts",
+     "sha256": "ad8a25b962a9e46c00cee4f155a536a306f37cb31688bfa3d2c3252c4379334d",
+     "file": "dossier-shapes/ad8a25b962a9e46c00cee4f155a536a306f37cb31688bfa3d2c3252c4379334d.brep",
+     "bbox": {
+      "min": [
+       58.0,
+       -9.0,
+       141.9
+      ],
+      "max": [
+       62.0,
+       9.0,
+       147.6
+      ]
+     },
+     "volume_mm3": 87.297006,
+     "solids": 2,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:126"
+  },
+  "hopper_inserts": {
+   "section": "S3-feed",
+   "grounded": false,
+   "free": false,
+   "sha256": "2eb28c5397f69054b17179791fd8dced6f9cb0fdeff2e5b353157e37c594373b",
+   "count": 1,
+   "instances": [
+    {
+     "key": "hopper_inserts",
+     "sha256": "b90939790b2cb3a1efc96f0264e6edfc2a8dd16056de8807e155df5ca83be06c",
+     "file": "dossier-shapes/b90939790b2cb3a1efc96f0264e6edfc2a8dd16056de8807e155df5ca83be06c.brep",
+     "bbox": {
+      "min": [
+       -88.961584,
+       -40.961584,
+       154.3
+      ],
+      "max": [
+       9.1,
+       40.961584,
+       160.0
+      ]
+     },
+     "volume_mm3": 130.945509,
+     "solids": 3,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:126"
+  },
+  "ball": {
+   "section": "S3-feed",
+   "grounded": false,
+   "free": true,
+   "free_reason": "a loose round of the physics-settled hopper load (sim/turret_feed.py --pile); held by the hopper's cavity",
+   "sha256": "901989207ea54f6c1813e450ee37baa9172cfb04b5e5f8065efb414a0ebe5604",
+   "count": 30,
+   "instances": [
+    {
+     "key": "ball#0",
+     "sha256": "a65216ac687270ac3257d29316de2a648a924d4e4f5291d1cc63901574160ace",
+     "file": "dossier-shapes/a65216ac687270ac3257d29316de2a648a924d4e4f5291d1cc63901574160ace.brep",
+     "bbox": {
+      "min": [
+       -25.166457,
+       2.809287,
+       134.98
+      ],
+      "max": [
+       -2.466457,
+       25.509287,
+       157.68
+      ]
+     },
+     "volume_mm3": 6124.578337,
+     "solids": 1,
+     "valid": true
+    },
+    {
+     "key": "ball#1",
+     "sha256": "03b799fd45df8370f59431ab5068e7b671858a68d009000f07a41f47b7f7923d",
+     "file": "dossier-shapes/03b799fd45df8370f59431ab5068e7b671858a68d009000f07a41f47b7f7923d.brep",
+     "bbox": {
+      "min": [
+       -43.765596,
+       23.095934,
+       134.96
+      ],
+      "max": [
+       -21.065596,
+       45.795934,
+       157.66
+      ]
+     },
+     "volume_mm3": 6124.578337,
+     "solids": 1,
+     "valid": true
+    },
+    {
+     "key": "ball#2",
+     "sha256": "acc48ce2a5f2e6a50462aa2de5a5cb8bcc5d9c33e9fc9d9ef442637092d9a327",
+     "file": "dossier-shapes/acc48ce2a5f2e6a50462aa2de5a5cb8bcc5d9c33e9fc9d9ef442637092d9a327.brep",
+     "bbox": {
+      "min": [
+       -73.420229,
+       22.383355,
+       134.98
+      ],
+      "max": [
+       -50.720229,
+       45.083355,
+       157.68
+      ]
+     },
+     "volume_mm3": 6124.578337,
+     "solids": 1,
+     "valid": true
+    },
+    {
+     "key": "ball#3",
+     "sha256": "710247883e3018526577c078e76d622f5dc00d70d5a6f0f73ce416c308f99202",
+     "file": "dossier-shapes/710247883e3018526577c078e76d622f5dc00d70d5a6f0f73ce416c308f99202.brep",
+     "bbox": {
+      "min": [
+       -93.529687,
+       2.80769,
+       134.98
+      ],
+      "max": [
+       -70.829687,
+       25.50769,
+       157.68
+      ]
+     },
+     "volume_mm3": 6124.578337,
+     "solids": 1,
+     "valid": true
+    },
+    {
+     "key": "ball#4",
+     "sha256": "034d3a325c7e1dc92a50af0744ff0dbd95c43d316f0a4383ccef90a664f39754",
+     "file": "dossier-shapes/034d3a325c7e1dc92a50af0744ff0dbd95c43d316f0a4383ccef90a664f39754.brep",
+     "bbox": {
+      "min": [
+       -94.207862,
+       -26.102493,
+       134.98
+      ],
+      "max": [
+       -71.507862,
+       -3.402493,
+       157.68
+      ]
+     },
+     "volume_mm3": 6124.578337,
+     "solids": 1,
+     "valid": true
+    },
+    {
+     "key": "ball#5",
+     "sha256": "fcf8f6bf500e9da9e67f4a4a03516362dff62bafacee8971e35baed0805cce75",
+     "file": "dossier-shapes/fcf8f6bf500e9da9e67f4a4a03516362dff62bafacee8971e35baed0805cce75.brep",
+     "bbox": {
+      "min": [
+       -73.051753,
+       -46.369104,
+       134.97
+      ],
+      "max": [
+       -50.351753,
+       -23.669104,
+       157.67
+      ]
+     },
+     "volume_mm3": 6124.578337,
+     "solids": 1,
+     "valid": true
+    },
+    {
+     "key": "ball#6",
+     "sha256": "2660f2931d97d37f9f10047d29c39f4b295e9cfc507a37a2279539d5d646a766",
+     "file": "dossier-shapes/2660f2931d97d37f9f10047d29c39f4b295e9cfc507a37a2279539d5d646a766.brep",
+     "bbox": {
+      "min": [
+       -45.206067,
+       -46.254281,
+       134.98
+      ],
+      "max": [
+       -22.506067,
+       -23.554281,
+       157.68
+      ]
+     },
+     "volume_mm3": 6124.578337,
+     "solids": 1,
+     "valid": true
+    },
+    {
+     "key": "ball#7",
+     "sha256": "a55c4782c355177437b8b067ac8bee84a6b951916da216ef1e15b52dbafd0943",
+     "file": "dossier-shapes/a55c4782c355177437b8b067ac8bee84a6b951916da216ef1e15b52dbafd0943.brep",
+     "bbox": {
+      "min": [
+       -25.170313,
+       -25.50769,
+       134.98
+      ],
+      "max": [
+       -2.470313,
+       -2.80769,
+       157.68
+      ]
+     },
+     "volume_mm3": 6124.578337,
+     "solids": 1,
+     "valid": true
+    },
+    {
+     "key": "ball#8",
+     "sha256": "a996235308cccc98bded38b9d14263eec13402be1b913a8a455cf456c394f7ea",
+     "file": "dossier-shapes/a996235308cccc98bded38b9d14263eec13402be1b913a8a455cf456c394f7ea.brep",
+     "bbox": {
+      "min": [
+       -53.35,
+       17.67,
+       154.73
+      ],
+      "max": [
+       -30.65,
+       40.37,
+       177.43
+      ]
+     },
+     "volume_mm3": 6124.578337,
+     "solids": 1,
+     "valid": true
+    },
+    {
+     "key": "ball#9",
+     "sha256": "fa11222c233c9168ab4a6734aa679d21af8c9d3e6cd5992140930e0ffa5eca3f",
+     "file": "dossier-shapes/fa11222c233c9168ab4a6734aa679d21af8c9d3e6cd5992140930e0ffa5eca3f.brep",
+     "bbox": {
+      "min": [
+       -82.74,
+       12.97,
+       153.7
+      ],
+      "max": [
+       -60.04,
+       35.67,
+       176.4
+      ]
+     },
+     "volume_mm3": 6124.578337,
+     "solids": 1,
+     "valid": true
+    },
+    {
+     "key": "ball#10",
+     "sha256": "2d5e0259b190effb6819b4aac948720444062af4e364857eecbc650e650f7054",
+     "file": "dossier-shapes/2d5e0259b190effb6819b4aac948720444062af4e364857eecbc650e650f7054.brep",
+     "bbox": {
+      "min": [
+       -96.01,
+       -13.43,
+       153.7
+      ],
+      "max": [
+       -73.31,
+       9.27,
+       176.4
+      ]
+     },
+     "volume_mm3": 6124.578337,
+     "solids": 1,
+     "valid": true
+    },
+    {
+     "key": "ball#11",
+     "sha256": "fcb0b087a6f670b97c9555413802a81c551b0250fb2ad4f58e8b05ea9493135c",
+     "file": "dossier-shapes/fcb0b087a6f670b97c9555413802a81c551b0250fb2ad4f58e8b05ea9493135c.brep",
+     "bbox": {
+      "min": [
+       -82.67,
+       -37.96,
+       153.71
+      ],
+      "max": [
+       -59.97,
+       -15.26,
+       176.41
+      ]
+     },
+     "volume_mm3": 6124.578337,
+     "solids": 1,
+     "valid": true
+    },
+    {
+     "key": "ball#12",
+     "sha256": "55be408654d5c8c6537583bf1e6627836694de530dc8389500edb564624783b5",
+     "file": "dossier-shapes/55be408654d5c8c6537583bf1e6627836694de530dc8389500edb564624783b5.brep",
+     "bbox": {
+      "min": [
+       -57.58,
+       -42.73,
+       153.68
+      ],
+      "max": [
+       -34.88,
+       -20.03,
+       176.38
+      ]
+     },
+     "volume_mm3": 6124.578337,
+     "solids": 1,
+     "valid": true
+    },
+    {
+     "key": "ball#13",
+     "sha256": "58c9e448feaa4e7b179e2623e3e312f44a4e01495ac8aaab039981045ccab972",
+     "file": "dossier-shapes/58c9e448feaa4e7b179e2623e3e312f44a4e01495ac8aaab039981045ccab972.brep",
+     "bbox": {
+      "min": [
+       -31.41,
+       -15.76,
+       162.97
+      ],
+      "max": [
+       -8.71,
+       6.94,
+       185.67
+      ]
+     },
+     "volume_mm3": 6124.578337,
+     "solids": 1,
+     "valid": true
+    },
+    {
+     "key": "ball#14",
+     "sha256": "41d444fd5cf6ea169982ddfd9aed651b1129d4ddb96b657dbe522751cf4043f3",
+     "file": "dossier-shapes/41d444fd5cf6ea169982ddfd9aed651b1129d4ddb96b657dbe522751cf4043f3.brep",
+     "bbox": {
+      "min": [
+       -59.74,
+       -11.38,
+       178.7
+      ],
+      "max": [
+       -37.04,
+       11.32,
+       201.4
+      ]
+     },
+     "volume_mm3": 6124.578337,
+     "solids": 1,
+     "valid": true
+    },
+    {
+     "key": "ball#15",
+     "sha256": "c847bfbec6e6a7c2020505e5ac8c9ac382c7fb197b850f44181460fd25057ce3",
+     "file": "dossier-shapes/c847bfbec6e6a7c2020505e5ac8c9ac382c7fb197b850f44181460fd25057ce3.brep",
+     "bbox": {
+      "min": [
+       -70.05,
+       24.91,
+       168.18
+      ],
+      "max": [
+       -47.35,
+       47.61,
+       190.88
+      ]
+     },
+     "volume_mm3": 6124.578337,
+     "solids": 1,
+     "valid": true
+    },
+    {
+     "key": "ball#16",
+     "sha256": "b74f8fc4348bb35d1a3170c2bb61f101e1febdac1e4ec8cb0dd912c27f0d7f26",
+     "file": "dossier-shapes/b74f8fc4348bb35d1a3170c2bb61f101e1febdac1e4ec8cb0dd912c27f0d7f26.brep",
+     "bbox": {
+      "min": [
+       -94.59,
+       2.4,
+       169.85
+      ],
+      "max": [
+       -71.89,
+       25.1,
+       192.55
+      ]
+     },
+     "volume_mm3": 6124.578337,
+     "solids": 1,
+     "valid": true
+    },
+    {
+     "key": "ball#17",
+     "sha256": "ae100fa2038963e1ac1da6f65a5441607e6193897937746853381696a97df192",
+     "file": "dossier-shapes/ae100fa2038963e1ac1da6f65a5441607e6193897937746853381696a97df192.brep",
+     "bbox": {
+      "min": [
+       -93.32,
+       -27.86,
+       170.97
+      ],
+      "max": [
+       -70.62,
+       -5.16,
+       193.67
+      ]
+     },
+     "volume_mm3": 6124.578337,
+     "solids": 1,
+     "valid": true
+    },
+    {
+     "key": "ball#18",
+     "sha256": "4d1b80f468136bc89986f2b66aab77640348e422e7ad7bc87e2462f3e8d6e223",
+     "file": "dossier-shapes/4d1b80f468136bc89986f2b66aab77640348e422e7ad7bc87e2462f3e8d6e223.brep",
+     "bbox": {
+      "min": [
+       -70.85,
+       -44.38,
+       171.96
+      ],
+      "max": [
+       -48.15,
+       -21.68,
+       194.66
+      ]
+     },
+     "volume_mm3": 6124.578337,
+     "solids": 1,
+     "valid": true
+    },
+    {
+     "key": "ball#19",
+     "sha256": "d335ed92c315ba0d2a1f7f9dcad55955956efd9199cde8571721e43051ac1993",
+     "file": "dossier-shapes/d335ed92c315ba0d2a1f7f9dcad55955956efd9199cde8571721e43051ac1993.brep",
+     "bbox": {
+      "min": [
+       -33.85,
+       -38.6,
+       153.73
+      ],
+      "max": [
+       -11.15,
+       -15.9,
+       176.43
+      ]
+     },
+     "volume_mm3": 6124.578337,
+     "solids": 1,
+     "valid": true
+    },
+    {
+     "key": "ball#20",
+     "sha256": "880a6bec8fbdbd4ea4f3d3b2e35594e63f175f062498f10d7fa50655135bea3d",
+     "file": "dossier-shapes/880a6bec8fbdbd4ea4f3d3b2e35594e63f175f062498f10d7fa50655135bea3d.brep",
+     "bbox": {
+      "min": [
+       -25.93,
+       6.24,
+       162.69
+      ],
+      "max": [
+       -3.23,
+       28.94,
+       185.39
+      ]
+     },
+     "volume_mm3": 6124.578337,
+     "solids": 1,
+     "valid": true
+    },
+    {
+     "key": "ball#21",
+     "sha256": "aa980a937510d1d4938a71f4a3d5efb2ff9b556f49da05184d3c193ae86f8bfc",
+     "file": "dossier-shapes/aa980a937510d1d4938a71f4a3d5efb2ff9b556f49da05184d3c193ae86f8bfc.brep",
+     "bbox": {
+      "min": [
+       -55.09,
+       -32.18,
+       186.44
+      ],
+      "max": [
+       -32.39,
+       -9.48,
+       209.14
+      ]
+     },
+     "volume_mm3": 6124.578337,
+     "solids": 1,
+     "valid": true
+    },
+    {
+     "key": "ball#22",
+     "sha256": "961903f3d0ecc374a0619a9b48a08eeb7f1bd7d250b535659fdb556a58771565",
+     "file": "dossier-shapes/961903f3d0ecc374a0619a9b48a08eeb7f1bd7d250b535659fdb556a58771565.brep",
+     "bbox": {
+      "min": [
+       -84.38,
+       17.02,
+       183.85
+      ],
+      "max": [
+       -61.68,
+       39.72,
+       206.55
+      ]
+     },
+     "volume_mm3": 6124.578337,
+     "solids": 1,
+     "valid": true
+    },
+    {
+     "key": "ball#23",
+     "sha256": "0b058c1ec3ea98cc3ef3f6e7bf55e3732801c0ce33da9347d653c5fc70103888",
+     "file": "dossier-shapes/0b058c1ec3ea98cc3ef3f6e7bf55e3732801c0ce33da9347d653c5fc70103888.brep",
+     "bbox": {
+      "min": [
+       -97.1,
+       -12.25,
+       186.97
+      ],
+      "max": [
+       -74.4,
+       10.45,
+       209.67
+      ]
+     },
+     "volume_mm3": 6124.578337,
+     "solids": 1,
+     "valid": true
+    },
+    {
+     "key": "ball#24",
+     "sha256": "aa2730bb73cb6a6b40036fea1d51a6863a891230108757d3bf2eceb382e37f07",
+     "file": "dossier-shapes/aa2730bb73cb6a6b40036fea1d51a6863a891230108757d3bf2eceb382e37f07.brep",
+     "bbox": {
+      "min": [
+       -85.02,
+       -39.08,
+       188.84
+      ],
+      "max": [
+       -62.32,
+       -16.38,
+       211.54
+      ]
+     },
+     "volume_mm3": 6124.578337,
+     "solids": 1,
+     "valid": true
+    },
+    {
+     "key": "ball#25",
+     "sha256": "4699dac6fa06617aa04cb1693692fe4c14259588bc0d624636fe2761311679d5",
+     "file": "dossier-shapes/4699dac6fa06617aa04cb1693692fe4c14259588bc0d624636fe2761311679d5.brep",
+     "bbox": {
+      "min": [
+       -44.82,
+       -46.33,
+       172.03
+      ],
+      "max": [
+       -22.12,
+       -23.63,
+       194.73
+      ]
+     },
+     "volume_mm3": 6124.578337,
+     "solids": 1,
+     "valid": true
+    },
+    {
+     "key": "ball#26",
+     "sha256": "bdea7592bd92b077c2ab76decdfe7414ae5315d1a898706738fc663eca976003",
+     "file": "dossier-shapes/bdea7592bd92b077c2ab76decdfe7414ae5315d1a898706738fc663eca976003.brep",
+     "bbox": {
+      "min": [
+       -27.96,
+       -32.39,
+       177.98
+      ],
+      "max": [
+       -5.26,
+       -9.69,
+       200.68
+      ]
+     },
+     "volume_mm3": 6124.578337,
+     "solids": 1,
+     "valid": true
+    },
+    {
+     "key": "ball#27",
+     "sha256": "1575e8658be342954d0699c8f23d6faaa21ecc2e703ffb6b9c5e682dd8ef7736",
+     "file": "dossier-shapes/1575e8658be342954d0699c8f23d6faaa21ecc2e703ffb6b9c5e682dd8ef7736.brep",
+     "bbox": {
+      "min": [
+       -39.86,
+       21.11,
+       172.6
+      ],
+      "max": [
+       -17.16,
+       43.81,
+       195.3
+      ]
+     },
+     "volume_mm3": 6124.578337,
+     "solids": 1,
+     "valid": true
+    },
+    {
+     "key": "ball#28",
+     "sha256": "c14fb2d2a5e6be89c66ba9f2a8d1629fc885dbd30411d7ab3516ad782a250a8a",
+     "file": "dossier-shapes/c14fb2d2a5e6be89c66ba9f2a8d1629fc885dbd30411d7ab3516ad782a250a8a.brep",
+     "bbox": {
+      "min": [
+       -58.1,
+       11.05,
+       181.56
+      ],
+      "max": [
+       -35.4,
+       33.75,
+       204.26
+      ]
+     },
+     "volume_mm3": 6124.578337,
+     "solids": 1,
+     "valid": true
+    },
+    {
+     "key": "ball#29",
+     "sha256": "6c22cc806a08be1fed03f74955d1973bc44a77c972ee5cf304a54b033c96ccec",
+     "file": "dossier-shapes/6c22cc806a08be1fed03f74955d1973bc44a77c972ee5cf304a54b033c96ccec.brep",
+     "bbox": {
+      "min": [
+       -92.55,
+       4.85,
+       201.15
+      ],
+      "max": [
+       -69.85,
+       27.55,
+       223.85
+      ]
+     },
+     "volume_mm3": 6124.578337,
+     "solids": 1,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:129"
+  },
+  "stand_box": {
+   "section": "S8-stand",
+   "grounded": false,
+   "free": false,
+   "sha256": "a071617ab2ed33a314630f5d07d16ec1f3c3c9195714d845307e5365d1123f2d",
+   "count": 1,
+   "instances": [
+    {
+     "key": "stand_box",
+     "sha256": "c3b0496eec81fa90b3ba6ec5a8c4d500c77541901c6a460dafcb952c5a22cefe",
+     "file": "dossier-shapes/c3b0496eec81fa90b3ba6ec5a8c4d500c77541901c6a460dafcb952c5a22cefe.brep",
+     "bbox": {
+      "min": [
+       -100.0,
+       -100.0,
+       -236.0
+      ],
+      "max": [
+       100.0,
+       100.0,
+       -86.0
+      ]
+     },
+     "volume_mm3": 713781.398787,
+     "solids": 1,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:136"
+  },
+  "stand_bottom": {
+   "section": "S8-stand",
+   "grounded": false,
+   "free": false,
+   "sha256": "e09d29ff11d6a8543abc701a5072457e553aa02fdfd04126be62eb5afa7a0262",
+   "count": 1,
+   "instances": [
+    {
+     "key": "stand_bottom",
+     "sha256": "2859cd669858378186a5337791d25ed8e8dec58fa31b05a1bdb51b14d7d2f54c",
+     "file": "dossier-shapes/2859cd669858378186a5337791d25ed8e8dec58fa31b05a1bdb51b14d7d2f54c.brep",
+     "bbox": {
+      "min": [
+       -100.0,
+       -120.0,
+       -240.0
+      ],
+      "max": [
+       100.0,
+       120.0,
+       -232.0
+      ]
+     },
+     "volume_mm3": 173513.477911,
+     "solids": 1,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:136"
+  },
+  "stand_foot": {
+   "section": "S8-stand",
+   "grounded": false,
+   "free": false,
+   "sha256": "98191a546d4756534332ced119d648c93248743fb29995e338b7b43fb151e3a3",
+   "count": 4,
+   "instances": [
+    {
+     "key": "stand_foot#0",
+     "sha256": "765798c4312d1208813b9391bab6f802e632017eda81fa1a214d41354706c4da",
+     "file": "dossier-shapes/765798c4312d1208813b9391bab6f802e632017eda81fa1a214d41354706c4da.brep",
+     "bbox": {
+      "min": [
+       -83.6,
+       -83.6,
+       -244.1
+      ],
+      "max": [
+       -72.4,
+       -72.4,
+       -239.0
+      ]
+     },
+     "volume_mm3": 502.453763,
+     "solids": 1,
+     "valid": true
+    },
+    {
+     "key": "stand_foot#1",
+     "sha256": "3c94328497e334fe2bab51f825adc96e20678d1586932da30956a42040091c24",
+     "file": "dossier-shapes/3c94328497e334fe2bab51f825adc96e20678d1586932da30956a42040091c24.brep",
+     "bbox": {
+      "min": [
+       72.4,
+       -83.6,
+       -244.1
+      ],
+      "max": [
+       83.6,
+       -72.4,
+       -239.0
+      ]
+     },
+     "volume_mm3": 502.453763,
+     "solids": 1,
+     "valid": true
+    },
+    {
+     "key": "stand_foot#2",
+     "sha256": "e953da1adfe197721f4be80d0c0031d6fd741a19753e59f4fee9fcad9d96a45f",
+     "file": "dossier-shapes/e953da1adfe197721f4be80d0c0031d6fd741a19753e59f4fee9fcad9d96a45f.brep",
+     "bbox": {
+      "min": [
+       -83.6,
+       72.4,
+       -244.1
+      ],
+      "max": [
+       -72.4,
+       83.6,
+       -239.0
+      ]
+     },
+     "volume_mm3": 502.453763,
+     "solids": 1,
+     "valid": true
+    },
+    {
+     "key": "stand_foot#3",
+     "sha256": "91bf952d3d3ec45557ad7c4610bc069cdfa3d2f250769ad8f846d54a3c4d75fb",
+     "file": "dossier-shapes/91bf952d3d3ec45557ad7c4610bc069cdfa3d2f250769ad8f846d54a3c4d75fb.brep",
+     "bbox": {
+      "min": [
+       72.4,
+       72.4,
+       -244.1
+      ],
+      "max": [
+       83.6,
+       83.6,
+       -239.0
+      ]
+     },
+     "volume_mm3": 502.453763,
+     "solids": 1,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:138"
+  },
+  "usb_can": {
+   "section": "S8-stand",
+   "grounded": false,
+   "free": false,
+   "sha256": "b761d735f07d8ad7da7d091c8bc919912801c7b95c28b742275596e2ef3a2a59",
+   "count": 1,
+   "instances": [
+    {
+     "key": "usb_can",
+     "sha256": "42c4cb107521a9360689d50414517caed97ec389ecc293aa98398077e84ad884",
+     "file": "dossier-shapes/42c4cb107521a9360689d50414517caed97ec389ecc293aa98398077e84ad884.brep",
+     "bbox": {
+      "min": [
+       -95.0,
+       -80.0,
+       -222.0
+      ],
+      "max": [
+       -45.0,
+       -60.0,
+       -210.0
+      ]
+     },
+     "volume_mm3": 12000.0,
+     "solids": 1,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:140"
+  },
+  "terminal_board": {
+   "section": "S8-stand",
+   "grounded": false,
+   "free": false,
+   "sha256": "67666b3fdb807dbce57e4afa6114c6ca38b55c8ba7bb7633f9fdfb2c90eac3a0",
+   "count": 1,
+   "instances": [
+    {
+     "key": "terminal_board",
+     "sha256": "862d5ed8b5dfc05e96d74e7ea9aad012e49d4785b4900b5ea74b6a7f0759534d",
+     "file": "dossier-shapes/862d5ed8b5dfc05e96d74e7ea9aad012e49d4785b4900b5ea74b6a7f0759534d.brep",
+     "bbox": {
+      "min": [
+       -40.0,
+       86.4,
+       -211.0
+      ],
+      "max": [
+       30.0,
+       88.0,
+       -161.0
+      ]
+     },
+     "volume_mm3": 5600.0,
+     "solids": 1,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:140"
+  },
+  "dock": {
+   "section": "S8-stand",
+   "grounded": false,
+   "free": false,
+   "sha256": "4068cbfc67316c664e32efb0ec99fa5d0a2d850a7dd0327e38ccdcd2a1d902bd",
+   "count": 1,
+   "instances": [
+    {
+     "key": "dock",
+     "sha256": "64f8a777930af22cb70a960871f389757c58699efa05b1f6a997155e468c94e9",
+     "file": "dossier-shapes/64f8a777930af22cb70a960871f389757c58699efa05b1f6a997155e468c94e9.brep",
+     "bbox": {
+      "min": [
+       -95.5,
+       -32.5,
+       -122.0
+      ],
+      "max": [
+       -15.5,
+       32.5,
+       -92.0
+      ]
+     },
+     "volume_mm3": 156000.0,
+     "solids": 1,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:140"
+  },
+  "pack": {
+   "section": "S8-stand",
+   "grounded": false,
+   "free": false,
+   "sha256": "285d29210161b581a30c97068d84a2b3b1c45d435a34d49e09f029c9b00d9091",
+   "count": 1,
+   "instances": [
+    {
+     "key": "pack",
+     "sha256": "2696437aeff8ec28495d5088ff88feb6902c75ee46790744a002b0c8ac62aed2",
+     "file": "dossier-shapes/2696437aeff8ec28495d5088ff88feb6902c75ee46790744a002b0c8ac62aed2.brep",
+     "bbox": {
+      "min": [
+       -98.0,
+       -46.0,
+       -232.0
+      ],
+      "max": [
+       59.0,
+       46.0,
+       -122.0
+      ]
+     },
+     "volume_mm3": 1588840.0,
+     "solids": 1,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:140"
+  },
+  "panel_switch": {
+   "section": "S8-stand",
+   "grounded": false,
+   "free": false,
+   "sha256": "b768900ad46adb3879ec16c1552ce414af83eadd92058baf693b18cb3fe17ba1",
+   "count": 1,
+   "instances": [
+    {
+     "key": "panel_switch",
+     "sha256": "3c11999fa6b562cf6f844cf21ad705da68343306a2b9b190ec0da4346138b6cd",
+     "file": "dossier-shapes/3c11999fa6b562cf6f844cf21ad705da68343306a2b9b190ec0da4346138b6cd.brep",
+     "bbox": {
+      "min": [
+       71.0,
+       -22.0,
+       -138.0
+      ],
+      "max": [
+       103.0,
+       2.0,
+       -114.0
+      ]
+     },
+     "volume_mm3": 18432.0,
+     "solids": 1,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:140"
+  },
+  "panel_pendant": {
+   "section": "S8-stand",
+   "grounded": false,
+   "free": false,
+   "sha256": "f2153382b455546032a8596a8f1e9026fc2f36210147364857d7d83b639009d8",
+   "count": 1,
+   "instances": [
+    {
+     "key": "panel_pendant",
+     "sha256": "90dd95e773e6c5ffd2b780c940b4a722f848b814d3cb694116398f21a10d7b7e",
+     "file": "dossier-shapes/90dd95e773e6c5ffd2b780c940b4a722f848b814d3cb694116398f21a10d7b7e.brep",
+     "bbox": {
+      "min": [
+       72.0,
+       53.75,
+       -132.25
+      ],
+      "max": [
+       103.0,
+       66.25,
+       -119.75
+      ]
+     },
+     "volume_mm3": 4843.75,
+     "solids": 1,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:140"
+  }
+ },
+ "cavities": {
+  "hopper_cavity": {
+   "part": "hopper",
+   "sha256": "51bb06a6711a5087972d6faab6b53922983617f761f6a715a1c759ba1cafcc99",
+   "file": "dossier-shapes/51bb06a6711a5087972d6faab6b53922983617f761f6a715a1c759ba1cafcc99.brep",
+   "bbox": {
+    "min": [
+     -97.1,
+     -49.1,
+     135.0
+    ],
+    "max": [
+     1.1,
+     49.1,
+     225.0
+    ]
+   },
+   "volume_mm3": 638369.00781,
+   "solids": 2,
+   "valid": true,
+   "declared_at": "cad/turret_dossier.py:131"
+  }
+ },
+ "joints": {
+  "I-pan": {
+   "kind": "revolute",
+   "moving": "pan_ring",
+   "fixed": "pan_bearing",
+   "axis": {
+    "origin": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "direction": [
+     0.0,
+     0.0,
+     1.0
+    ]
+   },
+   "range": [
+    -170.0,
+    170.0
+   ],
+   "unit": "deg",
+   "intended_contacts": [
+    [
+     "pan_bearing_inner",
+     "pan_bearing"
+    ],
+    [
+     "slip_ring_rotor",
+     "slip_ring"
+    ],
+    [
+     "pan_spacer",
+     "pan_bearing"
+    ],
+    [
+     "ring_coupling",
+     "slip_ring"
+    ]
+   ],
+   "samples": 35,
+   "declared_at": "cad/turret_dossier.py:143"
+  },
+  "I-tilt": {
+   "kind": "revolute",
+   "moving": "cartridge_body",
+   "fixed": "pan_ring",
+   "axis": {
+    "origin": [
+     0.0,
+     0.0,
+     140.0
+    ],
+    "direction": [
+     0.0,
+     1.0,
+     0.0
+    ]
+   },
+   "range": [
+    0.0,
+    25.0
+   ],
+   "unit": "deg",
+   "intended_contacts": [
+    [
+     "horn_boss",
+     "tilt_servo"
+    ],
+    [
+     "stop_lug",
+     "tilt_yoke"
+    ],
+    [
+     "shoulder_screw",
+     "tilt_yoke"
+    ],
+    [
+     "tilt_bearing_inner",
+     "tilt_bearing"
+    ],
+    [
+     "shoulder_screw",
+     "tilt_bearing"
+    ],
+    [
+     "pivot_spacer",
+     "tilt_bearing"
+    ],
+    [
+     "pivot_spacer",
+     "tilt_yoke"
+    ]
+   ],
+   "samples": 6,
+   "declared_at": "cad/turret_dossier.py:148"
+  },
+  "I-feed": {
+   "kind": "revolute",
+   "moving": "dial",
+   "fixed": "cartridge_body",
+   "axis": {
+    "origin": [
+     -48.0,
+     0.0,
+     125.0
+    ],
+    "direction": [
+     0.0,
+     0.0,
+     1.0
+    ]
+   },
+   "range": [
+    0.0,
+    90.0
+   ],
+   "unit": "deg",
+   "intended_contacts": [
+    [
+     "dial",
+     "feed_motor"
+    ]
+   ],
+   "samples": 16,
+   "declared_at": "cad/turret_dossier.py:154"
+  },
+  "I-wheel-l": {
+   "kind": "revolute",
+   "moving": "flywheel",
+   "fixed": "cartridge_body",
+   "axis": {
+    "origin": [
+     25.0,
+     25.81,
+     125.0
+    ],
+    "direction": [
+     0.0,
+     0.0,
+     1.0
+    ]
+   },
+   "range": [
+    0.0,
+    360.0
+   ],
+   "unit": "deg",
+   "intended_contacts": [
+    [
+     "flywheel",
+     "flywheel_motor_l"
+    ]
+   ],
+   "samples": 13,
+   "declared_at": "cad/turret_dossier.py:157"
+  },
+  "I-wheel-r": {
+   "kind": "revolute",
+   "moving": "flywheel_m",
+   "fixed": "cartridge_body",
+   "axis": {
+    "origin": [
+     25.0,
+     -25.81,
+     125.0
+    ],
+    "direction": [
+     0.0,
+     0.0,
+     1.0
+    ]
+   },
+   "range": [
+    0.0,
+    360.0
+   ],
+   "unit": "deg",
+   "intended_contacts": [
+    [
+     "flywheel_m",
+     "flywheel_motor_r"
+    ]
+   ],
+   "samples": 13,
+   "declared_at": "cad/turret_dossier.py:157"
+  },
+  "I-flap": {
+   "kind": "revolute",
+   "moving": "hopper_flap",
+   "fixed": "cartridge_body",
+   "axis": {
+    "origin": [
+     -87.0,
+     0.0,
+     231.0
+    ],
+    "direction": [
+     0.0,
+     1.0,
+     0.0
+    ]
+   },
+   "range": [
+    -70.0,
+    0.0
+   ],
+   "unit": "deg",
+   "intended_contacts": [
+    [
+     "hopper_flap",
+     "hopper_lid"
+    ]
+   ],
+   "samples": 8,
+   "declared_at": "cad/turret_dossier.py:159"
+  },
+  "I-pan-drive": {
+   "kind": "revolute",
+   "moving": "pan_pinion",
+   "fixed": "pan_servo",
+   "axis": {
+    "origin": [
+     -52.65,
+     0.0,
+     0.0
+    ],
+    "direction": [
+     0.0,
+     0.0,
+     1.0
+    ]
+   },
+   "range": [
+    0.0,
+    360.0
+   ],
+   "unit": "deg",
+   "intended_contacts": [
+    [
+     "pan_pinion",
+     "pan_servo"
+    ]
+   ],
+   "samples": 13,
+   "declared_at": "cad/turret_dossier.py:163"
+  },
+  "I-turntable": {
+   "kind": "fixed",
+   "moving": "pan_bearing_inner",
+   "fixed": "pan_ring",
+   "axis": {
+    "origin": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "direction": [
+     0.0,
+     0.0,
+     1.0
+    ]
+   },
+   "range": null,
+   "unit": "",
+   "intended_contacts": [],
+   "samples": null,
+   "declared_at": "cad/turret_dossier.py:167"
+  },
+  "I-spacer": {
+   "kind": "fixed",
+   "moving": "pan_spacer",
+   "fixed": "pan_bearing_inner",
+   "axis": {
+    "origin": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "direction": [
+     0.0,
+     0.0,
+     1.0
+    ]
+   },
+   "range": null,
+   "unit": "",
+   "intended_contacts": [],
+   "samples": null,
+   "declared_at": "cad/turret_dossier.py:167"
+  },
+  "I-circlip": {
+   "kind": "fixed",
+   "moving": "circlip_50",
+   "fixed": "pan_ring",
+   "axis": {
+    "origin": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "direction": [
+     0.0,
+     0.0,
+     1.0
+    ]
+   },
+   "range": null,
+   "unit": "",
+   "intended_contacts": [],
+   "samples": null,
+   "declared_at": "cad/turret_dossier.py:167"
+  },
+  "I-yoke": {
+   "kind": "fixed",
+   "moving": "tilt_yoke",
+   "fixed": "pan_ring",
+   "axis": {
+    "origin": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "direction": [
+     0.0,
+     0.0,
+     1.0
+    ]
+   },
+   "range": null,
+   "unit": "",
+   "intended_contacts": [],
+   "samples": null,
+   "declared_at": "cad/turret_dossier.py:167"
+  },
+  "I-driver": {
+   "kind": "fixed",
+   "moving": "ring_driver",
+   "fixed": "pan_ring",
+   "axis": {
+    "origin": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "direction": [
+     0.0,
+     0.0,
+     1.0
+    ]
+   },
+   "range": null,
+   "unit": "",
+   "intended_contacts": [],
+   "samples": null,
+   "declared_at": "cad/turret_dossier.py:167"
+  },
+  "I-coupling": {
+   "kind": "fixed",
+   "moving": "ring_coupling",
+   "fixed": "ring_driver",
+   "axis": {
+    "origin": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "direction": [
+     0.0,
+     0.0,
+     1.0
+    ]
+   },
+   "range": null,
+   "unit": "",
+   "intended_contacts": [],
+   "samples": null,
+   "declared_at": "cad/turret_dossier.py:167"
+  },
+  "I-rotor": {
+   "kind": "fixed",
+   "moving": "slip_ring_rotor",
+   "fixed": "ring_coupling",
+   "axis": {
+    "origin": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "direction": [
+     0.0,
+     0.0,
+     1.0
+    ]
+   },
+   "range": null,
+   "unit": "",
+   "intended_contacts": [],
+   "samples": null,
+   "declared_at": "cad/turret_dossier.py:167"
+  },
+  "I-hall": {
+   "kind": "fixed",
+   "moving": "hall_switch",
+   "fixed": "pan_ring",
+   "axis": {
+    "origin": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "direction": [
+     0.0,
+     0.0,
+     1.0
+    ]
+   },
+   "range": null,
+   "unit": "",
+   "intended_contacts": [],
+   "samples": null,
+   "declared_at": "cad/turret_dossier.py:167"
+  },
+  "I-bay": {
+   "kind": "fixed",
+   "moving": "board_bay",
+   "fixed": "tilt_yoke",
+   "axis": {
+    "origin": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "direction": [
+     0.0,
+     0.0,
+     1.0
+    ]
+   },
+   "range": null,
+   "unit": "",
+   "intended_contacts": [],
+   "samples": null,
+   "declared_at": "cad/turret_dossier.py:167"
+  },
+  "I-bay-lid": {
+   "kind": "fixed",
+   "moving": "board_bay_lid",
+   "fixed": "board_bay",
+   "axis": {
+    "origin": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "direction": [
+     0.0,
+     0.0,
+     1.0
+    ]
+   },
+   "range": null,
+   "unit": "",
+   "intended_contacts": [],
+   "samples": null,
+   "declared_at": "cad/turret_dossier.py:167"
+  },
+  "I-boards": {
+   "kind": "fixed",
+   "moving": "turret_board",
+   "fixed": "board_bay",
+   "axis": {
+    "origin": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "direction": [
+     0.0,
+     0.0,
+     1.0
+    ]
+   },
+   "range": null,
+   "unit": "",
+   "intended_contacts": [],
+   "samples": null,
+   "declared_at": "cad/turret_dossier.py:167"
+  },
+  "I-tilt-servo": {
+   "kind": "fixed",
+   "moving": "tilt_servo",
+   "fixed": "tilt_yoke",
+   "axis": {
+    "origin": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "direction": [
+     0.0,
+     0.0,
+     1.0
+    ]
+   },
+   "range": null,
+   "unit": "",
+   "intended_contacts": [],
+   "samples": null,
+   "declared_at": "cad/turret_dossier.py:167"
+  },
+  "I-tilt-outer": {
+   "kind": "fixed",
+   "moving": "tilt_bearing",
+   "fixed": "tilt_yoke",
+   "axis": {
+    "origin": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "direction": [
+     0.0,
+     0.0,
+     1.0
+    ]
+   },
+   "range": null,
+   "unit": "",
+   "intended_contacts": [],
+   "samples": null,
+   "declared_at": "cad/turret_dossier.py:167"
+  },
+  "I-ct": {
+   "kind": "fixed",
+   "moving": "cradle",
+   "fixed": "cartridge_body",
+   "axis": {
+    "origin": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "direction": [
+     0.0,
+     0.0,
+     1.0
+    ]
+   },
+   "range": null,
+   "unit": "",
+   "intended_contacts": [],
+   "samples": null,
+   "declared_at": "cad/turret_dossier.py:167"
+  },
+  "I-plate-l": {
+   "kind": "fixed",
+   "moving": "cradle_plate_l",
+   "fixed": "cradle",
+   "axis": {
+    "origin": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "direction": [
+     0.0,
+     0.0,
+     1.0
+    ]
+   },
+   "range": null,
+   "unit": "",
+   "intended_contacts": [],
+   "samples": null,
+   "declared_at": "cad/turret_dossier.py:167"
+  },
+  "I-plate-r": {
+   "kind": "fixed",
+   "moving": "cradle_plate_r",
+   "fixed": "cradle",
+   "axis": {
+    "origin": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "direction": [
+     0.0,
+     0.0,
+     1.0
+    ]
+   },
+   "range": null,
+   "unit": "",
+   "intended_contacts": [],
+   "samples": null,
+   "declared_at": "cad/turret_dossier.py:167"
+  },
+  "I-horn-boss": {
+   "kind": "fixed",
+   "moving": "horn_boss",
+   "fixed": "cradle_plate_l",
+   "axis": {
+    "origin": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "direction": [
+     0.0,
+     0.0,
+     1.0
+    ]
+   },
+   "range": null,
+   "unit": "",
+   "intended_contacts": [],
+   "samples": null,
+   "declared_at": "cad/turret_dossier.py:167"
+  },
+  "I-pivot-spacer": {
+   "kind": "fixed",
+   "moving": "pivot_spacer",
+   "fixed": "cradle_plate_r",
+   "axis": {
+    "origin": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "direction": [
+     0.0,
+     0.0,
+     1.0
+    ]
+   },
+   "range": null,
+   "unit": "",
+   "intended_contacts": [],
+   "samples": null,
+   "declared_at": "cad/turret_dossier.py:167"
+  },
+  "I-shoulder": {
+   "kind": "fixed",
+   "moving": "shoulder_screw",
+   "fixed": "cradle_plate_r",
+   "axis": {
+    "origin": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "direction": [
+     0.0,
+     0.0,
+     1.0
+    ]
+   },
+   "range": null,
+   "unit": "",
+   "intended_contacts": [],
+   "samples": null,
+   "declared_at": "cad/turret_dossier.py:167"
+  },
+  "I-tilt-inner": {
+   "kind": "fixed",
+   "moving": "tilt_bearing_inner",
+   "fixed": "shoulder_screw",
+   "axis": {
+    "origin": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "direction": [
+     0.0,
+     0.0,
+     1.0
+    ]
+   },
+   "range": null,
+   "unit": "",
+   "intended_contacts": [],
+   "samples": null,
+   "declared_at": "cad/turret_dossier.py:167"
+  },
+  "I-stop-lug": {
+   "kind": "fixed",
+   "moving": "stop_lug",
+   "fixed": "cradle_plate_r",
+   "axis": {
+    "origin": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "direction": [
+     0.0,
+     0.0,
+     1.0
+    ]
+   },
+   "range": null,
+   "unit": "",
+   "intended_contacts": [],
+   "samples": null,
+   "declared_at": "cad/turret_dossier.py:167"
+  },
+  "I-thumbscrew": {
+   "kind": "fixed",
+   "moving": "ct_thumbscrew",
+   "fixed": "cradle",
+   "axis": {
+    "origin": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "direction": [
+     0.0,
+     0.0,
+     1.0
+    ]
+   },
+   "range": null,
+   "unit": "",
+   "intended_contacts": [],
+   "samples": null,
+   "declared_at": "cad/turret_dossier.py:167"
+  },
+  "I-hopper-inserts": {
+   "kind": "fixed",
+   "moving": "hopper_inserts",
+   "fixed": "cartridge_body",
+   "axis": {
+    "origin": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "direction": [
+     0.0,
+     0.0,
+     1.0
+    ]
+   },
+   "range": null,
+   "unit": "",
+   "intended_contacts": [],
+   "samples": null,
+   "declared_at": "cad/turret_dossier.py:167"
+  },
+  "I-lid": {
+   "kind": "fixed",
+   "moving": "hopper_lid",
+   "fixed": "hopper",
+   "axis": {
+    "origin": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "direction": [
+     0.0,
+     0.0,
+     1.0
+    ]
+   },
+   "range": null,
+   "unit": "",
+   "intended_contacts": [],
+   "samples": null,
+   "declared_at": "cad/turret_dossier.py:167"
+  },
+  "I-barrel": {
+   "kind": "fixed",
+   "moving": "barrel",
+   "fixed": "cartridge_body",
+   "axis": {
+    "origin": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "direction": [
+     0.0,
+     0.0,
+     1.0
+    ]
+   },
+   "range": null,
+   "unit": "",
+   "intended_contacts": [],
+   "samples": null,
+   "declared_at": "cad/turret_dossier.py:167"
+  },
+  "I-laser-inserts": {
+   "kind": "fixed",
+   "moving": "laser_inserts",
+   "fixed": "cartridge_body",
+   "axis": {
+    "origin": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "direction": [
+     0.0,
+     0.0,
+     1.0
+    ]
+   },
+   "range": null,
+   "unit": "",
+   "intended_contacts": [],
+   "samples": null,
+   "declared_at": "cad/turret_dossier.py:167"
+  },
+  "I-set-screws": {
+   "kind": "fixed",
+   "moving": "laser_screws",
+   "fixed": "laser_mount",
+   "axis": {
+    "origin": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "direction": [
+     0.0,
+     0.0,
+     1.0
+    ]
+   },
+   "range": null,
+   "unit": "",
+   "intended_contacts": [],
+   "samples": null,
+   "declared_at": "cad/turret_dossier.py:167"
+  },
+  "I-laser": {
+   "kind": "fixed",
+   "moving": "laser",
+   "fixed": "laser_screws",
+   "axis": {
+    "origin": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "direction": [
+     0.0,
+     0.0,
+     1.0
+    ]
+   },
+   "range": null,
+   "unit": "",
+   "intended_contacts": [],
+   "samples": null,
+   "declared_at": "cad/turret_dossier.py:167"
+  },
+  "I-feed-servo": {
+   "kind": "fixed",
+   "moving": "feed_motor",
+   "fixed": "cartridge_body",
+   "axis": {
+    "origin": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "direction": [
+     0.0,
+     0.0,
+     1.0
+    ]
+   },
+   "range": null,
+   "unit": "",
+   "intended_contacts": [],
+   "samples": null,
+   "declared_at": "cad/turret_dossier.py:167"
+  },
+  "I-motor-l": {
+   "kind": "fixed",
+   "moving": "flywheel_motor_l",
+   "fixed": "cartridge_body",
+   "axis": {
+    "origin": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "direction": [
+     0.0,
+     0.0,
+     1.0
+    ]
+   },
+   "range": null,
+   "unit": "",
+   "intended_contacts": [],
+   "samples": null,
+   "declared_at": "cad/turret_dossier.py:167"
+  },
+  "I-motor-r": {
+   "kind": "fixed",
+   "moving": "flywheel_motor_r",
+   "fixed": "cartridge_body",
+   "axis": {
+    "origin": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "direction": [
+     0.0,
+     0.0,
+     1.0
+    ]
+   },
+   "range": null,
+   "unit": "",
+   "intended_contacts": [],
+   "samples": null,
+   "declared_at": "cad/turret_dossier.py:167"
+  },
+  "I-esc-l": {
+   "kind": "fixed",
+   "moving": "esc_l",
+   "fixed": "cartridge_body",
+   "axis": {
+    "origin": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "direction": [
+     0.0,
+     0.0,
+     1.0
+    ]
+   },
+   "range": null,
+   "unit": "",
+   "intended_contacts": [],
+   "samples": null,
+   "declared_at": "cad/turret_dossier.py:167"
+  },
+  "I-esc-r": {
+   "kind": "fixed",
+   "moving": "esc_r",
+   "fixed": "cartridge_body",
+   "axis": {
+    "origin": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "direction": [
+     0.0,
+     0.0,
+     1.0
+    ]
+   },
+   "range": null,
+   "unit": "",
+   "intended_contacts": [],
+   "samples": null,
+   "declared_at": "cad/turret_dossier.py:167"
+  },
+  "I-cart-board": {
+   "kind": "fixed",
+   "moving": "cartridge_board",
+   "fixed": "cartridge_body",
+   "axis": {
+    "origin": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "direction": [
+     0.0,
+     0.0,
+     1.0
+    ]
+   },
+   "range": null,
+   "unit": "",
+   "intended_contacts": [],
+   "samples": null,
+   "declared_at": "cad/turret_dossier.py:167"
+  },
+  "I-pile": {
+   "kind": "fixed",
+   "moving": "ball",
+   "fixed": "hopper",
+   "axis": {
+    "origin": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "direction": [
+     0.0,
+     0.0,
+     1.0
+    ]
+   },
+   "range": null,
+   "unit": "",
+   "intended_contacts": [],
+   "samples": null,
+   "declared_at": "cad/turret_dossier.py:167"
+  },
+  "I-tyre-l": {
+   "kind": "fixed",
+   "moving": "flywheel_tyre",
+   "fixed": "flywheel",
+   "axis": {
+    "origin": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "direction": [
+     0.0,
+     0.0,
+     1.0
+    ]
+   },
+   "range": null,
+   "unit": "",
+   "intended_contacts": [],
+   "samples": null,
+   "declared_at": "cad/turret_dossier.py:167"
+  },
+  "I-tyre-r": {
+   "kind": "fixed",
+   "moving": "flywheel_tyre_m",
+   "fixed": "flywheel_m",
+   "axis": {
+    "origin": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "direction": [
+     0.0,
+     0.0,
+     1.0
+    ]
+   },
+   "range": null,
+   "unit": "",
+   "intended_contacts": [],
+   "samples": null,
+   "declared_at": "cad/turret_dossier.py:167"
+  }
+ },
+ "fasteners": {
+  "laser_foot_screws": {
+   "key": "turret_screw_m3x10",
+   "clamps": "laser_mount",
+   "into": "laser_inserts",
+   "via": "I-laser-foot",
+   "tool": "hex 2.5",
+   "length_mm": 10.0,
+   "diameter_mm": 3.0,
+   "thread_start_mm": 6.0,
+   "thread_depth_mm": 5.7,
+   "count": 2,
+   "instances": [
+    {
+     "key": "laser_foot_screws#0",
+     "origin": [
+      60.0,
+      7.0,
+      153.6
+     ],
+     "direction": [
+      0.0,
+      0.0,
+      -1.0
+     ],
+     "sha256": "3c0dd637cd5a80403a4b068ebdc698af1f87445043ba2da9ca697047c6c8c259",
+     "file": "dossier-shapes/3c0dd637cd5a80403a4b068ebdc698af1f87445043ba2da9ca697047c6c8c259.brep",
+     "bbox": {
+      "min": [
+       57.25,
+       4.25,
+       143.6
+      ],
+      "max": [
+       62.75,
+       9.75,
+       156.6
+      ]
+     },
+     "volume_mm3": 141.960718,
+     "solids": 1,
+     "valid": true
+    },
+    {
+     "key": "laser_foot_screws#1",
+     "origin": [
+      60.0,
+      -7.0,
+      153.6
+     ],
+     "direction": [
+      0.0,
+      0.0,
+      -1.0
+     ],
+     "sha256": "22a833d5c5aaf1a0a70eb5b84ce48ec62e59af031f2c8af4bd4824faf59843f5",
+     "file": "dossier-shapes/22a833d5c5aaf1a0a70eb5b84ce48ec62e59af031f2c8af4bd4824faf59843f5.brep",
+     "bbox": {
+      "min": [
+       57.25,
+       -9.75,
+       143.6
+      ],
+      "max": [
+       62.75,
+       -4.25,
+       156.6
+      ]
+     },
+     "volume_mm3": 141.960718,
+     "solids": 1,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:171"
+  },
+  "hopper_screws": {
+   "key": "turret_screw_m3x8",
+   "clamps": "hopper",
+   "into": "hopper_inserts",
+   "via": "I-hopper-lugs",
+   "tool": "hex 2.5",
+   "length_mm": 8.0,
+   "diameter_mm": 3.0,
+   "thread_start_mm": 3.0,
+   "thread_depth_mm": 5.7,
+   "count": 3,
+   "instances": [
+    {
+     "key": "hopper_screws#0",
+     "origin": [
+      7.1,
+      0.0,
+      163.0
+     ],
+     "direction": [
+      0.0,
+      0.0,
+      -1.0
+     ],
+     "sha256": "fab9e1969782f5cda82028cbc7e3a59af4543c16754e5fff7d245cb8ffee346f",
+     "file": "dossier-shapes/fab9e1969782f5cda82028cbc7e3a59af4543c16754e5fff7d245cb8ffee346f.brep",
+     "bbox": {
+      "min": [
+       4.35,
+       -2.75,
+       155.0
+      ],
+      "max": [
+       9.85,
+       2.75,
+       166.0
+      ]
+     },
+     "volume_mm3": 127.823551,
+     "solids": 1,
+     "valid": true
+    },
+    {
+     "key": "hopper_screws#1",
+     "origin": [
+      -86.961584,
+      38.961584,
+      163.0
+     ],
+     "direction": [
+      0.0,
+      0.0,
+      -1.0
+     ],
+     "sha256": "537dac9d53ce6acd0e02823ba4518eff0b90bbb7d05d916acbd9b1f396ae9fa1",
+     "file": "dossier-shapes/537dac9d53ce6acd0e02823ba4518eff0b90bbb7d05d916acbd9b1f396ae9fa1.brep",
+     "bbox": {
+      "min": [
+       -89.711584,
+       36.211584,
+       155.0
+      ],
+      "max": [
+       -84.211584,
+       41.711584,
+       166.0
+      ]
+     },
+     "volume_mm3": 127.823551,
+     "solids": 1,
+     "valid": true
+    },
+    {
+     "key": "hopper_screws#2",
+     "origin": [
+      -86.961584,
+      -38.961584,
+      163.0
+     ],
+     "direction": [
+      0.0,
+      0.0,
+      -1.0
+     ],
+     "sha256": "492752e11b66888f51c57344cdc8dc6268e3bd1d41658cfbe1ad8abb4df3f599",
+     "file": "dossier-shapes/492752e11b66888f51c57344cdc8dc6268e3bd1d41658cfbe1ad8abb4df3f599.brep",
+     "bbox": {
+      "min": [
+       -89.711584,
+       -41.711584,
+       155.0
+      ],
+      "max": [
+       -84.211584,
+       -36.211584,
+       166.0
+      ]
+     },
+     "volume_mm3": 127.823551,
+     "solids": 1,
+     "valid": true
+    }
+   ],
+   "declared_at": "cad/turret_dossier.py:171"
+  }
+ },
+ "assembly": {
+  "steps": [
+   {
+    "order": 1,
+    "fit": "stand_box",
+    "onto": [],
+    "direction": "-Z",
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 2,
+    "fit": "dock",
+    "onto": [
+     "stand_box"
+    ],
+    "direction": "+Z",
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 3,
+    "fit": "terminal_board",
+    "onto": [
+     "stand_box"
+    ],
+    "direction": "+Y",
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 4,
+    "fit": "panel_switch",
+    "onto": [
+     "stand_box"
+    ],
+    "direction": "-X",
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 5,
+    "fit": "panel_pendant",
+    "onto": [
+     "stand_box"
+    ],
+    "direction": "-X",
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 6,
+    "fit": "usb_can",
+    "onto": [
+     "stand_box"
+    ],
+    "direction": "+Z",
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 7,
+    "fit": "stand_bottom",
+    "onto": [
+     "stand_box"
+    ],
+    "direction": "+Z",
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 8,
+    "fit": "stand_foot",
+    "onto": [
+     "stand_bottom"
+    ],
+    "direction": "+Z",
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 9,
+    "fit": "pack",
+    "onto": [
+     "stand_bottom"
+    ],
+    "direction": "+X",
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 10,
+    "fit": "compute_tray",
+    "onto": [
+     "stand_box"
+    ],
+    "direction": "-Z",
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 11,
+    "fit": "compute",
+    "onto": [
+     "compute_tray"
+    ],
+    "direction": "-Z",
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 12,
+    "fit": "input_fuses",
+    "onto": [
+     "compute_tray"
+    ],
+    "direction": "-Z",
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 13,
+    "fit": "compute_shell",
+    "onto": [
+     "compute_tray"
+    ],
+    "direction": "-Z",
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 14,
+    "fit": "eth_jack",
+    "onto": [
+     "compute_shell"
+    ],
+    "direction": "+X",
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 15,
+    "fit": "xt30_input",
+    "onto": [
+     "compute_shell"
+    ],
+    "direction": "+X",
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 16,
+    "fit": "pan_base",
+    "onto": [
+     "compute_shell"
+    ],
+    "direction": "-Z",
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 17,
+    "fit": "ring_carrier",
+    "onto": [
+     "pan_base"
+    ],
+    "direction": "-Z",
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 18,
+    "fit": "slip_ring",
+    "onto": [
+     "ring_carrier"
+    ],
+    "direction": "-Z",
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 19,
+    "fit": "base_board",
+    "onto": [
+     "pan_base"
+    ],
+    "direction": "-Z",
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 20,
+    "fit": "dt_receptacle",
+    "onto": [
+     "pan_base"
+    ],
+    "direction": "+Y",
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 21,
+    "fit": "pan_servo",
+    "onto": [
+     "pan_base"
+    ],
+    "direction": "-Z",
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 22,
+    "fit": "pan_bearing",
+    "onto": [
+     "pan_base"
+    ],
+    "direction": "-Z",
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 23,
+    "fit": "index_magnet",
+    "onto": [
+     "pan_base"
+    ],
+    "direction": "-Z",
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 24,
+    "fit": "pan_clamp",
+    "onto": [
+     "pan_base"
+    ],
+    "direction": "-Z",
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 25,
+    "fit": "bumper_ring",
+    "onto": [
+     "pan_base"
+    ],
+    "direction": "-Z",
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 26,
+    "fit": "hall_switch",
+    "onto": [
+     "pan_base"
+    ],
+    "direction": "-Z",
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 27,
+    "fit": "pan_ring",
+    "onto": [
+     "pan_bearing"
+    ],
+    "direction": "-Z",
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 28,
+    "fit": "pan_bearing_inner",
+    "onto": [
+     "pan_ring"
+    ],
+    "direction": "-Z",
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 29,
+    "fit": "pan_spacer",
+    "onto": [
+     "pan_bearing_inner"
+    ],
+    "direction": "+Z",
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 30,
+    "fit": "circlip_50",
+    "onto": [
+     "pan_ring"
+    ],
+    "direction": "+Z",
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 31,
+    "fit": "slip_ring_rotor",
+    "onto": [
+     "slip_ring"
+    ],
+    "direction": "-Z",
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 32,
+    "fit": "ring_coupling",
+    "onto": [
+     "slip_ring_rotor"
+    ],
+    "direction": "-Z",
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 33,
+    "fit": "ring_driver",
+    "onto": [
+     "pan_ring"
+    ],
+    "direction": "-Z",
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 34,
+    "fit": "pan_pinion",
+    "onto": [
+     "pan_servo"
+    ],
+    "direction": "-Z",
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 35,
+    "fit": "tilt_yoke",
+    "onto": [
+     "pan_ring"
+    ],
+    "direction": "-Z",
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 36,
+    "fit": "tilt_bearing",
+    "onto": [
+     "tilt_yoke"
+    ],
+    "direction": "+Y",
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 37,
+    "fit": "tilt_servo",
+    "onto": [
+     "tilt_yoke"
+    ],
+    "direction": "-Y",
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 38,
+    "fit": "board_bay",
+    "onto": [
+     "tilt_yoke"
+    ],
+    "direction": "+Y",
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 39,
+    "fit": "turret_board",
+    "onto": [
+     "board_bay"
+    ],
+    "direction": "+Y",
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 40,
+    "fit": "board_bay_lid",
+    "onto": [
+     "board_bay"
+    ],
+    "direction": "+Y",
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 41,
+    "fit": "cradle",
+    "onto": [
+     "tilt_yoke"
+    ],
+    "direction": "-Z",
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 42,
+    "fit": "cradle_plate_l",
+    "onto": [
+     "cradle"
+    ],
+    "direction": "-Y",
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 43,
+    "fit": "horn_boss",
+    "onto": [
+     "cradle_plate_l"
+    ],
+    "direction": "+Y",
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 44,
+    "fit": "cradle_plate_r",
+    "onto": [
+     "cradle"
+    ],
+    "direction": "+Y",
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 45,
+    "fit": "stop_lug",
+    "onto": [
+     "cradle_plate_r"
+    ],
+    "direction": "+Y",
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 46,
+    "fit": "pivot_spacer",
+    "onto": [
+     "cradle_plate_r"
+    ],
+    "direction": "+Y",
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 47,
+    "fit": "tilt_bearing_inner",
+    "onto": [
+     "tilt_bearing"
+    ],
+    "direction": "+Y",
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 48,
+    "fit": "shoulder_screw",
+    "onto": [
+     "cradle_plate_r"
+    ],
+    "direction": "+Y",
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 49,
+    "fit": "ct_thumbscrew",
+    "onto": [
+     "cradle"
+    ],
+    "direction": "+Z",
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 50,
+    "fit": "cartridge_body",
+    "onto": [
+     "cradle"
+    ],
+    "direction": "-Z",
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 51,
+    "fit": "feed_motor",
+    "onto": [
+     "cartridge_body"
+    ],
+    "direction": "+Z",
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 52,
+    "fit": "flywheel_motor_l",
+    "onto": [
+     "cartridge_body"
+    ],
+    "direction": "+Z",
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 53,
+    "fit": "flywheel_motor_r",
+    "onto": [
+     "cartridge_body"
+    ],
+    "direction": "+Z",
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 54,
+    "fit": "flywheel",
+    "onto": [
+     "flywheel_motor_l"
+    ],
+    "direction": "+Z",
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 55,
+    "fit": "flywheel_tyre",
+    "onto": [
+     "flywheel"
+    ],
+    "direction": "+Z",
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 56,
+    "fit": "flywheel_m",
+    "onto": [
+     "flywheel_motor_r"
+    ],
+    "direction": "+Z",
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 57,
+    "fit": "flywheel_tyre_m",
+    "onto": [
+     "flywheel_m"
+    ],
+    "direction": "+Z",
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 58,
+    "fit": "dial",
+    "onto": [
+     "feed_motor"
+    ],
+    "direction": "-Z",
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 59,
+    "fit": "hopper_inserts",
+    "onto": [
+     "cartridge_body"
+    ],
+    "direction": "-Z",
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 60,
+    "fit": "hopper",
+    "onto": [
+     "cartridge_body"
+    ],
+    "direction": "-Z",
+    "tool": "hex 2.5",
+    "fasteners": [
+     "hopper_screws"
+    ],
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 61,
+    "fit": "ball",
+    "onto": [
+     "dial"
+    ],
+    "direction": "-Z",
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 62,
+    "fit": "hopper_lid",
+    "onto": [
+     "hopper"
+    ],
+    "direction": "-Z",
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 63,
+    "fit": "hopper_flap",
+    "onto": [
+     "hopper_lid"
+    ],
+    "direction": "-Z",
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 64,
+    "fit": "esc_l",
+    "onto": [
+     "cartridge_body"
+    ],
+    "direction": "-Z",
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 65,
+    "fit": "esc_r",
+    "onto": [
+     "cartridge_body"
+    ],
+    "direction": "-Z",
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 66,
+    "fit": "cartridge_board",
+    "onto": [
+     "cartridge_body"
+    ],
+    "direction": "-Z",
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 67,
+    "fit": "barrel",
+    "onto": [
+     "cartridge_body"
+    ],
+    "direction": "-X",
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 68,
+    "fit": "laser_inserts",
+    "onto": [
+     "cartridge_body"
+    ],
+    "direction": "-Z",
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 69,
+    "fit": "laser_mount",
+    "onto": [
+     "cartridge_body"
+    ],
+    "direction": "-Z",
+    "tool": "hex 2.5",
+    "fasteners": [
+     "laser_foot_screws"
+    ],
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 70,
+    "fit": "laser",
+    "onto": [
+     "laser_mount"
+    ],
+    "direction": "+X",
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 71,
+    "fit": "laser_screws",
+    "onto": [
+     "laser_mount"
+    ],
+    "direction": "-Z",
+    "declared_at": "cad/turret_dossier.py:177"
+   },
+   {
+    "order": 72,
+    "fit": "dt_plug",
+    "onto": [
+     "dt_receptacle"
+    ],
+    "direction": "+Y",
+    "declared_at": "cad/turret_dossier.py:177"
+   }
+  ]
+ },
+ "physical_fit_verified": false
+}

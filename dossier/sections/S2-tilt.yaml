@@ -1,0 +1,319 @@
+# The turret's dossier (cad-agent: docs/dossier.md in the toolkit). Hand-edited YAML; joined by id to the geometry
+# cad/turret_dossier.py registers (exports/dossier-geometry.json). The design story is docs/turret-sections.md.
+id: S2-tilt
+title: Tilt yoke and cradle
+purpose: Hold the cartridge on a horizontal axis over the pan axis and tilt it 0 to -25 deg off an STS3215, with hard stops
+  at both ends so the barrel never points above level
+requirements:
+- R3
+- R9
+- R10
+- R12
+- R13
+- R14
+author: turret-dossier agent
+interfaces:
+- id: I-tilt-servo
+  between:
+  - tilt_servo
+  - tilt_yoke
+  kind: fastened
+  datum: the +y arm's pocket
+  description: 4 x M2 x 10 from the arm's inner face, the case in a 34.9 mm pocket.
+  owner: S2-tilt
+- id: I-tilt-outer
+  between:
+  - tilt_bearing
+  - tilt_yoke
+  kind: press_fit
+  datum: the -y arm's Ø12 bore
+  description: The MR126's outer race pressed into the arm.
+  owner: S2-tilt
+- id: I-plate-l
+  between:
+  - cradle_plate_l
+  - cradle
+  kind: fastened
+  datum: the +y rail's 3.2 mm rebate
+  description: 4 x M3 x 8 button heads into the rail's inserts.
+  owner: S2-tilt
+- id: I-plate-r
+  between:
+  - cradle_plate_r
+  - cradle
+  kind: fastened
+  datum: the -y rail's 3.2 mm rebate
+  description: 4 x M3 x 8 button heads into the rail's inserts.
+  owner: S2-tilt
+- id: I-horn-boss
+  between:
+  - horn_boss
+  - cradle_plate_l
+  kind: fastened
+  datum: the +y plate's inner face
+  description: 4 x M3 x 14 flat heads through the plate and boss into the servo horn.
+  owner: S2-tilt
+- id: I-pivot-spacer
+  between:
+  - pivot_spacer
+  - cradle_plate_r
+  kind: contact
+  datum: the -y plate's inner face
+  description: Clamped between the plate and the MR126's inner race by the shoulder screw.
+  owner: S2-tilt
+- id: I-shoulder
+  between:
+  - shoulder_screw
+  - cradle_plate_r
+  kind: fastened
+  datum: the -y plate's tapped M5 hole
+  description: The ISO 7379 shoulder screw's M5 thread in the plate.
+  owner: S2-tilt
+- id: I-tilt-inner
+  between:
+  - tilt_bearing_inner
+  - shoulder_screw
+  kind: press_fit
+  datum: the shoulder, Ø6
+  description: The MR126's inner race on the Ø6 shoulder.
+  owner: S2-tilt
+- id: I-stop-lug
+  between:
+  - stop_lug
+  - cradle_plate_r
+  kind: fastened
+  datum: the -y plate's outer face
+  description: 2 x M3 x 6 flat heads from the plate's inner face into the lug's tapped holes, a drop of CA.
+  owner: S2-tilt
+- id: I-thumbscrew
+  between:
+  - ct_thumbscrew
+  - cradle
+  kind: fastened
+  datum: under the -y rail
+  description: 'The CT latch: the captive thumbscrew under the rail (0.34 mm^3 shared with the rail''s collar: an intended
+    overlap).'
+  owner: S2-tilt
+- id: I-pivot-land
+  between:
+  - pivot_spacer
+  - tilt_bearing_inner
+  kind: contact
+  datum: the Ø6.8 x 1 land
+  description: The spacer's land bears on the MR126's inner race.
+  owner: S2-tilt
+- id: I-pivot-shoulder
+  between:
+  - pivot_spacer
+  - shoulder_screw
+  kind: contact
+  datum: the shoulder's step
+  description: The spacer takes the shoulder screw's step.
+  owner: S2-tilt
+- id: I-tilt-stop
+  between:
+  - stop_lug
+  - tilt_yoke
+  kind: contact
+  datum: the yoke's stop sectors at 0 and -25 deg
+  description: 'The hard stop: the lug rests on the upper sector at 0 deg (the tilt joint''s intended contact).'
+  owner: S2-tilt
+- id: I-shoulder-arm
+  between:
+  - shoulder_screw
+  - tilt_yoke
+  kind: gap
+  datum: the -y arm's Ø6.5 hole
+  description: The Ø6 shoulder turns in the arm's hole, 0.25 mm clear.
+  owner: S2-tilt
+- id: I-horn
+  between:
+  - horn_boss
+  - tilt_servo
+  kind: other
+  datum: the tilt servo's horn, on the tilt axis
+  description: 'The tilt servo drives the cradle through the boss (torque, co-axial with I-tilt: not a joint of its own).'
+  owner: S2-tilt
+parts:
+- id: tilt_yoke
+  function: 'Holds the cradle on the tilt axis over the pan axis: the tilt servo on the +y arm, the MR126 in the -y arm, the
+    hard-stop sectors at 0 and -25 deg'
+  interfaces:
+  - I-yoke
+  - I-bay
+  - I-tilt-servo
+  - I-tilt-outer
+  - I-driver-yoke
+  - I-tilt-stop
+  - I-shoulder-arm
+  material:
+    name: PA6-CF
+    process: FDM
+    wall_mm: 0.8
+    print_axis: on its back (layers along the arms)
+  checks:
+  - gate:connectivity
+  - gate:assembly
+  - gate:motion
+  - turret-fea
+- id: cradle
+  function: 'The rail frame (D48): the rails the cartridge sits on (2 dowels and a thumbscrew), the rebates and inserts for
+    the two cheek plates'
+  interfaces:
+  - I-ct
+  - I-plate-l
+  - I-plate-r
+  - I-thumbscrew
+  material:
+    name: PA6-CF
+    process: FDM
+    wall_mm: 0.8
+    print_axis: +Z
+  checks:
+  - gate:connectivity
+  - gate:assembly
+  - gate:motion
+  - turret-fea
+- id: cradle_plate_l
+  function: 'The +y cheek plate: carries the cradle on the tilt servo''s horn through the horn boss'
+  interfaces:
+  - I-plate-l
+  - I-horn-boss
+  material: &id001
+    name: 6061-T6 aluminium 0.125 in
+    process: laser cut (SendCutSend)
+  checks:
+  - gate:connectivity
+  - gate:assembly
+  - gate:motion
+  - turret-fea
+- id: cradle_plate_r
+  function: 'The -y cheek plate: carries the cradle on the shoulder screw (tapped M5) and the stop lug'
+  interfaces:
+  - I-plate-r
+  - I-pivot-spacer
+  - I-shoulder
+  - I-stop-lug
+  material: *id001
+  checks:
+  - gate:connectivity
+  - gate:assembly
+  - gate:motion
+  - turret-fea
+- id: stop_lug
+  function: 'The tilt hard stop: rests on the yoke''s sectors at 0 and -25 deg, so the barrel never points above level'
+  interfaces:
+  - I-stop-lug
+  - I-tilt-stop
+  material:
+    name: 6061-T6 aluminium 0.100 in
+    process: laser cut (SendCutSend)
+  checks:
+  - gate:connectivity
+  - gate:assembly
+  - gate:motion
+  - turret-fea
+- id: horn_boss
+  function: Spaces the +y plate from the tilt servo's horn and carries the horn screws
+  interfaces:
+  - I-horn-boss
+  - I-horn
+  material: &id002
+    name: PA6-CF
+    process: FDM
+    wall_mm: 0.8
+  checks:
+  - gate:connectivity
+  - gate:assembly
+  - gate:motion
+- id: pivot_spacer
+  function: Spaces the -y plate from the MR126 and bears on its inner race
+  interfaces:
+  - I-pivot-spacer
+  - I-pivot-land
+  - I-pivot-shoulder
+  material: *id002
+  checks:
+  - gate:connectivity
+  - gate:assembly
+  - gate:motion
+- id: tilt_servo
+  function: 'Feetech STS3215 12 V: drives tilt directly off its horn'
+  interfaces:
+  - I-tilt-servo
+  - I-horn
+  material:
+    name: Feetech STS3215
+    process: bought
+  checks:
+  - gate:connectivity
+  - gate:assembly
+  - gate:motion
+- id: tilt_bearing
+  function: The MR126 (126-2Z) outer race and shields in the -y arm
+  interfaces:
+  - I-tilt-outer
+  material:
+    name: McMaster 7804K112
+    process: bought
+  checks:
+  - gate:connectivity
+  - gate:assembly
+  - gate:motion
+- id: tilt_bearing_inner
+  function: The MR126's inner race on the shoulder screw
+  interfaces:
+  - I-tilt-inner
+  - I-pivot-land
+  material:
+    name: McMaster 7804K112 (with tilt_bearing)
+    process: bought
+  checks:
+  - gate:connectivity
+  - gate:assembly
+  - gate:motion
+- id: shoulder_screw
+  function: 'The -y tilt pivot: ISO 7379 6 x 12, M5, through the MR126 and the spacer into the plate'
+  interfaces:
+  - I-shoulder
+  - I-tilt-inner
+  - I-pivot-shoulder
+  - I-shoulder-arm
+  material:
+    name: McMaster 92981A101
+    process: bought
+  checks:
+  - gate:connectivity
+  - gate:assembly
+  - gate:motion
+- id: ct_thumbscrew
+  function: 'The CT latch: holds the cartridge down on the rails (DIN 464 M4 x 12)'
+  interfaces:
+  - I-thumbscrew
+  material:
+    name: McMaster 92581A250
+    process: bought
+  checks:
+  - gate:connectivity
+  - gate:assembly
+  - gate:motion
+decisions:
+- id: T2.1
+  decision: Direct drive off the tilt servo's horn, no gears
+  why: The STS3215's 30 kg.cm holds the group's 0.11 N.m with margin (the box build's holding check)
+  alternatives:
+  - option: A gear stage
+    rejected: adds backlash at the muzzle
+- id: T2.2
+  decision: An aluminium stop lug against printed stop sectors (D48)
+  why: The lug takes the stall-torque impact in plane; the sectors are true arcs clipped to the arm with buttresses (FEA 2.14-2.36
+    layer-aware on the push case)
+  alternatives:
+  - option: A printed lug
+    rejected: the impact across a printed lug's layers; the aluminium lug is in the same SendCutSend cart
+- id: T2.3
+  decision: 10 mm rail feet (from 12)
+  why: 2.37 mm over the slip ring's rotor leads at full depression
+  alternatives:
+  - option: 12 mm feet
+    rejected: 0.37 mm over the rotor leads at full depression

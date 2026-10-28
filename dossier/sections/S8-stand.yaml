@@ -1,0 +1,212 @@
+# The turret's dossier (cad-agent: docs/dossier.md in the toolkit). Hand-edited YAML; joined by id to the geometry
+# cad/turret_dossier.py registers (exports/dossier-geometry.json). The design story is docs/turret-sections.md.
+id: S8-stand
+title: The stand and its battery (D66)
+purpose: Carry the turret on its own and power it from one FLEXVOLT pack, with the hold-to-run pendant, for the bench and
+  for play without Gyropup
+requirements:
+- R1
+- R9
+- R12
+- R14
+- R16
+author: turret-dossier agent
+interfaces:
+- id: I-stand-bottom
+  between:
+  - stand_bottom
+  - stand_box
+  kind: fastened
+  datum: the corner bosses
+  description: 4 x M3 x 8 into the corner bosses' inserts.
+  owner: S8-stand
+- id: I-feet
+  between:
+  - stand_foot
+  - stand_bottom
+  kind: bonded
+  datum: the bottom's four recesses
+  description: 3M SJ5003 bumper feet in 1 mm recesses.
+  owner: S8-stand
+- id: I-dock
+  between:
+  - dock
+  - stand_box
+  kind: fastened
+  datum: under the top plate, at the back
+  description: The 20 V MAX dock adapter on 2 x M3 under the top plate.
+  owner: S8-stand
+- id: I-pack-dock
+  between:
+  - pack
+  - dock
+  kind: snap_fit
+  datum: the dock's rails
+  description: The DCB609 slides onto the dock as onto a drill.
+  owner: S8-stand
+- id: I-pack-ribs
+  between:
+  - pack
+  - stand_bottom
+  kind: contact
+  datum: the floor's two ribs
+  description: The pack rests on two ribs on the floor.
+  owner: S8-stand
+- id: I-terminal
+  between:
+  - terminal_board
+  - stand_box
+  kind: fastened
+  datum: the +y wall
+  description: The terminal board on 4 x M3 into the wall's bosses.
+  owner: S8-stand
+- id: I-usb-can
+  between:
+  - usb_can
+  - stand_box
+  kind: fastened
+  datum: the back wall's USB-C slot
+  description: 'The USB-CAN adapter beside the pack, its USB-C at the back wall''s slot. Open: drawn 1.0 mm off the wall and
+    14 mm over the floor, with no mount (the connectivity gate finds it floating).'
+  owner: S8-stand
+- id: I-switch
+  between:
+  - panel_switch
+  - stand_box
+  kind: snap_fit
+  datum: the front panel's Ø20.2 hole
+  description: 'The rocker snapped into the front panel (D70 replaces it with a Blue Sea 6006: open).'
+  owner: S8-stand
+- id: I-pendant
+  between:
+  - panel_pendant
+  - stand_box
+  kind: fastened
+  datum: the front panel
+  description: The pendant's TB3M socket in the front panel.
+  owner: S8-stand
+parts:
+- id: stand_box
+  function: 'The stand: the TM pattern on its top plate, the walls, the front panel, the dock and the boards inside'
+  interfaces:
+  - I-stand-tm
+  - I-stand-bottom
+  - I-dock
+  - I-terminal
+  - I-usb-can
+  - I-switch
+  - I-pendant
+  material:
+    name: PETG
+    process: FDM
+    wall_mm: 0.8
+    print_axis: -Z
+  checks:
+  - gate:connectivity
+  - gate:assembly
+- id: stand_bottom
+  function: Closes the stand; the feet, the clamp tabs and the ribs the pack rests on
+  interfaces:
+  - I-stand-bottom
+  - I-feet
+  - I-pack-ribs
+  material:
+    name: PETG
+    process: FDM
+    wall_mm: 0.8
+    print_axis: +Z
+  checks:
+  - gate:connectivity
+  - gate:assembly
+- id: stand_foot
+  function: Four rubber bumper feet
+  interfaces:
+  - I-feet
+  material:
+    name: 3M SJ5003
+    process: bought
+  checks:
+  - gate:connectivity
+  - gate:assembly
+- id: dock
+  function: The DeWalt 20 V MAX dock adapter the pack slides onto
+  interfaces:
+  - I-dock
+  - I-pack-dock
+  material:
+    name: 20 V MAX dock adapter, 12 AWG
+    process: bought
+  checks:
+  - gate:connectivity
+  - gate:assembly
+- id: pack
+  function: 'The stand''s battery: one DCB609 FLEXVOLT in 20 V mode (15-20.5 V)'
+  interfaces:
+  - I-pack-dock
+  - I-pack-ribs
+  material:
+    name: DeWalt DCB609
+    process: bought
+  checks:
+  - gate:connectivity
+  - gate:assembly
+- id: terminal_board
+  function: The pack's fuse and switch to the XT30 lead; the pendant's loop to the safety line
+  interfaces:
+  - I-terminal
+  material:
+    name: terminal board
+    process: bought
+  checks:
+  - gate:connectivity
+  - gate:assembly
+- id: usb_can
+  function: The laptop's CAN link to the turret's MCU
+  interfaces:
+  - I-usb-can
+  material:
+    name: CANable 2.0 class adapter
+    process: bought
+  checks:
+  - gate:connectivity
+  - gate:assembly
+- id: panel_switch
+  function: 'The stand''s power switch (the Bulgin rocker; D70: a Blue Sea 6006)'
+  interfaces:
+  - I-switch
+  material:
+    name: Bulgin R13244AAAA
+    process: bought
+  checks:
+  - gate:connectivity
+  - gate:assembly
+- id: panel_pendant
+  function: The hold-to-run pendant's socket (TB3M mini-XLR)
+  interfaces:
+  - I-pendant
+  material:
+    name: TB3M panel socket
+    process: bought
+  checks:
+  - gate:connectivity
+  - gate:assembly
+decisions:
+- id: T8.1
+  decision: The DCB609 slides into the stand's back onto a 20 V MAX dock fixed under the top plate, and rests on two ribs
+  why: As onto a drill; the pack stays inside the stand's footprint
+  alternatives:
+  - option: The dock on the top plate behind the turret
+    rejected: in the barrel's arc at pan 180, and the turret then stands on a narrower stand
+  - option: A 24 V mains supply
+    rejected: the turret is meant to run untethered
+- id: T8.2
+  status: open
+  decision: The stand's power switch is a Blue Sea 6006 battery switch (D70); its panel cut-out and screw holes are drawn
+    from Blue Sea's dimensioned drawing when the switch arrives. The model still has the Bulgin rocker (panel_switch) and
+    its Ø20.2 hole
+  why: bluesea.com refuses a plain fetch; the cut-out is not to be guessed from a box
+- id: T8.3
+  status: open
+  decision: 'Mount the USB-CAN adapter: it is drawn 1.0 mm off the back wall and 14 mm over the floor with nothing holding
+    it (the connectivity gate)'
+  why: Found by the dossier's first connectivity run (2026-10-28)
