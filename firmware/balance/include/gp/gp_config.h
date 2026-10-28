@@ -40,7 +40,7 @@
 #define GP_JUMP_MIN_V 44.0f             /* no jump below 44 V resting: 80 A x 0.112 ohm leaves 35 V */
 #define GP_JUMP_FLOOR_V 35.0f           /* the bus floor in the push: the DDR-120C-24 needs 33.6 V */
 #define GP_JUMP_FULL_V 48.1f            /* the full jump at and above the nominal pack */
-#define GP_JUMP_V_MAX 2.3f              /* m/s: the full jump's take-off speed (the push stops on reaching it) */
+#define GP_JUMP_V_MAX 3.2f              /* m/s: above the full push (it ends at 310 mm, as the simulation's); scaled by s(V) it caps the push */
 #define GP_VBUS_TIMEOUT_US 50000u       /* no bus voltage reading for this long: sit, refuse to stand */
 
 /* ---------------------------------------------------------------- the Jetson link and people near (D63) */
@@ -57,7 +57,7 @@
 /* ---------------------------------------------------------------- sitting */
 #define GP_SIT_FAST_S 0.3f              /* the radio stop: down in 0.3 s (B13: torque off and sat within 0.5 s) */
 #define GP_SIT_NORMAL_S 1.0f            /* UVLO, link lost, people near, the Jetson's sit */
-#define GP_SETTLE_S 0.3f                /* at the bottom: the feed-forward fades to zero, then the motors stop */
+#define GP_SETTLE_S 0.15f               /* at the bottom: the feed-forward fades to zero, then the motors stop */
 #define GP_SIT_L_ROBOT_M 0.110f         /* m: near the stops (25 mm under the skids at 101.5 mm) */
 #define GP_SIT_L_RIG_M 0.150f           /* m: the rig's sit-down (rig Limits.sit_to) */
 
