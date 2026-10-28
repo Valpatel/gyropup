@@ -425,6 +425,11 @@ STOP_EAR_BACK = 40.0                             # mm: the knee-out posts' ears 
 STOP_EAR_CLEAR = 66.0                            # ... outside this radius from the motor's axis (its case is Ø120)
 STOP_EAR_FILLET = 3.5                            # ... that face rounded into the web's back face (to 2.5 mm off the motor)
 STOP_EAR_CORNER = True                           # the knee-out lobe also blended into the flange's corner
+FLANGE_ROOT_FILLET = 6.0                         # mm: the flanges' roots on the web's motor side (the frame's turn-case
+                                                 # peak, E1, sat in that corner at the flanges' ends)
+FLANGE_FILLET_CLEAR = 61.5                       # ... trimmed to this radius round each motor's axis (its case is Ø120)
+GUSSET_RUNOUT = 12.0                             # mm: the frame's gussets between the motors run out tangent to the web
+                                                 # this far below the old triangle's tip (z 28 -> 16; the cable pass is Ø18)
 FLANGE_T, FLANGE_X = 13.0, 95.0                  # the hip frame's top and bottom flanges: thickness, half-length (mm).
                                                  # They carry the leg to the body across the print's layers (it prints
                                                  # web-down): 7 mm gave SF 0.75 in a landing across the layers, 13 about 1.3
@@ -470,10 +475,22 @@ def hip_frame():
             if zb * s > 0:
                 boss = ycyl(mt['boss_r'], yc, yc + mt['boss_len'], x, zb)
                 web = web.union(boss).cut(ycyl(FAST[mt['thread']]['insert_pilot'] / 2, yc - 1, yc + mt['pilot_depth'], x, zb))
-        # a gusset between the motors (x = 0, where no motor is) from the flange down the web's inner face
+        # a gusset between the motors (x = 0, where no motor is) from the flange down the web's inner face; its edge
+        # runs out tangent to the web (a quadratic curve through the old triangle's tip, GUSSET_RUNOUT further down):
+        # the triangle's sharp tip on the web was the frame's peak in the turn case (E1)
         web = web.union(yslab([(-3.5, s * zf), (3.5, s * zf), (3.5, s * (zf - 34)), (-3.5, s * (zf - 34))], yf0 - 0.01, yf0 + 0.01))
-        g = cq.Workplane('YZ', origin=(-3.5, 0, 0)).polyline([(yf0 + 0.01, s * zf), (yc + 18, s * zf), (yf0 + 0.01, s * (zf - 34))]).close().extrude(7.0)
+        p0, pc, p2 = (yc + 18, zf), (yf0 + 0.01, zf - 34), (yf0 + 0.01, zf - 34 - GUSSET_RUNOUT)
+        edge = [p0] + ([tuple((1 - t) ** 2 * a + 2 * t * (1 - t) * b + t ** 2 * c for a, b, c in zip(p0, pc, p2))
+                        for t in (k / 12 for k in range(1, 12))] + [p2] if GUSSET_RUNOUT > 0 else [pc])
+        g = cq.Workplane('YZ', origin=(-3.5, 0, 0)).polyline([(yf0 + 0.01, s * zf)] + [(y_, s * z_) for y_, z_ in edge]).close().extrude(7.0)
         web = web.union(g)
+        if FLANGE_ROOT_FILLET > 0:                             # the flange's root on the web's motor side, rounded; trimmed
+            r_ = FLANGE_ROOT_FILLET                            # round the motors (their Ø120 cases), so it is full only where
+            yz = cq.Workplane('YZ', origin=(-fl_x, 0, 0)).moveTo(yf0 + 0.01, s * zf).lineTo(yf0 + 0.01, s * (zf - r_)) \
+                .threePointArc((yf0 - r_ * (1 - 0.7071), s * (zf - r_ * (1 - 0.7071))), (yf0 - r_, s * zf)).close().extrude(2 * fl_x)
+            for mx in (ax, bx):                                # there is room: between the motors and at the flanges' ends
+                yz = yz.cut(ycyl(FLANGE_FILLET_CLEAR, yf0 - r_ - 1, yf0 + 1, mx))
+            web = web.union(yz.translate((0, 0, s * 0.01)))
     circle = lambda cx, cz, r: [(cx + r * math.cos(2 * math.pi * k / 48), cz + r * math.sin(2 * math.pi * k / 48)) for k in range(48)]
     for k, (px, pz) in enumerate(stop_posts()):               # bosses round the stop posts; the knee-out ones stand out past
         web = web.union(ycyl(STOP_BOSS_R, yf0, yf1, px, pz))   # the motor's ring, so each is blended into the ring and the
@@ -630,6 +647,12 @@ def eye_sleeve_end():
     return P['upper_t'] - EYE_SLEEVES * EYE_SLEEVE[2]
 
 
+FRONT_KNEE_FILLET = 10.0     # mm: where the front link's knee boss stands out of its outer face into the wheel link's layer
+                             # (the link's peak in the turn case, E1: 6 mm gave SF 1.62 at 17.75 kg and the 10 in wheel)
+FRONT_EYE_FILLET = 6.0       # mm: the front link's apex eye, where it stands in out of the link's inner face towards the
+                             # upper links' layer, rounded into the arm (issue #5: the eye-to-arm corner)
+
+
 def front_link():
     """Front lower link (printed PA6-CF, flat on its inner face): the knee boss with two 6201s reaching out over the
     wheel link's layer, a 16 mm body, and the apex eye reaching in over the upper links' layer with two 61812s 28 mm
@@ -642,7 +665,9 @@ def front_link():
     r_eye = AC['bearing_od'] / 2 + 6.0
     outline = link_outline((0, 0), (l2, 0), P['front_w'], P['front_w'] + 12, KC['hub_od'] / 2, r_eye)
     f = yslab(outline, y0, y1)
-    f = f.union(ycyl(KC['hub_od'] / 2, kb0, kb1)).union(boss_fillet(outline, y1, +1)).union(ycyl(r_eye, e0, e1, l2))
+    f = f.union(ycyl(KC['hub_od'] / 2, kb0, kb1)).union(boss_fillet(outline, y1, +1, f=FRONT_KNEE_FILLET)).union(ycyl(r_eye, e0, e1, l2))
+    if FRONT_EYE_FILLET > 0:                                                 # where the apex eye stands out of the inner face
+        f = f.union(boss_fillet(outline, y0, -1, r=r_eye - 0.5, f=FRONT_EYE_FILLET, cx=l2, arm_dir=-1))
     f = f.cut(knee_cartridge_cut(kb0, kb1))
     ao, ai = Y['apex_bearing'], Y['apex_bearing_in']
     f = f.cut(ycyl(36.0, e0 - 1, e1 + 1, l2, 0))                            # Ø72 web between the seats: the outer races' shoulders

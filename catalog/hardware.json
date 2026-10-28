@@ -3620,8 +3620,113 @@
    "https://www.mcmaster.com/91595A352/"
   ],
   "confidence": "product page",
-  "used_for": "AO standard faces: 2 per face x 4 (8 deep in the adapter, 8 in the link)",
+  "used_for": "the motors' Ø5 locating holes in the hip frame (2 per motor); the turret's motor mount",
   "qty_per_robot": 8
+ },
+ {
+  "id": "mcmaster-91595a356",
+  "key": "dowel_5x20",
+  "category": "fastener",
+  "vendor": "McMaster-Carr",
+  "model": "91595A356",
+  "name": "Dowel Pin, 52100 Alloy Steel, 5 mm Diameter, 20 mm Long",
+  "price_usd": 0.4352,
+  "price_note": "McMaster-Carr: $10.88 per pack of 25 (price_usd is per piece)",
+  "price_checked": "2026-10-28",
+  "pack_qty": 25,
+  "pack_price_usd": 10.88,
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/91595A356/",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "d_mm": 5.0,
+   "length_mm": 20.0,
+   "mass_g": 2.953,
+   "mass_basis": "CAD volume x density 7.85 g/cm3 (estimate)",
+   "material": "Alloy Steel",
+   "mcmaster": {
+    "raw": {
+     "Tolerance Rating": "Standard",
+     "Fastener Head Type": "Plain",
+     "Material": "Alloy Steel",
+     "Diameter": "5 mm",
+     "Diameter Tolerance": "0.004 mm to 0.012 mm",
+     "Length": "20 mm",
+     "Double Shear Breaking Strength": "Not Rated",
+     "Minimum Hardness": "Rockwell C52",
+     "Specifications Met": "DIN 6325-m6, ISO 8734",
+     "Certificate Form": "Digital",
+     "Certificate Type": "Material Certificate with Traceable Lot Number",
+     "End Shape": "Round × Chamfer/Round",
+     "End Type": "Plain",
+     "Performance": "High Strength",
+     "Pin Type": "Dowel",
+     "Shaft Type": "Plain",
+     "Steel Grade": "52100 Alloy Steel",
+     "System of Measurement": "Metric",
+     "Country of Origin": "United States, Belgium, Canada, China, France, Germany, India, Indonesia, Italy, Japan, Malaysia, Mexico, Philippines, Poland, South Korea, Switzerland, Taiwan, Thailand, Vietnam",
+     "DFARS Compliance": "Not Specialty Metals Compliant",
+     "Export Control Classification Number (ECCN)": "EAR99",
+     "REACH Compliance": "REACH (EC 1907/2006) (02/04/2026, 253 SVHC) Compliant",
+     "RoHS Compliance": "RoHS 3 (2015/863/EU) Compliant",
+     "Schedule B Number": "731829.0000",
+     "U.S.–Mexico–Canada Agreement (USMCA) Qualifying": "No"
+    },
+    "parsed": {
+     "Diameter": {
+      "value": 5.0,
+      "unit": "mm"
+     },
+     "Diameter Tolerance": {
+      "min": 0.004,
+      "max": 0.012,
+      "unit": "mm"
+     },
+     "Length": {
+      "value": 20.0,
+      "unit": "mm"
+     }
+    }
+   }
+  },
+  "cad": {
+   "file": "references/vendor/mcmaster/91595A356/91595A356.norm.step",
+   "kind": "pin",
+   "frame": "axis +Z, centred on the axis; the larger end (flange, head, collar) at z = 0 and the part on +z; when both ends are the same size, the heavier end at z = 0",
+   "available": true,
+   "step_url": "https://www.mcmaster.com/91595A356/",
+   "bbox_mm": {
+    "min": [
+     -2.5,
+     -2.5,
+     0.0
+    ],
+    "max": [
+     2.5,
+     2.5,
+     20.0
+    ],
+    "size": [
+     5.0,
+     5.0,
+     20.0
+    ]
+   },
+   "volume_mm3": 376.124
+  },
+  "frame": "axis +Z, centred on the axis; the larger end (flange, head, collar) at z = 0 and the part on +z; when both ends are the same size, the heavier end at z = 0",
+  "sources": [
+   "https://www.mcmaster.com/91595A356/"
+  ],
+  "confidence": "product page",
+  "used_for": "AO standard faces (output adapter to upper link): 2 per face x 4, pressed 8 deep into the adapter's H7 holes, 12 in the link (issue #5)",
+  "qty_per_robot": 8,
+  "notes": "The same pin as 91595A352 four mm longer: the link's dowel holes go through its 30 mm, so the extra length bears in the printed link (cad/leg_studies.py DOWEL_ENGAGED)."
  },
  {
   "id": "mcmaster-91595a452",
