@@ -1,0 +1,1227 @@
+{
+ "targets": {
+  "sf": 2.0,
+  "sf_fault": 1.2,
+  "deck_mm": 0.5,
+  "twist_deg": 0.1
+ },
+ "results": {
+  "S1-landing": {
+   "part": "spine S1 landing",
+   "material": "5052-H32 aluminium",
+   "material_note": "yield strength (ASM); used for the whole box (6061-T6 parts are stronger)",
+   "mesh": {
+    "nodes": 35990,
+    "tets": 112078,
+    "size_mm": 4.0,
+    "element": "P2 tetrahedra"
+   },
+   "loads": [
+    {
+     "kind": "force",
+     "n": [
+      0.0,
+      0.0,
+      558.5
+     ],
+     "area_mm2": 27625.5
+    },
+    {
+     "kind": "torque",
+     "nm": 205.10372765163882,
+     "axis": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "point_mm": [
+      -2.7692037309971204e-15,
+      19.526921483189195,
+      6.593342216659811e-17
+     ],
+     "about_centroid_mm": [
+      -0.0,
+      19.535,
+      -0.0
+     ],
+     "area_mm2": 27625.5
+    },
+    {
+     "kind": "force",
+     "n": [
+      0.0,
+      299.02,
+      0.0
+     ],
+     "area_mm2": 27625.5
+    },
+    {
+     "kind": "torque",
+     "nm": 126.72467599999999,
+     "axis": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "point_mm": [
+      -2.7692037309971204e-15,
+      19.526921483189195,
+      6.593342216659811e-17
+     ],
+     "about_centroid_mm": [
+      -0.0,
+      19.535,
+      -0.0
+     ],
+     "area_mm2": 27625.5
+    },
+    {
+     "kind": "force",
+     "n": [
+      0.0,
+      0.0,
+      558.5
+     ],
+     "area_mm2": 27625.5
+    },
+    {
+     "kind": "torque",
+     "nm": -205.10372765163882,
+     "axis": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "point_mm": [
+      2.7692037309971204e-15,
+      -19.52692148318921,
+      3.2966711083299054e-16
+     ],
+     "about_centroid_mm": [
+      -0.0,
+      -19.535,
+      -0.0
+     ],
+     "area_mm2": 27625.5
+    },
+    {
+     "kind": "force",
+     "n": [
+      0.0,
+      -299.02,
+      0.0
+     ],
+     "area_mm2": 27625.5
+    },
+    {
+     "kind": "torque",
+     "nm": -126.72467599999999,
+     "axis": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "point_mm": [
+      2.7692037309971204e-15,
+      -19.52692148318921,
+      3.2966711083299054e-16
+     ],
+     "about_centroid_mm": [
+      -0.0,
+      -19.535,
+      -0.0
+     ],
+     "area_mm2": 27625.5
+    },
+    {
+     "kind": "force",
+     "n": [
+      0.0,
+      0.0,
+      -893.6
+     ],
+     "area_mm2": 24729.7
+    },
+    {
+     "kind": "force",
+     "n": [
+      0.0,
+      0.0,
+      -223.4
+     ],
+     "area_mm2": 28126.2
+    }
+   ],
+   "max_displacement_mm": 0.0868,
+   "probe_displacement_mm": [
+    -0.0,
+    0.0091,
+    0.002
+   ],
+   "max_von_mises_mpa": 127.35,
+   "von_mises_design_mpa": 127.35,
+   "safety_factor": 1.52,
+   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
+   "stiffness_n_per_mm": null,
+   "torsional_stiffness_nm_per_deg": -7145.08,
+   "case": "S1-landing",
+   "rare": true,
+   "why": "rig 'drop_150' at 15.97 kg a leg (axle 2212 N): 205 N m roll and 558 N up at the hip frame's mount plane, plus 10 % of the 2990 N ground force sideways at the contact patch on BOTH legs; the payload's inertia on the tray (80 %) and the belly (20 %)",
+   "design_stress_away_from_spacer_ends_mpa": 43.7,
+   "sf_away_from_spacer_ends": 4.42,
+   "spacer_end_peak_mpa": 127.3,
+   "picture": "exports/body/fea/S1-landing.png",
+   "animation": "exports/body/fea/S1-landing.mp4",
+   "viewer": "exports/body/fea/S1-landing.json",
+   "target_sf": 2.0,
+   "pass": true,
+   "hot_spots": [
+    [
+     127.3,
+     -71.8,
+     15.6,
+     -64.0,
+     "cheek web"
+    ],
+    [
+     123.9,
+     72.2,
+     15.1,
+     -64.7,
+     "spacer"
+    ],
+    [
+     121.1,
+     71.8,
+     -15.6,
+     -64.0,
+     "cheek web"
+    ],
+    [
+     120.8,
+     9.8,
+     15.1,
+     -64.7,
+     "spacer"
+    ],
+    [
+     117.9,
+     -9.8,
+     15.6,
+     -64.0,
+     "cheek web"
+    ],
+    [
+     117.7,
+     -71.8,
+     -15.1,
+     -64.7,
+     "spacer"
+    ]
+   ]
+  },
+  "S1F-collapse": {
+   "part": "spine S1F collapse",
+   "material": "5052-H32 aluminium",
+   "material_note": "yield strength (ASM); used for the whole box (6061-T6 parts are stronger)",
+   "mesh": {
+    "nodes": 35990,
+    "tets": 112078,
+    "size_mm": 4.0,
+    "element": "P2 tetrahedra"
+   },
+   "loads": [
+    {
+     "kind": "force",
+     "n": [
+      0.0,
+      0.0,
+      964.1
+     ],
+     "area_mm2": 27625.5
+    },
+    {
+     "kind": "torque",
+     "nm": 275.7969271780573,
+     "axis": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "point_mm": [
+      -2.7692037309971204e-15,
+      19.526921483189195,
+      6.593342216659811e-17
+     ],
+     "about_centroid_mm": [
+      -0.0,
+      19.535,
+      -0.0
+     ],
+     "area_mm2": 27625.5
+    },
+    {
+     "kind": "force",
+     "n": [
+      0.0,
+      167.16,
+      0.0
+     ],
+     "area_mm2": 27625.5
+    },
+    {
+     "kind": "torque",
+     "nm": 29.319864000000003,
+     "axis": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "point_mm": [
+      -2.7692037309971204e-15,
+      19.526921483189195,
+      6.593342216659811e-17
+     ],
+     "about_centroid_mm": [
+      -0.0,
+      19.535,
+      -0.0
+     ],
+     "area_mm2": 27625.5
+    },
+    {
+     "kind": "force",
+     "n": [
+      0.0,
+      0.0,
+      964.1
+     ],
+     "area_mm2": 27625.5
+    },
+    {
+     "kind": "torque",
+     "nm": -275.7969271780573,
+     "axis": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "point_mm": [
+      2.7692037309971204e-15,
+      -19.52692148318921,
+      3.2966711083299054e-16
+     ],
+     "about_centroid_mm": [
+      -0.0,
+      -19.535,
+      -0.0
+     ],
+     "area_mm2": 27625.5
+    },
+    {
+     "kind": "force",
+     "n": [
+      0.0,
+      -167.16,
+      0.0
+     ],
+     "area_mm2": 27625.5
+    },
+    {
+     "kind": "torque",
+     "nm": -29.319864000000003,
+     "axis": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "point_mm": [
+      2.7692037309971204e-15,
+      -19.52692148318921,
+      3.2966711083299054e-16
+     ],
+     "about_centroid_mm": [
+      -0.0,
+      -19.535,
+      -0.0
+     ],
+     "area_mm2": 27625.5
+    },
+    {
+     "kind": "force",
+     "n": [
+      0.0,
+      0.0,
+      -1542.5600000000002
+     ],
+     "area_mm2": 24729.7
+    },
+    {
+     "kind": "force",
+     "n": [
+      0.0,
+      0.0,
+      -385.64000000000004
+     ],
+     "area_mm2": 28126.2
+    }
+   ],
+   "max_displacement_mm": 0.12,
+   "probe_displacement_mm": [
+    -0.0,
+    0.0059,
+    0.0021
+   ],
+   "max_von_mises_mpa": 113.75,
+   "von_mises_design_mpa": 113.75,
+   "safety_factor": 1.7,
+   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
+   "stiffness_n_per_mm": null,
+   "torsional_stiffness_nm_per_deg": -1796.94,
+   "case": "S1F-collapse",
+   "rare": "fault",
+   "why": "rig 'power_off' at 15.97 kg a leg (axle 1662 N): 275 N m roll and 964 N up at the hip frame's mount plane, plus 10 % of the 1672 N ground force sideways at the contact patch on BOTH legs (the undamped power cut, D39); payload inertia as S1",
+   "design_stress_away_from_spacer_ends_mpa": 67.0,
+   "sf_away_from_spacer_ends": 2.88,
+   "spacer_end_peak_mpa": 113.8,
+   "picture": "exports/body/fea/S1F-collapse.png",
+   "animation": "exports/body/fea/S1F-collapse.mp4",
+   "viewer": "exports/body/fea/S1F-collapse.json",
+   "target_sf": 1.2,
+   "pass": true,
+   "hot_spots": [
+    [
+     113.8,
+     -71.8,
+     15.6,
+     -64.0,
+     "cheek web"
+    ],
+    [
+     110.7,
+     72.2,
+     15.1,
+     -64.7,
+     "spacer"
+    ],
+    [
+     107.6,
+     9.8,
+     15.1,
+     -64.7,
+     "spacer"
+    ],
+    [
+     106.5,
+     71.8,
+     -15.6,
+     -64.0,
+     "cheek web"
+    ],
+    [
+     104.8,
+     -9.8,
+     15.6,
+     -64.0,
+     "cheek web"
+    ],
+    [
+     103.1,
+     -71.8,
+     -15.1,
+     -64.7,
+     "spacer"
+    ]
+   ]
+  },
+  "S1b-one-leg-bound": {
+   "part": "spine S1b one leg",
+   "material": "5052-H32 aluminium",
+   "material_note": "yield strength (ASM); used for the whole box (6061-T6 parts are stronger)",
+   "mesh": {
+    "nodes": 35990,
+    "tets": 112078,
+    "size_mm": 4.0,
+    "element": "P2 tetrahedra"
+   },
+   "loads": [
+    {
+     "kind": "force",
+     "n": [
+      0.0,
+      0.0,
+      558.5
+     ],
+     "area_mm2": 27625.5
+    },
+    {
+     "kind": "torque",
+     "nm": 205.10372765163882,
+     "axis": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "point_mm": [
+      -2.7692037309971204e-15,
+      19.526921483189195,
+      6.593342216659811e-17
+     ],
+     "about_centroid_mm": [
+      -0.0,
+      19.535,
+      -0.0
+     ],
+     "area_mm2": 27625.5
+    },
+    {
+     "kind": "force",
+     "n": [
+      0.0,
+      299.02,
+      0.0
+     ],
+     "area_mm2": 27625.5
+    },
+    {
+     "kind": "torque",
+     "nm": 126.72467599999999,
+     "axis": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "point_mm": [
+      -2.7692037309971204e-15,
+      19.526921483189195,
+      6.593342216659811e-17
+     ],
+     "about_centroid_mm": [
+      -0.0,
+      19.535,
+      -0.0
+     ],
+     "area_mm2": 27625.5
+    }
+   ],
+   "max_displacement_mm": 0.0802,
+   "probe_displacement_mm": [
+    0.0,
+    0.0071,
+    -0.0001
+   ],
+   "max_von_mises_mpa": 120.51,
+   "von_mises_design_mpa": 114.81,
+   "safety_factor": 1.68,
+   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
+   "stiffness_n_per_mm": 42276.5,
+   "torsional_stiffness_nm_per_deg": 2377.87,
+   "case": "S1b-one-leg-bound",
+   "rare": true,
+   "why": "rig 'drop_150' at 15.97 kg a leg (axle 2212 N): 205 N m roll and 558 N up at the hip frame's mount plane, plus 10 % of the 2990 N ground force sideways at the contact patch on ONE leg, the other cheek clamped: every newton crosses the gap (a bound: in a one-wheel landing the body's inertia takes most of it)",
+   "design_stress_away_from_spacer_ends_mpa": 69.0,
+   "sf_away_from_spacer_ends": 2.8,
+   "spacer_end_peak_mpa": 114.8,
+   "picture": "exports/body/fea/S1b-one-leg-bound.png",
+   "animation": "exports/body/fea/S1b-one-leg-bound.mp4",
+   "viewer": "exports/body/fea/S1b-one-leg-bound.json",
+   "target_sf": 2.0,
+   "pass": true,
+   "hot_spots": [
+    [
+     114.8,
+     9.8,
+     15.1,
+     -64.7,
+     "spacer"
+    ],
+    [
+     112.6,
+     -9.8,
+     15.6,
+     -64.0,
+     "cheek web"
+    ],
+    [
+     108.1,
+     -71.8,
+     15.1,
+     -64.7,
+     "spacer"
+    ],
+    [
+     106.3,
+     72.2,
+     15.1,
+     -64.7,
+     "spacer"
+    ],
+    [
+     86.6,
+     10.2,
+     15.1,
+     64.7,
+     "spacer"
+    ],
+    [
+     80.7,
+     -10.2,
+     15.1,
+     64.7,
+     "spacer"
+    ]
+   ]
+  },
+  "S2-twist": {
+   "part": "spine S2 twist",
+   "material": "5052-H32 aluminium",
+   "material_note": "yield strength (ASM); used for the whole box (6061-T6 parts are stronger)",
+   "mesh": {
+    "nodes": 35990,
+    "tets": 112078,
+    "size_mm": 4.0,
+    "element": "P2 tetrahedra"
+   },
+   "loads": [
+    {
+     "kind": "torque",
+     "nm": 80.0,
+     "axis": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "point_mm": [
+      -2.7692037309971204e-15,
+      19.526921483189195,
+      6.593342216659811e-17
+     ],
+     "about_centroid_mm": [
+      -0.0,
+      19.535,
+      -0.0
+     ],
+     "area_mm2": 27625.5
+    }
+   ],
+   "max_displacement_mm": 0.0156,
+   "probe_displacement_mm": [
+    0.0,
+    -0.0,
+    -0.0001
+   ],
+   "max_von_mises_mpa": 25.42,
+   "von_mises_design_mpa": 24.3,
+   "safety_factor": 7.94,
+   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
+   "torsional_stiffness_nm_per_deg": 6364.15,
+   "case": "S2-twist",
+   "rare": false,
+   "why": "one leg's 80 N m roll moment (the HM budget) against the other's",
+   "twist_deg": 0.0126,
+   "pass_twist": true,
+   "picture": "exports/body/fea/S2-twist.png",
+   "animation": "exports/body/fea/S2-twist.mp4",
+   "viewer": "exports/body/fea/S2-twist.json",
+   "target_sf": 2.0,
+   "pass": true,
+   "hot_spots": [
+    [
+     24.3,
+     9.8,
+     15.1,
+     -64.7,
+     "spacer"
+    ],
+    [
+     24.1,
+     10.2,
+     15.1,
+     64.7,
+     "spacer"
+    ],
+    [
+     23.6,
+     -9.8,
+     15.6,
+     -64.0,
+     "cheek web"
+    ],
+    [
+     22.6,
+     -71.8,
+     15.1,
+     -64.7,
+     "spacer"
+    ],
+    [
+     22.4,
+     -10.2,
+     15.1,
+     64.7,
+     "spacer"
+    ],
+    [
+     22.2,
+     72.2,
+     15.1,
+     -64.7,
+     "spacer"
+    ]
+   ]
+  },
+  "S3-pitch": {
+   "part": "spine S3 pitch",
+   "material": "5052-H32 aluminium",
+   "material_note": "yield strength (ASM); used for the whole box (6061-T6 parts are stronger)",
+   "mesh": {
+    "nodes": 35990,
+    "tets": 112078,
+    "size_mm": 4.0,
+    "element": "P2 tetrahedra"
+   },
+   "loads": [
+    {
+     "kind": "force",
+     "n": [
+      600.0,
+      0.0,
+      0.0
+     ],
+     "area_mm2": 27625.5
+    },
+    {
+     "kind": "torque",
+     "nm": 120.0,
+     "axis": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "point_mm": [
+      -2.7692037309971204e-15,
+      19.526921483189195,
+      6.593342216659811e-17
+     ],
+     "about_centroid_mm": [
+      -0.0,
+      19.535,
+      -0.0
+     ],
+     "area_mm2": 27625.5
+    }
+   ],
+   "max_displacement_mm": 0.003,
+   "probe_displacement_mm": [
+    0.0003,
+    -0.0,
+    -0.0
+   ],
+   "max_von_mises_mpa": 8.69,
+   "von_mises_design_mpa": 7.06,
+   "safety_factor": 27.34,
+   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
+   "stiffness_n_per_mm": 1745809.2,
+   "torsional_stiffness_nm_per_deg": 330509.2,
+   "case": "S3-pitch",
+   "rare": false,
+   "why": "the two motors' 60 N m caps reacted as one 120 N m couple about y, and 600 N fore-aft (the HM budget)",
+   "picture": "exports/body/fea/S3-pitch.png",
+   "animation": "exports/body/fea/S3-pitch.mp4",
+   "viewer": "exports/body/fea/S3-pitch.json",
+   "target_sf": 2.0,
+   "pass": true,
+   "hot_spots": [
+    [
+     7.1,
+     7.2,
+     15.6,
+     69.2,
+     "cheek web"
+    ],
+    [
+     6.5,
+     -8.6,
+     18.0,
+     65.5,
+     "cheek web"
+    ],
+    [
+     4.8,
+     72.0,
+     18.0,
+     69.9,
+     "cheek web"
+    ],
+    [
+     4.6,
+     -72.0,
+     18.0,
+     69.9,
+     "cheek web"
+    ],
+    [
+     3.6,
+     -80.5,
+     16.1,
+     -65.9,
+     "cheek web"
+    ]
+   ]
+  },
+  "D1-hand-front": {
+   "part": "deck D1 front",
+   "material": "5052-H32 aluminium",
+   "material_note": "yield strength (ASM); used for the whole box (6061-T6 parts are stronger)",
+   "mesh": {
+    "nodes": 58246,
+    "tets": 183725,
+    "size_mm": 4.0,
+    "element": "P2 tetrahedra"
+   },
+   "loads": [
+    {
+     "kind": "force",
+     "n": [
+      0.0,
+      0.0,
+      -300.0
+     ],
+     "area_mm2": 7736.0
+    }
+   ],
+   "max_displacement_mm": 0.4685,
+   "probe_displacement_mm": [
+    -0.0092,
+    -0.0,
+    -0.3276
+   ],
+   "max_von_mises_mpa": 120.75,
+   "von_mises_design_mpa": 76.32,
+   "safety_factor": 2.53,
+   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
+   "stiffness_n_per_mm": 915.8,
+   "case": "D1-hand-front",
+   "rare": false,
+   "why": "300 N down on the deck at the front (a child leaning on it)",
+   "deflection_mm": 0.328,
+   "pass_deflection": true,
+   "picture": "exports/body/fea/D1-hand-front.png",
+   "animation": "exports/body/fea/D1-hand-front.mp4",
+   "viewer": "exports/body/fea/D1-hand-front.json",
+   "target_sf": 2.0,
+   "pass": true,
+   "hot_spots": [
+    [
+     76.3,
+     129.7,
+     96.5,
+     214.1,
+     "plates"
+    ],
+    [
+     74.8,
+     129.7,
+     -96.9,
+     214.1,
+     "plates"
+    ],
+    [
+     37.1,
+     153.5,
+     97.2,
+     214.1,
+     "plates"
+    ],
+    [
+     31.2,
+     153.4,
+     118.6,
+     215.8,
+     "plates"
+    ],
+    [
+     30.9,
+     153.5,
+     -118.5,
+     213.7,
+     "plates"
+    ],
+    [
+     29.8,
+     8.7,
+     58.1,
+     215.4,
+     "plates"
+    ]
+   ]
+  },
+  "D1-hand-riser": {
+   "part": "deck D1 riser",
+   "material": "5052-H32 aluminium",
+   "material_note": "yield strength (ASM); used for the whole box (6061-T6 parts are stronger)",
+   "mesh": {
+    "nodes": 58246,
+    "tets": 183725,
+    "size_mm": 4.0,
+    "element": "P2 tetrahedra"
+   },
+   "loads": [
+    {
+     "kind": "force",
+     "n": [
+      0.0,
+      0.0,
+      -300.0
+     ],
+     "area_mm2": 13302.2
+    }
+   ],
+   "max_displacement_mm": 0.5143,
+   "probe_displacement_mm": [
+    0.058,
+    -0.0001,
+    -0.3832
+   ],
+   "max_von_mises_mpa": 121.08,
+   "von_mises_design_mpa": 66.7,
+   "safety_factor": 2.89,
+   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
+   "stiffness_n_per_mm": 782.8,
+   "case": "D1-hand-riser",
+   "rare": false,
+   "why": "300 N down on the deck at the riser (a child leaning on it)",
+   "deflection_mm": 0.383,
+   "pass_deflection": true,
+   "picture": "exports/body/fea/D1-hand-riser.png",
+   "animation": "exports/body/fea/D1-hand-riser.mp4",
+   "viewer": "exports/body/fea/D1-hand-riser.json",
+   "target_sf": 2.0,
+   "pass": true,
+   "hot_spots": [
+    [
+     66.7,
+     -129.1,
+     -96.6,
+     214.1,
+     "plates"
+    ],
+    [
+     65.6,
+     -129.1,
+     97.7,
+     214.7,
+     "plates"
+    ],
+    [
+     46.9,
+     129.7,
+     96.5,
+     214.1,
+     "plates"
+    ],
+    [
+     46.1,
+     10.7,
+     56.0,
+     215.7,
+     "plates"
+    ],
+    [
+     46.0,
+     129.7,
+     -96.9,
+     214.1,
+     "plates"
+    ],
+    [
+     44.8,
+     9.3,
+     -57.9,
+     215.4,
+     "plates"
+    ]
+   ]
+  },
+  "D2-turret-fall": {
+   "part": "deck D2 turret fall",
+   "material": "5052-H32 aluminium",
+   "material_note": "yield strength (ASM); used for the whole box (6061-T6 parts are stronger)",
+   "mesh": {
+    "nodes": 58246,
+    "tets": 183725,
+    "size_mm": 4.0,
+    "element": "P2 tetrahedra"
+   },
+   "loads": [
+    {
+     "kind": "force",
+     "n": [
+      353.76920099999995,
+      0.0,
+      -353.76920099999995
+     ],
+     "area_mm2": 13302.2
+    },
+    {
+     "kind": "torque",
+     "nm": 35.40344726593034,
+     "axis": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "point_mm": [
+      -40.074984384890925,
+      0.0749843848909153,
+      246.0
+     ],
+     "about_centroid_mm": [
+      -40.07,
+      0.07,
+      246.0
+     ],
+     "area_mm2": 13302.2
+    }
+   ],
+   "max_displacement_mm": 1.5506,
+   "probe_displacement_mm": [
+    0.3316,
+    -0.0002,
+    -0.771
+   ],
+   "max_von_mises_mpa": 223.25,
+   "von_mises_design_mpa": 146.87,
+   "safety_factor": 1.31,
+   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
+   "stiffness_n_per_mm": 641.7,
+   "torsional_stiffness_nm_per_deg": 9.49,
+   "case": "D2-turret-fall",
+   "rare": "fault",
+   "why": "a 30 g fall of the 1.70 kg head (the turret plan's budget) at 45 deg, its centre 100 mm above the TM face: a tip-over, an abuse case like the power cut (SF >= 1.2)",
+   "picture": "exports/body/fea/D2-turret-fall.png",
+   "animation": "exports/body/fea/D2-turret-fall.mp4",
+   "viewer": "exports/body/fea/D2-turret-fall.json",
+   "target_sf": 1.2,
+   "pass": true,
+   "hot_spots": [
+    [
+     146.9,
+     10.7,
+     56.0,
+     215.7,
+     "plates"
+    ],
+    [
+     142.5,
+     16.1,
+     -52.1,
+     215.4,
+     "plates"
+    ],
+    [
+     142.0,
+     129.7,
+     96.5,
+     214.1,
+     "plates"
+    ],
+    [
+     139.4,
+     129.7,
+     -96.9,
+     214.1,
+     "plates"
+    ],
+    [
+     133.0,
+     18.2,
+     46.1,
+     215.4,
+     "plates"
+    ],
+    [
+     121.2,
+     5.5,
+     -59.3,
+     214.7,
+     "plates"
+    ]
+   ]
+  },
+  "T1-tray": {
+   "part": "tray T1",
+   "material": "5052-H32 aluminium",
+   "material_note": "yield strength (ASM); used for the whole box (6061-T6 parts are stronger)",
+   "mesh": {
+    "nodes": 31454,
+    "tets": 94334,
+    "size_mm": 4.0,
+    "element": "P2 tetrahedra"
+   },
+   "loads": [
+    {
+     "kind": "force",
+     "n": [
+      0.0,
+      0.0,
+      -29.523697762500003
+     ],
+     "area_mm2": 193.3
+    },
+    {
+     "kind": "force",
+     "n": [
+      0.0,
+      0.0,
+      -29.523697762500003
+     ],
+     "area_mm2": 193.3
+    },
+    {
+     "kind": "force",
+     "n": [
+      0.0,
+      0.0,
+      -29.523697762500003
+     ],
+     "area_mm2": 193.3
+    },
+    {
+     "kind": "force",
+     "n": [
+      0.0,
+      0.0,
+      -29.523697762500003
+     ],
+     "area_mm2": 193.3
+    },
+    {
+     "kind": "force",
+     "n": [
+      0.0,
+      0.0,
+      -36.312217762500005
+     ],
+     "area_mm2": 193.3
+    },
+    {
+     "kind": "force",
+     "n": [
+      0.0,
+      0.0,
+      -36.312217762500005
+     ],
+     "area_mm2": 193.3
+    },
+    {
+     "kind": "force",
+     "n": [
+      0.0,
+      0.0,
+      -36.312217762500005
+     ],
+     "area_mm2": 193.3
+    },
+    {
+     "kind": "force",
+     "n": [
+      0.0,
+      0.0,
+      -36.312217762500005
+     ],
+     "area_mm2": 193.3
+    },
+    {
+     "kind": "force",
+     "n": [
+      0.0,
+      0.0,
+      -78.37558481250001
+     ],
+     "area_mm2": 372.5
+    },
+    {
+     "kind": "force",
+     "n": [
+      0.0,
+      0.0,
+      -78.37558481250001
+     ],
+     "area_mm2": 372.5
+    },
+    {
+     "kind": "force",
+     "n": [
+      0.0,
+      0.0,
+      -78.37558481250001
+     ],
+     "area_mm2": 372.5
+    },
+    {
+     "kind": "force",
+     "n": [
+      0.0,
+      0.0,
+      -78.37558481250001
+     ],
+     "area_mm2": 372.5
+    },
+    {
+     "kind": "force",
+     "n": [
+      0.0,
+      0.0,
+      -38.185425
+     ],
+     "area_mm2": 444.2
+    }
+   ],
+   "max_displacement_mm": 0.4797,
+   "probe_displacement_mm": null,
+   "max_von_mises_mpa": 147.88,
+   "von_mises_design_mpa": 77.2,
+   "safety_factor": 2.5,
+   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
+   "case": "T1-tray",
+   "rare": true,
+   "why": "what stands on the floor tray at 8.65 g (the body's landing peak from the rig): the compute 1.39 kg on its isolators, the power skid 1.71 kg on its posts, the deck with the lidar and turret 3.69 kg on the deck posts, the DDR-120C; the tray held by its screws",
+   "picture": "exports/body/fea/T1-tray.png",
+   "animation": "exports/body/fea/T1-tray.mp4",
+   "viewer": "exports/body/fea/T1-tray.json",
+   "target_sf": 2.0,
+   "pass": true,
+   "hot_spots": [
+    [
+     77.2,
+     93.3,
+     46.9,
+     91.3,
+     "plates"
+    ],
+    [
+     73.5,
+     94.1,
+     -46.8,
+     91.3,
+     "plates"
+    ],
+    [
+     64.3,
+     -93.9,
+     -46.5,
+     91.3,
+     "plates"
+    ],
+    [
+     64.2,
+     -93.2,
+     43.7,
+     91.3,
+     "plates"
+    ]
+   ]
+  }
+ }
+}
