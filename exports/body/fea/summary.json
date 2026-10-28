@@ -23,13 +23,13 @@
      "n": [
       0.0,
       0.0,
-      594.5
+      631.7
      ],
      "area_mm2": 27625.4
     },
     {
      "kind": "torque",
-     "nm": 178.92975127824403,
+     "nm": 182.4566423590694,
      "axis": [
       1.0,
       0.0,
@@ -51,14 +51,14 @@
      "kind": "force",
      "n": [
       0.0,
-      104.99000000000001,
+      106.03,
       0.0
      ],
      "area_mm2": 27625.4
     },
     {
      "kind": "torque",
-     "nm": 29.607180000000003,
+     "nm": 29.815635999999998,
      "axis": [
       1.0,
       0.0,
@@ -81,13 +81,13 @@
      "n": [
       0.0,
       0.0,
-      594.5
+      631.7
      ],
      "area_mm2": 27625.4
     },
     {
      "kind": "torque",
-     "nm": -178.92975127824403,
+     "nm": -182.4566423590694,
      "axis": [
       1.0,
       0.0,
@@ -109,14 +109,14 @@
      "kind": "force",
      "n": [
       0.0,
-      -104.99000000000001,
+      -106.03,
       0.0
      ],
      "area_mm2": 27625.4
     },
     {
      "kind": "torque",
-     "nm": -29.607180000000003,
+     "nm": -29.815635999999998,
      "axis": [
       1.0,
       0.0,
@@ -139,7 +139,7 @@
      "n": [
       0.0,
       0.0,
-      -951.2
+      -1010.7200000000001
      ],
      "area_mm2": 24729.7
     },
@@ -148,29 +148,29 @@
      "n": [
       0.0,
       0.0,
-      -237.8
+      -252.68000000000004
      ],
      "area_mm2": 28126.2
     }
    ],
-   "max_displacement_mm": 0.0497,
+   "max_displacement_mm": 0.0505,
    "probe_displacement_mm": [
     -0.0,
-    0.0036,
+    0.0037,
     0.0013
    ],
-   "max_von_mises_mpa": 79.6,
-   "von_mises_design_mpa": 79.6,
-   "safety_factor": 2.42,
+   "max_von_mises_mpa": 81.14,
+   "von_mises_design_mpa": 81.14,
+   "safety_factor": 2.38,
    "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
    "stiffness_n_per_mm": null,
-   "torsional_stiffness_nm_per_deg": -2672.5,
+   "torsional_stiffness_nm_per_deg": -2644.02,
    "case": "S1-landing",
    "rare": true,
-   "why": "rig 'jump_peak' at 17.75 kg a leg (axle 1817 N): 178 N m roll and 594 N up at the hip frame's mount plane, plus 10 % of the 1050 N ground force sideways at the contact patch on BOTH legs; the payload's inertia on the tray (80 %) and the belly (20 %)",
-   "design_stress_away_from_spacer_ends_mpa": 30.9,
-   "sf_away_from_spacer_ends": 6.24,
-   "spacer_end_peak_mpa": 79.6,
+   "why": "rig 'jump_peak' at 18.75 kg a leg (axle 1776 N): 182 N m roll and 632 N up at the hip frame's mount plane, plus 10 % of the 1060 N ground force sideways at the contact patch on BOTH legs; the payload's inertia on the tray (80 %) and the belly (20 %)",
+   "design_stress_away_from_spacer_ends_mpa": 32.9,
+   "sf_away_from_spacer_ends": 5.87,
+   "spacer_end_peak_mpa": 81.1,
    "picture": "exports/body/fea/S1-landing.png",
    "animation": "exports/body/fea/S1-landing.mp4",
    "viewer": "exports/body/fea/S1-landing.json",
@@ -178,46 +178,46 @@
    "pass": true,
    "hot_spots": [
     [
-     79.6,
+     81.1,
      -71.8,
      15.1,
      -64.7,
      "spacer"
     ],
     [
-     75.0,
+     76.5,
      72.2,
      15.1,
      -64.7,
      "spacer"
     ],
     [
-     72.7,
+     74.1,
      -9.8,
      15.6,
      -64.0,
      "cheek web"
     ],
     [
-     71.8,
+     73.1,
      -71.8,
      -15.6,
      -64.0,
      "cheek web"
     ],
     [
-     71.1,
+     72.3,
      71.8,
      -15.1,
      -64.7,
      "spacer"
     ],
     [
-     70.2,
-     10.2,
-     15.1,
-     -64.7,
-     "spacer"
+     71.6,
+     72.2,
+     15.6,
+     64.0,
+     "cheek web"
     ]
    ]
   },
@@ -237,13 +237,13 @@
      "n": [
       0.0,
       0.0,
-      1031.5
+      1207.9
      ],
      "area_mm2": 27625.4
     },
     {
      "kind": "torque",
-     "nm": 305.8456491900903,
+     "nm": 344.47316496045573,
      "axis": [
       1.0,
       0.0,
@@ -265,14 +265,14 @@
      "kind": "force",
      "n": [
       0.0,
-      175.29000000000002,
+      194.46,
       0.0
      ],
      "area_mm2": 27625.4
     },
     {
      "kind": "torque",
-     "nm": 37.967814000000004,
+     "nm": 42.47006400000001,
      "axis": [
       1.0,
       0.0,
@@ -295,13 +295,13 @@
      "n": [
       0.0,
       0.0,
-      1031.5
+      1207.9
      ],
      "area_mm2": 27625.4
     },
     {
      "kind": "torque",
-     "nm": -305.8456491900903,
+     "nm": -344.47316496045573,
      "axis": [
       1.0,
       0.0,
@@ -323,14 +323,14 @@
      "kind": "force",
      "n": [
       0.0,
-      -175.29000000000002,
+      -194.46,
       0.0
      ],
      "area_mm2": 27625.4
     },
     {
      "kind": "torque",
-     "nm": -37.967814000000004,
+     "nm": -42.47006400000001,
      "axis": [
       1.0,
       0.0,
@@ -353,7 +353,7 @@
      "n": [
       0.0,
       0.0,
-      -1650.4
+      -1932.6400000000003
      ],
      "area_mm2": 24729.7
     },
@@ -362,29 +362,29 @@
      "n": [
       0.0,
       0.0,
-      -412.6
+      -483.1600000000001
      ],
      "area_mm2": 28126.2
     }
    ],
-   "max_displacement_mm": 0.0821,
+   "max_displacement_mm": 0.0921,
    "probe_displacement_mm": [
     -0.0,
-    0.0061,
-    0.0022
+    0.0068,
+    0.0025
    ],
-   "max_von_mises_mpa": 131.67,
-   "von_mises_design_mpa": 131.67,
-   "safety_factor": 1.47,
+   "max_von_mises_mpa": 148.32,
+   "von_mises_design_mpa": 148.32,
+   "safety_factor": 1.3,
    "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
    "stiffness_n_per_mm": null,
-   "torsional_stiffness_nm_per_deg": -2078.83,
+   "torsional_stiffness_nm_per_deg": -2066.18,
    "case": "S1F-collapse",
    "rare": "fault",
-   "why": "rig 'power_off' at 17.75 kg a leg (axle 1731 N): 305 N m roll and 1032 N up at the hip frame's mount plane, plus 10 % of the 1753 N ground force sideways at the contact patch on BOTH legs (the undamped power cut, D39); payload inertia as S1",
-   "design_stress_away_from_spacer_ends_mpa": 53.7,
-   "sf_away_from_spacer_ends": 3.59,
-   "spacer_end_peak_mpa": 131.7,
+   "why": "rig 'power_off' at 18.75 kg a leg (axle 1929 N): 344 N m roll and 1208 N up at the hip frame's mount plane, plus 10 % of the 1945 N ground force sideways at the contact patch on BOTH legs (the undamped power cut, D39); payload inertia as S1",
+   "design_stress_away_from_spacer_ends_mpa": 62.9,
+   "sf_away_from_spacer_ends": 3.07,
+   "spacer_end_peak_mpa": 148.3,
    "picture": "exports/body/fea/S1F-collapse.png",
    "animation": "exports/body/fea/S1F-collapse.mp4",
    "viewer": "exports/body/fea/S1F-collapse.json",
@@ -392,46 +392,46 @@
    "pass": true,
    "hot_spots": [
     [
-     131.7,
+     148.3,
      -71.8,
      15.1,
      -64.7,
      "spacer"
     ],
     [
-     124.1,
+     139.8,
      72.2,
      15.1,
      -64.7,
      "spacer"
     ],
     [
-     120.2,
+     135.3,
      -9.8,
      15.6,
      -64.0,
      "cheek web"
     ],
     [
-     118.6,
+     133.4,
      -71.8,
      -15.6,
      -64.0,
      "cheek web"
     ],
     [
-     117.4,
+     132.0,
      71.8,
      -15.1,
      -64.7,
      "spacer"
     ],
     [
-     116.1,
-     10.2,
-     15.1,
-     -64.7,
-     "spacer"
+     131.1,
+     72.2,
+     15.6,
+     64.0,
+     "cheek web"
     ]
    ]
   },
@@ -451,13 +451,13 @@
      "n": [
       0.0,
       0.0,
-      594.5
+      631.7
      ],
      "area_mm2": 27625.4
     },
     {
      "kind": "torque",
-     "nm": 178.92975127824403,
+     "nm": 182.4566423590694,
      "axis": [
       1.0,
       0.0,
@@ -479,14 +479,14 @@
      "kind": "force",
      "n": [
       0.0,
-      104.99000000000001,
+      106.03,
       0.0
      ],
      "area_mm2": 27625.4
     },
     {
      "kind": "torque",
-     "nm": 29.607180000000003,
+     "nm": 29.815635999999998,
      "axis": [
       1.0,
       0.0,
@@ -505,24 +505,24 @@
      "area_mm2": 27625.4
     }
    ],
-   "max_displacement_mm": 0.0459,
+   "max_displacement_mm": 0.0466,
    "probe_displacement_mm": [
     0.0,
     0.0025,
     0.0001
    ],
-   "max_von_mises_mpa": 73.25,
-   "von_mises_design_mpa": 68.24,
-   "safety_factor": 2.83,
+   "max_von_mises_mpa": 74.6,
+   "von_mises_design_mpa": 69.45,
+   "safety_factor": 2.78,
    "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
-   "stiffness_n_per_mm": 42260.9,
-   "torsional_stiffness_nm_per_deg": 896.29,
+   "stiffness_n_per_mm": 42262.1,
+   "torsional_stiffness_nm_per_deg": 886.59,
    "case": "S1b-one-leg-bound",
    "rare": true,
-   "why": "rig 'jump_peak' at 17.75 kg a leg (axle 1817 N): 178 N m roll and 594 N up at the hip frame's mount plane, plus 10 % of the 1050 N ground force sideways at the contact patch on ONE leg, the other cheek clamped: every newton crosses the gap (a bound: in a one-wheel landing the body's inertia takes most of it)",
-   "design_stress_away_from_spacer_ends_mpa": 40.4,
-   "sf_away_from_spacer_ends": 4.78,
-   "spacer_end_peak_mpa": 68.2,
+   "why": "rig 'jump_peak' at 18.75 kg a leg (axle 1776 N): 182 N m roll and 632 N up at the hip frame's mount plane, plus 10 % of the 1060 N ground force sideways at the contact patch on ONE leg, the other cheek clamped: every newton crosses the gap (a bound: in a one-wheel landing the body's inertia takes most of it)",
+   "design_stress_away_from_spacer_ends_mpa": 41.1,
+   "sf_away_from_spacer_ends": 4.69,
+   "spacer_end_peak_mpa": 69.5,
    "picture": "exports/body/fea/S1b-one-leg-bound.png",
    "animation": "exports/body/fea/S1b-one-leg-bound.mp4",
    "viewer": "exports/body/fea/S1b-one-leg-bound.json",
@@ -530,42 +530,42 @@
    "pass": true,
    "hot_spots": [
     [
-     68.2,
+     69.5,
      -9.8,
      15.6,
      -64.0,
      "cheek web"
     ],
     [
-     67.0,
+     68.2,
      -71.8,
      15.1,
      -64.7,
      "spacer"
     ],
     [
-     65.9,
+     67.0,
      10.2,
      15.1,
      -64.7,
      "spacer"
     ],
     [
-     59.8,
+     60.8,
      72.2,
      15.1,
      -64.7,
      "spacer"
     ],
     [
-     58.0,
+     59.1,
      10.2,
      15.1,
      64.7,
      "spacer"
     ],
     [
-     54.0,
+     55.0,
      -10.2,
      15.1,
      64.7,
@@ -1093,7 +1093,7 @@
      "n": [
       0.0,
       0.0,
-      -27.373416884999997
+      -29.045857567500004
      ],
      "area_mm2": 193.3
     },
@@ -1102,7 +1102,7 @@
      "n": [
       0.0,
       0.0,
-      -27.373416884999997
+      -29.045857567500004
      ],
      "area_mm2": 193.3
     },
@@ -1111,7 +1111,7 @@
      "n": [
       0.0,
       0.0,
-      -27.373416884999997
+      -29.045857567500004
      ],
      "area_mm2": 193.3
     },
@@ -1120,7 +1120,7 @@
      "n": [
       0.0,
       0.0,
-      -27.373416884999997
+      -29.045857567500004
      ],
      "area_mm2": 193.3
     },
@@ -1129,7 +1129,7 @@
      "n": [
       0.0,
       0.0,
-      -36.527392755
+      -38.7591162525
      ],
      "area_mm2": 193.3
     },
@@ -1138,7 +1138,7 @@
      "n": [
       0.0,
       0.0,
-      -36.527392755
+      -38.7591162525
      ],
      "area_mm2": 193.3
     },
@@ -1147,7 +1147,7 @@
      "n": [
       0.0,
       0.0,
-      -36.527392755
+      -38.7591162525
      ],
      "area_mm2": 193.3
     },
@@ -1156,7 +1156,7 @@
      "n": [
       0.0,
       0.0,
-      -36.527392755
+      -38.7591162525
      ],
      "area_mm2": 193.3
     },
@@ -1165,7 +1165,7 @@
      "n": [
       0.0,
       0.0,
-      -72.62993403
+      -77.06742376500002
      ],
      "area_mm2": 372.5
     },
@@ -1174,7 +1174,7 @@
      "n": [
       0.0,
       0.0,
-      -72.62993403
+      -77.06742376500002
      ],
      "area_mm2": 372.5
     },
@@ -1183,7 +1183,7 @@
      "n": [
       0.0,
       0.0,
-      -72.62993403
+      -77.06742376500002
      ],
      "area_mm2": 372.5
     },
@@ -1192,20 +1192,20 @@
      "n": [
       0.0,
       0.0,
-      -72.62993403
+      -77.06742376500002
      ],
      "area_mm2": 372.5
     }
    ],
-   "max_displacement_mm": 0.4503,
+   "max_displacement_mm": 0.4779,
    "probe_displacement_mm": null,
-   "max_von_mises_mpa": 145.07,
-   "von_mises_design_mpa": 69.78,
-   "safety_factor": 2.77,
+   "max_von_mises_mpa": 153.94,
+   "von_mises_design_mpa": 74.04,
+   "safety_factor": 2.61,
    "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
    "case": "T1-tray",
    "rare": true,
-   "why": "what stands on the floor tray at 8.02 g (the body's landing peak from the rig): the compute 1.39 kg on its isolators, the power skid 1.86 kg on its posts, the deck with the lidar and turret 3.69 kg on the deck posts, the DDR-120C; the tray held by its screws",
+   "why": "what stands on the floor tray at 8.51 g (the body's landing peak from the rig): the compute 1.39 kg on its isolators, the power skid 1.86 kg on its posts, the deck with the lidar and turret 3.69 kg on the deck posts, the DDR-120C; the tray held by its screws",
    "picture": "exports/body/fea/T1-tray.png",
    "animation": "exports/body/fea/T1-tray.mp4",
    "viewer": "exports/body/fea/T1-tray.json",
@@ -1213,28 +1213,28 @@
    "pass": true,
    "hot_spots": [
     [
-     69.8,
+     74.0,
      93.6,
      -47.2,
      91.3,
      "plates"
     ],
     [
-     66.1,
+     70.2,
      93.5,
      46.9,
      91.3,
      "plates"
     ],
     [
-     56.4,
+     59.8,
      -93.6,
      46.6,
      91.3,
      "plates"
     ],
     [
-     52.7,
+     55.9,
      -93.3,
      -46.8,
      91.3,
