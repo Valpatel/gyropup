@@ -49,7 +49,7 @@
               160.0
             ]
           },
-          "cached": false
+          "cached": true
         },
         "cavity_box": [
           -97.1,
@@ -120,7 +120,7 @@
               135.0
             ]
           },
-          "cached": false
+          "cached": true
         },
         "outside_mm3": 0.014254,
         "clearance_mm": 0.0
@@ -150,7 +150,7 @@
               160.0
             ]
           },
-          "cached": false
+          "cached": true
         }
       }
     },
@@ -195,7 +195,7 @@
               135.0
             ]
           },
-          "cached": false
+          "cached": true
         },
         "outside_mm3": 0.196369,
         "clearance_mm": 0.0
@@ -225,7 +225,7 @@
               160.0
             ]
           },
-          "cached": false
+          "cached": true
         }
       }
     },
@@ -270,7 +270,7 @@
               135.0
             ]
           },
-          "cached": false
+          "cached": true
         },
         "outside_mm3": 0.014254,
         "clearance_mm": 0.0
@@ -300,7 +300,7 @@
               160.0
             ]
           },
-          "cached": false
+          "cached": true
         }
       }
     },
@@ -345,7 +345,7 @@
               135.0
             ]
           },
-          "cached": false
+          "cached": true
         },
         "outside_mm3": 0.014254,
         "clearance_mm": 0.0
@@ -375,7 +375,7 @@
               160.0
             ]
           },
-          "cached": false
+          "cached": true
         }
       }
     },
@@ -420,7 +420,7 @@
               135.0
             ]
           },
-          "cached": false
+          "cached": true
         },
         "outside_mm3": 0.428364,
         "clearance_mm": 0.0
@@ -450,7 +450,7 @@
               160.0
             ]
           },
-          "cached": false
+          "cached": true
         }
       }
     },
@@ -495,7 +495,7 @@
               135.0
             ]
           },
-          "cached": false
+          "cached": true
         },
         "outside_mm3": 0.032063,
         "clearance_mm": 0.0
@@ -525,7 +525,7 @@
               160.0
             ]
           },
-          "cached": false
+          "cached": true
         }
       }
     },
@@ -570,7 +570,7 @@
               135.0
             ]
           },
-          "cached": false
+          "cached": true
         },
         "outside_mm3": 0.014254,
         "clearance_mm": 0.0
@@ -600,7 +600,7 @@
               160.0
             ]
           },
-          "cached": false
+          "cached": true
         }
       }
     },
@@ -645,7 +645,7 @@
               135.0
             ]
           },
-          "cached": false
+          "cached": true
         },
         "outside_mm3": 0.014254,
         "clearance_mm": 0.0
@@ -675,7 +675,7 @@
               160.0
             ]
           },
-          "cached": false
+          "cached": true
         }
       }
     },
@@ -720,7 +720,7 @@
               156.328061
             ]
           },
-          "cached": false
+          "cached": true
         },
         "outside_mm3": 0.053433,
         "clearance_mm": 0.0
@@ -750,7 +750,7 @@
               166.080001
             ]
           },
-          "cached": false
+          "cached": true
         }
       }
     },
@@ -795,7 +795,7 @@
               153.75
             ]
           },
-          "cached": false
+          "cached": true
         },
         "outside_mm3": 0.089012,
         "clearance_mm": 0.0
@@ -825,7 +825,7 @@
               165.05
             ]
           },
-          "cached": false
+          "cached": true
         }
       }
     },
@@ -870,7 +870,7 @@
               153.75
             ]
           },
-          "cached": false
+          "cached": true
         },
         "outside_mm3": 0.038844,
         "clearance_mm": 0.0
@@ -900,7 +900,7 @@
               165.05
             ]
           },
-          "cached": false
+          "cached": true
         }
       }
     },
@@ -945,7 +945,7 @@
               153.75
             ]
           },
-          "cached": false
+          "cached": true
         },
         "outside_mm3": 0.01287,
         "clearance_mm": 0.0
@@ -975,7 +975,7 @@
               165.059999
             ]
           },
-          "cached": false
+          "cached": true
         }
       }
     },
@@ -1020,7 +1020,7 @@
               153.682331
             ]
           },
-          "cached": false
+          "cached": true
         },
         "outside_mm3": 0.113779,
         "clearance_mm": 0.0
@@ -1050,7 +1050,7 @@
               165.03
             ]
           },
-          "cached": false
+          "cached": true
         }
       }
     },
@@ -1095,7 +1095,7 @@
               163.0
             ]
           },
-          "cached": false
+          "cached": true
         },
         "outside_mm3": 0.032063,
         "clearance_mm": 0.0
@@ -1125,7 +1125,7 @@
               163.0
             ]
           },
-          "cached": false
+          "cached": true
         }
       }
     },
@@ -1170,7 +1170,7 @@
               179.75
             ]
           },
-          "cached": false
+          "cached": true
         },
         "outside_mm3": 0.000195,
         "clearance_mm": 0.0
@@ -1200,7 +1200,7 @@
               163.0
             ]
           },
-          "cached": false
+          "cached": true
         }
       }
     },
@@ -1245,7 +1245,7 @@
               180.412152
             ]
           },
-          "cached": false
+          "cached": true
         },
         "outside_mm3": 0.126289,
         "clearance_mm": 0.0
@@ -1275,7 +1275,7 @@
               180.485903
             ]
           },
-          "cached": false
+          "cached": true
         }
       }
     },
@@ -1320,7 +1320,7 @@
               182.275477
             ]
           },
-          "cached": false
+          "cached": true
         },
         "outside_mm3": 0.243541,
         "clearance_mm": 0.0
@@ -1350,7 +1350,7 @@
               180.548833
             ]
           },
-          "cached": false
+          "cached": true
         }
       }
     },
@@ -1395,7 +1395,7 @@
               182.374282
             ]
           },
-          "cached": false
+          "cached": true
         },
         "outside_mm3": 0.015575,
         "clearance_mm": 0.0
@@ -1425,7 +1425,7 @@
               182.986324
             ]
           },
-          "cached": false
+          "cached": true
         }
       }
     },
@@ -1470,7 +1470,7 @@
               183.310001
             ]
           },
-          "cached": false
+          "cached": true
         },
         "outside_mm3": 0.0,
         "clearance_mm": 2.775282
@@ -1500,7 +1500,7 @@
               183.31
             ]
           },
-          "cached": false
+          "cached": true
         }
       }
     },
@@ -1545,7 +1545,7 @@
               153.75
             ]
           },
-          "cached": false
+          "cached": true
         },
         "outside_mm3": 0.014254,
         "clearance_mm": 0.0
@@ -1575,7 +1575,7 @@
               165.08
             ]
           },
-          "cached": false
+          "cached": true
         }
       }
     },
@@ -1620,7 +1620,7 @@
               173.452473
             ]
           },
-          "cached": false
+          "cached": true
         },
         "outside_mm3": 0.0,
         "clearance_mm": 0.0
@@ -1650,7 +1650,7 @@
               173.699473
             ]
           },
-          "cached": false
+          "cached": true
         }
       }
     },
@@ -1695,7 +1695,7 @@
               179.75
             ]
           },
-          "cached": false
+          "cached": true
         },
         "outside_mm3": 0.0,
         "clearance_mm": 13.09045
@@ -1725,7 +1725,7 @@
               197.79
             ]
           },
-          "cached": false
+          "cached": true
         }
       }
     },
@@ -1770,7 +1770,7 @@
               196.562368
             ]
           },
-          "cached": false
+          "cached": true
         },
         "outside_mm3": 0.281191,
         "clearance_mm": 0.0
@@ -1800,7 +1800,7 @@
               194.181796
             ]
           },
-          "cached": false
+          "cached": true
         }
       }
     },
@@ -1845,7 +1845,7 @@
               197.894018
             ]
           },
-          "cached": false
+          "cached": true
         },
         "outside_mm3": 0.004677,
         "clearance_mm": 0.0
@@ -1875,7 +1875,7 @@
               197.830669
             ]
           },
-          "cached": false
+          "cached": true
         }
       }
     },
@@ -1920,7 +1920,7 @@
               201.05578
             ]
           },
-          "cached": false
+          "cached": true
         },
         "outside_mm3": 0.05737,
         "clearance_mm": 0.0
@@ -1950,7 +1950,7 @@
               201.096846
             ]
           },
-          "cached": false
+          "cached": true
         }
       }
     },
@@ -1995,7 +1995,7 @@
               182.380635
             ]
           },
-          "cached": false
+          "cached": true
         },
         "outside_mm3": 0.660014,
         "clearance_mm": 0.0
@@ -2025,7 +2025,7 @@
               183.947236
             ]
           },
-          "cached": false
+          "cached": true
         }
       }
     },
@@ -2070,7 +2070,7 @@
               190.052982
             ]
           },
-          "cached": false
+          "cached": true
         },
         "outside_mm3": 0.061976,
         "clearance_mm": 0.0
@@ -2100,7 +2100,7 @@
               190.216914
             ]
           },
-          "cached": false
+          "cached": true
         }
       }
     },
@@ -2145,7 +2145,7 @@
               185.512608
             ]
           },
-          "cached": false
+          "cached": true
         },
         "outside_mm3": 0.505581,
         "clearance_mm": 0.0
@@ -2175,7 +2175,7 @@
               182.389022
             ]
           },
-          "cached": false
+          "cached": true
         }
       }
     },
@@ -2220,7 +2220,7 @@
               179.75
             ]
           },
-          "cached": false
+          "cached": true
         },
         "outside_mm3": 0.0,
         "clearance_mm": 10.976029
@@ -2250,7 +2250,7 @@
               192.91
             ]
           },
-          "cached": false
+          "cached": true
         }
       }
     },
@@ -2295,7 +2295,7 @@
               212.499998
             ]
           },
-          "cached": false
+          "cached": true
         },
         "outside_mm3": 0.0,
         "clearance_mm": 0.808425
@@ -2325,7 +2325,7 @@
               212.5
             ]
           },
-          "cached": false
+          "cached": true
         }
       }
     },
