@@ -66,7 +66,8 @@ BOX_BOUGHT = [('amass-xt60e-m', 1, 'pod: 24 V in'), ('turret_screw_m2_5x8', 2, '
               ('switchcraft-tb3m', 1, 'pod: the hold-to-run pendant\'s socket'), ('usb-can-canable2', 1, 'pod: CAN to the turret, USB to the J501'),
               ('wago-221-413', 4, 'pod: +24 V and 0 V to the DT12\'s power pins, the pendant loop to its safety pins'),
               ('turret_screw_m3x40', 4, 'the lid screws through the legs, in place of the J501\'s M3 x 16'),
-              ('insert_m5', 4, 'deck: the TM face (the turret\'s own 4 x M5 x 16)'), ('turret_dowel_5x10', 2, 'deck: the TM face\'s dowels'),
+              ('insert_m5', 4, 'deck: the TM face, wholly in the 8 mm deck'), ('screw_m5x12_button', 4, 'the turret onto the deck (the stand keeps its M5 x 16)'),
+              ('turret_dowel_5x10', 2, 'deck: the TM face\'s dowels'),
               ('turret_insert_m3_short', 6, 'deck: the shroud\'s tabs'), ('turret_screw_m3x10', 6, 'shroud: its tabs up into the deck'),
               ('insert_m3', 4, 'deck: the pod cover'), ('turret_screw_m3x6_flat', 4, 'pod cover'),
               ('preson-p8106ul-3-8in', 1, 'shroud: a 3 mm strip cut from the roll, the ring under the floor\'s lip on the J501 roof\'s solid band')]
@@ -441,14 +442,14 @@ def adapter_clearance(adapter):
     for k, (x, y) in enumerate(tb.LEGS):
         leg = deck.intersect(tb._cyl_z(tb.LEG_OD / 2 + 1.0, tb.ROOF - tb.SPIGOT_L - 2.0, tb.DECK_Z0 - 0.01, x, y)).val()
         legs[f'leg_{k + 1}'] = round(shroud.distance(leg), 2)
-    for k, (x, y) in enumerate(tu.TM_BOLTS):
-        boss = deck.intersect(tb._box(x - 9.0, x + 9.0, y - 9.0, y + 9.0, tb.TM_BOSS_Z0 - 1.0, tb.DECK_Z0 - 0.01)).val()
-        bosses[f'tm_boss_{k + 1}'] = round(shroud.distance(boss), 2)
-    least = min([*legs.values(), *bosses.values()])
+    for k, (x, y) in enumerate(tu.TM_BOLTS):              # the TM inserts are wholly in the deck plate: anything below it?
+        below = deck.intersect(tb._box(x - 9.0, x + 9.0, y - 9.0, y + 9.0, tb.ROOF, tb.DECK_Z0 - 0.01))
+        bosses[f'tm_boss_{k + 1}'] = round(shroud.distance(below.val()), 2) if below.solids().size() else None
+    least = min([*legs.values(), *[b for b in bosses.values() if b is not None]])
     return {'legs_mm': legs, 'tm_bosses_mm': bosses, 'least_mm': least, 'required_mm': 3.0, 'ok': least >= 3.0,
             'shroud_over_the_roof_mm': round(min(v.Z for v in shroud.Vertices()) - tb.ROOF, 2),
             'how': 'the BRepExtrema distance between the intake shroud and each leg (the deck cut round it, under the deck plate) and '
-                   'each TM insert boss (the deck cut round it, under the deck plate)'}
+                   'anything of the deck below its plate at each TM insert (none: the inserts are wholly in the 8 mm deck)'}
 
 
 # ------------------------------------------------------------------------------------------- main

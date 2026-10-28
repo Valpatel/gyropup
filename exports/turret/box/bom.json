@@ -239,7 +239,7 @@
    "item": "Heat-Set Threaded Inserts for Plastic, Standard, Brass, M5 x 0.8 mm Thread Size, 7.9 mm Installed Length",
    "key": "insert_m5",
    "qty": 4,
-   "for": "deck: the TM face (the turret's own 4 x M5 x 16)",
+   "for": "deck: the TM face, wholly in the 8 mm deck",
    "part_number": "94459A775",
    "vendor": "McMaster-Carr",
    "url": "https://www.mcmaster.com/94459A775/",
@@ -252,6 +252,33 @@
      "price_usd": null,
      "pack_qty": null,
      "in_stock": null
+    }
+   ]
+  },
+  {
+   "item": "Black-oxide class 10.9 button head hex drive screw, ISO 7380, M5 x 0.8 x 12 mm (the hip frames into the cheeks)",
+   "key": "screw_m5x12_button",
+   "qty": 4,
+   "for": "the turret onto the deck (the stand keeps its M5 x 16)",
+   "part_number": "91239A228",
+   "vendor": "McMaster-Carr",
+   "url": "https://www.mcmaster.com/91239A228/",
+   "price_usd_each": 0.1206,
+   "pack_qty": 100,
+   "sellers": [
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/91239A228/",
+     "price_usd": 12.06,
+     "pack_qty": 100,
+     "in_stock": true
+    },
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/91239A224/",
+     "price_usd": 11.79,
+     "pack_qty": 100,
+     "in_stock": true
     }
    ]
   },
@@ -455,7 +482,7 @@
    "note": "not bought again"
   }
  ],
- "price_usd_known": 57.11,
+ "price_usd_known": 57.59,
  "not_in_a_catalogue": [],
  "no_listed_price": [],
  "modelled": [

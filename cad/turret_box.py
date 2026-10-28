@@ -29,7 +29,7 @@ Why it is shaped this way (the J501's cad/parameters.json, Rev 0.9 "0.9-g48r"):
 
 Parts (PETG: a bench part on a 40 C exhaust, not a robot part):
   box_deck       printed upside down, on its top face: the deck with the turret's TM pattern (4 x M5 inserts on 80 x 80
-                 in bosses deep enough for the turret's M5 x 16, 2 x Ø5 x 10 dowels, a Ø45 recess: the turret's harness
+                 wholly in the 8 mm deck for the turret's 4 x M5 x 12, 2 x Ø5 x 10 dowels, a Ø45 recess: the turret's harness
                  leaves from its side, so nothing passes the TM hole and nothing falls through it into the fan), the
                  four hollow legs, the front skirt each side of the grille, and the control pod under the rear overhang
                  with the bench stand's panel (cad/turret_stand.py PANEL): the XT60E-M 24 V inlet, the Ø20.2 keyed DC
@@ -178,7 +178,9 @@ def to_box(xj, yj, zj=0.0):
 
 
 ROOF = J['roof_z']                       # the lid's top face
-GAP = 36.0                               # roof to the deck's underside: the duct's height (+ floor and gasket)
+GAP = 40.0                               # roof to the deck's underside: the duct's height (+ floor and gasket); 40 since the
+#                                          J501's committed Rev 0.9 (the fan re-centred on the module, 38.8 m3/h at its CFD point):
+#                                          36 cost 10.9 % of the fan's flow
 DECK_T = 8.0
 Z_TM = ROOF + GAP + DECK_T               # the turret's TM face (the turret's mount_z in this frame)
 DECK_Z0 = Z_TM - DECK_T
@@ -192,17 +194,20 @@ LEG_OD, LEG_BORE, PAD_T = 14.0, 7.0, 5.0
 SPIGOT_D, SPIGOT_L = J['counterbore_d'] - 0.4, 10.0
 LID_SCREW_TIP = J['screw_head_z'] - J['lid_screw_len']           # where the J501's own lid screw ends (full insert)
 LID_SCREW_LEN = ROOF + PAD_T - LID_SCREW_TIP                      # the longer screw through a leg: same tip
-# the TM face: the turret's 4 x M5 x 16 pass its 5 mm foot and reach 11 mm below the face, so each insert boss goes
-# 13.5 mm down (a 12.5 mm pilot, 1 mm floor); its dowels stand at most 4 mm proud (the pan base's holes are 4 deep):
-# Ø5 x 10 pins 6.5 mm into blind holes
-TM_SCREW_REACH = 16.0 - tu.Geo().foot_t                          # the turret's M5 x 16 (its TM screws) through its foot
-TM_PILOT_DEPTH = TM_SCREW_REACH + 1.5
-TM_BOSS_R, TM_BOSS_Z0 = 6.5, Z_TM - TM_PILOT_DEPTH - 1.0
+# the TM face: on the box the turret goes on with 4 x M5 x 12 button heads (7 mm past its 5 mm foot) into M5 inserts
+# (7.9 mm) wholly inside the 8 mm deck, so nothing hangs below the deck: with the J501's fan re-centred 9.5 mm behind
+# the pan axis, the Ø105 collar round its grille reaches the 80 x 80 pattern, and bosses for the stand's M5 x 16 stood in
+# its way. Its dowels stand at most 4 mm proud (the pan base's holes are 4 deep): Ø5 x 10 pins 6.5 mm into blind holes
+TM_SCREW_LEN = 12.0
+TM_SCREW_REACH = TM_SCREW_LEN - tu.Geo().foot_t
+TM_PILOT_DEPTH = DECK_T + 0.1                                     # through the deck: the insert fills it, the screw ends 1 mm short
+TM_BOSS_R, TM_BOSS_Z0 = 0.0, DECK_Z0                              # no bosses below the deck
 DOWEL_HOLE_DEPTH = 6.5
 FAN = to_box(*J['fan_xy'])[:2]
 SH_WALL, SH_FLOOR_T, SH_GAP = 2.5, 2.0, 1.0
 SH_Z0 = ROOF + SH_GAP                    # the shroud's floor rests on 1.5 mm foam tape, 1 mm above the roof
-MOUTH_HALF = 80.0                        # the duct's mouth: 160 mm wide (the walls 4.7 mm off the front legs), as wide back
+MOUTH_HALF = 79.0                        # the duct's mouth: 158 mm wide (the walls 3.7 mm off the nearer front leg: the fan is
+#                                          2 mm off the box's centre line), as wide back
 #                                          to the fan's centre (airflow_estimate: 124 mm costs 15 % of the flow at the J501's
 #                                          latest CFD point, 160 mm under 10 % at both)
 TAPE_W = 3.0                             # the foam ring under the floor's lip
@@ -219,10 +224,8 @@ if _I['kind'] == 'grille':
     _mid = (OPEN_R + CELLS_R) / 2
     TAPE_R = (_mid - TAPE_W / 2, _mid + TAPE_W / 2)
     HOLE_R = TAPE_R[0] - 0.5
-    # the collar's inner face on the open-cell boundary, drawn in where it would come within CLEAR of a TM insert boss
-    # behind the fan (the rear bosses stand just outside it), never inside the tape
-    _rear = [math.hypot(x - FAN[0], y - FAN[1]) for x, y in tu.TM_BOLTS if x < FAN[0]]
-    COLLAR_R = max(min([CELLS_R] + [d - TM_BOSS_R - CLEAR - SH_WALL for d in _rear]), TAPE_R[1] + 1.0)
+    # the collar's inner face on the open-cell boundary, outside the tape
+    COLLAR_R = max(CELLS_R, TAPE_R[1] + 1.0)                     # nothing hangs below the deck in its way
 else:
     # Rev 0.8: the intake cells inside the duct ring; the floor's hole is the ring, the tape round it under the floor,
     # the collar's face 0.5 mm outside it (a face on the hole's own circle defeats the solid modeller's booleans)
@@ -367,9 +370,6 @@ def box_deck():
     s = s.union(pod)
     for (x, y) in POD_BOSSES:
         s = s.union(_cyl_z(4.5, POD_Z0, POD_Z0 + 10.0, x, y))
-    # the TM insert bosses under the deck, deep enough for the turret's M5 x 16
-    for (x, y) in tu.TM_BOLTS:
-        s = s.union(_cyl_z(TM_BOSS_R, TM_BOSS_Z0, DECK_Z0 + 0.01, x, y))
     # ---- cuts
     for (x, y) in LEGS:
         s = s.cut(_cyl_z(LEG_BORE / 2, ROOF + PAD_T, Z_TM + 1, x, y))                      # key and head from above
@@ -422,9 +422,6 @@ def intake_shroud():
     for y in grille_bars()[0]:                                                              # the front grille
         s = s.union(_box(FRONT_X - 0.6 - GRILLE['depth'], FRONT_X - 0.6, y - GRILLE['bar'] / 2, y + GRILLE['bar'] / 2,
                          z0 + SH_FLOOR_T - 0.01, z1))
-    if _I['kind'] != 'grille':
-        for (x, y) in tu.TM_BOLTS:                              # Rev 0.8: the collar ran under the TM insert bosses
-            s = s.cut(_cyl_z(TM_BOSS_R + 0.7, TM_BOSS_Z0 - 0.6, z1 + 1.0, x, y))
     return s
 
 
