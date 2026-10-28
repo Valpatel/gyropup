@@ -1,19 +1,19 @@
 {
  "toolkit": "cadagent.gates (connectivity, containment, relation table, fasteners, motion)",
- "fingerprint": "0cf1bc260a4587b4",
+ "fingerprint": "1432c61b9714e16d",
  "pile": "exports/turret/feed/pile.json",
  "verdicts": "exports/turret/gates",
  "seconds": {
-  "connectivity": 12.0,
+  "connectivity": 11.4,
   "hopper": 0.1,
-  "path": 27.4,
-  "sweep": 2.0,
-  "ammo_range": 27.5,
-  "fasteners": 10.9,
-  "motion_mechanisms": 81.6,
-  "motion_aim": 2808.7
+  "path": 24.9,
+  "sweep": 1.7,
+  "ammo_range": 25.8,
+  "fasteners": 10.7,
+  "motion_mechanisms": 48.9,
+  "motion_aim": 632.2
  },
- "ok": false,
+ "ok": true,
  "gates": {
   "connectivity": {
    "ok": true,
@@ -107,7 +107,7 @@
     {
      "id": "contact:cartridge_body|laser_mount",
      "status": "warn",
-     "message": "cartridge_body and laser_mount are in contact (touching, 197 mm2) but no interface, joint, fastener, contains or intended overlap declares it"
+     "message": "cartridge_body and laser_mount are in contact (touching, 288 mm2) but no interface, joint, fastener, contains or intended overlap declares it"
     },
     {
      "id": "contact:circlip_50|pan_ring",
@@ -175,70 +175,30 @@
    "findings": []
   },
   "fasteners": {
-   "ok": false,
-   "status": "fail",
+   "ok": true,
+   "status": "warn",
    "counts": {
-    "pass": 32,
-    "warn": 0,
-    "fail": 3
+    "pass": 34,
+    "warn": 1,
+    "fail": 0
    },
    "findings": [
     {
      "id": "fastener:hopper_screws#0:tool",
-     "status": "fail",
-     "message": "the hex 2.5 envelope hits cartridge_board 22.50 mm from the head (10.413 mm\u00b3) (at step 1)"
-    },
-    {
-     "id": "fastener:laser_foot_screws#0:seat",
-     "status": "fail",
-     "message": "nothing under the head at 2 of 8 angles: it overhangs an edge or a pocket; the head stands 1.972 mm off laser_mount's face (> 0.05)"
-    },
-    {
-     "id": "fastener:laser_foot_screws#1:seat",
-     "status": "fail",
-     "message": "nothing under the head at 2 of 8 angles: it overhangs an edge or a pocket; the head stands 1.972 mm off laser_mount's face (> 0.05)"
+     "status": "warn",
+     "message": "the hex 2.5 reaches the head at step 1, but cartridge_board (fitted later) must come off before it can be removed"
     }
    ]
   },
   "motion_mechanisms": {
-   "ok": false,
-   "status": "fail",
+   "ok": true,
+   "status": "warn",
    "counts": {
-    "pass": 2,
+    "pass": 5,
     "warn": 1,
-    "fail": 6
+    "fail": 0
    },
    "findings": [
-    {
-     "id": "collision:hopper_flap|hopper_lid",
-     "status": "fail",
-     "message": "hopper_flap and hopper_lid, an intended contact, share 0.17329 mm3 (over 0.001) first at flap=-60deg (onset between flap=-51.1328 and -51.1719 deg); 2 of 8 poses overlap"
-    },
-    {
-     "id": "motion:flap",
-     "status": "fail",
-     "message": "flap: 1 colliding pair(s) over 8 poses (flap -70..0 deg in 8 samples (10 deg apart, up to 6.479 mm of travel))"
-    },
-    {
-     "id": "collision:flywheel|flywheel_motor_l",
-     "status": "fail",
-     "message": "flywheel and flywheel_motor_l, an intended contact, share 0.007775 mm3 (over 0.001) first at wheel_l=0deg; 13 of 13 poses overlap"
-    },
-    {
-     "id": "motion:wheel_l",
-     "status": "fail",
-     "message": "wheel_l: 1 colliding pair(s) over 13 poses (wheel_l 0..360 deg in 13 samples (30 deg apart, up to 14.069 mm of travel))"
-    },
-    {
-     "id": "collision:flywheel_m|flywheel_motor_r",
-     "status": "fail",
-     "message": "flywheel_m and flywheel_motor_r, an intended contact, share 0.007775 mm3 (over 0.001) first at wheel_r=0deg; 13 of 13 poses overlap"
-    },
-    {
-     "id": "motion:wheel_r",
-     "status": "fail",
-     "message": "wheel_r: 1 colliding pair(s) over 13 poses (wheel_r 0..360 deg in 13 samples (30 deg apart, up to 14.069 mm of travel))"
-    },
     {
      "id": "combination:wheel_l+wheel_r",
      "status": "warn",
@@ -247,25 +207,14 @@
    ]
   },
   "motion_aim": {
-   "ok": false,
-   "status": "fail",
+   "ok": true,
+   "status": "pass",
    "counts": {
-    "pass": 0,
+    "pass": 1,
     "warn": 0,
-    "fail": 2
+    "fail": 0
    },
-   "findings": [
-    {
-     "id": "collision:slip_ring|slip_ring_rotor",
-     "status": "fail",
-     "message": "slip_ring and slip_ring_rotor, an intended contact, share 0.282743 mm3 (over 0.001) first at pan=0deg,tilt=0deg; 210 of 210 poses overlap"
-    },
-    {
-     "id": "motion:pan+tilt",
-     "status": "fail",
-     "message": "pan+tilt: 1 colliding pair(s) over 210 poses (pan -170..170 deg in 35 samples (10 deg apart, up to 26.358 mm of travel); tilt 0..25 deg in 6 samples (5 deg apart, up to 13.349 mm of travel))"
-    }
-   ]
+   "findings": []
   }
  }
 }

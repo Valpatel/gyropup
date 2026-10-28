@@ -143,7 +143,7 @@
    "solid": true,
    "frame": "tilt",
    "doc": "The ball cartridge, printed PA6-CF on its base (100 % solid, 2.5 mm walls): a base plate on the cradle rails",
-   "mass_g_each": 166.3,
+   "mass_g_each": 166.7,
    "print_h": 10.9,
    "bed_mm": [
     165.6,
@@ -214,7 +214,7 @@
    "mass_g_each": 44.5,
    "print_h": 1.8,
    "bed_mm": [
-    110.8,
+    103.4,
     101.4,
     65.0
    ],
@@ -279,11 +279,11 @@
    "solid": false,
    "frame": "tilt",
    "doc": "Laser holder, printed PETG: a ring round the \u00d87 laser over the barrel (\u00d811 bore with an O-ring at the back) and",
-   "mass_g_each": 6.2,
-   "print_h": 0.2,
+   "mass_g_each": 8.0,
+   "print_h": 0.3,
    "bed_mm": [
     33.0,
-    18.0,
+    25.0,
     18.0
    ],
    "fits_bed": true,
@@ -584,6 +584,16 @@
    "mass_g": 0.8999999999999999,
    "note": "3 x McMaster 93285A115 M3 x 6 nylon-tip set screws (18-8): the laser's boresight, in its holder's tapped ring",
    "frame": "tilt"
+  },
+  "laser_inserts": {
+   "mass_g": 0.716,
+   "note": "2 x McMaster 94459A140 M3 x 5.7 heat-set inserts in the barrel socket's pad: the laser holder's screws",
+   "frame": "tilt"
+  },
+  "hopper_inserts": {
+   "mass_g": 1.0739999999999998,
+   "note": "3 x McMaster 94459A140 M3 x 5.7 heat-set inserts in the housing's lugs: the hopper's screws",
+   "frame": "tilt"
   }
  },
  "tyre_set": {
@@ -715,13 +725,13 @@
    170.0
   ],
   "pan_hard_stop_deg": 173.5,
-  "mass_estimate_g": 2556.9,
+  "mass_estimate_g": 2560.8,
   "com": [
    -4.1,
    -2.8,
-   349.1
+   349.2
   ],
-  "com_above_mount_mm": 49.1,
+  "com_above_mount_mm": 49.2,
   "ball_d": 22.7,
   "bore": 24.2,
   "pose": {
@@ -746,12 +756,12 @@
    -25.0
   ]
  ],
- "mass_g_with_balls": 2556.9,
- "mass_g_empty": 2502.0,
+ "mass_g_with_balls": 2560.8,
+ "mass_g_empty": 2505.9,
  "com_from_mount_mm": [
   -4.1,
   -2.8,
-  49.1
+  49.2
  ],
  "not_modelled_g": {
   "wiring and the cable loops": 50,
@@ -760,6 +770,6 @@
   "screws, inserts, dowels, springs": 17,
   "CT connector pair (Micro-Fit 3.0 class)": 12
  },
- "print_hours": 71.4,
- "made_g": 1206.7
+ "print_hours": 71.5,
+ "made_g": 1208.9
 }
