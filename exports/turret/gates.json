@@ -1,5 +1,5 @@
 {
- "fingerprint": "a4ac927af2c05ff4",
+ "fingerprint": "8244ee7df3a9ab3f",
  "pile": "exports/turret/feed/pile.json",
  "seconds": 69,
  "ok": true,
@@ -524,12 +524,12 @@
    "touch_mm": 0.05,
    "groups": {
     "base": {
-     "parts": 10,
+     "parts": 16,
      "bodies": 1,
      "floating": []
     },
     "pan": {
-     "parts": 14,
+     "parts": 15,
      "bodies": 1,
      "floating": []
     },
@@ -631,6 +631,16 @@
    ],
    "joint_mm": 0.5,
    "links": [
+    [
+     "compute_shell",
+     "eth_jack",
+     "two 4-40 screws through its ears into the plinth's wall"
+    ],
+    [
+     "compute_shell",
+     "xt30_input",
+     "its housing clamped in the wall's pocket (a printed clip, 2 x M3)"
+    ],
     [
      "laser",
      "laser_mount",

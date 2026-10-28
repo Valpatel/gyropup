@@ -41,6 +41,8 @@ PLATE = {'curr_bed_type': 'Textured PEI Plate'}      # the slicer's default cool
 PARTS = [
     ('stand_box', 'bench/stand_box.stl', 'petg', 1, STAND, True, 'upside down, on its top plate', 'the stand first: it needs no decision'),
     ('stand_bottom', 'bench/stand_bottom.stl', 'petg', 1, STAND, False, 'flat', ''),
+    ('compute_tray', 'compute_tray.stl', 'pa6-cf', 1, PARTIAL, False, 'flat, ribs up', 'the compute plinth\'s floor (D66): 4 x M4 inserts'),
+    ('compute_shell', 'compute_shell.stl', 'petg', 1, PETG, True, 'upside down, on its top rim', 'the compute plinth\'s wall (D66): 4 x M5 inserts in the column tops'),
     ('pan_base', 'pan_base.stl', 'pa6-cf', 1, PARTIAL, True, 'on its foot', '40 % gyroid inside 4 perimeters (the FEA case)'),
     ('pan_ring', 'pan_ring.stl', 'pa6-cf', 1, SOLID, True, 'upside down: the gear teeth flat on the bed', ''),
     ('pan_spacer', 'pan_spacer.stl', 'pa6-cf', 1, SOLID, False, 'on its wide end', ''),
@@ -62,6 +64,7 @@ PARTS = [
     ('barrel', 'barrel.stl', 'petg', 1, PETG, True, 'standing on its socket end', 'change to blaze orange for the last 15 mm (a filament change at that layer)'),
     ('laser_mount', 'laser_mount.stl', 'petg', 1, PETG, False, 'on its foot', ''),
     ('board_bay', 'board_bay.stl', 'petg', 1, PETG, False, 'on its back', ''),
+    ('board_bay_lid', 'board_bay_lid.stl', 'petg', 1, PETG, False, 'flat, the lip up', 'the bay\'s snap lid (modelled since 2026-10-27)'),
     ('flywheel_tyre', 'flywheel_tyre_d34.stl', 'tpu95', 2, TPU, False, 'flat', 'Ø34 mounted (printed 4 % under the Ø28 rim): the only tyre for the X2216 (D42)'),
 ]
 NOT_PRINTED = {'bumper_ring': 'v1 (the robot): no bumper on the bench', 'hopper_flap': 'v1: the dock\'s fill flap',
@@ -72,8 +75,8 @@ NOT_PRINTED = {'bumper_ring': 'v1 (the robot): no bumper on the bench', 'hopper_
 # the print order (plan 4.2): the stand first, then the pan stack and the tilt group, the cartridge parts after the motor
 # and the servo are in hand, the tyres last
 SCHEDULE = [('Day 1', ['stand_box', 'stand_bottom']),
-            ('Day 1-2: the pan stack (PA6-CF)', ['pan_base', 'pan_ring', 'pan_spacer', 'pan_pinion', 'ring_carrier', 'ring_driver']),
-            ('Day 2-3: the tilt group (PA6-CF, PETG)', ['tilt_yoke', 'cradle', 'horn_boss', 'pivot_spacer', 'board_bay', 'laser_mount']),
+            ('Day 1-2: the compute plinth and the pan stack (PA6-CF, PETG)', ['compute_tray', 'compute_shell', 'pan_base', 'pan_ring', 'pan_spacer', 'pan_pinion', 'ring_carrier', 'ring_driver']),
+            ('Day 2-3: the tilt group (PA6-CF, PETG)', ['tilt_yoke', 'cradle', 'horn_boss', 'pivot_spacer', 'board_bay', 'board_bay_lid', 'laser_mount']),
             ('Once the X2216 and a servo are in hand: the cartridge', ['cartridge_body', 'flywheel', 'dial', 'hopper', 'hopper_lid', 'barrel']),
             ('Last', ['flywheel_tyre'])]
 

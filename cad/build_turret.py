@@ -66,6 +66,11 @@ TURRET_BOUGHT = {
     'slip_ring': ('sparkfun-rob-13065', 1), 'slip_ring_rotor': ('sparkfun-rob-13065', 0), 'ring_leads_rotor': ('sparkfun-rob-13065', 0),
     'ring_coupling': ('turret_tube_coupling', 1), 'index_magnet': ('turret_magnet_disc', 1), 'hall_switch': ('allegro-a1120lua-t', 1),
     'ct_thumbscrew': ('turret_thumbscrew_m4x12', 1),
+    # D66: the turret's own computer and power input, in the compute plinth
+    'compute': ('seeed-recomputer-mini-j4012-ext', 1), 'eth_jack': ('adafruit-909', 1), 'xt30_input': ('xt30_f', 1),
+    'input_fuses': ('fuse_holder_mini_inline', 2), 'hw_fuse_main': ('fuse_mini58_20a', 1), 'hw_fuse_compute': ('fuse_mini58_5a', 1),
+    'hw_plinth_inserts_m5': ('insert_m5', 4), 'hw_plinth_screws_m5': ('screw_m5x16', 4), 'hw_plinth_dowels': ('dowel_5x16', 2),
+    'hw_plinth_m4': ('turret_screw_m4x10', 4), 'hw_plinth_inserts_m4': ('turret_insert_m4', 4),
     'base_board': ('proto-board-52x50', 1), 'turret_board': ('proto-board-52x50', 3),
     # hardware
     'hw_tm_screws': ('screw_m5x16', 4), 'hw_tm_dowels': ('dowel_5x16', 2),
@@ -130,7 +135,10 @@ BENCH_BOUGHT = [('amass-xt60e-m', 1), ('turret_screw_m2_5x8', 2), ('turret_nut_m
                 ('fuse-holder-5x20-panel', 1), ('littelfuse-0477005-mxp', 2), ('switchcraft-tb3m', 1), ('switchcraft-ta3flx', 1),
                 ('pendant-hold-to-run', 1),
                 ('usb-can-canable2', 1), ('proto-board-70x50', 1), ('bumper-feet-12.7', 4), ('insert_m5', 4), ('insert_m3', 8),
-                ('turret_screw_m3x8', 4), ('meanwell-lrs-350-24', 1), ('caldwell-ballistic-precision-chronograph-bt', 1),
+                ('turret_screw_m3x8', 4),
+                # D66: the stand runs the turret on one FLEXVOLT pack in 20 V mode in a dock, to the turret's XT30
+                ('dewalt-dcb609', 1), ('dewalt-20v-dock-adapter-12awg', 1), ('xt30_m', 1), ('fuse_holder_mini_inline', 1), ('fuse_mini58_20a', 1),
+                ('caldwell-ballistic-precision-chronograph-bt', 1),
                 # the ammo (D67): a third-party Rival-compatible pack and the official Nerf Rival refill, side by side,
                 # cheapest a round first (any round 22.2-22.8 mm, 1.6-2.0 g: cad/turret_gates.py ammo_range)
                 ('worker-cheetah-rival-rounds-100', 2), ('hasbro-nerf-rival-accu-round-60', 1)]

@@ -404,3 +404,21 @@ Newest last. One entry per agent run: what it did, what it proved, what is next.
   - For the main session: docs/head-payload.md and designs' head_payload take D49's 1.70 kg; cad/leg_studies.py's
     docstring can say the layer-aware post-process applies there (N2's note); designer/turret_bench.js text changes are
     in the report.
+- 2026-10-27, the mechanical cleanup and D66/D67 (turret/program): the design gates (cad/gates.py generic,
+  cad/turret_gates.py on the turret, exports/turret/gates.json, enforced by cad/build_turret_box.py): every ball in its
+  cavity, no ball overlap over 0.1 mm, one body per moving group, the hopper's balls clear over the sweep, the ammo
+  range 22.2-22.8 mm. The pile is a MuJoCo settle (exports/turret/feed/pile.json). The 3D page drew every ball and the
+  dial's, wheels' and flap's pivots 48 mm off (C instead of the tilt frame): fixed. The connectivity gate found the
+  slip ring's coupling 1 mm loose on the rotor stub (now 51225K24) and the hall switch floating in its pocket.
+  docs/turret-sections.md reviews the turret in eight sections. D67: the official Nerf Rival refill beside the
+  Worker pack. D66: the compute plinth (a reComputer Mini J4012 with Extension, US$999, its XT30 input, Ethernet jack
+  and 58 V fuses) under the pan base; the stand carries a DCB609 in 20 V mode on a dock.
+  - For the body workstream (D66): the turret's TM face is now 86 mm higher on the head (the plinth's underside
+    carries the same TM pattern and dowels; Turret.mount_z includes it, so cad/build.py and sim/robot_v2.py follow),
+    and the turret is about 0.8 kg heavier (about 2.5 kg with 30 balls; the head payload in docs/head-payload.md and
+    designs' head_payload to update). Its power is one XT30 branch from the 10S bus (D55: a 20 A MINI 58 V fuse in the
+    body's branch is the turret's own size; the old 5 A 24 V branch goes), Ethernet to the J501 (the plinth's RJ-45 on
+    its -x side), and the dry safety loop on the DT12 as before. The head's Ø45 TM cable hole is no longer needed.
+    The lidar table (cad/turret_lidar.py, 143 mm) is to be rerun at the new height.
+  - For the main session: the 3D page's turret is now on its plinth on the J501 box; the stand scene (FLEXVOLT dock)
+    is in exports/turret/bench/ (cad/build_turret.py) and has no page of its own yet.

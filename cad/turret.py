@@ -637,7 +637,7 @@ CLAMP_T = 3.175                                   # SendCutSend 6061-T6 aluminiu
 YOKE_RELIEF = {'r': 35.0, 'h': 1.5, 'chamfer': 3.0}    # the bridge bears on the turntable inside r 35; a cone to 1.5 mm up at r 38
 # printed with 4 perimeters, 5 top and bottom layers and 40 % gyroid instead of solid (mass): the pan base's walls are
 # all perimeter at that, and its FEA peaks sit in them (cad/turret_studies.py)
-PARTIAL_FILL = {'pan_base'}
+PARTIAL_FILL = {'pan_base', 'compute_tray'}
 PINION_FACE = 16.0
 
 
@@ -747,6 +747,19 @@ def board_bay(G):
     return s
 
 
+TILT_POCKET_DEPTH = SERVO['H'] + SERVO['bump'] + 1.0       # 34.9 (15 until 2026-10-27: the servo stood 19 mm proud)
+
+
+def board_bay_lid(G):
+    """The board bay's lid, printed PETG flat: a 2 mm plate over the bay's open face with a 1.5 mm lip inside its walls
+    and two snap bumps (est.), so the boards are closed in and the bay reads as the -y arm's pod."""
+    a1 = G.arm_y[1]
+    X, (z0, z1), Y, w = TB['x'], TB['z'], TB['y_out'], TB['wall']
+    s = box(-X, X, -Y - 2.0, -Y, z0, z1)
+    lip = box(-X + w, X - w, -Y + 0.01, -Y + 4.0, z0 + w, z1 - w).cut(box(-X + w + 1.5, X - w - 1.5, -Y - 1, -Y + 5.0, z0 + w + 1.5, z1 - w - 1.5))
+    return s.union(lip)
+
+
 def tilt_yoke(G):
     """Printed PA6-CF on its back (layers run along the arms): a 12 mm bridge on the turntable (4 x M4) and two 8 mm
     arms up to the tilt axis, a 3 mm fillet where each meets the bridge. +y arm: a pocket for the STS3215 tilt servo on its outer face, the servo's output face
@@ -772,10 +785,11 @@ def tilt_yoke(G):
         r = YOKE_ROOT_FILLET[0]                                 # the bigger fillet everywhere but under the rotor leads
         for xa, xb in ((-20.0, -YOKE_LEAD_GAP), (YOKE_LEAD_GAP, 20.0)):
             s = s.union(box(xa, xb, yi - sgn * r, yi, b1 - 0.01, b1 + r).cut(cyl_x(r, xa - 1, xb + 1, yi - sgn * r, b1 + r)))
-    # tilt servo pocket on the +y arm (servo + 0.3, walls 3, 15 deep)
+    # tilt servo pocket on the +y arm (servo + 0.3, walls 3): its walls run out over the whole case (the servo's height
+    # and its idler bump, TILT_POCKET_DEPTH), so the servo sits in the arm, not on it; only its bus plugs stand out
     W, L, sft = SERVO['W'], SERVO['L'], SERVO['shaft_from_end']
-    pocket = box(-W / 2 - 3.3, W / 2 + 3.3, a1, a1 + 15, zt - (L - sft) - 3.3, zt + sft + 3.3)
-    s = s.union(pocket).cut(box(-W / 2 - 0.3, W / 2 + 0.3, a1, a1 + 16, zt - (L - sft) - 0.3, zt + sft + 0.3))
+    pocket = box(-W / 2 - 3.3, W / 2 + 3.3, a1, a1 + TILT_POCKET_DEPTH, zt - (L - sft) - 3.3, zt + sft + 3.3)
+    s = s.union(pocket).cut(box(-W / 2 - 0.3, W / 2 + 0.3, a1, a1 + TILT_POCKET_DEPTH + 1, zt - (L - sft) - 0.3, zt + sft + 0.3))
     holes = [(sgn * SERVO['holes_x'], zt - d) for sgn in (1, -1) for d in SERVO['holes_out']]
     relief = box(-W / 2 - 0.3, W / 2 + 0.3, a1 - 1.5, a1 + 0.01, zt - (L - sft) - 0.3, zt + sft + 0.3)
     for (x, z) in holes:
@@ -1356,10 +1370,111 @@ def head_ring_tm(L, G=None):
 
 # ------------------------------------------------------------------------------------------------ bought parts
 
+# ------------------------------------------------------------------------------------------------ compute and power (D66)
+# The turret is a robot of its own (D66): a Jetson Orin NX 16 GB on Seeed's reComputer Mini carrier, bought as the
+# reComputer Mini J4012 with Extension (the NX module, the carrier, its extension board with the RJ-45 and CAN, Seeed's
+# own fan and heat sink for the NX, in its 63 x 95 x 66.7 enclosure, 462 g), one XT30 input (12-54 V: one FLEXVOLT
+# in 20 V mode on the stand, the 10S bus on Gyropup) and its fuses, in a plinth under the pan base. The plinth's
+# underside carries the TM pattern, so the turret mounts on the head (or its stand) as before, 86 mm higher.
+J4012 = {'L': 95.0, 'W': 63.0, 'H': 66.7, 'mass_g': 462.0, 'x0': -50.0,
+         'name': 'Seeed reComputer Mini J4012 with Extension (Jetson Orin NX 16 GB, 10-40 W)'}
+PLINTH = {'h': 86.0, 'r': 78.0, 'wall': 2.5, 'tray_t': 10.0, 'col_r': 7.5, 'cbore': (9.5, 5.5), 'rib_h': 6.0,
+          'tab': 8.0, 'vent': (4.0, 36.0, 7), 'eth_y': 30.0, 'xt30_y': -30.0}
+ETH_JACK = {'cut': (16.0, 14.0), 'ears': 25.0, 'depth': 22.0, 'note': 'Adafruit 909 panel-mount RJ-45 extension (25 cm lead to the J4012\'s port)'}
+XT30_IN = {'body': (10.2, 5.2, 16.0), 'clamp': (16.0, 11.0), 'note': 'Amass XT30U-F on 14 AWG leads, its housing clamped in the plinth\'s wall'}
+FUSES = {'size': (36.0, 14.0, 12.0), 'note': 'two Bussmann HHM inline MINI holders on the tray (58 V MINI fuses only): 20 A main, 5 A to the J4012'}
+
+
+def compute_tray(G):
+    """The plinth's floor, printed PA6-CF (solid): a Ø156 x 10 disc on the head's TM pattern (4 x M5 x 16 counterbored
+    down through it into the head's inserts, put in first; 2 x Ø5 dowel holes), 4 x M4 inserts by the shell's column
+    feet and low ribs that locate the J4012 at its corners. No cable hole: the turret's leads (XT30, Ethernet) leave
+    through the shell's wall, and the head's Ø45 TM hole is closed."""
+    P = PLINTH
+    z0 = -P['h']
+    z1 = z0 + P['tray_t']
+    s = cyl_z(P['r'], z0, z1)
+    for (x, y) in TM_BOLTS:
+        s = s.cut(through_z(x, y, FAST['M5']['clear'], z0 - 1, z1 + 1)).cut(cyl_z(P['cbore'][0] / 2, z1 - P['cbore'][1], z1 + 1, x, y))
+        fx, fy = x * (1 - 14.0 / 40.0), y                                      # the column's foot, inboard in x
+        s = s.cut(insert_hole(fx, fy, z1, 'M4'))
+    for (x, y) in TM_DOWELS:
+        s = s.cut(through_z(x, y, 5.0, z0 - 1, z0 + 8.0))
+    J = J4012
+    x0, x1, y1 = J['x0'], J['x0'] + J['L'], J['W'] / 2
+    rh = P['rib_h']
+    for (cx, sx) in ((x0, 1), (x1, -1)):                                      # end stops, between the columns
+        s = s.union(box(cx - sx * 2.2, cx - sx * 0.2, -20.0, 20.0, z1 - 0.01, z1 + rh))
+    for sy in (1, -1):                                                         # side stops, mid-length
+        s = s.union(box(-20.0, 20.0, sy * (y1 + 0.2), sy * (y1 + 2.2), z1 - 0.01, z1 + rh))
+    return s
+
+
+def compute_shell(G):
+    """The plinth's wall, printed PETG upside down: a Ø156 x 3 ring from the tray to the pan base's foot, four columns
+    under the TM bolts (an M5 insert in each top for the pan base's M5 x 16; a foot with an M4 down into the tray; a tab
+    that holds the J4012 down at each top corner), ribs from the columns to the wall, vents in the +-y walls beside the
+    J4012's sides, and in the -x wall the Ethernet jack's window (2 x 4-40) and the XT30 input's clamp pocket."""
+    P = PLINTH
+    zt = -P['h'] + P['tray_t']
+    s = ring_z(P['r'], P['r'] - P['wall'], zt, 0.0)
+    J = J4012
+    jtop = zt + J['H']
+    for (x, y) in TM_BOLTS:
+        col = cyl_z(P['col_r'], zt, 0.0, x, y)
+        a = math.atan2(y, x)
+        rib = box(0.0, P['r'] - 1.0 - math.hypot(x, y), -2.0, 2.0, zt, 0.0).translate((math.hypot(x, y), 0, 0)).rotate((0, 0, 0), (0, 0, 1), math.degrees(a))
+        fx = x * (1 - 14.0 / 40.0)
+        foot = box(min(fx, x) - 6.0, max(fx, x) + 1.0, y - 6.0, y + 6.0, zt, zt + 5.0) if x > 0 else box(min(fx, x) - 1.0, max(fx, x) + 6.0, y - 6.0, y + 6.0, zt, zt + 5.0)
+        sy = 1 if y > 0 else -1
+        tab = box(x - P['tab'] / 2, x + P['tab'] / 2, sy * (J['W'] / 2 - 5.0), sy * (abs(y) - P['col_r'] + 0.5), jtop, jtop + 4.0)
+        s = s.union(col).union(rib).union(foot).union(tab)
+        s = s.cut(insert_hole(x, y, 0.0, 'M5')).cut(cyl_z(4.0, zt + 5.0, -16.0, x, y))        # hollow under the insert
+        s = s.cut(through_z(fx, y, FAST['M4']['clear'], zt - 1, zt + 6)).cut(cyl_z(4.0, zt + 5.0, zt + 40.0, fx, y))
+    w, l, n = P['vent']
+    zc = zt + J['H'] / 2
+    for sy in (1, -1):
+        for k in range(n):
+            x = J['x0'] + J['L'] / 2 + (k - (n - 1) / 2) * 11.0
+            s = s.cut(box(x - w / 2, x + w / 2, sy * (P['r'] - P['wall'] - 2), sy * (P['r'] + 2), zc - l / 2, zc + l / 2))
+    # the -x wall: the Ethernet jack (its window and two 4-40 ears) and the XT30 input's clamp pocket
+    ew, eh = ETH_JACK['cut']
+    ye, ze = P['eth_y'], zt + 30.0
+    xo = -P['r'] + P['wall'] + 12.0
+    s = s.cut(box(-P['r'] - 2, xo, ye - ew / 2, ye + ew / 2, ze - eh / 2, ze + eh / 2))
+    for d in (-1, 1):
+        s = s.cut(cyl_x(1.4, -P['r'] - 2, xo, ye + d * ETH_JACK['ears'] / 2, ze))
+    cw, ch = XT30_IN['clamp']
+    yx = P['xt30_y']
+    s = s.cut(box(-P['r'] - 2, xo, yx - XT30_IN['body'][0] / 2 - 0.2, yx + XT30_IN['body'][0] / 2 + 0.2,
+                  ze - XT30_IN['body'][1] / 2 - 0.2, ze + XT30_IN['body'][1] / 2 + 0.2))
+    return s
+
+
+def compute_parts(G):
+    """The bought parts in the plinth (envelopes, T frame): the J4012, the Ethernet jack, the XT30 input, the fuses."""
+    P, J = PLINTH, J4012
+    zt = -P['h'] + P['tray_t']
+    out = {}
+    out['compute'] = (box(J['x0'], J['x0'] + J['L'], -J['W'] / 2, J['W'] / 2, zt, zt + J['H']), 'base', J['mass_g'],
+                      J['name'] + '; on the tray between its locating ribs, held down by the shell\'s four tabs; XT30 power, RJ-45 to the '
+                      'wall\'s jack, CAN to the slip ring, its own fan and heat sink')
+    ye, ze = P['eth_y'], zt + 30.0
+    xw = -math.sqrt(P['r'] ** 2 - ye ** 2)                                    # the wall's outer face at the jack
+    out['eth_jack'] = (box(xw, J['x0'] - 0.01, ye - 7.9, ye + 7.9, ze - 6.9, ze + 6.9), 'base', 15.0, ETH_JACK['note'])
+    yx = P['xt30_y']
+    bx, by, bz = XT30_IN['body']
+    xw = -math.sqrt(P['r'] ** 2 - yx ** 2)
+    out['xt30_input'] = (box(xw - 1.0, xw - 1.0 + bz, yx - bx / 2, yx + bx / 2, ze - by / 2, ze + by / 2), 'base', 4.0, XT30_IN['note'])
+    fx, fy, fz = FUSES['size']
+    out['input_fuses'] = (box(J['x0'] + J['L'] + 2.5, J['x0'] + J['L'] + 2.5 + fy, -fx / 2, fx / 2, zt, zt + fz), 'base', 20.0, FUSES['note'])
+    return out
+
+
 def bought_parts(G):
     """Envelopes of the bought parts with their real (or catalogue) sizes, each in its build frame. Returns
     {name: (shape, frame, mass_g, note)} with frame 'base' (T), 'pan' (T, turns with pan) or 'tilt' (C)."""
-    out = {}
+    out = compute_parts(G)
     sx, sy = G.servo_pan_xy
     out['pan_servo'] = (servo_envelope(G, (sx, sy, G.servo_z0 + SERVO['H']), '+z'), 'base', SERVO['mass_g'],
                         'Feetech STS3215 12 V; horn up, pinion on the horn')
@@ -1542,6 +1657,10 @@ MADE = [
     ('ring_carrier', ring_carrier, 'base', 'pa6-cf', 1, ((1, 0, 0), 180), 'PA6-CF on its top face; 3 x M3 x 10 flat heads up into the base; 3 x M3 inserts for the ring'),
     ('ring_driver', ring_driver, 'pan', 'pa6-cf', 1, ((1, 0, 0), 180), 'PA6-CF on its top face; in the turntable\'s bore (ribs + CA)'),
     ('board_bay', board_bay, 'pan', 'petg', 1, ((1, 0, 0), -90), 'PETG on its back; 4 x M3 x 8 flat heads to the -y yoke arm; 4 x M3 inserts for the boards'),
+    ('board_bay_lid', board_bay_lid, 'pan', 'petg', 1, ((1, 0, 0), 90), 'PETG flat; snaps into the bay\'s open face'),
+    # D66: the compute plinth under the pan base (the J4012, its input and fuses)
+    ('compute_tray', compute_tray, 'base', 'pa6-cf', 1, None, 'PA6-CF flat; 4 x M5 x 16 down into the head\'s inserts (first), 4 x M4 inserts for the shell'),
+    ('compute_shell', compute_shell, 'base', 'petg', 1, ((1, 0, 0), 180), 'PETG upside down; 4 x M4 x 10 down into the tray, 4 x M5 inserts for the pan base'),
 ]
 
 
@@ -1551,7 +1670,7 @@ class Turret:
     def __init__(self, L, ball_d=22.7):
         self.L = L
         self.G = Geo(ball_d)
-        self.mount_z = L['bodyTop'] + 20.0 + SADDLE_T
+        self.mount_z = L['bodyTop'] + 20.0 + SADDLE_T + PLINTH['h']       # D66: the pan base on the compute plinth
         self.local = {}
         self.frame = {}
         self.meta = {}

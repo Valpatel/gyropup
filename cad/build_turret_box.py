@@ -130,6 +130,12 @@ ROLE = {
     'pod_pendant': ('Mini-XLR socket (Switchcraft TB3M) for the hold-to-run pendant: the safety line. Nothing spins or feeds unless it '
                     'is held; it is keyed, so no headphone plug can close the loop.'),
     'pod_usb': 'USB-CAN adapter: the J501 talks CAN to the turret\'s MCU through it.',
+    'compute': 'The turret\'s own computer (D66): a Jetson Orin NX 16 GB on Seeed\'s reComputer Mini carrier, with its own fan. Ethernet to the J501, CAN to the turret\'s MCU.',
+    'compute_tray': 'The compute plinth\'s floor: bolts to the head\'s TM pattern (4 x M5) and holds the Jetson between locating ribs.',
+    'compute_shell': 'The compute plinth\'s wall: four columns take the pan base; tabs hold the Jetson down; vents beside it; the XT30 input and the Ethernet jack on the back.',
+    'xt30_input': 'The turret\'s one power input, 12-54 V: a FLEXVOLT pack on its stand, or Gyropup\'s battery bus.',
+    'eth_jack': 'Ethernet to Gyropup\'s J501.',
+    'board_bay_lid': 'Closes the turret-board bay on the yoke\'s -y arm.',
     'pod_wago': 'WAGO lever connectors: 24 V to the DT12 power pins, the pendant loop to its safety pins.',
 }
 TITLE = {'pan_base': 'Pan base', 'pan_clamp': 'Bearing clamp', 'pan_ring': 'Pan ring (63 T)', 'pan_pinion': 'Pan pinion (21 T)',
@@ -141,18 +147,28 @@ TITLE = {'pan_base': 'Pan base', 'pan_clamp': 'Bearing clamp', 'pan_ring': 'Pan 
          'feed_motor': 'Feed servo (STS3215)', 'cartridge_board': 'Cartridge board', 'laser': 'Aiming laser', 'box_deck': 'Box adapter',
          'intake_shroud': 'Intake shroud', 'pod_cover': 'Pod cover', 'pod_xt60': '24 V in (XT60)', 'pod_switch': 'Power switch',
          'pod_fuse': 'Fuse', 'pod_pendant': 'Pendant socket', 'pod_usb': 'USB-CAN', 'pod_wago': 'Wiring', 'base': 'J501 base',
-         'cover': 'J501 lid', 'front_no_gmsl': 'J501 front plate', 'rear_io': 'J501 rear plate', 'side_hatch': 'J501 side hatch'}
+         'cover': 'J501 lid', 'front_no_gmsl': 'J501 front plate',
+         'compute': 'Jetson Orin NX (reComputer Mini)', 'compute_tray': 'Compute plinth floor', 'compute_shell': 'Compute plinth',
+         'xt30_input': 'Power in (XT30)', 'eth_jack': 'Ethernet', 'input_fuses': 'Fuses', 'board_bay': 'Board bay', 'board_bay_lid': 'Board bay lid', 'rear_io': 'J501 rear plate', 'side_hatch': 'J501 side hatch'}
 # the parts the callouts name (the rest are listed when clicked)
 CALLOUTS = ['hopper', 'dial', 'feed_motor', 'cartridge_body', 'flywheel_tyre', 'barrel', 'laser', 'cradle', 'tilt_servo', 'tilt_yoke',
-            'pan_ring', 'pan_pinion', 'pan_servo', 'pan_bearing', 'pan_base', 'dt_receptacle', 'box_deck', 'intake_shroud', 'pod_pendant', 'cover']
+            'pan_ring', 'pan_pinion', 'pan_servo', 'pan_bearing', 'pan_base', 'dt_receptacle', 'compute', 'compute_shell', 'box_deck',
+            'intake_shroud', 'pod_pendant', 'cover']
 # exploded view: how far each part moves (box frame at pan = tilt = 0, mm)
-EXPLODE = {'box_deck': (0, 0, 60), 'intake_shroud': (0, 0, 28), 'pod_cover': (0, 0, 48), 'lid_screw': (0, 0, 120), 'pod_': (0, 0, 60),
+EXPLODE = {'compute_tray': (0, 0, 70), 'compute': (0, 0, 120), 'input_fuses': (0, 0, 120), 'compute_shell': (0, 0, 210),
+           'eth_jack': (-40, 0, 210), 'xt30_input': (-40, 0, 210), 'board_bay': (0, -40, 195), 'board_bay_lid': (0, -70, 195),
+           'box_deck': (0, 0, 60), 'intake_shroud': (0, 0, 28), 'pod_cover': (0, 0, 48), 'lid_screw': (0, 0, 120), 'pod_': (0, 0, 60),
            'bumper_ring': (0, 0, 75), 'pan_base': (0, 0, 95), 'pan_servo': (0, 0, 95), 'dt_receptacle': (0, -30, 95), 'dt_plug': (0, -75, 95),
            'pan_bearing': (0, 0, 125), 'pan_clamp': (0, 0, 145), 'pan_pinion': (0, 0, 120), 'pan_ring': (0, 0, 165), 'tilt_yoke': (0, 0, 195),
            'tilt_servo': (0, 45, 195), 'tilt_bearing': (0, -30, 195), 'cradle': (0, 0, 215), 'cartridge_body': (0, 0, 250),
            'flywheel': (0, 0, 250), 'flywheel_tyre': (0, 0, 250), 'flywheel_motor': (0, 0, 290), 'esc_': (0, 0, 320), 'feed_motor': (0, 0, 210),
            'cartridge_board': (0, 0, 330), 'dial': (0, 0, 300), 'hopper': (0, 0, 350), 'hopper_lid': (0, 0, 390), 'hopper_flap': (0, 0, 400),
            'barrel': (70, 0, 250), 'laser_mount': (25, -35, 230), 'laser': (25, -35, 230)}
+
+
+# the turret's own parts move 220 mm more, over the compute plinth's (D66)
+EXPLODE = {k: (v if (k.startswith(('compute', 'input_fuses', 'eth_jack', 'xt30_input', 'box_deck', 'intake_shroud', 'pod_', 'lid_screw')))
+               else (v[0], v[1], v[2] + 220)) for k, v in EXPLODE.items()}
 
 
 def explode_of(name):
@@ -346,9 +362,9 @@ def mechanics(T, rows, groups):
     pan['inertia_kg_m2'] = round(pz, 5)
     pan['accel_at_cap_deg_s2'] = round(math.degrees(pan['ring_stall_nm'] * 0.5 / pz))
     pan['time_to_full_slew_ms'] = round(1000 * math.radians(pan['max_deg_s']) / math.radians(pan['accel_at_cap_deg_s2']), 1)
-    level, x_ground = flight(z0=(tb.Z_TM + G.path_t) * M + 0.3)
+    level, x_ground = flight(z0=(T.mount_z + G.path_t) * M + 0.3)
     return {'ball': ball, 'flywheel': fly, 'feed': feed, 'timing': timing, 'pan': pan, 'tilt': tilt,
-            'flight_level': {'rows': level, 'from_height_m': round((tb.Z_TM + G.path_t) * M + 0.3, 3), 'lands_m': x_ground,
+            'flight_level': {'rows': level, 'from_height_m': round((T.mount_z + G.path_t) * M + 0.3, 3), 'lands_m': x_ground,
                              'note': 'a level shot from the bench (the box on a 0.3 m crate): [range m, time s, drop mm, speed m/s]; '
                                      'drag as a sphere, Cd 0.5'}}
 
@@ -365,10 +381,10 @@ def sweep(T, pts_pan, pts_tilt, pans=np.arange(-170, 171, 5.0), tilts=np.arange(
     blocked = {}                                     # pan -> the deepest tilt that clears every antenna by 3 mm
     for pan in pans:
         ok_tilt, still_clear = None, True
-        p_pan = rot_z(pts_pan, math.radians(pan)) + [0, 0, tb.Z_TM]
+        p_pan = rot_z(pts_pan, math.radians(pan)) + [0, 0, T.mount_z]
         for tilt in tilts:
             p_t = rot_y(pts_tilt, math.radians(-tilt)) + [0, 0, G.tilt_t]
-            p_t = rot_z(p_t, math.radians(pan)) + [0, 0, tb.Z_TM]
+            p_t = rot_z(p_t, math.radians(pan)) + [0, 0, T.mount_z]
             p = np.concatenate([p_pan, p_t])
             r = np.hypot(p[:, 0], p[:, 1])
             over = (r > G.base_r) & (p[:, 0] > tb.DECK_X[0]) & (p[:, 0] < tb.DECK_X[1]) & (np.abs(p[:, 1]) < tb.SIDE_Y)
@@ -425,7 +441,7 @@ def ball_path_check():
         return None
     d = json.loads(f.read_text())
     deck = next((o for o in d.get('obstacles', []) if o.get('name') == 'deck and box'), None)
-    current = deck is not None and abs(deck['lo'][2] + tb.Z_TM) < 0.01
+    current = deck is not None and abs(deck['lo'][2] + tb.Z_TM + tu.PLINTH['h']) < 0.01
     ko = [abs(p) for p in d.get('keep_out_fire_pan_deg') or []]
     return {'file': 'exports/turret/lidar/box.json', 'current': current, 'margin_mm': d.get('margin_mm'),
             'limited_pan_window_deg': d.get('limited_pan_window_deg'), 'clear': current and d.get('limited_pan_window_deg') is None,
@@ -469,7 +485,7 @@ def main():
     for f in SCENE.glob('*.stl'):
         f.unlink()
     tg.stored()                                                    # fail fast: the design gates pass and are current
-    T = tu.Turret({'bodyTop': tb.Z_TM - 20.0 - tu.SADDLE_T})        # its TM face on the deck
+    T = tu.Turret({'bodyTop': tb.Z_TM - 20.0 - tu.SADDLE_T})        # the compute plinth on the deck, the TM face on it (D66)
     G = T.G
     g = tb.J.get('git') or {}
     print(f'turret on the box: TM face {tb.Z_TM:.0f} mm above the desk ({tb.GAP:.0f} mm gap + {tb.DECK_T:.0f} mm deck over the J501 '
@@ -511,8 +527,9 @@ def main():
         parts.append(e)
         return tris
 
-    tz = tb.Z_TM + G.tilt_t
-    pan_o, tilt_o = (0.0, 0.0, tb.Z_TM), (0.0, 0.0, tz)
+    zt = T.mount_z                                                   # the turret's TM face: on the compute plinth (D66)
+    tz = zt + G.tilt_t
+    pan_o, tilt_o = (0.0, 0.0, zt), (0.0, 0.0, tz)
     # the scene's tilt frame has its origin on the tilt axis: a point of the cartridge frame C (the parts' build frame:
     # the dial axis at x = y = 0, the ball path at z = 0) is at C - (tilt_x, 0, tilt_c) in it
     tx, tc = G.tilt_x, G.tilt_c
@@ -638,10 +655,10 @@ def main():
     #                                                              cooler is heavier, so the tipping push below is on the low side)
     turret_g = tot
     adapter_g = sum(masses.values()) + sum(m for _, m, _ in tb.bought().values())
-    zc = (j501_printed * 46 + j501_inside * 40 + adapter_g * (tb.ROOF + 25) + turret_g * (tb.Z_TM + com[2])) / (j501_printed + j501_inside + adapter_g + turret_g)
+    zc = (j501_printed * 46 + j501_inside * 40 + adapter_g * (tb.ROOF + 25) + turret_g * (T.mount_z + com[2])) / (j501_printed + j501_inside + adapter_g + turret_g)
     total = (j501_printed + j501_inside + adapter_g + turret_g) / 1000
     half = min(-tb.REAR_X, tb.FRONT_X, tb.SIDE_Y)
-    push_h = tb.Z_TM + G.tilt_t
+    push_h = T.mount_z + G.tilt_t
     tip = {'total_kg': round(total, 2), 'com_height_mm': round(zc), 'tip_angle_deg': round(math.degrees(math.atan2(half, zc))),
            'push_to_tip_n': round(total * G0 * half / push_h, 1), 'push_height_mm': round(push_h),
            'note': 'J501: 368 g printed (its slice report) + 1.0 kg Orin, carrier and cooler (est); a sideways push at the tilt axis that '
@@ -725,9 +742,9 @@ def main():
                'flywheel_tyre': [0.0, 20.0, 0.0], 'barrel': tf(G.barrel_x1 - 20, -15.0, 0.0),
                'laser': tf(tu.LASER_X[1] + 12, tu.LASER_Y, 0.0), 'cradle': tf(40.0, -G.cheek_y[1], G.rail_z[0] + 2),
                'tilt_servo': [0.0, round(G.arm_y[1] + 15, 1), round(G.tilt_t, 1)], 'tilt_yoke': [0.0, round(-G.arm_y[1], 1), round(G.tilt_t - 40, 1)],
-               'pan_ring': [0.0, -40.0, round(G.turntable_z[1] - 6, 1)], 'pan_pinion': [round(G.servo_pan_xy[0], 1), -14.0, round(G.turntable_z[1] - 4 + tb.Z_TM, 1)],
-               'pan_servo': [round(G.servo_pan_xy[0], 1), 25.0, round(tb.Z_TM + 20, 1)], 'pan_bearing': [0.0, -32.0, round(tb.Z_TM + G.brg_z + 3, 1)],
-               'pan_base': [30.0, -64.0, round(tb.Z_TM + 12, 1)], 'dt_receptacle': [0.0, round(-G.dt_y - 20, 1), round(tb.Z_TM + tu.DT_Z, 1)],
+               'pan_ring': [0.0, -40.0, round(G.turntable_z[1] - 6, 1)], 'pan_pinion': [round(G.servo_pan_xy[0], 1), -14.0, round(G.turntable_z[1] - 4 + zt, 1)],
+               'pan_servo': [round(G.servo_pan_xy[0], 1), 25.0, round(zt + 20, 1)], 'pan_bearing': [0.0, -32.0, round(zt + G.brg_z + 3, 1)],
+               'pan_base': [30.0, -64.0, round(zt + 12, 1)], 'dt_receptacle': [0.0, round(-G.dt_y - 20, 1), round(zt + tu.DT_Z, 1)],
                'box_deck': [70.0, -100.0, round(tb.Z_TM - 4, 1)], 'intake_shroud': [round(tb.FRONT_X - 2, 1), 30.0, round(tb.ROOF + 18, 1)],
                'pod_pendant': [round(tb.POD_X[0] - 2, 1), next(y for n, y, *_ in tb.PANEL if n == 'pendant'), round(tb.POD_ZC, 1)],
                'cover': [0.0, -80.0, round(tb.ROOF, 1)]}
@@ -783,7 +800,7 @@ def main():
            'deck': {'x': list(tb.DECK_X), 'y': [-tb.SIDE_Y, tb.SIDE_Y], 'z': [tb.DECK_Z0, tb.Z_TM]},
            'fan': {'xy': list(tb.FAN), 'z': tb.ROOF, 'r': tb.COLLAR_R, 'collar_r': tb.COLLAR_R, 'hole_r': tb.HOLE_R, 'intake': tb.J['intake']['kind'],
                    'grille_x': tb.FRONT_X, 'mouth_half': tb.MOUTH_HALF, 'duct_z': [tb.SH_Z0 + tb.SH_FLOOR_T, tb.DECK_Z0], 'model': tb.J['fan_model']},
-           'pivots': {'pan': list(pan_o), 'tilt': [0.0, 0.0, G.tilt_t], 'pinion': [G.servo_pan_xy[0], G.servo_pan_xy[1], tb.Z_TM],
+           'pivots': {'pan': list(pan_o), 'tilt': [0.0, 0.0, G.tilt_t], 'pinion': [G.servo_pan_xy[0], G.servo_pan_xy[1], zt],
                       'pinion_ratio': -G.gear['z_ring'] / G.gear['z_pinion'], 'dial': list(dial_o), 'wheel_l': list(wheel['wheel_l']),
                       'wheel_r': list(wheel['wheel_r']), 'flap': list(flap_hinge)},
            'limits': {'pan_deg': [-170.0, 170.0], 'tilt_deg': [G.tilt_min, 0.0], 'pan_rate_deg_s': mech['pan']['max_deg_s'],

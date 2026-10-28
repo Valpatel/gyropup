@@ -48,7 +48,9 @@ JOINTS = [('pan_bearing', 'pan_bearing_inner', 'the 61810 pan bearing (outer rac
           ('hopper_flap', 'hopper_lid', 'the fill flap on its hinge pin in the lid\'s lugs')]
 # fastened pairs whose solids do not touch in the CAD (the fastener is not modelled as a solid): (a, b, how)
 LINKS = [('laser', 'laser_mount', 'three M3 nylon-tip boresight screws hold it 2 mm clear of the ring\'s bore (it is aimed by them)'),
-         ('ring_leads_rotor', 'slip_ring_rotor', 'the rotor\'s own leads: one bought part with the ring\'s rotor')]
+         ('ring_leads_rotor', 'slip_ring_rotor', 'the rotor\'s own leads: one bought part with the ring\'s rotor'),
+         ('eth_jack', 'compute_shell', 'two 4-40 screws through its ears into the plinth\'s wall'),
+         ('xt30_input', 'compute_shell', 'its housing clamped in the wall\'s pocket (a printed clip, 2 x M3)')]
 
 
 def geometry_fingerprint():

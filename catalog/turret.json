@@ -8566,5 +8566,159 @@
   "used_for": "ammo (D67): the official Nerf Rival round, the ball the turret's physics is sized on",
   "qty_per_robot": 1,
   "notes": "The official refill beside the third-party pack (D67). Hasbro's own shop no longer sells (shop.hasbro.com redirects to its where-to-buy page); the 50-round Accu-Round refill F5051 was US$14.99 there. Rival is sold 14+; recommend eye protection, as Hasbro does."
+ },
+ {
+  "id": "seeed-recomputer-mini-j4012-ext",
+  "key": "seeed-recomputer-mini-j4012-ext",
+  "category": "compute",
+  "vendor": "Seeed Studio",
+  "model": "114993553",
+  "name": "reComputer Mini J4012 with Extension: Jetson Orin NX 16 GB on the reComputer Mini carrier, its extension board (RJ-45, CAN, 4 x USB 3), fan and heat sink, 128 GB NVMe",
+  "price_usd": 999.0,
+  "price_note": "Seeed Studio US$999.00 (its reComputer Mini & accessories page, read 2026-10-27 in Chrome); the carrier alone SKU 114993592 is US$89, the extension board SKU 114993593 US$59",
+  "price_checked": "2026-10-27",
+  "pack_qty": 1,
+  "buy": [
+   {
+    "seller": "Seeed Studio",
+    "url": "https://www.seeedstudio.com/reComputer-Mini-J4012-with-Extension-p-6353.html",
+    "in_stock": null,
+    "ships_from": "US/CN",
+    "price_usd": 999.0,
+    "seller_pn": "114993553"
+   },
+   {
+    "seller": "Switch Science",
+    "url": "https://www.switch-science.com/products/10478",
+    "in_stock": false,
+    "ships_from": "JP",
+    "price_usd": null,
+    "price_note": "JPY 207,878 incl. tax; 0 in stock on 2026-10-27"
+   }
+  ],
+  "specs": {
+   "dimensions_mm": [
+    95,
+    63,
+    66.7
+   ],
+   "mass_g": 462,
+   "input": "XT30, 12-54 V DC",
+   "module": "Jetson Orin NX 16 GB (10-40 W; 157 TOPS in Super mode)",
+   "cooling": "Seeed's fan (5 V PWM) and heat sink for the NX, inside the enclosure",
+   "interfaces": "carrier: 2 x USB 3.2 A, USB-C host, micro-B device; extension: RJ-45 GbE, 2 x CAN, 4 x USB 3",
+   "operating_temp_c": [
+    -10,
+    50
+   ],
+   "basis": "Seeed wiki (recomputer_jetson_mini_getting_started) and Botland's listing (63 x 95 x 66.7 mm, 462 g, -10 to 50 C)"
+  },
+  "cad": {
+   "step_url": null,
+   "available": false
+  },
+  "sources": [
+   "https://www.seeedstudio.com/reComputer-Mini-optional-accessories.html",
+   "https://wiki.seeedstudio.com/recomputer_jetson_mini_getting_started/"
+  ],
+  "confidence": "seller page",
+  "used_for": "the turret's own computer (D66), in the compute plinth under the pan base",
+  "qty_per_robot": 1,
+  "notes": "Bought as the J4012 kit, not the bare carrier: it is the only listing that brings the NX 16 GB with a fan and heat sink sold for it on this carrier (Seeed sells no Mini cooler on its own), and the extension board carries the RJ-45 the J501 link needs. Backup: the same kit at Switch Science (out of stock), or the parts from Seeed (carrier US$89 + extension US$59) with an NX 16 GB module (Arrow, about US$699, 24 weeks) and a cooler to choose then. Seeed's product pages answer a bot check; the accessories page was read in Chrome."
+ },
+ {
+  "id": "adafruit-909",
+  "key": "adafruit-909",
+  "category": "wiring",
+  "vendor": "Adafruit",
+  "model": "909",
+  "name": "Panel Mount Ethernet Extension Cable (RJ-45 jack with two 4-40 ears, 25 cm to a plug)",
+  "price_usd": 4.95,
+  "price_note": "Adafruit US$4.95 (product page, in stock, 2026-10-27); Digi-Key 1528-1572-ND US$4.95 (aggregator)",
+  "price_checked": "2026-10-27",
+  "pack_qty": 1,
+  "buy": [
+   {
+    "seller": "Adafruit",
+    "url": "https://www.adafruit.com/product/909",
+    "in_stock": true,
+    "ships_from": "US",
+    "price_usd": 4.95
+   },
+   {
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/detail/adafruit-industries-llc/909/5844686",
+    "in_stock": true,
+    "ships_from": "US",
+    "price_usd": 4.95,
+    "seller_pn": "1528-1572-ND"
+   }
+  ],
+  "specs": {
+   "ears_mm": 25.0,
+   "wall_max_mm": 6.0,
+   "length_mm": 330
+  },
+  "cad": {
+   "step_url": null,
+   "available": false
+  },
+  "sources": [
+   "https://www.adafruit.com/product/909"
+  ],
+  "confidence": "product page",
+  "used_for": "the turret's Ethernet port to the J501 (D66), in the compute plinth's wall",
+  "qty_per_robot": 1,
+  "notes": ""
+ },
+ {
+  "id": "dewalt-20v-dock-adapter-12awg",
+  "key": "dewalt-20v-dock-adapter-12awg",
+  "category": "wiring",
+  "vendor": "generic",
+  "model": "DeWalt 18/20 V MAX battery dock adapter, 12 AWG leads",
+  "name": "DeWalt 20 V MAX battery dock adapter, 12 AWG leads (takes a FLEXVOLT pack in its 20 V mode)",
+  "price_usd": 12.95,
+  "price_note": "Walmart US$12.95 (listing read through a web search 2026-10-27; Walmart's pages answer a robot check); Etsy US$13.50",
+  "price_checked": "2026-10-27",
+  "pack_qty": 1,
+  "buy": [
+   {
+    "seller": "Walmart",
+    "url": "https://www.walmart.com/c/kp/dewalt-adapter",
+    "in_stock": null,
+    "ships_from": "US",
+    "price_usd": 12.95
+   },
+   {
+    "seller": "Etsy",
+    "url": "https://www.etsy.com/listing/838361833",
+    "in_stock": null,
+    "ships_from": "US",
+    "price_usd": 13.5
+   }
+  ],
+  "specs": {
+   "wire_awg": 12,
+   "fits": "DeWalt 20 V MAX packs; a FLEXVOLT DCB609 runs in its 20 V mode in it (15-20.5 V)",
+   "dimensions_mm": [
+    80,
+    65,
+    30
+   ],
+   "dimensions_mm_basis": "estimate (as the 60 V adapter in power_electronics.json)"
+  },
+  "cad": {
+   "step_url": null,
+   "available": false
+  },
+  "sources": [
+   "https://www.walmart.com/c/kp/dewalt-adapter",
+   "https://www.etsy.com/listing/838361833"
+  ],
+  "confidence": "seller listing (search snippet)",
+  "used_for": "the turret stand's battery dock (D66): one DCB609 in 20 V mode",
+  "qty_per_robot": 1,
+  "notes": "A 20 V MAX dock, not the 60 V one: a FLEXVOLT pack switches to 60 V only in a 60 V tool. The stand adds its own fuse and switch after it."
  }
 ]

@@ -209,7 +209,16 @@ def mount(T) -> dict:
           'dowels_mm': [list(p) for p in tu.TM_DOWELS], 'dowel_d_mm': 5.0,
           'dowel_pin': f'Ø5 x {dowel_l:g}, {len(tu.TM_DOWELS)} off: not symmetric, the turret goes on one way only',
           'hole_d_mm': tu.TM_HOLE, 'hole_use': 'unused on the robot: the harness leaves by the DT12, nothing passes the hole',
-          'foot_d_mm': round(2 * G.base_r, 2), 'foot_t_mm': G.foot_t, 'foot': 'flat on the TM face (z = 0), Ø65 centre opening',
+          'foot_d_mm': round(2 * tu.PLINTH['r'], 2), 'foot_t_mm': tu.PLINTH['tray_t'],
+          'foot': 'D66: the compute plinth\'s floor (cad/turret.py compute_tray) flat on the head\'s TM face, no centre opening; '
+                  f'the pan base sits {tu.PLINTH["h"]:g} mm above on the plinth\'s columns',
+          'plinth': {'height_mm': tu.PLINTH['h'], 'd_mm': 2 * tu.PLINTH['r'], 'decision': 'D66: the turret\'s own Jetson (reComputer Mini J4012) inside',
+                     'ports_side': '-x (the turret\'s back): the XT30 power input (12-54 V; the 10S bus through the body\'s fused branch) '
+                                   'and the RJ-45 (Ethernet to the J501)',
+                     'xt30_mm': [round(-math.sqrt(tu.PLINTH['r'] ** 2 - tu.PLINTH['xt30_y'] ** 2), 1), tu.PLINTH['xt30_y'], round(30.0 + tu.PLINTH['tray_t'], 1)],
+                     'rj45_mm': [round(-math.sqrt(tu.PLINTH['r'] ** 2 - tu.PLINTH['eth_y'] ** 2), 1), tu.PLINTH['eth_y'], round(30.0 + tu.PLINTH['tray_t'], 1)],
+                     'ports_frame': 'x, y on the pan axis, z above the head\'s TM face',
+                     'mass_g_est': 780},
           'bumper_r_mm': G.bumper_r[1], 'bumper_lug_r_mm': tu.BUMPER_LUG[1], 'bumper_z_mm': list(G.bumper_z),
           'source': 'cad/turret.py TM_BOLTS, TM_DOWELS, TM_HOLE, Geo.base_r / foot_t / bumper_r, pan_base(); the screw and pin '
                     f'lengths from {_rel(BOM_JSON)} (hw_tm_screws, hw_tm_dowels)'}
@@ -299,7 +308,7 @@ def check(path: Path = OUT) -> list:
     m = json.loads(Path(path).read_text())
     G = tu.Geo()
     want = {('tm', 'bolts_mm'): [list(p) for p in tu.TM_BOLTS], ('tm', 'dowels_mm'): [list(p) for p in tu.TM_DOWELS],
-            ('tm', 'hole_d_mm'): tu.TM_HOLE, ('tm', 'foot_d_mm'): 2 * G.base_r, ('dt12', 'centre_above_tm_mm'): tu.DT_Z,
+            ('tm', 'hole_d_mm'): tu.TM_HOLE, ('tm', 'foot_d_mm'): 2 * tu.PLINTH['r'], ('dt12', 'centre_above_tm_mm'): tu.DT_Z,
             ('dt12', 'pad_face_y_mm'): -G.dt_y, ('dt12', 'withdrawal_mm'): tu.DT['sweep']}
     bad = []
     for (blk, key), v in want.items():

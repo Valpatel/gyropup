@@ -215,7 +215,7 @@ def scene_box():
     """The Orin AGX box (cad/turret_box.py): the deck and the box under it as one block, the four upright antennas on the
     J501's bulkheads (if fitted), in the turret's frame (z up from the TM face, which is the deck's top)."""
     import turret_box as tb
-    zt = tb.Z_TM
+    zt = tb.Z_TM + tu.PLINTH['h']                                   # the turret's TM face, on its compute plinth (D66)
     obs = [{'name': 'deck and box', 'kind': 'box', 'lo': (tb.DECK_X[0], -tb.SIDE_Y, -zt), 'hi': (tb.DECK_X[1], tb.SIDE_Y, 0.0), 'ball': True}]
     for name, b, t, d in tb.antennas():
         obs.append({'name': name, 'kind': 'cyl', 'x': b[0], 'y': b[1], 'r': d / 2, 'z0': b[2] - zt, 'z1': t[2] - zt, 'ball': True})
