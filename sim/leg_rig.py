@@ -1,6 +1,6 @@
 """Single-leg test rig: one five-bar leg module (cad/fivebar.py) on a vertical rail, in MuJoCo.
 
-    python -m sim.leg_rig [--video] [--only stand_up squat jump drop_150 power_off] [--half-mass 11]
+    python -m sim.leg_rig [--video] [--only stand_up squat jump drop_150 power_off] [--half-mass 16.25] [--bus-v 48.1]
 
 The rig is what we will build first: a carriage on a vertical rail (one slide joint, a rubber stop at the bottom)
 carries the hip frame, both RS-04s and a dummy mass for half the body; the leg stands on the floor and can crouch,
@@ -41,10 +41,10 @@ FPS = 30
 CAT = {it['id']: it for f in ('leg_actuators.json', 'wheel_motors.json') for it in json.loads((R / 'catalog' / f).read_text())}
 MOTOR = CAT[fb.MOTOR]['specs']
 WHEEL = CAT[fb.WHEEL]['specs']
-BUS_V = 54.0                                     # FLEXVOLT in 60 V mode, nominal
-HALF_MASS = 14.75                                  # kg one leg carries: half the robot's 29.5 kg (docs/body-plan.md's
-                                                   # budget with its real parts; 28.5 kg is the target; sim/robot_v2.py
-                                                   # had 26.2 with an interim body).
+BUS_V = 48.1                                     # the robot's 13S2P P30B pack, nominal (53.3 V full; docs/body-next-plan.md,
+                                                 # D57). The rig itself runs on a FLEXVOLT (60 V mode, 54 V nominal): --bus-v 54
+HALF_MASS = 16.25                                  # kg one leg carries: half the robot's 32.5 kg design mass (docs/body-next-plan.md
+                                                   # 2.4, D57: the 28.5 kg budget is retired; it was 29.5 until 2026-10-27).
                                                    # The ballast is its own welded body: the carriage's explicit
                                                    # <inertial> made MuJoCo drop a geom mass there (the rig carried 8.5 kg
                                                    # of a meant 11 until 2026-10-27; found by the spring study)
@@ -521,11 +521,14 @@ class VideoWriter:
 
 
 def main():
+    global BUS_V, LEG_OMEGA
     ap = argparse.ArgumentParser()
     ap.add_argument('--only', nargs='*')
     ap.add_argument('--video', action='store_true')
     ap.add_argument('--half-mass', type=float, default=HALF_MASS, help='what one leg carries, kg (half the robot)')
+    ap.add_argument('--bus-v', type=float, default=BUS_V, help=f'the motors\' bus, V (default the robot\'s {BUS_V}; the rig\'s FLEXVOLT is 54)')
     a = ap.parse_args()
+    BUS_V, LEG_OMEGA = a.bus_v, MOTOR['no_load_speed_rpm'] * a.bus_v / MOTOR['voltage_nominal_v'] * 2 * math.pi / 60
     OUT.mkdir(parents=True, exist_ok=True)
     meshes = export_meshes(OUT / 'rig_meshes') if a.video else None
     results = {}
@@ -540,7 +543,7 @@ def main():
         print(f"{name:10} gearbox {r['peak_gearbox_nm']:6.1f} N m ({r['gearbox_over_peak_ms']:.1f} ms > {LEG_PEAK} N m)  motor {r['peak_motor_nm']:6.1f} N m  wheel {r['peak_wheel_force_n']:7.1f} N  axle {r['peak_axle_force_n']:7.1f} N  front link {r['peak_front_link_n']:7.1f} N  "
               f"knee pin {r['peak_knee_pin_n']:7.1f} N (dynamic {max(r['peak_joint_force_n']['knee_f'], r['peak_joint_force_n']['knee_r']):.0f})  stop {r['peak_stop_nm']:6.1f} N m  L {r['L_range_mm']}"
               + (f"  jump {r['jump_height_mm']} mm" if r.get('jump_height_mm') is not None else ''))
-    f.write_text(json.dumps({'half_mass_kg': a.half_mass, 'model': {'leg_peak_nm': LEG_PEAK, 'leg_cap_nm': LEG_CAP, 'leg_omega_rad_s': round(LEG_OMEGA, 2),
+    f.write_text(json.dumps({'half_mass_kg': a.half_mass, 'bus_v': BUS_V, 'model': {'leg_peak_nm': LEG_PEAK, 'leg_cap_nm': LEG_CAP, 'leg_omega_rad_s': round(LEG_OMEGA, 2),
                                                                      'armature_kg_m2': round(ARMATURE, 5), 'stop_k_nm_per_rad': round(STOP_K)},
                              'scenarios': results}, indent=1) + '\n')
 

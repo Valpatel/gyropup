@@ -472,7 +472,9 @@ def hip_frame():
         web = web.union(ycyl(STOP_BOSS_R, yf0, yf1, px, pz))   # the motor's ring, so each is blended into the ring and the
         if k < 2:                                              # flange's corner (their hull): a round boss there left
             mx, sx = (ax, 1) if k == 0 else (bx, -1)           # notches the stop's push tore at (cad/leg_studies.py E3o)
-            lobe = _hull(circle(px, pz, STOP_BOSS_R) + circle(mx, 0.0, ring_r) + [(sx * fl_x, zf + fl_t)])
+            # (the polygon encloses the boss by 0.3 mm and takes the ring and the corner 1 mm inside them, so it meets
+            # each at an angle: tangent seams there left slivers the print's STL could not close)
+            lobe = _hull(circle(px, pz, STOP_BOSS_R + 0.3) + circle(mx, 0.0, ring_r - 1.0) + [(sx * (fl_x - 1.0), zf + fl_t - 1.0)])
             web = web.union(yslab(lobe, yf0, yf1))
             if STOP_EAR_BACK > 0:                              # and backed on the motor side, outside the motor's Ø120
                 back = yslab(lobe, yf0 - STOP_EAR_BACK, yf0 + 0.01).cut(ycyl(STOP_EAR_CLEAR, yf0 - STOP_EAR_BACK - 1, yf0 + 1, mx))

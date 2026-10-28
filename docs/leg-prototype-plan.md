@@ -60,7 +60,7 @@ radial rate. Then stand, squat, jump, drop, and the power cut last, with the bum
   2,609 N on the axle and 2,983 N on the pins (joints 0.69-1.09, upper link R3K 0.75) and is tagged `rare`, while
   `cad/leg_studies.py` now tags it `fault` (target 1.0) and the current rig gives 1,316 N axle / 1,458 N knee.
   **Re-run `cad/leg_studies.py` before the build package is final** (owner: main session).
-- The sim's TPU stop (816 N m/rad, 7.5 mm of travel), tyre (7.7 ms / 0.7 contact), rotor inertia (0.0243 kg m^2
+- The sim's TPU stop (856 N m/rad, 7.5 mm of travel at the 57.8 mm arm since D53), tyre (7.7 ms / 0.7 contact), rotor inertia (0.0243 kg m^2
   reflected) and power-off damping (20 % of shorted phases) are all estimates: that is what the bench tests are for.
 
 ### 1.3 Simplify for the first physical leg (decisions made here)
@@ -79,7 +79,7 @@ radial rate. Then stand, squat, jump, drop, and the power cut last, with the bum
    (after the drop test passes), the driver is the robot's Flipsky 75100 (14-84 V, $65, in stock at Flipsky CN,
    catalog 2026-10-25); backup ODrive Pro ($229, 58 V max; S1 sold out). The BotWheel's phase and hall leads are
    taped along the links for M3; the through-hub cable route is tried later.
-3. **The stops stay as drawn** (TPU 95A sleeves on 10 mm shoulder posts). The rig's bottom bumper is set so the
+3. **The stops stay as drawn** (TPU 95A sleeves on Ø16 steel pins, the links' radial stop faces: D53). The rig's bottom bumper is set so the
    carriage lands on the rig at a leg length of 115 mm, above the leg's own stops (101.5 mm), for every test until
    the power-off damping is measured; only the deliberate collapse test (last) lowers the bumper.
 4. **No spring** (D39, research section 8.7). The knee-to-knee add-on stays on the shelf.
@@ -106,8 +106,8 @@ motors' output face. Numbers from `fivebar.Y` and `hip_frame()`: the frame's fla
 are flush on the plane **y = -82.3 mm** (the robot's centre plane), inserts at **(x, z) = (-83, +-70), (0, +-70),
 (+83, +-70)** (`fivebar.frame_mounts()`, the source of truth), flanges 13 mm thick (z 62-75; 7 mm until the 2026-10-27
 review: too weak across the print's layers) spanning x +-95; the motors' rear faces are at y = -80.3 (2 mm inboard of
-that plane), their 310 mm harnesses exit radially from the O94 rear covers; the stop posts are at (+-108.8, +47.2) and
-(+-25.6, -30.4). Knees reach x +-225 (z +8) at the 101.5 mm crouch and x +-60 (z -149) at 392 mm; the wheel axle is at
+that plane), their 310 mm harnesses exit radially from the O94 rear covers; the stop posts are at (+-104.1, +52.5) and
+(+-20.6, -25.4) (D53; their TPU sleeves are Ø32, from the frame's face to y 19). Knees reach x +-225 (z +8) at the 101.5 mm crouch and x +-60 (z -149) at 392 mm; the wheel axle is at
 (0, -L), and (+-103, -282) at +-20 deg of lean at 300 mm; the tyre's mid-plane is y = 104.6 (tyre y 82-127).
 
 ### 2.1 Layout (one post, two rails, behind the hip frame, where the sim already puts the rail)
@@ -349,23 +349,24 @@ From the RobStride Python SDK README, the Seeed wiki, `robstride_ros2` and the f
 
 Fixtures (task T4): the **dyno pair**, two printed PETG lug plates (10 x M4 on O106 with the two O5 dowel holes) on a
 plywood board holding the two RS-04s output-to-output through a printed coupler disc (9 x M5 + 3 pin sockets each
-side); an **insert coupon** (a PA6-CF block printed in the output adapter's orientation `pa6_cf_z` with M5 and M8
-heat-set inserts); a **sleeve test block** (a 10 mm post in a PA6-CF block, the TPU sleeve on it, pressed by a flat
-anvil); a **tyre cradle** (the BotWheel on its 4 x M6 flange, pressed radially against a flat plate).
+side); an **insert coupon** (a PA6-CF block printed in the output adapter's orientation `pa6_cf_z` with M5
+heat-set inserts); a **post coupon** (a PA6-CF block printed web-down like the hip frame, with the stop pin's Ø16 x 23
+blind hole: the Ø16 x 40 pin set in it with Loctite 638, the TPU sleeve on it, pressed square by a flat anvil as the
+link's stop face presses it); a **tyre cradle** (the BotWheel on its 4 x M6 flange, pressed radially against a flat plate).
 
 | # | Test | Method | Sim assumes | Pass / decision |
 |---|---|---|---|---|
 | B1 | **RS-04 power-off damping** (decides D39) | Motor A unpowered (bus lead unplugged), motor B drives it through the coupler in velocity mode at 0.5, 1, 2, 4, 7, 10, 13, 15 rad/s both directions, B's torque feedback at 500 Hz = A's drag; repeat with A powered but disabled (stop state), and with `damper` 0x2023 = 1; also by hand: a 0.3 m lever and 2-10 kg masses, speed from video | 5.9 N m s/rad linear (20 % of shorted phases); the undamped case is 0 | Deliver the curve tau(omega). The main session reruns `sim/leg_rig.py power_off` with it (flag F1). **If the knee force stays at or below the fault case's SF 1.0 figure, no spring and D39 stands; if not: the knee-to-knee spring, softer longer-travel bumpers, and a firmware sit-down before any planned power-off** |
 | B2 | **Rotor inertia** | Motor alone, no load, MIT torque step 2 N m for 0.2 s from rest, log omega(t); J = tau / alpha corrected by the friction measured from the steady speed; also a spin-down from 10 rad/s | 3e-4 kg m^2 rotor, 0.0243 reflected | A value with +-20 %; the main session sets `ARMATURE` (flag F1) and the landing predictions move with it |
-| B3 | **TPU stop sleeve** | Sleeve on the test post, load 0-2,000 N in 200 N steps by a bathroom scale under a lever (or the S-type cell), deflection by dial gauge; 10 cycles to 7 mm | 243 N/mm (E 9.8 MPa over 18 x 11 mm, 8 mm wall), 7.5 mm travel before the steel post, 816 N m/rad at r 58 | Measured k within 0.5-2x of 243 N/mm, no tearing after 10 cycles; `STOP_K / STOP_TRAVEL` updated (flag F1) |
-| B4 | **Heat-set insert torque-tension and pull-out** (M5, M8, PA6-CF) | M5 x 30 through a washer stack and the S-type cell into the coupon; tighten in 0.5 N m steps to 4 N m, record tension; then pull-out to failure; same for M8 | 1,200 N preload per M5 (`HUB_PRELOAD_N`), mu 0.15 | A torque that gives >= 1,200 N with pull-out >= 2,400 N and no thread strip; that torque becomes the assembly spec; `leg_studies.py` reruns with the measured preload (flag F2) |
+| B3 | **TPU stop sleeve and its pin** (D53) | Sleeve on the post coupon's pin, a flat anvil 30 mm tall square on its side (as the link's stop face), load 0-2,000 N in 200 N steps by a bathroom scale under a lever (or the S-type cell), deflection by dial gauge; 10 cycles to 7 mm. Then the bare pin, loaded sideways 10.5 mm above the coupon's face to 2,100 N (twice the 1,038 N of E3), the pin's tilt by dial gauge on its tip | 256 N/mm (E 9.8 MPa over 19 x 11 mm, 8 mm wall), 7.5 mm travel before the pin, 856 N m/rad at the 57.8 mm arm; the pin bears 19 MPa on the print at E3 (`leg_studies.py` stop_checks) | Measured k within 0.5-2x of 256 N/mm, no tearing after 10 cycles; `STOP_K / STOP_TRAVEL` updated (flag F1). The pin: no permanent tilt (< 0.05 mm at its tip after unloading), no crack at the hole's mouth |
+| B4 | **Heat-set insert torque-tension and pull-out** (M5, PA6-CF) | M5 x 30 through a washer stack and the S-type cell into the coupon; tighten in 0.5 N m steps to 4 N m, record tension; then pull-out to failure | 1,200 N preload per M5 (`HUB_PRELOAD_N`), mu 0.15 | A torque that gives >= 1,200 N with pull-out >= 2,400 N and no thread strip; that torque becomes the assembly spec; `leg_studies.py` reruns with the measured preload (flag F2) |
 | B5 | **Tyre radial stiffness** | Wheel in the cradle, 0-1,000 N in 100 N steps, deflection by dial gauge; three spots round the tyre | 7.7 ms / 0.7 contact (about 100-250 N/mm) | A rate and a hysteresis figure; `TYRE_SOLREF` refitted (flag F1); if under 100 N/mm the landing loads fall and the drop test's predicted numbers are regenerated first |
 | S1 | **Stand-up** (`stand_up`) | From 140 mm to 300 mm in 1 s, hold 10 s; load plate under the wheel | peak motor 12.1 N m, wheel 140 N, axle 127 N, knee 120 N, L 140-303 | Holds 300 +-10 mm, peak torque <= 18 N m, no oscillation > 5 mm p-p, load plate 100-150 N steady, motor temperature rise < 10 C in 10 min |
 | S2 | **Squat** (`squat`) | Three squats 300 -> 150 mm at 0.5 Hz, then 30 cycles | peak 12.2 N m, 1.0 rad/s, wheel 139 N, L 157-302 | Tracks within +-15 mm, peak <= 18 N m, VBUS stays under 58 V (regen), nothing loosens (re-check every screw after) |
 | S3 | **Jump** (`jump`, 60 N m cap) | Crouch to 150, push at the cap, tuck, land; load plate removed; tether on | height 278.9 mm, peak 60 N m at up to 16.7 rad/s, wheel 3,700 N, gearbox 97.6 N m, knee 753 N, L 156-345 | First jump >= 200 mm (losses the sim does not have) and <= 320 mm; landing motor torque feedback <= 70 N m; leg settles to 250 +-15 mm within 0.5 s; inspect the knees, adapters and stop sleeves; then compare with the sim rerun at the measured J and tyre rate |
 | S4 | **Drop 150** (`drop_150`) | Carriage pinned 150 mm up, leg holding 300, pin pulled | axle 1,719 N, motor 35.5 N m, gearbox 66.5, knee 551 N, L 284-330 | Motor torque feedback <= 55 N m, leg back to 300 +-10 mm within 0.5 s, no damage on inspection, measured L(t) within 20 % of the sim's dip (16 mm) |
 | S5 | **Power cut, bumper high** | Standing at 300, open the contactor by the pendant | with 5.9 N m s/rad: 1.74 rad/s, knee 192 N; undamped 12.2 rad/s | The carriage lands on the bumper at 115 mm; fall time within 30 % of the sim rerun with B1's curve |
-| S6 | **Power cut onto the leg's stops** (only if B1 and the rerun say the knee stays under the fault limit) | Bumper shimmed down to 101.5 mm, same cut | undamped: 1,458 N knee, 96.8 N m stop; damped 192 N, 8.3 N m | D39: nothing breaks; knees, eye sleeves, pins and 6201s inspected after; the sleeves show no permanent set |
+| S6 | **Power cut onto the leg's stops** (only if B1 and the rerun say the knee stays under the fault limit) | Bumper shimmed down to 101.5 mm, same cut | undamped: 1,745 N knee, 109 N m stop; damped 264 N, 10.9 N m (rig-results.json, D53's stops) | D39: nothing breaks; knees, eye sleeves, pins and 6201s inspected after; the sleeves show no permanent set |
 
 Order: B1-B5 as the motors arrive (B3, B4 need only coupons; B5 needs the wheel), then S1-S6. Every run writes
 `exports/rig/runs/<date>-<test>.json` with raw series and the criteria verdict.
@@ -392,8 +393,7 @@ Prices as read on the date given; the leg's McMaster lines are from `catalog/har
 | M12 thin washer DIN 433 | 4 | McMaster 98689A118 $0.14 | any 13 x 20 x 2 |
 | Knee spacer tube 5/8 x 0.065 wall, cut 28 mm | 2 | McMaster 9056K68 $6.26 per 6 in | any 6061 tube 15.9 x 12.6 |
 | Eye sleeve DIN 179 12 x 18 x 20 | 4 | McMaster 96990A403 $16.11 | JW Winco DIN 179-B12-20 (stainless, price not shown); Reid DM-12025 $7.88 is 25 long (eye change) |
-| Stop post ISO 7379 10 x 20, M8 | 4 | McMaster 92981A303 $3.50 | Belmetric BSHLDR8X10X20/33 $4.05, in stock |
-| M8 heat-set insert 12.7 long | 4 | McMaster 94459A778 $0.65 | CNC Kitchen M8 x 12.7 (3DJake $11.18 / 20; 9.7 mm hole) |
+| Stop pin Ø16 x 40, 52100, vented, M8-tapped pull-out (D53) | 4 | McMaster 98432A386 $5.88 | McMaster 91595A845 $5.01 (plain: print a Ø2 vent through the hole's floor, and it cannot be pulled); Aspen Fasteners ME397-16X40 $192.49 per 8 |
 | M5 heat-set insert 7.9 long | 6 (+ coupons) | McMaster 94459A775 $0.27 | CNC Kitchen M5 x 9.5 (3DJake, deeper hole) |
 | M4 x 20 SHCS | 20 | McMaster 91290A168 $0.14 | any 12.9 |
 | O5 x 16 dowel | 8 | McMaster 91595A352 $0.38 | any DIN 6325 m6 (4 into the motors, 2 in each adapter's face) |
@@ -457,12 +457,12 @@ Hours from `exports/leg/print-plan.json` (grams / density / 14 cm^3 per h for PA
 | Day | Prints | Material | Hours | Purpose |
 |---|---|---|---|---|
 | 1 | dyno lug plates x 2, coupler disc, bumper/pin brackets, pod | PETG | 10 | bench fixtures and rig parts (order of parts does not wait on them) |
-| 1-2 | fit coupons: frame motor-ring slice, hub face (the link's side: spigot recess, clearance and dowel holes), knee eye, knee boss, apex eye, hub stub; insert coupon; sleeve block | PA6-CF | 8 | every seat and insert dialled in before any big part; B3 and B4 run on these |
+| 1-2 | fit coupons: frame motor-ring slice, hub face (the link's side: spigot recess, clearance and dowel holes), knee eye, knee boss, apex eye, hub stub; insert coupon; post coupon | PA6-CF | 8 | every seat and insert dialled in before any big part; B3 and B4 run on these |
 | 2 | stop sleeves x 4 (+2 spare), TPU bumpers x 2 | TPU | 10 | B3, the rig's bottom stop |
 | 3-5 | upper links x 2 | PA6-CF | 48 | |
 | 5-6 | front link | PA6-CF | 29 | turned on the bed |
 | 6-8 | wheel link | PA6-CF | 40 | turned |
-| 8-10 | hip frame | PA6-CF | 51 | last: the biggest print (274 x 148 x 81, turned 45 deg, 782 g); print it only after the coupons prove the seats and the P1S holds PA6-CF flat at that size (a 150 x 150 test slab first if there is any doubt) |
+| 8-10 | hip frame | PA6-CF | 67 | last: the biggest print (274 x 154 x 81, turned 45 deg with 0.8 mm to spare, 1,022 g with the 13 mm flanges and the stop posts' backed ears, D53); print it only after the coupons prove the seats and the P1S holds PA6-CF flat at that size (a 150 x 150 test slab first if there is any doubt) |
 | 10 | apex spacer, spares | PA6-CF | 2 | |
 
 About 198 h of printing (the adapters are machined now): 9 days if nothing fails; plan **three weeks** with drying and one reprint. The motors' lead
@@ -481,7 +481,7 @@ instant price read at upload. Everything else on the rig is extrusion, bought ha
 0. On receipt (review M7): each O5 dowel must slip into the RS-04's locating holes by hand (drawn Ø5 0/-0.01; an m6 pin
    is +0.004/+0.012). If one does not, polish its motor end or buy -0.01 pins: the pins are pressed into the frame
    only, never into both. Depth-gauge one motor's lug threads too: the M4 x 20s take 4.9 mm (the drawing promises 5).
-1. Hip frame: M5 inserts (6) and M8 inserts (4) set with the soldering iron at the coupon-proven temperature; the
+1. Hip frame: M5 inserts (6) set with the soldering iron at the coupon-proven temperature (the stop pins go in last, step 7); the
    two 61812s pressed in from the motor side onto the lip (light fit + retaining compound if the coupon says so);
    O5 dowels pressed into the frame's locating holes (the motor then slides onto them).
 2. Output adapters (machined) onto the motors: the motor's 3 pins into the adapter's sockets, 9 x M5 x 25 (no
@@ -502,9 +502,14 @@ instant price read at upload. Everything else on the rig is extrusion, bought ha
    outside against the web, then the wheel link's hub through both from the outside, the DIN 471-60 circlip.
 6. Wheel: 4 x M6 x 30 from inside the hub (measure the flange's thread depth first; bom.json note), cable taped along
    the wheel link and rear upper link.
-7. Stop posts with their TPU sleeves into the M8 inserts, last: four of the lug screws sit under the sleeves (front
-   43/223 deg, rear 137/-43 deg), so a lug re-torque means the posts come out first (review S8). Swing the leg by hand
-   to both stops: no clash, free knees.
+7. Stop pins, last (D53): each Ø16 x 40 pin, its vent flat turned to face its motor's axis (square to the stop's
+   load) and its tapped end up, a thin coat of Loctite 638 in the 23 mm blind hole, pushed in by hand or a light press
+   until it sits on the hole's floor (never a hard press into PA6-CF; the flat lets the air and compound out); wipe off
+   what comes out, 24 h before a load. Then each TPU sleeve pushed on over its pin, its cap outwards (a stretch fit: no
+   glue). Each post sits midway between two lug screws (front motor 43/79 and 187/223 deg, rear 101/137 and
+   -43/-7 deg), 19 mm from its axis: a hex key reaches them past the sleeve's edge, and a sleeve pulls off by hand for a
+   socket (review S8). A pin comes out with an M8 screw in its tapped end and a puller. Swing the leg by hand to both
+   stops: each link's radial stop face meets its sleeve square on, no clash, free knees.
 8. Carriage plate: blocks on (16 x M4), rods on, plate onto the frame's six inserts (M5 x 16); carriage onto the rails
    from the top, end caps on, tethers on; bumpers set at the 115 mm position, ballast plates to the rig.json figure.
 9. Electrics: pod, fuse, contactor, pendant, CAN chain with both terminators, VBUS read on the laptop before any enable.
@@ -524,7 +529,7 @@ session's (requests to them are the **F** items at the end). Estimates are worki
 | T1 | **Order list** so purchasing starts today: every bought part of section 6.1 with price, link, date checked, primary and backup, quantity, and the TODO prices filled (MISUMI configurator, holder, timer, contactor backup) | `docs/leg-rig-orders.md`, `catalog/rig.json` (items in the catalog schema) | every line has a price and a buy link read on the day, or a printed/SendCutSend note; totals per vendor | 0.5 |
 | T2 | **Rig CAD and checks**: post, rails and blocks (envelopes), carriage plate, rods, bumpers and brackets, base frame, deck, brace, pod; the checks of section 2.2 | `cad/rig_parts.py`, `cad/build_rig.py` -> `exports/rig/{*.step,*.stl,rig.json,print-plan.json,bom.json,renders}` | clearance sweep >= 10 mm at 14 lengths x 3 leans; carriage mass and the plate figure in rig.json; block loads and post stress printed; renders of the rig with the leg at 130/300/392 mm and the jump apex; read the frame's insert positions and mount plane from `fivebar.frame_mounts()` (z +-70 since the 13 mm flanges) without editing fivebar | 2 |
 | T3 | **Carriage plate DXF and SendCutSend sheet** | `exports/rig/sendcutsend/carriage_plate.dxf`, `exports/rig/sendcutsend/README.md` | DXF re-imports with the hole table of section 2.1; the instant price recorded | 0.5 |
-| T4 | **Bench fixtures CAD**: dyno lug plates and coupler, insert coupon, sleeve block, tyre cradle, the six fit coupons | `cad/rig_bench.py` -> `exports/rig/bench/` | each a valid solid, fits the bed, STL + STEP; coupon seat diameters parameterised +-0.1 mm in three steps | 1 |
+| T4 | **Bench fixtures CAD**: dyno lug plates and coupler, insert coupon, post coupon (the stop pin's hole, `fivebar.STOP_PIN`), tyre cradle, the six fit coupons | `cad/rig_bench.py` -> `exports/rig/bench/` | each a valid solid, fits the bed, STL + STEP; coupon seat diameters parameterised +-0.1 mm in three steps | 1 |
 | T5 | **Print schedule** from the two print plans (leg + rig) in the order of section 6.2 with drying windows | `tools/print_schedule.py` -> `exports/rig/print-schedule.md` | the table of section 6.2 regenerated from the JSON, total hours, the hip frame last | 0.5 |
 | T6 | **RS-04 driver** (section 4.3), with the frame layout verified against the RS04 manual section 4 | `rig/rs04.py`, `rig/tests/test_rs04.py` | pack/unpack round-trips for every type; MIT encoding at the RS04 ranges exact at the end points; a recorded-frame test; CLI scan/enable/stop/param works on one motor | 1.5 |
 | T7 | **Bus abstraction + MuJoCo backend** | `rig/bus.py`, `rig/sim_bus.py`, `rig/can_bus.py` | `run.py --backend sim` reproduces rig-results.json stand-up and squat peaks within 5 % and the jump height within 10 mm | 1 |

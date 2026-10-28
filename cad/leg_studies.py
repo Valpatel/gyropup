@@ -51,7 +51,8 @@ TARGETS = {'sf': 2.0, 'sf_rare': 1.2,
                                                         # break; inspect the knees after one (D39)
            'bearing_s0': 2.0, 'bearing_s0_rare': 1.0}   # rolling bearings: static safety s0 = C0 / P0 (SKF: >= 1 with normal
                                                         # demands on running; a rare overload may use it, everyday ones not)
-ROBOT_KG = 29.5                      # the robot (docs/body-plan.md's budget with its real parts); the rig carries half
+ROBOT_KG = 32.5                      # the robot's design mass (docs/body-next-plan.md 2.4, D57: the 28.5 kg budget is retired);
+                                     # the rig carries half, 16.25 kg (sim/leg_rig.py HALF_MASS)
 G = 9.81
 CAP, PEAK = 60.0, 120.0
 
