@@ -106,3 +106,24 @@ connected robot. GraphDone coordinates development work, not onboard control.
 `web/playground.png` is a browser capture of the committed target-practice
 snapshot, taken2026-10-28. Regenerate it from the simulator when that snapshot
 changes; do not use a screenshot of an obsolete landing page as the video poster.
+
+## Markdown for agents
+
+Every production build generates `/index.md`, `/llms.txt`, and a `.md` counterpart
+for each public HTML page. HTML includes a `rel="alternate"` link with
+`type="text/markdown"`. Use `/designer/sim.md`, `/designer/progress.md`,
+`/designer/build.md`, and `/site/index.md` as entry points. Original CAD, JSON,
+media, and document downloads keep their URLs.
+
+`tools/site-markdown.mjs` converts published HTML. Progress and Build reuse their
+trusted browser renderers against only the published bundle, so Markdown contains
+current report and parts data instead of empty client-rendered placeholders. A
+missing data snapshot fails the build. No separately maintained copy is needed.
+`npm run test:markdown` checks content parity, tables, MIME, downloads, and404s;
+`SITE_URL=https://gyropup.com npm run test:markdown` checks hosted routes too.
+
+This uses explicit static routes on the existing Cloudflare Pages plan. It does
+not negotiate `Accept: text/markdown` on the HTML URL. Cloudflare's native
+[Markdown for Agents](https://developers.cloudflare.com/fundamentals/reference/markdown-for-agents/)
+feature requires an eligible plan and Zone Settings Edit permission. Do not
+silently purchase a plan or expand a DNS token to enable it.
