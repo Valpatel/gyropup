@@ -562,26 +562,34 @@ jobsite-rated tools, and their adapters face up under the belly plate.
 
 - The DCB609 and the Terrafirma adapter are envelopes until they are measured (#20). Their rows say so, and a test
   keeps them labelled.
-- **The body's strength at 17.75 kg** (gb10-02, exports/body/fea/summary.json, leg-loads.json; 41 V, the 10 in wheel's
-  radius and tyre plane in the side grip). Every case driven by the legs passes:
+- **The body's strength at D71's 18.75 kg a leg** (gb10-02 and gb10-01; exports/body/fea/summary.json, leg-loads.json;
+  41 V; the side grip at the 10 in wheel's radius and tyre plane). Every case passes:
 
-  | Case | SF | Target |
-  |---|---|---|
-  | S1 landing | 2.42 | 2.0 |
-  | S1F collapse | 1.47 | 1.2 |
-  | S1b | 2.83 | 2.0 |
-  | S2 | 8.0 | 2.0 |
-  | S3 | 28 | 2.0 |
-  | D1 | 3.1 / 4.0 | 2.0 |
-  | T1 tray | 2.77 | 2.0 |
+  | Case | SF | Target | Mesh |
+  |---|---|---|---|
+  | S1 landing | 2.38 | 2.0 | 4 mm |
+  | S1F collapse | 1.30 | 1.2 | 4 mm |
+  | S1b | 2.78 | 2.0 | 4 mm |
+  | S2 | 8.0 | 2.0 | 4 mm |
+  | S3 | 28 | 2.0 | 4 mm |
+  | T1 tray | 2.61 | 2.0 | 4 mm |
+  | D1 front / riser | 5.5 / 5.9 | 2.0 | 4 mm |
+  | **D2 turret fall** | **2.12** | 2.0 | 2 mm |
 
-  **D2 (the turret's fall) fails: SF 1.54 against 2.0.** Its load is unchanged; the deck's peak rose from 90.9 to 125.7 MPa,
-  at robot (39.6, -68.4) on the deck's top. B4's run (af4c642) came before the integrity commits (40c427b, f08a8ba) added
-  holes to the deck, so this is a regression from those, not from D69. The hot spot is on the deck's underside, over the corner of
-  a lightening pocket in the turret plate (fillet at (33.2, -64.2)). There the plate's edge is bonded to the deck: a
-  re-entrant corner, which in a linear bonded model may be a singularity rather than a real stress. Next:
-  - a mesh-convergence run of D2 at that corner;
-  - if the peak keeps rising, either move that pocket 10 mm inboard or round its edge, and re-run D2 (about 30 min on a
-    GB10).
+  The 15 scenarios at 37.5 kg (0.75 kg of ballast) pass 15/15 (exports/body/sim-v2-design-mass.json).
+- **How D2 was fixed** (exports/body/fea/D2-convergence.json; tools/fea_convergence.py). With the turret plate bonded over
+  its whole face, its outer corners pried against the deck. Removing the front pockets made that worse (194-202 MPa), so
+  the corners were a model artefact, not the pocket. The plate is now modelled as the bolted joint it is: a 0.5 mm gap,
+  clamped under each riser foot (the M5's preload sandwiches the deck) and at its end nuts.
+  - With the Ø36 feet the deck's peak at the foot's rim converged to 107.6 / 104.0 / 100.4 MPa at 4 / 3 / 2 mm (SF 1.92).
+  - **The riser's feet grew to Ø44**, which gives 96.7 / 95.9 / 89.9 MPa, SF 2.15 at 2 mm. D2 now runs at 2 mm.
+  - The rigid-pad rims (the posts' corners, the clamp pads) are singular: 105 -> 375 MPa from 4 to 2 mm. Their abuse
+    check is judged at the 4 mm reference mesh only; finer meshes report them, and the bolted joint is the hand check.
+  - The wider feet cost 4 of the deck's 31 outlet cells. In the hand model the flow drops from 12.89 to 12.42 CFM, the
+    cooler's inlet rises from 2.49 to 2.59 K over the room (limit 3 K), and the plate goes from 60.3 to 60.5 C.
+  - The plate's foot pads are now r 22 (134.5 g, inside the 135 g budget).
+- **The deck's and the turret plate's SendCutSend prices are to re-read**, because their DXFs changed (the cells, the
+  plate's pads). Run `tools/sendcutsend_quote.py --only deck turret_plate`, then `cad/body_bom.py`. This session's
+  Playwright could not launch Chrome 151 headless.
 - Price the Deutsch connectors, the grommets, the vent plug and the gasket.
 - Open B7's louvre filter.
