@@ -15,10 +15,10 @@
    ],
    "fits": true,
    "placement": "turned",
-   "grams_each": 1006,
-   "grams": 1006,
-   "hours": 65.9,
-   "cost_usd": 80.49,
+   "grams_each": 1008,
+   "grams": 1008,
+   "hours": 66.0,
+   "cost_usd": 80.59,
    "infill": "100 %",
    "how": "printed PA6-CF web-down (turned 45 deg on the bed), 100 % solid; 20 x M4 into the motors, 2 x 61812 pressed in from the motor side onto a 2 mm lip (no retainers), 6 x M5 inserts in the flange ends, 4 x \u00d816 stop pins in blind holes (23 deep, retaining compound)"
   },
@@ -49,10 +49,10 @@
    ],
    "fits": true,
    "placement": "turned",
-   "grams_each": 442,
-   "grams": 442,
-   "hours": 29.0,
-   "cost_usd": 35.4,
+   "grams_each": 446,
+   "grams": 446,
+   "hours": 29.3,
+   "cost_usd": 35.71,
    "infill": "100 %",
    "how": "printed PA6-CF flat on its inner face, 20 mm body; two 6201-2RS at the knee, two 61812 at the apex (pressed against a central web)"
   },
@@ -110,9 +110,9 @@
  },
  "by_material": {
   "pa6-cf": {
-   "grams": 2877,
-   "hours": 188.6,
-   "cost_usd": 230.16,
+   "grams": 2883,
+   "hours": 189.0,
+   "cost_usd": 230.57,
    "parts": 6
   },
   "tpu95": {
@@ -123,7 +123,7 @@
   }
  },
  "too_big": [],
- "total_hours": 195.0,
- "total_grams": 2939,
+ "total_hours": 195.4,
+ "total_grams": 2945,
  "note": "hours are rough: grams / material density / a strength-holding volumetric rate"
 }

@@ -132,13 +132,24 @@
   },
   {
    "key": "dowel_5x16",
-   "qty": 8,
-   "for": "into each motor's two locating holes (4), and two in each adapter's standard face, pressed into its H7 holes (4)",
+   "qty": 4,
+   "for": "into each motor's two locating holes, 12 mm into the hip frame",
    "vendor": "McMaster-Carr",
    "part_number": "91595A352",
    "name": "Dowel Pin, 52100 Alloy Steel, 5 mm Diameter, 16 mm Long",
    "mass_g_each": 2.336,
    "price_usd_each": 0.3844,
+   "cad": true
+  },
+  {
+   "key": "dowel_5x20",
+   "qty": 4,
+   "for": "two in each adapter's standard face, pressed 8 mm into its H7 holes, 12 mm into the upper link (issue #5)",
+   "vendor": "McMaster-Carr",
+   "part_number": "91595A356",
+   "name": "Dowel Pin, 52100 Alloy Steel, 5 mm Diameter, 20 mm Long",
+   "mass_g_each": 2.953,
+   "price_usd_each": 0.4352,
    "cad": true
   },
   {
@@ -230,6 +241,6 @@
   "screw_m5x40",
   "screw_m6x30"
  ],
- "price_usd_per_leg": 1125.11,
+ "price_usd_per_leg": 1125.32,
  "made_to_order_estimate_usd_per_leg": 80.0
 }

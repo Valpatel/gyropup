@@ -70,12 +70,12 @@
    0.8,
    2.95
   ],
-  "wheel_boss": 74.8,
+  "wheel_boss": 75.0,
   "tyre": [
-   82.3,
-   126.9
+   82.5,
+   127.1
   ],
-  "wheel": 104.6,
+  "wheel": 104.8,
   "centre_plane": -82.30000000000001
  },
  "stack_notes": [],
@@ -83,7 +83,7 @@
   101.5,
   392.4
  ],
- "track_mm_two_legs_back_to_back": 373.8,
+ "track_mm_two_legs_back_to_back": 374.2,
  "stand_300": {
   "phi_deg": [
    -50.9,
@@ -120,14 +120,14 @@
   ]
  ],
  "mass_g": {
-  "printed": 2940,
+  "printed": 2945,
   "machined": 305,
-  "bought": 6456,
-  "total": 9701,
+  "bought": 6459,
+  "total": 9708,
   "printed_parts": {
-   "hip_frame": 1006.3,
+   "hip_frame": 1007.5,
    "upper_link": 399.5,
-   "front_link": 442.5,
+   "front_link": 446.4,
    "wheel_link": 615.8,
    "apex_spacer": 13.7,
    "stop_sleeve": 15.6
@@ -141,7 +141,7 @@
  },
  "print": {
   "too_big": [],
-  "hours": 195.0
+  "hours": 195.4
  },
  "clashes": [],
  "cable_route": {
