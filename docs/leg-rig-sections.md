@@ -24,23 +24,34 @@ The review pictures are in `exports/rig/views/` (`cad/rig_views.py`):
 - `rig-exploded.png`;
 - `carriage-front.png`, `carriage-back.png` and `carriage-section.png`.
 
-**The integrity checks** (`cad/rig_integrity.py`, run at the end of `cad/build_rig.py`, which fails if they fail) hold for every
-section:
+**The integrity checks** run at the end of `cad/build_rig.py`, which fails if they fail. They are cad-agent's gates
+(`cad/rig_gates.py`, issue #14), and their verdicts are in `exports/rig/gates/`. They hold for every section:
 
-1. **Nothing floats.** The fixed rig, the carriage with the leg's frame, and the leg's links are each one connected group of
-   parts. Parts count as joined when they touch, or when a screw in the joint table holds them. The carriage meets the
-   rig only at its four blocks on the two rails (each 0.3 mm clear, the balls' gap).
-2. **Nothing interferes** at 22 poses:
-   - the carriage from its bumpers to the top stop, with the leg folded and stretched;
-   - the leg's range on the deck at -20, 0 and +20 deg of lean.
+1. **connectivity** (`cadagent.gates.connectivity`). The checks are grouped by body:
+   - the static frame, grounded on the base's side members;
+   - the carriage body: the plate, blocks, ballast, screws, nuts and inserts, with the leg's frame and motors;
+   - the linkage body: the leg's links and its wheel.
 
-   Every overlap over 1 mm³ fails, except the leg model's own fits (`LEG_OVERLAPS`, listed there with a reason each)
-   and screw threads in holes drawn without their threads.
-3. **Every screw fits its stack.** For each of the 86 screws, the length under the head is checked against the stack it
-   clamps:
+   Each group must be one connected group of parts that touch, or that a declared fastener holds together. Every screw
+   of the joint table is declared, from what it clamps into its drop-in nut, insert or tapped part; the nuts and
+   inserts are modelled. The carriage hangs on four slider joints, its blocks on the rails, each 0.3 mm clear: the
+   balls' gap. The linkage hangs on the two hip joints.
+2. **motion** (`cadagent.gates.motion`). The carriage slides its whole travel, from the bumpers' contact to the top
+   stop's, with the leg folded and carried with it. Nothing may collide.
+3. **leg_range.** At each pose of the leg's range on the deck, at -20, 0 and +20 deg of lean, the relation table must
+   show no interference. The five-bar is a closed loop the motion gate does not sample.
+4. **screws.** Each of the 86 screws' length is checked against the stack it clamps:
    - at least 0.8 d of steel thread engaged (an ISO nut's height), or the whole of a drop-in nut thinner than that;
    - 5 mm in the frame's M5 inserts;
-   - the tip clear of whatever is behind the thread.
+   - the tip clear of what is behind the thread.
+
+   This check stays the rig's own until the fastener gate's tool sweep has the rig's assembly steps.
+
+What is excused is declared in `cad/rig_gates.py` with a reason each:
+- the leg model's own fits (press fits, threads drawn solid);
+- the 10 in wheel's envelope on the BotWheel's mount (W2, #25);
+- threads drawn at the minor diameter;
+- the inserts' knurls.
 
 **Assumptions to check on arrival.** The 8-series slot data is not from a maker's drawing yet:
 

@@ -261,7 +261,7 @@ def blocks():
     return out
 
 
-SHAFT = {'d': 25.4, 'len': 152.4}         # 1 in x 6 in shaft tapped 3/8-16 both ends (McMaster 6649K433)
+SHAFT = {'d': 25.4, 'len': 152.4, 'tap_d': 7.94, 'tap_depth': 19.05}         # 1 in x 6 in shaft tapped 3/8-16 both ends (McMaster 6649K433)
 WEIGHT_PLATE = {'d': 129.5, 't': 20.3, 'bore': 27.0}   # Body-Solid RPB 2.5 lb standard plate (5.1 x 0.8 in); the 1.25 lb is
                                                        # 4 x 0.4 in; the 5 lb (6.7 in) would reach the post: not used
 
@@ -290,7 +290,10 @@ def ballast_parts(n_plates: int = 1) -> dict:
     out = {}
     for sx in (-1, 1):
         x = sx * BALLAST_X
-        out[f'ballast_shaft_{sx:+d}'] = cyl(SHAFT['d'] / 2, 'y', Y_PLATE_BACK - SHAFT['len'], Y_PLATE_BACK, x, BALLAST_Z)
+        y0, y1 = Y_PLATE_BACK - SHAFT['len'], Y_PLATE_BACK            # tapped 3/8-16 x 3/4 in deep at both ends (drawn at the minor)
+        out[f'ballast_shaft_{sx:+d}'] = (cyl(SHAFT['d'] / 2, 'y', y0, y1, x, BALLAST_Z)
+                                         .cut(cyl(SHAFT['tap_d'] / 2, 'y', y1 - SHAFT['tap_depth'], y1 + 1, x, BALLAST_Z))
+                                         .cut(cyl(SHAFT['tap_d'] / 2, 'y', y0 - 1, y0 + SHAFT['tap_depth'], x, BALLAST_Z)))
         out[f'ballast_spacer_{sx:+d}'] = ballast_spacer().translate((x, 0.0, BALLAST_Z))
         y = Y_PLATE_BACK - BALLAST_SPACER['len']
         for k in range(n_plates):

@@ -95,6 +95,8 @@ def deck():
     for j in hw.joints():
         if j['name'].startswith(('deck_screw', 'bumper_screw')):
             s = s.cut(rp.cyl(3.3, 'z', -rp.DECK_T - 1, 1.0, j['seat'][0], j['seat'][1]))
+        if j['name'].startswith('tof_mount_screw'):                 # 3 mm pilots for the ToF mount's wood screws
+            s = s.cut(rp.cyl(1.5, 'z', -rp.DECK_T + 2.0, 1.0, j['seat'][0], j['seat'][1]))
     return s
 
 
@@ -164,7 +166,9 @@ def fixed_parts(with_bottom_bumpers: bool = True, hardware: bool = False) -> dic
     if hardware:
         import rig_hardware as hw
         out.update(hw.corner_brackets())
-        out.update(hw.screw_shapes([j for j in hw.joints() if j['body'] == 'frame']))
+        Jf = [j for j in hw.joints() if j['body'] == 'frame']
+        out.update(hw.screw_shapes(Jf))
+        out.update(hw.receivers(Jf))
     return out
 
 
@@ -181,7 +185,9 @@ def carriage_parts(zh: float, n_plates: int = 1, tof: bool = True, hardware: boo
     if tof:
         out['tof_arm'] = rp.tof_arm().translate(t)
     if hardware:
-        out.update(hw.screw_shapes([j for j in hw.joints(zh) if j['body'] == 'carriage' and (tof or 'tof' not in j['name'])]))
+        Jc = [j for j in hw.joints(zh) if j['body'] == 'carriage' and (tof or 'tof' not in j['name'])]
+        out.update(hw.screw_shapes(Jc))
+        out.update(hw.receivers(Jc))
     return out
 
 
@@ -694,7 +700,7 @@ def jump_apex(half_mass: float) -> dict:
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--no-render', action='store_true')
-    ap.add_argument('--no-integrity', action='store_true', help='skip cad/rig_integrity.py (floating parts, interference, screws)')
+    ap.add_argument('--no-integrity', action='store_true', help='skip cad/rig_gates.py (cad-agent\'s gates)')
     ap.add_argument('--no-sweep', action='store_true')
     ap.add_argument('--no-sim', action='store_true')
     a = ap.parse_args()
@@ -819,9 +825,9 @@ def main():
         c = summary['clearance']
         print(f"  clearance: {c['poses']} poses, under {c['limit_mm']} mm: {len(c['under_limit'])}; closest {list(c['closest'].items())[:4]}")
     print(f'  {time.time() - t0:.0f} s')
-    if not a.no_integrity:                                      # floating parts, interference over the travel, screw lengths
-        import rig_integrity
-        rc = rig_integrity.main([])
+    if not a.no_integrity:                                      # cad-agent's gates: connectivity, motion, the leg's range, screws
+        import rig_gates
+        rc = rig_gates.main([])
         if rc:
             sys.exit(rc)
 
