@@ -87,8 +87,8 @@ TURRET_BOUGHT = {
     'hw_standoff_m3x14': ('turret_standoff_m3x14', 4),
     # electronics (docs/turret-plan.md 2.4, 5.4)
     'el_mcu': ('adafruit-feather-m4-can-4759', 1), 'el_flywheel_regulator': ('tdk-lambda-i6a4w020a033v-001-r', 1),
-    'el_12v_regulators': ('pololu-d36v50f12-4095', 1), 'el_5v_regulator': ('pololu-d36v28f5-3782', 1),
-    'el_safety_switch': ('pololu-2815', 1), 'el_capacitors': ('panasonic-eeu-fr1v102', 2),
+    'el_12v_regulators': ('pololu-d36v50f12-4095', 2), 'el_5v_regulator': ('pololu-d36v28f5-3782', 1),
+    'el_safety_switch': ('pololu-2815', 1), 'el_capacitors': ('panasonic-eeu-fr1j471b', 2),
     'el_555': ('ti-ne555p', 1), 'el_opto': ('vishay-4n35', 1), 'el_monostables': ('ti-cd74hc423e', 1), 'el_supervisor': ('microchip-mcp120', 1),
     'el_trip_latch': ('ti-sn74hc74n', 1), 'el_and': ('ti-sn74hc08n', 1), 'el_brake_driver': ('ti-sn74hct14n', 1), 'el_bus_buffer': ('ti-sn74ahct125n', 1),
     'el_gate_comparator': ('ti-lm393p', 1), 'el_brake_fets': ('infineon-irlz44npbf', 6), 'el_gate_emitters': ('vishay-tsal4400', 2),
@@ -100,7 +100,7 @@ TURRET_BOUGHT = {
     # plugs 24 males (24 AWG); the ring's own 28 AWG leads 24 females (26-30 AWG)
     'el_microfit_f18': ('molex-43030-0038', 8), 'el_microfit_m18': ('molex-43031-0021', 8),
     'el_microfit_f24': ('molex-43030-0001', 14), 'el_microfit_m24': ('molex-43031-0001', 40), 'el_microfit_f28': ('molex-43030-0010', 30),
-    'el_fuse_holder': ('littelfuse-0fhm0001zxj', 1), 'el_fuse': ('littelfuse-0297005-wxnv', 2), 'el_laser_switch': ('onsemi-2n7000', 1),
+    'el_fuse_holder': ('littelfuse-0fhm0001zxj', 1), 'el_fuse': ('fuse_mini58_10a', 2), 'el_laser_switch': ('onsemi-2n7000', 1),
     'el_polyfuse_3a': ('bourns-mf-r300', 3), 'el_polyfuse_2a': ('bourns-mf-r250', 1),
     'el_dt_wedge': ('te-w12p', 1), 'el_dt_pins': ('te-0460-202-16141', 12),
     'el_wire_24awg': ('pololu-ul1007-24awg-60ft', 4), 'el_wire_18awg': ('remington-18ptfestr-25ft', 1),
@@ -114,7 +114,7 @@ def _passive_line(key: str) -> str:
     return {'yageo-rsf100jb-73-2k2': 'el_r_2k2_1w', 'cap-film-100n-5pct': 'el_c_100n_film', 'cap-mlcc-100n-50v': 'el_c_100n',
             'cap-mlcc-1u-50v': 'el_c_1u', 'panasonic-ecq-e1105kf': 'el_c_1u_film', 'onsemi-1n4148': 'el_d_1n4148',
             'omron-b3f-1000': 'el_sw_reset', 'vishay-bat85': 'el_d_bat85', 'schottky-1n5817': 'el_d_1n5817',
-            'schottky-1n5822': 'el_d_1n5822', 'tvs-p6ke15a': 'el_d_tvs15', 'bourns-mf-r010': 'el_polyfuse_loop'}.get(key, 'el_' + key)
+            'schottky-1n5822': 'el_d_1n5822', 'tvs-p6ke15a': 'el_d_tvs15', 'tvs-p6ke51a': 'el_d_tvs51', 'diode-1n5408g': 'el_d_1n5408', 'bourns-mf-r010': 'el_polyfuse_loop'}.get(key, 'el_' + key)
 
 
 # the boards' resistors, capacitors, diodes and the reset button, counted from cad/turret_boards.py COMPONENTS (the

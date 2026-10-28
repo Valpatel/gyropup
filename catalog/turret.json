@@ -3337,7 +3337,7 @@
   ],
   "confidence": "product page",
   "used_for": "not the flywheel rail since D68 (the trimmed TDK i6A4W replaced it: its fixed +-4 % set point and 40 V input do not fit D68 and D66)",
-  "qty_per_robot": 1,
+  "qty_per_robot": 0,
   "notes": "Fixed output, no trim pot. Pololu suggests the D42V110F12 (same size and pinout). D68: replaced for the flywheel rail by tdk-lambda-i6a4w020a033v-001-r."
  },
  {
@@ -3346,7 +3346,7 @@
   "category": "dcdc",
   "vendor": "TDK-Lambda",
   "model": "i6A4W020A033V-001-R",
-  "name": "i6A4W 250 W non-isolated buck, 9-53 V in, 3.3-15 V out by one trim resistor, 20 A (SIP)",
+  "name": "i6A4W 250 W non-isolated buck, 9-53 V in, 3.3-15 V out by one trim resistor, 20 A (1/16 brick, horizontal through-hole)",
   "price_usd": 47.46,
   "price_note": "Digi-Key, one unit, 1,873 in stock (Digi-Key i6A product page, read 2026-10-27); Newark 81Y1493 $40.32 (36 in stock in a search snapshot)",
   "price_checked": "2026-10-27",
@@ -3411,14 +3411,17 @@
     0,
     1500
    ],
-   "note": "output cannot exceed input; TDK datasheet i6A4W rev P10"
+   "note": "output cannot exceed input; TDK datasheet i6A4W rev P10",
+   "package": "DIP (1/16 brick, flat on the board): 33 x 22.9 x 12.1 (TDK i6A4W spec) to 12.7 (rev P10); the -0S1 is the SIP version (33 x 11.4 x 24.8)",
+   "trim": "Ru from TRIM (6) to VOUT- (4): Ru = Vref F / (Vo - Vref) - G, Vref 0.6 V, F 36.5 k, G 511 R (TDK i6A full specification, rev 2.3: the i6A24's constants; the i6A4W's own to be confirmed): 1.53 k for 11.31 V, 1.43-1.64 k for 10.8-11.9 V",
+   "cin_uf": "100 (TDK typical application); Cout 0.1 uF + 22 uF"
   },
   "sources": [
    "https://www.rgbautomatyka.pl/en/p/file/1160/I6A4W020A033V-001-R__TDK_78.pdf",
    "https://www.digikey.com/en/ptm/t/tdk-lambda-americas-inc/i6a-series-of-non-isolated-dc-dc-converters"
   ],
   "confidence": "datasheet",
-  "used_for": "the flywheel rail (D68): the turret's 15-42 V input in, ~11.3 V out (10.8-11.9 V, one fixed trim resistor chosen at the bench so the faster motor's no-load speed is 15,722 rpm): the only supply the flywheel ESCs ever see, and the hardware speed ceiling",
+  "used_for": "the flywheel rail (D68), U3 on the turret boards' level 0: BUS (15-42 V) in, RAIL ~11.31 V out (10.8-11.9 V per turret, set by the trim string R59-R65 at bench test 4.1), always on; the Pololu 2815 switches it to the ESCs and the feed servo while ARM is held",
   "qty_per_robot": 1,
   "notes": "A buck: the rail sits 3 V under one DCB609 at its loaded 15 V, so no buck-boost is needed (the 1400 KV motor is what makes the rail low enough). 9-53 V in covers the 15-20.5 V pack and the 30-42 V 10S bus; D66's 54 V input ceiling is 1 V over its 53 V, which no supply reaches. Its +-4 % set point and the motors' KV spread are measured out by the per-turret trim; what remains (line 0.3 %, load 1.2 % over 0-20 A, temperature) is in the ceiling stack. A fixed resistor, not a pot: soldered, sealed and recorded with the trim. The negative-logic ON/OFF pin can take the arm chain. Pololu's D42V110F12 (12 V fixed, 9 A, 60 V in, $59.95) is the fallback without a trim (it fails D68's stack: sim/turret_launch.py trim.untrimmed)."
  },
@@ -3456,7 +3459,7 @@
    "https://www.pololu.com/product/4095"
   ],
   "confidence": "product page",
-  "used_for": "the 12 V aux rail on the turret (tilt servo, laser) and the 12 V pan-servo rail in the base",
+  "used_for": "two on the turret: 12 V PAN on the base board (U2: the pan servo, the pendant loop) and 12 V AUX on level 1 (U15: the tilt servo); BUS in, 50 V max",
   "qty_per_robot": 2
  },
  {
@@ -3530,7 +3533,7 @@
    "https://www.pololu.com/product/2815"
   ],
   "confidence": "product page",
-  "used_for": "the safety switch: +24 V to the flywheel regulator and the C610 only while the arm chain holds its ON pin high (> 1 V)",
+  "used_for": "the safety switch (U4, level 1): RAIL (the i6A4W's 10.8-11.9 V) to FLY (the two ESCs and the feed servo) only while the arm chain holds its ON pin high (> 1 V); on the rail side since D66/D68 (the 42 V bus is over its 32 V)",
   "qty_per_robot": 1,
   "notes": "Pololu says it is not an emergency cutoff: the robot's radio stop cuts the head rail upstream as well."
  },
@@ -3573,8 +3576,8 @@
    "https://www.mouser.com/c/?q=EEU-FR1V102"
   ],
   "confidence": "datasheet",
-  "used_for": "the capacitor bank at the regulators' input (3 x 1000 uF ride a 2 ms ring bounce at 11 A)",
-  "qty_per_robot": 3
+  "used_for": "not used since D66: the turret's bus reaches 42 V, over its 35 V (panasonic-eeu-fr1j471b, 63 V, replaced it)",
+  "qty_per_robot": 0
  },
  {
   "id": "proto-board-52x50",
@@ -6079,9 +6082,9 @@
    "https://www.mouser.com/ProductDetail/167-R13244AAAA"
   ],
   "confidence": "product page",
-  "used_for": "the bench stand's power switch on the 24 V input",
+  "used_for": "the bench stand's power switch, between the DCB609 dock's 20 A fuse and the XT30 lead to the turret (15-20.5 V)",
   "qty_per_robot": 1,
-  "notes": "The DC-rated rocker sold by Digi-Key and Mouser. Same Ø20.2 hole as the Switch Components RA1-1A-DC-2-B-1 (the plan's choice: RS Americas $1.54, 7 in stock; TME $1.98), which is the backup."
+  "notes": "The DC-rated rocker sold by Digi-Key and Mouser. Same Ø20.2 hole as the Switch Components RA1-1A-DC-2-B-1 (the plan's choice: RS Americas $1.54, 7 in stock; TME $1.98), which is the backup. D66/D68 (sim/turret_power.py): at 15 V (the pack empty) the turret draws 11.2 A for ~0.2 s at the top of an 800 ms spin-up with the J4012 at 48 W and the servos moving, 13.1 A with every servo at its torque cap: over its 10 A, so on the stand (BUS_V under 24 V) the firmware stretches the ramp and slows bursts (docs/turret-wiring.md 5); a 15 A or larger DC switch is the stand's own fix (open)."
  },
  {
   "id": "wago-221-413",
@@ -6888,8 +6891,8 @@
    "https://www.mouser.com/ProductDetail/576-0297005.WXNV"
   ],
   "confidence": "product page",
-  "used_for": "the turret's +24 V fuse in the in-line holder (one spare)",
-  "qty_per_robot": 2,
+  "used_for": "not used since D66: the head branch's fuse is the 10 A MINI 58 V (body.json fuse_mini58_10a) in the same in-line holder (the bus reaches 42 V, over its 32 V)",
+  "qty_per_robot": 0,
   "notes": ""
  },
  {
@@ -8136,7 +8139,7 @@
    "https://www.digikey.com/en/products/result?keywords=1N5822-E3%2F54"
   ],
   "confidence": "product page",
-  "used_for": "the reverse-polarity diode after the 5 A fuse (D8) and across the 2815's output (D10)",
+  "used_for": "across the 2815's output (D10, on FLY). Not D8 since D66 (40 V: the bus reaches 42 V; diode-1n5408g)",
   "qty_per_robot": 1,
   "notes": "onsemi 1N5822G is the cheapest of the named makers at Mouser (Vishay 1N5822-E3/54 = 625-1N5822-E3, $0.91, 3292 in stock). Cheaper non-listed makers exist at Mouser (Taiwan Semiconductor 821-1N5822 $0.71, 1985 in stock) but were not chosen. The same aggregator page also shows Digi-Key 2156-1N5822G-ND with 11,879 in stock at $0.32; the seller of that listing could not be verified, so it is not used. Size: DO-201AD (case 267-05): body 7.30-9.50 mm long x 4.80-5.30 mm dia; leads 1.20-1.30 mm dia, 25.4 mm min length; cathode = polarity band"
  },
@@ -8889,5 +8892,584 @@
   "used_for": "the turret stand's battery dock (D66): one DCB609 in 20 V mode",
   "qty_per_robot": 1,
   "notes": "A 20 V MAX dock, not the 60 V one: a FLEXVOLT pack switches to 60 V only in a 60 V tool. The stand adds its own fuse and switch after it."
+ },
+ {
+  "id": "panasonic-eeu-fr1j471b",
+  "key": "panasonic-eeu-fr1j471b",
+  "category": "power_distribution",
+  "vendor": "Panasonic",
+  "model": "EEU-FR1J471B",
+  "name": "Aluminium electrolytic, 470 uF, 63 V, low ESR (FR), 12.5 x 25 mm radial",
+  "price_usd": 1.54,
+  "price_note": "Digi-Key P15300CT-ND $1.54 at 1, ~20,107 in stock (its row on findchips, read via search 2026-10-27); Newark 62W8085 $2.13, 10,970 in stock (oemstrade 2026-10-27); Mouser 667-EEU-FR1J471B also lists it",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/result?keywords=EEU-FR1J471B",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "P15300CT-ND",
+    "price_usd": 1.54,
+    "pack_qty": 1,
+    "stock": "~20,107 (findchips row, undated)",
+    "read_on": "2026-10-27",
+    "how_read": "search snippet"
+   },
+   {
+    "seller": "Newark",
+    "url": "https://www.newark.com/search?st=EEU-FR1J471B",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "62W8085",
+    "price_usd": 2.13,
+    "pack_qty": 1,
+    "stock": 10970,
+    "read_on": "2026-10-27",
+    "how_read": "oemstrade"
+   }
+  ],
+  "specs": {
+   "capacitance_uf": 470,
+   "voltage_v": 63,
+   "size_mm": [
+    12.5,
+    25.0
+   ],
+   "lead_pitch_mm": 5.0,
+   "ripple_current_a": 1.995,
+   "esr_ohm": null,
+   "temp_c": [
+    -40,
+    105
+   ],
+   "series": "FR (low ESR, long life)"
+  },
+  "sources": [
+   "https://www.oemstrade.com/search/EEU-FR1J471B",
+   "https://uk.rs-online.com/web/p/aluminium-capacitors/2403925"
+  ],
+  "confidence": "product page",
+  "used_for": "the bus bank on the turret boards' level 0 (C4, C5): at the TDK i6A4W's input (TDK: 100 uF Cin), across the turret's 15-42 V input after the slip ring",
+  "qty_per_robot": 2,
+  "notes": "D66: the bus reaches 42 V (10S full), over the 35 V of the EEU-FR1V102 it replaces; 63 V leaves 21 V over 42 V and clears the P6KE51A clamp's breakdown (48.5-53.6 V). Lying down it is 12.5 mm tall (level 0 allows 13). Ripple 1.995 A each (RS listing)."
+ },
+ {
+  "id": "tvs-p6ke51a",
+  "key": "tvs-p6ke51a",
+  "category": "turret",
+  "vendor": "Taiwan Semiconductor (or Diotec)",
+  "model": "P6KE51A",
+  "name": "TVS diode 600 W unidirectional, 43.6 V standoff, 70.1 V clamp, DO-15 (P6KE51A)",
+  "price_usd": 1.28,
+  "price_note": "Newark 99AC4212 (Taiwan Semiconductor) $1.28, 1,476 in stock; TME P6KE51A-DIO (Diotec) $0.47, 4,628 in stock (oemstrade 2026-10-27)",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Newark",
+    "url": "https://www.newark.com/search?st=P6KE51A",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "99AC4212",
+    "price_usd": 1.28,
+    "pack_qty": 1,
+    "stock": 1476,
+    "read_on": "2026-10-27",
+    "how_read": "oemstrade"
+   },
+   {
+    "seller": "TME",
+    "url": "https://www.tme.eu/en/details/p6ke51a-dio/",
+    "in_stock": true,
+    "ships_from": "PL",
+    "seller_pn": "P6KE51A-DIO",
+    "price_usd": 0.47,
+    "pack_qty": 1,
+    "stock": 4628,
+    "read_on": "2026-10-27",
+    "how_read": "oemstrade"
+   }
+  ],
+  "specs": {
+   "VRWM_V": 43.6,
+   "VBR_V": {
+    "min": 48.5,
+    "max": 53.6,
+    "at_IT_mA": 1.0
+   },
+   "VC_max_V": 70.1,
+   "IPP_A": 8.6,
+   "PPPM_W": "600 (10/1000 us)",
+   "IFSM_A": 100,
+   "polarity": "unidirectional; band = cathode",
+   "package": "DO-15 (body 3.6 x 7.6 mm)"
+  },
+  "sources": [
+   "https://www.oemstrade.com/search/P6KE51A",
+   "https://www.vishay.com/docs/88369/p6ke.pdf"
+  ],
+  "confidence": "datasheet",
+  "used_for": "the turret's input clamp (D66: 15-42 V): D13 across BUS on the boards' level 0, D14 at the base board's input",
+  "qty_per_robot": 2,
+  "notes": "The P6KE series' JEDEC values (Vishay 88369 table, the same as the P6KE15A entry's source). 43.6 V standoff: no current at the 42 V full bus; it starts at 48.5 V, under the 50 V of the Pololu regulators and the 53 V of the TDK i6A4W, for slow overvoltage; a fast, energetic spike clamps nearer 70 V, which is what a TVS cannot prevent: the source side (the body's branch, D55) must not ring past 50 V."
+ },
+ {
+  "id": "diode-1n5408g",
+  "key": "diode-1n5408g",
+  "category": "turret",
+  "vendor": "onsemi",
+  "model": "1N5408G",
+  "name": "Rectifier 3 A 1000 V, DO-201AD (1N5408)",
+  "price_usd": 0.58,
+  "price_note": "Mouser 863-1N5408G $0.58, 33,554 in stock; Newark 42K2941 $0.619, 31,895 (oemstrade 2026-10-27)",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/863-1N5408G",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "863-1N5408G",
+    "price_usd": 0.58,
+    "pack_qty": 1,
+    "stock": 33554,
+    "read_on": "2026-10-27",
+    "how_read": "oemstrade"
+   },
+   {
+    "seller": "Newark",
+    "url": "https://www.newark.com/search?st=1N5408G",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "42K2941",
+    "price_usd": 0.619,
+    "pack_qty": 1,
+    "stock": 31895,
+    "read_on": "2026-10-27",
+    "how_read": "oemstrade"
+   }
+  ],
+  "specs": {
+   "vrrm_v": 1000,
+   "io_A": 3.0,
+   "ifsm_A": 200,
+   "i2t_a2s": 166,
+   "package": "DO-201AD: body 9.5 x 5.3 mm max, leads 1.3 mm"
+  },
+  "sources": [
+   "https://www.oemstrade.com/search/1N5408",
+   "https://www.onsemi.com/pdf/datasheet/1n5400-d.pdf"
+  ],
+  "confidence": "datasheet",
+  "used_for": "D8: the reverse-polarity crowbar across the turret's BUS after the base's 10 A fuse (a reversed supply blows the fuse)",
+  "qty_per_robot": 1,
+  "notes": "Replaces the 1N5822 (40 V: reverse-biased at 42 V on a full 10S bus). Forward it carries the fault until the fuse opens: 200 A for 8.3 ms, I2t 166 A2s, over a 10 A MINI's melting I2t; the same DO-201AD body as the 1N5822."
+ },
+ {
+  "id": "yageo-mfr-25fbf52-1k33",
+  "key": "yageo-mfr-25fbf52-1k33",
+  "category": "turret",
+  "vendor": "Yageo",
+  "model": "MFR-25FBF52-1K33",
+  "name": "Resistor 1.33 k 1 % 1/4 W metal film (Yageo MFR-25FBF52)",
+  "price_usd": 0.1,
+  "price_note": "Mouser 603-MFR-25FBF52-1K33 $0.10, 17,999 in stock (its row on oemstrade.com, read 2026-10-27); Arrow as the backup",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-1K33",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "603-MFR-25FBF52-1K33",
+    "price_usd": 0.1,
+    "pack_qty": 1,
+    "stock": 17999,
+    "read_on": "2026-10-27",
+    "how_read": "oemstrade"
+   },
+   {
+    "seller": "Arrow",
+    "url": "https://www.arrow.com/en/products/mfr-25fbf52-1k33/yageo",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "V99:2348_17668792",
+    "price_usd": 0.016,
+    "pack_qty": 1,
+    "stock": "3495 (Americas)",
+    "read_on": "2026-10-27",
+    "how_read": "oemstrade"
+   }
+  ],
+  "specs": {
+   "value": "1.33 k",
+   "tolerance": "1 %",
+   "power_w": 0.25,
+   "package": "axial, 6.3 x 2.4 mm body"
+  },
+  "sources": [
+   "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-1K33",
+   "https://www.oemstrade.com/search/MFR-25FBF52-1K33"
+  ],
+  "confidence": "product page",
+  "used_for": "the flywheel rail's trim string on level 0 (R59-R65: TRIM to VOUT-, cad/turret_boards.py)",
+  "qty_per_robot": 1,
+  "notes": "Size: Axial through-hole, body 2.4 mm dia (+-0.2) x 6.3 mm long (+-0.5), lead dia 0.55 mm; 1/4 W, +-1 %, +-100 ppm/C (Yageo MFR datasheet, MFR-25 row)."
+ },
+ {
+  "id": "yageo-mfr-25fbf52-10r",
+  "key": "yageo-mfr-25fbf52-10r",
+  "category": "turret",
+  "vendor": "Yageo",
+  "model": "MFR-25FBF52-10R",
+  "name": "Resistor 10.0 R 1 % 1/4 W metal film (Yageo MFR-25FBF52)",
+  "price_usd": 0.1,
+  "price_note": "Newark 49AK5972 $0.10, 9,608 in stock; Quest Components $0.0705, 88 in stock (oemstrade 2026-10-27); Mouser 603-MFR-25FBF52-10R not shown there",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Newark",
+    "url": "https://www.newark.com/search?st=MFR-25FBF52-10R",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "49AK5972",
+    "price_usd": 0.1,
+    "pack_qty": 1,
+    "stock": 9608,
+    "read_on": "2026-10-27",
+    "how_read": "oemstrade"
+   },
+   {
+    "seller": "Quest Components",
+    "url": "https://www.questcomp.com/",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": null,
+    "price_usd": 0.0705,
+    "pack_qty": 1,
+    "stock": 88,
+    "read_on": "2026-10-27",
+    "how_read": "oemstrade"
+   }
+  ],
+  "specs": {
+   "value": "10.0 R",
+   "tolerance": "1 %",
+   "power_w": 0.25,
+   "package": "axial, 6.3 x 2.4 mm body"
+  },
+  "sources": [
+   "https://www.oemstrade.com/search/MFR-25FBF52-10R"
+  ],
+  "confidence": "product page",
+  "used_for": "the flywheel rail's trim string on level 0 (R59-R65: TRIM to VOUT-, cad/turret_boards.py)",
+  "qty_per_robot": 1,
+  "notes": "Size: Axial through-hole, body 2.4 mm dia (+-0.2) x 6.3 mm long (+-0.5), lead dia 0.55 mm; 1/4 W, +-1 %, +-100 ppm/C (Yageo MFR datasheet, MFR-25 row)."
+ },
+ {
+  "id": "yageo-mfr-25fbf52-20r",
+  "key": "yageo-mfr-25fbf52-20r",
+  "category": "turret",
+  "vendor": "Yageo",
+  "model": "MFR-25FBF52-20R",
+  "name": "Resistor 20.0 R 1 % 1/4 W metal film (Yageo MFR-25FBF52)",
+  "price_usd": 0.1,
+  "price_note": "Mouser 603-MFR-25FBF52-20R $0.10, 3,236 in stock (its row on oemstrade.com, read 2026-10-27); Arrow as the backup",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-20R",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "603-MFR-25FBF52-20R",
+    "price_usd": 0.1,
+    "pack_qty": 1,
+    "stock": 3236,
+    "read_on": "2026-10-27",
+    "how_read": "oemstrade"
+   },
+   {
+    "seller": "Arrow",
+    "url": "https://www.arrow.com/en/products/mfr-25fbf52-20r/yageo",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "V99:2348_17665225",
+    "price_usd": 0.016,
+    "pack_qty": 1,
+    "stock": 6692,
+    "read_on": "2026-10-27",
+    "how_read": "oemstrade"
+   }
+  ],
+  "specs": {
+   "value": "20.0 R",
+   "tolerance": "1 %",
+   "power_w": 0.25,
+   "package": "axial, 6.3 x 2.4 mm body"
+  },
+  "sources": [
+   "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-20R",
+   "https://www.oemstrade.com/search/MFR-25FBF52-20R"
+  ],
+  "confidence": "product page",
+  "used_for": "the flywheel rail's trim string on level 0 (R59-R65: TRIM to VOUT-, cad/turret_boards.py)",
+  "qty_per_robot": 1,
+  "notes": "Size: Axial through-hole, body 2.4 mm dia (+-0.2) x 6.3 mm long (+-0.5), lead dia 0.55 mm; 1/4 W, +-1 %, +-100 ppm/C (Yageo MFR datasheet, MFR-25 row)."
+ },
+ {
+  "id": "yageo-mfr-25fbf52-40r2",
+  "key": "yageo-mfr-25fbf52-40r2",
+  "category": "turret",
+  "vendor": "Yageo",
+  "model": "MFR-25FBF52-40R2",
+  "name": "Resistor 40.2 R 1 % 1/4 W metal film (Yageo MFR-25FBF52)",
+  "price_usd": 0.1,
+  "price_note": "Mouser 603-MFR-25FBF52-40R2 $0.10, 5,209 in stock (its row on oemstrade.com, read 2026-10-27); Quest Components as the backup",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-40R2",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "603-MFR-25FBF52-40R2",
+    "price_usd": 0.1,
+    "pack_qty": 1,
+    "stock": 5209,
+    "read_on": "2026-10-27",
+    "how_read": "oemstrade"
+   },
+   {
+    "seller": "Quest Components",
+    "url": "https://www.questcomp.com/",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": null,
+    "price_usd": 0.063,
+    "pack_qty": 1,
+    "stock": 557,
+    "read_on": "2026-10-27",
+    "how_read": "oemstrade"
+   }
+  ],
+  "specs": {
+   "value": "40.2 R",
+   "tolerance": "1 %",
+   "power_w": 0.25,
+   "package": "axial, 6.3 x 2.4 mm body"
+  },
+  "sources": [
+   "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-40R2",
+   "https://www.oemstrade.com/search/MFR-25FBF52-40R2"
+  ],
+  "confidence": "product page",
+  "used_for": "the flywheel rail's trim string on level 0 (R59-R65: TRIM to VOUT-, cad/turret_boards.py)",
+  "qty_per_robot": 1,
+  "notes": "Size: Axial through-hole, body 2.4 mm dia (+-0.2) x 6.3 mm long (+-0.5), lead dia 0.55 mm; 1/4 W, +-1 %, +-100 ppm/C (Yageo MFR datasheet, MFR-25 row)."
+ },
+ {
+  "id": "yageo-mfr-25fbf52-80r6",
+  "key": "yageo-mfr-25fbf52-80r6",
+  "category": "turret",
+  "vendor": "Yageo",
+  "model": "MFR-25FBF52-80R6",
+  "name": "Resistor 80.6 R 1 % 1/4 W metal film (Yageo MFR-25FBF52)",
+  "price_usd": 0.1,
+  "price_note": "Mouser 603-MFR-25FBF52-80R6 $0.10, 18,577 in stock (its row on oemstrade.com, read 2026-10-27); Digi-Key as the backup",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-80R6",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "603-MFR-25FBF52-80R6",
+    "price_usd": 0.1,
+    "pack_qty": 1,
+    "stock": 18577,
+    "read_on": "2026-10-27",
+    "how_read": "oemstrade"
+   },
+   {
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/result?keywords=MFR-25FBF52-80R6",
+    "in_stock": null,
+    "ships_from": "US",
+    "seller_pn": null,
+    "price_usd": null,
+    "pack_qty": 1,
+    "stock": null,
+    "read_on": "2026-10-27",
+    "how_read": "search link (price not read)"
+   }
+  ],
+  "specs": {
+   "value": "80.6 R",
+   "tolerance": "1 %",
+   "power_w": 0.25,
+   "package": "axial, 6.3 x 2.4 mm body"
+  },
+  "sources": [
+   "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-80R6",
+   "https://www.oemstrade.com/search/MFR-25FBF52-80R6"
+  ],
+  "confidence": "product page",
+  "used_for": "the flywheel rail's trim string on level 0 (R59-R65: TRIM to VOUT-, cad/turret_boards.py)",
+  "qty_per_robot": 1,
+  "notes": "Size: Axial through-hole, body 2.4 mm dia (+-0.2) x 6.3 mm long (+-0.5), lead dia 0.55 mm; 1/4 W, +-1 %, +-100 ppm/C (Yageo MFR datasheet, MFR-25 row)."
+ },
+ {
+  "id": "yageo-mfr-25fbf52-162r",
+  "key": "yageo-mfr-25fbf52-162r",
+  "category": "turret",
+  "vendor": "Yageo",
+  "model": "MFR-25FBF52-162R",
+  "name": "Resistor 162 R 1 % 1/4 W metal film (Yageo MFR-25FBF52)",
+  "price_usd": 0.1,
+  "price_note": "Mouser 603-MFR-25FBF52-162R $0.10, 7,377 in stock (its row on oemstrade.com, read 2026-10-27); Arrow as the backup",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-162R",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "603-MFR-25FBF52-162R",
+    "price_usd": 0.1,
+    "pack_qty": 1,
+    "stock": 7377,
+    "read_on": "2026-10-27",
+    "how_read": "oemstrade"
+   },
+   {
+    "seller": "Arrow",
+    "url": "https://www.arrow.com/en/products/mfr-25fbf52-162r/yageo",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "V99:2348_17733694",
+    "price_usd": 0.016,
+    "pack_qty": 1,
+    "stock": "8185 (Americas)",
+    "read_on": "2026-10-27",
+    "how_read": "oemstrade"
+   }
+  ],
+  "specs": {
+   "value": "162 R",
+   "tolerance": "1 %",
+   "power_w": 0.25,
+   "package": "axial, 6.3 x 2.4 mm body"
+  },
+  "sources": [
+   "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-162R",
+   "https://www.oemstrade.com/search/MFR-25FBF52-162R"
+  ],
+  "confidence": "product page",
+  "used_for": "the flywheel rail's trim string on level 0 (R59-R65: TRIM to VOUT-, cad/turret_boards.py)",
+  "qty_per_robot": 1,
+  "notes": "Size: Axial through-hole, body 2.4 mm dia (+-0.2) x 6.3 mm long (+-0.5), lead dia 0.55 mm; 1/4 W, +-1 %, +-100 ppm/C (Yageo MFR datasheet, MFR-25 row)."
+ },
+ {
+  "id": "yageo-mfr-25fbf52-324r",
+  "key": "yageo-mfr-25fbf52-324r",
+  "category": "turret",
+  "vendor": "Yageo",
+  "model": "MFR-25FBF52-324R",
+  "name": "Resistor 324 R 1 % 1/4 W metal film (Yageo MFR-25FBF52)",
+  "price_usd": 0.1,
+  "price_note": "Mouser 603-MFR-25FBF52-324R $0.10, 7,829 in stock (its row on oemstrade.com, read 2026-10-27); Arrow as the backup",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-324R",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "603-MFR-25FBF52-324R",
+    "price_usd": 0.1,
+    "pack_qty": 1,
+    "stock": 7829,
+    "read_on": "2026-10-27",
+    "how_read": "oemstrade"
+   },
+   {
+    "seller": "Arrow",
+    "url": "https://www.arrow.com/en/products/mfr-25fbf52-324r/yageo",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "V99:2348_17662115",
+    "price_usd": 0.016,
+    "pack_qty": 1,
+    "stock": 9514,
+    "read_on": "2026-10-27",
+    "how_read": "oemstrade"
+   }
+  ],
+  "specs": {
+   "value": "324 R",
+   "tolerance": "1 %",
+   "power_w": 0.25,
+   "package": "axial, 6.3 x 2.4 mm body"
+  },
+  "sources": [
+   "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-324R",
+   "https://www.oemstrade.com/search/MFR-25FBF52-324R"
+  ],
+  "confidence": "product page",
+  "used_for": "the flywheel rail's trim string on level 0 (R59-R65: TRIM to VOUT-, cad/turret_boards.py)",
+  "qty_per_robot": 1,
+  "notes": "Size: Axial through-hole, body 2.4 mm dia (+-0.2) x 6.3 mm long (+-0.5), lead dia 0.55 mm; 1/4 W, +-1 %, +-100 ppm/C (Yageo MFR datasheet, MFR-25 row)."
+ },
+ {
+  "id": "yageo-mfr-25fbf52-182k",
+  "key": "yageo-mfr-25fbf52-182k",
+  "category": "turret",
+  "vendor": "Yageo",
+  "model": "MFR-25FBF52-182K",
+  "name": "Resistor 182 k 1 % 1/4 W metal film (Yageo MFR-25FBF52)",
+  "price_usd": 0.1,
+  "price_note": "Mouser 603-MFR-25FBF52-182K $0.10, 31,912 in stock (its row on oemstrade.com, read 2026-10-27); Quest Components as the backup",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-182K",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "603-MFR-25FBF52-182K",
+    "price_usd": 0.1,
+    "pack_qty": 1,
+    "stock": 31912,
+    "read_on": "2026-10-27",
+    "how_read": "oemstrade"
+   },
+   {
+    "seller": "Quest Components",
+    "url": "https://www.questcomp.com/",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": null,
+    "price_usd": 0.045,
+    "pack_qty": 1,
+    "stock": 440,
+    "read_on": "2026-10-27",
+    "how_read": "oemstrade"
+   }
+  ],
+  "specs": {
+   "value": "182 k",
+   "tolerance": "1 %",
+   "power_w": 0.25,
+   "package": "axial, 6.3 x 2.4 mm body"
+  },
+  "sources": [
+   "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-182K",
+   "https://www.oemstrade.com/search/MFR-25FBF52-182K"
+  ],
+  "confidence": "product page",
+  "used_for": "R20, the BUS_V divider's top (BUS to the Feather's A0 through 182 k / 10 k)",
+  "qty_per_robot": 1,
+  "notes": "Size: Axial through-hole, body 2.4 mm dia (+-0.2) x 6.3 mm long (+-0.5), lead dia 0.55 mm; 1/4 W, +-1 %, +-100 ppm/C (Yageo MFR datasheet, MFR-25 row)."
  }
 ]

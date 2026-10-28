@@ -321,18 +321,7 @@ Gyropup walks, and a fault in one robot does not take the other down.
 - The interface to Gyropup unchanged in kind: the TM bolt pattern (4 x M5 on 80 x 80, 2 x Ø5 dowels), the XT30
   branch, Ethernet, the dry safety loop (DT12, as before).
 
-**The power budget** (the flywheels' share follows section 4's rail once D68's resize lands):
-
-| Load | Typical | Peak | Note |
-|---|---|---|---|
-| J4012 (NX 16 GB + carrier + fan + NVMe) | 20-25 W | 48 W (40 W module, est. 8 W carrier, fan, SSD) | 3.2 A at 15 V, 1.2 A at 41 V |
-| Turret MCU, regulators, lights, laser | 3 W | 5 W | |
-| Servos (pan, tilt, feed; STS3215 at 12 V) | 3-5 W | 3 x 2.7 A stall at 12 V (est. 100 W for a moment) | torque-capped at 50 % in firmware |
-| Flywheels (while ARM is held) | see section 4 | see section 4 | the converter's input current limit holds the spin-up peak |
-
-On one DCB609 (9 Ah in 20 V mode, about 160 Wh usable): **about 4 h** at a typical 40 W (the NX at 25 W, the
-turret idling between shots), **about 2.2 h** with the NX flat out at 48 W and the turret playing (73 W average,
-est.). The main fuse is a 20 A MINI 58 V (the stand's own and the turret's input), the J4012 a 5 A MINI 58 V branch.
+**The power budget** is under *Power* below (sim/turret_power.py, with section 4's D68 flywheels).
 
 **Interfaces.** The plinth's underside carries the TM pattern (4 x M5 x 16 down into the head's or the stand's
 inserts, 2 x Ø5 dowels); its top carries the pan base (4 x M5 x 16 into inserts in the plinth's four columns); the
@@ -376,6 +365,59 @@ above the J4012; the head's Ø45 TM cable hole is no longer used (the plinth's f
 fastened through the wall); the clash sweep (the DT12 plug 3 mm outside the shell); the box scene (the plinth on
 the J501 box's deck); the airflow of the J4012 in the plinth is open (bench test: the module's temperature at 40 W
 with the shell on).
+
+### Power (D66, D68)
+
+**Rails** (docs/turret-wiring.md 4 has every part). The XT30 feeds the J4012 directly (20 A MINI 58 V main, 5 A MINI 58 V
+branch) and the head branch through a 10 A MINI 58 V to the base board: **BUS**, 15-42 V. On the base board BUS makes
+12 V PAN (Pololu D36V50F12) for the pan servo and goes up the slip ring on three paralleled circuits each way (1, 2, 11
+and 3, 4, 12: the pair D41 kept for a camera is now the third power pair). In the bay, level 0: the bank (2 x 470 uF
+63 V), a P6KE51A clamp and the flywheel rail, **RAIL**: a TDK i6A4W, always on, trimmed per turret to ~11.31 V
+(10.8-11.9 V) by R59 1.33 k and six bridgeable resistors (10-324 R: 0.5 % steps) on its TRIM pin, sealed after bench
+test 4.1. Level 1: the Pololu 2815 switches RAIL to **FLY** (the two ESCs and the feed servo) only while ARM is held, the
+brake unchanged; a second D36V50F12 makes **12 V AUX** for the tilt servo, and a D36V28F5 the 5 V logic, both from BUS,
+so the rail's trim never moves their supply. Every part on BUS is rated 50 V or more (the i6A4W 53 V, the Pololus 50 V,
+the bank 63 V, the clamps' 43.6 V standoff over the 42 V full bus, the reverse crowbar a 1000 V 1N5408); the 2815
+(32 V) sits on RAIL. Level 0 is 13 mm tall for the i6A4W (12.7) and level 1 11 mm, so the bay's stack and its standoffs
+are as deep as before (`TB['levels']`; the stack 1.9 mm inside the bay's face).
+
+**Converter choices.** *The flywheel rail is the TDK i6A4W* (9-53 V in, 3.3-15 V by one resistor, 20 A, 250 W, $47.46
+Digi-Key, Newark $40.32): one buck from both supplies, the trim sets each turret's ceiling (D68). Rejected: the
+Pololu D24V150F12 (13.3-40 V in: under the 42 V bus; fixed, no trim), the D42V110F12 (60 V in but fixed 12 V ±4 %: D68's
+stack fails untrimmed), a buck-boost (not needed: the ~11.3 V rail sits 3 V under the empty pack), switching the
+i6A4W's ON/OFF pin from ARM (the rail would soft-start on every ARM; the 2815 on its output keeps one switch, on a stiff
+rail). *The tilt servo and the logic on their own Pololu D36V50F12 / D36V28F5* (50 V in, $39.95 / $23.95), not on the
+rail: a servo on a per-turret trim would change with every turret; a second i6A4W would be $47 for ~25 W. *The bank:
+Panasonic EEU-FR1J471B*, 470 uF 63 V (Digi-Key $1.54, Newark $2.13), replacing the 35 V parts.
+
+**Budget** (sim/turret_power.py; "play": the servos moving and the J4012 at 48 W; "worst": every servo at its 50 %
+torque cap at once; the ring's busiest circuit carries 42 % of the three; a spin-up by its 100 ms peak, a burst by its
+worst 1 s RMS):
+
+| | 15 V (pack empty) | 20.5 V (pack full) | 30 V (bus) | 42 V (bus full) |
+|---|---|---|---|---|
+| Input: spin-up (800 ms) peak, play / worst | 11.2 / 13.1 A | 7.9 / 9.1 A | 5.2 / 6.1 A | 3.7 / 4.3 A |
+| Input: 8 shots at 10/s, play / worst | 11.3 / 13.7 A | 8.0 / 9.7 A | 5.2 / 6.3 A | 3.7 / 4.4 A |
+| Input: game average, J4012 at 25 / 48 W | 3.9 / 5.4 A (58 / 81 W) | 2.8 / 3.9 A | 1.9 / 2.7 A | 1.4 / 1.9 A |
+| Ring, busiest circuit: spin-up / burst, play | **3.0 / 3.3 A** | **2.1 / 2.4 A** | 1.4 / 1.5 A | 1.0 / 1.1 A |
+| Ring, game average a circuit | 0.64 A | 0.47 A | 0.32 A | 0.23 A |
+
+The flywheels draw ~85 W at the top of the 800 ms ramp (100 ms), ~37 W holding speed and up to ~270 W for ~10 ms in a
+shot's recovery; the J4012 up to 48 W. **The slip ring (2 A a circuit) holds on the bus at the firmware's 800 ms and
+10/s, with every servo at its cap; on the stand's pack it does not.** So the firmware runs a stand profile from BUS_V
+(the Feather's A0: BUS through 182 k / 10 k): a 1.0 s ramp and bursts of at most 4/s at 20.5 V, 1.6 s and 2/s at 18 V,
+2.4 s and 1/s at 15 V, which hold the busiest circuit at 1.8-2.0 A in play (2.4-2.6 A if every servo hit its cap at
+once at 15 V: the open margin). The real fix is more ring (the plan's two-10-A-circuit robot ring) or a boost in the
+stand; not in this change.
+
+**The stand's rocker** (Bulgin R13244AAAA, 10 A 28 V DC; 20.5 V at most, inside 28 V): **over its 10 A** at 15 V with
+the firmware's 800 ms and 10/s (11.2-11.3 A in play, 13.1-13.7 A worst); within it on the stand profile in play (8.7 A),
+and at the worst coincidence with the J4012 in its 25 W mode (9.3 A, against 10.9 A at 48 W). So on the stand the J4012
+runs its 25 W mode, and a 15 A or larger DC switch is the stand's own fix (section 8, open). It switches at most the
+idle current (4.8 A at 15 V with the wheels held).
+
+**Run time** on one DCB609 (about 160 Wh in 20 V mode): ~5 h idle (the J4012 at 25 W, nothing moving: ~32 W), ~2.8 h
+at the game average (58 W), ~2.0 h with the J4012 flat out (81 W).
 
 ## 8. The stand and its battery (D66)
 
