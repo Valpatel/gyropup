@@ -1,5 +1,5 @@
-"""The body's P3 shell (milestone M5, B6; D61): the printed walls round the open frame, the bought parts they carry, the
-battery tub, and the checks that the shell keeps fingers out and plugs in. Robot frame (mm), see cad/body_params.py.
+"""The body's P3 shell (milestone M5, B6; D61): the printed walls round the open frame, the bought parts they carry, and
+the checks that the shell keeps fingers out and plugs in. Robot frame (mm), see cad/body_params.py.
 
     import body_shell as bs3
     parts = bs3.shell_parts()          # {name: body_frame.Part} at stage P3 (read by cad/build_body.py)
@@ -14,16 +14,13 @@ What it is (docs/body-safety.md, docs/body-thermal.md):
     air inlet beside the cooler's fins (the fan blows up and out through the deck); the left rear one the J501's port hatch (its window from the mated plugs, cadagent.connectors);
     the right front one the service door over the power plate; the front halves the ear-pod brackets (PA6-CF, through
     the wall with M5 bolts and nyloc nuts; the SSC1's foot on a 5/16-18 nut; the pod's top at z 193, under the lidar's
-    -15 deg beam). The left front half has a vent over the DDR-120C-24.
+    -15 deg beam). The left front half has a vent over the J501's converter.
   - Front face: the eyes alone (a window for the DualEye board). Below the tray, an apron (|y| <= 58: 25 mm inside
     the knee eyes' sweep at |y| >= 83) carries the front D435 low, its lens in a window, on a PA6-CF cradle.
   - Rear face: the rear D435 the same way; four RP-SMA bulkheads (D-flat holes); between the right rear post and the
-    turret's harness drop, the main switch's 16 mm button, the radio-stop jack (a mini-XLR 4-pin), the XT60 charge port
-    in a bezel and the radio receiver's bay.
-  - The battery tub (the PETG bay of P0-P2 burns: hazard 18): a 0.063 in 5052 floor bent up 20 mm each side and two
-    flat 0.063 in 5052 side plates (SendCutSend: a U as deep as the pack would break its rule that a channel's base be
-    twice its flanges), hung from two printed PA6-CF rails on the belly plate's twelve PEM nuts; printed end caps (the
-    front one the battery's door); TPU skids; the dock's two pad openings in the floor (B9).
+    turret's harness drop, the main switch's 16 mm button, the radio-stop jack (a mini-XLR 4-pin) and the radio
+    receiver's bay, printed with the face (D65: no charge port; the packs charge on DeWalt's chargers).
+  - The battery bay is cad/body_battery.py's (D65), on the robot from P1.
   - The J501 fan's duct (B7): from the turret plate's opening down to 2 mm over the fan's frame. The fan blows up
     (j501-agx 94da39d): the duct carries its exhaust out through the deck's cells, so it never spills into the body and
     comes back round through the fins.
@@ -58,8 +55,10 @@ SPLICE_Z, SPLICE_SCREWS_Z = (150.0, 190.0), (160.0, 180.0)   # the side walls' s
 BOSS_D, SCREW_D = 10.0, 3.4
 PAD_D = 3.5                               # the nut pads inside the walls: an M3 nut (2.4) in a 2.5 mm pocket
 LOUVRE = {'n': 14, 'w': 4.0, 'h': 46.0, 'pitch': 7.0, 'x0': -112.0, 'z0': 148.0}    # B7: 2,576 mm2 a side
-DDR_VENT = {'n': 6, 'w': 4.0, 'h': 46.0, 'pitch': 7.0, 'x0': 58.0, 'z0': 148.0}     # over the DDR-120C-24 (left front)
-DOOR = (70.0, 148.0, 98.0, 192.0)         # the right front half's service door (x0, x1, z0, z1): in front of the ear pod
+DDR_VENT = {'n': 6, 'w': 4.0, 'h': 46.0, 'pitch': 7.0, 'x0': 58.0, 'z0': 148.0}     # over the TRACO converter (right front, D65)
+DOOR_SIDE = 'l'                           # D65: the converter stands at the plate's right edge, so the door moved to the left
+DOOR = (70.0, 125.0, 98.0, 192.0)         # the left front half's service door (x0, x1, z0, z1): in front of the ear pod, its
+                                          # screws clear of the corner post's (to x 125: at 148 it took the post's two screws away)
 EAR = {'x': (-6.0, 55.0), 'top': 193.0, 'pod': (61.0, 50.8, 66.0), 'foot': 28.0,
        'shelf_z': (115.0, 127.0), 'plate_z': (85.0, 127.0), 'plate_t': 6.0, 'bolts_z': (100.0, 120.0)}
 EYES = {'y': 0.0, 'z': 182.0, 'window': (46.0, 20.0, 4.0), 'board': (51.0, 20.0, 7.0)}
@@ -68,7 +67,6 @@ RP_SMA = {'d': 6.5, 'flat': 5.8, 'at': [(-40.0, 150.0), (-15.0, 150.0), (-40.0, 
 REAR_COLUMN_Y = -86.0                     # between the right rear post (|y| >= 98) and the turret's harness drop (y >= -72)
 BUTTON = {'d': 16.2, 'y': -88.0, 'z': 104.0, 'depth': 30.0}
 JACK = {'d': 11.3, 'y': REAR_COLUMN_Y, 'z': 124.0, 'depth': 22.0, 'part': 'Switchcraft TB4M (mini-XLR 4-pin, 7/16-32 bushing)'}
-XT60_BEZEL = {'window': (16.4, 8.4), 'y': REAR_COLUMN_Y, 'z': 140.0, 'depth': 28.0}
 RECEIVER_BAY = {'x': 30.0, 'y': 22.0, 'z': (150.0, 194.0)}
 
 
@@ -186,7 +184,7 @@ def side_wall(side, half):
             hx0, hx1, hz0, hz1 = hatch_window()[0]
             add(box(hx0, hx1, y0, y1, hz0, hz1).edges('|Y').fillet(2.0))
     else:
-        if side == 'r':
+        if side == DOOR_SIDE:
             x0, x1, z0, z1 = DOOR
             add(box(x0, x1, y0, y1, z0, z1).edges('|Y').fillet(3.0))
         else:
@@ -204,23 +202,39 @@ def side_wall(side, half):
             rim = rim.cut(_hole_y(x, z, SCREW_D, *sorted((sy * (YI - 6), sy * (YO + 1)))))
             rim = rim.cut(bf.hexagon_y(6.4, *sorted((sy * (YI - PAD_D - 0.1), sy * (YI - 1.0))), x, z))
             s = s.union(rim)
-    if half == 'front' and side == 'r':                      # the door's four screws: nut pads round the opening
+    if half == 'front' and side == DOOR_SIDE:                # the door's four screws: nut pads round the opening
         x0, x1, z0, z1 = DOOR
         for x, z in ((x0 - 6, z0 + 12), (x0 - 6, z1 - 12), (x1 + 6, z0 + 12), (x1 + 6, z1 - 12)):
             pad = box(x - 5, x + 5, *sorted((sy * (YI - PAD_D), sy * YI)), z - 5, z + 5)
             pad = pad.cut(_hole_y(x, z, SCREW_D, *sorted((sy * (YI - 6), sy * (YO + 1)))))
             pad = pad.cut(bf.hexagon_y(6.4, *sorted((sy * (YI - PAD_D - 0.1), sy * (YI - 1.0))), x, z))
             s = s.union(pad)
+    for x, z in screw_holes_through(side, half):                # the door's and hatch's screws through the wall itself
+        s = s.cut(_hole_y(x, z, SCREW_D, *sorted((sy * (YI - 1), sy * (YO + 1)))))
     return s
+
+
+def door_screws():
+    x0, x1, z0, z1 = DOOR
+    return [(x0 - 6, z0 + 12), (x0 - 6, z1 - 12), (x1 + 6, z0 + 12), (x1 + 6, z1 - 12)]
+
+
+def screw_holes_through(side, half):
+    if side == DOOR_SIDE and half == 'front':
+        return door_screws()
+    if side == 'l' and half == 'rear':
+        return hatch_screws()
+    return []
 
 
 def door():
     """The right side's service door: a 2 mm PETG plate 8 mm over the opening all round, four M3 x 16 into the wall's
     nut pads, its edges rounded 2 mm (hazard table)."""
     x0, x1, z0, z1 = DOOR
-    d = box(x0 - 11, x1 + 11, -(YO + WALL_T), -YO, z0 - 8, z1 + 8).edges('|Y').fillet(4.0)
+    sy = 1.0 if DOOR_SIDE == 'l' else -1.0
+    d = box(x0 - 11, x1 + 11, *sorted((sy * (YO + WALL_T), sy * YO)), z0 - 8, z1 + 8).edges('|Y').fillet(4.0)
     for x, z in ((x0 - 6, z0 + 12), (x0 - 6, z1 - 12), (x1 + 6, z0 + 12), (x1 + 6, z1 - 12)):
-        d = d.cut(_hole_y(x, z, SCREW_D, -(YO + WALL_T + 1), -YO + 1))
+        d = d.cut(_hole_y(x, z, SCREW_D, *sorted((sy * (YO + WALL_T + 1), sy * (YO - 1)))))
     return d
 
 
@@ -291,11 +305,41 @@ def _face(front):
             s = s.union(cq.Workplane('YZ', origin=(min(sx * (post_end + 0.2), sx * XI), 0, 0)).center(y, z).circle(BOSS_D / 2)
                         .extrude(abs(XI - post_end - 0.2)))
             s = s.cut(_hole_x(y, z, SCREW_D, min(sx * (post_end - 1), sx * (XO + 1)), max(sx * (post_end - 1), sx * (XO + 1))))
-    # the D435's window in the apron, and its cradle's two screw bosses
+    # the D435's window in the apron, and its cradle's two feet's screws (M3 x 8 from outside into their inserts)
     wy, wz, wr = D435['window']
     zc = sum(D435['z']) / 2
     s = s.cut(_slot_x(0.0, zc, wy, wz, xa - 1, xb + 1, wr))
+    for y, z in cradle_screws():
+        s = s.cut(_hole_x(y, z, SCREW_D, xa - 1, xb + 1))
+    if front:                                                # the eyes' clip: two bosses with M3 inserts beside the window
+        for y, z in eyes_clip_screws():
+            s = s.union(cq.Workplane('YZ', origin=(XI - EYES['board'][2], 0, 0)).center(y, z).circle(4.0).extrude(EYES['board'][2] + 0.01))
+            s = s.cut(cq.Workplane('YZ', origin=(XI - EYES['board'][2] - 0.1, 0, 0)).center(y, z).circle(2.0).extrude(6.0))
     return s
+
+
+def cradle_screws():
+    """The D435 cradle's two feet's screws through the apron (y, z): at the feet's centres."""
+    W = D435['size'][1]
+    z0 = D435['z'][0]
+    return [(y, z0 + 2.0) for y in (-W / 2 - 4, W / 2 + 4)]
+
+
+def eyes_clip_screws():
+    """The eyes' clip's two screws (y, z): beside the board, into bosses on the front face's inside."""
+    bw = EYES['board'][0]
+    return [(EYES['y'] + s * (bw / 2 + 6.0), EYES['z']) for s in (-1, 1)]
+
+
+def eyes_clip():
+    """A 2 mm PETG plate behind the DualEye board that holds it against the front face's window: two M3 x 6 into the
+    face's bosses (their faces level with the board's back)."""
+    bw, bh, bt = EYES['board']
+    x1 = XI - bt
+    c = box(x1 - 2.0, x1, EYES['y'] - bw / 2 - 11.0, EYES['y'] + bw / 2 + 11.0, EYES['z'] - bh / 2 - 2, EYES['z'] + bh / 2 + 2)
+    for y, z in eyes_clip_screws():
+        c = c.cut(_hole_x(y, z, SCREW_D, x1 - 3, x1 + 1))
+    return c
 
 
 def front_face():
@@ -312,18 +356,7 @@ def rear_face():
         s = s.cut(h)
     s = s.cut(_hole_x(BUTTON['y'], BUTTON['z'], BUTTON['d'], -XO - 1, -XI + 1))
     s = s.cut(_hole_x(JACK['y'], JACK['z'], JACK['d'], -XO - 1, -XI + 1))
-    ww, wh = XT60_BEZEL['window']
-    s = s.cut(_slot_x(XT60_BEZEL['y'], XT60_BEZEL['z'], ww + 6, wh + 6, -XO - 1, -XI + 1, 2.0))      # the bezel's opening
-    return s
-
-
-def xt60_bezel():
-    """The charge port's printed bezel: it fills the rear face's opening and holds an XT60H-F (sockets only)."""
-    ww, wh = XT60_BEZEL['window']
-    y, z = XT60_BEZEL['y'], XT60_BEZEL['z']
-    flange = box(-XO - 1.5, -XO, y - ww / 2 - 6, y + ww / 2 + 6, z - wh / 2 - 6, z + wh / 2 + 6)
-    body = box(-XO, -XI + 8.0, y - ww / 2 - 2.8, y + ww / 2 + 2.8, z - wh / 2 - 2.8, z + wh / 2 + 2.8).edges('|X').fillet(2.2)
-    return flange.union(body).cut(box(-XO - 2, -XI + 9, y - ww / 2, y + ww / 2, z - wh / 2, z + wh / 2))
+    return s.union(receiver_bay())                           # the receiver's bay printed with the face (it rises from the face)
 
 
 def receiver_bay():
@@ -357,6 +390,8 @@ def d435_cradle(front):
         plate = plate.union(box(fa, fb, y - 4, y + 4, z0 - 2, z0 + 6))
     for y in (-D435['back_m3'] / 2, D435['back_m3'] / 2):
         plate = plate.cut(_hole_x(y, (z0 + z1) / 2, SCREW_D, min(pa, pb) - 1, max(pa, pb) + 1))
+    for y, z in cradle_screws():                              # M3 inserts in the feet's ends, from the apron
+        plate = plate.cut(_hole_x(y, z, 4.0, *sorted((sx * XI, sx * (XI - 7.5)))))
     return plate
 
 
@@ -366,125 +401,18 @@ def eyes_board():
     return box(XI - bt, XI, EYES['y'] - bw / 2, EYES['y'] + bw / 2, EYES['z'] - bh / 2, EYES['z'] + bh / 2)
 
 
-# ------------------------------------------------------------------------------------------- the battery tub
-
-TUB_STOCK = '5052-0.063'
-TUB_X = (-150.0, 158.0)                    # as the P0-P2 bay: the brick at the rear, the connector space behind the door
-TUB_FLANGE = 20.0                          # the floor's up-turned edges
-TUB_CAP_T = 3.0                            # the rear cap 0.5 mm behind the brick (as the P1 bay's wall)
-TUB_CAP_HALF_Y = 48.8                      # the caps 29.8 mm inside the knee pins (the gap rule: >= 25)
-TUB_IN = (TUB_X[0] + TUB_CAP_T, TUB_X[1] - TUB_CAP_T)   # the floor and the side plates between the caps
-TUB_RAIL_X = (-141.0, 147.0)               # the rails: over the belly's PEM nuts (x -135..140), short of the tub's ends
-TUB_SKID_T = 3.0
-DOCK_PADS = [(-110.0, 22.0), (-110.0, -22.0)]   # B9: two brass pads (60 along x, 25 across) in the floor, near the rear
-DOCK_PAD = (60.0, 25.0)
-
-
-def tub_geometry():
-    """The tub's numbers from the brick and the belly plate (robot frame)."""
-    import body_battery as bb
-    b = bb.brick()
-    t = bp.STOCK[TUB_STOCK]['t']
-    side_out = 42.8                                        # the side plates' outer face: against the rails
-    side_in = side_out - t
-    floor_w = 2 * (side_in - 0.2)                          # the floor's flanges inside the side plates
-    z_floor_top = b.box[4] - 2.0                          # 2 mm under the brick
-    z_floor = z_floor_top - t
-    z_belly = -bp.z_spine_top() - bp.STOCK[bp.BELLY]['t']
-    return {'t': t, 'side_out': side_out, 'side_in': side_in, 'floor_w': floor_w, 'z_floor': z_floor, 'z_floor_top': z_floor_top,
-            'z_belly': z_belly, 'z_bottom': z_floor - TUB_SKID_T, 'rail_z': (z_belly - 10.0, z_belly), 'brick': b.box}
-
-
-def tub_floor_part() -> bs.SheetPart:
-    """The tub's floor (SendCutSend 5052-H32 0.063 in): its long edges bent up 20 mm (a U whose base is four times its
-    flanges), PEM S-M3-0 nuts in the flanges for the side plates' screws, the skids' holes and the dock pads' openings."""
-    g = tub_geometry()
-    L = TUB_IN[1] - TUB_IN[0]
-    W = g['floor_w']
-    feats = []
-    for x in (-130.0, -70.0, -10.0, 50.0, 110.0):             # the side plates' screws into the flanges' nuts
-        for e in ('S', 'N'):
-            feats.append(bs.Feature('pem', e, (x - TUB_IN[0], 12.0), bp.PEM['S-M3-0']['H'], spec='S-M3-0', note='tub side plate'))
-    for (x, y) in DOCK_PADS:                                    # each pad's insulator: two M3 and the lead's hole
-        u, v = x - TUB_IN[0], W / 2 - y
-        feats.append(bs.Feature('slot', 'base', (u, v), size=(14.0, 8.0, 3.0), note='dock pad: its lead'))
-        for du in (-22.0, 22.0):
-            feats.append(bs.Feature('hole', 'base', (u + du, v), 3.4, note='dock pad insulator, M3'))
-    for x in (-125.0, -40.0, 40.0, 125.0):                     # the skids' screws
-        for y in (W / 2 - 12.0, -W / 2 + 12.0):
-            feats.append(bs.Feature('hole', 'base', (x - TUB_IN[0], W / 2 - y), 3.4, note='TPU skid, M3 x 8'))
-    return bs.SheetPart('tub_floor', TUB_STOCK, L, W, flanges=[bs.Flange('S', TUB_FLANGE), bs.Flange('N', TUB_FLANGE)], features=feats,
-                        note='the battery tub\'s floor: flanges up; PEM S-M3-0 pressed from the inside')
-
-
-def tub_side_part() -> bs.SheetPart:
-    """A tub side plate (SendCutSend 5052-H32 0.063 in, flat; one part for both sides): M3 screws into the floor's
-    flange nuts at the bottom and into the rail's inserts at the top."""
-    g = tub_geometry()
-    L = TUB_IN[1] - TUB_IN[0]
-    H = g['z_belly'] - g['z_floor']
-    feats = []
-    for x in (-130.0, -70.0, -10.0, 50.0, 110.0):
-        feats.append(bs.Feature('hole', 'base', (x - TUB_IN[0], 12.0), 3.4, note='M3 x 8 into the floor flange\'s nut'))
-    for x in (-107.5, -52.5, 2.5, 57.5, 112.5):
-        feats.append(bs.Feature('hole', 'base', (x - TUB_IN[0], H - 5.0), 3.4, note='M3 x 8 into the rail\'s insert'))
-    return bs.SheetPart('tub_side', TUB_STOCK, L, H, features=feats, qty=2, note='flat; the two sides are the same part')
-
-
-def place_tub_floor(shape):
-    g = tub_geometry()
-    return shape.translate((TUB_IN[0], -g['floor_w'] / 2, g['z_floor']))
-
-
-def place_tub_side(shape, side):
-    """The flat side plate (u along x, v up, its thickness along -y on the left) at |y| side_in..side_out."""
-    g = tub_geometry()
-    s = shape.rotate((0, 0, 0), (1, 0, 0), 90).translate((TUB_IN[0], 0, g['z_floor']))     # (u, v, w) -> (x, -w, z)
-    s = s.translate((0, g['side_out'], 0)) if side == 'l' else s.mirror('XZ').translate((0, -g['side_out'], 0))
-    return s
-
-
-def tub_rail(side):
-    """A tub rail (PA6-CF): screwed up into the belly plate's six PEM nuts on its side (M5 x 16), the side plate screwed
-    to its inner face (M3 x 8 into five heat-set inserts)."""
-    g = tub_geometry()
-    sy = 1.0 if side == 'l' else -1.0
-    ya, yb = sorted((sy * g['side_out'], sy * (g['side_out'] + 12.0)))
-    z0, z1 = g['rail_z']
-    r = box(TUB_RAIL_X[0], TUB_RAIL_X[1], ya, yb, z0, z1)
-    yp = sy * (g['side_out'] + 6.0)                                   # the belly's PEM nuts at |y| 48.8
-    for x in (-135.0, -80.0, -25.0, 30.0, 85.0, 140.0):
-        r = r.cut(bf.cyl_z(2.75, z0 - 1, z1 + 1, x, yp)).cut(bf.cyl_z(4.6, z0 - 1, z0 + 4.5, x, yp))    # the head sunk 4.5
-    for x in (-107.5, -52.5, 2.5, 57.5, 112.5):
-        r = r.cut(bf.cyl_y(2.0, *sorted((sy * (g['side_out'] - 0.1), sy * (g['side_out'] + 6.5))), x, z1 - 5.0))
-    return r
-
-
-def tub_cap(front):
-    """A tub end cap (PETG): the rear one fixed, the front one the battery's door (its two thumbscrews as P1's)."""
-    g = tub_geometry()
-    x0, x1 = ((TUB_X[1] - TUB_CAP_T, TUB_X[1]) if front else (TUB_X[0], TUB_X[0] + TUB_CAP_T))
-    w = TUB_CAP_HALF_Y
-    c = box(x0, x1, -w, w, g['z_floor'], g['z_belly'])
-    for y in (-(g['side_out'] - 8.0), g['side_out'] - 8.0):
-        c = c.cut(_hole_x(y, (g['z_floor'] + g['z_belly']) / 2, SCREW_D, x0 - 1, x1 + 1))
-    return c
-
-
-def tub_skids():
-    """The four TPU skids under the tub's floor (two a side: each fits the bed)."""
-    g = tub_geometry()
-    W = g['floor_w']
-    half = (TUB_IN[1] - TUB_IN[0] - 12) / 2
-    out = []
-    for sy in (1.0, -1.0):
-        for j in range(2):
-            x0 = TUB_IN[0] + 5 + j * (half + 2)
-            out.append(box(x0, x0 + half, *sorted((sy * (W / 2 - 1.0), sy * (W / 2 - 15.0))), g['z_bottom'], g['z_floor']))
-    return out
-
-
 # ------------------------------------------------------------------------------------------- the fan duct
+
+DUCT_TAB_T = 2.0
+DUCT_TAB_ANGLES = (90.0, 210.0, 330.0)        # clear of the plate's nuts, the riser's screws and the plate's opening
+
+
+def duct_tabs():
+    """The fan duct's three screws (robot x, y): 5 mm outside its sleeve, under solid turret plate."""
+    fx, fy = bp.j501_stack()['fan_xy']
+    r = bf.INTAKE_R + 1.0 + 1.6 + 5.0
+    return [(fx + r * math.cos(math.radians(a)), fy + r * math.sin(math.radians(a))) for a in DUCT_TAB_ANGLES]
+
 
 def fan_duct():
     """The J501 fan's duct (PETG, B7): a sleeve from the turret plate's opening down to 2 mm over the fan's frame,
@@ -496,7 +424,14 @@ def fan_duct():
     zp = bp.TOP - bp.STOCK[bp.DECK]['t'] - bp.STOCK[bf.TURRET_PLATE['stock']]['t']       # the plate's underside
     z0 = st['cooler_top'] + bp.j501()['cooler_clear_top']                                 # 2 mm over the fan
     r_in = bf.INTAKE_R + 1.0
-    s = bf.cyl_z(r_in + 1.6, z0, zp, fx, fy).cut(bf.cyl_z(r_in, z0 - 1, zp + 1, fx, fy))
+    s = bf.cyl_z(r_in + 1.6, z0, zp, fx, fy)
+    for x, y in duct_tabs():                                 # three tabs at the top, screwed up into the plate's tapped holes
+        a = math.atan2(y - fy, x - fx)
+        tab = bf.cyl_z(5.0, zp - DUCT_TAB_T, zp, x, y).union(
+            bf.box(-0.1, 5.5, -5.0, 5.0, zp - DUCT_TAB_T, zp).rotate((0, 0, 0), (0, 0, 1), math.degrees(a)).translate(
+                (fx + (r_in + 0.5) * math.cos(a), fy + (r_in + 0.5) * math.sin(a), 0)))
+        s = s.union(tab.cut(bf.cyl_z(1.7, zp - DUCT_TAB_T - 1, zp + 1, x, y)))
+    s = s.cut(bf.cyl_z(r_in, z0 - 1, zp + 1, fx, fy))
     for x, y in bf.turret_plate_end_holes():                 # clear of the plate's PEM nuts' bodies
         s = s.cut(bf.cyl_z(7.0, z0 - 1, zp + 1, x, y))
     for a, b in bf.RISER_FEET:                                # clear of the riser's screws' heads under the plate
@@ -522,31 +457,15 @@ def shell_parts() -> dict:
         for half in ('front', 'rear'):
             pr(f'shell_side_{side}_{half}', side_wall(side, half), 'petg', pet,
                'PETG, 2 mm with 1.6 mm ribs; printed on its outer face', ((1, 0, 0), 90 if side == 'r' else -90))
-        pr(f'ear_bracket_{side}', ear_bracket(side), 'pa6-cf', pa6, 'PA6-CF; four M5 x 16 through the wall, nyloc nuts inside')
+        pr(f'ear_bracket_{side}', ear_bracket(side), 'pa6-cf', pa6, 'PA6-CF; four M5 x 14 through the wall, nyloc nuts inside')
     pr('shell_front', front_face(), 'petg', pet, 'PETG, 2 mm with ribs; printed on its outer face', ((0, 1, 0), -90))
-    pr('shell_rear', rear_face(), 'petg', pet, 'PETG, 2 mm with ribs; printed on its outer face', ((0, 1, 0), 90))
+    pr('shell_rear', rear_face(), 'petg', pet, 'PETG, 2 mm with ribs, the receiver\'s bay with it; printed on its outer face', ((0, 1, 0), 90))
     pr('shell_door', door(), 'petg', pet, 'PETG; four M3 x 16 into the wall\'s nuts', ((1, 0, 0), 90))
     pr('shell_hatch', hatch(), 'petg', pet, 'PETG; two M3 x 16 into the wall\'s nuts', ((1, 0, 0), -90))
-    pr('xt60_bezel', xt60_bezel(), 'petg', pet, 'PETG; the XT60H-F charge port (sockets) pressed in')
-    pr('receiver_bay', receiver_bay(), 'petg', pet, 'PETG; the radio stop\'s receiver and RC switch')
     for front in (True, False):
         pr(f'd435_cradle_{"front" if front else "rear"}', d435_cradle(front), 'pa6-cf', pa6, 'PA6-CF; the D435 on its two back M3')
-    pr('fan_duct', fan_duct(), 'petg', pet, 'PETG: the fan\'s exhaust goes only out through the deck')
-    g = tub_geometry()
-    fl = tub_floor_part()
-    fls = fl.solid()
-    out['tub_floor'] = Part('tub_floor', 'sheet', place_tub_floor(fls), 1, fl, fls, fl.s['material'], colour=(0.66, 0.70, 0.75),
-                            note=fl.note, stage=P3)
-    sd = tub_side_part()
-    sds = sd.solid()
-    for side in ('l', 'r'):
-        out[f'tub_side_{side}'] = Part(f'tub_side_{side}', 'sheet', place_tub_side(sds, side), 1, sd if side == 'l' else None, sds,
-                                       sd.s['material'], colour=(0.66, 0.70, 0.75), note=sd.note, stage=P3)
-        pr(f'tub_rail_{side}', tub_rail(side), 'pa6-cf', pa6, 'PA6-CF; six M5 x 16 up into the belly plate\'s nuts, five M3 inserts')
-    pr('tub_cap_front', tub_cap(True), 'petg', (0.85, 0.55, 0.15), 'PETG: the battery\'s door (two M3 thumbscrews)')
-    pr('tub_cap_rear', tub_cap(False), 'petg', (0.85, 0.55, 0.15), 'PETG')
-    for k, sk in enumerate(tub_skids()):
-        pr(f'tub_skid_{k + 1}', sk, 'tpu95', (0.15, 0.15, 0.17), 'TPU 95A skid under the tub')
+    pr('fan_duct', fan_duct(), 'petg', pet, 'PETG: the fan\'s exhaust goes only out through the deck; three M3 x 5 up into the turret plate')
+    pr('eyes_clip', eyes_clip(), 'petg', pet, 'PETG: holds the DualEye board in its window; two M3 x 6 into the face\'s bosses')
     # bought parts the shell carries, as envelopes (masses in the ledger's shell rows)
     for side in ('l', 'r'):
         out[f'ear_pod_{side}'] = Part(f'ear_pod_{side}', 'bought', ear_pod(side), 1, colour=(0.23, 0.25, 0.29), note='Diode Dynamics SSC1', stage=P3)

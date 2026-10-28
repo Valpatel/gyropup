@@ -1,185 +1,283 @@
-"""The battery (milestone M5): a 13S2P Li-ion brick in the belly, and the bay that holds it. Robot frame (mm).
+"""The battery (milestone M5, D65): two DeWalt DCB609 FLEXVOLT packs in 20 V mode, in series, in a bay under the belly
+plate. Robot frame (mm).
 
-Why the belly, not a cassette on the floor tray (docs/body-plan.md 1.2 had a 95 x 160 cassette behind a right-side
-door): with the J501 carrier at the rear of the tray (its fan has to sit under the turret's riser) the tray's front
-third cannot also take the cassette, the 24 V converter, the wheel VESCs and the lidar's interface box; T3 measured it
-(cad/body_layout.py). In the belly the battery is 2.0 kg at z ~ -110 instead of +130, which lowers the robot's centre
-by ~15 mm, and it sits right over the dock's charge pads (D18).
+D65 (the user's choice, 2026-10-27) replaces D43's 13S2P brick and its Daly BMS: each pack (5S3P in 20 V mode, 9.0 Ah)
+slides onto an off-the-shelf DeWalt 20 V rail adapter (Terrafirma Technology, 10 AWG leads, 30 A stated, no fuse or
+switch), the two in series: 10S3P, 36 V nominal, about 41 V full, 30 V empty (3.0 V a cell: the robot enforces the
+cut-off and a current limit itself; the packs talk to nothing). Charging is the user's DeWalt chargers: the packs
+come out, so the robot has no charge port and no dock contacts (D64's dock is overtaken).
 
-The brick (the standard e-bike / e-board build: no cassette to print, nothing that does not fit the P1S bed):
-  26 cells lying, axes across the robot (y), 13 parallel pairs side by side along x, two layers; printed PETG end combs
-  hold the cell ends; 0.2 x 8 mm pure nickel joins each pair to the next on alternate faces; the BMS (Daly K-series 13S
-  100 A, 98 x 65 x 14, tabs to 123) lies on top; fish paper rings, barley paper, Kapton, 2 mm EVA foam at the ends,
-  then 0.2 mm PVC heat shrink. B+ and the BMS's P- leave the front end on 150 mm of 10 AWG to an XT90-S, the BMS's
-  UART and KEY leads on a 6-pin JST-XH beside it; a nylon strap to pull it.
-The bay: the belly plate on top, a printed PA6-CF tub in two halves under it (the bed is 256 mm), a hinged door at the
-front with a quarter-turn latch, the charge port on the rear cap; the tub's floor carries replaceable TPU skids.
+Why the belly, again (the alternatives in docs/body-sections.md 1): a pack is 138 x 87 x 97 mm and nothing in the body
+above the belly plate has 122 mm of height free over a 138 x 87 footprint (the floor tray carries the J501 and the
+power plate; the deck has 120 mm under it and the turret over it); on the front and rear faces the packs would grow the
+body 244 mm, sit in the lidar's lowest beam and the eyes', and hang where a child grabs them. In the belly they are low
+(the robot's centre falls), boxed, and between the legs, at a price: the bay is 132 mm deep, so the robot sits on its
+skids when its legs are under 139 mm (it never runs under 150: sim/robot_v2.py H_RANGE).
+
+The bay (one design from P1 on; the 13S2P's printed P0-P2 bay and P3 tub are gone):
+  - two printed PA6-CF adapter plates screwed up into the belly plate's PEM nuts (4 x M4 each); each adapter screws to
+    its plate (M3 into heat-set inserts placed from the adapter's own holes on arrival: their pattern is not published)
+  - the packs hang from the adapters as from a tool, their rails along x: the front pack slides out forwards, the rear
+    one backwards, each through its end door; a 30 mm space between them holds the adapters' leads, the series link's
+    XT90 pair and the two leads' way up through the belly's slot into the spine's gap
+  - a SendCutSend 5052 0.063 floor (a U, its 20 mm flanges up) and two flat side plates with lightening windows, the
+    sides screwed to the floor's flange nuts and to two printed rails, the rails screwed up into the belly's nuts
+  - two PETG end doors on two knurled M3 thumbscrews each (tool-free), TPU skids on VHB tape under the floor: the robot
+    sits on them
 """
 from __future__ import annotations
 
+import functools
 import math
-from dataclasses import dataclass
 
 import cadquery as cq
 
 import body_params as bp
 
-# Molicel datasheets (molicel.com product pages and datasheets, read 2026-10-27; max dimensions and masses)
-CELLS = {
-    'P30B': {'name': 'Molicel INR-18650-P30B', 'd': 18.6, 'L': 65.2, 'mass_g': 47.0, 'ah': 3.0, 'a_cont': 36.0, 'a_charge': 3.0,
-             'dcir_mohm': 15.0, 'source': 'molicel.com/product/inr-18650-p30b (3.0 Ah, 36 A, 18.6 x 65.2 max, 47 g max); DCIR est'},
-    'P50B': {'name': 'Molicel INR-21700-P50B', 'd': 21.55, 'L': 70.15, 'mass_g': 71.0, 'ah': 5.0, 'a_cont': 60.0, 'a_charge': 25.0,
-             'dcir_mohm': 12.8, 'source': 'molicel.com/product/inr-21700-p50b (5.0 Ah, 60 A at an 80 C cut-off, 21.55 x 70.15, 71 g max, DCIR 12.8 mOhm)'},
-    'P45B': {'name': 'Molicel INR-21700-P45B', 'd': 21.6, 'L': 70.2, 'mass_g': 69.0, 'ah': 4.5, 'a_cont': 45.0, 'a_charge': 13.5,
-             'dcir_mohm': 15.0, 'source': 'molicel.com/product/inr-21700-p45b'},
-}
-BMS = {'name': 'Daly K-series smart BMS, Li-ion 13S 48 V 100 A, Bluetooth + UART (SKU G08-RK-89704)', 'body': (98.0, 65.0, 14.0),
-       'tabs_l': 123.0, 'mass_g': 110.0, 'mass_basis': 'estimate (not published; a 98 x 65 x 14 board with its FETs and potting)',
-       'switch': 'negative side (B- / P-), common port', 'balance_ma': 100}
-SERIES, PARALLEL = 13, 2
-CELL = 'P30B'                    # 13S2P of 18650 P30B: 1.54 kg against the plan's P50B 2.17 kg (the mass ledger is over
-                                 # budget and the legs' power-off load grows with the mass); 256 Wh at 4.10 V/cell, 72 A
-                                 # continuous; the P50B brick (426 Wh) needs a 6 mm deeper bay
-PITCH_GAP = 0.9                  # printed comb web between cells
-WRAP = 2.0                       # fish paper, foam, shrink: each side
-STRIP = (0.2, 8.0)               # nickel (thickness, width)
+# The pack (the DeWalt sheet for its EU twin DCB547-XJ: 138 x 87 x 97 mm, 1.46 kg; Ace Tool lists the DCB609 at 3.2 lb.
+# DeWalt publishes no US outline: measure one pack before the bay is printed). The rail runs along L on the top face.
+PACK = {'name': 'DeWalt DCB609 FLEXVOLT 20V/60V MAX 9.0 Ah (20 V mode: 5S3P)', 'L': 138.0, 'W': 87.0, 'H': 97.0, 'mass_g': 1460.0,
+        'wh_rated': 180.0, 'ah': 9.0, 'series': 5,
+        'source': 'DeWalt DCB547-XJ datasheet (138 x 87 x 97 mm, 1.46 kg); Ace Tool DCB609 3.2 lb; measure on arrival'}
+# The rail adapter (Terrafirma Technology "4pack 10AWG Adapter for DeWALT 20V", Amazon B07HYJ628S, $64.00 the four, 30 A
+# stated). Its outline is not published: this envelope is a guess to be measured on arrival (the bay's plates are printed).
+ADAPTER = {'L': 100.0, 'W': 72.0, 'H': 25.0, 'mass_g': 70.0, 'basis': 'envelope estimate: Terrafirma publishes no drawing'}
+SERIES = 2 * PACK['series']                  # 10S
+V_FULL, V_NOM, V_EMPTY = 4.1 * SERIES, 3.6 * SERIES, 3.0 * SERIES
+R_PACK_OHM = 0.10                            # the leg rig's figure for the pair with its leads (rig/run.py, D65)
 
-
-@dataclass
-class Brick:
-    cell: str
-    box: tuple                   # (x0, x1, y0, y1, z0, z1) in the robot frame
-    mass_g: float
-    energy_wh: float             # nominal, 4.2 V/cell
-    energy_wh_410: float         # at the 4.10 V/cell charge rule
-    capacity_ah: float
-    cont_a: float
-    sag_v_80a: float
-    shapes: dict
-
-
-def brick(cell=CELL, x_front=None, z_top=None) -> Brick:
-    """The 13S2P brick, front end at x_front, its top just under the belly bay's roof."""
-    c = CELLS[cell]
-    p = c['d'] + PITCH_GAP
-    nx, nz = SERIES, PARALLEL
-    lx = nx * p + 2 * 4.0                       # the combs' end walls
-    ly = c['L'] + 2 * (STRIP[0] + 3.0)          # cell length + nickel + comb lips
-    lz = nz * p + BMS['body'][2] + 3.0          # two layers + the BMS on a 1 mm insulator + wiring room
-    lx, ly, lz = lx + 2 * WRAP, ly + 2 * WRAP, lz + 2 * WRAP
-    x1 = x_front if x_front is not None else BAY_X[0] + BAY_WALL + 0.5 + (SERIES * (c['d'] + PITCH_GAP) + 8.0 + 2 * WRAP)
-    # the brick sits at the bay's rear; the front of the bay (behind the door) is the connector space: the XT90 joint
-    # to the robot's lead (down through the belly slot) and the charge port's Y-splice
-    z1 = z_top if z_top is not None else bay_roof() - 1.0
-    box = (x1 - lx, x1, -ly / 2, ly / 2, z1 - lz, z1)
-    cells_g = SERIES * PARALLEL * c['mass_g']
-    extras = BMS['mass_g'] + 45.0 + 35.0 + 70.0 + 60.0   # BMS, nickel, combs, leads + XT90-S + balance wires, wrap + foam
-    ah = PARALLEL * c['ah']
-    e42 = SERIES * 3.6 * ah
-    e410 = e42 * 0.91                                       # ~9 % less stored energy at 4.10 V/cell (rule of thumb)
-    r_pack = SERIES * c['dcir_mohm'] / PARALLEL / 1000 + 0.015    # cells + nickel and leads (est)
-    shapes = {}
-    x0 = box[0] + WRAP + 4.0
-    zc0 = box[4] + WRAP + 1.0
-    cells = None
-    for i in range(nx):
-        for k in range(nz):
-            cx, cz = x0 + p / 2 + i * p, zc0 + p / 2 + k * p
-            s = cq.Workplane('XZ', origin=(0, c['L'] / 2, 0)).center(cx, cz).circle(c['d'] / 2).extrude(c['L'])
-            cells = s if cells is None else cells.union(s)
-    shapes['cells'] = cells
-    bx, by, bz = BMS['body']
-    shapes['bms'] = cq.Workplane('XY').box(bx, by, bz).translate(((box[0] + box[1]) / 2, 0, zc0 + nz * p + 1.0 + bz / 2))
-    return Brick(cell, box, cells_g + extras, e42, e410, ah * 0.92, PARALLEL * c['a_cont'], 80.0 * r_pack, shapes)
-
-
-# ------------------------------------------------------------------------------------------- the bay
-
-BAY_WALL = 3.0                   # printed PA6-CF tub walls
-BAY_FLOOR = 3.0
+PLATE_T = 4.0                                # the printed adapter plates under the belly
+GAP_MID = 30.0                               # between the packs: the leads and the series link
 DOOR_T = 4.0
-BAY_X = (-150.0, 158.0)
-SKID_T = 3.0                     # TPU 95A skid strips under the floor
+END_CLEAR = 2.0                              # a pack's end to its door
+SIDE_CLEAR = 4.5                             # a pack's side to the floor's flange: the flange nuts' bodies (3.2) and the M3 x 6 tips
+FLOOR_CLEAR = 1.0                            # under a pack
+TUB_STOCK = '5052-0.063'
+TUB_FLANGE = 20.0
+SKID_T = 3.0
+RAIL_W, RAIL_H = 8.0, 10.0                   # the printed rails at the top, inside the side plates
+THUMB = {'thread': 'M3', 'length': 10.0}     # the doors' knurled thumbscrews into the rails' end inserts
+LEADS_SLOT = (-30.0, 24.0)                   # the belly's slot for the two leads (x centre, length): between the standoffs at x -72 and -10
 
 
-def bay_roof():
-    """The underside of the belly plate: the bay's roof."""
+def z_belly():
+    """The belly plate's underside: the bay's roof."""
     return -bp.z_spine_top() - bp.STOCK[bp.BELLY]['t']
 
 
-def bay(b: Brick):
-    """The tub round the brick: inside it 2 mm all round, its walls inside |y| <= BELLY_HALF_Y (the knees' 25 mm)."""
-    x0, x1, y0, y1, z0, z1 = b.box
-    zr = bay_roof()
-    iz0 = z0 - 2.0
-    out = {'inner': (BAY_X[0] + BAY_WALL, BAY_X[1] - DOOR_T, y0 - 2.0, y1 + 2.0, iz0, zr),
-           'outer': (BAY_X[0], BAY_X[1], y0 - 2.0 - BAY_WALL, y1 + 2.0 + BAY_WALL, iz0 - BAY_FLOOR - SKID_T, zr)}
-    out['half_y'] = y1 + 2.0 + BAY_WALL
-    out['bottom_z'] = out['outer'][4]
+@functools.lru_cache(maxsize=1)
+def geometry():
+    """The bay's numbers (robot frame)."""
+    t = bp.STOCK[TUB_STOCK]['t']
+    zr = z_belly()
+    z_adapter = (zr - PLATE_T - ADAPTER['H'], zr - PLATE_T)
+    z_pack = (z_adapter[0] - PACK['H'], z_adapter[0])
+    z_floor_top = z_pack[0] - FLOOR_CLEAR
+    side_in = PACK['W'] / 2 + SIDE_CLEAR + t                  # the floor's flanges sit inside the side plates
+    side_out = side_in + t
+    inner_x = PACK['L'] * 2 + GAP_MID + 2 * END_CLEAR
+    x_in = (-inner_x / 2, inner_x / 2)
+    x_out = (x_in[0] - DOOR_T, x_in[1] + DOOR_T)
+    packs = {'front': (GAP_MID / 2, GAP_MID / 2 + PACK['L']), 'rear': (-GAP_MID / 2 - PACK['L'], -GAP_MID / 2)}
+    adapters = {k: ((a + b) / 2 - ADAPTER['L'] / 2 + (1 if k == 'front' else -1) * (PACK['L'] - ADAPTER['L']) / 2,
+                    (a + b) / 2 + ADAPTER['L'] / 2 + (1 if k == 'front' else -1) * (PACK['L'] - ADAPTER['L']) / 2)
+                for k, (a, b) in packs.items()}             # each adapter at its door's end: the latch and release face the door
+    return {'t': t, 'z_belly': zr, 'z_adapter': z_adapter, 'z_pack': z_pack, 'z_floor_top': z_floor_top, 'z_floor': z_floor_top - t,
+            'z_bottom': z_floor_top - t - SKID_T, 'side_in': side_in, 'side_out': side_out, 'flange_in': side_in - t,
+            'x_in': x_in, 'x_out': x_out, 'packs': packs, 'adapters': adapters,
+            'rail_y': (side_in - RAIL_W, side_in),
+            'rail_z': (zr - RAIL_H, zr), 'half_y': side_out}
+
+
+def pack_boxes():
+    g = geometry()
+    return {k: (a, b, -PACK['W'] / 2, PACK['W'] / 2, *g['z_pack']) for k, (a, b) in g['packs'].items()}
+
+
+def adapter_boxes():
+    g = geometry()
+    return {k: (a, b, -ADAPTER['W'] / 2, ADAPTER['W'] / 2, *g['z_adapter']) for k, (a, b) in g['adapters'].items()}
+
+
+def summary():
+    g = geometry()
+    wheel_r = 171.3 / 2
+    sit = -g['z_bottom'] - wheel_r                           # the leg length at which the skids touch the floor
+    return {'pack': PACK['name'], 'config': f'{SERIES}S3P (two packs in series)', 'v_full': round(V_FULL, 1), 'v_nominal': V_NOM, 'v_empty': V_EMPTY,
+            'wh_rated': 2 * PACK['wh_rated'], 'packs_kg': round(2 * PACK['mass_g'] / 1000, 2),
+            'bay_mm': [round(g['x_out'][1] - g['x_out'][0], 1), round(2 * g['side_out'], 1), round(g['z_belly'] - g['z_bottom'], 1)],
+            'bay_bottom_z': round(g['z_bottom'], 1), 'sits_on_skids_below_leg_mm': round(sit, 1),
+            'clearance_at_150_mm': round(150 + wheel_r + g['z_bottom'], 1), 'clearance_at_300_mm': round(300 + wheel_r + g['z_bottom'], 1),
+            'knee_gap_mm': round(83.0 - g['side_out'], 1), 'adapter': ADAPTER['basis']}
+
+
+# ------------------------------------------------------------------------------------------- the parts
+
+def _box(x0, x1, y0, y1, z0, z1):
+    (x0, x1), (y0, y1), (z0, z1) = sorted((x0, x1)), sorted((y0, y1)), sorted((z0, z1))
+    return cq.Workplane('XY').box(x1 - x0, y1 - y0, z1 - z0, centered=False).translate((x0, y0, z0))
+
+
+def _cyl_z(r, z0, z1, x=0.0, y=0.0):
+    return cq.Workplane('XY').workplane(offset=z0).center(x, y).circle(r).extrude(z1 - z0)
+
+
+def _cyl_y(r, y0, y1, x=0.0, z=0.0):
+    return cq.Workplane('XZ', origin=(0, y1, 0)).center(x, z).circle(r).extrude(y1 - y0)
+
+
+def _cyl_x(r, x0, x1, y=0.0, z=0.0):
+    return cq.Workplane('YZ', origin=(x0, 0, 0)).center(y, z).circle(r).extrude(x1 - x0)
+
+
+# The belly's nuts for the bay: S-M4-0, their bodies on the belly's top, so only beyond the cheeks' ends (|x| > 92: inside
+# them the cheeks' lower flanges lie on the belly out to |y| 45.5)
+BELLY_NUT_X = (-150.0, -102.0, 102.0, 150.0)
+
+
+def plate_holes(k):
+    """An adapter plate's four M4 screws up into the belly's PEM nuts (robot x, y): at its outer end, beyond the cheeks."""
+    sx = 1.0 if k == 'front' else -1.0
+    return [(sx * x, y) for x in (102.0, 150.0) for y in (-ADAPTER['W'] / 2 + 6.0, ADAPTER['W'] / 2 - 6.0)]
+
+
+def rail_holes():
+    """The rails' M4 screws up into the belly's PEM nuts (robot x, |y|): four each, beyond the cheeks' ends."""
+    g = geometry()
+    yc = (g['rail_y'][0] + g['rail_y'][1]) / 2
+    return [(x, yc) for x in BELLY_NUT_X]
+
+
+SIDE_SCREWS_X = (-125.0, -60.0, 0.0, 60.0, 125.0)            # the side plates into the floor's flange nuts and the rails' inserts
+
+
+def adapter_plate(k):
+    """A printed PA6-CF plate under the belly that carries one adapter: four M4 counterbored from below up into the
+    belly's nuts (the heads under the adapter's footprint's edges), the adapter's own screws into inserts set on arrival."""
+    g = geometry()
+    a, b = g['adapters'][k]
+    a, b = (min(a, 96.0), min(max(b, 154.5), g['x_in'][1] - 0.5)) if k == 'front' else (max(min(a, -154.5), g['x_in'][0] + 0.5), max(b, -96.0))
+    zr = g['z_belly']
+    w = ADAPTER['W'] / 2
+    s = _box(a, b, -w, w, zr - PLATE_T, zr)
+    for x, y in plate_holes(k):
+        s = s.cut(_cyl_z(2.25, zr - PLATE_T - 1, zr + 1, x, y)).cut(_cyl_z(4.0, zr - PLATE_T - 1, zr - PLATE_T + 1.5, x, y))
+    return s
+
+
+def rail(side):
+    """A rail (PA6-CF), inside the side plate at the top: up into the belly's nuts (M4, heads sunk), the side plate's
+    top row into its inserts (M3), the doors' thumbscrews into inserts in its ends."""
+    g = geometry()
+    sy = 1.0 if side == 'l' else -1.0
+    y0, y1 = sorted((sy * g['rail_y'][0], sy * g['rail_y'][1]))
+    z0, z1 = g['rail_z']
+    x0, x1 = g['x_in']
+    r = _box(x0, x1, y0, y1, z0, z1)
+    yc = (y0 + y1) / 2
+    for x, _ in rail_holes():                                 # M4 x 16 socket heads under the rail (19 mm over the packs)
+        r = r.cut(_cyl_z(2.25, z0 - 1, z1 + 1, x, yc))
+    zc = (z0 + z1) / 2
+    for x in SIDE_SCREWS_X:                                   # M3 inserts from the outer face (the side plate's top row)
+        yo = sy * g['side_in']
+        r = r.cut(_cyl_y(2.0, *sorted((yo, yo - sy * 6.5)), x, zc))
+    for xe, d in ((x0, 1), (x1, -1)):                          # the doors' thumbscrews: M3 inserts in the ends
+        r = r.cut(_cyl_x(2.0, *sorted((xe, xe + d * 7.5)), yc, zc))
+    return r
+
+
+def floor_part():
+    """The bay's floor (SendCutSend 5052-H32 0.063 in): a U with 20 mm flanges up, PEM S-M3-0 in the flanges for the side
+    plates' bottom row, the skids' holes."""
+    import body_sheet as bs
+    g = geometry()
+    L = g['x_in'][1] - g['x_in'][0]
+    W = 2 * g['side_in'] - 0.1                                   # its flanges inside the side plates
+    feats = []
+    for x in SIDE_SCREWS_X:
+        for e in ('S', 'N'):
+            feats.append(bs.Feature('pem', e, (x - g['x_in'][0], 12.0), bp.PEM['S-M3-0']['H'], spec='S-M3-0', note='bay side plate'))
+    feats.append(bs.Feature('slot', 'base', (L / 2, W / 2), size=(24.0, 40.0, 4.0), note='drain and the leads\' inspection'))
+    return bs.SheetPart('bay_floor', TUB_STOCK, L, W, flanges=[bs.Flange('S', TUB_FLANGE), bs.Flange('N', TUB_FLANGE)], features=feats,
+                        note='the battery bay\'s floor: flanges up; PEM S-M3-0 pressed from the inside')
+
+
+def side_part():
+    """A bay side plate (SendCutSend 5052-H32 0.063 in, flat; one part for both sides), three lightening windows."""
+    import body_sheet as bs
+    g = geometry()
+    L = g['x_in'][1] - g['x_in'][0]
+    H = g['z_belly'] - g['z_floor']
+    feats = []
+    for x in SIDE_SCREWS_X:
+        feats.append(bs.Feature('hole', 'base', (x - g['x_in'][0], 12.0), 3.4, note='M3 x 6 into the floor flange\'s nut'))
+        feats.append(bs.Feature('hole', 'base', (x - g['x_in'][0], H - RAIL_H / 2), 3.4, note='M3 x 6 into the rail\'s insert'))
+    zw0, zw1 = TUB_FLANGE + 6.0, H - RAIL_H - 6.0
+    for xa, xb in ((-115.0, -70.0), (-50.0, -10.0), (10.0, 50.0), (70.0, 115.0)):
+        feats.append(bs.Feature('slot', 'base', (((xa + xb) / 2) - g['x_in'][0], (zw0 + zw1) / 2), size=(xb - xa, zw1 - zw0, 6.0),
+                                note='lightening window'))
+    return bs.SheetPart('bay_side', TUB_STOCK, L, H, features=feats, qty=2, note='flat; the two sides are the same part')
+
+
+def place_floor(shape):
+    g = geometry()
+    W = 2 * g['side_in'] - 0.1
+    return shape.translate((g['x_in'][0], -W / 2, g['z_floor']))
+
+
+def place_side(shape, side):
+    g = geometry()
+    s = shape.rotate((0, 0, 0), (1, 0, 0), 90).translate((g['x_in'][0], 0, g['z_floor']))     # (u, v, w) -> (x, -w, z)
+    return s.translate((0, g['side_out'], 0)) if side == 'l' else s.mirror('XZ').translate((0, -g['side_out'], 0))
+
+
+def door(front):
+    """An end door (PETG, 4 mm): the pack slides out behind it; two knurled M3 thumbscrews into the rails' ends."""
+    g = geometry()
+    x0, x1 = (g['x_in'][1], g['x_out'][1]) if front else (g['x_out'][0], g['x_in'][0])
+    w = g['side_out']
+    d = _box(x0, x1, -w, w, g['z_floor'], g['z_belly'] - 0.5).edges('|X').fillet(3.0)
+    zc = sum(g['rail_z']) / 2
+    yc = (g['rail_y'][0] + g['rail_y'][1]) / 2
+    for y in (yc, -yc):
+        d = d.cut(_cyl_x(1.7, x0 - 1, x1 + 1, y, zc))
+    return d
+
+
+def skids():
+    g = geometry()
+    W = 2 * g['side_in'] - 0.1
+    half = (g['x_in'][1] - g['x_in'][0] - 12) / 2
+    out = []
+    for sy in (1.0, -1.0):
+        for j in range(2):
+            x0 = g['x_in'][0] + 5 + j * (half + 2)
+            out.append(_box(x0, x0 + half, sy * (W / 2 - 1.0), sy * (W / 2 - 15.0), g['z_bottom'], g['z_floor']))
     return out
 
 
-CONNECTOR_SPACE = 30.0           # behind the door: the XT90-S pair lying across y, the charge port's leads
-
-
-def bay_parts(b: Brick):
-    """The printed bay (PETG, 3 mm walls, impact-tough), robot frame: a rear and a front half (each fits the bed),
-    each a tub (floor + two walls) with outward flanges screwed up into the belly plate's PEM nuts, and the door with
-    the charge port (XT60E-F: the robot's side is the female, no live pins) and two thumbscrews."""
-    B = bay(b)
-    x0, x1, y0, y1, z0, z1 = B['outer']
-    wall, floor = BAY_WALL, BAY_FLOOR
-    zf = z0 + SKID_T                                   # the floor's underside (the skids under it)
-    flange_w = 12.0
-    seam = (x0 + x1 - DOOR_T) / 2
-    parts = {}
-    for name, (a, c) in (('bay_rear', (x0, seam)), ('bay_front', (seam, x1 - DOOR_T))):
-        tub = cq.Workplane('XY').box(c - a, y1 - y0, z1 - zf, centered=False).translate((a, y0, zf))
-        inner = cq.Workplane('XY').box(c - a + 2, y1 - y0 - 2 * wall, z1 - zf - floor + 1, centered=False).translate((a - 1, y0 + wall, zf + floor))
-        tub = tub.cut(inner)
-        for sy in (1, -1):                              # the flanges under the belly plate
-            yy = (y1, y1 + flange_w) if sy > 0 else (y0 - flange_w, y0)
-            tub = tub.union(cq.Workplane('XY').box(c - a, flange_w, 4.0, centered=False).translate((a, yy[0], z1 - 4.0)))
-            for x in (-135.0, -80.0, -25.0, 30.0, 85.0, 140.0):
-                if a + 6 < x < c - 6:
-                    tub = tub.cut(cq.Workplane('XY').workplane(offset=z1 - 5).center(x, sy * (B['half_y'] + 6.0)).circle(2.75).extrude(6))
-        if name == 'bay_rear':                          # the rear wall
-            tub = tub.union(cq.Workplane('XY').box(wall, y1 - y0, z1 - zf, centered=False).translate((a, y0, zf)))
-        parts[name] = tub
-    # the door: only 6 mm wider than the tub each side (the knee pins pass 29 mm from its edges at the 320 mm stance:
-    # ISO 13854's 25 mm for fingers), held by two M3 thumbscrews into inserts in bosses inside the tub's front corners
-    ear = 6.0
-    door = cq.Workplane('XY').box(DOOR_T, y1 - y0 + 2 * ear, z1 - zf, centered=False).translate((x1 - DOOR_T, y0 - ear, zf))
-    door = door.cut(cq.Workplane('YZ', origin=(x1 - DOOR_T - 1, 0, 0)).center(0, (zf + z1) / 2 - 8).rect(16.6, 8.6).extrude(DOOR_T + 2))   # XT60
-    zb = (zf + z1) / 2 + 12.0
-    for sy in (1, -1):
-        door = door.cut(cq.Workplane('YZ', origin=(x1 - DOOR_T - 1, 0, 0)).center(sy * (y1 - wall - 4.0), zb).circle(1.7).extrude(DOOR_T + 2))
-        boss = (cq.Workplane('YZ', origin=(x1 - DOOR_T - 12.0, 0, 0)).center(sy * (y1 - wall - 4.0), zb).circle(4.5).extrude(12.0)
-                .cut(cq.Workplane('YZ', origin=(x1 - DOOR_T - 7.0, 0, 0)).center(sy * (y1 - wall - 4.0), zb).circle(2.0).extrude(8.0)))
-        parts['bay_front'] = parts['bay_front'].union(boss)
-    parts['bay_door'] = door
-    half = (x1 - x0 - 12) / 2                           # TPU skids under the floor: two per side (the bed is 256 mm)
-    for k, sy in enumerate((1, -1)):
-        for j in range(2):
-            parts[f'bay_skid_{2 * k + j + 1}'] = cq.Workplane('XY').box(half, 14.0, SKID_T, centered=False).translate(
-                (x0 + 5 + j * (half + 2), (y1 - 18.0) if sy > 0 else (y0 + 4.0), z0))
-    return parts
-
-
-def summary(cell=CELL):
-    b = brick(cell)
-    B = bay(b)
-    fb = bp._fivebar()
-    wheel_r = 171.3 / 2
-    clear_min = bp.LEG_RANGE[0] + wheel_r + B['bottom_z']
-    return {'cell': CELLS[cell]['name'], 'config': f'{SERIES}S{PARALLEL}P', 'brick_mm': [round(b.box[1] - b.box[0], 1), round(b.box[3] - b.box[2], 1), round(b.box[5] - b.box[4], 1)],
-            'mass_g': round(b.mass_g), 'capacity_ah': round(b.capacity_ah, 2), 'energy_wh_42': round(b.energy_wh), 'energy_wh_410': round(b.energy_wh_410),
-            'continuous_a': b.cont_a, 'sag_at_80a_v': round(b.sag_v_80a, 1), 'bay_half_y': round(B['half_y'], 1), 'bay_bottom_z': round(B['bottom_z'], 1),
-            'ground_clearance_at_stops_mm': round(clear_min, 1), 'ground_clearance_at_130_mm': round(130 + wheel_r + B['bottom_z'], 1),
-            'knee_gap_mm': round(83.0 - B['half_y'], 1)}
-
-
-if __name__ == '__main__':
-    import json
-    for c in ('P50B', 'P30B'):
-        print(c, json.dumps(summary(c)))
+def bay_parts() -> dict:
+    """Every part of the bay as body_frame.Part (robot frame), from P1."""
+    import body_frame as bf
+    Part = bf.Part
+    out = {}
+    pa6, petg, al = (0.22, 0.24, 0.27), (0.85, 0.55, 0.15), (0.66, 0.70, 0.75)
+    fl = floor_part()
+    fls = fl.solid()
+    out['bay_floor'] = Part('bay_floor', 'sheet', place_floor(fls), 1, fl, fls, fl.s['material'], colour=al, note=fl.note)
+    sd = side_part()
+    sds = sd.solid()
+    for side in ('l', 'r'):
+        out[f'bay_side_{side}'] = Part(f'bay_side_{side}', 'sheet', place_side(sds, side), 1, sd if side == 'l' else None, sds,
+                                       sd.s['material'], colour=al, note=sd.note)
+        out[f'bay_rail_{side}'] = Part(f'bay_rail_{side}', 'printed', rail(side), 1, material='pa6-cf', colour=pa6,
+                                       note='PA6-CF; four M4 x 16 up into the belly\'s nuts, five M3 inserts, two in its ends')
+    for k in ('front', 'rear'):
+        out[f'adapter_plate_{k}'] = Part(f'adapter_plate_{k}', 'printed', adapter_plate(k), 1, material='pa6-cf', colour=pa6,
+                                         note='PA6-CF; four M4 x 8 up into the belly\'s nuts; the adapter\'s screws into inserts set on arrival')
+        out[f'bay_door_{k}'] = Part(f'bay_door_{k}', 'printed', door(k == 'front'), 1, material='petg', colour=petg,
+                                    note='PETG; two knurled M3 x 10 thumbscrews into the rails\' ends', print_rotation=((0, 1, 0), 90))
+    for i, sk in enumerate(skids()):
+        out[f'bay_skid_{i + 1}'] = Part(f'bay_skid_{i + 1}', 'printed', sk, 1, material='tpu95', colour=(0.15, 0.15, 0.17),
+                                        note='TPU 95A skid on 3M VHB tape (no screw: under the packs there is 1 mm): the robot sits on these')
+    return out

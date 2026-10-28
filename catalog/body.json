@@ -2379,5 +2379,923 @@
    "https://www.mcmaster.com/90592A085/",
    "https://www.mcmaster.com/91828A211/"
   ]
+ },
+ {
+  "id": "gyropup-fuse-board-jlcpcb",
+  "key": "fuse_board_pcb",
+  "category": "fab_service",
+  "vendor": "JLCPCB",
+  "model": "Gyropup fuse board rev A (hardware/fuse-board)",
+  "name": "Gyropup fuse board PCB, rev A: 88 x 76 mm, 2 layers, 2 oz outer copper, 1.6 mm FR-4, lead-free HASL (made to order from hardware/fuse-board/fab/fuse-board-gerbers.zip)",
+  "price_usd": 8.12,
+  "price_checked": "2026-10-27",
+  "pack_qty": 5,
+  "pack_price_usd": 40.6,
+  "price_note": "JLCPCB instant price read 2026-10-27 from the uploaded gerber zip (hardware/fuse-board/jlcpcb_quote.py, fab/jlcpcb-price.json): $40.60 for 5 boards ($35.30 of it the 2 oz copper, $1.30 lead-free HASL), $8.12 a board; DHL estimate $31.49, 3 days' build. Assembly (optional, the 7 SMD parts of fab/bom-jlcpcb.csv): about $31 for 2 boards from JLCPCB's published Economic PCBA fees ($8.18 setup, $1.53 stencil, $3.07 per extended part) - an estimate: its BOM step needs a sign-in",
+  "buy": [
+   {
+    "seller": "JLCPCB",
+    "url": "https://cart.jlcpcb.com/quote",
+    "in_stock": true,
+    "ships_from": "CN",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 40.6,
+    "pack_qty": 5,
+    "stock": "made to order (5 pieces, 3 days)",
+    "detected": "2 layer board of 76x88mm"
+   },
+   {
+    "seller": "JLCPCB (JLCONE desktop app)",
+    "url": "https://cart.jlcpcb.com/quote",
+    "in_stock": true,
+    "ships_from": "CN",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 38.6,
+    "pack_qty": 5,
+    "stock": "made to order (the same order placed from the desktop app)"
+   }
+  ],
+  "backup": {
+   "what": "the same zip at PCBWay (instant price on upload; not read)",
+   "seller": "PCBWay",
+   "price_usd": null
+  },
+  "specs": {
+   "size_mm": [
+    88.0,
+    76.0,
+    1.6
+   ],
+   "layers": 2,
+   "copper_oz": 2,
+   "finish": "lead-free HASL",
+   "drc": "clean against JLCPCB 2 oz rules (hardware/fuse-board/reports/drc.rpt)"
+  },
+  "sources": [
+   "https://cart.jlcpcb.com/quote",
+   "https://jlcpcb.com/capabilities/pcb-capabilities",
+   "https://jlcpcb.com/help/article/pcb-assembly-price"
+  ]
+ },
+ {
+  "id": "littelfuse-178-6764-0001",
+  "key": "fuse_holder_mini_pcb",
+  "category": "fuse",
+  "vendor": "Littelfuse",
+  "model": "178.6764.0001 (MINI FL1)",
+  "name": "Littelfuse MINI FL1 PCB fuse holder for MINI blade fuses: 58 V DC, 22 A continuous, fuses to 30 A (the fuse board's twelve holders)",
+  "price_usd": 1.67,
+  "price_checked": "2026-10-27",
+  "price_note": "LCSC: $1.94 each, $1.67 at 10+ (we buy 14), read 2026-10-27; TME $4.56",
+  "buy": [
+   {
+    "seller": "LCSC",
+    "url": "https://www.lcsc.com/product-detail/C142933.html",
+    "in_stock": true,
+    "ships_from": "CN",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 1.67,
+    "stock": "4,665",
+    "seller_pn": "C142933"
+   },
+   {
+    "seller": "TME",
+    "url": "https://www.tme.com/us/en-us/details/178.6764.0001/car-fuseholders/littelfuse/",
+    "in_stock": true,
+    "ships_from": "PL",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 4.56,
+    "stock": "599 in TME stock"
+   }
+  ],
+  "backup": {
+   "what": "same part",
+   "seller": "TME",
+   "price_usd": 4.56
+  },
+  "specs": {
+   "voltage_v_dc": 58,
+   "continuous_a": 22,
+   "fuse_max_a": 30,
+   "contact_temp_max_c": 130,
+   "body_mm": [
+    14.2,
+    6.0,
+    15.6
+   ],
+   "pins": "2 terminals 8 mm apart in 1.5 mm holes; a snap-in peg in a 2.7 mm hole 0.8 mm off their line",
+   "datasheet_voltage_note": "Littelfuse's page (2026-10-27) says 58 V DC max; its 2016 datasheet (rev 111616) says 125 V; LCSC's text says 32 V",
+   "versus_keystone_3568": "Keystone 3568: 20 A at 500 V AC, no DC rating (Keystone catalogs M55 and M60); too small for the 30 A VESC branches"
+  },
+  "sources": [
+   "https://www.littelfuse.com/products/fuses-overcurrent-protection/fuse-holders-fuse-blocks-accessories/fuse-holders/in-line-fuse-holders/mini-fl1/178-6764-0001",
+   "https://www.mouser.com/datasheet/2/240/Littelfuse_Fuseholder_MINI_FL1_PCB_Mount-2584333.pdf",
+   "https://www.lcsc.com/product-detail/C142933.html"
+  ]
+ },
+ {
+  "id": "bourns-css2h-3920r-1l00f",
+  "key": "shunt_1mohm_3920",
+  "category": "sensor",
+  "vendor": "Bourns",
+  "model": "CSS2H-3920R-1L00F",
+  "name": "Bourns CSS2H-3920 current-sense resistor 1 mOhm 1 %, 8 W at 70 C terminals, 3920 metal strip (the fuse board's high-side shunt)",
+  "price_usd": 0.783,
+  "price_checked": "2026-10-27",
+  "price_note": "LCSC: $0.783 each, read 2026-10-27",
+  "buy": [
+   {
+    "seller": "LCSC",
+    "url": "https://www.lcsc.com/product-detail/C4087295.html",
+    "in_stock": true,
+    "ships_from": "CN",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 0.783,
+    "stock": "511",
+    "seller_pn": "C4087295"
+   },
+   {
+    "seller": "LCSC",
+    "url": "https://www.lcsc.com/product-detail/C1848566.html",
+    "in_stock": true,
+    "ships_from": "CN",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 1.4964,
+    "stock": "5 (CSS2H-3920R-1L00FE, the 7 in reel)",
+    "seller_pn": "C1848566"
+   }
+  ],
+  "backup": {
+   "what": "CSS2H-3920R-1L00FE (same part, small reel)",
+   "seller": "LCSC",
+   "price_usd": 1.4964
+  },
+  "specs": {
+   "r_mohm": 1.0,
+   "tolerance_pct": 1.0,
+   "power_w_at_70c_terminal": 8.0,
+   "tcr_ppm_c_with_cu_terminals": 100,
+   "tcr_ppm_c_alloy": 50,
+   "short_time_overload": "5 x rated power for 5 s",
+   "size_mm": [
+    10.0,
+    5.2
+   ],
+   "pads_mm": "3.40 x 6.20 at +-3.80 (Bourns' layout)",
+   "kelvin": "sense at Bourns' measurement points, 8.40 mm apart"
+  },
+  "sources": [
+   "https://www.bourns.com/data/global/pdfs/CSS2H-3920.pdf",
+   "https://www.lcsc.com/product-detail/C4087295.html"
+  ]
+ },
+ {
+  "id": "ti-ina228aidgsr",
+  "key": "ina228_ic",
+  "category": "sensor",
+  "vendor": "Texas Instruments",
+  "model": "INA228AIDGSR",
+  "name": "TI INA228 85 V 20-bit power monitor, VSSOP-10 (optional U1 on the fuse board; the Adafruit 5832 is the default)",
+  "price_usd": 6.4168,
+  "price_checked": "2026-10-27",
+  "price_note": "LCSC: $6.42, 0 in stock on 2026-10-27 (hence the Adafruit 5832 as the default)",
+  "buy": [
+   {
+    "seller": "LCSC",
+    "url": "https://www.lcsc.com/product-detail/C2887910.html",
+    "in_stock": false,
+    "ships_from": "CN",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 6.4168,
+    "stock": "0 in stock (2026-10-27)",
+    "seller_pn": "C2887910"
+   },
+   {
+    "seller": "Adafruit",
+    "url": "https://www.adafruit.com/product/5832",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 14.95,
+    "stock": "58 in stock (the breakout, catalogue key ina228)"
+   }
+  ],
+  "backup": {
+   "what": "the Adafruit 5832 breakout wired to TP1-TP3",
+   "seller": "Adafruit",
+   "price_usd": 14.95
+  },
+  "specs": {
+   "common_mode_v": [
+    -0.3,
+    85
+   ],
+   "gain_error_pct_max": 0.05,
+   "offset_uv_max": 1.0,
+   "gain_drift_ppm_c": 20,
+   "cmrr_db_min": 154
+  },
+  "sources": [
+   "https://www.ti.com/lit/ds/symlink/ina228.pdf",
+   "https://www.lcsc.com/product-detail/C2887910.html"
+  ]
+ },
+ {
+  "id": "jst-sm04b-ghs-tb",
+  "key": "gh_header_4p_smd",
+  "category": "connector",
+  "vendor": "JST",
+  "model": "SM04B-GHS-TB(LF)(SN)",
+  "name": "JST GH 1.25 mm 4-pin SMD right-angle header (the fuse board's I2C, J17)",
+  "price_usd": 0.946,
+  "price_checked": "2026-10-27",
+  "price_note": "LCSC: $0.946 each at 5+, read 2026-10-27",
+  "buy": [
+   {
+    "seller": "LCSC",
+    "url": "https://www.lcsc.com/product-detail/C189895.html",
+    "in_stock": true,
+    "ships_from": "CN",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 0.946,
+    "stock": "10,230",
+    "seller_pn": "C189895"
+   },
+   {
+    "seller": "TLC Electronics",
+    "url": "https://tlcelectronics.com/products/detail/JST/SM04B-GHS-TB-LF-SN",
+    "in_stock": false,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 0.3286,
+    "stock": "0 in stock (2026-10-27)"
+   }
+  ],
+  "backup": {
+   "what": "same part",
+   "seller": "TLC Electronics",
+   "price_usd": 0.3286
+  },
+  "specs": {
+   "pitch_mm": 1.25,
+   "pins": 4
+  },
+  "sources": [
+   "https://www.lcsc.com/product-detail/C189895.html"
+  ]
+ },
+ {
+  "id": "jst-ghr-04v-s",
+  "key": "gh_housing_4p",
+  "category": "connector",
+  "vendor": "JST",
+  "model": "GHR-04V-S",
+  "name": "JST GH 1.25 mm 4-position receptacle housing (W42, the fuse board's I2C lead, both ends)",
+  "price_usd": 0.0778,
+  "price_checked": "2026-10-27",
+  "price_note": "TLC Electronics: $0.0778 each, read 2026-10-27",
+  "buy": [
+   {
+    "seller": "TLC Electronics",
+    "url": "https://tlcelectronics.com/products/detail/JST/GHR-04V-S",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 0.0778,
+    "stock": "8,543"
+   },
+   {
+    "seller": "LCSC",
+    "url": "https://www.lcsc.com/product-detail/C160418.html",
+    "in_stock": true,
+    "ships_from": "CN",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 0.1121,
+    "stock": "270 (5+)",
+    "seller_pn": "C160418"
+   }
+  ],
+  "backup": {
+   "what": "same part",
+   "seller": "LCSC",
+   "price_usd": 0.1121
+  },
+  "specs": {
+   "pitch_mm": 1.25,
+   "positions": 4
+  },
+  "sources": [
+   "https://tlcelectronics.com/products/detail/JST/GHR-04V-S"
+  ]
+ },
+ {
+  "id": "ancor-heat-shrink-ring-12-10-8",
+  "key": "ring_12awg_m4",
+  "category": "terminal",
+  "vendor": "Ancor",
+  "model": "adhesive-lined heat-shrink ring, 12-10 AWG, #8 stud",
+  "name": "Ancor adhesive-lined heat-shrink ring terminal 12-10 AWG, #8 (M4) stud, tinned copper: the fuse board's M4 studs (W14, W15 (the VESCs))",
+  "price_usd": 1.65,
+  "price_checked": "2026-10-27",
+  "pack_qty": 3,
+  "pack_price_usd": 4.95,
+  "price_note": "go2marine: $4.95 per 3-pack, read 2026-10-27 (price_usd is per piece)",
+  "buy": [
+   {
+    "seller": "go2marine",
+    "url": "https://www.go2marine.com/products/ring-terminals-adhesive-lined-heat-shrink-ancor",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 4.95,
+    "pack_qty": 3,
+    "stock": "available (store JSON)",
+    "seller_pn": "531302-12-10AWG-#8-3"
+   },
+   {
+    "seller": "go2marine",
+    "url": "https://www.go2marine.com/products/ring-terminals-adhesive-lined-heat-shrink-ancor",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 32.5,
+    "pack_qty": 25,
+    "stock": "available (store JSON): the 25-pack"
+   }
+  ],
+  "backup": {
+   "what": "the 25-pack",
+   "seller": "go2marine",
+   "price_usd": 32.5
+  },
+  "specs": {
+   "wire_awg": "12-10",
+   "stud": "#8 (M4)"
+  },
+  "sources": [
+   "https://www.go2marine.com/products/ring-terminals-adhesive-lined-heat-shrink-ancor"
+  ]
+ },
+ {
+  "id": "ancor-heat-shrink-ring-16-14-8",
+  "key": "ring_14awg_m4",
+  "category": "terminal",
+  "vendor": "Ancor",
+  "model": "adhesive-lined heat-shrink ring, 16-14 AWG, #8 stud",
+  "name": "Ancor adhesive-lined heat-shrink ring terminal 16-14 AWG, #8 (M4) stud, tinned copper: the fuse board's M4 studs (W10-W13 (the RS-04s), W33, W41)",
+  "price_usd": 1.3167,
+  "price_checked": "2026-10-27",
+  "pack_qty": 3,
+  "pack_price_usd": 3.95,
+  "price_note": "go2marine: $3.95 per 3-pack, read 2026-10-27 (price_usd is per piece)",
+  "buy": [
+   {
+    "seller": "go2marine",
+    "url": "https://www.go2marine.com/products/ring-terminals-adhesive-lined-heat-shrink-ancor",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 3.95,
+    "pack_qty": 3,
+    "stock": "available (store JSON)",
+    "seller_pn": "531302-16-14AWG-#8-3"
+   },
+   {
+    "seller": "go2marine",
+    "url": "https://www.go2marine.com/products/ring-terminals-adhesive-lined-heat-shrink-ancor",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 37.81,
+    "pack_qty": 25,
+    "stock": "available (store JSON): the 25-pack"
+   }
+  ],
+  "backup": {
+   "what": "the 25-pack",
+   "seller": "go2marine",
+   "price_usd": 37.81
+  },
+  "specs": {
+   "wire_awg": "16-14",
+   "stud": "#8 (M4)"
+  },
+  "sources": [
+   "https://www.go2marine.com/products/ring-terminals-adhesive-lined-heat-shrink-ancor"
+  ]
+ },
+ {
+  "id": "ancor-heat-shrink-ring-22-18-8",
+  "key": "ring_18awg_m4",
+  "category": "terminal",
+  "vendor": "Ancor",
+  "model": "adhesive-lined heat-shrink ring, 22-18 AWG, #8 stud",
+  "name": "Ancor adhesive-lined heat-shrink ring terminal 22-18 AWG, #8 (M4) stud, tinned copper: the fuse board's M4 studs (W8, W16, W17, W21, W22, W23, W27, W40)",
+  "price_usd": 1.3167,
+  "price_checked": "2026-10-27",
+  "pack_qty": 3,
+  "pack_price_usd": 3.95,
+  "price_note": "go2marine: $3.95 per 3-pack, read 2026-10-27 (price_usd is per piece)",
+  "buy": [
+   {
+    "seller": "go2marine",
+    "url": "https://www.go2marine.com/products/ring-terminals-adhesive-lined-heat-shrink-ancor",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 3.95,
+    "pack_qty": 3,
+    "stock": "available (store JSON)",
+    "seller_pn": "531302-22-18AWG-#8-3"
+   },
+   {
+    "seller": "go2marine",
+    "url": "https://www.go2marine.com/products/ring-terminals-adhesive-lined-heat-shrink-ancor",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 23.5,
+    "pack_qty": 25,
+    "stock": "available (store JSON): the 25-pack"
+   }
+  ],
+  "backup": {
+   "what": "the 25-pack",
+   "seller": "go2marine",
+   "price_usd": 23.5
+  },
+  "specs": {
+   "wire_awg": "22-18",
+   "stud": "#8 (M4)"
+  },
+  "sources": [
+   "https://www.go2marine.com/products/ring-terminals-adhesive-lined-heat-shrink-ancor"
+  ]
+ },
+ {
+  "id": "mcmaster-91290a148",
+  "key": "screw_m4x12_socket",
+  "category": "fastener",
+  "vendor": "McMaster-Carr",
+  "model": "91290A148",
+  "name": "Black-oxide alloy steel socket head screw, M4 x 0.7 x 12 mm (the fuse board's M4 studs, down through the lug into the standoff's nyloc)",
+  "price_usd": 0.123,
+  "price_checked": "2026-10-27",
+  "pack_qty": 100,
+  "pack_price_usd": 12.3,
+  "price_note": "McMaster-Carr: $12.30 per 100-pack (read 2026-10-27; price_usd is per piece)",
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/91290A148/",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 12.3,
+    "pack_qty": 100,
+    "stock": "product page read (McMaster ships next day)",
+    "seller_pn": "91290A148"
+   },
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/91290A150/",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 14.23,
+    "pack_qty": 100,
+    "stock": "M4 x 14 of the same series (a stack of three lugs)",
+    "seller_pn": "91290A150"
+   }
+  ],
+  "backup": {
+   "what": "M4 x 14 of the same series (a stack of three lugs)",
+   "seller": "McMaster-Carr",
+   "part_number": "91290A150",
+   "price_usd": 14.23
+  },
+  "specs": {
+   "thread": "M4",
+   "length_mm": 12
+  },
+  "sources": [
+   "https://www.mcmaster.com/91290A148/",
+   "https://www.mcmaster.com/91290A150/"
+  ]
+ },
+ {
+  "id": "mcmaster-90576a103",
+  "key": "nut_m4_nyloc",
+  "category": "fastener",
+  "vendor": "McMaster-Carr",
+  "model": "90576A103",
+  "name": "Medium-strength steel nylon-insert locknut, zinc plated, M4 x 0.7 (held in the fuse board standoffs' hex pockets)",
+  "price_usd": 0.0492,
+  "price_checked": "2026-10-27",
+  "pack_qty": 100,
+  "pack_price_usd": 4.92,
+  "price_note": "McMaster-Carr: $4.92 per 100-pack (read 2026-10-27; price_usd is per piece)",
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/90576A103/",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 4.92,
+    "pack_qty": 100,
+    "stock": "product page read (McMaster ships next day)",
+    "seller_pn": "90576A103"
+   },
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/94645A101/",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 13.25,
+    "pack_qty": 100,
+    "stock": "high-strength steel nyloc M4",
+    "seller_pn": "94645A101"
+   }
+  ],
+  "backup": {
+   "what": "high-strength steel nyloc M4",
+   "seller": "McMaster-Carr",
+   "part_number": "94645A101",
+   "price_usd": 13.25
+  },
+  "specs": {
+   "thread": "M4",
+   "af_mm": 7.0
+  },
+  "sources": [
+   "https://www.mcmaster.com/90576A103/",
+   "https://www.mcmaster.com/94645A101/"
+  ]
+ },
+ {
+  "id": "mcmaster-91290a318",
+  "key": "screw_m6x12_socket",
+  "category": "fastener",
+  "vendor": "McMaster-Carr",
+  "model": "91290A318",
+  "name": "Black-oxide alloy steel socket head screw, M6 x 1 x 12 mm (the fuse board's BUS+ IN stud, J1)",
+  "price_usd": 0.1541,
+  "price_checked": "2026-10-27",
+  "pack_qty": 100,
+  "pack_price_usd": 15.41,
+  "price_note": "McMaster-Carr: $15.41 per 100-pack (read 2026-10-27; price_usd is per piece)",
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/91290A318/",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 15.41,
+    "pack_qty": 100,
+    "stock": "product page read (McMaster ships next day)",
+    "seller_pn": "91290A318"
+   },
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/91290A316/",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 15.49,
+    "pack_qty": 100,
+    "stock": "M6 x 10 of the same series",
+    "seller_pn": "91290A316"
+   }
+  ],
+  "backup": {
+   "what": "M6 x 10 of the same series",
+   "seller": "McMaster-Carr",
+   "part_number": "91290A316",
+   "price_usd": 15.49
+  },
+  "specs": {
+   "thread": "M6",
+   "length_mm": 12
+  },
+  "sources": [
+   "https://www.mcmaster.com/91290A318/",
+   "https://www.mcmaster.com/91290A316/"
+  ]
+ },
+ {
+  "id": "mcmaster-91290a230",
+  "key": "screw_m5x14_socket",
+  "category": "fastener",
+  "vendor": "McMaster-Carr",
+  "model": "91290A230",
+  "name": "Black-oxide alloy steel socket head screw, M5 x 0.8 x 14 mm (the fuse board's plate bond, MH1, into the plate's flush nut)",
+  "price_usd": 0.1743,
+  "price_checked": "2026-10-27",
+  "pack_qty": 100,
+  "pack_price_usd": 17.43,
+  "price_note": "McMaster-Carr: $17.43 per 100-pack (read 2026-10-27; price_usd is per piece)",
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/91290A230/",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 17.43,
+    "pack_qty": 100,
+    "stock": "product page read (McMaster ships next day)",
+    "seller_pn": "91290A230"
+   },
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/91290A228/",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 16.36,
+    "pack_qty": 100,
+    "stock": "M5 x 12 of the same series, with MH1's standoff printed 1.6 mm shorter",
+    "seller_pn": "91290A228"
+   }
+  ],
+  "backup": {
+   "what": "M5 x 12 of the same series, with MH1's standoff printed 1.6 mm shorter",
+   "seller": "McMaster-Carr",
+   "part_number": "91290A228",
+   "price_usd": 16.36
+  },
+  "specs": {
+   "thread": "M5",
+   "length_mm": 14
+  },
+  "sources": [
+   "https://www.mcmaster.com/91290A230/",
+   "https://www.mcmaster.com/91290A228/"
+  ]
+ },
+ {
+  "id": "mcmaster-7130k12",
+  "key": "cable_tie_4in",
+  "category": "fastener",
+  "vendor": "McMaster-Carr",
+  "model": "7130K12",
+  "name": "Nylon cable tie, narrow, 4 in long (the fuse board's three tie slots)",
+  "price_usd": 0.0353,
+  "price_checked": "2026-10-27",
+  "pack_qty": 100,
+  "pack_price_usd": 3.53,
+  "price_note": "McMaster-Carr: $3.53 per 100-pack (read 2026-10-27; price_usd is per piece)",
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/7130K12/",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 3.53,
+    "pack_qty": 100,
+    "stock": "product page read (McMaster ships next day)",
+    "seller_pn": "7130K12"
+   },
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/7130K14/",
+    "in_stock": true,
+    "ships_from": "US",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": null,
+    "pack_qty": 100,
+    "stock": "standard 8-1/2 in (price not shown on the page read)",
+    "seller_pn": "7130K14"
+   }
+  ],
+  "backup": {
+   "what": "standard 8-1/2 in (price not shown on the page read)",
+   "seller": "McMaster-Carr",
+   "part_number": "7130K14",
+   "price_usd": null
+  },
+  "specs": {
+   "length_in": 4
+  },
+  "sources": [
+   "https://www.mcmaster.com/7130K12/",
+   "https://www.mcmaster.com/7130K14/"
+  ]
+ },
+ {
+  "id": "lcsc-c22859",
+  "key": "res_10r_0603",
+  "category": "passive",
+  "vendor": "UNI-ROYAL",
+  "model": "0603WAF100JT5E",
+  "name": "10 Ohm 1 % 0603 (the fuse board's R2, R3: the INA228's input resistors)",
+  "price_usd": 0.0033,
+  "price_checked": "2026-10-27",
+  "price_note": "LCSC: $0.0033 each, sold 20+, read 2026-10-27",
+  "buy": [
+   {
+    "seller": "LCSC",
+    "url": "https://www.lcsc.com/product-detail/C22859.html",
+    "in_stock": true,
+    "ships_from": "CN",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 0.0033,
+    "stock": "in stock (20+)",
+    "seller_pn": "C22859"
+   },
+   {
+    "seller": "LCSC",
+    "url": "https://www.lcsc.com/product-detail/C109318.html",
+    "in_stock": true,
+    "ships_from": "CN",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 0.0062,
+    "stock": "in stock: YAGEO RC0603FR-0710RL (100+)",
+    "seller_pn": "C109318"
+   }
+  ],
+  "backup": {
+   "what": "YAGEO RC0603FR-0710RL (100+)",
+   "seller": "LCSC",
+   "price_usd": 0.0062
+  },
+  "specs": {
+   "min_order": 20
+  },
+  "sources": [
+   "https://www.lcsc.com/product-detail/C22859.html"
+  ]
+ },
+ {
+  "id": "lcsc-c15725",
+  "key": "cap_100n_100v_0603",
+  "category": "passive",
+  "vendor": "Samsung",
+  "model": "CL10B104KC8NNNC",
+  "name": "100 nF 100 V X7R 0603 (the fuse board's C1: the INA228's input filter)",
+  "price_usd": 0.0134,
+  "price_checked": "2026-10-27",
+  "price_note": "LCSC: $0.0134 each, sold 50+, read 2026-10-27",
+  "buy": [
+   {
+    "seller": "LCSC",
+    "url": "https://www.lcsc.com/product-detail/C15725.html",
+    "in_stock": true,
+    "ships_from": "CN",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 0.0134,
+    "stock": "in stock (50+)",
+    "seller_pn": "C15725"
+   },
+   {
+    "seller": "LCSC",
+    "url": "https://www.lcsc.com/product-detail/C161117.html",
+    "in_stock": true,
+    "ships_from": "CN",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 0.0584,
+    "stock": "in stock: muRata 100 nF 100 V 0603 (10+)",
+    "seller_pn": "C161117"
+   }
+  ],
+  "backup": {
+   "what": "muRata 100 nF 100 V 0603 (10+)",
+   "seller": "LCSC",
+   "price_usd": 0.0584
+  },
+  "specs": {
+   "min_order": 50
+  },
+  "sources": [
+   "https://www.lcsc.com/product-detail/C15725.html"
+  ]
+ },
+ {
+  "id": "lcsc-c14663",
+  "key": "cap_100n_50v_0603",
+  "category": "passive",
+  "vendor": "YAGEO",
+  "model": "CC0603KRX7R9BB104",
+  "name": "100 nF 50 V X7R 0603 (the fuse board's C2: VS decoupling)",
+  "price_usd": 0.0082,
+  "price_checked": "2026-10-27",
+  "price_note": "LCSC: $0.0082 each, sold 50+, read 2026-10-27",
+  "buy": [
+   {
+    "seller": "LCSC",
+    "url": "https://www.lcsc.com/product-detail/C14663.html",
+    "in_stock": true,
+    "ships_from": "CN",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 0.0082,
+    "stock": "in stock (50+)",
+    "seller_pn": "C14663"
+   },
+   {
+    "seller": "LCSC",
+    "url": "https://www.lcsc.com/product-detail/C1591.html",
+    "in_stock": true,
+    "ships_from": "CN",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 0.0078,
+    "stock": "in stock: Samsung CL10B104KB8NNNC (100+)",
+    "seller_pn": "C1591"
+   }
+  ],
+  "backup": {
+   "what": "Samsung CL10B104KB8NNNC (100+)",
+   "seller": "LCSC",
+   "price_usd": 0.0078
+  },
+  "specs": {
+   "min_order": 50
+  },
+  "sources": [
+   "https://www.lcsc.com/product-detail/C14663.html"
+  ]
+ },
+ {
+  "id": "lcsc-c163339",
+  "key": "res_4k7_2512",
+  "category": "passive",
+  "vendor": "YAGEO",
+  "model": "RC2512FK-074K7L",
+  "name": "4.7 kOhm 1 % 1 W 2512 (the fuse board's R4: VBUS series)",
+  "price_usd": 0.08,
+  "price_checked": "2026-10-27",
+  "price_note": "LCSC: $0.08 each, sold 10+, read 2026-10-27",
+  "buy": [
+   {
+    "seller": "LCSC",
+    "url": "https://www.lcsc.com/product-detail/C163339.html",
+    "in_stock": true,
+    "ships_from": "CN",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 0.08,
+    "stock": "in stock (10+)",
+    "seller_pn": "C163339"
+   },
+   {
+    "seller": "LCSC",
+    "url": "https://www.lcsc.com/product-detail/C33178.html",
+    "in_stock": true,
+    "ships_from": "CN",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 0.0463,
+    "stock": "in stock: UNI-ROYAL 2512WJ0472T4E, 5 % (10+)",
+    "seller_pn": "C33178"
+   }
+  ],
+  "backup": {
+   "what": "UNI-ROYAL 2512WJ0472T4E, 5 % (10+)",
+   "seller": "LCSC",
+   "price_usd": 0.0463
+  },
+  "specs": {
+   "min_order": 10
+  },
+  "sources": [
+   "https://www.lcsc.com/product-detail/C163339.html"
+  ]
  }
 ]
