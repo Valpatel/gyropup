@@ -38,7 +38,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:126"
+   "declared_at": "cad/turret_dossier.py:127"
   },
   "pan_ring": {
    "section": "S1-base",
@@ -68,7 +68,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:126"
+   "declared_at": "cad/turret_dossier.py:127"
   },
   "pan_spacer": {
    "section": "S1-base",
@@ -98,7 +98,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:126"
+   "declared_at": "cad/turret_dossier.py:127"
   },
   "pan_pinion": {
    "section": "S1-base",
@@ -128,7 +128,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:126"
+   "declared_at": "cad/turret_dossier.py:127"
   },
   "tilt_yoke": {
    "section": "S2-tilt",
@@ -158,7 +158,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:126"
+   "declared_at": "cad/turret_dossier.py:127"
   },
   "cradle": {
    "section": "S2-tilt",
@@ -188,7 +188,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:126"
+   "declared_at": "cad/turret_dossier.py:127"
   },
   "horn_boss": {
    "section": "S2-tilt",
@@ -218,7 +218,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:126"
+   "declared_at": "cad/turret_dossier.py:127"
   },
   "pivot_spacer": {
    "section": "S2-tilt",
@@ -248,19 +248,19 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:126"
+   "declared_at": "cad/turret_dossier.py:127"
   },
   "cartridge_body": {
    "section": "S4-launcher",
    "grounded": false,
    "free": false,
-   "sha256": "2b329a8bb7678263918bcd062bef194bf6aad571548496e1778241d246dc664d",
+   "sha256": "0b6b97d085b61525d10b631570058d87507ff69201f58e98663bdd6e6352c011",
    "count": 1,
    "instances": [
     {
      "key": "cartridge_body",
-     "sha256": "86dd009bb89f8ee621bd193932bd3b50aa39f4631fb43da5cfcbf7b37842a4bc",
-     "file": "dossier-shapes/86dd009bb89f8ee621bd193932bd3b50aa39f4631fb43da5cfcbf7b37842a4bc.brep",
+     "sha256": "22b0a38478281274146d14a2c7e6dd53475997db0adf3cab13d26ad06e1b52ce",
+     "file": "dossier-shapes/22b0a38478281274146d14a2c7e6dd53475997db0adf3cab13d26ad06e1b52ce.brep",
      "bbox": {
       "min": [
        -101.6,
@@ -278,7 +278,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:126"
+   "declared_at": "cad/turret_dossier.py:127"
   },
   "flywheel": {
    "section": "S4-launcher",
@@ -308,7 +308,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:126"
+   "declared_at": "cad/turret_dossier.py:127"
   },
   "flywheel_m": {
    "section": "S4-launcher",
@@ -338,7 +338,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:126"
+   "declared_at": "cad/turret_dossier.py:127"
   },
   "flywheel_tyre": {
    "section": "S4-launcher",
@@ -368,7 +368,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:126"
+   "declared_at": "cad/turret_dossier.py:127"
   },
   "flywheel_tyre_m": {
    "section": "S4-launcher",
@@ -398,7 +398,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:126"
+   "declared_at": "cad/turret_dossier.py:127"
   },
   "dial": {
    "section": "S3-feed",
@@ -428,7 +428,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:126"
+   "declared_at": "cad/turret_dossier.py:127"
   },
   "hopper": {
    "section": "S3-feed",
@@ -458,7 +458,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:126"
+   "declared_at": "cad/turret_dossier.py:127"
   },
   "hopper_lid": {
    "section": "S3-feed",
@@ -488,7 +488,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:126"
+   "declared_at": "cad/turret_dossier.py:127"
   },
   "hopper_flap": {
    "section": "S3-feed",
@@ -518,7 +518,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:126"
+   "declared_at": "cad/turret_dossier.py:127"
   },
   "barrel": {
    "section": "S5-barrel",
@@ -548,37 +548,37 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:126"
+   "declared_at": "cad/turret_dossier.py:127"
   },
   "laser_mount": {
    "section": "S5-barrel",
    "grounded": false,
    "free": false,
-   "sha256": "86c23a60db698f0a6ce74594fa9beb34aaa86d2b98672934439095b05e4dfa61",
+   "sha256": "6e1294438f51524e7c921539c0f272de45df4a4b38c35b02acabdaba895a7613",
    "count": 1,
    "instances": [
     {
      "key": "laser_mount",
-     "sha256": "90e32d8d4d29cb9a367347645cecd7df7f987420a72931ba75977da95ade023d",
-     "file": "dossier-shapes/90e32d8d4d29cb9a367347645cecd7df7f987420a72931ba75977da95ade023d.brep",
+     "sha256": "3036dce1bae3e00c1d077d3656fd8c12a42b90fc2d6a8b95d019a729dcc77200",
+     "file": "dossier-shapes/3036dce1bae3e00c1d077d3656fd8c12a42b90fc2d6a8b95d019a729dcc77200.brep",
      "bbox": {
       "min": [
        51.0,
-       -9.0,
+       -12.5,
        145.5
       ],
       "max": [
        84.0,
-       9.0,
+       12.5,
        163.5
       ]
      },
-     "volume_mm3": 4925.553207,
+     "volume_mm3": 6371.364992,
      "solids": 1,
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:126"
+   "declared_at": "cad/turret_dossier.py:127"
   },
   "bumper_ring": {
    "section": "S1-base",
@@ -608,7 +608,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:126"
+   "declared_at": "cad/turret_dossier.py:127"
   },
   "ring_carrier": {
    "section": "S6-wiring",
@@ -638,7 +638,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:126"
+   "declared_at": "cad/turret_dossier.py:127"
   },
   "ring_driver": {
    "section": "S6-wiring",
@@ -668,7 +668,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:126"
+   "declared_at": "cad/turret_dossier.py:127"
   },
   "board_bay": {
    "section": "S6-wiring",
@@ -698,7 +698,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:126"
+   "declared_at": "cad/turret_dossier.py:127"
   },
   "board_bay_lid": {
    "section": "S6-wiring",
@@ -728,7 +728,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:126"
+   "declared_at": "cad/turret_dossier.py:127"
   },
   "compute_tray": {
    "section": "S7-compute",
@@ -758,7 +758,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:126"
+   "declared_at": "cad/turret_dossier.py:127"
   },
   "compute_shell": {
    "section": "S7-compute",
@@ -788,7 +788,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:126"
+   "declared_at": "cad/turret_dossier.py:127"
   },
   "compute": {
    "section": "S7-compute",
@@ -818,7 +818,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:126"
+   "declared_at": "cad/turret_dossier.py:127"
   },
   "eth_jack": {
    "section": "S7-compute",
@@ -848,7 +848,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:126"
+   "declared_at": "cad/turret_dossier.py:127"
   },
   "xt30_input": {
    "section": "S7-compute",
@@ -878,7 +878,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:126"
+   "declared_at": "cad/turret_dossier.py:127"
   },
   "input_fuses": {
    "section": "S7-compute",
@@ -908,7 +908,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:126"
+   "declared_at": "cad/turret_dossier.py:127"
   },
   "pan_servo": {
    "section": "S1-base",
@@ -938,7 +938,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:126"
+   "declared_at": "cad/turret_dossier.py:127"
   },
   "pan_bearing": {
    "section": "S1-base",
@@ -968,7 +968,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:126"
+   "declared_at": "cad/turret_dossier.py:127"
   },
   "pan_bearing_inner": {
    "section": "S1-base",
@@ -998,7 +998,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:126"
+   "declared_at": "cad/turret_dossier.py:127"
   },
   "circlip_50": {
    "section": "S1-base",
@@ -1028,7 +1028,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:126"
+   "declared_at": "cad/turret_dossier.py:127"
   },
   "pan_clamp": {
    "section": "S1-base",
@@ -1058,7 +1058,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:126"
+   "declared_at": "cad/turret_dossier.py:127"
   },
   "cradle_plate_l": {
    "section": "S2-tilt",
@@ -1088,7 +1088,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:126"
+   "declared_at": "cad/turret_dossier.py:127"
   },
   "cradle_plate_r": {
    "section": "S2-tilt",
@@ -1118,7 +1118,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:126"
+   "declared_at": "cad/turret_dossier.py:127"
   },
   "stop_lug": {
    "section": "S2-tilt",
@@ -1148,7 +1148,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:126"
+   "declared_at": "cad/turret_dossier.py:127"
   },
   "slip_ring": {
    "section": "S6-wiring",
@@ -1178,7 +1178,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:126"
+   "declared_at": "cad/turret_dossier.py:127"
   },
   "slip_ring_rotor": {
    "section": "S6-wiring",
@@ -1208,7 +1208,7 @@
      "valid": false
     }
    ],
-   "declared_at": "cad/turret_dossier.py:126"
+   "declared_at": "cad/turret_dossier.py:127"
   },
   "ring_coupling": {
    "section": "S6-wiring",
@@ -1238,7 +1238,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:126"
+   "declared_at": "cad/turret_dossier.py:127"
   },
   "base_board": {
    "section": "S6-wiring",
@@ -1268,7 +1268,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:126"
+   "declared_at": "cad/turret_dossier.py:127"
   },
   "turret_board": {
    "section": "S6-wiring",
@@ -1298,7 +1298,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:126"
+   "declared_at": "cad/turret_dossier.py:127"
   },
   "index_magnet": {
    "section": "S1-base",
@@ -1328,7 +1328,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:126"
+   "declared_at": "cad/turret_dossier.py:127"
   },
   "hall_switch": {
    "section": "S1-base",
@@ -1358,7 +1358,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:126"
+   "declared_at": "cad/turret_dossier.py:127"
   },
   "dt_receptacle": {
    "section": "S6-wiring",
@@ -1388,7 +1388,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:126"
+   "declared_at": "cad/turret_dossier.py:127"
   },
   "dt_plug": {
    "section": "S6-wiring",
@@ -1419,7 +1419,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:126"
+   "declared_at": "cad/turret_dossier.py:127"
   },
   "tilt_servo": {
    "section": "S2-tilt",
@@ -1449,7 +1449,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:126"
+   "declared_at": "cad/turret_dossier.py:127"
   },
   "tilt_bearing": {
    "section": "S2-tilt",
@@ -1479,7 +1479,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:126"
+   "declared_at": "cad/turret_dossier.py:127"
   },
   "tilt_bearing_inner": {
    "section": "S2-tilt",
@@ -1509,7 +1509,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:126"
+   "declared_at": "cad/turret_dossier.py:127"
   },
   "shoulder_screw": {
    "section": "S2-tilt",
@@ -1539,7 +1539,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:126"
+   "declared_at": "cad/turret_dossier.py:127"
   },
   "flywheel_motor_l": {
    "section": "S4-launcher",
@@ -1569,7 +1569,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:126"
+   "declared_at": "cad/turret_dossier.py:127"
   },
   "flywheel_motor_r": {
    "section": "S4-launcher",
@@ -1599,7 +1599,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:126"
+   "declared_at": "cad/turret_dossier.py:127"
   },
   "cartridge_board": {
    "section": "S4-launcher",
@@ -1629,7 +1629,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:126"
+   "declared_at": "cad/turret_dossier.py:127"
   },
   "esc_l": {
    "section": "S4-launcher",
@@ -1659,7 +1659,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:126"
+   "declared_at": "cad/turret_dossier.py:127"
   },
   "esc_r": {
    "section": "S4-launcher",
@@ -1689,7 +1689,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:126"
+   "declared_at": "cad/turret_dossier.py:127"
   },
   "feed_motor": {
    "section": "S3-feed",
@@ -1719,7 +1719,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:126"
+   "declared_at": "cad/turret_dossier.py:127"
   },
   "ct_thumbscrew": {
    "section": "S2-tilt",
@@ -1749,7 +1749,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:126"
+   "declared_at": "cad/turret_dossier.py:127"
   },
   "laser": {
    "section": "S5-barrel",
@@ -1779,7 +1779,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:126"
+   "declared_at": "cad/turret_dossier.py:127"
   },
   "laser_screws": {
    "section": "S5-barrel",
@@ -1809,28 +1809,28 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:126"
+   "declared_at": "cad/turret_dossier.py:127"
   },
   "laser_inserts": {
    "section": "S5-barrel",
    "grounded": false,
    "free": false,
-   "sha256": "127b679cad6813c8b8079fed57a1eae644b661fac8c6539316ec2dbfac31c01d",
+   "sha256": "bca1ee893a9f155a05da8a0240d26d2cb012ed80594add2644689e95316219ea",
    "count": 1,
    "instances": [
     {
      "key": "laser_inserts",
-     "sha256": "ad8a25b962a9e46c00cee4f155a536a306f37cb31688bfa3d2c3252c4379334d",
-     "file": "dossier-shapes/ad8a25b962a9e46c00cee4f155a536a306f37cb31688bfa3d2c3252c4379334d.brep",
+     "sha256": "3af66ecfc890a165f682072cf0566bda26e2819a68d2ec0c0e74d1fc32033fc9",
+     "file": "dossier-shapes/3af66ecfc890a165f682072cf0566bda26e2819a68d2ec0c0e74d1fc32033fc9.brep",
      "bbox": {
       "min": [
        58.0,
-       -9.0,
+       -11.0,
        141.9
       ],
       "max": [
        62.0,
-       9.0,
+       11.0,
        147.6
       ]
      },
@@ -1839,7 +1839,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:126"
+   "declared_at": "cad/turret_dossier.py:127"
   },
   "hopper_inserts": {
    "section": "S3-feed",
@@ -1869,7 +1869,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:126"
+   "declared_at": "cad/turret_dossier.py:127"
   },
   "ball": {
    "section": "S3-feed",
@@ -2480,7 +2480,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:129"
+   "declared_at": "cad/turret_dossier.py:130"
   },
   "stand_box": {
    "section": "S8-stand",
@@ -2510,7 +2510,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:136"
+   "declared_at": "cad/turret_dossier.py:137"
   },
   "stand_bottom": {
    "section": "S8-stand",
@@ -2540,7 +2540,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:136"
+   "declared_at": "cad/turret_dossier.py:137"
   },
   "stand_foot": {
    "section": "S8-stand",
@@ -2630,7 +2630,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:138"
+   "declared_at": "cad/turret_dossier.py:139"
   },
   "usb_can": {
    "section": "S8-stand",
@@ -2660,7 +2660,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:140"
+   "declared_at": "cad/turret_dossier.py:141"
   },
   "terminal_board": {
    "section": "S8-stand",
@@ -2690,7 +2690,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:140"
+   "declared_at": "cad/turret_dossier.py:141"
   },
   "dock": {
    "section": "S8-stand",
@@ -2720,7 +2720,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:140"
+   "declared_at": "cad/turret_dossier.py:141"
   },
   "pack": {
    "section": "S8-stand",
@@ -2750,7 +2750,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:140"
+   "declared_at": "cad/turret_dossier.py:141"
   },
   "panel_switch": {
    "section": "S8-stand",
@@ -2780,7 +2780,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:140"
+   "declared_at": "cad/turret_dossier.py:141"
   },
   "panel_pendant": {
    "section": "S8-stand",
@@ -2810,7 +2810,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:140"
+   "declared_at": "cad/turret_dossier.py:141"
   }
  },
  "cavities": {
@@ -2833,7 +2833,7 @@
    "volume_mm3": 638369.00781,
    "solids": 2,
    "valid": true,
-   "declared_at": "cad/turret_dossier.py:131"
+   "declared_at": "cad/turret_dossier.py:132"
   }
  },
  "joints": {
@@ -2877,7 +2877,7 @@
     ]
    ],
    "samples": 35,
-   "declared_at": "cad/turret_dossier.py:143"
+   "declared_at": "cad/turret_dossier.py:144"
   },
   "I-tilt": {
    "kind": "revolute",
@@ -2931,7 +2931,7 @@
     ]
    ],
    "samples": 6,
-   "declared_at": "cad/turret_dossier.py:148"
+   "declared_at": "cad/turret_dossier.py:149"
   },
   "I-feed": {
    "kind": "revolute",
@@ -2961,7 +2961,7 @@
     ]
    ],
    "samples": 16,
-   "declared_at": "cad/turret_dossier.py:154"
+   "declared_at": "cad/turret_dossier.py:155"
   },
   "I-wheel-l": {
    "kind": "revolute",
@@ -2991,7 +2991,7 @@
     ]
    ],
    "samples": 13,
-   "declared_at": "cad/turret_dossier.py:157"
+   "declared_at": "cad/turret_dossier.py:158"
   },
   "I-wheel-r": {
    "kind": "revolute",
@@ -3021,7 +3021,7 @@
     ]
    ],
    "samples": 13,
-   "declared_at": "cad/turret_dossier.py:157"
+   "declared_at": "cad/turret_dossier.py:158"
   },
   "I-flap": {
    "kind": "revolute",
@@ -3040,7 +3040,7 @@
     ]
    },
    "range": [
-    -70.0,
+    -50.0,
     0.0
    ],
    "unit": "deg",
@@ -3050,8 +3050,8 @@
      "hopper_lid"
     ]
    ],
-   "samples": 8,
-   "declared_at": "cad/turret_dossier.py:159"
+   "samples": 6,
+   "declared_at": "cad/turret_dossier.py:160"
   },
   "I-pan-drive": {
    "kind": "revolute",
@@ -3081,7 +3081,7 @@
     ]
    ],
    "samples": 13,
-   "declared_at": "cad/turret_dossier.py:163"
+   "declared_at": "cad/turret_dossier.py:164"
   },
   "I-turntable": {
    "kind": "fixed",
@@ -3103,7 +3103,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:167"
+   "declared_at": "cad/turret_dossier.py:168"
   },
   "I-spacer": {
    "kind": "fixed",
@@ -3125,7 +3125,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:167"
+   "declared_at": "cad/turret_dossier.py:168"
   },
   "I-circlip": {
    "kind": "fixed",
@@ -3147,7 +3147,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:167"
+   "declared_at": "cad/turret_dossier.py:168"
   },
   "I-yoke": {
    "kind": "fixed",
@@ -3169,7 +3169,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:167"
+   "declared_at": "cad/turret_dossier.py:168"
   },
   "I-driver": {
    "kind": "fixed",
@@ -3191,7 +3191,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:167"
+   "declared_at": "cad/turret_dossier.py:168"
   },
   "I-coupling": {
    "kind": "fixed",
@@ -3213,7 +3213,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:167"
+   "declared_at": "cad/turret_dossier.py:168"
   },
   "I-rotor": {
    "kind": "fixed",
@@ -3235,7 +3235,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:167"
+   "declared_at": "cad/turret_dossier.py:168"
   },
   "I-hall": {
    "kind": "fixed",
@@ -3257,7 +3257,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:167"
+   "declared_at": "cad/turret_dossier.py:168"
   },
   "I-bay": {
    "kind": "fixed",
@@ -3279,7 +3279,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:167"
+   "declared_at": "cad/turret_dossier.py:168"
   },
   "I-bay-lid": {
    "kind": "fixed",
@@ -3301,7 +3301,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:167"
+   "declared_at": "cad/turret_dossier.py:168"
   },
   "I-boards": {
    "kind": "fixed",
@@ -3323,7 +3323,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:167"
+   "declared_at": "cad/turret_dossier.py:168"
   },
   "I-tilt-servo": {
    "kind": "fixed",
@@ -3345,7 +3345,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:167"
+   "declared_at": "cad/turret_dossier.py:168"
   },
   "I-tilt-outer": {
    "kind": "fixed",
@@ -3367,7 +3367,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:167"
+   "declared_at": "cad/turret_dossier.py:168"
   },
   "I-ct": {
    "kind": "fixed",
@@ -3389,7 +3389,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:167"
+   "declared_at": "cad/turret_dossier.py:168"
   },
   "I-plate-l": {
    "kind": "fixed",
@@ -3411,7 +3411,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:167"
+   "declared_at": "cad/turret_dossier.py:168"
   },
   "I-plate-r": {
    "kind": "fixed",
@@ -3433,7 +3433,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:167"
+   "declared_at": "cad/turret_dossier.py:168"
   },
   "I-horn-boss": {
    "kind": "fixed",
@@ -3455,7 +3455,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:167"
+   "declared_at": "cad/turret_dossier.py:168"
   },
   "I-pivot-spacer": {
    "kind": "fixed",
@@ -3477,7 +3477,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:167"
+   "declared_at": "cad/turret_dossier.py:168"
   },
   "I-shoulder": {
    "kind": "fixed",
@@ -3499,7 +3499,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:167"
+   "declared_at": "cad/turret_dossier.py:168"
   },
   "I-tilt-inner": {
    "kind": "fixed",
@@ -3521,7 +3521,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:167"
+   "declared_at": "cad/turret_dossier.py:168"
   },
   "I-stop-lug": {
    "kind": "fixed",
@@ -3543,7 +3543,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:167"
+   "declared_at": "cad/turret_dossier.py:168"
   },
   "I-thumbscrew": {
    "kind": "fixed",
@@ -3565,7 +3565,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:167"
+   "declared_at": "cad/turret_dossier.py:168"
   },
   "I-hopper-inserts": {
    "kind": "fixed",
@@ -3587,7 +3587,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:167"
+   "declared_at": "cad/turret_dossier.py:168"
   },
   "I-lid": {
    "kind": "fixed",
@@ -3609,7 +3609,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:167"
+   "declared_at": "cad/turret_dossier.py:168"
   },
   "I-barrel": {
    "kind": "fixed",
@@ -3631,7 +3631,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:167"
+   "declared_at": "cad/turret_dossier.py:168"
   },
   "I-laser-inserts": {
    "kind": "fixed",
@@ -3653,7 +3653,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:167"
+   "declared_at": "cad/turret_dossier.py:168"
   },
   "I-set-screws": {
    "kind": "fixed",
@@ -3675,7 +3675,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:167"
+   "declared_at": "cad/turret_dossier.py:168"
   },
   "I-laser": {
    "kind": "fixed",
@@ -3697,7 +3697,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:167"
+   "declared_at": "cad/turret_dossier.py:168"
   },
   "I-feed-servo": {
    "kind": "fixed",
@@ -3719,7 +3719,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:167"
+   "declared_at": "cad/turret_dossier.py:168"
   },
   "I-motor-l": {
    "kind": "fixed",
@@ -3741,7 +3741,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:167"
+   "declared_at": "cad/turret_dossier.py:168"
   },
   "I-motor-r": {
    "kind": "fixed",
@@ -3763,7 +3763,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:167"
+   "declared_at": "cad/turret_dossier.py:168"
   },
   "I-esc-l": {
    "kind": "fixed",
@@ -3785,7 +3785,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:167"
+   "declared_at": "cad/turret_dossier.py:168"
   },
   "I-esc-r": {
    "kind": "fixed",
@@ -3807,7 +3807,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:167"
+   "declared_at": "cad/turret_dossier.py:168"
   },
   "I-cart-board": {
    "kind": "fixed",
@@ -3829,7 +3829,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:167"
+   "declared_at": "cad/turret_dossier.py:168"
   },
   "I-pile": {
    "kind": "fixed",
@@ -3851,7 +3851,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:167"
+   "declared_at": "cad/turret_dossier.py:168"
   },
   "I-tyre-l": {
    "kind": "fixed",
@@ -3873,7 +3873,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:167"
+   "declared_at": "cad/turret_dossier.py:168"
   },
   "I-tyre-r": {
    "kind": "fixed",
@@ -3895,7 +3895,7 @@
    "unit": "",
    "intended_contacts": [],
    "samples": null,
-   "declared_at": "cad/turret_dossier.py:167"
+   "declared_at": "cad/turret_dossier.py:168"
   }
  },
  "fasteners": {
@@ -3915,7 +3915,7 @@
      "key": "laser_foot_screws#0",
      "origin": [
       60.0,
-      7.0,
+      9.0,
       153.6
      ],
      "direction": [
@@ -3923,17 +3923,17 @@
       0.0,
       -1.0
      ],
-     "sha256": "3c0dd637cd5a80403a4b068ebdc698af1f87445043ba2da9ca697047c6c8c259",
-     "file": "dossier-shapes/3c0dd637cd5a80403a4b068ebdc698af1f87445043ba2da9ca697047c6c8c259.brep",
+     "sha256": "1f97f888f2c03f371262319233282008f448c738b01eff503b6d086288d2ff3f",
+     "file": "dossier-shapes/1f97f888f2c03f371262319233282008f448c738b01eff503b6d086288d2ff3f.brep",
      "bbox": {
       "min": [
        57.25,
-       4.25,
+       6.25,
        143.6
       ],
       "max": [
        62.75,
-       9.75,
+       11.75,
        156.6
       ]
      },
@@ -3945,7 +3945,7 @@
      "key": "laser_foot_screws#1",
      "origin": [
       60.0,
-      -7.0,
+      -9.0,
       153.6
      ],
      "direction": [
@@ -3953,17 +3953,17 @@
       0.0,
       -1.0
      ],
-     "sha256": "22a833d5c5aaf1a0a70eb5b84ce48ec62e59af031f2c8af4bd4824faf59843f5",
-     "file": "dossier-shapes/22a833d5c5aaf1a0a70eb5b84ce48ec62e59af031f2c8af4bd4824faf59843f5.brep",
+     "sha256": "5b54dc9d581be2e9b9410659993816e37c5dac82cf28369ce4e80893c4669480",
+     "file": "dossier-shapes/5b54dc9d581be2e9b9410659993816e37c5dac82cf28369ce4e80893c4669480.brep",
      "bbox": {
       "min": [
        57.25,
-       -9.75,
+       -11.75,
        143.6
       ],
       "max": [
        62.75,
-       -4.25,
+       -6.25,
        156.6
       ]
      },
@@ -3972,7 +3972,7 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:171"
+   "declared_at": "cad/turret_dossier.py:172"
   },
   "hopper_screws": {
    "key": "turret_screw_m3x8",
@@ -4077,542 +4077,101 @@
      "valid": true
     }
    ],
-   "declared_at": "cad/turret_dossier.py:171"
+   "declared_at": "cad/turret_dossier.py:172"
   }
  },
  "assembly": {
   "steps": [
    {
     "order": 1,
-    "fit": "stand_box",
+    "fit": "cartridge_body",
     "onto": [],
     "direction": "-Z",
-    "declared_at": "cad/turret_dossier.py:177"
+    "declared_at": "cad/turret_dossier.py:178"
    },
    {
     "order": 2,
-    "fit": "dock",
-    "onto": [
-     "stand_box"
-    ],
-    "direction": "+Z",
-    "declared_at": "cad/turret_dossier.py:177"
-   },
-   {
-    "order": 3,
-    "fit": "terminal_board",
-    "onto": [
-     "stand_box"
-    ],
-    "direction": "+Y",
-    "declared_at": "cad/turret_dossier.py:177"
-   },
-   {
-    "order": 4,
-    "fit": "panel_switch",
-    "onto": [
-     "stand_box"
-    ],
-    "direction": "-X",
-    "declared_at": "cad/turret_dossier.py:177"
-   },
-   {
-    "order": 5,
-    "fit": "panel_pendant",
-    "onto": [
-     "stand_box"
-    ],
-    "direction": "-X",
-    "declared_at": "cad/turret_dossier.py:177"
-   },
-   {
-    "order": 6,
-    "fit": "usb_can",
-    "onto": [
-     "stand_box"
-    ],
-    "direction": "+Z",
-    "declared_at": "cad/turret_dossier.py:177"
-   },
-   {
-    "order": 7,
-    "fit": "stand_bottom",
-    "onto": [
-     "stand_box"
-    ],
-    "direction": "+Z",
-    "declared_at": "cad/turret_dossier.py:177"
-   },
-   {
-    "order": 8,
-    "fit": "stand_foot",
-    "onto": [
-     "stand_bottom"
-    ],
-    "direction": "+Z",
-    "declared_at": "cad/turret_dossier.py:177"
-   },
-   {
-    "order": 9,
-    "fit": "pack",
-    "onto": [
-     "stand_bottom"
-    ],
-    "direction": "+X",
-    "declared_at": "cad/turret_dossier.py:177"
-   },
-   {
-    "order": 10,
-    "fit": "compute_tray",
-    "onto": [
-     "stand_box"
-    ],
-    "direction": "-Z",
-    "declared_at": "cad/turret_dossier.py:177"
-   },
-   {
-    "order": 11,
-    "fit": "compute",
-    "onto": [
-     "compute_tray"
-    ],
-    "direction": "-Z",
-    "declared_at": "cad/turret_dossier.py:177"
-   },
-   {
-    "order": 12,
-    "fit": "input_fuses",
-    "onto": [
-     "compute_tray"
-    ],
-    "direction": "-Z",
-    "declared_at": "cad/turret_dossier.py:177"
-   },
-   {
-    "order": 13,
-    "fit": "compute_shell",
-    "onto": [
-     "compute_tray"
-    ],
-    "direction": "-Z",
-    "declared_at": "cad/turret_dossier.py:177"
-   },
-   {
-    "order": 14,
-    "fit": "eth_jack",
-    "onto": [
-     "compute_shell"
-    ],
-    "direction": "+X",
-    "declared_at": "cad/turret_dossier.py:177"
-   },
-   {
-    "order": 15,
-    "fit": "xt30_input",
-    "onto": [
-     "compute_shell"
-    ],
-    "direction": "+X",
-    "declared_at": "cad/turret_dossier.py:177"
-   },
-   {
-    "order": 16,
-    "fit": "pan_base",
-    "onto": [
-     "compute_shell"
-    ],
-    "direction": "-Z",
-    "declared_at": "cad/turret_dossier.py:177"
-   },
-   {
-    "order": 17,
-    "fit": "ring_carrier",
-    "onto": [
-     "pan_base"
-    ],
-    "direction": "-Z",
-    "declared_at": "cad/turret_dossier.py:177"
-   },
-   {
-    "order": 18,
-    "fit": "slip_ring",
-    "onto": [
-     "ring_carrier"
-    ],
-    "direction": "-Z",
-    "declared_at": "cad/turret_dossier.py:177"
-   },
-   {
-    "order": 19,
-    "fit": "base_board",
-    "onto": [
-     "pan_base"
-    ],
-    "direction": "-Z",
-    "declared_at": "cad/turret_dossier.py:177"
-   },
-   {
-    "order": 20,
-    "fit": "dt_receptacle",
-    "onto": [
-     "pan_base"
-    ],
-    "direction": "+Y",
-    "declared_at": "cad/turret_dossier.py:177"
-   },
-   {
-    "order": 21,
-    "fit": "pan_servo",
-    "onto": [
-     "pan_base"
-    ],
-    "direction": "-Z",
-    "declared_at": "cad/turret_dossier.py:177"
-   },
-   {
-    "order": 22,
-    "fit": "pan_bearing",
-    "onto": [
-     "pan_base"
-    ],
-    "direction": "-Z",
-    "declared_at": "cad/turret_dossier.py:177"
-   },
-   {
-    "order": 23,
-    "fit": "index_magnet",
-    "onto": [
-     "pan_base"
-    ],
-    "direction": "-Z",
-    "declared_at": "cad/turret_dossier.py:177"
-   },
-   {
-    "order": 24,
-    "fit": "pan_clamp",
-    "onto": [
-     "pan_base"
-    ],
-    "direction": "-Z",
-    "declared_at": "cad/turret_dossier.py:177"
-   },
-   {
-    "order": 25,
-    "fit": "bumper_ring",
-    "onto": [
-     "pan_base"
-    ],
-    "direction": "-Z",
-    "declared_at": "cad/turret_dossier.py:177"
-   },
-   {
-    "order": 26,
-    "fit": "hall_switch",
-    "onto": [
-     "pan_base"
-    ],
-    "direction": "-Z",
-    "declared_at": "cad/turret_dossier.py:177"
-   },
-   {
-    "order": 27,
-    "fit": "pan_ring",
-    "onto": [
-     "pan_bearing"
-    ],
-    "direction": "-Z",
-    "declared_at": "cad/turret_dossier.py:177"
-   },
-   {
-    "order": 28,
-    "fit": "pan_bearing_inner",
-    "onto": [
-     "pan_ring"
-    ],
-    "direction": "-Z",
-    "declared_at": "cad/turret_dossier.py:177"
-   },
-   {
-    "order": 29,
-    "fit": "pan_spacer",
-    "onto": [
-     "pan_bearing_inner"
-    ],
-    "direction": "+Z",
-    "declared_at": "cad/turret_dossier.py:177"
-   },
-   {
-    "order": 30,
-    "fit": "circlip_50",
-    "onto": [
-     "pan_ring"
-    ],
-    "direction": "+Z",
-    "declared_at": "cad/turret_dossier.py:177"
-   },
-   {
-    "order": 31,
-    "fit": "slip_ring_rotor",
-    "onto": [
-     "slip_ring"
-    ],
-    "direction": "-Z",
-    "declared_at": "cad/turret_dossier.py:177"
-   },
-   {
-    "order": 32,
-    "fit": "ring_coupling",
-    "onto": [
-     "slip_ring_rotor"
-    ],
-    "direction": "-Z",
-    "declared_at": "cad/turret_dossier.py:177"
-   },
-   {
-    "order": 33,
-    "fit": "ring_driver",
-    "onto": [
-     "pan_ring"
-    ],
-    "direction": "-Z",
-    "declared_at": "cad/turret_dossier.py:177"
-   },
-   {
-    "order": 34,
-    "fit": "pan_pinion",
-    "onto": [
-     "pan_servo"
-    ],
-    "direction": "-Z",
-    "declared_at": "cad/turret_dossier.py:177"
-   },
-   {
-    "order": 35,
-    "fit": "tilt_yoke",
-    "onto": [
-     "pan_ring"
-    ],
-    "direction": "-Z",
-    "declared_at": "cad/turret_dossier.py:177"
-   },
-   {
-    "order": 36,
-    "fit": "tilt_bearing",
-    "onto": [
-     "tilt_yoke"
-    ],
-    "direction": "+Y",
-    "declared_at": "cad/turret_dossier.py:177"
-   },
-   {
-    "order": 37,
-    "fit": "tilt_servo",
-    "onto": [
-     "tilt_yoke"
-    ],
-    "direction": "-Y",
-    "declared_at": "cad/turret_dossier.py:177"
-   },
-   {
-    "order": 38,
-    "fit": "board_bay",
-    "onto": [
-     "tilt_yoke"
-    ],
-    "direction": "+Y",
-    "declared_at": "cad/turret_dossier.py:177"
-   },
-   {
-    "order": 39,
-    "fit": "turret_board",
-    "onto": [
-     "board_bay"
-    ],
-    "direction": "+Y",
-    "declared_at": "cad/turret_dossier.py:177"
-   },
-   {
-    "order": 40,
-    "fit": "board_bay_lid",
-    "onto": [
-     "board_bay"
-    ],
-    "direction": "+Y",
-    "declared_at": "cad/turret_dossier.py:177"
-   },
-   {
-    "order": 41,
-    "fit": "cradle",
-    "onto": [
-     "tilt_yoke"
-    ],
-    "direction": "-Z",
-    "declared_at": "cad/turret_dossier.py:177"
-   },
-   {
-    "order": 42,
-    "fit": "cradle_plate_l",
-    "onto": [
-     "cradle"
-    ],
-    "direction": "-Y",
-    "declared_at": "cad/turret_dossier.py:177"
-   },
-   {
-    "order": 43,
-    "fit": "horn_boss",
-    "onto": [
-     "cradle_plate_l"
-    ],
-    "direction": "+Y",
-    "declared_at": "cad/turret_dossier.py:177"
-   },
-   {
-    "order": 44,
-    "fit": "cradle_plate_r",
-    "onto": [
-     "cradle"
-    ],
-    "direction": "+Y",
-    "declared_at": "cad/turret_dossier.py:177"
-   },
-   {
-    "order": 45,
-    "fit": "stop_lug",
-    "onto": [
-     "cradle_plate_r"
-    ],
-    "direction": "+Y",
-    "declared_at": "cad/turret_dossier.py:177"
-   },
-   {
-    "order": 46,
-    "fit": "pivot_spacer",
-    "onto": [
-     "cradle_plate_r"
-    ],
-    "direction": "+Y",
-    "declared_at": "cad/turret_dossier.py:177"
-   },
-   {
-    "order": 47,
-    "fit": "tilt_bearing_inner",
-    "onto": [
-     "tilt_bearing"
-    ],
-    "direction": "+Y",
-    "declared_at": "cad/turret_dossier.py:177"
-   },
-   {
-    "order": 48,
-    "fit": "shoulder_screw",
-    "onto": [
-     "cradle_plate_r"
-    ],
-    "direction": "+Y",
-    "declared_at": "cad/turret_dossier.py:177"
-   },
-   {
-    "order": 49,
-    "fit": "ct_thumbscrew",
-    "onto": [
-     "cradle"
-    ],
-    "direction": "+Z",
-    "declared_at": "cad/turret_dossier.py:177"
-   },
-   {
-    "order": 50,
-    "fit": "cartridge_body",
-    "onto": [
-     "cradle"
-    ],
-    "direction": "-Z",
-    "declared_at": "cad/turret_dossier.py:177"
-   },
-   {
-    "order": 51,
     "fit": "feed_motor",
     "onto": [
      "cartridge_body"
     ],
     "direction": "+Z",
-    "declared_at": "cad/turret_dossier.py:177"
+    "declared_at": "cad/turret_dossier.py:178"
    },
    {
-    "order": 52,
+    "order": 3,
     "fit": "flywheel_motor_l",
     "onto": [
      "cartridge_body"
     ],
     "direction": "+Z",
-    "declared_at": "cad/turret_dossier.py:177"
+    "declared_at": "cad/turret_dossier.py:178"
    },
    {
-    "order": 53,
+    "order": 4,
     "fit": "flywheel_motor_r",
     "onto": [
      "cartridge_body"
     ],
     "direction": "+Z",
-    "declared_at": "cad/turret_dossier.py:177"
+    "declared_at": "cad/turret_dossier.py:178"
    },
    {
-    "order": 54,
+    "order": 5,
     "fit": "flywheel",
     "onto": [
      "flywheel_motor_l"
     ],
     "direction": "+Z",
-    "declared_at": "cad/turret_dossier.py:177"
+    "declared_at": "cad/turret_dossier.py:178"
    },
    {
-    "order": 55,
+    "order": 6,
     "fit": "flywheel_tyre",
     "onto": [
      "flywheel"
     ],
     "direction": "+Z",
-    "declared_at": "cad/turret_dossier.py:177"
+    "declared_at": "cad/turret_dossier.py:178"
    },
    {
-    "order": 56,
+    "order": 7,
     "fit": "flywheel_m",
     "onto": [
      "flywheel_motor_r"
     ],
     "direction": "+Z",
-    "declared_at": "cad/turret_dossier.py:177"
+    "declared_at": "cad/turret_dossier.py:178"
    },
    {
-    "order": 57,
+    "order": 8,
     "fit": "flywheel_tyre_m",
     "onto": [
      "flywheel_m"
     ],
     "direction": "+Z",
-    "declared_at": "cad/turret_dossier.py:177"
+    "declared_at": "cad/turret_dossier.py:178"
    },
    {
-    "order": 58,
+    "order": 9,
     "fit": "dial",
     "onto": [
      "feed_motor"
     ],
     "direction": "-Z",
-    "declared_at": "cad/turret_dossier.py:177"
+    "declared_at": "cad/turret_dossier.py:178"
    },
    {
-    "order": 59,
+    "order": 10,
     "fit": "hopper_inserts",
     "onto": [
      "cartridge_body"
     ],
     "direction": "-Z",
-    "declared_at": "cad/turret_dossier.py:177"
+    "declared_at": "cad/turret_dossier.py:178"
    },
    {
-    "order": 60,
+    "order": 11,
     "fit": "hopper",
     "onto": [
      "cartridge_body"
@@ -4622,82 +4181,55 @@
     "fasteners": [
      "hopper_screws"
     ],
-    "declared_at": "cad/turret_dossier.py:177"
+    "declared_at": "cad/turret_dossier.py:178"
    },
    {
-    "order": 61,
+    "order": 12,
     "fit": "ball",
     "onto": [
      "dial"
     ],
     "direction": "-Z",
-    "declared_at": "cad/turret_dossier.py:177"
+    "declared_at": "cad/turret_dossier.py:178"
    },
    {
-    "order": 62,
+    "order": 13,
     "fit": "hopper_lid",
     "onto": [
      "hopper"
     ],
     "direction": "-Z",
-    "declared_at": "cad/turret_dossier.py:177"
+    "declared_at": "cad/turret_dossier.py:178"
    },
    {
-    "order": 63,
+    "order": 14,
     "fit": "hopper_flap",
     "onto": [
      "hopper_lid"
     ],
     "direction": "-Z",
-    "declared_at": "cad/turret_dossier.py:177"
+    "declared_at": "cad/turret_dossier.py:178"
    },
    {
-    "order": 64,
-    "fit": "esc_l",
-    "onto": [
-     "cartridge_body"
-    ],
-    "direction": "-Z",
-    "declared_at": "cad/turret_dossier.py:177"
-   },
-   {
-    "order": 65,
-    "fit": "esc_r",
-    "onto": [
-     "cartridge_body"
-    ],
-    "direction": "-Z",
-    "declared_at": "cad/turret_dossier.py:177"
-   },
-   {
-    "order": 66,
-    "fit": "cartridge_board",
-    "onto": [
-     "cartridge_body"
-    ],
-    "direction": "-Z",
-    "declared_at": "cad/turret_dossier.py:177"
-   },
-   {
-    "order": 67,
+    "order": 15,
     "fit": "barrel",
     "onto": [
      "cartridge_body"
     ],
     "direction": "-X",
-    "declared_at": "cad/turret_dossier.py:177"
+    "declared_at": "cad/turret_dossier.py:178"
    },
    {
-    "order": 68,
+    "order": 16,
     "fit": "laser_inserts",
     "onto": [
      "cartridge_body"
     ],
     "direction": "-Z",
-    "declared_at": "cad/turret_dossier.py:177"
+    "declared_at": "cad/turret_dossier.py:178"
    },
    {
-    "order": 69,
+    "order": 17,
     "fit": "laser_mount",
     "onto": [
      "cartridge_body"
@@ -4707,25 +4239,493 @@
     "fasteners": [
      "laser_foot_screws"
     ],
-    "declared_at": "cad/turret_dossier.py:177"
+    "declared_at": "cad/turret_dossier.py:178"
    },
    {
-    "order": 70,
-    "fit": "laser",
-    "onto": [
-     "laser_mount"
-    ],
-    "direction": "+X",
-    "declared_at": "cad/turret_dossier.py:177"
-   },
-   {
-    "order": 71,
+    "order": 18,
     "fit": "laser_screws",
     "onto": [
      "laser_mount"
     ],
     "direction": "-Z",
-    "declared_at": "cad/turret_dossier.py:177"
+    "declared_at": "cad/turret_dossier.py:178"
+   },
+   {
+    "order": 19,
+    "fit": "laser",
+    "onto": [
+     "laser_mount"
+    ],
+    "direction": "-X",
+    "declared_at": "cad/turret_dossier.py:178"
+   },
+   {
+    "order": 20,
+    "fit": "esc_l",
+    "onto": [
+     "cartridge_body"
+    ],
+    "direction": "-Z",
+    "declared_at": "cad/turret_dossier.py:178"
+   },
+   {
+    "order": 21,
+    "fit": "esc_r",
+    "onto": [
+     "cartridge_body"
+    ],
+    "direction": "-Z",
+    "declared_at": "cad/turret_dossier.py:178"
+   },
+   {
+    "order": 22,
+    "fit": "cartridge_board",
+    "onto": [
+     "cartridge_body"
+    ],
+    "direction": "-Z",
+    "declared_at": "cad/turret_dossier.py:178"
+   },
+   {
+    "order": 23,
+    "fit": "cradle",
+    "onto": [
+     "cartridge_body"
+    ],
+    "direction": "+Z",
+    "declared_at": "cad/turret_dossier.py:178"
+   },
+   {
+    "order": 24,
+    "fit": "ct_thumbscrew",
+    "onto": [
+     "cradle"
+    ],
+    "direction": "+Z",
+    "declared_at": "cad/turret_dossier.py:178"
+   },
+   {
+    "order": 25,
+    "fit": "cradle_plate_l",
+    "onto": [
+     "cradle"
+    ],
+    "direction": "-Y",
+    "declared_at": "cad/turret_dossier.py:178"
+   },
+   {
+    "order": 26,
+    "fit": "horn_boss",
+    "onto": [
+     "cradle_plate_l"
+    ],
+    "direction": "-Y",
+    "declared_at": "cad/turret_dossier.py:178"
+   },
+   {
+    "order": 27,
+    "fit": "cradle_plate_r",
+    "onto": [
+     "cradle"
+    ],
+    "direction": "+Y",
+    "declared_at": "cad/turret_dossier.py:178"
+   },
+   {
+    "order": 28,
+    "fit": "stop_lug",
+    "onto": [
+     "cradle_plate_r"
+    ],
+    "direction": "+Y",
+    "declared_at": "cad/turret_dossier.py:178"
+   },
+   {
+    "order": 29,
+    "fit": "tilt_yoke",
+    "onto": [
+     "cradle"
+    ],
+    "direction": "+Z",
+    "declared_at": "cad/turret_dossier.py:178"
+   },
+   {
+    "order": 30,
+    "fit": "tilt_servo",
+    "onto": [
+     "tilt_yoke"
+    ],
+    "direction": "-Y",
+    "declared_at": "cad/turret_dossier.py:178"
+   },
+   {
+    "order": 31,
+    "fit": "tilt_bearing",
+    "onto": [
+     "tilt_yoke"
+    ],
+    "direction": "+Y",
+    "declared_at": "cad/turret_dossier.py:178"
+   },
+   {
+    "order": 32,
+    "fit": "tilt_bearing_inner",
+    "onto": [
+     "tilt_bearing"
+    ],
+    "direction": "+Y",
+    "declared_at": "cad/turret_dossier.py:178"
+   },
+   {
+    "order": 33,
+    "fit": "pivot_spacer",
+    "onto": [
+     "cradle_plate_r"
+    ],
+    "direction": "-Z",
+    "declared_at": "cad/turret_dossier.py:178"
+   },
+   {
+    "order": 34,
+    "fit": "shoulder_screw",
+    "onto": [
+     "cradle_plate_r"
+    ],
+    "direction": "+Y",
+    "declared_at": "cad/turret_dossier.py:178"
+   },
+   {
+    "order": 35,
+    "fit": "board_bay",
+    "onto": [
+     "tilt_yoke"
+    ],
+    "direction": "+Y",
+    "declared_at": "cad/turret_dossier.py:178"
+   },
+   {
+    "order": 36,
+    "fit": "turret_board",
+    "onto": [
+     "board_bay"
+    ],
+    "direction": "+Y",
+    "declared_at": "cad/turret_dossier.py:178"
+   },
+   {
+    "order": 37,
+    "fit": "board_bay_lid",
+    "onto": [
+     "board_bay"
+    ],
+    "direction": "+Y",
+    "declared_at": "cad/turret_dossier.py:178"
+   },
+   {
+    "order": 38,
+    "fit": "pan_ring",
+    "onto": [
+     "tilt_yoke"
+    ],
+    "direction": "+Z",
+    "declared_at": "cad/turret_dossier.py:178"
+   },
+   {
+    "order": 39,
+    "fit": "ring_driver",
+    "onto": [
+     "pan_ring"
+    ],
+    "direction": "+Z",
+    "declared_at": "cad/turret_dossier.py:178"
+   },
+   {
+    "order": 40,
+    "fit": "ring_coupling",
+    "onto": [
+     "ring_driver"
+    ],
+    "direction": "+Z",
+    "declared_at": "cad/turret_dossier.py:178"
+   },
+   {
+    "order": 41,
+    "fit": "hall_switch",
+    "onto": [
+     "pan_ring"
+    ],
+    "direction": "+Z",
+    "declared_at": "cad/turret_dossier.py:178"
+   },
+   {
+    "order": 42,
+    "fit": "pan_bearing_inner",
+    "onto": [
+     "pan_ring"
+    ],
+    "direction": "+Z",
+    "declared_at": "cad/turret_dossier.py:178"
+   },
+   {
+    "order": 43,
+    "fit": "pan_clamp",
+    "onto": [
+     "pan_ring"
+    ],
+    "direction": "+Z",
+    "declared_at": "cad/turret_dossier.py:178"
+   },
+   {
+    "order": 44,
+    "fit": "pan_bearing",
+    "onto": [
+     "pan_bearing_inner"
+    ],
+    "direction": "+Z",
+    "declared_at": "cad/turret_dossier.py:178"
+   },
+   {
+    "order": 45,
+    "fit": "index_magnet",
+    "onto": [
+     "pan_clamp"
+    ],
+    "direction": "+Z",
+    "declared_at": "cad/turret_dossier.py:178"
+   },
+   {
+    "order": 46,
+    "fit": "pan_spacer",
+    "onto": [
+     "pan_bearing_inner"
+    ],
+    "direction": "+Z",
+    "declared_at": "cad/turret_dossier.py:178"
+   },
+   {
+    "order": 47,
+    "fit": "circlip_50",
+    "onto": [
+     "pan_ring"
+    ],
+    "direction": "+Z",
+    "declared_at": "cad/turret_dossier.py:178"
+   },
+   {
+    "order": 48,
+    "fit": "pan_base",
+    "onto": [
+     "pan_bearing"
+    ],
+    "direction": "+Z",
+    "declared_at": "cad/turret_dossier.py:178"
+   },
+   {
+    "order": 49,
+    "fit": "bumper_ring",
+    "onto": [
+     "pan_base"
+    ],
+    "direction": "+Z",
+    "declared_at": "cad/turret_dossier.py:178"
+   },
+   {
+    "order": 50,
+    "fit": "pan_pinion",
+    "onto": [
+     "pan_ring"
+    ],
+    "direction": "+Z",
+    "declared_at": "cad/turret_dossier.py:178"
+   },
+   {
+    "order": 51,
+    "fit": "pan_servo",
+    "onto": [
+     "pan_base"
+    ],
+    "direction": "+Z",
+    "declared_at": "cad/turret_dossier.py:178"
+   },
+   {
+    "order": 52,
+    "fit": "ring_carrier",
+    "onto": [
+     "pan_base"
+    ],
+    "direction": "+Z",
+    "declared_at": "cad/turret_dossier.py:178"
+   },
+   {
+    "order": 53,
+    "fit": "slip_ring",
+    "onto": [
+     "ring_carrier"
+    ],
+    "direction": "+Z",
+    "declared_at": "cad/turret_dossier.py:178"
+   },
+   {
+    "order": 54,
+    "fit": "slip_ring_rotor",
+    "onto": [
+     "ring_coupling"
+    ],
+    "direction": "+Z",
+    "declared_at": "cad/turret_dossier.py:178"
+   },
+   {
+    "order": 55,
+    "fit": "base_board",
+    "onto": [
+     "pan_base"
+    ],
+    "direction": "+Z",
+    "declared_at": "cad/turret_dossier.py:178"
+   },
+   {
+    "order": 56,
+    "fit": "dt_receptacle",
+    "onto": [
+     "pan_base"
+    ],
+    "direction": "+Y",
+    "declared_at": "cad/turret_dossier.py:178"
+   },
+   {
+    "order": 57,
+    "fit": "compute_shell",
+    "onto": [
+     "pan_base"
+    ],
+    "direction": "+Z",
+    "declared_at": "cad/turret_dossier.py:178"
+   },
+   {
+    "order": 58,
+    "fit": "compute",
+    "onto": [
+     "compute_shell"
+    ],
+    "direction": "+Z",
+    "declared_at": "cad/turret_dossier.py:178"
+   },
+   {
+    "order": 59,
+    "fit": "input_fuses",
+    "onto": [
+     "compute_shell"
+    ],
+    "direction": "+Z",
+    "declared_at": "cad/turret_dossier.py:178"
+   },
+   {
+    "order": 60,
+    "fit": "eth_jack",
+    "onto": [
+     "compute_shell"
+    ],
+    "direction": "+X",
+    "declared_at": "cad/turret_dossier.py:178"
+   },
+   {
+    "order": 61,
+    "fit": "xt30_input",
+    "onto": [
+     "compute_shell"
+    ],
+    "direction": "+X",
+    "declared_at": "cad/turret_dossier.py:178"
+   },
+   {
+    "order": 62,
+    "fit": "compute_tray",
+    "onto": [
+     "compute_shell"
+    ],
+    "direction": "+Z",
+    "declared_at": "cad/turret_dossier.py:178"
+   },
+   {
+    "order": 63,
+    "fit": "stand_box",
+    "onto": [
+     "compute_tray"
+    ],
+    "direction": "+Z",
+    "declared_at": "cad/turret_dossier.py:178"
+   },
+   {
+    "order": 64,
+    "fit": "dock",
+    "onto": [
+     "stand_box"
+    ],
+    "direction": "+Z",
+    "declared_at": "cad/turret_dossier.py:178"
+   },
+   {
+    "order": 65,
+    "fit": "terminal_board",
+    "onto": [
+     "stand_box"
+    ],
+    "direction": "+Z",
+    "declared_at": "cad/turret_dossier.py:178"
+   },
+   {
+    "order": 66,
+    "fit": "usb_can",
+    "onto": [
+     "stand_box"
+    ],
+    "direction": "+Z",
+    "declared_at": "cad/turret_dossier.py:178"
+   },
+   {
+    "order": 67,
+    "fit": "panel_switch",
+    "onto": [
+     "stand_box"
+    ],
+    "direction": "-X",
+    "declared_at": "cad/turret_dossier.py:178"
+   },
+   {
+    "order": 68,
+    "fit": "panel_pendant",
+    "onto": [
+     "stand_box"
+    ],
+    "direction": "-X",
+    "declared_at": "cad/turret_dossier.py:178"
+   },
+   {
+    "order": 69,
+    "fit": "stand_bottom",
+    "onto": [
+     "stand_box"
+    ],
+    "direction": "+Z",
+    "declared_at": "cad/turret_dossier.py:178"
+   },
+   {
+    "order": 70,
+    "fit": "stand_foot",
+    "onto": [
+     "stand_bottom"
+    ],
+    "direction": "+Z",
+    "declared_at": "cad/turret_dossier.py:178"
+   },
+   {
+    "order": 71,
+    "fit": "pack",
+    "onto": [
+     "stand_bottom"
+    ],
+    "direction": "+X",
+    "declared_at": "cad/turret_dossier.py:178"
    },
    {
     "order": 72,
@@ -4734,7 +4734,7 @@
      "dt_receptacle"
     ],
     "direction": "+Y",
-    "declared_at": "cad/turret_dossier.py:177"
+    "declared_at": "cad/turret_dossier.py:178"
    }
   ]
  },

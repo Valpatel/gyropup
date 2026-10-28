@@ -176,3 +176,10 @@ decisions:
   alternatives:
   - option: The top at 95
     rejected: a physics fill fits only 29 balls
+- id: T3.5
+  decision: The fill flap opens 50 deg (I-flap -50..0)
+  why: The motion gate found its knuckle meeting the lid at 51 deg (turret/program 8016d3e); 50 deg is the flap's own stop
+    and clears the dock's spout
+  alternatives:
+  - option: 70 deg, as first briefed
+    rejected: the knuckle runs into the lid at 51 deg; it would need a relieved knuckle or lugs

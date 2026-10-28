@@ -26,7 +26,7 @@ cad:
     build: cad/turret_dossier.py
     declarations: dossier/gate-declarations.yaml
     jobs: 3
-    timeout_s: 7200
+    timeout_s: 14400
     # parts drawn on their seats: 0.05 mm reads as touching; 0.2 mm^3 of integration noise on large curved booleans
     # (turret_gates.CONNECT_TOL)
     connectivity: {tol: {touch_mm: 0.05, volume_check_mm3: 0.2}}
@@ -36,9 +36,12 @@ cad:
     containment: {tol: {touch_mm: 0.2, overlap_mm3: 1.0, contain_mm3: 1.0, volume_check_mm3: 0.2}, support: report,
                   support_mm: 0.5, probe: false}
     fasteners: {tol: {touch_mm: 0.05, volume_check_mm3: 0.2}}
-    # samples per joint are in the build (pan 35 x tilt 6 on one grid; dial 16, flywheels 13, flap 8, pinion 13);
-    # a 30 deg step bound keeps them (the pan's 10 deg step); per-pose containment off (the load rides with the hopper)
-    motion: {tol: {touch_mm: 0.05, volume_check_mm3: 0.2}, max_step_deg: 30.0, containment: false}
+    # The aim and the cartridge's mechanisms are one chain, which cadagent samples on the full grid: pan 35 (10 deg) x
+    # tilt 6 (5 deg) x the dial 3 (0/45/90: its fins repeat every 90) x the flap 3 (-50/-25/0) x each flywheel 2 (0/360:
+    # a solid of revolution, so one placement) = 7,560 poses; the pinion alone 13. Per-pose containment off (the load
+    # rides with the hopper, T0.2).
+    motion: {tol: {touch_mm: 0.05, volume_check_mm3: 0.2}, containment: false, max_poses: 8000,
+             samples: {I-pan: 35, I-tilt: 6, I-feed: 3, I-flap: 3, I-wheel-l: 2, I-wheel-r: 2, I-pan-drive: 13}}
     assembly: {tol: {touch_mm: 0.05, volume_check_mm3: 0.2}, max_step_mm: 2.0}
   checks:
     - {id: turret-fea, title: Turret FEA (layer-aware SF targets), file: exports/turret/fea/summary.json,

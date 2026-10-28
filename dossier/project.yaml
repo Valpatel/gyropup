@@ -177,7 +177,7 @@ interfaces:
   - cartridge_body
   kind: revolute
   datum: the flap hinge, C (FILL_PORT x - 19, y, hopper_top + 6), along y
-  description: 'The fill flap on its Ø2 pin in the lid''s lugs (0.36 mm from the lid: the intended contact), opening 70 deg.
+  description: 'The fill flap on its Ø2 pin in the lid''s lugs (0.36 mm from the lid: the intended contact), opening 50 deg: its knuckle meets the lid at 51 deg (T3.5).
     The chain rule measures it from the flap to cartridge_body (68.4 mm), so the 69 mm clearance stands for the lid and hopper
     between them.'
   clearance: 69.0
@@ -346,9 +346,45 @@ gates:
     - cartridge_body
     reason: 'the ESC envelope drawn 0.01 mm into the cage plate: 3.4 mm^3'
   - parts:
+    - flywheel
+    - flywheel_motor_l
+    reason: 'each hub''s bore on its X2216''s prop adapter: a 0.008 mm^3 modelling overlap where the envelopes meet (a slip fit)'
+  - parts:
+    - flywheel_m
+    - flywheel_motor_r
+    reason: 'each hub''s bore on its X2216''s prop adapter: a 0.008 mm^3 modelling overlap where the envelopes meet (a slip fit)'
+  - parts:
+    - slip_ring_rotor
+    - slip_ring
+    reason: 'one bought slip ring drawn as two solids: the rotor stub drawn 0.01 mm into the stator''s end face (0.28 mm^3)'
+  - parts:
     - ct_thumbscrew
     - cradle
     reason: 'the captive thumbscrew''s collar in the rail: 0.34 mm^3'
+  - parts:
+    - laser_screws
+    - laser_mount
+    reason: 'the set screws in the ring''s tapped holes: the thread envelope (Ø3 in the Ø2.5 tap drill)'
+  - parts:
+    - panel_switch
+    - stand_box
+    reason: 'the rocker''s 24 mm square envelope through its Ø20.2 round cut-out: the envelope, not the part'
+  - parts:
+    - panel_pendant
+    - stand_box
+    reason: 'the TB3M socket''s square envelope through its round cut-out: the envelope, not the part'
+  - parts:
+    - dt_plug
+    - dt_receptacle
+    reason: 'the mated DT connector: the plug''s shell drawn over the receptacle''s insert'
+  - parts:
+    - ball
+    - cartridge_body
+    reason: 'the settle''s soft contacts with the dial housing''s floor (0.19 mm^3 at most); the hopper''s containment checks the balls against the hopper'
+  - parts:
+    - ball
+    - dial
+    reason: 'the settle''s soft contacts with the dial''s cone, fins and pockets'
   ignore_pairs:
   - parts:
     - pan_pinion

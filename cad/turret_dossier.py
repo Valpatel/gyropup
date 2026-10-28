@@ -69,7 +69,8 @@ FREE = {'ball': 'a loose round of the physics-settled hopper load (sim/turret_fe
 
 # the moving joints. clearance: a declared gap (dossier interface) where the chain rule measures the hold from a part that
 # is not the bearing (see the module docstring); the toolkit's 1 mm otherwise
-SAMPLES = {'I-pan': 35, 'I-tilt': 6, 'I-feed': 16, 'I-wheel-l': 13, 'I-wheel-r': 13, 'I-flap': 8, 'I-pan-drive': 13}
+SAMPLES = {'I-pan': 35, 'I-tilt': 6, 'I-feed': 16, 'I-wheel-l': 13, 'I-wheel-r': 13, 'I-flap': 6, 'I-pan-drive': 13}
+FLAP_RANGE = (-50, 0)      # its knuckle meets the lid at 51 deg (turret/program 8016d3e, the motion gate's onset): the stop
 
 # fixed joints: (interface id, part, carrier): the part rides with its carrier's body. Every one is a mounting interface
 # of cad/turret.py's part notes; the interface's kind and datum are in the dossier.
@@ -157,7 +158,7 @@ def register(reg, T, pile):
         reg.joint(jid, 'revolute', parts=(hub, 'cartridge_body'), axis=(c_to_t(G, (G.wheel_x, sgn * G.wheel_y, 0)), (0, 0, 1)),
                   range_deg=(0, 360), samples=SAMPLES[jid], intended_contacts=[(hub, motor)])
     reg.joint('I-flap', 'revolute', parts=('hopper_flap', 'cartridge_body'),
-              axis=(c_to_t(G, (tu.FILL_PORT[0] - 19, 0, G.hopper_top + 6)), (0, 1, 0)), range_deg=(-70, 0),
+              axis=(c_to_t(G, (tu.FILL_PORT[0] - 19, 0, G.hopper_top + 6)), (0, 1, 0)), range_deg=FLAP_RANGE,
               samples=SAMPLES['I-flap'], intended_contacts=[('hopper_flap', 'hopper_lid')])
     sx, sy = G.servo_pan_xy
     reg.joint('I-pan-drive', 'revolute', parts=('pan_pinion', 'pan_servo'), axis=((sx, sy, 0), (0, 0, 1)),
@@ -177,60 +178,17 @@ def register(reg, T, pile):
         reg.assembly.step(order, fit, onto, direction=direction, **extra)
 
 
-# the build order: (part, onto, the direction it moves to its seat, {tool, fasteners}). The stand first, then the plinth,
-# the pan base and its bearing, the turntable and yoke, the cradle, then the cartridge built up and dropped on the rails.
+# The build order, read from the top: the cartridge is built on the bench first; then each group below it meets it from
+# below (+Z), which for cadagent's straight-line check is the same relative motion as lowering the upper group onto it
+# (the cartridge onto the cradle's rails, the cradle into the yoke, the yoke onto the turntable, the turntable into the
+# base, the base onto the plinth, the plinth onto the stand). Each step: (part, onto, the direction it moves to its
+# seat, {tool, fasteners}). cadagent fits one part at a time along a straight line, so a part fitted inside a group
+# before the group meets the next (the tilt bearing, pressed into the arm before the cradle goes in), a cable (the rotor's
+# leads) and the poured load are not straight insertions here: their steps fail, and docs/turret-sections.md says why.
 SCREWS = {'tool': 'hex 2.5'}
 ASSEMBLY = [
-    ('stand_box', None, '-Z', {}),
-    ('dock', 'stand_box', '+Z', {}),
-    ('terminal_board', 'stand_box', '+Y', {}),
-    ('panel_switch', 'stand_box', '-X', {}),
-    ('panel_pendant', 'stand_box', '-X', {}),
-    ('usb_can', 'stand_box', '+Z', {}),
-    ('stand_bottom', 'stand_box', '+Z', {}),
-    ('stand_foot', 'stand_bottom', '+Z', {}),
-    ('pack', 'stand_bottom', '+X', {}),
-    ('compute_tray', 'stand_box', '-Z', {}),
-    ('compute', 'compute_tray', '-Z', {}),
-    ('input_fuses', 'compute_tray', '-Z', {}),
-    ('compute_shell', 'compute_tray', '-Z', {}),
-    ('eth_jack', 'compute_shell', '+X', {}),
-    ('xt30_input', 'compute_shell', '+X', {}),
-    ('pan_base', 'compute_shell', '-Z', {}),
-    ('ring_carrier', 'pan_base', '-Z', {}),
-    ('slip_ring', 'ring_carrier', '-Z', {}),
-    ('base_board', 'pan_base', '-Z', {}),
-    ('dt_receptacle', 'pan_base', '+Y', {}),
-    ('pan_servo', 'pan_base', '-Z', {}),
-    ('pan_bearing', 'pan_base', '-Z', {}),
-    ('index_magnet', 'pan_base', '-Z', {}),
-    ('pan_clamp', 'pan_base', '-Z', {}),
-    ('bumper_ring', 'pan_base', '-Z', {}),
-    ('hall_switch', 'pan_base', '-Z', {}),
-    ('pan_ring', 'pan_bearing', '-Z', {}),
-    ('pan_bearing_inner', 'pan_ring', '-Z', {}),
-    ('pan_spacer', 'pan_bearing_inner', '+Z', {}),
-    ('circlip_50', 'pan_ring', '+Z', {}),
-    ('slip_ring_rotor', 'slip_ring', '-Z', {}),
-    ('ring_coupling', 'slip_ring_rotor', '-Z', {}),
-    ('ring_driver', 'pan_ring', '-Z', {}),
-    ('pan_pinion', 'pan_servo', '-Z', {}),
-    ('tilt_yoke', 'pan_ring', '-Z', {}),
-    ('tilt_bearing', 'tilt_yoke', '+Y', {}),
-    ('tilt_servo', 'tilt_yoke', '-Y', {}),
-    ('board_bay', 'tilt_yoke', '+Y', {}),
-    ('turret_board', 'board_bay', '+Y', {}),
-    ('board_bay_lid', 'board_bay', '+Y', {}),
-    ('cradle', 'tilt_yoke', '-Z', {}),
-    ('cradle_plate_l', 'cradle', '-Y', {}),
-    ('horn_boss', 'cradle_plate_l', '+Y', {}),
-    ('cradle_plate_r', 'cradle', '+Y', {}),
-    ('stop_lug', 'cradle_plate_r', '+Y', {}),
-    ('pivot_spacer', 'cradle_plate_r', '+Y', {}),
-    ('tilt_bearing_inner', 'tilt_bearing', '+Y', {}),
-    ('shoulder_screw', 'cradle_plate_r', '+Y', {}),
-    ('ct_thumbscrew', 'cradle', '+Z', {}),
-    ('cartridge_body', 'cradle', '-Z', {}),
+    # the cartridge, on the bench
+    ('cartridge_body', None, '-Z', {}),
     ('feed_motor', 'cartridge_body', '+Z', {}),
     ('flywheel_motor_l', 'cartridge_body', '+Z', {}),
     ('flywheel_motor_r', 'cartridge_body', '+Z', {}),
@@ -244,16 +202,69 @@ ASSEMBLY = [
     ('ball', 'dial', '-Z', {}),
     ('hopper_lid', 'hopper', '-Z', {}),
     ('hopper_flap', 'hopper_lid', '-Z', {}),
-    ('esc_l', 'cartridge_body', '-Z', {}),
-    ('esc_r', 'cartridge_body', '-Z', {}),
-    ('cartridge_board', 'cartridge_body', '-Z', {}),
     ('barrel', 'cartridge_body', '-X', {}),
     ('laser_inserts', 'cartridge_body', '-Z', {}),
     ('laser_mount', 'cartridge_body', '-Z', {**SCREWS, 'fasteners': ['laser_foot_screws']}),
-    ('laser', 'laser_mount', '+X', {}),
     ('laser_screws', 'laser_mount', '-Z', {}),
+    ('laser', 'laser_mount', '-X', {}),
+    ('esc_l', 'cartridge_body', '-Z', {}),
+    ('esc_r', 'cartridge_body', '-Z', {}),
+    ('cartridge_board', 'cartridge_body', '-Z', {}),
+    # the cradle under it (the cartridge onto the rails), then the yoke round the cradle
+    ('cradle', 'cartridge_body', '+Z', {}),
+    ('ct_thumbscrew', 'cradle', '+Z', {}),
+    ('cradle_plate_l', 'cradle', '-Y', {}),
+    ('horn_boss', 'cradle_plate_l', '-Y', {}),
+    ('cradle_plate_r', 'cradle', '+Y', {}),
+    ('stop_lug', 'cradle_plate_r', '+Y', {}),
+    ('tilt_yoke', 'cradle', '+Z', {}),
+    ('tilt_servo', 'tilt_yoke', '-Y', {}),
+    ('tilt_bearing', 'tilt_yoke', '+Y', {}),
+    ('tilt_bearing_inner', 'tilt_bearing', '+Y', {}),
+    ('pivot_spacer', 'cradle_plate_r', '-Z', {}),
+    ('shoulder_screw', 'cradle_plate_r', '+Y', {}),
+    ('board_bay', 'tilt_yoke', '+Y', {}),
+    ('turret_board', 'board_bay', '+Y', {}),
+    ('board_bay_lid', 'board_bay', '+Y', {}),
+    # the turntable under the yoke, its bearing, then the base round it
+    ('pan_ring', 'tilt_yoke', '+Z', {}),
+    ('ring_driver', 'pan_ring', '+Z', {}),
+    ('ring_coupling', 'ring_driver', '+Z', {}),
+    ('hall_switch', 'pan_ring', '+Z', {}),
+    ('pan_bearing_inner', 'pan_ring', '+Z', {}),
+    ('pan_clamp', 'pan_ring', '+Z', {}),
+    ('pan_bearing', 'pan_bearing_inner', '+Z', {}),
+    ('index_magnet', 'pan_clamp', '+Z', {}),
+    ('pan_spacer', 'pan_bearing_inner', '+Z', {}),
+    ('circlip_50', 'pan_ring', '+Z', {}),
+    ('pan_base', 'pan_bearing', '+Z', {}),
+    ('bumper_ring', 'pan_base', '+Z', {}),
+    ('pan_pinion', 'pan_ring', '+Z', {}),
+    ('pan_servo', 'pan_base', '+Z', {}),
+    ('ring_carrier', 'pan_base', '+Z', {}),
+    ('slip_ring', 'ring_carrier', '+Z', {}),
+    ('slip_ring_rotor', 'ring_coupling', '+Z', {}),
+    ('base_board', 'pan_base', '+Z', {}),
+    ('dt_receptacle', 'pan_base', '+Y', {}),
+    # the plinth under the base, then the stand under the plinth
+    ('compute_shell', 'pan_base', '+Z', {}),
+    ('compute', 'compute_shell', '+Z', {}),
+    ('input_fuses', 'compute_shell', '+Z', {}),
+    ('eth_jack', 'compute_shell', '+X', {}),
+    ('xt30_input', 'compute_shell', '+X', {}),
+    ('compute_tray', 'compute_shell', '+Z', {}),
+    ('stand_box', 'compute_tray', '+Z', {}),
+    ('dock', 'stand_box', '+Z', {}),
+    ('terminal_board', 'stand_box', '+Z', {}),
+    ('usb_can', 'stand_box', '+Z', {}),
+    ('panel_switch', 'stand_box', '-X', {}),
+    ('panel_pendant', 'stand_box', '-X', {}),
+    ('stand_bottom', 'stand_box', '+Z', {}),
+    ('stand_foot', 'stand_bottom', '+Z', {}),
+    ('pack', 'stand_bottom', '+X', {}),
     ('dt_plug', 'dt_receptacle', '+Y', {}),
 ]
+assert len(ASSEMBLY) == 72, len(ASSEMBLY)
 
 
 def turret():
