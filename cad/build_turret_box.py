@@ -102,7 +102,7 @@ ROLE = {
     'hopper_lid': 'The hopper lid, with the fill port for the dock\'s spout.',
     'hopper_flap': 'Sprung flap over the fill port: the dock\'s spout pushes it open.',
     'barrel': '100 mm barrel, bore 2 mm over the ball after the wheels: it only guides. Two IR gates 60 mm apart time every shot. Blaze-orange tip.',
-    'laser_mount': 'Holds the aiming laser parallel to the barrel (three boresight screws). It stays on the cradle when the cartridge comes off.',
+    'laser_mount': 'Holds the aiming laser over the barrel, parallel to it (three boresight set screws), on the cartridge\'s top: it comes off with the cartridge, so it stays boresighted to its own barrel.',
     'bumper_ring': 'TPU ring round the base: it takes the knocks.',
     'pan_servo': 'Feetech STS3215 (12 V serial bus, 2.94 N.m stall, 45 rpm, 12-bit encoder): drives the pinion.',
     'pan_bearing': '61810-2RS thin-section bearing (50 x 65 x 7): the whole upper turret turns on it, with a 40 mm open centre.',
@@ -117,6 +117,7 @@ ROLE = {
     'cartridge_board': 'The cartridge board: six FETs that short the motors\' phases about 8 ms after the safety line drops (the brake), their driver and the gates\' comparator; the two ESCs lie under it on the cage plate.',
     'feed_motor': 'Feetech STS3215 servo (bus ID 3) under the dial floor: steps the dial 45 deg per ball and feels a jam in its load reading.',
     'laser': 'Quarton 650 nm Class 2 red laser (under 1 mW): the aiming dot, parallel to the barrel.',
+    'laser_screws': 'Three M3 nylon-tip set screws (McMaster 93285A115): they hold the laser in its ring and aim it (the boresight).',
     'box_deck': f'The adapter: carries the TM face {tb.Z_TM - tb.ROOF:.0f} mm above the J501\'s roof on four legs at the lid\'s screw '
                 f'corners; the control pod hangs at the back.',
     'intake_shroud': (f'The J501 fan\'s exhaust duct (the fan blows up): a Ø{2 * tb.COLLAR_R:.0f} collar round the flush grille over '
@@ -143,7 +144,7 @@ TITLE = {'pan_base': 'Pan base', 'pan_clamp': 'Bearing clamp', 'pan_ring': 'Pan 
          'laser_mount': 'Laser mount', 'bumper_ring': 'Bumper ring', 'pan_servo': 'Pan servo', 'pan_bearing': 'Pan bearing',
          'dt_receptacle': 'DT12 socket', 'dt_plug': 'DT12 plug', 'tilt_servo': 'Tilt servo', 'tilt_bearing': 'Tilt bearing',
          'flywheel_motor_l': 'Flywheel motor L', 'flywheel_motor_r': 'Flywheel motor R', 'esc_l': 'ESC L', 'esc_r': 'ESC R',
-         'feed_motor': 'Feed servo (STS3215)', 'cartridge_board': 'Cartridge board', 'laser': 'Aiming laser', 'box_deck': 'Box adapter',
+         'feed_motor': 'Feed servo (STS3215)', 'cartridge_board': 'Cartridge board', 'laser': 'Aiming laser', 'laser_screws': 'Boresight screws', 'box_deck': 'Box adapter',
          'intake_shroud': 'Exhaust duct', 'pod_cover': 'Pod cover', 'pod_xt60': '24 V in (XT60)', 'pod_switch': 'Power switch',
          'pod_fuse': 'Fuse', 'pod_pendant': 'Pendant socket', 'pod_usb': 'USB-CAN', 'pod_wago': 'Wiring', 'base': 'J501 base',
          'cover': 'J501 lid', 'front_no_gmsl': 'J501 front plate',
@@ -162,7 +163,7 @@ EXPLODE = {'compute_tray': (0, 0, 70), 'compute': (0, 0, 120), 'input_fuses': (0
            'tilt_servo': (0, 45, 195), 'tilt_bearing': (0, -30, 195), 'cradle': (0, 0, 215), 'cartridge_body': (0, 0, 250),
            'flywheel': (0, 0, 250), 'flywheel_tyre': (0, 0, 250), 'flywheel_motor': (0, 0, 290), 'esc_': (0, 0, 320), 'feed_motor': (0, 0, 210),
            'cartridge_board': (0, 0, 330), 'dial': (0, 0, 300), 'hopper': (0, 0, 350), 'hopper_lid': (0, 0, 390), 'hopper_flap': (0, 0, 400),
-           'barrel': (70, 0, 250), 'laser_mount': (25, -35, 230), 'laser': (25, -35, 230)}
+           'barrel': (70, 0, 250), 'laser_mount': (40, 0, 270), 'laser': (40, 0, 270), 'laser_screws': (40, 0, 270)}
 
 
 # the turret's own parts move 220 mm more, over the compute plinth's (D66)
@@ -804,7 +805,7 @@ def main():
     anchors = {'hopper': top_of('hopper', -30, 0, -20, '-y'), 'dial': [-G.rp, -6.0, round(G.dial_z0 + 15 - tc, 1)],          # dial frame
                'feed_motor': tf(0.0, -12.0, G.floor_z - G.floor_t - 25), 'cartridge_body': tf(G.wheel_x, -G.cage_y, 10),
                'flywheel_tyre': [0.0, 20.0, 0.0], 'barrel': tf(G.barrel_x1 - 20, -15.0, 0.0),
-               'laser': tf(tu.LASER_X[1] + 12, tu.LASER_Y, 0.0), 'cradle': tf(40.0, -G.cheek_y[1], G.rail_z[0] + 2),
+               'laser': tf(tu.LASER_X[1] + 12, tu.LASER_Y, tu.LASER_Z), 'cradle': tf(40.0, -G.cheek_y[1], G.rail_z[0] + 2),
                'tilt_servo': [0.0, round(G.arm_y[1] + 15, 1), round(G.tilt_t, 1)], 'tilt_yoke': [0.0, round(-G.arm_y[1], 1), round(G.tilt_t - 40, 1)],
                'pan_ring': [0.0, -40.0, round(G.turntable_z[1] - 6, 1)], 'pan_pinion': [round(G.servo_pan_xy[0], 1), -14.0, round(G.turntable_z[1] - 4 + zt, 1)],
                'pan_servo': [round(G.servo_pan_xy[0], 1), 25.0, round(zt + 20, 1)], 'pan_bearing': [0.0, -32.0, round(zt + G.brg_z + 3, 1)],
@@ -869,7 +870,7 @@ def main():
                       'wheel_r': list(wheel['wheel_r']), 'flap': list(flap_hinge)},
            'limits': {'pan_deg': [-170.0, 170.0], 'tilt_deg': [G.tilt_min, 0.0], 'pan_rate_deg_s': mech['pan']['max_deg_s'],
                       'tilt_rate_deg_s': mech['tilt']['max_deg_s']},
-           'muzzle': tf(G.barrel_x1, 0.0, 0.0), 'laser': tf(tu.LASER_X[0] - 2 + tu.LASER['L'], tu.LASER_Y, 0.0),
+           'muzzle': tf(G.barrel_x1, 0.0, 0.0), 'laser': tf(tu.LASER_X[0] - 2 + tu.LASER['L'], tu.LASER_Y, tu.LASER_Z),
            'ball_path': path, 'pockets': pockets, 'pile': pile, 'ball_r': rb, 'dial_park_deg': fd['park_deg'],
            'antennas': [{'name': n, 'base': list(b), 'top': list(t), 'd': d} for n, b, t, d in tb.antennas()],
            'parts': parts, 'journey': journey, 'mechanics': mech, 'checks': checks,

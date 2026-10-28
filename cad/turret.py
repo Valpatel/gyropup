@@ -521,8 +521,9 @@ def pan_pinion(G):
     """21 T module 1.25 spur pinion (printed PA6-CF, 16 mm face, full-round roots) on a Ø20 flange that screws to the
     STS3215's aluminium horn: 4 x M3 x 16 on Ø14 into the horn's tapped holes, their heads sunk flush, a Ø6.5 hole over
     the horn's centre screw. 63 : 21 = 3 : 1, so the 2.94 N·m servo gives 8.8 N·m at the turntable. FEA of one tooth
-    loaded at its tip (cad/turret_studies.py): SF 1.26 at the servo's stall (rare, >= 1.2) and 2.52 at the firmware's
-    50 % torque cap (everyday, >= 2); the 12 mm face with sharp roots was SF 0.49 at stall."""
+    loaded at the pitch line (cad/turret_studies.py, layer-aware): 2.1 at the firmware's 50 % torque cap (everyday,
+    >= 2) and 1.31 at the servo's own EEPROM ceiling of 80 % (rare, >= 1.2; firmware/turret/config.py PAN_MAX_TORQUE,
+    verified at every init); at a full 100 % stall the root fillet read 1.05, which is why the ceiling is set."""
     m = G.gear
     x, y = G.servo_pan_xy
     z0 = G.servo_z0 + SERVO['H'] + SERVO['horn_t']
@@ -1774,7 +1775,8 @@ class Turret:
 
 
 # designed contacts (bought part in its seat, plug on its receptacle): checked, but only flagged above the threshold
-SKIP_PAIRS = {frozenset(p) for p in [('dt_plug', 'dt_receptacle')]}
+SKIP_PAIRS = {frozenset(p) for p in [('dt_plug', 'dt_receptacle'),
+                                      ('laser_mount', 'laser_screws')]}   # the set screws' threads in the ring's tapped holes
 # parts in different motion groups that touch by design: bearings on their journals and spacers, the horns on the
 # pinion and on the cradle hub, the gear mesh (0.15 mm backlash per flank)
 # (the outer races and shields are checked against everything that turns; the inner races turn with their shafts)

@@ -235,7 +235,7 @@ def path_cavity(T):
     solid except the flywheels and their tyres (they squeeze the ball by design), the dial at its zero (a pocket over
     the exit hole, as it stands while a ball drops)."""
     G = T.G
-    env = _solid(tu.ball_path(G)).fuse(_solid(tu.cyl_x(G.br_out, G.socket_x0, G.barrel_x1 + 1.0)))
+    env = _solid(tu.ball_path(G)).fuse(_solid(tu.cyl_x(G.br_out, G.socket_x0, G.barrel_x1)))
     keep = ('flywheel', 'flywheel_tyre', 'flywheel_m', 'flywheel_tyre_m')
     return _cut_all(env, [_solid(s) for n, s in tilt_local(T, 0.0).items() if n not in keep])
 
@@ -318,7 +318,10 @@ def hopper_gate(asm, cache, out='hopper.json', count=30):
     # probe=False: the pile's balls touch the dial's cone and fins and each other everywhere (a physics settle), and the
     # surface probe against a cavity cut by every tilt-frame solid takes ~30 s a ball; PILE_TOL's 0.5 mm^3 already
     # accepts the settle's soft-contact penetration, which is deeper than what the probe exists to find
-    return containment_gate(asm, decl, tol=PILE_TOL, cache=cache, support='fail', probe=False, out=VERDICTS / out)
+    # support_mm 0.5: with PILE_TOL's 0.5 mm^3 a 0.05 mm drop (a 0.09 mm^3 cap on a Ø22.7 ball) is below the overlap
+    # threshold and reads as resting on nothing; 0.5 mm (a ~9 mm^3 cap) is the smallest drop that PILE_TOL can see
+    return containment_gate(asm, decl, tol=PILE_TOL, cache=cache, support='fail', support_mm=0.5, probe=False,
+                            out=VERDICTS / out)
 
 
 def path_assembly(T, ball_d):

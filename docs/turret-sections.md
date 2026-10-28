@@ -21,14 +21,21 @@ nothing spins unless the ARM line is held.
 
 ## The design gates (all sections)
 
+`cad/turret_gates.py`, on cad-agent's integrity gates (`cadagent.gates`: the toolkit's docs/gates.md). Each gate writes
+a verdict (`exports/turret/gates/<gate>.json`, schema `cadagent.gate/1`, with its assumptions and
+`physical_fit_verified: false`); `exports/turret/gates.json` sums them up with a fingerprint of the CAD, the pile, the
+launch ceiling and the toolkit's gate code, and `cad/build_turret_box.py` refuses a failing or stale one.
+
 | Gate | What it proves | Pass |
 |---|---|---|
-| `hopper_in_cavity` | each of the 30 balls of a full hopper (the settled pile and the 8 dial pockets) against every solid of the tilt group, the dial parked | every sphere-solid intersection under 1 mm^3 |
-| `hopper_overlap` | no two balls through each other | worst overlap 0.1 mm or less |
-| `path_in_cavity` | a ball every 2 mm along its way, the exit pocket to the muzzle, against every solid (the dial at its step angle); only the tyres may touch it, at the nip | under 1 mm^3 |
-| `connected` | one connected body per moving group (base, pinion, pan, tilt, dial, each flywheel, the fill flap): every part touches a neighbour or is fastened through a declared link, and every joint between moving bodies is closed (within 0.5 mm) | 1 body each, all joints closed |
-| `ammo_range` | D67: any Rival-compatible round 22.2-22.8 mm (1.6-2.0 g) feeds and fires: the biggest ball along the path and in every pocket clear of the solids, the smallest one to a pocket and still squeezed at the nip, the bore's play for both | pass: pocket 25.06 mm long (two balls need 44.4), nip squeeze 23.3-25.3 %, bore play 1.4-2.0 mm (feed and chute), 1.9-2.5 mm (barrel) |
-| `sweep_with_balls` | the hopper's balls against every part outside the tilt group at 8 pans x 5 tilts | under 1 mm^3 |
+| `connectivity` | the whole turret at home as one `Assembly` (T frame): every part grounded (at `compute_tray`) through contacts, fasteners and joints measured to hold; each moving body (pan, pinion, tilt, dial, each flywheel, the fill flap) held by its joint (9 revolute joints within 1 mm; the mesh a `gear` interface within 0.5 mm); the laser held by its modelled set screws | no floating part, every joint holds; undeclared contacts are warnings |
+| `hopper` | the 30 balls of the physics-settled pile (`contains` in the hopper's registered `@cavity`: the Ø dial-wall cylinder from the floor to the lid, less every tilt-frame solid, the dial parked): each inside, none in the hopper's wall, none through another, each resting on the cavity or a ball below it | 0.5 mm^3 outside or shared at most (the settle's soft contacts), touching at 0.1 mm |
+| `path` | a ball every 2 mm from the exit pocket round the chute, through the nip and the barrel to the muzzle, each inside the path's `@cavity` (the ball's free space, the tyres left in: they squeeze by design) | cadagent's defaults (0.001 mm^3) |
+| `sweep` | the relation table on the posed turret: the hopper's balls against every part that moves relative to them (base, pinion, pan frame) at 8 pans x 5 tilts | no shared volume |
+| `ammo_range` | D67: the biggest round (22.8 mm) through the `path` and the pockets' containment, the smallest (22.2 mm) one to a pocket and still squeezed at the nip, the bore's play for both, and the launch ceiling's corners: the lightest round (1.6 g) at or under 105 fps, the densest under ASTM F963's 2,500 J/m^2 | all pass |
+
+The relation table is cached by content hash and placement (`.cadagent-cache/gates`, or `$CADAGENT_GATE_CACHE` on the
+compute hosts), so a rerun after a change to one part re-queries only that part's pairs.
 
 The clash sweep of the parts themselves is `turret.sweep()` (every pan in 10 deg steps at 0, -5, -12.5, -20 and
 -25 deg tilt; `exports/turret/clash-sweep.json`).
@@ -144,8 +151,21 @@ parked, powered or not, no ball can reach the wheels.
 **Requirements.**
 - 30 Rival rounds (D67: Hasbro's own or any Rival-compatible round 22.2-22.8 mm and 1.6-2.0 g; design ball 22.7 mm,
   1.83 g), bores ball + 1.5 = 24.2: 1.4 mm of play for the biggest round, 2.0 for the smallest (the `ammo_range` gate).
-- The ammo bought (D67): a third-party 100-pack (Worker Cheetah, US$0.15 a round) and the official Nerf Rival 60
-  Accu-Round refill (Hasbro F5052, US$0.33 a round), side by side, cheapest first.
+- The ammo (D67), side by side, cheapest a round first (`exports/turret/bench/bom.json` `ammo_side_by_side`, from
+  cad/build_turret.py AMMO_SIDE_BY_SIDE; prices read 2026-10-25..27):
+
+  | Pack | Maker | Seller | Price | A round | Ø / mass | D67 | Bought |
+  |---|---|---|---|---|---|---|---|
+  | Cheetah Rival-compatible, 100 | Worker (third party) | Out of Darts | US$14.99 | US$0.15 | 22.7 mm / 1.75 g | yes | 2 |
+  | Rival-compatible, 100 (ASIN B071SC9QYG) | third party (page names Little Valentine) | Amazon | US$14.99 | US$0.15 | not published | weigh and gauge 10 first | 0 |
+  | Nerf Rival 60 Accu-Round (F5052) | Hasbro (official) | eBay | US$16.95 | US$0.28 | 22.7 mm / 1.83 g | yes | 0 |
+  | Nerf Rival 50-Round Refill | Hasbro (official) | Walmart | US$15.95 | US$0.32 | 22.7 mm / 1.83 g | yes | 0 |
+  | Nerf Rival 60 Accu-Round (F5052) | Hasbro (official) | Walmart | US$19.99 | US$0.33 | 22.7 mm / 1.83 g | yes | 1 |
+  | Powerstrike rounds | Dart Zone (third party) | not priced | | | 22.8 mm / 1.85 g | yes | 0 |
+  | Adventure Force rounds | Walmart's own (third party) | Walmart, not priced | | | 22.8 mm / 1.88 g | yes | 0 |
+
+  The lightest accepted round (1.6 g, 22.8 mm) is the launch ceiling's fastest corner: 103.9 fps, under the 105
+  ceiling (the `ammo_range` gate reads it from exports/turret/launch/launch3d.json).
 - One ball per 45 deg step, no double feed, no empty step while balls remain (sim/turret_feed.py: every pose,
   friction 0.4-1.0, 3 and 8 balls/s).
 - Parked: a spoke over the exit hole.
@@ -467,3 +487,7 @@ dimensioned drawing when the switch arrives (bluesea.com refuses a plain fetch),
 | 8 Stand | 2026-10-27 | D66: the stand on a FLEXVOLT | the pack slides into the stand's back onto a dock | stand overlap check | |
 | 2, 6 Layout | 2026-10-27 | the tilt servo stood 19 mm proud of its pocket, the board bay was an open tray: two boxes on the yoke's sides | the pocket's walls over the whole servo; the bay's lid | clash sweep, `connected` | |
 | 5 Laser | 2026-10-27 | the laser on its tab 32 mm beside the barrel reads as a separate box | open: on the cartridge's top over the barrel, on the axis (keeps it off the barrel, so a barrel swap needs no re-boresight) | | |
+| 5 Laser | 2026-10-28 | (the open row above) | done: the holder on the barrel socket's pad on the cartridge's top, the beam 29.5 mm over the bore on its plane; the cradle's tab removed; the three set screws modelled (McMaster 93285A115) | `connectivity` (the laser held through its set screws), clash sweep | |
+| all | 2026-10-28 | the turret's own gates moved onto cadagent.gates: the first run found the XT30 floating 0.2 mm in its pocket, the RJ-45 jack held only by touching the J4012's envelope, the laser touching nothing | 8 mm bosses inside the plinth's wall hold both connectors line to line; the jack ends 2 mm short of the J4012; the set screws modelled | `connectivity`, `hopper`, `path`, `sweep`, `ammo_range` | |
+| 1 Base | 2026-10-28 | the pinion's 1.05 at a full stall is at the root fillet, a real peak | the pan servo's EEPROM torque ceiling at 80 %, verified by the firmware: R-stall loads 80 %: pinion 1.31, ring teeth 1.5 | FEA (gb10-01 run 2026-10-28), test_firmware | |
+| 7, 8 Power | 2026-10-28 | D70: the stand's 10 A rocker below the 11-14 A of an unprofiled spin-up | Blue Sea 6006 battery switch (48 V DC, 275 A); the firmware's supply profile implemented and tested | turret_power, test_firmware `supply_*` | the stand panel's cut-out for the 6006 on arrival |
