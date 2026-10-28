@@ -95,31 +95,47 @@ to 7-8; the robot's radio stop output (designed separately) will too. Twisted pa
 
 ### 2.4 Power rails
 
-| Rail | Source | Feeds | Fuse | Part |
+*Rewritten for D66 (one XT30 input, its own Jetson) and D68 (the trimmed flywheel rail); the build's detail is
+docs/turret-wiring.md 4.*
+
+| Rail | Source | Feeds | Fuse / protection | Part |
 |---|---|---|---|---|
-| 24 V in | DT12 → base | everything | 10 A ATO blade in the base, 32 V DC type | holder and fuse: McMaster (section 5) |
-| 12 V pan (base) | Pololu D36V50F12 (13.3-50 V in, 4.5 A typ) | STS3215 pan servo (2.7 A stall) | 3 A polyfuse or 3 A blade | Pololu 4095, $39.95 |
-| *(the three rails above are in the base; those below are on the turret, fed by the ring)* | | | | |
-| 12 V flywheel (turret) | Pololu D24V150F12 (15 A) or D42V110F12 | 2 × AM32 ESC → Snail 2305 (10 A limit each) | 15 A mini blade at the regulator input | Pololu 2885 $79.95 / D42V110F12 $69.95 |
-| 24 V dial (turret) | straight from the ring, through the safety switch | C610 → M2006 (10 A max) | 10 A mini blade | |
-| 12 V aux (turret) | Pololu D36V50F12 | tilt STS3215 (2.7 A stall), laser (20 mA at 12-24 V) | 3 A polyfuse | Pololu 4095, $39.95 |
-| 5 V logic (turret) | Pololu D36V28F5 class or the aux regulator → a 5 V buck (2-4 A family, $23.95-24.95; exact 5 V SKU to confirm) | Feather (USB/VBUS pin), servo-bus buffer, hall sensor, WS2812 lights (0.5 A), chronograph gates | 2 A polyfuse | |
+| Input (plinth) | one XT30, 12-54 V in principle: one DCB609 in 20 V mode on the stand (15-20.5 V) or Gyropup's 10S bus (30-42 V) | the J4012 (Jetson, up to 48 W) directly; the head branch | 20 A MINI 58 V main; 5 A MINI 58 V to the J4012 | XT30, Bussmann HHM holders (body.json) |
+| BUS (head branch) | the input | the base board (pan servo's regulator), and across the ring's circuits 1, 2, 11 (+) and 3, 4, 12 (GND) to the bay | 10 A MINI 58 V; 1N5408 reverse crowbar; P6KE51A clamps at the base and the bay; 2 x 470 uF 63 V on level 0 | `fuse_mini58_10a`, `diode-1n5408g`, `tvs-p6ke51a`, `panasonic-eeu-fr1j471b` |
+| 12 V pan (base) | Pololu D36V50F12 (13.3-50 V in, 4.5 A) | STS3215 pan servo (2.7 A stall, est); the 555's pendant loop | MF-R300 | Pololu 4095, $39.95 |
+| *(the rails above are on the fixed side; those below are on the turret, fed by the ring)* | | | | |
+| RAIL (flywheel, turret) | TDK i6A4W020A033V-001-R (9-53 V in, 20 A, 250 W), always on, trimmed per turret to ~11.31 V (10.8-11.9 V) by a resistor string on its TRIM pin | the safety switch only | P6KE15A; its own 27 A limit | $47.46 Digi-Key, Newark backup |
+| FLY (turret) | RAIL through the Pololu 2815 (16 A, ON pin from ARM) | 2 x AM32 ESC -> X2216 1400 KV (10 A limit each); the feed STS3215 | MF-R300 (feed servo); 1N5822 + P6KE15A | Pololu 2815, $8.49 |
+| 12 V aux (turret) | Pololu D36V50F12 (50 V in) | tilt STS3215 | MF-R300 | Pololu 4095, $39.95 |
+| 5 V logic (turret) | Pololu D36V28F5 (5.3-50 V in, 3.2 A) | Feather (USB pin), servo-bus buffer, hall sensor, gates, laser | MF-R250 | Pololu 3782, $23.95 |
 
-The **safety switch** (Pololu 2815, 16 A, ON pin) sits between the ring's +24 V and the two motor rails (flywheel
-regulator input and the C610), so with the line open the ESCs and the C610 have no power at all; the MCU, the servos,
-the laser and the lights stay up. The aux and logic rails are upstream of the switch.
+The **safety switch** (Pololu 2815) sits between RAIL and the motor loads, so with the line open the ESCs and the feed
+servo have no power at all, and the phase-short brake closes 5-14 ms later; the MCU, the pan and tilt servos, the laser
+and the gates stay up. It is on the rail side because the bus (42 V full) is over its 32 V. The speed ceiling is the
+trimmed rail: the ESCs only ever see it, and no firmware setting can raise it. The tilt servo and the logic have their
+own regulators so the rail's per-turret trim never moves their supply. Every part on the bus is rated 50 V or more.
+The plan's 24 V dial rail and C610 are gone (the feed is an STS3215 since D42).
 
-### 2.5 Current budget (data sheets and the launch model; research §11-12)
+### 2.5 Current budget (sim/turret_power.py, D66/D68)
 
-| Load | Continuous (game average) | Peak | Duration | Control |
+The flywheel pair holds 19.4 J at the 95 fps set speed (15,286 rpm); the firmware's 800 ms ramp peaks at ~85 W into
+the rail converter (100 ms), holding speed takes ~37 W, a shot's recovery pulse (both ESCs at their 10 A limit) up to
+~270 W for ~10 ms. "Play": the servos moving, the J4012 at 48 W; "worst": every servo at its 50 % torque cap at once.
+
+| | 15 V (pack empty) | 20.5 V (pack full) | 30 V (bus) | 42 V (bus full) |
 |---|---|---|---|---|
-| Flywheels, 2 × Snail 2305 on the 12 V rail | 0.36 A (idle at speed) + 0.3 A (10 shots/s recovery) at 24 V | **11.1 A at 24 V** stepped with a 10 A limit; **2.1 A** with the 200 ms ramp | 40 ms / 200 ms | AM32 `limits.current` = 10 A (verify on the bench), firmware ramp, regulator ~32 A instantaneous limit |
-| Dial, M2006 + C610 at 24 V | 0.3-1 A while feeding (est: 1 N·m is 5.6 A; a 45° dial step needs far less) | 3 A step cap, 5 A jam threshold, 10 A C610 hard max | ≤ 0.5 s (jam timeout) | firmware current command; never during spin-up |
-| Tilt STS3215 at 12 V | 0.3 A at 24 V (est) | 2.7 A stall → 1.5 A at 24 V | moves of 0.25 s | protection current register 28 |
-| Pan STS3215 (base, not through the ring) | | 2.7 A stall at 12 V | | torque limit 50 % (cad/turret_motion.py: gear SF) |
-| Laser | 0.02 A | | | GPIO |
-| Lights, MCU, sensors | 0.25 A at 24 V (est) | | | |
-| **Ring total** | **≤ 2 A at 24 V** (≤ 48 W, inside the 40 W average with the lights dimmed) | **≤ 13 A for 50 ms** worst case (stepped spin-up + a tilt move); **≤ 5 A** as flown (ramp + dial cap) | | |
+| Input, spin-up peak (100 ms), play / worst | 11.2 / 13.1 A | 7.9 / 9.1 A | 5.2 / 6.1 A | 3.7 / 4.3 A |
+| Input, 8 shots at 10/s (1 s RMS), play / worst | 11.3 / 13.7 A | 8.0 / 9.7 A | 5.2 / 6.3 A | 3.7 / 4.4 A |
+| Input, game average (J4012 at 25 W / 48 W) | 3.9 / 5.4 A | 2.8 / 3.9 A | 1.9 / 2.7 A | 1.4 / 1.9 A |
+| Ring's busiest circuit (of 3), spin-up / burst, play | 3.0 / 3.3 A | 2.1 / 2.4 A | 1.4 / 1.5 A | 1.0 / 1.1 A |
+| Ring, game average a circuit | 0.64 A | 0.47 A | 0.32 A | 0.23 A |
+
+On the 10S bus the ring (2 A a circuit) holds at 800 ms and 10/s with margin. On the stand's pack it does not, so the
+firmware runs a stand profile from BUS_V: a 1.0 s ramp and bursts of at most 4/s at 20.5 V, 1.6 s and 2/s at 18 V,
+2.4 s and 1/s at 15 V (docs/turret-wiring.md 5). The stand's rocker (10 A 28 V DC) is within its rating on that profile
+in play (8.7 A at 15 V) and with the J4012 in its 25 W mode at the worst coincidence (9.3 A); at 800 ms and 10/s on an
+empty pack it would carry 11-14 A. Section 2.6 below is the D41 plan's reasoning at 24 V; its numbers are superseded by
+this table.
 
 ### 2.6 Holding the peaks inside the ring's rating
 
