@@ -444,3 +444,11 @@
   status: decided
   source: {kind: user, quote: "To keep things simple the turret could have it's own ... jetson mini carrier board? That would let us basically make this design into two robots"}
   alternatives: [a boost converter to about 30 V on the stand, a larger slip ring, two packs on the stand]
+- id: D71
+  date: "2026-10-28"
+  title: "The design mass is 37.5 kg (18.75 kg a leg), with a 37.0 kg as-built gate; the body's own savings are taken as margin"
+  decision: "The robot is designed and strength-checked at 37.5 kg, 18.75 kg a leg. The as-built mass ledger must stay at or under 37.0 kg. This replaces D69's 35.5 kg / 35.0 kg. The body takes its listed savings levers (lighter cheeks, aluminium deck standoffs, the smaller cooler, a 1 m lidar cable, the packs weighed: about 0.8-1.0 kg) as margin, not as a reason to lower the design mass. The packs stay the user's DCB609 9 Ah (D65) and the wheels stay 10 in (D69). The leg's strength cases, the rig predictions and the robot sim re-run at 18.75 kg a leg. The lowest controlled leg length is 185 mm, so the body's 50 mm TPU crush pads (600 N plateau, 30 mm stroke) keep every motors-off fall under 3,000 N (worst 2,724 N)."
+  why: "The ledger with D65's packs and D69's 3.53 kg wheels is 36.25 kg after the scheduled savings (body/program 205b807, issue #10), and the turret as its own robot (D66: Orin NX, its own converter) weighs 2.55 kg against the 1.70 kg head budget: about 37.1 kg in all. D69's 35.0 kg ceiling came from a ledger taken before the packs. The alternatives cost what the user asked for: 6 Ah packs lose a third of the energy, and the 8.5 in wheel saves only 0.46 kg. The RS-04 has the torque (it stands at about 18 N m against 40 rated), so the honest answer is to design for the real mass and keep the levers as margin."
+  status: decided
+  source: {kind: user, quote: "Usage limits reset, full steam ahead, finish our plans and get this ready for first prototype manufacturing."}
+  alternatives: [keep 35.0 kg and swap to 6 Ah packs (-1.0 kg, 2/3 the energy), the 8.5 in wheel (-0.46 kg), a 36.1 kg ceiling at 18.3 kg a leg (does not cover the turret)]
