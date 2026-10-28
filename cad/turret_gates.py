@@ -43,6 +43,8 @@ from OCP.gp import gp_Ax1, gp_Dir, gp_Pnt, gp_Trsf, gp_Vec
 from cadagent.gates import Assembly, Check, PairCache, Tolerances, relation_table, verdict, write_verdict
 from cadagent.gates.connectivity import Declarations, connectivity_gate as ca_connectivity_gate
 from cadagent.gates.containment import containment_gate
+from cadagent.gates.fasteners import FastenerOptions, FastenerSpec, fastener_gate
+from cadagent.gates.motion import motion_gate
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import turret as tu  # noqa: E402
@@ -279,13 +281,13 @@ def body_of(name, frame):
     return TILT_MOVERS.get(name, frame)
 
 
-def build_assembly(T, pile=None, dial_deg=0.0, balls=True, ball_d=None):
+def build_assembly(T, pile=None, dial_deg=0.0, balls=True, ball_d=None, bodies=None):
     """The turret at home in T: every part placed by its frame, the hopper's cavity registered on the hopper, and the
     settled pile as instances ball#0.. (the pockets with the dial, the rest with the tilt frame)."""
     G = T.G
     asm = Assembly()
     for n, (s, fr) in parts_local(T, dial_deg).items():
-        asm.add(n, _solid(s), home(G, fr), body=body_of(n, fr), group=fr)
+        asm.add(n, _solid(s), home(G, fr), body=(bodies or body_of)(n, fr), group=fr)
     asm.add_cavity('hopper_cavity', hopper_cavity(T, dial_deg), part='hopper', location=home(G, 'tilt'))
     if balls and pile is not None:
         r = (ball_d or G.ball) / 2
@@ -456,6 +458,91 @@ def _ceiling_check():
                  {'worst_corner': worst, 'fps': c['highest_fps_any_case'], 'densest': dense, 'ked_j_m2': c['densest_ked_j_m2']})
 
 
+# ------------------------------------------------------------------------------------------------ motion
+
+def _pt(G, frame, p):
+    v = gp_Pnt(*p).Transformed(home(G, frame))
+    return (v.X(), v.Y(), v.Z())
+
+
+# pairs in different bodies that touch by design (turret.py DESIGNED_CONTACTS, the tilt stop's lug on the yoke)
+MOTION_CONTACTS = [sorted(p) for p in tu.DESIGNED_CONTACTS] + [sorted(tu.STOP_PAIR)]
+
+
+def motion_pan_tilt(T, cache, pans=35, tilts=6):
+    """cadagent.gates.motion over the aim: the pan joint (+-170 deg) carrying the tilt joint (0 to -25 deg: a turn of
+    0..25 deg about +y at the tilt axis) on one grid; the dial, the flywheels and the flap ride with the tilt frame at
+    home. The pinion is held still and its mesh with the ring is left to turret.pinion_check (the gate has no gear
+    coupling). No balls (the containment gates hold them)."""
+    G = T.G
+    asm = build_assembly(T, None, dial_deg=0.0, balls=False,
+                         bodies=lambda n, fr: 'tilt' if fr == 'tilt' else fr)
+    joints = {'pan': {'kind': 'revolute', 'moving': 'pan_bearing_inner', 'fixed': 'pan_bearing',
+                      'axis': ((0.0, 0.0, 0.0), (0.0, 0.0, 1.0)), 'range': [-170.0, 170.0], 'unit': 'deg', 'samples': pans},
+              'tilt': {'kind': 'revolute', 'moving': 'tilt_bearing_inner', 'fixed': 'tilt_bearing',
+                       'axis': ((0.0, 0.0, G.tilt_t), (0.0, 1.0, 0.0)), 'range': [0.0, -G.tilt_min], 'unit': 'deg',
+                       'samples': tilts}}
+    return motion_gate(asm, joints, tol=CONNECT_TOL, cache=cache, max_step_deg=12.0, intended_contacts=MOTION_CONTACTS,
+                       ignore_pairs=[('pan_pinion', 'pan_ring')], out=VERDICTS / 'motion_aim.json')
+
+
+def motion_mechanisms(T, cache):
+    """cadagent.gates.motion over the mechanisms with the aim at home: the feed dial through 90 deg (two steps; its
+    spokes repeat every 45 deg and its fins every 90), each flywheel a full turn, the fill flap open to 70 deg, and the
+    pinion a full turn on its servo."""
+    G = T.G
+    asm = build_assembly(T, None, dial_deg=0.0, balls=False)
+    sx, sy = G.servo_pan_xy
+    hinge = _pt(G, 'tilt', (tu.FILL_PORT[0] - 19, 0.0, G.hopper_top + 6))
+    joints = {'feed': {'kind': 'revolute', 'moving': 'dial', 'fixed': 'feed_motor',
+                       'axis': (_pt(G, 'tilt', (0, 0, 0)), (0, 0, 1)), 'range': [0.0, 90.0], 'unit': 'deg', 'samples': 16},
+              'wheel_l': {'kind': 'revolute', 'moving': 'flywheel', 'fixed': 'flywheel_motor_l',
+                          'axis': (_pt(G, 'tilt', (G.wheel_x, G.wheel_y, 0)), (0, 0, 1)), 'range': [0.0, 360.0], 'unit': 'deg',
+                          'samples': 13},
+              'wheel_r': {'kind': 'revolute', 'moving': 'flywheel_m', 'fixed': 'flywheel_motor_r',
+                          'axis': (_pt(G, 'tilt', (G.wheel_x, -G.wheel_y, 0)), (0, 0, 1)), 'range': [0.0, 360.0], 'unit': 'deg',
+                          'samples': 13},
+              'flap': {'kind': 'revolute', 'moving': 'hopper_flap', 'fixed': 'hopper_lid',
+                       'axis': (hinge, (0, 1, 0)), 'range': [-70.0, 0.0], 'unit': 'deg', 'samples': 8},
+              'pan_drive': {'kind': 'revolute', 'moving': 'pan_pinion', 'fixed': 'pan_servo',
+                            'axis': ((sx, sy, 0.0), (0, 0, 1)), 'range': [0.0, 360.0], 'unit': 'deg', 'samples': 13}}
+    return motion_gate(asm, joints, tol=CONNECT_TOL, cache=cache, max_step_deg=30.0, intended_contacts=MOTION_CONTACTS,
+                       ignore_pairs=[('pan_pinion', 'pan_ring')], out=VERDICTS / 'motion_mechanisms.json')
+
+
+# ------------------------------------------------------------------------------------------------ fasteners
+
+TOOLS = {'hex 2.5': {'envelope_d': 3.0, 'length': 60.0}}      # a straight 2.5 mm hex key (or a ball driver's shaft)
+
+
+def fastener_specs(T):
+    """cad/turret.py GATED_SCREWS as FastenerSpecs in the T frame: M3 x 0.5 socket heads (Ø5.5 x 3), axes down."""
+    G = T.G
+    out = {}
+    for name, g in tu.GATED_SCREWS.items():
+        if name == 'hopper_screws':
+            pts = [(*tu.polar(G.housing_r + 3.5, math.radians(a)), G.housing_top + 3.0) for a in tu.HOPPER_LUGS]
+            ins_top = G.housing_top
+        else:
+            pts = [(x, y, g['seat_z']) for x, y in g['xy']]
+            ins_top = tu.SOCKET_PAD_Z
+        axes = [(_pt(G, 'tilt', p), (0.0, 0.0, -1.0)) for p in pts]
+        out[name] = FastenerSpec(name=name, clamps=g['clamps'], into=g['into'], axes=axes, key=g['key'], tool='hex 2.5',
+                                 length_mm=g['length_mm'], diameter_mm=3.0, pitch_mm=0.5,
+                                 thread_start_mm=round(pts[0][2] - ins_top, 3), head_d_mm=5.5, head_h_mm=3.0)
+    return out
+
+
+def fasteners(T, asm, cache):
+    """cadagent.gates.fasteners on the screws cad/turret.py places with their receivers (GATED_SCREWS): seat, stack,
+    holes, engagement in the modelled insert, tip, length, and the hex key's straight reach. The steps: the screws go in
+    before the cartridge board and its ESCs (the board's front edge is over the front hopper lug)."""
+    steps = [{'order': 1, 'fit': ['hopper', 'laser_mount'], 'fasteners': list(tu.GATED_SCREWS), 'tool': 'hex 2.5'},
+             {'order': 2, 'fit': ['cartridge_board', 'esc_l', 'esc_r']}]
+    return fastener_gate(asm, fastener_specs(T), steps=steps, tools=TOOLS, tol=CONNECT_TOL, cache=cache,
+                         out=VERDICTS / 'fasteners.json')
+
+
 def _summary(v):
     out = {'ok': bool(v['pass']), 'status': v['status'], 'counts': v['counts'],
            'findings': [{'id': c['id'], 'status': c['status'], 'message': c['message'][:300]} for c in v['findings'][:20]]}
@@ -477,7 +564,10 @@ def run(T=None, write=True):
                      ('hopper', lambda: hopper_gate(asm, cache)),
                      ('path', lambda: path_gate(T, cache, T.G.ball, 'path.json')),
                      ('sweep', lambda: sweep_gate(T, asm, cache)),
-                     ('ammo_range', lambda: ammo_gate(T, pile, cache))):
+                     ('ammo_range', lambda: ammo_gate(T, pile, cache)),
+                     ('fasteners', lambda: fasteners(T, asm, cache)),
+                     ('motion_mechanisms', lambda: motion_mechanisms(T, cache)),
+                     ('motion_aim', lambda: motion_pan_tilt(T, cache))):
         t1 = time.time()
         v = fn()
         secs[name] = round(time.time() - t1, 1)
@@ -485,7 +575,7 @@ def run(T=None, write=True):
         print(f'  {name:13s} {v["status"]:5s} {v["counts"]} ({secs[name]} s)', flush=True)
         for c in v['findings'][:12]:
             print(f'      {c["status"]} {c["id"]}: {c["message"][:220]}', flush=True)
-    out = {'toolkit': 'cadagent.gates (connectivity, containment, relation table)', 'fingerprint': geometry_fingerprint(),
+    out = {'toolkit': 'cadagent.gates (connectivity, containment, relation table, fasteners, motion)', 'fingerprint': geometry_fingerprint(),
            'pile': str(PILE.relative_to(R)), 'verdicts': str(VERDICTS.relative_to(R)), 'seconds': secs,
            'ok': all(v['ok'] for v in res.values()), 'gates': res}
     if write:

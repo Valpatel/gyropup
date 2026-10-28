@@ -1,0 +1,1166 @@
+{
+  "schema": "cadagent.gate/1",
+  "gate": "turret-sweep",
+  "pass": true,
+  "status": "pass",
+  "counts": {
+    "pass": 40,
+    "warn": 0,
+    "fail": 0
+  },
+  "checks": [
+    {
+      "id": "sweep:pan+0:tilt+0.0",
+      "status": "pass",
+      "message": "3 ball/part pairs near, none shared; closest tilt_yoke/ball#19 24.90 mm",
+      "evidence": {
+        "closest": {
+          "a": "tilt_yoke",
+          "b": "ball#19",
+          "state": "apart",
+          "gap_mm": 24.896205,
+          "overlap_mm3": 0.0,
+          "witness": {
+            "point_a": [
+              -13.355666,
+              -60.81,
+              154.887115
+            ],
+            "point_b": [
+              -19.636578,
+              -37.758852,
+              161.888238
+            ]
+          },
+          "exact": true,
+          "cached": true
+        }
+      }
+    },
+    {
+      "id": "sweep:pan+0:tilt-5.0",
+      "status": "pass",
+      "message": "4 ball/part pairs near, none shared; closest tilt_yoke/ball#1 18.06 mm",
+      "evidence": {
+        "closest": {
+          "a": "tilt_yoke",
+          "b": "ball#1",
+          "state": "apart",
+          "gap_mm": 18.055603,
+          "overlap_mm3": 0.0,
+          "witness": {
+            "point_a": [
+              -19.223751,
+              60.81,
+              145.517917
+            ],
+            "point_b": [
+              -26.910375,
+              44.621959,
+              147.724258
+            ]
+          },
+          "exact": true,
+          "cached": true
+        }
+      }
+    },
+    {
+      "id": "sweep:pan+0:tilt-12.5",
+      "status": "pass",
+      "message": "5 ball/part pairs near, none shared; closest tilt_yoke/ball#1 18.06 mm",
+      "evidence": {
+        "closest": {
+          "a": "tilt_yoke",
+          "b": "ball#1",
+          "state": "apart",
+          "gap_mm": 18.055603,
+          "overlap_mm3": 0.0,
+          "witness": {
+            "point_a": [
+              -18.339056,
+              60.81,
+              147.979913
+            ],
+            "point_b": [
+              -25.671935,
+              44.621959,
+              151.170684
+            ]
+          },
+          "exact": true,
+          "cached": true
+        }
+      }
+    },
+    {
+      "id": "sweep:pan+0:tilt-20.0",
+      "status": "pass",
+      "message": "5 ball/part pairs near, none shared; closest tilt_yoke/ball#1 18.06 mm",
+      "evidence": {
+        "closest": {
+          "a": "tilt_yoke",
+          "b": "ball#1",
+          "state": "apart",
+          "gap_mm": 18.055603,
+          "overlap_mm3": 0.0,
+          "witness": {
+            "point_a": [
+              -17.140576,
+              60.81,
+              150.305371
+            ],
+            "point_b": [
+              -23.994241,
+              44.621959,
+              154.425977
+            ]
+          },
+          "exact": true,
+          "cached": true
+        }
+      }
+    },
+    {
+      "id": "sweep:pan+0:tilt-25.0",
+      "status": "pass",
+      "message": "5 ball/part pairs near, none shared; closest tilt_yoke/ball#1 18.06 mm",
+      "evidence": {
+        "closest": {
+          "a": "tilt_yoke",
+          "b": "ball#1",
+          "state": "apart",
+          "gap_mm": 18.055603,
+          "overlap_mm3": 0.0,
+          "witness": {
+            "point_a": [
+              -16.177178,
+              60.81,
+              151.760056
+            ],
+            "point_b": [
+              -22.645629,
+              44.621959,
+              156.462318
+            ]
+          },
+          "exact": true,
+          "cached": true
+        }
+      }
+    },
+    {
+      "id": "sweep:pan+45:tilt+0.0",
+      "status": "pass",
+      "message": "14 ball/part pairs near, none shared; closest tilt_yoke/ball#1 18.06 mm",
+      "evidence": {
+        "closest": {
+          "a": "tilt_yoke",
+          "b": "ball#1",
+          "state": "apart",
+          "gap_mm": 18.055603,
+          "overlap_mm3": 0.0,
+          "witness": {
+            "point_a": [
+              -56.880742,
+              29.117585,
+              143.821459
+            ],
+            "point_b": [
+              -50.984623,
+              12.120356,
+              145.349471
+            ]
+          },
+          "exact": true,
+          "cached": true
+        }
+      }
+    },
+    {
+      "id": "sweep:pan+45:tilt-5.0",
+      "status": "pass",
+      "message": "14 ball/part pairs near, none shared; closest tilt_yoke/ball#1 18.06 mm",
+      "evidence": {
+        "closest": {
+          "a": "tilt_yoke",
+          "b": "ball#1",
+          "state": "apart",
+          "gap_mm": 18.055603,
+          "overlap_mm3": 0.0,
+          "witness": {
+            "point_a": [
+              -56.592408,
+              29.405919,
+              145.517917
+            ],
+            "point_b": [
+              -50.580998,
+              12.523981,
+              147.724258
+            ]
+          },
+          "exact": true,
+          "cached": true
+        }
+      }
+    },
+    {
+      "id": "sweep:pan+45:tilt-12.5",
+      "status": "pass",
+      "message": "9 ball/part pairs near, none shared; closest tilt_yoke/ball#1 18.06 mm",
+      "evidence": {
+        "closest": {
+          "a": "tilt_yoke",
+          "b": "ball#1",
+          "state": "apart",
+          "gap_mm": 18.055603,
+          "overlap_mm3": 0.0,
+          "witness": {
+            "point_a": [
+              -55.966834,
+              30.031492,
+              147.979913
+            ],
+            "point_b": [
+              -49.705289,
+              13.39969,
+              151.170684
+            ]
+          },
+          "exact": true,
+          "cached": true
+        }
+      }
+    },
+    {
+      "id": "sweep:pan+45:tilt-20.0",
+      "status": "pass",
+      "message": "7 ball/part pairs near, none shared; closest tilt_yoke/ball#1 18.06 mm",
+      "evidence": {
+        "closest": {
+          "a": "tilt_yoke",
+          "b": "ball#1",
+          "state": "apart",
+          "gap_mm": 18.055603,
+          "overlap_mm3": 0.0,
+          "witness": {
+            "point_a": [
+              -55.119381,
+              30.878946,
+              150.305371
+            ],
+            "point_b": [
+              -48.51898,
+              14.585999,
+              154.425977
+            ]
+          },
+          "exact": true,
+          "cached": true
+        }
+      }
+    },
+    {
+      "id": "sweep:pan+45:tilt-25.0",
+      "status": "pass",
+      "message": "7 ball/part pairs near, none shared; closest tilt_yoke/ball#1 18.06 mm",
+      "evidence": {
+        "closest": {
+          "a": "tilt_yoke",
+          "b": "ball#1",
+          "state": "apart",
+          "gap_mm": 18.055603,
+          "overlap_mm3": 0.0,
+          "witness": {
+            "point_a": [
+              -54.438156,
+              31.560171,
+              151.760056
+            ],
+            "point_b": [
+              -47.565367,
+              15.539612,
+              156.462318
+            ]
+          },
+          "exact": true,
+          "cached": true
+        }
+      }
+    },
+    {
+      "id": "sweep:pan+90:tilt+0.0",
+      "status": "pass",
+      "message": "3 ball/part pairs near, none shared; closest tilt_yoke/ball#19 24.90 mm",
+      "evidence": {
+        "closest": {
+          "a": "tilt_yoke",
+          "b": "ball#19",
+          "state": "apart",
+          "gap_mm": 24.896205,
+          "overlap_mm3": 0.0,
+          "witness": {
+            "point_a": [
+              60.81,
+              -13.355666,
+              154.887115
+            ],
+            "point_b": [
+              37.758852,
+              -19.636578,
+              161.888238
+            ]
+          },
+          "exact": true,
+          "cached": true
+        }
+      }
+    },
+    {
+      "id": "sweep:pan+90:tilt-5.0",
+      "status": "pass",
+      "message": "4 ball/part pairs near, none shared; closest tilt_yoke/ball#1 18.06 mm",
+      "evidence": {
+        "closest": {
+          "a": "tilt_yoke",
+          "b": "ball#1",
+          "state": "apart",
+          "gap_mm": 18.055603,
+          "overlap_mm3": 0.0,
+          "witness": {
+            "point_a": [
+              -60.81,
+              -19.223751,
+              145.517917
+            ],
+            "point_b": [
+              -44.621959,
+              -26.910375,
+              147.724258
+            ]
+          },
+          "exact": true,
+          "cached": true
+        }
+      }
+    },
+    {
+      "id": "sweep:pan+90:tilt-12.5",
+      "status": "pass",
+      "message": "5 ball/part pairs near, none shared; closest tilt_yoke/ball#1 18.06 mm",
+      "evidence": {
+        "closest": {
+          "a": "tilt_yoke",
+          "b": "ball#1",
+          "state": "apart",
+          "gap_mm": 18.055603,
+          "overlap_mm3": 0.0,
+          "witness": {
+            "point_a": [
+              -60.81,
+              -18.339056,
+              147.979913
+            ],
+            "point_b": [
+              -44.621959,
+              -25.671935,
+              151.170684
+            ]
+          },
+          "exact": true,
+          "cached": true
+        }
+      }
+    },
+    {
+      "id": "sweep:pan+90:tilt-20.0",
+      "status": "pass",
+      "message": "5 ball/part pairs near, none shared; closest tilt_yoke/ball#1 18.06 mm",
+      "evidence": {
+        "closest": {
+          "a": "tilt_yoke",
+          "b": "ball#1",
+          "state": "apart",
+          "gap_mm": 18.055603,
+          "overlap_mm3": 0.0,
+          "witness": {
+            "point_a": [
+              -60.81,
+              -17.140576,
+              150.305371
+            ],
+            "point_b": [
+              -44.621959,
+              -23.994241,
+              154.425977
+            ]
+          },
+          "exact": true,
+          "cached": true
+        }
+      }
+    },
+    {
+      "id": "sweep:pan+90:tilt-25.0",
+      "status": "pass",
+      "message": "5 ball/part pairs near, none shared; closest tilt_yoke/ball#1 18.06 mm",
+      "evidence": {
+        "closest": {
+          "a": "tilt_yoke",
+          "b": "ball#1",
+          "state": "apart",
+          "gap_mm": 18.055603,
+          "overlap_mm3": 0.0,
+          "witness": {
+            "point_a": [
+              -60.81,
+              -16.177178,
+              151.760056
+            ],
+            "point_b": [
+              -44.621959,
+              -22.645629,
+              156.462318
+            ]
+          },
+          "exact": true,
+          "cached": true
+        }
+      }
+    },
+    {
+      "id": "sweep:pan+135:tilt+0.0",
+      "status": "pass",
+      "message": "14 ball/part pairs near, none shared; closest tilt_yoke/ball#1 18.06 mm",
+      "evidence": {
+        "closest": {
+          "a": "tilt_yoke",
+          "b": "ball#1",
+          "state": "apart",
+          "gap_mm": 18.055603,
+          "overlap_mm3": 0.0,
+          "witness": {
+            "point_a": [
+              -29.117585,
+              -56.880742,
+              143.821459
+            ],
+            "point_b": [
+              -12.120356,
+              -50.984623,
+              145.349471
+            ]
+          },
+          "exact": true,
+          "cached": true
+        }
+      }
+    },
+    {
+      "id": "sweep:pan+135:tilt-5.0",
+      "status": "pass",
+      "message": "14 ball/part pairs near, none shared; closest tilt_yoke/ball#1 18.06 mm",
+      "evidence": {
+        "closest": {
+          "a": "tilt_yoke",
+          "b": "ball#1",
+          "state": "apart",
+          "gap_mm": 18.055603,
+          "overlap_mm3": 0.0,
+          "witness": {
+            "point_a": [
+              -29.405919,
+              -56.592408,
+              145.517917
+            ],
+            "point_b": [
+              -12.523981,
+              -50.580998,
+              147.724258
+            ]
+          },
+          "exact": true,
+          "cached": true
+        }
+      }
+    },
+    {
+      "id": "sweep:pan+135:tilt-12.5",
+      "status": "pass",
+      "message": "9 ball/part pairs near, none shared; closest tilt_yoke/ball#1 18.06 mm",
+      "evidence": {
+        "closest": {
+          "a": "tilt_yoke",
+          "b": "ball#1",
+          "state": "apart",
+          "gap_mm": 18.055603,
+          "overlap_mm3": 0.0,
+          "witness": {
+            "point_a": [
+              -30.031492,
+              -55.966834,
+              147.979913
+            ],
+            "point_b": [
+              -13.39969,
+              -49.705289,
+              151.170684
+            ]
+          },
+          "exact": true,
+          "cached": true
+        }
+      }
+    },
+    {
+      "id": "sweep:pan+135:tilt-20.0",
+      "status": "pass",
+      "message": "7 ball/part pairs near, none shared; closest tilt_yoke/ball#1 18.06 mm",
+      "evidence": {
+        "closest": {
+          "a": "tilt_yoke",
+          "b": "ball#1",
+          "state": "apart",
+          "gap_mm": 18.055603,
+          "overlap_mm3": 0.0,
+          "witness": {
+            "point_a": [
+              -30.878946,
+              -55.119381,
+              150.305371
+            ],
+            "point_b": [
+              -14.585999,
+              -48.51898,
+              154.425977
+            ]
+          },
+          "exact": true,
+          "cached": true
+        }
+      }
+    },
+    {
+      "id": "sweep:pan+135:tilt-25.0",
+      "status": "pass",
+      "message": "7 ball/part pairs near, none shared; closest tilt_yoke/ball#1 18.06 mm",
+      "evidence": {
+        "closest": {
+          "a": "tilt_yoke",
+          "b": "ball#1",
+          "state": "apart",
+          "gap_mm": 18.055603,
+          "overlap_mm3": 0.0,
+          "witness": {
+            "point_a": [
+              -31.560171,
+              -54.438156,
+              151.760056
+            ],
+            "point_b": [
+              -15.539612,
+              -47.565367,
+              156.462318
+            ]
+          },
+          "exact": true,
+          "cached": true
+        }
+      }
+    },
+    {
+      "id": "sweep:pan+180:tilt+0.0",
+      "status": "pass",
+      "message": "3 ball/part pairs near, none shared; closest tilt_yoke/ball#19 24.90 mm",
+      "evidence": {
+        "closest": {
+          "a": "tilt_yoke",
+          "b": "ball#19",
+          "state": "apart",
+          "gap_mm": 24.896205,
+          "overlap_mm3": 0.0,
+          "witness": {
+            "point_a": [
+              13.355666,
+              60.81,
+              154.887115
+            ],
+            "point_b": [
+              19.636578,
+              37.758852,
+              161.888238
+            ]
+          },
+          "exact": true,
+          "cached": true
+        }
+      }
+    },
+    {
+      "id": "sweep:pan+180:tilt-5.0",
+      "status": "pass",
+      "message": "4 ball/part pairs near, none shared; closest tilt_yoke/ball#1 18.06 mm",
+      "evidence": {
+        "closest": {
+          "a": "tilt_yoke",
+          "b": "ball#1",
+          "state": "apart",
+          "gap_mm": 18.055603,
+          "overlap_mm3": 0.0,
+          "witness": {
+            "point_a": [
+              19.223751,
+              -60.81,
+              145.517917
+            ],
+            "point_b": [
+              26.910375,
+              -44.621959,
+              147.724258
+            ]
+          },
+          "exact": true,
+          "cached": true
+        }
+      }
+    },
+    {
+      "id": "sweep:pan+180:tilt-12.5",
+      "status": "pass",
+      "message": "5 ball/part pairs near, none shared; closest tilt_yoke/ball#1 18.06 mm",
+      "evidence": {
+        "closest": {
+          "a": "tilt_yoke",
+          "b": "ball#1",
+          "state": "apart",
+          "gap_mm": 18.055603,
+          "overlap_mm3": 0.0,
+          "witness": {
+            "point_a": [
+              18.339056,
+              -60.81,
+              147.979913
+            ],
+            "point_b": [
+              25.671935,
+              -44.621959,
+              151.170684
+            ]
+          },
+          "exact": true,
+          "cached": true
+        }
+      }
+    },
+    {
+      "id": "sweep:pan+180:tilt-20.0",
+      "status": "pass",
+      "message": "5 ball/part pairs near, none shared; closest tilt_yoke/ball#1 18.06 mm",
+      "evidence": {
+        "closest": {
+          "a": "tilt_yoke",
+          "b": "ball#1",
+          "state": "apart",
+          "gap_mm": 18.055603,
+          "overlap_mm3": 0.0,
+          "witness": {
+            "point_a": [
+              17.140576,
+              -60.81,
+              150.305371
+            ],
+            "point_b": [
+              23.994241,
+              -44.621959,
+              154.425977
+            ]
+          },
+          "exact": true,
+          "cached": true
+        }
+      }
+    },
+    {
+      "id": "sweep:pan+180:tilt-25.0",
+      "status": "pass",
+      "message": "5 ball/part pairs near, none shared; closest tilt_yoke/ball#1 18.06 mm",
+      "evidence": {
+        "closest": {
+          "a": "tilt_yoke",
+          "b": "ball#1",
+          "state": "apart",
+          "gap_mm": 18.055603,
+          "overlap_mm3": 0.0,
+          "witness": {
+            "point_a": [
+              16.177178,
+              -60.81,
+              151.760056
+            ],
+            "point_b": [
+              22.645629,
+              -44.621959,
+              156.462318
+            ]
+          },
+          "exact": true,
+          "cached": true
+        }
+      }
+    },
+    {
+      "id": "sweep:pan-135:tilt+0.0",
+      "status": "pass",
+      "message": "14 ball/part pairs near, none shared; closest tilt_yoke/ball#1 18.06 mm",
+      "evidence": {
+        "closest": {
+          "a": "tilt_yoke",
+          "b": "ball#1",
+          "state": "apart",
+          "gap_mm": 18.055603,
+          "overlap_mm3": 0.0,
+          "witness": {
+            "point_a": [
+              56.880742,
+              -29.117585,
+              143.821459
+            ],
+            "point_b": [
+              50.984623,
+              -12.120356,
+              145.349471
+            ]
+          },
+          "exact": true,
+          "cached": true
+        }
+      }
+    },
+    {
+      "id": "sweep:pan-135:tilt-5.0",
+      "status": "pass",
+      "message": "14 ball/part pairs near, none shared; closest tilt_yoke/ball#1 18.06 mm",
+      "evidence": {
+        "closest": {
+          "a": "tilt_yoke",
+          "b": "ball#1",
+          "state": "apart",
+          "gap_mm": 18.055603,
+          "overlap_mm3": 0.0,
+          "witness": {
+            "point_a": [
+              56.592408,
+              -29.405919,
+              145.517917
+            ],
+            "point_b": [
+              50.580998,
+              -12.523981,
+              147.724258
+            ]
+          },
+          "exact": true,
+          "cached": true
+        }
+      }
+    },
+    {
+      "id": "sweep:pan-135:tilt-12.5",
+      "status": "pass",
+      "message": "9 ball/part pairs near, none shared; closest tilt_yoke/ball#1 18.06 mm",
+      "evidence": {
+        "closest": {
+          "a": "tilt_yoke",
+          "b": "ball#1",
+          "state": "apart",
+          "gap_mm": 18.055603,
+          "overlap_mm3": 0.0,
+          "witness": {
+            "point_a": [
+              55.966834,
+              -30.031492,
+              147.979913
+            ],
+            "point_b": [
+              49.705289,
+              -13.39969,
+              151.170684
+            ]
+          },
+          "exact": true,
+          "cached": true
+        }
+      }
+    },
+    {
+      "id": "sweep:pan-135:tilt-20.0",
+      "status": "pass",
+      "message": "7 ball/part pairs near, none shared; closest tilt_yoke/ball#1 18.06 mm",
+      "evidence": {
+        "closest": {
+          "a": "tilt_yoke",
+          "b": "ball#1",
+          "state": "apart",
+          "gap_mm": 18.055603,
+          "overlap_mm3": 0.0,
+          "witness": {
+            "point_a": [
+              55.119381,
+              -30.878946,
+              150.305371
+            ],
+            "point_b": [
+              48.51898,
+              -14.585999,
+              154.425977
+            ]
+          },
+          "exact": true,
+          "cached": true
+        }
+      }
+    },
+    {
+      "id": "sweep:pan-135:tilt-25.0",
+      "status": "pass",
+      "message": "7 ball/part pairs near, none shared; closest tilt_yoke/ball#1 18.06 mm",
+      "evidence": {
+        "closest": {
+          "a": "tilt_yoke",
+          "b": "ball#1",
+          "state": "apart",
+          "gap_mm": 18.055603,
+          "overlap_mm3": 0.0,
+          "witness": {
+            "point_a": [
+              54.438156,
+              -31.560171,
+              151.760056
+            ],
+            "point_b": [
+              47.565367,
+              -15.539612,
+              156.462318
+            ]
+          },
+          "exact": true,
+          "cached": true
+        }
+      }
+    },
+    {
+      "id": "sweep:pan-90:tilt+0.0",
+      "status": "pass",
+      "message": "3 ball/part pairs near, none shared; closest tilt_yoke/ball#19 24.90 mm",
+      "evidence": {
+        "closest": {
+          "a": "tilt_yoke",
+          "b": "ball#19",
+          "state": "apart",
+          "gap_mm": 24.896205,
+          "overlap_mm3": 0.0,
+          "witness": {
+            "point_a": [
+              -60.81,
+              13.355666,
+              154.887115
+            ],
+            "point_b": [
+              -37.758852,
+              19.636578,
+              161.888238
+            ]
+          },
+          "exact": true,
+          "cached": true
+        }
+      }
+    },
+    {
+      "id": "sweep:pan-90:tilt-5.0",
+      "status": "pass",
+      "message": "4 ball/part pairs near, none shared; closest tilt_yoke/ball#1 18.06 mm",
+      "evidence": {
+        "closest": {
+          "a": "tilt_yoke",
+          "b": "ball#1",
+          "state": "apart",
+          "gap_mm": 18.055603,
+          "overlap_mm3": 0.0,
+          "witness": {
+            "point_a": [
+              60.81,
+              19.223751,
+              145.517917
+            ],
+            "point_b": [
+              44.621959,
+              26.910375,
+              147.724258
+            ]
+          },
+          "exact": true,
+          "cached": true
+        }
+      }
+    },
+    {
+      "id": "sweep:pan-90:tilt-12.5",
+      "status": "pass",
+      "message": "5 ball/part pairs near, none shared; closest tilt_yoke/ball#1 18.06 mm",
+      "evidence": {
+        "closest": {
+          "a": "tilt_yoke",
+          "b": "ball#1",
+          "state": "apart",
+          "gap_mm": 18.055603,
+          "overlap_mm3": 0.0,
+          "witness": {
+            "point_a": [
+              60.81,
+              18.339056,
+              147.979913
+            ],
+            "point_b": [
+              44.621959,
+              25.671935,
+              151.170684
+            ]
+          },
+          "exact": true,
+          "cached": true
+        }
+      }
+    },
+    {
+      "id": "sweep:pan-90:tilt-20.0",
+      "status": "pass",
+      "message": "5 ball/part pairs near, none shared; closest tilt_yoke/ball#1 18.06 mm",
+      "evidence": {
+        "closest": {
+          "a": "tilt_yoke",
+          "b": "ball#1",
+          "state": "apart",
+          "gap_mm": 18.055603,
+          "overlap_mm3": 0.0,
+          "witness": {
+            "point_a": [
+              60.81,
+              17.140576,
+              150.305371
+            ],
+            "point_b": [
+              44.621959,
+              23.994241,
+              154.425977
+            ]
+          },
+          "exact": true,
+          "cached": true
+        }
+      }
+    },
+    {
+      "id": "sweep:pan-90:tilt-25.0",
+      "status": "pass",
+      "message": "5 ball/part pairs near, none shared; closest tilt_yoke/ball#1 18.06 mm",
+      "evidence": {
+        "closest": {
+          "a": "tilt_yoke",
+          "b": "ball#1",
+          "state": "apart",
+          "gap_mm": 18.055603,
+          "overlap_mm3": 0.0,
+          "witness": {
+            "point_a": [
+              60.81,
+              16.177178,
+              151.760056
+            ],
+            "point_b": [
+              44.621959,
+              22.645629,
+              156.462318
+            ]
+          },
+          "exact": true,
+          "cached": true
+        }
+      }
+    },
+    {
+      "id": "sweep:pan-45:tilt+0.0",
+      "status": "pass",
+      "message": "14 ball/part pairs near, none shared; closest tilt_yoke/ball#1 18.06 mm",
+      "evidence": {
+        "closest": {
+          "a": "tilt_yoke",
+          "b": "ball#1",
+          "state": "apart",
+          "gap_mm": 18.055603,
+          "overlap_mm3": 0.0,
+          "witness": {
+            "point_a": [
+              29.117585,
+              56.880742,
+              143.821459
+            ],
+            "point_b": [
+              12.120356,
+              50.984623,
+              145.349471
+            ]
+          },
+          "exact": true,
+          "cached": true
+        }
+      }
+    },
+    {
+      "id": "sweep:pan-45:tilt-5.0",
+      "status": "pass",
+      "message": "14 ball/part pairs near, none shared; closest tilt_yoke/ball#1 18.06 mm",
+      "evidence": {
+        "closest": {
+          "a": "tilt_yoke",
+          "b": "ball#1",
+          "state": "apart",
+          "gap_mm": 18.055603,
+          "overlap_mm3": 0.0,
+          "witness": {
+            "point_a": [
+              29.405919,
+              56.592408,
+              145.517917
+            ],
+            "point_b": [
+              12.523981,
+              50.580998,
+              147.724258
+            ]
+          },
+          "exact": true,
+          "cached": true
+        }
+      }
+    },
+    {
+      "id": "sweep:pan-45:tilt-12.5",
+      "status": "pass",
+      "message": "9 ball/part pairs near, none shared; closest tilt_yoke/ball#1 18.06 mm",
+      "evidence": {
+        "closest": {
+          "a": "tilt_yoke",
+          "b": "ball#1",
+          "state": "apart",
+          "gap_mm": 18.055603,
+          "overlap_mm3": 0.0,
+          "witness": {
+            "point_a": [
+              30.031492,
+              55.966834,
+              147.979913
+            ],
+            "point_b": [
+              13.39969,
+              49.705289,
+              151.170684
+            ]
+          },
+          "exact": true,
+          "cached": true
+        }
+      }
+    },
+    {
+      "id": "sweep:pan-45:tilt-20.0",
+      "status": "pass",
+      "message": "7 ball/part pairs near, none shared; closest tilt_yoke/ball#1 18.06 mm",
+      "evidence": {
+        "closest": {
+          "a": "tilt_yoke",
+          "b": "ball#1",
+          "state": "apart",
+          "gap_mm": 18.055603,
+          "overlap_mm3": 0.0,
+          "witness": {
+            "point_a": [
+              30.878946,
+              55.119381,
+              150.305371
+            ],
+            "point_b": [
+              14.585999,
+              48.51898,
+              154.425977
+            ]
+          },
+          "exact": true,
+          "cached": true
+        }
+      }
+    },
+    {
+      "id": "sweep:pan-45:tilt-25.0",
+      "status": "pass",
+      "message": "7 ball/part pairs near, none shared; closest tilt_yoke/ball#1 18.06 mm",
+      "evidence": {
+        "closest": {
+          "a": "tilt_yoke",
+          "b": "ball#1",
+          "state": "apart",
+          "gap_mm": 18.055603,
+          "overlap_mm3": 0.0,
+          "witness": {
+            "point_a": [
+              31.560171,
+              54.438156,
+              151.760056
+            ],
+            "point_b": [
+              15.539612,
+              47.565367,
+              156.462318
+            ]
+          },
+          "exact": true,
+          "cached": true
+        }
+      }
+    }
+  ],
+  "findings": [],
+  "exclusions": [],
+  "limits": {
+    "pans_deg": [
+      0.0,
+      45.0,
+      90.0,
+      135.0,
+      180.0,
+      -135.0,
+      -90.0,
+      -45.0
+    ],
+    "tilts_deg": [
+      0.0,
+      -5.0,
+      -12.5,
+      -20.0,
+      -25.0
+    ],
+    "overlap_mm3": 0.001
+  },
+  "assumptions": [
+    "the settled pile rides with the tilt frame (the pockets with the dial, parked); the base, pinion and pan frame are posed by the rigid motions of cad/turret.py pose_shape",
+    "a static check at each pose of the grid, not a swept volume between poses",
+    "the model is checked, not the print: no tolerance stack, shrink or deflection"
+  ],
+  "physical_fit_verified": false,
+  "stats": {
+    "poses": 40,
+    "candidates": 292,
+    "kernel_queries": 0
+  }
+}

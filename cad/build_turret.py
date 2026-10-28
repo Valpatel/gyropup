@@ -165,6 +165,18 @@ AMMO_SIDE_BY_SIDE = [
 ]
 
 
+def turret_mass(T):
+    """D71: the turret's mass on Gyropup against its 2.6 kg ceiling (cad/turret.py mass_properties: printed parts by the
+    printed-part model, bought parts at their catalogue masses, the not-modelled allowance), with and without the
+    hopper's 30 balls."""
+    import turret_mount as tm
+    _, m_b, c_b = tu.mass_properties(T, with_balls=True)
+    _, m_e, _ = tu.mass_properties(T, with_balls=False)
+    return {'with_30_balls_g': round(m_b, 1), 'empty_g': round(m_e, 1), 'ceiling_kg': tm.MASS_CEILING_KG,
+            'margin_g': round(tm.MASS_CEILING_KG * 1000 - m_b, 1), 'within_ceiling': m_b <= tm.MASS_CEILING_KG * 1000,
+            'com_mm': [round(c, 1) for c in c_b], 'decision': 'D71 (the 37.5 kg robot covers the turret as its own robot, D66)'}
+
+
 def ammo_side_by_side():
     """The ammo table with a round's price and D67's verdict, cheapest a round first (unpriced last)."""
     out = []
@@ -254,6 +266,7 @@ def main():
                  'operations': tu.SHEET_OPS.get(n, 'none')} for n, st in tu.SHEET_PARTS.items()}
     (OUT / 'bom.json').write_text(json.dumps({'bench_turret': rows, 'bench_stand': bench, 'tools': tools, 'v1_only': v1, 'not_modelled': tu.NOT_MODELLED_G,
                                               'ammo_side_by_side': ammo_side_by_side(),
+                                              'turret_mass': turret_mass(T),
                                               'price_usd_known': {'turret': priced(rows), 'bench_stand': priced(bench), 'tools': priced(tools)},
                                               'not_in_a_catalogue': missing, 'no_listed_price': unpriced, 'no_second_source': no_backup,
                                               'ordered_to_drawing': sheet,

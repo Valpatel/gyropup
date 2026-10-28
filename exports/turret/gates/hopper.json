@@ -1,0 +1,2608 @@
+{
+  "schema": "cadagent.gate/1",
+  "gate": "containment",
+  "pass": true,
+  "status": "warn",
+  "counts": {
+    "pass": 64,
+    "warn": 1,
+    "fail": 0
+  },
+  "checks": [
+    {
+      "id": "contains:hopper_cavity:ball:count",
+      "status": "pass",
+      "message": "30 ball instance(s) found, 30 declared",
+      "evidence": {
+        "declared": 30,
+        "found": 30,
+        "brep": 30,
+        "mesh": 0
+      }
+    },
+    {
+      "id": "contains:hopper_cavity:ball:cavity",
+      "status": "pass",
+      "message": "cavity hopper_cavity is registered on hopper",
+      "evidence": {
+        "cavity_volume_mm3": 638369.006134
+      }
+    },
+    {
+      "id": "contains:hopper_cavity:ball:cavity-fit",
+      "status": "pass",
+      "message": "cavity hopper_cavity only touches hopper and lies within its box",
+      "evidence": {
+        "relation": {
+          "state": "touching",
+          "gap_mm": 0.0,
+          "overlap_mm3": 0.0,
+          "witness": {
+            "point_a": [
+              -29.011574,
+              -0.66309,
+              160.0
+            ],
+            "point_b": [
+              -29.011574,
+              -0.66309,
+              160.0
+            ]
+          },
+          "cached": false
+        },
+        "cavity_box": [
+          -97.1,
+          -49.1,
+          135.0,
+          1.1,
+          49.1,
+          225.0
+        ],
+        "host_box": [
+          -101.6,
+          -51.6,
+          106.9,
+          64.0,
+          51.6,
+          234.0
+        ],
+        "hosts": [
+          "hopper",
+          "cartridge_body",
+          "hopper_lid"
+        ],
+        "box_overshoot_mm": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        }
+      }
+    },
+    {
+      "id": "contains:hopper_cavity:ball#0:inside",
+      "status": "pass",
+      "message": "ball#0 inside hopper_cavity (0.01425 mm3 outside, 0 mm from its boundary)",
+      "parts": [
+        "ball#0"
+      ],
+      "evidence": {
+        "relation": {
+          "state": "contains",
+          "gap_mm": 0.0,
+          "overlap_mm3": 6124.564082,
+          "a_outside_b_mm3": 0.014254,
+          "b_outside_a_mm3": 632244.442057,
+          "contained": "a_in_b",
+          "wall_mm": 0.0,
+          "witness": {
+            "overlap_centroid": [
+              -13.816457,
+              14.159287,
+              146.330026
+            ],
+            "overlap_box": [
+              -25.166457,
+              2.809287,
+              135.0,
+              -2.466457,
+              25.509287,
+              157.68
+            ],
+            "inner_point": [
+              -13.142959,
+              14.159287,
+              135.0
+            ],
+            "outer_point": [
+              -13.142959,
+              14.159287,
+              135.0
+            ]
+          },
+          "cached": false
+        },
+        "outside_mm3": 0.014254,
+        "clearance_mm": 0.0
+      }
+    },
+    {
+      "id": "contains:hopper_cavity:ball#0:wall",
+      "status": "pass",
+      "message": "ball#0 vs hopper: apart (gap 2.32 mm)",
+      "parts": [
+        "ball#0"
+      ],
+      "evidence": {
+        "relation": {
+          "state": "apart",
+          "gap_mm": 2.32,
+          "overlap_mm3": 0.0,
+          "witness": {
+            "point_a": [
+              -13.816457,
+              14.159287,
+              157.68
+            ],
+            "point_b": [
+              -13.816457,
+              14.159287,
+              160.0
+            ]
+          },
+          "cached": false
+        }
+      }
+    },
+    {
+      "id": "contains:hopper_cavity:ball#1:inside",
+      "status": "pass",
+      "message": "ball#1 inside hopper_cavity (0.1964 mm3 outside, 0 mm from its boundary)",
+      "parts": [
+        "ball#1"
+      ],
+      "evidence": {
+        "relation": {
+          "state": "contains",
+          "gap_mm": 0.0,
+          "overlap_mm3": 6124.381203,
+          "a_outside_b_mm3": 0.196369,
+          "b_outside_a_mm3": 632244.609293,
+          "contained": "a_in_b",
+          "wall_mm": 0.0,
+          "witness": {
+            "overlap_centroid": [
+              -32.415706,
+              34.445716,
+              146.310105
+            ],
+            "overlap_box": [
+              -43.765596,
+              23.095934,
+              135.0,
+              -21.065596,
+              45.795934,
+              157.66
+            ],
+            "inner_point": [
+              -31.463546,
+              34.445934,
+              135.0
+            ],
+            "outer_point": [
+              -31.463546,
+              34.445934,
+              135.0
+            ]
+          },
+          "cached": false
+        },
+        "outside_mm3": 0.196369,
+        "clearance_mm": 0.0
+      }
+    },
+    {
+      "id": "contains:hopper_cavity:ball#1:wall",
+      "status": "pass",
+      "message": "ball#1 vs hopper: apart (gap 6.397 mm)",
+      "parts": [
+        "ball#1"
+      ],
+      "evidence": {
+        "relation": {
+          "state": "apart",
+          "gap_mm": 6.396548,
+          "overlap_mm3": 0.0,
+          "witness": {
+            "point_a": [
+              -29.438508,
+              41.026138,
+              155.06559
+            ],
+            "point_b": [
+              -27.760704,
+              44.73456,
+              160.0
+            ]
+          },
+          "cached": false
+        }
+      }
+    },
+    {
+      "id": "contains:hopper_cavity:ball#2:inside",
+      "status": "pass",
+      "message": "ball#2 inside hopper_cavity (0.01425 mm3 outside, 0 mm from its boundary)",
+      "parts": [
+        "ball#2"
+      ],
+      "evidence": {
+        "relation": {
+          "state": "contains",
+          "gap_mm": 0.0,
+          "overlap_mm3": 6124.564082,
+          "a_outside_b_mm3": 0.014254,
+          "b_outside_a_mm3": 632244.442047,
+          "contained": "a_in_b",
+          "wall_mm": 0.0,
+          "witness": {
+            "overlap_centroid": [
+              -62.070229,
+              33.733355,
+              146.330026
+            ],
+            "overlap_box": [
+              -73.420229,
+              22.383355,
+              135.0,
+              -50.720229,
+              45.083355,
+              157.68
+            ],
+            "inner_point": [
+              -61.39673,
+              33.733355,
+              135.0
+            ],
+            "outer_point": [
+              -61.39673,
+              33.733355,
+              135.0
+            ]
+          },
+          "cached": false
+        },
+        "outside_mm3": 0.014254,
+        "clearance_mm": 0.0
+      }
+    },
+    {
+      "id": "contains:hopper_cavity:ball#2:wall",
+      "status": "pass",
+      "message": "ball#2 vs hopper: apart (gap 7.207 mm)",
+      "parts": [
+        "ball#2"
+      ],
+      "evidence": {
+        "relation": {
+          "state": "apart",
+          "gap_mm": 7.207172,
+          "overlap_mm3": 0.0,
+          "witness": {
+            "point_a": [
+              -65.025085,
+              40.817621,
+              154.690892
+            ],
+            "point_b": [
+              -66.901399,
+              45.31608,
+              160.0
+            ]
+          },
+          "cached": false
+        }
+      }
+    },
+    {
+      "id": "contains:hopper_cavity:ball#3:inside",
+      "status": "pass",
+      "message": "ball#3 inside hopper_cavity (0.01425 mm3 outside, 0 mm from its boundary)",
+      "parts": [
+        "ball#3"
+      ],
+      "evidence": {
+        "relation": {
+          "state": "contains",
+          "gap_mm": 0.0,
+          "overlap_mm3": 6124.564082,
+          "a_outside_b_mm3": 0.014254,
+          "b_outside_a_mm3": 632244.442041,
+          "contained": "a_in_b",
+          "wall_mm": 0.0,
+          "witness": {
+            "overlap_centroid": [
+              -82.179687,
+              14.15769,
+              146.330026
+            ],
+            "overlap_box": [
+              -93.529687,
+              2.80769,
+              135.0,
+              -70.829687,
+              25.50769,
+              157.68
+            ],
+            "inner_point": [
+              -81.506189,
+              14.15769,
+              135.0
+            ],
+            "outer_point": [
+              -81.506189,
+              14.15769,
+              135.0
+            ]
+          },
+          "cached": false
+        },
+        "outside_mm3": 0.014254,
+        "clearance_mm": 0.0
+      }
+    },
+    {
+      "id": "contains:hopper_cavity:ball#3:wall",
+      "status": "pass",
+      "message": "ball#3 vs hopper: apart (gap 6.909 mm)",
+      "parts": [
+        "ball#3"
+      ],
+      "evidence": {
+        "relation": {
+          "state": "apart",
+          "gap_mm": 6.908694,
+          "overlap_mm3": 0.0,
+          "witness": {
+            "point_a": [
+              -89.131157,
+              17.037083,
+              154.827568
+            ],
+            "point_b": [
+              -93.362485,
+              18.789757,
+              160.0
+            ]
+          },
+          "cached": false
+        }
+      }
+    },
+    {
+      "id": "contains:hopper_cavity:ball#4:inside",
+      "status": "pass",
+      "message": "ball#4 inside hopper_cavity (0.4284 mm3 outside, 0 mm from its boundary)",
+      "parts": [
+        "ball#4"
+      ],
+      "evidence": {
+        "relation": {
+          "state": "contains",
+          "gap_mm": 0.0,
+          "overlap_mm3": 6124.146608,
+          "a_outside_b_mm3": 0.428364,
+          "b_outside_a_mm3": 632244.793068,
+          "contained": "a_in_b",
+          "wall_mm": 0.0,
+          "witness": {
+            "overlap_centroid": [
+              -82.85716,
+              -14.752198,
+              146.330027
+            ],
+            "overlap_box": [
+              -94.207862,
+              -26.102493,
+              135.0,
+              -71.507862,
+              -3.402493,
+              157.68
+            ],
+            "inner_point": [
+              -82.184364,
+              -14.752493,
+              135.0
+            ],
+            "outer_point": [
+              -82.184364,
+              -14.752493,
+              135.0
+            ]
+          },
+          "cached": false
+        },
+        "outside_mm3": 0.428364,
+        "clearance_mm": 0.0
+      }
+    },
+    {
+      "id": "contains:hopper_cavity:ball#4:wall",
+      "status": "pass",
+      "message": "ball#4 vs hopper: apart (gap 6.353 mm)",
+      "parts": [
+        "ball#4"
+      ],
+      "evidence": {
+        "relation": {
+          "state": "apart",
+          "gap_mm": 6.353288,
+          "overlap_mm3": 0.0,
+          "witness": {
+            "point_a": [
+              -89.499477,
+              -17.563347,
+              155.094163
+            ],
+            "point_b": [
+              -93.217194,
+              -19.136754,
+              160.0
+            ]
+          },
+          "cached": false
+        }
+      }
+    },
+    {
+      "id": "contains:hopper_cavity:ball#5:inside",
+      "status": "pass",
+      "message": "ball#5 inside hopper_cavity (0.03206 mm3 outside, 0 mm from its boundary)",
+      "parts": [
+        "ball#5"
+      ],
+      "evidence": {
+        "relation": {
+          "state": "contains",
+          "gap_mm": 0.0,
+          "overlap_mm3": 6124.546274,
+          "a_outside_b_mm3": 0.032063,
+          "b_outside_a_mm3": 632244.459851,
+          "contained": "a_in_b",
+          "wall_mm": 0.0,
+          "witness": {
+            "overlap_centroid": [
+              -61.701753,
+              -35.019104,
+              146.320059
+            ],
+            "overlap_box": [
+              -73.051753,
+              -46.369104,
+              135.0,
+              -50.351753,
+              -23.669104,
+              157.67
+            ],
+            "inner_point": [
+              -60.877071,
+              -35.019104,
+              135.0
+            ],
+            "outer_point": [
+              -60.877071,
+              -35.019104,
+              135.0
+            ]
+          },
+          "cached": false
+        },
+        "outside_mm3": 0.032063,
+        "clearance_mm": 0.0
+      }
+    },
+    {
+      "id": "contains:hopper_cavity:ball#5:wall",
+      "status": "pass",
+      "message": "ball#5 vs hopper: apart (gap 6.519 mm)",
+      "parts": [
+        "ball#5"
+      ],
+      "evidence": {
+        "relation": {
+          "state": "apart",
+          "gap_mm": 6.518852,
+          "overlap_mm3": 0.0,
+          "witness": {
+            "point_a": [
+              -64.362345,
+              -41.819078,
+              155.00931
+            ],
+            "point_b": [
+              -65.890451,
+              -45.72463,
+              160.0
+            ]
+          },
+          "cached": false
+        }
+      }
+    },
+    {
+      "id": "contains:hopper_cavity:ball#6:inside",
+      "status": "pass",
+      "message": "ball#6 inside hopper_cavity (0.01425 mm3 outside, 0 mm from its boundary)",
+      "parts": [
+        "ball#6"
+      ],
+      "evidence": {
+        "relation": {
+          "state": "contains",
+          "gap_mm": 0.0,
+          "overlap_mm3": 6124.564082,
+          "a_outside_b_mm3": 0.014254,
+          "b_outside_a_mm3": 632244.442049,
+          "contained": "a_in_b",
+          "wall_mm": 0.0,
+          "witness": {
+            "overlap_centroid": [
+              -33.856067,
+              -34.904281,
+              146.330026
+            ],
+            "overlap_box": [
+              -45.206067,
+              -46.254281,
+              135.0,
+              -22.506067,
+              -23.554281,
+              157.68
+            ],
+            "inner_point": [
+              -33.182569,
+              -34.904281,
+              135.0
+            ],
+            "outer_point": [
+              -33.182569,
+              -34.904281,
+              135.0
+            ]
+          },
+          "cached": false
+        },
+        "outside_mm3": 0.014254,
+        "clearance_mm": 0.0
+      }
+    },
+    {
+      "id": "contains:hopper_cavity:ball#6:wall",
+      "status": "pass",
+      "message": "ball#6 vs hopper: apart (gap 6.475 mm)",
+      "parts": [
+        "ball#6"
+      ],
+      "evidence": {
+        "relation": {
+          "state": "apart",
+          "gap_mm": 6.474617,
+          "overlap_mm3": 0.0,
+          "witness": {
+            "point_a": [
+              -31.12057,
+              -41.654919,
+              155.034507
+            ],
+            "point_b": [
+              -29.560103,
+              -45.505826,
+              160.0
+            ]
+          },
+          "cached": false
+        }
+      }
+    },
+    {
+      "id": "contains:hopper_cavity:ball#7:inside",
+      "status": "pass",
+      "message": "ball#7 inside hopper_cavity (0.01425 mm3 outside, 0 mm from its boundary)",
+      "parts": [
+        "ball#7"
+      ],
+      "evidence": {
+        "relation": {
+          "state": "contains",
+          "gap_mm": 0.0,
+          "overlap_mm3": 6124.564082,
+          "a_outside_b_mm3": 0.014254,
+          "b_outside_a_mm3": 632244.442055,
+          "contained": "a_in_b",
+          "wall_mm": 0.0,
+          "witness": {
+            "overlap_centroid": [
+              -13.820313,
+              -14.15769,
+              146.330026
+            ],
+            "overlap_box": [
+              -25.170313,
+              -25.50769,
+              135.0,
+              -2.470313,
+              -2.80769,
+              157.68
+            ],
+            "inner_point": [
+              -13.146815,
+              -14.15769,
+              135.0
+            ],
+            "outer_point": [
+              -13.146815,
+              -14.15769,
+              135.0
+            ]
+          },
+          "cached": false
+        },
+        "outside_mm3": 0.014254,
+        "clearance_mm": 0.0
+      }
+    },
+    {
+      "id": "contains:hopper_cavity:ball#7:wall",
+      "status": "pass",
+      "message": "ball#7 vs hopper: apart (gap 2.32 mm)",
+      "parts": [
+        "ball#7"
+      ],
+      "evidence": {
+        "relation": {
+          "state": "apart",
+          "gap_mm": 2.32,
+          "overlap_mm3": 0.0,
+          "witness": {
+            "point_a": [
+              -13.820313,
+              -14.15769,
+              157.68
+            ],
+            "point_b": [
+              -13.820313,
+              -14.15769,
+              160.0
+            ]
+          },
+          "cached": false
+        }
+      }
+    },
+    {
+      "id": "contains:hopper_cavity:ball#8:inside",
+      "status": "pass",
+      "message": "ball#8 inside hopper_cavity (0.05343 mm3 outside, 0 mm from its boundary)",
+      "parts": [
+        "ball#8"
+      ],
+      "evidence": {
+        "relation": {
+          "state": "contains",
+          "gap_mm": 0.0,
+          "overlap_mm3": 6124.525262,
+          "a_outside_b_mm3": 0.053433,
+          "b_outside_a_mm3": 632244.481275,
+          "contained": "a_in_b",
+          "wall_mm": 0.0,
+          "witness": {
+            "overlap_centroid": [
+              -41.99999,
+              29.020049,
+              166.080085
+            ],
+            "overlap_box": [
+              -53.35,
+              17.67,
+              154.73,
+              -30.65,
+              40.37,
+              177.43
+            ],
+            "inner_point": [
+              -44.007991,
+              23.571133,
+              156.328061
+            ],
+            "outer_point": [
+              -44.007991,
+              23.571133,
+              156.328061
+            ]
+          },
+          "cached": false
+        },
+        "outside_mm3": 0.053433,
+        "clearance_mm": 0.0
+      }
+    },
+    {
+      "id": "contains:hopper_cavity:ball#8:wall",
+      "status": "pass",
+      "message": "ball#8 vs hopper: apart (gap 8.116 mm)",
+      "parts": [
+        "ball#8"
+      ],
+      "evidence": {
+        "relation": {
+          "state": "apart",
+          "gap_mm": 8.116229,
+          "overlap_mm3": 0.0,
+          "witness": {
+            "point_a": [
+              -39.701946,
+              40.13492,
+              166.080001
+            ],
+            "point_b": [
+              -38.058638,
+              48.083046,
+              166.080001
+            ]
+          },
+          "cached": false
+        }
+      }
+    },
+    {
+      "id": "contains:hopper_cavity:ball#9:inside",
+      "status": "pass",
+      "message": "ball#9 inside hopper_cavity (0.08901 mm3 outside, 0 mm from its boundary)",
+      "parts": [
+        "ball#9"
+      ],
+      "evidence": {
+        "relation": {
+          "state": "contains",
+          "gap_mm": 0.0,
+          "overlap_mm3": 6124.489325,
+          "a_outside_b_mm3": 0.089012,
+          "b_outside_a_mm3": 632244.516806,
+          "contained": "a_in_b",
+          "wall_mm": 0.0,
+          "witness": {
+            "overlap_centroid": [
+              -71.39,
+              24.32,
+              165.050164
+            ],
+            "overlap_box": [
+              -82.74,
+              12.97,
+              153.75,
+              -60.04,
+              35.67,
+              176.4
+            ],
+            "inner_point": [
+              -70.32581,
+              24.32,
+              153.75
+            ],
+            "outer_point": [
+              -70.32581,
+              24.32,
+              153.75
+            ]
+          },
+          "cached": false
+        },
+        "outside_mm3": 0.089012,
+        "clearance_mm": 0.0
+      }
+    },
+    {
+      "id": "contains:hopper_cavity:ball#9:wall",
+      "status": "pass",
+      "message": "ball#9 vs hopper: apart (gap 4.008 mm)",
+      "parts": [
+        "ball#9"
+      ],
+      "evidence": {
+        "relation": {
+          "state": "apart",
+          "gap_mm": 4.007527,
+          "overlap_mm3": 0.0,
+          "witness": {
+            "point_a": [
+              -79.257725,
+              32.50055,
+              165.05
+            ],
+            "point_b": [
+              -82.035709,
+              35.388989,
+              165.05
+            ]
+          },
+          "cached": false
+        }
+      }
+    },
+    {
+      "id": "contains:hopper_cavity:ball#10:inside",
+      "status": "pass",
+      "message": "ball#10 inside hopper_cavity (0.03884 mm3 outside, 0 mm from its boundary)",
+      "parts": [
+        "ball#10"
+      ],
+      "evidence": {
+        "relation": {
+          "state": "contains",
+          "gap_mm": 0.0,
+          "overlap_mm3": 6124.539494,
+          "a_outside_b_mm3": 0.038844,
+          "b_outside_a_mm3": 632244.466623,
+          "contained": "a_in_b",
+          "wall_mm": 0.0,
+          "witness": {
+            "overlap_centroid": [
+              -84.66,
+              -2.080003,
+              165.050072
+            ],
+            "overlap_box": [
+              -96.01,
+              -13.43,
+              153.7,
+              -73.31,
+              9.27,
+              176.4
+            ],
+            "inner_point": [
+              -85.721179,
+              -2.0,
+              153.75
+            ],
+            "outer_point": [
+              -85.721179,
+              -2.0,
+              153.75
+            ]
+          },
+          "cached": false
+        },
+        "outside_mm3": 0.038844,
+        "clearance_mm": 0.0
+      }
+    },
+    {
+      "id": "contains:hopper_cavity:ball#10:wall",
+      "status": "pass",
+      "message": "ball#10 vs hopper: apart (gap 1.031 mm)",
+      "parts": [
+        "ball#10"
+      ],
+      "evidence": {
+        "relation": {
+          "state": "apart",
+          "gap_mm": 1.03104,
+          "overlap_mm3": 0.0,
+          "witness": {
+            "point_a": [
+              -95.991775,
+              -2.722938,
+              165.05
+            ],
+            "point_b": [
+              -97.02116,
+              -2.781342,
+              165.05
+            ]
+          },
+          "cached": false
+        }
+      }
+    },
+    {
+      "id": "contains:hopper_cavity:ball#11:inside",
+      "status": "pass",
+      "message": "ball#11 inside hopper_cavity (0.01287 mm3 outside, 0 mm from its boundary)",
+      "parts": [
+        "ball#11"
+      ],
+      "evidence": {
+        "relation": {
+          "state": "contains",
+          "gap_mm": 0.0,
+          "overlap_mm3": 6124.565467,
+          "a_outside_b_mm3": 0.01287,
+          "b_outside_a_mm3": 632244.440652,
+          "contained": "a_in_b",
+          "wall_mm": 0.0,
+          "witness": {
+            "overlap_centroid": [
+              -71.319999,
+              -26.610001,
+              165.060024
+            ],
+            "overlap_box": [
+              -82.67,
+              -37.96,
+              153.71,
+              -59.97,
+              -15.26,
+              176.41
+            ],
+            "inner_point": [
+              -72.183193,
+              -27.01162,
+              153.75
+            ],
+            "outer_point": [
+              -72.183193,
+              -27.01162,
+              153.75
+            ]
+          },
+          "cached": false
+        },
+        "outside_mm3": 0.01287,
+        "clearance_mm": 0.0
+      }
+    },
+    {
+      "id": "contains:hopper_cavity:ball#11:wall",
+      "status": "pass",
+      "message": "ball#11 vs hopper: apart (gap 2.368 mm)",
+      "parts": [
+        "ball#11"
+      ],
+      "evidence": {
+        "relation": {
+          "state": "apart",
+          "gap_mm": 2.367596,
+          "overlap_mm3": 0.0,
+          "witness": {
+            "point_a": [
+              -78.800611,
+              -35.145981,
+              165.06
+            ],
+            "point_b": [
+              -80.361057,
+              -36.926576,
+              165.059999
+            ]
+          },
+          "cached": false
+        }
+      }
+    },
+    {
+      "id": "contains:hopper_cavity:ball#12:inside",
+      "status": "pass",
+      "message": "ball#12 inside hopper_cavity (0.1138 mm3 outside, 0 mm from its boundary)",
+      "parts": [
+        "ball#12"
+      ],
+      "evidence": {
+        "relation": {
+          "state": "contains",
+          "gap_mm": 0.0,
+          "overlap_mm3": 6124.464558,
+          "a_outside_b_mm3": 0.113779,
+          "b_outside_a_mm3": 632244.541565,
+          "contained": "a_in_b",
+          "wall_mm": 0.0,
+          "witness": {
+            "overlap_centroid": [
+              -46.229994,
+              -31.38,
+              165.03021
+            ],
+            "overlap_box": [
+              -57.58,
+              -42.73,
+              153.682331,
+              -34.88,
+              -20.03,
+              176.38
+            ],
+            "inner_point": [
+              -46.0,
+              -31.38,
+              153.682331
+            ],
+            "outer_point": [
+              -46.0,
+              -31.38,
+              153.682331
+            ]
+          },
+          "cached": false
+        },
+        "outside_mm3": 0.113779,
+        "clearance_mm": 0.0
+      }
+    },
+    {
+      "id": "contains:hopper_cavity:ball#12:wall",
+      "status": "pass",
+      "message": "ball#12 vs hopper: apart (gap 6.32 mm)",
+      "parts": [
+        "ball#12"
+      ],
+      "evidence": {
+        "relation": {
+          "state": "apart",
+          "gap_mm": 6.320121,
+          "overlap_mm3": 0.0,
+          "witness": {
+            "point_a": [
+              -45.590815,
+              -42.711988,
+              165.03
+            ],
+            "point_b": [
+              -45.234892,
+              -49.022078,
+              165.03
+            ]
+          },
+          "cached": false
+        }
+      }
+    },
+    {
+      "id": "contains:hopper_cavity:ball#13:inside",
+      "status": "pass",
+      "message": "ball#13 inside hopper_cavity (0.03206 mm3 outside, 0 mm from its boundary)",
+      "parts": [
+        "ball#13"
+      ],
+      "evidence": {
+        "relation": {
+          "state": "contains",
+          "gap_mm": 0.0,
+          "overlap_mm3": 6124.546274,
+          "a_outside_b_mm3": 0.032063,
+          "b_outside_a_mm3": 632244.459868,
+          "contained": "a_in_b",
+          "wall_mm": 0.0,
+          "witness": {
+            "overlap_centroid": [
+              -20.06,
+              -4.41,
+              174.320059
+            ],
+            "overlap_box": [
+              -31.41,
+              -15.76,
+              163.0,
+              -8.71,
+              6.94,
+              185.67
+            ],
+            "inner_point": [
+              -19.235318,
+              -4.41,
+              163.0
+            ],
+            "outer_point": [
+              -19.235318,
+              -4.41,
+              163.0
+            ]
+          },
+          "cached": false
+        },
+        "outside_mm3": 0.032063,
+        "clearance_mm": 0.0
+      }
+    },
+    {
+      "id": "contains:hopper_cavity:ball#13:wall",
+      "status": "pass",
+      "message": "ball#13 vs hopper: touching (gap 0 mm)",
+      "parts": [
+        "ball#13"
+      ],
+      "evidence": {
+        "relation": {
+          "state": "touching",
+          "gap_mm": 0.0,
+          "overlap_mm3": 0.032063,
+          "witness": {
+            "point_a": [
+              -19.235318,
+              -4.41,
+              163.0
+            ],
+            "point_b": [
+              -19.235318,
+              -4.41,
+              163.0
+            ]
+          },
+          "cached": false
+        }
+      }
+    },
+    {
+      "id": "contains:hopper_cavity:ball#14:inside",
+      "status": "pass",
+      "message": "ball#14 inside hopper_cavity (0.000195 mm3 outside, 0 mm from its boundary)",
+      "parts": [
+        "ball#14"
+      ],
+      "evidence": {
+        "relation": {
+          "state": "contains",
+          "gap_mm": 0.0,
+          "overlap_mm3": 6124.578142,
+          "a_outside_b_mm3": 0.000195,
+          "b_outside_a_mm3": 632244.428003,
+          "contained": "a_in_b",
+          "wall_mm": 0.0,
+          "witness": {
+            "overlap_centroid": [
+              -48.39,
+              -0.03,
+              190.05
+            ],
+            "overlap_box": [
+              -59.74,
+              -11.38,
+              178.7,
+              -37.04,
+              11.32,
+              201.4
+            ],
+            "inner_point": [
+              -51.161391,
+              -3.909677,
+              179.75
+            ],
+            "outer_point": [
+              -51.161391,
+              -3.909677,
+              179.75
+            ]
+          },
+          "cached": false
+        },
+        "outside_mm3": 0.000195,
+        "clearance_mm": 0.0
+      }
+    },
+    {
+      "id": "contains:hopper_cavity:ball#14:wall",
+      "status": "pass",
+      "message": "ball#14 vs hopper: apart (gap 21.92 mm)",
+      "parts": [
+        "ball#14"
+      ],
+      "evidence": {
+        "relation": {
+          "state": "apart",
+          "gap_mm": 21.916558,
+          "overlap_mm3": 0.0,
+          "witness": {
+            "point_a": [
+              -42.041079,
+              -1.857299,
+              180.820987
+            ],
+            "point_b": [
+              -29.781476,
+              -5.385765,
+              163.0
+            ]
+          },
+          "cached": false
+        }
+      }
+    },
+    {
+      "id": "contains:hopper_cavity:ball#15:inside",
+      "status": "pass",
+      "message": "ball#15 inside hopper_cavity (0.1263 mm3 outside, 0 mm from its boundary)",
+      "parts": [
+        "ball#15"
+      ],
+      "evidence": {
+        "relation": {
+          "state": "contains",
+          "gap_mm": 0.0,
+          "overlap_mm3": 6124.451032,
+          "a_outside_b_mm3": 0.126289,
+          "b_outside_a_mm3": 632244.53451,
+          "contained": "a_in_b",
+          "wall_mm": 0.0,
+          "witness": {
+            "overlap_centroid": [
+              -58.699935,
+              36.259775,
+              179.53
+            ],
+            "overlap_box": [
+              -70.05,
+              24.91,
+              168.18,
+              -47.35,
+              47.61,
+              190.88
+            ],
+            "inner_point": [
+              -61.133489,
+              47.310902,
+              180.412152
+            ],
+            "outer_point": [
+              -61.133489,
+              47.310902,
+              180.412152
+            ]
+          },
+          "cached": false
+        },
+        "outside_mm3": 0.126289,
+        "clearance_mm": 0.0
+      }
+    },
+    {
+      "id": "contains:hopper_cavity:ball#15:wall",
+      "status": "pass",
+      "message": "ball#15 vs hopper: touching (gap 0 mm)",
+      "parts": [
+        "ball#15"
+      ],
+      "evidence": {
+        "relation": {
+          "state": "touching",
+          "gap_mm": 0.0,
+          "overlap_mm3": 0.126289,
+          "witness": {
+            "point_a": [
+              -62.541428,
+              46.897301,
+              180.485903
+            ],
+            "point_b": [
+              -62.541428,
+              46.897301,
+              180.485903
+            ]
+          },
+          "cached": false
+        }
+      }
+    },
+    {
+      "id": "contains:hopper_cavity:ball#16:inside",
+      "status": "pass",
+      "message": "ball#16 inside hopper_cavity (0.2435 mm3 outside, 0 mm from its boundary)",
+      "parts": [
+        "ball#16"
+      ],
+      "evidence": {
+        "relation": {
+          "state": "contains",
+          "gap_mm": 0.0,
+          "overlap_mm3": 6124.33271,
+          "a_outside_b_mm3": 0.243541,
+          "b_outside_a_mm3": 632244.631815,
+          "contained": "a_in_b",
+          "wall_mm": 0.0,
+          "witness": {
+            "overlap_centroid": [
+              -83.239582,
+              13.749835,
+              181.2
+            ],
+            "overlap_box": [
+              -94.59,
+              2.4,
+              169.85,
+              -71.89,
+              25.1,
+              192.55
+            ],
+            "inner_point": [
+              -93.414196,
+              18.664427,
+              182.275477
+            ],
+            "outer_point": [
+              -93.414196,
+              18.664427,
+              182.275477
+            ]
+          },
+          "cached": false
+        },
+        "outside_mm3": 0.243541,
+        "clearance_mm": 0.0
+      }
+    },
+    {
+      "id": "contains:hopper_cavity:ball#16:wall",
+      "status": "pass",
+      "message": "ball#16 vs hopper: touching (gap 0 mm)",
+      "parts": [
+        "ball#16"
+      ],
+      "evidence": {
+        "relation": {
+          "state": "touching",
+          "gap_mm": 0.0,
+          "overlap_mm3": 0.243541,
+          "witness": {
+            "point_a": [
+              -93.247628,
+              19.064684,
+              180.548833
+            ],
+            "point_b": [
+              -93.247628,
+              19.064684,
+              180.548833
+            ]
+          },
+          "cached": false
+        }
+      }
+    },
+    {
+      "id": "contains:hopper_cavity:ball#17:inside",
+      "status": "pass",
+      "message": "ball#17 inside hopper_cavity (0.01558 mm3 outside, 0 mm from its boundary)",
+      "parts": [
+        "ball#17"
+      ],
+      "evidence": {
+        "relation": {
+          "state": "contains",
+          "gap_mm": 0.0,
+          "overlap_mm3": 6124.562839,
+          "a_outside_b_mm3": 0.015575,
+          "b_outside_a_mm3": 632244.44474,
+          "contained": "a_in_b",
+          "wall_mm": 0.0,
+          "witness": {
+            "overlap_centroid": [
+              -81.969974,
+              -16.509987,
+              182.32
+            ],
+            "overlap_box": [
+              -93.32,
+              -27.86,
+              170.97,
+              -70.62,
+              -5.16,
+              193.67
+            ],
+            "inner_point": [
+              -91.824347,
+              -22.141288,
+              182.374282
+            ],
+            "outer_point": [
+              -91.824347,
+              -22.141288,
+              182.374282
+            ]
+          },
+          "cached": false
+        },
+        "outside_mm3": 0.015575,
+        "clearance_mm": 0.0
+      }
+    },
+    {
+      "id": "contains:hopper_cavity:ball#17:wall",
+      "status": "pass",
+      "message": "ball#17 vs hopper: touching (gap 0 mm)",
+      "parts": [
+        "ball#17"
+      ],
+      "evidence": {
+        "relation": {
+          "state": "touching",
+          "gap_mm": 0.0,
+          "overlap_mm3": 0.015575,
+          "witness": {
+            "point_a": [
+              -92.163877,
+              -21.456046,
+              182.986324
+            ],
+            "point_b": [
+              -92.163877,
+              -21.456046,
+              182.986324
+            ]
+          },
+          "cached": false
+        }
+      }
+    },
+    {
+      "id": "contains:hopper_cavity:ball#18:inside",
+      "status": "pass",
+      "message": "ball#18 inside hopper_cavity (0 mm3 outside, 2.775 mm from its boundary)",
+      "parts": [
+        "ball#18"
+      ],
+      "evidence": {
+        "relation": {
+          "state": "contains",
+          "gap_mm": 0.0,
+          "overlap_mm3": 6124.578337,
+          "a_outside_b_mm3": 0.0,
+          "b_outside_a_mm3": 632244.427797,
+          "contained": "a_in_b",
+          "wall_mm": 2.775282,
+          "witness": {
+            "overlap_centroid": [
+              -59.5,
+              -33.03,
+              183.31
+            ],
+            "overlap_box": [
+              -70.85,
+              -44.38,
+              171.96,
+              -48.15,
+              -21.68,
+              194.66
+            ],
+            "inner_point": [
+              -63.231982,
+              -43.7489,
+              183.310001
+            ],
+            "outer_point": [
+              -64.14452,
+              -46.369866,
+              183.310001
+            ]
+          },
+          "cached": false
+        },
+        "outside_mm3": 0.0,
+        "clearance_mm": 2.775282
+      }
+    },
+    {
+      "id": "contains:hopper_cavity:ball#18:wall",
+      "status": "pass",
+      "message": "ball#18 vs hopper: apart (gap 2.775 mm)",
+      "parts": [
+        "ball#18"
+      ],
+      "evidence": {
+        "relation": {
+          "state": "apart",
+          "gap_mm": 2.775282,
+          "overlap_mm3": 0.0,
+          "witness": {
+            "point_a": [
+              -63.231981,
+              -43.7489,
+              183.31
+            ],
+            "point_b": [
+              -64.144519,
+              -46.369866,
+              183.31
+            ]
+          },
+          "cached": false
+        }
+      }
+    },
+    {
+      "id": "contains:hopper_cavity:ball#19:inside",
+      "status": "pass",
+      "message": "ball#19 inside hopper_cavity (0.01425 mm3 outside, 0 mm from its boundary)",
+      "parts": [
+        "ball#19"
+      ],
+      "evidence": {
+        "relation": {
+          "state": "contains",
+          "gap_mm": 0.0,
+          "overlap_mm3": 6124.564082,
+          "a_outside_b_mm3": 0.014254,
+          "b_outside_a_mm3": 632244.442056,
+          "contained": "a_in_b",
+          "wall_mm": 0.0,
+          "witness": {
+            "overlap_centroid": [
+              -22.5,
+              -27.25,
+              165.080026
+            ],
+            "overlap_box": [
+              -33.85,
+              -38.6,
+              153.75,
+              -11.15,
+              -15.9,
+              176.43
+            ],
+            "inner_point": [
+              -21.826502,
+              -27.25,
+              153.75
+            ],
+            "outer_point": [
+              -21.826502,
+              -27.25,
+              153.75
+            ]
+          },
+          "cached": false
+        },
+        "outside_mm3": 0.014254,
+        "clearance_mm": 0.0
+      }
+    },
+    {
+      "id": "contains:hopper_cavity:ball#19:wall",
+      "status": "pass",
+      "message": "ball#19 vs hopper: apart (gap 0.4296 mm)",
+      "parts": [
+        "ball#19"
+      ],
+      "evidence": {
+        "relation": {
+          "state": "apart",
+          "gap_mm": 0.429597,
+          "overlap_mm3": 0.0,
+          "witness": {
+            "point_a": [
+              -14.744859,
+              -35.537357,
+              165.08
+            ],
+            "point_b": [
+              -14.451327,
+              -35.851033,
+              165.08
+            ]
+          },
+          "cached": false
+        }
+      }
+    },
+    {
+      "id": "contains:hopper_cavity:ball#20:inside",
+      "status": "pass",
+      "message": "ball#20 inside hopper_cavity (0 mm3 outside, 0 mm from its boundary)",
+      "parts": [
+        "ball#20"
+      ],
+      "evidence": {
+        "relation": {
+          "state": "contains",
+          "gap_mm": 0.0,
+          "overlap_mm3": 6124.578337,
+          "a_outside_b_mm3": 0.0,
+          "b_outside_a_mm3": 632244.427811,
+          "contained": "a_in_b",
+          "wall_mm": 0.0,
+          "witness": {
+            "overlap_centroid": [
+              -14.58,
+              17.59,
+              174.04
+            ],
+            "overlap_box": [
+              -25.93,
+              6.24,
+              162.69,
+              -3.23,
+              28.94,
+              185.39
+            ],
+            "inner_point": [
+              -4.639802,
+              23.036998,
+              173.452473
+            ],
+            "outer_point": [
+              -4.639802,
+              23.036998,
+              173.452473
+            ]
+          },
+          "cached": false
+        },
+        "outside_mm3": 0.0,
+        "clearance_mm": 0.0
+      }
+    },
+    {
+      "id": "contains:hopper_cavity:ball#20:wall",
+      "status": "pass",
+      "message": "ball#20 vs hopper: touching (gap 0 mm)",
+      "parts": [
+        "ball#20"
+      ],
+      "evidence": {
+        "relation": {
+          "state": "touching",
+          "gap_mm": 0.0,
+          "overlap_mm3": 0.010993,
+          "witness": {
+            "point_a": [
+              -4.284532,
+              22.355487,
+              173.699473
+            ],
+            "point_b": [
+              -4.284532,
+              22.355487,
+              173.699473
+            ]
+          },
+          "cached": false
+        }
+      }
+    },
+    {
+      "id": "contains:hopper_cavity:ball#21:inside",
+      "status": "pass",
+      "message": "ball#21 inside hopper_cavity (0 mm3 outside, 13.09 mm from its boundary)",
+      "parts": [
+        "ball#21"
+      ],
+      "evidence": {
+        "relation": {
+          "state": "contains",
+          "gap_mm": 0.0,
+          "overlap_mm3": 6124.578337,
+          "a_outside_b_mm3": 0.0,
+          "b_outside_a_mm3": 632244.427803,
+          "contained": "a_in_b",
+          "wall_mm": 13.09045,
+          "witness": {
+            "overlap_centroid": [
+              -43.74,
+              -20.83,
+              197.79
+            ],
+            "overlap_box": [
+              -55.09,
+              -32.18,
+              186.44,
+              -32.39,
+              -9.48,
+              209.14
+            ],
+            "inner_point": [
+              -44.486908,
+              -13.209023,
+              189.412331
+            ],
+            "outer_point": [
+              -45.34835,
+              -4.419417,
+              179.75
+            ]
+          },
+          "cached": false
+        },
+        "outside_mm3": 0.0,
+        "clearance_mm": 13.09045
+      }
+    },
+    {
+      "id": "contains:hopper_cavity:ball#21:wall",
+      "status": "pass",
+      "message": "ball#21 vs hopper: apart (gap 16.49 mm)",
+      "parts": [
+        "ball#21"
+      ],
+      "evidence": {
+        "relation": {
+          "state": "apart",
+          "gap_mm": 16.48885,
+          "overlap_mm3": 0.0,
+          "witness": {
+            "point_a": [
+              -41.465852,
+              -31.949836,
+              197.79
+            ],
+            "point_b": [
+              -38.162056,
+              -48.104312,
+              197.79
+            ]
+          },
+          "cached": false
+        }
+      }
+    },
+    {
+      "id": "contains:hopper_cavity:ball#22:inside",
+      "status": "pass",
+      "message": "ball#22 inside hopper_cavity (0.2812 mm3 outside, 0 mm from its boundary)",
+      "parts": [
+        "ball#22"
+      ],
+      "evidence": {
+        "relation": {
+          "state": "contains",
+          "gap_mm": 0.0,
+          "overlap_mm3": 6124.295589,
+          "a_outside_b_mm3": 0.281191,
+          "b_outside_a_mm3": 632244.678962,
+          "contained": "a_in_b",
+          "wall_mm": 0.0,
+          "witness": {
+            "overlap_centroid": [
+              -73.029658,
+              28.36961,
+              195.2
+            ],
+            "overlap_box": [
+              -84.38,
+              17.02,
+              183.85,
+              -61.68,
+              39.72,
+              206.55
+            ],
+            "inner_point": [
+              -80.625815,
+              36.692863,
+              196.562368
+            ],
+            "outer_point": [
+              -80.625815,
+              36.692863,
+              196.562368
+            ]
+          },
+          "cached": false
+        },
+        "outside_mm3": 0.281191,
+        "clearance_mm": 0.0
+      }
+    },
+    {
+      "id": "contains:hopper_cavity:ball#22:wall",
+      "status": "pass",
+      "message": "ball#22 vs hopper: touching (gap 0 mm)",
+      "parts": [
+        "ball#22"
+      ],
+      "evidence": {
+        "relation": {
+          "state": "touching",
+          "gap_mm": 0.0,
+          "overlap_mm3": 0.281192,
+          "witness": {
+            "point_a": [
+              -81.262649,
+              36.116564,
+              194.181796
+            ],
+            "point_b": [
+              -81.262649,
+              36.116564,
+              194.181796
+            ]
+          },
+          "cached": false
+        }
+      }
+    },
+    {
+      "id": "contains:hopper_cavity:ball#23:inside",
+      "status": "pass",
+      "message": "ball#23 inside hopper_cavity (0.004677 mm3 outside, 0 mm from its boundary)",
+      "parts": [
+        "ball#23"
+      ],
+      "evidence": {
+        "relation": {
+          "state": "contains",
+          "gap_mm": 0.0,
+          "overlap_mm3": 6124.573631,
+          "a_outside_b_mm3": 0.004677,
+          "b_outside_a_mm3": 632244.43195,
+          "contained": "a_in_b",
+          "wall_mm": 0.0,
+          "witness": {
+            "overlap_centroid": [
+              -85.749991,
+              -0.9,
+              198.32
+            ],
+            "overlap_box": [
+              -97.1,
+              -12.25,
+              186.97,
+              -74.4,
+              10.45,
+              209.67
+            ],
+            "inner_point": [
+              -97.091995,
+              -0.886562,
+              197.894018
+            ],
+            "outer_point": [
+              -97.091995,
+              -0.886562,
+              197.894018
+            ]
+          },
+          "cached": false
+        },
+        "outside_mm3": 0.004677,
+        "clearance_mm": 0.0
+      }
+    },
+    {
+      "id": "contains:hopper_cavity:ball#23:wall",
+      "status": "pass",
+      "message": "ball#23 vs hopper: touching (gap 0 mm)",
+      "parts": [
+        "ball#23"
+      ],
+      "evidence": {
+        "relation": {
+          "state": "touching",
+          "gap_mm": 0.0,
+          "overlap_mm3": 0.004677,
+          "witness": {
+            "point_a": [
+              -97.087706,
+              -1.098691,
+              197.830669
+            ],
+            "point_b": [
+              -97.087706,
+              -1.098691,
+              197.830669
+            ]
+          },
+          "cached": false
+        }
+      }
+    },
+    {
+      "id": "contains:hopper_cavity:ball#24:inside",
+      "status": "pass",
+      "message": "ball#24 inside hopper_cavity (0.05737 mm3 outside, 0 mm from its boundary)",
+      "parts": [
+        "ball#24"
+      ],
+      "evidence": {
+        "relation": {
+          "state": "contains",
+          "gap_mm": 0.0,
+          "overlap_mm3": 6124.521164,
+          "a_outside_b_mm3": 0.05737,
+          "b_outside_a_mm3": 632244.488676,
+          "contained": "a_in_b",
+          "wall_mm": 0.0,
+          "witness": {
+            "overlap_centroid": [
+              -73.669928,
+              -27.729922,
+              200.19
+            ],
+            "overlap_box": [
+              -85.02,
+              -39.08,
+              188.84,
+              -62.32,
+              -16.38,
+              211.54
+            ],
+            "inner_point": [
+              -81.621362,
+              -35.782874,
+              201.05578
+            ],
+            "outer_point": [
+              -81.621362,
+              -35.782874,
+              201.05578
+            ]
+          },
+          "cached": false
+        },
+        "outside_mm3": 0.05737,
+        "clearance_mm": 0.0
+      }
+    },
+    {
+      "id": "contains:hopper_cavity:ball#24:wall",
+      "status": "pass",
+      "message": "ball#24 vs hopper: touching (gap 0 mm)",
+      "parts": [
+        "ball#24"
+      ],
+      "evidence": {
+        "relation": {
+          "state": "touching",
+          "gap_mm": 0.0,
+          "overlap_mm3": 0.05737,
+          "witness": {
+            "point_a": [
+              -81.210939,
+              -36.164119,
+              201.096846
+            ],
+            "point_b": [
+              -81.210939,
+              -36.164119,
+              201.096846
+            ]
+          },
+          "cached": false
+        }
+      }
+    },
+    {
+      "id": "contains:hopper_cavity:ball#25:inside",
+      "status": "pass",
+      "message": "ball#25 inside hopper_cavity (0.66 mm3 outside, 0 mm from its boundary)",
+      "parts": [
+        "ball#25"
+      ],
+      "evidence": {
+        "relation": {
+          "state": "contains",
+          "gap_mm": 0.0,
+          "overlap_mm3": 6123.910933,
+          "a_outside_b_mm3": 0.660014,
+          "b_outside_a_mm3": 632244.953889,
+          "contained": "a_in_b",
+          "wall_mm": 0.0,
+          "witness": {
+            "overlap_centroid": [
+              -33.470464,
+              -34.978881,
+              183.38
+            ],
+            "overlap_box": [
+              -44.82,
+              -46.33,
+              172.03,
+              -22.12,
+              -23.63,
+              194.73
+            ],
+            "inner_point": [
+              -30.617688,
+              -45.920205,
+              182.380635
+            ],
+            "outer_point": [
+              -30.617688,
+              -45.920205,
+              182.380635
+            ]
+          },
+          "cached": false
+        },
+        "outside_mm3": 0.660014,
+        "clearance_mm": 0.0
+      }
+    },
+    {
+      "id": "contains:hopper_cavity:ball#25:wall",
+      "status": "pass",
+      "message": "ball#25 vs hopper: touching (gap 0 mm)",
+      "parts": [
+        "ball#25"
+      ],
+      "evidence": {
+        "relation": {
+          "state": "touching",
+          "gap_mm": 0.0,
+          "overlap_mm3": 0.660014,
+          "witness": {
+            "point_a": [
+              -30.860434,
+              -46.01136,
+              183.947236
+            ],
+            "point_b": [
+              -30.860434,
+              -46.01136,
+              183.947236
+            ]
+          },
+          "cached": false
+        }
+      }
+    },
+    {
+      "id": "contains:hopper_cavity:ball#26:inside",
+      "status": "pass",
+      "message": "ball#26 inside hopper_cavity (0.06198 mm3 outside, 0 mm from its boundary)",
+      "parts": [
+        "ball#26"
+      ],
+      "evidence": {
+        "relation": {
+          "state": "contains",
+          "gap_mm": 0.0,
+          "overlap_mm3": 6124.510385,
+          "a_outside_b_mm3": 0.061976,
+          "b_outside_a_mm3": 632244.382713,
+          "contained": "a_in_b",
+          "wall_mm": 0.0,
+          "witness": {
+            "overlap_centroid": [
+              -16.610094,
+              -21.039937,
+              189.33
+            ],
+            "overlap_box": [
+              -27.96,
+              -32.39,
+              177.98,
+              -5.26,
+              -9.69,
+              200.68
+            ],
+            "inner_point": [
+              -6.836238,
+              -26.764804,
+              190.052982
+            ],
+            "outer_point": [
+              -6.836238,
+              -26.764804,
+              190.052982
+            ]
+          },
+          "cached": false
+        },
+        "outside_mm3": 0.061976,
+        "clearance_mm": 0.0
+      }
+    },
+    {
+      "id": "contains:hopper_cavity:ball#26:wall",
+      "status": "pass",
+      "message": "ball#26 vs hopper: touching (gap 0 mm)",
+      "parts": [
+        "ball#26"
+      ],
+      "evidence": {
+        "relation": {
+          "state": "touching",
+          "gap_mm": 0.0,
+          "overlap_mm3": 0.061976,
+          "witness": {
+            "point_a": [
+              -7.016108,
+              -27.039427,
+              190.216914
+            ],
+            "point_b": [
+              -7.016108,
+              -27.039427,
+              190.216914
+            ]
+          },
+          "cached": false
+        }
+      }
+    },
+    {
+      "id": "contains:hopper_cavity:ball#27:inside",
+      "status": "pass",
+      "message": "ball#27 inside hopper_cavity (0.5056 mm3 outside, 0 mm from its boundary)",
+      "parts": [
+        "ball#27"
+      ],
+      "evidence": {
+        "relation": {
+          "state": "contains",
+          "gap_mm": 0.0,
+          "overlap_mm3": 6124.072165,
+          "a_outside_b_mm3": 0.505581,
+          "b_outside_a_mm3": 632244.920642,
+          "contained": "a_in_b",
+          "wall_mm": 0.0,
+          "witness": {
+            "overlap_centroid": [
+              -28.51048,
+              32.459202,
+              183.95
+            ],
+            "overlap_box": [
+              -39.86,
+              21.11,
+              172.6,
+              -17.16,
+              43.81,
+              195.3
+            ],
+            "inner_point": [
+              -22.445268,
+              41.925716,
+              185.512608
+            ],
+            "outer_point": [
+              -22.445268,
+              41.925716,
+              185.512608
+            ]
+          },
+          "cached": false
+        },
+        "outside_mm3": 0.505581,
+        "clearance_mm": 0.0
+      }
+    },
+    {
+      "id": "contains:hopper_cavity:ball#27:wall",
+      "status": "pass",
+      "message": "ball#27 vs hopper: touching (gap 0 mm)",
+      "parts": [
+        "ball#27"
+      ],
+      "evidence": {
+        "relation": {
+          "state": "touching",
+          "gap_mm": 0.0,
+          "overlap_mm3": 0.505581,
+          "witness": {
+            "point_a": [
+              -22.436775,
+              41.920538,
+              182.389022
+            ],
+            "point_b": [
+              -22.436775,
+              41.920538,
+              182.389022
+            ]
+          },
+          "cached": false
+        }
+      }
+    },
+    {
+      "id": "contains:hopper_cavity:ball#28:inside",
+      "status": "pass",
+      "message": "ball#28 inside hopper_cavity (0 mm3 outside, 10.98 mm from its boundary)",
+      "parts": [
+        "ball#28"
+      ],
+      "evidence": {
+        "relation": {
+          "state": "contains",
+          "gap_mm": 0.0,
+          "overlap_mm3": 6124.578337,
+          "a_outside_b_mm3": 0.0,
+          "b_outside_a_mm3": 632244.427804,
+          "contained": "a_in_b",
+          "wall_mm": 10.976029,
+          "witness": {
+            "overlap_centroid": [
+              -46.75,
+              22.4,
+              192.91
+            ],
+            "overlap_box": [
+              -58.1,
+              11.05,
+              181.56,
+              -35.4,
+              33.75,
+              204.26
+            ],
+            "inner_point": [
+              -46.037436,
+              13.259117,
+              186.219782
+            ],
+            "outer_point": [
+              -45.34835,
+              4.419417,
+              179.75
+            ]
+          },
+          "cached": false
+        },
+        "outside_mm3": 0.0,
+        "clearance_mm": 10.976029
+      }
+    },
+    {
+      "id": "contains:hopper_cavity:ball#28:wall",
+      "status": "pass",
+      "message": "ball#28 vs hopper: apart (gap 15.32 mm)",
+      "parts": [
+        "ball#28"
+      ],
+      "evidence": {
+        "relation": {
+          "state": "apart",
+          "gap_mm": 15.31515,
+          "overlap_mm3": 0.0,
+          "witness": {
+            "point_a": [
+              -46.117613,
+              33.732369,
+              192.91
+            ],
+            "point_b": [
+              -45.264301,
+              49.023728,
+              192.91
+            ]
+          },
+          "cached": false
+        }
+      }
+    },
+    {
+      "id": "contains:hopper_cavity:ball#29:inside",
+      "status": "pass",
+      "message": "ball#29 inside hopper_cavity (0 mm3 outside, 0.8084 mm from its boundary)",
+      "parts": [
+        "ball#29"
+      ],
+      "evidence": {
+        "relation": {
+          "state": "contains",
+          "gap_mm": 0.0,
+          "overlap_mm3": 6124.578337,
+          "a_outside_b_mm3": 0.0,
+          "b_outside_a_mm3": 632244.427801,
+          "contained": "a_in_b",
+          "wall_mm": 0.808425,
+          "witness": {
+            "overlap_centroid": [
+              -81.2,
+              16.2,
+              212.5
+            ],
+            "overlap_box": [
+              -92.55,
+              4.85,
+              201.15,
+              -69.85,
+              27.55,
+              223.85
+            ],
+            "inner_point": [
+              -91.400432,
+              21.177318,
+              212.499998
+            ],
+            "outer_point": [
+              -92.126976,
+              21.531837,
+              212.499998
+            ]
+          },
+          "cached": false
+        },
+        "outside_mm3": 0.0,
+        "clearance_mm": 0.808425
+      }
+    },
+    {
+      "id": "contains:hopper_cavity:ball#29:wall",
+      "status": "pass",
+      "message": "ball#29 vs hopper: apart (gap 0.8084 mm)",
+      "parts": [
+        "ball#29"
+      ],
+      "evidence": {
+        "relation": {
+          "state": "apart",
+          "gap_mm": 0.808425,
+          "overlap_mm3": 0.0,
+          "witness": {
+            "point_a": [
+              -91.400431,
+              21.177319,
+              212.5
+            ],
+            "point_b": [
+              -92.126976,
+              21.531837,
+              212.5
+            ]
+          },
+          "cached": false
+        }
+      }
+    },
+    {
+      "id": "contains:hopper_cavity:ball:interpenetration",
+      "status": "pass",
+      "message": "no two of the 30 ball instances share volume (47 pairs in contact range)",
+      "evidence": {
+        "instances": 30,
+        "pairs_checked": 47,
+        "overlaps": [],
+        "unknown": [],
+        "excluded": []
+      }
+    },
+    {
+      "id": "contains:hopper_cavity:ball:support",
+      "status": "warn",
+      "message": "2 of 30 ball instance(s) rest on nothing within 0.5 mm along [0.0, 0.0, -1.0]: ball#14, ball#20",
+      "parts": [
+        "ball#14",
+        "ball#20"
+      ],
+      "evidence": {
+        "down": [
+          0.0,
+          0.0,
+          -1.0
+        ],
+        "support_mm": 0.5,
+        "mode": "report",
+        "on_cavity": [
+          "ball#0",
+          "ball#1",
+          "ball#10",
+          "ball#11",
+          "ball#12",
+          "ball#13",
+          "ball#19",
+          "ball#2",
+          "ball#3",
+          "ball#4",
+          "ball#5",
+          "ball#6",
+          "ball#7",
+          "ball#8",
+          "ball#9"
+        ],
+        "rests_on": {
+          "ball#8": [
+            "ball#1"
+          ],
+          "ball#10": [
+            "ball#4"
+          ],
+          "ball#11": [
+            "ball#5"
+          ],
+          "ball#12": [
+            "ball#6"
+          ],
+          "ball#15": [
+            "ball#8",
+            "ball#9"
+          ],
+          "ball#16": [
+            "ball#10",
+            "ball#9"
+          ],
+          "ball#17": [
+            "ball#10",
+            "ball#11"
+          ],
+          "ball#18": [
+            "ball#11",
+            "ball#12"
+          ],
+          "ball#21": [
+            "ball#25"
+          ],
+          "ball#22": [
+            "ball#15",
+            "ball#16"
+          ],
+          "ball#23": [
+            "ball#16",
+            "ball#17"
+          ],
+          "ball#24": [
+            "ball#17",
+            "ball#18"
+          ],
+          "ball#25": [
+            "ball#12",
+            "ball#19"
+          ],
+          "ball#26": [
+            "ball#13"
+          ],
+          "ball#27": [
+            "ball#20",
+            "ball#8"
+          ],
+          "ball#28": [
+            "ball#15",
+            "ball#27"
+          ],
+          "ball#29": [
+            "ball#22",
+            "ball#23"
+          ]
+        },
+        "unsupported": [
+          "ball#14",
+          "ball#20"
+        ],
+        "errors": []
+      }
+    }
+  ],
+  "findings": [
+    {
+      "id": "contains:hopper_cavity:ball:support",
+      "status": "warn",
+      "message": "2 of 30 ball instance(s) rest on nothing within 0.5 mm along [0.0, 0.0, -1.0]: ball#14, ball#20",
+      "parts": [
+        "ball#14",
+        "ball#20"
+      ],
+      "evidence": {
+        "down": [
+          0.0,
+          0.0,
+          -1.0
+        ],
+        "support_mm": 0.5,
+        "mode": "report",
+        "on_cavity": [
+          "ball#0",
+          "ball#1",
+          "ball#10",
+          "ball#11",
+          "ball#12",
+          "ball#13",
+          "ball#19",
+          "ball#2",
+          "ball#3",
+          "ball#4",
+          "ball#5",
+          "ball#6",
+          "ball#7",
+          "ball#8",
+          "ball#9"
+        ],
+        "rests_on": {
+          "ball#8": [
+            "ball#1"
+          ],
+          "ball#10": [
+            "ball#4"
+          ],
+          "ball#11": [
+            "ball#5"
+          ],
+          "ball#12": [
+            "ball#6"
+          ],
+          "ball#15": [
+            "ball#8",
+            "ball#9"
+          ],
+          "ball#16": [
+            "ball#10",
+            "ball#9"
+          ],
+          "ball#17": [
+            "ball#10",
+            "ball#11"
+          ],
+          "ball#18": [
+            "ball#11",
+            "ball#12"
+          ],
+          "ball#21": [
+            "ball#25"
+          ],
+          "ball#22": [
+            "ball#15",
+            "ball#16"
+          ],
+          "ball#23": [
+            "ball#16",
+            "ball#17"
+          ],
+          "ball#24": [
+            "ball#17",
+            "ball#18"
+          ],
+          "ball#25": [
+            "ball#12",
+            "ball#19"
+          ],
+          "ball#26": [
+            "ball#13"
+          ],
+          "ball#27": [
+            "ball#20",
+            "ball#8"
+          ],
+          "ball#28": [
+            "ball#15",
+            "ball#27"
+          ],
+          "ball#29": [
+            "ball#22",
+            "ball#23"
+          ]
+        },
+        "unsupported": [
+          "ball#14",
+          "ball#20"
+        ],
+        "errors": []
+      }
+    }
+  ],
+  "exclusions": [],
+  "limits": {
+    "touch_mm": 0.2,
+    "contain_mm3": 1.0,
+    "overlap_mm3": 1.0,
+    "volume_check_mm3": 0.2,
+    "support": "report",
+    "down": [
+      0.0,
+      0.0,
+      -1.0
+    ],
+    "support_mm": 0.5,
+    "witness_deflection_mm": 0.05,
+    "witness_max_points": 600,
+    "contact_probe": false,
+    "probe_deflection_mm": 0.01,
+    "probe_points": 20000,
+    "probe_spacing_mm": 0.5,
+    "mesh_samples": 4000,
+    "seed": 0,
+    "poses": {}
+  },
+  "assumptions": [
+    "each content instance is tested against the registered cavity solid with non-destructive OCCT booleans (common and cut volumes, cross-checked) against the registered cavity solid",
+    "inside means no more than contain_mm3 of the instance is outside the cavity; touching the cavity boundary is inside",
+    "the wall check tests each instance against the container's solid: touching is allowed, shared volume above overlap_mm3 fails",
+    "the point furthest outside is the furthest of the vertices of a tessellation of the escaped piece, climbed to the piece's extreme point along the outward direction; its depth is a lower bound",
+    "an instance touching the cavity boundary is re-checked by classifying points on its surface (tessellation nodes at probe_deflection_mm and a UV grid of about probe_spacing_mm per face) against the cavity, because the boolean can miss a shallow near-tangent crossing; a crossing whose footprint falls between samples, or no deeper than touch_mm, can still be missed",
+    "the cavity-fit check requires the cavity to share no volume with the container and to lie within the box of the container and its closed_by parts; a cavity that stays inside that box but outside the material (beside an L-shaped container) is not caught",
+    "support is a static contact test (the instance moved support_mm along `down` pushes further out of the cavity or into a supported instance than before the move, by boolean volume or, for a pair with no shared volume within support_mm, by the surface probe), not a settling or stability simulation; only the cavity and other instances count as support",
+    "mesh-only items are sample-only: Monte Carlo volume estimates against the exact solids, with no interpenetration or support check",
+    "the model is checked, not the print: no tolerance stack, shrink or deflection"
+  ],
+  "physical_fit_verified": false,
+  "declarations": [
+    {
+      "pose": null,
+      "container": "hopper",
+      "cavity": "hopper_cavity",
+      "what": "ball",
+      "count": 30,
+      "free": false,
+      "closed_by": [
+        "cartridge_body",
+        "hopper_lid"
+      ],
+      "instances": 30,
+      "inside": 30,
+      "escaped": [],
+      "status": "warn"
+    }
+  ]
+}

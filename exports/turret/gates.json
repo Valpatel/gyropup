@@ -1,679 +1,175 @@
 {
- "fingerprint": "16ecc65b1a2dbb9b",
+ "toolkit": "cadagent.gates (connectivity, containment, relation table)",
+ "fingerprint": "d94524aefb4f389c",
  "pile": "exports/turret/feed/pile.json",
- "seconds": 73,
+ "verdicts": "exports/turret/gates",
+ "seconds": {
+  "connectivity": 63.0,
+  "hopper": 1436.5,
+  "path": 26.5,
+  "sweep": 2.0,
+  "ammo_range": 28.7
+ },
  "ok": true,
  "gates": {
-  "hopper_in_cavity": {
+  "connectivity": {
    "ok": true,
-   "spheres": 30,
-   "radius_mm": 11.35,
-   "max_mm3": 1.0,
-   "violations": [],
-   "tightest": [
+   "status": "warn",
+   "counts": {
+    "pass": 29,
+    "warn": 57,
+    "fail": 0
+   },
+   "findings": [
     {
-     "sphere": "pocket 1",
-     "solid": "cartridge_body",
-     "gap_mm": 0.0
+     "id": "contact:barrel|cartridge_body",
+     "status": "warn",
+     "message": "barrel and cartridge_body are in contact (touching, 228 mm2) but no interface, joint, fastener, contains or intended overlap declares it"
     },
     {
-     "sphere": "pocket 4",
-     "solid": "cartridge_body",
-     "gap_mm": 0.0
+     "id": "contact:base_board|pan_base",
+     "status": "warn",
+     "message": "base_board and pan_base are in contact (touching, 93.9 mm2) but no interface, joint, fastener, contains or intended overlap declares it"
     },
     {
-     "sphere": "pile 7",
-     "solid": "hopper",
-     "gap_mm": 0.0
+     "id": "contact:board_bay|board_bay_lid",
+     "status": "warn",
+     "message": "board_bay and board_bay_lid are in contact (touching, 599 mm2) but no interface, joint, fastener, contains or intended overlap declares it"
     },
     {
-     "sphere": "pile 8",
-     "solid": "hopper",
-     "gap_mm": 0.0
+     "id": "contact:board_bay|tilt_yoke",
+     "status": "warn",
+     "message": "board_bay and tilt_yoke are in contact (touching, 1.99e+03 mm2) but no interface, joint, fastener, contains or intended overlap declares it"
     },
     {
-     "sphere": "pile 9",
-     "solid": "hopper",
-     "gap_mm": 0.0
+     "id": "contact:board_bay|turret_board",
+     "status": "warn",
+     "message": "board_bay and turret_board are in contact (touching, 177 mm2) but no interface, joint, fastener, contains or intended overlap declares it"
+    },
+    {
+     "id": "contact:bumper_ring|pan_base",
+     "status": "warn",
+     "message": "bumper_ring and pan_base are in contact (overlapping, 0.04121 mm3 shared) but no interface, joint, fastener, contains or intended overlap declares it"
+    },
+    {
+     "id": "contact:cartridge_board|cartridge_body",
+     "status": "warn",
+     "message": "cartridge_board and cartridge_body are in contact (touching, 104 mm2) but no interface, joint, fastener, contains or intended overlap declares it"
+    },
+    {
+     "id": "contact:cartridge_body|cradle",
+     "status": "warn",
+     "message": "cartridge_body and cradle are in contact (touching, 3.27e+03 mm2) but no interface, joint, fastener, contains or intended overlap declares it"
+    },
+    {
+     "id": "contact:cartridge_body|esc_l",
+     "status": "warn",
+     "message": "cartridge_body and esc_l are in contact (overlapping, 3.38 mm3 shared) but no interface, joint, fastener, contains or intended overlap declares it"
+    },
+    {
+     "id": "contact:cartridge_body|esc_r",
+     "status": "warn",
+     "message": "cartridge_body and esc_r are in contact (overlapping, 3.38 mm3 shared) but no interface, joint, fastener, contains or intended overlap declares it"
+    },
+    {
+     "id": "contact:cartridge_body|feed_motor",
+     "status": "warn",
+     "message": "cartridge_body and feed_motor are in contact (touching, 445 mm2) but no interface, joint, fastener, contains or intended overlap declares it"
+    },
+    {
+     "id": "contact:cartridge_body|flywheel_motor_l",
+     "status": "warn",
+     "message": "cartridge_body and flywheel_motor_l are in contact (touching, 459 mm2) but no interface, joint, fastener, contains or intended overlap declares it"
+    },
+    {
+     "id": "contact:cartridge_body|flywheel_motor_r",
+     "status": "warn",
+     "message": "cartridge_body and flywheel_motor_r are in contact (touching, 459 mm2) but no interface, joint, fastener, contains or intended overlap declares it"
+    },
+    {
+     "id": "contact:cartridge_body|hopper",
+     "status": "warn",
+     "message": "cartridge_body and hopper are in contact (touching, 716 mm2) but no interface, joint, fastener, contains or intended overlap declares it"
+    },
+    {
+     "id": "contact:cartridge_body|laser_mount",
+     "status": "warn",
+     "message": "cartridge_body and laser_mount are in contact (touching, 197 mm2) but no interface, joint, fastener, contains or intended overlap declares it"
+    },
+    {
+     "id": "contact:circlip_50|pan_ring",
+     "status": "warn",
+     "message": "circlip_50 and pan_ring are in contact (overlapping, 0.05161 mm3 shared) but no interface, joint, fastener, contains or intended overlap declares it"
+    },
+    {
+     "id": "contact:circlip_50|pan_spacer",
+     "status": "warn",
+     "message": "circlip_50 and pan_spacer are in contact (touching, 596 mm2) but no interface, joint, fastener, contains or intended overlap declares it"
+    },
+    {
+     "id": "contact:compute|compute_shell",
+     "status": "warn",
+     "message": "compute and compute_shell are in contact (touching, 160 mm2) but no interface, joint, fastener, contains or intended overlap declares it"
+    },
+    {
+     "id": "contact:compute|compute_tray",
+     "status": "warn",
+     "message": "compute and compute_tray are in contact (touching, 5.98e+03 mm2) but no interface, joint, fastener, contains or intended overlap declares it"
+    },
+    {
+     "id": "contact:compute_shell|compute_tray",
+     "status": "warn",
+     "message": "compute_shell and compute_tray are in contact (touching, 2.36e+03 mm2) but no interface, joint, fastener, contains or intended overlap declares it"
     }
    ],
-   "allowed_contacts": []
+   "floating": [],
+   "unrealised": []
   },
-  "hopper_overlap": {
+  "hopper": {
    "ok": true,
-   "tol_mm": 0.1,
-   "worst_overlap_mm": 0.069,
-   "violations": []
-  },
-  "path_in_cavity": {
-   "ok": true,
-   "spheres": 87,
-   "radius_mm": 11.35,
-   "max_mm3": 1.0,
-   "violations": [],
-   "tightest": [
+   "status": "warn",
+   "counts": {
+    "pass": 64,
+    "warn": 1,
+    "fail": 0
+   },
+   "findings": [
     {
-     "sphere": "path x 56 z 0",
-     "solid": "flywheel_tyre",
-     "gap_mm": 0.35
-    },
-    {
-     "sphere": "path x 37 z 21",
-     "solid": "dial",
-     "gap_mm": 0.75
-    },
-    {
-     "sphere": "path x 37 z 19",
-     "solid": "cartridge_body",
-     "gap_mm": 0.75
-    },
-    {
-     "sphere": "path x 37 z 17",
-     "solid": "cartridge_body",
-     "gap_mm": 0.75
-    },
-    {
-     "sphere": "path x 38 z 16",
-     "solid": "cartridge_body",
-     "gap_mm": 0.75
+     "id": "contains:hopper_cavity:ball:support",
+     "status": "warn",
+     "message": "2 of 30 ball instance(s) rest on nothing within 0.5 mm along [0.0, 0.0, -1.0]: ball#14, ball#20"
     }
-   ],
-   "allowed_contacts": [
-    [
-     17,
-     "flywheel"
-    ],
-    [
-     17,
-     "flywheel_m"
-    ],
-    [
-     17,
-     "flywheel_tyre"
-    ],
-    [
-     17,
-     "flywheel_tyre_m"
-    ],
-    [
-     18,
-     "flywheel"
-    ],
-    [
-     18,
-     "flywheel_m"
-    ],
-    [
-     18,
-     "flywheel_tyre"
-    ],
-    [
-     18,
-     "flywheel_tyre_m"
-    ],
-    [
-     19,
-     "flywheel"
-    ],
-    [
-     19,
-     "flywheel_m"
-    ],
-    [
-     19,
-     "flywheel_tyre"
-    ],
-    [
-     19,
-     "flywheel_tyre_m"
-    ],
-    [
-     20,
-     "flywheel"
-    ],
-    [
-     20,
-     "flywheel_m"
-    ],
-    [
-     20,
-     "flywheel_tyre"
-    ],
-    [
-     20,
-     "flywheel_tyre_m"
-    ],
-    [
-     21,
-     "flywheel"
-    ],
-    [
-     21,
-     "flywheel_m"
-    ],
-    [
-     21,
-     "flywheel_tyre"
-    ],
-    [
-     21,
-     "flywheel_tyre_m"
-    ],
-    [
-     22,
-     "flywheel"
-    ],
-    [
-     22,
-     "flywheel_m"
-    ],
-    [
-     22,
-     "flywheel_tyre"
-    ],
-    [
-     22,
-     "flywheel_tyre_m"
-    ],
-    [
-     23,
-     "flywheel"
-    ],
-    [
-     23,
-     "flywheel_m"
-    ],
-    [
-     23,
-     "flywheel_tyre"
-    ],
-    [
-     23,
-     "flywheel_tyre_m"
-    ],
-    [
-     24,
-     "flywheel"
-    ],
-    [
-     24,
-     "flywheel_m"
-    ],
-    [
-     24,
-     "flywheel_tyre"
-    ],
-    [
-     24,
-     "flywheel_tyre_m"
-    ],
-    [
-     25,
-     "flywheel"
-    ],
-    [
-     25,
-     "flywheel_m"
-    ],
-    [
-     25,
-     "flywheel_tyre"
-    ],
-    [
-     25,
-     "flywheel_tyre_m"
-    ],
-    [
-     26,
-     "flywheel"
-    ],
-    [
-     26,
-     "flywheel_m"
-    ],
-    [
-     26,
-     "flywheel_tyre"
-    ],
-    [
-     26,
-     "flywheel_tyre_m"
-    ],
-    [
-     27,
-     "flywheel"
-    ],
-    [
-     27,
-     "flywheel_m"
-    ],
-    [
-     27,
-     "flywheel_tyre"
-    ],
-    [
-     27,
-     "flywheel_tyre_m"
-    ],
-    [
-     28,
-     "flywheel"
-    ],
-    [
-     28,
-     "flywheel_m"
-    ],
-    [
-     28,
-     "flywheel_tyre"
-    ],
-    [
-     28,
-     "flywheel_tyre_m"
-    ],
-    [
-     29,
-     "flywheel"
-    ],
-    [
-     29,
-     "flywheel_m"
-    ],
-    [
-     29,
-     "flywheel_tyre"
-    ],
-    [
-     29,
-     "flywheel_tyre_m"
-    ],
-    [
-     30,
-     "flywheel"
-    ],
-    [
-     30,
-     "flywheel_m"
-    ],
-    [
-     30,
-     "flywheel_tyre"
-    ],
-    [
-     30,
-     "flywheel_tyre_m"
-    ],
-    [
-     31,
-     "flywheel"
-    ],
-    [
-     31,
-     "flywheel_m"
-    ],
-    [
-     31,
-     "flywheel_tyre"
-    ],
-    [
-     31,
-     "flywheel_tyre_m"
-    ],
-    [
-     32,
-     "flywheel"
-    ],
-    [
-     32,
-     "flywheel_m"
-    ],
-    [
-     32,
-     "flywheel_tyre"
-    ],
-    [
-     32,
-     "flywheel_tyre_m"
-    ],
-    [
-     33,
-     "flywheel"
-    ],
-    [
-     33,
-     "flywheel_m"
-    ],
-    [
-     33,
-     "flywheel_tyre"
-    ],
-    [
-     33,
-     "flywheel_tyre_m"
-    ],
-    [
-     34,
-     "flywheel"
-    ],
-    [
-     34,
-     "flywheel_m"
-    ],
-    [
-     34,
-     "flywheel_tyre"
-    ],
-    [
-     34,
-     "flywheel_tyre_m"
-    ],
-    [
-     35,
-     "flywheel"
-    ],
-    [
-     35,
-     "flywheel_m"
-    ],
-    [
-     35,
-     "flywheel_tyre"
-    ],
-    [
-     35,
-     "flywheel_tyre_m"
-    ],
-    [
-     36,
-     "flywheel"
-    ],
-    [
-     36,
-     "flywheel_m"
-    ],
-    [
-     36,
-     "flywheel_tyre"
-    ],
-    [
-     36,
-     "flywheel_tyre_m"
-    ],
-    [
-     37,
-     "flywheel"
-    ],
-    [
-     37,
-     "flywheel_m"
-    ],
-    [
-     37,
-     "flywheel_tyre"
-    ],
-    [
-     37,
-     "flywheel_tyre_m"
-    ],
-    [
-     38,
-     "flywheel"
-    ],
-    [
-     38,
-     "flywheel_m"
-    ],
-    [
-     38,
-     "flywheel_tyre"
-    ],
-    [
-     38,
-     "flywheel_tyre_m"
-    ],
-    [
-     39,
-     "flywheel"
-    ],
-    [
-     39,
-     "flywheel_m"
-    ],
-    [
-     39,
-     "flywheel_tyre"
-    ],
-    [
-     39,
-     "flywheel_tyre_m"
-    ]
    ]
+  },
+  "path": {
+   "ok": true,
+   "status": "pass",
+   "counts": {
+    "pass": 410,
+    "warn": 0,
+    "fail": 0
+   },
+   "findings": []
+  },
+  "sweep": {
+   "ok": true,
+   "status": "pass",
+   "counts": {
+    "pass": 40,
+    "warn": 0,
+    "fail": 0
+   },
+   "findings": []
   },
   "ammo_range": {
-   "diameters_mm": [
-    22.2,
-    22.8
-   ],
-   "biggest_along_the_path": {
-    "ok": true,
-    "violations": [],
-    "tightest": [
-     {
-      "sphere": 16,
-      "solid": "flywheel_tyre",
-      "gap_mm": 0.3
-     },
-     {
-      "sphere": 0,
-      "solid": "dial",
-      "gap_mm": 0.7
-     },
-     {
-      "sphere": 1,
-      "solid": "cartridge_body",
-      "gap_mm": 0.7
-     },
-     {
-      "sphere": 2,
-      "solid": "cartridge_body",
-      "gap_mm": 0.7
-     },
-     {
-      "sphere": 3,
-      "solid": "cartridge_body",
-      "gap_mm": 0.7
-     }
-    ]
-   },
-   "biggest_in_the_pockets": {
-    "ok": true,
-    "violations": [],
-    "tightest": [
-     {
-      "sphere": 1,
-      "solid": "cartridge_body",
-      "gap_mm": 0.0
-     },
-     {
-      "sphere": 4,
-      "solid": "cartridge_body",
-      "gap_mm": 0.0
-     },
-     {
-      "sphere": 6,
-      "solid": "cartridge_body",
-      "gap_mm": 0.04
-     },
-     {
-      "sphere": 5,
-      "solid": "cartridge_body",
-      "gap_mm": 0.1
-     },
-     {
-      "sphere": 2,
-      "solid": "dial",
-      "gap_mm": 0.25
-     }
-    ]
-   },
-   "pocket_length_mm": 25.06,
-   "one_ball_a_pocket": true,
-   "nip_gap_mm": 13.62,
-   "smallest_squeezed_pct": 38.6,
-   "biggest_squeezed_pct": 40.3,
-   "squeezed": true,
-   "bore_play_mm": {
-    "feed_and_chute": [
-     1.4,
-     2.0
-    ],
-    "barrel": [
-     1.9,
-     2.5
-    ]
-   },
    "ok": true,
-   "violations": []
-  },
-  "connected": {
-   "ok": true,
-   "touch_mm": 0.05,
-   "groups": {
-    "base": {
-     "parts": 16,
-     "bodies": 1,
-     "floating": []
-    },
-    "pan": {
-     "parts": 15,
-     "bodies": 1,
-     "floating": []
-    },
-    "pinion": {
-     "parts": 1,
-     "bodies": 1,
-     "floating": []
-    },
-    "tilt": {
-     "parts": 21,
-     "bodies": 1,
-     "floating": []
-    },
-    "wheel_l": {
-     "parts": 2,
-     "bodies": 1,
-     "floating": []
-    },
-    "wheel_r": {
-     "parts": 2,
-     "bodies": 1,
-     "floating": []
-    },
-    "dial": {
-     "parts": 1,
-     "bodies": 1,
-     "floating": []
-    },
-    "flap": {
-     "parts": 1,
-     "bodies": 1,
-     "floating": []
-    }
+   "status": "pass",
+   "counts": {
+    "pass": 6,
+    "warn": 0,
+    "fail": 0
    },
-   "joints": [
-    {
-     "a": "pan_bearing",
-     "b": "pan_bearing_inner",
-     "how": "the 61810 pan bearing (outer race in the base, inner on the turntable)",
-     "gap_mm": 0.1,
-     "ok": true
-    },
-    {
-     "a": "pan_pinion",
-     "b": "pan_servo",
-     "how": "the pinion on the pan servo's horn",
-     "gap_mm": 0.0,
-     "ok": true
-    },
-    {
-     "a": "pan_pinion",
-     "b": "pan_ring",
-     "how": "the gear mesh (0.15 mm backlash a flank)",
-     "gap_mm": 0.195,
-     "ok": true
-    },
-    {
-     "a": "tilt_bearing",
-     "b": "tilt_bearing_inner",
-     "how": "the MR126 tilt bearing (outer in the yoke, inner on the shoulder screw)",
-     "gap_mm": 0.1,
-     "ok": true
-    },
-    {
-     "a": "tilt_servo",
-     "b": "horn_boss",
-     "how": "the tilt servo's horn on the cradle's horn boss",
-     "gap_mm": 0.0,
-     "ok": true
-    },
-    {
-     "a": "dial",
-     "b": "feed_motor",
-     "how": "the dial on the feed servo's horn",
-     "gap_mm": 0.0,
-     "ok": true
-    },
-    {
-     "a": "flywheel",
-     "b": "flywheel_motor_l",
-     "how": "the left flywheel on its X2216's prop adapter",
-     "gap_mm": 0.0,
-     "ok": true
-    },
-    {
-     "a": "flywheel_m",
-     "b": "flywheel_motor_r",
-     "how": "the right flywheel on its X2216's prop adapter",
-     "gap_mm": 0.0,
-     "ok": true
-    },
-    {
-     "a": "hopper_flap",
-     "b": "hopper_lid",
-     "how": "the fill flap on its hinge pin in the lid's lugs",
-     "gap_mm": 0.358,
-     "ok": true
-    }
-   ],
-   "joint_mm": 0.5,
-   "links": [
-    [
-     "compute_shell",
-     "eth_jack",
-     "two 4-40 screws through its ears into the plinth's wall"
-    ],
-    [
-     "compute_shell",
-     "xt30_input",
-     "its housing clamped in the wall's pocket (a printed clip, 2 x M3)"
-    ],
-    [
-     "laser",
-     "laser_mount",
-     "three M3 nylon-tip boresight screws hold it 2 mm clear of the ring's bore (it is aimed by them)"
-    ],
-    [
-     "ring_leads_rotor",
-     "slip_ring_rotor",
-     "the rotor's own leads: one bought part with the ring's rotor"
-    ]
-   ]
-  },
-  "sweep_with_balls": {
-   "ok": true,
-   "poses": 40,
-   "max_mm3": 1.0,
-   "violations": []
+   "findings": []
   }
  }
 }

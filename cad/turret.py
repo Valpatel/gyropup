@@ -1040,7 +1040,8 @@ THUMB = {'head': (16.0, 3.5), 'collar': (8.0, 6.0), 'l': 12.0, 'oring_seat': (8.
 LASER_X = (112.0, 132.0)       # the holder's ring (C frame x); the laser from LASER_X[0] - 2
 LASER_Y = 0.0
 LASER_Z = 29.5
-LASER_FOOT = {'x0': 99.0, 'half_w': 9.0, 'screws': ((105.0, 7.0), (105.0, -7.0))}
+LASER_FOOT = {'x0': 99.0, 'half_w': 9.0, 'screws': ((108.0, 7.0), (108.0, -7.0))}   # x 108: the hex key clears the
+#                                                                                     cartridge board's front edge (x 104)
 LASER_SCREW = {'d': 3.0, 'l': 6.0, 'mass_g': 0.3,
                'name': '3 x McMaster 93285A115 M3 x 6 nylon-tip set screws (18-8): the laser\'s boresight, in its holder\'s tapped ring'}
 
@@ -1392,6 +1393,24 @@ def laser_screw_axes(G):
     return out
 
 
+INSERT_M3 = {'od': 4.0, 'minor': 2.5, 'l': 5.7, 'mass_g': 0.358, 'name': 'McMaster 94459A140'}
+# the gated screws (cad/turret_gates.py fasteners): socket heads, M3 x 0.5, their seats and lengths (C frame)
+GATED_SCREWS = {
+    'laser_foot_screws': {'clamps': 'laser_mount', 'into': 'laser_inserts', 'length_mm': 10.0, 'seat_z': SOCKET_PAD_Z + 6.0,
+                          'xy': list(LASER_FOOT['screws']), 'key': 'turret_screw_m3x10',
+                          'why': 'the laser holder on the barrel socket\'s pad'},
+    'hopper_screws': {'clamps': 'hopper', 'into': 'hopper_inserts', 'length_mm': 8.0, 'seat_z': None,
+                      'xy': None, 'key': 'turret_screw_m3x8', 'why': 'the hopper\'s three lugs on the housing'},
+}
+
+
+def inserts_m3(points):
+    """Heat-set M3 inserts, top flush at each (x, y, z_top), going down: a ring at the pilot's diameter and the
+    thread's minor diameter (one compound)."""
+    sols = [ring_z(INSERT_M3['od'] / 2, INSERT_M3['minor'] / 2, z - INSERT_M3['l'], z, x, y).val() for x, y, z in points]
+    return cq.Workplane('XY').add(cq.Compound.makeCompound(sols))
+
+
 def cyl_along(r, p, d, t0, t1):
     """A cylinder of radius r on the line p + t d (d a unit vector), from t0 to t1."""
     a = cq.Vector(*p) + cq.Vector(*d) * t0
@@ -1682,6 +1701,12 @@ def bought_parts(G):
     out['laser'] = (cyl_x(LASER['d'] / 2, LASER_X[0] - 2, LASER_X[0] - 2 + LASER['L'], LASER_Y, LASER_Z), 'tilt', LASER['mass_g'],
                     LASER['name'] + ' (D42): over the barrel, in its holder on the cartridge')
     out['laser_screws'] = (laser_screws(G), 'tilt', 3 * LASER_SCREW['mass_g'], LASER_SCREW['name'])
+    # heat-set inserts modelled where a gated screw threads into them (cadagent.gates.fasteners needs the receiver):
+    # McMaster 94459A140 M3 x 5.7 brass, OD drawn at the 4.0 pilot, the thread at its minor diameter
+    out['laser_inserts'] = (inserts_m3([(x, y, SOCKET_PAD_Z) for x, y in LASER_FOOT['screws']]), 'tilt', 2 * INSERT_M3['mass_g'],
+                            '2 x McMaster 94459A140 M3 x 5.7 heat-set inserts in the barrel socket\'s pad: the laser holder\'s screws')
+    out['hopper_inserts'] = (inserts_m3([(*polar(G.housing_r + 3.5, math.radians(a)), G.housing_top) for a in HOPPER_LUGS]), 'tilt',
+                             3 * INSERT_M3['mass_g'], '3 x McMaster 94459A140 M3 x 5.7 heat-set inserts in the housing\'s lugs: the hopper\'s screws')
     return out
 
 
