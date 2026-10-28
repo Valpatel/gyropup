@@ -51,8 +51,8 @@ TARGETS = {'sf': 2.0, 'sf_rare': 1.2,
                                                         # break; inspect the knees after one (D39)
            'bearing_s0': 2.0, 'bearing_s0_rare': 1.0}   # rolling bearings: static safety s0 = C0 / P0 (SKF: >= 1 with normal
                                                         # demands on running; a rare overload may use it, everyday ones not)
-ROBOT_KG = 32.5                      # the robot's design mass (docs/body-next-plan.md 2.4, D57: the 28.5 kg budget is retired);
-                                     # the rig carries half, 16.25 kg (sim/leg_rig.py HALF_MASS)
+ROBOT_KG = 35.5                      # the robot's design mass (D69: the 10 in air-tyre wheels; the ledger's gate is 35.0 kg);
+                                     # the rig carries half, 17.75 kg (sim/leg_rig.py HALF_MASS)
 G = 9.81
 CAP, PEAK = 60.0, 120.0
 
@@ -267,7 +267,8 @@ def members_only(st, j):
 HUB_PRELOAD_N = 1200.0       # per M5 into the CNC adapter's tapped 6061, held by the printed link under its head: an
                              # estimate (PA6-CF under a Ø8.5 head creeps); the bench's torque-tension coupon replaces it
 HUB_MU = 0.15                # printed PA6-CF on machined 6061, dry (low end, so friction is not overstated)
-DOWEL_ENGAGED = 8.0          # mm of each Ø5 x 16 dowel in the link (and 8 pressed into the adapter's H7 holes)
+DOWEL_ENGAGED = 12.0         # mm of each Ø5 x 20 dowel in the link (McMaster 91595A356; 8 pressed into the adapter's H7
+                             # holes): the link's holes go through its 30 mm, so the longer pin bears 1.5 x as long (issue #5)
 
 
 PAD_RIM_BAND = 5.0           # mm: the upper link's design stress leaves out this band round the rim of its bonded contact

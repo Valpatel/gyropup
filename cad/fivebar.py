@@ -192,7 +192,11 @@ def stack() -> Stack:
     y['circlip'] = (0.8, 2.95)                                           # DIN 471-60 groove, inboard of the inner bearing
     w = gmi.motor_interface(WHEEL)
     boss_h = w['case']['spigot_h'] or 5.0
-    y['wheel_boss'] = y['wheel_link'][1] - boss_h - 0.2                 # the BotWheel's boss face, in a recess in the outer face
+    y['wheel_boss'] = y['wheel_link'][1] - boss_h                       # the BotWheel's boss face, in a recess in the outer face:
+                                                                         # its flange seats on the link's outer face, the boss's
+                                                                         # end 0.2 off the recess's floor (WHEEL_RECESS_PLAY; until
+                                                                         # 2026-10-28 the floor was the boss's face and the hub's
+                                                                         # Ø64 shoulder stood 0.2 into the link: 250 mm3, issue #6)
     y['tyre'] = (y['wheel_boss'] + 7.5, y['wheel_boss'] + 7.5 + 44.6)    # BotWheel drawing: boss face 7.5 inboard of the tyre
     y['wheel'] = sum(y['tyre']) / 2
     y['centre_plane'] = y['motor'][0] - 2.0                              # where the two legs' frames meet in the body
@@ -650,6 +654,8 @@ def front_link():
     return f
 
 
+WHEEL_RECESS_PLAY = 0.2     # mm: the BotWheel's Ø50 x 5 boss (height 5 +- 0.1) clears the recess's floor; its flange
+                             # seats on the wheel link's outer face
 WHEEL_BOSS_FILLET = 10.0     # mm: where the wheel link's knee boss leaves its inner face, the link's peak in a landing's
                              # full axle spike (cad/leg_studies.py R1w; 6 mm gave SF 1.13 at 14.75 kg)
 
@@ -676,7 +682,7 @@ def wheel_link():
     k = k.cut(ycyl(31.0, c0, c1, l2).cut(ycyl(28.5, c0 - 1, c1 + 1, l2)))                 # the circlip groove (Ø57)
     k = k.cut(ycyl(24.0, h0 - 1, h1 - 0.01, l2))                                            # Ø48 bore: cable and hex key
     boss = w['case']['boss_d'] or 50.0
-    k = k.cut(ycyl(boss / 2 + 0.03, Y['wheel_boss'], y1 + 1, l2))
+    k = k.cut(ycyl(boss / 2 + 0.03, Y['wheel_boss'] - WHEEL_RECESS_PLAY, y1 + 1, l2))
     bw = w['case']['bolts']
     for (x, z) in gmi.circle_pts(bw['pcd'], bw['count'] or 4, 45.0):
         k = k.cut(ycyl(gmi.clear('M6') / 2, h1 - 1, y1 + 1, l2 + x, z))                     # heads on the foot's inner face

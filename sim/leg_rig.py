@@ -1,6 +1,6 @@
 """Single-leg test rig: one five-bar leg module (cad/fivebar.py) on a vertical rail, in MuJoCo.
 
-    python -m sim.leg_rig [--video] [--only stand_up squat jump drop_150 power_off] [--half-mass 16.25] [--bus-v 48.1]
+    python -m sim.leg_rig [--video] [--only stand_up squat jump drop_150 power_off] [--half-mass 17.75] [--bus-v 36]
 
 The rig is what we will build first: a carriage on a vertical rail (one slide joint, a rubber stop at the bottom)
 carries the hip frame, both RS-04s and a dummy mass for half the body; the leg stands on the floor and can crouch,
@@ -40,19 +40,28 @@ G = 9.81
 FPS = 30
 CAT = {it['id']: it for f in ('leg_actuators.json', 'wheel_motors.json') for it in json.loads((R / 'catalog' / f).read_text())}
 MOTOR = CAT[fb.MOTOR]['specs']
-WHEEL = CAT[fb.WHEEL]['specs']
-BUS_V = 48.1                                     # the robot's 13S2P P30B pack, nominal (53.3 V full; docs/body-next-plan.md,
-                                                 # D57). The rig itself runs on a FLEXVOLT (60 V mode, 54 V nominal): --bus-v 54
-HALF_MASS = 16.25                                  # kg one leg carries: half the robot's 32.5 kg design mass (docs/body-next-plan.md
-                                                   # 2.4, D57: the 28.5 kg budget is retired; it was 29.5 until 2026-10-27).
+# The wheel (D69): a 10 in hoverboard-class hub motor, 10 x 2.125 pneumatic tyre at 30-35 psi (docs/wheel-change-plan.md,
+# research/air-tyre-hub-wheels.md). Listed 3.53 kg; taken at 4.0 kg (the tube, a heavier tyre, margin). Its mass, radius
+# and tyre are the rig's; the CAD still carries the BotWheel's interface (fivebar.WHEEL: its boss in the wheel link's foot,
+# its mid-plane fb.Y['wheel']) until W2 designs the 45 mm split D-clamp foot (issue #25). The motor's own numbers are the
+# study's estimates (sim/wheel_candidates.json 'hb10') until W1 measures two.
+WHEEL = dict(CAT[fb.WHEEL]['specs'])
+WHEEL.update({'title': '10 in hoverboard hub motor, 10 x 2.125 pneumatic (D69)', 'mass_g': 4000, 'od_mm': 254.0, 'tyre_width_mm': 54.0,
+              'peak_torque_nm': 15.0, 'rated_torque_nm': 5.0, 'no_load_speed_rpm': 330, 'voltage_nominal_v': 36,
+              'kt_nm_per_a': 1.0, 'peak_current_a': 15})
+BUS_V = 36.0                                     # D65: two DCB609 FLEXVOLTs in 20 V mode in series, a 10S bus at 30-41 V
+                                                 # (36 V nominal). The rig's own pack: rig/run.py pack_for()
+HALF_MASS = 17.75                                  # kg one leg carries, its own parts and its wheel included: half the robot's
+                                                   # 35.5 kg design mass (D69; the ledger's gate is 35.0 kg).
                                                    # The ballast is its own welded body: the carriage's explicit
                                                    # <inertial> made MuJoCo drop a geom mass there (the rig carried 8.5 kg
                                                    # of a meant 11 until 2026-10-27; found by the spring study)
 LEG_PEAK = MOTOR['peak_torque_nm']               # 120 N m
 LEG_CAP = 60.0                                   # firmware cap (designs/default.json leg_torque_limit_nm)
 LEG_OMEGA = MOTOR['no_load_speed_rpm'] * BUS_V / MOTOR['voltage_nominal_v'] * 2 * math.pi / 60
-ROTOR_SHARE = 0.6                                # of the BotWheel's mass that spins (estimate, as sim/model.py)
-WHEEL_R = (fb.gmi.motor_interface(fb.WHEEL)['od'] or 171.3) / 2000
+ROTOR_SHARE = 0.6                                # of the wheel's mass that spins (estimate, as sim/model.py and the wheel study)
+WHEEL_R = WHEEL['od_mm'] / 2000                  # 127 mm (the BotWheel was 85.65)
+WHEEL_W = WHEEL['tyre_width_mm'] / 1000
 # RS-04 rotor inertia is not published (the manual has none): ~3e-4 kg m^2 (a ~150 g rotor ring at r 45 mm, an
 # estimate) x 9^2 reflected. It sets how hard a landing is: the motors' rotors are most of the leg's moving mass.
 ARMATURE = 3.0e-4 * MOTOR['gear_ratio'] ** 2
@@ -63,9 +72,12 @@ ARMATURE = 3.0e-4 * MOTOR['gear_ratio'] ** 2
 # 9.8 MPa). Its travel is the wall less 0.5 mm, 7.4 deg, then the pin. Until 2026-10-27 the rig used an unsourced 40 MPa
 # and a 4 mm wall (four times too stiff), then a shoulder-screw post whose head stopped the TPU after 5 mm (review M6);
 # and the link's straight edge met that post 31 mm from the axis, not the 58 mm the model took (D53).
-# the BotWheel's tyre: solid rubber with a tread (estimate ~150-250 N/mm radially): MuJoCo's contact as a 7.7 ms,
-# 0.7-damped spring on the few kg behind it
-TYRE_SOLREF = '0.0077 0.7'
+# the tyre: MuJoCo's contact is a spring-damper with time constant tau on the mass behind it, so k goes as 1/tau^2. The
+# BotWheel's solid tyre (an estimated 150-250 N/mm) was 7.7 ms / 0.7; a 10 x 2.125 pneumatic at 30-35 psi is about
+# 60 N/mm (research/air-tyre-hub-wheels.md 3.1-3.2: membrane model x 0.75, calibrated on measured bicycle and e-scooter
+# tyres), tau = 7.7 ms x sqrt(200 / 60) = 14.1 ms, damping 0.5. At 50 psi (90 N/mm) the landings' axle spike is about
+# 15 % higher: run the tyres at 30-35 psi (the bench test measures k at 25-40 psi, W6)
+TYRE_SOLREF = '0.0141 0.5'
 TPU_E = json.loads((R / 'catalog/materials.json').read_text())['tpu95']['modulus_gpa'] * 1e9
 OFF_DAMPING = 0.2 * (MOTOR['kt_nm_per_a'] / MOTOR['gear_ratio']) ** 2 / 0.15 * MOTOR['gear_ratio'] ** 2   # N m s/rad, see run()
 TPU_WALL = (fb.TPU_SLEEVE[0] - fb.TPU_SLEEVE[1]) / 2 / 1000          # m
@@ -94,10 +106,10 @@ def mass_props():
                      Body(0.005 * 9, (0.0, head_y - 0.010, 0.0), name='9 x M5 x 25 into the motor')])
     front = combine([sm('front_link'), Body(0.110, (l2, 0.062, 0.0), name='61812'), kc])
     stator_kg = WHEEL['mass_g'] / 1000 * (1 - ROTOR_SHARE)
-    wheel_link = combine([sm('wheel_link'), kc, Body(stator_kg, (l2, yb['wheel'] / 1000, 0.0), name='BotWheel stator'),
+    wheel_link = combine([sm('wheel_link'), kc, Body(stator_kg, (l2, yb['wheel'] / 1000, 0.0), name='wheel stator and shaft'),
                           Body(4 * 0.015, (l2, 0.05, 0.0), name='M6 x 40')])
-    rotor = cylinder_body(WHEEL['mass_g'] / 1000 * ROTOR_SHARE, WHEEL_R, 0.0446, axis='y', hollow_radius=0.6 * WHEEL_R,
-                          center=(0.0, yb['wheel'] / 1000, 0.0), name='BotWheel rotor')
+    rotor = cylinder_body(WHEEL['mass_g'] / 1000 * ROTOR_SHARE, WHEEL_R, WHEEL_W, axis='y', hollow_radius=0.6 * WHEEL_R,
+                          center=(0.0, yb['wheel'] / 1000, 0.0), name='wheel rotor and tyre')
     frame = combine([sm('hip_frame'), Body(2 * MOTOR['mass_g'] / 1000, (0.0, (yb['motor'][0] + yb['motor'][1]) / 2000, 0.0), name='2 x RS-04'),
                      Body(2 * 0.110, (0.0, -0.006, 0.0), name='2 x 61812')])
     return {'upper': upper, 'front': front, 'wheel_link': wheel_link, 'rotor': rotor, 'frame': frame}
@@ -189,10 +201,10 @@ def mjcf(half_mass: float, meshes: dict | None = None, rail_low: float = 0.115) 
           <body name="wheel" pos="{l2} 0 0">
             <joint name="wheel" type="hinge" axis="0 -1 0" damping="0.01"/>
             {_inertial(mp['rotor'])}
-            <geom name="tyre" type="cylinder" size="{WHEEL_R:.4f} 0.0223" pos="0 {yw:.4f} 0" euler="1.5708 0 0" rgba=".1 .1 .11 1" mass="0"
+            <geom name="tyre" type="cylinder" size="{WHEEL_R:.4f} {WHEEL_W / 2:.4f}" pos="0 {yw:.4f} 0" euler="1.5708 0 0" rgba=".1 .1 .11 1" mass="0"
                   solref="{TYRE_SOLREF}"/>
-            <geom type="cylinder" size="{WHEEL_R - 0.016:.4f} 0.0226" pos="0 {yw:.4f} 0" euler="1.5708 0 0" rgba=".33 .35 .38 1" contype="0" conaffinity="0" mass="0"/>
-            <geom type="box" size="0.05 0.0228 0.006" pos="0 {yw:.4f} 0" rgba=".8 .3 .1 1" contype="0" conaffinity="0" mass="0"/>
+            <geom type="cylinder" size="{WHEEL_R - 0.027:.4f} {WHEEL_W / 2 + 0.0003:.4f}" pos="0 {yw:.4f} 0" euler="1.5708 0 0" rgba=".33 .35 .38 1" contype="0" conaffinity="0" mass="0"/>
+            <geom type="box" size="0.05 {WHEEL_W / 2 + 0.0005:.4f} 0.006" pos="0 {yw:.4f} 0" rgba=".8 .3 .1 1" contype="0" conaffinity="0" mass="0"/>
           </body>
         </body>
       </body>
