@@ -18,6 +18,9 @@ $N "$KPY" generate.py > /dev/null
 $N "$KCLI" pcb drc --refill-zones --save-board --schematic-parity --severity-all --exit-code-violations \
     -o reports/drc.rpt fuse-board.kicad_pcb
 $N "$KCLI" sch erc --severity-all --exit-code-violations -o reports/erc.rpt fuse-board.kicad_sch
+sed -i '/^\*\* Created on /d' reports/drc.rpt reports/erc.rpt   # no dates in the committed reports
+$N "$KPY" measure.py > /dev/null                     # the filled board's copper areas -> reports/board-facts.json
+$N python3 analysis.py > /dev/null                    # copper sizing, the INA228 budget, the mass -> reports/analysis.json
 
 # JLCPCB: gerbers (Protel extensions) and Excellon drills, plated and non-plated apart, oval holes as G85 slots
 $N "$KCLI" pcb export gerbers --layers F.Cu,B.Cu,F.Paste,B.Paste,F.Silkscreen,B.Silkscreen,F.Mask,B.Mask,Edge.Cuts \

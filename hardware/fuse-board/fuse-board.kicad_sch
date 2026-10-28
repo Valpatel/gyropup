@@ -4192,7 +4192,7 @@
 				(hide yes)
 			)
 		)
-		(property "Wires" "W_24: DDR-120C-24 +V (18 AWG)"
+		(property "Wires" "W40 DDR-120C-24 +V (18 AWG)"
 			(at 30.48 162.56 0)
 			(effects
 				(font
@@ -4276,7 +4276,7 @@
 				(hide yes)
 			)
 		)
-		(property "Wires" "W23 DDR-120C-24 -V; W27 DDR-60L-12 -V; W_STAR: - bus bar tap 5 (14 AWG)"
+		(property "Wires" "W23 DDR-120C-24 -V; W27 DDR-60L-12 -V; W41 - bus bar tap 5 (14 AWG)"
 			(at 330.2 165.1 0)
 			(effects
 				(font
@@ -4360,7 +4360,7 @@
 				(hide yes)
 			)
 		)
-		(property "Wires" "W33 frame bond (18 AWG green)"
+		(property "Wires" "W33 frame bond (14 AWG green)"
 			(at 330.2 180.34 0)
 			(effects
 				(font

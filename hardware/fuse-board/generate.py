@@ -32,6 +32,65 @@ def uid(*parts) -> str:
     return str(uuid.uuid5(NS, '/'.join(str(p) for p in parts)))
 
 
+def top_blocks(text):
+    """(start, end) of every list one level inside the file's outer list, skipping quoted strings."""
+    out, depth, i, start, n = [], 0, 0, None, len(text)
+    while i < n:
+        c = text[i]
+        if c == '"':
+            i += 1
+            while i < n and text[i] != '"':
+                i += 2 if text[i] == '\\' else 1
+        elif c == '(':
+            depth += 1
+            if depth == 2:
+                start = i
+        elif c == ')':
+            if depth == 2:
+                out.append((start, i + 1))
+            depth -= 1
+        i += 1
+    return out
+
+
+def stable_board(path: Path):
+    """KiCad orders a board's items by their (random) UUIDs when it saves. Give every top-level item UUIDs derived from
+    its own content (uuids blanked), then let KiCad load and save it again so the order follows them: a rebuild with
+    nothing changed leaves the file as it was."""
+    import re
+    text = path.read_text()
+    pat = re.compile(r'\(uuid "[0-9a-fA-F-]{36}"\)')
+    seen, parts, last = {}, [], 0
+    for a, z in top_blocks(text):
+        block = text[a:z]
+        key = pat.sub('(uuid "")', block)
+        k = seen[key] = seen.get(key, -1) + 1
+        n = [0]
+
+        def sub(m, key=key, k=k):
+            n[0] += 1
+            return f'(uuid "{uid(key, k, n[0])}")'
+        parts.append(text[last:a])
+        parts.append(pat.sub(sub, block))
+        last = z
+    parts.append(text[last:])
+    path.write_text(''.join(parts))
+    b = P.LoadBoard(str(path))
+    P.SaveBoard(str(path), b)
+
+
+def stable_uuids(path: Path):
+    """KiCad gives every saved item a random UUID: renumber them in file order from the file's name, so a rebuild with
+    nothing changed leaves the files as they were. Only (uuid "...") tokens change; footprint paths keep the schematic's."""
+    import re
+    n = [0]
+
+    def sub(m):
+        n[0] += 1
+        return f'(uuid "{uid(path.name, n[0])}")'
+    path.write_text(re.sub(r'\(uuid "[0-9a-fA-F-]{36}"\)', sub, path.read_text()))
+
+
 ROOT_UUID = uid('root')
 
 # ======================================================================================== the parts list
@@ -363,6 +422,7 @@ def custom_footprints():
     io = P.PCB_IO_MGR.FindPlugin(P.PCB_IO_MGR.KICAD_SEXP)
     for name, fp in out.items():
         io.FootprintSave(str(lib), fp)
+        stable_uuids(lib / f'{name}.kicad_mod')
     return out
 
 
@@ -772,6 +832,7 @@ def main():
     silk(b, fps)
     path = HERE / f'{PRJ}.kicad_pcb'
     P.SaveBoard(str(path), b)
+    stable_board(path)
     write_project()                           # after SaveBoard, which writes a default project file
     print(json.dumps({k: v for k, v in ROUTE_LOG.items()}, indent=0, default=lambda o: [round(x, 3) for x in o]))
     print('wrote', path.name)

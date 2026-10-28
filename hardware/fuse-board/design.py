@@ -84,8 +84,9 @@ for _h in HOLDERS:
     NETS[out_net(_h[0])] = ('P48' if _h[4] == '+BUS' else 'P24', f'{_h[1]} after its fuse')
 
 # ---------------------------------------------------------------------------------------------------- studs
-# M4 studs: an M4 x 18 socket head up from below (head on the bottom pad), a nyloc on top clamping it (a captive
-# stud), then the lug(s), a second nyloc. M6 the same with M6 x 20. (ref, label, net, x, y, size, wires landing)
+# Studs: the lug sits on the top pad and an M4 x 12 (M6 x 12 at J1) socket head goes down through it and the board
+# into a nyloc held in a hex pocket at the top of the stud's own printed standoff (as the bus bars' insulators hold
+# theirs): copper to copper, serviced from above. (ref, label, net, x, y, size, wires landing)
 STUD_PAD = {'M4': 7.0, 'M6': 12.0}         # pad diameters (both layers, a ring of vias)
 STUD_DRILL = {'M4': 4.3, 'M6': 6.4}
 N_STUD_Y, S_STUD_Y = 68.0, 8.0
@@ -99,20 +100,20 @@ STUDS = [
     ('J11', 'SPARE', out_net('F10'), COLS[3], S_STUD_Y, 'M4', ['(spare)']),
     ('J12', 'W21', out_net('F11'), COLS[4], S_STUD_Y, 'M4', ['W21 J501 DC-IN']),
     ('J13', 'W22', out_net('F12'), 83.9, 18.0, 'M4', ['W22 stop relay pole B']),
-    ('J14', '24V IN', '+24V', 83.9, 30.0, 'M4', ['W_24: DDR-120C-24 +V (18 AWG)']),
-    ('J15', 'STAR', 'BUS-', 83.9, 44.0, 'M4', ['W23 DDR-120C-24 -V', 'W27 DDR-60L-12 -V', 'W_STAR: - bus bar tap 5 (14 AWG)']),
-    ('J16', 'FRAME', 'BUS-', 83.9, 53.0, 'M4', ['W33 frame bond (18 AWG green)']),
+    ('J14', '24V IN', '+24V', 83.9, 30.0, 'M4', ['W40 DDR-120C-24 +V (18 AWG)']),
+    ('J15', 'STAR', 'BUS-', 83.9, 44.0, 'M4', ['W23 DDR-120C-24 -V', 'W27 DDR-60L-12 -V', 'W41 - bus bar tap 5 (14 AWG)']),
+    ('J16', 'FRAME', 'BUS-', 83.9, 53.0, 'M4', ['W33 frame bond (14 AWG green)']),
 ]
 
 # ---------------------------------------------------------------------------------------------------- mounting
-# MH1: the plate's flush nut at robot (50, 47) (the Blue Sea shunt's base nut): an M5 x 12 button head down through
-# the plated hole, a printed standoff (8.0 mm) and into the nut; it bonds the plate to BUS-. The plate's three
+# MH1: the plate's flush nut at robot (50, 47) (the Blue Sea shunt's base nut): an M5 x 14 socket head down through
+# the plated hole, a printed standoff (10 mm) and into the nut; it bonds the plate to BUS-. The plate's three
 # cable-tie slots at robot (46, -6), (111, -6), (111, 24) take a tie each through the board's slots and a printed
 # tie block. The shunt's other nut at (119, 47) falls 3 mm from the board's east edge: not used.
 MOUNTS = [('MH1', 'PLATE BOND M5', 'BUS-', 16.0, 61.0)]
 TIES = [('H1', 12.0, 8.0), ('H2', 77.0, 8.0), ('H3', 77.0, 38.0)]       # slot 4 x 10 (y), NPTH
 TIE_SLOT = (4.0, 10.0)
-STANDOFF_H = 8.0
+STANDOFF_H = 10.0
 UNDER_KEEPOUT = [(7.0, 43.15, 3.0, 'VESC L flange screw tip, 4.5 mm above the plate'),
                  (7.0, 70.15, 3.0, 'VESC L flange screw tip, 4.5 mm above the plate')]
 
