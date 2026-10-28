@@ -37,9 +37,10 @@ enum { /* why the robot last sat or limped (STATUS b6) */
     GP_R_STOP = 1,          /* the radio stop */
     GP_R_LINK = 2,          /* the Jetson's heartbeat lost for 2 s */
     GP_R_PEOPLE = 3,        /* people near for 2 s */
-    GP_R_UVLO = 4,          /* resting voltage under 41.6 V */
+    GP_R_UVLO = 4,          /* resting voltage under 32.0 V (3.2 V a cell) */
     GP_R_JETSON = 5,        /* the Jetson asked (RUN = 0) */
     GP_R_VBUS_STALE = 6,
+    GP_R_CUTOFF = 7,        /* the bus under load under 30.0 V (3.0 V a cell): latched until power cycle */
     GP_R_MOTOR_MISSING = 10,
     GP_R_MOTOR_FAULT = 11,
     GP_R_LEG_WINDOW = 12,
@@ -52,7 +53,7 @@ enum { /* why the robot last sat or limped (STATUS b6) */
 enum { /* why a jump was refused (FAULTS b6) */
     GP_J_OK = 0,
     GP_J_PEOPLE = 1,
-    GP_J_VOLTAGE = 2,   /* resting voltage under 44 V */
+    GP_J_VOLTAGE = 2,   /* resting voltage under 34.0 V (3.4 V a cell), or the cut-off latched */
     GP_J_NOT_RUNNING = 3,
     GP_J_LINK = 4,
     GP_J_HEIGHT_ZERO = 5,
@@ -78,6 +79,7 @@ typedef struct {
     float r_shunt;          /* ohm */
     float ina_sign;         /* -1: the low-side shunt of W30/W31 reads discharge negative */
     float r_pack;           /* ohm, the resting-voltage estimate */
+    float i_cont, i_peak;   /* A: the bus current limit (GP_BUS_I_CONT_A, GP_BUS_I_PEAK_A) */
     float sit_L;            /* m */
     gp_ctl_params ctl;
 } gp_config;
@@ -110,6 +112,9 @@ typedef struct {
     float phi[4], w[4];
     uint32_t misses[4];
     uint32_t tx_drops, can_rx, imu_packets, imu_crc_errors;
+    uint32_t cutoff;                         /* the 3.0 V a cell cut-off latched (until power cycle) */
+    float vload, iavg, ilimit, bus_scale;    /* the cut-off's filtered bus; the current limit's average, limit, factor */
+    float push_ilimit, push_scale;           /* the jump push's bus current limit and its factor on the legs */
 } gp_snapshot;
 
 typedef struct {
@@ -136,6 +141,11 @@ typedef struct {
     float vbus, ibus, vrest;
     uint32_t t_vbus;
     bool have_vbus, uvlo_warn, uvlo_sat;
+    float vload;          /* the bus under load, the cut-off's short filter */
+    bool cutoff;          /* latched: only a power cycle (gp_app_init) clears it */
+    /* the bus current limit */
+    float iavg, ilimit, peak_used, bus_scale;
+    float push_ilimit, push_scale; /* the jump's push: s(V) x GP_JUMP_I_FULL_A, a factor on the leg torques only */
     /* the stop */
     uint8_t stop_low;
     uint32_t t_stop_high;
@@ -170,7 +180,7 @@ void gp_app_ina228(gp_app *a, const uint8_t vbus[3], const uint8_t current[3], u
 void gp_app_tick(gp_app *a, uint32_t now_us, const gp_inputs *in, gp_outputs *out);
 void gp_app_snapshot(const gp_app *a, gp_snapshot *s);
 
-/* The jump gate's numbers: the take-off speed scale for a resting voltage (0 below 44 V: refused). */
+/* The jump gate's numbers: the take-off speed scale for a resting voltage (0 below GP_JUMP_MIN_V: refused). */
 float gp_jump_scale(float vrest);
 
 #endif

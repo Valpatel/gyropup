@@ -68,6 +68,8 @@ void gp_config_default(gp_config *c, uint8_t profile)
 #endif
     c->ina_sign = -1.0f;
     c->r_pack = GP_R_PACK_OHM;
+    c->i_cont = GP_BUS_I_CONT_A;
+    c->i_peak = GP_BUS_I_PEAK_A;
     if (profile == GP_PROFILE_ROBOT) {
         c->sit_L = GP_SIT_L_ROBOT_M;
         c->ctl.balance = true;
@@ -94,6 +96,8 @@ void gp_app_init(gp_app *a, const gp_config *cfg, uint32_t now_us)
     a->t_mode = now_us;
     a->mode = GP_MODE_BOOT;
     a->t_boot_retry = now_us;
+    a->bus_scale = 1.0f;
+    a->ilimit = cfg->i_peak;
 }
 
 /* ======================================================================================== receiving */
@@ -153,6 +157,7 @@ void gp_app_can_rx(gp_app *a, uint8_t bus, const gp_can_frame *f, uint32_t now_u
                 a->vbus = vmax; /* the max of its 10 ms: a regeneration spike is seen */
                 a->ibus = 0.0f;
                 a->vrest = a->have_vbus ? a->vrest + dt / GP_VREST_TAU_S * (mean - a->vrest) : mean;
+                a->vload = a->have_vbus ? a->vload + fminf(dt / GP_CUTOFF_TAU_S, 1.0f) * (mean - a->vload) : mean;
                 a->t_vbus = now_us;
                 a->have_vbus = true;
             }
@@ -224,6 +229,32 @@ void gp_app_uart_rx(gp_app *a, const uint8_t *data, size_t n, uint32_t now_us)
     }
 }
 
+/* The bus current limit (D65): one factor on every motor's current command. The limit is i_peak while the peak
+ * allowance lasts (GP_BUS_I_PEAK_S over i_cont, given back at the same rate under it) and the 1 s average is under
+ * i_cont, else i_cont. Over the limit the factor drops by limit / I at once (the motors' bus current goes nearly with
+ * it); under it, it climbs back at GP_BUS_SCALE_RECOVER a second. Discharge only: regeneration is not limited here. */
+static void bus_limit(gp_app *a, float i, float dt)
+{
+    a->iavg += fminf(dt / GP_BUS_I_AVG_S, 1.0f) * (i - a->iavg);
+    a->peak_used = i > a->cfg.i_cont ? a->peak_used + dt : fmaxf(0.0f, a->peak_used - dt);
+    const bool peak_ok = a->peak_used < GP_BUS_I_PEAK_S && a->iavg < a->cfg.i_cont;
+    a->ilimit = peak_ok ? a->cfg.i_peak : a->cfg.i_cont;
+    if (i > a->ilimit) {
+        a->bus_scale = fmaxf(GP_BUS_SCALE_MIN, a->bus_scale * a->ilimit / i);
+    } else {
+        a->bus_scale = fminf(1.0f, a->bus_scale + GP_BUS_SCALE_RECOVER * dt);
+    }
+    /* the jump's push: its own limit, s(V) x GP_JUMP_I_FULL_A, so the sag stays above GP_JUMP_FLOOR_V; on the legs only
+     * (no floor: the push may be cut to nothing, the balance is not) */
+    if (a->jump_phase == GP_JP_PUSH) {
+        if (i > a->push_ilimit) {
+            a->push_scale *= a->push_ilimit / i;
+        } else {
+            a->push_scale = fminf(1.0f, a->push_scale + GP_BUS_SCALE_RECOVER * dt);
+        }
+    }
+}
+
 void gp_app_ina228(gp_app *a, const uint8_t vbus[3], const uint8_t current[3], uint32_t now_us)
 {
     if (a->cfg.vbus_source != GP_VBUS_INA228) {
@@ -234,6 +265,8 @@ void gp_app_ina228(gp_app *a, const uint8_t vbus[3], const uint8_t current[3], u
     const float rest = v + i * a->cfg.r_pack;                           /* the sag taken back out */
     const float dt = a->have_vbus ? fminf(secs(now_us - a->t_vbus), 0.1f) : 0.0f;
     a->vrest = a->have_vbus ? a->vrest + dt / GP_VREST_TAU_S * (rest - a->vrest) : rest;
+    a->vload = a->have_vbus ? a->vload + fminf(dt / GP_CUTOFF_TAU_S, 1.0f) * (v - a->vload) : v; /* under load */
+    bus_limit(a, i, dt);
     a->vbus = v;
     a->ibus = i;
     a->t_vbus = now_us;
@@ -437,6 +470,7 @@ static void update_flags(gp_app *a)
         else if (a->vrest > GP_UVLO_WARN_CLEAR_V) a->uvlo_warn = false;
         if (a->vrest < GP_UVLO_SIT_V) a->uvlo_sat = true;
         else if (a->vrest >= GP_UVLO_STAND_V) a->uvlo_sat = false;
+        if (a->vload < GP_CUTOFF_V) a->cutoff = true; /* 3.0 V a cell under load: nothing but a power cycle clears it */
     }
     /* people near: the caps hold while the flag is up; 2 s of it sits the robot */
     const bool people = a->have_sp && a->sp.people_near && link_ok(a);
@@ -453,7 +487,7 @@ static uint8_t jump_refusal(const gp_app *a)
     if (a->mode != GP_MODE_RUN) return GP_J_NOT_RUNNING;
     if (!link_ok(a)) return GP_J_LINK;
     if (a->people) return GP_J_PEOPLE;
-    if (!vbus_fresh(a) || gp_jump_scale(a->vrest) <= 0.0f) return GP_J_VOLTAGE;
+    if (!vbus_fresh(a) || a->cutoff || gp_jump_scale(a->vrest) <= 0.0f) return GP_J_VOLTAGE;
     if (a->sp.jump_height == 0) return GP_J_HEIGHT_ZERO;
     return GP_J_OK;
 }
@@ -469,7 +503,9 @@ static void supervise(gp_app *a)
         if (why == GP_J_OK) {
             const float s = gp_jump_scale(a->vrest);
             a->jump_scale = s;
-            a->jump_v_target = GP_JUMP_V_MAX * sqrtf((float)a->sp.jump_height / 15.0f) * s;
+            a->jump_v_target = GP_JUMP_V_MAX * sqrtf((float)a->sp.jump_height / 15.0f);
+            a->push_ilimit = s * GP_JUMP_I_FULL_A;
+            a->push_scale = 1.0f;
             a->jump_from = 0.5f * (leg_length(a, 0) + leg_length(a, 1));
             a->jump_phase = GP_JP_CROUCH;
             a->t_jump = a->t_phase = a->now;
@@ -500,7 +536,8 @@ static void supervise(gp_app *a)
         }
         const bool stop_ok = a->stop_run && since(a, a->t_stop_high) >= GP_RUN_HOLD_US;
         if (a->run_rise && link_ok(a) && a->sp.run && stop_ok && !a->latched && all_configured(a) && vbus_fresh(a) &&
-            !a->uvlo_sat && !a->people && (!a->cfg.imu_required || imu_fresh(a))) {
+            !a->uvlo_sat && !a->cutoff && a->vrest >= GP_UVLO_STAND_V && !a->people &&
+            (!a->cfg.imu_required || imu_fresh(a))) {
             a->run_rise = false;
             a->reason = GP_R_NONE;
             for (int i = 0; i < 4; i++) {
@@ -521,6 +558,8 @@ static void supervise(gp_app *a)
         }
         if (!a->stop_run) {
             start_sit(a, GP_R_STOP, true);
+        } else if (a->cutoff) {
+            start_sit(a, GP_R_CUTOFF, false);
         } else if (all_run) {
             const float h = gp_ctl_height_frac(0.5f * (leg_length(a, 0) + leg_length(a, 1)));
             gp_ctl_reset(&a->ctl, h);
@@ -536,6 +575,7 @@ static void supervise(gp_app *a)
         uint8_t why = GP_R_NONE;
         bool fast = false;
         if (!a->stop_run) { why = GP_R_STOP; fast = true; }
+        else if (a->cutoff) why = GP_R_CUTOFF;
         else if (!vbus_fresh(a)) why = GP_R_VBUS_STALE;
         else if (a->uvlo_sat) why = GP_R_UVLO;
         else if (!link_ok(a) && since(a, a->t_link) >= GP_HEARTBEAT_LOST_US + GP_HEARTBEAT_HOLD_US) why = GP_R_LINK;
@@ -688,7 +728,7 @@ static void build_sense(const gp_app *a, gp_sense *s)
         const float erpm = (float)a->vesc[w].erpm;
         s->wheel_w[w] = (float)a->cfg.wheel_dir[w] * erpm / (float)GP_WHEEL_POLE_PAIRS * (2.0f * PI_F / 60.0f);
     }
-    s->vbus = a->have_vbus ? a->vbus : GP_JUMP_FULL_V;
+    s->vbus = a->have_vbus ? a->vbus : GP_PACK_NOMINAL_V;
     if (a->have_imu) {
         /* the VN-100's frame (x forward, y right, z down) to the robot's (x forward, y left, z up) */
         const float roll = a->imu.roll * DEG;
@@ -781,8 +821,9 @@ static void tx_state(gp_app *a)
             f.data[i] = (uint8_t)((a->mot[i].have ? 0x80u : 0u) | (a->mot[i].faults & 0x3Fu));
         }
         f.data[4] = (uint8_t)((a->have_vesc[0] ? 1u : 0u) | (a->have_vesc[1] ? 2u : 0u) | (imu_fresh(a) ? 4u : 0u) |
-                              (vbus_fresh(a) ? 8u : 0u) | (a->latched ? 16u : 0u));
-        f.data[5] = (uint8_t)lroundf(100.0f * gp_jump_scale(a->vrest) * gp_jump_scale(a->vrest));
+                              (vbus_fresh(a) ? 8u : 0u) | (a->latched ? 16u : 0u) | (a->cutoff ? 32u : 0u) |
+                              (a->bus_scale < 1.0f ? 64u : 0u));
+        f.data[5] = (uint8_t)lroundf(100.0f * gp_jump_scale(a->vrest)); /* the push's bus current allowed now, % of 72 A */
         f.data[6] = a->jump_refusal;
         f.data[7] = (uint8_t)(a->tick / 100u);
         break;
@@ -850,6 +891,12 @@ void gp_app_tick(gp_app *a, uint32_t now_us, const gp_inputs *in, gp_outputs *ou
 
     /* the motors */
     if (drive) {
+        const float legs = a->bus_scale * (a->jump_phase == GP_JP_PUSH ? a->push_scale : 1.0f);
+        for (int side = 0; side < 2; side++) { /* the bus current limit: every motor's command scaled together */
+            a->out.tau[side][0] *= legs;
+            a->out.tau[side][1] *= legs;
+            a->out.wheel[side] *= a->bus_scale;
+        }
         for (int i = 0; i < 4; i++) {
             gp_can_frame f;
             const float tau = (float)a->cfg.motor[i].dir * a->out.tau[i / 2][i % 2];
@@ -904,7 +951,8 @@ void gp_app_snapshot(const gp_app *a, gp_snapshot *s)
     s->uvlo_warn = a->uvlo_warn;
     s->uvlo_sat = a->uvlo_sat;
     s->latched = a->latched;
-    const bool jump_ok = a->mode == GP_MODE_RUN && s->link_ok && !a->people && vbus_fresh(a) && gp_jump_scale(a->vrest) > 0.0f;
+    const bool jump_ok = a->mode == GP_MODE_RUN && s->link_ok && !a->people && vbus_fresh(a) && !a->cutoff &&
+                         gp_jump_scale(a->vrest) > 0.0f;
     s->flags = (a->stop_run ? GP_JF_STOP_RUN : 0u) | (a->mcu_run ? GP_JF_MCU_RUN : 0u) | (s->link_ok ? GP_JF_LINK_OK : 0u) |
                (a->people ? GP_JF_PEOPLE : 0u) | (a->uvlo_warn ? GP_JF_UVLO_WARN : 0u) | (a->uvlo_sat ? GP_JF_UVLO_SIT : 0u) |
                (jump_ok ? GP_JF_JUMP_OK : 0u) | (a->mode == GP_MODE_JUMP ? GP_JF_JUMPING : 0u);
@@ -940,4 +988,11 @@ void gp_app_snapshot(const gp_app *a, gp_snapshot *s)
     s->can_rx = a->can_rx;
     s->imu_packets = a->vn.packets;
     s->imu_crc_errors = a->vn.crc_errors;
+    s->cutoff = a->cutoff;
+    s->vload = a->vload;
+    s->iavg = a->iavg;
+    s->ilimit = a->ilimit;
+    s->bus_scale = a->bus_scale;
+    s->push_ilimit = a->push_ilimit;
+    s->push_scale = a->push_scale;
 }

@@ -31,12 +31,21 @@ def command(t: float):
     return height, speed
 
 
+BUS_V = harness.DESIGN_BUS_V      # V: both controllers' motor speed lines and the INA228's reading (the 10S nominal, D65)
+
+
 class Plant:
-    def __init__(self):
+    def __init__(self, bus_v: float = BUS_V):
         import mujoco
         from sim.controller_v2 import RobotV2, place_standing
         self.mj = mujoco
         self.info = json.loads((BUILD / 'model.json').read_text())
+        # the model's speed lines are at robot_v2's BUS_V (model.json bus_v): move both to this bus, as the firmware
+        # does from the INA228's reading, so the two controllers clip alike
+        k = bus_v / float(self.info.get('bus_v', 48.1))
+        for key in ('leg_actuator', 'wheel_motor'):
+            self.info[key]['omega_max'] *= k
+        self.bus_v = bus_v
         self.m = mujoco.MjModel.from_xml_path(str(BUILD / 'robot.xml'))
         self.d = mujoco.MjData(self.m)
         self.rb = RobotV2(self.m, self.info)
@@ -130,7 +139,7 @@ def run_firmware(seconds: float = 8.0) -> dict:
                 w = float(d.qvel[rb.vadr[f'wheel_{side}']])
                 erpm = int(round(wheel_dir[vid] * w * pp * 60 / (2 * math.pi)))
                 devices.send((9 << 8) | vid, erpm.to_bytes(4, 'big', signed=True) + bytes(4), True)
-            fw.ina228(48.1, 0.0, now)
+            fw.ina228(p.bus_v, 0.0, now)
         if now % 10000 == 0:
             seq = (seq + 1) & 0xFF
             sp = int(round(v * 1000)).to_bytes(2, 'little', signed=True) + bytes(2) + bytes((int(round(h * 200)), 0, 1, seq))
@@ -190,7 +199,7 @@ def summary(fwl: dict, pyl: dict) -> dict:
            'worst_theta_deg_firmware': float(np.degrees(np.max(np.abs(fwl['theta'])))),
            'worst_theta_deg_python': float(np.degrees(np.max(np.abs(pyl['theta'])))),
            'theta_estimate_error_deg': float(np.degrees(np.max(np.abs(np.asarray(fwl['fw_theta']) - np.asarray(fwl['theta']))))),
-           'final_mode': fwlib.MODES[fwl['mode'][-1]]}
+           'final_mode': fwlib.MODES[fwl['mode'][-1]], 'bus_v': BUS_V}
     # the emulated VN-100 is self-consistent: its pitch rate is its pitch angle's rate (B3's model caught a gyro read in
     # the base's principal-inertia frame: 1/6 of the true pitch rate)
     dp = np.diff(fwl['imu_pitch']) / np.diff(fwl['t'])

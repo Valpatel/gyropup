@@ -172,8 +172,8 @@ static void test_ina228(void)
     CHECK(c.adcrange == 0 && c.shunt_cal == 4096);
     NEAR(c.current_lsb, 312.5e-6, 1e-9);
     uint8_t v[3], i[3];
-    gp_ina228_encode_vbus(48.1f, v);
-    NEAR(gp_ina228_vbus(v), 48.1, 2e-4);
+    gp_ina228_encode_vbus(41.0f, v);
+    NEAR(gp_ina228_vbus(v), 41.0, 2e-4);
     gp_ina228_encode_current(&c, -80.0f, i);
     NEAR(gp_ina228_current(&c, i), -80.0, 4e-4);
     /* the datasheet's own example of the register: VBUS 0x3D0900 << 4 is 48.828 V... here 0x00F424 -> 1.2207 V */
@@ -195,7 +195,7 @@ static void stance_sense(gp_sense *s, float L)
         s->phi[side][0] = phi[0];
         s->phi[side][1] = phi[1];
     }
-    s->vbus = 48.1f;
+    s->vbus = GP_PACK_NOMINAL_V;
 }
 
 static void test_control(void)
@@ -322,7 +322,7 @@ static void test_supervisor(void)
 {
     gp_snapshot s;
     /* boot: every motor configured and read back; no arm without the radio's run */
-    boot_and_stand(48.1f);
+    boot_and_stand(36.0f);
     gp_app_snapshot(&A, &s);
     CHECK(s.boot_mask == 0xF);
     env.stop = false;
@@ -341,22 +341,24 @@ static void test_supervisor(void)
     tick(50);
     CHECK(A.mode == GP_MODE_RUN);
 
-    /* the jump gate: 44.0 V resting and up, the take-off speed scaled */
-    NEAR(gp_jump_scale(43.99f), 0.0, 0);
-    NEAR(gp_jump_scale(44.0f), (44.0 - 35.0) / 13.1, 1e-6);
-    NEAR(gp_jump_scale(48.1f), 1.0, 1e-6);
-    NEAR(gp_jump_scale(53.3f), 1.0, 0);
-    boot_and_stand(43.9f);
+    /* the jump gate (D65): 34.0 V resting and up; the push's bus current limit s(V) x 72 A, s from the 31 V floor */
+    NEAR(gp_jump_scale(33.99f), 0.0, 0);
+    NEAR(gp_jump_scale(34.0f), (34.0 - 31.0) / 7.2, 1e-5);
+    NEAR(gp_jump_scale(38.2f), 1.0, 1e-6);
+    NEAR(gp_jump_scale(41.0f), 1.0, 0);
+    boot_and_stand(33.9f);
     jump_seq = 1;
     tick(20);
     CHECK(A.mode == GP_MODE_RUN && A.jump_refusal == GP_J_VOLTAGE && A.jumps_refused == 1);
-    boot_and_stand(44.1f);
+    boot_and_stand(34.1f);
     jump_seq = 1;
     tick(20);
     CHECK(A.mode == GP_MODE_JUMP && A.jumps == 1);
-    NEAR(A.jump_scale, (44.1 - 35.0) / 13.1, 1e-4);
+    NEAR(A.jump_scale, (34.1 - 31.0) / 7.2, 1e-4);
+    NEAR(A.push_ilimit, (34.1 - 31.0) / 7.2 * 72.0, 1e-3);
+    NEAR(A.jump_v_target, GP_JUMP_V_MAX, 1e-6);
     /* people near: no jump, then sit after 2 s */
-    boot_and_stand(48.1f);
+    boot_and_stand(36.0f);
     env.people = true;
     tick(20);
     jump_seq = 2;
@@ -367,31 +369,107 @@ static void test_supervisor(void)
     tick(50);
     CHECK(A.mode == GP_MODE_SIT && A.reason == GP_R_PEOPLE);
 
-    /* UVLO: warn under 45.5 V, sit under 41.6 V (resting, filtered over 1 s) */
-    boot_and_stand(45.6f);
+    /* UVLO (D65): warn under 35.0 V, sit under 32.0 V (resting, filtered over 1 s) */
+    boot_and_stand(35.1f);
     tick(3000);
     CHECK(!A.uvlo_warn);
-    env.vbus = 45.4f;
+    env.vbus = 34.9f;
     tick(5000);
     CHECK(A.uvlo_warn && A.mode == GP_MODE_RUN);
-    env.vbus = 41.5f;
+    env.vbus = 31.9f;
     float before = A.vrest;
     while (A.mode == GP_MODE_RUN && now < 60000000u) {
         before = A.vrest;
         tick(1);
     }
     CHECK(A.mode == GP_MODE_SIT && A.reason == GP_R_UVLO);
-    CHECK(before >= 41.6f && A.vrest < 41.6f);
-    /* the sag is taken back out: 30 A at 41.0 V on the wire is 44.4 V resting */
-    boot_and_stand(48.1f);
-    env.vbus = 41.0f;
+    CHECK(before >= 32.0f && A.vrest < 32.0f);
+    CHECK(!A.cutoff);
+    /* the sag is taken back out: 30 A at 31.0 V on the wire is 34.0 V resting; under load it is over the cut-off */
+    boot_and_stand(36.0f);
+    env.vbus = 31.0f;
     env.ibus = 30.0f;
     tick(6000);
-    NEAR(A.vrest, 41.0 + 30.0 * (double)GP_R_PACK_OHM, 0.02);
+    NEAR(A.vrest, 31.0 + 30.0 * (double)GP_R_PACK_OHM, 0.02);
+    CHECK(A.mode == GP_MODE_RUN && !A.cutoff);
+
+    /* no arming under 33.0 V resting (3.3 V a cell) */
+    boot_and_stand(36.0f);
+    env.run = false;
+    env.vbus = 32.9f;
+    tick(4000); /* sat (the Jetson's RUN 0), the resting voltage down to 32.9 */
+    CHECK(A.mode == GP_MODE_IDLE && !A.uvlo_sat);
+    env.run = true;
+    tick(200);
+    CHECK(A.mode == GP_MODE_IDLE);
+    env.vbus = 33.1f;
+    env.run = false;
+    tick(3000);
+    env.run = true;
+    tick(50);
     CHECK(A.mode == GP_MODE_RUN);
 
+    /* the cut-off (D65): 30.0 V a cell under load, 0.1 s filter; a 6 ms dip to 25 V does not trip it */
+    boot_and_stand(36.0f);
+    env.vbus = 25.0f;
+    tick(6);
+    env.vbus = 36.0f;
+    tick(500);
+    CHECK(A.mode == GP_MODE_RUN && !A.cutoff);
+    env.vbus = 29.9f;
+    env.ibus = 20.0f; /* 31.9 V resting: under load is what counts */
+    tick(1000);
+    CHECK(A.cutoff && A.reason == GP_R_CUTOFF && (A.mode == GP_MODE_SIT || A.mode == GP_MODE_SETTLE || A.mode == GP_MODE_IDLE));
+    tick(2000);
+    CHECK(A.mode == GP_MODE_IDLE && !A.mcu_run);
+    env.vbus = 41.0f; /* a fresh pack on the wire does not clear it: only a power cycle */
+    env.ibus = 0.0f;
+    env.run = false;
+    tick(3000);
+    env.run = true;
+    tick(200);
+    CHECK(A.mode == GP_MODE_IDLE && A.cutoff);
+    jump_seq = 3;
+    tick(20);
+    CHECK(A.jump_refusal == GP_J_NOT_RUNNING);
+    boot_and_stand(36.0f); /* gp_app_init: the power cycle */
+    CHECK(!A.cutoff);
+
+    /* the bus current limit (D65): 80 A for at most 0.5 s, else 40 A; one factor on every motor's command */
+    boot_and_stand(36.0f);
+    env.ibus = 39.0f;
+    tick(5000);
+    CHECK(A.bus_scale == 1.0f && A.ilimit == GP_BUS_I_PEAK_A); /* 39 A held: under the continuous limit */
+    env.ibus = 10.0f;
+    tick(4000);
+    env.ibus = 60.0f; /* over the continuous, under the peak (the average stays under 40 A: 33 A at 0.6 s) */
+    tick(400);
+    CHECK(A.bus_scale == 1.0f && A.ilimit == GP_BUS_I_PEAK_A);
+    tick(200);
+    CHECK(A.ilimit == GP_BUS_I_CONT_A && A.bus_scale < 1.0f && A.bus_scale >= GP_BUS_SCALE_MIN);
+    CHECK(A.mode == GP_MODE_RUN); /* scaled, not tripped */
+    env.ibus = 20.0f;
+    tick(1000);
+    CHECK(A.bus_scale == 1.0f && A.ilimit == GP_BUS_I_PEAK_A);
+    env.ibus = 100.0f; /* over the peak: down by 80/100 at once */
+    tick(2);
+    NEAR(A.bus_scale, 0.8, 1e-5);
+    tick(100);
+    NEAR(A.bus_scale, GP_BUS_SCALE_MIN, 0); /* this test's current does not follow the factor: it sits at its floor */
+    env.ibus = 30.0f;
+    tick(2000);
+    CHECK(A.bus_scale == 1.0f);
+    env.ibus = 45.0f; /* the 1 s average over 40 A takes the peak away even inside the 0.5 s */
+    tick(1500);
+    CHECK(A.ilimit == GP_BUS_I_CONT_A);
+    {
+        gp_app_snapshot(&A, &s);
+        NEAR(s.bus_scale, A.bus_scale, 0);
+        CHECK(A.mode == GP_MODE_RUN);
+    }
+
     /* the Jetson's heartbeat: 200 ms lost, 2 s holding, then sit */
-    boot_and_stand(48.1f);
+    boot_and_stand(36.0f);
     env.link = false;
     tick(2150);
     CHECK(A.mode == GP_MODE_RUN);
@@ -399,7 +477,7 @@ static void test_supervisor(void)
     CHECK(A.mode == GP_MODE_SIT && A.reason == GP_R_LINK);
 
     /* a motor that stops answering: limp after 3 ticks, torque off */
-    boot_and_stand(48.1f);
+    boot_and_stand(36.0f);
     TP.mute[2] = true;
     tick(3); /* the answers to the tick before still came */
     CHECK(A.mode == GP_MODE_RUN);
