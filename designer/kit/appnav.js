@@ -18,7 +18,7 @@ const ROOT_OK = /^(?:\.\.?\/)*(?:[A-Za-z0-9_-][A-Za-z0-9._-]*\/)*$/;
 export async function mountAppNav({ root = '../', current = '' } = {}) {
   if (typeof root !== 'string' || !ROOT_OK.test(root)) return null;
   let cfg;
-  try { cfg = await (await fetch(`${root}site/nav.json`)).json(); } catch { return null; }
+  try { cfg = await (await fetch(`${root}site/nav.json`, { cache: 'no-cache' })).json(); } catch { return null; }
   if (!cfg?.nav?.length) return null;
   const style = document.createElement('style');
   style.textContent = NAV_CSS;

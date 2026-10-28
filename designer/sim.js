@@ -14,7 +14,7 @@ import { evaluate, indexCatalog, legPose, effectiveDesign, resolvePart } from '.
 import { createSfx } from './sfx.js';
 
 const $ = (s) => document.querySelector(s);
-const getJson = async (u) => { const r = await fetch(u); if (!r.ok) throw new Error(`${u}: ${r.status}`); return r.json(); };
+const getJson = async (u) => { const r = await fetch(u, { cache: 'no-cache' }); if (!r.ok) throw new Error(`${u}: ${r.status}`); return r.json(); };
 const STORE = 'gyropup-design-v1';
 
 await mountAppNav({ root: '../', current: 'simulate' });
