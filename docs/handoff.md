@@ -139,3 +139,31 @@ cad-agent's design-process work (dossier, integrity gates, section review) is tr
 
 **WIP sites** (`cad-agent site --serve --host 0.0.0.0` run in each worktree): main :8642, turret :8651, legrig
 :8652, body :8653, legstops :8654.
+
+## Update 2026-10-27 late night (5-hour usage limit)
+
+Everything committed is pushed. Uncommitted edits in progress were also snapshotted to `wip/<branch>` branches on
+origin. These are for recovery only, not reviewed: the agents' own commits supersede them.
+- `wip/turret/program`: 39 files of the turret's mechanical cleanup, D66 and D68.
+- `wip/leg/stops`: the stops work since its last commit, including the GB10 FEA outputs.
+- `wip/wheels/study`: the air-tyre wheel study (#18).
+- `wip/feat/gate-containment` in cad-agent: the PR #42 review fixes.
+
+State at the limit:
+- **Merged to main:**
+  - the leg rig on 10S, with integrity checks (f50e5c4);
+  - the body with the P0 shunt fix, fuse board, battery bay and 183-screw integrity checks (507de33, PR #17; #11, #12 and #13 closed).
+- **cad-agent dev:** the plan (#25), the dossier (#26), the gates core (#27) and connectivity (#43, closing #30).
+- **In flight:**
+  - turret: issues #1-#3, PR #15;
+  - leg stops: #4, PR #16;
+  - wheels: #18, branch wheels/study;
+  - containment: cad-agent PR #42, issue #31. It needs a rebase onto dev, now that #43 is merged.
+- **Main-session leg work:** #5, #6 and #7 wait on leg/stops.
+- **Mass:** the design mass is set after #18 picks a wheel (#10).
+- **Purchases:** 4 RS-04s ordered (docs/purchases.md); a spare is #22.
+
+To resume:
+1. `gh issue list` in both repos.
+2. Read each issue's last comment for its resume notes.
+3. Restart each agent from its issue and branch.
