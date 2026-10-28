@@ -28,7 +28,7 @@
     -67.0
    ]
   ],
-  "from": "hip_frame() constants (fivebar.frame_mounts() not on this branch yet)"
+  "from": "fivebar.frame_mounts()"
  },
  "carriage_plate": {
   "material": "6061-T6 aluminium, 0.25 in (6.35 mm)",
@@ -208,14 +208,14 @@
    ],
    [
     "harness_front",
-    97.45,
+    80.17,
     -46.0,
     32.0,
     22.0
    ],
    [
     "harness_rear",
-    -49.3,
+    -66.28,
     46.0,
     32.0,
     22.0
@@ -243,19 +243,19 @@
   },
   "harness_slots": [
    {
-    "x": 97.45,
+    "x": 80.17,
     "z": -46.0,
     "w": 32.0,
     "h": 22.0,
-    "exit_deg": -66.8,
+    "exit_deg": -84.8,
     "motor": "front"
    },
    {
-    "x": -49.3,
+    "x": -66.28,
     "z": 46.0,
     "w": 32.0,
     "h": 22.0,
-    "exit_deg": 63.2,
+    "exit_deg": 81.2,
     "motor": "rear"
    }
   ]
@@ -330,55 +330,58 @@
    }
   },
   "leg": {
-   "frame_kg": 3.842,
-   "frame_com_y_mm": -43.6,
-   "moving_kg": 4.702,
+   "frame_kg": 3.832,
+   "frame_com_y_mm": -43.7,
+   "moving_kg": 4.954,
    "rotor_kg": 1.32,
    "wheel_link_kg": 1.6928
   },
   "ballast": {
    "lightest_kg": {
-    "with_posts": 12.45,
-    "posts_removed": 11.23,
+    "with_posts": 12.69,
+    "posts_removed": 11.47,
     "note": "the carriage's own parts set the floor: below it the rig cannot go (the plan's 11 kg point is out of reach)"
    },
    "11.0": {
-    "plates_needed_kg": -1.445,
+    "plates_needed_kg": -1.687,
     "reachable": false,
     "note": "below the carriage with its ballast posts: not reachable"
    },
    "13.1": {
-    "plates_needed_kg": 0.655,
+    "plates_needed_kg": 0.413,
     "per_post": {
      "1.25 lb": 0,
      "2.5 lb": 0
     },
-    "plates_kg": 0.0,
-    "short_by_kg": 0.655,
-    "washers_3p5in": 5,
-    "note": "trim with 3.5 in OD washers on the posts (McMaster 91117A251, ~0.14 kg each)"
+    "washers_3p5in": 3,
+    "ballast_kg": 0.42,
+    "over_by_kg": 0.007,
+    "carried_kg": 13.107,
+    "note": "weigh the plates: the table assumes 0.567 and 1.134 kg; the washers (McMaster 91117A251) ~0.14 kg each go on either post"
    },
    "14.75": {
-    "plates_needed_kg": 2.305,
+    "plates_needed_kg": 2.063,
     "per_post": {
      "1.25 lb": 0,
      "2.5 lb": 1
     },
-    "plates_kg": 2.268,
-    "short_by_kg": 0.037,
     "washers_3p5in": 0,
-    "note": ""
+    "ballast_kg": 2.268,
+    "over_by_kg": 0.205,
+    "carried_kg": 14.955,
+    "note": "weigh the plates: the table assumes 0.567 and 1.134 kg; the washers (McMaster 91117A251) ~0.14 kg each go on either post"
    },
    "16.0": {
-    "plates_needed_kg": 3.555,
+    "plates_needed_kg": 3.313,
     "per_post": {
      "1.25 lb": 1,
      "2.5 lb": 1
     },
-    "plates_kg": 3.402,
-    "short_by_kg": 0.153,
-    "washers_3p5in": 1,
-    "note": "trim with 3.5 in OD washers on the posts (McMaster 91117A251, ~0.14 kg each)"
+    "washers_3p5in": 0,
+    "ballast_kg": 3.402,
+    "over_by_kg": 0.089,
+    "carried_kg": 16.089,
+    "note": "weigh the plates: the table assumes 0.567 and 1.134 kg; the washers (McMaster 91117A251) ~0.14 kg each go on either post"
    }
   },
   "note": "the simulation's carriage at 14.75 kg is the leg's frame group + the dummy; the rig's dummy is its carriage parts + the plates"
@@ -396,18 +399,18 @@
   "jump_apex": {
    "11.0": {
     "half_mass_kg": 11.0,
-    "jump_mm": 242.2,
-    "zh_max_mm": 627.8,
-    "peak_wheel_force_n": 2380.0
+    "jump_mm": 238.5,
+    "zh_max_mm": 624.2,
+    "peak_wheel_force_n": 2667.7
    },
    "14.75": {
     "half_mass_kg": 14.75,
     "jump_mm": 245.3,
-    "zh_max_mm": 631.0,
-    "peak_wheel_force_n": 3428.3
+    "zh_max_mm": 630.9,
+    "peak_wheel_force_n": 3458.6
    }
   },
-  "margin_apex_to_top_stop_mm": 180.0,
+  "margin_apex_to_top_stop_mm": 180.1,
   "points": {
    "bumpers_crushed": {
     "zh_mm": 200.7,
@@ -565,10 +568,10 @@
     ]
    },
    "jump_apex": {
-    "zh_mm": 631.0,
+    "zh_mm": 630.9,
     "blocks_z_mm": [
-     475.3,
-     786.7
+     475.2,
+     786.6
     ],
     "on_rails": true,
     "closest": [
@@ -595,7 +598,7 @@
      [
       "ballast",
       "brace",
-      91.5
+      91.4
      ]
     ]
    },
@@ -678,148 +681,148 @@
  },
  "loads": {
   "source": "exports/rig/predictions.json (rig/run.py --predict, 14.75 kg)",
-  "carriage_com_y_mm": -90.1,
+  "carriage_com_y_mm": -89.2,
   "jump": {
-   "Fz_n": 3428.0,
+   "Fz_n": 3459.0,
    "side_frac": 0.1,
    "moment_on_rails_nm": [
-    770.3,
-    -102.8,
-    -66.7
+    774.1,
+    -103.8,
+    -67.0
    ],
    "block_loads_n": [
-    2559.0,
-    552.0,
-    768.0,
-    2374.0
+    2576.0,
+    551.0,
+    769.0,
+    2389.0
    ],
-   "worst_n": 2559.0,
+   "worst_n": 2576.0,
    "sf_C0": 6.6
   },
   "drop_150": {
-   "Fz_n": 2873.0,
+   "Fz_n": 2874.0,
    "side_frac": 0.1,
    "moment_on_rails_nm": [
-    645.4,
+    643.3,
     -86.2,
-    -55.9
+    -55.7
    ],
    "block_loads_n": [
-    2144.0,
-    463.0,
-    643.0,
-    1989.0
+    2140.0,
+    458.0,
+    639.0,
+    1985.0
    ],
-   "worst_n": 2144.0,
+   "worst_n": 2140.0,
    "sf_C0": 7.9
   },
   "post": [
    {
-    "M_nm": 770.0,
+    "M_nm": 774.0,
     "zh_mm": 245.65,
     "braced": false,
     "foot": "fixed",
-    "max_moment_nm": 770.3,
-    "stress_mpa": 23.9,
-    "sf_yield": 6.1,
-    "sway_at_carriage_mm": 0.56
+    "max_moment_nm": 774.1,
+    "stress_mpa": 24.0,
+    "sf_yield": 6.0,
+    "sway_at_carriage_mm": 0.57
    },
    {
-    "M_nm": 770.0,
+    "M_nm": 774.0,
     "zh_mm": 245.65,
     "braced": true,
     "foot": "fixed",
-    "max_moment_nm": 288.3,
-    "stress_mpa": 8.9,
+    "max_moment_nm": 289.7,
+    "stress_mpa": 9.0,
     "sf_yield": 16.2,
     "sway_at_carriage_mm": 0.11,
-    "brace_force_n": 1750.0
+    "brace_force_n": 1758.0
    },
    {
-    "M_nm": 770.0,
+    "M_nm": 774.0,
     "zh_mm": 245.65,
     "braced": true,
     "foot": "pinned",
-    "max_moment_nm": 333.9,
-    "stress_mpa": 10.3,
-    "sf_yield": 14.0,
-    "sway_at_carriage_mm": 0.14,
-    "brace_force_n": 2026.0
+    "max_moment_nm": 335.5,
+    "stress_mpa": 10.4,
+    "sf_yield": 13.9,
+    "sway_at_carriage_mm": 0.15,
+    "brace_force_n": 2036.0
    },
    {
-    "M_nm": 770.0,
+    "M_nm": 774.0,
     "zh_mm": 335.65,
     "braced": false,
     "foot": "fixed",
-    "max_moment_nm": 770.3,
-    "stress_mpa": 23.9,
-    "sf_yield": 6.1,
+    "max_moment_nm": 774.1,
+    "stress_mpa": 24.0,
+    "sf_yield": 6.0,
     "sway_at_carriage_mm": 0.9
    },
    {
-    "M_nm": 770.0,
+    "M_nm": 774.0,
     "zh_mm": 335.65,
     "braced": true,
     "foot": "fixed",
-    "max_moment_nm": 248.6,
+    "max_moment_nm": 249.8,
     "stress_mpa": 7.7,
-    "sf_yield": 18.8,
+    "sf_yield": 18.7,
     "sway_at_carriage_mm": 0.09,
-    "brace_force_n": 2164.0
+    "brace_force_n": 2175.0
    },
    {
-    "M_nm": 770.0,
+    "M_nm": 774.0,
     "zh_mm": 335.65,
     "braced": true,
     "foot": "pinned",
-    "max_moment_nm": 256.7,
+    "max_moment_nm": 258.0,
     "stress_mpa": 8.0,
-    "sf_yield": 18.2,
+    "sf_yield": 18.1,
     "sway_at_carriage_mm": 0.07,
-    "brace_force_n": 2026.0
+    "brace_force_n": 2036.0
    },
    {
-    "M_nm": 770.0,
+    "M_nm": 774.0,
     "zh_mm": 600.0,
     "braced": false,
     "foot": "fixed",
-    "max_moment_nm": 770.3,
-    "stress_mpa": 23.9,
-    "sf_yield": 6.1,
-    "sway_at_carriage_mm": 2.3
+    "max_moment_nm": 774.1,
+    "stress_mpa": 24.0,
+    "sf_yield": 6.0,
+    "sway_at_carriage_mm": 2.31
    },
    {
-    "M_nm": 770.0,
+    "M_nm": 774.0,
     "zh_mm": 600.0,
     "braced": true,
     "foot": "fixed",
-    "max_moment_nm": 469.7,
+    "max_moment_nm": 472.0,
     "stress_mpa": 14.6,
-    "sf_yield": 10.0,
+    "sf_yield": 9.9,
     "sway_at_carriage_mm": 0.18,
-    "brace_force_n": 2811.0
+    "brace_force_n": 2824.0
    },
    {
-    "M_nm": 770.0,
+    "M_nm": 774.0,
     "zh_mm": 600.0,
     "braced": true,
     "foot": "pinned",
-    "max_moment_nm": 553.6,
+    "max_moment_nm": 556.3,
     "stress_mpa": 17.2,
-    "sf_yield": 8.5,
+    "sf_yield": 8.4,
     "sway_at_carriage_mm": 0.17,
-    "brace_force_n": 2026.0
+    "brace_force_n": 2036.0
    }
   ],
   "post_worst": {
-   "M_nm": 770.0,
+   "M_nm": 774.0,
    "zh_mm": 245.65,
    "braced": false,
    "foot": "fixed",
-   "max_moment_nm": 770.3,
-   "stress_mpa": 23.9,
-   "sf_yield": 6.1,
-   "sway_at_carriage_mm": 0.56
+   "max_moment_nm": 774.1,
+   "stress_mpa": 24.0,
+   "sf_yield": 6.0,
+   "sway_at_carriage_mm": 0.57
   },
   "brace": {
    "length_mm": 720.0,
@@ -834,13 +837,13 @@
   "base_h_mm": 20.65,
   "contact_z_mm": 65.65,
   "power_cut_S5": {
-   "carriage_kg": 10.05,
+   "carriage_kg": 9.8,
    "speed_at_contact_m_s": 0.95,
-   "energy_j": 7.0,
-   "mean_force_per_bumper_n": 140.0
+   "energy_j": 6.9,
+   "mean_force_per_bumper_n": 137.0
   },
   "tpu_face_mm2": 2830.0,
-  "plateau_needed_mpa": 0.049,
+  "plateau_needed_mpa": 0.048,
   "gyroid_estimate": "TPU 95A gyroid crushes at roughly 0.3 x E x density^2 (elastomeric cells): 0.05 MPa at 15 %, 0.12 MPa at 20 %, 0.26 MPa at 30 % (E 9.8 MPa, Bambu); R0 in docs/leg-bench-tests.md drops the carriage on them to choose the infill"
  },
  "base": {
@@ -902,23 +905,23 @@
   },
   "slots": [
    {
-    "x": 97.45,
+    "x": 80.17,
     "z": -46.0,
     "w": 32.0,
     "h": 22.0,
-    "exit_deg": -66.8,
+    "exit_deg": -84.8,
     "motor": "front"
    },
    {
-    "x": -49.3,
+    "x": -66.28,
     "z": 46.0,
     "w": 32.0,
     "h": 22.0,
-    "exit_deg": 63.2,
+    "exit_deg": 81.2,
     "motor": "rear"
    }
   ],
-  "lug_clock_deg": 25.0,
+  "lug_clock_deg": 7.0,
   "note": "the leads leave the rear covers 6-19 mm in front of the mount plane, pointing at the frame's flanges; they go straight back through the plate. The slots follow fivebar's clocking: rebuild the DXF after any change to it"
  },
  "clearance": {
