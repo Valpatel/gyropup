@@ -1,0 +1,366 @@
+{
+ "botwheel": {
+  "wheel": {
+   "title": "ODrive BotWheel 171 mm solid (today's wheel)",
+   "od_mm": 171.3,
+   "mass_g": 2200,
+   "tyre_width_mm": 44.6,
+   "tyre_section_mm": 16,
+   "hub_od_mm": 139.3,
+   "hub_width_mm": 44.6,
+   "axle_d_mm": 50,
+   "peak_torque_nm": 14.3,
+   "rated_torque_nm": 5.0,
+   "no_load_speed_rpm": 209,
+   "voltage_nominal_v": 24,
+   "kt_nm_per_a": 0.951,
+   "peak_current_a": 15,
+   "tyre_k_n_per_mm": null,
+   "rotor_share": 0.6,
+   "basis": "catalog/wheel_motors.json; tyre solid (the rig's 7.7 ms / 0.7)"
+  },
+  "model_mass_kg": 33.8,
+  "wheel_motor": {
+   "peak_nm": 14.3,
+   "rated_nm": 5.0,
+   "omega_max": 32.82964323001334
+  },
+  "speed_mps": 0.6,
+  "heights": {
+   "25.0": {
+    "pass": true,
+    "reasons": [],
+    "x_max_m": 3.183,
+    "max_theta_deg": 7.13,
+    "fell_at": null,
+    "wheel_peak_nm": 6.22,
+    "wheel_of_peak": 0.435,
+    "wheel_saturated_s": 0.031,
+    "body_impact_peak_n": 0,
+    "wall_s": 1.5
+   },
+   "40.0": {
+    "pass": false,
+    "reasons": [
+     "fell at 3.6 s",
+     "the lidar hit the ground at 3.78 s",
+     "only reached 0.82 m of 1.5 m"
+    ],
+    "x_max_m": 0.823,
+    "max_theta_deg": 96.99,
+    "fell_at": 3.594,
+    "wheel_peak_nm": 14.3,
+    "wheel_of_peak": 1.0,
+    "wheel_saturated_s": 1.355,
+    "body_impact_peak_n": 803,
+    "wall_s": 0.8
+   },
+   "50.0": {
+    "pass": false,
+    "reasons": [
+     "fell at 3.6 s",
+     "the lidar hit the ground at 3.82 s",
+     "only reached 0.82 m of 1.5 m"
+    ],
+    "x_max_m": 0.824,
+    "max_theta_deg": 101.96,
+    "fell_at": 3.614,
+    "wheel_peak_nm": 14.3,
+    "wheel_of_peak": 1.0,
+    "wheel_saturated_s": 1.369,
+    "body_impact_peak_n": 874,
+    "wall_s": 0.8
+   },
+   "60.0": {
+    "pass": false,
+    "reasons": [
+     "fell at 3.6 s",
+     "the lidar hit the ground at 3.86 s",
+     "only reached 0.81 m of 1.5 m"
+    ],
+    "x_max_m": 0.814,
+    "max_theta_deg": 112.49,
+    "fell_at": 3.64,
+    "wheel_peak_nm": 14.3,
+    "wheel_of_peak": 1.0,
+    "wheel_saturated_s": 1.378,
+    "body_impact_peak_n": 921,
+    "wall_s": 0.8
+   },
+   "80.0": {
+    "pass": false,
+    "reasons": [
+     "fell at 3.9 s",
+     "the lidar hit the ground at 4.18 s",
+     "only reached 0.81 m of 1.5 m"
+    ],
+    "x_max_m": 0.812,
+    "max_theta_deg": 96.97,
+    "fell_at": 3.907,
+    "wheel_peak_nm": 14.3,
+    "wheel_of_peak": 1.0,
+    "wheel_saturated_s": 1.577,
+    "body_impact_peak_n": 779,
+    "wall_s": 0.8
+   },
+   "100.0": {
+    "pass": false,
+    "reasons": [
+     "only reached 0.72 m of 1.5 m"
+    ],
+    "x_max_m": 0.719,
+    "max_theta_deg": 24.15,
+    "fell_at": null,
+    "wheel_peak_nm": 14.17,
+    "wheel_of_peak": 0.991,
+    "wheel_saturated_s": 0.316,
+    "body_impact_peak_n": 385,
+    "wall_s": 1.7
+   }
+  }
+ },
+ "hb10": {
+  "wheel": {
+   "title": "10 in hoverboard off-road hub motor, 10x2.5 pneumatic, 36 V 350 W (survey values pending)",
+   "od_mm": 254,
+   "mass_g": 4000,
+   "tyre_width_mm": 64,
+   "tyre_section_mm": 32,
+   "hub_od_mm": 165,
+   "hub_width_mm": 65,
+   "axle_d_mm": 17,
+   "peak_torque_nm": 15.0,
+   "rated_torque_nm": 5.0,
+   "no_load_speed_rpm": 330,
+   "voltage_nominal_v": 36,
+   "kt_nm_per_a": 1.0,
+   "peak_current_a": 15,
+   "tyre_k_n_per_mm": 60,
+   "tyre_damp": 0.5,
+   "rotor_share": 0.6,
+   "basis": "estimates pending the survey; tyre 35 psi, membrane model x 0.6"
+  },
+  "model_mass_kg": 36.6,
+  "wheel_motor": {
+   "peak_nm": 15.0,
+   "rated_nm": 5.0,
+   "omega_max": 34.55751918948772
+  },
+  "speed_mps": 0.6,
+  "heights": {
+   "25.0": {
+    "pass": true,
+    "reasons": [],
+    "x_max_m": 3.168,
+    "max_theta_deg": 6.21,
+    "fell_at": null,
+    "wheel_peak_nm": 5.84,
+    "wheel_of_peak": 0.389,
+    "wheel_saturated_s": 0.0,
+    "body_impact_peak_n": 0,
+    "wall_s": 1.5
+   },
+   "40.0": {
+    "pass": false,
+    "reasons": [
+     "fell at 3.8 s",
+     "the lidar hit the ground at 4.00 s",
+     "only reached 0.79 m of 1.5 m"
+    ],
+    "x_max_m": 0.792,
+    "max_theta_deg": 101.68,
+    "fell_at": 3.795,
+    "wheel_peak_nm": 15.0,
+    "wheel_of_peak": 1.0,
+    "wheel_saturated_s": 1.463,
+    "body_impact_peak_n": 731,
+    "wall_s": 0.8
+   },
+   "50.0": {
+    "pass": false,
+    "reasons": [
+     "fell at 3.8 s",
+     "the lidar hit the ground at 4.04 s",
+     "only reached 0.79 m of 1.5 m"
+    ],
+    "x_max_m": 0.792,
+    "max_theta_deg": 96.7,
+    "fell_at": 3.819,
+    "wheel_peak_nm": 15.0,
+    "wheel_of_peak": 1.0,
+    "wheel_saturated_s": 1.451,
+    "body_impact_peak_n": 1141,
+    "wall_s": 0.8
+   },
+   "60.0": {
+    "pass": false,
+    "reasons": [
+     "fell at 3.8 s",
+     "the lidar hit the ground at 4.09 s",
+     "only reached 0.79 m of 1.5 m"
+    ],
+    "x_max_m": 0.785,
+    "max_theta_deg": 96.23,
+    "fell_at": 3.848,
+    "wheel_peak_nm": 15.0,
+    "wheel_of_peak": 1.0,
+    "wheel_saturated_s": 1.461,
+    "body_impact_peak_n": 602,
+    "wall_s": 0.9
+   },
+   "80.0": {
+    "pass": false,
+    "reasons": [
+     "fell at 3.9 s",
+     "the lidar hit the ground at 4.24 s",
+     "only reached 0.78 m of 1.5 m"
+    ],
+    "x_max_m": 0.776,
+    "max_theta_deg": 95.6,
+    "fell_at": 3.95,
+    "wheel_peak_nm": 15.0,
+    "wheel_of_peak": 1.0,
+    "wheel_saturated_s": 1.527,
+    "body_impact_peak_n": 642,
+    "wall_s": 0.9
+   },
+   "100.0": {
+    "pass": false,
+    "reasons": [
+     "fell at 4.9 s",
+     "the lidar hit the ground at 5.22 s",
+     "only reached 0.77 m of 1.5 m"
+    ],
+    "x_max_m": 0.771,
+    "max_theta_deg": 98.3,
+    "fell_at": 4.86,
+    "wheel_peak_nm": 15.0,
+    "wheel_of_peak": 1.0,
+    "wheel_saturated_s": 2.432,
+    "body_impact_peak_n": 393,
+    "wall_s": 1.0
+   }
+  }
+ },
+ "hb85": {
+  "wheel": {
+   "title": "8.5 in hoverboard off-road hub motor, 8.5x2.5 pneumatic, 36 V 350 W (survey values pending)",
+   "od_mm": 216,
+   "mass_g": 3300,
+   "tyre_width_mm": 64,
+   "tyre_section_mm": 32,
+   "hub_od_mm": 150,
+   "hub_width_mm": 60,
+   "axle_d_mm": 17,
+   "peak_torque_nm": 15.0,
+   "rated_torque_nm": 5.0,
+   "no_load_speed_rpm": 330,
+   "voltage_nominal_v": 36,
+   "kt_nm_per_a": 1.0,
+   "peak_current_a": 15,
+   "tyre_k_n_per_mm": 60,
+   "tyre_damp": 0.5,
+   "rotor_share": 0.6,
+   "basis": "estimates pending the survey; tyre 35 psi, membrane model x 0.6"
+  },
+  "model_mass_kg": 35.2,
+  "wheel_motor": {
+   "peak_nm": 15.0,
+   "rated_nm": 5.0,
+   "omega_max": 34.55751918948772
+  },
+  "speed_mps": 0.6,
+  "heights": {
+   "25.0": {
+    "pass": true,
+    "reasons": [],
+    "x_max_m": 3.175,
+    "max_theta_deg": 6.24,
+    "fell_at": null,
+    "wheel_peak_nm": 6.01,
+    "wheel_of_peak": 0.401,
+    "wheel_saturated_s": 0.0,
+    "body_impact_peak_n": 0,
+    "wall_s": 1.5
+   },
+   "40.0": {
+    "pass": false,
+    "reasons": [
+     "fell at 3.7 s",
+     "the lidar hit the ground at 3.90 s",
+     "only reached 0.80 m of 1.5 m"
+    ],
+    "x_max_m": 0.805,
+    "max_theta_deg": 105.24,
+    "fell_at": 3.703,
+    "wheel_peak_nm": 15.0,
+    "wheel_of_peak": 1.0,
+    "wheel_saturated_s": 1.4,
+    "body_impact_peak_n": 812,
+    "wall_s": 0.8
+   },
+   "50.0": {
+    "pass": false,
+    "reasons": [
+     "fell at 3.7 s",
+     "the lidar hit the ground at 3.94 s",
+     "only reached 0.80 m of 1.5 m"
+    ],
+    "x_max_m": 0.801,
+    "max_theta_deg": 96.93,
+    "fell_at": 3.728,
+    "wheel_peak_nm": 15.0,
+    "wheel_of_peak": 1.0,
+    "wheel_saturated_s": 1.407,
+    "body_impact_peak_n": 760,
+    "wall_s": 0.8
+   },
+   "60.0": {
+    "pass": false,
+    "reasons": [
+     "fell at 3.8 s",
+     "the lidar hit the ground at 3.98 s",
+     "only reached 0.80 m of 1.5 m"
+    ],
+    "x_max_m": 0.801,
+    "max_theta_deg": 96.62,
+    "fell_at": 3.754,
+    "wheel_peak_nm": 15.0,
+    "wheel_of_peak": 1.0,
+    "wheel_saturated_s": 1.42,
+    "body_impact_peak_n": 881,
+    "wall_s": 0.9
+   },
+   "80.0": {
+    "pass": false,
+    "reasons": [
+     "fell at 4.0 s",
+     "the lidar hit the ground at 4.25 s",
+     "only reached 0.79 m of 1.5 m"
+    ],
+    "x_max_m": 0.793,
+    "max_theta_deg": 98.95,
+    "fell_at": 3.955,
+    "wheel_peak_nm": 15.0,
+    "wheel_of_peak": 1.0,
+    "wheel_saturated_s": 1.559,
+    "body_impact_peak_n": 632,
+    "wall_s": 0.9
+   },
+   "100.0": {
+    "pass": false,
+    "reasons": [
+     "only reached 0.70 m of 1.5 m"
+    ],
+    "x_max_m": 0.697,
+    "max_theta_deg": 30.57,
+    "fell_at": null,
+    "wheel_peak_nm": 15.0,
+    "wheel_of_peak": 1.0,
+    "wheel_saturated_s": 3.327,
+    "body_impact_peak_n": 301,
+    "wall_s": 1.6
+   }
+  }
+ }
+}
