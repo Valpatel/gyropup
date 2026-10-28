@@ -658,6 +658,11 @@ def ledger(L=None, parts=None, stage='P3'):
         add(it.group, it.name, it.mass_g, it.centre, it.basis)
     zt = bp.z_tray_top()
     add('frame', 'hardware', HARDWARE_G, (0.0, 0.0, 40.0), 'estimate')
+    import body_battery as bb
+    mats = json.loads((R / 'catalog/materials.json').read_text())
+    dv = sum((b[1] - b[0]) * (b[3] - b[2]) * (b[5] - b[4]) for p in bb.pad_boxes() for b in bb.pad_retention_boxes(p)) / 1000.0
+    add('frame', 'bay_pads_solid_lips', dv * (mats['tpu95']['density_g_cm3'] - mats[bb.PAD['material']]['density_g_cm3']),
+        (0.0, 0.0, bb.geometry()['z_floor']), 'CAD: the pads\' webs and lips are solid TPU, not lattice (#26)')
     add('power', 'harness', HARNESS_G, (60.0, 0.0, zt + 20.0), 'estimate (docs/body-wiring.md)')
     for side, sy in (('l', 1.0), ('r', -1.0)):          # D69: each wheel's DTP04-4P/DTP06-4S (phases) and DT04-6P/DT06-6S (halls,
         add('power', f'wheel_connectors_{side}', WHEEL_CONNECTORS_G, (-30.0, sy * 70.0, zt),   # NTC) at the cheek where the wheel lead enters

@@ -34,19 +34,20 @@ How to order:
 
 ## 2. Bought parts, by seller
 
-### McMaster-Carr (mcmaster.com): $158.46
+### McMaster-Carr (mcmaster.com): $171.69
 
 | Task | Part | Used | Order | Price | Line | For | Backup |
 |---|---|---|---|---|---|---|---|
 | T2 | [94459A140](https://www.mcmaster.com/94459A140/): Heat-Set Threaded Inserts for Plastic, Standard, Brass, M3 x 0.5 mm Thread Size, 5.7 mm In | 26 | 1 x 50-pack | $10.91 | $10.91 | P1: 4 power dcdc, 2 bus insulator 1, 2 bus bar 1, 2 bus insulator 2, 2 bus bar 2, 5 bay side l high, | 3DJake $11.18 ([link](https://www.3djake.com/cnc-kitchen/threaded-inserts-m3-standard)): In stock |
 | T2 | [94459A775](https://www.mcmaster.com/94459A775/): Heat-Set Threaded Inserts for Plastic, Standard, Brass, M5 x 0.8 mm Thread Size, 7.9 mm In | 32 | 2 x 25-pack | $6.82 | $13.64 | P1: 6 hip frame left, 6 hip frame right, 1 post 1 foot, 1 post 1 head, 1 post 2 foot, 1 post 2 head, | 3DJake $11.18 ([link](https://www.3djake.com/cnc-kitchen/threaded-inserts-m5-short)): In stock |
-| T2 | [91290A111](https://www.mcmaster.com/91290A111/): Black-Oxide Alloy Steel Socket Head Screw, US Origin, M3 x 0.5 mm Thread Size, 6 mm Long | 28 | 1 x 100-pack | $11.59 | $11.59 | P1: 4 power dcdc, 5 bay side l low, 5 bay side l high, 5 bay side r low, 5 bay side r high (cad/body | Belmetric $0.12 ([link](https://belmetric.com/m3x0-5-socket-head-cap-screw-din-912-class-12-9/)): in stock |
+| T2 | [91290A111](https://www.mcmaster.com/91290A111/): Black-Oxide Alloy Steel Socket Head Screw, US Origin, M3 x 0.5 mm Thread Size, 6 mm Long | 20 | 1 x 100-pack | $11.59 | $11.59 | P1: 4 power dcdc, 1 bay side l low, 5 bay side l high, 1 bay side r low, 5 bay side r high (cad/body | Belmetric $0.12 ([link](https://belmetric.com/m3x0-5-socket-head-cap-screw-din-912-class-12-9/)): in stock |
 | T2 | [91290A113](https://www.mcmaster.com/91290A113/): Black-oxide alloy steel socket head screw, M3 x 0.5 x 8 mm (the bus bars to their insulato | 8 | 1 x 100-pack | $13.28 | $13.28 | P1: 2 bus insulator 1, 2 bus bar 1, 2 bus insulator 2, 2 bus bar 2 (cad/body_joints.py) | McMaster-Carr $13.23 ([link](https://www.mcmaster.com/91290A115/)): M3 x 10 of the same series |
 | T2 | [91294A190](https://www.mcmaster.com/91294A190/): Black-oxide alloy steel flat head hex drive screw, 90 deg, M4 x 0.7 x 10 mm (the spine sta | 16 | 1 x 100-pack | $6.38 | $6.38 | P1: 8 standoff left, 8 standoff right (cad/body_joints.py) | McMaster-Carr $6.25 ([link](https://www.mcmaster.com/91294A188/)): M4 x 8 of the same series (engages 3.3 mm in the standoff) |
 | T2 | [91290A148](https://www.mcmaster.com/91290A148/): Black-oxide alloy steel socket head screw, M4 x 0.7 x 12 mm (the fuse board's M4 studs, do | 10 | 1 x 100-pack | $12.30 | $12.30 | P1: 2 dcdc bracket, 4 adapter plate front, 4 adapter plate rear (cad/body_joints.py) | McMaster-Carr $14.23 ([link](https://www.mcmaster.com/91290A150/)): M4 x 14 of the same series (a stack of three lugs) |
 | T2 | [91290A168](https://www.mcmaster.com/91290A168/): Black-Oxide Alloy Steel Socket Head Screw, US Origin, M4 x 0.7 mm Thread Size, 20 mm Long | 12 | 1 x 100-pack | $14.47 | $14.47 | P1: 1 isolator 1, 1 isolator 2, 1 isolator 3, 1 isolator 4, 4 bay rail l, 4 bay rail r (cad/body_joi | Belmetric $0.20 ([link](https://belmetric.com/m4x0-7-socket-head-cap-screw-din-912-class-12-9/)): In stock |
 | T2 | [91239A224](https://www.mcmaster.com/91239A224/): Black-oxide class 10.9 button head hex drive screw, ISO 7380, M5 x 0.8 x 10 mm (tray, bell | 16 | 1 x 100-pack | $11.79 | $11.79 | P1: 1 plate post 1 foot, 1 plate post 1 head, 1 plate post 2 foot, 1 plate post 2 head, 1 plate post | McMaster-Carr $12.06 ([link](https://www.mcmaster.com/91239A228/)): M5 x 12 of the same series |
 | T2 | [91239A228](https://www.mcmaster.com/91239A228/): Black-oxide class 10.9 button head hex drive screw, ISO 7380, M5 x 0.8 x 12 mm (the hip fr | 40 | 1 x 100-pack | $12.06 | $12.06 | P1: 6 hip frame left, 4 tray flange left, 4 belly flange left, 6 hip frame right, 4 tray flange righ | McMaster-Carr $11.79 ([link](https://www.mcmaster.com/91239A224/)): M5 x 10 of the same series (engages 5.3 mm: only if the 12 is out) |
+| T2 | [91290A115](https://www.mcmaster.com/91290A115/): Black-Oxide Alloy Steel Socket Head Screw, US Origin, M3 x 0.5 mm Thread Size, 10 mm Long | 8 | 1 x 100-pack | $13.23 | $13.23 | P1: 2 bay pad 1, 2 bay pad 2, 2 bay pad 3, 2 bay pad 4 (cad/body_joints.py) | Belmetric $0.14 ([link](https://belmetric.com/m3x0-5-socket-head-cap-screw-din-912-class-12-9/)): in stock |
 | T2 | [95947A065](https://www.mcmaster.com/95947A065/): Lightweight aluminium female-threaded hex standoff, 6 mm hex, M4 x 31 mm (the spine: betwe | 8 | 8 | $1.46 | $11.68 | the spine: between the cheeks in the hip frames' bolt rows | McMaster-Carr $1.35 ([link](https://www.mcmaster.com/95947A062/)): M4 x 30 of the same series, with a printed 1 mm washer at one end |
 | T2 | [95947A048](https://www.mcmaster.com/95947A048/): Lightweight aluminium female-threaded hex standoff, 6 mm hex, M3 x 16 mm (the J501 carrier | 4 | 4 | $0.81 | $3.24 | the J501 carrier on the compute pallet | McMaster-Carr $0.81 ([link](https://www.mcmaster.com/95947A051/)): M3 x 19 of the same series (the carrier 3 mm higher) |
 | T2 | [91294A126](https://www.mcmaster.com/91294A126/): Black-Oxide Alloy Steel Hex-Drive Flat Head Screw, 90 Degree Countersink, M3 x 0.5 mm Thre | 4 | 1 x 100-pack | $5.45 | $5.45 | the carrier standoffs up through the pallet's countersinks | Belmetric $0.18 ([link](https://belmetric.com/m3x0-5-flat-head-cap-screw-steel-10-9-din-7991/)): in stock |
@@ -184,7 +185,7 @@ How to order:
 |---|---|---|---|---|---|---|---|
 | T5 | [0997005.WXN](https://il.farnell.com/littelfuse/0997005-wxn/auto-blade-fuse-5a-58v/dp/2748834): Littelfuse MINI 58V blade fuse 5 A (DDR-60L-12 input; the 24 V J501 and turret branches) | 2 | 2 | $0.98 | $1.96 | the INA228's VBUS sense lead (W32, 22 AWG); one spare | Dasenic $0.39 ([link](https://www.dasenic.com/product/littelfuse-0997005wxn)): 17,902 in stock, $0.3878 at 25+ (search result, 2026-10-27) |
 
-**Bought parts: $1608.60** (whole packs at the first seller's price; shipping and tax extra).
+**Bought parts: $1621.83** (whole packs at the first seller's price; shipping and tax extra).
 
 ## 3. Listed, not in this order
 
@@ -222,9 +223,9 @@ How to order:
 | bay_door_front | 1 | petg | 128 x 102 x 4 | 66 | 2.6 | PETG; two knurled M3 x 10 thumbscrews into the rails' ends |
 | adapter_plate_rear | 1 | pa6-cf | 102 x 72 x 4 | 31 | 2.1 | PA6-CF; four M4 x 8 up into the belly's nuts; the adapter's screws into inserts set on arrival |
 | bay_door_rear | 1 | petg | 128 x 102 x 4 | 66 | 2.6 | PETG; two knurled M3 x 10 thumbscrews into the rails' ends |
-| bay_skid | 4 | tpu95-gyroid | 149 x 24 x 50 | 59 | 47.7 | crush pad (#19): TPU 95A HF gyroid lattice, 50 mm free, 30 mm stroke, 600 N plateau, on 3M VHB tape (no screw: under the packs there is 1 mm); the robot sits on these |
+| bay_skid | 4 | tpu95-gyroid | 149 x 30 x 68 | 63 | 51.2 | crush pad (#19): TPU 95A HF gyroid lattice, 50 mm free, 30 mm stroke, 600 N plateau, on 3M VHB tape, its solid lip under the side plate's two low M3 x 10 (#26); the robot sits on these |
 
-By material: pa6-cf 0.57 kg, 37.2 h, $45.32; tpu95 0.01 kg, 0.9 h, $0.35; petg 0.21 kg, 8.2 h, $2.91; tpu95-gyroid 0.24 kg, 47.7 h, $9.91. STLs beside the plan in `exports/body/`.
+By material: pa6-cf 0.57 kg, 37.2 h, $45.32; tpu95 0.01 kg, 0.9 h, $0.35; petg 0.21 kg, 8.2 h, $2.91; tpu95-gyroid 0.25 kg, 51.2 h, $10.63. STLs beside the plan in `exports/body/`.
 
 ## 6. The P2 cart (the head: order it once P1 balances on its tether)
 
@@ -258,10 +259,10 @@ The shell and the tub's printed parts are in `exports/body/shell/` with their ow
 
 | | |
 |---|---|
-| Bought (section 2) | $1608.60 |
+| Bought (section 2) | $1621.83 |
 | SendCutSend (section 1, instant prices) | $578.17 |
-| Filament used (section 5) | $58.49 |
-| **Body P0 + P1** | **$2245.26** |
+| Filament used (section 5) | $59.21 |
+| **Body P0 + P1** | **$2259.21** |
 | P2 cart (section 6) | $62.72 |
 | P3 cart (section 6b) | $84.03 |
 

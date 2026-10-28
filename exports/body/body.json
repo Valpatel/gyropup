@@ -462,7 +462,7 @@
  },
  "print": {
   "too_big": [],
-  "hours": 94.0,
+  "hours": 97.5,
   "parts": {
    "post": {
     "material": "pa6-cf",
@@ -673,17 +673,17 @@
     "qty": 4,
     "size_mm": [
      149,
-     24,
-     50
+     30,
+     68
     ],
     "fits": true,
     "placement": "straight",
-    "grams_each": 59,
-    "grams": 236,
-    "hours": 47.7,
-    "cost_usd": 9.91,
+    "grams_each": 63,
+    "grams": 253,
+    "hours": 51.2,
+    "cost_usd": 10.63,
     "infill": "2 mm walls, 40 % gyroid",
-    "how": "crush pad (#19): TPU 95A HF gyroid lattice, 50 mm free, 30 mm stroke, 600 N plateau, on 3M VHB tape (no screw: under the packs there is 1 mm); the robot sits on these"
+    "how": "crush pad (#19): TPU 95A HF gyroid lattice, 50 mm free, 30 mm stroke, 600 N plateau, on 3M VHB tape, its solid lip under the side plate's two low M3 x 10 (#26); the robot sits on these"
    }
   }
  },
@@ -725,10 +725,10 @@
    "bay_door_front": 65.5,
    "adapter_plate_rear": 31.4,
    "bay_door_rear": 65.5,
-   "bay_skid_1": 59.0,
-   "bay_skid_2": 59.0,
-   "bay_skid_3": 59.0,
-   "bay_skid_4": 59.0,
+   "bay_skid_1": 63.3,
+   "bay_skid_2": 63.3,
+   "bay_skid_3": 63.3,
+   "bay_skid_4": 63.3,
    "spacers": 0.0,
    "spacer_screws": 0.0,
    "frame_screws_left": 0.0,
@@ -755,7 +755,7 @@
    "d435_rear": 0.0,
    "eyes_board": 0.0
   },
-  "frame_total": 5253.6
+  "frame_total": 5270.8
  },
  "internal_clashes": [],
  "shell": {
@@ -844,7 +844,7 @@
   "deck_holes_note": "two \u00d85.5 holes for the plate's end screws: drilled by hand in the P1 deck (spot through the plate's PEM nuts with an M5 transfer punch, the plate held on the riser's four screws), cut in a Rev B deck"
  },
  "integrity": {
-  "joints": 71,
+  "joints": 75,
   "screws": 183,
   "joints_with_problems": [],
   "floating": {},
@@ -1705,8 +1705,8 @@
      197.46,
      211.46
     ],
-    "mass_g": 230.0,
-    "basis": "estimate (3 m of the VLP-16 cable)",
+    "mass_g": 77.0,
+    "basis": "estimate: the VLP-16 cable cut to 1 m (lever 14; 230 g for the 3 m coil x 1/3)",
     "group": "compute",
     "stage": "P1",
     "catalog": "",
@@ -1775,10 +1775,10 @@
      -86.0,
      86.0,
      246.0,
-     446.0
+     344.4
     ],
-    "mass_g": 1700.0,
-    "basis": "budget 1.7 kg (turret.json: 1.639 kg with 30 balls); docs/turret-next-plan.md 3.1 (proposed head payload budget)",
+    "mass_g": 2561.0,
+    "basis": "budget 2.561 kg (turret.json: 1.639 kg with 30 balls); turret/program cf6592e exports/turret/turret.json: 2560.8 g with 30 balls, centre 49.2 mm over the TM face (D66, D71)",
     "group": "deck",
     "stage": "P2",
     "catalog": "",
@@ -1795,8 +1795,8 @@
      -219.04,
      -122.04
     ],
-    "mass_g": 1565.0,
-    "basis": "ENVELOPE, blocked on issue #20 (measure a real pack): a box from the DeWalt DCB547-XJ datasheet (138 x 87 x 97 mm incl. the rail tower); DeWalt US 3.45 lb = 1565 g (the conservative of 1.46-1.57 kg). No rail, latch, button or terminal is modelled and none is guessed",
+    "mass_g": 1460.0,
+    "basis": "ENVELOPE, blocked on issue #20 (measure a real pack): a box from the DeWalt DCB547-XJ datasheet (138 x 87 x 97 mm incl. the rail tower) and its 1.46 kg (lever 16, taken by the coordinator on #10: DeWalt US lists 3.45 lb = 1565 g; weigh one). No rail, latch, button or terminal is modelled and none is guessed",
     "group": "battery",
     "stage": "P0",
     "catalog": "dewalt-dcb609",
@@ -1813,8 +1813,8 @@
      -219.04,
      -122.04
     ],
-    "mass_g": 1565.0,
-    "basis": "ENVELOPE, blocked on issue #20 (measure a real pack): a box from the DeWalt DCB547-XJ datasheet (138 x 87 x 97 mm incl. the rail tower); DeWalt US 3.45 lb = 1565 g (the conservative of 1.46-1.57 kg). No rail, latch, button or terminal is modelled and none is guessed",
+    "mass_g": 1460.0,
+    "basis": "ENVELOPE, blocked on issue #20 (measure a real pack): a box from the DeWalt DCB547-XJ datasheet (138 x 87 x 97 mm incl. the rail tower) and its 1.46 kg (lever 16, taken by the coordinator on #10: DeWalt US lists 3.45 lb = 1565 g; weigh one). No rail, latch, button or terminal is modelled and none is guessed",
     "group": "battery",
     "stage": "P0",
     "catalog": "dewalt-dcb609",
@@ -1880,22 +1880,22 @@
  "mass": {
   "P1": {
    "stage": "P1",
-   "total_kg": 33.82,
+   "total_kg": 33.52,
    "com_mm": [
-    3.3,
-    -1.1,
-    -76.7
+    4.0,
+    -1.0,
+    -77.7
    ],
    "groups_kg": {
     "legs": 21.624,
-    "frame": 4.846,
-    "compute": 1.513,
+    "frame": 4.91,
+    "compute": 1.36,
     "power": 1.739,
     "deck": 0.83,
-    "battery": 3.27
+    "battery": 3.06
    },
    "legs_kg": 21.62,
-   "body_and_head_kg": 12.2,
+   "body_and_head_kg": 11.9,
    "budget": {
     "robot_kg": 37.0,
     "legs_kg_each": 10.85,
@@ -2041,12 +2041,12 @@
     {
      "key": "lidar_cable_1m",
      "n": 14,
-     "grams": -150,
+     "grams": -153,
      "cost_usd": 0.0,
      "stage": "P3",
      "kind": "on call",
-     "what": "the VLP-16 cable shortened to 1 m (the user's call: a Velodyne waiver)",
-     "status": "open"
+     "what": "the VLP-16 cable shortened to 1 m (taken on #10; Velodyne's waiver to read)",
+     "status": "taken"
     },
     {
      "key": "turret_levers",
@@ -2065,8 +2065,8 @@
      "cost_usd": 0.0,
      "stage": "P3",
      "kind": "on call",
-     "what": "the two DCB609 weighed: DeWalt's DCB547-XJ sheet says 1.46 kg against the 1.565 kg (3.45 lb) carried",
-     "status": "open"
+     "what": "the two DCB609 at DeWalt's DCB547-XJ sheet's 1.46 kg (taken on #10) against the US page's 1.565 kg: weigh one",
+     "status": "taken"
     },
     {
      "key": "wheel_8in5",
@@ -2092,23 +2092,23 @@
   },
   "P3": {
    "stage": "P3",
-   "total_kg": 36.77,
+   "total_kg": 37.33,
    "com_mm": [
-    1.4,
-    -1.0,
-    -49.8
+    1.0,
+    -0.9,
+    -44.8
    ],
    "groups_kg": {
     "legs": 21.624,
-    "frame": 4.98,
+    "frame": 5.044,
     "shell": 1.11,
-    "compute": 1.513,
+    "compute": 1.36,
     "power": 1.739,
-    "deck": 2.53,
-    "battery": 3.27
+    "deck": 3.391,
+    "battery": 3.06
    },
    "legs_kg": 21.62,
-   "body_and_head_kg": 15.14,
+   "body_and_head_kg": 15.7,
    "budget": {
     "robot_kg": 37.0,
     "legs_kg_each": 10.85,
@@ -2254,12 +2254,12 @@
     {
      "key": "lidar_cable_1m",
      "n": 14,
-     "grams": -150,
+     "grams": -153,
      "cost_usd": 0.0,
      "stage": "P3",
      "kind": "on call",
-     "what": "the VLP-16 cable shortened to 1 m (the user's call: a Velodyne waiver)",
-     "status": "open"
+     "what": "the VLP-16 cable shortened to 1 m (taken on #10; Velodyne's waiver to read)",
+     "status": "taken"
     },
     {
      "key": "turret_levers",
@@ -2278,8 +2278,8 @@
      "cost_usd": 0.0,
      "stage": "P3",
      "kind": "on call",
-     "what": "the two DCB609 weighed: DeWalt's DCB547-XJ sheet says 1.46 kg against the 1.565 kg (3.45 lb) carried",
-     "status": "open"
+     "what": "the two DCB609 at DeWalt's DCB547-XJ sheet's 1.46 kg (taken on #10) against the US page's 1.565 kg: weigh one",
+     "status": "taken"
     },
     {
      "key": "wheel_8in5",
@@ -2304,10 +2304,10 @@
    ],
    "gate": {
     "ceiling_kg": 37.0,
-    "gap_kg": -0.23,
+    "gap_kg": 0.33,
     "open_scheduled_g": -500,
-    "with_scheduled_levers_kg": 36.27,
-    "body_and_head_with_levers_kg": 14.64,
+    "with_scheduled_levers_kg": 36.83,
+    "body_and_head_with_levers_kg": 15.2,
     "leg_each_kg": 10.81,
     "pass": true,
     "on_call_next": [
@@ -2315,8 +2315,8 @@
      "alu_standoffs",
      "cooler_34mm"
     ],
-    "margin_kg": 0.73,
-    "on_call_open_g": -2301,
+    "margin_kg": 0.17,
+    "on_call_open_g": -1941,
     "rule": "the P3 ledger with every scheduled lever taken (the open ones at the plan's grams) under the 37.0 kg ceiling, each leg under 10.85 kg and the body and head under 15.3 kg (D71); over it, the on-call levers go in order before the next order, each with the user's or the coordinator's word"
    }
   }
