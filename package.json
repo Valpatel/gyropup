@@ -7,7 +7,8 @@
     "dev": "npm run build && node tools/serve-site.mjs",
     "deploy": "npm run build && wrangler pages deploy dist --project-name gyropup --branch main",
     "test:web": "node tools/test-site.mjs",
-    "test:markdown": "node --test tools/test-markdown.mjs"
+    "test:markdown": "node --test tools/test-markdown.mjs",
+    "test:sim": "node tools/test-sim-transitions.mjs"
   },
   "devDependencies": {
     "@playwright/test": "1.56.1",

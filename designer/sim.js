@@ -44,7 +44,7 @@ if (phone.matches || matchMedia('(pointer: coarse)').matches) {
   stage.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
   stage.renderer.shadowMap.enabled = false;
 }
-const state = { height: 0.6, pitch: 0, rollMM: 0, speed: 0, wheel: 0, alive: true, design: null, robot: null, result: null, replay: null };
+const state = { transition: null, height: 0.6, pitch: 0, rollMM: 0, speed: 0, wheel: 0, alive: true, design: null, robot: null, result: null, replay: null };
 const terrain = new THREE.Group();
 stage.root.add(terrain);
 // an outdoor yard: ground that takes light (headlight pools, the laser dot) and a few props
@@ -59,6 +59,7 @@ const gun = { pan: 0, tilt: -0.05, mag: BALL.hopper, capacity: BALL.hopper, queu
               armedUntil: 0, headlights: true };
 const sfx = createSfx();
 let talk = null;            // speech bubbles and voice (character/talk.js), when loaded
+const reactionMood = mood => { if (!talk?.isBusy()) eyes.set(mood); };
 const react = (ev) => { try { talk?.react?.(ev); } catch { /* the voice is optional */ } };
 
 // ---- layout: keep the robot out from under the panels
@@ -118,25 +119,27 @@ async function nextReplay() {
   if (!keys.length) return;
   const at = keys.indexOf(state.replay?.key ?? '');
   const key = keys[(at + 1) % keys.length];
-  const run = await getJson(`../exports/sim/${key}.json`);     // fetched while the last run holds its final frame
   runSel.value = key;
-  startReplay(key, { ease: true, run });
+  await startReplay(key); // Keep the current scene alive while the next recording loads.
 }
 
 // ---- the turret on the Orin AGX box: its own scene, panel sections and action bar (loaded the first time it is picked)
-let bench = null;
-async function enterBench() {
-  stopReplay();
+let bench = null, benchLoading = null, designRequest = 0;
+const robotCache = new Map();
+async function enterBench(request) {
   if (demo.on) { demo.on = false; paintDemo(); }
   if (!bench) {
     try {
-      bench = await (await import('./turret_bench.js')).createTurretBench({ stage, sfx, panel: $('#panel'), root: '../', onLayout: () => updateInsets() });
+      benchLoading ??= import('./turret_bench.js').then(module => module.createTurretBench({ stage, sfx, panel: $('#panel'), root: '../', onLayout: () => updateInsets() }));
+      bench = await benchLoading;
     } catch (err) {
       console.error(err);
       $('#summary').innerHTML = `<h2>Turret on the Orin AGX box</h2><p class="hud-note">Not built yet: ${err.message}</p>`;
       return;
     }
   }
+  if (request !== designRequest) return;
+  stopReplay();
   state.bench = true;
   if (state.robot) { state.robot.group.visible = false; if (state.robot.turret) state.robot.turret.laser.visible = false; }
   for (const l of state.robot?.lights ?? []) l.spot.visible = false;
@@ -149,7 +152,7 @@ async function enterBench() {
   $('#summary').innerHTML = `<h2 class="fold" title="Show or hide the details">${sm.title}<span class="chev"></span></h2><div class="hud-readouts">`
     + sm.rows.map(([k, v]) => `<div class="r"><span>${k}</span><b>${v}</b></div>`).join('') + '</div>';
   $('#summary .fold').onclick = () => { $('#summary').classList.toggle('min'); updateInsets(); };
-  bench.enter();
+  glideCamera(() => bench.enter());
   updateInsets();
 }
 function leaveBench() {
@@ -162,29 +165,49 @@ function leaveBench() {
 }
 
 async function loadDesign(value) {
-  if (value === 'turret-box') { await enterBench(); return; }
+  const request = ++designRequest;
+  ++replayRequest; // An old model's recording must not arrive on the newly selected robot.
+  if (value === 'turret-box') { await enterBench(request); return; }
+  if (value === state.modelKey && !state.bench) return;
+  // Build each hardware view once; leave the current activity and conversation running while it loads.
+  if (!robotCache.has(value)) robotCache.set(value, (async () => {
+    const v2 = value === 'v2';
+    const design = v2 ? { name: 'Gyropup v2 (five-bar)' } : value === '@designer' ? fromDesigner : await getJson(`../${value}`);
+    let summary = null;
+    if (value !== '@designer') {
+      try { summary = await getJson(`../exports/sim/${value.split('/').pop().replace(/\.json$/, '')}/summary.json`); } catch { /* not simulated */ }
+    }
+    let robot;
+    if (v2) robot = await buildRobotV2('../', { eyes });
+    else {
+      let mech = null;
+      try { const ml = await getJson('../exports/mech-layout.json'); if (ml.design === value) mech = ml; } catch { /* no CAD yet */ }
+      const cad = value === '@designer' ? null : await loadCadRig('../', value);
+      robot = buildRobot(design, catalog, { eyes, mech, cad });
+    }
+    return { design, v2, summary, robot, result: v2 ? null : evaluate(design, catalog, materials) };
+  })());
+  let next;
+  try { next = await robotCache.get(value); }
+  catch (error) {
+    robotCache.delete(value);
+    if (!state.robot) throw error;
+    if (request === designRequest) { sel.value = state.modelKey; talk?.dock.hint('That robot view could not load. Your game is still here.', true); }
+    return;
+  }
+  if (request !== designRequest) return;
   leaveBench();
-  const v2 = value === 'v2';
-  const design = v2 ? { name: 'Gyropup v2 (five-bar)' } : value === '@designer' ? fromDesigner : await getJson(`../${value}`);
-  state.design = design;
-  state.v2 = v2;
-  state.result = v2 ? null : evaluate(design, catalog, materials);
-  state.modelMass = null;                              // the physics model's mass (CAD parts), when there is a run
-  state.summary = null;
-  if (value !== '@designer') {
-    try { state.summary = await getJson(`../exports/sim/${value.split('/').pop().replace(/\.json$/, '')}/summary.json`); state.modelMass = state.summary.mass_kg; } catch { /* not simulated */ }
+  stopReplay();
+  const previous = state.robot;
+  if (previous) {
+    previous.group.visible = false;
+    if (previous.turret) previous.turret.laser.visible = false;
+    for (const light of previous.lights) light.spot.visible = false;
   }
-  if (state.robot) { stage.root.remove(state.robot.group); if (state.robot.turret) stage.root.remove(state.robot.turret.laser); }
-  if (v2) {
-    state.robot = await buildRobotV2('../', { eyes });
-  } else {
-    let mech = null;                                   // the real stack from the CAD, if it was built from this design
-    try { const ml = await getJson('../exports/mech-layout.json'); if (ml.design === value) mech = ml; } catch { /* no CAD yet */ }
-    const cad = value === '@designer' ? null : await loadCadRig('../', value);   // the real CAD meshes, posed by the joints
-    state.robot = buildRobot(design, catalog, { eyes, mech, cad });
-  }
-  stage.root.add(state.robot.group);
-  stage.frame(state.robot.info.heightM);
+  Object.assign(state, next, { modelKey: value, modelMass: next.summary?.mass_kg ?? null });
+  state.robot.group.visible = true;
+  if (!state.robot.group.parent) stage.root.add(state.robot.group);
+  glideCamera(() => stage.frame(state.robot.info.heightM));
   state.robot.fov.visible = gun.showFov;
   if (state.robot.turret) stage.root.add(state.robot.turret.laser);
   for (const l of state.robot.lights) { l.spot.visible = gun.headlights; l.lens.material.emissiveIntensity = gun.headlights ? 1.6 : 0.05; }
@@ -197,23 +220,107 @@ async function loadDesign(value) {
   renderGun();
   renderSummary();
   telemetry(state.robot.setPose({ height: state.height }));
-  await listRuns(value);
+  beginTransition();
+  await listRuns(value, request);
 }
 
 // ---- replays of physics runs (exports/sim/<design>/<scenario>.json)
-async function listRuns(value) {
-  stopReplay();
+async function listRuns(value, request) {
   runSel.innerHTML = '<option value="">Drive & play (live controls)</option>';
   if (value === '@designer') return;
   const stem = value.split('/').pop().replace(/\.json$/, '');
   try {
-    const sm = await getJson(`../exports/sim/${stem}/summary.json`);
+    const sm = state.summary ?? await getJson(`../exports/sim/${stem}/summary.json`);
+    if (request !== designRequest) return;
     runSel.innerHTML += Object.entries(sm.scenarios).map(([n, r]) => `<option value="${stem}/${n}">Replay: ${r.title} — ${r.pass ? 'pass' : 'FAIL'}</option>`).join('');
   } catch { /* not simulated yet */ }
 }
 
-const propMeshes = new Map();
-let replayBalls = [];
+const propMeshes = new Map(), propPool = new Map(), ballPool = new Map(), runCache = new Map();
+let replayBalls = [], replayRequest = 0;
+const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+function glideCamera(change) {
+  const from = { position: stage.camera.position.clone(), center: stage.controls.target.clone() };
+  change();
+  if (!document.body.dataset.ready) return;
+  state.cameraTransition = { ...from, toPosition: stage.camera.position.clone(), toCenter: stage.controls.target.clone(), elapsed: 0 };
+  stage.camera.position.copy(from.position); stage.controls.target.copy(from.center);
+  stage.controls.update();
+}
+function stepCamera(dt) {
+  const T = state.cameraTransition;
+  if (!T) return;
+  T.elapsed += dt;
+  const x = Math.min(1, T.elapsed / (reducedMotion.matches ? .18 : .85)), a = x * x * (3 - 2 * x);
+  stage.camera.position.lerpVectors(T.position, T.toPosition, a);
+  stage.controls.target.lerpVectors(T.center, T.toCenter, a);
+  if (x === 1) state.cameraTransition = null;
+}
+function capturePose(object) {
+  return { position: object.position.clone(), quaternion: object.quaternion.clone(), scale: object.scale.clone() };
+}
+function transitionObjects() {
+  const objects = [...propPool.values(), ...ballPool.values()].flatMap(o => o.g ? [o.g] : [o]);
+  state.robot?.group.traverse(o => objects.push(o));
+  return objects;
+}
+function beginTransition() {
+  if (!document.body.dataset.ready) return;
+  state.transition = { elapsed: 0, duration: reducedMotion.matches ? .18 : .85,
+    from: new Map(transitionObjects().filter(o => o.visible).map(o => [o, capturePose(o)])) };
+}
+function blendTransition(dt) {
+  const T = state.transition;
+  if (!T) return;
+  T.elapsed += dt;
+  const fraction = Math.min(1, T.elapsed / T.duration), alpha = fraction * fraction * (3 - 2 * fraction);
+  for (const object of transitionObjects()) {
+    const from = T.from.get(object);
+    if (from) {
+      object.position.lerpVectors(from.position, object.position, alpha);
+      object.quaternion.slerpQuaternions(from.quaternion, object.quaternion, alpha);
+      object.scale.lerpVectors(from.scale, object.scale, alpha);
+    } else if (object.userData.replayProp || object.userData.replayBall) object.scale.multiplyScalar(alpha);
+  }
+  if (fraction === 1) {
+    state.transition = null;
+    for (const mesh of propPool.values()) mesh.visible = mesh.userData.active;
+  }
+}
+function poseProps(R) {
+  for (const mesh of propPool.values()) {
+    const rest = mesh.userData.replayPose;
+    mesh.position.copy(rest.position); mesh.quaternion.copy(rest.quaternion);
+    mesh.scale.setScalar(mesh.userData.active ? 1 : 0);
+    mesh.visible = mesh.userData.active || !!state.transition;
+  }
+  for (const mv of R?.movers ?? []) {
+    const rotation = new THREE.Quaternion().setFromAxisAngle(mv.axis, R.qpos?.[mv.adr] ?? 0);
+    for (const mesh of mv.meshes) {
+      mesh.position.sub(mv.origin).applyQuaternion(rotation).add(mv.origin);
+      mesh.quaternion.premultiply(rotation);
+    }
+  }
+}
+function reconcileProps(run) {
+  propMeshes.clear();
+  for (const mesh of propPool.values()) mesh.userData.active = false;
+  for (const p of run.props ?? []) {
+    const key = JSON.stringify([p.name, p.type, p.size, p.rgba]);
+    let mesh = propPool.get(key);
+    if (!mesh) { mesh = propMesh(p); if (!mesh) continue; propPool.set(key, mesh); terrain.add(mesh); }
+    mesh.position.set(p.pos[1], p.pos[2], p.pos[0]);
+    mesh.quaternion.set(p.quat[2], p.quat[3], p.quat[1], p.quat[0]);
+    mesh.userData.replayPose = capturePose(mesh);
+    mesh.userData.active = true;
+    propMeshes.set(p.name, mesh);
+  }
+  return (run.movers ?? []).map(mv => ({
+    origin: new THREE.Vector3(mv.pivot[1], mv.pivot[2], mv.pivot[0]),
+    meshes: mv.geoms.map(name => propMeshes.get(name)).filter(Boolean),
+    adr: mv.qpos, axis: new THREE.Vector3(mv.axis[1], mv.axis[2], mv.axis[0]).normalize(),
+  }));
+}
 // MuJoCo geom types: 2 sphere, 3 capsule, 5 cylinder, 6 box. World frame (x fwd, y left, z up) -> page (y, z, x).
 function propMesh(p) {
   const [r, g, b, a] = p.rgba;
@@ -233,6 +340,7 @@ function propMesh(p) {
   }
   mesh.position.set(p.pos[1], p.pos[2], p.pos[0]);
   mesh.quaternion.set(p.quat[2], p.quat[3], p.quat[1], p.quat[0]);
+  mesh.userData.replayProp = true;
   mesh.castShadow = mesh.receiveShadow = true;
   return mesh;
 }
@@ -242,7 +350,7 @@ function propMesh(p) {
 // after that it turns as the physics rolls it. Older runs fired dart bodies: those are drawn as balls too.
 const UP = new THREE.Vector3(0, 1, 0), spinQ = new THREE.Quaternion();
 function replayBall(run, name) {
-  const { g, streak } = ballMesh();
+  const { g, streak } = ballPool.get(name) ?? ballMesh();
   const adr = run.qpos_layout[name], F = run.frames, n = F.qpos.length;
   const shot = (run.events ?? []).find((e) => e.type === 'shot' && (e.ball ?? e.dart) === name)?.t;
   let flight = null;
@@ -258,6 +366,7 @@ function replayBall(run, name) {
     }
     flight = [start / F.fps, i / F.fps];                       // in the replay's clock (frames / fps)
   }
+  g.userData.replayBall = true;
   return { name, adr, g, streak, flight };
 }
 
@@ -301,53 +410,53 @@ function boxFromMjcf(attrs) {
   return mesh;
 }
 
-async function startReplay(key, { ease = false, run = null } = {}) {
-  if (!run) {
-    stopReplay();
-    if (!key) return;
-    run = await getJson(`../exports/sim/${key}.json`);
-  }
-  stopReplay();
-  terrain.clear();
-  propMeshes.clear();
-  for (const p of run.props ?? []) {
-    const mesh = propMesh(p);
-    if (mesh) { terrain.add(mesh); propMeshes.set(p.name, mesh); }
-  }
-  // knock-down plates: their geoms hang from a pivot group that turns with the hinge angle in each frame
-  const movers = (run.movers ?? []).map((mv) => {
-    const pivot = new THREE.Group();
-    pivot.position.set(mv.pivot[1], mv.pivot[2], mv.pivot[0]);
-    terrain.add(pivot);
-    for (const name of mv.geoms) {
-      const mesh = propMeshes.get(name);
-      if (mesh) { pivot.add(mesh); mesh.position.sub(pivot.position); }
+async function startReplay(key) {
+  const request = ++replayRequest;
+  if (!key) { stopReplay(); return; }
+  let run;
+  try {
+    // No reset while loading. A late response must not replace a newer player choice.
+    if (!runCache.has(key)) runCache.set(key, getJson(`../exports/sim/${key}.json`));
+    run = await runCache.get(key);
+  } catch (error) {
+    runCache.delete(key);
+    if (request === replayRequest) {
+      runSel.value = state.replay?.key ?? '';
+      talk?.dock.hint('That activity could not load. Keep playing, or try it again.', true);
     }
-    return { pivot, adr: mv.qpos, axis: new THREE.Vector3(mv.axis[1], mv.axis[2], mv.axis[0]).normalize() };
+    return;
+  }
+  if (request !== replayRequest || state.bench) return;
+  state.cameraTransition = null;
+  beginTransition();
+  const movers = reconcileProps(run);
+  for (const b of ballPool.values()) { b.g.visible = false; b.streak.visible = false; }
+  replayBalls = Object.keys(run.qpos_layout ?? {}).filter(n => /^(ball|dart)_/.test(n)).map(name => {
+    const ball = replayBall(run, name);
+    ballPool.set(name, ball); ball.g.visible = true;
+    if (!ball.g.parent) stage.root.add(ball.g, ball.streak);
+    return ball;
   });
-  // physics balls: one mesh per ball body, posed from the recorded frames
-  replayBalls = Object.keys(run.qpos_layout ?? {}).filter((n) => /^(ball|dart)_/.test(n)).map((n) => {
-    const b = replayBall(run, n);
-    stage.root.add(b.g, b.streak);
-    return b;
-  });
-  const laserEvents = (run.events ?? []).filter((e) => e.type === 'laser_on' || e.type === 'laser_off');
-  state.replay = { run, key, t: 0, playing: true, rate: 1, focus: null, movers, laserEvents, targets: [] };
-  setTimeout(() => { if (state.replay?.run === run) introLine(state.replay); }, 400);
-  state.replay.targets = (run.props ?? []).filter((p) => /^target_[a-z]+$/.test(p.name)).map((p) => new THREE.Vector3(p.pos[1], p.pos[2], p.pos[0]));
-  if ($('#summary') && state.replay.targets.length) $('#summary').classList.add('min');   // room for the range
+  const laserEvents = (run.events ?? []).filter(e => e.type === 'laser_on' || e.type === 'laser_off');
+  state.replay = { run, key, t: 0, playing: true, rate: 1, focus: null, movers, laserEvents,
+    targets: (run.props ?? []).filter(p => /^target_[a-z]+$/.test(p.name)).map(p => new THREE.Vector3(p.pos[1], p.pos[2], p.pos[0])) };
+  const replay = state.replay;
+  setTimeout(() => { if (state.replay === replay) introLine(replay); }, 400);
+  if ($('#summary') && replay.targets.length) $('#summary').classList.add('min');
   updateInsets();
-  if (ease) state.replay.autoCam = true;                // the demo: glide to the new shot instead of cutting to it
+  // The first frame is composed before the canvas appears. Later changes always glide.
+  if (document.body.dataset.ready) replay.autoCam = true;
   else frameReplay();
   replayPanel.hidden = false;
   scrub.input.max = String(run.frames.qpos.length - 1);
+  scrub.set(0);
   replayInfo.set([['scenario', run.title], ['result', run.pass ? 'pass' : `FAIL: ${run.reasons.join('; ')}`, run.pass ? 'ok' : 'fail'],
                   ['max lean', `${run.max_theta_deg}°`], ['frames', `${run.frames.qpos.length} at ${run.frames.fps} fps`]]);
 }
 
 // Frame the robot and every target in the part of the screen the panels leave free: from behind and above the robot,
 // a little to the side, so the balls fly away from the camera towards the targets.
-// what Gyropup says as each demo starts (and again each time it loops)
+// Activity hints are optional banter: never interrupt a question or greet again on every loop.
 const INTRO = {
   stand: ['Hi! Watch me balance!', 'Hello! Standing still is harder than it looks!'],
   squat: ['Hi! Squats, here we go!', 'Hello! Down... and up!'],
@@ -362,8 +471,8 @@ const INTRO = {
 function introLine(R) {
   const lines = INTRO[R.run.scenario ?? R.key?.split('/').pop()] ?? ['Hi! Watch this!'];
   const line = lines[(R.introCount = (R.introCount ?? -1) + 1) % lines.length];
-  try { talk?.say?.(line, { mood: 'happy' }); } catch { /* the voice is optional */ }
-  if (sfx) setTimeout(() => sfx.chirp(), 120);
+  try { talk?.announce?.(line, { mood: 'happy' }); } catch { /* the voice is optional */ }
+
 }
 
 function replayShot(R) {
@@ -385,7 +494,7 @@ function frameReplay() {
   const R = state.replay;
   if (!R) return;
   const shot = replayShot(R);
-  stage.fitView(shot.pts, shot);
+  if (!document.body.dataset.ready) stage.fitView(shot.pts, shot);
   R.autoCam = true;
 }
 function followReplay(R) {
@@ -395,12 +504,15 @@ function followReplay(R) {
   stage.camera.position.lerp(want.position, 0.06);
   stage.controls.target.lerp(want.center, 0.06);
 }
-stage.controls.addEventListener('start', () => { if (state.replay) state.replay.autoCam = false; });   // the user took the camera
+stage.controls.addEventListener('start', () => { state.cameraTransition = null; if (state.replay) state.replay.autoCam = false; });   // the user took the camera
 
 function stopReplay() {
+  ++replayRequest;
+  beginTransition();
+  // Keep the range and targets where the player left them in Drive & play.
+  for (const mesh of propPool.values()) mesh.userData.replayPose = capturePose(mesh);
   state.replay = null;
-  terrain.clear();
-  for (const b of replayBalls) stage.root.remove(b.g, b.streak);
+  for (const b of replayBalls) { b.g.visible = false; b.streak.visible = false; }
   replayBalls = [];
   if (typeof replayPanel !== 'undefined') replayPanel.hidden = true;
 }
@@ -562,16 +674,18 @@ function replayLaser(R, tt) {
 let teleT = 0;
 const prevTurret = { pan: 0, tilt: 0 };
 stage.onFrame((t, dt) => {
+  stepCamera(dt);
   if (state.bench) { bench?.step(t, dt); return; }
   if (!state.robot) return;
   if (state.replay) {
     const R = state.replay, F = R.run.frames;
-    if (R.playing) {
+    if (R.playing && !state.transition) {
       const dur = F.qpos.length / F.fps, nt = R.t + dt * R.rate;
       if (nt >= dur && demo.on && !R.leaving) {            // demo: hold the last frame while the next run loads
         R.t = dur - 1e-3; R.playing = false; R.leaving = true;
         nextReplay();
-      } else R.t = nt % dur;
+      } else if (nt >= dur) { beginTransition(); R.t = 0; R.lastT = -1; }
+      else R.t = nt;
     }
     // blend between the recorded 30 fps frames so motion stays smooth at the screen's frame rate
     const f = Math.min(F.qpos.length - 1, R.t * F.fps), i = Math.floor(f), j = Math.min(F.qpos.length - 1, i + 1), w = f - i;
@@ -583,15 +697,17 @@ stage.onFrame((t, dt) => {
     for (let k = 3; k < 7; k++) qp[k] /= n;
     state.robot.setFromQpos(qp, R.run.qpos_layout);
     if (R.playing) scrub.set(i);
-    for (const mv of R.movers) mv.pivot.quaternion.setFromAxisAngle(mv.axis, qp[mv.adr]);
+    R.qpos = qp;
+    poseProps(R);
     for (const b of replayBalls) {                             // physics balls, from MuJoCo
       const a = b.adr;
+      b.g.scale.setScalar(1);
       b.g.position.set(qp[a + 1], qp[a + 2], qp[a]);
       b.g.quaternion.set(qp[a + 5], qp[a + 6], qp[a + 4], qp[a + 3]).normalize();
       if (b.flight) b.g.quaternion.multiply(spinQ.setFromAxisAngle(UP, BALL_SPIN * Math.min(Math.max(R.t - b.flight[0], 0), b.flight[1] - b.flight[0])));
       const v = new THREE.Vector3(B[a + 1] - A[a + 1], B[a + 2] - A[a + 2], B[a] - A[a]).multiplyScalar(F.fps);
       const sp = v.length();
-      b.streak.visible = sp > 4 && sp < 40;                    // only in flight (not when parked or teleported)
+      b.streak.visible = !state.transition && sp > 4 && sp < 40;                    // only in flight (not when parked or teleported)
       if (b.streak.visible) {
         const len = Math.min(0.4, sp * 0.016), dir = v.divideScalar(sp);
         b.streak.scale.set(1, len, 1);
@@ -613,7 +729,7 @@ stage.onFrame((t, dt) => {
     const tt = R.t;
     for (const ev of R.run.events ?? []) {
       const passed = ev.t <= tt && (R.lastT ?? -1) < ev.t;
-      if (!passed || !R.playing || tt - ev.t > 0.25) continue;     // seeking: skip the effects of events jumped over
+      if (!passed || !R.playing || state.transition || tt - ev.t > 0.25) continue;     // seeking: skip the effects of events jumped over
       if (ev.type === 'shot') {
         state.robot.turret?.flash();
         if (R.playing) { sfx.shot(); react('fire'); }
@@ -624,48 +740,49 @@ stage.onFrame((t, dt) => {
         const ball = replayBalls.find((b) => b.name === (ev.ball ?? ev.dart));
         if (ball) { ringFlash(ball.g.position, BALL.color, 0.4, 0.25); burst(ball.g.position, 0xfff1a8, 6, 0.9); }   // a foam "boop"
         if (R.playing) sfx.hit();
-        eyes.set('happy');                                      // a hit makes Gyropup happy for a moment
+        reactionMood('happy');                                      // a hit makes Gyropup happy for a moment
         R.moodUntil = tt + 0.8;
         react('hit');
       } else if (ev.type === 'fall') {
-        eyes.set('surprised');
+        reactionMood('surprised');
         R.moodUntil = tt + 3;
         react('fall');
         setTimeout(() => sfx.down(), 500);
       } else if (ev.type === 'push') {
-        eyes.set('surprised');
+        reactionMood('surprised');
         R.moodUntil = tt + 0.9;
       } else if (ev.type === 'down') {
         const m = propMeshes.get(ev.target);
         if (m) { const p = m.getWorldPosition(new THREE.Vector3()); burst(p, 0x00f0ff, 22, 2.2); ringFlash(p, 0x00f0ff); }
         if (R.playing) { sfx.down(); setTimeout(() => sfx.chirp(), 260); }
-        eyes.set('happy');
+        reactionMood('happy');
         R.moodUntil = tt + 1.4;
         react('down');
       }
-      if (ev.type === 'shot' && !(R.moodUntil > tt)) eyes.set('focused');
+      if (ev.type === 'shot' && !(R.moodUntil > tt)) reactionMood('focused');
     }
     for (const m of propMeshes.values()) if (m.userData.glowT > 0) { m.userData.glowT -= dt; if (m.userData.glowT <= 0) m.material.emissive.copy(m.userData.baseEmissive ?? new THREE.Color(0)); }
-    if (R.moodUntil && tt > R.moodUntil) { eyes.set('neutral'); R.moodUntil = 0; }
-    if (tt < (R.lastT ?? 0)) { balls.clear(); if (R.playing) introLine(R); }      // looped: say hello again
+    if (R.moodUntil && tt > R.moodUntil) { reactionMood('neutral'); R.moodUntil = 0; }
     R.lastT = tt;
     const laserNow = replayLaser(R, tt);
     if (laserNow !== gun.laserOn) {
       if (R.playing) { setLaser(laserNow); if (laserNow && Math.random() < 0.35) react('banter'); } else gun.laserOn = laserNow;
     }
-    if (state.robot.turret) { state.robot.turret.step(dt); state.robot.turret.updateLaser([terrain], gun.laserOn); }
+    if (state.robot.turret) { state.robot.turret.step(dt); state.robot.turret.updateLaser([...propMeshes.values()], gun.laserOn); }
     balls.step(dt);
     stepBits(dt);
+    blendTransition(dt);
     followReplay(R);
     eyes.step(t, dt);
     eyes.draw();
     return;
   }
+  poseProps(null);
   let height = state.height, pitch = state.pitch;
   if (state.alive) {
     height = Math.min(1, Math.max(0, height + 0.025 * Math.sin(t * 1.3)));         // breathing bob
     pitch += 0.012 * Math.sin(t * 0.7) + 0.006 * Math.sin(t * 2.3);                 // balance sway
-    if (!state.lastExpr || performance.now() - state.lastExpr > 9000) {             // an occasional mood
+    if (!talk?.isBusy() && (!state.lastExpr || performance.now() - state.lastExpr > 9000)) {             // an occasional mood
       if (Math.random() < dt * 0.15) { const n = ['neutral', 'happy', 'curious', 'thinking', 'neutral'][Math.floor(Math.random() * 5)]; eyes.set(n); eyeChips.mark(n); }
     }
   }
@@ -676,7 +793,7 @@ stage.onFrame((t, dt) => {
     state.robot.turret.setAim(gun.pan, Math.max(gun.tilt, -tiltLimit(gun.pan)), pitch);
     const now = performance.now() / 1000;
     setLaser(gun.laserMode === 'on' || (gun.laserMode === 'auto' && gun.attached && (gun.queue.length > 0 || now < gun.armedUntil)));
-    state.robot.turret.updateLaser([terrain], gun.laserOn);
+    state.robot.turret.updateLaser([...propMeshes.values()], gun.laserOn);
     const legSpeed = dt > 0 ? ((height - (state.prevHeight ?? height)) / dt) * 3 : 0;   // live pose: the height's rate (~rad/s)
     state.prevHeight = height;
     sfx.motion({ wheelSpeed: state.speed, legSpeed, servoSpeed: dt > 0 ? Math.hypot(gun.pan - prevTurret.pan, gun.tilt - prevTurret.tilt) / dt : 0 });
@@ -688,6 +805,7 @@ stage.onFrame((t, dt) => {
   stepBits(dt);
   state.robot.group.position.z += state.speed * dt;
   if (Math.abs(state.robot.group.position.z) > 2.5) state.robot.group.position.z *= -0.98;
+  blendTransition(dt);
   eyes.step(t, dt);
   eyes.draw();
   if ((teleT += dt) > 0.2) { teleT = 0; telemetry(p); }
@@ -704,7 +822,7 @@ function tiltLimit(pan) {
   return (t0 + (t1 - t0) * (d - p0) / (p1 - p0)) * Math.PI / 180;
 }
 
-window.__sim = { state, stage, eyes, setHeight: (v) => { state.height = v; sh.set(v); }, bench: () => bench };
+window.__sim = { state, stage, eyes, get talk() { return talk; }, get props() { return propMeshes; }, setHeight: (v) => { state.height = v; sh.set(v); }, bench: () => bench };
 sel.onchange = () => loadDesign(sel.value);
 runSel.onchange = () => startReplay(runSel.value);
 await loadDesign(sel.value);

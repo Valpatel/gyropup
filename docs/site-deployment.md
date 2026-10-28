@@ -127,3 +127,28 @@ not negotiate `Accept: text/markdown` on the HTML URL. Cloudflare's native
 [Markdown for Agents](https://developers.cloudflare.com/fundamentals/reference/markdown-for-agents/)
 feature requires an eligible plan and Zone Settings Edit permission. Do not
 silently purchase a plan or expand a DNS token to enable it.
+
+## Continuous simulator experience
+
+Ordinary replay/activity changes preserve the renderer, world, character, and
+conversation. Targets and robot poses blend into the next activity, including
+recording loops; the previous activity stays visible during loading. Late
+requests cannot replace a newer selection. Hardware previews and replay props
+are reused, and the turret re-racks its existing targets in place.
+
+On2026-10-28, stage greetings were found to call `talk.say` directly, bypassing
+the conversation's reaction cooldown. Use `talk.announce` for background stage
+chatter and honor `talk.isBusy()` for expressions. Never interrupt a pending
+answer, listening, or an answer still being presented. A stage change must not
+recreate the talk panel, history, voice, or character.
+
+Phone sliders previously inherited `#panel label { display:flex }`, squeezing
+the label/value/track onto one line. Keep `.hud-slider` a grid with its track
+below the label, a contrasting track, and a touch-sized thumb. Pooled inactive
+target geometry must be hidden after its transition and excluded from raycasts.
+
+Run `SITE_URL=http://127.0.0.1:8764 npm run test:sim` after the build; set
+`PLAYWRIGHT_BROWSER=webkit` for WebKit. This checks an in-flight mocked reply
+across stage changes, conversation and scene identity, loop blending, stale
+fetches, cached models, target re-racking, and phone slider layouts. The mock
+verifies browser continuity without claiming a production AI backend is online.

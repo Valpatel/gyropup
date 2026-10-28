@@ -437,7 +437,7 @@ export function mountTalk({ stage, getHead, eyes, root = '../', chips, brain, do
   // the brain
   const history = [];
   const scriptBags = new Map(), fallbackBag = bag(FALLBACK), safetyBag = bag(SAFETY_LINES), banterBag = bag(BANTER);
-  let askSeq = 0, replyBusyUntil = 0;
+  let askSeq = 0, replyBusyUntil = 0, askPending = false;
 
   function scripted(text) {
     const q = ' ' + text.toLowerCase() + ' ';
@@ -471,6 +471,7 @@ export function mountTalk({ stage, getHead, eyes, root = '../', chips, brain, do
     text = String(text ?? '').trim().slice(0, 500);
     if (!text) return '';
     const seq = ++askSeq;
+    askPending = true;
     stopVoice();
     setMood('thinking');
     showBubble('', { thinking: true });
@@ -487,10 +488,11 @@ export function mountTalk({ stage, getHead, eyes, root = '../', chips, brain, do
       if (UNSAFE_OUT.test(reply.text)) reply = { text: safetyBag(), mood: 'focused', source: 'safety' };
     }
     if (seq !== askSeq) return reply.text;                     // a newer question took over
+    askPending = false;
     history.push({ role: 'user', content: text }, { role: 'assistant', content: `[${reply.mood || 'neutral'}] ${reply.text}` });
     while (history.length > 12) history.shift();
-    replyBusyUntil = performance.now() + Math.max(2500, reply.text.length * 70);
     say(reply.text, { mood: reply.mood || guessMood(reply.text), speak: voice });
+    replyBusyUntil = shownUntil;
     lastSource = reply.source;
     renderStatus();
     return reply.text;
@@ -596,7 +598,7 @@ export function mountTalk({ stage, getHead, eyes, root = '../', chips, brain, do
     const R = REACT[event];
     if (!R) return null;
     const now = performance.now();
-    if (now < replyBusyUntil) return null;                          // never talk over an answer
+    if (isBusy()) return null;                          // never talk over an answer
     if (now - (reactLast.get(event) ?? -1e9) < R.gap) return null;   // per-event cooldown
     if (!R.priority && (now - reactGlobal < 3500 || (visible && now < shownUntil - 300))) return null;
     if (R.p != null && Math.random() > R.p) return null;
@@ -605,6 +607,15 @@ export function mountTalk({ stage, getHead, eyes, root = '../', chips, brain, do
     reactLast.set(event, now); reactGlobal = now;
     say(line, { mood: R.mood });
     return line;
+  }
+
+  // Stage changes and game reactions are background chatter. The conversation owns the
+  // bubble, voice and expression while listening, thinking, or presenting an answer.
+  function isBusy() { return askPending || !!listening || performance.now() < replyBusyUntil; }
+  function announce(text, options = {}) {
+    if (isBusy() || (visible && performance.now() < shownUntil)) return false;
+    say(text, options);
+    return true;
   }
 
   function setMuted(v) {
@@ -696,5 +707,5 @@ export function mountTalk({ stage, getHead, eyes, root = '../', chips, brain, do
   setMuted(muted);
   renderStatus();
 
-  return { say, ask, listen, react, setMuted, dock: dockApi, services, detect, stop: () => { stopVoice(); hideBubble(); } };
+  return { say, ask, listen, react, announce, isBusy, get conversation() { return history.map(entry => ({ ...entry })); }, setMuted, dock: dockApi, services, detect, stop: () => { stopVoice(); hideBubble(); } };
 }
