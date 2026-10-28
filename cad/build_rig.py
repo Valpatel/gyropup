@@ -89,16 +89,30 @@ def brace():
 
 
 def deck():
-    return rp.box(-300.0, 300.0, rp.Y_POST_FRONT, Y_FRONT, -rp.DECK_T, 0.0)
+    """The 18 mm plywood, cut to 600 x 400 at the store, drilled 6.6 mm through at every screw that passes it."""
+    import rig_hardware as hw
+    s = rp.box(-300.0, 300.0, rp.Y_POST_FRONT, Y_FRONT, -rp.DECK_T, 0.0)
+    for j in hw.joints():
+        if j['name'].startswith(('deck_screw', 'bumper_screw')):
+            s = s.cut(rp.cyl(3.3, 'z', -rp.DECK_T - 1, 1.0, j['seat'][0], j['seat'][1]))
+    return s
 
 
-def rails():
-    out = None
-    for sx in (-1, 1):
-        r = rp.box(sx * rp.BLOCK_X - rp.HG15['rail_w'] / 2, sx * rp.BLOCK_X + rp.HG15['rail_w'] / 2, rp.Y_POST_FRONT,
-                   rp.Y_POST_FRONT + rp.HG15['rail_h'], rp.RAIL_Z0, RAIL_TOP)
-        out = r if out is None else out.union(r)
-    return out
+def rails() -> dict:
+    """The two HGR15 rails on the post's front slots (rig_hardware.hg_rail: counterbored at P 60)."""
+    import rig_hardware as hw
+    return {f'rail_{side}': hw.hg_rail(sx * rp.BLOCK_X, rp.Y_POST_FRONT, rp.RAIL_Z0, rp.RAIL_LEN) for sx, side in ((-1, 'left'), (1, 'right'))}
+
+
+def brace_hinges() -> dict:
+    """The brace's two free-angle brackets: on the post's back face and on the rear member's top."""
+    import rig_hardware as hw
+    (y1, z1), (y2, z2) = brace_line()
+    L = math.hypot(y1 - y2, z1 - z2)
+    u = (0.0, (y1 - y2) / L, (z1 - z2) / L)                     # along the brace, from its foot to the post
+    top = hw.free_angle_hinge((0.0, rp.Y_POST_BACK, z1), (0.0, y1, z1), u, plate_normal=(0, -1, 0))
+    foot = hw.free_angle_hinge((0.0, y2, Z_FRAME_TOP), (0.0, y2, z2), (0.0, -u[1], -u[2]), plate_normal=(0, 0, 1))
+    return {'brace_hinge_top': top, 'brace_hinge_foot': foot}
 
 
 def bumpers_fixed(with_bottom: bool = True):
@@ -130,31 +144,44 @@ def pod_parts():
     """The pod on the post's back face (turned so its depth runs to -y), its panel on the -x side, the pendant's clip."""
     turn = lambda s: s.rotate((0, 0, 0), (0, 0, 1), 90).translate((0.0, rp.Y_POST_BACK, POD_Z))
     return {'pod': turn(rp.pod()), 'pod_lid': turn(rp.pod_lid().translate((0, rp.POD['d'] / 2, 0))),
-            'pendant_clip': rp.pendant_clip().rotate((0, 0, 0), (0, 0, 1), -90).translate((rp.POD['d'] / 2, rp.Y_POST_BACK - 70.0, POD_Z + 80.0))}
+            'pendant_clip': rp.pendant_clip().rotate((0, 0, 0), (0, 0, 1), -90).translate((rp.POD['d'] / 2, rp.Y_POST_BACK + rp.PENDANT_AT[0], POD_Z + rp.PENDANT_AT[1]))}
 
 
-def fixed_parts(with_bottom_bumpers: bool = True) -> dict:
+def fixed_parts(with_bottom_bumpers: bool = True, hardware: bool = False) -> dict:
+    """The rig that does not move. hardware=True adds the bought hardware: the corner brackets and every screw of the
+    fixed joints (cad/rig_hardware.py)."""
     out = {}
     for name, (kind, axis, L, at, flat) in base_members().items():
         out[name] = rp.extrusion(kind, axis, L, at, flat)
-    b, h, _ = brace()
+    b, _, _ = brace()
     out['brace'] = b
-    out['brace_hinges'] = h
+    out.update(brace_hinges())
     out['deck'] = deck()
-    out['rails'] = rails()
+    out.update(rails())
     out.update(bumpers_fixed(with_bottom_bumpers))
     out.update(pod_parts())
     out.update(tof_fixed())
+    if hardware:
+        import rig_hardware as hw
+        out.update(hw.corner_brackets())
+        out.update(hw.screw_shapes([j for j in hw.joints() if j['body'] == 'frame']))
     return out
 
 
-def carriage_parts(zh: float, n_plates: int = 2, tof: bool = True) -> dict:
-    """The parts that ride with the hip frame, at hip height zh (deck frame)."""
+def carriage_parts(zh: float, n_plates: int = 1, tof: bool = True, hardware: bool = False) -> dict:
+    """The parts that ride with the hip frame, at hip height zh (deck frame): the plate, the four blocks, the ballast
+    posts and plates, the ToF target; hardware=True adds their screws."""
+    import rig_hardware as hw
     t = (0.0, 0.0, zh)
-    out = {'carriage_plate': rp.carriage_plate().translate(t), 'blocks': rp.blocks().translate(t),
-           'ballast': rp.ballast(n_plates).translate(t)}
+    out = {'carriage_plate': rp.carriage_plate().translate(t)}
+    for sx in (-1, 1):
+        for sz in (-1, 1):
+            out[f'block_{sx:+d}{sz:+d}'] = hw.hg_block(sx * rp.BLOCK_X, zh + sz * rp.BLOCK_Z, rp.Y_POST_FRONT)
+    out.update({n: s.translate(t) for n, s in rp.ballast_parts(n_plates).items()})
     if tof:
         out['tof_arm'] = rp.tof_arm().translate(t)
+    if hardware:
+        out.update(hw.screw_shapes([j for j in hw.joints(zh) if j['body'] == 'carriage' and (tof or 'tof' not in j['name'])]))
     return out
 
 
@@ -173,7 +200,7 @@ def leg_parts(L_mm: float, lean: float, zh: float) -> dict:
     for n, (s, _) in asm.items():
         if s is None or n == 'wheel_cable':
             continue
-        static = n.startswith(fb.STATIC) or n == 'screws_lugs'
+        static = n.startswith(fb.STATIC) or n in ('screws_lugs', 'screws_outputs')   # the output screws ride with the adapters
         out['leg_' + n] = ((s.val() if hasattr(s, 'val') else s).translate(cq.Vector(0, 0, zh)), 'static' if static else 'moving')
     return out
 
@@ -253,7 +280,7 @@ def travel_check(zh_points: dict, limit: float = 10.0) -> dict:
         for n, s in moving.items():
             sb = _bb(s)
             for m, o in fixed.items():
-                if (n, m) == ('blocks', 'rails'):
+                if n.startswith('block_') and m.startswith('rail_'):
                     continue
                 if _bb_gap(sb, fixed_bb[m]) > limit:
                     continue
@@ -429,10 +456,10 @@ def ballast_table(cm: dict, lm: dict, plate_kg: dict) -> dict:
                              'note': 'below the carriage with its ballast posts' + (': remove the posts' if hm >= floor - shafts else ': not reachable')}
             continue
         best = None
-        tol = max(0.05, 0.02 * hm)                                 # within 2 % of the carried mass
+        tol = max(0.05, 0.03 * hm)                                 # within 3 % of the carried mass
         for n125 in range(0, 7, 2):                                # the plates the same on both posts
             for n25 in range(0, 9, 2):
-                for nw in range(0, 9):                             # 3.5 in washers (0.14 kg) trim it
+                for nw in range(0, 1):                             # (3.5 in trim washers, 0.14 kg: not bought; plates only)
                     tot = n125 * plate_kg['1.25 lb'] + n25 * plate_kg['2.5 lb'] + nw * WASHER_TRIM_KG
                     err = tot - need
                     if abs(err) > tol:
@@ -446,8 +473,7 @@ def ballast_table(cm: dict, lm: dict, plate_kg: dict) -> dict:
         rows[str(hm)] = {'plates_needed_kg': round(need, 3), 'per_post': {'1.25 lb': best[1] // 2, '2.5 lb': best[2] // 2},
                          'washers_3p5in': best[3], 'ballast_kg': round(best[4], 3), 'over_by_kg': round(best[4] - need, 3),
                          'carried_kg': round(floor + best[4], 3),
-                         'note': 'weigh the plates: the table assumes 0.567 and 1.134 kg; the washers (McMaster 91117A251) '
-                                 '~0.14 kg each go on either post'}
+                         'note': 'weigh the plates: the table assumes 0.567 and 1.134 kg'}
     return rows
 
 
@@ -601,7 +627,8 @@ def bom() -> dict:
 
 # ----------------------------------------------------------------------------------- renders
 
-COL = {'deck': (.80, .66, .45), 'post': (.62, .65, .70), 'rails': (.35, .37, .40), 'blocks': (.25, .27, .30),
+COL = {'screw': (.16, .16, .18), 'bracket': (.70, .72, .76), 'brace_hinge': (.40, .40, .45), 'weight_plate': (.20, .21, .23),
+       'deck': (.80, .66, .45), 'post': (.62, .65, .70), 'rail_': (.35, .37, .40), 'block_': (.25, .27, .30),
        'carriage_plate': (.78, .80, .83), 'ballast': (.20, .21, .23), 'brace': (.62, .65, .70), 'member': (.62, .65, .70),
        'bumper_tpu': (.85, .22, .20), 'top_tpu': (.85, .22, .20), 'bumper': (.30, .55, .85), 'top_stop': (.30, .55, .85),
        'pod': (.30, .55, .85), 'pendant': (.95, .80, .10), 'tof_arm': (.95, .95, .95), 'tof': (.30, .55, .85), 'drop': (.30, .55, .85), 'hinge': (.4, .4, .45),
@@ -663,6 +690,7 @@ def jump_apex(half_mass: float) -> dict:
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--no-render', action='store_true')
+    ap.add_argument('--no-integrity', action='store_true', help='skip cad/rig_integrity.py (floating parts, interference, screws)')
     ap.add_argument('--no-sweep', action='store_true')
     ap.add_argument('--no-sim', action='store_true')
     a = ap.parse_args()
@@ -787,6 +815,11 @@ def main():
         c = summary['clearance']
         print(f"  clearance: {c['poses']} poses, under {c['limit_mm']} mm: {len(c['under_limit'])}; closest {list(c['closest'].items())[:4]}")
     print(f'  {time.time() - t0:.0f} s')
+    if not a.no_integrity:                                      # floating parts, interference over the travel, screw lengths
+        import rig_integrity
+        rc = rig_integrity.main([])
+        if rc:
+            sys.exit(rc)
 
 
 if __name__ == '__main__':

@@ -16,23 +16,23 @@
   },
   "vbus_high": {
    "injected_at_s": 1.0,
-   "abort": "limp: VBUS 59.0 V > 58",
+   "abort": "limp: VBUS 46.0 V > 45",
    "abort_at_s": 1.0,
    "reaction_ms": 0.0,
    "expected": "limp",
    "ok": true,
    "leg_at_stop_mm": 172.8,
    "torque_after_stop_nm": 0.0,
-   "lowest_leg_after_mm": 107.7
+   "lowest_leg_after_mm": 107.8
   },
   "vbus_low": {
    "injected_at_s": 1.0,
-   "abort": "sitdown: VBUS 46.0 V (mean) < 46",
-   "abort_at_s": 2.604,
-   "reaction_ms": 1604.0,
+   "abort": "sitdown: VBUS 32.0 V (mean) < 32",
+   "abort_at_s": 2.94,
+   "reaction_ms": 1940.0,
    "expected": "sitdown",
    "ok": true,
-   "leg_at_stop_mm": 152.6,
+   "leg_at_stop_mm": 155.1,
    "torque_after_stop_nm": 0.0,
    "lowest_leg_after_mm": 111.4
   },
@@ -78,7 +78,7 @@
    "ok": true,
    "leg_at_stop_mm": 172.8,
    "torque_after_stop_nm": 0.0,
-   "lowest_leg_after_mm": 107.7
+   "lowest_leg_after_mm": 107.8
   },
   "rate_limit": {
    "limit_nm_per_tick": 5.0,

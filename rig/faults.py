@@ -37,9 +37,9 @@ class FaultBus(MotorBus):
         if k == 'run':
             tk.run = False
         elif k == 'vbus_high':
-            tk.vbus = 59.0
+            tk.vbus = 46.0
         elif k == 'vbus_low':
-            tk.vbus = 44.0
+            tk.vbus = 31.0
         elif k == 'hot':
             tk.f.temp_c = 90.0
         elif k == 'window':

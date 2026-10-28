@@ -2,35 +2,35 @@
 <rect width="100%" height="100%" fill="#ffffff"/>
 <defs><marker id="dot" markerWidth="6" markerHeight="6" refX="3" refY="3"><circle cx="3" cy="3" r="2.2" fill="#333"/></marker></defs>
 <text x="20" y="28" font-size="18" font-weight="bold">Gyropup body P0: power and CAN wiring</text>
-<text x="20" y="46" fill="#555">13S2P P30B, 48.1 V nominal, 53.3 V full (4.1 V a cell). W-numbers are the rows of docs/body-electrical.md (cad/body_wiring.py). Red +, black -, white sense, green frame bond.</text>
+<text x="20" y="46" fill="#555">Two DCB609 in series (10S, D65): 36.0 V nominal, 41.0 V full, 30.0 V empty. W-numbers are the rows of docs/body-electrical.md (cad/body_wiring.py). Red +, black -, white sense, green frame bond.</text>
 <rect x="20" y="70" width="210" height="210" rx="6" fill="#fff7e6" stroke="#333" stroke-width="1.5"/>
-<text x="28" y="87" font-weight="bold">Battery drawer (belly)</text>
-<text x="28" y="103" fill="#333" font-size="11">13S2P P30B brick, 256 Wh</text>
-<text x="28" y="117" fill="#333" font-size="11">Daly K 13S 100 A BMS</text>
-<text x="28" y="131" fill="#333" font-size="11">(common port: B- in, P- out)</text>
-<text x="28" y="145" fill="#333" font-size="11">BMS on Bluetooth only:</text>
-<text x="28" y="159" fill="#333" font-size="11">no wire to its UART (B- ground)</text>
-<text x="28" y="173" fill="#333" font-size="11"></text>
-<text x="28" y="187" fill="#333" font-size="11">XT90-S anti-spark plug</text>
-<text x="28" y="201" fill="#333" font-size="11">female on the pack lead</text>
+<text x="28" y="87" font-weight="bold">Battery bay (belly)</text>
+<text x="28" y="103" fill="#333" font-size="11">two DeWalt DCB609, 20 V mode</text>
+<text x="28" y="117" fill="#333" font-size="11">on two Terrafirma rail adapters</text>
+<text x="28" y="131" fill="#333" font-size="11">in series (W2: an XT90 link)</text>
+<text x="28" y="145" fill="#333" font-size="11">10S3P, 30-41 V, 360 Wh rated</text>
+<text x="28" y="159" fill="#333" font-size="11">no BMS the robot can read:</text>
+<text x="28" y="173" fill="#333" font-size="11">the firmware cuts off at 30 V</text>
+<text x="28" y="187" fill="#333" font-size="11"></text>
+<text x="28" y="201" fill="#333" font-size="11">XT90-S female on the bay's lead</text>
 <rect x="20" y="300" width="210" height="80" rx="6" fill="#fff7e6" stroke="#333" stroke-width="1.5"/>
-<text x="28" y="317" font-weight="bold">Charge port (belly)</text>
-<text x="28" y="333" fill="#333" font-size="11">XT60H female in a printed bezel</text>
-<text x="28" y="347" fill="#333" font-size="11">charger 53.3 V (90 %), 2-3 A</text>
-<text x="28" y="361" fill="#333" font-size="11">charges with the switch off</text>
+<text x="28" y="317" font-weight="bold">Charging</text>
+<text x="28" y="333" fill="#333" font-size="11">the packs come out and charge</text>
+<text x="28" y="347" fill="#333" font-size="11">on DeWalt's own chargers</text>
+<text x="28" y="361" fill="#333" font-size="11">(no charge port, D65)</text>
 <rect x="290" y="70" width="170" height="60" rx="6" fill="#ffe08a" stroke="#333" stroke-width="1.5"/>
 <text x="298" y="87" font-weight="bold">MRBF main fuse</text>
 <text x="298" y="103" fill="#333" font-size="11">Blue Sea 5191 + 5181 80 A</text>
 <text x="298" y="117" fill="#333" font-size="11">58 V DC, 2 kA</text>
-<rect x="290" y="200" width="170" height="60" rx="6" fill="#f4f6f8" stroke="#333" stroke-width="1.5"/>
-<text x="298" y="217" font-weight="bold">Shunt 150 A / 50 mV</text>
-<text x="298" y="233" fill="#333" font-size="11">Blue Sea, in the - lead</text>
-<text x="298" y="247" fill="#333" font-size="11">INA228 across it (W30-31)</text>
+<rect x="290" y="160" width="170" height="60" rx="6" fill="#f4f6f8" stroke="#333" stroke-width="1.5"/>
+<text x="298" y="177" font-weight="bold">Shunt 150 A / 50 mV</text>
+<text x="298" y="193" fill="#333" font-size="11">Blue Sea, in the + lead (W5, W6)</text>
+<text x="298" y="207" fill="#333" font-size="11">INA228 high side (W30-31)</text>
 <rect x="290" y="290" width="170" height="70" rx="6" fill="#e8f0ff" stroke="#333" stroke-width="1.5"/>
 <text x="298" y="307" font-weight="bold">Main switch</text>
 <text x="298" y="323" fill="#333" font-size="11">Flipsky Smart Enhanced V2.0</text>
 <text x="298" y="337" fill="#333" font-size="11">low side, momentary</text>
-<text x="298" y="351" fill="#333" font-size="11">(16 mm button, belly)</text>
+<text x="298" y="351" fill="#333" font-size="11">(16 mm button, rear face)</text>
 <rect x="520" y="70" width="60" height="330" rx="6" fill="#fde3e3" stroke="#333" stroke-width="1.5"/>
 <text x="528" y="87" font-weight="bold">+ bus</text>
 <text x="528" y="103" fill="#333" font-size="11">C110</text>
@@ -41,21 +41,15 @@
 <text x="528" y="467" fill="#333" font-size="11">star</text>
 <text x="528" y="481" fill="#333" font-size="11">point</text>
 <polyline points="230,100 290,100" fill="none" stroke="#d62728" stroke-width="3.0" stroke-linejoin="round" marker-start="url(#dot)" marker-end="url(#dot)"/>
-<text x="234" y="92" font-size="11" fill="#d62728">W1 W3 8</text>
-<polyline points="460,100 520,100" fill="none" stroke="#d62728" stroke-width="3.0" stroke-linejoin="round" marker-start="url(#dot)" marker-end="url(#dot)"/>
-<text x="464" y="94" font-size="11" fill="#d62728">W4 8</text>
-<polyline points="230,250 290,250" fill="none" stroke="#222" stroke-width="3.0" stroke-linejoin="round" marker-start="url(#dot)" marker-end="url(#dot)"/>
-<text x="234" y="266" font-size="11" fill="#222">W2 W5 8</text>
-<polyline points="375,260 375,290" fill="none" stroke="#222" stroke-width="3.0" stroke-linejoin="round" marker-start="url(#dot)" marker-end="url(#dot)"/>
-<text x="381" y="278" font-size="11" fill="#222">W6</text>
+<text x="234" y="92" font-size="11" fill="#d62728">W1 W4 10/8</text>
+<polyline points="375,130 375,160" fill="none" stroke="#d62728" stroke-width="3.0" stroke-linejoin="round" marker-start="url(#dot)" marker-end="url(#dot)"/>
+<text x="381" y="148" font-size="11" fill="#d62728">W5 8</text>
+<polyline points="460,190 490,190 490,100 520,100" fill="none" stroke="#d62728" stroke-width="3.0" stroke-linejoin="round" marker-start="url(#dot)" marker-end="url(#dot)"/>
+<text x="494" y="184" font-size="11" fill="#d62728">W6 8</text>
+<polyline points="230,250 260,250 260,320 290,320" fill="none" stroke="#222" stroke-width="3.0" stroke-linejoin="round" marker-start="url(#dot)" marker-end="url(#dot)"/>
+<text x="234" y="266" font-size="11" fill="#222">W3 W7 10/8</text>
 <polyline points="460,330 500,330 500,480 520,480" fill="none" stroke="#222" stroke-width="3.0" stroke-linejoin="round" marker-start="url(#dot)" marker-end="url(#dot)"/>
-<text x="504" y="326" font-size="11" fill="#222">W7 8</text>
-<polyline points="230,330 262,330 262,145 330,145 330,130" fill="none" stroke="#d62728" stroke-width="3.0" stroke-linejoin="round" marker-start="url(#dot)" marker-end="url(#dot)"/>
-<text x="266" y="159" font-size="11" fill="#d62728">W8 18 AWG (charge +)</text>
-<rect x="248" y="223" width="28" height="14" rx="3" fill="#ffe08a" stroke="#8a6d00"/>
-<text x="250" y="234" font-size="9">10 A</text>
-<polyline points="230,360 275,360 275,268 300,268 300,260" fill="none" stroke="#222" stroke-width="2" stroke-linejoin="round" marker-start="url(#dot)" marker-end="url(#dot)"/>
-<text x="234" y="374" font-size="11" fill="#222">W9 18 (charge -)</text>
+<text x="504" y="326" font-size="11" fill="#222">W8 8</text>
 <polyline points="580,95 700,95" fill="none" stroke="#d62728" stroke-width="2.2" stroke-linejoin="round" marker-start="url(#dot)" marker-end="url(#dot)"/>
 <text x="610" y="90" font-size="11" fill="#d62728">W10 14 AWG</text>
 <rect x="626" y="88" width="28" height="14" rx="3" fill="#ffe08a" stroke="#8a6d00"/>
@@ -97,62 +91,52 @@
 <rect x="626" y="316" width="28" height="14" rx="3" fill="#ffe08a" stroke="#8a6d00"/>
 <text x="628" y="327" font-size="9">10 A</text>
 <rect x="700" y="308" width="170" height="30" rx="6" fill="#eef7ee" stroke="#333" stroke-width="1.5"/>
-<text x="708" y="325" font-weight="bold">DDR-120C-24 in</text>
+<text x="708" y="325" font-weight="bold">TRACO TEP 150-4812WI in</text>
 <polyline points="580,361 700,361" fill="none" stroke="#d62728" stroke-width="2.2" stroke-linejoin="round" marker-start="url(#dot)" marker-end="url(#dot)"/>
-<text x="610" y="356" font-size="11" fill="#d62728">W17 18 AWG</text>
+<text x="610" y="356" font-size="11" fill="#d62728">W22 16 AWG</text>
 <rect x="626" y="354" width="28" height="14" rx="3" fill="#ffe08a" stroke="#8a6d00"/>
-<text x="628" y="365" font-size="9">5 A</text>
+<text x="628" y="365" font-size="9">7.5 A</text>
 <rect x="700" y="346" width="170" height="30" rx="6" fill="#eef7ee" stroke="#333" stroke-width="1.5"/>
-<text x="708" y="363" font-weight="bold">DDR-60L-12 in</text>
+<text x="708" y="363" font-weight="bold">Turret (stop relay B, XT30)</text>
 <polyline points="580,500 680,500 680,95" fill="none" stroke="#222" stroke-width="2.2" stroke-linejoin="round" marker-start="url(#dot)" marker-end="url(#dot)"/>
 <text x="688" y="440" font-size="11" fill="#222">W18-W20: each load's - back to the - bus</text>
-<rect x="930" y="300" width="170" height="60" rx="6" fill="#eef7ee" stroke="#333" stroke-width="1.5"/>
-<text x="938" y="317" font-weight="bold">DDR-120C-24 out</text>
-<text x="938" y="333" fill="#333" font-size="11">24 V 5 A, isolated</text>
-<text x="938" y="347" fill="#333" font-size="11">-V tied to the star (W23)</text>
-<rect x="930" y="400" width="170" height="60" rx="6" fill="#eef7ee" stroke="#333" stroke-width="1.5"/>
-<text x="938" y="417" font-weight="bold">DDR-60L-12 out</text>
-<text x="938" y="433" fill="#333" font-size="11">12 V 5 A, isolated</text>
-<text x="938" y="447" fill="#333" font-size="11">-V tied to the star (W27)</text>
-<rect x="1180" y="270" width="130" height="30" rx="6" fill="#e8f0ff" stroke="#333" stroke-width="1.5"/>
-<text x="1188" y="287" font-weight="bold">J501 DC-IN</text>
-<rect x="1180" y="320" width="130" height="30" rx="6" fill="#e8f0ff" stroke="#333" stroke-width="1.5"/>
-<text x="1188" y="337" font-weight="bold">Turret</text>
-<polyline points="1100,315 1125,315 1125,285 1180,285" fill="none" stroke="#d62728" stroke-width="2" stroke-linejoin="round" marker-start="url(#dot)" marker-end="url(#dot)"/>
-<text x="1143" y="280" font-size="11" fill="#d62728">W21 18</text>
-<rect x="1111" y="293" width="28" height="14" rx="3" fill="#ffe08a" stroke="#8a6d00"/>
-<text x="1113" y="304" font-size="9">5 A</text>
-<polyline points="1100,340 1180,335" fill="none" stroke="#d62728" stroke-width="2" stroke-linejoin="round" marker-start="url(#dot)" marker-end="url(#dot)"/>
-<text x="1106" y="356" font-size="11" fill="#d62728">W22 W34 18 (via the stop relay)</text>
-<rect x="1118" y="330" width="28" height="14" rx="3" fill="#ffe08a" stroke="#8a6d00"/>
-<text x="1120" y="341" font-size="9">5 A</text>
+<rect x="930" y="340" width="170" height="60" rx="6" fill="#eef7ee" stroke="#333" stroke-width="1.5"/>
+<text x="938" y="357" font-weight="bold">TRACO 12 V out</text>
+<text x="938" y="373" fill="#333" font-size="11">12 V 12.5 A, isolated</text>
+<text x="938" y="387" fill="#333" font-size="11">-V tied to the star (W23)</text>
+<rect x="1180" y="300" width="130" height="30" rx="6" fill="#e8f0ff" stroke="#333" stroke-width="1.5"/>
+<text x="1188" y="317" font-weight="bold">J501 DC-IN</text>
+<polyline points="1100,355 1125,355 1125,315 1180,315" fill="none" stroke="#d62728" stroke-width="2" stroke-linejoin="round" marker-start="url(#dot)" marker-end="url(#dot)"/>
+<text x="1143" y="310" font-size="11" fill="#d62728">W21 16</text>
+<rect x="1111" y="328" width="28" height="14" rx="3" fill="#ffe08a" stroke="#8a6d00"/>
+<text x="1113" y="339" font-size="9">10 A</text>
 <rect x="1180" y="380" width="150" height="30" rx="6" fill="#e8f0ff" stroke="#333" stroke-width="1.5"/>
 <text x="1188" y="397" font-weight="bold">Lidar box (VLP-16)</text>
 <rect x="1180" y="420" width="150" height="30" rx="6" fill="#e8f0ff" stroke="#333" stroke-width="1.5"/>
 <text x="1188" y="437" font-weight="bold">5 V buck D36V28F5</text>
 <rect x="1180" y="460" width="150" height="30" rx="6" fill="#e8f0ff" stroke="#333" stroke-width="1.5"/>
-<text x="1188" y="477" font-weight="bold">Radio-stop jack</text>
-<polyline points="1100,420 1130,420 1130,395 1180,395" fill="none" stroke="#d62728" stroke-width="2" stroke-linejoin="round" marker-start="url(#dot)" marker-end="url(#dot)"/>
-<text x="1138" y="390" font-size="11" fill="#d62728">W24 18</text>
-<polyline points="1100,430 1180,435" fill="none" stroke="#d62728" stroke-width="1.6" stroke-linejoin="round" marker-start="url(#dot)" marker-end="url(#dot)"/>
-<text x="1114" y="446" font-size="11" fill="#d62728">W25 22</text>
-<polyline points="1100,445 1120,445 1120,475 1180,475" fill="none" stroke="#d62728" stroke-width="1.6" stroke-linejoin="round" marker-start="url(#dot)" marker-end="url(#dot)"/>
-<text x="1128" y="491" font-size="11" fill="#d62728">W26 22</text>
-<polyline points="870,323 900,323 900,330 930,330" fill="none" stroke="#e08a00" stroke-width="2" stroke-linejoin="round" marker-start="url(#dot)" marker-end="url(#dot)"/>
-<polyline points="870,361 890,361 890,430 930,430" fill="none" stroke="#e08a00" stroke-width="2" stroke-linejoin="round" marker-start="url(#dot)" marker-end="url(#dot)"/>
-<polyline points="580,525 1015,525 1015,460" fill="none" stroke="#222" stroke-width="2" stroke-linejoin="round" marker-start="url(#dot)" marker-end="url(#dot)"/>
-<text x="740" y="541" font-size="11" fill="#222">W23 W27: each converter's -V to the star point</text>
+<text x="1188" y="477" font-weight="bold">Radio-stop jack, lights</text>
+<polyline points="1100,385 1140,385 1140,395 1180,395" fill="none" stroke="#d62728" stroke-width="2" stroke-linejoin="round" marker-start="url(#dot)" marker-end="url(#dot)"/>
+<text x="1104" y="380" font-size="11" fill="#d62728">W43 W24 16</text>
+<rect x="1126" y="403" width="28" height="14" rx="3" fill="#ffe08a" stroke="#8a6d00"/>
+<text x="1128" y="414" font-size="9">7.5 A</text>
+<polyline points="1140,420 1140,435 1180,435" fill="none" stroke="#d62728" stroke-width="1.6" stroke-linejoin="round" marker-start="url(#dot)" marker-end="url(#dot)"/>
+<text x="1148" y="449" font-size="11" fill="#d62728">W25 22</text>
+<polyline points="1140,435 1140,475 1180,475" fill="none" stroke="#d62728" stroke-width="1.6" stroke-linejoin="round" marker-start="url(#dot)" marker-end="url(#dot)"/>
+<text x="1148" y="489" font-size="11" fill="#d62728">W26 22</text>
+<polyline points="870,323 900,323 900,370 930,370" fill="none" stroke="#e08a00" stroke-width="2" stroke-linejoin="round" marker-start="url(#dot)" marker-end="url(#dot)"/>
+<polyline points="580,525 1015,525 1015,400" fill="none" stroke="#222" stroke-width="2" stroke-linejoin="round" marker-start="url(#dot)" marker-end="url(#dot)"/>
+<text x="740" y="541" font-size="11" fill="#222">W23: the converter's -V to the star point</text>
 <polyline points="550,540 550,590" fill="none" stroke="#2ca02c" stroke-width="2" stroke-linejoin="round" marker-start="url(#dot)" marker-end="url(#dot)"/>
-<text x="558" y="590" font-size="11" fill="#2ca02c">W33 frame bond 18 AWG</text>
+<text x="558" y="590" font-size="11" fill="#2ca02c">W33 frame bond 14 AWG</text>
 <rect x="20" y="600" width="330" height="140" rx="6" fill="#e8f0ff" stroke="#333" stroke-width="1.5"/>
 <text x="28" y="617" font-weight="bold">MCU board (on the power plate)</text>
 <text x="28" y="633" fill="#333" font-size="11">Nucleo-G474RE: FDCAN1/2/3 = buses A/B/C</text>
 <text x="28" y="647" fill="#333" font-size="11">CAN Pal x 3 (120 Ohm on: the bus ends)</text>
-<text x="28" y="661" fill="#333" font-size="11">INA228 on I2C: pack V and I (W30-32)</text>
-<text x="28" y="675" fill="#333" font-size="11">QT Py ESP32-S3 + CAN Pal 4 on bus C:</text>
-<text x="28" y="689" fill="#333" font-size="11">  the BMS over Bluetooth</text>
-<text x="28" y="703" fill="#333" font-size="11">STOP loop in (radio relay, closed = run)</text>
-<text x="28" y="717" fill="#333" font-size="11">5 V from the buck (W28-29)</text>
+<text x="28" y="661" fill="#333" font-size="11">INA228 on I2C: pack V and I, high side (W30-32)</text>
+<text x="28" y="675" fill="#333" font-size="11">the cut-off, current limit, regen clamp (D65)</text>
+<text x="28" y="689" fill="#333" font-size="11">STOP loop in (radio relay, closed = run)</text>
+<text x="28" y="703" fill="#333" font-size="11">5 V from the buck (W28-29)</text>
 <text x="380" y="614" font-size="12" font-weight="bold" fill="#1f5fbf">CAN A</text>
 <line x1="430" y1="610" x2="1380" y2="610" stroke="#1f5fbf" stroke-width="2" stroke-dasharray="6 3"/>
 <text x="436" y="626" font-size="11" fill="#1f5fbf">MCU FDCAN1 (CAN Pal 1, 120 Ohm on) → RS-04 left front → RS-04 left rear (120 Ohm at its plug)  (1 Mbit/s, the left leg)</text>
@@ -161,15 +145,11 @@
 <text x="436" y="662" font-size="11" fill="#1f5fbf">MCU FDCAN2 (CAN Pal 2, 120 Ohm on) → RS-04 right front → RS-04 right rear (120 Ohm at its plug)  (1 Mbit/s, the right leg)</text>
 <text x="380" y="686" font-size="12" font-weight="bold" fill="#1f5fbf">CAN C</text>
 <line x1="430" y1="682" x2="1380" y2="682" stroke="#1f5fbf" stroke-width="2" stroke-dasharray="6 3"/>
-<text x="436" y="698" font-size="11" fill="#1f5fbf">MCU FDCAN3 (CAN Pal 3, 120 Ohm on) → VESC left → VESC right → QT Py ESP32-S3 (CAN Pal 4, off): the BMS over Bluetooth → J501 can0 (its own 120 Ohm on)</text>
-<text x="436" y="711" font-size="11" fill="#1f5fbf">  (1 Mbit/s: wheels, battery, the computer)</text>
-<text x="380" y="722" font-size="12" font-weight="bold" fill="#1f5fbf">CAN T</text>
-<line x1="430" y1="718" x2="1380" y2="718" stroke="#1f5fbf" stroke-width="2" stroke-dasharray="6 3"/>
-<text x="436" y="734" font-size="11" fill="#1f5fbf">J501 can1 → the turret (its own bus)  (the turret workstream's)</text>
+<text x="436" y="698" font-size="11" fill="#1f5fbf">MCU FDCAN3 (CAN Pal 3, 120 Ohm on) → VESC left → VESC right → J501 can0 (its own 120 Ohm on)  (1 Mbit/s: wheels, the computer)</text>
 <text x="20" y="800" font-size="11" fill="#333">The radio stop (D37, D55): the ER3C-i receiver (failsafe: no pulses) drives one Pololu RC relay switch; its contact feeds the coil of the stop relay (Omron G2RL-2, DPDT, 12 V), whose other </text>
 <text x="20" y="815" font-size="11" fill="#333">end goes to ground through the MCU's MOSFET. The relay holds only while the radio says run AND the MCU says run. Pole A is the turret's dry safety loop (TM pins 7, 8: the turret cuts its </text>
-<text x="20" y="830" font-size="11" fill="#333">flywheels and dial in 20 ms), pole B is in the turret's 24 V branch (the independent cut); the MCU senses the coil voltage and sits the robot down when the radio drops, and opens the relay </text>
-<text x="20" y="845" font-size="11" fill="#333">itself when the robot sits. The main switch is the hard off. </text>
+<text x="20" y="830" font-size="11" fill="#333">flywheels and dial in 20 ms), pole B is in the turret's bus branch (W22, W34: the independent cut); the MCU senses the coil voltage and sits the robot down when the radio drops, and opens </text>
+<text x="20" y="845" font-size="11" fill="#333">the relay itself when the robot sits. The main switch is the hard off. </text>
 <text x="20" y="850" font-size="11" fill="#333">Fuses: Littelfuse MINI 58V (0997) in inline holders rated 32 V: the fuse interrupts (1 kA at 58 V); label every holder "58 V fuses only" and pull a fuse only with the pack unplugged.</text>
 <text x="20" y="870" font-size="11" fill="#333">Twist every CAN pair (22 AWG); keep the shunt's sense pair away from the 10 AWG runs; crimp, never solder-tin, a wire that goes into a screw terminal (ferrules).</text>
 </svg>

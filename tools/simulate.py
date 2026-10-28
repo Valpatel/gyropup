@@ -64,7 +64,28 @@ def simulate(design: Path, only=None, video=False, v2=False) -> dict:
                'passed': sum(1 for s in prev.values() if s['pass']), 'total': len(prev), 'estimates': info['estimates'],
                'physical_test': False}
     (out / 'summary.json').write_text(json.dumps(summary, indent=1) + '\n')
+    if v2:                                               # the body's evidence (D62): exports/sim/ is not kept in git
+        body_evidence(summary, info, exports)
     return summary
+
+
+def body_evidence(summary, info, exports):
+    """exports/body/sim-v2.json: each scenario's verdict, its worst motor and the body's impact, with the model's mass
+    and its reconciliation against the body's ledger, the bus voltage and the date: what the body workstream commits."""
+    import datetime
+    rows = {}
+    for n, r in summary['scenarios'].items():
+        worst = max(r['motors'].items(), key=lambda kv: kv[1]['of_peak'])
+        rows[n] = {'pass': r['pass'], 'reasons': r['reasons'], 'max_theta_deg': r['max_theta_deg'], 'top_speed_mps': r['top_speed_mps'],
+                   'worst_motor': [worst[0], worst[1]['peak_torque_nm'], worst[1]['of_peak']], 'saturated_s': max(m['saturated_s'] for m in r['motors'].values()),
+                   'body_impact_peak_n': r.get('body_impact_peak_n'), 'fell_at': r.get('fell_at'), 'lqr': r.get('lqr')}
+    ev = {'date': datetime.date.today().isoformat(), 'model': 'sim/robot_v2.py (the body as built, D62)', 'mass_kg': summary['mass_kg'],
+          'ledger_kg': (info.get('ledger') or {}).get('total_kg'), 'mass_reconciles': summary['mass_reconciles'], 'bus_v': info.get('bus_v'),
+          'com_mm': info.get('com_mm'), 'track_mm': info.get('track_mm'), 'passed': summary['passed'], 'total': summary['total'],
+          'scenarios': rows, 'note': 'tools/simulate.py --v2 (the full results and videos: exports/sim/v2/, not in git)'}
+    f = exports / 'body' / 'sim-v2.json'
+    f.parent.mkdir(parents=True, exist_ok=True)
+    f.write_text(json.dumps(ev, indent=1) + '\n')
 
 
 def main():

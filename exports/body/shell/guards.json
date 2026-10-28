@@ -1,0 +1,45 @@
+{
+ "stances": 210,
+ "rule": "ISO 13854 25 mm (fingers), ISO 13857 4 mm",
+ "requirements": {
+  "knee_front": {
+   "min_deg": 24.9,
+   "at_min": [
+    106.5,
+    0.0
+   ],
+   "max_deg": 170.2,
+   "guard_length_for_25_mm": 58.0,
+   "link_mm": 150.0,
+   "finger_proof_within_mm": 2.0,
+   "a_body_guard_can": true
+  },
+  "knee_rear": {
+   "min_deg": 24.9,
+   "at_min": [
+    106.5,
+    0.0
+   ],
+   "max_deg": 170.2,
+   "guard_length_for_25_mm": 58.0,
+   "link_mm": 150.0,
+   "finger_proof_within_mm": 2.0,
+   "a_body_guard_can": true
+  },
+  "apex": {
+   "min_deg": 29.1,
+   "at_min": [
+    391.5,
+    0.0
+   ],
+   "max_deg": 128.3,
+   "guard_length_for_25_mm": 49.8,
+   "link_mm": 250.0,
+   "finger_proof_within_mm": 2.2,
+   "a_body_guard_can": true
+  }
+ },
+ "knee": "a TPU 95A wedge on each upper link's inner edge at the knee, 58 mm long (its envelope below; fitted to the link by the leg workstream after leg/stops merges)",
+ "apex": "a TPU 95A fillet on the wheel link at the axle, 50 mm long (its envelope below)",
+ "stop_fairings": "blocked on leg/stops (the posts move: D53)"
+}

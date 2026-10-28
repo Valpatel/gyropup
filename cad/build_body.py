@@ -163,7 +163,8 @@ def clash_sweep(parts, items=None, quick=False, min_mm3=1.0, near_mm=25.0):
                         near[key] = (round(d, 2), [h, lean])
         first = False
     worst = sorted(([a, b, d, p] for (a, b), (d, p) in near.items()), key=lambda r: r[2])[:20]
-    return {'poses_checked': checked, 'poses_past_a_stop': skipped, 'clashes': clashes, 'nearest_moving_mm': worst,
+    shell_gaps = sorted([a, b, d, p] for (a, b), (d, p) in near.items() if b in SHELL_NAMES and 4.0 < d < near_mm)
+    return {'poses_checked': checked, 'poses_past_a_stop': skipped, 'clashes': clashes, 'nearest_moving_mm': worst, 'shell_gaps': shell_gaps,
             'note': 'both legs (the right one is the left turned 180 deg about z), motors as envelopes; intersections over '
                     f'{min_mm3} mm3 are clashes; nearest approaches of the moving leg parts to the body within {near_mm} mm'}
 
@@ -173,7 +174,11 @@ def body_internal_clashes(parts, items=None, min_mm3=1.0):
     body = body_shapes(parts, items)
     bbs = {n: s.BoundingBox() for n, s in body.items()}
     out = []
+    together = lambda a, b: (a not in parts or b not in parts
+                             or any(bf.on_robot(parts[a], st) and bf.on_robot(parts[b], st) for st in bf.STAGES))
     for (a, sa), (b, sb) in itertools.combinations(body.items(), 2):
+        if not together(a, b):
+            continue
         A, B = bbs[a], bbs[b]
         if A.xmax < B.xmin or B.xmax < A.xmin or A.ymax < B.ymin or B.ymax < A.ymin or A.zmax < B.zmin or B.zmax < A.zmin:
             continue
@@ -184,6 +189,77 @@ def body_internal_clashes(parts, items=None, min_mm3=1.0):
         if vol > min_mm3:
             out.append([a, b, round(vol, 1)])
     return out
+
+
+# (zone, frame part prefix) that meet by design: the plate and the bay in their own zones; the tray's slot has round corners in
+# a square zone; the frame screws' heads stand 1 mm into the cable slot's lowest band; the front-right deck post passes the
+# power plate's box where the plate is notched round it; the fan's column is the deck's cells' business (turret_plate_intake)
+FRAME_ZONE_OK = {('power_plate', 'power_plate'), ('battery_bay', 'bay_'), ('fan_column', 'turret_plate'), ('tray_slot', 'floor_tray'),
+                 ('tray_slot', 'frame_screws'), ('power_plate', 'post_'), ('battery_bay', 'adapter_plate')}
+
+
+def frame_vs_keepouts(parts, L, min_mm3=1.0):
+    """Frame parts in the layout's keep-out zones (the J501's plugs, the cooler's exhaust, the turret's plug and its
+    harness, the cable slot): [[zone, part, mm3]]. The fan's intake column is checked as the deck's cells instead (the
+    turret plate lies over the column outside them, where the deck is solid anyway: turret_plate_intake())."""
+    out = []
+    for z in L['items']:
+        if not z.keepout:
+            continue
+        x0, x1, y0, y1, z0, z1 = z.box
+        zs = _v(bf.cyl_z(z.cyl[2], z0, z1, z.cyl[0], z.cyl[1]) if z.cyl else bf.box(x0, x1, y0, y1, z0, z1))
+        zb = zs.BoundingBox()
+        for n, p in parts.items():
+            if p.shape is None or any(z.name == a and n.startswith(b) for a, b in FRAME_ZONE_OK):
+                continue
+            v = _v(p.shape)
+            b = v.BoundingBox()
+            if b.xmax < zb.xmin or zb.xmax < b.xmin or b.ymax < zb.ymin or zb.ymax < b.ymin or b.zmax < zb.zmin or zb.zmax < b.zmin:
+                continue
+            try:
+                vol = v.intersect(zs).Volume()
+            except Exception:
+                vol = 0.0
+            if vol > min_mm3:
+                out.append([z.name, n, round(vol, 1)])
+    return out
+
+
+def turret_plate_intake():
+    """The turret plate (D59) under the deck: every one of the deck's intake cells must lie inside its opening, so the
+    plate takes none of the J501 fan's air. {'cells', 'cells_covered', 'covered_mm2', 'deck_holes_to_drill'}"""
+    t = bp.STOCK[bf.TURRET_PLATE['stock']]['t']
+    tp = bf.turret_plate_part()
+    cut = _v(next(f for f in tp.features if f.kind == 'cutout').make(t))
+    covered, area = 0, 0.0
+    h = bf.INTAKE_CELL / 2
+    for (x, y) in bf.intake_cells():
+        u, w = bf.plate_t_uv(x, y)
+        sq = _v(cq.Workplane('XY').center(u, w).rect(2 * h, 2 * h).extrude(1.0).translate((0, 0, 1.0)))
+        out = sq.cut(cut).Volume()                                 # a 1 mm slab: its volume outside the opening is its area
+        if out > 0.01:
+            covered += 1
+            area += out
+    return {'cells': len(bf.intake_cells()), 'cells_covered': covered, 'covered_mm2': round(area, 2),
+            'deck_holes_to_drill': [[round(x, 1), round(y, 1)] for x, y in bf.turret_plate_end_holes()],
+            'deck_holes_note': 'two Ø5.5 holes for the plate\'s end screws: drilled by hand in the P1 deck (spot through the plate\'s PEM '
+                               'nuts with an M5 transfer punch, the plate held on the riser\'s four screws), cut in a Rev B deck'}
+
+
+SHELL_NAMES = set()            # the P3 shell's parts (filled by shell_checks): a moving part beside them must be > 25 or <= 4 mm away
+
+
+def shell_checks(parts):
+    """B6's checks of the shell (cad/body_shell.py): the J501's ports insert and withdraw through the hatch (the mated
+    plugs' sweep), the ear pods' tops under the lidar's lowest beam, and the shell's parts as the clash sweep sees them."""
+    import body_layout as bl
+    import body_shell as bs3
+    SHELL_NAMES.update(n for n, p in parts.items() if p.stage == 'P3')
+    pc = bs3.port_check(parts)
+    return {'ports_pass': pc['pass'], 'ports': {n: {'sweep_mm3': r['sweep_interference_mm3'], 'clearance_mm3': r['clearance_interference_mm3'],
+                                                     'min_margin_mm': r['min_margin_mm']} for n, r in pc['ports'].items()},
+            'hatch_window_mm': [round(v, 2) for v in bs3.hatch_window()[0]], 'ear_beam_margin_mm': bs3.ear_beam_margin(),
+            'parts': sorted(SHELL_NAMES), 'shell_group_prefixes': list(bl.SHELL_PREFIXES)}
 
 
 def frame_vs_legs_static(parts):
@@ -217,9 +293,11 @@ def colour(n):
 
 def render(parts, items, out: Path):
     from cadagent.render import Renderer
-    r = Renderer(out, subtitle='GYROPUP BODY P1 | OPEN FRAME, BOTH LEGS')
+    r = Renderer(out, subtitle='GYROPUP BODY | D65 BATTERY BAY')
     made = []
     legs = bf.legs(300.0)
+    p3 = [(_v(p.shape), p.colour if p.colour else colour(n)) for n, p in parts.items() if p.shape is not None and bf.on_robot(p, 'P3')]
+    parts = {n: p for n, p in parts.items() if bf.on_robot(p, 'P1')}          # the P1 pictures: the open frame
     body = [(_v(p.shape), p.colour if p.colour else colour(n)) for n, p in parts.items() if p.shape is not None]
     its = [(_v(it['shape']), it.get('rgb', (0.5, 0.55, 0.6))) for it in (items or []) if it.get('shape') is not None]
     legsh = [(_v(s), colour(n)) for n, s in legs.items()]
@@ -233,6 +311,10 @@ def render(parts, items, out: Path):
     hf = [(_v(s), colour(n)) for n, s in legs.items() if n.split('.', 1)[1].startswith(('hip_frame', 'motor', 'output_adapter', 'bearing'))]
     r.render('body-spine-iso.png', shapes=spine + hf, view=(0.9, -1.1, 0.7), caption='The spine: two C-channel cheeks on six standoffs, each hip frame on its own cheek')
     made.append('body-spine-iso.png')
+    legsh3 = [(_v(s), colour(n)) for n, s in legs.items()]
+    for v in ('iso', 'front', 'rear', 'side'):                          # P3: the shell on (the items inside hidden by it)
+        r.render(f'body-p3-{v}.png', shapes=p3 + its + legsh3, view=views[v], caption=f'P3: the shell, the battery bay and both legs at 300 mm, {v}')
+        made.append(f'body-p3-{v}.png')
     for h, tag in ((102, 'crouch'), (392, 'tall')):
         lg = bf.legs(float(h))
         r.render(f'body-p1-{tag}-side.png', shapes=body + its + [(_v(s), colour(n)) for n, s in lg.items()], view=views['side'],
@@ -294,8 +376,10 @@ def main():
     lay = _layout()
     mounts = lay['mounts'] if lay else None
     items = lay['items'] if lay else []
-    parts = bf.frame_parts(mounts)
-    sheet, plan, masses = {}, {}, {}
+    parts = bf.all_parts(mounts)
+    SH = OUT / 'shell'
+    SH.mkdir(parents=True, exist_ok=True)
+    sheet, plan, masses, plan3 = {}, {}, {}, {}
     printed_done = {}
     for n, p in parts.items():
         masses[n] = round(mass_g(p), 1)
@@ -308,9 +392,9 @@ def main():
             o = p.sheet.order()
             sheet[p.sheet.name] = {**o, 'rule_violations': p.sheet.checks(), 'step': f'exports/body/sendcutsend/{stem}.step',
                                    'dxf': f'exports/body/sendcutsend/{stem}.dxf', 'mass_g_each': masses[n],
-                                   'features': len(p.sheet.features)}
+                                   'features': len(p.sheet.features), 'stage': p.stage}
         elif p.kind == 'printed':
-            base = n.rstrip('0123456789').rstrip('_')
+            base = n.rstrip('0123456789').rstrip('_') if not n.startswith(('shell_', 'ear_bracket', 'd435_cradle', 'tub_cap', 'tub_rail', 'tub_floor', 'tub_side')) else n
             if base in printed_done:
                 printed_done[base]['qty'] += 1
                 continue
@@ -320,10 +404,14 @@ def main():
         local = (bf.post() if base == 'post' else bf.riser() if base == 'riser' else bf.bus_insulator() if base == 'bus_insulator'
                  else bf.plate_post() if base == 'plate_post' else bf.isolator() if base == 'isolator'
                  else bf.din_rail(*bf.din_rails(lay['raw']['items'])[base][:2]) if base.startswith('din_rail') else _v(p.shape))
-        cq.exporters.export(_v(local), str(OUT / f'{base}.step'))
-        export_print_stl(_v(local), OUT / f'{base}.stl', rotation=p.print_rotation)
-        plan[base] = printplan.row(_v(local), p.print_rotation, p.material, d['qty'], masses[d['name']], p.material == 'pa6-cf', p.note)
-    too_big = printplan.write(OUT / 'print-plan.json', plan, note='body P1: hours are rough (grams / density / a strength-holding rate)')
+        p3 = p.stage == 'P3'                                     # the shell's prints: their own folder and plan
+        where = SH if p3 else OUT
+        cq.exporters.export(_v(local), str(where / f'{base}.step'))
+        export_print_stl(_v(local), where / f'{base}.stl', rotation=p.print_rotation)
+        (plan3 if p3 else plan)[base] = printplan.row(_v(local), p.print_rotation, p.material, d['qty'], masses[d['name']],
+                                                      p.material == 'pa6-cf', p.note)
+    too_big = printplan.write(OUT / 'print-plan.json', plan, note='body P0-P2: hours are rough (grams / density / a strength-holding rate)')
+    too_big += printplan.write(SH / 'print-plan.json', plan3, note='body P3, the shell\'s printed parts: hours are rough')
     legs = bf.legs(300.0)
     comp = cq.Compound.makeCompound([_v(p.shape) for p in parts.values() if p.shape is not None] + [_v(s) for s in legs.values()]
                                     + [_v(it['shape']) for it in items if it.get('shape') is not None])
@@ -338,7 +426,14 @@ def main():
         'print': {'too_big': too_big, 'hours': round(sum(p['hours'] for p in plan.values()), 1), 'parts': plan},
         'mass_g': {'frame_parts': masses, 'frame_total': round(sum(masses.values()), 1)},
         'internal_clashes': body_internal_clashes(parts, items),
+        'shell': shell_checks(parts),
+        'in_keepouts': frame_vs_keepouts(parts, lay['raw']),
+        'turret_plate': turret_plate_intake(),
     }
+    import body_joints as bj                                     # the integrity checks: every screw's stack, no floating part
+    integ = bj.run(parts, items, clashes=len(summary['internal_clashes']))
+    bj.OUT.write_text(json.dumps(integ, indent=1) + '\n')
+    summary['integrity'] = integ['summary']
     if not a.no_clash:
         summary['clash_sweep'] = clash_sweep(parts, items, quick=a.quick)
     if lay:
@@ -361,8 +456,15 @@ def main():
         print(f"  {n:15} x{p['qty']} {p['material']} {p['grams_each']} g {p['size_mm']} {p['placement']} {p['hours']} h")
     print('  frame to cheek:', summary['interface']['frame_to_cheek'])
     print('  internal clashes:', summary['internal_clashes'] or 'none')
+    print('  frame parts in keep-outs:', summary['in_keepouts'] or 'none')
+    ig = summary['integrity']
+    print(f"  integrity: {ig['joints']} joints, {ig['screws']} screws; joints with problems: {ig['joints_with_problems'] or 'none'}; "
+          f"floating: {ig['floating'] or 'none'}; internal clashes {ig['clashes']}")
+    print('  turret plate over the intake cells:', summary['turret_plate'])
+    print('  shell:', {k: v for k, v in summary['shell'].items() if k not in ('parts', 'ports')}, summary['shell']['ports'])
     if 'clash_sweep' in summary:
         c = summary['clash_sweep']
+        print('  shell gaps between 4 and 25 mm beside a moving part:', c.get('shell_gaps') or 'none')
         print(f"  clash sweep: {len(c['poses_checked'])} stances, {len(c['clashes'])} clashes", *[f'    {x}' for x in c['clashes'][:20]], sep='\n')
         print('  nearest:', *[f'    {x}' for x in c['nearest_moving_mm'][:8]], sep='\n')
     print(f'  {time.time() - t0:.0f} s')

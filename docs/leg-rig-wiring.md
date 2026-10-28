@@ -13,9 +13,11 @@ their part numbers are in `docs/leg-rig-orders.md`; where each part sits in the 
   the contactor opens whatever the software did.
 - **The pendant switches signals only.** It closes the relay's trigger input and tells the rig node; it never carries
   the contactor's coil current (AbleNet publishes no contact rating).
-- **The pack is the master switch.** Unplug its XT60 and everything is dead; there is no other switch.
-- **Jumps and drops start at or under 57.5 V - 27 A x the pack's resistance** (about 50 V until B6 measures it): the
-  tuck and the landing push up to 27 A back into the pack and the RS-04 trips at 60 V (docs/leg-bench-tests.md).
+- **The packs are the master switch.** The rig runs on Gyropup's own bus (D65): two DeWalt DCB609 FLEXVOLTs in 20 V mode,
+  in series in two 20 V dock adapters: 10S, 36 V nominal, 41 V full, 30 V empty. Unplug the pair's XT60 and everything
+  is dead; there is no other switch.
+- **Jumps and drops start at or under 44.5 V - 40 A x the packs' resistance** (about 40.5 V until B6 measures it): the
+  tuck and the landing push up to 40 A back into the packs and the supervisor limps at 45 V (docs/leg-bench-tests.md).
 - **One ground**: the pack's negative at the pod's inlet. The CAN ground, the 12 V rail's 0 V, the rig node's GND and the
   motors' negatives all meet there. The U2C is not isolated: on the bench supply or a floating pack that is fine; with the
   laptop on mains and the motors on the bench supply, use the isolated InnoMaker USB2CAN.
@@ -24,8 +26,9 @@ their part numbers are in `docs/leg-rig-orders.md`; where each part sits in the 
 
 | # | From | To | Wire | Length | Notes |
 |---|---|---|---|---|---|
-| P1 | Dock adapter + | XT60H female (pack lead) | 12 AWG red | 0.5 m | the adapter's own leads; the female on the pack side: no bare live pin |
-| P2 | Dock adapter - | XT60H female - | 12 AWG black | 0.5 m | |
+| P1 | Dock adapter A + | XT60H female + (the pair's lead) | 12 AWG red | 0.5 m | the adapters' own leads; the female on the pack side: no bare live pin |
+| P1b | Dock adapter A - | Dock adapter B + | 12 AWG | 0.2 m | the series link (soldered, heat-shrunk): the pair is 10S, 30-41 V |
+| P2 | Dock adapter B - | XT60H female - | 12 AWG black | 0.5 m | |
 | P3 | Pod inlet XT60E-M + | Class CC fuse holder, line | 12 AWG red, ferrule | 0.10 m | inside the pod |
 | P4 | Fuse holder, load | Contactor + terminal (M5) | 12 AWG red, ring lug | 0.15 m | the LEV100's contacts are polarised: + to the pack side |
 | P5 | Contactor - terminal (M5) | Pod outlet XT60E-F + | 12 AWG red, ring lug | 0.15 m | 4 N m on the M5 terminals (TE) |
@@ -81,7 +84,7 @@ parallel); `python -m rig.rs04 --iface can0 scan` finds both motors.
 |---|---|---|
 | CAN H, L, G | the bus (C2, C3) | |
 | D5 | the pendant sense (H9) | input; high while the pendant is held |
-| A2 | the motors' bus after the contactor: 100k from the contactor's - terminal, 4.7k to GND | 60 V reads 2.69 V; sampled at 2 kHz, sent as max/min/mean every 10 ms (0x702) |
+| A2 | the motors' bus after the contactor: 100k from the contactor's - terminal, 4.7k to GND | 41 V reads 1.84 V (full scale 73 V); sampled as fast as the loop runs, sent as max/min/mean every 10 ms (0x702) |
 | STEMMA QT (I2C) | VL53L1X on the deck (0.6 m cable) | the carriage's height from its target (0x701) |
 | D6 (DT), D9 (SCK), 3V3, GND | HX711 -> the load plate's four half-bridge cells, on a 4-pin header | stand, squat and B5; for B3 and B4 the bench's load cell plugs in instead, with its own HX711 |
 | USB-C | the laptop | power and its log |

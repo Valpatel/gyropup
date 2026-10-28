@@ -157,9 +157,9 @@ class Flight:
 
 @dataclass
 class Limits:
-    vbus_max: float = 58.0        # V, instantaneous: regeneration pushes the pack up; the RS-04 trips at 60 (plan 3.2)
-    vbus_min: float = 46.0        # V, averaged over vbus_tau: the pack has no cut-off of its own (15 x 3.07 V)
-    vbus_floor: float = 36.0      # V, instantaneous: far below any sag a healthy pack shows (the RS-04 runs to 24 V)
+    vbus_max: float = 45.0        # V, instantaneous: D65's 10S bus is 41 V full; regeneration lifts it (the RS-04 trips at 60)
+    vbus_min: float = 32.0        # V, averaged over vbus_tau: 3.2 V a cell (the packs have no cut-off of their own)
+    vbus_floor: float = 26.0      # V, instantaneous: far below any sag a healthy pair shows (the RS-04 runs to 24 V)
     vbus_tau: float = 1.0         # s: a push sags the bus ~9 V for 0.1 s; that is not a flat pack
     temp_max: float = 80.0        # C winding: the motor warns at 135 and trips at 145; abort far below
     L_min: float = 0.095          # m: the leg-length window (plan 4.4), outside the leg's own 101.5-392.4 mm only by

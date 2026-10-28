@@ -46,7 +46,7 @@ from cadagent.fea import Material, Study, any_of, cylinder_at, in_box, plane_at 
 OUT = Path(os.environ.get('GYROPUP_BODY_FEA_OUT') or (R / 'exports' / 'body' / 'fea'))     # a study sweep writes elsewhere
 AL5052 = Material('5052-H32 aluminium', 70300.0, 0.33, 193.0, 2.68, 'yield strength (ASM); used for the whole box (6061-T6 parts are stronger)')
 AL6061 = Material('6061-T6 aluminium', 68900.0, 0.33, 276.0, 2.70, 'yield strength')
-TARGETS = {'sf': 2.0, 'sf_fault': 1.2, 'deck_mm': 0.5, 'twist_deg': 0.1}
+TARGETS = {'sf': 2.0, 'sf_fault': 1.2, 'deck_mm': 0.5, 'twist_deg': 0.1, 'sf_turret_fall': 2.0}    # D59: the turret's tip-over at 2.0
 G = 9.81
 ROBOT_KG = 29.5                  # the plan's estimate until T3's ledger (exports/body/mass.json) is in
 
@@ -229,10 +229,10 @@ def run(mesh=4.0, anim=True, only=None):
                 r['viewer'] = _rel(st.export_viewer(OUT / f'{case}.json'))
             except Exception as e:                      # a video failing does not lose the result
                 r['animation_error'] = str(e)
-        target = TARGETS['sf_fault'] if rare == 'fault' else TARGETS['sf']
-        sf = r.get('sf_away_from_spacer_ends') or r['safety_factor'] or 0
+        target = TARGETS['sf_fault'] if rare == 'fault' else TARGETS['sf_turret_fall'] if rare == 'D2' else TARGETS['sf']
+        sf = r.get('sf_by_part') or r.get('sf_away_from_spacer_ends') or r['safety_factor'] or 0
         r['target_sf'] = target
-        r['pass'] = sf >= target
+        r['pass'] = bool(sf >= target and r.get('post_corner_pass', True))
         r['hot_spots'] = hot_spots(st)
         results[case] = r
         print(f"  {case}: SF {r['safety_factor']} ({r.get('sf_away_from_spacer_ends')} away from the standoffs' ends), max {r['max_displacement_mm']} mm, design stress {r['von_mises_design_mpa']} MPa; hot {r['hot_spots'][:3]}"
@@ -298,6 +298,7 @@ def run(mesh=4.0, anim=True, only=None):
     return results
 
 
+POST_SKIP_MM = 4.0    # the deck's rigid post pads: their corners are reported apart (see by_part)
 LOAD_PAD_T = 1.0      # a 1 mm disc the size of the lidar's foot, bonded on the deck: the D1 hand load's patch
 
 
@@ -312,7 +313,41 @@ def deck_cases(record, mesh, want):
     zd = bp.TOP - bp.STOCK[bp.DECK]['t']
     for x, y in bp.POSTS:              # the posts' tops as 1 mm pads under the deck: their undersides are the supports
         pad = pad.union(bf.box(x - bp.POST_W / 2, x + bp.POST_W / 2, y - bp.POST_W / 2, y + bp.POST_W / 2, zd - LOAD_PAD_T, zd))
-    model = deck.union(ris).union(pad).clean()
+    model = deck.union(ris).union(pad)
+    plate = parts.get('turret_plate')
+    if plate is not None:                       # D59: the turret mount plate bonded under the deck (two plates in bending)
+        model = model.union(plate.shape)
+    model = model.clean()
+
+    def by_part(st, r):
+        """With the plate on, each part judged by its own yield: the deck (and riser) 5052-H32's 193 MPa, the plate
+        6061-T6's 276 MPa; the elements below the deck's underside are the plate's."""
+        if plate is None:
+            return {}
+        c = st.points[st.tets].mean(axis=1)
+        ok = ~st._touches_bc
+        # the deck rests on rigid 22 mm pads standing in for the printed posts: the pads' corners are singular in a linear
+        # model (the same as the standoffs' ends in S1), so the elements within POST_SKIP_MM of a pad's footprint are
+        # reported apart and judged against the abuse target (the real post is PA6-CF and gives; its M5 is checked by hand)
+        h = bp.POST_W / 2 + POST_SKIP_MM
+        near = np.zeros(len(c), bool)
+        for x, y in bp.POSTS:
+            near |= (np.abs(c[:, 0] - x) < h) & (np.abs(c[:, 1] - y) < h)
+        in_plate = (c[:, 2] < zd - 0.05) & ok & ~near
+        in_deck = (c[:, 2] >= zd - 0.05) & ok & ~near
+        vd = float(st.vm_elem[in_deck].max()) if in_deck.any() else 0.0
+        vp = float(st.vm_elem[in_plate].max()) if in_plate.any() else 0.0
+        vc = float(st.vm_elem[near & ok].max()) if (near & ok).any() else 0.0
+        sfd, sfp = (AL5052.strength_mpa / vd if vd else None), (AL6061.strength_mpa / vp if vp else None)
+        sfc = AL5052.strength_mpa / vc if vc else None
+        sf = min(v for v in (sfd, sfp) if v)
+        return {'deck_peak_mpa': round(vd, 1), 'deck_sf': round(sfd, 2) if sfd else None, 'plate_peak_mpa': round(vp, 1),
+                'plate_sf': round(sfp, 2) if sfp else None, 'sf_by_part': round(sf, 2),
+                'post_corner_peak_mpa': round(vc, 1), 'post_corner_sf': round(sfc, 2) if sfc else None,
+                'post_corner_pass': bool(sfc is None or sfc >= TARGETS['sf_fault']),
+                'note_by_part': 'the deck and riser at 5052-H32\'s 193 MPa, the turret plate at 6061-T6\'s 276 MPa; the deck '
+                                f'within {POST_SKIP_MM:.0f} mm of a post pad (a rigid-clamp corner) reported apart, against the '
+                                f'abuse target {TARGETS["sf_fault"]}'}
 
     def post_faces(f):
         return (f.kind == 'Plane' and abs(f.bbox[2] - (zd - LOAD_PAD_T)) < 0.05 and abs(f.bbox[5] - (zd - LOAD_PAD_T)) < 0.05
@@ -329,8 +364,10 @@ def deck_cases(record, mesh, want):
 
             def defl(st, r):
                 d = r.get('probe_displacement_mm')
-                return {'deflection_mm': round(abs(d[2]), 3) if d else None, 'pass_deflection': bool(d and abs(d[2]) <= TARGETS['deck_mm'])}
-            record(f'D1-hand-{tag}', st, False, f'300 N down on the deck at the {tag} (a child leaning on it)', defl, view=(30, -50))
+                return {'deflection_mm': round(abs(d[2]), 3) if d else None, 'pass_deflection': bool(d and abs(d[2]) <= TARGETS['deck_mm']),
+                        **by_part(st, r)}
+            record(f'D1-hand-{tag}', st, False, f'300 N down on the deck at the {tag} (a child leaning on it)'
+                   + (', the turret plate under the riser (D59)' if plate is not None else ''), defl, view=(30, -50))
     if want('D2'):
         st = Study(model, AL5052, mesh_mm=mesh, name='deck D2 turret fall')
         st.fix(post_faces)
@@ -338,8 +375,9 @@ def deck_cases(record, mesh, want):
         m, hcom = t['mass_kg'], t['com_above_face_mm']      # the head budget (1.70 kg, 100 mm), or the turret's mount.json
         F = 30 * G * m
         Gc = force_at(st, tm_face, (F * 0.7071, 0.0, -F * 0.7071), (t['pan_x'], 0.0, bp.TOP + bp.RISER_H + hcom))
-        record('D2-turret-fall', st, 'fault', f'a 30 g fall of the {m:.2f} kg head (the turret plan\'s budget) at 45 deg, its centre {hcom:.0f} mm '
-               'above the TM face: a tip-over, an abuse case like the power cut (SF >= 1.2)', view=(30, -50))
+        record('D2-turret-fall', st, 'D2', f'a 30 g fall of the {m:.2f} kg head (the turret plan\'s budget) at 45 deg, its centre {hcom:.0f} mm '
+               'above the TM face: a tip-over' + (', the turret plate under the riser (D59: SF >= 2.0, the everyday target)'
+                                                  if plate is not None else ' (SF >= 1.2, the abuse target)'), by_part, view=(30, -50))
 
 
 def body_g():

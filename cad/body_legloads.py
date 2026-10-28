@@ -1,9 +1,11 @@
-"""The legs' forces on the body at the body's real mass: the leg rig (sim/leg_rig.py, the leg workstream's) run at half
-the robot's total from the mass ledger, through its public run() (nothing of the leg's is written).
+"""The legs' forces on the body at the robot's design mass: the leg rig (sim/leg_rig.py, the leg workstream's) run at
+half the design mass (D57: 32.5 kg, 16.25 kg a leg) on the 13S pack's 48.1 V, through its public run() (nothing of
+the leg's is written: the bus voltage is set on the imported module, as sim/leg_rig.py's own --bus-v would).
 
-    .venv/bin/python cad/body_legloads.py [--half-mass 15.2]   # -> exports/body/leg-loads.json
+    .venv/bin/python cad/body_legloads.py [--half-mass 16.25] [--bus-v 48.1] [--ledger]   # -> exports/body/leg-loads.json
 
-docs/body-plan.md T4 asks the rig at half of T3's real mass: the body's strength cases take their loads from here.
+D62: the body's and the legs' strength loads come from the rig at the design mass, not the ledger (--ledger runs it at
+half the ledger's P3 robot instead, for a comparison). The body's strength cases (cad/body_studies.py) read this file.
 
 What reaches the body is less than the axle force: the leg's own 9.3 kg (the hip frame and motors, the links, the wheel)
 is decelerated by the ground directly. The rig is planar, so the body's loads are taken from it by d'Alembert on the
@@ -33,6 +35,14 @@ FAULT = ('power_off',)                            # the undamped power cut (D39'
 def half_mass_from_ledger():
     m = json.loads((R / 'exports/body/mass.json').read_text())['P3']['total_kg']
     return round(m / 2, 2)
+
+
+def design_half_mass():
+    import body_layout as bl
+    return bl.BUDGET['design_half_mass_kg']
+
+
+BUS_V = 48.1                                       # the 13S2P pack's nominal (D43); the rig's own default may differ
 
 
 LEG_BODIES = ('carriage', 'upper_f', 'lower_f', 'upper_r', 'lower_r', 'wheel')     # the leg module (not the ballast)
@@ -67,10 +77,15 @@ def _probe(lr, fb, log):
     return orig
 
 
-def run(half_mass: float) -> dict:
+def run(half_mass: float, bus_v: float = BUS_V) -> dict:
+    import math
     from sim import leg_rig as lr
     fb = lr.fb
-    out = {'half_mass_kg': half_mass, 'robot_kg': round(2 * half_mass, 2), 'source': 'sim/leg_rig.py run() at this half mass',
+    rig_v = lr.BUS_V
+    lr.BUS_V = bus_v                                # the motors' speed line at this bus (LEG_OMEGA is read when run() runs)
+    lr.LEG_OMEGA = lr.MOTOR['no_load_speed_rpm'] * bus_v / lr.MOTOR['voltage_nominal_v'] * 2 * math.pi / 60
+    out = {'half_mass_kg': half_mass, 'robot_kg': round(2 * half_mass, 2), 'bus_v': bus_v, 'rig_default_bus_v': rig_v,
+           'leg_omega_rad_s': round(lr.LEG_OMEGA, 2), 'source': f'sim/leg_rig.py run() at this half mass and {bus_v} V',
            'rig_committed_half_mass_kg': lr.HALF_MASS, 'mount_y_module_mm': fb.Y['centre_plane'], 'tyre_y_module_mm': fb.Y['wheel'],
            'scenarios': {}}
     for name, sc in lr.SCENARIOS.items():
@@ -101,14 +116,19 @@ def run(half_mass: float) -> dict:
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument('--half-mass', type=float)
+    ap.add_argument('--half-mass', type=float, help='kg a leg carries (default: half the design mass, D57)')
+    ap.add_argument('--bus-v', type=float, default=BUS_V)
+    ap.add_argument('--ledger', action='store_true', help='half the ledger\'s P3 robot instead of the design mass')
     a = ap.parse_args()
-    hm = a.half_mass or half_mass_from_ledger()
+    hm = a.half_mass or (half_mass_from_ledger() if a.ledger else design_half_mass())
     t0 = time.time()
-    d = run(hm)
+    d = run(hm, a.bus_v)
+    d['basis'] = ('half the ledger\'s P3 robot' if a.ledger and not a.half_mass else
+                  'given on the command line' if a.half_mass else 'half the design mass (D57, D62)')
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(d, indent=1) + '\n')
-    print(f"half mass {hm} kg: axle rare {d['rare']}, fault {d['fault']}; body roll moment rare {d['rare_body']}, fault {d['fault_body']} ({time.time() - t0:.0f} s)")
+    print(f"half mass {hm} kg at {a.bus_v} V: axle rare {d['rare']}, fault {d['fault']}; body roll moment rare {d['rare_body']}, "
+          f"fault {d['fault_body']}; jump {d['scenarios'].get('jump', {}).get('jump_height_mm')} mm ({time.time() - t0:.0f} s)")
     for n, r in d['scenarios'].items():
         print(f"  {n:18} axle {r['peak_axle_force_n']:7.1f} N  body: roll {r['body']['peak_roll_moment_nm']:6.1f} N m with {r['body']['with_vertical_n']:7.1f} N "
               f"(x{r['body']['moment_over_axle_lever']} of axle x lever); peak vertical {r['body']['peak_vertical_n']:7.1f} N (ballast {r['body']['peak_vertical_check_ballast_n']:7.1f})")
