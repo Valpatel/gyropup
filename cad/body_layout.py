@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import functools
 import json
+import os
 import math
 import sys
 from dataclasses import dataclass, field
@@ -135,7 +136,7 @@ FUSES = {'kind': 'provisional', 'box': (120.0, 42.0, 32.0), 'mass_g': 90.0,
 
 def j501_items():
     """The compute bay: the J501 carrier on its pallet, the module and cooler, the plug zones of the ports in use and
-    the fan's intake column (keep-outs)."""
+    the fan's exhaust column (keep-outs)."""
     import body_frame as bf
     j = bp.j501()
     st = bp.j501_stack()
@@ -154,7 +155,8 @@ def j501_items():
                     'estimate (NVIDIA publishes none; 100 x 87 x 16 module with its thermal plate)', 'compute', 'P0', '',
                     'AGX Orin 32 GB module under the cooler', (0.2, 0.22, 0.25)))
     # the fitted cooler (j501-agx parameters.json, from the user's photos): the 2 mm copper spreader on the module, the
-    # G48R heat-pipe tower and its 9215 fan on top; the fan blows down and the air leaves the fins at their +-y faces
+    # G48R heat-pipe tower and its 9215 fan on top; the fan blows UP (j501-agx 94da39d): it draws the body's air in through
+    # the fins' open +-y faces and blows it up through the deck's cells and out of the riser's sides
     st_t = sp.get('thickness', 0.0)
     if st_t:
         out.append(Item('agx_spreader', centred(sx, sy, st['cooler_bottom'], sp['size'][0], sp['size'][1], st_t), 200.0,
@@ -164,14 +166,14 @@ def j501_items():
                     'estimate (G48R: five 6 mm copper heat pipes, 6063 fins, 9215 fan; Seeed publishes no mass)', 'compute', 'P0', '',
                     f"{(j.get('cooler_model') or 'cooler').split(':')[0]}, {cw:g} x {cd:g} x {ch:g} mm", (0.75, 0.76, 0.78)))
     fan_r = (j.get('fan') or {}).get('frame', 84.0) / 2
-    out.append(Item('fan_intake', (cx - fan_r, cx + fan_r, cy - fan_r, cy + fan_r, st['cooler_top'], bp.TOP - bp.STOCK[bp.DECK]['t']), 0, '', 'compute',
-                    keepout=True, owner='agx_cooler', note='the fan\'s intake column up to the deck (nothing in it)'))
+    out.append(Item('fan_column', (cx - fan_r, cx + fan_r, cy - fan_r, cy + fan_r, st['cooler_top'], bp.TOP - bp.STOCK[bp.DECK]['t']), 0, '', 'compute',
+                    keepout=True, owner='agx_cooler', note='the fan\'s exhaust column up to the deck (nothing in it; the fan duct)', cyl=(cx, cy, fan_r)))
     fw, fd = j.get('fins') or (cw, cd)
-    for side, ey in (('left', 1.0), ('right', -1.0)):           # exhaust across the fins (the plates' +-y faces)
+    for side, ey in (('left', 1.0), ('right', -1.0)):           # the air in across the fins (the plates' +-y faces)
         ya = cy + ey * fd / 2
-        out.append(Item(f'cooler_exhaust_{side}', (cx - fw / 2, cx + fw / 2, min(ya, ya + ey * 30), max(ya, ya + ey * 30),
+        out.append(Item(f'cooler_fins_{side}', (cx - fw / 2, cx + fw / 2, min(ya, ya + ey * 30), max(ya, ya + ey * 30),
                                                    st['cooler_bottom'] + st_t, st['cooler_top'] - (j.get('fan') or {}).get('thickness', 0.0)),
-                        0, '', 'compute', keepout=True, owner='agx_cooler', note='hot air leaves the fins here'))
+                        0, '', 'compute', keepout=True, owner='agx_cooler', note='the cooler draws the body\'s air in here (keep it open)'))
     # the ports in use: their plugs and 40 mm of cable room beyond the PCB's edge (the front edge faces the robot's right)
     used = {'front': ('lan_1g', 'dc_in'), 'rear': ('io_terminal', 'usb_a', 'usb_c', 'hdmi')}
     for side, names in used.items():
@@ -187,7 +189,7 @@ def j501_items():
     for (xp, yp) in j['holes']:
         x, y = bp.pcb_to_robot(xp, yp)
         out.append(Item(f'j501_standoff_{xp}_{yp}', centred(x, y, st['pallet_top'], 6.4, 6.4, j['standoff_h']), 2.0, 'catalogue (M3 x 16 hex)', 'compute', 'P0'))
-    for u in json.loads((bp.J501_DIR / 'cad' / 'parameters.json').read_text())['underside_envelopes']['items']:
+    for u in bp.j501_params()['underside_envelopes']['items']:
         if u['role'] != 'card':                     # the SATA plug drops are unused (no drives)
             continue
         a = u['box']
@@ -201,7 +203,7 @@ def layout(cell=None):
     {'items': [Item], 'mounts': {part: [...]}, 'checks': [text], 'mass': {...}}."""
     import body_battery as bb
     import body_frame as bf
-    cell = cell or bb.CELL
+    cell = 'DCB609'
     zt = bp.z_tray_top()
     zd = bp.TOP - bp.STOCK[bp.DECK]['t']
     items = j501_items()
@@ -211,9 +213,6 @@ def layout(cell=None):
     # and tested on the bench as one plate, then dropped in.
     items.append(Item('tray_slot', (SLOT_X[0], SLOT_X[1], -SLOT_HALF, SLOT_HALF, zt - 20.0, zt + 12.0), 0, '', 'power', keepout=True,
                       note='the cables\' way up from the spine\'s gap and the front chase'))
-    items.append(Item('ddr120c_24', box_xyz(-22.0, 89.0, zt + 7.5, 125.2, 32.0, 104.8), 450.0, 'estimate (datasheet packs 0.51 kg with its carton)',
-                      'power', 'P0', 'meanwell-ddr-120c-24', '24 V 5 A, isolated: the J501 and the turret; on a TS35 rail across y in the '
-                      'left strip, past the carrier\'s USB-C; output terminals at its rear end, input at the front', (0.62, 0.64, 0.68)))
     pz = zt + PLATE_H                                   # the power plate's underside
     pt = bp.STOCK['5052-0.100']['t']
     items.append(Item('power_plate', (PLATE_X[0], PLATE_X[1], PLATE_Y[0], PLATE_Y[1], pz, pz + pt), 0, '', 'frame', 'P0',
@@ -223,22 +222,32 @@ def layout(cell=None):
                       'Flipsky 75100, the right wheel, hung under the plate on its four M5 flange holes; leads out of its rear end', (0.17, 0.42, 0.69)))
     items.append(Item('plate_vesc_l', box_xyz(37.0, 17.3, pz - 35.0, 108.0, 50.7, 35.0), 230.0, 'catalogue (estimate)', 'power', 'P0', 'flipsky-75100',
                       'Flipsky 75100, the left wheel', (0.17, 0.42, 0.69)))
-    items.append(Item('plate_main_switch', box_xyz(52.0, -116.0, pz - 16.5, 60.0, 45.0, 16.5), 110.0, 'estimate (metal case 60 x 45 x 16.5)', 'power', 'P0',
+    # the switch hangs 3 mm under the plate in its cradle: the 12 V rail's screw tips come through above it
+    items.append(Item('plate_main_switch', box_xyz(52.0, -116.0, pz - 19.5, 60.0, 45.0, 16.5), 110.0, 'estimate (metal case 60 x 45 x 16.5)', 'power', 'P0',
                       'flipsky-antispark-smart-enhanced-v2', 'Flipsky Anti Spark Switch Smart Enhanced 300A V2.0 (12-84 V, 100 A), low side, '
                       'in a printed cradle under the plate; its 16 mm momentary button on the rear panel (P3)', (0.25, 0.27, 0.3)))
-    items.append(Item('plate_shunt', box_xyz(40.0, 32.0, pz + pt, 85.0, 30.0, 25.0), 85.0, 'estimate (150 A / 50 mV meter shunt)', 'power', 'P0',
+    items.append(Item('plate_shunt', box_xyz(40.0, 32.0, pz + pt + 3.0, 85.0, 30.0, 25.0), 85.0,     # on 3 mm printed spacers: a VESC screw's tip under it
+                      'estimate (150 A / 50 mV meter shunt)', 'power', 'P0',
                       'blue-sea-150a-50mv-shunt', 'the current shunt in the negative lead (the switch\'s load side to the - bus)',
                       (0.7, 0.7, 0.72)))
     # on the plate
-    items.append(Item('plate_ddr60l_12', box_xyz(34.0, -118.0, pz + pt + 7.5, 90.0, 52.5, 55.0), 216.0, 'datasheet (TRC: 216 g)', 'power', 'P0',
-                      'meanwell-ddr-60l-12', '12 V 5 A (18-75 V in, isolated): lidar, lights, eyes, the 5 V buck; on a TS35 rail across y',
-                      (0.62, 0.64, 0.68)))
+    # D65: the bus is 30-41 V, under the DDR-120C-24's 33.6 V minimum. One TRACO TEP 150-4812WI (18-75 V in, isolated,
+    # 12 V 12.5 A, 150 W) takes the DDR-120C-24's and the DDR-60L-12's places: the J501 (12-36 V in) and the 12 V rail
+    # (lidar, lights, eyes, the 5 V buck) from one converter (D66: the turret has its own). It stands on its long edge where
+    # the DDR-60L-12 stood, its base flange screwed to a printed bracket's upright at the plate's right edge.
+    d = DCDC
+    zc = pz + pt + bf.DCDC_FOOT_T
+    items.append(Item('power_dcdc', (d['x'][0], d['x'][1], d['y'][0], d['y'][1], zc, zc + d['h']), d['mass_g'], d['mass_basis'], 'power', 'P0',
+                      'traco-tep-150-4812wi', '12 V 12.5 A from 18-75 V, isolated: the J501 and the 12 V rail; standing on its long edge on '
+                      'a printed bracket at the plate\'s right edge, terminals at its ends', (0.62, 0.64, 0.68)))
     BUS_XY.clear()
     BUS_XY.extend([(34.0, -60.0), (34.0, -36.0)])       # + and - bus bars (frame parts: SendCutSend C110 on printed insulators)
-    items.append(Item('plate_mrbf_block', box_xyz(125.0, -15.0, pz + pt, 20.0, 60.9, 44.5), 90.0, 'catalogue (70 g) + MRBF fuse (est 20 g)',
+    items.append(Item('plate_mrbf_block', box_xyz(125.0, -15.0, pz + pt + 3.0, 20.0, 60.9, 44.5), 90.0,     # on 3 mm spacers: a VESC screw's tip
+                      'catalogue (70 g) + MRBF fuse (est 20 g)',
                       'power', 'P0', 'blue-sea-5191-mrbf-terminal-fuse-block', 'main fuse 80 A (Blue Sea 5181) on the battery + lead\'s insulated M10 post',
                       (0.1, 0.1, 0.12)))
-    items.append(Item('plate_fuses', box_xyz(36.0, -12.0, pz + pt, 85.0, 42.0, 22.0), 110.0, 'estimate (10 inline MINI holders, 58 V fuses, leads)',
+    # the fuse bundle stays clear of the left VESC's screw tips at y 29
+    items.append(Item('plate_fuses', box_xyz(36.0, -12.0, pz + pt, 85.0, 36.0, 22.0), 110.0, 'estimate (10 inline MINI holders, 58 V fuses, leads)',
                       'power', 'P0', 'littelfuse-0997-mini-58v', 'the ten branch fuses: Littelfuse MINI 58V in inline holders, bundled on the plate',
                       (0.85, 0.75, 0.2)))
     items.append(Item('plate_mcu_board', box_xyz(32.0, 64.0, pz + pt, 85.0, 22.0, 72.0), 75.0,
@@ -250,7 +259,7 @@ def layout(cell=None):
     # ---------------- the IMU, rigid on the tray near the hip axis, under the carrier's front
     items.append(Item('vn100', box_xyz(-40.0, -16.55, zt, 35.9, 33.1, 8.9), 15.0, 'catalogue (VectorNav: 15 g)', 'power', 'P0',
                       'vectornav-vn-100-rugged', 'VN-100 Rugged on 2 x M3 + 2 dowels in the tray; its connector faces +x', (0.8, 0.2, 0.2)))
-    # ---------------- the lidar's interface box behind the cooler (the G48R's fins blow out at +-y and its fan draws from
+    # ---------------- the lidar's interface box behind the cooler (the G48R's fins draw in at +-y and its fan blows up through
     # the deck, so the strip behind its heat pipes' bends is the free one), its cable coiled flat under the deck beside it
     items.append(Item('lidar_box', (-157.0, -122.0, 10.0, 95.0, zt + 53.0, zd - 2.0), 120.0, 'estimate (Polycase LP-41 class, plan 90 g + gland)',
                       'compute', 'P1', '', 'VLP-16 interface box standing on edge on a printed bracket behind the cooler, left; RJ45 '
@@ -263,6 +272,9 @@ def layout(cell=None):
     # ---------------- the deck: lidar, riser, turret (P2), harness passes
     lid = bp.lidar()
     t = bp.tm()
+    pb = bp.turret_plug_box()
+    items.append(Item('turret_plug_sweep', pb['box'], 0, '', 'deck', keepout=True, owner='turret',
+                      note=f"the turret's DT06-12SA plug and the 30 mm it withdraws ({pb['source']})"))
     items.append(Item('vlp16', (lid['x'] - lid['d'] / 2, lid['x'] + lid['d'] / 2, -lid['d'] / 2, lid['d'] / 2, bp.TOP, bp.TOP + lid['h']), lid['mass_g'],
                       'catalogue (830 g without cable)', 'deck', 'P1', 'velodyne-vlp-16', 'VLP-16 on the deck', (0.17, 0.18, 0.2),
                       cyl=(lid['x'], 0.0, lid['d'] / 2)))
@@ -272,15 +284,20 @@ def layout(cell=None):
                       1000.0 * t['mass_kg'], f"budget {t['mass_kg']} kg (turret.json: {tj['mass_g_with_balls'] / 1000:.3f} kg with 30 balls); "
                       + t['mass_basis'], 'deck', 'P2', '', 'the foam-ball turret on the riser (P1: a dummy of the budget mass)',
                       (0.55, 0.57, 0.6), cyl=(t['pan_x'], 0.0, t['bumper_r'])))
-    # ---------------- the battery in the belly
-    b = bb.brick(cell)
-    B = bb.bay(b)
-    items.append(Item('battery', b.box, b.mass_g, f'cells {bb.CELLS[cell]["source"]}; BMS and build est', 'battery', 'P0', '',
-                      f'13S2P {bb.CELLS[cell]["name"]}, {b.capacity_ah:.1f} Ah, the Daly 13S 100 A BMS on top; slides out of the front', (0.95, 0.73, 0.1)))
-    items.append(Item('battery_bay', B['outer'], 0, '', 'frame', 'P0', keepout=True, owner='battery', note='the printed bay (walls, floor, skids)'))
+    # ---------------- the battery in the belly (D65): two DCB609 packs on their rail adapters
+    g = bb.geometry()
+    for k, box_ in bb.pack_boxes().items():
+        items.append(Item(f'battery_{k}', box_, bb.PACK['mass_g'], bb.PACK['source'], 'battery', 'P0', 'dewalt-dcb609',
+                          f'{bb.PACK["name"]}: slides out of the {k} door', (0.99, 0.73, 0.07)))
+    for k, box_ in bb.adapter_boxes().items():
+        items.append(Item(f'battery_adapter_{k}', box_, bb.ADAPTER['mass_g'], bb.ADAPTER['basis'], 'battery', 'P0', 'terrafirma-dewalt-20v-adapter-10awg',
+                          f'the {k} pack\'s rail adapter (10 AWG leads, 30 A), screwed to its printed plate', (0.15, 0.15, 0.17)))
+    B = {'outer': (g['x_out'][0], g['x_out'][1], -g['side_out'], g['side_out'], g['z_bottom'], g['z_belly']), 'half_y': g['side_out'],
+         'bottom_z': g['z_bottom']}
+    items.append(Item('battery_bay', B['outer'], 0, '', 'frame', 'P1', keepout=True, owner='battery', note='the bay (floor, sides, rails, doors, skids)'))
     # ---------------- what the frame parts must give these items (holes, slots, nuts)
     mounts = mounts_for(items, B)
-    return {'items': items, 'mounts': mounts, 'cell': cell, 'brick': b, 'bay': B}
+    return {'items': items, 'mounts': mounts, 'cell': cell, 'brick': None, 'bay': B}
 
 
 def _get(items, name):
@@ -306,22 +323,21 @@ def mounts_for(items, B):
     T.append(('slot', (SLOT_X[0] + SLOT_X[1]) / 2, 0.0, SLOT_X[1] - SLOT_X[0], 2 * SLOT_HALF, 6.0, 'cables up from the gap and the front chase'))
     for x, y in bf.ISOLATORS:
         T.append(('pem', x, y, 'S-M4-0', 'compute pallet isolator stud'))
-    d = _get(items, 'ddr120c_24')
-    cx = (d.box[0] + d.box[1]) / 2
-    for y in (d.box[2] + 6.0, d.box[2] + 20.0):          # 8 mm (flat) clear of the tray's side bend
-        T.append(('pem', cx, y, 'S-M4-0', 'DDR-120C DIN rail'))
     v = _get(items, 'vn100')
     vx0, vx1, vy0, vy1, *_ = v.box
     vcx = (vx0 + vx1) / 2
     for sx in (-1, 1):                                  # VN-100: 2 x M3 (tapped) 30.84 apart, 17.8 from the connector end; its
         T.append((vcx + sx * 15.42, vy0 + 17.8, 2.5, 'tap M3 x 0.5: VN-100'))      # dowel holes are 3.81 from the screws: a 1.8 mm web,
                                                         # under SendCutSend's minimum, so no dowels (the firmware calibrates the mounting)
-    # ---- belly: the battery bay's flanges, the leads' slots
-    for x in (-135.0, -80.0, -25.0, 30.0, 85.0, 140.0):
+    # ---- belly: the bay's rails and adapter plates (S-M4-0 beyond the cheeks' ends), the leads' slot
+    import body_battery as bb
+    for x, yc in bb.rail_holes():
         for sy in (1, -1):
-            BE.append(('pem', x, sy * (B['half_y'] + 6.0), 'SS-M5-0', 'battery bay flange'))
-    BE.append(('slot', 117.5, 0.0, 45.0, 22.0, 6.0, 'the battery\'s leads up to the power plate (front chase)'))
-    BE.append(('slot', -125.0, 0.0, 30.0, 22.0, 6.0, 'the charge port\'s leads up (rear chase)'))
+            BE.append(('pem', x, sy * yc, 'S-M4-0', 'battery bay rail'))
+    for k in ('front', 'rear'):
+        for x, y in bb.plate_holes(k):
+            BE.append(('pem', x, y, 'S-M4-0', f'{k} pack adapter plate'))
+    BE.append(('slot', bb.LEADS_SLOT[0], 0.0, bb.LEADS_SLOT[1], 22.0, 6.0, 'the packs\' two leads up into the spine\'s gap'))
     # ---- deck
     for name, inset, what in (('lidar_box', 12.0, 'lidar interface box bracket'), ('lidar_coil', 20.0, 'lidar cable coil clip')):
         b = _get(items, name).box                     # two M4 from above along the item's longer side
@@ -339,9 +355,8 @@ def mounts_for(items, B):
     sw = _get(items, 'plate_main_switch')
     for x in (sw.box[0] + 10.0, sw.box[1] - 10.0):
         PL.append(('pem', x, (sw.box[2] + sw.box[3]) / 2, 'F-M4-2', 'switch cradle'))
-    dd = _get(items, 'plate_ddr60l_12')
-    for y in (dd.box[2] + 8.0, dd.box[3] - 8.0):
-        PL.append(('pem', (dd.box[0] + dd.box[1]) / 2, y, 'F-M4-2', 'DDR-60L-12 DIN rail'))
+    for x, y in bf.dcdc_bracket_holes():                  # the converter's bracket: two M4 on its inner side
+        PL.append(('pem', x, y, 'F-M4-2', 'the converter\'s bracket'))
     for name, (bx, by) in zip(('bus_pos', 'bus_neg'), BUS_XY):
         yc = by + bf.BUS_W / 2
         for u in (bf.BUS_INS[0] + 22.5, bf.BUS_INS[1] - 22.5):
@@ -358,9 +373,13 @@ def mounts_for(items, B):
     PL.append(((bk.box[0] + bk.box[1]) / 2, (bk.box[2] + bk.box[3]) / 2, 3.4, '5 V buck on an M3 standoff'))
     fu = _get(items, 'plate_fuses')
     for x in (fu.box[0] + 10.0, fu.box[1] - 10.0):
-        for y in (fu.box[2] + 6.0, fu.box[3] - 6.0):
+        for y in (fu.box[2] + 6.0, 24.0):                 # y 24: P3's fuse board ties through the same slot (body_fuse_board.MOUNTS)
             PL.append(('slot', x, y, 4.0, 10.0, 2.0, 'cable-tie slot for the fuse bundle'))
     return m
+
+
+DCDC = {'x': (30.0, 128.0), 'y': (-118.0, -82.0), 'h': 65.0, 'mass_g': 300.0,     # its base flange at y -118, on the bracket's upright
+        'mass_basis': 'TRC lists 300 g (the 4815WI); 98 x 65 x 35.7 mm (TRACO\'s outline as Farnell and RS give it): measure on arrival'}
 
 
 def frame_boxes():
@@ -377,20 +396,103 @@ def frame_boxes():
     return out
 
 
-if __name__ == '__main__':
-    L = layout()
-    bad = check(L['items'], frame_boxes())
-    print(f"{len(L['items'])} items, {len(bad)} problems")
-    for b in bad:
-        print('  ', b)
-
-
 # ------------------------------------------------------------------------------------------- mass and centre of mass
 
 HARDWARE_G = 300.0               # frame screws, standoffs, PEM nuts, inserts, cable ties (est)
 HARNESS_G = 400.0                # every wire and connector of the body (est; docs/body-electrical.md lists them)
 LEG_STOPS_EXTRA_G = 200.0        # per leg: the hip frame's 13 mm flanges and the stop redesign (main cdda86d, 2026-10-27: 'roughly
-                                 # 0.2 kg' over leg.json's 9.28 kg) until exports/leg/leg.json carries them
+                                 # 0.2 kg' over leg.json's 9.28 kg; D53 says 204 g) until exports/leg/leg.json carries them
+LEG_TOTAL_BEFORE_STOPS_G = 9282  # leg.json's mass_g.total that the 0.2 kg was announced against: once the leg publishes another
+                                 # total (its stops and the strength fixes in), the ledger takes that total as it is
+
+# D57 (docs/body-next-plan.md 2.4): the robot is designed for 32.5 kg (16.25 kg a leg) in every strength case and held under
+# 32.0 kg as built; the plan's 28.5 / 10.3 kg budget is retired. cad/test_body.py gates every commit on it.
+BUDGET = {'robot_kg': 32.0, 'legs_kg_each': 9.6, 'body_and_head_kg': 12.8, 'design_mass_kg': 32.5, 'design_half_mass_kg': 16.25,
+          'com_x_mm': 10.0, 'com_y_mm': 5.0, 'basis': 'D57, docs/body-next-plan.md 2.4 (the 28.5 / 10.3 kg budget of docs/body-plan.md 1.8 is retired)'}
+
+# The mass levers of docs/body-next-plan.md 2.3, in its order: scheduled for P2/P3, then on call when the ledger crosses
+# the ceiling (D57). grams < 0 saves mass. 'taken' says how the ledger shows the lever done (a check on the CAD), so the
+# status is never typed by hand: (key, n, grams, cost_usd, stage, kind, what, taken-check name)
+LEVERS = [
+    ('shell_2mm', 1, -240, 0.0, 'P3', 'scheduled', 'shell panels in 2 mm PETG with 1.6 mm ribs instead of 3 mm (PA6-CF at the ear-pod bosses)', 'shell_from_cad'),
+    ('tray_cutouts', 2, -150, 62.0, 'P3', 'scheduled', 'floor tray Rev B: lightening cutouts where nothing bolts and T1 is low (1/8 in stays)', 'tray_lightened'),
+    ('deck_cutouts', 3, -120, 65.0, 'P3', 'scheduled', 'deck Rev B: cutouts outside the lidar, the TM pattern and the intake field', 'deck_lightened'),
+    ('turret_plate', 4, +135, 25.0, 'P2', 'scheduled', 'the turret mount plate under the deck at the riser, 6061-T6 0.125 in, pocketed (D59)', 'turret_plate'),
+    ('hollow_posts', 5, -100, 0.0, 'P2', 'scheduled', 'deck posts printed hollow (22 mm square, 4 mm walls) instead of solid', 'hollow_posts'),
+    ('pallet_cutouts', 6, -60, 30.0, 'P3', 'scheduled', 'compute pallet cutouts under the module between the tie-down and the standoffs', 'pallet_lightened'),
+    ('fuse_board', 7, -35, 20.0, 'P3', 'scheduled', 'the fuse board (D60) instead of ten inline MINI holders and their leads', 'fuse_board'),
+    ('board_shunt', 8, -75, 3.0, 'P3', 'scheduled', 'the 1 mOhm shunt on the fuse board instead of the 85 g Blue Sea 150 A block', 'board_shunt'),
+    ('harness_10awg', 9, -60, 25.0, 'P2', 'scheduled', 'the main path in 10 AWG, the VESC leads in 14 AWG, lengths cut to P0\'s measurements', 'harness_10awg'),
+    ('pololu_12v', 10, -200, 69.95, 'P3', 'on call', 'Pololu D42V110F12 instead of the 216 g DDR-60L-12 (when Pololu restocks it)', None),
+    ('cheeks_rev_b', 11, -150, 120.0, 'P3', 'on call', 'cheeks Rev B: lightening holes where S1 < 40 MPa (-150), or 1/8 in with more standoffs (-330)', None),
+    ('alu_standoffs', 12, -80, 30.0, 'P3', 'on call', 'aluminium M5 x 120 hex standoffs in place of the printed deck posts', None),
+    ('cooler_34mm', 13, -200, 49.0, 'P3', 'on call', 'the 34 mm WS-RDN-601 cooler instead of the fitted G48R (the user\'s call after the thermal test)', None),
+    ('lidar_cable_1m', 14, -150, 0.0, 'P3', 'on call', 'the VLP-16 cable shortened to 1 m (the user\'s call: a Velodyne waiver)', None),
+    ('turret_levers', 15, -51, 0.0, 'P2', 'on call', 'the turret\'s own: a 24-ball hopper, a one-board bay (its plan, not scheduled here)', None),
+]
+
+
+def leg_stops_extra_g() -> tuple:
+    """(grams a leg, basis): the stops' and flanges' mass the ledger adds to exports/leg/leg.json's total until the leg
+    publishes a total with them in."""
+    total = json.loads((R / 'exports/leg/leg.json').read_text())['mass_g']['total']
+    if round(total) == LEG_TOTAL_BEFORE_STOPS_G:
+        return LEG_STOPS_EXTRA_G, f'leg.json {total} g + {LEG_STOPS_EXTRA_G:.0f} g announced for the stops and flanges (D53)'
+    return 0.0, f'leg.json {total} g (published with the stops in)'
+
+
+def lever_taken(check: str, parts=None, L=None) -> bool:
+    """Whether a lever shows in the CAD (its check names what to look for)."""
+    import body_frame as bf
+    parts = parts or {}
+    if check == 'turret_plate':
+        return 'turret_plate' in parts
+    if check == 'hollow_posts':
+        p = parts.get('post_1')
+        if p is None:
+            return False
+        v = (p.shape.val() if hasattr(p.shape, 'val') else p.shape).Volume()
+        return v < 0.9 * bp.POST_W ** 2 * bf.post_height()
+    if check in ('tray_lightened', 'deck_lightened', 'pallet_lightened'):
+        name = {'tray_lightened': 'floor_tray', 'deck_lightened': 'deck', 'pallet_lightened': 'compute_pallet'}[check]
+        sp = parts.get(name).sheet if parts.get(name) is not None else None
+        return bool(sp and any(f.note.startswith('lightening') for f in sp.features))
+    names = {i.name for i in (L or {}).get('items', [])}
+    if check == 'fuse_board':
+        return 'plate_fuse_board' in names
+    if check == 'board_shunt':
+        return 'plate_fuse_board' in names and 'plate_shunt' not in names
+    if check == 'harness_10awg':
+        return HARNESS_G <= 340.0
+    if check == 'shell_from_cad':
+        return 'shell_side_l_front' in parts
+    return False
+
+
+def levers(parts=None, L=None) -> list:
+    out = []
+    for key, n, g, usd, stage, kind, what, check in LEVERS:
+        taken = bool(check) and lever_taken(check, parts, L)
+        out.append({'key': key, 'n': n, 'grams': g, 'cost_usd': usd, 'stage': stage, 'kind': kind, 'what': what,
+                    'status': 'taken' if taken else 'open'})
+    return out
+
+
+def gate(led: dict) -> dict:
+    """D57's gate on a P3 ledger: the ledger as it is, and with every scheduled lever not yet in the CAD taken (their
+    grams as the plan states them), against the ceiling: robot <= 32.0, each leg <= 9.6, body and head <= 12.8."""
+    open_g = sum(l['grams'] for l in led['levers'] if l['kind'] == 'scheduled' and l['status'] == 'open')
+    proj = led['total_kg'] + open_g / 1000.0
+    proj_bh = led['body_and_head_kg'] + open_g / 1000.0
+    b = BUDGET
+    legs_each = led['legs_kg'] / 2
+    return {'ceiling_kg': b['robot_kg'], 'gap_kg': round(led['total_kg'] - b['robot_kg'], 3),
+            'open_scheduled_g': open_g, 'with_scheduled_levers_kg': round(proj, 3),
+            'body_and_head_with_levers_kg': round(proj_bh, 3), 'leg_each_kg': round(legs_each, 3),
+            'pass': proj <= b['robot_kg'] + 1e-9 and proj_bh <= b['body_and_head_kg'] + 1e-9 and legs_each <= b['legs_kg_each'] + 1e-9,
+            'on_call_next': [l['key'] for l in led['levers'] if l['kind'] == 'on call' and l['status'] == 'open'][:3],
+            'rule': 'the P3 ledger with every scheduled lever taken (the open ones at the plan\'s grams) under the ceiling, each leg '
+                    'under 9.6 kg and the body and head under 12.8 kg; over it, the on-call levers go in order before the next order (D57)'}
 
 
 def leg_rows(h_mm=300.0):
@@ -438,19 +540,37 @@ def leg_rows(h_mm=300.0):
                                                               'screw_m5x25', 'screw_m5x30', 'insert_m5') if k in bom}
     for side, sy in (('L', 1.0), ('R', -1.0)):
         rows.append((f'{side}.small_hardware', sum(rest.values()), (0.0, sy * (bp.y_off() + 30.0), 0.0)))
+    extra = leg_stops_extra_g()[0]
     for side, sy in (('L', 1.0), ('R', -1.0)):            # to leg.json's total (its own count of every part)
         placed = sum(g for n, g, _ in rows if n.startswith(side + '.'))
-        left = leg_json['total'] + LEG_STOPS_EXTRA_G - placed
+        left = leg_json['total'] + extra - placed
         if abs(left) > 1.0:
             rows.append((f'{side}.rest_of_leg_json', left, (0.0, sy * (bp.y_off() + 30.0), -100.0)))
+    if WHEEL_CHANGE_G:                                    # a wheel study's change (issue #18), at each wheel's centre
+        for side in ('L', 'R'):
+            w = next(((n, g, c) for n, g, c in rows if n == f'{side}.wheel_hub'), None)
+            rows.append((f'{side}.wheel_change', WHEEL_CHANGE_G, w[2] if w else (0.0, 0.0, -h_mm)))
     return rows
 
 
-def frame_rows(parts):
+# The wheels are the leg's (exports/leg/leg.json: the ODrive BotWheel, 2.2 kg each). Issue #18 studies 8-10 in air-tyre hub
+# motors (+0.8 to +2.3 kg a wheel): set this (or GYROPUP_WHEEL_CHANGE_G) to a candidate's change per wheel to see the
+# ledger and the gate with it, before anything is redesigned round it.
+WHEEL_CHANGE_G = float(os.environ.get('GYROPUP_WHEEL_CHANGE_G', 0.0))
+
+
+SHELL_PREFIXES = ('shell_', 'ear_bracket', 'receiver_bay', 'd435_cradle', 'fan_duct', 'eyes_clip')    # the shell group's CAD
+
+
+def frame_rows(parts, stage='P3'):
+    """[(name, g, com, group)] of the made parts on the robot at a stage (frame, tub; the shell's own in 'shell')."""
+    import body_frame as bf
     from cadagent.robot import solid_mass_properties
     mats = json.loads((R / 'catalog/materials.json').read_text())
     rows = []
     for n, p in parts.items():
+        if not bf.on_robot(p, stage):
+            continue
         v = p.shape.val() if hasattr(p.shape, 'val') else p.shape
         if p.kind == 'sheet':
             dens = next(st['density'] for st in bp.STOCK.values() if st['material'] == p.material)
@@ -459,7 +579,8 @@ def frame_rows(parts):
             b = solid_mass_properties(v, mats[p.material]['density_g_cm3'], 1.0, n)
         else:
             continue
-        rows.append((f'frame.{n}', b.mass * 1000, tuple(x * 1000 for x in b.com)))
+        group = 'shell' if n.startswith(SHELL_PREFIXES) else 'frame'
+        rows.append((f'{group}.{n}', b.mass * 1000, tuple(x * 1000 for x in b.com), group))
     return rows
 
 
@@ -467,7 +588,7 @@ def ledger(L=None, parts=None, stage='P3'):
     """The robot's mass and centre (robot frame, standing at 300 mm) by group, with every row's basis."""
     import body_frame as bf
     L = L or layout()
-    parts = parts or bf.frame_parts(L['mounts'])
+    parts = parts or bf.all_parts(L['mounts'])
     order = ('P0', 'P1', 'P2', 'P3')
     keep = lambda it: order.index(it.stage) <= order.index(stage)
     rows = []
@@ -479,8 +600,8 @@ def ledger(L=None, parts=None, stage='P3'):
         groups[group] += g
     for n, g, c in leg_rows():
         add('legs', n, g, c, 'CAD (printed PA6-CF solids) and exports/leg/bom.json')
-    for n, g, c in frame_rows(parts):
-        add('frame', n, g, c, 'CAD (sheet and printed solids)')
+    for n, g, c, grp in frame_rows(parts, stage):
+        add(grp, n, g, c, 'CAD (sheet and printed solids)' if grp == 'frame' else 'CAD (cad/body_shell.py, printed)')
     for it in L['items']:
         if it.keepout or not it.mass_g or not keep(it):
             continue
@@ -489,14 +610,17 @@ def ledger(L=None, parts=None, stage='P3'):
     add('frame', 'hardware', HARDWARE_G, (0.0, 0.0, 40.0), 'estimate')
     add('power', 'harness', HARNESS_G, (60.0, 0.0, zt + 20.0), 'estimate (docs/body-wiring.md)')
     if stage == 'P3':
-        for n, g, c, b in SHELL_ITEMS:
+        for n, g, c, b in shell_items(parts):
             add('shell', n, g, c, b)
     m = sum(r['mass_g'] for r in rows)
     com = [sum(r['mass_g'] * r['com_mm'][k] for r in rows) / m for k in range(3)]
     legs_g = groups.get('legs', 0.0)
-    return {'stage': stage, 'total_kg': round(m / 1000, 2), 'com_mm': [round(v, 1) for v in com], 'groups_kg': {k: round(v / 1000, 3) for k, v in groups.items()},
-            'legs_kg': round(legs_g / 1000, 2), 'body_and_head_kg': round((m - legs_g) / 1000, 2), 'rows': rows,
-            'budget': {'robot_kg': 28.5, 'body_and_head_kg': 10.3, 'com_x_mm': 10.0, 'com_y_mm': 5.0, 'basis': 'docs/body-plan.md 1.8'}}
+    out = {'stage': stage, 'total_kg': round(m / 1000, 2), 'com_mm': [round(v, 1) for v in com], 'groups_kg': {k: round(v / 1000, 3) for k, v in groups.items()},
+           'legs_kg': round(legs_g / 1000, 2), 'body_and_head_kg': round((m - legs_g) / 1000, 2), 'rows': rows,
+           'budget': dict(BUDGET), 'leg_extra': leg_stops_extra_g()[1], 'levers': levers(parts, L)}
+    if stage == 'P3':
+        out['gate'] = gate(out)
+    return out
 
 
 # the P3 shell and what it carries (docs/body-plan.md 1.5, 1.7; the shell is T7's)
@@ -510,3 +634,49 @@ SHELL_ITEMS = [
     ('ear_pod_r', 154.0, (20.0, -155.0, 165.0), 'catalogue (SSC1 154 g each)'),
     ('belly_box_skids', 120.0, (0.0, 0.0, -150.0), 'estimate (TPU skids, the bay door)'),
 ]
+
+
+def shell_items(parts):
+    """The P3 shell's ledger rows: its bought parts (catalogue masses) where cad/body_shell.py puts them; the panels,
+    brackets and tub come from the CAD (frame_rows), so the estimates here are only for what has no CAD."""
+    import body_shell as bs3
+    if 'shell_side_l_front' not in parts:
+        return SHELL_ITEMS
+    c = lambda s: tuple(round(v, 1) for v in bs3._v(s).Center().toTuple())
+    out = [('depth_camera_front', 75.0, c(bs3.d435(True)), 'catalogue (D435 75 g), cad/body_shell.py'),
+           ('depth_camera_rear', 75.0, c(bs3.d435(False)), 'catalogue (D435 75 g), cad/body_shell.py'),
+           ('eyes', 11.0, c(bs3.eyes_board()), 'catalogue (DualEye 11 g), cad/body_shell.py'),
+           ('eye_controller', 8.0, (150.0, 0.0, 170.0), 'catalogue (QT Py ESP32-S3)'),
+           ('ear_pod_l', 154.0, c(bs3.ear_pod('l')), 'catalogue (SSC1 154 g each), cad/body_shell.py'),
+           ('ear_pod_r', 154.0, c(bs3.ear_pod('r')), 'catalogue (SSC1 154 g each), cad/body_shell.py'),
+           ('shell_hardware', 60.0, (0.0, 0.0, 150.0), 'estimate (M3/M5 screws, nuts, inserts of the shell and tub)')]
+    return out
+
+
+def write_ledger():
+    """exports/body/mass.json (P1 and P3) without the whole build: the layout, every part and the ledger."""
+    import body_frame as bf
+    L = layout()
+    parts = bf.all_parts(L['mounts'])
+    led = {st: ledger(L, parts, stage=st) for st in ('P1', 'P3')}
+    (OUT / 'mass.json').write_text(json.dumps(led, indent=1) + '\n')
+    return led
+
+
+if __name__ == '__main__':
+    import argparse
+    ap = argparse.ArgumentParser()
+    ap.add_argument('--ledger', action='store_true', help='write exports/body/mass.json (else: the overlap check only)')
+    a = ap.parse_args()
+    L = layout()
+    bad = check(L['items'], frame_boxes())
+    print(f"{len(L['items'])} items, {len(bad)} problems")
+    for b in bad:
+        print('  ', b)
+    if a.ledger:
+        led = write_ledger()
+        g = led['P3']['gate']
+        print(f"P1 {led['P1']['total_kg']} kg, P3 {led['P3']['total_kg']} kg (ceiling {g['ceiling_kg']}, gap {g['gap_kg']:+.3f}); "
+              f"with the open scheduled levers {g['with_scheduled_levers_kg']} kg: {'pass' if g['pass'] else 'OVER'}")
+        for l in led['P3']['levers']:
+            print(f"   {l['n']:2} {l['key']:15} {l['grams']:+5} g  {l['stage']} {l['kind']:9} {l['status']}")

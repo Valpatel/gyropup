@@ -101,3 +101,69 @@ Repoint it to dev once nothing else depends on that worktree.
   were also stopped. Restart each from its plan; recreate the 2-hour program tick (its prompt now carries the disk policy).
 - **Disk:** heavy files go to /mnt/storage-10tb/claude-scratch/gyropup/ (memory: disk-space-policy).
 - **Build page:** designer/build.html (top bar "Build"): everything to order and print, by seller.
+
+## Update 2026-10-27 evening: where everything is tracked (pick up from any computer)
+
+**GitHub is the record.** Every workstream branch is pushed to origin, and each one has a draft PR into main that
+closes its issues:
+
+| Workstream | Branch | PR | Issues |
+|---|---|---|---|
+| Turret: clean mechanics, its own computer (D66), Rival speed (D68), ammo (D67) | turret/program | #15 | #1, #2, #3 |
+| Leg stops (D53) | leg/stops | #16 | #4 |
+| Body: power for D65, P0 shunt fix, fuse board, sections | body/program (includes b5, b8) | #17 | #10–#13 |
+| Leg core (main session): front link and dowels, the wheel link overlap, BUS_V 36 V | main | — | #5, #6, #7 |
+| Rig: predictions at 16.25 kg / 36 V | legrig/program | — | #8 |
+| Instant prices that need an upload | — | — | #9 |
+| Move onto cad-agent's gates | — | — | #14 |
+
+cad-agent's design-process work (dossier, integrity gates, section review) is tracked in Valpatel/cad-agent:
+- the tracking issue is #41;
+- tasks T2–T16 are issues #29–#40;
+- PRs #25, #26 and #27 are merged into dev.
+
+**Decisions from today:**
+- D65: two DCB609 FLEXVOLTs in series, a 10S bus at 30–41 V.
+- D66: the turret is its own robot, on a reComputer Mini with a Jetson Orin NX 16 GB.
+- D67: Rival rounds, off-brand allowed within 22.2–22.8 mm and 1.6–2.0 g.
+- D68: about 100 fps, with a 105 fps physical ceiling.
+
+**Compute.** Heavy CAD, FEA and sim runs go to the compute hosts with `tools/gp-remote` (copy it to ~/.local/bin).
+- It rsyncs the worktree and ~/Code/cad-agent-gyropup-int to `~/gyropup-compute/` on the compute hosts listed in ~/.config/gp-remote/hosts (SSH aliases) and pulls back the
+  paths you list.
+- The GB10 environment is a venv built from this venv's `pip freeze`, minus the Intel, pardiso and umf packages.
+- gmsh comes from a micromamba env (`~/gyropup-compute/gmsh-env`, with gmsh.py symlinked into the venv), because PyPI
+  has no aarch64 gmsh.
+- gp-remote LD_PRELOADs that env's OpenSSL.
+- There's no PARDISO on aarch64, so the FEA uses SciPy's solver.
+
+**WIP sites** (`cad-agent site --serve --host 0.0.0.0` run in each worktree): main :8642, turret :8651, legrig
+:8652, body :8653, legstops :8654.
+
+## Update 2026-10-27 late night (5-hour usage limit)
+
+Everything committed is pushed. Uncommitted edits in progress were also snapshotted to `wip/<branch>` branches on
+origin. These are for recovery only, not reviewed: the agents' own commits supersede them.
+- `wip/turret/program`: 39 files of the turret's mechanical cleanup, D66 and D68.
+- `wip/leg/stops`: the stops work since its last commit, including the GB10 FEA outputs.
+- `wip/wheels/study`: the air-tyre wheel study (#18).
+- `wip/feat/gate-containment` in cad-agent: the PR #42 review fixes.
+
+State at the limit:
+- **Merged to main:**
+  - the leg rig on 10S, with integrity checks (f50e5c4);
+  - the body with the P0 shunt fix, fuse board, battery bay and 183-screw integrity checks (507de33, PR #17; #11, #12 and #13 closed).
+- **cad-agent dev:** the plan (#25), the dossier (#26), the gates core (#27) and connectivity (#43, closing #30).
+- **In flight:**
+  - turret: issues #1-#3, PR #15;
+  - leg stops: #4, PR #16;
+  - wheels: #18, branch wheels/study;
+  - containment: cad-agent PR #42, issue #31. It needs a rebase onto dev, now that #43 is merged.
+- **Main-session leg work:** #5, #6 and #7 wait on leg/stops.
+- **Mass:** the design mass is set after #18 picks a wheel (#10).
+- **Purchases:** 4 RS-04s ordered (docs/purchases.md); a spare is #22.
+
+To resume:
+1. `gh issue list` in both repos.
+2. Read each issue's last comment for its resume notes.
+3. Restart each agent from its issue and branch.

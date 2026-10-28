@@ -1,0 +1,250 @@
+{
+ "parts": {
+  "dyno_lug_plate": {
+   "valid": true,
+   "solids": 1,
+   "watertight": true,
+   "fits": true,
+   "grams": 422
+  },
+  "dyno_hub": {
+   "valid": true,
+   "solids": 1,
+   "watertight": true,
+   "fits": true,
+   "grams": 292
+  },
+  "dyno_spider": {
+   "valid": true,
+   "solids": 1,
+   "watertight": true,
+   "fits": true,
+   "grams": 68
+  },
+  "press_cage": {
+   "valid": true,
+   "solids": 1,
+   "watertight": true,
+   "fits": true,
+   "grams": 335
+  },
+  "press_base": {
+   "valid": true,
+   "solids": 1,
+   "watertight": true,
+   "fits": true,
+   "grams": 48
+  },
+  "press_slider": {
+   "valid": true,
+   "solids": 1,
+   "watertight": true,
+   "fits": true,
+   "grams": 29
+  },
+  "sleeve_block": {
+   "valid": true,
+   "solids": 1,
+   "watertight": true,
+   "fits": true,
+   "grams": 60
+  },
+  "sleeve_anvil": {
+   "valid": true,
+   "solids": 1,
+   "watertight": true,
+   "fits": true,
+   "grams": 13
+  },
+  "puller_m5": {
+   "valid": true,
+   "solids": 1,
+   "watertight": true,
+   "fits": true,
+   "grams": 115
+  },
+  "puller_m8": {
+   "valid": true,
+   "solids": 1,
+   "watertight": true,
+   "fits": true,
+   "grams": 38
+  },
+  "bearing_disc": {
+   "valid": true,
+   "solids": 1,
+   "watertight": true,
+   "fits": true,
+   "grams": 6
+  },
+  "coupon_frame_ring_m01": {
+   "valid": true,
+   "solids": 1,
+   "watertight": true,
+   "fits": true,
+   "grams": 25
+  },
+  "coupon_frame_ring_nom": {
+   "valid": true,
+   "solids": 1,
+   "watertight": true,
+   "fits": true,
+   "grams": 109
+  },
+  "coupon_frame_ring_p01": {
+   "valid": true,
+   "solids": 1,
+   "watertight": true,
+   "fits": true,
+   "grams": 25
+  },
+  "coupon_hub_face_m01": {
+   "valid": true,
+   "solids": 1,
+   "watertight": true,
+   "fits": true,
+   "grams": 21
+  },
+  "coupon_hub_face_nom": {
+   "valid": true,
+   "solids": 1,
+   "watertight": true,
+   "fits": true,
+   "grams": 21
+  },
+  "coupon_hub_face_p01": {
+   "valid": true,
+   "solids": 1,
+   "watertight": true,
+   "fits": true,
+   "grams": 21
+  },
+  "coupon_knee_eye_m01": {
+   "valid": true,
+   "solids": 1,
+   "watertight": true,
+   "fits": true,
+   "grams": 25
+  },
+  "coupon_knee_eye_nom": {
+   "valid": true,
+   "solids": 1,
+   "watertight": true,
+   "fits": true,
+   "grams": 25
+  },
+  "coupon_knee_eye_p01": {
+   "valid": true,
+   "solids": 1,
+   "watertight": true,
+   "fits": true,
+   "grams": 25
+  },
+  "coupon_knee_boss_m01": {
+   "valid": true,
+   "solids": 1,
+   "watertight": true,
+   "fits": true,
+   "grams": 13
+  },
+  "coupon_knee_boss_nom": {
+   "valid": true,
+   "solids": 1,
+   "watertight": true,
+   "fits": true,
+   "grams": 13
+  },
+  "coupon_knee_boss_p01": {
+   "valid": true,
+   "solids": 1,
+   "watertight": true,
+   "fits": true,
+   "grams": 13
+  },
+  "coupon_apex_eye_m01": {
+   "valid": true,
+   "solids": 1,
+   "watertight": true,
+   "fits": true,
+   "grams": 25
+  },
+  "coupon_apex_eye_nom": {
+   "valid": true,
+   "solids": 1,
+   "watertight": true,
+   "fits": true,
+   "grams": 25
+  },
+  "coupon_apex_eye_p01": {
+   "valid": true,
+   "solids": 1,
+   "watertight": true,
+   "fits": true,
+   "grams": 25
+  },
+  "coupon_hub_stub_m01": {
+   "valid": true,
+   "solids": 1,
+   "watertight": true,
+   "fits": true,
+   "grams": 26
+  },
+  "coupon_hub_stub_nom": {
+   "valid": true,
+   "solids": 1,
+   "watertight": true,
+   "fits": true,
+   "grams": 27
+  },
+  "coupon_hub_stub_p01": {
+   "valid": true,
+   "solids": 1,
+   "watertight": true,
+   "fits": true,
+   "grams": 27
+  }
+ },
+ "too_big": [],
+ "variants_mm": [
+  -0.1,
+  0.0,
+  0.1
+ ],
+ "press_cage": {
+  "cell": [
+   138.0,
+   214.0
+  ],
+  "b3_slack_mm": 6.0,
+  "b3_sleeve_od": 26.0,
+  "b4_stud_end": 73.0,
+  "b4_nut": [
+   77.0,
+   88.2
+  ],
+  "b4_nut_engaged": true,
+  "b4_insert_face": 37.0,
+  "b4_reach": {
+   "M5 x 40 + 1.6 washer": 15.4,
+   "M5 x 40 + 6 disc + 1.6 washer": 9.4,
+   "M8 x 40 + 2.4 washer": 14.6
+  }
+ },
+ "d46_face": {
+  "bolts_deg": [
+   0,
+   30,
+   90,
+   120,
+   180,
+   210,
+   270,
+   300
+  ],
+  "dowels_deg": [
+   60,
+   150
+  ],
+  "spigot_recess": 40.1
+ }
+}

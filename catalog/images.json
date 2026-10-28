@@ -78,6 +78,16 @@
   "material": "pa6-cf",
   "bom": "leg"
  },
+ "ballast_shaft": {
+  "source_url": "https://www.mcmaster.com/6649K433/",
+  "image_url": "https://www.mcmaster.com/mvC/Contents/gfx/ImageCache/664/6649K433_817e06d7-fe9b-4b3f-b7b0-391c8b17906b@4x_638012306543535228.png?ver=ImageNotFound",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/ballast_shaft.jpg",
+  "kind": "mcmaster",
+  "seller": "McMaster-Carr",
+  "part_number": "6649K433",
+  "availability": "Delivers Thursday 7-9 am"
+ },
  "barrel": {
   "source_url": "gyropup-turret/exports/turret/barrel.stl",
   "image_url": null,
@@ -117,6 +127,15 @@
   "part_number": "5972K42",
   "availability": "Delivers Wednesday 7-9 am"
  },
+ "bearing_disc": {
+  "source_url": "exports/rig/bench/bearing_disc.stl",
+  "image_url": null,
+  "fetched": "2026-10-27",
+  "path": "exports/thumbs/bearing_disc.png",
+  "kind": "render",
+  "material": "pa6-cf",
+  "bom": "rig"
+ },
  "bearing_mr126": {
   "source_url": "https://www.mcmaster.com/7804K112/",
   "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/780/7804K112_66876404-7476-4cfd-8e8f-96ddc4bbdab3@4x_o9vj3_1787087084.png?ver=ImageNotFound",
@@ -127,6 +146,16 @@
   "part_number": "7804K112",
   "availability": "Delivers tomorrow 7-9 am"
  },
+ "bench_supply_48v": {
+  "source_url": "https://www.bravoelectro.com/lrs-600-48.html",
+  "image_url": "https://www.bravoelectro.com/media/catalog/product/cache/656e967247d4eb88b33e3f0739f96e0a/m/e/mea-lrs-600.png",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/bench_supply_48v.jpg",
+  "kind": "vendor",
+  "seller": "Bravo Electro",
+  "part_number": "Mean Well LRS-600-48",
+  "read_with": "request"
+ },
  "board_bay": {
   "source_url": "gyropup-turret/exports/turret/board_bay.stl",
   "image_url": null,
@@ -135,6 +164,36 @@
   "kind": "render",
   "material": "petg",
   "bom": "turret"
+ },
+ "bolt_m12x80": {
+  "source_url": "https://boltdepot.com/Product-Details?product=6132",
+  "image_url": "https://boltdepot.com/images/dimensions/hex-bolt-full-thread-8.8-dimensions.gif",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/bolt_m12x80.jpg",
+  "kind": "vendor",
+  "seller": "Bolt Depot",
+  "part_number": "6132",
+  "read_with": "chrome"
+ },
+ "bracket_corner_8": {
+  "source_url": "https://us.misumi-ec.com/vona2/detail/110300450470/?HissuCode=HBLTS8-C-SEP",
+  "image_url": "https://us.misumi-ec.com/linked/material/mech/MSM1/PHOTO/10300450470.jpg",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/bracket_corner_8.jpg",
+  "kind": "vendor",
+  "seller": "MISUMI",
+  "part_number": "HBLTS8-C-SEP",
+  "read_with": "chrome"
+ },
+ "bracket_free_angle_8": {
+  "source_url": "https://us.misumi-ec.com/vona2/detail/110302255430/?HissuCode=HBLTBA40-SET1",
+  "image_url": "https://us.misumi-ec.com/linked/material/mech/MSM1/PHOTO/10302255430.jpg",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/bracket_free_angle_8.jpg",
+  "kind": "vendor",
+  "seller": "MISUMI",
+  "part_number": "HBLTBA40-SET1",
+  "read_with": "chrome"
  },
  "bumper-feet-12.7": {
   "source_url": "https://www.digikey.com/en/products/detail/3m/SJ5003/26770367",
@@ -146,6 +205,24 @@
   "part_number": "SJ5003 (Bumpon)",
   "read_with": "chosen"
  },
+ "bumper_base": {
+  "source_url": "exports/rig/bumper_base.stl",
+  "image_url": null,
+  "fetched": "2026-10-27",
+  "path": "exports/thumbs/bumper_base.png",
+  "kind": "render",
+  "material": "petg",
+  "bom": "rig"
+ },
+ "bumper_cap": {
+  "source_url": "exports/rig/bumper_cap.stl",
+  "image_url": null,
+  "fetched": "2026-10-27",
+  "path": "exports/thumbs/bumper_cap.png",
+  "kind": "render",
+  "material": "petg",
+  "bom": "rig"
+ },
  "bumper_ring": {
   "source_url": "gyropup-turret/exports/turret/bumper_ring.stl",
   "image_url": null,
@@ -154,6 +231,35 @@
   "kind": "render",
   "material": "tpu95",
   "bom": "turret"
+ },
+ "bumper_tpu": {
+  "source_url": "exports/rig/bumper_tpu.stl",
+  "image_url": null,
+  "fetched": "2026-10-27",
+  "path": "exports/thumbs/bumper_tpu.png",
+  "kind": "render",
+  "material": "tpu95",
+  "bom": "rig"
+ },
+ "can_cable": {
+  "source_url": "https://www.automationdirect.com/adc/shopping/catalog/bulk_wire_-a-_cable/data_-a-_communication_cable/q0357-1",
+  "image_url": "https://cdn.automationdirect.com/static/images/products/packaging/pkg_q03571.jpg?format=auto",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/can_cable.jpg",
+  "kind": "vendor",
+  "seller": "AutomationDirect",
+  "part_number": "Quabbin Q0357-1",
+  "read_with": "chrome"
+ },
+ "carabiner": {
+  "source_url": "https://www.amazon.com/dp/B07D73RRH5?th=1",
+  "image_url": "https://m.media-amazon.com/images/I/71EHgMN-ymS._AC_SX569_.jpg",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/carabiner.jpg",
+  "kind": "vendor",
+  "seller": "Amazon (XINDA)",
+  "part_number": "ASIN B07D73RRH5 (2-pack)",
+  "read_with": "chrome"
  },
  "cartridge_body": {
   "source_url": "gyropup-turret/exports/turret/cartridge_body.stl",
@@ -184,6 +290,168 @@
   "part_number": "98541A174",
   "availability": "Delivers Wednesday 7-9 am"
  },
+ "coupon_apex_eye_m01": {
+  "source_url": "exports/rig/bench/coupon_apex_eye_m01.stl",
+  "image_url": null,
+  "fetched": "2026-10-27",
+  "path": "exports/thumbs/coupon_apex_eye_m01.png",
+  "kind": "render",
+  "material": "pa6-cf",
+  "bom": "rig"
+ },
+ "coupon_apex_eye_nom": {
+  "source_url": "exports/rig/bench/coupon_apex_eye_nom.stl",
+  "image_url": null,
+  "fetched": "2026-10-27",
+  "path": "exports/thumbs/coupon_apex_eye_nom.png",
+  "kind": "render",
+  "material": "pa6-cf",
+  "bom": "rig"
+ },
+ "coupon_apex_eye_p01": {
+  "source_url": "exports/rig/bench/coupon_apex_eye_p01.stl",
+  "image_url": null,
+  "fetched": "2026-10-27",
+  "path": "exports/thumbs/coupon_apex_eye_p01.png",
+  "kind": "render",
+  "material": "pa6-cf",
+  "bom": "rig"
+ },
+ "coupon_frame_ring_m01": {
+  "source_url": "exports/rig/bench/coupon_frame_ring_m01.stl",
+  "image_url": null,
+  "fetched": "2026-10-27",
+  "path": "exports/thumbs/coupon_frame_ring_m01.png",
+  "kind": "render",
+  "material": "pa6-cf",
+  "bom": "rig"
+ },
+ "coupon_frame_ring_nom": {
+  "source_url": "exports/rig/bench/coupon_frame_ring_nom.stl",
+  "image_url": null,
+  "fetched": "2026-10-27",
+  "path": "exports/thumbs/coupon_frame_ring_nom.png",
+  "kind": "render",
+  "material": "pa6-cf",
+  "bom": "rig"
+ },
+ "coupon_frame_ring_p01": {
+  "source_url": "exports/rig/bench/coupon_frame_ring_p01.stl",
+  "image_url": null,
+  "fetched": "2026-10-27",
+  "path": "exports/thumbs/coupon_frame_ring_p01.png",
+  "kind": "render",
+  "material": "pa6-cf",
+  "bom": "rig"
+ },
+ "coupon_hub_face_m01": {
+  "source_url": "exports/rig/bench/coupon_hub_face_m01.stl",
+  "image_url": null,
+  "fetched": "2026-10-27",
+  "path": "exports/thumbs/coupon_hub_face_m01.png",
+  "kind": "render",
+  "material": "pa6-cf",
+  "bom": "rig"
+ },
+ "coupon_hub_face_nom": {
+  "source_url": "exports/rig/bench/coupon_hub_face_nom.stl",
+  "image_url": null,
+  "fetched": "2026-10-27",
+  "path": "exports/thumbs/coupon_hub_face_nom.png",
+  "kind": "render",
+  "material": "pa6-cf",
+  "bom": "rig"
+ },
+ "coupon_hub_face_p01": {
+  "source_url": "exports/rig/bench/coupon_hub_face_p01.stl",
+  "image_url": null,
+  "fetched": "2026-10-27",
+  "path": "exports/thumbs/coupon_hub_face_p01.png",
+  "kind": "render",
+  "material": "pa6-cf",
+  "bom": "rig"
+ },
+ "coupon_hub_stub_m01": {
+  "source_url": "exports/rig/bench/coupon_hub_stub_m01.stl",
+  "image_url": null,
+  "fetched": "2026-10-27",
+  "path": "exports/thumbs/coupon_hub_stub_m01.png",
+  "kind": "render",
+  "material": "pa6-cf",
+  "bom": "rig"
+ },
+ "coupon_hub_stub_nom": {
+  "source_url": "exports/rig/bench/coupon_hub_stub_nom.stl",
+  "image_url": null,
+  "fetched": "2026-10-27",
+  "path": "exports/thumbs/coupon_hub_stub_nom.png",
+  "kind": "render",
+  "material": "pa6-cf",
+  "bom": "rig"
+ },
+ "coupon_hub_stub_p01": {
+  "source_url": "exports/rig/bench/coupon_hub_stub_p01.stl",
+  "image_url": null,
+  "fetched": "2026-10-27",
+  "path": "exports/thumbs/coupon_hub_stub_p01.png",
+  "kind": "render",
+  "material": "pa6-cf",
+  "bom": "rig"
+ },
+ "coupon_knee_boss_m01": {
+  "source_url": "exports/rig/bench/coupon_knee_boss_m01.stl",
+  "image_url": null,
+  "fetched": "2026-10-27",
+  "path": "exports/thumbs/coupon_knee_boss_m01.png",
+  "kind": "render",
+  "material": "pa6-cf",
+  "bom": "rig"
+ },
+ "coupon_knee_boss_nom": {
+  "source_url": "exports/rig/bench/coupon_knee_boss_nom.stl",
+  "image_url": null,
+  "fetched": "2026-10-27",
+  "path": "exports/thumbs/coupon_knee_boss_nom.png",
+  "kind": "render",
+  "material": "pa6-cf",
+  "bom": "rig"
+ },
+ "coupon_knee_boss_p01": {
+  "source_url": "exports/rig/bench/coupon_knee_boss_p01.stl",
+  "image_url": null,
+  "fetched": "2026-10-27",
+  "path": "exports/thumbs/coupon_knee_boss_p01.png",
+  "kind": "render",
+  "material": "pa6-cf",
+  "bom": "rig"
+ },
+ "coupon_knee_eye_m01": {
+  "source_url": "exports/rig/bench/coupon_knee_eye_m01.stl",
+  "image_url": null,
+  "fetched": "2026-10-27",
+  "path": "exports/thumbs/coupon_knee_eye_m01.png",
+  "kind": "render",
+  "material": "pa6-cf",
+  "bom": "rig"
+ },
+ "coupon_knee_eye_nom": {
+  "source_url": "exports/rig/bench/coupon_knee_eye_nom.stl",
+  "image_url": null,
+  "fetched": "2026-10-27",
+  "path": "exports/thumbs/coupon_knee_eye_nom.png",
+  "kind": "render",
+  "material": "pa6-cf",
+  "bom": "rig"
+ },
+ "coupon_knee_eye_p01": {
+  "source_url": "exports/rig/bench/coupon_knee_eye_p01.stl",
+  "image_url": null,
+  "fetched": "2026-10-27",
+  "path": "exports/thumbs/coupon_knee_eye_p01.png",
+  "kind": "render",
+  "material": "pa6-cf",
+  "bom": "rig"
+ },
  "cradle": {
   "source_url": "gyropup-turret/exports/turret/cradle.stl",
   "image_url": null,
@@ -193,6 +461,16 @@
   "material": "pa6-cf",
   "bom": "turret"
  },
+ "dcdc_ddr30l12": {
+  "source_url": "https://www.bravoelectro.com/ddr-30l-12.html",
+  "image_url": "https://www.bravoelectro.com/media/catalog/product/cache/656e967247d4eb88b33e3f0739f96e0a/m/e/mea-ddr-30.png",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/dcdc_ddr30l12.jpg",
+  "kind": "vendor",
+  "seller": "Bravo Electro",
+  "part_number": "Mean Well DDR-30L-12",
+  "read_with": "request"
+ },
  "dial": {
   "source_url": "gyropup-turret/exports/turret/dial.stl",
   "image_url": null,
@@ -201,6 +479,26 @@
   "kind": "render",
   "material": "petg",
   "bom": "turret"
+ },
+ "dial_indicator": {
+  "source_url": "https://www.grizzly.com/products/grizzly-magnetic-base-dial-indicator-combo/g9849",
+  "image_url": "https://cdn0.grizzly.com/pics/jpeg1000/g/g9849-0dd7f1a335f90c2e1a4977f35549ba6b.jpg",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/dial_indicator.jpg",
+  "kind": "vendor",
+  "seller": "Grizzly",
+  "part_number": "G9849 (Grizzly Magnetic Base/Dial Indicator Combo)",
+  "read_with": "chrome"
+ },
+ "diode_1n4001": {
+  "source_url": "https://www.sparkfun.com/diode-rectifier-1a-50v-1n4001.html",
+  "image_url": "https://www.sparkfun.com/media/catalog/product/cache/6b78ac9ed927a3c2db42a3c84dab4ce5/0/8/08588-02-L.jpg",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/diode_1n4001.jpg",
+  "kind": "vendor",
+  "seller": "SparkFun",
+  "part_number": "COM-08589",
+  "read_with": "request"
  },
  "dji-c610-esc": {
   "source_url": "https://store.dji.com/product/rm-c610-brushless-dc-motor-speed-control",
@@ -242,6 +540,92 @@
   "part_number": "91595A352",
   "availability": "Delivers tomorrow 7-9 am"
  },
+ "drop_bracket": {
+  "source_url": "exports/rig/drop_bracket.stl",
+  "image_url": null,
+  "fetched": "2026-10-27",
+  "path": "exports/thumbs/drop_bracket.png",
+  "kind": "render",
+  "material": "petg",
+  "bom": "rig"
+ },
+ "dyno_hub": {
+  "source_url": "exports/rig/bench/dyno_hub.stl",
+  "image_url": null,
+  "fetched": "2026-10-27",
+  "path": "exports/thumbs/dyno_hub.png",
+  "kind": "render",
+  "material": "petg",
+  "bom": "rig"
+ },
+ "dyno_lug_plate": {
+  "source_url": "exports/rig/bench/dyno_lug_plate.stl",
+  "image_url": null,
+  "fetched": "2026-10-27",
+  "path": "exports/thumbs/dyno_lug_plate.png",
+  "kind": "render",
+  "material": "petg",
+  "bom": "rig"
+ },
+ "dyno_spider": {
+  "source_url": "exports/rig/bench/dyno_spider.stl",
+  "image_url": null,
+  "fetched": "2026-10-27",
+  "path": "exports/thumbs/dyno_spider.png",
+  "kind": "render",
+  "material": "tpu95",
+  "bom": "rig"
+ },
+ "extrusion_4040_620": {
+  "source_url": "https://us.misumi-ec.com/vona2/detail/110302689860/?HissuCode=HFS8-4040-620",
+  "image_url": "https://us.misumi-ec.com/linked/material/mech/MSM1/PHOTO/10302689860.jpg",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/extrusion_4040_620.jpg",
+  "kind": "vendor",
+  "seller": "MISUMI",
+  "part_number": "HFS8-4040-620",
+  "read_with": "chrome"
+ },
+ "extrusion_4040_720": {
+  "source_url": "https://us.misumi-ec.com/vona2/detail/110302689860/?HissuCode=HFS8-4040-720",
+  "image_url": "https://us.misumi-ec.com/linked/material/mech/MSM1/PHOTO/10302689860.jpg",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/extrusion_4040_720.jpg",
+  "kind": "vendor",
+  "seller": "MISUMI",
+  "part_number": "HFS8-4040-720",
+  "read_with": "chrome"
+ },
+ "extrusion_4040_900": {
+  "source_url": "https://us.misumi-ec.com/vona2/detail/110302689860/?HissuCode=HFS8-4040-900",
+  "image_url": "https://us.misumi-ec.com/linked/material/mech/MSM1/PHOTO/10302689860.jpg",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/extrusion_4040_900.jpg",
+  "kind": "vendor",
+  "seller": "MISUMI",
+  "part_number": "HFS8-4040-900",
+  "read_with": "chrome"
+ },
+ "extrusion_4080_620": {
+  "source_url": "https://us.misumi-ec.com/vona2/detail/110302690310/?HissuCode=HFS8-4080-620",
+  "image_url": "https://us.misumi-ec.com/linked/material/mech/MSM1/PHOTO/10302690310.jpg",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/extrusion_4080_620.jpg",
+  "kind": "vendor",
+  "seller": "MISUMI",
+  "part_number": "HFS8-4080-620",
+  "read_with": "chrome"
+ },
+ "extrusion_8080_1200": {
+  "source_url": "https://us.misumi-ec.com/vona2/detail/110302690740/?HissuCode=HFS8-8080-1200",
+  "image_url": "https://us.misumi-ec.com/linked/material/mech/MSM1/PHOTO/10302690740.jpg",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/extrusion_8080_1200.jpg",
+  "kind": "vendor",
+  "seller": "MISUMI",
+  "part_number": "HFS8-8080-1200",
+  "read_with": "chrome"
+ },
  "eye_sleeve": {
   "source_url": "https://www.mcmaster.com/96990A403/",
   "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/969/96990A403_2f05800d-4105-4036-b279-f25d2e9740b4@4x_638061860006710954.png?ver=ImageNotFound",
@@ -252,6 +636,26 @@
   "part_number": "96990A403",
   "availability": "Delivers tomorrow 7-9 am"
  },
+ "feather_m4_can": {
+  "source_url": "https://www.adafruit.com/product/4759",
+  "image_url": "https://www.adafruit.com/images/480x360/4759-09.jpg",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/feather_m4_can.jpg",
+  "kind": "vendor",
+  "seller": "Adafruit",
+  "part_number": "4759",
+  "read_with": "request"
+ },
+ "featherwing_proto": {
+  "source_url": "https://www.adafruit.com/product/2884",
+  "image_url": "https://www.adafruit.com/images/480x360/2884-13.jpg",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/featherwing_proto.jpg",
+  "kind": "vendor",
+  "seller": "Adafruit",
+  "part_number": "2884",
+  "read_with": "request"
+ },
  "feetech-sts3215-c018-12v": {
   "source_url": "https://www.waveshare.com/st3215-servo.htm?sku=22414",
   "image_url": "https://www.waveshare.com/media/catalog/product/cache/1/image/560x560/9df78eab33525d08d6e5fb8d27136e95/s/t/st3215-servo-1_5.jpg",
@@ -261,6 +665,16 @@
   "seller": "Waveshare",
   "part_number": "STS3215 / ST3215 12 V 30 kg-cm serial bus servo",
   "read_with": "chosen"
+ },
+ "ferrule_kit": {
+  "source_url": "https://www.iwiss.com/products/hsc8-6-4-kit-ferrule-crimping-tool-kit-awg-23-10-self-adjustable-ratchet-ferrule-crimper-plier-c-w-770end-sleeve-ferrules-connector-terminals",
+  "image_url": "https://www.iwiss.com/cdn/shop/files/46_1-351986_1200x1200.jpg?v=1731482399",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/ferrule_kit.jpg",
+  "kind": "vendor",
+  "seller": "IWISS",
+  "part_number": "HSC8 6-4-KIT",
+  "read_with": "request"
  },
  "flywheel": {
   "source_url": "gyropup-turret/exports/turret/flywheel.stl",
@@ -309,6 +723,56 @@
   "part_number": "03455LS1H",
   "read_with": "chosen"
  },
+ "fuse_holder_5x20": {
+  "source_url": "https://www.lcsc.com/product-detail/C206937.html",
+  "image_url": "https://assets.lcsc.com/images/lcsc/900x900/20180914_Littelfuse-03455LS1HX020_C206937_front.jpg",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/fuse_holder_5x20.jpg",
+  "kind": "vendor",
+  "seller": "www.lcsc.com",
+  "part_number": "Littelfuse 03455LS1H",
+  "read_with": "request"
+ },
+ "fuse_holder_cc": {
+  "source_url": "https://www.galco.com/lpsc0001z-littelfuse.html",
+  "image_url": "https://www.galco.com/media/catalog/product/cache/6517c62f5899ad6aa0ba23ceb3eeff97/l/p/lpsc0001z-littelfuse_1.jpg",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/fuse_holder_cc.jpg",
+  "kind": "vendor",
+  "seller": "Galco",
+  "part_number": "Littelfuse LPSC0001Z",
+  "read_with": "chrome"
+ },
+ "fuse_kldr030": {
+  "source_url": "https://www.standardelectricsupply.com/Littelfuse-KLDR030-TXP-POWR-GARD-Time-Delay-Fuse",
+  "image_url": "https://do1jvmih5t6vs.cloudfront.net/userfiles/ad/small/littelfuse_kldr_100txp.jpg",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/fuse_kldr030.jpg",
+  "kind": "vendor",
+  "seller": "Standard Electric Supply",
+  "part_number": "Littelfuse KLDR030.TXP",
+  "read_with": "request"
+ },
+ "gh_header_2p": {
+  "source_url": "https://www.lcsc.com/product-detail/C161690.html",
+  "image_url": "https://assets.lcsc.com/images/lcsc/900x900/20180914_JST-BM02B-GHS-TBT-LF-SN_C161690_front.jpg",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/gh_header_2p.jpg",
+  "kind": "vendor",
+  "seller": "LCSC",
+  "part_number": "JST BM02B-GHS-TBT(LF)(SN) (LCSC C161690)",
+  "read_with": "request"
+ },
+ "heatshrink_kit": {
+  "source_url": "https://www.racedayquads.com/products/530-pcs-heat-shrink-tube-set",
+  "image_url": "http://www.racedayquads.com/cdn/shop/products/fpvelite-heat-shrink-tube-set-530pc-hardware-6996551991409.jpg?v=1762440086",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/heatshrink_kit.jpg",
+  "kind": "vendor",
+  "seller": "RaceDayQuads",
+  "part_number": "Heat Shrink Tube Set (530PC)",
+  "read_with": "request"
+ },
  "hip_frame": {
   "source_url": "exports/leg/hip_frame.stl",
   "image_url": null,
@@ -344,6 +808,16 @@
   "kind": "render",
   "material": "petg",
   "bom": "turret"
+ },
+ "hx711": {
+  "source_url": "https://www.sparkfun.com/products/13879",
+  "image_url": "https://www.sparkfun.com/media/catalog/product/cache/6b78ac9ed927a3c2db42a3c84dab4ce5/1/3/13879-SparkFun_Load_Cell_Amplifier_-_HX711-01.jpg",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/hx711.jpg",
+  "kind": "vendor",
+  "seller": "SparkFun",
+  "part_number": "SEN-13879",
+  "read_with": "request"
  },
  "insert_m3": {
   "source_url": "https://www.mcmaster.com/94459A140/",
@@ -433,6 +907,35 @@
   "kind": "render",
   "material": "petg",
   "bom": "turret"
+ },
+ "load_cell_mount": {
+  "source_url": "exports/rig/load_cell_mount.stl",
+  "image_url": null,
+  "fetched": "2026-10-27",
+  "path": "exports/thumbs/load_cell_mount.png",
+  "kind": "render",
+  "material": "petg",
+  "bom": "rig"
+ },
+ "load_cell_s500": {
+  "source_url": "https://www.phidgets.com/?prodid=231",
+  "image_url": "https://cdn.phidgets.com/productfiles/3140/3140_0/Images/551x-/20/3140_0.jpg",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/load_cell_s500.jpg",
+  "kind": "vendor",
+  "seller": "Phidgets",
+  "part_number": "3140_0",
+  "read_with": "chrome"
+ },
+ "load_cells_4x50": {
+  "source_url": "https://vxb.com/products/4-pack-50kg-half-bridge-load-cell-sensor-kit-with",
+  "image_url": "http://vxb.com/cdn/shop/files/71B-t-uLhZL.jpg?v=1785673102",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/load_cells_4x50.jpg",
+  "kind": "vendor",
+  "seller": "vxb.com",
+  "part_number": "ASIN B079FTXR7Y",
+  "read_with": "request"
  },
  "molex-43020-0600": {
   "source_url": "https://heilind.com/mol43020-0600.html",
@@ -534,6 +1037,56 @@
   "part_number": "94645A220",
   "availability": "Delivers Wednesday 7-9 am"
  },
+ "nut_m12": {
+  "source_url": "https://boltdepot.com/Product-Details?product=4790",
+  "image_url": "https://boltdepot.com/images/dimensions/hex-nut-dimensions1.gif",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/nut_m12.jpg",
+  "kind": "vendor",
+  "seller": "Bolt Depot",
+  "part_number": "4790",
+  "read_with": "chrome"
+ },
+ "nut_m4_dropin": {
+  "source_url": "https://us.misumi-ec.com/vona2/detail/110302257010/?HissuCode=HNTA8-4",
+  "image_url": "https://us.misumi-ec.com/linked/material/mech/MSM1/PHOTO/10302257010.jpg",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/nut_m4_dropin.jpg",
+  "kind": "vendor",
+  "seller": "MISUMI",
+  "part_number": "HNTA8-4",
+  "read_with": "chrome"
+ },
+ "nut_m6_dropin": {
+  "source_url": "https://us.misumi-ec.com/vona2/detail/110302257010/?HissuCode=HNTA8-6",
+  "image_url": "https://us.misumi-ec.com/linked/material/mech/MSM1/PHOTO/10302257010.jpg",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/nut_m6_dropin.jpg",
+  "kind": "vendor",
+  "seller": "MISUMI",
+  "part_number": "HNTA8-6",
+  "read_with": "chrome"
+ },
+ "nut_m6_nylock": {
+  "source_url": "https://boltdepot.com/Product-Details?product=4804",
+  "image_url": "https://boltdepot.com/images/dimensions/hex-lock-nut-nylon-insert-dimensions1.gif",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/nut_m6_nylock.jpg",
+  "kind": "vendor",
+  "seller": "Bolt Depot",
+  "part_number": "4804",
+  "read_with": "chrome"
+ },
+ "nut_m8_dropin": {
+  "source_url": "https://us.misumi-ec.com/vona2/detail/110302257010/?HissuCode=HNTA8-8",
+  "image_url": "https://us.misumi-ec.com/linked/material/mech/MSM1/PHOTO/10302257010.jpg",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/nut_m8_dropin.jpg",
+  "kind": "vendor",
+  "seller": "MISUMI",
+  "part_number": "HNTA8-8",
+  "read_with": "chrome"
+ },
  "odrive-botwheel": {
   "source_url": "https://shop.odriverobotics.com/products/botwheels",
   "image_url": "http://shop.odriverobotics.com/cdn/shop/files/PXL_20220913_163241201-2.jpg?v=1705544648",
@@ -552,6 +1105,16 @@
   "kind": "render",
   "material": "al6061",
   "bom": "leg"
+ },
+ "pack_adapter_60v": {
+  "source_url": "https://www.newegg.com/p/1DK-013R-00A95",
+  "image_url": "https://c1.neweggimages.com/ProductImage/B8VPD2309220IGWI059.jpg",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/pack_adapter_60v.jpg",
+  "kind": "vendor",
+  "seller": "www.newegg.com",
+  "part_number": "eBay 142917514402",
+  "read_with": "chrome"
  },
  "pan_base": {
   "source_url": "gyropup-turret/exports/turret/pan_base.stl",
@@ -608,6 +1171,25 @@
   "part_number": "Specs IC (SKU 10000114)",
   "read_with": "chosen"
  },
+ "pendant_clip": {
+  "source_url": "exports/rig/pendant_clip.stl",
+  "image_url": null,
+  "fetched": "2026-10-27",
+  "path": "exports/thumbs/pendant_clip.png",
+  "kind": "render",
+  "material": "petg",
+  "bom": "rig"
+ },
+ "pendant_specs": {
+  "source_url": "https://www.ablenetinc.com/specs-ic/",
+  "image_url": "https://cdn11.bigcommerce.com/s-rwcdtzv1dl/products/253/images/1023/21__48704_copy__76767.1755183350.386.513.jpg?c=1",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/pendant_specs.jpg",
+  "kind": "vendor",
+  "seller": "AbleNet",
+  "part_number": "Specs IC (10000114)",
+  "read_with": "request"
+ },
  "picotronic-dd520-1-24-12x40": {
   "source_url": "https://shop.picotronic.de/de/p/70121025",
   "image_url": "https://shop.picotronic.de/media/75/53/33/1605719838/77ef5a469762cc75e98c2cad32de8842.jpg?ts=1752053638",
@@ -617,6 +1199,34 @@
   "seller": "Picotronic GmbH (maker's web shop, Koblenz, Germany)",
   "part_number": "DD520-1-24(12x40)-QCW, order no. 70121025",
   "read_with": "chosen"
+ },
+ "pin_lanyard": {
+  "source_url": "https://www.mcmaster.com/90312A296/",
+  "image_url": "https://www.mcmaster.com/mvC/Contents/gfx/ImageCache/303/30345t851c1-e01j-digital-master1562013971-p9@1x_636975943100802305.png?ver=ImageNotFound",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/pin_lanyard.jpg",
+  "kind": "mcmaster",
+  "seller": "McMaster-Carr",
+  "part_number": "90312A296",
+  "availability": "Delivers Thursday"
+ },
+ "pod": {
+  "source_url": "exports/rig/pod.stl",
+  "image_url": null,
+  "fetched": "2026-10-27",
+  "path": "exports/thumbs/pod.png",
+  "kind": "render",
+  "material": "petg",
+  "bom": "rig"
+ },
+ "pod_lid": {
+  "source_url": "exports/rig/pod_lid.stl",
+  "image_url": null,
+  "fetched": "2026-10-27",
+  "path": "exports/thumbs/pod_lid.png",
+  "kind": "render",
+  "material": "petg",
+  "bom": "rig"
  },
  "pololu-2815": {
   "source_url": "https://www.pololu.com/product/2815",
@@ -658,6 +1268,33 @@
   "part_number": "4095 (D36V50F12)",
   "read_with": "request"
  },
+ "press_base": {
+  "source_url": "exports/rig/bench/press_base.stl",
+  "image_url": null,
+  "fetched": "2026-10-27",
+  "path": "exports/thumbs/press_base.png",
+  "kind": "render",
+  "material": "petg",
+  "bom": "rig"
+ },
+ "press_cage": {
+  "source_url": "exports/rig/bench/press_cage.stl",
+  "image_url": null,
+  "fetched": "2026-10-27",
+  "path": "exports/thumbs/press_cage.png",
+  "kind": "render",
+  "material": "petg",
+  "bom": "rig"
+ },
+ "press_slider": {
+  "source_url": "exports/rig/bench/press_slider.stl",
+  "image_url": null,
+  "fetched": "2026-10-27",
+  "path": "exports/thumbs/press_slider.png",
+  "kind": "render",
+  "material": "petg",
+  "bom": "rig"
+ },
  "proto-board-52x50": {
   "source_url": "https://www.taydaelectronics.com/double-side-prototyping-board-50x70mm.html",
   "image_url": "https://www.taydaelectronics.com/media/catalog/product/cache/1eb4f7f02fef46fb836117af4bb921e7/5/x/5x7.jpg.jpg",
@@ -678,6 +1315,44 @@
   "part_number": "double-sided prototype board 50 x 70 mm",
   "read_with": "request"
  },
+ "puller_m5": {
+  "source_url": "exports/rig/bench/puller_m5.stl",
+  "image_url": null,
+  "fetched": "2026-10-27",
+  "path": "exports/thumbs/puller_m5.png",
+  "kind": "render",
+  "material": "pa6-cf",
+  "bom": "rig"
+ },
+ "puller_m8": {
+  "source_url": "exports/rig/bench/puller_m8.stl",
+  "image_url": null,
+  "fetched": "2026-10-27",
+  "path": "exports/thumbs/puller_m8.png",
+  "kind": "render",
+  "material": "pa6-cf",
+  "bom": "rig"
+ },
+ "quick_pin": {
+  "source_url": "https://www.mcmaster.com/92384A274/",
+  "image_url": "https://www.mcmaster.com/mvC/Contents/gfx/ImageCache/923/92384A274_7202b591-a1e8-4c89-b0b2-e8a73bf2a1261771890495@4x_2u5un_1771891152.png?ver=ImageNotFound",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/quick_pin.jpg",
+  "kind": "mcmaster",
+  "seller": "McMaster-Carr",
+  "part_number": "92384A274",
+  "availability": "Delivers Thursday 7-9 am"
+ },
+ "rail_hgr15_kit": {
+  "source_url": "https://vxb.com/products/beefy-square-cnc-linear-rail-kit-hgh15-39-37-inch",
+  "image_url": "http://vxb.com/cdn/shop/files/61hnxsA8mHL.jpg?v=1783863733",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/rail_hgr15_kit.jpg",
+  "kind": "vendor",
+  "seller": "vxb.com",
+  "part_number": "ASIN B0GJZCLXWJ (1000mm / 2)",
+  "read_with": "request"
+ },
  "repeat-robotics-am32-35a-esc": {
   "source_url": "https://palmbeachbots.com/products/repeat-robotics-am32-brushless-drive-esc-bi-directional",
   "image_url": "http://palmbeachbots.com/cdn/shop/files/AM32DriveESC.jpg?v=1706386827",
@@ -686,6 +1361,16 @@
   "kind": "vendor",
   "seller": "Palm Beach Bots",
   "part_number": "AM32 Brushless Drive ESC 35 A (bi-directional)",
+  "read_with": "request"
+ },
+ "resistor_kit": {
+  "source_url": "https://www.sparkfun.com/resistor-kit-1-4w-500-total.html",
+  "image_url": "https://www.sparkfun.com/media/catalog/product/cache/6b78ac9ed927a3c2db42a3c84dab4ce5/1/0/10969-Resistor_Kit_-_1_4W__500_total_-01.jpg",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/resistor_kit.jpg",
+  "kind": "vendor",
+  "seller": "SparkFun",
+  "part_number": "COM-10969",
   "read_with": "request"
  },
  "ring_carrier": {
@@ -722,6 +1407,46 @@
    0.9
   ]
  },
+ "rubber_mat": {
+  "source_url": "https://www.amazon.com/dp/B0F8RCXB7D",
+  "image_url": "https://m.media-amazon.com/images/I/71glrKMT78L._AC_SY450_PIbundle-2,TopRight,0,0_SH20_.jpg",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/rubber_mat.jpg",
+  "kind": "vendor",
+  "seller": "Amazon (Boomerang Rubber)",
+  "part_number": "ASIN B0F8RCXB7D",
+  "read_with": "chrome"
+ },
+ "screw_3_8x1": {
+  "source_url": "https://www.mcmaster.com/91251A624/",
+  "image_url": "https://www.mcmaster.com/mvC/Contents/gfx/ImageCache/912/91251A624_8076a85d-862e-448e-9ecd-74539e05489b1683565919@4x_1683565922.png?ver=ImageNotFound",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/screw_3_8x1.jpg",
+  "kind": "mcmaster",
+  "seller": "McMaster-Carr",
+  "part_number": "91251A624",
+  "availability": "Delivers Thursday 7-9 am"
+ },
+ "screw_3_8x3_4": {
+  "source_url": "https://www.mcmaster.com/91251A622/",
+  "image_url": "https://www.mcmaster.com/mvC/Contents/gfx/ImageCache/912/91251A622_ce7b4bf6-86ef-4f3c-a941-d811fc268c961683564470@4x_1683564474.png?ver=ImageNotFound",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/screw_3_8x3_4.jpg",
+  "kind": "mcmaster",
+  "seller": "McMaster-Carr",
+  "part_number": "91251A622",
+  "availability": "Delivers Thursday 7-9 am"
+ },
+ "screw_m12x30": {
+  "source_url": "https://boltdepot.com/Product-Details?product=6604",
+  "image_url": "https://boltdepot.com/images/dimensions/socket-head-knurled-full-thread-dimensions.gif",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/screw_m12x30.jpg",
+  "kind": "vendor",
+  "seller": "Bolt Depot",
+  "part_number": "6604",
+  "read_with": "chrome"
+ },
  "screw_m3x6": {
   "source_url": "https://www.mcmaster.com/91290A111/",
   "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/912/91290A111_b98fcb5f-bf8f-4786-bfcc-3ea5c71f81091772469680@4x_jd8ed_1772469682.png?ver=ImageNotFound",
@@ -731,6 +1456,16 @@
   "seller": "McMaster-Carr",
   "part_number": "91290A111",
   "availability": "Delivers tomorrow"
+ },
+ "screw_m4x16_rail": {
+  "source_url": "https://www.mcmaster.com/91292A118/",
+  "image_url": "https://www.mcmaster.com/mvC/Contents/gfx/ImageCache/912/91292A118_40aa502e-c99e-4645-8609-15fed20c0d2a@4x_dv6gz_1758145931.png?ver=ImageNotFound",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/screw_m4x16_rail.jpg",
+  "kind": "mcmaster",
+  "seller": "McMaster-Carr",
+  "part_number": "91292A118",
+  "availability": "Delivers Thursday 7-9 am"
  },
  "screw_m4x20": {
   "source_url": "https://www.mcmaster.com/91290A168/",
@@ -751,6 +1486,16 @@
   "seller": "McMaster-Carr",
   "part_number": "91290A232",
   "availability": "Delivers tomorrow"
+ },
+ "screw_m5x25": {
+  "source_url": "https://www.mcmaster.com/91290A252/",
+  "image_url": "https://www.mcmaster.com/mvC/Contents/gfx/ImageCache/912/91290A252_5a244e88-5588-402d-9785-ef8d949246f41772470074@4x_b8w25_1772470076.png?ver=ImageNotFound",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/screw_m5x25.jpg",
+  "kind": "mcmaster",
+  "seller": "McMaster-Carr",
+  "part_number": "91290A252",
+  "availability": "Delivers Thursday 7-9 am"
  },
  "screw_m5x30": {
   "source_url": "https://www.mcmaster.com/91290A254/",
@@ -782,6 +1527,46 @@
   "part_number": "91290A332",
   "availability": "Delivers tomorrow 7-9 am"
  },
+ "screw_m6x35": {
+  "source_url": "https://www.mcmaster.com/91290A334/",
+  "image_url": "https://www.mcmaster.com/mvC/Contents/gfx/ImageCache/912/91290A334_32b0966f-fa53-4c4f-bda5-abeb74d4eb991772469056@4x_y3r3h_1772469060.png?ver=ImageNotFound",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/screw_m6x35.jpg",
+  "kind": "mcmaster",
+  "seller": "McMaster-Carr",
+  "part_number": "91290A334",
+  "availability": "Delivers Thursday 7-9 am"
+ },
+ "screw_m6x40": {
+  "source_url": "https://www.mcmaster.com/91290A336/",
+  "image_url": "https://www.mcmaster.com/mvC/Contents/gfx/ImageCache/912/91290A336_b6aa32cf-6b65-4758-bb63-b7f23cd86d261772469542@4x_jk4ld_1772469545.png?ver=ImageNotFound",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/screw_m6x40.jpg",
+  "kind": "mcmaster",
+  "seller": "McMaster-Carr",
+  "part_number": "91290A336",
+  "availability": "Delivers Thursday 7-9 am"
+ },
+ "screw_m8x16_bh": {
+  "source_url": "https://8020.net/40-4376.html",
+  "image_url": "https://8020.net/media/catalog/product/cache/8ab71e5c6755cc499f19eeeb2f9ec805/4/0/40-4376_photo_1.png",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/screw_m8x16_bh.jpg",
+  "kind": "vendor",
+  "seller": "80/20 Inc.",
+  "part_number": "13-8316",
+  "read_with": "request"
+ },
+ "screw_m8x40": {
+  "source_url": "https://boltdepot.com/Product-Details?product=6565",
+  "image_url": "https://boltdepot.com/images/dimensions/socket-head-knurled-dimensions.gif",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/screw_m8x40.jpg",
+  "kind": "vendor",
+  "seller": "Bolt Depot",
+  "part_number": "6565",
+  "read_with": "chrome"
+ },
  "shoulder_6x12_m5": {
   "source_url": "https://www.mcmaster.com/92981A101/",
   "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/929/92981A101_8de84135-ae26-45e3-9a42-2df22c62002a1770818613@4x_r5xg9_1770818616.png?ver=ImageNotFound",
@@ -791,6 +1576,34 @@
   "seller": "McMaster-Carr",
   "part_number": "92981A101",
   "availability": "Delivers tomorrow 7-9 am"
+ },
+ "sleeve_anvil": {
+  "source_url": "exports/rig/bench/sleeve_anvil.stl",
+  "image_url": null,
+  "fetched": "2026-10-27",
+  "path": "exports/thumbs/sleeve_anvil.png",
+  "kind": "render",
+  "material": "pa6-cf",
+  "bom": "rig"
+ },
+ "sleeve_block": {
+  "source_url": "exports/rig/bench/sleeve_block.stl",
+  "image_url": null,
+  "fetched": "2026-10-27",
+  "path": "exports/thumbs/sleeve_block.png",
+  "kind": "render",
+  "material": "pa6-cf",
+  "bom": "rig"
+ },
+ "sling_1in": {
+  "source_url": "https://www.amazon.com/dp/B0026GIUMG",
+  "image_url": "https://m.media-amazon.com/images/I/417OV--XaQL._SX466_.jpg",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/sling_1in.jpg",
+  "kind": "vendor",
+  "seller": "Amazon (Megamart USA)",
+  "part_number": "ASIN B0026GIUMG",
+  "read_with": "chrome"
  },
  "sparkfun-rob-13065": {
   "source_url": "https://www.sparkfun.com/products/13065",
@@ -839,6 +1652,16 @@
   "material": "tpu95",
   "bom": "leg"
  },
+ "stud_m12x80": {
+  "source_url": "https://www.fastenal.com/product/details/91217237",
+  "image_url": "https://img1.fastenal.com/infp360pmm/derivates/3/001/285/061/0156404.jpg",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/stud_m12x80.jpg",
+  "kind": "vendor",
+  "seller": "Fastenal",
+  "part_number": "91217237",
+  "read_with": "chrome"
+ },
  "te-dt04-12pa-l012": {
   "source_url": "https://www.lcsc.com/product-detail/C6423585.html",
   "image_url": "https://assets.lcsc.com/images/lcsc/900x900/20260902_TE-Connectivity-DT04-12PA-L012_C6423585_front.jpg",
@@ -867,6 +1690,53 @@
   "kind": "render",
   "material": "pa6-cf",
   "bom": "turret"
+ },
+ "timer_offdelay": {
+  "source_url": "https://www.automationdirect.com/adc/shopping/catalog/relays_-z-_timers/timer_relays/t2r-m1-adj-240u",
+  "image_url": "https://cdn.automationdirect.com/static/images/products/packaging/pkg_t2rm1adj240u.jpg?format=auto",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/timer_offdelay.jpg",
+  "kind": "vendor",
+  "seller": "AutomationDirect",
+  "part_number": "ProSense T2R-M1-ADJ-240U",
+  "read_with": "chrome"
+ },
+ "tof_arm": {
+  "source_url": "exports/rig/tof_arm.stl",
+  "image_url": null,
+  "fetched": "2026-10-27",
+  "path": "exports/thumbs/tof_arm.png",
+  "kind": "render",
+  "material": "petg",
+  "bom": "rig"
+ },
+ "tof_mount": {
+  "source_url": "exports/rig/tof_mount.stl",
+  "image_url": null,
+  "fetched": "2026-10-27",
+  "path": "exports/thumbs/tof_mount.png",
+  "kind": "render",
+  "material": "petg",
+  "bom": "rig"
+ },
+ "tof_vl53l1x": {
+  "source_url": "https://www.sparkfun.com/products/14722",
+  "image_url": "https://www.sparkfun.com/media/catalog/product/cache/6b78ac9ed927a3c2db42a3c84dab4ce5/1/4/14722-SparkFun_Distance_Sensor_Breakout-_4_Meter__VL53L1X__Qwiic_-01.jpg",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/tof_vl53l1x.jpg",
+  "kind": "vendor",
+  "seller": "www.sparkfun.com",
+  "part_number": "3967",
+  "read_with": "request"
+ },
+ "top_stop_bracket": {
+  "source_url": "exports/rig/top_stop_bracket.stl",
+  "image_url": null,
+  "fetched": "2026-10-27",
+  "path": "exports/thumbs/top_stop_bracket.png",
+  "kind": "render",
+  "material": "petg",
+  "bom": "rig"
  },
  "turret_dowel_4x8": {
   "source_url": "https://www.mcmaster.com/91595A150/",
@@ -1167,6 +2037,46 @@
   "part_number": "UCAN (SKU MM-U2CAN-0001)",
   "read_with": "chosen"
  },
+ "usb_can_u2c": {
+  "source_url": "https://biqu.equipment/products/bigtreetech-ebb36-42-can-bus-u2c-v2-1-klipper-board?variant=39762747949154",
+  "image_url": "http://biqu.equipment/cdn/shop/products/EBB-36_7899172f-17a5-4310-8807-74e88e0aac27.jpg?v=1760706456",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/usb_can_u2c.jpg",
+  "kind": "vendor",
+  "seller": "BIQU Equipment",
+  "part_number": "BIGTREETECH U2C V2.1 (SKU 1030000107)",
+  "read_with": "request"
+ },
+ "washer_2in": {
+  "source_url": "https://www.mcmaster.com/91117A219/",
+  "image_url": "https://www.mcmaster.com/mvC/Contents/gfx/ImageCache/911/91117A219_704643e1-cb4f-48cd-a940-f140b8ace428@4x_1677075840.png?ver=ImageNotFound",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/washer_2in.jpg",
+  "kind": "mcmaster",
+  "seller": "McMaster-Carr",
+  "part_number": "91117A219",
+  "availability": "Delivers Thursday 7-9 am"
+ },
+ "washer_3_8": {
+  "source_url": "https://www.mcmaster.com/91090A121/",
+  "image_url": "https://www.mcmaster.com/mvC/Contents/gfx/ImageCache/910/91090A121_7ff62caf-46fd-48dc-a1bd-2ba1fce1e447@4x_1677024484.png?ver=ImageNotFound",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/washer_3_8.jpg",
+  "kind": "mcmaster",
+  "seller": "McMaster-Carr",
+  "part_number": "91090A121",
+  "availability": "Delivers Thursday 7-9 am"
+ },
+ "washer_m12": {
+  "source_url": "https://boltdepot.com/Product-Details?product=4531",
+  "image_url": "https://boltdepot.com/images/dimensions/flat-washer-dimensions.gif",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/washer_m12.jpg",
+  "kind": "vendor",
+  "seller": "Bolt Depot",
+  "part_number": "4531",
+  "read_with": "chrome"
+ },
  "washer_m12_thin": {
   "source_url": "https://www.mcmaster.com/98689A118/",
   "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/986/98689A118_e8c3621b-8ec8-43e7-82b1-4dafeeab5aaf1691718543@4x_1691718546.png?ver=ImageNotFound",
@@ -1187,6 +2097,46 @@
   "part_number": "91116A120",
   "availability": "Delivers tomorrow 7-9 am"
  },
+ "washer_m5": {
+  "source_url": "https://www.mcmaster.com/93475A240/",
+  "image_url": "https://www.mcmaster.com/mvC/Contents/gfx/ImageCache/934/93475A240_0aa5da33-aac8-476e-9808-73b93d346b98@4x_uzphd_1782866333.png?ver=ImageNotFound",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/washer_m5.jpg",
+  "kind": "mcmaster",
+  "seller": "McMaster-Carr",
+  "part_number": "93475A240",
+  "availability": "Delivers Thursday 7-9 am"
+ },
+ "washer_m6_large": {
+  "source_url": "https://www.mcmaster.com/91116A150/",
+  "image_url": "https://www.mcmaster.com/mvC/Contents/gfx/ImageCache/911/91116A150_08525b54-c2a6-4a34-9cbd-1c1531db4579@4x_nbkh5_1780839059.png?ver=ImageNotFound",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/washer_m6_large.jpg",
+  "kind": "mcmaster",
+  "seller": "McMaster-Carr",
+  "part_number": "91116A150",
+  "availability": "Delivers Thursday 7-9 am"
+ },
+ "weight_plate_1p25": {
+  "source_url": "https://bodysolid.com/cast-iron-standard-plates",
+  "image_url": "https://cdn11.bigcommerce.com/s-2v01ommyhe/products/403/images/763/RPB-1028px__27881.1733252872.386.513.jpg?c=1",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/weight_plate_1p25.jpg",
+  "kind": "vendor",
+  "seller": "Body-Solid",
+  "part_number": "RPB1-25",
+  "read_with": "request"
+ },
+ "weight_plate_2p5": {
+  "source_url": "https://bodysolid.com/cast-iron-standard-plates",
+  "image_url": "https://cdn11.bigcommerce.com/s-2v01ommyhe/products/403/images/763/RPB-1028px__27881.1733252872.386.513.jpg?c=1",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/weight_plate_2p5.jpg",
+  "kind": "vendor",
+  "seller": "Body-Solid",
+  "part_number": "RPB2-5",
+  "read_with": "request"
+ },
  "wheel_link": {
   "source_url": "exports/leg/wheel_link.stl",
   "image_url": null,
@@ -1196,6 +2146,16 @@
   "material": "pa6-cf",
   "bom": "leg"
  },
+ "wire_12awg": {
+  "source_url": "https://bntechgo.com/",
+  "image_url": "https://cdn11.bigcommerce.com/s-clng77kigt/images/stencil/original/carousel/71/banner-1--1.png?c=2",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/wire_12awg.jpg",
+  "kind": "vendor",
+  "seller": "BNTECHGO",
+  "part_number": "12 AWG silicone red + black 25 + 25 ft",
+  "read_with": "chrome"
+ },
  "worker-cheetah-rival-rounds-100": {
   "source_url": "https://outofdarts.com/products/worker-cheetah-rounds-rival-compatible-ammo-100-pack",
   "image_url": "http://outofdarts.com/cdn/shop/files/Out-of-Darts-Darts-Ammo-Worker-Rival-Rounds.jpg?v=1703286147",
@@ -1204,6 +2164,36 @@
   "kind": "vendor",
   "seller": "Out of Darts",
   "part_number": "Cheetah Rival-compatible rounds, 100-pack",
+  "read_with": "request"
+ },
+ "xt30_male": {
+  "source_url": "https://www.racedayquads.com/products/xt30-connector-male-or-female",
+  "image_url": "http://www.racedayquads.com/cdn/shop/products/fpvelite-xt30-connector-1pc-male-or-female-male-hardware-14854623330417.jpg?v=1762440749",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/xt30_male.jpg",
+  "kind": "vendor",
+  "seller": "RaceDayQuads",
+  "part_number": "Amass XT30 (male)",
+  "read_with": "request"
+ },
+ "xt60_pair": {
+  "source_url": "https://www.racedayquads.com/products/amass-xt60h-connector-1pc-choose-your-version",
+  "image_url": "http://www.racedayquads.com/cdn/shop/products/fpvelite-amass-xt60h-connector-1pc-choose-your-version-male-yellow-hardware-14854140526705.jpg?v=1762440747",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/xt60_pair.jpg",
+  "kind": "vendor",
+  "seller": "RaceDayQuads",
+  "part_number": "Amass XT60H (male + female)",
+  "read_with": "request"
+ },
+ "xt60e_f_panel": {
+  "source_url": "https://pro.maplin.co.uk/products/female-xt60e-panel-mount-gold-plated-connector-20a-amass",
+  "image_url": "https://pro.maplin.co.uk/cdn/shop/files/bb83438d-c18a-42cc-bfc9-f0095a11117a_1200x1200.jpg?v=1769637314",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/xt60e_f_panel.jpg",
+  "kind": "vendor",
+  "seller": "pro.maplin.co.uk",
+  "part_number": "Amass XT60E-F",
   "read_with": "request"
  }
 }

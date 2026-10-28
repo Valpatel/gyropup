@@ -1,0 +1,83 @@
+{
+ "wheel": {
+  "title": "10 in hoverboard off-road hub motor, 10x2.5 pneumatic, 36 V 350 W (survey values pending)",
+  "od_mm": 254,
+  "mass_g": 4000,
+  "tyre_width_mm": 64,
+  "tyre_section_mm": 32,
+  "hub_od_mm": 165,
+  "hub_width_mm": 65,
+  "axle_d_mm": 17,
+  "peak_torque_nm": 15.0,
+  "rated_torque_nm": 5.0,
+  "no_load_speed_rpm": 330,
+  "voltage_nominal_v": 36,
+  "kt_nm_per_a": 1.0,
+  "peak_current_a": 15,
+  "tyre_k_n_per_mm": 60,
+  "tyre_damp": 0.5,
+  "rotor_share": 0.6,
+  "basis": "estimates pending the survey; tyre 35 psi, membrane model x 0.6"
+ },
+ "model_mass_kg": 36.6,
+ "wheel_motor": {
+  "peak_nm": 15.0,
+  "rated_nm": 5.0,
+  "omega_max": 34.55751918948772
+ },
+ "speed_mps": 1.2,
+ "heights": {
+  "30.0": {
+   "pass": true,
+   "reasons": [],
+   "x_max_m": 6.214,
+   "max_theta_deg": 10.08,
+   "fell_at": null,
+   "wheel_peak_nm": 8.89,
+   "wheel_of_peak": 0.593,
+   "wheel_saturated_s": 0.025,
+   "body_impact_peak_n": 0,
+   "wall_s": 1.6
+  },
+  "35.0": {
+   "pass": true,
+   "reasons": [],
+   "x_max_m": 6.197,
+   "max_theta_deg": 11.22,
+   "fell_at": null,
+   "wheel_peak_nm": 9.88,
+   "wheel_of_peak": 0.659,
+   "wheel_saturated_s": 0.085,
+   "body_impact_peak_n": 0,
+   "wall_s": 1.5
+  },
+  "40.0": {
+   "pass": true,
+   "reasons": [],
+   "x_max_m": 6.178,
+   "max_theta_deg": 21.0,
+   "fell_at": null,
+   "wheel_peak_nm": 11.0,
+   "wheel_of_peak": 0.734,
+   "wheel_saturated_s": 0.283,
+   "body_impact_peak_n": 0,
+   "wall_s": 1.6
+  },
+  "50.0": {
+   "pass": false,
+   "reasons": [
+    "fell at 3.0 s",
+    "the lidar hit the ground at 3.23 s",
+    "only reached 0.79 m of 1.5 m"
+   ],
+   "x_max_m": 0.791,
+   "max_theta_deg": 108.7,
+   "fell_at": 3.047,
+   "wheel_peak_nm": 15.0,
+   "wheel_of_peak": 1.0,
+   "wheel_saturated_s": 1.271,
+   "body_impact_peak_n": 1424,
+   "wall_s": 0.7
+  }
+ }
+}

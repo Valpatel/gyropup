@@ -1,0 +1,5 @@
+fuse-board-backups/
+fp-info-cache
+*.kicad_prl
+*.lck
+__pycache__/

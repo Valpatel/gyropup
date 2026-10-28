@@ -1,0 +1,252 @@
+{
+ "bus_current_limit": {
+  "bus_a_max": 51.8,
+  "bus_scale_min": 0.743,
+  "i_peak_a": 50.0,
+  "mode_after": "run",
+  "ms_over_the_limit": 35,
+  "reason": "none",
+  "rise_above_standing_mm": 178.0
+ },
+ "conditions": {
+  "bus_v": 36.0,
+  "half_mass_kg": 16.25,
+  "legs": "two rigs (sim/leg_rig.py through rig/sim_bus.py), one per bus",
+  "loop_hz": 1000,
+  "pack_r_int_ohm": 0.1
+ },
+ "cutoff": {
+  "leg_at_stop_mm": 137.7,
+  "mcu_run_at_end": false,
+  "mode_at_end": "idle",
+  "motors_stopped_ms": 1344.0,
+  "reason": "cut-off",
+  "trip_after_drop_ms": 194.0,
+  "vload_at_trip": 29.993,
+  "vload_tick_before": 30.006,
+  "vrest_at_trip": 33.206
+ },
+ "heartbeat": {
+  "reason": "link",
+  "sit_after_last_setpoint_s": 2.198
+ },
+ "jump_gate": {
+  "33.9 V": {
+   "bus_a_max_in_the_jump": 1.3,
+   "bus_v_min_in_the_jump": 33.77,
+   "cutoff": false,
+   "jumped": false,
+   "mode_after": "run",
+   "push_bus_current_limit_a": 0.0,
+   "refused": "voltage",
+   "rise_above_standing_mm": 0.2,
+   "scale": 0.0
+  },
+  "34.1 V": {
+   "bus_a_max_in_the_jump": 32.4,
+   "bus_v_min_in_the_jump": 30.86,
+   "cutoff": false,
+   "jumped": true,
+   "mode_after": "run",
+   "push_bus_current_limit_a": 31.0,
+   "refused": null,
+   "rise_above_standing_mm": 103.8,
+   "scale": 0.4306
+  },
+  "36.0 V": {
+   "bus_a_max_in_the_jump": 51.6,
+   "bus_v_min_in_the_jump": 30.84,
+   "cutoff": false,
+   "jumped": true,
+   "mode_after": "run",
+   "push_bus_current_limit_a": 50.0,
+   "refused": null,
+   "rise_above_standing_mm": 150.4,
+   "scale": 0.6944
+  },
+  "41.0 V": {
+   "bus_a_max_in_the_jump": 70.4,
+   "bus_v_min_in_the_jump": 33.99,
+   "cutoff": false,
+   "jumped": true,
+   "mode_after": "run",
+   "push_bus_current_limit_a": 72.0,
+   "refused": null,
+   "rise_above_standing_mm": 199.2,
+   "scale": 1.0
+  }
+ },
+ "made_by": "python -m pytest firmware/balance/hil (firmware/balance/hil/test_hil.py)",
+ "overcharge": {
+  "leg_at_stop_mm": 137.7,
+  "leg_min_in_the_sit_mm": 137.7,
+  "mcu_run_at_end": false,
+  "mode_at_end": "idle",
+  "motors_stopped_ms": 1196.0,
+  "reason": "over-charge",
+  "regen_scale_min": 0.744,
+  "trip_after_step_ms": 46.0,
+  "vhigh_at_trip": 44.005,
+  "vhigh_tick_before": 43.96
+ },
+ "people_near": {
+  "jump_refused": "people near",
+  "reason": "people",
+  "sit_after_s": 2.008
+ },
+ "radio_stop": {
+  "leg_at_stop_mm": 131.8,
+  "mcu_run_open_ms": 1.0,
+  "motors_stopped_ms": 451.0,
+  "reason": "stop"
+ },
+ "regen_clamp": {
+  "bus_v_max": 46.19,
+  "charge_a_max": 51.9,
+  "leg_min_mm": 153.9,
+  "mode_after": "run",
+  "ms_over_42_5_v_in_the_landing": 27,
+  "ms_over_42_5_v_outside_the_landing": 5,
+  "overcharge": false,
+  "overcharge_filter_max_v": 42.929,
+  "pack_v": 41.0,
+  "regen_scale_min": 0.0,
+  "rise_above_standing_mm": 199.2
+ },
+ "robot_sil": {
+  "at_3.9s": {
+   "L_fw_mm": 291.4,
+   "L_py_mm": 291.5,
+   "v_fw": 0.632,
+   "v_py": 0.634,
+   "x_fw": 0.961,
+   "x_py": 0.972
+  },
+  "at_5.9s": {
+   "L_fw_mm": 291.6,
+   "L_py_mm": 291.6,
+   "v_fw": -0.096,
+   "v_py": -0.099,
+   "x_fw": 1.478,
+   "x_py": 1.483
+  },
+  "at_7.9s": {
+   "L_fw_mm": 227.0,
+   "L_py_mm": 227.0,
+   "v_fw": -0.056,
+   "v_py": -0.056,
+   "x_fw": 1.281,
+   "x_py": 1.284
+  },
+  "bus_v": 36.0,
+  "fell": false,
+  "final_mode": "run",
+  "imu_pitch_rate_error": 0.0016904586695635296,
+  "seconds": 8.0,
+  "theta_estimate_error_deg": 0.023015963381886054,
+  "worst_diff_L": 0.0011770307532599222,
+  "worst_diff_theta": 0.1463925153265957,
+  "worst_diff_v": 0.006939810626328008,
+  "worst_diff_x": 0.012488415227337013,
+  "worst_theta_deg_firmware": 5.535156473493021,
+  "worst_theta_deg_python": 5.566788715523154
+ },
+ "stand_up": {
+  "boot_ms": 102,
+  "criterion": "worst |dL| / L_ref <= 0.05 and worst |d lean| <= 0.05 rad (the axle 5 % of the leg off line)",
+  "firmware_left_leg": {
+   "end_L_mm": [
+    303.7041990175655,
+    303.7049464157326
+   ],
+   "rms_L_mm": 0.15399460707480978,
+   "samples": 1500,
+   "worst_L_at_s": 0.766,
+   "worst_L_mm": 0.3635488677802001,
+   "worst_L_rel": 0.0017031382033239188,
+   "worst_lean_axle_rel": 0.0001516968302935411,
+   "worst_lean_deg": 0.008691588141332198,
+   "worst_lean_rad": 0.0001516968302935411
+  },
+  "firmware_right_leg": {
+   "end_L_mm": [
+    303.7052386522833,
+    303.7049464157326
+   ],
+   "rms_L_mm": 0.15408572769111287,
+   "samples": 1500,
+   "worst_L_at_s": 0.778,
+   "worst_L_mm": 0.36501832610619234,
+   "worst_L_rel": 0.0017105563562571147,
+   "worst_lean_axle_rel": 0.00015100001995177698,
+   "worst_lean_deg": 0.008651663849628045,
+   "worst_lean_rad": 0.00015100001995177698
+  },
+  "misses": [
+   0,
+   0,
+   0,
+   0
+  ],
+  "rig_controller_same_hil": {
+   "end_L_mm": [
+    303.7036810023192,
+    303.7049464157326
+   ],
+   "rms_L_mm": 0.06959337247363923,
+   "samples": 1500,
+   "worst_L_at_s": 0.07,
+   "worst_L_mm": 0.2518287724714574,
+   "worst_L_rel": 0.0017848263192968173,
+   "worst_lean_axle_rel": 0.00015208299746680083,
+   "worst_lean_deg": 0.008713713890546478,
+   "worst_lean_rad": 0.00015208299746680083
+  },
+  "tx_drops": 0
+ },
+ "uvlo": {
+  "cutoff": {
+   "bus_v_on_the_wire": 29.98,
+   "estimate_v": 29.9997,
+   "estimate_v_tick_before": 30.0001,
+   "firmware_estimate": "vload",
+   "mode": "idle",
+   "pack_open_circuit_v": 30.0332,
+   "t_s": 30.335,
+   "threshold_v": 30.0
+  },
+  "jump_refused": {
+   "bus_v_on_the_wire": 33.678,
+   "estimate_v": 34.0,
+   "estimate_v_tick_before": 34.0004,
+   "firmware_estimate": "vrest",
+   "mode": "run",
+   "pack_open_circuit_v": 33.8008,
+   "t_s": 11.497,
+   "threshold_v": 34.0
+  },
+  "note": "warn, jump and sit trip on the resting estimate (V + I x 0.100 ohm, 1 s filter), which on a falling pack lags by ramp x 1 s; the cut-off on the loaded bus (0.1 s filter)",
+  "ramp_v_per_s": 0.2,
+  "sat_leg_mm": 137.7,
+  "sit": {
+   "bus_v_on_the_wire": 31.671,
+   "estimate_v": 32.0,
+   "estimate_v_tick_before": 32.0004,
+   "firmware_estimate": "vrest",
+   "mode": "sit",
+   "pack_open_circuit_v": 31.8008,
+   "t_s": 21.497,
+   "threshold_v": 32.0
+  },
+  "warn": {
+   "bus_v_on_the_wire": 34.682,
+   "estimate_v": 34.9999,
+   "estimate_v_tick_before": 35.0003,
+   "firmware_estimate": "vrest",
+   "mode": "run",
+   "pack_open_circuit_v": 34.8024,
+   "t_s": 6.489,
+   "threshold_v": 35.0
+  }
+ }
+}

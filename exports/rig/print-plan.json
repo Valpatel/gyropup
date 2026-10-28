@@ -1,0 +1,231 @@
+{
+ "bed_mm": [
+  256,
+  256,
+  256
+ ],
+ "parts": {
+  "bumper_tpu": {
+   "material": "tpu95",
+   "qty": 4,
+   "size_mm": [
+    53,
+    53,
+    40
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 76,
+   "grams": 303,
+   "hours": 31.0,
+   "cost_usd": 12.72,
+   "infill": "2 mm walls, 40 % gyroid",
+   "how": "TPU 95A, 30 % gyroid, 2 walls (sized for 33 J: a hard fault at a jump's apex; docs/leg-bench-tests.md R0 confirms the infill by dropping the carriage on them); two under the plate, two in the top stop"
+  },
+  "bumper_base": {
+   "material": "petg",
+   "qty": 2,
+   "size_mm": [
+    60,
+    60,
+    29
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 52,
+   "grams": 105,
+   "hours": 4.2,
+   "cost_usd": 1.47,
+   "infill": "2 mm walls, 40 % gyroid",
+   "how": "PETG, 4 walls, 40 % gyroid; 2 x M6 x 45 countersunk through the deck into T-nuts"
+  },
+  "bumper_cap": {
+   "material": "petg",
+   "qty": 4,
+   "size_mm": [
+    60,
+    60,
+    13
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 29,
+   "grams": 116,
+   "hours": 4.7,
+   "cost_usd": 1.63,
+   "infill": "100 %",
+   "how": "PETG, 100 % (it spreads the plate edge's blow); printed upside down"
+  },
+  "top_stop_bracket": {
+   "material": "petg",
+   "qty": 1,
+   "size_mm": [
+    220,
+    68,
+    66
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 186,
+   "grams": 186,
+   "hours": 7.4,
+   "cost_usd": 2.6,
+   "infill": "2 mm walls, 40 % gyroid",
+   "how": "PETG, 6 walls, 50 % gyroid; 4 x M8 x 16 into T-nuts on the post's front"
+  },
+  "drop_bracket": {
+   "material": "petg",
+   "qty": 1,
+   "size_mm": [
+    105,
+    100,
+    40
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 199,
+   "grams": 199,
+   "hours": 7.9,
+   "cost_usd": 2.78,
+   "infill": "100 %",
+   "how": "PETG, 100 %; fitted for the drop test only (2 x M8 x 16 into the post's side slots)"
+  },
+  "tof_arm": {
+   "material": "petg",
+   "qty": 1,
+   "size_mm": [
+    113,
+    85,
+    50
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 46,
+   "grams": 46,
+   "hours": 1.8,
+   "cost_usd": 0.64,
+   "infill": "2 mm walls, 40 % gyroid",
+   "how": "PETG, white (the ToF's target); 2 x M4 x 10 to the plate"
+  },
+  "tof_mount": {
+   "material": "petg",
+   "qty": 1,
+   "size_mm": [
+    52,
+    32,
+    9
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 6,
+   "grams": 6,
+   "hours": 0.2,
+   "cost_usd": 0.08,
+   "infill": "2 mm walls, 40 % gyroid",
+   "how": "PETG; the VL53L1X on 2 x M2.5 x 8, two wood screws into the deck"
+  },
+  "pod": {
+   "material": "petg",
+   "qty": 1,
+   "size_mm": [
+    230,
+    200,
+    140
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 493,
+   "grams": 493,
+   "hours": 19.7,
+   "cost_usd": 6.89,
+   "infill": "2 mm walls, 40 % gyroid",
+   "how": "PETG, 3 walls, 25 % infill; 4 x M8 x 16 into the post's back slots; 3 x M4 inserts (contactor, relay)"
+  },
+  "pod_lid": {
+   "material": "petg",
+   "qty": 1,
+   "size_mm": [
+    230,
+    140,
+    3
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 65,
+   "grams": 65,
+   "hours": 2.6,
+   "cost_usd": 0.91,
+   "infill": "2 mm walls, 40 % gyroid",
+   "how": "PETG; 4 x M3 x 10 into the pod's inserts"
+  },
+  "pendant_clip": {
+   "material": "petg",
+   "qty": 1,
+   "size_mm": [
+    76,
+    44,
+    22
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 18,
+   "grams": 18,
+   "hours": 0.7,
+   "cost_usd": 0.25,
+   "infill": "2 mm walls, 40 % gyroid",
+   "how": "PETG; 2 x M4 x 10 into the pod's inserts"
+  },
+  "ballast_spacer": {
+   "material": "petg",
+   "qty": 2,
+   "size_mm": [
+    40,
+    9,
+    40
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 8,
+   "grams": 17,
+   "hours": 0.7,
+   "cost_usd": 0.23,
+   "infill": "100 %",
+   "how": "PETG, 100 %; on each ballast post against the plate"
+  },
+  "load_cell_mount": {
+   "material": "petg",
+   "qty": 4,
+   "size_mm": [
+    42,
+    42,
+    6
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 4,
+   "grams": 17,
+   "hours": 0.7,
+   "cost_usd": 0.23,
+   "infill": "2 mm walls, 40 % gyroid",
+   "how": "PETG; under the load plate's corners (stand and squat only)"
+  }
+ },
+ "by_material": {
+  "tpu95": {
+   "grams": 303,
+   "hours": 31.0,
+   "cost_usd": 12.72,
+   "parts": 4
+  },
+  "petg": {
+   "grams": 1268,
+   "hours": 50.6,
+   "cost_usd": 17.71,
+   "parts": 19
+  }
+ },
+ "too_big": [],
+ "total_hours": 81.6,
+ "total_grams": 1571,
+ "note": "the rig's printed parts; grams: solid parts in full, the rest at ~55 % of solid (walls and infill); hours are rough"
+}

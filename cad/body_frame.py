@@ -49,6 +49,8 @@ class Part:
     note: str = ''
     colour: tuple = (0.6, 0.6, 0.6)
     print_rotation: tuple = None  # printed parts: rotation onto the bed (axis, deg)
+    stage: str = 'P1'             # P0 skid, P1 open frame, P2 head, P3 shell: the ledger counts a part from its stage on
+    until: str = None             # the last stage it is on the robot (the PETG bay until P2: the P3 tub replaces it)
 
 
 # ------------------------------------------------------------------------------------------- helpers
@@ -273,7 +275,10 @@ def deck_part(mounts=None) -> bs.SheetPart:
         feats.append(bs.Feature('hole', 'base', tray_uv(x, y), 3.95, note='VLP-16 locating pin 5/32 in (ream to a light press)'))
     t = bp.tm()
     for (x, y) in RISER_FEET:
-        feats.append(bs.Feature('hole', 'base', tray_uv(t['pan_x'] + x, y), 5.5, note='riser, M5 x 12 from below into its insert'))
+        feats.append(bs.Feature('hole', 'base', tray_uv(t['pan_x'] + x, y), 5.5,
+                                note='riser, M5 x 16 from below through the turret plate (D59) into its insert'))
+    for (x, y) in turret_plate_end_holes():
+        feats.append(bs.Feature('hole', 'base', tray_uv(x, y), 5.5, note='the turret plate\'s ends (P2): M5 x 10 down into its PEM nuts'))
     for (x, y) in intake_cells():
         feats.append(bs.Feature('slot', 'base', tray_uv(x, y), size=(INTAKE_CELL, INTAKE_CELL, 1.5), note='fan intake'))
     feats += _mount_features((mounts or {}).get('deck', []), tray_uv)
@@ -370,14 +375,36 @@ def post_height():
     return bp.TOP - bp.STOCK[bp.DECK]['t'] - bp.z_tray_top()
 
 
+POST_END = 14.0              # solid at each end round the M5 insert (11 deep)
+POST_WALL = 4.0              # lever 5: hollow between the ends (the inserts need 4 mm walls)
+POST_M3_PILOT = 8.0          # the shell's M3 inserts: through the 7.5 mm boss into the hollow (an M3 x 16 goes 6.4 mm in)
+
+
 def post():
-    """A deck post (PA6-CF, 100 % solid): square POST_W, M5 heat-set inserts (94459A775, Ø6.4 x 11 pilot) both ends,
-    the edges rounded; printed standing (layers across the post: the post is in compression and the inserts pull
-    along it, so the pull-out crosses the layers: M3's coupon test covers it)."""
+    """A deck post (PA6-CF, 100 %): square POST_W, hollow between solid ends (lever 5: 4 mm walls; it carries 290 N at
+    the landing's 8.65 g), M5 heat-set inserts (94459A775, Ø6.4 x 11 pilot) both ends; M3 inserts (94459A140) for the
+    P3 shell in bosses: on its +-y faces at the side walls' screw heights, on its +-x faces at the front and rear
+    faces' (every corner uses one of each). Printed standing: the pull-out crosses the layers (the coupon test)."""
+    import body_shell as bs3
     h = post_height()
     w = bp.POST_W
+    zt = bp.z_tray_top()
     s = box(-w / 2, w / 2, -w / 2, w / 2, 0.0, h).edges('|Z').fillet(3.0)
+    core = box(-w / 2 + POST_WALL, w / 2 - POST_WALL, -w / 2 + POST_WALL, w / 2 - POST_WALL, POST_END, h - POST_END)
+    for z in bs3.POST_Z_SIDE:                                # a boss behind each M3 insert (7.5 deep from the face)
+        for sy in (1, -1):
+            core = core.cut(box(-4.5, 4.5, *sorted((sy * w / 2, sy * (w / 2 - 7.5))), z - zt - 4.5, z - zt + 4.5))
+    for z in bs3.POST_Z_FACE:
+        for sx in (1, -1):
+            core = core.cut(box(*sorted((sx * w / 2, sx * (w / 2 - 7.5))), -4.5, 4.5, z - zt - 4.5, z - zt + 4.5))
+    s = s.cut(core)
     s = s.cut(cyl_z(3.2, -1.0, 11.0)).cut(cyl_z(3.2, h - 11.0, h + 1.0))
+    for z in bs3.POST_Z_SIDE:
+        for sy in (1, -1):
+            s = s.cut(cyl_y(2.0, *sorted((sy * w / 2, sy * (w / 2 - POST_M3_PILOT))), 0.0, z - zt))
+    for z in bs3.POST_Z_FACE:
+        for sx in (1, -1):
+            s = s.cut(cq.Workplane('YZ', origin=(min(sx * w / 2, sx * (w / 2 - POST_M3_PILOT)), 0, 0)).center(0.0, z - zt).circle(2.0).extrude(POST_M3_PILOT))
     return s
 
 
@@ -394,6 +421,7 @@ def plate_post():
 
 
 ISOLATOR_D = 16.0
+ISOLATOR_CAP_T = 1.5         # an M4 x 20 and its washer then engage 3.6 mm of the tray's S-M4-0 (cad/body_joints.py)
 
 
 def isolator():
@@ -402,7 +430,7 @@ def isolator():
     both into the tray's S-M4-0 nut, snug, not tight: the pallet touches only TPU."""
     h = bp.ISOLATOR_H
     foot = cyl_z(ISOLATOR_D / 2, 0.0, h).union(cyl_z(3.8, h, h + bp.STOCK[bp.PALLET]['t'] - 0.2))
-    cap = cyl_z(6.0, h + bp.STOCK[bp.PALLET]['t'] + 0.5, h + bp.STOCK[bp.PALLET]['t'] + 3.5)      # Ø12: clear of the carrier's standoffs
+    cap = cyl_z(6.0, h + bp.STOCK[bp.PALLET]['t'] + 0.5, h + bp.STOCK[bp.PALLET]['t'] + 0.5 + ISOLATOR_CAP_T)      # Ø12: clear of the carrier's standoffs
     return foot.union(cap).cut(cyl_z(2.3, -1.0, h + 10.0))
 
 
@@ -425,19 +453,136 @@ def din_rail(length, hole_off=None):
 
 
 def din_rails(items):
-    """The two rail pieces, placed on their PEM nuts (body_layout.mounts_for): {name: (length, hole_off, (x, y, z))}."""
-    get = lambda n: next(i for i in items if i.name == n)
-    d, dd = get('ddr120c_24'), get('plate_ddr60l_12')
-    ya, yb = d.box[2] + 6.0, d.box[2] + 20.0                      # the tray's two S-M4-0 nuts under the 24 V rail
-    yc, yd = dd.box[2] + 8.0, dd.box[3] - 8.0                     # the plate's two F-M4-2 nuts under the 12 V rail
-    return {'din_rail_24v': (26.0, (yb - ya) / 2, ((d.box[0] + d.box[1]) / 2, (ya + yb) / 2, d.box[4] - 7.5)),
-            'din_rail_12v': (60.0, (yd - yc) / 2, ((dd.box[0] + dd.box[1]) / 2, (yc + yd) / 2, dd.box[4] - 7.5))}
+    """D65: no DIN-rail converter is left on the body (the TRACO replaces both): {}."""
+    return {}
+
+
+DCDC_FOOT_T, DCDC_WALL_T = 4.0, 6.0      # the upright at y -124..-118: the P3 wall's ribs start at -124.1
+
+
+def _plate_top():
+    import body_layout as bl
+    return bp.z_tray_top() + bl.PLATE_H + bp.STOCK['5052-0.100']['t']
+
+
+def dcdc_bracket_holes():
+    """The converter's bracket: two M4 down into the plate's flush nuts on its inner side (robot x, y)."""
+    import body_layout as bl
+    d = bl.DCDC
+    return [(40.0, d['y'][1] + 3.0), (120.0, d['y'][1] + 3.0)]     # beyond the switch under the plate (x 52..112)
+
+
+def dcdc_screws():
+    """The converter's four M3 through its base flange's slots into inserts in the bracket's upright (robot x, z)."""
+    import body_layout as bl
+    d = bl.DCDC
+    z0 = _plate_top() + DCDC_FOOT_T
+    return [(x, z) for x in (d['x'][0] + 5.0, d['x'][1] - 5.0) for z in (z0 + 3.0, z0 + d['h'] - 3.0)]
+
+
+def dcdc_bracket():
+    """The TRACO TEP 150-4815WI's bracket (PA6-CF): a foot on the tray under the converter, screwed down beyond its ends,
+    and an upright on its inner side its baseplate bolts to (four M3 from the carrier's side: the converter goes on the
+    bracket first, then the bracket on the tray). The converter's outer face stays at |y| 121: the left ear bracket's
+    nyloc nuts stand inside the wall to 122.6."""
+    import body_layout as bl
+    d = bl.DCDC
+    zp = _plate_top()
+    x0, x1 = d['x'][0], d['x'][1]
+    yw = d['y'][0] - DCDC_WALL_T
+    s = box(x0, x1, yw, d['y'][1] + 6.0, zp, zp + DCDC_FOOT_T)
+    s = s.union(box(x0, x1, yw, d['y'][0], zp, zp + DCDC_FOOT_T + d['h']))
+    for x, y in dcdc_bracket_holes():
+        s = s.cut(cyl_z(2.25, zp - 1, zp + DCDC_FOOT_T + 1, x, y))
+    for x, z in dcdc_screws():                                    # M3 inserts through the upright
+        s = s.cut(cyl_y(2.0, yw - 1, d['y'][0] + 1, x, z))
+    for x, y in [(44.0, -96.0)]:                                  # the plate post's screw head under the foot
+        s = s.cut(cyl_z(5.5, zp - 1, zp + 3.0, x, y))
+    return s
+
+
+# ------------------------------------------------------------------------------------------- the turret mount plate (D59)
+
+TURRET_PLATE = {'stock': '6061-0.125', 'L': 160.0, 'W': 140.0,      # under the deck at the riser, centred on the pan axis
+                'end_pem_x': 10.0,                                   # its two PEM SS-M5-0 this far in from its +-x ends, on y = 0
+                'foot_pad_r': 20.0,                                  # the plate stays whole round each riser foot (its screw)
+                'notch': (4.0, 26.0)}                                # the rear-right corner cut away (x, y) for the turret harness's drop
+TURRET_PLATE_POCKETS = [(23.0, 55.0, 24.0, 22.0), (23.0, -55.0, 24.0, 22.0),   # (x, y, length, width) robot: the front corners
+                        (-108.0, 56.0, 16.0, 20.0)]                           # and the rear-left one (the rear-right is the notch)
+
+
+def turret_plate_xy():
+    """The plate's corner (x0, y0) in the robot frame and its size: centred on the turret's pan axis."""
+    t = bp.tm()
+    P = TURRET_PLATE
+    return t['pan_x'] - P['L'] / 2, -P['W'] / 2, P['L'], P['W']
+
+
+def plate_t_uv(x, y):
+    x0, y0, L, W = turret_plate_xy()
+    return (x - x0, W / 2 - y)
+
+
+def turret_plate_part(mounts=None) -> bs.SheetPart:
+    """D59: the turret mount plate, SendCutSend 6061-T6 0.125 in, flat, bolted under the deck at the riser: the riser's
+    four M5 screws come up through it and the deck into the riser's feet (M5 x 16 now: 3.2 mm longer), and two M5
+    screws go down through the deck into its two PEM SS-M5-0 nuts at its +-x ends. Two plates in bending under the
+    riser's feet take the turret's tip-over (D2) from SF 1.3 to over 2. It is open over the J501 fan's intake field
+    (the deck's cells, 1 mm clear: the intersection of the fan's field and the riser's ring, less a 20 mm pad round each
+    riser foot) and notched at its rear-right corner, where the turret's harness drops through the deck."""
+    import cadquery as cq
+    x0, y0, L, W = turret_plate_xy()
+    P = TURRET_PLATE
+    t = bp.tm()
+    fx, fy = bp.j501_stack()['fan_xy']
+    fan_uv = plate_t_uv(fx, fy)
+    pan_uv = plate_t_uv(t['pan_x'], 0.0)
+    feet_uv = [plate_t_uv(t['pan_x'] + a, b) for a, b in RISER_FEET]
+    r_field = INTAKE_R + 1.0                            # the cells' corners are within INTAKE_R of the fan's axis
+    r_ring = t['foot_r'] - 12.0 + 1.0                   # and within the riser's ring less 12 mm
+
+    def opening(th):
+        o = (cq.Workplane('XY').center(*fan_uv).circle(r_field).extrude(th + 2).translate((0, 0, -1))
+             .intersect(cq.Workplane('XY').center(*pan_uv).circle(r_ring).extrude(th + 2).translate((0, 0, -1))))
+        for f in feet_uv:
+            o = o.cut(cq.Workplane('XY').center(*f).circle(P['foot_pad_r']).extrude(th + 4).translate((0, 0, -2)))
+        return o
+    feats = [bs.Feature('cutout', 'base', fan_uv, make=opening, note='open over the J501 fan\'s intake field')]
+    for (u, v) in feet_uv:
+        feats.append(bs.Feature('hole', 'base', (u, v), 5.5, note='riser foot: M5 x 16 up through the plate and the deck into its insert'))
+    for u in (P['end_pem_x'], L - P['end_pem_x']):
+        feats.append(bs.Feature('pem', 'base', (u, W / 2), bp.PEM['SS-M5-0']['H'], spec='SS-M5-0',
+                                note='M5 x 10 ISO 7380 down through the deck into this nut'))
+    import body_shell as bs3
+    for (x, y) in bs3.duct_tabs():                       # P3: the fan duct hangs from three tapped holes
+        feats.append(bs.Feature('hole', 'base', plate_t_uv(x, y), 2.5, note='tap M3 x 0.5: the fan duct\'s tab (M3 x 5 from below)'))
+    for (x, y, lx, ly) in TURRET_PLATE_POCKETS:          # lightening, where neither a riser foot nor a nut needs the plate
+        feats.append(bs.Feature('slot', 'base', plate_t_uv(x, y), size=(lx, ly, 5.0), note='lightening pocket'))
+    nx, ny = P['notch']
+    outline = [(0.0, 0.0), (L, 0.0), (L, W), (nx, W), (nx, W - ny), (0.0, W - ny)]     # v = W is y = -W/2: the right side
+    return bs.SheetPart('turret_plate', P['stock'], L, W, features=feats, outline=outline,
+                        note='flat; under the deck at the riser (D59); PEM SS-M5-0 pressed from its underside, their bodies down')
+
+
+def place_turret_plate(shape):
+    """Flat part (u, v, 0..t) -> robot: its top face against the deck's underside (part z = 0 up after the turn)."""
+    x0, y0, L, W = turret_plate_xy()
+    zd = bp.TOP - bp.STOCK[bp.DECK]['t']
+    return shape.rotate((0, 0, 0), (1, 0, 0), 180).translate((x0, W / 2, zd))
+
+
+def turret_plate_end_holes():
+    """The two Ø5.5 holes the plate's end screws need in the deck (robot x, y): drilled by hand in the P1 deck, cut in a
+    Rev B deck."""
+    x0, y0, L, W = turret_plate_xy()
+    return [(x0 + TURRET_PLATE['end_pem_x'], 0.0), (x0 + L - TURRET_PLATE['end_pem_x'], 0.0)]
 
 
 RISER_LEG_R = 9.0
 RISER_FOOT_R = 18.0         # each leg ends in a Ø36 x 4 foot: it spreads the turret's fall load on the 0.100 in deck (D2)
 RISER_FOOT_T = 4.0
 RISER_TOP_T = 9.0
+RISER_FOOT_PILOT = 12.0     # the feet's insert pilots: an M5 x 16 through the turret plate and deck reaches 10.3 mm in
 
 
 def riser():
@@ -455,7 +600,7 @@ def riser():
     for (x, y) in t['bolts']:
         s = s.cut(cyl_z(3.2, H - 9.5, H + 1.0, x, y))                          # M5 insert from the top (the turret)
     for (x, y) in RISER_FEET:
-        s = s.cut(cyl_z(3.2, -1.0, 9.5, x, y))                                  # M5 insert from below (the deck)
+        s = s.cut(cyl_z(3.2, -1.0, RISER_FOOT_PILOT, x, y))                     # M5 insert from below (the deck; P2's M5 x 16 goes 10.3 in)
     for (x, y) in t['dowels']:
         s = s.cut(cyl_z(2.5 - 0.03, H - 8.0, H + 1.0, x, y))
     s = s.cut(cyl_z(t['hole_d'] / 2, H - RISER_TOP_T - 1, H + 1))
@@ -550,6 +695,12 @@ def frame_parts(mounts=None) -> dict:
     out['riser'] = Part('riser', 'printed', riser().translate((t['pan_x'], 0.0, bp.TOP)), 1, material='pa6-cf',
                         colour=(0.25, 0.27, 0.30), note='PA6-CF, 100 % solid, printed on its top face; 8 x M5 inserts, 2 x Ø5 dowels',
                         print_rotation=((1, 0, 0), 180))
+    tp = turret_plate_part(mounts)                                     # D59: under the deck at the riser, ordered with P2
+    tl = tp.solid()
+    out['turret_plate'] = Part('turret_plate', 'sheet', place_turret_plate(tl), 1, tp, tl, tp.s['material'], colour=(0.78, 0.80, 0.84),
+                               note=tp.note, stage='P2')
+    out['turret_plate_nuts'] = Part('turret_plate_nuts', 'bought', pem_bodies(tp, place_turret_plate), 2, colour=(0.6, 0.6, 0.62),
+                                    note='PEM SS-M5-0 (pressed by SendCutSend)', stage='P2')
     iso = isolator()
     for k, (x, y) in enumerate(ISOLATORS):
         out[f'isolator_{k + 1}'] = Part(f'isolator_{k + 1}', 'printed', iso.translate((x, y, zt)), 1, material='tpu95',
@@ -575,16 +726,17 @@ def frame_parts(mounts=None) -> dict:
     zp = zt + bl.PLATE_H + bp.STOCK['5052-0.100']['t']
     if mounts is not None and mounts.get('_bus_xy'):
         for k, (bx, by) in enumerate(mounts['_bus_xy']):
-            out[f'bus_bar_{k + 1}'] = Part(f'bus_bar_{k + 1}', 'sheet', bloc.translate((bx, by, zp + 10.0)), 1, bus if k == 0 else None, bloc,
+            out[f'bus_bar_{k + 1}'] = Part(f'bus_bar_{k + 1}', 'sheet', bloc.translate((bx, by, zp + BUS_INS_H)), 1, bus if k == 0 else None, bloc,
                                            bus.s['material'], colour=(0.85, 0.45, 0.2) if k == 0 else (0.25, 0.25, 0.27), note=bus.note)
-            out[f'bus_insulator_{k + 1}'] = Part(f'bus_insulator_{k + 1}', 'printed', ins.translate((bx, by, zp)), 1, material='pa6-cf',
-                                                 colour=(0.2, 0.2, 0.22), note='PA6-CF, 100 %; 4 x M3 inserts')
-    # ---- the battery bay under the belly plate (printed PETG, TPU skids)
+            out[f'bus_insulator_{k + 1}'] = Part(f'bus_insulator_{k + 1}', 'printed', ins.translate((bx, by, zp)), 1, material='petg',
+                                                 colour=(0.2, 0.2, 0.22), note='PETG, 100 % (never a carbon-filled filament: carbon '
+                                                 'conducts, and the plate is bonded to the - bus); 4 x M3 inserts; test: > 10 MOhm at 50 V '
+                                                 'from every lug screw to the plate before power')
+    out['dcdc_bracket'] = Part('dcdc_bracket', 'printed', dcdc_bracket(), 1, material='pa6-cf', colour=(0.25, 0.27, 0.30),
+                               note='PA6-CF; two M4 x 10 down into the tray\'s nuts; the converter on four M3 x 8 through its upright')
+    # ---- the battery bay under the belly plate (D65: two DeWalt packs; cad/body_battery.py)
     import body_battery as bb
-    for n, sh in bb.bay_parts(bb.brick()).items():
-        mat = 'tpu95' if 'skid' in n else 'petg'
-        out[n] = Part(n, 'printed', sh, 1, material=mat, colour=(0.15, 0.15, 0.17) if 'skid' in n else (0.85, 0.55, 0.15),
-                      note='TPU 95A skid' if 'skid' in n else 'PETG, 3 mm walls; 4 x M5 x 10 up into the belly plate\'s nuts each side')
+    out.update(bb.bay_parts())
     out['spacers'] = Part('spacers', 'bought', spacers(), len(SPACERS_XZ), colour=(0.8, 0.8, 0.82), note='M4 x 31 hex standoff, 6 mm hex, female-female, aluminium (95947A065)')
     out['spacer_screws'] = Part('spacer_screws', 'bought', spacer_screws(), 2 * len(SPACERS_XZ), colour=(0.15, 0.15, 0.17), note='M4 x 10 ISO 10642 flat head')
     for side in ('left', 'right'):
@@ -592,6 +744,23 @@ def frame_parts(mounts=None) -> dict:
                                            note='M5 x 12 ISO 7380 into the hip frame\'s inserts')
         out[f'cheek_nuts_{side}'] = Part(f'cheek_nuts_{side}', 'bought', pem_bodies(cp, lambda s, sd=side: place_cheek(s, sd)), 8,
                                          colour=(0.6, 0.6, 0.62), note='PEM SS-M5-0 (pressed by SendCutSend)')
+    return out
+
+
+STAGES = ('P0', 'P1', 'P2', 'P3')
+
+
+def on_robot(p, stage) -> bool:
+    """Whether a part is on the robot at a stage (its stage .. its until)."""
+    i = STAGES.index(stage)
+    return STAGES.index(getattr(p, 'stage', 'P1')) <= i and (getattr(p, 'until', None) is None or i <= STAGES.index(p.until))
+
+
+def all_parts(mounts=None) -> dict:
+    """The frame's parts and the P3 shell's (cad/body_shell.py): every part of every stage."""
+    import body_shell as bs3
+    out = frame_parts(mounts)
+    out.update(bs3.shell_parts())
     return out
 
 
@@ -657,31 +826,59 @@ def power_plate_part(mounts=None) -> bs.SheetPart:
 
 
 BUS_L, BUS_W = 110.0, 20.0
-BUS_HOLES = [10.0, 32.5, 55.0, 77.5, 100.0]         # along the bar: M6 tapped (the input, then the branches)
+BUS_HOLES = [10.0, 32.5, 55.0, 77.5, 100.0]         # along the bar: M6 clearance (the input, then the branches)
+BUS_INS_H = 16.0                                    # the insulator: the M6 nut's pocket and the screw's tip both in plastic
+BUS_FLOOR = 3.5                                     # plastic left under the deepest screw tip: the VESCs' M5 x 8 tips stand
+                                                    # 1.5 mm up through the plate in 2.5 mm pockets under it, 1 mm of PA6-CF apart
+BUS_NUT = {'af': 10.0, 'h': 6.0, 'key': 'nut_m6_nyloc'}        # DIN 985 M6 nyloc (McMaster 94645A205): 10 mm A/F, 6 mm tall
+BUS_SCREW = {'d': 6.0, 'length': 16.0, 'key': 'screw_m6x16'}   # ISO 4762 M6 x 16 (91290A667), through the lugs and the bar
 
 
 def bus_bar_part() -> bs.SheetPart:
-    """A bus bar: C110 copper 0.125 in, 110 x 20, five M6 tapped holes (drawn at the M6 tap drill, 5.0 mm). One part
-    for + and -; the ring lugs stack on M6 x 12 screws into the taps."""
-    feats = [bs.Feature('hole', 'base', (u, BUS_W / 2), 5.0, note='tap M6 x 1.0 through') for u in BUS_HOLES]
+    """A bus bar: C110 copper 0.125 in, 110 x 20, five Ø6.4 holes for the lugs' M6 screws and two Ø3.4 for the M3
+    screws that hold it to its insulator. One part for + and -. Each lug stack is an M6 x 16 socket head down through
+    the lug(s) and the bar into a nyloc nut held in a hex pocket of the insulator: SendCutSend taps no part under 1 in
+    wide (its app, 2026-10-27), and three threads of copper are a poor hold for a lug's torque anyway."""
+    feats = [bs.Feature('hole', 'base', (u, BUS_W / 2), 6.4, note='M6 clearance: the lug screw into the insulator\'s nut') for u in BUS_HOLES]
     feats += [bs.Feature('hole', 'base', (u, BUS_W / 2), 3.4, note='M3 x 8 down into the insulator\'s inserts') for u in BUS_INS]
     return bs.SheetPart('bus_bar', 'C110-0.125', BUS_L, BUS_W, features=feats, qty=2,
-                        note='C110 copper: five holes tapped M6 x 1.0 (the lugs), two clearance holes for M4 into the printed insulator; '
-                             'deburr; + and - are the same part')
+                        note='C110 copper, cut only: five Ø6.4 holes for the lugs\' M6 screws, two Ø3.4 for the M3 screws into the '
+                             'printed insulator; deburr; + and - are the same part')
 
 
 BUS_INS = (21.25, 88.75)
 
 
 def bus_insulator():
-    """The printed PA6-CF block a bus bar sits on: 110 x 20 x 10, four M3 heat-set inserts (94459A140, Ø4.0 x 6.5:
-    two from above for the bar, two from below for the plate's screws, offset so they never meet). The bar's
-    potential never reaches the plate: every screw ends in plastic."""
-    s = box(0.0, BUS_L, 0.0, BUS_W, 0.0, 10.0).edges('|Z').fillet(2.0)
+    """The printed PETG block a bus bar sits on (not PA6-CF: carbon fibre conducts and the plate is bonded to the - bus): 110 x 20 x BUS_INS_H, four M3 heat-set inserts (94459A140, Ø4.0 x
+    6.5: two from above for the bar, two from below for the plate's screws, offset so they never meet) and, under each
+    of the bar's five holes, a hex pocket for the lug screw's nyloc nut (it cannot turn) with the screw's tip hole
+    below it. The bar's potential never reaches the plate: every screw ends in plastic, BUS_FLOOR above the plate (an
+    M6 x 16 through one 1 mm lug and the bar ends 0.7 mm above that floor; a tap with no lug gets no screw)."""
+    H = BUS_INS_H
+    s = box(0.0, BUS_L, 0.0, BUS_W, 0.0, H).edges('|Z').fillet(2.0)
     for u in BUS_INS:
-        s = s.cut(cyl_z(2.0, 10.0 - 6.5, 10.1, u, BUS_W / 2))           # M3 insert from above (the bar)
+        s = s.cut(cyl_z(2.0, H - 6.5, H + 0.1, u, BUS_W / 2))             # M3 insert from above (the bar)
     for u in (BUS_INS[0] + 22.5, BUS_INS[1] - 22.5):
         s = s.cut(cyl_z(2.0, -0.1, 6.5, u, BUS_W / 2))                  # M3 insert from below (the plate)
-    for u in BUS_HOLES:                                                 # clear the M6 screws' tips
-        s = s.cut(cyl_z(4.0, 10.0 - 7.0, 10.1, u, BUS_W / 2))
+    for u in BUS_HOLES:
+        s = s.cut(hexagon_z(BUS_NUT['af'] + 0.3, H - BUS_NUT['h'] - 0.3, H + 0.1, u, BUS_W / 2))     # the nut, held
+        s = s.cut(cyl_z(3.3, BUS_FLOOR, H - BUS_NUT['h'], u, BUS_W / 2))   # the screw's tip: BUS_FLOOR of plastic stays
+    for u, v in bus_insulator_reliefs():                  # the VESCs' flange screws come 3.5 mm up through the plate under it
+        s = s.cut(cyl_z(4.5, -0.1, 2.5, u, v))
     return s
+
+
+@functools.lru_cache(maxsize=1)
+def bus_insulator_reliefs():
+    """Where the VESCs' flange screws' tips stand under either insulator (its own frame): one part for both, so the
+    pockets of both."""
+    import body_layout as bl
+    items = bl.layout()['items']
+    out = set()
+    for bx, by in bl.BUS_XY:
+        for it in ('plate_vesc_r', 'plate_vesc_l'):
+            for x, y in bl.vesc_holes(bl._get(items, it)):
+                if bx - 4 < x < bx + BUS_L + 4 and by - 4 < y < by + BUS_W + 4:
+                    out.add((round(x - bx, 2), round(y - by, 2)))
+    return sorted(out)

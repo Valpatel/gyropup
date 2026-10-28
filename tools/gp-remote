@@ -1,0 +1,62 @@
+#!/usr/bin/env bash
+# gp-remote: run a heavy Gyropup command (CAD build, FEA, rig sim) on a GB10 instead of this workstation.
+#
+#   gp-remote [--host HOST] [--pull PATH]... -- COMMAND...
+#
+# Run from inside a gyropup worktree. It rsyncs the worktree (no .git/.venv) to
+# HOST:~/gyropup-compute/wt/<worktree name>/, runs COMMAND there with the GB10's venv on PATH
+# (`python` and `.venv/bin/python` both work), then rsyncs back the paths given by --pull
+# (default: exports/). One run per worktree per host at a time (flock). Default host: the least-loaded
+# host in $GP_REMOTE_HOSTS or ~/.config/gp-remote/hosts (SSH aliases, space or newline separated).
+# aarch64 hosts have no PARDISO, so the FEA there uses SciPy's solver.
+set -euo pipefail
+host=""; pulls=()
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --host) host="$2"; shift 2;;
+    --pull) pulls+=("$2"); shift 2;;
+    --) shift; break;;
+    *) break;;
+  esac
+done
+[ $# -gt 0 ] || { sed -n '2,12p' "$0"; exit 2; }
+wt=$(git rev-parse --show-toplevel)
+name=$(basename "$wt")
+rel=$(realpath --relative-to="$wt" "$PWD")
+[ ${#pulls[@]} -gt 0 ] || pulls=(exports/)
+if [ -z "$host" ]; then
+  best=""; bl=999
+  hosts=${GP_REMOTE_HOSTS:-$(cat "$HOME/.config/gp-remote/hosts" 2>/dev/null)}
+  for h in $hosts; do
+    l=$(ssh -o ConnectTimeout=5 "$h" "cut -d' ' -f1 /proc/loadavg" 2>/dev/null) || continue
+    if awk "BEGIN{exit !($l < $bl)}"; then bl=$l; best=$h; fi
+  done
+  host=${best:?no compute host reachable (set GP_REMOTE_HOSTS or ~/.config/gp-remote/hosts)}
+fi
+dest="gyropup-compute/wt/$name"
+echo "gp-remote: $name -> $host:~/$dest ($*)" >&2
+ssh "$host" "mkdir -p ~/$dest"
+rsync -a --delete --exclude .git --exclude '*.egg-info' --exclude __pycache__ \
+  "$HOME/Code/cad-agent-gyropup-int/" "$host:gyropup-compute/cad-agent/"
+rsync -a --delete --exclude .git --exclude .venv --exclude __pycache__ --exclude node_modules \
+  --exclude 'exports/sim/' --exclude 'exports/leg/rig_meshes/' "$wt/" "$host:$dest/"
+cmd=$(printf '%q ' "$@")
+b64=$(printf 'mkdir -p "$TMPDIR"; %s' "$cmd" | base64 -w0)   # base64 so quotes in the command survive ssh
+set +e
+ssh "$host" "cd ~/$dest && ln -sfn ~/gyropup-compute/.venv .venv && cd '$rel' && \
+  exec flock -w 3600 ~/$dest/.gp-remote.lock env PATH=\$HOME/gyropup-compute/.venv/bin:\$PATH \
+  MPLBACKEND=Agg TMPDIR=\$HOME/gyropup-compute/tmp \
+  LD_PRELOAD=\$HOME/gyropup-compute/gmsh-env/lib/libcrypto.so.3:\$HOME/gyropup-compute/gmsh-env/lib/libssl.so.3 \
+  nice -n 5 bash -c \"echo $b64 | base64 -d | bash\""
+rc=$?
+set -e
+for p in "${pulls[@]}"; do
+  p=${p%/}
+  if ssh "$host" "test -d ~/$dest/$p"; then
+    rsync -a "$host:$dest/$p/" "$wt/$p/"
+  else
+    rsync -a "$host:$dest/$p" "$wt/$p" 2>/dev/null || echo "gp-remote: nothing at $p" >&2
+  fi
+done
+echo "gp-remote: exit $rc on $host, pulled ${pulls[*]}" >&2
+exit $rc

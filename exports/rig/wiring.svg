@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 540" font-family="DejaVu Sans, Arial, sans-serif">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="20" y="24" font-size="16" font-weight="bold" fill="#142b38">Gyropup leg rig: power, hold-to-run and CAN</text>
+<path d="M105,75 L220,75 L220,75 L335,75" fill="none" stroke="#d33" stroke-width="3" opacity="0.8"/>
+<text x="224" y="72" font-size="9" fill="#d33">pack + (12 AWG)</text>
+<path d="M335,75 L445,75 L445,75 L555,75" fill="none" stroke="#d33" stroke-width="3" opacity="0.8"/>
+<text x="449" y="72" font-size="9" fill="#d33">fused + (12 AWG)</text>
+<path d="M555,75 L688,75 L688,75 L820,75" fill="none" stroke="#d33" stroke-width="3" opacity="0.8"/>
+<text x="692" y="72" font-size="9" fill="#d33">switched + (12 AWG)</text>
+<path d="M105,89 L462,89 L462,89 L820,89" fill="none" stroke="#222" stroke-width="3" opacity="0.8"/>
+<text x="466" y="86" font-size="9" fill="#222">pack - (12 AWG)</text>
+<path d="M335,75 L335,75 L335,205 L335,205" fill="none" stroke="#d33" stroke-width="1.6" opacity="0.8"/>
+<text x="339" y="137" font-size="9" fill="#d33">fused + to the 12 V rail (18 AWG)</text>
+<path d="M335,205 L445,205 L445,210 L555,210" fill="none" stroke="#e80" stroke-width="1.6" opacity="0.8"/>
+<text x="449" y="204" font-size="9" fill="#e80">+12 V supply (22 AWG)</text>
+<path d="M555,210 L555,210 L555,75 L555,75" fill="none" stroke="#e80" stroke-width="1.6" opacity="0.8"/>
+<text x="559" y="140" font-size="9" fill="#e80">coil (22 AWG)</text>
+<path d="M335,205 L445,205 L445,330 L555,330" fill="none" stroke="#e80" stroke-width="1.6" opacity="0.8"/>
+<text x="449" y="264" font-size="9" fill="#e80">+12 V to the pendant (22 AWG)</text>
+<path d="M555,330 L555,330 L555,210 L555,210" fill="none" stroke="#e80" stroke-width="1.6" opacity="0.8"/>
+<text x="559" y="267" font-size="9" fill="#e80">trigger (22 AWG)</text>
+<path d="M555,330 L688,330 L688,310 L820,310" fill="none" stroke="#e80" stroke-width="1.6" opacity="0.8"/>
+<text x="692" y="317" font-size="9" fill="#e80">pendant sense (22 AWG)</text>
+<path d="M555,75 L688,75 L688,310 L820,310" fill="none" stroke="#d33" stroke-width="1.6" opacity="0.8"/>
+<text x="692" y="190" font-size="9" fill="#d33">VBUS sense (22 AWG)</text>
+<path d="M1060,285 L940,285 L940,310 L820,310" fill="none" stroke="#36c" stroke-width="1.6" opacity="0.8"/>
+<text x="944" y="294" font-size="9" fill="#36c">CAN (pod) (twisted pair + GND)</text>
+<path d="M820,310 L940,310 L940,160 L1060,160" fill="none" stroke="#36c" stroke-width="1.6" opacity="0.8"/>
+<text x="944" y="232" font-size="9" fill="#36c">CAN trunk (Quabbin Q0357-1, shield at the pod end)</text>
+<path d="M1060,140 L940,140 L940,55 L820,55" fill="none" stroke="#36c" stroke-width="1.6" opacity="0.8"/>
+<text x="944" y="94" font-size="9" fill="#36c">CAN stubs (motor leads (GH1.25))</text>
+<path d="M1060,410 L1060,410 L1060,285 L1060,285" fill="none" stroke="#888" stroke-width="1.6" opacity="0.8"/>
+<text x="1064" y="344" font-size="9" fill="#888">USB (USB-C)</text>
+<path d="M1060,410 L940,410 L940,310 L820,310" fill="none" stroke="#888" stroke-width="1.6" opacity="0.8"/>
+<text x="944" y="357" font-size="9" fill="#888">USB (USB-C)</text>
+<rect x="20" y="40" width="170" height="70" rx="6" fill="#f4f6f8" stroke="#142b38" stroke-width="1.2"/>
+<text x="28" y="56" font-size="11" font-weight="bold" fill="#142b38">2 x DCB609, 20 V mode, in series</text>
+<text x="28" y="71" font-size="9.5" fill="#333">10S, 36 V nom, 41 V full (D65)</text>
+<text x="28" y="83" font-size="9.5" fill="#333">two 20 V dock adapters, 12 AWG</text>
+<text x="28" y="95" font-size="9.5" fill="#333">XT60H female on the pair's lead</text>
+<rect x="260" y="40" width="150" height="70" rx="6" fill="#f4f6f8" stroke="#142b38" stroke-width="1.2"/>
+<text x="268" y="56" font-size="11" font-weight="bold" fill="#142b38">Class CC fuse 30 A</text>
+<text x="268" y="71" font-size="9.5" fill="#333">Littelfuse KLDR030</text>
+<text x="268" y="83" font-size="9.5" fill="#333">in LPSC0001Z (DIN)</text>
+<text x="268" y="95" font-size="9.5" fill="#333">300 VDC</text>
+<rect x="470" y="40" width="170" height="70" rx="6" fill="#f4f6f8" stroke="#142b38" stroke-width="1.2"/>
+<text x="478" y="56" font-size="11" font-weight="bold" fill="#142b38">Contactor (hold-to-run)</text>
+<text x="478" y="71" font-size="9.5" fill="#333">TE LEV100A4ANG</text>
+<text x="478" y="83" font-size="9.5" fill="#333">+ terminal to the fuse</text>
+<text x="478" y="95" font-size="9.5" fill="#333">12 V coil, 0.36 A</text>
+<rect x="720" y="30" width="200" height="90" rx="6" fill="#f4f6f8" stroke="#142b38" stroke-width="1.2"/>
+<text x="728" y="46" font-size="11" font-weight="bold" fill="#142b38">RS-04 x 2 (ids 1, 2)</text>
+<text x="728" y="61" font-size="9.5" fill="#333">XT30 Y-splice on the carriage</text>
+<text x="728" y="73" font-size="9.5" fill="#333">XT30UW-F leads, 310 mm</text>
+<text x="728" y="85" font-size="9.5" fill="#333">CAN on GH1.25-2P plugs</text>
+<rect x="260" y="170" width="150" height="70" rx="6" fill="#f4f6f8" stroke="#142b38" stroke-width="1.2"/>
+<text x="268" y="186" font-size="11" font-weight="bold" fill="#142b38">12 V rail</text>
+<text x="268" y="201" font-size="9.5" fill="#333">Mean Well DDR-30L-12</text>
+<text x="268" y="213" font-size="9.5" fill="#333">18-75 V in, 12 V 2.5 A</text>
+<text x="268" y="225" font-size="9.5" fill="#333">input fuse 5 A (5x20, DC)</text>
+<rect x="470" y="170" width="170" height="80" rx="6" fill="#f4f6f8" stroke="#142b38" stroke-width="1.2"/>
+<text x="478" y="186" font-size="11" font-weight="bold" fill="#142b38">Off-delay relay</text>
+<text x="478" y="201" font-size="9.5" fill="#333">ProSense T2R-M1-ADJ-240U</text>
+<text x="478" y="213" font-size="9.5" fill="#333">OFF DELAY, 1.0 s (DIP A off, B on;</text>
+<text x="478" y="225" font-size="9.5" fill="#333">C, D on: 0.1-10 s; E, F on: knob)</text>
+<rect x="470" y="300" width="170" height="60" rx="6" fill="#f4f6f8" stroke="#142b38" stroke-width="1.2"/>
+<text x="478" y="316" font-size="11" font-weight="bold" fill="#142b38">Pendant (hold to run)</text>
+<text x="478" y="331" font-size="9.5" fill="#333">AbleNet Specs IC, N.O.</text>
+<text x="478" y="343" font-size="9.5" fill="#333">3.5 mm jack on the pod</text>
+<rect x="720" y="250" width="200" height="120" rx="6" fill="#f4f6f8" stroke="#142b38" stroke-width="1.2"/>
+<text x="728" y="266" font-size="11" font-weight="bold" fill="#142b38">Rig node: Feather M4 CAN</text>
+<text x="728" y="281" font-size="9.5" fill="#333">D5: pendant (10k / 2.2k divider)</text>
+<text x="728" y="293" font-size="9.5" fill="#333">A2: VBUS (100k / 4.7k)</text>
+<text x="728" y="305" font-size="9.5" fill="#333">I2C: VL53L1X (STEMMA QT)</text>
+<text x="728" y="317" font-size="9.5" fill="#333">D6, D9: HX711 (load plate)</text>
+<text x="728" y="329" font-size="9.5" fill="#333">USB-C: laptop (power, log)</text>
+<rect x="980" y="250" width="160" height="70" rx="6" fill="#f4f6f8" stroke="#142b38" stroke-width="1.2"/>
+<text x="988" y="266" font-size="11" font-weight="bold" fill="#142b38">USB-CAN: BTT U2C V2.1</text>
+<text x="988" y="281" font-size="9.5" fill="#333">candleLight -> SocketCAN</text>
+<text x="988" y="293" font-size="9.5" fill="#333">120 ohm jumper ON (bus end)</text>
+<rect x="980" y="380" width="160" height="60" rx="6" fill="#f4f6f8" stroke="#142b38" stroke-width="1.2"/>
+<text x="988" y="396" font-size="11" font-weight="bold" fill="#142b38">Laptop</text>
+<text x="988" y="411" font-size="9.5" fill="#333">python -m rig.run</text>
+<text x="988" y="423" font-size="9.5" fill="#333">can0 at 1 Mbit/s</text>
+<rect x="980" y="120" width="160" height="80" rx="6" fill="#f4f6f8" stroke="#142b38" stroke-width="1.2"/>
+<text x="988" y="136" font-size="11" font-weight="bold" fill="#142b38">CAN junction (carriage)</text>
+<text x="988" y="151" font-size="9.5" fill="#333">FeatherWing Proto</text>
+<text x="988" y="163" font-size="9.5" fill="#333">2 x JST GH 2-pin headers</text>
+<text x="988" y="175" font-size="9.5" fill="#333">120 ohm H-L (bus end)</text>
+<text x="20" y="525" font-size="10" fill="#555">Red: the motors' bus (12 AWG pack side). Orange: the 12 V hold-to-run loop. Blue: CAN at 1 Mbit/s, 120 ohm at the U2C and at the junction. Grounds meet at the pack's negative (the pod's inlet).</text>
+</svg>
