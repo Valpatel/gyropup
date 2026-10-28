@@ -69,7 +69,7 @@ Tick with a link to the evidence (file, picture, result JSON). Unticked = open.
       parked-safe passes powered and unpowered; nothing sticks in the chute; on a fixed period 3/s level and 2.5/s at
       -25 deg feed without a double (a hung ball at -25 deg and 3/s came down with the next ball), about 1 step in 8
       empty with rigid balls. The firmware's answer: each step paced on gate 1, a dither instead of a step when no ball
-      arrives (docs/turret-firmware.md). Open until bench test 5.1 counts it with real foam.
+      arrives (docs/turret-firmware.md). Open until bench test 5.1 counts it with real foam. Points at bench test 5.1 (docs/turret-next-plan.md N15).
 - [x] Rate of fire: dial speed vs flywheel recovery between shots. Evidence (v0, the STS3215 feed):
       docs/turret-physics.md section 3: a step settles in 232-246 ms; 3 balls/s level and 2.5 at -25 deg on a fixed
       period, so the firmware paces each step on gate 1 (docs/turret-firmware.md); the X2216's wheels lose 1.3 % a shot
@@ -90,17 +90,21 @@ Tick with a link to the evidence (file, picture, result JSON). Unticked = open.
       test 4.7.
 - [ ] Command to muzzle: ~340 ms with the servo-stepped dial in v0 (the step ~235 ms, the drop and chute ~90 ms, the
       nip and bore ~12 ms: docs/turret-physics.md section 3). Pre-staging a ball is not in v0; the firmware leads its
-      shots by the measured latency.
+      shots by the measured latency. Points at the feed and accuracy tests (N15), which log trigger to muzzle per shot.
 - [x] Firing backwards: at pan 140 deg the muzzle clears the deck's rear corner by 3 mm, where the operator stands.
       Add a pan keep-out behind and check the muzzle's clearance at every pan and tilt (a general obstacle check,
       as for the lidar). Evidence: cad/turret_lidar.py is now that general check (obstacles as cylinders and boxes,
       the ball path at the slowest stray-ball speed); `--scene box` finds every pose clear of the deck and the antennas
       and keeps firing out within 60 deg of straight back (exports/turret/lidar/box.json `keep_out_fire_pan_deg`;
       docs/turret-firmware.md section 5).
-- [ ] Torque caps: the tilt holds with a 15x margin and slewing is speed-limited (~100x torque margin). Cap both
-      servos' torque in firmware to protect the printed gear and fingers (the pinion is the weak tooth: see the FEA).
-- [ ] Box-specific, for cad/turret_box.py when the turret's base changes: the antennas collide at full depression,
-      the stack tips at a 10.6 N push, the shroud costs ~7 % of the fan's airflow (est).
+- [x] Torque caps: the tilt holds with a 46x margin and slewing is speed-limited. Evidence: the firmware writes the
+      servos' torque limit (register 48, config.SERVO_TORQUE_LIMIT = 500: 50 % of stall) to the pan and tilt servos at
+      BOOT (firmware/turret/turret_fw.py) and to the feed servo whenever it comes back on the bus (feed.py; checked by
+      test_firmware.py's feed-servo re-init case); the pinion at the cap is SF 2.7 (FEA); bench test 2.3 holds a stall.
+- [x] Box-specific (cad/turret_box.py on the J501's committed Rev 0.9, D50): the antennas no longer limit the
+      depression (the box scene clear at every pan and tilt, firing kept out within 60 deg of straight back:
+      exports/turret/lidar/box.json); the stack tips at a 10.6 N push at the tilt axis; the shroud costs 9.2 % of the
+      9215's flow by hand (exports/turret/box/box.json). The proof is the thermometer in the collar (N17).
 
 **Structure and motion**
 - [ ] Strength of every printed load path (pan ring and gear teeth, yoke, cradle, cartridge, barrel mount) under
@@ -114,41 +118,47 @@ Tick with a link to the evidence (file, picture, result JSON). Unticked = open.
       hold 47.6, world-frame 21.9; pan 90 deg in 1.2 s with a margin of 10.0 at the 50 % torque cap, yaw 104; the
       pinion (16 mm face, full-round roots) SF 2.52 at the cap and 1.26 at stall by FEA of one tooth.
 - [x] Clearances and stops over the whole pan/tilt range, including the lidar in front and the DT12 harness. The
-      turret itself is clear: no overlap and nothing moving within 1 mm but the designed tilt stops, at pans 0-350
-      every 10 deg x tilts 0 and -25 (exports/turret/clash-sweep.json), and every degree where the cradle passes over
-      the pan pinion at full depression (exports/turret/t1-fine-checks.json). Over the lidar (cad/turret_lidar.py, the
-      30 mm riser): limited only within pan +-26 deg, to -16 deg at worst (exports/turret/lidar/lidar.json, a firmware
-      table every 5 deg). On the Orin box: no limit, firing kept out within 60 deg of straight back
-      (exports/turret/lidar/box.json). The DT plug's 30 mm withdrawal path is clear of the fixed parts.
-- [ ] Mass: 1.639 kg with a full hopper in v0 (the X2216s, the cartridge board and the taller cage: exports/turret/turret.json; it was 1.594 before D42) against the head payload's 1.5 kg
-      (docs/head-payload.md): the slip ring, its carrier and driver, and the two board bays added ~250 g. Cut at least
-      100 g (infill where the FEA allows, a lighter carrier and bay) or agree a new budget with the leg's sizing.
+      turret itself is clear: no overlap and nothing moving within 1 mm but the lug on the yoke's stops at 0 and -25 deg,
+      at pans 0-350 every 10 deg x tilts 0, -5, -12.5, -20, -25 (exports/turret/clash-sweep.json); every degree of pans
+      130-230 at full depression, the nearest part to the pan pinion is the rail frame at 5.38 mm
+      (exports/turret/t1-fine-checks.json, cad/turret.py pinion_check). Over the lidar at the body's 143 mm
+      (cad/turret_lidar.py, the 30 mm riser): limited only within pan +-26 deg, to -16.5 deg at worst
+      (exports/turret/lidar/lidar.json; the firmware's robot default). On the Orin box: no limit, firing kept out within
+      60 deg of straight back (exports/turret/lidar/box.json). The DT plug's 30 mm withdrawal path is clear of the fixed
+      parts; exports/turret/mount.json gives the body the plug's sweep as a box.
+- [x] The turret's interface for the body. Evidence: exports/turret/mount.json (cad/turret_mount.py, written by every
+      bench build: the TM pattern, the riser, the DT12 and its sweep, the harness, the mass and centre with and without
+      balls, power, CAN, the lidar table, the recoil; it round-trips cad/turret.py's TM constants); the robot's harness and
+      safety line (docs/turret-wiring.md 1.1b, D52); the host bridge for the laptop and the Jetson
+      (firmware/turret/host.py, its test in test_firmware.py: 20 of 20).
+- [x] Mass: the head payload's budget is 1.70 kg with a full hopper, its centre at most 100 mm above the TM face (D49).
+      As built after D48: 1.684 kg with 30 balls, 1.629 empty, the centre 95.7 mm above the TM face
+      (exports/turret/turret.json, exports/turret/mount.json). docs/head-payload.md and the designs' head_payload take
+      1.70 at the main session's tick; the levers (a 24-ball hopper, a one-board bay) stay listed.
 
 **Build**
 - [x] Every printed part: orientation, supports, bed fit, print time; tolerances for bearings, inserts and the gear.
       Evidence: exports/turret/print/*.3mf (each part in its print orientation) and print.json, sliced by Bambu Studio
-      for a P1S (1,291 g, 50 h); docs/turret-print.md (settings, schedule); the fits are bench test 1.1.
+      for a P1S (21 parts, 1,281 g, 49.3 h; the rail frame flat with no supports); docs/turret-print.md (settings,
+      schedule); the fits are bench test 1.1.
 - [x] Every bought part with a real part number and price; nothing left as "estimate" that can be sourced. Evidence
-      (v0): exports/turret/bench/bom.json (`not_in_a_catalogue`, `no_listed_price` and `no_second_source` empty) and the
-      order sheets exports/turret/bench/orders/ (118 lines, 18 sellers, a backup seller on every line, $1,579 in whole
-      packs with the stand and the tools, the servos and motors first; the boards' resistors, capacitors and diodes
-      counted from exports/turret/wiring/parts.md). Each line carries a catalogue key, part number and source URL
-      (thumbnails and alternates through cad/bom_media.py). Every part follows the parts rule (D40): the pan bearing is
-      VXB's chrome-steel 6810-2RS, the ring the SparkFun ROB-13065, the laser Quarton's red VLM-650-03 LPT (D42), the pan
-      clamp a SendCutSend 6061-T6 part (exports/turret/pan_clamp.dxf, instant price on upload). The DJI Snail, M2006
-      and C610 are out of v0 (D42: the X2216 880KV and a third STS3215); the longest lead is the servos from Waveshare
-      (1-3 weeks).
+      (v0 with D48 and D51): exports/turret/bench/bom.json (`not_in_a_catalogue`, `no_listed_price` and
+      `no_second_source` empty) and the order sheets exports/turret/bench/orders/ (131 lines from 18 sellers, a backup
+      seller on every line, $1,686.96 in whole packs with the stand and the tools; both AM32 ESC pairs, D51). The
+      SendCutSend cart is four parts in two thicknesses (the pan clamp, the cradle's two cheek plates, the stop lug),
+      each DXF drawn from its countersunk face. Every part follows the parts rule (D40); the longest lead is the servos
+      from Waveshare (1-3 weeks).
 - [x] Wiring (v0): docs/turret-wiring.md (every connector, conductor and crimp; the +24 V traced to each ESC phase;
       the arm chain drawn with a designator on every part and exports/turret/wiring/parts.md listing each part's value,
       catalogue key and pins; the boards laid out and checked by cad/turret_boards.py). The plan's 5 V logic, 5 V 555,
       floating brake star and 3.3 V laser gate were corrected before anything was soldered (D47).
 - [x] Assembly order with pictures; a bench test plan (chronograph, accuracy, jam rate, the pendant). Evidence:
       docs/turret-assembly.md (twelve steps, a picture each from the CAD, the v0 cartridge), docs/turret-bench-tests.md
-      (the v0 procedure with its numbers).
+      (the v0 procedure with its numbers). Step 8 is the cradle on its aluminium cheeks (D48).
 
 **Awesome**
-- [ ] Sounds, look and feedback (the laser, lights) on the 3D page match the real thing.
-- [ ] Reload at the dock: the hopper's fill port and flap.
+- [ ] Sounds, look and feedback (the laser, lights) on the 3D page match the real thing. Points at N19.
+- [ ] Reload at the dock: the hopper's fill port and flap. Points at N19 (the fill flap and its spring).
 
 ## Log
 
@@ -365,3 +375,26 @@ Newest last. One entry per agent run: what it did, what it proved, what is next.
     intake shroud was drawn round the Rev 0.8 duct and needs a look when Rev 0.9 lands.
   - Next: order (the servos and the X2216s first: Waveshare ships from China); print the stand and the pan stack; test-
     fit the TB3M's panel hole; T6's measurements on the parts in hand; then T10-T15.
+- 2026-10-27/28: docs/turret-next-plan.md section 4.1, N0-N8 (decisions D48-D52).
+  - N0: main 3ceadf8 rebuilt, every number reproduced (1.639 / 1.584 kg, 0 clashes, tilt 5.9, pan 8.9, the cradle 0.78
+    / 0.62 / 0.77, 19 firmware tests, 33 of 33 simulated bench tests).
+  - N1 (D48): the cradle is a printed rail frame on two SendCutSend 6061-T6 cheek plates with an aluminium stop lug;
+    the checks changed the plan's sketch: 10 mm feet (12 passed 0.37 mm over the rotor leads), feet to x -10 (the rail
+    cantilevered 46 mm to the rear dowel), a +-10 deg lug band, and a yoke with a 12 mm bridge, 6 mm root fillets, a
+    smaller lead window and buttressed stop sectors (its push was 1.07 at first). 1.684 kg with balls; sweep at five
+    tilts clean; the rail frame prints in 2.1 h with no supports.
+  - N2: every printed part's FEA has a layer-aware column (across 23 / shear 11.5 / along 49 MPa) and the verdict uses
+    it; on the final geometry the rail frame 2.51 / 4.29 / 2.22 and the yoke 3.79 / 2.03 / 5.10 / 2.14-2.36 (the full
+    run's summary.json with every part follows).
+  - N3 (D51): the Lumenier AM32 pair and the gates' 39 k alternates in the first order; $1,686.96, 131 lines, 18 sellers.
+  - N4 (D50): the J501 adapter on the committed Rev 0.9 (the fan re-centred): inserts wholly in the deck, a 40 mm gap,
+    a 158 mm mouth; 9.2 % of the fan's flow, 3.7 mm to the legs, the box scene clear.
+  - N5, N6, N7: mount.json for the body, the lidar table at 143 mm (-16.5 deg worst), the host bridge (20 of 20
+    firmware tests, 33 of 33 bench), the robot's DT12 harness and STOP contact (wiring 1.1b).
+  - For the body workstream (D52 is already in its code and next plan): docs/body-plan.md still says the grommet at
+    (-130, 60) and a "10 A blade fuse" on the turret (it is a 5 A MINI); the STOP relay's pole A carries about 10 mA at
+    12 V (the 555's own supply as well as the opto's 2 mA: a gold-clad contact), and pole B closes onto the turret's
+    2 x 1000 uF bank (rate it for the inrush or put an NTC in the branch).
+  - For the main session: docs/head-payload.md and designs' head_payload take D49's 1.70 kg; cad/leg_studies.py's
+    docstring can say the layer-aware post-process applies there (N2's note); designer/turret_bench.js text changes are
+    in the report.
