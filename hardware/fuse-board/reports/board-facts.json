@@ -1,0 +1,12 @@
+{
+ "board_area_mm2": 6684.6,
+ "copper_area_mm2": {
+  "top": 3568.2,
+  "bottom": 4121.7
+ },
+ "holes": 256,
+ "hole_area_mm2": 537.6,
+ "thickness_mm": 1.6,
+ "copper_um": 70.0,
+ "zones_filled": true
+}
