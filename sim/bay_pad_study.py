@@ -25,6 +25,7 @@ sys.path.insert(0, str(R))
 from sim import scenarios as S  # noqa: E402
 
 BUILD = R / 'build' / 'sim' / 'v2'
+SWEEP = (0.02, 0.03, 0.04, 0.06, 0.08)
 OUT = R / 'exports' / 'body' / 'bay-pad-study.json'
 _rec = {'peak': 0.0, 'pair': None}
 _orig = mujoco.mj_contactForce
@@ -33,6 +34,15 @@ _orig = mujoco.mj_contactForce
 def _spy(model, data, ci, f):
     _orig(model, data, ci, f)
     c = data.contact[ci]
+    names = (model.geom(c.geom1).name, model.geom(c.geom2).name)
+    if 'battery_bay' in names and _rec.get('touch') is None:          # the first touch: the bay's speed and the base's energy
+        v6 = np.zeros(6)
+        mujoco.mj_objectVelocity(model, data, mujoco.mjtObj.mjOBJ_GEOM, model.geom('battery_bay').id, v6, 0)
+        base = model.body('base').id
+        m_base = float(model.body_subtreemass[base])
+        _rec['touch'] = {'t': round(float(data.time), 3), 'bay_v_world_mps': [round(float(x), 3) for x in v6[3:]],
+                         'base_qvel_z_mps': round(float(data.qvel[2]), 3), 'robot_kg': round(m_base, 2),
+                         'base_body_kg': round(float(model.body_mass[base]), 2)}
     if abs(f[0]) > _rec['peak']:
         _rec.update(peak=abs(float(f[0])), pair=(model.geom(c.geom1).name, model.geom(c.geom2).name), t=float(data.time),
                     depth=float(-c.dist))
@@ -49,14 +59,14 @@ def fall(xml_text, info):
         f.write(xml_text)
         p = Path(f.name)
     try:
-        _rec.update(peak=0.0, pair=None)
+        _rec.update(peak=0.0, pair=None, touch=None)
         mujoco.mj_contactForce = _spy
         r = S.run(p, info, S.SCENARIOS['fall_side'])
     finally:
         mujoco.mj_contactForce = _orig
         p.unlink()
     return {'body_impact_peak_n': r.get('body_impact_peak_n'), 'peak_pair': _rec['pair'], 'peak_at_s': round(_rec.get('t', 0.0), 3),
-            'depth_mm_at_peak': round(_rec.get('depth', 0.0) * 1000, 2)}
+            'depth_mm_at_peak': round(_rec.get('depth', 0.0) * 1000, 2), 'first_touch': _rec.get('touch')}
 
 
 def static_stiffness(xml_text):
@@ -86,7 +96,7 @@ def main():
     info = json.loads((BUILD / 'model.json').read_text())
     out = {'model_kg': info.get('total_mass_kg'), 'as_modelled': fall(xml, info), 'sweep': []}
     print('as modelled:', out['as_modelled'])
-    for tc in (0.02, 0.03, 0.04, 0.06, 0.08):
+    for tc in (SWEEP if len(sys.argv) < 2 else ()):
         x = with_pad(xml, (tc, 1.0))
         row = {'solref': [tc, 1.0], **fall(x, info), 'static': static_stiffness(x)}
         out['sweep'].append(row)
