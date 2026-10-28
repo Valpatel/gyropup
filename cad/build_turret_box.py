@@ -110,7 +110,7 @@ ROLE = {
     'dt_plug': 'The host\'s DT12 plug (a 90 deg boot turns the harness down).',
     'tilt_servo': 'STS3215 on the yoke\'s left arm: tilts the cradle directly.',
     'tilt_bearing': 'MR126 bearing round the M5 shoulder screw: the cradle\'s second pivot.',
-    'flywheel_motor_l': 'SunnySky X2216 (880 rpm/V) on the fixed 12 V rail: 10,560 rpm at most, which caps the ball speed. Hangs under the cage plate.',
+    'flywheel_motor_l': 'SunnySky X2216 1400 rpm/V on the turret\'s trimmed flywheel rail (about 11.3 V): its no-load speed is the 105 fps ceiling (D68). Hangs under the cage plate.',
     'flywheel_motor_r': 'SunnySky X2216, spinning the other way.',
     'esc_l': 'AM32 35 A ESC for the left flywheel motor, on the cartridge board.',
     'esc_r': 'AM32 35 A ESC for the right flywheel motor, on the cartridge board.',
@@ -293,10 +293,10 @@ def flight(v0=21.3, z0=0.55, pitch_deg=0.0, cd=0.5, d=0.0227, m=0.00183, dt=2e-4
 
 def mechanics(T, rows, groups):
     G = T.G
-    sn, sv = CAT['sunnysky-x2216-880kv-v3']['specs'], CAT['feetech-sts3215-c018-12v']['specs']
+    sn, sv = CAT['sunnysky-x2216-1400kv-v3']['specs'], CAT['feetech-sts3215-c018-12v']['specs']
     l3 = json.loads((R / 'exports/turret/launch/launch3d.json').read_text())['design']          # the physics' set speed (sim/turret_launch3d.py)
     ball = {'d_mm': G.ball, 'mass_g': 1.83, 'speed_mps': round(l3['set_fps_nominal'] * 0.3048, 2), 'fps': l3['set_fps_nominal'], 'bore_mm': G.bore_out,
-            'cap_fps': 70}
+            'cap_fps': 105, 'target_fps': [95, 100]}                    # D68: the 105 fps physical ceiling
     ball['energy_j'] = round(0.5 * ball['mass_g'] * M * ball['speed_mps'] ** 2, 3)
     # flywheels: hub + tyre from the CAD (about the wheel's axis), the X2216's rotor from the catalogue (est)
     hub = solid_mass_properties(T.local['flywheel'].val(), tu.DENS['pa6-cf'], 1.0)
@@ -310,7 +310,7 @@ def mechanics(T, rows, groups):
     loss = 0.3                                                     # foam hysteresis per shot, share of the ball's energy (assumed)
     de = ball['energy_j'] * (1 + loss) / 2                          # per wheel
     drop = 100 * (1 - math.sqrt(max(0.0, 1 - de / e_wheel)))
-    i_lim = 20.0                                                   # AM32 current limit set for the flywheels (A, a choice)
+    i_lim = 10.0                                                   # AM32 current limit for each flywheel (A; D68's firmware)
     torque = sn['kt_nm_per_a'] * i_lim
     recover_ms = 1000 * i_wheel * 1e-6 * (w * drop / 100) / torque
     spin_ms = 1000 * i_wheel * 1e-6 * w / torque
@@ -318,7 +318,8 @@ def mechanics(T, rows, groups):
     crush = G.ball + wheel_d - G.wheel_c
     fly = {'d_mm': wheel_d, 'centres_mm': round(G.wheel_c, 2), 'crush_mm': round(crush, 2), 'crush_pct': round(100 * crush / G.ball, 1),
            'rpm': round(rpm, -1), 'surface_mps': round(rpm / 60 * math.pi * wheel_d * M, 1), 'efficiency_assumed': eta,
-           'throttle_pct': round(100 * rpm / sn['no_load_speed_rpm']), 'motor_kv': sn['kv_rpm_per_v'], 'no_load_rpm': sn['no_load_speed_rpm'],
+           'throttle_pct': round(100 * rpm / l3.get('no_load_rpm', sn['no_load_speed_rpm'])), 'motor_kv': sn['kv_rpm_per_v'],
+           'no_load_rpm': l3.get('no_load_rpm', sn['no_load_speed_rpm']), 'rail_v': l3.get('supply_v'),
            'inertia_kg_mm2': round(i_wheel, 2), 'energy_j_each': round(e_wheel, 2), 'speed_drop_per_shot_pct': round(drop, 1),
            'recovery_ms': round(recover_ms, 1), 'spin_up_ms_motor_limit': round(spin_ms), 'coast_down_s': round(coast_s, 1),
            'current_limit_a': i_lim, 'note': 'the set speed for the nominal ball at the physics\' set fps (sim/turret_launch3d.py); foam loss 30 % '
@@ -669,15 +670,18 @@ def main():
     vmax = fl['no_load_rpm'] / 60 * math.pi * fl['d_mm'] * M * fl['efficiency_assumed']
     # the physics' ceiling (sim/turret_launch3d.py: the fastest swept ball at 100 % throttle, +5 % KV, +4 % rail, runout, tyre growth)
     l3 = json.loads((R / 'exports/turret/launch/launch3d.json').read_text())
-    ceil = next((c for c in l3.get('ceiling_map', []) if c['rail_v'] == 12.0 and abs(c['wheel_d_mm'] - fl['d_mm']) < 0.1), None)
+    # D68: the design's trimmed rail (l3 design.supply_v) and its worst-corner ceiling over every accepted round
+    dsg, cl3 = l3.get('design', {}), l3.get('ceiling', {})
+    ceil = {'ceiling_fps': cl3.get('worst_corner_fps'), 'rail_v': dsg.get('supply_v')} if cl3.get('worst_corner_fps') else None
     ceil_txt = (f'{ceil["ceiling_fps"]} fps on Ø{fl["d_mm"]:.0f} tyres, docs/turret-physics.md section 4' if ceil else
                 'docs/turret-physics.md section 4')
     overspeed = {'max_exit_mps': round(vmax, 1), 'max_fps': round(vmax / 0.3048), 'cap_mps': round(mech['ball']['cap_fps'] * 0.3048, 2),
                  'physics_ceiling_fps': ceil['ceiling_fps'] if ceil else None,
-                 'note': f'the fixed 12 V flywheel rail is the ceiling: at the X2216s\' full no-load speed on it ({fl["no_load_rpm"]} rpm) a ball '
-                         f'leaves at about {vmax:.0f} m/s by this page\'s rough model (the physics\' fastest ball at 100 % throttle on a fast '
-                         f'motor and a high rail: {ceil_txt}), under the {mech["ball"]["cap_fps"]} fps cap; the barrel\'s two gates trip the '
-                         f'safety line on any ball over 66 fps, and 24 V must never reach the ESCs'}
+                 'note': f'the flywheel rail, trimmed per turret ({fl["rail_v"]} V nominal: the faster X2216 turns {fl["no_load_rpm"]} rpm with no '
+                         f'load), is the ceiling (D68): at full throttle a ball leaves at about {vmax:.0f} m/s by this page\'s rough model; the physics\' '
+                         f'fastest accepted round (22.2-22.8 mm, 1.6-2.0 g) with every tolerance: {ceil_txt}, under the {mech["ball"]["cap_fps"]} fps '
+                         f'ceiling and ASTM F963\'s 2,500 J/m2; the barrel\'s two gates trip the safety line on any ball over 105 fps. Eye '
+                         f'protection recommended, as Hasbro does for Rival'}
     tmg = mech['timing']
     rel = l3.get('release_phase_short') or {}
     b5 = round(rel.get('speed_5pct_at_ms') or 48)
@@ -775,14 +779,14 @@ def main():
         {'id': 'nip', 'title': '5  Flywheels', 'parts': ['flywheel', 'flywheel_tyre', 'flywheel_motor_l', 'flywheel_motor_r', 'esc_l', 'esc_r', 'cartridge_board'],
          'focus': tf(G.wheel_x, 0.0, 0.0),
          'text': f'Two Ø{G.wheel_d:.0f} wheels {fl["centres_mm"]:.0f} mm apart spin opposite ways at about {fl["rpm"]:,.0f} rpm ({fl["throttle_pct"]} % of the '
-                 f'X2216\'s no-load speed on the 12 V rail). The gap is {fl["crush_mm"]} mm narrower than the ball ({fl["crush_pct"]} % squeeze), so it leaves at the tyres\' '
+                 f'X2216\'s no-load speed on its trimmed rail). The gap is {fl["crush_mm"]} mm narrower than the ball ({fl["crush_pct"]} % squeeze), so it leaves at the tyres\' '
                  f'surface speed. Each wheel stores {fl["energy_j_each"]} J; a shot costs about {fl["speed_drop_per_shot_pct"]} % of its speed, back in '
                  f'{fl["recovery_ms"]} ms at a {fl["current_limit_a"]:.0f} A current limit.'},
         {'id': 'barrel', 'title': '6  Barrel', 'parts': ['barrel'], 'focus': tf(G.barrel_x0 + 50, 0.0, 0.0),
          'text': f'{G.barrel_len:.0f} mm long, bore Ø{G.bore_out:.1f}: 2 mm over the ball, so it only guides. Two IR gates 60 mm apart time every ball '
                  f'(a built-in chronograph); {tm["nip_to_muzzle_ms"]} ms from the nip to the muzzle.'},
         {'id': 'muzzle', 'title': '7  Muzzle', 'parts': ['barrel', 'laser', 'laser_mount'], 'focus': tf(G.barrel_x1, 0.0, 0.0),
-         'text': f'{mech["ball"]["speed_mps"]} m/s ({mech["ball"]["fps"]} fps nominal; the kid-safety cap is {mech["ball"]["cap_fps"]}), {mech["ball"]["energy_j"]} J. The barrel can never point above '
+         'text': f'{mech["ball"]["speed_mps"]} m/s ({mech["ball"]["fps"]} fps set; the physical ceiling is {mech["ball"]["cap_fps"]}), {mech["ball"]["energy_j"]} J. The barrel can never point above '
                  f'level: hard stops at 0 and {G.tilt_min:.0f} deg in the yoke. About {tm["trigger_to_muzzle_ms"]} ms from the command to here.'},
         {'id': 'flight', 'title': '8  Flight', 'parts': [], 'focus': None,
          'text': f'Air drag and gravity: a level shot from the bench has dropped {at3[2]} mm at {at3[0]:.0f} m and slowed to {at3[3]} m/s. The laser is parallel to '

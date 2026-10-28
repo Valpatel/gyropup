@@ -16,7 +16,7 @@ barrel, the dial axis at x = y = 0, the ball path at z = 0). At tilt 0, C sits 1
 face and 48 mm (`tilt_x`) behind the pan axis; the tilt axis is at C (48, y, 15), over the pan axis.
 
 The parts rule (D40): every part is bought at a listed price, printed, or cut at an instant online price. Kid safety
-is a hard rule: the barrel never above level (hard stops at 0 and -25 deg), at most 70 fps by the hardware, and
+is a hard rule: the barrel never above level (hard stops at 0 and -25 deg), at most 105 fps by the hardware (D68: about 100 fps for a Hasbro round, under ASTM F963's 2,500 J/m2; eye protection recommended, as Hasbro does), and
 nothing spins unless the ARM line is held.
 
 ## The design gates (all sections)
@@ -268,7 +268,7 @@ Hasbro recommends for Rival.
 ## 5. Barrel and laser
 
 **Function.** Guide the ball out straight, time it (two IR gates 60 mm apart, a built-in chronograph that trips the
-safety line over 66 fps), and show the aim with a laser parallel to the bore.
+safety line over 105 fps), and show the aim with a laser parallel to the bore.
 
 **Parts.** `barrel` (PETG, standing; Ø30 x 100, bore 24.7 from the nip on, the last 15 mm blaze orange),
 `laser_mount` (PETG ring on the cradle's laser tab, 2 x M3), `laser` (Quarton VLM-650-03, < 1 mW, Class 2) held by

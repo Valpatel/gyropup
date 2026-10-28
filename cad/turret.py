@@ -399,6 +399,9 @@ def servo_envelope(G, shaft_xyz, axis):
 
 # ------------------------------------------------------------------------------------------------ fixed (pan base) parts
 
+SERVO_END_WALL = 8.0          # mm: the pan servo pocket's end wall (3 until 2026-10-27, docs/turret-sections.md section 1)
+
+
 def pan_base(G):
     """The fixed base, printed PA6-CF on its foot (100 % solid): a Ø144 x 5 foot on the TM pattern (4 x M5 x 16
     counterbored through it into the head ring's inserts, 2 x Ø5 dowel holes, a Ø65 centre opening (wider than the
@@ -423,6 +426,9 @@ def pan_base(G):
     W, L, sft = SERVO['W'], SERVO['L'], SERVO['shaft_from_end']
     px0, px1, py0, py1 = sx - W / 2 - 0.3, sx + W / 2 + 0.3, sy - sft - 0.3, sy + L - sft + 0.3
     s = s.union(box(px0 - 3, px1 + 9.0, py0 - 3, py1 + 3, 0, G.servo_z0 + 25))   # inner wall runs well into the housing tube
+    # the end wall the mesh's tangential force pushes the servo into (224 N at a full stall): 3 mm bent it across its
+    # layers (FEA: interlaminar shear, 0.57 at a stall, 1.14 at the cap); SERVO_END_WALL thick, inside the bumper's bore
+    s = s.union(box(px0 - 3, px1 + 9.0, py1, py1 + SERVO_END_WALL, 0, G.servo_z0 + 25).intersect(cyl_z(G.bumper_r[0] - 2.0, -1, 200)))
     s = s.cut(box(px0, px1, py0, py1, t, G.servo_z0 + 40))
     posts = [(sx + sgn * SERVO['holes_x'], sy + d) for sgn in (1, -1) for d in SERVO['holes_idler']]
     for (x, y) in posts:
