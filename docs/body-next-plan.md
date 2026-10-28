@@ -556,6 +556,22 @@ jobsite-rated tools, and their adapters face up under the belly plate.
 
 - The DCB609 and the Terrafirma adapter are envelopes until they are measured (#20). Their rows say so, and a test
   keeps them labelled.
-- Re-run the body's loads and strength cases at 17.75 kg with the 10 in wheel on a GB10. The run is recorded on #10.
+- **The body's strength at 17.75 kg** (gb10-02, exports/body/fea/summary.json, leg-loads.json; 41 V, the 10 in wheel's
+  radius and tyre plane in the side grip). Every case driven by the legs passes:
+
+  | Case | SF | Target |
+  |---|---|---|
+  | S1 landing | 2.42 | 2.0 |
+  | S1F collapse | 1.47 | 1.2 |
+  | S1b | 2.83 | 2.0 |
+  | S2 | 8.0 | 2.0 |
+  | S3 | 28 | 2.0 |
+  | D1 | 3.1 / 4.0 | 2.0 |
+  | T1 tray | 2.77 | 2.0 |
+
+  **D2 (the turret's fall) fails: SF 1.54 against 2.0.** Its load is unchanged; the deck's peak rose from 90.9 to 125.7 MPa,
+  at robot (39.6, -68.4) on the deck's top. B4's run (af4c642) came before the integrity commits (40c427b, f08a8ba) added
+  holes to the deck, so this is a regression from those, not from D69. Next: find the hole at the hot spot, then move it
+  or reinforce round it (a larger turret plate under it, or a washer plate), and re-run D2.
 - Price the Deutsch connectors, the grommets, the vent plug and the gasket.
 - Open B7's louvre filter.

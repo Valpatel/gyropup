@@ -139,7 +139,7 @@ Joins the two legs into one stiff body and carries everything else: the hip fram
 | D69 | The design mass 35.5 kg, 17.75 kg a leg; a 35.0 kg ledger gate (it replaces D57's 32.5 / 32.0 kg) | the leg's loads scale with mass; the gate keeps the robot honest against them; D65's packs and D69's hub wheels are heavier | designing to the 26.8 kg estimate; D57's 32.0 kg (the packs and wheels do not fit under it) |
 | this page | The tray and belly into the cheeks' flange nuts with M5 x 12 (was x 10) | the integrity check: an M5 x 10 engaged 2.8 mm of the SS-M5-0's thread under the 3.2 mm tray | - |
 
-Strength (cad/body_studies.py at 16.25 kg a leg): S1-landing SF 4.65 (pass); S1F-collapse SF 3.65 (pass); S1b-one-leg-bound SF 3.04 (pass); S2-twist SF 8.03 (pass); S3-pitch SF 28.11 (pass); D1-hand-front SF 5.81 (pass); D1-hand-riser SF 6.49 (pass); D2-turret-fall SF 2.12 (pass); T1-tray SF 2.52 (pass).
+Strength (cad/body_studies.py at 17.75 kg a leg): S1-landing SF 6.24 (pass); S1F-collapse SF 3.59 (pass); S1b-one-leg-bound SF 4.78 (pass); S2-twist SF 8.03 (pass); S3-pitch SF 28.11 (pass); D1-hand-front SF 4.57 (pass); D1-hand-riser SF 4.77 (pass); D2-turret-fall SF 1.54 (FAIL); T1-tray SF 2.77 (pass).
 
 ## 3. Head and mounts
 
