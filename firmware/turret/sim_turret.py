@@ -91,7 +91,8 @@ class SimTurret(HAL):
         hr = random.Random(seed * 7 + 1)
         self.pan_hw = th.Hardware(hr)
         self.index_offset = self.pan_hw.h / 2 + hr.uniform(-0.3, 0.3)     # the assembly calibration
-        self.pan_servo = SimServo(C.ID_PAN, mode=C.MODE_STEP, rng=random.Random(seed * 7 + 2), p_corrupt=2e-4)
+        self.pan_servo = SimServo(C.ID_PAN, mode=C.MODE_STEP, rng=random.Random(seed * 7 + 2), p_corrupt=2e-4,
+                                  max_torque=opt.get('pan_max_torque', C.PAN_MAX_TORQUE))
         self.pan_servo.read_noise = 1.0
         self._sync_pan()
         self.pan_servo.goal = self.pan_servo.pos

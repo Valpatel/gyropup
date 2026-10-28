@@ -175,12 +175,12 @@
    "expected_ratio": 0.417,
    "max_step_per_ms": 0.001001,
    "shots": 2,
-   "shot_gap_s": 0.993,
+   "shot_gap_s": 0.994,
    "pass_": true
   },
   "supply_unmeasured_is_slowest": {
    "ramp_to_ready_s": 2.452,
-   "min_shot_gap_s": 1.016,
+   "min_shot_gap_s": 1.017,
    "pass_": true
   },
   "supply_over_54v_refused": {
@@ -188,6 +188,12 @@
     210
    ],
    "max_throttle": 0.0,
+   "pass_": true
+  },
+  "pan_servo_torque_ceiling_verified": {
+   "at_80pct_runs": true,
+   "at_100pct_refused": true,
+   "ceiling": 800,
    "pass_": true
   },
   "ball_over_105fps_latches_safe": {
@@ -198,7 +204,7 @@
   "aim_live_disarmed_capped": {
    "max_pan_rate": 90.0,
    "max_tilt_rate": 90.0,
-   "final_pan_error_deg": 0.03,
+   "final_pan_error_deg": 0.001,
    "pass_": true
   },
   "feed_servo_drop_off_and_reinit": {

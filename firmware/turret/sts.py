@@ -153,9 +153,10 @@ class Master:
         return None if b is None else b[0] / 10.0
 
     def read_eeprom(self, sid: int) -> Optional[dict]:
-        """The fields the firmware verifies at every (re)init: mode and angle limits."""
+        """The fields the firmware verifies at every (re)init: mode, angle limits and the EEPROM torque ceiling."""
         a = self.read(sid, R_MIN_ANGLE, 4)
         m = self.read(sid, R_MODE, 1)
-        if a is None or m is None:
+        q = self.read(sid, R_MAX_TORQUE, 2)
+        if a is None or m is None or q is None:
             return None
-        return {'min_angle': le16(a, 0), 'max_angle': le16(a, 2), 'mode': m[0]}
+        return {'min_angle': le16(a, 0), 'max_angle': le16(a, 2), 'mode': m[0], 'max_torque': le16(q, 0)}

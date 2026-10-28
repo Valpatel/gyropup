@@ -463,6 +463,8 @@ class TurretFirmware:
             if e is None:
                 continue
             good = e['mode'] == mode
+            if sid == C.ID_PAN:                                          # the printed pinion's ceiling (EEPROM 16)
+                good = good and 0 < e['max_torque'] <= C.PAN_MAX_TORQUE
             if sid == C.ID_TILT:
                 over = int(math.ceil(1.0 / C.DEG_PER_COUNT))          # at most 1 deg above level, into the stop
                 if C.TILT_SIGN < 0:

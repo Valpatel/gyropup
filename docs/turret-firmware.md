@@ -75,7 +75,9 @@ BOOT -> HOMING -> IDLE <-> ARMED -> SPIN_UP -> READY <-> FIRING
 
 - **BOOT.** Ping the pan and tilt servos (12 V PAN and 12 V MAIN are always on). Each servo's EEPROM is read and
   verified, never written: a release can cut the feed servo mid-write, and the setup tool owns EEPROM. The pan must be
-  in step mode, the tilt in position mode with angle limits that keep it at most 1 deg above level. Then the RAM
+  in step mode with its torque ceiling (register 16, max torque) at most 80 % of stall: the printed pinion's rare-load
+  limit, which holds at power-up before the firmware writes anything (cad/turret_studies.py R-stall); the tilt in
+  position mode with angle limits that keep it at most 1 deg above level. Then the RAM
   registers are written (torque limit 50 %, acceleration, speed: at most 100 deg/s, D7) and torque is enabled. Wrong
   EEPROM latches SERVO_CONFIG and the turret stays in FAULT.
 - **HOMING.** Section 3. Nothing else moves until it is done, and HOMING shows in the heartbeat. It fails after 15 s

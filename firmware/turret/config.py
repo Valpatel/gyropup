@@ -26,6 +26,11 @@ DEG_PER_COUNT = 360.0 / COUNTS
 SERVO_READ_HZ = 100            # position reads of every servo that is on the bus
 SERVO_RETRIES = 1              # a reply with a bad checksum or none is retried once, then counted as a failed read
 SERVO_TORQUE_LIMIT = 500       # register 48, 0.1 % of stall: 50 % on all three (the printed pinion's cap; the dial's)
+PAN_MAX_TORQUE = 800           # register 16 (EEPROM), the pan servo's own ceiling, set once with the setup tool: 80 % of
+#                                stall. The servo starts every power-up at it (RAM 48 copies 16), so with the firmware's
+#                                cap lost the pinion and the turntable's teeth see 80 %, not 100 %: the printed pinion's
+#                                rare case (cad/turret_studies.py R-stall, layer-aware SF 1.05 at 100 %). The firmware
+#                                verifies it at every init and will not drive a pan servo set higher (SERVO_CONFIG)
 SERVO_NO_LOAD_CPS = 3072       # 45 rpm at 12 V = 270 deg/s of the servo's output, in counts/s
 
 # drive modes (register 33, EEPROM, set once with the setup tool and only verified by the firmware):

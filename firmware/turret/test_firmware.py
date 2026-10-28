@@ -399,6 +399,21 @@ def t_supply_profile(out):
           refused=hi['refused'], max_throttle=hi['max_throttle'])
 
 
+def t_pan_torque_ceiling(out):
+    # the pan servo's EEPROM torque ceiling (register 16) is the printed pinion's rare-load limit: the firmware drives a
+    # pan servo set at 80 % and refuses one at 100 % (SERVO_CONFIG, latched: no homing, no arming)
+    good = SimRig(seed=95)
+    hg = Host(good)
+    hg.boot()
+    ok_good = hg.fw.state == 'IDLE' and not hg.fw.latched & M.F_SERVO_CONFIG
+    bad = SimRig(seed=95, pan_max_torque=1000)
+    hb = Host(bad)
+    hb.run(6.0)
+    refused = bool(hb.fw.latched & M.F_SERVO_CONFIG) and hb.fw.state == 'FAULT' and not hb.fw.pan_ok
+    check(out, 'pan_servo_torque_ceiling_verified', ok_good and refused, at_80pct_runs=ok_good, at_100pct_refused=refused,
+          ceiling=C.PAN_MAX_TORQUE)
+
+
 def t_overspeed(out):
     rig = SimRig(seed=51, hopper=10)
     h = Host(rig)
@@ -547,7 +562,7 @@ def main():
     a = ap.parse_args()
     out = {}
     for fn in (t_protocols, t_numbers, t_tilt, t_arm_conditions, t_ramp_and_guard, t_set_point_ramps, t_supply_profile,
-               t_overspeed, t_aim_disarmed, t_feed_release, t_host_bridge):
+               t_pan_torque_ceiling, t_overspeed, t_aim_disarmed, t_feed_release, t_host_bridge):
         fn(out)
     ok = all(v['pass_'] for v in out.values())
     res = {'pass': ok, 'cases': out, 'scope': __doc__.split('\n\n')[1].strip()}

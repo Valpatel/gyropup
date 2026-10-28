@@ -29,7 +29,9 @@ Loads (masses from cad/turret.py's mass_properties at run time, written to summa
   E-cap    everyday: the pan servo at its firmware cap, 50 % of its 2.94 N m stall, through the 21:63 gears
   E-push   everyday: a hand pushes the muzzle up or down with 50 N; the cradle's lug meets the 0 or -25 deg stop
            (a push sideways back-drives the pan servo at its cap: E-cap)
-  R-stall  rare: the pan servo at its full stall (the cap failed, or it is forced)
+  R-stall  rare: the pan servo at its own torque ceiling, 80 % of its stall (EEPROM register 16, set with the setup tool
+           and verified by the firmware at every init: firmware/turret/config.py PAN_MAX_TORQUE): what it can push if
+           the firmware's 50 % cap is lost. At 100 % of stall the pinion's tooth root read layer-aware SF 1.05.
   R-fall   rare: 30 g on everything (the TM interface's design load, docs/cad-plan.md section 5): straight down, and
            sideways (the robot falling over), each part loaded by what it carries
 Parts: the tilt yoke, the turntable and its teeth, the pinion, the pan base, the cradle's rail frame, the cartridge,
@@ -63,6 +65,7 @@ G0 = 9.81
 FALL_G = 30.0
 SERVO_STALL = 2.94                 # N m, STS3215 at 12 V (Feetech datasheet)
 CAP = 0.5                          # the firmware's torque cap on the pan servo
+CEILING = 0.8                      # the pan servo's own EEPROM torque ceiling (firmware/turret/config.py PAN_MAX_TORQUE)
 PUSH_N = 50.0                      # a hand on the muzzle
 VIEWS = {'tilt_yoke': (20, -35), 'pan_ring': (35, -60), 'pan_pinion': (40, -60), 'pan_base': (30, -60), 'cradle': (25, -50),
          'cartridge_body': (30, -60), 'pan_clamp': (40, -60), 'dial': (40, -60), 'cradle_plate_l': (15, -80), 'cradle_plate_r': (15, -100),
@@ -284,7 +287,7 @@ def run(mesh, anim=True, only=None):
         (f.kind == 'Cylinder' and f.radius is not None and abs(f.radius - (rp_ring - 10.0)) < 0.3)
     mesh_tooth = lambda f: (f.kind in ('Plane', 'BSpline surface') and f.center[0] < -rp_ring + 1.2 and abs(f.center[1]) < 2.2
                             and z0g + 0.5 < f.center[2] < z1g - 0.5 and f.center[0] > -rp_ring - G.gear['m'] - 0.2)
-    for case, frac, rare in (('E-cap', CAP, False), ('R-stall', 1.0, True)):
+    for case, frac, rare in (('E-cap', CAP, False), ('R-stall', CEILING, True)):
         Ft = frac * SERVO_STALL / (G.gear['m'] * G.gear['z_pinion'] / 2000)
         Fr = Ft * math.tan(math.radians(20.0))
         study('pan_ring', f'{case}-teeth', sector, 'pa6_cf_xy',
@@ -299,7 +302,7 @@ def run(mesh, anim=True, only=None):
     rpp = G.gear['m'] * G.gear['z_pinion'] / 2
     pin_tooth = lambda f: (f.kind in ('Plane', 'BSpline surface') and f.center[0] > sx + rpp - 1.2 and abs(f.center[1] - sy) < 2.2
                            and f.center[2] > zp0 + 1.5)
-    for case, frac, rare in (('E-cap', CAP, False), ('R-stall', 1.0, True)):
+    for case, frac, rare in (('E-cap', CAP, False), ('R-stall', CEILING, True)):
         Ft = frac * SERVO_STALL / (rpp / 1000)
         Fr = Ft * math.tan(math.radians(20.0))
         study('pan_pinion', case, pin, 'pa6_cf_xy',
@@ -327,7 +330,7 @@ def run(mesh, anim=True, only=None):
     px0, py1 = sx - W / 2 - 0.3, sy + L - sft + 0.3
     end_wall = lambda f: f.kind == 'Plane' and near(f.center[1], py1, 0.1) and px0 - 0.1 < f.center[0] < sx + W / 2 + 0.4
     out_wall = lambda f: f.kind == 'Plane' and near(f.center[0], px0, 0.1) and sy - sft - 0.4 < f.center[1] < py1 + 0.1
-    for case, frac, rare in (('E-cap', CAP, False), ('R-stall', 1.0, True)):
+    for case, frac, rare in (('E-cap', CAP, False), ('R-stall', CEILING, True)):
         Ft = frac * SERVO_STALL / (G.gear['m'] * G.gear['z_pinion'] / 2000)
         Fr = Ft * math.tan(math.radians(20.0))
         study('pan_base', f'{case}-servo', base, 'pa6_cf_xy',
