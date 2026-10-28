@@ -151,7 +151,7 @@
         "priority": 3
       },
       {
-        "name": "OUT24",
+        "name": "OUT12",
         "clearance": 0.2,
         "track_width": 1.0,
         "via_diameter": 0.85,
@@ -169,7 +169,7 @@
         "priority": 4
       },
       {
-        "name": "P24",
+        "name": "P12",
         "clearance": 0.2,
         "track_width": 1.0,
         "via_diameter": 0.85,
@@ -238,8 +238,8 @@
         "pattern": "+BUS"
       },
       {
-        "netclass": "P24",
-        "pattern": "+24V"
+        "netclass": "P12",
+        "pattern": "+12V"
       },
       {
         "netclass": "GND",
@@ -307,23 +307,23 @@
       },
       {
         "netclass": "OUT48",
-        "pattern": "OUT_W17"
+        "pattern": "OUT_W22"
       },
       {
         "netclass": "OUT48",
-        "pattern": "OUT_W8"
+        "pattern": "OUT_SPARE9"
       },
       {
         "netclass": "OUT48",
-        "pattern": "OUT_SPARE"
+        "pattern": "OUT_SPARE10"
       },
       {
-        "netclass": "OUT24",
+        "netclass": "OUT12",
         "pattern": "OUT_W21"
       },
       {
-        "netclass": "OUT24",
-        "pattern": "OUT_W22"
+        "netclass": "OUT12",
+        "pattern": "OUT_W43"
       },
       {
         "netclass": "LV",

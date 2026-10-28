@@ -3297,5 +3297,55 @@
   "sources": [
    "https://www.lcsc.com/product-detail/C163339.html"
   ]
+ },
+ {
+  "id": "littelfuse-099707.5",
+  "key": "fuse_mini58_7a5",
+  "category": "fuse",
+  "vendor": "Littelfuse",
+  "model": "099707.5WXN",
+  "name": "Littelfuse MINI 58V blade fuse 7.5 A (the turret's feed W22 and the 12 V rail W43, D66)",
+  "price_usd": 0.5766,
+  "price_checked": "2026-10-27",
+  "price_note": "LCSC: $0.5766 each (10+: $0.4698), read 2026-10-27",
+  "buy": [
+   {
+    "seller": "LCSC",
+    "url": "https://www.lcsc.com/product-detail/C2680610.html",
+    "in_stock": true,
+    "ships_from": "CN",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 0.5766,
+    "stock": "3,810",
+    "seller_pn": "C2680610"
+   },
+   {
+    "seller": "LCSC (other suppliers)",
+    "url": "https://www.lcsc.com/product-detail/C2680610.html",
+    "in_stock": true,
+    "ships_from": "CN",
+    "read_on": "2026-10-27",
+    "source": "page",
+    "price_usd": 0.3118,
+    "stock": "3,000 (5-7 business days)",
+    "seller_pn": "C2680610"
+   }
+  ],
+  "backup": {
+   "what": "same fuse, LCSC's other-supplier stock",
+   "seller": "LCSC",
+   "price_usd": 0.3118
+  },
+  "specs": {
+   "rating_a": 7.5,
+   "voltage_v_dc": 58,
+   "interrupt_a_at_58v": 1000,
+   "i2t_typ_a2s": 68
+  },
+  "sources": [
+   "https://www.lcsc.com/product-detail/C2680610.html",
+   "https://www.littelfuse.com/assetdocs/littelfuse-datasheet-997-mini58v?assetguid=f4bf5724-5a40-4a44-8f08-c52ae959a5ef"
+  ]
  }
 ]

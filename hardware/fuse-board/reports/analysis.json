@@ -152,7 +152,7 @@
   },
   {
    "holder": "F7",
-   "branch": "DDR-120C IN",
+   "branch": "TRACO 12V IN",
    "wire": "W16",
    "fuse_a": 10,
    "design_a": 10,
@@ -177,50 +177,50 @@
   },
   {
    "holder": "F8",
-   "branch": "DDR-60L IN",
-   "wire": "W17",
-   "fuse_a": 5,
-   "design_a": 5,
+   "branch": "TURRET",
+   "wire": "W22",
+   "fuse_a": 7.5,
+   "design_a": 7.5,
    "run_width_mm_each_layer": 6.0,
    "layers": 2,
-   "ipc2221_width_needed_mm_each_layer_dt20": 0.35,
-   "ipc2221_dt_run_c": 0.2,
+   "ipc2221_width_needed_mm_each_layer_dt20": 0.61,
+   "ipc2221_dt_run_c": 0.5,
    "neck_mm": [
     2.6,
     3.6
    ],
-   "neck_rise_over_ends_c": 0.01,
+   "neck_rise_over_ends_c": 0.03,
    "within_ipc2221_limits": true,
-   "fuse_power_w_at_rating": 0.65,
+   "fuse_power_w_at_rating": 1.01,
    "fault": {
     "copper_withstand_a2s_neck": 2632,
-    "fuse_i2t_typ_a2s": 25,
-    "margin": 105.3
+    "fuse_i2t_typ_a2s": 68,
+    "margin": 38.7
    },
    "holder_ok": true,
    "holder_continuous_a": 22
   },
   {
    "holder": "F9",
-   "branch": "CHARGE PORT",
-   "wire": "W8",
-   "fuse_a": 10,
-   "design_a": 10,
+   "branch": "SPARE",
+   "wire": null,
+   "fuse_a": null,
+   "design_a": 30,
    "run_width_mm_each_layer": 6.0,
    "layers": 2,
-   "ipc2221_width_needed_mm_each_layer_dt20": 0.91,
-   "ipc2221_dt_run_c": 0.9,
+   "ipc2221_width_needed_mm_each_layer_dt20": 4.13,
+   "ipc2221_dt_run_c": 10.8,
    "neck_mm": [
     2.6,
     3.6
    ],
-   "neck_rise_over_ends_c": 0.05,
+   "neck_rise_over_ends_c": 0.49,
    "within_ipc2221_limits": true,
-   "fuse_power_w_at_rating": 1.08,
+   "fuse_power_w_at_rating": 2.61,
    "fault": {
     "copper_withstand_a2s_neck": 2632,
-    "fuse_i2t_typ_a2s": 93,
-    "margin": 28.3
+    "fuse_i2t_typ_a2s": 1100,
+    "margin": 2.4
    },
    "holder_ok": true,
    "holder_continuous_a": 22
@@ -252,50 +252,50 @@
   },
   {
    "holder": "F11",
-   "branch": "J501 24V",
+   "branch": "J501 12V",
    "wire": "W21",
-   "fuse_a": 5,
-   "design_a": 5,
+   "fuse_a": 10,
+   "design_a": 10,
    "run_width_mm_each_layer": 6.0,
    "layers": 2,
-   "ipc2221_width_needed_mm_each_layer_dt20": 0.35,
-   "ipc2221_dt_run_c": 0.2,
+   "ipc2221_width_needed_mm_each_layer_dt20": 0.91,
+   "ipc2221_dt_run_c": 0.9,
    "neck_mm": [
     2.6,
     3.6
    ],
-   "neck_rise_over_ends_c": 0.01,
+   "neck_rise_over_ends_c": 0.05,
    "within_ipc2221_limits": true,
-   "fuse_power_w_at_rating": 0.65,
+   "fuse_power_w_at_rating": 1.08,
    "fault": {
     "copper_withstand_a2s_neck": 2632,
-    "fuse_i2t_typ_a2s": 25,
-    "margin": 105.3
+    "fuse_i2t_typ_a2s": 93,
+    "margin": 28.3
    },
    "holder_ok": true,
    "holder_continuous_a": 22
   },
   {
    "holder": "F12",
-   "branch": "TURRET 24V",
-   "wire": "W22",
-   "fuse_a": 5,
-   "design_a": 5,
+   "branch": "12V RAIL",
+   "wire": "W43",
+   "fuse_a": 7.5,
+   "design_a": 7.5,
    "run_width_mm_each_layer": 2.6,
    "layers": 2,
-   "ipc2221_width_needed_mm_each_layer_dt20": 0.35,
-   "ipc2221_dt_run_c": 0.7,
+   "ipc2221_width_needed_mm_each_layer_dt20": 0.61,
+   "ipc2221_dt_run_c": 1.8,
    "neck_mm": [
     2.6,
     3.6
    ],
-   "neck_rise_over_ends_c": 0.01,
+   "neck_rise_over_ends_c": 0.03,
    "within_ipc2221_limits": true,
-   "fuse_power_w_at_rating": 0.65,
+   "fuse_power_w_at_rating": 1.01,
    "fault": {
     "copper_withstand_a2s_neck": 2632,
-    "fuse_i2t_typ_a2s": 25,
-    "margin": 105.3
+    "fuse_i2t_typ_a2s": 68,
+    "margin": 38.7
    },
    "holder_ok": true,
    "holder_continuous_a": 22
@@ -337,6 +337,13 @@
     "pulse_80a_0p3s_adiabatic_dt_c": 0.54
    }
   ],
+  "rail_12v": {
+   "section": "+12V pour, J14 to F11 and F12 (12.6 mm, both layers, 6 vias)",
+   "current_a": 12.5,
+   "note": "the TRACO TEP 150-4812WI's full 12.5 A",
+   "ipc2221_dt_c": 0.4,
+   "stud": "M4 (J14) with a 14 AWG #8 ring: a ring rated 16-14 AWG carries it"
+  },
   "vias": {
    "beside_pad1_+BAT_IN": 14,
    "beside_pad4_+BUS": 20,
@@ -394,27 +401,27 @@
    "shunt TCR, ambient 15-55 C (100 ppm/C x 30 C)": 0.3,
    "INA228 gain drift (20 ppm/C x 30 C)": 0.06
   },
-  "offset_uv_total": 5.36,
+  "offset_uv_total": 5.12,
   "calibration": "one point at 25 C, 5-10 A through the shunt from a bench supply, read on a meter with <= 0.3 % on its 10 A range: SHUNT_CAL (or the firmware's scale) set so the INA228 agrees; VBUS the same against the meter's DC volts (the 4.7 kOhm against the 1 MOhm VBUS input is -0.47 %)",
   "by_current": [
    {
     "current_a": 1.0,
-    "uncalibrated_worst_pct": 2.47,
-    "uncalibrated_rss_pct": 1.28,
-    "calibrated_worst_pct": 1.2,
-    "calibrated_rss_pct": 0.69
+    "uncalibrated_worst_pct": 2.44,
+    "uncalibrated_rss_pct": 1.27,
+    "calibrated_worst_pct": 1.17,
+    "calibrated_rss_pct": 0.67
    },
    {
     "current_a": 2.0,
-    "uncalibrated_worst_pct": 2.2,
+    "uncalibrated_worst_pct": 2.19,
     "uncalibrated_rss_pct": 1.19,
-    "calibrated_worst_pct": 0.93,
-    "calibrated_rss_pct": 0.51
+    "calibrated_worst_pct": 0.92,
+    "calibrated_rss_pct": 0.5
    },
    {
     "current_a": 5.0,
     "uncalibrated_worst_pct": 2.04,
-    "uncalibrated_rss_pct": 1.17,
+    "uncalibrated_rss_pct": 1.16,
     "calibrated_worst_pct": 0.77,
     "calibrated_rss_pct": 0.44
    },
@@ -422,7 +429,7 @@
     "current_a": 10.0,
     "uncalibrated_worst_pct": 2.0,
     "uncalibrated_rss_pct": 1.16,
-    "calibrated_worst_pct": 0.73,
+    "calibrated_worst_pct": 0.72,
     "calibrated_rss_pct": 0.43
    },
    {
@@ -434,7 +441,7 @@
    },
    {
     "current_a": 40.0,
-    "uncalibrated_worst_pct": 2.15,
+    "uncalibrated_worst_pct": 2.14,
     "uncalibrated_rss_pct": 1.18,
     "calibrated_worst_pct": 0.87,
     "calibrated_rss_pct": 0.47
@@ -447,7 +454,7 @@
     "calibrated_rss_pct": 0.47
    }
   ],
-  "result": "within 1 % of reading from 2 A to 80 A after the one-point calibration (worst case 0.93 %); not within 1 % uncalibrated (2.0-2.5 % worst case, 1.2-1.3 % RSS: the shunt's own 1 % and the Kelvin layout are most of it); below 2 A the error is about +-5 mA plus 0.7 % of reading"
+  "result": "within 1 % of reading from 2 A to 80 A after the one-point calibration (worst case 0.92 %); not within 1 % uncalibrated (2.0-2.4 % worst case, 1.2-1.3 % RSS: the shunt's own 1 % and the Kelvin layout are most of it); below 2 A the error is about +-5 mA plus 0.7 % of reading"
  },
  "mass": {
   "items_g": {
@@ -455,7 +462,7 @@
    "copper (70 um, 8.96 g/cm3)": 4.8,
    "solder mask, HASL, silk (est)": 1.5,
    "12 x Littelfuse MINI FL1 holder (est 1.6 g, PBT and copper alloy)": 19.2,
-   "11 x MINI 58V fuse (0.57 g, datasheet)": 6.3,
+   "10 x MINI 58V fuse (0.57 g, datasheet)": 5.7,
    "shunt, passives, GH (est)": 0.8,
    "INA228 or Adafruit 5832 (3.3 g, catalog)": 3.3,
    "15 x M4 x 12 socket head + nyloc (est 1.9 + 0.9 g)": 42.0,
@@ -463,7 +470,7 @@
    "M5 x 14 socket head, plate bond (est)": 3.4,
    "17 printed standoffs and 3 tie blocks, PA6-GF 1.35 g/cm3 (est 1.3 g each)": 26.0
   },
-  "total_g": 132.1,
+  "total_g": 131.5,
   "board_alone_g": 44.5
  },
  "holder": {

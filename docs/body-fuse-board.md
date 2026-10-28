@@ -4,7 +4,9 @@ One JLCPCB board that takes the place of the eleven inline MINI holders and the 
 P3: twelve MINI 58V fuse holders, the 1 mOhm shunt and the INA228 that reads it, the - star point and the frame bond.
 Everything here is generated: `hardware/fuse-board/design.py` (parts, nets, placement), `generate.py` (the KiCad 10
 schematic and PCB), `build.sh` (checks, fabrication files, pictures), `analysis.py` (the numbers below), and
-`cad/body_fuse_board.py` (the board as the body sees it). Written 2026-10-27; prices read that day.
+`cad/body_fuse_board.py` (the board as the body sees it). Written 2026-10-27; prices read that day. Revised the same day for D65 (two DeWalt DCB609 packs in series: a 10S bus,
+30-41 V, no charge port) and D66 (the turret on its own fused branch of the bus; one TRACO TEP 150-4812WI, 12 V
+12.5 A isolated, feeds the J501 and the 12 V rail in place of both DDR converters).
 
 ![The board, top](../hardware/fuse-board/pictures/top.png)
 
@@ -12,12 +14,12 @@ schematic and PCB), `build.sh` (checks, fabrication files, pictures), `analysis.
 |---|---|
 | Board | 88 x 76 mm, 2 layers, 2 oz (70 um) copper, 1.6 mm FR-4, lead-free HASL, green |
 | Where | robot x 34..122, y -14..62 on the power plate's top face (z 138.2); the board at z 148.2..149.8 on 10 mm printed standoffs; fuse tops at z 174.2 |
-| Holders | 12 x Littelfuse MINI FL1 178.6764.0001 (58 V DC, 22 A continuous, fuses to 30 A): ten on the + bus, two on the 24 V rail |
+| Holders | 12 x Littelfuse MINI FL1 178.6764.0001 (58 V DC, 22 A continuous, fuses to 30 A): ten on the + bus (two of them spares), two on the 12 V rail |
 | Shunt | Bourns CSS2H-3920R-1L00F, 1 mOhm 1 %, 8 W, on the **high side** between the MRBF and the + bus |
 | Monitor | INA228 (U1, TSSOP-10) on the board, or the Adafruit 5832 wired to three pads (TP1-TP3); I2C on a JST GH 4-pin |
-| Studs | M6 for the 80 A input; M4 for every branch, the 24 V input, the star point and the frame bond |
+| Studs | M6 for the 80 A input; M4 for every branch, the 12 V input, the star point and the frame bond |
 | Checks | KiCad DRC clean against JLCPCB's 2 oz rules, schematic parity 0, ERC 0 (`hardware/fuse-board/reports/`) |
-| Price | JLCPCB $40.60 for 5 boards (instant price from the uploaded zip); one board built for $156.70 in parts and packs |
+| Price | JLCPCB $40.60 for 5 boards (instant price from the uploaded zip); one board built for $154.48 in parts and packs |
 | Mass | 132 g with its screws, nuts and standoffs (45 g the bare board with its holders) |
 
 ## 1. What changed from the brief, and why
@@ -28,16 +30,14 @@ below its own ground (TI SLYS021A, absolute maximum, both pins). Its ground is t
 shunt in the pack's - lead before the low-side switch, turning the switch off lets the - bus float up toward the + bus
 (the loads pull it there) while the INA228's inputs stay at the pack's -: its input clamps then carry the robot's load
 current round the open switch, which destroys the INA228 and leaves the switch bypassed through a 22 AWG sense lead.
-On the + side the INA228's inputs sit 0 to 57 V above its ground whether the switch is on or off, which is the INA228's
-own high-side application (TI's figure 8-2, charger on the load side of the shunt). The charge is still counted: the
-charge port's 10 A fuse (F9) hangs off the board's + bus, after the shunt, so the charger's current runs back through
-the shunt and the MRBF into the pack (it reads with the opposite sign). The low-side fix, an isolated INA228 (I2C
+On the + side the INA228's inputs sit 0 to 41 V above its ground whether the switch is on or off, which is the INA228's
+own high-side application (TI's figure 8-2). (Under D65 the packs charge on DeWalt's chargers, off the robot; the
+regeneration that flows back into them reads with the opposite sign.) The low-side fix, an isolated INA228 (I2C
 isolator and a 1 W isolated supply), was the alternative: more parts for the same result.
 
 **This applies to P0 as wired today**: the Adafruit INA228 across the Blue Sea shunt in the - lead, grounded on the
 MCU, sees exactly this when the switch goes off. Before bring-up step 4 either move the Blue Sea shunt into the + lead
-(MRBF load stud to the + bus bar's tap 1; W8 then lands on the + bus bar with its inline 10 A fuse, W9 on the switch's
-IN-), or leave the INA228's VIN+/VIN- unconnected until the board arrives.
+(MRBF load stud to the + bus bar's tap 1), or leave the INA228's VIN+/VIN- unconnected until the board arrives.
 
 **Littelfuse MINI FL1 holders, not Keystone 3568.** Keystone rates the 3568 at 20 A at 500 V AC with no DC rating
 (Keystone catalogs M55, 2006, and M60, 2013, page 40; TME lists 20 A; some distributors list 30 A without a source;
@@ -45,15 +45,28 @@ Keystone's own drawing, rev C 2019, states none), so it does not carry the VESC 
 MINI holder (a 6.3 x 32 mm fuse clip; LCSC lists no specification). The Littelfuse MINI FL1 (178.6764.0001) is
 rated 58 V DC, 22 A continuous, for MINI fuses up to 30 A (Littelfuse's product page, read 2026-10-27; its 2016
 datasheet says 125 V, LCSC's text 32 V). It is the only PCB MINI holder found with a DC rating at the bus voltage, so
-D55's "32 V holder on a 53 V bus" ends with it; the "58 V FUSES ONLY" silk stays at every holder because a standard
+D55's "32 V holder on the battery bus" ends with it; the "58 V FUSES ONLY" silk stays at every holder because a standard
 32 V MINI fuse may still fit it (check on arrival whether one seats). The holder's 22 A continuous sets a rule for
 the wheels: **the VESCs' battery current limit at 20 A** (VESC Tool, "Battery Current Max"; the motor current limit can
 stay higher, the battery current at low speed is a fraction of it). The 30 A fuses stay (the fuse's own derating puts
 its continuous load at 22-24 A at 40-60 C).
 
+**The turret's feed (D66): 7.5 A, not 10 A, through the stop relay's pole B.** The turret takes about 40 W and bursts
+to about 140 W: 4.7 A at 30 V, 3.4 A at 41 V. The stop relay is the Omron G2RL-2 (DPDT): rated 8 A at 30 V DC
+resistive and 8 A carry at 70 C (5 A at 85 C). Its maximum switching capacity curve for the 2-pole type (Omron's
+datasheet, engineering data) holds 8 A to about 39 V and falls steeply above: read off the curve, about 6 A at 41 V
+and about 1 A at 55 V, for resistive loads. The turret's 3.4 A at 41 V is inside it, with no margin to spare, and
+Omron gives no DC endurance above 30 V. A 10 A fuse would let the contact carry past its 8 A rating in an overload;
+the 7.5 A MINI 58V keeps it under (Littelfuse derates a 7.5 A fuse to 6.0 A at 40 C: the 4.7 A burst is inside that).
+The relay opens with the turret's safety loop (pole A) at the same instant, which stops the flywheels, so the current
+it breaks is mostly the reComputer's idle draw. Two things to measure at the P2 bring-up (B12/B15): the inrush when
+the relay closes onto the turret's input capacitance (the 7.5 A fuse's I2t is 68 A2s; if it blows or the contact
+pits, the turret needs its own soft start, or pole B's job goes to a DC-rated relay or a high-side MOSFET driven from
+the coil line), and the contact after a hundred stops.
+
 **88 x 76, not 120 x 42.** A holder and its stud need about 27 mm in line (the 14.2 mm holder, its output run, a 7 mm
 stud and the lug's edge) and 10 mm across (the M4 lugs side by side). Twelve in one row is 120 mm long and 27 mm deep,
-which leaves 15 mm of the 42 for the + bus feeding them and nothing for the M6 input, the shunt, the INA228, the 24 V
+which leaves 15 mm of the 42 for the + bus feeding them and nothing for the M6 input, the shunt, the INA228, the 12 V
 input or the star and frame studs; two rows back to back with the bus between them need about 66 mm of depth. The
 board takes the whole free area of the plate (x 34..122, y -14..62).
 It sits 36 mm tall over the plate (10 mm standoffs, the holder and the fuse), 6 mm more than the brief's 30: the deck's
@@ -67,19 +80,22 @@ underside is at z 213.5, 39 mm above the fuses.
 - **R1**, the shunt: pad 1 +BAT_IN, pad 4 **+BUS**. Its Kelvin taps (pads 2 and 3, net-tied to 1 and 4 inside the
   footprint) sit at Bourns' measurement points, 8.40 mm apart, and leave sideways of the current.
 - **+BUS**: a band poured on both layers between the two rows of holders, stitched with 36 vias; it feeds F1-F10.
-- **+24V**: J14 (W40 from the DDR-120C-24's +V) to F11 and F12, its own pour.
-- **F1-F12**: each holder's pin 2 runs to its own M4 stud (J2-J13): OUT_W10 ... OUT_W22, OUT_SPARE.
+- **+12V**: J14 (W40, 14 AWG, from the TRACO TEP 150-4812WI's +V, up to 12.5 A) to F11 and F12, its own pour.
+- **F1-F12**: each holder's pin 2 runs to its own M4 stud (J2-J13): OUT_W10 ... OUT_W43, OUT_SPARE9, OUT_SPARE10.
+  On the + bus: F1-F4 the RS-04s (20 A), F5-F6 the VESCs (30 A), F7 the TRACO's input (W16, 10 A), F8 the turret
+  (W22 to the stop relay's pole B, 7.5 A), F9-F10 spares. On the 12 V rail: F11 the J501 (W21, 10 A), F12 the rest of
+  the rail (W43: lidar box, SSC1 lights, eyes, the 5 V buck; 7.5 A).
 - **The INA228**: R2 and R3 (10 Ohm, TI's protection against a hard short's dV/dt) from the taps to IN- and IN+; C1
   (100 nF, 100 V) across them; VBUS through R4 (4.7 kOhm, 1 W 2512: 11 mA if VBUS ever shorts) from +BAT_IN; VS on
   3V3 with C2; A0 and A1 to ground (address 0x40); ALERT not connected (the firmware polls). IN+ is the bus side:
-  **positive current is charging**, discharge reads negative.
+  **positive current flows into the packs** (regeneration); discharge reads negative.
 - **J17** (JST GH 4, SM04B-GHS-TB): 1 GND, 2 3V3, 3 SDA, 4 SCL, to the MCU carrier (W42); the I2C pull-ups (4.7 kOhm)
   are on the carrier. The order is the board's, chosen so the four lines leave the INA228 without crossing; the body
   makes this lead.
 - **The Adafruit 5832 instead of U1** (U1 is not fitted while LCSC has none): its 15 mOhm shunt removed and its VBUS
   jumper open, VIN+ to TP2, VIN- to TP1, VBUS to TP3, its STEMMA QT lead to the MCU, mounted on the MCU carrier as in
   P0. Not both: both answer at 0x40. TP1-TP3 are also the meter's Kelvin points for the calibration.
-- **BUS-** (the switched - bus): J15, the star stud (W23, W27, and W41 from the - bus bar), J16, the frame-bond stud
+- **BUS-** (the switched - bus): J15, the star stud (W23, the TRACO's -V tie, and W41 from the - bus bar), J16, the frame-bond stud
   (W33 on its own stud, so the bond is never loosened with the star), MH1 (the plate bond), U1's ground and J17's
   ground, joined by a strip on the bottom along the north edge.
 
@@ -89,8 +105,9 @@ underside is at z 213.5, 39 mm above the fuses.
 
 The holders stand in two rows of six across the robot, 10 mm apart, inputs toward the + bus band between the rows,
 outputs outward to a row of studs on each long edge: the four RS-04s and the two VESCs along the board's left edge
-(+y, toward the MCU board), the converters, the charge port, the spare and the J501 along its right edge (-y, toward
-the bus bars), the turret, the 24 V input and the star and frame studs at its front (+x, beside the MRBF block). The
+(+y, toward the MCU board), the TRACO's input, the turret, two spares and the J501 along its right edge (-y, toward
+the bus bars), the 12 V rail's branch, the 12 V input and the star and frame studs at its front (+x, beside the MRBF
+block). The
 power entry (J1, the shunt) and the INA228 are in the strip at its rear (-x); MH1 sits on the plate's old shunt nut.
 
 **Mounting** (all into features the P1 plate already has):
@@ -99,7 +116,10 @@ power entry (J1, the shunt) and the INA228 are in the strip at its rear (-x); MH
   (OD 12, 10 mm) into the plate's flush nut (the Blue Sea shunt's base nut). It bonds the plate to the - bus: the
   plate stands on printed posts and was otherwise floating under every + lead of the skid (hazard 10).
 - **Three cable ties** (7130K12) through the plate's old fuse-bundle slots at (46, -6), (111, -6) and (111, 24), a
-  printed tie block (10 mm, a 4 x 10 slot through it) and the board's own 4 x 10 slots, round the block.
+  printed tie block (10 mm, a 4 x 10 slot through it) and the board's own 4 x 10 slots, round the block. The body's
+  commit 40c427b shrank `plate_fuses` to 36 mm, which moves the plate's upper slots to y 18; at (111, 18) a slot would
+  fall under F12's holder. Keep the plate's slot at (111, 24) (`cad/body_fuse_board.MOUNTS` has it), or the board is
+  held by MH1, the two lower ties and its sixteen stud feet only.
 - **Every stud is its own standoff**: a printed foot (OD 12 for M4, 16 for M6, 10 mm) under the stud with a hex pocket
   at its top holding the nyloc (M4: 7.2 AF x 5.3; M6: 10.2 AF x 6.3) and the screw's hole through it. The lug sits on
   the top pad and the screw goes down through the lug and the board into the nut: copper to copper, serviced from
@@ -126,12 +146,14 @@ is extrapolated and marked so. Fault let-through against the copper: IEC 60949's
 |---|---|---|---|---|---|---|---|
 | F1-F4 | RS-04 x 4 (W10-W13) | 20 A | 6.0 mm | 2.4 mm | 4.3 C | +0.2 C | 6.9 |
 | F5, F6 | VESC L, R (W14, W15) | 30 A | 6.0 mm | 4.1 mm | 10.8 C | +0.5 C | 2.4 |
-| F7 | DDR-120C-24 in (W16) | 10 A | 6.0 mm | 0.9 mm | 0.9 C | 0 | 28 |
-| F8 | DDR-60L-12 in (W17) | 5 A | 6.0 mm | 0.4 mm | 0.2 C | 0 | 105 |
-| F9 | charge port (W8) | 10 A | 6.0 mm | 0.9 mm | 0.9 C | 0 | 28 |
-| F10 | spare (sized for 30 A) | - | 6.0 mm | 4.1 mm | 10.8 C | +0.5 C | 2.4 |
-| F11 | J501 24 V (W21) | 5 A | 6.0 mm | 0.4 mm | 0.2 C | 0 | 105 |
-| F12 | turret 24 V (W22) | 5 A | 2.6 mm | 0.4 mm | 0.7 C | 0 | 105 |
+| F7 | TRACO TEP 150-4812WI in (W16) | 10 A | 6.0 mm | 0.9 mm | 0.9 C | 0 | 28 |
+| F8 | the turret, via the stop relay (W22) | 7.5 A | 6.0 mm | 0.6 mm | 0.5 C | 0 | 39 |
+| F9, F10 | spares (sized for 30 A) | - | 6.0 mm | 4.1 mm | 10.8 C | +0.5 C | 2.4 |
+| F11 | J501 at 12 V (W21) | 10 A | 6.0 mm | 0.9 mm | 0.9 C | 0 | 28 |
+| F12 | the 12 V rail (W43) | 7.5 A | 2.6 mm | 0.6 mm | 1.8 C | 0 | 39 |
+
+The 12 V pour (12.6 mm on both layers, six vias) carries the TRACO's full 12.5 A from J14 at +0.4 C; J14 is an M4 stud
+with a 16-14 AWG ring on W40 (14 AWG).
 
 Every branch carries its fuse's rating at a few degrees; the heat at a holder is the fuse's own (2.6 W in a 30 A
 MINI at its rating, 1.9 W in a 20 A), which is why the holders are 10 mm apart. The neck is where the 6 mm run passes
@@ -172,7 +194,7 @@ The error budget in % of reading (`analysis.py`); the board between 15 and 55 C,
 | Shunt TCR, 100 ppm/C with its copper terminals, over 30 C | 0.30 % | no |
 | Shunt self-heating (12.5 C/W to its terminals; the 80 A pulse adiabatic) | 0.02-0.20 % | no |
 | INA228 gain drift, 20 ppm/C over 30 C | 0.06 % | no |
-| Offset 1 uV + drift 0.3 uV + CMRR 154 dB at 53 V 0.1 uV + thermal EMF 3 uV | 5.4 uV (0.27 % at 2 A) | no |
+| Offset 1 uV + drift 0.3 uV + CMRR 154 dB at 41 V 0.1 uV + thermal EMF 3 uV | 5.4 uV (0.27 % at 2 A) | no |
 | The calibrating meter (10 A range) | 0.3 % | - |
 
 | Current | Uncalibrated, worst case | Uncalibrated, RSS | Calibrated, worst case | Calibrated, RSS |
@@ -187,7 +209,7 @@ The error budget in % of reading (`analysis.py`); the board between 15 and 55 C,
 **Result: within 1 % of reading from 2 A to 80 A after a one-point calibration; not within 1 % without it** (the
 shunt's own 1 % and the layout allowance are most of the error). Below 2 A the floor is about 5 mA plus 0.7 % of
 reading. **The calibration** (bring-up step 5, which already compares the INA228 with a meter): 5-10 A from a bench
-supply through the shunt (or a dummy load on the 24 V rail), read on a meter with 0.3 % or better on its 10 A range;
+supply through the shunt (or a dummy load on the 12 V rail), read on a meter with 0.3 % or better on its 10 A range;
 set the firmware's scale (or SHUNT_CAL) so the INA228 agrees; record the factor in the build log. VBUS the same against
 the meter's DC volts (its 4.7 kOhm in series with the 1 MOhm VBUS input reads 0.47 % low before calibration). The
 INA228's SHUNT_TEMPCO can take the shunt's 100 ppm/C against the die temperature: the two sit 10 mm apart on the same
@@ -224,11 +246,12 @@ One board built from a 5-board PCB order (`cad/body_fuse_board.py ORDER`, the ca
 | Bourns CSS2H-3920R-1L00F shunt | shunt_1mohm_3920 | 2 | LCSC C4087295 $0.78 (C1848566 $1.50) | $1.57 |
 | 10 Ohm 0603, 100 nF 100 V and 50 V 0603, 4.7 kOhm 2512 | res_10r_0603, cap_100n_100v_0603, cap_100n_50v_0603, res_4k7_2512 | LCSC minimums | LCSC (alternates listed) | $1.95 |
 | JST GH 4 header, housings, 4 pre-crimped wires | gh_header_4p_smd, gh_housing_4p, gh_lead_2p_300 | 5, 2, 4 | LCSC, TLC Electronics | $6.97 |
-| Ancor #8 heat-shrink rings 12-10, 16-14, 22-18 AWG | ring_12awg_m4, ring_14awg_m4, ring_18awg_m4 | 3, 7, 9 | go2marine 3-packs (25-packs) | $28.65 |
+| Ancor #8 heat-shrink rings 12-10, 16-14, 22-18 AWG | ring_12awg_m4, ring_14awg_m4, ring_18awg_m4 | 3, 12, 3 | go2marine 3-packs (25-packs) | $24.70 |
 | M4 x 12 socket head, M4 nyloc, M6 x 12, M5 x 14, 4 in ties | screw_m4x12_socket, nut_m4_nyloc, screw_m6x12_socket, screw_m5x14_socket, cable_tie_4in | 100-packs | McMaster-Carr (next length up) | $53.59 |
-| **Total** | | | | **$156.70** before shipping |
+| MINI 58V 7.5 A fuses (Littelfuse 099707.5WXN) | fuse_mini58_7a5 | 3 | LCSC C2680610 $0.58 (LCSC other suppliers $0.31) | $1.73 |
+| **Total** | | | | **$154.48** before shipping |
 
-Reused from P0: the eleven MINI 58V fuses, the Adafruit 5832, W4's 8 AWG M6 lug and the bus bars' M6 nylocs. The
+Reused from P0: the eight MINI 58V fuses of 20, 30 and 10 A, the Adafruit 5832, W4's 8 AWG M6 lug and the bus bars' M6 nylocs. The
 standoffs are printed (about 26 g of PETG). The bare INA228 (ina228_ic, LCSC C2887910 $6.42, none in stock on
 2026-10-27) is optional.
 
@@ -238,15 +261,18 @@ standoffs are printed (about 26 g of PETG). The bare INA228 (ina228_ic, LCSC C28
 
 - **W4** MRBF load stud to the board's J1 (was: the + bus bar's tap 1). The + bus bar carries nothing in P3: anything
   left on it would bypass the shunt.
-- **W5** XT90's - straight to the switch's IN-; **W6 goes**; **W9** (charge port -) to the switch's IN- with W5.
-- **W8** from J10 (F9, 10 A, fed from the + bus after the MRBF and the shunt) to the charge port (was: from the MRBF's
-  battery stud through an inline holder; the unfused stub at the battery stud goes with it).
-- **W10-W17, W21, W22** from their M4 studs (J2-J9, J12, J13) with #8 rings (was: + bus taps and the DDR-120C's +V
-  through inline holders).
-- **W23, W27** to J15 (the star); **W33** to J16 in **14 AWG** (was 18): a + lead chafed through before its branch
-  fuse puts the MRBF's let-through on the bond.
-- New: **W40** DDR-120C-24 +V to J14 (18 AWG); **W41** - bus bar tap 5 to J15 (14 AWG); **W42** J17 to the MCU
-  carrier (GH 4, 28 AWG pre-crimped: 1 GND, 2 3V3, 3 SDA, 4 SCL; 4.7 kOhm pull-ups on the carrier).
+- **W5** the packs' - straight to the switch's IN-; **W6 goes**. **W8, W9 go** (D65: no charge port).
+- **W10-W15** from their M4 studs (J2-J7) with #8 rings (was: + bus taps through inline holders).
+- **W16** J8 (F7, 10 A) to the TRACO TEP 150-4812WI's Vin+ (18 AWG): 150 W out is about 5.6 A in at 30 V.
+- **W22** J9 (F8, 7.5 A) to the stop relay's pole B, then **W34** from pole B to the turret's XT30 (16 AWG; D66): the
+  radio stop still cuts the turret's power.
+- **W40** the TRACO's +V to J14 (14 AWG, 12.5 A); **W21** J12 (F11, 10 A) to the J501's DC-IN at 12 V (16 AWG,
+  XT30U-F); **W43** (new) J13 (F12, 7.5 A) to the rest of the 12 V rail (16 AWG): the lidar box, the SSC1 lights, the
+  eyes, the 5 V buck, about 40 W. **W17, W24-W27 go** with the DDR-60L-12.
+- **W23** the TRACO's -V tie to J15 (the star); **W33** to J16 in **14 AWG** (was 18): a + lead chafed through before
+  its branch fuse puts the MRBF's let-through on the bond.
+- New: **W41** - bus bar tap 5 to J15 (14 AWG); **W42** J17 to the MCU carrier (GH 4, 28 AWG pre-crimped: 1 GND,
+  2 3V3, 3 SDA, 4 SCL; 4.7 kOhm pull-ups on the carrier).
 - **W30, W31, W32 go** (the sense pair and VBUS are on the board), unless the Adafruit replaces U1: then three short
   leads TP1, TP2, TP3 to its VIN-, VIN+, VBUS.
 
@@ -258,30 +284,38 @@ standoffs are printed (about 26 g of PETG). The bare INA228 (ina228_ic, LCSC C28
    U1 if fitted. Inspect the shunt's four joints; R1's taps are the small pads outside its north edge.
 3. Holders: snap each FL1's peg into its oval slot (the slot takes the peg on either side of the terminals' line),
    check it sits flat, solder both terminals (a large tip: the + bus band is 2 oz on both layers).
-4. Insulation, before anything is bolted: more than 1 MOhm between +BAT_IN, +BUS, +24V, BUS- and every OUT_ stud,
+4. Insulation, before anything is bolted: more than 1 MOhm between +BAT_IN, +BUS, +12V, BUS- and every OUT_ stud,
    with no fuses in; +BAT_IN to +BUS reads about 1 mOhm (four-wire: 5 A in at J1, out at an output, mV across TP1-TP2).
 5. On the plate: the standoffs with their nylocs pressed in, MH1's screw into the plate's nut (plate to J16 under
    0.1 Ohm), the three ties; then the lugs, each screw down through its lug into its standoff's nut.
-6. Bring-up (docs/body-electrical.md 6) with these changes: step 4's rails with the converters' fuses (F7, F8, F11)
+6. Bring-up (docs/body-electrical.md 6) with these changes: step 4's rails with the TRACO's fuses (F7, F11, F12)
    only; step 5 the calibration of section 5 against a meter; step 6 the RS-04 and VESC fuses one at a time. A
-   fuse is pulled only with the pack unplugged.
+   fuse is pulled only with both packs out.
 
 ## 10. Still open
 
+**Arrival checks** (before the board is built):
+
+- The FL1 holder's DC voltage rating: Littelfuse's page says 58 V DC, its 2016 datasheet 125 V, LCSC's text 32 V. The
+  board relies on the page (the bus is 41 V under D65, under every one of them but the last), and D55's rule (a fuse
+  is pulled only with the packs out) stands regardless. Ask Littelfuse or read the label on the carton.
+- Whether a standard 32 V MINI fuse seats in the FL1 (Littelfuse markets a rejection feature for its MINI 58V fuses).
+  If it seats, the "58V FUSES ONLY" silk is the only guard, as with the inline holders.
+- The FL1's peg side (section 9 step 3).
+
+**Open:**
+
 - **P0's INA228 across the - lead shunt** (section 1): fix before bring-up step 4.
+- **The turret's feed through the G2RL-2** at 41 V DC (section 1): the inrush and the contact at B12/B15.
+- **The plate's third tie slot** at (111, 24), not (111, 18) (section 3).
 - **The VESCs' battery current limit at 20 A** (the holder's 22 A continuous): for the firmware (B8) and the VESC Tool
   setup in B12.
 - **PA6-CF as an insulator**: the bus bars' insulators (`cad/body_frame.py bus_insulator()`) hold the + and - bars
   over the aluminium plate, which this board now bonds to the - bus. Bambu publishes no resistivity for PA6-CF;
   carbon-filled nylon can conduct. Measure a printed insulator (more than 100 MOhm at 50 V across it) or print them in
   PA6-GF or PETG.
-- The FL1's voltage rating disagrees between Littelfuse's page (58 V DC), its 2016 datasheet (125 V) and LCSC's text
-  (32 V); the board relies on the page and keeps D55's procedure regardless. Whether a standard 32 V MINI fuse seats
-  in it (Littelfuse markets the MINI 58V's rejection feature) is to check on arrival.
-- The FL1's peg side is not dimensioned on its drawing; the oval slot covers both sides. Check the first holder's fit
-  before soldering twelve.
 - JLCPCB's assembly price and its engineering review need a sign-in and an order; the PCB price is read.
-- The mass: the board and its hardware are 132 g against the 195 g of inline holders, leads and Blue Sea shunt they
+- The mass: the board and its hardware are 131 g against the 195 g of inline holders, leads and Blue Sea shunt they
   replace: about -63 g, not the plan's -110 g (levers 7 and 8); most of the difference is steel (15 M4 screws and nuts,
   42 g). Aluminium screws would bring back about 20 g.
 - The height: 36 mm over the plate against the brief's 30; nothing above it until the deck.

@@ -55,7 +55,7 @@ def withstand_i2t(area_mm2, t0=60.0, t1=200.0):
 
 
 # Littelfuse MINI 58V (0997) datasheet (rev 11/18/2025): typical pre-arcing I^2t, cold resistance, voltage drop at rating
-FUSE = {5: {'i2t': 25, 'r_mohm': 17.75, 'vdrop_mv': 129}, 10: {'i2t': 93, 'r_mohm': 7.42, 'vdrop_mv': 108},
+FUSE = {5: {'i2t': 25, 'r_mohm': 17.75, 'vdrop_mv': 129}, 7.5: {'i2t': 68, 'r_mohm': 10.85, 'vdrop_mv': 135}, 10: {'i2t': 93, 'r_mohm': 7.42, 'vdrop_mv': 108},
         20: {'i2t': 380, 'r_mohm': 3.21, 'vdrop_mv': 96}, 30: {'i2t': 1100, 'r_mohm': 1.85, 'vdrop_mv': 87}}
 HOLDER = {'part': 'Littelfuse 178.6764.0001 (MINI FL1)', 'continuous_a': 22, 'fuse_max_a': 30, 'v_dc': 58,
           'source': 'littelfuse.com product page, read 2026-10-27 (datasheet rev 111616 lists 125 V, 30 A)'}
@@ -135,7 +135,10 @@ def main_path(facts):
         rows.append({'current_a': i, 'power_w': round(p, 2), 'board_mean_rise_c': round(p / (h * area), 1)})
     local = {'note': 'the shunt heats about 20 cm^2 of pour on each face before the rest of the board: R ~ 1/(12 W/m2K x 40 cm2) ~ 21 K/W',
              'shunt_terminal_rise_at_40a_c': round(1.6 * 21.0, 1), 'shunt_terminal_rise_at_80a_continuous_c': round(6.4 * 21.0, 1)}
-    return {'sections': out, 'vias': vias, 'shunt': shunt, 'board_lump': rows, 'shunt_local': local,
+    rail = {'section': '+12V pour, J14 to F11 and F12 (12.6 mm, both layers, 6 vias)', 'current_a': 12.5,
+            'note': 'the TRACO TEP 150-4812WI\'s full 12.5 A', 'ipc2221_dt_c': round(ipc_dt(12.5 / 2, 12.6), 1),
+            'stud': 'M4 (J14) with a 14 AWG #8 ring: a ring rated 16-14 AWG carries it'}
+    return {'sections': out, 'rail_12v': rail, 'vias': vias, 'shunt': shunt, 'board_lump': rows, 'shunt_local': local,
             'rating': {'continuous_a': 40, 'pulse': '80 A for 0.3 s (the jump) at any duty that keeps the RMS under 40 A; '
                                                    '80 A for up to 30 s',
                        'why': 'the copper is good for more (IPC-2221 under 7 C at 40 A, extrapolated about 30 C at 80 A); '
@@ -147,7 +150,7 @@ def ina228_budget():
     """% of reading. TI SLYS021A (INA228): gain error 0.05 % max, gain drift 20 ppm/C max, offset 1 uV max, offset drift
     10 nV/C max, CMRR 154 dB min, R_DIFF 92 kOhm typ. Bourns CSS2H-3920R-1L00F: 1 %, TCR 100 ppm/C with copper terminals."""
     dT_amb = 30.0                         # calibrated at 25 C, used 15-55 C on the board
-    v_cm = 53.3
+    v_cm = 41.0                          # D65: 10S, 41 V charged
     items = {
         'shunt tolerance': {'pct': 1.0, 'calibrated_out': True},
         'Kelvin taps (2-terminal part sensed at Bourns\' measurement points; pad and solder)': {'pct': 0.5, 'calibrated_out': True},
@@ -196,7 +199,7 @@ def mass(facts):
         'copper (70 um, 8.96 g/cm3)': (facts['copper_area_mm2']['top'] + facts['copper_area_mm2']['bottom']) * 0.070 * 8.96e-3,
         'solder mask, HASL, silk (est)': 1.5,
         '12 x Littelfuse MINI FL1 holder (est 1.6 g, PBT and copper alloy)': 12 * 1.6,
-        '11 x MINI 58V fuse (0.57 g, datasheet)': 11 * 0.57,
+        '10 x MINI 58V fuse (0.57 g, datasheet)': 10 * 0.57,
         'shunt, passives, GH (est)': 0.8,
         'INA228 or Adafruit 5832 (3.3 g, catalog)': 3.3,
         '15 x M4 x 12 socket head + nyloc (est 1.9 + 0.9 g)': 15 * 2.8,

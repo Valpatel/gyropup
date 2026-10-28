@@ -2461,7 +2461,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "J501 24V 5 A"
+		(property "Value" "J501 12V 10 A"
 			(at 293.37 107.95 0)
 			(effects
 				(font
@@ -2515,7 +2515,7 @@
 				(hide yes)
 			)
 		)
-		(property "Fuse" "Littelfuse 0997005.WXN MINI 58V 5 A"
+		(property "Fuse" "Littelfuse 0997010.WXN MINI 58V 10 A"
 			(at 289.56 106.68 0)
 			(effects
 				(font
@@ -2566,7 +2566,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "TURRET 24V 5 A"
+		(property "Value" "12V RAIL 7.5 A"
 			(at 354.33 107.95 0)
 			(effects
 				(font
@@ -2620,7 +2620,7 @@
 				(hide yes)
 			)
 		)
-		(property "Fuse" "Littelfuse 0997005.WXN MINI 58V 5 A"
+		(property "Fuse" "Littelfuse 099707.5.WXN MINI 58V 7.5 A"
 			(at 350.52 106.68 0)
 			(effects
 				(font
@@ -2629,7 +2629,7 @@
 				(hide yes)
 			)
 		)
-		(property "Wire" "W22"
+		(property "Wire" "W43"
 			(at 350.52 106.68 0)
 			(effects
 				(font
@@ -3196,7 +3196,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "DDR-120C IN 10 A"
+		(property "Value" "TRACO 12V IN 10 A"
 			(at 49.53 107.95 0)
 			(effects
 				(font
@@ -3301,7 +3301,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "DDR-60L IN 5 A"
+		(property "Value" "TURRET 7.5 A"
 			(at 110.49 107.95 0)
 			(effects
 				(font
@@ -3355,7 +3355,7 @@
 				(hide yes)
 			)
 		)
-		(property "Fuse" "Littelfuse 0997005.WXN MINI 58V 5 A"
+		(property "Fuse" "Littelfuse 099707.5.WXN MINI 58V 7.5 A"
 			(at 106.68 106.68 0)
 			(effects
 				(font
@@ -3364,7 +3364,7 @@
 				(hide yes)
 			)
 		)
-		(property "Wire" "W17"
+		(property "Wire" "W22"
 			(at 106.68 106.68 0)
 			(effects
 				(font
@@ -3406,7 +3406,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "CHARGE PORT 10 A"
+		(property "Value" "SPARE (no fuse)"
 			(at 171.45 107.95 0)
 			(effects
 				(font
@@ -3460,7 +3460,7 @@
 				(hide yes)
 			)
 		)
-		(property "Fuse" "Littelfuse 0997010.WXN MINI 58V 10 A"
+		(property "Fuse" "none (spare)"
 			(at 167.64 106.68 0)
 			(effects
 				(font
@@ -3469,7 +3469,7 @@
 				(hide yes)
 			)
 		)
-		(property "Wire" "W8"
+		(property "Wire" "-"
 			(at 167.64 106.68 0)
 			(effects
 				(font
@@ -3811,7 +3811,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "W8"
+		(property "Value" "SPARE"
 			(at 181.61 123.19 0)
 			(effects
 				(font
@@ -3856,7 +3856,7 @@
 				(hide yes)
 			)
 		)
-		(property "Wires" "W8 charge port +"
+		(property "Wires" "(spare)"
 			(at 177.8 121.92 0)
 			(effects
 				(font
@@ -4024,7 +4024,7 @@
 				(hide yes)
 			)
 		)
-		(property "Wires" "W21 J501 DC-IN"
+		(property "Wires" "W21 J501 DC-IN (12 V)"
 			(at 299.72 121.92 0)
 			(effects
 				(font
@@ -4063,7 +4063,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "W22"
+		(property "Value" "W43"
 			(at 364.49 123.19 0)
 			(effects
 				(font
@@ -4108,7 +4108,7 @@
 				(hide yes)
 			)
 		)
-		(property "Wires" "W22 stop relay pole B"
+		(property "Wires" "W43 the 12 V rail (lidar box, SSC1, eyes, 5 V buck)"
 			(at 360.68 121.92 0)
 			(effects
 				(font
@@ -4147,7 +4147,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "24V IN"
+		(property "Value" "12V IN"
 			(at 34.29 163.83 0)
 			(effects
 				(font
@@ -4192,7 +4192,7 @@
 				(hide yes)
 			)
 		)
-		(property "Wires" "W40 DDR-120C-24 +V (18 AWG)"
+		(property "Wires" "W40 TRACO TEP 150-4812WI +V (14 AWG)"
 			(at 30.48 162.56 0)
 			(effects
 				(font
@@ -4276,7 +4276,7 @@
 				(hide yes)
 			)
 		)
-		(property "Wires" "W23 DDR-120C-24 -V; W27 DDR-60L-12 -V; W41 - bus bar tap 5 (14 AWG)"
+		(property "Wires" "W23 TRACO -V (the 12 V return's tie); W41 - bus bar tap 5 (14 AWG)"
 			(at 330.2 165.1 0)
 			(effects
 				(font
@@ -5053,7 +5053,7 @@
 				(hide yes)
 			)
 		)
-		(property "Wires" "W16 DDR-120C-24 Vin+"
+		(property "Wires" "W16 TRACO TEP 150-4812WI Vin+"
 			(at 55.88 121.92 0)
 			(effects
 				(font
@@ -5092,7 +5092,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "W17"
+		(property "Value" "W22"
 			(at 120.65 123.19 0)
 			(effects
 				(font
@@ -5137,7 +5137,7 @@
 				(hide yes)
 			)
 		)
-		(property "Wires" "W17 DDR-60L-12 Vin+"
+		(property "Wires" "W22 stop relay pole B (in), then the turret's XT30"
 			(at 116.84 121.92 0)
 			(effects
 				(font
@@ -5995,7 +5995,7 @@
 			)
 		)
 	)
-	(global_label "+24V"
+	(global_label "+12V"
 		(shape passive)
 		(at 325.12 203.2 270)
 		(fields_autoplaced yes)
@@ -6163,7 +6163,7 @@
 			)
 		)
 	)
-	(global_label "OUT_SPARE"
+	(global_label "OUT_SPARE10"
 		(shape passive)
 		(at 228.6 110.49 270)
 		(fields_autoplaced yes)
@@ -6184,7 +6184,7 @@
 			)
 		)
 	)
-	(global_label "+24V"
+	(global_label "+12V"
 		(shape passive)
 		(at 289.56 102.87 90)
 		(fields_autoplaced yes)
@@ -6226,7 +6226,7 @@
 			)
 		)
 	)
-	(global_label "+24V"
+	(global_label "+12V"
 		(shape passive)
 		(at 350.52 102.87 90)
 		(fields_autoplaced yes)
@@ -6247,7 +6247,7 @@
 			)
 		)
 	)
-	(global_label "OUT_W22"
+	(global_label "OUT_W43"
 		(shape passive)
 		(at 350.52 110.49 270)
 		(fields_autoplaced yes)
@@ -6541,7 +6541,7 @@
 			)
 		)
 	)
-	(global_label "OUT_W17"
+	(global_label "OUT_W22"
 		(shape passive)
 		(at 106.68 110.49 270)
 		(fields_autoplaced yes)
@@ -6583,7 +6583,7 @@
 			)
 		)
 	)
-	(global_label "OUT_W8"
+	(global_label "OUT_SPARE9"
 		(shape passive)
 		(at 167.64 110.49 270)
 		(fields_autoplaced yes)
@@ -6625,7 +6625,7 @@
 			)
 		)
 	)
-	(global_label "OUT_W8"
+	(global_label "OUT_SPARE9"
 		(shape passive)
 		(at 172.72 121.92 180)
 		(fields_autoplaced yes)
@@ -6646,7 +6646,7 @@
 			)
 		)
 	)
-	(global_label "OUT_SPARE"
+	(global_label "OUT_SPARE10"
 		(shape passive)
 		(at 233.68 121.92 180)
 		(fields_autoplaced yes)
@@ -6688,7 +6688,7 @@
 			)
 		)
 	)
-	(global_label "OUT_W22"
+	(global_label "OUT_W43"
 		(shape passive)
 		(at 355.6 121.92 180)
 		(fields_autoplaced yes)
@@ -6709,7 +6709,7 @@
 			)
 		)
 	)
-	(global_label "+24V"
+	(global_label "+12V"
 		(shape passive)
 		(at 25.4 162.56 180)
 		(fields_autoplaced yes)
@@ -7024,7 +7024,7 @@
 			)
 		)
 	)
-	(global_label "OUT_W17"
+	(global_label "OUT_W22"
 		(shape passive)
 		(at 111.76 121.92 180)
 		(fields_autoplaced yes)
@@ -7543,7 +7543,7 @@
 		)
 		(uuid "450d677a-50a5-5f46-ae08-ebd561bd41eb")
 	)
-	(text "Fuses: Littelfuse MINI 58V (0997 series, 1 kA at 58 V DC) ONLY, in Littelfuse MINI FL1 holders (58 V DC, 22 A continuous). A 32 V MINI fuse fits the same holder: the silk says 58 V FUSES ONLY at every holder. Pull a fuse only with the pack unplugged (D55)."
+	(text "Fuses: Littelfuse MINI 58V (0997 series, 1 kA at 58 V DC) ONLY, in Littelfuse MINI FL1 holders (58 V DC, 22 A continuous). A 32 V MINI fuse fits the same holder: the silk says 58 V FUSES ONLY at every holder. Pull a fuse only with both packs out (D55)."
 		(exclude_from_sim no)
 		(at 25.4 234.95 0)
 		(effects
@@ -7554,7 +7554,7 @@
 		)
 		(uuid "2f704364-598d-569f-ab7e-9fffe26bc78b")
 	)
-	(text "High-side shunt R1 (1 mOhm) between J1 (from the MRBF load stud) and +BUS: the INA228's inputs stay inside -0.3..85 V of its ground (BUS-, the switched negative) whether the main switch is on or off. Positive current = into the pack (charging); discharge reads negative."
+	(text "High-side shunt R1 (1 mOhm) between J1 (from the MRBF load stud) and +BUS: the INA228's inputs stay inside -0.3..85 V of its ground (BUS-, the switched negative) whether the main switch is on or off. Positive current = into the packs (regeneration); discharge reads negative."
 		(exclude_from_sim no)
 		(at 25.4 241.3 0)
 		(effects
