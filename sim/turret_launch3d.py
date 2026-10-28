@@ -343,7 +343,7 @@ def ceiling_balls(balls):
 def ceiling_at(balls, L, tol=None, seed=5, bonded=None):
     """The fastest accepted ball at 100 % throttle with the tolerance stack (tl.TOL: trimmed), the feed's offsets, 0.15 mm
     runout and the soft tyre's growth (bonded unless told): the population and the 32 corners. Returns (top fps,
-    population mean fps, the corners' top fps, the corner)."""
+    population mean fps, the corners' top fps, the corner, the highest energy density J/m^2, that ball)."""
     tol = tol or tl.TOL
     rng = np.random.default_rng(seed)
     n = len(balls)
@@ -356,7 +356,10 @@ def ceiling_at(balls, L, tol=None, seed=5, bonded=None):
                                                            tyre_E_mpa=TPU['E_mpa'][0], tyre_bonded=bonded))
     ok, okc = ~r['rejected'], ~rc['rejected']
     k = int(np.argmax(np.where(okc, rc['fps'], -1)))
-    return (max(float(r['fps'][ok].max()), float(rc['fps'][okc].max())), float(r['fps'][ok].mean()), float(rc['fps'][k]), cs[k].name)
+    kd = [tl.ked(b, float(v)) if o else 0.0 for b, v, o in zip(list(balls) + cs, np.concatenate([r['speed'], rc['speed']]), np.concatenate([ok, okc]))]
+    j = int(np.argmax(kd))
+    return (max(float(r['fps'][ok].max()), float(rc['fps'][okc].max())), float(r['fps'][ok].mean()), float(rc['fps'][k]), cs[k].name,
+            kd[j], (list(balls) + cs)[j].name)
 
 
 def ceiling_map(balls, rails=(10.5, 11.0, tl.RAIL_V_TRIM, 12.0, 12.5), wheels=(36.0, 38.0, 40.0), crush=None, seed=5):
@@ -369,13 +372,14 @@ def ceiling_map(balls, rails=(10.5, 11.0, tl.RAIL_V_TRIM, 12.0, 12.5), wheels=(3
         for D in wheels:
             cr = tl.cage_crush(D) if crush is None else crush
             L = tl.launcher_for(D, cr, supply_v=V)
-            top, mean, _, corner = ceiling_at(balls, L, seed=seed)
+            top, mean, _, corner, kd, kball = ceiling_at(balls, L, seed=seed)
             hb = launch3d(tl.HASBRO, L, Entry(z=0.0, wy=0.0), Wheels(full_throttle=True))
             w0 = tl.no_load_speed(L)
             rows.append({'rail_v': round(V, 3), 'wheel_d_mm': D, 'crush': round(cr, 3), 'no_load_rpm': round(tl.rpm(w0)),
                          'no_load_rpm_tol': round(tl.rpm(tl.no_load_speed(L, tl.TOL['kv'], tl.TOL['v']))), 'surface_m_s_tol': round(tl.no_load_speed(L, tl.TOL['kv'], tl.TOL['v']) * D / 2000, 2),
                          'ceiling_fps': round(top, 1), 'worst_corner': corner, 'hasbro_full_throttle_fps': round(float(hb['fps'][0]), 1),
-                         'population_mean_fps': round(mean, 1), 'margin_fps': round(CAP_FPS - top, 1), 'holds': top <= CAP_FPS})
+                         'population_mean_fps': round(mean, 1), 'margin_fps': round(CAP_FPS - top, 1), 'densest_ked_j_m2': round(kd),
+                         'holds': top <= CAP_FPS, 'under_astm': kd <= tl.ASTM_KED})
     return rows
 
 
@@ -639,25 +643,29 @@ def study(quick=False, seed=1):
     # 2. the hardware ceiling: 100 % throttle on the trimmed rail with the remaining tolerances (tl.TOL: the magnets +15 C,
     #    the rail +2 %), the feed's offsets, 0.15 mm runout, the soft tyre's growth (bonded), the population and the 32
     #    corners of the accepted range; then the same untrimmed (a fixed set point) and with a tyre come loose
-    top, mean, ctop, corner = ceiling_at(balls, L, seed=seed)
-    topu, _, ctopu, corneru = ceiling_at(balls, L, tol=tl.TOL_UNTRIMMED, seed=seed)
-    topd, _, ctopd, cornerd = ceiling_at(balls, L, seed=seed, bonded=False)
+    top, mean, ctop, corner, kd, kball = ceiling_at(balls, L, seed=seed)
+    topu, _, ctopu, corneru, kdu, _ = ceiling_at(balls, L, tol=tl.TOL_UNTRIMMED, seed=seed)
+    topd, _, ctopd, cornerd, kdd, _ = ceiling_at(balls, L, seed=seed, bonded=False)
     ceil = launch3d(balls, L, ent, _tol_wheels(tl.TOL, runout=0.00015, runout_phase=phases, tyre_E_mpa=TPU['E_mpa'][0]))
     hb = launch3d(nominal, L, Entry(z=0.0, wy=0.0), Wheels(full_throttle=True))
     pop_ft = launch3d(balls, L, ent, Wheels(full_throttle=True, runout=0.00015, runout_phase=phases, tyre_E_mpa=TPU['E_mpa'][1]))
     n105 = tl.rpm(w0 * tl.TOL['kv'] * tl.TOL['v']) * CAP_FPS / top
+    nastm = tl.rpm(w0 * tl.TOL['kv'] * tl.TOL['v']) * math.sqrt(tl.ASTM_KED / kd)
     res['ceiling'] = {'population_full_throttle': stats(ceil), 'worst_corner_fps': round(ctop, 2), 'worst_corner': corner,
+                      'densest_ked_j_m2': round(kd), 'densest_ball': kball, 'astm_ked_j_m2': tl.ASTM_KED, 'under_astm': bool(kd <= tl.ASTM_KED),
+                      'n_astm_rpm': round(nastm),
                       'hasbro_full_throttle_fps': round(float(hb['fps'][0]), 2), 'population_full_throttle_no_tolerance': stats(pop_ft),
-                      'untrimmed': {'highest_fps': round(topu, 2), 'worst_corner': corneru, 'tolerances': tl.TOL_UNTRIMMED['note']},
-                      'tyre_come_loose': {'highest_fps': round(topd, 2), 'worst_corner': cornerd,
+                      'untrimmed': {'highest_fps': round(topu, 2), 'worst_corner': corneru, 'densest_ked_j_m2': round(kdu), 'tolerances': tl.TOL_UNTRIMMED['note']},
+                      'tyre_come_loose': {'highest_fps': round(topd, 2), 'worst_corner': cornerd, 'densest_ked_j_m2': round(kdd),
                                           'note': 'the tyre debonded and floating on its 4 % stretch fit (the free ring, E 10 MPa): a failure the bench spin test (4.1) and the chronograph trip catch'},
                       'cap_fps': CAP_FPS, 'highest_fps_any_case': round(top, 2), 'margin_fps': round(CAP_FPS - top, 2), 'holds': bool(top <= CAP_FPS),
                       'tolerances': tl.TOL['note'], 'n_trim_rpm': round(tl.rpm(w0)), 'n_105_rpm': round(n105),
                       'how_held': (f'the trimmed flywheel rail ({D["supply_v"]:.2f} V for a nominal motor; each turret\'s set by one fixed resistor so the faster '
                                    f'motor turns {tl.rpm(w0):,.0f} rpm at no load, warm) + the {tl.MOTOR["name"]} ({tl.MOTOR["kv_rpm_v"]:.0f} rpm/V) + the bonded '
                                    f'Ø{D["wheel_d_mm"]:.0f} tyre ({w0 * D["wheel_d_mm"] / 2000:.1f} m/s surface): even 100 % throttle with the magnets 15 C warmer and the rail '
-                                   f'2 % high leaves the fastest accepted ball at the figure above; the firmware cannot raise the rail, refuses to feed above '
-                                   f'{n105:,.0f} rpm (where a ball could reach {CAP_FPS:.0f}), and the chronograph latches SAFE on any ball over {CAP_FPS:.0f} fps')}
+                                   f'2 % high leaves the fastest accepted ball at the figure above and the densest under ASTM F963\'s 2500 J/m^2; the firmware '
+                                   f'cannot raise the rail, refuses to feed above {min(n105, nastm):,.0f} rpm (where a ball could pass either), and the '
+                                   f'chronograph latches SAFE on any ball over {CAP_FPS:.0f} fps')}
     # 3. mismatched wheels: one wheel slow by 2, 5, 10 %, and one wheel at the set speed with the other at no-load
     mis = []
     for pct in (0.0, 2.0, 5.0, 10.0):

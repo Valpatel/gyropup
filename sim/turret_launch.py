@@ -237,9 +237,15 @@ def corners():
 TOL = {'kv': 1.018, 'v': 1.020, 'note': 'trimmed per turret: the magnets +15 C (KV +1.8 %), the rail +2.0 % (line, load, temperature, the eRPM reading)'}
 TOL_UNTRIMMED = {'kv': 1.05 * 1.018, 'v': 1.04, 'note': 'a fixed set point: KV +5 % (est) and +1.8 % warm, the converter +4 %'}
 CEIL_AIM_FPS = 104.0            # the trim aims the worst corner here: 1 fps under the ceiling for the 3D model's runout
+# D68 cites ASTM F963's 2500 J/m^2 (kinetic energy over the ball's cross-section). For the design ball that is 109 fps,
+# but D67 accepts a 2.0 g ball as small as 22.2 mm, which reaches it at 102.1 fps: at the 104 fps trim that corner (stiff,
+# grippy) leaves at 102.8 fps with 2540 J/m^2. So the trim also aims the densest accepted ball 1 % under ASTM's limit,
+# which binds first (the fastest ball then leaves at ~102.6, the Hasbro ball at ~97)
+ASTM_KED = 2500.0               # J/m^2, ASTM F963 4.21.2.3 / 8.14.6 (sim/turret_target.py LIMITS)
+KED_AIM = 2475.0
 # RAIL_V_TRIM: the rail that gives a nominal 1400 KV motor the trim speed (each turret's own rail is RAIL_V_TRIM / its
 # measured KV ratio); set from trim_rail() (study 'trim')
-RAIL_V_TRIM = 11.46
+RAIL_V_TRIM = 11.31
 DESIGN = {'wheel_d_mm': 38.0, 'crush': 0.40, 'supply_v': RAIL_V_TRIM, 'set_fps': 95.0, 'nominal': HASBRO}
 
 
@@ -289,24 +295,35 @@ def population(n=400, seed=1):
     return out
 
 
+def ked(ball, v):
+    """Kinetic energy over the ball's cross-section (J/m^2) at v m/s: ASTM F963's measure."""
+    return 0.5 * ball.m_g / 1000 * v ** 2 / (math.pi * (ball.d_mm / 2000) ** 2)
+
+
 def worst_corner(L, tol=None, balls=None):
-    """The fastest ball of the corners at 100 % throttle with the tolerance stack: (fps, ball name, peak normal N)."""
+    """The corners at 100 % throttle with the tolerance stack: (the fastest's fps, its name, its peak normal N, the
+    highest energy density J/m^2, that ball's name)."""
     tol = tol or TOL
-    best = None
+    best, dense = None, None
     for b in balls or corners():
         r = shot(b, L, full_throttle=True, kv_scale=tol['kv'], v_scale=tol['v'])
         if best is None or r['fps'] > best[0]:
             best = (r['fps'], b.name, r['peak_normal_n'])
-    return best
+        k = ked(b, r['v_exit'])
+        if dense is None or k > dense[0]:
+            dense = (k, b.name)
+    return best + dense
 
 
-def trim_rail(wheel_d=None, crush=None, aim=CEIL_AIM_FPS, tol=None, lo=6.0, hi=24.0):
-    """The rail (nominal KV) whose worst corner, with the tolerance stack, leaves at `aim` fps."""
+def trim_rail(wheel_d=None, crush=None, aim=CEIL_AIM_FPS, tol=None, lo=6.0, hi=24.0, ked_aim=KED_AIM):
+    """The rail (nominal KV) at which the worst corner, with the tolerance stack, leaves at `aim` fps or the densest
+    reaches `ked_aim` J/m^2, whichever comes first (None: speed only)."""
     wheel_d = wheel_d or DESIGN['wheel_d_mm']
     crush = DESIGN['crush'] if crush is None else crush
     for _ in range(20):
         mid = 0.5 * (lo + hi)
-        if worst_corner(launcher_for(wheel_d, crush, supply_v=mid), tol)[0] > aim:
+        w = worst_corner(launcher_for(wheel_d, crush, supply_v=mid), tol)
+        if w[0] > aim or (ked_aim and w[3] > ked_aim):
             hi = mid
         else:
             lo = mid
@@ -375,11 +392,13 @@ def study():
     res['crush_choice'] = cr
     # 3. the trim: the rail for the ceiling aim, and the same with a fixed (untrimmed) set point
     v_trim = trim_rail()
+    v_speed = trim_rail(ked_aim=None)
+    wc_speed = worst_corner(launcher_for(D['wheel_d_mm'], D['crush'], supply_v=v_speed))
     L = launcher_for(D['wheel_d_mm'], D['crush'], supply_v=v_trim)
     w_trim = no_load_speed(L)
     rn = shot(HASBRO, L, full_throttle=True)
     wc = worst_corner(L)
-    v_fix = trim_rail(tol=TOL_UNTRIMMED)
+    v_fix = trim_rail(tol=TOL_UNTRIMMED, ked_aim=None)
     rnf = shot(HASBRO, launcher_for(D['wheel_d_mm'], D['crush'], supply_v=v_fix), full_throttle=True)
     lo, hi = 6.0, 24.0                                             # untrimmed: the rail the Hasbro ball needs for 95 fps
     for _ in range(20):
@@ -394,8 +413,12 @@ def study():
                    'n_trim_erpm': round(rpm(w_trim) * MOTOR['pole_pairs']), 'surface_m_s': round(w_trim * D['wheel_d_mm'] / 2000, 2),
                    'rail_v_for_kv_minus5_plus5': [round(v_trim * 1.05, 2), round(v_trim / 1.05, 2)],
                    'hasbro_full_throttle_fps': round(rn['fps'], 1), 'worst_corner_fps': round(wc[0], 2), 'worst_corner_ball': wc[1],
+                   'densest_ked_j_m2': round(wc[3]), 'densest_ball': wc[4], 'astm_ked_j_m2': ASTM_KED,
                    'n_105_rpm': round(rpm(w_trim) * TOL['kv'] * TOL['v'] * CAP_FPS / wc[0]),
-                   'note': 'n_105: the no-load speed at which the worst corner reaches 105 fps (the ceiling scales with the wheel speed)',
+                   'n_astm_rpm': round(rpm(w_trim) * TOL['kv'] * TOL['v'] * math.sqrt(ASTM_KED / wc[3])),
+                   'speed_only_trim': {'rail_v': round(v_speed, 3), 'densest_ked_j_m2': round(wc_speed[3]), 'densest_ball': wc_speed[4],
+                                       'hasbro_full_throttle_fps': round(shot(HASBRO, launcher_for(D['wheel_d_mm'], D['crush'], supply_v=v_speed), full_throttle=True)['fps'], 1)},
+                   'note': 'n_105 / n_astm: the no-load speeds at which the worst corner reaches 105 fps / the densest reaches 2500 J/m^2 (both scale with the wheel speed)',
                    'untrimmed': {'rail_v_for_104_worst': round(v_fix, 3), 'hasbro_fps_then': round(rnf['fps'], 1),
                                  'rail_v_for_hasbro_95': round(v_need, 3), 'worst_corner_fps_then': round(wcf[0], 1),
                                  'verdict': 'impossible: a fixed set point holds the worst corner at 104 only with the Hasbro ball at '
@@ -434,7 +457,7 @@ def study():
         'population_at_full_throttle_fps': {'mean': round(float(np.mean(full_nom)), 1), 'p1': round(float(np.percentile(full_nom, 1)), 1),
                                             'max': round(max(full_nom), 1), 'max_with_tolerances': round(max(full), 1),
                                             'note': 'every ball at 100 % throttle on the trimmed rail; with tolerances: magnets +15 C, rail +2 %'},
-        'worst_corner_full_throttle_fps': round(wc[0], 1), 'worst_corner_ball': wc[1],
+        'worst_corner_full_throttle_fps': round(wc[0], 1), 'worst_corner_ball': wc[1], 'densest_ked_j_m2': round(wc[3]), 'densest_ball': wc[4],
         'margin_fps': round(CAP_FPS - max(max(full), wc[0]), 1),
     }
     # 7. how the speed moves with one property at a time (the Hasbro ball at 100 %)

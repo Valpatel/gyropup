@@ -15,73 +15,73 @@
   "source": "cad/turret.py gear_profile(backlash=0.15) and Geo.gear"
  },
  "recoil": {
-  "impulse_per_shot_ns": 0.03009,
-  "impulse_5_burst_ns": 0.1505,
-  "impulse_30_hopper_ns": 0.903,
-  "peak_force_on_cage_n": 56.9,
-  "pulse_ms": 4.76,
-  "peak_moment_about_tilt_axis_nm": 0.853,
+  "impulse_per_shot_ns": 0.05207,
+  "impulse_5_burst_ns": 0.2603,
+  "impulse_30_hopper_ns": 1.562,
+  "peak_force_on_cage_n": 95.3,
+  "pulse_ms": 5.08,
+  "peak_moment_about_tilt_axis_nm": 1.429,
   "moment_arm_mm": 15.0,
-  "tilt_angular_impulse_nms": 0.0004513,
-  "tilt_group_inertia_kg_m2": 0.002086,
-  "tilt_kick_rad_s": 0.2164,
-  "gravity_preload_nm": 0.042,
-  "kick_stops_after_mrad": 1.163,
+  "tilt_angular_impulse_nms": 0.000781,
+  "tilt_group_inertia_kg_m2": 0.002567,
+  "tilt_kick_rad_s": 0.3043,
+  "gravity_preload_nm": 0.0563,
+  "kick_stops_after_mrad": 2.111,
   "servo_backlash_mrad": 8.73,
-  "aim_shift_mrad": 1.163,
+  "aim_shift_mrad": 2.111,
   "crosses_backlash": false,
   "pan_moment": "zero: the ball path lies in the pan axis's plane (y = 0) and both tyres push alike",
   "mean_force_in_burst_n": {
-   "3_per_s": 0.0903,
-   "5_per_s": 0.1505,
-   "10_per_s": 0.3009
+   "3_per_s": 0.1562,
+   "5_per_s": 0.2603,
+   "10_per_s": 0.5207
   },
   "on_the_robot": "a 30-ball hopper dump is 0.9 N s: 0.05 m/s on a 17 kg robot (docs/head-payload.md budget 0.05 N s per shot)"
  },
  "gyroscopic": {
-  "wheel_angular_momentum_nms": 0.00386,
-  "wheel_I_kg_m2": 3.917519259407896e-06,
-  "w_rad_s": 985,
+  "wheel_angular_momentum_nms": 0.012132,
+  "wheel_I_kg_m2": 7.578685734168326e-06,
+  "w_rad_s": 1601,
   "pan_slew_torque_nm": 0.0,
   "pan_note": "the spin axes are parallel to the pan axis: no gyroscopic torque",
-  "tilt_at_200deg_s_per_wheel_nm": 0.01347,
+  "tilt_at_200deg_s_per_wheel_nm": 0.04235,
   "tilt_pair_net_nm": 0.0,
-  "body_pitch_1rad_s_per_wheel_nm": 0.00386,
+  "body_pitch_1rad_s_per_wheel_nm": 0.01213,
   "pair_note": "the two tyres counter-rotate: equal and opposite on the cartridge, net zero; each Snail mount sees the per-wheel value",
-  "one_wheel_faulted_tilt_nm": 0.01347,
-  "vs_tilt_servo_stall": 0.004582
+  "one_wheel_faulted_tilt_nm": 0.04235,
+  "vs_tilt_servo_stall": 0.014404
  },
  "servo_margins": {
   "tilt": {
-   "move_torque_nm": 0.1,
-   "plus_mean_recoil_at_10_per_s_nm": 0.0045,
-   "plus_gyro_one_wheel_nm": 0.01347,
-   "sustained_total_nm": 0.118,
+   "move_torque_nm": 0.128,
+   "plus_mean_recoil_at_10_per_s_nm": 0.0078,
+   "plus_gyro_one_wheel_nm": 0.04235,
+   "sustained_total_nm": 0.178,
    "available_at_peak_speed_nm": 0.762,
-   "margin": 6.5,
-   "recoil_pulse_nm_5ms": 0.853,
-   "pulse_vs_stall": 0.29,
+   "margin": 4.3,
+   "recoil_pulse_nm_5ms": 1.429,
+   "pulse_vs_stall": 0.49,
    "pulse_note": "the pulse exceeds nothing the servo must hold continuously; it turns the tilting group 1-2 mrad against gravity's preload inside the gear lash (recoil.aim_shift_mrad)",
-   "hold_margin_at_stall": 63.2
+   "hold_margin_at_stall": 45.9
   },
   "pan": {
-   "move_torque_at_servo_nm": 0.0128,
+   "move_torque_at_servo_nm": 0.0344,
    "speed_limit_deg_s_at_turret": 90.0,
    "fastest_90_deg_s": 1.0,
    "note": "speed-limited, not torque-limited: 45 rpm through 3:1 is 90 deg/s at the turret, so the 90 deg in 1.2 s move (150 deg/s peak) is not reachable; recoil adds no pan moment",
-   "yaw_margin_against_body": 113.1
+   "yaw_margin_against_body": 89.4
   },
   "source": "catalog feetech-sts3215-c018-12v (Waveshare ST3215: 30 kg.cm, 45 rpm at 12 V)"
  },
  "aim_movers": {
   "recoil_tilt_kick": {
-   "mrad": 1.163,
+   "mrad": 2.111,
    "direction": "down",
    "note": "stopped by the gravity preload inside the backlash",
    "cm_at": {
-    "2_m": 0.23,
-    "4_m": 0.47,
-    "6_m": 0.7
+    "2_m": 0.42,
+    "4_m": 0.84,
+    "6_m": 1.27
    }
   },
   "pan_gear_backlash_total": {
@@ -165,7 +165,7 @@
   }
  },
  "checks": {
-  "recoil_within_budget_0_05ns": true,
+  "recoil_within_budget_0_05ns": false,
   "tilt_servo_margin_ok": true,
   "pan_reaches_90deg_in_1_2s": true,
   "recoil_kick_inside_backlash": true,

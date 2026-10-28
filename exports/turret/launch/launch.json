@@ -58,7 +58,7 @@
    "E_mpa": 0.75,
    "mu": 0.6,
    "fps": 48.5,
-   "eta": 0.466,
+   "eta": 0.472,
    "rejected": false,
    "peak_normal_n": 16.2
   },
@@ -67,7 +67,7 @@
    "E_mpa": 0.75,
    "mu": 0.8,
    "fps": 56.1,
-   "eta": 0.539,
+   "eta": 0.546,
    "rejected": false,
    "peak_normal_n": 16.7
   },
@@ -76,7 +76,7 @@
    "E_mpa": 0.75,
    "mu": 1.0,
    "fps": 62.9,
-   "eta": 0.604,
+   "eta": 0.613,
    "rejected": false,
    "peak_normal_n": 17.2
   },
@@ -85,7 +85,7 @@
    "E_mpa": 1.5,
    "mu": 0.6,
    "fps": 65.8,
-   "eta": 0.633,
+   "eta": 0.641,
    "rejected": false,
    "peak_normal_n": 34.3
   },
@@ -94,7 +94,7 @@
    "E_mpa": 1.5,
    "mu": 0.8,
    "fps": 77.2,
-   "eta": 0.742,
+   "eta": 0.752,
    "rejected": false,
    "peak_normal_n": 36.1
   },
@@ -103,7 +103,7 @@
    "E_mpa": 1.5,
    "mu": 1.0,
    "fps": 87.5,
-   "eta": 0.841,
+   "eta": 0.852,
    "rejected": false,
    "peak_normal_n": 37.8
   },
@@ -112,7 +112,7 @@
    "E_mpa": 3.0,
    "mu": 0.6,
    "fps": 90.8,
-   "eta": 0.873,
+   "eta": 0.884,
    "rejected": false,
    "peak_normal_n": 75.1
   },
@@ -120,7 +120,7 @@
    "crush": 0.25,
    "E_mpa": 3.0,
    "mu": 0.8,
-   "fps": 99.3,
+   "fps": 98.0,
    "eta": 0.955,
    "rejected": false,
    "peak_normal_n": 81.1
@@ -129,7 +129,7 @@
    "crush": 0.25,
    "E_mpa": 3.0,
    "mu": 1.0,
-   "fps": 99.5,
+   "fps": 98.2,
    "eta": 0.957,
    "rejected": false,
    "peak_normal_n": 86.7
@@ -139,7 +139,7 @@
    "E_mpa": 0.75,
    "mu": 0.6,
    "fps": 58.1,
-   "eta": 0.559,
+   "eta": 0.566,
    "rejected": false,
    "peak_normal_n": 24.8
   },
@@ -148,7 +148,7 @@
    "E_mpa": 0.75,
    "mu": 0.8,
    "fps": 68.3,
-   "eta": 0.657,
+   "eta": 0.665,
    "rejected": false,
    "peak_normal_n": 26.1
   },
@@ -157,7 +157,7 @@
    "E_mpa": 0.75,
    "mu": 1.0,
    "fps": 77.6,
-   "eta": 0.746,
+   "eta": 0.756,
    "rejected": false,
    "peak_normal_n": 27.4
   },
@@ -166,7 +166,7 @@
    "E_mpa": 1.5,
    "mu": 0.6,
    "fps": 79.7,
-   "eta": 0.767,
+   "eta": 0.777,
    "rejected": false,
    "peak_normal_n": 54.1
   },
@@ -175,7 +175,7 @@
    "E_mpa": 1.5,
    "mu": 0.8,
    "fps": 95.8,
-   "eta": 0.921,
+   "eta": 0.933,
    "rejected": false,
    "peak_normal_n": 58.6
   },
@@ -183,7 +183,7 @@
    "crush": 0.32,
    "E_mpa": 1.5,
    "mu": 1.0,
-   "fps": 99.4,
+   "fps": 98.1,
    "eta": 0.956,
    "rejected": false,
    "peak_normal_n": 62.9
@@ -192,7 +192,7 @@
    "crush": 0.32,
    "E_mpa": 3.0,
    "mu": 0.6,
-   "fps": 97.4,
+   "fps": 96.1,
    "eta": 0.937,
    "rejected": false,
    "peak_normal_n": 122.8
@@ -201,7 +201,7 @@
    "crush": 0.32,
    "E_mpa": 3.0,
    "mu": 0.8,
-   "fps": 98.2,
+   "fps": 96.9,
    "eta": 0.944,
    "rejected": false,
    "peak_normal_n": 138.4
@@ -210,17 +210,17 @@
    "crush": 0.32,
    "E_mpa": 3.0,
    "mu": 1.0,
-   "fps": 98.5,
+   "fps": 97.2,
    "eta": 0.947,
    "rejected": false,
-   "peak_normal_n": 148.2
+   "peak_normal_n": 147.4
   },
   {
    "crush": 0.36,
    "E_mpa": 0.75,
    "mu": 0.6,
    "fps": 63.3,
-   "eta": 0.609,
+   "eta": 0.617,
    "rejected": false,
    "peak_normal_n": 30.6
   },
@@ -229,7 +229,7 @@
    "E_mpa": 0.75,
    "mu": 0.8,
    "fps": 75.3,
-   "eta": 0.724,
+   "eta": 0.733,
    "rejected": false,
    "peak_normal_n": 32.7
   },
@@ -238,7 +238,7 @@
    "E_mpa": 0.75,
    "mu": 1.0,
    "fps": 86.3,
-   "eta": 0.83,
+   "eta": 0.841,
    "rejected": false,
    "peak_normal_n": 34.7
   },
@@ -247,7 +247,7 @@
    "E_mpa": 1.5,
    "mu": 0.6,
    "fps": 87.6,
-   "eta": 0.842,
+   "eta": 0.853,
    "rejected": false,
    "peak_normal_n": 67.8
   },
@@ -255,7 +255,7 @@
    "crush": 0.36,
    "E_mpa": 1.5,
    "mu": 0.8,
-   "fps": 98.6,
+   "fps": 97.3,
    "eta": 0.948,
    "rejected": false,
    "peak_normal_n": 75.0
@@ -264,7 +264,7 @@
    "crush": 0.36,
    "E_mpa": 1.5,
    "mu": 1.0,
-   "fps": 98.9,
+   "fps": 97.6,
    "eta": 0.951,
    "rejected": false,
    "peak_normal_n": 81.7
@@ -273,7 +273,7 @@
    "crush": 0.36,
    "E_mpa": 3.0,
    "mu": 0.6,
-   "fps": 96.1,
+   "fps": 94.8,
    "eta": 0.924,
    "rejected": false,
    "peak_normal_n": 157.3
@@ -282,26 +282,26 @@
    "crush": 0.36,
    "E_mpa": 3.0,
    "mu": 0.8,
-   "fps": 97.3,
+   "fps": 96.0,
    "eta": 0.935,
    "rejected": false,
-   "peak_normal_n": 179.6
+   "peak_normal_n": 178.9
   },
   {
    "crush": 0.36,
    "E_mpa": 3.0,
    "mu": 1.0,
-   "fps": 97.7,
+   "fps": 96.4,
    "eta": 0.939,
    "rejected": false,
-   "peak_normal_n": 184.2
+   "peak_normal_n": 182.8
   },
   {
    "crush": 0.4,
    "E_mpa": 0.75,
    "mu": 0.6,
    "fps": 68.3,
-   "eta": 0.657,
+   "eta": 0.666,
    "rejected": false,
    "peak_normal_n": 37.1
   },
@@ -310,7 +310,7 @@
    "E_mpa": 0.75,
    "mu": 0.8,
    "fps": 82.3,
-   "eta": 0.791,
+   "eta": 0.802,
    "rejected": false,
    "peak_normal_n": 40.3
   },
@@ -319,7 +319,7 @@
    "E_mpa": 0.75,
    "mu": 1.0,
    "fps": 95.3,
-   "eta": 0.916,
+   "eta": 0.928,
    "rejected": false,
    "peak_normal_n": 43.2
   },
@@ -328,7 +328,7 @@
    "E_mpa": 1.5,
    "mu": 0.6,
    "fps": 95.3,
-   "eta": 0.917,
+   "eta": 0.929,
    "rejected": false,
    "peak_normal_n": 83.5
   },
@@ -336,7 +336,7 @@
    "crush": 0.4,
    "E_mpa": 1.5,
    "mu": 0.8,
-   "fps": 98.0,
+   "fps": 96.7,
    "eta": 0.942,
    "rejected": false,
    "peak_normal_n": 94.3
@@ -345,7 +345,7 @@
    "crush": 0.4,
    "E_mpa": 1.5,
    "mu": 1.0,
-   "fps": 98.4,
+   "fps": 97.1,
    "eta": 0.946,
    "rejected": false,
    "peak_normal_n": 104.3
@@ -354,7 +354,7 @@
    "crush": 0.4,
    "E_mpa": 3.0,
    "mu": 0.6,
-   "fps": 94.2,
+   "fps": 93.0,
    "eta": 0.906,
    "rejected": false,
    "peak_normal_n": 197.5
@@ -363,26 +363,26 @@
    "crush": 0.4,
    "E_mpa": 3.0,
    "mu": 0.8,
-   "fps": 96.2,
-   "eta": 0.925,
+   "fps": 94.9,
+   "eta": 0.924,
    "rejected": false,
-   "peak_normal_n": 220.9
+   "peak_normal_n": 219.3
   },
   {
    "crush": 0.4,
    "E_mpa": 3.0,
    "mu": 1.0,
-   "fps": 96.7,
+   "fps": 95.4,
    "eta": 0.93,
    "rejected": false,
-   "peak_normal_n": 222.7
+   "peak_normal_n": 220.9
   },
   {
    "crush": 0.44,
    "E_mpa": 0.75,
    "mu": 0.6,
    "fps": 73.2,
-   "eta": 0.704,
+   "eta": 0.714,
    "rejected": false,
    "peak_normal_n": 44.3
   },
@@ -391,7 +391,7 @@
    "E_mpa": 0.75,
    "mu": 0.8,
    "fps": 89.4,
-   "eta": 0.86,
+   "eta": 0.871,
    "rejected": false,
    "peak_normal_n": 48.9
   },
@@ -399,7 +399,7 @@
    "crush": 0.44,
    "E_mpa": 0.75,
    "mu": 1.0,
-   "fps": 98.9,
+   "fps": 97.6,
    "eta": 0.951,
    "rejected": false,
    "peak_normal_n": 53.2
@@ -408,8 +408,8 @@
    "crush": 0.44,
    "E_mpa": 1.5,
    "mu": 0.6,
-   "fps": 95.1,
-   "eta": 0.915,
+   "fps": 93.8,
+   "eta": 0.914,
    "rejected": false,
    "peak_normal_n": 101.2
   },
@@ -417,7 +417,7 @@
    "crush": 0.44,
    "E_mpa": 1.5,
    "mu": 0.8,
-   "fps": 97.2,
+   "fps": 95.9,
    "eta": 0.935,
    "rejected": false,
    "peak_normal_n": 116.8
@@ -426,62 +426,62 @@
    "crush": 0.44,
    "E_mpa": 1.5,
    "mu": 1.0,
-   "fps": 97.7,
+   "fps": 96.4,
    "eta": 0.939,
    "rejected": false,
-   "peak_normal_n": 129.8
+   "peak_normal_n": 129.3
   },
   {
    "crush": 0.44,
    "E_mpa": 3.0,
    "mu": 0.6,
-   "fps": 90.6,
+   "fps": 89.3,
    "eta": 0.871,
    "rejected": false,
-   "peak_normal_n": 242.4
+   "peak_normal_n": 241.8
   },
   {
    "crush": 0.44,
    "E_mpa": 3.0,
    "mu": 0.8,
-   "fps": 94.8,
-   "eta": 0.912,
+   "fps": 93.5,
+   "eta": 0.911,
    "rejected": false,
-   "peak_normal_n": 262.9
+   "peak_normal_n": 260.7
   },
   {
    "crush": 0.44,
    "E_mpa": 3.0,
    "mu": 1.0,
-   "fps": 95.5,
+   "fps": 94.2,
    "eta": 0.918,
    "rejected": false,
-   "peak_normal_n": 264.4
+   "peak_normal_n": 262.1
   }
  ],
  "efficiency_by_crush": {
   "0.25": {
-   "eta_min": 0.466,
+   "eta_min": 0.472,
    "eta_max": 0.957,
    "rejections": 0
   },
   "0.32": {
-   "eta_min": 0.559,
+   "eta_min": 0.566,
    "eta_max": 0.956,
    "rejections": 0
   },
   "0.36": {
-   "eta_min": 0.609,
+   "eta_min": 0.617,
    "eta_max": 0.951,
    "rejections": 0
   },
   "0.4": {
-   "eta_min": 0.657,
+   "eta_min": 0.666,
    "eta_max": 0.946,
    "rejections": 0
   },
   "0.44": {
-   "eta_min": 0.704,
+   "eta_min": 0.714,
    "eta_max": 0.951,
    "rejections": 0
   }
@@ -490,91 +490,101 @@
   {
    "crush": 0.32,
    "hasbro_full_throttle_fps": 85.7,
-   "hasbro_eta": 0.824,
-   "worst_corner_fps": 105.2,
+   "hasbro_eta": 0.835,
+   "worst_corner_fps": 103.8,
    "worst_corner_ball": "d22.2-m1.6-E3-mu1-e0.75",
-   "worst_over_hasbro": 1.2277,
+   "worst_over_hasbro": 1.2123,
    "slowest_corner_fps": 50.9,
    "stuck_corners": 0,
    "hasbro_peak_normal_n": 45.0,
-   "worst_peak_normal_n": 186.0
+   "worst_peak_normal_n": 184.4
   },
   {
    "crush": 0.36,
    "hasbro_full_throttle_fps": 95.1,
-   "hasbro_eta": 0.915,
-   "worst_corner_fps": 104.7,
+   "hasbro_eta": 0.927,
+   "worst_corner_fps": 103.3,
    "worst_corner_ball": "d22.2-m1.6-E3-mu1-e0.75",
-   "worst_over_hasbro": 1.1,
+   "worst_over_hasbro": 1.0861,
    "slowest_corner_fps": 56.1,
    "stuck_corners": 0,
    "hasbro_peak_normal_n": 57.1,
-   "worst_peak_normal_n": 230.3
+   "worst_peak_normal_n": 228.3
   },
   {
    "crush": 0.38,
-   "hasbro_full_throttle_fps": 98.7,
+   "hasbro_full_throttle_fps": 97.4,
    "hasbro_eta": 0.949,
-   "worst_corner_fps": 104.3,
+   "worst_corner_fps": 103.0,
    "worst_corner_ball": "d22.2-m1.6-E3-mu1-e0.75",
-   "worst_over_hasbro": 1.0576,
+   "worst_over_hasbro": 1.0581,
    "slowest_corner_fps": 58.7,
    "stuck_corners": 0,
    "hasbro_peak_normal_n": 63.9,
-   "worst_peak_normal_n": 253.9
+   "worst_peak_normal_n": 251.6
   },
   {
    "crush": 0.4,
-   "hasbro_full_throttle_fps": 98.4,
+   "hasbro_full_throttle_fps": 97.1,
    "hasbro_eta": 0.946,
-   "worst_corner_fps": 104.0,
-   "worst_corner_ball": "d22.2-m1.6-E3-mu1-e0.75",
-   "worst_over_hasbro": 1.0572,
+   "worst_corner_fps": 102.8,
+   "worst_corner_ball": "d22.8-m1.6-E0.75-mu1-e0.75",
+   "worst_over_hasbro": 1.0589,
    "slowest_corner_fps": 61.2,
    "stuck_corners": 0,
    "hasbro_peak_normal_n": 71.3,
-   "worst_peak_normal_n": 279.0
+   "worst_peak_normal_n": 276.4
   },
   {
    "crush": 0.42,
-   "hasbro_full_throttle_fps": 98.1,
+   "hasbro_full_throttle_fps": 96.8,
    "hasbro_eta": 0.943,
-   "worst_corner_fps": 105.1,
+   "worst_corner_fps": 103.7,
    "worst_corner_ball": "d22.8-m1.6-E0.75-mu1-e0.75",
-   "worst_over_hasbro": 1.0713,
+   "worst_over_hasbro": 1.0719,
    "slowest_corner_fps": 63.8,
    "stuck_corners": 0,
    "hasbro_peak_normal_n": 79.2,
-   "worst_peak_normal_n": 305.0
+   "worst_peak_normal_n": 302.2
   },
   {
    "crush": 0.44,
-   "hasbro_full_throttle_fps": 97.7,
+   "hasbro_full_throttle_fps": 96.4,
    "hasbro_eta": 0.94,
-   "worst_corner_fps": 104.9,
-   "worst_corner_ball": "d22.8-m1.6-E0.75-mu1-e0.75",
-   "worst_over_hasbro": 1.0737,
+   "worst_corner_fps": 103.8,
+   "worst_corner_ball": "d22.2-m1.6-E0.75-mu1-e0.75",
+   "worst_over_hasbro": 1.0761,
    "slowest_corner_fps": 66.3,
    "stuck_corners": 0,
    "hasbro_peak_normal_n": 87.7,
-   "worst_peak_normal_n": 331.7
+   "worst_peak_normal_n": 328.6
   }
  ],
  "trim": {
-  "rail_v_nominal_motor": 11.459,
-  "rail_v_in_use": 11.46,
-  "n_trim_rpm": 15928,
-  "n_trim_erpm": 111499,
-  "surface_m_s": 31.69,
+  "rail_v_nominal_motor": 11.312,
+  "rail_v_in_use": 11.31,
+  "n_trim_rpm": 15724,
+  "n_trim_erpm": 110070,
+  "surface_m_s": 31.29,
   "rail_v_for_kv_minus5_plus5": [
-   12.03,
-   10.91
+   11.88,
+   10.77
   ],
-  "hasbro_full_throttle_fps": 98.4,
-  "worst_corner_fps": 104.0,
-  "worst_corner_ball": "d22.2-m1.6-E3-mu1-e0.75",
-  "n_105_rpm": 16699,
-  "note": "n_105: the no-load speed at which the worst corner reaches 105 fps (the ceiling scales with the wheel speed)",
+  "hasbro_full_throttle_fps": 97.1,
+  "worst_corner_fps": 102.82,
+  "worst_corner_ball": "d22.8-m1.6-E0.75-mu1-e0.75",
+  "densest_ked_j_m2": 2475,
+  "densest_ball": "d22.2-m2-E3-mu1-e0.75",
+  "astm_ked_j_m2": 2500.0,
+  "n_105_rpm": 16674,
+  "n_astm_rpm": 16410,
+  "speed_only_trim": {
+   "rail_v": 11.459,
+   "densest_ked_j_m2": 2537,
+   "densest_ball": "d22.2-m2-E3-mu1-e0.75",
+   "hasbro_full_throttle_fps": 98.4
+  },
+  "note": "n_105 / n_astm: the no-load speeds at which the worst corner reaches 105 fps / the densest reaches 2500 J/m^2 (both scale with the wheel speed)",
   "untrimmed": {
    "rail_v_for_104_worst": 10.711,
    "hasbro_fps_then": 92.0,
@@ -586,110 +596,110 @@
  "routes": [
   {
    "kv": 880,
-   "rail_v_nominal_motor": 18.21,
+   "rail_v_nominal_motor": 17.97,
    "rail_v_trim_range": [
-    17.34,
-    19.12
+    17.12,
+    18.87
    ],
    "inside_motor_rating_2_4s": false,
    "buck_from_15v_pack": false,
-   "no_load_a_at_speed_est": 0.91
+   "no_load_a_at_speed_est": 0.89
   },
   {
    "kv": 1100,
-   "rail_v_nominal_motor": 14.57,
+   "rail_v_nominal_motor": 14.38,
    "rail_v_trim_range": [
-    13.88,
-    15.3
+    13.7,
+    15.1
    ],
    "inside_motor_rating_2_4s": true,
    "buck_from_15v_pack": false,
-   "no_load_a_at_speed_est": 1.23
+   "no_load_a_at_speed_est": 1.22
   },
   {
    "kv": 1250,
-   "rail_v_nominal_motor": 12.83,
+   "rail_v_nominal_motor": 12.66,
    "rail_v_trim_range": [
-    12.22,
-    13.47
+    12.06,
+    13.3
    ],
    "inside_motor_rating_2_4s": true,
    "buck_from_15v_pack": false,
-   "no_load_a_at_speed_est": 1.34
+   "no_load_a_at_speed_est": 1.32
   },
   {
    "kv": 1400,
-   "rail_v_nominal_motor": 11.46,
+   "rail_v_nominal_motor": 11.31,
    "rail_v_trim_range": [
-    10.91,
-    12.03
+    10.77,
+    11.88
    ],
    "inside_motor_rating_2_4s": true,
    "buck_from_15v_pack": true,
-   "no_load_a_at_speed_est": 1.48
+   "no_load_a_at_speed_est": 1.46
   }
  ],
  "ceiling_by_wheel": [
   {
    "wheel_d_mm": 36.0,
    "crush_on_this_cage": 0.312,
-   "worst_fps_at_full_throttle": 100.1,
+   "worst_fps_at_full_throttle": 98.9,
    "hasbro_fps_at_full_throttle": 82.5,
-   "no_load_rpm": 15930
+   "no_load_rpm": 15722
   },
   {
    "wheel_d_mm": 38.0,
    "crush_on_this_cage": 0.4,
-   "worst_fps_at_full_throttle": 104.0,
-   "hasbro_fps_at_full_throttle": 98.4,
-   "no_load_rpm": 15930
+   "worst_fps_at_full_throttle": 102.8,
+   "hasbro_fps_at_full_throttle": 97.1,
+   "no_load_rpm": 15722
   },
   {
    "wheel_d_mm": 40.0,
    "crush_on_this_cage": 0.488,
-   "worst_fps_at_full_throttle": 109.9,
-   "hasbro_fps_at_full_throttle": 101.7,
-   "no_load_rpm": 15930
+   "worst_fps_at_full_throttle": 108.5,
+   "hasbro_fps_at_full_throttle": 100.4,
+   "no_load_rpm": 15722
   }
  ],
  "design": {
   "wheel_d_mm": 38.0,
   "crush": 0.4,
   "gap_mm_for_22_7": 13.62,
-  "supply_v": 11.46,
+  "supply_v": 11.31,
   "wheel_I_kg_m2": 7.578685734168326e-06,
-  "no_load_rpm": 15930,
-  "set_rpm": 15269,
+  "no_load_rpm": 15722,
+  "set_rpm": 15286,
   "set_fps": 95.0,
-  "set_fraction_of_no_load": 0.959,
+  "set_fraction_of_no_load": 0.972,
   "hasbro_full_throttle": {
-   "v_exit": 29.9863,
-   "fps": 98.3801,
-   "contact_ms": 5.085,
-   "w_start": 1668.1961,
-   "w_end": 1563.8687,
-   "surface_m_s": 31.6957,
+   "v_exit": 29.595,
+   "fps": 97.0964,
+   "contact_ms": 5.092,
+   "w_start": 1646.3611,
+   "w_end": 1543.0188,
+   "surface_m_s": 31.2809,
    "eta": 0.9461,
-   "speed_drop_pct": 6.2539,
+   "speed_drop_pct": 6.277,
    "peak_normal_n": 71.2833,
    "peak_friction_n": 57.0267,
-   "impulse_ns": 0.054,
-   "slip_loss_j": 1.7581,
-   "ball_ke_j": 0.8227
+   "impulse_ns": 0.0532,
+   "slip_loss_j": 1.72,
+   "ball_ke_j": 0.8014
   },
   "nominal_shot": {
    "v_exit": 28.956,
    "fps": 95.0,
    "contact_ms": 5.104,
-   "w_start": 1598.9921,
+   "w_start": 1600.7025,
    "w_end": 1508.9527,
-   "surface_m_s": 30.3808,
-   "eta": 0.9531,
-   "speed_drop_pct": 5.631,
+   "surface_m_s": 30.4133,
+   "eta": 0.9521,
+   "speed_drop_pct": 5.7318,
    "peak_normal_n": 71.2833,
    "peak_friction_n": 57.0267,
    "impulse_ns": 0.0521,
-   "slip_loss_j": 1.6554,
+   "slip_loss_j": 1.6558,
    "ball_ke_j": 0.7672
   },
   "population_at_set_speed_fps": {
@@ -701,43 +711,45 @@
    "max": 97.4
   },
   "population_at_full_throttle_fps": {
-   "mean": 94.9,
+   "mean": 93.9,
    "p1": 72.8,
-   "max": 100.6,
-   "max_with_tolerances": 104.2,
+   "max": 99.3,
+   "max_with_tolerances": 102.9,
    "note": "every ball at 100 % throttle on the trimmed rail; with tolerances: magnets +15 C, rail +2 %"
   },
-  "worst_corner_full_throttle_fps": 104.0,
-  "worst_corner_ball": "d22.2-m1.6-E3-mu1-e0.75",
-  "margin_fps": 0.8
+  "worst_corner_full_throttle_fps": 102.8,
+  "worst_corner_ball": "d22.8-m1.6-E0.75-mu1-e0.75",
+  "densest_ked_j_m2": 2474,
+  "densest_ball": "d22.2-m2-E3-mu1-e0.75",
+  "margin_fps": 2.1
  },
  "sensitivity_full_throttle": {
   "d_mm": [
    {
     "value": 22.2,
-    "fps": 98.6
+    "fps": 97.4
    },
    {
     "value": 22.7,
-    "fps": 98.4
+    "fps": 97.1
    },
    {
     "value": 22.8,
-    "fps": 98.3
+    "fps": 97.0
    }
   ],
   "m_g": [
    {
     "value": 1.6,
-    "fps": 99.0
+    "fps": 97.7
    },
    {
     "value": 1.83,
-    "fps": 98.4
+    "fps": 97.1
    },
    {
     "value": 2.0,
-    "fps": 97.9
+    "fps": 96.7
    }
   ],
   "E_mpa": [
@@ -747,11 +759,11 @@
    },
    {
     "value": 1.2,
-    "fps": 98.4
+    "fps": 97.1
    },
    {
     "value": 3.0,
-    "fps": 96.2
+    "fps": 94.9
    }
   ],
   "mu": [
@@ -761,25 +773,25 @@
    },
    {
     "value": 0.8,
-    "fps": 98.4
+    "fps": 97.1
    },
    {
     "value": 1.0,
-    "fps": 98.7
+    "fps": 97.4
    }
   ],
   "e": [
    {
     "value": 0.45,
-    "fps": 97.6
+    "fps": 96.3
    },
    {
     "value": 0.6,
-    "fps": 98.4
+    "fps": 97.1
    },
    {
     "value": 0.75,
-    "fps": 100.2
+    "fps": 98.9
    }
   ],
   "wet": {
@@ -794,49 +806,49 @@
  "burst_10_per_s": [
   {
    "shot": 1,
-   "w_rpm": 15269,
+   "w_rpm": 15286,
    "fps": 95.0
   },
   {
    "shot": 2,
-   "w_rpm": 15267,
+   "w_rpm": 15284,
    "fps": 95.0
   },
   {
    "shot": 3,
-   "w_rpm": 15267,
+   "w_rpm": 15284,
    "fps": 95.0
   },
   {
    "shot": 4,
-   "w_rpm": 15267,
+   "w_rpm": 15284,
    "fps": 95.0
   },
   {
    "shot": 5,
-   "w_rpm": 15267,
+   "w_rpm": 15284,
    "fps": 95.0
   },
   {
    "shot": 6,
-   "w_rpm": 15267,
+   "w_rpm": 15284,
    "fps": 95.0
   },
   {
    "shot": 7,
-   "w_rpm": 15267,
+   "w_rpm": 15284,
    "fps": 95.0
   },
   {
    "shot": 8,
-   "w_rpm": 15267,
+   "w_rpm": 15284,
    "fps": 95.0
   }
  ],
  "recoil": {
-  "per_shot_ns": 0.0549,
+  "per_shot_ns": 0.0542,
   "at_cap_ns": 0.064,
-  "burst_8_ns": 0.439,
+  "burst_8_ns": 0.433,
   "peak_force_on_the_cage_n": 142.6,
   "note": "impulse = the ball momentum at the muzzle (the Hasbro ball at 100 %); the at-cap figure takes the heaviest accepted ball (2.0 g) at 105 fps"
  }

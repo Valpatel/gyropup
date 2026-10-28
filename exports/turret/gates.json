@@ -1,7 +1,7 @@
 {
- "fingerprint": "d3e0198c2c3916e6",
+ "fingerprint": "fce5f05f7b8e4995",
  "pile": "exports/turret/feed/pile.json",
- "seconds": 53,
+ "seconds": 58,
  "ok": true,
  "gates": {
   "hopper_in_cavity": {
@@ -47,11 +47,16 @@
   },
   "path_in_cavity": {
    "ok": true,
-   "spheres": 86,
+   "spheres": 87,
    "radius_mm": 11.35,
    "max_mm3": 1.0,
    "violations": [],
    "tightest": [
+    {
+     "sphere": "path x 56 z 0",
+     "solid": "flywheel_tyre",
+     "gap_mm": 0.35
+    },
     {
      "sphere": "path x 37 z 21",
      "solid": "dial",
@@ -69,11 +74,6 @@
     },
     {
      "sphere": "path x 38 z 16",
-     "solid": "cartridge_body",
-     "gap_mm": 0.75
-    },
-    {
-     "sphere": "path x 38 z 14",
      "solid": "cartridge_body",
      "gap_mm": 0.75
     }
@@ -429,6 +429,22 @@
     ],
     [
      38,
+     "flywheel_tyre_m"
+    ],
+    [
+     39,
+     "flywheel"
+    ],
+    [
+     39,
+     "flywheel_m"
+    ],
+    [
+     39,
+     "flywheel_tyre"
+    ],
+    [
+     39,
      "flywheel_tyre_m"
     ]
    ]
