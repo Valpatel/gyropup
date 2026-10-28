@@ -381,10 +381,10 @@
 - id: D67
   date: "2026-10-27"
   title: "The ammo is standard Hasbro Nerf Rival rounds"
-  decision: "The turret is designed and bought for Hasbro's own Nerf Rival rounds (22.2-22.8 mm, 1.83 g average measured; the design ball is 22.7 mm and 1.83 g, as the launch, feed and safety numbers already assume). The BOM's ammo line is an official Nerf Rival refill pack from a mainstream seller; Rival-compatible third-party rounds (Worker Cheetah) are the backup only. The speed ceiling is D68's; the barrel-never-above-level rule is unchanged."
+  decision: "The turret is designed and bought for Hasbro's own Nerf Rival rounds (22.2-22.8 mm, 1.83 g average measured; the design ball is 22.7 mm and 1.83 g, as the launch, feed and safety numbers already assume). Off-brand Rival-compatible rounds are fine when they are close enough: 22.2-22.8 mm and 1.6-2.0 g (the feed, bore and speed ceiling are checked across that range). The BOM lists an official Nerf Rival refill and a third-party pack (e.g. Worker Cheetah) side by side, cheapest in-stock first. The speed ceiling is D68's; the barrel-never-above-level rule is unchanged."
   why: "The user asked for standard Rival rounds: they are sold everywhere, kids already have them, and they are the round the turret's physics (research/turret-launcher-study.md 2.1, BlasterHub's weighing of Hasbro rounds) was sized on. Third-party rounds vary in size and mass, which moves the speed under the cap."
   status: decided
-  source: {kind: user, quote: "standard \"nerf rival\" foam balls should be our ammo."}
+  source: {kind: user, quote: "standard \"nerf rival\" foam balls should be our ammo. / It's ok to use off brand balls, just as long as they're close enough."}
 - id: D68
   date: "2026-10-27"
   title: "The turret fires like a stock Nerf Rival blaster: about 100 fps, with a physical ceiling of 105 fps"
