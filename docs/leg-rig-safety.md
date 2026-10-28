@@ -29,6 +29,8 @@ Read this before the first power-up. Go through the checklist before every sessi
    until B6 has run (a pair fresh off the charger is 41 V: one stand-up brings it under). The runner refuses above it.
 6. **The power-cut tests (S5, S6) cut the power by the pendant.** Hold it, let go, and the leg falls. S6 (onto the
    leg's own stops) only after B1 and the main session's rerun clear it.
+   An undamped cut runs only with the bottom bumpers set, and the knees' 6201s are turned by hand for notches after
+   it (the rear one is at 6 % over its static rating in that fall: docs/leg-bench-tests.md, #29).
 7. **A pack that is damaged, swollen or hot goes outside onto concrete.** Keep an ABC extinguisher by the door.
 
 ## The checklist (each session)
