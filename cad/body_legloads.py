@@ -1,5 +1,5 @@
 """The legs' forces on the body at the robot's design mass: the leg rig (sim/leg_rig.py, the leg workstream's) run at
-half the design mass (D69: 35.5 kg, 17.75 kg a leg, with D69's 10 in hub wheel) at the bus voltage given, through its public run() (nothing of
+half the design mass (D71: 37.5 kg, 18.75 kg a leg, with D69's 10 in hub wheel) at the bus voltage given, through its public run() (nothing of
 the leg's is written: the bus voltage is set on the imported module, as sim/leg_rig.py's own --bus-v would).
 
     .venv/bin/python cad/body_legloads.py [--half-mass 16.25] [--bus-v 48.1] [--ledger]   # -> exports/body/leg-loads.json

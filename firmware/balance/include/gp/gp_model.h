@@ -54,8 +54,8 @@
 #define GP_RIG_KD_TH 6.0f
 #define GP_TUCK_KP_L 3000.0f
 #define GP_TUCK_KD_L 260.0f
-#define GP_RIG_HALF_MASS_KG 17.75f
-#define GP_RIG_LEG_FF_N 142.432577f
+#define GP_RIG_HALF_MASS_KG 18.75f
+#define GP_RIG_LEG_FF_N 152.242577f
 
 /* the centre-of-mass model (robot frame: x forward, z up, origin midway between the hip axes) */
 #define GP_COM_BASE_KG 24.1709f

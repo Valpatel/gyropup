@@ -1505,14 +1505,14 @@
    }
   ],
   "budget": {
-   "robot_kg": 35.0,
+   "robot_kg": 37.0,
    "legs_kg_each": 10.85,
-   "body_and_head_kg": 13.3,
-   "design_mass_kg": 35.5,
-   "design_half_mass_kg": 17.75,
+   "body_and_head_kg": 15.3,
+   "design_mass_kg": 37.5,
+   "design_half_mass_kg": 18.75,
    "com_x_mm": 10.0,
    "com_y_mm": 5.0,
-   "basis": "D69 (35.0 kg as built, 35.5 kg design; it replaces D57's 32.0 / 32.5 kg); legs 2 x 10.85 kg (leg.json + D53 stops + the D69 wheel at its listed 3.53 kg + the clamp hardware), body and head 13.3 kg"
+   "basis": "D71 (37.0 kg as built, 37.5 kg design; it replaces D69's 35.0 / 35.5 kg); legs 2 x 10.85 kg (leg.json + D53 stops + the D69 wheel at its listed 3.53 kg + the clamp hardware), body and head 15.3 kg"
   },
   "leg_extra": "leg.json 9282 g + 200 g announced for the stops and flanges (D53)",
   "levers": [
@@ -3458,14 +3458,14 @@
    }
   ],
   "budget": {
-   "robot_kg": 35.0,
+   "robot_kg": 37.0,
    "legs_kg_each": 10.85,
-   "body_and_head_kg": 13.3,
-   "design_mass_kg": 35.5,
-   "design_half_mass_kg": 17.75,
+   "body_and_head_kg": 15.3,
+   "design_mass_kg": 37.5,
+   "design_half_mass_kg": 18.75,
    "com_x_mm": 10.0,
    "com_y_mm": 5.0,
-   "basis": "D69 (35.0 kg as built, 35.5 kg design; it replaces D57's 32.0 / 32.5 kg); legs 2 x 10.85 kg (leg.json + D53 stops + the D69 wheel at its listed 3.53 kg + the clamp hardware), body and head 13.3 kg"
+   "basis": "D71 (37.0 kg as built, 37.5 kg design; it replaces D69's 35.0 / 35.5 kg); legs 2 x 10.85 kg (leg.json + D53 stops + the D69 wheel at its listed 3.53 kg + the clamp hardware), body and head 15.3 kg"
   },
   "leg_extra": "leg.json 9282 g + 200 g announced for the stops and flanges (D53)",
   "levers": [
@@ -3651,21 +3651,21 @@
    }
   ],
   "gate": {
-   "ceiling_kg": 35.0,
-   "gap_kg": 1.75,
+   "ceiling_kg": 37.0,
+   "gap_kg": -0.25,
    "open_scheduled_g": -500,
    "with_scheduled_levers_kg": 36.25,
    "body_and_head_with_levers_kg": 14.63,
    "leg_each_kg": 10.81,
-   "pass": false,
+   "pass": true,
    "on_call_next": [
     "cheeks_rev_b",
     "alu_standoffs",
     "cooler_34mm"
    ],
-   "margin_kg": -1.25,
+   "margin_kg": 0.75,
    "on_call_open_g": -2301,
-   "rule": "the P3 ledger with every scheduled lever taken (the open ones at the plan's grams) under the 35.0 kg ceiling, each leg under 10.85 kg and the body and head under 13.3 kg (D69); over it, the on-call levers go in order before the next order, each with the user's or the coordinator's word"
+   "rule": "the P3 ledger with every scheduled lever taken (the open ones at the plan's grams) under the 37.0 kg ceiling, each leg under 10.85 kg and the body and head under 15.3 kg (D71); over it, the on-call levers go in order before the next order, each with the user's or the coordinator's word"
   }
  }
 }

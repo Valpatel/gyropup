@@ -1,30 +1,30 @@
 {
  "bus_current_limit": {
-  "bus_a_max": 51.6,
-  "bus_scale_min": 0.758,
+  "bus_a_max": 51.4,
+  "bus_scale_min": 0.749,
   "i_peak_a": 50.0,
   "mode_after": "run",
-  "ms_over_the_limit": 37,
+  "ms_over_the_limit": 39,
   "reason": "none",
-  "rise_above_standing_mm": 160.3
+  "rise_above_standing_mm": 151.7
  },
  "conditions": {
   "bus_v": 36.0,
-  "half_mass_kg": 17.75,
+  "half_mass_kg": 18.75,
   "legs": "two rigs (sim/leg_rig.py through rig/sim_bus.py), one per bus",
   "loop_hz": 1000,
   "pack_r_int_ohm": 0.1
  },
  "cutoff": {
-  "leg_at_stop_mm": 138.1,
+  "leg_at_stop_mm": 137.2,
   "mcu_run_at_end": false,
   "mode_at_end": "idle",
-  "motors_stopped_ms": 1344.0,
+  "motors_stopped_ms": 1342.0,
   "reason": "cut-off",
-  "trip_after_drop_ms": 194.0,
+  "trip_after_drop_ms": 192.0,
   "vload_at_trip": 29.991,
-  "vload_tick_before": 30.004,
-  "vrest_at_trip": 33.206
+  "vload_tick_before": 30.005,
+  "vrest_at_trip": 33.213
  },
  "heartbeat": {
   "reason": "link",
@@ -32,62 +32,62 @@
  },
  "jump_gate": {
   "33.9 V": {
-   "bus_a_max_in_the_jump": 1.3,
-   "bus_v_min_in_the_jump": 33.77,
+   "bus_a_max_in_the_jump": 1.4,
+   "bus_v_min_in_the_jump": 33.76,
    "cutoff": false,
    "jumped": false,
    "mode_after": "run",
    "push_bus_current_limit_a": 0.0,
    "refused": "voltage",
-   "rise_above_standing_mm": 0.2,
+   "rise_above_standing_mm": 0.1,
    "scale": 0.0
   },
   "34.1 V": {
-   "bus_a_max_in_the_jump": 32.6,
-   "bus_v_min_in_the_jump": 30.84,
+   "bus_a_max_in_the_jump": 32.8,
+   "bus_v_min_in_the_jump": 30.82,
    "cutoff": false,
    "jumped": true,
    "mode_after": "run",
    "push_bus_current_limit_a": 31.0,
    "refused": null,
-   "rise_above_standing_mm": 84.8,
+   "rise_above_standing_mm": 83.1,
    "scale": 0.4306
   },
   "36.0 V": {
-   "bus_a_max_in_the_jump": 52.2,
-   "bus_v_min_in_the_jump": 30.78,
+   "bus_a_max_in_the_jump": 51.2,
+   "bus_v_min_in_the_jump": 30.88,
    "cutoff": false,
    "jumped": true,
    "mode_after": "run",
    "push_bus_current_limit_a": 50.0,
    "refused": null,
-   "rise_above_standing_mm": 126.3,
+   "rise_above_standing_mm": 125.1,
    "scale": 0.6944
   },
   "41.0 V": {
    "bus_a_max_in_the_jump": 70.4,
-   "bus_v_min_in_the_jump": 33.96,
+   "bus_v_min_in_the_jump": 33.97,
    "cutoff": false,
    "jumped": true,
    "mode_after": "run",
    "push_bus_current_limit_a": 72.0,
    "refused": null,
-   "rise_above_standing_mm": 180.1,
+   "rise_above_standing_mm": 167.4,
    "scale": 1.0
   }
  },
  "made_by": "python -m pytest firmware/balance/hil (firmware/balance/hil/test_hil.py)",
  "overcharge": {
-  "leg_at_stop_mm": 138.1,
-  "leg_min_in_the_sit_mm": 138.1,
+  "leg_at_stop_mm": 137.2,
+  "leg_min_in_the_sit_mm": 137.2,
   "mcu_run_at_end": false,
   "mode_at_end": "idle",
-  "motors_stopped_ms": 1196.0,
+  "motors_stopped_ms": 1198.0,
   "reason": "over-charge",
-  "regen_scale_min": 0.727,
-  "trip_after_step_ms": 46.0,
-  "vhigh_at_trip": 44.004,
-  "vhigh_tick_before": 43.96
+  "regen_scale_min": 0.753,
+  "trip_after_step_ms": 48.0,
+  "vhigh_at_trip": 44.035,
+  "vhigh_tick_before": 43.995
  },
  "people_near": {
   "jump_refused": "people near",
@@ -95,23 +95,23 @@
   "sit_after_s": 2.008
  },
  "radio_stop": {
-  "leg_at_stop_mm": 131.9,
+  "leg_at_stop_mm": 129.8,
   "mcu_run_open_ms": 1.0,
   "motors_stopped_ms": 451.0,
   "reason": "stop"
  },
  "regen_clamp": {
-  "bus_v_max": 46.26,
-  "charge_a_max": 52.6,
-  "leg_min_mm": 154.6,
+  "bus_v_max": 45.75,
+  "charge_a_max": 50.4,
+  "leg_min_mm": 153.7,
   "mode_after": "run",
-  "ms_over_42_5_v_in_the_landing": 23,
+  "ms_over_42_5_v_in_the_landing": 25,
   "ms_over_42_5_v_outside_the_landing": 5,
   "overcharge": false,
-  "overcharge_filter_max_v": 42.837,
+  "overcharge_filter_max_v": 42.904,
   "pack_v": 41.0,
   "regen_scale_min": 0.0,
-  "rise_above_standing_mm": 180.1
+  "rise_above_standing_mm": 167.4
  },
  "robot_sil": {
   "at_3.9s": {
@@ -156,31 +156,31 @@
   "criterion": "worst |dL| / L_ref <= 0.05 and worst |d lean| <= 0.05 rad (the axle 5 % of the leg off line)",
   "firmware_left_leg": {
    "end_L_mm": [
-    304.592211247574,
-    304.5927301926477
+    304.76054879118243,
+    304.75917310301793
    ],
-   "rms_L_mm": 0.15411068627938881,
+   "rms_L_mm": 0.15499240085071514,
    "samples": 1500,
-   "worst_L_at_s": 0.78,
-   "worst_L_mm": 0.3661226351507063,
-   "worst_L_rel": 0.0016928957864906066,
-   "worst_lean_axle_rel": 0.00014789827535543874,
-   "worst_lean_deg": 0.008473946975130354,
-   "worst_lean_rad": 0.00014789827535543874
+   "worst_L_at_s": 0.788,
+   "worst_L_mm": 0.36727493786994914,
+   "worst_L_rel": 0.001700261752612433,
+   "worst_lean_axle_rel": 0.00015648568990486492,
+   "worst_lean_deg": 0.008965969585741713,
+   "worst_lean_rad": 0.00015648568990486492
   },
   "firmware_right_leg": {
    "end_L_mm": [
-    304.59236537159865,
-    304.5927301926477
+    304.7605618108865,
+    304.75917310301793
    ],
-   "rms_L_mm": 0.15405432196083046,
+   "rms_L_mm": 0.1547961498823979,
    "samples": 1500,
-   "worst_L_at_s": 0.778,
-   "worst_L_mm": 0.36496921061160426,
-   "worst_L_rel": 0.0016935227067169925,
-   "worst_lean_axle_rel": 0.00015507166856831205,
-   "worst_lean_deg": 0.008884952131015785,
-   "worst_lean_rad": 0.00015507166856831205
+   "worst_L_at_s": 0.78,
+   "worst_L_mm": 0.3669893169138405,
+   "worst_L_rel": 0.001702953209519304,
+   "worst_lean_axle_rel": 0.00015946739157184455,
+   "worst_lean_deg": 0.009136808507026768,
+   "worst_lean_rad": 0.00015946739157184455
   },
   "misses": [
    0,
@@ -190,17 +190,17 @@
   ],
   "rig_controller_same_hil": {
    "end_L_mm": [
-    304.5921652866938,
-    304.5927301926477
+    304.7604985049771,
+    304.75917310301793
    ],
-   "rms_L_mm": 0.0745082905759725,
+   "rms_L_mm": 0.07774752255431966,
    "samples": 1500,
-   "worst_L_at_s": 0.07200000000000001,
-   "worst_L_mm": 0.2885510089758736,
-   "worst_L_rel": 0.002040107579607518,
-   "worst_lean_axle_rel": 0.0001445471758532903,
-   "worst_lean_deg": 0.008281943116928857,
-   "worst_lean_rad": 0.0001445471758532903
+   "worst_L_at_s": 0.074,
+   "worst_L_mm": 0.3039411019303828,
+   "worst_L_rel": 0.0021481606056215513,
+   "worst_lean_axle_rel": 0.0001571259114166845,
+   "worst_lean_deg": 0.00900265157632246,
+   "worst_lean_rad": 0.0001571259114166845
   },
   "tx_drops": 0
  },
@@ -216,7 +216,7 @@
    "threshold_v": 30.0
   },
   "jump_refused": {
-   "bus_v_on_the_wire": 33.676,
+   "bus_v_on_the_wire": 33.664,
    "estimate_v": 34.0,
    "estimate_v_tick_before": 34.0004,
    "firmware_estimate": "vrest",
@@ -227,9 +227,9 @@
   },
   "note": "warn, jump and sit trip on the resting estimate (V + I x 0.100 ohm, 1 s filter), which on a falling pack lags by ramp x 1 s; the cut-off on the loaded bus (0.1 s filter)",
   "ramp_v_per_s": 0.2,
-  "sat_leg_mm": 138.1,
+  "sat_leg_mm": 137.2,
   "sit": {
-   "bus_v_on_the_wire": 31.669,
+   "bus_v_on_the_wire": 31.656,
    "estimate_v": 32.0,
    "estimate_v_tick_before": 32.0004,
    "firmware_estimate": "vrest",
@@ -239,7 +239,7 @@
    "threshold_v": 32.0
   },
   "warn": {
-   "bus_v_on_the_wire": 34.681,
+   "bus_v_on_the_wire": 34.669,
    "estimate_v": 34.9999,
    "estimate_v_tick_before": 35.0003,
    "firmware_estimate": "vrest",

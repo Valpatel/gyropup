@@ -16,8 +16,8 @@ This study, on D69's robot (10 in hub wheels, the ledger's mass):
   2. a baseline with the pads made rigid (the old 3 mm skids' behaviour, at the pads' depth);
   3. a sweep of the crush plateau and c at the design k, stroke and rebound, of the rebound (unload_ratio) at the design k and c, and of
      the falls' pushes (x0.6 to x1.4), to show the margin round the chosen pad;
-  4. the chosen pad with 1.0 kg more on the base (the ledger is already over D69's 35.5 kg design mass; this covers the
-     4.0 kg wheels or the turret branch's heavier head).
+  4. the chosen pad at D71's design mass, 37.5 kg (ballast at the base's centre of mass up to it; at least 1.0 kg, which
+     covers the 4.0 kg wheels or the turret's 2.55 kg head).
 """
 from __future__ import annotations
 
@@ -42,6 +42,7 @@ P_SWEEP = (450.0, 600.0, 750.0, 1000.0, 1e9)   # N a pad: the crush plateau (1e9
 C_SWEEP = (50.0, 100.0, 250.0)               # N s/m a pad
 UNLOAD_SWEEP = (0.0, 0.1, 0.2, 0.3, 0.5, 1.0)  # the share of k x a pad gives back unloading (1.0: an ideal spring)
 PUSHES = (0.6, 0.8, 1.2, 1.4)                # the falls' pushes scaled: how robust the landing is
+DESIGN_MASS_KG = 37.5                         # D71
 HEAVY_KG = 1.0                               # the ledger + 1.0 kg at the base's centre: the 4.0 kg wheels (+0.94) or the turret
                                              # branch's 2.55 kg head (+0.85); the ledger already exceeds D69's 35.5 kg design mass
 LIMIT_N = 3000.0
@@ -206,8 +207,9 @@ def main():
             row['worst_n'] = max(row[n]['body_impact_peak_n'] for n in FALLS)
             out['push_sweep'].append(row)
             print('push', f, row['worst_n'], row['all_pass'], [(n, row[n]['reasons']) for n in FALLS if not row[n]['pass']], flush=True)
-        xb = with_ballast(xml, HEAVY_KG)
-        out['heavy'] = {'kg': round(info['total_mass_kg'] + HEAVY_KG, 2), 'ballast_kg': HEAVY_KG}
+        extra = max(HEAVY_KG, DESIGN_MASS_KG - info['total_mass_kg'])
+        xb = with_ballast(xml, extra)
+        out['heavy'] = {'kg': round(info['total_mass_kg'] + extra, 2), 'ballast_kg': round(extra, 3)}
         for name in FALLS:
             out['heavy'][name] = fall(xb, info, name)
             print('heavy', name, out['heavy'][name], flush=True)

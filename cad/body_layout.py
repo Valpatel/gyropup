@@ -406,15 +406,15 @@ LEG_STOPS_EXTRA_G = 200.0        # per leg: the hip frame's 13 mm flanges and th
 LEG_TOTAL_BEFORE_STOPS_G = 9282  # leg.json's mass_g.total that the 0.2 kg was announced against: once the leg publishes another
                                  # total (its stops and the strength fixes in), the ledger takes that total as it is
 
-# D69 (docs/decisions.yaml, 2026-10-28): the robot is designed for 35.5 kg (17.75 kg a leg) in every strength case and held
-# under 35.0 kg as built, covering D65's packs and D69's 10 in hub wheels; D57's 32.0 / 32.5 kg is retired. The leg and
-# body sub-budgets split the 35.0 kg: each leg is leg.json with D53's stops (9.48 kg) plus the D69 wheel's 1.33 kg over the
-# BotWheel and 40 g for the foot's clamp hardware (10.85 kg); the body and head get the rest (13.3 kg). cad/test_body.py
-# gates every commit on it.
-BUDGET = {'robot_kg': 35.0, 'legs_kg_each': 10.85, 'body_and_head_kg': 13.3, 'design_mass_kg': 35.5, 'design_half_mass_kg': 17.75,
+# D71 (docs/decisions.yaml, 2026-10-28): the robot is designed for 37.5 kg (18.75 kg a leg) in every strength case and held
+# under 37.0 kg as built (it replaces D69's 35.5 / 35.0 kg and D57's 32.5 / 32.0 kg); the on-call savings levers stay
+# listed as margin. The sub-budgets split the 37.0 kg: each leg is leg.json with D53's stops (9.48 kg) plus the D69
+# wheel's 1.33 kg over the BotWheel and 40 g for the foot's clamp hardware (10.85 kg); the body and head get the rest
+# (15.3 kg). cad/test_body.py gates every commit on it.
+BUDGET = {'robot_kg': 37.0, 'legs_kg_each': 10.85, 'body_and_head_kg': 15.3, 'design_mass_kg': 37.5, 'design_half_mass_kg': 18.75,
           'com_x_mm': 10.0, 'com_y_mm': 5.0,
-          'basis': 'D69 (35.0 kg as built, 35.5 kg design; it replaces D57\'s 32.0 / 32.5 kg); legs 2 x 10.85 kg (leg.json + D53 stops '
-                   '+ the D69 wheel at its listed 3.53 kg + the clamp hardware), body and head 13.3 kg'}
+          'basis': 'D71 (37.0 kg as built, 37.5 kg design; it replaces D69\'s 35.0 / 35.5 kg); legs 2 x 10.85 kg (leg.json + D53 stops '
+                   '+ the D69 wheel at its listed 3.53 kg + the clamp hardware), body and head 15.3 kg'}
 
 # D69's wheel: a 10 in hoverboard-class hub motor with a 10 x 2.125 pneumatic tyre. exports/leg/bom.json still lists the
 # ODrive BotWheel (2.2 kg) until the leg workstream's foot change lands (issue #25); until then the ledger puts this wheel
@@ -530,7 +530,7 @@ def gate(led: dict) -> dict:
             'margin_kg': round(b['robot_kg'] - proj, 3),
             'on_call_open_g': sum(l['grams'] for l in led['levers'] if l['kind'] == 'on call' and l['status'] == 'open'),
             'rule': f"the P3 ledger with every scheduled lever taken (the open ones at the plan's grams) under the {b['robot_kg']} kg "
-                    f"ceiling, each leg under {b['legs_kg_each']} kg and the body and head under {b['body_and_head_kg']} kg (D69); "
+                    f"ceiling, each leg under {b['legs_kg_each']} kg and the body and head under {b['body_and_head_kg']} kg (D71); "
                     'over it, the on-call levers go in order before the next order, each with the user\'s or the coordinator\'s word'}
 
 
