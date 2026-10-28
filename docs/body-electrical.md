@@ -93,6 +93,13 @@ The holders are rated 32 V by Eaton; the fuse does the interrupting (1 kA at 58 
 
 ### 3.1 The wire list
 
+> **SAFETY (issue #11): do not wire W30-W32 (the INA228) as listed here.** The shunt sits in the pack's - lead
+> ahead of a low-side switch: opening the switch lifts the - bus toward +, drives the INA228's inputs far below its
+> ground (abs max -0.3 V), destroys it and lets the load current bypass the switch. The fix (the shunt in the + lead
+> after the MRBF block, VBUS on its own 5 A fuse) is on body/program (f08a8ba, e4892bb; PR #17). Until it merges, build
+> P0 with the INA228 unconnected.
+
+
 Red +, black -, white sense or signal, green the frame bond. Silicone wire throughout (BNTECHGO, 200 °C, 600 V). Lengths
 are cut to the plate in P0 and recorded.
 
@@ -177,6 +184,13 @@ turret's interface is docs/turret-next-plan.md 3.1-3.2 (TM pins 1-2 +24 V, 3-4 G
 loop): plug its DT12 only with the stop relay open (its three 1,000 µF capacitors charge through the plug otherwise).
 
 ## 6. Bring-up (P0, on the bench, before the plate goes into the robot)
+
+> **SAFETY (issue #11): do not wire W30-W32 (the INA228) as listed here.** The shunt sits in the pack's - lead
+> ahead of a low-side switch: opening the switch lifts the - bus toward +, drives the INA228's inputs far below its
+> ground (abs max -0.3 V), destroys it and lets the load current bypass the switch. The fix (the shunt in the + lead
+> after the MRBF block, VBUS on its own 5 A fuse) is on body/program (f08a8ba, e4892bb; PR #17). Until it merges, build
+> P0 with the INA228 unconnected.
+
 
 The whole power skid is one plate: it is built and tested on the bench with dummy loads, then dropped into the body
 on its four posts.
