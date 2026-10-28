@@ -533,6 +533,9 @@ def route(b, nets, fps):
     for net, poly in D.POURS:
         for layer in (P.F_Cu, P.B_Cu):
             zone(b, nets[net], poly, layer)
+    for net, pts in D.STITCH.items():
+        for at in pts:
+            via(b, nets[net], at, 0.4, 0.95)
     # BUS-: the east strip with the star and frame studs (both layers), a bottom strip along the north edge to the
     # west, and the west block round the plate bond (MH1) and the GH connector
     zone(b, nets['BUS-'], [(80.2, 39.0), (87.4, 39.0), (87.4, 61.6), (80.2, 61.6)], P.F_Cu)

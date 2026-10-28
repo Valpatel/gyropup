@@ -140,6 +140,16 @@ POURS = [
     ('+24V', [(61.6, 23.2), (87.4, 23.2), (87.4, 35.8), (61.6, 35.8)]),
 ]
 
+# stitching vias (0.4 / 0.95 mm) that share the main path between the layers: the shunt's pads are on the top only, so
+# half the current comes up through these beside them; the band and the 24 V pour are stitched on a grid
+STITCH = {
+    '+BAT_IN': [(x, y) for x in (1.8, 3.6) for y in (28.6, 30.4, 32.2)] + [(7.1, 30.6), (7.1, 32.4), (7.1, 34.2), (8.6, 28.4), (10.4, 28.4),
+                                                                            (5.4, 28.6), (5.4, 30.4), (5.4, 32.2)],
+    '+BUS': [(19.9, y) for y in (30.4, 32.2, 34.0, 35.8)] + [(16.4, 28.4), (18.2, 28.4)] + [(x, y) for x in (21.8, 23.6) for y in (23.6, 25.4, 27.2, 29.0, 30.8, 32.6, 34.4)]
+            + [(x, y) for x in (31.0, 41.0, 51.0) for y in (31.0, 34.0, 41.0, 44.0)] + [(x, y) for x in (61.0, 71.0) for y in (41.0, 44.0)],
+    '+24V': [(70.5, 30.0), (80.5, 25.0), (80.5, 34.6), (71.5, 33.5)],
+}
+
 # ---------------------------------------------------------------------------------------------------- branch copper
 # The output copper from each holder's pin 2 to its stud: a straight run on both layers, stitched (widths below are
 # what analysis.py checks against IPC-2221 for the fuse's rating).
