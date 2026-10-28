@@ -34,10 +34,9 @@
     {
       "id": "section-below-gated@dossier/sections/S1-base.yaml:3",
       "status": "fail",
-      "message": "section 'S1-base' is built, below gated: pan_base: gate:assembly fail (failing: step:53:insert); turret-fea fail (verdict.all_ok is False); gate:wall fail (failing: wall:pan_base); pan_clamp: gate:assembly fail (failing: step:50:insert); pan_bearing: gate:assembly fail (failing: step:50:insert); pan_bearing_inner: gate:assembly fail (failing: step:50:insert); gate:motion unrun (exports/gates/motion.json not written yet)",
+      "message": "section 'S1-base' is built, below gated: pan_base: gate:assembly fail (failing: step:53:insert); turret-fea fail (verdict.all_ok is False); gate:wall fail (failing: wall:pan_base); pan_clamp: gate:assembly fail (failing: step:50:insert); pan_bearing: gate:assembly fail (failing: step:50:insert); pan_bearing_inner: gate:assembly fail (failing: step:50:insert)",
       "parts": [
         "circlip_50",
-        "hall_switch",
         "pan_base",
         "pan_bearing",
         "pan_bearing_inner",
@@ -56,19 +55,16 @@
     {
       "id": "section-below-gated@dossier/sections/S2-tilt.yaml:3",
       "status": "fail",
-      "message": "section 'S2-tilt' is built, below gated: tilt_yoke: gate:assembly fail (failing: step:29:insert, step:31:insert, step:32:insert, step:50:insert); gate:motion unrun (exports/gates/motion.json not written yet); turret-fea fail (verdict.all_ok is False); gate:wall fail (failing: wall:tilt_yoke); cradle: gate:motion unrun (exports/gates/motion.json not written yet); turret-fea fail (verdict.all_ok is False); gate:wall fail (failing: wall:cradle); cradle_plate_l: gate:motion unrun (exports/gates/motion.json not written yet); turret-fea fail (verdict.all_ok is False); cradle_plate_r: gate:motion unrun (exports/gates/motion.json not written yet); turret-fea fail (verdict.all_ok is False)",
+      "message": "section 'S2-tilt' is built, below gated: tilt_yoke: gate:assembly fail (failing: step:29:insert, step:31:insert, step:32:insert, step:50:insert); turret-fea fail (verdict.all_ok is False); gate:wall fail (failing: wall:tilt_yoke); cradle: turret-fea fail (verdict.all_ok is False); gate:wall fail (failing: wall:cradle); cradle_plate_l: turret-fea fail (verdict.all_ok is False); cradle_plate_r: turret-fea fail (verdict.all_ok is False)",
       "parts": [
         "cradle",
         "cradle_plate_l",
         "cradle_plate_r",
-        "ct_thumbscrew",
         "horn_boss",
         "pivot_spacer",
-        "shoulder_screw",
         "stop_lug",
         "tilt_bearing",
         "tilt_bearing_inner",
-        "tilt_servo",
         "tilt_yoke"
       ],
       "evidence": {
@@ -85,10 +81,7 @@
       "parts": [
         "ball",
         "dial",
-        "feed_motor",
         "hopper",
-        "hopper_flap",
-        "hopper_inserts",
         "hopper_lid"
       ],
       "evidence": {
@@ -117,14 +110,8 @@
       "status": "fail",
       "message": "section 'S4-launcher' is draft, below gated: cartridge_body: 2 lint error(s): unknown-check; flywheel_tyre: 2 lint error(s): unknown-check; flywheel_tyre_m: 2 lint error(s): unknown-check",
       "parts": [
-        "cartridge_board",
         "cartridge_body",
-        "esc_l",
-        "esc_r",
-        "flywheel",
         "flywheel_m",
-        "flywheel_motor_l",
-        "flywheel_motor_r",
         "flywheel_tyre",
         "flywheel_tyre_m"
       ],
@@ -236,10 +223,7 @@
       "message": "section 'S5-barrel' is draft, below gated: barrel: 2 lint error(s): unknown-check",
       "parts": [
         "barrel",
-        "laser",
-        "laser_inserts",
-        "laser_mount",
-        "laser_screws"
+        "laser_mount"
       ],
       "evidence": {
         "code": "section-below-gated",
@@ -279,16 +263,13 @@
     {
       "id": "section-below-gated@dossier/sections/S6-wiring.yaml:3",
       "status": "fail",
-      "message": "section 'S6-wiring' is built, below gated: slip_ring_rotor: gate:assembly fail (failing: step:50:insert); gate:motion unrun (exports/gates/motion.json not written yet); ring_carrier: gate:wall fail (failing: wall:ring_carrier); ring_driver: gate:assembly fail (failing: step:50:insert); gate:motion unrun (exports/gates/motion.json not written yet); ring_coupling: gate:motion unrun (exports/gates/motion.json not written yet)",
+      "message": "section 'S6-wiring' is built, below gated: slip_ring_rotor: gate:assembly fail (failing: step:50:insert); ring_carrier: gate:wall fail (failing: wall:ring_carrier); ring_driver: gate:assembly fail (failing: step:50:insert); board_bay: gate:assembly fail (failing: step:50:insert)",
       "parts": [
         "base_board",
         "board_bay",
-        "board_bay_lid",
         "ring_carrier",
-        "ring_coupling",
         "ring_driver",
-        "slip_ring_rotor",
-        "turret_board"
+        "slip_ring_rotor"
       ],
       "evidence": {
         "code": "section-below-gated",
@@ -504,10 +485,9 @@
     {
       "id": "section-below-gated@dossier/sections/S1-base.yaml:3",
       "status": "fail",
-      "message": "section 'S1-base' is built, below gated: pan_base: gate:assembly fail (failing: step:53:insert); turret-fea fail (verdict.all_ok is False); gate:wall fail (failing: wall:pan_base); pan_clamp: gate:assembly fail (failing: step:50:insert); pan_bearing: gate:assembly fail (failing: step:50:insert); pan_bearing_inner: gate:assembly fail (failing: step:50:insert); gate:motion unrun (exports/gates/motion.json not written yet)",
+      "message": "section 'S1-base' is built, below gated: pan_base: gate:assembly fail (failing: step:53:insert); turret-fea fail (verdict.all_ok is False); gate:wall fail (failing: wall:pan_base); pan_clamp: gate:assembly fail (failing: step:50:insert); pan_bearing: gate:assembly fail (failing: step:50:insert); pan_bearing_inner: gate:assembly fail (failing: step:50:insert)",
       "parts": [
         "circlip_50",
-        "hall_switch",
         "pan_base",
         "pan_bearing",
         "pan_bearing_inner",
@@ -526,19 +506,16 @@
     {
       "id": "section-below-gated@dossier/sections/S2-tilt.yaml:3",
       "status": "fail",
-      "message": "section 'S2-tilt' is built, below gated: tilt_yoke: gate:assembly fail (failing: step:29:insert, step:31:insert, step:32:insert, step:50:insert); gate:motion unrun (exports/gates/motion.json not written yet); turret-fea fail (verdict.all_ok is False); gate:wall fail (failing: wall:tilt_yoke); cradle: gate:motion unrun (exports/gates/motion.json not written yet); turret-fea fail (verdict.all_ok is False); gate:wall fail (failing: wall:cradle); cradle_plate_l: gate:motion unrun (exports/gates/motion.json not written yet); turret-fea fail (verdict.all_ok is False); cradle_plate_r: gate:motion unrun (exports/gates/motion.json not written yet); turret-fea fail (verdict.all_ok is False)",
+      "message": "section 'S2-tilt' is built, below gated: tilt_yoke: gate:assembly fail (failing: step:29:insert, step:31:insert, step:32:insert, step:50:insert); turret-fea fail (verdict.all_ok is False); gate:wall fail (failing: wall:tilt_yoke); cradle: turret-fea fail (verdict.all_ok is False); gate:wall fail (failing: wall:cradle); cradle_plate_l: turret-fea fail (verdict.all_ok is False); cradle_plate_r: turret-fea fail (verdict.all_ok is False)",
       "parts": [
         "cradle",
         "cradle_plate_l",
         "cradle_plate_r",
-        "ct_thumbscrew",
         "horn_boss",
         "pivot_spacer",
-        "shoulder_screw",
         "stop_lug",
         "tilt_bearing",
         "tilt_bearing_inner",
-        "tilt_servo",
         "tilt_yoke"
       ],
       "evidence": {
@@ -555,10 +532,7 @@
       "parts": [
         "ball",
         "dial",
-        "feed_motor",
         "hopper",
-        "hopper_flap",
-        "hopper_inserts",
         "hopper_lid"
       ],
       "evidence": {
@@ -587,14 +561,8 @@
       "status": "fail",
       "message": "section 'S4-launcher' is draft, below gated: cartridge_body: 2 lint error(s): unknown-check; flywheel_tyre: 2 lint error(s): unknown-check; flywheel_tyre_m: 2 lint error(s): unknown-check",
       "parts": [
-        "cartridge_board",
         "cartridge_body",
-        "esc_l",
-        "esc_r",
-        "flywheel",
         "flywheel_m",
-        "flywheel_motor_l",
-        "flywheel_motor_r",
         "flywheel_tyre",
         "flywheel_tyre_m"
       ],
@@ -706,10 +674,7 @@
       "message": "section 'S5-barrel' is draft, below gated: barrel: 2 lint error(s): unknown-check",
       "parts": [
         "barrel",
-        "laser",
-        "laser_inserts",
-        "laser_mount",
-        "laser_screws"
+        "laser_mount"
       ],
       "evidence": {
         "code": "section-below-gated",
@@ -749,16 +714,13 @@
     {
       "id": "section-below-gated@dossier/sections/S6-wiring.yaml:3",
       "status": "fail",
-      "message": "section 'S6-wiring' is built, below gated: slip_ring_rotor: gate:assembly fail (failing: step:50:insert); gate:motion unrun (exports/gates/motion.json not written yet); ring_carrier: gate:wall fail (failing: wall:ring_carrier); ring_driver: gate:assembly fail (failing: step:50:insert); gate:motion unrun (exports/gates/motion.json not written yet); ring_coupling: gate:motion unrun (exports/gates/motion.json not written yet)",
+      "message": "section 'S6-wiring' is built, below gated: slip_ring_rotor: gate:assembly fail (failing: step:50:insert); ring_carrier: gate:wall fail (failing: wall:ring_carrier); ring_driver: gate:assembly fail (failing: step:50:insert); board_bay: gate:assembly fail (failing: step:50:insert)",
       "parts": [
         "base_board",
         "board_bay",
-        "board_bay_lid",
         "ring_carrier",
-        "ring_coupling",
         "ring_driver",
-        "slip_ring_rotor",
-        "turret_board"
+        "slip_ring_rotor"
       ],
       "evidence": {
         "code": "section-below-gated",
@@ -824,7 +786,7 @@
     "pan_servo": "gated",
     "bumper_ring": "gated",
     "index_magnet": "gated",
-    "hall_switch": "built",
+    "hall_switch": "gated",
     "tilt_yoke": "built",
     "cradle": "built",
     "cradle_plate_l": "built",
@@ -832,41 +794,41 @@
     "stop_lug": "built",
     "horn_boss": "built",
     "pivot_spacer": "built",
-    "tilt_servo": "built",
+    "tilt_servo": "gated",
     "tilt_bearing": "built",
     "tilt_bearing_inner": "built",
-    "shoulder_screw": "built",
-    "ct_thumbscrew": "built",
+    "shoulder_screw": "gated",
+    "ct_thumbscrew": "gated",
     "dial": "draft",
     "hopper": "built",
     "hopper_lid": "built",
-    "hopper_flap": "built",
-    "feed_motor": "built",
-    "hopper_inserts": "built",
+    "hopper_flap": "gated",
+    "feed_motor": "gated",
+    "hopper_inserts": "gated",
     "ball": "built",
     "cartridge_body": "draft",
-    "flywheel": "built",
+    "flywheel": "gated",
     "flywheel_m": "built",
     "flywheel_tyre": "draft",
     "flywheel_tyre_m": "draft",
-    "flywheel_motor_l": "built",
-    "flywheel_motor_r": "built",
-    "esc_l": "built",
-    "esc_r": "built",
-    "cartridge_board": "built",
+    "flywheel_motor_l": "gated",
+    "flywheel_motor_r": "gated",
+    "esc_l": "gated",
+    "esc_r": "gated",
+    "cartridge_board": "gated",
     "barrel": "draft",
     "laser_mount": "built",
-    "laser": "built",
-    "laser_screws": "built",
-    "laser_inserts": "built",
+    "laser": "gated",
+    "laser_screws": "gated",
+    "laser_inserts": "gated",
     "slip_ring": "gated",
     "slip_ring_rotor": "built",
     "ring_carrier": "built",
     "ring_driver": "built",
-    "ring_coupling": "built",
+    "ring_coupling": "gated",
     "board_bay": "built",
-    "board_bay_lid": "built",
-    "turret_board": "built",
+    "board_bay_lid": "gated",
+    "turret_board": "gated",
     "base_board": "built",
     "dt_receptacle": "gated",
     "dt_plug": "gated",

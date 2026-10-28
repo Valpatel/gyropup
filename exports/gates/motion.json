@@ -1,0 +1,884 @@
+{
+  "schema": "cadagent.gate/1",
+  "gate": "motion",
+  "pass": true,
+  "status": "warn",
+  "counts": {
+    "pass": 2,
+    "warn": 1,
+    "fail": 0
+  },
+  "checks": [
+    {
+      "id": "motion:I-pan+I-tilt+I-feed+I-flap+I-wheel-l+I-wheel-r",
+      "status": "pass",
+      "message": "I-pan+I-tilt+I-feed+I-flap+I-wheel-l+I-wheel-r: no collision in 7560 poses (I-pan -170..170 deg in 35 samples (10 deg apart, up to 26.358 mm of travel); I-tilt 0..25 deg in 6 samples (5 deg apart, up to 13.349 mm of travel); I-feed 0..90 deg in 3 samples (45 deg apart, up to 53.703 mm of travel); I-flap -50..0 deg in 3 samples (25 deg apart, up to 16.197 mm of travel); I-wheel-l 0..360 deg in 2 samples (360 deg apart, up to 168.83 mm of travel); I-wheel-r 0..360 deg in 2 samples (360 deg apart, up to 168.83 mm of travel))",
+      "parts": [
+        "pan_ring",
+        "cartridge_body",
+        "dial",
+        "hopper_flap",
+        "flywheel",
+        "flywheel_m"
+      ],
+      "evidence": {
+        "joints": [
+          "I-pan",
+          "I-tilt",
+          "I-feed",
+          "I-flap",
+          "I-wheel-l",
+          "I-wheel-r"
+        ],
+        "poses": 7560,
+        "density": [
+          {
+            "joint": "I-pan",
+            "axis": "rotate",
+            "unit": "deg",
+            "range": [
+              -170.0,
+              170.0
+            ],
+            "samples": 35,
+            "declared_samples": 35,
+            "step": 10.0,
+            "max_radius_mm": 151.017,
+            "max_travel_per_step_mm": 26.358
+          },
+          {
+            "joint": "I-tilt",
+            "axis": "rotate",
+            "unit": "deg",
+            "range": [
+              0.0,
+              25.0
+            ],
+            "samples": 6,
+            "declared_samples": 6,
+            "step": 5.0,
+            "max_radius_mm": 152.971,
+            "max_travel_per_step_mm": 13.349
+          },
+          {
+            "joint": "I-feed",
+            "axis": "rotate",
+            "unit": "deg",
+            "range": [
+              0.0,
+              90.0
+            ],
+            "samples": 3,
+            "declared_samples": 3,
+            "step": 45.0,
+            "max_radius_mm": 68.377,
+            "max_travel_per_step_mm": 53.703
+          },
+          {
+            "joint": "I-flap",
+            "axis": "rotate",
+            "unit": "deg",
+            "range": [
+              -50.0,
+              0.0
+            ],
+            "samples": 3,
+            "declared_samples": 3,
+            "step": 25.0,
+            "max_radius_mm": 37.121,
+            "max_travel_per_step_mm": 16.197
+          },
+          {
+            "joint": "I-wheel-l",
+            "axis": "rotate",
+            "unit": "deg",
+            "range": [
+              0.0,
+              360.0
+            ],
+            "samples": 2,
+            "declared_samples": 2,
+            "step": 360.0,
+            "max_radius_mm": 26.87,
+            "max_travel_per_step_mm": 168.83
+          },
+          {
+            "joint": "I-wheel-r",
+            "axis": "rotate",
+            "unit": "deg",
+            "range": [
+              0.0,
+              360.0
+            ],
+            "samples": 2,
+            "declared_samples": 2,
+            "step": 360.0,
+            "max_radius_mm": 26.87,
+            "max_travel_per_step_mm": 168.83
+          }
+        ],
+        "coarsened": false,
+        "max_poses": 8000,
+        "moving": [
+          "cradle",
+          "horn_boss",
+          "pivot_spacer",
+          "cartridge_body",
+          "hopper",
+          "hopper_lid",
+          "barrel",
+          "laser_mount",
+          "cradle_plate_l",
+          "cradle_plate_r",
+          "stop_lug",
+          "tilt_bearing_inner",
+          "shoulder_screw",
+          "flywheel_motor_l",
+          "flywheel_motor_r",
+          "cartridge_board",
+          "esc_l",
+          "esc_r",
+          "feed_motor",
+          "ct_thumbscrew",
+          "laser",
+          "laser_screws",
+          "laser_inserts",
+          "hopper_inserts",
+          "ball#0",
+          "ball#1",
+          "ball#2",
+          "ball#3",
+          "ball#4",
+          "ball#5",
+          "ball#6",
+          "ball#7",
+          "ball#8",
+          "ball#9",
+          "ball#10",
+          "ball#11",
+          "ball#12",
+          "ball#13",
+          "ball#14",
+          "ball#15",
+          "ball#16",
+          "ball#17",
+          "ball#18",
+          "ball#19",
+          "ball#20",
+          "ball#21",
+          "ball#22",
+          "ball#23",
+          "ball#24",
+          "ball#25",
+          "ball#26",
+          "ball#27",
+          "ball#28",
+          "ball#29",
+          "laser_foot_screws#0",
+          "laser_foot_screws#1",
+          "hopper_screws#0",
+          "hopper_screws#1",
+          "hopper_screws#2",
+          "dial",
+          "flywheel",
+          "flywheel_tyre",
+          "flywheel_m",
+          "flywheel_tyre_m",
+          "hopper_flap",
+          "pan_ring",
+          "pan_spacer",
+          "tilt_yoke",
+          "ring_driver",
+          "board_bay",
+          "board_bay_lid",
+          "pan_bearing_inner",
+          "circlip_50",
+          "slip_ring_rotor",
+          "ring_coupling",
+          "turret_board",
+          "hall_switch",
+          "tilt_servo",
+          "tilt_bearing"
+        ],
+        "bodies": [
+          "cartridge_body",
+          "dial",
+          "flywheel",
+          "flywheel_m",
+          "hopper_flap",
+          "pan_ring"
+        ],
+        "intended_contacts": [
+          "cartridge_body|dial",
+          "cartridge_body|flywheel",
+          "cartridge_body|flywheel_m",
+          "cartridge_body|hopper_flap",
+          "cartridge_body|pan_ring",
+          "dial|feed_motor",
+          "flywheel_m|flywheel_motor_r",
+          "flywheel|flywheel_motor_l",
+          "hopper_flap|hopper_lid",
+          "horn_boss|tilt_servo",
+          "pan_bearing|pan_bearing_inner",
+          "pan_bearing|pan_ring",
+          "pan_bearing|pan_spacer",
+          "pivot_spacer|tilt_bearing",
+          "pivot_spacer|tilt_yoke",
+          "ring_coupling|slip_ring",
+          "shoulder_screw|tilt_bearing",
+          "shoulder_screw|tilt_yoke",
+          "slip_ring|slip_ring_rotor",
+          "stop_lug|tilt_yoke",
+          "tilt_bearing|tilt_bearing_inner"
+        ],
+        "intended_contacts_touching": {
+          "dial|feed_motor": {
+            "poses": 7560,
+            "first": "I-pan=-170deg,I-tilt=0deg,I-feed=0deg,I-flap=-50deg,I-wheel-l=0deg,I-wheel-r=0deg",
+            "last": "I-pan=170deg,I-tilt=25deg,I-feed=90deg,I-flap=0deg,I-wheel-l=360deg,I-wheel-r=360deg"
+          },
+          "hopper_flap|hopper_lid": {
+            "poses": 2520,
+            "first": "I-pan=-170deg,I-tilt=0deg,I-feed=0deg,I-flap=-50deg,I-wheel-l=0deg,I-wheel-r=0deg",
+            "last": "I-pan=170deg,I-tilt=25deg,I-feed=90deg,I-flap=-50deg,I-wheel-l=360deg,I-wheel-r=360deg"
+          },
+          "horn_boss|tilt_servo": {
+            "poses": 7560,
+            "first": "I-pan=-170deg,I-tilt=0deg,I-feed=0deg,I-flap=-50deg,I-wheel-l=0deg,I-wheel-r=0deg",
+            "last": "I-pan=170deg,I-tilt=25deg,I-feed=90deg,I-flap=0deg,I-wheel-l=360deg,I-wheel-r=360deg"
+          },
+          "stop_lug|tilt_yoke": {
+            "poses": 2520,
+            "first": "I-pan=-170deg,I-tilt=0deg,I-feed=0deg,I-flap=-50deg,I-wheel-l=0deg,I-wheel-r=0deg",
+            "last": "I-pan=170deg,I-tilt=25deg,I-feed=90deg,I-flap=0deg,I-wheel-l=360deg,I-wheel-r=360deg"
+          }
+        },
+        "collisions": [],
+        "min_clearance_mm": 0.703913,
+        "at": {
+          "gap_mm": 0.703913,
+          "pair": [
+            "dial",
+            "hopper"
+          ],
+          "pose": "I-pan=-170deg,I-tilt=0deg,I-feed=0deg,I-flap=-50deg,I-wheel-l=0deg,I-wheel-r=0deg",
+          "point_a": [
+            28.630586,
+            8.009747,
+            159.391625
+          ],
+          "point_b": [
+            28.276559,
+            8.003567,
+            160.0
+          ]
+        }
+      }
+    },
+    {
+      "id": "motion:I-pan-drive",
+      "status": "pass",
+      "message": "I-pan-drive: no collision in 13 poses (I-pan-drive 0..360 deg in 13 samples (30 deg apart, up to 10.636 mm of travel))",
+      "parts": [
+        "pan_pinion"
+      ],
+      "evidence": {
+        "joints": [
+          "I-pan-drive"
+        ],
+        "poses": 13,
+        "density": [
+          {
+            "joint": "I-pan-drive",
+            "axis": "rotate",
+            "unit": "deg",
+            "range": [
+              0.0,
+              360.0
+            ],
+            "samples": 13,
+            "declared_samples": 13,
+            "step": 30.0,
+            "max_radius_mm": 20.313,
+            "max_travel_per_step_mm": 10.636
+          }
+        ],
+        "coarsened": false,
+        "max_poses": 8000,
+        "moving": [
+          "pan_pinion"
+        ],
+        "bodies": [
+          "pan_pinion"
+        ],
+        "intended_contacts": [
+          "pan_pinion|pan_servo"
+        ],
+        "intended_contacts_touching": {
+          "pan_pinion|pan_servo": {
+            "poses": 13,
+            "first": "I-pan-drive=0deg",
+            "last": "I-pan-drive=360deg"
+          }
+        },
+        "collisions": [],
+        "min_clearance_mm": null,
+        "at": null,
+        "unmeasured_gap_at_least_mm": 1.825,
+        "unmeasured_at": {
+          "mm": 1.825,
+          "pair": [
+            "pan_clamp",
+            "pan_pinion"
+          ],
+          "pose": "I-pan-drive=30deg"
+        }
+      }
+    },
+    {
+      "id": "combination:I-pan+I-tilt+I-feed+I-flap+I-wheel-l+I-wheel-r+I-pan-drive",
+      "status": "warn",
+      "message": "I-pan+I-tilt+I-feed+I-flap+I-wheel-l+I-wheel-r and I-pan-drive were sampled one at a time, but the swept boxes of barrel and pan_pinion come within 0 mm: pass combine=[[...]] to sample them together",
+      "parts": [
+        "barrel",
+        "pan_pinion"
+      ],
+      "evidence": {
+        "groups": [
+          "I-pan+I-tilt+I-feed+I-flap+I-wheel-l+I-wheel-r",
+          "I-pan-drive"
+        ],
+        "box_distance_mm": 0.0
+      }
+    }
+  ],
+  "findings": [
+    {
+      "id": "combination:I-pan+I-tilt+I-feed+I-flap+I-wheel-l+I-wheel-r+I-pan-drive",
+      "status": "warn",
+      "message": "I-pan+I-tilt+I-feed+I-flap+I-wheel-l+I-wheel-r and I-pan-drive were sampled one at a time, but the swept boxes of barrel and pan_pinion come within 0 mm: pass combine=[[...]] to sample them together",
+      "parts": [
+        "barrel",
+        "pan_pinion"
+      ],
+      "evidence": {
+        "groups": [
+          "I-pan+I-tilt+I-feed+I-flap+I-wheel-l+I-wheel-r",
+          "I-pan-drive"
+        ],
+        "box_distance_mm": 0.0
+      }
+    }
+  ],
+  "exclusions": [
+    {
+      "parts": [
+        "circlip_50",
+        "pan_ring"
+      ],
+      "reason": "the circlip drawn at its groove's d2: 0.05 mm^3"
+    },
+    {
+      "parts": [
+        "ring_driver",
+        "pan_ring"
+      ],
+      "reason": "the driver's three crush ribs in the turntable's bore: 2 mm^3"
+    },
+    {
+      "parts": [
+        "slip_ring_rotor",
+        "ring_coupling"
+      ],
+      "reason": "the tube stretched over the rotor stub: 0.10 mm^3"
+    },
+    {
+      "parts": [
+        "bumper_ring",
+        "pan_base"
+      ],
+      "reason": "the bumper's lug on a base tab: 0.04 mm^3 (curved faces)"
+    },
+    {
+      "parts": [
+        "esc_l",
+        "cartridge_body"
+      ],
+      "reason": "the ESC envelope drawn 0.01 mm into the cage plate: 3.4 mm^3"
+    },
+    {
+      "parts": [
+        "esc_r",
+        "cartridge_body"
+      ],
+      "reason": "the ESC envelope drawn 0.01 mm into the cage plate: 3.4 mm^3"
+    },
+    {
+      "parts": [
+        "flywheel",
+        "flywheel_motor_l"
+      ],
+      "reason": "each hub's bore on its X2216's prop adapter: a 0.008 mm^3 modelling overlap where the envelopes meet (a slip fit)"
+    },
+    {
+      "parts": [
+        "flywheel_m",
+        "flywheel_motor_r"
+      ],
+      "reason": "each hub's bore on its X2216's prop adapter: a 0.008 mm^3 modelling overlap where the envelopes meet (a slip fit)"
+    },
+    {
+      "parts": [
+        "slip_ring_rotor",
+        "slip_ring"
+      ],
+      "reason": "one bought slip ring drawn as two solids: the rotor stub drawn 0.01 mm into the stator's end face (0.28 mm^3)"
+    },
+    {
+      "parts": [
+        "ct_thumbscrew",
+        "cradle"
+      ],
+      "reason": "the captive thumbscrew's collar in the rail: 0.34 mm^3"
+    },
+    {
+      "parts": [
+        "laser_screws",
+        "laser_mount"
+      ],
+      "reason": "the set screws in the ring's tapped holes: the thread envelope (\u00d83 in the \u00d82.5 tap drill)"
+    },
+    {
+      "parts": [
+        "panel_switch",
+        "stand_box"
+      ],
+      "reason": "the rocker's 24 mm square envelope through its \u00d820.2 round cut-out: the envelope, not the part"
+    },
+    {
+      "parts": [
+        "panel_pendant",
+        "stand_box"
+      ],
+      "reason": "the TB3M socket's square envelope through its round cut-out: the envelope, not the part"
+    },
+    {
+      "parts": [
+        "dt_plug",
+        "dt_receptacle"
+      ],
+      "reason": "the mated DT connector: the plug's shell drawn over the receptacle's insert"
+    },
+    {
+      "parts": [
+        "ball",
+        "cartridge_body"
+      ],
+      "reason": "the settle's soft contacts with the dial housing's floor (0.19 mm^3 at most); the hopper's containment checks the balls against the hopper"
+    },
+    {
+      "parts": [
+        "ball",
+        "dial"
+      ],
+      "reason": "the settle's soft contacts with the dial's cone, fins and pockets"
+    },
+    {
+      "parts": [
+        "laser_foot_screws",
+        "laser_inserts"
+      ],
+      "reason": "thread envelope: the M3 screw's nominal \u00d83 in the insert's \u00d82.5 minor diameter, by design"
+    },
+    {
+      "parts": [
+        "hopper_screws",
+        "hopper_inserts"
+      ],
+      "reason": "thread envelope: the M3 screw's nominal \u00d83 in the insert's \u00d82.5 minor diameter, by design"
+    }
+  ],
+  "limits": {
+    "touch_mm": 0.05,
+    "overlap_mm3": 0.001,
+    "near_mm": 1.0,
+    "volume_check_mm3": 0.2,
+    "default_samples": 12,
+    "max_step_deg": null,
+    "max_step_mm": null,
+    "max_poses": 8000,
+    "refine_steps": 8,
+    "strict_contacts": false,
+    "combine": []
+  },
+  "assumptions": [
+    "joints are sampled at discrete values across their declared ranges, both ends included; the density is reported per joint axis. A collision that starts and ends between two samples, or a feature thinner than the travel per sample, can be missed: this is not a swept-volume check",
+    "a joint's range is measured from the pose the model was built in (0 = as modelled); a joint's axis is in assembly coordinates at that pose, and a child joint's axis is carried by its parent",
+    "what moves with a joint is its moving part's body: the transitive closure over fixed joints and fastener clamps/into (relations.moving_bodies), or the assembly's own body labels",
+    "joints in one chain are sampled on a grid; independent joints one at a time with the others at home (0 clamped into the range) unless combined",
+    "pairs that do not move relative to each other (static against static, parts of one body) are not queried; the relation table and connectivity gate cover them",
+    "exact B-rep relations within the relation tolerances; no tolerance stack, print shrink, deflection or backlash: a clear pose in the model does not prove the printed parts clear"
+  ],
+  "physical_fit_verified": false,
+  "groups": [
+    {
+      "id": "I-pan+I-tilt+I-feed+I-flap+I-wheel-l+I-wheel-r",
+      "joints": [
+        "I-pan",
+        "I-tilt",
+        "I-feed",
+        "I-flap",
+        "I-wheel-l",
+        "I-wheel-r"
+      ],
+      "poses": 7560,
+      "density": [
+        {
+          "joint": "I-pan",
+          "axis": "rotate",
+          "unit": "deg",
+          "range": [
+            -170.0,
+            170.0
+          ],
+          "samples": 35,
+          "declared_samples": 35,
+          "step": 10.0,
+          "max_radius_mm": 151.017,
+          "max_travel_per_step_mm": 26.358
+        },
+        {
+          "joint": "I-tilt",
+          "axis": "rotate",
+          "unit": "deg",
+          "range": [
+            0.0,
+            25.0
+          ],
+          "samples": 6,
+          "declared_samples": 6,
+          "step": 5.0,
+          "max_radius_mm": 152.971,
+          "max_travel_per_step_mm": 13.349
+        },
+        {
+          "joint": "I-feed",
+          "axis": "rotate",
+          "unit": "deg",
+          "range": [
+            0.0,
+            90.0
+          ],
+          "samples": 3,
+          "declared_samples": 3,
+          "step": 45.0,
+          "max_radius_mm": 68.377,
+          "max_travel_per_step_mm": 53.703
+        },
+        {
+          "joint": "I-flap",
+          "axis": "rotate",
+          "unit": "deg",
+          "range": [
+            -50.0,
+            0.0
+          ],
+          "samples": 3,
+          "declared_samples": 3,
+          "step": 25.0,
+          "max_radius_mm": 37.121,
+          "max_travel_per_step_mm": 16.197
+        },
+        {
+          "joint": "I-wheel-l",
+          "axis": "rotate",
+          "unit": "deg",
+          "range": [
+            0.0,
+            360.0
+          ],
+          "samples": 2,
+          "declared_samples": 2,
+          "step": 360.0,
+          "max_radius_mm": 26.87,
+          "max_travel_per_step_mm": 168.83
+        },
+        {
+          "joint": "I-wheel-r",
+          "axis": "rotate",
+          "unit": "deg",
+          "range": [
+            0.0,
+            360.0
+          ],
+          "samples": 2,
+          "declared_samples": 2,
+          "step": 360.0,
+          "max_radius_mm": 26.87,
+          "max_travel_per_step_mm": 168.83
+        }
+      ],
+      "coarsened": false,
+      "max_poses": 8000,
+      "bodies": [
+        "cartridge_body",
+        "dial",
+        "flywheel",
+        "flywheel_m",
+        "hopper_flap",
+        "pan_ring"
+      ],
+      "intended_contacts": [
+        "cartridge_body|dial",
+        "cartridge_body|flywheel",
+        "cartridge_body|flywheel_m",
+        "cartridge_body|hopper_flap",
+        "cartridge_body|pan_ring",
+        "dial|feed_motor",
+        "flywheel_m|flywheel_motor_r",
+        "flywheel|flywheel_motor_l",
+        "hopper_flap|hopper_lid",
+        "horn_boss|tilt_servo",
+        "pan_bearing|pan_bearing_inner",
+        "pan_bearing|pan_ring",
+        "pan_bearing|pan_spacer",
+        "pivot_spacer|tilt_bearing",
+        "pivot_spacer|tilt_yoke",
+        "ring_coupling|slip_ring",
+        "shoulder_screw|tilt_bearing",
+        "shoulder_screw|tilt_yoke",
+        "slip_ring|slip_ring_rotor",
+        "stop_lug|tilt_yoke",
+        "tilt_bearing|tilt_bearing_inner"
+      ],
+      "intended_contacts_touching": {
+        "dial|feed_motor": {
+          "poses": 7560,
+          "first": "I-pan=-170deg,I-tilt=0deg,I-feed=0deg,I-flap=-50deg,I-wheel-l=0deg,I-wheel-r=0deg",
+          "last": "I-pan=170deg,I-tilt=25deg,I-feed=90deg,I-flap=0deg,I-wheel-l=360deg,I-wheel-r=360deg"
+        },
+        "hopper_flap|hopper_lid": {
+          "poses": 2520,
+          "first": "I-pan=-170deg,I-tilt=0deg,I-feed=0deg,I-flap=-50deg,I-wheel-l=0deg,I-wheel-r=0deg",
+          "last": "I-pan=170deg,I-tilt=25deg,I-feed=90deg,I-flap=-50deg,I-wheel-l=360deg,I-wheel-r=360deg"
+        },
+        "horn_boss|tilt_servo": {
+          "poses": 7560,
+          "first": "I-pan=-170deg,I-tilt=0deg,I-feed=0deg,I-flap=-50deg,I-wheel-l=0deg,I-wheel-r=0deg",
+          "last": "I-pan=170deg,I-tilt=25deg,I-feed=90deg,I-flap=0deg,I-wheel-l=360deg,I-wheel-r=360deg"
+        },
+        "stop_lug|tilt_yoke": {
+          "poses": 2520,
+          "first": "I-pan=-170deg,I-tilt=0deg,I-feed=0deg,I-flap=-50deg,I-wheel-l=0deg,I-wheel-r=0deg",
+          "last": "I-pan=170deg,I-tilt=25deg,I-feed=90deg,I-flap=0deg,I-wheel-l=360deg,I-wheel-r=360deg"
+        }
+      },
+      "collisions": [],
+      "min_clearance_mm": 0.703913,
+      "at": {
+        "gap_mm": 0.703913,
+        "pair": [
+          "dial",
+          "hopper"
+        ],
+        "pose": "I-pan=-170deg,I-tilt=0deg,I-feed=0deg,I-flap=-50deg,I-wheel-l=0deg,I-wheel-r=0deg",
+        "point_a": [
+          28.630586,
+          8.009747,
+          159.391625
+        ],
+        "point_b": [
+          28.276559,
+          8.003567,
+          160.0
+        ]
+      },
+      "status": "pass"
+    },
+    {
+      "id": "I-pan-drive",
+      "joints": [
+        "I-pan-drive"
+      ],
+      "poses": 13,
+      "density": [
+        {
+          "joint": "I-pan-drive",
+          "axis": "rotate",
+          "unit": "deg",
+          "range": [
+            0.0,
+            360.0
+          ],
+          "samples": 13,
+          "declared_samples": 13,
+          "step": 30.0,
+          "max_radius_mm": 20.313,
+          "max_travel_per_step_mm": 10.636
+        }
+      ],
+      "coarsened": false,
+      "max_poses": 8000,
+      "bodies": [
+        "pan_pinion"
+      ],
+      "intended_contacts": [
+        "pan_pinion|pan_servo"
+      ],
+      "intended_contacts_touching": {
+        "pan_pinion|pan_servo": {
+          "poses": 13,
+          "first": "I-pan-drive=0deg",
+          "last": "I-pan-drive=360deg"
+        }
+      },
+      "collisions": [],
+      "min_clearance_mm": null,
+      "at": null,
+      "unmeasured_gap_at_least_mm": 1.825,
+      "unmeasured_at": {
+        "mm": 1.825,
+        "pair": [
+          "pan_clamp",
+          "pan_pinion"
+        ],
+        "pose": "I-pan-drive=30deg"
+      },
+      "status": "pass"
+    }
+  ],
+  "not_checked": [
+    "I-pan+I-tilt+I-feed+I-flap+I-wheel-l+I-wheel-r with I-pan-drive: combined poses (sampled separately)"
+  ],
+  "stats": {
+    "joints": 7,
+    "groups": 2,
+    "poses": 7573,
+    "pair_queries": 966145,
+    "kernel_queries": 27178,
+    "memo_hits": 934950,
+    "cache_hits": 4017,
+    "seconds": 9901.559
+  },
+  "inputs": {
+    "geometry": {
+      "file": "exports/dossier-geometry.json",
+      "digest": "edd7861908ab42802edb28b9c73ed1307458919926b28689727218328f7fe254",
+      "hashes": {
+        "ball#0": "a65216ac687270ac3257d29316de2a648a924d4e4f5291d1cc63901574160ace",
+        "ball#1": "03b799fd45df8370f59431ab5068e7b671858a68d009000f07a41f47b7f7923d",
+        "ball#10": "2d5e0259b190effb6819b4aac948720444062af4e364857eecbc650e650f7054",
+        "ball#11": "fcb0b087a6f670b97c9555413802a81c551b0250fb2ad4f58e8b05ea9493135c",
+        "ball#12": "55be408654d5c8c6537583bf1e6627836694de530dc8389500edb564624783b5",
+        "ball#13": "58c9e448feaa4e7b179e2623e3e312f44a4e01495ac8aaab039981045ccab972",
+        "ball#14": "41d444fd5cf6ea169982ddfd9aed651b1129d4ddb96b657dbe522751cf4043f3",
+        "ball#15": "c847bfbec6e6a7c2020505e5ac8c9ac382c7fb197b850f44181460fd25057ce3",
+        "ball#16": "b74f8fc4348bb35d1a3170c2bb61f101e1febdac1e4ec8cb0dd912c27f0d7f26",
+        "ball#17": "ae100fa2038963e1ac1da6f65a5441607e6193897937746853381696a97df192",
+        "ball#18": "4d1b80f468136bc89986f2b66aab77640348e422e7ad7bc87e2462f3e8d6e223",
+        "ball#19": "d335ed92c315ba0d2a1f7f9dcad55955956efd9199cde8571721e43051ac1993",
+        "ball#2": "acc48ce2a5f2e6a50462aa2de5a5cb8bcc5d9c33e9fc9d9ef442637092d9a327",
+        "ball#20": "880a6bec8fbdbd4ea4f3d3b2e35594e63f175f062498f10d7fa50655135bea3d",
+        "ball#21": "aa980a937510d1d4938a71f4a3d5efb2ff9b556f49da05184d3c193ae86f8bfc",
+        "ball#22": "961903f3d0ecc374a0619a9b48a08eeb7f1bd7d250b535659fdb556a58771565",
+        "ball#23": "0b058c1ec3ea98cc3ef3f6e7bf55e3732801c0ce33da9347d653c5fc70103888",
+        "ball#24": "aa2730bb73cb6a6b40036fea1d51a6863a891230108757d3bf2eceb382e37f07",
+        "ball#25": "4699dac6fa06617aa04cb1693692fe4c14259588bc0d624636fe2761311679d5",
+        "ball#26": "bdea7592bd92b077c2ab76decdfe7414ae5315d1a898706738fc663eca976003",
+        "ball#27": "1575e8658be342954d0699c8f23d6faaa21ecc2e703ffb6b9c5e682dd8ef7736",
+        "ball#28": "c14fb2d2a5e6be89c66ba9f2a8d1629fc885dbd30411d7ab3516ad782a250a8a",
+        "ball#29": "6c22cc806a08be1fed03f74955d1973bc44a77c972ee5cf304a54b033c96ccec",
+        "ball#3": "710247883e3018526577c078e76d622f5dc00d70d5a6f0f73ce416c308f99202",
+        "ball#4": "034d3a325c7e1dc92a50af0744ff0dbd95c43d316f0a4383ccef90a664f39754",
+        "ball#5": "fcf8f6bf500e9da9e67f4a4a03516362dff62bafacee8971e35baed0805cce75",
+        "ball#6": "2660f2931d97d37f9f10047d29c39f4b295e9cfc507a37a2279539d5d646a766",
+        "ball#7": "a55c4782c355177437b8b067ac8bee84a6b951916da216ef1e15b52dbafd0943",
+        "ball#8": "a996235308cccc98bded38b9d14263eec13402be1b913a8a455cf456c394f7ea",
+        "ball#9": "fa11222c233c9168ab4a6734aa679d21af8c9d3e6cd5992140930e0ffa5eca3f",
+        "barrel": "ffdc798a409ecf39e33751b2934d98ed2fc711e89476fc7f36dfda50374cc940",
+        "base_board": "c6a7de0e8985518af4e8fe3170a99c622ba0dc8b818031aa4f61e271429feb2c",
+        "board_bay": "fac6f89b4e1affe822af20a1dfb5174bbd7460740bca930039ff2fccc19e3c47",
+        "board_bay_lid": "3f35f0e96a4a1e2874ef33bee1272c49d1e4fec22a3dc3a459cd47b2d4ef3f09",
+        "bumper_ring": "91e6d1c7230c669727e96f0542d43cab7bd264aaccc5f5d6fde45da3b5a42ebc",
+        "cartridge_board": "76a7fee9501317026fb599f7d6ea77493ac04f19d8fcf083621f59e2abf158c0",
+        "cartridge_body": "83cb0fee3e9ac1311432b62bfc131d8bcf12cb39ddaf18483916d6c5c20e0302",
+        "circlip_50": "4732d3026f49ca83f9a7f37e06851f2f2778306fb7f5d6e0cadce35b92b6ab57",
+        "compute": "19df8bd0dbda8b8c5a2d5561abe550787e39ac0f85789a09dfa9d1e47cc38141",
+        "compute_shell": "345c2945ae2ff0c20ffa748e89ae1797f36a9b81a763b042542bbac8a9d6ea04",
+        "compute_tray": "8cc9d05e5583e83ea2fc9327f8809c737d4975ae429f7207f7b9cc0143932589",
+        "cradle": "d06851e7f6c4499bd281cc3ac92ff2701830d56fe746a7fbd51b1dc16e6538cf",
+        "cradle_plate_l": "ac28d6c0c439676eaf1fc2adb35db7bd45ef1b0966861e4a4c1c975becc0fd56",
+        "cradle_plate_r": "32469157ddfff0bcd9f3b0e18858f613a42c7427149d61a639c8e5f3902c7052",
+        "ct_thumbscrew": "0c671c252d37f8a13364b0d6b3c9fe64c3509b9ed911d6e167f03a6e6c1e5071",
+        "dial": "1bb91abbb7f8c46f22ed7c8899356aeb94c477002eb5f9b0d91071bd71cbfbf8",
+        "dock": "64f8a777930af22cb70a960871f389757c58699efa05b1f6a997155e468c94e9",
+        "dt_plug": "0b4aa436ed04c60c8c3d867b566521d8331e7b6acba70f1858f3df23cbc6c708",
+        "dt_receptacle": "c40f8087351820986a821ead94c8f182aae7333c1ae3f5432e2acb7d5805ce24",
+        "esc_l": "512b249bbe269cfac70c84c75567f28984e0b3b68c7c9778450f9811343514c4",
+        "esc_r": "c4b5a23106e80e94d3ba93137ff12a5475ebf4b4132c1f64c9245a331d12df5b",
+        "eth_jack": "1cecaac97930297d5b1043a4b907b38ffbb4e8beeb28bd89e5cf17f6d34499af",
+        "feed_motor": "85e7b10529e831292e8ef016f3d48c6f40705e50d8a3f255482645cc6db7a746",
+        "flywheel": "087f82d6eadf63fd75ac32009574267901c7c1ddac031a9709548adbc6fe68f4",
+        "flywheel_m": "1fccfda45e0f1f88794ade29044db983d03a57ebec85a2562b4b9a237913a240",
+        "flywheel_motor_l": "adb3422ab73a8db6101d5454d1b3fab6e8e5aa83d836a8b3e486d67bddaeb09b",
+        "flywheel_motor_r": "deac14529d7c19340e4e0357145f6511be0a731c25babdcb3895098132be2841",
+        "flywheel_tyre": "9c5dca93473c44737dc003f2695ade7119caa135640d237f8027e2f78ec2d911",
+        "flywheel_tyre_m": "45b1129d43e3dc566c9270b6746571e18774107816fa540a8546a6b0e022029f",
+        "hall_switch": "29a32ceed8f0166678d1974fc6c87e78d14ca776141137dadb173592dbd531fb",
+        "hopper": "bfc93c60bd5926acbb4898a30326c88cce75a85fcc1d50fb77c49c5e196c1087",
+        "hopper_cavity": "065686cd5c709350ee7b20697adf17e0125faeb6ad00dcacffc18bfc65eabb29",
+        "hopper_flap": "e2a894672535e11447b7d39c5b35030fe6076fe4816e30a793822cc4c794383f",
+        "hopper_inserts": "c24c13e0f2422e6983760178a64171984af561cd3c122c45f478b6c1f1139a54",
+        "hopper_lid": "d694d917f175f67060b4f5c6fa92b92f9d5d80eae63f047a91b2230b92885c26",
+        "hopper_screws#0": "53b5fe777e051c88c7d6521bd9e5d3b134cb9b64f9b6f24e0db16d00a7c6d94c",
+        "hopper_screws#1": "0bfc468fd0b58556b346fbf12b7fa86609d4c5b124ccc58f50350f95985901e5",
+        "hopper_screws#2": "1438cf69e3399d57a655cde3ac22c0160f1237d800a7a249fa029094d0de4c5d",
+        "horn_boss": "6705056118088b16e66be2eda682010594a755ca7fc2a9c6ec891051dcc70ae7",
+        "index_magnet": "325cc63fa0300a24127b730a1b52c5f736fb73ef5d1575525d734aad8017c590",
+        "input_fuses": "b534b3e5b8aed6645004cbeb8705dc572894318c7baf4da72b4f6871afe8f764",
+        "laser": "695162186a4e2a06a514809cff63624efe4299109be32a31c764187c7972499c",
+        "laser_foot_screws#0": "1f97f888f2c03f371262319233282008f448c738b01eff503b6d086288d2ff3f",
+        "laser_foot_screws#1": "5b54dc9d581be2e9b9410659993816e37c5dac82cf28369ce4e80893c4669480",
+        "laser_inserts": "3af66ecfc890a165f682072cf0566bda26e2819a68d2ec0c0e74d1fc32033fc9",
+        "laser_mount": "934ffd01d50a86b557764968147cd3597e93edff772f7854a72a17d862cbeea9",
+        "laser_screws": "2ac3f2b3f0a6b44373fa2f05017b97b716dd76ed2a0bfca401de7114e97e8baa",
+        "pack": "2696437aeff8ec28495d5088ff88feb6902c75ee46790744a002b0c8ac62aed2",
+        "pan_base": "e3ab8a9a83f46cdf630fbbcefaa90410f82d3a5d574693809731429599a3027d",
+        "pan_bearing": "b3ecd75d87d4786da6a6ad989bb010f3cf73c8e81947e29373431b61379943c8",
+        "pan_bearing_inner": "fa6405bae408a522df79b4f92adcfece1d11d9a272c362a68c6f0ec70f73d5cf",
+        "pan_clamp": "f740503a7e3b5f178b8db7bbf524392bdf2e5d17f672139ed040393d226da80e",
+        "pan_pinion": "f67a4f24a2cb9eb960063acc400866b6fe61792f57a9c11a69577be7e479f40d",
+        "pan_ring": "f6e98b4fb1d08325a8a7026fba95b01576b23cd148a2c35b90aa5bf4e6eb1397",
+        "pan_servo": "33d2ecab1a490de17d78e743ea0acb7f01f67698a324c9b34bd3ae365da3cb14",
+        "pan_spacer": "ac07f0f05892c702b83f4de3c4d10bfebbfedab51fa9c7af6266b083b8a25622",
+        "panel_pendant": "90dd95e773e6c5ffd2b780c940b4a722f848b814d3cb694116398f21a10d7b7e",
+        "panel_switch": "3c11999fa6b562cf6f844cf21ad705da68343306a2b9b190ec0da4346138b6cd",
+        "pivot_spacer": "f32dec7018eb00fb17326fc94c7fc195897dfded7fb60f76d63cbedd457424ff",
+        "ring_carrier": "74127d526bc7ba5fdd4d2ae07b94552d4cd42fde8b3614e20475c3c48b49b008",
+        "ring_coupling": "d6517f3eee6025d83ff8d29a91f0d7916742d032db0671e8ea160387fafd0154",
+        "ring_driver": "ce570693a041534fc0cd02830c7e3aedbc3c622ae526cd00d94f299825e62169",
+        "shoulder_screw": "1fc799385bf1184cb28e4857175675d9380fb92a02fda004961f5ea2f1936d7d",
+        "slip_ring": "f77ab054fa727ff8ad8a2e61e68593dbfdd325fc135ac9443fa5f43cea6d0a29",
+        "slip_ring_rotor": "c616abbe4fd2b61a15769b9393a8af23a50ff906524c7ecfade4d46262ee5694",
+        "stand_bottom": "14afdd1ed648276eb975a7f6e6329b07243e98b62c2f0a9625c52d13798b6658",
+        "stand_box": "3ed1d579d2bc6e4bcb56d64d9ba876ff70545e70c2084ad7fb4d713b138051cc",
+        "stand_foot#0": "765798c4312d1208813b9391bab6f802e632017eda81fa1a214d41354706c4da",
+        "stand_foot#1": "3c94328497e334fe2bab51f825adc96e20678d1586932da30956a42040091c24",
+        "stand_foot#2": "e953da1adfe197721f4be80d0c0031d6fd741a19753e59f4fee9fcad9d96a45f",
+        "stand_foot#3": "91bf952d3d3ec45557ad7c4610bc069cdfa3d2f250769ad8f846d54a3c4d75fb",
+        "stop_lug": "9c4122602635954c8540a91e0d802f9677f98835f62e0638fbfcd3a8170be25b",
+        "terminal_board": "862d5ed8b5dfc05e96d74e7ea9aad012e49d4785b4900b5ea74b6a7f0759534d",
+        "tilt_bearing": "bf9047f7aeccd6e7ec1033ff43613dc29cc4ecc73fa0727383f78f846e648333",
+        "tilt_bearing_inner": "d8e528ff24eaaeb12b27323bc7a1a584f50a920bbd2897880040613cc0a7cf9d",
+        "tilt_servo": "5bb7c0a100f381bb15202d9cc7b57b41faf5e568c374df2dedb2fdb21c758129",
+        "tilt_yoke": "ad7b9c1545c1bbba883d78d1cfed7f9c1bc27d10d4a3e4e51b5d5f3f080bdbfe",
+        "turret_board": "65c4ebf5b938d79e38cc02ec284512a445dfd48dbbaaad2d9b65766467268016",
+        "usb_can": "84b85b023467dde090a46adce7a6c7d48f3b33046c6d129809c38b10b693ac8f",
+        "xt30_input": "aea2dbf4db68d36634d0ea180dc1dd8d3ede3df562b6c652d3ca2fc750650f95"
+      }
+    },
+    "toolkit": "0.3.1",
+    "declarations": "77bdfcaa878f5179df03c1cbc7217315c2b7651b0b3d002cfc8a5651236d0b2e",
+    "options": "1eba190e519313d8b0ca465772ce3f0ef86236c9520ab99a1ae89f045f9e5693"
+  }
+}
