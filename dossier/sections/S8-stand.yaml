@@ -63,11 +63,19 @@ interfaces:
 - id: I-usb-can
   between:
   - usb_can
+  - stand_bottom
+  kind: bonded
+  datum: the floor at the back wall
+  description: The USB-CAN adapter on a VHB pad on the floor, its USB-C at the back wall's slot (dd02fcd; it was drawn
+    floating 10 mm up until the connectivity gate found it).
+  owner: S8-stand
+- id: I-usb-can-wall
+  between:
+  - usb_can
   - stand_box
-  kind: fastened
-  datum: the back wall's USB-C slot
-  description: 'The USB-CAN adapter beside the pack, its USB-C at the back wall''s slot. Open: drawn 1.0 mm off the wall and
-    14 mm over the floor, with no mount (the connectivity gate finds it floating).'
+  kind: contact
+  datum: the back wall's inner face
+  description: The adapter's end against the back wall, its USB-C in the slot.
   owner: S8-stand
 - id: I-switch
   between:
@@ -93,7 +101,7 @@ parts:
   - I-stand-bottom
   - I-dock
   - I-terminal
-  - I-usb-can
+  - I-usb-can-wall
   - I-switch
   - I-pendant
   material:
@@ -110,6 +118,7 @@ parts:
   - I-stand-bottom
   - I-feet
   - I-pack-ribs
+  - I-usb-can
   material:
     name: PETG
     process: FDM
@@ -164,6 +173,7 @@ parts:
   function: The laptop's CAN link to the turret's MCU
   interfaces:
   - I-usb-can
+  - I-usb-can-wall
   material:
     name: CANable 2.0 class adapter
     process: bought
@@ -206,7 +216,8 @@ decisions:
     its Ø20.2 hole
   why: bluesea.com refuses a plain fetch; the cut-out is not to be guessed from a box
 - id: T8.3
-  status: open
-  decision: 'Mount the USB-CAN adapter: it is drawn 1.0 mm off the back wall and 14 mm over the floor with nothing holding
-    it (the connectivity gate)'
-  why: Found by the dossier's first connectivity run (2026-10-28)
+  decision: The USB-CAN adapter on a VHB pad on the stand's floor, against the back wall at its USB-C slot (dd02fcd)
+  why: The dossier's first connectivity run found it drawn 1.0 mm off the wall and 14 mm over the floor, held by nothing
+  alternatives:
+  - option: As first drawn, 10 mm over the floor
+    rejected: nothing held it (the connectivity gate)

@@ -40,7 +40,7 @@ interfaces:
   - hopper
   - hopper_inserts
   kind: fastened
-  datum: the housing's lugs at 0, 135, 225 deg
+  datum: 'the housing''s lugs at 45, 150, 210 deg (dd96792, from 0, 135, 225: at 0 deg a lug sat under the cage''s top plate)'
   description: 3 x M3 x 8 socket heads (hopper_screws) into the lugs' inserts.
   owner: S3-feed
 - id: I-dial-horn
