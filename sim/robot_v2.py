@@ -24,6 +24,7 @@ from __future__ import annotations
 
 import json
 import math
+import os
 import struct
 import sys
 from pathlib import Path
@@ -616,10 +617,21 @@ def build():
         hip += [Body(leg_rest, (0.0, (Y_OFF + 30.0) * M, -0.1), name='rest of leg.json (left)'),
                 Body(leg_rest, (0.0, -(Y_OFF + 30.0) * M, -0.1), name='rest of leg.json (right)')]
     parts += hip + [tb['base']]
+    # D71's design-mass runs (GYROPUP_DESIGN_MASS_KG, e.g. 37.5): ballast at the base's own centre of mass brings the
+    # whole robot to that mass; the model then reconciles with the ledger plus the ballast, and says so
+    target = float(os.environ.get('GYROPUP_DESIGN_MASS_KG') or 0.0)
+    ballast = 0.0
+    if target:
+        pre = combine(parts, 'base')
+        rest = sum(b_.mass for b_ in (lb['upper'], lb['upper'], lb['front'], lb['wheel_link'], lb['rotor'])) * 2 \
+            + tb['pan'].mass + tb['tilt'].mass + sum(pad_g.values()) + floor_g
+        ballast = max(0.0, target - pre.mass - rest)
+        if ballast > 0:
+            parts.append(Body(ballast, pre.com, name='design-mass ballast (D71)'))
     base = combine(parts, 'base')
     leg_kg = 2 * (2 * lb['upper'].mass + lb['front'].mass + lb['wheel_link'].mass + lb['rotor'].mass)
     total = base.mass + leg_kg + tb['pan'].mass + tb['tilt'].mass + sum(pad_g.values()) + floor_g
-    reconciles = abs(total - led_kg) <= 0.002 * led_kg            # the model carries the ledger's mass
+    reconciles = abs(total - led_kg - ballast) <= 0.002 * led_kg  # the model carries the ledger's mass (+ a design-mass ballast)
     rp = ref_pose()
     frame_shape = fb.leg_parts().parts['hip_frame'].translate((0, Y_OFF, 0))
     fbb = frame_shape.val().BoundingBox()
@@ -792,7 +804,7 @@ def build():
         'mass_split_kg': {'base (hip modules, frame, electronics, battery, lidar, shell, turret base)': round(base.mass, 3),
                           'legs (links, adapters, bearings, wheels)': round(leg_kg, 3),
                           'turret pan + tilt': round(tb['pan'].mass + tb['tilt'].mass, 3)},
-        'mass_reconciles': reconciles,
+        'mass_reconciles': reconciles, 'design_ballast_kg': round(ballast, 3),
         'ledger': {'stage': 'P3', 'total_kg': round(led_kg, 3), 'groups_kg': led['groups_kg'], 'com_mm': led['com_mm'],
                    'source': 'cad/body_layout.py ledger() P3 (exports/body/mass.json); the legs to exports/leg/leg.json\'s total; '
                              'the head to body_params.tm()', 'legs_rest_kg_each': round(leg_rest, 4),
