@@ -1219,6 +1219,52 @@
   "qty_per_robot": 5
  },
  {
+  "id": "monsterbolts-shcs-b12-9-m3x40",
+  "key": "turret_screw_m3x40",
+  "category": "fastener",
+  "vendor": "Monster Bolts",
+  "model": "SHCS - B12.9 M03 x 040(PT)",
+  "name": "M3-0.5 x 40 mm socket head cap screw, class 12.9 alloy steel, black oxide, partial thread (DIN 912 / ISO 4762)",
+  "price_usd": 0.281,
+  "price_note": "Monster Bolts: $2.81 per pack of 10, $10.53 per 50 (price_usd is per piece)",
+  "price_checked": "2026-10-27",
+  "pack_qty": 10,
+  "pack_price_usd": 2.81,
+  "buy": [
+   {
+    "seller": "Monster Bolts",
+    "url": "https://monsterbolts.com/products/socket-cap-b12-9-m3",
+    "in_stock": true,
+    "ships_from": null,
+    "seller_pn": "SHCS - B12.9 M03 x 040(PT).0010 (variant 35986541004)",
+    "price_usd": 2.81,
+    "pack_qty": 10,
+    "stock": "available: true (Shopify; no count exposed)",
+    "read_on": "2026-10-27",
+    "how_read": "json"
+   }
+  ],
+  "specs": {
+   "thread": "M3x0.5",
+   "length_mm": 40.0,
+   "head_d_mm": 5.5,
+   "head_height_mm": 3.0,
+   "grade": "12.9",
+   "finish": "black oxide",
+   "threading": "partial (ISO 4762: b = 18 mm for M3, so the thread runs from the tip at z 62 to z 80: the J501 insert's whole length)"
+  },
+  "cad": {
+   "available": false
+  },
+  "sources": [
+   "https://monsterbolts.com/products/socket-cap-b12-9-m3"
+  ],
+  "confidence": "product page",
+  "used_for": "the turret's box adapter (cad/turret_box.py): one through each leg into the J501 lid's insert, in place of the J501's M3 x 16 (head on the leg's pad at z 102, tip at z 62 as before)",
+  "qty_per_robot": 0,
+  "notes": "McMaster-Carr sells this size in its 91290A black-oxide series, but its part number could not be found by product-page reads (tools/mcmaster_cad.py reads product pages only: 91290A134 is M5 x 110, 91290A132 M20 x 35); a McMaster line can replace this one once the number is known. Read from the store's Shopify product data (socket-cap-b12-9-m3.js): 48 variants, M3 x 4 to 40, packs of 10, 50 and 250."
+ },
+ {
   "id": "mcmaster-91290a144",
   "key": "turret_screw_m4x10",
   "category": "fastener",
@@ -1836,6 +1882,95 @@
   "confidence": "product page",
   "used_for": "the CT dowels: pressed in the cradle's rails, 2.3 mm up into the cartridge's base",
   "qty_per_robot": 2
+ },
+ {
+  "id": "mcmaster-91595a340",
+  "key": "turret_dowel_5x10",
+  "category": "fastener",
+  "vendor": "McMaster-Carr",
+  "model": "91595A340",
+  "name": "Dowel Pin, 52100 Alloy Steel, 5 mm Diameter, 10 mm Long",
+  "price_usd": 0.4612,
+  "price_note": "McMaster-Carr: $11.53 per pack of 25 (price_usd is per piece)",
+  "price_checked": "2026-10-27",
+  "pack_qty": 25,
+  "pack_price_usd": 11.53,
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/91595A340/",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "d_mm": 5.0,
+   "length_mm": 10.0,
+   "mass_g": null,
+   "mass_basis": "unknown",
+   "material": "Alloy Steel",
+   "mcmaster": {
+    "raw": {
+     "Tolerance Rating": "Standard",
+     "Fastener Head Type": "Plain",
+     "Material": "Alloy Steel",
+     "Diameter": "5 mm",
+     "Diameter Tolerance": "0.004 mm to 0.012 mm",
+     "Length": "10 mm",
+     "Double Shear Breaking Strength": "Not Rated",
+     "Minimum Hardness": "Rockwell C52",
+     "Specifications Met": "DIN 6325-m6, ISO 8734",
+     "Certificate Form": "Digital",
+     "Certificate Type": "Material Certificate with Traceable Lot Number",
+     "End Shape": "Round × Chamfer/Round",
+     "End Type": "Plain",
+     "Performance": "High Strength",
+     "Pin Type": "Dowel",
+     "Shaft Type": "Plain",
+     "Steel Grade": "52100 Alloy Steel",
+     "System of Measurement": "Metric",
+     "Country of Origin": "United States, Belgium, Canada, China, France, Germany, India, Indonesia, Italy, Japan, Malaysia, Mexico, Philippines, Poland, South Korea, Switzerland, Taiwan, Thailand, Vietnam",
+     "DFARS Compliance": "Not Specialty Metals Compliant",
+     "Export Control Classification Number (ECCN)": "EAR99",
+     "REACH Compliance": "REACH (EC 1907/2006) (02/04/2026, 253 SVHC) Compliant",
+     "RoHS Compliance": "RoHS 3 (2015/863/EU) Compliant",
+     "Schedule B Number": "731829.0000",
+     "U.S.–Mexico–Canada Agreement (USMCA) Qualifying": "No"
+    },
+    "parsed": {
+     "Diameter": {
+      "value": 5.0,
+      "unit": "mm"
+     },
+     "Diameter Tolerance": {
+      "min": 0.004,
+      "max": 0.012,
+      "unit": "mm"
+     },
+     "Length": {
+      "value": 10.0,
+      "unit": "mm"
+     }
+    }
+   }
+  },
+  "cad": {
+   "file": null,
+   "kind": "pin",
+   "frame": "axis +Z, centred on the axis; the larger end (flange, head, collar) at z = 0 and the part on +z; when both ends are the same size, the heavier end at z = 0",
+   "available": true,
+   "step_url": "https://www.mcmaster.com/91595A340/",
+   "bbox_mm": null,
+   "volume_mm3": null,
+   "pending": "STEP not downloaded yet: McMaster-Carr asks for a login before CAD downloads (the product page itself reads without one). Finish with .venv/bin/python tools/mcmaster_cad.py --catalog --file catalog/turret.json --only turret_dowel_5x10 once logged in, or save the STEP from a logged-in browser as references/vendor/mcmaster/91595A340/91595A340.step and run the same command."
+  },
+  "frame": "axis +Z, centred on the axis; the larger end (flange, head, collar) at z = 0 and the part on +z; when both ends are the same size, the heavier end at z = 0",
+  "sources": [
+   "https://www.mcmaster.com/91595A340/"
+  ],
+  "confidence": "product page",
+  "used_for": "the turret's box adapter (cad/turret_box.py): the TM face's two dowels, pressed 6.5 mm into the deck, 3.5 mm proud into the pan base's 4 mm holes",
+  "qty_per_robot": 0
  },
  {
   "id": "mcmaster-98381a414",
@@ -5769,6 +5904,108 @@
   "used_for": "the bench stand's power switch on the 24 V input",
   "qty_per_robot": 1,
   "notes": "The DC-rated rocker sold by Digi-Key and Mouser. Same Ø20.2 hole as the Switch Components RA1-1A-DC-2-B-1 (the plan's choice: RS Americas $1.54, 7 in stock; TME $1.98), which is the backup."
+ },
+ {
+  "id": "wago-221-413",
+  "key": "wago-221-413",
+  "category": "wiring",
+  "vendor": "WAGO",
+  "model": "221-413",
+  "name": "WAGO 221-413 LEVER-NUTS compact splicing connector, 3 conductors, 24-12 AWG, 32 A / 450 V, transparent housing",
+  "price_usd": 0.84,
+  "price_note": "Newark 71Y8329 about $0.84 each at qty 1; Del City 907061 about $0.57 each, in stock (WebSearch summaries of the listings: the pages return 403 to curl and WebFetch)",
+  "price_checked": "2026-10-27",
+  "pack_qty": 1,
+  "buy": [
+   {
+    "seller": "Newark",
+    "url": "https://www.newark.com/wago/221-413/terminal-block-pluggable-3pos/dp/71Y8329",
+    "in_stock": null,
+    "ships_from": "US",
+    "seller_pn": "71Y8329",
+    "price_usd": 0.84,
+    "pack_qty": 1,
+    "stock": null,
+    "read_on": "2026-10-27",
+    "how_read": "WebSearch summary"
+   },
+   {
+    "seller": "Del City",
+    "url": "https://www.delcity.net/store/wire-connectors-quick-splices/wago-connectors/221-lever-nut-3-conductor/",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "907061",
+    "price_usd": 0.57,
+    "pack_qty": 1,
+    "stock": "in stock (search summary)",
+    "read_on": "2026-10-27",
+    "how_read": "WebSearch summary"
+   }
+  ],
+  "specs": {
+   "conductors": 3,
+   "wire_awg": "24-12 (solid, stranded, fine-stranded)",
+   "rated_current_a": 32,
+   "rated_voltage_v": 450,
+   "strip_mm": 11,
+   "datasheet": "https://www.mouser.com/datasheet/2/737/Data_Sheet221_413_-1928674.pdf"
+  },
+  "cad": {
+   "available": false
+  },
+  "sources": [
+   "https://www.newark.com/wago/221-413/terminal-block-pluggable-3pos/dp/71Y8329",
+   "https://www.delcity.net/store/wire-connectors-quick-splices/wago-connectors/221-lever-nut-3-conductor/"
+  ],
+  "confidence": "search summary",
+  "used_for": "the turret's box adapter (cad/turret_box.py): the control pod's joins: +24 V and 0 V from the switch and the XT60 to the DT12's power pins, the pendant's loop to its safety pins",
+  "qty_per_robot": 0,
+  "notes": "Newark, Del City, Galco, Arrow and Digi-Key (2946-221-413-ND) block automated reads; Home Depot also lists 10 and 50 packs. The 221-413/996-010 ten-pack is obsolete (its replacement 221-413/K006-0000); the loose 221-413 is active."
+ },
+ {
+  "id": "preson-p8106ulrl00-38xoh",
+  "key": "preson-p8106ul-3-8in",
+  "category": "turret",
+  "vendor": "Pres-On (Presbond)",
+  "model": "P8106ULRL00.38XOH",
+  "name": "Closed-cell neoprene/EPDM/SBR foam strip, 1/16 in thick x 3/8 in wide x 50 ft, rubber adhesive one side (P8106UL series, SC42UL)",
+  "price_usd": 10.95,
+  "price_note": "Presbond (Pres-On's own store): $10.95 per 50 ft roll",
+  "price_checked": "2026-10-27",
+  "pack_qty": 1,
+  "buy": [
+   {
+    "seller": "Presbond",
+    "url": "https://presbond.com/products/1-16-thick-neoprene-foam-strip-3-8-width-x-50-length-black-rubber-adhesive",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "P8106ULRL00.38XOH (variant 51479574741266)",
+    "price_usd": 10.95,
+    "pack_qty": 1,
+    "stock": "available: true (Shopify; no count exposed)",
+    "read_on": "2026-10-27",
+    "how_read": "json"
+   }
+  ],
+  "specs": {
+   "thickness_mm": 1.59,
+   "width_mm": 9.5,
+   "length_m": 15.2,
+   "density_pcf": "4-8",
+   "cells": "closed",
+   "adhesive": "high-tack rubber PSA, one side, release liner",
+   "flammability": "FMVSS 302, UL 94 HF1"
+  },
+  "cad": {
+   "available": false
+  },
+  "sources": [
+   "https://presbond.com/products/1-16-thick-neoprene-foam-strip-3-8-width-x-50-length-black-rubber-adhesive"
+  ],
+  "confidence": "product page",
+  "used_for": "the turret's box adapter (cad/turret_box.py): the seal ring under the intake shroud's floor lip (a 3 mm strip cut from the roll, laid round the lip at r 47-50; 1.6 mm squeezed to 1.0 mm between the lip and the J501 roof)",
+  "qty_per_robot": 0,
+  "notes": "Read from the store's Shopify product data (.js). 3/8 in is the narrowest single roll in 1/16 in: the 1/4 in strip comes only as an 8-roll pack ($68.95). Cut one 3 mm strip along the roll with a knife against a rule; the shroud's lip is the template."
  },
  {
   "id": "switchcomponents-ra1-1a-dc-2-b-1",
