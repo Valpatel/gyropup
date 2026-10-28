@@ -372,7 +372,7 @@ def mounts_for(items, B):
     PL.append(((bk.box[0] + bk.box[1]) / 2, (bk.box[2] + bk.box[3]) / 2, 3.4, '5 V buck on an M3 standoff'))
     fu = _get(items, 'plate_fuses')
     for x in (fu.box[0] + 10.0, fu.box[1] - 10.0):
-        for y in (fu.box[2] + 6.0, fu.box[3] - 6.0):
+        for y in (fu.box[2] + 6.0, 24.0):                 # y 24: P3's fuse board ties through the same slot (body_fuse_board.MOUNTS)
             PL.append(('slot', x, y, 4.0, 10.0, 2.0, 'cable-tie slot for the fuse bundle'))
     return m
 

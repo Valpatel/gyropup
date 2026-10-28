@@ -58,20 +58,21 @@ WIRES = [
      'the wheel: its battery current limit 20 A in VESC Tool (the fuse board\'s FL1 holders carry 22 A); its own lead carries the XT60H-M'),
     ('W15', '+ bus tap 4', 'VESC right +', 12, 'red', 'lug M6 / XT60H-F', 'MINI 58V 30 A', 'as W14'),
     ('W16', '+ bus tap 5', 'TRACO TEP 150-4812WI Vin+', 18, 'red', 'lug M6 / ferrule', 'MINI 58V 10 A', '150 W out: 5.6 A in at 30 V'),
-    ('W17', '+ bus tap 5', 'stop relay, pole B (in): the turret\'s branch', 16, 'red', 'lug M6 / screw terminal', 'MINI 58V 10 A',
-     'D66: the turret\'s own robot on the bus (its Orin NX ~40 W, flywheel bursts to ~140 W: 4.7 A at 30 V); the stop relay cuts it'),
+    ('W22', '+ bus tap 5', 'stop relay, pole B (in): the turret\'s branch', 16, 'red', 'lug M6 / screw terminal', 'MINI 58V 7.5 A',
+     'D66: the turret\'s own robot on the bus (its Orin NX ~40 W, flywheel bursts to ~140 W: 4.7 A at 30 V); 7.5 A keeps the G2RL-2\'s '
+     'contact under its 8 A (about 6 A breaking at 41 V: docs/body-fuse-board.md); the stop relay cuts it'),
     ('W18', '- bus taps 2-3', 'RS-04 x 4 (XT60H)', 14, 'black', 'lug M6 / XT60H-F', '-', 'returns, one per motor (the - of W10-W13\'s plugs)'),
     ('W19', '- bus tap 4', 'VESC left, right -', 12, 'black', 'lug M6 / XT60H-F', '-', 'returns (the - of W14-W15\'s plugs)'),
     ('W20', '- bus tap 5', 'TRACO Vin-, the turret\'s XT30U-F -', 16, 'black', 'lug M6 / ferrule / XT30', '-', 'returns'),
     # ---- 12 V (isolated; its - tied to the - bus at the star point)
     ('W21', 'TRACO +V', 'J501 DC-IN (XT30)', 16, 'red', 'ferrule / XT30U-F', 'MINI 10 A (inline)',
      'the J501 at 12 V (12-36 V in): 60 W peak, 5 A; its DC-IN adapter lead carries the XT30U-M'),
-    ('W22', 'TRACO +V', '12 V loads: lidar box, buck, jack, lights, eyes', 18, 'red', 'ferrule / Wago 221', 'MINI 7.5 A (inline)',
+    ('W43', 'TRACO +V', '12 V loads: lidar box, buck, jack, lights, eyes', 16, 'red', 'ferrule / Wago 221', 'MINI 58V 7.5 A (inline)',
      'about 40 W: the VLP-16 8 W (3 A at spin-up), the SSC1 pods, the eyes, the 5 V buck'),
     ('W23', 'TRACO -V', 'J501 return; star point', 16, 'black', 'ferrule / XT30U-F', '-', 'one tie from -V to the - bus (the CAN reference)'),
-    ('W24', '12 V loads (W22)', 'lidar interface box (XT30)', 18, 'red', 'Wago 221 / XT30U-F', '(W22\'s 7.5 A)', 'the box\'s lead carries the XT30U-M'),
-    ('W25', '12 V loads (W22)', '5 V buck VIN (Pololu D36V28F5)', 22, 'red', 'Wago 221 / solder', '(W22\'s 7.5 A)', '~0.6 A at 12 V'),
-    ('W26', '12 V loads (W22)', 'radio-stop jack pin 3 (+12 V)', 22, 'red', 'Wago 221 / jack', '(W22\'s 7.5 A)', 'D37: the jack offers 12 V'),
+    ('W24', '12 V loads (W43)', 'lidar interface box (XT30)', 18, 'red', 'Wago 221 / XT30U-F', '(W43\'s 7.5 A)', 'the box\'s lead carries the XT30U-M'),
+    ('W25', '12 V loads (W43)', '5 V buck VIN (Pololu D36V28F5)', 22, 'red', 'Wago 221 / solder', '(W43\'s 7.5 A)', '~0.6 A at 12 V'),
+    ('W26', '12 V loads (W43)', 'radio-stop jack pin 3 (+12 V)', 22, 'red', 'Wago 221 / jack', '(W43\'s 7.5 A)', 'D37: the jack offers 12 V'),
     ('W27', 'TRACO -V', 'lidar box, buck, jack GND', 18, 'black', 'ferrule', '-', 'the 12 V loads\' returns'),
     # ---- 5 V
     ('W28', '5 V buck VOUT', 'Nucleo E5V, 3 CAN Pal, VN-100, radio receiver', 22, 'red', 'solder / GH', '(the buck\'s 3.2 A limit)', '~1 A in all'),
@@ -84,14 +85,14 @@ WIRES = [
     ('W33', 'frame (a tray PEM stud)', '- bus star point', 14, 'green', 'ring M5 / lug M6', '-',
      'a + short to the frame blows a fuse, not leaves it live; 14 AWG: a + lead chafed ahead of its branch fuse puts the MRBF\'s let-through on it'),
     # ---- the turret (D66: its own robot; power on an XT30, Ethernet to the J501, the dry safety loop)
-    ('W34', 'stop relay, pole B (out)', 'the turret\'s XT30U-F +', 16, 'red', 'screw terminal / XT30U-F', 'MINI 58V 10 A (W17)',
+    ('W34', 'stop relay, pole B (out)', 'the turret\'s XT30U-F +', 16, 'red', 'screw terminal / XT30U-F', 'MINI 58V 7.5 A (W22)',
      'dead whenever the stop relay is open; the turret\'s lead carries the XT30U-M'),
     ('W36', 'J501 Ethernet (its second port or a switch)', 'the turret\'s RJ45', None, 'blue', 'Cat 6, 0.5 m', '-', 'D66: the turret\'s link (it had can1)'),
     ('W37', 'stop relay, pole A (closed = run)', 'the turret\'s safety loop (SAFETY_A, SAFETY_B)', 22, 'white', 'twisted pair', '-',
      'the turret\'s dry safety loop (12 V at 2 mA; D41 D7: it cuts the flywheels and the dial in hardware)'),
     ('W38', 'stop relay coil, + side', 'MCU STOP sense (divider 12 V to 3.3 V)', 22, 'white', 'GH', '-',
      '12 V on the coil = the radio says run: the MCU sits the robot down when it drops (D37)'),
-    ('W39', '12 V loads (W22) via the RC switch\'s contact', 'stop relay coil, + side', 22, 'red', 'solder / screw terminal', '(W22\'s 7.5 A)',
+    ('W39', '12 V loads (W43) via the RC switch\'s contact', 'stop relay coil, + side', 22, 'red', 'solder / screw terminal', '(W43\'s 7.5 A)',
      'the coil (12 V, 33 mA) is fed only while the radio says run; its - side through the MCU\'s MOSFET (MCU_RUN), a diode across it'),
 ]
 
@@ -104,7 +105,7 @@ CAN = [
 STOP = ('The radio stop (D37, D55): the ER3C-i receiver (failsafe: no pulses) drives one Pololu RC relay switch; its contact feeds '
         'the coil of the stop relay (Omron G2RL-2, DPDT, 12 V), whose other end goes to ground through the MCU\'s MOSFET. The relay '
         'holds only while the radio says run AND the MCU says run. Pole A is the turret\'s dry safety loop (TM pins 7, 8: the turret '
-        'cuts its flywheels and dial in 20 ms), pole B is in the turret\'s 24 V branch (the independent cut); the MCU senses the coil '
+        'cuts its flywheels and dial in 20 ms), pole B is in the turret\'s bus branch (W22, W34: the independent cut); the MCU senses the coil '
         'voltage and sits the robot down when the radio drops, and opens the relay itself when the robot sits. The main switch is the '
         'hard off.')
 
@@ -159,7 +160,7 @@ def svg() -> str:
     # branches
     loads = [('RS-04 L front', 'XT60H', 20, 14, 'W10'), ('RS-04 L rear', 'XT60H', 20, 14, 'W11'), ('RS-04 R front', 'XT60H', 20, 14, 'W12'),
              ('RS-04 R rear', 'XT60H', 20, 14, 'W13'), ('VESC left (75100)', 'XT60H', 30, 12, 'W14'), ('VESC right (75100)', 'XT60H', 30, 12, 'W15'),
-             ('TRACO TEP 150-4812WI in', 'ferrules', 10, 18, 'W16'), ('Turret (stop relay B, XT30)', 'XT30', 10, 16, 'W17')]
+             ('TRACO TEP 150-4812WI in', 'ferrules', 10, 18, 'W16'), ('Turret (stop relay B, XT30)', 'XT30', 7.5, 16, 'W22')]
     for i, (name, conn, amps, awg, wid) in enumerate(loads):
         y = 95 + 38 * i
         wire([(580, y), (700, y)], 'red', f'{wid} {awg} AWG', 0, 30, -5, width=2.2)
@@ -175,7 +176,7 @@ def svg() -> str:
     box(1180, 380, 150, 30, 'Lidar box (VLP-16)', [], fill='#e8f0ff')
     box(1180, 420, 150, 30, '5 V buck D36V28F5', [], fill='#e8f0ff')
     box(1180, 460, 150, 30, 'Radio-stop jack, lights', [], fill='#e8f0ff')
-    wire([(1100, 385), (1140, 385), (1140, 395), (1180, 395)], 'red', 'W22 W24 18', 0, 4, -5, width=2)
+    wire([(1100, 385), (1140, 385), (1140, 395), (1180, 395)], 'red', 'W43 W24 16', 0, 4, -5, width=2)
     fuse(1140, 410, '7.5 A')
     wire([(1140, 420), (1140, 435), (1180, 435)], 'red', 'W25 22', 1, 8, 14, width=1.6)
     wire([(1140, 435), (1140, 475), (1180, 475)], 'red', 'W26 22', 1, 8, 14, width=1.6)

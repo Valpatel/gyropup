@@ -199,7 +199,7 @@ def made_to_order(body, prices=None):
     if prices is None:
         prices = json.loads(PRICES.read_text()) if PRICES.exists() else {}
     est = {'cheek': 60.0, 'floor_tray': 62.0, 'belly_plate': 33.0, 'deck': 65.0, 'compute_pallet': 30.0, 'power_plate': 39.0, 'bus_bar': 17.0,
-           'turret_plate': 25.0, 'tub_floor': 45.0, 'tub_side': 30.0}
+           'turret_plate': 25.0, 'bay_floor': 50.0, 'bay_side': 13.0}
     out = []
     for name, s in body['sheet'].items():
         spec = [f"{s['material']}, {s['thickness_in']} in ({s['thickness_mm']} mm); qty {s['qty']}; flat {s['flat_mm'][0]} x {s['flat_mm'][1]} mm"]
@@ -264,7 +264,8 @@ def build():
             L('mrbf_80a', 2, 'the main fuse (80 A, 58 V DC, 2 kA at 58 V); one spare'),
             L('fuse_mini58_20a', 8, 'the four RS-04 branches (14 AWG); four spares'),
             L('fuse_mini58_30a', 4, 'the two VESC branches (12 AWG; the VESCs\' battery current limit 20 A); two spares'),
-            L('fuse_mini58_10a', 8, 'the TRACO input (W16), the turret\'s branch (W17), the J501 (W21) and the 12 V loads (W22); four spares'),
+            L('fuse_mini58_10a', 4, 'the TRACO input (W16) and the J501 (W21); two spares'),
+            L('fuse_mini58_7a5', 4, 'the turret\'s branch (W22: the stop relay\'s contact carries 8 A) and the 12 V loads (W43); two spares'),
             L('fuse_mini58_5a', 2, 'the INA228\'s VBUS sense lead (W32, 22 AWG); one spare'),
             L('fuse_holder_mini_inline', 12, 'one per branch (11) and a spare: labelled "58 V fuses only"; pull only with the packs out'),
             L('traco-tep-150-4812wi', 1, '12 V 12.5 A, 18-75 V in, isolated (D65): the J501 and the 12 V rail, in place of the DDR-120C-24 '

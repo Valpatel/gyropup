@@ -163,14 +163,14 @@
    "why": "150 W out: 5.6 A in at 30 V"
   },
   {
-   "id": "W17",
+   "id": "W22",
    "from": "+ bus tap 5",
    "to": "stop relay, pole B (in): the turret's branch",
    "awg": 16,
    "colour": "red",
    "termination": "lug M6 / screw terminal",
-   "fuse": "MINI 58V 10 A",
-   "why": "D66: the turret's own robot on the bus (its Orin NX ~40 W, flywheel bursts to ~140 W: 4.7 A at 30 V); the stop relay cuts it"
+   "fuse": "MINI 58V 7.5 A",
+   "why": "D66: the turret's own robot on the bus (its Orin NX ~40 W, flywheel bursts to ~140 W: 4.7 A at 30 V); 7.5 A keeps the G2RL-2's contact under its 8 A (about 6 A breaking at 41 V: docs/body-fuse-board.md); the stop relay cuts it"
   },
   {
    "id": "W18",
@@ -213,13 +213,13 @@
    "why": "the J501 at 12 V (12-36 V in): 60 W peak, 5 A; its DC-IN adapter lead carries the XT30U-M"
   },
   {
-   "id": "W22",
+   "id": "W43",
    "from": "TRACO +V",
    "to": "12 V loads: lidar box, buck, jack, lights, eyes",
-   "awg": 18,
+   "awg": 16,
    "colour": "red",
    "termination": "ferrule / Wago 221",
-   "fuse": "MINI 7.5 A (inline)",
+   "fuse": "MINI 58V 7.5 A (inline)",
    "why": "about 40 W: the VLP-16 8 W (3 A at spin-up), the SSC1 pods, the eyes, the 5 V buck"
   },
   {
@@ -234,32 +234,32 @@
   },
   {
    "id": "W24",
-   "from": "12 V loads (W22)",
+   "from": "12 V loads (W43)",
    "to": "lidar interface box (XT30)",
    "awg": 18,
    "colour": "red",
    "termination": "Wago 221 / XT30U-F",
-   "fuse": "(W22's 7.5 A)",
+   "fuse": "(W43's 7.5 A)",
    "why": "the box's lead carries the XT30U-M"
   },
   {
    "id": "W25",
-   "from": "12 V loads (W22)",
+   "from": "12 V loads (W43)",
    "to": "5 V buck VIN (Pololu D36V28F5)",
    "awg": 22,
    "colour": "red",
    "termination": "Wago 221 / solder",
-   "fuse": "(W22's 7.5 A)",
+   "fuse": "(W43's 7.5 A)",
    "why": "~0.6 A at 12 V"
   },
   {
    "id": "W26",
-   "from": "12 V loads (W22)",
+   "from": "12 V loads (W43)",
    "to": "radio-stop jack pin 3 (+12 V)",
    "awg": 22,
    "colour": "red",
    "termination": "Wago 221 / jack",
-   "fuse": "(W22's 7.5 A)",
+   "fuse": "(W43's 7.5 A)",
    "why": "D37: the jack offers 12 V"
   },
   {
@@ -339,7 +339,7 @@
    "awg": 16,
    "colour": "red",
    "termination": "screw terminal / XT30U-F",
-   "fuse": "MINI 58V 10 A (W17)",
+   "fuse": "MINI 58V 7.5 A (W22)",
    "why": "dead whenever the stop relay is open; the turret's lead carries the XT30U-M"
   },
   {
@@ -374,12 +374,12 @@
   },
   {
    "id": "W39",
-   "from": "12 V loads (W22) via the RC switch's contact",
+   "from": "12 V loads (W43) via the RC switch's contact",
    "to": "stop relay coil, + side",
    "awg": 22,
    "colour": "red",
    "termination": "solder / screw terminal",
-   "fuse": "(W22's 7.5 A)",
+   "fuse": "(W43's 7.5 A)",
    "why": "the coil (12 V, 33 mA) is fed only while the radio says run; its - side through the MCU's MOSFET (MCU_RUN), a diode across it"
   }
  ],
@@ -413,5 +413,5 @@
    "note": "1 Mbit/s: wheels, the computer"
   }
  ],
- "stop": "The radio stop (D37, D55): the ER3C-i receiver (failsafe: no pulses) drives one Pololu RC relay switch; its contact feeds the coil of the stop relay (Omron G2RL-2, DPDT, 12 V), whose other end goes to ground through the MCU's MOSFET. The relay holds only while the radio says run AND the MCU says run. Pole A is the turret's dry safety loop (TM pins 7, 8: the turret cuts its flywheels and dial in 20 ms), pole B is in the turret's 24 V branch (the independent cut); the MCU senses the coil voltage and sits the robot down when the radio drops, and opens the relay itself when the robot sits. The main switch is the hard off."
+ "stop": "The radio stop (D37, D55): the ER3C-i receiver (failsafe: no pulses) drives one Pololu RC relay switch; its contact feeds the coil of the stop relay (Omron G2RL-2, DPDT, 12 V), whose other end goes to ground through the MCU's MOSFET. The relay holds only while the radio says run AND the MCU says run. Pole A is the turret's dry safety loop (TM pins 7, 8: the turret cuts its flywheels and dial in 20 ms), pole B is in the turret's bus branch (W22, W34: the independent cut); the MCU senses the coil voltage and sits the robot down when the radio drops, and opens the relay itself when the robot sits. The main switch is the hard off."
 }

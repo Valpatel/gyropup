@@ -166,8 +166,8 @@
   {
    "key": "fuse_mini58_10a",
    "id": "littelfuse-0997010",
-   "qty": 8,
-   "for": "the TRACO input (W16), the turret's branch (W17), the J501 (W21) and the 12 V loads (W22); four spares",
+   "qty": 4,
+   "for": "the TRACO input (W16) and the J501 (W21); two spares",
    "vendor": "Littelfuse",
    "part_number": "0997010.WXN",
    "name": "Littelfuse MINI 58V blade fuse 10 A (DDR-120C-24 input, the charge port)",
@@ -194,6 +194,40 @@
      "read_on": "2026-10-27",
      "price_usd": 0.66,
      "seller_pn": "C207027"
+    }
+   ]
+  },
+  {
+   "key": "fuse_mini58_7a5",
+   "id": "littelfuse-099707.5",
+   "qty": 4,
+   "for": "the turret's branch (W22: the stop relay's contact carries 8 A) and the 12 V loads (W43); two spares",
+   "vendor": "Littelfuse",
+   "part_number": "099707.5WXN",
+   "name": "Littelfuse MINI 58V blade fuse 7.5 A (the turret's feed W22 and the 12 V rail W43, D66)",
+   "mass_g_each": null,
+   "price_usd_each": 0.5766,
+   "url": "https://www.lcsc.com/product-detail/C2680610.html",
+   "sellers": [
+    {
+     "seller": "LCSC",
+     "url": "https://www.lcsc.com/product-detail/C2680610.html",
+     "in_stock": true,
+     "ships_from": "CN",
+     "stock": "3,810",
+     "read_on": "2026-10-27",
+     "price_usd": 0.5766,
+     "seller_pn": "C2680610"
+    },
+    {
+     "seller": "LCSC (other suppliers)",
+     "url": "https://www.lcsc.com/product-detail/C2680610.html",
+     "in_stock": true,
+     "ships_from": "CN",
+     "stock": "3,000 (5-7 business days)",
+     "read_on": "2026-10-27",
+     "price_usd": 0.3118,
+     "seller_pn": "C2680610"
     }
    ]
   },
@@ -2004,7 +2038,7 @@
    "vendor": "SendCutSend (sendcutsend.com: upload the DXF, pick the material, add the services above)",
    "backup": "OSH Cut (oshcut.com: instant price from the DXF or STEP; bends and PEM nuts)",
    "material": "5052-H32 aluminium 0.125 in",
-   "mass_g_each": 752.2,
+   "mass_g_each": 752.6,
    "size_mm": [
     339.0,
     273.0,
@@ -2016,7 +2050,7 @@
    "spec": [
     "5052-H32 aluminium, 0.125 in (3.175 mm); qty 1; flat 339.0 x 273.0 mm",
     "4 bends, 90 deg, SendCutSend's 0.125 in radius (K 0.44, bend deduction 0.216 in): the DXF's BEND layer marks the lines (the app reads them; each 90 deg UP); flanges as the STEP",
-    "6 x PEM S-M4-0 pressed by SendCutSend (hardware insertion), positions as the STEP",
+    "4 x PEM S-M4-0 pressed by SendCutSend (hardware insertion), positions as the STEP",
     "tapping: the two \u00d82.5 holes M3 x 0.5 (the VN-100)",
     "deburr (SendCutSend's deburring); no finish needed"
    ],
@@ -2042,7 +2076,7 @@
    "vendor": "SendCutSend (sendcutsend.com: upload the DXF, pick the material, add the services above)",
    "backup": "OSH Cut (oshcut.com: instant price from the DXF or STEP; bends and PEM nuts)",
    "material": "6061-T6 aluminium 0.1 in",
-   "mass_g_each": 239.7,
+   "mass_g_each": 247.4,
    "size_mm": [
     320.0,
     116.0,
@@ -2053,7 +2087,7 @@
    "drawing": "exports/body/sendcutsend/belly_plate_6061-T6_0.100in_x1.dxf",
    "spec": [
     "6061-T6 aluminium, 0.1 in (2.54 mm); qty 1; flat 320.0 x 116.0 mm",
-    "12 x PEM SS-M5-0 pressed by SendCutSend (hardware insertion), positions as the STEP",
+    "16 x PEM S-M4-0 pressed by SendCutSend (hardware insertion), positions as the STEP",
     "deburr (SendCutSend's deburring); no finish needed"
    ],
    "rules": "SendCutSend rules checked: none broken",
@@ -2078,7 +2112,7 @@
    "vendor": "SendCutSend (sendcutsend.com: upload the DXF, pick the material, add the services above)",
    "backup": "OSH Cut (oshcut.com: instant price from the DXF or STEP; bends and PEM nuts)",
    "material": "5052-H32 aluminium 0.1 in",
-   "mass_g_each": 647.6,
+   "mass_g_each": 647.3,
    "size_mm": [
     350.3,
     284.3,
@@ -2150,7 +2184,7 @@
    "vendor": "SendCutSend (sendcutsend.com: upload the DXF, pick the material, add the services above)",
    "backup": "OSH Cut (oshcut.com: instant price from the DXF or STEP; bends and PEM nuts)",
    "material": "6061-T6 aluminium 0.125 in",
-   "mass_g_each": 132.6,
+   "mass_g_each": 132.5,
    "size_mm": [
     160.0,
     140.0,
@@ -2254,76 +2288,56 @@
    "stage": "P1"
   },
   {
-   "key": "tub_floor",
+   "key": "bay_floor",
    "qty": 1,
    "vendor": "SendCutSend (sendcutsend.com: upload the DXF, pick the material, add the services above)",
    "backup": "OSH Cut (oshcut.com: instant price from the DXF or STEP; bends and PEM nuts)",
    "material": "5052-H32 aluminium 0.063 in",
-   "mass_g_each": 150.0,
+   "mass_g_each": 174.1,
    "size_mm": [
-    302.0,
-    116.9,
+    310.0,
+    134.0,
     1.6
    ],
-   "step": "exports/body/sendcutsend/tub_floor_5052-H32_0.063in_x1.step",
-   "dxf": "exports/body/sendcutsend/tub_floor_5052-H32_0.063in_x1.dxf",
-   "drawing": "exports/body/sendcutsend/tub_floor_5052-H32_0.063in_x1.dxf",
+   "step": "exports/body/sendcutsend/bay_floor_5052-H32_0.063in_x1.step",
+   "dxf": "exports/body/sendcutsend/bay_floor_5052-H32_0.063in_x1.dxf",
+   "drawing": "exports/body/sendcutsend/bay_floor_5052-H32_0.063in_x1.dxf",
    "spec": [
-    "5052-H32 aluminium, 0.063 in (1.6 mm); qty 1; flat 302.0 x 116.9 mm",
+    "5052-H32 aluminium, 0.063 in (1.6 mm); qty 1; flat 310.0 x 134.0 mm",
     "2 bends, 90 deg, SendCutSend's 0.035 in radius (K 0.42, bend deduction 0.096 in): the DXF's BEND layer marks the lines (the app reads them; each 90 deg UP); flanges as the STEP",
     "10 x PEM S-M3-0 pressed by SendCutSend (hardware insertion), positions as the STEP",
     "deburr (SendCutSend's deburring); no finish needed"
    ],
    "rules": "SendCutSend rules checked: none broken",
-   "price_estimate_usd_each": 45.0,
-   "price_usd_each": 50.06,
-   "price_read_on": "2026-10-27",
-   "price_usd_line": 50.06,
-   "price_breaks_usd_each": {
-    "2": 34.23,
-    "10": 23.2,
-    "50": 17.09,
-    "100": 14.9,
-    "1000": 12.09
-   },
-   "ships_by": "Nov 2",
-   "price_note": "SendCutSend's instant price, read in its app on 2026-10-27 from the uploaded DXF (tools/sendcutsend_quote.py): 5052-H32 aluminium 0.063 in, bending 2 bends found in the DXF's BEND layer, each 90 deg UP, hardware 1, deburred, qty 1; cutting alone $26.48 each",
-   "stage": "P3"
+   "price_estimate_usd_each": null,
+   "price_usd_each": null,
+   "price_note": "an estimate until the instant price is read: run tools/sendcutsend_quote.py --only bay_floor",
+   "stage": "P1"
   },
   {
-   "key": "tub_side",
+   "key": "bay_side",
    "qty": 2,
    "vendor": "SendCutSend (sendcutsend.com: upload the DXF, pick the material, add the services above)",
    "backup": "OSH Cut (oshcut.com: instant price from the DXF or STEP; bends and PEM nuts)",
    "material": "5052-H32 aluminium 0.063 in",
-   "mass_g_each": 83.3,
+   "mass_g_each": 108.0,
    "size_mm": [
-    302.0,
-    64.6,
+    310.0,
+    128.6,
     1.6
    ],
-   "step": "exports/body/sendcutsend/tub_side_5052-H32_0.063in_x2.step",
-   "dxf": "exports/body/sendcutsend/tub_side_5052-H32_0.063in_x2.dxf",
-   "drawing": "exports/body/sendcutsend/tub_side_5052-H32_0.063in_x2.dxf",
+   "step": "exports/body/sendcutsend/bay_side_5052-H32_0.063in_x2.step",
+   "dxf": "exports/body/sendcutsend/bay_side_5052-H32_0.063in_x2.dxf",
+   "drawing": "exports/body/sendcutsend/bay_side_5052-H32_0.063in_x2.dxf",
    "spec": [
-    "5052-H32 aluminium, 0.063 in (1.6 mm); qty 2; flat 302.0 x 64.6 mm",
+    "5052-H32 aluminium, 0.063 in (1.6 mm); qty 2; flat 310.0 x 128.6 mm",
     "deburr (SendCutSend's deburring); no finish needed"
    ],
    "rules": "SendCutSend rules checked: none broken",
-   "price_estimate_usd_each": 30.0,
-   "price_usd_each": 12.98,
-   "price_read_on": "2026-10-27",
-   "price_usd_line": 25.96,
-   "price_breaks_usd_each": {
-    "2": 12.98,
-    "10": 8.71,
-    "50": 5.96,
-    "100": 5.15,
-    "1000": 4.23
-   },
-   "ships_by": "Nov 2",
-   "price_note": "SendCutSend's instant price, read in its app on 2026-10-27 from the uploaded DXF (tools/sendcutsend_quote.py): 5052-H32 aluminium 0.063 in, cut only, deburred, qty 2; cutting alone $15.53 each",
-   "stage": "P3"
+   "price_estimate_usd_each": null,
+   "price_usd_each": null,
+   "price_note": "an estimate until the instant price is read: run tools/sendcutsend_quote.py --only bay_side",
+   "stage": "P1"
   }
  ],
  "to_source": [
@@ -2487,10 +2501,10 @@
    ]
   }
  ],
- "price_usd_known": 1607.93,
+ "price_usd_known": 1608.6,
  "p2_usd": 55.23,
  "made_to_order_estimate_usd": 383.0,
- "p3_usd": 160.05,
+ "p3_usd": 84.03,
  "made_to_order_usd": 483.17,
- "made_to_order_priced": true
+ "made_to_order_priced": false
 }

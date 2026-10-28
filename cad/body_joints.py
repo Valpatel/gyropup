@@ -541,7 +541,7 @@ def run(parts, items=None, stages=('P1', 'P2', 'P3'), clashes=None):
             rows = check_joint(j, S, st)
             bad = [r for r in rows if r['problems']]
             report['joints'].append({'joint': j.name, 'stage': st, 'screw': f'{j.thread} x {j.length:g} {j.head}', 'count': len(j.at),
-                                     'stack': list(j.stack), 'receiver': list(j.receiver), 'bom': j.bom, 'note': j.note,
+                                     'stack': list(j.stack), 'receiver': list(j.receiver), 'bom': j.bom, 'note': j.note, 'screw_part': j.screw_part,
                                      'grip_mm': sorted({r['grip_mm'] for r in rows}), 'engagement_mm': sorted({r['engagement_mm'] for r in rows if r['engagement_mm'] is not None}),
                                      'problems': [{'at': r['at'], 'problems': r['problems']} for r in bad]})
         report['floating'][st] = connectivity([n for n in shapes if not n.startswith('leg.')], J, H, st)

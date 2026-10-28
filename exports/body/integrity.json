@@ -381,7 +381,7 @@
   {
    "joint": "isolator_1",
    "stage": "P1",
-   "screw": "M4 x 25 socket",
+   "screw": "M4 x 20 socket",
    "count": 1,
    "stack": [
     "isolator_1",
@@ -391,20 +391,20 @@
     "pem",
     "floor_tray"
    ],
-   "bom": "screw_m4x25",
+   "bom": "screw_m4x20",
    "note": "a TPU isolator (snug, not tight): an M4 x 20 and a washer through its cap and foot into the tray's nut",
    "grip_mm": [
-    18.65
+    17.15
    ],
    "engagement_mm": [
-    4.76
+    3.61
    ],
    "problems": []
   },
   {
    "joint": "isolator_2",
    "stage": "P1",
-   "screw": "M4 x 25 socket",
+   "screw": "M4 x 20 socket",
    "count": 1,
    "stack": [
     "isolator_2",
@@ -414,20 +414,20 @@
     "pem",
     "floor_tray"
    ],
-   "bom": "screw_m4x25",
+   "bom": "screw_m4x20",
    "note": "a TPU isolator (snug, not tight): an M4 x 20 and a washer through its cap and foot into the tray's nut",
    "grip_mm": [
-    18.65
+    17.15
    ],
    "engagement_mm": [
-    4.76
+    3.61
    ],
    "problems": []
   },
   {
    "joint": "isolator_3",
    "stage": "P1",
-   "screw": "M4 x 25 socket",
+   "screw": "M4 x 20 socket",
    "count": 1,
    "stack": [
     "isolator_3",
@@ -437,20 +437,20 @@
     "pem",
     "floor_tray"
    ],
-   "bom": "screw_m4x25",
+   "bom": "screw_m4x20",
    "note": "a TPU isolator (snug, not tight): an M4 x 20 and a washer through its cap and foot into the tray's nut",
    "grip_mm": [
-    18.65
+    17.15
    ],
    "engagement_mm": [
-    4.76
+    3.61
    ],
    "problems": []
   },
   {
    "joint": "isolator_4",
    "stage": "P1",
-   "screw": "M4 x 25 socket",
+   "screw": "M4 x 20 socket",
    "count": 1,
    "stack": [
     "isolator_4",
@@ -460,13 +460,13 @@
     "pem",
     "floor_tray"
    ],
-   "bom": "screw_m4x25",
+   "bom": "screw_m4x20",
    "note": "a TPU isolator (snug, not tight): an M4 x 20 and a washer through its cap and foot into the tray's nut",
    "grip_mm": [
-    18.65
+    17.15
    ],
    "engagement_mm": [
-    4.76
+    3.61
    ],
    "problems": []
   },
@@ -659,7 +659,7 @@
     "insert",
     "dcdc_bracket"
    ],
-   "bom": "screw_m3x6_pan",
+   "bom": "screw_m3x6",
    "note": "the converter's base flange (its slots) on the bracket's upright",
    "grip_mm": [
     8.0
@@ -672,7 +672,7 @@
   {
    "joint": "dcdc_bracket",
    "stage": "P1",
-   "screw": "M4 x 8 socket",
+   "screw": "M4 x 12 socket",
    "count": 2,
    "stack": [
     "dcdc_bracket",
@@ -682,7 +682,7 @@
     "pem",
     "power_plate"
    ],
-   "bom": "screw_m4x8",
+   "bom": "screw_m4x12_socket",
    "note": "the converter's bracket down into the plate's flush nuts (the switch hangs 3 mm under the plate)",
    "grip_mm": [
     6.54
@@ -824,23 +824,12 @@
    "engagement_mm": [
     2.54
    ],
-   "problems": [
-    {
-     "at": [
-      141.0,
-      29.15,
-      131.68
-     ],
-     "problems": [
-      "the tip hits item.plate_mrbf_block at 6.5 mm"
-     ]
-    }
-   ]
+   "problems": []
   },
   {
    "joint": "bay_rail_l",
    "stage": "P1",
-   "screw": "M4 x 16 socket",
+   "screw": "M4 x 20 socket",
    "count": 4,
    "stack": [
     "bay_rail_l",
@@ -850,13 +839,13 @@
     "pem",
     "belly_plate"
    ],
-   "bom": "screw_m4x16",
+   "bom": "screw_m4x20",
    "note": "a bay rail up into the belly's nuts, beyond the cheeks' ends",
    "grip_mm": [
     12.54
    ],
    "engagement_mm": [
-    4.22
+    4.76
    ],
    "problems": []
   },
@@ -873,7 +862,7 @@
     "pem",
     "bay_floor"
    ],
-   "bom": "screw_m3x6_button",
+   "bom": "screw_m3x6",
    "note": "a side plate into the floor's flange nuts",
    "grip_mm": [
     3.25
@@ -895,7 +884,7 @@
     "insert",
     "bay_rail_l"
    ],
-   "bom": "screw_m3x6_button",
+   "bom": "screw_m3x6",
    "note": "a side plate into its rail's inserts",
    "grip_mm": [
     1.6
@@ -908,7 +897,7 @@
   {
    "joint": "bay_rail_r",
    "stage": "P1",
-   "screw": "M4 x 16 socket",
+   "screw": "M4 x 20 socket",
    "count": 4,
    "stack": [
     "bay_rail_r",
@@ -918,13 +907,13 @@
     "pem",
     "belly_plate"
    ],
-   "bom": "screw_m4x16",
+   "bom": "screw_m4x20",
    "note": "a bay rail up into the belly's nuts, beyond the cheeks' ends",
    "grip_mm": [
     12.54
    ],
    "engagement_mm": [
-    4.22
+    4.76
    ],
    "problems": []
   },
@@ -941,7 +930,7 @@
     "pem",
     "bay_floor"
    ],
-   "bom": "screw_m3x6_button",
+   "bom": "screw_m3x6",
    "note": "a side plate into the floor's flange nuts",
    "grip_mm": [
     3.25
@@ -963,7 +952,7 @@
     "insert",
     "bay_rail_r"
    ],
-   "bom": "screw_m3x6_button",
+   "bom": "screw_m3x6",
    "note": "a side plate into its rail's inserts",
    "grip_mm": [
     1.6
@@ -976,7 +965,7 @@
   {
    "joint": "adapter_plate_front",
    "stage": "P1",
-   "screw": "M4 x 8 socket",
+   "screw": "M4 x 12 socket",
    "count": 4,
    "stack": [
     "adapter_plate_front",
@@ -986,13 +975,13 @@
     "pem",
     "belly_plate"
    ],
-   "bom": "screw_m4x8",
+   "bom": "screw_m4x12_socket",
    "note": "a pack adapter's printed plate up into the belly's nuts (heads counterbored 1.5 mm)",
    "grip_mm": [
     5.04
    ],
    "engagement_mm": [
-    3.72
+    4.76
    ],
    "problems": []
   },
@@ -1043,7 +1032,7 @@
   {
    "joint": "adapter_plate_rear",
    "stage": "P1",
-   "screw": "M4 x 8 socket",
+   "screw": "M4 x 12 socket",
    "count": 4,
    "stack": [
     "adapter_plate_rear",
@@ -1053,13 +1042,13 @@
     "pem",
     "belly_plate"
    ],
-   "bom": "screw_m4x8",
+   "bom": "screw_m4x12_socket",
    "note": "a pack adapter's printed plate up into the belly's nuts (heads counterbored 1.5 mm)",
    "grip_mm": [
     5.04
    ],
    "engagement_mm": [
-    3.72
+    4.76
    ],
    "problems": []
   },
@@ -1558,7 +1547,7 @@
   {
    "joint": "isolator_1",
    "stage": "P3",
-   "screw": "M4 x 25 socket",
+   "screw": "M4 x 20 socket",
    "count": 1,
    "stack": [
     "isolator_1",
@@ -1568,20 +1557,20 @@
     "pem",
     "floor_tray"
    ],
-   "bom": "screw_m4x25",
+   "bom": "screw_m4x20",
    "note": "a TPU isolator (snug, not tight): an M4 x 20 and a washer through its cap and foot into the tray's nut",
    "grip_mm": [
-    18.65
+    17.15
    ],
    "engagement_mm": [
-    4.76
+    3.61
    ],
    "problems": []
   },
   {
    "joint": "isolator_2",
    "stage": "P3",
-   "screw": "M4 x 25 socket",
+   "screw": "M4 x 20 socket",
    "count": 1,
    "stack": [
     "isolator_2",
@@ -1591,20 +1580,20 @@
     "pem",
     "floor_tray"
    ],
-   "bom": "screw_m4x25",
+   "bom": "screw_m4x20",
    "note": "a TPU isolator (snug, not tight): an M4 x 20 and a washer through its cap and foot into the tray's nut",
    "grip_mm": [
-    18.65
+    17.15
    ],
    "engagement_mm": [
-    4.76
+    3.61
    ],
    "problems": []
   },
   {
    "joint": "isolator_3",
    "stage": "P3",
-   "screw": "M4 x 25 socket",
+   "screw": "M4 x 20 socket",
    "count": 1,
    "stack": [
     "isolator_3",
@@ -1614,20 +1603,20 @@
     "pem",
     "floor_tray"
    ],
-   "bom": "screw_m4x25",
+   "bom": "screw_m4x20",
    "note": "a TPU isolator (snug, not tight): an M4 x 20 and a washer through its cap and foot into the tray's nut",
    "grip_mm": [
-    18.65
+    17.15
    ],
    "engagement_mm": [
-    4.76
+    3.61
    ],
    "problems": []
   },
   {
    "joint": "isolator_4",
    "stage": "P3",
-   "screw": "M4 x 25 socket",
+   "screw": "M4 x 20 socket",
    "count": 1,
    "stack": [
     "isolator_4",
@@ -1637,13 +1626,13 @@
     "pem",
     "floor_tray"
    ],
-   "bom": "screw_m4x25",
+   "bom": "screw_m4x20",
    "note": "a TPU isolator (snug, not tight): an M4 x 20 and a washer through its cap and foot into the tray's nut",
    "grip_mm": [
-    18.65
+    17.15
    ],
    "engagement_mm": [
-    4.76
+    3.61
    ],
    "problems": []
   },
@@ -1836,7 +1825,7 @@
     "insert",
     "dcdc_bracket"
    ],
-   "bom": "screw_m3x6_pan",
+   "bom": "screw_m3x6",
    "note": "the converter's base flange (its slots) on the bracket's upright",
    "grip_mm": [
     8.0
@@ -1849,7 +1838,7 @@
   {
    "joint": "dcdc_bracket",
    "stage": "P3",
-   "screw": "M4 x 8 socket",
+   "screw": "M4 x 12 socket",
    "count": 2,
    "stack": [
     "dcdc_bracket",
@@ -1859,7 +1848,7 @@
     "pem",
     "power_plate"
    ],
-   "bom": "screw_m4x8",
+   "bom": "screw_m4x12_socket",
    "note": "the converter's bracket down into the plate's flush nuts (the switch hangs 3 mm under the plate)",
    "grip_mm": [
     6.54
@@ -2001,23 +1990,12 @@
    "engagement_mm": [
     2.54
    ],
-   "problems": [
-    {
-     "at": [
-      141.0,
-      29.15,
-      131.68
-     ],
-     "problems": [
-      "the tip hits item.plate_mrbf_block at 6.5 mm"
-     ]
-    }
-   ]
+   "problems": []
   },
   {
    "joint": "bay_rail_l",
    "stage": "P3",
-   "screw": "M4 x 16 socket",
+   "screw": "M4 x 20 socket",
    "count": 4,
    "stack": [
     "bay_rail_l",
@@ -2027,13 +2005,13 @@
     "pem",
     "belly_plate"
    ],
-   "bom": "screw_m4x16",
+   "bom": "screw_m4x20",
    "note": "a bay rail up into the belly's nuts, beyond the cheeks' ends",
    "grip_mm": [
     12.54
    ],
    "engagement_mm": [
-    4.22
+    4.76
    ],
    "problems": []
   },
@@ -2050,7 +2028,7 @@
     "pem",
     "bay_floor"
    ],
-   "bom": "screw_m3x6_button",
+   "bom": "screw_m3x6",
    "note": "a side plate into the floor's flange nuts",
    "grip_mm": [
     3.25
@@ -2072,7 +2050,7 @@
     "insert",
     "bay_rail_l"
    ],
-   "bom": "screw_m3x6_button",
+   "bom": "screw_m3x6",
    "note": "a side plate into its rail's inserts",
    "grip_mm": [
     1.6
@@ -2085,7 +2063,7 @@
   {
    "joint": "bay_rail_r",
    "stage": "P3",
-   "screw": "M4 x 16 socket",
+   "screw": "M4 x 20 socket",
    "count": 4,
    "stack": [
     "bay_rail_r",
@@ -2095,13 +2073,13 @@
     "pem",
     "belly_plate"
    ],
-   "bom": "screw_m4x16",
+   "bom": "screw_m4x20",
    "note": "a bay rail up into the belly's nuts, beyond the cheeks' ends",
    "grip_mm": [
     12.54
    ],
    "engagement_mm": [
-    4.22
+    4.76
    ],
    "problems": []
   },
@@ -2118,7 +2096,7 @@
     "pem",
     "bay_floor"
    ],
-   "bom": "screw_m3x6_button",
+   "bom": "screw_m3x6",
    "note": "a side plate into the floor's flange nuts",
    "grip_mm": [
     3.25
@@ -2140,7 +2118,7 @@
     "insert",
     "bay_rail_r"
    ],
-   "bom": "screw_m3x6_button",
+   "bom": "screw_m3x6",
    "note": "a side plate into its rail's inserts",
    "grip_mm": [
     1.6
@@ -2153,7 +2131,7 @@
   {
    "joint": "adapter_plate_front",
    "stage": "P3",
-   "screw": "M4 x 8 socket",
+   "screw": "M4 x 12 socket",
    "count": 4,
    "stack": [
     "adapter_plate_front",
@@ -2163,13 +2141,13 @@
     "pem",
     "belly_plate"
    ],
-   "bom": "screw_m4x8",
+   "bom": "screw_m4x12_socket",
    "note": "a pack adapter's printed plate up into the belly's nuts (heads counterbored 1.5 mm)",
    "grip_mm": [
     5.04
    ],
    "engagement_mm": [
-    3.72
+    4.76
    ],
    "problems": []
   },
@@ -2220,7 +2198,7 @@
   {
    "joint": "adapter_plate_rear",
    "stage": "P3",
-   "screw": "M4 x 8 socket",
+   "screw": "M4 x 12 socket",
    "count": 4,
    "stack": [
     "adapter_plate_rear",
@@ -2230,13 +2208,13 @@
     "pem",
     "belly_plate"
    ],
-   "bom": "screw_m4x8",
+   "bom": "screw_m4x12_socket",
    "note": "a pack adapter's printed plate up into the belly's nuts (heads counterbored 1.5 mm)",
    "grip_mm": [
     5.04
    ],
    "engagement_mm": [
-    3.72
+    4.76
    ],
    "problems": []
   },
@@ -2341,7 +2319,7 @@
     "nut",
     "shell_side_l_rear"
    ],
-   "bom": "screw_m3x8_pan",
+   "bom": "screw_m3x8_socket",
    "note": "the side wall's halves: through the front half into a nut held in the rear half's tab",
    "grip_mm": [
     3.0
@@ -2364,7 +2342,7 @@
     "nyloc",
     null
    ],
-   "bom": "screw_m5x14_button",
+   "bom": "screw_m5x14_socket",
    "note": "an ear bracket through the wall, nyloc nuts inside",
    "grip_mm": [
     8.0
@@ -2431,7 +2409,7 @@
     "nut",
     "shell_side_r_rear"
    ],
-   "bom": "screw_m3x8_pan",
+   "bom": "screw_m3x8_socket",
    "note": "the side wall's halves: through the front half into a nut held in the rear half's tab",
    "grip_mm": [
     3.0
@@ -2454,7 +2432,7 @@
     "nyloc",
     null
    ],
-   "bom": "screw_m5x14_button",
+   "bom": "screw_m5x14_socket",
    "note": "an ear bracket through the wall, nyloc nuts inside",
    "grip_mm": [
     8.0
@@ -2520,7 +2498,7 @@
     "insert",
     "d435_cradle_front"
    ],
-   "bom": "screw_m3x8_pan",
+   "bom": "screw_m3x8_socket",
    "note": "the camera's cradle to the apron, from outside",
    "grip_mm": [
     2.0
@@ -2608,7 +2586,7 @@
     "insert",
     "d435_cradle_rear"
    ],
-   "bom": "screw_m3x8_pan",
+   "bom": "screw_m3x8_socket",
    "note": "the camera's cradle to the apron, from outside",
    "grip_mm": [
     2.0
@@ -2652,7 +2630,7 @@
     "insert",
     "shell_front"
    ],
-   "bom": "screw_m3x6_socket",
+   "bom": "screw_m3x6",
    "note": "the eyes' clip into the face's bosses",
    "grip_mm": [
     2.0
@@ -2669,13 +2647,13 @@
    "count": 4,
    "stack": [
     "shell_door",
-    "shell_side_r_front"
+    "shell_side_l_front"
    ],
    "receiver": [
     "nut",
-    "shell_side_r_front"
+    "shell_side_l_front"
    ],
-   "bom": "screw_m3x8_pan",
+   "bom": "screw_m3x8_socket",
    "note": "the service door into the nuts held in the wall's pads",
    "grip_mm": [
     5.0
@@ -2683,19 +2661,7 @@
    "engagement_mm": [
     3.0
    ],
-   "problems": [
-    {
-     "at": [
-      64.0,
-      -131.6,
-      180.0
-     ],
-     "problems": [
-      "the stack also clamps ['dcdc_bracket']",
-      "the tip hits dcdc_bracket at 7.6 mm"
-     ]
-    }
-   ]
+   "problems": []
   },
   {
    "joint": "shell_hatch",
@@ -2710,7 +2676,7 @@
     "nut",
     "shell_side_l_rear"
    ],
-   "bom": "screw_m3x8_pan",
+   "bom": "screw_m3x8_socket",
    "note": "the J501 hatch into the nuts held in the wall's rim",
    "grip_mm": [
     5.0
@@ -2723,7 +2689,7 @@
   {
    "joint": "fan_duct",
    "stage": "P3",
-   "screw": "M3 x 5 socket",
+   "screw": "M3 x 6 socket",
    "count": 3,
    "stack": [
     "fan_duct",
@@ -2733,10 +2699,10 @@
     "tapped",
     "turret_plate"
    ],
-   "bom": "screw_m3x5_socket",
+   "bom": "screw_m3x6",
    "note": "the fan duct up into the turret plate's tapped holes",
    "grip_mm": [
-    5.17
+    6.17
    ],
    "engagement_mm": [
     3.0
@@ -2929,17 +2895,15 @@
  "screw_count": {
   "M3 x 10 thumb (P1+)": 4,
   "M3 x 16 pan (P3+)": 16,
-  "M3 x 5 socket (P3+)": 3,
   "M3 x 6 button (P1+)": 20,
   "M3 x 6 pan (P1+)": 4,
-  "M3 x 6 socket (P3+)": 2,
+  "M3 x 6 socket (P3+)": 5,
   "M3 x 8 pan (P3+)": 14,
   "M3 x 8 socket (P1+)": 8,
   "M3 x 8 socket (P3+)": 4,
   "M4 x 10 flat (P1+)": 16,
-  "M4 x 16 socket (P1+)": 8,
-  "M4 x 25 socket (P1+)": 4,
-  "M4 x 8 socket (P1+)": 10,
+  "M4 x 12 socket (P1+)": 10,
+  "M4 x 20 socket (P1+)": 12,
   "M5 x 10 button (P1+)": 8,
   "M5 x 10 button (P2+)": 2,
   "M5 x 12 button (P1+)": 36,
@@ -2951,11 +2915,8 @@
  "summary": {
   "joints": 71,
   "screws": 183,
-  "joints_with_problems": [
-   "plate_vesc_l_flange",
-   "shell_door"
-  ],
+  "joints_with_problems": [],
   "floating": {},
-  "clashes": null
+  "clashes": 0
  }
 }
