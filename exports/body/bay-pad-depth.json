@@ -11,80 +11,82 @@
     "fall_front x0.6": {
      "pass": false,
      "reasons": [
-      "body impact 3213 N (limit 3000 N)"
+      "body impact 5333 N (limit 3000 N)"
      ],
-     "body_impact_peak_n": 3213,
-     "max_stroke_mm": 16.1,
+     "body_impact_peak_n": 5333,
+     "max_stroke_mm": 15.6,
      "bottomed": true
     },
     "fall_front x1.0": {
      "pass": false,
      "reasons": [
-      "body impact 3889 N (limit 3000 N)"
+      "body impact 7965 N (limit 3000 N)"
      ],
-     "body_impact_peak_n": 3889,
-     "max_stroke_mm": 17.0,
+     "body_impact_peak_n": 7965,
+     "max_stroke_mm": 16.0,
      "bottomed": true
     },
     "fall_front x1.4": {
-     "pass": true,
-     "reasons": [],
-     "body_impact_peak_n": 2979,
-     "max_stroke_mm": 17.1,
+     "pass": false,
+     "reasons": [
+      "body impact 5821 N (limit 3000 N)"
+     ],
+     "body_impact_peak_n": 5821,
+     "max_stroke_mm": 15.8,
      "bottomed": true
     },
     "fall_back x0.6": {
      "pass": false,
      "reasons": [
-      "body impact 3090 N (limit 3000 N)"
+      "body impact 4591 N (limit 3000 N)"
      ],
-     "body_impact_peak_n": 3090,
-     "max_stroke_mm": 16.0,
+     "body_impact_peak_n": 4591,
+     "max_stroke_mm": 15.6,
      "bottomed": true
     },
     "fall_back x1.0": {
      "pass": false,
      "reasons": [
-      "body impact 3641 N (limit 3000 N)"
+      "body impact 7512 N (limit 3000 N)"
      ],
-     "body_impact_peak_n": 3641,
-     "max_stroke_mm": 17.1,
+     "body_impact_peak_n": 7512,
+     "max_stroke_mm": 15.9,
      "bottomed": true
     },
     "fall_back x1.4": {
      "pass": false,
      "reasons": [
-      "body impact 3001 N (limit 3000 N)"
+      "body impact 5918 N (limit 3000 N)"
      ],
-     "body_impact_peak_n": 3001,
-     "max_stroke_mm": 17.1,
+     "body_impact_peak_n": 5918,
+     "max_stroke_mm": 15.8,
      "bottomed": true
     },
     "fall_side x0.6": {
      "pass": true,
      "reasons": [],
-     "body_impact_peak_n": 2610,
+     "body_impact_peak_n": 2609,
      "max_stroke_mm": 6.2,
      "bottomed": false
     },
     "fall_side x1.0": {
      "pass": true,
      "reasons": [],
-     "body_impact_peak_n": 1313,
+     "body_impact_peak_n": 1312,
      "max_stroke_mm": 1.7,
      "bottomed": false
     },
     "fall_side x1.4": {
      "pass": true,
      "reasons": [],
-     "body_impact_peak_n": 1754,
+     "body_impact_peak_n": 1753,
      "max_stroke_mm": 2.3,
      "bottomed": false
     }
    },
-   "worst_n": 3889,
+   "worst_n": 7965,
    "all_pass": false,
-   "max_stroke_mm": 17.1
+   "max_stroke_mm": 16.0
   },
   {
    "h_mm": 25.0,
@@ -95,62 +97,70 @@
     "fall_front x0.6": {
      "pass": false,
      "reasons": [
-      "body impact 3252 N (limit 3000 N)"
+      "body impact 3251 N (limit 3000 N)"
      ],
-     "body_impact_peak_n": 3252,
+     "body_impact_peak_n": 3251,
      "max_stroke_mm": 12.6,
      "bottomed": false
     },
     "fall_front x1.0": {
-     "pass": true,
-     "reasons": [],
-     "body_impact_peak_n": 2818,
-     "max_stroke_mm": 15.7,
+     "pass": false,
+     "reasons": [
+      "body impact 3836 N (limit 3000 N)"
+     ],
+     "body_impact_peak_n": 3836,
+     "max_stroke_mm": 15.4,
      "bottomed": true
     },
     "fall_front x1.4": {
-     "pass": true,
-     "reasons": [],
-     "body_impact_peak_n": 2166,
-     "max_stroke_mm": 15.9,
+     "pass": false,
+     "reasons": [
+      "body impact 3347 N (limit 3000 N)"
+     ],
+     "body_impact_peak_n": 3347,
+     "max_stroke_mm": 15.5,
      "bottomed": true
     },
     "fall_back x0.6": {
      "pass": false,
      "reasons": [
-      "body impact 3246 N (limit 3000 N)"
+      "body impact 3245 N (limit 3000 N)"
      ],
-     "body_impact_peak_n": 3246,
+     "body_impact_peak_n": 3245,
      "max_stroke_mm": 12.2,
      "bottomed": false
     },
     "fall_back x1.0": {
-     "pass": true,
-     "reasons": [],
-     "body_impact_peak_n": 2608,
-     "max_stroke_mm": 15.6,
+     "pass": false,
+     "reasons": [
+      "body impact 3443 N (limit 3000 N)"
+     ],
+     "body_impact_peak_n": 3443,
+     "max_stroke_mm": 15.4,
      "bottomed": true
     },
     "fall_back x1.4": {
-     "pass": true,
-     "reasons": [],
-     "body_impact_peak_n": 2161,
-     "max_stroke_mm": 15.9,
+     "pass": false,
+     "reasons": [
+      "body impact 3649 N (limit 3000 N)"
+     ],
+     "body_impact_peak_n": 3649,
+     "max_stroke_mm": 15.5,
      "bottomed": true
     },
     "fall_side x0.6": {
      "pass": false,
      "reasons": [
-      "body impact 3141 N (limit 3000 N)"
+      "body impact 3140 N (limit 3000 N)"
      ],
-     "body_impact_peak_n": 3141,
+     "body_impact_peak_n": 3140,
      "max_stroke_mm": 5.4,
      "bottomed": false
     },
     "fall_side x1.0": {
      "pass": true,
      "reasons": [],
-     "body_impact_peak_n": 1555,
+     "body_impact_peak_n": 1545,
      "max_stroke_mm": 1.6,
      "bottomed": false
     },
@@ -162,9 +172,9 @@
      "bottomed": false
     }
    },
-   "worst_n": 3252,
+   "worst_n": 3836,
    "all_pass": false,
-   "max_stroke_mm": 15.9
+   "max_stroke_mm": 15.5
   },
   {
    "h_mm": 25.0,
@@ -175,76 +185,76 @@
     "fall_front x0.6": {
      "pass": false,
      "reasons": [
-      "body impact 3777 N (limit 3000 N)"
+      "body impact 3776 N (limit 3000 N)"
      ],
-     "body_impact_peak_n": 3777,
+     "body_impact_peak_n": 3776,
      "max_stroke_mm": 10.0,
      "bottomed": false
     },
     "fall_front x1.0": {
      "pass": true,
      "reasons": [],
-     "body_impact_peak_n": 2591,
+     "body_impact_peak_n": 2573,
      "max_stroke_mm": 12.4,
      "bottomed": false
     },
     "fall_front x1.4": {
      "pass": false,
      "reasons": [
-      "body impact 3349 N (limit 3000 N)"
+      "body impact 3347 N (limit 3000 N)"
      ],
-     "body_impact_peak_n": 3349,
+     "body_impact_peak_n": 3347,
      "max_stroke_mm": 13.1,
      "bottomed": false
     },
     "fall_back x0.6": {
      "pass": false,
      "reasons": [
-      "body impact 3766 N (limit 3000 N)"
+      "body impact 3764 N (limit 3000 N)"
      ],
-     "body_impact_peak_n": 3766,
+     "body_impact_peak_n": 3764,
      "max_stroke_mm": 9.6,
      "bottomed": false
     },
     "fall_back x1.0": {
      "pass": true,
      "reasons": [],
-     "body_impact_peak_n": 2424,
+     "body_impact_peak_n": 2405,
      "max_stroke_mm": 12.0,
      "bottomed": false
     },
     "fall_back x1.4": {
      "pass": true,
      "reasons": [],
-     "body_impact_peak_n": 2926,
+     "body_impact_peak_n": 2925,
      "max_stroke_mm": 12.8,
      "bottomed": false
     },
     "fall_side x0.6": {
      "pass": false,
      "reasons": [
-      "body impact 3513 N (limit 3000 N)"
+      "body impact 3516 N (limit 3000 N)"
      ],
-     "body_impact_peak_n": 3513,
+     "body_impact_peak_n": 3516,
      "max_stroke_mm": 4.9,
      "bottomed": false
     },
     "fall_side x1.0": {
      "pass": true,
      "reasons": [],
-     "body_impact_peak_n": 1621,
+     "body_impact_peak_n": 1601,
      "max_stroke_mm": 1.6,
      "bottomed": false
     },
     "fall_side x1.4": {
      "pass": true,
      "reasons": [],
-     "body_impact_peak_n": 2202,
+     "body_impact_peak_n": 2201,
      "max_stroke_mm": 2.0,
      "bottomed": false
     }
    },
-   "worst_n": 3777,
+   "worst_n": 3776,
    "all_pass": false,
    "max_stroke_mm": 13.1
   },
@@ -257,16 +267,16 @@
     "fall_front x0.6": {
      "pass": false,
      "reasons": [
-      "body impact 4064 N (limit 3000 N)"
+      "body impact 4053 N (limit 3000 N)"
      ],
-     "body_impact_peak_n": 4064,
+     "body_impact_peak_n": 4053,
      "max_stroke_mm": 8.3,
      "bottomed": false
     },
     "fall_front x1.0": {
      "pass": true,
      "reasons": [],
-     "body_impact_peak_n": 2668,
+     "body_impact_peak_n": 2650,
      "max_stroke_mm": 9.6,
      "bottomed": false
     },
@@ -282,53 +292,53 @@
     "fall_back x0.6": {
      "pass": false,
      "reasons": [
-      "body impact 3856 N (limit 3000 N)"
+      "body impact 3842 N (limit 3000 N)"
      ],
-     "body_impact_peak_n": 3856,
+     "body_impact_peak_n": 3842,
      "max_stroke_mm": 7.8,
      "bottomed": false
     },
     "fall_back x1.0": {
      "pass": true,
      "reasons": [],
-     "body_impact_peak_n": 2380,
+     "body_impact_peak_n": 2383,
      "max_stroke_mm": 9.2,
      "bottomed": false
     },
     "fall_back x1.4": {
      "pass": false,
      "reasons": [
-      "body impact 3169 N (limit 3000 N)"
+      "body impact 3168 N (limit 3000 N)"
      ],
-     "body_impact_peak_n": 3169,
+     "body_impact_peak_n": 3168,
      "max_stroke_mm": 9.8,
      "bottomed": false
     },
     "fall_side x0.6": {
      "pass": false,
      "reasons": [
-      "body impact 3713 N (limit 3000 N)"
+      "body impact 3716 N (limit 3000 N)"
      ],
-     "body_impact_peak_n": 3713,
+     "body_impact_peak_n": 3716,
      "max_stroke_mm": 4.6,
      "bottomed": false
     },
     "fall_side x1.0": {
      "pass": true,
      "reasons": [],
-     "body_impact_peak_n": 1621,
+     "body_impact_peak_n": 1601,
      "max_stroke_mm": 1.6,
      "bottomed": false
     },
     "fall_side x1.4": {
      "pass": true,
      "reasons": [],
-     "body_impact_peak_n": 2204,
+     "body_impact_peak_n": 2203,
      "max_stroke_mm": 2.0,
      "bottomed": false
     }
    },
-   "worst_n": 4064,
+   "worst_n": 4053,
    "all_pass": false,
    "max_stroke_mm": 10.2
   },
@@ -341,74 +351,78 @@
     "fall_front x0.6": {
      "pass": true,
      "reasons": [],
-     "body_impact_peak_n": 2698,
-     "max_stroke_mm": 16.2,
+     "body_impact_peak_n": 2712,
+     "max_stroke_mm": 16.6,
      "bottomed": false
     },
     "fall_front x1.0": {
-     "pass": true,
-     "reasons": [],
-     "body_impact_peak_n": 2674,
-     "max_stroke_mm": 21.2,
+     "pass": false,
+     "reasons": [
+      "body impact 4567 N (limit 3000 N)"
+     ],
+     "body_impact_peak_n": 4567,
+     "max_stroke_mm": 21.6,
      "bottomed": true
     },
     "fall_front x1.4": {
      "pass": false,
      "reasons": [
-      "body impact 3442 N (limit 3000 N)"
+      "body impact 8917 N (limit 3000 N)"
      ],
-     "body_impact_peak_n": 3442,
-     "max_stroke_mm": 23.1,
+     "body_impact_peak_n": 8917,
+     "max_stroke_mm": 22.0,
      "bottomed": true
     },
     "fall_back x0.6": {
      "pass": true,
      "reasons": [],
-     "body_impact_peak_n": 2708,
-     "max_stroke_mm": 16.8,
+     "body_impact_peak_n": 2706,
+     "max_stroke_mm": 17.2,
      "bottomed": false
     },
     "fall_back x1.0": {
-     "pass": true,
-     "reasons": [],
-     "body_impact_peak_n": 2677,
-     "max_stroke_mm": 21.9,
+     "pass": false,
+     "reasons": [
+      "body impact 3614 N (limit 3000 N)"
+     ],
+     "body_impact_peak_n": 3614,
+     "max_stroke_mm": 21.4,
      "bottomed": true
     },
     "fall_back x1.4": {
      "pass": false,
      "reasons": [
-      "body impact 3224 N (limit 3000 N)"
+      "body impact 8872 N (limit 3000 N)"
      ],
-     "body_impact_peak_n": 3224,
-     "max_stroke_mm": 23.0,
+     "body_impact_peak_n": 8872,
+     "max_stroke_mm": 22.1,
      "bottomed": true
     },
     "fall_side x0.6": {
      "pass": true,
      "reasons": [],
-     "body_impact_peak_n": 2704,
-     "max_stroke_mm": 10.9,
+     "body_impact_peak_n": 2705,
+     "max_stroke_mm": 11.2,
      "bottomed": false
     },
     "fall_side x1.0": {
      "pass": true,
      "reasons": [],
-     "body_impact_peak_n": 1750,
-     "max_stroke_mm": 6.3,
+     "body_impact_peak_n": 1690,
+     "max_stroke_mm": 5.8,
      "bottomed": false
     },
     "fall_side x1.4": {
      "pass": true,
      "reasons": [],
-     "body_impact_peak_n": 2001,
+     "body_impact_peak_n": 2060,
      "max_stroke_mm": 1.3,
      "bottomed": false
     }
    },
-   "worst_n": 3442,
+   "worst_n": 8917,
    "all_pass": false,
-   "max_stroke_mm": 23.1
+   "max_stroke_mm": 22.1
   },
   {
    "h_mm": 35.0,
@@ -419,76 +433,78 @@
     "fall_front x0.6": {
      "pass": false,
      "reasons": [
-      "body impact 3251 N (limit 3000 N)"
+      "body impact 3265 N (limit 3000 N)"
      ],
-     "body_impact_peak_n": 3251,
-     "max_stroke_mm": 12.2,
+     "body_impact_peak_n": 3265,
+     "max_stroke_mm": 12.6,
      "bottomed": false
     },
     "fall_front x1.0": {
-     "pass": true,
-     "reasons": [],
-     "body_impact_peak_n": 2886,
-     "max_stroke_mm": 16.4,
+     "pass": false,
+     "reasons": [
+      "body impact 3000 N (limit 3000 N)"
+     ],
+     "body_impact_peak_n": 3000,
+     "max_stroke_mm": 17.2,
      "bottomed": false
     },
     "fall_front x1.4": {
      "pass": true,
      "reasons": [],
-     "body_impact_peak_n": 2037,
-     "max_stroke_mm": 19.0,
+     "body_impact_peak_n": 1984,
+     "max_stroke_mm": 20.3,
      "bottomed": false
     },
     "fall_back x0.6": {
      "pass": false,
      "reasons": [
-      "body impact 3261 N (limit 3000 N)"
+      "body impact 3255 N (limit 3000 N)"
      ],
-     "body_impact_peak_n": 3261,
-     "max_stroke_mm": 12.7,
+     "body_impact_peak_n": 3255,
+     "max_stroke_mm": 13.0,
      "bottomed": false
     },
     "fall_back x1.0": {
      "pass": true,
      "reasons": [],
-     "body_impact_peak_n": 2859,
-     "max_stroke_mm": 17.0,
+     "body_impact_peak_n": 2758,
+     "max_stroke_mm": 17.2,
      "bottomed": false
     },
     "fall_back x1.4": {
      "pass": true,
      "reasons": [],
-     "body_impact_peak_n": 1767,
-     "max_stroke_mm": 18.3,
+     "body_impact_peak_n": 1778,
+     "max_stroke_mm": 19.5,
      "bottomed": false
     },
     "fall_side x0.6": {
      "pass": false,
      "reasons": [
-      "body impact 3279 N (limit 3000 N)"
+      "body impact 3284 N (limit 3000 N)"
      ],
-     "body_impact_peak_n": 3279,
-     "max_stroke_mm": 9.2,
+     "body_impact_peak_n": 3284,
+     "max_stroke_mm": 9.5,
      "bottomed": false
     },
     "fall_side x1.0": {
      "pass": true,
      "reasons": [],
-     "body_impact_peak_n": 1897,
-     "max_stroke_mm": 5.6,
+     "body_impact_peak_n": 1855,
+     "max_stroke_mm": 5.1,
      "bottomed": false
     },
     "fall_side x1.4": {
      "pass": true,
      "reasons": [],
-     "body_impact_peak_n": 2045,
+     "body_impact_peak_n": 2099,
      "max_stroke_mm": 1.3,
      "bottomed": false
     }
    },
-   "worst_n": 3279,
+   "worst_n": 3284,
    "all_pass": false,
-   "max_stroke_mm": 19.0
+   "max_stroke_mm": 20.3
   },
   {
    "h_mm": 35.0,
@@ -499,76 +515,76 @@
     "fall_front x0.6": {
      "pass": false,
      "reasons": [
-      "body impact 3769 N (limit 3000 N)"
+      "body impact 3813 N (limit 3000 N)"
      ],
-     "body_impact_peak_n": 3769,
-     "max_stroke_mm": 9.8,
+     "body_impact_peak_n": 3813,
+     "max_stroke_mm": 10.2,
      "bottomed": false
     },
     "fall_front x1.0": {
      "pass": true,
      "reasons": [],
-     "body_impact_peak_n": 2633,
-     "max_stroke_mm": 12.6,
+     "body_impact_peak_n": 2747,
+     "max_stroke_mm": 13.4,
      "bottomed": false
     },
     "fall_front x1.4": {
      "pass": true,
      "reasons": [],
-     "body_impact_peak_n": 2840,
-     "max_stroke_mm": 13.7,
+     "body_impact_peak_n": 2949,
+     "max_stroke_mm": 14.7,
      "bottomed": false
     },
     "fall_back x0.6": {
      "pass": false,
      "reasons": [
-      "body impact 3778 N (limit 3000 N)"
+      "body impact 3768 N (limit 3000 N)"
      ],
-     "body_impact_peak_n": 3778,
-     "max_stroke_mm": 10.0,
+     "body_impact_peak_n": 3768,
+     "max_stroke_mm": 10.3,
      "bottomed": false
     },
     "fall_back x1.0": {
      "pass": true,
      "reasons": [],
-     "body_impact_peak_n": 2614,
+     "body_impact_peak_n": 2461,
      "max_stroke_mm": 13.1,
      "bottomed": false
     },
     "fall_back x1.4": {
      "pass": true,
      "reasons": [],
-     "body_impact_peak_n": 2056,
-     "max_stroke_mm": 13.1,
+     "body_impact_peak_n": 2067,
+     "max_stroke_mm": 14.1,
      "bottomed": false
     },
     "fall_side x0.6": {
      "pass": false,
      "reasons": [
-      "body impact 3832 N (limit 3000 N)"
+      "body impact 3850 N (limit 3000 N)"
      ],
-     "body_impact_peak_n": 3832,
-     "max_stroke_mm": 8.0,
+     "body_impact_peak_n": 3850,
+     "max_stroke_mm": 8.3,
      "bottomed": false
     },
     "fall_side x1.0": {
      "pass": true,
      "reasons": [],
-     "body_impact_peak_n": 2217,
-     "max_stroke_mm": 5.0,
+     "body_impact_peak_n": 2254,
+     "max_stroke_mm": 4.6,
      "bottomed": false
     },
     "fall_side x1.4": {
      "pass": true,
      "reasons": [],
-     "body_impact_peak_n": 2045,
+     "body_impact_peak_n": 2099,
      "max_stroke_mm": 1.3,
      "bottomed": false
     }
    },
-   "worst_n": 3832,
+   "worst_n": 3850,
    "all_pass": false,
-   "max_stroke_mm": 13.7
+   "max_stroke_mm": 14.7
   },
   {
    "h_mm": 35.0,
@@ -579,78 +595,78 @@
     "fall_front x0.6": {
      "pass": false,
      "reasons": [
-      "body impact 4009 N (limit 3000 N)"
+      "body impact 4108 N (limit 3000 N)"
      ],
-     "body_impact_peak_n": 4009,
-     "max_stroke_mm": 8.2,
+     "body_impact_peak_n": 4108,
+     "max_stroke_mm": 8.8,
      "bottomed": false
     },
     "fall_front x1.0": {
      "pass": true,
      "reasons": [],
-     "body_impact_peak_n": 2555,
-     "max_stroke_mm": 9.7,
+     "body_impact_peak_n": 2651,
+     "max_stroke_mm": 10.5,
      "bottomed": false
     },
     "fall_front x1.4": {
      "pass": false,
      "reasons": [
-      "body impact 3198 N (limit 3000 N)"
+      "body impact 3295 N (limit 3000 N)"
      ],
-     "body_impact_peak_n": 3198,
-     "max_stroke_mm": 10.4,
+     "body_impact_peak_n": 3295,
+     "max_stroke_mm": 11.2,
      "bottomed": false
     },
     "fall_back x0.6": {
      "pass": false,
      "reasons": [
-      "body impact 3988 N (limit 3000 N)"
+      "body impact 3885 N (limit 3000 N)"
      ],
-     "body_impact_peak_n": 3988,
+     "body_impact_peak_n": 3885,
      "max_stroke_mm": 8.5,
      "bottomed": false
     },
     "fall_back x1.0": {
      "pass": true,
      "reasons": [],
-     "body_impact_peak_n": 2508,
-     "max_stroke_mm": 10.1,
+     "body_impact_peak_n": 2409,
+     "max_stroke_mm": 10.0,
      "bottomed": false
     },
     "fall_back x1.4": {
      "pass": true,
      "reasons": [],
-     "body_impact_peak_n": 2352,
-     "max_stroke_mm": 9.9,
+     "body_impact_peak_n": 2488,
+     "max_stroke_mm": 10.7,
      "bottomed": false
     },
     "fall_side x0.6": {
      "pass": false,
      "reasons": [
-      "body impact 4363 N (limit 3000 N)"
+      "body impact 4385 N (limit 3000 N)"
      ],
-     "body_impact_peak_n": 4363,
-     "max_stroke_mm": 7.2,
+     "body_impact_peak_n": 4385,
+     "max_stroke_mm": 7.5,
      "bottomed": false
     },
     "fall_side x1.0": {
      "pass": true,
      "reasons": [],
-     "body_impact_peak_n": 2330,
-     "max_stroke_mm": 4.6,
+     "body_impact_peak_n": 2359,
+     "max_stroke_mm": 4.2,
      "bottomed": false
     },
     "fall_side x1.4": {
      "pass": true,
      "reasons": [],
-     "body_impact_peak_n": 2045,
+     "body_impact_peak_n": 2099,
      "max_stroke_mm": 1.3,
      "bottomed": false
     }
    },
-   "worst_n": 4363,
+   "worst_n": 4385,
    "all_pass": false,
-   "max_stroke_mm": 10.4
+   "max_stroke_mm": 11.2
   },
   {
    "h_mm": 45.0,
@@ -661,70 +677,70 @@
     "fall_front x0.6": {
      "pass": true,
      "reasons": [],
-     "body_impact_peak_n": 2704,
-     "max_stroke_mm": 15.8,
+     "body_impact_peak_n": 2726,
+     "max_stroke_mm": 17.0,
      "bottomed": false
     },
     "fall_front x1.0": {
      "pass": true,
      "reasons": [],
-     "body_impact_peak_n": 2680,
-     "max_stroke_mm": 21.3,
+     "body_impact_peak_n": 2690,
+     "max_stroke_mm": 22.3,
      "bottomed": false
     },
     "fall_front x1.4": {
      "pass": true,
      "reasons": [],
-     "body_impact_peak_n": 1689,
-     "max_stroke_mm": 25.7,
-     "bottomed": false
+     "body_impact_peak_n": 1649,
+     "max_stroke_mm": 27.0,
+     "bottomed": true
     },
     "fall_back x0.6": {
      "pass": true,
      "reasons": [],
-     "body_impact_peak_n": 2714,
-     "max_stroke_mm": 16.4,
+     "body_impact_peak_n": 2723,
+     "max_stroke_mm": 17.1,
      "bottomed": false
     },
     "fall_back x1.0": {
      "pass": true,
      "reasons": [],
-     "body_impact_peak_n": 2671,
-     "max_stroke_mm": 21.2,
+     "body_impact_peak_n": 2674,
+     "max_stroke_mm": 22.5,
      "bottomed": false
     },
     "fall_back x1.4": {
      "pass": true,
      "reasons": [],
-     "body_impact_peak_n": 1657,
-     "max_stroke_mm": 26.4,
-     "bottomed": false
+     "body_impact_peak_n": 2820,
+     "max_stroke_mm": 27.3,
+     "bottomed": true
     },
     "fall_side x0.6": {
      "pass": true,
      "reasons": [],
-     "body_impact_peak_n": 2697,
-     "max_stroke_mm": 14.6,
+     "body_impact_peak_n": 2707,
+     "max_stroke_mm": 15.2,
      "bottomed": false
     },
     "fall_side x1.0": {
      "pass": true,
      "reasons": [],
-     "body_impact_peak_n": 2676,
+     "body_impact_peak_n": 2684,
      "max_stroke_mm": 10.8,
      "bottomed": false
     },
     "fall_side x1.4": {
      "pass": true,
      "reasons": [],
-     "body_impact_peak_n": 1414,
-     "max_stroke_mm": 4.9,
+     "body_impact_peak_n": 1417,
+     "max_stroke_mm": 4.0,
      "bottomed": false
     }
    },
-   "worst_n": 2714,
+   "worst_n": 2820,
    "all_pass": true,
-   "max_stroke_mm": 26.4
+   "max_stroke_mm": 27.3
   },
   {
    "h_mm": 45.0,
@@ -735,80 +751,80 @@
     "fall_front x0.6": {
      "pass": false,
      "reasons": [
-      "body impact 3248 N (limit 3000 N)"
+      "body impact 3289 N (limit 3000 N)"
      ],
-     "body_impact_peak_n": 3248,
-     "max_stroke_mm": 12.1,
+     "body_impact_peak_n": 3289,
+     "max_stroke_mm": 13.0,
      "bottomed": false
     },
     "fall_front x1.0": {
      "pass": false,
      "reasons": [
-      "body impact 3022 N (limit 3000 N)"
+      "body impact 3004 N (limit 3000 N)"
      ],
-     "body_impact_peak_n": 3022,
-     "max_stroke_mm": 16.6,
+     "body_impact_peak_n": 3004,
+     "max_stroke_mm": 17.6,
      "bottomed": false
     },
     "fall_front x1.4": {
      "pass": true,
      "reasons": [],
-     "body_impact_peak_n": 1760,
-     "max_stroke_mm": 18.3,
+     "body_impact_peak_n": 1770,
+     "max_stroke_mm": 19.3,
      "bottomed": false
     },
     "fall_back x0.6": {
      "pass": false,
      "reasons": [
-      "body impact 3258 N (limit 3000 N)"
+      "body impact 3266 N (limit 3000 N)"
      ],
-     "body_impact_peak_n": 3258,
-     "max_stroke_mm": 12.6,
+     "body_impact_peak_n": 3266,
+     "max_stroke_mm": 13.1,
      "bottomed": false
     },
     "fall_back x1.0": {
      "pass": true,
      "reasons": [],
-     "body_impact_peak_n": 2764,
-     "max_stroke_mm": 16.7,
+     "body_impact_peak_n": 2739,
+     "max_stroke_mm": 17.7,
      "bottomed": false
     },
     "fall_back x1.4": {
      "pass": true,
      "reasons": [],
-     "body_impact_peak_n": 1772,
-     "max_stroke_mm": 18.9,
+     "body_impact_peak_n": 1782,
+     "max_stroke_mm": 19.9,
      "bottomed": false
     },
     "fall_side x0.6": {
      "pass": false,
      "reasons": [
-      "body impact 3273 N (limit 3000 N)"
+      "body impact 3279 N (limit 3000 N)"
      ],
-     "body_impact_peak_n": 3273,
-     "max_stroke_mm": 11.7,
+     "body_impact_peak_n": 3279,
+     "max_stroke_mm": 12.4,
      "bottomed": false
     },
     "fall_side x1.0": {
      "pass": false,
      "reasons": [
-      "body impact 3092 N (limit 3000 N)"
+      "body impact 3055 N (limit 3000 N)"
      ],
-     "body_impact_peak_n": 3092,
-     "max_stroke_mm": 9.7,
+     "body_impact_peak_n": 3055,
+     "max_stroke_mm": 9.8,
      "bottomed": false
     },
     "fall_side x1.4": {
      "pass": true,
      "reasons": [],
-     "body_impact_peak_n": 1715,
-     "max_stroke_mm": 4.3,
+     "body_impact_peak_n": 1720,
+     "max_stroke_mm": 3.6,
      "bottomed": false
     }
    },
-   "worst_n": 3273,
+   "worst_n": 3289,
    "all_pass": false,
-   "max_stroke_mm": 18.9
+   "max_stroke_mm": 19.9
   },
   {
    "h_mm": 45.0,
@@ -819,78 +835,78 @@
     "fall_front x0.6": {
      "pass": false,
      "reasons": [
-      "body impact 3760 N (limit 3000 N)"
+      "body impact 3817 N (limit 3000 N)"
      ],
-     "body_impact_peak_n": 3760,
-     "max_stroke_mm": 9.7,
+     "body_impact_peak_n": 3817,
+     "max_stroke_mm": 10.6,
      "bottomed": false
     },
     "fall_front x1.0": {
      "pass": true,
      "reasons": [],
-     "body_impact_peak_n": 2763,
-     "max_stroke_mm": 13.2,
+     "body_impact_peak_n": 2725,
+     "max_stroke_mm": 14.0,
      "bottomed": false
     },
     "fall_front x1.4": {
      "pass": true,
      "reasons": [],
-     "body_impact_peak_n": 2050,
-     "max_stroke_mm": 13.4,
+     "body_impact_peak_n": 2060,
+     "max_stroke_mm": 14.1,
      "bottomed": false
     },
     "fall_back x0.6": {
      "pass": false,
      "reasons": [
-      "body impact 3770 N (limit 3000 N)"
+      "body impact 3780 N (limit 3000 N)"
      ],
-     "body_impact_peak_n": 3770,
-     "max_stroke_mm": 10.1,
+     "body_impact_peak_n": 3780,
+     "max_stroke_mm": 10.5,
      "bottomed": false
     },
     "fall_back x1.0": {
      "pass": true,
      "reasons": [],
-     "body_impact_peak_n": 2508,
-     "max_stroke_mm": 12.9,
+     "body_impact_peak_n": 2469,
+     "max_stroke_mm": 13.7,
      "bottomed": false
     },
     "fall_back x1.4": {
      "pass": true,
      "reasons": [],
-     "body_impact_peak_n": 2063,
-     "max_stroke_mm": 13.9,
+     "body_impact_peak_n": 2072,
+     "max_stroke_mm": 14.6,
      "bottomed": false
     },
     "fall_side x0.6": {
      "pass": false,
      "reasons": [
-      "body impact 3847 N (limit 3000 N)"
+      "body impact 3846 N (limit 3000 N)"
      ],
-     "body_impact_peak_n": 3847,
-     "max_stroke_mm": 9.6,
+     "body_impact_peak_n": 3846,
+     "max_stroke_mm": 10.3,
      "bottomed": false
     },
     "fall_side x1.0": {
      "pass": false,
      "reasons": [
-      "body impact 3120 N (limit 3000 N)"
+      "body impact 3026 N (limit 3000 N)"
      ],
-     "body_impact_peak_n": 3120,
-     "max_stroke_mm": 8.8,
+     "body_impact_peak_n": 3026,
+     "max_stroke_mm": 9.0,
      "bottomed": false
     },
     "fall_side x1.4": {
      "pass": true,
      "reasons": [],
-     "body_impact_peak_n": 2007,
-     "max_stroke_mm": 4.0,
+     "body_impact_peak_n": 2015,
+     "max_stroke_mm": 3.3,
      "bottomed": false
     }
    },
-   "worst_n": 3847,
+   "worst_n": 3846,
    "all_pass": false,
-   "max_stroke_mm": 13.9
+   "max_stroke_mm": 14.6
   },
   {
    "h_mm": 45.0,
@@ -901,78 +917,398 @@
     "fall_front x0.6": {
      "pass": false,
      "reasons": [
-      "body impact 3940 N (limit 3000 N)"
+      "body impact 4199 N (limit 3000 N)"
      ],
-     "body_impact_peak_n": 3940,
-     "max_stroke_mm": 8.2,
+     "body_impact_peak_n": 4199,
+     "max_stroke_mm": 9.0,
      "bottomed": false
     },
     "fall_front x1.0": {
      "pass": true,
      "reasons": [],
-     "body_impact_peak_n": 2659,
-     "max_stroke_mm": 10.5,
+     "body_impact_peak_n": 2654,
+     "max_stroke_mm": 11.0,
      "bottomed": false
     },
     "fall_front x1.4": {
      "pass": true,
      "reasons": [],
-     "body_impact_peak_n": 2346,
-     "max_stroke_mm": 10.2,
+     "body_impact_peak_n": 2355,
+     "max_stroke_mm": 10.8,
      "bottomed": false
     },
     "fall_back x0.6": {
      "pass": false,
      "reasons": [
-      "body impact 3920 N (limit 3000 N)"
+      "body impact 3965 N (limit 3000 N)"
      ],
-     "body_impact_peak_n": 3920,
-     "max_stroke_mm": 8.5,
+     "body_impact_peak_n": 3965,
+     "max_stroke_mm": 8.8,
      "bottomed": false
     },
     "fall_back x1.0": {
      "pass": true,
      "reasons": [],
-     "body_impact_peak_n": 2412,
-     "max_stroke_mm": 10.1,
+     "body_impact_peak_n": 2387,
+     "max_stroke_mm": 10.6,
      "bottomed": false
     },
     "fall_back x1.4": {
      "pass": true,
      "reasons": [],
-     "body_impact_peak_n": 2359,
-     "max_stroke_mm": 10.6,
+     "body_impact_peak_n": 2368,
+     "max_stroke_mm": 11.2,
      "bottomed": false
     },
     "fall_side x0.6": {
      "pass": false,
      "reasons": [
-      "body impact 4421 N (limit 3000 N)"
+      "body impact 4403 N (limit 3000 N)"
      ],
-     "body_impact_peak_n": 4421,
-     "max_stroke_mm": 8.3,
+     "body_impact_peak_n": 4403,
+     "max_stroke_mm": 8.9,
      "bottomed": false
     },
     "fall_side x1.0": {
      "pass": false,
      "reasons": [
-      "body impact 3185 N (limit 3000 N)"
+      "body impact 3110 N (limit 3000 N)"
      ],
-     "body_impact_peak_n": 3185,
-     "max_stroke_mm": 8.1,
+     "body_impact_peak_n": 3110,
+     "max_stroke_mm": 8.3,
      "bottomed": false
     },
     "fall_side x1.4": {
      "pass": true,
      "reasons": [],
-     "body_impact_peak_n": 2296,
-     "max_stroke_mm": 3.7,
+     "body_impact_peak_n": 2306,
+     "max_stroke_mm": 3.1,
      "bottomed": false
     }
    },
-   "worst_n": 4421,
+   "worst_n": 4403,
    "all_pass": false,
-   "max_stroke_mm": 10.6
+   "max_stroke_mm": 11.2
+  },
+  {
+   "h_mm": 50.0,
+   "stroke_mm": 30.0,
+   "lowest_leg_mm": 185.0,
+   "plateau_n": 600.0,
+   "runs": {
+    "fall_front x0.6": {
+     "pass": true,
+     "reasons": [],
+     "body_impact_peak_n": 2724,
+     "max_stroke_mm": 16.7,
+     "bottomed": false
+    },
+    "fall_front x1.0": {
+     "pass": true,
+     "reasons": [],
+     "body_impact_peak_n": 2677,
+     "max_stroke_mm": 22.1,
+     "bottomed": false
+    },
+    "fall_front x1.4": {
+     "pass": true,
+     "reasons": [],
+     "body_impact_peak_n": 1761,
+     "max_stroke_mm": 27.6,
+     "bottomed": false
+    },
+    "fall_back x0.6": {
+     "pass": true,
+     "reasons": [],
+     "body_impact_peak_n": 2720,
+     "max_stroke_mm": 16.8,
+     "bottomed": false
+    },
+    "fall_back x1.0": {
+     "pass": true,
+     "reasons": [],
+     "body_impact_peak_n": 2667,
+     "max_stroke_mm": 22.0,
+     "bottomed": false
+    },
+    "fall_back x1.4": {
+     "pass": true,
+     "reasons": [],
+     "body_impact_peak_n": 1649,
+     "max_stroke_mm": 27.1,
+     "bottomed": false
+    },
+    "fall_side x0.6": {
+     "pass": true,
+     "reasons": [],
+     "body_impact_peak_n": 2709,
+     "max_stroke_mm": 16.3,
+     "bottomed": false
+    },
+    "fall_side x1.0": {
+     "pass": true,
+     "reasons": [],
+     "body_impact_peak_n": 2723,
+     "max_stroke_mm": 12.8,
+     "bottomed": false
+    },
+    "fall_side x1.4": {
+     "pass": true,
+     "reasons": [],
+     "body_impact_peak_n": 1439,
+     "max_stroke_mm": 6.9,
+     "bottomed": false
+    }
+   },
+   "worst_n": 2724,
+   "all_pass": true,
+   "max_stroke_mm": 27.6
+  },
+  {
+   "h_mm": 50.0,
+   "stroke_mm": 30.0,
+   "lowest_leg_mm": 185.0,
+   "plateau_n": 750.0,
+   "runs": {
+    "fall_front x0.6": {
+     "pass": false,
+     "reasons": [
+      "body impact 3286 N (limit 3000 N)"
+     ],
+     "body_impact_peak_n": 3286,
+     "max_stroke_mm": 12.8,
+     "bottomed": false
+    },
+    "fall_front x1.0": {
+     "pass": true,
+     "reasons": [],
+     "body_impact_peak_n": 2929,
+     "max_stroke_mm": 17.3,
+     "bottomed": false
+    },
+    "fall_front x1.4": {
+     "pass": true,
+     "reasons": [],
+     "body_impact_peak_n": 1777,
+     "max_stroke_mm": 20.1,
+     "bottomed": false
+    },
+    "fall_back x0.6": {
+     "pass": false,
+     "reasons": [
+      "body impact 3257 N (limit 3000 N)"
+     ],
+     "body_impact_peak_n": 3257,
+     "max_stroke_mm": 13.3,
+     "bottomed": false
+    },
+    "fall_back x1.0": {
+     "pass": true,
+     "reasons": [],
+     "body_impact_peak_n": 2662,
+     "max_stroke_mm": 17.3,
+     "bottomed": false
+    },
+    "fall_back x1.4": {
+     "pass": true,
+     "reasons": [],
+     "body_impact_peak_n": 1777,
+     "max_stroke_mm": 19.3,
+     "bottomed": false
+    },
+    "fall_side x0.6": {
+     "pass": false,
+     "reasons": [
+      "body impact 3285 N (limit 3000 N)"
+     ],
+     "body_impact_peak_n": 3285,
+     "max_stroke_mm": 12.8,
+     "bottomed": false
+    },
+    "fall_side x1.0": {
+     "pass": false,
+     "reasons": [
+      "body impact 3238 N (limit 3000 N)"
+     ],
+     "body_impact_peak_n": 3238,
+     "max_stroke_mm": 11.2,
+     "bottomed": false
+    },
+    "fall_side x1.4": {
+     "pass": true,
+     "reasons": [],
+     "body_impact_peak_n": 1735,
+     "max_stroke_mm": 6.0,
+     "bottomed": false
+    }
+   },
+   "worst_n": 3286,
+   "all_pass": false,
+   "max_stroke_mm": 20.1
+  },
+  {
+   "h_mm": 50.0,
+   "stroke_mm": 30.0,
+   "lowest_leg_mm": 185.0,
+   "plateau_n": 900.0,
+   "runs": {
+    "fall_front x0.6": {
+     "pass": false,
+     "reasons": [
+      "body impact 3813 N (limit 3000 N)"
+     ],
+     "body_impact_peak_n": 3813,
+     "max_stroke_mm": 10.3,
+     "bottomed": false
+    },
+    "fall_front x1.0": {
+     "pass": true,
+     "reasons": [],
+     "body_impact_peak_n": 2644,
+     "max_stroke_mm": 13.8,
+     "bottomed": false
+    },
+    "fall_front x1.4": {
+     "pass": true,
+     "reasons": [],
+     "body_impact_peak_n": 2068,
+     "max_stroke_mm": 14.9,
+     "bottomed": false
+    },
+    "fall_back x0.6": {
+     "pass": false,
+     "reasons": [
+      "body impact 3763 N (limit 3000 N)"
+     ],
+     "body_impact_peak_n": 3763,
+     "max_stroke_mm": 10.7,
+     "bottomed": false
+    },
+    "fall_back x1.0": {
+     "pass": true,
+     "reasons": [],
+     "body_impact_peak_n": 2343,
+     "max_stroke_mm": 13.5,
+     "bottomed": false
+    },
+    "fall_back x1.4": {
+     "pass": true,
+     "reasons": [],
+     "body_impact_peak_n": 2068,
+     "max_stroke_mm": 14.3,
+     "bottomed": false
+    },
+    "fall_side x0.6": {
+     "pass": false,
+     "reasons": [
+      "body impact 3854 N (limit 3000 N)"
+     ],
+     "body_impact_peak_n": 3854,
+     "max_stroke_mm": 10.6,
+     "bottomed": false
+    },
+    "fall_side x1.0": {
+     "pass": false,
+     "reasons": [
+      "body impact 3613 N (limit 3000 N)"
+     ],
+     "body_impact_peak_n": 3613,
+     "max_stroke_mm": 10.1,
+     "bottomed": false
+    },
+    "fall_side x1.4": {
+     "pass": true,
+     "reasons": [],
+     "body_impact_peak_n": 2029,
+     "max_stroke_mm": 5.4,
+     "bottomed": false
+    }
+   },
+   "worst_n": 3854,
+   "all_pass": false,
+   "max_stroke_mm": 14.9
+  },
+  {
+   "h_mm": 50.0,
+   "stroke_mm": 30.0,
+   "lowest_leg_mm": 185.0,
+   "plateau_n": 1050.0,
+   "runs": {
+    "fall_front x0.6": {
+     "pass": false,
+     "reasons": [
+      "body impact 4131 N (limit 3000 N)"
+     ],
+     "body_impact_peak_n": 4131,
+     "max_stroke_mm": 8.7,
+     "bottomed": false
+    },
+    "fall_front x1.0": {
+     "pass": true,
+     "reasons": [],
+     "body_impact_peak_n": 2530,
+     "max_stroke_mm": 10.9,
+     "bottomed": false
+    },
+    "fall_front x1.4": {
+     "pass": true,
+     "reasons": [],
+     "body_impact_peak_n": 2363,
+     "max_stroke_mm": 11.5,
+     "bottomed": false
+    },
+    "fall_back x0.6": {
+     "pass": false,
+     "reasons": [
+      "body impact 3827 N (limit 3000 N)"
+     ],
+     "body_impact_peak_n": 3827,
+     "max_stroke_mm": 9.0,
+     "bottomed": false
+    },
+    "fall_back x1.0": {
+     "pass": true,
+     "reasons": [],
+     "body_impact_peak_n": 2333,
+     "max_stroke_mm": 10.4,
+     "bottomed": false
+    },
+    "fall_back x1.4": {
+     "pass": true,
+     "reasons": [],
+     "body_impact_peak_n": 2365,
+     "max_stroke_mm": 11.0,
+     "bottomed": false
+    },
+    "fall_side x0.6": {
+     "pass": false,
+     "reasons": [
+      "body impact 4412 N (limit 3000 N)"
+     ],
+     "body_impact_peak_n": 4412,
+     "max_stroke_mm": 9.1,
+     "bottomed": false
+    },
+    "fall_side x1.0": {
+     "pass": false,
+     "reasons": [
+      "body impact 3718 N (limit 3000 N)"
+     ],
+     "body_impact_peak_n": 3718,
+     "max_stroke_mm": 9.3,
+     "bottomed": false
+    },
+    "fall_side x1.4": {
+     "pass": true,
+     "reasons": [],
+     "body_impact_peak_n": 2325,
+     "max_stroke_mm": 4.9,
+     "bottomed": false
+    }
+   },
+   "worst_n": 4412,
+   "all_pass": false,
+   "max_stroke_mm": 11.5
   }
  ],
  "verdict": {
@@ -980,7 +1316,12 @@
    [
     45.0,
     600.0,
-    2714
+    2820
+   ],
+   [
+    50.0,
+    600.0,
+    2724
    ]
   ],
   "shallowest_passing_h_mm": 45.0

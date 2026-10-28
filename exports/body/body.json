@@ -2,7 +2,7 @@
  "numbers": {
   "spine_w_mm": 40.5,
   "y_off_mm": 102.55,
-  "track_mm": 414.3,
+  "track_mm": 433.7,
   "z_spine_top_mm": 90.5,
   "z_tray_top_mm": 93.675,
   "top_mm": 216.0,
@@ -14,7 +14,7 @@
   "tm_face_z_mm": 246.0,
   "pan_axis_x_mm": -40.0,
   "lidar_axis_x_mm": 103.0,
-  "wheel_y_module_mm": 104.6,
+  "wheel_y_module_mm": 114.3,
   "centre_plane_module_mm": -82.30000000000001
  },
  "interface": {
@@ -462,7 +462,7 @@
  },
  "print": {
   "too_big": [],
-  "hours": 88.6,
+  "hours": 93.4,
   "parts": {
    "post": {
     "material": "pa6-cf",
@@ -674,16 +674,16 @@
     "size_mm": [
      149,
      24,
-     45
+     50
     ],
     "fits": true,
     "placement": "straight",
-    "grams_each": 53,
-    "grams": 212,
-    "hours": 42.9,
-    "cost_usd": 8.92,
+    "grams_each": 59,
+    "grams": 236,
+    "hours": 47.7,
+    "cost_usd": 9.91,
     "infill": "2 mm walls, 40 % gyroid",
-    "how": "crush pad (#19): TPU 95A HF gyroid lattice, 45 mm free, 27 mm stroke, 600 N plateau, on 3M VHB tape (no screw: under the packs there is 1 mm); the robot sits on these"
+    "how": "crush pad (#19): TPU 95A HF gyroid lattice, 50 mm free, 30 mm stroke, 600 N plateau, on 3M VHB tape (no screw: under the packs there is 1 mm); the robot sits on these"
    }
   }
  },
@@ -725,10 +725,10 @@
    "bay_door_front": 65.5,
    "adapter_plate_rear": 31.4,
    "bay_door_rear": 65.5,
-   "bay_skid_1": 53.1,
-   "bay_skid_2": 53.1,
-   "bay_skid_3": 53.1,
-   "bay_skid_4": 53.1,
+   "bay_skid_1": 59.0,
+   "bay_skid_2": 59.0,
+   "bay_skid_3": 59.0,
+   "bay_skid_4": 59.0,
    "spacers": 0.0,
    "spacer_screws": 0.0,
    "frame_screws_left": 0.0,
@@ -755,7 +755,7 @@
    "d435_rear": 0.0,
    "eyes_board": 0.0
   },
-  "frame_total": 5217.5
+  "frame_total": 5241.1
  },
  "internal_clashes": [],
  "shell": {
@@ -1796,7 +1796,7 @@
      -122.04
     ],
     "mass_g": 1565.0,
-    "basis": "DeWalt DCB547-XJ datasheet (138 x 87 x 97 mm incl. the rail tower); DeWalt US 3.45 lb = 1565 g (the conservative of 1.46-1.57 kg): weigh one",
+    "basis": "ENVELOPE, blocked on issue #20 (measure a real pack): a box from the DeWalt DCB547-XJ datasheet (138 x 87 x 97 mm incl. the rail tower); DeWalt US 3.45 lb = 1565 g (the conservative of 1.46-1.57 kg). No rail, latch, button or terminal is modelled and none is guessed",
     "group": "battery",
     "stage": "P0",
     "catalog": "dewalt-dcb609",
@@ -1814,7 +1814,7 @@
      -122.04
     ],
     "mass_g": 1565.0,
-    "basis": "DeWalt DCB547-XJ datasheet (138 x 87 x 97 mm incl. the rail tower); DeWalt US 3.45 lb = 1565 g (the conservative of 1.46-1.57 kg): weigh one",
+    "basis": "ENVELOPE, blocked on issue #20 (measure a real pack): a box from the DeWalt DCB547-XJ datasheet (138 x 87 x 97 mm incl. the rail tower); DeWalt US 3.45 lb = 1565 g (the conservative of 1.46-1.57 kg). No rail, latch, button or terminal is modelled and none is guessed",
     "group": "battery",
     "stage": "P0",
     "catalog": "dewalt-dcb609",
@@ -1832,7 +1832,7 @@
      -97.04
     ],
     "mass_g": 70.0,
-    "basis": "envelope estimate: Terrafirma publishes no drawing",
+    "basis": "ENVELOPE, blocked on issue #20 (measure a real adapter): a guessed box; Terrafirma publishes no drawing, so its rail, catch, holes and lead exit are not modelled",
     "group": "battery",
     "stage": "P0",
     "catalog": "terrafirma-dewalt-20v-adapter-10awg",
@@ -1850,7 +1850,7 @@
      -97.04
     ],
     "mass_g": 70.0,
-    "basis": "envelope estimate: Terrafirma publishes no drawing",
+    "basis": "ENVELOPE, blocked on issue #20 (measure a real adapter): a guessed box; Terrafirma publishes no drawing, so its rail, catch, holes and lead exit are not modelled",
     "group": "battery",
     "stage": "P0",
     "catalog": "terrafirma-dewalt-20v-adapter-10awg",
@@ -1864,7 +1864,7 @@
      159.0,
      -51.2,
      51.2,
-     -266.64,
+     -271.64,
      -93.04
     ],
     "mass_g": 0,
@@ -1880,22 +1880,22 @@
  "mass": {
   "P1": {
    "stage": "P1",
-   "total_kg": 33.79,
+   "total_kg": 33.81,
    "com_mm": [
     3.3,
     -1.1,
-    -76.7
+    -76.8
    ],
    "groups_kg": {
     "legs": 21.624,
-    "frame": 4.812,
+    "frame": 4.835,
     "compute": 1.513,
     "power": 1.739,
     "deck": 0.83,
     "battery": 3.27
    },
    "legs_kg": 21.62,
-   "body_and_head_kg": 12.16,
+   "body_and_head_kg": 12.19,
    "budget": {
     "robot_kg": 35.0,
     "legs_kg_each": 10.85,
@@ -2092,15 +2092,15 @@
   },
   "P3": {
    "stage": "P3",
-   "total_kg": 36.73,
+   "total_kg": 36.75,
    "com_mm": [
     1.4,
     -1.0,
-    -49.8
+    -49.9
    ],
    "groups_kg": {
     "legs": 21.624,
-    "frame": 4.944,
+    "frame": 4.968,
     "shell": 1.11,
     "compute": 1.513,
     "power": 1.739,
@@ -2108,7 +2108,7 @@
     "battery": 3.27
    },
    "legs_kg": 21.62,
-   "body_and_head_kg": 15.11,
+   "body_and_head_kg": 15.13,
    "budget": {
     "robot_kg": 35.0,
     "legs_kg_each": 10.85,
@@ -2304,10 +2304,10 @@
    ],
    "gate": {
     "ceiling_kg": 35.0,
-    "gap_kg": 1.73,
+    "gap_kg": 1.75,
     "open_scheduled_g": -500,
-    "with_scheduled_levers_kg": 36.23,
-    "body_and_head_with_levers_kg": 14.61,
+    "with_scheduled_levers_kg": 36.25,
+    "body_and_head_with_levers_kg": 14.63,
     "leg_each_kg": 10.81,
     "pass": false,
     "on_call_next": [
@@ -2315,7 +2315,7 @@
      "alu_standoffs",
      "cooler_34mm"
     ],
-    "margin_kg": -1.23,
+    "margin_kg": -1.25,
     "on_call_open_g": -2301,
     "rule": "the P3 ledger with every scheduled lever taken (the open ones at the plan's grams) under the 35.0 kg ceiling, each leg under 10.85 kg and the body and head under 13.3 kg (D69); over it, the on-call levers go in order before the next order, each with the user's or the coordinator's word"
    }

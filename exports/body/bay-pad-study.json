@@ -1,5 +1,5 @@
 {
- "model_kg": 36.731,
+ "model_kg": 36.754,
  "wheel": {
   "decision": "D69",
   "key": "hb10",
@@ -21,16 +21,16 @@
   "c_ns_per_m_each": 100.0,
   "plateau_n_each": 600.0,
   "unload_ratio": 0.2,
-  "body_kg_each_in_model": 0.0966,
-  "stroke_mm": 27.0,
-  "h_mm": 45.0,
+  "body_kg_each_in_model": 0.1025,
+  "stroke_mm": 30.0,
+  "h_mm": 50.0,
   "mass_kg": {
-   "pad_1": 0.0531,
-   "pad_2": 0.0531,
-   "pad_3": 0.0531,
-   "pad_4": 0.0531
+   "pad_1": 0.059,
+   "pad_2": 0.059,
+   "pad_3": 0.059,
+   "pad_4": 0.059
   },
-  "touch_leg_mm": 139.6,
+  "touch_leg_mm": 144.6,
   "basis": "cad/body_battery.py PAD (issue #19)"
  },
  "limit_n": 3000.0,
@@ -38,46 +38,46 @@
   "fall_front": {
    "pass": true,
    "reasons": [],
-   "body_impact_peak_n": 2691,
-   "pads_peak_n": 2691,
-   "pad_each_peak_n": 734,
-   "max_stroke_mm": 22.3,
+   "body_impact_peak_n": 2677,
+   "pads_peak_n": 2677,
+   "pad_each_peak_n": 733,
+   "max_stroke_mm": 22.1,
    "bottomed": false,
    "first_touch": {
-    "t": 1.181,
-    "base_vz_mps": -1.586,
-    "base_v_mps": 1.591,
-    "robot_kg": 36.73
+    "t": 1.179,
+    "base_vz_mps": -1.57,
+    "base_v_mps": 1.575,
+    "robot_kg": 36.75
    }
   },
   "fall_back": {
    "pass": true,
    "reasons": [],
-   "body_impact_peak_n": 2675,
-   "pads_peak_n": 2675,
-   "pad_each_peak_n": 734,
-   "max_stroke_mm": 22.5,
+   "body_impact_peak_n": 2667,
+   "pads_peak_n": 2667,
+   "pad_each_peak_n": 732,
+   "max_stroke_mm": 22.0,
    "bottomed": false,
    "first_touch": {
-    "t": 1.18,
-    "base_vz_mps": -1.58,
-    "base_v_mps": 1.585,
-    "robot_kg": 36.73
+    "t": 1.178,
+    "base_vz_mps": -1.564,
+    "base_v_mps": 1.57,
+    "robot_kg": 36.75
    }
   },
   "fall_side": {
    "pass": true,
    "reasons": [],
-   "body_impact_peak_n": 2685,
-   "pads_peak_n": 2685,
-   "pad_each_peak_n": 716,
-   "max_stroke_mm": 10.8,
+   "body_impact_peak_n": 2723,
+   "pads_peak_n": 2723,
+   "pad_each_peak_n": 718,
+   "max_stroke_mm": 12.8,
    "bottomed": false,
    "first_touch": {
-    "t": 1.189,
-    "base_vz_mps": -1.614,
-    "base_v_mps": 1.624,
-    "robot_kg": 36.73
+    "t": 1.188,
+    "base_vz_mps": -1.612,
+    "base_v_mps": 1.623,
+    "robot_kg": 36.75
    }
   }
  },
@@ -85,52 +85,52 @@
   "fall_front": {
    "pass": false,
    "reasons": [
-    "body impact 4949 N (limit 3000 N)"
+    "body impact 5263 N (limit 3000 N)"
    ],
-   "body_impact_peak_n": 4949,
-   "pads_peak_n": 4949,
-   "pad_each_peak_n": 2476,
-   "max_stroke_mm": 1.9,
+   "body_impact_peak_n": 5263,
+   "pads_peak_n": 5263,
+   "pad_each_peak_n": 2635,
+   "max_stroke_mm": 0.8,
    "bottomed": true,
    "first_touch": {
-    "t": 1.181,
-    "base_vz_mps": -1.585,
-    "base_v_mps": 1.591,
-    "robot_kg": 36.73
+    "t": 1.179,
+    "base_vz_mps": -1.569,
+    "base_v_mps": 1.575,
+    "robot_kg": 36.75
    }
   },
   "fall_back": {
    "pass": false,
    "reasons": [
-    "body impact 4869 N (limit 3000 N)"
+    "body impact 5124 N (limit 3000 N)"
    ],
-   "body_impact_peak_n": 4869,
-   "pads_peak_n": 4869,
-   "pad_each_peak_n": 2436,
-   "max_stroke_mm": 1.9,
+   "body_impact_peak_n": 5124,
+   "pads_peak_n": 5124,
+   "pad_each_peak_n": 2564,
+   "max_stroke_mm": 0.8,
    "bottomed": true,
    "first_touch": {
-    "t": 1.18,
-    "base_vz_mps": -1.579,
-    "base_v_mps": 1.584,
-    "robot_kg": 36.73
+    "t": 1.178,
+    "base_vz_mps": -1.563,
+    "base_v_mps": 1.569,
+    "robot_kg": 36.75
    }
   },
   "fall_side": {
    "pass": false,
    "reasons": [
-    "body impact 5552 N (limit 3000 N)"
+    "body impact 7257 N (limit 3000 N)"
    ],
-   "body_impact_peak_n": 5552,
-   "pads_peak_n": 5552,
-   "pad_each_peak_n": 2976,
-   "max_stroke_mm": 2.3,
+   "body_impact_peak_n": 7257,
+   "pads_peak_n": 7257,
+   "pad_each_peak_n": 3668,
+   "max_stroke_mm": 0.8,
    "bottomed": true,
    "first_touch": {
-    "t": 1.189,
-    "base_vz_mps": -1.614,
-    "base_v_mps": 1.624,
-    "robot_kg": 36.73
+    "t": 1.188,
+    "base_vz_mps": -1.612,
+    "base_v_mps": 1.622,
+    "robot_kg": 36.75
    }
   }
  },
@@ -141,113 +141,109 @@
    "fall_front": {
     "pass": false,
     "reasons": [
-     "body impact 4206 N (limit 3000 N)"
+     "body impact 3190 N (limit 3000 N)"
     ],
-    "body_impact_peak_n": 4206,
-    "pads_peak_n": 4206,
-    "pad_each_peak_n": 1607,
-    "max_stroke_mm": 28.8,
+    "body_impact_peak_n": 3190,
+    "pads_peak_n": 3190,
+    "pad_each_peak_n": 1489,
+    "max_stroke_mm": 30.3,
     "bottomed": true,
     "first_touch": {
-     "t": 1.181,
-     "base_vz_mps": -1.586,
-     "base_v_mps": 1.592,
-     "robot_kg": 36.73
+     "t": 1.179,
+     "base_vz_mps": -1.57,
+     "base_v_mps": 1.576,
+     "robot_kg": 36.75
     }
    },
    "fall_back": {
     "pass": false,
     "reasons": [
-     "body impact 4098 N (limit 3000 N)"
+     "body impact 3252 N (limit 3000 N)"
     ],
-    "body_impact_peak_n": 4098,
-    "pads_peak_n": 4098,
-    "pad_each_peak_n": 1555,
-    "max_stroke_mm": 28.7,
+    "body_impact_peak_n": 3252,
+    "pads_peak_n": 3252,
+    "pad_each_peak_n": 1168,
+    "max_stroke_mm": 30.2,
     "bottomed": true,
     "first_touch": {
-     "t": 1.18,
-     "base_vz_mps": -1.58,
-     "base_v_mps": 1.585,
-     "robot_kg": 36.73
+     "t": 1.178,
+     "base_vz_mps": -1.564,
+     "base_v_mps": 1.57,
+     "robot_kg": 36.75
     }
    },
    "fall_side": {
     "pass": true,
     "reasons": [],
-    "body_impact_peak_n": 2048,
-    "pads_peak_n": 2048,
-    "pad_each_peak_n": 534,
-    "max_stroke_mm": 13.2,
+    "body_impact_peak_n": 2058,
+    "pads_peak_n": 2058,
+    "pad_each_peak_n": 533,
+    "max_stroke_mm": 15.7,
     "bottomed": false,
     "first_touch": {
-     "t": 1.189,
-     "base_vz_mps": -1.615,
-     "base_v_mps": 1.624,
-     "robot_kg": 36.73
+     "t": 1.188,
+     "base_vz_mps": -1.613,
+     "base_v_mps": 1.623,
+     "robot_kg": 36.75
     }
    },
-   "worst_n": 4206,
+   "worst_n": 3252,
    "bottomed": true,
-   "max_stroke_mm": 28.8,
+   "max_stroke_mm": 30.3,
    "all_pass": false
   },
   {
    "plateau_n": 450.0,
    "c_ns_per_m": 100.0,
    "fall_front": {
-    "pass": false,
-    "reasons": [
-     "body impact 3463 N (limit 3000 N)"
-    ],
-    "body_impact_peak_n": 3463,
-    "pads_peak_n": 3463,
-    "pad_each_peak_n": 1249,
-    "max_stroke_mm": 28.4,
-    "bottomed": true,
+    "pass": true,
+    "reasons": [],
+    "body_impact_peak_n": 2160,
+    "pads_peak_n": 2160,
+    "pad_each_peak_n": 591,
+    "max_stroke_mm": 29.0,
+    "bottomed": false,
     "first_touch": {
-     "t": 1.181,
-     "base_vz_mps": -1.586,
-     "base_v_mps": 1.591,
-     "robot_kg": 36.73
+     "t": 1.179,
+     "base_vz_mps": -1.57,
+     "base_v_mps": 1.575,
+     "robot_kg": 36.75
     }
    },
    "fall_back": {
-    "pass": false,
-    "reasons": [
-     "body impact 3428 N (limit 3000 N)"
-    ],
-    "body_impact_peak_n": 3428,
-    "pads_peak_n": 3428,
-    "pad_each_peak_n": 1231,
-    "max_stroke_mm": 28.4,
-    "bottomed": true,
+    "pass": true,
+    "reasons": [],
+    "body_impact_peak_n": 2151,
+    "pads_peak_n": 2151,
+    "pad_each_peak_n": 593,
+    "max_stroke_mm": 29.3,
+    "bottomed": false,
     "first_touch": {
-     "t": 1.18,
-     "base_vz_mps": -1.58,
-     "base_v_mps": 1.585,
-     "robot_kg": 36.73
+     "t": 1.178,
+     "base_vz_mps": -1.564,
+     "base_v_mps": 1.57,
+     "robot_kg": 36.75
     }
    },
    "fall_side": {
     "pass": true,
     "reasons": [],
-    "body_impact_peak_n": 2145,
-    "pads_peak_n": 2145,
-    "pad_each_peak_n": 571,
-    "max_stroke_mm": 12.5,
+    "body_impact_peak_n": 2171,
+    "pads_peak_n": 2171,
+    "pad_each_peak_n": 573,
+    "max_stroke_mm": 14.9,
     "bottomed": false,
     "first_touch": {
-     "t": 1.189,
-     "base_vz_mps": -1.614,
-     "base_v_mps": 1.624,
-     "robot_kg": 36.73
+     "t": 1.188,
+     "base_vz_mps": -1.612,
+     "base_v_mps": 1.623,
+     "robot_kg": 36.75
     }
    },
-   "worst_n": 3463,
-   "bottomed": true,
-   "max_stroke_mm": 28.4,
-   "all_pass": false
+   "worst_n": 2171,
+   "bottomed": false,
+   "max_stroke_mm": 29.3,
+   "all_pass": true
   },
   {
    "plateau_n": 450.0,
@@ -255,51 +251,51 @@
    "fall_front": {
     "pass": true,
     "reasons": [],
-    "body_impact_peak_n": 2444,
-    "pads_peak_n": 2444,
-    "pad_each_peak_n": 701,
-    "max_stroke_mm": 25.4,
+    "body_impact_peak_n": 2435,
+    "pads_peak_n": 2435,
+    "pad_each_peak_n": 700,
+    "max_stroke_mm": 24.8,
     "bottomed": false,
     "first_touch": {
-     "t": 1.181,
-     "base_vz_mps": -1.586,
-     "base_v_mps": 1.591,
-     "robot_kg": 36.73
+     "t": 1.179,
+     "base_vz_mps": -1.569,
+     "base_v_mps": 1.575,
+     "robot_kg": 36.75
     }
    },
    "fall_back": {
     "pass": true,
     "reasons": [],
-    "body_impact_peak_n": 2432,
-    "pads_peak_n": 2432,
-    "pad_each_peak_n": 701,
-    "max_stroke_mm": 25.4,
+    "body_impact_peak_n": 2418,
+    "pads_peak_n": 2418,
+    "pad_each_peak_n": 700,
+    "max_stroke_mm": 25.2,
     "bottomed": false,
     "first_touch": {
-     "t": 1.18,
-     "base_vz_mps": -1.579,
-     "base_v_mps": 1.585,
-     "robot_kg": 36.73
+     "t": 1.178,
+     "base_vz_mps": -1.563,
+     "base_v_mps": 1.569,
+     "robot_kg": 36.75
     }
    },
    "fall_side": {
     "pass": true,
     "reasons": [],
-    "body_impact_peak_n": 2314,
-    "pads_peak_n": 2314,
-    "pad_each_peak_n": 639,
-    "max_stroke_mm": 10.7,
+    "body_impact_peak_n": 2388,
+    "pads_peak_n": 2388,
+    "pad_each_peak_n": 653,
+    "max_stroke_mm": 12.7,
     "bottomed": false,
     "first_touch": {
-     "t": 1.189,
-     "base_vz_mps": -1.614,
-     "base_v_mps": 1.624,
-     "robot_kg": 36.73
+     "t": 1.188,
+     "base_vz_mps": -1.612,
+     "base_v_mps": 1.622,
+     "robot_kg": 36.75
     }
    },
-   "worst_n": 2444,
+   "worst_n": 2435,
    "bottomed": false,
-   "max_stroke_mm": 25.4,
+   "max_stroke_mm": 25.2,
    "all_pass": true
   },
   {
@@ -308,51 +304,51 @@
    "fall_front": {
     "pass": true,
     "reasons": [],
-    "body_impact_peak_n": 2591,
-    "pads_peak_n": 2591,
+    "body_impact_peak_n": 2582,
+    "pads_peak_n": 2582,
+    "pad_each_peak_n": 687,
+    "max_stroke_mm": 23.0,
+    "bottomed": false,
+    "first_touch": {
+     "t": 1.179,
+     "base_vz_mps": -1.57,
+     "base_v_mps": 1.576,
+     "robot_kg": 36.75
+    }
+   },
+   "fall_back": {
+    "pass": true,
+    "reasons": [],
+    "body_impact_peak_n": 2578,
+    "pads_peak_n": 2578,
     "pad_each_peak_n": 688,
-    "max_stroke_mm": 23.2,
+    "max_stroke_mm": 22.9,
     "bottomed": false,
     "first_touch": {
-     "t": 1.181,
-     "base_vz_mps": -1.586,
-     "base_v_mps": 1.592,
-     "robot_kg": 36.73
-    }
-   },
-   "fall_back": {
-    "pass": true,
-    "reasons": [],
-    "body_impact_peak_n": 2583,
-    "pads_peak_n": 2583,
-    "pad_each_peak_n": 689,
-    "max_stroke_mm": 23.4,
-    "bottomed": false,
-    "first_touch": {
-     "t": 1.18,
-     "base_vz_mps": -1.58,
-     "base_v_mps": 1.585,
-     "robot_kg": 36.73
+     "t": 1.178,
+     "base_vz_mps": -1.564,
+     "base_v_mps": 1.57,
+     "robot_kg": 36.75
     }
    },
    "fall_side": {
     "pass": true,
     "reasons": [],
-    "body_impact_peak_n": 2613,
-    "pads_peak_n": 2613,
-    "pad_each_peak_n": 682,
-    "max_stroke_mm": 11.4,
+    "body_impact_peak_n": 2627,
+    "pads_peak_n": 2627,
+    "pad_each_peak_n": 681,
+    "max_stroke_mm": 13.4,
     "bottomed": false,
     "first_touch": {
-     "t": 1.189,
-     "base_vz_mps": -1.615,
-     "base_v_mps": 1.624,
-     "robot_kg": 36.73
+     "t": 1.188,
+     "base_vz_mps": -1.613,
+     "base_v_mps": 1.623,
+     "robot_kg": 36.75
     }
    },
-   "worst_n": 2613,
+   "worst_n": 2627,
    "bottomed": false,
-   "max_stroke_mm": 23.4,
+   "max_stroke_mm": 23.0,
    "all_pass": true
   },
   {
@@ -361,51 +357,51 @@
    "fall_front": {
     "pass": true,
     "reasons": [],
-    "body_impact_peak_n": 2691,
-    "pads_peak_n": 2691,
-    "pad_each_peak_n": 734,
-    "max_stroke_mm": 22.3,
+    "body_impact_peak_n": 2677,
+    "pads_peak_n": 2677,
+    "pad_each_peak_n": 733,
+    "max_stroke_mm": 22.1,
     "bottomed": false,
     "first_touch": {
-     "t": 1.181,
-     "base_vz_mps": -1.586,
-     "base_v_mps": 1.591,
-     "robot_kg": 36.73
+     "t": 1.179,
+     "base_vz_mps": -1.57,
+     "base_v_mps": 1.575,
+     "robot_kg": 36.75
     }
    },
    "fall_back": {
     "pass": true,
     "reasons": [],
-    "body_impact_peak_n": 2675,
-    "pads_peak_n": 2675,
-    "pad_each_peak_n": 734,
-    "max_stroke_mm": 22.5,
+    "body_impact_peak_n": 2667,
+    "pads_peak_n": 2667,
+    "pad_each_peak_n": 732,
+    "max_stroke_mm": 22.0,
     "bottomed": false,
     "first_touch": {
-     "t": 1.18,
-     "base_vz_mps": -1.58,
-     "base_v_mps": 1.585,
-     "robot_kg": 36.73
+     "t": 1.178,
+     "base_vz_mps": -1.564,
+     "base_v_mps": 1.57,
+     "robot_kg": 36.75
     }
    },
    "fall_side": {
     "pass": true,
     "reasons": [],
-    "body_impact_peak_n": 2685,
-    "pads_peak_n": 2685,
-    "pad_each_peak_n": 716,
-    "max_stroke_mm": 10.8,
+    "body_impact_peak_n": 2723,
+    "pads_peak_n": 2723,
+    "pad_each_peak_n": 718,
+    "max_stroke_mm": 12.8,
     "bottomed": false,
     "first_touch": {
-     "t": 1.189,
-     "base_vz_mps": -1.614,
-     "base_v_mps": 1.624,
-     "robot_kg": 36.73
+     "t": 1.188,
+     "base_vz_mps": -1.612,
+     "base_v_mps": 1.623,
+     "robot_kg": 36.75
     }
    },
-   "worst_n": 2691,
+   "worst_n": 2723,
    "bottomed": false,
-   "max_stroke_mm": 22.5,
+   "max_stroke_mm": 22.1,
    "all_pass": true
   },
   {
@@ -414,51 +410,51 @@
    "fall_front": {
     "pass": true,
     "reasons": [],
-    "body_impact_peak_n": 2893,
-    "pads_peak_n": 2893,
-    "pad_each_peak_n": 825,
-    "max_stroke_mm": 19.5,
+    "body_impact_peak_n": 2857,
+    "pads_peak_n": 2857,
+    "pad_each_peak_n": 827,
+    "max_stroke_mm": 19.4,
     "bottomed": false,
     "first_touch": {
-     "t": 1.181,
-     "base_vz_mps": -1.586,
-     "base_v_mps": 1.591,
-     "robot_kg": 36.73
+     "t": 1.179,
+     "base_vz_mps": -1.569,
+     "base_v_mps": 1.575,
+     "robot_kg": 36.75
     }
    },
    "fall_back": {
     "pass": true,
     "reasons": [],
-    "body_impact_peak_n": 2836,
-    "pads_peak_n": 2836,
-    "pad_each_peak_n": 828,
-    "max_stroke_mm": 19.7,
+    "body_impact_peak_n": 2800,
+    "pads_peak_n": 2800,
+    "pad_each_peak_n": 827,
+    "max_stroke_mm": 19.3,
     "bottomed": false,
     "first_touch": {
-     "t": 1.18,
-     "base_vz_mps": -1.579,
-     "base_v_mps": 1.585,
-     "robot_kg": 36.73
+     "t": 1.178,
+     "base_vz_mps": -1.563,
+     "base_v_mps": 1.569,
+     "robot_kg": 36.75
     }
    },
    "fall_side": {
     "pass": true,
     "reasons": [],
-    "body_impact_peak_n": 2788,
-    "pads_peak_n": 2788,
-    "pad_each_peak_n": 781,
-    "max_stroke_mm": 9.3,
+    "body_impact_peak_n": 2923,
+    "pads_peak_n": 2923,
+    "pad_each_peak_n": 792,
+    "max_stroke_mm": 10.9,
     "bottomed": false,
     "first_touch": {
-     "t": 1.189,
-     "base_vz_mps": -1.614,
-     "base_v_mps": 1.624,
-     "robot_kg": 36.73
+     "t": 1.188,
+     "base_vz_mps": -1.612,
+     "base_v_mps": 1.622,
+     "robot_kg": 36.75
     }
    },
-   "worst_n": 2893,
+   "worst_n": 2923,
    "bottomed": false,
-   "max_stroke_mm": 19.7,
+   "max_stroke_mm": 19.4,
    "all_pass": true
   },
   {
@@ -467,110 +463,110 @@
    "fall_front": {
     "pass": false,
     "reasons": [
-     "body impact 3088 N (limit 3000 N)"
+     "body impact 3002 N (limit 3000 N)"
     ],
-    "body_impact_peak_n": 3088,
-    "pads_peak_n": 3088,
-    "pad_each_peak_n": 836,
-    "max_stroke_mm": 18.2,
+    "body_impact_peak_n": 3002,
+    "pads_peak_n": 3002,
+    "pad_each_peak_n": 835,
+    "max_stroke_mm": 17.9,
     "bottomed": false,
     "first_touch": {
-     "t": 1.181,
-     "base_vz_mps": -1.586,
-     "base_v_mps": 1.592,
-     "robot_kg": 36.73
+     "t": 1.179,
+     "base_vz_mps": -1.57,
+     "base_v_mps": 1.576,
+     "robot_kg": 36.75
     }
    },
    "fall_back": {
     "pass": true,
     "reasons": [],
-    "body_impact_peak_n": 2840,
-    "pads_peak_n": 2840,
-    "pad_each_peak_n": 837,
-    "max_stroke_mm": 18.3,
+    "body_impact_peak_n": 2744,
+    "pads_peak_n": 2744,
+    "pad_each_peak_n": 836,
+    "max_stroke_mm": 17.9,
     "bottomed": false,
     "first_touch": {
-     "t": 1.18,
-     "base_vz_mps": -1.58,
-     "base_v_mps": 1.585,
-     "robot_kg": 36.73
+     "t": 1.178,
+     "base_vz_mps": -1.564,
+     "base_v_mps": 1.57,
+     "robot_kg": 36.75
     }
    },
    "fall_side": {
-    "pass": true,
-    "reasons": [],
-    "body_impact_peak_n": 2997,
-    "pads_peak_n": 2997,
-    "pad_each_peak_n": 830,
-    "max_stroke_mm": 10.3,
+    "pass": false,
+    "reasons": [
+     "body impact 3169 N (limit 3000 N)"
+    ],
+    "body_impact_peak_n": 3169,
+    "pads_peak_n": 3169,
+    "pad_each_peak_n": 827,
+    "max_stroke_mm": 11.7,
     "bottomed": false,
     "first_touch": {
-     "t": 1.189,
-     "base_vz_mps": -1.615,
-     "base_v_mps": 1.624,
-     "robot_kg": 36.73
+     "t": 1.188,
+     "base_vz_mps": -1.613,
+     "base_v_mps": 1.623,
+     "robot_kg": 36.75
     }
    },
-   "worst_n": 3088,
+   "worst_n": 3169,
    "bottomed": false,
-   "max_stroke_mm": 18.3,
+   "max_stroke_mm": 17.9,
    "all_pass": false
   },
   {
    "plateau_n": 750.0,
    "c_ns_per_m": 100.0,
    "fall_front": {
-    "pass": false,
-    "reasons": [
-     "body impact 3022 N (limit 3000 N)"
-    ],
-    "body_impact_peak_n": 3022,
-    "pads_peak_n": 3022,
-    "pad_each_peak_n": 875,
-    "max_stroke_mm": 17.6,
+    "pass": true,
+    "reasons": [],
+    "body_impact_peak_n": 2929,
+    "pads_peak_n": 2929,
+    "pad_each_peak_n": 874,
+    "max_stroke_mm": 17.3,
     "bottomed": false,
     "first_touch": {
-     "t": 1.181,
-     "base_vz_mps": -1.586,
-     "base_v_mps": 1.591,
-     "robot_kg": 36.73
+     "t": 1.179,
+     "base_vz_mps": -1.57,
+     "base_v_mps": 1.575,
+     "robot_kg": 36.75
     }
    },
    "fall_back": {
     "pass": true,
     "reasons": [],
-    "body_impact_peak_n": 2759,
-    "pads_peak_n": 2759,
-    "pad_each_peak_n": 875,
-    "max_stroke_mm": 17.7,
+    "body_impact_peak_n": 2662,
+    "pads_peak_n": 2662,
+    "pad_each_peak_n": 874,
+    "max_stroke_mm": 17.3,
     "bottomed": false,
     "first_touch": {
-     "t": 1.18,
-     "base_vz_mps": -1.58,
-     "base_v_mps": 1.585,
-     "robot_kg": 36.73
+     "t": 1.178,
+     "base_vz_mps": -1.564,
+     "base_v_mps": 1.57,
+     "robot_kg": 36.75
     }
    },
    "fall_side": {
     "pass": false,
     "reasons": [
-     "body impact 3052 N (limit 3000 N)"
+     "body impact 3238 N (limit 3000 N)"
     ],
-    "body_impact_peak_n": 3052,
-    "pads_peak_n": 3052,
-    "pad_each_peak_n": 861,
-    "max_stroke_mm": 9.8,
+    "body_impact_peak_n": 3238,
+    "pads_peak_n": 3238,
+    "pad_each_peak_n": 863,
+    "max_stroke_mm": 11.2,
     "bottomed": false,
     "first_touch": {
-     "t": 1.189,
-     "base_vz_mps": -1.614,
-     "base_v_mps": 1.624,
-     "robot_kg": 36.73
+     "t": 1.188,
+     "base_vz_mps": -1.612,
+     "base_v_mps": 1.623,
+     "robot_kg": 36.75
     }
    },
-   "worst_n": 3052,
+   "worst_n": 3238,
    "bottomed": false,
-   "max_stroke_mm": 17.7,
+   "max_stroke_mm": 17.3,
    "all_pass": false
   },
   {
@@ -579,52 +575,54 @@
    "fall_front": {
     "pass": true,
     "reasons": [],
-    "body_impact_peak_n": 2899,
-    "pads_peak_n": 2899,
-    "pad_each_peak_n": 961,
-    "max_stroke_mm": 15.8,
-    "bottomed": false,
-    "first_touch": {
-     "t": 1.181,
-     "base_vz_mps": -1.586,
-     "base_v_mps": 1.591,
-     "robot_kg": 36.73
-    }
-   },
-   "fall_back": {
-    "pass": true,
-    "reasons": [],
-    "body_impact_peak_n": 2693,
-    "pads_peak_n": 2693,
+    "body_impact_peak_n": 2806,
+    "pads_peak_n": 2806,
     "pad_each_peak_n": 960,
     "max_stroke_mm": 15.6,
     "bottomed": false,
     "first_touch": {
-     "t": 1.18,
-     "base_vz_mps": -1.579,
-     "base_v_mps": 1.585,
-     "robot_kg": 36.73
+     "t": 1.179,
+     "base_vz_mps": -1.569,
+     "base_v_mps": 1.575,
+     "robot_kg": 36.75
+    }
+   },
+   "fall_back": {
+    "pass": true,
+    "reasons": [],
+    "body_impact_peak_n": 2538,
+    "pads_peak_n": 2538,
+    "pad_each_peak_n": 958,
+    "max_stroke_mm": 15.5,
+    "bottomed": false,
+    "first_touch": {
+     "t": 1.178,
+     "base_vz_mps": -1.563,
+     "base_v_mps": 1.569,
+     "robot_kg": 36.75
     }
    },
    "fall_side": {
-    "pass": true,
-    "reasons": [],
-    "body_impact_peak_n": 2922,
-    "pads_peak_n": 2922,
-    "pad_each_peak_n": 925,
-    "max_stroke_mm": 8.5,
+    "pass": false,
+    "reasons": [
+     "body impact 3410 N (limit 3000 N)"
+    ],
+    "body_impact_peak_n": 3410,
+    "pads_peak_n": 3410,
+    "pad_each_peak_n": 934,
+    "max_stroke_mm": 9.6,
     "bottomed": false,
     "first_touch": {
-     "t": 1.189,
-     "base_vz_mps": -1.614,
-     "base_v_mps": 1.624,
-     "robot_kg": 36.73
+     "t": 1.188,
+     "base_vz_mps": -1.612,
+     "base_v_mps": 1.622,
+     "robot_kg": 36.75
     }
    },
-   "worst_n": 2922,
+   "worst_n": 3410,
    "bottomed": false,
-   "max_stroke_mm": 15.8,
-   "all_pass": true
+   "max_stroke_mm": 15.6,
+   "all_pass": false
   },
   {
    "plateau_n": 1000.0,
@@ -632,53 +630,53 @@
    "fall_front": {
     "pass": true,
     "reasons": [],
-    "body_impact_peak_n": 2678,
-    "pads_peak_n": 2678,
+    "body_impact_peak_n": 2540,
+    "pads_peak_n": 2540,
     "pad_each_peak_n": 1085,
-    "max_stroke_mm": 12.1,
+    "max_stroke_mm": 12.0,
     "bottomed": false,
     "first_touch": {
-     "t": 1.181,
-     "base_vz_mps": -1.586,
-     "base_v_mps": 1.592,
-     "robot_kg": 36.73
+     "t": 1.179,
+     "base_vz_mps": -1.57,
+     "base_v_mps": 1.576,
+     "robot_kg": 36.75
     }
    },
    "fall_back": {
     "pass": true,
     "reasons": [],
-    "body_impact_peak_n": 2389,
-    "pads_peak_n": 2389,
-    "pad_each_peak_n": 1087,
-    "max_stroke_mm": 11.7,
+    "body_impact_peak_n": 2234,
+    "pads_peak_n": 2234,
+    "pad_each_peak_n": 1086,
+    "max_stroke_mm": 11.5,
     "bottomed": false,
     "first_touch": {
-     "t": 1.18,
-     "base_vz_mps": -1.58,
-     "base_v_mps": 1.585,
-     "robot_kg": 36.73
+     "t": 1.178,
+     "base_vz_mps": -1.564,
+     "base_v_mps": 1.57,
+     "robot_kg": 36.75
     }
    },
    "fall_side": {
     "pass": false,
     "reasons": [
-     "body impact 3101 N (limit 3000 N)"
+     "body impact 3746 N (limit 3000 N)"
     ],
-    "body_impact_peak_n": 3101,
-    "pads_peak_n": 3101,
-    "pad_each_peak_n": 1075,
-    "max_stroke_mm": 8.9,
+    "body_impact_peak_n": 3746,
+    "pads_peak_n": 3746,
+    "pad_each_peak_n": 1072,
+    "max_stroke_mm": 9.9,
     "bottomed": false,
     "first_touch": {
-     "t": 1.189,
-     "base_vz_mps": -1.615,
-     "base_v_mps": 1.624,
-     "robot_kg": 36.73
+     "t": 1.188,
+     "base_vz_mps": -1.613,
+     "base_v_mps": 1.623,
+     "robot_kg": 36.75
     }
    },
-   "worst_n": 3101,
+   "worst_n": 3746,
    "bottomed": false,
-   "max_stroke_mm": 12.1,
+   "max_stroke_mm": 12.0,
    "all_pass": false
   },
   {
@@ -687,16 +685,71 @@
    "fall_front": {
     "pass": true,
     "reasons": [],
-    "body_impact_peak_n": 2680,
-    "pads_peak_n": 2680,
-    "pad_each_peak_n": 1117,
-    "max_stroke_mm": 11.9,
+    "body_impact_peak_n": 2532,
+    "pads_peak_n": 2532,
+    "pad_each_peak_n": 1116,
+    "max_stroke_mm": 11.8,
     "bottomed": false,
     "first_touch": {
-     "t": 1.181,
-     "base_vz_mps": -1.586,
-     "base_v_mps": 1.591,
-     "robot_kg": 36.73
+     "t": 1.179,
+     "base_vz_mps": -1.57,
+     "base_v_mps": 1.575,
+     "robot_kg": 36.75
+    }
+   },
+   "fall_back": {
+    "pass": true,
+    "reasons": [],
+    "body_impact_peak_n": 2296,
+    "pads_peak_n": 2296,
+    "pad_each_peak_n": 1117,
+    "max_stroke_mm": 11.3,
+    "bottomed": false,
+    "first_touch": {
+     "t": 1.178,
+     "base_vz_mps": -1.564,
+     "base_v_mps": 1.57,
+     "robot_kg": 36.75
+    }
+   },
+   "fall_side": {
+    "pass": false,
+    "reasons": [
+     "body impact 3703 N (limit 3000 N)"
+    ],
+    "body_impact_peak_n": 3703,
+    "pads_peak_n": 3703,
+    "pad_each_peak_n": 1106,
+    "max_stroke_mm": 9.5,
+    "bottomed": false,
+    "first_touch": {
+     "t": 1.188,
+     "base_vz_mps": -1.612,
+     "base_v_mps": 1.623,
+     "robot_kg": 36.75
+    }
+   },
+   "worst_n": 3703,
+   "bottomed": false,
+   "max_stroke_mm": 11.8,
+   "all_pass": false
+  },
+  {
+   "plateau_n": 1000.0,
+   "c_ns_per_m": 250.0,
+   "fall_front": {
+    "pass": true,
+    "reasons": [],
+    "body_impact_peak_n": 2623,
+    "pads_peak_n": 2623,
+    "pad_each_peak_n": 1189,
+    "max_stroke_mm": 10.9,
+    "bottomed": false,
+    "first_touch": {
+     "t": 1.179,
+     "base_vz_mps": -1.569,
+     "base_v_mps": 1.575,
+     "robot_kg": 36.75
     }
    },
    "fall_back": {
@@ -704,91 +757,36 @@
     "reasons": [],
     "body_impact_peak_n": 2409,
     "pads_peak_n": 2409,
-    "pad_each_peak_n": 1118,
-    "max_stroke_mm": 11.5,
+    "pad_each_peak_n": 1188,
+    "max_stroke_mm": 10.6,
     "bottomed": false,
     "first_touch": {
-     "t": 1.18,
-     "base_vz_mps": -1.58,
-     "base_v_mps": 1.585,
-     "robot_kg": 36.73
+     "t": 1.178,
+     "base_vz_mps": -1.563,
+     "base_v_mps": 1.569,
+     "robot_kg": 36.75
     }
    },
    "fall_side": {
     "pass": false,
     "reasons": [
-     "body impact 3146 N (limit 3000 N)"
+     "body impact 3713 N (limit 3000 N)"
     ],
-    "body_impact_peak_n": 3146,
-    "pads_peak_n": 3146,
-    "pad_each_peak_n": 1106,
-    "max_stroke_mm": 8.5,
+    "body_impact_peak_n": 3713,
+    "pads_peak_n": 3713,
+    "pad_each_peak_n": 1174,
+    "max_stroke_mm": 8.3,
     "bottomed": false,
     "first_touch": {
-     "t": 1.189,
-     "base_vz_mps": -1.614,
-     "base_v_mps": 1.624,
-     "robot_kg": 36.73
+     "t": 1.188,
+     "base_vz_mps": -1.612,
+     "base_v_mps": 1.622,
+     "robot_kg": 36.75
     }
    },
-   "worst_n": 3146,
+   "worst_n": 3713,
    "bottomed": false,
-   "max_stroke_mm": 11.9,
-   "all_pass": false
-  },
-  {
-   "plateau_n": 1000.0,
-   "c_ns_per_m": 250.0,
-   "fall_front": {
-    "pass": true,
-    "reasons": [],
-    "body_impact_peak_n": 2760,
-    "pads_peak_n": 2760,
-    "pad_each_peak_n": 1190,
-    "max_stroke_mm": 11.0,
-    "bottomed": false,
-    "first_touch": {
-     "t": 1.181,
-     "base_vz_mps": -1.586,
-     "base_v_mps": 1.591,
-     "robot_kg": 36.73
-    }
-   },
-   "fall_back": {
-    "pass": true,
-    "reasons": [],
-    "body_impact_peak_n": 2504,
-    "pads_peak_n": 2504,
-    "pad_each_peak_n": 1189,
-    "max_stroke_mm": 10.7,
-    "bottomed": false,
-    "first_touch": {
-     "t": 1.18,
-     "base_vz_mps": -1.579,
-     "base_v_mps": 1.585,
-     "robot_kg": 36.73
-    }
-   },
-   "fall_side": {
-    "pass": false,
-    "reasons": [
-     "body impact 3108 N (limit 3000 N)"
-    ],
-    "body_impact_peak_n": 3108,
-    "pads_peak_n": 3108,
-    "pad_each_peak_n": 1167,
-    "max_stroke_mm": 7.4,
-    "bottomed": false,
-    "first_touch": {
-     "t": 1.189,
-     "base_vz_mps": -1.614,
-     "base_v_mps": 1.624,
-     "robot_kg": 36.73
-    }
-   },
-   "worst_n": 3108,
-   "bottomed": false,
-   "max_stroke_mm": 11.0,
+   "max_stroke_mm": 10.9,
    "all_pass": false
   },
   {
@@ -797,57 +795,57 @@
    "fall_front": {
     "pass": false,
     "reasons": [
-     "body impact 5051 N (limit 3000 N)"
+     "body impact 5040 N (limit 3000 N)"
     ],
-    "body_impact_peak_n": 5051,
-    "pads_peak_n": 5051,
-    "pad_each_peak_n": 2527,
+    "body_impact_peak_n": 5040,
+    "pads_peak_n": 5040,
+    "pad_each_peak_n": 2521,
     "max_stroke_mm": 4.9,
     "bottomed": false,
     "first_touch": {
-     "t": 1.181,
-     "base_vz_mps": -1.586,
-     "base_v_mps": 1.592,
-     "robot_kg": 36.73
+     "t": 1.179,
+     "base_vz_mps": -1.57,
+     "base_v_mps": 1.576,
+     "robot_kg": 36.75
     }
    },
    "fall_back": {
     "pass": false,
     "reasons": [
-     "body impact 4961 N (limit 3000 N)"
+     "body impact 4950 N (limit 3000 N)"
     ],
-    "body_impact_peak_n": 4961,
-    "pads_peak_n": 4961,
-    "pad_each_peak_n": 2482,
+    "body_impact_peak_n": 4950,
+    "pads_peak_n": 4950,
+    "pad_each_peak_n": 2476,
     "max_stroke_mm": 4.8,
     "bottomed": false,
     "first_touch": {
-     "t": 1.18,
-     "base_vz_mps": -1.58,
-     "base_v_mps": 1.585,
-     "robot_kg": 36.73
+     "t": 1.178,
+     "base_vz_mps": -1.564,
+     "base_v_mps": 1.57,
+     "robot_kg": 36.75
     }
    },
    "fall_side": {
     "pass": false,
     "reasons": [
-     "body impact 5413 N (limit 3000 N)"
+     "body impact 6159 N (limit 3000 N)"
     ],
-    "body_impact_peak_n": 5413,
-    "pads_peak_n": 5413,
-    "pad_each_peak_n": 2867,
-    "max_stroke_mm": 5.7,
+    "body_impact_peak_n": 6159,
+    "pads_peak_n": 6159,
+    "pad_each_peak_n": 2984,
+    "max_stroke_mm": 5.9,
     "bottomed": false,
     "first_touch": {
-     "t": 1.189,
-     "base_vz_mps": -1.615,
-     "base_v_mps": 1.624,
-     "robot_kg": 36.73
+     "t": 1.188,
+     "base_vz_mps": -1.613,
+     "base_v_mps": 1.623,
+     "robot_kg": 36.75
     }
    },
-   "worst_n": 5413,
+   "worst_n": 6159,
    "bottomed": false,
-   "max_stroke_mm": 5.7,
+   "max_stroke_mm": 5.9,
    "all_pass": false
   },
   {
@@ -856,57 +854,57 @@
    "fall_front": {
     "pass": false,
     "reasons": [
-     "body impact 5177 N (limit 3000 N)"
+     "body impact 5161 N (limit 3000 N)"
     ],
-    "body_impact_peak_n": 5177,
-    "pads_peak_n": 5177,
-    "pad_each_peak_n": 2590,
+    "body_impact_peak_n": 5161,
+    "pads_peak_n": 5161,
+    "pad_each_peak_n": 2582,
     "max_stroke_mm": 5.0,
     "bottomed": false,
     "first_touch": {
-     "t": 1.181,
-     "base_vz_mps": -1.586,
-     "base_v_mps": 1.591,
-     "robot_kg": 36.73
+     "t": 1.179,
+     "base_vz_mps": -1.57,
+     "base_v_mps": 1.575,
+     "robot_kg": 36.75
     }
    },
    "fall_back": {
     "pass": false,
     "reasons": [
-     "body impact 5088 N (limit 3000 N)"
+     "body impact 5071 N (limit 3000 N)"
     ],
-    "body_impact_peak_n": 5088,
-    "pads_peak_n": 5088,
-    "pad_each_peak_n": 2545,
+    "body_impact_peak_n": 5071,
+    "pads_peak_n": 5071,
+    "pad_each_peak_n": 2537,
     "max_stroke_mm": 4.9,
     "bottomed": false,
     "first_touch": {
-     "t": 1.18,
-     "base_vz_mps": -1.58,
-     "base_v_mps": 1.585,
-     "robot_kg": 36.73
+     "t": 1.178,
+     "base_vz_mps": -1.564,
+     "base_v_mps": 1.57,
+     "robot_kg": 36.75
     }
    },
    "fall_side": {
     "pass": false,
     "reasons": [
-     "body impact 5421 N (limit 3000 N)"
+     "body impact 6213 N (limit 3000 N)"
     ],
-    "body_impact_peak_n": 5421,
-    "pads_peak_n": 5421,
-    "pad_each_peak_n": 2830,
-    "max_stroke_mm": 5.6,
+    "body_impact_peak_n": 6213,
+    "pads_peak_n": 6213,
+    "pad_each_peak_n": 2972,
+    "max_stroke_mm": 5.9,
     "bottomed": false,
     "first_touch": {
-     "t": 1.189,
-     "base_vz_mps": -1.614,
-     "base_v_mps": 1.624,
-     "robot_kg": 36.73
+     "t": 1.188,
+     "base_vz_mps": -1.612,
+     "base_v_mps": 1.623,
+     "robot_kg": 36.75
     }
    },
-   "worst_n": 5421,
+   "worst_n": 6213,
    "bottomed": false,
-   "max_stroke_mm": 5.6,
+   "max_stroke_mm": 5.9,
    "all_pass": false
   },
   {
@@ -915,106 +913,106 @@
    "fall_front": {
     "pass": false,
     "reasons": [
-     "body impact 5315 N (limit 3000 N)"
+     "body impact 5287 N (limit 3000 N)"
     ],
-    "body_impact_peak_n": 5315,
-    "pads_peak_n": 5315,
-    "pad_each_peak_n": 2659,
+    "body_impact_peak_n": 5287,
+    "pads_peak_n": 5287,
+    "pad_each_peak_n": 2645,
     "max_stroke_mm": 5.1,
     "bottomed": false,
     "first_touch": {
-     "t": 1.181,
-     "base_vz_mps": -1.586,
-     "base_v_mps": 1.591,
-     "robot_kg": 36.73
+     "t": 1.179,
+     "base_vz_mps": -1.569,
+     "base_v_mps": 1.575,
+     "robot_kg": 36.75
     }
    },
    "fall_back": {
     "pass": false,
     "reasons": [
-     "body impact 5226 N (limit 3000 N)"
+     "body impact 5201 N (limit 3000 N)"
     ],
-    "body_impact_peak_n": 5226,
-    "pads_peak_n": 5226,
-    "pad_each_peak_n": 2614,
+    "body_impact_peak_n": 5201,
+    "pads_peak_n": 5201,
+    "pad_each_peak_n": 2602,
     "max_stroke_mm": 5.0,
     "bottomed": false,
     "first_touch": {
-     "t": 1.18,
-     "base_vz_mps": -1.579,
-     "base_v_mps": 1.585,
-     "robot_kg": 36.73
+     "t": 1.178,
+     "base_vz_mps": -1.563,
+     "base_v_mps": 1.569,
+     "robot_kg": 36.75
     }
    },
    "fall_side": {
     "pass": false,
     "reasons": [
-     "body impact 5213 N (limit 3000 N)"
+     "body impact 6191 N (limit 3000 N)"
     ],
-    "body_impact_peak_n": 5213,
-    "pads_peak_n": 5213,
-    "pad_each_peak_n": 2676,
-    "max_stroke_mm": 5.3,
+    "body_impact_peak_n": 6191,
+    "pads_peak_n": 6191,
+    "pad_each_peak_n": 2837,
+    "max_stroke_mm": 5.6,
     "bottomed": false,
     "first_touch": {
-     "t": 1.189,
-     "base_vz_mps": -1.614,
-     "base_v_mps": 1.624,
-     "robot_kg": 36.73
+     "t": 1.188,
+     "base_vz_mps": -1.612,
+     "base_v_mps": 1.622,
+     "robot_kg": 36.75
     }
    },
-   "worst_n": 5315,
+   "worst_n": 6191,
    "bottomed": false,
-   "max_stroke_mm": 5.3,
+   "max_stroke_mm": 5.6,
    "all_pass": false
   }
  ],
  "heavy": {
-  "kg": 37.73,
+  "kg": 37.75,
   "ballast_kg": 1.0,
   "fall_front": {
    "pass": true,
    "reasons": [],
-   "body_impact_peak_n": 2688,
-   "pads_peak_n": 2688,
-   "pad_each_peak_n": 732,
-   "max_stroke_mm": 22.7,
+   "body_impact_peak_n": 2713,
+   "pads_peak_n": 2713,
+   "pad_each_peak_n": 736,
+   "max_stroke_mm": 22.9,
    "bottomed": false,
    "first_touch": {
-    "t": 1.18,
-    "base_vz_mps": -1.584,
-    "base_v_mps": 1.589,
-    "robot_kg": 37.73
+    "t": 1.179,
+    "base_vz_mps": -1.575,
+    "base_v_mps": 1.581,
+    "robot_kg": 37.75
    }
   },
   "fall_back": {
    "pass": true,
    "reasons": [],
-   "body_impact_peak_n": 2698,
-   "pads_peak_n": 2698,
-   "pad_each_peak_n": 738,
-   "max_stroke_mm": 23.4,
+   "body_impact_peak_n": 2683,
+   "pads_peak_n": 2683,
+   "pad_each_peak_n": 736,
+   "max_stroke_mm": 23.3,
    "bottomed": false,
    "first_touch": {
-    "t": 1.18,
-    "base_vz_mps": -1.585,
-    "base_v_mps": 1.591,
-    "robot_kg": 37.73
+    "t": 1.178,
+    "base_vz_mps": -1.57,
+    "base_v_mps": 1.575,
+    "robot_kg": 37.75
    }
   },
   "fall_side": {
    "pass": true,
    "reasons": [],
-   "body_impact_peak_n": 2692,
-   "pads_peak_n": 2692,
-   "pad_each_peak_n": 716,
-   "max_stroke_mm": 11.0,
+   "body_impact_peak_n": 2740,
+   "pads_peak_n": 2740,
+   "pad_each_peak_n": 720,
+   "max_stroke_mm": 13.7,
    "bottomed": false,
    "first_touch": {
-    "t": 1.189,
-    "base_vz_mps": -1.62,
-    "base_v_mps": 1.63,
-    "robot_kg": 37.73
+    "t": 1.187,
+    "base_vz_mps": -1.614,
+    "base_v_mps": 1.625,
+    "robot_kg": 37.75
    }
   }
  },
@@ -1024,49 +1022,49 @@
    "fall_front": {
     "pass": true,
     "reasons": [],
-    "body_impact_peak_n": 2691,
-    "pads_peak_n": 2691,
-    "pad_each_peak_n": 734,
-    "max_stroke_mm": 22.3,
+    "body_impact_peak_n": 2677,
+    "pads_peak_n": 2677,
+    "pad_each_peak_n": 733,
+    "max_stroke_mm": 22.2,
     "bottomed": false,
     "first_touch": {
-     "t": 1.181,
-     "base_vz_mps": -1.586,
-     "base_v_mps": 1.591,
-     "robot_kg": 36.73
+     "t": 1.179,
+     "base_vz_mps": -1.57,
+     "base_v_mps": 1.575,
+     "robot_kg": 36.75
     }
    },
    "fall_back": {
     "pass": true,
     "reasons": [],
-    "body_impact_peak_n": 2675,
-    "pads_peak_n": 2675,
-    "pad_each_peak_n": 734,
-    "max_stroke_mm": 22.6,
+    "body_impact_peak_n": 2667,
+    "pads_peak_n": 2667,
+    "pad_each_peak_n": 732,
+    "max_stroke_mm": 22.0,
     "bottomed": false,
     "first_touch": {
-     "t": 1.18,
-     "base_vz_mps": -1.58,
-     "base_v_mps": 1.585,
-     "robot_kg": 36.73
+     "t": 1.178,
+     "base_vz_mps": -1.564,
+     "base_v_mps": 1.57,
+     "robot_kg": 36.75
     }
    },
    "fall_side": {
     "pass": true,
     "reasons": [],
-    "body_impact_peak_n": 2685,
-    "pads_peak_n": 2685,
-    "pad_each_peak_n": 716,
-    "max_stroke_mm": 10.9,
+    "body_impact_peak_n": 2723,
+    "pads_peak_n": 2723,
+    "pad_each_peak_n": 718,
+    "max_stroke_mm": 12.8,
     "bottomed": false,
     "first_touch": {
-     "t": 1.189,
-     "base_vz_mps": -1.614,
-     "base_v_mps": 1.624,
-     "robot_kg": 36.73
+     "t": 1.188,
+     "base_vz_mps": -1.612,
+     "base_v_mps": 1.623,
+     "robot_kg": 36.75
     }
    },
-   "worst_n": 2691,
+   "worst_n": 2723,
    "all_pass": true
   },
   {
@@ -1074,49 +1072,49 @@
    "fall_front": {
     "pass": true,
     "reasons": [],
-    "body_impact_peak_n": 2691,
-    "pads_peak_n": 2691,
-    "pad_each_peak_n": 734,
-    "max_stroke_mm": 22.3,
+    "body_impact_peak_n": 2677,
+    "pads_peak_n": 2677,
+    "pad_each_peak_n": 733,
+    "max_stroke_mm": 22.2,
     "bottomed": false,
     "first_touch": {
-     "t": 1.181,
-     "base_vz_mps": -1.586,
-     "base_v_mps": 1.591,
-     "robot_kg": 36.73
+     "t": 1.179,
+     "base_vz_mps": -1.57,
+     "base_v_mps": 1.575,
+     "robot_kg": 36.75
     }
    },
    "fall_back": {
     "pass": true,
     "reasons": [],
-    "body_impact_peak_n": 2675,
-    "pads_peak_n": 2675,
-    "pad_each_peak_n": 734,
-    "max_stroke_mm": 22.6,
+    "body_impact_peak_n": 2667,
+    "pads_peak_n": 2667,
+    "pad_each_peak_n": 732,
+    "max_stroke_mm": 22.0,
     "bottomed": false,
     "first_touch": {
-     "t": 1.18,
-     "base_vz_mps": -1.58,
-     "base_v_mps": 1.585,
-     "robot_kg": 36.73
+     "t": 1.178,
+     "base_vz_mps": -1.564,
+     "base_v_mps": 1.57,
+     "robot_kg": 36.75
     }
    },
    "fall_side": {
     "pass": true,
     "reasons": [],
-    "body_impact_peak_n": 2685,
-    "pads_peak_n": 2685,
-    "pad_each_peak_n": 716,
-    "max_stroke_mm": 10.9,
+    "body_impact_peak_n": 2723,
+    "pads_peak_n": 2723,
+    "pad_each_peak_n": 718,
+    "max_stroke_mm": 12.8,
     "bottomed": false,
     "first_touch": {
-     "t": 1.189,
-     "base_vz_mps": -1.614,
-     "base_v_mps": 1.624,
-     "robot_kg": 36.73
+     "t": 1.188,
+     "base_vz_mps": -1.612,
+     "base_v_mps": 1.623,
+     "robot_kg": 36.75
     }
    },
-   "worst_n": 2691,
+   "worst_n": 2723,
    "all_pass": true
   },
   {
@@ -1124,49 +1122,49 @@
    "fall_front": {
     "pass": true,
     "reasons": [],
-    "body_impact_peak_n": 2691,
-    "pads_peak_n": 2691,
-    "pad_each_peak_n": 734,
-    "max_stroke_mm": 22.3,
+    "body_impact_peak_n": 2677,
+    "pads_peak_n": 2677,
+    "pad_each_peak_n": 733,
+    "max_stroke_mm": 22.1,
     "bottomed": false,
     "first_touch": {
-     "t": 1.181,
-     "base_vz_mps": -1.586,
-     "base_v_mps": 1.591,
-     "robot_kg": 36.73
+     "t": 1.179,
+     "base_vz_mps": -1.57,
+     "base_v_mps": 1.575,
+     "robot_kg": 36.75
     }
    },
    "fall_back": {
     "pass": true,
     "reasons": [],
-    "body_impact_peak_n": 2675,
-    "pads_peak_n": 2675,
-    "pad_each_peak_n": 734,
-    "max_stroke_mm": 22.5,
+    "body_impact_peak_n": 2667,
+    "pads_peak_n": 2667,
+    "pad_each_peak_n": 732,
+    "max_stroke_mm": 22.0,
     "bottomed": false,
     "first_touch": {
-     "t": 1.18,
-     "base_vz_mps": -1.58,
-     "base_v_mps": 1.585,
-     "robot_kg": 36.73
+     "t": 1.178,
+     "base_vz_mps": -1.564,
+     "base_v_mps": 1.57,
+     "robot_kg": 36.75
     }
    },
    "fall_side": {
     "pass": true,
     "reasons": [],
-    "body_impact_peak_n": 2685,
-    "pads_peak_n": 2685,
-    "pad_each_peak_n": 716,
-    "max_stroke_mm": 10.8,
+    "body_impact_peak_n": 2723,
+    "pads_peak_n": 2723,
+    "pad_each_peak_n": 718,
+    "max_stroke_mm": 12.8,
     "bottomed": false,
     "first_touch": {
-     "t": 1.189,
-     "base_vz_mps": -1.614,
-     "base_v_mps": 1.624,
-     "robot_kg": 36.73
+     "t": 1.188,
+     "base_vz_mps": -1.612,
+     "base_v_mps": 1.623,
+     "robot_kg": 36.75
     }
    },
-   "worst_n": 2691,
+   "worst_n": 2723,
    "all_pass": true
   },
   {
@@ -1174,49 +1172,49 @@
    "fall_front": {
     "pass": true,
     "reasons": [],
-    "body_impact_peak_n": 2691,
-    "pads_peak_n": 2691,
-    "pad_each_peak_n": 734,
-    "max_stroke_mm": 22.2,
+    "body_impact_peak_n": 2677,
+    "pads_peak_n": 2677,
+    "pad_each_peak_n": 733,
+    "max_stroke_mm": 22.1,
     "bottomed": false,
     "first_touch": {
-     "t": 1.181,
-     "base_vz_mps": -1.586,
-     "base_v_mps": 1.591,
-     "robot_kg": 36.73
+     "t": 1.179,
+     "base_vz_mps": -1.57,
+     "base_v_mps": 1.575,
+     "robot_kg": 36.75
     }
    },
    "fall_back": {
     "pass": true,
     "reasons": [],
-    "body_impact_peak_n": 2675,
-    "pads_peak_n": 2675,
-    "pad_each_peak_n": 734,
-    "max_stroke_mm": 22.5,
+    "body_impact_peak_n": 2667,
+    "pads_peak_n": 2667,
+    "pad_each_peak_n": 732,
+    "max_stroke_mm": 22.0,
     "bottomed": false,
     "first_touch": {
-     "t": 1.18,
-     "base_vz_mps": -1.58,
-     "base_v_mps": 1.585,
-     "robot_kg": 36.73
+     "t": 1.178,
+     "base_vz_mps": -1.564,
+     "base_v_mps": 1.57,
+     "robot_kg": 36.75
     }
    },
    "fall_side": {
     "pass": true,
     "reasons": [],
-    "body_impact_peak_n": 2685,
-    "pads_peak_n": 2685,
-    "pad_each_peak_n": 716,
-    "max_stroke_mm": 10.8,
+    "body_impact_peak_n": 2723,
+    "pads_peak_n": 2723,
+    "pad_each_peak_n": 718,
+    "max_stroke_mm": 12.8,
     "bottomed": false,
     "first_touch": {
-     "t": 1.189,
-     "base_vz_mps": -1.614,
-     "base_v_mps": 1.624,
-     "robot_kg": 36.73
+     "t": 1.188,
+     "base_vz_mps": -1.612,
+     "base_v_mps": 1.623,
+     "robot_kg": 36.75
     }
    },
-   "worst_n": 2691,
+   "worst_n": 2723,
    "all_pass": true
   },
   {
@@ -1224,49 +1222,49 @@
    "fall_front": {
     "pass": true,
     "reasons": [],
-    "body_impact_peak_n": 2691,
-    "pads_peak_n": 2691,
-    "pad_each_peak_n": 734,
-    "max_stroke_mm": 22.2,
+    "body_impact_peak_n": 2677,
+    "pads_peak_n": 2677,
+    "pad_each_peak_n": 733,
+    "max_stroke_mm": 22.1,
     "bottomed": false,
     "first_touch": {
-     "t": 1.181,
-     "base_vz_mps": -1.586,
-     "base_v_mps": 1.591,
-     "robot_kg": 36.73
+     "t": 1.179,
+     "base_vz_mps": -1.57,
+     "base_v_mps": 1.575,
+     "robot_kg": 36.75
     }
    },
    "fall_back": {
     "pass": true,
     "reasons": [],
-    "body_impact_peak_n": 2675,
-    "pads_peak_n": 2675,
-    "pad_each_peak_n": 734,
-    "max_stroke_mm": 22.4,
+    "body_impact_peak_n": 2667,
+    "pads_peak_n": 2667,
+    "pad_each_peak_n": 732,
+    "max_stroke_mm": 21.9,
     "bottomed": false,
     "first_touch": {
-     "t": 1.18,
-     "base_vz_mps": -1.58,
-     "base_v_mps": 1.585,
-     "robot_kg": 36.73
+     "t": 1.178,
+     "base_vz_mps": -1.564,
+     "base_v_mps": 1.57,
+     "robot_kg": 36.75
     }
    },
    "fall_side": {
     "pass": true,
     "reasons": [],
-    "body_impact_peak_n": 2685,
-    "pads_peak_n": 2685,
-    "pad_each_peak_n": 716,
-    "max_stroke_mm": 10.8,
+    "body_impact_peak_n": 2723,
+    "pads_peak_n": 2723,
+    "pad_each_peak_n": 718,
+    "max_stroke_mm": 12.7,
     "bottomed": false,
     "first_touch": {
-     "t": 1.189,
-     "base_vz_mps": -1.614,
-     "base_v_mps": 1.624,
-     "robot_kg": 36.73
+     "t": 1.188,
+     "base_vz_mps": -1.612,
+     "base_v_mps": 1.623,
+     "robot_kg": 36.75
     }
    },
-   "worst_n": 2691,
+   "worst_n": 2723,
    "all_pass": true
   },
   {
@@ -1274,52 +1272,50 @@
    "fall_front": {
     "pass": true,
     "reasons": [],
-    "body_impact_peak_n": 2691,
-    "pads_peak_n": 2691,
-    "pad_each_peak_n": 734,
-    "max_stroke_mm": 22.1,
+    "body_impact_peak_n": 2677,
+    "pads_peak_n": 2677,
+    "pad_each_peak_n": 733,
+    "max_stroke_mm": 21.9,
     "bottomed": false,
     "first_touch": {
-     "t": 1.181,
-     "base_vz_mps": -1.586,
-     "base_v_mps": 1.591,
-     "robot_kg": 36.73
+     "t": 1.179,
+     "base_vz_mps": -1.57,
+     "base_v_mps": 1.575,
+     "robot_kg": 36.75
     }
    },
    "fall_back": {
-    "pass": false,
-    "reasons": [
-     "the lidar hit the ground at 2.54 s"
-    ],
-    "body_impact_peak_n": 2675,
-    "pads_peak_n": 2675,
-    "pad_each_peak_n": 734,
-    "max_stroke_mm": 22.3,
+    "pass": true,
+    "reasons": [],
+    "body_impact_peak_n": 2667,
+    "pads_peak_n": 2667,
+    "pad_each_peak_n": 732,
+    "max_stroke_mm": 21.8,
     "bottomed": false,
     "first_touch": {
-     "t": 1.18,
-     "base_vz_mps": -1.58,
-     "base_v_mps": 1.585,
-     "robot_kg": 36.73
+     "t": 1.178,
+     "base_vz_mps": -1.564,
+     "base_v_mps": 1.57,
+     "robot_kg": 36.75
     }
    },
    "fall_side": {
     "pass": true,
     "reasons": [],
-    "body_impact_peak_n": 2685,
-    "pads_peak_n": 2685,
-    "pad_each_peak_n": 716,
-    "max_stroke_mm": 10.7,
+    "body_impact_peak_n": 2723,
+    "pads_peak_n": 2723,
+    "pad_each_peak_n": 718,
+    "max_stroke_mm": 12.6,
     "bottomed": false,
     "first_touch": {
-     "t": 1.189,
-     "base_vz_mps": -1.614,
-     "base_v_mps": 1.624,
-     "robot_kg": 36.73
+     "t": 1.188,
+     "base_vz_mps": -1.612,
+     "base_v_mps": 1.623,
+     "robot_kg": 36.75
     }
    },
-   "worst_n": 2691,
-   "all_pass": false
+   "worst_n": 2723,
+   "all_pass": true
   }
  ],
  "push_sweep": [
@@ -1328,204 +1324,204 @@
    "fall_front": {
     "pass": true,
     "reasons": [],
-    "body_impact_peak_n": 2726,
-    "pads_peak_n": 2726,
-    "pad_each_peak_n": 707,
-    "max_stroke_mm": 17.1,
+    "body_impact_peak_n": 2724,
+    "pads_peak_n": 2724,
+    "pad_each_peak_n": 706,
+    "max_stroke_mm": 16.7,
     "bottomed": false,
     "first_touch": {
-     "t": 1.185,
-     "base_vz_mps": -1.622,
-     "base_v_mps": 1.624,
-     "robot_kg": 36.73
+     "t": 1.183,
+     "base_vz_mps": -1.607,
+     "base_v_mps": 1.608,
+     "robot_kg": 36.75
     }
    },
    "fall_back": {
     "pass": true,
     "reasons": [],
-    "body_impact_peak_n": 2723,
-    "pads_peak_n": 2723,
-    "pad_each_peak_n": 708,
-    "max_stroke_mm": 17.1,
+    "body_impact_peak_n": 2720,
+    "pads_peak_n": 2720,
+    "pad_each_peak_n": 707,
+    "max_stroke_mm": 16.8,
     "bottomed": false,
     "first_touch": {
-     "t": 1.184,
-     "base_vz_mps": -1.615,
-     "base_v_mps": 1.617,
-     "robot_kg": 36.73
+     "t": 1.182,
+     "base_vz_mps": -1.6,
+     "base_v_mps": 1.602,
+     "robot_kg": 36.75
     }
    },
    "fall_side": {
     "pass": true,
     "reasons": [],
-    "body_impact_peak_n": 2714,
-    "pads_peak_n": 2714,
-    "pad_each_peak_n": 695,
-    "max_stroke_mm": 15.1,
+    "body_impact_peak_n": 2709,
+    "pads_peak_n": 2709,
+    "pad_each_peak_n": 694,
+    "max_stroke_mm": 16.3,
     "bottomed": false,
     "first_touch": {
-     "t": 1.19,
-     "base_vz_mps": -1.649,
-     "base_v_mps": 1.651,
-     "robot_kg": 36.73
+     "t": 1.188,
+     "base_vz_mps": -1.637,
+     "base_v_mps": 1.64,
+     "robot_kg": 36.75
     }
    },
    "all_pass": true,
-   "worst_n": 2726
+   "worst_n": 2724
   },
   {
    "push_scale": 0.8,
    "fall_front": {
     "pass": true,
     "reasons": [],
-    "body_impact_peak_n": 2704,
-    "pads_peak_n": 2704,
-    "pad_each_peak_n": 719,
-    "max_stroke_mm": 19.4,
+    "body_impact_peak_n": 2715,
+    "pads_peak_n": 2715,
+    "pad_each_peak_n": 722,
+    "max_stroke_mm": 19.6,
     "bottomed": false,
     "first_touch": {
-     "t": 1.182,
-     "base_vz_mps": -1.596,
-     "base_v_mps": 1.6,
-     "robot_kg": 36.73
+     "t": 1.181,
+     "base_vz_mps": -1.588,
+     "base_v_mps": 1.592,
+     "robot_kg": 36.75
     }
    },
    "fall_back": {
     "pass": true,
     "reasons": [],
-    "body_impact_peak_n": 2713,
-    "pads_peak_n": 2713,
-    "pad_each_peak_n": 724,
-    "max_stroke_mm": 20.0,
+    "body_impact_peak_n": 2707,
+    "pads_peak_n": 2707,
+    "pad_each_peak_n": 723,
+    "max_stroke_mm": 19.6,
     "bottomed": false,
     "first_touch": {
-     "t": 1.182,
-     "base_vz_mps": -1.598,
-     "base_v_mps": 1.601,
-     "robot_kg": 36.73
+     "t": 1.18,
+     "base_vz_mps": -1.582,
+     "base_v_mps": 1.585,
+     "robot_kg": 36.75
     }
    },
    "fall_side": {
     "pass": true,
     "reasons": [],
-    "body_impact_peak_n": 2728,
-    "pads_peak_n": 2728,
-    "pad_each_peak_n": 708,
-    "max_stroke_mm": 13.5,
+    "body_impact_peak_n": 2715,
+    "pads_peak_n": 2715,
+    "pad_each_peak_n": 704,
+    "max_stroke_mm": 15.0,
     "bottomed": false,
     "first_touch": {
-     "t": 1.189,
-     "base_vz_mps": -1.631,
-     "base_v_mps": 1.636,
-     "robot_kg": 36.73
+     "t": 1.188,
+     "base_vz_mps": -1.627,
+     "base_v_mps": 1.633,
+     "robot_kg": 36.75
     }
    },
    "all_pass": true,
-   "worst_n": 2728
+   "worst_n": 2715
   },
   {
    "push_scale": 1.2,
    "fall_front": {
     "pass": true,
     "reasons": [],
-    "body_impact_peak_n": 2576,
-    "pads_peak_n": 2576,
-    "pad_each_peak_n": 740,
-    "max_stroke_mm": 25.1,
+    "body_impact_peak_n": 2532,
+    "pads_peak_n": 2532,
+    "pad_each_peak_n": 737,
+    "max_stroke_mm": 24.5,
     "bottomed": false,
     "first_touch": {
-     "t": 1.179,
-     "base_vz_mps": -1.567,
-     "base_v_mps": 1.575,
-     "robot_kg": 36.73
+     "t": 1.177,
+     "base_vz_mps": -1.551,
+     "base_v_mps": 1.559,
+     "robot_kg": 36.75
     }
    },
    "fall_back": {
     "pass": true,
     "reasons": [],
-    "body_impact_peak_n": 2382,
-    "pads_peak_n": 2382,
-    "pad_each_peak_n": 739,
-    "max_stroke_mm": 25.0,
+    "body_impact_peak_n": 2502,
+    "pads_peak_n": 2502,
+    "pad_each_peak_n": 743,
+    "max_stroke_mm": 25.2,
     "bottomed": false,
     "first_touch": {
-     "t": 1.178,
-     "base_vz_mps": -1.561,
-     "base_v_mps": 1.569,
-     "robot_kg": 36.73
+     "t": 1.177,
+     "base_vz_mps": -1.553,
+     "base_v_mps": 1.561,
+     "robot_kg": 36.75
     }
    },
    "fall_side": {
     "pass": true,
     "reasons": [],
-    "body_impact_peak_n": 1637,
-    "pads_peak_n": 1637,
-    "pad_each_peak_n": 718,
-    "max_stroke_mm": 8.2,
+    "body_impact_peak_n": 2240,
+    "pads_peak_n": 2240,
+    "pad_each_peak_n": 726,
+    "max_stroke_mm": 10.3,
     "bottomed": false,
     "first_touch": {
-     "t": 1.189,
-     "base_vz_mps": -1.592,
-     "base_v_mps": 1.607,
-     "robot_kg": 36.73
+     "t": 1.188,
+     "base_vz_mps": -1.593,
+     "base_v_mps": 1.609,
+     "robot_kg": 36.75
     }
    },
    "all_pass": true,
-   "worst_n": 2576
+   "worst_n": 2532
   },
   {
    "push_scale": 1.4,
    "fall_front": {
     "pass": true,
     "reasons": [],
-    "body_impact_peak_n": 1663,
-    "pads_peak_n": 1663,
-    "pad_each_peak_n": 743,
-    "max_stroke_mm": 27.0,
-    "bottomed": true,
+    "body_impact_peak_n": 1761,
+    "pads_peak_n": 1761,
+    "pad_each_peak_n": 746,
+    "max_stroke_mm": 27.6,
+    "bottomed": false,
     "first_touch": {
-     "t": 1.177,
-     "base_vz_mps": -1.547,
-     "base_v_mps": 1.559,
-     "robot_kg": 36.73
+     "t": 1.176,
+     "base_vz_mps": -1.539,
+     "base_v_mps": 1.551,
+     "robot_kg": 36.75
     }
    },
    "fall_back": {
     "pass": true,
     "reasons": [],
-    "body_impact_peak_n": 1741,
-    "pads_peak_n": 1741,
-    "pad_each_peak_n": 823,
-    "max_stroke_mm": 27.6,
-    "bottomed": true,
+    "body_impact_peak_n": 1649,
+    "pads_peak_n": 1649,
+    "pad_each_peak_n": 746,
+    "max_stroke_mm": 27.1,
+    "bottomed": false,
     "first_touch": {
-     "t": 1.177,
-     "base_vz_mps": -1.55,
-     "base_v_mps": 1.562,
-     "robot_kg": 36.73
+     "t": 1.175,
+     "base_vz_mps": -1.533,
+     "base_v_mps": 1.546,
+     "robot_kg": 36.75
     }
    },
    "fall_side": {
     "pass": true,
     "reasons": [],
-    "body_impact_peak_n": 1417,
-    "pads_peak_n": 1417,
-    "pad_each_peak_n": 711,
-    "max_stroke_mm": 4.0,
+    "body_impact_peak_n": 1439,
+    "pads_peak_n": 1439,
+    "pad_each_peak_n": 720,
+    "max_stroke_mm": 6.9,
     "bottomed": false,
     "first_touch": {
-     "t": 1.19,
-     "base_vz_mps": -1.455,
-     "base_v_mps": 1.472,
-     "robot_kg": 36.73
+     "t": 1.188,
+     "base_vz_mps": -1.552,
+     "base_v_mps": 1.573,
+     "robot_kg": 36.75
     }
    },
    "all_pass": true,
-   "worst_n": 1741
+   "worst_n": 1761
   }
  ],
  "verdict": {
-  "worst_fall_n": 2691,
+  "worst_fall_n": 2723,
   "pass": true,
   "falls_pass": {
    "fall_front": true,
@@ -1533,8 +1529,8 @@
    "fall_side": true
   },
   "bottomed": false,
-  "max_stroke_mm": 22.5,
-  "heavy_worst_n": 2698,
-  "rigid_worst_n": 5552
+  "max_stroke_mm": 22.1,
+  "heavy_worst_n": 2740,
+  "rigid_worst_n": 7257
  }
 }

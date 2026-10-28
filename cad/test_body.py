@@ -297,8 +297,8 @@ def test_body_loads_from_the_mount_plane():
 import pytest  # noqa: E402
 
 
-@pytest.mark.xfail(strict=True, reason='D69: with the 10 in hub wheels at their listed 3.53 kg and the 45 mm crush pads the P3 ledger is 36.23 kg with '
-                   'every scheduled lever, 1.23 kg over the 35.0 kg ceiling; the on-call levers and their owners are in issue #10 '
+@pytest.mark.xfail(strict=True, reason='D69: with the 10 in hub wheels at their listed 3.53 kg and the 50 mm crush pads the P3 ledger is 36.25 kg with '
+                   'every scheduled lever, 1.25 kg over the 35.0 kg ceiling; the on-call levers and their owners are in issue #10 '
                    'and docs/body-sections.md 6. strict: this fails loudly once it passes')
 def test_the_mass_ledger_under_the_ceiling():
     """D69: the robot is designed for 35.5 kg and held under 35.0 kg as built. The P3 ledger, with every scheduled lever

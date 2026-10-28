@@ -466,8 +466,8 @@ is edited.
 
 ### 10.2 The mass gate (issue #10)
 
-The P3 ledger is 36.73 kg: 36.23 kg with the scheduled levers, which is 1.23 kg over 35.0. That includes the
-crush pads' 0.21 kg (10.3); before the pads it was 36.55 / 36.05 kg. The gate is not relaxed:
+The P3 ledger is 36.75 kg: 36.25 kg with the scheduled levers, which is 1.25 kg over 35.0. That includes the
+crush pads' 0.23 kg (10.3); before the pads it was 36.55 / 36.05 kg. The gate is not relaxed:
 `test_the_mass_ledger_under_the_ceiling` stays a strict xfail. The levers that could close the gap are listed in
 docs/body-sections.md 6. The body-only ones are worth 0.8-1.0 kg, which is not enough alone. The rest are:
 
@@ -484,21 +484,35 @@ The bay's four pads are printed TPU 95A gyroid:
 
 | Property | Value |
 |---|---|
-| Free height | 45 mm |
-| Stroke | 27 mm |
+| Free height | 50 mm |
+| Stroke | 30 mm |
 | Crush plateau | 600 N a pad |
 | Ground clearance needed | 40 mm |
 
-To keep the 40 mm, the lowest controlled leg rises from 160 to 180 mm (sim/robot_v2.py `H_RANGE`, the firmware's
-`GP_H_MIN_M`). The leg's stops do not move.
+To keep the 40 mm, the lowest controlled leg rises from 160 to 185 mm. `H_RANGE` in sim/robot_v2.py reads it from
+cad/body_battery.py PAD; the firmware's `GP_H_MIN_M` follows, and a test ties the three together. The leg's stops do
+not move.
 
-Results across the three falls and their pushes at x0.6 to x1.4:
-- the worst body impact is 2,691-2,728 N, against a 3,000 N limit;
-- no 25 mm or 35 mm pad passes all nine cases at any plateau.
+Results, with the densified pad modelled as stiff as the 1 ms step allows:
 
-The robot sits on the pads under a 140 mm leg; they are D69's parking brake. Evidence: sim/bay_pad_study.py,
-exports/body/bay-pad-study.json and bay-pad-depth.json. Still to do: the coupon test for the plateau, the onset
-stiffness and the rebound.
+| Case | Body impact (limit 3,000 N) | Stroke used |
+|---|---|---|
+| Three falls at the scenarios' push | 2,723 N worst | 22.1 of 30 mm |
+| All nine (pushes x0.6, x1.0, x1.4) | 2,724 N worst | 27.6 mm |
+| 1 kg more | 2,740 N | |
+| Rigid pads | 7,257 N | |
+
+- No 25 mm or 35 mm pad passes all nine at any plateau.
+- 45 mm works only in a 600-650 N window, too narrow to build to. The review of #21 found that 600 N reaches its
+  stroke at x1.4, and 650 N peaks at 2,909 N at x0.6.
+
+The robot sits on the pads under a 145 mm leg; they are D69's parking brake. The pads add 0.23 kg against the 30 g
+skids. Evidence: sim/bay_pad_study.py, exports/body/bay-pad-study.json and bay-pad-depth.json. Still to do:
+
+- The coupon test for the plateau (0.14-0.20 MPa over the 24 x 149 mm face), the onset stiffness and the rebound.
+- Sideways, the pad is rigid in the model. Under a sliding or slanted landing the VHB tape peels: about 1.7 MPa at the
+  tape's edge, the review estimates. The pad gets a printed lip round the floor's edge, or two M3 screws through the
+  floor's flange, before it is printed.
 
 ### 10.4 Track, stance and the wheel's connectors
 
@@ -506,9 +520,10 @@ stiffness and the rebound.
 |---|---|---|
 | Track (tyre centres) | 414.3 mm | 433.7 mm |
 | Tyre band from the cheek's face (y, robot) | 184.9-229.4 mm | 184.9-248.9 mm |
-| Hip height at the 0.6 stance | 375 mm (289 mm leg) | 424 mm (297 mm leg: the range is now 180-375) |
-| Pads under the floor at 300 mm | - | 160 mm |
-| 15 robot scenarios (tools/simulate.py --v2) | 14/15 (fall_side 3,408 N) | **15/15** at 36.73 kg |
+| Hip height at the 0.6 stance | 375 mm (289 mm leg) | 426 mm (299 mm leg: the range is now 185-375) |
+| Under the pads at a 300 mm leg | - | 155 mm |
+| Tyre to the nearest body part (22 stances) | - | 72.5 mm (the ear bracket, folded leg); no 4-25 mm gap |
+| 15 robot scenarios (tools/simulate.py --v2) | 14/15 (fall_side 3,408 N) | **15/15** at 36.75 kg |
 
 Each wheel connects at the cheek's end, where its lead enters the cable chase beside the RS-04 harnesses. The body
 carries the sockets and the wheel's lead carries the pins:
