@@ -1,0 +1,59 @@
+[
+ {
+  "id": "robstride-rs-04",
+  "category": "leg_actuator",
+  "vendor": "RobStride",
+  "model": "RS-04",
+  "price_usd": 255.0,
+  "price_note": "Seeed Studio (= list); CN warehouse",
+  "price_checked": "2026-10-25",
+  "buy": [
+   {
+    "seller": "Seeed Studio",
+    "url": "https://www.seeedstudio.com/Robostride-04-Actuator-p-6775.html",
+    "in_stock": true,
+    "ships_from": "CN"
+   },
+   {
+    "seller": "roboticscenter.ai ($295)",
+    "url": "https://www.roboticscenter.ai/store/brand/robstride/",
+    "in_stock": null,
+    "ships_from": null
+   }
+  ],
+  "specs": {
+   "mass_g": 1420,
+   "diameter_mm": 120,
+   "length_mm": 56,
+   "peak_torque_nm": 120,
+   "rated_torque_nm": 40,
+   "no_load_speed_rpm": 200,
+   "rated_speed_rpm": 50,
+   "gear_ratio": 9,
+   "voltage_nominal_v": 48,
+   "voltage_range_v": [
+    15,
+    60
+   ],
+   "peak_current_a": 90,
+   "kt_nm_per_a": 2.1,
+   "interface": "CAN 2.0 1 Mbps (CAN-FD variant sold for some models); MIT mode yes (separate protocol, select with type-0x19 frame + reboot); also position/velocity/current modes",
+   "encoder": "dual magnetic 14-bit (output-absolute not stated)",
+   "hollow_shaft_mm": null,
+   "ip_rating": "IP52"
+  },
+  "cad": {
+   "step_url": "https://github.com/RobStride/Product_Information/tree/main/Product%20Literature/CAN2.0/RS04/RS04.stp",
+   "available": true
+  },
+  "sources": [
+   "https://www.seeedstudio.com/Robostride-04-Actuator-p-6775.html",
+   "https://github.com/RobStride/Product_Information",
+   "https://www.robstride.com/",
+   "https://github.com/RobStride/Python_Sample",
+   "https://github.com/RobStride/robstride_ros_sample"
+  ],
+  "confidence": "datasheet",
+  "notes": "Overkill for 8-20 kg but cheapest per Nm on the market. Seeed CN 11 on hand + 80 due 2026-11-14. PDF: 1510 g, rated 35 Nm. Curve (rpm,Nm): (95,120),(148,80),(160,60),(184,40),(190,10). Derived: peak 84.5 Nm/kg, rated 28.2 Nm/kg, $2.1 per peak Nm."
+ }
+]

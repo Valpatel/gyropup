@@ -1,0 +1,82 @@
+[
+ {
+  "id": "flipsky-75100",
+  "category": "motor_driver",
+  "vendor": "Flipsky",
+  "model": "75100 (single)",
+  "price_usd": 65.0,
+  "price_note": "flipsky.net; aluminium-PCB version $73 bare / $77 cased",
+  "price_checked": "2026-10-25",
+  "buy": [
+   {
+    "seller": "Flipsky",
+    "url": "https://flipsky.net/products/flipsky-75100-75v-100a-single-esc-based-on-vesc-for-electric-skateboard-electric-scooter-ebike-speed-controller",
+    "in_stock": true,
+    "ships_from": "CN"
+   }
+  ],
+  "specs": {
+   "mass_g": 230,
+   "length_mm": 108,
+   "width_mm": 50.7,
+   "height_mm": 35,
+   "channels": 1,
+   "voltage_range_v": [
+    14,
+    84
+   ],
+   "continuous_current_a": 100,
+   "peak_current_a": 120,
+   "interface": "USB, CAN, UART",
+   "onboard_encoder": "none",
+   "external_encoder_support": "ABI, hall, AS5047, AS5048A",
+   "can_fd": false,
+   "brake_chopper": null,
+   "dimensions_mm": [
+    108,
+    50.7,
+    35
+   ],
+   "dimensions_axes": "L = along the extrusion/cable axis incl. the two end mounting flanges (extruded body alone 87), W = across the fins (50.7), H = mounting face to top (33.8 body; 35 incl. 1 mm flange offset). Product text says 85 x 50.7 x 33.8; the drawing on the same page shows an 87 mm body",
+   "dimensions_mm_basis": "product page dimension drawing (flipsky.net 75100 'Detail size' image)",
+   "body_dimensions_mm": [
+    87,
+    50.7,
+    33.8
+   ],
+   "body_dimensions_mm_basis": "product page dimension drawing",
+   "mass_g_basis": "estimate",
+   "mass_note": "Not published. 600 g is the Shopify shipping weight (box, USB cable, hall adapter, manual). 230 g estimated from the 87 x 50.7 x 33.8 aluminium extrusion, end plates/flanges, power PCB and ~15 cm 12 AWG leads; weigh one.",
+   "mounting": {
+    "type": "two flat flange plates, one under each end of the extrusion, flush with the bottom face",
+    "holes": 4,
+    "pattern_mm": [
+     100,
+     27
+    ],
+    "pattern_note": "100 mm along L (4 mm from each flange end; flange-to-flange 108), 27 mm across (flange plate 35 wide, centred on the body)",
+    "hole_diameter_mm": 5.8,
+    "hole_diameter_note": "drawing label '5,8' beside the holes (reads as clearance for M5); a 4.2 mm wide open slot also sits on the centreline of each flange (usable for M4)",
+    "fastener": "M5 (or M4 through the centre slots)"
+   },
+   "mounting_basis": "product page dimension drawing",
+   "cable_exits": "Everything leaves ONE end face through a round grommet: battery + / - (12 AWG, red/black), 3 motor phases (12 AWG, blue/green/yellow, bare ends), and fly-lead pigtails: USB-C (female, on a lead), HALL 6-pin, COMM 7-pin (UART/ADC), PPM 3-pin, UART2 8-pin, CAN 2-pin (CANL/CANH). The opposite end face is blank.",
+   "cable_exits_basis": "product page wiring images",
+   "orientation_cooling": "The finned aluminium case is the heatsink; no fan. A power/LED button is on the top face, 48 mm from one end. Bolt the flat bottom to a metal plate or leave the fins in airflow for 100 A continuous; any orientation. Leave >=60 mm beyond the cable end for the 12 AWG bend and pigtails (estimate).",
+   "length_height_note": "length_mm/height_mm are the overall envelope incl. end flanges (body 87 x 50.7 x 33.8; product text says 85 mm)"
+  },
+  "cad": {
+   "step_url": null,
+   "available": false,
+   "note": "Flipsky publishes no STEP; model from the product-page dimension drawing."
+  },
+  "sources": [
+   "https://flipsky.net/products/flipsky-75100-75v-100a-single-esc-based-on-vesc-for-electric-skateboard-electric-scooter-ebike-speed-controller",
+   "https://flipsky.net/products/flipsky-75100-75v-100a-single-esc-based-on-vesc-for-electric-skateboard-electric-scooter-ebike-speed-controller.json",
+   "https://cdn.shopify.com/s/files/1/0011/4039/1996/files/75100_4f5a7c9d-0553-4945-8cef-d319f5dd5843_1024x1024.jpg?v=1638500514",
+   "https://cdn.shopify.com/s/files/1/0011/4039/1996/files/type-c-_3.jpg?v=1750301068"
+  ],
+  "confidence": "product page",
+  "notes": "Phase filter must be off on firmware >=5.3 or the ESC can be damaged. Mass not published. Dimensions and 100 x 27 mm four-hole flange pattern from the product-page drawing; all wiring exits one end. Mass is an estimate (not published). Not verified (2026-10-26): mass (estimate 230 g; 600 g is shipping weight); mounting hole diameter 5.8 read from a low-resolution drawing; exact overall height 33.8 vs 35 (flange offset); grommet diameter on the cable end."
+ }
+]

@@ -1,0 +1,63 @@
+{
+  "revision": "0.1-cad",
+  "units": "mm",
+  "note": "Interfaces of the body parts (J501 box, cameras, lidar, head plate) and printing rules. The leg's interfaces are in cad/interfaces.json (the GMI standard) and catalog/interfaces.json (each motor's drawing).",
+  "print": {
+    "printer": "Bambu Lab P1S",
+    "bed_mm": [
+      256,
+      256,
+      256
+    ],
+    "material_default": "pla",
+    "material_hot": "petg",
+    "insert_m3_pilot": 4.0,
+    "insert_m4_pilot": 5.6,
+    "insert_m5_pilot": 6.4,
+    "insert_depth": 8.0,
+    "clearance": 0.25
+  },
+  "j501_box": {
+    "width": 206.0,
+    "depth": 192.0,
+    "standoff_centers": [
+      [
+        8.8,
+        30.0
+      ],
+      [
+        8.8,
+        162.0
+      ],
+      [
+        197.2,
+        30.0
+      ],
+      [
+        197.2,
+        162.0
+      ]
+    ],
+    "standoff": "M3 male-female hex, 5.5 AF",
+    "basis": "j501-agx cad/parameters.json storage.standoff_centers: the base's stacking inserts"
+  },
+  "camera": {
+    "mount": "1/4-20 UNC",
+    "d435": [
+      90.0,
+      25.0,
+      25.0
+    ]
+  },
+  "lidar": {
+    "mount": "1/4-20 UNC",
+    "pin_d": 4.0,
+    "pin_spacing": 25.4,
+    "basis": "VLP-16 base: 1/4-20 centre hole plus two 5/32 in locating pins (spacing ASSUMED 1.0 in)"
+  },
+  "head_plate": {
+    "size": 110.0,
+    "t": 6.0,
+    "turret_bolts": "4x M4 on 80 mm square, heat-set inserts (turret project to match)"
+  }
+}

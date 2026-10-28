@@ -1,0 +1,63 @@
+[
+ {
+  "id": "odrive-botwheel",
+  "category": "wheel_motor",
+  "vendor": "ODrive Robotics",
+  "model": "BotWheel (BW0124)",
+  "price_usd": 134.5,
+  "price_note": "$269 per 2-pack (only 2-packs available) = $134.50/wheel; single listed $139 but out of stock. BotWheel+S1 kit $279 (out of stock).",
+  "price_checked": "2026-10-25",
+  "buy": [
+   {
+    "seller": "ODrive Robotics shop (2-pack)",
+    "url": "https://shop.odriverobotics.com/products/botwheels",
+    "in_stock": true,
+    "ships_from": null
+   }
+  ],
+  "specs": {
+   "mass_g": 2200,
+   "diameter_mm": 171,
+   "length_mm": null,
+   "width_mm": 44.6,
+   "peak_torque_nm": 14.3,
+   "rated_torque_nm": 5,
+   "no_load_speed_rpm": 209,
+   "rated_speed_rpm": 110,
+   "gear_ratio": 1,
+   "voltage_nominal_v": 24,
+   "voltage_range_v": null,
+   "rated_current_a": 5,
+   "peak_current_a": 15,
+   "kt_nm_per_a": 0.951,
+   "kv_rpm_per_v": 8.7,
+   "pole_pairs": 15,
+   "interface": "3-phase + hall + encoder harness (JST PUD, ODrive S1 pinout)",
+   "encoder": "hall sensors + built-in 3200 CPR incremental encoder (not absolute; hall used for commutation at boot)",
+   "encoder_counts_per_rev": 3200,
+   "integrated_driver": false,
+   "driver_needed": "ODrive S1 ($149, out of stock) or ODrive Pro ($229) or moteus n1 ($149, quadrature + hall aux)",
+   "axle": "fixed flange 4x M6 on dia 36 PCD, dia 50 boss, cable exits centre one side (single-sided)",
+   "tyre": "patterned tread; solid vs pneumatic not stated",
+   "hollow_shaft_mm": null,
+   "ip_rating": "IP54",
+   "calc_wheel_diameter_mm": 171,
+   "calc_wheel_diameter_assumed": false,
+   "calc_top_speed_kmh": 6.74,
+   "calc_peak_ground_force_n": 167.3,
+   "calc_rated_ground_force_n": 58.5,
+   "calc_basis": "top speed from no_load_speed_rpm at voltage_nominal_v; force from peak_torque_nm / wheel radius"
+  },
+  "cad": {
+   "step_url": "https://cad.onshape.com/publications/ffa16d9268e83ffcb5643cba/w/81f7a79746984b3bebf1d392/e/3101f331226b74a504e702ae",
+   "available": true
+  },
+  "sources": [
+   "https://shop.odriverobotics.com/products/botwheels",
+   "https://docs.odriverobotics.com/v/latest/hardware/odrive-motors.html#odrive-botwheel",
+   "https://cdn.shopify.com/s/files/1/0580/2904/7878/files/BotWheel_Drawng.png"
+  ],
+  "confidence": "datasheet",
+  "notes": "peak_torque_nm (14.3) and no_load_speed_rpm (209) are DERIVED, not published: 15 A peak (3 s) x Kt 0.951 and Kv 8.7 x 24 V. Rated load 80 kg per wheel. Ship origin not stated (US store, tariff surcharge on some products). Best-documented, easiest-to-buy chunky hub with a real encoder."
+ }
+]

@@ -1,0 +1,59 @@
+[
+ {
+  "id": "diode-dynamics-ssc1-sport-white-pair",
+  "category": "light",
+  "vendor": "Diode Dynamics",
+  "model": "Stage Series C1 (SSC1) Sport LED pod, white, standard mount, pair (DD6450P spot / DD6445P flood / DD6440P wide)",
+  "price_usd": 179.95,
+  "price_note": "Diode Dynamics store, pair, all beam options same price",
+  "price_checked": "2026-10-26",
+  "buy": [
+   {
+    "seller": "Diode Dynamics",
+    "url": "https://www.diodedynamics.com/stage-series-c1-white-sport-standard-led-pod-pair.html",
+    "in_stock": true,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "count": 2,
+   "mass_g": 308,
+   "mass_g_basis": "product page unit weight 0.34 lb (154 g) per pod; the info guide says 0.7 lb single / 1.2 lb pair (likely packed)",
+   "dimensions_mm": [
+    50.8,
+    61,
+    66
+   ],
+   "dimensions_axes": "per pod: L = 50.8 (2.0 in) wide, W = 61 (2.4 in) deep front-to-back incl. fins and connector, H = 66 (2.6 in) tall incl. bracket; pod head 2.0 x 2.0 in",
+   "dimensions_mm_basis": "info guide PP0140H page 2 drawing",
+   "mounting": "Per pod: L-bracket foot 1.1 x 1.1 in (28 x 28 mm) with one 5/16-18 x 3/4 in bolt to the chassis; the pod pivots on a 10-32 x 1-3/8 in cross bolt (tilt adjust). Pivot axis 0.8 in (20 mm) above the foot. A flush-mount kit and GoPro-style adapter exist.",
+   "mounting_basis": "info guide PP0140H hardware list and drawing",
+   "voltage_range_v": [
+    9,
+    16
+   ],
+   "power_typical_w": 25.6,
+   "power_note": "12.8 W main beam per pod (1.0 A @ 12.8 V) + 0.3 W backlight; pair 25.6 W / 2.0 A",
+   "power_max_w": 26.2,
+   "lumens_each": 1030,
+   "beam": "spot 50,000 cd (DD6450P); flood 400 cd; wide 2,500 cd",
+   "connector": "integrated Deutsch DT 4-pin (main, ground, backlight, brake) with short pigtail; 18 AWG or larger",
+   "ip_rating": "IP69K",
+   "operating_temp_c": [
+    -40,
+    85
+   ],
+   "orientation_cooling": "Finned die-cast aluminium back: keep the fins in free air; aim forward; 12.8 W each heats the housing."
+  },
+  "cad": {
+   "step_url": null,
+   "available": false
+  },
+  "sources": [
+   "https://www.diodedynamics.com/stage-series-c1-white-sport-standard-led-pod-pair.html",
+   "http://images.diodedynamics.com/docs/install/universal/stage_series/Stage_Series_C1_LED_Pod_Info_Guide.pdf"
+  ],
+  "confidence": "datasheet",
+  "notes": "Proposed real replacement for assumed-led-pod-pair-20w: a small (2 in), well-documented 12 V pod from a US maker. 9-16 V input fits the 12 V rail. Power warning: the pair draws 25.6 W, and with the VLP-16 (8 W typ, 3 A spin-up surge) that exceeds the DDR-30L-12's 30 W/2.5 A; either PWM-dim the lights (low-side MOSFET) or move them/the lidar to a bigger 12 V supply. Cheaper generic 2 in pods (Nilight/Auxbeam, ~$25/pair) publish no reliable dims or mass."
+ }
+]

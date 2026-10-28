@@ -1,0 +1,232 @@
+{
+ "pla": {
+  "kind": "filament",
+  "name": "Bambu Lab PLA Basic",
+  "density_g_cm3": 1.24,
+  "price_usd_per_kg": 14.99,
+  "tensile_mpa": 35,
+  "tensile_z_mpa": 31,
+  "modulus_gpa": 2.58,
+  "flexural_strength_xy_mpa": 76,
+  "max_service_c": 54,
+  "next": "petg",
+  "p1s": "stock",
+  "hardened_nozzle_required": false,
+  "price_checked": "2026-10-25",
+  "source": [
+   "https://store.bblcdn.com/s1/default/58b85d0f3db94878854a28fdb8a0006e/Bambu_PLA_Basic_Technical_Data_Sheet.pdf",
+   "https://us.store.bambulab.com/products/pla-basic-filament"
+  ],
+  "next_name": "Bambu Lab PETG Basic"
+ },
+ "pla-tough": {
+  "kind": "filament",
+  "name": "Bambu Lab PLA Tough+",
+  "density_g_cm3": 1.21,
+  "price_usd_per_kg": 20.99,
+  "tensile_mpa": 34.9,
+  "tensile_z_mpa": 20.9,
+  "modulus_gpa": 1.86,
+  "flexural_strength_xy_mpa": 65,
+  "max_service_c": 58,
+  "next": "petg",
+  "p1s": "stock",
+  "hardened_nozzle_required": false,
+  "price_checked": "2026-10-25",
+  "source": [
+   "https://store.bblcdn.com/s7/default/80a85371db2e40bda97069d283fed76c/BambuPLA_Tough_TechnicalData_Sheet_(2).pdf",
+   "https://us.store.bambulab.com/products/pla-tough-upgrade"
+  ],
+  "next_name": "Bambu Lab PETG Basic"
+ },
+ "petg": {
+  "kind": "filament",
+  "name": "Bambu Lab PETG Basic",
+  "density_g_cm3": 1.25,
+  "price_usd_per_kg": 13.99,
+  "tensile_mpa": 51,
+  "tensile_z_mpa": 35,
+  "modulus_gpa": 2.78,
+  "flexural_strength_xy_mpa": 75,
+  "max_service_c": 68,
+  "next": "asa",
+  "p1s": "stock",
+  "hardened_nozzle_required": false,
+  "price_checked": "2026-10-25",
+  "source": [
+   "https://store.bblcdn.com/s1/default/cb94589bf7994fdcbfa833badefae9cd/Bambu_PETG_Basic_Technical_Data_Sheet.pdf",
+   "https://us.store.bambulab.com/products/petg-basic"
+  ],
+  "next_name": "Bambu Lab ASA"
+ },
+ "asa": {
+  "kind": "filament",
+  "name": "Bambu Lab ASA",
+  "density_g_cm3": 1.05,
+  "price_usd_per_kg": 29.99,
+  "tensile_mpa": 37,
+  "tensile_z_mpa": 31,
+  "modulus_gpa": 2.45,
+  "flexural_strength_xy_mpa": 65,
+  "max_service_c": 92,
+  "next": "pet-cf",
+  "p1s": "stock",
+  "hardened_nozzle_required": false,
+  "price_checked": "2026-10-25",
+  "source": [
+   "https://store.bblcdn.com/ad7b08230c164e72856cffbe06bb7dc9.pdf",
+   "https://us.store.bambulab.com/products/asa-filament"
+  ],
+  "next_name": "Bambu Lab PET-CF"
+ },
+ "pla-cf": {
+  "kind": "filament",
+  "name": "Bambu Lab PLA-CF",
+  "density_g_cm3": 1.22,
+  "price_usd_per_kg": 31.99,
+  "tensile_mpa": 38,
+  "tensile_z_mpa": 26,
+  "modulus_gpa": 2.79,
+  "flexural_strength_xy_mpa": 89,
+  "max_service_c": 54,
+  "next": "petg-cf",
+  "p1s": "hardened nozzle",
+  "hardened_nozzle_required": true,
+  "price_checked": "2026-10-25",
+  "source": [
+   "https://store.bblcdn.com/842f399d4e274507953a5231126ec8c1.pdf",
+   "https://us.store.bambulab.com/products/pla-cf"
+  ],
+  "next_name": "Bambu Lab PETG-CF"
+ },
+ "petg-cf": {
+  "kind": "filament",
+  "name": "Bambu Lab PETG-CF",
+  "density_g_cm3": 1.25,
+  "price_usd_per_kg": 31.99,
+  "tensile_mpa": 35,
+  "tensile_z_mpa": 29,
+  "modulus_gpa": 2.46,
+  "flexural_strength_xy_mpa": 70,
+  "max_service_c": 68,
+  "next": "pet-cf",
+  "p1s": "hardened nozzle",
+  "hardened_nozzle_required": true,
+  "price_checked": "2026-10-25",
+  "source": [
+   "https://store.bblcdn.com/626e4f424bf345ae965ad0ddfcaf2459.pdf",
+   "https://us.store.bambulab.com/products/petg-cf"
+  ],
+  "next_name": "Bambu Lab PET-CF"
+ },
+ "pet-cf": {
+  "kind": "filament",
+  "name": "Bambu Lab PET-CF",
+  "density_g_cm3": 1.29,
+  "price_usd_per_kg": 84.99,
+  "tensile_mpa": 74,
+  "tensile_z_mpa": 35,
+  "modulus_gpa": 4.73,
+  "flexural_strength_xy_mpa": 131,
+  "max_service_c": 182,
+  "next": "pa6-cf",
+  "p1s": "hardened nozzle",
+  "hardened_nozzle_required": true,
+  "price_checked": "2026-10-25",
+  "source": [
+   "https://store.bblcdn.com/9690d6226f024acab2ba0dd52dabb654.pdf",
+   "https://us.store.bambulab.com/products/pet-cf"
+  ],
+  "next_name": "Bambu Lab PA6-CF"
+ },
+ "pa6-cf": {
+  "kind": "filament",
+  "name": "Bambu Lab PA6-CF",
+  "density_g_cm3": 1.09,
+  "price_usd_per_kg": 79.99,
+  "tensile_mpa": 102,
+  "tensile_z_mpa": 48,
+  "modulus_gpa": 4.43,
+  "flexural_strength_xy_mpa": 151,
+  "max_service_c": 164,
+  "next": "paht-cf",
+  "p1s": "hardened nozzle",
+  "hardened_nozzle_required": true,
+  "price_checked": "2026-10-25",
+  "source": [
+   "https://store.bblcdn.com/b2abc59ac250492b979a52f1ce3e61b3.pdf",
+   "https://us.store.bambulab.com/products/pa6-cf"
+  ],
+  "next_name": "Bambu Lab PAHT-CF"
+ },
+ "paht-cf": {
+  "kind": "filament",
+  "name": "Bambu Lab PAHT-CF",
+  "density_g_cm3": 1.06,
+  "price_usd_per_kg": 94.99,
+  "tensile_mpa": 92,
+  "tensile_z_mpa": 47,
+  "modulus_gpa": 3.86,
+  "flexural_strength_xy_mpa": 125,
+  "max_service_c": 170,
+  "next": "ppa-cf",
+  "p1s": "hardened nozzle",
+  "hardened_nozzle_required": true,
+  "price_checked": "2026-10-25",
+  "source": [
+   "https://store.bblcdn.com/7166b20bc68f4c87b32c972b856eeb4b.pdf",
+   "https://us.store.bambulab.com/products/paht-cf"
+  ],
+  "next_name": "Bambu Lab PPA-CF"
+ },
+ "ppa-cf": {
+  "kind": "filament",
+  "name": "Bambu Lab PPA-CF",
+  "density_g_cm3": 1.25,
+  "price_usd_per_kg": 199.99,
+  "tensile_mpa": 168,
+  "tensile_z_mpa": 57,
+  "modulus_gpa": 11.8,
+  "flexural_strength_xy_mpa": 208,
+  "max_service_c": 196,
+  "next": null,
+  "p1s": "heated chamber (not a P1S)",
+  "hardened_nozzle_required": true,
+  "price_checked": "2026-10-25",
+  "source": [
+   "https://store.bblcdn.com/05b0e4ca5ee14a4cb378cfa48df24f91.pdf",
+   "https://us.store.bambulab.com/products/ppa-cf"
+  ]
+ },
+ "tpu95": {
+  "kind": "filament",
+  "name": "Bambu Lab TPU 95A HF",
+  "density_g_cm3": 1.22,
+  "price_usd_per_kg": 41.99,
+  "tensile_mpa": 27.3,
+  "tensile_z_mpa": 22.3,
+  "modulus_gpa": 0.0098,
+  "flexural_strength_xy_mpa": null,
+  "max_service_c": null,
+  "next": null,
+  "p1s": "stock",
+  "hardened_nozzle_required": false,
+  "price_checked": "2026-10-25",
+  "source": [
+   "https://store.bblcdn.com/58df32731eab4c90a7dac9b12e13ba88.pdf",
+   "https://us.store.bambulab.com/products/tpu-95a-hf"
+  ]
+ },
+ "al6061": {
+  "kind": "metal",
+  "name": "Aluminium 6061-T6 (machined)",
+  "density_g_cm3": 2.7,
+  "tensile_mpa": 310,
+  "yield_mpa": 276,
+  "modulus_gpa": 68.9,
+  "made": "CNC from bar, ordered online at an instant price (JLCCNC, backup Xometry): not a filament, never in a print plan",
+  "source": [
+   "ASM Aerospace Specification Metals, 6061-T6 (MatWeb), typical properties"
+  ]
+ }
+}

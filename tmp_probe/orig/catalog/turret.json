@@ -1,0 +1,4545 @@
+[
+ {
+  "id": "dji-robomaster-snail-2305",
+  "category": "turret",
+  "vendor": "DJI RoboMaster",
+  "model": "Snail 2305 friction-wheel motor (+ C615 ESC)",
+  "price_usd": 40.0,
+  "price_note": "aifitlab: motor $40; C615 ESC $60; motor + C615 $100; motor + 420S ESC $80",
+  "price_checked": "2026-10-25",
+  "buy": [
+   {
+    "seller": "aifitlab",
+    "url": "https://aifitlab.com/products/dji-robomaster-snail-2305-motor-c615-speed-controller",
+    "in_stock": true,
+    "ships_from": null
+   }
+  ],
+  "specs": {
+   "mass_g": 27.8,
+   "diameter_mm": 29,
+   "stator_mm": "23 x 5",
+   "shaft_diameter_mm": 2.95,
+   "kv_rpm_per_v": 875,
+   "no_load_speed_rpm": 21000,
+   "no_load_current_a": 0.4,
+   "kt_nm_per_a": 0.0109,
+   "rotor_inertia_kg_mm2": 1.84,
+   "voltage_nominal_v": 24,
+   "esc_c615_max_voltage_v": 26,
+   "esc_c615_continuous_a": 15,
+   "esc_c615_peak_a_3s": 20,
+   "esc_c615_mass_g": 9.7,
+   "esc_signal": "PWM up to 500 Hz",
+   "interface": "C615 ESC, PWM",
+   "ip_rating": null
+  },
+  "cad": {
+   "step_url": "https://aifitlab.com/products/dji-robomaster-snail-2305-motor-c615-speed-controller",
+   "available": true
+  },
+  "sources": [
+   "https://aifitlab.com/products/dji-robomaster-snail-2305-motor-c615-speed-controller"
+  ],
+  "confidence": "seller listing",
+  "notes": "RoboMaster's 17 mm friction-wheel launcher motor. The listing gives KV both as 2400 and as 875 rpm/V; 21000 rpm at 24 V matches 875. Listing links STEP files and user guides. C615 max 26 V is below a 7S pack's 29.4 V full charge, so it needs a regulated rail. Not a foam-dart part: flywheels and cage would be custom (2.95 mm shaft).",
+  "key": "dji-robomaster-snail-2305"
+ },
+ {
+  "id": "worker-cheetah-rival-rounds-100",
+  "category": "turret",
+  "vendor": "Worker",
+  "model": "Cheetah Rival-compatible rounds, 100-pack",
+  "price_usd": 14.99,
+  "price_note": "Out of Darts, 100 rounds",
+  "price_checked": "2026-10-25",
+  "buy": [
+   {
+    "seller": "Out of Darts",
+    "url": "https://outofdarts.com/products/worker-cheetah-rounds-rival-compatible-ammo-100-pack",
+    "in_stock": true,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "mass_g": 1.75,
+   "diameter_mm": 22.7,
+   "material": "EVA foam",
+   "pack_count": 100,
+   "ip_rating": null
+  },
+  "cad": {
+   "step_url": null,
+   "available": false
+  },
+  "sources": [
+   "https://outofdarts.com/products/worker-cheetah-rounds-rival-compatible-ammo-100-pack"
+  ],
+  "confidence": "product page",
+  "notes": "mass_g is per round. 75% heavier than a short dart, so more energy at the same speed; Hasbro sells Rival as 14+ with eyewear recommended. Not recommended for a kids' game.",
+  "key": "worker-cheetah-rival-rounds-100"
+ },
+ {
+  "id": "feetech-sts3215-c018-12v",
+  "category": "turret",
+  "vendor": "Feetech (Waveshare ST3215)",
+  "model": "STS3215 / ST3215 12 V 30 kg-cm serial bus servo",
+  "preferred": true,
+  "price_usd": 21.99,
+  "price_note": "Waveshare SKU 22414, 1 unit (tiers to ~$20.63); RobotShop US $49.22 out of stock",
+  "price_checked": "2026-10-25",
+  "buy": [
+   {
+    "seller": "Waveshare",
+    "url": "https://www.waveshare.com/st3215-servo.htm?sku=22414",
+    "in_stock": null,
+    "ships_from": "CN"
+   },
+   {
+    "seller": "RobotShop",
+    "url": "https://robotshop.com/products/feetech-12v-30kgcm-magnetic-encoding-servo-sts3215",
+    "in_stock": false,
+    "ships_from": null
+   }
+  ],
+  "specs": {
+   "mass_g": 89,
+   "stall_torque_nm": 2.94,
+   "rated_torque_nm": null,
+   "no_load_speed_rpm": 45,
+   "no_load_speed_deg_per_s": 270,
+   "voltage_nominal_v": 12,
+   "voltage_range_v": [
+    6,
+    12.6
+   ],
+   "interface": "TTL UART half-duplex serial bus, 38400 bps-1 Mbps",
+   "encoder": "12-bit magnetic, 4096 counts/turn, 360 deg, no mechanical limit",
+   "ip_rating": null
+  },
+  "cad": {
+   "step_url": null,
+   "available": false
+  },
+  "sources": [
+   "https://www.waveshare.com/st3215-servo.htm?sku=22414",
+   "https://robotshop.com/products/feetech-12v-30kgcm-magnetic-encoding-servo-sts3215"
+  ],
+  "confidence": "product page",
+  "notes": "Stall torque converted from 30 kg-cm at 12 V (7.4 V version: 19.5 kg-cm, 52 rpm). Waveshare lists 89 g; other listings say 55 g. Cheap, light tilt actuator with an absolute encoder, so tilt angle is known at power-up. Needs a 12 V rail (not the 7S bus) and a UART bus adapter. Not PWM controllable.",
+  "key": "feetech-sts3215-c018-12v"
+ },
+ {
+  "id": "dji-robomaster-m2006-p36",
+  "category": "turret",
+  "vendor": "DJI RoboMaster",
+  "model": "M2006 P36 geared motor (+ C610 ESC)",
+  "price_usd": 95.0,
+  "price_note": "aifitlab motor only; C610 ESC V2.0 $250 listed separately",
+  "price_checked": "2026-10-25",
+  "buy": [
+   {
+    "seller": "aifitlab",
+    "url": "https://aifitlab.com/products/dji-robomaster-m2006-p36-brushless-dc-gear-motor",
+    "in_stock": true,
+    "ships_from": null
+   }
+  ],
+  "specs": {
+   "mass_g": 90,
+   "gear_ratio": 36,
+   "rated_torque_nm": 1.0,
+   "stall_torque_nm": 7,
+   "stall_current_a": 27.3,
+   "no_load_speed_rpm": 500,
+   "rated_speed_rpm": 416,
+   "voltage_nominal_v": 24,
+   "kt_nm_per_a": 0.18,
+   "interface": "C610 ESC (CAN)",
+   "ip_rating": null
+  },
+  "cad": {
+   "step_url": "https://aifitlab.com/products/dji-robomaster-m2006-p36-brushless-dc-gear-motor",
+   "available": true
+  },
+  "sources": [
+   "https://aifitlab.com/products/dji-robomaster-m2006-p36-brushless-dc-gear-motor"
+  ],
+  "confidence": "seller listing",
+  "notes": "RoboMaster's usual trigger / feed-dial motor (jam detection by watching its speed). Overkill for darts; listed because it is how RoboMaster feeds 17 mm balls. Speeds with C610; Z650 ESC values differ.",
+  "key": "dji-robomaster-m2006-p36"
+ },
+ {
+  "id": "repeat-robotics-am32-35a-esc",
+  "category": "turret",
+  "vendor": "Repeat Robotics (sold by Palm Beach Bots)",
+  "model": "AM32 Brushless Drive ESC 35 A (bi-directional)",
+  "price_usd": 24.99,
+  "price_note": "Palm Beach Bots, single unit",
+  "price_checked": "2026-10-25",
+  "buy": [
+   {
+    "seller": "Palm Beach Bots",
+    "url": "https://palmbeachbots.com/products/repeat-robotics-am32-brushless-drive-esc-bi-directional",
+    "in_stock": true,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "mass_g": 5,
+   "size_mm": [
+    25,
+    13,
+    5
+   ],
+   "continuous_current_a": 35,
+   "cells_s": [
+    3,
+    6
+   ],
+   "voltage_range_v": [
+    9.0,
+    25.2
+   ],
+   "firmware": "AM32 (reprogrammable with the AM32 config tool)",
+   "interface": "servo PWM / DShot (AM32); RPM telemetry on this board not confirmed",
+   "ip_rating": null
+  },
+  "cad": {
+   "step_url": null,
+   "available": false
+  },
+  "sources": [
+   "https://palmbeachbots.com/products/repeat-robotics-am32-brushless-drive-esc-bi-directional",
+   "https://github.com/am32-firmware/AM32"
+  ],
+  "confidence": "product page",
+  "notes": "6S-capable 5 g ESC, so it runs flywheel motors straight from a regulated 24 V payload rail. Ships with crawler (bi-directional) settings; reflash as uni-directional with RPM telemetry for a closed-loop flywheel. Voltage range is 3-6S LiPo (calc), not a stated rating. Listing shipping weight 15 g.",
+  "key": "repeat-robotics-am32-35a-esc"
+ },
+ {
+  "id": "mcmaster-91290a015",
+  "key": "turret_screw_m2x8",
+  "category": "fastener",
+  "vendor": "McMaster-Carr",
+  "model": "91290A015",
+  "name": "Black-Oxide Alloy Steel Socket Head Screw, US Origin, M2 x 0.4 mm Thread Size, 8 mm Long",
+  "price_usd": 0.1916,
+  "price_note": "McMaster-Carr: $19.16 per pack of 100 (price_usd is per piece)",
+  "price_checked": "2026-10-27",
+  "pack_qty": 100,
+  "pack_price_usd": 19.16,
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/91290A015/",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "thread": "M2x0.4",
+   "length_mm": 8.0,
+   "head_d_mm": 3.8,
+   "head_height_mm": 2.0,
+   "mass_g": null,
+   "mass_basis": "unknown",
+   "material": "Black-Oxide Alloy Steel",
+   "mcmaster": {
+    "raw": {
+     "Thread Size": "M2 × 0.4 mm",
+     "Thread Spacing": "Coarse",
+     "Thread Type": "Metric",
+     "Thread Fit": "Metric Class 5g6g",
+     "Thread Direction": "Right Hand",
+     "Socket Head Profile": "Standard",
+     "Fastener Head Type": "Socket",
+     "Drive Style": "Hex",
+     "Length": "8 mm",
+     "Head Diameter": "3.8 mm",
+     "Head Height": "2 mm",
+     "Threading": "Fully Threaded",
+     "Tensile Strength": "170,000 psi",
+     "Fastener Strength Grade/Class": "Class 12.9",
+     "Drive Size": "1.5 mm",
+     "Hardness": "Rockwell C41",
+     "Material": "Black-Oxide Alloy Steel",
+     "Performance": "High Strength",
+     "Specifications Met": "DIN 912, ISO 4762",
+     "System of Measurement": "Metric",
+     "Tip Type": "Flat",
+     "Country of Origin": "United States",
+     "DFARS Compliance": "Specialty Metals Compliant (252.225-7009)",
+     "Export Control Classification Number (ECCN)": "EAR99",
+     "REACH Compliance": "REACH (EC 1907/2006) (02/04/2026, 253 SVHC) Compliant",
+     "RoHS Compliance": "RoHS 3 (2015/863/EU) Compliant",
+     "Schedule B Number": "731815.9000",
+     "U.S.–Mexico–Canada Agreement (USMCA) Qualifying": "Yes"
+    },
+    "parsed": {
+     "Thread Size": {
+      "thread": "M2x0.4",
+      "d": 2.0,
+      "pitch": 0.4,
+      "unit": "mm"
+     },
+     "Length": {
+      "value": 8.0,
+      "unit": "mm"
+     },
+     "Head Diameter": {
+      "value": 3.8,
+      "unit": "mm"
+     },
+     "Head Height": {
+      "value": 2.0,
+      "unit": "mm"
+     },
+     "Tensile Strength": {
+      "value": 1172.1092,
+      "unit": "MPa"
+     },
+     "Drive Size": {
+      "value": 1.5,
+      "unit": "mm"
+     }
+    }
+   }
+  },
+  "cad": {
+   "file": null,
+   "kind": "screw",
+   "frame": "axis +Z, centred on the axis, head on +z and shank towards -z; z = 0 at the underside of the head (socket, button, pan, hex and flanged heads) or at the top face of a countersunk (flat) head",
+   "available": true,
+   "step_url": "https://www.mcmaster.com/91290A015/",
+   "bbox_mm": null,
+   "volume_mm3": null,
+   "pending": "STEP not downloaded yet: McMaster-Carr asks for a login before CAD downloads (the product page itself reads without one). Finish with .venv/bin/python tools/mcmaster_cad.py --catalog --file catalog/turret.json --only turret_screw_m2x8 once logged in, or save the STEP from a logged-in browser as references/vendor/mcmaster/91290A015/91290A015.step and run the same command."
+  },
+  "frame": "axis +Z, centred on the axis, head on +z and shank towards -z; z = 0 at the underside of the head (socket, button, pan, hex and flanged heads) or at the top face of a countersunk (flat) head",
+  "sources": [
+   "https://www.mcmaster.com/91290A015/"
+  ],
+  "confidence": "product page",
+  "used_for": "the flywheel hubs to the Snails' bells: 3 x M2 x 8 each on Ø10.3, heads 6 mm down in the hub",
+  "qty_per_robot": 6
+ },
+ {
+  "id": "mcmaster-91290a017",
+  "key": "turret_screw_m2x10",
+  "category": "fastener",
+  "vendor": "McMaster-Carr",
+  "model": "91290A017",
+  "name": "Black-Oxide Alloy Steel Socket Head Screw, US Origin, M2 x 0.4 mm Thread Size, 10 mm Long",
+  "price_usd": 0.1589,
+  "price_note": "McMaster-Carr: $15.89 per pack of 100 (price_usd is per piece)",
+  "price_checked": "2026-10-27",
+  "pack_qty": 100,
+  "pack_price_usd": 15.89,
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/91290A017/",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "thread": "M2x0.4",
+   "length_mm": 10.0,
+   "head_d_mm": 3.8,
+   "head_height_mm": 2.0,
+   "mass_g": null,
+   "mass_basis": "unknown",
+   "material": "Black-Oxide Alloy Steel",
+   "mcmaster": {
+    "raw": {
+     "Thread Size": "M2 × 0.4 mm",
+     "Thread Spacing": "Coarse",
+     "Thread Type": "Metric",
+     "Thread Fit": "Metric Class 5g6g",
+     "Thread Direction": "Right Hand",
+     "Socket Head Profile": "Standard",
+     "Fastener Head Type": "Socket",
+     "Drive Style": "Hex",
+     "Length": "10 mm",
+     "Head Diameter": "3.8 mm",
+     "Head Height": "2 mm",
+     "Threading": "Fully Threaded",
+     "Tensile Strength": "170,000 psi",
+     "Fastener Strength Grade/Class": "Class 12.9",
+     "Drive Size": "1.5 mm",
+     "Hardness": "Rockwell C41",
+     "Material": "Black-Oxide Alloy Steel",
+     "Performance": "High Strength",
+     "Specifications Met": "DIN 912, ISO 4762",
+     "System of Measurement": "Metric",
+     "Tip Type": "Flat",
+     "Country of Origin": "United States",
+     "DFARS Compliance": "Specialty Metals Compliant (252.225-7009)",
+     "Export Control Classification Number (ECCN)": "EAR99",
+     "REACH Compliance": "Not Compliant",
+     "RoHS Compliance": "RoHS 3 (2015/863/EU) Compliant",
+     "Schedule B Number": "731815.9000",
+     "U.S.–Mexico–Canada Agreement (USMCA) Qualifying": "Yes"
+    },
+    "parsed": {
+     "Thread Size": {
+      "thread": "M2x0.4",
+      "d": 2.0,
+      "pitch": 0.4,
+      "unit": "mm"
+     },
+     "Length": {
+      "value": 10.0,
+      "unit": "mm"
+     },
+     "Head Diameter": {
+      "value": 3.8,
+      "unit": "mm"
+     },
+     "Head Height": {
+      "value": 2.0,
+      "unit": "mm"
+     },
+     "Tensile Strength": {
+      "value": 1172.1092,
+      "unit": "MPa"
+     },
+     "Drive Size": {
+      "value": 1.5,
+      "unit": "mm"
+     }
+    }
+   }
+  },
+  "cad": {
+   "file": null,
+   "kind": "screw",
+   "frame": "axis +Z, centred on the axis, head on +z and shank towards -z; z = 0 at the underside of the head (socket, button, pan, hex and flanged heads) or at the top face of a countersunk (flat) head",
+   "available": true,
+   "step_url": "https://www.mcmaster.com/91290A017/",
+   "bbox_mm": null,
+   "volume_mm3": null,
+   "pending": "STEP not downloaded yet: McMaster-Carr asks for a login before CAD downloads (the product page itself reads without one). Finish with .venv/bin/python tools/mcmaster_cad.py --catalog --file catalog/turret.json --only turret_screw_m2x10 once logged in, or save the STEP from a logged-in browser as references/vendor/mcmaster/91290A017/91290A017.step and run the same command."
+  },
+  "frame": "axis +Z, centred on the axis, head on +z and shank towards -z; z = 0 at the underside of the head (socket, button, pan, hex and flanged heads) or at the top face of a countersunk (flat) head",
+  "sources": [
+   "https://www.mcmaster.com/91290A017/"
+  ],
+  "confidence": "product page",
+  "used_for": "the tilt servo to the +y yoke arm, from the arm's inner face (heads sunk 2 mm) into its output face",
+  "qty_per_robot": 4
+ },
+ {
+  "id": "mcmaster-91290a049",
+  "key": "turret_screw_m2x20",
+  "category": "fastener",
+  "vendor": "McMaster-Carr",
+  "model": "91290A049",
+  "name": "Black-Oxide Alloy Steel Socket Head Screw, M2 x 0.4 mm Thread Size, 20 mm Long",
+  "price_usd": 0.1658,
+  "price_note": "McMaster-Carr: $16.58 per pack of 100 (price_usd is per piece)",
+  "price_checked": "2026-10-27",
+  "pack_qty": 100,
+  "pack_price_usd": 16.58,
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/91290A049/",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "thread": "M2x0.4",
+   "length_mm": 20.0,
+   "head_d_mm": 3.8,
+   "head_height_mm": 2.0,
+   "mass_g": null,
+   "mass_basis": "unknown",
+   "material": "Black-Oxide Alloy Steel",
+   "mcmaster": {
+    "raw": {
+     "Thread Size": "M2 × 0.4 mm",
+     "Thread Spacing": "Coarse",
+     "Thread Type": "Metric",
+     "Thread Fit": "Metric Class 5g6g",
+     "Thread Direction": "Right Hand",
+     "Socket Head Profile": "Standard",
+     "Fastener Head Type": "Socket",
+     "Drive Style": "Hex",
+     "Length": "20 mm",
+     "Head Diameter": "3.8 mm",
+     "Head Height": "2 mm",
+     "Threading": "Fully Threaded",
+     "Tensile Strength": "170,000 psi",
+     "Fastener Strength Grade/Class": "Class 12.9",
+     "Certificate Form": "Digital",
+     "Certificate Type": "Material Certificate with Traceable Lot Number",
+     "Drive Size": "1.5 mm",
+     "Hardness": "Rockwell C41",
+     "Material": "Black-Oxide Alloy Steel",
+     "Performance": "High Strength",
+     "Specifications Met": "DIN 912, ISO 4762",
+     "System of Measurement": "Metric",
+     "Tip Type": "Flat",
+     "Country of Origin": "United States, Belgium, Canada, China, France, Germany, India, Indonesia, Italy, Japan, Malaysia, Mexico, Philippines, Poland, South Korea, Switzerland, Taiwan, Thailand, Vietnam",
+     "DFARS Compliance": "Not Specialty Metals Compliant",
+     "Export Control Classification Number (ECCN)": "EAR99",
+     "REACH Compliance": "REACH (EC 1907/2006) (02/04/2026, 253 SVHC) Compliant",
+     "RoHS Compliance": "RoHS 3 (2015/863/EU) Compliant",
+     "Schedule B Number": "731815.9000",
+     "U.S.–Mexico–Canada Agreement (USMCA) Qualifying": "No"
+    },
+    "parsed": {
+     "Thread Size": {
+      "thread": "M2x0.4",
+      "d": 2.0,
+      "pitch": 0.4,
+      "unit": "mm"
+     },
+     "Length": {
+      "value": 20.0,
+      "unit": "mm"
+     },
+     "Head Diameter": {
+      "value": 3.8,
+      "unit": "mm"
+     },
+     "Head Height": {
+      "value": 2.0,
+      "unit": "mm"
+     },
+     "Tensile Strength": {
+      "value": 1172.1092,
+      "unit": "MPa"
+     },
+     "Drive Size": {
+      "value": 1.5,
+      "unit": "mm"
+     }
+    }
+   }
+  },
+  "cad": {
+   "file": null,
+   "kind": "screw",
+   "frame": "axis +Z, centred on the axis, head on +z and shank towards -z; z = 0 at the underside of the head (socket, button, pan, hex and flanged heads) or at the top face of a countersunk (flat) head",
+   "available": true,
+   "step_url": "https://www.mcmaster.com/91290A049/",
+   "bbox_mm": null,
+   "volume_mm3": null,
+   "pending": "STEP not downloaded yet: McMaster-Carr asks for a login before CAD downloads (the product page itself reads without one). Finish with .venv/bin/python tools/mcmaster_cad.py --catalog --file catalog/turret.json --only turret_screw_m2x20 once logged in, or save the STEP from a logged-in browser as references/vendor/mcmaster/91290A049/91290A049.step and run the same command."
+  },
+  "frame": "axis +Z, centred on the axis, head on +z and shank towards -z; z = 0 at the underside of the head (socket, button, pan, hex and flanged heads) or at the top face of a countersunk (flat) head",
+  "sources": [
+   "https://www.mcmaster.com/91290A049/"
+  ],
+  "confidence": "product page",
+  "used_for": "the pan servo: up through the foot and its four posts into its idler face",
+  "qty_per_robot": 4
+ },
+ {
+  "id": "mcmaster-91290a102",
+  "key": "turret_screw_m2_5x8",
+  "category": "fastener",
+  "vendor": "McMaster-Carr",
+  "model": "91290A102",
+  "name": "Black-Oxide Alloy Steel Socket Head Screw, US Origin, M2.5 x 0.45 mm Thread Size, 8 mm Long",
+  "price_usd": 0.246,
+  "price_note": "McMaster-Carr: $12.30 per pack of 50 (price_usd is per piece)",
+  "price_checked": "2026-10-27",
+  "pack_qty": 50,
+  "pack_price_usd": 12.3,
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/91290A102/",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "thread": "M2.5x0.45",
+   "length_mm": 8.0,
+   "head_d_mm": 4.5,
+   "head_height_mm": 2.5,
+   "mass_g": null,
+   "mass_basis": "unknown",
+   "material": "Black-Oxide Alloy Steel",
+   "mcmaster": {
+    "raw": {
+     "Thread Size": "M2.5 × 0.45 mm",
+     "Thread Spacing": "Coarse",
+     "Thread Type": "Metric",
+     "Thread Fit": "Metric Class 5g6g",
+     "Thread Direction": "Right Hand",
+     "Socket Head Profile": "Standard",
+     "Fastener Head Type": "Socket",
+     "Drive Style": "Hex",
+     "Length": "8 mm",
+     "Head Diameter": "4.5 mm",
+     "Head Height": "2.5 mm",
+     "Threading": "Fully Threaded",
+     "Tensile Strength": "170,000 psi",
+     "Fastener Strength Grade/Class": "Class 12.9",
+     "Drive Size": "2 mm",
+     "Hardness": "Rockwell C41",
+     "Material": "Black-Oxide Alloy Steel",
+     "Performance": "High Strength",
+     "Specifications Met": "DIN 912, ISO 4762",
+     "System of Measurement": "Metric",
+     "Tip Type": "Flat",
+     "Country of Origin": "United States",
+     "DFARS Compliance": "Specialty Metals Compliant (252.225-7009)",
+     "Export Control Classification Number (ECCN)": "EAR99",
+     "REACH Compliance": "Not Compliant",
+     "RoHS Compliance": "RoHS 3 (2015/863/EU) Compliant",
+     "Schedule B Number": "731815.9000",
+     "U.S.–Mexico–Canada Agreement (USMCA) Qualifying": "Yes"
+    },
+    "parsed": {
+     "Thread Size": {
+      "thread": "M2.5x0.45",
+      "d": 2.5,
+      "pitch": 0.45,
+      "unit": "mm"
+     },
+     "Length": {
+      "value": 8.0,
+      "unit": "mm"
+     },
+     "Head Diameter": {
+      "value": 4.5,
+      "unit": "mm"
+     },
+     "Head Height": {
+      "value": 2.5,
+      "unit": "mm"
+     },
+     "Tensile Strength": {
+      "value": 1172.1092,
+      "unit": "MPa"
+     },
+     "Drive Size": {
+      "value": 2.0,
+      "unit": "mm"
+     }
+    }
+   }
+  },
+  "cad": {
+   "file": null,
+   "kind": "screw",
+   "frame": "axis +Z, centred on the axis, head on +z and shank towards -z; z = 0 at the underside of the head (socket, button, pan, hex and flanged heads) or at the top face of a countersunk (flat) head",
+   "available": true,
+   "step_url": "https://www.mcmaster.com/91290A102/",
+   "bbox_mm": null,
+   "volume_mm3": null,
+   "pending": "STEP not downloaded yet: McMaster-Carr asks for a login before CAD downloads (the product page itself reads without one). Finish with .venv/bin/python tools/mcmaster_cad.py --catalog --file catalog/turret.json --only turret_screw_m2_5x8 once logged in, or save the STEP from a logged-in browser as references/vendor/mcmaster/91290A102/91290A102.step and run the same command."
+  },
+  "frame": "axis +Z, centred on the axis, head on +z and shank towards -z; z = 0 at the underside of the head (socket, button, pan, hex and flanged heads) or at the top face of a countersunk (flat) head",
+  "sources": [
+   "https://www.mcmaster.com/91290A102/"
+  ],
+  "confidence": "product page",
+  "used_for": "the bench stand's XT60 panel socket",
+  "qty_per_robot": 2
+ },
+ {
+  "id": "mcmaster-91290a113",
+  "key": "turret_screw_m3x8",
+  "category": "fastener",
+  "vendor": "McMaster-Carr",
+  "model": "91290A113",
+  "name": "Black-Oxide Alloy Steel Socket Head Screw, US Origin, M3 x 0.5 mm Thread Size, 8 mm Long",
+  "price_usd": 0.1328,
+  "price_note": "McMaster-Carr: $13.28 per pack of 100 (price_usd is per piece)",
+  "price_checked": "2026-10-27",
+  "pack_qty": 100,
+  "pack_price_usd": 13.28,
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/91290A113/",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "thread": "M3x0.5",
+   "length_mm": 8.0,
+   "head_d_mm": 5.5,
+   "head_height_mm": 3.0,
+   "mass_g": null,
+   "mass_basis": "unknown",
+   "material": "Black-Oxide Alloy Steel",
+   "mcmaster": {
+    "raw": {
+     "Thread Size": "M3 × 0.5 mm",
+     "Thread Spacing": "Coarse",
+     "Thread Type": "Metric",
+     "Thread Fit": "Metric Class 5g6g",
+     "Thread Direction": "Right Hand",
+     "Socket Head Profile": "Standard",
+     "Fastener Head Type": "Socket",
+     "Drive Style": "Hex",
+     "Length": "8 mm",
+     "Head Diameter": "5.5 mm",
+     "Head Height": "3 mm",
+     "Threading": "Fully Threaded",
+     "Tensile Strength": "170,000 psi",
+     "Fastener Strength Grade/Class": "Class 12.9",
+     "Drive Size": "2.5 mm",
+     "Hardness": "Rockwell C41",
+     "Material": "Black-Oxide Alloy Steel",
+     "Performance": "High Strength",
+     "Specifications Met": "DIN 912, ISO 4762",
+     "System of Measurement": "Metric",
+     "Tip Type": "Flat",
+     "Country of Origin": "United States",
+     "DFARS Compliance": "Specialty Metals Compliant (252.225-7009)",
+     "Export Control Classification Number (ECCN)": "EAR99",
+     "REACH Compliance": "REACH (EC 1907/2006) (02/04/2026, 253 SVHC) Compliant",
+     "RoHS Compliance": "RoHS 3 (2015/863/EU) Compliant",
+     "Schedule B Number": "731815.9000",
+     "U.S.–Mexico–Canada Agreement (USMCA) Qualifying": "Yes"
+    },
+    "parsed": {
+     "Thread Size": {
+      "thread": "M3x0.5",
+      "d": 3.0,
+      "pitch": 0.5,
+      "unit": "mm"
+     },
+     "Length": {
+      "value": 8.0,
+      "unit": "mm"
+     },
+     "Head Diameter": {
+      "value": 5.5,
+      "unit": "mm"
+     },
+     "Head Height": {
+      "value": 3.0,
+      "unit": "mm"
+     },
+     "Tensile Strength": {
+      "value": 1172.1092,
+      "unit": "MPa"
+     },
+     "Drive Size": {
+      "value": 2.5,
+      "unit": "mm"
+     }
+    }
+   }
+  },
+  "cad": {
+   "file": null,
+   "kind": "screw",
+   "frame": "axis +Z, centred on the axis, head on +z and shank towards -z; z = 0 at the underside of the head (socket, button, pan, hex and flanged heads) or at the top face of a countersunk (flat) head",
+   "available": true,
+   "step_url": "https://www.mcmaster.com/91290A113/",
+   "bbox_mm": null,
+   "volume_mm3": null,
+   "pending": "STEP not downloaded yet: McMaster-Carr asks for a login before CAD downloads (the product page itself reads without one). Finish with .venv/bin/python tools/mcmaster_cad.py --catalog --file catalog/turret.json --only turret_screw_m3x8 once logged in, or save the STEP from a logged-in browser as references/vendor/mcmaster/91290A113/91290A113.step and run the same command."
+  },
+  "frame": "axis +Z, centred on the axis, head on +z and shank towards -z; z = 0 at the underside of the head (socket, button, pan, hex and flanged heads) or at the top face of a countersunk (flat) head",
+  "sources": [
+   "https://www.mcmaster.com/91290A113/"
+  ],
+  "confidence": "product page",
+  "used_for": "the aluminium pan clamp (5), the slip ring's flange to the carrier with washers (3), the hopper lugs (3), the dial on the M2006 shaft with a washer (1)",
+  "qty_per_robot": 12
+ },
+ {
+  "id": "mcmaster-91290a115",
+  "key": "turret_screw_m3x10",
+  "category": "fastener",
+  "vendor": "McMaster-Carr",
+  "model": "91290A115",
+  "name": "Black-Oxide Alloy Steel Socket Head Screw, US Origin, M3 x 0.5 mm Thread Size, 10 mm Long",
+  "price_usd": 0.1323,
+  "price_note": "McMaster-Carr: $13.23 per pack of 100 (price_usd is per piece)",
+  "price_checked": "2026-10-27",
+  "pack_qty": 100,
+  "pack_price_usd": 13.23,
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/91290A115/",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "thread": "M3x0.5",
+   "length_mm": 10.0,
+   "head_d_mm": 5.5,
+   "head_height_mm": 3.0,
+   "mass_g": null,
+   "mass_basis": "unknown",
+   "material": "Black-Oxide Alloy Steel",
+   "mcmaster": {
+    "raw": {
+     "Thread Size": "M3 × 0.5 mm",
+     "Thread Spacing": "Coarse",
+     "Thread Type": "Metric",
+     "Thread Fit": "Metric Class 5g6g",
+     "Thread Direction": "Right Hand",
+     "Socket Head Profile": "Standard",
+     "Fastener Head Type": "Socket",
+     "Drive Style": "Hex",
+     "Length": "10 mm",
+     "Head Diameter": "5.5 mm",
+     "Head Height": "3 mm",
+     "Threading": "Fully Threaded",
+     "Tensile Strength": "170,000 psi",
+     "Fastener Strength Grade/Class": "Class 12.9",
+     "Drive Size": "2.5 mm",
+     "Hardness": "Rockwell C41",
+     "Material": "Black-Oxide Alloy Steel",
+     "Performance": "High Strength",
+     "Specifications Met": "DIN 912, ISO 4762",
+     "System of Measurement": "Metric",
+     "Tip Type": "Flat",
+     "Country of Origin": "United States",
+     "DFARS Compliance": "Specialty Metals Compliant (252.225-7009)",
+     "Export Control Classification Number (ECCN)": "EAR99",
+     "REACH Compliance": "REACH (EC 1907/2006) (02/04/2026, 253 SVHC) Compliant",
+     "RoHS Compliance": "RoHS 3 (2015/863/EU) Compliant",
+     "Schedule B Number": "731815.9000",
+     "U.S.–Mexico–Canada Agreement (USMCA) Qualifying": "Yes"
+    },
+    "parsed": {
+     "Thread Size": {
+      "thread": "M3x0.5",
+      "d": 3.0,
+      "pitch": 0.5,
+      "unit": "mm"
+     },
+     "Length": {
+      "value": 10.0,
+      "unit": "mm"
+     },
+     "Head Diameter": {
+      "value": 5.5,
+      "unit": "mm"
+     },
+     "Head Height": {
+      "value": 3.0,
+      "unit": "mm"
+     },
+     "Tensile Strength": {
+      "value": 1172.1092,
+      "unit": "MPa"
+     },
+     "Drive Size": {
+      "value": 2.5,
+      "unit": "mm"
+     }
+    }
+   }
+  },
+  "cad": {
+   "file": null,
+   "kind": "screw",
+   "frame": "axis +Z, centred on the axis, head on +z and shank towards -z; z = 0 at the underside of the head (socket, button, pan, hex and flanged heads) or at the top face of a countersunk (flat) head",
+   "available": true,
+   "step_url": "https://www.mcmaster.com/91290A115/",
+   "bbox_mm": null,
+   "volume_mm3": null,
+   "pending": "STEP not downloaded yet: McMaster-Carr asks for a login before CAD downloads (the product page itself reads without one). Finish with .venv/bin/python tools/mcmaster_cad.py --catalog --file catalog/turret.json --only turret_screw_m3x10 once logged in, or save the STEP from a logged-in browser as references/vendor/mcmaster/91290A115/91290A115.step and run the same command."
+  },
+  "frame": "axis +Z, centred on the axis, head on +z and shank towards -z; z = 0 at the underside of the head (socket, button, pan, hex and flanged heads) or at the top face of a countersunk (flat) head",
+  "sources": [
+   "https://www.mcmaster.com/91290A115/"
+  ],
+  "confidence": "product page",
+  "used_for": "the laser mount: up through the cradle's tab into the mount's tapped holes",
+  "qty_per_robot": 2
+ },
+ {
+  "id": "mcmaster-91290a117",
+  "key": "turret_screw_m3x12",
+  "category": "fastener",
+  "vendor": "McMaster-Carr",
+  "model": "91290A117",
+  "name": "Black-Oxide Alloy Steel Socket Head Screw, US Origin, M3 x 0.5 mm Thread Size, 12 mm Long",
+  "price_usd": 0.1203,
+  "price_note": "McMaster-Carr: $12.03 per pack of 100 (price_usd is per piece)",
+  "price_checked": "2026-10-27",
+  "pack_qty": 100,
+  "pack_price_usd": 12.03,
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/91290A117/",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "thread": "M3x0.5",
+   "length_mm": 12.0,
+   "head_d_mm": 5.5,
+   "head_height_mm": 3.0,
+   "mass_g": null,
+   "mass_basis": "unknown",
+   "material": "Black-Oxide Alloy Steel",
+   "mcmaster": {
+    "raw": {
+     "Thread Size": "M3 × 0.5 mm",
+     "Thread Spacing": "Coarse",
+     "Thread Type": "Metric",
+     "Thread Fit": "Metric Class 5g6g",
+     "Thread Direction": "Right Hand",
+     "Socket Head Profile": "Standard",
+     "Fastener Head Type": "Socket",
+     "Drive Style": "Hex",
+     "Length": "12 mm",
+     "Head Diameter": "5.5 mm",
+     "Head Height": "3 mm",
+     "Threading": "Fully Threaded",
+     "Tensile Strength": "170,000 psi",
+     "Fastener Strength Grade/Class": "Class 12.9",
+     "Drive Size": "2.5 mm",
+     "Hardness": "Rockwell C41",
+     "Material": "Black-Oxide Alloy Steel",
+     "Performance": "High Strength",
+     "Specifications Met": "DIN 912, ISO 4762",
+     "System of Measurement": "Metric",
+     "Tip Type": "Flat",
+     "Country of Origin": "United States",
+     "DFARS Compliance": "Specialty Metals Compliant (252.225-7009)",
+     "Export Control Classification Number (ECCN)": "EAR99",
+     "REACH Compliance": "Not Compliant",
+     "RoHS Compliance": "RoHS 3 (2015/863/EU) Compliant",
+     "Schedule B Number": "731815.9000",
+     "U.S.–Mexico–Canada Agreement (USMCA) Qualifying": "Yes"
+    },
+    "parsed": {
+     "Thread Size": {
+      "thread": "M3x0.5",
+      "d": 3.0,
+      "pitch": 0.5,
+      "unit": "mm"
+     },
+     "Length": {
+      "value": 12.0,
+      "unit": "mm"
+     },
+     "Head Diameter": {
+      "value": 5.5,
+      "unit": "mm"
+     },
+     "Head Height": {
+      "value": 3.0,
+      "unit": "mm"
+     },
+     "Tensile Strength": {
+      "value": 1172.1092,
+      "unit": "MPa"
+     },
+     "Drive Size": {
+      "value": 2.5,
+      "unit": "mm"
+     }
+    }
+   }
+  },
+  "cad": {
+   "file": null,
+   "kind": "screw",
+   "frame": "axis +Z, centred on the axis, head on +z and shank towards -z; z = 0 at the underside of the head (socket, button, pan, hex and flanged heads) or at the top face of a countersunk (flat) head",
+   "available": true,
+   "step_url": "https://www.mcmaster.com/91290A117/",
+   "bbox_mm": null,
+   "volume_mm3": null,
+   "pending": "STEP not downloaded yet: McMaster-Carr asks for a login before CAD downloads (the product page itself reads without one). Finish with .venv/bin/python tools/mcmaster_cad.py --catalog --file catalog/turret.json --only turret_screw_m3x12 once logged in, or save the STEP from a logged-in browser as references/vendor/mcmaster/91290A117/91290A117.step and run the same command."
+  },
+  "frame": "axis +Z, centred on the axis, head on +z and shank towards -z; z = 0 at the underside of the head (socket, button, pan, hex and flanged heads) or at the top face of a countersunk (flat) head",
+  "sources": [
+   "https://www.mcmaster.com/91290A117/"
+  ],
+  "confidence": "product page",
+  "used_for": "the cradle's hub to the tilt servo's horn (4 x M3 on Ø14; heads 9.5 mm from the horn)",
+  "qty_per_robot": 4
+ },
+ {
+  "id": "mcmaster-91290a120",
+  "key": "turret_screw_m3x16",
+  "category": "fastener",
+  "vendor": "McMaster-Carr",
+  "model": "91290A120",
+  "name": "Black-Oxide Alloy Steel Socket Head Screw, US Origin, M3 x 0.5 mm Thread Size, 16 mm Long",
+  "price_usd": 0.1222,
+  "price_note": "McMaster-Carr: $12.22 per pack of 100 (price_usd is per piece)",
+  "price_checked": "2026-10-27",
+  "pack_qty": 100,
+  "pack_price_usd": 12.22,
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/91290A120/",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "thread": "M3x0.5",
+   "length_mm": 16.0,
+   "head_d_mm": 5.5,
+   "head_height_mm": 3.0,
+   "mass_g": null,
+   "mass_basis": "unknown",
+   "material": "Black-Oxide Alloy Steel",
+   "mcmaster": {
+    "raw": {
+     "Thread Size": "M3 × 0.5 mm",
+     "Thread Spacing": "Coarse",
+     "Thread Type": "Metric",
+     "Thread Fit": "Metric Class 5g6g",
+     "Thread Direction": "Right Hand",
+     "Socket Head Profile": "Standard",
+     "Fastener Head Type": "Socket",
+     "Drive Style": "Hex",
+     "Length": "16 mm",
+     "Head Diameter": "5.5 mm",
+     "Head Height": "3 mm",
+     "Threading": "Fully Threaded",
+     "Tensile Strength": "170,000 psi",
+     "Fastener Strength Grade/Class": "Class 12.9",
+     "Drive Size": "2.5 mm",
+     "Hardness": "Rockwell C41",
+     "Material": "Black-Oxide Alloy Steel",
+     "Performance": "High Strength",
+     "Specifications Met": "DIN 912, ISO 4762",
+     "System of Measurement": "Metric",
+     "Tip Type": "Flat",
+     "Country of Origin": "United States",
+     "DFARS Compliance": "Specialty Metals Compliant (252.225-7009)",
+     "Export Control Classification Number (ECCN)": "EAR99",
+     "REACH Compliance": "REACH (EC 1907/2006) (01/21/2025, 247 SVHC) Compliant",
+     "RoHS Compliance": "RoHS 3 (2015/863/EU) Compliant",
+     "Schedule B Number": "731815.9000",
+     "U.S.–Mexico–Canada Agreement (USMCA) Qualifying": "Yes"
+    },
+    "parsed": {
+     "Thread Size": {
+      "thread": "M3x0.5",
+      "d": 3.0,
+      "pitch": 0.5,
+      "unit": "mm"
+     },
+     "Length": {
+      "value": 16.0,
+      "unit": "mm"
+     },
+     "Head Diameter": {
+      "value": 5.5,
+      "unit": "mm"
+     },
+     "Head Height": {
+      "value": 3.0,
+      "unit": "mm"
+     },
+     "Tensile Strength": {
+      "value": 1172.1092,
+      "unit": "MPa"
+     },
+     "Drive Size": {
+      "value": 2.5,
+      "unit": "mm"
+     }
+    }
+   }
+  },
+  "cad": {
+   "file": null,
+   "kind": "screw",
+   "frame": "axis +Z, centred on the axis, head on +z and shank towards -z; z = 0 at the underside of the head (socket, button, pan, hex and flanged heads) or at the top face of a countersunk (flat) head",
+   "available": true,
+   "step_url": "https://www.mcmaster.com/91290A120/",
+   "bbox_mm": null,
+   "volume_mm3": null,
+   "pending": "STEP not downloaded yet: McMaster-Carr asks for a login before CAD downloads (the product page itself reads without one). Finish with .venv/bin/python tools/mcmaster_cad.py --catalog --file catalog/turret.json --only turret_screw_m3x16 once logged in, or save the STEP from a logged-in browser as references/vendor/mcmaster/91290A120/91290A120.step and run the same command."
+  },
+  "frame": "axis +Z, centred on the axis, head on +z and shank towards -z; z = 0 at the underside of the head (socket, button, pan, hex and flanged heads) or at the top face of a countersunk (flat) head",
+  "sources": [
+   "https://www.mcmaster.com/91290A120/"
+  ],
+  "confidence": "product page",
+  "used_for": "the pan pinion to the pan servo's horn (4 x M3 on Ø14, heads sunk 3.4 mm; 2.4 mm into the 3 mm horn)",
+  "qty_per_robot": 4
+ },
+ {
+  "id": "mcmaster-91290a123",
+  "key": "turret_screw_m3x20",
+  "category": "fastener",
+  "vendor": "McMaster-Carr",
+  "model": "91290A123",
+  "name": "Black-Oxide Alloy Steel Socket Head Screw, US Origin, M3 x 0.5 mm Thread Size, 20 mm Long",
+  "price_usd": 0.1447,
+  "price_note": "McMaster-Carr: $14.47 per pack of 100 (price_usd is per piece)",
+  "price_checked": "2026-10-27",
+  "pack_qty": 100,
+  "pack_price_usd": 14.47,
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/91290A123/",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "thread": "M3x0.5",
+   "length_mm": 20.0,
+   "head_d_mm": 5.5,
+   "head_height_mm": 3.0,
+   "mass_g": null,
+   "mass_basis": "unknown",
+   "material": "Black-Oxide Alloy Steel",
+   "mcmaster": {
+    "raw": {
+     "Thread Size": "M3 × 0.5 mm",
+     "Thread Spacing": "Coarse",
+     "Thread Type": "Metric",
+     "Thread Fit": "Metric Class 5g6g",
+     "Thread Direction": "Right Hand",
+     "Socket Head Profile": "Standard",
+     "Fastener Head Type": "Socket",
+     "Drive Style": "Hex",
+     "Length": "20 mm",
+     "Head Diameter": "5.5 mm",
+     "Head Height": "3 mm",
+     "Threading": "Fully Threaded",
+     "Tensile Strength": "170,000 psi",
+     "Fastener Strength Grade/Class": "Class 12.9",
+     "Drive Size": "2.5 mm",
+     "Hardness": "Rockwell C41",
+     "Material": "Black-Oxide Alloy Steel",
+     "Performance": "High Strength",
+     "Specifications Met": "DIN 912, ISO 4762",
+     "System of Measurement": "Metric",
+     "Tip Type": "Flat",
+     "Country of Origin": "United States",
+     "DFARS Compliance": "Specialty Metals Compliant (252.225-7009)",
+     "Export Control Classification Number (ECCN)": "EAR99",
+     "REACH Compliance": "Not Compliant",
+     "RoHS Compliance": "RoHS 3 (2015/863/EU) Compliant",
+     "Schedule B Number": "731815.9000",
+     "U.S.–Mexico–Canada Agreement (USMCA) Qualifying": "Yes"
+    },
+    "parsed": {
+     "Thread Size": {
+      "thread": "M3x0.5",
+      "d": 3.0,
+      "pitch": 0.5,
+      "unit": "mm"
+     },
+     "Length": {
+      "value": 20.0,
+      "unit": "mm"
+     },
+     "Head Diameter": {
+      "value": 5.5,
+      "unit": "mm"
+     },
+     "Head Height": {
+      "value": 3.0,
+      "unit": "mm"
+     },
+     "Tensile Strength": {
+      "value": 1172.1092,
+      "unit": "MPa"
+     },
+     "Drive Size": {
+      "value": 2.5,
+      "unit": "mm"
+     }
+    }
+   }
+  },
+  "cad": {
+   "file": null,
+   "kind": "screw",
+   "frame": "axis +Z, centred on the axis, head on +z and shank towards -z; z = 0 at the underside of the head (socket, button, pan, hex and flanged heads) or at the top face of a countersunk (flat) head",
+   "available": true,
+   "step_url": "https://www.mcmaster.com/91290A123/",
+   "bbox_mm": null,
+   "volume_mm3": null,
+   "pending": "STEP not downloaded yet: McMaster-Carr asks for a login before CAD downloads (the product page itself reads without one). Finish with .venv/bin/python tools/mcmaster_cad.py --catalog --file catalog/turret.json --only turret_screw_m3x20 once logged in, or save the STEP from a logged-in browser as references/vendor/mcmaster/91290A123/91290A123.step and run the same command."
+  },
+  "frame": "axis +Z, centred on the axis, head on +z and shank towards -z; z = 0 at the underside of the head (socket, button, pan, hex and flanged heads) or at the top face of a countersunk (flat) head",
+  "sources": [
+   "https://www.mcmaster.com/91290A123/"
+  ],
+  "confidence": "product page",
+  "used_for": "the TPU bumper ring to the pan base's tabs, with the oversized washers",
+  "qty_per_robot": 5
+ },
+ {
+  "id": "mcmaster-91290a144",
+  "key": "turret_screw_m4x10",
+  "category": "fastener",
+  "vendor": "McMaster-Carr",
+  "model": "91290A144",
+  "name": "Black-Oxide Alloy Steel Socket Head Screw, US Origin, M4 x 0.7 mm Thread Size, 10 mm Long",
+  "price_usd": 0.1355,
+  "price_note": "McMaster-Carr: $13.55 per pack of 100 (price_usd is per piece)",
+  "price_checked": "2026-10-27",
+  "pack_qty": 100,
+  "pack_price_usd": 13.55,
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/91290A144/",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "thread": "M4x0.7",
+   "length_mm": 10.0,
+   "head_d_mm": 7.0,
+   "head_height_mm": 4.0,
+   "mass_g": null,
+   "mass_basis": "unknown",
+   "material": "Black-Oxide Alloy Steel",
+   "mcmaster": {
+    "raw": {
+     "Thread Size": "M4 × 0.7 mm",
+     "Thread Spacing": "Coarse",
+     "Thread Type": "Metric",
+     "Thread Fit": "Metric Class 5g6g",
+     "Thread Direction": "Right Hand",
+     "Socket Head Profile": "Standard",
+     "Fastener Head Type": "Socket",
+     "Drive Style": "Hex",
+     "Length": "10 mm",
+     "Head Diameter": "7 mm",
+     "Head Height": "4 mm",
+     "Threading": "Fully Threaded",
+     "Tensile Strength": "170,000 psi",
+     "Fastener Strength Grade/Class": "Class 12.9",
+     "Drive Size": "3 mm",
+     "Hardness": "Rockwell C41",
+     "Material": "Black-Oxide Alloy Steel",
+     "Performance": "High Strength",
+     "Specifications Met": "DIN 912, ISO 4762",
+     "System of Measurement": "Metric",
+     "Tip Type": "Flat",
+     "Country of Origin": "United States",
+     "DFARS Compliance": "Specialty Metals Compliant (252.225-7009)",
+     "Export Control Classification Number (ECCN)": "EAR99",
+     "REACH Compliance": "Not Compliant",
+     "RoHS Compliance": "RoHS 3 (2015/863/EU) Compliant",
+     "Schedule B Number": "731815.9000",
+     "U.S.–Mexico–Canada Agreement (USMCA) Qualifying": "Yes"
+    },
+    "parsed": {
+     "Thread Size": {
+      "thread": "M4x0.7",
+      "d": 4.0,
+      "pitch": 0.7,
+      "unit": "mm"
+     },
+     "Length": {
+      "value": 10.0,
+      "unit": "mm"
+     },
+     "Head Diameter": {
+      "value": 7.0,
+      "unit": "mm"
+     },
+     "Head Height": {
+      "value": 4.0,
+      "unit": "mm"
+     },
+     "Tensile Strength": {
+      "value": 1172.1092,
+      "unit": "MPa"
+     },
+     "Drive Size": {
+      "value": 3.0,
+      "unit": "mm"
+     }
+    }
+   }
+  },
+  "cad": {
+   "file": null,
+   "kind": "screw",
+   "frame": "axis +Z, centred on the axis, head on +z and shank towards -z; z = 0 at the underside of the head (socket, button, pan, hex and flanged heads) or at the top face of a countersunk (flat) head",
+   "available": true,
+   "step_url": "https://www.mcmaster.com/91290A144/",
+   "bbox_mm": null,
+   "volume_mm3": null,
+   "pending": "STEP not downloaded yet: McMaster-Carr asks for a login before CAD downloads (the product page itself reads without one). Finish with .venv/bin/python tools/mcmaster_cad.py --catalog --file catalog/turret.json --only turret_screw_m4x10 once logged in, or save the STEP from a logged-in browser as references/vendor/mcmaster/91290A144/91290A144.step and run the same command."
+  },
+  "frame": "axis +Z, centred on the axis, head on +z and shank towards -z; z = 0 at the underside of the head (socket, button, pan, hex and flanged heads) or at the top face of a countersunk (flat) head",
+  "sources": [
+   "https://www.mcmaster.com/91290A144/"
+  ],
+  "confidence": "product page",
+  "used_for": "the DT04-12PA flange to the pan base's pad (4) and the tilt yoke to the turntable (4, heads 4 mm down in the bridge)",
+  "qty_per_robot": 8
+ },
+ {
+  "id": "mcmaster-91294a126",
+  "key": "turret_screw_m3x6_flat",
+  "category": "fastener",
+  "vendor": "McMaster-Carr",
+  "model": "91294A126",
+  "name": "Black-Oxide Alloy Steel Hex-Drive Flat Head Screw, 90 Degree Countersink, M3 x 0.5 mm Thread Size, 6 mm Long",
+  "price_usd": 0.0545,
+  "price_note": "McMaster-Carr: $5.45 per pack of 100 (price_usd is per piece)",
+  "price_checked": "2026-10-27",
+  "pack_qty": 100,
+  "pack_price_usd": 5.45,
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/91294A126/",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "thread": "M3x0.5",
+   "length_mm": 6.0,
+   "head_d_mm": 6.0,
+   "head_height_mm": 1.7,
+   "mass_g": null,
+   "mass_basis": "unknown",
+   "material": "Black-Oxide Alloy Steel",
+   "mcmaster": {
+    "raw": {
+     "Thread Direction": "Right Hand",
+     "Drive Style": "Hex",
+     "Tip Type": "Flat",
+     "Thread Size": "M3 × 0.5 mm",
+     "Length": "6 mm",
+     "Countersink Angle": "90°",
+     "Flat Head Profile": "Standard",
+     "Head Diameter": "6 mm",
+     "Head Height": "1.7 mm",
+     "Threading": "Fully Threaded",
+     "Tensile Strength": "120,000 psi",
+     "Certificate Form": "Digital",
+     "Certificate Type": "Material Certificate with Traceable Lot Number",
+     "Drive Size": "2 mm",
+     "Fastener Head Type": "Flat",
+     "Fastener Strength Grade/Class": "Class 10.9",
+     "Hardness": "Rockwell C32",
+     "Material": "Black-Oxide Alloy Steel",
+     "Performance": "High Strength",
+     "Specifications Met": "DIN 7991",
+     "System of Measurement": "Metric",
+     "Thread Fit": "Metric Class 6g",
+     "Thread Spacing": "Coarse",
+     "Thread Type": "Metric",
+     "Country of Origin": "United States",
+     "DFARS Compliance": "Specialty Metals COTS-Exempt",
+     "Export Control Classification Number (ECCN)": "EAR99",
+     "REACH Compliance": "REACH (EC 1907/2006) (02/04/2026, 253 SVHC) Compliant",
+     "RoHS Compliance": "RoHS 3 (2015/863/EU) Compliant",
+     "Schedule B Number": "731815.9000",
+     "U.S.–Mexico–Canada Agreement (USMCA) Qualifying": "Yes"
+    },
+    "parsed": {
+     "Thread Size": {
+      "thread": "M3x0.5",
+      "d": 3.0,
+      "pitch": 0.5,
+      "unit": "mm"
+     },
+     "Length": {
+      "value": 6.0,
+      "unit": "mm"
+     },
+     "Head Diameter": {
+      "value": 6.0,
+      "unit": "mm"
+     },
+     "Head Height": {
+      "value": 1.7,
+      "unit": "mm"
+     },
+     "Tensile Strength": {
+      "value": 827.3712,
+      "unit": "MPa"
+     },
+     "Drive Size": {
+      "value": 2.0,
+      "unit": "mm"
+     }
+    }
+   }
+  },
+  "cad": {
+   "file": null,
+   "kind": "screw",
+   "frame": "axis +Z, centred on the axis, head on +z and shank towards -z; z = 0 at the underside of the head (socket, button, pan, hex and flanged heads) or at the top face of a countersunk (flat) head",
+   "available": true,
+   "step_url": "https://www.mcmaster.com/91294A126/",
+   "bbox_mm": null,
+   "volume_mm3": null,
+   "pending": "STEP not downloaded yet: McMaster-Carr asks for a login before CAD downloads (the product page itself reads without one). Finish with .venv/bin/python tools/mcmaster_cad.py --catalog --file catalog/turret.json --only turret_screw_m3x6_flat once logged in, or save the STEP from a logged-in browser as references/vendor/mcmaster/91294A126/91294A126.step and run the same command."
+  },
+  "frame": "axis +Z, centred on the axis, head on +z and shank towards -z; z = 0 at the underside of the head (socket, button, pan, hex and flanged heads) or at the top face of a countersunk (flat) head",
+  "sources": [
+   "https://www.mcmaster.com/91294A126/"
+  ],
+  "confidence": "product page",
+  "used_for": "the M2006 under the dial-housing floor, countersunk flush on Ø19",
+  "qty_per_robot": 3
+ },
+ {
+  "id": "mcmaster-91294a130",
+  "key": "turret_screw_m3x10_flat",
+  "category": "fastener",
+  "vendor": "McMaster-Carr",
+  "model": "91294A130",
+  "name": "Black-Oxide Alloy Steel Hex-Drive Flat Head Screw, 90 Degree Countersink, M3 x 0.5 mm Thread Size, 10 mm Long",
+  "price_usd": 0.0636,
+  "price_note": "McMaster-Carr: $6.36 per pack of 100 (price_usd is per piece)",
+  "price_checked": "2026-10-27",
+  "pack_qty": 100,
+  "pack_price_usd": 6.36,
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/91294A130/",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "thread": "M3x0.5",
+   "length_mm": 10.0,
+   "head_d_mm": 6.0,
+   "head_height_mm": 1.7,
+   "mass_g": null,
+   "mass_basis": "unknown",
+   "material": "Black-Oxide Alloy Steel",
+   "mcmaster": {
+    "raw": {
+     "Thread Direction": "Right Hand",
+     "Drive Style": "Hex",
+     "Tip Type": "Flat",
+     "Thread Size": "M3 × 0.5 mm",
+     "Length": "10 mm",
+     "Countersink Angle": "90°",
+     "Flat Head Profile": "Standard",
+     "Head Diameter": "6 mm",
+     "Head Height": "1.7 mm",
+     "Threading": "Fully Threaded",
+     "Tensile Strength": "120,000 psi",
+     "Drive Size": "2 mm",
+     "Fastener Head Type": "Flat",
+     "Fastener Strength Grade/Class": "Class 10.9",
+     "Hardness": "Rockwell C32",
+     "Material": "Black-Oxide Alloy Steel",
+     "Performance": "High Strength",
+     "Specifications Met": "DIN 7991",
+     "System of Measurement": "Metric",
+     "Thread Fit": "Metric Class 6g",
+     "Thread Spacing": "Coarse",
+     "Thread Type": "Metric",
+     "Country of Origin": "United States",
+     "DFARS Compliance": "Specialty Metals COTS-Exempt",
+     "Export Control Classification Number (ECCN)": "EAR99",
+     "REACH Compliance": "REACH (EC 1907/2006) (02/04/2026, 253 SVHC) Compliant",
+     "RoHS Compliance": "RoHS 3 (2015/863/EU) Compliant",
+     "Schedule B Number": "731815.9000",
+     "U.S.–Mexico–Canada Agreement (USMCA) Qualifying": "Yes"
+    },
+    "parsed": {
+     "Thread Size": {
+      "thread": "M3x0.5",
+      "d": 3.0,
+      "pitch": 0.5,
+      "unit": "mm"
+     },
+     "Length": {
+      "value": 10.0,
+      "unit": "mm"
+     },
+     "Head Diameter": {
+      "value": 6.0,
+      "unit": "mm"
+     },
+     "Head Height": {
+      "value": 1.7,
+      "unit": "mm"
+     },
+     "Tensile Strength": {
+      "value": 827.3712,
+      "unit": "MPa"
+     },
+     "Drive Size": {
+      "value": 2.0,
+      "unit": "mm"
+     }
+    }
+   }
+  },
+  "cad": {
+   "file": null,
+   "kind": "screw",
+   "frame": "axis +Z, centred on the axis, head on +z and shank towards -z; z = 0 at the underside of the head (socket, button, pan, hex and flanged heads) or at the top face of a countersunk (flat) head",
+   "available": true,
+   "step_url": "https://www.mcmaster.com/91294A130/",
+   "bbox_mm": null,
+   "volume_mm3": null,
+   "pending": "STEP not downloaded yet: McMaster-Carr asks for a login before CAD downloads (the product page itself reads without one). Finish with .venv/bin/python tools/mcmaster_cad.py --catalog --file catalog/turret.json --only turret_screw_m3x10_flat once logged in, or save the STEP from a logged-in browser as references/vendor/mcmaster/91294A130/91294A130.step and run the same command."
+  },
+  "frame": "axis +Z, centred on the axis, head on +z and shank towards -z; z = 0 at the underside of the head (socket, button, pan, hex and flanged heads) or at the top face of a countersunk (flat) head",
+  "sources": [
+   "https://www.mcmaster.com/91294A130/"
+  ],
+  "confidence": "product page",
+  "used_for": "the slip ring's carrier: up through its tabs, flush with the TM face, into the base's inserted bosses",
+  "qty_per_robot": 3
+ },
+ {
+  "id": "mcmaster-93285a115",
+  "key": "turret_setscrew_m3x6_nylon",
+  "category": "fastener",
+  "vendor": "McMaster-Carr",
+  "model": "93285A115",
+  "name": "Nylon-Tip 18-8 Stainless Steel Set Screw, M3 x 0.5 mm Thread, 6 mm Long",
+  "price_usd": 3.462,
+  "price_note": "McMaster-Carr: $17.31 per pack of 5 (price_usd is per piece)",
+  "price_checked": "2026-10-27",
+  "pack_qty": 5,
+  "pack_price_usd": 17.31,
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/93285A115/",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "thread": "M3x0.5",
+   "length_mm": 6.0,
+   "mass_g": null,
+   "mass_basis": "unknown",
+   "material": "18-8 Stainless Steel",
+   "mcmaster": {
+    "raw": {
+     "Drive Style": "Hex",
+     "Tip Type": "Soft",
+     "Material": "18-8 Stainless Steel",
+     "Tip Diameter": "1.6 mm",
+     "Tip Length": "0.8 mm",
+     "Tip Temperature": "-50° F to 250° F",
+     "Tip Material": "Nylon",
+     "Tip Color": "Green",
+     "Thread Size": "M3 × 0.5 mm",
+     "Length": "6 mm",
+     "Drive Size": "1.5 mm",
+     "Hardness": "Rockwell B80",
+     "Fastener Head Type": "Headless",
+     "Performance": "Corrosion Resistant, Nonmarring",
+     "Specifications Met": "ASME B18.3.6M",
+     "System of Measurement": "Metric",
+     "Thread Direction": "Right Hand",
+     "Thread Fit": "Metric Class 6g",
+     "Thread Spacing": "Coarse",
+     "Thread Type": "Metric",
+     "Country of Origin": "United States",
+     "DFARS Compliance": "Specialty Metals Compliant (252.225-7009)",
+     "Export Control Classification Number (ECCN)": "EAR99",
+     "REACH Compliance": "REACH (EC 1907/2006) (01/21/2025, 247 SVHC) Compliant",
+     "RoHS Compliance": "RoHS 3 (2015/863/EU) Compliant",
+     "Schedule B Number": "731815.9000",
+     "U.S.–Mexico–Canada Agreement (USMCA) Qualifying": "No"
+    },
+    "parsed": {
+     "Tip Diameter": {
+      "value": 1.6,
+      "unit": "mm"
+     },
+     "Tip Length": {
+      "value": 0.8,
+      "unit": "mm"
+     },
+     "Tip Temperature": {
+      "min": -45.555556,
+      "max": 121.111111,
+      "unit": "degC"
+     },
+     "Thread Size": {
+      "thread": "M3x0.5",
+      "d": 3.0,
+      "pitch": 0.5,
+      "unit": "mm"
+     },
+     "Length": {
+      "value": 6.0,
+      "unit": "mm"
+     },
+     "Drive Size": {
+      "value": 1.5,
+      "unit": "mm"
+     }
+    }
+   }
+  },
+  "cad": {
+   "file": null,
+   "kind": "screw",
+   "frame": "axis +Z, centred on the axis, head on +z and shank towards -z; z = 0 at the underside of the head (socket, button, pan, hex and flanged heads) or at the top face of a countersunk (flat) head",
+   "available": true,
+   "step_url": "https://www.mcmaster.com/93285A115/",
+   "bbox_mm": null,
+   "volume_mm3": null,
+   "pending": "STEP not downloaded yet: McMaster-Carr asks for a login before CAD downloads (the product page itself reads without one). Finish with .venv/bin/python tools/mcmaster_cad.py --catalog --file catalog/turret.json --only turret_setscrew_m3x6_nylon once logged in, or save the STEP from a logged-in browser as references/vendor/mcmaster/93285A115/93285A115.step and run the same command."
+  },
+  "frame": "axis +Z, centred on the axis, head on +z and shank towards -z; z = 0 at the underside of the head (socket, button, pan, hex and flanged heads) or at the top face of a countersunk (flat) head",
+  "sources": [
+   "https://www.mcmaster.com/93285A115/"
+  ],
+  "confidence": "product page",
+  "used_for": "the barrel in its socket (1, through the socket's insert) and the laser's boresight (3)",
+  "qty_per_robot": 4
+ },
+ {
+  "id": "mcmaster-94459a160",
+  "key": "turret_insert_m4",
+  "category": "fastener",
+  "vendor": "McMaster-Carr",
+  "model": "94459A160",
+  "name": "Heat-Set Threaded Inserts for Plastic, Standard, Brass, M4 x 0.7 mm Thread Size, 6.4 mm Installed Length",
+  "price_usd": 0.2346,
+  "price_note": "McMaster-Carr: $11.73 per pack of 50 (price_usd is per piece)",
+  "price_checked": "2026-10-27",
+  "pack_qty": 50,
+  "pack_price_usd": 11.73,
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/94459A160/",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "installed_length_mm": 6.4,
+   "hole_mm": 5.55625,
+   "thread": "M4",
+   "mass_g": null,
+   "mass_basis": "unknown",
+   "material": "Brass",
+   "mcmaster": {
+    "raw": {
+     "Threaded Insert Type": "Heat Set",
+     "Profile": "Standard",
+     "Material": "Brass",
+     "Thread Size": "M4",
+     "Thread Pitch": "0.7 mm",
+     "Installed Length": "6.4 mm",
+     "Drill Bit Size": "7/32\"",
+     "For Maximum Hole Diameter": "5.6 mm",
+     "End Type": "Open",
+     "For Minimum Material Thickness": "7.1 mm",
+     "For Use In": "Plastic",
+     "Performance": "Conductive, Corrosion Resistant, Nonmagnetic",
+     "System of Measurement": "Metric",
+     "Tensile Strength": "Not Rated",
+     "Thread Direction": "Right Hand",
+     "Thread Fit": "Metric Class 6H",
+     "Thread Spacing": "Coarse",
+     "Thread Type": "Metric",
+     "Threaded Insert Securing Type": "Knurled",
+     "Country of Origin": "United States",
+     "DFARS Compliance": "Specialty Metals COTS-Exempt",
+     "Export Control Classification Number (ECCN)": "EAR99",
+     "REACH Compliance": "REACH (EC 1907/2006) (02/04/2026, 253 SVHC) Compliant",
+     "RoHS Compliance": "RoHS 3 (2015/863/EU) Compliant with Exemptions",
+     "RoHS Exemptions": "6(c)",
+     "Schedule B Number": "741539.0000",
+     "U.S.–Mexico–Canada Agreement (USMCA) Qualifying": "Yes",
+     "Related Products": "Soldering Installation Tips"
+    },
+    "parsed": {
+     "Thread Pitch": {
+      "value": 0.7,
+      "unit": "mm"
+     },
+     "Installed Length": {
+      "value": 6.4,
+      "unit": "mm"
+     },
+     "Drill Bit Size": {
+      "value": 5.55625,
+      "unit": "mm"
+     },
+     "For Maximum Hole Diameter": {
+      "value": 5.6,
+      "unit": "mm"
+     },
+     "For Minimum Material Thickness": {
+      "value": 7.1,
+      "unit": "mm"
+     }
+    }
+   }
+  },
+  "cad": {
+   "file": null,
+   "kind": "insert",
+   "frame": "axis +Z, centred on the axis; the larger end (flange, head, collar) at z = 0 and the part on +z; when both ends are the same size, the heavier end at z = 0",
+   "available": true,
+   "step_url": "https://www.mcmaster.com/94459A160/",
+   "bbox_mm": null,
+   "volume_mm3": null,
+   "pending": "STEP not downloaded yet: McMaster-Carr asks for a login before CAD downloads (the product page itself reads without one). Finish with .venv/bin/python tools/mcmaster_cad.py --catalog --file catalog/turret.json --only turret_insert_m4 once logged in, or save the STEP from a logged-in browser as references/vendor/mcmaster/94459A160/94459A160.step and run the same command."
+  },
+  "frame": "axis +Z, centred on the axis; the larger end (flange, head, collar) at z = 0 and the part on +z; when both ends are the same size, the heavier end at z = 0",
+  "sources": [
+   "https://www.mcmaster.com/94459A160/"
+  ],
+  "confidence": "product page",
+  "used_for": "M4 heat-set inserts: the DT pad (4), the turntable for the yoke (4), the cartridge's CT latch (1)",
+  "qty_per_robot": 9
+ },
+ {
+  "id": "mcmaster-91595a150",
+  "key": "turret_dowel_4x8",
+  "category": "fastener",
+  "vendor": "McMaster-Carr",
+  "model": "91595A150",
+  "name": "Dowel Pin, 52100 Alloy Steel, 4 mm Diameter, 8 mm Long",
+  "price_usd": 0.242,
+  "price_note": "McMaster-Carr: $12.10 per pack of 50 (price_usd is per piece)",
+  "price_checked": "2026-10-27",
+  "pack_qty": 50,
+  "pack_price_usd": 12.1,
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/91595A150/",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "d_mm": 4.0,
+   "length_mm": 8.0,
+   "mass_g": null,
+   "mass_basis": "unknown",
+   "material": "Alloy Steel",
+   "mcmaster": {
+    "raw": {
+     "Tolerance Rating": "Standard",
+     "Fastener Head Type": "Plain",
+     "Material": "Alloy Steel",
+     "Diameter": "4 mm",
+     "Diameter Tolerance": "0.004 mm to 0.012 mm",
+     "Length": "8 mm",
+     "Double Shear Breaking Strength": "Not Rated",
+     "Minimum Hardness": "Rockwell C52",
+     "Specifications Met": "DIN 6325-m6, ISO 8734",
+     "Certificate Form": "Digital",
+     "Certificate Type": "Material Certificate with Traceable Lot Number",
+     "End Shape": "Round × Chamfer/Round",
+     "End Type": "Plain",
+     "Performance": "High Strength",
+     "Pin Type": "Dowel",
+     "Shaft Type": "Plain",
+     "Steel Grade": "52100 Alloy Steel",
+     "System of Measurement": "Metric",
+     "Country of Origin": "United States, Belgium, Canada, China, France, Germany, India, Indonesia, Italy, Japan, Malaysia, Mexico, Philippines, Poland, South Korea, Switzerland, Taiwan, Thailand, Vietnam",
+     "DFARS Compliance": "Not Specialty Metals Compliant",
+     "Export Control Classification Number (ECCN)": "EAR99",
+     "REACH Compliance": "REACH (EC 1907/2006) (02/04/2026, 253 SVHC) Compliant",
+     "RoHS Compliance": "RoHS 3 (2015/863/EU) Compliant",
+     "Schedule B Number": "731829.0000",
+     "U.S.–Mexico–Canada Agreement (USMCA) Qualifying": "No"
+    },
+    "parsed": {
+     "Diameter": {
+      "value": 4.0,
+      "unit": "mm"
+     },
+     "Diameter Tolerance": {
+      "min": 0.004,
+      "max": 0.012,
+      "unit": "mm"
+     },
+     "Length": {
+      "value": 8.0,
+      "unit": "mm"
+     }
+    }
+   }
+  },
+  "cad": {
+   "file": null,
+   "kind": "pin",
+   "frame": "axis +Z, centred on the axis; the larger end (flange, head, collar) at z = 0 and the part on +z; when both ends are the same size, the heavier end at z = 0",
+   "available": true,
+   "step_url": "https://www.mcmaster.com/91595A150/",
+   "bbox_mm": null,
+   "volume_mm3": null,
+   "pending": "STEP not downloaded yet: McMaster-Carr asks for a login before CAD downloads (the product page itself reads without one). Finish with .venv/bin/python tools/mcmaster_cad.py --catalog --file catalog/turret.json --only turret_dowel_4x8 once logged in, or save the STEP from a logged-in browser as references/vendor/mcmaster/91595A150/91595A150.step and run the same command."
+  },
+  "frame": "axis +Z, centred on the axis; the larger end (flange, head, collar) at z = 0 and the part on +z; when both ends are the same size, the heavier end at z = 0",
+  "sources": [
+   "https://www.mcmaster.com/91595A150/"
+  ],
+  "confidence": "product page",
+  "used_for": "the CT dowels: pressed in the cradle's rails, 2.3 mm up into the cartridge's base",
+  "qty_per_robot": 2
+ },
+ {
+  "id": "mcmaster-98381a414",
+  "key": "turret_pin_1_16x3_16",
+  "category": "fastener",
+  "vendor": "McMaster-Carr",
+  "model": "98381A414",
+  "name": "Dowel Pin, Alloy Steel, 1/16\" Diameter, 3/16\" Long",
+  "price_usd": 0.2476,
+  "price_note": "McMaster-Carr: $12.38 per pack of 50 (price_usd is per piece)",
+  "price_checked": "2026-10-27",
+  "pack_qty": 50,
+  "pack_price_usd": 12.38,
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/98381A414/",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "d_mm": 1.5875,
+   "length_mm": 4.7625,
+   "mass_g": null,
+   "mass_basis": "unknown",
+   "material": "Alloy Steel",
+   "mcmaster": {
+    "raw": {
+     "Tolerance Rating": "Standard",
+     "Fastener Head Type": "Plain",
+     "Material": "Alloy Steel",
+     "Diameter": "1/16\"",
+     "Diameter Tolerance": "0.0001\" to 0.0003\"",
+     "Length": "3/16\"",
+     "Double Shear Breaking Strength": "750 lbf",
+     "Minimum Hardness": "Rockwell C47",
+     "Specifications Met": "ASME B18.8.2",
+     "Certificate Form": "Digital",
+     "Certificate Type": "Material Certificate with Traceable Lot Number",
+     "End Shape": "Round × Chamfer",
+     "End Type": "Plain",
+     "Performance": "High Strength",
+     "Pin Type": "Dowel",
+     "Shaft Type": "Plain",
+     "System of Measurement": "Inch",
+     "Country of Origin": "United States",
+     "DFARS Compliance": "Specialty Metals Compliant (252.225-7008)",
+     "Export Control Classification Number (ECCN)": "EAR99",
+     "REACH Compliance": "REACH (EC 1907/2006) (02/04/2026, 253 SVHC) Compliant",
+     "RoHS Compliance": "RoHS 3 (2015/863/EU) Compliant",
+     "Schedule B Number": "731829.0000",
+     "U.S.–Mexico–Canada Agreement (USMCA) Qualifying": "No"
+    },
+    "parsed": {
+     "Diameter": {
+      "value": 1.5875,
+      "unit": "mm"
+     },
+     "Diameter Tolerance": {
+      "min": 0.00254,
+      "max": 0.00762,
+      "unit": "mm"
+     },
+     "Length": {
+      "value": 4.7625,
+      "unit": "mm"
+     },
+     "Double Shear Breaking Strength": {
+      "value": 3336.1662,
+      "unit": "N"
+     }
+    }
+   }
+  },
+  "cad": {
+   "file": null,
+   "kind": "pin",
+   "frame": "axis +Z, centred on the axis; the larger end (flange, head, collar) at z = 0 and the part on +z; when both ends are the same size, the heavier end at z = 0",
+   "available": true,
+   "step_url": "https://www.mcmaster.com/98381A414/",
+   "bbox_mm": null,
+   "volume_mm3": null,
+   "pending": "STEP not downloaded yet: McMaster-Carr asks for a login before CAD downloads (the product page itself reads without one). Finish with .venv/bin/python tools/mcmaster_cad.py --catalog --file catalog/turret.json --only turret_pin_1_16x3_16 once logged in, or save the STEP from a logged-in browser as references/vendor/mcmaster/98381A414/98381A414.step and run the same command."
+  },
+  "frame": "axis +Z, centred on the axis; the larger end (flange, head, collar) at z = 0 and the part on +z; when both ends are the same size, the heavier end at z = 0",
+  "sources": [
+   "https://www.mcmaster.com/98381A414/"
+  ],
+  "confidence": "product page",
+  "used_for": "the flywheel hubs' drive pins: 2 each into the Snail bell's Ø1.6 holes",
+  "qty_per_robot": 4
+ },
+ {
+  "id": "mcmaster-93600a249",
+  "key": "turret_pin_2x20",
+  "category": "fastener",
+  "vendor": "McMaster-Carr",
+  "model": "93600A249",
+  "name": "316 Stainless Steel Dowel Pin, 2mm Diameter, 20mm Long",
+  "price_usd": 0.406,
+  "price_note": "McMaster-Carr: $10.15 per pack of 25 (price_usd is per piece)",
+  "price_checked": "2026-10-27",
+  "pack_qty": 25,
+  "pack_price_usd": 10.15,
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/93600A249/",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "d_mm": 2.0,
+   "length_mm": 20.0,
+   "mass_g": null,
+   "mass_basis": "unknown",
+   "material": "316 Stainless Steel",
+   "mcmaster": {
+    "raw": {
+     "Tolerance Rating": "Standard",
+     "Fastener Head Type": "Plain",
+     "Material": "316 Stainless Steel",
+     "Diameter": "2 mm",
+     "Diameter Tolerance": "0.002 mm to 0.008 mm",
+     "Length": "20 mm",
+     "Double Shear Breaking Strength": "Not Rated",
+     "Minimum Hardness": "Not Rated",
+     "Specifications Met": "ISO 2338-m6",
+     "Certificate Form": "Digital",
+     "Certificate Type": "Material Certificate with Traceable Lot Number",
+     "End Shape": "Chamfer",
+     "End Type": "Plain",
+     "Passivation": "Passivated",
+     "Performance": "Highly Corrosion Resistant",
+     "Pin Type": "Dowel",
+     "Shaft Type": "Plain",
+     "System of Measurement": "Metric",
+     "Country of Origin": "United States, Belgium, Canada, China, France, Germany, India, Indonesia, Italy, Japan, Malaysia, Mexico, Philippines, Poland, South Korea, Switzerland, Taiwan, Thailand, Vietnam",
+     "DFARS Compliance": "Not Specialty Metals Compliant",
+     "Export Control Classification Number (ECCN)": "EAR99",
+     "REACH Compliance": "REACH (EC 1907/2006) (02/04/2026, 253 SVHC) Compliant",
+     "RoHS Compliance": "RoHS 3 (2015/863/EU) Compliant",
+     "Schedule B Number": "731829.0000",
+     "U.S.–Mexico–Canada Agreement (USMCA) Qualifying": "No"
+    },
+    "parsed": {
+     "Diameter": {
+      "value": 2.0,
+      "unit": "mm"
+     },
+     "Diameter Tolerance": {
+      "min": 0.002,
+      "max": 0.008,
+      "unit": "mm"
+     },
+     "Length": {
+      "value": 20.0,
+      "unit": "mm"
+     }
+    }
+   }
+  },
+  "cad": {
+   "file": null,
+   "kind": "pin",
+   "frame": "axis +Z, centred on the axis; the larger end (flange, head, collar) at z = 0 and the part on +z; when both ends are the same size, the heavier end at z = 0",
+   "available": true,
+   "step_url": "https://www.mcmaster.com/93600A249/",
+   "bbox_mm": null,
+   "volume_mm3": null,
+   "pending": "STEP not downloaded yet: McMaster-Carr asks for a login before CAD downloads (the product page itself reads without one). Finish with .venv/bin/python tools/mcmaster_cad.py --catalog --file catalog/turret.json --only turret_pin_2x20 once logged in, or save the STEP from a logged-in browser as references/vendor/mcmaster/93600A249/93600A249.step and run the same command."
+  },
+  "frame": "axis +Z, centred on the axis; the larger end (flange, head, collar) at z = 0 and the part on +z; when both ends are the same size, the heavier end at z = 0",
+  "sources": [
+   "https://www.mcmaster.com/93600A249/"
+  ],
+  "confidence": "product page",
+  "used_for": "the hopper flap's hinge pin",
+  "qty_per_robot": 1
+ },
+ {
+  "id": "mcmaster-9271k13",
+  "key": "turret_spring_flap",
+  "category": "fastener",
+  "vendor": "McMaster-Carr",
+  "model": "9271K13",
+  "name": "Torsion Spring, 90 Degree Left-Hand Wound, 0.16\" OD",
+  "price_usd": 1.0517,
+  "price_note": "McMaster-Carr: $6.31 per pack of 6 (price_usd is per piece)",
+  "price_checked": "2026-10-27",
+  "pack_qty": 6,
+  "pack_price_usd": 6.31,
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/9271K13/",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "od_mm": 4.064,
+   "id_mm": 2.3622,
+   "mass_g": null,
+   "mass_basis": "unknown",
+   "material": "Spring Steel",
+   "mcmaster": {
+    "raw": {
+     "Deflection Angle": "90°",
+     "Spring Wind Direction": "Left Hand",
+     "OD": "0.16\"",
+     "For Shaft Diameter": "0.093\"",
+     "Wire Diameter": "0.017\"",
+     "Leg Length": "0.5\"",
+     "Number of Coils": "3.25",
+     "Spring Length @ Maximum Torque": "0.081\"",
+     "Maximum Torque": "0.125 in·lbf",
+     "Material": "Spring Steel",
+     "Spring Type": "Torsion",
+     "Steel Grade": "Music-Wire Steel",
+     "Country of Origin": "United States",
+     "DFARS Compliance": "Specialty Metals COTS-Exempt",
+     "Export Control Classification Number (ECCN)": "EAR99",
+     "REACH Compliance": "REACH (EC 1907/2006) (02/04/2026, 253 SVHC) Compliant",
+     "RoHS Compliance": "RoHS 3 (2015/863/EU) Compliant",
+     "Schedule B Number": "732020.5000",
+     "U.S.–Mexico–Canada Agreement (USMCA) Qualifying": "Yes"
+    },
+    "parsed": {
+     "OD": {
+      "value": 4.064,
+      "unit": "mm"
+     },
+     "For Shaft Diameter": {
+      "value": 2.3622,
+      "unit": "mm"
+     },
+     "Wire Diameter": {
+      "value": 0.4318,
+      "unit": "mm"
+     },
+     "Leg Length": {
+      "value": 12.7,
+      "unit": "mm"
+     },
+     "Spring Length @ Maximum Torque": {
+      "value": 2.0574,
+      "unit": "mm"
+     }
+    }
+   }
+  },
+  "cad": {
+   "file": null,
+   "kind": "pin",
+   "frame": "axis +Z, centred on the axis; the larger end (flange, head, collar) at z = 0 and the part on +z; when both ends are the same size, the heavier end at z = 0",
+   "available": true,
+   "step_url": "https://www.mcmaster.com/9271K13/",
+   "bbox_mm": null,
+   "volume_mm3": null,
+   "pending": "STEP not downloaded yet: McMaster-Carr asks for a login before CAD downloads (the product page itself reads without one). Finish with .venv/bin/python tools/mcmaster_cad.py --catalog --file catalog/turret.json --only turret_spring_flap once logged in, or save the STEP from a logged-in browser as references/vendor/mcmaster/9271K13/9271K13.step and run the same command."
+  },
+  "frame": "axis +Z, centred on the axis; the larger end (flange, head, collar) at z = 0 and the part on +z; when both ends are the same size, the heavier end at z = 0",
+  "sources": [
+   "https://www.mcmaster.com/9271K13/"
+  ],
+  "confidence": "product page",
+  "used_for": "the hopper flap's return spring, on the hinge pin",
+  "qty_per_robot": 1
+ },
+ {
+  "id": "mcmaster-91828a113",
+  "key": "turret_nut_m2_5",
+  "category": "fastener",
+  "vendor": "McMaster-Carr",
+  "model": "91828A113",
+  "name": "Corrosion-Resistant 18-8 Stainless Steel Hex Nut, M2.5 x 0.45 mm Thread Size",
+  "price_usd": 0.071,
+  "price_note": "McMaster-Carr: $7.10 per pack of 100 (price_usd is per piece)",
+  "price_checked": "2026-10-27",
+  "pack_qty": 100,
+  "pack_price_usd": 7.1,
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/91828A113/",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "thread": "M2.5x0.45",
+   "width_mm": 5.0,
+   "height_mm": 2.0,
+   "mass_g": null,
+   "mass_basis": "unknown",
+   "material": "18-8 Stainless Steel",
+   "mcmaster": {
+    "raw": {
+     "Hex Nut Profile": "Standard",
+     "Material": "18-8 Stainless Steel",
+     "Thread Size": "M2.5 × 0.45 mm",
+     "Width": "5 mm",
+     "Height": "2 mm",
+     "Specifications Met": "DIN 934",
+     "Certificate Form": "Digital",
+     "Certificate Type": "Material Certificate with Traceable Lot Number",
+     "Drive Style": "External Hex",
+     "Nut Type": "Hex",
+     "Performance": "Corrosion Resistant",
+     "System of Measurement": "Metric",
+     "Thread Direction": "Right Hand",
+     "Thread Fit": "Metric Class 6H",
+     "Thread Spacing": "Coarse",
+     "Thread Type": "Metric",
+     "Country of Origin": "Brazil, China, India, Taiwan, Thailand",
+     "DFARS Compliance": "Not Specialty Metals Compliant",
+     "Export Control Classification Number (ECCN)": "EAR99",
+     "REACH Compliance": "REACH (EC 1907/2006) (02/04/2026, 253 SVHC) Compliant",
+     "RoHS Compliance": "RoHS 3 (2015/863/EU) Compliant",
+     "Schedule B Number": "731816.0000",
+     "U.S.–Mexico–Canada Agreement (USMCA) Qualifying": "No"
+    },
+    "parsed": {
+     "Thread Size": {
+      "thread": "M2.5x0.45",
+      "d": 2.5,
+      "pitch": 0.45,
+      "unit": "mm"
+     },
+     "Width": {
+      "value": 5.0,
+      "unit": "mm"
+     },
+     "Height": {
+      "value": 2.0,
+      "unit": "mm"
+     }
+    }
+   }
+  },
+  "cad": {
+   "file": null,
+   "kind": "nut",
+   "frame": "axis +Z, centred on the axis; the larger end (flange, head, collar) at z = 0 and the part on +z; when both ends are the same size, the heavier end at z = 0",
+   "available": true,
+   "step_url": "https://www.mcmaster.com/91828A113/",
+   "bbox_mm": null,
+   "volume_mm3": null,
+   "pending": "STEP not downloaded yet: McMaster-Carr asks for a login before CAD downloads (the product page itself reads without one). Finish with .venv/bin/python tools/mcmaster_cad.py --catalog --file catalog/turret.json --only turret_nut_m2_5 once logged in, or save the STEP from a logged-in browser as references/vendor/mcmaster/91828A113/91828A113.step and run the same command."
+  },
+  "frame": "axis +Z, centred on the axis; the larger end (flange, head, collar) at z = 0 and the part on +z; when both ends are the same size, the heavier end at z = 0",
+  "sources": [
+   "https://www.mcmaster.com/91828A113/"
+  ],
+  "confidence": "product page",
+  "used_for": "the bench stand's XT60 panel socket",
+  "qty_per_robot": 2
+ },
+ {
+  "id": "mcmaster-5862k102",
+  "key": "turret_magnet_disc",
+  "category": "fastener",
+  "vendor": "McMaster-Carr",
+  "model": "5862K102",
+  "name": "Neodymium Magnet, Magnetized Through Thickness, 1/8\" Thick, 3/16\" OD",
+  "price_usd": 1.0,
+  "price_note": "McMaster-Carr: $1.00 each (price_usd is per piece)",
+  "price_checked": "2026-10-27",
+  "pack_qty": 1,
+  "pack_price_usd": 1.0,
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/5862K102/",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "thickness_mm": 3.175,
+   "od_mm": 4.7625,
+   "mass_g": null,
+   "mass_basis": "unknown",
+   "material": "Nickel-Plated Neodymium",
+   "mcmaster": {
+    "raw": {
+     "Mount Type": "Plain Back",
+     "Thickness": "1/8\"",
+     "Thickness Tolerance": "-0.005\" to 0.005\"",
+     "OD": "3/16\"",
+     "OD Tolerance": "-0.005\" to 0.005\"",
+     "Maximum Pull": "1.6 lbf",
+     "Temperature Minimum": "Not Rated",
+     "Temperature Maximum": "175° F",
+     "Magnet Grade": "N52",
+     "Direction of Magnetization": "Through Thickness",
+     "Color": "Silver",
+     "Fabrication": "Sintered",
+     "Material": "Nickel-Plated Neodymium",
+     "Flux Density": "5,390 G",
+     "Magnet Type": "Rare Earth",
+     "Magnetic Pull Rating": "Super Light",
+     "Maximum Energy Product": "414 kJ/m³",
+     "Performance": "Strong Hold",
+     "Relative Size": "Compact",
+     "Sets of Poles": "1",
+     "Shape": "Disc, Round",
+     "System of Measurement": "Inch",
+     "Country of Origin": "China",
+     "DFARS Compliance": "Not Specialty Metals Compliant",
+     "Export Control Classification Number (ECCN)": "EAR99",
+     "REACH Compliance": "REACH (EC 1907/2006) (02/04/2026, 253 SVHC) Compliant",
+     "RoHS Compliance": "RoHS 3 (2015/863/EU) Compliant",
+     "Schedule B Number": "850511.0070",
+     "U.S.–Mexico–Canada Agreement (USMCA) Qualifying": "No"
+    },
+    "parsed": {
+     "Thickness": {
+      "value": 3.175,
+      "unit": "mm"
+     },
+     "Thickness Tolerance": {
+      "min": -0.127,
+      "max": 0.127,
+      "unit": "mm"
+     },
+     "OD": {
+      "value": 4.7625,
+      "unit": "mm"
+     },
+     "OD Tolerance": {
+      "min": -0.127,
+      "max": 0.127,
+      "unit": "mm"
+     },
+     "Maximum Pull": {
+      "value": 7.117155,
+      "unit": "N"
+     },
+     "Temperature Maximum": {
+      "value": 79.444444,
+      "unit": "degC"
+     }
+    }
+   }
+  },
+  "cad": {
+   "file": null,
+   "kind": "spacer",
+   "frame": "axis +Z, centred on the axis; the larger end (flange, head, collar) at z = 0 and the part on +z; when both ends are the same size, the heavier end at z = 0",
+   "available": true,
+   "step_url": "https://www.mcmaster.com/5862K102/",
+   "bbox_mm": null,
+   "volume_mm3": null,
+   "pending": "STEP not downloaded yet: McMaster-Carr asks for a login before CAD downloads (the product page itself reads without one). Finish with .venv/bin/python tools/mcmaster_cad.py --catalog --file catalog/turret.json --only turret_magnet_disc once logged in, or save the STEP from a logged-in browser as references/vendor/mcmaster/5862K102/5862K102.step and run the same command."
+  },
+  "frame": "axis +Z, centred on the axis; the larger end (flange, head, collar) at z = 0 and the part on +z; when both ends are the same size, the heavier end at z = 0",
+  "sources": [
+   "https://www.mcmaster.com/5862K102/"
+  ],
+  "confidence": "product page",
+  "used_for": "the pan index magnet: through the clamp ring on the housing's top at pan 0 (1, and a spare); 2.1 mm of ring is left beside its Ø4.8 hole",
+  "qty_per_robot": 2
+ },
+ {
+  "id": "mcmaster-51225k32",
+  "key": "turret_tube_coupling",
+  "category": "fastener",
+  "vendor": "McMaster-Carr",
+  "model": "51225K32",
+  "name": "Continuous-Flex Tpv Rubber Tube for Chemicals, 5/16\" ID, 7/16\" OD",
+  "price_usd": 0.94,
+  "price_note": "McMaster-Carr: $0.94 per ft. (price_usd is per piece)",
+  "price_checked": "2026-10-27",
+  "pack_qty": 1,
+  "pack_price_usd": 0.94,
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/51225K32/",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "id_mm": 7.9375,
+   "od_mm": 11.1125,
+   "mass_g": null,
+   "mass_basis": "unknown",
+   "material": "TPV",
+   "mcmaster": {
+    "raw": {
+     "Tube Hardness Rating": "Soft",
+     "ID": "5/16\"",
+     "OD": "7/16\"",
+     "Wall Thickness": "1/16\"",
+     "Bend Radius": "2 5/8\"",
+     "Hardness": "Durometer 65A",
+     "Maximum Pressure @ Temperature": "Not Rated",
+     "Temperature Range": "-70° F to 245° F",
+     "Compatible Fitting Connection": "Barbed",
+     "Flexibility": "Continuous Flex",
+     "Clarity": "Opaque",
+     "Color": "Black",
+     "Chemical Resistance (Excellent)": "Deionized Water, Methanol (Methyl Alcohol), Sodium Hypochlorite (Bleach), Acetic Acid (White Vinegar) (10% Concentration), Ethylene Glycol (50% Concentration), Hydrochloric Acid (10% Concentration), Hydrochloric Acid (30% Concentration), Hydrogen Peroxide (10% Concentration), Hydrogen Peroxide (30% Concentration), Sodium Hydroxide (Caustic Soda) (10% Concentration), Sodium Hydroxide (Caustic Soda) (30% Concentration), Sulfuric Acid (10% Concentration), Sulfuric Acid (30% Concentration)",
+     "Chemical Resistance (Moderate)": "Methyl Ethyl Ketone (MEK)",
+     "Chemical Resistance (Not Recommended)": "Acetone, Diesel Fuel, Fuel Oil, Gasoline, Hydraulic Fluid, Isopropyl Alcohol, Synthetic Oil, Phosphoric Acid (25% Concentration), Phosphoric Acid (85% Concentration)",
+     "Connects To": "Tube",
+     "End Type": "Without Fittings",
+     "For Use With": "Chemicals, Acetic Acid (White Vinegar), Coolant, Deionized Water, Hydrochloric Acid, Hydrogen Peroxide, Methanol (Methyl Alcohol), Sodium Hydroxide (Caustic Soda), Sodium Hypochlorite (Bleach), Sulfuric Acid",
+     "Material": "TPV",
+     "Maximum Vacuum @ Temperature": "Not Rated",
+     "Performance": "Chemical Resistant",
+     "Shape": "Round Tube",
+     "System of Measurement": "Inch",
+     "Warning Message": "Chemical compatibility must be determined by the customer based on the conditions in which the product is being used, including the presence of other chemicals, temperature, and consistency.",
+     "Country of Origin": "United States",
+     "DFARS Compliance": "Specialty Metals COTS-Exempt",
+     "Export Control Classification Number (ECCN)": "EAR99",
+     "REACH Compliance": "REACH (EC 1907/2006) (02/04/2026, 253 SVHC) Compliant",
+     "RoHS Compliance": "RoHS 3 (2015/863/EU) Compliant",
+     "Schedule B Number": "391732.0000",
+     "U.S.–Mexico–Canada Agreement (USMCA) Qualifying": "Yes"
+    },
+    "parsed": {
+     "ID": {
+      "value": 7.9375,
+      "unit": "mm"
+     },
+     "OD": {
+      "value": 11.1125,
+      "unit": "mm"
+     },
+     "Wall Thickness": {
+      "value": 1.5875,
+      "unit": "mm"
+     },
+     "Bend Radius": {
+      "value": 66.675,
+      "unit": "mm"
+     },
+     "Temperature Range": {
+      "min": -56.666667,
+      "max": 118.333333,
+      "unit": "degC"
+     }
+    }
+   }
+  },
+  "cad": {
+   "file": null,
+   "kind": "rod",
+   "frame": "axis +Z, centred on the axis; the larger end (flange, head, collar) at z = 0 and the part on +z; when both ends are the same size, the heavier end at z = 0",
+   "available": true,
+   "step_url": "https://www.mcmaster.com/51225K32/",
+   "bbox_mm": null,
+   "volume_mm3": null,
+   "pending": "STEP not downloaded yet: McMaster-Carr asks for a login before CAD downloads (the product page itself reads without one). Finish with .venv/bin/python tools/mcmaster_cad.py --catalog --file catalog/turret.json --only turret_tube_coupling once logged in, or save the STEP from a logged-in browser as references/vendor/mcmaster/51225K32/51225K32.step and run the same command."
+  },
+  "frame": "axis +Z, centred on the axis; the larger end (flange, head, collar) at z = 0 and the part on +z; when both ends are the same size, the heavier end at z = 0",
+  "sources": [
+   "https://www.mcmaster.com/51225K32/"
+  ],
+  "confidence": "product page",
+  "used_for": "the slip ring's rotor coupling: a 25 mm length from the 1 ft sold",
+  "qty_per_robot": 1,
+  "options": [
+   "Choose a Length, ft. 10 25 50",
+   "Choose a Length, ft."
+  ]
+ },
+ {
+  "id": "mcmaster-94459a130",
+  "key": "turret_insert_m3_short",
+  "category": "fastener",
+  "vendor": "McMaster-Carr",
+  "model": "94459A130",
+  "name": "Heat-Set Threaded Inserts for Plastic, Standard, Brass, M3 x 0.5 mm Thread Size, 4.3 mm Installed Length",
+  "price_usd": 0.2182,
+  "price_note": "McMaster-Carr: $10.91 per pack of 50 (price_usd is per piece)",
+  "price_checked": "2026-10-27",
+  "pack_qty": 50,
+  "pack_price_usd": 10.91,
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/94459A130/",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "installed_length_mm": 4.3,
+   "thread": "M3",
+   "mass_g": null,
+   "mass_basis": "unknown",
+   "material": "Brass",
+   "mcmaster": {
+    "raw": {
+     "Threaded Insert Type": "Heat Set",
+     "Profile": "Standard",
+     "Material": "Brass",
+     "Thread Size": "M3",
+     "Thread Pitch": "0.5 mm",
+     "Installed Length": "4.3 mm",
+     "Drill Bit Size": "22 Ga.",
+     "For Maximum Hole Diameter": "4 mm",
+     "End Type": "Open",
+     "For Minimum Material Thickness": "5.1 mm",
+     "For Use In": "Plastic",
+     "Performance": "Conductive, Corrosion Resistant, Nonmagnetic",
+     "System of Measurement": "Metric",
+     "Tensile Strength": "Not Rated",
+     "Thread Direction": "Right Hand",
+     "Thread Fit": "Metric Class 6H",
+     "Thread Spacing": "Coarse",
+     "Thread Type": "Metric",
+     "Threaded Insert Securing Type": "Knurled",
+     "Country of Origin": "United States",
+     "DFARS Compliance": "Specialty Metals COTS-Exempt",
+     "Export Control Classification Number (ECCN)": "EAR99",
+     "REACH Compliance": "REACH (EC 1907/2006) (02/04/2026, 253 SVHC) Compliant",
+     "RoHS Compliance": "RoHS 3 (2015/863/EU) Compliant with Exemptions",
+     "RoHS Exemptions": "6(c)",
+     "Schedule B Number": "741539.0000",
+     "U.S.–Mexico–Canada Agreement (USMCA) Qualifying": "Yes",
+     "Related Products": "Soldering Installation Tips"
+    },
+    "parsed": {
+     "Thread Pitch": {
+      "value": 0.5,
+      "unit": "mm"
+     },
+     "Installed Length": {
+      "value": 4.3,
+      "unit": "mm"
+     },
+     "For Maximum Hole Diameter": {
+      "value": 4.0,
+      "unit": "mm"
+     },
+     "For Minimum Material Thickness": {
+      "value": 5.1,
+      "unit": "mm"
+     }
+    }
+   }
+  },
+  "cad": {
+   "file": null,
+   "kind": "insert",
+   "frame": "axis +Z, centred on the axis; the larger end (flange, head, collar) at z = 0 and the part on +z; when both ends are the same size, the heavier end at z = 0",
+   "available": true,
+   "step_url": "https://www.mcmaster.com/94459A130/",
+   "bbox_mm": null,
+   "volume_mm3": null,
+   "pending": "STEP not downloaded yet: McMaster-Carr asks for a login before CAD downloads (the product page itself reads without one). Finish with .venv/bin/python tools/mcmaster_cad.py --catalog --file catalog/turret.json --only turret_insert_m3_short once logged in, or save the STEP from a logged-in browser as references/vendor/mcmaster/94459A130/94459A130.step and run the same command."
+  },
+  "frame": "axis +Z, centred on the axis; the larger end (flange, head, collar) at z = 0 and the part on +z; when both ends are the same size, the heavier end at z = 0",
+  "sources": [
+   "https://www.mcmaster.com/94459A130/"
+  ],
+  "confidence": "product page",
+  "used_for": "short M3 heat-set inserts (4.3 mm) in the pan base's 6 mm bumper tabs",
+  "qty_per_robot": 5
+ },
+ {
+  "id": "mcmaster-91294a128",
+  "key": "turret_screw_m3x8_flat",
+  "category": "fastener",
+  "vendor": "McMaster-Carr",
+  "model": "91294A128",
+  "name": "Black-Oxide Alloy Steel Hex-Drive Flat Head Screw, 90 Degree Countersink, M3 x 0.5 mm Thread Size, 8 mm Long",
+  "price_usd": 0.0582,
+  "price_note": "McMaster-Carr: $5.82 per pack of 100 (price_usd is per piece)",
+  "price_checked": "2026-10-27",
+  "pack_qty": 100,
+  "pack_price_usd": 5.82,
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/91294A128/",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "thread": "M3x0.5",
+   "length_mm": 8.0,
+   "head_d_mm": 6.0,
+   "head_height_mm": 1.7,
+   "mass_g": null,
+   "mass_basis": "unknown",
+   "material": "Black-Oxide Alloy Steel",
+   "mcmaster": {
+    "raw": {
+     "Thread Direction": "Right Hand",
+     "Drive Style": "Hex",
+     "Tip Type": "Flat",
+     "Thread Size": "M3 × 0.5 mm",
+     "Length": "8 mm",
+     "Countersink Angle": "90°",
+     "Flat Head Profile": "Standard",
+     "Head Diameter": "6 mm",
+     "Head Height": "1.7 mm",
+     "Threading": "Fully Threaded",
+     "Tensile Strength": "120,000 psi",
+     "Drive Size": "2 mm",
+     "Fastener Head Type": "Flat",
+     "Fastener Strength Grade/Class": "Class 10.9",
+     "Hardness": "Rockwell C32",
+     "Material": "Black-Oxide Alloy Steel",
+     "Performance": "High Strength",
+     "Specifications Met": "DIN 7991",
+     "System of Measurement": "Metric",
+     "Thread Fit": "Metric Class 6g",
+     "Thread Spacing": "Coarse",
+     "Thread Type": "Metric",
+     "Country of Origin": "United States",
+     "DFARS Compliance": "Specialty Metals COTS-Exempt",
+     "Export Control Classification Number (ECCN)": "EAR99",
+     "REACH Compliance": "REACH (EC 1907/2006) (02/04/2026, 253 SVHC) Compliant",
+     "RoHS Compliance": "RoHS 3 (2015/863/EU) Compliant",
+     "Schedule B Number": "731815.9000",
+     "U.S.–Mexico–Canada Agreement (USMCA) Qualifying": "Yes"
+    },
+    "parsed": {
+     "Thread Size": {
+      "thread": "M3x0.5",
+      "d": 3.0,
+      "pitch": 0.5,
+      "unit": "mm"
+     },
+     "Length": {
+      "value": 8.0,
+      "unit": "mm"
+     },
+     "Head Diameter": {
+      "value": 6.0,
+      "unit": "mm"
+     },
+     "Head Height": {
+      "value": 1.7,
+      "unit": "mm"
+     },
+     "Tensile Strength": {
+      "value": 827.3712,
+      "unit": "MPa"
+     },
+     "Drive Size": {
+      "value": 2.0,
+      "unit": "mm"
+     }
+    }
+   }
+  },
+  "cad": {
+   "file": null,
+   "kind": "screw",
+   "frame": "axis +Z, centred on the axis, head on +z and shank towards -z; z = 0 at the underside of the head (socket, button, pan, hex and flanged heads) or at the top face of a countersunk (flat) head",
+   "available": true,
+   "step_url": "https://www.mcmaster.com/91294A128/",
+   "bbox_mm": null,
+   "volume_mm3": null,
+   "pending": "STEP not downloaded yet: McMaster-Carr asks for a login before CAD downloads (the product page itself reads without one). Finish with .venv/bin/python tools/mcmaster_cad.py --catalog --file catalog/turret.json --only turret_screw_m3x8_flat once logged in, or save the STEP from a logged-in browser as references/vendor/mcmaster/91294A128/91294A128.step and run the same command."
+  },
+  "frame": "axis +Z, centred on the axis, head on +z and shank towards -z; z = 0 at the underside of the head (socket, button, pan, hex and flanged heads) or at the top face of a countersunk (flat) head",
+  "sources": [
+   "https://www.mcmaster.com/91294A128/"
+  ],
+  "confidence": "product page",
+  "used_for": "the turret-board bay to the -y yoke arm, countersunk in its back",
+  "qty_per_robot": 4
+ },
+ {
+  "id": "mcmaster-92581a250",
+  "key": "turret_thumbscrew_m4x12",
+  "category": "fastener",
+  "vendor": "McMaster-Carr",
+  "model": "92581A250",
+  "name": "Steel Raised Knurled-Head Thumb Screw, M4 x 0.7mm Thread Size, 12mm Long",
+  "price_usd": 4.64,
+  "price_note": "McMaster-Carr: $4.64 each (price_usd is per piece)",
+  "price_checked": "2026-10-27",
+  "pack_qty": 1,
+  "pack_price_usd": 4.64,
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/92581A250/",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "length_mm": 12.0,
+   "head_d_mm": 16.0,
+   "head_height_mm": 3.5,
+   "thread": "M4",
+   "mass_g": null,
+   "mass_basis": "unknown",
+   "material": "Black-Oxide Steel",
+   "mcmaster": {
+    "raw": {
+     "Thumb Screw Head Profile": "Raised",
+     "Fastener Head Type": "Thumb",
+     "Grip Style": "Knurled Head",
+     "Tip Type": "Flat",
+     "Material": "Black-Oxide Steel",
+     "Thread Size": "M4",
+     "Thread Pitch": "0.7 mm",
+     "Thread Direction": "Right Hand",
+     "Thread Spacing": "Coarse",
+     "Thread Type": "Metric",
+     "Thread Fit": "Metric Class 6g",
+     "Length": "12 mm",
+     "Head Diameter": "16 mm",
+     "Head Height": "3.5 mm",
+     "Head Texture": "Knurled",
+     "Collar Diameter": "8 mm",
+     "Collar Height": "6 mm",
+     "Threading": "Fully Threaded",
+     "Tensile Strength": "70,000 psi",
+     "Hardness": "Rockwell B84",
+     "Specifications Met": "DIN 464",
+     "System of Measurement": "Metric",
+     "Country of Origin": "Germany",
+     "DFARS Compliance": "Specialty Metals COTS-Exempt",
+     "Export Control Classification Number (ECCN)": "EAR99",
+     "REACH Compliance": "REACH (EC 1907/2006) (01/21/2025, 247 SVHC) Compliant",
+     "RoHS Compliance": "RoHS 3 (2015/863/EU) Compliant",
+     "Schedule B Number": "731815.9000",
+     "U.S.–Mexico–Canada Agreement (USMCA) Qualifying": "No"
+    },
+    "parsed": {
+     "Thread Pitch": {
+      "value": 0.7,
+      "unit": "mm"
+     },
+     "Length": {
+      "value": 12.0,
+      "unit": "mm"
+     },
+     "Head Diameter": {
+      "value": 16.0,
+      "unit": "mm"
+     },
+     "Head Height": {
+      "value": 3.5,
+      "unit": "mm"
+     },
+     "Collar Diameter": {
+      "value": 8.0,
+      "unit": "mm"
+     },
+     "Collar Height": {
+      "value": 6.0,
+      "unit": "mm"
+     },
+     "Tensile Strength": {
+      "value": 482.6332,
+      "unit": "MPa"
+     }
+    }
+   }
+  },
+  "cad": {
+   "file": null,
+   "kind": "screw",
+   "frame": "axis +Z, centred on the axis, head on +z and shank towards -z; z = 0 at the underside of the head (socket, button, pan, hex and flanged heads) or at the top face of a countersunk (flat) head",
+   "available": true,
+   "step_url": "https://www.mcmaster.com/92581A250/",
+   "bbox_mm": null,
+   "volume_mm3": null,
+   "pending": "STEP not downloaded yet: McMaster-Carr asks for a login before CAD downloads (the product page itself reads without one). Finish with .venv/bin/python tools/mcmaster_cad.py --catalog --file catalog/turret.json --only turret_thumbscrew_m4x12 once logged in, or save the STEP from a logged-in browser as references/vendor/mcmaster/92581A250/92581A250.step and run the same command."
+  },
+  "frame": "axis +Z, centred on the axis, head on +z and shank towards -z; z = 0 at the underside of the head (socket, button, pan, hex and flanged heads) or at the top face of a countersunk (flat) head",
+  "sources": [
+   "https://www.mcmaster.com/92581A250/"
+  ],
+  "confidence": "product page",
+  "used_for": "the CT latch: DIN 464 knurled thumbscrew up through the cradle's rail into the cartridge's M4 insert",
+  "qty_per_robot": 1
+ },
+ {
+  "id": "mcmaster-9452k14",
+  "key": "turret_oring_ct",
+  "category": "wiring",
+  "vendor": "McMaster-Carr",
+  "model": "9452K14",
+  "name": "Oil-Resistant Buna-N O-Ring, 1/16 Fractional Width, Dash Number 006",
+  "price_usd": 0.0279,
+  "price_note": "McMaster-Carr: $2.79 per pack of 100 (price_usd is per piece)",
+  "price_checked": "2026-10-27",
+  "pack_qty": 100,
+  "pack_price_usd": 2.79,
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/9452K14/",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "width_mm": 1.778,
+   "id_mm": 2.8956,
+   "od_mm": 6.4516,
+   "mass_g": null,
+   "mass_basis": "unknown",
+   "material": null,
+   "mcmaster": {
+    "raw": {
+     "System of Measurement": "Inch",
+     "Fractional Width": "1/16",
+     "Fractional ID": "1/8",
+     "Fractional OD": "1/4",
+     "Width": "0.07\"",
+     "Dash Number": "006",
+     "ID": "0.114\"",
+     "OD": "0.254\"",
+     "Hardness": "Durometer 70A (Medium)",
+     "Specifications Met": "ASTM D2000, ISO 3601-1, SAE AS568, SAE J200",
+     "Temperature Range": "-30° F to 215° F",
+     "Color": "Black",
+     "Cross Section Shape": "Round",
+     "For Use With": "Animal Oil Boric Acid Butyl Alcohol Calcium Hydroxide Citric Acid Ethanol Ethylene Glycol Glycerin Grease Hydraulic Oil Isopropyl Alcohol Methanol (Methyl Alcohol) Mineral Oil Motor Oil Petroleum Potassium Hydroxide Sodium Bicarbonate (Baking Soda) Vegetable Oil Water",
+     "Performance": "Highly Tear Resistant, Ultra Oil Resistant",
+     "Country of Origin": "United States, China, Vietnam",
+     "DFARS Compliance": "Specialty Metals COTS-Exempt",
+     "Export Control Classification Number (ECCN)": "EAR99",
+     "REACH Compliance": "REACH (EC 1907/2006) (02/04/2026, 253 SVHC) Compliant",
+     "RoHS Compliance": "RoHS 3 (2015/863/EU) Compliant",
+     "Schedule B Number": "401693.0000",
+     "U.S.–Mexico–Canada Agreement (USMCA) Qualifying": "No"
+    },
+    "parsed": {
+     "Width": {
+      "value": 1.778,
+      "unit": "mm"
+     },
+     "ID": {
+      "value": 2.8956,
+      "unit": "mm"
+     },
+     "OD": {
+      "value": 6.4516,
+      "unit": "mm"
+     },
+     "Temperature Range": {
+      "min": -34.444444,
+      "max": 101.666667,
+      "unit": "degC"
+     }
+    }
+   }
+  },
+  "cad": {
+   "file": null,
+   "kind": "grommet",
+   "frame": "axis +Z, centred on the axis; the larger end (flange, head, collar) at z = 0 and the part on +z; when both ends are the same size, the heavier end at z = 0",
+   "available": true,
+   "step_url": "https://www.mcmaster.com/9452K14/",
+   "bbox_mm": null,
+   "volume_mm3": null,
+   "pending": "STEP not downloaded yet: McMaster-Carr asks for a login before CAD downloads (the product page itself reads without one). Finish with .venv/bin/python tools/mcmaster_cad.py --catalog --file catalog/turret.json --only turret_oring_ct once logged in, or save the STEP from a logged-in browser as references/vendor/mcmaster/9452K14/9452K14.step and run the same command."
+  },
+  "frame": "axis +Z, centred on the axis; the larger end (flange, head, collar) at z = 0 and the part on +z; when both ends are the same size, the heavier end at z = 0",
+  "sources": [
+   "https://www.mcmaster.com/9452K14/"
+  ],
+  "confidence": "product page",
+  "used_for": "keeps the CT thumbscrew in its rail: on its thread, in the counterbore on the rail's top",
+  "qty_per_robot": 1
+ },
+ {
+  "id": "mcmaster-93475a210",
+  "key": "turret_washer_m3",
+  "category": "fastener",
+  "vendor": "McMaster-Carr",
+  "model": "93475A210",
+  "name": "18-8 Stainless Steel General Purpose Washer, for M3 Screw Size, 3.2 mm ID, 7.0 mm OD",
+  "price_usd": 0.0289,
+  "price_note": "McMaster-Carr: $2.89 per pack of 100 (price_usd is per piece)",
+  "price_checked": "2026-10-27",
+  "pack_qty": 100,
+  "pack_price_usd": 2.89,
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/93475A210/",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "id_mm": 3.2,
+   "od_mm": 7.0,
+   "mass_g": null,
+   "mass_basis": "unknown",
+   "material": "18-8 Stainless Steel",
+   "mcmaster": {
+    "raw": {
+     "Washer Designation": "General Purpose",
+     "Material": "18-8 Stainless Steel",
+     "For Screw Size": "M3",
+     "ID": "3.2 mm",
+     "OD": "7.0 mm",
+     "Thickness": "0.4 mm to 0.6 mm",
+     "Certificate Form": "Digital",
+     "Certificate Type": "Material Certificate with Traceable Lot Number",
+     "Hardness": "Not Rated",
+     "Performance": "Corrosion Resistant",
+     "Specifications Met": "DIN 125, ISO 7089",
+     "System of Measurement": "Metric",
+     "Washer Type": "Flat",
+     "Country of Origin": "Brazil, China, India, Taiwan, Thailand",
+     "DFARS Compliance": "Not Specialty Metals Compliant",
+     "Export Control Classification Number (ECCN)": "EAR99",
+     "REACH Compliance": "REACH (EC 1907/2006) (02/04/2026, 253 SVHC) Compliant",
+     "RoHS Compliance": "RoHS 3 (2015/863/EU) Compliant",
+     "Schedule B Number": "731822.0000",
+     "U.S.–Mexico–Canada Agreement (USMCA) Qualifying": "No"
+    },
+    "parsed": {
+     "ID": {
+      "value": 3.2,
+      "unit": "mm"
+     },
+     "OD": {
+      "value": 7.0,
+      "unit": "mm"
+     },
+     "Thickness": {
+      "min": 0.4,
+      "max": 0.6,
+      "unit": "mm"
+     }
+    }
+   }
+  },
+  "cad": {
+   "file": null,
+   "kind": "washer",
+   "frame": "axis +Z, centred on the axis; the larger end (flange, head, collar) at z = 0 and the part on +z; when both ends are the same size, the heavier end at z = 0",
+   "available": true,
+   "step_url": "https://www.mcmaster.com/93475A210/",
+   "bbox_mm": null,
+   "volume_mm3": null,
+   "pending": "STEP not downloaded yet: McMaster-Carr asks for a login before CAD downloads (the product page itself reads without one). Finish with .venv/bin/python tools/mcmaster_cad.py --catalog --file catalog/turret.json --only turret_washer_m3 once logged in, or save the STEP from a logged-in browser as references/vendor/mcmaster/93475A210/93475A210.step and run the same command."
+  },
+  "frame": "axis +Z, centred on the axis; the larger end (flange, head, collar) at z = 0 and the part on +z; when both ends are the same size, the heavier end at z = 0",
+  "sources": [
+   "https://www.mcmaster.com/93475A210/"
+  ],
+  "confidence": "product page",
+  "used_for": "under the dial's retaining screw",
+  "qty_per_robot": 1
+ },
+ {
+  "id": "mcmaster-98952a110",
+  "key": "turret_standoff_m3x12",
+  "category": "fastener",
+  "vendor": "McMaster-Carr",
+  "model": "98952A110",
+  "name": "Aluminum Male-Female Threaded Hex Standoff, 4.5mm Hex, 12mm Long, M3 x 0.50 mm Thread",
+  "price_usd": 0.83,
+  "price_note": "McMaster-Carr: $0.83 each (price_usd is per piece)",
+  "price_checked": "2026-10-27",
+  "pack_qty": 1,
+  "pack_price_usd": 0.83,
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/98952A110/",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "length_mm": 12.0,
+   "thread": "M3",
+   "mass_g": null,
+   "mass_basis": "unknown",
+   "material": "Aluminum",
+   "mcmaster": {
+    "raw": {
+     "Material": "Aluminum",
+     "Thread Size (A)": "M3",
+     "Thread Size (B)": "M3",
+     "Thread Pitch (A)": "0.5 mm",
+     "Thread Pitch (B)": "0.5 mm",
+     "Length": "12 mm",
+     "Length Tolerance": "-0.13 mm to 0.13 mm",
+     "Hex Size": "4.5 mm",
+     "Hex Size Tolerance": "-0.13 mm to 0.13 mm",
+     "Thread Lg. (A)": "4.7 mm",
+     "Minimum Thread Length (B)": "6.4 mm",
+     "Gender (A)": "Male",
+     "Gender (B)": "Female",
+     "Hardness": "Rockwell B50",
+     "Mount Type (A)": "Threaded",
+     "Mount Type (B)": "Threaded",
+     "Performance": "Corrosion Resistant, Lightweight",
+     "Shape": "Hex",
+     "System of Measurement": "Metric",
+     "Tensile Strength": "45,000 psi",
+     "Thread Fit (A)": "Metric Class 6g",
+     "Thread Fit (B)": "Metric Class 6H",
+     "Country of Origin": "United States",
+     "DFARS Compliance": "Specialty Metals COTS-Exempt",
+     "Export Control Classification Number (ECCN)": "EAR99",
+     "REACH Compliance": "REACH (EC 1907/2006) (02/04/2026, 253 SVHC) Compliant",
+     "RoHS Compliance": "RoHS 3 (2015/863/EU) Compliant with Exemptions",
+     "RoHS Exemptions": "6(b)-II",
+     "Schedule B Number": "761610.8000",
+     "U.S.–Mexico–Canada Agreement (USMCA) Qualifying": "Yes"
+    },
+    "parsed": {
+     "Thread Pitch (A)": {
+      "value": 0.5,
+      "unit": "mm"
+     },
+     "Thread Pitch (B)": {
+      "value": 0.5,
+      "unit": "mm"
+     },
+     "Length": {
+      "value": 12.0,
+      "unit": "mm"
+     },
+     "Length Tolerance": {
+      "min": -0.13,
+      "max": 0.13,
+      "unit": "mm"
+     },
+     "Hex Size": {
+      "value": 4.5,
+      "unit": "mm"
+     },
+     "Hex Size Tolerance": {
+      "min": -0.13,
+      "max": 0.13,
+      "unit": "mm"
+     },
+     "Thread Lg. (A)": {
+      "value": 4.7,
+      "unit": "mm"
+     },
+     "Minimum Thread Length (B)": {
+      "value": 6.4,
+      "unit": "mm"
+     },
+     "Tensile Strength": {
+      "value": 310.2642,
+      "unit": "MPa"
+     }
+    }
+   }
+  },
+  "cad": {
+   "file": null,
+   "kind": "standoff",
+   "frame": "axis +Z, centred on the axis; the larger end (flange, head, collar) at z = 0 and the part on +z; when both ends are the same size, the heavier end at z = 0",
+   "available": true,
+   "step_url": "https://www.mcmaster.com/98952A110/",
+   "bbox_mm": null,
+   "volume_mm3": null,
+   "pending": "STEP not downloaded yet: McMaster-Carr asks for a login before CAD downloads (the product page itself reads without one). Finish with .venv/bin/python tools/mcmaster_cad.py --catalog --file catalog/turret.json --only turret_standoff_m3x12 once logged in, or save the STEP from a logged-in browser as references/vendor/mcmaster/98952A110/98952A110.step and run the same command."
+  },
+  "frame": "axis +Z, centred on the axis; the larger end (flange, head, collar) at z = 0 and the part on +z; when both ends are the same size, the heavier end at z = 0",
+  "sources": [
+   "https://www.mcmaster.com/98952A110/"
+  ],
+  "confidence": "product page",
+  "used_for": "the turret bay's level-2 board over the level-1 board (male end through level 1 into the bay's inserts)",
+  "qty_per_robot": 4
+ },
+ {
+  "id": "sparkfun-rob-13065",
+  "key": "sparkfun-rob-13065",
+  "category": "turret",
+  "vendor": "SparkFun (Senring M220 series)",
+  "model": "ROB-13065",
+  "name": "Slip Ring - 12 Wire (2A)",
+  "price_usd": 27.95,
+  "price_note": "one unit, before shipping",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "SparkFun",
+    "url": "https://www.sparkfun.com/products/13065",
+    "in_stock": null,
+    "ships_from": null
+   }
+  ],
+  "specs": {
+   "body_d_mm": 22,
+   "body_l_mm": 26.5,
+   "flange_d_mm": 44.5,
+   "circuits": 12,
+   "current_a": 2,
+   "wire_awg": 28,
+   "lead_mm": 250,
+   "max_rpm": 250
+  },
+  "sources": [
+   "https://www.sparkfun.com/products/13065"
+  ],
+  "confidence": "product page",
+  "used_for": "the slip ring on the bench and on the robot (D2, decided 2026-10-27): 12 x 2 A; 1-2 +24 V, 3-4 GND, 5-6 CAN, 7-8 safety pulses, 9 servo TTL, 10 signal ground, 11-12 kept for a camera (docs/turret-wiring.md 1.2)",
+  "qty_per_robot": 1,
+  "notes": "cad/turret.py RING_MODELS sparkfun_rob13065. The flange hole pattern is not published: measure the ring and drill the carrier to suit."
+ },
+ {
+  "id": "allegro-a1120lua-t",
+  "key": "allegro-a1120lua-t",
+  "category": "sensor",
+  "vendor": "Allegro MicroSystems",
+  "model": "A1120LUA-T",
+  "name": "Unipolar hall-effect switch, 3-24 V, SIP-3 (UA)",
+  "price_usd": 2.41,
+  "price_note": "one unit, before shipping",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Cytech Systems (also RS Components 724-4660)",
+    "url": "https://www.cytechsystems.com/fr/product/a1120lua-t",
+    "in_stock": null,
+    "ships_from": null
+   }
+  ],
+  "specs": {
+   "supply_v": [
+    3,
+    24
+   ],
+   "package": "UA (SIP-3)"
+  },
+  "sources": [
+   "https://www.cytechsystems.com/fr/product/a1120lua-t"
+  ],
+  "confidence": "seller listing",
+  "used_for": "the pan index: in the turntable's underside, 3 mm over the magnet at pan 0",
+  "qty_per_robot": 2,
+  "notes": "1 + a spare. TI DRV5032 is the alternate."
+ },
+ {
+  "id": "adafruit-feather-m4-can-4759",
+  "key": "adafruit-feather-m4-can-4759",
+  "category": "compute",
+  "vendor": "Adafruit",
+  "model": "4759",
+  "name": "Feather M4 CAN Express with ATSAME51",
+  "price_usd": 24.95,
+  "price_note": "one unit, before shipping",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Adafruit",
+    "url": "https://www.adafruit.com/product/4759",
+    "in_stock": null,
+    "ships_from": null
+   }
+  ],
+  "specs": {
+   "size_mm": [
+    50.8,
+    22.8,
+    7.2
+   ],
+   "mass_g": 5.5
+  },
+  "sources": [
+   "https://www.adafruit.com/product/4759"
+  ],
+  "confidence": "product page",
+  "used_for": "the turret MCU (level 2 of the bay): CAN to the robot, the servo bus, the ESCs, the C610, the gates, the lights",
+  "qty_per_robot": 1
+ },
+ {
+  "id": "pololu-d24v150f12-2885",
+  "key": "pololu-d24v150f12-2885",
+  "category": "dcdc",
+  "vendor": "Pololu",
+  "model": "2885 (D24V150F12)",
+  "name": "12V, 15A Step-Down Voltage Regulator D24V150F12",
+  "price_usd": 79.95,
+  "price_note": "one unit, before shipping",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Pololu",
+    "url": "https://www.pololu.com/product/2885",
+    "in_stock": null,
+    "ships_from": null
+   }
+  ],
+  "specs": {
+   "size_mm": [
+    43.2,
+    31.8,
+    11.0
+   ],
+   "output_v": 12,
+   "current_a": 15,
+   "input_v": [
+    13.3,
+    40
+   ]
+  },
+  "sources": [
+   "https://www.pololu.com/product/2885"
+  ],
+  "confidence": "product page",
+  "used_for": "the flywheel rail: 24 V in, a fixed 12 V out, the only supply the flywheel ESCs ever see (the hardware speed ceiling)",
+  "qty_per_robot": 1,
+  "notes": "Fixed output, no trim pot. Pololu suggests the D42V110F12 (same size and pinout)."
+ },
+ {
+  "id": "pololu-d36v50f12-4095",
+  "key": "pololu-d36v50f12-4095",
+  "category": "dcdc",
+  "vendor": "Pololu",
+  "model": "4095 (D36V50F12)",
+  "name": "12V, 4.5A Step-Down Voltage Regulator D36V50F12",
+  "price_usd": 39.95,
+  "price_note": "one unit, before shipping",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Pololu",
+    "url": "https://www.pololu.com/product/4095",
+    "in_stock": null,
+    "ships_from": null
+   }
+  ],
+  "specs": {
+   "size_mm": [
+    25.4,
+    25.4,
+    9.5
+   ],
+   "current_a": 4.5,
+   "input_v": [
+    13.3,
+    50
+   ]
+  },
+  "sources": [
+   "https://www.pololu.com/product/4095"
+  ],
+  "confidence": "product page",
+  "used_for": "the 12 V aux rail on the turret (tilt servo, laser) and the 12 V pan-servo rail in the base",
+  "qty_per_robot": 2
+ },
+ {
+  "id": "pololu-d36v28f5-3782",
+  "key": "pololu-d36v28f5-3782",
+  "category": "dcdc",
+  "vendor": "Pololu",
+  "model": "3782 (D36V28F5)",
+  "name": "5V, 3.2A Step-Down Voltage Regulator D36V28F5",
+  "price_usd": 23.95,
+  "price_note": "one unit, before shipping",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Pololu",
+    "url": "https://www.pololu.com/product/3782",
+    "in_stock": null,
+    "ships_from": null
+   }
+  ],
+  "specs": {
+   "size_mm": [
+    17.8,
+    20.3,
+    8.8
+   ],
+   "current_a": 3.2,
+   "input_v": [
+    5.3,
+    50
+   ]
+  },
+  "sources": [
+   "https://www.pololu.com/product/3782"
+  ],
+  "confidence": "product page",
+  "used_for": "the 5 V logic rail on the turret (the Feather, the servo-bus buffer, the hall switch, the lights, the gates)",
+  "qty_per_robot": 1
+ },
+ {
+  "id": "pololu-2815",
+  "key": "pololu-2815",
+  "category": "power_distribution",
+  "vendor": "Pololu",
+  "model": "2815",
+  "name": "Big MOSFET Slide Switch with Reverse Voltage Protection, HP",
+  "price_usd": 8.49,
+  "price_note": "one unit, before shipping",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Pololu",
+    "url": "https://www.pololu.com/product/2815",
+    "in_stock": null,
+    "ships_from": null
+   }
+  ],
+  "specs": {
+   "size_mm": [
+    20.3,
+    25.4,
+    4.1
+   ],
+   "current_a": 16,
+   "voltage_v": [
+    4.5,
+    32
+   ]
+  },
+  "sources": [
+   "https://www.pololu.com/product/2815"
+  ],
+  "confidence": "product page",
+  "used_for": "the safety switch: +24 V to the flywheel regulator and the C610 only while the arm chain holds its ON pin high (> 1 V)",
+  "qty_per_robot": 1,
+  "notes": "Pololu says it is not an emergency cutoff: the robot's radio stop cuts the head rail upstream as well."
+ },
+ {
+  "id": "panasonic-eeu-fr1v102",
+  "key": "panasonic-eeu-fr1v102",
+  "category": "power_distribution",
+  "vendor": "Panasonic",
+  "model": "EEU-FR1V102",
+  "name": "Aluminium electrolytic, 1000 uF, 35 V, low ESR (FR)",
+  "price_usd": 1.2,
+  "price_note": "est",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Mouser / Digi-Key",
+    "url": "https://www.mouser.com/c/?q=EEU-FR1V102",
+    "in_stock": null,
+    "ships_from": null
+   }
+  ],
+  "specs": {},
+  "sources": [
+   "https://www.mouser.com/c/?q=EEU-FR1V102"
+  ],
+  "confidence": "datasheet",
+  "used_for": "the capacitor bank at the regulators' input (3 x 1000 uF ride a 2 ms ring bounce at 11 A)",
+  "qty_per_robot": 3
+ },
+ {
+  "id": "proto-board-52x50",
+  "key": "proto-board-52x50",
+  "category": "wiring",
+  "vendor": "generic",
+  "model": "double-sided prototype board 50 x 70 mm",
+  "name": "Double-sided prototype board 50 x 70 mm, cut to size",
+  "price_usd": 0.99,
+  "price_note": "one unit, before shipping",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Tayda Electronics",
+    "url": "https://www.taydaelectronics.com/double-side-prototyping-board-50x70mm.html",
+    "in_stock": null,
+    "ships_from": null
+   }
+  ],
+  "specs": {},
+  "sources": [
+   "https://www.taydaelectronics.com/double-side-prototyping-board-50x70mm.html"
+  ],
+  "confidence": "seller listing",
+  "used_for": "the turret bay's three boards (cut to 52 x 50, Ø3.2 holes drilled at the corners) and the base board (cut to 30 x 50.8)",
+  "qty_per_robot": 4,
+  "notes": "The same board as the bench stand's terminal board (catalog/sourcing.json proto-board-70x50)."
+ },
+ {
+  "id": "ti-ne555p",
+  "key": "ti-ne555p",
+  "category": "turret",
+  "vendor": "Texas Instruments",
+  "model": "NE555P",
+  "name": "Precision timer, DIP-8",
+  "price_usd": 0.45,
+  "price_note": "est",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Texas Instruments (TI store)",
+    "url": "https://www.ti.com/product/NE555/part-details/NE555P",
+    "in_stock": null,
+    "ships_from": "US"
+   },
+   {
+    "seller": "Mouser / Digi-Key",
+    "url": "https://www.mouser.com/c/?q=NE555P",
+    "in_stock": null,
+    "ships_from": null
+   }
+  ],
+  "specs": {},
+  "sources": [
+   "https://www.ti.com/product/NE555/part-details/NE555P"
+  ],
+  "confidence": "datasheet",
+  "used_for": "the base's 1 kHz safety-pulse oscillator",
+  "qty_per_robot": 1
+ },
+ {
+  "id": "ti-ua78l05aclp",
+  "key": "ti-ua78l05aclp",
+  "category": "turret",
+  "vendor": "Texas Instruments",
+  "model": "UA78L05ACLP",
+  "name": "5 V 100 mA linear regulator, TO-92",
+  "price_usd": 0.4,
+  "price_note": "est",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Texas Instruments (TI store)",
+    "url": "https://www.ti.com/product/UA78L05/part-details/UA78L05ACLP",
+    "in_stock": null,
+    "ships_from": "US"
+   },
+   {
+    "seller": "Mouser / Digi-Key",
+    "url": "https://www.mouser.com/c/?q=UA78L05ACLP",
+    "in_stock": null,
+    "ships_from": null
+   }
+  ],
+  "specs": {},
+  "sources": [
+   "https://www.ti.com/product/UA78L05/part-details/UA78L05ACLP"
+  ],
+  "confidence": "datasheet",
+  "used_for": "powers the 555 from the base's 12 V, through the pendant loop",
+  "qty_per_robot": 1
+ },
+ {
+  "id": "vishay-4n35",
+  "key": "vishay-4n35",
+  "category": "turret",
+  "vendor": "Vishay",
+  "model": "4N35",
+  "name": "Optocoupler, phototransistor output, DIP-6",
+  "price_usd": 0.6,
+  "price_note": "est",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Mouser / Digi-Key",
+    "url": "https://www.mouser.com/c/?q=4N35",
+    "in_stock": null,
+    "ships_from": null
+   }
+  ],
+  "specs": {},
+  "sources": [
+   "https://www.mouser.com/c/?q=4N35"
+  ],
+  "confidence": "datasheet",
+  "used_for": "the turret end of the safety pulse loop (2.2 k / 1 W in series)",
+  "qty_per_robot": 1
+ },
+ {
+  "id": "ti-sn74hc123n",
+  "key": "ti-sn74hc123n",
+  "category": "turret",
+  "vendor": "Texas Instruments",
+  "model": "SN74HC123N",
+  "name": "Dual retriggerable monostable, DIP-16",
+  "price_usd": 0.8,
+  "price_note": "est",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Texas Instruments (TI store)",
+    "url": "https://www.ti.com/product/SN74HC123/part-details/SN74HC123N",
+    "in_stock": null,
+    "ships_from": "US"
+   },
+   {
+    "seller": "Mouser / Digi-Key",
+    "url": "https://www.mouser.com/c/?q=SN74HC123N",
+    "in_stock": null,
+    "ships_from": null
+   }
+  ],
+  "specs": {},
+  "sources": [
+   "https://www.ti.com/product/SN74HC123/part-details/SN74HC123N"
+  ],
+  "confidence": "datasheet",
+  "used_for": "the 20 ms arm monostable and the overspeed trip's 2.98 ms window (gates 60 mm apart)",
+  "qty_per_robot": 2
+ },
+ {
+  "id": "ti-sn74hc74n",
+  "key": "ti-sn74hc74n",
+  "category": "turret",
+  "vendor": "Texas Instruments",
+  "model": "SN74HC74N",
+  "name": "Dual D flip-flop, DIP-14",
+  "price_usd": 0.6,
+  "price_note": "est",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Texas Instruments (TI store)",
+    "url": "https://www.ti.com/product/SN74HC74/part-details/SN74HC74N",
+    "in_stock": null,
+    "ships_from": "US"
+   },
+   {
+    "seller": "Mouser / Digi-Key",
+    "url": "https://www.mouser.com/c/?q=SN74HC74N",
+    "in_stock": null,
+    "ships_from": null
+   }
+  ],
+  "specs": {},
+  "sources": [
+   "https://www.ti.com/product/SN74HC74/part-details/SN74HC74N"
+  ],
+  "confidence": "datasheet",
+  "used_for": "the TRIP latch",
+  "qty_per_robot": 1
+ },
+ {
+  "id": "ti-sn74hc08n",
+  "key": "ti-sn74hc08n",
+  "category": "turret",
+  "vendor": "Texas Instruments",
+  "model": "SN74HC08N",
+  "name": "Quad 2-input AND, DIP-14",
+  "price_usd": 0.5,
+  "price_note": "est",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Texas Instruments (TI store)",
+    "url": "https://www.ti.com/product/SN74HC08/part-details/SN74HC08N",
+    "in_stock": null,
+    "ships_from": "US"
+   },
+   {
+    "seller": "Mouser / Digi-Key",
+    "url": "https://www.mouser.com/c/?q=SN74HC08N",
+    "in_stock": null,
+    "ships_from": null
+   }
+  ],
+  "specs": {},
+  "sources": [
+   "https://www.ti.com/product/SN74HC08/part-details/SN74HC08N"
+  ],
+  "confidence": "datasheet",
+  "used_for": "pulses present AND no trip = armed",
+  "qty_per_robot": 1
+ },
+ {
+  "id": "ti-sn74hc14n",
+  "key": "ti-sn74hc14n",
+  "category": "turret",
+  "vendor": "Texas Instruments",
+  "model": "SN74HC14N",
+  "name": "Hex Schmitt inverter, DIP-14",
+  "price_usd": 0.5,
+  "price_note": "est",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Texas Instruments (TI store)",
+    "url": "https://www.ti.com/product/SN74HC14/part-details/SN74HC14N",
+    "in_stock": null,
+    "ships_from": "US"
+   },
+   {
+    "seller": "Mouser / Digi-Key",
+    "url": "https://www.mouser.com/c/?q=SN74HC14N",
+    "in_stock": null,
+    "ships_from": null
+   }
+  ],
+  "specs": {},
+  "sources": [
+   "https://www.ti.com/product/SN74HC14/part-details/SN74HC14N"
+  ],
+  "confidence": "datasheet",
+  "used_for": "the phase-short brake's inverter with its 10 ms RC; edge cleanup",
+  "qty_per_robot": 1
+ },
+ {
+  "id": "ti-sn74ahct125n",
+  "key": "ti-sn74ahct125n",
+  "category": "turret",
+  "vendor": "Texas Instruments",
+  "model": "SN74AHCT125N",
+  "name": "Quad buffer, 3-state, TTL inputs, DIP-14",
+  "price_usd": 0.6,
+  "price_note": "est",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Texas Instruments (TI store)",
+    "url": "https://www.ti.com/product/SN74AHCT125/part-details/SN74AHCT125N",
+    "in_stock": null,
+    "ships_from": "US"
+   },
+   {
+    "seller": "Mouser / Digi-Key",
+    "url": "https://www.mouser.com/c/?q=SN74AHCT125N",
+    "in_stock": null,
+    "ships_from": null
+   }
+  ],
+  "specs": {},
+  "sources": [
+   "https://www.ti.com/product/SN74AHCT125/part-details/SN74AHCT125N"
+  ],
+  "confidence": "datasheet",
+  "used_for": "drives the Feetech half-duplex servo bus from the Feather's UART",
+  "qty_per_robot": 1
+ },
+ {
+  "id": "ti-lm393p",
+  "key": "ti-lm393p",
+  "category": "turret",
+  "vendor": "Texas Instruments",
+  "model": "LM393P",
+  "name": "Dual comparator, DIP-8",
+  "price_usd": 0.45,
+  "price_note": "est",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Texas Instruments (TI store)",
+    "url": "https://www.ti.com/product/LM393/part-details/LM393P",
+    "in_stock": null,
+    "ships_from": "US"
+   },
+   {
+    "seller": "Mouser / Digi-Key",
+    "url": "https://www.mouser.com/c/?q=LM393P",
+    "in_stock": null,
+    "ships_from": null
+   }
+  ],
+  "specs": {},
+  "sources": [
+   "https://www.ti.com/product/LM393/part-details/LM393P"
+  ],
+  "confidence": "datasheet",
+  "used_for": "the two chronograph gates' receivers",
+  "qty_per_robot": 1
+ },
+ {
+  "id": "infineon-irlz44npbf",
+  "key": "infineon-irlz44npbf",
+  "category": "turret",
+  "vendor": "Infineon",
+  "model": "IRLZ44NPBF",
+  "name": "Logic-level N-MOSFET 55 V 47 A, TO-220",
+  "price_usd": 1.6,
+  "price_note": "est",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Mouser / Digi-Key",
+    "url": "https://www.mouser.com/c/?q=IRLZ44NPBF",
+    "in_stock": null,
+    "ships_from": null
+   }
+  ],
+  "specs": {},
+  "sources": [
+   "https://www.mouser.com/c/?q=IRLZ44NPBF"
+  ],
+  "confidence": "datasheet",
+  "used_for": "the phase-short brake: 3 per Snail, tying its phases together 10 ms after ARM drops",
+  "qty_per_robot": 6
+ },
+ {
+  "id": "vishay-tsal4400",
+  "key": "vishay-tsal4400",
+  "category": "sensor",
+  "vendor": "Vishay",
+  "model": "TSAL4400",
+  "name": "IR emitting diode 940 nm, T-1 (3 mm)",
+  "price_usd": 0.4,
+  "price_note": "est",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Mouser / Digi-Key",
+    "url": "https://www.mouser.com/c/?q=TSAL4400",
+    "in_stock": null,
+    "ships_from": null
+   }
+  ],
+  "specs": {},
+  "sources": [
+   "https://www.mouser.com/c/?q=TSAL4400"
+  ],
+  "confidence": "datasheet",
+  "used_for": "the chronograph gates' emitters (barrel, 22 and 82 mm from the shoulder)",
+  "qty_per_robot": 2
+ },
+ {
+  "id": "vishay-teft4300",
+  "key": "vishay-teft4300",
+  "category": "sensor",
+  "vendor": "Vishay",
+  "model": "TEFT4300",
+  "name": "Silicon NPN phototransistor, T-1 (3 mm)",
+  "price_usd": 0.45,
+  "price_note": "est",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Mouser / Digi-Key",
+    "url": "https://www.mouser.com/c/?q=TEFT4300",
+    "in_stock": null,
+    "ships_from": null
+   }
+  ],
+  "specs": {},
+  "sources": [
+   "https://www.mouser.com/c/?q=TEFT4300"
+  ],
+  "confidence": "datasheet",
+  "used_for": "the chronograph gates' receivers",
+  "qty_per_robot": 2
+ },
+ {
+  "id": "adafruit-2167",
+  "key": "adafruit-2167",
+  "category": "sensor",
+  "vendor": "Adafruit",
+  "model": "2167",
+  "name": "IR Break Beam Sensor - 3mm LEDs",
+  "price_usd": 1.95,
+  "price_note": "one unit, before shipping",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Adafruit",
+    "url": "https://www.adafruit.com/product/2167",
+    "in_stock": null,
+    "ships_from": null
+   }
+  ],
+  "specs": {},
+  "sources": [
+   "https://www.adafruit.com/product/2167"
+  ],
+  "confidence": "product page",
+  "used_for": "the hopper-full beam (two Ø5 holes near the hopper's top)",
+  "qty_per_robot": 1
+ },
+ {
+  "id": "adafruit-neopixel-ring-12-1643",
+  "key": "adafruit-neopixel-ring-12-1643",
+  "category": "light",
+  "vendor": "Adafruit",
+  "model": "1643",
+  "name": "NeoPixel Ring - 12 x 5050 RGB LED",
+  "price_usd": 7.5,
+  "price_note": "est",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Adafruit",
+    "url": "https://www.adafruit.com/product/1643",
+    "in_stock": null,
+    "ships_from": null
+   }
+  ],
+  "specs": {},
+  "sources": [
+   "https://www.adafruit.com/product/1643"
+  ],
+  "confidence": "product page",
+  "used_for": "the turret's status lights",
+  "qty_per_robot": 1
+ },
+ {
+  "id": "molex-43030-0038",
+  "key": "molex-43030-0038",
+  "category": "wiring",
+  "vendor": "Molex",
+  "model": "43030-0038",
+  "name": "Micro-Fit 3.0 female crimp terminal, 18 AWG, tin, 8.5 A",
+  "price_usd": 0.15,
+  "price_note": "est",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Heilind",
+    "url": "https://heilind.com/mol43030-0038.html",
+    "in_stock": null,
+    "ships_from": null
+   }
+  ],
+  "specs": {},
+  "sources": [
+   "https://heilind.com/mol43030-0038.html"
+  ],
+  "confidence": "seller listing",
+  "used_for": "female contacts for the 18 AWG power leads",
+  "qty_per_robot": 12
+ },
+ {
+  "id": "molex-43031-0021",
+  "key": "molex-43031-0021",
+  "category": "wiring",
+  "vendor": "Molex",
+  "model": "43031-0021",
+  "name": "Micro-Fit 3.0 male crimp terminal, 18 AWG, tin, 8.5 A",
+  "price_usd": 0.15,
+  "price_note": "est",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Heilind",
+    "url": "https://heilind.com/mol43031-0021.html",
+    "in_stock": null,
+    "ships_from": "US"
+   },
+   {
+    "seller": "Molex (distributors)",
+    "url": "https://www.molex.com/ja-jp/products/part-detail/430310021",
+    "in_stock": null,
+    "ships_from": null
+   }
+  ],
+  "specs": {},
+  "sources": [
+   "https://heilind.com/mol43031-0021.html"
+  ],
+  "confidence": "product page",
+  "used_for": "male contacts for the 18 AWG power leads",
+  "qty_per_robot": 12
+ },
+ {
+  "id": "molex-43030-0001",
+  "key": "molex-43030-0001",
+  "category": "wiring",
+  "vendor": "Molex",
+  "model": "43030-0001",
+  "name": "Micro-Fit 3.0 female crimp terminal, 20-24 AWG, tin",
+  "price_usd": 0.12,
+  "price_note": "est",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Heilind",
+    "url": "https://heilind.com/mol43030-0001.html",
+    "in_stock": null,
+    "ships_from": "US"
+   },
+   {
+    "seller": "Mouser / Digi-Key",
+    "url": "https://www.mouser.com/c/?q=43030-0001",
+    "in_stock": null,
+    "ships_from": null
+   }
+  ],
+  "specs": {},
+  "sources": [
+   "https://heilind.com/mol43030-0001.html"
+  ],
+  "confidence": "datasheet",
+  "used_for": "female contacts for the signal leads",
+  "qty_per_robot": 30
+ },
+ {
+  "id": "molex-43031-0001",
+  "key": "molex-43031-0001",
+  "category": "wiring",
+  "vendor": "Molex",
+  "model": "43031-0001",
+  "name": "Micro-Fit 3.0 male crimp terminal, 20-24 AWG, tin",
+  "price_usd": 0.12,
+  "price_note": "est",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Heilind",
+    "url": "https://heilind.com/mol43031-0001.html",
+    "in_stock": null,
+    "ships_from": "US"
+   },
+   {
+    "seller": "Mouser / Digi-Key",
+    "url": "https://www.mouser.com/c/?q=43031-0001",
+    "in_stock": null,
+    "ships_from": null
+   }
+  ],
+  "specs": {},
+  "sources": [
+   "https://heilind.com/mol43031-0001.html"
+  ],
+  "confidence": "seller listing",
+  "used_for": "male contacts for the signal leads",
+  "qty_per_robot": 30
+ },
+ {
+  "id": "keystone-3557-2",
+  "key": "keystone-3557-2",
+  "category": "power_distribution",
+  "vendor": "Keystone Electronics",
+  "model": "3557-2",
+  "name": "PCB fuse holder for ATO or MINI blade fuses",
+  "price_usd": 0.9,
+  "price_note": "est",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "JLCPCB parts / Farnell",
+    "url": "https://jlcpcb.com/partdetail/3557-2/C352820",
+    "in_stock": null,
+    "ships_from": null
+   }
+  ],
+  "specs": {},
+  "sources": [
+   "https://jlcpcb.com/partdetail/3557-2/C352820"
+  ],
+  "confidence": "seller listing",
+  "used_for": "the fuses on the boards: 10 A ATO main (base), 15 A MINI flywheel regulator and 10 A MINI C610 (turret)",
+  "qty_per_robot": 3
+ },
+ {
+  "id": "littelfuse-0287010-pxcn",
+  "key": "littelfuse-0287010-pxcn",
+  "category": "power_distribution",
+  "vendor": "Littelfuse",
+  "model": "0287010.PXCN",
+  "name": "ATO blade fuse 10 A, 32 V DC",
+  "price_usd": 0.4,
+  "price_note": "est",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Mouser / Digi-Key",
+    "url": "https://www.mouser.com/c/?q=0287010.PXCN",
+    "in_stock": null,
+    "ships_from": null
+   }
+  ],
+  "specs": {},
+  "sources": [
+   "https://www.mouser.com/c/?q=0287010.PXCN"
+  ],
+  "confidence": "datasheet",
+  "used_for": "the base's main fuse (and a spare)",
+  "qty_per_robot": 2
+ },
+ {
+  "id": "littelfuse-0297015-wxnv",
+  "key": "littelfuse-0297015-wxnv",
+  "category": "power_distribution",
+  "vendor": "Littelfuse",
+  "model": "0297015.WXNV",
+  "name": "MINI blade fuse 15 A, 32 V DC",
+  "price_usd": 0.35,
+  "price_note": "est",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Mouser / Digi-Key",
+    "url": "https://www.mouser.com/c/?q=0297015.WXNV",
+    "in_stock": null,
+    "ships_from": null
+   }
+  ],
+  "specs": {},
+  "sources": [
+   "https://www.mouser.com/c/?q=0297015.WXNV"
+  ],
+  "confidence": "datasheet",
+  "used_for": "the flywheel regulator's input (and a spare)",
+  "qty_per_robot": 2
+ },
+ {
+  "id": "littelfuse-0297010-wxnv",
+  "key": "littelfuse-0297010-wxnv",
+  "category": "power_distribution",
+  "vendor": "Littelfuse",
+  "model": "0297010.WXNV",
+  "name": "MINI blade fuse 10 A, 32 V DC",
+  "price_usd": 0.35,
+  "price_note": "est",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Mouser / Digi-Key",
+    "url": "https://www.mouser.com/c/?q=0297010.WXNV",
+    "in_stock": null,
+    "ships_from": null
+   }
+  ],
+  "specs": {},
+  "sources": [
+   "https://www.mouser.com/c/?q=0297010.WXNV"
+  ],
+  "confidence": "datasheet",
+  "used_for": "the C610's 24 V dial rail (and a spare)",
+  "qty_per_robot": 2
+ },
+ {
+  "id": "bourns-mf-r300",
+  "key": "bourns-mf-r300",
+  "category": "power_distribution",
+  "vendor": "Bourns",
+  "model": "MF-R300",
+  "name": "Resettable PTC fuse, 3 A hold, 30 V",
+  "price_usd": 0.5,
+  "price_note": "est",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Mouser / Digi-Key",
+    "url": "https://www.mouser.com/c/?q=MF-R300",
+    "in_stock": null,
+    "ships_from": null
+   }
+  ],
+  "specs": {},
+  "sources": [
+   "https://www.mouser.com/c/?q=MF-R300"
+  ],
+  "confidence": "datasheet",
+  "used_for": "the 12 V aux rail (turret) and the pan servo's 12 V rail (base)",
+  "qty_per_robot": 2
+ },
+ {
+  "id": "bourns-mf-r200",
+  "key": "bourns-mf-r200",
+  "category": "power_distribution",
+  "vendor": "Bourns",
+  "model": "MF-R200",
+  "name": "Resettable PTC fuse, 2 A hold, 30 V",
+  "price_usd": 0.45,
+  "price_note": "est",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Mouser / Digi-Key",
+    "url": "https://www.mouser.com/c/?q=MF-R200",
+    "in_stock": null,
+    "ships_from": null
+   }
+  ],
+  "specs": {},
+  "sources": [
+   "https://www.mouser.com/c/?q=MF-R200"
+  ],
+  "confidence": "datasheet",
+  "used_for": "the 5 V logic rail",
+  "qty_per_robot": 1
+ },
+ {
+  "id": "te-w12p",
+  "key": "te-w12p",
+  "category": "wiring",
+  "vendor": "TE Connectivity (Deutsch)",
+  "model": "W12P",
+  "name": "DT wedgelock for the 12-way receptacle",
+  "price_usd": 1.2,
+  "price_note": "est",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Mouser / Digi-Key",
+    "url": "https://www.mouser.com/c/?q=W12P",
+    "in_stock": null,
+    "ships_from": null
+   }
+  ],
+  "specs": {},
+  "sources": [
+   "https://www.mouser.com/c/?q=W12P"
+  ],
+  "confidence": "datasheet",
+  "used_for": "locks the pins in the DT04-12PA-L012 on the pan base",
+  "qty_per_robot": 1
+ },
+ {
+  "id": "te-0460-202-16141",
+  "key": "te-0460-202-16141",
+  "category": "wiring",
+  "vendor": "TE Connectivity (Deutsch)",
+  "model": "0460-202-16141",
+  "name": "DT size 16 pin contact, nickel, 14-16 AWG",
+  "price_usd": 0.3,
+  "price_note": "est",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Mouser / Digi-Key",
+    "url": "https://www.mouser.com/c/?q=0460-202-16141",
+    "in_stock": null,
+    "ships_from": null
+   }
+  ],
+  "specs": {},
+  "sources": [
+   "https://www.mouser.com/c/?q=0460-202-16141"
+  ],
+  "confidence": "datasheet",
+  "used_for": "the receptacle's 12 pins",
+  "qty_per_robot": 12
+ },
+ {
+  "id": "adafruit-2517",
+  "key": "adafruit-2517",
+  "category": "wiring",
+  "vendor": "Adafruit",
+  "model": "2517",
+  "name": "Silicone Cover Stranded-Core Wire - 25ft 26AWG - Black",
+  "price_usd": 4.95,
+  "price_note": "est",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Adafruit",
+    "url": "https://www.adafruit.com/product/2517",
+    "in_stock": null,
+    "ships_from": null
+   }
+  ],
+  "specs": {},
+  "sources": [
+   "https://www.adafruit.com/product/2517"
+  ],
+  "confidence": "seller listing",
+  "used_for": "the signal leads (twisted pairs for CAN, the safety loop, the gates)",
+  "qty_per_robot": 1
+ },
+ {
+  "id": "remington-18ul3173strblu25",
+  "key": "remington-18ul3173strblu25",
+  "category": "wiring",
+  "vendor": "Remington Industries",
+  "model": "18UL3173STRBLU25",
+  "name": "18 AWG stranded hook-up wire, XLPE 125 C, 25 ft",
+  "price_usd": 9.0,
+  "price_note": "est",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Zoro",
+    "url": "https://www.zoro.com/remington-industries-hookup-wire-18-awg-blue-25-ft-18ul3173strblu25/i/G310059658/",
+    "in_stock": null,
+    "ships_from": null
+   }
+  ],
+  "specs": {},
+  "sources": [
+   "https://www.zoro.com/remington-industries-hookup-wire-18-awg-blue-25-ft-18ul3173strblu25/i/G310059658/"
+  ],
+  "confidence": "seller listing",
+  "used_for": "the power pairs: ring to board, board to the CT connector (buy red and black of the same family)",
+  "qty_per_robot": 2
+ },
+ {
+  "id": "mcmaster-98952a112",
+  "key": "turret_standoff_m3x14",
+  "category": "fastener",
+  "vendor": "McMaster-Carr",
+  "model": "98952A112",
+  "name": "Aluminum Male-Female Threaded Hex Standoff, 4.5mm Hex, 14mm Long, M3 x 0.50 mm Thread",
+  "price_usd": 0.84,
+  "price_note": "McMaster-Carr: $0.84 each (price_usd is per piece)",
+  "price_checked": "2026-10-27",
+  "pack_qty": 1,
+  "pack_price_usd": 0.84,
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/98952A112/",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "length_mm": 14.0,
+   "thread": "M3",
+   "mass_g": null,
+   "mass_basis": "unknown",
+   "material": "Aluminum",
+   "mcmaster": {
+    "raw": {
+     "Material": "Aluminum",
+     "Thread Size (A)": "M3",
+     "Thread Size (B)": "M3",
+     "Thread Pitch (A)": "0.5 mm",
+     "Thread Pitch (B)": "0.5 mm",
+     "Length": "14 mm",
+     "Length Tolerance": "-0.13 mm to 0.13 mm",
+     "Hex Size": "4.5 mm",
+     "Hex Size Tolerance": "-0.13 mm to 0.13 mm",
+     "Thread Lg. (A)": "4.7 mm",
+     "Minimum Thread Length (B)": "6.4 mm",
+     "Gender (A)": "Male",
+     "Gender (B)": "Female",
+     "Hardness": "Rockwell B50",
+     "Mount Type (A)": "Threaded",
+     "Mount Type (B)": "Threaded",
+     "Performance": "Corrosion Resistant, Lightweight",
+     "Shape": "Hex",
+     "System of Measurement": "Metric",
+     "Tensile Strength": "45,000 psi",
+     "Thread Fit (A)": "Metric Class 6g",
+     "Thread Fit (B)": "Metric Class 6H",
+     "Country of Origin": "United States",
+     "DFARS Compliance": "Specialty Metals COTS-Exempt",
+     "Export Control Classification Number (ECCN)": "EAR99",
+     "REACH Compliance": "REACH (EC 1907/2006) (02/04/2026, 253 SVHC) Compliant",
+     "RoHS Compliance": "RoHS 3 (2015/863/EU) Compliant with Exemptions",
+     "RoHS Exemptions": "6(b)-II",
+     "Schedule B Number": "761610.8000",
+     "U.S.–Mexico–Canada Agreement (USMCA) Qualifying": "Yes"
+    },
+    "parsed": {
+     "Thread Pitch (A)": {
+      "value": 0.5,
+      "unit": "mm"
+     },
+     "Thread Pitch (B)": {
+      "value": 0.5,
+      "unit": "mm"
+     },
+     "Length": {
+      "value": 14.0,
+      "unit": "mm"
+     },
+     "Length Tolerance": {
+      "min": -0.13,
+      "max": 0.13,
+      "unit": "mm"
+     },
+     "Hex Size": {
+      "value": 4.5,
+      "unit": "mm"
+     },
+     "Hex Size Tolerance": {
+      "min": -0.13,
+      "max": 0.13,
+      "unit": "mm"
+     },
+     "Thread Lg. (A)": {
+      "value": 4.7,
+      "unit": "mm"
+     },
+     "Minimum Thread Length (B)": {
+      "value": 6.4,
+      "unit": "mm"
+     },
+     "Tensile Strength": {
+      "value": 310.2642,
+      "unit": "MPa"
+     }
+    }
+   }
+  },
+  "cad": {
+   "file": null,
+   "kind": "standoff",
+   "frame": "axis +Z, centred on the axis; the larger end (flange, head, collar) at z = 0 and the part on +z; when both ends are the same size, the heavier end at z = 0",
+   "available": true,
+   "step_url": "https://www.mcmaster.com/98952A112/",
+   "bbox_mm": null,
+   "volume_mm3": null,
+   "pending": "STEP not downloaded yet: McMaster-Carr asks for a login before CAD downloads (the product page itself reads without one). Finish with .venv/bin/python tools/mcmaster_cad.py --catalog --file catalog/turret.json --only turret_standoff_m3x14 once logged in, or save the STEP from a logged-in browser as references/vendor/mcmaster/98952A112/98952A112.step and run the same command."
+  },
+  "frame": "axis +Z, centred on the axis; the larger end (flange, head, collar) at z = 0 and the part on +z; when both ends are the same size, the heavier end at z = 0",
+  "sources": [
+   "https://www.mcmaster.com/98952A112/"
+  ],
+  "confidence": "product page",
+  "used_for": "the turret bay's level-2 board over level 1 (the capacitor bank lies between)",
+  "qty_per_robot": 4
+ },
+ {
+  "id": "amass-xt60e-m",
+  "key": "amass-xt60e-m",
+  "category": "wiring",
+  "vendor": "Amass",
+  "model": "XT60E-M",
+  "name": "XT60E-M panel-mount plug (male), 2 screw holes",
+  "price_usd": 1.5,
+  "price_note": "est; sellers list it singly or in pairs",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Maplin (UK)",
+    "url": "https://pro.maplin.co.uk/products/male-xt60e-panel-mount-gold-plated-connector-20a-amass",
+    "in_stock": null,
+    "ships_from": "UK"
+   },
+   {
+    "seller": "Probots (IN)",
+    "url": "https://probots.co.in/xt60e-m-male-panel-mount-connector-for-lipo-battery-esc-brushless-motor.html",
+    "in_stock": null,
+    "ships_from": "IN"
+   }
+  ],
+  "specs": {},
+  "sources": [
+   "https://pro.maplin.co.uk/products/male-xt60e-panel-mount-gold-plated-connector-20a-amass"
+  ],
+  "confidence": "seller listing",
+  "used_for": "the bench stand's 24 V inlet: the supply's lead carries the female, so no live pin is bare",
+  "qty_per_robot": 1,
+  "notes": "Screw spacing and size not published (sellers: ~19-20 mm, M2.5 or M3): the stand's holes are slotted 18-28 mm at Ø3.2. Replaces the XT60E-F (female) the stand first named."
+ },
+ {
+  "id": "littelfuse-0477005-mxp",
+  "key": "littelfuse-0477005-mxp",
+  "category": "power_distribution",
+  "vendor": "Littelfuse",
+  "model": "0477005.MXP",
+  "name": "5 x 20 mm time-lag fuse, 5 A, 500 V AC / 400 V DC (477 series)",
+  "price_usd": 1.0,
+  "price_note": "est",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/detail/littelfuse-inc/0477005-MXP/1979192",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "current_a": 5,
+   "voltage_dc_v": 400
+  },
+  "sources": [
+   "https://rspsupply.com/p-564062-littelfuse-0477005mxp-5x20mm-fuse-5-amp-500-vac400-vdc.aspx"
+  ],
+  "confidence": "seller listing",
+  "used_for": "the bench stand's 24 V fuse: DC-rated (the 218 series the stand first named is rated for AC only)",
+  "qty_per_robot": 1
+ },
+ {
+  "id": "molex-43025-0600",
+  "key": "molex-43025-0600",
+  "category": "wiring",
+  "vendor": "Molex",
+  "model": "43025-0600",
+  "name": "Micro-Fit 3.0 receptacle housing, dual row, 6 circuits",
+  "price_usd": 0.6,
+  "price_note": "est",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Heilind",
+    "url": "https://heilind.com/mol43025-0600.html",
+    "in_stock": null,
+    "ships_from": "US"
+   },
+   {
+    "seller": "Mouser / Digi-Key",
+    "url": "https://www.mouser.com/c/?q=43025-0600",
+    "in_stock": null,
+    "ships_from": null
+   }
+  ],
+  "specs": {},
+  "sources": [
+   "https://heilind.com/mol43025-0600.html"
+  ],
+  "confidence": "datasheet",
+  "used_for": "the CT power connector, cartridge side (docs/turret-wiring.md 1.4)",
+  "qty_per_robot": 1
+ },
+ {
+  "id": "molex-43020-0600",
+  "key": "molex-43020-0600",
+  "category": "wiring",
+  "vendor": "Molex",
+  "model": "43020-0600",
+  "name": "Micro-Fit 3.0 plug housing, dual row, 6 circuits",
+  "price_usd": 0.6,
+  "price_note": "est",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Heilind",
+    "url": "https://heilind.com/mol43020-0600.html",
+    "in_stock": null,
+    "ships_from": "US"
+   },
+   {
+    "seller": "Mouser / Digi-Key",
+    "url": "https://www.mouser.com/c/?q=43020-0600",
+    "in_stock": null,
+    "ships_from": null
+   }
+  ],
+  "specs": {},
+  "sources": [
+   "https://heilind.com/mol43020-0600.html"
+  ],
+  "confidence": "datasheet",
+  "used_for": "the CT power connector, cradle side",
+  "qty_per_robot": 1
+ },
+ {
+  "id": "molex-43025-1200",
+  "key": "molex-43025-1200",
+  "category": "wiring",
+  "vendor": "Molex",
+  "model": "43025-1200",
+  "name": "Micro-Fit 3.0 receptacle housing, dual row, 12 circuits",
+  "price_usd": 0.6,
+  "price_note": "est",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Heilind",
+    "url": "https://heilind.com/mol43025-1200.html",
+    "in_stock": null,
+    "ships_from": "US"
+   },
+   {
+    "seller": "Mouser / Digi-Key",
+    "url": "https://www.mouser.com/c/?q=43025-1200",
+    "in_stock": null,
+    "ships_from": null
+   }
+  ],
+  "specs": {},
+  "sources": [
+   "https://heilind.com/mol43025-1200.html"
+  ],
+  "confidence": "datasheet",
+  "used_for": "the slip ring's stator and rotor connectors (receptacles on the ring's leads, 2 x 6: docs/turret-wiring.md 1.3)",
+  "qty_per_robot": 2
+ },
+ {
+  "id": "molex-43020-1200",
+  "key": "molex-43020-1200",
+  "category": "wiring",
+  "vendor": "Molex",
+  "model": "43020-1200",
+  "name": "Micro-Fit 3.0 plug housing, dual row, 12 circuits",
+  "price_usd": 0.6,
+  "price_note": "est",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Heilind",
+    "url": "https://heilind.com/mol43020-1200.html",
+    "in_stock": null,
+    "ships_from": "US"
+   },
+   {
+    "seller": "Mouser / Digi-Key",
+    "url": "https://www.mouser.com/c/?q=43020-1200",
+    "in_stock": null,
+    "ships_from": null
+   }
+  ],
+  "specs": {},
+  "sources": [
+   "https://heilind.com/mol43020-1200.html"
+  ],
+  "confidence": "datasheet",
+  "used_for": "the base board's and the turret bay's mating plugs for the ring",
+  "qty_per_robot": 2
+ },
+ {
+  "id": "molex-43025-1000",
+  "key": "molex-43025-1000",
+  "category": "wiring",
+  "vendor": "Molex",
+  "model": "43025-1000",
+  "name": "Micro-Fit 3.0 receptacle housing, dual row, 10 circuits",
+  "price_usd": null,
+  "price_note": "see the price sourcing note",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Heilind",
+    "url": "https://heilind.com/mol43025-1000.html",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {},
+  "sources": [
+   "https://heilind.com/mol43025-1000.html"
+  ],
+  "confidence": "datasheet",
+  "used_for": "the CT signal connector, cartridge side (2 x 5)",
+  "qty_per_robot": 1
+ },
+ {
+  "id": "molex-43020-1000",
+  "key": "molex-43020-1000",
+  "category": "wiring",
+  "vendor": "Molex",
+  "model": "43020-1000",
+  "name": "Micro-Fit 3.0 plug housing, dual row, 10 circuits",
+  "price_usd": null,
+  "price_note": "see the price sourcing note",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Heilind",
+    "url": "https://heilind.com/mol43020-1000.html",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {},
+  "sources": [
+   "https://heilind.com/mol43020-1000.html"
+  ],
+  "confidence": "datasheet",
+  "used_for": "the CT signal connector, cradle side (2 x 5)",
+  "qty_per_robot": 1
+ },
+ {
+  "id": "vxb-6810-2rs",
+  "key": "vxb-6810-2rs",
+  "category": "bearing",
+  "vendor": "VXB Bearings",
+  "model": "Kit7458 (6810-2RS)",
+  "name": "6810-2RS Bearing 50x65x7mm - Sealed Ball Bearing - Thin Section (chrome steel)",
+  "price_usd": 24.99,
+  "price_note": "one unit, VXB store (decided 2026-10-27: the chrome-steel sealed 6810-2RS, not the $194.88 stainless)",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "VXB Bearings",
+    "url": "https://vxb.com/products/6810-2rs-bearing-50x65x7mm-sealed",
+    "in_stock": true,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "bore_mm": 50,
+   "od_mm": 65,
+   "width_mm": 7,
+   "mass_g": 52,
+   "seal": "2RS"
+  },
+  "sources": [
+   "https://vxb.com/products/6810-2rs-bearing-50x65x7mm-sealed"
+  ],
+  "confidence": "product page",
+  "used_for": "the pan bearing (cad/turret.py BRG): outer race in the pan base's seat under the clamp, inner race on the turntable's journal",
+  "qty_per_robot": 1
+ },
+ {
+  "id": "quarton-vlm-520-73-lpt",
+  "key": "quarton-vlm-520-73-lpt",
+  "category": "turret",
+  "vendor": "Quarton",
+  "model": "VLM-520-73 LPT",
+  "name": "Green dot laser module 520 nm, < 1 mW (Class 2), 3-6 V DC, Ø7 x 26.1 mm",
+  "price_usd": 41.82,
+  "price_note": "Digi-Key 100-VLM-520-73LPT-ND, one unit (0 in stock, 4 weeks lead, read 2026-10-27)",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/detail/quarton-inc/VLM-520-73-LPT/10523439",
+    "in_stock": false,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "diameter_mm": 7.0,
+   "length_mm": 26.1,
+   "mass_g": 3.8,
+   "voltage_v": [
+    3,
+    6
+   ],
+   "class": "2"
+  },
+  "sources": [
+   "https://wmsc.lcsc.com/wmsc/upload/file/pdf/v2/lcsc/2404171146_Quarton--Inc--VLM-520-73-LPT_C5997388.pdf"
+  ],
+  "confidence": "datasheet",
+  "used_for": "the aiming laser in its mount on the cradle (Class 2, under 1 mW: kid-safe), on the 5 V rail through a logic MOSFET",
+  "qty_per_robot": 1,
+  "notes": "Replaces the Picotronic DD520-1-24 (EUR 320, maker's store in Germany only): the same green dot class at an eighth of the price, listed at Digi-Key and LCSC (C5997388)."
+ },
+ {
+  "id": "sendcutsend-pan-clamp",
+  "key": "sendcutsend-pan-clamp",
+  "category": "turret",
+  "vendor": "SendCutSend",
+  "model": "pan_clamp.dxf (6061-T6, 0.125 in)",
+  "name": "Pan clamp ring, laser-cut 6061-T6 aluminium 0.125 in, 86 x 87 mm, 7 holes",
+  "price_usd": null,
+  "price_note": "instant price on upload of exports/turret/pan_clamp.dxf at sendcutsend.com (no quote): est $8-15 for one in 6061-T6 0.125 in",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "SendCutSend",
+    "url": "https://sendcutsend.com/materials/6061-t6-aluminum/",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "material": "6061-T6 aluminium",
+   "thickness_in": 0.125,
+   "thickness_mm": 3.175,
+   "mass_g": 17.8,
+   "drawing": "exports/turret/pan_clamp.dxf"
+  },
+  "sources": [
+   "https://sendcutsend.com/materials/6061-t6-aluminum/"
+  ],
+  "confidence": "estimate",
+  "used_for": "holds the pan bearing's outer race down (5 x M3 x 8 into the housing ears); FEA SF 3.1 on the lift case",
+  "qty_per_robot": 1
+ }
+]

@@ -1,0 +1,209 @@
+{
+ "_meta": {
+  "units": "mm, g, N, N*m; angles in degrees",
+  "retrieved": "2026-10-25",
+  "notes": "Values from vendor drawings unless a field name or 'basis' says STEP (measured in the vendor STEP with OCP) or inferred. 'depth' = usable thread depth from the drawing. Output face = the rotating face the link bolts to. See research/actuator-interfaces.md for sources per value."
+ },
+ "robstride-rs-04": {
+  "envelope": {
+   "outer_diameter": 120.0,
+   "length_case": 39.0,
+   "length_case_tol": 0.15,
+   "rear_cover_length": 13.2,
+   "rear_cover_diameter": 94.0,
+   "length_total": 52.2,
+   "length_total_basis": "drawing 13.2+39, excl. 0.5 output step and 3 mm pins",
+   "length_total_step": 55.7,
+   "mass_g": 1420,
+   "mass_note": "manual 1420+-20; spec PDF 1510"
+  },
+  "output": {
+   "flange_diameter": 49.8,
+   "flange_basis": "STEP",
+   "face_offset_from_case_face": 0.5,
+   "face_offset_tol": 0.3,
+   "bolts": {
+    "count": 9,
+    "thread": "M5",
+    "pcd": 36.0,
+    "depth": 6.5,
+    "pcd_tol": 0.1,
+    "depth_note": "min",
+    "angles_deg": [
+     45.0,
+     75.0,
+     105.0,
+     165.0,
+     195.0,
+     225.0,
+     285.0,
+     315.0,
+     345.0
+    ],
+    "angles_basis": "STEP (RS04.stp): 12 positions every 30 deg from 15 deg, pins at 3 of them; angles from STEP +X"
+   },
+   "dowel_pins": {
+    "count": 3,
+    "diameter": 6.0,
+    "tolerance": "0/-0.01",
+    "pcd": 35.86,
+    "pcd_tol": 0.025,
+    "protrusion": 3.0,
+    "protrusion_tol": 0.25,
+    "note": "pins are INSTALLED and stand 3 mm proud of the output face",
+    "angles_deg": [
+     15.0,
+     135.0,
+     255.0
+    ]
+   },
+   "pilot": null,
+   "through_hole": false,
+   "through_hole_diameter": null
+  },
+  "case": {
+   "mount_face": "both faces",
+   "bolts": {
+    "count": 10,
+    "thread": "M4",
+    "pcd": 106.0,
+    "depth": 5,
+    "pcd_tol": 0.1,
+    "depth_note": "output-side face, min"
+   },
+   "bolts_rear": {
+    "count": 10,
+    "thread": "M4",
+    "pcd": 106.0,
+    "depth": 6,
+    "pcd_tol": 0.1
+   },
+   "locating": {
+    "count": 2,
+    "diameter": 5.0,
+    "tolerance": "0/-0.01 (as drawn)",
+    "pcd": 106.0,
+    "note": "STEP shows 4.5 deep holes"
+   },
+   "spigot": null
+  },
+  "bearing": {
+   "type": "deep-groove ball, thin section",
+   "size_d_D_B": [
+    50,
+    65,
+    7
+   ],
+   "basis": "STEP part name '61810_50'",
+   "crossed_roller": false,
+   "rated_axial_n": null,
+   "rated_radial_n": null,
+   "rated_moment_nm": null
+  },
+  "connectors": {
+   "power": "XT30UW-F on harness (board XT30APW-M)",
+   "signal": "GH1.25 2-pin CAN on harness (board GH1.25-2PWT)",
+   "fixed_leads": true,
+   "harness": "310+-5 mm sheathed lead through a silicone-sealed grommet in the rear cover, then 40+-3 mm breakout; blue CAN_H, brown CAN_L, black GND, red VBAT+",
+   "exit": "radial, rear cover side",
+   "cable_od": null,
+   "bend_radius": null
+  },
+  "encoder": {
+   "count": 2,
+   "type": "magnetic",
+   "bits": 14,
+   "output_absolute": "not stated explicitly",
+   "through_bore": false
+  },
+  "step": {
+   "url": "https://raw.githubusercontent.com/RobStride/Product_Information/384cc561e1ff079c22f68b19908526094430febd/Product%20Literature/CAN2.0/RS04/RS04.stp",
+   "local": "references/vendor/robstride-rs-04/RS04.stp"
+  },
+  "drawing": {
+   "url": "https://raw.githubusercontent.com/RobStride/Product_Information/384cc561e1ff079c22f68b19908526094430febd/Product%20Literature/CAN2.0/RS04/RS04User%20Manual260713.pdf",
+   "pdf_page": 10,
+   "local": "references/vendor/robstride-rs-04/RS04User_Manual260713.pdf"
+  },
+  "sources": [
+   "https://github.com/RobStride/Product_Information/tree/384cc561e1ff079c22f68b19908526094430febd/Product%20Literature/CAN2.0/RS04",
+   "https://github.com/RobStride/Product_Information/blob/main/README.md",
+   "https://github.com/RobStride/Product_Information/blob/main/%E7%81%B5%E8%B6%B3%E6%97%B6%E4%BB%A3RS%E7%B3%BB%E5%88%97%E4%BA%A7%E5%93%81%E8%A7%84%E6%A0%BC%E4%BB%8B%E7%BB%8D(2026.010.09).pdf"
+  ],
+  "confidence": "drawing"
+ },
+ "odrive-botwheel": {
+  "envelope": {
+   "outer_diameter": 171.3,
+   "outer_diameter_basis": "drawing (171.30 reference); shop says 171",
+   "tyre_width": 44.6,
+   "tyre_width_tol": 1.5,
+   "length_total": 52.1,
+   "length_total_basis": "inferred: 44.6 width + 7.5 to mounting face",
+   "mass_g": 2200
+  },
+  "output": {
+   "type": "rotating hub/tyre (outer rotor); no output flange",
+   "rim_screws": "10 x M3 on the hub cover (assembly screws, not an interface)"
+  },
+  "case": {
+   "mount_face": "single-sided fixed stator flange on one side",
+   "bolts": {
+    "count": 4,
+    "thread": "M6",
+    "pcd": 36.0,
+    "depth": null,
+    "pcd_tol": 0.05,
+    "depth_note": "not published"
+   },
+   "spigot": {
+    "type": "male boss",
+    "diameter": 50.0,
+    "tolerance": "0/-0.04",
+    "height": 5.0,
+    "height_tol": 0.1
+   },
+   "boss_face_outboard_of_tyre_side": 7.5,
+   "boss_face_outboard_tol": 0.8,
+   "opposite_side": "closed hub with centre cap; no axle (drawing)"
+  },
+  "bearing": {
+   "type": null,
+   "rated_radial_n": 785,
+   "rated_radial_basis": "shop: 'Rated load weight: 80kg / wheel' (80 x 9.81)",
+   "rated_axial_n": null,
+   "rated_moment_nm": null
+  },
+  "connectors": {
+   "phase": "JST 03T-WPJV-1-SM (WPJ series, 3-pin, waterproof)",
+   "feedback": "JST 08R-JWPF-VSLE-D housing + SWPR-001T-P025 pins (JWPF 8-pin, waterproof); supplied stub harness ends in JST PUD with ODrive S1 pinout",
+   "exit": "axial, from the centre of the stator mounting boss",
+   "fixed_leads": true,
+   "cable_length": 300,
+   "cable_length_tol": 25,
+   "cable_note": "200 REF dimension on drawing, probably the sheathed length (inferred)",
+   "cable_od": null,
+   "bend_radius": null
+  },
+  "encoder": {
+   "type": "hall + 3200 CPR incremental",
+   "absolute": false,
+   "through_bore": null
+  },
+  "ip_rating": "IP54",
+  "step": {
+   "url": "https://cad.onshape.com/publications/ffa16d9268e83ffcb5643cba/w/81f7a79746984b3bebf1d392/e/3101f331226b74a504e702ae",
+   "local": null,
+   "note": "Onshape publication; STEP export needs an Onshape login"
+  },
+  "drawing": {
+   "url": "https://cdn.shopify.com/s/files/1/0580/2904/7878/files/BotWheel_Drawng.png?v=1738951877",
+   "local": "references/vendor/odrive-botwheel/BotWheel_Drawng.png"
+  },
+  "sources": [
+   "https://shop.odriverobotics.com/products/botwheels",
+   "https://docs.odriverobotics.com/v/latest/hardware/odrive-motors.html#odrive-botwheel"
+  ],
+  "confidence": "drawing"
+ }
+}

@@ -1,0 +1,657 @@
+"""Build the foam-ball turret on the Orin AGX compute box (cad/turret_box.py): the adapter's parts and print plan, the
+clearance and airflow checks, and the 3D game page's scene (designer/sim.html, design "Turret on the Orin AGX box").
+
+    .venv/bin/python cad/build_turret_box.py
+
+Writes exports/turret/box/ (the adapter's STEP and print-ready STL, print-plan.json, bom.json, box.json with the checks
+and the mechanism's numbers) and exports/sim/turret_box/ (gitignored: every turret, adapter and J501 part as an STL in
+its moving group's frame, and manifest.json: the pivots, the ball path, the callouts, the ball's journey, the numbers).
+The turret is cad/turret.py's and the box is the J501 repo's own export (J501_DIR/exports/view/*.stl), so rebuilding
+after either changes picks the change up. Frames: the box frame of cad/turret_box.py (mm, x forward, y left, z up).
+"""
+from __future__ import annotations
+
+import argparse
+import json
+import math
+import struct
+import sys
+import time
+from pathlib import Path
+
+import numpy as np
+
+R = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(R / 'cad'))
+import cadquery as cq  # noqa: E402
+
+import printplan  # noqa: E402
+import turret as tu  # noqa: E402
+import turret_box as tb  # noqa: E402
+from cadagent.geometry import export_print_stl  # noqa: E402
+from cadagent.robot import Body, combine, printed_part_body, solid_mass_properties  # noqa: E402
+
+OUT = R / 'exports' / 'turret' / 'box'
+SCENE = R / 'exports' / 'sim' / 'turret_box'
+MATERIALS = json.loads((R / 'catalog/materials.json').read_text())
+CAT = {i['id']: i for i in json.loads((R / 'catalog/turret.json').read_text())}
+J501_VIEW = tb.J501_DIR / 'exports' / 'view'
+J501_PARTS = {'base': ('#2f343c', 'J501 base (P1): the floor, the walls, the board and cooler columns'),
+              'cover': ('#3b3f46', 'J501 lid (P2, Rev 0.8): hex cells inside the Ø80 ring feed the fan, the cells round it let the exhaust out'),
+              'front_no_gmsl': ('#8a9099', 'J501 front plate (P4)'), 'rear_io': ('#8a9099', 'J501 rear plate (P5): DC in, Ethernet, USB'),
+              'side_hatch': ('#8a9099', 'J501 side hatch (P10)')}
+M = 1e-3
+G0 = 9.81
+
+# ------------------------------------------------------------------------------------------- what each part does
+
+ROLE = {
+    'pan_base': 'The fixed base: bolts to the TM face (4 x M5, 2 dowels) and holds the pan bearing, the pan servo, the DT12 socket and the pan stop post.',
+    'pan_clamp': 'Clamps the pan bearing\'s outer race into the base (3 x M3).',
+    'pan_ring': 'The turntable: a 63-tooth gear on the bearing\'s inner race; the yoke bolts on top. A finger meets the base\'s post at +-173.5 deg.',
+    'pan_pinion': '21-tooth pinion on the pan servo\'s horn. 63 / 21 = 3, so the servo turns three times for every turn of the turret.',
+    'tilt_yoke': 'Two arms up to the tilt axis: the tilt servo on the left, a bearing on the right, hard stops at 0 and -25 deg (it cannot point above level).',
+    'cradle': 'Swings on the tilt axis. Its two rails carry the ball cartridge (2 dowels + a thumbscrew) and the laser.',
+    'cartridge_body': 'One printed block: the dial housing, the drop chute, the flywheel cage and the barrel socket. It lifts off the cradle as a unit.',
+    'flywheel': 'Flywheel hub on the Snail motor\'s shaft (grub screw). Two of them spin opposite ways.',
+    'flywheel_tyre': 'TPU tyre: the 22.7 mm ball is squeezed 2.7 mm between two of them and leaves at their surface speed.',
+    'dial': 'The feed dial: 8 pockets on the M2006. Each 45 deg step drops one ball through the exit hole; parked, a spoke covers the hole.',
+    'hopper': 'Clear tube over the dial: 30 balls fall into the pockets by gravity; the cone on the dial stirs them.',
+    'hopper_lid': 'The hopper lid, with the fill port for the dock\'s spout.',
+    'hopper_flap': 'Sprung flap over the fill port: the dock\'s spout pushes it open.',
+    'barrel': '100 mm barrel, bore 1.5 mm over the ball: it only guides. Two IR gates 50 mm apart time every shot. Blaze-orange tip.',
+    'laser_mount': 'Holds the aiming laser parallel to the barrel (three boresight screws). It stays on the cradle when the cartridge comes off.',
+    'bumper_ring': 'TPU ring round the base: it takes the knocks.',
+    'pan_servo': 'Feetech STS3215 (12 V serial bus, 2.94 N.m stall, 45 rpm, 12-bit encoder): drives the pinion.',
+    'pan_bearing': '61810-2RS thin-section bearing (50 x 65 x 7): the whole upper turret turns on it, with a 40 mm open centre.',
+    'dt_receptacle': 'Deutsch DT 12-way socket: 24 V, CAN, the safety line and an ID pin between the turret and its host.',
+    'dt_plug': 'The host\'s DT12 plug (a 90 deg boot turns the harness down).',
+    'tilt_servo': 'STS3215 on the yoke\'s left arm: tilts the cradle directly.',
+    'tilt_bearing': 'MR126 bearing round the M5 shoulder screw: the cradle\'s second pivot.',
+    'flywheel_motor_l': 'DJI Snail 2305 (875 rpm/V, 21,000 rpm at 24 V): hangs under the cage plate.',
+    'flywheel_motor_r': 'DJI Snail 2305, spinning the other way.',
+    'esc_l': 'AM32 35 A ESC for the left flywheel motor.',
+    'esc_r': 'AM32 35 A ESC for the right flywheel motor.',
+    'feed_motor': 'DJI M2006 P36 geared motor (36:1, 416 rpm rated) under the dial floor.',
+    'feed_esc': 'DJI C610: the M2006\'s speed controller on CAN.',
+    'laser': 'Picotronic 520 nm Class 2 green laser: the aiming dot, parallel to the barrel.',
+    'box_deck': 'The adapter: carries the TM face 44 mm above the J501\'s roof on four legs at the lid\'s screw corners; the control pod hangs at the back.',
+    'intake_shroud': 'Keeps the J501 fan\'s intake apart from its exhaust: the fan breathes through the front grille, not its own hot air.',
+    'pod_cover': 'Closes the control pod from below.',
+    'pod_xt60': 'XT60 socket: 24 V in. The J501 takes 12-36 V, so one 24 V supply can run both.',
+    'pod_switch': 'Rocker switch: turret power.', 'pod_fuse': '5 A slow-blow fuse in a panel holder.',
+    'pod_pendant': '3.5 mm jack for the hold-to-run pendant: the safety line. Nothing spins or feeds unless it is held.',
+    'pod_usb': 'USB-CAN adapter: the J501 talks CAN to the turret\'s MCU through it.',
+    'pod_wago': 'WAGO lever connectors: 24 V to the DT12 power pins, the pendant loop to its safety pins.',
+}
+TITLE = {'pan_base': 'Pan base', 'pan_clamp': 'Bearing clamp', 'pan_ring': 'Pan ring (63 T)', 'pan_pinion': 'Pan pinion (21 T)',
+         'tilt_yoke': 'Tilt yoke', 'cradle': 'Cradle', 'cartridge_body': 'Ball cartridge', 'flywheel': 'Flywheel hub', 'flywheel_tyre': 'Flywheel tyre',
+         'dial': 'Feed dial', 'hopper': 'Hopper', 'hopper_lid': 'Hopper lid', 'hopper_flap': 'Fill flap', 'barrel': 'Barrel',
+         'laser_mount': 'Laser mount', 'bumper_ring': 'Bumper ring', 'pan_servo': 'Pan servo', 'pan_bearing': 'Pan bearing',
+         'dt_receptacle': 'DT12 socket', 'dt_plug': 'DT12 plug', 'tilt_servo': 'Tilt servo', 'tilt_bearing': 'Tilt bearing',
+         'flywheel_motor_l': 'Flywheel motor L', 'flywheel_motor_r': 'Flywheel motor R', 'esc_l': 'ESC L', 'esc_r': 'ESC R',
+         'feed_motor': 'Feed motor (M2006)', 'feed_esc': 'Feed ESC (C610)', 'laser': 'Aiming laser', 'box_deck': 'Box adapter',
+         'intake_shroud': 'Intake shroud', 'pod_cover': 'Pod cover', 'pod_xt60': '24 V in (XT60)', 'pod_switch': 'Power switch',
+         'pod_fuse': 'Fuse', 'pod_pendant': 'Pendant jack', 'pod_usb': 'USB-CAN', 'pod_wago': 'Wiring', 'base': 'J501 base',
+         'cover': 'J501 lid', 'front_no_gmsl': 'J501 front plate', 'rear_io': 'J501 rear plate', 'side_hatch': 'J501 side hatch'}
+# the parts the callouts name (the rest are listed when clicked)
+CALLOUTS = ['hopper', 'dial', 'feed_motor', 'cartridge_body', 'flywheel_tyre', 'barrel', 'laser', 'cradle', 'tilt_servo', 'tilt_yoke',
+            'pan_ring', 'pan_pinion', 'pan_servo', 'pan_bearing', 'pan_base', 'dt_receptacle', 'box_deck', 'intake_shroud', 'pod_pendant', 'cover']
+# exploded view: how far each part moves (box frame at pan = tilt = 0, mm)
+EXPLODE = {'box_deck': (0, 0, 60), 'intake_shroud': (0, 0, 28), 'pod_cover': (0, 0, 48), 'lid_screw': (0, 0, 120), 'pod_': (0, 0, 60),
+           'bumper_ring': (0, 0, 75), 'pan_base': (0, 0, 95), 'pan_servo': (0, 0, 95), 'dt_receptacle': (0, -30, 95), 'dt_plug': (0, -75, 95),
+           'pan_bearing': (0, 0, 125), 'pan_clamp': (0, 0, 145), 'pan_pinion': (0, 0, 120), 'pan_ring': (0, 0, 165), 'tilt_yoke': (0, 0, 195),
+           'tilt_servo': (0, 45, 195), 'tilt_bearing': (0, -30, 195), 'cradle': (0, 0, 215), 'cartridge_body': (0, 0, 250),
+           'flywheel': (0, 0, 250), 'flywheel_tyre': (0, 0, 250), 'flywheel_motor': (0, 0, 290), 'esc_': (0, 0, 320), 'feed_motor': (0, 0, 210),
+           'feed_esc': (-30, 0, 230), 'dial': (0, 0, 300), 'hopper': (0, 0, 350), 'hopper_lid': (0, 0, 390), 'hopper_flap': (0, 0, 400),
+           'barrel': (70, 0, 250), 'laser_mount': (25, -35, 230), 'laser': (25, -35, 230)}
+
+
+def explode_of(name):
+    for k in sorted(EXPLODE, key=len, reverse=True):
+        if name == k or (k.endswith('_') and name.startswith(k)) or name.startswith(k + '_') or name == k.rstrip('_'):
+            return list(EXPLODE[k])
+    return [0, 0, 0]
+
+
+def hexcol(c):
+    return '#' + ''.join(f'{int(round(255 * max(0.0, min(1.0, v)))):02x}' for v in c[:3])
+
+
+# ------------------------------------------------------------------------------------------- meshes
+
+_STL = np.dtype([('n', '<f4', 3), ('v', '<f4', (3, 3)), ('a', '<u2')])
+
+
+def read_stl(path):
+    b = Path(path).read_bytes()
+    n = struct.unpack('<I', b[80:84])[0]
+    if len(b) == 84 + 50 * n:
+        return np.frombuffer(b[84:], dtype=_STL)['v'].astype(float)
+    vs = [list(map(float, ln.split()[1:4])) for ln in b.decode(errors='ignore').splitlines() if ln.strip().startswith('vertex')]
+    return np.array(vs, float).reshape(-1, 3, 3)
+
+
+def write_stl(path, tris):
+    tris = np.asarray(tris, np.float32)
+    nrm = np.cross(tris[:, 1] - tris[:, 0], tris[:, 2] - tris[:, 0])
+    ln = np.linalg.norm(nrm, axis=1, keepdims=True)
+    nrm = np.divide(nrm, ln, out=np.zeros_like(nrm), where=ln > 0)
+    a = np.zeros(len(tris), dtype=_STL)
+    a['n'], a['v'] = nrm, tris
+    with open(path, 'wb') as f:
+        f.write(b'gyropup turret_box'.ljust(80, b' '))
+        f.write(struct.pack('<I', len(tris)))
+        f.write(a.tobytes())
+
+
+def shape_tris(shape, tol=0.2, ang=0.3):
+    s = shape.val() if hasattr(shape, 'val') else shape
+    verts, faces = s.tessellate(tol, ang)
+    v = np.array([(p.x, p.y, p.z) for p in verts], float)
+    return v[np.array(faces, int)] if len(faces) else np.zeros((0, 3, 3))
+
+
+def decimate(tris, keep):
+    """Fewer triangles for the page: quadric decimation (VTK, through pyvista) of the welded mesh."""
+    try:
+        import pyvista as pv
+    except ImportError:
+        return tris
+    pts, inv = np.unique(np.round(tris.reshape(-1, 3), 4), axis=0, return_inverse=True)
+    f = inv.reshape(-1, 3)
+    f = f[(f[:, 0] != f[:, 1]) & (f[:, 1] != f[:, 2]) & (f[:, 0] != f[:, 2])]
+    m = pv.PolyData(pts, np.hstack([np.full((len(f), 1), 3), f]).ravel()).decimate(1.0 - keep, volume_preservation=True)
+    return np.asarray(m.points)[m.faces.reshape(-1, 4)[:, 1:]]
+
+
+def surface_points(tris, per_mm2=0.12, rng=np.random.default_rng(1)):
+    """Points on a mesh: every vertex and about per_mm2 random points per mm2 of its faces."""
+    a, b, c = tris[:, 0], tris[:, 1], tris[:, 2]
+    area = 0.5 * np.linalg.norm(np.cross(b - a, c - a), axis=1)
+    n = rng.poisson(area * per_mm2)
+    idx = np.repeat(np.arange(len(tris)), n)
+    u, v = rng.random(len(idx)), rng.random(len(idx))
+    flip = u + v > 1
+    u[flip], v[flip] = 1 - u[flip], 1 - v[flip]
+    pts = a[idx] + u[:, None] * (b[idx] - a[idx]) + v[:, None] * (c[idx] - a[idx])
+    return np.concatenate([tris.reshape(-1, 3), pts])
+
+
+def rot_z(p, ang):
+    c, s = math.cos(ang), math.sin(ang)
+    return np.stack([p[:, 0] * c - p[:, 1] * s, p[:, 0] * s + p[:, 1] * c, p[:, 2]], axis=1)
+
+
+def rot_y(p, ang):
+    """About +y by ang (rad): turret.py's tilt turns the tilt group by -tilt about +y (negative tilt = muzzle down)."""
+    c, s = math.cos(ang), math.sin(ang)
+    return np.stack([p[:, 0] * c + p[:, 2] * s, p[:, 1], -p[:, 0] * s + p[:, 2] * c], axis=1)
+
+
+# ------------------------------------------------------------------------------------------- the mechanism's numbers
+
+def flight(v0=21.3, z0=0.55, pitch_deg=0.0, cd=0.5, d=0.0227, m=0.00183, dt=2e-4, x_max=12.0):
+    """A ball's flight with drag and gravity (as designer/turret3d.js flies it): rows [x m, t s, drop mm, v m/s]."""
+    k = 0.5 * 1.2 * cd * math.pi * (d / 2) ** 2 / m
+    a = math.radians(pitch_deg)
+    x, z, vx, vz, t = 0.0, z0, v0 * math.cos(a), v0 * math.sin(a), 0.0
+    rows, nxt = [], 1.0
+    while x < x_max and z > 0:
+        v = math.hypot(vx, vz)
+        vx -= k * v * vx * dt
+        vz -= (G0 + k * v * vz) * dt
+        x += vx * dt
+        z += vz * dt
+        t += dt
+        if x >= nxt:
+            if nxt <= 6.0:
+                rows.append([round(nxt, 1), round(t, 3), round((z0 - z) * 1000), round(math.hypot(vx, vz), 1)])
+            nxt += 1.0
+    return rows, round(x, 2)
+
+
+def mechanics(T, rows, groups):
+    G = T.G
+    sn, m2, sv = CAT['dji-robomaster-snail-2305']['specs'], CAT['dji-robomaster-m2006-p36']['specs'], CAT['feetech-sts3215-c018-12v']['specs']
+    ball = {'d_mm': G.ball, 'mass_g': 1.83, 'speed_mps': 21.3, 'fps': 70, 'bore_mm': G.bore}
+    ball['energy_j'] = round(0.5 * ball['mass_g'] * M * ball['speed_mps'] ** 2, 3)
+    # flywheels: hub + tyre from the CAD (about the wheel's axis), the Snail's rotor from the catalogue
+    hub = solid_mass_properties(T.local['flywheel'].val(), tu.DENS['pa6-cf'], 1.0)
+    tyre = solid_mass_properties(T.local['flywheel_tyre'].val(), tu.DENS['tpu95'], 1.0)
+    i_wheel = (hub.inertia[2][2] + tyre.inertia[2][2]) * 1e6 + sn['rotor_inertia_kg_mm2']           # kg mm2
+    eta = 0.85                                                     # exit speed / tyre surface speed (assumed; bench it)
+    rpm = ball['speed_mps'] / (eta * math.pi * G.wheel_d * M) * 60
+    w = rpm * 2 * math.pi / 60
+    e_wheel = 0.5 * i_wheel * 1e-6 * w ** 2
+    loss = 0.3                                                     # foam hysteresis per shot, share of the ball's energy (assumed)
+    de = ball['energy_j'] * (1 + loss) / 2                          # per wheel
+    drop = 100 * (1 - math.sqrt(max(0.0, 1 - de / e_wheel)))
+    i_lim = 20.0                                                   # AM32 current limit set for the flywheels (A, a choice)
+    torque = sn['kt_nm_per_a'] * i_lim
+    recover_ms = 1000 * i_wheel * 1e-6 * (w * drop / 100) / torque
+    spin_ms = 1000 * i_wheel * 1e-6 * w / torque
+    coast_s = i_wheel * 1e-6 * w / (sn['kt_nm_per_a'] * sn['no_load_current_a'])
+    crush = G.ball + G.wheel_d - G.wheel_c
+    fly = {'d_mm': G.wheel_d, 'centres_mm': round(G.wheel_c, 2), 'crush_mm': round(crush, 2), 'crush_pct': round(100 * crush / G.ball, 1),
+           'rpm': round(rpm, -1), 'surface_mps': round(rpm / 60 * math.pi * G.wheel_d * M, 1), 'efficiency_assumed': eta,
+           'throttle_pct': round(100 * rpm / sn['no_load_speed_rpm']), 'motor_kv': sn['kv_rpm_per_v'], 'no_load_rpm': sn['no_load_speed_rpm'],
+           'inertia_kg_mm2': round(i_wheel, 2), 'energy_j_each': round(e_wheel, 2), 'speed_drop_per_shot_pct': round(drop, 1),
+           'recovery_ms': round(recover_ms, 1), 'spin_up_ms_motor_limit': round(spin_ms), 'coast_down_s': round(coast_s, 1),
+           'current_limit_a': i_lim, 'note': 'rpm for 21.3 m/s with exit = 0.85 x surface speed (assumed); foam loss 30 % (assumed); '
+                                            'the chronograph gates in the barrel measure the real speed'}
+    # feed: one ball per 45 deg of the dial
+    rate = 10.0
+    dial_rpm = rate / G.n_pockets * 60
+    feed = {'pockets': G.n_pockets, 'motor': 'DJI M2006 P36', 'ratio': m2['gear_ratio'], 'rated_rpm': m2['rated_speed_rpm'],
+            'dial_rpm_at_10_per_s': round(dial_rpm), 'max_rate_per_s': round(m2['rated_speed_rpm'] / 60 * G.n_pockets),
+            'pitch_radius_mm': G.rp, 'exit_x_mm': G.exit_x, 'park_deg': 360 / G.n_pockets / 2}
+    # the drop from the pocket through the chute to the nip: gravity along the bend (radius chute_r), from rest
+    t, s, v, dt = 0.0, 0.0, 0.0, 1e-5
+    arc = math.pi / 2 * G.chute_r * M
+    while s < arc:
+        ang = s / (G.chute_r * M)                                 # 0 = falling straight down, pi/2 = moving forward
+        v += G0 * math.cos(ang) * dt
+        s += v * dt
+        t += dt
+    chute_ms, v_nip = 1000 * t, v
+    run_ms = 1000 * ((G.wheel_x - 7.25 - G.chute_cx) * M) / max(v_nip, 0.1)
+    barrel_ms = 1000 * (G.barrel_x1 - G.wheel_x) * M / ball['speed_mps']
+    timing = {'dial_to_exit_ms': round(1000 * (feed['park_deg'] / 360) / (dial_rpm / 60)), 'chute_ms': round(chute_ms), 'to_nip_ms': round(run_ms),
+              'nip_to_muzzle_ms': round(barrel_ms, 1), 'speed_into_nip_mps': round(v_nip, 2)}
+    timing['trigger_to_muzzle_ms'] = round(timing['dial_to_exit_ms'] + chute_ms + run_ms + barrel_ms)
+    # pan and tilt
+    gr = G.gear
+    pan = {'pinion_teeth': gr['z_pinion'], 'ring_teeth': gr['z_ring'], 'ratio': gr['z_ring'] / gr['z_pinion'], 'module_mm': gr['m'],
+           'servo_stall_nm': sv['stall_torque_nm'], 'ring_stall_nm': round(sv['stall_torque_nm'] * gr['z_ring'] / gr['z_pinion'], 2),
+           'firmware_cap_pct': 50, 'max_deg_s': round(sv['no_load_speed_deg_per_s'] / (gr['z_ring'] / gr['z_pinion'])),
+           'range_deg': [-170, 170], 'hard_stop_deg': 173.5, 'encoder_counts_per_turret_deg': round(4096 / 360 * gr['z_ring'] / gr['z_pinion'], 1)}
+    tg = groups['tilt']
+    tilt_axis_x = 0.0
+    hold = tg.mass * G0 * (tg.com[0] - tilt_axis_x)
+    tilt = {'servo_stall_nm': sv['stall_torque_nm'], 'max_deg_s': sv['no_load_speed_deg_per_s'], 'range_deg': [G.tilt_min, 0.0],
+            'group_mass_g': round(tg.mass * 1000), 'com_ahead_mm': round(tg.com[0] * 1000, 1), 'holding_nm': round(hold, 2),
+            'margin': round(sv['stall_torque_nm'] / max(abs(hold), 1e-6), 1)}
+    # the pan group's inertia about the pan axis (with the tilt group at tilt 0), and the torque to reach full slew fast
+    pz = 0.0
+    for b in (groups['pan'], groups['tilt']):
+        pz += b.inertia[2][2] + b.mass * (b.com[0] ** 2 + b.com[1] ** 2)
+    pan['inertia_kg_m2'] = round(pz, 5)
+    pan['accel_at_cap_deg_s2'] = round(math.degrees(pan['ring_stall_nm'] * 0.5 / pz))
+    pan['time_to_full_slew_ms'] = round(1000 * math.radians(pan['max_deg_s']) / math.radians(pan['accel_at_cap_deg_s2']), 1)
+    level, x_ground = flight(z0=(tb.Z_TM + G.path_t) * M + 0.3)
+    return {'ball': ball, 'flywheel': fly, 'feed': feed, 'timing': timing, 'pan': pan, 'tilt': tilt,
+            'flight_level': {'rows': level, 'from_height_m': round((tb.Z_TM + G.path_t) * M + 0.3, 3), 'lands_m': x_ground,
+                             'note': 'a level shot from the bench (the box on a 0.3 m crate): [range m, time s, drop mm, speed m/s]; '
+                                     'drag as a sphere, Cd 0.5'}}
+
+
+# ------------------------------------------------------------------------------------------- clearance
+
+def sweep(T, pts_pan, pts_tilt, pans=np.arange(-170, 171, 5.0), tilts=np.arange(0.0, -25.01, -2.5)):
+    """The moving parts against the deck (outside the turret's own base) and against upright antennas on the J501's
+    bulkheads, over pan x tilt. Points are in their groups' frames (mm)."""
+    G = T.G
+    ants = tb.antennas()
+    deck_gap, worst = 1e9, None
+    ant_min = {a[0]: 1e9 for a in ants}
+    blocked = {}                                     # pan -> the deepest tilt that clears every antenna by 3 mm
+    for pan in pans:
+        ok_tilt, still_clear = None, True
+        p_pan = rot_z(pts_pan, math.radians(pan)) + [0, 0, tb.Z_TM]
+        for tilt in tilts:
+            p_t = rot_y(pts_tilt, math.radians(-tilt)) + [0, 0, G.tilt_t]
+            p_t = rot_z(p_t, math.radians(pan)) + [0, 0, tb.Z_TM]
+            p = np.concatenate([p_pan, p_t])
+            r = np.hypot(p[:, 0], p[:, 1])
+            over = (r > G.base_r) & (p[:, 0] > tb.DECK_X[0]) & (p[:, 0] < tb.DECK_X[1]) & (np.abs(p[:, 1]) < tb.SIDE_Y)
+            if over.any():
+                g = float((p[over, 2] - tb.Z_TM).min())
+                if g < deck_gap:
+                    deck_gap, worst = g, (float(pan), float(tilt))
+            clear = True
+            for name, b, t, d in ants:
+                q = p[(p[:, 2] > b[2]) & (p[:, 2] < t[2] + d)]
+                dist = float(np.hypot(q[:, 0] - b[0], q[:, 1] - b[1]).min()) - d / 2 if len(q) else 1e9
+                ant_min[name] = min(ant_min[name], dist)
+                if dist < 3.0:
+                    clear = False
+            if clear and still_clear:
+                ok_tilt = tilt
+            still_clear = still_clear and clear
+        blocked[float(pan)] = ok_tilt if ok_tilt is not None else 0.0
+    table = [[p, -float(v)] for p, v in blocked.items()]          # [pan deg, most depression allowed deg] with antennas up
+    lim = [p for p, v in table if v < -G.tilt_min - 0.01]
+    sectors = []                                                  # the pan sectors where the antennas limit the tilt
+    for pan in lim:
+        if sectors and pan - sectors[-1][1] <= 5.0 + 1e-6:
+            sectors[-1][1] = pan
+        else:
+            sectors.append([pan, pan])
+    return {'deck_min_gap_mm': round(deck_gap, 1), 'deck_worst_pose_deg': worst,
+            'antenna_min_gap_mm': {k: round(v, 1) for k, v in ant_min.items()},
+            'antenna_tilt_max_deg': table,
+            'antenna_limited_pans_deg': sectors,
+            'note': 'antennas: upright swivel dipoles on all four RP-SMA bulkheads (none chosen yet: ' + tb.ANTENNA['note'] + ')'}
+
+
+def ball_clear(T, pans=np.arange(-170, 171, 5.0), tilt=-25.0):
+    """At the deepest tilt, how far outside the deck's outline the muzzle is (mm, the least over pan): a ball leaving it
+    can only go down past the deck and the box, never into them."""
+    G = T.G
+    worst = 1e9
+    for pan in pans:
+        x, y, _ = T.point((G.barrel_x1, 0, 0), 'tilt', pan, tilt)
+        dx = max(tb.DECK_X[0] - x, x - tb.DECK_X[1], 0.0)
+        dy = max(abs(y) - tb.SIDE_Y, 0.0)
+        out = math.hypot(dx, dy) if (dx or dy) else -min(x - tb.DECK_X[0], tb.DECK_X[1] - x, tb.SIDE_Y - abs(y))
+        worst = min(worst, out - G.br)
+    return round(worst, 1)
+
+
+# ------------------------------------------------------------------------------------------- main
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument('--no-j501', action='store_true', help='skip the J501 meshes (the page then shows a plain box)')
+    a = ap.parse_args()
+    t0 = time.time()
+    OUT.mkdir(parents=True, exist_ok=True)
+    SCENE.mkdir(parents=True, exist_ok=True)
+    for f in SCENE.glob('*.stl'):
+        f.unlink()
+    T = tu.Turret({'bodyTop': tb.Z_TM - 20.0 - tu.SADDLE_T})        # its TM face on the deck
+    G = T.G
+    print(f'turret on the box: TM face {tb.Z_TM:.0f} mm above the desk ({tb.GAP:.0f} mm gap + {tb.DECK_T:.0f} mm deck over the J501 '
+          f'Rev {tb.J["revision"]} roof), pan axis over the box middle; J501 parameters from {tb.J["source"] or "the built-in fallback"}')
+
+    # ---- the adapter: STEP, print STL, print plan
+    adapter = tb.parts()
+    plan, masses = {}, {}
+    for name, shape in adapter.items():
+        mat, qty, how, rot = tb.PARTS[name]
+        v = shape.val()
+        cq.exporters.export(v, str(OUT / f'{name}.step'))
+        export_print_stl(v, OUT / f'{name}.stl', rotation=rot)
+        g = solid_mass_properties(v, MATERIALS[mat]['density_g_cm3'], 0.45, name).mass * 1000
+        masses[name] = g
+        plan[name] = printplan.row(v, rot, mat, qty, g, False, how)
+    too_big = printplan.write(OUT / 'print-plan.json', plan, note='the turret\'s adapter on the J501 compute box; hours are rough')
+
+    # ---- the turret's parts, posed in the box frame, by moving group
+    rows, tot, com = tu.mass_properties(T, 0.0)
+    parts = []                                         # manifest entries
+
+    def add(name, group, shape, color, opacity=1.0, kind='made', mirror=False, offset=(0, 0, 0), extra=None, tol=0.2):
+        tris = shape_tris(shape, tol) - np.asarray(offset, float)
+        f = f'{name}{"_m" if mirror else ""}.stl'
+        write_stl(SCENE / f, tris)
+        lo, hi = tris.reshape(-1, 3).min(axis=0), tris.reshape(-1, 3).max(axis=0)
+        e = {'name': name + ('_m' if mirror else ''), 'part': name, 'group': group, 'file': f, 'color': color, 'opacity': opacity, 'kind': kind,
+             'bbox': [round(float(x), 1) for x in (*lo, *hi)], 'title': TITLE.get(name, name.replace('_', ' ')),
+             'role': ROLE.get(name, ''), 'explode': explode_of(name)}
+        if extra:
+            e.update(extra)
+        parts.append(e)
+        return tris
+
+    tz = tb.Z_TM + G.tilt_t
+    pan_o, tilt_o = (0.0, 0.0, tb.Z_TM), (0.0, 0.0, tz)
+    flap_hinge = (tu.FILL_PORT[0] - 19.0, 0.0, G.hopper_top + 6.0 - G.tilt_c)      # tilt frame
+    wheel = {'wheel_l': (G.wheel_x, G.wheel_y, 0.0), 'wheel_r': (G.wheel_x, -G.wheel_y, 0.0)}
+    group_pts = {'pan': [], 'tilt': []}
+    for name, m in T.meta.items():
+        fr = T.frame[name]
+        posed = T.pose_shape(T.local[name], fr, 0.0, 0.0, robot=True)
+        row = rows.get(name, {})
+        info = {'material': m['material'], 'mass_g': round(row.get('mass_g', 0.0), 1), 'qty': m['qty'], 'how': m['note'], 'doc': m['doc'],
+                'print_h': round(row.get('mass_g', 0.0) * m['qty'] / tu.DENS[m['material']] / tu.PRINT_RATE_CM3_H[m['material']], 1)}
+        col = tu.COL.get(name, (0.6, 0.6, 0.62))
+        op = col[3] if len(col) > 3 else 1.0
+        if fr in ('base', 'pinion'):
+            add(name, fr, posed, hexcol(col), op, extra=info)
+        elif fr == 'pan':
+            tris = add(name, 'pan', posed, hexcol(col), op, offset=pan_o, extra=info)
+            group_pts['pan'].append(tris)
+        else:
+            if name in ('flywheel', 'flywheel_tyre'):
+                for side, mir in (('wheel_l', False), ('wheel_r', True)):
+                    sh = T.pose_shape(T.local[name].mirror('XZ'), fr, 0.0, 0.0, robot=True) if mir else posed
+                    wx, wy, _ = wheel[side]
+                    tris = add(name, side, sh, hexcol(col), op, mirror=mir, offset=(wx, wy, tz), extra=info)
+                    group_pts['tilt'].append(tris + [wx, wy, 0.0])
+            elif name == 'dial':
+                tris = add(name, 'dial', posed, hexcol(col), op, offset=tilt_o, extra=info)
+                group_pts['tilt'].append(tris)
+            elif name == 'hopper_flap':
+                tris = add(name, 'flap', posed, hexcol(col), op, offset=(flap_hinge[0], 0.0, tz + flap_hinge[2]), extra=info)
+                group_pts['tilt'].append(tris + [flap_hinge[0], 0.0, flap_hinge[2]])
+            else:
+                tris = add(name, 'tilt', posed, hexcol(col), op, offset=tilt_o, extra=info)
+                group_pts['tilt'].append(tris)
+    for name, (shape, fr, mass, note) in T.bought.items():
+        posed = T.pose_shape(shape, fr, 0.0, 0.0, robot=True)
+        col = tu.COL.get(name, (0.2, 0.2, 0.22))
+        op = col[3] if len(col) > 3 else 1.0
+        info = {'mass_g': mass, 'note': note}
+        if fr == 'base':
+            add(name, 'base', posed, hexcol(col), op, kind='bought', extra=info)
+        elif fr == 'pan':
+            group_pts['pan'].append(add(name, 'pan', posed, hexcol(col), op, kind='bought', offset=pan_o, extra=info))
+        else:
+            group_pts['tilt'].append(add(name, 'tilt', posed, hexcol(col), op, kind='bought', offset=tilt_o, extra=info))
+
+    # ---- the adapter and what is in it (box frame)
+    acol = {'box_deck': '#3d4552', 'intake_shroud': '#5aa9e6', 'pod_cover': '#3d4552'}
+    for name, shape in adapter.items():
+        mat, qty, how, rot = tb.PARTS[name]
+        add(name, 'adapter', shape, acol[name], kind='adapter', extra={'material': mat, 'mass_g': round(masses[name], 1), 'qty': qty, 'how': how,
+                                                                       'print_h': plan[name]['hours']})
+    for name, (shape, mass, note) in tb.bought().items():
+        base = 'lid_screw' if name.startswith('lid_screw') else name
+        add(name, 'adapter', shape, '#c9ccd2' if base == 'lid_screw' else '#1d2027', kind='bought', extra={'mass_g': mass, 'note': note,
+                                                                                                          'title': TITLE.get(base, 'Lid screw')})
+        if base == 'lid_screw':
+            parts[-1]['title'] = f'Lid screw (M3 x {tb.LID_SCREW_LEN:.0f})'
+            parts[-1]['role'] = f'Clamps leg, lid and base into the J501\'s own lid insert: the J501\'s M3 x {tb.J["lid_screw_len"]:.0f} swapped for M3 x {tb.LID_SCREW_LEN:.0f}.'
+
+    # ---- the J501 itself, from its repo's export (box frame), decimated for phones
+    j501 = []
+    Mj = np.array([[0.0, -1.0, 0.0], [1.0, 0.0, 0.0], [0.0, 0.0, 1.0]])
+    tj = np.array([tb.TC[1], -tb.TC[0], 0.0])
+    if not a.no_j501:
+        for name, (col, role) in J501_PARTS.items():
+            src = J501_VIEW / f'{name}.stl'
+            if not src.exists():
+                print(f'  (no {src}: skipped)')
+                continue
+            tris = read_stl(src) @ Mj.T + tj
+            n0 = len(tris)
+            tris = decimate(tris, {'base': 0.3, 'cover': 0.55}.get(name, 0.5) if n0 > 8000 else 1.0)
+            write_stl(SCENE / f'j501_{name}.stl', tris)
+            lo, hi = tris.reshape(-1, 3).min(axis=0), tris.reshape(-1, 3).max(axis=0)
+            parts.append({'name': f'j501_{name}', 'part': name, 'group': 'j501', 'file': f'j501_{name}.stl', 'color': col, 'opacity': 1.0,
+                          'kind': 'j501', 'bbox': [round(float(x), 1) for x in (*lo, *hi)], 'title': TITLE.get(name, name), 'role': role,
+                          'explode': [0, 0, 0], 'triangles': [n0, len(tris)], 'source': str(src)})
+            j501.append(name)
+
+    # ---- mass properties of the moving groups (for the tilt holding torque and the pan's inertia)
+    def group_body(gname):
+        bodies = []
+        for name, m in T.meta.items():
+            fr = T.frame[name]
+            if (gname == 'tilt') != (fr == 'tilt') or (gname == 'pan' and fr != 'pan'):
+                continue
+            wall, infill = (500.0, 1.0) if m['solid'] else (2.0, 0.4)
+            for k in range(m['qty']):
+                sh = T.local[name] if k == 0 else T.local[name].mirror('XZ')
+                v = T.pose_shape(sh, fr, 0.0, 0.0, robot=False).val()
+                if gname == 'tilt':
+                    v = v.translate(cq.Vector(0, 0, -G.tilt_t))
+                bodies.append(printed_part_body(v, tu.DENS[m['material']], wall_mm=wall, infill=infill, name=name)[0])
+        for name, (shape, fr, mass, note) in T.bought.items():
+            if fr != gname or mass <= 0:
+                continue
+            v = T.pose_shape(shape, fr, 0.0, 0.0, robot=False).val()
+            if gname == 'tilt':
+                v = v.translate(cq.Vector(0, 0, -G.tilt_t))
+            bodies.append(solid_mass_properties(v, mass / (v.Volume() / 1000.0), 1.0, name))
+        if gname == 'tilt':
+            bodies.append(Body(30 * 0.00183, (0.0, 0.0, (G.path_t + (G.dial_z0 + G.hopper_top) / 2 - 8 - G.tilt_t) * M), name='30 balls'))
+        return combine(bodies, gname)
+    groups = {g: group_body(g) for g in ('pan', 'tilt')}
+    mech = mechanics(T, rows, groups)
+
+    # ---- checks: the sweep, the ball's way out, the airflow, tipping
+    pts_pan = surface_points(np.concatenate(group_pts['pan']), 0.05)
+    pts_tilt = surface_points(np.concatenate(group_pts['tilt']), 0.05)
+    sw = sweep(T, pts_pan, pts_tilt)
+    air = tb.airflow_estimate()
+    j501_printed = 368.2                                         # g, the J501 Rev 0.8 slice report (PLA)
+    j501_inside = 1000.0                                         # g, the Orin module + carrier + cooler (est)
+    turret_g = tot
+    adapter_g = sum(masses.values()) + sum(m for _, m, _ in tb.bought().values())
+    zc = (j501_printed * 46 + j501_inside * 40 + adapter_g * (tb.ROOF + 25) + turret_g * (tb.Z_TM + com[2])) / (j501_printed + j501_inside + adapter_g + turret_g)
+    total = (j501_printed + j501_inside + adapter_g + turret_g) / 1000
+    half = min(-tb.REAR_X, tb.FRONT_X, tb.SIDE_Y)
+    push_h = tb.Z_TM + G.tilt_t
+    tip = {'total_kg': round(total, 2), 'com_height_mm': round(zc), 'tip_angle_deg': round(math.degrees(math.atan2(half, zc))),
+           'push_to_tip_n': round(total * G0 * half / push_h, 1), 'push_height_mm': round(push_h),
+           'note': 'J501: 368 g printed (its slice report) + 1.0 kg Orin, carrier and cooler (est); a sideways push at the tilt axis that '
+                   'lifts the box off its narrow edge'}
+    fl = mech['flywheel']
+    vmax = fl['no_load_rpm'] / 60 * math.pi * G.wheel_d * M * fl['efficiency_assumed']
+    overspeed = {'max_exit_mps': round(vmax, 1), 'max_fps': round(vmax / 0.3048), 'cap_mps': mech['ball']['speed_mps'],
+                 'note': f'at the Snails\' full no-load speed ({fl["no_load_rpm"]} rpm at 24 V) a ball would leave at about {vmax:.0f} m/s: '
+                         f'the {mech["ball"]["fps"]} fps cap is only the throttle limit in firmware, so the barrel\'s chronograph gates '
+                         f'should open the safety line on any ball over the cap'}
+    tmg = mech['timing']
+    release = {'after_drop_ms': round(tmg['trigger_to_muzzle_ms'] - tmg['dial_to_exit_ms']), 'coast_s': fl['coast_down_s'],
+               'note': f'a ball that has already dropped still fires up to {tmg["trigger_to_muzzle_ms"] - tmg["dial_to_exit_ms"]:.0f} ms after ARM '
+                       f'is released, and the unbraked flywheels keep {fl["coast_down_s"]} s of speed: brake them (AM32 active braking) on release'}
+    checks = {'clearance': sw, 'muzzle_outside_deck_mm': ball_clear(T), 'airflow': air, 'tipping': tip, 'overspeed': overspeed, 'release': release,
+              'lid_screw': f'M3 x {tb.LID_SCREW_LEN:.0f} ISO 4762, tip at z {tb.LID_SCREW_TIP:.0f} (as the J501\'s own M3 x {tb.J["lid_screw_len"]:.0f})',
+              'too_big': too_big}
+    print(f'  deck: min gap under the moving turret {sw["deck_min_gap_mm"]} mm (pan, tilt {sw["deck_worst_pose_deg"]}); at -25 deg the '
+          f'ball leaves {checks["muzzle_outside_deck_mm"]} mm or more outside the deck\'s outline')
+    print(f'  antennas upright: closest {min(sw["antenna_min_gap_mm"].values())} mm; depression limited at pans {sw["antenna_limited_pans_deg"]}')
+    print(f'  airflow: {air["loss_pa"]} Pa through the shroud, J501 fan flow -{air["flow_drop_pct"]} % (est)')
+    print(f'  tipping: {tip["total_kg"]} kg, centre of mass {tip["com_height_mm"]} mm up, a {tip["push_to_tip_n"]} N push at the tilt axis tips it')
+    print(f'  flywheels {mech["flywheel"]["rpm"]:.0f} rpm, {mech["flywheel"]["energy_j_each"]} J each, -{mech["flywheel"]["speed_drop_per_shot_pct"]} % a shot, '
+          f'back in {mech["flywheel"]["recovery_ms"]} ms; trigger to muzzle {mech["timing"]["trigger_to_muzzle_ms"]} ms; tilt hold '
+          f'{mech["tilt"]["holding_nm"]} N.m ({mech["tilt"]["margin"]}x)')
+
+    # ---- the ball's way through the turret (tilt frame, mm) and the balls in a full hopper
+    tc = G.tilt_c
+    path = [[round(G.exit_x, 2), 0.0, round(G.ball_z_dial - tc, 2)]]
+    for k in range(1, 13):
+        th = math.pi + k * (math.pi / 2) / 12
+        path.append([round(G.chute_cx + G.chute_r * math.cos(th), 2), 0.0, round(G.chute_r + G.chute_r * math.sin(th) - tc, 2)])
+    for x in (G.wheel_x - 7.25, G.wheel_x, G.wheel_x + 7.25, G.socket_x0, G.barrel_x0 + 30, G.barrel_x0 + 80, G.barrel_x1):
+        path.append([round(x, 2), 0.0, round(-tc, 2)])
+    rb = G.ball / 2
+    pockets = [[round(G.rp * math.cos(math.radians(45 * k)), 2), round(G.rp * math.sin(math.radians(45 * k)), 2), round(G.ball_z_dial - tc, 2)]
+               for k in range(G.n_pockets)]                                    # dial frame: pocket k at 45k deg
+    pile = []
+    z1 = G.dial_z0 + G.dial_h + rb + 0.5
+    for z, rings in ((z1, ((13.0, 3, 0.0), (36.5, 9, 0.0))), (z1 + 17.0, ((0.0, 1, 0.0), (26.0, 7, 0.3), (37.0, 3, 0.9)))):
+        for rr, n, a0 in rings:
+            for k in range(n):
+                ang = a0 + 2 * math.pi * k / n
+                pile.append([round(rr * math.cos(ang), 2), round(rr * math.sin(ang), 2), round(z - tc, 2)])
+    pile = pile[:30 - (G.n_pockets - 1)]
+
+    # ---- callout anchors (in each part's group frame) and the ball's journey
+    by = {p['name']: p for p in parts}
+
+    def top_of(name, dx=0.0, dy=0.0, dz=0.0, side=None):
+        b = by[name]['bbox']
+        x, y = (b[0] + b[3]) / 2 + dx, (b[1] + b[4]) / 2 + dy
+        if side == '-y':
+            y = b[1] + dy
+        return [round(x, 1), round(y, 1), round(b[5] + dz, 1)]
+    anchors = {'hopper': top_of('hopper', -30, 0, -20, '-y'), 'dial': [-G.rp, -6.0, round(G.dial_z0 + 15 - tc, 1)],
+               'feed_motor': [0.0, -12.0, round(G.floor_z - G.floor_t - 25 - tc, 1)], 'cartridge_body': [round(G.wheel_x, 1), round(-G.cage_y, 1), round(10 - tc, 1)],
+               'flywheel_tyre': [0.0, 20.0, 0.0], 'barrel': [round(G.barrel_x1 - 20, 1), -15.0, round(-tc, 1)],
+               'laser': [round(tu.LASER_X[1] + 12, 1), round(tu.LASER_Y, 1), round(-tc, 1)], 'cradle': [40.0, round(-G.cheek_y[1], 1), round(G.rail_z[0] + 2 - tc, 1)],
+               'tilt_servo': [0.0, round(G.arm_y[1] + 15, 1), round(G.tilt_t, 1)], 'tilt_yoke': [0.0, round(-G.arm_y[1], 1), round(G.tilt_t - 40, 1)],
+               'pan_ring': [0.0, -40.0, round(G.turntable_z[1] - 6, 1)], 'pan_pinion': [round(G.servo_pan_xy[0], 1), -14.0, round(G.turntable_z[1] - 4 + tb.Z_TM, 1)],
+               'pan_servo': [round(G.servo_pan_xy[0], 1), 25.0, round(tb.Z_TM + 20, 1)], 'pan_bearing': [0.0, -32.0, round(tb.Z_TM + G.brg_z + 3, 1)],
+               'pan_base': [30.0, -64.0, round(tb.Z_TM + 12, 1)], 'dt_receptacle': [0.0, round(-G.dt_y - 20, 1), round(tb.Z_TM + tu.DT_Z, 1)],
+               'box_deck': [70.0, -100.0, round(tb.Z_TM - 4, 1)], 'intake_shroud': [round(tb.FRONT_X - 2, 1), 30.0, round(tb.ROOF + 18, 1)],
+               'pod_pendant': [round(tb.POD_X[0] - 2, 1), 30.0, round(tb.POD_ZC, 1)], 'cover': [0.0, -80.0, round(tb.ROOF, 1)]}
+    for p in parts:
+        if p['part'] in anchors and not p['name'].endswith('_m'):
+            p['anchor'] = anchors[p['part']]
+            p['callout'] = p['part'] in CALLOUTS
+        if p['part'] == 'cover' and p['group'] == 'j501':
+            p['anchor'], p['callout'] = anchors['cover'], True
+    fl, fd, tm = mech['flywheel'], mech['feed'], mech['timing']
+    fl_rows = mech['flight_level']['rows']
+    at3 = next((r for r in fl_rows if r[0] == 3.0), fl_rows[-1])
+    journey = [
+        {'id': 'hopper', 'title': '1  Hopper', 'parts': ['hopper', 'hopper_lid', 'hopper_flap'], 'focus': [0.0, 0.0, round((G.dial_z0 + G.hopper_top) / 2 - tc, 1)],
+         'text': f'Thirty balls (Ø{G.ball}, 1.83 g) wait in the clear hopper. Gravity drops them into the dial\'s pockets; the cone on top of the dial stirs the pile so they cannot bridge.'},
+        {'id': 'dial', 'title': '2  Feed dial', 'parts': ['dial', 'feed_motor', 'feed_esc'], 'focus': [0.0, 0.0, round(G.ball_z_dial - tc, 1)],
+         'text': f'The M2006 ({fd["ratio"]}:1) turns the dial 45 deg per ball: {fd["dial_rpm_at_10_per_s"]} rpm at 10 balls/s, '
+                 f'{fd["max_rate_per_s"]} balls/s at its rated speed. Parked, a spoke sits over the exit hole, so no ball can reach the wheels with the motor off.'},
+        {'id': 'exit', 'title': '3  Exit hole', 'parts': ['cartridge_body', 'dial'], 'focus': [round(G.exit_x, 1), 0.0, round(G.ball_z_dial - tc, 1)],
+         'text': f'At the front of the housing ({G.exit_x:.0f} mm ahead of the dial axis) a pocket passes over a hole in the floor and its ball drops out. '
+                 f'{tm["dial_to_exit_ms"]} ms from the command at 10 balls/s.'},
+        {'id': 'chute', 'title': '4  Chute', 'parts': ['cartridge_body'], 'focus': [round(G.chute_cx - 8, 1), 0.0, round(G.chute_r / 2 - tc, 1)],
+         'text': f'A quarter bend of radius {G.chute_r:.1f} mm turns the falling ball forward onto the path, {G.tilt_c:.0f} mm under the tilt axis. '
+                 f'It takes about {tm["chute_ms"]} ms and reaches the wheels at {tm["speed_into_nip_mps"]} m/s.'},
+        {'id': 'nip', 'title': '5  Flywheels', 'parts': ['flywheel', 'flywheel_tyre', 'flywheel_motor_l', 'flywheel_motor_r', 'esc_l', 'esc_r'],
+         'focus': [round(G.wheel_x, 1), 0.0, round(-tc, 1)],
+         'text': f'Two Ø{G.wheel_d:.0f} wheels {fl["centres_mm"]:.0f} mm apart spin opposite ways at about {fl["rpm"]:,.0f} rpm ({fl["throttle_pct"]} % of the '
+                 f'Snail\'s no-load speed). The gap is {fl["crush_mm"]} mm narrower than the ball ({fl["crush_pct"]} % squeeze), so it leaves at the tyres\' '
+                 f'surface speed. Each wheel stores {fl["energy_j_each"]} J; a shot costs about {fl["speed_drop_per_shot_pct"]} % of its speed, back in '
+                 f'{fl["recovery_ms"]} ms at a {fl["current_limit_a"]:.0f} A current limit.'},
+        {'id': 'barrel', 'title': '6  Barrel', 'parts': ['barrel'], 'focus': [round(G.barrel_x0 + 50, 1), 0.0, round(-tc, 1)],
+         'text': f'{G.barrel_len:.0f} mm long, bore Ø{G.bore:.1f}: 1.5 mm over the ball, so it only guides. Two IR gates 50 mm apart time every ball '
+                 f'(a built-in chronograph); {tm["nip_to_muzzle_ms"]} ms from the nip to the muzzle.'},
+        {'id': 'muzzle', 'title': '7  Muzzle', 'parts': ['barrel', 'laser', 'laser_mount'], 'focus': [round(G.barrel_x1, 1), 0.0, round(-tc, 1)],
+         'text': f'{mech["ball"]["speed_mps"]} m/s ({mech["ball"]["fps"]} fps, the kid-safety cap), {mech["ball"]["energy_j"]} J. The barrel can never point above '
+                 f'level: hard stops at 0 and {G.tilt_min:.0f} deg in the yoke. About {tm["trigger_to_muzzle_ms"]} ms from the command to here.'},
+        {'id': 'flight', 'title': '8  Flight', 'parts': [], 'focus': None,
+         'text': f'Air drag and gravity: a level shot from the bench has dropped {at3[2]} mm at {at3[0]:.0f} m and slowed to {at3[3]} m/s. The laser is parallel to '
+                 f'the barrel, so at range the ball lands under the dot.'},
+    ]
+
+    # ---- the manifest
+    man = {'units': 'mm', 'frame': 'box: x forward (pan 0), y left, z up; origin on the desk under the pan axis. Each part is in its '
+                    'group\'s frame (pivots); journey focus points and the ball path are in the tilt frame (origin on the tilt axis)',
+           'built': time.strftime('%Y-%m-%d %H:%M'), 'z_tm': tb.Z_TM, 'roof_z': tb.ROOF,
+           'box': {'x': [tb.REAR_X, tb.FRONT_X], 'y': [-tb.SIDE_Y, tb.SIDE_Y], 'z': [0.0, tb.ROOF], 'revision': tb.J['revision'], 'parts': j501},
+           'deck': {'x': list(tb.DECK_X), 'y': [-tb.SIDE_Y, tb.SIDE_Y], 'z': [tb.DECK_Z0, tb.Z_TM]},
+           'fan': {'xy': list(tb.FAN), 'z': tb.ROOF, 'r': tb.RING_R, 'grille_x': tb.FRONT_X, 'mouth_half': tb.MOUTH_HALF,
+                   'duct_z': [tb.SH_Z0 + tb.SH_FLOOR_T, tb.DECK_Z0]},
+           'pivots': {'pan': list(pan_o), 'tilt': [0.0, 0.0, G.tilt_t], 'pinion': [G.servo_pan_xy[0], G.servo_pan_xy[1], tb.Z_TM],
+                      'pinion_ratio': -G.gear['z_ring'] / G.gear['z_pinion'], 'dial': [0.0, 0.0, 0.0], 'wheel_l': list(wheel['wheel_l']),
+                      'wheel_r': list(wheel['wheel_r']), 'flap': list(flap_hinge)},
+           'limits': {'pan_deg': [-170.0, 170.0], 'tilt_deg': [G.tilt_min, 0.0], 'pan_rate_deg_s': mech['pan']['max_deg_s'],
+                      'tilt_rate_deg_s': mech['tilt']['max_deg_s']},
+           'muzzle': [G.barrel_x1, 0.0, -tc], 'laser': [tu.LASER_X[0] - 2 + tu.LASER['L'], tu.LASER_Y, -tc],
+           'ball_path': path, 'pockets': pockets, 'pile': pile, 'ball_r': rb, 'dial_park_deg': fd['park_deg'],
+           'antennas': [{'name': n, 'base': list(b), 'top': list(t), 'd': d} for n, b, t, d in tb.antennas()],
+           'parts': parts, 'journey': journey, 'mechanics': mech, 'checks': checks,
+           'masses_g': {'turret_with_balls': round(tot), 'adapter': round(adapter_g), 'j501_printed': j501_printed, 'j501_inside_est': j501_inside}}
+    (SCENE / 'manifest.json').write_text(json.dumps(man, indent=1, default=float) + '\n')
+    (OUT / 'box.json').write_text(json.dumps({'checks': checks, 'mechanics': mech, 'masses_g': man['masses_g'], 'z_tm_mm': tb.Z_TM,
+                                              'j501': {k: tb.J[k] for k in ('revision', 'source')}}, indent=1, default=float) + '\n')
+    bom = [{'item': n, 'note': note, 'mass_g': m} for n, (_, m, note) in tb.bought().items()]
+    bom += [{'item': 'M3 x 4 heat-set inserts', 'qty': len(tb.SHROUD_TABS), 'for': 'intake shroud'},
+            {'item': 'M3 x 8 button head', 'qty': len(tb.SHROUD_TABS), 'for': 'intake shroud'},
+            {'item': 'M3 x 8 heat-set inserts', 'qty': 4, 'for': 'pod cover'}, {'item': 'M3 x 6 button head', 'qty': 4, 'for': 'pod cover'},
+            {'item': 'M5 x 8 heat-set inserts', 'qty': 4, 'for': 'the TM face (the turret\'s 4 x M5 x 16)'},
+            {'item': 'Ø5 x 12 dowel pins', 'qty': 2, 'for': 'the TM face'},
+            {'item': 'closed-cell foam tape 3 x 1.5 mm', 'qty': 1, 'for': 'under the shroud floor, round the Ø80 hole'},
+            {'item': 'grommet for the DT12 harness, Ø13 hole', 'qty': 1, 'for': 'the pod\'s -y wall'}]
+    (OUT / 'bom.json').write_text(json.dumps({'adapter': bom, 'note': 'the turret\'s own parts: exports/turret/bench/bom.json'}, indent=1) + '\n')
+    size = sum(f.stat().st_size for f in SCENE.glob('*.stl'))
+    print(f'adapter {sum(masses.values()):.0f} g PETG, {sum(p["hours"] for p in plan.values()):.1f} h; scene {len(parts)} meshes, '
+          f'{size / 1e6:.1f} MB -> {SCENE.relative_to(R)}; {time.time() - t0:.0f} s')
+
+
+if __name__ == '__main__':
+    main()

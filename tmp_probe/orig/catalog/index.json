@@ -1,0 +1,13 @@
+{
+  "files": [
+    "hardware.json",
+    "leg_actuators.json",
+    "lights.json",
+    "motor_drivers.json",
+    "power_electronics.json",
+    "sensors_compute.json",
+    "turret.json",
+    "wheel_motors.json"
+  ],
+  "items": 54
+}
