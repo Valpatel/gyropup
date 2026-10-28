@@ -2836,6 +2836,104 @@
   "P2": [],
   "P3": []
  },
+ "connectivity": {
+  "P1": {
+   "status": "warn",
+   "pass": true,
+   "fails": [],
+   "undeclared_contacts": [
+    "bay_door_front|bay_floor",
+    "bay_door_front|bay_side_l",
+    "bay_door_front|bay_side_r",
+    "bay_door_rear|bay_floor",
+    "bay_door_rear|bay_side_l",
+    "bay_door_rear|bay_side_r",
+    "bay_side_l|belly_plate",
+    "bay_side_r|belly_plate",
+    "cheek_left|frame_screws_left",
+    "cheek_right|frame_screws_right",
+    "compute_pallet|isolator_2",
+    "compute_pallet|isolator_3",
+    "compute_pallet|isolator_4",
+    "compute_pallet|item.plate_vesc_l",
+    "compute_pallet|item.plate_vesc_r",
+    "item.agx_cooler|item.agx_spreader",
+    "item.j501_carrier|item.j501_standoff_15_146.5",
+    "item.j501_carrier|item.j501_standoff_165_146.5",
+    "item.j501_carrier|item.j501_standoff_165_16.5",
+    "item.plate_main_switch|plate_post_1",
+    "item.plate_mrbf_block|item.plate_shunt",
+    "leg.left_hip_frame|spacer_screws",
+    "leg.right_hip_frame|spacer_screws"
+   ],
+   "verdict": "build/gates/connectivity-P1.json"
+  },
+  "P2": {
+   "status": "warn",
+   "pass": true,
+   "fails": [],
+   "undeclared_contacts": [
+    "bay_door_front|bay_floor",
+    "bay_door_front|bay_side_l",
+    "bay_door_front|bay_side_r",
+    "bay_door_rear|bay_floor",
+    "bay_door_rear|bay_side_l",
+    "bay_door_rear|bay_side_r",
+    "bay_side_l|belly_plate",
+    "bay_side_r|belly_plate",
+    "cheek_left|frame_screws_left",
+    "cheek_right|frame_screws_right",
+    "compute_pallet|isolator_2",
+    "compute_pallet|isolator_3",
+    "compute_pallet|isolator_4",
+    "compute_pallet|item.plate_vesc_l",
+    "compute_pallet|item.plate_vesc_r",
+    "item.agx_cooler|item.agx_spreader",
+    "item.j501_carrier|item.j501_standoff_15_146.5",
+    "item.j501_carrier|item.j501_standoff_165_146.5",
+    "item.j501_carrier|item.j501_standoff_165_16.5",
+    "item.plate_main_switch|plate_post_1",
+    "item.plate_mrbf_block|item.plate_shunt",
+    "leg.left_hip_frame|spacer_screws",
+    "leg.right_hip_frame|spacer_screws"
+   ],
+   "verdict": "build/gates/connectivity-P2.json"
+  },
+  "P3": {
+   "status": "warn",
+   "pass": true,
+   "fails": [],
+   "undeclared_contacts": [
+    "bay_door_front|bay_floor",
+    "bay_door_front|bay_side_l",
+    "bay_door_front|bay_side_r",
+    "bay_door_rear|bay_floor",
+    "bay_door_rear|bay_side_l",
+    "bay_door_rear|bay_side_r",
+    "bay_side_l|belly_plate",
+    "bay_side_r|belly_plate",
+    "cheek_left|frame_screws_left",
+    "cheek_right|frame_screws_right",
+    "compute_pallet|isolator_2",
+    "compute_pallet|isolator_3",
+    "compute_pallet|isolator_4",
+    "compute_pallet|item.plate_vesc_l",
+    "compute_pallet|item.plate_vesc_r",
+    "ear_pod_l|shell_side_l_front",
+    "ear_pod_r|shell_side_r_front",
+    "eyes_board|shell_front",
+    "item.agx_cooler|item.agx_spreader",
+    "item.j501_carrier|item.j501_standoff_15_146.5",
+    "item.j501_carrier|item.j501_standoff_165_146.5",
+    "item.j501_carrier|item.j501_standoff_165_16.5",
+    "item.plate_main_switch|plate_post_1",
+    "item.plate_mrbf_block|item.plate_shunt",
+    "leg.left_hip_frame|spacer_screws",
+    "leg.right_hip_frame|spacer_screws"
+   ],
+   "verdict": "exports/body/gates/connectivity-P3.json"
+  }
+ },
  "holds": [
   [
    "cheek_nuts_left",
@@ -2930,7 +3028,8 @@
   [
    "item.agx_cooler",
    "item.j501_carrier",
-   "the cooler's four spring screws through the carrier (j501-agx)"
+   "the cooler's four spring screws through the carrier (j501-agx)",
+   40.0
   ],
   [
    "item.j501_standoff_15_16.5",
@@ -2955,17 +3054,20 @@
   [
    "item.plate_main_switch",
    "power_plate",
-   "in its printed cradle, two M4 into the plate's F-M4-2"
+   "in its printed cradle (3 mm under the plate), two M4 into the plate's F-M4-2",
+   3.0
   ],
   [
    "item.plate_shunt",
    "power_plate",
-   "two M5 into the plate's F-M5-2"
+   "on 3 mm printed spacers, two M5 into the plate's F-M5-2",
+   3.0
   ],
   [
    "item.plate_mrbf_block",
    "power_plate",
-   "its M8 post through a printed bushing in the plate"
+   "on 3 mm printed spacers, its M8 post through a printed bushing in the plate",
+   3.0
   ],
   [
    "item.plate_fuses",
@@ -3038,6 +3140,11 @@
   "screws": 183,
   "joints_with_problems": [],
   "floating": {},
-  "clashes": 0
+  "connectivity_pass": {
+   "P1": true,
+   "P2": true,
+   "P3": true
+  },
+  "clashes": null
  }
 }

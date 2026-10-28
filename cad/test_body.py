@@ -357,10 +357,11 @@ if __name__ == '__main__':
 
 def test_integrity_every_joint_and_no_floating_part():
     """cad/body_joints.py (run by cad/build_body.py): every screw's stack reads true through the CAD (the head on its face,
-    the stack touching, the holes, the thread engaged, the tip clear), every part on the robot reaches the cheeks, and
-    no two body parts interfere."""
+    the stack touching, the holes, the thread engaged, the tip clear), every part on the robot reaches the cheeks through
+    cad-agent's connectivity gate (issue #14), and no two body parts interfere."""
     f = R / 'exports' / 'body' / 'integrity.json'
     d = json.loads(f.read_text())['summary']
     assert not d['joints_with_problems'], d['joints_with_problems']
     assert not d['floating'], d['floating']
     assert not d.get('clashes'), d.get('clashes')
+    assert d.get('connectivity_pass') and all(d['connectivity_pass'].values()), d.get('connectivity_pass')   # cad-agent's gate (#14)
