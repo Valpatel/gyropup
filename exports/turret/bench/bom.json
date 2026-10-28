@@ -653,7 +653,7 @@
     }
    ],
    "media_key": "proto-board-52x50",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/proto-board-52x50.jpg",
    "thumb_from": "https://www.taydaelectronics.com/double-side-prototyping-board-50x70mm.html",
    "alternates": []
   },
@@ -765,6 +765,138 @@
      "changes": null,
      "checked": "2026-10-27",
      "evidence": "docs/turret-prototype-plan.md 3.3: Xometry sheet-cut upload (instant price), the same DXF, material and thickness"
+    }
+   ]
+  },
+  {
+   "item": "Cradle cheek plate, +y (the servo's side), laser-cut 6061-T6 aluminium 0.125 in, 90 x 62 mm, 9 holes, 4 countersunk",
+   "id": "sendcutsend-cradle-plate-l",
+   "key": "sendcutsend-cradle-plate-l",
+   "qty": 1,
+   "for": "cradle_plate_l",
+   "part_number": "cradle_plate_l.dxf (6061-T6, 0.125 in)",
+   "vendor": "SendCutSend",
+   "url": "https://sendcutsend.com/materials/6061-t6-aluminum/",
+   "price_usd_each": null,
+   "mass_g_each": 24.6,
+   "note": null,
+   "pack_qty": null,
+   "sellers": [
+    {
+     "seller": "SendCutSend",
+     "url": "https://sendcutsend.com/materials/6061-t6-aluminum/",
+     "seller_pn": null,
+     "price_usd": null,
+     "pack_qty": null,
+     "in_stock": null,
+     "stock": null,
+     "read_on": null
+    }
+   ],
+   "media_key": "sendcutsend-cradle-plate-l",
+   "thumb": null,
+   "thumb_from": null,
+   "alternates": [
+    {
+     "supplier": "Xometry",
+     "part_number": "cradle_plate_l.dxf, 6061-T6 0.125 in, sheet cutting",
+     "url": "https://www.xometry.com/capabilities/sheet-metal-manufacturing/",
+     "price": "instant price on upload",
+     "price_usd_each": null,
+     "pack_qty": 1,
+     "stock": null,
+     "drop_in": true,
+     "changes": null,
+     "checked": "2026-10-27",
+     "evidence": "the same DXF, material and thickness, uploaded for Xometry's instant sheet-cutting price (tapping and countersinks as finishing options), as the pan clamp's backup"
+    }
+   ]
+  },
+  {
+   "item": "Cradle cheek plate, -y (the pivot's side), laser-cut 6061-T6 aluminium 0.125 in, 90 x 62 mm, 7 holes, 1 tapped M5, 2 countersunk",
+   "id": "sendcutsend-cradle-plate-r",
+   "key": "sendcutsend-cradle-plate-r",
+   "qty": 1,
+   "for": "cradle_plate_r",
+   "part_number": "cradle_plate_r.dxf (6061-T6, 0.125 in)",
+   "vendor": "SendCutSend",
+   "url": "https://sendcutsend.com/materials/6061-t6-aluminum/",
+   "price_usd_each": null,
+   "mass_g_each": 25.0,
+   "note": null,
+   "pack_qty": null,
+   "sellers": [
+    {
+     "seller": "SendCutSend",
+     "url": "https://sendcutsend.com/materials/6061-t6-aluminum/",
+     "seller_pn": null,
+     "price_usd": null,
+     "pack_qty": null,
+     "in_stock": null,
+     "stock": null,
+     "read_on": null
+    }
+   ],
+   "media_key": "sendcutsend-cradle-plate-r",
+   "thumb": null,
+   "thumb_from": null,
+   "alternates": [
+    {
+     "supplier": "Xometry",
+     "part_number": "cradle_plate_r.dxf, 6061-T6 0.125 in, sheet cutting",
+     "url": "https://www.xometry.com/capabilities/sheet-metal-manufacturing/",
+     "price": "instant price on upload",
+     "price_usd_each": null,
+     "pack_qty": 1,
+     "stock": null,
+     "drop_in": true,
+     "changes": null,
+     "checked": "2026-10-27",
+     "evidence": "the same DXF, material and thickness, uploaded for Xometry's instant sheet-cutting price (tapping and countersinks as finishing options), as the pan clamp's backup"
+    }
+   ]
+  },
+  {
+   "item": "Tilt hard-stop lug, laser-cut 6061-T6 aluminium 0.100 in, 24 x 23 mm, 2 holes tapped M3",
+   "id": "sendcutsend-stop-lug",
+   "key": "sendcutsend-stop-lug",
+   "qty": 1,
+   "for": "stop_lug",
+   "part_number": "stop_lug.dxf (6061-T6, 0.100 in)",
+   "vendor": "SendCutSend",
+   "url": "https://sendcutsend.com/materials/6061-t6-aluminum/",
+   "price_usd_each": null,
+   "mass_g_each": 2.0,
+   "note": null,
+   "pack_qty": null,
+   "sellers": [
+    {
+     "seller": "SendCutSend",
+     "url": "https://sendcutsend.com/materials/6061-t6-aluminum/",
+     "seller_pn": null,
+     "price_usd": null,
+     "pack_qty": null,
+     "in_stock": null,
+     "stock": null,
+     "read_on": null
+    }
+   ],
+   "media_key": "sendcutsend-stop-lug",
+   "thumb": null,
+   "thumb_from": null,
+   "alternates": [
+    {
+     "supplier": "Xometry",
+     "part_number": "stop_lug.dxf, 6061-T6 0.100 in, sheet cutting",
+     "url": "https://www.xometry.com/capabilities/sheet-metal-manufacturing/",
+     "price": "instant price on upload",
+     "price_usd_each": null,
+     "pack_qty": 1,
+     "stock": null,
+     "drop_in": true,
+     "changes": null,
+     "checked": "2026-10-27",
+     "evidence": "the same DXF, material and thickness, uploaded for Xometry's instant sheet-cutting price (tapping and countersinks as finishing options), as the pan clamp's backup"
     }
    ]
   },
@@ -1345,7 +1477,7 @@
     }
    ],
    "media_key": "sparkfun-rob-13065",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/sparkfun-rob-13065.jpg",
    "thumb_from": "https://www.sparkfun.com/products/13065",
    "alternates": [
     {
@@ -1389,7 +1521,7 @@
     }
    ],
    "media_key": "sparkfun-rob-13065",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/sparkfun-rob-13065.jpg",
    "thumb_from": "https://www.sparkfun.com/products/13065",
    "alternates": [
     {
@@ -1433,7 +1565,7 @@
     }
    ],
    "media_key": "sparkfun-rob-13065",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/sparkfun-rob-13065.jpg",
    "thumb_from": "https://www.sparkfun.com/products/13065",
    "alternates": [
     {
@@ -1477,7 +1609,7 @@
     }
    ],
    "media_key": "turret_tube_coupling",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/turret_tube_coupling.jpg",
    "thumb_from": "https://www.mcmaster.com/51225K32/",
    "alternates": [
     {
@@ -1521,7 +1653,7 @@
     }
    ],
    "media_key": "turret_magnet_disc",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/turret_magnet_disc.jpg",
    "thumb_from": "https://www.mcmaster.com/5862K103/",
    "alternates": [
     {
@@ -1575,7 +1707,7 @@
     }
    ],
    "media_key": "allegro-a1120lua-t",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/allegro-a1120lua-t.jpg",
    "thumb_from": "https://www.cytechsystems.com/fr/product/a1120lua-t",
    "alternates": []
   },
@@ -1605,7 +1737,7 @@
     }
    ],
    "media_key": "turret_thumbscrew_m4x12",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/turret_thumbscrew_m4x12.jpg",
    "thumb_from": "https://www.mcmaster.com/92581A250/",
    "alternates": [
     {
@@ -1659,7 +1791,7 @@
     }
    ],
    "media_key": "proto-board-52x50",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/proto-board-52x50.jpg",
    "thumb_from": "https://www.taydaelectronics.com/double-side-prototyping-board-50x70mm.html",
    "alternates": []
   },
@@ -1699,7 +1831,7 @@
     }
    ],
    "media_key": "proto-board-52x50",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/proto-board-52x50.jpg",
    "thumb_from": "https://www.taydaelectronics.com/double-side-prototyping-board-50x70mm.html",
    "alternates": []
   },
@@ -1729,7 +1861,7 @@
     }
    ],
    "media_key": "screw_m5x16",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/screw_m5x16.jpg",
    "thumb_from": "https://www.mcmaster.com/91290A232/",
    "alternates": [
     {
@@ -1843,7 +1975,7 @@
     }
    ],
    "media_key": "turret_screw_m2x10",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/turret_screw_m2x10.jpg",
    "thumb_from": "https://www.mcmaster.com/91290A017/",
    "alternates": [
     {
@@ -1887,7 +2019,7 @@
     }
    ],
    "media_key": "turret_screw_m2x20",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/turret_screw_m2x20.jpg",
    "thumb_from": "https://www.mcmaster.com/91290A049/",
    "alternates": [
     {
@@ -2019,7 +2151,7 @@
     }
    ],
    "media_key": "turret_screw_m3x8",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/turret_screw_m3x8.jpg",
    "thumb_from": "https://www.mcmaster.com/91290A113/",
    "alternates": [
     {
@@ -2063,7 +2195,7 @@
     }
    ],
    "media_key": "turret_screw_m3x10",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/turret_screw_m3x10.jpg",
    "thumb_from": "https://www.mcmaster.com/91290A115/",
    "alternates": [
     {
@@ -2078,50 +2210,6 @@
      "changes": null,
      "checked": "2026-10-27",
      "evidence": "Same spec, 10 mm (select Length=10mm). $0.14 each; 25-99 $0.10; 100-999 $0.09; 1000+ $0.08."
-    }
-   ]
-  },
-  {
-   "item": "Black-Oxide Alloy Steel Socket Head Screw, US Origin, M3 x 0.5 mm Thread Size, 12 mm Long",
-   "id": "turret_screw_m3x12",
-   "key": "turret_screw_m3x12",
-   "qty": 4,
-   "for": "hw_screw_m3x12",
-   "part_number": "91290A117",
-   "vendor": "McMaster-Carr",
-   "url": "https://www.mcmaster.com/91290A117/",
-   "price_usd_each": 0.1203,
-   "mass_g_each": null,
-   "note": null,
-   "pack_qty": 100,
-   "sellers": [
-    {
-     "seller": "McMaster-Carr",
-     "url": "https://www.mcmaster.com/91290A117/",
-     "seller_pn": null,
-     "price_usd": null,
-     "pack_qty": null,
-     "in_stock": null,
-     "stock": null,
-     "read_on": null
-    }
-   ],
-   "media_key": "turret_screw_m3x12",
-   "thumb": null,
-   "thumb_from": "https://www.mcmaster.com/91290A117/",
-   "alternates": [
-    {
-     "supplier": "Belmetric",
-     "part_number": "BSH3X12",
-     "url": "https://belmetric.com/m3x0-5-socket-head-cap-screw-din-912-class-12-9/",
-     "price": "$0.16",
-     "price_usd_each": 0.16,
-     "pack_qty": 1,
-     "stock": "in stock",
-     "drop_in": true,
-     "changes": null,
-     "checked": "2026-10-27",
-     "evidence": "Same spec, 12 mm (select Length=12mm). $0.16 each; 25-99 $0.10; 100-999 $0.09; 1000+ $0.08."
     }
    ]
   },
@@ -2151,7 +2239,7 @@
     }
    ],
    "media_key": "turret_screw_m3x16",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/turret_screw_m3x16.jpg",
    "thumb_from": "https://www.mcmaster.com/91290A120/",
    "alternates": [
     {
@@ -2166,6 +2254,138 @@
      "changes": null,
      "checked": "2026-10-27",
      "evidence": "Same spec, 16 mm (select Length=16mm). $0.16 each; 25-99 $0.10; 100-999 $0.09; 1000+ $0.08."
+    }
+   ]
+  },
+  {
+   "item": "18-8 Stainless Steel Hex-Drive Flat Head Screw, M3 x 0.5 mm Thread Size, 14 mm Long",
+   "id": "turret_screw_m3x14_flat_ss",
+   "key": "turret_screw_m3x14_flat_ss",
+   "qty": 4,
+   "for": "hw_flat_m3x14",
+   "part_number": "92125A133",
+   "vendor": "McMaster-Carr",
+   "url": "https://www.mcmaster.com/92125A133/",
+   "price_usd_each": 0.1065,
+   "mass_g_each": null,
+   "note": null,
+   "pack_qty": 100,
+   "sellers": [
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/92125A133/",
+     "seller_pn": null,
+     "price_usd": null,
+     "pack_qty": null,
+     "in_stock": null,
+     "stock": null,
+     "read_on": null
+    }
+   ],
+   "media_key": "turret_screw_m3x14_flat_ss",
+   "thumb": null,
+   "thumb_from": null,
+   "alternates": [
+    {
+     "supplier": "Belmetric",
+     "part_number": "SF3X14CLZ",
+     "url": "https://belmetric.com/m3x0-5-flat-head-cap-screw-steel-10-9-din-7991/",
+     "price": "$0.18",
+     "price_usd_each": 0.18,
+     "pack_qty": 1,
+     "stock": "in stock",
+     "drop_in": true,
+     "changes": null,
+     "checked": "2026-10-27",
+     "evidence": "Same geometry: DIN 7991 / ISO 10642 M3 x 14 (overall length, as McMaster), head \u00d86; class 10.9 steel, zinc plated (14 mm is listed only as SF3X14CLZ); 'Starts At: $0.18' each on the page's Length selector."
+    }
+   ]
+  },
+  {
+   "item": "Class 10.9 Screw, M3 x 0.5 mm Thread Size, 8 mm Long",
+   "id": "turret_screw_m3x8_button",
+   "key": "turret_screw_m3x8_button",
+   "qty": 8,
+   "for": "hw_button_m3x8",
+   "part_number": "91239A113",
+   "vendor": "McMaster-Carr",
+   "url": "https://www.mcmaster.com/91239A113/",
+   "price_usd_each": 0.0982,
+   "mass_g_each": null,
+   "note": null,
+   "pack_qty": 100,
+   "sellers": [
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/91239A113/",
+     "seller_pn": null,
+     "price_usd": null,
+     "pack_qty": null,
+     "in_stock": null,
+     "stock": null,
+     "read_on": null
+    }
+   ],
+   "media_key": "turret_screw_m3x8_button",
+   "thumb": null,
+   "thumb_from": null,
+   "alternates": [
+    {
+     "supplier": "Fastener Superstore",
+     "part_number": "227258",
+     "url": "https://www.fastenersuperstore.com/products/227258/button-head-socket-cap-screws",
+     "price": "$31.01 / carton of 100",
+     "price_usd_each": 0.31,
+     "pack_qty": 100,
+     "stock": "not shown",
+     "drop_in": true,
+     "changes": null,
+     "checked": "2026-10-27",
+     "evidence": "M3-0.5 x 8 mm button head socket cap screw, alloy steel, black oxide: $31.01 per carton of 100 (1-2 cartons)."
+    }
+   ]
+  },
+  {
+   "item": "Black-Oxide Alloy Steel Hex-Drive Flat Head Screw, 90 Degree Countersink, M3 x 0.5 mm Thread Size, 6 mm Long",
+   "id": "turret_screw_m3x6_flat",
+   "key": "turret_screw_m3x6_flat",
+   "qty": 2,
+   "for": "hw_flat_m3x6",
+   "part_number": "91294A126",
+   "vendor": "McMaster-Carr",
+   "url": "https://www.mcmaster.com/91294A126/",
+   "price_usd_each": 0.0545,
+   "mass_g_each": null,
+   "note": null,
+   "pack_qty": 100,
+   "sellers": [
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/91294A126/",
+     "seller_pn": null,
+     "price_usd": null,
+     "pack_qty": null,
+     "in_stock": null,
+     "stock": null,
+     "read_on": null
+    }
+   ],
+   "media_key": "turret_screw_m3x6_flat",
+   "thumb": "references/vendor/thumbs/turret_screw_m3x6_flat.jpg",
+   "thumb_from": "https://www.mcmaster.com/91294A126/",
+   "alternates": [
+    {
+     "supplier": "Belmetric",
+     "part_number": "SF3X6",
+     "url": "https://belmetric.com/m3x0-5-flat-head-cap-screw-steel-10-9-din-7991/",
+     "price": "$0.18",
+     "price_usd_each": 0.18,
+     "pack_qty": 1,
+     "stock": "in stock",
+     "drop_in": true,
+     "changes": null,
+     "checked": "2026-10-27",
+     "evidence": "Same spec: DIN 7991 / ISO 10642, class 10.9 steel, black oxide (select Finish=Black Oxide, Length=6mm; a zinc-plated option exists on the same page). Length is overall incl. head, as McMaster. $0.18 each; 25-99 $0.11; 100-999 $0.10; 1000+ $0.08."
     }
    ]
   },
@@ -2195,7 +2415,7 @@
     }
    ],
    "media_key": "turret_screw_m4x10",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/turret_screw_m4x10.jpg",
    "thumb_from": "https://www.mcmaster.com/91290A144/",
    "alternates": [
     {
@@ -2239,7 +2459,7 @@
     }
    ],
    "media_key": "turret_screw_m3x8_flat",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/turret_screw_m3x8_flat.jpg",
    "thumb_from": "https://www.mcmaster.com/91294A128/",
    "alternates": [
     {
@@ -2283,7 +2503,7 @@
     }
    ],
    "media_key": "turret_screw_m3x10_flat",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/turret_screw_m3x10_flat.jpg",
    "thumb_from": "https://www.mcmaster.com/91294A130/",
    "alternates": [
     {
@@ -2327,7 +2547,7 @@
     }
    ],
    "media_key": "turret_setscrew_m3x6_nylon",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/turret_setscrew_m3x6_nylon.jpg",
    "thumb_from": "https://www.mcmaster.com/93285A115/",
    "alternates": [
     {
@@ -2349,7 +2569,7 @@
    "item": "Heat-Set Threaded Inserts for Plastic, Standard, Brass, M3 x 0.5 mm Thread Size, 5.7 mm Installed Length",
    "id": "insert_m3",
    "key": "insert_m3",
-   "qty": 29,
+   "qty": 37,
    "for": "hw_insert_m3",
    "part_number": "94459A140",
    "vendor": "McMaster-Carr",
@@ -2428,7 +2648,7 @@
     }
    ],
    "media_key": "turret_insert_m4",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/turret_insert_m4.jpg",
    "thumb_from": "https://www.mcmaster.com/94459A160/",
    "alternates": [
     {
@@ -2443,63 +2663,6 @@
      "changes": "NOT drop-in: 8.1 mm long vs McMaster 6.4 mm (1.7 mm longer, needs a deeper boss). The other ruthex option, RX-M4Sx4.0 short, is 2.4 mm shorter (page not opened). Neither ruthex nor CNC Kitchen (M4x8.1 / M4x4) sells a 6.4 mm M4. EUR 9.49 per 50 (VAT incl.), no USD price.",
      "checked": "2026-10-27",
      "evidence": "NOT drop-in: 8.1 mm long vs McMaster 6.4 mm (1.7 mm longer, needs a deeper boss). The other ruthex option, RX-M4Sx4.0 short, is 2.4 mm shorter (page not opened). Neither ruthex nor CNC Kitchen (M4x8.1 / M4x4) sells a 6.4 mm M4. EUR 9.49 per 50 (VAT incl.), no USD price."
-    }
-   ]
-  },
-  {
-   "item": "Heat-Set Threaded Inserts for Plastic, Standard, Brass, M5 x 0.8 mm Thread Size, 7.9 mm Installed Length",
-   "id": "insert_m5",
-   "key": "insert_m5",
-   "qty": 1,
-   "for": "hw_insert_m5",
-   "part_number": "94459A775",
-   "vendor": "McMaster-Carr",
-   "url": "https://www.mcmaster.com/94459A775/",
-   "price_usd_each": 0.2728,
-   "mass_g_each": null,
-   "note": null,
-   "pack_qty": 25,
-   "sellers": [
-    {
-     "seller": "McMaster-Carr",
-     "url": "https://www.mcmaster.com/94459A775/",
-     "seller_pn": null,
-     "price_usd": null,
-     "pack_qty": null,
-     "in_stock": null,
-     "stock": null,
-     "read_on": null
-    }
-   ],
-   "media_key": "insert_m5",
-   "thumb": "references/vendor/thumbs/insert_m5.jpg",
-   "thumb_from": "https://www.mcmaster.com/94459A775/",
-   "alternates": [
-    {
-     "supplier": "ruthex",
-     "part_number": "RX-M5x9.5 (SKU GE-M5x95-001)",
-     "url": "https://www.ruthex.de/products/ruthex-gewindeeinsatz-m5-50-stuck-rx-m5x9-5-messing-gewindebuchsen",
-     "price": null,
-     "price_usd_each": null,
-     "pack_qty": 50,
-     "stock": "InStock (schema.org availability)",
-     "drop_in": false,
-     "changes": "NOT drop-in: 9.5 mm long vs McMaster 7.9 mm (1.6 mm longer). The short version RX-M5Sx5.8 (and CNC Kitchen 'M5 x 5.8 short', also listed) is 2.1 mm shorter. No 7.9 mm M5 at ruthex or CNC Kitchen. EUR 9.99 per 50 (VAT incl.), no USD price.",
-     "checked": "2026-10-27",
-     "evidence": "NOT drop-in: 9.5 mm long vs McMaster 7.9 mm (1.6 mm longer). The short version RX-M5Sx5.8 (and CNC Kitchen 'M5 x 5.8 short', also listed) is 2.1 mm shorter. No 7.9 mm M5 at ruthex or CNC Kitchen. EUR 9.99 per 50 (VAT incl.), no USD price."
-    },
-    {
-     "supplier": "3DJake",
-     "part_number": "CNC-B09FXM8ZMV",
-     "url": "https://www.3djake.com/cnc-kitchen/threaded-inserts-m5-short",
-     "price": "$11.18 ($0.22 / pc), excl. VAT",
-     "price_usd_each": 0.2236,
-     "pack_qty": 50,
-     "stock": "In stock",
-     "drop_in": false,
-     "changes": "5.8 mm long instead of 7.9 mm, so 2.1 mm less thread engagement and pull-out strength. Same 6.4 mm hole per CNC Kitchen's table. It fits the existing 6.4 mm hole without a CAD change and sits flush with spare depth below.",
-     "checked": "2026-10-27",
-     "evidence": "curl of the 3DJake page: 'CNC Kitchen Threaded Inserts M5 Short, M5 x 5.8 (50 pieces)', InStock. The dimension table lists M5 Short: L 5.8, hole D3 6.4, and M5: L 9.5, hole D3 6.4. 3DJake also sells the M5 x 9.5 (CNC-X001FCE5ZB) at $11.18/50, 75 left. Direct from cnckitchen.store: TC-M5x5.8 and TC-M5x9.5, 50 pcs, 9.90 EUR each, InStock. No 7.9 mm-long M5 was found at either."
     }
    ]
   },
@@ -2584,7 +2747,7 @@
     }
    ],
    "media_key": "turret_dowel_4x8",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/turret_dowel_4x8.jpg",
    "thumb_from": "https://www.mcmaster.com/91595A150/",
    "alternates": [
     {
@@ -2628,7 +2791,7 @@
     }
    ],
    "media_key": "turret_oring_ct",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/turret_oring_ct.jpg",
    "thumb_from": "https://www.mcmaster.com/9452K14/",
    "alternates": [
     {
@@ -2672,7 +2835,7 @@
     }
    ],
    "media_key": "turret_standoff_m3x12",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/turret_standoff_m3x12.jpg",
    "thumb_from": "https://www.mcmaster.com/98952A110/",
    "alternates": [
     {
@@ -2760,7 +2923,7 @@
     }
    ],
    "media_key": "turret_standoff_m3x14",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/turret_standoff_m3x14.jpg",
    "thumb_from": "https://www.mcmaster.com/98952A112/",
    "alternates": [
     {
@@ -2824,7 +2987,7 @@
     }
    ],
    "media_key": "adafruit-feather-m4-can-4759",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/adafruit-feather-m4-can-4759.jpg",
    "thumb_from": "https://www.adafruit.com/product/4759",
    "alternates": []
   },
@@ -2854,7 +3017,7 @@
     }
    ],
    "media_key": "pololu-d24v150f12-2885",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/pololu-d24v150f12-2885.jpg",
    "thumb_from": "https://www.pololu.com/product/2885",
    "alternates": [
     {
@@ -2898,7 +3061,7 @@
     }
    ],
    "media_key": "pololu-d36v50f12-4095",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/pololu-d36v50f12-4095.jpg",
    "thumb_from": "https://www.pololu.com/product/4095",
    "alternates": [
     {
@@ -2942,7 +3105,7 @@
     }
    ],
    "media_key": "pololu-d36v28f5-3782",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/pololu-d36v28f5-3782.jpg",
    "thumb_from": "https://www.pololu.com/product/3782",
    "alternates": [
     {
@@ -2986,7 +3149,7 @@
     }
    ],
    "media_key": "pololu-2815",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/pololu-2815.jpg",
    "thumb_from": "https://www.pololu.com/product/2815",
    "alternates": [
     {
@@ -3600,7 +3763,7 @@
     }
    ],
    "media_key": "molex-43020-1200",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/molex-43020-1200.jpg",
    "thumb_from": "https://heilind.com/mol43020-1200.html",
    "alternates": []
   },
@@ -3640,7 +3803,7 @@
     }
    ],
    "media_key": "molex-43025-0600",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/molex-43025-0600.jpg",
    "thumb_from": "https://heilind.com/mol43025-0600.html",
    "alternates": []
   },
@@ -3680,7 +3843,7 @@
     }
    ],
    "media_key": "molex-43020-0600",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/molex-43020-0600.jpg",
    "thumb_from": "https://heilind.com/mol43020-0600.html",
    "alternates": []
   },
@@ -3800,7 +3963,7 @@
     }
    ],
    "media_key": "molex-43030-0038",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/molex-43030-0038.jpg",
    "thumb_from": "https://heilind.com/mol43030-0038.html",
    "alternates": []
   },
@@ -3840,7 +4003,7 @@
     }
    ],
    "media_key": "molex-43031-0021",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/molex-43031-0021.jpg",
    "thumb_from": "https://heilind.com/mol43031-0021.html",
    "alternates": []
   },
@@ -3880,7 +4043,7 @@
     }
    ],
    "media_key": "molex-43030-0001",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/molex-43030-0001.jpg",
    "thumb_from": "https://heilind.com/mol43030-0001.html",
    "alternates": []
   },
@@ -3920,7 +4083,7 @@
     }
    ],
    "media_key": "molex-43031-0001",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/molex-43031-0001.jpg",
    "thumb_from": "https://heilind.com/mol43031-0001.html",
    "alternates": []
   },
@@ -5325,7 +5488,7 @@
     }
    ],
    "media_key": "amass-xt60e-m",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/amass-xt60e-m.jpg",
    "thumb_from": "https://pro.maplin.co.uk/products/male-xt60e-panel-mount-gold-plated-connector-20a-amass",
    "alternates": []
   },
@@ -5354,7 +5517,7 @@
     }
    ],
    "media_key": "turret_screw_m2_5x8",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/turret_screw_m2_5x8.jpg",
    "thumb_from": "https://www.mcmaster.com/91290A102/",
    "alternates": [
     {
@@ -5397,7 +5560,7 @@
     }
    ],
    "media_key": "turret_nut_m2_5",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/turret_nut_m2_5.jpg",
    "thumb_from": "https://www.mcmaster.com/91828A113/",
    "alternates": [
     {
@@ -6085,7 +6248,7 @@
     }
    ],
    "media_key": "turret_screw_m3x8",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/turret_screw_m3x8.jpg",
    "thumb_from": "https://www.mcmaster.com/91290A113/",
    "alternates": [
     {
@@ -6754,7 +6917,7 @@
   "CT connector pair (Micro-Fit 3.0 class)": 12
  },
  "price_usd_known": {
-  "turret": 716.34,
+  "turret": 718.65,
   "bench_stand": 382.87,
   "tools": 255.73
  },
@@ -6769,7 +6932,38 @@
    "thickness_in": 0.125,
    "density_g_cm3": 2.7,
    "vendor": "SendCutSend",
-   "url": "https://sendcutsend.com/materials/6061-t6-aluminum/"
+   "url": "https://sendcutsend.com/materials/6061-t6-aluminum/",
+   "operations": "none"
+  },
+  "cradle_plate_l": {
+   "drawing": "exports/turret/cradle_plate_l.dxf",
+   "name": "6061-T6 aluminium",
+   "thickness_mm": 3.175,
+   "thickness_in": 0.125,
+   "density_g_cm3": 2.7,
+   "vendor": "SendCutSend",
+   "url": "https://sendcutsend.com/materials/6061-t6-aluminum/",
+   "operations": "4 holes countersunk 90 deg to \u00d86.4 on the face drawn (the face on the rail; DIN 7991 M3 flat heads)"
+  },
+  "cradle_plate_r": {
+   "drawing": "exports/turret/cradle_plate_r.dxf",
+   "name": "6061-T6 aluminium",
+   "thickness_mm": 3.175,
+   "thickness_in": 0.125,
+   "density_g_cm3": 2.7,
+   "vendor": "SendCutSend",
+   "url": "https://sendcutsend.com/materials/6061-t6-aluminum/",
+   "operations": "the \u00d84.2 hole tapped M5 x 0.8; 2 holes countersunk 90 deg to \u00d86.4 on the face drawn (the face on the rail)"
+  },
+  "stop_lug": {
+   "drawing": "exports/turret/stop_lug.dxf",
+   "name": "6061-T6 aluminium",
+   "thickness_mm": 2.54,
+   "thickness_in": 0.1,
+   "density_g_cm3": 2.7,
+   "vendor": "SendCutSend",
+   "url": "https://sendcutsend.com/materials/6061-t6-aluminum/",
+   "operations": "2 holes tapped M3 x 0.5"
   }
  },
  "note": "every line names a catalogue key (catalog/turret.json, hardware.json, sourcing.json): off the shelf with a listed price, printed, or ordered to our drawing at an instant online price (docs/decisions.yaml D40); qty is per turret; packs are bought whole (each item's pack_qty); thumbnails and alternates from cad/bom_media.py"

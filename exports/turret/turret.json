@@ -71,16 +71,16 @@
   "tilt_yoke": {
    "material": "pa6-cf",
    "qty": 1,
-   "note": "PA6-CF on its back; 4 x M4 x 10 to the turntable (heads 4 mm down in the bridge)",
+   "note": "PA6-CF on its back; 4 x M4 x 10 to the turntable (heads 6 mm down in the 12 mm bridge)",
    "solid": true,
    "frame": "pan",
-   "doc": "Printed PA6-CF on its back (layers run along the arms): an 8 mm bridge on the turntable (4 x M4) and two 8 mm",
-   "mass_g_each": 101.1,
-   "print_h": 6.6,
+   "doc": "Printed PA6-CF on its back (layers run along the arms): a 12 mm bridge on the turntable (4 x M4) and two 8 mm",
+   "mass_g_each": 116.3,
+   "print_h": 7.6,
    "bed_mm": [
     152.0,
     91.0,
-    48.4
+    40.0
    ],
    "fits_bed": true,
    "valid_single_solid": true
@@ -88,16 +88,50 @@
   "cradle": {
    "material": "pa6-cf",
    "qty": 1,
-   "note": "PA6-CF flat; ISO 7379 6 x 12 shoulder screw (M5) in an insert",
+   "note": "PA6-CF flat, no supports: the rail frame (D48); 8 x M3 inserts for the aluminium cheek plates",
    "solid": true,
    "frame": "tilt",
-   "doc": "Printed PA6-CF flat (100 % solid). Two 5 mm cheeks on the tilt axis and two 17 mm rails under the cartridge,",
-   "mass_g_each": 76.3,
-   "print_h": 5.0,
+   "doc": "The cradle's rail frame (D48), printed PA6-CF flat (100 % solid, no supports): two rails under the cartridge",
+   "mass_g_each": 51.1,
+   "print_h": 3.3,
    "bed_mm": [
     181.6,
-    126.0,
-    59.1
+    113.0,
+    10.0
+   ],
+   "fits_bed": true,
+   "valid_single_solid": true
+  },
+  "horn_boss": {
+   "material": "pa6-cf",
+   "qty": 1,
+   "note": "PA6-CF on an end face; between the +y plate and the tilt servo's horn (4 x M3 x 14 flat heads)",
+   "solid": true,
+   "frame": "tilt",
+   "doc": "Printed PA6-CF (100 % solid, on an end face): a \u00d820 x 9 boss between the +y cheek plate's outer face and the tilt",
+   "mass_g_each": 2.4,
+   "print_h": 0.2,
+   "bed_mm": [
+    20.0,
+    20.0,
+    9.0
+   ],
+   "fits_bed": true,
+   "valid_single_solid": true
+  },
+  "pivot_spacer": {
+   "material": "pa6-cf",
+   "qty": 1,
+   "note": "PA6-CF on its boss face, land up; between the -y plate and the MR126 (the shoulder screw through it)",
+   "solid": true,
+   "frame": "tilt",
+   "doc": "Printed PA6-CF (100 % solid, on its boss face): between the -y cheek plate's outer face and the MR126's inner",
+   "mass_g_each": 0.8,
+   "print_h": 0.1,
+   "bed_mm": [
+    18.0,
+    18.0,
+    4.0
    ],
    "fits_bed": true,
    "valid_single_solid": true
@@ -350,6 +384,21 @@
    "note": "pan clamp ring, SendCutSend 6061-T6 aluminium 0.125 in (exports/turret/pan_clamp.dxf)",
    "frame": "base"
   },
+  "cradle_plate_l": {
+   "mass_g": 24.6,
+   "note": "the +y cheek plate: the tilt servo's horn through the horn boss (4 x M3 x 14 flat heads, countersunk on its inner face); SendCutSend 6061-T6 aluminium 0.125 in (exports/turret/cradle_plate_l.dxf), on 4 x M3 x 8 button heads into the rail",
+   "frame": "tilt"
+  },
+  "cradle_plate_r": {
+   "mass_g": 25.0,
+   "note": "the -y cheek plate: tapped M5 for the shoulder screw, the stop lug on its outer face; SendCutSend 6061-T6 aluminium 0.125 in (exports/turret/cradle_plate_r.dxf), on 4 x M3 x 8 button heads into the rail",
+   "frame": "tilt"
+  },
+  "stop_lug": {
+   "mass_g": 2.0,
+   "note": "the tilt hard stop: SendCutSend 6061-T6 aluminium 0.100 in, 2 holes tapped M3 (exports/turret/stop_lug.dxf); 2 x M3 x 6 flat heads from the -y plate's inner face, and a drop of CA gel",
+   "frame": "tilt"
+  },
   "slip_ring": {
    "mass_g": 25.0,
    "note": "SparkFun ROB-13065 (Senring M220 series): 12 x 2 A, \u00d822 x 26.5, flange \u00d844.5 (envelope from the vendor sheets; flange holes to measure)",
@@ -483,7 +532,53 @@
     86.7
    ],
    "mass_g": 17.8,
-   "order": "https://sendcutsend.com/materials/6061-t6-aluminum/"
+   "order": "https://sendcutsend.com/materials/6061-t6-aluminum/",
+   "operations": "none"
+  },
+  "cradle_plate_l": {
+   "dxf": "exports/turret/cradle_plate_l.dxf",
+   "step": "exports/turret/cradle_plate_l.step",
+   "vendor": "SendCutSend",
+   "material": "6061-T6 aluminium",
+   "thickness_in": 0.125,
+   "thickness_mm": 3.175,
+   "size_mm": [
+    90.0,
+    62.1
+   ],
+   "mass_g": 24.6,
+   "order": "https://sendcutsend.com/materials/6061-t6-aluminum/",
+   "operations": "4 holes countersunk 90 deg to \u00d86.4 on the face drawn (the face on the rail; DIN 7991 M3 flat heads)"
+  },
+  "cradle_plate_r": {
+   "dxf": "exports/turret/cradle_plate_r.dxf",
+   "step": "exports/turret/cradle_plate_r.step",
+   "vendor": "SendCutSend",
+   "material": "6061-T6 aluminium",
+   "thickness_in": 0.125,
+   "thickness_mm": 3.175,
+   "size_mm": [
+    90.0,
+    62.1
+   ],
+   "mass_g": 25.0,
+   "order": "https://sendcutsend.com/materials/6061-t6-aluminum/",
+   "operations": "the \u00d84.2 hole tapped M5 x 0.8; 2 holes countersunk 90 deg to \u00d86.4 on the face drawn (the face on the rail)"
+  },
+  "stop_lug": {
+   "dxf": "exports/turret/stop_lug.dxf",
+   "step": "exports/turret/stop_lug.step",
+   "vendor": "SendCutSend",
+   "material": "6061-T6 aluminium",
+   "thickness_in": 0.1,
+   "thickness_mm": 2.54,
+   "size_mm": [
+    23.8,
+    22.7
+   ],
+   "mass_g": 2.0,
+   "order": "https://sendcutsend.com/materials/6061-t6-aluminum/",
+   "operations": "2 holes tapped M3 x 0.5"
   }
  },
  "info": {
@@ -544,13 +639,13 @@
    170.0
   ],
   "pan_hard_stop_deg": 173.5,
-  "mass_estimate_g": 1639.2,
+  "mass_estimate_g": 1684.0,
   "com": [
    -5.6,
-   -4.9,
-   309.5
+   -4.7,
+   309.7
   ],
-  "com_above_mount_mm": 95.5,
+  "com_above_mount_mm": 95.7,
   "ball_d": 22.7,
   "bore": 24.2,
   "pose": {
@@ -562,25 +657,25 @@
  "gaps_under_1mm": [
   [
    "tilt_yoke",
-   "cradle",
+   "stop_lug",
    0.0,
    0.0,
    0.0
   ],
   [
    "tilt_yoke",
-   "cradle",
+   "stop_lug",
    0.0,
    0.0,
    -25.0
   ]
  ],
- "mass_g_with_balls": 1639.2,
- "mass_g_empty": 1584.3,
+ "mass_g_with_balls": 1684.0,
+ "mass_g_empty": 1629.1,
  "com_from_mount_mm": [
   -5.6,
-  -4.9,
-  95.5
+  -4.7,
+  95.7
  ],
  "not_modelled_g": {
   "wiring and the cable loops": 50,
@@ -589,6 +684,6 @@
   "screws, inserts, dowels, springs": 17,
   "CT connector pair (Micro-Fit 3.0 class)": 12
  },
- "print_hours": 52.3,
- "made_g": 841.6
+ "print_hours": 51.9,
+ "made_g": 834.8
 }

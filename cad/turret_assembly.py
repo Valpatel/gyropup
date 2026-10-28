@@ -58,7 +58,8 @@ STEPS = [
       'shoulder_screw'],
      {'tilt_servo': (0, 40, 0), 'cradle': 55, 'cradle_plate_l': (0, 22, 55), 'cradle_plate_r': (0, -22, 55), 'stop_lug': (0, -38, 55),
       'horn_boss': (0, 14, 0), 'pivot_spacer': (0, -14, 0), 'shoulder_screw': (0, -40, 0)}, (0.5, -1.0, 0.5),
-     'On the bench first (D48): 8 x M3 inserts into the rail frame\'s two rebates, put in from the side; the aluminium stop lug onto the -y '
+     'The rail frame, its two aluminium plates and the stop lug go together on the bench (D48): 8 x M3 inserts into the rail frame\'s two '
+     'rebates, put in from the side; the aluminium stop lug onto the -y '
      'plate\'s outer face, 2 x M3 x 6 flat heads from the plate\'s inner face into its tapped holes, a drop of CA gel under it; each plate '
      'into its rail\'s rebate, 4 x M3 x 8 button heads. Then the STS3215 into its pocket on the +y arm, 4 x M2 x 10 from the arm\'s inner '
      'face, and the MR126 into the -y arm\'s seat. The cradle between the arms: the horn boss between the +y plate and the servo\'s horn, '

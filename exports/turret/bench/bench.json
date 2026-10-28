@@ -1,7 +1,7 @@
 {
  "too_big": [],
- "print_hours": 50.0,
- "printed_g": 1291,
+ "print_hours": 49.1,
+ "printed_g": 1281,
  "stand_mm": [
   180.0,
   200.0,
@@ -9,12 +9,12 @@
  ],
  "note": "printed_g and print_hours are print-plan.json's (the slicer's where sliced); sliced is cad/turret_print.py's own total",
  "sliced": {
-  "grams": 1291.0,
-  "hours": 50.1,
+  "grams": 1281.4,
+  "hours": 49.3,
   "by_material": {
    "pa6-cf": {
-    "grams": 637.0,
-    "hours": 31.8
+    "grams": 627.4,
+    "hours": 31.0
    },
    "petg": {
     "grams": 604.1,
@@ -31,6 +31,11 @@
   },
   "file": "exports/turret/print/print.json"
  },
+ "pictures": [
+  "turret-bench-level-iso.png",
+  "turret-bench-level-front.png",
+  "turret-bench-aimed-iso.png"
+ ],
  "orders": {
   "sellers": [
    "Waveshare",
@@ -51,7 +56,7 @@
    "IWISS",
    "FYSETC"
   ],
-  "grand_total_usd": 1609.89,
-  "lines": 125
+  "grand_total_usd": 1623.78,
+  "lines": 130
  }
 }

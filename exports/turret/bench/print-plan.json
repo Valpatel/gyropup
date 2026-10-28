@@ -123,16 +123,16 @@
    "size_mm": [
     152,
     91,
-    48
+    40
    ],
    "fits": true,
    "placement": "straight",
-   "grams_each": 104,
-   "grams": 104,
-   "hours": 4.8,
-   "cost_usd": 8.33,
+   "grams_each": 118,
+   "grams": 118,
+   "hours": 5.1,
+   "cost_usd": 9.47,
    "infill": "100 %",
-   "how": "PA6-CF on its back; 4 x M4 x 10 to the turntable (heads 4 mm down in the bridge)",
+   "how": "PA6-CF on its back; 4 x M4 x 10 to the turntable (heads 6 mm down in the 12 mm bridge)",
    "sliced": true,
    "settings": {
     "wall_loops": "4",
@@ -151,29 +151,78 @@
    "qty": 1,
    "size_mm": [
     182,
-    126,
-    59
+    113,
+    10
    ],
    "fits": true,
    "placement": "straight",
-   "grams_each": 77,
-   "grams": 77,
-   "hours": 3.5,
-   "cost_usd": 6.16,
+   "grams_each": 50,
+   "grams": 50,
+   "hours": 2.1,
+   "cost_usd": 4.0,
    "infill": "100 %",
-   "how": "PA6-CF flat; ISO 7379 6 x 12 shoulder screw (M5) in an insert",
+   "how": "PA6-CF flat, no supports: the rail frame (D48); 8 x M3 inserts for the aluminium cheek plates",
    "sliced": true,
    "settings": {
     "wall_loops": "4",
     "sparse_infill_density": "100%",
     "sparse_infill_pattern": "zig-zag",
-    "curr_bed_type": "Textured PEI Plate",
-    "enable_support": "1",
-    "support_type": "tree(auto)",
-    "support_threshold_angle": "30"
+    "curr_bed_type": "Textured PEI Plate"
    },
    "print_file": "exports/turret/print/cradle.3mf",
-   "orientation": "flat"
+   "orientation": "flat, no supports"
+  },
+  "horn_boss": {
+   "material": "pa6-cf",
+   "qty": 1,
+   "size_mm": [
+    20,
+    20,
+    9
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 2,
+   "grams": 2,
+   "hours": 0.2,
+   "cost_usd": 0.23,
+   "infill": "100 %",
+   "how": "PA6-CF on an end face; between the +y plate and the tilt servo's horn (4 x M3 x 14 flat heads)",
+   "sliced": true,
+   "settings": {
+    "wall_loops": "4",
+    "sparse_infill_density": "100%",
+    "sparse_infill_pattern": "zig-zag",
+    "curr_bed_type": "Textured PEI Plate"
+   },
+   "print_file": "exports/turret/print/horn_boss.3mf",
+   "orientation": "on an end face"
+  },
+  "pivot_spacer": {
+   "material": "pa6-cf",
+   "qty": 1,
+   "size_mm": [
+    18,
+    18,
+    4
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 1,
+   "grams": 1,
+   "hours": 0.0,
+   "cost_usd": 0.05,
+   "infill": "100 %",
+   "how": "PA6-CF on its boss face, land up; between the -y plate and the MR126 (the shoulder screw through it)",
+   "sliced": true,
+   "settings": {
+    "wall_loops": "4",
+    "sparse_infill_density": "100%",
+    "sparse_infill_pattern": "zig-zag",
+    "curr_bed_type": "Textured PEI Plate"
+   },
+   "print_file": "exports/turret/print/pivot_spacer.3mf",
+   "orientation": "on its boss face, the land up"
   },
   "cartridge_body": {
    "material": "pa6-cf",
@@ -528,10 +577,10 @@
  },
  "by_material": {
   "pa6-cf": {
-   "grams": 637,
-   "hours": 31.8,
-   "cost_usd": 50.98,
-   "parts": 11
+   "grams": 627,
+   "hours": 30.9,
+   "cost_usd": 50.24,
+   "parts": 13
   },
   "tpu95": {
    "grams": 9,
@@ -547,7 +596,7 @@
   }
  },
  "too_big": [],
- "total_hours": 50.0,
- "total_grams": 1291,
+ "total_hours": 49.1,
+ "total_grams": 1281,
  "note": "the bench turret (cad/turret.py, v0: no bumper, no fill flap) and its stand; grams and hours are Bambu Studio's where the part is sliced (sliced: true, cad/turret_print.py), rough otherwise"
 }
