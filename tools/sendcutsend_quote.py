@@ -255,6 +255,8 @@ def main():
     parts = {'cheek': bf.cheek_part, 'floor_tray': bf.tray_part, 'belly_plate': bf.belly_part, 'deck': bf.deck_part,
              'compute_pallet': bf.pallet_part, 'power_plate': bf.power_plate_part, 'bus_bar': bf.bus_bar_part,
              'turret_plate': bf.turret_plate_part}
+    import body_battery as bb
+    parts.update({'bay_floor': bb.floor_part, 'bay_side': bb.side_part})
     outf = Path(a.out)
     res = json.loads(outf.read_text()) if outf.exists() else {}
     today = datetime.date.today().isoformat()
@@ -265,7 +267,7 @@ def main():
             feats = []
             if name in parts:
                 import body_layout as bl
-                sp = parts[name](bl.layout()['mounts']) if name not in ('cheek', 'bus_bar', 'turret_plate') else parts[name]()
+                sp = parts[name](bl.layout()['mounts']) if name not in ('cheek', 'bus_bar', 'turret_plate', 'bay_floor', 'bay_side') else parts[name]()
                 feats = [{'d': f.d, 'note': f.note, 'kind': f.kind} for f in sp.features]
             o = order_of(s, feats)
             app = App(p, Path(a.shots) / name if a.shots else None)
@@ -276,7 +278,9 @@ def main():
                 r = {'file': s['dxf'], 'error': str(e)[:400]}
             finally:
                 app.close()
-            r.update({'read_on': today, 'seller': 'SendCutSend', 'url': APP, 'order': o})
+            import body_sheet
+            r.update({'read_on': today, 'seller': 'SendCutSend', 'url': APP, 'order': o,
+                      'dxf_sha1': body_sheet.dxf_geometry_sha1(R / s['dxf'])})     # the price is for this DXF
             res[name] = r
             outf.write_text(json.dumps(res, indent=1) + '\n')
             f = r.get('final') or {}

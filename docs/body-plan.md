@@ -93,64 +93,37 @@ frame's twist between the two hip faces ≤ 0.1° under one leg's 80 N·m. The t
 (M3's coupon test measures an M5 insert's pull-out in printed PA6-CF): the cheeks also bear on the flanges' end faces,
 so the bolts see mostly shear and the bottom row's tension in a landing (≤ 0.45 kN per bolt at 2.5 kN per leg).
 
-### 1.2 Battery
+### 1.2 Battery (D65, replacing D43/D54: rewritten 2026-10-27)
 
 **Loads (standing, lights off):** 4 × RS-04 at ~10 W = 40 W; Orin AGX + J501 ~40 W (15-40 W module modes, 60 W
-system max); VLP-16 8 W; 2 × D435 7 W; VESCs and wheels balancing ~10 W; MCU, IMU, BMS, eyes ~3 W: **~110 W**.
-Playing: plus the turret's 40 W average (docs/head-payload.md) and the SSC1 pods 25.6 W: **~190 W**. Peaks: a jump
-is 4 motors at 60 N·m × 16.7 rad/s ≈ 1 kW each for ~0.2 s, plus the turret's 2.1 A ramped spin-up: ~4 kW, **~80 A
-at 48 V**.
+system max); VLP-16 8 W; 2 × D435 7 W; VESCs and wheels balancing ~10 W; MCU, IMU, eyes ~3 W: **~110 W**. Playing:
+plus the turret (D66: its own robot on a bus branch, ~40 W average, flywheel bursts to ~140 W) and the SSC1 pods
+25.6 W: **~190 W**. Peaks: a jump's push draws about 70 A for 0.3 s (the leg rig's HIL at 16.25 kg a leg).
 
-**Why 48 V class, not 8S LiFePO4 (R23) and not the FLEXVOLT (D25):**
-- The rig's jump (exports/leg/rig-results.json) peaks at 16.67 rad/s at 60 N·m (jump_peak 17.69 rad/s at 120 N·m);
-  the sim's RS-04 line gives 60 N·m up to about 160 rpm × V/48 V. At 8S LFP (25.6 V) that is 8.9 rad/s: no jump at
-  all; stand, squat (1.0 rad/s) and balance are unaffected. At 13S (48.1 V nominal) it is 16.8 rad/s: the jump as
-  simulated. Below ~45 V the jump shrinks and the controller scales it with bus voltage.
-- RS-04 manual (references/vendor/robstride-rs-04/RS04User_Manual260713.pdf): "Rated voltage 48 VDC; operating
-  voltage range 24-60 VDC; the maximum allowable voltage 60 VDC; overvoltage fault: the motor voltage exceeds the
-  protection voltage of 60 V; undervoltage fault below 12 V". DeWalt's own footnote (dewalt.com, the DCB606 FLEXVOLT
-  page, read 2026-10-27): "Maximum initial battery voltage (measured without a workload) is 20 and 60 volts. Nominal
-  voltage is 18 and 54." So a fresh FLEXVOLT sits at 60 V: the RS-04s fault at power-on, and D25's 58 V shunt clamp would
-  then dissipate across the pack until it bled down to 58 V. The Flipsky switch is rated 60 V and the MRBF block 58 V
-  as well. One FLEXVOLT is also only 180 Wh (about 1 h here) with no discharge protection of its own.
-- 12S (50.4 V full, 36 V empty) is the fallback: everything in rating, 10 % less jump, and WREKD sells a 12S2P pack
-  at a listed price (below). 14S at 4.10 V/cell is 57.4 V, too close to 60 V with regen.
+**Decision (D65, the user's): two DeWalt DCB609 FLEXVOLT 9.0 Ah packs in 20 V mode, in series: 10S3P, 36 V nominal,
+41 V full, 30 V empty, 360 Wh rated, 3.1 kg (DeWalt US: 3.45 lb a pack).** Each pack slides onto an off-the-shelf
+rail adapter (Terrafirma Technology, 10 AWG leads, 30 A stated, no fuse or switch; $64.00 the four on Amazon,
+B07HYJ628S). 60 V mode is ruled out: a fresh pack sits at the RS-04's 60 V over-voltage fault. One pack (18 V) is
+under the RS-04's 24 V.
 
-**Decision: 13S2P Molicel INR21700-P45B (or P50B), 48.1 V nominal, 9-10 Ah, 433-480 Wh, about 2.0 kg with BMS and
-cassette.** Charged to 4.10 V/cell (53.3 V) by setting the BMS's cell OVP, so regen always has ≥ 1.9 V/cell of
-headroom to the 4.25 V/cell cut and the bus stays under 57 V. Continuous 90 A (2 × 45 A), above the 80 A jump
-pulses. Runtime with 85 % of capacity usable (4.10 to 3.2 V/cell): about **1.9 h playing, 3 h standing**. A 13S1P
-(216 Wh, 1.1 kg) is the light option if the mass budget bites (section 1.8); it still covers 1 h of play.
-
-- **Primary pack:** 26 × Molicel INR21700-P50B (5.0 Ah, 60 A continuous; Li-ion Wholesale $8.99 each with 12,334 in
-  stock on 2026-10-27, 18650BatteryStore $11.99 in stock) or P45B (4.5 Ah, 45 A; Li-ion Wholesale $7.49, 12,701 in
-  stock; sold out at 18650BatteryStore), spot-welded with 0.2 mm nickel (a kWeld complete kit, €169-177 net, about
-  $188-197, keenlab.de 2026-10-27, plus a ≥ 800 A source such as a 3S LiPo; the Glitter 801D is "currently
-  unavailable" on Amazon), a **JK (JiKong) JK-B2A24S15P smart BMS** (8-24S configurable, 150 A continuous / 300 A
-  peak, 2 A active balance, Bluetooth + UART; $103.99, in stock on Amazon 2026-10-27, sold by JKBMS and shipped by
-  Amazon, ASIN B0D17J36JC; the 200 A JK-B2A24S20P is $169.99 with 18 left) set to 13S, cell OVP 4.10 V, UVP 3.0 V,
-  charge current 5 A, 0 °C charge block; an XT90-S power lead, a 4-pin JST-XH for the BMS UART to the balance MCU, a
-  10 kΩ NTC on the cell block. Cells upright in a 4 × 7 footprint (86 × 150 mm): cassette 95 × 160 × 85 mm with the
-  XT90-S on its end face. With P50B cells the pack is 10 Ah, 481 Wh, 120 A continuous.
-- **Backup pack:** WREKD no longer lists any 12S or 13S Molicel pack (its whole catalogue and a "P45B" search were
-  read on 2026-10-27: nothing, and no BMS option), so the research's $504 12S2P is off the table. The backup is a
-  second cassette of the same cells on a **Daly 13S 48 V 100 A smart BMS** ($70.99-95.47 on Amazon 2026-10-27,
-  Bluetooth, RS485/CAN variants, passive balance) if the JK is out of stock; the mass lever is a 13S1P cassette
-  (1.1 kg, 216-240 Wh). No balance charger is needed with a BMS pack.
-- **Robot-side protection regardless of pack:** the 80 A MRBF main fuse, the anti-spark switch, an INA228 with a
-  100 A shunt on the MCU (voltage, current, charge counting), firmware UVLO: warn 3.5 V/cell (45.5 V), sit and stop
-  at 3.2 V/cell (41.6 V), the BMS cuts at 3.0 V/cell (39 V). The DDR-120C-24's 33.6 V minimum is covered.
-
-**Charging.** Off-robot on the bench with a standard 13S 54.6 V 5 A CC/CV charger (Amazon B0BN1DSJGG $34.99 in
-stock with a plug set, or B0CYZGKDJ8 $38.50 with an XLR plug, both 2026-10-27; EM3ev's 54.6 V 5 A from $30.00; none
-ships with an XT connector, so fit one); the BMS stops the charge at 4.10 V/cell, so the charger's 54.6 V is never
-reached. On the robot through an XT60E-M panel plug (5 A charging needs no XT90; Pyrodrone $11.99 per 10, in stock
-2026-10-27) on the belly box's rear face, wired to the pack side of the main switch, so it charges through the
-BMS with the robot off. The dock (D18, R24) uses the same principle (section 2.5).
-
-**Swapping.** The cassette slides in through the right side door into a tray on the floor tray (front, centre-right),
-latched; two cassettes make the robot continuous. The XT90-S has its own pre-charge resistor, so plugging in never
-sparks even with the main switch left on.
+- **Where:** the battery bay under the belly plate, between the knees (cad/body_battery.py; docs/body-sections.md 1):
+  the packs hang from their adapters on printed plates as from a tool, rails along x, the front one slides out of the
+  front door and the rear one out of the rear, each door on two knurled M3 thumbscrews (tool-free). The bay is a
+  SendCutSend 0.063 in floor and sides on printed rails, TPU skids on VHB under it: 318 × 102 × 132 mm, its bottom at
+  z -224.6. The robot sits on the skids under a 139 mm leg; the controller's lowest height is 160 mm (21 mm off the
+  floor). A pack's 97 mm height is why the bay is 64 mm deeper than the 13S2P brick's.
+- **Protection is the robot's own** (the packs talk to nothing): the firmware's windows (docs/body-firmware.md 5):
+  warn 35.0 V, no jump under 34.0 V resting, sit 32.0 V, a latched cut-off at 30.0 V under load (3.0 V a cell); the bus
+  current limited to 30 A (1 s) and 80 A (0.5 s); regen clamped over 41.5 V; latched off over 44.0 V; no arming over
+  42.0 V. The MRBF 80 A main fuse and the anti-spark switch stay (D55).
+- **The jump** (the leg rig's HIL with the firmware's current-limited push): 199 mm on a full pair (41 V), 150 mm at
+  36 V, 104 mm at 34.1 V, refused under 34 V; the 13S pack gave 245/231 mm.
+- **Charging:** the packs come out and charge on DeWalt's chargers; the robot has no charge port. The dock (D18, D64)
+  as planned charged the pack through pads in the tub's floor; with tool packs it is overtaken (docs/body-next-plan.md 9).
+- **Converters:** the DDR-120C-24 starts at 33.6 V, inside the 10S range, so one TRACO TEP 150-4812WI (18-75 V in,
+  isolated, 12 V 12.5 A) feeds the J501 (12-36 V in) and the 12 V rail in place of the DDR-120C-24 and DDR-60L-12.
+- **Mass:** the battery group is 3.27 kg against the brick's 1.54: the P3 ledger is 1.8 kg over the 32.0 kg gate
+  (D57); where the mass comes from is open (docs/body-sections.md 6, issue #10).
 
 ### 1.3 Power distribution
 
@@ -536,14 +509,14 @@ workstream. Keep the design simple and every bought part highly available (D40).
 | Group | Items | Est. cost |
 |---|---|---|
 | SendCutSend | spine (5052-H32 0.125 in, 4 bends, 12 PEM M5), floor tray (5052-H32 0.100 in, 4 bends), deck (6061-T6 0.100 in), belly (6061-T6 0.100 in), pallet (6061-T6 0.080 in): 1 each | $180-300 (instant quote; verify) |
-| Battery | 26 × Molicel P50B ($234) or P45B ($195), JK-B2A24S15P BMS ($103.99), 0.2 × 10 mm nickel strip, XT90-S pair, JST-XH kit, fish paper, Kapton, a 13S 54.6 V 5 A charger ($35); a kWeld kit (~$195 plus a 3S LiPo, once) | $560-620 incl. the welder |
-| Power | 2 × DDR-120C-24 ($138.40, one spare), DDR-60L-12 ($34.20), DDR-30L-5 (~$27.60), Flipsky switch ($48), Blue Sea 5191 ($30.12) + MRBF 80 A (~$20), copper bar and studs for the bus bars (~$25), 10 gPV 10 × 38 fuses + 5 two-pole holders (~$120, or less with an Amazon kit), INA228 + shunt (~$30), XT60E-M plugs ($11.99), 100 mm DIN rail | ~$490 |
-| Control | Nucleo-G474RE ($19.90), 3 × Adafruit CAN Pal ($11.85), QT Py ESP32-S3 ($12.50), DualEye ($15.99), 10 AWG / 12 AWG / 16 AWG silicone wire, XT60 and XT30 leads, Micro-Fit and JST-XH kits, GH1.25 extensions (~$80) | ~$140 |
+| Battery (D65) | 2 × DeWalt DCB609 ($259 each; the user's own packs and chargers serve), Terrafirma 10 AWG rail adapters (4 for $64.00), 2 × XT90-S pairs, knurled M3 thumbscrews, VHB tape; the bay is SendCutSend (floor and sides) and printed (rails, adapter plates, doors, skids) | $90 without the packs, $608 with two |
+| Power | TRACO TEP 150-4812WI ($222.65-275.99 listed: the J501 and the 12 V rail), Flipsky switch ($48), Blue Sea 5191 ($30.12) + MRBF 80 A (~$20), the C110 bus bars (SendCutSend), MINI 58V fuses and inline holders, INA228 + shunt (~$30), Pololu 5 V buck | ~$420 |
+| Control | Nucleo-G474RE ($19.90), 3 × Adafruit CAN Pal ($11.85), DualEye ($15.99), 10 AWG / 12 AWG / 16 AWG silicone wire, XT60 and XT30 leads, Micro-Fit and JST-XH kits, GH1.25 extensions (~$80) | ~$140 |
 | Lights, cameras | SSC1 pair ($179.95); the D435s are the user's (a new D435 is $375 with a 6-8 week lead time) | $180 |
 | Printed | PA6-CF ~1.5 kg, PETG ~1.2 kg, TPU 95A 0.3 kg | ~$130 |
 | McMaster | M5 inserts × 60, M3 × 40, M8 × 8, 5/16-18 × 2; M5 × 16 button heads × 60, M3 × 35 flat heads × 4, M3 × 16 standoffs × 4, M3 × 10 × 40; 4 rubber isolators; Ø18 grommets × 6; cable-tie mounts | ~$90 |
 | From the leg workstream (M3) | 2 hip modules with 4 × RS-04 and 2 × BotWheel, 2 × Flipsky 75100 | (their order) |
-| **Body P1 total, excluding motors, wheels, compute and sensors** | | **~$1,800-2,000** (about $1,600 without the welder and the spare DDR-120C) |
+| **Body P1 total, excluding motors, wheels, compute, sensors and the packs** | | exports/body/bom.json is the priced list (docs/body-orders.md): $1,608 bought + $483 SendCutSend as last read (2026-10-27; the bay's and changed plates' prices to re-read) |
 
 ## 9. Still to verify, and TODO (next session)
 

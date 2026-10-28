@@ -423,3 +423,23 @@ docs/body-orders.md 4).
   packs in 20 V mode in series (10S, 30-41 V) on two dock adapters; the DDR-120C-24 gives way to a converter rated to
   28 V or below; the turret's 24 V branch gives way to an XT30 branch off the bus. The voltage windows above (UVLO
   45.5 / 41.6 V, the 44 V jump gate) move to the 10S range: section 9 below records the new ones.
+
+## 9. D65 and D66 in the body (2026-10-27; issues #10, #12, #13)
+
+- **The battery bay** (cad/body_battery.py): the two DCB609 packs hang from their rail adapters under the belly, out
+  through two end doors on thumbscrews; 132 mm deep; the robot sits on its skids under a 139 mm leg (H_RANGE 160-375).
+- **One converter**, TRACO TEP 150-4812WI (12 V 150 W, 18-75 V), for the J501 and the 12 V rail; the DDR-120C-24 and
+  DDR-60L-12 are gone. The turret (D66) is a 7.5 A branch of the bus through the stop relay's pole B (the G2RL-2's
+  contact carries 8 A at 30 V, about 6 A breaking at 41 V: B15 measures the inrush and the contact).
+- **The firmware's 10S windows** (merged from body/b8-firmware): warn 35.0, jump gate 34.0, sit 32.0, cut-off 30.0 V
+  under load, 30 A / 80 A current limits, the regen clamp over 41.5 V and the 44.0 V latch; the jump 199 / 150 / 104 mm
+  at 41 / 36 / 34.1 V. The LQR table is regenerated on the D65 model (33.58 kg).
+- **B9 (the dock) and B17 are overtaken:** D64 charged the pack through pads in the tub's floor; tool packs charge on
+  DeWalt's chargers. A parking stand with the user's DeWalt chargers is the obvious successor; not planned until the
+  coordinator asks for it.
+- **The mass gate fails:** P3 33.8 kg against 32.0 (the packs 3.13 kg against the brick's 1.54). The options are in
+  docs/body-sections.md 6; the gate's test is a strict expected failure until one is chosen.
+- **The B5 fuse board** is reworked for 10S (body/b5-fuse-board 760e889, merged): F7 the TRACO 10 A, F8 the turret
+  7.5 A, F11 the J501 10 A, F12 the other 12 V loads 7.5 A, F9-F10 spare.
+- **Mechanics first** (issue #13): cad/body_joints.py models every screw as a joint and checks it through the CAD; it
+  found and fixed thirteen faults (the commit messages list them); cad/body_sections.py writes docs/body-sections.md.

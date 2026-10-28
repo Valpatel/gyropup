@@ -478,3 +478,24 @@ def _slot_outline(c, size, n=8):
 
 def _poly_edge_dist(p, poly):
     return min(_seg_dist(p, poly[i], poly[(i + 1) % len(poly)]) for i in range(len(poly)))
+
+
+def dxf_geometry_sha1(path) -> str:
+    """A hash of a DXF's geometry alone (entity types, layers, coordinates to 0.001 mm), not its header's timestamps: a
+    SendCutSend price stays valid while this does (cad/body_bom.py made_to_order)."""
+    import hashlib
+    import ezdxf
+    doc = ezdxf.readfile(str(path))
+    rows = []
+    for e in doc.modelspace():
+        t = e.dxftype()
+        d = e.dxf
+        vals = []
+        for k in ('start', 'end', 'center', 'radius', 'start_angle', 'end_angle', 'insert'):
+            if d.hasattr(k):
+                v = d.get(k)
+                vals.append(tuple(round(float(c), 3) for c in v) if hasattr(v, '__iter__') else round(float(v), 3))
+        if t == 'LWPOLYLINE':
+            vals.append(tuple(tuple(round(float(c), 3) for c in p) for p in e.get_points()))
+        rows.append(repr((t, d.get('layer', ''), vals)))
+    return hashlib.sha1('\n'.join(sorted(rows)).encode()).hexdigest()

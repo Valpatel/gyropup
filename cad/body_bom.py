@@ -225,7 +225,11 @@ def made_to_order(body, prices=None):
                'price_estimate_usd_each': est.get(name)}
         pr = prices.get(name) or {}
         fin = pr.get('final') or {}
-        same = pr.get('order', {}).get('qty') == s['qty'] and not pr.get('refused') and not pr.get('error')
+        import body_sheet
+        dxf = R / s['dxf'] if s.get('dxf') else None
+        sha = body_sheet.dxf_geometry_sha1(dxf) if dxf and dxf.exists() else None
+        same = (pr.get('order', {}).get('qty') == s['qty'] and not pr.get('refused') and not pr.get('error')
+                and pr.get('dxf_sha1') is not None and pr.get('dxf_sha1') == sha)          # a price is for the DXF it was read from
         if fin.get('each') is not None and same:
             row.update({'price_usd_each': fin['each'], 'price_read_on': pr['read_on'], 'price_usd_line': fin.get('subtotal'),
                         'price_breaks_usd_each': fin.get('breaks'), 'ships_by': fin.get('arrives'),

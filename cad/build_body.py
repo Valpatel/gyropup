@@ -293,7 +293,7 @@ def colour(n):
 
 def render(parts, items, out: Path):
     from cadagent.render import Renderer
-    r = Renderer(out, subtitle='GYROPUP BODY P1 | OPEN FRAME, BOTH LEGS')
+    r = Renderer(out, subtitle='GYROPUP BODY | D65 BATTERY BAY')
     made = []
     legs = bf.legs(300.0)
     p3 = [(_v(p.shape), p.colour if p.colour else colour(n)) for n, p in parts.items() if p.shape is not None and bf.on_robot(p, 'P3')]
