@@ -45,6 +45,36 @@ balls through the fill port onto the dial's real cone and fins, parked, a ball s
 rest (slowest ball 0.0009 m/s at the end). `exports/turret/feed/pile.json` holds the result; the gates and the 3D page
 both read it.
 
+## The dossier (cad-agent's process)
+
+The turret is the first part of Gyropup on cad-agent's full process (the toolkit's docs/dossier.md and docs/gates.md):
+these eight sections as a YAML dossier, the geometry declared on the dossier registry, every integrity gate and the
+dossier lint run by `cad-agent gates`, and `cad-agent check` failing on a failing, missing or stale verdict.
+
+| File | What it holds |
+|---|---|
+| `dossier/project.yaml` | the requirements (R1-R19, each with its source and how it is verified), the interfaces between sections, the gates' declarations (ground, free parts, intended overlaps, ignored pairs, tools) |
+| `dossier/sections/S1-base.yaml` .. `S8-stand.yaml` | each section's purpose, requirements, interfaces, decisions (with the alternatives rejected) and a card per part: its function, interfaces, material, screws, checks |
+| `dossier/decisions.yaml` | the turret's project decisions (D40, D48, D66-D68, D70) and the dossier's own (T0.1-T0.8) |
+| `dossier/gate-declarations.yaml` | what the schema cannot say yet: the hopper's `contains` with `closed_by`, the screws' thread overlaps |
+| `cad/turret_dossier.py` | the registry build: every part at home in T (the stand under the plinth), the hopper's cavity, the joints, the gated screws, the build order -> `exports/dossier-geometry.json` |
+| `exports/gates/*.json`, `*.md` | the verdicts: connectivity, containment, fasteners, motion, assembly, wall, the dossier lint; and the turret's own `turret-path`, `turret-ammo` |
+
+```
+.venv/bin/cad-agent gates --build             # build the record, run every gate and the lint (heavy: gp-remote --host gb10-01)
+.venv/bin/python cad/turret_gates.py --dossier   # the ball path and D67's ammo range, bound to that record
+.venv/bin/cad-agent dossier                   # the lint again, with the turret's own verdicts
+.venv/bin/cad-agent check                     # fails on a failing, missing or stale verdict
+```
+
+**Bodies and the chain rule (T0.1).** cadagent puts a part in a moving body only through a declared fixed joint or
+fastener, growing from the joint's moving part, and stops at every moving joint's fixed part. So each child joint hangs
+on its parent's moving part: I-tilt on `pan_ring` (the pan's), I-feed, I-wheel-l, I-wheel-r and I-flap on
+`cartridge_body` (the tilt's). Their holds are measured from those parts, with declared clearances where the gap is not
+the bearing's (I-tilt 39 mm, I-flap 69 mm, the wheels 4 and 1.5 mm); the bearings (the 61810's races, the MR126, the
+horns) are the joints' intended contacts. The 37 fixed joints are the mounts of the moving parts, each an interface in
+the dossier. The settled load rides with the hopper (I-pile, T0.2), so the motion gate sweeps it with the tilt frame.
+
 ---
 
 ## 1. Base and pan drive

@@ -125,6 +125,7 @@ interfaces:
   kind: gap
   datum: the -y arm's Ø6.5 hole
   description: The Ø6 shoulder turns in the arm's hole, 0.25 mm clear.
+  clearance: 0.5
   owner: S2-tilt
 - id: I-horn
   between:
