@@ -21,7 +21,7 @@ Cases
   S2 twist     one leg's 80 N m roll moment (the HM budget, docs/mechanical-interfaces.md): stiffness and twist
   S3 pitch     the two motors' 60 N m caps reacted as one 120 N m couple about y, plus the HM budget's 600 N fore-aft
   D1 hand      300 N down on the deck at its front edge over the lidar (the cantilever) and at the riser
-  D2 turret    a 30 g fall of the 1.56 kg turret: its weight and the moment of its centre 90 mm above the TM face
+  D2 turret    a 30 g fall of the 1.70 kg head budget, its centre 100 mm above the TM face (a tip-over: SF >= 1.2)
   T1 tray      the battery cassette and the compute at 5 g on the floor tray (a landing)
 Writes exports/body/fea/<case>.png (+ .mp4 overload video, .json for the viewer) and summary.json.
 """
@@ -338,7 +338,8 @@ def deck_cases(record, mesh, want):
         m, hcom = t['mass_kg'], t['com_above_face_mm']      # the head budget (1.70 kg, 100 mm), or the turret's mount.json
         F = 30 * G * m
         Gc = force_at(st, tm_face, (F * 0.7071, 0.0, -F * 0.7071), (t['pan_x'], 0.0, bp.TOP + bp.RISER_H + hcom))
-        record('D2-turret-fall', st, True, f'a 30 g fall of the {m:.2f} kg turret at 45 deg, its centre {hcom:.0f} mm above the TM face', view=(30, -50))
+        record('D2-turret-fall', st, 'fault', f'a 30 g fall of the {m:.2f} kg head (the turret plan\'s budget) at 45 deg, its centre {hcom:.0f} mm '
+               'above the TM face: a tip-over, an abuse case like the power cut (SF >= 1.2)', view=(30, -50))
 
 
 def body_g():
@@ -352,7 +353,7 @@ def body_g():
 
 
 def tray_case(record, mesh):
-    """The floor tray on the cheeks' upper flanges (clamped round their screws), with what stands on it at the landing's
+    """The floor tray bearing on the cheeks' upper flanges, with what stands on it at the landing's
     load factor: the compute through its four isolators, the power skid through its four posts, the DDR-120C on its
     rail, the deck, lidar and turret through the four deck posts."""
     import body_layout as bl
@@ -376,8 +377,13 @@ def tray_case(record, mesh):
     for _, _, pts in supports:
         for (x, y, r) in pts:
             model = model.union(bf.cyl_z(r, top, top + LOAD_PAD_T, x, y))
+    # the tray bears on the cheeks' upper flanges (their whole width, y from the cheeks' faces to the flanges' edges, x over
+    # the cheeks' length): 1 mm pads under it there, their undersides held (the screws only keep it from lifting)
+    y0, y1 = bf.FACE_Y, bf.GAP_Y + bp.CHEEK_FLANGE
+    for sy in (1, -1):
+        model = model.union(bf.box(bp.SPINE_X[0], bp.SPINE_X[1], min(sy * y0, sy * y1), max(sy * y0, sy * y1), zt - LOAD_PAD_T, zt))
     st = Study(model.clean(), AL5052, mesh_mm=mesh, name='tray T1')
-    st.fix(any_of(*[cylinder_at((x, sy * bf.PEM_Y, zt), (0, 0, 1), radius_max=3.0, tol=0.6) for x in bf.FLANGE_NUT_X for sy in (1, -1)]))
+    st.fix(lambda f: f.kind == 'Plane' and abs(f.bbox[2] - (zt - LOAD_PAD_T)) < 0.05 and abs(f.bbox[5] - (zt - LOAD_PAD_T)) < 0.05)
     for name, g, pts in supports:
         for (x, y, r) in pts:
             sel = lambda f, x=x, y=y, r=r: (f.kind == 'Plane' and abs(f.bbox[5] - (top + LOAD_PAD_T)) < 0.05 and abs(f.bbox[2] - (top + LOAD_PAD_T)) < 0.05

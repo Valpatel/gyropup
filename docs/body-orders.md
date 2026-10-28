@@ -19,7 +19,7 @@ How to order:
 | Part | Qty | Material | Flat (mm) | Operations | Files | Estimate |
 |---|---|---|---|---|---|---|
 | cheek | 2 | 5052-H32 aluminium 0.187 in | 184.0 x 223.0 | 2 bends, 90 deg, SendCutSend's 0.25 in radius (K 0.43, bend deduction 0.356 in): the DXF's BEND layer marks the lines; flanges as the STEP; 8 x PEM SS-M5-0 pressed by SendCutSend (hardware insertion), positions as the STEP; 8 x 90 deg countersinks for M4 flat heads (SendCutSend countersinking), the side the STEP shows | [DXF](../exports/body/sendcutsend/cheek_5052-H32_0.187in_x2.dxf), [STEP](../exports/body/sendcutsend/cheek_5052-H32_0.187in_x2.step) | ~$60 each |
-| floor_tray | 1 | 5052-H32 aluminium 0.1 in | 340.3 x 274.3 | 4 bends, 90 deg, SendCutSend's 0.125 in radius (K 0.4, bend deduction 0.191 in): the DXF's BEND layer marks the lines; flanges as the STEP; 6 x PEM S-M4-0 pressed by SendCutSend (hardware insertion), positions as the STEP; tapping: the two Ø2.5 holes M3 x 0.5 (the VN-100) | [DXF](../exports/body/sendcutsend/floor_tray_5052-H32_0.100in_x1.dxf), [STEP](../exports/body/sendcutsend/floor_tray_5052-H32_0.100in_x1.step) | ~$62 each |
+| floor_tray | 1 | 5052-H32 aluminium 0.125 in | 339.0 x 273.0 | 4 bends, 90 deg, SendCutSend's 0.125 in radius (K 0.44, bend deduction 0.216 in): the DXF's BEND layer marks the lines; flanges as the STEP; 6 x PEM S-M4-0 pressed by SendCutSend (hardware insertion), positions as the STEP; tapping: the two Ø2.5 holes M3 x 0.5 (the VN-100) | [DXF](../exports/body/sendcutsend/floor_tray_5052-H32_0.125in_x1.dxf), [STEP](../exports/body/sendcutsend/floor_tray_5052-H32_0.125in_x1.step) | ~$62 each |
 | belly_plate | 1 | 6061-T6 aluminium 0.1 in | 320.0 x 116.0 | 12 x PEM SS-M5-0 pressed by SendCutSend (hardware insertion), positions as the STEP | [DXF](../exports/body/sendcutsend/belly_plate_6061-T6_0.100in_x1.dxf), [STEP](../exports/body/sendcutsend/belly_plate_6061-T6_0.100in_x1.step) | ~$33 each |
 | deck | 1 | 5052-H32 aluminium 0.1 in | 350.3 x 284.3 | 4 bends, 90 deg, SendCutSend's 0.125 in radius (K 0.4, bend deduction 0.191 in): the DXF's BEND layer marks the lines; flanges as the STEP | [DXF](../exports/body/sendcutsend/deck_5052-H32_0.100in_x1.dxf), [STEP](../exports/body/sendcutsend/deck_5052-H32_0.100in_x1.step) | ~$65 each |
 | compute_pallet | 1 | 6061-T6 aluminium 0.125 in | 194.0 x 158.0 | 8 x 90 deg countersinks for M3 flat heads (SendCutSend countersinking), the side the STEP shows | [DXF](../exports/body/sendcutsend/compute_pallet_6061-T6_0.125in_x1.dxf), [STEP](../exports/body/sendcutsend/compute_pallet_6061-T6_0.125in_x1.step) | ~$30 each |
@@ -223,7 +223,7 @@ Estimate ~$383 for the set until the instant prices are read. Backup: OSH Cut (o
 
 | Part | Qty | Material | Size (mm) | g each | Hours | How |
 |---|---|---|---|---|---|---|
-| post | 4 | pa6-cf | 22 x 22 x 120 | 62 | 16.2 | PA6-CF, 100 % solid, printed standing; 2 x M5 inserts |
+| post | 4 | pa6-cf | 22 x 22 x 120 | 61 | 16.1 | PA6-CF, 100 % solid, printed standing; 2 x M5 inserts |
 | riser | 1 | pa6-cf | 144 x 144 x 30 | 166 | 10.9 | PA6-CF, 100 % solid, printed on its top face; 8 x M5 inserts, 2 x Ø5 dowels |
 | isolator | 4 | tpu95 | 16 x 16 x 15 | 2 | 0.9 | TPU 95A: the pallet's isolator foot, neck and cap |
 | din_rail_24v | 1 | pa6-cf | 35 x 26 x 8 | 2 | 0.1 | PA6-CF TS35 rail piece; 2 x M4 x 10 flat heads into the nuts below |
@@ -235,7 +235,7 @@ Estimate ~$383 for the set until the instant prices are read. Backup: OSH Cut (o
 | bay_door | 1 | petg | 98 x 4 x 66 | 31 | 1.3 | PETG, 3 mm walls; 4 x M5 x 10 up into the belly plate's nuts each side |
 | bay_skid | 4 | tpu95 | 148 x 14 x 3 | 8 | 3.1 | TPU 95A skid |
 
-By material: pa6-cf 0.51 kg, 33.1 h, $40.45; tpu95 0.04 kg, 4.0 h, $1.67; petg 0.33 kg, 13.2 h, $4.60. STLs beside the plan in `exports/body/`.
+By material: pa6-cf 0.51 kg, 33.0 h, $40.36; tpu95 0.04 kg, 4.0 h, $1.67; petg 0.33 kg, 13.2 h, $4.60. STLs beside the plan in `exports/body/`.
 
 ## 6. Totals
 
@@ -243,7 +243,7 @@ By material: pa6-cf 0.51 kg, 33.1 h, $40.45; tpu95 0.04 kg, 4.0 h, $1.67; petg 0
 |---|---|
 | Bought (section 2) | $1494.10 |
 | SendCutSend (section 1, estimate) | ~$383 |
-| Filament used (section 5) | $46.72 |
+| Filament used (section 5) | $46.63 |
 | **Body P0 + P1** | **~$1924** |
 
 Not included: the compute and sensors (section 3, R13), the legs and their VESCs (the leg workstream's order), the turret (the turret workstream's), the shell and head (P3, T7), shipping and tax.

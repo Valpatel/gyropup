@@ -4,7 +4,7 @@
   "y_off_mm": 102.55,
   "track_mm": 414.3,
   "z_spine_top_mm": 90.5,
-  "z_tray_top_mm": 93.04,
+  "z_tray_top_mm": 93.675,
   "top_mm": 216.0,
   "body_x_mm": [
    -160.0,
@@ -246,18 +246,18 @@
   },
   "floor_tray": {
    "material": "5052-H32 aluminium",
-   "thickness_in": 0.1,
-   "thickness_mm": 2.54,
+   "thickness_in": 0.125,
+   "thickness_mm": 3.175,
    "qty": 1,
    "flat_mm": [
-    340.3,
-    274.3
+    339.0,
+    273.0
    ],
    "bends": 4,
    "bend_spec": {
     "inside_radius_in": 0.125,
-    "k_factor": 0.4,
-    "bend_deduction_in": 0.191
+    "k_factor": 0.44,
+    "bend_deduction_in": 0.216
    },
    "hardware": {
     "S-M4-0": 6
@@ -265,9 +265,9 @@
    "countersinks": {},
    "note": "lips 15 mm down all round, open corners with round reliefs",
    "rule_violations": [],
-   "step": "exports/body/sendcutsend/floor_tray_5052-H32_0.100in_x1.step",
-   "dxf": "exports/body/sendcutsend/floor_tray_5052-H32_0.100in_x1.dxf",
-   "mass_g_each": 608.4,
+   "step": "exports/body/sendcutsend/floor_tray_5052-H32_0.125in_x1.step",
+   "dxf": "exports/body/sendcutsend/floor_tray_5052-H32_0.125in_x1.dxf",
+   "mass_g_each": 752.2,
    "features": 25
   },
   "belly_plate": {
@@ -384,7 +384,7 @@
  },
  "print": {
   "too_big": [],
-  "hours": 50.3,
+  "hours": 50.2,
   "parts": {
    "post": {
     "material": "pa6-cf",
@@ -396,10 +396,10 @@
     ],
     "fits": true,
     "placement": "straight",
-    "grams_each": 62,
-    "grams": 247,
-    "hours": 16.2,
-    "cost_usd": 19.74,
+    "grams_each": 61,
+    "grams": 246,
+    "hours": 16.1,
+    "cost_usd": 19.65,
     "infill": "100 %",
     "how": "PA6-CF, 100 % solid, printed standing; 2 x M5 inserts"
    },
@@ -579,14 +579,14 @@
   "frame_parts": {
    "cheek_left": 491.9,
    "cheek_right": 491.9,
-   "floor_tray": 608.4,
+   "floor_tray": 752.2,
    "belly_plate": 239.7,
    "deck": 648.9,
    "compute_pallet": 228.7,
-   "post_1": 61.7,
-   "post_2": 61.7,
-   "post_3": 61.7,
-   "post_4": 61.7,
+   "post_1": 61.4,
+   "post_2": 61.4,
+   "post_3": 61.4,
+   "post_4": 61.4,
    "riser": 165.6,
    "isolator_1": 2.3,
    "isolator_2": 2.3,
@@ -617,7 +617,7 @@
    "frame_screws_right": 0.0,
    "cheek_nuts_right": 0.0
   },
-  "frame_total": 3862.8
+  "frame_total": 4005.4
  },
  "internal_clashes": [],
  "clash_sweep": {
@@ -818,8 +818,8 @@
      26.0,
      -81.5,
      81.5,
-     120.22,
-     121.79
+     120.85,
+     122.43
     ],
     "mass_g": 225.0,
     "basis": "datasheet (Seeed: carrier without module 225 g)",
@@ -836,8 +836,8 @@
      26.0,
      -81.5,
      81.5,
-     121.79,
-     136.79
+     122.43,
+     137.43
     ],
     "mass_g": 0,
     "basis": "",
@@ -854,8 +854,8 @@
      -12.0,
      -54.5,
      32.5,
-     121.79,
-     141.47
+     122.43,
+     142.11
     ],
     "mass_g": 280.0,
     "basis": "estimate (NVIDIA publishes none; 100 x 87 x 16 module with its thermal plate)",
@@ -872,8 +872,8 @@
      -10.0,
      -54.5,
      55.5,
-     141.47,
-     143.47
+     142.11,
+     144.11
     ],
     "mass_g": 200.0,
     "basis": "CAD volume x copper 8.96 g/cm3 (100 x 110 x 2 mm)",
@@ -890,8 +890,8 @@
      -11.0,
      -59.5,
      37.5,
-     143.47,
-     191.77
+     144.11,
+     192.41
     ],
     "mass_g": 450.0,
     "basis": "estimate (G48R: five 6 mm copper heat pipes, 6063 fins, 9215 fan; Seeed publishes no mass)",
@@ -908,7 +908,7 @@
      -16.0,
      -57.0,
      35.0,
-     191.77,
+     192.41,
      213.46
     ],
     "mass_g": 0,
@@ -926,8 +926,8 @@
      -20.0,
      35.5,
      65.5,
-     143.47,
-     176.77
+     144.11,
+     177.41
     ],
     "mass_g": 0,
     "basis": "",
@@ -944,8 +944,8 @@
      -20.0,
      -87.5,
      -57.5,
-     143.47,
-     176.77
+     144.11,
+     177.41
     ],
     "mass_g": 0,
     "basis": "",
@@ -962,8 +962,8 @@
      -41.17,
      -123.5,
      -81.5,
-     118.22,
-     143.79
+     118.85,
+     144.43
     ],
     "mass_g": 0,
     "basis": "",
@@ -980,8 +980,8 @@
      7.61,
      -123.5,
      -81.5,
-     118.22,
-     143.79
+     118.85,
+     144.43
     ],
     "mass_g": 0,
     "basis": "",
@@ -998,8 +998,8 @@
      -81.09,
      81.5,
      123.5,
-     118.22,
-     143.79
+     118.85,
+     144.43
     ],
     "mass_g": 0,
     "basis": "",
@@ -1016,8 +1016,8 @@
      -51.65,
      81.5,
      123.5,
-     118.22,
-     143.79
+     118.85,
+     144.43
     ],
     "mass_g": 0,
     "basis": "",
@@ -1034,8 +1034,8 @@
      -24.37,
      81.5,
      123.5,
-     118.22,
-     143.79
+     118.85,
+     144.43
     ],
     "mass_g": 0,
     "basis": "",
@@ -1052,8 +1052,8 @@
      -70.14,
      81.5,
      123.5,
-     118.22,
-     143.79
+     118.85,
+     144.43
     ],
     "mass_g": 0,
     "basis": "",
@@ -1070,8 +1070,8 @@
      -131.8,
      -68.2,
      -61.8,
-     104.22,
-     120.22
+     104.85,
+     120.85
     ],
     "mass_g": 2.0,
     "basis": "catalogue (M3 x 16 hex)",
@@ -1088,8 +1088,8 @@
      18.2,
      -68.2,
      -61.8,
-     104.22,
-     120.22
+     104.85,
+     120.85
     ],
     "mass_g": 2.0,
     "basis": "catalogue (M3 x 16 hex)",
@@ -1106,8 +1106,8 @@
      -131.8,
      61.8,
      68.2,
-     104.22,
-     120.22
+     104.85,
+     120.85
     ],
     "mass_g": 2.0,
     "basis": "catalogue (M3 x 16 hex)",
@@ -1124,8 +1124,8 @@
      18.2,
      61.8,
      68.2,
-     104.22,
-     120.22
+     104.85,
+     120.85
     ],
     "mass_g": 2.0,
     "basis": "catalogue (M3 x 16 hex)",
@@ -1142,8 +1142,8 @@
      -118.0,
      -14.5,
      43.0,
-     110.22,
-     120.22
+     110.85,
+     120.85
     ],
     "mass_g": 0,
     "basis": "",
@@ -1160,8 +1160,8 @@
      -121.5,
      -25.0,
      32.5,
-     111.22,
-     120.22
+     111.85,
+     120.85
     ],
     "mass_g": 0,
     "basis": "",
@@ -1178,8 +1178,8 @@
      -100.5,
      -58.5,
      -34.5,
-     112.72,
-     120.22
+     113.35,
+     120.85
     ],
     "mass_g": 0,
     "basis": "",
@@ -1196,8 +1196,8 @@
      135.0,
      -15.0,
      15.0,
-     73.04,
-     105.04
+     73.67,
+     105.67
     ],
     "mass_g": 0,
     "basis": "",
@@ -1214,8 +1214,8 @@
      103.2,
      89.0,
      121.0,
-     100.54,
-     205.34
+     101.17,
+     205.97
     ],
     "mass_g": 450.0,
     "basis": "estimate (datasheet packs 0.51 kg with its carton)",
@@ -1232,8 +1232,8 @@
      152.0,
      -120.0,
      86.0,
-     135.04,
-     137.58
+     135.68,
+     138.22
     ],
     "mass_g": 0,
     "basis": "",
@@ -1250,8 +1250,8 @@
      145.0,
      -68.0,
      -17.3,
-     100.04,
-     135.04
+     100.68,
+     135.68
     ],
     "mass_g": 230.0,
     "basis": "catalogue (estimate)",
@@ -1268,8 +1268,8 @@
      145.0,
      17.3,
      68.0,
-     100.04,
-     135.04
+     100.68,
+     135.68
     ],
     "mass_g": 230.0,
     "basis": "catalogue (estimate)",
@@ -1286,8 +1286,8 @@
      112.0,
      -116.0,
      -71.0,
-     118.54,
-     135.04
+     119.18,
+     135.68
     ],
     "mass_g": 110.0,
     "basis": "estimate (metal case 60 x 45 x 16.5)",
@@ -1304,8 +1304,8 @@
      125.0,
      32.0,
      62.0,
-     137.58,
-     162.58
+     138.22,
+     163.22
     ],
     "mass_g": 85.0,
     "basis": "estimate (150 A / 50 mV meter shunt)",
@@ -1322,8 +1322,8 @@
      124.0,
      -118.0,
      -65.5,
-     145.08,
-     200.08
+     145.72,
+     200.72
     ],
     "mass_g": 216.0,
     "basis": "datasheet (TRC: 216 g)",
@@ -1340,8 +1340,8 @@
      145.0,
      -15.0,
      45.9,
-     137.58,
-     182.08
+     138.22,
+     182.72
     ],
     "mass_g": 90.0,
     "basis": "catalogue (70 g) + MRBF fuse (est 20 g)",
@@ -1358,8 +1358,8 @@
      121.0,
      -12.0,
      30.0,
-     137.58,
-     159.58
+     138.22,
+     160.22
     ],
     "mass_g": 110.0,
     "basis": "estimate (10 inline MINI holders, 58 V fuses, leads)",
@@ -1376,8 +1376,8 @@
      117.0,
      64.0,
      86.0,
-     137.58,
-     209.58
+     138.22,
+     210.22
     ],
     "mass_g": 75.0,
     "basis": "estimate (Nucleo-G474RE 48 g + 4 CAN Pal + INA228 + QT Py ESP32-S3 + carrier)",
@@ -1394,8 +1394,8 @@
      144.0,
      64.0,
      84.0,
-     137.58,
-     149.58
+     138.22,
+     150.22
     ],
     "mass_g": 4.0,
     "basis": "catalogue (Pololu D36V28F5)",
@@ -1412,8 +1412,8 @@
      -4.1,
      -16.55,
      16.55,
-     93.04,
-     101.94
+     93.67,
+     102.58
     ],
     "mass_g": 15.0,
     "basis": "catalogue (VectorNav: 15 g)",
@@ -1430,7 +1430,7 @@
      -122.0,
      10.0,
      95.0,
-     146.04,
+     146.68,
      211.46
     ],
     "mass_g": 120.0,
@@ -1466,7 +1466,7 @@
      -118.0,
      -72.0,
      -48.0,
-     138.04,
+     138.68,
      213.46
     ],
     "mass_g": 0,
@@ -1554,22 +1554,22 @@
  "mass": {
   "P1": {
    "stage": "P1",
-   "total_kg": 29.03,
+   "total_kg": 29.17,
    "com_mm": [
     3.4,
     0.5,
-    -44.8
+    -44.0
    ],
    "groups_kg": {
     "legs": 18.964,
-    "frame": 4.163,
+    "frame": 4.305,
     "compute": 1.513,
     "power": 2.015,
     "deck": 0.83,
     "battery": 1.542
    },
    "legs_kg": 18.96,
-   "body_and_head_kg": 10.06,
+   "body_and_head_kg": 10.21,
    "budget": {
     "robot_kg": 28.5,
     "body_and_head_kg": 10.3,
@@ -1580,15 +1580,15 @@
   },
   "P3": {
    "stage": "P3",
-   "total_kg": 32.12,
+   "total_kg": 32.27,
    "com_mm": [
     1.3,
     0.4,
-    -16.4
+    -15.8
    ],
    "groups_kg": {
     "legs": 18.964,
-    "frame": 4.163,
+    "frame": 4.305,
     "compute": 1.513,
     "power": 2.015,
     "deck": 2.53,
@@ -1596,7 +1596,7 @@
     "shell": 1.397
    },
    "legs_kg": 18.96,
-   "body_and_head_kg": 13.16,
+   "body_and_head_kg": 13.3,
    "budget": {
     "robot_kg": 28.5,
     "body_and_head_kg": 10.3,

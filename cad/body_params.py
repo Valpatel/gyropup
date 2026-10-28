@@ -229,7 +229,7 @@ def z_spine_top() -> float:
 
 # ------------------------------------------------------------------------------------------- the box
 
-TRAY = '5052-0.100'
+TRAY = '5052-0.125'                 # 1/8 in: at 0.100 in the landing case T1 was SF 1.55 where the tray overhangs the cheeks' ends
 DECK = '5052-0.100'
 BELLY = '6061-0.100'
 PALLET = '6061-0.125'

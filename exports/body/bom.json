@@ -1841,19 +1841,19 @@
    "qty": 1,
    "vendor": "SendCutSend (sendcutsend.com: upload the DXF for the instant price)",
    "backup": "OSH Cut (oshcut.com: instant price from the DXF or STEP; bends and PEM nuts)",
-   "material": "5052-H32 aluminium 0.1 in",
-   "mass_g_each": 608.4,
+   "material": "5052-H32 aluminium 0.125 in",
+   "mass_g_each": 752.2,
    "size_mm": [
-    340.3,
-    274.3,
-    2.54
+    339.0,
+    273.0,
+    3.175
    ],
-   "step": "exports/body/sendcutsend/floor_tray_5052-H32_0.100in_x1.step",
-   "dxf": "exports/body/sendcutsend/floor_tray_5052-H32_0.100in_x1.dxf",
-   "drawing": "exports/body/sendcutsend/floor_tray_5052-H32_0.100in_x1.dxf",
+   "step": "exports/body/sendcutsend/floor_tray_5052-H32_0.125in_x1.step",
+   "dxf": "exports/body/sendcutsend/floor_tray_5052-H32_0.125in_x1.dxf",
+   "drawing": "exports/body/sendcutsend/floor_tray_5052-H32_0.125in_x1.dxf",
    "spec": [
-    "5052-H32 aluminium, 0.1 in (2.54 mm); qty 1; flat 340.3 x 274.3 mm",
-    "4 bends, 90 deg, SendCutSend's 0.125 in radius (K 0.4, bend deduction 0.191 in): the DXF's BEND layer marks the lines; flanges as the STEP",
+    "5052-H32 aluminium, 0.125 in (3.175 mm); qty 1; flat 339.0 x 273.0 mm",
+    "4 bends, 90 deg, SendCutSend's 0.125 in radius (K 0.44, bend deduction 0.216 in): the DXF's BEND layer marks the lines; flanges as the STEP",
     "6 x PEM S-M4-0 pressed by SendCutSend (hardware insertion), positions as the STEP",
     "tapping: the two \u00d82.5 holes M3 x 0.5 (the VN-100)",
     "deburr (tumble or linear grain); no finish needed"

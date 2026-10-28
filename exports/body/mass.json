@@ -1,22 +1,22 @@
 {
  "P1": {
   "stage": "P1",
-  "total_kg": 29.03,
+  "total_kg": 29.17,
   "com_mm": [
    3.4,
    0.5,
-   -44.8
+   -44.0
   ],
   "groups_kg": {
    "legs": 18.964,
-   "frame": 4.163,
+   "frame": 4.305,
    "compute": 1.513,
    "power": 2.015,
    "deck": 0.83,
    "battery": 1.542
   },
   "legs_kg": 18.96,
-  "body_and_head_kg": 10.06,
+  "body_and_head_kg": 10.21,
   "rows": [
    {
     "group": "legs",
@@ -791,11 +791,11 @@
    {
     "group": "frame",
     "name": "frame.floor_tray",
-    "mass_g": 608.4,
+    "mass_g": 752.2,
     "com_mm": [
-     -2.8,
+     -2.9,
      -0.0,
-     90.6
+     91.0
     ],
     "basis": "CAD (sheet and printed solids)"
    },
@@ -828,51 +828,51 @@
     "com_mm": [
      -67.6,
      -0.0,
-     102.6
+     103.3
     ],
     "basis": "CAD (sheet and printed solids)"
    },
    {
     "group": "frame",
     "name": "frame.post_1",
-    "mass_g": 61.7,
+    "mass_g": 61.4,
     "com_mm": [
      142.0,
      109.0,
-     153.2
+     153.6
     ],
     "basis": "CAD (sheet and printed solids)"
    },
    {
     "group": "frame",
     "name": "frame.post_2",
-    "mass_g": 61.7,
+    "mass_g": 61.4,
     "com_mm": [
      142.0,
      -109.0,
-     153.2
+     153.6
     ],
     "basis": "CAD (sheet and printed solids)"
    },
    {
     "group": "frame",
     "name": "frame.post_3",
-    "mass_g": 61.7,
+    "mass_g": 61.4,
     "com_mm": [
      -142.0,
      109.0,
-     153.2
+     153.6
     ],
     "basis": "CAD (sheet and printed solids)"
    },
    {
     "group": "frame",
     "name": "frame.post_4",
-    "mass_g": 61.7,
+    "mass_g": 61.4,
     "com_mm": [
      -142.0,
      -109.0,
-     153.2
+     153.6
     ],
     "basis": "CAD (sheet and printed solids)"
    },
@@ -894,7 +894,7 @@
     "com_mm": [
      -145.0,
      -70.0,
-     98.7
+     99.4
     ],
     "basis": "CAD (sheet and printed solids)"
    },
@@ -905,7 +905,7 @@
     "com_mm": [
      -145.0,
      70.0,
-     98.7
+     99.4
     ],
     "basis": "CAD (sheet and printed solids)"
    },
@@ -916,7 +916,7 @@
     "com_mm": [
      28.0,
      -70.0,
-     98.7
+     99.4
     ],
     "basis": "CAD (sheet and printed solids)"
    },
@@ -927,7 +927,7 @@
     "com_mm": [
      28.0,
      70.0,
-     98.7
+     99.4
     ],
     "basis": "CAD (sheet and printed solids)"
    },
@@ -938,7 +938,7 @@
     "com_mm": [
      40.6,
      102.0,
-     95.5
+     96.2
     ],
     "basis": "CAD (sheet and printed solids)"
    },
@@ -949,7 +949,7 @@
     "com_mm": [
      79.0,
      -91.7,
-     140.0
+     140.6
     ],
     "basis": "CAD (sheet and printed solids)"
    },
@@ -960,7 +960,7 @@
     "com_mm": [
      88.6,
      -15.3,
-     136.3
+     136.9
     ],
     "basis": "CAD (sheet and printed solids)"
    },
@@ -971,7 +971,7 @@
     "com_mm": [
      44.0,
      -96.0,
-     114.0
+     114.7
     ],
     "basis": "CAD (sheet and printed solids)"
    },
@@ -982,7 +982,7 @@
     "com_mm": [
      47.0,
      80.0,
-     114.0
+     114.7
     ],
     "basis": "CAD (sheet and printed solids)"
    },
@@ -993,7 +993,7 @@
     "com_mm": [
      145.0,
      -88.0,
-     114.0
+     114.7
     ],
     "basis": "CAD (sheet and printed solids)"
    },
@@ -1004,7 +1004,7 @@
     "com_mm": [
      145.0,
      80.0,
-     114.0
+     114.7
     ],
     "basis": "CAD (sheet and printed solids)"
    },
@@ -1015,7 +1015,7 @@
     "com_mm": [
      89.0,
      -50.0,
-     149.2
+     149.8
     ],
     "basis": "CAD (sheet and printed solids)"
    },
@@ -1026,7 +1026,7 @@
     "com_mm": [
      89.0,
      -50.0,
-     142.4
+     143.1
     ],
     "basis": "CAD (sheet and printed solids)"
    },
@@ -1037,7 +1037,7 @@
     "com_mm": [
      89.0,
      -26.0,
-     149.2
+     149.8
     ],
     "basis": "CAD (sheet and printed solids)"
    },
@@ -1048,7 +1048,7 @@
     "com_mm": [
      89.0,
      -26.0,
-     142.4
+     143.1
     ],
     "basis": "CAD (sheet and printed solids)"
    },
@@ -1136,7 +1136,7 @@
     "com_mm": [
      -62.0,
      0.0,
-     121.0
+     121.6
     ],
     "basis": "datasheet (Seeed: carrier without module 225 g)"
    },
@@ -1147,7 +1147,7 @@
     "com_mm": [
      -62.0,
      -11.0,
-     131.6
+     132.3
     ],
     "basis": "estimate (NVIDIA publishes none; 100 x 87 x 16 module with its thermal plate)"
    },
@@ -1158,7 +1158,7 @@
     "com_mm": [
      -60.0,
      0.5,
-     142.5
+     143.1
     ],
     "basis": "CAD volume x copper 8.96 g/cm3 (100 x 110 x 2 mm)"
    },
@@ -1169,7 +1169,7 @@
     "com_mm": [
      -62.0,
      -11.0,
-     167.6
+     168.3
     ],
     "basis": "estimate (G48R: five 6 mm copper heat pipes, 6063 fins, 9215 fan; Seeed publishes no mass)"
    },
@@ -1180,7 +1180,7 @@
     "com_mm": [
      -135.0,
      -65.0,
-     112.2
+     112.8
     ],
     "basis": "catalogue (M3 x 16 hex)"
    },
@@ -1191,7 +1191,7 @@
     "com_mm": [
      15.0,
      -65.0,
-     112.2
+     112.8
     ],
     "basis": "catalogue (M3 x 16 hex)"
    },
@@ -1202,7 +1202,7 @@
     "com_mm": [
      -135.0,
      65.0,
-     112.2
+     112.8
     ],
     "basis": "catalogue (M3 x 16 hex)"
    },
@@ -1213,7 +1213,7 @@
     "com_mm": [
      15.0,
      65.0,
-     112.2
+     112.8
     ],
     "basis": "catalogue (M3 x 16 hex)"
    },
@@ -1224,7 +1224,7 @@
     "com_mm": [
      40.6,
      105.0,
-     152.9
+     153.6
     ],
     "basis": "estimate (datasheet packs 0.51 kg with its carton)"
    },
@@ -1235,7 +1235,7 @@
     "com_mm": [
      91.0,
      -42.6,
-     117.5
+     118.2
     ],
     "basis": "catalogue (estimate)"
    },
@@ -1246,7 +1246,7 @@
     "com_mm": [
      91.0,
      42.6,
-     117.5
+     118.2
     ],
     "basis": "catalogue (estimate)"
    },
@@ -1257,7 +1257,7 @@
     "com_mm": [
      82.0,
      -93.5,
-     126.8
+     127.4
     ],
     "basis": "estimate (metal case 60 x 45 x 16.5)"
    },
@@ -1268,7 +1268,7 @@
     "com_mm": [
      82.5,
      47.0,
-     150.1
+     150.7
     ],
     "basis": "estimate (150 A / 50 mV meter shunt)"
    },
@@ -1279,7 +1279,7 @@
     "com_mm": [
      79.0,
      -91.8,
-     172.6
+     173.2
     ],
     "basis": "datasheet (TRC: 216 g)"
    },
@@ -1290,7 +1290,7 @@
     "com_mm": [
      135.0,
      15.4,
-     159.8
+     160.5
     ],
     "basis": "catalogue (70 g) + MRBF fuse (est 20 g)"
    },
@@ -1301,7 +1301,7 @@
     "com_mm": [
      78.5,
      9.0,
-     148.6
+     149.2
     ],
     "basis": "estimate (10 inline MINI holders, 58 V fuses, leads)"
    },
@@ -1312,7 +1312,7 @@
     "com_mm": [
      74.5,
      75.0,
-     173.6
+     174.2
     ],
     "basis": "estimate (Nucleo-G474RE 48 g + 4 CAN Pal + INA228 + QT Py ESP32-S3 + carrier)"
    },
@@ -1323,7 +1323,7 @@
     "com_mm": [
      134.0,
      74.0,
-     143.6
+     144.2
     ],
     "basis": "catalogue (Pololu D36V28F5)"
    },
@@ -1334,7 +1334,7 @@
     "com_mm": [
      -22.1,
      0.0,
-     97.5
+     98.1
     ],
     "basis": "catalogue (VectorNav: 15 g)"
    },
@@ -1345,7 +1345,7 @@
     "com_mm": [
      -139.5,
      52.5,
-     178.8
+     179.1
     ],
     "basis": "estimate (Polycase LP-41 class, plan 90 g + gland)"
    },
@@ -1400,7 +1400,7 @@
     "com_mm": [
      60.0,
      0.0,
-     113.0
+     113.7
     ],
     "basis": "estimate (docs/body-wiring.md)"
    }
@@ -1415,15 +1415,15 @@
  },
  "P3": {
   "stage": "P3",
-  "total_kg": 32.12,
+  "total_kg": 32.27,
   "com_mm": [
    1.3,
    0.4,
-   -16.4
+   -15.8
   ],
   "groups_kg": {
    "legs": 18.964,
-   "frame": 4.163,
+   "frame": 4.305,
    "compute": 1.513,
    "power": 2.015,
    "deck": 2.53,
@@ -1431,7 +1431,7 @@
    "shell": 1.397
   },
   "legs_kg": 18.96,
-  "body_and_head_kg": 13.16,
+  "body_and_head_kg": 13.3,
   "rows": [
    {
     "group": "legs",
@@ -2206,11 +2206,11 @@
    {
     "group": "frame",
     "name": "frame.floor_tray",
-    "mass_g": 608.4,
+    "mass_g": 752.2,
     "com_mm": [
-     -2.8,
+     -2.9,
      -0.0,
-     90.6
+     91.0
     ],
     "basis": "CAD (sheet and printed solids)"
    },
@@ -2243,51 +2243,51 @@
     "com_mm": [
      -67.6,
      -0.0,
-     102.6
+     103.3
     ],
     "basis": "CAD (sheet and printed solids)"
    },
    {
     "group": "frame",
     "name": "frame.post_1",
-    "mass_g": 61.7,
+    "mass_g": 61.4,
     "com_mm": [
      142.0,
      109.0,
-     153.2
+     153.6
     ],
     "basis": "CAD (sheet and printed solids)"
    },
    {
     "group": "frame",
     "name": "frame.post_2",
-    "mass_g": 61.7,
+    "mass_g": 61.4,
     "com_mm": [
      142.0,
      -109.0,
-     153.2
+     153.6
     ],
     "basis": "CAD (sheet and printed solids)"
    },
    {
     "group": "frame",
     "name": "frame.post_3",
-    "mass_g": 61.7,
+    "mass_g": 61.4,
     "com_mm": [
      -142.0,
      109.0,
-     153.2
+     153.6
     ],
     "basis": "CAD (sheet and printed solids)"
    },
    {
     "group": "frame",
     "name": "frame.post_4",
-    "mass_g": 61.7,
+    "mass_g": 61.4,
     "com_mm": [
      -142.0,
      -109.0,
-     153.2
+     153.6
     ],
     "basis": "CAD (sheet and printed solids)"
    },
@@ -2309,7 +2309,7 @@
     "com_mm": [
      -145.0,
      -70.0,
-     98.7
+     99.4
     ],
     "basis": "CAD (sheet and printed solids)"
    },
@@ -2320,7 +2320,7 @@
     "com_mm": [
      -145.0,
      70.0,
-     98.7
+     99.4
     ],
     "basis": "CAD (sheet and printed solids)"
    },
@@ -2331,7 +2331,7 @@
     "com_mm": [
      28.0,
      -70.0,
-     98.7
+     99.4
     ],
     "basis": "CAD (sheet and printed solids)"
    },
@@ -2342,7 +2342,7 @@
     "com_mm": [
      28.0,
      70.0,
-     98.7
+     99.4
     ],
     "basis": "CAD (sheet and printed solids)"
    },
@@ -2353,7 +2353,7 @@
     "com_mm": [
      40.6,
      102.0,
-     95.5
+     96.2
     ],
     "basis": "CAD (sheet and printed solids)"
    },
@@ -2364,7 +2364,7 @@
     "com_mm": [
      79.0,
      -91.7,
-     140.0
+     140.6
     ],
     "basis": "CAD (sheet and printed solids)"
    },
@@ -2375,7 +2375,7 @@
     "com_mm": [
      88.6,
      -15.3,
-     136.3
+     136.9
     ],
     "basis": "CAD (sheet and printed solids)"
    },
@@ -2386,7 +2386,7 @@
     "com_mm": [
      44.0,
      -96.0,
-     114.0
+     114.7
     ],
     "basis": "CAD (sheet and printed solids)"
    },
@@ -2397,7 +2397,7 @@
     "com_mm": [
      47.0,
      80.0,
-     114.0
+     114.7
     ],
     "basis": "CAD (sheet and printed solids)"
    },
@@ -2408,7 +2408,7 @@
     "com_mm": [
      145.0,
      -88.0,
-     114.0
+     114.7
     ],
     "basis": "CAD (sheet and printed solids)"
    },
@@ -2419,7 +2419,7 @@
     "com_mm": [
      145.0,
      80.0,
-     114.0
+     114.7
     ],
     "basis": "CAD (sheet and printed solids)"
    },
@@ -2430,7 +2430,7 @@
     "com_mm": [
      89.0,
      -50.0,
-     149.2
+     149.8
     ],
     "basis": "CAD (sheet and printed solids)"
    },
@@ -2441,7 +2441,7 @@
     "com_mm": [
      89.0,
      -50.0,
-     142.4
+     143.1
     ],
     "basis": "CAD (sheet and printed solids)"
    },
@@ -2452,7 +2452,7 @@
     "com_mm": [
      89.0,
      -26.0,
-     149.2
+     149.8
     ],
     "basis": "CAD (sheet and printed solids)"
    },
@@ -2463,7 +2463,7 @@
     "com_mm": [
      89.0,
      -26.0,
-     142.4
+     143.1
     ],
     "basis": "CAD (sheet and printed solids)"
    },
@@ -2551,7 +2551,7 @@
     "com_mm": [
      -62.0,
      0.0,
-     121.0
+     121.6
     ],
     "basis": "datasheet (Seeed: carrier without module 225 g)"
    },
@@ -2562,7 +2562,7 @@
     "com_mm": [
      -62.0,
      -11.0,
-     131.6
+     132.3
     ],
     "basis": "estimate (NVIDIA publishes none; 100 x 87 x 16 module with its thermal plate)"
    },
@@ -2573,7 +2573,7 @@
     "com_mm": [
      -60.0,
      0.5,
-     142.5
+     143.1
     ],
     "basis": "CAD volume x copper 8.96 g/cm3 (100 x 110 x 2 mm)"
    },
@@ -2584,7 +2584,7 @@
     "com_mm": [
      -62.0,
      -11.0,
-     167.6
+     168.3
     ],
     "basis": "estimate (G48R: five 6 mm copper heat pipes, 6063 fins, 9215 fan; Seeed publishes no mass)"
    },
@@ -2595,7 +2595,7 @@
     "com_mm": [
      -135.0,
      -65.0,
-     112.2
+     112.8
     ],
     "basis": "catalogue (M3 x 16 hex)"
    },
@@ -2606,7 +2606,7 @@
     "com_mm": [
      15.0,
      -65.0,
-     112.2
+     112.8
     ],
     "basis": "catalogue (M3 x 16 hex)"
    },
@@ -2617,7 +2617,7 @@
     "com_mm": [
      -135.0,
      65.0,
-     112.2
+     112.8
     ],
     "basis": "catalogue (M3 x 16 hex)"
    },
@@ -2628,7 +2628,7 @@
     "com_mm": [
      15.0,
      65.0,
-     112.2
+     112.8
     ],
     "basis": "catalogue (M3 x 16 hex)"
    },
@@ -2639,7 +2639,7 @@
     "com_mm": [
      40.6,
      105.0,
-     152.9
+     153.6
     ],
     "basis": "estimate (datasheet packs 0.51 kg with its carton)"
    },
@@ -2650,7 +2650,7 @@
     "com_mm": [
      91.0,
      -42.6,
-     117.5
+     118.2
     ],
     "basis": "catalogue (estimate)"
    },
@@ -2661,7 +2661,7 @@
     "com_mm": [
      91.0,
      42.6,
-     117.5
+     118.2
     ],
     "basis": "catalogue (estimate)"
    },
@@ -2672,7 +2672,7 @@
     "com_mm": [
      82.0,
      -93.5,
-     126.8
+     127.4
     ],
     "basis": "estimate (metal case 60 x 45 x 16.5)"
    },
@@ -2683,7 +2683,7 @@
     "com_mm": [
      82.5,
      47.0,
-     150.1
+     150.7
     ],
     "basis": "estimate (150 A / 50 mV meter shunt)"
    },
@@ -2694,7 +2694,7 @@
     "com_mm": [
      79.0,
      -91.8,
-     172.6
+     173.2
     ],
     "basis": "datasheet (TRC: 216 g)"
    },
@@ -2705,7 +2705,7 @@
     "com_mm": [
      135.0,
      15.4,
-     159.8
+     160.5
     ],
     "basis": "catalogue (70 g) + MRBF fuse (est 20 g)"
    },
@@ -2716,7 +2716,7 @@
     "com_mm": [
      78.5,
      9.0,
-     148.6
+     149.2
     ],
     "basis": "estimate (10 inline MINI holders, 58 V fuses, leads)"
    },
@@ -2727,7 +2727,7 @@
     "com_mm": [
      74.5,
      75.0,
-     173.6
+     174.2
     ],
     "basis": "estimate (Nucleo-G474RE 48 g + 4 CAN Pal + INA228 + QT Py ESP32-S3 + carrier)"
    },
@@ -2738,7 +2738,7 @@
     "com_mm": [
      134.0,
      74.0,
-     143.6
+     144.2
     ],
     "basis": "catalogue (Pololu D36V28F5)"
    },
@@ -2749,7 +2749,7 @@
     "com_mm": [
      -22.1,
      0.0,
-     97.5
+     98.1
     ],
     "basis": "catalogue (VectorNav: 15 g)"
    },
@@ -2760,7 +2760,7 @@
     "com_mm": [
      -139.5,
      52.5,
-     178.8
+     179.1
     ],
     "basis": "estimate (Polycase LP-41 class, plan 90 g + gland)"
    },
@@ -2826,7 +2826,7 @@
     "com_mm": [
      60.0,
      0.0,
-     113.0
+     113.7
     ],
     "basis": "estimate (docs/body-wiring.md)"
    },

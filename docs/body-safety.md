@@ -58,7 +58,7 @@ behind it), touch temperatures 48 °C on metal and 60 °C on plastic, SELV below
 | # | Hazard | Where | Measure | Status |
 |---|---|---|---|---|
 | 24 | The robot (29-32 kg) falling on a child | anywhere | people-near mode (a person within 0.6 m: legs hold, ≤ 0.5 m/s, no jumps, sits after 2 s); the radio stop sits it down; the undamped power cut is the legs' fault case (D39) | firmware (T9) + the leg workstream |
-| 25 | A heavy robot | the mass ledger says 32.0 kg with the shell and turret (exports/body/mass.json), 3.5 kg over the 28.5 kg budget | the levers in docs/body-frame.md (pocketed plates, a lighter shell) | open (T3) |
+| 25 | A heavy robot | the mass ledger says 32.3 kg with the shell and turret (exports/body/mass.json), 3.8 kg over the 28.5 kg budget | the levers in docs/body-frame.md (pocketed plates, a lighter shell) | open (T3) |
 
 A hazard review on the P1 frame, with this table and the clash sweep's list, comes before any session with children
 (the plan's rule).
