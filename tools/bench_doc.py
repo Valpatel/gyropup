@@ -48,7 +48,7 @@ def assumes() -> str:
                                                          f"r {a['stop_r_m'] * 1000:.0f} mm), {a['stop_travel_mm']:.1f} mm before steel"),
             ('B4', 'preload per M5 in the hub joint (HUB_PRELOAD_N)', f"{a['HUB_PRELOAD_N']:.0f} N"),
             ('B5', 'tyre contact (TYRE_SOLREF)', f"solref {a['TYRE_SOLREF']} (about 100-250 N/mm)"),
-            ('B6', 'pack resistance (rig/run.py --r-int)', '0.25 ohm (an estimate: 15S1P tool cells)')]
+            ('B6', 'the packs\' resistance (rig/run.py --r-int)', '0.10 ohm (an estimate: two 5S3P packs in series, D65)')]
     L = ['| Test | What the simulation assumes | Value now |', '|---|---|---|']
     L += [f'| {t} | {w} | {v} |' for t, w, v in rows]
     return '\n'.join(L)

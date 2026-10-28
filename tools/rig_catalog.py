@@ -60,7 +60,7 @@ for key, pn, L, qty, price, a_price, used in (
                   'per mm + cut charge', a_price, drop_in=False,
                   changes="80/20's own 40-series slot: MISUMI's brackets and nuts are not verified to fit; switch the whole frame and its fasteners together")])
 add('bracket_corner_8', 'rig', 'fastener', 'MISUMI', 'HBLTS8-C-SEP', 'Corner bracket, 8 series, with 2 x M8 screws + 2 drop-in spring nuts', 4.42, 24,
-    f'{MIS}110300450470/?HissuCode=HBLTS8-C-SEP', stock='Ship Date Same Day', used_for='the base\'s 10 joints (2 each) and the post\'s foot (4)',
+    f'{MIS}110300450470/?HissuCode=HBLTS8-C-SEP', stock='Ship Date Same Day', used_for='the base\'s 16 free joint faces and the post\'s foot (4); 4 spare',
     specs={'allowable_load_n': 2058, 'mass_g': 65.8}, note='Each bracket brings its own two screws and drop-in nuts.',
     alts=[alt('MISUMI', 'HBLTS8-C-SEC', f'{MIS}110300450470/?HissuCode=HBLTS8-C-SEC', '$5.24', 5.24, changes='another screw set'),
           alt('80/20 Inc.', '40-4376 + 3 x 75-3422', 'https://8020.net/40-4376.html', '$7.48 + 3 x $1.14', 10.90, drop_in=False, changes='80/20 slot system')])
@@ -86,8 +86,8 @@ add('screw_m4x16_rail', 'rig', 'fastener', 'McMaster-Carr', '91292A118', '18-8 s
     pack=100, pack_price=11.63, used_for='the rails into the drop-in nuts (HIWIN\'s M4 x 16)',
     note='7 mm head fits the rail\'s 7.5 mm counterbore; a flanged head would not.',
     alts=[alt('Bolt Depot', '23082 (class 12.9, zinc)', 'https://boltdepot.com/', '$0.19 each', 0.19)])
-add('screw_m4x10_block', 'rig', 'fastener', 'McMaster-Carr', '91290A144', 'Black-oxide alloy steel socket head screw M4 x 10', 0.1355, 16,
-    f'{MCM}91290A144/', pack=100, pack_price=13.55, used_for='the four blocks onto the plate: 3.65 mm into the 5 mm threads (0.9 d, steel)',
+add('screw_m4x10_block', 'rig', 'fastener', 'McMaster-Carr', '91290A144', 'Black-oxide alloy steel socket head screw M4 x 10', 0.1355, 20,
+    f'{MCM}91290A144/', pack=100, pack_price=13.55, used_for='the four blocks onto the plate (16: 3.65 mm into the 5 mm threads, 0.9 d); the pendant clip (2) and the ToF arm (2) into inserts',
     note='Same part as catalog/turret.json turret_screw_m4x10. No washer (a washer would leave 2.9 mm of thread).')
 add('screw_m5x16_plate', 'rig', 'fastener', 'McMaster-Carr', '91290A232', 'Black-oxide alloy steel socket head screw M5 x 16', 0.1727, 6,
     f'{MCM}91290A232/', pack=100, pack_price=17.27, used_for='the plate onto the hip frame\'s six M5 inserts (with washers)',
@@ -152,17 +152,20 @@ add('carriage_plate', 'rig', 'fab_service', 'SendCutSend', 'carriage_plate.dxf, 
     note='Instant price on upload of the DXF (no quote, no account needed to see it at upload); estimate $60-90. Deburr option on.',
     alts=[alt('Xometry', 'carriage_plate.step, 6061-T6 1/4 in sheet cutting', 'https://www.xometry.com/', 'instant price on upload', None)])
 # ------------------------------------------------------------------ electronics
-add('pack_adapter_60v', 'electronics', 'power_distribution', 'Terrafirma Technology (eBay)', 'eBay 142917514402',
-    'DeWalt FLEXVOLT 60 V dock adapter, 12 AWG leads', 16.5, 1, 'https://www.ebay.com/itm/142917514402', how='search snippet', ships='US',
-    used_for='the pack into the rig (XT60 on its leads)', confidence='search snippet',
-    note='eBay blocks automated reads: price from the search snippet. Check the listing says it engages the 60 V mode (FLEXVOLT packs switch '
-         'by the tool\'s tab); measure 54-60 V open-circuit on a charged pack before wiring.',
-    alts=[alt('Newegg (heimakeji)', '1DK-013R-00A95', 'https://www.newegg.com/p/1DK-013R-00A95', 'about $23.35 (snippet)', 23.35, how='search snippet')])
-add('bench_supply_48v', 'electronics', 'dcdc', 'Bravo Electro', 'Mean Well LRS-600-48', '48 V 12.5 A enclosed supply', 61.60, 1,
-    'https://www.bravoelectro.com/lrs-600-48.html', stock='In stock', used_for='bench tests only (B1, B2, first enable): it cannot sink regeneration',
-    note='Shuts down after 3 s at 105-150 % load and latches off above 55.2-64.8 V: never on the motors in a squat, jump or drop.',
-    alts=[alt('TRC Electronics', 'LRS-600-48', 'https://www.trcelectronics.com/products/mean-well-lrs-600-48', '$66.80', 66.80, stock='210 can ship now'),
-          alt('Bravo Electro', 'LRS-600N2-48 (200 % peak)', 'https://www.bravoelectro.com/lrs-600n2-48.html', '$66.10', 66.10)])
+add('dock_adapter_20v', 'electronics', 'power_distribution', 'Amazon (CHoiKWong, sold by LIANQUAN)', 'ASIN B0B9NPZM3M',
+    'DeWalt 20 V MAX dock adapter, 12 AWG leads, switch and 30 A blade fuse', 9.99, 2, 'https://www.amazon.com/dp/B0B9NPZM3M',
+    stock='In Stock', used_for='D65: one per DCB609 in 20 V mode; the two in series (10S, 30-41 V) feed the pod',
+    note='The listing names the DCB200-206, not the DCB609: check the fit on arrival. Each adapter\'s 32 V blade fuse sees one pack; '
+         'the string is protected by the pod\'s Class CC fuse (300 VDC). Leave the adapters\' switches on: they are not rated to break '
+         'the motors\' current.',
+    alts=[alt('Amazon (Ensayeer, sold by Unsaidtech)', 'ASIN B09J4R4QZ6 (2-pack)', 'https://www.amazon.com/dp/B09J4R4QZ6', '$21.99 per 2', 11.0,
+              pack=2, stock='In Stock')])
+add('bench_supply_36v', 'electronics', 'dcdc', 'Bravo Electro', 'Mean Well LRS-600-36', '36 V 16.6 A enclosed supply', 61.60, 1,
+    'https://www.bravoelectro.com/lrs-600-36.html', used_for='bench tests only (B2, the first enable, B1\'s tested motor): the robot\'s 36 V; it cannot sink regeneration',
+    note='Shuts down on a sustained overload and latches off on over-voltage: never on the motors in a squat, jump or drop. A mains cord and '
+         'output leads to its screw terminals.',
+    alts=[alt('TRC Electronics', 'LRS-600-36', 'https://www.trcelectronics.com/View/Mean-Well/LRS-600-36.shtml', '$66.80', 66.80,
+              stock='Contact Us (lead time from 1 week)')])
 add('fuse_kldr030', 'electronics', 'power_distribution', 'Standard Electric Supply', 'Littelfuse KLDR030.TXP', 'Class CC time-delay fuse 30 A, 600 VAC / 300 VDC',
     31.70, 1, 'https://www.standardelectricsupply.com/Littelfuse-KLDR030-TXP-POWR-GARD-Time-Delay-Fuse', stock='812 In Stock',
     used_for='the pack\'s positive, before the contactor', note='300 VDC per Littelfuse\'s datasheet (self-certified; the UL listing is AC).',
@@ -262,8 +265,8 @@ add('resistor_kit', 'electronics', 'wiring', 'SparkFun', 'COM-10969', 'Resistor 
     'the motors\' bus 100k/4.7k (60 V -> 2.7 V)')
 add('featherwing_proto', 'electronics', 'wiring', 'Adafruit', '2884', 'FeatherWing Proto', 4.95, 2, 'https://www.adafruit.com/product/2884',
     stock='In Stock', used_for='one under the Feather (the dividers, the sensors\' plugs); one as the carriage\'s CAN junction (the GH headers)')
-add('pod_insert_m4', 'rig', 'fastener', 'McMaster-Carr', '94459A160', 'Heat-set insert M4 (brass)', 0.2346, 3, f'{MCM}94459A160/', pack=50, pack_price=11.73,
-    used_for='the pod: the contactor (2), the relay (1)', note='Same part as catalog/turret.json turret_insert_m4.')
+add('pod_insert_m4', 'rig', 'fastener', 'McMaster-Carr', '94459A160', 'Heat-set insert M4 (brass)', 0.2346, 7, f'{MCM}94459A160/', pack=50, pack_price=11.73,
+    used_for='the pod: the contactor (2), the relay (1), the pendant clip (2); the ToF target arm (2)', note='Same part as catalog/turret.json turret_insert_m4.')
 add('screw_m2_5x8', 'electronics', 'fastener', 'McMaster-Carr', '91290A102', 'Socket head screw M2.5 x 8', 0.246, 4, f'{MCM}91290A102/', pack=50, pack_price=12.30,
     used_for='the Feather\'s FeatherWing into the pod\'s bosses (self-tapping into PETG)', note='Same part as catalog/turret.json turret_screw_m2_5x8.')
 add('xt60e_m_panel', 'electronics', 'wiring', 'Maplin (UK)', 'Amass XT60E-M', 'XT60 male panel plug (the pack\'s inlet)', 1.50, 1,

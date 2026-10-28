@@ -237,7 +237,7 @@
   {
    "key": "bracket_corner_8",
    "qty": 24,
-   "for": "the base's 10 joints (2 each) and the post's foot (4)",
+   "for": "the base's 16 free joint faces and the post's foot (4); 4 spare",
    "name": "Corner bracket, 8 series, with 2 x M8 screws + 2 drop-in spring nuts",
    "vendor": "MISUMI",
    "part_number": "HBLTS8-C-SEP",
@@ -505,8 +505,8 @@
   },
   {
    "key": "turret_screw_m4x10",
-   "qty": 16,
-   "for": "the four blocks onto the plate: 3.65 mm into the 5 mm threads (0.9 d, steel)",
+   "qty": 20,
+   "for": "the four blocks onto the plate (16: 3.65 mm into the 5 mm threads, 0.9 d); the pendant clip (2) and the ToF arm (2) into inserts",
    "name": "Black-oxide alloy steel socket head screw M4 x 10",
    "vendor": "McMaster-Carr",
    "part_number": "91290A144",
@@ -1170,8 +1170,8 @@
   },
   {
    "key": "turret_insert_m4",
-   "qty": 3,
-   "for": "the pod: the contactor (2), the relay (1)",
+   "qty": 7,
+   "for": "the pod: the contactor (2), the relay (1), the pendant clip (2); the ToF target arm (2)",
    "name": "Heat-set insert M4 (brass)",
    "vendor": "McMaster-Carr",
    "part_number": "94459A160",
@@ -1206,84 +1206,72 @@
  ],
  "electronics": [
   {
-   "key": "pack_adapter_60v",
-   "qty": 1,
-   "for": "the pack into the rig (XT60 on its leads)",
-   "name": "DeWalt FLEXVOLT 60 V dock adapter, 12 AWG leads",
-   "vendor": "Terrafirma Technology (eBay)",
-   "part_number": "eBay 142917514402",
-   "price_usd_each": 16.5,
+   "key": "dock_adapter_20v",
+   "qty": 2,
+   "for": "D65: one per DCB609 in 20 V mode; the two in series (10S, 30-41 V) feed the pod",
+   "name": "DeWalt 20 V MAX dock adapter, 12 AWG leads, switch and 30 A blade fuse",
+   "vendor": "Amazon (CHoiKWong, sold by LIANQUAN)",
+   "part_number": "ASIN B0B9NPZM3M",
+   "price_usd_each": 9.99,
    "pack_qty": 1,
    "sellers": [
     {
-     "seller": "Terrafirma Technology (eBay)",
-     "url": "https://www.ebay.com/itm/142917514402",
-     "seller_pn": "eBay 142917514402",
-     "price_usd": 16.5,
+     "seller": "Amazon (CHoiKWong, sold by LIANQUAN)",
+     "url": "https://www.amazon.com/dp/B0B9NPZM3M",
+     "seller_pn": "ASIN B0B9NPZM3M",
+     "price_usd": 9.99,
      "pack_qty": 1,
-     "stock": null,
+     "stock": "In Stock",
      "in_stock": true,
      "ships_from": "US",
      "read_on": "2026-10-27"
     },
     {
-     "seller": "Newegg (heimakeji)",
-     "url": "https://www.newegg.com/p/1DK-013R-00A95",
-     "seller_pn": "1DK-013R-00A95",
-     "price_usd": 23.35,
-     "pack_qty": 1,
-     "stock": null,
+     "seller": "Amazon (Ensayeer, sold by Unsaidtech)",
+     "url": "https://www.amazon.com/dp/B09J4R4QZ6",
+     "seller_pn": "ASIN B09J4R4QZ6 (2-pack)",
+     "price_usd": 22.0,
+     "pack_qty": 2,
+     "stock": "In Stock",
      "read_on": "2026-10-27",
      "drop_in": true,
      "changes": null,
-     "price_text": "about $23.35 (snippet)"
+     "price_text": "$21.99 per 2"
     }
    ]
   },
   {
-   "key": "bench_supply_48v",
+   "key": "bench_supply_36v",
    "qty": 1,
-   "for": "bench tests only (B1, B2, first enable): it cannot sink regeneration",
-   "name": "48 V 12.5 A enclosed supply",
+   "for": "bench tests only (B2, the first enable, B1's tested motor): the robot's 36 V; it cannot sink regeneration",
+   "name": "36 V 16.6 A enclosed supply",
    "vendor": "Bravo Electro",
-   "part_number": "Mean Well LRS-600-48",
+   "part_number": "Mean Well LRS-600-36",
    "price_usd_each": 61.6,
    "pack_qty": 1,
    "sellers": [
     {
      "seller": "Bravo Electro",
-     "url": "https://www.bravoelectro.com/lrs-600-48.html",
-     "seller_pn": "Mean Well LRS-600-48",
+     "url": "https://www.bravoelectro.com/lrs-600-36.html",
+     "seller_pn": "Mean Well LRS-600-36",
      "price_usd": 61.6,
      "pack_qty": 1,
-     "stock": "In stock",
+     "stock": null,
      "in_stock": true,
      "ships_from": "US",
      "read_on": "2026-10-27"
     },
     {
      "seller": "TRC Electronics",
-     "url": "https://www.trcelectronics.com/products/mean-well-lrs-600-48",
-     "seller_pn": "LRS-600-48",
+     "url": "https://www.trcelectronics.com/View/Mean-Well/LRS-600-36.shtml",
+     "seller_pn": "LRS-600-36",
      "price_usd": 66.8,
      "pack_qty": 1,
-     "stock": "210 can ship now",
+     "stock": "Contact Us (lead time from 1 week)",
      "read_on": "2026-10-27",
      "drop_in": true,
      "changes": null,
      "price_text": "$66.80"
-    },
-    {
-     "seller": "Bravo Electro",
-     "url": "https://www.bravoelectro.com/lrs-600n2-48.html",
-     "seller_pn": "LRS-600N2-48 (200 % peak)",
-     "price_usd": 66.1,
-     "pack_qty": 1,
-     "stock": null,
-     "read_on": "2026-10-27",
-     "drop_in": true,
-     "changes": null,
-     "price_text": "$66.10"
     }
    ]
   },
@@ -2875,7 +2863,19 @@
      "stock": null,
      "in_stock": null,
      "ships_from": null,
-     "read_on": "2026-10-26"
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "ruthex",
+     "url": "https://www.ruthex.de/products/ruthex-gewindeeinsatz-m5-50-stuck-rx-m5x9-5-messing-gewindebuchsen",
+     "seller_pn": "RX-M5x9.5 (SKU GE-M5x95-001)",
+     "price_usd": null,
+     "pack_qty": 50,
+     "stock": "InStock (schema.org availability)",
+     "read_on": "2026-10-27",
+     "drop_in": false,
+     "changes": "NOT drop-in: 9.5 mm long vs McMaster 7.9 mm (1.6 mm longer). The short version RX-M5Sx5.8 (and CNC Kitchen 'M5 x 5.8 short', also listed) is 2.1 mm shorter. No 7.9 mm M5 at ruthex or CNC Kitchen. EUR 9.99 per 50 (VAT incl.), no USD price.",
+     "price_text": null
     },
     {
      "seller": "3DJake",
@@ -2888,18 +2888,6 @@
      "drop_in": false,
      "changes": "5.8 mm long instead of 7.9 mm, so 2.1 mm less thread engagement and pull-out strength. Same 6.4 mm hole per CNC Kitchen's table. It fits the existing 6.4 mm hole without a CAD change and sits flush with spare depth below.",
      "price_text": "$11.18 ($0.22 / pc), excl. VAT"
-    },
-    {
-     "seller": "ruthex",
-     "url": "https://www.ruthex.de/products/ruthex-gewindeeinsatz-m5-50-stuck-rx-m5x9-5-messing-gewindebuchsen",
-     "seller_pn": "RX-M5x9.5 (set GE-M5x95-001)",
-     "price_usd": null,
-     "pack_qty": 50,
-     "stock": "In stock",
-     "read_on": "2026-10-27",
-     "drop_in": false,
-     "changes": "9.5 mm long instead of 7.9 mm (1.6 mm longer): the hole must be at least 1.6 mm deeper and the boss longer. Hole diameter is presumably 6.4 mm (see evidence). Ruthex also sells RX-M5Sx5.8 (5.8 mm long, 8.99 EUR / 50), which fits the existing hole depth but gives less engagement.",
-     "price_text": "9.99 EUR / 50 pcs"
     }
    ]
   },
@@ -3083,7 +3071,7 @@
    "price_note": "an estimate until the instant price is read on upload (D40: no quotes); SendCutSend ships in about a week"
   }
  ],
- "price_usd": 1786.46,
+ "price_usd": 1789.94,
  "made_to_order_estimate_usd": 75.0,
  "made_by": "tools/rig_orders.py from catalog/rig.json (tools/rig_catalog.py)"
 }

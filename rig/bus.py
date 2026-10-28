@@ -73,11 +73,11 @@ class MotorBus(ABC):
 class Pack:
     """The FLEXVOLT pack behind the motors, simply: an open-circuit voltage behind a resistance. The bus current is
     the motors' electrical power over the voltage; regeneration (negative power) lifts the voltage. Used by the
-    simulation backend so the VBUS window can trip there as it would on the rig. Pack(54, 0) is sim.leg_rig's ideal
-    54 V bus (what rig-results.json assumes)."""
-    v_oc: float = 50.0          # V: the jump rule's start (V_start <= 57.5 - 27 A x r_int; docs/leg-bench-tests.md)
-    r_int: float = 0.25         # ohm: a FLEXVOLT in 60 V mode is one string of 15 cells (~15 mOhm each) plus the
-                                # leads, fuse and contactor: an estimate until the rig's first jumps measure it
+    simulation backend so the VBUS window can trip there as it would on the rig. Pack(sim.leg_rig.BUS_V, 0) is the
+    simulation's ideal bus (what rig-results.json assumes)."""
+    v_oc: float = 38.0          # V: D65's two DCB609s in 20 V mode in series (10S3P: 41 full, 36 nominal, 30 empty)
+    r_int: float = 0.10         # ohm: 10 cells in series, 3 in parallel (~15 mOhm a cell), two dock adapters, the leads,
+                                # fuse and contactor: an estimate until B6 measures it
     r_phase: float = 0.12       # ohm: RS-04 winding, line to line (an estimate)
     kt: float = 2.1             # N m per A rms at the output (manual 1.3)
     idle_w: float = 4.0         # W per motor (drive electronics)

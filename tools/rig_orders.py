@@ -320,7 +320,7 @@ def main():
         L.append('')
     L.append('## Checked on arrival\n')
     L.append('- **Rails:** both blocks run smooth with no play by hand; the rail\'s hole pitch (60) and end distance (20) as drawn.\n'
-             '- **Pack adapter:** a charged pack reads 54-60 V at its leads (the 60 V mode engaged).\n'
+             '- **Dock adapters:** each DCB609 seats and reads 20-21 V on its adapter\'s leads (20 V mode); the pair in series reads 40-41 V.\n'
              '- **Contactor:** the + terminal goes to the pack side (its contacts are polarised).\n'
              '- **Weight plates:** weigh each; the ballast table in `exports/rig/rig.json` assumes 0.567 and 1.134 kg.\n'
              '- **Motors:** firmware version (`python -m rig.rs04 --id 127 version`); the 310 mm leads and their XT30 and GH plugs.\n')

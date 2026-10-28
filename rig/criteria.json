@@ -62,11 +62,11 @@
      "needs": "force_n"
     },
     {
-     "what": "VBUS inside 46-58 V",
+     "what": "VBUS inside 32-45 V",
      "kind": "range",
      "signal": "vbus",
-     "min": 46.0,
-     "max": 58.0
+     "min": 32.0,
+     "max": 45.0
     }
    ]
   },
@@ -98,10 +98,10 @@
      "max": 18.0
     },
     {
-     "what": "VBUS under 58 V (regeneration)",
+     "what": "VBUS under 45 V (regeneration)",
      "kind": "range",
      "signal": "vbus",
-     "max": 58.0
+     "max": 45.0
     }
    ]
   },
@@ -140,11 +140,11 @@
      "within_s": 0.5
     },
     {
-     "what": "VBUS inside 40-58 V (a push sags it, the tuck and landing lift it)",
+     "what": "VBUS inside 28-45 V (a push sags it, the tuck and landing lift it)",
      "kind": "range",
      "signal": "vbus",
-     "min": 40.0,
-     "max": 58.0
+     "min": 28.0,
+     "max": 45.0
     }
    ]
   },
@@ -227,11 +227,11 @@
      "to_s": 63.0
     },
     {
-     "what": "VBUS inside 46-58 V",
+     "what": "VBUS inside 32-45 V",
      "kind": "range",
      "signal": "vbus",
-     "min": 46.0,
-     "max": 58.0
+     "min": 32.0,
+     "max": 45.0
     }
    ]
   }
