@@ -571,7 +571,11 @@ jobsite-rated tools, and their adapters face up under the belly plate.
 
   **D2 (the turret's fall) fails: SF 1.54 against 2.0.** Its load is unchanged; the deck's peak rose from 90.9 to 125.7 MPa,
   at robot (39.6, -68.4) on the deck's top. B4's run (af4c642) came before the integrity commits (40c427b, f08a8ba) added
-  holes to the deck, so this is a regression from those, not from D69. Next: find the hole at the hot spot, then move it
-  or reinforce round it (a larger turret plate under it, or a washer plate), and re-run D2.
+  holes to the deck, so this is a regression from those, not from D69. The hot spot is on the deck's underside, over the corner of
+  a lightening pocket in the turret plate (fillet at (33.2, -64.2)). There the plate's edge is bonded to the deck: a
+  re-entrant corner, which in a linear bonded model may be a singularity rather than a real stress. Next:
+  - a mesh-convergence run of D2 at that corner;
+  - if the peak keeps rising, either move that pocket 10 mm inboard or round its edge, and re-run D2 (about 30 min on a
+    GB10).
 - Price the Deutsch connectors, the grommets, the vent plug and the gasket.
 - Open B7's louvre filter.
