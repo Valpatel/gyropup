@@ -616,7 +616,7 @@ def frame_rows(parts, stage='P3'):
         if p.kind == 'sheet':
             dens = next(st['density'] for st in bp.STOCK.values() if st['material'] == p.material)
             b = solid_mass_properties(v, dens, 1.0, n)
-        elif p.kind == 'printed' or (p.kind == 'bought' and p.material in mats):    # a bought part cut from stock (the bay's pads)
+        elif p.kind == 'printed':
             b = solid_mass_properties(v, mats[p.material]['density_g_cm3'], 1.0, n)
         else:
             continue

@@ -38,7 +38,7 @@ os.environ.setdefault('MUJOCO_GL', 'egl')
 import fwlib  # noqa: E402
 
 RIG_DIR = Path(os.environ.get('GYROPUP_RIG_DIR', str(Path.home() / 'Code' / 'gyropup-legrig')))
-DESIGN_HALF_MASS = 16.25      # kg a leg (D57)
+DESIGN_HALF_MASS = 17.75      # kg a leg (D69; cad/body_layout.py BUDGET)
 DESIGN_BUS_V = 36.0           # V, the 10S pack's nominal (D65: two DCB609s in 20 V mode in series; gp_config.h GP_PACK_NOMINAL_V)
 PACK_FULL_V = 41.0            # V, 4.1 V a cell (GP_PACK_FULL_V)
 R_PACK = 0.100                # ohm, as the firmware's resting-voltage estimate (gp_config.h GP_R_PACK_OHM)
@@ -48,6 +48,8 @@ def import_rig():
     """(sim.leg_rig, rig.hil, rig.sim_bus, rig.can_bus, rig.canio, rig.bus, rig.leg_control): this repository's
     sim.leg_rig first, so the rig's modules bind to it."""
     from sim import leg_rig as lr                       # noqa: F401  (imported before rig.sim_bus binds `sim`)
+    from sim import robot_v2
+    robot_v2.use_d69_wheel()                            # D69's 10 in hub wheel, as the firmware header was generated
     from sim import leg_control  # noqa: F401
     try:
         import rig.hil  # noqa: F401

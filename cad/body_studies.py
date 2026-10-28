@@ -58,9 +58,14 @@ def _rel(p):
 
 
 def _wheel_r_mm():
-    """The BotWheel's radius from the catalogue."""
-    cat = json.loads((R / 'catalog/wheel_motors.json').read_text())
-    return next(c for c in cat if c['id'] == 'odrive-botwheel')['specs']['diameter_mm'] / 2
+    """D69's 10 in tyre's radius (cad/body_params.py D69_WHEEL_CAD; the BotWheel's 85.65 mm before D69)."""
+    return bp.D69_WHEEL_CAD['od_mm'] / 2
+
+
+def _tyre_y_module_mm():
+    """D69's tyre centre plane in the left module's frame (the leg's foot face + 7.5 + half the tyre)."""
+    fb = bp._fivebar()
+    return fb.Y['wheel_boss'] + 7.5 + bp.D69_WHEEL_CAD['tyre_width_mm'] / 2
 
 
 def rare_leg_load(kind='rare'):
@@ -82,7 +87,7 @@ def rare_leg_load(kind='rare'):
     hm = d['half_mass_kg']
     Fg = b['with_ground_n']
     return {'scenario': name, 'Fz': Fz, 'M_roll': M, 'y_line': y_mount + 1000.0 * M / Fz, 'L_mm': L,
-            'y_wheel': bp.y_off() + fb.Y['wheel'], 'z_patch': -(L + _wheel_r_mm()), 'Fx': 0.0, 'Fy': 0.10 * Fg,
+            'y_wheel': bp.y_off() + _tyre_y_module_mm(), 'z_patch': -(L + _wheel_r_mm()), 'Fx': 0.0, 'Fy': 0.10 * Fg,
             'half_mass_kg': hm, 'kind': kind, 'axle_n': sc['peak_axle_force_n'],
             'from': (f"rig '{name}' at {hm} kg a leg (axle {sc['peak_axle_force_n']:.0f} N): {M:.0f} N m roll and {Fz:.0f} N up at "
                      f"the hip frame's mount plane, plus 10 % of the {Fg:.0f} N ground force sideways at the contact patch")}
@@ -404,13 +409,13 @@ def tray_case(record, mesh):
     fm = json.loads((R / 'exports/body/body.json').read_text())['mass_g']['frame_parts']          # the frame parts' CAD masses
     part_g = lambda n: fm.get(n) or 0.0
     compute = sum(g for n, g in mass.items() if n.startswith(('j501', 'agx'))) + part_g('compute_pallet')
-    skid = sum(g for n, g in mass.items() if n.startswith('plate_')) + part_g('power_plate') + 400.0     # + its wiring
+    skid = (sum(g for n, g in mass.items() if n.startswith('plate_') or n == 'power_dcdc') + part_g('power_plate')
+            + part_g('dcdc_bracket') + 400.0)     # + its wiring; D65's TRACO stands on the plate's bracket
     deck = sum(g for n, g in mass.items() if n in ('vlp16', 'turret', 'lidar_box', 'lidar_coil')) + part_g('deck') + part_g('riser')
     supports = [('compute', compute, [(x, y, bf.ISOLATOR_D / 2) for x, y in bf.ISOLATORS]),
                 ('power skid', skid, [(x, y, bf.PLATE_POST_W / 2) for x, y in bf.PLATE_STANDOFFS]),
                 ('deck, lidar, turret', deck, [(x, y, bp.POST_W / 2) for x, y in bp.POSTS])]
-    d = next(i for i in L['items'] if i.name == 'ddr120c_24')
-    supports.append(('DDR-120C-24', d.mass_g, [((d.box[0] + d.box[1]) / 2, (d.box[2] + d.box[3]) / 2, 12.0)]))
+    # (D65: the DDR-120C-24 that stood on the tray is gone; its TRACO successor is on the power plate, in the skid above)
     model = parts['floor_tray'].shape                  # each support as a 1 mm pad on the tray: its top face takes the load
     for _, _, pts in supports:
         for (x, y, r) in pts:

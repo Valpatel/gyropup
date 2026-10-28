@@ -112,7 +112,7 @@ def fall(xml_text: str, info: dict, name: str, **pad) -> dict:
             'first_touch': _rec['touch']}
 
 
-DEPTHS = (25.0, 35.0, 45.0)                  # pad free height (mm); the lowest controlled leg that keeps 40 mm under it
+DEPTHS = (25.0, 35.0, 45.0, 50.0)                  # pad free height (mm); the lowest controlled leg that keeps 40 mm under it
 DEPTH_PLATEAUS = (600.0, 750.0, 900.0, 1050.0)
 DEPTH_PUSHES = (0.6, 1.0, 1.4)
 
@@ -137,7 +137,7 @@ def depth():
         subprocess.run([sys.executable, '-m', 'sim.robot_v2'], cwd=R, env=env, check=True, stdout=subprocess.DEVNULL)
         xml = set_pad((BUILD / 'robot.xml').read_text(), c=100.0)
         info = json.loads((BUILD / 'model.json').read_text())
-        lowest = 160.0 + (h - 25.0)                                    # 40 mm under the pad at the lowest controlled leg
+        lowest = info['fivebar']['h_range_mm'][0]                      # applied: the model's lowest leg keeps 40 mm under the pad
         for fp in DEPTH_PLATEAUS:
             row = {'h_mm': h, 'stroke_mm': round(0.6 * h, 1), 'lowest_leg_mm': lowest, 'plateau_n': fp, 'runs': {}}
             for n in FALLS:

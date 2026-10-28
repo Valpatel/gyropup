@@ -55,9 +55,10 @@ EAR = {'size': (61.0, 50.8, 50.8), 'x': (-10.0, 51.0), 'top': 193.0}   # SSC1 po
 TILT_STOP_DEG = 25.0                                # cad/turret.py's hard stops: 0 .. -25 deg (here + = barrel down)
 PAN_STOP_DEG = 170.0
 REF_H = 300.0                                       # the model's joints are zero standing at this leg length
-H_RANGE = (180.0, 375.0)                            # leg length (mm) for the controller's height 0..1. Issue #19: the bay's 45 mm
-                                                    # crush pads (cad/body_battery.py PAD) need the lowest height at 180 mm (it was
-                                                    # 160) to keep D69's 40 mm under them; they touch the floor under a 140 mm leg
+import body_battery as _bb  # noqa: E402
+H_RANGE = (_bb.PAD['lowest_leg_mm'], 375.0)        # leg length (mm) for the controller's height 0..1. Issue #19: the bay's 50 mm
+                                                    # crush pads (cad/body_battery.py PAD) need the lowest height at 185 mm (it was
+                                                    # 160) to keep D69's 40 mm under them; they touch the floor under a 145 mm leg
 WHEEL_KEY = 'hb10'                                  # D69: sim/wheel_candidates.json's 10 in hub motor, at the ledger's wheel mass
 _WHEEL = {}
 
@@ -72,6 +73,12 @@ def use_d69_wheel() -> dict:
         return _WHEEL
     import body_layout as bl
     from sim import wheel_study as ws
+    if lr.WHEEL.get('mass_g') != 2200 or abs(lr.WHEEL_R - 0.08565) > 1e-4:
+        # the caller has set a wheel already (sim/wheel_study.py's candidates), or the leg core now carries its own
+        # wheel (#25): use it as it is, never overwrite it
+        _WHEEL.update(dict(lr.WHEEL, od_mm=lr.WHEEL_R * 2000, tyre_width_mm=bl.D69_WHEEL['tyre_width_mm'],
+                           y_mm=fb.Y['wheel_boss'] + 7.5 + bl.D69_WHEEL['tyre_width_mm'] / 2, preset=True))
+        return _WHEEL
     w = dict(ws.CANDIDATES[WHEEL_KEY])
     w.update(mass_g=bl.wheel_g(), od_mm=bl.D69_WHEEL['od_mm'], tyre_width_mm=bl.D69_WHEEL['tyre_width_mm'],
              rotor_share=bl.D69_WHEEL['rotor_share'])
@@ -676,9 +683,9 @@ def build():
     # pushed up into the floor). The joint carries the pad's damper c; its crush law (min(k x, the plateau), the lattice's
     # hysteresis unloading) is applied each step by sim/scenarios.py from model.json's pads; past the stroke the joint's
     # limit is the densified lattice (a stiff, critically damped stop). The pad's floor contact is stiff, so the pad's own
-    # law is the compliance. Numerics: a 25 g pad on an 80 N/mm spring rings at 1.8 kHz, beyond the 1 ms step; the bay
-    # floor's mass (it sits right over the pads) rides on the pads in the model instead, so each pad body carries a quarter
-    # of floor and pads (the total is the ledger's).
+    # law is the compliance. The bay floor's mass (it sits right over the pads) rides on the pads in the model, so each
+    # pad body carries a quarter of floor and pads (the total is the ledger's). It is not needed for stability (the
+    # review of #21 ran without it); it is kept because it is mildly conservative (front fall 2,691 against 2,640 N).
     k_pad, c_pad, stroke = PAD['k_n_per_mm'] * 1000.0, PAD['c_ns_per_m'], PAD['stroke'] / 1000.0
     pad_each = (sum(pad_g.values()) + floor_g) / max(len(pad_g), 1)
 
@@ -689,7 +696,7 @@ def build():
         I = (m * (sy * sy + sz * sz) / 3, m * (sx * sx + sz * sz) / 3, m * (sx * sx + sy * sy) / 3)
         return (f'<body name="{name}" pos="{(x0 + x1) / 2:.5f} {(y0 + y1) / 2:.5f} {z1_:.5f}">'
                 f'<joint name="{name}" type="slide" axis="0 0 1" range="0 {stroke:.5f}" stiffness="0" damping="{c_pad:.1f}" '
-                f'solreflimit="0.002 1"/>'
+                f'solreflimit="0.002 1" solimplimit="0.99 0.999 0.0005"/>'   # the densified lattice: as stiff as the 1 ms step allows
                 f'<inertial pos="0 0 {-sz:.5f}" mass="{m:.4f}" diaginertia="{I[0]:.3g} {I[1]:.3g} {I[2]:.3g}"/>'
                 f'<geom name="{name}" type="box" size="{sx:.5f} {sy:.5f} {sz:.5f}" pos="0 0 {-sz:.5f}" contype="2" conaffinity="1" '
                 f'solref="0.004 1" friction="0.8 0.005 0.0001" rgba="0.15 0.15 0.17 1" group="1"/></body>')

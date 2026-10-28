@@ -68,13 +68,15 @@ TUB_FLANGE = 20.0
 # it densifies. In sim/robot_v2.py and sim/scenarios.py each pad is a body on a slide joint with that force law: min(k x,
 # the plateau) plus a damper c while it loads, unload_ratio of the elastic part while it unloads (the lattice's
 # hysteresis), the densified pad past its stroke as a stiff stop. Sizing: sim/bay_pad_study.py, exports/body/bay-pad-study.json.
-#   h       free height 45 mm. The falls need it: a pad lands either flat on all four (a gentle push) or on two (the front
+#   h       free height 50 mm. The falls need it: a pad lands either flat on all four (a gentle push) or on two (the front
 #           and back falls), and a crush pad's plateau must be low enough for four together (<= ~650 N each under
 #           3,000 N) yet absorb the two-pad landing's ~30 J within its stroke: 25 mm (at the 160 mm lowest controlled leg)
-#           and 35 mm pads fail some of the nine falls at every plateau; 45 mm with a 600 N plateau passes all nine
-#           (sim/bay_pad_study.py depth, exports/body/bay-pad-depth.json). So the lowest controlled leg rises from 160 to
-#           180 mm (sim/robot_v2.py H_RANGE; the leg's stops do not move), which keeps D69's 40 mm under the pads (puddles,
-#           the rolling step); they touch the ground under a 140 mm leg
+#           and 35 mm pads fail some of the nine falls at every plateau; 45 mm passes only in a 600-650 N window (600
+#           reaches its stroke at push x1.4, 650 peaks at 2,909 N at x0.6: the review of #21); 50 mm with 600 N keeps
+#           its stroke at every push (sim/bay_pad_study.py depth, exports/body/bay-pad-depth.json). So the lowest
+#           controlled leg rises from 160 to 185 mm (sim/robot_v2.py H_RANGE reads it from here; the leg's stops do not
+#           move), which keeps D69's 40 mm under the pads (puddles, the rolling step); they touch the ground under a
+#           145 mm leg
 #   w       24 mm under each of the floor's long edges, front and rear halves of its length
 #   stroke  0.6 h: a gyroid lattice densifies past about 60 % strain
 #   k       its initial stiffness, per pad (N/mm): a crush lattice reaches its plateau within ~10 % strain;
@@ -82,11 +84,12 @@ TUB_FLANGE = 20.0
 #   unload_ratio  the share of the elastic force a pad pushes back with while it unloads. The study's finding: a pad that
 #           gives back much of what it stores bounces the robot in the back fall and tips it onto its face (the lidar
 #           strikes the floor). The coupon's drop and rebound test measures it
-PAD = {'h': 45.0, 'w': 24.0, 'l': None, 'stroke': 27.0, 'k_n_per_mm': 500.0, 'plateau_n': 600.0, 'c_ns_per_m': 100.0,
-       'unload_ratio': 0.2, 'material': 'tpu95-gyroid', 'wheel_r': 127.0, 'lowest_leg_mm': 180.0,
+PAD = {'h': 50.0, 'w': 24.0, 'l': None, 'stroke': 30.0, 'k_n_per_mm': 500.0, 'plateau_n': 600.0, 'c_ns_per_m': 100.0,
+       'unload_ratio': 0.2, 'material': 'tpu95-gyroid', 'wheel_r': 127.0, 'lowest_leg_mm': 185.0,
        'basis': 'issue #19: sized by sim/bay_pad_study.py on the D69 model; a coupon drop test to confirm k, the plateau and the rebound'}
 if os.environ.get('GYROPUP_PAD_H'):          # a study's deeper pad (sim/bay_pad_study.py depth): stroke 0.6 h
-    PAD.update(h=float(os.environ['GYROPUP_PAD_H']), stroke=0.6 * float(os.environ['GYROPUP_PAD_H']))
+    PAD.update(h=float(os.environ['GYROPUP_PAD_H']), stroke=0.6 * float(os.environ['GYROPUP_PAD_H']),
+               lowest_leg_mm=160.0 + float(os.environ['GYROPUP_PAD_H']) - 25.0)     # 40 mm under the pad, as designed
 SKID_T = PAD['h']
 RAIL_W, RAIL_H = 8.0, 10.0                   # the printed rails at the top, inside the side plates
 THUMB = {'thread': 'M3', 'length': 10.0}     # the doors' knurled thumbscrews into the rails' end inserts

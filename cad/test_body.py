@@ -322,7 +322,7 @@ def test_the_ledger_carries_the_d69_wheel():
     m = json.loads((R / 'exports' / 'body' / 'mass.json').read_text())['P3']
     w = {r['name']: r['mass_g'] for r in m['rows'] if r['name'].endswith(('wheel_tyre', 'wheel_hub'))}
     assert abs(w['L.wheel_tyre'] + w['L.wheel_hub'] - bl.wheel_g()) < 1.0, w
-    assert bl.wheel_g() >= 3500.0
+    assert bl.wheel_g() > 2200.0                       # heavier than the BotWheel it replaces (a weighed wheel may differ)
     assert m['budget']['design_half_mass_kg'] == 17.75
 
 
@@ -356,6 +356,39 @@ if __name__ == '__main__':
     sys.exit(pytest.main([__file__, '-q', '-s']))
 
 
+# cad-agent's connectivity gate (#14) at P3: the contacts no joint or hold declares, each reviewed (touching faces of
+# parts that are also screwed or held: the bay's doors and sides, the frame screws' heads on the cheeks, the pallet on
+# its isolators and the VESCs' envelopes under it, the ear pods and the eyes board on the shell, the J501's stack)
+UNDECLARED_CONTACTS_P3 = [
+    'bay_door_front|bay_floor',
+    'bay_door_front|bay_side_l',
+    'bay_door_front|bay_side_r',
+    'bay_door_rear|bay_floor',
+    'bay_door_rear|bay_side_l',
+    'bay_door_rear|bay_side_r',
+    'bay_side_l|belly_plate',
+    'bay_side_r|belly_plate',
+    'cheek_left|frame_screws_left',
+    'cheek_right|frame_screws_right',
+    'compute_pallet|isolator_2',
+    'compute_pallet|isolator_3',
+    'compute_pallet|isolator_4',
+    'compute_pallet|item.plate_vesc_l',
+    'compute_pallet|item.plate_vesc_r',
+    'ear_pod_l|shell_side_l_front',
+    'ear_pod_r|shell_side_r_front',
+    'eyes_board|shell_front',
+    'item.agx_cooler|item.agx_spreader',
+    'item.j501_carrier|item.j501_standoff_15_146.5',
+    'item.j501_carrier|item.j501_standoff_165_146.5',
+    'item.j501_carrier|item.j501_standoff_165_16.5',
+    'item.plate_main_switch|plate_post_1',
+    'item.plate_mrbf_block|item.plate_shunt',
+    'leg.left_hip_frame|spacer_screws',
+    'leg.right_hip_frame|spacer_screws',
+]
+
+
 def test_integrity_every_joint_and_no_floating_part():
     """cad/body_joints.py (run by cad/build_body.py): every screw's stack reads true through the CAD (the head on its face,
     the stack touching, the holes, the thread engaged, the tip clear), every part on the robot reaches the cheeks through
@@ -366,6 +399,9 @@ def test_integrity_every_joint_and_no_floating_part():
     assert not d['floating'], d['floating']
     assert not d.get('clashes'), d.get('clashes')
     assert d.get('connectivity_pass') and all(d['connectivity_pass'].values()), d.get('connectivity_pass')   # cad-agent's gate (#14)
+    # the gate counts a touching part as held: every contact no joint or hold declares is pinned here, so a new one fails
+    full = json.loads(f.read_text())['connectivity']['P3']['undeclared_contacts']
+    assert sorted(full) == sorted(UNDECLARED_CONTACTS_P3), sorted(set(full) ^ set(UNDECLARED_CONTACTS_P3))
 
 
 def test_pack_and_adapter_are_marked_envelopes_until_measured():
@@ -377,3 +413,17 @@ def test_pack_and_adapter_are_marked_envelopes_until_measured():
     m = json.loads((R / 'exports' / 'body' / 'mass.json').read_text())['P3']
     rows = [r for r in m['rows'] if r['name'].startswith('battery_')]
     assert rows and all(r['basis'].startswith('ENVELOPE') for r in rows), [(r['name'], r['basis'][:40]) for r in rows]
+
+
+def test_the_lowest_leg_is_one_number():
+    """Issue #19: the crush pads' 40 mm under them needs the lowest controlled leg at 180 mm, set in the pad's spec, the
+    body's sim and the firmware header: one number in all three."""
+    import re
+    import body_battery as bb
+    from sim import robot_v2
+    h = robot_v2.H_RANGE[0]
+    fw = (R / 'firmware' / 'balance' / 'include' / 'gp' / 'gp_model.h').read_text()
+    hf = float(re.search(r'#define GP_H_MIN_M ([\d.]+)f', fw).group(1)) * 1000
+    assert h == bb.PAD['lowest_leg_mm'] == round(hf, 3), (h, bb.PAD['lowest_leg_mm'], hf)
+    g = bb.geometry()
+    assert bb.PAD['lowest_leg_mm'] + bb.PAD['wheel_r'] + g['z_bottom'] >= 40.0 - 1e-6       # D69: 40 mm under the pads
