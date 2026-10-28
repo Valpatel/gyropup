@@ -462,7 +462,7 @@ Hours from `exports/leg/print-plan.json` (grams / density / 14 cm^3 per h for PA
 | 3-5 | upper links x 2 | PA6-CF | 48 | |
 | 5-6 | front link | PA6-CF | 29 | turned on the bed |
 | 6-8 | wheel link | PA6-CF | 40 | turned |
-| 8-10 | hip frame | PA6-CF | 67 | last: the biggest print (274 x 154 x 81, turned 45 deg with 0.8 mm to spare, 1,022 g with the 13 mm flanges and the stop posts' backed ears, D53); print it only after the coupons prove the seats and the P1S holds PA6-CF flat at that size (a 150 x 150 test slab first if there is any doubt) |
+| 8-10 | hip frame | PA6-CF | 66 | last: the biggest print (274 x 154 x 81, turned 45 deg with 0.8 mm to spare, 1,006 g with the 13 mm flanges and the stop posts' backed ears, D53); print it only after the coupons prove the seats and the P1S holds PA6-CF flat at that size (a 150 x 150 test slab first if there is any doubt) |
 | 10 | apex spacer, spares | PA6-CF | 2 | |
 
 About 198 h of printing (the adapters are machined now): 9 days if nothing fails; plan **three weeks** with drying and one reprint. The motors' lead

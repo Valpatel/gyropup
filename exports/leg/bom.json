@@ -109,26 +109,15 @@
    "cad": false
   },
   {
-   "key": "stop_post",
+   "key": "stop_pin",
    "qty": 4,
-   "for": "stop posts (TPU sleeves over them)",
+   "for": "stop posts: \u00d816 x 40 vented pull-out dowels, 23 mm into blind holes in the hip frame (retaining compound), TPU sleeves over them",
    "vendor": "McMaster-Carr",
-   "part_number": "92981A303",
-   "name": "Alloy Steel Shoulder Screws, 10 mm Shoulder Diameter, 20 mm Shoulder Length, M8 x 1.25 mm Thread",
-   "mass_g_each": 26.3,
-   "price_usd_each": 3.5,
-   "cad": false
-  },
-  {
-   "key": "insert_m8",
-   "qty": 4,
-   "for": "stop posts, in the hip frame",
-   "vendor": "McMaster-Carr",
-   "part_number": "94459A778",
-   "name": "Heat-Set Threaded Inserts for Plastic, Standard, Brass, M8 x 1.25mm Thread Size, 12.7mm Installed Length",
-   "mass_g_each": 3.71,
-   "price_usd_each": 0.6544,
-   "cad": false
+   "part_number": "98432A386",
+   "name": "Vented Pull-Out Dowel Pin with Flat Shaft, High-Strength 52100 Alloy Steel, 16 mm Diameter, 40 mm Long",
+   "mass_g_each": 52.748,
+   "price_usd_each": 5.88,
+   "cad": true
   },
   {
    "key": "screw_m4x20",
@@ -204,7 +193,7 @@
    "vendor": "JLCCNC (jlccnc.com: upload the STEP for the instant price)",
    "backup": "Xometry (xometry.com: instant quote from the STEP)",
    "material": "Aluminium 6061-T6 (machined)",
-   "mass_g_each": 153.8,
+   "mass_g_each": 152.5,
    "size_mm": [
     63.5,
     63.5,
@@ -213,15 +202,17 @@
    "step": "exports/leg/cnc/output_adapter.step",
    "spec": [
     "Material 6061-T6; as machined, deburred; no anodise (it would change the journal); general tolerance ISO 2768-m; threads 6H",
-    "\u00d860 j6 journal, z 11.6 to 24.6: the support bearing's inner ring (61812), fitted with retaining compound",
+    "Datums: A = the \u00d860 journal's axis; the contact face (z 0) square to A within 0.02; the standard face (z 24.6) parallel to the contact face within 0.02; the dowel holes and the motor's pin sockets at position \u00d80.05 to A",
+    "\u00d860 j6 journal, z 11.6 to 24.6, with a 0.5 x 45 deg lead-in at the face end: the support bearing's inner ring (61812), fitted with retaining compound",
     "\u00d863.5 shoulder, its face at z 11.6 square to the axis within 0.02: seats the bearing's inner ring",
     "Contact face at z 0 (\u00d848.8) flat within 0.02; 0.6 mm relief outside it",
-    "8 x M5 tapped 12 deep (drill \u00d84.2 x 15) from the face (z 24.6), PCD 50 at 0, 30, 90, 120, 180, 210, 270, 300 deg",
+    "8 x M5 tapped 16 deep (drill \u00d84.2 x 19) from the face (z 24.6), PCD 50 at 0, 30, 90, 120, 180, 210, 270, 300 deg",
     "2 x \u00d85 H7 x 8 deep from the face, PCD 50 at 60, 150 deg (\u00d85 m6 dowel pins pressed in)",
     "9 x \u00d85.5 through, PCD 36 at 45, 75, 105, 165, 195, 225, 285, 315, 345 deg, each with a \u00d810 counterbore from the top to z 19 (5.6 below the face); the spigot is cut away between counterbores closer than 3 mm",
     "3 x \u00d86 H7 x 3.5 deep from the motor face, PCD 35.86 at 15, 135, 255 deg (the motor's own pins)",
     "\u00d824 x 17 blind bore from the motor face (mass)",
-    "\u00d840 -0.02/-0.05 spigot, 3 tall: locates the link"
+    "\u00d840 spigot, 3 tall (general tolerance: the dowels locate the link; the spigot is three lobes between the counterbores and a lead into the link's recess)",
+    "Walls of 1.4 mm (1.0 mm to the thread's major diameter) between the counterbores and the face's tapped and dowel holes, 15 deg apart: intended, fine in 6061"
    ],
    "price_usd_each": null,
    "price_estimate_usd_each": 40.0,
@@ -235,12 +226,10 @@
   "washer_m12_thin",
   "knee_spacer",
   "eye_sleeve",
-  "stop_post",
-  "insert_m8",
   "screw_m5x25",
   "screw_m5x40",
   "screw_m6x30"
  ],
- "price_usd_per_leg": 1118.21,
+ "price_usd_per_leg": 1125.11,
  "made_to_order_estimate_usd_per_leg": 80.0
 }
