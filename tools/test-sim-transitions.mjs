@@ -131,8 +131,32 @@ try {
   assert.equal(await page.evaluate(() => window.__sim.talk.announce('An activity changed!')), false);
   await page.evaluate(() => window.testUtterance.onend());
   assert.equal(await page.evaluate(() => window.__sim.talk.isBusy()), false);
+  // A failed first load can be retried; a late failure cannot overwrite a newer robot view.
+  let benchAttempts = 0, releaseBenchFailure;
+  await page.route('**/exports/sim/turret_box/manifest.json', async route => {
+    const attempt = ++benchAttempts;
+    if (attempt === 2) await new Promise(resolve => { releaseBenchFailure = resolve; });
+    if (attempt <= 2) await route.fulfill({ status: 503, body: 'Temporary test failure' });
+    else await route.continue();
+  });
+  await page.selectOption('#design-select', 'turret-box');
+  await page.waitForFunction(() => document.querySelector('#design-select').value === 'v2');
+  assert.equal(benchAttempts, 1);
+  assert.ok(await page.evaluate(() => !window.__sim.state.bench && window.__sim.state.robot === window.original.robot));
+  await page.selectOption('#design-select', 'turret-box');
+  // Wait for the intercepted request without relying on a network response that is deliberately held.
+  for (let attempt = 0; !releaseBenchFailure && attempt < 50; attempt++) await page.waitForTimeout(20);
+  assert.ok(releaseBenchFailure);
+  await page.selectOption('#design-select', 'v2');
+  const currentSummary = await page.locator('#summary').innerHTML();
+  const failed = page.waitForResponse(response => response.url().endsWith('/exports/sim/turret_box/manifest.json') && response.status() === 503);
+  releaseBenchFailure(); await failed;
+  await page.waitForTimeout(100);
+  assert.equal(await page.locator('#summary').innerHTML(), currentSummary);
+  assert.equal(await page.locator('#design-select').inputValue(), 'v2');
   await page.selectOption('#design-select', 'turret-box');
   await page.waitForFunction(() => window.__sim.state.bench);
+  assert.equal(benchAttempts, 3, 'Recovered manifest fetched again without reloading the page');
   const resetStart = await page.evaluate(() => {
     const api = window.__sim.bench().api, targets = api.targets;
     window.benchTargets = targets;

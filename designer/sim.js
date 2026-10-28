@@ -129,12 +129,16 @@ const robotCache = new Map();
 async function enterBench(request) {
   if (demo.on) { demo.on = false; paintDemo(); }
   if (!bench) {
+    const loading = benchLoading ??= import('./turret_bench.js').then(module => module.createTurretBench({ stage, sfx, panel: $('#panel'), root: '../', onLayout: () => updateInsets() }));
     try {
-      benchLoading ??= import('./turret_bench.js').then(module => module.createTurretBench({ stage, sfx, panel: $('#panel'), root: '../', onLayout: () => updateInsets() }));
-      bench = await benchLoading;
+      bench = await loading;
     } catch (err) {
-      console.error(err);
-      $('#summary').innerHTML = `<h2>Turret on the Orin AGX box</h2><p class="hud-note">Not built yet: ${err.message}</p>`;
+      if (benchLoading === loading) benchLoading = null; // A transient failure must be retryable.
+      if (request === designRequest) {
+        sel.value = state.modelKey;
+        talk?.dock.hint('The turret view could not load. Your game is still here; try it again.', true);
+      }
+      console.warn('Turret view unavailable:', err.message);
       return;
     }
   }
