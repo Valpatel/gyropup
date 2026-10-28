@@ -1,4 +1,4 @@
-# Order 5: Adafruit
+# Order 6: Adafruit
 
 2 lines, **$34.95** before shipping and tax (whole packs). Prices as the catalogue read them (the date is per line in `catalog/*.json`); check the cart against this sheet. Each line has a backup seller in the last column.
 

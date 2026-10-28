@@ -52,6 +52,9 @@ TURRET_BOUGHT = {
     'pan_servo': ('feetech-sts3215-c018-12v', 1), 'tilt_servo': ('feetech-sts3215-c018-12v', 1),
     'flywheel_motor_l': ('sunnysky-x2216-880kv-v3', 1), 'flywheel_motor_r': ('sunnysky-x2216-880kv-v3', 1),
     'esc_l': ('repeat-robotics-am32-35a-esc', 1), 'esc_r': ('repeat-robotics-am32-35a-esc', 1),
+    # D51: the backup pair with stock AM32 and a documented telemetry pad, bought with the first order; the pair that
+    # returns bidirectional-DShot eRPM on the bench (plan N10) is the one built in, the other is the spare
+    'esc_backup_pair': ('lumenier-razor-pro-f4-45a-am32', 2),
     'feed_motor': ('feetech-sts3215-c018-12v', 1), 'cartridge_board': ('proto-board-52x50', 1),
     'laser': ('quarton-vlm-650-03-lpt', 1), 'pan_clamp': ('sendcutsend-pan-clamp', 1),
     # the cradle's aluminium (D48): the same SendCutSend cart as the clamp

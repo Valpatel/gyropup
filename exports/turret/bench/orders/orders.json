@@ -3,6 +3,7 @@
   "Waveshare",
   "SunnySky USA",
   "Palm Beach Bots",
+  "RaceDayQuads",
   "Pololu",
   "Adafruit",
   "SparkFun",
@@ -22,11 +23,12 @@
   "Waveshare": 70.96,
   "SunnySky USA": 49.98,
   "Palm Beach Bots": 49.98,
+  "RaceDayQuads": 62.98,
   "Pololu": 196.14,
   "Adafruit": 34.95,
   "SparkFun": 56.95,
   "Digi-Key": 156.09,
-  "Mouser": 88.02,
+  "Mouser": 88.22,
   "McMaster-Carr": 490.69,
   "VXB Bearings": 74.98,
   "SendCutSend": 0,
@@ -37,8 +39,8 @@
   "IWISS": 24.99,
   "FYSETC": 8.0
  },
- "grand_total_usd": 1623.78,
- "lines": 130,
+ "grand_total_usd": 1686.96,
+ "lines": 131,
  "off_rule_sellers": [
   "Jameco",
   "Out of Darts"

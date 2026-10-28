@@ -509,6 +509,46 @@
    ]
   },
   {
+   "item": "Lumenier Razor Pro F4 45A 2-6S AM32 single ESC (the flywheel ESC's backup)",
+   "id": "lumenier-razor-pro-f4-45a-am32",
+   "key": "lumenier-razor-pro-f4-45a-am32",
+   "qty": 2,
+   "for": "esc_backup_pair",
+   "part_number": "Razor Pro F4 45A 2-6S AM32 ESC (single)",
+   "vendor": "Lumenier",
+   "url": "https://www.racedayquads.com/products/lumenier-razor-pro-f4-45a-2-6s-am32-esc",
+   "price_usd_each": 31.49,
+   "mass_g_each": null,
+   "note": null,
+   "pack_qty": null,
+   "sellers": [
+    {
+     "seller": "RaceDayQuads",
+     "url": "https://www.racedayquads.com/products/lumenier-razor-pro-f4-45a-2-6s-am32-esc",
+     "seller_pn": "22300 (UPC 724376363650)",
+     "price_usd": 31.49,
+     "pack_qty": 1,
+     "in_stock": true,
+     "stock": "available: true (Shopify; no count exposed)",
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "GetFPV",
+     "url": "https://www.getfpv.com/lumenier-razor-pro-f4-45a-2-6s-am32-esc.html",
+     "seller_pn": "not read",
+     "price_usd": 31.49,
+     "pack_qty": 1,
+     "in_stock": null,
+     "stock": "unknown (page returns 403 to automated reads)",
+     "read_on": "2026-10-27"
+    }
+   ],
+   "media_key": "lumenier-razor-pro-f4-45a-am32",
+   "thumb": null,
+   "thumb_from": null,
+   "alternates": []
+  },
+  {
    "item": "STS3215 / ST3215 12 V 30 kg-cm serial bus servo",
    "id": "feetech-sts3215-c018-12v",
    "key": "feetech-sts3215-c018-12v",
@@ -5055,7 +5095,7 @@
    "item": "Resistor 39 k 1 % 1/4 W metal film (Yageo MFR-25FBF52)",
    "id": "yageo-mfr-25fbf52-39k",
    "key": "yageo-mfr-25fbf52-39k",
-   "qty": 3,
+   "qty": 5,
    "for": "el_r_39k",
    "part_number": "MFR-25FBF52-39K",
    "vendor": "Yageo",
@@ -6917,7 +6957,7 @@
   "CT connector pair (Micro-Fit 3.0 class)": 12
  },
  "price_usd_known": {
-  "turret": 718.65,
+  "turret": 781.83,
   "bench_stand": 382.87,
   "tools": 255.73
  },

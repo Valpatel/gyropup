@@ -1,6 +1,6 @@
-# Order 8: Mouser
+# Order 9: Mouser
 
-35 lines, **$88.02** before shipping and tax (whole packs). Prices as the catalogue read them (the date is per line in `catalog/*.json`); check the cart against this sheet. Each line has a backup seller in the last column.
+35 lines, **$88.22** before shipping and tax (whole packs). Prices as the catalogue read them (the date is per line in `catalog/*.json`); check the cart against this sheet. Each line has a backup seller in the last column.
 
 | # | Part | Seller part no. | For | Need | Buy | Each | Line | Backup |
 |---|---|---|---|---|---|---|---|---|
@@ -20,7 +20,7 @@
 | 14 | [Resistor 100 R 1 % 1/4 W metal film (Yageo MFR-25FBF52)](https://www.mouser.com/ProductDetail/603-MFR-25FBF52-100R) | 603-MFR-25FBF52-100R | boards: resistors | 4 | 4 | $0.10 | $0.40 | [Digi-Key 100XBK-ND](https://digikey.com/product-detail/en/yageo/MFR-25FBF52-100R/100XBK-ND/12795) |
 | 15 | [Resistor 100 k 1 % 1/4 W metal film (Yageo MFR-25FBF52)](https://www.mouser.com/ProductDetail/603-MFR-25FBF52-100K) | 603-MFR-25FBF52-100K | boards: resistors | 16 | 16 | $0.10 | $1.60 | [Digi-Key 100KXBK-ND](https://www.digikey.com/en/products/detail/yageo/MFR-25FBF52-100K/100KXBK-ND/13473) |
 | 16 | [Resistor 2.2k 1 W 5 % metal oxide (RSF100)](https://www.mouser.com/ProductDetail/603-RSF100JB-73-2K2) | 603-RSF100JB-73-2K2 | boards: resistors | 3 | 3 | $0.20 | $0.60 | [Digi-Key 2.2KW-1-ND](https://www.digikey.com/product-detail/en/yageo/RSF100JB-73-2K2/2.2KW-1-ND/18091) |
-| 17 | [Resistor 39 k 1 % 1/4 W metal film (Yageo MFR-25FBF52)](https://www.mouser.com/ProductDetail/603-MFR-25FBF52-39K) | 603-MFR-25FBF52-39K | boards: resistors | 3 | 3 | $0.10 | $0.30 | [Digi-Key 39.0KXBK-ND](https://www.digikey.com/en/products/result?keywords=MFR-25FBF52-39K) |
+| 17 | [Resistor 39 k 1 % 1/4 W metal film (Yageo MFR-25FBF52)](https://www.mouser.com/ProductDetail/603-MFR-25FBF52-39K) | 603-MFR-25FBF52-39K | boards: resistors | 5 | 5 | $0.10 | $0.50 | [Digi-Key 39.0KXBK-ND](https://www.digikey.com/en/products/result?keywords=MFR-25FBF52-39K) |
 | 18 | [Resistor 4.7 k 1 % 1/4 W metal film (Yageo MFR-25FBF52)](https://www.mouser.com/ProductDetail/603-MFR-25FBF52-4K7) | 603-MFR-25FBF52-4K7 | boards: resistors | 2 | 2 | $0.11 | $0.22 | [Digi-Key (search)](https://www.digikey.com/en/products/result?keywords=MFR-25FBF52-4K7) |
 | 19 | [Resistor 6.8 k 1 % 1/4 W metal film (Yageo MFR-25FBF52)](https://www.mouser.com/ProductDetail/603-MFR-25FBF52-6K8) | 603-MFR-25FBF52-6K8 | boards: resistors | 3 | 3 | $0.10 | $0.30 | [Digi-Key 13-MFR-25FRF52-6K8CT-ND](https://www.digikey.com/en/products/detail/yageo/MFR-25FRF52-6K8/MFR-25FRF52-6K8-ND/9139107) $0.10 |
 | 20 | [Resistor 60.4 k 1 % 1/4 W metal film (Yageo MFR-25FBF52)](https://www.mouser.com/ProductDetail/603-MFR-25FBF52-60K4) | 603-MFR-25FBF52-60K4 | boards: resistors | 2 | 2 | $0.10 | $0.20 | [Digi-Key 60.4KXBK-ND](https://www.digikey.com/en/products/detail/yageo/MFR-25FBF52-60K4/13430) |

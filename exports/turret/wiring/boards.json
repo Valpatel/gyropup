@@ -1446,13 +1446,25 @@
     "ref": "R41",
     "value": "10 k",
     "key": "yageo-mfr-25fbf52-10k",
-    "does": "5 V to Q8's collector (39 k if bench test 3.4's lit level stays over 1 V)"
+    "does": "5 V to Q8's collector (39 k if bench test 3.10's clear level stays over 1 V)"
    },
    {
     "ref": "R42",
     "value": "10 k",
     "key": "yageo-mfr-25fbf52-10k",
-    "does": "5 V to Q9's collector"
+    "does": "5 V to Q9's collector (likewise)"
+   },
+   {
+    "ref": "R41a",
+    "value": "39 k",
+    "key": "yageo-mfr-25fbf52-39k",
+    "does": "R41's alternate, bench test 3.10 (D51: in the first order)"
+   },
+   {
+    "ref": "R42a",
+    "value": "39 k",
+    "key": "yageo-mfr-25fbf52-39k",
+    "does": "R42's alternate, bench test 3.10"
    },
    {
     "ref": "U13",
@@ -1591,7 +1603,7 @@
   "yageo-mfr-25fbf52-100r": 3,
   "yageo-mfr-25fbf52-100k": 13,
   "tvs-p6ke15a": 2,
-  "yageo-mfr-25fbf52-39k": 2,
+  "yageo-mfr-25fbf52-39k": 4,
   "yageo-mfr-25fbf52-63k4": 1,
   "yageo-mfr-25fbf52-60k4": 1,
   "yageo-mfr-25fbf52-66k5": 1,

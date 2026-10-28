@@ -31,16 +31,12 @@
   },
   "file": "exports/turret/print/print.json"
  },
- "pictures": [
-  "turret-bench-level-iso.png",
-  "turret-bench-level-front.png",
-  "turret-bench-aimed-iso.png"
- ],
  "orders": {
   "sellers": [
    "Waveshare",
    "SunnySky USA",
    "Palm Beach Bots",
+   "RaceDayQuads",
    "Pololu",
    "Adafruit",
    "SparkFun",
@@ -56,7 +52,7 @@
    "IWISS",
    "FYSETC"
   ],
-  "grand_total_usd": 1623.78,
-  "lines": 130
+  "grand_total_usd": 1686.96,
+  "lines": 131
  }
 }

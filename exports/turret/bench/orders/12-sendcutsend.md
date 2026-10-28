@@ -1,6 +1,6 @@
-# Order 11: SendCutSend
+# Order 12: SendCutSend
 
-Day one: upload the drawing for an instant price; 3-5 days.
+Day one: upload the four drawings (two thicknesses) for an instant price; 3-5 days.
 
 4 lines, **$0.00** before shipping and tax (whole packs). Prices as the catalogue read them (the date is per line in `catalog/*.json`); check the cart against this sheet. Each line has a backup seller in the last column.
 
