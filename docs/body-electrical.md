@@ -1,12 +1,12 @@
-# Body electrics: the 13S bus, the battery, the power skid and the CAN buses
+# Body electrics: the 10S bus, the battery bay, the power skid and the CAN buses
 
 The P0 power system of Gyropup's body as built from `cad/body_wiring.py` (the wire list and the drawing),
-`cad/body_battery.py` (the brick and the drawer), `cad/body_layout.py` (where every part sits on the power plate) and
+`cad/body_battery.py` (the battery bay), `cad/body_layout.py` (where every part sits on the power plate) and
 `exports/body/bom.json` (what to buy, by catalogue key). It is the build package for milestone M5's power skid: a
-person with the parts, a spot welder and a crimper can build and test it from this page and
-[the wiring diagram](../exports/body/wiring.svg). Decisions: D43 (the 13S bus), D45 (the converters and the turret's share),
-D54 (the battery and its BMS), D55 (the protection and the switch).
-Written 2026-10-27.
+person with the parts and a crimper can build and test it from this page and
+[the wiring diagram](../exports/body/wiring.svg). Decisions: D65 (the two DeWalt packs, the 10S bus; it replaces D43
+and D54), D55 (the protection and the switch), D60 (the fuse board, P3), D66 (the turret's own branch). Rewritten
+2026-10-27 for D65.
 
 ![Power and CAN wiring](../exports/body/wiring.svg)
 
@@ -14,67 +14,41 @@ Written 2026-10-27.
 
 | | |
 |---|---|
-| Pack | 13S2P Molicel INR-18650-P30B (26 cells), in the belly drawer |
-| Voltage | 48.1 V nominal; charged to 53.3 V (4.1 V a cell, not 4.20: about 9 % of the capacity traded for cycle life); empty at 39.0 V (3.0 V a cell) |
-| Capacity | 6.0 Ah, 256 Wh to 4.10 V a cell |
-| Current | 80 A for a jump's 0.2-0.3 s; 72 A continuous rating (36 A a cell); 9 V of sag at 80 A |
-| BMS | Daly K 13S 100 A, BT + UART, common port (B-/P-) |
+| Packs | two DeWalt DCB609 FLEXVOLT 9.0 Ah in 20 V mode (5S3P each), in series on two Terrafirma rail adapters: 10S3P |
+| Voltage | 36 V nominal; about 41 V full (4.1 V a cell); empty at 30.0 V (3.0 V a cell: the firmware's latched cut-off) |
+| Capacity | 9.0 Ah, 360 Wh rated (DeWalt's 180 Wh a pack) |
+| Current | 80 A for at most 0.5 s (a jump's push draws about 70 A for 0.3 s), 30 A continuous: the adapters' stated rating, enforced by the firmware |
+| Pack protection | none the robot can read: the firmware's windows (docs/body-firmware.md 5) and the MRBF |
 | Main fuse | MRBF 80 A (Blue Sea 5181 on a 5191 block), 58 V DC, 2 kA interrupting at 58 V |
 | Branch fuses | Littelfuse MINI 58V (0997 series), 1 kA at 58 V |
-| Rails | 24 V 5 A isolated (Mean Well DDR-120C-24), 12 V 5 A isolated (DDR-60L-12), 5 V 3.2 A (Pololu D36V28F5 from the 12 V) |
-| Below SELV | 53.3 V is under the 60 V DC limit: nothing on the robot is a shock hazard, but the pack's short-circuit current is |
+| Rails | 12 V 12.5 A isolated (TRACO TEP 150-4812WI, 18-75 V in): the J501 and the 12 V loads; 5 V 3.2 A (Pololu D36V28F5 from the 12 V) |
+| Below SELV | 41 V is under the 60 V DC limit: nothing on the robot is a shock hazard, but the packs' short-circuit current is |
 
-The bus was chosen in docs/body-plan.md (D43): every load is rated across 39-53.3 V (the RS-04 15-60 V, the 75100
-14-84 V, the switch 12-84 V, the DDR converters 33.6-67.2 V and 18-75 V, the MINI 58V fuses and the MRBF 58 V), and
-regeneration has room to 57 V before anything is near its limit.
+Every load is rated across 30-41 V (D65): the RS-04 24-60 V, the 75100 14-84 V, the switch 12-84 V, the TRACO 18-75 V,
+the MINI 58V fuses and the MRBF 58 V. Regeneration is clamped over 41.5 V and the robot latches off over 44.0 V (the
+firmware), far under the RS-04's 60 V fault.
 
 ## 2. The battery
 
-### 2.1 The brick
+### 2.1 The bay
 
-26 Molicel P30B (18650, 3.0 Ah, 36 A) in 13 groups of two. The cells lie along y (across the robot) in two layers of
-13 columns (`cad/body_battery.py` `brick()`: 266 x 76 x 60 mm with the BMS on top, 1.54 kg with its share of nickel and
-insulation); a column is one 2P group, its two cells one above the other; the groups' + ends alternate side to side, so
-every series link is a short strip from one column to the next.
+`cad/body_battery.py`; docs/body-sections.md 1 for why the belly. The two packs hang from their rail adapters as from
+a tool, rails along x, in a bay under the belly plate between the knees (318 x 102 x 132 mm; the robot sits on its TPU
+skids under a 139 mm leg). The front pack slides out of the front door, the rear one out of the rear door; each door is
+held by two knurled M3 thumbscrews (no tool). The adapters' leads meet in the 30 mm between the packs:
 
-1. **Match the cells.** Charge or discharge every cell to the same voltage (3.6-3.7 V, within 0.02 V of each other)
-   before welding. Write each cell's voltage on a list; reject any below 2.5 V or that warms on the bench.
-2. **Fish paper.** One ring on every cell's + end (the 18650's can is the - terminal right up to the + cap).
-3. **Lay out the columns** in the printed cell nest (the bay halves, `exports/body/bay_rear.stl` and `bay_front.stl`),
-   + ends alternating, so that column 1's - end and column 13's + end come out at the same end of the brick.
-4. **Weld the 2P groups and the series links** with the 2P pre-shaped strip (IMR 0.15 x 18.5 mm), four welds a cell
-   end, then a second layer of strip on every series link (the jump's 80 A crosses each link). Test-weld scrap first
-   and peel it: the nugget should tear the strip, not lift.
-5. **Kapton** between the layers' ends, over every weld, and round the brick's edges where the strip turns.
-6. **Balance leads** (the BMS's 14-wire harness, 24 AWG): B0 to the brick's - end (group 1 -), B1 to the group 1/2
-   link, B2 to 2/3 ... B12 to the 12/13 link, B13 to the brick's + end (group 13 +). Solder each to its strip's tab, not
-   to a cell. **Do not plug the harness into the BMS yet.**
-7. **Check the harness**: with the BMS unplugged, measure each pin against B0: 3.6, 7.2, 10.8 ... 46.8 V, rising by
-   one cell each pin, in order. Any step that is not one cell is a wrong tap: fix it before going on.
-8. **BMS:** B- lead (10 AWG) to the brick's - end first; then plug the balance harness; then P- (10 AWG, to the
-   XT90-S's - cup); the pack + lead (10 AWG) from the brick's + end to the XT90-S's + cup. The XT90-S female (sockets)
-   goes on the pack, the male on the robot.
-9. **Set the BMS** in Daly's app over Bluetooth before the first charge (and write the settings in the build log):
-   cell over-voltage 4.15 V (release 4.1 V), under-voltage 3.0 V
-   (release 3.2 V), charge over-current 6 A, discharge over-current
-   100 A, charge temperature 0-45 °C, discharge
-   -10-60 °C, balancing from 3.9 V at a
-   15 mV spread. The over-voltage is the backstop: the charger stops at 4.10 V a cell.
-10. **Wrap** the brick (Kapton, then the bay halves screw together round it: 4 x M5 x 10 each side into the belly's nuts).
-
-The BMS's UART ground is B-, not the robot's ground (P-): a wire from it to the MCU would be a path round the BMS's
-switches when they are open. So the BMS is read only over its Bluetooth, by the QT Py ESP32-S3 on the MCU board, which
-puts the cell voltages and the state of charge on CAN bus C (D54). Nothing is wired to the BMS but the pack.
+1. **Each adapter** screws to its printed plate (M3 into heat-set inserts set from the adapter's own holes: their
+   pattern is not published), the plate up into the belly's S-M4-0 nuts (four M4 x 12).
+2. **Check each pack's mode**: the FLEXVOLT slider must stay out (20 V mode): 18-20.5 V on its adapter's leads.
+3. **The series link** (W2): the front adapter's - to the rear adapter's + through an XT90-S pair; unplugged, each half
+   of the bay is 18-20 V and the bay's lead is dead.
+4. **The bay's lead** (W1, W3): the front adapter's + and the rear adapter's - to the bay's XT90-S female; up through
+   the belly's slot at x -30 into the spine's gap, forward to the tray's slot and up to the plate.
 
 ### 2.2 Charging
 
-The charge port is an XT60H **female** in a printed bezel in the belly (no live pins on the robot). It goes straight to
-the pack's + (through a 10 A MINI 58V fuse at the MRBF block's battery stud, W8) and to the shunt's load side (W9): it
-charges with the main switch off, and the shunt counts the charge. The charger is the Luna 48V Advanced (XT60 output):
-set its voltage knob to 90 % and **meter its open-circuit output before it ever meets the pack: it must read 53.3 V
-(±0.2)**; if it does not, the backup is the Grin Satiator, which is set to 53.3 V directly. Charge current 2-3 A
-(0.3-0.5 C). Charge on a non-flammable surface, attended, the robot's main switch off. The BMS's over-voltage at 4.15 V
-is the backstop if the charger is mis-set.
+The packs come out and charge on DeWalt's own chargers (the user's): the robot has no charge port and no dock contacts
+(D64's dock is overtaken). Unplug the series link before a pack comes out.
 
 ## 3. The main path and the branches
 
@@ -103,8 +77,8 @@ The holders are rated 32 V by Eaton; the fuse does the interrupting (1 kA at 58 
 ### 3.1 The wire list
 
 Red +, black -, white sense or signal, green the frame bond. Silicone wire throughout (BNTECHGO, 200 °C, 600 V). Lengths
-are cut to the plate in P0 and recorded. **Every live end on the body is a socket** (D58, hazard 11): the 48 V branch
-leads end in XT60H-F and the 24 V and 12 V ones in XT30U-F; the devices' leads carry the pins (the RS-04 pigtails'
+are cut to the plate in P0 and recorded. **Every live end on the body is a socket** (D58, hazard 11): the bus branch
+leads end in XT60H-F (the turret's in XT30U-F) and the 12 V ones in XT30U-F; the devices' leads carry the pins (the RS-04 pigtails'
 XT60H-M are the leg's, the VESC leads', the J501's and the lidar box's adapter leads' are in this order). The table is
 written by `cad/body_wiring.py` from its wire list; `cad/test_body.py` checks that no body-side lead ends in a pin.
 
@@ -150,18 +124,19 @@ written by `cad/body_wiring.py` from its wire list; `cad/test_body.py` checks th
 
 ### 3.2 The rails
 
-- **24 V** (DDR-120C-24, 120 W): the J501 (60 W at MAXN) and the turret (60 W peaks, 40 W playing). Exactly its
-  rating at the two peaks together: the firmware staggers the turret's flywheel start from the J501's boot, and a
-  DDR-240C-24 (10 A, $132.74 at TRC) is the step up if the bench shows it at its limit. Two are bought (D58): Master
-  Electronics flags the DDR-120C-24 "no longer being manufactured"; the SD-100C-24 is its successor if both ever fail.
-- **12 V** (DDR-60L-12, 60 W): the lidar interface box (8 W, 3 A at spin-up), the 5 V buck (~5 W), the radio-stop
-  jack; in P3 the SSC1 pods (25.6 W) and the eyes, switched on after the lidar has spun up.
-- **5 V** (Pololu D36V28F5 from the 12 V, 3.2 A): the Nucleo (E5V), four CAN Pal, the QT Py, the VN-100, the radio
-  receiver; about 1 A in all.
+- **12 V** (TRACO TEP 150-4812WI, 150 W, 18-75 V in, isolated): the J501 (12-36 V in; 60 W at MAXN, W21 on 10 A) and
+  the 12 V loads (W43 on 7.5 A): the lidar interface box (8 W, 3 A at spin-up), the 5 V buck (~5 W), the radio-stop
+  jack; in P3 the SSC1 pods (25.6 W) and the eyes, switched on after the lidar has spun up. About 100 W at the most:
+  two thirds of its rating. It replaces the DDR-120C-24 (which starts at 33.6 V, inside the 10S range) and the
+  DDR-60L-12 (D65).
+- **The turret** (D66) is not on a rail: its own robot takes 30-41 V from the bus on a 7.5 A branch (W22) through the
+  stop relay's pole B (W34) and makes its own rails.
+- **5 V** (Pololu D36V28F5 from the 12 V, 3.2 A): the Nucleo (E5V), three CAN Pal, the VN-100, the radio receiver;
+  about 1 A in all.
 
-Both converters are isolated; each one's -V is tied once to the - bus at the star point (W23, W27), so the MCU, the CAN
-transceivers and the motor drivers share one reference. The frame is bonded to the star point (W33): a + lead chafed
-through to the aluminium blows its fuse instead of leaving the frame live.
+The converter is isolated; its -V is tied once to the - bus at the star point (W23), so the MCU, the CAN transceivers,
+the J501 and the motor drivers share one reference. The frame is bonded to the star point (W33, 14 AWG): a + lead
+chafed through to the aluminium blows its fuse instead of leaving the frame live.
 
 ## 4. CAN
 
@@ -169,23 +144,25 @@ through to the aluminium blows its fuse instead of leaving the frame live.
 |---|---|---|---|
 | A | MCU FDCAN1 (CAN Pal 1, 120 Ohm on) | RS-04 left front → RS-04 left rear (120 Ohm at its plug) | 1 Mbit/s, the left leg |
 | B | MCU FDCAN2 (CAN Pal 2, 120 Ohm on) | RS-04 right front → RS-04 right rear (120 Ohm at its plug) | 1 Mbit/s, the right leg |
-| C | MCU FDCAN3 (CAN Pal 3, 120 Ohm on) | VESC left → VESC right → QT Py ESP32-S3 (CAN Pal 4, off): the BMS over Bluetooth → J501 can0 (its own 120 Ohm on) | 1 Mbit/s: wheels, battery, the computer |
-| T | J501 can1 | the turret (its own bus) | the turret workstream's |
+| C | MCU FDCAN3 (CAN Pal 3, 120 Ohm on) | VESC left → VESC right → J501 can0 (its own 120 Ohm on) | 1 Mbit/s: wheels, the computer |
+
+The turret (D66) talks to the J501 over Ethernet, not CAN.
 
 All 1 Mbit/s classic CAN (the RS-04s and the VESCs speak it; the G474's FDCAN runs it), 22 AWG twisted by hand at
 about 30 twists a metre, 120 Ohm at both ends of each bus and nowhere else (the CAN Pal's switch, the J501's built-in
 terminator). The J501's two ports are capacitively isolated (Seeed wiki, read 2026-10-27); if only one comes up on the
-board (`ip link`), the turret moves to an isolated USB-CAN adapter as on its bench (docs/body-plan.md 9).
+board (`ip link`), bus C moves to an isolated USB-CAN adapter.
 
 ## 5. The radio stop and the switches
 
-The radio stop (D37, D55): the ER3C-i receiver (failsafe: no pulses) drives one Pololu RC relay switch; its contact feeds the coil of the stop relay (Omron G2RL-2, DPDT, 12 V), whose other end goes to ground through the MCU's MOSFET. The relay holds only while the radio says run AND the MCU says run. Pole A is the turret's dry safety loop (TM pins 7, 8: the turret cuts its flywheels and dial in 20 ms), pole B is in the turret's 24 V branch (the independent cut); the MCU senses the coil voltage and sits the robot down when the radio drops, and opens the relay itself when the robot sits. The main switch is the hard off.
+The radio stop (D37, D55): the ER3C-i receiver (failsafe: no pulses) drives one Pololu RC relay switch; its contact feeds the coil of the stop relay (Omron G2RL-2, DPDT, 12 V), whose other end goes to ground through the MCU's MOSFET. The relay holds only while the radio says run AND the MCU says run. Pole A is the turret's dry safety loop (TM pins 7, 8: the turret cuts its flywheels and dial in 20 ms), pole B is in the turret's bus branch (W22, W34: the independent cut); the MCU senses the coil voltage and sits the robot down when the radio drops, and opens the relay itself when the robot sits. The main switch is the hard off.
 
 No contactor, no e-stop button on the robot (D37): the radio stop sits the robot down, and the main switch on the
 belly is the hard off for a person standing at the robot. The stop relay, its MOSFET (a logic-level N-channel on
 MCU_RUN), the flyback diode and the 12 V-to-3.3 V divider for the sense sit on the MCU carrier's protoboard. The
-turret's interface is docs/turret-next-plan.md 3.1-3.2 (TM pins 1-2 +24 V, 3-4 GND, 5-6 CAN, 7-8 the dry safety
-loop): plug its DT12 only with the stop relay open (its three 1,000 µF capacitors charge through the plug otherwise).
+turret (D66) plugs in with its XT30 (power through pole B), its RJ45 to the J501 and its safety loop on pole A: plug it
+only with the stop relay open (its input capacitors charge through the plug otherwise; B15 measures the inrush on the
+7.5 A fuse and the G2RL-2's contact).
 
 ## 6. Bring-up (P0, on the bench, before the plate goes into the robot)
 
@@ -223,10 +200,12 @@ so the firmware's cut-off and current limit (docs/body-firmware.md 5) are tested
 ## 7. Open items
 
 - The Flipsky switch's side (low or high) from its wiring card on arrival (section 3).
-- The Daly K BMS's mass and its short-circuit trip current: the MINI 58V (1 kA) and the MRBF (2 kA) interrupt
-  ratings must be above the pack's prospective short-circuit current through the BMS; 26 P30B in 13S2P can source
-  more than 1 kA into a dead short, and the BMS's short-circuit protection (microseconds) is what limits it. Read it
-  from the BMS's card, or measure the trip on the bench with a current-limited supply.
-- The Luna charger's 90 % voltage (metered before use).
+- The packs' prospective short-circuit current: DeWalt publishes none; two DCB609 in series can source more than the
+  MINI 58V's 1 kA into a dead short, and nothing in the packs limits it. The MRBF (2 kA) is the last line: keep every
+  unfused lead (W1-W4) short and sleeved.
+- The adapters' outline and mounting holes (Terrafirma publishes no drawing): measure one, then set the inserts in the
+  printed adapter plates; and that the adapter leaves the FLEXVOLT slider out (20 V mode).
+- The TRACO's height (35.7 mm per its outline; Digi-Key lists one variant at 40.6) and its base flange's slots.
+- The FL1 fuse holders' DC rating and whether a standard 32 V MINI fuse seats in them (docs/body-fuse-board.md 10).
 - The INA228 breakout's on-board shunt removed (a 15 mOhm resistor in parallel with the 0.33 mOhm external shunt would
   take 2 % of the current: small, but it is not rated for it).
