@@ -50,39 +50,39 @@
  },
  "robot_sil": {
   "at_3.9s": {
-   "L_fw_mm": 287.5,
+   "L_fw_mm": 372.6,
    "L_py_mm": 287.5,
-   "v_fw": 0.622,
-   "v_py": 0.63,
-   "x_fw": 0.984,
-   "x_py": 0.996
+   "v_fw": -0.0,
+   "v_py": 0.633,
+   "x_fw": -0.18,
+   "x_py": 0.979
   },
   "at_5.9s": {
-   "L_fw_mm": 287.5,
-   "L_py_mm": 287.5,
-   "v_fw": -0.099,
-   "v_py": -0.112,
-   "x_fw": 1.456,
-   "x_py": 1.464
+   "L_fw_mm": 372.6,
+   "L_py_mm": 287.6,
+   "v_fw": -0.0,
+   "v_py": -0.102,
+   "x_fw": -0.18,
+   "x_py": 1.477
   },
   "at_7.9s": {
-   "L_fw_mm": 220.0,
+   "L_fw_mm": 372.6,
    "L_py_mm": 220.0,
-   "v_fw": -0.048,
-   "v_py": -0.047,
-   "x_fw": 1.275,
-   "x_py": 1.273
+   "v_fw": 0.0,
+   "v_py": -0.054,
+   "x_fw": -0.18,
+   "x_py": 1.281
   },
-  "fell": false,
-  "final_mode": "run",
+  "fell": true,
+  "final_mode": "idle",
   "seconds": 8.0,
-  "theta_estimate_error_deg": 0.024013072195658774,
-  "worst_diff_L": 0.0011827040827583901,
-  "worst_diff_theta": 0.27976007991791674,
-  "worst_diff_v": 0.013873174165084753,
-  "worst_diff_x": 0.019478885627495668,
-  "worst_theta_deg_firmware": 5.896705617870755,
-  "worst_theta_deg_python": 5.805224396954477
+  "theta_estimate_error_deg": 3.17807544154791,
+  "worst_diff_L": 0.1535972700612261,
+  "worst_diff_theta": 85.99614871776427,
+  "worst_diff_v": 0.9558746284518844,
+  "worst_diff_x": 1.699306821678567,
+  "worst_theta_deg_firmware": 82.16401796097264,
+  "worst_theta_deg_python": 5.599606054955346
  },
  "stand_up": {
   "boot_ms": 102,

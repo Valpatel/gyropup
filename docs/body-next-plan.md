@@ -408,3 +408,18 @@ docs/body-orders.md 4).
   frame before any 1/8 in cheek is drawn.
 - Not in this plan: the game page and the voice (M6), the RL policy at the new mass (M6), the leg's spring question
   (D39: after the damping test).
+
+## 8. Notes from the work (2026-10-27)
+
+- **B8 (merged from body/b8-firmware):** the LQR gain table in `firmware/balance/include/gp/gp_model.h` came from the
+  interim 26.8 kg model; it is regenerated (`firmware/balance/tools/gen_model.py`) on B3's model of the real body,
+  and again whenever `sim/robot_v2.py` changes (the 10S bus of D65 is the next). The jump-height scaling with bus
+  voltage is the firmware agent's own rule (docs/body-firmware.md), not a sim result: B13 checks it on the bench. The
+  motor calibrations in the firmware are placeholders until `rig/calibrate.py` runs on the bench (B13).
+- **The J501's fan blows up** (j501-agx 94da39d): the body's louvres are the inlet and the deck's cells the outlet;
+  the printed shroud became a duct (docs/body-thermal.md). The turret box (`cad/turret_box.py`) still assumes the fan
+  draws in through the deck.
+- **D65 and D66 (main, 0b69b6d, 0a636a4):** the 13S2P brick, its Daly BMS and its tub give way to two DeWalt DCB609
+  packs in 20 V mode in series (10S, 30-41 V) on two dock adapters; the DDR-120C-24 gives way to a converter rated to
+  28 V or below; the turret's 24 V branch gives way to an XT30 branch off the bus. The voltage windows above (UVLO
+  45.5 / 41.6 V, the 44 V jump gate) move to the 10S range: section 9 below records the new ones.
