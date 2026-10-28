@@ -401,3 +401,11 @@
   status: decided
   source: {kind: user, quote: "for the wheels can we do something more like a 10\" hub motor with air filled tires? ... In general I want air tires."}
   alternatives: [the ODrive BotWheel 171 mm solid (today), the 8.5 in hoverboard motor (backup), a two-sided scooter 10 in wheel in a fork, the DDT M1502D (24 V, quote-only)]
+- id: D70
+  date: "2026-10-28"
+  title: "The slip ring's camera pair (circuits 11-12) carries power; standing alone on one FLEXVOLT, the turret fires on a supply-voltage profile"
+  decision: "D41 reserved circuits 11-12 of the turret's slip ring for a camera. They now carry power, as a third power pair, because two pairs cannot carry the standalone case (D66: one DCB609 in 20 V mode, 15-20.5 V). A camera on the turret uses the Orin NX on the turret itself (D66), so nothing needs to cross the ring for it. On a single pack, the turret keeps every ring circuit at or under 2 A with a profile driven by the supply voltage: at 15 V the spin-up stretches to 2.4 s and the rate drops to 1 shot/s. On Gyropup's 30-41 V bus, the full rate and speed of D68 apply. The stand's rocker switch becomes a DC switch rated 15 A or more (it carries up to 13.7 A at 15 V)."
+  why: "The turret's power rework (turret/program 3e238a6, issue #2) found 3.0-3.3 A per circuit at 15 V on two pairs. A third pair and a low-voltage profile keep the bought slip ring within its rating without a bigger ring or a boost converter. The camera reservation is moot now that the turret has its own computer."
+  status: decided
+  source: {kind: user, quote: "To keep things simple the turret could have it's own ... jetson mini carrier board? That would let us basically make this design into two robots"}
+  alternatives: [a boost converter to about 30 V on the stand, a larger slip ring, two packs on the stand]
