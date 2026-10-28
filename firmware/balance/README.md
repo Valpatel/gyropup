@@ -1,8 +1,9 @@
 # firmware/balance: Gyropup's balance controller (Nucleo-G474RE)
 
-C for the STM32G474RE: three FDCAN buses at 1 Mbit/s (the legs' RS-04s on A and B; the VESCs, the BMS bridge and the
-J501 on C), the VN-100 at 800 Hz, the INA228, the radio stop's sense and MCU_RUN, and a 1 kHz loop ported from
-`sim/controller_v2.py`, with UVLO, the jump gate, the Jetson's heartbeat and the people-near caps.
+C for the STM32G474RE: three FDCAN buses at 1 Mbit/s (the legs' RS-04s on A and B; the VESCs and the J501 on C), the
+VN-100 at 800 Hz, the INA228, the radio stop's sense and MCU_RUN, and a 1 kHz loop ported from `sim/controller_v2.py`,
+with the 10S pack's windows (D65: warn, sit, the 3.0 V a cell cut-off, the jump gate; all in `include/gp/gp_config.h`),
+the bus current limit, the Jetson's heartbeat and the people-near caps.
 **docs/body-firmware.md** is the reference: architecture, timing, every CAN message, the safety numbers, the pins.
 
 | Path | What |
@@ -19,5 +20,5 @@ J501 on C), the VN-100 at 800 Hz, the INA228, the radio stop's sense and MCU_RUN
 cmake -S firmware/balance -B build/fw-mcu -DCMAKE_TOOLCHAIN_FILE="$PWD/firmware/balance/cmake/arm-none-eabi.cmake"
 cmake --build build/fw-mcu                         # balance.elf / .bin / .hex
 cmake -S firmware/balance -B build/fw-host && cmake --build build/fw-host && ctest --test-dir build/fw-host
-python -m pytest firmware/balance/hil -q           # needs MuJoCo and the rig package (GYROPUP_RIG_DIR)
+GP_FW_HOST_LIB=build/fw-host/libgp_host.so python -m pytest firmware/balance/hil -q   # needs MuJoCo; build/sim/v2 for the robot
 ```

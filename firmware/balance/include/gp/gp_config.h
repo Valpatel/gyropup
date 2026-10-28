@@ -30,17 +30,46 @@
 #define GP_VBUS_OVER_V 58.0f            /* V, instantaneous: regeneration; the RS-04 trips at 60 V */
 #define GP_FALLEN_RAD 0.9f              /* rad of pendulum angle: fallen (sim/scenarios.py) -> limp */
 
-/* ---------------------------------------------------------------- battery: UVLO and the jump gate (D63) */
-#define GP_R_PACK_OHM 0.112f            /* 13S2P P30B + BMS + leads (docs/body-next-plan.md 1.3) */
+/* ---------------------------------------------------------------- the battery (D65): every voltage window, one place
+ * Two DeWalt DCB609 FLEXVOLT packs in 20 V mode in series: 10S3P, 36.0 V nominal, about 41 V full (4.1 V a cell),
+ * 30 V empty. The packs have no BMS the robot can talk to, so the robot enforces the cut-off and the current limit
+ * itself. The windows are per cell x GP_CELLS; "resting" is the bus with the sag taken back out (V + I x R_pack,
+ * filtered over GP_VREST_TAU_S), "under load" the bus itself (GP_CUTOFF_TAU_S). docs/body-firmware.md 5. */
+#define GP_CELLS 10.0f                  /* 10S (two 5S3P packs in series) */
+#define GP_PACK_NOMINAL_V 36.0f         /* 3.60 V a cell */
+#define GP_PACK_FULL_V 41.0f            /* 4.10 V a cell (DeWalt's charge end, about 20.5 V a pack) */
+#define GP_R_PACK_OHM 0.100f            /* two DCB609s + their dock adapters + leads (D65's rig figure; measure at B12) */
 #define GP_VREST_TAU_S 1.0f             /* the resting-voltage filter: a jump's 0.3 s sag is not a flat pack */
-#define GP_UVLO_WARN_V 45.5f            /* 3.50 V a cell: warn (the Jetson goes home) */
-#define GP_UVLO_WARN_CLEAR_V 45.8f
-#define GP_UVLO_SIT_V 41.6f             /* 3.20 V a cell: sit and stay down */
-#define GP_UVLO_STAND_V 42.6f           /* no stand-up below this after a UVLO sit */
-#define GP_JUMP_MIN_V 44.0f             /* no jump below 44 V resting: 80 A x 0.112 ohm leaves 35 V */
-#define GP_JUMP_FLOOR_V 35.0f           /* the bus floor in the push: the DDR-120C-24 needs 33.6 V */
-#define GP_JUMP_FULL_V 48.1f            /* the full jump at and above the nominal pack */
-#define GP_JUMP_V_MAX 3.2f              /* m/s: above the full push (it ends at 310 mm, as the simulation's); scaled by s(V) it caps the push */
+#define GP_UVLO_WARN_V 35.0f            /* 3.50 V a cell, resting: warn (the Jetson goes home) */
+#define GP_UVLO_WARN_CLEAR_V 35.3f      /* 3.53 V a cell */
+#define GP_UVLO_SIT_V 32.0f             /* 3.20 V a cell, resting: sit and stay down */
+#define GP_UVLO_STAND_V 33.0f           /* 3.30 V a cell, resting: no arming below this (and after a UVLO sit) */
+#define GP_CUTOFF_V 30.0f               /* 3.00 V a cell UNDER LOAD: legs down, motors off, latched until power cycle */
+#define GP_CUTOFF_TAU_S 0.1f            /* the cut-off's filter on the loaded bus: PWM ripple and spikes, not sag */
+#define GP_REGEN_START_V 41.5f          /* 4.15 V a cell on the bus: the regen clamp starts (charging current limited, D65: no BMS) */
+#define GP_REGEN_ZERO_V 42.5f           /* 4.25 V a cell: no charging current allowed */
+#define GP_REGEN_I_A 15.0f              /* A of charging allowed at 41.5 V, falling to 0 at 42.5 V: (42.5 - 41.0) V / 0.100 ohm, a full pack's */
+#define GP_REGEN_GAIN 5.0f              /* /(A s): the braking factor's fall per amp of charging over the allowance (52 A: 2 samples to 0) */
+#define GP_REGEN_RECOVER 10.0f          /* /s: the factor back up to 1 */
+#define GP_OVERCHARGE_V 44.0f           /* 4.40 V a cell on the bus: sit and stop, latched until power cycle */
+#define GP_OVERCHARGE_TAU_S 0.02f       /* the over-charge latch's filter: one sample's spike is not a charger */
+#define GP_ARM_MAX_V 42.0f              /* 4.20 V a cell, resting: no arming over it (an over-full or wrong pack: the clamp would take the braking) */
+#define GP_JUMP_MIN_V 34.0f             /* 3.40 V a cell, resting: no jump below this */
+#define GP_JUMP_FLOOR_V 31.0f           /* the bus floor in the push: 1 V over the cut-off (the 24 V converter is rated lower, D65) */
+#define GP_JUMP_FULL_V 38.2f            /* the full push at and above this, resting: its 7.2 V sag (HIL, 72 A x 0.1 ohm) reaches the floor */
+#define GP_JUMP_I_FULL_A 72.0f          /* A: the push's bus current limit at s(V) = 1, (GP_JUMP_FULL_V - GP_JUMP_FLOOR_V) / R_pack */
+#define GP_JUMP_V_MAX 3.2f              /* m/s: the take-off speed cap at jump height 15/15, above the full push (it ends at 310 mm) */
+
+/* ---------------------------------------------------------------- the bus current limit (D65), from the INA228
+ * Not a trip: every motor's current command is scaled down (one factor, legs and wheels) while the bus is over the
+ * limit. The limit is GP_BUS_I_PEAK_A for at most GP_BUS_I_PEAK_S at a time, else GP_BUS_I_CONT_A, and GP_BUS_I_CONT_A
+ * whenever the 1 s average is over it. B12 checks the adapters' contact temperature after ten jumps. */
+#define GP_BUS_I_CONT_A 30.0f           /* A, the 1 s average: the Terrafirma 10 AWG DeWalt 20 V dock adapters' stated 30 A */
+#define GP_BUS_I_PEAK_A 80.0f           /* A, at most GP_BUS_I_PEAK_S at a time: the jump's push (the 80 A MRBF main fuse, D55) */
+#define GP_BUS_I_PEAK_S 0.5f
+#define GP_BUS_I_AVG_S 1.0f             /* the average's window (first order) */
+#define GP_BUS_SCALE_MIN 0.5f           /* the factor never goes under this: balance and the legs' weight need torque */
+#define GP_BUS_SCALE_RECOVER 4.0f       /* /s: the factor's climb back to 1 under the limit */
 #define GP_VBUS_TIMEOUT_US 50000u       /* no bus voltage reading for this long: sit, refuse to stand */
 
 /* ---------------------------------------------------------------- the Jetson link and people near (D63) */
@@ -58,7 +87,7 @@
 #define GP_SIT_FAST_S 0.3f              /* the radio stop: down in 0.3 s (B13: torque off and sat within 0.5 s) */
 #define GP_SIT_NORMAL_S 1.0f            /* UVLO, link lost, people near, the Jetson's sit */
 #define GP_SETTLE_S 0.15f               /* at the bottom: the feed-forward fades to zero, then the motors stop */
-#define GP_SIT_L_ROBOT_M 0.110f         /* m: near the stops (25 mm under the skids at 101.5 mm) */
+#define GP_SIT_L_ROBOT_M 0.110f         /* m: near the stops (101.5 mm); the D65 battery bay's skids reach the floor at 139 mm */
 #define GP_SIT_L_RIG_M 0.150f           /* m: the rig's sit-down (rig Limits.sit_to) */
 
 /* ---------------------------------------------------------------- the jump sequence (sim/leg_rig.py 'jump') */
@@ -80,7 +109,6 @@
 #define GP_ID_MCU_STATE_B 0x121u        /* 200 Hz */
 #define GP_ID_MCU_STATUS 0x122u         /* 200 Hz */
 #define GP_ID_MCU_FAULTS 0x123u         /* 10 Hz */
-/* 0x130-0x13F: reserved for the BMS bridge (the QT Py ESP32-S3; its firmware is not part of B8) */
 
 /* The leg rig node (rig/node.py): 11-bit frames on the leg's bus, used by the rig profile's bench source */
 #define GP_ID_RIG_RUN 0x700u

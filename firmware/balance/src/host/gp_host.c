@@ -67,6 +67,8 @@ int gp_host_set(const char *key, float v)
     else if (!strcmp(key, "vbus_source")) cfg.vbus_source = (uint8_t)v;
     else if (!strcmp(key, "bench_scenario")) cfg.bench_scenario = (uint8_t)v;
     else if (!strcmp(key, "r_pack")) cfg.r_pack = v;
+    else if (!strcmp(key, "i_cont")) cfg.i_cont = v;
+    else if (!strcmp(key, "i_peak")) cfg.i_peak = v;
     else if (!strcmp(key, "r_shunt")) cfg.r_shunt = v;
     else if (!strcmp(key, "ina_sign")) cfg.ina_sign = v;
     else if (!strcmp(key, "sit_L")) cfg.sit_L = v;

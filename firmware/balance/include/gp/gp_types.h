@@ -9,7 +9,7 @@
 /* The three CAN buses (docs/body-electrical.md 4), all 1 Mbit/s classic CAN. */
 #define GP_BUS_A 0u /* FDCAN1: the left leg's two RS-04s */
 #define GP_BUS_B 1u /* FDCAN2: the right leg's two RS-04s */
-#define GP_BUS_C 2u /* FDCAN3: the two VESCs, the BMS bridge, the J501's can0 */
+#define GP_BUS_C 2u /* FDCAN3: the two VESCs and the J501's can0 */
 #define GP_NBUS 3u
 
 /* One classic CAN frame. Kept at 16 bytes with natural alignment: hil/fwlib.py mirrors it with ctypes. */

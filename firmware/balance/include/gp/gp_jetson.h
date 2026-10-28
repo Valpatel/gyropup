@@ -43,8 +43,8 @@ typedef struct {
 #define GP_JF_MCU_RUN 0x02u     /* MCU_RUN is driven high */
 #define GP_JF_LINK_OK 0x04u     /* the Jetson's setpoints are fresh */
 #define GP_JF_PEOPLE 0x08u      /* people-near caps active */
-#define GP_JF_UVLO_WARN 0x10u   /* resting voltage under 45.5 V */
-#define GP_JF_UVLO_SIT 0x20u    /* resting voltage under 41.6 V: sat, will not stand */
+#define GP_JF_UVLO_WARN 0x10u   /* resting voltage under 35.0 V (3.5 V a cell) */
+#define GP_JF_UVLO_SIT 0x20u    /* resting voltage under 32.0 V (3.2 V a cell): sat, will not stand */
 #define GP_JF_JUMP_OK 0x40u     /* a jump would be accepted now */
 #define GP_JF_JUMPING 0x80u
 

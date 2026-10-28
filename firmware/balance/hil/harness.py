@@ -4,7 +4,7 @@ rig/hil.py HilLink: the plant is stepped with what the motors were told), with a
 VESCs. The firmware cannot tell: it boots the motors (configure, read back, enable), runs its 1 kHz loop, and
 every byte it sends or reads is a CAN frame or a sensor register.
 
-    h = Hil(scenario='stand_up', half_mass=16.25, bus_v=48.1)
+    h = Hil(scenario='stand_up', half_mass=16.25, bus_v=36.0)
     log = h.run(3.0)                       # plant seconds after the firmware reaches RUN
 
 Bus A carries the left leg (motors 1, 2) on one rig, bus B the right (3, 4) on a second rig running the same scenario;
@@ -39,8 +39,9 @@ import fwlib  # noqa: E402
 
 RIG_DIR = Path(os.environ.get('GYROPUP_RIG_DIR', str(Path.home() / 'Code' / 'gyropup-legrig')))
 DESIGN_HALF_MASS = 16.25      # kg a leg (D57)
-DESIGN_BUS_V = 48.1           # V, the 13S pack's nominal
-R_PACK = 0.112                # ohm, as the firmware's resting-voltage estimate (gp_config.h GP_R_PACK_OHM)
+DESIGN_BUS_V = 36.0           # V, the 10S pack's nominal (D65: two DCB609s in 20 V mode in series; gp_config.h GP_PACK_NOMINAL_V)
+PACK_FULL_V = 41.0            # V, 4.1 V a cell (GP_PACK_FULL_V)
+R_PACK = 0.100                # ohm, as the firmware's resting-voltage estimate (gp_config.h GP_R_PACK_OHM)
 
 
 def import_rig():
@@ -236,7 +237,9 @@ class Hil:
         Returns per-tick arrays (plant time, both legs' true length and lean, the rail, the firmware's state)."""
         from sim.leg_control import polar
         log: Dict[str, List[float]] = {k: [] for k in ('t', 'L', 'lean', 'L_r', 'lean_r', 'rail_mm', 'mode', 'flags', 'reason',
-                                                       'vrest', 'vbus', 'v_oc', 'jump_phase', 'tau_f', 'tau_r', 'mcu_run')}
+                                                       'vrest', 'vbus', 'v_oc', 'jump_phase', 'tau_f', 'tau_r', 'mcu_run',
+                                                       'vload', 'cutoff', 'bus_scale', 'ibus', 'vhigh', 'overcharge',
+                                                       'regen_scale')}
         boot_ticks = 0
         while not self.running:
             s = self.tick()
@@ -259,7 +262,8 @@ class Hil:
             log['L_r'].append(pl[1][0])
             log['lean_r'].append(pl[1][1])
             log['rail_mm'].append(tk[0].extra['rail_mm'])
-            for k in ('mode', 'flags', 'reason', 'vrest', 'vbus', 'jump_phase', 'mcu_run'):
+            for k in ('mode', 'flags', 'reason', 'vrest', 'vbus', 'jump_phase', 'mcu_run', 'vload', 'cutoff', 'bus_scale', 'ibus',
+                      'vhigh', 'overcharge', 'regen_scale'):
                 log[k].append(getattr(s, k))
             log['v_oc'].append(self.v_oc)
             log['tau_f'].append(s.tau[0])
@@ -297,7 +301,10 @@ def rig_controller_stand_up(half_mass: float = DESIGN_HALF_MASS, bus_v: float = 
     link = hil.HilLink(sim, cal)
     bus = can_bus.CanBus(link.port, cal, tick=0.001, realtime=False, clock=link.clock, after_exchange=link.advance)
     link.begin()
-    ctl = lc.LegController('stand_up', sim.ff_n, lc.Limits(cap=lr.LEG_CAP), tick=0.001, external_cut=True)
+    # the rig's own Limits carry its pack's bus window (vbus_min 46 V); here the 10S robot's: the 30 V cut-off, the
+    # RS-04's 24 V floor (rig/leg_control.py is the leg rig's: it moves to 36 V with sim/leg_rig.py's BUS_V)
+    limits = lc.Limits(cap=lr.LEG_CAP, vbus_min=min(lc.Limits().vbus_min, 30.0), vbus_floor=min(lc.Limits().vbus_floor, 24.0))
+    ctl = lc.LegController('stand_up', sim.ff_n, limits, tick=0.001, external_cut=True)
     out = {'t': [], 'L': [], 'lean': []}
     tk = bus.start()
     while tk.t < 3.0 - 1e-9:
