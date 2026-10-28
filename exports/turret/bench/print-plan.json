@@ -150,7 +150,7 @@
    "material": "pa6-cf",
    "qty": 1,
    "size_mm": [
-    182,
+    150,
     114,
     10
    ],
@@ -159,7 +159,7 @@
    "grams_each": 50,
    "grams": 50,
    "hours": 2.1,
-   "cost_usd": 4.02,
+   "cost_usd": 3.98,
    "infill": "100 %",
    "how": "PA6-CF flat, no supports: the rail frame (D48); 8 x M3 inserts for the aluminium cheek plates",
    "sliced": true,
@@ -237,7 +237,7 @@
    "grams_each": 188,
    "grams": 188,
    "hours": 10.7,
-   "cost_usd": 14.99,
+   "cost_usd": 15.04,
    "infill": "100 %",
    "how": "PA6-CF on its base; supports under the chute",
    "sliced": true,
@@ -419,18 +419,18 @@
    "material": "petg",
    "qty": 1,
    "size_mm": [
-    20,
+    33,
     18,
-    24
+    18
    ],
    "fits": true,
    "placement": "straight",
    "grams_each": 6,
    "grams": 6,
    "hours": 0.4,
-   "cost_usd": 0.1,
+   "cost_usd": 0.08,
    "infill": "2 mm walls, 40 % gyroid",
-   "how": "PETG; 3 x M3 boresight, 2 x M3 to the cradle",
+   "how": "PETG; 3 x M3 boresight, 2 x M3 x 10 to the socket pad",
    "sliced": true,
    "settings": {
     "wall_loops": "5",
@@ -563,10 +563,10 @@
    ],
    "fits": true,
    "placement": "straight",
-   "grams_each": 83,
-   "grams": 83,
-   "hours": 3.3,
-   "cost_usd": 1.16,
+   "grams_each": 84,
+   "grams": 84,
+   "hours": 3.4,
+   "cost_usd": 1.18,
    "infill": "2 mm walls, 40 % gyroid",
    "how": "PETG upside down; 4 x M4 x 10 down into the tray, 4 x M5 inserts for the pan base"
   },
@@ -630,7 +630,7 @@
   "pa6-cf": {
    "grams": 720,
    "hours": 37.0,
-   "cost_usd": 57.64,
+   "cost_usd": 57.65,
    "parts": 14
   },
   "tpu95": {
@@ -640,14 +640,14 @@
    "parts": 2
   },
   "petg": {
-   "grams": 732,
-   "hours": 21.1,
+   "grams": 733,
+   "hours": 21.2,
    "cost_usd": 10.22,
    "parts": 10
   }
  },
  "too_big": [],
- "total_hours": 58.7,
- "total_grams": 1461,
+ "total_hours": 58.8,
+ "total_grams": 1462,
  "note": "the bench turret (cad/turret.py, v0: no bumper, no fill flap) and its stand; grams and hours are Bambu Studio's where the part is sliced (sliced: true, cad/turret_print.py), rough otherwise"
 }

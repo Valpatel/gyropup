@@ -1,20 +1,16 @@
 {
  "over_pinion_tilt_-25": {
-  "cradle": [
-   5.38,
-   214
-  ],
   "barrel": [
    6.02,
    180
   ],
-  "laser_mount": [
-   10.76,
-   214
-  ],
   "cartridge_body": [
    13.95,
    167
+  ],
+  "cradle": [
+   18.9,
+   130
   ],
   "cradle_plate_l": [
    21.13,
@@ -28,8 +24,16 @@
    34.45,
    130
   ],
+  "laser_mount": [
+   40.48,
+   130
+  ],
   "laser": [
-   37.7,
+   45.26,
+   130
+  ],
+  "laser_screws": [
+   47.23,
    130
   ],
   "feed_motor": [

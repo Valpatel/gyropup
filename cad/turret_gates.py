@@ -300,11 +300,11 @@ def build_assembly(T, pile=None, dial_deg=0.0, balls=True, ball_d=None, bodies=N
 def declarations(asm):
     return Declarations(grounded=GROUNDED, free=FREE, interfaces=INTERFACES,
                         joints={k: {kk: vv for kk, vv in v.items() if kk != 'how'} for k, v in JOINTS.items()},
-                        fasteners=fasteners(), touch_mm=CONNECT_TOL.touch_mm,
+                        fasteners=connect_fasteners(), touch_mm=CONNECT_TOL.touch_mm,
                         contains=[{'what': 'ball', 'cavity': 'hopper_cavity', 'container': 'hopper', 'free': True}])
 
 
-def fasteners():
+def connect_fasteners():
     """Fasteners that carry a part whose own solid touches nothing else that holds it (modelled solids: each must
     touch what it clamps and what it threads into)."""
     return {'laser_screws': {'clamps': 'laser', 'into': 'laser_mount'}}

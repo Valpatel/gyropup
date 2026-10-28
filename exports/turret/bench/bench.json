@@ -1,7 +1,7 @@
 {
  "too_big": [],
- "print_hours": 58.7,
- "printed_g": 1461,
+ "print_hours": 58.8,
+ "printed_g": 1462,
  "stand_mm": [
   200.0,
   200.0,
@@ -60,11 +60,12 @@
    "FYSETC",
    "RockAuto",
    "Pyrodrone",
+   "Newark",
    "LCSC",
    "Jameco",
    "Farnell"
   ],
-  "grand_total_usd": 2917.97,
-  "lines": 140
+  "grand_total_usd": 2992.97,
+  "lines": 149
  }
 }

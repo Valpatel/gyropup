@@ -92,10 +92,10 @@
    "solid": true,
    "frame": "tilt",
    "doc": "The cradle's rail frame (D48), printed PA6-CF flat (100 % solid, no supports): two rails under the cartridge",
-   "mass_g_each": 51.4,
-   "print_h": 3.4,
+   "mass_g_each": 45.9,
+   "print_h": 3.0,
    "bed_mm": [
-    181.6,
+    149.6,
     113.6,
     10.0
    ],
@@ -143,8 +143,8 @@
    "solid": true,
    "frame": "tilt",
    "doc": "The ball cartridge, printed PA6-CF on its base (100 % solid, 2.5 mm walls): a base plate on the cradle rails",
-   "mass_g_each": 152.9,
-   "print_h": 10.0,
+   "mass_g_each": 166.3,
+   "print_h": 10.9,
    "bed_mm": [
     165.6,
     103.2,
@@ -275,16 +275,16 @@
   "laser_mount": {
    "material": "petg",
    "qty": 1,
-   "note": "PETG; 3 x M3 boresight, 2 x M3 to the cradle",
+   "note": "PETG; 3 x M3 boresight, 2 x M3 x 10 to the socket pad",
    "solid": false,
    "frame": "tilt",
-   "doc": "Laser holder, printed PETG: a ring round the \u00d87 laser (\u00d811 bore with an O-ring at the back) and three M3",
-   "mass_g_each": 7.4,
-   "print_h": 0.3,
+   "doc": "Laser holder, printed PETG: a ring round the \u00d87 laser over the barrel (\u00d811 bore with an O-ring at the back) and",
+   "mass_g_each": 6.2,
+   "print_h": 0.2,
    "bed_mm": [
-    20.0,
+    33.0,
     18.0,
-    24.1
+    18.0
    ],
    "fits_bed": true,
    "valid_single_solid": true
@@ -398,8 +398,8 @@
    "solid": false,
    "frame": "base",
    "doc": "The plinth's wall, printed PETG upside down: a \u00d8156 x 3 ring from the tray to the pan base's foot, four columns",
-   "mass_g_each": 184.1,
-   "print_h": 7.4,
+   "mass_g_each": 187.1,
+   "print_h": 7.5,
    "bed_mm": [
     156.0,
     156.0,
@@ -422,7 +422,7 @@
   },
   "xt30_input": {
    "mass_g": 4.0,
-   "note": "Amass XT30U-F on 14 AWG leads, its housing clamped in the plinth's wall",
+   "note": "Amass XT30U-F on 14 AWG leads, its housing held line to line in the plinth wall's boss (a drop of CA)",
    "frame": "base"
   },
   "input_fuses": {
@@ -577,7 +577,12 @@
   },
   "laser": {
    "mass_g": 3.0,
-   "note": "Quarton VLM-650-03 LPT, 650 nm, < 1 mW (Class 2) (D42)",
+   "note": "Quarton VLM-650-03 LPT, 650 nm, < 1 mW (Class 2) (D42): over the barrel, in its holder on the cartridge",
+   "frame": "tilt"
+  },
+  "laser_screws": {
+   "mass_g": 0.8999999999999999,
+   "note": "3 x McMaster 93285A115 M3 x 6 nylon-tip set screws (18-8): the laser's boresight, in its holder's tapped ring",
    "frame": "tilt"
   }
  },
@@ -697,9 +702,9 @@
    0.0
   ],
   "laser_origin": [
-   78.0,
-   -32.0,
-   425.0
+   84.0,
+   0.0,
+   454.5
   ],
   "tilt_range_deg": [
    -25.0,
@@ -710,13 +715,13 @@
    170.0
   ],
   "pan_hard_stop_deg": 173.5,
-  "mass_estimate_g": 2546.2,
+  "mass_estimate_g": 2556.9,
   "com": [
-   -4.0,
-   -3.0,
-   348.7
+   -4.1,
+   -2.8,
+   349.1
   ],
-  "com_above_mount_mm": 48.7,
+  "com_above_mount_mm": 49.1,
   "ball_d": 22.7,
   "bore": 24.2,
   "pose": {
@@ -741,12 +746,12 @@
    -25.0
   ]
  ],
- "mass_g_with_balls": 2546.2,
- "mass_g_empty": 2491.3,
+ "mass_g_with_balls": 2556.9,
+ "mass_g_empty": 2502.0,
  "com_from_mount_mm": [
-  -4.0,
-  -3.0,
-  48.7
+  -4.1,
+  -2.8,
+  49.1
  ],
  "not_modelled_g": {
   "wiring and the cable loops": 50,
@@ -755,6 +760,6 @@
   "screws, inserts, dowels, springs": 17,
   "CT connector pair (Micro-Fit 3.0 class)": 12
  },
- "print_hours": 70.8,
- "made_g": 1197.0
+ "print_hours": 71.4,
+ "made_g": 1206.7
 }
