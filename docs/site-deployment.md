@@ -89,3 +89,20 @@ simulator drawer, replay, pose, firing and turret; required network assets,
 downloads, document anchors and genuine 404s. It writes screenshots and the
 result matrix to ignored `test-results/`. This is viewport/touch emulation, not
 a claim to have tested every physical phone or Safari version.
+
+## Public launch and brand evidence
+
+`gyropup.com` became active with a valid Cloudflare-managed certificate on
+2026-10-28. The proxied apex CNAME points to `gyropup.pages.dev`. DNS propagation
+can leave a local resolver with a negative cache briefly after creation; verify
+against a public resolver and validate normal TLS rather than redeploying.
+
+The landing page presents a 50-pound-class robot family as the ambition. Current
+CAD uses37.5kg (see decision D71); do not turn the brand ambition into a verified
+product specification. Tritium is a design requirement (D19). The Tritium,
+Graphlings, and GraphDone cards describe the integration roadmap, not a running
+connected robot. GraphDone coordinates development work, not onboard control.
+
+`web/playground.png` is a browser capture of the committed target-practice
+snapshot, taken2026-10-28. Regenerate it from the simulator when that snapshot
+changes; do not use a screenshot of an obsolete landing page as the video poster.
