@@ -629,7 +629,9 @@ def dossier_gates(cache=None):
     if not DOSSIER_RECORD.exists():
         raise GateFailure(f'no geometry record ({DOSSIER_RECORD.relative_to(R)}): run cad-agent gates --build first')
     record = json.loads(DOSSIER_RECORD.read_text())
-    T = td.T
+    # a fresh Turret: the hopper cavity's cuts raise the cut parts' tolerances in place (OCCT), which changes their BREP
+    # text and so their content hashes, so shapes already registered once never hash the same again
+    T = td.turret()
     pile = load_pile(T.G)
     with cd.use_registry() as reg:
         td.register(reg, T, pile)
