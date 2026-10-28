@@ -55,12 +55,12 @@ folder; keep it aligned with the dashboard configuration.
 
 ### Returning browsers and local edits
 
-All published files explicitly revalidate (`Cache-Control: public, no-cache,
-max-age=0, must-revalidate`). The local preview uses the same policy and ETags,
-so unchanged bytes can return304. Cloudflare Pages applies this through the
+The build emits revalidation headers for published files (`Cache-Control: public,
+no-cache, max-age=0, must-revalidate`). The local preview uses this policy and ETags,
+so unchanged bytes can return 304. Cloudflare Pages applies this through the
 generated `_headers` file; its [header rules override the default response](https://developers.cloudflare.com/pages/configuration/headers/).
 
-On2026-10-28, production CSS/JS responses had a four-hour freshness lifetime.
+On 2026-10-28, production CSS/JS responses had a four-hour freshness lifetime.
 A real browser test showed that an ordinary reload refreshed HTML while keeping
 old entry modules, nested modules and CSS, even after the server policy changed.
 Headers alone cannot evict bytes that a returning browser still considers fresh.
@@ -70,6 +70,21 @@ Existing Three.js aliases remain available. CSS imports/fonts and the character'
 runtime stylesheet carry the same key. Static JSON fetches in the simulator and
 navigation revalidate; conversation requests keep their existing behavior.
 
+After the `74829d3` rollout on 2026-10-28, the immutable Pages deployment served
+the emitted policy, but the custom domain still overrode CSS/JS responses with
+`public, max-age=14400, must-revalidate`. HTML, JSON and Markdown revalidated.
+Content-derived module and stylesheet URLs still ensure release freshness on
+normal reloads, even with the four-hour browser cache. The
+[live verification receipt](https://github.com/Valpatel/gyropup/issues/36#issuecomment-6476128867)
+records all 144 Markdown bodies matching that production build.
+
+Setting the zone's Browser Cache TTL to
+[Respect Existing Headers](https://developers.cloudflare.com/cache/how-to/edge-browser-cache-ttl/set-browser-ttl/)
+would align the custom-domain policy with the build. This is optional hosting
+alignment pending the owner's choice or existing authorized access, tracked in
+[issue 36](https://github.com/Valpatel/gyropup/issues/36). Releases and cache
+freshness do not depend on expanding permissions or changing that setting.
+
 The key changes for local edits before a commit and is recorded as `assets` in
 `version.json`. Run `npm run build`, then reload normally. Already loaded tabs
 are not forcibly reloaded, so an update cannot interrupt an active conversation.
@@ -77,11 +92,10 @@ This is not a service worker or an automatic refresh mechanism.
 
 `npm run test:cache` uses an actual browser HTTP cache: it first reproduces the
 old four-hour behavior, then checks ordinary reloads through two new builds and
-conditional304 reuse. Use `PLAYWRIGHT_BROWSER=webkit npm run test:cache` for
+conditional 304 reuse. Use `PLAYWRIGHT_BROWSER=webkit npm run test:cache` for
 WebKit. After publication, check both HTML and a nested asset on the custom
-domain for the explicit policy and verify `version.json`; a dashboard cache rule
-must not replace the response policy. Do not rely on a CDN purge to clear browser
-caches.
+domain and verify `version.json`, recording any hosting override separately from
+the emitted policy. Do not rely on a CDN purge to clear browser caches.
 
 Cloudflare OAuth should be refreshed with `npx wrangler whoami` before treating
 an expired token as a blocker. Pages deployment permission does **not** imply DNS
