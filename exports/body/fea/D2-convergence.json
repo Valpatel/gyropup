@@ -1,0 +1,232 @@
+{
+ "case": "D2",
+ "meshes": [
+  4.0,
+  3.0,
+  2.5,
+  2.0
+ ],
+ "rows": [
+  {
+   "case": "D2-turret-fall",
+   "mesh_mm": 4.0,
+   "wall_s": 184,
+   "safety_factor": 1.54,
+   "sf_by_part": 1.54,
+   "deck_peak_mpa": 125.7,
+   "deck_sf": 1.54,
+   "plate_peak_mpa": 106.5,
+   "plate_sf": 2.59,
+   "post_corner_peak_mpa": 104.9,
+   "max_von_mises_mpa": 180.95,
+   "von_mises_design_mpa": 125.73,
+   "max_displacement_mm": 0.872,
+   "pass": false,
+   "n_nodes": null,
+   "n_elements": null,
+   "hot_spots": [
+    [
+     125.7,
+     39.6,
+     -68.4,
+     213.7,
+     "plates"
+    ],
+    [
+     104.9,
+     129.6,
+     96.5,
+     214.1,
+     "plates"
+    ],
+    [
+     104.3,
+     129.6,
+     -96.3,
+     214.1,
+     "plates"
+    ],
+    [
+     92.3,
+     12.2,
+     -64.9,
+     210.7,
+     "plates"
+    ],
+    [
+     92.1,
+     41.3,
+     71.6,
+     214.1,
+     "plates"
+    ]
+   ]
+  },
+  {
+   "case": "D2-turret-fall",
+   "mesh_mm": 3.0,
+   "wall_s": 269,
+   "safety_factor": 1.24,
+   "sf_by_part": 1.77,
+   "deck_peak_mpa": 86.8,
+   "deck_sf": 2.22,
+   "plate_peak_mpa": 156.2,
+   "plate_sf": 1.77,
+   "post_corner_peak_mpa": 117.8,
+   "max_von_mises_mpa": 219.16,
+   "von_mises_design_mpa": 156.2,
+   "max_displacement_mm": 0.878,
+   "pass": false,
+   "n_nodes": null,
+   "n_elements": null,
+   "hot_spots": [
+    [
+     156.2,
+     39.6,
+     69.6,
+     212.3,
+     "plates"
+    ],
+    [
+     153.2,
+     39.6,
+     -69.6,
+     212.3,
+     "plates"
+    ],
+    [
+     117.8,
+     129.7,
+     -96.9,
+     214.1,
+     "plates"
+    ],
+    [
+     111.0,
+     129.7,
+     97.2,
+     214.1,
+     "plates"
+    ],
+    [
+     94.4,
+     14.6,
+     -66.2,
+     210.7,
+     "plates"
+    ]
+   ]
+  },
+  {
+   "case": "D2-turret-fall",
+   "mesh_mm": 2.5,
+   "wall_s": 340,
+   "safety_factor": 0.96,
+   "sf_by_part": 1.75,
+   "deck_peak_mpa": 94.7,
+   "deck_sf": 2.04,
+   "plate_peak_mpa": 157.7,
+   "plate_sf": 1.75,
+   "post_corner_peak_mpa": 200.3,
+   "max_von_mises_mpa": 321.03,
+   "von_mises_design_mpa": 200.29,
+   "max_displacement_mm": 0.8799,
+   "pass": false,
+   "n_nodes": null,
+   "n_elements": null,
+   "hot_spots": [
+    [
+     200.3,
+     131.4,
+     -99.3,
+     213.6,
+     "plates"
+    ],
+    [
+     187.3,
+     131.4,
+     99.3,
+     213.6,
+     "plates"
+    ],
+    [
+     157.7,
+     39.6,
+     69.6,
+     212.3,
+     "plates"
+    ],
+    [
+     156.9,
+     39.6,
+     -69.6,
+     212.3,
+     "plates"
+    ],
+    [
+     93.9,
+     13.6,
+     65.9,
+     211.0,
+     "plates"
+    ]
+   ]
+  },
+  {
+   "case": "D2-turret-fall",
+   "mesh_mm": 2.0,
+   "wall_s": 397,
+   "safety_factor": 0.6,
+   "sf_by_part": 1.7,
+   "deck_peak_mpa": 96.8,
+   "deck_sf": 1.99,
+   "plate_peak_mpa": 162.7,
+   "plate_sf": 1.7,
+   "post_corner_peak_mpa": 319.9,
+   "max_von_mises_mpa": 357.92,
+   "von_mises_design_mpa": 319.94,
+   "max_displacement_mm": 0.8811,
+   "pass": false,
+   "n_nodes": null,
+   "n_elements": null,
+   "hot_spots": [
+    [
+     319.9,
+     131.2,
+     98.8,
+     213.2,
+     "plates"
+    ],
+    [
+     264.2,
+     131.2,
+     -99.0,
+     213.5,
+     "plates"
+    ],
+    [
+     162.7,
+     39.6,
+     69.6,
+     212.3,
+     "plates"
+    ],
+    [
+     155.4,
+     39.6,
+     -69.6,
+     212.2,
+     "plates"
+    ],
+    [
+     123.5,
+     -131.7,
+     -119.8,
+     213.2,
+     "plates"
+    ]
+   ]
+  }
+ ],
+ "how": "cad/body_studies.py --only <case> --no-anim at each global mesh size (tools/fea_convergence.py)"
+}
