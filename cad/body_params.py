@@ -288,8 +288,10 @@ def z_belly_top() -> float:
 # ------------------------------------------------------------------------------------------- the turret (TM)
 
 
-HEAD_BUDGET = {'mass_kg': 1.70, 'com_above_face_mm': 100.0,      # the turret plan's head payload budget (docs/turret-next-plan.md:
-               'basis': 'docs/turret-next-plan.md 3.1 (proposed head payload budget)'}   # 1.639 kg with 30 balls today)
+HEAD_BUDGET = {'mass_kg': 2.561, 'com_above_face_mm': 49.2,      # D66/D71: the turret as its own robot (its Orin NX, carrier and
+               # converter), from turret/program's exports/turret/turret.json (cf6592e, 2026-10-28): 2,560.8 g with 30 balls, its
+               # centre 49.2 mm above the TM face. It replaces the 1.70 kg / 100 mm head budget of docs/turret-next-plan.md 3.1
+               'basis': 'turret/program cf6592e exports/turret/turret.json: 2560.8 g with 30 balls, centre 49.2 mm over the TM face (D66, D71)'}
 TURRET_GROMMET = (-130.0, -60.0)    # the turret harness through the deck, right rear: the turret's DT12 plug is on its right
 
 

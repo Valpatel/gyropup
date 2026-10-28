@@ -37,10 +37,10 @@ import body_params as bp
 
 # The pack (the DeWalt sheet for its EU twin DCB547-XJ: 138 x 87 x 97 mm, 1.46 kg; Ace Tool lists the DCB609 at 3.2 lb.
 # DeWalt publishes no US outline: measure one pack before the bay is printed). The rail runs along L on the top face.
-PACK = {'name': 'DeWalt DCB609 FLEXVOLT 20V/60V MAX 9.0 Ah (20 V mode: 5S3P)', 'L': 138.0, 'W': 87.0, 'H': 97.0, 'mass_g': 1565.0,
+PACK = {'name': 'DeWalt DCB609 FLEXVOLT 20V/60V MAX 9.0 Ah (20 V mode: 5S3P)', 'L': 138.0, 'W': 87.0, 'H': 97.0, 'mass_g': 1460.0,
         'wh_rated': 180.0, 'ah': 9.0, 'series': 5,
         'source': 'ENVELOPE, blocked on issue #20 (measure a real pack): a box from the DeWalt DCB547-XJ datasheet (138 x 87 x 97 mm '
-                  'incl. the rail tower); DeWalt US 3.45 lb = 1565 g (the conservative of 1.46-1.57 kg). No rail, latch, button or '
+                  'incl. the rail tower) and its 1.46 kg (lever 16, taken by the coordinator on #10: DeWalt US lists 3.45 lb = 1565 g; weigh one). No rail, latch, button or '
                   'terminal is modelled and none is guessed',
         'envelope': True, 'blocked_by': 'issue #20: calipers on a DCB609 (rail tower, rails, latch, release button, terminals, gauge)'}
 # The rail adapter (Terrafirma Technology "4pack 10AWG Adapter for DeWALT 20V", Amazon B07HYJ628S, $64.00 the four, 30 A

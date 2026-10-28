@@ -264,7 +264,7 @@ def layout(cell=None):
     items.append(Item('lidar_box', (-157.0, -122.0, 10.0, 95.0, zt + 53.0, zd - 2.0), 120.0, 'estimate (Polycase LP-41 class, plan 90 g + gland)',
                       'compute', 'P1', '', 'VLP-16 interface box standing on edge on a printed bracket behind the cooler, left; RJ45 '
                       'over the carrier to its 1GbE on the right edge', (0.3, 0.3, 0.33)))
-    items.append(Item('lidar_coil', (-157.0, -122.0, -48.0, 5.0, zd - 16.0, zd - 2.0), 230.0, 'estimate (3 m of the VLP-16 cable)', 'compute', 'P1', '',
+    items.append(Item('lidar_coil', (-157.0, -122.0, -48.0, 5.0, zd - 16.0, zd - 2.0), LIDAR_CABLE_G, LIDAR_CABLE_BASIS, 'compute', 'P1', '',
                       'the VLP-16\'s 3 m cable, coiled flat under the deck behind the cooler, clear of the turret harness\'s drop', (0.3, 0.3, 0.33)))
     gx, gy = bp.TURRET_GROMMET
     items.append(Item('turret_harness_drop', (gx - 12.0, gx + 12.0, gy - 12.0, gy + 12.0, zt + 45.0, zd), 0, '', 'deck', keepout=True,
@@ -399,6 +399,10 @@ def frame_boxes():
 # ------------------------------------------------------------------------------------------- mass and centre of mass
 
 HARDWARE_G = 300.0               # frame screws, standoffs, PEM nuts, inserts, cable ties (est)
+# lever 14 (taken on #10, D71): the VLP-16's 3 m cable shortened to 1 m (the coordinator's call; Velodyne's waiver to read):
+# 230 g for 3 m coiled, so about 77 g for 1 m
+LIDAR_CABLE_G = 77.0
+LIDAR_CABLE_BASIS = 'estimate: the VLP-16 cable cut to 1 m (lever 14; 230 g for the 3 m coil x 1/3)'
 WHEEL_CONNECTORS_G = 45.0       # D69: a DTP 4-way and a DT 6-way pair a wheel, mated, with contacts (est)
 HARNESS_G = 400.0                # every wire and connector of the body (est; docs/body-electrical.md lists them)
 LEG_STOPS_EXTRA_G = 200.0        # per leg: the hip frame's 13 mm flanges and the stop redesign (main cdda86d, 2026-10-27: 'roughly
@@ -444,10 +448,10 @@ LEVERS = [
     ('cheeks_rev_b', 11, -150, 120.0, 'P3', 'on call', 'cheeks Rev B: lightening holes where S1 < 40 MPa (-150), or 1/8 in with more standoffs (-330)', None),
     ('alu_standoffs', 12, -80, 30.0, 'P3', 'on call', 'aluminium M5 x 120 hex standoffs in place of the printed deck posts', None),
     ('cooler_34mm', 13, -200, 49.0, 'P3', 'on call', 'the 34 mm WS-RDN-601 cooler instead of the fitted G48R (the user\'s call after the thermal test)', None),
-    ('lidar_cable_1m', 14, -150, 0.0, 'P3', 'on call', 'the VLP-16 cable shortened to 1 m (the user\'s call: a Velodyne waiver)', None),
+    ('lidar_cable_1m', 14, -153, 0.0, 'P3', 'on call', 'the VLP-16 cable shortened to 1 m (taken on #10; Velodyne\'s waiver to read)', 'lidar_cable_1m'),
     ('turret_levers', 15, -51, 0.0, 'P2', 'on call', 'the turret\'s own: a 24-ball hopper, a one-board bay (its plan, not scheduled here)', None),
     # after D69 (issue #10): what else could close the gap, none taken without the user's or the coordinator's word
-    ('packs_weighed', 16, -210, 0.0, 'P3', 'on call', 'the two DCB609 weighed: DeWalt\'s DCB547-XJ sheet says 1.46 kg against the 1.565 kg (3.45 lb) carried', None),
+    ('packs_weighed', 16, -210, 0.0, 'P3', 'on call', 'the two DCB609 at DeWalt\'s DCB547-XJ sheet\'s 1.46 kg (taken on #10) against the US page\'s 1.565 kg: weigh one', 'packs_sheet'),
     ('wheel_8in5', 17, -460, 0.0, 'P1', 'on call', 'D69\'s backup wheel, the 8.5 in of the same family (about 3.3 kg each, unverified): jump +15 mm, kerb 35 mm', None),
     ('packs_6ah', 18, -1000, 0.0, 'P1', 'on call', 'two DCB606 FLEXVOLT 6.0 Ah in the same bay and adapters (about 1.0 kg lighter the pair, 2/3 the energy: masses to read from DeWalt)', None),
 ]
@@ -498,6 +502,11 @@ def lever_taken(check: str, parts=None, L=None) -> bool:
         return 'plate_fuse_board' in names
     if check == 'board_shunt':
         return 'plate_fuse_board' in names and 'plate_shunt' not in names
+    if check == 'lidar_cable_1m':
+        return LIDAR_CABLE_G <= 80.0
+    if check == 'packs_sheet':
+        import body_battery as bb
+        return bb.PACK['mass_g'] <= 1460.0
     if check == 'harness_10awg':
         return HARNESS_G <= 340.0
     if check == 'shell_from_cad':
@@ -515,7 +524,7 @@ def levers(parts=None, L=None) -> list:
 
 
 def gate(led: dict) -> dict:
-    """D69's gate on a P3 ledger: the ledger as it is, and with every scheduled lever not yet in the CAD taken (their
+    """D71's gate on a P3 ledger: the ledger as it is, and with every scheduled lever not yet in the CAD taken (their
     grams as the plan states them), against the ceiling (BUDGET): the robot, each leg, the body and head."""
     open_g = sum(l['grams'] for l in led['levers'] if l['kind'] == 'scheduled' and l['status'] == 'open')
     proj = led['total_kg'] + open_g / 1000.0
