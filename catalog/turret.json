@@ -59,6 +59,13 @@
     "url": "https://outofdarts.com/products/worker-cheetah-rounds-rival-compatible-ammo-100-pack",
     "in_stock": true,
     "ships_from": "US"
+   },
+   {
+    "seller": "Out of Darts",
+    "url": "https://outofdarts.com/products/worker-ammo-rival-rounds",
+    "in_stock": null,
+    "ships_from": "US",
+    "note": "Worker Cheetah Rival rounds, the 100-pack under its other listing (second link at the same seller; a third-party alternate: catalog/alternates.json)"
    }
   ],
   "specs": {
@@ -76,8 +83,10 @@
    "https://outofdarts.com/products/worker-cheetah-rounds-rival-compatible-ammo-100-pack"
   ],
   "confidence": "product page",
-  "notes": "mass_g is per round. 75% heavier than a short dart, so more energy at the same speed; Hasbro sells Rival as 14+ with eyewear recommended. Not recommended for a kids' game.",
-  "key": "worker-cheetah-rival-rounds-100"
+  "notes": "mass_g is per round (Worker states about 1.75 g; D67 accepts 22.2-22.8 mm and 1.6-2.0 g, checked by cad/turret_gates.py ammo_range and the launch ceiling). Listed side by side with the official Nerf Rival refill (hasbro-nerf-rival-accu-round-60), cheapest in stock first. Rival rounds are a 14+ product; eye protection recommended, as Hasbro does.",
+  "key": "worker-cheetah-rival-rounds-100",
+  "name": "Worker Cheetah Rival-compatible rounds, 100-pack",
+  "used_for": "ammo (D67): third-party Rival-compatible rounds, 22.7 mm; the cheapest a round in stock (US$0.15)"
  },
  {
   "id": "feetech-sts3215-c018-12v",
@@ -8508,5 +8517,54 @@
   "confidence": "estimate",
   "used_for": "the barrel's hard stops at 0 and -25 deg (D48): on the -y cheek plate's outer face, 2 x M3 x 6 flat heads from its inner face and a drop of CA gel",
   "qty_per_robot": 1
+ },
+ {
+  "id": "hasbro-nerf-rival-accu-round-60",
+  "key": "hasbro-nerf-rival-accu-round-60",
+  "category": "turret",
+  "vendor": "Hasbro (Nerf)",
+  "model": "F5052",
+  "name": "Nerf Rival 60 Accu-Round Refill (Hasbro F5052), 60 official Rival rounds",
+  "price_usd": 19.99,
+  "price_note": "Walmart $19.99 (its Nerf Rival refill listings, read through a web search 2026-10-27: Walmart's own pages answer a robot check); eBay $16.95 (product page 13055032602)",
+  "price_checked": "2026-10-27",
+  "pack_qty": 1,
+  "buy": [
+   {
+    "seller": "Walmart",
+    "url": "https://www.walmart.com/c/kp/nerf-rival-balls",
+    "in_stock": true,
+    "ships_from": "US",
+    "price_usd": 19.99,
+    "note": "listed as 'Nerf Rival 60 Accu-Round Refill Foam Rounds, Multi-color, 60 Count'"
+   },
+   {
+    "seller": "eBay",
+    "url": "https://www.ebay.com/p/13055032602",
+    "in_stock": null,
+    "ships_from": "US",
+    "price_usd": 16.95
+   }
+  ],
+  "specs": {
+   "mass_g": 1.83,
+   "diameter_mm": 22.7,
+   "pack_count": 60,
+   "material": "foam (Hasbro Accu-Round: the most accurate Rival round, Hasbro)",
+   "mass_basis": "BlasterHub's weighing of Hasbro Rival rounds, 1.83 g average (research/turret-launcher-study.md 2.1)"
+  },
+  "cad": {
+   "step_url": null,
+   "available": false
+  },
+  "sources": [
+   "https://www.walmart.com/c/kp/nerf-rival-balls",
+   "https://www.ebay.com/p/13055032602",
+   "https://nerf.fandom.com/wiki/Accu-Round"
+  ],
+  "confidence": "seller listing (search snippet for Walmart)",
+  "used_for": "ammo (D67): the official Nerf Rival round, the ball the turret's physics is sized on",
+  "qty_per_robot": 1,
+  "notes": "The official refill beside the third-party pack (D67). Hasbro's own shop no longer sells (shop.hasbro.com redirects to its where-to-buy page); the 50-round Accu-Round refill F5051 was US$14.99 there. Rival is sold 14+; recommend eye protection, as Hasbro does."
  }
 ]

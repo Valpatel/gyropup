@@ -763,6 +763,16 @@
   "part_number": "JST BM02B-GHS-TBT(LF)(SN) (LCSC C161690)",
   "read_with": "request"
  },
+ "hasbro-nerf-rival-accu-round-60": {
+  "source_url": "https://www.ebay.com/p/13055032602",
+  "image_url": "https://i.ebayimg.com/images/g/bqIAAeSw9hZoi1lK/s-l1600.jpg",
+  "fetched": "2026-10-27",
+  "path": "references/vendor/thumbs/hasbro-nerf-rival-accu-round-60.jpg",
+  "kind": "vendor",
+  "seller": "eBay",
+  "part_number": "F5052",
+  "read_with": "chosen"
+ },
  "heatshrink_kit": {
   "source_url": "https://www.racedayquads.com/products/530-pcs-heat-shrink-tube-set",
   "image_url": "http://www.racedayquads.com/cdn/shop/products/fpvelite-heat-shrink-tube-set-530pc-hardware-6996551991409.jpg?v=1762440086",

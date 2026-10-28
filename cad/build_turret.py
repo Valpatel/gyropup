@@ -131,7 +131,9 @@ BENCH_BOUGHT = [('amass-xt60e-m', 1), ('turret_screw_m2_5x8', 2), ('turret_nut_m
                 ('pendant-hold-to-run', 1),
                 ('usb-can-canable2', 1), ('proto-board-70x50', 1), ('bumper-feet-12.7', 4), ('insert_m5', 4), ('insert_m3', 8),
                 ('turret_screw_m3x8', 4), ('meanwell-lrs-350-24', 1), ('caldwell-ballistic-precision-chronograph-bt', 1),
-                ('worker-cheetah-rival-rounds-100', 3)]
+                # the ammo (D67): a third-party Rival-compatible pack and the official Nerf Rival refill, side by side,
+                # cheapest a round first (any round 22.2-22.8 mm, 1.6-2.0 g: cad/turret_gates.py ammo_range)
+                ('worker-cheetah-rival-rounds-100', 2), ('hasbro-nerf-rival-accu-round-60', 1)]
 # bought once for the build (docs/turret-assembly.md's tools): [(key, qty)]
 TOOLS = [('waveshare-bus-servo-adapter-a', 1), ('tool-deutsch-crimper-iwd1620', 1), ('tool-microfit-crimper', 1), ('tool-am32-usb-linker', 1),
          ('tool-circlip-pliers', 1), ('tool-insert-tips', 1), ('tool-reamer-5mm', 1), ('tool-dial-indicator', 1)]
@@ -186,7 +188,7 @@ def main():
                 'part_number': it.get('model'), 'vendor': it.get('vendor'), 'url': buys[0].get('url'), 'price_usd_each': it.get('price_usd'),
                 'pack_qty': it.get('pack_qty'), 'mass_g_each': None,
                 'sellers': [{k: b.get(k) for k in ('seller', 'url', 'seller_pn', 'price_usd', 'pack_qty', 'in_stock', 'stock', 'read_on')} for b in buys if b.get('url')]}
-    bench = [line(key, qty, 'ammo' if key.startswith('worker-') else 'bench') for key, qty in BENCH_BOUGHT]
+    bench = [line(key, qty, 'ammo' if key.startswith(('worker-', 'hasbro-nerf-')) else 'bench') for key, qty in BENCH_BOUGHT]
     tools = [line(key, qty, 'tool') for key, qty in TOOLS]
     v1 = [line(key, qty, name) for name, (key, qty) in V1_ONLY.items()]
     for r in rows:

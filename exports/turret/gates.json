@@ -1,7 +1,7 @@
 {
- "fingerprint": "d3e0198c2c3916e6",
+ "fingerprint": "a4ac927af2c05ff4",
  "pile": "exports/turret/feed/pile.json",
- "seconds": 53,
+ "seconds": 69,
  "ok": true,
  "gates": {
   "hopper_in_cavity": {
@@ -432,6 +432,92 @@
      "flywheel_tyre_m"
     ]
    ]
+  },
+  "ammo_range": {
+   "diameters_mm": [
+    22.2,
+    22.8
+   ],
+   "biggest_along_the_path": {
+    "ok": true,
+    "violations": [],
+    "tightest": [
+     {
+      "sphere": 0,
+      "solid": "dial",
+      "gap_mm": 0.7
+     },
+     {
+      "sphere": 1,
+      "solid": "cartridge_body",
+      "gap_mm": 0.7
+     },
+     {
+      "sphere": 2,
+      "solid": "cartridge_body",
+      "gap_mm": 0.7
+     },
+     {
+      "sphere": 3,
+      "solid": "cartridge_body",
+      "gap_mm": 0.7
+     },
+     {
+      "sphere": 4,
+      "solid": "cartridge_body",
+      "gap_mm": 0.7
+     }
+    ]
+   },
+   "biggest_in_the_pockets": {
+    "ok": true,
+    "violations": [],
+    "tightest": [
+     {
+      "sphere": 1,
+      "solid": "cartridge_body",
+      "gap_mm": 0.0
+     },
+     {
+      "sphere": 4,
+      "solid": "cartridge_body",
+      "gap_mm": 0.0
+     },
+     {
+      "sphere": 6,
+      "solid": "cartridge_body",
+      "gap_mm": 0.04
+     },
+     {
+      "sphere": 5,
+      "solid": "cartridge_body",
+      "gap_mm": 0.1
+     },
+     {
+      "sphere": 2,
+      "solid": "dial",
+      "gap_mm": 0.25
+     }
+    ]
+   },
+   "pocket_length_mm": 25.06,
+   "one_ball_a_pocket": true,
+   "nip_gap_mm": 17.02,
+   "smallest_squeezed_pct": 23.3,
+   "biggest_squeezed_pct": 25.3,
+   "squeezed": true,
+   "bore_play_mm": {
+    "feed_and_chute": [
+     1.4,
+     2.0
+    ],
+    "barrel": [
+     1.9,
+     2.5
+    ]
+   },
+   "ok": true,
+   "violations": []
   },
   "connected": {
    "ok": true,

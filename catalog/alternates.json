@@ -2133,5 +2133,33 @@
    "checked": "2026-10-27",
    "evidence": "the same DXF, material and thickness, uploaded for Xometry's instant sheet-cutting price (tapping and countersinks as finishing options), as the pan clamp's backup"
   }
+ ],
+ "hasbro-nerf-rival-accu-round-60": [
+  {
+   "supplier": "Walmart",
+   "part_number": "Nerf Rival 50-Round Refill",
+   "url": "https://www.walmart.com/ip/Nerf-Rival-50-Round-Refill/1417174757",
+   "price": "$15.95",
+   "price_usd_each": 15.95,
+   "pack_qty": 1,
+   "stock": null,
+   "drop_in": true,
+   "changes": "50 rounds, not 60",
+   "checked": "2026-10-27",
+   "evidence": "Walmart listing read through a web search (Walmart's own pages answer a robot check)"
+  },
+  {
+   "supplier": "Out of Darts",
+   "part_number": "Worker Cheetah 100-pack",
+   "url": "https://outofdarts.com/products/worker-cheetah-rounds-rival-compatible-ammo-100-pack",
+   "price": "$14.99",
+   "price_usd_each": 14.99,
+   "pack_qty": 1,
+   "stock": "In stock",
+   "drop_in": true,
+   "changes": "third-party Rival-compatible rounds (D67 accepts 22.2-22.8 mm, 1.6-2.0 g)",
+   "checked": "2026-10-27",
+   "evidence": "catalog/turret.json worker-cheetah-rival-rounds-100"
+  }
  ]
 }

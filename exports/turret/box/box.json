@@ -339,7 +339,7 @@
     "model": "9215-Y: 12 V, 0-4000 rpm PWM, 14.1-55.26 CFM, 0.84-2.87 mmH2O, 0.24-2.28 W, 4-pin 2510 (S06 p.2, drawing p.11)",
     "dp0_pa": 28.1,
     "q_free_m3h": 93.9,
-    "note": "9215-Y at full speed (12 V, 4000 rpm): 55.26 CFM free air, 2.87 mmH2O at zero flow (S06 p.2); straight-line curve between the two; blowing down into the fins."
+    "note": "9215-Y at full speed (12 V, 4000 rpm): 55.26 CFM free air, 2.87 mmH2O at zero flow (S06 p.2); straight-line curve between the two. Blows up: it pulls air in through the fin block's open sides and out through the lid grille (user, 2026-10-27, on the fitted cooler)."
    },
    "operating_point": {
     "q_m3h": 38.82,
@@ -383,6 +383,42 @@
    "open_cells": 106,
    "open_cells_under_the_shroud": 68,
    "note": "the J501 roof is solid on top from the grille's openings out to its first open hex cell (the grille's rim, the skirt's top, a band of cells closed by a 1.2 mm skin: its cad/build.py); the foam ring lies in the middle of that band, so no exhaust cell opens inside it. The open cells under the shroud's floor vent through the 1 mm under it"
+  },
+  "design_gates": {
+   "file": "exports/turret/gates.json",
+   "fingerprint": "d3e0198c2c3916e6",
+   "ok": true,
+   "gates": {
+    "hopper_in_cavity": {
+     "ok": true,
+     "spheres": 30
+    },
+    "hopper_overlap": {
+     "ok": true,
+     "worst_overlap_mm": 0.069
+    },
+    "path_in_cavity": {
+     "ok": true,
+     "spheres": 86
+    },
+    "connected": {
+     "ok": true,
+     "bodies": {
+      "base": 1,
+      "pan": 1,
+      "pinion": 1,
+      "tilt": 1,
+      "wheel_l": 1,
+      "wheel_r": 1,
+      "dial": 1,
+      "flap": 1
+     }
+    },
+    "sweep_with_balls": {
+     "ok": true,
+     "poses": 40
+    }
+   }
   },
   "shroud_fit": {
    "legs_mm": {
@@ -500,9 +536,9 @@
    ],
    "hard_stop_deg": 173.5,
    "encoder_counts_per_turret_deg": 34.1,
-   "inertia_kg_m2": 0.00433,
-   "accel_at_cap_deg_s2": 58342,
-   "time_to_full_slew_ms": 1.5
+   "inertia_kg_m2": 0.00446,
+   "accel_at_cap_deg_s2": 56687,
+   "time_to_full_slew_ms": 1.6
   },
   "tilt": {
    "servo_stall_nm": 2.94,
@@ -512,9 +548,9 @@
     0.0
    ],
    "group_mass_g": 737,
-   "com_ahead_mm": -5.0,
-   "holding_nm": -0.04,
-   "margin": 81.0
+   "com_ahead_mm": -8.6,
+   "holding_nm": -0.06,
+   "margin": 47.3
   },
   "flight_level": {
    "rows": [
@@ -573,7 +609,7 @@
   "source": "/home/scubasonar/Code/j501-agx/cad/parameters.json",
   "parameters_git": {
    "state": "committed",
-   "head": "8e3387420e96a9b9219491f33753cd06d7101b6e",
+   "head": "94da39d894c5157fe8aef5f1cdef00647d1e02ee",
    "branch": "rev0.9-g48r",
    "tags_at_head": [],
    "file": "cad/parameters.json"
@@ -596,6 +632,6 @@
    "hub_d": 20.0,
    "open_r": 44.519999999999996
   },
-  "meshes": "exports/*.step (its view meshes do not match its parameters yet)"
+  "meshes": "exports/view (its view meshes)"
  }
 }

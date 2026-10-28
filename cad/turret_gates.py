@@ -122,6 +122,36 @@ def ball_gates(T, pile):
     return res, hopper
 
 
+AMMO_D = (22.2, 22.8)          # D67: any Rival-compatible round 22.2-22.8 mm (1.6-2.0 g: the mass is the launch ceiling's)
+
+
+def ammo_gate(T, pile):
+    """The accepted ammo range (D67) through the feed and the bore: the biggest ball along the whole path and in every
+    pocket clear of the solids, the smallest ball still one to a pocket (the gap between spokes at the pitch radius
+    under two balls) and still squeezed at the nip, and the bore's play for both."""
+    G = T.G
+    dmin, dmax = AMMO_D
+    path = ball_path(G)
+    nip = [i for i, p in enumerate(path) if abs(p[0] - G.wheel_x) < G.wheel_d / 2 + dmax / 2 and abs(p[2]) < 1e-6]
+    allow = [(i, n) for i in nip for n in ('flywheel_tyre', 'flywheel_tyre_m', 'flywheel', 'flywheel_m')]
+    big_path = gates.spheres_in_cavities(path, dmax / 2, tilt_solids(T, 0.0), allow=allow)
+    pockets = [rot_z(p, pile['park_deg']) for p in pile['pockets']]
+    big_pockets = gates.spheres_in_cavities(pockets, dmax / 2, tilt_solids(T, pile['park_deg']))
+    gap = 2 * math.pi * G.rp / G.n_pockets - G.spoke_w                    # the pocket's length along the pitch circle
+    nip_gap = G.wheel_c - G.wheel_d                                        # between the tyres
+    out = {'diameters_mm': list(AMMO_D), 'biggest_along_the_path': {k: big_path[k] for k in ('ok', 'violations', 'tightest')},
+           'biggest_in_the_pockets': {k: big_pockets[k] for k in ('ok', 'violations', 'tightest')},
+           'pocket_length_mm': round(gap, 2), 'one_ball_a_pocket': gap < 2 * dmin,
+           'nip_gap_mm': round(nip_gap, 2), 'smallest_squeezed_pct': round(100 * (1 - nip_gap / dmin), 1),
+           'biggest_squeezed_pct': round(100 * (1 - nip_gap / dmax), 1), 'squeezed': nip_gap < dmin,
+           'bore_play_mm': {'feed_and_chute': [round(G.bore - dmax, 2), round(G.bore - dmin, 2)],
+                            'barrel': [round(G.bore_out - dmax, 2), round(G.bore_out - dmin, 2)]}}
+    out['ok'] = big_path['ok'] and big_pockets['ok'] and out['one_ball_a_pocket'] and out['squeezed'] and G.bore - dmax >= 1.0
+    out['violations'] = big_path['violations'] + big_pockets['violations'] + \
+        ([] if out['one_ball_a_pocket'] else ['two small balls fit a pocket']) + ([] if out['squeezed'] else ['the smallest ball passes the nip unsqueezed'])
+    return out
+
+
 def connectivity_gate(T):
     solids, groups = {}, {}
     for n, fr in T.frame.items():
@@ -151,6 +181,7 @@ def run(T=None, write=True):
     T = T or tu.Turret({'bodyTop': 100.0})
     pile = load_pile(T.G)
     res, hopper = ball_gates(T, pile)
+    res['ammo_range'] = ammo_gate(T, pile)
     res['connected'] = connectivity_gate(T)
     res['sweep_with_balls'] = sweep_gate(T, hopper)
     out = {'fingerprint': geometry_fingerprint(), 'pile': str(PILE.relative_to(R)), 'seconds': round(time.time() - t0),
@@ -176,7 +207,10 @@ def main():
     d = run()
     for k, v in d['gates'].items():
         extra = ''
-        if 'violations' in v:
+        if k == 'ammo_range':
+            extra = (f'{v["diameters_mm"]} mm: pocket {v["pocket_length_mm"]} (one ball each), nip squeeze {v["biggest_squeezed_pct"]}-'
+                     f'{v["smallest_squeezed_pct"]} %, bore play {v["bore_play_mm"]}' + ''.join(f'\n      {x}' for x in v['violations'][:8]))
+        elif 'violations' in v:
             extra = f'{len(v["violations"])} violations' + (f', tightest {v["tightest"][:2]}' if v.get('tightest') else '') + \
                     (f', worst overlap {v["worst_overlap_mm"]} mm' if 'worst_overlap_mm' in v else '')
             for x in v['violations'][:12]:

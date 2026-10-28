@@ -23,6 +23,7 @@ nothing spins unless the ARM line is held.
 | `hopper_overlap` | no two balls through each other | worst overlap 0.1 mm or less |
 | `path_in_cavity` | a ball every 2 mm along its way, the exit pocket to the muzzle, against every solid (the dial at its step angle); only the tyres may touch it, at the nip | under 1 mm^3 |
 | `connected` | one connected body per moving group (base, pinion, pan, tilt, dial, each flywheel, the fill flap): every part touches a neighbour or is fastened through a declared link, and every joint between moving bodies is closed (within 0.5 mm) | 1 body each, all joints closed |
+| `ammo_range` | D67: any Rival-compatible round 22.2-22.8 mm (1.6-2.0 g) feeds and fires: the biggest ball along the path and in every pocket clear of the solids, the smallest one to a pocket and still squeezed at the nip, the bore's play for both | pass: pocket 25.06 mm long (two balls need 44.4), nip squeeze 23.3-25.3 %, bore play 1.4-2.0 mm (feed and chute), 1.9-2.5 mm (barrel) |
 | `sweep_with_balls` | the hopper's balls against every part outside the tilt group at 8 pans x 5 tilts | under 1 mm^3 |
 
 The clash sweep of the parts themselves is `turret.sweep()` (every pan in 10 deg steps at 0, -5, -12.5, -20 and
@@ -130,7 +131,10 @@ and -25; `connected` (tilt one body; the MR126's races, the horn on its boss).
 parked, powered or not, no ball can reach the wheels.
 
 **Requirements.**
-- 30 Rival balls (Ø22.2-22.8; design ball 22.7), bores ball + 1.5 = 24.2.
+- 30 Rival rounds (D67: Hasbro's own or any Rival-compatible round 22.2-22.8 mm and 1.6-2.0 g; design ball 22.7 mm,
+  1.83 g), bores ball + 1.5 = 24.2: 1.4 mm of play for the biggest round, 2.0 for the smallest (the `ammo_range` gate).
+- The ammo bought (D67): a third-party 100-pack (Worker Cheetah, US$0.15 a round) and the official Nerf Rival 60
+  Accu-Round refill (Hasbro F5052, US$0.33 a round), side by side, cheapest first.
 - One ball per 45 deg step, no double feed, no empty step while balls remain (sim/turret_feed.py: every pose,
   friction 0.4-1.0, 3 and 8 balls/s).
 - Parked: a spoke over the exit hole.
