@@ -62,7 +62,7 @@ ARMATURE = 3.0e-4 * MOTOR['gear_ratio'] ** 2
 # a joint stiffness k arm^2 (855 N m/rad); E is the filament maker's (catalog/materials.json tpu95: Bambu TPU 95A HF,
 # 9.8 MPa). Its travel is the wall less 0.5 mm, 7.4 deg, then the pin. Until 2026-10-27 the rig used an unsourced 40 MPa
 # and a 4 mm wall (four times too stiff), then a shoulder-screw post whose head stopped the TPU after 5 mm (review M6);
-# and the link's straight edge met that post 31 mm from the axis, not the 58 mm the model took (D49).
+# and the link's straight edge met that post 31 mm from the axis, not the 58 mm the model took (D53).
 # the BotWheel's tyre: solid rubber with a tread (estimate ~150-250 N/mm radially): MuJoCo's contact as a 7.7 ms,
 # 0.7-damped spring on the few kg behind it
 TYRE_SOLREF = '0.0077 0.7'

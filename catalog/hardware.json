@@ -4098,7 +4098,7 @@
    "https://www.mcmaster.com/98432A386/"
   ],
   "confidence": "product page",
-  "used_for": "leg v2 stop posts (D49): 4 per leg, 23 mm into blind Ø16 holes in the hip frame's web (a light fit, Loctite 638 filling the gap), the tapped end up under the TPU sleeve; the upper links' radial stop faces land on the sleeves at +3 / -97 deg",
+  "used_for": "leg v2 stop posts (D53): 4 per leg, 23 mm into blind Ø16 holes in the hip frame's web (a light fit, Loctite 638 filling the gap), the tapped end up under the TPU sleeve; the upper links' radial stop faces land on the sleeves at +3 / -97 deg",
   "qty_per_robot": 8,
   "notes": "Vented pull-out dowel (DIN 7979 D, m6): the flat lets air and retaining compound out of the blind hole (turn it to face the motor's axis, square to the stop's load), and the M8 thread in its end takes a puller screw, so a pin can come out of the printed frame. Ø16 because a Ø12 pin 22 mm into the printed web bears at SF 0.6 everyday against the link's straight edge and 1.2 with the radial stop face, against 2 (cad/leg_studies.py stop_checks); Ø16 x 23 with the face: 2.1."
  },
@@ -4199,7 +4199,7 @@
    "https://www.mcmaster.com/94459A778/"
   ],
   "confidence": "product page",
-  "used_for": "no longer in the leg (its stop posts are Ø16 pins in blind holes since D49); kept for the body plan's M8 inserts (docs/body-plan.md)",
+  "used_for": "no longer in the leg (its stop posts are Ø16 pins in blind holes since D53); kept for the body plan's M8 inserts (docs/body-plan.md)",
   "qty_per_robot": null,
   "notes": "Installed length 12.7 mm; recommended hole: letter drill V (9.58 mm), 9.6 mm maximum (McMaster). cad/fivebar.py cuts a 10 x 16 pilot: make it 9.6 (a printed hole comes out a little small, so 9.6-9.7 as modelled); 16 deep leaves room below the insert for displaced melt and the post's thread tip. Minimum material 13.5 mm (McMaster): the hip frame is 24.1 mm thick at the posts. The 12.7 mm length, not the 6.4 mm 94459A777, so the stop post's whole 13 mm thread is engaged and the insert resists the impact bending of a stop. Same family as insert_m5 / insert_m3 (94459A, standard brass)."
  },
