@@ -633,7 +633,8 @@ const madeInfo = (m) => {
   if (m.kind === 'cnc') {
     const r = m.r;
     const est = r.price_usd_each ?? r.price_estimate_usd_each ?? null;
-    const files = r.step ? [{ href: `${R}${r.step}`, label: r.step.split('/').pop() }] : [];
+    // the DXF first when there is one (sheet parts: SendCutSend takes it), then the STEP, then a callouts page
+    const files = [r.dxf || r.drawing, r.step].filter((f, i, a) => f && a.indexOf(f) === i).map((f) => ({ href: `${R}${f}`, label: f.split('/').pop() }));
     if (/\/cnc\//.test(r.step || '')) files.push({ href: `${R}${r.step.replace(/[^/]+$/, 'README.md')}`, label: 'callouts page (README.md)' });
     return { key: r.key, name: r.key, picKey: r.key, stream: st, qty: m.qty, callouts: r.spec || [], files,
       desc: `${r.material || ''}${r.mass_g_each ? `, ${r.mass_g_each} g` : ''}${r.size_mm ? `, ${r.size_mm.join(' × ')} mm` : ''}`,

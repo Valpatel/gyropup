@@ -1,0 +1,299 @@
+{
+ "half_mass_kg": 15.97,
+ "robot_kg": 31.94,
+ "source": "sim/leg_rig.py run() at this half mass",
+ "rig_committed_half_mass_kg": 14.75,
+ "mount_y_module_mm": -82.30000000000001,
+ "tyre_y_module_mm": 104.6,
+ "scenarios": {
+  "stand_up": {
+   "peak_motor_nm": 15.4,
+   "peak_motor_speed_rad_s": 1.01,
+   "peak_wheel_force_n": 169.0,
+   "peak_axle_force_n": 156.1,
+   "peak_knee_pin_n": 172.4,
+   "peak_gearbox_nm": 15.4,
+   "peak_stop_nm": 0.0,
+   "jump_height_mm": null,
+   "L_range_mm": [
+    140.0,
+    303.7
+   ],
+   "peak_joint_force_n": {
+    "knee_f": 152.7,
+    "knee_r": 150.3,
+    "hip_f": 149.9,
+    "hip_r": 147.6,
+    "apex": 156.3
+   },
+   "pose_at_peak_axle_force": {
+    "L_mm": 140.0,
+    "phi_deg": [
+     -10.1,
+     -169.9
+    ]
+   },
+   "body": {
+    "peak_roll_moment_nm": 22.6,
+    "with_vertical_n": 76.3,
+    "with_fore_aft_n": 0.0,
+    "with_ground_n": 168.4,
+    "at_L_mm": 149.3,
+    "at_t_s": 0.504,
+    "peak_vertical_n": 76.3,
+    "peak_vertical_check_ballast_n": 74.1,
+    "moment_over_axle_lever": 0.776
+   }
+  },
+  "squat": {
+   "peak_motor_nm": 15.6,
+   "peak_motor_speed_rad_s": 1.01,
+   "peak_wheel_force_n": 169.5,
+   "peak_axle_force_n": 156.6,
+   "peak_knee_pin_n": 164.0,
+   "peak_gearbox_nm": 15.5,
+   "peak_stop_nm": 0.0,
+   "jump_height_mm": null,
+   "L_range_mm": [
+    156.3,
+    302.9
+   ],
+   "peak_joint_force_n": {
+    "knee_f": 145.2,
+    "knee_r": 145.0,
+    "hip_f": 142.4,
+    "hip_r": 142.1,
+    "apex": 148.5
+   },
+   "pose_at_peak_axle_force": {
+    "L_mm": 160.2,
+    "phi_deg": [
+     -15.6,
+     -164.3
+    ]
+   },
+   "body": {
+    "peak_roll_moment_nm": 22.8,
+    "with_vertical_n": 76.9,
+    "with_fore_aft_n": 0.0,
+    "with_ground_n": 169.5,
+    "at_L_mm": 160.2,
+    "at_t_s": 1.472,
+    "peak_vertical_n": 76.9,
+    "peak_vertical_check_ballast_n": 74.7,
+    "moment_over_axle_lever": 0.78
+   }
+  },
+  "jump": {
+   "peak_motor_nm": 60.0,
+   "peak_motor_speed_rad_s": 15.01,
+   "peak_wheel_force_n": 3458.7,
+   "peak_axle_force_n": 2353.0,
+   "peak_knee_pin_n": 1881.0,
+   "peak_gearbox_nm": 99.0,
+   "peak_stop_nm": 0.0,
+   "jump_height_mm": 257.8,
+   "L_range_mm": [
+    154.2,
+    340.3
+   ],
+   "peak_joint_force_n": {
+    "knee_f": 742.7,
+    "knee_r": 751.7,
+    "hip_f": 677.2,
+    "hip_r": 672.0,
+    "apex": 1054.8
+   },
+   "pose_at_peak_axle_force": {
+    "L_mm": 251.5,
+    "phi_deg": [
+     -38.1,
+     -141.9
+    ]
+   },
+   "body": {
+    "peak_roll_moment_nm": 167.0,
+    "with_vertical_n": 433.8,
+    "with_fore_aft_n": 2.6,
+    "with_ground_n": 2528.7,
+    "at_L_mm": 249.3,
+    "at_t_s": 1.184,
+    "peak_vertical_n": 433.8,
+    "peak_vertical_check_ballast_n": 443.2,
+    "moment_over_axle_lever": 0.38
+   }
+  },
+  "jump_peak": {
+   "peak_motor_nm": 120.0,
+   "peak_motor_speed_rad_s": 16.4,
+   "peak_wheel_force_n": 3307.9,
+   "peak_axle_force_n": 2367.8,
+   "peak_knee_pin_n": 1878.2,
+   "peak_gearbox_nm": 108.4,
+   "peak_stop_nm": 0.0,
+   "jump_height_mm": 302.9,
+   "L_range_mm": [
+    154.2,
+    339.8
+   ],
+   "peak_joint_force_n": {
+    "knee_f": 1090.2,
+    "knee_r": 1089.8,
+    "hip_f": 1071.9,
+    "hip_r": 1072.4,
+    "apex": 1139.0
+   },
+   "pose_at_peak_axle_force": {
+    "L_mm": 250.5,
+    "phi_deg": [
+     -37.9,
+     -142.1
+    ]
+   },
+   "body": {
+    "peak_roll_moment_nm": 188.1,
+    "with_vertical_n": 449.4,
+    "with_fore_aft_n": -10.5,
+    "with_ground_n": 3307.9,
+    "at_L_mm": 250.5,
+    "at_t_s": 1.198,
+    "peak_vertical_n": 582.9,
+    "peak_vertical_check_ballast_n": 580.8,
+    "moment_over_axle_lever": 0.425
+   }
+  },
+  "drop_150": {
+   "peak_motor_nm": 35.8,
+   "peak_motor_speed_rad_s": 8.36,
+   "peak_wheel_force_n": 2990.2,
+   "peak_axle_force_n": 2212.1,
+   "peak_knee_pin_n": 1384.4,
+   "peak_gearbox_nm": 74.3,
+   "peak_stop_nm": 0.0,
+   "jump_height_mm": null,
+   "L_range_mm": [
+    279.6,
+    338.3
+   ],
+   "peak_joint_force_n": {
+    "knee_f": 586.5,
+    "knee_r": 648.1,
+    "hip_f": 493.0,
+    "hip_r": 546.6,
+    "apex": 889.5
+   },
+   "pose_at_peak_axle_force": {
+    "L_mm": 338.3,
+    "phi_deg": [
+     -62.9,
+     -117.1
+    ]
+   },
+   "body": {
+    "peak_roll_moment_nm": 204.7,
+    "with_vertical_n": 558.5,
+    "with_fore_aft_n": -25.7,
+    "with_ground_n": 2990.2,
+    "at_L_mm": 338.3,
+    "at_t_s": 0.158,
+    "peak_vertical_n": 558.5,
+    "peak_vertical_check_ballast_n": 562.9,
+    "moment_over_axle_lever": 0.495
+   }
+  },
+  "power_off": {
+   "peak_motor_nm": 13.7,
+   "peak_motor_speed_rad_s": 12.93,
+   "peak_wheel_force_n": 1677.2,
+   "peak_axle_force_n": 1661.7,
+   "peak_knee_pin_n": 1857.1,
+   "peak_gearbox_nm": 27.1,
+   "peak_stop_nm": 112.2,
+   "jump_height_mm": null,
+   "L_range_mm": [
+    88.6,
+    302.8
+   ],
+   "peak_joint_force_n": {
+    "knee_f": 1840.1,
+    "knee_r": 1841.8,
+    "hip_f": 1810.7,
+    "hip_r": 1812.6,
+    "apex": 1847.4
+   },
+   "pose_at_peak_axle_force": {
+    "L_mm": 91.2,
+    "phi_deg": [
+     7.9,
+     -187.9
+    ]
+   },
+   "body": {
+    "peak_roll_moment_nm": 275.1,
+    "with_vertical_n": 964.1,
+    "with_fore_aft_n": -1.6,
+    "with_ground_n": 1671.6,
+    "at_L_mm": 89.9,
+    "at_t_s": 0.828,
+    "peak_vertical_n": 964.1,
+    "peak_vertical_check_ballast_n": 963.7,
+    "moment_over_axle_lever": 0.886
+   }
+  },
+  "power_off_damped": {
+   "peak_motor_nm": 13.7,
+   "peak_motor_speed_rad_s": 2.3,
+   "peak_wheel_force_n": 285.1,
+   "peak_axle_force_n": 272.2,
+   "peak_knee_pin_n": 311.3,
+   "peak_gearbox_nm": 13.6,
+   "peak_stop_nm": 13.1,
+   "jump_height_mm": null,
+   "L_range_mm": [
+    99.6,
+    302.8
+   ],
+   "peak_joint_force_n": {
+    "knee_f": 289.1,
+    "knee_r": 291.9,
+    "hip_f": 284.3,
+    "hip_r": 287.3,
+    "apex": 292.9
+   },
+   "pose_at_peak_axle_force": {
+    "L_mm": 100.6,
+    "phi_deg": [
+     3.5,
+     -183.4
+    ]
+   },
+   "body": {
+    "peak_roll_moment_nm": 42.1,
+    "with_vertical_n": 143.0,
+    "with_fore_aft_n": -2.5,
+    "with_ground_n": 285.1,
+    "at_L_mm": 100.6,
+    "at_t_s": 1.112,
+    "peak_vertical_n": 143.0,
+    "peak_vertical_check_ballast_n": 145.3,
+    "moment_over_axle_lever": 0.828
+   }
+  }
+ },
+ "rare": [
+  2367.8,
+  "jump_peak"
+ ],
+ "fault": [
+  1661.7,
+  "power_off"
+ ],
+ "rare_body": [
+  204.7,
+  "drop_150"
+ ],
+ "fault_body": [
+  275.1,
+  "power_off"
+ ]
+}

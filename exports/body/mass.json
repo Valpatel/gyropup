@@ -1,0 +1,2930 @@
+{
+ "P1": {
+  "stage": "P1",
+  "total_kg": 29.17,
+  "com_mm": [
+   3.4,
+   0.5,
+   -44.0
+  ],
+  "groups_kg": {
+   "legs": 18.964,
+   "frame": 4.305,
+   "compute": 1.513,
+   "power": 2.015,
+   "deck": 0.83,
+   "battery": 1.542
+  },
+  "legs_kg": 18.96,
+  "body_and_head_kg": 10.21,
+  "rows": [
+   {
+    "group": "legs",
+    "name": "L.hip_frame",
+    "mass_g": 968.7,
+    "com_mm": [
+     0.0,
+     76.3,
+     0.9
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "R.hip_frame",
+    "mass_g": 968.7,
+    "com_mm": [
+     -0.0,
+     -76.3,
+     0.9
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "L.output_adapter_front",
+    "mass_g": 153.8,
+    "com_mm": [
+     75.1,
+     90.5,
+     0.0
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "R.output_adapter_front",
+    "mass_g": 153.8,
+    "com_mm": [
+     -75.1,
+     -90.5,
+     0.0
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "L.output_adapter_rear",
+    "mass_g": 153.8,
+    "com_mm": [
+     -74.9,
+     90.5,
+     -0.1
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "R.output_adapter_rear",
+    "mass_g": 153.8,
+    "com_mm": [
+     74.9,
+     -90.5,
+     -0.1
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "L.upper_link_front",
+    "mass_g": 359.9,
+    "com_mm": [
+     115.0,
+     116.2,
+     -49.1
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "R.upper_link_front",
+    "mass_g": 359.9,
+    "com_mm": [
+     -115.0,
+     -116.2,
+     -49.1
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "L.upper_link_rear",
+    "mass_g": 359.9,
+    "com_mm": [
+     -114.9,
+     116.2,
+     -49.2
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "R.upper_link_rear",
+    "mass_g": 359.9,
+    "com_mm": [
+     114.9,
+     -116.2,
+     -49.2
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "L.front_link",
+    "mass_g": 442.5,
+    "com_mm": [
+     74.9,
+     142.3,
+     -219.0
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "R.front_link",
+    "mass_g": 442.5,
+    "com_mm": [
+     -74.9,
+     -142.3,
+     -219.0
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "L.wheel_link",
+    "mass_g": 615.8,
+    "com_mm": [
+     -64.2,
+     163.8,
+     -230.5
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "R.wheel_link",
+    "mass_g": 615.8,
+    "com_mm": [
+     64.2,
+     -163.8,
+     -230.5
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "L.stop_sleeve_1",
+    "mass_g": 10.4,
+    "com_mm": [
+     108.8,
+     112.0,
+     47.2
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "R.stop_sleeve_1",
+    "mass_g": 10.4,
+    "com_mm": [
+     -108.8,
+     -112.0,
+     47.2
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "L.stop_sleeve_2",
+    "mass_g": 10.4,
+    "com_mm": [
+     -108.8,
+     112.0,
+     47.2
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "R.stop_sleeve_2",
+    "mass_g": 10.4,
+    "com_mm": [
+     108.8,
+     -112.0,
+     47.2
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "L.stop_sleeve_3",
+    "mass_g": 10.4,
+    "com_mm": [
+     25.6,
+     112.0,
+     -30.4
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "R.stop_sleeve_3",
+    "mass_g": 10.4,
+    "com_mm": [
+     -25.6,
+     -112.0,
+     -30.4
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "L.stop_sleeve_4",
+    "mass_g": 10.4,
+    "com_mm": [
+     -25.6,
+     112.0,
+     -30.4
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "R.stop_sleeve_4",
+    "mass_g": 10.4,
+    "com_mm": [
+     25.6,
+     -112.0,
+     -30.4
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "L.apex_spacer",
+    "mass_g": 13.7,
+    "com_mm": [
+     0.0,
+     126.5,
+     -300.0
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "R.apex_spacer",
+    "mass_g": 13.7,
+    "com_mm": [
+     -0.0,
+     -126.5,
+     -300.0
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "L.motor_front",
+    "mass_g": 1420,
+    "com_mm": [
+     75.0,
+     49.9,
+     -0.0
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "R.motor_front",
+    "mass_g": 1420,
+    "com_mm": [
+     -75.0,
+     -49.9,
+     -0.0
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "L.bearing_61812_front",
+    "mass_g": 97.4,
+    "com_mm": [
+     75.0,
+     94.5,
+     0.0
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "R.bearing_61812_front",
+    "mass_g": 97.4,
+    "com_mm": [
+     -75.0,
+     -94.5,
+     0.0
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "L.motor_rear",
+    "mass_g": 1420,
+    "com_mm": [
+     -75.0,
+     49.9,
+     -0.0
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "R.motor_rear",
+    "mass_g": 1420,
+    "com_mm": [
+     75.0,
+     -49.9,
+     -0.0
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "L.bearing_61812_rear",
+    "mass_g": 97.4,
+    "com_mm": [
+     -75.0,
+     94.5,
+     0.0
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "R.bearing_61812_rear",
+    "mass_g": 97.4,
+    "com_mm": [
+     75.0,
+     -94.5,
+     0.0
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "L.knee_6201_front_in",
+    "mass_g": 35.1,
+    "com_mm": [
+     169.6,
+     139.5,
+     -116.4
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "R.knee_6201_front_in",
+    "mass_g": 35.1,
+    "com_mm": [
+     -169.6,
+     -139.5,
+     -116.4
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "L.knee_6201_front_out",
+    "mass_g": 35.1,
+    "com_mm": [
+     169.6,
+     177.5,
+     -116.4
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "R.knee_6201_front_out",
+    "mass_g": 35.1,
+    "com_mm": [
+     -169.6,
+     -177.5,
+     -116.4
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "L.knee_pin_front",
+    "mass_g": 104.1,
+    "com_mm": [
+     169.6,
+     143.0,
+     -116.4
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "R.knee_pin_front",
+    "mass_g": 104.1,
+    "com_mm": [
+     -169.6,
+     -143.0,
+     -116.4
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "L.knee_6201_rear_in",
+    "mass_g": 35.1,
+    "com_mm": [
+     -169.6,
+     139.5,
+     -116.4
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "R.knee_6201_rear_in",
+    "mass_g": 35.1,
+    "com_mm": [
+     169.6,
+     -139.5,
+     -116.4
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "L.knee_6201_rear_out",
+    "mass_g": 35.1,
+    "com_mm": [
+     -169.6,
+     177.5,
+     -116.4
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "R.knee_6201_rear_out",
+    "mass_g": 35.1,
+    "com_mm": [
+     169.6,
+     -177.5,
+     -116.4
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "L.knee_pin_rear",
+    "mass_g": 104.1,
+    "com_mm": [
+     -169.6,
+     143.0,
+     -116.4
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "R.knee_pin_rear",
+    "mass_g": 104.1,
+    "com_mm": [
+     169.6,
+     -143.0,
+     -116.4
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "L.eye_sleeve_front",
+    "mass_g": 44.4,
+    "com_mm": [
+     169.6,
+     112.5,
+     -116.4
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "R.eye_sleeve_front",
+    "mass_g": 44.4,
+    "com_mm": [
+     -169.6,
+     -112.5,
+     -116.4
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "L.eye_sleeve_rear",
+    "mass_g": 44.4,
+    "com_mm": [
+     -169.6,
+     112.5,
+     -116.4
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "R.eye_sleeve_rear",
+    "mass_g": 44.4,
+    "com_mm": [
+     169.6,
+     -112.5,
+     -116.4
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "L.apex_61812",
+    "mass_g": 194.9,
+    "com_mm": [
+     0.0,
+     126.5,
+     -300.0
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "R.apex_61812",
+    "mass_g": 194.9,
+    "com_mm": [
+     -0.0,
+     -126.5,
+     -300.0
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "L.apex_circlip",
+    "mass_g": 13.7,
+    "com_mm": [
+     0.0,
+     104.4,
+     -300.0
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "R.apex_circlip",
+    "mass_g": 13.7,
+    "com_mm": [
+     -0.0,
+     -104.4,
+     -300.0
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "L.stop_posts",
+    "mass_g": 105.2,
+    "com_mm": [
+     -0.0,
+     114.3,
+     8.4
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "R.stop_posts",
+    "mass_g": 105.2,
+    "com_mm": [
+     0.0,
+     -114.3,
+     8.4
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "L.screws_lugs",
+    "mass_g": 50.9,
+    "com_mm": [
+     -0.0,
+     85.1,
+     -0.0
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "R.screws_lugs",
+    "mass_g": 50.9,
+    "com_mm": [
+     -0.0,
+     -85.1,
+     -0.0
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "L.screws_links",
+    "mass_g": 117.4,
+    "com_mm": [
+     -0.0,
+     113.0,
+     0.0
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "R.screws_links",
+    "mass_g": 117.4,
+    "com_mm": [
+     -0.0,
+     -113.0,
+     0.0
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "L.screws_wheel",
+    "mass_g": 33.8,
+    "com_mm": [
+     -0.0,
+     165.1,
+     -300.0
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "R.screws_wheel",
+    "mass_g": 33.8,
+    "com_mm": [
+     -0.0,
+     -165.1,
+     -300.0
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "L.wheel_tyre",
+    "mass_g": 1210.0,
+    "com_mm": [
+     0.0,
+     207.1,
+     -300.0
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "R.wheel_tyre",
+    "mass_g": 1210.0,
+    "com_mm": [
+     -0.0,
+     -207.1,
+     -300.0
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "L.wheel_hub",
+    "mass_g": 990.0,
+    "com_mm": [
+     0.0,
+     206.1,
+     -300.0
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "R.wheel_hub",
+    "mass_g": 990.0,
+    "com_mm": [
+     -0.0,
+     -206.1,
+     -300.0
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "L.small_hardware",
+    "mass_g": 177.1,
+    "com_mm": [
+     0.0,
+     132.5,
+     0.0
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "R.small_hardware",
+    "mass_g": 177.1,
+    "com_mm": [
+     0.0,
+     -132.5,
+     0.0
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "L.rest_of_leg_json",
+    "mass_g": 7.2,
+    "com_mm": [
+     0.0,
+     132.5,
+     -100.0
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "R.rest_of_leg_json",
+    "mass_g": 7.2,
+    "com_mm": [
+     0.0,
+     -132.5,
+     -100.0
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "frame",
+    "name": "frame.cheek_left",
+    "mass_g": 491.9,
+    "com_mm": [
+     -0.0,
+     21.4,
+     0.0
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "frame",
+    "name": "frame.cheek_right",
+    "mass_g": 491.9,
+    "com_mm": [
+     0.0,
+     -21.4,
+     0.0
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "frame",
+    "name": "frame.floor_tray",
+    "mass_g": 752.2,
+    "com_mm": [
+     -2.9,
+     -0.0,
+     91.0
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "frame",
+    "name": "frame.belly_plate",
+    "mass_g": 239.7,
+    "com_mm": [
+     -1.0,
+     0.0,
+     -91.8
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "frame",
+    "name": "frame.deck",
+    "mass_g": 648.9,
+    "com_mm": [
+     0.9,
+     -0.3,
+     212.7
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "frame",
+    "name": "frame.compute_pallet",
+    "mass_g": 228.7,
+    "com_mm": [
+     -67.6,
+     -0.0,
+     103.3
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "frame",
+    "name": "frame.post_1",
+    "mass_g": 61.4,
+    "com_mm": [
+     142.0,
+     109.0,
+     153.6
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "frame",
+    "name": "frame.post_2",
+    "mass_g": 61.4,
+    "com_mm": [
+     142.0,
+     -109.0,
+     153.6
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "frame",
+    "name": "frame.post_3",
+    "mass_g": 61.4,
+    "com_mm": [
+     -142.0,
+     109.0,
+     153.6
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "frame",
+    "name": "frame.post_4",
+    "mass_g": 61.4,
+    "com_mm": [
+     -142.0,
+     -109.0,
+     153.6
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "frame",
+    "name": "frame.riser",
+    "mass_g": 165.6,
+    "com_mm": [
+     -40.1,
+     0.1,
+     237.7
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "frame",
+    "name": "frame.isolator_1",
+    "mass_g": 2.3,
+    "com_mm": [
+     -145.0,
+     -70.0,
+     99.4
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "frame",
+    "name": "frame.isolator_2",
+    "mass_g": 2.3,
+    "com_mm": [
+     -145.0,
+     70.0,
+     99.4
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "frame",
+    "name": "frame.isolator_3",
+    "mass_g": 2.3,
+    "com_mm": [
+     28.0,
+     -70.0,
+     99.4
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "frame",
+    "name": "frame.isolator_4",
+    "mass_g": 2.3,
+    "com_mm": [
+     28.0,
+     70.0,
+     99.4
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "frame",
+    "name": "frame.din_rail_24v",
+    "mass_g": 2.1,
+    "com_mm": [
+     40.6,
+     102.0,
+     96.2
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "frame",
+    "name": "frame.din_rail_12v",
+    "mass_g": 5.0,
+    "com_mm": [
+     79.0,
+     -91.7,
+     140.6
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "frame",
+    "name": "frame.power_plate",
+    "mass_g": 161.7,
+    "com_mm": [
+     88.6,
+     -15.3,
+     136.9
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "frame",
+    "name": "frame.plate_post_1",
+    "mass_g": 10.7,
+    "com_mm": [
+     44.0,
+     -96.0,
+     114.7
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "frame",
+    "name": "frame.plate_post_2",
+    "mass_g": 10.7,
+    "com_mm": [
+     47.0,
+     80.0,
+     114.7
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "frame",
+    "name": "frame.plate_post_3",
+    "mass_g": 10.7,
+    "com_mm": [
+     145.0,
+     -88.0,
+     114.7
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "frame",
+    "name": "frame.plate_post_4",
+    "mass_g": 10.7,
+    "com_mm": [
+     145.0,
+     80.0,
+     114.7
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "frame",
+    "name": "frame.bus_bar_1",
+    "mass_g": 59.1,
+    "com_mm": [
+     89.0,
+     -50.0,
+     149.8
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "frame",
+    "name": "frame.bus_insulator_1",
+    "mass_g": 21.7,
+    "com_mm": [
+     89.0,
+     -50.0,
+     143.1
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "frame",
+    "name": "frame.bus_bar_2",
+    "mass_g": 59.1,
+    "com_mm": [
+     89.0,
+     -26.0,
+     149.8
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "frame",
+    "name": "frame.bus_insulator_2",
+    "mass_g": 21.7,
+    "com_mm": [
+     89.0,
+     -26.0,
+     143.1
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "frame",
+    "name": "frame.bay_rear",
+    "mass_g": 156.9,
+    "com_mm": [
+     -82.9,
+     -0.0,
+     -131.5
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "frame",
+    "name": "frame.bay_front",
+    "mass_g": 139.8,
+    "com_mm": [
+     78.8,
+     -0.0,
+     -132.2
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "frame",
+    "name": "frame.bay_door",
+    "mass_g": 31.4,
+    "com_mm": [
+     156.0,
+     -0.0,
+     -125.9
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "frame",
+    "name": "frame.bay_skid_1",
+    "mass_g": 7.6,
+    "com_mm": [
+     -71.0,
+     31.8,
+     -160.5
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "frame",
+    "name": "frame.bay_skid_2",
+    "mass_g": 7.6,
+    "com_mm": [
+     79.0,
+     31.8,
+     -160.5
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "frame",
+    "name": "frame.bay_skid_3",
+    "mass_g": 7.6,
+    "com_mm": [
+     -71.0,
+     -31.8,
+     -160.5
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "frame",
+    "name": "frame.bay_skid_4",
+    "mass_g": 7.6,
+    "com_mm": [
+     79.0,
+     -31.8,
+     -160.5
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "compute",
+    "name": "j501_carrier",
+    "mass_g": 225.0,
+    "com_mm": [
+     -62.0,
+     0.0,
+     121.6
+    ],
+    "basis": "datasheet (Seeed: carrier without module 225 g)"
+   },
+   {
+    "group": "compute",
+    "name": "agx_module",
+    "mass_g": 280.0,
+    "com_mm": [
+     -62.0,
+     -11.0,
+     132.3
+    ],
+    "basis": "estimate (NVIDIA publishes none; 100 x 87 x 16 module with its thermal plate)"
+   },
+   {
+    "group": "compute",
+    "name": "agx_spreader",
+    "mass_g": 200.0,
+    "com_mm": [
+     -60.0,
+     0.5,
+     143.1
+    ],
+    "basis": "CAD volume x copper 8.96 g/cm3 (100 x 110 x 2 mm)"
+   },
+   {
+    "group": "compute",
+    "name": "agx_cooler",
+    "mass_g": 450.0,
+    "com_mm": [
+     -62.0,
+     -11.0,
+     168.3
+    ],
+    "basis": "estimate (G48R: five 6 mm copper heat pipes, 6063 fins, 9215 fan; Seeed publishes no mass)"
+   },
+   {
+    "group": "compute",
+    "name": "j501_standoff_15_16.5",
+    "mass_g": 2.0,
+    "com_mm": [
+     -135.0,
+     -65.0,
+     112.8
+    ],
+    "basis": "catalogue (M3 x 16 hex)"
+   },
+   {
+    "group": "compute",
+    "name": "j501_standoff_165_16.5",
+    "mass_g": 2.0,
+    "com_mm": [
+     15.0,
+     -65.0,
+     112.8
+    ],
+    "basis": "catalogue (M3 x 16 hex)"
+   },
+   {
+    "group": "compute",
+    "name": "j501_standoff_15_146.5",
+    "mass_g": 2.0,
+    "com_mm": [
+     -135.0,
+     65.0,
+     112.8
+    ],
+    "basis": "catalogue (M3 x 16 hex)"
+   },
+   {
+    "group": "compute",
+    "name": "j501_standoff_165_146.5",
+    "mass_g": 2.0,
+    "com_mm": [
+     15.0,
+     65.0,
+     112.8
+    ],
+    "basis": "catalogue (M3 x 16 hex)"
+   },
+   {
+    "group": "power",
+    "name": "ddr120c_24",
+    "mass_g": 450.0,
+    "com_mm": [
+     40.6,
+     105.0,
+     153.6
+    ],
+    "basis": "estimate (datasheet packs 0.51 kg with its carton)"
+   },
+   {
+    "group": "power",
+    "name": "plate_vesc_r",
+    "mass_g": 230.0,
+    "com_mm": [
+     91.0,
+     -42.6,
+     118.2
+    ],
+    "basis": "catalogue (estimate)"
+   },
+   {
+    "group": "power",
+    "name": "plate_vesc_l",
+    "mass_g": 230.0,
+    "com_mm": [
+     91.0,
+     42.6,
+     118.2
+    ],
+    "basis": "catalogue (estimate)"
+   },
+   {
+    "group": "power",
+    "name": "plate_main_switch",
+    "mass_g": 110.0,
+    "com_mm": [
+     82.0,
+     -93.5,
+     127.4
+    ],
+    "basis": "estimate (metal case 60 x 45 x 16.5)"
+   },
+   {
+    "group": "power",
+    "name": "plate_shunt",
+    "mass_g": 85.0,
+    "com_mm": [
+     82.5,
+     47.0,
+     150.7
+    ],
+    "basis": "estimate (150 A / 50 mV meter shunt)"
+   },
+   {
+    "group": "power",
+    "name": "plate_ddr60l_12",
+    "mass_g": 216.0,
+    "com_mm": [
+     79.0,
+     -91.8,
+     173.2
+    ],
+    "basis": "datasheet (TRC: 216 g)"
+   },
+   {
+    "group": "power",
+    "name": "plate_mrbf_block",
+    "mass_g": 90.0,
+    "com_mm": [
+     135.0,
+     15.4,
+     160.5
+    ],
+    "basis": "catalogue (70 g) + MRBF fuse (est 20 g)"
+   },
+   {
+    "group": "power",
+    "name": "plate_fuses",
+    "mass_g": 110.0,
+    "com_mm": [
+     78.5,
+     9.0,
+     149.2
+    ],
+    "basis": "estimate (10 inline MINI holders, 58 V fuses, leads)"
+   },
+   {
+    "group": "power",
+    "name": "plate_mcu_board",
+    "mass_g": 75.0,
+    "com_mm": [
+     74.5,
+     75.0,
+     174.2
+    ],
+    "basis": "estimate (Nucleo-G474RE 48 g + 4 CAN Pal + INA228 + QT Py ESP32-S3 + carrier)"
+   },
+   {
+    "group": "power",
+    "name": "plate_buck_5v",
+    "mass_g": 4.0,
+    "com_mm": [
+     134.0,
+     74.0,
+     144.2
+    ],
+    "basis": "catalogue (Pololu D36V28F5)"
+   },
+   {
+    "group": "power",
+    "name": "vn100",
+    "mass_g": 15.0,
+    "com_mm": [
+     -22.1,
+     0.0,
+     98.1
+    ],
+    "basis": "catalogue (VectorNav: 15 g)"
+   },
+   {
+    "group": "compute",
+    "name": "lidar_box",
+    "mass_g": 120.0,
+    "com_mm": [
+     -139.5,
+     52.5,
+     179.1
+    ],
+    "basis": "estimate (Polycase LP-41 class, plan 90 g + gland)"
+   },
+   {
+    "group": "compute",
+    "name": "lidar_coil",
+    "mass_g": 230.0,
+    "com_mm": [
+     -139.5,
+     -21.5,
+     204.5
+    ],
+    "basis": "estimate (3 m of the VLP-16 cable)"
+   },
+   {
+    "group": "deck",
+    "name": "vlp16",
+    "mass_g": 830,
+    "com_mm": [
+     103.0,
+     0.0,
+     251.8
+    ],
+    "basis": "catalogue (830 g without cable)"
+   },
+   {
+    "group": "battery",
+    "name": "battery",
+    "mass_g": 1542.0,
+    "com_mm": [
+     -13.8,
+     0.0,
+     -124.0
+    ],
+    "basis": "cells molicel.com/product/inr-18650-p30b (3.0 Ah, 36 A, 18.6 x 65.2 max, 47 g max); DCIR est; BMS and build est"
+   },
+   {
+    "group": "frame",
+    "name": "hardware",
+    "mass_g": 300.0,
+    "com_mm": [
+     0.0,
+     0.0,
+     40.0
+    ],
+    "basis": "estimate"
+   },
+   {
+    "group": "power",
+    "name": "harness",
+    "mass_g": 400.0,
+    "com_mm": [
+     60.0,
+     0.0,
+     113.7
+    ],
+    "basis": "estimate (docs/body-wiring.md)"
+   }
+  ],
+  "budget": {
+   "robot_kg": 28.5,
+   "body_and_head_kg": 10.3,
+   "com_x_mm": 10.0,
+   "com_y_mm": 5.0,
+   "basis": "docs/body-plan.md 1.8"
+  }
+ },
+ "P3": {
+  "stage": "P3",
+  "total_kg": 32.27,
+  "com_mm": [
+   1.3,
+   0.4,
+   -15.8
+  ],
+  "groups_kg": {
+   "legs": 18.964,
+   "frame": 4.305,
+   "compute": 1.513,
+   "power": 2.015,
+   "deck": 2.53,
+   "battery": 1.542,
+   "shell": 1.397
+  },
+  "legs_kg": 18.96,
+  "body_and_head_kg": 13.3,
+  "rows": [
+   {
+    "group": "legs",
+    "name": "L.hip_frame",
+    "mass_g": 968.7,
+    "com_mm": [
+     0.0,
+     76.3,
+     0.9
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "R.hip_frame",
+    "mass_g": 968.7,
+    "com_mm": [
+     -0.0,
+     -76.3,
+     0.9
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "L.output_adapter_front",
+    "mass_g": 153.8,
+    "com_mm": [
+     75.1,
+     90.5,
+     0.0
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "R.output_adapter_front",
+    "mass_g": 153.8,
+    "com_mm": [
+     -75.1,
+     -90.5,
+     0.0
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "L.output_adapter_rear",
+    "mass_g": 153.8,
+    "com_mm": [
+     -74.9,
+     90.5,
+     -0.1
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "R.output_adapter_rear",
+    "mass_g": 153.8,
+    "com_mm": [
+     74.9,
+     -90.5,
+     -0.1
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "L.upper_link_front",
+    "mass_g": 359.9,
+    "com_mm": [
+     115.0,
+     116.2,
+     -49.1
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "R.upper_link_front",
+    "mass_g": 359.9,
+    "com_mm": [
+     -115.0,
+     -116.2,
+     -49.1
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "L.upper_link_rear",
+    "mass_g": 359.9,
+    "com_mm": [
+     -114.9,
+     116.2,
+     -49.2
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "R.upper_link_rear",
+    "mass_g": 359.9,
+    "com_mm": [
+     114.9,
+     -116.2,
+     -49.2
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "L.front_link",
+    "mass_g": 442.5,
+    "com_mm": [
+     74.9,
+     142.3,
+     -219.0
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "R.front_link",
+    "mass_g": 442.5,
+    "com_mm": [
+     -74.9,
+     -142.3,
+     -219.0
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "L.wheel_link",
+    "mass_g": 615.8,
+    "com_mm": [
+     -64.2,
+     163.8,
+     -230.5
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "R.wheel_link",
+    "mass_g": 615.8,
+    "com_mm": [
+     64.2,
+     -163.8,
+     -230.5
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "L.stop_sleeve_1",
+    "mass_g": 10.4,
+    "com_mm": [
+     108.8,
+     112.0,
+     47.2
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "R.stop_sleeve_1",
+    "mass_g": 10.4,
+    "com_mm": [
+     -108.8,
+     -112.0,
+     47.2
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "L.stop_sleeve_2",
+    "mass_g": 10.4,
+    "com_mm": [
+     -108.8,
+     112.0,
+     47.2
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "R.stop_sleeve_2",
+    "mass_g": 10.4,
+    "com_mm": [
+     108.8,
+     -112.0,
+     47.2
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "L.stop_sleeve_3",
+    "mass_g": 10.4,
+    "com_mm": [
+     25.6,
+     112.0,
+     -30.4
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "R.stop_sleeve_3",
+    "mass_g": 10.4,
+    "com_mm": [
+     -25.6,
+     -112.0,
+     -30.4
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "L.stop_sleeve_4",
+    "mass_g": 10.4,
+    "com_mm": [
+     -25.6,
+     112.0,
+     -30.4
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "R.stop_sleeve_4",
+    "mass_g": 10.4,
+    "com_mm": [
+     25.6,
+     -112.0,
+     -30.4
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "L.apex_spacer",
+    "mass_g": 13.7,
+    "com_mm": [
+     0.0,
+     126.5,
+     -300.0
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "R.apex_spacer",
+    "mass_g": 13.7,
+    "com_mm": [
+     -0.0,
+     -126.5,
+     -300.0
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "L.motor_front",
+    "mass_g": 1420,
+    "com_mm": [
+     75.0,
+     49.9,
+     -0.0
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "R.motor_front",
+    "mass_g": 1420,
+    "com_mm": [
+     -75.0,
+     -49.9,
+     -0.0
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "L.bearing_61812_front",
+    "mass_g": 97.4,
+    "com_mm": [
+     75.0,
+     94.5,
+     0.0
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "R.bearing_61812_front",
+    "mass_g": 97.4,
+    "com_mm": [
+     -75.0,
+     -94.5,
+     0.0
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "L.motor_rear",
+    "mass_g": 1420,
+    "com_mm": [
+     -75.0,
+     49.9,
+     -0.0
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "R.motor_rear",
+    "mass_g": 1420,
+    "com_mm": [
+     75.0,
+     -49.9,
+     -0.0
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "L.bearing_61812_rear",
+    "mass_g": 97.4,
+    "com_mm": [
+     -75.0,
+     94.5,
+     0.0
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "R.bearing_61812_rear",
+    "mass_g": 97.4,
+    "com_mm": [
+     75.0,
+     -94.5,
+     0.0
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "L.knee_6201_front_in",
+    "mass_g": 35.1,
+    "com_mm": [
+     169.6,
+     139.5,
+     -116.4
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "R.knee_6201_front_in",
+    "mass_g": 35.1,
+    "com_mm": [
+     -169.6,
+     -139.5,
+     -116.4
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "L.knee_6201_front_out",
+    "mass_g": 35.1,
+    "com_mm": [
+     169.6,
+     177.5,
+     -116.4
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "R.knee_6201_front_out",
+    "mass_g": 35.1,
+    "com_mm": [
+     -169.6,
+     -177.5,
+     -116.4
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "L.knee_pin_front",
+    "mass_g": 104.1,
+    "com_mm": [
+     169.6,
+     143.0,
+     -116.4
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "R.knee_pin_front",
+    "mass_g": 104.1,
+    "com_mm": [
+     -169.6,
+     -143.0,
+     -116.4
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "L.knee_6201_rear_in",
+    "mass_g": 35.1,
+    "com_mm": [
+     -169.6,
+     139.5,
+     -116.4
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "R.knee_6201_rear_in",
+    "mass_g": 35.1,
+    "com_mm": [
+     169.6,
+     -139.5,
+     -116.4
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "L.knee_6201_rear_out",
+    "mass_g": 35.1,
+    "com_mm": [
+     -169.6,
+     177.5,
+     -116.4
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "R.knee_6201_rear_out",
+    "mass_g": 35.1,
+    "com_mm": [
+     169.6,
+     -177.5,
+     -116.4
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "L.knee_pin_rear",
+    "mass_g": 104.1,
+    "com_mm": [
+     -169.6,
+     143.0,
+     -116.4
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "R.knee_pin_rear",
+    "mass_g": 104.1,
+    "com_mm": [
+     169.6,
+     -143.0,
+     -116.4
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "L.eye_sleeve_front",
+    "mass_g": 44.4,
+    "com_mm": [
+     169.6,
+     112.5,
+     -116.4
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "R.eye_sleeve_front",
+    "mass_g": 44.4,
+    "com_mm": [
+     -169.6,
+     -112.5,
+     -116.4
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "L.eye_sleeve_rear",
+    "mass_g": 44.4,
+    "com_mm": [
+     -169.6,
+     112.5,
+     -116.4
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "R.eye_sleeve_rear",
+    "mass_g": 44.4,
+    "com_mm": [
+     169.6,
+     -112.5,
+     -116.4
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "L.apex_61812",
+    "mass_g": 194.9,
+    "com_mm": [
+     0.0,
+     126.5,
+     -300.0
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "R.apex_61812",
+    "mass_g": 194.9,
+    "com_mm": [
+     -0.0,
+     -126.5,
+     -300.0
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "L.apex_circlip",
+    "mass_g": 13.7,
+    "com_mm": [
+     0.0,
+     104.4,
+     -300.0
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "R.apex_circlip",
+    "mass_g": 13.7,
+    "com_mm": [
+     -0.0,
+     -104.4,
+     -300.0
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "L.stop_posts",
+    "mass_g": 105.2,
+    "com_mm": [
+     -0.0,
+     114.3,
+     8.4
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "R.stop_posts",
+    "mass_g": 105.2,
+    "com_mm": [
+     0.0,
+     -114.3,
+     8.4
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "L.screws_lugs",
+    "mass_g": 50.9,
+    "com_mm": [
+     -0.0,
+     85.1,
+     -0.0
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "R.screws_lugs",
+    "mass_g": 50.9,
+    "com_mm": [
+     -0.0,
+     -85.1,
+     -0.0
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "L.screws_links",
+    "mass_g": 117.4,
+    "com_mm": [
+     -0.0,
+     113.0,
+     0.0
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "R.screws_links",
+    "mass_g": 117.4,
+    "com_mm": [
+     -0.0,
+     -113.0,
+     0.0
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "L.screws_wheel",
+    "mass_g": 33.8,
+    "com_mm": [
+     -0.0,
+     165.1,
+     -300.0
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "R.screws_wheel",
+    "mass_g": 33.8,
+    "com_mm": [
+     -0.0,
+     -165.1,
+     -300.0
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "L.wheel_tyre",
+    "mass_g": 1210.0,
+    "com_mm": [
+     0.0,
+     207.1,
+     -300.0
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "R.wheel_tyre",
+    "mass_g": 1210.0,
+    "com_mm": [
+     -0.0,
+     -207.1,
+     -300.0
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "L.wheel_hub",
+    "mass_g": 990.0,
+    "com_mm": [
+     0.0,
+     206.1,
+     -300.0
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "R.wheel_hub",
+    "mass_g": 990.0,
+    "com_mm": [
+     -0.0,
+     -206.1,
+     -300.0
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "L.small_hardware",
+    "mass_g": 177.1,
+    "com_mm": [
+     0.0,
+     132.5,
+     0.0
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "R.small_hardware",
+    "mass_g": 177.1,
+    "com_mm": [
+     0.0,
+     -132.5,
+     0.0
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "L.rest_of_leg_json",
+    "mass_g": 7.2,
+    "com_mm": [
+     0.0,
+     132.5,
+     -100.0
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "legs",
+    "name": "R.rest_of_leg_json",
+    "mass_g": 7.2,
+    "com_mm": [
+     0.0,
+     -132.5,
+     -100.0
+    ],
+    "basis": "CAD (printed PA6-CF solids) and exports/leg/bom.json"
+   },
+   {
+    "group": "frame",
+    "name": "frame.cheek_left",
+    "mass_g": 491.9,
+    "com_mm": [
+     -0.0,
+     21.4,
+     0.0
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "frame",
+    "name": "frame.cheek_right",
+    "mass_g": 491.9,
+    "com_mm": [
+     0.0,
+     -21.4,
+     0.0
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "frame",
+    "name": "frame.floor_tray",
+    "mass_g": 752.2,
+    "com_mm": [
+     -2.9,
+     -0.0,
+     91.0
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "frame",
+    "name": "frame.belly_plate",
+    "mass_g": 239.7,
+    "com_mm": [
+     -1.0,
+     0.0,
+     -91.8
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "frame",
+    "name": "frame.deck",
+    "mass_g": 648.9,
+    "com_mm": [
+     0.9,
+     -0.3,
+     212.7
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "frame",
+    "name": "frame.compute_pallet",
+    "mass_g": 228.7,
+    "com_mm": [
+     -67.6,
+     -0.0,
+     103.3
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "frame",
+    "name": "frame.post_1",
+    "mass_g": 61.4,
+    "com_mm": [
+     142.0,
+     109.0,
+     153.6
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "frame",
+    "name": "frame.post_2",
+    "mass_g": 61.4,
+    "com_mm": [
+     142.0,
+     -109.0,
+     153.6
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "frame",
+    "name": "frame.post_3",
+    "mass_g": 61.4,
+    "com_mm": [
+     -142.0,
+     109.0,
+     153.6
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "frame",
+    "name": "frame.post_4",
+    "mass_g": 61.4,
+    "com_mm": [
+     -142.0,
+     -109.0,
+     153.6
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "frame",
+    "name": "frame.riser",
+    "mass_g": 165.6,
+    "com_mm": [
+     -40.1,
+     0.1,
+     237.7
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "frame",
+    "name": "frame.isolator_1",
+    "mass_g": 2.3,
+    "com_mm": [
+     -145.0,
+     -70.0,
+     99.4
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "frame",
+    "name": "frame.isolator_2",
+    "mass_g": 2.3,
+    "com_mm": [
+     -145.0,
+     70.0,
+     99.4
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "frame",
+    "name": "frame.isolator_3",
+    "mass_g": 2.3,
+    "com_mm": [
+     28.0,
+     -70.0,
+     99.4
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "frame",
+    "name": "frame.isolator_4",
+    "mass_g": 2.3,
+    "com_mm": [
+     28.0,
+     70.0,
+     99.4
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "frame",
+    "name": "frame.din_rail_24v",
+    "mass_g": 2.1,
+    "com_mm": [
+     40.6,
+     102.0,
+     96.2
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "frame",
+    "name": "frame.din_rail_12v",
+    "mass_g": 5.0,
+    "com_mm": [
+     79.0,
+     -91.7,
+     140.6
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "frame",
+    "name": "frame.power_plate",
+    "mass_g": 161.7,
+    "com_mm": [
+     88.6,
+     -15.3,
+     136.9
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "frame",
+    "name": "frame.plate_post_1",
+    "mass_g": 10.7,
+    "com_mm": [
+     44.0,
+     -96.0,
+     114.7
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "frame",
+    "name": "frame.plate_post_2",
+    "mass_g": 10.7,
+    "com_mm": [
+     47.0,
+     80.0,
+     114.7
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "frame",
+    "name": "frame.plate_post_3",
+    "mass_g": 10.7,
+    "com_mm": [
+     145.0,
+     -88.0,
+     114.7
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "frame",
+    "name": "frame.plate_post_4",
+    "mass_g": 10.7,
+    "com_mm": [
+     145.0,
+     80.0,
+     114.7
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "frame",
+    "name": "frame.bus_bar_1",
+    "mass_g": 59.1,
+    "com_mm": [
+     89.0,
+     -50.0,
+     149.8
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "frame",
+    "name": "frame.bus_insulator_1",
+    "mass_g": 21.7,
+    "com_mm": [
+     89.0,
+     -50.0,
+     143.1
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "frame",
+    "name": "frame.bus_bar_2",
+    "mass_g": 59.1,
+    "com_mm": [
+     89.0,
+     -26.0,
+     149.8
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "frame",
+    "name": "frame.bus_insulator_2",
+    "mass_g": 21.7,
+    "com_mm": [
+     89.0,
+     -26.0,
+     143.1
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "frame",
+    "name": "frame.bay_rear",
+    "mass_g": 156.9,
+    "com_mm": [
+     -82.9,
+     -0.0,
+     -131.5
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "frame",
+    "name": "frame.bay_front",
+    "mass_g": 139.8,
+    "com_mm": [
+     78.8,
+     -0.0,
+     -132.2
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "frame",
+    "name": "frame.bay_door",
+    "mass_g": 31.4,
+    "com_mm": [
+     156.0,
+     -0.0,
+     -125.9
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "frame",
+    "name": "frame.bay_skid_1",
+    "mass_g": 7.6,
+    "com_mm": [
+     -71.0,
+     31.8,
+     -160.5
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "frame",
+    "name": "frame.bay_skid_2",
+    "mass_g": 7.6,
+    "com_mm": [
+     79.0,
+     31.8,
+     -160.5
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "frame",
+    "name": "frame.bay_skid_3",
+    "mass_g": 7.6,
+    "com_mm": [
+     -71.0,
+     -31.8,
+     -160.5
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "frame",
+    "name": "frame.bay_skid_4",
+    "mass_g": 7.6,
+    "com_mm": [
+     79.0,
+     -31.8,
+     -160.5
+    ],
+    "basis": "CAD (sheet and printed solids)"
+   },
+   {
+    "group": "compute",
+    "name": "j501_carrier",
+    "mass_g": 225.0,
+    "com_mm": [
+     -62.0,
+     0.0,
+     121.6
+    ],
+    "basis": "datasheet (Seeed: carrier without module 225 g)"
+   },
+   {
+    "group": "compute",
+    "name": "agx_module",
+    "mass_g": 280.0,
+    "com_mm": [
+     -62.0,
+     -11.0,
+     132.3
+    ],
+    "basis": "estimate (NVIDIA publishes none; 100 x 87 x 16 module with its thermal plate)"
+   },
+   {
+    "group": "compute",
+    "name": "agx_spreader",
+    "mass_g": 200.0,
+    "com_mm": [
+     -60.0,
+     0.5,
+     143.1
+    ],
+    "basis": "CAD volume x copper 8.96 g/cm3 (100 x 110 x 2 mm)"
+   },
+   {
+    "group": "compute",
+    "name": "agx_cooler",
+    "mass_g": 450.0,
+    "com_mm": [
+     -62.0,
+     -11.0,
+     168.3
+    ],
+    "basis": "estimate (G48R: five 6 mm copper heat pipes, 6063 fins, 9215 fan; Seeed publishes no mass)"
+   },
+   {
+    "group": "compute",
+    "name": "j501_standoff_15_16.5",
+    "mass_g": 2.0,
+    "com_mm": [
+     -135.0,
+     -65.0,
+     112.8
+    ],
+    "basis": "catalogue (M3 x 16 hex)"
+   },
+   {
+    "group": "compute",
+    "name": "j501_standoff_165_16.5",
+    "mass_g": 2.0,
+    "com_mm": [
+     15.0,
+     -65.0,
+     112.8
+    ],
+    "basis": "catalogue (M3 x 16 hex)"
+   },
+   {
+    "group": "compute",
+    "name": "j501_standoff_15_146.5",
+    "mass_g": 2.0,
+    "com_mm": [
+     -135.0,
+     65.0,
+     112.8
+    ],
+    "basis": "catalogue (M3 x 16 hex)"
+   },
+   {
+    "group": "compute",
+    "name": "j501_standoff_165_146.5",
+    "mass_g": 2.0,
+    "com_mm": [
+     15.0,
+     65.0,
+     112.8
+    ],
+    "basis": "catalogue (M3 x 16 hex)"
+   },
+   {
+    "group": "power",
+    "name": "ddr120c_24",
+    "mass_g": 450.0,
+    "com_mm": [
+     40.6,
+     105.0,
+     153.6
+    ],
+    "basis": "estimate (datasheet packs 0.51 kg with its carton)"
+   },
+   {
+    "group": "power",
+    "name": "plate_vesc_r",
+    "mass_g": 230.0,
+    "com_mm": [
+     91.0,
+     -42.6,
+     118.2
+    ],
+    "basis": "catalogue (estimate)"
+   },
+   {
+    "group": "power",
+    "name": "plate_vesc_l",
+    "mass_g": 230.0,
+    "com_mm": [
+     91.0,
+     42.6,
+     118.2
+    ],
+    "basis": "catalogue (estimate)"
+   },
+   {
+    "group": "power",
+    "name": "plate_main_switch",
+    "mass_g": 110.0,
+    "com_mm": [
+     82.0,
+     -93.5,
+     127.4
+    ],
+    "basis": "estimate (metal case 60 x 45 x 16.5)"
+   },
+   {
+    "group": "power",
+    "name": "plate_shunt",
+    "mass_g": 85.0,
+    "com_mm": [
+     82.5,
+     47.0,
+     150.7
+    ],
+    "basis": "estimate (150 A / 50 mV meter shunt)"
+   },
+   {
+    "group": "power",
+    "name": "plate_ddr60l_12",
+    "mass_g": 216.0,
+    "com_mm": [
+     79.0,
+     -91.8,
+     173.2
+    ],
+    "basis": "datasheet (TRC: 216 g)"
+   },
+   {
+    "group": "power",
+    "name": "plate_mrbf_block",
+    "mass_g": 90.0,
+    "com_mm": [
+     135.0,
+     15.4,
+     160.5
+    ],
+    "basis": "catalogue (70 g) + MRBF fuse (est 20 g)"
+   },
+   {
+    "group": "power",
+    "name": "plate_fuses",
+    "mass_g": 110.0,
+    "com_mm": [
+     78.5,
+     9.0,
+     149.2
+    ],
+    "basis": "estimate (10 inline MINI holders, 58 V fuses, leads)"
+   },
+   {
+    "group": "power",
+    "name": "plate_mcu_board",
+    "mass_g": 75.0,
+    "com_mm": [
+     74.5,
+     75.0,
+     174.2
+    ],
+    "basis": "estimate (Nucleo-G474RE 48 g + 4 CAN Pal + INA228 + QT Py ESP32-S3 + carrier)"
+   },
+   {
+    "group": "power",
+    "name": "plate_buck_5v",
+    "mass_g": 4.0,
+    "com_mm": [
+     134.0,
+     74.0,
+     144.2
+    ],
+    "basis": "catalogue (Pololu D36V28F5)"
+   },
+   {
+    "group": "power",
+    "name": "vn100",
+    "mass_g": 15.0,
+    "com_mm": [
+     -22.1,
+     0.0,
+     98.1
+    ],
+    "basis": "catalogue (VectorNav: 15 g)"
+   },
+   {
+    "group": "compute",
+    "name": "lidar_box",
+    "mass_g": 120.0,
+    "com_mm": [
+     -139.5,
+     52.5,
+     179.1
+    ],
+    "basis": "estimate (Polycase LP-41 class, plan 90 g + gland)"
+   },
+   {
+    "group": "compute",
+    "name": "lidar_coil",
+    "mass_g": 230.0,
+    "com_mm": [
+     -139.5,
+     -21.5,
+     204.5
+    ],
+    "basis": "estimate (3 m of the VLP-16 cable)"
+   },
+   {
+    "group": "deck",
+    "name": "vlp16",
+    "mass_g": 830,
+    "com_mm": [
+     103.0,
+     0.0,
+     251.8
+    ],
+    "basis": "catalogue (830 g without cable)"
+   },
+   {
+    "group": "deck",
+    "name": "turret",
+    "mass_g": 1700.0,
+    "com_mm": [
+     -40.0,
+     0.0,
+     346.0
+    ],
+    "basis": "budget 1.7 kg (turret.json: 1.556 kg with 30 balls); docs/turret-next-plan.md 3.1 (proposed head payload budget)"
+   },
+   {
+    "group": "battery",
+    "name": "battery",
+    "mass_g": 1542.0,
+    "com_mm": [
+     -13.8,
+     0.0,
+     -124.0
+    ],
+    "basis": "cells molicel.com/product/inr-18650-p30b (3.0 Ah, 36 A, 18.6 x 65.2 max, 47 g max); DCIR est; BMS and build est"
+   },
+   {
+    "group": "frame",
+    "name": "hardware",
+    "mass_g": 300.0,
+    "com_mm": [
+     0.0,
+     0.0,
+     40.0
+    ],
+    "basis": "estimate"
+   },
+   {
+    "group": "power",
+    "name": "harness",
+    "mass_g": 400.0,
+    "com_mm": [
+     60.0,
+     0.0,
+     113.7
+    ],
+    "basis": "estimate (docs/body-wiring.md)"
+   },
+   {
+    "group": "shell",
+    "name": "shell_panels",
+    "mass_g": 800.0,
+    "com_mm": [
+     0.0,
+     0.0,
+     150.0
+    ],
+    "basis": "estimate (PETG 3 mm side, front and rear walls, the door and hatches)"
+   },
+   {
+    "group": "shell",
+    "name": "depth_camera_front",
+    "mass_g": 75.0,
+    "com_mm": [
+     147.0,
+     0.0,
+     188.0
+    ],
+    "basis": "catalogue (D435 75 g)"
+   },
+   {
+    "group": "shell",
+    "name": "depth_camera_rear",
+    "mass_g": 75.0,
+    "com_mm": [
+     -147.0,
+     0.0,
+     188.0
+    ],
+    "basis": "catalogue (D435 75 g)"
+   },
+   {
+    "group": "shell",
+    "name": "eyes",
+    "mass_g": 11.0,
+    "com_mm": [
+     157.0,
+     0.0,
+     200.0
+    ],
+    "basis": "catalogue (DualEye 11 g)"
+   },
+   {
+    "group": "shell",
+    "name": "eye_controller",
+    "mass_g": 8.0,
+    "com_mm": [
+     150.0,
+     0.0,
+     195.0
+    ],
+    "basis": "catalogue (QT Py ESP32-S3)"
+   },
+   {
+    "group": "shell",
+    "name": "ear_pod_l",
+    "mass_g": 154.0,
+    "com_mm": [
+     20.0,
+     155.0,
+     165.0
+    ],
+    "basis": "catalogue (SSC1 154 g each)"
+   },
+   {
+    "group": "shell",
+    "name": "ear_pod_r",
+    "mass_g": 154.0,
+    "com_mm": [
+     20.0,
+     -155.0,
+     165.0
+    ],
+    "basis": "catalogue (SSC1 154 g each)"
+   },
+   {
+    "group": "shell",
+    "name": "belly_box_skids",
+    "mass_g": 120.0,
+    "com_mm": [
+     0.0,
+     0.0,
+     -150.0
+    ],
+    "basis": "estimate (TPU skids, the bay door)"
+   }
+  ],
+  "budget": {
+   "robot_kg": 28.5,
+   "body_and_head_kg": 10.3,
+   "com_x_mm": 10.0,
+   "com_y_mm": 5.0,
+   "basis": "docs/body-plan.md 1.8"
+  }
+ }
+}
