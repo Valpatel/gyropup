@@ -320,15 +320,15 @@ def deck_cases(record, mesh, want):
         pad = pad.union(bf.box(x - bp.POST_W / 2, x + bp.POST_W / 2, y - bp.POST_W / 2, y + bp.POST_W / 2, zd - LOAD_PAD_T, zd))
     model = deck.union(ris).union(pad)
     plate = parts.get('turret_plate')
+    plate_screws = [(bp.tm()['pan_x'] + a, b) for a, b in bf.RISER_FEET] + bf.turret_plate_end_holes()
     if plate is not None:                       # D59: the turret mount plate under the deck (two plates in bending)
         # A bolted joint, not a bond: the plate hangs PLATE_GAP_MM under the deck, joined only by a clamp pad (the
         # screw's clamped zone, Ø PLATE_CLAMP_D) at each of its six screws (the riser's four feet, its two end nuts).
         # Bonded over its whole face, its outer corners pried against the deck and their stress rose with every mesh
         # refinement (exports/body/fea/D2-convergence.json, 2026-10-28): the real plate is free to part from the deck there.
         t = bp.tm()
-        screws = [(t['pan_x'] + a, b) for a, b in bf.RISER_FEET] + bf.turret_plate_end_holes()
         model = model.union(plate.shape.translate((0, 0, -PLATE_GAP_MM)))
-        for x, y in screws:
+        for x, y in plate_screws:
             model = model.union(bf.cyl_z(PLATE_CLAMP_D / 2, zd - PLATE_GAP_MM - 0.01, zd + 0.01, x, y))
     model = model.clean()
 
@@ -346,6 +346,15 @@ def deck_cases(record, mesh, want):
         near = np.zeros(len(c), bool)
         for x, y in bp.POSTS:
             near |= (np.abs(c[:, 0] - x) < h) & (np.abs(c[:, 1] - y) < h)
+        # the plate's six clamp pads (a bolted joint, see the model) are rigid discs bonded to both plates: their edges are
+        # singular in the same way (D2's convergence run: their peak rose 155 -> 191 MPa from 3 to 2 mm). The elements within
+        # POST_SKIP_MM of a pad's rim are reported apart and judged against the abuse target, like the posts' corners; the
+        # screw's own bearing and the PEM's push-out are hand checks (docs/body-next-plan.md 10.6)
+        clamp = np.zeros(len(c), bool)
+        for x, y in plate_screws:
+            clamp |= np.hypot(c[:, 0] - x, c[:, 1] - y) < PLATE_CLAMP_D / 2 + POST_SKIP_MM
+        vk = float(st.vm_elem[clamp & ok].max()) if (clamp & ok).any() else 0.0
+        near |= clamp
         in_plate = (c[:, 2] < zd - 0.05) & ok & ~near
         in_deck = (c[:, 2] >= zd - 0.05) & ok & ~near
         vd = float(st.vm_elem[in_deck].max()) if in_deck.any() else 0.0
@@ -357,7 +366,9 @@ def deck_cases(record, mesh, want):
         return {'deck_peak_mpa': round(vd, 1), 'deck_sf': round(sfd, 2) if sfd else None, 'plate_peak_mpa': round(vp, 1),
                 'plate_sf': round(sfp, 2) if sfp else None, 'sf_by_part': round(sf, 2),
                 'post_corner_peak_mpa': round(vc, 1), 'post_corner_sf': round(sfc, 2) if sfc else None,
-                'post_corner_pass': bool(sfc is None or sfc >= TARGETS['sf_fault']),
+                'post_corner_pass': bool((sfc is None or sfc >= TARGETS['sf_fault'])
+                                         and (not vk or AL5052.strength_mpa / vk >= TARGETS['sf_fault'])),
+                'plate_clamp_peak_mpa': round(vk, 1), 'plate_clamp_sf': round(AL5052.strength_mpa / vk, 2) if vk else None,
                 'note_by_part': 'the deck and riser at 5052-H32\'s 193 MPa, the turret plate at 6061-T6\'s 276 MPa; the deck '
                                 f'within {POST_SKIP_MM:.0f} mm of a post pad (a rigid-clamp corner) reported apart, against the '
                                 f'abuse target {TARGETS["sf_fault"]}'}
