@@ -14,20 +14,21 @@
    "pass_": true
   },
   "set_speed": {
-   "rpm": 8855.0,
-   "erpm": 61985,
-   "throttle": 0.843,
+   "rpm": 15286.0,
+   "erpm": 107002,
+   "throttle": 0.972,
    "pass_": true
   },
   "erpm_limit": {
-   "erpm": 81312,
-   "rpm": 11616.0,
+   "erpm": 114730,
+   "rpm": 16390.0,
+   "trimmed_rpm_warm_high_rail": 16325,
    "pass_": true
   },
   "tyre_36_refused": {
    "refused": true,
    "arming_refused": true,
-   "arms_on_34": true,
+   "arms_on_38": true,
    "pass_": true
   },
   "tilt_never_above_level": {
@@ -60,14 +61,14 @@
    "pass_": true
   },
   "ramp_never_steps": {
-   "max_throttle_step_per_ms": 0.0035,
-   "ramp_slope_per_ms": 0.00333,
+   "max_throttle_step_per_ms": 0.0015,
+   "ramp_slope_per_ms": 0.00125,
    "pass_": true
   },
-  "erpm_guard_24v": {
+  "erpm_guard_bypassed_converter": {
    "latency_ms": 2.0,
-   "trip_erpm": 82645,
-   "max_erpm": 82873,
+   "trip_erpm": 115385,
+   "max_erpm": 115385,
    "dial_refused": true,
    "latched_while_armed": true,
    "cleared_when_released": true,
@@ -77,12 +78,119 @@
    "pass_": true
   },
   "set_point_changes_ramp": {
-   "max_throttle_step_per_ms": 0.00281,
-   "limit_per_ms": 0.00433,
+   "max_throttle_step_per_ms": 0.00122,
+   "limit_per_ms": 0.00225,
    "no_frames_while_off": true,
    "pass_": true
   },
-  "ball_over_66fps_latches_safe": {
+  "supply_profile_table": {
+   "rows": {
+    "54.0": [
+     0.8,
+     3.0
+    ],
+    "42.0": [
+     0.8,
+     3.0
+    ],
+    "30.0": [
+     0.8,
+     3.0
+    ],
+    "24.0": [
+     0.8,
+     3.0
+    ],
+    "23.9": [
+     1.0,
+     3.0
+    ],
+    "20.5": [
+     1.0,
+     3.0
+    ],
+    "20.4": [
+     1.6,
+     2.0
+    ],
+    "18.0": [
+     1.6,
+     2.0
+    ],
+    "17.9": [
+     2.4,
+     1.0
+    ],
+    "15.0": [
+     2.4,
+     1.0
+    ],
+    "12.0": [
+     2.4,
+     1.0
+    ],
+    "5.0": [
+     2.4,
+     1.0
+    ],
+    "0.0": [
+     2.4,
+     1.0
+    ]
+   },
+   "slower_below_every_row": true,
+   "pass_": true
+  },
+  "supply_profile_ramp_and_rate": {
+   "bus_36v": {
+    "ramp_to_ready_s": 0.85,
+    "max_throttle_step_per_ms": 0.002001,
+    "shots": 4,
+    "min_shot_gap_s": 0.351
+   },
+   "pack_20v5": {
+    "ramp_to_ready_s": 1.05,
+    "max_throttle_step_per_ms": 0.001501,
+    "shots": 4,
+    "min_shot_gap_s": 0.479
+   },
+   "pack_18v": {
+    "ramp_to_ready_s": 1.65,
+    "max_throttle_step_per_ms": 0.001501,
+    "shots": 4,
+    "min_shot_gap_s": 0.979
+   },
+   "pack_15v": {
+    "ramp_to_ready_s": 2.45,
+    "max_throttle_step_per_ms": 0.001001,
+    "shots": 4,
+    "min_shot_gap_s": 0.979
+   },
+   "pass_": true
+  },
+  "supply_sag_stretches_the_ramp": {
+   "slope_before_per_s": 0.973,
+   "slope_after_per_s": 0.4062,
+   "ratio": 0.417,
+   "expected_ratio": 0.417,
+   "max_step_per_ms": 0.001001,
+   "shots": 2,
+   "shot_gap_s": 0.993,
+   "pass_": true
+  },
+  "supply_unmeasured_is_slowest": {
+   "ramp_to_ready_s": 2.452,
+   "min_shot_gap_s": 1.016,
+   "pass_": true
+  },
+  "supply_over_54v_refused": {
+   "refused": [
+    210
+   ],
+   "max_throttle": 0.0,
+   "pass_": true
+  },
+  "ball_over_105fps_latches_safe": {
    "firmware": true,
    "hardware_trip": true,
    "pass_": true
@@ -95,13 +203,13 @@
   },
   "feed_servo_drop_off_and_reinit": {
    "offline_on_release": true,
-   "back_ms_after_arm": 319,
+   "back_ms_after_arm": 318,
    "registers_rewritten": true,
    "balls_after": 3,
    "pass_": true
   },
-  "every_ball_under_66fps": {
-   "fastest_fps": 52.4,
+  "every_ball_under_105fps": {
+   "fastest_fps": 94.3,
    "balls": 6,
    "pass_": true
   },
@@ -116,7 +224,7 @@
    "armed": true,
    "balls": 24,
    "burst_end": "complete",
-   "fastest_fps": 54.3,
+   "fastest_fps": 98.9,
    "people_near_in_a_burst": [
     "the burst stopped and its wheels spun down"
    ],
@@ -132,8 +240,8 @@
    "pan_rate_new_aim": 50.0,
    "log": {
     "shots": 25,
-    "feed": 136,
-    "power": 136,
+    "feed": 138,
+    "power": 138,
     "health": 28,
     "events": 34,
     "commands": 15

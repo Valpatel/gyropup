@@ -1,4 +1,4 @@
-"""The two flywheels: set speed from CONFIG, the 800 ms ramp, a bounded speed trim, READY, and the pre-feed eRPM check
+"""The two flywheels: set speed from CONFIG, the ramp (800 ms on the bus; up to 2.4 s on the stand's pack, D70), a bounded speed trim, READY, and the pre-feed eRPM check
 (docs/turret-firmware.md section 4).
 
 The set speed comes from the tyre and the launch ratio (config.set_rpm); the throttle is a feed-forward from the
@@ -87,6 +87,8 @@ class Flywheels:
         self.rpm_from = 0.0                             # a change of set point ramps from here over RAMP_S: never a step,
         self.thr_from = 0.0                             # up (the ring's current) or down (no braking into the rail)
         self.t0 = 0.0
+        self.ramp_s = C.RAMP_S                          # 0 to full set speed (D70: the supply profile sets it)
+        self.seg_s = C.RAMP_S                           # this segment's length (a retimed ramp is shorter than ramp_s)
         self.ready_since: Optional[float] = None
         self.hist: deque = deque()
 
@@ -104,21 +106,30 @@ class Flywheels:
         return self.mode in ('idle', 'speed', 'throttle')
 
     def _rpm_now(self, t: float) -> float:
-        return self.rpm_from + (self.rpm_set - self.rpm_from) * min(1.0, (t - self.t0) / C.RAMP_S)
+        return self.rpm_from + (self.rpm_set - self.rpm_from) * min(1.0, (t - self.t0) / self.seg_s)
 
     def _thr_now(self, t: float) -> float:
-        return self.thr_from + (self.throttle_set - self.thr_from) * min(1.0, (t - self.t0) / C.RAMP_S)
+        return self.thr_from + (self.throttle_set - self.thr_from) * min(1.0, (t - self.t0) / self.seg_s)
+
+    def set_ramp(self, t: float, ramp_s: float):
+        """D70: the supply profile's ramp. A longer ramp also stretches a segment in progress from where it is (its
+        slope only falls, so the current never steps); a shorter one waits for the next segment."""
+        if ramp_s > self.ramp_s and self.spinning and t - self.t0 < self.seg_s:
+            left = (1.0 - (t - self.t0) / self.seg_s) * self.seg_s * ramp_s / self.ramp_s
+            self.rpm_from, self.thr_from = self._rpm_now(t), self._thr_now(t)
+            self.t0, self.seg_s, self.ready_since = t, max(left, 1e-3), None
+        self.ramp_s = ramp_s
 
     def spin_speed(self, t: float, rpm: float):
         if not self.esc_armed():
             return False
         if self.mode != 'speed':
-            self.t0, self.rpm_from = t, 0.0
+            self.t0, self.rpm_from, self.seg_s = t, 0.0, self.ramp_s
             for w in self.w:
                 w.integral, w.trim = 0.0, 0.0
             self.ready_since = None
         elif rpm != self.rpm_set:                       # a new set speed while spinning: ramp to it (the trim carries on)
-            self.rpm_from, self.t0, self.ready_since = self._rpm_now(t), t, None
+            self.rpm_from, self.t0, self.ready_since, self.seg_s = self._rpm_now(t), t, None, self.ramp_s
         self.mode, self.rpm_set = 'speed', rpm
         return True
 
@@ -127,9 +138,9 @@ class Flywheels:
             return False
         throttle = max(0.0, min(1.0, throttle))
         if self.mode != 'throttle':
-            self.t0, self.ready_since, self.thr_from = t, None, 0.0
+            self.t0, self.ready_since, self.thr_from, self.seg_s = t, None, 0.0, self.ramp_s
         elif throttle != self.throttle_set:
-            self.thr_from, self.t0, self.ready_since = self._thr_now(t), t, None
+            self.thr_from, self.t0, self.ready_since, self.seg_s = self._thr_now(t), t, None, self.ramp_s
         self.mode, self.throttle_set = 'throttle', throttle
         return True
 
@@ -194,7 +205,7 @@ class Flywheels:
             if self.mode == 'throttle':
                 thr = self._thr_now(t)
             else:
-                frac = min(1.0, el / C.RAMP_S)
+                frac = min(1.0, el / self.seg_s)
                 thr = self.cfg.throttle_for(self._rpm_now(t))
                 if frac >= 1.0 and w.erpm is not None and self.rpm_set > 0:
                     e = (self.rpm_set - w.rpm) / self.rpm_set
@@ -214,10 +225,10 @@ class Flywheels:
             self.hist.popleft()
         ok = self.fresh(t)
         if ok and self.mode == 'speed':
-            ok = t - self.t0 >= C.RAMP_S and all(abs(w.rpm - self.rpm_set) <= C.READY_TOL * self.rpm_set
+            ok = t - self.t0 >= self.seg_s and all(abs(w.rpm - self.rpm_set) <= C.READY_TOL * self.rpm_set
                                                   for w in self.w)
         elif ok and self.mode == 'throttle':
-            ok = t - self.t0 >= C.RAMP_S * self.throttle_set + 0.15 and self.hist[0][0] <= t - 0.1 and \
+            ok = t - self.t0 >= self.seg_s * self.throttle_set + 0.15 and self.hist[0][0] <= t - 0.1 and \
                 all(abs(self.hist[-1][k] - self.hist[0][k]) <= 0.01 * max(1.0, self.hist[-1][k]) for k in (1, 2))
         if ok:
             self.ready_since = t if self.ready_since is None else self.ready_since

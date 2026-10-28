@@ -129,6 +129,25 @@ STRAY_WINDOW_S = 0.100         # a ball in the first 100 ms of a ramp is the str
 SPIN_HOLD_S = 3.0              # after a burst the wheels stay at speed this long, then stop (AM32 brake on stop)
 DSHOT_RATE_HZ = 1000           # DShot300 frames (and eRPM telemetry back) per wheel
 
+# ---------------------------------------------------------------- D70: the supply-voltage profile (the stand)
+# The turret takes 12-54 V on its XT30 (D66). On Gyropup's 10S bus (30-41 V) the ring's three power pairs stay within
+# 2 A a circuit at the 800 ms ramp and the full rate; on the stand's one DCB609 (15-20.5 V) the same spin-up and bursts
+# would put 2.1-3.3 A on a circuit and 11-14 A through the rocker. So the ramp stretches and the burst rate drops with
+# BUS_V (docs/turret-wiring.md section 5, sim/turret_power.py 'stand_profile'; play loads, the J4012 at 48 W):
+#   BUS_V >= 24 V     0.8 s ramp, the full rate (RATE_MAX)
+#   >= 20.5 V         1.0 s, at most 4/s (so RATE_MAX's 3/s)
+#   >= 18 V           1.6 s, at most 2/s
+#   below 18 V        2.4 s, at most 1/s (15 V, the pack empty: the busiest circuit 2.0 / 1.9 A)
+# A row holds from its voltage up, so between rows the slower row applies (never interpolated faster). BUS_V is the
+# lowest reading over the last BUS_V_WINDOW_S (the pack sags under the spin-up's own current, so a sagging pack picks
+# the slower row for the rest of the window). An unmeasured BUS_V (under BUS_V_VALID) takes the slowest row; over
+# BUS_V_MAX (D66's ceiling) nothing spins.
+SUPPLY_PROFILE = ((24.0, 0.800, 10.0), (20.5, 1.0, 4.0), (18.0, 1.6, 2.0), (0.0, 2.4, 1.0))   # (from V, ramp s, rate /s)
+BUS_V_DIVIDER = (182.0 + 10.0) / 10.0   # R20 / R21 (cad/turret_boards.py) to A0: 19.2 : 1; the HAL returns BUS in mV
+BUS_V_VALID = 9.0              # below this the reading is not a supply (a cut lead, an unpopulated divider): slowest row
+BUS_V_MAX = 54.0               # D66's input ceiling: over it the firmware refuses to spin
+BUS_V_WINDOW_S = 2.0
+
 # the hardware the firmware only reports (it neither drives nor can override it)
 BRAKE_DELAY_S = 0.008          # the phase-short closes ~8 ms after ARM falls (5-14 ms: 74HCT14 + 6.8 k / 1 uF) ...
 BRAKE_TAU_S = 0.0233           # ... and the wheel decays with an effective tau of 23 ms: the 1400 KV's short through two FETs
@@ -163,6 +182,15 @@ ROBOT_DEPRESSION = ((-35.0, -25.0), (-30.0, -23.0), (-25.0, -19.5), (-20.0, -18.
                     (25.0, -19.5), (30.0, -23.0), (35.0, -25.0))
 ROBOT_DEPRESSION_FOR = {'lidar_to_pan_mm': 143.0, 'lidar_top_above_tm_mm': 41.7, 'margin_mm': 10.0,
                         'file': 'exports/turret/lidar/lidar.json'}
+
+
+def supply_profile(bus_v: float) -> tuple:
+    """D70: (ramp_s, burst rate cap /s, row's voltage) for the supply voltage BUS_V (the lowest over the window)."""
+    if bus_v < BUS_V_VALID:
+        row = SUPPLY_PROFILE[-1]
+    else:
+        row = next(r for r in SUPPLY_PROFILE if bus_v >= r[0])
+    return row[1], min(RATE_MAX, row[2]), row[0]
 
 
 def set_rpm(fps: float, tyre_mm: float, launch_ratio: float = LAUNCH_RATIO) -> float:

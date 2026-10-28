@@ -948,7 +948,7 @@ def t_spinup_current(tt, b, r):
     b.load_balls(8)
     arm(tt, b)
     if b.sim:
-        b.hw.i24_peak, b.hw.bus_min = 0.0, 24.0
+        b.hw.i24_peak, b.hw.bus_min = 0.0, b.hw.supply_now
     t0 = tt.now()
     tt.fire(8, 3.0, C.SET_FPS_DESIGN)
     burst_done(tt, t0, 20.0)

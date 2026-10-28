@@ -141,9 +141,15 @@ class SimTurret(HAL):
         self.esc_frames_out: List[Tuple[int, float, int]] = []
         self.esc_unplugged = False                     # CT unplugged (the 5.3 tests: a lamp on 12 V FLY instead)
         self.rpm_log: deque = deque(maxlen=30000)      # (t, mean rpm), for the release test's +50 ms reading
+        # the supply on the XT30 (D66): Gyropup's 10S bus by default (36 V, its middle), or the stand's pack (15-20.5 V);
+        # supply_v may be a function of time (a pack sagging mid-test). i24_log is the input current (the name is the
+        # old 24 V ring's); supply_r the source's resistance (pack, leads, ring)
+        self.supply_v = opt.get('supply_v', 36.0)
+        self.supply_r = opt.get('supply_r', 0.06)
+        self.bus_unmeasured = opt.get('bus_unmeasured', False)
         self.i24_log: deque = deque(maxlen=60000)
         self.i24_peak = 0.0
-        self.bus_min = 24.0
+        self.bus_min = self.supply_now
         # -------------------------------------------------- balls and gates
         self.balls: List[dict] = []
         self.gate_ev: List[Tuple[float, int]] = []
@@ -208,11 +214,15 @@ class SimTurret(HAL):
         self.laser_on = on
 
     def bus_mv(self) -> int:
-        return int(self.bus_now * 1000)
+        return 0 if self.bus_unmeasured else int(self.bus_now * 1000)
+
+    @property
+    def supply_now(self) -> float:
+        return self.supply_v(self.t) if callable(self.supply_v) else self.supply_v
 
     @property
     def bus_now(self) -> float:
-        return 24.0 - 0.06 * (self.i24_log[-1][1] if self.i24_log else 0.3)
+        return self.supply_now - self.supply_r * (self.i24_log[-1][1] if self.i24_log else 0.3)
 
     # =================================================================== the operator's and the instruments' side
     def set_pendant(self, held: bool):
@@ -450,7 +460,8 @@ class SimTurret(HAL):
             if e['on_t'] is not None and e['armed']:
                 p_tot += max(0.0, j * om * al) / 0.85 + 2.0 * e['thr']     # ESC 85 %, ~2 W of losses at speed
         self.rpm_log.append((t, (self.rpm[0] + self.rpm[1]) / 2.0))
-        i24 = 0.25 + p_tot / (24.0 * 0.9)                                 # logic and servos idle; regulator 90 %
+        v_in = self.supply_now
+        i24 = (0.25 * 24.0 + p_tot / 0.9) / v_in                          # logic and servos idle (6 W); regulator 90 %
         self.i24_log.append((t, i24))
         self.i24_peak = max(self.i24_peak, i24)
         self.bus_min = min(self.bus_min, self.bus_now)

@@ -13,6 +13,9 @@ Safety       the tilt never above level at any command, through homing, the stra
              the first eRPM read over the limit with the converter bypassed (20.5 V), latched until cleared with the
              line released; one corrupt telemetry frame is not a fault; a ball over 105 fps latches SAFE; pan and tilt live and under
              100 deg/s while disarmed; the feed servo leaves the bus on a release and is re-initialised on the next arm
+Supply       D70: the ramp and the burst rate follow BUS_V (0.8 s / 3/s on the bus; 1.0 s at 20.5 V; 1.6 s / 2/s at 18 V;
+             2.4 s / 1/s on an empty pack), a pack sagging mid-ramp stretches the ramp without a step, an unmeasured
+             BUS_V takes the slowest row, and over 54 V nothing spins
 Host         host.py end to end with mount robot: homing, no arming before the mount's table is loaded, the CONFIG rows
              in the firmware, an aim, 24 balls, and people near: fire refused, pan and tilt held to 50 deg/s
 """
@@ -302,6 +305,100 @@ def t_set_point_ramps(out):
           max_throttle_step_per_ms=round(max(steps), 5), limit_per_ms=round(lim, 5), no_frames_while_off=off_frames == (None, None))
 
 
+def _spin_profile(supply, seed, balls=4, until_s=14.0, **opt):
+    """Arm on `supply` (V or a function of t), fire `balls` at 3/s; the spin-up's length (start of the ramp to READY),
+    the steepest throttle step, and the shots' spacing."""
+    rig = SimRig(seed=seed, hopper=40, supply_v=supply, **opt)
+    h = Host(rig)
+    h.boot()
+    h.arm_up()
+    t0 = rig.hw.t
+    h.send('FIRE', balls=balls, rate_d=30, fps_d=0, req=7)
+    marks = {}
+
+    def watch():
+        st = h.fw.state
+        if 'ramp' not in marks and h.fw.spin and h.fw.spin.get('phase') in ('ramp', 'wait'):
+            marks['ramp'] = rig.hw.t
+        if 'ready' not in marks and st in ('READY', 'FIRING'):
+            marks['ready'] = rig.hw.t
+        return bool(h.events(M.EV_BURST_DONE, t0))
+    h.run(until_s, watch)
+    shots = [t for t, f in h.shots(t0) if not f['flags'] & M.S_STRAY]
+    thr = [v[0] for t, v in h.dshot_log if t >= t0]
+    steps = [b - a for a, b in zip(thr, thr[1:]) if b > a]
+    gaps = [b - a for a, b in zip(shots, shots[1:])]
+    return {'ramp_to_ready_s': round(marks['ready'] - marks['ramp'], 3) if 'ready' in marks and 'ramp' in marks else None,
+            'max_throttle_step_per_ms': round(max(steps), 6) if steps else None, 'shots': len(shots),
+            'min_shot_gap_s': round(min(gaps), 3) if gaps else None, 'profile': h.fw.profile,
+            'refused': [f['b'] for _, f in h.events(M.EV_SHOT_REFUSED, t0)], 'max_throttle': max(thr) if thr else 0.0,
+            'profile_changes': h.fw.profile_changes}
+
+
+def t_supply_profile(out):
+    # D70: the ramp and the burst rate follow BUS_V (the lowest over 2 s): 0.8 s and 3/s on Gyropup's bus, 1.0 s at
+    # 20.5 V, 1.6 s and 2/s at 18 V, 2.4 s and 1/s on an empty pack; a pack that sags mid-ramp stretches the ramp
+    # without a step; an unmeasured BUS_V takes the slowest row; over 54 V nothing spins
+    rows = {v: C.supply_profile(v) for v in (54.0, 42.0, 30.0, 24.0, 23.9, 20.5, 20.4, 18.0, 17.9, 15.0, 12.0, 5.0, 0.0)}
+    want = {54.0: (0.8, 3.0), 42.0: (0.8, 3.0), 30.0: (0.8, 3.0), 24.0: (0.8, 3.0), 23.9: (1.0, 3.0), 20.5: (1.0, 3.0),
+            20.4: (1.6, 2.0), 18.0: (1.6, 2.0), 17.9: (2.4, 1.0), 15.0: (2.4, 1.0), 12.0: (2.4, 1.0), 5.0: (2.4, 1.0),
+            0.0: (2.4, 1.0)}
+    table = all(abs(rows[v][0] - want[v][0]) < 1e-9 and abs(rows[v][1] - want[v][1]) < 1e-9 for v in want)
+    vs = sorted(rows)
+    mono = all(rows[a][0] >= rows[b][0] and rows[a][1] <= rows[b][1] for a, b in zip(vs, vs[1:]))
+    check(out, 'supply_profile_table', table and mono, rows={str(v): list(r[:2]) for v, r in rows.items()},
+          slower_below_every_row=mono)
+    res = {}
+    for name, supply in (('bus_36v', 36.0), ('pack_20v5', 20.6), ('pack_18v', 18.1), ('pack_15v', 15.4)):
+        res[name] = _spin_profile(supply, seed=91, supply_r=0.0 if name == 'bus_36v' else 0.02)
+    ok = True
+    for name, (ramp, gap) in (('bus_36v', (0.8, 1 / 3.0)), ('pack_20v5', (1.0, 1 / 3.0)), ('pack_18v', (1.6, 0.5)),
+                              ('pack_15v', (2.4, 1.0))):
+        r = res[name]
+        ok = ok and r['ramp_to_ready_s'] is not None and ramp <= r['ramp_to_ready_s'] <= ramp + 0.6 and \
+            r['max_throttle_step_per_ms'] <= 1.0 / (ramp * 1000) + 0.002 and r['shots'] == 4 and \
+            r['min_shot_gap_s'] >= gap - 0.05                  # the gates time the ball: a few ms of jitter
+    check(out, 'supply_profile_ramp_and_rate', ok, **{k: {kk: v[kk] for kk in ('ramp_to_ready_s', 'max_throttle_step_per_ms',
+                                                                              'shots', 'min_shot_gap_s')} for k, v in res.items()})
+    # the pack sags from 21 V to 15.4 V a quarter of the way up the ramp: the ramp stretches from there, never steps
+    rig_t = {}
+
+    def supply(t):
+        return 21.0 if t < rig_t.get('drop', 1e9) else 15.4
+    rig = SimRig(seed=92, hopper=40, supply_v=supply, supply_r=0.02)
+    h = Host(rig)
+    h.boot()
+    h.arm_up()
+    t0 = rig.hw.t
+    h.send('FIRE', balls=2, rate_d=30, fps_d=0, req=8)
+    h.run(3.0, lambda: bool(h.fw.spin and h.fw.spin.get('phase') == 'ramp'))
+    t_ramp = rig.hw.t
+    rig_t['drop'] = t_ramp + 0.25
+    h.run(12.0, lambda: bool(h.events(M.EV_BURST_DONE, t0)))
+    thr = [(t, v[0]) for t, v in h.dshot_log if t >= t_ramp]
+    def at(tq):
+        return next(v for t, v in thr if t >= tq)
+    d = rig_t['drop']
+    slope_before = (at(d) - at(t_ramp + 0.05)) / (d - t_ramp - 0.05)            # throttle / s, on the 21 V row (1.0 s)
+    slope_after = (at(d + 0.30) - at(d + 0.05)) / 0.25                           # ... on the 15 V row (2.4 s)
+    steps = [b[1] - a[1] for a, b in zip(thr, thr[1:])]
+    shots = [t for t, f in h.shots(t0) if not f['flags'] & M.S_STRAY]
+    ratio = slope_after / slope_before if slope_before > 0 else None
+    sag_ok = ratio is not None and 0.33 <= ratio <= 0.50 and max(steps) <= 1.0 / 1000 + 0.002 and len(shots) == 2 and \
+        (shots[1] - shots[0]) >= 1.0 - 0.05
+    check(out, 'supply_sag_stretches_the_ramp', sag_ok, slope_before_per_s=round(slope_before, 4),
+          slope_after_per_s=round(slope_after, 4), ratio=round(ratio, 3) if ratio else None, expected_ratio=round(1.0 / 2.4, 3),
+          max_step_per_ms=round(max(steps), 6), shots=len(shots),
+          shot_gap_s=round(shots[1] - shots[0], 3) if len(shots) == 2 else None)
+    un = _spin_profile(36.0, seed=93, balls=2, bus_unmeasured=True)
+    check(out, 'supply_unmeasured_is_slowest', un['profile'][:2] == (2.4, 1.0) and un['ramp_to_ready_s'] is not None and
+          un['ramp_to_ready_s'] >= 2.4 and (un['min_shot_gap_s'] or 9) >= 0.95, ramp_to_ready_s=un['ramp_to_ready_s'],
+          min_shot_gap_s=un['min_shot_gap_s'])
+    hi = _spin_profile(56.0, seed=94, balls=2, until_s=3.0)
+    check(out, 'supply_over_54v_refused', hi['max_throttle'] == 0.0 and 210 in hi['refused'] and hi['shots'] == 0,
+          refused=hi['refused'], max_throttle=hi['max_throttle'])
+
+
 def t_overspeed(out):
     rig = SimRig(seed=51, hopper=10)
     h = Host(rig)
@@ -449,8 +546,8 @@ def main():
     ap.add_argument('--out', default=str(R / 'exports' / 'turret' / 'firmware'))
     a = ap.parse_args()
     out = {}
-    for fn in (t_protocols, t_numbers, t_tilt, t_arm_conditions, t_ramp_and_guard, t_set_point_ramps, t_overspeed,
-               t_aim_disarmed, t_feed_release, t_host_bridge):
+    for fn in (t_protocols, t_numbers, t_tilt, t_arm_conditions, t_ramp_and_guard, t_set_point_ramps, t_supply_profile,
+               t_overspeed, t_aim_disarmed, t_feed_release, t_host_bridge):
         fn(out)
     ok = all(v['pass_'] for v in out.values())
     res = {'pass': ok, 'cases': out, 'scope': __doc__.split('\n\n')[1].strip()}
