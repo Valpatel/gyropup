@@ -50,7 +50,7 @@ CAT = _catalogue()
 # lines are the electronics on its boards (docs/turret-plan.md 2, docs/turret-wiring.md). Qty 0: bought with another.
 TURRET_BOUGHT = {
     'pan_servo': ('feetech-sts3215-c018-12v', 1), 'tilt_servo': ('feetech-sts3215-c018-12v', 1),
-    'flywheel_motor_l': ('sunnysky-x2216-880kv-v3', 1), 'flywheel_motor_r': ('sunnysky-x2216-880kv-v3', 1),
+    'flywheel_motor_l': ('sunnysky-x2216-1400kv-v3', 1), 'flywheel_motor_r': ('sunnysky-x2216-1400kv-v3', 1),
     'esc_l': ('repeat-robotics-am32-35a-esc', 1), 'esc_r': ('repeat-robotics-am32-35a-esc', 1),
     # D51: the backup pair with stock AM32 and a documented telemetry pad, bought with the first order; the pair that
     # returns bidirectional-DShot eRPM on the bench (plan N10) is the one built in, the other is the spare
@@ -81,7 +81,7 @@ TURRET_BOUGHT = {
     'hw_hub_nuts': ('nut_m5_nyloc', 2),
     'hw_standoff_m3x14': ('turret_standoff_m3x14', 4),
     # electronics (docs/turret-plan.md 2.4, 5.4)
-    'el_mcu': ('adafruit-feather-m4-can-4759', 1), 'el_flywheel_regulator': ('pololu-d24v150f12-2885', 1),
+    'el_mcu': ('adafruit-feather-m4-can-4759', 1), 'el_flywheel_regulator': ('tdk-lambda-i6a4w020a033v-001-r', 1),
     'el_12v_regulators': ('pololu-d36v50f12-4095', 1), 'el_5v_regulator': ('pololu-d36v28f5-3782', 1),
     'el_safety_switch': ('pololu-2815', 1), 'el_capacitors': ('panasonic-eeu-fr1v102', 2),
     'el_555': ('ti-ne555p', 1), 'el_opto': ('vishay-4n35', 1), 'el_monostables': ('ti-cd74hc423e', 1), 'el_supervisor': ('microchip-mcp120', 1),
