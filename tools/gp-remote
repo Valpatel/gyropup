@@ -41,11 +41,13 @@ rsync -a --delete --exclude .git --exclude '*.egg-info' --exclude __pycache__ \
 rsync -a --delete --exclude .git --exclude .venv --exclude __pycache__ --exclude node_modules \
   --exclude 'exports/sim/' --exclude 'exports/leg/rig_meshes/' "$wt/" "$host:$dest/"
 cmd=$(printf '%q ' "$@")
+b64=$(printf 'mkdir -p "$TMPDIR"; %s' "$cmd" | base64 -w0)   # base64 so quotes in the command survive ssh
 set +e
 ssh "$host" "cd ~/$dest && ln -sfn ~/gyropup-compute/.venv .venv && cd '$rel' && \
   exec flock -w 3600 ~/$dest/.gp-remote.lock env PATH=\$HOME/gyropup-compute/.venv/bin:\$PATH \
   MPLBACKEND=Agg TMPDIR=\$HOME/gyropup-compute/tmp \
-  LD_PRELOAD=\$HOME/gyropup-compute/gmsh-env/lib/libcrypto.so.3:\$HOME/gyropup-compute/gmsh-env/lib/libssl.so.3 nice -n 5 bash -c 'mkdir -p \$TMPDIR; $cmd'"
+  LD_PRELOAD=\$HOME/gyropup-compute/gmsh-env/lib/libcrypto.so.3:\$HOME/gyropup-compute/gmsh-env/lib/libssl.so.3 \
+  nice -n 5 bash -c \"echo $b64 | base64 -d | bash\""
 rc=$?
 set -e
 for p in "${pulls[@]}"; do
