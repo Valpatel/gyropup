@@ -1,0 +1,197 @@
+(footprint "Littelfuse_MINI_FL1_178.6764.0001"
+	(version 20260206)
+	(generator "pcbnew")
+	(generator_version "10.0")
+	(layer "F.Cu")
+	(descr "Littelfuse MINI FL1 PCB holder for MINI blade fuses, 58 V DC, 22 A continuous")
+	(property "Reference" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(uuid "36e3fe67-fd2e-434d-9c76-3ffc2f266103")
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "Value" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "a63e5c91-785a-4546-9b99-cd48c62b2d2f")
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "95bda43b-4e4d-4ecf-9477-563df7003615")
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "0ceb7a96-67f6-47dd-8d8b-f0642e2600ee")
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(attr through_hole)
+	(duplicate_pad_numbers_are_jumpers no)
+	(fp_line
+		(start -7.22 -3.12)
+		(end 7.22 -3.12)
+		(stroke
+			(width 0.15)
+			(type default)
+		)
+		(layer "F.SilkS")
+		(uuid "2d471023-7e77-4f62-956e-b61a71c2225c")
+	)
+	(fp_line
+		(start -7.22 3.12)
+		(end -7.22 -3.12)
+		(stroke
+			(width 0.15)
+			(type default)
+		)
+		(layer "F.SilkS")
+		(uuid "89e8d9da-5971-4b21-8e72-3cf79460259e")
+	)
+	(fp_line
+		(start 7.22 -3.12)
+		(end 7.22 3.12)
+		(stroke
+			(width 0.15)
+			(type default)
+		)
+		(layer "F.SilkS")
+		(uuid "350d024b-7611-4a6f-88cc-0e3e9d44ddc3")
+	)
+	(fp_line
+		(start 7.22 3.12)
+		(end -7.22 3.12)
+		(stroke
+			(width 0.15)
+			(type default)
+		)
+		(layer "F.SilkS")
+		(uuid "b0f7f6b7-5f49-4031-9087-fb0cb560e6d7")
+	)
+	(fp_line
+		(start -7.35 -3.25)
+		(end 7.35 -3.25)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(layer "F.CrtYd")
+		(uuid "367411ff-332d-4493-8494-5749fef09f80")
+	)
+	(fp_line
+		(start -7.35 3.25)
+		(end -7.35 -3.25)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(layer "F.CrtYd")
+		(uuid "d165d643-ebc8-4cbe-8ff3-032785580713")
+	)
+	(fp_line
+		(start 7.35 -3.25)
+		(end 7.35 3.25)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(layer "F.CrtYd")
+		(uuid "cf3193c8-55ea-4ff0-b563-ee313354d333")
+	)
+	(fp_line
+		(start 7.35 3.25)
+		(end -7.35 3.25)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(layer "F.CrtYd")
+		(uuid "3c6d21e7-ac90-4c32-ace3-5c0a74e0a06e")
+	)
+	(fp_line
+		(start -7.1 -3)
+		(end 7.1 -3)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(layer "F.Fab")
+		(uuid "ef3ca928-8897-4a3d-809b-91d6db2ec7b7")
+	)
+	(fp_line
+		(start -7.1 3)
+		(end -7.1 -3)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(layer "F.Fab")
+		(uuid "491af863-eb29-4db9-b61d-75c1f4055dc3")
+	)
+	(fp_line
+		(start 7.1 -3)
+		(end 7.1 3)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(layer "F.Fab")
+		(uuid "01b39c27-46ec-4465-8df2-b455f4e2af95")
+	)
+	(fp_line
+		(start 7.1 3)
+		(end -7.1 3)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(layer "F.Fab")
+		(uuid "36f62467-f564-41d4-aba6-e7031538a133")
+	)
+	(pad "" np_thru_hole oval
+		(at 0 0)
+		(size 2.7 4.3)
+		(drill oval 2.7 4.3)
+		(layers "*.Cu" "*.Mask")
+		(thermal_bridge_angle 45)
+		(uuid "e16af8de-dd64-467c-b9d6-bacdad4b5e36")
+	)
+	(pad "1" thru_hole circle
+		(at -4 0)
+		(size 3.2 3.2)
+		(drill 1.5)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "106fcff1-ed5e-4756-88a3-061afc98e707")
+	)
+	(pad "2" thru_hole circle
+		(at 4 0)
+		(size 3.2 3.2)
+		(drill 1.5)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "c2e36326-1d59-4161-8072-6dc74e671b6f")
+	)
+	(embedded_fonts no)
+)

@@ -1,0 +1,4 @@
+(fp_lib_table
+  (version 7)
+  (lib (name "fuse-board")(type "KiCad")(uri "${KIPRJMOD}/fuse-board.pretty")(options "")(descr "the fuse board's own footprints"))
+)

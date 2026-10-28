@@ -1,0 +1,100 @@
+(footprint "TieSlot_4x10"
+	(version 20260206)
+	(generator "pcbnew")
+	(generator_version "10.0")
+	(layer "F.Cu")
+	(descr "non-plated slot 4 x 10 for a cable tie through the power plate's slot")
+	(property "Reference" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(uuid "89fdaea1-6c12-4441-95dd-e2287cd459b1")
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "Value" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "c5d2eeae-7f02-46bc-b2c9-2727ad9069fb")
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "3090ec49-be00-471d-80ad-967301716a46")
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "1ca6262a-f94d-49c9-a470-9cb3fd9ea4e9")
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(duplicate_pad_numbers_are_jumpers no)
+	(fp_line
+		(start -2.5 -5.5)
+		(end 2.5 -5.5)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(layer "F.CrtYd")
+		(uuid "26453ae0-cc7f-4c7f-b6b9-81409eaf6443")
+	)
+	(fp_line
+		(start -2.5 5.5)
+		(end -2.5 -5.5)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(layer "F.CrtYd")
+		(uuid "7f0a84b1-dd98-466c-ac43-a1be8c12056b")
+	)
+	(fp_line
+		(start 2.5 -5.5)
+		(end 2.5 5.5)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(layer "F.CrtYd")
+		(uuid "37773203-8172-42a7-b056-4a45033058f0")
+	)
+	(fp_line
+		(start 2.5 5.5)
+		(end -2.5 5.5)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(layer "F.CrtYd")
+		(uuid "a5b2a077-8eb7-47ed-9fb9-3118fbf25a24")
+	)
+	(pad "" np_thru_hole oval
+		(at 0 0)
+		(size 4 10)
+		(drill oval 4 10)
+		(layers "*.Cu" "*.Mask")
+		(thermal_bridge_angle 45)
+		(uuid "9d1b58c9-44c0-4763-9fad-74d2f6612f52")
+	)
+	(embedded_fonts no)
+)

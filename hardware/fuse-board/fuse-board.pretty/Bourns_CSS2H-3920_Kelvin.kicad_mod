@@ -1,0 +1,202 @@
+(footprint "Bourns_CSS2H-3920_Kelvin"
+	(version 20260206)
+	(generator "pcbnew")
+	(generator_version "10.0")
+	(layer "F.Cu")
+	(descr "Bourns CSS2H-3920 1 mOhm shunt, 4-terminal (Kelvin) layout, net-tied sense pads")
+	(property "Reference" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(uuid "07f246c9-72d2-49c0-b7f7-16d4fff3fb99")
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "Value" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "acb7108e-4826-4775-8e3d-e874b5b96843")
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "5efb14f5-d389-48c5-95ac-4a4749b84c18")
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "721ee2fe-6056-4cd7-bf22-82d859cfd7b0")
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(attr smd)
+	(net_tie_pad_groups "1, 2" "3, 4")
+	(duplicate_pad_numbers_are_jumpers no)
+	(fp_line
+		(start -4.2 -3.65)
+		(end -4.2 -2.9)
+		(stroke
+			(width 0.3)
+			(type default)
+		)
+		(layer "F.Cu")
+		(uuid "4849de7d-5cd1-41f1-8a08-491396464032")
+	)
+	(fp_line
+		(start 4.2 -3.65)
+		(end 4.2 -2.9)
+		(stroke
+			(width 0.3)
+			(type default)
+		)
+		(layer "F.Cu")
+		(uuid "39ad0f58-f5e7-4bd3-947f-09097f373e81")
+	)
+	(fp_line
+		(start -1.6 -3.35)
+		(end 1.6 -3.35)
+		(stroke
+			(width 0.15)
+			(type default)
+		)
+		(layer "F.SilkS")
+		(uuid "2011542c-e018-49ed-a4e3-a817f9f40dac")
+	)
+	(fp_line
+		(start -1.6 3.35)
+		(end 1.6 3.35)
+		(stroke
+			(width 0.15)
+			(type default)
+		)
+		(layer "F.SilkS")
+		(uuid "78fdd92c-7638-44fe-80d0-4ce99ef8f756")
+	)
+	(fp_line
+		(start -5.75 -4.15)
+		(end 5.75 -4.15)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(layer "F.CrtYd")
+		(uuid "ec938a1d-b001-470a-addb-deff324bd725")
+	)
+	(fp_line
+		(start -5.75 3.35)
+		(end -5.75 -4.15)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(layer "F.CrtYd")
+		(uuid "4e051fd3-d329-43a8-baa9-27e1d125dce1")
+	)
+	(fp_line
+		(start 5.75 -4.15)
+		(end 5.75 3.35)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(layer "F.CrtYd")
+		(uuid "82e8ab93-3b69-4721-95eb-c4ae789f6605")
+	)
+	(fp_line
+		(start 5.75 3.35)
+		(end -5.75 3.35)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(layer "F.CrtYd")
+		(uuid "1cf4be3f-eb2d-4540-9b67-65d1fc4cf00c")
+	)
+	(fp_line
+		(start -5 -2.6)
+		(end 5 -2.6)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(layer "F.Fab")
+		(uuid "07aceed8-f73a-4029-9292-82d43504711d")
+	)
+	(fp_line
+		(start -5 2.6)
+		(end -5 -2.6)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(layer "F.Fab")
+		(uuid "fcf87131-fb51-4ad6-bdc6-700b7d7fc29a")
+	)
+	(fp_line
+		(start 5 -2.6)
+		(end 5 2.6)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(layer "F.Fab")
+		(uuid "8468248c-5266-4afd-8eca-413032209345")
+	)
+	(fp_line
+		(start 5 2.6)
+		(end -5 2.6)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(layer "F.Fab")
+		(uuid "ed452dc1-66c0-455f-a6dd-a283bcaf743e")
+	)
+	(pad "1" smd rect
+		(at -3.8 0)
+		(size 3.4 6.2)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(thermal_bridge_angle 45)
+		(uuid "b44e6f18-d5f1-4f78-b6bf-cb40c3e125df")
+	)
+	(pad "2" smd rect
+		(at -4.2 -3.65)
+		(size 0.5 0.5)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(thermal_bridge_angle 45)
+		(uuid "5d1cb93d-0913-4e42-bee6-c5689cf70032")
+	)
+	(pad "3" smd rect
+		(at 4.2 -3.65)
+		(size 0.5 0.5)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(thermal_bridge_angle 45)
+		(uuid "d7bc91fc-e153-44ac-9fc6-47bffa64b556")
+	)
+	(pad "4" smd rect
+		(at 3.8 0)
+		(size 3.4 6.2)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(thermal_bridge_angle 45)
+		(uuid "72cc09a9-ecd4-4fd1-a027-39aacf0ddfc3")
+	)
+	(embedded_fonts no)
+)
