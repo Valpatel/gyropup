@@ -85,8 +85,8 @@ the dossier. The settled load rides with the hopper (I-pile, T0.2), so the motio
 | motion | pass, 1 warning (7,560 poses: pan 35 x tilt 6 x dial 3 x flap 3 x wheels 2, plus the pinion 13; 9,903 s on gb10-01) | run 2 found the flap's knuckle on the lid at 51.1 deg and the hub overlaps, both fixed |
 | assembly | 220 pass, 6 fail | stop_lug: the cradle cannot be lowered into the yoke with the lug on its plate (the upper stop sector, 8.2 mm before its seat); base_board: drawn in a closed pocket of pan_base (no straight way in); both open mechanical items for the next round. The poured load, the rotor's leads (a cable) and the MR126's races (pressed in from inside before the cradle) are not straight insertions |
 | wall | 16 pass, 12 fail | features under 0.8 mm, mostly boolean sliver skins: cartridge_body and ring_carrier 0.002 mm, pan_ring 0.025, pan_base 0.07, compute_shell 0.10, laser_mount 0.12, tilt_yoke 0.15, cradle 0.20; dial 0.64, hopper 0.62, hopper_lid 0.70, pivot_spacer 0.75 |
-| turret-path, turret-ammo | not yet bound to this record | they bind only to a record their own machine reproduces (the GB10's hashes differ from the workstation's): run `cad/turret_gates.py --dossier` on gb10-01 |
-| dossier lint | sections: S8 gated, S1, S2, S6, S7 built, S3, S4, S5 draft until turret-path and turret-ammo exist | T4.7 (the cartridge's recoil SF) and T8.2 (the stand's switch cut-out) open |
+| turret-path, turret-ammo | pass (410 and 6 checks), bound to this record on gb10-01 | they bind only to a record their own machine reproduces: the GB10's hashes differ from the workstation's |
+| dossier lint | 7 errors (section-below-gated: the failures above and the FEA's open recoil case), 2 warnings; S8 gated, the others built | T4.7 (the cartridge's recoil SF) and T8.2 (the stand's switch cut-out) open |
 
 ---
 
