@@ -443,3 +443,10 @@ docs/body-orders.md 4).
   7.5 A, F11 the J501 10 A, F12 the other 12 V loads 7.5 A, F9-F10 spare.
 - **Mechanics first** (issue #13): cad/body_joints.py models every screw as a joint and checks it through the CAD; it
   found and fixed thirteen faults (the commit messages list them); cad/body_sections.py writes docs/body-sections.md.
+- **The robot's scenarios at 36 V on the D65 model (33.80 kg; tools/simulate.py --v2, exports/body/sim-v2.json): 14 of
+  15 pass. fall_side fails: with the motors cut and a sideways push, the body lands at 3,408 N against the 3,000 N
+  limit.** The 13S tub reached the legs' stops first (25 mm of clearance at the stops); the D65 bay's skids touch the
+  floor under a 139 mm leg, so in a power cut the body lands on the skids at about 1.7 m/s instead of on the stops.
+  The packs then carry that load into their rail adapters. Options (issue #10): crush-pad skids (a 10 mm TPU 85A
+  lattice, modelled with its stiffness in the sim's contact), a shallower bay (packs lying on their side need 122 mm
+  across, more than the 116 mm between the knees: no), or the leg's stops raised to 140 mm (the leg workstream's).

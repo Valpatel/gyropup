@@ -1,17 +1,17 @@
 {
  "date": "2026-10-27",
  "model": "sim/robot_v2.py (the body as built, D62)",
- "mass_kg": 32.151,
- "ledger_kg": 32.151,
+ "mass_kg": 33.799,
+ "ledger_kg": 33.799,
  "mass_reconciles": true,
- "bus_v": 48.1,
+ "bus_v": 36.0,
  "com_mm": [
-  0.6,
-  0.5,
-  -18.7
+  1.0,
+  -1.3,
+  -31.1
  ],
  "track_mm": 414.3,
- "passed": 15,
+ "passed": 14,
  "total": 15,
  "scenarios": {
   "stand": {
@@ -21,16 +21,16 @@
    "top_speed_mps": 0.01,
    "worst_motor": [
     "motor_f_l",
-    15.44,
-    0.129
+    16.09,
+    0.134
    ],
    "saturated_s": 0.0,
    "body_impact_peak_n": 0,
    "fell_at": null,
    "lqr": {
-    "mass_body": 29.5109,
-    "com_height": 0.2938,
-    "inertia_body": 0.9464
+    "mass_body": 31.1588,
+    "com_height": 0.2823,
+    "inertia_body": 1.0546
    }
   },
   "squat": {
@@ -39,188 +39,190 @@
    "max_theta_deg": 0.12,
    "top_speed_mps": 0.01,
    "worst_motor": [
-    "motor_f_l",
-    17.2,
-    0.143
+    "motor_f_r",
+    18.55,
+    0.155
    ],
    "saturated_s": 0.0,
    "body_impact_peak_n": 0,
    "fell_at": null,
    "lqr": {
-    "mass_body": 29.5109,
-    "com_height": 0.3484,
-    "inertia_body": 1.0782
+    "mass_body": 31.1588,
+    "com_height": 0.335,
+    "inertia_body": 1.1733
    }
   },
   "push": {
    "pass": true,
    "reasons": [],
-   "max_theta_deg": 6.77,
-   "top_speed_mps": 0.9,
+   "max_theta_deg": 6.69,
+   "top_speed_mps": 0.88,
    "worst_motor": [
-    "wheel_l",
-    4.67,
-    0.327
+    "wheel_r",
+    4.73,
+    0.331
    ],
    "saturated_s": 0.0,
    "body_impact_peak_n": 0,
    "fell_at": null,
    "lqr": {
-    "mass_body": 29.5109,
-    "com_height": 0.2938,
-    "inertia_body": 0.9464
+    "mass_body": 31.1588,
+    "com_height": 0.2823,
+    "inertia_body": 1.0546
    }
   },
   "drive": {
    "pass": true,
    "reasons": [],
-   "max_theta_deg": 5.28,
+   "max_theta_deg": 5.29,
    "top_speed_mps": 1.21,
    "worst_motor": [
     "wheel_r",
     2.98,
-    0.208
+    0.209
    ],
    "saturated_s": 0.0,
    "body_impact_peak_n": 0,
    "fell_at": null,
    "lqr": {
-    "mass_body": 29.5109,
-    "com_height": 0.2938,
-    "inertia_body": 0.9464
+    "mass_body": 31.1588,
+    "com_height": 0.2823,
+    "inertia_body": 1.0546
    }
   },
   "slope": {
    "pass": true,
    "reasons": [],
-   "max_theta_deg": 5.85,
+   "max_theta_deg": 5.87,
    "top_speed_mps": 0.73,
    "worst_motor": [
-    "wheel_l",
-    2.92,
-    0.204
+    "wheel_r",
+    3.07,
+    0.215
    ],
    "saturated_s": 0.0,
    "body_impact_peak_n": 0,
    "fell_at": null,
    "lqr": {
-    "mass_body": 29.5109,
-    "com_height": 0.2938,
-    "inertia_body": 0.9464
+    "mass_body": 31.1588,
+    "com_height": 0.2823,
+    "inertia_body": 1.0546
    }
   },
   "targets": {
    "pass": true,
    "reasons": [],
-   "max_theta_deg": 3.84,
-   "top_speed_mps": 0.59,
+   "max_theta_deg": 3.86,
+   "top_speed_mps": 0.63,
    "worst_motor": [
-    "motor_r_l",
-    23.57,
-    0.196
+    "wheel_l",
+    3.42,
+    0.239
    ],
    "saturated_s": 0.0,
    "body_impact_peak_n": 0,
    "fell_at": null,
    "lqr": {
-    "mass_body": 29.5109,
-    "com_height": 0.338,
-    "inertia_body": 1.052
+    "mass_body": 31.1588,
+    "com_height": 0.316,
+    "inertia_body": 1.1291
    }
   },
   "look": {
    "pass": true,
    "reasons": [],
-   "max_theta_deg": 0.42,
-   "top_speed_mps": 0.03,
+   "max_theta_deg": 0.56,
+   "top_speed_mps": 0.04,
    "worst_motor": [
-    "motor_f_l",
-    16.27,
-    0.136
+    "motor_f_r",
+    16.98,
+    0.142
    ],
    "saturated_s": 0.0,
    "body_impact_peak_n": 0,
    "fell_at": null,
    "lqr": {
-    "mass_body": 29.5109,
-    "com_height": 0.2991,
-    "inertia_body": 0.9588
+    "mass_body": 31.1588,
+    "com_height": 0.2874,
+    "inertia_body": 1.0656
    }
   },
   "fall_front": {
    "pass": true,
    "reasons": [],
-   "max_theta_deg": 12.98,
-   "top_speed_mps": 0.25,
+   "max_theta_deg": 7.16,
+   "top_speed_mps": 0.16,
    "worst_motor": [
     "motor_f_l",
-    15.44,
-    0.129
+    16.09,
+    0.134
    ],
    "saturated_s": 2.933,
-   "body_impact_peak_n": 1919,
+   "body_impact_peak_n": 2085,
    "fell_at": null,
    "lqr": {
-    "mass_body": 29.5109,
-    "com_height": 0.2938,
-    "inertia_body": 0.9464
+    "mass_body": 31.1588,
+    "com_height": 0.2823,
+    "inertia_body": 1.0546
    }
   },
   "fall_back": {
    "pass": true,
    "reasons": [],
-   "max_theta_deg": 15.83,
-   "top_speed_mps": 0.31,
+   "max_theta_deg": 7.0,
+   "top_speed_mps": 0.16,
    "worst_motor": [
     "motor_f_l",
-    15.44,
-    0.129
+    16.09,
+    0.134
    ],
-   "saturated_s": 2.933,
-   "body_impact_peak_n": 1877,
+   "saturated_s": 2.932,
+   "body_impact_peak_n": 2173,
    "fell_at": null,
    "lqr": {
-    "mass_body": 29.5109,
-    "com_height": 0.2938,
-    "inertia_body": 0.9464
+    "mass_body": 31.1588,
+    "com_height": 0.2823,
+    "inertia_body": 1.0546
    }
   },
   "fall_side": {
-   "pass": true,
-   "reasons": [],
-   "max_theta_deg": 10.48,
-   "top_speed_mps": 0.14,
+   "pass": false,
+   "reasons": [
+    "body impact 3408 N (limit 3000 N)"
+   ],
+   "max_theta_deg": 0.53,
+   "top_speed_mps": 0.05,
    "worst_motor": [
     "motor_f_l",
-    15.44,
-    0.129
+    16.09,
+    0.134
    ],
-   "saturated_s": 2.939,
-   "body_impact_peak_n": 109,
+   "saturated_s": 2.94,
+   "body_impact_peak_n": 3408,
    "fell_at": null,
    "lqr": {
-    "mass_body": 29.5109,
-    "com_height": 0.2938,
-    "inertia_body": 0.9464
+    "mass_body": 31.1588,
+    "com_height": 0.2823,
+    "inertia_body": 1.0546
    }
   },
   "kerb_drop": {
    "pass": true,
    "reasons": [],
-   "max_theta_deg": 8.02,
-   "top_speed_mps": 0.96,
+   "max_theta_deg": 7.98,
+   "top_speed_mps": 0.95,
    "worst_motor": [
-    "motor_r_l",
-    39.26,
-    0.327
+    "motor_r_r",
+    39.7,
+    0.331
    ],
    "saturated_s": 0.0,
    "body_impact_peak_n": 0,
    "fell_at": null,
    "lqr": {
-    "mass_body": 29.5109,
-    "com_height": 0.2938,
-    "inertia_body": 0.9464
+    "mass_body": 31.1588,
+    "com_height": 0.2823,
+    "inertia_body": 1.0546
    }
   },
   "landing": {
@@ -229,74 +231,74 @@
    "max_theta_deg": 0.04,
    "top_speed_mps": 0.01,
    "worst_motor": [
-    "motor_f_l",
-    49.0,
-    0.408
+    "motor_f_r",
+    49.81,
+    0.415
    ],
    "saturated_s": 0.0,
    "body_impact_peak_n": 0,
    "fell_at": null,
    "lqr": {
-    "mass_body": 29.5109,
-    "com_height": 0.2938,
-    "inertia_body": 0.9464
+    "mass_body": 31.1588,
+    "com_height": 0.2823,
+    "inertia_body": 1.0546
    }
   },
   "side_kerb": {
    "pass": true,
    "reasons": [],
-   "max_theta_deg": 9.8,
-   "top_speed_mps": 0.89,
+   "max_theta_deg": 10.32,
+   "top_speed_mps": 0.91,
    "worst_motor": [
     "wheel_l",
-    9.74,
-    0.681
+    10.37,
+    0.725
    ],
-   "saturated_s": 0.028,
+   "saturated_s": 0.035,
    "body_impact_peak_n": 0,
    "fell_at": null,
    "lqr": {
-    "mass_body": 29.5109,
-    "com_height": 0.2938,
-    "inertia_body": 0.9464
+    "mass_body": 31.1588,
+    "com_height": 0.2823,
+    "inertia_body": 1.0546
    }
   },
   "curb": {
    "pass": true,
    "reasons": [],
-   "max_theta_deg": 6.79,
-   "top_speed_mps": 1.02,
+   "max_theta_deg": 7.13,
+   "top_speed_mps": 1.03,
    "worst_motor": [
-    "wheel_r",
-    6.3,
-    0.441
+    "wheel_l",
+    6.22,
+    0.435
    ],
-   "saturated_s": 0.002,
+   "saturated_s": 0.031,
    "body_impact_peak_n": 0,
    "fell_at": null,
    "lqr": {
-    "mass_body": 29.5109,
-    "com_height": 0.2938,
-    "inertia_body": 0.9464
+    "mass_body": 31.1588,
+    "com_height": 0.2823,
+    "inertia_body": 1.0546
    }
   },
   "recoil": {
    "pass": true,
    "reasons": [],
-   "max_theta_deg": 6.37,
-   "top_speed_mps": 0.74,
+   "max_theta_deg": 6.33,
+   "top_speed_mps": 0.73,
    "worst_motor": [
     "motor_f_l",
-    15.44,
-    0.129
+    16.09,
+    0.134
    ],
    "saturated_s": 0.0,
    "body_impact_peak_n": 0,
    "fell_at": null,
    "lqr": {
-    "mass_body": 29.5109,
-    "com_height": 0.2938,
-    "inertia_body": 0.9464
+    "mass_body": 31.1588,
+    "com_height": 0.2823,
+    "inertia_body": 1.0546
    }
   }
  },
