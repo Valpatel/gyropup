@@ -399,16 +399,33 @@ def frame_boxes():
 # ------------------------------------------------------------------------------------------- mass and centre of mass
 
 HARDWARE_G = 300.0               # frame screws, standoffs, PEM nuts, inserts, cable ties (est)
+WHEEL_CONNECTORS_G = 45.0       # D69: a DTP 4-way and a DT 6-way pair a wheel, mated, with contacts (est)
 HARNESS_G = 400.0                # every wire and connector of the body (est; docs/body-electrical.md lists them)
 LEG_STOPS_EXTRA_G = 200.0        # per leg: the hip frame's 13 mm flanges and the stop redesign (main cdda86d, 2026-10-27: 'roughly
                                  # 0.2 kg' over leg.json's 9.28 kg; D53 says 204 g) until exports/leg/leg.json carries them
 LEG_TOTAL_BEFORE_STOPS_G = 9282  # leg.json's mass_g.total that the 0.2 kg was announced against: once the leg publishes another
                                  # total (its stops and the strength fixes in), the ledger takes that total as it is
 
-# D57 (docs/body-next-plan.md 2.4): the robot is designed for 32.5 kg (16.25 kg a leg) in every strength case and held under
-# 32.0 kg as built; the plan's 28.5 / 10.3 kg budget is retired. cad/test_body.py gates every commit on it.
-BUDGET = {'robot_kg': 32.0, 'legs_kg_each': 9.6, 'body_and_head_kg': 12.8, 'design_mass_kg': 32.5, 'design_half_mass_kg': 16.25,
-          'com_x_mm': 10.0, 'com_y_mm': 5.0, 'basis': 'D57, docs/body-next-plan.md 2.4 (the 28.5 / 10.3 kg budget of docs/body-plan.md 1.8 is retired)'}
+# D69 (docs/decisions.yaml, 2026-10-28): the robot is designed for 35.5 kg (17.75 kg a leg) in every strength case and held
+# under 35.0 kg as built, covering D65's packs and D69's 10 in hub wheels; D57's 32.0 / 32.5 kg is retired. The leg and
+# body sub-budgets split the 35.0 kg: each leg is leg.json with D53's stops (9.48 kg) plus the D69 wheel's 1.33 kg over the
+# BotWheel and 40 g for the foot's clamp hardware (10.85 kg); the body and head get the rest (13.3 kg). cad/test_body.py
+# gates every commit on it.
+BUDGET = {'robot_kg': 35.0, 'legs_kg_each': 10.85, 'body_and_head_kg': 13.3, 'design_mass_kg': 35.5, 'design_half_mass_kg': 17.75,
+          'com_x_mm': 10.0, 'com_y_mm': 5.0,
+          'basis': 'D69 (35.0 kg as built, 35.5 kg design; it replaces D57\'s 32.0 / 32.5 kg); legs 2 x 10.85 kg (leg.json + D53 stops '
+                   '+ the D69 wheel at its listed 3.53 kg + the clamp hardware), body and head 13.3 kg'}
+
+# D69's wheel: a 10 in hoverboard-class hub motor with a 10 x 2.125 pneumatic tyre. exports/leg/bom.json still lists the
+# ODrive BotWheel (2.2 kg) until the leg workstream's foot change lands (issue #25); until then the ledger puts this wheel
+# in the BotWheel's rows (the rotor 60 %: tyre, rim and magnets; the stator, shaft and halls 40 %), at the wheel's centre with
+# the tyre's y band moved out by its extra width (64 mm against 44.6 mm). The mass is the one listed number read on a
+# seller's page; D69 brackets 3.5-4.0 kg and two motors are weighed before the foot is cut (W1): GYROPUP_WHEEL_CHANGE_G adds
+# a change per wheel on top (e.g. 470 for the 4.0 kg the leg rig simulated).
+D69_WHEEL = {'key': 'hoverboard-10in-36v-350w', 'mass_g': 3530.0, 'od_mm': 254.0, 'tyre_width_mm': 64.0, 'rotor_share': 0.6,
+             'botwheel_width_mm': 44.6, 'sim_upper_mass_g': 4000.0,
+             'basis': 'D69 wheel: e-gizmo 230300029 lists 3.53 kg with the 10 x 2.125 pneumatic tyre (research/air-tyre-hub-wheels.md 3); '
+                      'weigh two before the foot is cut (docs/wheel-change-plan.md W1)'}
 
 # The mass levers of docs/body-next-plan.md 2.3, in its order: scheduled for P2/P3, then on call when the ledger crosses
 # the ceiling (D57). grams < 0 saves mass. 'taken' says how the ledger shows the lever done (a check on the CAD), so the
@@ -423,13 +440,32 @@ LEVERS = [
     ('fuse_board', 7, -35, 20.0, 'P3', 'scheduled', 'the fuse board (D60) instead of ten inline MINI holders and their leads', 'fuse_board'),
     ('board_shunt', 8, -75, 3.0, 'P3', 'scheduled', 'the 1 mOhm shunt on the fuse board instead of the 85 g Blue Sea 150 A block', 'board_shunt'),
     ('harness_10awg', 9, -60, 25.0, 'P2', 'scheduled', 'the main path in 10 AWG, the VESC leads in 14 AWG, lengths cut to P0\'s measurements', 'harness_10awg'),
-    ('pololu_12v', 10, -200, 69.95, 'P3', 'on call', 'Pololu D42V110F12 instead of the 216 g DDR-60L-12 (when Pololu restocks it)', None),
+    ('pololu_12v', 10, 0, 0.0, 'P3', 'retired', 'Pololu D42V110F12 instead of the DDR-60L-12: moot since D65 (the TRACO TEP 150 replaced the DDR-60L-12)', None),
     ('cheeks_rev_b', 11, -150, 120.0, 'P3', 'on call', 'cheeks Rev B: lightening holes where S1 < 40 MPa (-150), or 1/8 in with more standoffs (-330)', None),
     ('alu_standoffs', 12, -80, 30.0, 'P3', 'on call', 'aluminium M5 x 120 hex standoffs in place of the printed deck posts', None),
     ('cooler_34mm', 13, -200, 49.0, 'P3', 'on call', 'the 34 mm WS-RDN-601 cooler instead of the fitted G48R (the user\'s call after the thermal test)', None),
     ('lidar_cable_1m', 14, -150, 0.0, 'P3', 'on call', 'the VLP-16 cable shortened to 1 m (the user\'s call: a Velodyne waiver)', None),
     ('turret_levers', 15, -51, 0.0, 'P2', 'on call', 'the turret\'s own: a 24-ball hopper, a one-board bay (its plan, not scheduled here)', None),
+    # after D69 (issue #10): what else could close the gap, none taken without the user's or the coordinator's word
+    ('packs_weighed', 16, -210, 0.0, 'P3', 'on call', 'the two DCB609 weighed: DeWalt\'s DCB547-XJ sheet says 1.46 kg against the 1.565 kg (3.45 lb) carried', None),
+    ('wheel_8in5', 17, -460, 0.0, 'P1', 'on call', 'D69\'s backup wheel, the 8.5 in of the same family (about 3.3 kg each, unverified): jump +15 mm, kerb 35 mm', None),
+    ('packs_6ah', 18, -1000, 0.0, 'P1', 'on call', 'two DCB606 FLEXVOLT 6.0 Ah in the same bay and adapters (about 1.0 kg lighter the pair, 2/3 the energy: masses to read from DeWalt)', None),
 ]
+
+
+def wheel_is_d69_override() -> bool:
+    """True while exports/leg/bom.json still lists the BotWheel: the ledger then carries D69's wheel in its place."""
+    keys = {r['key'] for r in json.loads((R / 'exports/leg/bom.json').read_text())['per_leg']}
+    return 'odrive-botwheel' in keys
+
+
+def wheel_g() -> float:
+    """One wheel's mass (g) in the ledger: D69's wheel while the leg's BOM still lists the BotWheel, else the leg's own."""
+    rows = {r['key']: r for r in json.loads((R / 'exports/leg/bom.json').read_text())['per_leg']}
+    if 'odrive-botwheel' in rows:
+        return D69_WHEEL['mass_g']
+    hub = next((r for k, r in rows.items() if 'hoverboard' in k or 'hub-motor' in k), None)
+    return hub['mass_g_each'] if hub else D69_WHEEL['mass_g']
 
 
 def leg_stops_extra_g() -> tuple:
@@ -479,8 +515,8 @@ def levers(parts=None, L=None) -> list:
 
 
 def gate(led: dict) -> dict:
-    """D57's gate on a P3 ledger: the ledger as it is, and with every scheduled lever not yet in the CAD taken (their
-    grams as the plan states them), against the ceiling: robot <= 32.0, each leg <= 9.6, body and head <= 12.8."""
+    """D69's gate on a P3 ledger: the ledger as it is, and with every scheduled lever not yet in the CAD taken (their
+    grams as the plan states them), against the ceiling (BUDGET): the robot, each leg, the body and head."""
     open_g = sum(l['grams'] for l in led['levers'] if l['kind'] == 'scheduled' and l['status'] == 'open')
     proj = led['total_kg'] + open_g / 1000.0
     proj_bh = led['body_and_head_kg'] + open_g / 1000.0
@@ -491,8 +527,11 @@ def gate(led: dict) -> dict:
             'body_and_head_with_levers_kg': round(proj_bh, 3), 'leg_each_kg': round(legs_each, 3),
             'pass': proj <= b['robot_kg'] + 1e-9 and proj_bh <= b['body_and_head_kg'] + 1e-9 and legs_each <= b['legs_kg_each'] + 1e-9,
             'on_call_next': [l['key'] for l in led['levers'] if l['kind'] == 'on call' and l['status'] == 'open'][:3],
-            'rule': 'the P3 ledger with every scheduled lever taken (the open ones at the plan\'s grams) under the ceiling, each leg '
-                    'under 9.6 kg and the body and head under 12.8 kg; over it, the on-call levers go in order before the next order (D57)'}
+            'margin_kg': round(b['robot_kg'] - proj, 3),
+            'on_call_open_g': sum(l['grams'] for l in led['levers'] if l['kind'] == 'on call' and l['status'] == 'open'),
+            'rule': f"the P3 ledger with every scheduled lever taken (the open ones at the plan's grams) under the {b['robot_kg']} kg "
+                    f"ceiling, each leg under {b['legs_kg_each']} kg and the body and head under {b['body_and_head_kg']} kg (D69); "
+                    'over it, the on-call levers go in order before the next order, each with the user\'s or the coordinator\'s word'}
 
 
 def leg_rows(h_mm=300.0):
@@ -507,7 +546,7 @@ def leg_rows(h_mm=300.0):
     bom = {r['key']: r for r in json.loads((R / 'exports/leg/bom.json').read_text())['per_leg']}
     each = lambda k: bom[k]['mass_g_each'] if k in bom else 0.0
     bought = {'motor_front': each('robstride-rs-04'), 'motor_rear': each('robstride-rs-04'),
-              'wheel_tyre': each('odrive-botwheel') * 0.55, 'wheel_hub': each('odrive-botwheel') * 0.45,
+              'wheel_tyre': wheel_g() * D69_WHEEL['rotor_share'], 'wheel_hub': wheel_g() * (1 - D69_WHEEL['rotor_share']),
               'bearing_61812_front': each('bearing_61812'), 'bearing_61812_rear': each('bearing_61812'),
               'apex_61812': 2 * each('bearing_61812'), 'knee_6201_front_in': each('bearing_6201'), 'knee_6201_front_out': each('bearing_6201'),
               'knee_6201_rear_in': each('bearing_6201'), 'knee_6201_rear_out': each('bearing_6201'), 'knee_pin_front': each('knee_pin'),
@@ -523,6 +562,9 @@ def leg_rows(h_mm=300.0):
         c = v.Center()
         if part in bought:
             g = bought[part]
+            if part.startswith('wheel_') and wheel_is_d69_override():     # the tyre's band moves out by its extra width
+                dy = (D69_WHEEL['tyre_width_mm'] - D69_WHEEL['botwheel_width_mm']) / 2 * (1 if c.y > 0 else -1)
+                c = (c.x, c.y + dy, c.z)
         elif part.startswith('output_adapter') and 'output_adapter' in machined:
             g = machined['output_adapter']
             c = solid_mass_properties(v, 1.0, 1.0, part)
@@ -541,6 +583,8 @@ def leg_rows(h_mm=300.0):
     for side, sy in (('L', 1.0), ('R', -1.0)):
         rows.append((f'{side}.small_hardware', sum(rest.values()), (0.0, sy * (bp.y_off() + 30.0), 0.0)))
     extra = leg_stops_extra_g()[0]
+    if wheel_is_d69_override():                           # D69's wheel in place of the BotWheel leg.json counts
+        extra += wheel_g() - each('odrive-botwheel')
     for side, sy in (('L', 1.0), ('R', -1.0)):            # to leg.json's total (its own count of every part)
         placed = sum(g for n, g, _ in rows if n.startswith(side + '.'))
         left = leg_json['total'] + extra - placed
@@ -609,6 +653,9 @@ def ledger(L=None, parts=None, stage='P3'):
     zt = bp.z_tray_top()
     add('frame', 'hardware', HARDWARE_G, (0.0, 0.0, 40.0), 'estimate')
     add('power', 'harness', HARNESS_G, (60.0, 0.0, zt + 20.0), 'estimate (docs/body-wiring.md)')
+    for side, sy in (('l', 1.0), ('r', -1.0)):          # D69: each wheel's DTP04-4P/DTP06-4S (phases) and DT04-6P/DT06-6S (halls,
+        add('power', f'wheel_connectors_{side}', WHEEL_CONNECTORS_G, (-30.0, sy * 70.0, zt),   # NTC) at the cheek where the wheel lead enters
+            'estimate (two Deutsch pairs with contacts and wedgelocks, at the belly box\'s side gland)')
     if stage == 'P3':
         for n, g, c, b in shell_items(parts):
             add('shell', n, g, c, b)
