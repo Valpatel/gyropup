@@ -2,11 +2,11 @@
  "what": "the turret's interface for the body (docs/turret-next-plan.md 3.1, task N5)",
  "frame": "the turret frame T: x forward, y left, z up (mm), the origin on the pan axis in the TM face",
  "written_by": "cad/build_turret.py through cad/turret_mount.py, from the CAD as built",
- "mass_kg": 1.6393,
+ "mass_kg": 1.6841,
  "com_mm": [
   -5.6,
-  -4.9,
-  95.5
+  -4.7,
+  95.7
  ],
  "tm": {
   "bolts_mm": [
@@ -199,28 +199,28 @@
  "mass": {
   "pose": "pan 0, tilt 0 (the centre turns with pan about the pan axis)",
   "with_30_balls": {
-   "mass_g": 1639.2,
+   "mass_g": 1684.0,
    "com_mm": [
     -5.6,
-    -4.9,
-    95.5
+    -4.7,
+    95.7
    ]
   },
   "empty": {
-   "mass_g": 1584.3,
+   "mass_g": 1629.1,
    "com_mm": [
-    -4.1,
-    -5.0,
-    92.9
+    -4.2,
+    -4.9,
+    93.2
    ]
   },
   "with_30_balls_at_tilt_min": {
    "tilt_deg": -25.0,
-   "mass_g": 1639.2,
+   "mass_g": 1684.0,
    "com_mm": [
-    -4.0,
-    -4.9,
-    96.8
+    -4.3,
+    -4.7,
+    97.1
    ]
   },
   "balls": {
@@ -228,8 +228,8 @@
    "mass_g": 54.9,
    "note": "30 Rival rounds x 1.83 g"
   },
-  "com_off_pan_axis_mm": 7.4,
-  "com_above_deck_on_riser_mm": 125.5,
+  "com_off_pan_axis_mm": 7.3,
+  "com_above_deck_on_riser_mm": 125.7,
   "budget": "D49 (proposed): 1.70 kg with a full hopper, the centre at most 100 mm above the TM face",
   "source": "cad/turret.py mass_properties() (printed parts by the printed-part model, bought parts at their catalogue masses, the not-modelled allowance at the turntable)"
  },

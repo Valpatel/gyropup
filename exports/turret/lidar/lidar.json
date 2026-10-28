@@ -1798,13 +1798,13 @@
   }
  ],
  "points": {
-  "sampled": 5202257,
+  "sampled": 5310993,
   "near_enough_to_check": {
    "barrel": 23490
   }
  },
  "how": "surface samples of every panning and tilting part (~1.2 mm apart), the ones that can come within the margin at some pose kept (a lower bound over pan and tilt), and the ball path; the limit is the deepest tilt in 0.5 deg steps that keeps the margin",
- "seconds": 149,
+ "seconds": 45,
  "lidar": {
   "d": 103.3,
   "h": 71.7,
