@@ -1,6 +1,6 @@
 # Gyropup balance firmware (D63): the Nucleo-G474RE image, or on the host the control core's library and tests.
 #
-#   cmake -S firmware/balance -B build/fw-mcu -DCMAKE_TOOLCHAIN_FILE=firmware/balance/cmake/arm-none-eabi.cmake
+#   cmake -S firmware/balance -B build/fw-mcu -DCMAKE_TOOLCHAIN_FILE="$PWD/firmware/balance/cmake/arm-none-eabi.cmake"
 #   cmake --build build/fw-mcu                    # balance.elf / .bin / .hex, the sizes printed
 #   cmake -S firmware/balance -B build/fw-host && cmake --build build/fw-host && ctest --test-dir build/fw-host
 cmake_minimum_required(VERSION 3.22)

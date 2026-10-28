@@ -7,7 +7,8 @@ RS-04s and MuJoCo rig (hil/harness.py).
   1. stand_up replayed within 5 % of leg length and lean of sim/leg_rig.py run() at 16.25 kg and 48.1 V;
   2. UVLO: the warning at 45.5 V, the jump gate closing at 44.0 V, the sit at 41.6 V (resting), on a falling pack;
   3. the jump gate: a jump at 48.1 V, a scaled one at 44.2 V, none at 43.9 V;
-  4. the radio stop, the Jetson's heartbeat, people near.
+  4. the radio stop, the Jetson's heartbeat, people near;
+  5. the robot profile balancing sim/robot_v2.py's model like sim/controller_v2.py (hil/sil_robot.py).
 Each test writes its numbers into hil/hil-results.json. Skipped (with the reason) when the `rig` package (legrig/program,
 GYROPUP_RIG_DIR) or the host library is not there; CI builds and unit-tests the firmware but does not run these.
 """
@@ -220,3 +221,19 @@ def test_bridge_carries_frames_both_ways():
     br.pump()
     f = host.recv(0)
     assert f is not None and (f[0] >> 24) == 2 and br.count == [1, 1]
+
+
+# ---------------------------------------------------------------------------------------------- 5. the whole robot
+
+def test_robot_balances_like_the_simulations_controller():
+    """The robot profile on sim/robot_v2.py's model (hil/sil_robot.py): stand, drive 0.5 m/s, stop, crouch, against
+    sim/controller_v2.py on the same model; the leg rig cannot check the LQR, the pendulum estimate or the wheel signs."""
+    import sil_robot
+    if not (sil_robot.BUILD / 'robot.xml').exists():
+        pytest.skip('build/sim/v2 is missing: python -m sim.robot_v2')
+    res = sil_robot.summary(sil_robot.run_firmware(), sil_robot.run_python())
+    record('robot_sil', res)
+    assert not res['fell'] and res['final_mode'] == 'run'
+    assert res['worst_diff_x'] < 0.05 and res['worst_diff_v'] < 0.05 and res['worst_diff_L'] < 0.005
+    assert res['worst_diff_theta'] < 1.0 and res['theta_estimate_error_deg'] < 0.2
+    assert res['at_3.9s']['v_fw'] > 0.4                     # it drove forward when asked to
