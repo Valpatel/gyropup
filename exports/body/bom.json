@@ -2128,8 +2128,18 @@
    ],
    "rules": "SendCutSend rules checked: none broken",
    "price_estimate_usd_each": 65.0,
-   "price_usd_each": null,
-   "price_note": "an estimate until the instant price is read: run tools/sendcutsend_quote.py --only deck (last read: None)",
+   "price_usd_each": 79.11,
+   "price_read_on": "2026-10-28",
+   "price_usd_line": 79.11,
+   "price_breaks_usd_each": {
+    "2": 58.62,
+    "10": 41.89,
+    "50": 33.9,
+    "100": 28.26,
+    "1000": 23.68
+   },
+   "ships_by": "Nov 2",
+   "price_note": "SendCutSend's instant price, read in its app on 2026-10-28 from the uploaded DXF (tools/sendcutsend_quote.py): 5052-H32 aluminium 0.1 in, bending 4 bends found in the DXF's BEND layer, each 90 deg UP, deburred, qty 1; cutting alone $62.8 each",
    "stage": "P1"
   },
   {
@@ -2190,8 +2200,18 @@
    ],
    "rules": "SendCutSend rules checked: none broken",
    "price_estimate_usd_each": 25.0,
-   "price_usd_each": null,
-   "price_note": "an estimate until the instant price is read: run tools/sendcutsend_quote.py --only turret_plate (last read: None)",
+   "price_usd_each": 44.11,
+   "price_read_on": "2026-10-28",
+   "price_usd_line": 44.11,
+   "price_breaks_usd_each": {
+    "2": 30.22,
+    "10": 23.79,
+    "50": 18.36,
+    "100": 16.69,
+    "1000": 12.52
+   },
+   "ships_by": "Nov 2",
+   "price_note": "SendCutSend's instant price, read in its app on 2026-10-28 from the uploaded DXF (tools/sendcutsend_quote.py): 6061-T6 aluminium 0.125 in, tapping 1, hardware 1, deburred, qty 1; cutting alone $27.45 each",
    "stage": "P2"
   },
   {
@@ -2502,9 +2522,9 @@
   }
  ],
  "price_usd_known": 1608.6,
- "p2_usd": 43.61,
+ "p2_usd": 62.72,
  "made_to_order_estimate_usd": 459.0,
  "p3_usd": 84.03,
- "made_to_order_usd": 564.06,
- "made_to_order_priced": false
+ "made_to_order_usd": 578.17,
+ "made_to_order_priced": true
 }

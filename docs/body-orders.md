@@ -23,14 +23,14 @@ How to order:
 | cheek | 2 | 5052-H32 aluminium 0.187 in | 184.0 x 223.0 | 2 bends, 90 deg, SendCutSend's 0.25 in radius (K 0.43, bend deduction 0.356 in): the DXF's BEND layer marks the lines (the app reads them; each 90 deg UP); flanges as the STEP; 8 x PEM SS-M5-0 pressed by SendCutSend (hardware insertion), positions as the STEP; 8 x 90 deg countersinks for M4 flat heads (SendCutSend countersinking), the side the STEP shows | [DXF](../exports/body/sendcutsend/cheek_5052-H32_0.187in_x2.dxf), [STEP](../exports/body/sendcutsend/cheek_5052-H32_0.187in_x2.step) | $63.87 (read 2026-10-27) | $127.74 |
 | floor_tray | 1 | 5052-H32 aluminium 0.125 in | 339.0 x 273.0 | 4 bends, 90 deg, SendCutSend's 0.125 in radius (K 0.44, bend deduction 0.216 in): the DXF's BEND layer marks the lines (the app reads them; each 90 deg UP); flanges as the STEP; 4 x PEM S-M4-0 pressed by SendCutSend (hardware insertion), positions as the STEP; tapping: the two Ø2.5 holes M3 x 0.5 (the VN-100) | [DXF](../exports/body/sendcutsend/floor_tray_5052-H32_0.125in_x1.dxf), [STEP](../exports/body/sendcutsend/floor_tray_5052-H32_0.125in_x1.step) | $80.62 (read 2026-10-27) | $80.62 |
 | belly_plate | 1 | 6061-T6 aluminium 0.1 in | 320.0 x 116.0 | 16 x PEM S-M4-0 pressed by SendCutSend (hardware insertion), positions as the STEP | [DXF](../exports/body/sendcutsend/belly_plate_6061-T6_0.100in_x1.dxf), [STEP](../exports/body/sendcutsend/belly_plate_6061-T6_0.100in_x1.step) | $62.16 (read 2026-10-27) | $62.16 |
-| deck | 1 | 5052-H32 aluminium 0.1 in | 350.3 x 284.3 | 4 bends, 90 deg, SendCutSend's 0.125 in radius (K 0.4, bend deduction 0.191 in): the DXF's BEND layer marks the lines (the app reads them; each 90 deg UP); flanges as the STEP | [DXF](../exports/body/sendcutsend/deck_5052-H32_0.100in_x1.dxf), [STEP](../exports/body/sendcutsend/deck_5052-H32_0.100in_x1.step) | ~$65 (estimate) | $65.00 |
+| deck | 1 | 5052-H32 aluminium 0.1 in | 350.3 x 284.3 | 4 bends, 90 deg, SendCutSend's 0.125 in radius (K 0.4, bend deduction 0.191 in): the DXF's BEND layer marks the lines (the app reads them; each 90 deg UP); flanges as the STEP | [DXF](../exports/body/sendcutsend/deck_5052-H32_0.100in_x1.dxf), [STEP](../exports/body/sendcutsend/deck_5052-H32_0.100in_x1.step) | $79.11 (read 2026-10-28) | $79.11 |
 | compute_pallet | 1 | 6061-T6 aluminium 0.125 in | 194.0 x 158.0 | 8 x 90 deg countersinks for M3 flat heads (SendCutSend countersinking), the side the STEP shows | [DXF](../exports/body/sendcutsend/compute_pallet_6061-T6_0.125in_x1.dxf), [STEP](../exports/body/sendcutsend/compute_pallet_6061-T6_0.125in_x1.step) | $49.40 (read 2026-10-27) | $49.40 |
 | power_plate | 1 | 5052-H32 aluminium 0.1 in | 124.0 x 206.0 | 10 x PEM F-M5-2 pressed by SendCutSend (hardware insertion), positions as the STEP; 6 x PEM F-M4-2 pressed by SendCutSend (hardware insertion), positions as the STEP | [DXF](../exports/body/sendcutsend/power_plate_5052-H32_0.100in_x1.dxf), [STEP](../exports/body/sendcutsend/power_plate_5052-H32_0.100in_x1.step) | $47.48 (read 2026-10-27) | $47.48 |
 | bus_bar | 2 | C110 copper 0.125 in | 110.0 x 20.0 | cut only: the five Ø6.4 holes take the lugs' M6 screws into nuts held in the printed insulator (SendCutSend does no service on a part under 1 in wide) | [DXF](../exports/body/sendcutsend/bus_bar_C110_0.125in_x2.dxf), [STEP](../exports/body/sendcutsend/bus_bar_C110_0.125in_x2.step) | $18.22 (read 2026-10-27) | $36.44 |
 | bay_floor | 1 | 5052-H32 aluminium 0.063 in | 310.0 x 134.0 | 2 bends, 90 deg, SendCutSend's 0.035 in radius (K 0.42, bend deduction 0.096 in): the DXF's BEND layer marks the lines (the app reads them; each 90 deg UP); flanges as the STEP; 10 x PEM S-M3-0 pressed by SendCutSend (hardware insertion), positions as the STEP | [DXF](../exports/body/sendcutsend/bay_floor_5052-H32_0.063in_x1.dxf), [STEP](../exports/body/sendcutsend/bay_floor_5052-H32_0.063in_x1.step) | $51.12 (read 2026-10-27) | $51.12 |
 | bay_side | 2 | 5052-H32 aluminium 0.063 in | 310.0 x 128.6 |  | [DXF](../exports/body/sendcutsend/bay_side_5052-H32_0.063in_x2.dxf), [STEP](../exports/body/sendcutsend/bay_side_5052-H32_0.063in_x2.step) | $22.05 (read 2026-10-27) | $44.10 |
 
-**SendCutSend: $564.06** for the set (instant prices read 2026-10-27 in SendCutSend's app); the plan's estimate was ~$459. Shipping is free over SendCutSend's threshold. Backup: OSH Cut (oshcut.com), which prices the same DXF instantly and also bends and inserts PEM nuts. The bus bars can instead be two Victron VBB115040020 (150 A, 70 V, $17.82 each, in catalog/body.json), which need no insulators.
+**SendCutSend: $578.17** for the set (instant prices read 2026-10-27 in SendCutSend's app); the plan's estimate was ~$459. Shipping is free over SendCutSend's threshold. Backup: OSH Cut (oshcut.com), which prices the same DXF instantly and also bends and inserts PEM nuts. The bus bars can instead be two Victron VBB115040020 (150 A, 70 V, $17.82 each, in catalog/body.json), which need no insulators.
 
 ## 2. Bought parts, by seller
 
@@ -232,11 +232,11 @@ The turret's mount plate (D59) goes under the deck at the riser: the riser's fou
 
 | Part | Qty | Made | Price each | Line | For |
 |---|---|---|---|---|---|
-| [turret_plate](../exports/body/sendcutsend/turret_plate_6061-T6_0.125in_x1.dxf) | 1 | SendCutSend: 6061-T6 aluminium 0.125 in, 2 x PEM SS-M5-0 pressed by SendCutSend (hardware insertion), positions as the STEP | ~$25 (estimate) | $25.00 | D59 |
+| [turret_plate](../exports/body/sendcutsend/turret_plate_6061-T6_0.125in_x1.dxf) | 1 | SendCutSend: 6061-T6 aluminium 0.125 in, 2 x PEM SS-M5-0 pressed by SendCutSend (hardware insertion), positions as the STEP | $44.11 (read 2026-10-28) | $44.11 | D59 |
 | [94459A775](https://www.mcmaster.com/94459A775/): Heat-Set Threaded Inserts for Plastic, Standard, Brass, M5 x 0.8 mm Th | 4 | McMaster-Carr (1 x 25-pack) | $6.82 | $6.82 | P2: 4 riser (cad/body_joints.py) |
 | [91239A224](https://www.mcmaster.com/91239A224/): Black-oxide class 10.9 button head hex drive screw, ISO 7380, M5 x 0.8 | 2 | McMaster-Carr (1 x 100-pack) | $11.79 | $11.79 | P2: 2 turret plate ends (cad/body_joints.py) |
 
-**P2 cart: $43.61** (whole packs; a line marked as taken from an earlier pack costs nothing here).
+**P2 cart: $62.72** (whole packs; a line marked as taken from an earlier pack costs nothing here).
 
 ## 6b. The P3 cart (the shell, the tub, the guards: order it with P3)
 
@@ -259,10 +259,10 @@ The shell and the tub's printed parts are in `exports/body/shell/` with their ow
 | | |
 |---|---|
 | Bought (section 2) | $1608.60 |
-| SendCutSend (section 1, partly estimated) | $564.06 |
+| SendCutSend (section 1, instant prices) | $578.17 |
 | Filament used (section 5) | $58.49 |
-| **Body P0 + P1** | **$2231.15** |
-| P2 cart (section 6) | $43.61 |
+| **Body P0 + P1** | **$2245.26** |
+| P2 cart (section 6) | $62.72 |
 | P3 cart (section 6b) | $84.03 |
 
 Not included: the compute and sensors (section 3, R13), the legs and their VESCs (the leg workstream's order), the turret (the turret workstream's), the shell (P3), shipping and tax.
