@@ -328,7 +328,7 @@ def deck_cases(record, mesh, want):
     # each screw joining the plates, with its clamped zone's diameter: under a riser foot the deck is sandwiched between the
     # Ø36 foot and the plate by the M5's preload (~5 kN), so the whole foot clamps; at the plate's two end nuts, the M5's own
     # zone (Ø14: the head's and the nut's cones)
-    plate_screws = ([(bp.tm()['pan_x'] + a, b, 2 * bf.RISER_FOOT_R) for a, b in bf.RISER_FEET]
+    plate_screws = ([(bp.tm()['pan_x'] + a, b, 2 * bf.RISER_FOOT_R - 0.5) for a, b in bf.RISER_FEET]   # a hair inside the rim (OCC)
                     + [(x, y, PLATE_CLAMP_D) for x, y in bf.turret_plate_end_holes()])
     if plate is not None:                       # D59: the turret mount plate under the deck (two plates in bending)
         # A bolted joint, not a bond: the plate hangs PLATE_GAP_MM under the deck, joined only by a clamp pad (the
