@@ -394,8 +394,10 @@ def sweep(T, pts_pan, pts_tilt, pans=np.arange(-170, 171, 5.0), tilts=np.arange(
                     deck_gap, worst = g, (float(pan), float(tilt))
             clear = True
             for name, b, t, d in ants:
-                q = p[(p[:, 2] > b[2]) & (p[:, 2] < t[2] + d)]
-                dist = float(np.hypot(q[:, 0] - b[0], q[:, 1] - b[1]).min()) - d / 2 if len(q) else 1e9
+                # the distance to the antenna as a capped cylinder: sideways off its radius, and up off its top
+                dxy = np.clip(np.hypot(p[:, 0] - b[0], p[:, 1] - b[1]) - d / 2, 0.0, None)
+                dz = np.clip(p[:, 2] - t[2], 0.0, None) + np.clip(b[2] - p[:, 2], 0.0, None)
+                dist = float(np.sqrt(dxy ** 2 + dz ** 2).min())
                 ant_min[name] = min(ant_min[name], dist)
                 if dist < 3.0:
                     clear = False

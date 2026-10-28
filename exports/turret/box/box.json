@@ -1,16 +1,16 @@
 {
  "checks": {
   "clearance": {
-   "deck_min_gap_mm": 50.7,
+   "deck_min_gap_mm": 136.7,
    "deck_worst_pose_deg": [
     -160.0,
     -25.0
    ],
    "antenna_min_gap_mm": {
-    "antenna_left_46.5": 91.6,
-    "antenna_left_145.5": 91.6,
-    "antenna_right_46.5": 91.6,
-    "antenna_right_145.5": 91.6
+    "antenna_left_46.5": 111.7,
+    "antenna_left_145.5": 111.7,
+    "antenna_right_46.5": 111.7,
+    "antenna_right_145.5": 111.7
    },
    "antenna_tilt_max_deg": [
     [
@@ -386,7 +386,7 @@
   },
   "design_gates": {
    "file": "exports/turret/gates.json",
-   "fingerprint": "d3e0198c2c3916e6",
+   "fingerprint": "90ff373d0168485e",
    "ok": true,
    "gates": {
     "hopper_in_cavity": {
@@ -400,6 +400,9 @@
     "path_in_cavity": {
      "ok": true,
      "spheres": 86
+    },
+    "ammo_range": {
+     "ok": true
     },
     "connected": {
      "ok": true,
@@ -440,11 +443,11 @@
    "how": "the BRepExtrema distance between the intake shroud and each leg (the deck cut round it, under the deck plate) and anything of the deck below its plate at each TM insert (none: the inserts are wholly in the 8 mm deck)"
   },
   "tipping": {
-   "total_kg": 3.41,
-   "com_height_mm": 148,
-   "tip_angle_deg": 31,
-   "push_to_tip_n": 10.6,
-   "push_height_mm": 285,
+   "total_kg": 4.26,
+   "com_height_mm": 190,
+   "tip_angle_deg": 25,
+   "push_to_tip_n": 10.2,
+   "push_height_mm": 371,
    "note": "J501: 368 g printed (its slice report) + 1.0 kg Orin, carrier and cooler (est); a sideways push at the tilt axis that lifts the box off its narrow edge"
   },
   "overspeed": {
@@ -536,9 +539,9 @@
    ],
    "hard_stop_deg": 173.5,
    "encoder_counts_per_turret_deg": 34.1,
-   "inertia_kg_m2": 0.00446,
-   "accel_at_cap_deg_s2": 56687,
-   "time_to_full_slew_ms": 1.6
+   "inertia_kg_m2": 0.00469,
+   "accel_at_cap_deg_s2": 53886,
+   "time_to_full_slew_ms": 1.7
   },
   "tilt": {
    "servo_stall_nm": 2.94,
@@ -591,13 +594,13 @@
      14.6
     ]
    ],
-   "from_height_m": 0.57,
-   "lands_m": 6.26,
+   "from_height_m": 0.656,
+   "lands_m": 6.65,
    "note": "a level shot from the bench (the box on a 0.3 m crate): [range m, time s, drop mm, speed m/s]; drag as a sphere, Cd 0.5"
   }
  },
  "masses_g": {
-  "turret_with_balls": 1684,
+  "turret_with_balls": 2533,
   "adapter": 357,
   "j501_printed": 368.2,
   "j501_inside_est": 1000.0
