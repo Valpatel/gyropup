@@ -507,10 +507,8 @@ TURRET_PLATE = {'stock': '6061-0.125', 'L': 160.0, 'W': 140.0,      # under the 
                 'end_pem_x': 10.0,                                   # its two PEM SS-M5-0 this far in from its +-x ends, on y = 0
                 'foot_pad_r': 20.0,                                  # the plate stays whole round each riser foot (its screw)
                 'notch': (4.0, 26.0)}                                # the rear-right corner cut away (x, y) for the turret harness's drop
-# (x, y, length, width) robot. The two front pockets (23, +-55, 24 x 22) are gone: D2's mesh-convergence run
-# (exports/body/fea/D2-convergence.json) put the plate's converged peak, ~160 MPa (SF 1.7), at its front corners, where the
-# pockets left a 4-5 mm ligament to the edges; they saved about 9 g between them
-TURRET_PLATE_POCKETS = [(-108.0, 56.0, 16.0, 20.0)]                           # the rear-left one (the rear-right is the notch)
+TURRET_PLATE_POCKETS = [(23.0, 55.0, 24.0, 22.0), (23.0, -55.0, 24.0, 22.0),   # (x, y, length, width) robot: the front corners
+                        (-108.0, 56.0, 16.0, 20.0)]                           # and the rear-left one (the rear-right is the notch)
 
 
 def turret_plate_xy():

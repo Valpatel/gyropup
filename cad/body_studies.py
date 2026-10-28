@@ -320,8 +320,16 @@ def deck_cases(record, mesh, want):
         pad = pad.union(bf.box(x - bp.POST_W / 2, x + bp.POST_W / 2, y - bp.POST_W / 2, y + bp.POST_W / 2, zd - LOAD_PAD_T, zd))
     model = deck.union(ris).union(pad)
     plate = parts.get('turret_plate')
-    if plate is not None:                       # D59: the turret mount plate bonded under the deck (two plates in bending)
-        model = model.union(plate.shape)
+    if plate is not None:                       # D59: the turret mount plate under the deck (two plates in bending)
+        # A bolted joint, not a bond: the plate hangs PLATE_GAP_MM under the deck, joined only by a clamp pad (the
+        # screw's clamped zone, Ø PLATE_CLAMP_D) at each of its six screws (the riser's four feet, its two end nuts).
+        # Bonded over its whole face, its outer corners pried against the deck and their stress rose with every mesh
+        # refinement (exports/body/fea/D2-convergence.json, 2026-10-28): the real plate is free to part from the deck there.
+        t = bp.tm()
+        screws = [(t['pan_x'] + a, b) for a, b in bf.RISER_FEET] + bf.turret_plate_end_holes()
+        model = model.union(plate.shape.translate((0, 0, -PLATE_GAP_MM)))
+        for x, y in screws:
+            model = model.union(bf.cyl_z(PLATE_CLAMP_D / 2, zd - PLATE_GAP_MM - 0.01, zd + 0.01, x, y))
     model = model.clean()
 
     def by_part(st, r):
@@ -383,6 +391,10 @@ def deck_cases(record, mesh, want):
         record('D2-turret-fall', st, 'D2', f'a 30 g fall of the {m:.2f} kg head (the turret plan\'s budget) at 45 deg, its centre {hcom:.0f} mm '
                'above the TM face: a tip-over' + (', the turret plate under the riser (D59: SF >= 2.0, the everyday target)'
                                                   if plate is not None else ' (SF >= 1.2, the abuse target)'), by_part, view=(30, -50))
+
+
+PLATE_GAP_MM = 0.5          # D2's model: the turret plate's face this far under the deck, away from its screws
+PLATE_CLAMP_D = 14.0        # an M5's clamped zone between the plates (about 2.8 d: the head's and the nut's cone)
 
 
 def body_g():
