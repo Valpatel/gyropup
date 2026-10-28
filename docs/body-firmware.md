@@ -17,7 +17,7 @@ docs/body-next-plan.md 4.1. Nothing has run on hardware yet: that is B13 (sectio
 | The jump scaled with the voltage | 41.0 V: **199 mm**, bus min 34.0 V, 70 A; 36.0 V: s 0.694, the push held to 50 A, **150 mm**, bus min 30.8 V; 34.1 V: s 0.431, 31 A, **104 mm**, bus min 30.9 V; 33.9 V: refused. Never through the cut-off | the same |
 | The bus current limit | a full-pack jump (72 A unlimited) with the peak lowered to 50 A: held at it (51.8 A worst, the INA228's 2 ms behind), the motors scaled to 0.74, still 178 mm, nothing trips | the same |
 | The regen clamp and the over-charge latch (no BMS) | a 41.0 V jump: the take-off tuck's 52 A of regeneration (bus 46.2 V) cut within 5 ms; the landing keeps its braking (27 ms over 42.5 V, lands at 154 mm of leg); the 44.0 V latch's filter peaks at 42.9 V. The bus stepped to 44.5 V while standing: latched in 46 ms, a normal sit (138 mm), latched through 40 V and a new RUN | the same |
-| (beyond B8) the law on the whole robot | the robot profile balances `sim/robot_v2.py`'s B3 model (32.15 kg) through the same emulated devices like `sim/controller_v2.py` does, both at 36 V: stand, 0.5 m/s, stop, crouch; never past 5.6 deg (the simulation's controller 5.6 deg), x within 12 mm, v 7 mm/s, leg length within 1.2 mm, the pendulum-angle estimate within 0.023 deg of MuJoCo's | `hil/sil_robot.py` |
+| (beyond B8) the law on the whole robot | the robot profile balances `sim/robot_v2.py`'s model of the real body with the D65 battery bay (33.58 kg, BUS_V 36 V) through the same emulated devices like `sim/controller_v2.py` does: stand, 0.5 m/s, stop, crouch; never past 5.54 deg (the simulation's controller 5.57 deg), x within 12 mm, v 7 mm/s, leg length within 1.2 mm, the pendulum-angle estimate within 0.023 deg of MuJoCo's | `hil/sil_robot.py` |
 | (beyond B8) the radio stop, the heartbeat, people near | MCU_RUN open 1 ms after the coil sense drops, the legs down and the motors stopped 451 ms after; the heartbeat sit 2.198 s after the last setpoint; people near refuses the jump and sits after 2.008 s | `hil/test_hil.py` |
 
 ## 2. Architecture
@@ -179,7 +179,7 @@ average: the Terrafirma 10 AWG DeWalt 20 V dock adapters are rated 30 A) and 80 
 push (`GP_BUS_I_CONT_A`, `GP_BUS_I_PEAK_A`; the 80 A MRBF main fuse of D55); the robot's own jump draws 70 A at most
 for about 0.3 s (HIL, 16.25 kg a leg), and B12 checks the adapters' contact temperature after ten jumps.
 
-The sit lengths: 110 mm on the robot (25 mm of the skids' clearance is at the stops, 101.5 mm), 150 mm on the rig.
+The sit lengths: 110 mm on the robot (near the stops at 101.5 mm; the D65 battery bay's skids reach the floor at a 139 mm leg, so the body rests on them and the wheels lift), 150 mm on the rig.
 How the robot sits onto its skids (the wheels' torque fades, the legs fold onto the stops) is a skeleton: B13/B14 on
 the tether decide it.
 
@@ -254,12 +254,13 @@ python -m sim.robot_v2 && python firmware/balance/tools/gen_model.py      # then
 python firmware/balance/tools/gen_model.py --check                       # 1 if the committed header is stale
 ```
 
-Today's header is from B3's model of the real body (32.15 kg, d1900ea; `--check` passes against it). On that model the
+Today's header is from the body's model with the D65 battery bay (33.58 kg; body/program 40c427b with BUS_V 36.0 and
+H_RANGE 160-375 mm: the bay's skids reach the floor under a 139 mm leg; `--check` passes against it). On B3's model the
 robot SIL first fell (82 deg): not the firmware, but the SIL's emulated VN-100, which read the base's angular velocity
 with `mj_objectVelocity(mjOBJ_BODY, local)`, in the body's principal-inertia frame. B3's full inertia tensor turns that
 frame 81 deg about z from the base's (the interim model's 25 deg), so the gyro's pitch rate was 0.16 of the truth and
 the LQR lost its theta_dot damping. The SIL now reads the `imu` site and checks its gyro against its own attitude.
-The SIL moves both controllers' motor speed lines to 36 V (model.json is at robot_v2's BUS_V, still 48.1 V).
+The SIL's INA228 reads model.json's `bus_v` (robot_v2's BUS_V, 36 V), the bus both controllers' speed lines are at.
 
 ## 9. Not done yet, and what B13 must do
 
@@ -276,6 +277,10 @@ The SIL moves both controllers' motor speed lines to 36 V (model.json is at robo
 - **The pendulum-angle trim** (`theta_trim`) and the wheels' directions are calibrated on the robot.
 - **The sit onto the skids and the robot's jump** (balance through the crouch, push, flight and landing) are skeletons:
   the rig profile's jump is the simulation's; the robot's is untested beyond the code.
+- **The regen clamp's choice** (accepted by the body): the legs keep their braking while lowering the robot onto its
+  stops. The alternatives, if the bench says otherwise: refuse jumps over about 38.5 V resting (the HIL's full-pack
+  landings keep their braking at 38.0 V and not at 39.0 V under a clamp on the landing too), or clamp the landing and
+  accept about 110 mm of leg at the bottom of a full-pack landing (the bay's skids reach the floor at 139 mm).
 - **Regeneration that the clamp leaves**: the first 5 ms of a hard brake (the INA228's sample and the cut: a jump's
   take-off tuck lifts a full pack's bus to 46.2 V for them), and the legs while they lower the robot onto its stops (a
   full-pack landing holds the bus over 42.5 V for 27 ms, 44.9 V at most). The 44.0 V latch (20 ms) is the backstop;
@@ -293,4 +298,4 @@ The SIL moves both controllers' motor speed lines to 36 V (model.json is at robo
   leg rig's 15S window: 46 V minimum, 58 V maximum, no regen clamp). The HIL's cross-check of the rig's own controller
   passes it the 10S minimum; the firmware's rig profile has the windows, the clamp and the latches above, but with the
   rig node as its bus source (no current reading) the current limit and the regen clamp do not act.
-- **The gains** are the simulation's at 32.15 kg (B3's model, section 8).
+- **The gains** are the simulation's at 33.58 kg (the body with the D65 battery bay, section 8).

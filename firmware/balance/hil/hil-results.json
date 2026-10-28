@@ -115,41 +115,41 @@
  },
  "robot_sil": {
   "at_3.9s": {
-   "L_fw_mm": 287.5,
-   "L_py_mm": 287.5,
-   "v_fw": 0.631,
-   "v_py": 0.633,
-   "x_fw": 0.968,
-   "x_py": 0.979
+   "L_fw_mm": 291.4,
+   "L_py_mm": 291.5,
+   "v_fw": 0.632,
+   "v_py": 0.634,
+   "x_fw": 0.961,
+   "x_py": 0.972
   },
   "at_5.9s": {
-   "L_fw_mm": 287.6,
-   "L_py_mm": 287.6,
-   "v_fw": -0.1,
-   "v_py": -0.102,
-   "x_fw": 1.473,
-   "x_py": 1.477
+   "L_fw_mm": 291.6,
+   "L_py_mm": 291.6,
+   "v_fw": -0.096,
+   "v_py": -0.099,
+   "x_fw": 1.478,
+   "x_py": 1.483
   },
   "at_7.9s": {
-   "L_fw_mm": 220.0,
-   "L_py_mm": 220.0,
-   "v_fw": -0.053,
-   "v_py": -0.054,
-   "x_fw": 1.278,
-   "x_py": 1.281
+   "L_fw_mm": 227.0,
+   "L_py_mm": 227.0,
+   "v_fw": -0.056,
+   "v_py": -0.056,
+   "x_fw": 1.281,
+   "x_py": 1.284
   },
   "bus_v": 36.0,
   "fell": false,
   "final_mode": "run",
-  "imu_pitch_rate_error": 0.0019265337096958976,
+  "imu_pitch_rate_error": 0.0016904586695635296,
   "seconds": 8.0,
-  "theta_estimate_error_deg": 0.02267559647934443,
-  "worst_diff_L": 0.0012226081020931812,
-  "worst_diff_theta": 0.14752613576350715,
-  "worst_diff_v": 0.006997148851983853,
-  "worst_diff_x": 0.012268441940618935,
-  "worst_theta_deg_firmware": 5.568844563791301,
-  "worst_theta_deg_python": 5.599606054956743
+  "theta_estimate_error_deg": 0.023015963381886054,
+  "worst_diff_L": 0.0011770307532599222,
+  "worst_diff_theta": 0.1463925153265957,
+  "worst_diff_v": 0.006939810626328008,
+  "worst_diff_x": 0.012488415227337013,
+  "worst_theta_deg_firmware": 5.535156473493021,
+  "worst_theta_deg_python": 5.566788715523154
  },
  "stand_up": {
   "boot_ms": 102,

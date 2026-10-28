@@ -87,7 +87,7 @@
 #define GP_SIT_FAST_S 0.3f              /* the radio stop: down in 0.3 s (B13: torque off and sat within 0.5 s) */
 #define GP_SIT_NORMAL_S 1.0f            /* UVLO, link lost, people near, the Jetson's sit */
 #define GP_SETTLE_S 0.15f               /* at the bottom: the feed-forward fades to zero, then the motors stop */
-#define GP_SIT_L_ROBOT_M 0.110f         /* m: near the stops (25 mm under the skids at 101.5 mm) */
+#define GP_SIT_L_ROBOT_M 0.110f         /* m: near the stops (101.5 mm); the D65 battery bay's skids reach the floor at 139 mm */
 #define GP_SIT_L_RIG_M 0.150f           /* m: the rig's sit-down (rig Limits.sit_to) */
 
 /* ---------------------------------------------------------------- the jump sequence (sim/leg_rig.py 'jump') */

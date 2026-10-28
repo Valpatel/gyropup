@@ -31,21 +31,14 @@ def command(t: float):
     return height, speed
 
 
-BUS_V = harness.DESIGN_BUS_V      # V: both controllers' motor speed lines and the INA228's reading (the 10S nominal, D65)
-
-
 class Plant:
-    def __init__(self, bus_v: float = BUS_V):
+    def __init__(self):
         import mujoco
         from sim.controller_v2 import RobotV2, place_standing
         self.mj = mujoco
         self.info = json.loads((BUILD / 'model.json').read_text())
-        # the model's speed lines are at robot_v2's BUS_V (model.json bus_v): move both to this bus, as the firmware
-        # does from the INA228's reading, so the two controllers clip alike
-        k = bus_v / float(self.info.get('bus_v', 48.1))
-        for key in ('leg_actuator', 'wheel_motor'):
-            self.info[key]['omega_max'] *= k
-        self.bus_v = bus_v
+        # the INA228 reads robot_v2's BUS_V (the 10S nominal, D65), the bus the simulation's speed lines are at
+        self.bus_v = float(self.info['bus_v'])
         self.m = mujoco.MjModel.from_xml_path(str(BUILD / 'robot.xml'))
         self.d = mujoco.MjData(self.m)
         self.rb = RobotV2(self.m, self.info)
@@ -190,6 +183,7 @@ def run_firmware(seconds: float = 8.0) -> dict:
         elif now > 2_000_000:
             raise RuntimeError(f'the firmware did not arm: {fwlib.MODES[s.mode]}, boot {s.boot_mask:#x}')
         now += 1000
+    log['bus_v'] = p.bus_v
     return log
 
 
@@ -199,7 +193,7 @@ def summary(fwl: dict, pyl: dict) -> dict:
            'worst_theta_deg_firmware': float(np.degrees(np.max(np.abs(fwl['theta'])))),
            'worst_theta_deg_python': float(np.degrees(np.max(np.abs(pyl['theta'])))),
            'theta_estimate_error_deg': float(np.degrees(np.max(np.abs(np.asarray(fwl['fw_theta']) - np.asarray(fwl['theta']))))),
-           'final_mode': fwlib.MODES[fwl['mode'][-1]], 'bus_v': BUS_V}
+           'final_mode': fwlib.MODES[fwl['mode'][-1]], 'bus_v': fwl['bus_v']}
     # the emulated VN-100 is self-consistent: its pitch rate is its pitch angle's rate (B3's model caught a gyro read in
     # the base's principal-inertia frame: 1/6 of the true pitch rate)
     dp = np.diff(fwl['imu_pitch']) / np.diff(fwl['t'])
