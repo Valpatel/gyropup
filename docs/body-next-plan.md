@@ -464,7 +464,12 @@ sim (sim/robot_v2.py `use_d69_wheel()`), the legs' loads (cad/body_legloads.py) 
 (firmware/balance/tools/gen_model.py) put the same wheel into sim.leg_rig's state, at the ledger's 3.53 kg. No leg file
 is edited.
 
-### 10.2 The mass gate (issue #10)
+### 10.2 The mass gate (issue #10; D71 replaces D69's numbers)
+
+**D71 (main e899d28):** 37.5 kg design (18.75 kg a leg), 37.0 kg as built. P3 is 36.75 kg, 36.25 kg with the scheduled
+levers: a 0.75 kg margin, and the test passes. The turret's 2.55 kg head (D66) would use about 0.85 kg of it. What
+follows is the state under D69.
+
 
 The P3 ledger is 36.75 kg: 36.25 kg with the scheduled levers, which is 1.25 kg over 35.0. That includes the
 crush pads' 0.23 kg (10.3); before the pads it was 36.55 / 36.05 kg. The gate is not relaxed:
@@ -509,10 +514,11 @@ Results, with the densified pad modelled as stiff as the 1 ms step allows:
 The robot sits on the pads under a 145 mm leg; they are D69's parking brake. The pads add 0.23 kg against the 30 g
 skids. Evidence: sim/bay_pad_study.py, exports/body/bay-pad-study.json and bay-pad-depth.json. Still to do:
 
-- The coupon test for the plateau (0.14-0.20 MPa over the 24 x 149 mm face), the onset stiffness and the rebound.
-- Sideways, the pad is rigid in the model. Under a sliding or slanted landing the VHB tape peels: about 1.7 MPa at the
-  tape's edge, the review estimates. The pad gets a printed lip round the floor's edge, or two M3 screws through the
-  floor's flange, before it is printed.
+- **Issue #26, before the pads are printed:**
+  - a coupon crush test and a drop and rebound test (acceptance: a plateau of 500-700 N a pad, at most 24 mm in a
+    1.6 m/s drop, a rebound at most 50 %, a slanted drop bonded);
+  - the retention: a 3 mm lip up the floor flange's outer face, and two M3 into new PEMs in each flange. The model's
+    pads are rigid sideways, and VHB alone may peel at about 1.7 MPa.
 
 ### 10.4 Track, stance and the wheel's connectors
 
