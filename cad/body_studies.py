@@ -320,7 +320,11 @@ def deck_cases(record, mesh, want):
         pad = pad.union(bf.box(x - bp.POST_W / 2, x + bp.POST_W / 2, y - bp.POST_W / 2, y + bp.POST_W / 2, zd - LOAD_PAD_T, zd))
     model = deck.union(ris).union(pad)
     plate = parts.get('turret_plate')
-    plate_screws = [(bp.tm()['pan_x'] + a, b) for a, b in bf.RISER_FEET] + bf.turret_plate_end_holes()
+    # each screw joining the plates, with its clamped zone's diameter: under a riser foot the deck is sandwiched between the
+    # Ø36 foot and the plate by the M5's preload (~5 kN), so the whole foot clamps; at the plate's two end nuts, the M5's own
+    # zone (Ø14: the head's and the nut's cones)
+    plate_screws = ([(bp.tm()['pan_x'] + a, b, 2 * bf.RISER_FOOT_R) for a, b in bf.RISER_FEET]
+                    + [(x, y, PLATE_CLAMP_D) for x, y in bf.turret_plate_end_holes()])
     if plate is not None:                       # D59: the turret mount plate under the deck (two plates in bending)
         # A bolted joint, not a bond: the plate hangs PLATE_GAP_MM under the deck, joined only by a clamp pad (the
         # screw's clamped zone, Ø PLATE_CLAMP_D) at each of its six screws (the riser's four feet, its two end nuts).
@@ -328,8 +332,8 @@ def deck_cases(record, mesh, want):
         # refinement (exports/body/fea/D2-convergence.json, 2026-10-28): the real plate is free to part from the deck there.
         t = bp.tm()
         model = model.union(plate.shape.translate((0, 0, -PLATE_GAP_MM)))
-        for x, y in plate_screws:
-            model = model.union(bf.cyl_z(PLATE_CLAMP_D / 2, zd - PLATE_GAP_MM - 0.01, zd + 0.01, x, y))
+        for x, y, d in plate_screws:
+            model = model.union(bf.cyl_z(d / 2, zd - PLATE_GAP_MM - 0.01, zd + 0.01, x, y))
     model = model.clean()
 
     def by_part(st, r):
@@ -351,8 +355,8 @@ def deck_cases(record, mesh, want):
         # POST_SKIP_MM of a pad's rim are reported apart and judged against the abuse target, like the posts' corners; the
         # screw's own bearing and the PEM's push-out are hand checks (docs/body-next-plan.md 10.6)
         clamp = np.zeros(len(c), bool)
-        for x, y in plate_screws:
-            clamp |= np.hypot(c[:, 0] - x, c[:, 1] - y) < PLATE_CLAMP_D / 2 + POST_SKIP_MM
+        for x, y, d in plate_screws:
+            clamp |= np.hypot(c[:, 0] - x, c[:, 1] - y) < d / 2 + POST_SKIP_MM
         vk = float(st.vm_elem[clamp & ok].max()) if (clamp & ok).any() else 0.0
         near |= clamp
         in_plate = (c[:, 2] < zd - 0.05) & ok & ~near
