@@ -1,5 +1,7 @@
 # Handoff: where the work stopped (2026-10-27)
 
+> **Start with GitHub issue #31 (pinned): "Program status: start here".** It has the live state of every workstream, with its branch, PR, issues and next step. Each issue's last comment has the exact resume steps. This file keeps the history.
+
 The session stopped near the weekly usage limit. Everything below was saved first: committed on main, committed on the
 turret branch, or written in the plan docs. Pick the work up from here.
 
