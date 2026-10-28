@@ -377,20 +377,103 @@ def frame_boxes():
     return out
 
 
-if __name__ == '__main__':
-    L = layout()
-    bad = check(L['items'], frame_boxes())
-    print(f"{len(L['items'])} items, {len(bad)} problems")
-    for b in bad:
-        print('  ', b)
-
-
 # ------------------------------------------------------------------------------------------- mass and centre of mass
 
 HARDWARE_G = 300.0               # frame screws, standoffs, PEM nuts, inserts, cable ties (est)
 HARNESS_G = 400.0                # every wire and connector of the body (est; docs/body-electrical.md lists them)
 LEG_STOPS_EXTRA_G = 200.0        # per leg: the hip frame's 13 mm flanges and the stop redesign (main cdda86d, 2026-10-27: 'roughly
-                                 # 0.2 kg' over leg.json's 9.28 kg) until exports/leg/leg.json carries them
+                                 # 0.2 kg' over leg.json's 9.28 kg; D53 says 204 g) until exports/leg/leg.json carries them
+LEG_TOTAL_BEFORE_STOPS_G = 9282  # leg.json's mass_g.total that the 0.2 kg was announced against: once the leg publishes another
+                                 # total (its stops and the strength fixes in), the ledger takes that total as it is
+
+# D57 (docs/body-next-plan.md 2.4): the robot is designed for 32.5 kg (16.25 kg a leg) in every strength case and held under
+# 32.0 kg as built; the plan's 28.5 / 10.3 kg budget is retired. cad/test_body.py gates every commit on it.
+BUDGET = {'robot_kg': 32.0, 'legs_kg_each': 9.6, 'body_and_head_kg': 12.8, 'design_mass_kg': 32.5, 'design_half_mass_kg': 16.25,
+          'com_x_mm': 10.0, 'com_y_mm': 5.0, 'basis': 'D57, docs/body-next-plan.md 2.4 (the 28.5 / 10.3 kg budget of docs/body-plan.md 1.8 is retired)'}
+
+# The mass levers of docs/body-next-plan.md 2.3, in its order: scheduled for P2/P3, then on call when the ledger crosses
+# the ceiling (D57). grams < 0 saves mass. 'taken' says how the ledger shows the lever done (a check on the CAD), so the
+# status is never typed by hand: (key, n, grams, cost_usd, stage, kind, what, taken-check name)
+LEVERS = [
+    ('shell_2mm', 1, -240, 0.0, 'P3', 'scheduled', 'shell panels in 2 mm PETG with 1.6 mm ribs instead of 3 mm (PA6-CF at the ear-pod bosses)', 'shell_from_cad'),
+    ('tray_cutouts', 2, -150, 62.0, 'P3', 'scheduled', 'floor tray Rev B: lightening cutouts where nothing bolts and T1 is low (1/8 in stays)', 'tray_lightened'),
+    ('deck_cutouts', 3, -120, 65.0, 'P3', 'scheduled', 'deck Rev B: cutouts outside the lidar, the TM pattern and the intake field', 'deck_lightened'),
+    ('turret_plate', 4, +135, 25.0, 'P2', 'scheduled', 'the turret mount plate under the deck at the riser, 6061-T6 0.125 in, pocketed (D59)', 'turret_plate'),
+    ('hollow_posts', 5, -100, 0.0, 'P2', 'scheduled', 'deck posts printed hollow (22 mm square, 4 mm walls) instead of solid', 'hollow_posts'),
+    ('pallet_cutouts', 6, -60, 30.0, 'P3', 'scheduled', 'compute pallet cutouts under the module between the tie-down and the standoffs', 'pallet_lightened'),
+    ('fuse_board', 7, -35, 20.0, 'P3', 'scheduled', 'the fuse board (D60) instead of ten inline MINI holders and their leads', 'fuse_board'),
+    ('board_shunt', 8, -75, 3.0, 'P3', 'scheduled', 'the 1 mOhm shunt on the fuse board instead of the 85 g Blue Sea 150 A block', 'board_shunt'),
+    ('harness_10awg', 9, -60, 25.0, 'P2', 'scheduled', 'the main path in 10 AWG, the VESC leads in 14 AWG, lengths cut to P0\'s measurements', 'harness_10awg'),
+    ('pololu_12v', 10, -200, 69.95, 'P3', 'on call', 'Pololu D42V110F12 instead of the 216 g DDR-60L-12 (when Pololu restocks it)', None),
+    ('cheeks_rev_b', 11, -150, 120.0, 'P3', 'on call', 'cheeks Rev B: lightening holes where S1 < 40 MPa (-150), or 1/8 in with more standoffs (-330)', None),
+    ('alu_standoffs', 12, -80, 30.0, 'P3', 'on call', 'aluminium M5 x 120 hex standoffs in place of the printed deck posts', None),
+    ('cooler_34mm', 13, -200, 49.0, 'P3', 'on call', 'the 34 mm WS-RDN-601 cooler instead of the fitted G48R (the user\'s call after the thermal test)', None),
+    ('lidar_cable_1m', 14, -150, 0.0, 'P3', 'on call', 'the VLP-16 cable shortened to 1 m (the user\'s call: a Velodyne waiver)', None),
+    ('turret_levers', 15, -51, 0.0, 'P2', 'on call', 'the turret\'s own: a 24-ball hopper, a one-board bay (its plan, not scheduled here)', None),
+]
+
+
+def leg_stops_extra_g() -> tuple:
+    """(grams a leg, basis): the stops' and flanges' mass the ledger adds to exports/leg/leg.json's total until the leg
+    publishes a total with them in."""
+    total = json.loads((R / 'exports/leg/leg.json').read_text())['mass_g']['total']
+    if round(total) == LEG_TOTAL_BEFORE_STOPS_G:
+        return LEG_STOPS_EXTRA_G, f'leg.json {total} g + {LEG_STOPS_EXTRA_G:.0f} g announced for the stops and flanges (D53)'
+    return 0.0, f'leg.json {total} g (published with the stops in)'
+
+
+def lever_taken(check: str, parts=None, L=None) -> bool:
+    """Whether a lever shows in the CAD (its check names what to look for)."""
+    import body_frame as bf
+    parts = parts or {}
+    if check == 'turret_plate':
+        return 'turret_plate' in parts
+    if check == 'hollow_posts':
+        p = parts.get('post_1')
+        if p is None:
+            return False
+        v = (p.shape.val() if hasattr(p.shape, 'val') else p.shape).Volume()
+        return v < 0.7 * bp.POST_W ** 2 * bf.post_height()
+    if check in ('tray_lightened', 'deck_lightened', 'pallet_lightened'):
+        name = {'tray_lightened': 'floor_tray', 'deck_lightened': 'deck', 'pallet_lightened': 'compute_pallet'}[check]
+        sp = parts.get(name).sheet if parts.get(name) is not None else None
+        return bool(sp and any(f.note.startswith('lightening') for f in sp.features))
+    names = {i.name for i in (L or {}).get('items', [])}
+    if check == 'fuse_board':
+        return 'plate_fuse_board' in names
+    if check == 'board_shunt':
+        return 'plate_fuse_board' in names and 'plate_shunt' not in names
+    if check == 'harness_10awg':
+        return HARNESS_G <= 340.0
+    if check == 'shell_from_cad':
+        return any(r[0] == 'shell_panels' and 'cad/body_shell.py' in r[3] for r in SHELL_ITEMS)
+    return False
+
+
+def levers(parts=None, L=None) -> list:
+    out = []
+    for key, n, g, usd, stage, kind, what, check in LEVERS:
+        taken = bool(check) and lever_taken(check, parts, L)
+        out.append({'key': key, 'n': n, 'grams': g, 'cost_usd': usd, 'stage': stage, 'kind': kind, 'what': what,
+                    'status': 'taken' if taken else 'open'})
+    return out
+
+
+def gate(led: dict) -> dict:
+    """D57's gate on a P3 ledger: the ledger as it is, and with every scheduled lever not yet in the CAD taken (their
+    grams as the plan states them), against the ceiling: robot <= 32.0, each leg <= 9.6, body and head <= 12.8."""
+    open_g = sum(l['grams'] for l in led['levers'] if l['kind'] == 'scheduled' and l['status'] == 'open')
+    proj = led['total_kg'] + open_g / 1000.0
+    proj_bh = led['body_and_head_kg'] + open_g / 1000.0
+    b = BUDGET
+    legs_each = led['legs_kg'] / 2
+    return {'ceiling_kg': b['robot_kg'], 'gap_kg': round(led['total_kg'] - b['robot_kg'], 3),
+            'open_scheduled_g': open_g, 'with_scheduled_levers_kg': round(proj, 3),
+            'body_and_head_with_levers_kg': round(proj_bh, 3), 'leg_each_kg': round(legs_each, 3),
+            'pass': proj <= b['robot_kg'] + 1e-9 and proj_bh <= b['body_and_head_kg'] + 1e-9 and legs_each <= b['legs_kg_each'] + 1e-9,
+            'on_call_next': [l['key'] for l in led['levers'] if l['kind'] == 'on call' and l['status'] == 'open'][:3],
+            'rule': 'the P3 ledger with every scheduled lever taken (the open ones at the plan\'s grams) under the ceiling, each leg '
+                    'under 9.6 kg and the body and head under 12.8 kg; over it, the on-call levers go in order before the next order (D57)'}
 
 
 def leg_rows(h_mm=300.0):
@@ -438,19 +521,23 @@ def leg_rows(h_mm=300.0):
                                                               'screw_m5x25', 'screw_m5x30', 'insert_m5') if k in bom}
     for side, sy in (('L', 1.0), ('R', -1.0)):
         rows.append((f'{side}.small_hardware', sum(rest.values()), (0.0, sy * (bp.y_off() + 30.0), 0.0)))
+    extra = leg_stops_extra_g()[0]
     for side, sy in (('L', 1.0), ('R', -1.0)):            # to leg.json's total (its own count of every part)
         placed = sum(g for n, g, _ in rows if n.startswith(side + '.'))
-        left = leg_json['total'] + LEG_STOPS_EXTRA_G - placed
+        left = leg_json['total'] + extra - placed
         if abs(left) > 1.0:
             rows.append((f'{side}.rest_of_leg_json', left, (0.0, sy * (bp.y_off() + 30.0), -100.0)))
     return rows
 
 
-def frame_rows(parts):
+def frame_rows(parts, stage='P3'):
     from cadagent.robot import solid_mass_properties
     mats = json.loads((R / 'catalog/materials.json').read_text())
+    order = ('P0', 'P1', 'P2', 'P3')
     rows = []
     for n, p in parts.items():
+        if order.index(getattr(p, 'stage', 'P1')) > order.index(stage):
+            continue
         v = p.shape.val() if hasattr(p.shape, 'val') else p.shape
         if p.kind == 'sheet':
             dens = next(st['density'] for st in bp.STOCK.values() if st['material'] == p.material)
@@ -479,7 +566,7 @@ def ledger(L=None, parts=None, stage='P3'):
         groups[group] += g
     for n, g, c in leg_rows():
         add('legs', n, g, c, 'CAD (printed PA6-CF solids) and exports/leg/bom.json')
-    for n, g, c in frame_rows(parts):
+    for n, g, c in frame_rows(parts, stage):
         add('frame', n, g, c, 'CAD (sheet and printed solids)')
     for it in L['items']:
         if it.keepout or not it.mass_g or not keep(it):
@@ -494,9 +581,12 @@ def ledger(L=None, parts=None, stage='P3'):
     m = sum(r['mass_g'] for r in rows)
     com = [sum(r['mass_g'] * r['com_mm'][k] for r in rows) / m for k in range(3)]
     legs_g = groups.get('legs', 0.0)
-    return {'stage': stage, 'total_kg': round(m / 1000, 2), 'com_mm': [round(v, 1) for v in com], 'groups_kg': {k: round(v / 1000, 3) for k, v in groups.items()},
-            'legs_kg': round(legs_g / 1000, 2), 'body_and_head_kg': round((m - legs_g) / 1000, 2), 'rows': rows,
-            'budget': {'robot_kg': 28.5, 'body_and_head_kg': 10.3, 'com_x_mm': 10.0, 'com_y_mm': 5.0, 'basis': 'docs/body-plan.md 1.8'}}
+    out = {'stage': stage, 'total_kg': round(m / 1000, 2), 'com_mm': [round(v, 1) for v in com], 'groups_kg': {k: round(v / 1000, 3) for k, v in groups.items()},
+           'legs_kg': round(legs_g / 1000, 2), 'body_and_head_kg': round((m - legs_g) / 1000, 2), 'rows': rows,
+           'budget': dict(BUDGET), 'leg_extra': leg_stops_extra_g()[1], 'levers': levers(parts, L)}
+    if stage == 'P3':
+        out['gate'] = gate(out)
+    return out
 
 
 # the P3 shell and what it carries (docs/body-plan.md 1.5, 1.7; the shell is T7's)
@@ -510,3 +600,32 @@ SHELL_ITEMS = [
     ('ear_pod_r', 154.0, (20.0, -155.0, 165.0), 'catalogue (SSC1 154 g each)'),
     ('belly_box_skids', 120.0, (0.0, 0.0, -150.0), 'estimate (TPU skids, the bay door)'),
 ]
+
+
+def write_ledger():
+    """exports/body/mass.json (P1 and P3) without the whole build: the layout, the frame parts and the ledger."""
+    import body_frame as bf
+    L = layout()
+    parts = bf.frame_parts(L['mounts'])
+    led = {st: ledger(L, parts, stage=st) for st in ('P1', 'P3')}
+    (OUT / 'mass.json').write_text(json.dumps(led, indent=1) + '\n')
+    return led
+
+
+if __name__ == '__main__':
+    import argparse
+    ap = argparse.ArgumentParser()
+    ap.add_argument('--ledger', action='store_true', help='write exports/body/mass.json (else: the overlap check only)')
+    a = ap.parse_args()
+    L = layout()
+    bad = check(L['items'], frame_boxes())
+    print(f"{len(L['items'])} items, {len(bad)} problems")
+    for b in bad:
+        print('  ', b)
+    if a.ledger:
+        led = write_ledger()
+        g = led['P3']['gate']
+        print(f"P1 {led['P1']['total_kg']} kg, P3 {led['P3']['total_kg']} kg (ceiling {g['ceiling_kg']}, gap {g['gap_kg']:+.3f}); "
+              f"with the open scheduled levers {g['with_scheduled_levers_kg']} kg: {'pass' if g['pass'] else 'OVER'}")
+        for l in led['P3']['levers']:
+            print(f"   {l['n']:2} {l['key']:15} {l['grams']:+5} g  {l['stage']} {l['kind']:9} {l['status']}")

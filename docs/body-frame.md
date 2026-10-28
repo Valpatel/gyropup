@@ -78,18 +78,47 @@ the aluminium thread's ~4 kN strip.
 
 ## 4. Mass and centre of mass
 
+D57 (docs/body-next-plan.md 2.4): the robot is **designed for 32.5 kg** (16.25 kg a leg) in every strength case, and
+**held under 32.0 kg as built** (each leg under 9.6 kg, the body and head under 12.8 kg). The plan's 28.5 / 10.3 kg
+budget is retired. `cad/body_layout.py` keeps the ledger (`ledger()`, `BUDGET`, `LEVERS`), writes it to
+`exports/body/mass.json` (`.venv/bin/python cad/body_layout.py --ledger` alone, or with the whole build), and
+`cad/test_body.py test_the_mass_ledger_under_the_ceiling` gates every commit: the P3 ledger, with every scheduled
+lever that is not in the CAD yet taken at its planned grams, must be under the ceiling; once the scheduled levers are
+all in the CAD, the ledger itself must be. Over it, the on-call levers go in order (10, 11, 12, ...) before the next
+part is ordered.
+
 | Stage | Robot | Legs | Body and head | COM (x, y, z) mm at a 300 mm stance | Groups (kg) |
 |---|---|---|---|---|---|
-| P1 | 29.17 kg | 18.96 kg | 10.21 kg (budget 10.3) | [3.4, 0.5, -44.0] | legs 18.96, frame 4.30, compute 1.51, power 2.02, deck 0.83, battery 1.54 |
-| P3 | 32.27 kg | 18.96 kg | 13.3 kg (budget 10.3) | [1.3, 0.4, -15.8] | legs 18.96, frame 4.30, compute 1.51, power 2.02, deck 2.53, battery 1.54, shell 1.40 |
+| P1 | 29.18 kg | 18.96 kg | 10.22 kg | [3.4, 0.5, -43.9] | legs 18.96, frame 4.32, compute 1.51, power 2.02, deck 0.83, battery 1.54 |
+| P3 | 32.28 kg (ceiling 32.0: 0.28 over) | 18.96 kg (9.48 each, under 9.6) | 13.31 kg | [1.3, 0.4, -15.8] | legs 18.96, frame 4.32, compute 1.51, power 2.02, deck 2.53, battery 1.54, shell 1.40 |
+| P3 with the scheduled levers | **31.58 kg** (gate: pass) | 18.96 kg | 12.61 kg (under 12.8) | | the nine scheduled levers below, -705 g |
 
-P1 is the open frame with the battery, compute, power skid and lidar; P3 adds the turret and the shell. The legs are exports/leg/leg.json's 9.28 kg each plus the 0.2 kg the leg workstream announced for its 13 mm flanges and stops.
+P1 is the open frame with the battery, compute, power skid and lidar; P3 adds the turret and the shell. The legs are
+exports/leg/leg.json's 9,282 g each plus the 200 g the leg workstream announced for its 13 mm flanges and stops (D53
+says 204 g); the ledger takes leg.json's total as it is once the leg publishes a total other than 9,282 g.
 
-The robot is over the plan's 28.5 kg budget, mostly in the legs (the leg workstream's 9.5 kg each) and the 3/16 in
-spine; the body and head are 13.3 kg against 10.3. Levers, in order: pocket the tray and the deck where nothing
-bolts (about 0.4 kg); the shell in 2 mm PETG with ribs instead of 3 mm (about 0.5 kg); the battery drawer's PETG
-walls thinner once it is a bent aluminium box in P3; the power plate's rail and posts lightened. The centre of mass is
-inside the plan's ±10 mm (x) and ±5 mm (y).
+The levers (docs/body-next-plan.md 2.3; each one's status is read from the CAD, never typed):
+
+| # | Lever | g | Cost | Stage | Kind | Status |
+|---|---|---|---|---|---|---|
+| 1 | shell panels in 2 mm PETG with ribs instead of 3 mm | -240 | $0 | P3 | scheduled | open |
+| 2 | floor tray Rev B: lightening cutouts | -150 | $62 | P3 | scheduled | open |
+| 3 | deck Rev B: cutouts outside the lidar, TM pattern and intake field | -120 | $65 | P3 | scheduled | open |
+| 4 | the turret mount plate (D59), 6061-T6 0.125 in | +135 | $25 | P2 | scheduled | open |
+| 5 | deck posts printed hollow | -100 | $0 | P2 | scheduled | open |
+| 6 | compute pallet cutouts | -60 | $30 | P3 | scheduled | open |
+| 7 | the fuse board (D60) instead of ten inline holders | -35 | $20 | P3 | scheduled | open |
+| 8 | the 1 mOhm shunt on the fuse board instead of the Blue Sea block | -75 | $3 | P3 | scheduled | open |
+| 9 | the main path in 10 AWG, the VESC leads in 14 AWG | -60 | $25 | P2 | scheduled | open |
+| 10 | Pololu D42V110F12 instead of the DDR-60L-12 (when restocked) | -200 | $69.95 | P3 | on call | open |
+| 11 | cheeks Rev B (holes in the web, or 1/8 in with more standoffs) | -150 to -330 | $120 | P3 | on call | open |
+| 12 | aluminium hex standoffs instead of the printed deck posts | -80 | ~$30 | P3 | on call | open |
+| 13 | the 34 mm WS-RDN-601 cooler instead of the G48R (the user's call) | -200 | $49 | P3 | on call | open |
+| 14 | the lidar cable shortened to 1 m (a Velodyne waiver) | -150 | $0 | P3 | on call | open |
+| 15 | the turret's own levers (its plan) | -51 | $0 | P2 | on call | open |
+
+The centre of mass is inside ±10 mm (x) and ±5 mm (y) at P1 and P3. The harness (400 g), hardware (300 g) and the
+G48R cooler (450 g) are estimates until P0 and P1 are weighed (B12, B14).
 
 ## 5. Clearance to the legs
 

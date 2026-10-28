@@ -227,6 +227,34 @@ def test_body_loads_from_the_mount_plane():
         assert abs(b['peak_vertical_n'] - b['peak_vertical_check_ballast_n']) < 0.05 * b['peak_vertical_n'] + 10, b
 
 
+def test_the_mass_ledger_under_the_ceiling():
+    """D57: the robot is designed for 32.5 kg and held under 32.0 kg as built. The P3 ledger, with every scheduled lever
+    of docs/body-next-plan.md 2.3 that is not in the CAD yet taken at its planned grams, stays under 32.0 kg, each leg
+    under 9.6 and the body and head under 12.8; once every scheduled lever is in the CAD the ledger itself must be."""
+    m = json.loads((R / 'exports' / 'body' / 'mass.json').read_text())['P3']
+    g = m['gate']
+    open_ = [l['key'] for l in m['levers'] if l['kind'] == 'scheduled' and l['status'] == 'open']
+    print(f"\nmass ledger P3 {m['total_kg']} kg (ceiling {g['ceiling_kg']}, gap {g['gap_kg']:+.3f} kg); legs {g['leg_each_kg']} kg each; "
+          f"with the open scheduled levers {open_} ({g['open_scheduled_g']} g): {g['with_scheduled_levers_kg']} kg")
+    assert m['budget']['robot_kg'] == 32.0 and m['budget']['design_mass_kg'] == 32.5 and m['budget']['legs_kg_each'] == 9.6
+    assert g['pass'], g
+    if not open_:
+        assert m['total_kg'] <= g['ceiling_kg'], (m['total_kg'], g)
+
+
+def test_the_gate_catches_a_ledger_over_the_ceiling():
+    """The gate itself: a ledger over 32.0 kg with every scheduled lever taken fails it, as does a leg over 9.6 kg; the
+    open scheduled levers' grams count toward it."""
+    import body_layout as bl
+    taken = [dict(l, status='taken') for l in bl.levers()]
+    assert not bl.gate({'total_kg': 32.05, 'body_and_head_kg': 12.7, 'legs_kg': 19.35, 'levers': taken})['pass']
+    assert not bl.gate({'total_kg': 31.9, 'body_and_head_kg': 12.6, 'legs_kg': 19.3, 'levers': taken})['pass']      # 9.65 a leg
+    assert bl.gate({'total_kg': 31.9, 'body_and_head_kg': 12.7, 'legs_kg': 19.2, 'levers': taken})['pass']
+    opened = [dict(l, status='open') for l in bl.levers()]                    # -705 g still to come
+    assert bl.gate({'total_kg': 32.6, 'body_and_head_kg': 13.4, 'legs_kg': 19.2, 'levers': opened})['pass']
+    assert not bl.gate({'total_kg': 32.8, 'body_and_head_kg': 13.6, 'legs_kg': 19.2, 'levers': opened})['pass']
+
+
 def test_lidar_ahead_of_the_pan_axis_by_143():
     """The turret's depression table is computed for the lidar's axis 143 mm ahead of the pan axis
     (docs/turret-next-plan.md 3.1): the body keeps that number."""

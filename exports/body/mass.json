@@ -1406,12 +1406,168 @@
    }
   ],
   "budget": {
-   "robot_kg": 28.5,
-   "body_and_head_kg": 10.3,
+   "robot_kg": 32.0,
+   "legs_kg_each": 9.6,
+   "body_and_head_kg": 12.8,
+   "design_mass_kg": 32.5,
+   "design_half_mass_kg": 16.25,
    "com_x_mm": 10.0,
    "com_y_mm": 5.0,
-   "basis": "docs/body-plan.md 1.8"
-  }
+   "basis": "D57, docs/body-next-plan.md 2.4 (the 28.5 / 10.3 kg budget of docs/body-plan.md 1.8 is retired)"
+  },
+  "leg_extra": "leg.json 9282 g + 200 g announced for the stops and flanges (D53)",
+  "levers": [
+   {
+    "key": "shell_2mm",
+    "n": 1,
+    "grams": -240,
+    "cost_usd": 0.0,
+    "stage": "P3",
+    "kind": "scheduled",
+    "what": "shell panels in 2 mm PETG with 1.6 mm ribs instead of 3 mm (PA6-CF at the ear-pod bosses)",
+    "status": "open"
+   },
+   {
+    "key": "tray_cutouts",
+    "n": 2,
+    "grams": -150,
+    "cost_usd": 62.0,
+    "stage": "P3",
+    "kind": "scheduled",
+    "what": "floor tray Rev B: lightening cutouts where nothing bolts and T1 is low (1/8 in stays)",
+    "status": "open"
+   },
+   {
+    "key": "deck_cutouts",
+    "n": 3,
+    "grams": -120,
+    "cost_usd": 65.0,
+    "stage": "P3",
+    "kind": "scheduled",
+    "what": "deck Rev B: cutouts outside the lidar, the TM pattern and the intake field",
+    "status": "open"
+   },
+   {
+    "key": "turret_plate",
+    "n": 4,
+    "grams": 135,
+    "cost_usd": 25.0,
+    "stage": "P2",
+    "kind": "scheduled",
+    "what": "the turret mount plate under the deck at the riser, 6061-T6 0.125 in, pocketed (D59)",
+    "status": "open"
+   },
+   {
+    "key": "hollow_posts",
+    "n": 5,
+    "grams": -100,
+    "cost_usd": 0.0,
+    "stage": "P2",
+    "kind": "scheduled",
+    "what": "deck posts printed hollow (22 mm square, 4 mm walls) instead of solid",
+    "status": "open"
+   },
+   {
+    "key": "pallet_cutouts",
+    "n": 6,
+    "grams": -60,
+    "cost_usd": 30.0,
+    "stage": "P3",
+    "kind": "scheduled",
+    "what": "compute pallet cutouts under the module between the tie-down and the standoffs",
+    "status": "open"
+   },
+   {
+    "key": "fuse_board",
+    "n": 7,
+    "grams": -35,
+    "cost_usd": 20.0,
+    "stage": "P3",
+    "kind": "scheduled",
+    "what": "the fuse board (D60) instead of ten inline MINI holders and their leads",
+    "status": "open"
+   },
+   {
+    "key": "board_shunt",
+    "n": 8,
+    "grams": -75,
+    "cost_usd": 3.0,
+    "stage": "P3",
+    "kind": "scheduled",
+    "what": "the 1 mOhm shunt on the fuse board instead of the 85 g Blue Sea 150 A block",
+    "status": "open"
+   },
+   {
+    "key": "harness_10awg",
+    "n": 9,
+    "grams": -60,
+    "cost_usd": 25.0,
+    "stage": "P2",
+    "kind": "scheduled",
+    "what": "the main path in 10 AWG, the VESC leads in 14 AWG, lengths cut to P0's measurements",
+    "status": "open"
+   },
+   {
+    "key": "pololu_12v",
+    "n": 10,
+    "grams": -200,
+    "cost_usd": 69.95,
+    "stage": "P3",
+    "kind": "on call",
+    "what": "Pololu D42V110F12 instead of the 216 g DDR-60L-12 (when Pololu restocks it)",
+    "status": "open"
+   },
+   {
+    "key": "cheeks_rev_b",
+    "n": 11,
+    "grams": -150,
+    "cost_usd": 120.0,
+    "stage": "P3",
+    "kind": "on call",
+    "what": "cheeks Rev B: lightening holes where S1 < 40 MPa (-150), or 1/8 in with more standoffs (-330)",
+    "status": "open"
+   },
+   {
+    "key": "alu_standoffs",
+    "n": 12,
+    "grams": -80,
+    "cost_usd": 30.0,
+    "stage": "P3",
+    "kind": "on call",
+    "what": "aluminium M5 x 120 hex standoffs in place of the printed deck posts",
+    "status": "open"
+   },
+   {
+    "key": "cooler_34mm",
+    "n": 13,
+    "grams": -200,
+    "cost_usd": 49.0,
+    "stage": "P3",
+    "kind": "on call",
+    "what": "the 34 mm WS-RDN-601 cooler instead of the fitted G48R (the user's call after the thermal test)",
+    "status": "open"
+   },
+   {
+    "key": "lidar_cable_1m",
+    "n": 14,
+    "grams": -150,
+    "cost_usd": 0.0,
+    "stage": "P3",
+    "kind": "on call",
+    "what": "the VLP-16 cable shortened to 1 m (the user's call: a Velodyne waiver)",
+    "status": "open"
+   },
+   {
+    "key": "turret_levers",
+    "n": 15,
+    "grams": -51,
+    "cost_usd": 0.0,
+    "stage": "P2",
+    "kind": "on call",
+    "what": "the turret's own: a 24-ball hopper, a one-board bay (its plan, not scheduled here)",
+    "status": "open"
+   }
+  ]
  },
  "P3": {
   "stage": "P3",
@@ -2920,11 +3076,182 @@
    }
   ],
   "budget": {
-   "robot_kg": 28.5,
-   "body_and_head_kg": 10.3,
+   "robot_kg": 32.0,
+   "legs_kg_each": 9.6,
+   "body_and_head_kg": 12.8,
+   "design_mass_kg": 32.5,
+   "design_half_mass_kg": 16.25,
    "com_x_mm": 10.0,
    "com_y_mm": 5.0,
-   "basis": "docs/body-plan.md 1.8"
+   "basis": "D57, docs/body-next-plan.md 2.4 (the 28.5 / 10.3 kg budget of docs/body-plan.md 1.8 is retired)"
+  },
+  "leg_extra": "leg.json 9282 g + 200 g announced for the stops and flanges (D53)",
+  "levers": [
+   {
+    "key": "shell_2mm",
+    "n": 1,
+    "grams": -240,
+    "cost_usd": 0.0,
+    "stage": "P3",
+    "kind": "scheduled",
+    "what": "shell panels in 2 mm PETG with 1.6 mm ribs instead of 3 mm (PA6-CF at the ear-pod bosses)",
+    "status": "open"
+   },
+   {
+    "key": "tray_cutouts",
+    "n": 2,
+    "grams": -150,
+    "cost_usd": 62.0,
+    "stage": "P3",
+    "kind": "scheduled",
+    "what": "floor tray Rev B: lightening cutouts where nothing bolts and T1 is low (1/8 in stays)",
+    "status": "open"
+   },
+   {
+    "key": "deck_cutouts",
+    "n": 3,
+    "grams": -120,
+    "cost_usd": 65.0,
+    "stage": "P3",
+    "kind": "scheduled",
+    "what": "deck Rev B: cutouts outside the lidar, the TM pattern and the intake field",
+    "status": "open"
+   },
+   {
+    "key": "turret_plate",
+    "n": 4,
+    "grams": 135,
+    "cost_usd": 25.0,
+    "stage": "P2",
+    "kind": "scheduled",
+    "what": "the turret mount plate under the deck at the riser, 6061-T6 0.125 in, pocketed (D59)",
+    "status": "open"
+   },
+   {
+    "key": "hollow_posts",
+    "n": 5,
+    "grams": -100,
+    "cost_usd": 0.0,
+    "stage": "P2",
+    "kind": "scheduled",
+    "what": "deck posts printed hollow (22 mm square, 4 mm walls) instead of solid",
+    "status": "open"
+   },
+   {
+    "key": "pallet_cutouts",
+    "n": 6,
+    "grams": -60,
+    "cost_usd": 30.0,
+    "stage": "P3",
+    "kind": "scheduled",
+    "what": "compute pallet cutouts under the module between the tie-down and the standoffs",
+    "status": "open"
+   },
+   {
+    "key": "fuse_board",
+    "n": 7,
+    "grams": -35,
+    "cost_usd": 20.0,
+    "stage": "P3",
+    "kind": "scheduled",
+    "what": "the fuse board (D60) instead of ten inline MINI holders and their leads",
+    "status": "open"
+   },
+   {
+    "key": "board_shunt",
+    "n": 8,
+    "grams": -75,
+    "cost_usd": 3.0,
+    "stage": "P3",
+    "kind": "scheduled",
+    "what": "the 1 mOhm shunt on the fuse board instead of the 85 g Blue Sea 150 A block",
+    "status": "open"
+   },
+   {
+    "key": "harness_10awg",
+    "n": 9,
+    "grams": -60,
+    "cost_usd": 25.0,
+    "stage": "P2",
+    "kind": "scheduled",
+    "what": "the main path in 10 AWG, the VESC leads in 14 AWG, lengths cut to P0's measurements",
+    "status": "open"
+   },
+   {
+    "key": "pololu_12v",
+    "n": 10,
+    "grams": -200,
+    "cost_usd": 69.95,
+    "stage": "P3",
+    "kind": "on call",
+    "what": "Pololu D42V110F12 instead of the 216 g DDR-60L-12 (when Pololu restocks it)",
+    "status": "open"
+   },
+   {
+    "key": "cheeks_rev_b",
+    "n": 11,
+    "grams": -150,
+    "cost_usd": 120.0,
+    "stage": "P3",
+    "kind": "on call",
+    "what": "cheeks Rev B: lightening holes where S1 < 40 MPa (-150), or 1/8 in with more standoffs (-330)",
+    "status": "open"
+   },
+   {
+    "key": "alu_standoffs",
+    "n": 12,
+    "grams": -80,
+    "cost_usd": 30.0,
+    "stage": "P3",
+    "kind": "on call",
+    "what": "aluminium M5 x 120 hex standoffs in place of the printed deck posts",
+    "status": "open"
+   },
+   {
+    "key": "cooler_34mm",
+    "n": 13,
+    "grams": -200,
+    "cost_usd": 49.0,
+    "stage": "P3",
+    "kind": "on call",
+    "what": "the 34 mm WS-RDN-601 cooler instead of the fitted G48R (the user's call after the thermal test)",
+    "status": "open"
+   },
+   {
+    "key": "lidar_cable_1m",
+    "n": 14,
+    "grams": -150,
+    "cost_usd": 0.0,
+    "stage": "P3",
+    "kind": "on call",
+    "what": "the VLP-16 cable shortened to 1 m (the user's call: a Velodyne waiver)",
+    "status": "open"
+   },
+   {
+    "key": "turret_levers",
+    "n": 15,
+    "grams": -51,
+    "cost_usd": 0.0,
+    "stage": "P2",
+    "kind": "on call",
+    "what": "the turret's own: a 24-ball hopper, a one-board bay (its plan, not scheduled here)",
+    "status": "open"
+   }
+  ],
+  "gate": {
+   "ceiling_kg": 32.0,
+   "gap_kg": 0.28,
+   "open_scheduled_g": -705,
+   "with_scheduled_levers_kg": 31.575,
+   "body_and_head_with_levers_kg": 12.605,
+   "leg_each_kg": 9.48,
+   "pass": true,
+   "on_call_next": [
+    "pololu_12v",
+    "cheeks_rev_b",
+    "alu_standoffs"
+   ],
+   "rule": "the P3 ledger with every scheduled lever taken (the open ones at the plan's grams) under the ceiling, each leg under 9.6 kg and the body and head under 12.8 kg; over it, the on-call levers go in order before the next order (D57)"
   }
  }
 }
