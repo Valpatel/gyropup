@@ -575,7 +575,7 @@ def frame_parts(mounts=None) -> dict:
     zp = zt + bl.PLATE_H + bp.STOCK['5052-0.100']['t']
     if mounts is not None and mounts.get('_bus_xy'):
         for k, (bx, by) in enumerate(mounts['_bus_xy']):
-            out[f'bus_bar_{k + 1}'] = Part(f'bus_bar_{k + 1}', 'sheet', bloc.translate((bx, by, zp + 10.0)), 1, bus if k == 0 else None, bloc,
+            out[f'bus_bar_{k + 1}'] = Part(f'bus_bar_{k + 1}', 'sheet', bloc.translate((bx, by, zp + BUS_INS_H)), 1, bus if k == 0 else None, bloc,
                                            bus.s['material'], colour=(0.85, 0.45, 0.2) if k == 0 else (0.25, 0.25, 0.27), note=bus.note)
             out[f'bus_insulator_{k + 1}'] = Part(f'bus_insulator_{k + 1}', 'printed', ins.translate((bx, by, zp)), 1, material='pa6-cf',
                                                  colour=(0.2, 0.2, 0.22), note='PA6-CF, 100 %; 4 x M3 inserts')
@@ -657,31 +657,41 @@ def power_plate_part(mounts=None) -> bs.SheetPart:
 
 
 BUS_L, BUS_W = 110.0, 20.0
-BUS_HOLES = [10.0, 32.5, 55.0, 77.5, 100.0]         # along the bar: M6 tapped (the input, then the branches)
+BUS_HOLES = [10.0, 32.5, 55.0, 77.5, 100.0]         # along the bar: M6 clearance (the input, then the branches)
+BUS_INS_H = 14.0                                    # the insulator: the M6 nut's pocket and the screw's tip both in plastic
+BUS_FLOOR = 1.5                                     # plastic left under the deepest screw tip
+BUS_NUT = {'af': 10.0, 'h': 6.0, 'key': 'nut_m6_nyloc'}        # DIN 985 M6 nyloc (McMaster 94645A205): 10 mm A/F, 6 mm tall
+BUS_SCREW = {'d': 6.0, 'length': 16.0, 'key': 'screw_m6x16'}   # ISO 4762 M6 x 16 (91290A667), through the lugs and the bar
 
 
 def bus_bar_part() -> bs.SheetPart:
-    """A bus bar: C110 copper 0.125 in, 110 x 20, five M6 tapped holes (drawn at the M6 tap drill, 5.0 mm). One part
-    for + and -; the ring lugs stack on M6 x 12 screws into the taps."""
-    feats = [bs.Feature('hole', 'base', (u, BUS_W / 2), 5.0, note='tap M6 x 1.0 through') for u in BUS_HOLES]
+    """A bus bar: C110 copper 0.125 in, 110 x 20, five Ø6.4 holes for the lugs' M6 screws and two Ø3.4 for the M3
+    screws that hold it to its insulator. One part for + and -. Each lug stack is an M6 x 16 socket head down through
+    the lug(s) and the bar into a nyloc nut held in a hex pocket of the insulator: SendCutSend taps no part under 1 in
+    wide (its app, 2026-10-27), and three threads of copper are a poor hold for a lug's torque anyway."""
+    feats = [bs.Feature('hole', 'base', (u, BUS_W / 2), 6.4, note='M6 clearance: the lug screw into the insulator\'s nut') for u in BUS_HOLES]
     feats += [bs.Feature('hole', 'base', (u, BUS_W / 2), 3.4, note='M3 x 8 down into the insulator\'s inserts') for u in BUS_INS]
     return bs.SheetPart('bus_bar', 'C110-0.125', BUS_L, BUS_W, features=feats, qty=2,
-                        note='C110 copper: five holes tapped M6 x 1.0 (the lugs), two clearance holes for M4 into the printed insulator; '
-                             'deburr; + and - are the same part')
+                        note='C110 copper, cut only: five Ø6.4 holes for the lugs\' M6 screws, two Ø3.4 for the M3 screws into the '
+                             'printed insulator; deburr; + and - are the same part')
 
 
 BUS_INS = (21.25, 88.75)
 
 
 def bus_insulator():
-    """The printed PA6-CF block a bus bar sits on: 110 x 20 x 10, four M3 heat-set inserts (94459A140, Ø4.0 x 6.5:
-    two from above for the bar, two from below for the plate's screws, offset so they never meet). The bar's
-    potential never reaches the plate: every screw ends in plastic."""
-    s = box(0.0, BUS_L, 0.0, BUS_W, 0.0, 10.0).edges('|Z').fillet(2.0)
+    """The printed PA6-CF block a bus bar sits on: 110 x 20 x BUS_INS_H, four M3 heat-set inserts (94459A140, Ø4.0 x
+    6.5: two from above for the bar, two from below for the plate's screws, offset so they never meet) and, under each
+    of the bar's five holes, a hex pocket for the lug screw's nyloc nut (it cannot turn) with the screw's tip hole
+    below it. The bar's potential never reaches the plate: every screw ends in plastic, BUS_FLOOR above the plate (an
+    M6 x 16 through one 1 mm lug and the bar ends 0.7 mm above that floor; a tap with no lug gets no screw)."""
+    H = BUS_INS_H
+    s = box(0.0, BUS_L, 0.0, BUS_W, 0.0, H).edges('|Z').fillet(2.0)
     for u in BUS_INS:
-        s = s.cut(cyl_z(2.0, 10.0 - 6.5, 10.1, u, BUS_W / 2))           # M3 insert from above (the bar)
+        s = s.cut(cyl_z(2.0, H - 6.5, H + 0.1, u, BUS_W / 2))             # M3 insert from above (the bar)
     for u in (BUS_INS[0] + 22.5, BUS_INS[1] - 22.5):
         s = s.cut(cyl_z(2.0, -0.1, 6.5, u, BUS_W / 2))                  # M3 insert from below (the plate)
-    for u in BUS_HOLES:                                                 # clear the M6 screws' tips
-        s = s.cut(cyl_z(4.0, 10.0 - 7.0, 10.1, u, BUS_W / 2))
+    for u in BUS_HOLES:
+        s = s.cut(hexagon_z(BUS_NUT['af'] + 0.3, H - BUS_NUT['h'] - 0.3, H + 0.1, u, BUS_W / 2))     # the nut, held
+        s = s.cut(cyl_z(3.3, BUS_FLOOR, H - BUS_NUT['h'], u, BUS_W / 2))   # the screw's tip: BUS_FLOOR of plastic stays
     return s

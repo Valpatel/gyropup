@@ -126,9 +126,9 @@
    "to": "RS-04 left front (XT60H)",
    "awg": 14,
    "colour": "red",
-   "termination": "lug M6 / XT60H-M",
+   "termination": "lug M6 / XT60H-F",
    "fuse": "MINI 58V 20 A",
-   "why": "~12 A at a jump, 25 A peaks: 14 AWG silicone"
+   "why": "~12 A at a jump, 25 A peaks: 14 AWG silicone; the motor's 450 mm pigtail carries the XT60H-M"
   },
   {
    "id": "W11",
@@ -136,7 +136,7 @@
    "to": "RS-04 left rear (XT60H)",
    "awg": 14,
    "colour": "red",
-   "termination": "lug M6 / XT60H-M",
+   "termination": "lug M6 / XT60H-F",
    "fuse": "MINI 58V 20 A",
    "why": "as W10 (two lugs share the tap)"
   },
@@ -146,7 +146,7 @@
    "to": "RS-04 right front (XT60H)",
    "awg": 14,
    "colour": "red",
-   "termination": "lug M6 / XT60H-M",
+   "termination": "lug M6 / XT60H-F",
    "fuse": "MINI 58V 20 A",
    "why": "as W10"
   },
@@ -156,7 +156,7 @@
    "to": "RS-04 right rear (XT60H)",
    "awg": 14,
    "colour": "red",
-   "termination": "lug M6 / XT60H-M",
+   "termination": "lug M6 / XT60H-F",
    "fuse": "MINI 58V 20 A",
    "why": "as W10"
   },
@@ -166,9 +166,9 @@
    "to": "VESC left (Flipsky 75100) +",
    "awg": 12,
    "colour": "red",
-   "termination": "lug M6 / XT60H-M",
+   "termination": "lug M6 / XT60H-F",
    "fuse": "MINI 58V 30 A",
-   "why": "the wheel: firmware limits it to 25 A"
+   "why": "the wheel: firmware limits it to 25 A; the VESC's own lead carries the XT60H-M"
   },
   {
    "id": "W15",
@@ -176,7 +176,7 @@
    "to": "VESC right +",
    "awg": 12,
    "colour": "red",
-   "termination": "lug M6 / XT60H-M",
+   "termination": "lug M6 / XT60H-F",
    "fuse": "MINI 58V 30 A",
    "why": "as W14"
   },
@@ -206,9 +206,9 @@
    "to": "RS-04 x 4 (XT60H)",
    "awg": 14,
    "colour": "black",
-   "termination": "lug M6 / XT60H-M",
+   "termination": "lug M6 / XT60H-F",
    "fuse": "-",
-   "why": "returns, one per motor"
+   "why": "returns, one per motor (the - of W10-W13's plugs)"
   },
   {
    "id": "W19",
@@ -216,9 +216,9 @@
    "to": "VESC left, right -",
    "awg": 12,
    "colour": "black",
-   "termination": "lug M6 / XT60H-M",
+   "termination": "lug M6 / XT60H-F",
    "fuse": "-",
-   "why": "returns"
+   "why": "returns (the - of W14-W15's plugs)"
   },
   {
    "id": "W20",
@@ -236,9 +236,9 @@
    "to": "J501 DC-IN (XT30)",
    "awg": 18,
    "colour": "red",
-   "termination": "ferrule / XT30-M",
+   "termination": "ferrule / XT30U-F",
    "fuse": "MINI 5 A",
-   "why": "the J501: 60 W peak, 2.5 A"
+   "why": "the J501: 60 W peak, 2.5 A; its DC-IN adapter lead carries the XT30U-M"
   },
   {
    "id": "W22",
@@ -256,7 +256,7 @@
    "to": "J501 and turret returns; star point",
    "awg": 18,
    "colour": "black",
-   "termination": "ferrule / XT30-M",
+   "termination": "ferrule / XT30U-F",
    "fuse": "-",
    "why": "one tie from -V to the - bus (the CAN reference)"
   },
@@ -266,9 +266,9 @@
    "to": "lidar interface box (XT30)",
    "awg": 18,
    "colour": "red",
-   "termination": "ferrule / XT30-M",
+   "termination": "ferrule / XT30U-F",
    "fuse": "(the converter's 5 A limit)",
-   "why": "VLP-16: 8 W, 3 A at spin-up"
+   "why": "VLP-16: 8 W, 3 A at spin-up; the box's lead carries the XT30U-M"
   },
   {
    "id": "W25",

@@ -1,0 +1,441 @@
+{
+ "cheek": {
+  "file": "exports/body/sendcutsend/cheek_5052-H32_0.187in_x2.dxf",
+  "refused": {},
+  "picked": {
+   "bending": "2 bends found in the DXF's BEND layer, each 90 deg UP",
+   "countersinking": {
+    "4.500mm": "0.315 / 0.164 / 90\u00b0"
+   },
+   "hardware": {
+    "6.375mm": "SS-M5-0 -> Nut, M5x0.8"
+   },
+   "finish": "Deburring"
+  },
+  "cut_only": {
+   "each": 54.25,
+   "subtotal": 54.25,
+   "breaks": {
+    "2": 36.48,
+    "10": 25.84,
+    "50": 21.77,
+    "100": 19.35,
+    "1000": 12.36
+   },
+   "arrives": "Oct 31"
+  },
+  "with_services": {
+   "each": 94.07,
+   "subtotal": 94.07,
+   "breaks": {
+    "2": 63.87,
+    "10": 44.89,
+    "50": 38.15,
+    "100": 33.49,
+    "1000": 23.32
+   },
+   "arrives": "Nov 3"
+  },
+  "final": {
+   "each": 63.87,
+   "subtotal": 127.74,
+   "breaks": {
+    "2": 63.87,
+    "10": 44.89,
+    "50": 38.15,
+    "100": 33.49,
+    "1000": 23.32
+   },
+   "arrives": "Nov 3"
+  },
+  "qty": 2,
+  "read_on": "2026-10-27",
+  "seller": "SendCutSend",
+  "url": "https://app.sendcutsend.com/",
+  "order": {
+   "cat": "Aluminum",
+   "mat": "5052 H32 Aluminum",
+   "th": ".187\" (4.7 MM)",
+   "qty": 2,
+   "bends": 2,
+   "csk": {
+    "M4": "0.315 / 0.164 / 90\u00b0"
+   },
+   "hw": {
+    "SS-M5-0": 8
+   },
+   "taps": {}
+  }
+ },
+ "floor_tray": {
+  "file": "exports/body/sendcutsend/floor_tray_5052-H32_0.125in_x1.dxf",
+  "refused": {},
+  "picked": {
+   "bending": "4 bends found in the DXF's BEND layer, each 90 deg UP",
+   "tapping": {
+    "2.500mm": "M3 x 0.5"
+   },
+   "hardware": {
+    "5.385mm": "S-M4-0 -> Nut, M4x0.7"
+   },
+   "finish": "Deburring"
+  },
+  "cut_only": {
+   "each": 50.62,
+   "subtotal": 50.62,
+   "breaks": {
+    "2": 37.91,
+    "10": 28.46,
+    "50": 21.55,
+    "100": 18.35,
+    "1000": 15.73
+   },
+   "arrives": "Oct 31"
+  },
+  "with_services": {
+   "each": 81.05,
+   "subtotal": 81.05,
+   "breaks": {
+    "2": 57.17,
+    "10": 43.43,
+    "50": 33.17,
+    "100": 29.42,
+    "1000": 23.49
+   },
+   "arrives": "Nov 3"
+  },
+  "final": {
+   "each": 81.05,
+   "subtotal": 81.05,
+   "breaks": {
+    "2": 57.17,
+    "10": 43.43,
+    "50": 33.17,
+    "100": 29.42,
+    "1000": 23.49
+   },
+   "arrives": "Nov 3"
+  },
+  "qty": 1,
+  "read_on": "2026-10-27",
+  "seller": "SendCutSend",
+  "url": "https://app.sendcutsend.com/",
+  "order": {
+   "cat": "Aluminum",
+   "mat": "5052 H32 Aluminum",
+   "th": ".125\" (3.2 MM)",
+   "qty": 1,
+   "bends": 4,
+   "csk": {},
+   "hw": {
+    "S-M4-0": 6
+   },
+   "taps": {
+    "2.500mm": "M3 x 0.5"
+   }
+  }
+ },
+ "belly_plate": {
+  "file": "exports/body/sendcutsend/belly_plate_6061-T6_0.100in_x1.dxf",
+  "refused": {},
+  "picked": {
+   "hardware": {
+    "6.375mm": "SS-M5-0 -> Nut, M5x0.8"
+   },
+   "finish": "Deburring"
+  },
+  "cut_only": {
+   "each": 51.21,
+   "subtotal": 51.21,
+   "breaks": {
+    "2": 40.17,
+    "10": 32.31,
+    "50": 21.44,
+    "100": 17.74,
+    "1000": 16.5
+   },
+   "arrives": "Nov 3"
+  },
+  "with_services": {
+   "each": 61.02,
+   "subtotal": 61.02,
+   "breaks": {
+    "2": 48.11,
+    "10": 38.48,
+    "50": 27.28,
+    "100": 22.74,
+    "1000": 20.53
+   },
+   "arrives": "Nov 4"
+  },
+  "final": {
+   "each": 61.02,
+   "subtotal": 61.02,
+   "breaks": {
+    "2": 48.11,
+    "10": 38.48,
+    "50": 27.28,
+    "100": 22.74,
+    "1000": 20.53
+   },
+   "arrives": "Nov 4"
+  },
+  "qty": 1,
+  "read_on": "2026-10-27",
+  "seller": "SendCutSend",
+  "url": "https://app.sendcutsend.com/",
+  "order": {
+   "cat": "Aluminum",
+   "mat": "6061 T6 Aluminum",
+   "th": ".100\" (2.5 MM)",
+   "qty": 1,
+   "bends": 0,
+   "csk": {},
+   "hw": {
+    "SS-M5-0": 12
+   },
+   "taps": {}
+  }
+ },
+ "deck": {
+  "file": "exports/body/sendcutsend/deck_5052-H32_0.100in_x1.dxf",
+  "refused": {},
+  "picked": {
+   "bending": "4 bends found in the DXF's BEND layer, each 90 deg UP",
+   "finish": "Deburring"
+  },
+  "cut_only": {
+   "each": 62.63,
+   "subtotal": 62.63,
+   "breaks": {
+    "2": 46.3,
+    "10": 32.02,
+    "50": 26.15,
+    "100": 20.99,
+    "1000": 18.55
+   },
+   "arrives": "Oct 31"
+  },
+  "with_services": {
+   "each": 78.94,
+   "subtotal": 78.94,
+   "breaks": {
+    "2": 58.49,
+    "10": 41.79,
+    "50": 33.81,
+    "100": 28.19,
+    "1000": 23.63
+   },
+   "arrives": "Nov 2"
+  },
+  "final": {
+   "each": 78.94,
+   "subtotal": 78.94,
+   "breaks": {
+    "2": 58.49,
+    "10": 41.79,
+    "50": 33.81,
+    "100": 28.19,
+    "1000": 23.63
+   },
+   "arrives": "Nov 2"
+  },
+  "qty": 1,
+  "read_on": "2026-10-27",
+  "seller": "SendCutSend",
+  "url": "https://app.sendcutsend.com/",
+  "order": {
+   "cat": "Aluminum",
+   "mat": "5052 H32 Aluminum",
+   "th": ".100\" (2.5 MM)",
+   "qty": 1,
+   "bends": 4,
+   "csk": {},
+   "hw": {},
+   "taps": {}
+  }
+ },
+ "compute_pallet": {
+  "file": "exports/body/sendcutsend/compute_pallet_6061-T6_0.125in_x1.dxf",
+  "refused": {},
+  "picked": {
+   "countersinking": {
+    "3.400mm": "0.236 / 0.13 / 90\u00b0"
+   },
+   "finish": "Deburring"
+  },
+  "cut_only": {
+   "each": 30.62,
+   "subtotal": 30.62,
+   "breaks": {
+    "2": 22.68,
+    "10": 18.07,
+    "50": 14.65,
+    "100": 13.01,
+    "1000": 9.75
+   },
+   "arrives": "Oct 31"
+  },
+  "with_services": {
+   "each": 49.4,
+   "subtotal": 49.4,
+   "breaks": {
+    "2": 38.87,
+    "10": 28.96,
+    "50": 24.35,
+    "100": 20.85,
+    "1000": 16.23
+   },
+   "arrives": "Nov 2"
+  },
+  "final": {
+   "each": 49.4,
+   "subtotal": 49.4,
+   "breaks": {
+    "2": 38.87,
+    "10": 28.96,
+    "50": 24.35,
+    "100": 20.85,
+    "1000": 16.23
+   },
+   "arrives": "Nov 2"
+  },
+  "qty": 1,
+  "read_on": "2026-10-27",
+  "seller": "SendCutSend",
+  "url": "https://app.sendcutsend.com/",
+  "order": {
+   "cat": "Aluminum",
+   "mat": "6061 T6 Aluminum",
+   "th": ".125\" (3.2 MM)",
+   "qty": 1,
+   "bends": 0,
+   "csk": {
+    "M3": "0.236 / 0.13 / 90\u00b0"
+   },
+   "hw": {},
+   "taps": {}
+  }
+ },
+ "power_plate": {
+  "file": "exports/body/sendcutsend/power_plate_5052-H32_0.100in_x1.dxf",
+  "refused": {},
+  "picked": {
+   "hardware": {
+    "7.925mm": "F-M5-2 -> Flush Nut, M5x0.8,2",
+    "7.366mm": "F-M4-2 -> Flush Nut, M4x0.7,2"
+   },
+   "finish": "Deburring"
+  },
+  "cut_only": {
+   "each": 28.87,
+   "subtotal": 28.87,
+   "breaks": {
+    "2": 22.33,
+    "10": 16.14,
+    "50": 12.88,
+    "100": 10.33,
+    "1000": 7.06
+   },
+   "arrives": "Oct 31"
+  },
+  "with_services": {
+   "each": 47.48,
+   "subtotal": 47.48,
+   "breaks": {
+    "2": 38.72,
+    "10": 29.44,
+    "50": 25.58,
+    "100": 21.09,
+    "1000": 15.89
+   },
+   "arrives": "Nov 2"
+  },
+  "final": {
+   "each": 47.48,
+   "subtotal": 47.48,
+   "breaks": {
+    "2": 38.72,
+    "10": 29.44,
+    "50": 25.58,
+    "100": 21.09,
+    "1000": 15.89
+   },
+   "arrives": "Nov 2"
+  },
+  "qty": 1,
+  "read_on": "2026-10-27",
+  "seller": "SendCutSend",
+  "url": "https://app.sendcutsend.com/",
+  "order": {
+   "cat": "Aluminum",
+   "mat": "5052 H32 Aluminum",
+   "th": ".100\" (2.5 MM)",
+   "qty": 1,
+   "bends": 0,
+   "csk": {},
+   "hw": {
+    "F-M5-2": 10,
+    "F-M4-2": 6
+   },
+   "taps": {}
+  }
+ },
+ "bus_bar": {
+  "file": "exports/body/sendcutsend/bus_bar_C110_0.125in_x2.dxf",
+  "refused": {},
+  "picked": {
+   "finish": "Deburring"
+  },
+  "cut_only": {
+   "each": 23.56,
+   "subtotal": 23.56,
+   "breaks": {
+    "2": 18.22,
+    "10": 16.76,
+    "50": 14.86,
+    "100": 13.66,
+    "1000": 11.4
+   },
+   "arrives": "Nov 3"
+  },
+  "with_services": {
+   "each": 23.56,
+   "subtotal": 23.56,
+   "breaks": {
+    "2": 18.22,
+    "10": 16.76,
+    "50": 14.86,
+    "100": 13.66,
+    "1000": 11.4
+   },
+   "arrives": "Nov 3"
+  },
+  "final": {
+   "each": 18.22,
+   "subtotal": 36.44,
+   "breaks": {
+    "2": 18.22,
+    "10": 16.76,
+    "50": 14.86,
+    "100": 13.66,
+    "1000": 11.4
+   },
+   "arrives": "Nov 3"
+  },
+  "qty": 2,
+  "read_on": "2026-10-27",
+  "seller": "SendCutSend",
+  "url": "https://app.sendcutsend.com/",
+  "order": {
+   "cat": "Copper",
+   "mat": null,
+   "th": ".125\" (3.2 MM)",
+   "qty": 2,
+   "bends": 0,
+   "csk": {},
+   "hw": {},
+   "taps": {}
+  }
+ }
+}

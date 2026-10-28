@@ -264,8 +264,8 @@
   {
    "key": "meanwell-ddr-120c-24",
    "id": "meanwell-ddr-120c-24",
-   "qty": 1,
-   "for": "24 V 5 A, isolated: the J501 and the turret; on a printed TS35 rail on the tray",
+   "qty": 2,
+   "for": "24 V 5 A, isolated: the J501 and the turret; on a printed TS35 rail on the tray. Two: Master Electronics flags it no longer manufactured; the SD-100C-24 is its successor (D58)",
    "vendor": "Mean Well",
    "part_number": "DDR-120C-24",
    "name": "Mean Well DDR-120C-24",
@@ -628,40 +628,6 @@
      "read_on": "2026-10-27",
      "price_usd": 14.99,
      "pack_qty": 3
-    }
-   ]
-  },
-  {
-   "key": "xt60h_f",
-   "id": "amass-xt60h-f-5",
-   "qty": 1,
-   "for": "the charge port on the robot (female: no live pins), held in a printed bezel in the belly",
-   "vendor": "Amass",
-   "part_number": "XT60H-F",
-   "name": "Amass XT60H female (charge port, held in a printed bezel), 5-pack",
-   "mass_g_each": null,
-   "price_usd_each": 0.798,
-   "url": "https://www.pyrodrone.com/products/amass-xt60h-connector-5pcs-female",
-   "pack_qty": 5,
-   "sellers": [
-    {
-     "seller": "Pyrodrone",
-     "url": "https://www.pyrodrone.com/products/amass-xt60h-connector-5pcs-female",
-     "in_stock": true,
-     "ships_from": "US",
-     "stock": "available",
-     "read_on": "2026-10-27",
-     "price_usd": 3.99,
-     "pack_qty": 5
-    },
-    {
-     "seller": "RaceDayQuads",
-     "url": "https://www.racedayquads.com/products/xt60-connector-1pc-choose-your-version",
-     "in_stock": true,
-     "ships_from": "US",
-     "stock": "available (single)",
-     "read_on": "2026-10-27",
-     "price_usd": 0.99
     }
    ]
   },
@@ -1154,13 +1120,47 @@
    ]
   },
   {
+   "key": "xt60h_f",
+   "id": "amass-xt60h-f-5",
+   "qty": 7,
+   "for": "sockets on the robot, no live pins (D58, hazard 11): the charge port in its printed bezel and the six 48 V branch leads' ends (W10-W15)",
+   "vendor": "Amass",
+   "part_number": "XT60H-F",
+   "name": "Amass XT60H female, 5-pack (the robot's live ends: the charge port and the 48 V branch leads; D58)",
+   "mass_g_each": null,
+   "price_usd_each": 0.798,
+   "url": "https://www.pyrodrone.com/products/amass-xt60h-connector-5pcs-female",
+   "pack_qty": 5,
+   "sellers": [
+    {
+     "seller": "Pyrodrone",
+     "url": "https://www.pyrodrone.com/products/amass-xt60h-connector-5pcs-female",
+     "in_stock": true,
+     "ships_from": "US",
+     "stock": "available",
+     "read_on": "2026-10-27",
+     "price_usd": 3.99,
+     "pack_qty": 5
+    },
+    {
+     "seller": "RaceDayQuads",
+     "url": "https://www.racedayquads.com/products/xt60-connector-1pc-choose-your-version",
+     "in_stock": true,
+     "ships_from": "US",
+     "stock": "available (single)",
+     "read_on": "2026-10-27",
+     "price_usd": 0.99
+    }
+   ]
+  },
+  {
    "key": "xt60h_m",
    "id": "amass-xt60h-m-5",
-   "qty": 6,
-   "for": "the RS-04 and VESC branch plugs",
+   "qty": 2,
+   "for": "the two VESC leads' plugs (the devices carry the pins; the RS-04 pigtails' XT60H-M come with the leg's pigtails, docs/body-next-plan.md 5.1 item 5)",
    "vendor": "Amass",
    "part_number": "XT60H-M 5-pack",
-   "name": "Amass XT60H male, 5-pack (RS-04 and VESC branches)",
+   "name": "Amass XT60H male, 5-pack (the devices' end: the VESC leads; D58)",
    "mass_g_each": null,
    "price_usd_each": 0.798,
    "url": "https://www.pyrodrone.com/products/xt60h-male-xt60-upgrade-amass",
@@ -1188,21 +1188,21 @@
    ]
   },
   {
-   "key": "xt30_m",
-   "id": "amass-xt30u-m-8",
-   "qty": 6,
-   "for": "the 24 V and 12 V branch plugs (J501, turret, lidar box, radio jack, two spare)",
+   "key": "xt30_f",
+   "id": "amass-xt30u-f-8",
+   "qty": 4,
+   "for": "sockets on the robot: the 24 V and 12 V branch leads' ends (W21 the J501, W24 the lidar box), two spare",
    "vendor": "Amass",
-   "part_number": "XT30U-M 8-pack",
-   "name": "Amass XT30U male, 8-pack (12 V and 24 V branches)",
+   "part_number": "XT30U-F 8-pack",
+   "name": "Amass XT30U female, 8-pack (the robot's live ends: the 24 V and 12 V branch leads; D58)",
    "mass_g_each": null,
    "price_usd_each": 0.3738,
-   "url": "https://www.pyrodrone.com/products/yellow-xt30u-m-8-pack-male-device",
+   "url": "https://www.pyrodrone.com/products/yellow-xt30u-f-8-pack-female-battery",
    "pack_qty": 8,
    "sellers": [
     {
      "seller": "Pyrodrone",
-     "url": "https://www.pyrodrone.com/products/yellow-xt30u-m-8-pack-male-device",
+     "url": "https://www.pyrodrone.com/products/yellow-xt30u-f-8-pack-female-battery",
      "in_stock": true,
      "ships_from": "US",
      "stock": "available",
@@ -1222,21 +1222,21 @@
    ]
   },
   {
-   "key": "xt30_f",
-   "id": "amass-xt30u-f-8",
-   "qty": 6,
-   "for": "their mating sockets",
+   "key": "xt30_m",
+   "id": "amass-xt30u-m-8",
+   "qty": 4,
+   "for": "the devices' pins: the J501's DC-IN and the lidar box's adapter leads, two spare",
    "vendor": "Amass",
-   "part_number": "XT30U-F 8-pack",
-   "name": "Amass XT30U female, 8-pack",
+   "part_number": "XT30U-M 8-pack",
+   "name": "Amass XT30U male, 8-pack (the devices' end: the J501 and lidar box adapter leads; D58)",
    "mass_g_each": null,
    "price_usd_each": 0.3738,
-   "url": "https://www.pyrodrone.com/products/yellow-xt30u-f-8-pack-female-battery",
+   "url": "https://www.pyrodrone.com/products/yellow-xt30u-m-8-pack-male-device",
    "pack_qty": 8,
    "sellers": [
     {
      "seller": "Pyrodrone",
-     "url": "https://www.pyrodrone.com/products/yellow-xt30u-f-8-pack-female-battery",
+     "url": "https://www.pyrodrone.com/products/yellow-xt30u-m-8-pack-male-device",
      "in_stock": true,
      "ships_from": "US",
      "stock": "available",
@@ -1532,11 +1532,11 @@
     {
      "seller": "ruthex",
      "url": "https://www.ruthex.de/products/ruthex-gewindeeinsatz-m5-50-stuck-rx-m5x9-5-messing-gewindebuchsen",
-     "stock": "In stock",
+     "stock": "InStock (schema.org availability)",
      "read_on": "2026-10-27",
-     "seller_pn": "RX-M5x9.5 (set GE-M5x95-001)",
+     "seller_pn": "RX-M5x9.5 (SKU GE-M5x95-001)",
      "pack_qty": 50,
-     "note": "9.5 mm long instead of 7.9 mm (1.6 mm longer): the hole must be at least 1.6 mm deeper and the boss longer. Hole diameter is presumably 6.4 mm (see evidence). Ruthex also sells RX-M5Sx5.8 (5.8 mm long, 8.99 EUR / 50), which fits the existing hole depth but gives less engagement."
+     "note": "NOT drop-in: 9.5 mm long vs McMaster 7.9 mm (1.6 mm longer). The short version RX-M5Sx5.8 (and CNC Kitchen 'M5 x 5.8 short', also listed) is 2.1 mm shorter. No 7.9 mm M5 at ruthex or CNC Kitchen. EUR 9.99 per 50 (VAT incl.), no USD price."
     }
    ]
   },
@@ -1573,9 +1573,9 @@
     {
      "seller": "ruthex",
      "url": "https://www.ruthex.de/products/ruthex-gewindeeinsatz-m3-100-stuck-rx-m3x5-7-messing-gewindebuchsen",
-     "stock": "In stock",
+     "stock": "InStock (schema.org availability)",
      "read_on": "2026-10-27",
-     "seller_pn": "RX-M3x5.7 (set GE-M3x57-001)",
+     "seller_pn": "RX-M3x5.7 (SKU GE-M3x57-001)",
      "pack_qty": 100
     }
    ]
@@ -1635,7 +1635,7 @@
     {
      "seller": "Belmetric",
      "url": "https://belmetric.com/m3x0-5-socket-head-cap-screw-din-912-class-12-9/",
-     "stock": "In stock",
+     "stock": "in stock",
      "read_on": "2026-10-27",
      "seller_pn": "BSH3X6",
      "price_usd": 0.12
@@ -1664,13 +1664,12 @@
      "pack_qty": 100
     },
     {
-     "seller": "McMaster-Carr",
-     "url": "https://www.mcmaster.com/91294A128/",
-     "price_usd": 5.82,
-     "pack_qty": 100,
-     "seller_pn": "91294A128",
-     "stock": "M3 x 8 of the same series (4.8 mm into the standoff)",
-     "read_on": "2026-10-27"
+     "seller": "Belmetric",
+     "url": "https://belmetric.com/m3x0-5-flat-head-cap-screw-steel-10-9-din-7991/",
+     "stock": "in stock",
+     "read_on": "2026-10-27",
+     "seller_pn": "SF3X6",
+     "price_usd": 0.18
     }
    ]
   },
@@ -1738,6 +1737,69 @@
      "price_usd": 13.23,
      "pack_qty": 100,
      "seller_pn": "91290A115"
+    }
+   ]
+  },
+  {
+   "key": "screw_m6x16",
+   "id": "mcmaster-91290a667",
+   "qty": 10,
+   "for": "the bus bars' lug stacks: down through the lug(s) and the bar into the insulator's nut",
+   "vendor": "McMaster-Carr",
+   "part_number": "91290A667",
+   "name": "Black-Oxide Alloy Steel Socket Head Screw, M6 x 1 mm Thread Size, 16 mm Long, Fully Threaded",
+   "mass_g_each": 5.963,
+   "price_usd_each": 0.0859,
+   "url": "https://www.mcmaster.com/91290A667/",
+   "pack_qty": 100,
+   "sellers": [
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/91290A667/",
+     "in_stock": null,
+     "ships_from": "US",
+     "price_usd": 8.59,
+     "pack_qty": 100
+    },
+    {
+     "seller": "Belmetric",
+     "url": "https://belmetric.com/m6x1-0-socket-head-cap-screw-din-912-class-12-9/",
+     "price_usd": 0.2,
+     "seller_pn": "BSH6X16",
+     "read_on": "2026-10-27",
+     "stock": "in stock: DIN 912 class 12.9, black oxide, fully threaded (the same screw); $0.12 each from 25"
+    }
+   ]
+  },
+  {
+   "key": "nut_m6_nyloc",
+   "id": "mcmaster-94645a205",
+   "qty": 10,
+   "for": "held in the bus insulators' hex pockets under the bars' holes (they cannot turn)",
+   "vendor": "McMaster-Carr",
+   "part_number": "94645A205",
+   "name": "High-Strength Steel Nylon-Insert Locknut, Zinc Plated, M6 x 1 mm Thread Size",
+   "mass_g_each": 2.537,
+   "price_usd_each": 0.1226,
+   "url": "https://www.mcmaster.com/94645A205/",
+   "pack_qty": 100,
+   "sellers": [
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/94645A205/",
+     "in_stock": null,
+     "ships_from": "US",
+     "price_usd": 12.26,
+     "pack_qty": 100
+    },
+    {
+     "seller": "Global Industrial",
+     "url": "https://www.globalindustrial.com/p/m6-x-1-0-nylon-insert-lock-nut-304-stainless-steel-din-985-pkg-of-100",
+     "price_usd": 25.95,
+     "pack_qty": 100,
+     "seller_pn": "WBB2298457 (Titan Fasteners AAV06)",
+     "read_on": "2026-10-27",
+     "stock": "ships in 2 business days: DIN 985 M6 in 304 stainless (the same size, 6 mm tall)"
     }
    ]
   }
@@ -1812,7 +1874,7 @@
   {
    "key": "cheek",
    "qty": 2,
-   "vendor": "SendCutSend (sendcutsend.com: upload the DXF for the instant price)",
+   "vendor": "SendCutSend (sendcutsend.com: upload the DXF, pick the material, add the services above)",
    "backup": "OSH Cut (oshcut.com: instant price from the DXF or STEP; bends and PEM nuts)",
    "material": "5052-H32 aluminium 0.187 in",
    "mass_g_each": 491.9,
@@ -1826,20 +1888,30 @@
    "drawing": "exports/body/sendcutsend/cheek_5052-H32_0.187in_x2.dxf",
    "spec": [
     "5052-H32 aluminium, 0.187 in (4.75 mm); qty 2; flat 184.0 x 223.0 mm",
-    "2 bends, 90 deg, SendCutSend's 0.25 in radius (K 0.43, bend deduction 0.356 in): the DXF's BEND layer marks the lines; flanges as the STEP",
+    "2 bends, 90 deg, SendCutSend's 0.25 in radius (K 0.43, bend deduction 0.356 in): the DXF's BEND layer marks the lines (the app reads them; each 90 deg UP); flanges as the STEP",
     "8 x PEM SS-M5-0 pressed by SendCutSend (hardware insertion), positions as the STEP",
     "8 x 90 deg countersinks for M4 flat heads (SendCutSend countersinking), the side the STEP shows",
-    "deburr (tumble or linear grain); no finish needed"
+    "deburr (SendCutSend's deburring); no finish needed"
    ],
    "rules": "SendCutSend rules checked: none broken",
-   "price_usd_each": null,
    "price_estimate_usd_each": 60.0,
-   "price_note": "an estimate until the instant price is read on upload (D40: no quotes): cutting by area and cut length, bending, hardware and countersinks per piece; SendCutSend ships in 2-5 days, free shipping over its threshold"
+   "price_usd_each": 63.87,
+   "price_read_on": "2026-10-27",
+   "price_usd_line": 127.74,
+   "price_breaks_usd_each": {
+    "2": 63.87,
+    "10": 44.89,
+    "50": 38.15,
+    "100": 33.49,
+    "1000": 23.32
+   },
+   "ships_by": "Nov 3",
+   "price_note": "SendCutSend's instant price, read in its app on 2026-10-27 from the uploaded DXF (tools/sendcutsend_quote.py): 5052-H32 aluminium 0.187 in, bending 2 bends found in the DXF's BEND layer, each 90 deg UP, countersinking 1, hardware 1, deburred, qty 2; cutting alone $54.25 each"
   },
   {
    "key": "floor_tray",
    "qty": 1,
-   "vendor": "SendCutSend (sendcutsend.com: upload the DXF for the instant price)",
+   "vendor": "SendCutSend (sendcutsend.com: upload the DXF, pick the material, add the services above)",
    "backup": "OSH Cut (oshcut.com: instant price from the DXF or STEP; bends and PEM nuts)",
    "material": "5052-H32 aluminium 0.125 in",
    "mass_g_each": 752.2,
@@ -1853,20 +1925,30 @@
    "drawing": "exports/body/sendcutsend/floor_tray_5052-H32_0.125in_x1.dxf",
    "spec": [
     "5052-H32 aluminium, 0.125 in (3.175 mm); qty 1; flat 339.0 x 273.0 mm",
-    "4 bends, 90 deg, SendCutSend's 0.125 in radius (K 0.44, bend deduction 0.216 in): the DXF's BEND layer marks the lines; flanges as the STEP",
+    "4 bends, 90 deg, SendCutSend's 0.125 in radius (K 0.44, bend deduction 0.216 in): the DXF's BEND layer marks the lines (the app reads them; each 90 deg UP); flanges as the STEP",
     "6 x PEM S-M4-0 pressed by SendCutSend (hardware insertion), positions as the STEP",
     "tapping: the two \u00d82.5 holes M3 x 0.5 (the VN-100)",
-    "deburr (tumble or linear grain); no finish needed"
+    "deburr (SendCutSend's deburring); no finish needed"
    ],
    "rules": "SendCutSend rules checked: none broken",
-   "price_usd_each": null,
    "price_estimate_usd_each": 62.0,
-   "price_note": "an estimate until the instant price is read on upload (D40: no quotes): cutting by area and cut length, bending, hardware and countersinks per piece; SendCutSend ships in 2-5 days, free shipping over its threshold"
+   "price_usd_each": 81.05,
+   "price_read_on": "2026-10-27",
+   "price_usd_line": 81.05,
+   "price_breaks_usd_each": {
+    "2": 57.17,
+    "10": 43.43,
+    "50": 33.17,
+    "100": 29.42,
+    "1000": 23.49
+   },
+   "ships_by": "Nov 3",
+   "price_note": "SendCutSend's instant price, read in its app on 2026-10-27 from the uploaded DXF (tools/sendcutsend_quote.py): 5052-H32 aluminium 0.125 in, bending 4 bends found in the DXF's BEND layer, each 90 deg UP, tapping 1, hardware 1, deburred, qty 1; cutting alone $50.62 each"
   },
   {
    "key": "belly_plate",
    "qty": 1,
-   "vendor": "SendCutSend (sendcutsend.com: upload the DXF for the instant price)",
+   "vendor": "SendCutSend (sendcutsend.com: upload the DXF, pick the material, add the services above)",
    "backup": "OSH Cut (oshcut.com: instant price from the DXF or STEP; bends and PEM nuts)",
    "material": "6061-T6 aluminium 0.1 in",
    "mass_g_each": 239.7,
@@ -1881,17 +1963,27 @@
    "spec": [
     "6061-T6 aluminium, 0.1 in (2.54 mm); qty 1; flat 320.0 x 116.0 mm",
     "12 x PEM SS-M5-0 pressed by SendCutSend (hardware insertion), positions as the STEP",
-    "deburr (tumble or linear grain); no finish needed"
+    "deburr (SendCutSend's deburring); no finish needed"
    ],
    "rules": "SendCutSend rules checked: none broken",
-   "price_usd_each": null,
    "price_estimate_usd_each": 33.0,
-   "price_note": "an estimate until the instant price is read on upload (D40: no quotes): cutting by area and cut length, bending, hardware and countersinks per piece; SendCutSend ships in 2-5 days, free shipping over its threshold"
+   "price_usd_each": 61.02,
+   "price_read_on": "2026-10-27",
+   "price_usd_line": 61.02,
+   "price_breaks_usd_each": {
+    "2": 48.11,
+    "10": 38.48,
+    "50": 27.28,
+    "100": 22.74,
+    "1000": 20.53
+   },
+   "ships_by": "Nov 4",
+   "price_note": "SendCutSend's instant price, read in its app on 2026-10-27 from the uploaded DXF (tools/sendcutsend_quote.py): 6061-T6 aluminium 0.1 in, hardware 1, deburred, qty 1; cutting alone $51.21 each"
   },
   {
    "key": "deck",
    "qty": 1,
-   "vendor": "SendCutSend (sendcutsend.com: upload the DXF for the instant price)",
+   "vendor": "SendCutSend (sendcutsend.com: upload the DXF, pick the material, add the services above)",
    "backup": "OSH Cut (oshcut.com: instant price from the DXF or STEP; bends and PEM nuts)",
    "material": "5052-H32 aluminium 0.1 in",
    "mass_g_each": 648.9,
@@ -1905,18 +1997,28 @@
    "drawing": "exports/body/sendcutsend/deck_5052-H32_0.100in_x1.dxf",
    "spec": [
     "5052-H32 aluminium, 0.1 in (2.54 mm); qty 1; flat 350.3 x 284.3 mm",
-    "4 bends, 90 deg, SendCutSend's 0.125 in radius (K 0.4, bend deduction 0.191 in): the DXF's BEND layer marks the lines; flanges as the STEP",
-    "deburr (tumble or linear grain); no finish needed"
+    "4 bends, 90 deg, SendCutSend's 0.125 in radius (K 0.4, bend deduction 0.191 in): the DXF's BEND layer marks the lines (the app reads them; each 90 deg UP); flanges as the STEP",
+    "deburr (SendCutSend's deburring); no finish needed"
    ],
    "rules": "SendCutSend rules checked: none broken",
-   "price_usd_each": null,
    "price_estimate_usd_each": 65.0,
-   "price_note": "an estimate until the instant price is read on upload (D40: no quotes): cutting by area and cut length, bending, hardware and countersinks per piece; SendCutSend ships in 2-5 days, free shipping over its threshold"
+   "price_usd_each": 78.94,
+   "price_read_on": "2026-10-27",
+   "price_usd_line": 78.94,
+   "price_breaks_usd_each": {
+    "2": 58.49,
+    "10": 41.79,
+    "50": 33.81,
+    "100": 28.19,
+    "1000": 23.63
+   },
+   "ships_by": "Nov 2",
+   "price_note": "SendCutSend's instant price, read in its app on 2026-10-27 from the uploaded DXF (tools/sendcutsend_quote.py): 5052-H32 aluminium 0.1 in, bending 4 bends found in the DXF's BEND layer, each 90 deg UP, deburred, qty 1; cutting alone $62.63 each"
   },
   {
    "key": "compute_pallet",
    "qty": 1,
-   "vendor": "SendCutSend (sendcutsend.com: upload the DXF for the instant price)",
+   "vendor": "SendCutSend (sendcutsend.com: upload the DXF, pick the material, add the services above)",
    "backup": "OSH Cut (oshcut.com: instant price from the DXF or STEP; bends and PEM nuts)",
    "material": "6061-T6 aluminium 0.125 in",
    "mass_g_each": 228.7,
@@ -1931,17 +2033,27 @@
    "spec": [
     "6061-T6 aluminium, 0.125 in (3.175 mm); qty 1; flat 194.0 x 158.0 mm",
     "8 x 90 deg countersinks for M3 flat heads (SendCutSend countersinking), the side the STEP shows",
-    "deburr (tumble or linear grain); no finish needed"
+    "deburr (SendCutSend's deburring); no finish needed"
    ],
    "rules": "SendCutSend rules checked: none broken",
-   "price_usd_each": null,
    "price_estimate_usd_each": 30.0,
-   "price_note": "an estimate until the instant price is read on upload (D40: no quotes): cutting by area and cut length, bending, hardware and countersinks per piece; SendCutSend ships in 2-5 days, free shipping over its threshold"
+   "price_usd_each": 49.4,
+   "price_read_on": "2026-10-27",
+   "price_usd_line": 49.4,
+   "price_breaks_usd_each": {
+    "2": 38.87,
+    "10": 28.96,
+    "50": 24.35,
+    "100": 20.85,
+    "1000": 16.23
+   },
+   "ships_by": "Nov 2",
+   "price_note": "SendCutSend's instant price, read in its app on 2026-10-27 from the uploaded DXF (tools/sendcutsend_quote.py): 6061-T6 aluminium 0.125 in, countersinking 1, deburred, qty 1; cutting alone $30.62 each"
   },
   {
    "key": "power_plate",
    "qty": 1,
-   "vendor": "SendCutSend (sendcutsend.com: upload the DXF for the instant price)",
+   "vendor": "SendCutSend (sendcutsend.com: upload the DXF, pick the material, add the services above)",
    "backup": "OSH Cut (oshcut.com: instant price from the DXF or STEP; bends and PEM nuts)",
    "material": "5052-H32 aluminium 0.1 in",
    "mass_g_each": 161.7,
@@ -1957,20 +2069,30 @@
     "5052-H32 aluminium, 0.1 in (2.54 mm); qty 1; flat 124.0 x 206.0 mm",
     "10 x PEM F-M5-2 pressed by SendCutSend (hardware insertion), positions as the STEP",
     "6 x PEM F-M4-2 pressed by SendCutSend (hardware insertion), positions as the STEP",
-    "deburr (tumble or linear grain); no finish needed"
+    "deburr (SendCutSend's deburring); no finish needed"
    ],
    "rules": "SendCutSend rules checked: none broken",
-   "price_usd_each": null,
    "price_estimate_usd_each": 39.0,
-   "price_note": "an estimate until the instant price is read on upload (D40: no quotes): cutting by area and cut length, bending, hardware and countersinks per piece; SendCutSend ships in 2-5 days, free shipping over its threshold"
+   "price_usd_each": 47.48,
+   "price_read_on": "2026-10-27",
+   "price_usd_line": 47.48,
+   "price_breaks_usd_each": {
+    "2": 38.72,
+    "10": 29.44,
+    "50": 25.58,
+    "100": 21.09,
+    "1000": 15.89
+   },
+   "ships_by": "Nov 2",
+   "price_note": "SendCutSend's instant price, read in its app on 2026-10-27 from the uploaded DXF (tools/sendcutsend_quote.py): 5052-H32 aluminium 0.1 in, hardware 2, deburred, qty 1; cutting alone $28.87 each"
   },
   {
    "key": "bus_bar",
    "qty": 2,
-   "vendor": "SendCutSend (sendcutsend.com: upload the DXF for the instant price)",
+   "vendor": "SendCutSend (sendcutsend.com: upload the DXF, pick the material, add the services above)",
    "backup": "OSH Cut (oshcut.com: instant price from the DXF or STEP; bends and PEM nuts)",
    "material": "C110 copper 0.125 in",
-   "mass_g_each": 59.1,
+   "mass_g_each": 57.4,
    "size_mm": [
     110.0,
     20.0,
@@ -1981,13 +2103,23 @@
    "drawing": "exports/body/sendcutsend/bus_bar_C110_0.125in_x2.dxf",
    "spec": [
     "C110 copper, 0.125 in (3.175 mm); qty 2; flat 110.0 x 20.0 mm",
-    "tapping: the five \u00d85.0 holes M6 x 1.0 (SendCutSend tapping)",
-    "deburr (tumble or linear grain); no finish needed"
+    "cut only: the five \u00d86.4 holes take the lugs' M6 screws into nuts held in the printed insulator (SendCutSend does no service on a part under 1 in wide)",
+    "deburr (SendCutSend's deburring); no finish needed"
    ],
    "rules": "SendCutSend rules checked: none broken",
-   "price_usd_each": null,
    "price_estimate_usd_each": 17.0,
-   "price_note": "an estimate until the instant price is read on upload (D40: no quotes): cutting by area and cut length, bending, hardware and countersinks per piece; SendCutSend ships in 2-5 days, free shipping over its threshold"
+   "price_usd_each": 18.22,
+   "price_read_on": "2026-10-27",
+   "price_usd_line": 36.44,
+   "price_breaks_usd_each": {
+    "2": 18.22,
+    "10": 16.76,
+    "50": 14.86,
+    "100": 13.66,
+    "1000": 11.4
+   },
+   "ships_by": "Nov 3",
+   "price_note": "SendCutSend's instant price, read in its app on 2026-10-27 from the uploaded DXF (tools/sendcutsend_quote.py): C110 copper 0.125 in, cut only, deburred, qty 2; cutting alone $23.56 each"
   }
  ],
  "to_source": [
@@ -2109,6 +2241,8 @@
    ]
   }
  ],
- "price_usd_known": 1494.1,
- "made_to_order_estimate_usd": 383.0
+ "price_usd_known": 1584.15,
+ "made_to_order_estimate_usd": 383.0,
+ "made_to_order_usd": 482.07,
+ "made_to_order_priced": true
 }

@@ -76,6 +76,10 @@ SCS_RULES = {
     'channel_base_to_flange': 2.0,           # "U/C-channel base must be at least 2x flange length for sheet metal"
     'max_bend_deg': 130.0,
     'box_flange_max_in_with_hardware': 3.0,
+    # app.sendcutsend.com refuses every service (bending, countersinking, hardware, tapping) on a part narrower than
+    # this: "This design does not meet our minimum width for this operation. The minimum width for this operation is
+    # 1 in." (read on the 20 mm bus bar, 2026-10-27, with tools/sendcutsend_quote.py)
+    'min_width_for_services_in': 1.0,
 }
 # PEM self-clinching nuts SendCutSend presses (catalogue: H hole to draw, K centre to cut edge, N centre to the edge
 # of the bend allowance, M centre to centre for the same part; min sheet), inches

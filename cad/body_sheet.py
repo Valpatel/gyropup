@@ -282,6 +282,13 @@ class SheetPart:
             bad.append(f'flat {fw:.0f} x {fh:.0f} mm is over the instant-price size')
         if self.flanges and not s['bend']:
             bad.append(f'{s["material"]} {s["t_in"]} in is not bent by SendCutSend')
+        services = [k for k, on in (('bending', bool(self.flanges)), ('hardware', any(f.kind == 'pem' for f in self.features)),
+                                    ('countersinking', any(f.kind == 'csk' for f in self.features)),
+                                    ('tapping', any(f.note.startswith('tap ') for f in self.features))) if on]
+        narrow = min(self.flat_size())
+        if services and narrow < bp.SCS_RULES['min_width_for_services_in'] * bp.IN - 1e-6:
+            bad.append(f'{", ".join(services)} on a part {narrow:.1f} mm wide: SendCutSend does no service on a part under '
+                       f'{bp.SCS_RULES["min_width_for_services_in"]} in wide')
         for f in self.flanges:
             if f.length < s['min_flange'] - 1e-6:
                 bad.append(f'flange {f.edge} {f.length} mm < minimum {s["min_flange"]:.2f}')

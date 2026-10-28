@@ -166,9 +166,9 @@ def test_every_bought_line_has_a_price_and_a_backup():
             s = r.get('sellers') or []
             if len(s) < 2 or not s[0].get('url') or (s[0].get('price_usd') is None and r.get('price_usd_each') is None):
                 bad.append((k, r.get('key')))
-    for m in bom['made_to_order']:
-        if not (m.get('step') and m.get('dxf') and m.get('backup') and m.get('price_estimate_usd_each')):
-            bad.append(('made_to_order', m['key']))
+    for m in bom['made_to_order']:                      # each with SendCutSend's instant price, read on a date (D58)
+        if not (m.get('step') and m.get('dxf') and m.get('backup') and m.get('price_usd_each') is not None and m.get('price_read_on')):
+            bad.append(('made_to_order', m['key'], m.get('price_note')))
     assert not bad, bad
 
 
@@ -186,6 +186,35 @@ def test_every_fuse_protects_its_wire():
             if float(m.group(1)) > AMPACITY_A[r['awg']]:
                 bad.append((r['id'], r['fuse'], r['awg']))
     assert not bad, bad
+
+
+def test_no_live_pins_on_the_body():
+    """Every connector on the body's side of a lead that is live with the pack in is a socket (hazard 11, D58): the
+    charge port, the 48 V branch leads (XT60H-F) and the 24 V and 12 V ones (XT30U-F); the devices' leads carry the
+    pins. The pack's XT90-S is the one exception: its female is on the pack, the robot's male is dead with the pack out.
+    The order buys the sockets the wire list needs."""
+    import re
+    w = json.loads((R / 'exports' / 'body' / 'wiring.json').read_text())
+    bad = []
+    for r in w['wires']:
+        for field in ('from', 'to', 'termination'):
+            for m in re.finditer(r'\b(XT\d+[A-Z]*)(?:-S)?[- ](M|F|male|female)\b', r[field]):
+                if m.group(1).startswith('XT90'):
+                    continue
+                if m.group(2) in ('M', 'male'):
+                    bad.append((r['id'], field, m.group(0)))
+    assert not bad, bad
+    ends = {r['id']: r['termination'] for r in w['wires']}
+    assert all('XT60H-F' in ends[k] for k in ('W10', 'W11', 'W12', 'W13', 'W14', 'W15')), ends
+    assert all('XT30U-F' in ends[k] for k in ('W21', 'W24')), ends
+    f = R / 'exports' / 'body' / 'bom.json'
+    if f.exists():
+        bom = json.loads(f.read_text())
+        qty = {r['key']: r['qty'] for k, rows in bom.items() if isinstance(rows, list) and not k.startswith(('not_', 'to_source', 'made_to'))
+               for r in rows if isinstance(r, dict) and 'key' in r}
+        sockets_60 = 1 + sum(1 for k in ('W10', 'W11', 'W12', 'W13', 'W14', 'W15') if 'XT60H-F' in ends[k])     # + the charge port
+        assert qty.get('xt60h_f', 0) >= sockets_60, (qty.get('xt60h_f'), sockets_60)
+        assert qty.get('xt30_f', 0) >= 2, qty.get('xt30_f')
 
 
 def test_body_loads_from_the_mount_plane():

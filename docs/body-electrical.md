@@ -83,8 +83,12 @@ lead goes to the MRBF block's battery stud (its M8 post sits in a printed insula
 fuse to the + bus bar; the pack's - lead to the shunt, then the main switch (Flipsky Smart Enhanced V2.0, momentary
 mode: hold 0.3 s on, 1 s off; its smart mode off), then the - bus bar. **Flipsky draws its switch on the negative:
 read the wiring card that comes with it before the first wire, and if it is high side, swap the switch and the shunt
-into the + lead in the drawing.** The bus bars are SendCutSend C110 copper (0.125 in, five M6 taps each) on printed
-insulators: no screw of a bar reaches the plate.
+into the + lead in the drawing.** The bus bars are SendCutSend C110 copper (0.125 in, cut only, five Ø6.4 holes each)
+on printed insulators: each lug stack is an M6 x 16 socket head down through the lug(s) and the bar into a DIN 985
+nyloc nut held in a hex pocket of the insulator, its tip 1.5 mm above the insulator's floor, so no screw of a bar
+reaches the plate. (SendCutSend does no service, tapping included, on a part under 1 in wide: its app refused the
+20 mm bar's taps when the prices were read, 2026-10-27; three threads of copper were a poor hold for a lug anyway.)
+A tap with no lug gets no screw.
 
 Every branch has its own MINI 58V fuse in an inline holder on the + side, as close to the bus bar as the lead allows.
 The holders are rated 32 V by Eaton; the fuse does the interrupting (1 kA at 58 V), so each holder is labelled
@@ -94,7 +98,10 @@ The holders are rated 32 V by Eaton; the fuse does the interrupting (1 kA at 58 
 ### 3.1 The wire list
 
 Red +, black -, white sense or signal, green the frame bond. Silicone wire throughout (BNTECHGO, 200 °C, 600 V). Lengths
-are cut to the plate in P0 and recorded.
+are cut to the plate in P0 and recorded. **Every live end on the body is a socket** (D58, hazard 11): the 48 V branch
+leads end in XT60H-F and the 24 V and 12 V ones in XT30U-F; the devices' leads carry the pins (the RS-04 pigtails'
+XT60H-M are the leg's, the VESC leads', the J501's and the lidar box's adapter leads' are in this order). The table is
+written by `cad/body_wiring.py` from its wire list; `cad/test_body.py` checks that no body-side lead ends in a pin.
 
 | Wire | From | To | AWG | Colour | Ends | Fuse | Why |
 |---|---|---|---|---|---|---|---|
@@ -107,21 +114,21 @@ are cut to the plate in P0 and recorded.
 | W7 | main switch OUT- (P-) | - bus bar, tap 1 (M6) | 8 | black | lug M6 | - | the switched negative: everything below is off with it |
 | W8 | charge port XT60H-F + | MRBF block, battery stud (M8) | 18 | red | XT60 / lug M8 | MINI 58V 10 A (inline, at the stud) | charger 2-3 A; the fuse guards the lead against a pack short |
 | W9 | charge port XT60H-F - | shunt, load side (M8) | 18 | black | XT60 / lug M8 | - | after the shunt (it counts the charge), before the switch (the robot can be off) |
-| W10 | + bus tap 2 | RS-04 left front (XT60H) | 14 | red | lug M6 / XT60H-M | MINI 58V 20 A | ~12 A at a jump, 25 A peaks: 14 AWG silicone |
-| W11 | + bus tap 2 | RS-04 left rear (XT60H) | 14 | red | lug M6 / XT60H-M | MINI 58V 20 A | as W10 (two lugs share the tap) |
-| W12 | + bus tap 3 | RS-04 right front (XT60H) | 14 | red | lug M6 / XT60H-M | MINI 58V 20 A | as W10 |
-| W13 | + bus tap 3 | RS-04 right rear (XT60H) | 14 | red | lug M6 / XT60H-M | MINI 58V 20 A | as W10 |
-| W14 | + bus tap 4 | VESC left (Flipsky 75100) + | 12 | red | lug M6 / XT60H-M | MINI 58V 30 A | the wheel: firmware limits it to 25 A |
-| W15 | + bus tap 4 | VESC right + | 12 | red | lug M6 / XT60H-M | MINI 58V 30 A | as W14 |
+| W10 | + bus tap 2 | RS-04 left front (XT60H) | 14 | red | lug M6 / XT60H-F | MINI 58V 20 A | ~12 A at a jump, 25 A peaks: 14 AWG silicone; the motor's 450 mm pigtail carries the XT60H-M |
+| W11 | + bus tap 2 | RS-04 left rear (XT60H) | 14 | red | lug M6 / XT60H-F | MINI 58V 20 A | as W10 (two lugs share the tap) |
+| W12 | + bus tap 3 | RS-04 right front (XT60H) | 14 | red | lug M6 / XT60H-F | MINI 58V 20 A | as W10 |
+| W13 | + bus tap 3 | RS-04 right rear (XT60H) | 14 | red | lug M6 / XT60H-F | MINI 58V 20 A | as W10 |
+| W14 | + bus tap 4 | VESC left (Flipsky 75100) + | 12 | red | lug M6 / XT60H-F | MINI 58V 30 A | the wheel: firmware limits it to 25 A; the VESC's own lead carries the XT60H-M |
+| W15 | + bus tap 4 | VESC right + | 12 | red | lug M6 / XT60H-F | MINI 58V 30 A | as W14 |
 | W16 | + bus tap 5 | DDR-120C-24 Vin+ | 18 | red | lug M6 / ferrule | MINI 58V 10 A | 120 W out: 3.3 A in at 40 V, plus its inrush |
 | W17 | + bus tap 5 | DDR-60L-12 Vin+ | 18 | red | lug M6 / ferrule | MINI 58V 5 A | 60 W out: 1.7 A in at 40 V |
-| W18 | - bus taps 2-3 | RS-04 x 4 (XT60H) | 14 | black | lug M6 / XT60H-M | - | returns, one per motor |
-| W19 | - bus tap 4 | VESC left, right - | 12 | black | lug M6 / XT60H-M | - | returns |
+| W18 | - bus taps 2-3 | RS-04 x 4 (XT60H) | 14 | black | lug M6 / XT60H-F | - | returns, one per motor (the - of W10-W13's plugs) |
+| W19 | - bus tap 4 | VESC left, right - | 12 | black | lug M6 / XT60H-F | - | returns (the - of W14-W15's plugs) |
 | W20 | - bus tap 5 | DDR-120C-24 Vin-, DDR-60L-12 Vin- | 18 | black | lug M6 / ferrule | - | returns |
-| W21 | DDR-120C-24 +V | J501 DC-IN (XT30) | 18 | red | ferrule / XT30-M | MINI 5 A | the J501: 60 W peak, 2.5 A |
+| W21 | DDR-120C-24 +V | J501 DC-IN (XT30) | 18 | red | ferrule / XT30U-F | MINI 5 A | the J501: 60 W peak, 2.5 A; its DC-IN adapter lead carries the XT30U-M |
 | W22 | DDR-120C-24 +V | stop relay, pole B (in) | 18 | red | ferrule / screw terminal | MINI 5 A | the turret's branch: 60 W peaks (its own fuse stays in the turret too) |
-| W23 | DDR-120C-24 -V | J501 and turret returns; star point | 18 | black | ferrule / XT30-M | - | one tie from -V to the - bus (the CAN reference) |
-| W24 | DDR-60L-12 +V | lidar interface box (XT30) | 18 | red | ferrule / XT30-M | (the converter's 5 A limit) | VLP-16: 8 W, 3 A at spin-up |
+| W23 | DDR-120C-24 -V | J501 and turret returns; star point | 18 | black | ferrule / XT30U-F | - | one tie from -V to the - bus (the CAN reference) |
+| W24 | DDR-60L-12 +V | lidar interface box (XT30) | 18 | red | ferrule / XT30U-F | (the converter's 5 A limit) | VLP-16: 8 W, 3 A at spin-up; the box's lead carries the XT30U-M |
 | W25 | DDR-60L-12 +V | 5 V buck VIN (Pololu D36V28F5) | 22 | red | ferrule / solder | (the converter's 5 A limit) | ~0.6 A at 12 V |
 | W26 | DDR-60L-12 +V | radio-stop jack pin 3 (+12 V) | 22 | red | ferrule / jack | (the converter's 5 A limit) | D37: the jack offers 12 V |
 | W27 | DDR-60L-12 -V | lidar box, buck, jack GND; star point | 18 | black | ferrule | - | one tie to the - bus |
@@ -142,7 +149,8 @@ are cut to the plate in P0 and recorded.
 
 - **24 V** (DDR-120C-24, 120 W): the J501 (60 W at MAXN) and the turret (60 W peaks, 40 W playing). Exactly its
   rating at the two peaks together: the firmware staggers the turret's flywheel start from the J501's boot, and a
-  DDR-240C-24 (10 A, $132.74 at TRC) is the step up if the bench shows it at its limit.
+  DDR-240C-24 (10 A, $132.74 at TRC) is the step up if the bench shows it at its limit. Two are bought (D58): Master
+  Electronics flags the DDR-120C-24 "no longer being manufactured"; the SD-100C-24 is its successor if both ever fail.
 - **12 V** (DDR-60L-12, 60 W): the lidar interface box (8 W, 3 A at spin-up), the 5 V buck (~5 W), the radio-stop
   jack; in P3 the SSC1 pods (25.6 W) and the eyes, switched on after the lidar has spun up.
 - **5 V** (Pololu D36V28F5 from the 12 V, 3.2 A): the Nucleo (E5V), four CAN Pal, the QT Py, the VN-100, the radio

@@ -74,6 +74,12 @@ EXTRA_BACKUP = {        # a second source where neither the catalogue nor altern
                                 'seller_pn': '91294A128', 'stock': 'M3 x 8 of the same series (4.8 mm into the standoff)', 'read_on': READ}],
     'grommet_cable_pass': [{'seller': 'printed', 'url': 'https://www.mcmaster.com/9307K884/', 'price_usd': 0.0,
                             'stock': 'print a split TPU 95A grommet (as the deck\'s lidar pass)', 'read_on': READ}],
+    'screw_m6x16': [{'seller': 'Belmetric', 'url': 'https://belmetric.com/m6x1-0-socket-head-cap-screw-din-912-class-12-9/', 'price_usd': 0.20,
+                     'seller_pn': 'BSH6X16', 'read_on': READ,
+                     'stock': 'in stock: DIN 912 class 12.9, black oxide, fully threaded (the same screw); $0.12 each from 25'}],
+    'nut_m6_nyloc': [{'seller': 'Global Industrial', 'url': 'https://www.globalindustrial.com/p/m6-x-1-0-nylon-insert-lock-nut-304-stainless-steel-din-985-pkg-of-100',
+                      'price_usd': 25.95, 'pack_qty': 100, 'seller_pn': 'WBB2298457 (Titan Fasteners AAV06)', 'read_on': READ,
+                      'stock': 'ships in 2 business days: DIN 985 M6 in 304 stainless (the same size, 6 mm tall)'}],
 }
 
 
@@ -93,8 +99,10 @@ def line(cat, key, qty, why, **kw):
             if 'seller_pn' in b:
                 x['seller_pn'] = b['seller_pn']
             sellers.append(x)
-    if len(sellers) < 2:                                     # the shared catalogue's alternates (catalog/alternates.json)
-        for a in (ALTERNATES.get(key) or ALTERNATES.get(it.get('id')) or []):
+    if len(sellers) < 2:                                     # the shared catalogue's alternates (catalog/alternates.json):
+        alts = list(ALTERNATES.get(key) or ALTERNATES.get(it.get('id')) or [])          # a priced, drop-in one first
+        alts.sort(key=lambda a: (a.get('price_usd_each') is None, 'not drop-in' in (a.get('changes') or '').lower()))
+        for a in alts:
             pk = a.get('pack_qty') or 1
             x = {'seller': a.get('supplier'), 'url': a.get('url'), 'stock': a.get('stock'), 'read_on': a.get('checked'),
                  'seller_pn': a.get('part_number')}
@@ -153,11 +161,20 @@ def hardware_counts():
         'turret_screw_m3x6_flat': (4, 'the carrier standoffs up through the pallet\'s countersinks'),
         'grommet_cable_pass': (1, 'the turret harness through the deck'),
         'screw_m3x8_socket': (8, 'the bus bars to their insulators (4), the insulators to the plate from below (4)'),
+        'screw_m6x16': (2 * len(bf.BUS_HOLES), 'the bus bars\' lug stacks: down through the lug(s) and the bar into the insulator\'s nut'),
+        'nut_m6_nyloc': (2 * len(bf.BUS_HOLES), 'held in the bus insulators\' hex pockets under the bars\' holes (they cannot turn)'),
     }
 
 
-def made_to_order(body):
-    """The SendCutSend parts from exports/body/body.json, with the order's callouts and an estimate each."""
+PRICES = R / 'exports' / 'body' / 'sendcutsend' / 'prices.json'      # tools/sendcutsend_quote.py: SendCutSend's instant prices
+
+
+def made_to_order(body, prices=None):
+    """The SendCutSend parts from exports/body/body.json, with the order's callouts and SendCutSend's instant price each,
+    read in its app from the uploaded DXF (tools/sendcutsend_quote.py -> exports/body/sendcutsend/prices.json); a part
+    not priced yet keeps an estimate and says what to upload."""
+    if prices is None:
+        prices = json.loads(PRICES.read_text()) if PRICES.exists() else {}
     est = {'cheek': 60.0, 'floor_tray': 62.0, 'belly_plate': 33.0, 'deck': 65.0, 'compute_pallet': 30.0, 'power_plate': 39.0, 'bus_bar': 17.0}
     out = []
     for name, s in body['sheet'].items():
@@ -165,24 +182,39 @@ def made_to_order(body):
         if s['bends']:
             b = s['bend_spec']
             spec.append(f"{s['bends']} bends, 90 deg, SendCutSend's {b['inside_radius_in']} in radius (K {b['k_factor']}, bend deduction "
-                        f"{b['bend_deduction_in']} in): the DXF's BEND layer marks the lines; flanges as the STEP")
+                        f"{b['bend_deduction_in']} in): the DXF's BEND layer marks the lines (the app reads them; each 90 deg UP); flanges as the STEP")
         for k, n in (s.get('hardware') or {}).items():
             spec.append(f'{n} x PEM {k} pressed by SendCutSend (hardware insertion), positions as the STEP')
         for k, n in (s.get('countersinks') or {}).items():
             spec.append(f'{n} x 90 deg countersinks for {k} flat heads (SendCutSend countersinking), the side the STEP shows')
         if name == 'bus_bar':
-            spec.append('tapping: the five Ø5.0 holes M6 x 1.0 (SendCutSend tapping)')
+            spec.append('cut only: the five Ø6.4 holes take the lugs\' M6 screws into nuts held in the printed insulator (SendCutSend does '
+                        'no service on a part under 1 in wide)')
         if name == 'floor_tray':
             spec.append('tapping: the two Ø2.5 holes M3 x 0.5 (the VN-100)')
-        spec.append('deburr (tumble or linear grain); no finish needed')
-        out.append({'key': name, 'qty': s['qty'], 'vendor': 'SendCutSend (sendcutsend.com: upload the DXF for the instant price)',
-                    'backup': 'OSH Cut (oshcut.com: instant price from the DXF or STEP; bends and PEM nuts)',
-                    'material': f"{s['material']} {s['thickness_in']} in", 'mass_g_each': s['mass_g_each'],
-                    'size_mm': [round(v, 1) for v in s['flat_mm']] + [s['thickness_mm']], 'step': s['step'], 'dxf': s['dxf'],
-                    'drawing': s['dxf'], 'spec': spec, 'rules': s['rule_violations'] or 'SendCutSend rules checked: none broken',
-                    'price_usd_each': None, 'price_estimate_usd_each': est.get(name),
-                    'price_note': 'an estimate until the instant price is read on upload (D40: no quotes): cutting by area and cut length, '
-                                  'bending, hardware and countersinks per piece; SendCutSend ships in 2-5 days, free shipping over its threshold'})
+        spec.append('deburr (SendCutSend\'s deburring); no finish needed')
+        row = {'key': name, 'qty': s['qty'], 'vendor': 'SendCutSend (sendcutsend.com: upload the DXF, pick the material, add the services above)',
+               'backup': 'OSH Cut (oshcut.com: instant price from the DXF or STEP; bends and PEM nuts)',
+               'material': f"{s['material']} {s['thickness_in']} in", 'mass_g_each': s['mass_g_each'],
+               'size_mm': [round(v, 1) for v in s['flat_mm']] + [s['thickness_mm']], 'step': s['step'], 'dxf': s['dxf'],
+               'drawing': s['dxf'], 'spec': spec, 'rules': s['rule_violations'] or 'SendCutSend rules checked: none broken',
+               'price_estimate_usd_each': est.get(name)}
+        pr = prices.get(name) or {}
+        fin = pr.get('final') or {}
+        same = pr.get('order', {}).get('qty') == s['qty'] and not pr.get('refused') and not pr.get('error')
+        if fin.get('each') is not None and same:
+            row.update({'price_usd_each': fin['each'], 'price_read_on': pr['read_on'], 'price_usd_line': fin.get('subtotal'),
+                        'price_breaks_usd_each': fin.get('breaks'), 'ships_by': fin.get('arrives'),
+                        'price_note': (f"SendCutSend's instant price, read in its app on {pr['read_on']} from the uploaded DXF "
+                                       f"(tools/sendcutsend_quote.py): {s['material']} {s['thickness_in']} in, "
+                                       + (', '.join(f'{k} {v if isinstance(v, str) else len(v)}' for k, v in (pr.get('picked') or {}).items()
+                                                    if k != 'finish') or 'cut only')
+                                       + f", deburred, qty {s['qty']}; cutting alone ${(pr.get('cut_only') or {}).get('each')} each")})
+        else:
+            row.update({'price_usd_each': None,
+                        'price_note': ('an estimate until the instant price is read: run tools/sendcutsend_quote.py --only ' + name
+                                       + (f" (last read: {pr.get('refused') or pr.get('error')})" if pr else ''))})
+        out.append(row)
     return out
 
 
@@ -204,7 +236,8 @@ def build():
             L('fuse_mini58_10a', 4, 'the DDR-120C-24 input and the charge port (18 AWG); two spares'),
             L('fuse_mini58_5a', 6, 'the DDR-60L-12 input, and the 24 V J501 and turret branches (18 AWG); three spares'),
             L('fuse_holder_mini_inline', 12, 'one per branch (11) and a spare: labelled "58 V fuses only"; pull only with the pack unplugged'),
-            L('meanwell-ddr-120c-24', 1, '24 V 5 A, isolated: the J501 and the turret; on a printed TS35 rail on the tray'),
+            L('meanwell-ddr-120c-24', 2, '24 V 5 A, isolated: the J501 and the turret; on a printed TS35 rail on the tray. Two: '
+                                         'Master Electronics flags it no longer manufactured; the SD-100C-24 is its successor (D58)'),
             L('ddr60l_12', 1, '12 V 5 A, isolated: the lidar interface box, the 5 V buck, the radio-stop jack (and the P3 lights and eyes)'),
             L('buck_5v', 1, '5 V from the 12 V rail: the MCU, VN-100, CAN transceivers, QT Py, radio receiver'),
             L('shunt_150a', 1, 'the current shunt in the battery negative (before the switch: it sees charge and discharge)'),
@@ -217,7 +250,6 @@ def build():
             L('fish_paper_18650', 26, 'one ring on every cell\'s + end'),
             L('kapton_20', 1, 'between the layers, over every weld, round the BMS'),
             L('xt90s_pair', 1, 'the pack\'s anti-spark plug: female on the pack lead, male on the robot (5-pair pack)'),
-            L('xt60h_f', 1, 'the charge port on the robot (female: no live pins), held in a printed bezel in the belly'),
             L('charger_13s', 1, 'the charger: XT60 output, set to 90 % and metered to 53.3 V before the first charge, 2-3 A'),
         ],
         'p0_control': [
@@ -237,9 +269,12 @@ def build():
             L('lug_8awg_m6', 10, 'the bus bars\' M6 taps'),
             L('lug_8awg_m8', 4, 'the MRBF block\'s M8 studs and the shunt'),
             L('ferrules', 1, 'every screw terminal (the converters, the switch)'),
-            L('xt60h_m', 6, 'the RS-04 and VESC branch plugs'),
-            L('xt30_m', 6, 'the 24 V and 12 V branch plugs (J501, turret, lidar box, radio jack, two spare)'),
-            L('xt30_f', 6, 'their mating sockets'),
+            L('xt60h_f', 7, 'sockets on the robot, no live pins (D58, hazard 11): the charge port in its printed bezel and the six 48 V '
+                            'branch leads\' ends (W10-W15)'),
+            L('xt60h_m', 2, 'the two VESC leads\' plugs (the devices carry the pins; the RS-04 pigtails\' XT60H-M come with the leg\'s '
+                            'pigtails, docs/body-next-plan.md 5.1 item 5)'),
+            L('xt30_f', 4, 'sockets on the robot: the 24 V and 12 V branch leads\' ends (W21 the J501, W24 the lidar box), two spare'),
+            L('xt30_m', 4, 'the devices\' pins: the J501\'s DC-IN and the lidar box\'s adapter leads, two spare'),
             L('gh_lead_2p_300', 8, 'CAN and I2C leads to the transceivers and the INA228'),
             L('te-dt06-12sa-kit', 1, 'the turret\'s TM plug on the body\'s harness (docs/turret-wiring.md 1.1): 24 V, CAN (J501 can1), SAFETY'),
         ],
@@ -270,6 +305,9 @@ def build():
     priced = [r for k, v in bom.items() if isinstance(v, list) and not k.startswith(('not_', 'to_source', 'made_to_order')) for r in v]
     bom['price_usd_known'] = round(sum(_line_cost(r) for r in priced), 2)
     bom['made_to_order_estimate_usd'] = round(sum((m['price_estimate_usd_each'] or 0) * m['qty'] for m in bom['made_to_order']), 2)
+    bom['made_to_order_usd'] = round(sum((m['price_usd_each'] if m['price_usd_each'] is not None else (m['price_estimate_usd_each'] or 0))
+                                         * m['qty'] for m in bom['made_to_order']), 2)
+    bom['made_to_order_priced'] = all(m['price_usd_each'] is not None for m in bom['made_to_order'])
     return bom
 
 
@@ -313,22 +351,31 @@ seller in `bom.json`, shown in the last column.
 
 How to order:
 
-1. **SendCutSend** (section 1): upload each DXF from `exports/body/sendcutsend/`, pick the material and thickness in
-   its file name, add the bends, PEM nuts, countersinks and tapping listed, and read the instant price. No quotes.
+1. **SendCutSend** (section 1): upload each DXF from `exports/body/sendcutsend/` at app.sendcutsend.com, pick the
+   material and thickness in its file name, add the bends (the app reads the DXF's BEND layer: 90 deg, UP), PEM nuts,
+   countersinks and tapping listed, deburring, and the quantity. The prices below were read that way in the app
+   (`tools/sendcutsend_quote.py`, no account needed for a price); re-read them before the cart goes.
 2. **McMaster-Carr** (section 2, first table): one cart, next-day.
 3. **The other sellers** (section 2): the ones that ship from China first (LCSC, Daly, Flipsky): one to three weeks.
 4. **Print** (section 5) while the orders arrive.
 """, "## 1. SendCutSend (T2: the frame and the power plate): custom parts at an instant price\n",
-           "| Part | Qty | Material | Flat (mm) | Operations | Files | Estimate |", "|---|---|---|---|---|---|---|"]
-    tot_m = 0.0
+           "| Part | Qty | Material | Flat (mm) | Operations | Files | Price each | Line |", "|---|---|---|---|---|---|---|---|"]
+    tot_m, read = 0.0, []
     for m in bom['made_to_order']:
         ops = '; '.join(x for x in m['spec'][1:] if not x.startswith('deburr'))
-        tot_m += (m['price_estimate_usd_each'] or 0) * m['qty']
+        each = m['price_usd_each'] if m['price_usd_each'] is not None else m['price_estimate_usd_each']
+        tot_m += (each or 0) * m['qty']
+        if m['price_usd_each'] is not None:
+            read.append(m['price_read_on'])
+        price = (f"${m['price_usd_each']:.2f} (read {m['price_read_on']})" if m['price_usd_each'] is not None
+                 else f"~${m['price_estimate_usd_each']:.0f} (estimate)")
         out.append(f"| {m['key']} | {m['qty']} | {m['material']} | {m['size_mm'][0]} x {m['size_mm'][1]} | {ops} | "
-                   f"[DXF](../{m['dxf']}), [STEP](../{m['step']}) | ~${m['price_estimate_usd_each']:.0f} each |")
-    out.append(f"\nEstimate ~${tot_m:.0f} for the set until the instant prices are read. Backup: OSH Cut (oshcut.com), which prices the "
-               "same DXF instantly and also bends and inserts PEM nuts. The bus bars can instead be two Victron VBB115040020 (150 A, 70 V, "
-               "$17.82 each, in catalog/body.json), which need no insulators.\n")
+                   f"[DXF](../{m['dxf']}), [STEP](../{m['step']}) | {price} | ${(each or 0) * m['qty']:.2f} |")
+    est_all = sum((m['price_estimate_usd_each'] or 0) * m['qty'] for m in bom['made_to_order'])
+    out.append(f"\n**SendCutSend: ${tot_m:.2f}** for the set" + (f" (instant prices read {min(read)} in SendCutSend's app)" if read else '')
+               + f"; the plan's estimate was ~${est_all:.0f}. Shipping is free over SendCutSend's threshold. Backup: OSH Cut "
+               "(oshcut.com), which prices the same DXF instantly and also bends and inserts PEM nuts. The bus bars can instead be two "
+               "Victron VBB115040020 (150 A, 70 V, $17.82 each, in catalog/body.json), which need no insulators.\n")
     grand = 0.0
     order = sorted(groups.items(), key=lambda kv: (0 if kv[0] == 'McMaster-Carr' else 1, -sum(cost(r)[3] for _, r in kv[1])))
     out.append("## 2. Bought parts, by seller\n")
@@ -367,8 +414,10 @@ How to order:
     fil = sum(v.get('cost_usd', 0) for v in bm.values())
     out.append("\nBy material: " + '; '.join(f"{m} {v.get('grams', 0) / 1000:.2f} kg, {v.get('hours', 0):.1f} h, ${v.get('cost_usd', 0):.2f}"
                                             for m, v in bm.items()) + f". STLs beside the plan in `exports/body/`.\n")
-    out.append(f"## 6. Totals\n\n| | |\n|---|---|\n| Bought (section 2) | ${grand:.2f} |\n| SendCutSend (section 1, estimate) | ~${tot_m:.0f} |\n"
-               f"| Filament used (section 5) | ${fil:.2f} |\n| **Body P0 + P1** | **~${grand + tot_m + fil:.0f}** |\n\n"
+    priced = all(m['price_usd_each'] is not None for m in bom['made_to_order'])
+    out.append(f"## 6. Totals\n\n| | |\n|---|---|\n| Bought (section 2) | ${grand:.2f} |\n"
+               f"| SendCutSend (section 1{', instant prices' if priced else ', partly estimated'}) | ${tot_m:.2f} |\n"
+               f"| Filament used (section 5) | ${fil:.2f} |\n| **Body P0 + P1** | **${grand + tot_m + fil:.2f}** |\n\n"
                "Not included: the compute and sensors (section 3, R13), the legs and their VESCs (the leg workstream's order), the turret "
                "(the turret workstream's), the shell and head (P3, T7), shipping and tax.\n")
     path.write_text('\n'.join(out))
@@ -380,7 +429,8 @@ def main():
     OUT.write_text(json.dumps(bom, indent=1) + '\n')
     write_orders(bom)
     n = sum(len(v) for k, v in bom.items() if isinstance(v, list))
-    print(f"exports/body/bom.json: {n} lines; bought ${bom['price_usd_known']:.2f} + made to order ~${bom['made_to_order_estimate_usd']:.2f}")
+    print(f"exports/body/bom.json: {n} lines; bought ${bom['price_usd_known']:.2f} + made to order ${bom['made_to_order_usd']:.2f} "
+          f"({'every price read' if bom['made_to_order_priced'] else 'some estimated'}; the estimate was ${bom['made_to_order_estimate_usd']:.2f})")
 
 
 if __name__ == '__main__':

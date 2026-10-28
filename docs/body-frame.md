@@ -20,7 +20,7 @@ docs/body-electrical.md. Hazards: docs/body-safety.md. Decisions D43-D45, D54-D5
 | deck | SendCutSend 5052-H32 0.100 in, 320 x 254, lips down | z 216 (the sim's TOP); the VLP-16 (x 103, 143 mm ahead of the turret's pan axis at x -40: the turret's depression table is computed for that), the riser, the fan intake field, the lidar cable pass, the turret harness grommet (right rear) |
 | compute pallet | SendCutSend 6061-T6 0.125 in, countersunk | the J501 carrier on four M3 x 16 standoffs and the cooler's tie-down, on four printed TPU isolators |
 | power plate | SendCutSend 5052-H32 0.100 in, 16 flush PEM nuts | the P0 power skid: switch, MRBF, bus bars, fuses, shunt, DDR-60L-12, MCU board, 5 V buck on top; the VESCs and the switch hang under it; on four printed posts (42 mm) |
-| 2 x bus bar | SendCutSend C110 copper 0.125 in, five M6 taps | + and -, on printed PA6-CF insulators |
+| 2 x bus bar | SendCutSend C110 copper 0.125 in, cut only, five Ø6.4 holes | + and -, on printed PA6-CF insulators (14 mm) with a nyloc nut held under each hole: the lugs' M6 x 16 screws go into them (SendCutSend taps no part under 1 in wide) |
 | 4 x deck post, riser, 4 x plate post, 2 x bus insulator, 2 x DIN rail | printed PA6-CF | heat-set M5 (M3 for the insulators) inserts |
 | battery bay (2 halves, door), 4 x skid, 4 x isolator | printed PETG, TPU 95A | the battery drawer (a bent 5052 box in P3), the belly's skids, the pallet's isolators |
 

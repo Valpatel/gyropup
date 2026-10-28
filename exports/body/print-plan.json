@@ -113,14 +113,14 @@
    "size_mm": [
     110,
     20,
-    10
+    14
    ],
    "fits": true,
    "placement": "straight",
-   "grams_each": 22,
-   "grams": 43,
-   "hours": 2.8,
-   "cost_usd": 3.47,
+   "grams_each": 29,
+   "grams": 58,
+   "hours": 3.8,
+   "cost_usd": 4.62,
    "infill": "100 %",
    "how": "PA6-CF, 100 %; 4 x M3 inserts"
   },
@@ -195,9 +195,9 @@
  },
  "by_material": {
   "pa6-cf": {
-   "grams": 505,
-   "hours": 33.0,
-   "cost_usd": 40.36,
+   "grams": 520,
+   "hours": 34.0,
+   "cost_usd": 41.51,
    "parts": 13
   },
   "tpu95": {
@@ -214,7 +214,7 @@
   }
  },
  "too_big": [],
- "total_hours": 50.2,
- "total_grams": 872,
+ "total_hours": 51.2,
+ "total_grams": 887,
  "note": "body P1: hours are rough (grams / density / a strength-holding rate)"
 }

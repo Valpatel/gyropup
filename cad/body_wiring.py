@@ -12,6 +12,13 @@ with a Daly K 13S 100 A BMS on its negative side; an XT90-S plug; the 80 A MRBF 
 comes with it); two C110 bus bars; Littelfuse MINI 58V fuses in inline holders to every branch; isolated Mean Well
 converters for 24 V (the J501, the turret) and 12 V (the lidar box, the 5 V buck, the radio stop); the charge port
 straight to the pack (fused), so it charges with the robot off.
+
+The live-end rule (hazard 11, D58): every connector on the body's side of a lead that is live with the pack in is a
+SOCKET (female): the charge port, every 48 V branch lead (XT60H-F) and the 24 V and 12 V branch leads (XT30U-F). The
+devices' leads carry the pins (males): the RS-04 pigtails (the leg's: 450 mm, XT60H-M), the VESCs' own leads, the
+J501's DC-IN and the lidar box's adapter leads. The pack's own plug is the one exception the other way round: its
+XT90-S female is on the pack, the male on the robot, whose pins are dead with the pack out (charge only with the
+pack in). `cad/test_body.py` checks it.
 """
 from __future__ import annotations
 
@@ -41,23 +48,27 @@ WIRES = [
     ('W8', 'charge port XT60H-F +', 'MRBF block, battery stud (M8)', 18, 'red', 'XT60 / lug M8', 'MINI 58V 10 A (inline, at the stud)', 'charger 2-3 A; the fuse guards the lead against a pack short'),
     ('W9', 'charge port XT60H-F -', 'shunt, load side (M8)', 18, 'black', 'XT60 / lug M8', '-', 'after the shunt (it counts the charge), before the switch (the robot can be off)'),
     # ---- the 48 V branches from the bus bars
-    ('W10', '+ bus tap 2', 'RS-04 left front (XT60H)', 14, 'red', 'lug M6 / XT60H-M', 'MINI 58V 20 A', '~12 A at a jump, 25 A peaks: 14 AWG silicone'),
-    ('W11', '+ bus tap 2', 'RS-04 left rear (XT60H)', 14, 'red', 'lug M6 / XT60H-M', 'MINI 58V 20 A', 'as W10 (two lugs share the tap)'),
-    ('W12', '+ bus tap 3', 'RS-04 right front (XT60H)', 14, 'red', 'lug M6 / XT60H-M', 'MINI 58V 20 A', 'as W10'),
-    ('W13', '+ bus tap 3', 'RS-04 right rear (XT60H)', 14, 'red', 'lug M6 / XT60H-M', 'MINI 58V 20 A', 'as W10'),
-    ('W14', '+ bus tap 4', 'VESC left (Flipsky 75100) +', 12, 'red', 'lug M6 / XT60H-M', 'MINI 58V 30 A', 'the wheel: firmware limits it to 25 A'),
-    ('W15', '+ bus tap 4', 'VESC right +', 12, 'red', 'lug M6 / XT60H-M', 'MINI 58V 30 A', 'as W14'),
+    ('W10', '+ bus tap 2', 'RS-04 left front (XT60H)', 14, 'red', 'lug M6 / XT60H-F', 'MINI 58V 20 A',
+     '~12 A at a jump, 25 A peaks: 14 AWG silicone; the motor\'s 450 mm pigtail carries the XT60H-M'),
+    ('W11', '+ bus tap 2', 'RS-04 left rear (XT60H)', 14, 'red', 'lug M6 / XT60H-F', 'MINI 58V 20 A', 'as W10 (two lugs share the tap)'),
+    ('W12', '+ bus tap 3', 'RS-04 right front (XT60H)', 14, 'red', 'lug M6 / XT60H-F', 'MINI 58V 20 A', 'as W10'),
+    ('W13', '+ bus tap 3', 'RS-04 right rear (XT60H)', 14, 'red', 'lug M6 / XT60H-F', 'MINI 58V 20 A', 'as W10'),
+    ('W14', '+ bus tap 4', 'VESC left (Flipsky 75100) +', 12, 'red', 'lug M6 / XT60H-F', 'MINI 58V 30 A',
+     'the wheel: firmware limits it to 25 A; the VESC\'s own lead carries the XT60H-M'),
+    ('W15', '+ bus tap 4', 'VESC right +', 12, 'red', 'lug M6 / XT60H-F', 'MINI 58V 30 A', 'as W14'),
     ('W16', '+ bus tap 5', 'DDR-120C-24 Vin+', 18, 'red', 'lug M6 / ferrule', 'MINI 58V 10 A', '120 W out: 3.3 A in at 40 V, plus its inrush'),
     ('W17', '+ bus tap 5', 'DDR-60L-12 Vin+', 18, 'red', 'lug M6 / ferrule', 'MINI 58V 5 A', '60 W out: 1.7 A in at 40 V'),
-    ('W18', '- bus taps 2-3', 'RS-04 x 4 (XT60H)', 14, 'black', 'lug M6 / XT60H-M', '-', 'returns, one per motor'),
-    ('W19', '- bus tap 4', 'VESC left, right -', 12, 'black', 'lug M6 / XT60H-M', '-', 'returns'),
+    ('W18', '- bus taps 2-3', 'RS-04 x 4 (XT60H)', 14, 'black', 'lug M6 / XT60H-F', '-', 'returns, one per motor (the - of W10-W13\'s plugs)'),
+    ('W19', '- bus tap 4', 'VESC left, right -', 12, 'black', 'lug M6 / XT60H-F', '-', 'returns (the - of W14-W15\'s plugs)'),
     ('W20', '- bus tap 5', 'DDR-120C-24 Vin-, DDR-60L-12 Vin-', 18, 'black', 'lug M6 / ferrule', '-', 'returns'),
     # ---- 24 V (isolated; its - tied to the - bus at the star point)
-    ('W21', 'DDR-120C-24 +V', 'J501 DC-IN (XT30)', 18, 'red', 'ferrule / XT30-M', 'MINI 5 A', 'the J501: 60 W peak, 2.5 A'),
+    ('W21', 'DDR-120C-24 +V', 'J501 DC-IN (XT30)', 18, 'red', 'ferrule / XT30U-F', 'MINI 5 A',
+     'the J501: 60 W peak, 2.5 A; its DC-IN adapter lead carries the XT30U-M'),
     ('W22', 'DDR-120C-24 +V', 'stop relay, pole B (in)', 18, 'red', 'ferrule / screw terminal', 'MINI 5 A', 'the turret\'s branch: 60 W peaks (its own fuse stays in the turret too)'),
-    ('W23', 'DDR-120C-24 -V', 'J501 and turret returns; star point', 18, 'black', 'ferrule / XT30-M', '-', 'one tie from -V to the - bus (the CAN reference)'),
+    ('W23', 'DDR-120C-24 -V', 'J501 and turret returns; star point', 18, 'black', 'ferrule / XT30U-F', '-', 'one tie from -V to the - bus (the CAN reference)'),
     # ---- 12 V (isolated; its - to the star point)
-    ('W24', 'DDR-60L-12 +V', 'lidar interface box (XT30)', 18, 'red', 'ferrule / XT30-M', '(the converter\'s 5 A limit)', 'VLP-16: 8 W, 3 A at spin-up'),
+    ('W24', 'DDR-60L-12 +V', 'lidar interface box (XT30)', 18, 'red', 'ferrule / XT30U-F', '(the converter\'s 5 A limit)',
+     'VLP-16: 8 W, 3 A at spin-up; the box\'s lead carries the XT30U-M'),
     ('W25', 'DDR-60L-12 +V', '5 V buck VIN (Pololu D36V28F5)', 22, 'red', 'ferrule / solder', '(the converter\'s 5 A limit)', '~0.6 A at 12 V'),
     ('W26', 'DDR-60L-12 +V', 'radio-stop jack pin 3 (+12 V)', 22, 'red', 'ferrule / jack', '(the converter\'s 5 A limit)', 'D37: the jack offers 12 V'),
     ('W27', 'DDR-60L-12 -V', 'lidar box, buck, jack GND; star point', 18, 'black', 'ferrule', '-', 'one tie to the - bus'),
@@ -206,13 +217,30 @@ def svg() -> str:
     return '\n'.join(o)
 
 
+DOC = R / 'docs' / 'body-electrical.md'
+TABLE_HEAD = '| Wire | From | To | AWG | Colour | Ends | Fuse | Why |'
+
+
+def write_doc_table(rows, doc=DOC):
+    """docs/body-electrical.md section 3.1's table, rewritten from WIRES (the rows between its header and the next
+    blank line), so the page and this list cannot disagree."""
+    lines = doc.read_text().split('\n')
+    i = lines.index(TABLE_HEAD)
+    j = i + 2
+    while j < len(lines) and lines[j].startswith('|'):
+        j += 1
+    body = [f"| {r['id']} | {r['from']} | {r['to']} | {r['awg']} | {r['colour']} | {r['termination']} | {r['fuse']} | {r['why']} |" for r in rows]
+    doc.write_text('\n'.join(lines[:i + 2] + body + lines[j:]))
+
+
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
     rows = [dict(zip(('id', 'from', 'to', 'awg', 'colour', 'termination', 'fuse', 'why'), w)) for w in WIRES]
     (OUT / 'wiring.json').write_text(json.dumps({'pack': PACK, 'wires': rows, 'can': [dict(zip(('bus', 'master', 'nodes', 'note'), c)) for c in CAN],
                                                  'stop': STOP}, indent=1) + '\n')
     (OUT / 'wiring.svg').write_text(svg())
-    print(f'exports/body/wiring.json ({len(rows)} wires), exports/body/wiring.svg')
+    write_doc_table(rows)
+    print(f'exports/body/wiring.json ({len(rows)} wires), exports/body/wiring.svg, docs/body-electrical.md 3.1')
 
 
 if __name__ == '__main__':
