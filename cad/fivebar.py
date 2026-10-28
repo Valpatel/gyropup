@@ -414,10 +414,13 @@ STOP_BOSS_R = 18.0                               # the hip frame's boss round ea
                                                  # (the knee-out ones' ears: Ø36 is the most the frame takes and still fits
                                                  # the bed turned, 248.9 of 250 mm)
 STOP_HOLE_PLAY = 0.05                            # mm on the radius: the pin's hole Ø16.1 as drawn (a printed hole closes up)
-STOP_EAR_BACK = 40.0                             # mm: the knee-out posts' ears thickened on the motor side, behind the web
-                                                 # (E3o, the frame round the post at the 60 N m cap: SF 1.64 without, 1.88 at
-                                                 # 25, 2.37 at 40; cad/leg_studies.py, 2026-10-27)
-STOP_EAR_CLEAR = 62.5                            # ... outside this radius from the motor's axis (its case is Ø120)
+STOP_EAR_BACK = 40.0                             # mm: the knee-out posts' ears backed on the motor side, behind the web: the
+                                                 # frame round the post at the 60 N m cap (E3o) needs it, and it buries the
+                                                 # top flange's end, whose root the ear's lobe loaded (the frame's landing case:
+                                                 # SF 1.13 with the lobe alone, 1.22 so; 1.33 before the stops were redone)
+STOP_EAR_CLEAR = 66.0                            # ... outside this radius from the motor's axis (its case is Ø120)
+STOP_EAR_FILLET = 3.5                            # ... that face rounded into the web's back face (to 2.5 mm off the motor)
+STOP_EAR_CORNER = True                           # the knee-out lobe also blended into the flange's corner
 FLANGE_T, FLANGE_X = 13.0, 95.0                  # the hip frame's top and bottom flanges: thickness, half-length (mm).
                                                  # They carry the leg to the body across the print's layers (it prints
                                                  # web-down): 7 mm gave SF 0.75 in a landing across the layers, 13 about 1.3
@@ -474,11 +477,20 @@ def hip_frame():
             mx, sx = (ax, 1) if k == 0 else (bx, -1)           # notches the stop's push tore at (cad/leg_studies.py E3o)
             # (the polygon encloses the boss by 0.3 mm and takes the ring and the corner 1 mm inside them, so it meets
             # each at an angle: tangent seams there left slivers the print's STL could not close)
-            lobe = _hull(circle(px, pz, STOP_BOSS_R + 0.3) + circle(mx, 0.0, ring_r - 1.0) + [(sx * (fl_x - 1.0), zf + fl_t - 1.0)])
+            lobe = _hull(circle(px, pz, STOP_BOSS_R + 0.3) + circle(mx, 0.0, ring_r - 1.0)
+                         + ([(sx * (fl_x - 1.0), zf + fl_t - 1.0)] if STOP_EAR_CORNER else []))
             web = web.union(yslab(lobe, yf0, yf1))
-            if STOP_EAR_BACK > 0:                              # and backed on the motor side, outside the motor's Ø120
-                back = yslab(lobe, yf0 - STOP_EAR_BACK, yf0 + 0.01).cut(ycyl(STOP_EAR_CLEAR, yf0 - STOP_EAR_BACK - 1, yf0 + 1, mx))
-                web = web.union(back)
+            if STOP_EAR_BACK > 0:                              # and backed on the motor side, outside the motor's Ø120: the
+                # hull of the boss and the flange's end face (not of the ring: hugging the motor it thinned to a knife
+                # edge, which the frame's landing case tore at), so it also fills the corner of the flange's end; its
+                # face towards the motor rounded into the web (a square step there tore in the landing case too)
+                blk = _hull(circle(px, pz, STOP_BOSS_R + 0.3) + [(sx * (fl_x - 1.0), zf + 0.5), (sx * (fl_x - 1.0), zf + fl_t - 1.0)])
+                back = yslab(blk, yf0 - STOP_EAR_BACK, yf0 + 0.01).cut(ycyl(STOP_EAR_CLEAR, yf0 - STOP_EAR_BACK - 1, yf0 + 1, mx))
+                f, rc = STOP_EAR_FILLET, STOP_EAR_CLEAR
+                prof = [(mx + rc, yf0 + 0.01), (mx + rc - f, yf0 + 0.01)]
+                prof += [(mx + rc - f + f * math.cos(math.radians(90 - 90 * k / 8)), yf0 - f + f * math.sin(math.radians(90 - 90 * k / 8))) for k in range(9)]
+                ring = cq.Workplane('XY').polyline(prof).close().revolve(360, (mx, 0, 0), (mx, 1, 0))
+                web = web.union(back).union(ring.intersect(yslab(blk, yf0 - f - 1.0, yf0 + 0.02)))
     # the motors: lug screws (counterbored from the leg side, deep so a stocked length engages), the bore
     for mx, front in ((ax, True), (bx, False)):
         for a in lug_angles(front):
