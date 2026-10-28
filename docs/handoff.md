@@ -128,8 +128,8 @@ cad-agent's design-process work (dossier, integrity gates, section review) is tr
 - D67: Rival rounds, off-brand allowed within 22.2–22.8 mm and 1.6–2.0 g.
 - D68: about 100 fps, with a 105 fps physical ceiling.
 
-**Compute.** Heavy CAD, FEA and sim runs go to the GB10s with `tools/gp-remote` (copy it to ~/.local/bin).
-- It rsyncs the worktree and ~/Code/cad-agent-gyropup-int to `~/gyropup-compute/` on gb10-01/02 and pulls back the
+**Compute.** Heavy CAD, FEA and sim runs go to the compute hosts with `tools/gp-remote` (copy it to ~/.local/bin).
+- It rsyncs the worktree and ~/Code/cad-agent-gyropup-int to `~/gyropup-compute/` on the compute hosts listed in ~/.config/gp-remote/hosts (SSH aliases) and pulls back the
   paths you list.
 - The GB10 environment is a venv built from this venv's `pip freeze`, minus the Intel, pardiso and umf packages.
 - gmsh comes from a micromamba env (`~/gyropup-compute/gmsh-env`, with gmsh.py symlinked into the venv), because PyPI

@@ -1,13 +1,14 @@
 #!/usr/bin/env bash
 # gp-remote: run a heavy Gyropup command (CAD build, FEA, rig sim) on a GB10 instead of this workstation.
 #
-#   gp-remote [--host gb10-01|gb10-02] [--pull PATH]... -- COMMAND...
+#   gp-remote [--host HOST] [--pull PATH]... -- COMMAND...
 #
 # Run from inside a gyropup worktree. It rsyncs the worktree (no .git/.venv) to
 # HOST:~/gyropup-compute/wt/<worktree name>/, runs COMMAND there with the GB10's venv on PATH
 # (`python` and `.venv/bin/python` both work), then rsyncs back the paths given by --pull
-# (default: exports/). One run per worktree per host at a time (flock). Default host: the GB10
-# with the lower load. The GB10s are aarch64: no PARDISO, so the FEA uses SciPy's solver.
+# (default: exports/). One run per worktree per host at a time (flock). Default host: the least-loaded
+# host in $GP_REMOTE_HOSTS or ~/.config/gp-remote/hosts (SSH aliases, space or newline separated).
+# aarch64 hosts have no PARDISO, so the FEA there uses SciPy's solver.
 set -euo pipefail
 host=""; pulls=()
 while [ $# -gt 0 ]; do
@@ -25,11 +26,12 @@ rel=$(realpath --relative-to="$wt" "$PWD")
 [ ${#pulls[@]} -gt 0 ] || pulls=(exports/)
 if [ -z "$host" ]; then
   best=""; bl=999
-  for h in gb10-01 gb10-02; do
+  hosts=${GP_REMOTE_HOSTS:-$(cat "$HOME/.config/gp-remote/hosts" 2>/dev/null)}
+  for h in $hosts; do
     l=$(ssh -o ConnectTimeout=5 "$h" "cut -d' ' -f1 /proc/loadavg" 2>/dev/null) || continue
     if awk "BEGIN{exit !($l < $bl)}"; then bl=$l; best=$h; fi
   done
-  host=${best:?no GB10 reachable}
+  host=${best:?no compute host reachable (set GP_REMOTE_HOSTS or ~/.config/gp-remote/hosts)}
 fi
 dest="gyropup-compute/wt/$name"
 echo "gp-remote: $name -> $host:~/$dest ($*)" >&2

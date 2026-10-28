@@ -37,4 +37,7 @@ electronics.
 The tooling that compared many designs and parts lives on in [cad-agent](https://github.com/Valpatel/cad-agent) as a
 generic comparison framework; the version that was here is at the git tag `explorer-snapshot-2026-10-26`.
 
-**Licence:** private and closed source for now.
+**Licence:** [MIT](LICENSE), covering the code, CAD sources, generated models, docs and data in this repository.
+Bought parts' vendor CAD (STEP files from McMaster-Carr, RobStride, Seeed and others) is not in the repository and is
+not covered: `references/vendor/**/SOURCE.txt` records where each came from, and the build fetches them locally.
+Product names and trademarks belong to their owners.
