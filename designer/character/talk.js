@@ -353,7 +353,7 @@ export function mountTalk({ stage, getHead, eyes, root = '../', chips, brain, do
   // =============================================================================================================
   // the voice
   let muted = ls.get('muted') === '1';
-  let actx = null, current = null, speakSeq = 0;
+  let actx = null, current = null, speakSeq = 0, answerVoice = false;
   const audioCtx = () => {
     if (!actx) { const C = window.AudioContext || window.webkitAudioContext; actx = C ? new C() : null; }
     if (actx?.state === 'suspended') actx.resume().catch(() => {});
@@ -365,6 +365,7 @@ export function mountTalk({ stage, getHead, eyes, root = '../', chips, brain, do
     speakSeq++;
     try { current?.stop(); } catch { /* already ended */ }
     current = null;
+    answerVoice = false;
     if ('speechSynthesis' in window) window.speechSynthesis.cancel();
   }
 
@@ -382,7 +383,7 @@ export function mountTalk({ stage, getHead, eyes, root = '../', chips, brain, do
       const g = a.createGain();
       g.gain.value = VOICE_GAIN;                                // under the turret: the shots are the loudest thing (sfx.js)
       src.connect(g).connect(a.destination);
-      src.onended = () => { if (current === src) current = null; };
+      src.onended = () => { if (current === src) { current = null; answerVoice = false; } };
       current = src;
       src.start();
       return true;
@@ -398,21 +399,26 @@ export function mountTalk({ stage, getHead, eyes, root = '../', chips, brain, do
       const en = vs.filter((v) => /^en/i.test(v.lang));
       const pick = (re) => en.find((v) => re.test(v.name));
       u.voice = pick(/natural|neural/i) || pick(/google us english|samantha|aria|jenny|ava|zira|female/i) || en[0] || null;
+      const playback = { stop: () => window.speechSynthesis.cancel() };
+      u.onend = u.onerror = () => { if (current === playback) { current = null; answerVoice = false; } };
+      current = playback;
       window.speechSynthesis.speak(u);
-      current = { stop: () => window.speechSynthesis.cancel() };
       return true;
     } catch { return false; }
   }
 
-  async function speak(text) {
+  async function speak(text, conversation = false) {
     stopVoice();
     if (muted || !text) return false;
     const seq = speakSeq;
+    answerVoice = conversation; // includes time waiting for a delayed voice service
     await detect();
     if (seq !== speakSeq || muted) return false;
     if (services.tts.ok && await speakPiper(text, seq)) return true;
     if (seq !== speakSeq || muted) return false;
-    return speakBrowser(text);
+    const started = speakBrowser(text);
+    if (!started) answerVoice = false;
+    return started;
   }
 
   function setMood(mood) {
@@ -423,14 +429,14 @@ export function mountTalk({ stage, getHead, eyes, root = '../', chips, brain, do
   }
 
   /** say(text, { mood, speak = true, hold }) — bubble + eye mood + voice. Resolves once the voice has started. */
-  function say(text, { mood, speak: voice = true, hold } = {}) {
+  function say(text, { mood, speak: voice = true, hold, conversation = false } = {}) {
     text = String(text ?? '').trim();
     if (!text) return Promise.resolve(false);
     const tok = setMood(mood || guessMood(text));
     showBubble(text, { hold });
     const until = shownUntil;
     if (tok) setTimeout(() => { if (tok === moodToken && until === shownUntil) { try { eyes.set('neutral'); } catch { /* */ } } }, Math.max(0, until - performance.now()) + 200);
-    return voice ? speak(text) : Promise.resolve(false);
+    return voice ? speak(text, conversation) : Promise.resolve(false);
   }
 
   // =============================================================================================================
@@ -491,7 +497,7 @@ export function mountTalk({ stage, getHead, eyes, root = '../', chips, brain, do
     askPending = false;
     history.push({ role: 'user', content: text }, { role: 'assistant', content: `[${reply.mood || 'neutral'}] ${reply.text}` });
     while (history.length > 12) history.shift();
-    say(reply.text, { mood: reply.mood || guessMood(reply.text), speak: voice });
+    say(reply.text, { mood: reply.mood || guessMood(reply.text), speak: voice, conversation: true });
     replyBusyUntil = shownUntil;
     lastSource = reply.source;
     renderStatus();
@@ -611,7 +617,7 @@ export function mountTalk({ stage, getHead, eyes, root = '../', chips, brain, do
 
   // Stage changes and game reactions are background chatter. The conversation owns the
   // bubble, voice and expression while listening, thinking, or presenting an answer.
-  function isBusy() { return askPending || !!listening || performance.now() < replyBusyUntil; }
+  function isBusy() { return askPending || answerVoice || !!listening || performance.now() < replyBusyUntil; }
   function announce(text, options = {}) {
     if (isBusy() || (visible && performance.now() < shownUntil)) return false;
     say(text, options);

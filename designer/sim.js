@@ -278,7 +278,8 @@ function blendTransition(dt) {
     const from = T.from.get(object);
     if (from) {
       object.position.lerpVectors(from.position, object.position, alpha);
-      object.quaternion.slerpQuaternions(from.quaternion, object.quaternion, alpha);
+      // The destination is this quaternion; avoid aliasing slerpQuaternions' output with its second input.
+      object.quaternion.slerp(from.quaternion, 1 - alpha);
       object.scale.lerpVectors(from.scale, object.scale, alpha);
     } else if (object.userData.replayProp || object.userData.replayBall) object.scale.multiplyScalar(alpha);
   }

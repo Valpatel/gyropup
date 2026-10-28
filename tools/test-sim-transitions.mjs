@@ -13,6 +13,9 @@ await mkdir(out, { recursive: true });
 page.on('pageerror', error => errors.push(error.message));
 await context.addInitScript(() => {
   localStorage.setItem('gyropup.probe', 'off');
+  // Deterministic slow voice: hold the answer until the test signals its end.
+  Object.defineProperty(window, 'SpeechSynthesisUtterance', { value: class { constructor(text) { this.text = text; } }, configurable: true });
+  Object.defineProperty(window, 'speechSynthesis', { value: { getVoices: () => [], cancel() {}, speak(utterance) { window.testUtterance = utterance; } }, configurable: true });
   window.GYROPUP_BRAIN = { base: location.origin + '/test-brain', model: 'test-conversation' };
 });
 let releaseReply, requestBody;
@@ -31,7 +34,8 @@ try {
       eyes: s.eyes, talk: s.talk, dock: s.talk.dock.el, target: s.props.get('target_a') };
     window.original.scales = new Map();
     s.state.robot.group.traverse(o => window.original.scales.set(o, o.scale.toArray()));
-    s.talk.ask('Remember our foam robot adventure?', { speak: false });
+    s.talk.setMuted(false);
+    s.talk.ask('Remember our foam robot adventure?');
   });
   await page.waitForFunction(() => document.querySelector('.gp-bubble').classList.contains('thinking'));
   // Changing activities while a reply is in flight must not replace its thinking bubble or abort it.
@@ -63,18 +67,26 @@ try {
   });
   assert.deepEqual(scales, [], 'Model descendants must not shrink during transitions');
   // Wrap from the end of a recording: first frame must blend, not teleport or greet again.
+  await page.evaluate(() => { const R = window.__sim.state.replay; R.t = (R.run.frames.qpos.length - 1) / R.run.frames.fps; R.playing = false; });
+  await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
   await page.evaluate(() => {
     window.motion = [];
-    const s = window.__sim;
-    s.stage.onFrame(() => { if(s.state.transition) window.motion.push({ p: s.state.robot.base.getWorldPosition(s.state.robot.base.position.clone()).toArray(), camera: s.stage.camera.position.toArray() }); });
+    const s = window.__sim, observedReplay = s.state.replay;
+    s.stage.onFrame(() => { if(s.state.replay === observedReplay && s.state.transition) window.motion.push({ p: s.state.robot.base.getWorldPosition(s.state.robot.base.position.clone()).toArray(), camera: s.stage.camera.position.toArray(), target: s.props.get('target_a').quaternion.toArray() }); });
     const R = s.state.replay; R.t = R.run.frames.qpos.length / R.run.frames.fps - .002; R.playing = true; });
   await page.waitForFunction(() => window.__sim.state.transition !== null);
   await page.waitForFunction(() => window.__sim.state.transition === null);
   assert.equal(await page.locator('.gp-text').textContent(), reply);
   assert.equal(await page.evaluate(() => window.__sim.talk.conversation.length), 2);
-  const motion = await page.evaluate(() => window.motion);
+  const motion = await page.evaluate(() => [...window.motion, { p: window.__sim.state.robot.base.getWorldPosition(window.__sim.state.robot.base.position.clone()).toArray(), target: window.__sim.props.get('target_a').quaternion.toArray() }]);
   assert.ok(motion.length > 5, 'Transition renders intermediate frames');
-  for(let i=1;i<motion.length;i++) assert.ok(Math.hypot(...motion[i].p.map((v,k)=>v-motion[i-1].p[k])) < .15, 'Robot moves continuously through the loop');
+  for(let i=1;i<motion.length;i++) {
+    assert.ok(Math.hypot(...motion[i].p.map((v,k)=>v-motion[i-1].p[k])) < .15, 'Robot moves continuously through the loop');
+    const dot = Math.min(1, Math.abs(motion[i].target.reduce((sum,v,k)=>sum+v*motion[i-1].target[k],0)));
+    assert.ok(2*Math.acos(dot) < .25, 'Knocked-down targets rotate smoothly upright, including the last frame');
+  }
+  const turn = Math.abs(motion.at(0).target.reduce((sum,v,k)=>sum+v*motion.at(-1).target[k],0));
+  assert.ok(2*Math.acos(Math.min(1,turn)) > 1, 'Test exercises a genuinely fallen target');
   await page.screenshot({ path: `${out}/${engine.name()}-after-loop.png` });
   // A slower earlier fetch must never override a newer choice; loading leaves the old replay alive.
   let releaseRun;
@@ -113,6 +125,12 @@ try {
     assert.equal(await page.evaluate(() => window.__sim.state.height), .25);
     if (width === 390) await page.screenshot({ path: `${out}/${engine.name()}-phone-sliders.png` });
   }
+  // A delayed/long spoken answer owns the conversation even after its bubble expires.
+  await page.waitForFunction(() => document.querySelector('.gp-bubble').classList.contains('hidden'));
+  assert.ok(await page.evaluate(() => !!window.testUtterance && window.__sim.talk.isBusy()));
+  assert.equal(await page.evaluate(() => window.__sim.talk.announce('An activity changed!')), false);
+  await page.evaluate(() => window.testUtterance.onend());
+  assert.equal(await page.evaluate(() => window.__sim.talk.isBusy()), false);
   await page.selectOption('#design-select', 'turret-box');
   await page.waitForFunction(() => window.__sim.state.bench);
   const resetStart = await page.evaluate(() => {
@@ -135,5 +153,5 @@ try {
   }), 'Targets return home in the same scene and conversation');
   assert.equal(await page.evaluate(() => document.body.dataset.stageError), undefined);
   assert.deepEqual(errors, []);
-  console.log(`PASS ${engine.name()}: scene/robot/target identity, pending reply and history, loop blending, latest replay selection, cached hardware views, target re-rack, 8 slider layouts. Screenshots ${out}`);
+  console.log(`PASS ${engine.name()}: scene/robot/target identity, pending reply, long voice and history, loop blending, latest replay selection, cached hardware views, target re-rack, 8 slider layouts. Screenshots ${out}`);
 } finally { releaseReply?.(); await browser.close(); }
