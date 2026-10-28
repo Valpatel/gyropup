@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import functools
 import json
+import os
 import math
 import sys
 from dataclasses import dataclass, field
@@ -545,7 +546,17 @@ def leg_rows(h_mm=300.0):
         left = leg_json['total'] + extra - placed
         if abs(left) > 1.0:
             rows.append((f'{side}.rest_of_leg_json', left, (0.0, sy * (bp.y_off() + 30.0), -100.0)))
+    if WHEEL_CHANGE_G:                                    # a wheel study's change (issue #18), at each wheel's centre
+        for side in ('L', 'R'):
+            w = next(((n, g, c) for n, g, c in rows if n == f'{side}.wheel_hub'), None)
+            rows.append((f'{side}.wheel_change', WHEEL_CHANGE_G, w[2] if w else (0.0, 0.0, -h_mm)))
     return rows
+
+
+# The wheels are the leg's (exports/leg/leg.json: the ODrive BotWheel, 2.2 kg each). Issue #18 studies 8-10 in air-tyre hub
+# motors (+0.8 to +2.3 kg a wheel): set this (or GYROPUP_WHEEL_CHANGE_G) to a candidate's change per wheel to see the
+# ledger and the gate with it, before anything is redesigned round it.
+WHEEL_CHANGE_G = float(os.environ.get('GYROPUP_WHEEL_CHANGE_G', 0.0))
 
 
 SHELL_PREFIXES = ('shell_', 'ear_bracket', 'receiver_bay', 'd435_cradle', 'fan_duct', 'eyes_clip')    # the shell group's CAD

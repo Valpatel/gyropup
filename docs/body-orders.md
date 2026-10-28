@@ -21,14 +21,16 @@ How to order:
 | Part | Qty | Material | Flat (mm) | Operations | Files | Price each | Line |
 |---|---|---|---|---|---|---|---|
 | cheek | 2 | 5052-H32 aluminium 0.187 in | 184.0 x 223.0 | 2 bends, 90 deg, SendCutSend's 0.25 in radius (K 0.43, bend deduction 0.356 in): the DXF's BEND layer marks the lines (the app reads them; each 90 deg UP); flanges as the STEP; 8 x PEM SS-M5-0 pressed by SendCutSend (hardware insertion), positions as the STEP; 8 x 90 deg countersinks for M4 flat heads (SendCutSend countersinking), the side the STEP shows | [DXF](../exports/body/sendcutsend/cheek_5052-H32_0.187in_x2.dxf), [STEP](../exports/body/sendcutsend/cheek_5052-H32_0.187in_x2.step) | $63.87 (read 2026-10-27) | $127.74 |
-| floor_tray | 1 | 5052-H32 aluminium 0.125 in | 339.0 x 273.0 | 4 bends, 90 deg, SendCutSend's 0.125 in radius (K 0.44, bend deduction 0.216 in): the DXF's BEND layer marks the lines (the app reads them; each 90 deg UP); flanges as the STEP; 6 x PEM S-M4-0 pressed by SendCutSend (hardware insertion), positions as the STEP; tapping: the two Ø2.5 holes M3 x 0.5 (the VN-100) | [DXF](../exports/body/sendcutsend/floor_tray_5052-H32_0.125in_x1.dxf), [STEP](../exports/body/sendcutsend/floor_tray_5052-H32_0.125in_x1.step) | $81.05 (read 2026-10-27) | $81.05 |
-| belly_plate | 1 | 6061-T6 aluminium 0.1 in | 320.0 x 116.0 | 12 x PEM SS-M5-0 pressed by SendCutSend (hardware insertion), positions as the STEP | [DXF](../exports/body/sendcutsend/belly_plate_6061-T6_0.100in_x1.dxf), [STEP](../exports/body/sendcutsend/belly_plate_6061-T6_0.100in_x1.step) | $61.02 (read 2026-10-27) | $61.02 |
-| deck | 1 | 5052-H32 aluminium 0.1 in | 350.3 x 284.3 | 4 bends, 90 deg, SendCutSend's 0.125 in radius (K 0.4, bend deduction 0.191 in): the DXF's BEND layer marks the lines (the app reads them; each 90 deg UP); flanges as the STEP | [DXF](../exports/body/sendcutsend/deck_5052-H32_0.100in_x1.dxf), [STEP](../exports/body/sendcutsend/deck_5052-H32_0.100in_x1.step) | $80.04 (read 2026-10-27) | $80.04 |
+| floor_tray | 1 | 5052-H32 aluminium 0.125 in | 339.0 x 273.0 | 4 bends, 90 deg, SendCutSend's 0.125 in radius (K 0.44, bend deduction 0.216 in): the DXF's BEND layer marks the lines (the app reads them; each 90 deg UP); flanges as the STEP; 4 x PEM S-M4-0 pressed by SendCutSend (hardware insertion), positions as the STEP; tapping: the two Ø2.5 holes M3 x 0.5 (the VN-100) | [DXF](../exports/body/sendcutsend/floor_tray_5052-H32_0.125in_x1.dxf), [STEP](../exports/body/sendcutsend/floor_tray_5052-H32_0.125in_x1.step) | $80.62 (read 2026-10-27) | $80.62 |
+| belly_plate | 1 | 6061-T6 aluminium 0.1 in | 320.0 x 116.0 | 16 x PEM S-M4-0 pressed by SendCutSend (hardware insertion), positions as the STEP | [DXF](../exports/body/sendcutsend/belly_plate_6061-T6_0.100in_x1.dxf), [STEP](../exports/body/sendcutsend/belly_plate_6061-T6_0.100in_x1.step) | $62.16 (read 2026-10-27) | $62.16 |
+| deck | 1 | 5052-H32 aluminium 0.1 in | 350.3 x 284.3 | 4 bends, 90 deg, SendCutSend's 0.125 in radius (K 0.4, bend deduction 0.191 in): the DXF's BEND layer marks the lines (the app reads them; each 90 deg UP); flanges as the STEP | [DXF](../exports/body/sendcutsend/deck_5052-H32_0.100in_x1.dxf), [STEP](../exports/body/sendcutsend/deck_5052-H32_0.100in_x1.step) | $80.57 (read 2026-10-27) | $80.57 |
 | compute_pallet | 1 | 6061-T6 aluminium 0.125 in | 194.0 x 158.0 | 8 x 90 deg countersinks for M3 flat heads (SendCutSend countersinking), the side the STEP shows | [DXF](../exports/body/sendcutsend/compute_pallet_6061-T6_0.125in_x1.dxf), [STEP](../exports/body/sendcutsend/compute_pallet_6061-T6_0.125in_x1.step) | $49.40 (read 2026-10-27) | $49.40 |
 | power_plate | 1 | 5052-H32 aluminium 0.1 in | 124.0 x 206.0 | 10 x PEM F-M5-2 pressed by SendCutSend (hardware insertion), positions as the STEP; 6 x PEM F-M4-2 pressed by SendCutSend (hardware insertion), positions as the STEP | [DXF](../exports/body/sendcutsend/power_plate_5052-H32_0.100in_x1.dxf), [STEP](../exports/body/sendcutsend/power_plate_5052-H32_0.100in_x1.step) | $47.48 (read 2026-10-27) | $47.48 |
 | bus_bar | 2 | C110 copper 0.125 in | 110.0 x 20.0 | cut only: the five Ø6.4 holes take the lugs' M6 screws into nuts held in the printed insulator (SendCutSend does no service on a part under 1 in wide) | [DXF](../exports/body/sendcutsend/bus_bar_C110_0.125in_x2.dxf), [STEP](../exports/body/sendcutsend/bus_bar_C110_0.125in_x2.step) | $18.22 (read 2026-10-27) | $36.44 |
+| bay_floor | 1 | 5052-H32 aluminium 0.063 in | 310.0 x 134.0 | 2 bends, 90 deg, SendCutSend's 0.035 in radius (K 0.42, bend deduction 0.096 in): the DXF's BEND layer marks the lines (the app reads them; each 90 deg UP); flanges as the STEP; 10 x PEM S-M3-0 pressed by SendCutSend (hardware insertion), positions as the STEP | [DXF](../exports/body/sendcutsend/bay_floor_5052-H32_0.063in_x1.dxf), [STEP](../exports/body/sendcutsend/bay_floor_5052-H32_0.063in_x1.step) | $51.12 (read 2026-10-27) | $51.12 |
+| bay_side | 2 | 5052-H32 aluminium 0.063 in | 310.0 x 128.6 |  | [DXF](../exports/body/sendcutsend/bay_side_5052-H32_0.063in_x2.dxf), [STEP](../exports/body/sendcutsend/bay_side_5052-H32_0.063in_x2.step) | $22.05 (read 2026-10-27) | $44.10 |
 
-**SendCutSend: $483.17** for the set (instant prices read 2026-10-27 in SendCutSend's app); the plan's estimate was ~$383. Shipping is free over SendCutSend's threshold. Backup: OSH Cut (oshcut.com), which prices the same DXF instantly and also bends and inserts PEM nuts. The bus bars can instead be two Victron VBB115040020 (150 A, 70 V, $17.82 each, in catalog/body.json), which need no insulators.
+**SendCutSend: $579.63** for the set (instant prices read 2026-10-27 in SendCutSend's app); the plan's estimate was ~$459. Shipping is free over SendCutSend's threshold. Backup: OSH Cut (oshcut.com), which prices the same DXF instantly and also bends and inserts PEM nuts. The bus bars can instead be two Victron VBB115040020 (150 A, 70 V, $17.82 each, in catalog/body.json), which need no insulators.
 
 ## 2. Bought parts, by seller
 
@@ -155,13 +157,14 @@ How to order:
 |---|---|---|---|---|---|---|---|
 | T5 | [XT90-S](https://www.amazon.com/dp/B074PTHZ3M): Amass XT90-S anti-spark connector, male + female, 5 pairs | 2 | 1 x 5-pack | $12.98 | $12.98 | the bay's lead (anti-spark: female on the bay, male on the robot) and the series link between the pa | FLYRC on Amazon $14.99 ([link](https://www.amazon.com/dp/B08L3S2ZK8)): In Stock; 3 pairs with 150 mm 10 AWG pigtails |
 
-### LCSC (lcsc.com): $9.92
+### LCSC (lcsc.com): $10.59
 
 | Task | Part | Used | Order | Price | Line | For | Backup |
 |---|---|---|---|---|---|---|---|
 | T5 | [0997020.WXN](https://www.lcsc.com/product-detail/C207028.html): Littelfuse MINI 58V blade fuse 20 A (the RS-04 branches) | 8 | 8 | $0.61 | $4.88 | the four RS-04 branches (14 AWG); four spares | element14 ([link](https://nz.element14.com/littelfuse/0997020-wxn/auto-blade-fuse-2a-58v/dp/2748837)): listed (snippet) |
 | T5 | [0997030.WXN](https://www.lcsc.com/product-detail/C207030.html): Littelfuse MINI 58V blade fuse 30 A (the VESC branches) | 4 | 4 | $0.44 | $1.76 | the two VESC branches (12 AWG; the VESCs' battery current limit 20 A); two spares | LCSC $0.49 ([link](https://www.lcsc.com/product-detail/C207029.html)): 1,743 (25 A) |
-| T5 | [0997010.WXN](https://www.lcsc.com/product-detail/C207026.html): Littelfuse MINI 58V blade fuse 10 A (DDR-120C-24 input, the charge port) | 8 | 8 | $0.41 | $3.28 | the TRACO input (W16), the turret's branch (W17), the J501 (W21) and the 12 V loads (W22); four spar | LCSC $0.66 ([link](https://www.lcsc.com/product-detail/C207027.html)): 2,950 (15 A) |
+| T5 | [0997010.WXN](https://www.lcsc.com/product-detail/C207026.html): Littelfuse MINI 58V blade fuse 10 A (DDR-120C-24 input, the charge port) | 4 | 4 | $0.41 | $1.64 | the TRACO input (W16) and the J501 (W21); two spares | LCSC $0.66 ([link](https://www.lcsc.com/product-detail/C207027.html)): 2,950 (15 A) |
+| T5 | [099707.5WXN](https://www.lcsc.com/product-detail/C2680610.html): Littelfuse MINI 58V blade fuse 7.5 A (the turret's feed W22 and the 12 V rail W43, D66) | 4 | 4 | $0.58 | $2.31 | the turret's branch (W22: the stop relay's contact carries 8 A) and the 12 V loads (W43); two spares | LCSC (other suppliers) $0.31 ([link](https://www.lcsc.com/product-detail/C2680610.html)): 3,000 (5-7 business days) |
 
 ### DigiKey (digikey.com): $8.28
 
@@ -181,7 +184,7 @@ How to order:
 |---|---|---|---|---|---|---|---|
 | T5 | [0997005.WXN](https://il.farnell.com/littelfuse/0997005-wxn/auto-blade-fuse-5a-58v/dp/2748834): Littelfuse MINI 58V blade fuse 5 A (DDR-60L-12 input; the 24 V J501 and turret branches) | 2 | 2 | $0.98 | $1.96 | the INA228's VBUS sense lead (W32, 22 AWG); one spare | Dasenic $0.39 ([link](https://www.dasenic.com/product/littelfuse-0997005wxn)): 17,902 in stock, $0.3878 at 25+ (search result, 2026-10-27) |
 
-**Bought parts: $1607.93** (whole packs at the first seller's price; shipping and tax extra).
+**Bought parts: $1608.60** (whole packs at the first seller's price; shipping and tax extra).
 
 ## 3. Listed, not in this order
 
@@ -208,18 +211,20 @@ How to order:
 | Part | Qty | Material | Size (mm) | g each | Hours | How |
 |---|---|---|---|---|---|---|
 | post | 4 | pa6-cf | 22 x 22 x 120 | 44 | 11.4 | PA6-CF, 100 % solid, printed standing; 2 x M5 inserts |
-| riser | 1 | pa6-cf | 144 x 144 x 30 | 166 | 10.9 | PA6-CF, 100 % solid, printed on its top face; 8 x M5 inserts, 2 x Ø5 dowels |
-| isolator | 4 | tpu95 | 16 x 16 x 15 | 2 | 0.9 | TPU 95A: the pallet's isolator foot, neck and cap |
-| din_rail_24v | 1 | pa6-cf | 35 x 26 x 8 | 2 | 0.1 | PA6-CF TS35 rail piece; 2 x M4 x 10 flat heads into the nuts below |
-| din_rail_12v | 1 | pa6-cf | 60 x 35 x 8 | 5 | 0.3 | PA6-CF TS35 rail piece; 2 x M4 x 10 flat heads into the nuts below |
+| riser | 1 | pa6-cf | 144 x 144 x 30 | 165 | 10.8 | PA6-CF, 100 % solid, printed on its top face; 8 x M5 inserts, 2 x Ø5 dowels |
+| isolator | 4 | tpu95 | 16 x 16 x 13 | 2 | 0.9 | TPU 95A: the pallet's isolator foot, neck and cap |
 | plate_post | 4 | pa6-cf | 16 x 16 x 42 | 11 | 2.8 | PA6-CF, 100 %; M5 inserts both ends; printed standing |
-| bus_insulator | 2 | pa6-cf | 110 x 20 x 14 | 29 | 3.8 | PA6-CF, 100 %; 4 x M3 inserts |
-| bay_rear | 1 | petg | 152 x 110 x 66 | 157 | 6.3 | PETG, 3 mm walls; 4 x M5 x 10 up into the belly plate's nuts each side |
-| bay_front | 1 | petg | 152 x 110 x 66 | 140 | 5.6 | PETG, 3 mm walls; 4 x M5 x 10 up into the belly plate's nuts each side |
-| bay_door | 1 | petg | 98 x 4 x 66 | 31 | 1.3 | PETG, 3 mm walls; 4 x M5 x 10 up into the belly plate's nuts each side |
-| bay_skid | 4 | tpu95 | 148 x 14 x 3 | 8 | 3.1 | TPU 95A skid |
+| bus_insulator | 2 | petg | 110 x 20 x 16 | 38 | 3.0 | PETG, 100 % (never a carbon-filled filament: carbon conducts, and the plate is bonded to the - bus); 4 x M3 inserts; test: > 10 MOhm at 50 V from every lug screw to the plate before power |
+| dcdc_bracket | 1 | pa6-cf | 98 x 48 x 69 | 61 | 4.0 | PA6-CF; two M4 x 10 down into the tray's nuts; the converter on four M3 x 8 through its upright |
+| bay_rail_l | 1 | pa6-cf | 310 x 8 x 10 | 26 | 1.7 | PA6-CF; four M4 x 16 up into the belly's nuts, five M3 inserts, two in its ends |
+| bay_rail_r | 1 | pa6-cf | 310 x 8 x 10 | 26 | 1.7 | PA6-CF; four M4 x 16 up into the belly's nuts, five M3 inserts, two in its ends |
+| adapter_plate_front | 1 | pa6-cf | 102 x 72 x 4 | 31 | 2.1 | PA6-CF; four M4 x 8 up into the belly's nuts; the adapter's screws into inserts set on arrival |
+| bay_door_front | 1 | petg | 128 x 102 x 4 | 66 | 2.6 | PETG; two knurled M3 x 10 thumbscrews into the rails' ends |
+| adapter_plate_rear | 1 | pa6-cf | 102 x 72 x 4 | 31 | 2.1 | PA6-CF; four M4 x 8 up into the belly's nuts; the adapter's screws into inserts set on arrival |
+| bay_door_rear | 1 | petg | 128 x 102 x 4 | 66 | 2.6 | PETG; two knurled M3 x 10 thumbscrews into the rails' ends |
+| bay_skid | 4 | tpu95 | 149 x 14 x 3 | 8 | 3.1 | TPU 95A skid on 3M VHB tape (no screw: under the packs there is 1 mm): the robot sits on these |
 
-By material: pa6-cf 0.45 kg, 29.3 h, $35.81; tpu95 0.04 kg, 4.0 h, $1.67; petg 0.33 kg, 13.2 h, $4.60. STLs beside the plan in `exports/body/`.
+By material: pa6-cf 0.56 kg, 36.6 h, $44.61; tpu95 0.04 kg, 4.0 h, $1.63; petg 0.21 kg, 8.2 h, $2.91. STLs beside the plan in `exports/body/`.
 
 ## 6. The P2 cart (the head: order it once P1 balances on its tether)
 
@@ -227,11 +232,11 @@ The turret's mount plate (D59) goes under the deck at the riser: the riser's fou
 
 | Part | Qty | Made | Price each | Line | For |
 |---|---|---|---|---|---|
-| [turret_plate](../exports/body/sendcutsend/turret_plate_6061-T6_0.125in_x1.dxf) | 1 | SendCutSend: 6061-T6 aluminium 0.125 in, 2 x PEM SS-M5-0 pressed by SendCutSend (hardware insertion), positions as the STEP | $36.62 (read 2026-10-27) | $36.62 | D59 |
+| [turret_plate](../exports/body/sendcutsend/turret_plate_6061-T6_0.125in_x1.dxf) | 1 | SendCutSend: 6061-T6 aluminium 0.125 in, 2 x PEM SS-M5-0 pressed by SendCutSend (hardware insertion), positions as the STEP | $44.02 (read 2026-10-27) | $44.02 | D59 |
 | [94459A775](https://www.mcmaster.com/94459A775/): Heat-Set Threaded Inserts for Plastic, Standard, Brass, M5 x 0.8 mm Th | 4 | McMaster-Carr (1 x 25-pack) | $6.82 | $6.82 | P2: 4 riser (cad/body_joints.py) |
 | [91239A224](https://www.mcmaster.com/91239A224/): Black-oxide class 10.9 button head hex drive screw, ISO 7380, M5 x 0.8 | 2 | McMaster-Carr (1 x 100-pack) | $11.79 | $11.79 | P2: 2 turret plate ends (cad/body_joints.py) |
 
-**P2 cart: $55.23** (whole packs; a line marked as taken from an earlier pack costs nothing here).
+**P2 cart: $62.63** (whole packs; a line marked as taken from an earlier pack costs nothing here).
 
 ## 6b. The P3 cart (the shell, the tub, the guards: order it with P3)
 
@@ -239,8 +244,6 @@ The shell and the tub's printed parts are in `exports/body/shell/` with their ow
 
 | Part | Qty | Made | Price each | Line | For |
 |---|---|---|---|---|---|
-| [tub_floor](../exports/body/sendcutsend/tub_floor_5052-H32_0.063in_x1.dxf) | 1 | SendCutSend: 5052-H32 aluminium 0.063 in, 2 bends, 90 deg, SendCutSend's 0.035 in radius (K 0.42, bend deduction 0.096 in): the DXF's BEND layer marks the lines (the app reads them; each 90 deg UP); flanges as the STEP; 10 x PEM S-M3-0 pressed by SendCutSend (hardware insertion), positions as the STEP | $50.06 (read 2026-10-27) | $50.06 | the battery tub (D61) |
-| [tub_side](../exports/body/sendcutsend/tub_side_5052-H32_0.063in_x2.dxf) | 2 | SendCutSend: 5052-H32 aluminium 0.063 in,  | $12.98 (read 2026-10-27) | $25.96 | the battery tub (D61) |
 | [94459A140](https://www.mcmaster.com/94459A140/): Heat-Set Threaded Inserts for Plastic, Standard, Brass, M3 x 0.5 mm Th | 22 | McMaster-Carr (1 x 50-pack) | $10.91 | $10.91 | P3: 2 wall l front, 2 wall l rear, 2 wall r front, 2 wall r rear, 2 shell front post l, 2 shell front post r,  |
 | [90592A085](https://www.mcmaster.com/90592A085/): Steel Hex Nut, Medium-Strength, Class 8, M3 x 0.5 mm (held in the P3 s | 10 | McMaster-Carr (1 x 100-pack) | $2.94 | $2.94 | P3: 2 splice l, 2 splice r, 4 shell door, 2 shell hatch (cad/body_joints.py) |
 | [94645A102](https://www.mcmaster.com/94645A102/): High-Strength Steel Nylon-Insert Locknut, Zinc Plated, M5 x 0.8 mm Thr | 8 | McMaster-Carr (1 x 100-pack) | $15.66 | $15.66 | P3: 4 ear bracket l, 4 ear bracket r (cad/body_joints.py) |
@@ -249,17 +252,17 @@ The shell and the tub's printed parts are in `exports/body/shell/` with their ow
 | [91290A113](https://www.mcmaster.com/91290A113/): Black-oxide alloy steel socket head screw, M3 x 0.5 x 8 mm (the bus ba | 18 | McMaster-Carr (1 x 100-pack) | $13.28 | $13.28 | P3: 2 splice l, 2 splice r, 2 d435 cradle front feet, 2 d435 front back, 2 d435 cradle rear feet, 2 d435 rear  |
 | [91290A230](https://www.mcmaster.com/91290A230/): Black-oxide alloy steel socket head screw, M5 x 0.8 x 14 mm (the fuse  | 8 | McMaster-Carr (1 x 100-pack) | $17.43 | $17.43 | P3: 4 ear bracket l, 4 ear bracket r (cad/body_joints.py) |
 
-**P3 cart: $160.05** (whole packs; the bought shell parts (the SSC1 pods, the D435s, the DualEye) are in the sensor head's order).
+**P3 cart: $84.03** (whole packs; the bought shell parts (the SSC1 pods, the D435s, the DualEye) are in the sensor head's order).
 
 ## 7. Totals
 
 | | |
 |---|---|
-| Bought (section 2) | $1607.93 |
-| SendCutSend (section 1, instant prices) | $483.17 |
-| Filament used (section 5) | $42.08 |
-| **Body P0 + P1** | **$2133.18** |
-| P2 cart (section 6) | $55.23 |
-| P3 cart (section 6b) | $160.05 |
+| Bought (section 2) | $1608.60 |
+| SendCutSend (section 1, instant prices) | $579.63 |
+| Filament used (section 5) | $49.15 |
+| **Body P0 + P1** | **$2237.38** |
+| P2 cart (section 6) | $62.63 |
+| P3 cart (section 6b) | $84.03 |
 
 Not included: the compute and sensors (section 3, R13), the legs and their VESCs (the leg workstream's order), the turret (the turret workstream's), the shell (P3), shipping and tax.

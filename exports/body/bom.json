@@ -2056,18 +2056,18 @@
    ],
    "rules": "SendCutSend rules checked: none broken",
    "price_estimate_usd_each": 62.0,
-   "price_usd_each": 81.05,
+   "price_usd_each": 80.62,
    "price_read_on": "2026-10-27",
-   "price_usd_line": 81.05,
+   "price_usd_line": 80.62,
    "price_breaks_usd_each": {
-    "2": 57.17,
-    "10": 43.43,
-    "50": 33.17,
-    "100": 29.42,
-    "1000": 23.49
+    "2": 56.8,
+    "10": 42.55,
+    "50": 32.09,
+    "100": 28.47,
+    "1000": 22.81
    },
    "ships_by": "Nov 3",
-   "price_note": "SendCutSend's instant price, read in its app on 2026-10-27 from the uploaded DXF (tools/sendcutsend_quote.py): 5052-H32 aluminium 0.125 in, bending 4 bends found in the DXF's BEND layer, each 90 deg UP, tapping 1, hardware 1, deburred, qty 1; cutting alone $50.62 each",
+   "price_note": "SendCutSend's instant price, read in its app on 2026-10-27 from the uploaded DXF (tools/sendcutsend_quote.py): 5052-H32 aluminium 0.125 in, bending 4 bends found in the DXF's BEND layer, each 90 deg UP, tapping 1, hardware 1, deburred, qty 1; cutting alone $50.19 each",
    "stage": "P1"
   },
   {
@@ -2092,18 +2092,18 @@
    ],
    "rules": "SendCutSend rules checked: none broken",
    "price_estimate_usd_each": 33.0,
-   "price_usd_each": 61.02,
+   "price_usd_each": 62.16,
    "price_read_on": "2026-10-27",
-   "price_usd_line": 61.02,
+   "price_usd_line": 62.16,
    "price_breaks_usd_each": {
-    "2": 48.11,
-    "10": 38.48,
-    "50": 27.28,
-    "100": 22.74,
-    "1000": 20.53
+    "2": 49.44,
+    "10": 39.84,
+    "50": 28.62,
+    "100": 23.86,
+    "1000": 21.44
    },
    "ships_by": "Nov 4",
-   "price_note": "SendCutSend's instant price, read in its app on 2026-10-27 from the uploaded DXF (tools/sendcutsend_quote.py): 6061-T6 aluminium 0.1 in, hardware 1, deburred, qty 1; cutting alone $51.21 each",
+   "price_note": "SendCutSend's instant price, read in its app on 2026-10-27 from the uploaded DXF (tools/sendcutsend_quote.py): 6061-T6 aluminium 0.1 in, hardware 1, deburred, qty 1; cutting alone $51.0 each",
    "stage": "P1"
   },
   {
@@ -2128,18 +2128,18 @@
    ],
    "rules": "SendCutSend rules checked: none broken",
    "price_estimate_usd_each": 65.0,
-   "price_usd_each": 80.04,
+   "price_usd_each": 80.57,
    "price_read_on": "2026-10-27",
-   "price_usd_line": 80.04,
+   "price_usd_line": 80.57,
    "price_breaks_usd_each": {
-    "2": 59.37,
-    "10": 42.49,
-    "50": 34.41,
-    "100": 28.69,
-    "1000": 23.91
+    "2": 59.8,
+    "10": 42.83,
+    "50": 34.7,
+    "100": 28.92,
+    "1000": 24.04
    },
    "ships_by": "Nov 2",
-   "price_note": "SendCutSend's instant price, read in its app on 2026-10-27 from the uploaded DXF (tools/sendcutsend_quote.py): 5052-H32 aluminium 0.1 in, bending 4 bends found in the DXF's BEND layer, each 90 deg UP, deburred, qty 1; cutting alone $63.73 each",
+   "price_note": "SendCutSend's instant price, read in its app on 2026-10-27 from the uploaded DXF (tools/sendcutsend_quote.py): 5052-H32 aluminium 0.1 in, bending 4 bends found in the DXF's BEND layer, each 90 deg UP, deburred, qty 1; cutting alone $64.26 each",
    "stage": "P1"
   },
   {
@@ -2200,18 +2200,18 @@
    ],
    "rules": "SendCutSend rules checked: none broken",
    "price_estimate_usd_each": 25.0,
-   "price_usd_each": 36.62,
+   "price_usd_each": 44.02,
    "price_read_on": "2026-10-27",
-   "price_usd_line": 36.62,
+   "price_usd_line": 44.02,
    "price_breaks_usd_each": {
-    "2": 25.42,
-    "10": 19.38,
-    "50": 15.67,
-    "100": 14.04,
-    "1000": 10.69
+    "2": 30.17,
+    "10": 23.75,
+    "50": 18.34,
+    "100": 16.68,
+    "1000": 12.52
    },
    "ships_by": "Nov 2",
-   "price_note": "SendCutSend's instant price, read in its app on 2026-10-27 from the uploaded DXF (tools/sendcutsend_quote.py): 6061-T6 aluminium 0.125 in, hardware 1, deburred, qty 1; cutting alone $26.81 each",
+   "price_note": "SendCutSend's instant price, read in its app on 2026-10-27 from the uploaded DXF (tools/sendcutsend_quote.py): 6061-T6 aluminium 0.125 in, tapping 1, hardware 1, deburred, qty 1; cutting alone $27.36 each",
    "stage": "P2"
   },
   {
@@ -2309,9 +2309,19 @@
     "deburr (SendCutSend's deburring); no finish needed"
    ],
    "rules": "SendCutSend rules checked: none broken",
-   "price_estimate_usd_each": null,
-   "price_usd_each": null,
-   "price_note": "an estimate until the instant price is read: run tools/sendcutsend_quote.py --only bay_floor",
+   "price_estimate_usd_each": 50.0,
+   "price_usd_each": 51.12,
+   "price_read_on": "2026-10-27",
+   "price_usd_line": 51.12,
+   "price_breaks_usd_each": {
+    "2": 34.97,
+    "10": 23.52,
+    "50": 17.22,
+    "100": 14.99,
+    "1000": 12.14
+   },
+   "ships_by": "Nov 2",
+   "price_note": "SendCutSend's instant price, read in its app on 2026-10-27 from the uploaded DXF (tools/sendcutsend_quote.py): 5052-H32 aluminium 0.063 in, bending 2 bends found in the DXF's BEND layer, each 90 deg UP, hardware 1, deburred, qty 1; cutting alone $27.54 each",
    "stage": "P1"
   },
   {
@@ -2334,9 +2344,19 @@
     "deburr (SendCutSend's deburring); no finish needed"
    ],
    "rules": "SendCutSend rules checked: none broken",
-   "price_estimate_usd_each": null,
-   "price_usd_each": null,
-   "price_note": "an estimate until the instant price is read: run tools/sendcutsend_quote.py --only bay_side",
+   "price_estimate_usd_each": 13.0,
+   "price_usd_each": 22.05,
+   "price_read_on": "2026-10-27",
+   "price_usd_line": 44.1,
+   "price_breaks_usd_each": {
+    "2": 22.05,
+    "10": 14.34,
+    "50": 9.96,
+    "100": 8.74,
+    "1000": 7.35
+   },
+   "ships_by": "Nov 2",
+   "price_note": "SendCutSend's instant price, read in its app on 2026-10-27 from the uploaded DXF (tools/sendcutsend_quote.py): 5052-H32 aluminium 0.063 in, cut only, deburred, qty 2; cutting alone $27.21 each",
    "stage": "P1"
   }
  ],
@@ -2502,9 +2522,9 @@
   }
  ],
  "price_usd_known": 1608.6,
- "p2_usd": 55.23,
- "made_to_order_estimate_usd": 383.0,
+ "p2_usd": 62.63,
+ "made_to_order_estimate_usd": 459.0,
  "p3_usd": 84.03,
- "made_to_order_usd": 483.17,
- "made_to_order_priced": false
+ "made_to_order_usd": 579.63,
+ "made_to_order_priced": true
 }
