@@ -173,7 +173,8 @@ means the protection is on. 1 means it is off. The simulation assumes 5.88 N m s
 - Motor A (id 1) is the one tested.
 - Motor B (id 2) drives it in velocity mode, and its own torque reading is the drag.
 - B runs on the pack (through the pod's fuse and contactor). At 60 N m x 13 rad/s it can pull more than the 600 W
-  bench supply gives. Start the pack at 54 V or under.
+  bench supply gives. Start the pack at 54 V or under, and hold the pendant through each sweep: the contactor is
+  closed only while it is held.
 - A is either unplugged or on the bench supply, as each condition says.
 
 **Steps:**

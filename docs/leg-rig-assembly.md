@@ -68,7 +68,7 @@ The carriage resting on its bumpers. Each motor's lead through its slot in the p
 
 ![step 11](../exports/rig/assembly/step-11.png)
 
-The bench supply (48 V; docs/leg-bench-tests.md, commissioning C1-C5): set each motor's id (127 -> 1 front, 2 rear), `python -m rig.rs04 --id N setup`, save. Then python -m rig.calibrate: hold each upper link on its bare knee-out post, it zeroes the motor there, you swing the link to the knee-in post, it checks the 112 deg between the bare posts and the direction and writes rig/calibration.json. Power off.
+The bench supply (48 V; docs/leg-bench-tests.md, commissioning C1-C5): set each motor's id (127 -> 1 front, 2 rear), `python -m rig.rs04 --id N setup`, save. Then python -m rig.calibrate: hold each upper link on its bare knee-out post, it zeroes the motor there, you swing the link to the knee-in post, it checks the 125 deg between the bare posts and the direction and writes rig/calibration.json. Power off.
 
 ## 12. The knees
 
