@@ -1097,7 +1097,7 @@
    ],
    "max_von_mises_mpa": 8.31,
    "von_mises_design_mpa": 8.31,
-   "safety_factor": 5.9,
+   "safety_factor": 5.81,
    "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
    "stiffness_n_per_mm": 31912.0,
    "peak_at_mm": [
@@ -1154,12 +1154,12 @@
      "p99_mpa": 0.51
     },
     "governs": "shear",
-    "sf": 3.29
+    "sf": 3.24
    },
-   "sf_layer_aware": 3.29,
+   "sf_layer_aware": 3.24,
    "sf_isotropic_weak": 2.77,
    "ok_isotropic": true,
-   "verdict_sf": 3.29,
+   "verdict_sf": 3.24,
    "verdict_on": "layer-aware",
    "case": "R-fall-down",
    "material_id": "pa6_cf_xy",
@@ -1167,7 +1167,8 @@
    "png": "exports/turret/fea/pan_base-R-fall-down.png",
    "target": 1.2,
    "ok": true,
-   "seconds": 137.7
+   "seconds": 137.7,
+   "rerun": "2026-10-27, cad/turret_studies.py --only pan_base on gb10-02 with SERVO_END_WALL 8 mm (log: /mnt/storage-10tb/claude-scratch/gyropup/turret/fea_base.log); the detail fields above are from the full run"
   },
   {
    "part": "pan_base",
@@ -1218,7 +1219,7 @@
    ],
    "max_von_mises_mpa": 17.39,
    "von_mises_design_mpa": 17.39,
-   "safety_factor": 1.32,
+   "safety_factor": 1.3,
    "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
    "stiffness_n_per_mm": 4905.6,
    "torsional_stiffness_nm_per_deg": 308.93,
@@ -1276,12 +1277,12 @@
      "p99_mpa": 1.61
     },
     "governs": "across",
-    "sf": 1.27
+    "sf": 1.25
    },
-   "sf_layer_aware": 1.27,
+   "sf_layer_aware": 1.25,
    "sf_isotropic_weak": 1.32,
    "ok_isotropic": true,
-   "verdict_sf": 1.27,
+   "verdict_sf": 1.25,
    "verdict_on": "layer-aware",
    "case": "R-fall-side",
    "material_id": "pa6_cf_z",
@@ -1289,7 +1290,8 @@
    "png": "exports/turret/fea/pan_base-R-fall-side.png",
    "target": 1.2,
    "ok": true,
-   "seconds": 185.1
+   "seconds": 185.1,
+   "rerun": "2026-10-27, cad/turret_studies.py --only pan_base on gb10-02 with SERVO_END_WALL 8 mm (log: /mnt/storage-10tb/claude-scratch/gyropup/turret/fea_base.log); the detail fields above are from the full run"
   },
   {
    "part": "pan_base",
@@ -1329,7 +1331,7 @@
    ],
    "max_von_mises_mpa": 59.16,
    "von_mises_design_mpa": 21.72,
-   "safety_factor": 2.26,
+   "safety_factor": 7.25,
    "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
    "stiffness_n_per_mm": null,
    "peak_at_mm": [
@@ -1386,20 +1388,21 @@
      "p99_mpa": 1.09
     },
     "governs": "shear",
-    "sf": 1.14
+    "sf": 3.81
    },
-   "sf_layer_aware": 1.14,
+   "sf_layer_aware": 3.81,
    "sf_isotropic_weak": 1.06,
    "ok_isotropic": true,
-   "verdict_sf": 1.14,
+   "verdict_sf": 3.81,
    "verdict_on": "layer-aware",
    "case": "E-cap-servo",
    "material_id": "pa6_cf_xy",
    "load_from": "the pan servo at 50 % of its stall pushes its pocket: 112 N along it (the mesh's tangential force) and 41 N outwards (the separating force)",
    "png": "exports/turret/fea/pan_base-E-cap-servo.png",
    "target": 2.0,
-   "ok": false,
-   "seconds": 175.5
+   "ok": true,
+   "seconds": 175.5,
+   "rerun": "2026-10-27, cad/turret_studies.py --only pan_base on gb10-02 with SERVO_END_WALL 8 mm (log: /mnt/storage-10tb/claude-scratch/gyropup/turret/fea_base.log); the detail fields above are from the full run"
   },
   {
    "part": "pan_base",
@@ -1439,7 +1442,7 @@
    ],
    "max_von_mises_mpa": 118.32,
    "von_mises_design_mpa": 43.43,
-   "safety_factor": 1.13,
+   "safety_factor": 3.63,
    "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
    "stiffness_n_per_mm": null,
    "peak_at_mm": [
@@ -1496,20 +1499,21 @@
      "p99_mpa": 2.19
     },
     "governs": "shear",
-    "sf": 0.57
+    "sf": 1.91
    },
-   "sf_layer_aware": 0.57,
+   "sf_layer_aware": 1.91,
    "sf_isotropic_weak": 0.53,
    "ok_isotropic": false,
-   "verdict_sf": 0.57,
+   "verdict_sf": 1.91,
    "verdict_on": "layer-aware",
    "case": "R-stall-servo",
    "material_id": "pa6_cf_xy",
    "load_from": "the pan servo at 100 % of its stall pushes its pocket: 224 N along it (the mesh's tangential force) and 82 N outwards (the separating force)",
    "png": "exports/turret/fea/pan_base-R-stall-servo.png",
    "target": 1.2,
-   "ok": false,
-   "seconds": 148.2
+   "ok": true,
+   "seconds": 148.2,
+   "rerun": "2026-10-27, cad/turret_studies.py --only pan_base on gb10-02 with SERVO_END_WALL 8 mm (log: /mnt/storage-10tb/claude-scratch/gyropup/turret/fea_base.log); the detail fields above are from the full run"
   },
   {
    "part": "pan_clamp",
@@ -2760,14 +2764,12 @@
  },
  "verdict": {
   "on": "the layer-aware SF for printed parts (N2), the yield SF for the aluminium parts; the isotropic columns are reported with each result",
-  "min_sf_everyday": 1.14,
-  "min_sf_rare": 0.57,
+  "min_sf_everyday": 2.02,
+  "min_sf_rare": 1.05,
   "all_ok": false,
-  "weakest": "pan_base R-stall-servo",
+  "weakest": "pan_pinion R-stall",
   "below_target": [
-   "pan_pinion R-stall: 1.05 < 1.2",
-   "pan_base E-cap-servo: 1.14 < 2.0",
-   "pan_base R-stall-servo: 0.57 < 1.2"
+   "pan_pinion R-stall: 1.05 < 1.2"
   ]
  },
  "table": [
@@ -2885,45 +2887,45 @@
    "part": "pan_base",
    "case": "R-fall-down",
    "target": 1.2,
-   "sf_as_v0": 5.9,
+   "sf_as_v0": 5.81,
    "sf_isotropic_weak": 2.77,
-   "sf_layer_aware": 3.29,
+   "sf_layer_aware": 3.24,
    "governs": "shear",
-   "verdict_sf": 3.29,
+   "verdict_sf": 3.24,
    "ok": true
   },
   {
    "part": "pan_base",
    "case": "R-fall-side",
    "target": 1.2,
-   "sf_as_v0": 1.32,
+   "sf_as_v0": 1.3,
    "sf_isotropic_weak": 1.32,
-   "sf_layer_aware": 1.27,
+   "sf_layer_aware": 1.25,
    "governs": "across",
-   "verdict_sf": 1.27,
+   "verdict_sf": 1.25,
    "ok": true
   },
   {
    "part": "pan_base",
    "case": "E-cap-servo",
    "target": 2.0,
-   "sf_as_v0": 2.26,
+   "sf_as_v0": 7.25,
    "sf_isotropic_weak": 1.06,
-   "sf_layer_aware": 1.14,
+   "sf_layer_aware": 3.81,
    "governs": "shear",
-   "verdict_sf": 1.14,
-   "ok": false
+   "verdict_sf": 3.81,
+   "ok": true
   },
   {
    "part": "pan_base",
    "case": "R-stall-servo",
    "target": 1.2,
-   "sf_as_v0": 1.13,
+   "sf_as_v0": 3.63,
    "sf_isotropic_weak": 0.53,
-   "sf_layer_aware": 0.57,
+   "sf_layer_aware": 1.91,
    "governs": "shear",
-   "verdict_sf": 0.57,
-   "ok": false
+   "verdict_sf": 1.91,
+   "ok": true
   },
   {
    "part": "pan_clamp",

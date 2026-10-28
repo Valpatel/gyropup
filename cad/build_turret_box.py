@@ -119,10 +119,9 @@ ROLE = {
     'laser': 'Quarton 650 nm Class 2 red laser (under 1 mW): the aiming dot, parallel to the barrel.',
     'box_deck': f'The adapter: carries the TM face {tb.Z_TM - tb.ROOF:.0f} mm above the J501\'s roof on four legs at the lid\'s screw '
                 f'corners; the control pod hangs at the back.',
-    'intake_shroud': (f'Keeps the J501 fan\'s intake apart from its exhaust: a Ø{2 * tb.COLLAR_R:.0f} collar round the flush grille over '
-                      f'the 9215 fan, sealed on the roof by a foam ring, fed by a duct from the front grille; the fan breathes room air, '
-                      f'not its own hot exhaust.' if tb.J['intake']['kind'] == 'grille' else
-                      'Keeps the J501 fan\'s intake apart from its exhaust: the fan breathes through the front grille, not its own hot air.'),
+    'intake_shroud': (f'The J501 fan\'s exhaust duct (the fan blows up): a Ø{2 * tb.COLLAR_R:.0f} collar round the flush grille over '
+                      f'the 9215 fan, sealed on the roof by a foam ring, carries the hot air forward and out of the deck\'s front, above the '
+                      f'J501\'s own vents and away from the turret\'s; the roof\'s other cells breathe room air from the deck\'s sides.'),
     'pod_cover': 'Closes the control pod from below.',
     'pod_xt60': 'XT60 socket: 24 V in. The J501 takes 12-36 V, so one 24 V supply can run both.',
     'pod_switch': 'DC rocker switch (Bulgin R13244AAAA, Ø20.2, keyed): turret power.',
@@ -145,7 +144,7 @@ TITLE = {'pan_base': 'Pan base', 'pan_clamp': 'Bearing clamp', 'pan_ring': 'Pan 
          'dt_receptacle': 'DT12 socket', 'dt_plug': 'DT12 plug', 'tilt_servo': 'Tilt servo', 'tilt_bearing': 'Tilt bearing',
          'flywheel_motor_l': 'Flywheel motor L', 'flywheel_motor_r': 'Flywheel motor R', 'esc_l': 'ESC L', 'esc_r': 'ESC R',
          'feed_motor': 'Feed servo (STS3215)', 'cartridge_board': 'Cartridge board', 'laser': 'Aiming laser', 'box_deck': 'Box adapter',
-         'intake_shroud': 'Intake shroud', 'pod_cover': 'Pod cover', 'pod_xt60': '24 V in (XT60)', 'pod_switch': 'Power switch',
+         'intake_shroud': 'Exhaust duct', 'pod_cover': 'Pod cover', 'pod_xt60': '24 V in (XT60)', 'pod_switch': 'Power switch',
          'pod_fuse': 'Fuse', 'pod_pendant': 'Pendant socket', 'pod_usb': 'USB-CAN', 'pod_wago': 'Wiring', 'base': 'J501 base',
          'cover': 'J501 lid', 'front_no_gmsl': 'J501 front plate',
          'compute': 'Jetson Orin NX (reComputer Mini)', 'compute_tray': 'Compute plinth floor', 'compute_shell': 'Compute plinth',
@@ -454,6 +453,29 @@ def ball_path_check():
                     'stale: rerun .venv/bin/python cad/turret_lidar.py --scene box, then this build'}
 
 
+def exhaust_check(T):
+    """The J501's fan blows up (the J501 repo, 94da39d): its exhaust leaves through the lid grille into the shroud,
+    whose duct carries it forward and out of the deck's front mouth (the shroud is still named intake_shroud). What must
+    hold so nothing breathes it back: the J501's own intakes (its lid and panel vents) all below the mouth's floor (the
+    plume rises away from them), the front corners walled (the plume cannot curl round into the side gaps that feed the
+    roof's cells), and the turret plinth's vents behind the pan axis, far from the mouth and above it."""
+    E = json.loads((tb.J501_DIR / 'cad' / 'parameters.json').read_text())['enclosure']
+    mouth_z = (tb.SH_Z0 + tb.SH_FLOOR_T, tb.DECK_Z0)
+    intakes_top = max(E['lid_vent_z'][1], E['panel_vent_z'][1])
+    vent_x = tu.VENT_X1 + tu.PLINTH['vent'][0] / 2                          # the plinth's frontmost vent edge (turret frame = box x)
+    vz0 = T.mount_z - tu.PLINTH['h'] + tu.PLINTH['tray_t'] + tu.J4012['H'] / 2 - tu.PLINTH['vent'][1] / 2
+    out = {'mouth_x_mm': round(tb.FRONT_X, 1), 'mouth_z_mm': [round(z, 1) for z in mouth_z], 'mouth_w_mm': round(2 * tb.MOUTH_HALF, 1),
+           'j501_intakes_top_z_mm': intakes_top, 'intakes_below_mouth_mm': round(mouth_z[0] - intakes_top, 1),
+           'plinth_vents_behind_mouth_mm': round(tb.FRONT_X - vent_x, 1), 'plinth_vents_from_z_mm': round(vz0, 1),
+           'fan_blows': 'up (exhaust through the lid grille; J501 thermal.fan.note)'}
+    out['ok'] = out['intakes_below_mouth_mm'] > 0 and out['plinth_vents_behind_mouth_mm'] >= 80.0
+    out['note'] = (f'the J501 exhaust leaves the deck\'s front mouth ({out["mouth_w_mm"]} mm wide, z {out["mouth_z_mm"][0]}-{out["mouth_z_mm"][1]}), '
+                   f'{out["intakes_below_mouth_mm"]} mm above the J501\'s highest intake vent, with the front corners walled; the plinth '
+                   f'breathes {out["plinth_vents_behind_mouth_mm"]} mm behind the mouth. To prove on the bench: the J501\'s intake and the '
+                   'J4012\'s within 3 K of the room with both at full load (bench_proof)')
+    return out
+
+
 def adapter_clearance(adapter):
     """The shroud against the deck's legs and TM insert bosses (task N4 asks 3 mm or more), measured between the solids, and
     the shroud's lowest point over the J501's roof (mm)."""
@@ -695,9 +717,11 @@ def main():
     gsum = {k: {'ok': v['ok'], **{m: v[m] for m in ('worst_overlap_mm', 'spheres', 'poses') if m in v}} for k, v in gd['gates'].items()}
     gsum['connected']['bodies'] = {g: x['bodies'] for g, x in gd['gates']['connected']['groups'].items()}
     gate_info = {'file': 'exports/turret/gates.json', 'fingerprint': gd['fingerprint'], 'ok': gd['ok'], 'gates': gsum}
+    ex = exhaust_check(T)
+    print(f'  J501 exhaust (it blows up): {ex["note"]} -> {"ok" if ex["ok"] else "CHECK"}')
     print(f'  design gates: {", ".join(k for k in gsum)} all pass (exports/turret/gates.json, fingerprint {gd["fingerprint"]})')
     checks = {'clearance': sw, 'muzzle_outside_deck_mm': ball_clear(T), 'ball_path': path_out, 'airflow': air, 'intake_seal': seal,
-              'design_gates': gate_info,
+              'design_gates': gate_info, 'exhaust': exhaust_check(T),
               'shroud_fit': fit, 'tipping': tip, 'overspeed': overspeed, 'release': release,
               'lid_screw': f'M3 x {tb.LID_SCREW_LEN:.0f} ISO 4762, tip at z {tb.LID_SCREW_TIP:.0f} (as the J501\'s own M3 x {tb.J["lid_screw_len"]:.0f})',
               'heights_mm': {'roof': tb.ROOF, 'deck_underside': tb.DECK_Z0, 'tm_face': tb.Z_TM,

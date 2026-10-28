@@ -219,14 +219,14 @@
    ]
   },
   {
-   "item": "SunnySky X2216 880KV V3 outrunner, short shaft, with its bolt-on prop adapter and X-mount",
-   "id": "sunnysky-x2216-880kv-v3",
-   "key": "sunnysky-x2216-880kv-v3",
+   "item": "SunnySky X2216 1400KV V3 outrunner, short shaft, with its bolt-on prop adapter and X-mount",
+   "id": "sunnysky-x2216-1400kv-v3",
+   "key": "sunnysky-x2216-1400kv-v3",
    "qty": 1,
    "for": "flywheel_motor_l",
-   "part_number": "X2216 V3 880KV, short shaft (SKU SS-XV3-X2216-S-880-V3)",
+   "part_number": "X2216 V3 1400KV, short shaft (SKU SS-XV3-X2216-S-1400-V3)",
    "vendor": "SunnySky",
-   "url": "https://sunnyskyusa.com/products/sunnysky-x2216?variant=15890897469534",
+   "url": "https://sunnyskyusa.com/products/sunnysky-x2216?variant=27868073427038",
    "price_usd_each": 24.99,
    "mass_g_each": 72.0,
    "note": null,
@@ -234,8 +234,8 @@
    "sellers": [
     {
      "seller": "SunnySky USA",
-     "url": "https://sunnyskyusa.com/products/sunnysky-x2216?variant=15890897469534",
-     "seller_pn": "SS-XV3-X2216-S-880-V3 (variant 15890897469534, '880 Short')",
+     "url": "https://sunnyskyusa.com/products/sunnysky-x2216?variant=27868073427038",
+     "seller_pn": "SS-XV3-X2216-S-1400-V3 (variant 27868073427038, '1400 Short')",
      "price_usd": 24.99,
      "pack_qty": 1,
      "in_stock": true,
@@ -244,79 +244,29 @@
     },
     {
      "seller": "ReadyMadeRC",
-     "url": "https://www.readymaderc.com/products/details/sunny-sky-x2216-brushless-motor-short-shaft-880kv",
-     "seller_pn": "SS-XV3-X2216-S-880-V3 (RMRC 84776, GTIN 680306447725)",
-     "price_usd": 22.99,
+     "url": "https://www.readymaderc.com/products/details/sunnysky-x-series-v3-x2216-brushless-motor-short-shaft-1400kv",
+     "seller_pn": "SS-XV3-X2216-S-1400-V3 (RMRC 84546, GTIN 680306447800)",
+     "price_usd": 24.99,
      "pack_qty": 1,
      "in_stock": true,
      "stock": "In Stock (no quantity shown)",
      "read_on": "2026-10-27"
-    },
-    {
-     "seller": "Amazon",
-     "url": "https://www.amazon.com/dp/B0BR4VV3FG",
-     "seller_pn": "ASIN B0BR4VV3FG",
-     "price_usd": 26.99,
-     "pack_qty": 1,
-     "in_stock": true,
-     "stock": "Only 3 left in stock - order soon",
-     "read_on": "2026-10-27"
     }
    ],
-   "media_key": "sunnysky-x2216-880kv-v3",
+   "media_key": "sunnysky-x2216-1400kv-v3",
    "thumb": null,
    "thumb_from": null,
-   "alternates": [
-    {
-     "supplier": "ReadyMadeRC",
-     "part_number": "SunnySky X2216 V3 short shaft 880KV",
-     "url": "https://www.readymaderc.com/products/details/sunny-sky-x2216-brushless-motor-short-shaft-880kv",
-     "price": "$22.99",
-     "price_usd_each": 22.99,
-     "pack_qty": 1,
-     "stock": "In Stock",
-     "drop_in": true,
-     "changes": null,
-     "checked": "2026-10-27",
-     "evidence": "Page read 2026-10-27: $22.99, In Stock; in the box the motor, an X-mount bracket with screws and a prop adapter; 67.5 g, 89 mOhm, 0.5 A/10 V."
-    },
-    {
-     "supplier": "Amazon (FBA)",
-     "part_number": "B0BR4VV3FG",
-     "url": "https://www.amazon.com/dp/B0BR4VV3FG",
-     "price": "$26.99",
-     "price_usd_each": 26.99,
-     "pack_qty": 1,
-     "stock": "only 3 left (2026-10-27)",
-     "drop_in": true,
-     "changes": null,
-     "checked": "2026-10-27",
-     "evidence": "docs/turret-prototype-plan.md 3.1 (page)."
-    },
-    {
-     "supplier": "RobotShop",
-     "part_number": "T-Motor MN2212 V2 920KV",
-     "url": "https://www.robotshop.com/products/t-motor-navigator-mn2212-v2-920kv-brushless-motor",
-     "price": "$55.90",
-     "price_usd_each": 55.9,
-     "pack_qty": 1,
-     "stock": "In stock",
-     "drop_in": false,
-     "changes": "920 KV: \u00d834 tyres only and at the 66 fps bench limit (the ceiling test decides); a 4 mm shaft and its own stack height: a new hub and cage plate height",
-     "checked": "2026-10-27",
-     "evidence": "docs/turret-prototype-plan.md 3.1 (page)."
-    }
-   ]
+   "alternates": []
   },
   {
-   "item": "SunnySky X2216 880KV V3 outrunner, short shaft, with its bolt-on prop adapter and X-mount",
-   "id": "sunnysky-x2216-880kv-v3",
-   "key": "sunnysky-x2216-880kv-v3",
+   "item": "SunnySky X2216 1400KV V3 outrunner, short shaft, with its bolt-on prop adapter and X-mount",
+   "id": "sunnysky-x2216-1400kv-v3",
+   "key": "sunnysky-x2216-1400kv-v3",
    "qty": 1,
    "for": "flywheel_motor_r",
-   "part_number": "X2216 V3 880KV, short shaft (SKU SS-XV3-X2216-S-880-V3)",
+   "part_number": "X2216 V3 1400KV, short shaft (SKU SS-XV3-X2216-S-1400-V3)",
    "vendor": "SunnySky",
-   "url": "https://sunnyskyusa.com/products/sunnysky-x2216?variant=15890897469534",
+   "url": "https://sunnyskyusa.com/products/sunnysky-x2216?variant=27868073427038",
    "price_usd_each": 24.99,
    "mass_g_each": 72.0,
    "note": null,
@@ -324,8 +274,8 @@
    "sellers": [
     {
      "seller": "SunnySky USA",
-     "url": "https://sunnyskyusa.com/products/sunnysky-x2216?variant=15890897469534",
-     "seller_pn": "SS-XV3-X2216-S-880-V3 (variant 15890897469534, '880 Short')",
+     "url": "https://sunnyskyusa.com/products/sunnysky-x2216?variant=27868073427038",
+     "seller_pn": "SS-XV3-X2216-S-1400-V3 (variant 27868073427038, '1400 Short')",
      "price_usd": 24.99,
      "pack_qty": 1,
      "in_stock": true,
@@ -334,69 +284,19 @@
     },
     {
      "seller": "ReadyMadeRC",
-     "url": "https://www.readymaderc.com/products/details/sunny-sky-x2216-brushless-motor-short-shaft-880kv",
-     "seller_pn": "SS-XV3-X2216-S-880-V3 (RMRC 84776, GTIN 680306447725)",
-     "price_usd": 22.99,
+     "url": "https://www.readymaderc.com/products/details/sunnysky-x-series-v3-x2216-brushless-motor-short-shaft-1400kv",
+     "seller_pn": "SS-XV3-X2216-S-1400-V3 (RMRC 84546, GTIN 680306447800)",
+     "price_usd": 24.99,
      "pack_qty": 1,
      "in_stock": true,
      "stock": "In Stock (no quantity shown)",
      "read_on": "2026-10-27"
-    },
-    {
-     "seller": "Amazon",
-     "url": "https://www.amazon.com/dp/B0BR4VV3FG",
-     "seller_pn": "ASIN B0BR4VV3FG",
-     "price_usd": 26.99,
-     "pack_qty": 1,
-     "in_stock": true,
-     "stock": "Only 3 left in stock - order soon",
-     "read_on": "2026-10-27"
     }
    ],
-   "media_key": "sunnysky-x2216-880kv-v3",
+   "media_key": "sunnysky-x2216-1400kv-v3",
    "thumb": null,
    "thumb_from": null,
-   "alternates": [
-    {
-     "supplier": "ReadyMadeRC",
-     "part_number": "SunnySky X2216 V3 short shaft 880KV",
-     "url": "https://www.readymaderc.com/products/details/sunny-sky-x2216-brushless-motor-short-shaft-880kv",
-     "price": "$22.99",
-     "price_usd_each": 22.99,
-     "pack_qty": 1,
-     "stock": "In Stock",
-     "drop_in": true,
-     "changes": null,
-     "checked": "2026-10-27",
-     "evidence": "Page read 2026-10-27: $22.99, In Stock; in the box the motor, an X-mount bracket with screws and a prop adapter; 67.5 g, 89 mOhm, 0.5 A/10 V."
-    },
-    {
-     "supplier": "Amazon (FBA)",
-     "part_number": "B0BR4VV3FG",
-     "url": "https://www.amazon.com/dp/B0BR4VV3FG",
-     "price": "$26.99",
-     "price_usd_each": 26.99,
-     "pack_qty": 1,
-     "stock": "only 3 left (2026-10-27)",
-     "drop_in": true,
-     "changes": null,
-     "checked": "2026-10-27",
-     "evidence": "docs/turret-prototype-plan.md 3.1 (page)."
-    },
-    {
-     "supplier": "RobotShop",
-     "part_number": "T-Motor MN2212 V2 920KV",
-     "url": "https://www.robotshop.com/products/t-motor-navigator-mn2212-v2-920kv-brushless-motor",
-     "price": "$55.90",
-     "price_usd_each": 55.9,
-     "pack_qty": 1,
-     "stock": "In stock",
-     "drop_in": false,
-     "changes": "920 KV: \u00d834 tyres only and at the 66 fps bench limit (the ceiling test decides); a 4 mm shaft and its own stack height: a new hub and cage plate height",
-     "checked": "2026-10-27",
-     "evidence": "docs/turret-prototype-plan.md 3.1 (page)."
-    }
-   ]
+   "alternates": []
   },
   {
    "item": "AM32 Brushless Drive ESC 35 A (bi-directional)",
@@ -3531,48 +3431,44 @@
    "alternates": []
   },
   {
-   "item": "12V, 15A Step-Down Voltage Regulator D24V150F12",
-   "id": "pololu-d24v150f12-2885",
-   "key": "pololu-d24v150f12-2885",
+   "item": "i6A4W 250 W non-isolated buck, 9-53 V in, 3.3-15 V out by one trim resistor, 20 A (SIP)",
+   "id": "tdk-lambda-i6a4w020a033v-001-r",
+   "key": "tdk-lambda-i6a4w020a033v-001-r",
    "qty": 1,
    "for": "el_flywheel_regulator",
-   "part_number": "2885 (D24V150F12)",
-   "vendor": "Pololu",
-   "url": "https://www.pololu.com/product/2885",
-   "price_usd_each": 79.95,
+   "part_number": "i6A4W020A033V-001-R",
+   "vendor": "TDK-Lambda",
+   "url": "https://www.digikey.com/en/ptm/t/tdk-lambda-americas-inc/i6a-series-of-non-isolated-dc-dc-converters",
+   "price_usd_each": 47.46,
    "mass_g_each": null,
    "note": null,
    "pack_qty": null,
    "sellers": [
     {
-     "seller": "Pololu",
-     "url": "https://www.pololu.com/product/2885",
-     "seller_pn": null,
-     "price_usd": null,
-     "pack_qty": null,
+     "seller": "Digi-Key",
+     "url": "https://www.digikey.com/en/ptm/t/tdk-lambda-americas-inc/i6a-series-of-non-isolated-dc-dc-converters",
+     "seller_pn": "I6A4W020A033V-001-R",
+     "price_usd": 47.46,
+     "pack_qty": 1,
+     "in_stock": true,
+     "stock": 1873,
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "Newark",
+     "url": "https://www.newark.com/tdk-lambda/i6a4w020a033v-001-r/dc-dc-converter-3-3v-to-40v-20a/dp/81Y1493",
+     "seller_pn": "81Y1493",
+     "price_usd": 40.32,
+     "pack_qty": 1,
      "in_stock": null,
-     "stock": null,
-     "read_on": null
+     "stock": "36 in one snapshot, back-order in another",
+     "read_on": "2026-10-27"
     }
    ],
-   "media_key": "pololu-d24v150f12-2885",
-   "thumb": "references/vendor/thumbs/pololu-d24v150f12-2885.jpg",
-   "thumb_from": "https://www.pololu.com/product/2885",
-   "alternates": [
-    {
-     "supplier": "Pololu",
-     "part_number": "5677",
-     "url": "https://www.pololu.com/product/5677",
-     "price": "$69.95",
-     "price_usd_each": 69.95,
-     "pack_qty": 1,
-     "stock": "180",
-     "drop_in": false,
-     "changes": "D42V110F12: 9-10 A at 24 V in against 15 A: enough for the 300 ms ramp and 3/s (the recovery pulses ride the bank); same size and pinout family (Pololu's own replacement for the D24V150Fx)",
-     "checked": "2026-10-27",
-     "evidence": "Page read today: $69.95, 180 available (data-available-stock), 'New!'. 12 V out, 9 A typical max (at 42 V in), 12-60 V input. Only 9 A against the D24V150F12's 15 A: enough only if the flywheel rail's peak stays under ~9 A; Pololu has no other 12 V regulator above 9 A."
-    }
-   ]
+   "media_key": "tdk-lambda-i6a4w020a033v-001-r",
+   "thumb": null,
+   "thumb_from": null,
+   "alternates": []
   },
   {
    "item": "12V, 4.5A Step-Down Voltage Regulator D36V50F12",
@@ -7678,7 +7574,7 @@
   "CT connector pair (Micro-Fit 3.0 class)": 12
  },
  "price_usd_known": {
-  "turret": 1796.01,
+  "turret": 1763.52,
   "bench_stand": 630.99,
   "tools": 255.73
  },

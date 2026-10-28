@@ -6,6 +6,15 @@ Box frame (mm): x forward (the turret's forward at pan 0, out over the J501's fr
 desk under the pan axis. The J501's own frame (x across its width, y from its front plate to its rear plate, z up from
 its floor) maps to it by x = 96 - y_j, y = x_j - 103, z = z_j: the pan axis stands over the middle of the box.
 
+CORRECTION (2026-10-27, the J501 repo's 94da39d and the user on the fitted cooler): the 9215 fan BLOWS UP. It pulls
+air in through the fin block's open sides (the box's side, panel and roof vents) and out through the lid grille. So the
+"intake shroud" below is the J501's exhaust duct: its collar takes the fan's exhaust off the grille and the duct carries
+it forward and out of the deck's front mouth, above the J501's highest vent (cad/build_turret_box.py exhaust_check);
+the roof's open cells outside the collar are intakes, fed from the deck gap's sides, and the walled front corners keep
+the plume from curling back into them. The duct's loss (airflow_estimate) is the same K's with the flow reversed (an
+exit loss at the mouth instead of an entry loss), so its estimate stands. The words below were written for a fan
+blowing down; the part keeps its name (intake_shroud) for the files and the page.
+
 Why it is shaped this way (the J501's cad/parameters.json, Rev 0.9 "0.9-g48r"):
   - the cooler is the Seeed reComputer mini J501 heatsink (SKU 100099421): a heat-pipe tower with a 9215 fan (92 x 92 x
     15, 12 V) on top, blowing down, its centre at box (+10.5, 0). Over the fan the roof (97 high) is cut to a flush 3 mm

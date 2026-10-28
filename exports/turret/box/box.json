@@ -1,16 +1,16 @@
 {
  "checks": {
   "clearance": {
-   "deck_min_gap_mm": 136.7,
+   "deck_min_gap_mm": 135.5,
    "deck_worst_pose_deg": [
     -160.0,
     -25.0
    ],
    "antenna_min_gap_mm": {
-    "antenna_left_46.5": 111.7,
-    "antenna_left_145.5": 111.7,
-    "antenna_right_46.5": 111.7,
-    "antenna_right_145.5": 111.7
+    "antenna_left_46.5": 110.5,
+    "antenna_left_145.5": 110.5,
+    "antenna_right_46.5": 110.5,
+    "antenna_right_145.5": 110.5
    },
    "antenna_tilt_max_deg": [
     [
@@ -293,7 +293,7 @@
    "antenna_limited_pans_deg": [],
    "note": "antennas: upright swivel dipoles on all four RP-SMA bulkheads (none chosen yet: typical 2.4 GHz swivel dipole, \u00d810 x 108 (est; none chosen))"
   },
-  "muzzle_outside_deck_mm": -30.9,
+  "muzzle_outside_deck_mm": -28.8,
   "ball_path": {
    "file": "exports/turret/lidar/box.json",
    "current": true,
@@ -386,7 +386,7 @@
   },
   "design_gates": {
    "file": "exports/turret/gates.json",
-   "fingerprint": "90ff373d0168485e",
+   "fingerprint": "16ecc65b1a2dbb9b",
    "ok": true,
    "gates": {
     "hopper_in_cavity": {
@@ -399,7 +399,7 @@
     },
     "path_in_cavity": {
      "ok": true,
-     "spheres": 86
+     "spheres": 87
     },
     "ammo_range": {
      "ok": true
@@ -423,6 +423,21 @@
     }
    }
   },
+  "exhaust": {
+   "mouth_x_mm": 90.5,
+   "mouth_z_mm": [
+    100.0,
+    137.0
+   ],
+   "mouth_w_mm": 158.0,
+   "j501_intakes_top_z_mm": 88,
+   "intakes_below_mouth_mm": 12.0,
+   "plinth_vents_behind_mouth_mm": 94.5,
+   "plinth_vents_from_z_mm": 170.3,
+   "fan_blows": "up (exhaust through the lid grille; J501 thermal.fan.note)",
+   "ok": true,
+   "note": "the J501 exhaust leaves the deck's front mouth (158.0 mm wide, z 100.0-137.0), 12.0 mm above the J501's highest intake vent, with the front corners walled; the plinth breathes 94.5 mm behind the mouth. To prove on the bench: the J501's intake and the J4012's within 3 K of the room with both at full load (bench_proof)"
+  },
   "shroud_fit": {
    "legs_mm": {
     "leg_1": 5.17,
@@ -443,7 +458,7 @@
    "how": "the BRepExtrema distance between the intake shroud and each leg (the deck cut round it, under the deck plate) and anything of the deck below its plate at each TM insert (none: the inserts are wholly in the 8 mm deck)"
   },
   "tipping": {
-   "total_kg": 4.26,
+   "total_kg": 4.27,
    "com_height_mm": 190,
    "tip_angle_deg": 25,
    "push_to_tip_n": 10.2,
@@ -451,18 +466,18 @@
    "note": "J501: 368 g printed (its slice report) + 1.0 kg Orin, carrier and cooler (est); a sideways push at the tilt axis that lifts the box off its narrow edge"
   },
   "overspeed": {
-   "max_exit_mps": 18.9,
-   "max_fps": 62,
-   "cap_mps": 21.34,
-   "physics_ceiling_fps": 67.6,
-   "note": "the fixed 12 V flywheel rail is the ceiling: at the X2216s' full no-load speed on it (10560 rpm) a ball leaves at about 19 m/s by this page's rough model (the physics' fastest ball at 100 % throttle on a fast motor and a high rail: 67.6 fps on \u00d834 tyres, docs/turret-physics.md section 4), under the 70 fps cap; the barrel's two gates trip the safety line on any ball over 66 fps, and 24 V must never reach the ESCs"
+   "max_exit_mps": 29.8,
+   "max_fps": 98,
+   "cap_mps": 32.0,
+   "physics_ceiling_fps": 103.91,
+   "note": "the flywheel rail, trimmed per turret (11.31 V nominal: the faster X2216 turns 15722 rpm with no load), is the ceiling (D68): at full throttle a ball leaves at about 30 m/s by this page's rough model; the physics' fastest accepted round (22.2-22.8 mm, 1.6-2.0 g) with every tolerance: 103.91 fps on \u00d838 tyres, docs/turret-physics.md section 4, under the 105 fps ceiling and ASTM F963's 2,500 J/m2; the barrel's two gates trip the safety line on any ball over 105 fps. Eye protection recommended, as Hasbro does for Rival"
   },
   "release": {
-   "after_drop_ms": 103,
-   "coast_s": 1.1,
-   "note": "a ball that has already dropped still fires up to 103 ms after ARM is released; the phase-short brake (six FETs on the cartridge board, 5-14 ms after the line drops) stops the wheels to 5 % about 48 ms after release (docs/turret-physics.md section 5), where unbraked they would coast 1.1 s",
-   "brake_to_5pct_ms": 48,
-   "brake_tau_ms": 10.16
+   "after_drop_ms": 102,
+   "coast_s": 1.3,
+   "note": "a ball that has already dropped still fires up to 102 ms after ARM is released; the phase-short brake (six FETs on the cartridge board, 5-14 ms after the line drops) stops the wheels to 5 % about 80 ms after release (docs/turret-physics.md section 5), where unbraked they would coast 1.3 s",
+   "brake_to_5pct_ms": 80,
+   "brake_tau_ms": 18.08
   },
   "lid_screw": "M3 x 40 ISO 4762, tip at z 62 (as the J501's own M3 x 16)",
   "heights_mm": {
@@ -477,30 +492,35 @@
   "ball": {
    "d_mm": 22.7,
    "mass_g": 1.83,
-   "speed_mps": 15.85,
-   "fps": 52.0,
+   "speed_mps": 28.96,
+   "fps": 95.0,
    "bore_mm": 24.7,
-   "cap_fps": 70,
-   "energy_j": 0.23
+   "cap_fps": 105,
+   "target_fps": [
+    95,
+    100
+   ],
+   "energy_j": 0.767
   },
   "flywheel": {
-   "d_mm": 34.0,
-   "centres_mm": 53.02,
-   "crush_mm": 3.68,
-   "crush_pct": 16.2,
-   "rpm": 8860.0,
-   "surface_mps": 15.8,
-   "efficiency_assumed": 1.005,
-   "throttle_pct": 84,
-   "motor_kv": 880,
-   "no_load_rpm": 10560,
-   "inertia_kg_mm2": 6.46,
-   "energy_j_each": 2.78,
-   "speed_drop_per_shot_pct": 2.7,
-   "recovery_ms": 0.8,
-   "spin_up_ms_motor_limit": 28,
-   "coast_down_s": 1.1,
-   "current_limit_a": 20.0,
+   "d_mm": 38.0,
+   "centres_mm": 51.62,
+   "crush_mm": 9.08,
+   "crush_pct": 40.0,
+   "rpm": 15290.0,
+   "surface_mps": 30.4,
+   "efficiency_assumed": 0.952,
+   "throttle_pct": 97,
+   "motor_kv": 1400,
+   "no_load_rpm": 15722,
+   "rail_v": 11.31,
+   "inertia_kg_mm2": 7.44,
+   "energy_j_each": 9.53,
+   "speed_drop_per_shot_pct": 2.6,
+   "recovery_ms": 4.6,
+   "spin_up_ms_motor_limit": 175,
+   "coast_down_s": 1.3,
+   "current_limit_a": 10.0,
    "note": "the set speed for the nominal ball at the physics' set fps (sim/turret_launch3d.py); foam loss 30 % (assumed); the chronograph gates in the barrel measure the real speed"
   },
   "feed": {
@@ -519,10 +539,10 @@
   "timing": {
    "dial_to_exit_ms": 235,
    "chute_ms": 86,
-   "to_nip_ms": 8,
-   "nip_to_muzzle_ms": 7.8,
+   "to_nip_ms": 11,
+   "nip_to_muzzle_ms": 4.3,
    "speed_into_nip_mps": 0.65,
-   "trigger_to_muzzle_ms": 338
+   "trigger_to_muzzle_ms": 337
   },
   "pan": {
    "pinion_teeth": 21,
@@ -539,8 +559,8 @@
    ],
    "hard_stop_deg": 173.5,
    "encoder_counts_per_turret_deg": 34.1,
-   "inertia_kg_m2": 0.00469,
-   "accel_at_cap_deg_s2": 53886,
+   "inertia_kg_m2": 0.00476,
+   "accel_at_cap_deg_s2": 53120,
    "time_to_full_slew_ms": 1.7
   },
   "tilt": {
@@ -550,10 +570,10 @@
     -25.0,
     0.0
    ],
-   "group_mass_g": 737,
-   "com_ahead_mm": -8.6,
+   "group_mass_g": 745,
+   "com_ahead_mm": -7.5,
    "holding_nm": -0.06,
-   "margin": 47.3
+   "margin": 53.3
   },
   "flight_level": {
    "rows": [
@@ -600,7 +620,7 @@
   }
  },
  "masses_g": {
-  "turret_with_balls": 2533,
+  "turret_with_balls": 2544,
   "adapter": 357,
   "j501_printed": 368.2,
   "j501_inside_est": 1000.0
@@ -612,7 +632,7 @@
   "source": "/home/scubasonar/Code/j501-agx/cad/parameters.json",
   "parameters_git": {
    "state": "committed",
-   "head": "94da39d894c5157fe8aef5f1cdef00647d1e02ee",
+   "head": "cc4334bb73df96ea2da42277ba9c9a60af8c4483",
    "branch": "rev0.9-g48r",
    "tags_at_head": [],
    "file": "cad/parameters.json"

@@ -1388,7 +1388,8 @@ def head_ring_tm(L, G=None):
 J4012 = {'L': 95.0, 'W': 63.0, 'H': 66.7, 'mass_g': 462.0, 'x0': -50.0,
          'name': 'Seeed reComputer Mini J4012 with Extension (Jetson Orin NX 16 GB, 10-40 W)'}
 PLINTH = {'h': 86.0, 'r': 78.0, 'wall': 2.5, 'tray_t': 10.0, 'col_r': 7.5, 'cbore': (9.5, 5.5), 'rib_h': 6.0,
-          'tab': 8.0, 'vent': (4.0, 36.0, 7), 'eth_y': 30.0, 'xt30_y': -30.0}
+          'tab': 8.0, 'vent': (4.0, 36.0, 6), 'eth_y': 30.0, 'xt30_y': -30.0}
+VENT_X1 = -6.0                 # the frontmost vent slot's x: everything behind the pan axis (see compute_shell)
 ETH_JACK = {'cut': (16.0, 14.0), 'ears': 25.0, 'depth': 22.0, 'note': 'Adafruit 909 panel-mount RJ-45 extension (25 cm lead to the J4012\'s port)'}
 XT30_IN = {'body': (10.2, 5.2, 16.0), 'clamp': (16.0, 11.0), 'note': 'Amass XT30U-F on 14 AWG leads, its housing clamped in the plinth\'s wall'}
 FUSES = {'size': (36.0, 14.0, 12.0), 'note': 'two Bussmann HHM inline MINI holders on the tray (58 V MINI fuses only): 20 A main, 5 A to the J4012'}
@@ -1422,7 +1423,7 @@ def compute_tray(G):
 def compute_shell(G):
     """The plinth's wall, printed PETG upside down: a Ø156 x 3 ring from the tray to the pan base's foot, four columns
     under the TM bolts (an M5 insert in each top for the pan base's M5 x 16; a foot with an M4 down into the tray; a tab
-    that holds the J4012 down at each top corner), ribs from the columns to the wall, vents in the +-y walls beside the
+    that holds the J4012 down at each top corner), ribs from the columns to the wall, vents in the +-y walls behind the pan axis (the J501 exhaust plume is in front) beside the
     J4012's sides, and in the -x wall the Ethernet jack's window (2 x 4-40) and the XT30 input's clamp pocket."""
     P = PLINTH
     zt = -P['h'] + P['tray_t']
@@ -1440,12 +1441,16 @@ def compute_shell(G):
         s = s.union(col).union(rib).union(foot).union(tab)
         s = s.cut(insert_hole(x, y, 0.0, 'M5')).cut(cyl_z(4.0, zt + 5.0, -16.0, x, y))        # hollow under the insert
         s = s.cut(through_z(fx, y, FAST['M4']['clear'], zt - 1, zt + 6)).cut(cyl_z(4.0, zt + 5.0, zt + 40.0, fx, y))
+    # vents in the rear half only (x < VENT_X1): on Gyropup's J501 box the J501's fan blows its exhaust up and the
+    # adapter's duct throws it out at the deck's front edge (J501 94da39d), so the plinth breathes from behind, away
+    # from the plume; the J4012's own fan then draws from the -x and the +-y rear walls
     w, l, n = P['vent']
     zc = zt + J['H'] / 2
     for sy in (1, -1):
         for k in range(n):
-            x = J['x0'] + J['L'] / 2 + (k - (n - 1) / 2) * 11.0
-            s = s.cut(box(x - w / 2, x + w / 2, sy * (P['r'] - P['wall'] - 2), sy * (P['r'] + 2), zc - l / 2, zc + l / 2))
+            x = VENT_X1 - k * 9.0
+            yw = math.sqrt(P['r'] ** 2 - x ** 2)
+            s = s.cut(box(x - w / 2, x + w / 2, sy * (yw - P['wall'] - 3.0), sy * (yw + 3.0), zc - l / 2, zc + l / 2))
     # the -x wall: the Ethernet jack (its window and two 4-40 ears) and the XT30 input's clamp pocket
     ew, eh = ETH_JACK['cut']
     ye, ze = P['eth_y'], zt + 30.0

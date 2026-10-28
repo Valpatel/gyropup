@@ -18,7 +18,7 @@
    "grams_each": 133,
    "grams": 133,
    "hours": 6.4,
-   "cost_usd": 10.68,
+   "cost_usd": 10.73,
    "infill": "2 mm walls, 40 % gyroid",
    "how": "PA6-CF on its foot; 4 x M5 x 16 into the head ring, 2 x \u00d85 dowels",
    "sliced": true,
@@ -121,7 +121,7 @@
    "material": "pa6-cf",
    "qty": 1,
    "size_mm": [
-    172,
+    173,
     91,
     40
    ],
@@ -130,7 +130,7 @@
    "grams_each": 118,
    "grams": 118,
    "hours": 5.1,
-   "cost_usd": 9.47,
+   "cost_usd": 9.41,
    "infill": "100 %",
    "how": "PA6-CF on its back; 4 x M4 x 10 to the turntable (heads 6 mm down in the 12 mm bridge)",
    "sliced": true,
@@ -151,7 +151,7 @@
    "qty": 1,
    "size_mm": [
     182,
-    113,
+    114,
     10
    ],
    "fits": true,
@@ -159,7 +159,7 @@
    "grams_each": 50,
    "grams": 50,
    "hours": 2.1,
-   "cost_usd": 4.0,
+   "cost_usd": 4.02,
    "infill": "100 %",
    "how": "PA6-CF flat, no supports: the rail frame (D48); 8 x M3 inserts for the aluminium cheek plates",
    "sliced": true,
@@ -228,7 +228,7 @@
    "material": "pa6-cf",
    "qty": 1,
    "size_mm": [
-    163,
+    166,
     103,
     82
    ],
@@ -237,7 +237,7 @@
    "grams_each": 188,
    "grams": 188,
    "hours": 10.7,
-   "cost_usd": 14.97,
+   "cost_usd": 14.99,
    "infill": "100 %",
    "how": "PA6-CF on its base; supports under the chute",
    "sliced": true,
@@ -257,8 +257,8 @@
    "material": "pa6-cf",
    "qty": 2,
    "size_mm": [
-    28,
-    28,
+    30,
+    30,
     12
    ],
    "fits": true,
@@ -266,7 +266,7 @@
    "grams_each": 5,
    "grams": 10,
    "hours": 0.4,
-   "cost_usd": 0.87,
+   "cost_usd": 0.82,
    "infill": "100 %",
    "how": "PA6-CF on its top face; on the X2216's prop adapter: washer + M5 nylon-insert nut; bore reamed to 5.00",
    "sliced": true,
@@ -283,8 +283,8 @@
    "material": "tpu95",
    "qty": 2,
    "size_mm": [
-    34,
-    34,
+    38,
+    38,
     12
    ],
    "fits": true,
@@ -630,7 +630,7 @@
   "pa6-cf": {
    "grams": 720,
    "hours": 37.0,
-   "cost_usd": 57.66,
+   "cost_usd": 57.64,
    "parts": 14
   },
   "tpu95": {

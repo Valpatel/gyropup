@@ -84,8 +84,9 @@ bore (section 6).
 
 **Checks.** FEA `pan_base` / `pan_ring` / `pan_pinion` (cad/turret_studies.py, exports/turret/fea/); the gear check
 `turret.pinion_check()`; the clash sweep; `connected` (base, pan, pinion one body each; joints: the 61810's races, the
-pinion on its horn, the mesh). Open: `pan_pinion R-stall` reads 1.05 layer-aware against 1.2 and `pan_base E-cap-servo`
-1.14 against 2.0 in the layer-aware post-process (isotropic 1.2 and 2.26 pass); see the FEA summary.
+pinion on its horn, the mesh). The pan servo's pocket end wall is 8 mm (it was 3: the FEA's layer-aware post-process
+found it bending across its layers, 0.57 at a full stall; now 1.91, and 3.81 at the 50 % cap). Open: `pan_pinion
+R-stall` reads 1.05 layer-aware against 1.2 (isotropic 1.2), its peak at the edge of the one-tooth model's load patch.
 
 ## 2. Tilt yoke and cradle
 
@@ -364,7 +365,12 @@ above the J4012; the head's Ø45 TM cable hole is no longer used (the plinth's f
   pattern), the shell's columns then take the pan base's M5s at the same positions. One box would need 90 mm
   through-bolts (none at a listed price we could read) or screws under the columns that cannot be reached.
 - *Ports on the -x side*, the operator's side and away from the barrel's arc; the vents on the +-y walls beside the
-  J4012's long sides (43 mm of air each side).
+  J4012's long sides (43 mm of air each side), **behind the pan axis only**: on Gyropup's J501 box the J501's fan blows
+  up (J501 94da39d; the adapter was drawn for a fan blowing down), so the adapter's "intake shroud" is in fact its
+  exhaust duct and throws the J501's hot air out of the deck's front mouth. The plinth breathes from behind, about
+  90 mm from the mouth and above the plume's start; the J501's own vents are all below the mouth's floor
+  (cad/build_turret_box.py `exhaust_check`, in the box scene's checks). To prove on the bench: both computers at full
+  load, the J501's intake and the J4012's within 3 K of the room.
 
 **Checks.** `connected` (the base group one body: the J4012 on the tray and under the tabs, the jack and the XT30
 fastened through the wall); the clash sweep (the DT12 plug 3 mm outside the shell); the box scene (the plinth on
@@ -398,7 +404,7 @@ against it.
 | 3 Feed | 2026-10-27 | the hopper pile was hand-placed rings (interpenetrating, on the cone) | the physics settle (pile.json) | `hopper_*` pass: worst overlap 0.069 mm, no ball in a solid | |
 | 1 Base | 2026-10-27 | the hall switch drawn 0.2 mm under its pocket's roof (floating) | the pocket's roof seats it | `connected` | |
 | 6 Wiring | 2026-10-27 | the coupling tube 1 mm loose on the rotor stub (could not drive it) | 51225K24 3/16 in ID | `connected` | |
-| 1 Base | 2026-10-27 | the full FEA (layer-aware): the servo posts 0.57 at a full stall, 1.14 at the cap; the pinion 1.05 at a full stall | open | FEA | |
+| 1 Base | 2026-10-27 | the full FEA (layer-aware): the pan servo's pocket end wall bent across its layers, 0.57 at a full stall, 1.14 at the cap; the pinion 1.05 at a full stall | the end wall 3 -> 8 mm (SERVO_END_WALL): 1.91 at a stall, 3.81 at the cap (pan_base rerun on gb10-02; the falls 3.24 / 1.25 unchanged). The pinion stays open: its peak sits at the edge of the one-tooth model's load patch (p99 4x lower) | FEA | |
 | 7 Compute | 2026-10-27 | D66: the turret's own Jetson and input | the compute plinth (tray, shell, J4012, jack, XT30, fuses) | `connected`, sweep | |
 | 8 Stand | 2026-10-27 | D66: the stand on a FLEXVOLT | the pack slides into the stand's back onto a dock | stand overlap check | |
 | 2, 6 Layout | 2026-10-27 | the tilt servo stood 19 mm proud of its pocket, the board bay was an open tray: two boxes on the yoke's sides | the pocket's walls over the whole servo; the bay's lid | clash sweep, `connected` | |
