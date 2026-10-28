@@ -51,8 +51,8 @@ TARGETS = {'sf': 2.0, 'sf_rare': 1.2,
                                                         # break; inspect the knees after one (D39)
            'bearing_s0': 2.0, 'bearing_s0_rare': 1.0}   # rolling bearings: static safety s0 = C0 / P0 (SKF: >= 1 with normal
                                                         # demands on running; a rare overload may use it, everyday ones not)
-ROBOT_KG = 35.5                      # the robot's design mass (D69: the 10 in air-tyre wheels; the ledger's gate is 35.0 kg);
-                                     # the rig carries half, 17.75 kg (sim/leg_rig.py HALF_MASS)
+ROBOT_KG = 37.5                      # the robot's design mass (D71: the DCB609 pair, the 10 in wheels, the turret's own
+                                     # computer; the ledger's gate is 37.0 kg); the rig carries half, 18.75 kg (sim/leg_rig.py HALF_MASS)
 G = 9.81
 CAP, PEAK = 60.0, 120.0
 

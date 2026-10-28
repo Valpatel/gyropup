@@ -1,6 +1,6 @@
 """Single-leg test rig: one five-bar leg module (cad/fivebar.py) on a vertical rail, in MuJoCo.
 
-    python -m sim.leg_rig [--video] [--only stand_up squat jump drop_150 power_off] [--half-mass 17.75] [--bus-v 36]
+    python -m sim.leg_rig [--video] [--only stand_up squat jump drop_150 power_off] [--half-mass 18.75] [--bus-v 36]
 
 The rig is what we will build first: a carriage on a vertical rail (one slide joint, a rubber stop at the bottom)
 carries the hip frame, both RS-04s and a dummy mass for half the body; the leg stands on the floor and can crouch,
@@ -51,8 +51,8 @@ WHEEL.update({'title': '10 in hoverboard hub motor, 10 x 2.125 pneumatic (D69)',
               'kt_nm_per_a': 1.0, 'peak_current_a': 15})
 BUS_V = 36.0                                     # D65: two DCB609 FLEXVOLTs in 20 V mode in series, a 10S bus at 30-41 V
                                                  # (36 V nominal). The rig's own pack: rig/run.py pack_for()
-HALF_MASS = 17.75                                  # kg one leg carries, its own parts and its wheel included: half the robot's
-                                                   # 35.5 kg design mass (D69; the ledger's gate is 35.0 kg).
+HALF_MASS = 18.75                                  # kg one leg carries, its own parts and its wheel included: half the robot's
+                                                   # 37.5 kg design mass (D71; the ledger's gate is 37.0 kg; D69's was 35.5).
                                                    # The ballast is its own welded body: the carriage's explicit
                                                    # <inertial> made MuJoCo drop a geom mass there (the rig carried 8.5 kg
                                                    # of a meant 11 until 2026-10-27; found by the spring study)
