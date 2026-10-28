@@ -171,7 +171,9 @@ def _solid(s):
 
 
 def sphere(r):
-    return cq.Solid.makeSphere(r, cq.Vector(0, 0, 0))
+    """A whole ball. (CadQuery's makeSphere defaults to angles 0..90, the upper hemisphere: the turret's old gates
+    (cad/gates.py, before 2026-10-28) checked half balls that way, and the support check found it.)"""
+    return cq.Solid.makeSphere(r, cq.Vector(0, 0, 0), cq.Vector(0, 0, 1), -90, 90, 360)
 
 
 def rot_z(p, deg):

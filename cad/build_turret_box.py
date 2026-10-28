@@ -749,9 +749,9 @@ def main():
                'brake_to_5pct_ms': b5, 'brake_tau_ms': rel.get('tau_ms_model')}
     # the design gates (cad/turret_gates.py, run on a GB10): the build stops here when they fail or are stale
     gd = tg.stored()
-    gsum = {k: {'ok': v['ok'], **{m: v[m] for m in ('worst_overlap_mm', 'spheres', 'poses') if m in v}} for k, v in gd['gates'].items()}
-    gsum['connected']['bodies'] = {g: x['bodies'] for g, x in gd['gates']['connected']['groups'].items()}
-    gate_info = {'file': 'exports/turret/gates.json', 'fingerprint': gd['fingerprint'], 'ok': gd['ok'], 'gates': gsum}
+    gsum = {k: {'ok': v['ok'], 'status': v['status'], 'counts': v['counts']} for k, v in gd['gates'].items()}
+    gate_info = {'file': 'exports/turret/gates.json', 'verdicts': gd['verdicts'], 'toolkit': gd['toolkit'],
+                 'fingerprint': gd['fingerprint'], 'ok': gd['ok'], 'gates': gsum}
     ex = exhaust_check(T)
     print(f'  J501 exhaust (it blows up): {ex["note"]} -> {"ok" if ex["ok"] else "CHECK"}')
     print(f'  design gates: {", ".join(k for k in gsum)} all pass (exports/turret/gates.json, fingerprint {gd["fingerprint"]})')

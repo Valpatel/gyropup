@@ -1065,7 +1065,8 @@ def cartridge_body(G):
     fz0 = fz - G.floor_t                                                                    # the floor's underside
     # base plate (windowed) under everything; the window takes the feed servo (its length runs to the rear)
     s = box(-hr - 2.0, G.cage_x1, -G.cage_y, G.cage_y, bz0, bz0 + 3)
-    s = s.cut(box(-37, 26, -34, 34, bz0 - 1, bz0 + 4))
+    s = s.cut(box(-37, 26, -34, 34, bz0 - 1, bz0 + 4).edges('|Z').fillet(6.0))   # corners rounded: the latch's load
+    #                                                                                   peaked at a square one (FEA)
     # dial housing: wall from the base to the top, floor, flange lugs for the hopper
     s = s.union(ring_z(hr, G.dial_wall_r, bz0 + 3, G.housing_top))
     s = s.union(cyl_z(G.dial_wall_r, fz0, fz))
@@ -1073,7 +1074,9 @@ def cartridge_body(G):
         lug = cyl_z(5.0, G.housing_top - 6, G.housing_top, *polar(hr + 3.5, math.radians(a)))
         s = s.union(lug.union(box(hr - 1.0, hr + 3.5, -5.0, 5.0, G.housing_top - 6, G.housing_top).rotate((0, 0, 0), (0, 0, 1), a)))
     for sy in (1, -1):
-        s = s.cut(box(-20, 20, sy * 20, sy * 60, -5, fz0 - 3))                              # side windows
+        # side windows, clear of the CT dowel (x -20) and the latch (x +20) under them, their corners rounded (the
+        # FEA found the 30 g fall and the recoil peaking at a square corner straight over the latch's insert)
+        s = s.cut(box(-11, 11, sy * 20, sy * 60, -5, fz0 - 3).edges('|Y').fillet(3.0))
     # chute and channel walls
     chute = cq.Workplane('XY').add(cq.Solid.makeTorus(G.chute_r, br + w, cq.Vector(G.chute_cx, 0, G.chute_r), cq.Vector(0, 1, 0)))
     quad = box(G.exit_x - br - w - 1, G.chute_cx, -br - w - 1, br + w + 1, -br - w - 1, fz - G.floor_t + 0.5)
@@ -1089,6 +1092,14 @@ def cartridge_body(G):
     s = s.union(_slab(plate, G.plate_z0, G.plate_z1).cut(cyl_z(hop, G.plate_z0 - 1, G.plate_z1 + 1)))   # not over the hopper
     s = s.union(_slab(plate, bz0, bz0 + 3))
     s = s.union(box(G.cage_x1 - w, G.cage_x1 + 1.5, -br - w - 3, br + w + 3, bz0, br + w + 3))   # front wall
+    # the spine (2026-10-28): a 5 mm web on the cage's centre plane from the channel up to the top plate, between the
+    # motors' bells and outside the tyres' cavities: D68's recoil (53 N back on each motor at a 105 fps shot) and the
+    # nip's squeeze (79 N a tyre) twisted the shells on the chute (FEA layer-aware 0.53); it ties the plate to the base
+    lug_x = G.housing_r + 3.5 + 6.0                          # clear of the hopper's front lug and its screw
+    s = s.union(box(lug_x, G.cage_x1 - w + 0.01, -CAGE_SPINE_T / 2, CAGE_SPINE_T / 2, 10.0, G.plate_z0 + 0.01))
+    s = s.union(box(53.0, lug_x + 0.01, -CAGE_SPINE_T / 2, CAGE_SPINE_T / 2, 10.0, G.housing_top - 1.0))
+    for sy in (1, -1):                       # and a web each side from the shell's rear onto the chute (the recoil's peak)
+        s = s.union(box(G.cage_x0 - 1.0, G.wheel_x - 8.0, sy * 13.0 - 2.0, sy * 13.0 + 2.0, bz0, G.housing_top - 1.0))
     s = s.union(cyl_x(br + 6.0, G.socket_x0 - 1.5, G.socket_x1))                            # barrel socket
     s = s.union(box(G.socket_x0 + 1, G.socket_x1, -12.5, 12.5, 0, SOCKET_PAD_Z))           # socket pad: set screw, laser foot
     cb = CART_BOARD
@@ -1127,9 +1138,12 @@ def cartridge_body(G):
         s = s.cut(through_z(hx, hy, 2.4, fz0 - 1, fz + 1))
         s = s.cut(cq.Workplane('XY').circle(1.2).workplane(offset=1.1).circle(2.3).loft().translate((hx, hy, fz - 1.09)))
     ct_dowels, ct_latch = ct_points(G)
-    for (x, y) in ct_dowels:
+    for (x, y) in ct_dowels:                 # a Ø12 x 8 boss over each dowel: the recoil's shear peaked round the
+        s = s.union(cyl_z(6.0, bz0 + 2.9, bz0 + 8.0, x, y))   # holes in the 3 mm plate (FEA E-recoil, 2026-10-28)
         s = s.cut(cyl_z(2.0, bz0 - 1, bz0 + 2.5, x, y))
-    s = s.union(cyl_z(5.0, bz0, bz0 + 9, *ct_latch))
+    # the latch's boss, Ø14 and up to z 2 (it was Ø10 x 9): the CT's one screw takes the recoil's and a fall's pull, and
+    # the FEA peaked where the short boss met the housing wall
+    s = s.union(cyl_z(7.0, bz0, 2.0, *ct_latch))
     s = s.cut(cyl_z(FAST['M4']['insert_pilot'] / 2, bz0 - 1, bz0 + 8.0, *ct_latch))       # insert from below
     for a in HOPPER_LUGS:
         s = s.cut(insert_hole(*polar(hr + 3.5, math.radians(a)), G.housing_top, 'M3', 6.0))
@@ -1137,6 +1151,7 @@ def cartridge_body(G):
 
 
 HOPPER_LUGS = (0.0, 135.0, 225.0)
+CAGE_SPINE_T = 5.0             # the cage's centre web (cartridge_body)
 HOPPER_WALL = 1.6
 SOCKET_PAD_Z = 22.6            # the socket pad's top (C frame): the laser holder's foot sits on it
 

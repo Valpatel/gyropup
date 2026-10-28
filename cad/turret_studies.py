@@ -468,15 +468,17 @@ def run(mesh, anim=True, only=None):
                 f'and ESCs {F_brd:.0f} N on its posts; held at the CT dowels and latch')
     left = lambda f: motor_holes(f) and f.center[1] > 0
     right = lambda f: motor_holes(f) and f.center[1] < 0
-    # a shot's loads from the launch physics (sim/turret_launch3d.py at the set speed), scaled to the fastest ball the
-    # bench lets through (the chronograph's 66 fps line): the nip's squeeze on each tyre and the recoil on the cage
-    rec = json.loads((R / 'exports/turret/launch/launch3d.json').read_text())['recoil']
-    k_fast = 66.0 / 52.0
+    # a shot's loads from the launch physics (sim/turret_launch3d.py at the design set speed, D68: 95 fps), scaled to the
+    # fastest ball the hardware lets through (the chronograph's 105 fps trip): the nip's squeeze on each tyre and the
+    # recoil on the cage. (It read 66 / 52 until 2026-10-28: the v0 trip over the v0 set speed, on D68's launch loads)
+    L3 = json.loads((R / 'exports/turret/launch/launch3d.json').read_text())
+    rec = L3['recoil']
+    k_fast = 105.0 / L3['design']['set_fps_nominal']
     F_sq = rec['peak_normal_per_tyre_n'] * k_fast
     F_rc = rec['peak_force_on_cage_n'] * k_fast / 2
     study('cartridge_body', 'E-recoil', cart, 'pa6_cf_z',
           lambda st: (st.fix(ct_fix), st.force(left, (-F_rc, F_sq, 0)), st.force(right, (-F_rc, -F_sq, 0), probe=False)),
-          False, f'a shot at 66 fps (the bench\'s trip line; the launch physics at 52 fps x 66 / 52): {F_sq:.0f} N squeezing each tyre apart '
+          False, f'a shot at 105 fps (the chronograph\'s trip; the launch physics at 95 fps x 105 / 95): {F_sq:.0f} N squeezing each tyre apart '
                  f'and {2 * F_rc:.0f} N of recoil, on the motors\' mounts')
 
     # ---------------------------------------------------------------- the dial (C frame, PETG), on the feed servo's horn
