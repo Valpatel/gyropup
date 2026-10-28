@@ -622,7 +622,7 @@ SHEET_OPS = {'pan_clamp': 'none',
 # land between the plate and the MR126) and carries the aluminium hard-stop lug on its outer face.
 # The plan's 12 mm feet (rails 12 deep there) passed 0.37 mm over the slip ring's rotor-lead bundle where it crosses the
 # yoke's bridge (z 89) at full depression: 10 mm keeps 2.3 mm.
-PLATE = {'foot_x': (-10.0, 80.0), 'foot_h': 10.0, 'half_w': 22.0, 'rebate': 3.2, 'foot_holes_x': (-3.0, 33.0, 58.0, 70.0),
+PLATE = {'foot_x': (-10.0, 84.0), 'foot_h': 10.0, 'half_w': 22.0, 'rebate': 3.2, 'foot_holes_x': (-3.0, 33.0, 58.0, 77.0),
          'fillet': 5.0, 'csk_d': 6.4, 'horn_screw_l': 14.0, 'rebate_back': 2.5, 'rebate_fillet': 2.0}      # csk: DIN 7991 M3 heads are Ø6.0 (McMaster 91294A, 92125A)
 # the hard stop (D48): a 2.54 mm 6061-T6 lug on the -y plate's outer face, 1.5 mm from the yoke's arm. Its stop band
 # (+-STOP_HALF_DEG about straight down at tilt 0, r 22.5..32) meets the yoke's two sectors (r 24..32, YOKE_STOP_PROUD off
@@ -895,7 +895,12 @@ def cradle(G):
         s = s.cut(cyl_z(2.0, zb, z1 + 1, x, y))
     s = s.cut(through_z(*ct_latch, FAST['M4']['clear'], zb, z1 + 1))
     s = s.cut(cyl_z(THUMB['oring_seat'][0] / 2, z1 - THUMB['oring_seat'][1], z1 + 1, *ct_latch))      # the captive O-ring
-    # the latch is inside the plate's foot zone, where the rail is 10 mm deep: a pocket from below keeps its collar's seat
+    # under the latch (now at the rail's front, x 91) the rail is made 10 mm deep locally, as in the plate's foot zone
+    lx0, ly0 = ct_latch
+    s = s.union(box(fx1 - 1.0, xr1, -G.plate_y[0], -r0, G.foot_z[0], z0 + 0.01))     # on from the plate's foot: no neck
+    s = s.union(box(fx1 + 0.3, xr1, -r1, -G.plate_y[0] + 0.01, G.foot_z[0], z0 + 0.01))    # (clear of the plate's rebate)
+    s = s.cut(through_z(*ct_latch, FAST['M4']['clear'], zb, z1 + 1))
+    # a pocket from below keeps its collar's seat
     # 7 mm under the rail's top as in v0 (the M4 x 12 keeps 5 mm in the cartridge's insert), open to the rail's inner side
     lx, ly = ct_latch
     zs = z0 - RAIL_DEEP['dz']
@@ -1023,11 +1028,15 @@ def pivot_spacer(G):
     yl = yr + PIVOT['land_h']
     s = cyl_y(PIVOT['boss_d'] / 2, yl, yp, xt, zt).union(cyl_y(PIVOT['land_d'] / 2, yr, yl + 0.01, xt, zt))
     return s.cut(cyl_y(PIVOT['bore'] / 2, yr - 1, yp + 1, xt, zt))
+# The CT latch is the one part of the interface that holds the cartridge down (the dowels only locate it, a slip fit).
+# A push up at the muzzle turns the cartridge nose-up about its base's rear edge: with the latch at x 20 the latch pulled
+# 175 N and the rear of the base pressed 125 N on the rails' cross bar for a 50 N push (cradle FEA 0.58); at x 91, ahead
+# of the tilt axis, 88 N and 38 N. x 91 keeps its Ø10 boss clear of the right motor's way in from below.
 def ct_points(G):
     """The CT interface (cradle <-> cartridge), C frame: two Ø4 x 8 dowels and the M4 captive thumbscrew up through the
     cradle's rail into an insert in the cartridge's base, 6 mm inside the cartridge's sides."""
     yy = G.cage_y - 6.0
-    return [(-20.0, yy), (50.0, -yy)], (20.0, -yy)       # the front dowel at x 50 (it was 75: inside the right motor's
+    return [(-20.0, yy), (50.0, -yy)], (91.0, -yy)       # the latch at the front (it was x 20, behind the tilt axis)       # the front dowel at x 50 (it was 75: inside the right motor's
     #                                    way in from below, which cadagent's assembly gate found once a boss stood there)
 
 
@@ -1141,12 +1150,12 @@ def cartridge_body(G):
         s = s.cut(cq.Workplane('XY').circle(1.2).workplane(offset=1.1).circle(2.3).loft().translate((hx, hy, fz - 1.09)))
     ct_dowels, ct_latch = ct_points(G)
     for (x, y) in ct_dowels:                 # a Ø12 x 8 boss over each dowel: the recoil's shear peaked round the
-        s = s.union(cyl_z(6.0, bz0 + 2.9, bz0 + 8.0, x, y))   # holes in the 3 mm plate (FEA E-recoil, 2026-10-28)
+        s = s.union(cyl_z(6.0, bz0 + 2.9, 10.0, x, y))        # holes in the 3 mm plate (FEA E-recoil, 2026-10-28), up into
+    #                                                             the shell and the floor (a boss ending at z 0 peaked at its top)
         s = s.cut(cyl_z(2.0, bz0 - 1, bz0 + 2.5, x, y))
-    # the latch's boss, Ø14 and up to z 2 (it was Ø10 x 9): the CT's one screw takes the recoil's and a fall's pull, and
-    # the FEA peaked where the short boss met the housing wall
-    s = s.union(cyl_z(7.0, bz0, 2.0, *ct_latch))
-    s = s.cut(cyl_z(FAST['M4']['insert_pilot'] / 2, bz0 - 1, bz0 + 8.0, *ct_latch))       # insert from below
+    # the latch's boss: the CT's one screw takes the push's, the recoil's and a fall's pull
+    s = s.union(cyl_z(5.0, bz0, -7.5, *ct_latch))          # Ø10, under the tyre's cavity (its cut starts at z -8)
+    s = s.cut(cyl_z(FAST['M4']['insert_pilot'] / 2, bz0 - 1, -8.5, *ct_latch))            # insert from below, 1 mm cap
     for a in HOPPER_LUGS:
         s = s.cut(insert_hole(*polar(hr + 3.5, math.radians(a)), G.housing_top, 'M3', 6.0))
     return s
