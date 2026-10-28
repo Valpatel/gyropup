@@ -1,5 +1,6 @@
 {
   "files": [
+    "body.json",
     "hardware.json",
     "leg_actuators.json",
     "lights.json",
