@@ -1624,22 +1624,22 @@
    ]
   },
   {
-   "item": "Continuous-Flex Tpv Rubber Tube for Chemicals, 5/16\" ID, 7/16\" OD",
+   "item": "Continuous-Flex Tpv Rubber Tube for Chemicals, 3/16\" ID, 5/16\" OD",
    "id": "turret_tube_coupling",
    "key": "turret_tube_coupling",
    "qty": 1,
    "for": "ring_coupling",
-   "part_number": "51225K32",
+   "part_number": "51225K24",
    "vendor": "McMaster-Carr",
-   "url": "https://www.mcmaster.com/51225K32/",
-   "price_usd_each": 0.94,
-   "mass_g_each": 2.0,
+   "url": "https://www.mcmaster.com/51225K24/",
+   "price_usd_each": 0.62,
+   "mass_g_each": 1.0,
    "note": null,
    "pack_qty": 1,
    "sellers": [
     {
      "seller": "McMaster-Carr",
-     "url": "https://www.mcmaster.com/51225K32/",
+     "url": "https://www.mcmaster.com/51225K24/",
      "seller_pn": null,
      "price_usd": null,
      "pack_qty": null,
@@ -1792,6 +1792,505 @@
      "changes": null,
      "checked": "2026-10-27",
      "evidence": "DIN 464 knurled high-head thumb screw, M4x0.7 x 12 mm, A2 stainless (brief allows stainless; McMaster part is steel). $2.46 each; 25-99 $2.07; 100-249 $1.98; 250+ $1.72."
+    }
+   ]
+  },
+  {
+   "item": "reComputer Mini J4012 with Extension: Jetson Orin NX 16 GB on the reComputer Mini carrier, its extension board (RJ-45, CAN, 4 x USB 3), fan and heat sink, 128 GB NVMe",
+   "id": "seeed-recomputer-mini-j4012-ext",
+   "key": "seeed-recomputer-mini-j4012-ext",
+   "qty": 1,
+   "for": "compute",
+   "part_number": "114993553",
+   "vendor": "Seeed Studio",
+   "url": "https://www.seeedstudio.com/reComputer-Mini-J4012-with-Extension-p-6353.html",
+   "price_usd_each": 999.0,
+   "mass_g_each": 462.0,
+   "note": null,
+   "pack_qty": 1,
+   "sellers": [
+    {
+     "seller": "Seeed Studio",
+     "url": "https://www.seeedstudio.com/reComputer-Mini-J4012-with-Extension-p-6353.html",
+     "seller_pn": "114993553",
+     "price_usd": 999.0,
+     "pack_qty": null,
+     "in_stock": null,
+     "stock": null,
+     "read_on": null
+    },
+    {
+     "seller": "Switch Science",
+     "url": "https://www.switch-science.com/products/10478",
+     "seller_pn": null,
+     "price_usd": null,
+     "pack_qty": null,
+     "in_stock": false,
+     "stock": null,
+     "read_on": null
+    }
+   ],
+   "media_key": "seeed-recomputer-mini-j4012-ext",
+   "thumb": null,
+   "thumb_from": null,
+   "alternates": []
+  },
+  {
+   "item": "Panel Mount Ethernet Extension Cable (RJ-45 jack with two 4-40 ears, 25 cm to a plug)",
+   "id": "adafruit-909",
+   "key": "adafruit-909",
+   "qty": 1,
+   "for": "eth_jack",
+   "part_number": "909",
+   "vendor": "Adafruit",
+   "url": "https://www.adafruit.com/product/909",
+   "price_usd_each": 4.95,
+   "mass_g_each": 15.0,
+   "note": null,
+   "pack_qty": 1,
+   "sellers": [
+    {
+     "seller": "Adafruit",
+     "url": "https://www.adafruit.com/product/909",
+     "seller_pn": null,
+     "price_usd": 4.95,
+     "pack_qty": null,
+     "in_stock": true,
+     "stock": null,
+     "read_on": null
+    },
+    {
+     "seller": "Digi-Key",
+     "url": "https://www.digikey.com/en/products/detail/adafruit-industries-llc/909/5844686",
+     "seller_pn": "1528-1572-ND",
+     "price_usd": 4.95,
+     "pack_qty": null,
+     "in_stock": true,
+     "stock": null,
+     "read_on": null
+    }
+   ],
+   "media_key": "adafruit-909",
+   "thumb": null,
+   "thumb_from": null,
+   "alternates": []
+  },
+  {
+   "item": "Amass XT30U female, 8-pack",
+   "id": "xt30_f",
+   "key": "xt30_f",
+   "qty": 1,
+   "for": "xt30_input",
+   "part_number": "XT30U-F 8-pack",
+   "vendor": "Amass",
+   "url": "https://www.pyrodrone.com/products/yellow-xt30u-f-8-pack-female-battery",
+   "price_usd_each": 0.3738,
+   "mass_g_each": 4.0,
+   "note": null,
+   "pack_qty": 8,
+   "sellers": [
+    {
+     "seller": "Pyrodrone",
+     "url": "https://www.pyrodrone.com/products/yellow-xt30u-f-8-pack-female-battery",
+     "seller_pn": null,
+     "price_usd": 2.99,
+     "pack_qty": 8,
+     "in_stock": true,
+     "stock": "available",
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "RaceDayQuads",
+     "url": "https://www.racedayquads.com/products/xt30-connector-male-or-female",
+     "seller_pn": null,
+     "price_usd": 0.99,
+     "pack_qty": null,
+     "in_stock": true,
+     "stock": "available (single)",
+     "read_on": "2026-10-27"
+    }
+   ],
+   "media_key": "xt30_f",
+   "thumb": null,
+   "thumb_from": null,
+   "alternates": []
+  },
+  {
+   "item": "Bussmann HHM inline MINI fuse holder, 2-30 A (rated 32 V DC: the 58 V fuse does the interrupting; label it \"58 V fuses only\")",
+   "id": "fuse_holder_mini_inline",
+   "key": "fuse_holder_mini_inline",
+   "qty": 2,
+   "for": "input_fuses",
+   "part_number": "HHM",
+   "vendor": "Eaton Bussmann",
+   "url": "https://www.rockauto.com/en/moreinfo.php?pk=1474944",
+   "price_usd_each": 2.28,
+   "mass_g_each": 20.0,
+   "note": null,
+   "pack_qty": null,
+   "sellers": [
+    {
+     "seller": "RockAuto",
+     "url": "https://www.rockauto.com/en/moreinfo.php?pk=1474944",
+     "seller_pn": null,
+     "price_usd": 2.28,
+     "pack_qty": null,
+     "in_stock": true,
+     "stock": "Add to Cart",
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "LCSC",
+     "url": "https://www.lcsc.com/product-detail/C3207515.html",
+     "seller_pn": null,
+     "price_usd": 0.3,
+     "pack_qty": null,
+     "in_stock": true,
+     "stock": "0 (Keystone 3570 PCB holder: the fuse-board upgrade)",
+     "read_on": "2026-10-27"
+    }
+   ],
+   "media_key": "fuse_holder_mini_inline",
+   "thumb": null,
+   "thumb_from": null,
+   "alternates": []
+  },
+  {
+   "item": "Littelfuse MINI 58V blade fuse 20 A (the RS-04 branches)",
+   "id": "fuse_mini58_20a",
+   "key": "fuse_mini58_20a",
+   "qty": 1,
+   "for": "hw_fuse_main",
+   "part_number": "0997020.WXN",
+   "vendor": "Littelfuse",
+   "url": "https://www.lcsc.com/product-detail/C207028.html",
+   "price_usd_each": 0.61,
+   "mass_g_each": null,
+   "note": null,
+   "pack_qty": null,
+   "sellers": [
+    {
+     "seller": "LCSC",
+     "url": "https://www.lcsc.com/product-detail/C207028.html",
+     "seller_pn": "C207028",
+     "price_usd": 0.61,
+     "pack_qty": null,
+     "in_stock": true,
+     "stock": "1,609",
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "element14",
+     "url": "https://nz.element14.com/littelfuse/0997020-wxn/auto-blade-fuse-2a-58v/dp/2748837",
+     "seller_pn": null,
+     "price_usd": null,
+     "pack_qty": null,
+     "in_stock": true,
+     "stock": "listed (snippet)",
+     "read_on": "2026-10-27"
+    }
+   ],
+   "media_key": "fuse_mini58_20a",
+   "thumb": null,
+   "thumb_from": null,
+   "alternates": []
+  },
+  {
+   "item": "Littelfuse MINI 58V blade fuse 5 A (DDR-60L-12 input; the 24 V J501 and turret branches)",
+   "id": "fuse_mini58_5a",
+   "key": "fuse_mini58_5a",
+   "qty": 1,
+   "for": "hw_fuse_compute",
+   "part_number": "0997005.WXN",
+   "vendor": "Littelfuse",
+   "url": "https://il.farnell.com/littelfuse/0997005-wxn/auto-blade-fuse-5a-58v/dp/2748834",
+   "price_usd_each": 0.98,
+   "mass_g_each": null,
+   "note": null,
+   "pack_qty": null,
+   "sellers": [
+    {
+     "seller": "Farnell",
+     "url": "https://il.farnell.com/littelfuse/0997005-wxn/auto-blade-fuse-5a-58v/dp/2748834",
+     "seller_pn": null,
+     "price_usd": 0.98,
+     "pack_qty": null,
+     "in_stock": true,
+     "stock": "5,995 in stock, 10-14 business days from US stock (search result, 2026-10-27)",
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "Dasenic",
+     "url": "https://www.dasenic.com/product/littelfuse-0997005wxn",
+     "seller_pn": null,
+     "price_usd": 0.39,
+     "pack_qty": null,
+     "in_stock": true,
+     "stock": "17,902 in stock, $0.3878 at 25+ (search result, 2026-10-27)",
+     "read_on": "2026-10-27"
+    }
+   ],
+   "media_key": "fuse_mini58_5a",
+   "thumb": null,
+   "thumb_from": null,
+   "alternates": []
+  },
+  {
+   "item": "Heat-Set Threaded Inserts for Plastic, Standard, Brass, M5 x 0.8 mm Thread Size, 7.9 mm Installed Length",
+   "id": "insert_m5",
+   "key": "insert_m5",
+   "qty": 4,
+   "for": "hw_plinth_inserts_m5",
+   "part_number": "94459A775",
+   "vendor": "McMaster-Carr",
+   "url": "https://www.mcmaster.com/94459A775/",
+   "price_usd_each": 0.2728,
+   "mass_g_each": null,
+   "note": null,
+   "pack_qty": 25,
+   "sellers": [
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/94459A775/",
+     "seller_pn": null,
+     "price_usd": null,
+     "pack_qty": null,
+     "in_stock": null,
+     "stock": null,
+     "read_on": null
+    }
+   ],
+   "media_key": "insert_m5",
+   "thumb": "references/vendor/thumbs/insert_m5.jpg",
+   "thumb_from": "https://www.mcmaster.com/94459A775/",
+   "alternates": [
+    {
+     "supplier": "ruthex",
+     "part_number": "RX-M5x9.5 (SKU GE-M5x95-001)",
+     "url": "https://www.ruthex.de/products/ruthex-gewindeeinsatz-m5-50-stuck-rx-m5x9-5-messing-gewindebuchsen",
+     "price": null,
+     "price_usd_each": null,
+     "pack_qty": 50,
+     "stock": "InStock (schema.org availability)",
+     "drop_in": false,
+     "changes": "NOT drop-in: 9.5 mm long vs McMaster 7.9 mm (1.6 mm longer). The short version RX-M5Sx5.8 (and CNC Kitchen 'M5 x 5.8 short', also listed) is 2.1 mm shorter. No 7.9 mm M5 at ruthex or CNC Kitchen. EUR 9.99 per 50 (VAT incl.), no USD price.",
+     "checked": "2026-10-27",
+     "evidence": "NOT drop-in: 9.5 mm long vs McMaster 7.9 mm (1.6 mm longer). The short version RX-M5Sx5.8 (and CNC Kitchen 'M5 x 5.8 short', also listed) is 2.1 mm shorter. No 7.9 mm M5 at ruthex or CNC Kitchen. EUR 9.99 per 50 (VAT incl.), no USD price."
+    },
+    {
+     "supplier": "3DJake",
+     "part_number": "CNC-B09FXM8ZMV",
+     "url": "https://www.3djake.com/cnc-kitchen/threaded-inserts-m5-short",
+     "price": "$11.18 ($0.22 / pc), excl. VAT",
+     "price_usd_each": 0.2236,
+     "pack_qty": 50,
+     "stock": "In stock",
+     "drop_in": false,
+     "changes": "5.8 mm long instead of 7.9 mm, so 2.1 mm less thread engagement and pull-out strength. Same 6.4 mm hole per CNC Kitchen's table. It fits the existing 6.4 mm hole without a CAD change and sits flush with spare depth below.",
+     "checked": "2026-10-27",
+     "evidence": "curl of the 3DJake page: 'CNC Kitchen Threaded Inserts M5 Short, M5 x 5.8 (50 pieces)', InStock. The dimension table lists M5 Short: L 5.8, hole D3 6.4, and M5: L 9.5, hole D3 6.4. 3DJake also sells the M5 x 9.5 (CNC-X001FCE5ZB) at $11.18/50, 75 left. Direct from cnckitchen.store: TC-M5x5.8 and TC-M5x9.5, 50 pcs, 9.90 EUR each, InStock. No 7.9 mm-long M5 was found at either."
+    }
+   ]
+  },
+  {
+   "item": "Black-Oxide Alloy Steel Socket Head Screw, US Origin, M5 x 0.8 mm Thread Size, 16 mm Long",
+   "id": "screw_m5x16",
+   "key": "screw_m5x16",
+   "qty": 4,
+   "for": "hw_plinth_screws_m5",
+   "part_number": "91290A232",
+   "vendor": "McMaster-Carr",
+   "url": "https://www.mcmaster.com/91290A232/",
+   "price_usd_each": 0.1727,
+   "mass_g_each": null,
+   "note": null,
+   "pack_qty": 100,
+   "sellers": [
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/91290A232/",
+     "seller_pn": null,
+     "price_usd": null,
+     "pack_qty": null,
+     "in_stock": null,
+     "stock": null,
+     "read_on": null
+    }
+   ],
+   "media_key": "screw_m5x16",
+   "thumb": "references/vendor/thumbs/screw_m5x16.jpg",
+   "thumb_from": "https://www.mcmaster.com/91290A232/",
+   "alternates": [
+    {
+     "supplier": "Belmetric",
+     "part_number": "BSH5X16",
+     "url": "https://belmetric.com/m5x0-8-socket-head-cap-screw-din-912-class-12-9/",
+     "price": "$0.17",
+     "price_usd_each": 0.17,
+     "pack_qty": 1,
+     "stock": "in stock",
+     "drop_in": true,
+     "changes": null,
+     "checked": "2026-10-27",
+     "evidence": "Same spec: DIN 912, class 12.9, black oxide, M5x0.8 x 16 mm full thread (select Length=16mm). $0.17 each; 25-99 $0.11; 100-999 $0.10; 1000+ $0.08."
+    }
+   ]
+  },
+  {
+   "item": "Dowel Pin, 52100 Alloy Steel, 5 mm Diameter, 16 mm Long",
+   "id": "dowel_5x16",
+   "key": "dowel_5x16",
+   "qty": 2,
+   "for": "hw_plinth_dowels",
+   "part_number": "91595A352",
+   "vendor": "McMaster-Carr",
+   "url": "https://www.mcmaster.com/91595A352/",
+   "price_usd_each": 0.3844,
+   "mass_g_each": null,
+   "note": null,
+   "pack_qty": 50,
+   "sellers": [
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/91595A352/",
+     "seller_pn": null,
+     "price_usd": null,
+     "pack_qty": null,
+     "in_stock": null,
+     "stock": null,
+     "read_on": null
+    }
+   ],
+   "media_key": "dowel_5x16",
+   "thumb": "references/vendor/thumbs/dowel_5x16.jpg",
+   "thumb_from": "https://www.mcmaster.com/91595A352/",
+   "alternates": [
+    {
+     "supplier": "WDS Components",
+     "part_number": "662-20316",
+     "url": "https://www.wdscomponents.com/en-us/5mm-x-16mm-steel-precision-dowel-pin",
+     "price": "$0.60",
+     "price_usd_each": 0.6,
+     "pack_qty": 1,
+     "stock": "Stock Guaranteed; stock availability < 500",
+     "drop_in": true,
+     "changes": null,
+     "checked": "2026-10-27",
+     "evidence": "5 x 16 mm, steel BS970 230M07, 'hardened and ground' precision dowel; the page names no standard and no tolerance class, so ISO 8734 / DIN 6325 m6 is NOT confirmed (230M07 is a case-hardening free-cutting steel, closer to ISO 8734 type B than through-hardened alloy). $0.60 each; 50+ $0.51; 1000+ $0.48. Belmetric only lists DIN 7 (unhardened) pins; Fastenermart (DIN 6325 5x16) and Ametric are behin"
+    },
+    {
+     "supplier": "Aspen Fasteners",
+     "part_number": "ME397-5X16-00300",
+     "url": "https://www.aspenfasteners.com/m5-x-16mm-din-6325-metric-solid-dowel-pins-steel/",
+     "price": "Now: $180.47 (Box of 300)",
+     "price_usd_each": 0.6016,
+     "pack_qty": 300,
+     "stock": "Contact Support for Availability Info",
+     "drop_in": true,
+     "changes": null,
+     "checked": "2026-10-27",
+     "evidence": "curl of product page: 'M5 X 16mm DIN 6325, Metric, Solid Dowel Pins, Steel', tolerance m6, hardened Rockwell C58-C62, rounded ends, chamfer 1.2 mm. Sold only as a box of 300."
+    },
+    {
+     "supplier": "Aspen Fasteners",
+     "part_number": "UB006-5X16-000400",
+     "url": "https://www.aspenfasteners.com/m5-x-16mm-din-6325-metric-solid-dowel-pins-alloy-steel-plain-unbrako/",
+     "price": "Now: $437.89 (Box of 400)",
+     "price_usd_each": 1.0947,
+     "pack_qty": 400,
+     "stock": "Contact Support for Availability Info",
+     "drop_in": true,
+     "changes": null,
+     "checked": "2026-10-27",
+     "evidence": "curl of product page: 'M5 X 16mm DIN 6325 ... Alloy Steel, Plain, Unbrako', through-hardened, 'Ground Oversize to 0.0002in'. Same supplier, different maker. I found no small-pack source I could read: Misumi, Bolt Depot, Accu and Fastenal block automated reads, and Belmetric's DIN 6325 items are special-order placeholders."
+    }
+   ]
+  },
+  {
+   "item": "Black-Oxide Alloy Steel Socket Head Screw, US Origin, M4 x 0.7 mm Thread Size, 10 mm Long",
+   "id": "turret_screw_m4x10",
+   "key": "turret_screw_m4x10",
+   "qty": 4,
+   "for": "hw_plinth_m4",
+   "part_number": "91290A144",
+   "vendor": "McMaster-Carr",
+   "url": "https://www.mcmaster.com/91290A144/",
+   "price_usd_each": 0.1355,
+   "mass_g_each": null,
+   "note": null,
+   "pack_qty": 100,
+   "sellers": [
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/91290A144/",
+     "seller_pn": null,
+     "price_usd": null,
+     "pack_qty": null,
+     "in_stock": null,
+     "stock": null,
+     "read_on": null
+    }
+   ],
+   "media_key": "turret_screw_m4x10",
+   "thumb": "references/vendor/thumbs/turret_screw_m4x10.jpg",
+   "thumb_from": "https://www.mcmaster.com/91290A144/",
+   "alternates": [
+    {
+     "supplier": "Belmetric",
+     "part_number": "BSH4X10",
+     "url": "https://belmetric.com/m4x0-7-socket-head-cap-screw-din-912-class-12-9/",
+     "price": "$0.14",
+     "price_usd_each": 0.14,
+     "pack_qty": 1,
+     "stock": "in stock",
+     "drop_in": true,
+     "changes": null,
+     "checked": "2026-10-27",
+     "evidence": "Same spec: DIN 912, class 12.9, black oxide, M4x0.7 x 10 mm full thread (select Length=10mm). $0.14 each; 25-99 $0.10; 100-999 $0.09; 1000+ $0.08."
+    }
+   ]
+  },
+  {
+   "item": "Heat-Set Threaded Inserts for Plastic, Standard, Brass, M4 x 0.7 mm Thread Size, 6.4 mm Installed Length",
+   "id": "turret_insert_m4",
+   "key": "turret_insert_m4",
+   "qty": 4,
+   "for": "hw_plinth_inserts_m4",
+   "part_number": "94459A160",
+   "vendor": "McMaster-Carr",
+   "url": "https://www.mcmaster.com/94459A160/",
+   "price_usd_each": 0.2346,
+   "mass_g_each": null,
+   "note": null,
+   "pack_qty": 50,
+   "sellers": [
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/94459A160/",
+     "seller_pn": null,
+     "price_usd": null,
+     "pack_qty": null,
+     "in_stock": null,
+     "stock": null,
+     "read_on": null
+    }
+   ],
+   "media_key": "turret_insert_m4",
+   "thumb": "references/vendor/thumbs/turret_insert_m4.jpg",
+   "thumb_from": "https://www.mcmaster.com/94459A160/",
+   "alternates": [
+    {
+     "supplier": "ruthex",
+     "part_number": "RX-M4x8.1 (SKU GE-M4x81-001)",
+     "url": "https://www.ruthex.de/products/ruthex-gewindeeinsatz-m4-50-stuck-rx-m4x8-1-messing-gewindebuchsen",
+     "price": null,
+     "price_usd_each": null,
+     "pack_qty": 50,
+     "stock": "InStock (schema.org availability)",
+     "drop_in": false,
+     "changes": "NOT drop-in: 8.1 mm long vs McMaster 6.4 mm (1.7 mm longer, needs a deeper boss). The other ruthex option, RX-M4Sx4.0 short, is 2.4 mm shorter (page not opened). Neither ruthex nor CNC Kitchen (M4x8.1 / M4x4) sells a 6.4 mm M4. EUR 9.49 per 50 (VAT incl.), no USD price.",
+     "checked": "2026-10-27",
+     "evidence": "NOT drop-in: 8.1 mm long vs McMaster 6.4 mm (1.7 mm longer, needs a deeper boss). The other ruthex option, RX-M4Sx4.0 short, is 2.4 mm shorter (page not opened). Neither ruthex nor CNC Kitchen (M4x8.1 / M4x4) sells a 6.4 mm M4. EUR 9.49 per 50 (VAT incl.), no USD price."
     }
    ]
   },
@@ -6307,40 +6806,186 @@
    ]
   },
   {
-   "item": "Enclosed AC-DC supply, 24 V 14.6 A, 350 W",
-   "id": "meanwell-lrs-350-24",
-   "key": "meanwell-lrs-350-24",
+   "item": "DCB609 FLEXVOLT 20V/60V MAX 9.0Ah",
+   "id": "dewalt-dcb609",
+   "key": "dewalt-dcb609",
    "qty": 1,
    "for": "bench",
-   "part_number": "LRS-350-24",
-   "vendor": "Mean Well",
-   "url": "https://www.jameco.com/webapp/wcs/stores/servlet/ProductDisplay?langId=-1&storeId=10001&catalogId=10001&productId=2219823",
-   "price_usd_each": 32.1,
+   "part_number": "DCB609 FLEXVOLT 20V/60V MAX 9.0Ah",
+   "vendor": "DeWalt",
+   "url": "https://thepowertoolstore.com/products/dewalt-dcb609",
+   "price_usd_each": 259.0,
    "pack_qty": null,
    "mass_g_each": null,
    "sellers": [
     {
-     "seller": "Jameco",
-     "url": "https://www.jameco.com/webapp/wcs/stores/servlet/ProductDisplay?langId=-1&storeId=10001&catalogId=10001&productId=2219823",
-     "seller_pn": "2219823",
-     "price_usd": 32.1,
-     "pack_qty": 1,
+     "seller": "The Power Tool Store",
+     "url": "https://thepowertoolstore.com/products/dewalt-dcb609",
+     "seller_pn": null,
+     "price_usd": null,
+     "pack_qty": null,
      "in_stock": true,
-     "stock": "245 (Octopart, updated 2026-10-27 06:18 UTC)",
+     "stock": null,
+     "read_on": null
+    }
+   ],
+   "media_key": "dewalt-dcb609",
+   "thumb": null,
+   "thumb_from": null,
+   "alternates": []
+  },
+  {
+   "item": "DeWalt 20 V MAX battery dock adapter, 12 AWG leads (takes a FLEXVOLT pack in its 20 V mode)",
+   "id": "dewalt-20v-dock-adapter-12awg",
+   "key": "dewalt-20v-dock-adapter-12awg",
+   "qty": 1,
+   "for": "bench",
+   "part_number": "DeWalt 18/20 V MAX battery dock adapter, 12 AWG leads",
+   "vendor": "generic",
+   "url": "https://www.walmart.com/c/kp/dewalt-adapter",
+   "price_usd_each": 12.95,
+   "pack_qty": 1,
+   "mass_g_each": null,
+   "sellers": [
+    {
+     "seller": "Walmart",
+     "url": "https://www.walmart.com/c/kp/dewalt-adapter",
+     "seller_pn": null,
+     "price_usd": 12.95,
+     "pack_qty": null,
+     "in_stock": null,
+     "stock": null,
+     "read_on": null
+    },
+    {
+     "seller": "Etsy",
+     "url": "https://www.etsy.com/listing/838361833",
+     "seller_pn": null,
+     "price_usd": 13.5,
+     "pack_qty": null,
+     "in_stock": null,
+     "stock": null,
+     "read_on": null
+    }
+   ],
+   "media_key": "dewalt-20v-dock-adapter-12awg",
+   "thumb": null,
+   "thumb_from": null,
+   "alternates": []
+  },
+  {
+   "item": "Amass XT30U male, 8-pack (12 V and 24 V branches)",
+   "id": "xt30_m",
+   "key": "xt30_m",
+   "qty": 1,
+   "for": "bench",
+   "part_number": "XT30U-M 8-pack",
+   "vendor": "Amass",
+   "url": "https://www.pyrodrone.com/products/yellow-xt30u-m-8-pack-male-device",
+   "price_usd_each": 0.3738,
+   "pack_qty": 8,
+   "mass_g_each": null,
+   "sellers": [
+    {
+     "seller": "Pyrodrone",
+     "url": "https://www.pyrodrone.com/products/yellow-xt30u-m-8-pack-male-device",
+     "seller_pn": null,
+     "price_usd": 2.99,
+     "pack_qty": 8,
+     "in_stock": true,
+     "stock": "available",
      "read_on": "2026-10-27"
     },
     {
-     "seller": "TRC Electronics",
-     "url": "https://www.trcelectronics.com/products/mean-well-lrs-350-24",
-     "seller_pn": "LRS-350-24",
-     "price_usd": 34.81,
-     "pack_qty": 1,
+     "seller": "RaceDayQuads",
+     "url": "https://www.racedayquads.com/products/xt30-connector-male-or-female",
+     "seller_pn": null,
+     "price_usd": 0.99,
+     "pack_qty": null,
      "in_stock": true,
-     "stock": "In Stock: 2,902 can ship now",
+     "stock": "available (single)",
      "read_on": "2026-10-27"
     }
    ],
-   "media_key": "meanwell-lrs-350-24",
+   "media_key": "xt30_m",
+   "thumb": null,
+   "thumb_from": null,
+   "alternates": []
+  },
+  {
+   "item": "Bussmann HHM inline MINI fuse holder, 2-30 A (rated 32 V DC: the 58 V fuse does the interrupting; label it \"58 V fuses only\")",
+   "id": "fuse_holder_mini_inline",
+   "key": "fuse_holder_mini_inline",
+   "qty": 1,
+   "for": "bench",
+   "part_number": "HHM",
+   "vendor": "Eaton Bussmann",
+   "url": "https://www.rockauto.com/en/moreinfo.php?pk=1474944",
+   "price_usd_each": 2.28,
+   "pack_qty": null,
+   "mass_g_each": null,
+   "sellers": [
+    {
+     "seller": "RockAuto",
+     "url": "https://www.rockauto.com/en/moreinfo.php?pk=1474944",
+     "seller_pn": null,
+     "price_usd": 2.28,
+     "pack_qty": null,
+     "in_stock": true,
+     "stock": "Add to Cart",
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "LCSC",
+     "url": "https://www.lcsc.com/product-detail/C3207515.html",
+     "seller_pn": null,
+     "price_usd": 0.3,
+     "pack_qty": null,
+     "in_stock": true,
+     "stock": "0 (Keystone 3570 PCB holder: the fuse-board upgrade)",
+     "read_on": "2026-10-27"
+    }
+   ],
+   "media_key": "fuse_holder_mini_inline",
+   "thumb": null,
+   "thumb_from": null,
+   "alternates": []
+  },
+  {
+   "item": "Littelfuse MINI 58V blade fuse 20 A (the RS-04 branches)",
+   "id": "fuse_mini58_20a",
+   "key": "fuse_mini58_20a",
+   "qty": 1,
+   "for": "bench",
+   "part_number": "0997020.WXN",
+   "vendor": "Littelfuse",
+   "url": "https://www.lcsc.com/product-detail/C207028.html",
+   "price_usd_each": 0.61,
+   "pack_qty": null,
+   "mass_g_each": null,
+   "sellers": [
+    {
+     "seller": "LCSC",
+     "url": "https://www.lcsc.com/product-detail/C207028.html",
+     "seller_pn": "C207028",
+     "price_usd": 0.61,
+     "pack_qty": null,
+     "in_stock": true,
+     "stock": "1,609",
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "element14",
+     "url": "https://nz.element14.com/littelfuse/0997020-wxn/auto-blade-fuse-2a-58v/dp/2748837",
+     "seller_pn": null,
+     "price_usd": null,
+     "pack_qty": null,
+     "in_stock": true,
+     "stock": "listed (snippet)",
+     "read_on": "2026-10-27"
+    }
+   ],
+   "media_key": "fuse_mini58_20a",
    "thumb": null,
    "thumb_from": null,
    "alternates": []
@@ -6395,10 +7040,10 @@
    "alternates": []
   },
   {
-   "item": "Cheetah Rival-compatible rounds, 100-pack",
+   "item": "Worker Cheetah Rival-compatible rounds, 100-pack",
    "id": "worker-cheetah-rival-rounds-100",
    "key": "worker-cheetah-rival-rounds-100",
-   "qty": 3,
+   "qty": 2,
    "for": "ammo",
    "part_number": "Cheetah Rival-compatible rounds, 100-pack",
    "vendor": "Worker",
@@ -6414,6 +7059,16 @@
      "price_usd": null,
      "pack_qty": null,
      "in_stock": true,
+     "stock": null,
+     "read_on": null
+    },
+    {
+     "seller": "Out of Darts",
+     "url": "https://outofdarts.com/products/worker-ammo-rival-rounds",
+     "seller_pn": null,
+     "price_usd": null,
+     "pack_qty": null,
+     "in_stock": null,
      "stock": null,
      "read_on": null
     }
@@ -6434,6 +7089,72 @@
      "changes": null,
      "checked": "2026-10-27",
      "evidence": "Read from Amazon's search-results page (price, delivery, rating); the product page itself served a captcha to a plain fetch (not bypassed), and its page title (via WebFetch) names the brand 'Little Valentine', so this is NOT the official Hasbro refill. The official Hasbro Nerf Rival 100-round refill was not found at Amazon or Target today: Amazon lists only the official 25-pack (Nerf B1589FR6, ASI"
+    }
+   ]
+  },
+  {
+   "item": "Nerf Rival 60 Accu-Round Refill (Hasbro F5052), 60 official Rival rounds",
+   "id": "hasbro-nerf-rival-accu-round-60",
+   "key": "hasbro-nerf-rival-accu-round-60",
+   "qty": 1,
+   "for": "ammo",
+   "part_number": "F5052",
+   "vendor": "Hasbro (Nerf)",
+   "url": "https://www.walmart.com/c/kp/nerf-rival-balls",
+   "price_usd_each": 19.99,
+   "pack_qty": 1,
+   "mass_g_each": null,
+   "sellers": [
+    {
+     "seller": "Walmart",
+     "url": "https://www.walmart.com/c/kp/nerf-rival-balls",
+     "seller_pn": null,
+     "price_usd": 19.99,
+     "pack_qty": null,
+     "in_stock": true,
+     "stock": null,
+     "read_on": null
+    },
+    {
+     "seller": "eBay",
+     "url": "https://www.ebay.com/p/13055032602",
+     "seller_pn": null,
+     "price_usd": 16.95,
+     "pack_qty": null,
+     "in_stock": null,
+     "stock": null,
+     "read_on": null
+    }
+   ],
+   "media_key": "hasbro-nerf-rival-accu-round-60",
+   "thumb": "references/vendor/thumbs/hasbro-nerf-rival-accu-round-60.jpg",
+   "thumb_from": "https://www.ebay.com/p/13055032602",
+   "alternates": [
+    {
+     "supplier": "Walmart",
+     "part_number": "Nerf Rival 50-Round Refill",
+     "url": "https://www.walmart.com/ip/Nerf-Rival-50-Round-Refill/1417174757",
+     "price": "$15.95",
+     "price_usd_each": 15.95,
+     "pack_qty": 1,
+     "stock": null,
+     "drop_in": true,
+     "changes": "50 rounds, not 60",
+     "checked": "2026-10-27",
+     "evidence": "Walmart listing read through a web search (Walmart's own pages answer a robot check)"
+    },
+    {
+     "supplier": "Out of Darts",
+     "part_number": "Worker Cheetah 100-pack",
+     "url": "https://outofdarts.com/products/worker-cheetah-rounds-rival-compatible-ammo-100-pack",
+     "price": "$14.99",
+     "price_usd_each": 14.99,
+     "pack_qty": 1,
+     "stock": "In stock",
+     "drop_in": true,
+     "changes": "third-party Rival-compatible rounds (D67 accepts 22.2-22.8 mm, 1.6-2.0 g)",
+     "checked": "2026-10-27",
+     "evidence": "catalog/turret.json worker-cheetah-rival-rounds-100"
     }
    ]
   }
@@ -6957,13 +7678,15 @@
   "CT connector pair (Micro-Fit 3.0 class)": 12
  },
  "price_usd_known": {
-  "turret": 781.83,
-  "bench_stand": 382.87,
+  "turret": 1796.01,
+  "bench_stand": 630.99,
   "tools": 255.73
  },
  "not_in_a_catalogue": [],
  "no_listed_price": [],
- "no_second_source": [],
+ "no_second_source": [
+  "dewalt-dcb609"
+ ],
  "ordered_to_drawing": {
   "pan_clamp": {
    "drawing": "exports/turret/pan_clamp.dxf",

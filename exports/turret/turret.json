@@ -75,10 +75,10 @@
    "solid": true,
    "frame": "pan",
    "doc": "Printed PA6-CF on its back (layers run along the arms): a 12 mm bridge on the turntable (4 x M4) and two 8 mm",
-   "mass_g_each": 116.3,
-   "print_h": 7.6,
+   "mass_g_each": 126.3,
+   "print_h": 8.3,
    "bed_mm": [
-    152.0,
+    171.9,
     91.0,
     40.0
    ],
@@ -330,7 +330,7 @@
    "solid": true,
    "frame": "pan",
    "doc": "The slip ring's driver, printed PA6-CF: a \u00d839.6 x 6 disc held in the top of the turntable's \u00d840 bore (three",
-   "mass_g_each": 7.0,
+   "mass_g_each": 7.7,
    "print_h": 0.5,
    "bed_mm": [
     39.9,
@@ -347,18 +347,89 @@
    "solid": false,
    "frame": "pan",
    "doc": "The turret-board bay, printed PETG on its back: a 58 x 57 tray with 2 mm walls out to y -115, screwed to the -y",
-   "mass_g_each": 27.6,
+   "mass_g_each": 28.6,
    "print_h": 1.1,
    "bed_mm": [
     58.0,
     57.0,
-    46.5
+    49.5
+   ],
+   "fits_bed": true,
+   "valid_single_solid": true
+  },
+  "board_bay_lid": {
+   "material": "petg",
+   "qty": 1,
+   "note": "PETG flat; snaps into the bay's open face",
+   "solid": false,
+   "frame": "pan",
+   "doc": "The board bay's lid, printed PETG flat: a 2 mm plate over the bay's open face with a 1.5 mm lip inside its walls",
+   "mass_g_each": 8.9,
+   "print_h": 0.4,
+   "bed_mm": [
+    58.0,
+    57.0,
+    3.5
+   ],
+   "fits_bed": true,
+   "valid_single_solid": false
+  },
+  "compute_tray": {
+   "material": "pa6-cf",
+   "qty": 1,
+   "note": "PA6-CF flat; 4 x M5 x 16 down into the head's inserts (first), 4 x M4 inserts for the shell",
+   "solid": false,
+   "frame": "base",
+   "doc": "The plinth's floor, printed PA6-CF (solid): a \u00d8156 x 10 disc on the head's TM pattern (4 x M5 x 16 counterbored",
+   "mass_g_each": 144.0,
+   "print_h": 9.4,
+   "bed_mm": [
+    156.0,
+    156.0,
+    16.0
+   ],
+   "fits_bed": true,
+   "valid_single_solid": true
+  },
+  "compute_shell": {
+   "material": "petg",
+   "qty": 1,
+   "note": "PETG upside down; 4 x M4 x 10 down into the tray, 4 x M5 inserts for the pan base",
+   "solid": false,
+   "frame": "base",
+   "doc": "The plinth's wall, printed PETG upside down: a \u00d8156 x 3 ring from the tray to the pan base's foot, four columns",
+   "mass_g_each": 184.1,
+   "print_h": 7.4,
+   "bed_mm": [
+    156.0,
+    156.0,
+    76.0
    ],
    "fits_bed": true,
    "valid_single_solid": true
   }
  },
  "bought": {
+  "compute": {
+   "mass_g": 462.0,
+   "note": "Seeed reComputer Mini J4012 with Extension (Jetson Orin NX 16 GB, 10-40 W); on the tray between its locating ribs, held down by the shell's four tabs; XT30 power, RJ-45 to the wall's jack, CAN to the slip ring, its own fan and heat sink",
+   "frame": "base"
+  },
+  "eth_jack": {
+   "mass_g": 15.0,
+   "note": "Adafruit 909 panel-mount RJ-45 extension (25 cm lead to the J4012's port)",
+   "frame": "base"
+  },
+  "xt30_input": {
+   "mass_g": 4.0,
+   "note": "Amass XT30U-F on 14 AWG leads, its housing clamped in the plinth's wall",
+   "frame": "base"
+  },
+  "input_fuses": {
+   "mass_g": 20.0,
+   "note": "two Bussmann HHM inline MINI holders on the tray (58 V MINI fuses only): 20 A main, 5 A to the J4012",
+   "frame": "base"
+  },
   "pan_servo": {
    "mass_g": 60.0,
    "note": "Feetech STS3215 12 V; horn up, pinion on the horn",
@@ -410,8 +481,8 @@
    "frame": "pan"
   },
   "ring_coupling": {
-   "mass_g": 2.0,
-   "note": "soft silicone tubing 5/16 in ID x 7/16 in OD, coupling the rotor to the driver",
+   "mass_g": 1.0,
+   "note": "soft TPV rubber tube 3/16 in ID x 5/16 in OD (McMaster 51225K24), coupling the rotor to the driver",
    "frame": "pan"
   },
   "ring_leads_rotor": {
@@ -586,7 +657,7 @@
    "point": [
     0.0,
     0.0,
-    214.0
+    300.0
    ],
    "interface": "TM: 4 x M5 on 80 x 80, 2 x \u00d85 dowels at (52, 0) and (0, -52), \u00d845 centre hole",
    "needs": "head_ring_tm(L) in place of the head_saddle ring (see its docstring)"
@@ -595,7 +666,7 @@
    "point": [
     0.0,
     0.0,
-    214.0
+    300.0
    ],
    "dir": [
     0,
@@ -607,7 +678,7 @@
    "point": [
     0.0,
     0.0,
-    354.0
+    440.0
    ],
    "dir": [
     -0.0,
@@ -618,7 +689,7 @@
   "muzzle": [
    147.0,
    0.0,
-   339.0
+   425.0
   ],
   "muzzle_dir": [
    1.0,
@@ -628,7 +699,7 @@
   "laser_origin": [
    78.0,
    -32.0,
-   339.0
+   425.0
   ],
   "tilt_range_deg": [
    -25.0,
@@ -639,13 +710,13 @@
    170.0
   ],
   "pan_hard_stop_deg": 173.5,
-  "mass_estimate_g": 1684.0,
+  "mass_estimate_g": 2532.7,
   "com": [
-   -5.6,
-   -4.7,
-   309.7
+   -4.2,
+   -3.1,
+   348.5
   ],
-  "com_above_mount_mm": 95.7,
+  "com_above_mount_mm": 48.5,
   "ball_d": 22.7,
   "bore": 24.2,
   "pose": {
@@ -670,12 +741,12 @@
    -25.0
   ]
  ],
- "mass_g_with_balls": 1684.0,
- "mass_g_empty": 1629.1,
+ "mass_g_with_balls": 2532.7,
+ "mass_g_empty": 2477.8,
  "com_from_mount_mm": [
-  -5.6,
-  -4.7,
-  95.7
+  -4.2,
+  -3.1,
+  48.5
  ],
  "not_modelled_g": {
   "wiring and the cable loops": 50,
@@ -684,6 +755,6 @@
   "screws, inserts, dowels, springs": 17,
   "CT connector pair (Micro-Fit 3.0 class)": 12
  },
- "print_hours": 51.9,
- "made_g": 834.8
+ "print_hours": 69.8,
+ "made_g": 1183.5
 }

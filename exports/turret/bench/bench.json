@@ -1,11 +1,11 @@
 {
  "too_big": [],
- "print_hours": 49.1,
- "printed_g": 1281,
+ "print_hours": 58.7,
+ "printed_g": 1461,
  "stand_mm": [
-  180.0,
   200.0,
-  100.0
+  200.0,
+  150.0
  ],
  "note": "printed_g and print_hours are print-plan.json's (the slicer's where sliced); sliced is cad/turret_print.py's own total",
  "sliced": {
@@ -31,6 +31,11 @@
   },
   "file": "exports/turret/print/print.json"
  },
+ "pictures": [
+  "turret-bench-level-iso.png",
+  "turret-bench-level-front.png",
+  "turret-bench-aimed-iso.png"
+ ],
  "orders": {
   "sellers": [
    "Waveshare",
@@ -45,14 +50,21 @@
    "McMaster-Carr",
    "VXB Bearings",
    "SendCutSend",
+   "Seeed Studio",
+   "The Power Tool Store",
    "Caldwell",
    "AbleNet",
+   "Walmart",
    "Out of Darts",
-   "Jameco",
    "IWISS",
-   "FYSETC"
+   "FYSETC",
+   "RockAuto",
+   "Pyrodrone",
+   "LCSC",
+   "Jameco",
+   "Farnell"
   ],
-  "grand_total_usd": 1686.96,
-  "lines": 131
+  "grand_total_usd": 2950.46,
+  "lines": 140
  }
 }

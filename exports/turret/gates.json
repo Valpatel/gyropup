@@ -1,7 +1,7 @@
 {
- "fingerprint": "8244ee7df3a9ab3f",
+ "fingerprint": "90ff373d0168485e",
  "pile": "exports/turret/feed/pile.json",
- "seconds": 69,
+ "seconds": 73,
  "ok": true,
  "gates": {
   "hopper_in_cavity": {

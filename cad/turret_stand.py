@@ -105,8 +105,8 @@ def stand_box():
     s = s.cut(_box(x0 - 1, x0 + WALL + 1, -PACK['W'] / 2 - 2.0, PACK['W'] / 2 + 2.0, -H - 1, -H + 4.0 + PACK['H'] + 2.0))
     dx0 = DOCK_X0
     for sy in (-1, 1):
-        s = s.union(_box(dx0 + 4.0, dx0 + DOCK['L'], sy * (DOCK['W'] / 2), sy * (DOCK['W'] / 2 + 3.0), -TOP - DOCK['H'] + 6.0, -TOP + 0.01))
-    s = s.union(_box(dx0 + DOCK['L'], dx0 + DOCK['L'] + 3.0, -DOCK['W'] / 2, DOCK['W'] / 2, -TOP - 12.0, -TOP + 0.01))
+        s = s.union(_box(dx0 + 4.0, dx0 + DOCK['L'] + 1.5, sy * (DOCK['W'] / 2), sy * (DOCK['W'] / 2 + 3.0), -TOP - DOCK['H'] + 6.0, -TOP + 0.5))
+    s = s.union(_box(dx0 + DOCK['L'], dx0 + DOCK['L'] + 3.0, -DOCK['W'] / 2 - 3.0, DOCK['W'] / 2 + 3.0, -TOP - 12.0, -TOP + 0.5))
     for dy in (-15.0, 15.0):
         s = s.cut(_cyl_z(FAST['M3']['insert_pilot'] / 2, -TOP - 0.01, -TOP + 4.0, dx0 + DOCK['L'] / 2, dy))
     # the terminal board's bosses on the +y wall

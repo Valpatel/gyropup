@@ -706,9 +706,9 @@ def ring_driver(G):
 # is cad/turret_boards.py's (checked there part by part): level 0 (on the tray's bosses) the D24V150F12 12 V regulator
 # (43.2 x 31.8 x 11) and the laser's switch; level 1 (on 12 mm standoffs) the Pololu 2815 switch, the D36V28F5 5 V
 # regulator, the 2 x 1000 uF bank lying down, the opto and the one-shots; level 2 (on 14 mm standoffs) the Feather M4
-# CAN (50.8 x 22.8), the trip latch, the ARM gate and the servo bus buffer. The tray reaches y -115 at x +-29 (r 118.6): the tilt servo on the other arm already sweeps r 112, and
+# CAN (50.8 x 22.8), the trip latch, the ARM gate and the servo bus buffer. The tray reaches y -118 at x +-29 (r 121.5; 115 until its lid was modelled, when the boards stood 0.8 mm out of it): the tilt servo on the other arm already sweeps r 112, and
 # nothing fixed stands above z 69 out there (the pinion's top), so it clears every pan.
-TB = {'x': 29.0, 'z': (71.0, 128.0), 'y_out': 115.0, 'wall': 1.2, 'back': 3.0, 'board': (52.0, 50.0, 1.6), 'boss': 5.0,
+TB = {'x': 29.0, 'z': (71.0, 128.0), 'y_out': 118.0, 'wall': 1.2, 'back': 3.0, 'board': (52.0, 50.0, 1.6), 'boss': 5.0,
       'levels': ((11.0, 12.0), (12.5, 14.0), (8.5, None)),        # (tallest part, standoff to the next board) per level
       'screws': ((10.0, 78.0), (-10.0, 78.0), (10.0, 121.0), (-10.0, 121.0)), 'mass_g': 100.0}
 
@@ -756,7 +756,7 @@ def board_bay_lid(G):
     a1 = G.arm_y[1]
     X, (z0, z1), Y, w = TB['x'], TB['z'], TB['y_out'], TB['wall']
     s = box(-X, X, -Y - 2.0, -Y, z0, z1)
-    lip = box(-X + w, X - w, -Y + 0.01, -Y + 4.0, z0 + w, z1 - w).cut(box(-X + w + 1.5, X - w - 1.5, -Y - 1, -Y + 5.0, z0 + w + 1.5, z1 - w - 1.5))
+    lip = box(-X + w, X - w, -Y + 0.01, -Y + 1.5, z0 + w, z1 - w).cut(box(-X + w + 1.5, X - w - 1.5, -Y - 1, -Y + 2.5, z0 + w + 1.5, z1 - w - 1.5))
     return s.union(lip)
 
 

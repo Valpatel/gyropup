@@ -221,7 +221,8 @@ continuous pan.
 turned by `ring_driver` (PA6-CF, in the turntable's bore: three crush ribs and CA) through `ring_coupling` (McMaster
 51225K24, 3/16 in ID TPV tube, 25 mm), `ring_leads_rotor` (the rotor's leads, up the axis, along the bridge, through the
 -y arm's window to the board bay), `board_bay` (PETG tray on the -y arm, three boards) and its snap lid
-`board_bay_lid` (modelled since 2026-10-27: the bay is a closed pod, not an open tray), `dt_receptacle` (DT12 on the
+`board_bay_lid` (modelled since 2026-10-27: the bay is a closed pod, not an open tray; the clash sweep then found
+the board stack 0.8 mm out of the bay's open face, so the bay is 3 mm deeper, to y -118), `dt_receptacle` (DT12 on the
 base, the robot's harness).
 
 **Decisions.**

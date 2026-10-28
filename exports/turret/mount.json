@@ -2,11 +2,11 @@
  "what": "the turret's interface for the body (docs/turret-next-plan.md 3.1, task N5)",
  "frame": "the turret frame T: x forward, y left, z up (mm), the origin on the pan axis in the TM face",
  "written_by": "cad/build_turret.py through cad/turret_mount.py, from the CAD as built",
- "mass_kg": 1.6841,
+ "mass_kg": 2.5327,
  "com_mm": [
-  -5.6,
-  -4.7,
-  95.7
+  -4.2,
+  -3.1,
+  48.5
  ],
  "tm": {
   "bolts_mm": [
@@ -43,9 +43,27 @@
   "dowel_pin": "Ø5 x 16, 2 off: not symmetric, the turret goes on one way only",
   "hole_d_mm": 45.0,
   "hole_use": "unused on the robot: the harness leaves by the DT12, nothing passes the hole",
-  "foot_d_mm": 144.0,
-  "foot_t_mm": 5.0,
-  "foot": "flat on the TM face (z = 0), Ø65 centre opening",
+  "foot_d_mm": 156.0,
+  "foot_t_mm": 10.0,
+  "foot": "D66: the compute plinth's floor (cad/turret.py compute_tray) flat on the head's TM face, no centre opening; the pan base sits 86 mm above on the plinth's columns",
+  "plinth": {
+   "height_mm": 86.0,
+   "d_mm": 156.0,
+   "decision": "D66: the turret's own Jetson (reComputer Mini J4012) inside",
+   "ports_side": "-x (the turret's back): the XT30 power input (12-54 V; the 10S bus through the body's fused branch) and the RJ-45 (Ethernet to the J501)",
+   "xt30_mm": [
+    -72.0,
+    -30.0,
+    40.0
+   ],
+   "rj45_mm": [
+    -72.0,
+    30.0,
+    40.0
+   ],
+   "ports_frame": "x, y on the pan axis, z above the head's TM face",
+   "mass_g_est": 780
+  },
   "bumper_r_mm": 86.0,
   "bumper_lug_r_mm": 87.5,
   "bumper_z_mm": [
@@ -199,28 +217,28 @@
  "mass": {
   "pose": "pan 0, tilt 0 (the centre turns with pan about the pan axis)",
   "with_30_balls": {
-   "mass_g": 1684.0,
+   "mass_g": 2532.7,
    "com_mm": [
-    -5.6,
-    -4.7,
-    95.7
+    -4.2,
+    -3.1,
+    48.5
    ]
   },
   "empty": {
-   "mass_g": 1629.1,
+   "mass_g": 2477.8,
    "com_mm": [
-    -4.2,
-    -4.9,
-    93.2
+    -3.2,
+    -3.2,
+    45.7
    ]
   },
   "with_30_balls_at_tilt_min": {
    "tilt_deg": -25.0,
-   "mass_g": 1684.0,
+   "mass_g": 2532.7,
    "com_mm": [
-    -4.3,
-    -4.7,
-    97.1
+    -3.3,
+    -3.1,
+    49.4
    ]
   },
   "balls": {
@@ -228,8 +246,8 @@
    "mass_g": 54.9,
    "note": "30 Rival rounds x 1.83 g"
   },
-  "com_off_pan_axis_mm": 7.3,
-  "com_above_deck_on_riser_mm": 125.7,
+  "com_off_pan_axis_mm": 5.2,
+  "com_above_deck_on_riser_mm": 78.5,
   "budget": "D49 (proposed): 1.70 kg with a full hopper, the centre at most 100 mm above the TM face",
   "source": "cad/turret.py mass_properties() (printed parts by the printed-part model, bought parts at their catalogue masses, the not-modelled allowance at the turntable)"
  },
@@ -343,8 +361,8 @@
   "source": "firmware/turret/config.py, cad/turret.py Geo"
  },
  "envelope": {
-  "lowest_z_mm": -0.0,
-  "nothing_below_face": true,
+  "lowest_z_mm": -86.0,
+  "nothing_below_face": false,
   "top_z_mm": 263.2,
   "top_by": "hopper_lid",
   "fixed_r_mm": 100.1,
