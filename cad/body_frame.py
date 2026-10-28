@@ -505,7 +505,7 @@ def dcdc_bracket():
 
 TURRET_PLATE = {'stock': '6061-0.125', 'L': 160.0, 'W': 140.0,      # under the deck at the riser, centred on the pan axis
                 'end_pem_x': 10.0,                                   # its two PEM SS-M5-0 this far in from its +-x ends, on y = 0
-                'foot_pad_r': 20.0,                                  # the plate stays whole round each riser foot (its screw)
+                'foot_pad_r': 24.0,                                  # the plate stays whole round each riser foot (its screw), 2 mm past the foot
                 'notch': (4.0, 26.0)}                                # the rear-right corner cut away (x, y) for the turret harness's drop
 TURRET_PLATE_POCKETS = [(23.0, 55.0, 24.0, 22.0), (23.0, -55.0, 24.0, 22.0),   # (x, y, length, width) robot: the front corners
                         (-108.0, 56.0, 16.0, 20.0)]                           # and the rear-left one (the rear-right is the notch)
@@ -579,7 +579,7 @@ def turret_plate_end_holes():
 
 
 RISER_LEG_R = 9.0
-RISER_FOOT_R = 18.0         # each leg ends in a Ø36 x 4 foot: it spreads the turret's fall load on the 0.100 in deck (D2)
+RISER_FOOT_R = 22.0         # each leg ends in a Ø44 x 4 foot: it spreads the turret's fall load on the 0.100 in deck (D2; it was Ø36 until D2's convergence run put the deck at SF 1.92 at the Ø36 foot's rim)
 RISER_FOOT_T = 4.0
 RISER_TOP_T = 9.0
 RISER_FOOT_PILOT = 12.0     # the feet's insert pilots: an M5 x 16 through the turret plate and deck reaches 10.3 mm in

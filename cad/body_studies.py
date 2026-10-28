@@ -362,12 +362,13 @@ def deck_cases(record, mesh, want):
         in_plate = (c[:, 2] < zd - 0.05) & ok & ~near
         in_deck = (c[:, 2] >= zd - 0.05) & ok & ~near
         vd = float(st.vm_elem[in_deck].max()) if in_deck.any() else 0.0
+        at_d = [round(float(v), 1) for v in c[in_deck][int(np.argmax(st.vm_elem[in_deck]))]] if in_deck.any() else None
         vp = float(st.vm_elem[in_plate].max()) if in_plate.any() else 0.0
         vc = float(st.vm_elem[near & ok].max()) if (near & ok).any() else 0.0
         sfd, sfp = (AL5052.strength_mpa / vd if vd else None), (AL6061.strength_mpa / vp if vp else None)
         sfc = AL5052.strength_mpa / vc if vc else None
         sf = min(v for v in (sfd, sfp) if v)
-        return {'deck_peak_mpa': round(vd, 1), 'deck_sf': round(sfd, 2) if sfd else None, 'plate_peak_mpa': round(vp, 1),
+        return {'deck_peak_mpa': round(vd, 1), 'deck_peak_at_mm': at_d, 'deck_sf': round(sfd, 2) if sfd else None, 'plate_peak_mpa': round(vp, 1),
                 'plate_sf': round(sfp, 2) if sfp else None, 'sf_by_part': round(sf, 2),
                 'post_corner_peak_mpa': round(vc, 1), 'post_corner_sf': round(sfc, 2) if sfc else None,
                 'post_corner_pass': bool((sfc is None or sfc >= TARGETS['sf_fault'])
