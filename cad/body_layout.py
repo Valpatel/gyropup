@@ -418,8 +418,8 @@ BUDGET = {'robot_kg': 35.0, 'legs_kg_each': 10.85, 'body_and_head_kg': 13.3, 'de
 
 # D69's wheel: a 10 in hoverboard-class hub motor with a 10 x 2.125 pneumatic tyre. exports/leg/bom.json still lists the
 # ODrive BotWheel (2.2 kg) until the leg workstream's foot change lands (issue #25); until then the ledger puts this wheel
-# in the BotWheel's rows (the rotor 60 %: tyre, rim and magnets; the stator, shaft and halls 40 %), at the wheel's centre with
-# the tyre's y band moved out by its extra width (64 mm against 44.6 mm). The mass is the one listed number read on a
+# in the BotWheel's rows (the rotor 60 %: tyre, rim and magnets; the stator, shaft and halls 40 %), at the centres of the
+# wheel's solids (cad/body_params.py _fivebar() draws D69's wheel in the leg's place). The mass is the one listed number read on a
 # seller's page; D69 brackets 3.5-4.0 kg and two motors are weighed before the foot is cut (W1): GYROPUP_WHEEL_CHANGE_G adds
 # a change per wheel on top (e.g. 470 for the 4.0 kg the leg rig simulated).
 D69_WHEEL = {'key': 'hoverboard-10in-36v-350w', 'mass_g': 3530.0, 'od_mm': 254.0, 'tyre_width_mm': 64.0, 'rotor_share': 0.6,
@@ -562,9 +562,6 @@ def leg_rows(h_mm=300.0):
         c = v.Center()
         if part in bought:
             g = bought[part]
-            if part.startswith('wheel_') and wheel_is_d69_override():     # the tyre's band moves out by its extra width
-                dy = (D69_WHEEL['tyre_width_mm'] - D69_WHEEL['botwheel_width_mm']) / 2 * (1 if c.y > 0 else -1)
-                c = (c.x, c.y + dy, c.z)
         elif part.startswith('output_adapter') and 'output_adapter' in machined:
             g = machined['output_adapter']
             c = solid_mass_properties(v, 1.0, 1.0, part)

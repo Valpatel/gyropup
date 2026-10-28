@@ -15,7 +15,8 @@ Where every number comes from:
     links and the wheels, the turret at rest) and each link's mass and centre in its own frame, from the MJCF;
   - the five-bar (cad/fivebar.py PARAMS), the motors (catalog/leg_actuators.json, catalog/wheel_motors.json, the
     60 N m cap of designs/default.json);
-  - the rig profile's feed-forward at the design mass (D57: 16.25 kg a leg), as sim/leg_rig.py run() computes it.
+  - the rig profile's feed-forward at the design mass (D69: 17.75 kg a leg, cad/body_layout.py BUDGET), as sim/leg_rig.py
+    run() computes it; the wheel is D69's hub motor (sim/robot_v2.py use_d69_wheel()).
 Re-run it whenever sim/robot_v2.py's model changes (B3 puts the real body in it) and commit the header.
 """
 from __future__ import annotations
@@ -38,7 +39,7 @@ os.environ.setdefault('MUJOCO_GL', 'egl')
 
 OUT = FW / 'include' / 'gp' / 'gp_model.h'
 BUILD = R / 'build' / 'sim' / 'v2'
-DESIGN_HALF_MASS = 16.25          # kg a leg (D57)
+DESIGN_HALF_MASS = None           # kg a leg: the ledger's design half mass (cad/body_layout.py BUDGET; D69: 17.75)
 N_LQR = 21
 LINKS = ('upper_f', 'lower_f', 'upper_r', 'lower_r')
 
@@ -60,6 +61,11 @@ def generate() -> str:
     from sim.controller_v2 import ControllerV2, LegGains, RobotV2, place_standing
     from sim import leg_rig as lr
     from sim.leg_control import Gains as RigGains
+    from sim import robot_v2
+    import body_layout as bl
+    global DESIGN_HALF_MASS
+    robot_v2.use_d69_wheel()                    # D69's hub wheel in sim.leg_rig's state, as the model was built with it
+    DESIGN_HALF_MASS = bl.BUDGET['design_half_mass_kg']
 
     info_path, xml_path = BUILD / 'model.json', BUILD / 'robot.xml'
     if not info_path.exists():

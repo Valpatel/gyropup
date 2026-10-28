@@ -122,10 +122,24 @@ def _hash(*paths) -> str:
 
 
 def _fivebar():
+    """cad/fivebar.py (the leg, read only), with D69's wheel in place of the BotWheel while the leg still draws the
+    BotWheel (its foot change is the leg workstream's, issue #25): the 10 in hub motor's tyre ring, hub drum and shaft as
+    sim/wheel_study.py draws them, so the body's clash sweep, views, ledger and sim all see the wheel it will have."""
     import sys
     sys.path.insert(0, str(R / 'cad'))
+    if str(R) not in sys.path:
+        sys.path.insert(0, str(R))
     import fivebar
+    if fivebar.WHEEL == 'odrive-botwheel' and not getattr(fivebar, '_body_d69_wheel', False):
+        from sim import wheel_study as ws
+        w = dict(ws.CANDIDATES[D69_WHEEL_KEY], **D69_WHEEL_CAD)
+        ws._patch_cad(w)
+        fivebar._body_d69_wheel = w
     return fivebar
+
+
+D69_WHEEL_KEY = 'hb10'                       # sim/wheel_candidates.json
+D69_WHEEL_CAD = {'od_mm': 254.0, 'tyre_width_mm': 64.0}     # D69: 10 x 2.125 pneumatic (the candidate's 10 x 2.5 drawn 64 wide)
 
 
 @functools.lru_cache(maxsize=1)

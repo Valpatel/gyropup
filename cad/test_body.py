@@ -365,3 +365,14 @@ def test_integrity_every_joint_and_no_floating_part():
     assert not d['floating'], d['floating']
     assert not d.get('clashes'), d.get('clashes')
     assert d.get('connectivity_pass') and all(d['connectivity_pass'].values()), d.get('connectivity_pass')   # cad-agent's gate (#14)
+
+
+def test_pack_and_adapter_are_marked_envelopes_until_measured():
+    """Issue #20: the DCB609 and its rail adapter stay labelled boxes until a real pack and adapter are measured; the
+    ledger's rows say so, so nobody reads them as modelled interfaces."""
+    import body_battery as bb
+    for spec in (bb.PACK, bb.ADAPTER):
+        assert spec.get('envelope') and '#20' in spec.get('blocked_by', ''), spec
+    m = json.loads((R / 'exports' / 'body' / 'mass.json').read_text())['P3']
+    rows = [r for r in m['rows'] if r['name'].startswith('battery_')]
+    assert rows and all(r['basis'].startswith('ENVELOPE') for r in rows), [(r['name'], r['basis'][:40]) for r in rows]

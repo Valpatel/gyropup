@@ -39,10 +39,16 @@ import body_params as bp
 # DeWalt publishes no US outline: measure one pack before the bay is printed). The rail runs along L on the top face.
 PACK = {'name': 'DeWalt DCB609 FLEXVOLT 20V/60V MAX 9.0 Ah (20 V mode: 5S3P)', 'L': 138.0, 'W': 87.0, 'H': 97.0, 'mass_g': 1565.0,
         'wh_rated': 180.0, 'ah': 9.0, 'series': 5,
-        'source': 'DeWalt DCB547-XJ datasheet (138 x 87 x 97 mm incl. the rail tower); DeWalt US 3.45 lb = 1565 g (the conservative of 1.46-1.57 kg): weigh one'}
+        'source': 'ENVELOPE, blocked on issue #20 (measure a real pack): a box from the DeWalt DCB547-XJ datasheet (138 x 87 x 97 mm '
+                  'incl. the rail tower); DeWalt US 3.45 lb = 1565 g (the conservative of 1.46-1.57 kg). No rail, latch, button or '
+                  'terminal is modelled and none is guessed',
+        'envelope': True, 'blocked_by': 'issue #20: calipers on a DCB609 (rail tower, rails, latch, release button, terminals, gauge)'}
 # The rail adapter (Terrafirma Technology "4pack 10AWG Adapter for DeWALT 20V", Amazon B07HYJ628S, $64.00 the four, 30 A
 # stated). Its outline is not published: this envelope is a guess to be measured on arrival (the bay's plates are printed).
-ADAPTER = {'L': 100.0, 'W': 72.0, 'H': 25.0, 'mass_g': 70.0, 'basis': 'envelope estimate: Terrafirma publishes no drawing'}
+ADAPTER = {'L': 100.0, 'W': 72.0, 'H': 25.0, 'mass_g': 70.0, 'envelope': True,
+           'basis': 'ENVELOPE, blocked on issue #20 (measure a real adapter): a guessed box; Terrafirma publishes no drawing, '
+                    'so its rail, catch, holes and lead exit are not modelled',
+           'blocked_by': 'issue #20: calipers on the Terrafirma adapter (outline, rail, catch, holes, lead exit)'}
 SERIES = 2 * PACK['series']                  # 10S
 V_FULL, V_NOM, V_EMPTY = 4.1 * SERIES, 3.6 * SERIES, 3.0 * SERIES
 R_PACK_OHM = 0.10                            # the leg rig's figure for the pair with its leads (rig/run.py, D65)
