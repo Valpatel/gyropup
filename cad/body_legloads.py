@@ -1,5 +1,5 @@
 """The legs' forces on the body at the robot's design mass: the leg rig (sim/leg_rig.py, the leg workstream's) run at
-half the design mass (D57: 32.5 kg, 16.25 kg a leg) on the 13S pack's 48.1 V, through its public run() (nothing of
+half the design mass (D71: 37.5 kg, 18.75 kg a leg, with D69's 10 in hub wheel) at the bus voltage given, through its public run() (nothing of
 the leg's is written: the bus voltage is set on the imported module, as sim/leg_rig.py's own --bus-v would).
 
     .venv/bin/python cad/body_legloads.py [--half-mass 16.25] [--bus-v 48.1] [--ledger]   # -> exports/body/leg-loads.json
@@ -42,7 +42,7 @@ def design_half_mass():
     return bl.BUDGET['design_half_mass_kg']
 
 
-BUS_V = 48.1                                       # the 13S2P pack's nominal (D43); the rig's own default may differ
+BUS_V = 41.0                                       # D65: the 10S FLEXVOLT pair full (the fastest motors, the hardest jump)
 
 
 LEG_BODIES = ('carriage', 'upper_f', 'lower_f', 'upper_r', 'lower_r', 'wheel')     # the leg module (not the ballast)
@@ -54,7 +54,7 @@ def _probe(lr, fb, log):
     import numpy as np
     orig = lr.sample
     y_mount = fb.Y['centre_plane'] / 1000
-    y_tyre = fb.Y['wheel'] / 1000
+    y_tyre = tyre_y_mm() / 1000
     acc = np.zeros(6)
 
     def sample(m, d, leg, t, state=None):
@@ -77,16 +77,24 @@ def _probe(lr, fb, log):
     return orig
 
 
+def tyre_y_mm() -> float:
+    """The tyre's centre plane in the left module's frame: D69's 10 in tyre (sim/robot_v2.py use_d69_wheel())."""
+    from sim import robot_v2
+    return robot_v2.use_d69_wheel()['y_mm']
+
+
 def run(half_mass: float, bus_v: float = BUS_V) -> dict:
     import math
     from sim import leg_rig as lr
+    from sim import robot_v2
+    robot_v2.use_d69_wheel()                        # D69's 10 in hub wheel in the rig's module state (as sim/wheel_study.py)
     fb = lr.fb
     rig_v = lr.BUS_V
     lr.BUS_V = bus_v                                # the motors' speed line at this bus (LEG_OMEGA is read when run() runs)
     lr.LEG_OMEGA = lr.MOTOR['no_load_speed_rpm'] * bus_v / lr.MOTOR['voltage_nominal_v'] * 2 * math.pi / 60
     out = {'half_mass_kg': half_mass, 'robot_kg': round(2 * half_mass, 2), 'bus_v': bus_v, 'rig_default_bus_v': rig_v,
            'leg_omega_rad_s': round(lr.LEG_OMEGA, 2), 'source': f'sim/leg_rig.py run() at this half mass and {bus_v} V',
-           'rig_committed_half_mass_kg': lr.HALF_MASS, 'mount_y_module_mm': fb.Y['centre_plane'], 'tyre_y_module_mm': fb.Y['wheel'],
+           'rig_committed_half_mass_kg': lr.HALF_MASS, 'mount_y_module_mm': fb.Y['centre_plane'], 'tyre_y_module_mm': tyre_y_mm(),
            'scenarios': {}}
     for name, sc in lr.SCENARIOS.items():
         log = []
@@ -104,7 +112,7 @@ def run(half_mass: float, bus_v: float = BUS_V) -> dict:
                        'with_fore_aft_n': rd(log[im]['F_mount_x']), 'with_ground_n': rd(log[im]['Fg']), 'at_L_mm': rd(log[im]['L_mm']),
                        'at_t_s': round(log[im]['t'], 4), 'peak_vertical_n': rd(log[iz]['F_mount_z']),
                        'peak_vertical_check_ballast_n': rd(log[ib]['ballast_z']),
-                       'moment_over_axle_lever': round(log[im]['M_roll_nm'] / max(1e-6, row['peak_axle_force_n'] * (fb.Y['wheel'] - fb.Y['centre_plane']) / 1000), 3)}
+                       'moment_over_axle_lever': round(log[im]['M_roll_nm'] / max(1e-6, row['peak_axle_force_n'] * (tyre_y_mm() - fb.Y['centre_plane']) / 1000), 3)}
         out['scenarios'][name] = row
     sc = out['scenarios']
     out['rare'] = max((sc[n]['peak_axle_force_n'], n) for n in RARE if n in sc)
@@ -116,7 +124,7 @@ def run(half_mass: float, bus_v: float = BUS_V) -> dict:
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument('--half-mass', type=float, help='kg a leg carries (default: half the design mass, D57)')
+    ap.add_argument('--half-mass', type=float, help='kg a leg carries (default: half the design mass, D69)')
     ap.add_argument('--bus-v', type=float, default=BUS_V)
     ap.add_argument('--ledger', action='store_true', help='half the ledger\'s P3 robot instead of the design mass')
     a = ap.parse_args()

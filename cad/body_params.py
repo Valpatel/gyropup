@@ -122,10 +122,26 @@ def _hash(*paths) -> str:
 
 
 def _fivebar():
+    """cad/fivebar.py (the leg, read only), with D69's wheel in place of the BotWheel while the leg still draws the
+    BotWheel (its foot change is the leg workstream's, issue #25): the 10 in hub motor's tyre ring, hub drum and shaft as
+    sim/wheel_study.py draws them, so the body's clash sweep, views, ledger and sim all see the wheel it will have."""
     import sys
     sys.path.insert(0, str(R / 'cad'))
+    if str(R) not in sys.path:
+        sys.path.insert(0, str(R))
     import fivebar
+    if fivebar.WHEEL == 'odrive-botwheel' and not getattr(fivebar, '_body_d69_wheel', False):
+        from sim import wheel_study as ws
+        w = dict(ws.CANDIDATES[D69_WHEEL_KEY], **D69_WHEEL_CAD)
+        ws._patch_cad(w)
+        fivebar._body_d69_wheel = w
     return fivebar
+
+
+D69_WHEEL_KEY = 'hb10'                       # sim/wheel_candidates.json
+D69_WHEEL_CAD = {'od_mm': 254.0, 'tyre_width_mm': 64.0}     # D69's tyre is a 10 x 2.125 (54 mm); it is drawn 64 mm wide, as
+                                                             # the wheel study drew its 10 x 2.5 candidate: the wider band is
+                                                             # the conservative one for clearance and the roll lever
 
 
 @functools.lru_cache(maxsize=1)
@@ -212,8 +228,8 @@ def y_off() -> float:
 
 
 def track() -> float:
-    """Wheel centre to wheel centre (mm)."""
-    return 2 * (y_off() + _fivebar().Y['wheel'])
+    """Tyre centre to tyre centre (mm): D69's 10 in tyre (its centre plane 7.5 mm plus half its width off the foot)."""
+    return 2 * (y_off() + _fivebar().Y['wheel_boss'] + 7.5 + D69_WHEEL_CAD['tyre_width_mm'] / 2)
 
 
 def to_robot(p_module, side: str = 'left'):
@@ -450,7 +466,7 @@ def summary() -> dict:
     return {'spine_w_mm': round(SPINE_W, 3), 'y_off_mm': round(y_off(), 3), 'track_mm': round(track(), 2),
             'z_spine_top_mm': z_spine_top(), 'z_tray_top_mm': round(z_tray_top(), 3), 'top_mm': TOP,
             'body_x_mm': BODY_X, 'body_half_y_mm': BODY_HALF_Y, 'tm_face_z_mm': tm()['face_z'], 'pan_axis_x_mm': round(tm()['pan_x'], 2),
-            'lidar_axis_x_mm': round(lidar()['x'], 2), 'wheel_y_module_mm': fb.Y['wheel'], 'centre_plane_module_mm': fb.Y['centre_plane']}
+            'lidar_axis_x_mm': round(lidar()['x'], 2), 'wheel_y_module_mm': fb.Y['wheel_boss'] + 7.5 + D69_WHEEL_CAD['tyre_width_mm'] / 2, 'centre_plane_module_mm': fb.Y['centre_plane']}
 
 
 if __name__ == '__main__':

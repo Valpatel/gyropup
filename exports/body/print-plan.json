@@ -32,10 +32,10 @@
    ],
    "fits": true,
    "placement": "straight",
-   "grams_each": 165,
-   "grams": 165,
-   "hours": 10.8,
-   "cost_usd": 13.22,
+   "grams_each": 174,
+   "grams": 174,
+   "hours": 11.4,
+   "cost_usd": 13.93,
    "infill": "100 %",
    "how": "PA6-CF, 100 % solid, printed on its top face; 8 x M5 inserts, 2 x \u00d85 dowels"
   },
@@ -210,45 +210,51 @@
    "how": "PETG; two knurled M3 x 10 thumbscrews into the rails' ends"
   },
   "bay_skid": {
-   "material": "tpu95",
+   "material": "tpu95-gyroid",
    "qty": 4,
    "size_mm": [
     149,
-    14,
-    3
+    24,
+    50
    ],
    "fits": true,
    "placement": "straight",
-   "grams_each": 8,
-   "grams": 30,
-   "hours": 3.1,
-   "cost_usd": 1.28,
+   "grams_each": 59,
+   "grams": 236,
+   "hours": 47.7,
+   "cost_usd": 9.91,
    "infill": "2 mm walls, 40 % gyroid",
-   "how": "TPU 95A skid on 3M VHB tape (no screw: under the packs there is 1 mm): the robot sits on these"
+   "how": "crush pad (#19): TPU 95A HF gyroid lattice, 50 mm free, 30 mm stroke, 600 N plateau, on 3M VHB tape (no screw: under the packs there is 1 mm); the robot sits on these"
   }
  },
  "by_material": {
   "pa6-cf": {
-   "grams": 557,
-   "hours": 36.6,
-   "cost_usd": 44.61,
+   "grams": 566,
+   "hours": 37.2,
+   "cost_usd": 45.32,
    "parts": 14
   },
   "tpu95": {
-   "grams": 38,
-   "hours": 4.0,
-   "cost_usd": 1.63,
-   "parts": 8
+   "grams": 8,
+   "hours": 0.9,
+   "cost_usd": 0.35,
+   "parts": 4
   },
   "petg": {
    "grams": 208,
    "hours": 8.2,
    "cost_usd": 2.91,
    "parts": 4
+  },
+  "tpu95-gyroid": {
+   "grams": 236,
+   "hours": 47.7,
+   "cost_usd": 9.91,
+   "parts": 4
   }
  },
  "too_big": [],
- "total_hours": 48.8,
- "total_grams": 803,
+ "total_hours": 94.0,
+ "total_grams": 1018,
  "note": "body P0-P2: hours are rough (grams / density / a strength-holding rate)"
 }

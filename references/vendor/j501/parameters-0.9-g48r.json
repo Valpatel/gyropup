@@ -280,7 +280,7 @@
     "heatsink_thread_engagement": 3.0,
     "heatsink_thread_engagement_note": "About 6 threads at the M3 0.5 mm pitch into the bottom of the cooler's 6.8 mm F-F standoff, whose thread starts on the copper spreader (module top + 0.5 mm pad + 2 mm spreader). That leaves 3.8 mm of the standoff for the short screws from the heatsink ears. Rev 0.8 counted from the module top (the 34 mm cooler); in a Rev 0.8 base the same M3 x 35 reaches only about 1.5 mm.",
     "heatsink_screw_length": 35.0,
-    "heatsink_seat_note": "Head seat raised inside the column (D7 pocket from the floor, 90-degree countersink at the top) so a standard M3 x 35 gives exactly the 4 mm (8-thread) engagement.",
+    "heatsink_seat_note": "Head seat raised inside the column (D7 pocket from the floor, 90-degree countersink at the top) so a standard M3 x 35 gives 3 mm (6 threads) in the G48R cooler's standoffs, leaving 3.8 mm of the 6.8 mm standoff for the short screws (heatsink_thread_engagement).",
     "lid_column_fillet": 4.0,
     "lid_column_flare": 3.0,
     "lid_column_note": "Each lid-screw column is fused to its side wall by a full-height buttress (wall face to column centre) with 4 mm concave fillets, plus a 3 mm radius fillet where it meets the floor (base) or roof (lid).",
@@ -312,7 +312,7 @@
       "ring_width": 1.4,
       "spokes": 12,
       "spoke_width": 2.0,
-      "note": "Rev 0.9: the roof is cut away over the fan down to a flush 3 mm grille (hub disc, 2 rings, 12 spokes); the fan top sits 2.44 mm under it. A skirt wall around the fan frame (6 mm clear, so a 3 mm fan-position error still clears; down to 3.5 mm below the fan top) keeps the fan's exhaust (it blows up) going straight out through the grille and stiffens the cut-out; the roof ribs start on it. Spokes, hub and thickness from the lid sweep (300 N): 12 spokes and a D20 hub flex least.",
+      "note": "Rev 0.9: the roof is cut away over the fan down to a flush 3 mm grille (hub disc, 2 rings, 12 spokes); the fan top sits 2.44 mm under it. A skirt wall around the fan frame (6 mm clear, so a 3 mm fan-position error still clears; down to 3.5 mm below the fan top) is meant to keep the fan's exhaust (it blows up) going out through the grille (the 6 mm gap between frame and skirt stays open below, so some exhaust can spill back: see the cooled CFD) and stiffens the cut-out; the roof ribs start on it. Spokes, hub and thickness from the lid sweep (300 N): 12 spokes and a D20 hub flex least.",
       "band_skin": 1.2
     }
   },
@@ -326,7 +326,7 @@
       90.0,
       90.5
     ],
-    "center_note": "Fan and fin centre. From IMG_1852 with a camera model fitted to the 4 lid inserts and 4 board screws (2 px rms): fan hub at PCB (84.5, 70.8); the cooler mount ears sit on a 93 x 80 pattern centred at (88, 69); the spreader edges say the photo reads about 2 mm low in x. About +/-3 mm: measure the fan centre from the PCB edges.",
+    "center_note": "Fan and fin centre, on the module centre. From IMG_1852 (corrected orientation: front I/O on the photo's right, DC IN at the top) with a two-plane fit (wall tops Z72, board screw heads Z24): fan hub at PCB (90.4, 90.5); the four mounting ears land within 2.6 mm of the four module holes. The lid tolerates +/-3 mm; measure the fan centre from the PCB edges to confirm.",
     "size": [
       102.0,
       97.0,
@@ -335,7 +335,7 @@
     "size_note": "Envelope from the spreader underside to the fan top: x along the heat pipes with their U-bends (102), y across the fins (fan 92, fins 93, 97 overall), z = 2 mm copper spreader + 48.3 mm heatsink with fan (S06).",
     "agx_top_above_pcb_top": 19.18,
     "tim_thickness": 0.5,
-    "tim_note": "Thermal pad between the AGX thermal plate and the copper spreader (Seeed supplies pads); 0.5 mm nominal, measure the fitted pad. Raises the cooler, not the standoff thread start.",
+    "tim_note": "Thermal pad between the AGX thermal plate and the copper spreader (Seeed supplies pads); 0.5 mm nominal, measure the fitted pad. It raises the spreader and so the standoff thread start: a 1 mm pad leaves the M3 x 35 tie-down 2.5 mm of thread instead of 3 mm.",
     "spreader": {
       "size": [
         100.0,
@@ -371,7 +371,7 @@
         90.5
       ],
       "note": "Between the spreader and the heatsink bracket, short M3 screws each end (user). Pattern from the photo ears.",
-      "axes_status": "UNCONFIRMED: photo-derived cooler lugs differ from registered module axes; do not choose bolt lengths from this model"
+      "axes_status": "Ears placed on the module mounting axes (corrected photo fit, IMG_1852: within 2.6 mm of each hole). The M3 x 35 and the raised seat are chosen from this stack with an assumed 0.5 mm pad; check by hand that the screw turns 6 full threads into each standoff before fitting the short screws."
     },
     "heatsink": {
       "fins": [
@@ -482,7 +482,7 @@
       "by": "user (ruler, approximate)",
       "note": "Design keeps 70.0 mm (fan top Z91.56), 2 mm above the measurement, so the real grille gap is about 4.4 mm."
     },
-    "fan_xy_note": "The fan is centred on the module (PCB 90, 90.5): the photo fit (IMG_1852, corrected orientation) puts the hub at (90.4, 90.5) and the four heatsink ears within 2 mm of the four module mounting holes, where the long M3 screws pass. The lid still keeps clear of the frame moved 3 mm in any direction, and of a 95 mm frame (S06 table size, may include the wire clips) moved 3 mm.",
+    "fan_xy_note": "The fan is centred on the module (PCB 90, 90.5): the photo fit (IMG_1852, corrected orientation) puts the hub at (90.4, 90.5) and the four heatsink ears within 2.6 mm of the four module mounting holes, where the long M3 screws pass. The lid still keeps clear of the frame moved 3 mm in any direction, and of a 95 mm frame (S06 table size, may include the wire clips) moved 3 mm.",
     "photo_registration": {
       "filename": "IMG_1852.HEIC",
       "coordinates_on_resized_image": [

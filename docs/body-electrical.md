@@ -122,6 +122,10 @@ written by `cad/body_wiring.py` from its wire list; `cad/test_body.py` checks th
 | W37 | stop relay, pole A (closed = run) | the turret's safety loop (SAFETY_A, SAFETY_B) | 22 | white | twisted pair | - | the turret's dry safety loop (12 V at 2 mA; D41 D7: it cuts the flywheels and the dial in hardware) |
 | W38 | stop relay coil, + side | MCU STOP sense (divider 12 V to 3.3 V) | 22 | white | GH | - | 12 V on the coil = the radio says run: the MCU sits the robot down when it drops (D37) |
 | W39 | 12 V loads (W43) via the RC switch's contact | stop relay coil, + side | 22 | red | solder / screw terminal | (W43's 7.5 A) | the coil (12 V, 33 mA) is fed only while the radio says run; its - side through the MCU's MOSFET (MCU_RUN), a diode across it |
+| W50 | VESC left phases A/B/C | left wheel phases (its lead's DTP04-4P) | 14 | yellow/green/blue | DTP06-4S plug + WM-4S wedge, 3 x 0462-203-12141 sockets (4th cavity plugged, 114017) | - | D69: 30 A motor peak for 0.5 s, 10 A continuous; 14 AWG silicone, 400 mm to the cheek's gland; no fuse (the VESC limits it) |
+| W51 | VESC left halls (5 V, GND, H1-H3) + motor NTC | left wheel sensors (its lead's DT04-6P) | 20 | per VESC | DT06-6S plug + W6S wedge, 6 x 0462-201-20141 sockets | - | D69: halls and the stator NTC; a shielded 6-core, shield to the VESC's GND only |
+| W52 | VESC right phases A/B/C | right wheel phases (its lead's DTP04-4P) | 14 | yellow/green/blue | DTP06-4S plug + WM-4S wedge, 3 x 0462-203-12141 sockets (4th cavity plugged, 114017) | - | as W50 |
+| W53 | VESC right halls (5 V, GND, H1-H3) + motor NTC | right wheel sensors (its lead's DT04-6P) | 20 | per VESC | DT06-6S plug + W6S wedge, 6 x 0462-201-20141 sockets | - | as W51 |
 
 ### 3.2 The rails
 

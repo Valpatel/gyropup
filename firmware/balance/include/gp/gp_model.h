@@ -3,8 +3,8 @@
 #ifndef GP_MODEL_H
 #define GP_MODEL_H
 
-#define GP_MODEL_SOURCE "Gyropup v2 (five-bar), 33.579 kg, model+xml sha256 7abc761e7793eb18"
-#define GP_MODEL_MASS_KG 33.5795f
+#define GP_MODEL_SOURCE "Gyropup v2 (five-bar), 36.754 kg, model+xml sha256 dd00ab2deb03a069"
+#define GP_MODEL_MASS_KG 36.7543f
 
 /* the five-bar (cad/fivebar.py PARAMS), m and rad */
 #define GP_FB_D_M 0.15f
@@ -14,22 +14,22 @@
 #define GP_FB_STOP_FRONT_IN -1.69296937f
 #define GP_FB_STOP_REAR_OUT -3.19395253f
 #define GP_FB_STOP_REAR_IN -1.44862328f
-#define GP_H_MIN_M 0.16f /* the controller's height 0 .. 1 (sim/robot_v2.py H_RANGE) */
+#define GP_H_MIN_M 0.185f /* the controller's height 0 .. 1 (sim/robot_v2.py H_RANGE) */
 #define GP_H_MAX_M 0.375f
 
 /* the motors */
 #define GP_LEG_PEAK_NM 120.0f
 #define GP_LEG_CAP_NM 60.0f
 #define GP_LEG_W_PER_V 0.436332313f /* rad/s of no-load speed per volt */
-#define GP_WHEEL_R_M 0.08565f
-#define GP_WHEEL_PEAK_NM 14.3f
-#define GP_WHEEL_W_PER_V 0.911934534f
-#define GP_WHEEL_KT_NM_PER_A 0.951f
+#define GP_WHEEL_R_M 0.127f
+#define GP_WHEEL_PEAK_NM 15.0f
+#define GP_WHEEL_W_PER_V 0.959931089f
+#define GP_WHEEL_KT_NM_PER_A 1.0f
 #define GP_WHEEL_POLE_PAIRS 15
 
 /* the robot: masses and the legs' gravity feed-forward ((total - wheels) g / 2, sim/controller_v2.py) */
-#define GP_ROBOT_WHEELS_KG 2.64f
-#define GP_ROBOT_LEG_FF_N 151.758247f
+#define GP_ROBOT_WHEELS_KG 4.236f
+#define GP_ROBOT_LEG_FF_N 159.502262f
 
 /* sim/controller.py Gains */
 #define GP_G_YAW_KP_PER_NM 0.25f
@@ -54,14 +54,14 @@
 #define GP_RIG_KD_TH 6.0f
 #define GP_TUCK_KP_L 3000.0f
 #define GP_TUCK_KD_L 260.0f
-#define GP_RIG_HALF_MASS_KG 16.25f
-#define GP_RIG_LEG_FF_N 138.155417f
+#define GP_RIG_HALF_MASS_KG 18.75f
+#define GP_RIG_LEG_FF_N 152.242577f
 
 /* the centre-of-mass model (robot frame: x forward, z up, origin midway between the hip axes) */
-#define GP_COM_BASE_KG 23.6561f
-#define GP_COM_BASE_X 0.00196994204f
-#define GP_COM_BASE_Z 0.0455707732f
-/* checked against MuJoCo's pendulum angle at four placed heights: worst 2.55e-07 rad */
+#define GP_COM_BASE_KG 24.1709f
+#define GP_COM_BASE_X 0.00185379841f
+#define GP_COM_BASE_Z 0.0411912806f
+/* checked against MuJoCo's pendulum angle at four placed heights: worst 2.57e-07 rad */
 
 #define GP_LQR_N 21
 #ifdef GP_MODEL_TABLES
@@ -70,32 +70,32 @@ static const float gp_com_link[4][3] = {
     {0.6477f, 0.05513f, 6e-05f}, /* upper_f */
     {0.7165f, 0.15396f, 0.0f}, /* lower_f */
     {0.6477f, 0.05513f, 6e-05f}, /* upper_r */
-    {1.6298f, 0.20198f, 0.0f}, /* lower_r */
+    {2.1618f, 0.2138f, 0.0f}, /* lower_r */
 };
 /* LQR gains K (u = -K [x - x_ref, theta, v - v_cmd, theta_dot], u the two wheels' torque, N m) by height 0..1;
  * the pendulum at each: body mass (kg), centre height over the axle (m), inertia (kg m^2) */
 static const float gp_lqr_k[GP_LQR_N][4] = {
-    {-4.47213595f, -57.7084956f, -8.37180731f, -9.26852291f}, /* h 0.00: 30.94 kg, l 0.1739 m, I 0.8520 */
-    {-4.47213595f, -58.4355326f, -8.34657211f, -9.33573048f}, /* h 0.05: 30.94 kg, l 0.1829 m, I 0.8652 */
-    {-4.47213595f, -59.1286813f, -8.32445374f, -9.40732724f}, /* h 0.10: 30.94 kg, l 0.1920 m, I 0.8790 */
-    {-4.47213595f, -59.7910032f, -8.30508618f, -9.48309999f}, /* h 0.15: 30.94 kg, l 0.2011 m, I 0.8932 */
-    {-4.47213595f, -60.425239f, -8.2881555f, -9.56283076f}, /* h 0.20: 30.94 kg, l 0.2102 m, I 0.9081 */
-    {-4.47213595f, -61.0338366f, -8.27339159f, -9.64630285f}, /* h 0.25: 30.94 kg, l 0.2193 m, I 0.9235 */
-    {-4.47213595f, -61.6189797f, -8.26056101f, -9.7333043f}, /* h 0.30: 30.94 kg, l 0.2284 m, I 0.9394 */
-    {-4.47213595f, -62.1826165f, -8.2494612f, -9.82362964f}, /* h 0.35: 30.94 kg, l 0.2376 m, I 0.9559 */
-    {-4.47213595f, -62.7264866f, -8.23991549f, -9.91708069f}, /* h 0.40: 30.94 kg, l 0.2467 m, I 0.9730 */
-    {-4.47213595f, -63.2521442f, -8.23176906f, -10.0134665f}, /* h 0.45: 30.94 kg, l 0.2559 m, I 0.9906 */
-    {-4.47213595f, -63.7609791f, -8.22488557f, -10.112603f}, /* h 0.50: 30.94 kg, l 0.2650 m, I 1.0088 */
-    {-4.47213595f, -64.2542348f, -8.21914425f, -10.2143118f}, /* h 0.55: 30.94 kg, l 0.2742 m, I 1.0274 */
-    {-4.47213595f, -64.733024f, -8.21443749f, -10.3184185f}, /* h 0.60: 30.94 kg, l 0.2834 m, I 1.0467 */
-    {-4.47213595f, -65.1983408f, -8.21066874f, -10.4247507f}, /* h 0.65: 30.94 kg, l 0.2925 m, I 1.0664 */
-    {-4.47213595f, -65.6510712f, -8.20775052f, -10.5331342f}, /* h 0.70: 30.94 kg, l 0.3017 m, I 1.0866 */
-    {-4.47213595f, -66.0919985f, -8.20560259f, -10.643388f}, /* h 0.75: 30.94 kg, l 0.3109 m, I 1.1073 */
-    {-4.47213595f, -66.5218055f, -8.20414982f, -10.755315f}, /* h 0.80: 30.94 kg, l 0.3201 m, I 1.1285 */
-    {-4.47213595f, -66.9410671f, -8.20331957f, -10.8686861f}, /* h 0.85: 30.94 kg, l 0.3293 m, I 1.1499 */
-    {-4.47213595f, -67.3502266f, -8.20303722f, -10.9832076f}, /* h 0.90: 30.94 kg, l 0.3386 m, I 1.1717 */
-    {-4.47213595f, -67.7495276f, -8.20321701f, -11.0984434f}, /* h 0.95: 30.94 kg, l 0.3478 m, I 1.1936 */
-    {-4.47213595f, -68.1387959f, -8.20373548f, -11.2135825f}, /* h 1.00: 30.94 kg, l 0.3571 m, I 1.2154 */
+    {-4.47213595f, -71.7155142f, -9.45991023f, -11.4829022f}, /* h 0.00: 32.52 kg, l 0.1859 m, I 0.9489 */
+    {-4.47213595f, -72.7937736f, -9.44010063f, -11.6191896f}, /* h 0.05: 32.52 kg, l 0.1937 m, I 0.9647 */
+    {-4.47213595f, -73.8349876f, -9.42256831f, -11.7578231f}, /* h 0.10: 32.52 kg, l 0.2015 m, I 0.9810 */
+    {-4.47213595f, -74.8413932f, -9.40707674f, -11.8987301f}, /* h 0.15: 32.52 kg, l 0.2093 m, I 0.9979 */
+    {-4.47213595f, -75.8150701f, -9.39341939f, -12.0418303f}, /* h 0.20: 32.52 kg, l 0.2171 m, I 1.0154 */
+    {-4.47213595f, -76.7579475f, -9.38141525f, -12.1870371f}, /* h 0.25: 32.52 kg, l 0.2250 m, I 1.0335 */
+    {-4.47213595f, -77.6718134f, -9.37090503f, -12.3342597f}, /* h 0.30: 32.52 kg, l 0.2328 m, I 1.0521 */
+    {-4.47213595f, -78.5583235f, -9.36174795f, -12.4834041f}, /* h 0.35: 32.52 kg, l 0.2406 m, I 1.0713 */
+    {-4.47213595f, -79.4190109f, -9.35381913f, -12.6343739f}, /* h 0.40: 32.52 kg, l 0.2485 m, I 1.0911 */
+    {-4.47213595f, -80.2552953f, -9.3470073f, -12.7870707f}, /* h 0.45: 32.52 kg, l 0.2563 m, I 1.1114 */
+    {-4.47213595f, -81.0684914f, -9.34121289f, -12.9413941f}, /* h 0.50: 32.52 kg, l 0.2642 m, I 1.1323 */
+    {-4.47213595f, -81.8598174f, -9.33634637f, -13.0972411f}, /* h 0.55: 32.52 kg, l 0.2721 m, I 1.1538 */
+    {-4.47213595f, -82.6304014f, -9.33232682f, -13.2545058f}, /* h 0.60: 32.52 kg, l 0.2799 m, I 1.1758 */
+    {-4.47213595f, -83.3812886f, -9.32908055f, -13.4130769f}, /* h 0.65: 32.52 kg, l 0.2878 m, I 1.1983 */
+    {-4.47213595f, -84.1134457f, -9.3265399f, -13.5728355f}, /* h 0.70: 32.52 kg, l 0.2957 m, I 1.2213 */
+    {-4.47213595f, -84.8277656f, -9.32464194f, -13.7336502f}, /* h 0.75: 32.52 kg, l 0.3036 m, I 1.2449 */
+    {-4.47213595f, -85.525069f, -9.32332695f, -13.8953693f}, /* h 0.80: 32.52 kg, l 0.3115 m, I 1.2689 */
+    {-4.47213595f, -86.2061035f, -9.32253638f, -14.0578058f}, /* h 0.85: 32.52 kg, l 0.3194 m, I 1.2932 */
+    {-4.47213595f, -86.871536f, -9.32220945f, -14.2207077f}, /* h 0.90: 32.52 kg, l 0.3273 m, I 1.3180 */
+    {-4.47213595f, -87.5219303f, -9.32227603f, -14.3836906f}, /* h 0.95: 32.52 kg, l 0.3352 m, I 1.3429 */
+    {-4.47213595f, -88.1576765f, -9.32263731f, -14.5460444f}, /* h 1.00: 32.52 kg, l 0.3432 m, I 1.3679 */
 };
 #endif
 

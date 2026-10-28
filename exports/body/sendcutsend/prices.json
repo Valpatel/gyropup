@@ -208,43 +208,43 @@
    "finish": "Deburring"
   },
   "cut_only": {
-   "each": 64.26,
-   "subtotal": 64.26,
+   "each": 62.8,
+   "subtotal": 62.8,
    "breaks": {
-    "2": 47.61,
-    "10": 33.06,
-    "50": 27.04,
-    "100": 21.72,
-    "1000": 18.96
+    "2": 46.43,
+    "10": 32.12,
+    "50": 26.24,
+    "100": 21.06,
+    "1000": 18.6
    },
    "arrives": "Oct 31"
   },
   "with_services": {
-   "each": 80.57,
-   "subtotal": 80.57,
+   "each": 79.11,
+   "subtotal": 79.11,
    "breaks": {
-    "2": 59.8,
-    "10": 42.83,
-    "50": 34.7,
-    "100": 28.92,
-    "1000": 24.04
+    "2": 58.62,
+    "10": 41.89,
+    "50": 33.9,
+    "100": 28.26,
+    "1000": 23.68
    },
    "arrives": "Nov 2"
   },
   "final": {
-   "each": 80.57,
-   "subtotal": 80.57,
+   "each": 79.11,
+   "subtotal": 79.11,
    "breaks": {
-    "2": 59.8,
-    "10": 42.83,
-    "50": 34.7,
-    "100": 28.92,
-    "1000": 24.04
+    "2": 58.62,
+    "10": 41.89,
+    "50": 33.9,
+    "100": 28.26,
+    "1000": 23.68
    },
    "arrives": "Nov 2"
   },
   "qty": 1,
-  "read_on": "2026-10-27",
+  "read_on": "2026-10-28",
   "seller": "SendCutSend",
   "url": "https://app.sendcutsend.com/",
   "order": {
@@ -257,7 +257,7 @@
    "hw": {},
    "taps": {}
   },
-  "dxf_sha1": "e0888f286fe1bdabd2acf63b396c1ba3b75416a7"
+  "dxf_sha1": "df4e68997be81a41122a59360c29887e374c030d"
  },
  "compute_pallet": {
   "file": "exports/body/sendcutsend/compute_pallet_6061-T6_0.125in_x1.dxf",
@@ -458,43 +458,43 @@
    "finish": "Deburring"
   },
   "cut_only": {
-   "each": 27.36,
-   "subtotal": 27.36,
+   "each": 27.45,
+   "subtotal": 27.45,
    "breaks": {
-    "2": 20.74,
-    "10": 17.31,
-    "50": 13.98,
-    "100": 12.42,
+    "2": 20.79,
+    "10": 17.35,
+    "50": 14.0,
+    "100": 12.43,
     "1000": 9.48
    },
    "arrives": "Oct 31"
   },
   "with_services": {
-   "each": 44.02,
-   "subtotal": 44.02,
+   "each": 44.11,
+   "subtotal": 44.11,
    "breaks": {
-    "2": 30.17,
-    "10": 23.75,
-    "50": 18.34,
-    "100": 16.68,
+    "2": 30.22,
+    "10": 23.79,
+    "50": 18.36,
+    "100": 16.69,
     "1000": 12.52
    },
    "arrives": "Nov 2"
   },
   "final": {
-   "each": 44.02,
-   "subtotal": 44.02,
+   "each": 44.11,
+   "subtotal": 44.11,
    "breaks": {
-    "2": 30.17,
-    "10": 23.75,
-    "50": 18.34,
-    "100": 16.68,
+    "2": 30.22,
+    "10": 23.79,
+    "50": 18.36,
+    "100": 16.69,
     "1000": 12.52
    },
    "arrives": "Nov 2"
   },
   "qty": 1,
-  "read_on": "2026-10-27",
+  "read_on": "2026-10-28",
   "seller": "SendCutSend",
   "url": "https://app.sendcutsend.com/",
   "order": {
@@ -511,7 +511,7 @@
     "2.500mm": "M3 x 0.5"
    }
   },
-  "dxf_sha1": "fb53ffbad0d6beb5c05f307ecb9031898f1bbc9f"
+  "dxf_sha1": "de36e02ee76b6c54cbc096f86fe8ad77ffa5b32a"
  },
  "bay_floor": {
   "file": "exports/body/sendcutsend/bay_floor_5052-H32_0.063in_x1.dxf",
