@@ -15,7 +15,7 @@ cad:
              knee_motor: "#3a3f47", wheel: "#1d2025", lidar: "#2a2d33", camera: "#2a2d33"}
   steps:
     - {name: leg, run: cad/build_leg.py}
-  # The design process (dossier + integrity gates) covers the turret first (docs/turret-dossier.md). `cad-agent build`
+  # The design process (dossier + integrity gates) covers the turret first (docs/turret-sections.md, "The dossier"). `cad-agent build`
   # still builds only the leg; the turret's geometry record is built by the gates:
   #   .venv/bin/cad-agent gates --build          # cad/turret_dossier.py -> exports/dossier-geometry.json, every gate, the lint
   #   .venv/bin/python cad/turret_gates.py --dossier   # the turret's own gates (path, ammo range), bound to that record

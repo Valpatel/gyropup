@@ -611,7 +611,7 @@ DOSSIER_GATES = R / 'exports' / 'gates'
 
 
 def dossier_gates(cache=None):
-    """The turret's own gates for cad-agent's process (docs/turret-dossier.md): the ball path and D67's ammo range,
+    """The turret's own gates for cad-agent's process (docs/turret-sections.md, "The dossier"): the ball path and D67's ammo range,
     written as exports/gates/turret-path.json and turret-ammo.json (+ .md) and bound to the dossier's geometry record,
     so `cad-agent check` and the dossier lint (gate:turret-path, gate:turret-ammo) read them like the toolkit's gates
     and fail them when the record changes. Refuses to bind unless the record is the geometry cad/turret_dossier.py
