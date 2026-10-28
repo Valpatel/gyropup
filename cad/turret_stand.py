@@ -164,8 +164,9 @@ def bought():
     """Envelopes of what goes in or on the stand: {name: (shape, mass_g, note)}."""
     x1 = W / 2
     out = {}
-    out['usb_can'] = (_box(-W / 2 + WALL + 1, -W / 2 + WALL + 51, -80.0, -60.0, -H + BOT + 10, -H + BOT + 22), 20.0,
-                      'USB-CAN adapter (CANable 2.0 class), USB-C at the back wall')
+    out['usb_can'] = (_box(-W / 2 + WALL, -W / 2 + WALL + 50, -80.0, -60.0, -H, -H + 12), 20.0,
+                      'USB-CAN adapter (CANable 2.0 class), USB-C at the back wall; on the floor against the wall on a '
+                      'VHB pad (it floated 10 mm up: cadagent connectivity, 2026-10-28)')
     bx, bz, by = BOARD_ON_WALL['x'], BOARD_ON_WALL['z'], BOARD_ON_WALL['y']
     out['terminal_board'] = (_box(bx[0], bx[1], by - 1.6, by, bz[0], bz[1]), 30.0,
                              '70 x 50 board on the +y wall: the pack\'s fuse and switch to the XT30 lead, the pendant loop to the DT12 plug')
