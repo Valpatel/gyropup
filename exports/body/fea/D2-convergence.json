@@ -3,61 +3,60 @@
  "meshes": [
   4.0,
   3.0,
-  2.5,
   2.0
  ],
  "rows": [
   {
    "case": "D2-turret-fall",
    "mesh_mm": 4.0,
-   "wall_s": 184,
-   "safety_factor": 1.54,
-   "sf_by_part": 1.54,
-   "deck_peak_mpa": 125.7,
-   "deck_sf": 1.54,
-   "plate_peak_mpa": 106.5,
-   "plate_sf": 2.59,
-   "post_corner_peak_mpa": 104.9,
-   "max_von_mises_mpa": 180.95,
-   "von_mises_design_mpa": 125.73,
-   "max_displacement_mm": 0.872,
+   "wall_s": 219,
+   "safety_factor": 1.2,
+   "sf_by_part": 1.99,
+   "deck_peak_mpa": 96.7,
+   "deck_sf": 1.99,
+   "plate_peak_mpa": 39.2,
+   "plate_sf": 7.04,
+   "post_corner_peak_mpa": 160.4,
+   "max_von_mises_mpa": 208.93,
+   "von_mises_design_mpa": 160.41,
+   "max_displacement_mm": 1.2572,
    "pass": false,
    "n_nodes": null,
    "n_elements": null,
    "hot_spots": [
     [
-     125.7,
-     39.6,
-     -68.4,
-     213.7,
+     160.4,
+     36.1,
+     1.3,
+     213.2,
      "plates"
     ],
     [
-     104.9,
-     129.6,
+     121.1,
+     129.4,
+     -96.7,
+     214.1,
+     "plates"
+    ],
+    [
+     120.4,
+     129.3,
      96.5,
      214.1,
      "plates"
     ],
     [
-     104.3,
-     129.6,
-     -96.3,
-     214.1,
+     116.3,
+     16.3,
+     -56.9,
+     215.4,
      "plates"
     ],
     [
-     92.3,
-     12.2,
-     -64.9,
-     210.7,
-     "plates"
-    ],
-    [
-     92.1,
-     41.3,
-     71.6,
-     214.1,
+     110.6,
+     15.0,
+     60.0,
+     215.4,
      "plates"
     ]
    ]
@@ -65,109 +64,54 @@
   {
    "case": "D2-turret-fall",
    "mesh_mm": 3.0,
-   "wall_s": 269,
-   "safety_factor": 1.24,
-   "sf_by_part": 1.77,
-   "deck_peak_mpa": 86.8,
-   "deck_sf": 2.22,
-   "plate_peak_mpa": 156.2,
-   "plate_sf": 1.77,
-   "post_corner_peak_mpa": 117.8,
-   "max_von_mises_mpa": 219.16,
-   "von_mises_design_mpa": 156.2,
-   "max_displacement_mm": 0.878,
-   "pass": false,
+   "wall_s": 284,
+   "safety_factor": 1.26,
+   "sf_by_part": 2.01,
+   "deck_peak_mpa": 95.9,
+   "deck_sf": 2.01,
+   "plate_peak_mpa": 38.7,
+   "plate_sf": 7.13,
+   "post_corner_peak_mpa": 153.7,
+   "max_von_mises_mpa": 257.46,
+   "von_mises_design_mpa": 153.66,
+   "max_displacement_mm": 1.2597,
+   "pass": true,
    "n_nodes": null,
    "n_elements": null,
    "hot_spots": [
     [
-     156.2,
-     39.6,
-     69.6,
-     212.3,
+     153.7,
+     36.1,
+     1.7,
+     213.4,
      "plates"
     ],
     [
-     153.2,
-     39.6,
-     -69.6,
-     212.3,
-     "plates"
-    ],
-    [
-     117.8,
-     129.7,
-     -96.9,
+     133.4,
+     129.6,
+     -97.2,
      214.1,
      "plates"
     ],
     [
-     111.0,
-     129.7,
-     97.2,
+     127.9,
+     129.8,
+     97.1,
      214.1,
      "plates"
     ],
     [
-     94.4,
-     14.6,
-     -66.2,
-     210.7,
-     "plates"
-    ]
-   ]
-  },
-  {
-   "case": "D2-turret-fall",
-   "mesh_mm": 2.5,
-   "wall_s": 340,
-   "safety_factor": 0.96,
-   "sf_by_part": 1.75,
-   "deck_peak_mpa": 94.7,
-   "deck_sf": 2.04,
-   "plate_peak_mpa": 157.7,
-   "plate_sf": 1.75,
-   "post_corner_peak_mpa": 200.3,
-   "max_von_mises_mpa": 321.03,
-   "von_mises_design_mpa": 200.29,
-   "max_displacement_mm": 0.8799,
-   "pass": false,
-   "n_nodes": null,
-   "n_elements": null,
-   "hot_spots": [
-    [
-     200.3,
-     131.4,
-     -99.3,
-     213.6,
+     113.6,
+     12.7,
+     59.5,
+     214.1,
      "plates"
     ],
     [
-     187.3,
-     131.4,
-     99.3,
-     213.6,
-     "plates"
-    ],
-    [
-     157.7,
-     39.6,
-     69.6,
-     212.3,
-     "plates"
-    ],
-    [
-     156.9,
-     39.6,
-     -69.6,
-     212.3,
-     "plates"
-    ],
-    [
-     93.9,
-     13.6,
-     65.9,
-     211.0,
+     109.8,
+     16.8,
+     -56.7,
+     215.4,
      "plates"
     ]
    ]
@@ -175,54 +119,54 @@
   {
    "case": "D2-turret-fall",
    "mesh_mm": 2.0,
-   "wall_s": 397,
-   "safety_factor": 0.6,
-   "sf_by_part": 1.7,
-   "deck_peak_mpa": 96.8,
-   "deck_sf": 1.99,
-   "plate_peak_mpa": 162.7,
-   "plate_sf": 1.7,
-   "post_corner_peak_mpa": 319.9,
-   "max_von_mises_mpa": 357.92,
-   "von_mises_design_mpa": 319.94,
-   "max_displacement_mm": 0.8811,
+   "wall_s": 589,
+   "safety_factor": 0.52,
+   "sf_by_part": 2.15,
+   "deck_peak_mpa": 89.9,
+   "deck_sf": 2.15,
+   "plate_peak_mpa": 38.0,
+   "plate_sf": 7.27,
+   "post_corner_peak_mpa": 374.7,
+   "max_von_mises_mpa": 419.21,
+   "von_mises_design_mpa": 374.7,
+   "max_displacement_mm": 1.2621,
    "pass": false,
    "n_nodes": null,
    "n_elements": null,
    "hot_spots": [
     [
-     319.9,
+     374.7,
      131.2,
      98.8,
      213.2,
      "plates"
     ],
     [
-     264.2,
+     310.0,
      131.2,
      -99.0,
      213.5,
      "plates"
     ],
     [
-     162.7,
-     39.6,
-     69.6,
-     212.3,
+     190.2,
+     13.8,
+     -58.2,
+     214.7,
      "plates"
     ],
     [
-     155.4,
-     39.6,
-     -69.6,
-     212.2,
+     170.2,
+     36.3,
+     -1.1,
+     213.5,
      "plates"
     ],
     [
-     123.5,
-     -131.7,
-     -119.8,
-     213.2,
+     168.8,
+     22.3,
+     44.6,
+     214.7,
      "plates"
     ]
    ]

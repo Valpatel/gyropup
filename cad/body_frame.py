@@ -505,7 +505,7 @@ def dcdc_bracket():
 
 TURRET_PLATE = {'stock': '6061-0.125', 'L': 160.0, 'W': 140.0,      # under the deck at the riser, centred on the pan axis
                 'end_pem_x': 10.0,                                   # its two PEM SS-M5-0 this far in from its +-x ends, on y = 0
-                'foot_pad_r': 24.0,                                  # the plate stays whole round each riser foot (its screw), 2 mm past the foot
+                'foot_pad_r': 22.0,                                  # the plate stays whole under each Ø44 riser foot (its screw); 135 g budget
                 'notch': (4.0, 26.0)}                                # the rear-right corner cut away (x, y) for the turret harness's drop
 TURRET_PLATE_POCKETS = [(23.0, 55.0, 24.0, 22.0), (23.0, -55.0, 24.0, 22.0),   # (x, y, length, width) robot: the front corners
                         (-108.0, 56.0, 16.0, 20.0)]                           # and the rear-left one (the rear-right is the notch)

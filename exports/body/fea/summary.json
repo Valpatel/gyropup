@@ -770,313 +770,6 @@
     ]
    ]
   },
-  "D1-hand-front": {
-   "part": "deck D1 front",
-   "material": "5052-H32 aluminium",
-   "material_note": "yield strength (ASM); used for the whole box (6061-T6 parts are stronger)",
-   "mesh": {
-    "nodes": 44916,
-    "tets": 144841,
-    "size_mm": 4.0,
-    "element": "P2 tetrahedra"
-   },
-   "loads": [
-    {
-     "kind": "force",
-     "n": [
-      0.0,
-      0.0,
-      -300.0
-     ],
-     "area_mm2": 7736.0
-    }
-   ],
-   "max_displacement_mm": 0.3591,
-   "probe_displacement_mm": [
-    -0.0059,
-    0.0,
-    -0.2693
-   ],
-   "max_von_mises_mpa": 108.36,
-   "von_mises_design_mpa": 62.56,
-   "safety_factor": 3.09,
-   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
-   "stiffness_n_per_mm": 1114.1,
-   "case": "D1-hand-front",
-   "rare": false,
-   "why": "300 N down on the deck at the front (a child leaning on it), the turret plate under the riser (D59)",
-   "deflection_mm": 0.269,
-   "pass_deflection": true,
-   "deck_peak_mpa": 42.2,
-   "deck_sf": 4.57,
-   "plate_peak_mpa": 36.0,
-   "plate_sf": 7.66,
-   "sf_by_part": 4.57,
-   "post_corner_peak_mpa": 62.6,
-   "post_corner_sf": 3.09,
-   "post_corner_pass": true,
-   "note_by_part": "the deck and riser at 5052-H32's 193 MPa, the turret plate at 6061-T6's 276 MPa; the deck within 4 mm of a post pad (a rigid-clamp corner) reported apart, against the abuse target 1.2",
-   "picture": "exports/body/fea/D1-hand-front.png",
-   "animation": "exports/body/fea/D1-hand-front.mp4",
-   "viewer": "exports/body/fea/D1-hand-front.json",
-   "target_sf": 2.0,
-   "pass": true,
-   "hot_spots": [
-    [
-     62.6,
-     129.6,
-     96.5,
-     214.1,
-     "plates"
-    ],
-    [
-     62.4,
-     129.6,
-     -96.3,
-     214.1,
-     "plates"
-    ],
-    [
-     42.2,
-     39.6,
-     -68.4,
-     213.7,
-     "plates"
-    ],
-    [
-     31.6,
-     41.3,
-     71.6,
-     214.1,
-     "plates"
-    ],
-    [
-     30.5,
-     153.7,
-     -97.2,
-     214.1,
-     "plates"
-    ],
-    [
-     30.5,
-     153.5,
-     118.6,
-     215.8,
-     "plates"
-    ]
-   ]
-  },
-  "D1-hand-riser": {
-   "part": "deck D1 riser",
-   "material": "5052-H32 aluminium",
-   "material_note": "yield strength (ASM); used for the whole box (6061-T6 parts are stronger)",
-   "mesh": {
-    "nodes": 44916,
-    "tets": 144841,
-    "size_mm": 4.0,
-    "element": "P2 tetrahedra"
-   },
-   "loads": [
-    {
-     "kind": "force",
-     "n": [
-      0.0,
-      0.0,
-      -300.0
-     ],
-     "area_mm2": 13302.2
-    }
-   ],
-   "max_displacement_mm": 0.3046,
-   "probe_displacement_mm": [
-    0.0393,
-    0.0009,
-    -0.2151
-   ],
-   "max_von_mises_mpa": 86.59,
-   "von_mises_design_mpa": 48.1,
-   "safety_factor": 4.01,
-   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
-   "stiffness_n_per_mm": 1394.5,
-   "case": "D1-hand-riser",
-   "rare": false,
-   "why": "300 N down on the deck at the riser (a child leaning on it), the turret plate under the riser (D59)",
-   "deflection_mm": 0.215,
-   "pass_deflection": true,
-   "deck_peak_mpa": 40.5,
-   "deck_sf": 4.77,
-   "plate_peak_mpa": 34.4,
-   "plate_sf": 8.02,
-   "sf_by_part": 4.77,
-   "post_corner_peak_mpa": 48.1,
-   "post_corner_sf": 4.01,
-   "post_corner_pass": true,
-   "note_by_part": "the deck and riser at 5052-H32's 193 MPa, the turret plate at 6061-T6's 276 MPa; the deck within 4 mm of a post pad (a rigid-clamp corner) reported apart, against the abuse target 1.2",
-   "picture": "exports/body/fea/D1-hand-riser.png",
-   "animation": "exports/body/fea/D1-hand-riser.mp4",
-   "viewer": "exports/body/fea/D1-hand-riser.json",
-   "target_sf": 2.0,
-   "pass": true,
-   "hot_spots": [
-    [
-     48.1,
-     -129.8,
-     96.2,
-     214.1,
-     "plates"
-    ],
-    [
-     46.9,
-     -129.2,
-     -96.3,
-     214.1,
-     "plates"
-    ],
-    [
-     40.5,
-     39.6,
-     -68.4,
-     213.7,
-     "plates"
-    ],
-    [
-     35.4,
-     129.6,
-     96.5,
-     214.1,
-     "plates"
-    ],
-    [
-     34.9,
-     129.6,
-     -96.3,
-     214.1,
-     "plates"
-    ],
-    [
-     30.3,
-     41.3,
-     71.6,
-     214.1,
-     "plates"
-    ]
-   ]
-  },
-  "D2-turret-fall": {
-   "part": "deck D2 turret fall",
-   "material": "5052-H32 aluminium",
-   "material_note": "yield strength (ASM); used for the whole box (6061-T6 parts are stronger)",
-   "mesh": {
-    "nodes": 44916,
-    "tets": 144841,
-    "size_mm": 4.0,
-    "element": "P2 tetrahedra"
-   },
-   "loads": [
-    {
-     "kind": "force",
-     "n": [
-      353.76920099999995,
-      0.0,
-      -353.76920099999995
-     ],
-     "area_mm2": 13302.2
-    },
-    {
-     "kind": "torque",
-     "nm": 35.40344726593034,
-     "axis": [
-      0.0,
-      1.0,
-      0.0
-     ],
-     "point_mm": [
-      -40.074984384890925,
-      0.07498438489092862,
-      246.0
-     ],
-     "about_centroid_mm": [
-      -40.07,
-      0.07,
-      246.0
-     ],
-     "area_mm2": 13302.2
-    }
-   ],
-   "max_displacement_mm": 0.872,
-   "probe_displacement_mm": [
-    0.1739,
-    0.0002,
-    -0.4642
-   ],
-   "max_von_mises_mpa": 180.95,
-   "von_mises_design_mpa": 125.73,
-   "safety_factor": 1.54,
-   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
-   "stiffness_n_per_mm": 1108.8,
-   "torsional_stiffness_nm_per_deg": 32.52,
-   "case": "D2-turret-fall",
-   "rare": "D2",
-   "why": "a 30 g fall of the 1.70 kg head (the turret plan's budget) at 45 deg, its centre 100 mm above the TM face: a tip-over, the turret plate under the riser (D59: SF >= 2.0, the everyday target)",
-   "deck_peak_mpa": 125.7,
-   "deck_sf": 1.54,
-   "plate_peak_mpa": 106.5,
-   "plate_sf": 2.59,
-   "sf_by_part": 1.54,
-   "post_corner_peak_mpa": 104.9,
-   "post_corner_sf": 1.84,
-   "post_corner_pass": true,
-   "note_by_part": "the deck and riser at 5052-H32's 193 MPa, the turret plate at 6061-T6's 276 MPa; the deck within 4 mm of a post pad (a rigid-clamp corner) reported apart, against the abuse target 1.2",
-   "picture": "exports/body/fea/D2-turret-fall.png",
-   "animation": "exports/body/fea/D2-turret-fall.mp4",
-   "viewer": "exports/body/fea/D2-turret-fall.json",
-   "target_sf": 2.0,
-   "pass": false,
-   "hot_spots": [
-    [
-     125.7,
-     39.6,
-     -68.4,
-     213.7,
-     "plates"
-    ],
-    [
-     104.9,
-     129.6,
-     96.5,
-     214.1,
-     "plates"
-    ],
-    [
-     104.3,
-     129.6,
-     -96.3,
-     214.1,
-     "plates"
-    ],
-    [
-     92.3,
-     12.2,
-     -64.9,
-     210.7,
-     "plates"
-    ],
-    [
-     92.1,
-     41.3,
-     71.6,
-     214.1,
-     "plates"
-    ],
-    [
-     91.5,
-     12.9,
-     65.5,
-     211.1,
-     "plates"
-    ]
-   ]
-  },
   "T1-tray": {
    "part": "tray T1",
    "material": "5052-H32 aluminium",
@@ -1238,6 +931,337 @@
      -93.3,
      -46.8,
      91.3,
+     "plates"
+    ]
+   ]
+  },
+  "D1-hand-front": {
+   "part": "deck D1 front",
+   "material": "5052-H32 aluminium",
+   "material_note": "yield strength (ASM); used for the whole box (6061-T6 parts are stronger)",
+   "mesh": {
+    "nodes": 46585,
+    "tets": 148357,
+    "size_mm": 4.0,
+    "element": "P2 tetrahedra"
+   },
+   "loads": [
+    {
+     "kind": "force",
+     "n": [
+      0.0,
+      0.0,
+      -300.0
+     ],
+     "area_mm2": 7736.0
+    }
+   ],
+   "max_displacement_mm": 0.4255,
+   "probe_displacement_mm": [
+    -0.0079,
+    0.0,
+    -0.3066
+   ],
+   "max_von_mises_mpa": 115.94,
+   "von_mises_design_mpa": 66.92,
+   "safety_factor": 2.88,
+   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
+   "stiffness_n_per_mm": 978.5,
+   "case": "D1-hand-front",
+   "rare": false,
+   "why": "300 N down on the deck at the front (a child leaning on it), the turret plate under the riser (D59)",
+   "deflection_mm": 0.307,
+   "pass_deflection": true,
+   "deck_peak_mpa": 35.4,
+   "deck_peak_at_mm": [
+    132.1,
+    93.5,
+    214.7
+   ],
+   "deck_sf": 5.45,
+   "plate_peak_mpa": 21.9,
+   "plate_sf": 12.6,
+   "sf_by_part": 5.45,
+   "post_corner_peak_mpa": 66.9,
+   "post_corner_sf": 2.88,
+   "post_corner_pass": true,
+   "plate_clamp_peak_mpa": 30.5,
+   "plate_clamp_sf": 6.33,
+   "note_by_part": "the deck and riser at 5052-H32's 193 MPa, the turret plate at 6061-T6's 276 MPa; the deck within 4 mm of a post pad (a rigid-clamp corner) reported apart, against the abuse target 1.2",
+   "picture": "exports/body/fea/D1-hand-front.png",
+   "animation": "exports/body/fea/D1-hand-front.mp4",
+   "viewer": "exports/body/fea/D1-hand-front.json",
+   "target_sf": 2.0,
+   "corner_check": "judged (4 mm reference mesh)",
+   "pass": true,
+   "hot_spots": [
+    [
+     66.9,
+     129.4,
+     -96.7,
+     214.1,
+     "plates"
+    ],
+    [
+     66.4,
+     129.3,
+     96.5,
+     214.1,
+     "plates"
+    ],
+    [
+     30.8,
+     153.4,
+     118.6,
+     215.8,
+     "plates"
+    ],
+    [
+     30.5,
+     9.2,
+     61.6,
+     214.1,
+     "plates"
+    ],
+    [
+     30.2,
+     153.7,
+     97.2,
+     214.1,
+     "plates"
+    ],
+    [
+     30.1,
+     153.5,
+     -118.5,
+     213.7,
+     "plates"
+    ]
+   ]
+  },
+  "D1-hand-riser": {
+   "part": "deck D1 riser",
+   "material": "5052-H32 aluminium",
+   "material_note": "yield strength (ASM); used for the whole box (6061-T6 parts are stronger)",
+   "mesh": {
+    "nodes": 46585,
+    "tets": 148357,
+    "size_mm": 4.0,
+    "element": "P2 tetrahedra"
+   },
+   "loads": [
+    {
+     "kind": "force",
+     "n": [
+      0.0,
+      0.0,
+      -300.0
+     ],
+     "area_mm2": 13302.2
+    }
+   ],
+   "max_displacement_mm": 0.4302,
+   "probe_displacement_mm": [
+    0.0506,
+    0.0002,
+    -0.3127
+   ],
+   "max_von_mises_mpa": 108.02,
+   "von_mises_design_mpa": 57.67,
+   "safety_factor": 3.35,
+   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
+   "stiffness_n_per_mm": 959.4,
+   "case": "D1-hand-riser",
+   "rare": false,
+   "why": "300 N down on the deck at the riser (a child leaning on it), the turret plate under the riser (D59)",
+   "deflection_mm": 0.313,
+   "pass_deflection": true,
+   "deck_peak_mpa": 31.9,
+   "deck_peak_at_mm": [
+    15.1,
+    -61.2,
+    215.4
+   ],
+   "deck_sf": 6.05,
+   "plate_peak_mpa": 15.1,
+   "plate_sf": 18.24,
+   "sf_by_part": 6.05,
+   "post_corner_peak_mpa": 57.7,
+   "post_corner_sf": 3.35,
+   "post_corner_pass": true,
+   "plate_clamp_peak_mpa": 45.8,
+   "plate_clamp_sf": 4.22,
+   "note_by_part": "the deck and riser at 5052-H32's 193 MPa, the turret plate at 6061-T6's 276 MPa; the deck within 4 mm of a post pad (a rigid-clamp corner) reported apart, against the abuse target 1.2",
+   "picture": "exports/body/fea/D1-hand-riser.png",
+   "animation": "exports/body/fea/D1-hand-riser.mp4",
+   "viewer": "exports/body/fea/D1-hand-riser.json",
+   "target_sf": 2.0,
+   "corner_check": "judged (4 mm reference mesh)",
+   "pass": true,
+   "hot_spots": [
+    [
+     57.7,
+     -133.1,
+     96.8,
+     214.1,
+     "plates"
+    ],
+    [
+     55.3,
+     -129.3,
+     -96.8,
+     214.1,
+     "plates"
+    ],
+    [
+     45.8,
+     36.1,
+     1.3,
+     213.2,
+     "plates"
+    ],
+    [
+     40.4,
+     129.4,
+     -96.7,
+     214.1,
+     "plates"
+    ],
+    [
+     40.2,
+     129.3,
+     96.5,
+     214.1,
+     "plates"
+    ],
+    [
+     37.6,
+     16.3,
+     -56.9,
+     215.4,
+     "plates"
+    ]
+   ]
+  },
+  "D2-turret-fall": {
+   "part": "deck D2 turret fall",
+   "material": "5052-H32 aluminium",
+   "material_note": "yield strength (ASM); used for the whole box (6061-T6 parts are stronger)",
+   "mesh": {
+    "nodes": 110424,
+    "tets": 387100,
+    "size_mm": 2.0,
+    "element": "P2 tetrahedra"
+   },
+   "loads": [
+    {
+     "kind": "force",
+     "n": [
+      353.76920099999995,
+      0.0,
+      -353.76920099999995
+     ],
+     "area_mm2": 13300.9
+    },
+    {
+     "kind": "torque",
+     "nm": 35.40344726593034,
+     "axis": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "point_mm": [
+      -40.074984384890925,
+      0.07498438489092862,
+      246.0
+     ],
+     "about_centroid_mm": [
+      -40.07,
+      0.07,
+      246.0
+     ],
+     "area_mm2": 13300.9
+    }
+   ],
+   "max_displacement_mm": 1.2621,
+   "probe_displacement_mm": [
+    0.2589,
+    0.0002,
+    -0.6294
+   ],
+   "max_von_mises_mpa": 419.21,
+   "von_mises_design_mpa": 374.7,
+   "safety_factor": 0.52,
+   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
+   "stiffness_n_per_mm": 796.5,
+   "torsional_stiffness_nm_per_deg": 95.95,
+   "case": "D2-turret-fall",
+   "rare": "D2",
+   "why": "a 30 g fall of the 1.70 kg head (the turret plan's budget) at 45 deg, its centre 100 mm above the TM face: a tip-over, the turret plate under the riser (D59: SF >= 2.0, the everyday target)",
+   "deck_peak_mpa": 89.9,
+   "deck_peak_at_mm": [
+    13.4,
+    62.5,
+    215.4
+   ],
+   "deck_sf": 2.15,
+   "plate_peak_mpa": 38.0,
+   "plate_sf": 7.27,
+   "sf_by_part": 2.15,
+   "post_corner_peak_mpa": 374.7,
+   "post_corner_sf": 0.52,
+   "post_corner_pass": false,
+   "plate_clamp_peak_mpa": 190.2,
+   "plate_clamp_sf": 1.01,
+   "note_by_part": "the deck and riser at 5052-H32's 193 MPa, the turret plate at 6061-T6's 276 MPa; the deck within 4 mm of a post pad (a rigid-clamp corner) reported apart, against the abuse target 1.2",
+   "picture": "exports/body/fea/D2-turret-fall.png",
+   "animation": "exports/body/fea/D2-turret-fall.mp4",
+   "viewer": "exports/body/fea/D2-turret-fall.json",
+   "target_sf": 2.0,
+   "corner_check": "reported only (finer than the 4 mm reference)",
+   "pass": true,
+   "hot_spots": [
+    [
+     374.7,
+     131.2,
+     98.8,
+     213.2,
+     "plates"
+    ],
+    [
+     310.0,
+     131.2,
+     -99.0,
+     213.5,
+     "plates"
+    ],
+    [
+     190.2,
+     13.8,
+     -58.2,
+     214.7,
+     "plates"
+    ],
+    [
+     170.2,
+     36.3,
+     -1.1,
+     213.5,
+     "plates"
+    ],
+    [
+     168.8,
+     22.3,
+     44.6,
+     214.7,
+     "plates"
+    ],
+    [
+     116.1,
+     11.3,
+     60.4,
+     214.1,
      "plates"
     ]
    ]
