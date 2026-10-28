@@ -1,24 +1,1506 @@
 {
- "model_kg": 33.799,
- "as_modelled": {
-  "body_impact_peak_n": 3408,
-  "peak_pair": [
-   "floor",
-   "battery_bay"
+ "model_kg": 36.666,
+ "wheel": {
+  "decision": "D69",
+  "key": "hb10",
+  "od_mm": 254.0,
+  "mass_g": 3530.0,
+  "tyre_width_mm": 64.0,
+  "tyre_solref": "0.0141 0.5",
+  "peak_nm": 15.0,
+  "basis": "sim/wheel_candidates.json hb10 at the ledger's mass"
+ },
+ "pad": {
+  "names": [
+   "pad_1",
+   "pad_2",
+   "pad_3",
+   "pad_4"
   ],
-  "peak_at_s": 1.183,
-  "depth_mm_at_peak": 0.02,
-  "first_touch": {
-   "t": 1.183,
-   "bay_v_world_mps": [
-    0.002,
-    -0.055,
-    -1.53
+  "k_n_per_mm_each": 80.0,
+  "c_ns_per_m_each": 250.0,
+  "unload_ratio": 0.5,
+  "stroke_mm": 15.0,
+  "h_mm": 25.0,
+  "mass_kg": {
+   "pad_1": 0.0369,
+   "pad_2": 0.0369,
+   "pad_3": 0.0369,
+   "pad_4": 0.0369
+  },
+  "touch_leg_mm": 119.6,
+  "basis": "cad/body_battery.py PAD (issue #19)"
+ },
+ "limit_n": 3000.0,
+ "as_designed": {
+  "fall_front": {
+   "pass": true,
+   "reasons": [],
+   "body_impact_peak_n": 2491,
+   "pads_peak_n": 2491,
+   "pad_each_peak_n": 1074,
+   "max_stroke_mm": 12.9,
+   "bottomed": false,
+   "first_touch": {
+    "t": 1.187,
+    "base_vz_mps": -1.63,
+    "base_v_mps": 1.634,
+    "robot_kg": 36.67
+   }
+  },
+  "fall_back": {
+   "pass": false,
+   "reasons": [
+    "the lidar hit the ground at 1.84 s"
    ],
-   "base_qvel_z_mps": -1.448,
-   "robot_kg": 33.8,
-   "base_body_kg": 22.66
+   "body_impact_peak_n": 2482,
+   "pads_peak_n": 2482,
+   "pad_each_peak_n": 1098,
+   "max_stroke_mm": 13.2,
+   "bottomed": false,
+   "first_touch": {
+    "t": 1.186,
+    "base_vz_mps": -1.623,
+    "base_v_mps": 1.628,
+    "robot_kg": 36.67
+   }
+  },
+  "fall_side": {
+   "pass": true,
+   "reasons": [],
+   "body_impact_peak_n": 843,
+   "pads_peak_n": 843,
+   "pad_each_peak_n": 358,
+   "max_stroke_mm": 4.4,
+   "bottomed": false,
+   "first_touch": {
+    "t": 1.197,
+    "base_vz_mps": -1.161,
+    "base_v_mps": 1.161,
+    "robot_kg": 36.67
+   }
   }
  },
- "sweep": []
+ "rigid": {
+  "fall_front": {
+   "pass": false,
+   "reasons": [
+    "body impact 3519 N (limit 3000 N)"
+   ],
+   "body_impact_peak_n": 3519,
+   "pads_peak_n": 3519,
+   "pad_each_peak_n": 1751,
+   "max_stroke_mm": 1.6,
+   "bottomed": true,
+   "first_touch": {
+    "t": 1.187,
+    "base_vz_mps": -1.63,
+    "base_v_mps": 1.634,
+    "robot_kg": 36.67
+   }
+  },
+  "fall_back": {
+   "pass": false,
+   "reasons": [
+    "body impact 3467 N (limit 3000 N)"
+   ],
+   "body_impact_peak_n": 3467,
+   "pads_peak_n": 3467,
+   "pad_each_peak_n": 1734,
+   "max_stroke_mm": 1.6,
+   "bottomed": true,
+   "first_touch": {
+    "t": 1.186,
+    "base_vz_mps": -1.623,
+    "base_v_mps": 1.627,
+    "robot_kg": 36.67
+   }
+  },
+  "fall_side": {
+   "pass": true,
+   "reasons": [],
+   "body_impact_peak_n": 1150,
+   "pads_peak_n": 1150,
+   "pad_each_peak_n": 603,
+   "max_stroke_mm": 0.6,
+   "bottomed": true,
+   "first_touch": {
+    "t": 1.197,
+    "base_vz_mps": -1.161,
+    "base_v_mps": 1.161,
+    "robot_kg": 36.67
+   }
+  }
+ },
+ "sweep": [
+  {
+   "k_n_per_mm": 20.0,
+   "c_ns_per_m": 100.0,
+   "fall_front": {
+    "pass": true,
+    "reasons": [],
+    "body_impact_peak_n": 2587,
+    "pads_peak_n": 2587,
+    "pad_each_peak_n": 1218,
+    "max_stroke_mm": 19.6,
+    "bottomed": true,
+    "first_touch": {
+     "t": 1.187,
+     "base_vz_mps": -1.63,
+     "base_v_mps": 1.634,
+     "robot_kg": 36.67
+    }
+   },
+   "fall_back": {
+    "pass": true,
+    "reasons": [],
+    "body_impact_peak_n": 2502,
+    "pads_peak_n": 2502,
+    "pad_each_peak_n": 1192,
+    "max_stroke_mm": 19.5,
+    "bottomed": true,
+    "first_touch": {
+     "t": 1.186,
+     "base_vz_mps": -1.624,
+     "base_v_mps": 1.628,
+     "robot_kg": 36.67
+    }
+   },
+   "fall_side": {
+    "pass": true,
+    "reasons": [],
+    "body_impact_peak_n": 631,
+    "pads_peak_n": 631,
+    "pad_each_peak_n": 189,
+    "max_stroke_mm": 9.3,
+    "bottomed": false,
+    "first_touch": {
+     "t": 1.197,
+     "base_vz_mps": -1.161,
+     "base_v_mps": 1.161,
+     "robot_kg": 36.67
+    }
+   },
+   "worst_n": 2587,
+   "bottomed": true,
+   "max_stroke_mm": 19.6,
+   "all_pass": true
+  },
+  {
+   "k_n_per_mm": 20.0,
+   "c_ns_per_m": 150.0,
+   "fall_front": {
+    "pass": true,
+    "reasons": [],
+    "body_impact_peak_n": 2476,
+    "pads_peak_n": 2476,
+    "pad_each_peak_n": 1148,
+    "max_stroke_mm": 19.5,
+    "bottomed": true,
+    "first_touch": {
+     "t": 1.187,
+     "base_vz_mps": -1.63,
+     "base_v_mps": 1.634,
+     "robot_kg": 36.67
+    }
+   },
+   "fall_back": {
+    "pass": true,
+    "reasons": [],
+    "body_impact_peak_n": 2399,
+    "pads_peak_n": 2399,
+    "pad_each_peak_n": 1128,
+    "max_stroke_mm": 19.4,
+    "bottomed": true,
+    "first_touch": {
+     "t": 1.186,
+     "base_vz_mps": -1.623,
+     "base_v_mps": 1.628,
+     "robot_kg": 36.67
+    }
+   },
+   "fall_side": {
+    "pass": true,
+    "reasons": [],
+    "body_impact_peak_n": 666,
+    "pads_peak_n": 666,
+    "pad_each_peak_n": 202,
+    "max_stroke_mm": 9.8,
+    "bottomed": false,
+    "first_touch": {
+     "t": 1.197,
+     "base_vz_mps": -1.161,
+     "base_v_mps": 1.161,
+     "robot_kg": 36.67
+    }
+   },
+   "worst_n": 2476,
+   "bottomed": true,
+   "max_stroke_mm": 19.5,
+   "all_pass": true
+  },
+  {
+   "k_n_per_mm": 20.0,
+   "c_ns_per_m": 250.0,
+   "fall_front": {
+    "pass": true,
+    "reasons": [],
+    "body_impact_peak_n": 2232,
+    "pads_peak_n": 2232,
+    "pad_each_peak_n": 1017,
+    "max_stroke_mm": 19.1,
+    "bottomed": true,
+    "first_touch": {
+     "t": 1.187,
+     "base_vz_mps": -1.63,
+     "base_v_mps": 1.634,
+     "robot_kg": 36.67
+    }
+   },
+   "fall_back": {
+    "pass": false,
+    "reasons": [
+     "the lidar hit the ground at 1.86 s"
+    ],
+    "body_impact_peak_n": 2168,
+    "pads_peak_n": 2168,
+    "pad_each_peak_n": 1005,
+    "max_stroke_mm": 19.0,
+    "bottomed": true,
+    "first_touch": {
+     "t": 1.186,
+     "base_vz_mps": -1.623,
+     "base_v_mps": 1.628,
+     "robot_kg": 36.67
+    }
+   },
+   "fall_side": {
+    "pass": true,
+    "reasons": [],
+    "body_impact_peak_n": 699,
+    "pads_peak_n": 699,
+    "pad_each_peak_n": 218,
+    "max_stroke_mm": 10.1,
+    "bottomed": false,
+    "first_touch": {
+     "t": 1.197,
+     "base_vz_mps": -1.16,
+     "base_v_mps": 1.161,
+     "robot_kg": 36.67
+    }
+   },
+   "worst_n": 2232,
+   "bottomed": true,
+   "max_stroke_mm": 19.1,
+   "all_pass": false
+  },
+  {
+   "k_n_per_mm": 20.0,
+   "c_ns_per_m": 500.0,
+   "fall_front": {
+    "pass": true,
+    "reasons": [],
+    "body_impact_peak_n": 2146,
+    "pads_peak_n": 1562,
+    "pad_each_peak_n": 692,
+    "max_stroke_mm": 17.6,
+    "bottomed": true,
+    "first_touch": {
+     "t": 1.187,
+     "base_vz_mps": -1.63,
+     "base_v_mps": 1.634,
+     "robot_kg": 36.67
+    }
+   },
+   "fall_back": {
+    "pass": false,
+    "reasons": [
+     "the lidar hit the ground at 1.91 s"
+    ],
+    "body_impact_peak_n": 2032,
+    "pads_peak_n": 1486,
+    "pad_each_peak_n": 674,
+    "max_stroke_mm": 17.5,
+    "bottomed": true,
+    "first_touch": {
+     "t": 1.186,
+     "base_vz_mps": -1.623,
+     "base_v_mps": 1.627,
+     "robot_kg": 36.67
+    }
+   },
+   "fall_side": {
+    "pass": true,
+    "reasons": [],
+    "body_impact_peak_n": 769,
+    "pads_peak_n": 769,
+    "pad_each_peak_n": 234,
+    "max_stroke_mm": 9.7,
+    "bottomed": false,
+    "first_touch": {
+     "t": 1.197,
+     "base_vz_mps": -1.16,
+     "base_v_mps": 1.161,
+     "robot_kg": 36.67
+    }
+   },
+   "worst_n": 2146,
+   "bottomed": true,
+   "max_stroke_mm": 17.6,
+   "all_pass": false
+  },
+  {
+   "k_n_per_mm": 40.0,
+   "c_ns_per_m": 100.0,
+   "fall_front": {
+    "pass": true,
+    "reasons": [],
+    "body_impact_peak_n": 2649,
+    "pads_peak_n": 2649,
+    "pad_each_peak_n": 1216,
+    "max_stroke_mm": 17.9,
+    "bottomed": true,
+    "first_touch": {
+     "t": 1.187,
+     "base_vz_mps": -1.63,
+     "base_v_mps": 1.634,
+     "robot_kg": 36.67
+    }
+   },
+   "fall_back": {
+    "pass": true,
+    "reasons": [],
+    "body_impact_peak_n": 2711,
+    "pads_peak_n": 2711,
+    "pad_each_peak_n": 1269,
+    "max_stroke_mm": 18.2,
+    "bottomed": true,
+    "first_touch": {
+     "t": 1.186,
+     "base_vz_mps": -1.624,
+     "base_v_mps": 1.628,
+     "robot_kg": 36.67
+    }
+   },
+   "fall_side": {
+    "pass": true,
+    "reasons": [],
+    "body_impact_peak_n": 733,
+    "pads_peak_n": 733,
+    "pad_each_peak_n": 257,
+    "max_stroke_mm": 6.4,
+    "bottomed": false,
+    "first_touch": {
+     "t": 1.197,
+     "base_vz_mps": -1.161,
+     "base_v_mps": 1.161,
+     "robot_kg": 36.67
+    }
+   },
+   "worst_n": 2711,
+   "bottomed": true,
+   "max_stroke_mm": 18.2,
+   "all_pass": true
+  },
+  {
+   "k_n_per_mm": 40.0,
+   "c_ns_per_m": 150.0,
+   "fall_front": {
+    "pass": true,
+    "reasons": [],
+    "body_impact_peak_n": 2541,
+    "pads_peak_n": 2541,
+    "pad_each_peak_n": 1141,
+    "max_stroke_mm": 17.8,
+    "bottomed": true,
+    "first_touch": {
+     "t": 1.187,
+     "base_vz_mps": -1.63,
+     "base_v_mps": 1.634,
+     "robot_kg": 36.67
+    }
+   },
+   "fall_back": {
+    "pass": false,
+    "reasons": [
+     "the lidar hit the ground at 2.21 s"
+    ],
+    "body_impact_peak_n": 2623,
+    "pads_peak_n": 2614,
+    "pad_each_peak_n": 1195,
+    "max_stroke_mm": 18.0,
+    "bottomed": true,
+    "first_touch": {
+     "t": 1.186,
+     "base_vz_mps": -1.623,
+     "base_v_mps": 1.628,
+     "robot_kg": 36.67
+    }
+   },
+   "fall_side": {
+    "pass": true,
+    "reasons": [],
+    "body_impact_peak_n": 781,
+    "pads_peak_n": 781,
+    "pad_each_peak_n": 274,
+    "max_stroke_mm": 6.8,
+    "bottomed": false,
+    "first_touch": {
+     "t": 1.197,
+     "base_vz_mps": -1.161,
+     "base_v_mps": 1.161,
+     "robot_kg": 36.67
+    }
+   },
+   "worst_n": 2623,
+   "bottomed": true,
+   "max_stroke_mm": 18.0,
+   "all_pass": false
+  },
+  {
+   "k_n_per_mm": 40.0,
+   "c_ns_per_m": 250.0,
+   "fall_front": {
+    "pass": true,
+    "reasons": [],
+    "body_impact_peak_n": 2217,
+    "pads_peak_n": 2217,
+    "pad_each_peak_n": 970,
+    "max_stroke_mm": 17.1,
+    "bottomed": true,
+    "first_touch": {
+     "t": 1.187,
+     "base_vz_mps": -1.63,
+     "base_v_mps": 1.634,
+     "robot_kg": 36.67
+    }
+   },
+   "fall_back": {
+    "pass": false,
+    "reasons": [
+     "the lidar hit the ground at 1.92 s"
+    ],
+    "body_impact_peak_n": 2277,
+    "pads_peak_n": 2277,
+    "pad_each_peak_n": 1017,
+    "max_stroke_mm": 17.4,
+    "bottomed": true,
+    "first_touch": {
+     "t": 1.186,
+     "base_vz_mps": -1.623,
+     "base_v_mps": 1.628,
+     "robot_kg": 36.67
+    }
+   },
+   "fall_side": {
+    "pass": true,
+    "reasons": [],
+    "body_impact_peak_n": 833,
+    "pads_peak_n": 833,
+    "pad_each_peak_n": 291,
+    "max_stroke_mm": 7.1,
+    "bottomed": false,
+    "first_touch": {
+     "t": 1.197,
+     "base_vz_mps": -1.16,
+     "base_v_mps": 1.161,
+     "robot_kg": 36.67
+    }
+   },
+   "worst_n": 2277,
+   "bottomed": true,
+   "max_stroke_mm": 17.4,
+   "all_pass": false
+  },
+  {
+   "k_n_per_mm": 40.0,
+   "c_ns_per_m": 500.0,
+   "fall_front": {
+    "pass": true,
+    "reasons": [],
+    "body_impact_peak_n": 2084,
+    "pads_peak_n": 1578,
+    "pad_each_peak_n": 668,
+    "max_stroke_mm": 14.8,
+    "bottomed": false,
+    "first_touch": {
+     "t": 1.187,
+     "base_vz_mps": -1.63,
+     "base_v_mps": 1.634,
+     "robot_kg": 36.67
+    }
+   },
+   "fall_back": {
+    "pass": false,
+    "reasons": [
+     "the lidar hit the ground at 1.89 s"
+    ],
+    "body_impact_peak_n": 1977,
+    "pads_peak_n": 1508,
+    "pad_each_peak_n": 659,
+    "max_stroke_mm": 14.5,
+    "bottomed": false,
+    "first_touch": {
+     "t": 1.186,
+     "base_vz_mps": -1.623,
+     "base_v_mps": 1.627,
+     "robot_kg": 36.67
+    }
+   },
+   "fall_side": {
+    "pass": true,
+    "reasons": [],
+    "body_impact_peak_n": 1266,
+    "pads_peak_n": 1266,
+    "pad_each_peak_n": 451,
+    "max_stroke_mm": 10.1,
+    "bottomed": false,
+    "first_touch": {
+     "t": 1.197,
+     "base_vz_mps": -1.16,
+     "base_v_mps": 1.161,
+     "robot_kg": 36.67
+    }
+   },
+   "worst_n": 2084,
+   "bottomed": false,
+   "max_stroke_mm": 14.8,
+   "all_pass": false
+  },
+  {
+   "k_n_per_mm": 60.0,
+   "c_ns_per_m": 100.0,
+   "fall_front": {
+    "pass": true,
+    "reasons": [],
+    "body_impact_peak_n": 2581,
+    "pads_peak_n": 2581,
+    "pad_each_peak_n": 1156,
+    "max_stroke_mm": 16.2,
+    "bottomed": true,
+    "first_touch": {
+     "t": 1.187,
+     "base_vz_mps": -1.63,
+     "base_v_mps": 1.634,
+     "robot_kg": 36.67
+    }
+   },
+   "fall_back": {
+    "pass": true,
+    "reasons": [],
+    "body_impact_peak_n": 2654,
+    "pads_peak_n": 2654,
+    "pad_each_peak_n": 1219,
+    "max_stroke_mm": 16.5,
+    "bottomed": true,
+    "first_touch": {
+     "t": 1.186,
+     "base_vz_mps": -1.624,
+     "base_v_mps": 1.628,
+     "robot_kg": 36.67
+    }
+   },
+   "fall_side": {
+    "pass": true,
+    "reasons": [],
+    "body_impact_peak_n": 741,
+    "pads_peak_n": 741,
+    "pad_each_peak_n": 288,
+    "max_stroke_mm": 4.8,
+    "bottomed": false,
+    "first_touch": {
+     "t": 1.197,
+     "base_vz_mps": -1.161,
+     "base_v_mps": 1.161,
+     "robot_kg": 36.67
+    }
+   },
+   "worst_n": 2654,
+   "bottomed": true,
+   "max_stroke_mm": 16.5,
+   "all_pass": true
+  },
+  {
+   "k_n_per_mm": 60.0,
+   "c_ns_per_m": 150.0,
+   "fall_front": {
+    "pass": true,
+    "reasons": [],
+    "body_impact_peak_n": 2394,
+    "pads_peak_n": 2394,
+    "pad_each_peak_n": 1036,
+    "max_stroke_mm": 15.9,
+    "bottomed": true,
+    "first_touch": {
+     "t": 1.187,
+     "base_vz_mps": -1.63,
+     "base_v_mps": 1.634,
+     "robot_kg": 36.67
+    }
+   },
+   "fall_back": {
+    "pass": false,
+    "reasons": [
+     "the lidar hit the ground at 2.10 s"
+    ],
+    "body_impact_peak_n": 2549,
+    "pads_peak_n": 2484,
+    "pad_each_peak_n": 1109,
+    "max_stroke_mm": 16.2,
+    "bottomed": true,
+    "first_touch": {
+     "t": 1.186,
+     "base_vz_mps": -1.623,
+     "base_v_mps": 1.628,
+     "robot_kg": 36.67
+    }
+   },
+   "fall_side": {
+    "pass": true,
+    "reasons": [],
+    "body_impact_peak_n": 798,
+    "pads_peak_n": 798,
+    "pad_each_peak_n": 310,
+    "max_stroke_mm": 5.1,
+    "bottomed": false,
+    "first_touch": {
+     "t": 1.197,
+     "base_vz_mps": -1.161,
+     "base_v_mps": 1.161,
+     "robot_kg": 36.67
+    }
+   },
+   "worst_n": 2549,
+   "bottomed": true,
+   "max_stroke_mm": 16.2,
+   "all_pass": false
+  },
+  {
+   "k_n_per_mm": 60.0,
+   "c_ns_per_m": 250.0,
+   "fall_front": {
+    "pass": true,
+    "reasons": [],
+    "body_impact_peak_n": 2180,
+    "pads_peak_n": 2180,
+    "pad_each_peak_n": 931,
+    "max_stroke_mm": 14.8,
+    "bottomed": false,
+    "first_touch": {
+     "t": 1.187,
+     "base_vz_mps": -1.63,
+     "base_v_mps": 1.634,
+     "robot_kg": 36.67
+    }
+   },
+   "fall_back": {
+    "pass": false,
+    "reasons": [
+     "the lidar hit the ground at 1.89 s"
+    ],
+    "body_impact_peak_n": 2171,
+    "pads_peak_n": 2171,
+    "pad_each_peak_n": 953,
+    "max_stroke_mm": 15.2,
+    "bottomed": true,
+    "first_touch": {
+     "t": 1.186,
+     "base_vz_mps": -1.623,
+     "base_v_mps": 1.628,
+     "robot_kg": 36.67
+    }
+   },
+   "fall_side": {
+    "pass": true,
+    "reasons": [],
+    "body_impact_peak_n": 875,
+    "pads_peak_n": 875,
+    "pad_each_peak_n": 334,
+    "max_stroke_mm": 5.5,
+    "bottomed": false,
+    "first_touch": {
+     "t": 1.197,
+     "base_vz_mps": -1.161,
+     "base_v_mps": 1.161,
+     "robot_kg": 36.67
+    }
+   },
+   "worst_n": 2180,
+   "bottomed": true,
+   "max_stroke_mm": 15.2,
+   "all_pass": false
+  },
+  {
+   "k_n_per_mm": 60.0,
+   "c_ns_per_m": 500.0,
+   "fall_front": {
+    "pass": true,
+    "reasons": [],
+    "body_impact_peak_n": 2022,
+    "pads_peak_n": 1936,
+    "pad_each_peak_n": 832,
+    "max_stroke_mm": 12.8,
+    "bottomed": false,
+    "first_touch": {
+     "t": 1.187,
+     "base_vz_mps": -1.63,
+     "base_v_mps": 1.634,
+     "robot_kg": 36.67
+    }
+   },
+   "fall_back": {
+    "pass": false,
+    "reasons": [
+     "the lidar hit the ground at 1.78 s"
+    ],
+    "body_impact_peak_n": 1999,
+    "pads_peak_n": 1913,
+    "pad_each_peak_n": 837,
+    "max_stroke_mm": 12.8,
+    "bottomed": false,
+    "first_touch": {
+     "t": 1.186,
+     "base_vz_mps": -1.623,
+     "base_v_mps": 1.627,
+     "robot_kg": 36.67
+    }
+   },
+   "fall_side": {
+    "pass": true,
+    "reasons": [],
+    "body_impact_peak_n": 1358,
+    "pads_peak_n": 1358,
+    "pad_each_peak_n": 423,
+    "max_stroke_mm": 6.7,
+    "bottomed": false,
+    "first_touch": {
+     "t": 1.197,
+     "base_vz_mps": -1.16,
+     "base_v_mps": 1.161,
+     "robot_kg": 36.67
+    }
+   },
+   "worst_n": 2022,
+   "bottomed": false,
+   "max_stroke_mm": 12.8,
+   "all_pass": false
+  },
+  {
+   "k_n_per_mm": 80.0,
+   "c_ns_per_m": 100.0,
+   "fall_front": {
+    "pass": true,
+    "reasons": [],
+    "body_impact_peak_n": 2641,
+    "pads_peak_n": 2641,
+    "pad_each_peak_n": 1164,
+    "max_stroke_mm": 14.2,
+    "bottomed": false,
+    "first_touch": {
+     "t": 1.187,
+     "base_vz_mps": -1.63,
+     "base_v_mps": 1.634,
+     "robot_kg": 36.67
+    }
+   },
+   "fall_back": {
+    "pass": true,
+    "reasons": [],
+    "body_impact_peak_n": 2647,
+    "pads_peak_n": 2647,
+    "pad_each_peak_n": 1184,
+    "max_stroke_mm": 14.4,
+    "bottomed": false,
+    "first_touch": {
+     "t": 1.186,
+     "base_vz_mps": -1.624,
+     "base_v_mps": 1.628,
+     "robot_kg": 36.67
+    }
+   },
+   "fall_side": {
+    "pass": true,
+    "reasons": [],
+    "body_impact_peak_n": 714,
+    "pads_peak_n": 714,
+    "pad_each_peak_n": 305,
+    "max_stroke_mm": 3.8,
+    "bottomed": false,
+    "first_touch": {
+     "t": 1.197,
+     "base_vz_mps": -1.161,
+     "base_v_mps": 1.161,
+     "robot_kg": 36.67
+    }
+   },
+   "worst_n": 2647,
+   "bottomed": false,
+   "max_stroke_mm": 14.4,
+   "all_pass": true
+  },
+  {
+   "k_n_per_mm": 80.0,
+   "c_ns_per_m": 150.0,
+   "fall_front": {
+    "pass": true,
+    "reasons": [],
+    "body_impact_peak_n": 2602,
+    "pads_peak_n": 2602,
+    "pad_each_peak_n": 1138,
+    "max_stroke_mm": 13.8,
+    "bottomed": false,
+    "first_touch": {
+     "t": 1.187,
+     "base_vz_mps": -1.63,
+     "base_v_mps": 1.634,
+     "robot_kg": 36.67
+    }
+   },
+   "fall_back": {
+    "pass": false,
+    "reasons": [
+     "the lidar hit the ground at 2.10 s"
+    ],
+    "body_impact_peak_n": 2615,
+    "pads_peak_n": 2615,
+    "pad_each_peak_n": 1161,
+    "max_stroke_mm": 14.1,
+    "bottomed": false,
+    "first_touch": {
+     "t": 1.186,
+     "base_vz_mps": -1.623,
+     "base_v_mps": 1.628,
+     "robot_kg": 36.67
+    }
+   },
+   "fall_side": {
+    "pass": true,
+    "reasons": [],
+    "body_impact_peak_n": 760,
+    "pads_peak_n": 760,
+    "pad_each_peak_n": 325,
+    "max_stroke_mm": 4.0,
+    "bottomed": false,
+    "first_touch": {
+     "t": 1.197,
+     "base_vz_mps": -1.161,
+     "base_v_mps": 1.161,
+     "robot_kg": 36.67
+    }
+   },
+   "worst_n": 2615,
+   "bottomed": false,
+   "max_stroke_mm": 14.1,
+   "all_pass": false
+  },
+  {
+   "k_n_per_mm": 80.0,
+   "c_ns_per_m": 250.0,
+   "fall_front": {
+    "pass": true,
+    "reasons": [],
+    "body_impact_peak_n": 2491,
+    "pads_peak_n": 2491,
+    "pad_each_peak_n": 1074,
+    "max_stroke_mm": 12.9,
+    "bottomed": false,
+    "first_touch": {
+     "t": 1.187,
+     "base_vz_mps": -1.63,
+     "base_v_mps": 1.634,
+     "robot_kg": 36.67
+    }
+   },
+   "fall_back": {
+    "pass": false,
+    "reasons": [
+     "the lidar hit the ground at 1.84 s"
+    ],
+    "body_impact_peak_n": 2482,
+    "pads_peak_n": 2482,
+    "pad_each_peak_n": 1098,
+    "max_stroke_mm": 13.2,
+    "bottomed": false,
+    "first_touch": {
+     "t": 1.186,
+     "base_vz_mps": -1.623,
+     "base_v_mps": 1.628,
+     "robot_kg": 36.67
+    }
+   },
+   "fall_side": {
+    "pass": true,
+    "reasons": [],
+    "body_impact_peak_n": 843,
+    "pads_peak_n": 843,
+    "pad_each_peak_n": 358,
+    "max_stroke_mm": 4.4,
+    "bottomed": false,
+    "first_touch": {
+     "t": 1.197,
+     "base_vz_mps": -1.161,
+     "base_v_mps": 1.161,
+     "robot_kg": 36.67
+    }
+   },
+   "worst_n": 2491,
+   "bottomed": false,
+   "max_stroke_mm": 13.2,
+   "all_pass": false
+  },
+  {
+   "k_n_per_mm": 80.0,
+   "c_ns_per_m": 500.0,
+   "fall_front": {
+    "pass": true,
+    "reasons": [],
+    "body_impact_peak_n": 2234,
+    "pads_peak_n": 2234,
+    "pad_each_peak_n": 974,
+    "max_stroke_mm": 11.4,
+    "bottomed": false,
+    "first_touch": {
+     "t": 1.187,
+     "base_vz_mps": -1.63,
+     "base_v_mps": 1.634,
+     "robot_kg": 36.67
+    }
+   },
+   "fall_back": {
+    "pass": false,
+    "reasons": [
+     "the lidar hit the ground at 1.74 s"
+    ],
+    "body_impact_peak_n": 2191,
+    "pads_peak_n": 2191,
+    "pad_each_peak_n": 974,
+    "max_stroke_mm": 11.4,
+    "bottomed": false,
+    "first_touch": {
+     "t": 1.186,
+     "base_vz_mps": -1.623,
+     "base_v_mps": 1.627,
+     "robot_kg": 36.67
+    }
+   },
+   "fall_side": {
+    "pass": true,
+    "reasons": [],
+    "body_impact_peak_n": 1319,
+    "pads_peak_n": 1319,
+    "pad_each_peak_n": 496,
+    "max_stroke_mm": 5.9,
+    "bottomed": false,
+    "first_touch": {
+     "t": 1.197,
+     "base_vz_mps": -1.16,
+     "base_v_mps": 1.161,
+     "robot_kg": 36.67
+    }
+   },
+   "worst_n": 2234,
+   "bottomed": false,
+   "max_stroke_mm": 11.4,
+   "all_pass": false
+  },
+  {
+   "k_n_per_mm": 120.0,
+   "c_ns_per_m": 100.0,
+   "fall_front": {
+    "pass": false,
+    "reasons": [
+     "body impact 3118 N (limit 3000 N)"
+    ],
+    "body_impact_peak_n": 3118,
+    "pads_peak_n": 3118,
+    "pad_each_peak_n": 1399,
+    "max_stroke_mm": 11.4,
+    "bottomed": false,
+    "first_touch": {
+     "t": 1.187,
+     "base_vz_mps": -1.63,
+     "base_v_mps": 1.634,
+     "robot_kg": 36.67
+    }
+   },
+   "fall_back": {
+    "pass": false,
+    "reasons": [
+     "body impact 3016 N (limit 3000 N)"
+    ],
+    "body_impact_peak_n": 3016,
+    "pads_peak_n": 3016,
+    "pad_each_peak_n": 1381,
+    "max_stroke_mm": 11.2,
+    "bottomed": false,
+    "first_touch": {
+     "t": 1.186,
+     "base_vz_mps": -1.624,
+     "base_v_mps": 1.628,
+     "robot_kg": 36.67
+    }
+   },
+   "fall_side": {
+    "pass": true,
+    "reasons": [],
+    "body_impact_peak_n": 710,
+    "pads_peak_n": 710,
+    "pad_each_peak_n": 351,
+    "max_stroke_mm": 2.8,
+    "bottomed": false,
+    "first_touch": {
+     "t": 1.197,
+     "base_vz_mps": -1.161,
+     "base_v_mps": 1.161,
+     "robot_kg": 36.67
+    }
+   },
+   "worst_n": 3118,
+   "bottomed": false,
+   "max_stroke_mm": 11.4,
+   "all_pass": false
+  },
+  {
+   "k_n_per_mm": 120.0,
+   "c_ns_per_m": 150.0,
+   "fall_front": {
+    "pass": false,
+    "reasons": [
+     "body impact 3127 N (limit 3000 N)"
+    ],
+    "body_impact_peak_n": 3127,
+    "pads_peak_n": 3127,
+    "pad_each_peak_n": 1385,
+    "max_stroke_mm": 11.2,
+    "bottomed": false,
+    "first_touch": {
+     "t": 1.187,
+     "base_vz_mps": -1.63,
+     "base_v_mps": 1.634,
+     "robot_kg": 36.67
+    }
+   },
+   "fall_back": {
+    "pass": false,
+    "reasons": [
+     "the lidar hit the ground at 2.44 s",
+     "body impact 3021 N (limit 3000 N)"
+    ],
+    "body_impact_peak_n": 3021,
+    "pads_peak_n": 3021,
+    "pad_each_peak_n": 1368,
+    "max_stroke_mm": 11.1,
+    "bottomed": false,
+    "first_touch": {
+     "t": 1.186,
+     "base_vz_mps": -1.623,
+     "base_v_mps": 1.628,
+     "robot_kg": 36.67
+    }
+   },
+   "fall_side": {
+    "pass": true,
+    "reasons": [],
+    "body_impact_peak_n": 679,
+    "pads_peak_n": 679,
+    "pad_each_peak_n": 336,
+    "max_stroke_mm": 2.8,
+    "bottomed": false,
+    "first_touch": {
+     "t": 1.197,
+     "base_vz_mps": -1.161,
+     "base_v_mps": 1.161,
+     "robot_kg": 36.67
+    }
+   },
+   "worst_n": 3127,
+   "bottomed": false,
+   "max_stroke_mm": 11.2,
+   "all_pass": false
+  },
+  {
+   "k_n_per_mm": 120.0,
+   "c_ns_per_m": 250.0,
+   "fall_front": {
+    "pass": true,
+    "reasons": [],
+    "body_impact_peak_n": 2909,
+    "pads_peak_n": 2909,
+    "pad_each_peak_n": 1285,
+    "max_stroke_mm": 10.4,
+    "bottomed": false,
+    "first_touch": {
+     "t": 1.187,
+     "base_vz_mps": -1.63,
+     "base_v_mps": 1.634,
+     "robot_kg": 36.67
+    }
+   },
+   "fall_back": {
+    "pass": false,
+    "reasons": [
+     "the lidar hit the ground at 1.85 s"
+    ],
+    "body_impact_peak_n": 2923,
+    "pads_peak_n": 2923,
+    "pad_each_peak_n": 1310,
+    "max_stroke_mm": 10.6,
+    "bottomed": false,
+    "first_touch": {
+     "t": 1.186,
+     "base_vz_mps": -1.623,
+     "base_v_mps": 1.628,
+     "robot_kg": 36.67
+    }
+   },
+   "fall_side": {
+    "pass": true,
+    "reasons": [],
+    "body_impact_peak_n": 623,
+    "pads_peak_n": 623,
+    "pad_each_peak_n": 333,
+    "max_stroke_mm": 2.8,
+    "bottomed": false,
+    "first_touch": {
+     "t": 1.197,
+     "base_vz_mps": -1.161,
+     "base_v_mps": 1.161,
+     "robot_kg": 36.67
+    }
+   },
+   "worst_n": 2923,
+   "bottomed": false,
+   "max_stroke_mm": 10.6,
+   "all_pass": false
+  },
+  {
+   "k_n_per_mm": 120.0,
+   "c_ns_per_m": 500.0,
+   "fall_front": {
+    "pass": true,
+    "reasons": [],
+    "body_impact_peak_n": 2704,
+    "pads_peak_n": 2704,
+    "pad_each_peak_n": 1201,
+    "max_stroke_mm": 9.6,
+    "bottomed": false,
+    "first_touch": {
+     "t": 1.187,
+     "base_vz_mps": -1.63,
+     "base_v_mps": 1.634,
+     "robot_kg": 36.67
+    }
+   },
+   "fall_back": {
+    "pass": false,
+    "reasons": [
+     "the lidar hit the ground at 1.73 s"
+    ],
+    "body_impact_peak_n": 2670,
+    "pads_peak_n": 2670,
+    "pad_each_peak_n": 1204,
+    "max_stroke_mm": 9.6,
+    "bottomed": false,
+    "first_touch": {
+     "t": 1.186,
+     "base_vz_mps": -1.623,
+     "base_v_mps": 1.627,
+     "robot_kg": 36.67
+    }
+   },
+   "fall_side": {
+    "pass": true,
+    "reasons": [],
+    "body_impact_peak_n": 1440,
+    "pads_peak_n": 1440,
+    "pad_each_peak_n": 588,
+    "max_stroke_mm": 4.8,
+    "bottomed": false,
+    "first_touch": {
+     "t": 1.197,
+     "base_vz_mps": -1.161,
+     "base_v_mps": 1.161,
+     "robot_kg": 36.67
+    }
+   },
+   "worst_n": 2704,
+   "bottomed": false,
+   "max_stroke_mm": 9.6,
+   "all_pass": false
+  }
+ ],
+ "heavy": {
+  "kg": 37.67,
+  "ballast_kg": 1.0,
+  "fall_front": {
+   "pass": true,
+   "reasons": [],
+   "body_impact_peak_n": 2544,
+   "pads_peak_n": 2544,
+   "pad_each_peak_n": 1089,
+   "max_stroke_mm": 13.1,
+   "bottomed": false,
+   "first_touch": {
+    "t": 1.187,
+    "base_vz_mps": -1.635,
+    "base_v_mps": 1.639,
+    "robot_kg": 37.67
+   }
+  },
+  "fall_back": {
+   "pass": false,
+   "reasons": [
+    "the lidar hit the ground at 1.87 s"
+   ],
+   "body_impact_peak_n": 2460,
+   "pads_peak_n": 2460,
+   "pad_each_peak_n": 1080,
+   "max_stroke_mm": 13.0,
+   "bottomed": false,
+   "first_touch": {
+    "t": 1.186,
+    "base_vz_mps": -1.63,
+    "base_v_mps": 1.634,
+    "robot_kg": 37.67
+   }
+  },
+  "fall_side": {
+   "pass": true,
+   "reasons": [],
+   "body_impact_peak_n": 763,
+   "pads_peak_n": 763,
+   "pad_each_peak_n": 351,
+   "max_stroke_mm": 4.4,
+   "bottomed": false,
+   "first_touch": {
+    "t": 1.196,
+    "base_vz_mps": -1.232,
+    "base_v_mps": 1.233,
+    "robot_kg": 37.67
+   }
+  }
+ },
+ "unload_sweep": [
+  {
+   "unload_ratio": 0.3,
+   "fall_front": {
+    "pass": true,
+    "reasons": [],
+    "body_impact_peak_n": 2491,
+    "pads_peak_n": 2491,
+    "pad_each_peak_n": 1074,
+    "max_stroke_mm": 12.9,
+    "bottomed": false,
+    "first_touch": {
+     "t": 1.187,
+     "base_vz_mps": -1.63,
+     "base_v_mps": 1.634,
+     "robot_kg": 36.67
+    }
+   },
+   "fall_back": {
+    "pass": false,
+    "reasons": [
+     "the lidar hit the ground at 2.15 s"
+    ],
+    "body_impact_peak_n": 2529,
+    "pads_peak_n": 2482,
+    "pad_each_peak_n": 1098,
+    "max_stroke_mm": 13.2,
+    "bottomed": false,
+    "first_touch": {
+     "t": 1.186,
+     "base_vz_mps": -1.623,
+     "base_v_mps": 1.628,
+     "robot_kg": 36.67
+    }
+   },
+   "fall_side": {
+    "pass": true,
+    "reasons": [],
+    "body_impact_peak_n": 870,
+    "pads_peak_n": 870,
+    "pad_each_peak_n": 357,
+    "max_stroke_mm": 4.4,
+    "bottomed": false,
+    "first_touch": {
+     "t": 1.197,
+     "base_vz_mps": -1.161,
+     "base_v_mps": 1.161,
+     "robot_kg": 36.67
+    }
+   },
+   "worst_n": 2529,
+   "all_pass": false
+  },
+  {
+   "unload_ratio": 0.5,
+   "fall_front": {
+    "pass": true,
+    "reasons": [],
+    "body_impact_peak_n": 2491,
+    "pads_peak_n": 2491,
+    "pad_each_peak_n": 1074,
+    "max_stroke_mm": 12.9,
+    "bottomed": false,
+    "first_touch": {
+     "t": 1.187,
+     "base_vz_mps": -1.63,
+     "base_v_mps": 1.634,
+     "robot_kg": 36.67
+    }
+   },
+   "fall_back": {
+    "pass": false,
+    "reasons": [
+     "the lidar hit the ground at 1.84 s"
+    ],
+    "body_impact_peak_n": 2482,
+    "pads_peak_n": 2482,
+    "pad_each_peak_n": 1098,
+    "max_stroke_mm": 13.2,
+    "bottomed": false,
+    "first_touch": {
+     "t": 1.186,
+     "base_vz_mps": -1.623,
+     "base_v_mps": 1.628,
+     "robot_kg": 36.67
+    }
+   },
+   "fall_side": {
+    "pass": true,
+    "reasons": [],
+    "body_impact_peak_n": 843,
+    "pads_peak_n": 843,
+    "pad_each_peak_n": 358,
+    "max_stroke_mm": 4.4,
+    "bottomed": false,
+    "first_touch": {
+     "t": 1.197,
+     "base_vz_mps": -1.161,
+     "base_v_mps": 1.161,
+     "robot_kg": 36.67
+    }
+   },
+   "worst_n": 2491,
+   "all_pass": false
+  },
+  {
+   "unload_ratio": 0.7,
+   "fall_front": {
+    "pass": true,
+    "reasons": [],
+    "body_impact_peak_n": 2491,
+    "pads_peak_n": 2491,
+    "pad_each_peak_n": 1074,
+    "max_stroke_mm": 12.9,
+    "bottomed": false,
+    "first_touch": {
+     "t": 1.187,
+     "base_vz_mps": -1.63,
+     "base_v_mps": 1.634,
+     "robot_kg": 36.67
+    }
+   },
+   "fall_back": {
+    "pass": false,
+    "reasons": [
+     "the lidar hit the ground at 1.75 s"
+    ],
+    "body_impact_peak_n": 2482,
+    "pads_peak_n": 2482,
+    "pad_each_peak_n": 1098,
+    "max_stroke_mm": 13.2,
+    "bottomed": false,
+    "first_touch": {
+     "t": 1.186,
+     "base_vz_mps": -1.623,
+     "base_v_mps": 1.628,
+     "robot_kg": 36.67
+    }
+   },
+   "fall_side": {
+    "pass": true,
+    "reasons": [],
+    "body_impact_peak_n": 1141,
+    "pads_peak_n": 1141,
+    "pad_each_peak_n": 403,
+    "max_stroke_mm": 4.9,
+    "bottomed": false,
+    "first_touch": {
+     "t": 1.197,
+     "base_vz_mps": -1.161,
+     "base_v_mps": 1.161,
+     "robot_kg": 36.67
+    }
+   },
+   "worst_n": 2491,
+   "all_pass": false
+  },
+  {
+   "unload_ratio": 1.0,
+   "fall_front": {
+    "pass": true,
+    "reasons": [],
+    "body_impact_peak_n": 2491,
+    "pads_peak_n": 2491,
+    "pad_each_peak_n": 1074,
+    "max_stroke_mm": 12.9,
+    "bottomed": false,
+    "first_touch": {
+     "t": 1.187,
+     "base_vz_mps": -1.63,
+     "base_v_mps": 1.634,
+     "robot_kg": 36.67
+    }
+   },
+   "fall_back": {
+    "pass": false,
+    "reasons": [
+     "the lidar hit the ground at 1.70 s"
+    ],
+    "body_impact_peak_n": 2482,
+    "pads_peak_n": 2482,
+    "pad_each_peak_n": 1098,
+    "max_stroke_mm": 13.2,
+    "bottomed": false,
+    "first_touch": {
+     "t": 1.186,
+     "base_vz_mps": -1.623,
+     "base_v_mps": 1.628,
+     "robot_kg": 36.67
+    }
+   },
+   "fall_side": {
+    "pass": true,
+    "reasons": [],
+    "body_impact_peak_n": 1509,
+    "pads_peak_n": 1509,
+    "pad_each_peak_n": 443,
+    "max_stroke_mm": 5.5,
+    "bottomed": false,
+    "first_touch": {
+     "t": 1.197,
+     "base_vz_mps": -1.161,
+     "base_v_mps": 1.161,
+     "robot_kg": 36.67
+    }
+   },
+   "worst_n": 2491,
+   "all_pass": false
+  }
+ ],
+ "verdict": {
+  "worst_fall_n": 2491,
+  "pass": false,
+  "falls_pass": {
+   "fall_front": true,
+   "fall_back": false,
+   "fall_side": true
+  },
+  "bottomed": false,
+  "max_stroke_mm": 13.2,
+  "heavy_worst_n": 2544,
+  "rigid_worst_n": 3519
+ }
 }

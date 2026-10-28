@@ -22,8 +22,8 @@ The bay (one design from P1 on; the 13S2P's printed P0-P2 bay and P3 tub are gon
     XT90 pair and the two leads' way up through the belly's slot into the spine's gap
   - a SendCutSend 5052 0.063 floor (a U, its 20 mm flanges up) and two flat side plates with lightening windows, the
     sides screwed to the floor's flange nuts and to two printed rails, the rails screwed up into the belly's nuts
-  - two PETG end doors on two knurled M3 thumbscrews each (tool-free), TPU skids on VHB tape under the floor: the robot
-    sits on them
+  - two PETG end doors on two knurled M3 thumbscrews each (tool-free), four TPU 95A gyroid crush pads on VHB tape under the floor
+    (issue #19): the robot sits on them
 """
 from __future__ import annotations
 
@@ -54,7 +54,21 @@ SIDE_CLEAR = 4.5                             # a pack's side to the floor's flan
 FLOOR_CLEAR = 1.0                            # under a pack
 TUB_STOCK = '5052-0.063'
 TUB_FLANGE = 20.0
-SKID_T = 3.0
+# Issue #19: four crush pads under the floor in place of the 3 mm skids. D69's 10 in wheels lift the body 41 mm at every
+# leg length, so the old skids would never reach the floor (they touched under a 98 mm leg; the leg folds to 101.5 mm on its
+# stops): the pads reach down instead. Each pad is a printed TPU 95A HF gyroid block (the lattice's density, not the shore
+# hardness, sets its stiffness: the stock P1S filament) on VHB tape, and in sim/robot_v2.py a body
+# on a slide joint: a spring (k), a damper (c), a stroke, then the densified lattice as a stiff stop. The robot sits on
+# them (D55, D69's parking brake). Sizing: sim/bay_pad_study.py, exports/body/bay-pad-study.json.
+#   h       its free height under the floor: the floor at 65.4 mm over the ground at the lowest controlled leg (160 mm)
+#           less h keeps D69's 40 mm (puddles, the rolling step) under the pads; they touch the ground under a 119.7 mm leg
+#   stroke  0.6 h: a gyroid lattice densifies past about 60 % strain (the coupon test checks it)
+#   k, c    the pair of numbers the study sized, per pad (N/mm, N s/m)
+#   unload_ratio  the lattice's hysteresis: unloading, its spring gives back this share of k x (an elastomer lattice
+#           dissipates about half of a large compression in its first cycles; the coupon's rebound height measures it)
+PAD = {'h': 25.0, 'w': 30.0, 'stroke': 15.0, 'k_n_per_mm': 80.0, 'c_ns_per_m': 250.0, 'unload_ratio': 0.5, 'material': 'tpu95-gyroid',
+       'wheel_r': 127.0, 'basis': 'issue #19: sized by sim/bay_pad_study.py at the D69 mass; coupon drop test to confirm k and c'}
+SKID_T = PAD['h']
 RAIL_W, RAIL_H = 8.0, 10.0                   # the printed rails at the top, inside the side plates
 THUMB = {'thread': 'M3', 'length': 10.0}     # the doors' knurled thumbscrews into the rails' end inserts
 LEADS_SLOT = (-30.0, 24.0)                   # the belly's slot for the two leads (x centre, length): between the standoffs at x -72 and -10
@@ -101,13 +115,14 @@ def adapter_boxes():
 
 def summary():
     g = geometry()
-    wheel_r = 171.3 / 2
-    sit = -g['z_bottom'] - wheel_r                           # the leg length at which the skids touch the floor
+    wheel_r = PAD['wheel_r']                                 # D69's 10 in tyre
+    sit = -g['z_bottom'] - wheel_r                           # the leg length at which the pads touch the floor
     return {'pack': PACK['name'], 'config': f'{SERIES}S3P (two packs in series)', 'v_full': round(V_FULL, 1), 'v_nominal': V_NOM, 'v_empty': V_EMPTY,
             'wh_rated': 2 * PACK['wh_rated'], 'packs_kg': round(2 * PACK['mass_g'] / 1000, 2),
             'bay_mm': [round(g['x_out'][1] - g['x_out'][0], 1), round(2 * g['side_out'], 1), round(g['z_belly'] - g['z_bottom'], 1)],
             'bay_bottom_z': round(g['z_bottom'], 1), 'sits_on_skids_below_leg_mm': round(sit, 1),
-            'clearance_at_150_mm': round(150 + wheel_r + g['z_bottom'], 1), 'clearance_at_300_mm': round(300 + wheel_r + g['z_bottom'], 1),
+            'clearance_at_150_mm': round(150 + wheel_r + g['z_bottom'], 1), 'clearance_at_160_mm': round(160 + wheel_r + g['z_bottom'], 1),
+            'clearance_at_300_mm': round(300 + wheel_r + g['z_bottom'], 1), 'pad': {k: v for k, v in PAD.items() if k != 'basis'},
             'knee_gap_mm': round(83.0 - g['side_out'], 1), 'adapter': ADAPTER['basis']}
 
 
@@ -244,7 +259,8 @@ def door(front):
     return d
 
 
-def skids():
+def pad_boxes():
+    """The four crush pads' boxes (x0, x1, y0, y1, z0, z1), robot frame: under the floor's long edges, front and rear."""
     g = geometry()
     W = 2 * g['side_in'] - 0.1
     half = (g['x_in'][1] - g['x_in'][0] - 12) / 2
@@ -252,8 +268,14 @@ def skids():
     for sy in (1.0, -1.0):
         for j in range(2):
             x0 = g['x_in'][0] + 5 + j * (half + 2)
-            out.append(_box(x0, x0 + half, sy * (W / 2 - 1.0), sy * (W / 2 - 15.0), g['z_bottom'], g['z_floor']))
+            y0, y1 = sorted((sy * (W / 2 - 1.0), sy * (W / 2 - 1.0 - PAD['w'])))
+            out.append((x0, x0 + half, y0, y1, g['z_bottom'], g['z_floor']))
     return out
+
+
+def skids():
+    """The crush pads as solids (the names stay bay_skid_N: the joints and the views know them by it)."""
+    return [_box(*b) for b in pad_boxes()]
 
 
 def bay_parts() -> dict:
@@ -278,6 +300,7 @@ def bay_parts() -> dict:
         out[f'bay_door_{k}'] = Part(f'bay_door_{k}', 'printed', door(k == 'front'), 1, material='petg', colour=petg,
                                     note='PETG; two knurled M3 x 10 thumbscrews into the rails\' ends', print_rotation=((0, 1, 0), 90))
     for i, sk in enumerate(skids()):
-        out[f'bay_skid_{i + 1}'] = Part(f'bay_skid_{i + 1}', 'printed', sk, 1, material='tpu95', colour=(0.15, 0.15, 0.17),
-                                        note='TPU 95A skid on 3M VHB tape (no screw: under the packs there is 1 mm): the robot sits on these')
+        out[f'bay_skid_{i + 1}'] = Part(f'bay_skid_{i + 1}', 'printed', sk, 1, material=PAD['material'], colour=(0.15, 0.15, 0.17),
+                                        note=f"crush pad (#19): TPU 95A HF gyroid, {PAD['h']:.0f} mm free, {PAD['stroke']:.0f} mm stroke, on 3M VHB "
+                                             'tape (no screw: under the packs there is 1 mm); the robot sits on these')
     return out

@@ -228,5 +228,27 @@
   "source": [
    "ASM Aerospace Specification Metals, 6061-T6 (MatWeb), typical properties"
   ]
+ },
+ "tpu95-gyroid": {
+  "kind": "filament",
+  "name": "Bambu Lab TPU 95A HF, printed as a gyroid crush lattice (about 15 % infill, 2 walls, 1 mm skins)",
+  "density_g_cm3": 0.33,
+  "price_usd_per_kg": 41.99,
+  "tensile_mpa": 27.3,
+  "tensile_z_mpa": 22.3,
+  "modulus_gpa": null,
+  "flexural_strength_xy_mpa": null,
+  "max_service_c": null,
+  "next": null,
+  "p1s": "stock",
+  "hardened_nozzle_required": false,
+  "price_checked": "2026-10-25",
+  "source": [
+   "https://store.bblcdn.com/58df32731eab4c90a7dac9b12e13ba88.pdf",
+   "https://us.store.bambulab.com/products/tpu-95a-hf"
+  ],
+  "lattice_of": "tpu95",
+  "density_basis": "effective: 1.22 g/cm3 x (skins ~8 % + walls ~6 % + 15 % of the rest) for a 25 x 30 x 145 mm pad; weigh the coupon",
+  "use": "the battery bay's crush pads (issue #19): stiffness and damping from the coupon drop test, not the solid modulus"
  }
 }

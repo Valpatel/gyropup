@@ -214,7 +214,16 @@ def run(xml_path: Path, info: dict, sc: Scenario, video: Optional[Path] = None, 
         mujoco.mj_forward(model, data)
     lidar_geom = next((g for g in range(model.ngeom) if model.geom(g).name == 'lidar'), None)
     base_geoms = {g for g in range(model.ngeom) if model.geom_bodyid[g] == rb.base}
+    # the battery bay's crush pads (sim/robot_v2.py, issue #19): bodies of their own on slide joints; what they pass to the
+    # body is their floor contact (a pad is ~35 g), summed over all of them at each step: the body's impact through the pads
+    pad_geoms = {g for g in range(model.ngeom) if model.body(model.geom_bodyid[g]).name.startswith('pad_')}
+    # a printed elastomer lattice gives back only part of what it stores (its hysteresis): unloading, a pad's spring pushes
+    # with unload_ratio x k x (the joint carries k and c; the rest is taken off here, smoothly in the pad's speed)
+    pad_dofs = [(int(model.jnt_qposadr[j]), int(model.jnt_dofadr[j]), float(model.jnt_stiffness[j])) for j in range(model.njnt)
+                if model.joint(j).name.startswith('pad_')]
+    unload = float((info.get('pads') or {}).get('unload_ratio', 1.0))
     peak_body_n, lidar_touch, force6 = 0.0, None, np.zeros(6)
+    peak_pads_n, peak_pad_n = 0.0, 0.0
     ctl = Ctl(rb, noise=noise, delay_steps=delay_steps)
     ctl.height = sc.start_height                 # start from the pose the robot is placed in
     turret = TurretController(model, data, list(sc.targets), tilt_max=(info.get('turret') or {}).get('tilt_max_rad'))
@@ -273,10 +282,20 @@ def run(xml_path: Path, info: dict, sc: Scenario, video: Optional[Path] = None, 
         st = ctl.control(data, cmd, dt)
         if sc.motors_off_at is not None and t >= sc.motors_off_at:
             data.ctrl[:] = 0.0                       # power cut: every motor goes limp
+        for qa, va, kp in pad_dofs:
+            q, v = float(data.qpos[qa]), float(data.qvel[va])
+            data.qfrc_applied[va] = (1.0 - unload) * kp * max(q, 0.0) * 0.5 * (1.0 - math.tanh(v / 0.01))
         turret.step(t, dt)
         mujoco.mj_step(model, data)
+        pads_now, each_pad = 0.0, {}
         for ci in range(data.ncon):                  # what the body (and the lidar) hits
             c = data.contact[ci]
+            if (c.geom1 in pad_geoms) ^ (c.geom2 in pad_geoms):
+                pg, other = (c.geom1, c.geom2) if c.geom1 in pad_geoms else (c.geom2, c.geom1)
+                if model.geom_bodyid[other] not in robot_set:
+                    mujoco.mj_contactForce(model, data, ci, force6)
+                    pads_now += abs(float(force6[0]))
+                    each_pad[pg] = each_pad.get(pg, 0.0) + abs(float(force6[0]))
             if c.geom1 in base_geoms or c.geom2 in base_geoms:
                 other = c.geom2 if c.geom1 in base_geoms else c.geom1
                 if model.geom_bodyid[other] in robot_set:
@@ -285,6 +304,10 @@ def run(xml_path: Path, info: dict, sc: Scenario, video: Optional[Path] = None, 
                 peak_body_n = max(peak_body_n, abs(float(force6[0])))
                 if lidar_geom is not None and lidar_touch is None and lidar_geom in (c.geom1, c.geom2):
                     lidar_touch = round(float(data.time), 3)
+        if pads_now:
+            peak_pads_n = max(peak_pads_n, pads_now)
+            peak_pad_n = max(peak_pad_n, max(each_pad.values()))
+            peak_body_n = max(peak_body_n, pads_now)
         th = st['theta']
         thetas.append(th)
         rolls.append((t, st.get('roll', 0.0)))
@@ -376,7 +399,7 @@ def run(xml_path: Path, info: dict, sc: Scenario, video: Optional[Path] = None, 
                   + [{'t': round(p.t, 3), 'type': 'push'} for p in sc.pushes if not p.absolute]
                   + ([{'t': round(min(tipping_at or fell_at, fell_at), 3), 'type': 'fall'}] if fell_at is not None else []),
         'fell_at': round(fell_at, 3) if fell_at is not None else None,
-        'lidar_clearance_mm': round(clear * 1000, 1), 'body_impact_peak_n': round(peak_body_n), 'lidar_touched_at': lidar_touch,
+        'lidar_clearance_mm': round(clear * 1000, 1), 'body_impact_peak_n': round(peak_body_n), 'pads_peak_n': round(peak_pads_n), 'pad_each_peak_n': round(peak_pad_n), 'lidar_touched_at': lidar_touch,
         'turret': tsum,
         'qpos_layout': {model.joint(j).name: int(model.jnt_qposadr[j]) for j in range(model.njnt)},
         'props': props,
