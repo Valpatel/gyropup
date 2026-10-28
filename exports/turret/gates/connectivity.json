@@ -5,7 +5,7 @@
   "status": "warn",
   "counts": {
     "pass": 29,
-    "warn": 57,
+    "warn": 61,
     "fail": 0
   },
   "checks": [
@@ -76,13 +76,13 @@
     {
       "id": "connect:body:tilt",
       "status": "pass",
-      "message": "44 part(s) reach ground through horn_boss, tilt_bearing_inner",
+      "message": "46 part(s) reach ground through horn_boss, tilt_bearing_inner",
       "evidence": {
         "anchors": [
           "horn_boss",
           "tilt_bearing_inner"
         ],
-        "part_count": 44
+        "part_count": 46
       }
     },
     {
@@ -938,6 +938,56 @@
       }
     },
     {
+      "id": "contact:cartridge_body|hopper_inserts",
+      "status": "warn",
+      "message": "cartridge_body and hopper_inserts are in contact (touching, 215 mm2) but no interface, joint, fastener, contains or intended overlap declares it",
+      "parts": [
+        "cartridge_body",
+        "hopper_inserts"
+      ],
+      "evidence": {
+        "state": "touching",
+        "contact_area_mm2": 214.884938,
+        "witness": {
+          "point_a": [
+            -84.961584,
+            -38.961584,
+            160.0
+          ],
+          "point_b": [
+            -84.961584,
+            -38.961584,
+            160.0
+          ]
+        }
+      }
+    },
+    {
+      "id": "contact:cartridge_body|laser_inserts",
+      "status": "warn",
+      "message": "cartridge_body and laser_inserts are in contact (touching, 143 mm2) but no interface, joint, fastener, contains or intended overlap declares it",
+      "parts": [
+        "cartridge_body",
+        "laser_inserts"
+      ],
+      "evidence": {
+        "state": "touching",
+        "contact_area_mm2": 143.256625,
+        "witness": {
+          "point_a": [
+            62.0,
+            -7.0,
+            147.6
+          ],
+          "point_b": [
+            62.0,
+            -7.0,
+            147.6
+          ]
+        }
+      }
+    },
+    {
       "id": "contact:cartridge_body|laser_mount",
       "status": "warn",
       "message": "cartridge_body and laser_mount are in contact (touching, 197 mm2) but no interface, joint, fastener, contains or intended overlap declares it",
@@ -1469,6 +1519,31 @@
       }
     },
     {
+      "id": "contact:hopper|hopper_inserts",
+      "status": "warn",
+      "message": "hopper and hopper_inserts are in contact (touching, 10.5 mm2) but no interface, joint, fastener, contains or intended overlap declares it",
+      "parts": [
+        "hopper",
+        "hopper_inserts"
+      ],
+      "evidence": {
+        "state": "touching",
+        "contact_area_mm2": 10.461504,
+        "witness": {
+          "point_a": [
+            -85.261584,
+            -38.961584,
+            160.0
+          ],
+          "point_b": [
+            -85.261584,
+            -38.961584,
+            160.0
+          ]
+        }
+      }
+    },
+    {
       "id": "contact:hopper|hopper_lid",
       "status": "warn",
       "message": "hopper and hopper_lid are in contact (touching, 502 mm2) but no interface, joint, fastener, contains or intended overlap declares it",
@@ -1539,6 +1614,31 @@
             37.43,
             0.0,
             47.0
+          ]
+        }
+      }
+    },
+    {
+      "id": "contact:laser_inserts|laser_mount",
+      "status": "warn",
+      "message": "laser_inserts and laser_mount are in contact (touching, 6.97 mm2) but no interface, joint, fastener, contains or intended overlap declares it",
+      "parts": [
+        "laser_inserts",
+        "laser_mount"
+      ],
+      "evidence": {
+        "state": "touching",
+        "contact_area_mm2": 6.974336,
+        "witness": {
+          "point_a": [
+            61.7,
+            -7.0,
+            147.6
+          ],
+          "point_b": [
+            61.7,
+            -7.0,
+            147.6
           ]
         }
       }
@@ -2386,6 +2486,56 @@
       }
     },
     {
+      "id": "contact:cartridge_body|hopper_inserts",
+      "status": "warn",
+      "message": "cartridge_body and hopper_inserts are in contact (touching, 215 mm2) but no interface, joint, fastener, contains or intended overlap declares it",
+      "parts": [
+        "cartridge_body",
+        "hopper_inserts"
+      ],
+      "evidence": {
+        "state": "touching",
+        "contact_area_mm2": 214.884938,
+        "witness": {
+          "point_a": [
+            -84.961584,
+            -38.961584,
+            160.0
+          ],
+          "point_b": [
+            -84.961584,
+            -38.961584,
+            160.0
+          ]
+        }
+      }
+    },
+    {
+      "id": "contact:cartridge_body|laser_inserts",
+      "status": "warn",
+      "message": "cartridge_body and laser_inserts are in contact (touching, 143 mm2) but no interface, joint, fastener, contains or intended overlap declares it",
+      "parts": [
+        "cartridge_body",
+        "laser_inserts"
+      ],
+      "evidence": {
+        "state": "touching",
+        "contact_area_mm2": 143.256625,
+        "witness": {
+          "point_a": [
+            62.0,
+            -7.0,
+            147.6
+          ],
+          "point_b": [
+            62.0,
+            -7.0,
+            147.6
+          ]
+        }
+      }
+    },
+    {
       "id": "contact:cartridge_body|laser_mount",
       "status": "warn",
       "message": "cartridge_body and laser_mount are in contact (touching, 197 mm2) but no interface, joint, fastener, contains or intended overlap declares it",
@@ -2917,6 +3067,31 @@
       }
     },
     {
+      "id": "contact:hopper|hopper_inserts",
+      "status": "warn",
+      "message": "hopper and hopper_inserts are in contact (touching, 10.5 mm2) but no interface, joint, fastener, contains or intended overlap declares it",
+      "parts": [
+        "hopper",
+        "hopper_inserts"
+      ],
+      "evidence": {
+        "state": "touching",
+        "contact_area_mm2": 10.461504,
+        "witness": {
+          "point_a": [
+            -85.261584,
+            -38.961584,
+            160.0
+          ],
+          "point_b": [
+            -85.261584,
+            -38.961584,
+            160.0
+          ]
+        }
+      }
+    },
+    {
       "id": "contact:hopper|hopper_lid",
       "status": "warn",
       "message": "hopper and hopper_lid are in contact (touching, 502 mm2) but no interface, joint, fastener, contains or intended overlap declares it",
@@ -2987,6 +3162,31 @@
             37.43,
             0.0,
             47.0
+          ]
+        }
+      }
+    },
+    {
+      "id": "contact:laser_inserts|laser_mount",
+      "status": "warn",
+      "message": "laser_inserts and laser_mount are in contact (touching, 6.97 mm2) but no interface, joint, fastener, contains or intended overlap declares it",
+      "parts": [
+        "laser_inserts",
+        "laser_mount"
+      ],
+      "evidence": {
+        "state": "touching",
+        "contact_area_mm2": 6.974336,
+        "witness": {
+          "point_a": [
+            61.7,
+            -7.0,
+            147.6
+          ],
+          "point_b": [
+            61.7,
+            -7.0,
+            147.6
           ]
         }
       }
@@ -4505,6 +4705,19 @@
         "floating": false
       },
       {
+        "id": "hopper_inserts",
+        "owner": "hopper_inserts",
+        "kind": "part",
+        "group": "body:tilt",
+        "body_given": "tilt",
+        "section": "tilt",
+        "grounded": false,
+        "free": null,
+        "component": "c30",
+        "held": true,
+        "floating": false
+      },
+      {
         "id": "hopper_lid",
         "owner": "hopper_lid",
         "kind": "part",
@@ -4559,6 +4772,19 @@
       {
         "id": "laser",
         "owner": "laser",
+        "kind": "part",
+        "group": "body:tilt",
+        "body_given": "tilt",
+        "section": "tilt",
+        "grounded": false,
+        "free": null,
+        "component": "c30",
+        "held": true,
+        "floating": false
+      },
+      {
+        "id": "laser_inserts",
+        "owner": "laser_inserts",
         "kind": "part",
         "group": "body:tilt",
         "body_given": "tilt",
@@ -6859,6 +7085,52 @@
       },
       {
         "a": "cartridge_body",
+        "b": "hopper_inserts",
+        "kind": "contact",
+        "state": "touching",
+        "gap_mm": 0.0,
+        "contact_area_mm2": 214.884938,
+        "witness": {
+          "point_a": [
+            -84.961584,
+            -38.961584,
+            160.0
+          ],
+          "point_b": [
+            -84.961584,
+            -38.961584,
+            160.0
+          ]
+        },
+        "rigid": true,
+        "declared_by": [],
+        "undeclared": true
+      },
+      {
+        "a": "cartridge_body",
+        "b": "laser_inserts",
+        "kind": "contact",
+        "state": "touching",
+        "gap_mm": 0.0,
+        "contact_area_mm2": 143.256625,
+        "witness": {
+          "point_a": [
+            62.0,
+            -7.0,
+            147.6
+          ],
+          "point_b": [
+            62.0,
+            -7.0,
+            147.6
+          ]
+        },
+        "rigid": true,
+        "declared_by": [],
+        "undeclared": true
+      },
+      {
+        "a": "cartridge_body",
         "b": "laser_mount",
         "kind": "contact",
         "state": "touching",
@@ -7457,6 +7729,29 @@
       },
       {
         "a": "hopper",
+        "b": "hopper_inserts",
+        "kind": "contact",
+        "state": "touching",
+        "gap_mm": 0.0,
+        "contact_area_mm2": 10.461504,
+        "witness": {
+          "point_a": [
+            -85.261584,
+            -38.961584,
+            160.0
+          ],
+          "point_b": [
+            -85.261584,
+            -38.961584,
+            160.0
+          ]
+        },
+        "rigid": true,
+        "declared_by": [],
+        "undeclared": true
+      },
+      {
+        "a": "hopper",
         "b": "hopper_lid",
         "kind": "contact",
         "state": "touching",
@@ -7572,6 +7867,29 @@
         "declared_by": [
           "fastener:laser_screws"
         ]
+      },
+      {
+        "a": "laser_inserts",
+        "b": "laser_mount",
+        "kind": "contact",
+        "state": "touching",
+        "gap_mm": 0.0,
+        "contact_area_mm2": 6.974336,
+        "witness": {
+          "point_a": [
+            61.7,
+            -7.0,
+            147.6
+          ],
+          "point_b": [
+            61.7,
+            -7.0,
+            147.6
+          ]
+        },
+        "rigid": true,
+        "declared_by": [],
+        "undeclared": true
       },
       {
         "a": "laser_mount",
@@ -8583,9 +8901,11 @@
           "flywheel_motor_l",
           "flywheel_motor_r",
           "hopper",
+          "hopper_inserts",
           "hopper_lid",
           "horn_boss",
           "laser",
+          "laser_inserts",
           "laser_mount",
           "laser_screws",
           "pivot_spacer",
@@ -9065,6 +9385,48 @@
     {
       "parts": [
         "cartridge_body",
+        "hopper_inserts"
+      ],
+      "state": "touching",
+      "contact_area_mm2": 214.884938,
+      "overlap_mm3": null,
+      "witness": {
+        "point_a": [
+          -84.961584,
+          -38.961584,
+          160.0
+        ],
+        "point_b": [
+          -84.961584,
+          -38.961584,
+          160.0
+        ]
+      }
+    },
+    {
+      "parts": [
+        "cartridge_body",
+        "laser_inserts"
+      ],
+      "state": "touching",
+      "contact_area_mm2": 143.256625,
+      "overlap_mm3": null,
+      "witness": {
+        "point_a": [
+          62.0,
+          -7.0,
+          147.6
+        ],
+        "point_b": [
+          62.0,
+          -7.0,
+          147.6
+        ]
+      }
+    },
+    {
+      "parts": [
+        "cartridge_body",
         "laser_mount"
       ],
       "state": "touching",
@@ -9512,6 +9874,27 @@
     {
       "parts": [
         "hopper",
+        "hopper_inserts"
+      ],
+      "state": "touching",
+      "contact_area_mm2": 10.461504,
+      "overlap_mm3": null,
+      "witness": {
+        "point_a": [
+          -85.261584,
+          -38.961584,
+          160.0
+        ],
+        "point_b": [
+          -85.261584,
+          -38.961584,
+          160.0
+        ]
+      }
+    },
+    {
+      "parts": [
+        "hopper",
         "hopper_lid"
       ],
       "state": "touching",
@@ -9569,6 +9952,27 @@
           37.43,
           0.0,
           47.0
+        ]
+      }
+    },
+    {
+      "parts": [
+        "laser_inserts",
+        "laser_mount"
+      ],
+      "state": "touching",
+      "contact_area_mm2": 6.974336,
+      "overlap_mm3": null,
+      "witness": {
+        "point_a": [
+          61.7,
+          -7.0,
+          147.6
+        ],
+        "point_b": [
+          61.7,
+          -7.0,
+          147.6
         ]
       }
     },
@@ -9981,12 +10385,12 @@
   "unrealised": [],
   "not_checked": [],
   "relation_stats": {
-    "parts": 90,
-    "pairs": 4005,
-    "candidates": 282,
+    "parts": 92,
+    "pairs": 4186,
+    "candidates": 302,
     "states": {
-      "apart": 157,
-      "touching": 57,
+      "apart": 173,
+      "touching": 61,
       "overlapping": 68,
       "contains": 0,
       "unknown": 0

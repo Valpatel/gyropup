@@ -483,7 +483,9 @@ def motion_pan_tilt(T, cache, pans=35, tilts=6):
               'tilt': {'kind': 'revolute', 'moving': 'tilt_bearing_inner', 'fixed': 'tilt_bearing',
                        'axis': ((0.0, 0.0, G.tilt_t), (0.0, 1.0, 0.0)), 'range': [0.0, -G.tilt_min], 'unit': 'deg',
                        'samples': tilts}}
+    rotor = 'the slip ring\'s rotor stub drawn 0.01 mm into its own stator (one bought part, the ring\'s envelope)'
     return motion_gate(asm, joints, tol=CONNECT_TOL, cache=cache, max_step_deg=12.0, intended_contacts=MOTION_CONTACTS,
+                       intended_overlaps=[{'parts': ['slip_ring', 'slip_ring_rotor'], 'reason': rotor}],
                        ignore_pairs=[('pan_pinion', 'pan_ring')], out=VERDICTS / 'motion_aim.json')
 
 

@@ -96,9 +96,11 @@ graph connectivity {
     "flywheel_motor_l";
     "flywheel_motor_r";
     "hopper";
+    "hopper_inserts";
     "hopper_lid";
     "horn_boss";
     "laser";
+    "laser_inserts";
     "laser_mount";
     "laser_screws";
     "pivot_spacer";
@@ -189,6 +191,8 @@ graph connectivity {
   "cartridge_body" -- "flywheel_motor_l" [color=orange, label="undeclared"];
   "cartridge_body" -- "flywheel_motor_r" [color=orange, label="undeclared"];
   "cartridge_body" -- "hopper" [color=orange, label="undeclared"];
+  "cartridge_body" -- "hopper_inserts" [color=orange, label="undeclared"];
+  "cartridge_body" -- "laser_inserts" [color=orange, label="undeclared"];
   "cartridge_body" -- "laser_mount" [color=orange, label="undeclared"];
   "circlip_50" -- "pan_ring" [color=orange, label="undeclared"];
   "circlip_50" -- "pan_spacer" [color=orange, label="undeclared"];
@@ -214,11 +218,13 @@ graph connectivity {
   "flywheel_m" -- "flywheel_motor_r" [color=gray60];
   "flywheel_m" -- "flywheel_tyre_m" [color=orange, label="undeclared"];
   "hall_switch" -- "pan_ring" [color=orange, label="undeclared"];
+  "hopper" -- "hopper_inserts" [color=orange, label="undeclared"];
   "hopper" -- "hopper_lid" [color=orange, label="undeclared"];
   "horn_boss" -- "tilt_servo" [color=gray60];
   "index_magnet" -- "pan_base" [color=orange, label="undeclared"];
   "index_magnet" -- "pan_clamp" [color=orange, label="undeclared"];
   "laser" -- "laser_screws";
+  "laser_inserts" -- "laser_mount" [color=orange, label="undeclared"];
   "laser_mount" -- "laser_screws";
   "pan_base" -- "pan_bearing" [color=orange, label="undeclared"];
   "pan_base" -- "pan_clamp" [color=orange, label="undeclared"];

@@ -1027,7 +1027,8 @@ def ct_points(G):
     """The CT interface (cradle <-> cartridge), C frame: two Ø4 x 8 dowels and the M4 captive thumbscrew up through the
     cradle's rail into an insert in the cartridge's base, 6 mm inside the cartridge's sides."""
     yy = G.cage_y - 6.0
-    return [(-20.0, yy), (75.0, -yy)], (20.0, -yy)
+    return [(-20.0, yy), (50.0, -yy)], (20.0, -yy)       # the front dowel at x 50 (it was 75: inside the right motor's
+    #                                    way in from below, which cadagent's assembly gate found once a boss stood there)
 
 
 # the CT latch: a DIN 464 knurled thumbscrew M4 x 12 (McMaster 92581A250: head Ø16 x 3.5 on a Ø8 x 6 collar) up through
@@ -1122,7 +1123,6 @@ def cartridge_body(G):
             s = s.cut(slot.rotate((0, 0, 0), (0, 0, 1), a).translate((xw, yw, 0)))
         s = s.cut(box(xw - 4, xw + 4, yw + sy * 14.0, yw + sy * 18.0, G.plate_z0 - 1, G.plate_z1 + 1))   # its leads, outboard
         s = s.cut(cyl_z(G.wheel_d / 2 + 0.75, bz0 - 1, -7.9, xw, yw))                      # a motor + wheel go in here
-    s = s.cut(cyl_z(3.6, G.plate_z0 - 1, G.plate_z1 + 1, hr + 3.5, 0.0))                   # over the hopper's front lug: its screw
     for (x, y) in cb['bosses']:
         s = s.cut(insert_hole(x, y, G.plate_z1 + cb['boss_h'] + cb['standoff'], 'M3', 6.0))
     s = s.cut(ball_path(G))
@@ -1152,7 +1152,8 @@ def cartridge_body(G):
     return s
 
 
-HOPPER_LUGS = (0.0, 135.0, 225.0)
+HOPPER_LUGS = (45.0, 150.0, 210.0)   # not 0 deg: a lug there sat under the cage's top plate, so the hopper could not
+#                                      be lowered onto the housing (cadagent's assembly gate, 2026-10-28)
 CAGE_SPINE_T = 5.0             # the cage's centre web (cartridge_body)
 HOPPER_WALL = 1.6
 SOCKET_PAD_Z = 22.6            # the socket pad's top (C frame): the laser holder's foot sits on it
