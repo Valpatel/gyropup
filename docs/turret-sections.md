@@ -87,10 +87,10 @@ bore (section 6).
   barrel), 4:1 (too slow a slew).
 - *A thin-section 61810* over a pair of small bearings: one part carries the overturning moment with the 50 mm bore free.
 - *The hall in a closed-roof pocket* (rev. 2026-10-27): the first pocket was open 0.2 mm above the switch, so it was
-  drawn floating; now the switch is glued up against the pocket's roof (found by the `connected` gate).
+  drawn floating; now the switch is glued up against the pocket's roof (found by the `connectivity` gate).
 
 **Checks.** FEA `pan_base` / `pan_ring` / `pan_pinion` (cad/turret_studies.py, exports/turret/fea/); the gear check
-`turret.pinion_check()`; the clash sweep; `connected` (base, pan, pinion one body each; joints: the 61810's races, the
+`turret.pinion_check()`; the clash sweep; `connectivity` (base, pan, pinion one body each; joints: the 61810's races, the
 pinion on its horn, the mesh). The pan servo's pocket end wall is 8 mm (it was 3: the FEA's layer-aware post-process
 found it bending across its layers, 0.57 at a full stall; now 1.91, and 3.81 at the 50 % cap). Open: `pan_pinion
 R-stall` read 1.05 layer-aware against 1.2 at 100 % of the servo's stall; its peak is at the tooth's root fillet
@@ -141,7 +141,7 @@ thumbscrew, `ct_thumbscrew`).
 
 **Checks.** FEA `tilt_yoke`, `cradle`, `cradle_plate_l/r`, `stop_lug` and the hand checks (horn screws, lug screws,
 pivot land, the -y plate out of plane, inserts, the pivot thread); the clash sweep with `STOP_PAIR` touching only at 0
-and -25; `connected` (tilt one body; the MR126's races, the horn on its boss).
+and -25; `connectivity` (tilt one body; the MR126's races, the horn on its boss).
 
 ## 3. Feed: hopper, dial, exit, chute
 
@@ -192,7 +192,7 @@ chute, a quarter bend of radius 21.35 inside the cartridge body, turning the bal
 - *The baffle over the exit pocket* (+-24 deg): nothing refills the pocket over the hole, so one ball per step.
 - *Hopper top at 100*: a physics fill fits 29 balls under 95, 34 under 100.
 
-**Checks.** `hopper_in_cavity`, `hopper_overlap`, `path_in_cavity` (the chute), `sweep_with_balls`; the feed sim's
+**Checks.** `hopper`, `hopper_overlap`, `path` (the chute), `sweep`; the feed sim's
 verdict (exports/turret/feed/feed.json: double feeds 0, parked leaks 0).
 
 ## 4. Launcher: flywheel cage, motors, nip
@@ -283,7 +283,18 @@ Digi-Key, Newark backup; catalog `tdk-lambda-i6a4w020a033v-001-r`), `cartridge_b
 | TPU 95A tyre (Bambu: 27.3 MPa tensile, E 9.8 MPa) | | bonded: hoop ≤ 0.12 MPa, the bond's tension 0.26 MPa; free ring 1.29 MPa | 21x on the free ring; the bond (CA on TPU, est ≥ 2 MPa) ~8x |
 | PA6-CF hub (Bambu: 102 MPa; D33's humid, printed knock-down x0.6 x0.8 = 49 MPa, 23 across layers) | | rim: 0.72 MPa its own, + 1.3 MPa from the bonded tyre's pull | ≥ 11x across the layers |
 
-**Checks.** `path_in_cavity` (only the tyres touch the ball, at the nip; 0.35 mm tightest elsewhere); `connected`
+**The cage on D68's recoil (2026-10-28).** The FEA's recoil case had scaled D68's launch loads by v0's 66 / 52 (and
+the summary before it held v0's loads): rescaled to the 105 fps trip over the 95 fps design point (79 N squeezing each
+tyre apart, 53 N back on each motor), the cartridge read layer-aware 0.35 for the recoil and 0.48 for a 30 g fall,
+peaking at square window corners right over the CT latch and dowels, at the short latch boss, and where the shells
+twist on the chute. Changed: a 5 mm spine on the cage's centre plane from the channel to the top plate (clear of the
+hopper's lug, the tyres' cavities and the bells), a web each side from the shell's rear onto the chute, the latch
+boss Ø14 up to z 2 (was Ø10 x 9), Ø12 bosses over the dowels, the side windows narrowed to x +-11 with rounded
+corners, the base window's corners rounded. Now: fall 2.21 (>= 1.2); recoil 1.38 against 2.0 (open), its peak at the
+CT's rear dowel in the 3 mm base plate. Next: Ø4 x 12 dowels in holes 6 mm into the new bosses, or a second latch.
+The load is the 5 ms contact peak applied statically, at the 105 fps ceiling (1.53 at the 95 fps set speed).
+
+**Checks.** `path` (only the tyres touch the ball, at the nip; 0.35 mm tightest elsewhere); `connectivity`
 (each wheel one body on its motor); sim/turret_launch3d.py's `ceiling` (holds, under ASTM) and `ceiling_map`;
 sim/turret_dynamics.py (recoil, tilt servo margin 4.3); the cage FEA (recoil); firmware/turret's tests (the 105 fps
 trip, the eRPM guard at 16,390 rpm). On the bench, before any ball: the trim (test 4.1: the faster motor warm at or
@@ -332,11 +343,11 @@ base, the robot's harness).
 **Decisions.**
 - *A compliant tube coupling* between the rotor stub and the driver: the ring is driven, never pushed, and the tube
   takes the misalignment between the base and the turntable. *Changed 2026-10-27:* the 5/16 in ID tube first chosen
-  sat 1 mm loose round the Ø6 stub and could not drive it (the `connected` gate found the rotor floating); the 3/16 in
+  sat 1 mm loose round the Ø6 stub and could not drive it (the `connectivity` gate found the rotor floating); the 3/16 in
   ID tube stretches 26 % over the stub and grips it, its other end pushed into a Ø7.64 socket (0.3 mm squeeze).
 - *Boards on the yoke* (turning with pan), so only power, bus, CAN and the safety line cross the ring.
 
-**Checks.** `connected` (the rotor turned by the coupling; the leads part of the ring), the clash sweep at every pan
+**Checks.** `connectivity` (the rotor turned by the coupling; the leads part of the ring), the clash sweep at every pan
 (the leads 2.37 mm under the rails at full depression), docs/turret-wiring.md for the pin map.
 
 ## 7. Compute and power (D66)
@@ -395,7 +406,7 @@ above the J4012; the head's Ø45 TM cable hole is no longer used (the plinth's f
   (cad/build_turret_box.py `exhaust_check`, in the box scene's checks). To prove on the bench: both computers at full
   load, the J501's intake and the J4012's within 3 K of the room.
 
-**Checks.** `connected` (the base group one body: the J4012 on the tray and under the tabs, the jack and the XT30
+**Checks.** `connectivity` (the base group one body: the J4012 on the tray and under the tabs, the jack and the XT30
 fastened through the wall); the clash sweep (the DT12 plug 3 mm outside the shell); the box scene (the plinth on
 the J501 box's deck); the airflow of the J4012 in the plinth is open (bench test: the module's temperature at 40 W
 with the shell on).
@@ -480,12 +491,12 @@ dimensioned drawing when the switch arrives (bluesea.com refuses a plain fetch),
 |---|---|---|---|---|---|
 | all | 2026-10-27 | the 3D page drew every ball, the ball path, the muzzle, the laser, the flywheels' and the flap's pivots and the dial's pivot in C, not in the scene's tilt frame (48 mm forward of the parts): balls outside the shells, the dial and wheels orbiting the tilt axis | cad/build_turret_box.py: one C-to-tilt transform for every point, the dial in its own frame about its axis | all gates, read by the build | |
 | 3 Feed | 2026-10-27 | the hopper pile was hand-placed rings (interpenetrating, on the cone) | the physics settle (pile.json) | `hopper_*` pass: worst overlap 0.069 mm, no ball in a solid | |
-| 1 Base | 2026-10-27 | the hall switch drawn 0.2 mm under its pocket's roof (floating) | the pocket's roof seats it | `connected` | |
-| 6 Wiring | 2026-10-27 | the coupling tube 1 mm loose on the rotor stub (could not drive it) | 51225K24 3/16 in ID | `connected` | |
+| 1 Base | 2026-10-27 | the hall switch drawn 0.2 mm under its pocket's roof (floating) | the pocket's roof seats it | `connectivity` | |
+| 6 Wiring | 2026-10-27 | the coupling tube 1 mm loose on the rotor stub (could not drive it) | 51225K24 3/16 in ID | `connectivity` | |
 | 1 Base | 2026-10-27 | the full FEA (layer-aware): the pan servo's pocket end wall bent across its layers, 0.57 at a full stall, 1.14 at the cap; the pinion 1.05 at a full stall | the end wall 3 -> 8 mm (SERVO_END_WALL): 1.91 at a stall, 3.81 at the cap (pan_base rerun on gb10-02; the falls 3.24 / 1.25 unchanged). The pinion stays open: its peak sits at the edge of the one-tooth model's load patch (p99 4x lower) | FEA | |
-| 7 Compute | 2026-10-27 | D66: the turret's own Jetson and input | the compute plinth (tray, shell, J4012, jack, XT30, fuses) | `connected`, sweep | |
+| 7 Compute | 2026-10-27 | D66: the turret's own Jetson and input | the compute plinth (tray, shell, J4012, jack, XT30, fuses) | `connectivity`, sweep | |
 | 8 Stand | 2026-10-27 | D66: the stand on a FLEXVOLT | the pack slides into the stand's back onto a dock | stand overlap check | |
-| 2, 6 Layout | 2026-10-27 | the tilt servo stood 19 mm proud of its pocket, the board bay was an open tray: two boxes on the yoke's sides | the pocket's walls over the whole servo; the bay's lid | clash sweep, `connected` | |
+| 2, 6 Layout | 2026-10-27 | the tilt servo stood 19 mm proud of its pocket, the board bay was an open tray: two boxes on the yoke's sides | the pocket's walls over the whole servo; the bay's lid | clash sweep, `connectivity` | |
 | 5 Laser | 2026-10-27 | the laser on its tab 32 mm beside the barrel reads as a separate box | open: on the cartridge's top over the barrel, on the axis (keeps it off the barrel, so a barrel swap needs no re-boresight) | | |
 | 5 Laser | 2026-10-28 | (the open row above) | done: the holder on the barrel socket's pad on the cartridge's top, the beam 29.5 mm over the bore on its plane; the cradle's tab removed; the three set screws modelled (McMaster 93285A115) | `connectivity` (the laser held through its set screws), clash sweep | |
 | all | 2026-10-28 | the turret's own gates moved onto cadagent.gates: the first run found the XT30 floating 0.2 mm in its pocket, the RJ-45 jack held only by touching the J4012's envelope, the laser touching nothing | 8 mm bosses inside the plinth's wall hold both connectors line to line; the jack ends 2 mm short of the J4012; the set screws modelled | `connectivity`, `hopper`, `path`, `sweep`, `ammo_range` | |
