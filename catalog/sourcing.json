@@ -50,7 +50,13 @@
   "amass-xt60e-f": "https://pro.maplin.co.uk/products/female-xt60e-panel-mount-gold-plated-connector-20a-amass",
   "kcd1-rocker-16a": "https://www.e-switch.com/product/rca1913-series-sealed-power-rocker-switch/",
   "jack-3.5mm-panel": "https://www.masterelectronics.com/en/switchcraft/35pm2a-12319088.html",
-  "proto-board-70x50": "https://botland.store/circuit-boards/2745-universal-double-sided-board-50x70mm-5904422303303.html"
+  "proto-board-70x50": "https://botland.store/circuit-boards/2745-universal-double-sided-board-50x70mm-5904422303303.html",
+  "rail_hgr15_kit": "https://vxb.com/products/beefy-square-cnc-linear-rail-kit-hgh15-39-37-inch",
+  "pack_adapter_60v": "https://www.newegg.com/p/1DK-013R-00A95",
+  "tof_vl53l1x": "https://www.sparkfun.com/products/14722",
+  "load_cells_4x50": "https://vxb.com/products/4-pack-50kg-half-bridge-load-cell-sensor-kit-with",
+  "xt60e_f_panel": "https://pro.maplin.co.uk/products/female-xt60e-panel-mount-gold-plated-connector-20a-amass",
+  "fuse_holder_5x20": "https://www.lcsc.com/product-detail/C206937.html"
  },
  "image_urls": {
   "feetech-sts3215-c018-12v": "https://www.waveshare.com/media/catalog/product/cache/1/image/560x560/9df78eab33525d08d6e5fb8d27136e95/s/t/st3215-servo-1_5.jpg",
