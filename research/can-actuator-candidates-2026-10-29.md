@@ -1,4 +1,4 @@
-# CAN ESC and position-servo candidates
+# CAN ESC, position-servo and motor candidates
 
 Checked **2026-10-29** against manufacturer sources. Research for [issue #45](https://github.com/Valpatel/gyropup/issues/45), separate from the playground UI release. No BOM substitution, hardware modification, purchase or physical validation has occurred.
 
@@ -50,6 +50,25 @@ Hitec's [CAN/DroneCAN protocol rev 2.5](https://www.hiteccs.com/public/uploads/c
 MYACTUATOR's [V4 archive](https://www.myactuator.com/_files/archives/cab28a_3c574913978243a99767646da75afa3c.zip?dn=%28X-V4%29+Protocol+and+manual+of+V4+260920.zip), *CAN BUS Motor Motion Protocol V4.4*, uses 11-bit frames: request `0x140 + ID`, reply `0x240 + ID`, broadcast `0x280`. Default is 1 Mbps; command `0xB4` selects 1M/500k/250k and requires a power cycle. Thus **MAD, Hitec and this custom-CAN actuator have a common 1 Mbps option**.
 
 Other categories should remain distinct: [moteus-n1](https://mjbots.com/products/moteus-n1) is a controller needing a motor/encoder, with a [custom CAN-FD protocol](https://mjbots.github.io/moteus/protocol/can/) using 1 Mbps arbitration and 5 Mbps data by default. [maxon EPOS4](https://support.maxongroup.com/hc/en-us/articles/360015382019-EPOS4-ESCON2-ESCON-What-controller-should-I-select) offers CANopen position control, also as a controller-based integration. Neither is a turnkey DroneCAN RC servo.
+
+## User-proposed threaded-shaft motor
+
+On 2026-10-29 the user proposed [Amazon ASIN B0GJNX17YX](https://www.amazon.com/dp/B0GJNX17YX?th=1), citing easier availability and a threaded shaft. The exact retrieved variant is **Deeahdah PRO 3115-900KV, four motors**. Amazon names Deeahdah as brand/manufacturer; an independent manufacturer site, drawing or manual for this exact part was not found. Other manufacturers' “3115-900KV” specifications must not be substituted: for example, [Techno's TM3115](https://technomotor.cn/En_Pr_d_gci_114_id_220.html) has different dimensions, mass and voltage limits.
+
+| Property | Deeahdah listing claim | Original SunnySky X2216 880 KV baseline |
+| --- | --- | --- |
+| KV | 900 | 880; the candidate is approximately 2.3% higher, not identical |
+| Supply | 4–8S in title/bullets; 24 V in attributes | Manufacturer specifies 2–4S |
+| Size | Ø37.1 × 47.8 mm; height datum unspecified | Ø27.7, 32 mm mount-to-bell face, 36.5 mm overall before prop adapter |
+| Mass with leads | 120 g | 72 g manufacturer figure; candidate adds about 48 g each / 96 g per pair |
+| Shaft/mount | 5 mm shaft; thread and smooth shoulder visible in photos; mounting dimensions absent | 3.175 mm motor shaft; separate bolt-on prop adapter; 16/19 mm M3 mounting cross |
+| Current | Attribute says 50 A without duration or test conditions | Manufacturer page conflicts: 20 A/30 s in detailed 880 table, 30 A/30 s in overview; neither is an indefinite thermal rating |
+
+The listing also has inconsistent power fields (1245 versus 2070 W). These are unqualified seller data, not a validated flywheel duty-cycle rating. The dated page confirms the listing exists; the retrieved offer did not establish stock, price or delivery. [SunnySky USA's variant data](https://sunnyskyusa.com/products/sunnysky-x2216.js) returned `available: true` and $24.99 for both 880 Short and 1400 Short on the same date, without a stock count. This does not establish either supplier's sustained availability.
+
+The SunnySky dimensions above come from its [manufacturer drawing](https://www.rcsunnysky.com/Uploads/ueditor/image/20190903/6370311669556908787898053.jpg) and [specifications](https://en.rcsunnysky.com/x-fixedwingseries/1102.html). Its existing adapter already provides an **M5 × 0.8 stud**, 13 mm threaded length, and a Ø5 mm pilot 5.5 mm long. The current [CAD baseline](https://github.com/Valpatel/gyropup/blob/14a4127cefa1f67ecbc4d70986beb9b56adceedf/cad/turret.py#L97) clamps the flywheel against that adapter flange. Deeahdah's integral threaded extension may simplify that arrangement, but its **thread diameter/pitch/handedness, usable thread length, pilot diameter/length, shoulder/flange face, mounting-hole pattern/depth and runout** remain unverified. A photo cannot establish those tolerances. Retention must be checked for both counter-rotating wheels and braking torque; do not infer handedness from intended motor rotation or assume the existing hub fits.
+
+Distinguish design revisions: D42 selected 880 KV, while turret/program D68 selects **1400 KV** in the same SunnySky package. A 900 KV substitution therefore needs a review against the intended current operating point, not merely the old KV. The advertised 8S limit also does not qualify this motor for the full 41 V 10S bus, even though the MAD ESC supports that battery. Motor voltage/thermal qualification remains separate from ESC input compatibility; neither a higher-current motor label nor a duty cap settles it. Keep this as a candidate pending an exact drawing/specification or sample inspection, with no catalog, CAD or inventory substitution yet.
 
 ## Shared-bus and power validation still needed
 
