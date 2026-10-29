@@ -47,6 +47,22 @@ The phone regression waits for breakpoint-driven drawer state and animation fram
 
 Current-head CI, independent review, final full-suite receipts and the deployed version are recorded on [PR44](https://github.com/Valpatel/gyropup/pull/44). Verify those release receipts before treating local evidence as a production claim.
 
+## Current-model and landing follow-up (issue47)
+
+The user requested a second validation pass after PR44: consistent current models across pages, a matching loading poster, a contrasting background, an alive/talking landing robot and label-free exploded inspection. The following inventory starts with observed gaps and is updated with measured results as the separate release is checked.
+
+| Area | What it should do | Observed gap | Validation required |
+| --- | --- | --- | --- |
+| Poster handoff | Keep the same apparent pose, scale and framing until a real first frame is ready. | The previous hero showed a different full-CAD illustration and hid it before rendering. | Compare delayed loading and first-frame screenshots at narrow/wide aspect ratios and DPR1/2; retain useful fallback if WebGL or assets fail. |
+| Hero contrast | Separate the yellow robot clearly from its background. | Warm yellow/cream field competed with yellow geometry. | Inspect the cool backdrop on phone and desktop, including labels, focus indicators and fallback. |
+| Current model | Use the same approved full-detail turret and current robot in live play, landing and character demo. | Robotv2 used31 older turret parts, the bench used48 current turret parts, and the character demo used a stand-in. | Compare exported hashes, transformed parts, muzzle/laser and ownership across routes; validate current parts against independent CAD datums. |
+| Default demo | Show the current robot while staying playful and continuous. | Autoplay cycled recorded physics with an older turret snapshot. | Exercise current live autoplay phases, manual takeover, pause, model changes and repeated toggles without scene or conversation replacement. |
+| Recorded evidence | Preserve the model and trajectories actually used for recorded simulations. | Replacing only the turret would detach the recorded projectile origins from the visible barrel. | Keep matching historical geometry and an explicit recorded-snapshot label; check return to current live presentation. |
+| Exploded inspection | Reveal components without labels, restore smoothly, and remain accessible by touch/keyboard. | Landing had no inspection control. | Rapid hover entry/exit, focused/pressed button, touch toggle, reduced motion, resize and return to assembled pose; reject pivot/frame drift. |
+| Landing character | Offer occasional readable bubbles and optional speech without competing with the page. | Landing animated eyes but had no conversation/character behavior. | Verify hidden-tab/offscreen suppression, repeat cadence, manual interaction and shared master/voice mute before and during speech. |
+
+Validation is staged: baseline reproduction, focused regression and negative controls, independent review, then hosted checks against the deployed version. Repeating an assertion does not replace testing a different state or input sequence. Historical simulation evidence and human play judgments remain distinct from presentation tests.
+
 ## Evidence and method
 
 The independent broad probe `/tmp/gyropup-playground-audit.mjs` checks deliberate control groups, state changes and scene identity rather than clicking arbitrary buttons. The portal probe `/tmp/gyropup-portal-audit.mjs` and receipt `/tmp/gyropup-portal-audit.json` cover the landing page, progress, build, design notebook, FEA and character demo. Built-site portal receipts are `/tmp/gyropup-portal-chromium/report.json` and `/tmp/gyropup-portal-webkit/report.json`, both with no page errors or missing required resources. Scratch paths describe this session's evidence and are not durable repository dependencies.
