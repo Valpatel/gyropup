@@ -33,9 +33,11 @@ libx264, libvpx-vp9, libwebp and FreeType. Build and serve the repository first,
 then capture its actual browser simulation:
 
 ```sh
-npm run build
-PORT=8899 node tools/serve-site.mjs
-# In another shell:
+npm run preview:status
+# Reuse the shared preview if it serves this checkout. Otherwise coordinate
+# with its owner before changing the selected checkout; do not add a daemon.
+npm run dev
+# In another shell, with the selected checkout confirmed:
 SITE_URL=http://127.0.0.1:8899 node tools/capture-highlights.mjs
 python3 tools/encode-highlights.py --frames /tmp/gyropup-highlights-frames
 python3 tools/check-highlights.py --frames /tmp/gyropup-highlights-frames
@@ -71,8 +73,10 @@ if the independent 3D hero fails.
 
 ### Full-page loading correction
 
-The initial isolated-player checks intentionally failed the hero import. A later
-real-hero check found that simultaneous CAD and movie downloads could fail on a
+The isolated-player checks now explicitly intercept the versioned hero import
+and assert the fixture was exercised. Their original exact-URL fixture missed
+its version query; that original run did not establish hero-failure independence.
+A separate real-hero check found that simultaneous CAD and movie downloads could fail on a
 constrained connection, so main publication was held for
 [issue 111](https://github.com/Valpatel/gyropup/issues/111). With Chrome at
 390×844, 150 ms latency, 1.6 Mbps download and 750 kbps upload, the hero-only
@@ -89,11 +93,24 @@ pixels are unchanged; increasing the CAD timeout alone would not address media
 contention or repeated playback waits.
 
 `npm run test:highlight-integration` exercises the actual hero and reel together,
-including the constrained connection above. Its timestamps and stall counts are
-browser/network emulation observations, not physical-phone guarantees. The
-deterministic player harness separately checks loading order and cancellation.
-Final correction evidence belongs on issue 111 and its linked PR before the
-main publication resumes.
+including the constrained connection above. It requires the complete first play
+and second replay, actual changing model pixels, and at least 600 additional
+decoded frames after replay starts. Extending the replay exposed WebKit advancing
+frames without another `playing` event: a timer previously stopped that working
+replay near 20 seconds. Recovery now follows actual forward presented-frame
+progress, bound to its source and play attempt. Cancellation, retries and seeks
+invalidate old callbacks; a genuinely frozen decoder still times out.
+
+Eligibility also reads the current reduced-motion preference. WebKit can expose
+a new value through a fresh query before a retained query's change event arrives;
+hero completion during that interval must not authorize autoplay. Deterministic
+checks reproduce that ordering, offscreen hero-completion races and stale/frozen
+frame recovery. Native replay checks keep real media behavior intact.
+
+Timestamps and stall counts are browser/network emulation observations, not
+physical-phone guarantees. Final correction evidence is recorded on
+[PR 112](https://github.com/Valpatel/gyropup/pull/112) before the main publication
+resumes.
 
 ## Validation
 
