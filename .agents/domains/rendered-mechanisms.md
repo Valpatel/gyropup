@@ -15,3 +15,5 @@ Check the actual barrel STL mouth center on all three axes and its transformed b
 ## Current models and physics archives
 
 Use the shared current renderer for current landing, playground and character routes. Recorded trajectories must retain their matching geometry and muzzle frames; lazy archive loads must not overwrite a newer live choice or discard a usable scene on failure. Body placement expectations come from the actual committed body snapshot's inspected CAD datums, not later source that added geometry absent from the snapshot. See [current model validation](../../docs/validation/current-model.md) and `npm run test:models` for cross-route, frame, failure and negative-control checks.
+
+Visible-model tests must include fixed-position speech/chat rectangles (`offsetParent` alone misses them). Check fresh startup near layout breakpoints as well as resizes; a previously collapsed panel can mask a cramped desktop-panel state on a wide phone. Current talk speech uses a separate visual envelope so its face anchor below the turret cannot hide the turret itself.
