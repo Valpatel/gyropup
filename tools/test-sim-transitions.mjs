@@ -4,7 +4,7 @@ import { mkdir } from 'node:fs/promises';
 import { chromium, webkit } from '@playwright/test';
 const base = (process.env.SITE_URL || 'http://127.0.0.1:8878').replace(/\/$/, '');
 const engine = process.env.PLAYWRIGHT_BROWSER === 'webkit' ? webkit : chromium;
-const browser = await engine.launch(engine === chromium ? { channel: 'chrome', headless: true,
+const browser = await engine.launch(engine === chromium ? { channel: process.env.PLAYWRIGHT_CHANNEL === 'chromium' ? undefined : 'chrome', headless: true,
   args: ['--no-sandbox', '--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] } : { headless: true });
 const context = await browser.newContext({ viewport: { width: 390, height: 844 }, hasTouch: true, deviceScaleFactor: 1 });
 const page = await context.newPage(), errors = [];
@@ -26,8 +26,10 @@ await page.route('**/test-brain/chat/completions', async route => {
   await route.fulfill({ json: { choices: [{ message: { content: '[happy] I remember our foam robot adventure. Ready for the next round!' } }] } });
 });
 try {
-  await page.goto(base + '/designer/sim.html?sound=0', { waitUntil: 'networkidle' });
+  await page.goto(base + '/designer/sim.html?sound=0&run=targets', { waitUntil: 'networkidle' });
   await page.waitForFunction(() => document.body.dataset.ready === '1');
+  // This fixture checks archived target pooling; the separate live-demo suite covers current/live transitions.
+  await page.waitForFunction(() => window.__sim?.state.replay?.key === 'v2/targets' && window.__sim.state.robot.turret.presentation === 'recorded' && window.__sim.talk);
   await page.evaluate(() => {
     const s = window.__sim;
     window.original = { canvas: s.stage.renderer.domElement, scene: s.stage.scene, robot: s.state.robot,
