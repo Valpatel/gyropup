@@ -71,9 +71,9 @@ def main():
     plot.add_text('GYROPUP / STRUCTURAL LAB', position=(28, 680), font_size=12, color='#83b8ce', font='arial')
     plot.add_text('HIP FRAME  /  E1', position=(28, 625), font_size=28, color='#f6f8ff', font='arial')
     plot.add_text('STATIC DEFORMATION', position=(570, 635), font_size=14, color='#75f4e8', font='arial')
-    plot.add_text('SF 1.65 / REQUIRED 2.00  —  BELOW TARGET', position=(28, 146), font_size=18,
+    plot.add_text('SF 1.65 / REQUIRED 2.00  —  BELOW TARGET', position=(28, 146), font_size=15,
                   color='#ffbf69', font='arial')
-    readout = plot.add_text('', position=(28, 92), font_size=17, color='#f6f8ff', font='arial')
+    readout = plot.add_text('', position=(28, 92), font_size=14, color='#f6f8ff', font='arial')
     plot.add_text(f'Deformation ×{exaggeration}  •  gray ghost = unloaded shape', position=(28, 56),
                   font_size=13, color='#c1d3e0', font='arial')
     plot.add_text('37.5 kg recorded baseline  •  static load scaling, not physical elapsed time',
@@ -98,7 +98,8 @@ def main():
             direction = np.array([math.cos(elevation) * math.cos(angle), math.cos(elevation) * math.sin(angle), math.sin(elevation)])
             # Fixed fit and gentle closed camera loop; no simulated camera physics.
             plot.camera_position = [centre + direction * extent * 3, centre, (0, 0, 1)]
-            plot.camera.parallel_scale = extent * .61
+            plot.camera.parallel_scale = extent * .76
+            plot.camera.SetWindowCenter(0, -.13)
             for actor, force in force_actors:
                 origin = np.array(force['origin']) + np.array(force['disp']) * factor * exaggeration
                 length = extent * .15 * factor
@@ -106,6 +107,9 @@ def main():
                 actor.SetScale(max(length, .00001)); actor.SetVisibility(factor > .01)
             readout.SetInput(f'LOAD {factor:4.0%}    DEFLECTION {maximum * factor:.3f} mm\nPEAK STRESS {baseline["von_mises_design_mpa"] * factor:.2f} MPa')
             plot.reset_camera_clipping_range()
+            # screenshot() only renders the first time; explicitly redraw every
+            # updated mesh, camera and text actor before reading the framebuffer.
+            plot.render()
             image = plot.screenshot(return_img=True)
             process.stdin.write(np.ascontiguousarray(image[:, :, :3]).tobytes())
             if frame == 6 * FPS:
