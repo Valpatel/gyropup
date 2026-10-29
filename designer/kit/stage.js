@@ -81,6 +81,21 @@ export function createStage(container, opts = {}) {
   pad.rotation.x = -Math.PI / 2;
   scene.add(ground, grid, pad);
 
+  /** Viewer palette: keep the product's smooth zoom, fitting and sky dimming. */
+  function setPalette({accent:nextAccent=accent,grid:nextGrid=0x0e7490,glow:nextGlow=0x00f0ff,background}={}) {
+    if(background!==undefined){sky.day.set(background);scene.background.copy(sky.day);}
+    rim.color.set(nextAccent);
+    const replacement=new THREE.GridHelper(1,52,nextAccent,nextGrid);
+    grid.geometry.dispose();grid.geometry=replacement.geometry;
+    replacement.material.dispose();
+    const components=new THREE.Color(nextGlow).getStyle().match(/[\d.]+/g);
+    const rgba=alpha=>`rgba(${components.join(',')},${alpha})`;
+    pad.material.map.dispose();
+    pad.material.map=radialGlow([[0,rgba(.22)],[.5,rgba(.07)],[1,rgba(0)]]);
+    pad.material.needsUpdate=true;
+  }
+  if(opts.palette)setPalette(opts.palette);
+
   const root = new THREE.Group();
   scene.add(root);
 
@@ -214,7 +229,7 @@ export function createStage(container, opts = {}) {
   }
 
   return {
-    renderer, scene, camera, controls, root, frame, setInsets, fitView,
+    renderer, scene, camera, controls, root, frame, setInsets, fitView, setPalette,
     setSceneBackground(day = 0xe8efdc, night = 0x081319) { sky.day.set(day); sky.night.set(night); applyLight(); },
     setSceneLight(v, immediate = false) { light.level = Math.max(0, Math.min(1, v)); if (immediate) { light.current = light.level; applyLight(); } },
     onFrame(cb) { callbacks.push(cb); },
@@ -224,6 +239,7 @@ export function createStage(container, opts = {}) {
       if (disposed) return;
       disposed = true; running = false; cancelAnimationFrame(frameId);
       observer.disconnect(); wheelZoom.dispose(); controls.dispose(); callbacks.length = 0;
+      for(const object of [ground,grid,pad]){object.geometry.dispose();object.material.map?.dispose();object.material.dispose();}
       renderer.dispose(); renderer.forceContextLoss(); renderer.domElement.remove();
     },
   };

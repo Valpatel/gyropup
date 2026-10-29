@@ -29,10 +29,12 @@ jobs:
               npm run test:notice
               npm run test:hero
               npm run test:viewers
+              npm run test:file-viewer-theme
               npm run test:audio
               npm run test:web
               npm run test:markdown
               npm run test:cache
+              npm run test:diagrams
               npm run test:services
           - suite: loading
             commands: |
@@ -44,6 +46,7 @@ jobs:
           - suite: build-portal
             commands: |
               npm run test:build-portal
+              npm run test:study-media
     steps:
       - uses: actions/checkout@v4
         with:
@@ -54,6 +57,8 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npx playwright install --with-deps chromium
+      - if: matrix.suite == 'build-portal'
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg
       - run: npm run build
       - name: Validate ${{ matrix.suite }}
         env:

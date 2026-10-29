@@ -16,6 +16,7 @@
     "test:interactions": "node tools/test-turret-interactions.mjs",
     "test:robot": "node tools/test-robot-controls.mjs",
     "test:viewers": "node tools/test-portal-viewers.mjs",
+    "test:file-viewer-theme": "node tools/test-file-viewer-theme.mjs",
     "test:audio": "node tools/test-audio-settings.mjs",
     "test:hero": "node tools/test-hero-preview.mjs",
     "test:demo": "node tools/test-live-demo.mjs",
@@ -27,7 +28,9 @@
     "test:loading-portal": "node tools/test-loading-portal.mjs",
     "test:loading-hero": "node tools/test-loading-hero.mjs",
     "test:part-media": "node --test tools/test-part-media.mjs",
-    "test:build-portal": "node tools/test-build-portal.mjs"
+    "test:build-portal": "node --test tools/test-model-links.mjs && node tools/test-build-portal.mjs",
+    "test:study-media": "python3 tools/test-study-media.py && node tools/test-study-media.mjs",
+    "test:diagrams": "node tools/test-diagrams.mjs"
   },
   "devDependencies": {
     "@playwright/test": "1.56.1",

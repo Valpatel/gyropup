@@ -29,6 +29,7 @@ export async function renderPortal(html, file, out) {
   const expectedImports = ["import { mountAppNav } from './kit/appnav.js';", "import { createLoadingStatus } from './kit/loading.js';", "import { createPortalParts } from './portal-parts.js';",
     file === 'designer/build.html' ? "import { createDataReader, isRecord, isMarkdown } from './kit/portal-data.js';"
       : "import { createDataReader, isRecord } from './kit/portal-data.js';"];
+  if(file==='designer/progress.html')expectedImports.push("import { mountStudyMedia, matchingStudyMedia } from './kit/study-media.js';");
   if (imports.length !== expectedImports.length || imports.some((line,i)=>line!==expectedImports[i])) {
     throw new Error(`Update the Markdown renderer for changed imports in ${script.file}`);
   }
@@ -51,6 +52,12 @@ export async function renderPortal(html, file, out) {
   const dataSource=await readFile(path.join(out,'designer/kit/portal-data.js'),'utf8');
   if (/^import\s/m.test(dataSource)) throw new Error('Update the Markdown renderer for portal-data imports');
   const dataAPI=new Function(dataSource.replace(/^export /gm,'')+'\nreturn {createDataReader,isRecord,isMarkdown};')();
+  let studyAPI={};
+  if(file==='designer/progress.html'){
+    const studySource=await readFile(path.join(out,'designer/kit/study-media.js'),'utf8');
+    if(/^import\s/m.test(studySource))throw new Error('Update the Markdown renderer for study-media imports');
+    studyAPI=new Function(studySource.replace(/^export /gm,'')+'\nreturn {mountStudyMedia,matchingStudyMedia};')();
+  }
   const statuses=[];
   const createLoadingStatus=(host)=>{
     const element=document.createElement('p');element.className='gp-loading';element.hidden=true;host.append(element);
@@ -63,8 +70,8 @@ export async function renderPortal(html, file, out) {
     statuses.push(api);return api;
   };
   const AsyncFunction = Object.getPrototypeOf(async function () {}).constructor;
-  await new AsyncFunction('document','window','fetch','mountAppNav','createLoadingStatus','createDataReader','isRecord','isMarkdown','createPortalParts',
-    imports.reduce((body,line)=>body.replace(line,''),source))(document,window,fetch,async()=>{},createLoadingStatus,dataAPI.createDataReader,dataAPI.isRecord,dataAPI.isMarkdown,()=>({dispose(){},enhance(){},replace(host,html){host.innerHTML=html;}}));
+  await new AsyncFunction('document','window','fetch','mountAppNav','createLoadingStatus','createDataReader','isRecord','isMarkdown','createPortalParts','mountStudyMedia','matchingStudyMedia',
+    imports.reduce((body,line)=>body.replace(line,''),source))(document,window,fetch,async()=>{},createLoadingStatus,dataAPI.createDataReader,dataAPI.isRecord,dataAPI.isMarkdown,()=>({dispose(){},enhance(){},replace(host,html){host.innerHTML=html;}}),host=>studyAPI.mountStudyMedia(host,{staticRender:true}),studyAPI.matchingStudyMedia);
   if (!document.querySelector(script.ready)) throw new Error(`Empty Markdown data snapshot: ${file}`);
   const errors=statuses.filter(status=>status.element.dataset.state==='error');
   if(errors.length)throw new Error(`Incomplete Markdown data snapshot: ${file}: ${errors.map(status=>status.element.textContent).join('; ')}`);
