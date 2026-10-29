@@ -4,7 +4,11 @@
 
 Tracking [issue83](https://github.com/Valpatel/gyropup/issues/83) / [PR84](https://github.com/Valpatel/gyropup/pull/84), following [PR82's requirements](../../research/protection/carrier-input-protection.md). No current catalog selection, carrier geometry, connector or installed circuit is changed.
 
-- [Rendered schematic](pictures/pan-cutoff.svg) and [native editable KiCad schematic](pan-cutoff.kicad_sch), with local [symbol library](candidate.kicad_sym).
+![PAN supply cutoff circuit candidate, including MOSFET body diodes and connected protection branches](pictures/pan-cutoff.svg)
+
+The preview fits this page; pinch or use browser zoom to inspect the details. The original vector drawing retains its full A3 paper dimensions.
+
+- <a href="pictures/pan-cutoff.svg" download>Download original SVG</a> and [native editable KiCad schematic](pan-cutoff.kicad_sch), with local [symbol library](candidate.kicad_sym).
 - [Exact pins and carrier interfaces](pins.md); manufacturer facts and project-assigned module pad IDs are distinguished.
 - [Candidate BOM](candidate-bom.csv), [dated availability and primary sources](availability.json). Several passive offer quantities remain unresolved; the 127 kΩ and 22 kΩ candidates are normally nonstock. This is not a ready-to-order list.
 - [Fault-state review and remaining release gates](fault-review.md), [numerical screening](reports/calculations.json), [KiCad-exported netlist](reports/netlist.xml), [ERC report](reports/erc.rpt), [source/artifact receipt](reports/receipt.json).

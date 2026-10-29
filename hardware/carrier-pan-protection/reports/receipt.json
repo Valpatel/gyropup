@@ -8,7 +8,7 @@
   },
   "files_sha256": {
     "../fuse-board/sexp.py": "94cc011d6e6d9a9f167930d744ef3579e7d2422a4b6fa8daf2dbeea219abf1e4",
-    "README.md": "09f460e9c112a2cbd1305774d5e925e4ba664c5bfb0f2db9348799b8f316dedc",
+    "README.md": "e97c17244586533dd24708938a6d5491f3e32d5134bfe6311b836a13ce8d8b17",
     "availability.json": "54cfba1739d56539ac0f9a5d6917c829bd92c9d4af7c7dbe83dfaca2067d17c9",
     "build.py": "e2fd1cf6a2aaaeabcea4a9318781a76f7ae4ce421a6ae468819f233b9fbb19cf",
     "calculate.py": "ec38243347e2af104923f544d1a217f7bdb5d24e426e69f3a6e5dc33fdeb925c",
