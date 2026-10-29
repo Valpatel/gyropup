@@ -4,3 +4,8 @@ main.prog{margin:auto;min-width:0}.portal-jumps{display:flex;flex-wrap:wrap;gap:
 .cad-table-tools[hidden]{display:none}
 
 #made table{min-width:1100px}#made table td:nth-child(2){min-width:160px}#made table td:nth-child(3){min-width:150px}#made table td:nth-child(5),#made table td:nth-child(6){min-width:170px}.cad-table-hint{font:12px/1.4 var(--font-ui);color:#526956;margin:6px 0}.cad-table-scroll{scrollbar-width:auto}#made .note{font-size:12px;max-width:260px}
+
+.cad-part-table th{overflow-wrap:normal;word-break:normal}.cad-part-table th:not(:first-child):not(.cad-status-heading){min-width:110px}.cad-part-table th.cad-part-identity{min-width:150px}.cad-part-table .cad-table-sort-button{overflow-wrap:normal;word-break:normal}
+@media(max-width:600px){.cad-part-table th.cad-part-identity,.cad-part-table td.cad-part-identity,#made table td.cad-part-identity{position:sticky;left:0;z-index:2;width:120px;min-width:120px;max-width:120px;background:#f4f8ee;border-right:1px solid #bccdbb;box-shadow:3px 0 5px #244d4010}.cad-part-table th.cad-part-identity{z-index:3;background:#e0ebdd}.cad-part-table .cad-status-cell,.cad-part-table .cad-status-heading{min-width:80px;width:88px}.cad-part-table .cad-status-check{min-width:64px}.cad-part-table .cad-part-identity>*{max-width:104px;overflow-wrap:anywhere}}
+/* The wrapper owns clipping; overflow on the table traps sticky identity cells. */
+table.cmp.cad-part-table{overflow:visible}

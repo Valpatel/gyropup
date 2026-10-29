@@ -11,10 +11,12 @@ export function createPortalParts(host) {
       if(enhanced.has(table)||!table.tHead||!table.tBodies.length)continue;
       const many=[...table.tBodies[0].rows].filter(row=>!row.hasAttribute('data-fixed')).length>1;
       for(const [index,th] of [...table.tHead.rows[0].cells].entries()) {
-        if(!many||!th.textContent.trim())continue;
+        if(!many||!th.textContent.trim()||/^picture$/i.test(th.textContent.trim())){th.removeAttribute('data-sort');continue;}
         th.dataset.sort=[...table.tBodies[0].rows].some(row=>row.cells[index]?.hasAttribute('data-sort-value'))?'number':'text';
       }
       if(!table.parentElement.classList.contains('cad-table-scroll')){const wrap=document.createElement('div');wrap.className='cad-table-scroll';table.before(wrap);wrap.append(table);}
+      const identity=[...table.tHead.rows[0].cells].findIndex(th=>/^part$/i.test(th.textContent.trim()));
+      if(table.dataset.track&&identity>=0){table.tHead.rows[0].cells[identity].classList.add('cad-part-identity');for(const row of table.tBodies[0].rows)row.cells[identity]?.classList.add('cad-part-identity');}
       const statuses=table.dataset.track==='print'?[{id:'printed',label:'Printed'}]:table.dataset.track==='buy'?[{id:'ordered',label:'Ordered'},{id:'inHand',label:'In hand'}]:[];
       const api=enhancePartTable(table,{label:table.dataset.label||table.caption?.textContent||'Parts',tracker,statuses,searchable:many});
       api.toolbar.hidden=!many;
