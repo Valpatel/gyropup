@@ -139,6 +139,8 @@ export async function buildRobotV2(root, { eyes, color = 0xf5b82e } = {}) {
     turret.tilt.position.copy(tiltP).sub(panP);
     for (const p of T.tilt ?? []) { const m = mesh(p); if (m) turret.tilt.add(m); }
     turret.muzzle.position.copy(at(T.muzzle_mm)).sub(tiltP);
+    const laserMesh = turret.tilt.children.find(m => /_laser$/.test(m.name));
+    if (laserMesh) turret.alignLaserToCAD(laserMesh);
     if (turret.flashMesh) turret.flashMesh.position.copy(turret.muzzle.position).add(new THREE.Vector3(0, 0, 0.006));
     base.add(turret.group);
   }

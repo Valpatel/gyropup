@@ -42,6 +42,7 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
   if (!res.ok) throw new Error('no turret_box export: run .venv/bin/python cad/build_turret_box.py');
   const man = await res.json();
   const mech = man.mechanics;
+  const launchSpeed = mech.ball.speed_mps;
   const coarse = matchMedia('(pointer: coarse)').matches;
 
   // ------------------------------------------------------------------------------------------------ the scene
@@ -57,6 +58,7 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
   panPivot.position.copy(P(man.pivots.pan));
   tiltPivot.position.copy(P(man.pivots.tilt));
   pinionPivot.position.copy(P(man.pivots.pinion));
+  dialPivot.position.copy(P(man.pivots.dial));
   wheelL.position.copy(P(man.pivots.wheel_l));
   wheelR.position.copy(P(man.pivots.wheel_r));
   flapPivot.position.copy(P(man.pivots.flap));
@@ -64,6 +66,18 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
   tiltPivot.add(dialPivot, wheelL, wheelR, flapPivot);
   world.add(groups.j501, groups.adapter, groups.base, pinionPivot, panPivot);
   Object.assign(groups, { pinion: pinionPivot, pan: panPivot, tilt: tiltPivot, dial: dialPivot, wheel_l: wheelL, wheel_r: wheelR, flap: flapPivot });
+
+  // All angles are joint-local radians; this same path drives live animation and
+  // the rendered-vertex regression (including independent and compound poses).
+  function poseMechanism(a) {
+    panPivot.rotation.y = a.pan;
+    tiltPivot.rotation.x = -a.tilt;
+    pinionPivot.rotation.y = a.pinion;
+    dialPivot.rotation.y = a.dial;
+    wheelL.rotation.y = a.wheel_l;
+    wheelR.rotation.y = -a.wheel_r;
+    flapPivot.rotation.x = -a.flap;
+  }
 
   // the crate the box stands on
   {
@@ -467,7 +481,7 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
   const fl = mech.flywheel, tm = mech.timing, pn = mech.pan, tl = mech.tilt, fd = mech.feed, bl = mech.ball;
   const r3 = mech.flight_level.rows.find((r) => r[0] === 3) ?? mech.flight_level.rows.at(-1);
   nums.set([
-    ['ball', `Ø${bl.d_mm} mm, ${bl.mass_g} g, ${bl.speed_mps} m/s (${bl.fps} fps cap), ${bl.energy_j} J`],
+    ['ball', `Ø${bl.d_mm} mm, ${bl.mass_g} g, ${bl.speed_mps} m/s (${bl.fps} fps nominal; ${bl.cap_fps} fps cap), ${bl.energy_j} J`],
     ['flywheels', `Ø${fl.d_mm}, ${fmt(fl.rpm)} rpm (${fl.throttle_pct} % of no-load), squeeze ${fl.crush_mm} mm`],
     ['flywheel energy', `${fl.energy_j_each} J each; a shot costs ${fl.speed_drop_per_shot_pct} % speed, back in ${fl.recovery_ms} ms`],
     ['feed', `${fd.pockets} pockets on the feed servo (STS3215, ${fd.ratio}:1); a 45° step in ~${fd.step_ms_est} ms; up to ${fd.max_rate_per_s}/s, paced on gate 1`],
@@ -616,7 +630,7 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
     if (Math.abs(pan) > lim.pan_deg[1] * D2R) { say(`Out of the pan range (±${lim.pan_deg[1]}°: the cables wind up past that)`); pan = Math.sign(pan) * lim.pan_deg[1] * D2R; }
     const dist = Math.hypot(pt.x - axis.x, pt.z - axis.z);
     const p0 = new THREE.Vector3(), d0 = new THREE.Vector3();
-    const miss = (tilt) => { muzzleAt(pan, tilt, p0, d0); return heightAt(p0, d0.multiplyScalar(BALL.speed), dist, axis) - pt.y; };
+    const miss = (tilt) => { muzzleAt(pan, tilt, p0, d0); return heightAt(p0, d0.multiplyScalar(launchSpeed), dist, axis) - pt.y; };
     let lo = -tiltMax(pan) * D2R, hi = 0;
     let tilt;
     if (miss(hi) < 0) { tilt = 0; say('Too far for a level shot: the barrel never points above level, so the ball falls short', 2600); }
@@ -875,8 +889,8 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
     if (s < segS.chute[1]) return Math.sqrt(0.0025 + 2 * 9.81 * chuteR * Math.sin((s / segS.chute[1]) * Math.PI / 2));
     if (s < segS.run[1]) return mech.timing.speed_into_nip_mps;
     const u = (s - segS.barrel[0]) / 0.0145;                    // through the nip (about 14.5 mm of contact) it gets up to speed
-    if (u < 1) return Math.max(mech.timing.speed_into_nip_mps, BALL.speed * Math.min(1, u * u));
-    return BALL.speed;
+    if (u < 1) return Math.max(mech.timing.speed_into_nip_mps, launchSpeed * Math.min(1, u * u));
+    return launchSpeed;
   }
   function squash(g, s) {                                       // squeezed 2.7 mm between the tyres at the nip
     const nipC = cum[IX.nipC], half = (cum[IX.nipOut] - cum[IX.nipIn]) / 2, x = Math.abs(s - nipC);
@@ -896,7 +910,7 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
     const ang = SPREAD_DEG * D2R * Math.sqrt(-2 * Math.log(Math.max(1e-6, Math.random()))), az = Math.random() * 2 * Math.PI;
     const perp1 = new THREE.Vector3().crossVectors(d, new THREE.Vector3(0, 1, 0)).normalize(), perp2 = new THREE.Vector3().crossVectors(perp1, d);
     d.addScaledVector(perp1, Math.cos(az) * Math.tan(ang)).addScaledVector(perp2, Math.sin(az) * Math.tan(ang)).normalize();
-    const v = BALL.speed * (1 + SPEED_SPREAD * (Math.random() * 2 - 1)) * (S.rpm > 0 ? Math.min(1, S.rpm / fl.rpm) : 1);
+    const v = launchSpeed * (1 + SPEED_SPREAD * (Math.random() * 2 - 1)) * (S.rpm > 0 ? Math.min(1, S.rpm / fl.rpm) : 1);
     const { g, streak } = ballMesh();
     g.position.copy(p);
     scene.add(g, streak);
@@ -905,7 +919,7 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
     S.lastSpeed = v;
     S.shots += 1;
     flashT = 0.06;
-    if (!demo) sfx.turret.shot({ power: v / BALL.speed });       // the journey's muzzle stage plays its own
+    if (!demo) sfx.turret.shot({ power: v / launchSpeed });       // the journey's muzzle stage plays its own
   }
   function stepTransit(dt) {
     const tmT = (mech.timing.chute_ms + mech.timing.to_nip_ms) / 1000;
@@ -915,7 +929,7 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
       // pace: the chute and the roll to the nip by the computed times, then the barrel at the ball's speed
       let s;
       if (b.t < tmT) s = segS.run[1] * Math.min(1, (b.t / tmT) ** 1.6);
-      else s = segS.run[1] + (b.t - tmT) * BALL.speed;
+      else s = segS.run[1] + (b.t - tmT) * launchSpeed;
       pathAt(Math.min(s, segS.barrel[1]), b.g.position);
       squash(b.g, s);
       gateBlink(s);
@@ -1091,7 +1105,7 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
     const p = new THREE.Vector3(), d = new THREE.Vector3();
     muzzle.getWorldPosition(p);
     muzzle.getWorldQuaternion(tmpQ);
-    const v = d.set(0, 0, 1).applyQuaternion(tmpQ).multiplyScalar(BALL.speed);
+    const v = d.set(0, 0, 1).applyQuaternion(tmpQ).multiplyScalar(launchSpeed);
     arcPts.length = 0;
     arcPts.push(p.clone());
     const objs = hitTargets();
@@ -1228,9 +1242,6 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
     const mv = (cur, cmd, rate) => cur + clamp(cmd - cur, -rate * dt, rate * dt);
     S.pan = mv(S.pan, S.panCmd, lim.pan_rate_deg_s * D2R);
     S.tilt = clamp(mv(S.tilt, S.tiltCmd, lim.tilt_rate_deg_s * D2R), tmin, 0);
-    panPivot.rotation.y = S.pan;
-    tiltPivot.rotation.x = -S.tilt;
-    pinionPivot.rotation.y = man.pivots.pinion_ratio * S.pan;
     // the safety line: ARM held = flywheels up, laser on; released = no feed, and the phase-short brake stops the
     // flywheels (5 % speed ~48 ms after release; unbraked they would coast for 1.1 s)
     const armed = S.arm.size > 0 || !!S.journey;
@@ -1268,17 +1279,15 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
         if (Math.floor((a0 - 120) / 360) !== Math.floor((a1 - 120) / 360) && !S.pockets[k] && S.pile > 0) { S.pockets[k] = true; S.pile -= 1; }
       });
     }
-    dialPivot.rotation.y = S.phi;
     pocketBalls.forEach((g, k) => { g.visible = S.pockets[k]; });
     pileBalls.forEach((g, k) => { g.visible = k < S.pile; });
     // flywheels: drawn turning at the real speed in slow motion, a readable spin otherwise
     const w = (S.rpm / 60) * 2 * Math.PI * S.timeScale;
     S.wheelAng += Math.min(w, 40) * dtReal;
-    wheelL.rotation.y = S.wheelAng;
-    wheelR.rotation.y = -S.wheelAng;
     // the fill flap opens for a reload
     S.flapT = Math.max(0, S.flapT - dtReal);
-    flapPivot.rotation.x = -Math.min(1, S.flapT * 2) * 1.1;
+    poseMechanism({ pan: S.pan, tilt: S.tilt, pinion: man.pivots.pinion_ratio * S.pan,
+      dial: S.phi, wheel_l: S.wheelAng, wheel_r: S.wheelAng, flap: Math.min(1, S.flapT * 2) * 1.1 });
     stepTransit(dt);
     stepBalls(dt);
     stepTargetReset(dtReal);
@@ -1395,7 +1404,7 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
       title: 'Turret on the Orin AGX box',
       rows: [['turret', `${(ms.turret_with_balls / 1000).toFixed(2)} kg with 30 balls`], ['adapter', `${ms.adapter} g PETG on the J501 lid's 4 screw corners`],
         ['TM face', `${man.z_tm - man.roof_z} mm over the roof; intake kept apart from the exhaust`],
-        ['launch', `${bl.speed_mps} m/s (${bl.fps} fps cap), ${fmt(fl.rpm)} rpm flywheels`], ['fire', 'only while ARM (the safety line) is held']],
+        ['launch', `${bl.speed_mps} m/s (${bl.fps} fps nominal; ${bl.cap_fps} fps cap), ${fmt(fl.rpm)} rpm flywheels`], ['fire', 'only while ARM (the safety line) is held']],
     };
   }
 
@@ -1404,7 +1413,8 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
     get active() { return S.active; },
     // for tests and screenshots
     api: {
-      state: S, get targets() { return { plates, cans, resetting: !!targetReset }; }, arm(on) { if (on) S.arm.add('api'); else S.arm.delete('api'); }, fire(n = 1) { S.queue += n; },
+      state: S, poseMechanism, get mechanism() { return { scene, world, groups, parts, pocketBalls, pileBalls, path, gates, muzzle, laserOrigin: laserO }; },
+      get targets() { return { plates, cans, resetting: !!targetReset }; }, arm(on) { if (on) S.arm.add('api'); else S.arm.delete('api'); }, fire(n = 1) { S.queue += n; },
       aim(panDeg, tiltDeg) { S.panCmd = panDeg * D2R; S.tiltCmd = tiltDeg * D2R; S.pan = S.panCmd; S.tilt = S.tiltCmd; panSl.set(panDeg); tiltSl.set(tiltDeg); },
       view: setView, journey: (i = 0) => { startJourney(); if (i) gotoStep(i); }, select: (name) => select(parts.find((p) => p.e.part === name) ?? null, true),
       labels(on) { S.labels = on; labelsT.checked = on; }, airflow(on) { S.airflow = on; flowGroup.visible = on; }, antennas(on) { S.antennas = on; antennas.visible = on; },

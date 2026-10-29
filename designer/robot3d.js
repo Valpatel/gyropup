@@ -356,6 +356,8 @@ export function buildRobot(design, catalog, { eyes, mech, cad } = {}) {
       turret.tilt.position.copy(T.tiltPivot).sub(T.panPivot);
       turret.tilt.add(T.tilt);
       if (turret.muzzle) turret.muzzle.position.copy(T.muzzle).sub(T.tiltPivot);
+      const laserMesh = T.tilt.children.find(m => /_laser$/.test(m.name));
+      if (laserMesh) turret.alignLaserToCAD(laserMesh);
       if (turret.flashMesh) turret.flashMesh.position.copy(T.muzzle).sub(T.tiltPivot).add(new THREE.Vector3(0, 0, 0.006));
     }
     if (mounts.eyes) {

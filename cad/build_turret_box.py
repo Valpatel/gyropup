@@ -400,8 +400,12 @@ def main():
 
     tz = tb.Z_TM + G.tilt_t
     pan_o, tilt_o = (0.0, 0.0, tb.Z_TM), (0.0, 0.0, tz)
-    flap_hinge = (tu.FILL_PORT[0] - 19.0, 0.0, G.hopper_top + 6.0 - G.tilt_c)      # tilt frame
-    wheel = {'wheel_l': (G.wheel_x, G.wheel_y, 0.0), 'wheel_r': (G.wheel_x, -G.wheel_y, 0.0)}
+    # Cartridge coordinates are NOT tilt coordinates: pose_shape subtracts tilt_x.
+    # Keep the group origin on the physical shaft, and export vertices relative to it.
+    # Regression: tools/test-turret-frames.py + tools/test-turret-motion.mjs (#40).
+    flap_hinge = (tu.FILL_PORT[0] - 19.0 - G.tilt_x, 0.0, G.hopper_top + 6.0 - G.tilt_c)
+    dial_o = (-G.tilt_x, 0.0, 0.0)
+    wheel = {'wheel_l': (G.wheel_x - G.tilt_x, G.wheel_y, 0.0), 'wheel_r': (G.wheel_x - G.tilt_x, -G.wheel_y, 0.0)}
     group_pts = {'pan': [], 'tilt': []}
     for name, m in T.meta.items():
         fr = T.frame[name]
@@ -424,8 +428,8 @@ def main():
                     tris = add(name, side, sh, hexcol(col), op, mirror=mir, offset=(wx, wy, tz), extra=info)
                     group_pts['tilt'].append(tris + [wx, wy, 0.0])
             elif name == 'dial':
-                tris = add(name, 'dial', posed, hexcol(col), op, offset=tilt_o, extra=info)
-                group_pts['tilt'].append(tris)
+                tris = add(name, 'dial', posed, hexcol(col), op, offset=(-G.tilt_x, 0.0, tz), extra=info)
+                group_pts['tilt'].append(tris + list(dial_o))
             elif name == 'hopper_flap':
                 tris = add(name, 'flap', posed, hexcol(col), op, offset=(flap_hinge[0], 0.0, tz + flap_hinge[2]), extra=info)
                 group_pts['tilt'].append(tris + [flap_hinge[0], 0.0, flap_hinge[2]])
@@ -557,12 +561,12 @@ def main():
 
     # ---- the ball's way through the turret (tilt frame, mm) and the balls in a full hopper
     tc = G.tilt_c
-    path = [[round(G.exit_x, 2), 0.0, round(G.ball_z_dial - tc, 2)]]
+    path = [[round(G.exit_x - G.tilt_x, 2), 0.0, round(G.ball_z_dial - tc, 2)]]
     for k in range(1, 13):
         th = math.pi + k * (math.pi / 2) / 12
-        path.append([round(G.chute_cx + G.chute_r * math.cos(th), 2), 0.0, round(G.chute_r + G.chute_r * math.sin(th) - tc, 2)])
-    for x in (G.wheel_x - 7.25, G.wheel_x, G.wheel_x + 7.25, G.socket_x0, G.barrel_x0 + 30, G.barrel_x0 + 80, G.barrel_x1):
-        path.append([round(x, 2), 0.0, round(-tc, 2)])
+        path.append([round(G.chute_cx + G.chute_r * math.cos(th) - G.tilt_x, 2), 0.0, round(G.chute_r + G.chute_r * math.sin(th) - tc, 2)])
+    for x in (G.wheel_x - 7.25, G.wheel_x, G.wheel_x + 7.25, G.socket_x0, *(G.barrel_x0 + dx for dx in tu.GATES['x']), G.barrel_x1):
+        path.append([round(x - G.tilt_x, 2), 0.0, round(-tc, 2)])
     rb = G.ball / 2
     pockets = [[round(G.rp * math.cos(math.radians(45 * k)), 2), round(G.rp * math.sin(math.radians(45 * k)), 2), round(G.ball_z_dial - tc, 2)]
                for k in range(G.n_pockets)]                                    # dial frame: pocket k at 45k deg
@@ -572,7 +576,7 @@ def main():
         for rr, n, a0 in rings:
             for k in range(n):
                 ang = a0 + 2 * math.pi * k / n
-                pile.append([round(rr * math.cos(ang), 2), round(rr * math.sin(ang), 2), round(z - tc, 2)])
+                pile.append([round(rr * math.cos(ang) - G.tilt_x, 2), round(rr * math.sin(ang), 2), round(z - tc, 2)])
     pile = pile[:30 - (G.n_pockets - 1)]
 
     # ---- callout anchors (in each part's group frame) and the ball's journey
@@ -594,6 +598,10 @@ def main():
                'pan_base': [30.0, -64.0, round(tb.Z_TM + 12, 1)], 'dt_receptacle': [0.0, round(-G.dt_y - 20, 1), round(tb.Z_TM + tu.DT_Z, 1)],
                'box_deck': [70.0, -100.0, round(tb.Z_TM - 4, 1)], 'intake_shroud': [round(tb.FRONT_X - 2, 1), 30.0, round(tb.ROOF + 18, 1)],
                'pod_pendant': [round(tb.POD_X[0] - 2, 1), 30.0, round(tb.POD_ZC, 1)], 'cover': [0.0, -80.0, round(tb.ROOF, 1)]}
+    # These anchors were authored in cartridge coordinates; bbox-derived hopper
+    # and rotating dial/wheel anchors are already in their own group frames.
+    for name in ('feed_motor', 'cartridge_body', 'barrel', 'laser', 'cradle'):
+        anchors[name][0] = round(anchors[name][0] - G.tilt_x, 1)
     for p in parts:
         if p['part'] in anchors and not p['name'].endswith('_m'):
             p['anchor'] = anchors[p['part']]
@@ -633,20 +641,25 @@ def main():
                  f'the barrel, so at range the ball lands under the dot.'},
     ]
 
+    for step in journey:
+        if step['focus'] is not None:
+            step['focus'][0] = round(step['focus'][0] - G.tilt_x, 1)
+
     # ---- the manifest
     man = {'units': 'mm', 'frame': 'box: x forward (pan 0), y left, z up; origin on the desk under the pan axis. Each part is in its '
                     'group\'s frame (pivots); journey focus points and the ball path are in the tilt frame (origin on the tilt axis)',
+           'scene_frame_version': 2,
            'built': time.strftime('%Y-%m-%d %H:%M'), 'z_tm': tb.Z_TM, 'roof_z': tb.ROOF,
            'box': {'x': [tb.REAR_X, tb.FRONT_X], 'y': [-tb.SIDE_Y, tb.SIDE_Y], 'z': [0.0, tb.ROOF], 'revision': tb.J['revision'], 'parts': j501},
            'deck': {'x': list(tb.DECK_X), 'y': [-tb.SIDE_Y, tb.SIDE_Y], 'z': [tb.DECK_Z0, tb.Z_TM]},
            'fan': {'xy': list(tb.FAN), 'z': tb.ROOF, 'r': tb.RING_R, 'grille_x': tb.FRONT_X, 'mouth_half': tb.MOUTH_HALF,
                    'duct_z': [tb.SH_Z0 + tb.SH_FLOOR_T, tb.DECK_Z0]},
            'pivots': {'pan': list(pan_o), 'tilt': [0.0, 0.0, G.tilt_t], 'pinion': [G.servo_pan_xy[0], G.servo_pan_xy[1], tb.Z_TM],
-                      'pinion_ratio': -G.gear['z_ring'] / G.gear['z_pinion'], 'dial': [0.0, 0.0, 0.0], 'wheel_l': list(wheel['wheel_l']),
+                      'pinion_ratio': -G.gear['z_ring'] / G.gear['z_pinion'], 'dial': list(dial_o), 'wheel_l': list(wheel['wheel_l']),
                       'wheel_r': list(wheel['wheel_r']), 'flap': list(flap_hinge)},
            'limits': {'pan_deg': [-170.0, 170.0], 'tilt_deg': [G.tilt_min, 0.0], 'pan_rate_deg_s': mech['pan']['max_deg_s'],
                       'tilt_rate_deg_s': mech['tilt']['max_deg_s']},
-           'muzzle': [G.barrel_x1, 0.0, -tc], 'laser': [tu.LASER_X[0] - 2 + tu.LASER['L'], tu.LASER_Y, -tc],
+           'muzzle': [G.barrel_x1 - G.tilt_x, 0.0, -tc], 'laser': [tu.LASER_X[0] - 2 + tu.LASER['L'] - G.tilt_x, tu.LASER_Y, -tc],
            'ball_path': path, 'pockets': pockets, 'pile': pile, 'ball_r': rb, 'dial_park_deg': fd['park_deg'],
            'antennas': [{'name': n, 'base': list(b), 'top': list(t), 'd': d} for n, b, t, d in tb.antennas()],
            'parts': parts, 'journey': journey, 'mechanics': mech, 'checks': checks,
