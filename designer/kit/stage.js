@@ -168,6 +168,9 @@ export function createStage(container, opts = {}) {
     };
     // perspective: near things look bigger, so search the distance that just fits every point
     let hi = Math.max(sphere.radius, center.distanceTo(sphere.center) + sphere.radius) * 6, lo = 0.05 * sphere.radius;
+    // A short landscape viewport can leave only a thin band between overlays.
+    // Six radii is a starting estimate, not a guaranteed fitting distance.
+    if (x1 > x0 && y1 > y0) for (let k = 0; k < 24 && !fits(hi); k++) hi *= 2;
     if (fits(hi)) {
       for (let k = 0; k < 32; k++) { const mid = (lo + hi) / 2; if (fits(mid)) hi = mid; else lo = mid; }
     }

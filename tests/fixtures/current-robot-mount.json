@@ -1,0 +1,11 @@
+{
+  "length_unit": "mm",
+  "frame": "robot-body",
+  "source_revision": "31908a8",
+  "reference": "Independent inspection of the committed interim-v2 CAD deck and cylindrical pan-bearing STL, not the animation manifest. The deck maximum z is the mounting plane; the bearing's x/y center is the pan axis. Current CAD source has a later riser and is not this body snapshot.",
+  "deck": {"file": "exports/sim/v2/rig/body__interim_body.stl", "sha256": "094c327f646b1713f7603cd04cbf6a9b90c9d2e035c77f958457465b0d56954b"},
+  "bearing": {"file": "exports/sim/v2/rig/body__turret_pan_bearing_5.stl", "sha256": "b87163b3c33d0a8b2c748e72d825bdadaac5d7e19ce66c483a226b796408d50e"},
+  "pan_axis_at_deck_mm": [-54.65, 0, 216],
+  "datum_tolerance_mm": 0.00001,
+  "limits": "This validates placement on the committed body. It does not regenerate the newer body, establish continuous clearances, or rerun full-robot mass, FEA or physics."
+}

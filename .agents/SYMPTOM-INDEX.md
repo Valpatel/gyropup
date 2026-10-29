@@ -6,3 +6,4 @@
 | Static build succeeds but a new simulator module returns 404 or the page never initializes | [Static build module references](domains/static-build.md) |
 | Buttons appear correct but keyboard, pause, overlays or reload behave differently | [Playground interactions](domains/playground-interactions.md) |
 | Loading poster and interactive hero jump in pose, scale or background | [Landing preview handoff](domains/landing-preview.md) |
+| Current pages show different robot versions, or archived balls miss a newly swapped barrel | [Current models and physics archives](domains/rendered-mechanisms.md#current-models-and-physics-archives) |

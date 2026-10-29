@@ -186,7 +186,7 @@ export function createBalls(scene) {
     muzzle.getWorldDirection(dir);
     g.position.copy(pos);
     scene.add(g);
-    balls.push({ g, v: dir.multiplyScalar(BALL.speed), rolling: false, resting: false, age: 0 });
+    balls.push({ g, v: dir.multiplyScalar(muzzle.userData.launchSpeed ?? BALL.speed), rolling: false, resting: false, age: 0 });
   }
 
   function step(dt) {
@@ -212,5 +212,5 @@ export function createBalls(scene) {
     }
   }
   function clear() { for (const b of balls) scene.remove(b.g); balls.length = 0; }
-  return { fire, step, clear, get count() { return balls.length; } };
+  return { fire, step, clear, get count() { return balls.length; }, get active() { return balls; } };
 }

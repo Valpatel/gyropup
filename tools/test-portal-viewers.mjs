@@ -34,7 +34,8 @@ async function visibleModel(key, minimumHeight = 35) {
     const top = document.querySelector('#topbar').getBoundingClientRect().bottom;
     const status = document.querySelector('.fea-status'), legend = document.querySelector('.fea-legend');
     const dock = document.querySelector('.gp-dock');
-    return { x: Math.min(...xs), right: Math.max(...xs), y: Math.min(...ys), bottom: Math.max(...ys),
+    const min=values=>values.reduce((a,b)=>Math.min(a,b),Infinity),max=values=>values.reduce((a,b)=>Math.max(a,b),-Infinity);
+    return { x: min(xs), right: max(xs), y: min(ys), bottom: max(ys),
       freeTop: status?.offsetParent ? Math.max(top, status.getBoundingClientRect().bottom) : top,
       freeBottom: legend?.offsetParent ? legend.getBoundingClientRect().top : dock ? dock.getBoundingClientRect().top : innerHeight,
       width: innerWidth, height: innerHeight, scrollWidth: document.documentElement.scrollWidth,
