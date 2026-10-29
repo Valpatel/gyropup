@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 import time
 import cadquery as cq
+import OCP
 import turret as tu
 import turret_base_board as bb
 import turret_carrier_interfaces as ci
@@ -97,6 +98,7 @@ def run(out):
             'coverage':evidence,'checks':checks,'tails':tails,'connectors':{'power':ci.POWER,'signal':ci.SIGNAL},
             'anchors_mm':ci.ANCHORS,'module_service_pose_mm':[ci.MODULE_TRAVEL_MM,0.,0.],
             'source_urls':ci.SOURCES,'seconds':round(time.monotonic()-started,2),
+            'runtime':{'cadquery':cq.__version__,'OCP':OCP.__version__},
             'source_sha256':{p:hashlib.sha256((ROOT/p).read_bytes()).hexdigest() for p in
                             ('cad/turret.py','cad/turret_base_board.py','cad/turret_boards.py',
                              'cad/turret_carrier_interfaces.py','cad/check_base_board_interfaces.py')},
@@ -109,10 +111,18 @@ def run(out):
                       'Source fuse/TVS/regulator coordination and DT contact/seal compatibility remain open.',
                       'Base and carrier changes require renewed structural, print and physical-fit qualification.']}
     out.mkdir(parents=True,exist_ok=True)
-    (out/'interfaces.json').write_text(json.dumps(result,indent=2)+'\n')
     cq.exporters.export(carrier,str(out/'carrier-wiring-candidate.step'))
-    cq.exporters.export(cq.Compound.makeCompound([carrier.val(),bb.pcb().val(),*[s.val() for s in reservations]]),
+    cq.exporters.export(base,str(out/'pan-base-wiring-candidate.step'))
+    # Include the real footprint/component layout and every mounting instance in
+    # the review assembly. Public fasteners remain labelled authored geometry.
+    layout=[base.val(),carrier.val(),bb.board().val(),*[s.val() for s in bb.hardware().values()],
+            *[s.val() for s in reservations]]
+    cq.exporters.export(cq.Compound.makeCompound(layout),
                         str(out/'carrier-wiring-layout.step'))
+    result['artifact_sha256']={p:hashlib.sha256((out/p).read_bytes()).hexdigest() for p in
+                              ('carrier-wiring-candidate.step','pan-base-wiring-candidate.step','carrier-wiring-layout.step')}
+    # A partial export must not publish a new completed receipt.
+    (out/'interfaces.json').write_text(json.dumps(result,indent=2)+'\n')
     print(json.dumps({'checks':len(checks),'failed':[c['id'] for c in checks if not c['pass']],
                       'bounded_reservation_checks_pass':evidence['geometry'],'readiness':result['readiness'],
                       'seconds':result['seconds']}))

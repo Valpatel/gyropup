@@ -41,6 +41,8 @@ class CarrierInterfaces(unittest.TestCase):
         receipt=json.loads((ROOT/'exports/turret/base-board-service/interfaces/interfaces.json').read_text())
         for path,digest in receipt['source_sha256'].items():
             self.assertEqual(hashlib.sha256((ROOT/path).read_bytes()).hexdigest(),digest,path)
+        for path,digest in receipt['artifact_sha256'].items():
+            self.assertEqual(hashlib.sha256((ROOT/'exports/turret/base-board-service/interfaces'/path).read_bytes()).hexdigest(),digest,path)
         self.assertTrue(receipt['bounded_reservation_checks_pass'])
         self.assertFalse(receipt['readiness'])
         self.assertFalse(receipt['physical_fit_verified'])

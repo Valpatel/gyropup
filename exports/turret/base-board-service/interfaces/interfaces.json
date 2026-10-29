@@ -2514,13 +2514,17 @@
     "splice_application": "https://www.te.com/commerce/DocumentDelivery/DDEController?Action=srchrtrv&DocFormat=pdf&DocLang=English&DocNm=114-2157&DocType=Specification+Or+Standard&PartCntxt=320559",
     "wire": "https://www.remingtonindustries.com/content/PTFE%20Hook%20Up%20Wire%20Data%20Sheet.pdf"
   },
-  "seconds": 15.18,
+  "seconds": 15.22,
+  "runtime": {
+    "cadquery": "2.8.0",
+    "OCP": "7.9.3.1"
+  },
   "source_sha256": {
     "cad/turret.py": "76d4fa676c3181e1d3bf0c623cefa75e420a3b2ed90057320d038c8b7aa41534",
     "cad/turret_base_board.py": "153e49871e0a3359478cd34a50daf7e44f4497970097475c829dbbcdacda90ba",
     "cad/turret_boards.py": "c7a115d2fe3cefddf46b0dd521e21076e1f7721235df3e7bd22fadb6e165707b",
     "cad/turret_carrier_interfaces.py": "5311e7a92d6b6dd4c7f08ca24e622977de67f5a4904820bad3957f9561832965",
-    "cad/check_base_board_interfaces.py": "ba8f43c4b78339bda8d93159aa9caebadb80d5fe1d7ebbc07a2e7206b6c81ecb"
+    "cad/check_base_board_interfaces.py": "37b3f1c8f7b9d1907a5e667676d58a3096b7b6c1078de657aa058e12c43172eb"
   },
   "limits": [
     "Connector solids are authored dimension/space reservations, not manufacturer models.",
@@ -2531,5 +2535,10 @@
     "45 mm module pose is not a new full insertion/removal sweep result.",
     "Source fuse/TVS/regulator coordination and DT contact/seal compatibility remain open.",
     "Base and carrier changes require renewed structural, print and physical-fit qualification."
-  ]
+  ],
+  "artifact_sha256": {
+    "carrier-wiring-candidate.step": "9e28f110908cbb7780de56466be87d0d348b00e5dec8fe668a65a289cac1ad55",
+    "pan-base-wiring-candidate.step": "096ca041a79f77330a569cbfbe52faaf144c838048e6bfbc53e7b17156f4454c",
+    "carrier-wiring-layout.step": "70f62e1608cafdcf3bf951b5089ce51641c59c2c57e66d139c47e78a33ea59ab"
+  }
 }
