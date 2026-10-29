@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>3D Model Viewer</title>
 <link rel="stylesheet" href="hud.css">
+<link rel="stylesheet" href="loading.css" data-gyropup-loading>
 <script type="importmap">{"imports": {"three": "./vendor/three/three.module.min.js", "three/addons/": "./vendor/three/addons/"}}</script>
 </head>
 <body>
@@ -12,12 +13,13 @@
 <div id="hud">
   <header id="topbar"><span class="glyph"></span><h1 id="title">Model</h1><span class="hud-tag">3D view</span><span class="spacer"></span>
     <a class="hud-tag" id="back" href="../../site/">Project site</a></header>
-  <main id="stage-overlay"><div id="viewer-loading"><p>Loading the model…</p></div><div class="hud-hint">DRAG · ORBIT // SCROLL · ZOOM // RIGHT-DRAG · PAN</div></main>
+  <main id="stage-overlay"><div id="viewer-loading"><div class="gp-loading gp-loading--overlay" role="status" aria-live="polite" aria-busy="true" data-state="loading"><span class="gp-loading-icon" aria-hidden="true"></span><span class="gp-loading-message">Loading the model…</span></div></div><div class="hud-hint">DRAG · ORBIT // SCROLL · ZOOM // RIGHT-DRAG · PAN</div></main>
   <aside id="panel"><p class="hud-note">Explore the real Gyropup assembly in the <a href="../sim.html?run=none">playground</a>. Exported CAD assemblies can also open here with an explicit model manifest.</p></aside>
 </div>
 <script type="module">
-  import { createViewer } from './viewer.js';
-  import { createLoadingStatus } from './loading.js';
+  try{
+  const [{ createViewer },{ createLoadingStatus }]=await Promise.all([import('./viewer.js'),import('./loading.js')]);
+
   const q = new URLSearchParams(location.search);
   // Gyropup's real assembly lives in the playground; this reusable viewer needs an explicit export.
   if (!q.has('manifest')) {
@@ -46,6 +48,15 @@
       }
     }
     await load();
+  }
+  }catch(error){
+    console.warn('Page startup failed:',error.message);
+    // Only a failed bootstrap reloads. Data/model retries above retain the existing scene.
+    if(document.body.dataset.ready!=='1'){
+      const host=document.getElementById('viewer-loading');host.hidden=false;
+      host.innerHTML='<div class="gp-loading gp-loading--overlay" data-bootstrap-error data-state="error" role="status" aria-live="polite" aria-busy="false"><span class="gp-loading-icon" aria-hidden="true"></span><span class="gp-loading-message">The model viewer could not start. Reload the page to try again.</span><span class="gp-loading-actions"><button type="button" data-bootstrap-retry>Reload page</button></span></div>';
+      host.querySelector('[data-bootstrap-retry]').onclick=()=>location.reload();
+    }
   }
 </script>
 </body>

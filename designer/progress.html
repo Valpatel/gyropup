@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Gyropup Progress</title>
 <link rel="stylesheet" href="kit/hud.css">
+<link rel="stylesheet" href="kit/loading.css" data-gyropup-loading>
 <style>
   html, body { overflow: auto; height: auto; }
   body.has-appnav main.prog { padding-top: var(--appnav-h, 64px); }
@@ -80,7 +81,7 @@
 <main class="prog">
   <div class="portal-intro"><strong>Built by autonomous systems · work in progress</strong>You're inside the Gyropup workshop. These are evolving design files and simulation reports; physical testing is still ahead. <a href="../#built">About the project ↗</a></div>
   <h1>Gyropup: progress</h1>
-  <p id="progress-loading" role="status">Loading the published progress reports…</p>
+  <div id="progress-loading"><div class="gp-loading" role="status" aria-live="polite" aria-busy="true" data-state="loading"><span class="gp-loading-icon" aria-hidden="true"></span><span class="gp-loading-message">Loading the published progress reports…</span></div></div>
   <p class="lede" id="updated">One robot, built leg first: one leg on a test rig, then the foam-ball turret, then the body around two
   legs. Everything here is CAD and simulation until parts are printed; reports update with each published design change. Everything to order and print
   for the first prototype, by seller: <a href="build.html">Build</a>.</p>
@@ -128,6 +129,18 @@
   <p class="lede" style="margin-top:28px">The <a href="sim.html">playground</a> includes Gyropup v2, the earlier serial-leg design, and the turret bench. Browser demo snapshots are labeled separately from the latest engineering reports.</p>
 <footer class="portal-footer">Created by <a href="https://valpatel.com">Valpatel Software LLC</a>. © 2026. All rights reserved. Repository materials retain their stated licenses.</footer>
 </main>
-<script type="module" src="progress.js"></script>
+<script type="module">
+  try{await import('./progress.js');}catch(error){
+    console.warn('Page startup failed:',error.message);
+    // Only a failed bootstrap reloads. Data/model retries above retain the existing scene.
+    if(document.body.dataset.ready!=='1'){
+      let host=document.getElementById('progress-loading');
+      if(!host){host=document.createElement('div');host.id='progress-loading';(document.querySelector('main')||document.body).prepend(host);}
+      host.hidden=false;
+      host.innerHTML='<div class="gp-loading" data-bootstrap-error data-state="error" role="status" aria-live="polite" aria-busy="false"><span class="gp-loading-icon" aria-hidden="true"></span><span class="gp-loading-message">Progress reports could not start. Reload the page to try again.</span><span class="gp-loading-actions"><button type="button" data-bootstrap-retry>Reload page</button></span></div>';
+      host.querySelector('[data-bootstrap-retry]').onclick=()=>location.reload();
+    }
+  }
+</script>
 </body>
 </html>

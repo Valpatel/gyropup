@@ -33,6 +33,34 @@ async function errorLayout(page,id,label){
 async function captured(predicate){for(let n=0;n<100&&!predicate();n++)await new Promise(resolve=>setTimeout(resolve,50));assert.ok(predicate(),'Request reached the held route');}
 const fail=(route,status=503,body='Unavailable')=>route.fulfill({status,contentType:'text/plain',body});
 try{
+  // Entry-graph failures cannot rely on the loading helper that failed to import.
+  // The inline fallback is reserved for bootstrap; normal data retries below
+  // retain their scene and conversation instead of reloading the document.
+  for(const [label,path,module,host] of [
+    ['Build','/designer/build.html','/designer/build.js','build-loading'],
+    ['Progress','/designer/progress.html','/designer/progress.js','progress-loading'],
+    ['CAD viewer','/designer/kit/viewer.html?manifest='+encodeURIComponent('/__loading__/model.json'),'/designer/kit/loading.js','viewer-loading'],
+    ['FEA','/designer/kit/fea.html?case='+encodeURIComponent('../../exports/fea/thigh-T1.json'),'/designer/kit/fea-viewer.js','fea-loading'],
+    ['Talk','/designer/character/talk-demo.html','/designer/robot_v2.js','talk-loading'],
+  ]){
+    let held,requests=0;const match=url=>url.pathname===module;
+    const page=await pageFor(path,async page=>{
+      page.on('request',request=>{if(new URL(request.url()).pathname===module)requests++;});
+      await page.route(match,route=>{held=route;});
+      if(label==='CAD viewer')await page.route(url=>url.pathname==='/__loading__/model.json',route=>route.fulfill({contentType:'application/json',body:JSON.stringify(manifest)}));
+    });
+    await captured(()=>held);const pending=page.locator('#'+host+' .gp-loading');
+    assert.equal(await pending.getAttribute('data-state'),'loading');assert.equal(await pending.getAttribute('aria-busy'),'true');assert.ok(await pending.isVisible());
+    assert.equal(await page.locator('canvas').count(),0,'No usable scene exists before bootstrap completes');
+    await held.abort('internetdisconnected');await page.waitForFunction(host=>!!document.querySelector('#'+host+' [data-bootstrap-error]'),host);
+    const retryButton=page.locator('#'+host+' [data-bootstrap-retry]');await retryButton.focus();assert.ok(await retryButton.evaluate(el=>el===document.activeElement));
+    const bounds=await retryButton.boundingBox();assert.ok(bounds&&bounds.height>=44&&bounds.width>=44&&bounds.x>=0&&bounds.y>=0&&bounds.x+bounds.width<=320&&bounds.y+bounds.height<=568,'Bootstrap reload remains reachable on a phone');
+    await page.screenshot({path:`${out}/${engine.name()}-bootstrap-${host}.png`});
+    await page.unroute(match);await page.evaluate(()=>window.bootstrapSentinel={});
+    await Promise.all([page.waitForNavigation({waitUntil:'domcontentloaded'}),retryButton.click()]);await ready(page);
+    assert.ok(requests>=2,'Native reload refetches the failed entry graph');assert.ok(await page.evaluate(()=>!window.bootstrapSentinel));assert.equal(await page.locator('[data-bootstrap-error]').count(),0);
+    record(label+' held/failed entry graph and native reload');await page.close();
+  }
   // The catalog may still be downloading while optional navigation is stalled.
   let release;
   const build=await pageFor('/designer/build.html',async page=>{
