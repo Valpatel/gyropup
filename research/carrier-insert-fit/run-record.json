@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date_utc": "2026-10-29",
+  "source_revision": "961774edfe165440fd5df561668be41d3490d84e",
+  "toolkit_revision": "2ad426943ce2c7232875e105e50810849f9a3e5e",
+  "command": "python research/carrier-insert-fit/generate.py --out <fresh-output>; python research/carrier-insert-fit/verify.py <fresh-output>",
+  "host_role": "CAD compute host",
+  "start_utc": "2026-10-29T13:10:18Z",
+  "end_utc": "2026-10-29T13:10:26Z",
+  "exit_code": 0,
+  "elapsed_seconds": 8.14,
+  "peak_rss_kib": 557820,
+  "earlier_runs": [
+    {
+      "source_revision": "304e00d",
+      "exit_code": 1,
+      "cause": "Consumer compared integer4 to released string version4; stopped before geometry."
+    },
+    {
+      "source_revision": "148e398",
+      "exit_code": 1,
+      "cause": "Consumer used b instead of documented b_in_a containment enum; no exports published."
+    }
+  ],
+  "artifact_receipt": "../../exports/turret/carrier-insert-fit/receipt.json",
+  "physical_trial_performed": false
+}

@@ -4,6 +4,8 @@ Audit date: 2026-10-29. Mechanical source snapshot: `faed5f510586ab282db4a27f645
 
 Subsequent source changes: `d8e9ed9` resolved the PCB drilling/stock identity; the [C2 interface candidate](base-board-interfaces.md) now implements a wiring window and strain-relief anchors with a source-hashed bounded receipt. Historical line references below identify the original audit snapshot, not current line numbers. Full module/harness qualification remains open.
 
+The [unpowered insert-fit specimens](../research/carrier-insert-fit/README.md) extract the actual local carrier boss and base anchor in their different print orientations. Their source-bound STEP/STL and geometry-only 3MF files provide a blank measurement workflow; no physical measurements or fit acceptance are claimed.
+
 Scope remains the passive pan-base opening and removable electronics carrier. No launcher, motor, rail, torque, or other turret/leg redesign. The missing-cache correction at this snapshot passed independent recheck, including the original reproduction and eight empty/partial-cache cases; its specific PR thread is resolved. This does not qualify numerical volumes, hardware fit or service. No new complete CAD run was started for this audit. Subsequent implementation must regenerate evidence from its own source head.
 
 ### Exact mounting inventory and placements
