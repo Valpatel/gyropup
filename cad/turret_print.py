@@ -14,14 +14,17 @@ from __future__ import annotations
 
 import argparse
 import json
+import fcntl
 import shutil
 import sys
 import time
+import tempfile
 from pathlib import Path
 
 R = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(R / 'cad'))
 import print_provenance as provenance  # noqa: E402
+import print_slicing  # noqa: E402
 OUT = R / 'exports' / 'turret' / 'print'
 WORK = R / 'build' / 'slicer' / 'turret'
 BED = (256.0, 256.0)
@@ -82,27 +85,61 @@ SCHEDULE = [('Day 1', ['stand_box', 'stand_bottom']),
             ('Last', ['flywheel_tyre'])]
 
 
-def make_3mf(name: str, stl: Path) -> dict:
+def make_3mf(name: str, stl: Path, output: Path) -> dict:
     import trimesh
     from cadagent.mesh3mf import write_3mf
     mesh = trimesh.load_mesh(stl, process=True)
-    OUT.mkdir(parents=True, exist_ok=True)
-    rep = write_3mf(OUT / f'{name}.3mf', mesh.vertices, mesh.faces, name, BED)
+    output.mkdir(parents=True, exist_ok=True)
+    rep = write_3mf(output / f'{name}.3mf', mesh.vertices, mesh.faces, name, BED)
     ext = mesh.bounds[1] - mesh.bounds[0]
     return {'file': f'exports/turret/print/{name}.3mf', 'size_mm': [round(float(e), 1) for e in ext], 'ok': bool(rep.get('ok'))}
 
 
-def slice_one(name: str, material: str, settings: dict, support: bool) -> dict:
-    from cadagent.slicer import slice_part
-    over = {**settings, **PLATE}
-    if support:
-        over.update(SUPPORT)
-    work = WORK / name
-    r = slice_part(OUT / f'{name}.3mf', workdir=work, printer=PRINTER, process=PROCESS, filament=FILAMENT[material], overrides=over)
-    err = r.get('error')
-    err = None if not err or str(err).strip().rstrip('.').lower() == 'success' else err
-    return {'grams': r.get('grams'), 'minutes': r.get('minutes'), 'filament_m': r.get('filament_m'), 'error': err,
-            'exit_code': r.get('exit_code'), 'log_tail': (r.get('log_tail') or '')[-400:] or None}
+def slice_one(name: str, output: Path, work: Path, identity: dict) -> dict:
+    return print_slicing.run(output / f'{name}.3mf', work / name, identity)
+
+
+def recipe(part: tuple, slice_inputs: dict | None) -> str:
+    _, _, mat, copies, settings, support, how, _ = part
+    return provenance.fingerprint({'material': mat, 'copies': copies, 'settings': settings,
+        'support': support, 'orientation': how, 'printer': PRINTER, 'process': PROCESS,
+        'filament': FILAMENT[mat], 'plate': PLATE, 'support_settings': SUPPORT, 'slice_inputs': slice_inputs})
+
+
+def _copy_verified(source: Path, destination: Path, expected: str):
+    import hashlib
+    raw = source.read_bytes()
+    if hashlib.sha256(raw).hexdigest() != expected:
+        raise ValueError(f'{source.name}: input changed during packaging')
+    destination.write_bytes(raw)
+
+
+def _publish(staged: Path, document: Path, backup: Path):
+    """Rollback ordinary publication errors; the old generation stays intact until validation.
+
+    A process/host crash between directory renames can leave the backup directory.
+    Do not auto-delete it: the next run stops for explicit recovery.
+    """
+    doc = R / 'docs/turret-print.md'
+    old_doc = doc.read_bytes() if doc.exists() else None
+    had_output = OUT.exists()
+    if had_output:
+        OUT.rename(backup)
+    try:
+        staged.rename(OUT)
+        document.replace(doc)
+    except BaseException:
+        if OUT.exists():
+            shutil.rmtree(OUT)
+        if had_output:
+            backup.rename(OUT)
+        if old_doc is None:
+            doc.unlink(missing_ok=True)
+        else:
+            doc.write_bytes(old_doc)
+        raise
+    if had_output:
+        shutil.rmtree(backup)
 
 
 def main():
@@ -110,6 +147,18 @@ def main():
     ap.add_argument('--only', nargs='+')
     ap.add_argument('--no-slice', action='store_true')
     a = ap.parse_args()
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    # Serialize writers; readers use hashes to reject a generation interrupted by a crash.
+    with (OUT.parent / '.print-package.lock').open('a') as lock:
+        fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        backup = OUT.with_name('print-previous-generation')
+        if backup.exists():
+            raise ValueError('Interrupted publication: recover print-previous-generation before rebuilding')
+        with tempfile.TemporaryDirectory(prefix='print-staging-', dir=OUT.parent) as temp:
+            _build(a, ap, Path(temp), backup)
+
+
+def _build(a, ap, stage: Path, backup: Path):
     t0 = time.time()
     path = OUT / 'print.json'
     old = json.loads(path.read_text()) if path.exists() else {}
@@ -117,72 +166,97 @@ def main():
     if a.only and not set(a.only) <= names:
         ap.error('Unknown part(s): ' + ', '.join(sorted(set(a.only) - names)))
     inputs = provenance.snapshot(R)
-    sources = {}
-    recipes = {}
-    # Validate every input and every retained row before modifying any output.
-    # A partial rerun must never combine new 3MFs with an old unbound print kit.
+    sources, recipes, slicing, rows = {}, {}, {}, {}
+    output = stage / 'print'
+    output.mkdir()
+    meshes = stage / 'meshes'
+    meshes.mkdir()
+    work = WORK / stage.name
     retained = old.get('parts', {}) if a.only else {}
-    rows = {}
-    for name, mesh, mat, copies, settings, support, how, note in PARTS:
+    # Copy verified bytes into a private generation. No visible output changes on failure.
+    for part in PARTS:
+        name, mesh, mat, copies, settings, support, how, note = part
         selected = not a.only or name in a.only
         if not selected and name not in retained:
             continue
-        sources[name] = provenance.validate_mesh(R, R / 'exports/turret' / mesh, inputs)
-        recipes[name] = provenance.fingerprint({'material': mat, 'copies': copies, 'settings': settings,
-            'support': support, 'orientation': how, 'printer': PRINTER, 'process': PROCESS,
-            'filament': FILAMENT[mat], 'plate': PLATE, 'support_settings': SUPPORT})
+        src = R / 'exports/turret' / mesh
+        sources[name] = provenance.validate_mesh(R, src, inputs)
+        over = {**settings, **PLATE, **(SUPPORT if support else {})}
+        slicing[name] = None if a.no_slice else print_slicing.capture(PRINTER, PROCESS, FILAMENT[mat], over)
+        recipes[name] = recipe(part, slicing[name])
+        _copy_verified(src, meshes / f'{name}.stl', sources[name]['sha256'])
         if not selected:
             row = retained[name]
             expected_output = f'exports/turret/print/{name}.3mf'
-            output = R / expected_output
-            if (row.get('file') != expected_output or row.get('source') != sources[name] or row.get('recipe_sha256') != recipes[name]
-                    or not output.is_file() or row.get('sha256') != provenance.digest(output)):
+            if (row.get('file') != expected_output or row.get('source') != sources[name]
+                    or row.get('recipe_sha256') != recipes[name] or row.get('slice_inputs') != slicing[name]
+                    or (not a.no_slice and not provenance.successful_slice(row))):
                 raise ValueError(f'{name}: retained print output is stale or unbound; regenerate the full package')
+            try:
+                _copy_verified(R / expected_output, output / f'{name}.3mf', row.get('sha256'))
+            except (OSError, ValueError) as exc:
+                raise ValueError(f'{name}: retained print output is stale or unbound; regenerate the full package') from exc
             rows[name] = row
-    for name, mesh, mat, copies, settings, support, how, note in PARTS:
-        if a.only and name not in a.only:
-            continue
-        src = R / 'exports' / 'turret' / mesh
-        if not src.exists():
-            raise FileNotFoundError(f'{src}: run cad/turret.py and cad/build_turret.py first')
-        row = {'material': mat, 'filament_profile': FILAMENT[mat], 'copies': copies, 'orientation': how, 'note': note,
-               'settings': {**settings, **PLATE, **(SUPPORT if support else {})}, **make_3mf(name, src),
-               'source': sources[name], 'recipe_sha256': recipes[name]}
-        if not row.get('ok'):
-            raise ValueError(f'{name}: 3MF writer rejected the mesh; package remains unqualified')
-        row['sha256'] = provenance.digest(R / row['file'])
-        if not a.no_slice:
-            row.update(slice_one(name, mat, settings, support))
-            print(f"  {name:15} {mat:10} x{copies}  {row.get('grams')} g  {row.get('minutes')} min  {row['size_mm']}"
-                  f"{'  ERROR ' + str(row.get('error')) if row.get('error') or not row.get('grams') else ''}  ({time.time() - t0:.0f} s)")
-        rows[name] = row
-    order = [p[0] for p in PARTS]                                # the table in PARTS' order; parts no longer printed are dropped
-    rows = {n: rows[n] for n in order if n in rows}
-    tot = lambda key, mats: round(sum((r.get(key) or 0) * r['copies'] for r in rows.values() if r['material'] in mats), 1)
-    by = {m: {'grams': tot('grams', (m,)), 'hours': round(tot('minutes', (m,)) / 60, 1)} for m in ('pa6-cf', 'petg', 'petg-clear', 'tpu95')}
-    res = {'printer': PRINTER, 'nozzle': '0.4 mm hardened steel (PA6-CF is abrasive)', 'process': PROCESS, 'bed_mm': BED, 'parts': rows,
-           'complete': set(rows) == names, 'physical_fit_verified': False,
-           'qualification': 'Source-bound print preparation; mechanical and physical acceptance remain separate.',
-           'by_material': by, 'total_grams': round(sum(v['grams'] for v in by.values()), 1), 'total_hours': round(sum(v['hours'] for v in by.values()), 1),
-           'not_printed_v0': NOT_PRINTED, 'schedule': SCHEDULE,
-           'note': 'grams and minutes are Bambu Studio\'s own (command line) for the part in this orientation with these settings and its '
-                   'supports; copies multiply them'}
-    path.write_text(json.dumps(res, indent=1) + '\n')
-    write_doc(res)
-    shutil.rmtree(WORK, ignore_errors=True)
-    print(f"{len(rows)} parts: {res['total_grams']} g, {res['total_hours']} h; {by}")
+    try:
+        for part in PARTS:
+            name, mesh, mat, copies, settings, support, how, note = part
+            if a.only and name not in a.only:
+                continue
+            src = meshes / f'{name}.stl'
+            row = {'material': mat, 'filament_profile': FILAMENT[mat], 'copies': copies, 'orientation': how, 'note': note,
+                   'settings': {**settings, **PLATE, **(SUPPORT if support else {})}, **make_3mf(name, src, output),
+                   'source': sources[name], 'recipe_sha256': recipes[name], 'slice_inputs': slicing[name]}
+            if not row.get('ok') or provenance.digest(src) != sources[name]['sha256']:
+                raise ValueError(f'{name}: mesh changed during packaging or 3MF writer rejected it')
+            row['sha256'] = provenance.digest(output / f'{name}.3mf')
+            if not a.no_slice:
+                row.update(slice_one(name, output, work, slicing[name]))
+                if not provenance.successful_slice(row):
+                    raise ValueError(f'{name}: slicer failed or returned invalid measurements (exit {row.get("exit_code")})')
+                print(f"  {name:15} {mat:10} x{copies}  {row['grams']} g  {row['minutes']} min  ({time.time() - t0:.0f} s)")
+            rows[name] = row
+        rows = {p[0]: rows[p[0]] for p in PARTS if p[0] in rows}
+        totals = provenance.slice_totals(rows, names)
+        res = {'printer': PRINTER, 'nozzle': '0.4 mm hardened steel (PA6-CF is abrasive)', 'process': PROCESS, 'bed_mm': BED,
+               'parts': rows, 'complete': set(rows) == names, 'slice_complete': bool(totals and totals['complete']),
+               'physical_fit_verified': False,
+               'qualification': 'Source-bound print preparation; mechanical and physical acceptance remain separate.',
+               'by_material': totals['by_material'] if totals else {}, 'total_grams': totals['grams'] if totals else None,
+               'total_hours': totals['hours'] if totals else None, 'not_printed_v0': NOT_PRINTED, 'schedule': SCHEDULE,
+               'note': '3MF geometry coverage and successful slicing are separate; missing slice measurements are null.'}
+        (output / 'print.json').write_text(json.dumps(res, indent=1) + '\n')
+        doc = stage / 'turret-print.md'
+        write_doc(res, doc)
+        # Check originals, staged bytes, context, toolchain and profiles again after the last slice.
+        if provenance.snapshot(R) != inputs:
+            raise ValueError('CAD inputs changed during packaging')
+        for name, source in sources.items():
+            if provenance.validate_mesh(R, R / source['file'], inputs) != source:
+                raise ValueError(f'{name}: source receipt changed during packaging')
+            if (provenance.digest(meshes / f'{name}.stl') != source['sha256']
+                    or provenance.digest(output / f'{name}.3mf') != rows[name]['sha256']):
+                raise ValueError(f'{name}: staged input/output changed during packaging')
+            if slicing[name] is not None and not print_slicing.current(slicing[name]):
+                raise ValueError(f'{name}: slicer inputs changed during packaging')
+        _publish(output, doc, backup)
+        print(f"{len(rows)} parts: {res['total_grams']} g, {res['total_hours']} h; sliced={res['slice_complete']}")
+    finally:
+        # Keep failed slicer logs for diagnosis. Successful captured settings live in print.json.
+        if not stage.joinpath('print').exists():
+            shutil.rmtree(work, ignore_errors=True)
 
 
-def write_doc(res: dict):
+def write_doc(res: dict, destination: Path):
     rows = res['parts']
     hrs = lambda n: round((rows[n].get('minutes') or 0) * rows[n]['copies'] / 60, 1)
     lines = ['# Printing the bench turret (v0)', '',
              '**Research prototype — not a fabrication release.** Review the current [mechanical readiness gates](mechanical-readiness.md) '
              'before printing. Matching source hashes establish artifact identity, not fit, strength or safe operation. '
              + ('This package includes every planned print row.' if res['complete'] else 'This package is partial; its totals are incomplete.'), '',
+             ('Slicing completed for every planned row.' if res['slice_complete'] else '**Slicing is incomplete or was skipped; missing measurements are not zero.**'), '',
              'From `cad/turret_print.py`: every printed part of the bench turret and its stand as a 3MF in the orientation it prints in '
-             '(`exports/turret/print/<part>.3mf`, one part centred on the bed), sliced by Bambu Studio for a P1S with these settings, so '
-             'the grams and hours are the slicer\'s own. Open a 3MF in Bambu Studio, pick the printer, the filament and the settings in the '
+             '(`exports/turret/print/<part>.3mf`, one part centred on the bed). When slicing succeeds, grams and hours come from '
+             'Bambu Studio with the recorded P1S profiles and settings. Open a 3MF in Bambu Studio, pick the printer, the filament and the settings in the '
              'table, and slice. The strength checks (cad/turret_studies.py) assume these settings: PA6-CF solid except the pan base, PETG with '
              '2 mm walls (5 loops) and 40 % gyroid.', '',
              '**Before printing:** the P1S needs its 0.4 mm hardened-steel nozzle for PA6-CF (it is abrasive), and the PA6-CF must be dried '
@@ -196,17 +270,21 @@ def write_doc(res: dict):
         lines.append(f"| [{name}](../{r['file']}) | {r['material']} ({r['filament_profile']}) | {r['copies']} | {r['orientation']} | {st} | "
                      f"{r.get('grams') or ''} | {round((r.get('minutes') or 0) / 60, 1) or ''} | {r['note']} |")
     by = res['by_material']
-    lines += ['', f"**Totals:** {res['total_grams']} g of filament, {res['total_hours']} h on one printer: "
+    total_text = ('**Totals:** not measured; slicing was skipped.' if res['total_grams'] is None else
+                  f"**Totals:** {res['total_grams']} g of filament, {res['total_hours']} h on one printer: ")
+    lines += ['', total_text
               + ', '.join(f"{m} {v['grams']} g / {v['hours']} h" for m, v in by.items() if v['grams']) + '.', '',
               '## The schedule', '']
     for day, names in res['schedule']:
         have = [n for n in names if n in rows]
-        lines.append(f"- **{day}**: " + ', '.join(f"{n} ({hrs(n)} h)" for n in have) + f" — {round(sum(hrs(n) for n in have), 1)} h")
-    lines += ['', 'With one P1S that is about ' + str(round(res['total_hours'] / 20, 1)) + ' days at 20 printing hours a day; the stand can go on a second '
-              'printer. The cartridge, hubs, dial and hopper wait for the X2216 and a servo (their sizes are checked against the drawings first).', '',
-              '## Not printed for the bench', '']
+        labels = [f"{n} ({hrs(n)} h)" if provenance.successful_slice(rows[n]) else f'{n} (not sliced)' for n in have]
+        lines.append(f"- **{day}**: " + ', '.join(labels))
+    if res['slice_complete']:
+        lines += ['', f"At 20 printing hours per day, the measured schedule is about {round(res['total_hours'] / 20, 1)} days on one P1S."]
+    lines += ['', 'The cartridge, hubs, dial and hopper wait for motor and servo dimensions to be checked against the drawings.',
+              '', '## Not printed for the bench', '']
     lines += [f"- `{k}`: {v}" for k, v in res['not_printed_v0'].items()]
-    (R / 'docs' / 'turret-print.md').write_text('\n'.join(lines) + '\n')
+    destination.write_text('\n'.join(lines) + '\n')
 
 
 if __name__ == '__main__':

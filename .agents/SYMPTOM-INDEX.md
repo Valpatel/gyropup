@@ -22,3 +22,4 @@
 | A newly integrated CAD viewer opens but disposal throws or its animation keeps running after removal | [Parts retain their identity when their table changes](domains/build-portal.md) |
 | Phone status checkboxes remain reachable but their part names disappear, despite sticky cell styling | [Sticky identity and the scroll wrapper](inbox/2026-10-29-sticky-part-identity-needs-the-scroll-wrapper.md) |
 | Wheel tests fail after a fixed sleep under software rendering | [Wait for rendered camera targets](inbox/2026-10-29-camera-tests-must-wait-for-rendered-targets.md) |
+| Print hashes pass but package mixes revisions, slicer settings or stale totals | [Preflight is not a generation transaction](inbox/2026-10-29-print-preflight-is-not-a-generation-transaction.md) |

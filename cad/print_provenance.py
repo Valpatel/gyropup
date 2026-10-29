@@ -10,6 +10,7 @@ import hashlib
 import importlib.metadata
 import importlib.util
 import json
+import math
 import os
 from pathlib import Path
 import subprocess
@@ -102,26 +103,54 @@ def validate_mesh(root: Path, mesh: Path, inputs: dict) -> dict:
             'fingerprint': data['fingerprint'], 'source_revision': data.get('source_revision'), 'context_files': context}
 
 
+def successful_slice(row: dict) -> bool:
+    def positive(value):
+        return type(value) in (int, float) and math.isfinite(value) and value > 0
+    return (row.get('ok') is True and not row.get('error')
+            and type(row.get('exit_code')) is int and row['exit_code'] == 0
+            and (row.get('return_code') is None or type(row['return_code']) is int and row['return_code'] == 0)
+            and positive(row.get('grams')) and positive(row.get('minutes'))
+            and type(row.get('copies')) is int and row['copies'] > 0)
+
+
 def current_slice_rows(root: Path, rows: dict, inputs: dict) -> dict:
-    """Old slicer grams/time must not migrate into a newly generated bench BOM."""
+    """Reuse only source-bound, currently reproducible, successful slicer rows."""
+    import print_slicing
+    import turret_print
+    parts = {p[0]: p for p in turret_print.PARTS}
     current = {}
     for name, row in rows.items():
-        source = row.get('source', {})
         try:
-            context = source.get('context_files')
-            if not isinstance(context, dict) or context_snapshot(root, [root / p for p in context]) != context:
+            if name not in parts or not successful_slice(row):
                 continue
-        except (OSError, ValueError, TypeError):
+            source = row['source']
+            mesh = root / source['file']
+            output = root / 'exports/turret/print' / f'{name}.3mf'
+            identity = row['slice_inputs']
+            if (not isinstance(identity, dict) or not print_slicing.current(identity)
+                    or row.get('recipe_sha256') != turret_print.recipe(parts[name], identity)
+                    or source != validate_mesh(root, mesh, inputs)
+                    or not output.resolve().is_relative_to((root / 'exports/turret/print').resolve())
+                    or row.get('file') != output.relative_to(root).as_posix()
+                    or row.get('sha256') != digest(output)):
+                continue
+            current[name] = row
+        except (OSError, ValueError, TypeError, KeyError, AttributeError):
             continue
-        mesh = root / source.get('file', '')
-        output = root / 'exports/turret/print' / f'{name}.3mf'
-        if (source.get('fingerprint') != fingerprint(inputs)
-                or not mesh.resolve().is_relative_to((root / 'exports/turret').resolve())
-                or not output.resolve().is_relative_to((root / 'exports/turret/print').resolve())
-                or row.get('file') != output.relative_to(root).as_posix()
-                or not mesh.is_file() or source.get('sha256') != digest(mesh)
-                or not output.is_file() or row.get('sha256') != digest(output)
-                or row.get('error') or not row.get('ok') or not row.get('grams') or not row.get('minutes')):
-            continue
-        current[name] = row
     return current
+
+
+def slice_totals(rows: dict, expected: set[str]) -> dict | None:
+    """Derive totals from accepted rows; never trust a previous report's aggregates."""
+    sliced = {n: r for n, r in rows.items() if n in expected and successful_slice(r)}
+    if not sliced:
+        return None
+    by = {}
+    for row in sliced.values():
+        material = by.setdefault(row['material'], {'grams': 0., 'hours': 0.})
+        material['grams'] += row['grams'] * row['copies']
+        material['hours'] += row['minutes'] * row['copies'] / 60
+    total = {'grams': round(sum(r['grams'] for r in by.values()), 1),
+             'hours': round(sum(r['hours'] for r in by.values()), 1)}
+    by = {m: {k: round(v, 1) for k, v in metrics.items()} for m, metrics in by.items()}
+    return {**total, 'by_material': by, 'parts': sorted(sliced), 'complete': set(sliced) == expected}

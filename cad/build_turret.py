@@ -278,12 +278,10 @@ def main():
                                                       'thumbnails and alternates from cad/bom_media.py'}, indent=1) + '\n')
     summary = {'too_big': too_big, 'print_hours': round(sum(p['hours'] for p in plan.values()), 1),
                'printed_g': sum(p['grams'] for p in plan.values()), 'stand_mm': [ts.W, ts.D, ts.H],
-               'note': 'printed_g and print_hours are print-plan.json\'s (the slicer\'s where sliced); sliced is cad/turret_print.py\'s own total'}
-    pj = R / 'exports' / 'turret' / 'print' / 'print.json'
-    if pj.exists():                                       # the slicer's own grams and hours for the v0 parts (cad/turret_print.py)
-        pr = json.loads(pj.read_text())
-        summary['sliced'] = {'grams': pr.get('total_grams'), 'hours': pr.get('total_hours'), 'by_material': pr.get('by_material'),
-                             'file': 'exports/turret/print/print.json'}
+               'note': 'printed_g and print_hours mix current sliced estimates with rough estimates; sliced includes only accepted current rows'}
+    totals = print_provenance.slice_totals(sliced, set(plan))
+    if totals:
+        summary['sliced'] = {**totals, 'file': 'exports/turret/print/print.json'}
     if not a.no_render:
         from cadagent.render import Renderer
         r = Renderer(OUT, subtitle='GYROPUP TURRET | ON ITS BENCH STAND')
