@@ -1,6 +1,6 @@
 {
   "schema": "gyropup.carrier-insert-fit/1",
-  "source_revision": "961774edfe165440fd5df561668be41d3490d84e",
+  "source_revision": "660271612fdacd7dc2b02faa0f2a1f140e7b067c",
   "inputs": {
     "files": {
       "cad/assembly.py": "4b7c7ef0a5364e524b14d7599b2357f0de4249a2c51e8a02cc69d929b30bab8a",
@@ -96,9 +96,9 @@
     "toolkit_sources_sha256": "c2941322d5f3d000d3777b0047567211d06855861fa5e14229d7d7519fef3ed3"
   },
   "context_files": {
-    "research/carrier-insert-fit/generate.py": "ea79ef189aed096dd0c446d5cefc61a903e492eb47e49c63d24654d7091ed112",
-    "research/carrier-insert-fit/test_guards.py": "e9cc7e2524a8e25b87f769ecdf39006bdfe754551bb8363c6bfd865ba90510ba",
-    "research/carrier-insert-fit/verify.py": "df24fd748eb8ccab74c33a972a74f3daae9e0a6e8d0ef2ea6cc3db769a18cf4d"
+    "research/carrier-insert-fit/generate.py": "c6b10b6c6dbfac7d9d37be5254f628cf0b7ee36fa179b5c007654238094f873e",
+    "research/carrier-insert-fit/test_guards.py": "ef42a1128eb39c3f536f6c8003ae1640fb7aa7e1aea30228182b4e1a72bee47f",
+    "research/carrier-insert-fit/verify.py": "7041315eee812a252c726494c1343ac08f41edf638f332a55cf4e8ffda007e95"
   },
   "relation_engine": "4",
   "specimens": {
@@ -327,15 +327,18 @@
       "negative_controls": {
         "filled_pilot": {
           "rejected": true,
-          "reason": "Specimen must be one valid solid"
+          "reason": "Nominal pilot is obstructed or too shallow",
+          "expected_diagnostic": "Nominal pilot is obstructed"
         },
         "drilled_through": {
           "rejected": true,
-          "reason": "Blind pilot floor/back wall is missing or too thin: {'a': 'a', 'b': 'b', 'state': 'touching', 'gap_mm': 0.01, 'overlap_mm3': 0.0, 'witness': {'point_a': [55.99, -22.4, 11.0], 'point_b': [55.99, -22.4, 10.99], 'volume_integration': {'method': 'adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8', 'error_basis': 'max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound', 'max_estimated_error_mm3': 1.8197332733450406e-07, 'max_refinement_delta_mm3': 7.105427357601002e-15}}, 'exact': True, 'cached': False}"
+          "reason": "Blind pilot floor/back wall is missing or too thin: {'a': 'a', 'b': 'b', 'state': 'touching', 'gap_mm': 0.01, 'overlap_mm3': 0.0, 'witness': {'point_a': [55.99, -22.4, 11.0], 'point_b': [55.99, -22.4, 10.99], 'volume_integration': {'method': 'adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8', 'error_basis': 'max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound', 'max_estimated_error_mm3': 1.8197332733450406e-07, 'max_refinement_delta_mm3': 7.105427357601002e-15}}, 'exact': True, 'cached': False}",
+          "expected_diagnostic": "Blind pilot floor/back wall is missing"
         },
         "wrong_orientation": {
           "rejected": true,
-          "reason": "Insert pilot has the wrong layer/print orientation"
+          "reason": "Insert pilot has the wrong layer/print orientation",
+          "expected_diagnostic": "Insert pilot has the wrong layer/print orientation"
         }
       },
       "mesh": {
@@ -611,15 +614,18 @@
       "negative_controls": {
         "filled_pilot": {
           "rejected": true,
-          "reason": "Specimen must be one valid solid"
+          "reason": "Nominal pilot is obstructed or too shallow",
+          "expected_diagnostic": "Nominal pilot is obstructed"
         },
         "drilled_through": {
           "rejected": true,
-          "reason": "Blind pilot floor/back wall is missing or too thin: {'a': 'a', 'b': 'b', 'state': 'touching', 'gap_mm': 0.01, 'overlap_mm3': 0.0, 'witness': {'point_a': [45.01, -31.0, 7.0], 'point_b': [45.01, -31.0, 7.01], 'volume_integration': {'method': 'adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8', 'error_basis': 'max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound', 'max_estimated_error_mm3': 4.4343741628746565e-08, 'max_refinement_delta_mm3': 3.552713678800501e-15}}, 'exact': True, 'cached': False}"
+          "reason": "Blind pilot floor/back wall is missing or too thin: {'a': 'a', 'b': 'b', 'state': 'touching', 'gap_mm': 0.01, 'overlap_mm3': 0.0, 'witness': {'point_a': [45.01, -31.0, 7.0], 'point_b': [45.01, -31.0, 7.01], 'volume_integration': {'method': 'adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8', 'error_basis': 'max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound', 'max_estimated_error_mm3': 4.4343741628746565e-08, 'max_refinement_delta_mm3': 3.552713678800501e-15}}, 'exact': True, 'cached': False}",
+          "expected_diagnostic": "Blind pilot floor/back wall is missing"
         },
         "wrong_orientation": {
           "rejected": true,
-          "reason": "Insert pilot has the wrong layer/print orientation"
+          "reason": "Insert pilot has the wrong layer/print orientation",
+          "expected_diagnostic": "Insert pilot has the wrong layer/print orientation"
         }
       },
       "mesh": {
@@ -687,10 +693,10 @@
   ],
   "files": {
     "base-anchor.3mf": "6c2a09c805a503e327404999aba049bd897911074f535795d627955cb870a615",
-    "base-anchor.step": "81973aa447c141522abebbac42c8161b22c5758d9a09020e12682d6c3df00450",
+    "base-anchor.step": "ad47b335873f87519f1b099c8e687738aca0c2d6f89c4ede3bbc1cf4f5eebefc",
     "base-anchor.stl": "ce29f74ad434979e27b0025e5bb06cfcc07bd5ded646b1a483fc5f211352d8d7",
     "carrier-boss.3mf": "b46b7c50eb099ea07d1e05f0551bef47ffe4c697ffbdcf0cd5af2d954d619bd2",
-    "carrier-boss.step": "ae368b942954f2ac22780d744b49571012a02865d60c75e5231afbd7cd009690",
+    "carrier-boss.step": "c7144e8504ce6ee0089bd20ef3bf219258e490a89a81367b39730a64ed86db22",
     "carrier-boss.stl": "374fcbef1209f1ea25dfa195dcf7106e197ecbbaf919842c50a924967da563d3",
     "measurements.csv": "763fce59e411c8a81f168694643a536181d41c1891dffa0eec1f62ad4f8f8820"
   }
