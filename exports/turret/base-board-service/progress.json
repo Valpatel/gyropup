@@ -1,0 +1,1164 @@
+{
+  "complete": true,
+  "checks": [
+    {
+      "id": "valid:base",
+      "pass": true,
+      "evidence": {
+        "solids": 1
+      }
+    },
+    {
+      "id": "valid:carrier",
+      "pass": true,
+      "evidence": {
+        "solids": 1
+      }
+    },
+    {
+      "id": "valid:pcb",
+      "pass": true,
+      "evidence": {
+        "solids": 1
+      }
+    },
+    {
+      "id": "protected:foot",
+      "pass": true,
+      "evidence": {
+        "symmetric_difference_mm3": 0.0
+      }
+    },
+    {
+      "id": "protected:bearing_tube",
+      "pass": true,
+      "evidence": {
+        "symmetric_difference_mm3": 0.0
+      }
+    },
+    {
+      "id": "protected:bearing_seat",
+      "pass": true,
+      "evidence": {
+        "symmetric_difference_mm3": 0.0
+      }
+    },
+    {
+      "id": "protected:servo_pocket",
+      "pass": true,
+      "evidence": {
+        "symmetric_difference_mm3": 0.0
+      }
+    },
+    {
+      "id": "board_seated",
+      "pass": true,
+      "evidence": {
+        "base_overlap_mm3": 0.0,
+        "carrier_overlap_mm3": 0.0
+      }
+    },
+    {
+      "id": "install:base",
+      "pass": true,
+      "evidence": {
+        "part": "obstacle",
+        "travel_mm": 42.8772,
+        "state": "clear",
+        "min_gap_mm": 0.0,
+        "gap_lower_bound_mm": 0.0,
+        "touching": true,
+        "samples": 90
+      }
+    },
+    {
+      "id": "remove:base",
+      "pass": true,
+      "evidence": {
+        "part": "obstacle",
+        "travel_mm": 42.8772,
+        "state": "clear",
+        "min_gap_mm": 0.0104,
+        "gap_lower_bound_mm": 0.0052,
+        "touching": false,
+        "samples": 89
+      }
+    },
+    {
+      "id": "install:pan_ring",
+      "pass": true,
+      "evidence": {
+        "part": "obstacle",
+        "travel_mm": 4.7229,
+        "state": "clear",
+        "min_gap_mm": 11.9,
+        "gap_lower_bound_mm": 11.9,
+        "touching": false,
+        "samples": 2
+      }
+    },
+    {
+      "id": "remove:pan_ring",
+      "pass": true,
+      "evidence": {
+        "part": "obstacle",
+        "travel_mm": 4.7229,
+        "state": "clear",
+        "min_gap_mm": 16.6229,
+        "gap_lower_bound_mm": 16.6229,
+        "touching": false,
+        "samples": 1
+      }
+    },
+    {
+      "id": "install:pan_clamp",
+      "pass": true,
+      "evidence": {
+        "part": "obstacle",
+        "travel_mm": 13.1,
+        "state": "clear",
+        "min_gap_mm": null,
+        "gap_lower_bound_mm": 9.5,
+        "touching": false,
+        "samples": 0
+      }
+    },
+    {
+      "id": "remove:pan_clamp",
+      "pass": true,
+      "evidence": {
+        "part": "obstacle",
+        "travel_mm": 13.1,
+        "state": "clear",
+        "min_gap_mm": null,
+        "gap_lower_bound_mm": 9.5,
+        "touching": false,
+        "samples": 0
+      }
+    },
+    {
+      "id": "install:pan_pinion",
+      "pass": true,
+      "evidence": {
+        "part": "obstacle",
+        "travel_mm": 1.0,
+        "state": "clear",
+        "min_gap_mm": null,
+        "gap_lower_bound_mm": 76.565,
+        "touching": false,
+        "samples": 0
+      }
+    },
+    {
+      "id": "remove:pan_pinion",
+      "pass": true,
+      "evidence": {
+        "part": "obstacle",
+        "travel_mm": 1.0,
+        "state": "clear",
+        "min_gap_mm": null,
+        "gap_lower_bound_mm": 76.565,
+        "touching": false,
+        "samples": 0
+      }
+    },
+    {
+      "id": "negative:old_wall",
+      "pass": true,
+      "evidence": {
+        "part": "obstacle",
+        "travel_mm": 42.8772,
+        "state": "blocked",
+        "first_contact_mm": [
+          35.0997,
+          35.0996
+        ],
+        "overlap_mm3": 0.001088,
+        "overlap_centroid": [
+          71.99978,
+          0.0,
+          13.15
+        ],
+        "clear_gap_mm": 0.0,
+        "clear_points": [
+          [
+            71.999695,
+            0.209689,
+            8.3
+          ],
+          [
+            71.999695,
+            0.209689,
+            8.3
+          ]
+        ],
+        "samples": 15
+      }
+    },
+    {
+      "id": "negative:bumper_retained",
+      "pass": true,
+      "evidence": {
+        "part": "obstacle",
+        "travel_mm": 50.1,
+        "state": "blocked",
+        "first_contact_mm": [
+          49.0998,
+          49.0997
+        ],
+        "overlap_mm3": 0.001091,
+        "overlap_centroid": [
+          85.999817,
+          0.0,
+          14.15
+        ],
+        "clear_gap_mm": 0.0,
+        "clear_points": [
+          [
+            85.999756,
+            0.20492,
+            8.3
+          ],
+          [
+            85.999756,
+            0.20492,
+            8.3
+          ]
+        ],
+        "samples": 15
+      }
+    },
+    {
+      "id": "negative:wrong_direction",
+      "pass": true,
+      "evidence": {
+        "part": "obstacle",
+        "travel_mm": 109.0,
+        "state": "blocked",
+        "first_contact_mm": [
+          83.7208,
+          83.7208
+        ],
+        "overlap_mm3": 0.001002,
+        "overlap_centroid": [
+          53.004046,
+          -48.72517,
+          11.75
+        ],
+        "clear_gap_mm": 0.0,
+        "clear_points": [
+          [
+            53.0,
+            -48.72083,
+            18.0
+          ],
+          [
+            53.0,
+            -48.72083,
+            18.0
+          ]
+        ],
+        "samples": 20
+      }
+    },
+    {
+      "id": "fasteners:pcb_bench",
+      "pass": true,
+      "evidence": {
+        "counts": {
+          "pass": 28,
+          "warn": 0,
+          "fail": 0
+        },
+        "expected_failure": null,
+        "witnessed": true,
+        "findings": []
+      }
+    },
+    {
+      "id": "fasteners:carrier_installed",
+      "pass": true,
+      "evidence": {
+        "counts": {
+          "pass": 28,
+          "warn": 0,
+          "fail": 0
+        },
+        "expected_failure": null,
+        "witnessed": true,
+        "findings": []
+      }
+    },
+    {
+      "id": "negative:pcb_inside_base",
+      "pass": true,
+      "evidence": {
+        "counts": {
+          "pass": 24,
+          "warn": 0,
+          "fail": 4
+        },
+        "expected_failure": ":tool",
+        "witnessed": true,
+        "findings": [
+          {
+            "id": "fastener:base_board_screws#0:tool",
+            "status": "fail",
+            "message": "the kernel could not decide the driver envelope against pan_base (at step 16)",
+            "parts": [
+              "base_board_screws#0",
+              "pan_base"
+            ],
+            "evidence": {
+              "tool": "driver",
+              "step": 16,
+              "step_fit": "base_board",
+              "envelope": {
+                "segments": [
+                  {
+                    "d": 6.0,
+                    "length": 60.0
+                  },
+                  {
+                    "d": 25.0,
+                    "length": 80.0
+                  }
+                ],
+                "start": "head",
+                "offset_mm": 0.0,
+                "swing": null
+              },
+              "start_t_mm": -3.0,
+              "blocked": [
+                {
+                  "part": "pan_base",
+                  "state": "unknown",
+                  "overlap_mm3": null,
+                  "error": "volumes disagree: vol(b) 143142 != common 7993.34 + cut 135149 mm3"
+                }
+              ],
+              "clear": false,
+              "present_count": 19
+            }
+          },
+          {
+            "id": "fastener:base_board_screws#1:tool",
+            "status": "fail",
+            "message": "the driver envelope hits pan_base 13.67 mm from the head (3486.352 mm\u00b3) (at step 16)",
+            "parts": [
+              "base_board_screws#1",
+              "pan_base"
+            ],
+            "evidence": {
+              "tool": "driver",
+              "step": 16,
+              "step_fit": "base_board",
+              "envelope": {
+                "segments": [
+                  {
+                    "d": 6.0,
+                    "length": 60.0
+                  },
+                  {
+                    "d": 25.0,
+                    "length": 80.0
+                  }
+                ],
+                "start": "head",
+                "offset_mm": 0.0,
+                "swing": null
+              },
+              "start_t_mm": -3.0,
+              "blocked": [
+                {
+                  "part": "pan_base",
+                  "state": "overlapping",
+                  "overlap_mm3": 3486.351537,
+                  "from_head_mm": 13.6697
+                }
+              ],
+              "clear": false,
+              "present_count": 19
+            }
+          },
+          {
+            "id": "fastener:base_board_screws#2:tool",
+            "status": "fail",
+            "message": "the driver envelope hits pan_base 13.67 mm from the head (10661.153 mm\u00b3) (at step 16)",
+            "parts": [
+              "base_board_screws#2",
+              "pan_base"
+            ],
+            "evidence": {
+              "tool": "driver",
+              "step": 16,
+              "step_fit": "base_board",
+              "envelope": {
+                "segments": [
+                  {
+                    "d": 6.0,
+                    "length": 60.0
+                  },
+                  {
+                    "d": 25.0,
+                    "length": 80.0
+                  }
+                ],
+                "start": "head",
+                "offset_mm": 0.0,
+                "swing": null
+              },
+              "start_t_mm": -3.0,
+              "blocked": [
+                {
+                  "part": "pan_base",
+                  "state": "overlapping",
+                  "overlap_mm3": 10661.152703,
+                  "from_head_mm": 13.6697
+                }
+              ],
+              "clear": false,
+              "present_count": 19
+            }
+          },
+          {
+            "id": "fastener:base_board_screws#3:tool",
+            "status": "fail",
+            "message": "the driver envelope hits pan_base 13.67 mm from the head (7264.338 mm\u00b3) (at step 16)",
+            "parts": [
+              "base_board_screws#3",
+              "pan_base"
+            ],
+            "evidence": {
+              "tool": "driver",
+              "step": 16,
+              "step_fit": "base_board",
+              "envelope": {
+                "segments": [
+                  {
+                    "d": 6.0,
+                    "length": 60.0
+                  },
+                  {
+                    "d": 25.0,
+                    "length": 80.0
+                  }
+                ],
+                "start": "head",
+                "offset_mm": 0.0,
+                "swing": null
+              },
+              "start_t_mm": -3.0,
+              "blocked": [
+                {
+                  "part": "pan_base",
+                  "state": "overlapping",
+                  "overlap_mm3": 7264.337735,
+                  "from_head_mm": 13.6697
+                }
+              ],
+              "clear": false,
+              "present_count": 19
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "negative:bumper_tool",
+      "pass": true,
+      "evidence": {
+        "counts": {
+          "pass": 26,
+          "warn": 0,
+          "fail": 2
+        },
+        "expected_failure": ":tool",
+        "witnessed": true,
+        "findings": [
+          {
+            "id": "fastener:base_carrier_screws#0:tool",
+            "status": "fail",
+            "message": "the driver envelope hits bumper_ring 13.41 mm from the head (144.579 mm\u00b3) (at step 17)",
+            "parts": [
+              "base_carrier_screws#0",
+              "bumper_ring"
+            ],
+            "evidence": {
+              "tool": "driver",
+              "step": 17,
+              "step_fit": "base_board_carrier",
+              "envelope": {
+                "segments": [
+                  {
+                    "d": 6.0,
+                    "length": 60.0
+                  },
+                  {
+                    "d": 25.0,
+                    "length": 80.0
+                  }
+                ],
+                "start": "head",
+                "offset_mm": 0.0,
+                "swing": null
+              },
+              "start_t_mm": -3.0,
+              "blocked": [
+                {
+                  "part": "bumper_ring",
+                  "state": "overlapping",
+                  "overlap_mm3": 144.578977,
+                  "from_head_mm": 13.4129
+                }
+              ],
+              "clear": false,
+              "present_count": 20
+            }
+          },
+          {
+            "id": "fastener:base_carrier_screws#2:tool",
+            "status": "fail",
+            "message": "the kernel could not decide the driver envelope against bumper_ring (at step 17)",
+            "parts": [
+              "base_carrier_screws#2",
+              "bumper_ring"
+            ],
+            "evidence": {
+              "tool": "driver",
+              "step": 17,
+              "step_fit": "base_board_carrier",
+              "envelope": {
+                "segments": [
+                  {
+                    "d": 6.0,
+                    "length": 60.0
+                  },
+                  {
+                    "d": 25.0,
+                    "length": 80.0
+                  }
+                ],
+                "start": "head",
+                "offset_mm": 0.0,
+                "swing": null
+              },
+              "start_t_mm": -3.0,
+              "blocked": [
+                {
+                  "part": "bumper_ring",
+                  "state": "unknown",
+                  "overlap_mm3": null,
+                  "error": "volumes disagree: vol(b) 30360.6 != common 144.579 + cut 30216.1 mm3"
+                }
+              ],
+              "clear": false,
+              "present_count": 20
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "negative:short_screw",
+      "pass": true,
+      "evidence": {
+        "counts": {
+          "pass": 20,
+          "warn": 0,
+          "fail": 8
+        },
+        "expected_failure": ":engagement",
+        "witnessed": true,
+        "findings": [
+          {
+            "id": "fastener:base_carrier_screws#0:engagement",
+            "status": "fail",
+            "message": "1.00 mm of thread in base_carrier_inserts (2.0 threads), under the minimum 3.00 mm (declared)",
+            "parts": [
+              "base_carrier_inserts#0",
+              "base_carrier_screws#0"
+            ],
+            "evidence": {
+              "thread_start_mm": 3.0,
+              "thread_end_mm": 8.74,
+              "engagement_mm": 1.0,
+              "thread_stretches": [
+                [
+                  3.0,
+                  8.74
+                ]
+              ],
+              "bridge_mm": 0.75,
+              "min_engagement_mm": 3.0,
+              "min_source": "declared",
+              "pitch_mm": 0.5,
+              "probe_radius_mm": 1.38,
+              "threads": 2.0
+            }
+          },
+          {
+            "id": "fastener:base_carrier_screws#0:length",
+            "status": "fail",
+            "message": "the placed solid is 4.00 mm long, the record says 8; length 4 is outside the 6.00..9.00 mm the stack takes (thread at 3.00 + 3.00 engagement; pan_base at 9.50 less 0.5 tip room)",
+            "parts": [
+              "base_carrier_screws#0"
+            ],
+            "evidence": {
+              "fits_mm": [
+                6.0,
+                9.0
+              ],
+              "limited_by": "pan_base",
+              "stock_that_fits_mm": [
+                6.0,
+                7.0,
+                8.0
+              ],
+              "length_mm": 4.0,
+              "record_length_mm": 8.0,
+              "thread_depth_required_mm": 1.0
+            }
+          },
+          {
+            "id": "fastener:base_carrier_screws#1:engagement",
+            "status": "fail",
+            "message": "1.00 mm of thread in base_carrier_inserts (2.0 threads), under the minimum 3.00 mm (declared)",
+            "parts": [
+              "base_carrier_inserts#1",
+              "base_carrier_screws#1"
+            ],
+            "evidence": {
+              "thread_start_mm": 3.0,
+              "thread_end_mm": 8.74,
+              "engagement_mm": 1.0,
+              "thread_stretches": [
+                [
+                  3.0,
+                  8.74
+                ]
+              ],
+              "bridge_mm": 0.75,
+              "min_engagement_mm": 3.0,
+              "min_source": "declared",
+              "pitch_mm": 0.5,
+              "probe_radius_mm": 1.38,
+              "threads": 2.0
+            }
+          },
+          {
+            "id": "fastener:base_carrier_screws#1:length",
+            "status": "fail",
+            "message": "the placed solid is 4.00 mm long, the record says 8; length 4 is outside the 6.00..9.00 mm the stack takes (thread at 3.00 + 3.00 engagement; pan_base at 9.50 less 0.5 tip room)",
+            "parts": [
+              "base_carrier_screws#1"
+            ],
+            "evidence": {
+              "fits_mm": [
+                6.0,
+                9.0
+              ],
+              "limited_by": "pan_base",
+              "stock_that_fits_mm": [
+                6.0,
+                7.0,
+                8.0
+              ],
+              "length_mm": 4.0,
+              "record_length_mm": 8.0,
+              "thread_depth_required_mm": 1.0
+            }
+          },
+          {
+            "id": "fastener:base_carrier_screws#2:engagement",
+            "status": "fail",
+            "message": "1.00 mm of thread in base_carrier_inserts (2.0 threads), under the minimum 3.00 mm (declared)",
+            "parts": [
+              "base_carrier_inserts#2",
+              "base_carrier_screws#2"
+            ],
+            "evidence": {
+              "thread_start_mm": 3.0,
+              "thread_end_mm": 8.74,
+              "engagement_mm": 1.0,
+              "thread_stretches": [
+                [
+                  3.0,
+                  8.74
+                ]
+              ],
+              "bridge_mm": 0.75,
+              "min_engagement_mm": 3.0,
+              "min_source": "declared",
+              "pitch_mm": 0.5,
+              "probe_radius_mm": 1.38,
+              "threads": 2.0
+            }
+          },
+          {
+            "id": "fastener:base_carrier_screws#2:length",
+            "status": "fail",
+            "message": "the placed solid is 4.00 mm long, the record says 8; length 4 is outside the 6.00..9.00 mm the stack takes (thread at 3.00 + 3.00 engagement; pan_base at 9.50 less 0.5 tip room)",
+            "parts": [
+              "base_carrier_screws#2"
+            ],
+            "evidence": {
+              "fits_mm": [
+                6.0,
+                9.0
+              ],
+              "limited_by": "pan_base",
+              "stock_that_fits_mm": [
+                6.0,
+                7.0,
+                8.0
+              ],
+              "length_mm": 4.0,
+              "record_length_mm": 8.0,
+              "thread_depth_required_mm": 1.0
+            }
+          },
+          {
+            "id": "fastener:base_carrier_screws#3:engagement",
+            "status": "fail",
+            "message": "1.00 mm of thread in base_carrier_inserts (2.0 threads), under the minimum 3.00 mm (declared)",
+            "parts": [
+              "base_carrier_inserts#3",
+              "base_carrier_screws#3"
+            ],
+            "evidence": {
+              "thread_start_mm": 3.0,
+              "thread_end_mm": 8.74,
+              "engagement_mm": 1.0,
+              "thread_stretches": [
+                [
+                  3.0,
+                  8.74
+                ]
+              ],
+              "bridge_mm": 0.75,
+              "min_engagement_mm": 3.0,
+              "min_source": "declared",
+              "pitch_mm": 0.5,
+              "probe_radius_mm": 1.38,
+              "threads": 2.0
+            }
+          },
+          {
+            "id": "fastener:base_carrier_screws#3:length",
+            "status": "fail",
+            "message": "the placed solid is 4.00 mm long, the record says 8; length 4 is outside the 6.00..9.00 mm the stack takes (thread at 3.00 + 3.00 engagement; pan_base at 9.50 less 0.5 tip room)",
+            "parts": [
+              "base_carrier_screws#3"
+            ],
+            "evidence": {
+              "fits_mm": [
+                6.0,
+                9.0
+              ],
+              "limited_by": "pan_base",
+              "stock_that_fits_mm": [
+                6.0,
+                7.0,
+                8.0
+              ],
+              "length_mm": 4.0,
+              "record_length_mm": 8.0,
+              "thread_depth_required_mm": 1.0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "negative:long_screw",
+      "pass": true,
+      "evidence": {
+        "counts": {
+          "pass": 20,
+          "warn": 0,
+          "fail": 8
+        },
+        "expected_failure": ":tip",
+        "witnessed": true,
+        "findings": [
+          {
+            "id": "fastener:base_carrier_screws#0:tip",
+            "status": "fail",
+            "message": "the screw runs 1.50 mm into pan_base (t 9.50..11.00); the screw's solid overlaps pan_base (10.603 mm\u00b3, t 9.50..11.00)",
+            "parts": [
+              "base_carrier_screws#0",
+              "pan_base"
+            ],
+            "evidence": {
+              "next_solid": null,
+              "tip_t_mm": 16.0,
+              "tip_clearance_mm": null,
+              "min_tip_clearance_mm": 0.5,
+              "probe_end_t_mm": 26.0
+            }
+          },
+          {
+            "id": "fastener:base_carrier_screws#0:length",
+            "status": "fail",
+            "message": "the placed solid is 16.00 mm long, the record says 8; length 16 is outside the 6.00..9.00 mm the stack takes (thread at 3.00 + 3.00 engagement; pan_base at 9.50 less 0.5 tip room)",
+            "parts": [
+              "base_carrier_screws#0"
+            ],
+            "evidence": {
+              "fits_mm": [
+                6.0,
+                9.0
+              ],
+              "limited_by": "pan_base",
+              "stock_that_fits_mm": [
+                6.0,
+                7.0,
+                8.0
+              ],
+              "length_mm": 16.0,
+              "record_length_mm": 8.0,
+              "thread_depth_required_mm": 13.0
+            }
+          },
+          {
+            "id": "fastener:base_carrier_screws#1:tip",
+            "status": "fail",
+            "message": "the screw runs 1.50 mm into pan_base (t 9.50..11.00); the screw's solid overlaps pan_base (10.603 mm\u00b3, t 9.50..11.00)",
+            "parts": [
+              "base_carrier_screws#1",
+              "pan_base"
+            ],
+            "evidence": {
+              "next_solid": null,
+              "tip_t_mm": 16.0,
+              "tip_clearance_mm": null,
+              "min_tip_clearance_mm": 0.5,
+              "probe_end_t_mm": 26.0
+            }
+          },
+          {
+            "id": "fastener:base_carrier_screws#1:length",
+            "status": "fail",
+            "message": "the placed solid is 16.00 mm long, the record says 8; length 16 is outside the 6.00..9.00 mm the stack takes (thread at 3.00 + 3.00 engagement; pan_base at 9.50 less 0.5 tip room)",
+            "parts": [
+              "base_carrier_screws#1"
+            ],
+            "evidence": {
+              "fits_mm": [
+                6.0,
+                9.0
+              ],
+              "limited_by": "pan_base",
+              "stock_that_fits_mm": [
+                6.0,
+                7.0,
+                8.0
+              ],
+              "length_mm": 16.0,
+              "record_length_mm": 8.0,
+              "thread_depth_required_mm": 13.0
+            }
+          },
+          {
+            "id": "fastener:base_carrier_screws#2:tip",
+            "status": "fail",
+            "message": "the screw runs 1.50 mm into pan_base (t 9.50..11.00); the screw's solid overlaps pan_base (10.603 mm\u00b3, t 9.50..11.00)",
+            "parts": [
+              "base_carrier_screws#2",
+              "pan_base"
+            ],
+            "evidence": {
+              "next_solid": null,
+              "tip_t_mm": 16.0,
+              "tip_clearance_mm": null,
+              "min_tip_clearance_mm": 0.5,
+              "probe_end_t_mm": 26.0
+            }
+          },
+          {
+            "id": "fastener:base_carrier_screws#2:length",
+            "status": "fail",
+            "message": "the placed solid is 16.00 mm long, the record says 8; length 16 is outside the 6.00..9.00 mm the stack takes (thread at 3.00 + 3.00 engagement; pan_base at 9.50 less 0.5 tip room)",
+            "parts": [
+              "base_carrier_screws#2"
+            ],
+            "evidence": {
+              "fits_mm": [
+                6.0,
+                9.0
+              ],
+              "limited_by": "pan_base",
+              "stock_that_fits_mm": [
+                6.0,
+                7.0,
+                8.0
+              ],
+              "length_mm": 16.0,
+              "record_length_mm": 8.0,
+              "thread_depth_required_mm": 13.0
+            }
+          },
+          {
+            "id": "fastener:base_carrier_screws#3:tip",
+            "status": "fail",
+            "message": "the screw runs 1.50 mm into pan_base (t 9.50..11.00); the screw's solid overlaps pan_base (10.603 mm\u00b3, t 9.50..11.00)",
+            "parts": [
+              "base_carrier_screws#3",
+              "pan_base"
+            ],
+            "evidence": {
+              "next_solid": null,
+              "tip_t_mm": 16.0,
+              "tip_clearance_mm": null,
+              "min_tip_clearance_mm": 0.5,
+              "probe_end_t_mm": 26.0
+            }
+          },
+          {
+            "id": "fastener:base_carrier_screws#3:length",
+            "status": "fail",
+            "message": "the placed solid is 16.00 mm long, the record says 8; length 16 is outside the 6.00..9.00 mm the stack takes (thread at 3.00 + 3.00 engagement; pan_base at 9.50 less 0.5 tip room)",
+            "parts": [
+              "base_carrier_screws#3"
+            ],
+            "evidence": {
+              "fits_mm": [
+                6.0,
+                9.0
+              ],
+              "limited_by": "pan_base",
+              "stock_that_fits_mm": [
+                6.0,
+                7.0,
+                8.0
+              ],
+              "length_mm": 16.0,
+              "record_length_mm": 8.0,
+              "thread_depth_required_mm": 13.0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "negative:missing_hole",
+      "pass": true,
+      "evidence": {
+        "counts": {
+          "pass": 27,
+          "warn": 0,
+          "fail": 1
+        },
+        "expected_failure": ":holes",
+        "witnessed": true,
+        "findings": [
+          {
+            "id": "fastener:base_carrier_screws#0:holes",
+            "status": "fail",
+            "message": "no hole in base_board_carrier: material on the axis; the screw overlaps base_board_carrier (21.206 mm\u00b3, t 0.00..3.00): the hole is too small or missing",
+            "parts": [
+              "base_board_carrier",
+              "base_carrier_screws#0"
+            ],
+            "evidence": {
+              "holes": {
+                "base_board_carrier": {
+                  "radius_mm": 0.0,
+                  "point": [
+                    55.7,
+                    -31.0,
+                    9.0
+                  ],
+                  "open_to_mm": 3.75
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "fasteners:manufacturer_pcb",
+      "pass": false,
+      "evidence": {
+        "counts": {
+          "pass": 24,
+          "warn": 0,
+          "fail": 4
+        },
+        "expected_failure": null,
+        "witnessed": true,
+        "findings": [
+          {
+            "id": "fastener:base_board_screws#0:tip",
+            "status": "fail",
+            "message": "the kernel could not decide the screw against base_board_inserts#0: volumes disagree: vol(a) 42.1296 != common 0.33917 + cut 41.0937 mm3",
+            "parts": [
+              "base_board_inserts#0",
+              "base_board_screws#0"
+            ],
+            "evidence": {
+              "next_solid": {
+                "part": "base_board_carrier",
+                "t_mm": 8.1
+              },
+              "tip_t_mm": 6.0,
+              "tip_clearance_mm": 2.1,
+              "min_tip_clearance_mm": 0.5,
+              "probe_end_t_mm": 16.0
+            }
+          },
+          {
+            "id": "fastener:base_board_screws#1:tip",
+            "status": "fail",
+            "message": "the kernel could not decide the screw against base_board_inserts#1: volumes disagree: vol(a) 42.1296 != common 0.33917 + cut 41.0937 mm3",
+            "parts": [
+              "base_board_inserts#1",
+              "base_board_screws#1"
+            ],
+            "evidence": {
+              "next_solid": {
+                "part": "base_board_carrier",
+                "t_mm": 8.1
+              },
+              "tip_t_mm": 6.0,
+              "tip_clearance_mm": 2.1,
+              "min_tip_clearance_mm": 0.5,
+              "probe_end_t_mm": 16.0
+            }
+          },
+          {
+            "id": "fastener:base_board_screws#2:tip",
+            "status": "fail",
+            "message": "the kernel could not decide the screw against base_board_inserts#2: volumes disagree: vol(a) 42.1296 != common 0.33917 + cut 41.0937 mm3",
+            "parts": [
+              "base_board_inserts#2",
+              "base_board_screws#2"
+            ],
+            "evidence": {
+              "next_solid": {
+                "part": "base_board_carrier",
+                "t_mm": 8.1
+              },
+              "tip_t_mm": 6.0,
+              "tip_clearance_mm": 2.1,
+              "min_tip_clearance_mm": 0.5,
+              "probe_end_t_mm": 16.0
+            }
+          },
+          {
+            "id": "fastener:base_board_screws#3:tip",
+            "status": "fail",
+            "message": "the kernel could not decide the screw against base_board_inserts#3: volumes disagree: vol(a) 42.1296 != common 0.33917 + cut 41.0937 mm3",
+            "parts": [
+              "base_board_inserts#3",
+              "base_board_screws#3"
+            ],
+            "evidence": {
+              "next_solid": {
+                "part": "base_board_carrier",
+                "t_mm": 8.1
+              },
+              "tip_t_mm": 6.0,
+              "tip_clearance_mm": 2.1,
+              "min_tip_clearance_mm": 0.5,
+              "probe_end_t_mm": 16.0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "fasteners:manufacturer_carrier",
+      "pass": false,
+      "evidence": {
+        "counts": {
+          "pass": 24,
+          "warn": 0,
+          "fail": 4
+        },
+        "expected_failure": null,
+        "witnessed": true,
+        "findings": [
+          {
+            "id": "fastener:base_carrier_screws#0:tip",
+            "status": "fail",
+            "message": "the kernel could not decide the screw against base_carrier_inserts#0: volumes disagree: vol(a) 42.1296 != common 6.63245 + cut 35.4825 mm3",
+            "parts": [
+              "base_carrier_inserts#0",
+              "base_carrier_screws#0"
+            ],
+            "evidence": {
+              "next_solid": {
+                "part": "pan_base",
+                "t_mm": 9.5
+              },
+              "tip_t_mm": 8.0,
+              "tip_clearance_mm": 1.5,
+              "min_tip_clearance_mm": 0.5,
+              "probe_end_t_mm": 18.0
+            }
+          },
+          {
+            "id": "fastener:base_carrier_screws#1:tip",
+            "status": "fail",
+            "message": "the kernel could not decide the screw against base_carrier_inserts#1: volumes disagree: vol(a) 42.1296 != common 6.63245 + cut 35.4825 mm3",
+            "parts": [
+              "base_carrier_inserts#1",
+              "base_carrier_screws#1"
+            ],
+            "evidence": {
+              "next_solid": {
+                "part": "pan_base",
+                "t_mm": 9.5
+              },
+              "tip_t_mm": 8.0,
+              "tip_clearance_mm": 1.5,
+              "min_tip_clearance_mm": 0.5,
+              "probe_end_t_mm": 18.0
+            }
+          },
+          {
+            "id": "fastener:base_carrier_screws#2:tip",
+            "status": "fail",
+            "message": "the kernel could not decide the screw against base_carrier_inserts#2: volumes disagree: vol(a) 42.1296 != common 6.63245 + cut 35.4825 mm3",
+            "parts": [
+              "base_carrier_inserts#2",
+              "base_carrier_screws#2"
+            ],
+            "evidence": {
+              "next_solid": {
+                "part": "pan_base",
+                "t_mm": 9.5
+              },
+              "tip_t_mm": 8.0,
+              "tip_clearance_mm": 1.5,
+              "min_tip_clearance_mm": 0.5,
+              "probe_end_t_mm": 18.0
+            }
+          },
+          {
+            "id": "fastener:base_carrier_screws#3:tip",
+            "status": "fail",
+            "message": "the kernel could not decide the screw against base_carrier_inserts#3: volumes disagree: vol(a) 42.1296 != common 6.63245 + cut 35.4825 mm3",
+            "parts": [
+              "base_carrier_inserts#3",
+              "base_carrier_screws#3"
+            ],
+            "evidence": {
+              "next_solid": {
+                "part": "pan_base",
+                "t_mm": 9.5
+              },
+              "tip_t_mm": 8.0,
+              "tip_clearance_mm": 1.5,
+              "min_tip_clearance_mm": 0.5,
+              "probe_end_t_mm": 18.0
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -4,7 +4,7 @@ Issue #66; integration #61. This passive change keeps the existing PCB pose and 
 
 ## Status
 
-Design and validation in progress. Physical fit, printer clearance, harness disconnection/slack and affected-base structural qualification are unverified. Do not treat this isolated mounting change as a turret print release.
+Geometry implemented; model acceptance remains incomplete after the detailed manufacturer checks failed. Physical fit, printer clearance, harness disconnection/slack and affected-base structural qualification are unverified. Do not treat this isolated mounting change as a turret print release.
 
 ## Design contract
 
@@ -36,3 +36,11 @@ The public model contains eight screws and eight inserts as labelled authored si
 The isolated hardware inventory is three SKUs and sixteen instances: eight screws and eight inserts. Four carrier screws and four anchor inserts are additional to the previous BOM; the existing four PCB screws/inserts move to the carrier.
 
 The first manufacturer-backed run (`683ae9a`) failed rather than qualifying the mount: the real insert has a 0.105 mm thread lead-in and 5.53 mm useful thread span, giving 4.295 mm PCB-screw engagement and 4.895 mm carrier-screw engagement. The nominal 4.4/5 mm arithmetic excludes that lead-in. The checker now distinguishes grip from the usable thread start. It also registers detailed inserts individually; OCCT could not consistently subtract a screw from the previous compound of four receivers. Unknown kernel outcomes remain failures, and negative controls must include a concrete failure of their intended mechanism.
+
+## Latest complete run: 42db26b
+
+The protected regions, rigid-module routes, deliberate obstruction controls and both public fastener groups passed. Each public fastener group passed 28 checks; deliberately short/long screws, missing holes and blocked tools were rejected for their intended reasons. With actual manufacturer inserts and the cached PCB screws, each group passed 24 checks and failed four tip checks because the Boolean kernel could not conserve volume. Those eight unknown results remain failures; the thread lead-in/engagement declarations themselves now pass.
+
+The failure is not diagnosed as a frame or grouping defect. A separate native-frame experiment accidentally changed insert thread clocking and cannot establish frame invariance. `tools/probe-thread-boolean.py` is the corrected minimal reproducer: its `--frame canonical` applies the same rigid transform to both already positioned parts. It records private model hashes, toolkit code hash, runtime and the unchanged tolerances, without exporting vendor geometry. No tolerance relaxation is justified by the current evidence.
+
+`checks.json` intentionally has `pass_model_checks: false`, `release_ready: false` and `physical_fit_verified: false`. This branch is not a print-release approval.
