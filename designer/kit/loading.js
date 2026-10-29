@@ -42,7 +42,8 @@ export function createLoadingStatus(host, { label = '', onRetry, onCancel, overl
   const finish = (state, text, opts = {}) => {
     if (!valid(opts.token ?? generation)) return false;
     ++generation;
-    retryAction = opts.onRetry ?? onRetry; cancelAction = opts.onCancel ?? onCancel;
+    retryAction = Object.hasOwn(opts, 'onRetry') ? opts.onRetry : onRetry;
+    cancelAction = Object.hasOwn(opts, 'onCancel') ? opts.onCancel : onCancel;
     paint(state, text); return true;
   };
   const api = {
@@ -50,7 +51,8 @@ export function createLoadingStatus(host, { label = '', onRetry, onCancel, overl
     begin(text = label, opts = {}) {
       if (disposed) return null;
       const token = ++generation;
-      retryAction = opts.onRetry ?? onRetry; cancelAction = opts.onCancel ?? onCancel;
+      retryAction = Object.hasOwn(opts, 'onRetry') ? opts.onRetry : onRetry;
+      cancelAction = Object.hasOwn(opts, 'onCancel') ? opts.onCancel : onCancel;
       paint('loading', text); return token;
     },
     update(text, token = generation) { if (!valid(token)) return false; message.textContent = text; return true; },
