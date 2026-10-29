@@ -2,7 +2,7 @@
 
 Work in progress for [issue 85](https://github.com/Valpatel/gyropup/issues/85), continuing the removable carrier in [issue 66](https://github.com/Valpatel/gyropup/issues/66). This page will bind the actual connectors, cable exits and parking positions to the complete module service check. It is not fabrication approval.
 
-The [C2 candidate](base-board-interfaces.md) already requires C3 and the pan-servo connection to be unplugged while the carrier remains mechanically retained. Their real release and parked-tail geometry is still absent. A green C2 reservation check does not cover these connections.
+The [C2 candidate](base-board-interfaces.md) requires C3 and the pan-servo connection to be unplugged while the carrier remains mechanically retained. C3 now has source-bound housing poses, unplug/park sweeps and a separate support/access candidate checked against the listed neighbours. Actual retained cable routes, the servo disconnect and complete module withdrawal remain unqualified. The bounded C2/C3 checks do not establish that complete service sequence.
 
 | Interface | Current project selection | Evidence to establish before a service claim |
 | --- | --- | --- |
@@ -12,7 +12,7 @@ The [C2 candidate](base-board-interfaces.md) already requires C3 and the pan-ser
 
 The legacy wiring table calls C3's board tails 60 mm long and its ring leads 250 mm. Those lengths are not yet demonstrated retained service slack. The existing “Molex 5264-type” servo description does not by itself identify a particular housing, terminal, mating header or crimp tool.
 
-The next geometry check will retain the PCB, carrier, their four PCB screws and four inserts as one rigid module with exact member identities. External carrier retainers, base inserts, servo, stator connection, fixed harness and any removed bumper hardware will retain their separate identities and explicit service order. Conditional removal prerequisites will be labelled as such; they must not silently become proved teardown operations.
+The represented retained inventory now includes the carrier, PCB/component envelopes, four PCB screws and four inserts, the C3 support with two screws and two nuts, the C3 module housing and two C2 module reservations. Contacts, crimps, real wiring/junctions, the servo interface and added protection hardware are explicitly incomplete. The next full-service check must move the completed module with exact member identities while keeping external retainers, base inserts, servo, fixed stator/harness and bumper hardware separate. Conditional removal prerequisites must remain labelled; they cannot silently become proved teardown operations.
 
 Before new full-service evidence is generated, the historical service checker must adopt complete input provenance and reviewed topology/uncertainty predicates. It must reject missing or wrong manufacturer variants, inaccessible latch/grip space, still-mated interfaces, inadequate retained tails and parked cables that obstruct withdrawal. Unknown manufacturer bend radius, insulation or actual lead data remains unknown rather than becoming a guessed clearance.
 
