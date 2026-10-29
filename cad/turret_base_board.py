@@ -18,6 +18,7 @@ M3_CLEAR = 3.4
 INSERT_PILOT = 4.0  # catalogue maximum hole diameter; printed fit still needs a coupon
 INSERT_LENGTH = 5.74  # normalized 94459A140 manufacturer model, nominal 5.7
 PUBLIC_NOTE = 'authored simplified hardware; not manufacturer CAD; threads/knurls omitted'
+MANUFACTURER_PARTS = ('91290A111', '91290A113', '94459A140')
 
 
 def box(x0, x1, y0, y1, z0, z1):
@@ -113,12 +114,14 @@ def screw_specs():
     }
 
 
-def hardware(private=False, available_private=False):
-    """Individual instances allow coverage, tool and wrong-variant checks."""
+def hardware(private=False):
+    """Individual instances, either all authored public or all private manufacturer CAD.
+
+    A partial private cache must never quietly create a mixed manufacturer check.
+    """
     out = {}
     def load(pn):
-        present = (ROOT / f'references/vendor/mcmaster/{pn}/{pn}.norm.step').is_file()
-        return normalized(pn, private or (available_private and present))
+        return normalized(pn, private=private)
     for group,spec in screw_specs().items():
         shape = load(spec['pn'])
         for i,(o,d) in enumerate(spec['axes']):

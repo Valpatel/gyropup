@@ -16,6 +16,7 @@ import cadquery as cq
 from cadagent.gates import Assembly, Tolerances, PairCache
 from cadagent.gates.assembly import AssemblySequenceWorld, AccessOptions, sweep_pair
 from cadagent.gates.fasteners import FastenerSpec, fastener_gate
+from cadagent.gates.verdict import Check, verdict
 import turret as tu
 import turret_base_board as bb
 
@@ -44,15 +45,48 @@ def sweep(moving, obstacle, seat=True, direction=(-1.,0.,0.)):
     return sweep_pair(world,'module',direction,'obstacle',options=AccessOptions(max_step_mm=.25),seat=seat)
 
 
+def manufacturer_inputs():
+    """Inventory the same private root the geometry loader uses; do not import CAD."""
+    models = {}
+    for pn in bb.MANUFACTURER_PARTS:
+        relative = f'references/vendor/mcmaster/{pn}/{pn}.norm.step'
+        path = bb.ROOT / relative
+        models[pn] = {'available': path.is_file(), 'file': relative}
+        if path.is_file():
+            models[pn]['sha256'] = hashlib.sha256(path.read_bytes()).hexdigest()
+    return models
+
+
+def manufacturer_complete(models):
+    """A complete, valid private inventory is mandatory, including on an empty cache."""
+    return all(models.get(pn, {}).get('available') is True and models[pn].get('valid') is True
+               for pn in bb.MANUFACTURER_PARTS)
+
+
+def model_checks_pass(checks, models):
+    return bool(checks) and all(c['pass'] for c in checks) and manufacturer_complete(models)
+
+
 def hardware_gate(which, base=None, bumper=None, bad_length=None, missing_hole=False, manufacturer=False):
     """PCB screws tested on bench; carrier screws tested with the base present."""
+    models = manufacturer_inputs() if manufacturer else {}
+    missing = [pn for pn, record in models.items() if not record['available']]
+    if missing:
+        # Every hardware instance included below must have its real input. In
+        # particular, do not replace a missing screw or receiver with a public mesh.
+        return verdict('fasteners', [Check('manufacturer:inputs', 'fail',
+                       'private manufacturer CAD missing; geometry checks not run', missing,
+                       {'missing': missing, 'models': models})],
+                       assumptions=['Manufacturer checks require all selected private STEP inputs; no public fallback.'],
+                       extra={'hardware_geometry': 'manufacturer inputs incomplete',
+                              'not_checked': ['manufacturer fastener geometry'], 'manufacturer_models': models})
     a = Assembly()
     carrier=bb.carrier(); pcb=bb.board()
     if missing_hole:
         y,z=bb.CARRIER_HOLES[0]
         carrier=carrier.union(bb.cx(bb.M3_CLEAR/2,53,56,y,z))
     a.add('base_board_carrier',shape(carrier));a.add('base_board',shape(pcb))
-    hw=bb.hardware(available_private=manufacturer)
+    hw=bb.hardware(private=manufacturer)
     # Keep each detailed receiver independent: Boolean subtraction against a
     # compound of four threaded inserts produced inconsistent OCCT volumes.
     for n,s in hw.items():
@@ -61,7 +95,7 @@ def hardware_gate(which, base=None, bumper=None, bad_length=None, missing_hole=F
     specdata=bb.screw_specs()[which]
     spec=FastenerSpec(name=which,**{k:v for k,v in specdata.items() if k!='pn'},diameter_mm=3.,
                       thread_depth_mm=bb.INSERT_LENGTH,min_engagement_mm=3.,head_d_mm=5.5,head_h_mm=3.,tool='driver')
-    if manufacturer and (ROOT/'references/vendor/mcmaster/94459A140/94459A140.norm.step').is_file():
+    if manufacturer:
         # Manufacturer STEP rays: first useful thread is 0.105 mm past each mouth.
         # Overall length is 5.74 mm; the usable threaded span is 5.53 mm.
         spec.thread_start_mm += .105
@@ -80,7 +114,10 @@ def hardware_gate(which, base=None, bumper=None, bad_length=None, missing_hole=F
     names=[n for n in a.names if not n.startswith(which+'#')]
     steps=[dict(order=i+1,fit=n) for i,n in enumerate(names)]
     steps.append(dict(order=len(steps)+1,fit=spec.clamps,fasteners=[which],tool='driver'))
-    return fastener_gate(a,{which:spec},steps=steps,tools={'driver':TOOL},cache=PAIR_CACHE)
+    result = fastener_gate(a,{which:spec},steps=steps,tools={'driver':TOOL},cache=PAIR_CACHE)
+    result.update(hardware_geometry='private manufacturer STEP' if manufacturer else bb.PUBLIC_NOTE,
+                  manufacturer_models=models)
+    return result
 
 
 def run(out):
@@ -136,19 +173,21 @@ def run(out):
                       and 'could not decide' not in c['message'] for c in gates[name]['checks'])
         check(('fasteners:' if expected else 'negative:')+name,bool(gates[name]['pass'])==expected and witnessed,
               {'counts':gates[name]['counts'],'expected_failure':failure_kind,'witnessed':witnessed,'findings':gates[name]['findings']})
-    # Offline manufacturer coverage is audited independently. Missing models never
-    # silently become a manufacturer's model and do not qualify hardware completeness.
-    private={}
-    for pn in ('91290A111','91290A113','94459A140'):
-        p=ROOT/f'references/vendor/mcmaster/{pn}/{pn}.norm.step'
-        private[pn]={'available':p.is_file(),'file':str(p.relative_to(ROOT))}
-        if p.is_file():
-            s=bb.normalized(pn,private=True).val();b=s.BoundingBox()
-            private[pn].update(sha256=hashlib.sha256(p.read_bytes()).hexdigest(),bbox_mm=[b.xlen,b.ylen,b.zlen],valid=s.isValid())
+    # This audit participates in the aggregate, independently of each stage's
+    # preflight: removing a private input cannot turn a failed candidate green.
+    private=manufacturer_inputs()
+    for pn, record in private.items():
+        if record['available']:
+            try:
+                s=bb.normalized(pn,private=True).val();b=s.BoundingBox()
+                record.update(bbox_mm=[b.xlen,b.ylen,b.zlen],valid=s.isValid())
+            except Exception as exc:
+                record.update(valid=False,error=f'{type(exc).__name__}: {exc}')
+    check('manufacturer:model_coverage',manufacturer_complete(private),private)
     import cadagent.gates.assembly as ga
     sourcehash={n:hashlib.sha256((ROOT/n).read_bytes()).hexdigest() for n in SOURCES}
-    result=dict(schema='gyropup.base-board-service/1',pass_model_checks=all(c['pass'] for c in checks),checks=checks,
-                physical_fit_verified=False,release_ready=False,hardware_geometry='public module geometry; manufacturer STEP for fastener checks where locally available, explicitly audited below',
+    result=dict(schema='gyropup.base-board-service/1',pass_model_checks=model_checks_pass(checks,private),checks=checks,
+                physical_fit_verified=False,release_ready=False,hardware_geometry='public module geometry; manufacturer fastener stages require all private STEP inputs; no fallback',
                 manufacturer_models=private,commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),
                 sources=sourcehash,toolkit_assembly_sha256=hashlib.sha256(Path(ga.__file__).read_bytes()).hexdigest(),
                 seconds=round(time.time()-started,2),limits=['No physical fits or printed tolerances measured.',

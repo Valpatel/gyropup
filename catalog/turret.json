@@ -789,7 +789,7 @@
    "step_url": "https://www.mcmaster.com/91290A113/",
    "bbox_mm": null,
    "volume_mm3": null,
-   "pending": "2026-10-29: cache search found no STEP; one sequential tools/mcmaster_cad.py fetch failed: product page had no specification table. Authored public geometry is used; manufacturer-model validation remains incomplete."
+   "pending": "2026-10-29: no cached STEP. The initial missing-specification-table error did not establish its cause. A fresh Chrome session at 08:16:39Z returned HTTP 200 with an explicit login requirement and no specification rows or CAD controls; this observation is session-specific. Cached 2026-10-27 specifications remain historical. Authored public geometry is labelled; manufacturer checks require the actual downloaded, normalized STEP and remain incomplete."
   },
   "frame": "axis +Z, centred on the axis, head on +z and shank towards -z; z = 0 at the underside of the head (socket, button, pan, hex and flanged heads) or at the top face of a countersunk (flat) head",
   "sources": [
