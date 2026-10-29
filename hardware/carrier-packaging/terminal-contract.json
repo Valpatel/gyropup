@@ -1,0 +1,300 @@
+{
+  "adjacent_protection": [
+    {
+      "id": "H.F4",
+      "mpn": "BournsMF-R010",
+      "pins": {
+        "1": "12V_PAN",
+        "2": "SAFETY_A"
+      },
+      "placement": null
+    },
+    {
+      "id": "H.D8",
+      "mpn": "onsemi1N5408G",
+      "note": "Existing shunt after upstreamfuse, no creditedI2t coordination orseriesprotection.",
+      "pins": {
+        "A": "GND",
+        "K": "BUS_HEAD_FUSED"
+      },
+      "placement": null
+    },
+    {
+      "catalog_key": "tvs-p6ke51a",
+      "exact_manufacturer": null,
+      "id": "H.D14",
+      "note": "Barepartfamily has unresolvedmanufacturervariant; no provenclampceiling.",
+      "pins": {
+        "A": "GND",
+        "K": "BUS_HEAD_FUSED"
+      },
+      "placement": null
+    },
+    {
+      "catalog_key": "littelfuse-0fhm0001zxj",
+      "exact_voltage_grade": null,
+      "id": "HEAD_FUSE_HOLDER",
+      "note": "Currentexactbareholder qualification open in supplieraudit; donotinherit58V familyrow as originalrating."
+    }
+  ],
+  "all_terminals_allocated": false,
+  "continuous_bypasses": [
+    [
+      "C2-S.module.1",
+      "C3.module.5",
+      "CAN_H"
+    ],
+    [
+      "C2-S.module.2",
+      "C3.module.6",
+      "CAN_L"
+    ],
+    [
+      "C3.module.9",
+      "PAN.servo.datasheet3",
+      "PAN_TTL"
+    ]
+  ],
+  "existing_interfaces": [
+    {
+      "id": "C2-P.module",
+      "location": "existing carrier interface; not on new protection PCB",
+      "mpn": "AMASS XT30U-M.G.Y",
+      "physical_source": "docs/base-board-interfaces.md",
+      "pins": {
+        "+": "BUS_HEAD_FUSED",
+        "-": "GND"
+      },
+      "wire": "existing selected-for-layout16AWG short tails; transition to18AWG trunk unresolved"
+    },
+    {
+      "contacts": "4x43031-0001",
+      "id": "C2-S.module",
+      "mpn": "Molex43020-0400",
+      "physical_source": "docs/base-board-interfaces.md",
+      "pins": {
+        "1": "CAN_H",
+        "2": "CAN_L",
+        "3": "SAFETY_A",
+        "4": "SAFETY_B"
+      },
+      "wire": "4x24AWG existing proposed module tails",
+      "wire_awg": 24
+    },
+    {
+      "contacts": "12x43031-0001",
+      "id": "C3.module",
+      "mpn": "Molex43020-1200",
+      "physical_source": "docs/carrier-service-connectors.md",
+      "pins": {
+        "1": "BUS_HEAD_FUSED",
+        "10": "GND",
+        "11": "BUS_HEAD_FUSED",
+        "12": "GND",
+        "2": "BUS_HEAD_FUSED",
+        "3": "GND",
+        "4": "GND",
+        "5": "CAN_H",
+        "6": "CAN_L",
+        "7": "SAFETY_PULSE",
+        "8": "GND",
+        "9": "PAN_TTL"
+      },
+      "wire": "24AWG module tails; manufacturer contact range20..24AWG, insulation identity/OD still must match",
+      "wire_awg": 24
+    },
+    {
+      "contact_awg_range": [
+        26,
+        30
+      ],
+      "contact_max_insulation_od_mm": 1.27,
+      "contacts": "12x43030-0010",
+      "id": "C3.fixed",
+      "mpn": "Molex43025-1200",
+      "note": "No43030-0001 substitution selected here.",
+      "physical_source": "docs/carrier-service-connectors.md",
+      "wire": "original28AWG ring leads; contact26..30AWG and max1.27mm insulation; NOT a24AWG termination",
+      "wire_awg": 28
+    },
+    {
+      "id": "PAN.servo",
+      "mpn": null,
+      "note": "Physical OEM cavity/lead identity unknown; conditional CJTA2505 family3A is unqualified at3.25A screening load.",
+      "physical_source": "C018 servo table in existing connector note",
+      "pins": {
+        "datasheet1": "GND",
+        "datasheet2": "SERVO_12V_AFTER_F1",
+        "datasheet3": "PAN_TTL"
+      }
+    }
+  ],
+  "frozen": false,
+  "junctions": [
+    {
+      "hardware": null,
+      "id": "J_BUS",
+      "logical_members": [
+        "C2-P.module.+",
+        "C3.module.1",
+        "C3.module.2",
+        "C3.module.11",
+        "PROTECTION.BUS_IN",
+        "H.D8.K",
+        "H.D14.K"
+      ],
+      "net": "BUS_HEAD_FUSED",
+      "note": "Whole-head10A branch; protectionfeed is only one tap. Never mergewithPAN_INPUT or12V_PAN.",
+      "position": null
+    },
+    {
+      "hardware": null,
+      "id": "J_RETURN",
+      "logical_members": [
+        "C2-P.module.-",
+        "C3.module.3",
+        "C3.module.4",
+        "C3.module.8",
+        "C3.module.10",
+        "C3.module.12",
+        "PROTECTION.GND",
+        "LEGACY.GND",
+        "PAN.servo.datasheet1",
+        "H.D8.A",
+        "H.D14.A"
+      ],
+      "net": "GND",
+      "note": "Logical commonnet only. Actual star/return segregation, wire-splice count andground-noise behavior are unresolved.",
+      "position": null
+    },
+    {
+      "hardware": null,
+      "id": "J_12V",
+      "logical_members": [
+        "PROTECTION.12V_OUT",
+        "L.F1.1",
+        "H.F4.1"
+      ],
+      "net": "12V_PAN",
+      "note": "L.F1 output toservo; F4 output topendant. No3A connector qualification inherited.",
+      "position": null
+    }
+  ],
+  "legacy_control_pins": {
+    "L.C1": {
+      "1": "TIMING",
+      "2": "GND"
+    },
+    "L.C2": {
+      "1": "CTRL",
+      "2": "GND"
+    },
+    "L.C3": {
+      "1": "SAFETY_B",
+      "2": "GND"
+    },
+    "L.D1": {
+      "A": "OSC_OUT",
+      "K": "PULSE_LIMIT_IN"
+    },
+    "L.F1": {
+      "1": "12V_PAN",
+      "2": "SERVO_12V_AFTER_F1"
+    },
+    "L.R1": {
+      "1": "SAFETY_B",
+      "2": "DISCHARGE"
+    },
+    "L.R2": {
+      "1": "DISCHARGE",
+      "2": "TIMING"
+    },
+    "L.R3": {
+      "1": "PULSE_LIMIT_IN",
+      "2": "SAFETY_PULSE"
+    },
+    "L.U1": {
+      "1": "GND",
+      "2": "TIMING",
+      "3": "OSC_OUT",
+      "4": "SAFETY_B",
+      "5": "CTRL",
+      "6": "TIMING",
+      "7": "DISCHARGE",
+      "8": "SAFETY_B"
+    }
+  },
+  "observed": "2026-10-29",
+  "physical_end_count": {
+    "C2_module": 6,
+    "C3_module": 12,
+    "note": "Positions only, not21 solderpads. Bypasses andjunctions change actual termination count; everybranch needs an actual retention/connectiondesign.",
+    "servo": 3,
+    "total_external_positions": 21
+  },
+  "protection_external_terminal_proposal": {
+    "internal_nets": [
+      "VIN_PROTECTED",
+      "PAN_INPUT",
+      "PAN_ENABLE",
+      "GATE",
+      "GATE_RC",
+      "SHDN_DIV",
+      "FLOATING_VSS"
+    ],
+    "mount_zone": null,
+    "note": "Threefunctionalexternalpowerports only; noimplicit connector forinternalnets. Reviewed U1 latch reset stillneeds an explicit isolated/reset interface; no live manual procedure or unselected switch is implied. Exactcoppercurrent/clearance andphysicalwireends must befrozen withPCBoutline.",
+    "pad_geometry": null,
+    "port_nets": {
+      "12V_OUT": "12V_PAN",
+      "BUS_IN": "BUS_HEAD_FUSED",
+      "GND": "GND"
+    },
+    "ports": [
+      "BUS_IN",
+      "GND",
+      "12V_OUT"
+    ],
+    "terminal_type": null,
+    "wire_strain_relief": null
+  },
+  "source_files": [
+    "docs/base-board-interfaces.md",
+    "docs/carrier-service-connectors.md",
+    "cad/turret_boards.py",
+    "hardware/carrier-pan-protection/pins.md"
+  ],
+  "status": "LOGICAL_TERMINAL_INVENTORY_PHYSICAL_ALLOCATION_OPEN",
+  "wire_candidate_limits": [
+    "No substitution for currentPololu/Remington selection",
+    "5D is manufacturer-specific; no inside/centerline interpretation orrepeated-flex life inferred",
+    "No stock,current/thermal,crimp orbundle qualification",
+    "24AWGcandidate must notbecrimped into43030-0010 on28AWG ring side"
+  ],
+  "wire_candidates_not_selected": [
+    {
+      "derived_radius_at_max_od_mm": 5.715,
+      "gauge_awg": 24,
+      "mpn": "Alpha6712",
+      "od_in": [
+        0.041,
+        0.045
+      ],
+      "published_bend_multiple": 5,
+      "stranding": "7/32",
+      "url": "https://www.alphawire.com/products/wire/ecogen/ecowire/6712"
+    },
+    {
+      "derived_radius_at_max_od_mm": 10.541,
+      "gauge_awg": 16,
+      "mpn": "Alpha6716",
+      "od_in": [
+        0.079,
+        0.083
+      ],
+      "published_bend_multiple": 5,
+      "stranding": "26/30",
+      "url": "https://www.alphawire.com/products/wire/ecogen/ecowire/6716"
+    }
+  ]
+}
