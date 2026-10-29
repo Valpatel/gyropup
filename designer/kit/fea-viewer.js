@@ -19,9 +19,12 @@ const clamp01 = (x) => (x < 0 ? 0 : x > 1 ? 1 : x);
 const TYPES = { float32: Float32Array, uint32: Uint32Array, uint8: Uint8Array, int32: Int32Array, uint16: Uint16Array };
 
 function decode(a) {
-  const bin = atob(a.b64);
+  if(!a||!Object.hasOwn(TYPES,a.dtype)||typeof a.b64!=='string')throw new Error('The structural report is missing valid surface data.');
+  let bin;
+  try{bin=atob(a.b64);}catch{throw new Error('The structural report contains unreadable surface data.');}
   const u8 = new Uint8Array(bin.length);
   for (let i = 0; i < bin.length; i++) u8[i] = bin.charCodeAt(i);
+  if(u8.byteLength%TYPES[a.dtype].BYTES_PER_ELEMENT)throw new Error('The structural report contains incomplete surface data.');
   return new TYPES[a.dtype](u8.buffer);
 }
 
@@ -137,7 +140,7 @@ export async function mountFeaViewer(element, url, opts = {}) {
   await new Promise(requestAnimationFrame);
   let data;
   try{data=JSON.parse(new TextDecoder().decode(bytes));}catch{throw new Error('The downloaded report is not valid JSON.');}
-  if (data.format !== 'cadagent-fea-viewer') throw new Error('not a cad-agent FEA viewer file (Study.export_viewer)');
+  if (data?.format !== 'cadagent-fea-viewer') throw new Error('This file is not a supported structural report.');
 
   if (!document.getElementById('fea-viewer-css')) {
     const st = document.createElement('style');
@@ -165,14 +168,15 @@ export async function mountFeaViewer(element, url, opts = {}) {
 
   // --- the surface: one vertex per triangle corner, so a triangle can turn black on its own (element stress)
   const surf = data.surface;
-  const nv = Math.trunc(num(surf.vertices)), nt = Math.trunc(num(surf.triangles));
+  if(!surf||!Number.isInteger(surf.vertices)||surf.vertices<3||!Number.isInteger(surf.triangles)||surf.triangles<1)throw new Error('The structural report is missing valid surface data.');
+  const nv = surf.vertices, nt = surf.triangles;
   const P0 = decode(surf.positions), IDX = decode(surf.index), D = decode(surf.displacement);
   const VM = decode(surf.von_mises), VMT = decode(surf.tri_von_mises), FL = decode(surf.flags);
   const SM = surf.von_mises_smoothed ? decode(surf.von_mises_smoothed) : null;         // averaged corners ("smoothed")
   const TFL = surf.tri_flags ? decode(surf.tri_flags) : new Uint8Array(nt);           // 1: support element, not checked
   if (P0.length !== 3 * nv || D.length !== 3 * nv || VM.length !== nv || FL.length !== nv || IDX.length !== 3 * nt
-      || VMT.length !== nt || TFL.length !== nt || IDX.some((i) => i >= nv)) throw new Error('inconsistent surface arrays');
-  if(nv<3||nt<1||![P0,D,VM,VMT].every(values=>values.every(Number.isFinite))||IDX.some(i=>i<0||!Number.isInteger(i))||(SM&&SM.length!==nv))throw new Error('The structural report has invalid or empty surfaces.');
+      || VMT.length !== nt || TFL.length !== nt || IDX.some((i) => i >= nv)) throw new Error('The structural report has inconsistent surface data.');
+  if(nv<3||nt<1||![P0,D,VM,VMT].every(values=>values.every(Number.isFinite))||IDX.some(i=>i<0||!Number.isInteger(i))||(SM&&(SM.length!==nv||!SM.every(Number.isFinite))))throw new Error('The structural report has invalid or empty surfaces.');
   opts.onProgress?.('Preparing the structural view…');
   await new Promise(requestAnimationFrame);
   element.innerHTML = `<div id="app"></div><div id="hud">
