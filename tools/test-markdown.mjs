@@ -72,7 +72,8 @@ test('progress and build expose their data, tables, prices, and original downloa
     assert.ok(md.includes(status.value), status.value);
   }
   assert.ok(md.includes(progress.updated));
-  assert.ok(md.includes(progress.log.at(-1).title));
+  for(const entry of progress.log)assert.ok(md.includes(entry.title),'Collapsed history remains agent-readable: '+entry.title);
+  assert.ok(md.includes(progress.focus));
   assert.match(md, /\|.*scenario/i);
   assert.match(md, /Watch the deformation animation/);
   assert.match(md, /WebM alternative/);

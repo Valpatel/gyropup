@@ -138,6 +138,16 @@ const TB = '../exports/turret/bench/';
 
 const validPrint=value=>isRecord(value)&&isRecord(value.parts)&&isRecord(value.by_material)&&Array.isArray(value.too_big);
 const updatedIntro=$('updated').innerHTML;
+const entryHTML=e=>`<li><time>${esc(e.time)}</time><b>${esc(e.title)}</b><p>${esc(e.text)}</p>`
+  + `<div class="entry-links">${(e.links||[]).map(l=>`<a href="${esc(l.href)}">${esc(l.title)}</a>`).join('')}</div></li>`;
+// Native disclosures keep the long evidence available to keyboard users and
+// static Markdown. Deep links must reveal every enclosing disclosure as well.
+function revealProgressTarget(hash){
+  let id;try{id=decodeURIComponent(hash.slice(1));}catch{return;}
+  const target=$(id);if(!target)return;
+  for(let el=target;el;el=el.parentElement)if(el.tagName==='DETAILS')el.open=true;
+  window.requestAnimationFrame(()=>target.scrollIntoView({block:'start'}));
+}
 $('progress-loading')?.remove();
 window.__portalLoads={};
 function sectionLoad(id,target,label,render){
@@ -159,14 +169,23 @@ function updatePageState(){
  document.body.dataset.loadState=pending?'loading':failed?'partial':'ready';
 }
 await Promise.all([
-sectionLoad('progress','status','Progress report',async isCurrent=>{
+sectionLoad('progress','current-focus','Progress report',async isCurrent=>{
 const prog = await getJson('../docs/progress.json',{optional:false,validate:value=>isRecord(value)&&Array.isArray(value.status)&&Array.isArray(value.log),label:'Progress report'});
 if(!isCurrent())return false;
 if (prog) {
   $('updated').innerHTML=updatedIntro+` Last update: <b>${esc(prog.updated)}</b>.`;
+  $('current-focus').textContent=prog.focus||'';
   $('status').innerHTML = (prog.status || []).map((s) => `<div class="card"><b>${esc(s.title)}</b><div class="k">${esc(s.value)}</div><span>${esc(s.note || '')}</span></div>`).join('');
-  $('log').innerHTML = (prog.log || []).slice().reverse().map((e) => `<li><time>${esc(e.time)}</time><b>${esc(e.title)}</b><p>${esc(e.text)}`
-    + `${(e.links || []).map((l) => ` <a href="${esc(l.href)}">${esc(l.title)}</a>`).join(' ·')}</p></li>`).join('');
+  const entries=prog.log.slice().reverse(),history=entries.slice(3),days=new Map();
+  $('log').innerHTML=entries.slice(0,3).map(entryHTML).join('');
+  for(const entry of history){
+    const raw=String(entry.time||''),day=/^\d{4}-\d{2}-\d{2}/.test(raw)?raw.slice(0,10):/^\d{2}-\d{2}/.test(raw)?'2026-'+raw.slice(0,5):'Undated notes';
+    if(!days.has(day))days.set(day,[]);days.get(day).push(entry);
+  }
+  // Retain the reader's expanded dates if only the progress data is retried.
+  const openDays=new Set([...$('history').querySelectorAll('details[open]')].map(el=>el.id));
+  $('history').innerHTML=[...days].map(([day,items])=>`<details class="progress-fold" id="history-${esc(day)}"${openDays.has('history-'+day)?' open':''}><summary><span><strong>${esc(day)}</strong><small>${items.length} recorded update${items.length===1?'':'s'}</small></span></summary><div class="fold-body"><ul class="log history-log">${items.map(entryHTML).join('')}</ul></div></details>`).join('');
+  $('history-count').textContent=`${history.length} earlier updates · grouped by date`;
   partsUI.replace($('shop'), prog.shopping ? `<table class="cmp" data-label="Motor order notes"><thead><tr><th>item</th><th>qty</th><th>each</th><th>total</th><th>notes</th></tr></thead><tbody>`
     + prog.shopping.items.map((i) => `<tr><td>${i.href ? `<a href="${esc(i.href)}">${esc(i.item)}</a>` : esc(i.item)}</td><td data-sort-value="${/^\d+$/.test(String(i.qty))?Number(i.qty):''}">${esc(i.qty)}</td><td data-sort-value="${noteUSD(i.each)}">${esc(i.each)}</td><td data-sort-value="${noteUSD(i.total)}">${esc(i.total)}</td><td>${esc(i.notes)}</td></tr>`).join('')
     + `</tbody></table><p class="lede">${esc(prog.shopping.note || '')}</p>` : '');
@@ -218,7 +237,7 @@ if (rig) {
 
 return !!rig;
 }),
-sectionLoad('fea','fea','Structural reports',async isCurrent=>{
+sectionLoad('fea','strength-title','Structural reports',async isCurrent=>{
 const fea = await getJson(`${LEG}fea/summary.json`,{optional:true,validate:value=>isRecord(value)&&Array.isArray(value.results),label:'Structural reports'});
 if(!isCurrent())return false;
 if (fea) {
@@ -231,7 +250,7 @@ if (fea) {
   const viewerHref = r=>{const file=mediaFor(r)?.fields||r.viewer;return file?`kit/fea.html?case=${encodeURIComponent(`../../${file}`)}&title=${encodeURIComponent(`${r.part} ${r.case}`)}&current=progress`:null;};
   const b = fea.front_link_buckling;
   partsUI.replace($('fea'), `<table class="cmp" data-label="Structural reports"><thead><tr><th>part</th><th>case</th><th>material</th><th>SF</th><th>need</th><th>deflection</th><th></th><th>3D</th></tr></thead><tbody>`
-    + rows.map(({ r, ok, warn }, i) => `<tr class="click" data-i="${i}"><td>${esc(r.part)}</td><td>${esc(r.case)}</td><td>${esc(r.material)}</td>`
+    + rows.map(({ r, ok, warn }, i) => `<tr class="click" data-i="${i}"><td>${esc(r.part)}<button type="button" class="case-choice" aria-label="Inspect ${esc(r.part)} ${esc(r.case)}">Inspect</button></td><td>${esc(r.case)}</td><td>${esc(r.material)}</td>`
       + `<td data-sort-value="${r.safety_factor??''}">${r.safety_factor}</td><td data-sort-value="${r.target??''}">${r.target}</td><td data-sort-value="${r.probe_displacement_mm?Math.hypot(...r.probe_displacement_mm):''}">${r.probe_displacement_mm ? Math.hypot(...r.probe_displacement_mm).toFixed(2) : '—'} mm</td><td>${tag(ok, warn)}</td>`
       + `<td>${viewerHref(r) ? `<a class="open3d" href="${esc(viewerHref(r))}" title="Interactive: load slider, hot spots, section cut">open ↗</a>` : '—'}</td></tr>`).join('')
     + (b ? `<tr><td>front lower link</td><td>buckling (${esc(b.note)})</td><td>Structural check</td><td data-sort-value="${b.sf}">${b.sf}</td><td data-sort-value="3">3</td><td data-sort-value="">${b.P_cr_n} N</td><td>${tag(b.sf >= 3)}</td><td></td></tr>` : '')
@@ -248,8 +267,18 @@ if (fea) {
       + `<b>Safety factor ${esc(r.safety_factor)} / required ${esc(r.target)}${r.safety_factor<r.target?' — below target':''}.</b>`;
     document.querySelectorAll('#fea tr.click').forEach((tr) => tr.classList.toggle('on', +tr.dataset.i === i));
   };
-  document.querySelectorAll('#fea tr.click').forEach((tr) => tr.addEventListener('click', (e) => { if (!e.target.closest('a')) show(+tr.dataset.i); }));
-  if (rows.length) show(rows.reduce((a, x, i) => (x.r.safety_factor / x.r.target < rows[a].r.safety_factor / rows[a].r.target ? i : a), 0));
+  document.querySelectorAll('#fea tr.click').forEach((tr) => tr.addEventListener('click', (e) => {
+    if(e.target.closest('a'))return;
+    show(+tr.dataset.i);
+    // Only an explicit selection moves focus/viewport; loading or retrying a
+    // report must not drag readers away from the work they are inspecting.
+    $('fea-media').focus({preventScroll:true});
+    $('fea-media').scrollIntoView({block:'start'});
+  }));
+  if (rows.length) {
+    const featured=rows.findIndex(({r})=>r.part==='hip_frame'&&r.case==='E1');
+    show(featured>=0?featured:rows.reduce((a,x,i)=>(x.r.safety_factor/x.r.target<rows[a].r.safety_factor/rows[a].r.target?i:a),0));
+  }
 }
 
 
@@ -347,3 +376,13 @@ return !!tpp;
 })
 ]);
 updatePageState();
+if(window.location){
+  window.addEventListener('hashchange',()=>revealProgressTarget(window.location.hash));
+  document.querySelector('main.prog').addEventListener('click',event=>{
+    const link=event.target.closest('a[href^="#"]');
+    if(!link||event.button!==0||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;
+    // Also reveal a link to the current hash after its section was collapsed.
+    revealProgressTarget(link.getAttribute('href'));
+  });
+  revealProgressTarget(window.location.hash);
+}

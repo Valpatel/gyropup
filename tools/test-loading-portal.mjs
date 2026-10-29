@@ -99,6 +99,7 @@ try{
       await route.fulfill({contentType:'application/json',body:JSON.stringify({...progress,status:[{title:'Newer report',value:'Current response'}]})});
     }));
     await state(page,'load-progress','loading');await state(page,'load-leg','ready');
+    await page.getByText('The five-bar leg',{exact:true}).click();
     assert.match(await page.locator('#leglede').innerText(),/Two RS-04s/);
     await page.evaluate(()=>window.__portalLoads.progress.retry());await state(page,'load-progress','ready');
     assert.match(await page.locator('#status').innerText(),/Newer report/);
@@ -111,6 +112,7 @@ try{
     await page.route('**/exports/leg/fea/summary.json*',route=>fail(route));
   });
   await state(reports,'load-leg','unavailable');await state(reports,'load-fea','error');await state(reports,'load-progress','ready');
+  await reports.getByText('The five-bar leg',{exact:true}).click();
   assert.match(await reports.locator('#load-leg').innerText(),/not been published/);assert.doesNotMatch(await reports.locator('#load-fea').innerText(),/not been published/);
   await reports.evaluate(()=>window.savedLog=document.getElementById('log'));
   await reports.unroute('**/exports/leg/fea/summary.json*');await retry(reports,'load-fea');await state(reports,'load-fea','ready');

@@ -48,3 +48,4 @@
 | Native design files are downloadable but notes are unlisted, or a drawing opens cropped at paper width | [Engineering files need a usable portal](inbox/2026-10-29-downloadable-cad-notes-still-need-a-usable-portal.md) |
 - Insert coupon passes but parent fit is unknown; horizontal versus vertical pilot; geometry-only3MF confused with a sliced print → [Preserve parent specimen orientation](inbox/2026-10-29-fit-specimens-must-preserve-layer-orientation.md), `research/carrier-insert-fit/`.
 - A failed CAD receipt passes after its failed check or output manifest is deleted → [Require complete evidence membership](inbox/2026-10-29-receipt-coverage-must-not-be-optional.md), `tools/test-carrier-connector-support.py`.
+| Progress looks stale, the useful simulation is buried, or links cannot open collapsed reports | [Progress publication and readable history](domains/progress-publication.md) |
