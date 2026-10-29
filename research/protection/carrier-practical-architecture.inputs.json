@@ -166,8 +166,13 @@
     },
     {
       "id": "bzg03",
-      "url": "https://www.vishay.com/docs/86138/bzg03c-m-series.pdf",
-      "revision": "modern M-series; substitution qualification outstanding"
+      "url": "https://www.vishay.com/doc?86574=",
+      "revision": "Document 86574, Rev. 1.0 (24-Oct-2025); modern M-series, legacy Figure 10 substitution qualification outstanding",
+      "pages": [
+        1,
+        2
+      ],
+      "capture": "Manufacturer PDF parsed on 2026-10-29; M3_A-08 ordering family and 75-M row verified. Replaces broken 86138 URL; not a legacy-grade equivalence claim."
     }
   ],
   "supplier_observation_limit": "Public pages retrieved on observed_on, sometimes from search cache. Quantities/prices are observations, not reserved stock or a shipping commitment. No cart or purchase. Unconfirmed is not unavailable.",
