@@ -449,7 +449,9 @@ def _joint_checks_case(C, SH, case):
     return out
 
 
-def run(mesh, anim=True, only=None):
+def run(mesh, anim=True, only=None, only_cases=None, viewer=False):
+    if only_cases and (not only or 'leg' in only):
+        raise ValueError('Case filtering requires individual parts; whole-leg share solves stay complete')
     OUT.mkdir(parents=True, exist_ok=True)
     L = fb.leg_parts()
     C = cases()
@@ -457,6 +459,8 @@ def run(mesh, anim=True, only=None):
 
     def study(part, case, setup, rare, why, shape=None, record=True):
         if only and part not in only:
+            return None
+        if only_cases and case not in only_cases:
             return None
         t0 = time.time()
         mat = L.meta[part].get('fea_material') or 'pa6_cf_xy'
@@ -473,6 +477,7 @@ def run(mesh, anim=True, only=None):
         st.render(png, view=VIEWS.get(part, (25, -60)), title=f"{part} {case} ({MATERIALS[mat].name}): SF {r['safety_factor']}, {disp} mm at the load")
         if anim:
             r['animation'] = str(st.animate(OUT / f'{part}-{case}.mp4', view=VIEWS.get(part, (25, -60)), title=f'{part} {case}: {MATERIALS[mat].name}').relative_to(R))
+        if anim or viewer:
             r['viewer'] = str(st.export_viewer(OUT / f'{part}-{case}.json').relative_to(R))
         target = TARGETS['sf_fault' if rare == 'fault' else 'sf_rare' if rare else 'sf']
         if part == 'leg':                                        # the printed members; the joints are joint_checks()
@@ -744,7 +749,7 @@ def run(mesh, anim=True, only=None):
                            'all_ok': all(r['ok'] for r in results) and P_cr / max(1.0, C['R1']['loads']['front_axial']) >= 3.0 and joints['all_ok'],
                            'joints_worst': joints['worst'],
                            'weakest': min(results, key=lambda r: r['safety_factor'] / r['target'])['part'] + ' ' + min(results, key=lambda r: r['safety_factor'] / r['target'])['case'] if results else None}}
-    if not only:
+    if not only and not only_cases:
         (OUT / 'summary.json').write_text(json.dumps(summary, indent=1, default=lambda o: list(o) if isinstance(o, (tuple, np.ndarray)) else str(o)) + '\n')
     print('buckling', buckling)
     print('verdict', summary['verdict'])
@@ -756,5 +761,9 @@ if __name__ == '__main__':
     ap.add_argument('--mesh', type=float, default=4.0)
     ap.add_argument('--no-anim', action='store_true')
     ap.add_argument('--only', nargs='+')
+    ap.add_argument('--cases', nargs='+', help='Select recorded cases; requires --only to avoid incomplete whole-leg share solves')
+    ap.add_argument('--viewer', action='store_true', help='Export solved surface fields even when --no-anim is selected')
     a = ap.parse_args()
-    run(a.mesh, anim=not a.no_anim, only=a.only)
+    if a.cases and (not a.only or 'leg' in a.only):
+        ap.error('--cases requires --only for individual parts; whole-leg share solves stay complete')
+    run(a.mesh, anim=not a.no_anim, only=a.only, only_cases=a.cases, viewer=a.viewer)
