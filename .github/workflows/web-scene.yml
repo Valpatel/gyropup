@@ -40,10 +40,13 @@ jobs:
               npm run test:audio
               npm run test:web
               npm run test:progress
+              npm run test:highlights
+              npm run test:highlight-integration
               npm run test:markdown
               npm run test:cache
               npm run test:diagrams
               npm run test:services
+              npm run test:preview
           - suite: loading
             commands: |
               npm run test:part-media
@@ -56,6 +59,7 @@ jobs:
               npm run test:build-portal
               npm run test:carrier-inspection
               npm run test:study-media
+              npm run test:highlight-media
     steps:
       - uses: actions/checkout@v4
         with:
@@ -75,7 +79,7 @@ jobs:
           PLAYWRIGHT_CHANNEL: chromium
           SITE_URL: http://127.0.0.1:8879
         run: |
-          node tools/serve-site.mjs > /tmp/gyropup-site.log 2>&1 &
+          GYROPUP_PREVIEW_PARENT_PID=$$ node tools/serve-site.mjs --ephemeral > /tmp/gyropup-site.log 2>&1 &
           server_pid=$!
           trap 'kill "$server_pid"' EXIT
           ${{ matrix.commands }}

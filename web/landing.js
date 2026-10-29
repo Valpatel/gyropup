@@ -161,8 +161,3 @@ async function showRobot() {
   }
 }
 showRobot();
-const video = document.querySelector('.sim-window video');
-new IntersectionObserver(([entry]) => {
-  if (entry.isIntersecting && !reduceMotion.matches) video.play().catch(() => {});
-  else video.pause();
-}).observe(video);

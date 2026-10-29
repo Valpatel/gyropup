@@ -16,9 +16,15 @@ npm ci
 npm run dev
 ```
 
-Open the printed URL (default `http://127.0.0.1:8644`). If that port is taken,
-use `PORT=8764 npm run dev`. After editing sources, run `npm run build` and
-refresh. The preview serves the latest bundle without restarting. The original
+Open the shared URL, `http://127.0.0.1:8899`. Check its exact served directory and
+owner with `npm run preview:status`. `npm run preview` starts the existing build
+or reuses the same checkout's server. If another checkout owns the shared address,
+coordinate with its owner and stop it before switching; do not select another
+persistent port. After editing sources, run `npm run build` and refresh. The
+preview serves the latest bundle without restarting. Stop it with Ctrl+C when
+finished. Tests use `node tools/serve-site.mjs --ephemeral`, retain its child handle,
+and stop/wait during teardown. Temporary CLI servers also expire after 30 minutes
+and stop if their parent disappears; `PORT=0` remains supported. The original
 `cad-agent site --serve` remains available for CAD-specific work; it redirects
 its root to the engineering notebook. `npm run dev` is the full public-site
 preview, including the landing page.
@@ -173,9 +179,12 @@ masses and do not establish validation at the full 100 lb ceiling. Tritium is a 
 Graphlings, and GraphDone cards describe the integration roadmap, not a running
 connected robot. GraphDone coordinates development work, not onboard control.
 
-`web/playground.png` is a browser capture of the committed target-practice
-snapshot, taken2026-10-28. Regenerate it from the simulator when that snapshot
-changes; do not use a screenshot of an obsolete landing page as the video poster.
+The landing highlights use fresh captures of the current public turret and demo,
+plus explicitly archived leg physics and E1 static deformation inserts. The matching
+WebP poster and H.264/VP9 movies live in `web/highlights/`. Rebuild them with the
+[capture and encoding recipe](validation/landing-highlights.md); do not pair the
+movie with a screenshot from another robot revision. The older `web/playground.png`
+remains an archival asset and is no longer the landing movie's poster.
 
 ## Markdown for agents
 
