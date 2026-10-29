@@ -23,3 +23,25 @@ Validate replay and seeking after initial playback. The local preview server mus
 serve real single byte ranges, as a media client can reject HTTP 200 when resuming
 with a range. `tools/test-site-ranges.mjs` checks HTTP semantics and the highlights
 browser harness checks the consumer. Verify production range responses separately.
+
+Exercise the real 3D hero and movie together on a constrained connection. An
+isolated player's successful first decoded frame does not prove smooth playback
+or that competing CAD downloads meet their deadlines. Check automatic and
+explicit loading order, queued-play cancellation, failed/missing hero release,
+initial buffering, and an actual network-emulated integrated page. Keep those
+observations distinct from real-device performance guarantees.
+
+Before a delayed media request or play attempt, verify current bounds as well as
+observer state; a scroll can precede IntersectionObserver delivery. Keep queued
+intent cancellation independent of an already-false visibility predicate. Native
+`waiting` events can represent seek/decode with a complete buffer: inspect the
+contiguous range before pausing, and retain native WebKit replay coverage in
+addition to synthetic buffer tests.
+
+Clear a recovery watchdog on actual forward presented-frame progress as well as
+normal media events. Scope callbacks to the current play/source generation, and
+invalidate them on cancellation, retry, seek and replay; frozen recovery must
+still time out. Complete the full second replay past the watchdog deadline.
+Read current reduced-motion preferences at the final eligibility decision:
+WebKit can briefly report a fresh query as true before a retained list and its
+change listener update. Keep the listener for ongoing cancellation too.

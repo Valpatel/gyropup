@@ -17,6 +17,7 @@
 | A motor, wheel, feed dial or flap orbits outside its assembly while animating; static bounds still pass | [Rendered mechanism frames](domains/rendered-mechanisms.md) |
 | Upper links move while output adapters or their screws remain fixed to the robot body | [Output-adapter ownership](inbox/2026-10-29-output-adapters-belong-to-upper-links.md) |
 | Static build succeeds but a new simulator module returns 404 or the page never initializes | [Static build module references](domains/static-build.md) |
+| A network-failure test passes but its fixture never intercepts a versioned module | [Versioned imports and verified fixtures](domains/static-build.md) |
 | Buttons appear correct but keyboard, pause, overlays or reload behave differently | [Playground interactions](domains/playground-interactions.md) |
 | A fresh simulator clips the robot above the screen, but resizing or switching models repairs it | [Late overlay layout and camera insets](domains/playground-interactions.md) |
 | Loading poster and interactive hero jump in pose, scale or background | [Landing preview handoff](domains/landing-preview.md) |
@@ -28,6 +29,10 @@
 | Video works in local Chrome but CI Chromium reports no supported streams or never reaches ready | [Chrome and Chromium codec coverage](inbox/2026-10-29-chrome-and-chromium-do-not-share-video-codecs.md) |
 | A movie's neighboring report or current model has changed, or a capture has the wrong aspect ratio | [Recorded evidence and capture dimensions](domains/structural-media.md) |
 | Video plays initially but WebKit replay fails with an unexpected HTTP 200 range response | [Local and production media ranges](domains/structural-media.md) |
+| Isolated video tests pass but real-page autoplay stalls or times out CAD parts on a slow connection | [Integrated media loading and buffering](domains/structural-media.md) |
+| Replay stalls with a full buffer, or late readiness starts an offscreen movie download | [Native recovery and current visibility](domains/structural-media.md) |
+| A moving replay hits its recovery timeout, or a fresh motion preference precedes its change event | [Frame-progress watchdogs and current preferences](domains/structural-media.md) |
+| A second virtual-clock fixture fails inside Playwright before navigation | [Isolate virtual-clock browser contexts](inbox/2026-10-29-virtual-clocks-need-isolated-browser-contexts.md) |
 | A native navigation works but its test rejects Cloudflare canonicalization or a queryless static Back link | [Exact canonical navigation routes](inbox/2026-10-29-hosted-navigation-must-accept-the-canonical-route.md) |
 | A mesher fails with OpenSSL symbols despite gmsh-first imports, or runtime version lookup fails after solving | [Select the mesher runtime before Python starts](inbox/2026-10-29-mesher-runtime-must-be-selected-before-python-starts.md) |
 | A STEP worker surfaces a null-reference error despite empty HTTP/page-error arrays, or a fresh rerun passes after a reader failure | [Imported assembly errors and unresolved WebKit investigation](inbox/2026-10-29-review-the-imported-assembly-not-only-the-export.md#a-later-passing-import-does-not-erase-an-intermittent-reader-error) |
