@@ -6,6 +6,13 @@ const engine=process.env.PLAYWRIGHT_BROWSER==='webkit'?webkit:chromium;
 const browser=await engine.launch(engine===chromium?{channel:process.env.PLAYWRIGHT_CHANNEL==='chromium'?undefined:'chrome',headless:true,args:['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']}:{headless:true});
 const page=await browser.newPage({viewport:{width:1280,height:900}}),errors=[];
 page.setDefaultTimeout(90000); // Software-rendered CI advances capped simulation time slowly.
+async function resize(width,height){
+ const wasPhone=page.viewportSize().width<900;
+ await page.setViewportSize({width,height});
+ if(wasPhone!==(width<900))await page.waitForFunction(phone=>document.getElementById('drawer-handle').getAttribute('aria-expanded')===(phone?'false':'true'),width<900);
+ await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+}
+
 const out=process.env.TEST_OUTPUT||'/tmp/gyropup-turret-interactions';await mkdir(out,{recursive:true});
 page.on('pageerror',e=>errors.push(e.message));
 await page.addInitScript(()=>localStorage.setItem('gyropup.probe','off'));
@@ -124,9 +131,7 @@ try{
  await page.emulateMedia({reducedMotion:'no-preference'});
  const phones=[];
  for(const [width,height] of [[320,568],[360,640],[390,844],[430,932],[844,390]]){
-  await page.setViewportSize({width,height});
-  await page.waitForFunction(()=>document.getElementById('hud').classList.contains('drawer-closed'));
-  await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+  await resize(width,height);
   await page.evaluate(()=>window.__sim.bench().api.select('pan_base'));
   const metrics=await page.evaluate(()=>{
    const b=document.querySelector('.tb-reload'),r=b.getBoundingClientRect(),el=document.elementFromPoint(r.x+r.width/2,r.y+r.height/2);
@@ -142,7 +147,7 @@ try{
  await page.selectOption('#design-select','v2');await page.waitForFunction(()=>!window.__sim.state.bench);
  const centers=[];
  for(const [width,height] of [[1280,900],[320,568],[390,844]]){
-  await page.setViewportSize({width,height});await page.waitForTimeout(200);
+  await resize(width,height);
   const drawer=page.locator('#drawer-handle');if(await drawer.isVisible()&&await drawer.getAttribute('aria-expanded')==='false')await drawer.click();
   await page.evaluate(()=>{document.querySelector('#hud').classList.remove('panel-collapsed');document.querySelectorAll('#panel details').forEach(d=>d.open=true);});
   const auto=page.locator('button.hud-chip[data-id=auto]');await auto.scrollIntoViewIfNeeded();
