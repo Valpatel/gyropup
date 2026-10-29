@@ -16,7 +16,7 @@
 <link rel="stylesheet" href="/web/landing.css">
 <script type="importmap">{"imports":{"three":"/designer/kit/vendor/three/three.module.min.js","three/addons/":"/designer/kit/vendor/three/addons/"}}</script>
 </head>
-<body>
+<body class="landing-page">
 <a class="skip" href="#main">Skip to content</a>
 <header class="site-header wrap">
 <a class="wordmark" href="/" aria-label="Gyropup home"><img src="/web/icon.svg" width="38" height="38" alt="">gyropup<span class="brand-dot">.</span></a>
@@ -30,8 +30,8 @@
 <div class="actions"><a class="button primary" href="/designer/sim.html">Jump into the sim <span aria-hidden="true">↗</span></a><a class="button quiet" href="#built">Follow the build <span aria-hidden="true">↓</span></a></div>
 <p class="micro">Play in your browser. No robot required.</p></div>
 <div class="hero-scene"><div class="scene-orbit" aria-hidden="true"></div><div class="scene-spark spark-one" aria-hidden="true">✳</div><div class="scene-spark spark-two" aria-hidden="true">+</div><span class="scene-label"><span class="status-dot"></span> MEET YOUR FUTURE TEAMMATE</span>
-<div id="robot-preview" aria-label="Interactive 3D preview of Gyropup; drag to turn the robot"><img class="scene-fallback" src="/docs/hero.jpg" alt="Gyropup's yellow five-bar leg and foam-ball turret, rendered from the project CAD"></div>
-<div class="scene-caption"><b>Ready. Set. Robot.</b><span id="preview-hint">A robot taking shape, one iteration at a time.</span></div><span class="prototype-stamp">PROTOTYPE<br>IN PROGRESS ↗</span></div>
+<div id="robot-preview" data-state="loading" aria-label="Interactive 3D preview of Gyropup; drag to turn the robot"><img class="scene-fallback" src="/web/robot-poster.png" width="1024" height="1024" alt="Gyropup, the yellow robot with a foam-ball turret, rendered from the current project CAD"></div>
+<div class="scene-caption"><b>Ready. Set. Robot.</b><span id="preview-hint">A robot taking shape, one iteration at a time.</span></div><div class="hero-controls" aria-label="Robot preview controls"><button id="hero-inspect" type="button" aria-pressed="false" disabled>Peek inside</button><button id="hero-sound" type="button" aria-pressed="true" disabled>Sound on</button><details class="hero-volume"><summary aria-label="Adjust volume" title="Adjust volume">♫</summary><label>Volume<input id="hero-volume" type="range" min="0" max="1" step="0.01" value="1" disabled><output>100%</output></label></details></div><span class="prototype-stamp">PROTOTYPE<br>IN PROGRESS ↗</span></div>
 </section>
 <div class="ticker"><div class="wrap"><span>MADE FOR PLAY</span><span aria-hidden="true">✳</span><span>POWERED BY CURIOSITY</span><span aria-hidden="true">✳</span><span>BUILT BY AUTONOMOUS SYSTEMS</span><span aria-hidden="true">✳</span></div></div>
 <section id="meet" class="meet wrap section"><div class="section-heading"><p class="eyebrow">01 / THE BIG IDEA</p><h2>Big robots.<br>Backyard legends.</h2></div><div class="meet-copy"><p class="large-copy">Meet your next<br>favorite rival.</p><p>A self-balancing robot. A foam-ball turret. A personality you can’t help rooting for. Gyropup is the beginning of a robot family that rolls, dodges, and battles alongside you.</p><p>Our big idea: 50-pound-class robot playmates for foam-ball battles, target challenges, and backyard missions. Explore the simulated prototype today while we work toward the real thing.</p><a class="text-link" href="/designer/sim.html">Meet Gyropup in the simulator ↗</a><p class="design-note">The ambition is 50-pound-class play. The current CAD design is 37.5 kg (83 lb), and weight reduction is part of the engineering ahead.</p></div></section>
