@@ -27,7 +27,7 @@ The actual LTC4359 Rev F PDF and Figure10 pixels have now been inspected indepen
 
 The DCB6 exposed pad is electrically NC in this paper proposal, following page11's guidance to increase effective spacing above30 V. Pin6 still returns to floating VSS; the physical exposed metal is not omitted from the land envelope. Actual creepage, contamination/leakage and thermal behavior remain unresolved. The SHDN pin remains open as drawn in Figure10, with its leakage condition visible. This is not approval to route a compact high-voltage board merely because the IC fits.
 
-[Package records](package-envelopes.json) currently provide primary evidence for44 of47 electronic items; they distinguish maximum body dimensions, nominal module profiles and manufacturer lands. They do not establish a complete footprint/terminal inventory or a placement. Newly bound records include exact Diodes SOD523/SOD123/SMA variants, Vishay high-power1206 and Yageo axial resistor families. KEMET reflow pad extents are recorded separately from its larger placement courtyards; through-hole lead forming and solder stacks remain unresolved. The Panasonic valve requires at least2 mm of free space: its upright maximum body plus valve allowance alone is14.5 mm, before mounting, PCB, underside solder and insulation. The18 mm trial stack therefore cannot be accepted from nominal component heights.
+[Package records](package-envelopes.json) currently provide primary evidence for45 of47 electronic items; they distinguish maximum body dimensions, nominal module profiles and manufacturer lands. They do not establish a complete footprint/terminal inventory or a placement. Newly bound records include exact Diodes SOD523/SOD123/SMA variants, Vishay high-power1206 and Yageo axial resistor families. KEMET reflow pad extents are recorded separately from its larger placement courtyards; through-hole lead forming and solder stacks remain unresolved. The Panasonic valve requires at least2 mm of free space: its upright maximum body plus valve allowance alone is14.5 mm, before mounting, PCB, underside solder and insulation. The18 mm trial stack therefore cannot be accepted from nominal component heights.
 
 The mechanical investigation now also holds the region on the bumper teardown sequence. The existing C3 support obstructs a pure upward rigid bumper lift, while some carrier/support fasteners require the bumper removed for the currently modelled straight tools. The proposed electronics overhang adds an obstruction. No new board placement is frozen while a viable rigid teardown path or explicit retention redesign is missing.
 
@@ -55,3 +55,16 @@ The actual build supply remains unresolved: DDZ9699T-7 had only one cached Mouse
 The exact MF-R300 drawing supplies a12 mm maximum width,18.3 mm top-to-coating-end span and3 mm thickness. Its bare lead length is only a minimum, and the installed flat form is not dimensioned. The legacy12×14×3.5 mm box therefore does not establish actual fit. Its guaranteed hold-current table also drops from3 A at23°C to2.04 A at60°C; the3.25 A load screen does not establish continuous operation through this unchanged F1. No fuse or circuit substitution is made here.
 
 Littelfuse SMCJ150A dimensions are visually bound to the authorized2020 mirror, with2025 text-only corroboration distinguished. Overall terminal span8.13, width6.22 and height2.62 mm use the correct axes. Its solder dimensions combine minima and a maximum gap:9×3.3 mm is a proposed pattern, not a manufacturer maximum. Source-axis/minimum-versus-maximum negative controls preserve these distinctions.
+
+## Retained control-board envelopes also need correction
+
+Retaining the control function does not validate its old drawn boxes. The source-bound `cad/turret_boards.py` currently uses these simplified reservations:
+
+| Item | Existing reservation | Exact-source limit | Contract consequence |
+|---|---|---|---|
+| NE555P | DIP8 height4.5 mm | TI PDIP maximum5.08 mm above its seating plane | Reserve the larger height plus actual mounting; the old box is not a complete body bound. |
+| R3 RSF100 and D1 group | Height3.5 mm | RSF100 maximum body diameter5 mm | A horizontal resistor can exceed the group height before lead stand-off; actual placement and clearance remain open. |
+| F1 MF-R300 | Flat12×14×3.5 mm | Manufacturer dimensions include a18.3 mm coated span and only a minimum bare lead length | Define and validate the formed part; no flat installed maximum follows from the source. |
+| R1/R2/C2/C3 group |12×5×6 mm combined box | Exact individual bodies and lead forms have separate limits | Assign every body, formed lead and pad; a group box does not prove four-part packing or routing. |
+
+These are reservation mismatches or missing assembly evidence, not demonstrated collisions. The global11 mm legacy board height limit, tool access and solder-side space still need evaluation using real component placement. The new power-board proposal cannot silently consume the old converter box, retained control area or unallocated termination strip.

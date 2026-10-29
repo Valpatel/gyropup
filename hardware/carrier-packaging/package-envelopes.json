@@ -236,6 +236,57 @@
       "note": "Height conservatively adds maximum stand-off0.05 to tableA maximum0.8. EP is explicitly NC in the paper proposal following >30V spacing guidance; pin6 remains FLOATING_VSS. EP metal/land is still reserved.",
       "source": "ltc4359"
     },
+    "ltc4368_ms10": {
+      "land_constraints_mm": {
+        "inner_gap_range": [
+          3.2,
+          3.45
+        ],
+        "overall_span_min": 5.1,
+        "pad_length_range": [
+          0.762,
+          1.016
+        ],
+        "pad_width_range": [
+          0.267,
+          0.343
+        ]
+      },
+      "land_outer_mm": null,
+      "lead_pitch_mm": 0.5,
+      "match": [
+        "LTC4368IMS-2#PBF"
+      ],
+      "maximum_body_mm": [
+        3.406,
+        5.052,
+        1.1
+      ],
+      "note": "No exposed pad on this MS10 variant. Pin1 marker and top/bottom orientation must be preserved in actual footprint assignment.",
+      "pin_functions_top_view": {
+        "1": "VIN",
+        "10": "GATE",
+        "2": "UV",
+        "3": "OV",
+        "4": "RETRY",
+        "5": "GND",
+        "6": "SHDN",
+        "7": "FAULT",
+        "8": "VOUT",
+        "9": "SENSE"
+      },
+      "planning_gap_mm": 3.2,
+      "planning_land_basis": "Project rectangular pads0.3x1.0 at0.5pitch, gap3.2, overall span5.2. Within manufacturer ranges but no assembly/creepage acceptance. Body extends beyond pin-row land length2.3.",
+      "planning_land_mm": [
+        2.3,
+        5.2
+      ],
+      "planning_pad_mm": [
+        0.3,
+        1.0
+      ],
+      "source": "ltc4368_ms10"
+    },
     "mmsz5231": {
       "land_outer_mm": [
         4.05,

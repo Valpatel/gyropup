@@ -7,7 +7,7 @@
   "fit_qualified": false,
   "frozen": false,
   "inventory_count": 47,
-  "package_evidence_count": 44,
+  "package_evidence_count": 45,
   "remaining_physical_inventory": [
     "external F4, D8, D14 and exact upstream fuse/holder boundary",
     "C2/C3/servo housings, contacts, crimps and actual leads",
@@ -143,8 +143,59 @@
       "datasheet": "https://www.analog.com/media/en/technical-documentation/data-sheets/ltc4368.pdf",
       "group": "retained_cutoff_converter",
       "id": "P.U1",
-      "maximum_envelope": null,
+      "maximum_envelope": {
+        "land_constraints_mm": {
+          "inner_gap_range": [
+            3.2,
+            3.45
+          ],
+          "overall_span_min": 5.1,
+          "pad_length_range": [
+            0.762,
+            1.016
+          ],
+          "pad_width_range": [
+            0.267,
+            0.343
+          ]
+        },
+        "land_outer_mm": null,
+        "lead_pitch_mm": 0.5,
+        "match": [
+          "LTC4368IMS-2#PBF"
+        ],
+        "maximum_body_mm": [
+          3.406,
+          5.052,
+          1.1
+        ],
+        "note": "No exposed pad on this MS10 variant. Pin1 marker and top/bottom orientation must be preserved in actual footprint assignment.",
+        "pin_functions_top_view": {
+          "1": "VIN",
+          "10": "GATE",
+          "2": "UV",
+          "3": "OV",
+          "4": "RETRY",
+          "5": "GND",
+          "6": "SHDN",
+          "7": "FAULT",
+          "8": "VOUT",
+          "9": "SENSE"
+        },
+        "planning_gap_mm": 3.2,
+        "planning_land_basis": "Project rectangular pads0.3x1.0 at0.5pitch, gap3.2, overall span5.2. Within manufacturer ranges but no assembly/creepage acceptance. Body extends beyond pin-row land length2.3.",
+        "planning_land_mm": [
+          2.3,
+          5.2
+        ],
+        "planning_pad_mm": [
+          0.3,
+          1.0
+        ],
+        "source": "ltc4368_ms10"
+      },
       "mpn": "LTC4368IMS-2#PBF",
+      "package_evidence_id": "ltc4368_ms10",
       "pins_from_reviewed_candidate": {
         "1": "VIN_PROTECTED",
         "10": "GATE",
@@ -1918,8 +1969,8 @@
     "docs/carrier-service-connectors.md": "f73db1114d1d807002ff454b5cb9ae1c7d94c1e29af89567b640e36f17966ec7",
     "hardware/carrier-packaging/front-reference-contract.json": "06956af049dafbeaf44bb9b0a739cde0b4ce099f0a6795758bebc77ced918b48",
     "hardware/carrier-packaging/inventory.py": "317786bb0bf507e3a572a48e45b77b08320baf9220bc0156d3c61293d0f767b7",
-    "hardware/carrier-packaging/package-envelopes.json": "ed80c8b61ee3eb5b791266cb5bb5490e4b4762421385daddad620b573938cd70",
-    "hardware/carrier-packaging/primary-envelope-sources.json": "3be2d86aa3ef4f50c1218ca5fdc61c90202e53205780f7a1609698c5cbea3767",
+    "hardware/carrier-packaging/package-envelopes.json": "b64773564646c491bccb4e3f3eaf41e2aea7cecfe4fc689df0454eea3743665c",
+    "hardware/carrier-packaging/primary-envelope-sources.json": "45a9007e8e9e7a77cd1fbf6fa15c537f4a994f4cf81c3156d9a6917a55ddc9c6",
     "hardware/carrier-packaging/terminal-contract.json": "4f1eb2c31cafc363d8ea5381293db8f9ea43dcd111f506ccf698e0599a3253ca",
     "hardware/carrier-pan-protection/availability.json": "549a8ccdfd7d9ea95b5baedcb47ec7aa971cfbdeffe1092e4be13df40c480ec8",
     "hardware/carrier-pan-protection/circuit_design.py": "37b4d99eecaa1f567109df6762a00f69f46c02e6efbe7d53c35893d2955ace8a",

@@ -308,6 +308,24 @@
       "revision": "JC.10/29/20",
       "sha256": "fc7dbc6ac38dbb5c3bcf210c217b13689c80b6830fc775ef66745c9f131fdbb5",
       "url": "https://www.mouser.com/datasheet/2/240/Littelfuse_TVS_Diode_SMCJ_Datasheet_pdf-1317380.pdf"
+    },
+    {
+      "acquisition": "Normal Chrome public PDF-viewer download after an earlier protocol error. ADI product entry403 retained as failed access evidence; no credentials, bypass or access settings changed.",
+      "evidence": "Actual source pages viewed. MS10 body3.00+/-0.102 permits0.152flash each side; reserve3.406 along pin row. Overall lead span4.90+/-0.152, height1.10max. Pad span5.10minimum, inner gap3.20..3.45, pad length0.889+/-0.127 and width0.305+/-0.038, pitch0.50. No MS8 or DFN substitution.",
+      "id": "ltc4368_ms10",
+      "manufacturer_url": "https://www.analog.com/media/en/technical-documentation/data-sheets/ltc4368.pdf",
+      "observed": "2026-10-29",
+      "pages": [
+        2,
+        19
+      ],
+      "render_sha256": {
+        "page19": "694899e062b653e6d091469691721dbbb179757d04f253da34752d856ffc216c",
+        "page2": "e68616d1544d4847b763a2090fd057ff7f264260c4491e90668c0e1a80adb30c"
+      },
+      "revision": "LTC4368 RevC04/21; package05-08-1661 RevF",
+      "sha256": "1a4f8b351d04f893511f6c8023b882a0bbcb0118521c71b0c4c032c5e7af7a52",
+      "url": "https://www.mouser.com/datasheet/2/609/ltc4368-3126108.pdf"
     }
   ],
   "status": "WIP_PRIMARY_INVENTORY_NOT_A_LAYOUT"
