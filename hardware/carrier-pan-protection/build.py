@@ -3,6 +3,7 @@ from pathlib import Path
 import hashlib
 import json
 import os
+import re
 import subprocess
 import xml.etree.ElementTree as ET
 import calculate
@@ -31,6 +32,11 @@ def build():
     normalize_netlist(HERE/'reports/netlist.xml')
     contract=verify.check_netlist(ET.parse(HERE/'reports/netlist.xml').getroot())
     run('sch','export','svg','-o','pictures/','pan-cutoff.kicad_sch')
+    svg=HERE/'pictures/pan-cutoff.svg'
+    stable,count=re.subn(r'<title>SVG Image created as pan-cutoff\.svg date [^<]+</title>',
+                        '<title>Gyropup PAN cutoff candidate; see source-bound receipt</title>',svg.read_text())
+    if count!=1: raise RuntimeError('Unexpected KiCad SVG title format; review before normalizing metadata')
+    svg.write_text(stable)
     (HERE/'reports/calculations.json').write_text(json.dumps(calculate.calculate(),indent=2,sort_keys=True)+'\n')
     files=['README.md','pins.md','fault-review.md','availability.json','circuit_design.py','generate.py','calculate.py','verify.py','test_circuit.py','build.py',
       'pan-cutoff.kicad_sch','pan-cutoff.kicad_pro','candidate.kicad_sym','sym-lib-table','candidate-bom.csv',
