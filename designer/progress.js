@@ -138,6 +138,16 @@ const TB = '../exports/turret/bench/';
 
 const validPrint=value=>isRecord(value)&&isRecord(value.parts)&&isRecord(value.by_material)&&Array.isArray(value.too_big);
 const updatedIntro=$('updated').innerHTML;
+const entryHTML=e=>`<li><time>${esc(e.time)}</time><b>${esc(e.title)}</b><p>${esc(e.text)}</p>`
+  + `<div class="entry-links">${(e.links||[]).map(l=>`<a href="${esc(l.href)}">${esc(l.title)}</a>`).join('')}</div></li>`;
+// Native disclosures keep the long evidence available to keyboard users and
+// static Markdown. Deep links must reveal every enclosing disclosure as well.
+function revealProgressTarget(hash){
+  let id;try{id=decodeURIComponent(hash.slice(1));}catch{return;}
+  const target=$(id);if(!target)return;
+  for(let el=target;el;el=el.parentElement)if(el.tagName==='DETAILS')el.open=true;
+  window.requestAnimationFrame(()=>target.scrollIntoView({block:'start'}));
+}
 $('progress-loading')?.remove();
 window.__portalLoads={};
 function sectionLoad(id,target,label,render){
@@ -164,9 +174,18 @@ const prog = await getJson('../docs/progress.json',{optional:false,validate:valu
 if(!isCurrent())return false;
 if (prog) {
   $('updated').innerHTML=updatedIntro+` Last update: <b>${esc(prog.updated)}</b>.`;
+  $('current-focus').textContent=prog.focus||'';
   $('status').innerHTML = (prog.status || []).map((s) => `<div class="card"><b>${esc(s.title)}</b><div class="k">${esc(s.value)}</div><span>${esc(s.note || '')}</span></div>`).join('');
-  $('log').innerHTML = (prog.log || []).slice().reverse().map((e) => `<li><time>${esc(e.time)}</time><b>${esc(e.title)}</b><p>${esc(e.text)}`
-    + `${(e.links || []).map((l) => ` <a href="${esc(l.href)}">${esc(l.title)}</a>`).join(' ·')}</p></li>`).join('');
+  const entries=prog.log.slice().reverse(),history=entries.slice(3),days=new Map();
+  $('log').innerHTML=entries.slice(0,3).map(entryHTML).join('');
+  for(const entry of history){
+    const raw=String(entry.time||''),day=/^\d{4}-\d{2}-\d{2}/.test(raw)?raw.slice(0,10):/^\d{2}-\d{2}/.test(raw)?'2026-'+raw.slice(0,5):'Undated notes';
+    if(!days.has(day))days.set(day,[]);days.get(day).push(entry);
+  }
+  // Retain the reader's expanded dates if only the progress data is retried.
+  const openDays=new Set([...$('history').querySelectorAll('details[open]')].map(el=>el.id));
+  $('history').innerHTML=[...days].map(([day,items])=>`<details class="progress-fold" id="history-${esc(day)}"${openDays.has('history-'+day)?' open':''}><summary><span><strong>${esc(day)}</strong><small>${items.length} recorded update${items.length===1?'':'s'}</small></span></summary><div class="fold-body"><ul class="log history-log">${items.map(entryHTML).join('')}</ul></div></details>`).join('');
+  $('history-count').textContent=`${history.length} earlier updates · grouped by date`;
   partsUI.replace($('shop'), prog.shopping ? `<table class="cmp" data-label="Motor order notes"><thead><tr><th>item</th><th>qty</th><th>each</th><th>total</th><th>notes</th></tr></thead><tbody>`
     + prog.shopping.items.map((i) => `<tr><td>${i.href ? `<a href="${esc(i.href)}">${esc(i.item)}</a>` : esc(i.item)}</td><td data-sort-value="${/^\d+$/.test(String(i.qty))?Number(i.qty):''}">${esc(i.qty)}</td><td data-sort-value="${noteUSD(i.each)}">${esc(i.each)}</td><td data-sort-value="${noteUSD(i.total)}">${esc(i.total)}</td><td>${esc(i.notes)}</td></tr>`).join('')
     + `</tbody></table><p class="lede">${esc(prog.shopping.note || '')}</p>` : '');
@@ -249,7 +268,10 @@ if (fea) {
     document.querySelectorAll('#fea tr.click').forEach((tr) => tr.classList.toggle('on', +tr.dataset.i === i));
   };
   document.querySelectorAll('#fea tr.click').forEach((tr) => tr.addEventListener('click', (e) => { if (!e.target.closest('a')) show(+tr.dataset.i); }));
-  if (rows.length) show(rows.reduce((a, x, i) => (x.r.safety_factor / x.r.target < rows[a].r.safety_factor / rows[a].r.target ? i : a), 0));
+  if (rows.length) {
+    const featured=rows.findIndex(({r})=>r.part==='hip_frame'&&r.case==='E1');
+    show(featured>=0?featured:rows.reduce((a,x,i)=>(x.r.safety_factor/x.r.target<rows[a].r.safety_factor/rows[a].r.target?i:a),0));
+  }
 }
 
 
@@ -347,3 +369,13 @@ return !!tpp;
 })
 ]);
 updatePageState();
+if(window.location){
+  window.addEventListener('hashchange',()=>revealProgressTarget(window.location.hash));
+  document.querySelector('main.prog').addEventListener('click',event=>{
+    const link=event.target.closest('a[href^="#"]');
+    if(!link||event.button!==0||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;
+    // Also reveal a link to the current hash after its section was collapsed.
+    revealProgressTarget(link.getAttribute('href'));
+  });
+  revealProgressTarget(window.location.hash);
+}

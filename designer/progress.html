@@ -79,60 +79,49 @@
     #print, #turretprint { overflow-x: auto; }
   }
 </style>
+<link rel="stylesheet" href="progress.css">
 </head>
 <body>
 <main class="prog">
-  <div class="portal-intro"><strong>Built by autonomous systems · work in progress</strong>You're inside the Gyropup workshop. These are evolving design files and simulation reports; physical testing is still ahead. <a href="../#built">About the project ↗</a></div>
-  <h1>Gyropup: progress</h1>
+  <div class="portal-intro"><strong>Built by autonomous systems · work in progress</strong>Real design work, recorded in the open. Physical testing is still ahead. <a href="../#built">About Gyropup ↗</a></div>
+  <header class="progress-header">
+    <p class="eyebrow">The Gyropup workshop</p>
+    <h1>A robot taking shape.</h1>
+    <p class="lede" id="updated">Follow the design, see what the simulations reveal, and inspect the work behind each change.</p>
+    <p id="current-focus" class="current-focus"></p>
+  </header>
   <div id="progress-loading"><div class="gp-loading" role="status" aria-live="polite" aria-busy="true" data-state="loading"><span class="gp-loading-icon" aria-hidden="true"></span><span class="gp-loading-message">Loading the published progress reports…</span></div></div>
-  <p class="lede" id="updated">One robot, built leg first: one leg on a test rig, then the foam-ball turret, then the body around two
-  legs. Everything here is CAD and simulation until parts are printed; reports update with each published design change. Everything to order and print
-  for the first prototype, by seller: <a href="build.html">Build</a>.</p>
-  <nav class="portal-jumps" aria-label="Progress sections"><a href="#status">Status</a><a href="#rigtable">Tests</a><a href="#fea">Strength</a><a href="#print">Prints</a><a href="#buy">Parts</a><a href="#turretbuy">Turret</a></nav>
-  <div id="progress-tools"></div>
-<div class="status" id="status"></div>
+  <nav class="portal-jumps" aria-label="Progress sections"><a href="#strength">Deformation</a><a href="#latest">Latest work</a><a href="#status">Status</a><a href="#designs">Designs &amp; tests</a><a href="#parts">Parts &amp; prints</a><a href="#archive">History</a></nav>
 
-  <div class="sec">Latest</div>
-  <div class="card"><ul class="log" id="log"></ul></div>
+  <section class="study-feature" id="strength" aria-labelledby="strength-title">
+    <div class="feature-heading"><p class="eyebrow">Inside the engineering</p><h2 id="strength-title">See where the structure bends.</h2><p>Explore a solved load case, then open the same field in 3D. The movement is exaggerated so small deflections are visible.</p></div>
+    <div class="featured-study">
+      <div id="fea-media" class="study-media"></div>
+      <div class="study-context"><span class="feature-label">Static deformation study</span><h3>One load case. A closer look.</h3><p id="feanote" class="lede"></p><p class="study-limits">This scales a static solution. It is not a jumping robot, elapsed physical time, or a fracture simulation. A compelling visual does not make a failed strength target pass.</p><a class="study-guide" href="../site/pages/docs-structural-study-media-md.html">How to read this study ↗</a></div>
+    </div>
+    <details class="progress-fold case-fold" id="load-cases"><summary><span><strong>All structural results</strong><small>Load cases, safety factors, stills and available 3D fields</small></span></summary><div class="fold-body"><p class="lede">Select a case to inspect its recorded result above. Other cases may have only a still image; unpublished animations are labeled. These historical results do not validate the current 100 lb design ceiling.</p><div id="fea"></div></div></details>
+  </section>
 
-  <div class="sec">Leg v2: a five-bar with both motors in the body</div>
-  <p class="lede" id="leglede"></p>
-  <div class="gallery" id="leg"></div>
+  <section id="latest" aria-labelledby="latest-title"><h2 class="section-title" id="latest-title">Latest from the workshop</h2><ul class="log latest-grid" id="log"></ul></section>
+  <section aria-labelledby="status-title"><h2 class="section-title" id="status-title">Where we are</h2><div class="status" id="status"></div></section>
 
-  <div class="sec">The leg on its test rig (physics)</div>
-  <p class="lede" id="riglede"></p>
-  <div id="rigtable"></div>
-  <div class="gallery" id="rig" style="margin-top:14px"></div>
+  <section id="designs" aria-labelledby="designs-title"><h2 class="section-title" id="designs-title">Designs &amp; recorded tests</h2><p class="lede">Open a workstream to inspect its published snapshot. CAD and simulation remain distinct from physical testing.</p>
+    <details class="progress-fold"><summary><span><strong>The five-bar leg</strong><small>Both motors in the body · poses, geometry and renders</small></span></summary><div class="fold-body"><p class="lede" id="leglede"></p><div class="gallery" id="leg"></div></div></details>
+    <details class="progress-fold"><summary><span><strong>The leg on its test rig</strong><small>Recorded physics · loads, jumps and test scenarios</small></span></summary><div class="fold-body"><p class="lede" id="riglede"></p><div id="rigtable"></div><div class="gallery" id="rig"></div></div></details>
+    <details class="progress-fold"><summary><span><strong>The foam-ball turret</strong><small>Bench-stand CAD and the published hardware snapshot</small></span></summary><div class="fold-body"><p class="lede" id="turretlede"></p><div class="gallery" id="turret"></div></div></details>
+  </section>
 
-  <div class="sec">Strength: static load studies</div>
-  <p class="lede">Each printed part under the rig's worst loads (everyday: safety factor 2; rare events: 1.2, on humid printed PA6-CF).
-  Click a row to inspect its recorded result. Available animations scale a solved static field; they are not transient motion or fracture simulations.
-  <b>open ↗</b> opens the interactive 3D view: drag the load, see the hot spots, cut it open, probe any point.</p>
-  <div class="viewer"><div id="fea"></div><div><div id="fea-media" class="study-media"></div><p class="lede" id="feanote"></p></div></div>
+  <details class="progress-fold" id="parts"><summary><span><strong>Parts &amp; print plans</strong><small>Detailed lists, supplier notes and your local order checklist</small></span></summary><div class="fold-body"><p class="lede">For the combined build, use the <a href="build.html">Build portal</a>. These report-specific lists retain their recorded estimates; check suppliers before ordering.</p><div id="progress-tools"></div>
+    <details class="progress-fold"><summary><span><strong>Leg · what to print</strong><small>Materials, quantities, placement and estimated hours</small></span></summary><div class="fold-body"><p class="lede" id="printlede"></p><div id="print"></div></div></details>
+    <details class="progress-fold"><summary><span><strong>Leg · what to buy</strong><small>Part numbers and alternate suppliers</small></span></summary><div class="fold-body"><p class="lede" id="buylede"></p><div id="buy"></div></div></details>
+    <details class="progress-fold"><summary><span><strong>Turret · what to buy</strong><small>Recorded bill of materials</small></span></summary><div class="fold-body"><p class="lede" id="turretbuylede"></p><div id="turretbuy"></div></div></details>
+    <details class="progress-fold"><summary><span><strong>Turret · what to print</strong><small>Parts, material and print estimates</small></span></summary><div class="fold-body"><p class="lede" id="turretprintlede"></p><div id="turretprint"></div></div></details>
+    <details class="progress-fold"><summary><span><strong>Motor sourcing notes</strong><small>Historical Seeed Studio order notes · confirm current stock</small></span></summary><div class="fold-body"><div id="shop"></div></div></details>
+  </div></details>
 
-  <div class="sec">Parts: what to print</div>
-  <p class="lede" id="printlede"></p>
-  <div id="print"></div>
-
-  <div class="sec">Parts: what to buy (one leg)</div>
-  <p class="lede" id="buylede"></p>
-  <div id="buy"></div>
-
-  <div class="sec">The foam-ball turret, on its bench stand</div>
-  <p class="lede" id="turretlede"></p>
-  <div class="gallery" id="turret"></div>
-  <div class="sec">The turret: what to buy</div>
-  <p class="lede" id="turretbuylede"></p>
-  <div id="turretbuy"></div>
-  <div class="sec">The turret: what to print</div>
-  <p class="lede" id="turretprintlede"></p>
-  <div id="turretprint"></div>
-
-  <div class="sec">Motors to order (Seeed Studio)</div>
-  <div id="shop"></div>
-
-  <p class="lede" style="margin-top:28px">The <a href="sim.html">playground</a> includes Gyropup v2, the earlier serial-leg design, and the turret bench. Browser demo snapshots are labeled separately from the latest engineering reports.</p>
-<footer class="portal-footer">Created by <a href="https://valpatel.com">Valpatel Software LLC</a>. © 2026. All rights reserved. Repository materials retain their stated licenses.</footer>
+  <details class="progress-fold history-fold" id="archive"><summary><span><strong>Workshop history</strong><small id="history-count">Earlier decisions and development logs</small></span></summary><div class="fold-body"><p class="history-note">Historical notes describe the design and assumptions at the time. Later revisions can supersede their mass, fit, strength and availability claims. They are not current build approval.</p><div id="history"></div></div></details>
+  <p class="lede progress-outro">Want to play? Try the <a href="sim.html">playground</a>. Browser demo snapshots are labeled separately from the latest engineering reports.</p>
+  <footer class="portal-footer">Created by <a href="https://valpatel.com">Valpatel Software LLC</a>. © 2026. All rights reserved. Repository materials retain their stated licenses.</footer>
 </main>
 <script type="module">
   try{await import('./progress.js');}catch(error){
