@@ -1,0 +1,296 @@
+{
+  "schema": 1,
+  "observed_on": "2026-10-29",
+  "baseline_commit": "912439f9bc9d5338319db50ed71c75d3136466d4",
+  "contract": {
+    "steady_sources_V": [
+      [
+        15,
+        20.5
+      ],
+      [
+        30,
+        42
+      ]
+    ],
+    "servo_nominal_V": 12,
+    "screen_output_A": 3.25,
+    "raw_reverse_V": -42,
+    "charged_front_output_V": 55
+  },
+  "design_assumptions": {
+    "front_FET_hot_ohm": 0.06,
+    "ambient_screen_C": 85,
+    "FET_junction_target_C": 125,
+    "converter_efficiency_scenarios": [
+      0.8,
+      0.85,
+      0.89
+    ],
+    "legacy_board_mm": [
+      50.8,
+      30
+    ],
+    "legacy_U2_mm": [
+      25.4,
+      25.4,
+      9.5
+    ]
+  },
+  "manufacturer_values": {
+    "IPB200N25N3G": {
+      "VDS_V": 250,
+      "RDS_max_25C_10V_ohm": 0.02,
+      "theta_JA_minimal_footprint_C_per_W": 62,
+      "theta_JA_6cm2_C_per_W": 40,
+      "thermal_test_board_mm": [
+        40,
+        40,
+        1.5
+      ],
+      "thermal_test_copper_cm2": 6,
+      "package_max_mm": [
+        15.88,
+        10.31,
+        4.57
+      ],
+      "land_envelope_max_mm": [
+        16.25,
+        10.9
+      ]
+    },
+    "LTC4359": {
+      "raw_IN_min_V": -40,
+      "IN_OUT_absolute_V": 100,
+      "reference_figure": "Rev F Figure 10; complete floating VSS and clamp network required"
+    },
+    "LM7480": {
+      "C_minus_A_absolute_V": 85
+    },
+    "LM74910H": {
+      "C_minus_A_absolute_V": 88
+    },
+    "RP60Q-11012SRUWB/P": {
+      "input_min_V": 14,
+      "input_max_V": 160,
+      "UVLO_on_max_V": 14,
+      "output_V": 12,
+      "output_A": 5,
+      "power_W": 60,
+      "set_fraction": 0.01,
+      "line_fraction": 0.001,
+      "load_fraction": 0.001,
+      "temperature_fraction_per_K": 0.0002,
+      "temperature_delta_K": 65,
+      "baseplate_max_C": 110,
+      "theta_no_heatsink_C_per_W": 6.3,
+      "theta_heatsink_C_per_W": 5,
+      "body_mm": [
+        57.9,
+        36.8,
+        12.7
+      ],
+      "efficiency_typ_at72V_full_load_25C": 0.89,
+      "OVP_fraction": [
+        1.2,
+        1.35
+      ]
+    }
+  },
+  "primary_sources": [
+    {
+      "id": "ltc4359",
+      "url": "https://www.analog.com/media/en/technical-documentation/data-sheets/ltc4359.pdf",
+      "revision": "F",
+      "pages": [
+        2,
+        3,
+        9,
+        10,
+        12
+      ],
+      "capture": "browser parsed manufacturer PDF; local download timed out; no archived PDF or circuit transcription"
+    },
+    {
+      "id": "ipb200n25",
+      "url": "https://www.infineon.com/assets/row/public/documents/24/49/infineon-ipp-b-i-200n25n3-g-datasheet-en.pdf",
+      "revision": "2.5 (2017-03-31)",
+      "pages": [
+        2,
+        3,
+        9
+      ],
+      "download_sha256": "40d90aec1c320d814ffe3f3bb4f10e4048e71cde3b93257962f8031cefa092ac"
+    },
+    {
+      "id": "rp60q",
+      "url": "https://recom-power.com/pdf/Powerline_DC-DC/RP60Q-RUW.pdf",
+      "revision": "5-2024",
+      "pages": [
+        1,
+        2,
+        6,
+        7,
+        8,
+        10,
+        11
+      ],
+      "download_sha256": "d6277646f92237642edb164b70f604804fd55eea20d905df0301e6ce9bc93bc1"
+    },
+    {
+      "id": "lm7480",
+      "url": "https://www.ti.com/lit/ds/symlink/lm7480-q1.pdf",
+      "revision": "C",
+      "pages": [
+        4,
+        34
+      ]
+    },
+    {
+      "id": "lm74910",
+      "url": "https://www.ti.com/lit/ds/symlink/lm74900-q1.pdf",
+      "revision": "C",
+      "pages": [
+        5
+      ]
+    },
+    {
+      "id": "pololu5577",
+      "url": "https://www.pololu.com/product/5577",
+      "revision": "manufacturer product page"
+    },
+    {
+      "id": "smat70a",
+      "url": "https://www.diodes.com/datasheet/download/SMAT70A.pdf",
+      "revision": "DS30213 Rev11-2 (2014-11)"
+    },
+    {
+      "id": "bzg03",
+      "url": "https://www.vishay.com/doc?86574=",
+      "revision": "Document 86574, Rev. 1.0 (24-Oct-2025); modern M-series, legacy Figure 10 substitution qualification outstanding",
+      "pages": [
+        1,
+        2
+      ],
+      "capture": "Manufacturer PDF parsed on 2026-10-29; M3_A-08 ordering family and 75-M row verified. Replaces broken 86138 URL; not a legacy-grade equivalence claim."
+    }
+  ],
+  "supplier_observation_limit": "Public pages retrieved on observed_on, sometimes from search cache. Quantities/prices are observations, not reserved stock or a shipping commitment. No cart or purchase. Unconfirmed is not unavailable.",
+  "supplier_observations": [
+    [
+      "LTC4359IDCB#TRPBF",
+      "https://www.digikey.com/en/products/detail/analog-devices-inc/LTC4359IDCB-TRPBF/3306828",
+      1712,
+      9.47,
+      1,
+      "CT; reel2500; 10wk factory"
+    ],
+    [
+      "IPB200N25N3GATMA1",
+      "https://www.digikey.com/en/products/detail/infineon-technologies/IPB200N25N3GATMA1/2344863",
+      10794,
+      8,
+      1,
+      "CT; reel1000; 52wk factory; indexed quantity can lag"
+    ],
+    [
+      "SMAT70A-13-F",
+      "https://www.digikey.com/en/products/detail/diodes-incorporated/SMAT70A-13-F/804884",
+      3068,
+      1.26,
+      1,
+      "CT; reel5000"
+    ],
+    [
+      "MMSZ5231B-7-F",
+      "https://www.digikey.com/en/products/detail/diodes-incorporated/MMSZ5231B-7-F/755472",
+      210649,
+      0.2,
+      1,
+      "CT; current -F order code, old -7 discontinued"
+    ],
+    [
+      "BZG03C75-M3_A-08",
+      "https://www.digikey.com/en/products/detail/vishay-general-semiconductor-diodes-division/BZG03C75-M3-A-08/28533357",
+      7167,
+      1.2,
+      1,
+      "CT; modern order code, not qualified as legacy Fig10 equivalent"
+    ],
+    [
+      "DDZ9699T-7",
+      "https://www.mouser.com/en/ProductDetail/Diodes-Incorporated/DDZ9699T-7?qs=mQbszxtPdlOBwg08InvD3Q%3D%3D",
+      1,
+      0.53,
+      1,
+      "CT; reel3000; 40wk factory; cached page lists1, refresh403; DigiKey0. Scarce/unconfirmed, not reliable build stock"
+    ],
+    [
+      "S1B-13-F",
+      "https://www.digikey.com/en/products/detail/diodes-incorporated/S1B-13-F/725064",
+      601391,
+      0.25,
+      1,
+      "CT; reference-family order code"
+    ],
+    [
+      "SMCJ150A",
+      "https://www.digikey.com/en/products/detail/littelfuse-inc/SMCJ150A/762440",
+      6840,
+      0.96,
+      1,
+      "CT; reel3000; 34wk factory; 243V clamp at6.2A does not qualify250V FET over temperature"
+    ],
+    [
+      "CRCW12062K00FKEAHP",
+      "https://www.digikey.com/en/products/detail/vishay-dale/CRCW12062K00FKEAHP/2222438",
+      46960,
+      0.28,
+      1,
+      "CT; candidate2k pulse resistor, exact pulse/voltage qualification outstanding"
+    ],
+    [
+      "Pololu5577 D42V55F12",
+      "https://www.pololu.com/product/5577",
+      null,
+      47.95,
+      1,
+      "Rationed, backorders allowed; no public count or guaranteed lead time"
+    ],
+    [
+      "RP60Q-11012SRUWB/P",
+      "https://www.digikey.com/en/products/detail/recom-power/RP60Q-11012SRUWB-P/24390369",
+      2,
+      226.98,
+      1,
+      "tray; factory stock2; 17wk factory; do not add listed stock and factory stock"
+    ],
+    [
+      "RP60Q-11012SRUW/P",
+      "https://www.digikey.com/en/products/detail/recom-power/RP60Q-11012SRUW-P/9637616",
+      0,
+      212.52,
+      2,
+      "nonstock;17wk; distributor specifies16V minimum, not qualified for15V source"
+    ]
+  ],
+  "supplier_row_columns": [
+    "mpn",
+    "url",
+    "listed_stock",
+    "unit_USD",
+    "minimum_order",
+    "limits"
+  ],
+  "qualifications": {
+    "architecture_selected": false,
+    "native_circuit_transcribed": false,
+    "charged_reverse_waveform": false,
+    "clamp_temperature_pulse": false,
+    "startup_gate_bodydiode": false,
+    "thermal": false,
+    "carrier_fit": false,
+    "output_regeneration": false,
+    "production_supply": false
+  }
+}
