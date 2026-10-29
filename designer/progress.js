@@ -250,7 +250,7 @@ if (fea) {
   const viewerHref = r=>{const file=mediaFor(r)?.fields||r.viewer;return file?`kit/fea.html?case=${encodeURIComponent(`../../${file}`)}&title=${encodeURIComponent(`${r.part} ${r.case}`)}&current=progress`:null;};
   const b = fea.front_link_buckling;
   partsUI.replace($('fea'), `<table class="cmp" data-label="Structural reports"><thead><tr><th>part</th><th>case</th><th>material</th><th>SF</th><th>need</th><th>deflection</th><th></th><th>3D</th></tr></thead><tbody>`
-    + rows.map(({ r, ok, warn }, i) => `<tr class="click" data-i="${i}"><td>${esc(r.part)}</td><td>${esc(r.case)}</td><td>${esc(r.material)}</td>`
+    + rows.map(({ r, ok, warn }, i) => `<tr class="click" data-i="${i}"><td>${esc(r.part)}<button type="button" class="case-choice" aria-label="Inspect ${esc(r.part)} ${esc(r.case)}">Inspect</button></td><td>${esc(r.case)}</td><td>${esc(r.material)}</td>`
       + `<td data-sort-value="${r.safety_factor??''}">${r.safety_factor}</td><td data-sort-value="${r.target??''}">${r.target}</td><td data-sort-value="${r.probe_displacement_mm?Math.hypot(...r.probe_displacement_mm):''}">${r.probe_displacement_mm ? Math.hypot(...r.probe_displacement_mm).toFixed(2) : '—'} mm</td><td>${tag(ok, warn)}</td>`
       + `<td>${viewerHref(r) ? `<a class="open3d" href="${esc(viewerHref(r))}" title="Interactive: load slider, hot spots, section cut">open ↗</a>` : '—'}</td></tr>`).join('')
     + (b ? `<tr><td>front lower link</td><td>buckling (${esc(b.note)})</td><td>Structural check</td><td data-sort-value="${b.sf}">${b.sf}</td><td data-sort-value="3">3</td><td data-sort-value="">${b.P_cr_n} N</td><td>${tag(b.sf >= 3)}</td><td></td></tr>` : '')
@@ -267,7 +267,14 @@ if (fea) {
       + `<b>Safety factor ${esc(r.safety_factor)} / required ${esc(r.target)}${r.safety_factor<r.target?' — below target':''}.</b>`;
     document.querySelectorAll('#fea tr.click').forEach((tr) => tr.classList.toggle('on', +tr.dataset.i === i));
   };
-  document.querySelectorAll('#fea tr.click').forEach((tr) => tr.addEventListener('click', (e) => { if (!e.target.closest('a')) show(+tr.dataset.i); }));
+  document.querySelectorAll('#fea tr.click').forEach((tr) => tr.addEventListener('click', (e) => {
+    if(e.target.closest('a'))return;
+    show(+tr.dataset.i);
+    // Only an explicit selection moves focus/viewport; loading or retrying a
+    // report must not drag readers away from the work they are inspecting.
+    $('fea-media').focus({preventScroll:true});
+    $('fea-media').scrollIntoView({block:'start'});
+  }));
   if (rows.length) {
     const featured=rows.findIndex(({r})=>r.part==='hip_frame'&&r.case==='E1');
     show(featured>=0?featured:rows.reduce((a,x,i)=>(x.r.safety_factor/x.r.target<rows[a].r.safety_factor/rows[a].r.target?i:a),0));

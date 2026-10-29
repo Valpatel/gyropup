@@ -20,6 +20,8 @@ main.prog [id] { scroll-margin-top: calc(var(--appnav-h, 64px) + 20px); }
 #feanote .hud-btn { white-space: normal; min-height: 44px; height: auto; padding: 11px 14px; line-height: 1.4; }
 .study-limits { color: #5a6355; font-size: 13px; line-height: 1.6; padding-top: 14px; border-top: 1px solid #c6d2c7; }
 .study-guide { display: inline-flex; align-items: center; min-height: 44px; font-weight: 650; font-size: 13px; }
+.case-choice { display: block; min-height: 44px; margin-top: 6px; padding: 7px 12px; border: 1px solid #afc7b8; border-radius: 8px; background: #edf3e9; color: #285442; font: 650 12px var(--font-ui); cursor: pointer; }
+.case-choice:focus-visible, #fea-media:focus-visible { outline: 3px solid #b5652f; outline-offset: -3px; }
 .section-title { margin: 36px 0 15px; font-size: 23px; letter-spacing: -.02em; }
 .latest-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
 .latest-grid li { margin: 0; padding: 21px; border: 1px solid #d2dacc; border-radius: 14px; background: #fffef9; border-top: 3px solid #b76639; }

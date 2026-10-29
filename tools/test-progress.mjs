@@ -45,6 +45,14 @@ try {
  const dayId=await day.getAttribute('id');await page.evaluate(()=>window.__portalLoads.progress.retry());await ready();assert.ok(await page.locator('#'+dayId).evaluate(e=>e.open),'Retry retains opened history dates');
  await archive.focus();await archive.press('Space');assert.equal(await page.locator('#archive').evaluate(e=>e.open),false);
  assert.ok(await movie.evaluate(el=>el===document.querySelector('#feavid')),'Toggling logs never remounts the study');
+ // A selected case above the table must become visible, including native keyboard use.
+ for(const [width,height] of [[390,844],[1440,1000]]){
+  await page.setViewportSize({width,height});
+  if(!await page.locator('#load-cases').evaluate(el=>el.open))await page.locator('#load-cases > summary').click();
+  const choice=page.locator('#fea .case-choice').first();await choice.focus();await choice.press('Enter');
+  assert.equal(await page.locator('#fea-media').evaluate(el=>el===document.activeElement),true,'Focus follows an explicit case selection');
+  const box=await page.locator('#fea-media').boundingBox();assert.ok(box.y>=0&&box.y<height/2&&box.y+box.height>0,'Selected result is visible above the results table');
+ }
  // Cold deep links, nested procurement and links to an already selected hash.
  for(const id of ['fea','print','turretbuy','rigtable',dayId]){
   await page.goto(base+'/designer/progress.html#'+id);await ready();await page.waitForFunction(id=>{const el=document.getElementById(id);return el&&el.getBoundingClientRect().height>0;},id);
