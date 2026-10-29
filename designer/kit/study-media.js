@@ -26,7 +26,8 @@ export function mountStudyMedia(host,{staticRender=false}={}) {
     play.hidden=retry.hidden=true;play.textContent='Play deformation';still.hidden=false;
     still.alt=`${record.part} ${record.case}: recorded static stress result`;
     still.src='../'+record.png;
-    const source=media?.video||record.animation,poster=media?.poster||record.png;
+    const source=media?(video.canPlayType('video/mp4; codecs="avc1.640028"')?media.video:media.webm):record.animation,
+      poster=media?.poster||record.png;
     kind.textContent=source?'Animated static deformation':'Recorded static result';
     const failure=()=>{
       if(own!==selection)return;
@@ -68,7 +69,7 @@ export function matchingStudyMedia(record,index) {
   for(const key of ['safety_factor','target','max_displacement_mm','von_mises_design_mpa','load_from']) {
     if(item.recorded?.[key]!==record[key])throw new Error('Animation belongs to a different structural result.');
   }
-  for(const key of ['video','poster','fields']) {
+  for(const key of ['video','webm','poster','fields']) {
     if(typeof item[key]!=='string'||!item[key].startsWith('exports/leg/fea/')||item[key].includes('..'))throw new Error('Invalid structural media path.');
   }
   if(item.kind!=='static-deformation'||item.transient_simulation!==false)throw new Error('Unsupported structural animation evidence.');

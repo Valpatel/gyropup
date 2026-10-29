@@ -13,6 +13,7 @@ const version=await json('/version.json'),summary=await json('/exports/leg/fea/s
 const hip=summary.results.findIndex(r=>r.part==='hip_frame'&&r.case==='E1');
 const still=summary.results.findIndex((r,i)=>i!==hip&&!r.animation&&!media.cases[`${r.part}/${r.case}`]);
 const selector=i=>`#fea tr.click[data-i="${i}"]`;
+const movieURL=url=>/\/hip-frame-e1\.(mp4|webm)$/.test(url.pathname);
 const record=label=>{cases.push(label);console.log('PASS '+label);};
 async function pageFor(setup=async()=>{}){
   const page=await context.newPage();page.setDefaultTimeout(30000);page.on('pageerror',error=>errors.push(error.message));
@@ -31,6 +32,7 @@ async function checkPlayback(page){
 try{
   const page=await pageFor();await select(page,hip);await state(page,'ready');
   assert.equal(await page.locator('#feavid').evaluate(v=>v.duration),12);
+  assert.equal(await page.locator('#feavid').evaluate(v=>v.currentSrc.endsWith(v.canPlayType('video/mp4; codecs="avc1.640028"')?'.mp4':'.webm')),true,'Choose a supported encoding');
   assert.equal(await page.locator('#feavid').evaluate(v=>v.paused),true,'Reduced motion waits for deliberate play');
   assert.match(await page.locator('#feanote').innerText(),/Safety factor 1\.65 \/ required 2 — below target/);
   assert.match(await page.locator('.study-media-status').innerText(),/static load scaling, not elapsed physical time/);
@@ -56,16 +58,16 @@ try{
   assert.match(await page.locator('.study-media-status').innerText(),/No animation was published/);record('Missing clip is an honest still without zero-second controls');await page.close();
 
   let held;
-  const delayed=await pageFor(page=>page.route('**/hip-frame-e1.mp4*',route=>{held=route;}));
+  const delayed=await pageFor(page=>page.route(movieURL,route=>{held=route;}));
   await select(delayed,hip);await state(delayed,'loading');await select(delayed,still);await state(delayed,'still');
   if(held)await held.continue().catch(()=>{});
   await delayed.waitForTimeout(300);assert.equal(await delayed.locator('#fea-media').getAttribute('data-state'),'still');
   assert.ok(await delayed.locator('#feavid').isHidden());record('Changing case cancels pending animation without late takeover');await delayed.close();
   for(const fault of ['http','invalid']){
     let calls=0;
-    const bad=await pageFor(page=>page.route('**/hip-frame-e1.mp4*',route=>{calls++;return route.fulfill(fault==='http'?{status:503,body:'Unavailable'}:{contentType:'video/mp4',body:'Not a movie'});}));
+    const bad=await pageFor(page=>page.route(movieURL,route=>{calls++;return route.fulfill(fault==='http'?{status:503,body:'Unavailable'}:{contentType:route.request().url().includes('.webm')?'video/webm':'video/mp4',body:'Not a movie'});}));
     await select(bad,hip);await state(bad,'error');assert.ok(await bad.locator('.study-still').isVisible());assert.ok(await bad.locator('#feavid').isHidden());
-    await bad.unroute('**/hip-frame-e1.mp4*');await bad.locator('.study-retry').click();await state(bad,'ready');
+    await bad.unroute(movieURL);await bad.locator('.study-retry').click();await state(bad,'ready');
     assert.ok(calls>0);await checkPlayback(bad);record(fault+' media failure retains image/report and retry restores playback');await bad.close();
   }
   const stale=await pageFor(page=>page.route('**/exports/leg/fea/media.json*',route=>{
@@ -80,5 +82,10 @@ try{
   await automatic.waitForFunction(()=>document.querySelector('#feavid').currentTime>.2);record('Muted autoplay works when reduced motion is not requested');await automatic.close();
   assert.deepEqual(errors,[]);assert.deepEqual(await json('/version.json'),version,'Single published build throughout test');
   await writeFile(`${out}/${engine.name()}-report.json`,JSON.stringify({base,version,cases,errors},null,2));
-}catch(error){for(const [i,page] of context.pages().entries())await page.screenshot({path:`${out}/${engine.name()}-failure-${i}.png`}).catch(()=>{});throw error;}
+}catch(error){for(const [i,page] of context.pages().entries()){
+  console.error('Media failure details',await page.locator('#feavid').evaluate(v=>({state:document.querySelector('#fea-media').dataset.state,
+    canPlayH264:v.canPlayType('video/mp4; codecs="avc1.640028"'),canPlayVP9:v.canPlayType('video/webm; codecs="vp9"'),
+    currentSrc:v.currentSrc,readyState:v.readyState,networkState:v.networkState,duration:v.duration,error:v.error&&{code:v.error.code,message:v.error.message}})).catch(()=>null));
+  await page.locator('#fea-media').scrollIntoViewIfNeeded().catch(()=>{});await page.screenshot({path:`${out}/${engine.name()}-failure-${i}.png`}).catch(()=>{});
+}throw error;}
 finally{await browser.close();}

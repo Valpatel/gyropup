@@ -82,12 +82,13 @@ def validate(root=ROOT, decode=True):
     for path, sha in video_receipt['source_hashes'].items():
         require(digest((root / path).read_bytes()) == sha, f'Stale animation source: {path}')
         require(historical_hash(video_receipt['source_revision'], path) == sha, f'Uncommitted animation source: {path}')
-    expected_outputs = {MEDIA + 'hip-frame-e1.mp4', MEDIA + 'hip-frame-e1-poster.png'}
+    expected_outputs = {MEDIA + 'hip-frame-e1.mp4', MEDIA + 'hip-frame-e1.webm', MEDIA + 'hip-frame-e1-poster.png'}
     require(set(video_receipt['outputs']) == expected_outputs, 'Incomplete rendered artifacts')
     for path, sha in video_receipt['outputs'].items():
         require(digest((root / path).read_bytes()) == sha, f'Rendered artifact changed: {path}')
     require(index['video'] == MEDIA + 'hip-frame-e1.mp4' and index['poster'] == MEDIA + 'hip-frame-e1-poster.png'
-            and index['fields'] == field_receipt['fields'] and index['receipt'] == MEDIA + 'video-receipt.json', 'Media index paths differ')
+            and index['webm'] == MEDIA + 'hip-frame-e1.webm' and index['fields'] == field_receipt['fields']
+            and index['receipt'] == MEDIA + 'video-receipt.json', 'Media index paths differ')
     require(index['kind'] == 'static-deformation' and index['transient_simulation'] is False
             and video_receipt['transient_simulation'] is False, 'Static evidence mislabeled')
     for key, value in index['recorded'].items(): require(value == baseline[key], f'Media index differs: {key}')
@@ -117,6 +118,22 @@ def validate(root=ROOT, decode=True):
         size = 590 * 360 * 3
         require(len(pixels) == size * 2, 'Missing independent decoded samples')
         result.update(moving_model(pixels[:size], pixels[size:])); result['decoded_frames'] = 288; result['seconds'] = 12
+        webm = root / index['webm']
+        webm_probe = json.loads(subprocess.check_output(['ffprobe','-v','error','-count_frames','-select_streams','v:0',
+            '-show_entries','stream=codec_name,width,height,pix_fmt,avg_frame_rate,nb_read_frames:format=duration','-of','json',str(webm)]))
+        require(webm_probe == video_receipt['webm_ffprobe'], 'VP9 companion differs from receipt')
+        stream = webm_probe['streams'][0]
+        require(stream['codec_name'] == 'vp9' and stream['pix_fmt'] == 'yuv420p' and stream['width'] == 960
+                and stream['height'] == 720 and stream['avg_frame_rate'] == '24/1' and int(stream['nb_read_frames']) == 288
+                and float(webm_probe['format']['duration']) == 12, 'VP9 companion is not the expected playable loop')
+        subprocess.run(['ffmpeg','-v','error','-i',str(webm),'-f','null','-'],check=True)
+        vp9_pixels = subprocess.check_output(['ffmpeg','-v','error','-i',str(webm),'-vf',
+            "select='eq(n,0)+eq(n,144)',crop=590:360:200:130",'-fps_mode','vfr','-f','rawvideo','-pix_fmt','rgb24','-'])
+        require(len(vp9_pixels) == size * 2, 'Missing VP9 decoded samples')
+        result['vp9_motion'] = moving_model(vp9_pixels[:size], vp9_pixels[size:])
+        mean_codec_difference = sum(abs(a-b) for a,b in zip(pixels,vp9_pixels)) / len(pixels)
+        require(mean_codec_difference < 5, 'VP9 scene differs from H.264 companion')
+        result['mean_codec_difference'] = mean_codec_difference
     return result
 
 

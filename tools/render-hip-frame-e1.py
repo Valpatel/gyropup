@@ -128,17 +128,28 @@ def main():
         '-show_entries', 'stream=codec_name,width,height,pix_fmt,avg_frame_rate,nb_read_frames,duration', '-of', 'json', str(movie)], text=True))['streams'][0]
     if abs(float(probe['duration']) - SECONDS) > .05 or int(probe['nb_read_frames']) != FPS * SECONDS:
         raise ValueError('Encoded movie duration/frame count differs from its timeline')
-    # Decode the whole movie as an independent integrity check before publishing.
-    subprocess.run(['ffmpeg', '-v', 'error', '-i', str(movie), '-f', 'null', '-'], check=True)
-    files = {p.relative_to(ROOT).as_posix(): digest(p) for p in (movie, OUT / 'hip-frame-e1-poster.png')}
+    # The pinned open-source Chromium build cannot decode H.264. Preserve the
+    # same presentation in VP9, without a second solve or altered load history.
+    webm = OUT / 'hip-frame-e1.webm'
+    subprocess.run(['ffmpeg', '-y', '-v', 'error', '-i', str(movie), '-an', '-c:v', 'libvpx-vp9',
+                    '-b:v', '0', '-crf', '30', '-cpu-used', '4', '-row-mt', '1', str(webm)], check=True)
+    webm_probe = json.loads(subprocess.check_output(['ffprobe', '-v', 'error', '-count_frames', '-select_streams', 'v:0',
+        '-show_entries', 'stream=codec_name,width,height,pix_fmt,avg_frame_rate,nb_read_frames:format=duration', '-of', 'json', str(webm)], text=True))
+    if abs(float(webm_probe['format']['duration']) - SECONDS) > .05 or int(webm_probe['streams'][0]['nb_read_frames']) != FPS * SECONDS:
+        raise ValueError('VP9 companion differs from the presentation timeline')
+    # Decode both encodings completely before publishing.
+    for video in (movie, webm):
+        subprocess.run(['ffmpeg', '-v', 'error', '-i', str(video), '-f', 'null', '-'], check=True)
+    files = {p.relative_to(ROOT).as_posix(): digest(p) for p in (movie, webm, OUT / 'hip-frame-e1-poster.png')}
     result = {'schema': 1, 'source_revision': subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip(),
-        'source_hashes': source_hashes, 'outputs': files, 'ffprobe': probe, 'decoded_all_frames': True,
+        'source_hashes': source_hashes, 'outputs': files, 'ffprobe': probe, 'webm_ffprobe': webm_probe, 'decoded_all_frames': True,
         'renderer': {'pyvista': pv.__version__, 'numpy': np.__version__, 'fps': FPS, 'duration_seconds': SECONDS,
                      'deformation_exaggeration': exaggeration, 'load_factor_range': [0, 1]},
         'timeline': timeline, 'transient_simulation': False, 'qualification': 'Presentation of the reproduced static E1 field; strength gate remains failed.'}
     (OUT / 'video-receipt.json').write_text(json.dumps(result, indent=2) + '\n')
     index = {'schema': 1, 'cases': {'hip_frame/E1': {'kind': 'static-deformation', 'transient_simulation': False,
-        'video': movie.relative_to(ROOT).as_posix(), 'poster': (OUT / 'hip-frame-e1-poster.png').relative_to(ROOT).as_posix(),
+        'video': movie.relative_to(ROOT).as_posix(), 'webm': webm.relative_to(ROOT).as_posix(),
+        'poster': (OUT / 'hip-frame-e1-poster.png').relative_to(ROOT).as_posix(),
         'fields': receipt['fields'], 'duration_seconds': SECONDS,
         'receipt': (OUT / 'video-receipt.json').relative_to(ROOT).as_posix(),
         'recorded': {k: baseline[k] for k in ('safety_factor', 'target', 'max_displacement_mm', 'von_mises_design_mpa', 'load_from')}}}}

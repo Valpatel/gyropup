@@ -40,6 +40,7 @@ class StudyMedia(unittest.TestCase):
             fault('tools/render-hip-frame-e1.py', lambda p: p.write_bytes(p.read_bytes()+b'\n# changed\n'), 'Stale animation source')
             fault(check.MEDIA+'hip_frame-E1.json', lambda p: p.write_bytes(p.read_bytes()+b'\n'), 'Field bytes changed')
             fault(check.MEDIA+'hip-frame-e1.mp4', lambda p: p.write_bytes(p.read_bytes()[:-1]), 'Rendered artifact changed')
+            fault(check.MEDIA+'hip-frame-e1.webm', lambda p: p.write_bytes(p.read_bytes()[:-1]), 'Rendered artifact changed')
             fault(check.MEDIA+'hip-frame-e1-poster.png', lambda p: p.write_bytes(p.read_bytes()[:-1]), 'Rendered artifact changed')
             fault('exports/leg/fea/media.json', edit(lambda d: d['cases']['hip_frame/E1']['recorded'].update(safety_factor=2.5)), 'Media index differs')
             fault('exports/leg/fea/media.json', edit(lambda d: d['cases']['hip_frame/E1'].update(transient_simulation=True)), 'Static evidence mislabeled')
