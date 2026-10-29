@@ -16,6 +16,7 @@ export function mountStudyMedia(host,{staticRender=false}={}) {
     status.textContent=source?'Static load scaling, not elapsed physical time. Deformation is exaggerated; the recorded safety factor is unchanged.':problem?'Animation metadata unavailable; recorded static result shown.':'No animation was published for this case.';
     if(media)status.append(' Recorded 37.5 kg baseline; this does not validate the 100 lb design target.');
     if(source){const link=host.ownerDocument.createElement('a');link.href='../'+source;link.textContent='Watch the deformation animation';status.append(' ',link);}
+    if(media?.webm){const link=host.ownerDocument.createElement('a');link.href='../'+media.webm;link.textContent='WebM alternative';status.append(' · ',link);}
   }};
   let selection=0,events,timer,current;
   const state=(value,message)=>{host.dataset.state=value;status.textContent=message;};
@@ -26,7 +27,7 @@ export function mountStudyMedia(host,{staticRender=false}={}) {
     play.hidden=retry.hidden=true;play.textContent='Play deformation';still.hidden=false;
     still.alt=`${record.part} ${record.case}: recorded static stress result`;
     still.src='../'+record.png;
-    const source=media?(video.canPlayType('video/mp4; codecs="avc1.640028"')?media.video:media.webm):record.animation,
+    const source=media?(video.canPlayType('video/mp4; codecs="avc1.64001f"')?media.video:media.webm):record.animation,
       poster=media?.poster||record.png;
     kind.textContent=source?'Animated static deformation':'Recorded static result';
     const failure=()=>{

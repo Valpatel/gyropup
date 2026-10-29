@@ -1,14 +1,15 @@
 {
   "schema": 1,
-  "source_revision": "c312c1546511bb0392fd73817237674dbcdb7354",
+  "source_revision": "a0d9dc340e92bee57453e69ded5c1c02c5b14f87",
   "source_hashes": {
-    "tools/render-hip-frame-e1.py": "05a7fd74ee7ac36605d6534da157e92c8826052d0dcc40a793ec9c24c177cf7e",
+    "tools/render-hip-frame-e1.py": "a03233d281a6e9c5436972a314c16ef77d9f5dc1e2334666b610b65e4a688a84",
     "exports/leg/fea/hip-frame-e1-media/field-receipt.json": "ab55baf1e8acac50f49cc70b8657f029ede1e4de328d2aa9ce9ac5708100d7c2",
     "exports/leg/fea/hip-frame-e1-media/hip_frame-E1.json": "80fee01acc44c0fc0cc6530808dafb8e67660320bb6cb93fbac5b8e7e98a7949",
     "exports/leg/fea/summary.json": "a94c700284a789e9b810e9bdf2fc8989db518bd6df691dedb23c6da75a9a76e5"
   },
   "outputs": {
     "exports/leg/fea/hip-frame-e1-media/hip-frame-e1.mp4": "e846a402145dfb49ccdc0067e3c43828b3de0591b003edf57d1bfdc37e52aa0c",
+    "exports/leg/fea/hip-frame-e1-media/hip-frame-e1.webm": "3ad054d8e28534614f3223fe02cfacef581cf32c0e96e906c38bbf07326c1c76",
     "exports/leg/fea/hip-frame-e1-media/hip-frame-e1-poster.png": "a7c664f719098169523dad8ef95edbf22966e0f7249de2930f04f64dd62323ad"
   },
   "ffprobe": {
@@ -19,6 +20,22 @@
     "avg_frame_rate": "24/1",
     "duration": "12.000000",
     "nb_read_frames": "288"
+  },
+  "webm_ffprobe": {
+    "programs": [],
+    "streams": [
+      {
+        "codec_name": "vp9",
+        "width": 960,
+        "height": 720,
+        "pix_fmt": "yuv420p",
+        "avg_frame_rate": "24/1",
+        "nb_read_frames": "288"
+      }
+    ],
+    "format": {
+      "duration": "12.000000"
+    }
   },
   "decoded_all_frames": true,
   "renderer": {

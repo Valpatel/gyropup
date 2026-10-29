@@ -110,6 +110,9 @@ def validate(root=ROOT, decode=True):
         require(probe == video_receipt['ffprobe'], 'Decoded movie differs from receipt')
         require(probe['codec_name'] == 'h264' and probe['pix_fmt'] == 'yuv420p' and probe['width'] == 960 and probe['height'] == 720
                 and probe['avg_frame_rate'] == '24/1' and int(probe['nb_read_frames']) == 288 and float(probe['duration']) == 12, 'Movie is not the expected playable loop')
+        codec = json.loads(subprocess.check_output(['ffprobe','-v','error','-select_streams','v:0',
+            '-show_entries','stream=profile,level','-of','json',str(movie)]))['streams'][0]
+        require(codec['profile'] == 'High' and codec['level'] == 31, 'Update the browser AVC capability string to match the encoded profile/level')
         subprocess.run(['ffmpeg','-v','error','-i',str(movie),'-f','null','-'],check=True)
         # Frames 0 and 144 have the same camera direction. Exclude all captions:
         # a changing timestamp or orbit alone must not rescue a frozen field.

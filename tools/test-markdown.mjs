@@ -75,6 +75,7 @@ test('progress and build expose their data, tables, prices, and original downloa
   assert.ok(md.includes(progress.log.at(-1).title));
   assert.match(md, /\|.*scenario/i);
   assert.match(md, /Watch the deformation animation/);
+  assert.match(md, /WebM alternative/);
   assert.match(md, /static load scaling, not elapsed physical time/i);
   assert.match(md, /does not validate the 100 lb design target/);
   const build = await read('designer/build.md');

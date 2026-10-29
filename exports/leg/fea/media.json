@@ -5,6 +5,7 @@
       "kind": "static-deformation",
       "transient_simulation": false,
       "video": "exports/leg/fea/hip-frame-e1-media/hip-frame-e1.mp4",
+      "webm": "exports/leg/fea/hip-frame-e1-media/hip-frame-e1.webm",
       "poster": "exports/leg/fea/hip-frame-e1-media/hip-frame-e1-poster.png",
       "fields": "exports/leg/fea/hip-frame-e1-media/hip_frame-E1.json",
       "duration_seconds": 12,

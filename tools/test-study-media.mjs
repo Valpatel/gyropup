@@ -10,6 +10,10 @@ const context=await browser.newContext({viewport:{width:390,height:844},reducedM
 await context.addInitScript(()=>{localStorage.setItem('gyropup.probe','off');sessionStorage.setItem('gyropup.prototype-notice','2026-10-29-v1');});
 const json=async path=>{const r=await context.request.get(base+path);assert.ok(r.ok(),path);return r.json();};
 const version=await json('/version.json'),summary=await json('/exports/leg/fea/summary.json'),media=await json('/exports/leg/fea/media.json');
+for(const [key,type] of [['video','video/mp4'],['webm','video/webm']]){
+  const response=await context.request.head(base+'/'+media.cases['hip_frame/E1'][key]);
+  assert.ok(response.ok());assert.match(response.headers()['content-type'],new RegExp('^'+type));
+}
 const hip=summary.results.findIndex(r=>r.part==='hip_frame'&&r.case==='E1');
 const still=summary.results.findIndex((r,i)=>i!==hip&&!r.animation&&!media.cases[`${r.part}/${r.case}`]);
 const selector=i=>`#fea tr.click[data-i="${i}"]`;
@@ -21,7 +25,10 @@ async function pageFor(setup=async()=>{}){
   await page.locator(selector(hip)).waitFor();return page;
 }
 async function select(page,i){await page.locator(selector(i)).locator('td').first().click();}
-async function state(page,value){await page.waitForFunction(value=>document.querySelector('#fea-media')?.dataset.state===value,value);}
+async function state(page,value){await page.waitForFunction(value=>{
+  const host=document.querySelector('#fea-media');if(host?.dataset.state==='error'&&value!=='error')throw new Error(host.textContent);
+  return host?.dataset.state===value;
+},value);}
 async function checkPlayback(page){
   await page.locator('.study-play').click();
   await page.waitForFunction(()=>{const v=document.querySelector('#feavid');return !v.paused&&v.currentTime>.25;});
@@ -32,7 +39,7 @@ async function checkPlayback(page){
 try{
   const page=await pageFor();await select(page,hip);await state(page,'ready');
   assert.equal(await page.locator('#feavid').evaluate(v=>v.duration),12);
-  assert.equal(await page.locator('#feavid').evaluate(v=>v.currentSrc.endsWith(v.canPlayType('video/mp4; codecs="avc1.640028"')?'.mp4':'.webm')),true,'Choose a supported encoding');
+  assert.equal(await page.locator('#feavid').evaluate(v=>v.currentSrc.endsWith(v.canPlayType('video/mp4; codecs="avc1.64001f"')?'.mp4':'.webm')),true,'Choose a supported encoding');
   assert.equal(await page.locator('#feavid').evaluate(v=>v.paused),true,'Reduced motion waits for deliberate play');
   assert.match(await page.locator('#feanote').innerText(),/Safety factor 1\.65 \/ required 2 — below target/);
   assert.match(await page.locator('.study-media-status').innerText(),/static load scaling, not elapsed physical time/);
@@ -84,7 +91,7 @@ try{
   await writeFile(`${out}/${engine.name()}-report.json`,JSON.stringify({base,version,cases,errors},null,2));
 }catch(error){for(const [i,page] of context.pages().entries()){
   console.error('Media failure details',await page.locator('#feavid').evaluate(v=>({state:document.querySelector('#fea-media').dataset.state,
-    canPlayH264:v.canPlayType('video/mp4; codecs="avc1.640028"'),canPlayVP9:v.canPlayType('video/webm; codecs="vp9"'),
+    canPlayH264:v.canPlayType('video/mp4; codecs="avc1.64001f"'),canPlayVP9:v.canPlayType('video/webm; codecs="vp9"'),
     currentSrc:v.currentSrc,readyState:v.readyState,networkState:v.networkState,duration:v.duration,error:v.error&&{code:v.error.code,message:v.error.message}})).catch(()=>null));
   await page.locator('#fea-media').scrollIntoViewIfNeeded().catch(()=>{});await page.screenshot({path:`${out}/${engine.name()}-failure-${i}.png`}).catch(()=>{});
 }throw error;}
