@@ -11,7 +11,7 @@ const context=await browser.newContext({viewport:{width:1280,height:900}});await
 const page=await context.newPage(),errors=[];page.setDefaultTimeout(60000);page.on('pageerror',error=>errors.push(error.message));
 const ready=()=>page.waitForFunction(()=>document.body.dataset.ready==='1');
 const checkModelActions=async()=>{
- await page.locator('[data-model-preview]').first().waitFor();
+ await page.locator('[data-model-preview]').first().waitFor({state:'attached'});
  await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
  const rows=await page.locator('tr').evaluateAll(rows=>rows.map(row=>{
   const originals=[...row.querySelectorAll('a[data-model-original]')],previews=[...row.querySelectorAll('a[data-model-preview]')];
