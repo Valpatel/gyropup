@@ -6,6 +6,8 @@ Issue #66; integration #61. This passive change keeps the existing PCB pose and 
 
 Geometry implemented; model acceptance remains incomplete after the detailed manufacturer checks failed. Physical fit, printer clearance, harness disconnection/slack and affected-base structural qualification are unverified. Do not treat this isolated mounting change as a turret print release.
 
+The [component checklist](base-board-component-checklist.md) records exact hardware placements, assembly/service dependencies, missing connector and wiring envelopes, and the remaining acceptance evidence.
+
 ## Design contract
 
 Preserve the pan-base foot (z <= 5 mm), bearing housing (radius <= 35.5 mm, z <= 38 mm), bearing-seat region (x +/-43, y +/-50, z 38..60 mm), and servo-pocket region (x -85..-25, y -50..60, z 0..65 mm). The PCB remains 50.8 x 30 x 1.6 mm at x 46.4..48, y +/-25.4, z 6..36; mounting centers y +/-22.4, z 9/33 mm. These are CAD design dimensions, not measured parts.
@@ -25,7 +27,7 @@ Hardware: four existing McMaster 91290A111 M3 x 6 PCB screws, four 91290A113 M3 
 
 ## Current evidence limits
 
-The PCB uses the actual `turret_boards.py` footprint layout with drilled holes; components remain package envelopes, and solder tails/connectors are unverified. The isolated checker proves the carrier plus PCB and attached hardware move together. The generic dossier's single-part assembly model cannot yet represent this bench subassembly, so its sequence remains unqualified; no collision waiver substitutes for that missing capability.
+The PCB uses the actual `turret_boards.py` footprint layout with drilled holes; components remain package envelopes, and solder tails/connectors are unverified. The isolated checker proves the carrier plus PCB and attached hardware move together. The released cad-agent v0.4.1 now supports rigid subassemblies, but this product has not integrated that API into its dossier; its sequence remains unqualified. No collision waiver substitutes for the missing product evidence.
 
 The public model contains eight screws and eight inserts as labelled authored simplified hardware. Manufacturer fastener stages now require all three private normalized STEP inputs used by their geometry; they stop with a failing coverage verdict before loading geometry when any input is missing. Public and private hardware modes cannot mix. The final aggregate also requires every private model to be present and valid, independently of the per-stage results.
 
