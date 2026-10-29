@@ -13,23 +13,34 @@
   <header id="topbar"><span class="glyph"></span><h1 id="title">Model</h1><span class="hud-tag">3D view</span><span class="spacer"></span>
     <a class="hud-tag" id="back" href="../../site/">Project site</a></header>
   <main id="stage-overlay"><div class="hud-hint">DRAG · ORBIT // SCROLL · ZOOM // RIGHT-DRAG · PAN</div></main>
-  <aside id="panel"></aside>
+  <aside id="panel"><p class="hud-note">Explore the real Gyropup assembly in the <a href="../sim.html?run=none">playground</a>. Exported CAD assemblies can also open here with an explicit model manifest.</p></aside>
 </div>
 <script type="module">
   import { createViewer } from './viewer.js';
   const q = new URLSearchParams(location.search);
-  const manifestUrl = q.get('manifest') ?? '../../exports/view/view.json';
-  createViewer({ app: document.getElementById('app'), panel: document.getElementById('panel'),
-                 title: document.getElementById('title'), manifestUrl })
-    .then((v) => {
-      // Scriptable for screenshots and docs: ?explode=0..1 &section=0..1 &view=iso|front|side|top &panel=0
-      if (q.has('explode')) v.setExplode(+q.get('explode'));
-      if (q.has('section')) v.setSection(+q.get('section'));
-      if (q.has('view')) [...document.querySelectorAll('.hud-btn')].find((b) => b.textContent === q.get('view').toUpperCase())?.click();
-      if (q.get('panel') === '0') document.getElementById('panel').style.display = 'none';
-      window.__viewer = v; document.body.dataset.ready = '1';
-    })
-    .catch((e) => { document.getElementById('panel').innerHTML = `<p class="hud-note">Could not load ${manifestUrl}: ${e.message}. Run <code>cad-agent view</code> first.</p>`; });
+  // Gyropup's real assembly lives in the playground; this reusable viewer needs an explicit export.
+  if (!q.has('manifest')) {
+    location.replace('../sim.html?run=none');
+  } else {
+    document.getElementById('panel').replaceChildren();
+    const manifestUrl = q.get('manifest');
+    createViewer({ app: document.getElementById('app'), panel: document.getElementById('panel'),
+                   title: document.getElementById('title'), manifestUrl })
+      .then((v) => {
+        // Scriptable for screenshots and docs: ?explode=0..1 &section=0..1 &view=iso|front|side|top &panel=0
+        if (q.has('explode')) v.setExplode(+q.get('explode'));
+        if (q.has('section')) v.setSection(+q.get('section'));
+        if (q.has('view')) [...document.querySelectorAll('.hud-btn')].find((b) => b.textContent === q.get('view').toUpperCase())?.click();
+        if (q.get('panel') === '0') document.getElementById('panel').style.display = 'none';
+        window.__viewer = v; document.body.dataset.ready = '1';
+      })
+      .catch((e) => {
+        const note = document.createElement('p'); note.className = 'hud-note';
+        note.textContent = `This model could not be loaded: ${e.message}.`;
+        const link = document.createElement('a'); link.href = '../sim.html'; link.textContent = 'Explore Gyropup in the playground';
+        document.getElementById('panel').replaceChildren(note, link);
+      });
+  }
 </script>
 </body>
 </html>

@@ -99,9 +99,24 @@ border:1px solid var(--hairline);border-radius:6px;background:var(--surface-2);c
 .fea-row .hud-btn{padding:7px 10px}
 .fea-row .hud-btn.on{border-color:var(--cyan);color:var(--cyan);background:var(--glow-06)}
 .fea-note{font-size:12px;color:var(--muted);margin:0;line-height:1.5}
-@media (max-width:820px){.fea-status{font-size:10px;line-height:1.4;padding:6px 8px;top:8px;left:8px}.fea-legend{bottom:8px;left:8px;padding:6px 8px}
+@media (max-width:820px), (max-width:1000px) and (max-height:480px){.fea-status{font-size:10px;line-height:1.4;padding:6px 8px;top:8px;left:8px}.fea-legend{bottom:8px;left:8px;padding:6px 8px}
 .fea-legend .keys{gap:2px 8px;margin-top:4px} #stage-overlay .hud-hint{display:none}
-#hud{grid-template-rows:auto minmax(0,1fr) 38vh}}
+#hud{grid-template-columns:1fr;grid-template-areas:'topbar' 'stage' 'panel';grid-template-rows:auto minmax(0,1fr) 38vh}
+#panel{margin:0 8px 8px} .hud-panel-tab{display:none}
+#hud.panel-collapsed{grid-template-columns:1fr;grid-template-rows:auto minmax(0,1fr);grid-template-areas:'topbar' 'stage'}
+#topbar{gap:8px;flex-wrap:nowrap;min-height:48px} #topbar h1{min-width:0;flex:1;overflow:hidden;text-overflow:ellipsis}
+#topbar .fea-material,#topbar .fea-safety,#topbar .fea-back,#topbar .spacer{display:none}
+#topbar .hud-pill{flex:none;min-height:44px}
+.fea-row .hud-btn{min-height:44px}
+.fea-status .l2,.fea-status .l3,.fea-legend .keys{display:none}
+#hud:not(.panel-collapsed) .fea-status{display:none}
+.fea-status{max-width:calc(100% - 16px)}
+.fea-legend{width:calc(100% - 16px);max-width:320px}
+}
+@media(max-width:1000px) and (max-height:480px){
+#hud{grid-template-rows:auto minmax(0,1fr) 44vh}
+.fea-status{display:none} .fea-legend .name{display:none} .fea-legend{padding:3px 8px}
+}
 `;
 
 /**
@@ -146,8 +161,8 @@ export async function mountFeaViewer(element, url, opts = {}) {
 
   element.innerHTML = `<div id="app"></div><div id="hud">
     <header id="topbar"><span class="glyph"></span><h1>${esc(title)}</h1>
-      <span class="hud-tag">${esc(mat.name)}</span><span class="hud-tag">SF ${fmt(res.safety_factor)}</span><span class="spacer"></span>
-      ${backHref ? `<a class="hud-tag" href="${esc(backHref)}">${esc(opts.backLabel ?? 'Back')}</a>` : ''}</header>
+      <span class="hud-tag fea-material">${esc(mat.name)}</span><span class="hud-tag fea-safety">SF ${fmt(res.safety_factor)}</span><span class="spacer"></span>
+      ${backHref ? `<a class="hud-tag fea-back" href="${esc(backHref)}">${esc(opts.backLabel ?? 'Back')}</a>` : ''}</header>
     <main id="stage-overlay">
       <div class="hud-card fea-status"><div class="l1"></div><div class="l2"></div><div class="l3"></div></div>
       <div class="hud-card fea-legend"><div class="name"></div><div class="bar"></div><div class="ticks"></div><div class="keys">
@@ -509,14 +524,12 @@ export async function mountFeaViewer(element, url, opts = {}) {
     b.setFromObject(model);                          // the part and its load arrows
     return b.expandByScalar(0.05 * sizeM);
   }
-  // the stage area the overlays leave free; on a phone the status card and the legend count too
+  // Reserve the cards at every size: narrow tablets can overlap the model even with a side panel.
   function insets() {
     const ins = overlayInsets(hud);
-    if (window.innerWidth <= 820) {
-      const a = app.getBoundingClientRect(), st = statusEl.getBoundingClientRect(), lg = legendEl.getBoundingClientRect();
-      ins.top = Math.max(ins.top, st.bottom - a.top + 4);
-      ins.bottom = Math.max(ins.bottom, a.bottom - lg.top + 4);
-    }
+    const a = app.getBoundingClientRect(), st = statusEl.getBoundingClientRect(), lg = legendEl.getBoundingClientRect();
+    if (statusEl.offsetParent !== null) ins.top = Math.max(ins.top, st.bottom - a.top + 4);
+    ins.bottom = Math.max(ins.bottom, a.bottom - lg.top + 4);
     return ins;
   }
   let lastView = 'iso', userMoved = false;
@@ -745,9 +758,13 @@ export async function mountFeaViewer(element, url, opts = {}) {
   });
 
   // panel: false (a link that hides the panel) must not change what later visits remember
-  const collapse = collapsiblePanel(hud, panel, { key: opts.panel === false ? 'fea-panel-collapsed-by-link' : 'fea-panel-collapsed',
-                                                  onChange: () => stage.setInsets(insets()) });
-  if (opts.panel === false) collapse.set(true);
+  const phone = matchMedia('(max-width:820px), (max-width:1000px) and (max-height:480px)').matches;
+  const panelKey = opts.panel === false ? 'fea-panel-collapsed-by-link' : phone ? 'fea-panel-collapsed-mobile' : 'fea-panel-collapsed';
+  let savedPanel = null;
+  try { savedPanel = localStorage.getItem(panelKey); } catch { /* storage is optional */ }
+  const collapse = collapsiblePanel(hud, panel, { key: panelKey,
+    onChange: () => { if (!userMoved && !fly && picked < 0) fit(lastView); else stage.setInsets(insets()); } });
+  if (opts.panel === false || (phone && opts.panel !== true && savedPanel === null)) collapse.set(true);
   const onResize = () => {                            // a resized or rotated screen: refit unless the user has moved the view
     if (!userMoved && !fly && picked < 0) fit(lastView); else stage.setInsets(insets());
   };
