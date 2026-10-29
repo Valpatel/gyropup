@@ -17,7 +17,8 @@ function voiceStub(){
 async function settle(page){await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));}
 async function handoffMetrics(page,phase){return page.evaluate(phase=>{
  const r=document.querySelector('.hero-scene').getBoundingClientRect();
- return {phase,scrollY,hero:{x:r.x,y:r.y,width:r.width,height:r.height,documentY:r.y+scrollY},interLoaded:document.fonts.check('600 14px Inter')};
+ const interFaces=[...document.fonts].filter(face=>face.family==='Inter').map(face=>face.status);
+ return {phase,scrollY,hero:{x:r.x,y:r.y,width:r.width,height:r.height,documentY:r.y+scrollY},interFaces,interLoaded:interFaces.length>0&&interFaces.every(status=>status==='loaded')};
 },phase);}
 async function assertGreetingClear(page){
  const bounds=await page.evaluate(()=>{
@@ -66,13 +67,18 @@ await acknowledgePrototypeNotice(context);
   await page.waitForFunction(()=>{const i=document.querySelector('.scene-fallback');return i.complete&&i.naturalWidth===1024;});
   assert.equal(await page.locator('#robot-preview canvas').count(),0);
   await page.locator('.hero-scene').scrollIntoViewIfNeeded();
-  if(interRequested){await interRequested;assert.equal(await page.evaluate(()=>document.fonts.check('600 14px Inter')),false,'Phone case starts with Inter deliberately pending');}
-  handoff.phases.push(await handoffMetrics(page,'beforeFonts'));
+  if(interRequested)await interRequested;
+  const beforeFonts=await handoffMetrics(page,'beforeFonts');handoff.phases.push(beforeFonts);
+  if(interRequested){
+   assert.ok(beforeFonts.interFaces.length,'Inter face is registered');
+   assert.equal(beforeFonts.interLoaded,false,'Phone case starts with Inter deliberately pending');
+  }
   // WebKit's document.fonts.ready waits for the deliberately held module load.
   // Font swaps and screenshot scrolling are setup, not the 3D handoff being measured.
   const fontsLoaded=page.evaluate(()=>Promise.all([document.fonts.load('600 14px Inter'),document.fonts.load('600 10px "JetBrains Mono"')]));
   releaseInter?.();await fontsLoaded;await settle(page);
-  handoff.phases.push(await handoffMetrics(page,'afterFonts'));
+  const afterFonts=await handoffMetrics(page,'afterFonts');handoff.phases.push(afterFonts);
+  assert.equal(afterFonts.interLoaded,true,'Inter is loaded before capturing the handoff baseline');
   process.env.PW_TEST_SCREENSHOT_NO_FONTS_READY='1';
   try { await page.locator('.hero-scene').screenshot({path:`${out}/${engine.name()}-loading-dpr${dpr}.png`}); }
   finally { delete process.env.PW_TEST_SCREENSHOT_NO_FONTS_READY; }
