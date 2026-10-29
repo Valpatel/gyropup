@@ -27,7 +27,8 @@ class SupportEvidence(unittest.TestCase):
     def test_source_closure_change_rejects(self):
         with tempfile.TemporaryDirectory() as tmp:
             root=Path(tmp)
-            for name in set(self.receipt['inputs']['files'])|set(self.receipt['context_files']):
+            artifacts={'exports/turret/base-board-service/connectors/'+n for n in self.receipt['public_artifact_sha256']}
+            for name in set(self.receipt['inputs']['files'])|set(self.receipt['context_files'])|artifacts:
                 p=root/name;p.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(MOD.ROOT/name,p)
             self.assertTrue(MOD.validate_receipt(self.receipt,root))
             p=root/'cad/turret_base_board.py';p.write_bytes(p.read_bytes()+b'\n# altered underlying mount\n')

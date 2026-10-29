@@ -45,6 +45,10 @@ def validate_receipt(receipt,root=ROOT):
         raise ValueError('Bounded support check cannot establish readiness')
     if not receipt['checks'] or any(c['pass'] is not True for c in receipt['checks']):
         raise ValueError('Support candidate has failed checks')
+    for name,wanted in receipt.get('public_artifact_sha256',{}).items():
+        path=root/'exports/turret/base-board-service/connectors'/name
+        if not path.is_file() or provenance.digest(path)!=wanted:
+            raise ValueError('Support public artifact changed: '+name)
     return True
 
 

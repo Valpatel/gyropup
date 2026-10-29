@@ -126,6 +126,8 @@ The next concrete support must preserve the carrier's original fastener seats an
 
 [The opt-in support source](../cad/turret_carrier_support.py) adds two new mounting holes at Y±10/Z10 mm. It preserves the carrier's original PCB bosses, four insert seats and four external retainer holes. The default turret still uses the earlier carrier; this candidate must not silently replace it in fabrication exports.
 
+[Inspect the assembled support candidate](../exports/turret/base-board-service/connectors/C3-support-layout.step). The named colours distinguish authored parts, simplified public hardware, package envelopes and connector reservations. [Support only](../exports/turret/base-board-service/connectors/C3-support-candidate.step) and [carrier candidate](../exports/turret/base-board-service/connectors/carrier-support-candidate.step) are research inspection models, not approved print files.
+
 | Part / interface | Concrete candidate | Remaining qualification |
 | --- | --- | --- |
 | Support-to-carrier screws | Two exact McMaster 91290A113 M3×8; seats at X58, shafts toward−X | Torque, loosening, printed bearing/creep and thread clocking |
