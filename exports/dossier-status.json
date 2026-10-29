@@ -1,0 +1,5985 @@
+{
+  "schema": "cad-agent.dossier-status/1",
+  "dossier": "dossier/project.yaml",
+  "title": "Gyropup turret",
+  "statuses": [
+    "draft",
+    "built",
+    "gated",
+    "reviewed",
+    "signed_off"
+  ],
+  "required_section_status": "gated",
+  "require_separate_reviewer": true,
+  "pass": false,
+  "counts": {
+    "error": 7,
+    "warning": 2,
+    "sections": {
+      "draft": 0,
+      "built": 7,
+      "gated": 1,
+      "reviewed": 0,
+      "signed_off": 0
+    },
+    "parts": {
+      "draft": 0,
+      "built": 31,
+      "gated": 41,
+      "reviewed": 0,
+      "signed_off": 0
+    }
+  },
+  "geometry": {
+    "file": "exports/dossier-geometry.json",
+    "actor": "unknown"
+  },
+  "sections": {
+    "S1-base": {
+      "id": "S1-base",
+      "title": "Base and pan drive",
+      "file": "dossier/sections/S1-base.yaml",
+      "line": 3,
+      "requirements": [
+        "R2",
+        "R9",
+        "R10",
+        "R12",
+        "R13",
+        "R14"
+      ],
+      "parts": [
+        "pan_base",
+        "pan_clamp",
+        "pan_bearing",
+        "pan_bearing_inner",
+        "pan_ring",
+        "pan_spacer",
+        "circlip_50",
+        "pan_pinion",
+        "pan_servo",
+        "bumper_ring",
+        "index_magnet",
+        "hall_switch"
+      ],
+      "open_decisions": [],
+      "status": "built",
+      "blocked_by": [
+        "pan_base: gate:assembly fail (failing: step:53:insert); turret-fea fail (verdict.all_ok is False); gate:wall fail (failing: wall:pan_base)",
+        "pan_clamp: gate:assembly fail (failing: step:50:insert)",
+        "pan_bearing: gate:assembly fail (failing: step:50:insert)",
+        "pan_bearing_inner: gate:assembly fail (failing: step:50:insert)",
+        "pan_ring: gate:assembly fail (failing: step:50:insert); turret-fea fail (verdict.all_ok is False); gate:wall fail (failing: wall:pan_ring)",
+        "pan_spacer: gate:assembly fail (failing: step:50:insert)",
+        "circlip_50: gate:assembly fail (failing: step:50:insert)",
+        "pan_pinion: turret-fea fail (verdict.all_ok is False)"
+      ],
+      "review": null,
+      "findings": 1
+    },
+    "S2-tilt": {
+      "id": "S2-tilt",
+      "title": "Tilt yoke and cradle",
+      "file": "dossier/sections/S2-tilt.yaml",
+      "line": 3,
+      "requirements": [
+        "R3",
+        "R9",
+        "R10",
+        "R12",
+        "R13",
+        "R14"
+      ],
+      "parts": [
+        "tilt_yoke",
+        "cradle",
+        "cradle_plate_l",
+        "cradle_plate_r",
+        "stop_lug",
+        "horn_boss",
+        "pivot_spacer",
+        "tilt_servo",
+        "tilt_bearing",
+        "tilt_bearing_inner",
+        "shoulder_screw",
+        "ct_thumbscrew"
+      ],
+      "open_decisions": [],
+      "status": "built",
+      "blocked_by": [
+        "tilt_yoke: gate:assembly fail (failing: step:29:insert, step:31:insert, step:32:insert, step:50:insert); turret-fea fail (verdict.all_ok is False); gate:wall fail (failing: wall:tilt_yoke)",
+        "cradle: turret-fea fail (verdict.all_ok is False); gate:wall fail (failing: wall:cradle)",
+        "cradle_plate_l: turret-fea fail (verdict.all_ok is False)",
+        "cradle_plate_r: turret-fea fail (verdict.all_ok is False)",
+        "stop_lug: gate:assembly fail (failing: step:29:insert); turret-fea fail (verdict.all_ok is False)",
+        "horn_boss: gate:assembly fail (failing: step:29:insert)",
+        "pivot_spacer: gate:wall fail (failing: wall:pivot_spacer)",
+        "tilt_bearing: gate:assembly fail (failing: step:31:insert)",
+        "tilt_bearing_inner: gate:assembly fail (failing: step:32:insert)"
+      ],
+      "review": null,
+      "findings": 1
+    },
+    "S3-feed": {
+      "id": "S3-feed",
+      "title": "Feed: hopper, dial, exit, chute",
+      "file": "dossier/sections/S3-feed.yaml",
+      "line": 3,
+      "requirements": [
+        "R4",
+        "R5",
+        "R6",
+        "R8",
+        "R9",
+        "R10",
+        "R11",
+        "R12",
+        "R14"
+      ],
+      "parts": [
+        "dial",
+        "hopper",
+        "hopper_lid",
+        "hopper_flap",
+        "feed_motor",
+        "hopper_inserts",
+        "ball"
+      ],
+      "open_decisions": [],
+      "status": "built",
+      "blocked_by": [
+        "dial: gate:wall fail (failing: wall:dial)",
+        "hopper: gate:assembly fail (failing: step:12:insert); gate:wall fail (failing: wall:hopper)",
+        "hopper_lid: gate:wall fail (failing: wall:hopper_lid)",
+        "ball: gate:assembly fail (failing: step:12:insert)"
+      ],
+      "review": null,
+      "findings": 1
+    },
+    "S4-launcher": {
+      "id": "S4-launcher",
+      "title": "Launcher: flywheel cage, motors, nip",
+      "file": "dossier/sections/S4-launcher.yaml",
+      "line": 3,
+      "requirements": [
+        "R6",
+        "R7",
+        "R8",
+        "R9",
+        "R10",
+        "R12",
+        "R13",
+        "R14",
+        "R18"
+      ],
+      "parts": [
+        "cartridge_body",
+        "flywheel",
+        "flywheel_m",
+        "flywheel_tyre",
+        "flywheel_tyre_m",
+        "flywheel_motor_l",
+        "flywheel_motor_r",
+        "esc_l",
+        "esc_r",
+        "cartridge_board"
+      ],
+      "open_decisions": [
+        "T4.7"
+      ],
+      "status": "built",
+      "blocked_by": [
+        "cartridge_body: gate:connectivity fail (failing: joint:I-wheel-r); turret-fea fail (verdict.all_ok is False); gate:wall fail (failing: wall:cartridge_body)",
+        "flywheel_m: gate:connectivity fail (failing: connect:body:flywheel_m, joint:I-wheel-r)",
+        "flywheel_tyre_m: gate:connectivity fail (failing: connect:body:flywheel_m)"
+      ],
+      "review": null,
+      "findings": 1
+    },
+    "S5-barrel": {
+      "id": "S5-barrel",
+      "title": "Barrel and laser",
+      "file": "dossier/sections/S5-barrel.yaml",
+      "line": 3,
+      "requirements": [
+        "R6",
+        "R8",
+        "R9",
+        "R10",
+        "R11",
+        "R12",
+        "R14",
+        "R19"
+      ],
+      "parts": [
+        "barrel",
+        "laser_mount",
+        "laser",
+        "laser_screws",
+        "laser_inserts"
+      ],
+      "open_decisions": [],
+      "status": "built",
+      "blocked_by": [
+        "laser_mount: gate:wall fail (failing: wall:laser_mount)"
+      ],
+      "review": null,
+      "findings": 1
+    },
+    "S6-wiring": {
+      "id": "S6-wiring",
+      "title": "Wiring and slip ring",
+      "file": "dossier/sections/S6-wiring.yaml",
+      "line": 3,
+      "requirements": [
+        "R2",
+        "R9",
+        "R10",
+        "R12",
+        "R14",
+        "R17",
+        "R18"
+      ],
+      "parts": [
+        "slip_ring",
+        "slip_ring_rotor",
+        "ring_carrier",
+        "ring_driver",
+        "ring_coupling",
+        "board_bay",
+        "board_bay_lid",
+        "turret_board",
+        "base_board",
+        "dt_receptacle",
+        "dt_plug"
+      ],
+      "open_decisions": [],
+      "status": "built",
+      "blocked_by": [
+        "slip_ring_rotor: gate:assembly fail (failing: step:50:insert)",
+        "ring_carrier: gate:wall fail (failing: wall:ring_carrier)",
+        "ring_driver: gate:assembly fail (failing: step:50:insert)",
+        "board_bay: gate:assembly fail (failing: step:50:insert)",
+        "base_board: gate:assembly fail (failing: step:53:insert)"
+      ],
+      "review": null,
+      "findings": 1
+    },
+    "S7-compute": {
+      "id": "S7-compute",
+      "title": "Compute and power (D66)",
+      "file": "dossier/sections/S7-compute.yaml",
+      "line": 3,
+      "requirements": [
+        "R1",
+        "R9",
+        "R12",
+        "R14",
+        "R15"
+      ],
+      "parts": [
+        "compute_tray",
+        "compute_shell",
+        "compute",
+        "eth_jack",
+        "xt30_input",
+        "input_fuses"
+      ],
+      "open_decisions": [],
+      "status": "built",
+      "blocked_by": [
+        "compute_shell: gate:wall fail (failing: wall:compute_shell)"
+      ],
+      "review": null,
+      "findings": 1
+    },
+    "S8-stand": {
+      "id": "S8-stand",
+      "title": "The stand and its battery (D66)",
+      "file": "dossier/sections/S8-stand.yaml",
+      "line": 3,
+      "requirements": [
+        "R1",
+        "R9",
+        "R12",
+        "R14",
+        "R16"
+      ],
+      "parts": [
+        "stand_box",
+        "stand_bottom",
+        "stand_foot",
+        "dock",
+        "pack",
+        "terminal_board",
+        "usb_can",
+        "panel_switch",
+        "panel_pendant"
+      ],
+      "open_decisions": [
+        "T8.2"
+      ],
+      "status": "gated",
+      "blocked_by": [
+        "stand_box: no current reviewer record",
+        "stand_bottom: no current reviewer record",
+        "stand_foot: no current reviewer record",
+        "dock: no current reviewer record",
+        "pack: no current reviewer record",
+        "terminal_board: no current reviewer record",
+        "usb_can: no current reviewer record",
+        "panel_switch: no current reviewer record",
+        "panel_pendant: no current reviewer record"
+      ],
+      "review": null,
+      "findings": 0
+    }
+  },
+  "parts": {
+    "pan_base": {
+      "id": "pan_base",
+      "section": "S1-base",
+      "file": "dossier/sections/S1-base.yaml",
+      "line": 132,
+      "claimed": "draft",
+      "sha256": "2f94b77c52ad989d301a1eb6edd68be10ee950fa8cae5acc745012a70f6aa762",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "fail",
+          "message": "failing: step:53:insert",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "turret-fea",
+          "status": "fail",
+          "message": "verdict.all_ok is False",
+          "file": "exports/turret/fea/summary.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "fail",
+          "message": "failing: wall:pan_base",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "built",
+      "blocked_by": [
+        "gate:assembly fail (failing: step:53:insert)",
+        "turret-fea fail (verdict.all_ok is False)",
+        "gate:wall fail (failing: wall:pan_base)"
+      ],
+      "findings": 1
+    },
+    "pan_clamp": {
+      "id": "pan_clamp",
+      "section": "S1-base",
+      "file": "dossier/sections/S1-base.yaml",
+      "line": 154,
+      "claimed": "draft",
+      "sha256": "889a97b0dabc0797d83795e5dd1fbef055e2d1b7a18f4f1a4c5cf18197f45bc7",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "fail",
+          "message": "failing: step:50:insert",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "built",
+      "blocked_by": [
+        "gate:assembly fail (failing: step:50:insert)"
+      ],
+      "findings": 1
+    },
+    "pan_bearing": {
+      "id": "pan_bearing",
+      "section": "S1-base",
+      "file": "dossier/sections/S1-base.yaml",
+      "line": 165,
+      "claimed": "draft",
+      "sha256": "ae4a7a2ab8515dc527456a3a705d086e92bfe5917444a879ae0cffc8bb2a9b70",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "fail",
+          "message": "failing: step:50:insert",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "built",
+      "blocked_by": [
+        "gate:assembly fail (failing: step:50:insert)"
+      ],
+      "findings": 1
+    },
+    "pan_bearing_inner": {
+      "id": "pan_bearing_inner",
+      "section": "S1-base",
+      "file": "dossier/sections/S1-base.yaml",
+      "line": 178,
+      "claimed": "draft",
+      "sha256": "606f23bae49af7e976223f231808862675403eee57c6d0269a6e50c11b43300c",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "fail",
+          "message": "failing: step:50:insert",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "built",
+      "blocked_by": [
+        "gate:assembly fail (failing: step:50:insert)"
+      ],
+      "findings": 1
+    },
+    "pan_ring": {
+      "id": "pan_ring",
+      "section": "S1-base",
+      "file": "dossier/sections/S1-base.yaml",
+      "line": 190,
+      "claimed": "draft",
+      "sha256": "a1dc9238be93b88ac09c9df39c4a3d3ce2eb29a50da6db8a42969ae7d969a69f",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "fail",
+          "message": "failing: step:50:insert",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "turret-fea",
+          "status": "fail",
+          "message": "verdict.all_ok is False",
+          "file": "exports/turret/fea/summary.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "fail",
+          "message": "failing: wall:pan_ring",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "built",
+      "blocked_by": [
+        "gate:assembly fail (failing: step:50:insert)",
+        "turret-fea fail (verdict.all_ok is False)",
+        "gate:wall fail (failing: wall:pan_ring)"
+      ],
+      "findings": 1
+    },
+    "pan_spacer": {
+      "id": "pan_spacer",
+      "section": "S1-base",
+      "file": "dossier/sections/S1-base.yaml",
+      "line": 212,
+      "claimed": "draft",
+      "sha256": "3be2d4d9f623d428bfe6e29b6c0065f24d0b8282ba38b94a6789a89e24538d12",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "fail",
+          "message": "failing: step:50:insert",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "built",
+      "blocked_by": [
+        "gate:assembly fail (failing: step:50:insert)"
+      ],
+      "findings": 1
+    },
+    "circlip_50": {
+      "id": "circlip_50",
+      "section": "S1-base",
+      "file": "dossier/sections/S1-base.yaml",
+      "line": 225,
+      "claimed": "draft",
+      "sha256": "d752916a43f277eee131fef4f73ca80d2f8f9a90412aa9a193dc2fd23c87a374",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "fail",
+          "message": "failing: step:50:insert",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "built",
+      "blocked_by": [
+        "gate:assembly fail (failing: step:50:insert)"
+      ],
+      "findings": 1
+    },
+    "pan_pinion": {
+      "id": "pan_pinion",
+      "section": "S1-base",
+      "file": "dossier/sections/S1-base.yaml",
+      "line": 237,
+      "claimed": "draft",
+      "sha256": "91301efa3164f21a1f192d67ab4af8e86b1d1d2c7aa66ed9004ea5180ab11318",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "turret-fea",
+          "status": "fail",
+          "message": "verdict.all_ok is False",
+          "file": "exports/turret/fea/summary.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "built",
+      "blocked_by": [
+        "turret-fea fail (verdict.all_ok is False)"
+      ],
+      "findings": 1
+    },
+    "pan_servo": {
+      "id": "pan_servo",
+      "section": "S1-base",
+      "file": "dossier/sections/S1-base.yaml",
+      "line": 248,
+      "claimed": "draft",
+      "sha256": "385db056f41489e54b12777c0cb7f29acb932d5239f0d7d527ddf239891d62a6",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "gated",
+      "blocked_by": [
+        "no current reviewer record"
+      ],
+      "findings": 0
+    },
+    "bumper_ring": {
+      "id": "bumper_ring",
+      "section": "S1-base",
+      "file": "dossier/sections/S1-base.yaml",
+      "line": 259,
+      "claimed": "draft",
+      "sha256": "a51e045c0b814862b4a1439422f499d499bdfa4a55e918c796538b194d15730c",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "gated",
+      "blocked_by": [
+        "no current reviewer record"
+      ],
+      "findings": 0
+    },
+    "index_magnet": {
+      "id": "index_magnet",
+      "section": "S1-base",
+      "file": "dossier/sections/S1-base.yaml",
+      "line": 270,
+      "claimed": "draft",
+      "sha256": "105937f27a0143ef781fa99d6eb9583e5d248cf5ac44cfb24e6015aff5f55c1a",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "gated",
+      "blocked_by": [
+        "no current reviewer record"
+      ],
+      "findings": 0
+    },
+    "hall_switch": {
+      "id": "hall_switch",
+      "section": "S1-base",
+      "file": "dossier/sections/S1-base.yaml",
+      "line": 280,
+      "claimed": "draft",
+      "sha256": "93c71f37842a8d469f3f7311b9d49fa62814d29e8cddbf113c63c46cfd90f801",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "gated",
+      "blocked_by": [
+        "no current reviewer record"
+      ],
+      "findings": 0
+    },
+    "tilt_yoke": {
+      "id": "tilt_yoke",
+      "section": "S2-tilt",
+      "file": "dossier/sections/S2-tilt.yaml",
+      "line": 139,
+      "claimed": "draft",
+      "sha256": "e572877223315673055b9fb9c922a5627e09e55527a4a3fc6520005107b77192",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "fail",
+          "message": "failing: step:29:insert, step:31:insert, step:32:insert, step:50:insert",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "turret-fea",
+          "status": "fail",
+          "message": "verdict.all_ok is False",
+          "file": "exports/turret/fea/summary.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "fail",
+          "message": "failing: wall:tilt_yoke",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "built",
+      "blocked_by": [
+        "gate:assembly fail (failing: step:29:insert, step:31:insert, step:32:insert, step:50:insert)",
+        "turret-fea fail (verdict.all_ok is False)",
+        "gate:wall fail (failing: wall:tilt_yoke)"
+      ],
+      "findings": 1
+    },
+    "cradle": {
+      "id": "cradle",
+      "section": "S2-tilt",
+      "file": "dossier/sections/S2-tilt.yaml",
+      "line": 160,
+      "claimed": "draft",
+      "sha256": "b8b24a50e197a20b0cbad1e6f41d3e4129d156083f334082e18a050ac654a4a7",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "turret-fea",
+          "status": "fail",
+          "message": "verdict.all_ok is False",
+          "file": "exports/turret/fea/summary.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "fail",
+          "message": "failing: wall:cradle",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "built",
+      "blocked_by": [
+        "turret-fea fail (verdict.all_ok is False)",
+        "gate:wall fail (failing: wall:cradle)"
+      ],
+      "findings": 1
+    },
+    "cradle_plate_l": {
+      "id": "cradle_plate_l",
+      "section": "S2-tilt",
+      "file": "dossier/sections/S2-tilt.yaml",
+      "line": 178,
+      "claimed": "draft",
+      "sha256": "641eaa33268c1b8ee5f6b324604b4a3ab55580536c1e100708e1714f4bdff8db",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "turret-fea",
+          "status": "fail",
+          "message": "verdict.all_ok is False",
+          "file": "exports/turret/fea/summary.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "built",
+      "blocked_by": [
+        "turret-fea fail (verdict.all_ok is False)"
+      ],
+      "findings": 1
+    },
+    "cradle_plate_r": {
+      "id": "cradle_plate_r",
+      "section": "S2-tilt",
+      "file": "dossier/sections/S2-tilt.yaml",
+      "line": 191,
+      "claimed": "draft",
+      "sha256": "e276825af707e1036a63014d0a2c06b2c9364b186ab1ba6298f2d61bee813ccf",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "turret-fea",
+          "status": "fail",
+          "message": "verdict.all_ok is False",
+          "file": "exports/turret/fea/summary.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "built",
+      "blocked_by": [
+        "turret-fea fail (verdict.all_ok is False)"
+      ],
+      "findings": 1
+    },
+    "stop_lug": {
+      "id": "stop_lug",
+      "section": "S2-tilt",
+      "file": "dossier/sections/S2-tilt.yaml",
+      "line": 204,
+      "claimed": "draft",
+      "sha256": "ffb54ed98b83cceb844244d1e59e6d81664210a1133343d850a015a0644e1067",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "fail",
+          "message": "failing: step:29:insert",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "turret-fea",
+          "status": "fail",
+          "message": "verdict.all_ok is False",
+          "file": "exports/turret/fea/summary.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "built",
+      "blocked_by": [
+        "gate:assembly fail (failing: step:29:insert)",
+        "turret-fea fail (verdict.all_ok is False)"
+      ],
+      "findings": 1
+    },
+    "horn_boss": {
+      "id": "horn_boss",
+      "section": "S2-tilt",
+      "file": "dossier/sections/S2-tilt.yaml",
+      "line": 217,
+      "claimed": "draft",
+      "sha256": "0af40d2c920c80ed44d3b1f9d3098f9435ef217faf9e6bcf767010cf69f81215",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "fail",
+          "message": "failing: step:29:insert",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "built",
+      "blocked_by": [
+        "gate:assembly fail (failing: step:29:insert)"
+      ],
+      "findings": 1
+    },
+    "pivot_spacer": {
+      "id": "pivot_spacer",
+      "section": "S2-tilt",
+      "file": "dossier/sections/S2-tilt.yaml",
+      "line": 230,
+      "claimed": "draft",
+      "sha256": "dfc9d94831e5510cefb7ee8d304a302e33a6bf82135634ccc6c9257ed029eb94",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "fail",
+          "message": "failing: wall:pivot_spacer",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "built",
+      "blocked_by": [
+        "gate:wall fail (failing: wall:pivot_spacer)"
+      ],
+      "findings": 1
+    },
+    "tilt_servo": {
+      "id": "tilt_servo",
+      "section": "S2-tilt",
+      "file": "dossier/sections/S2-tilt.yaml",
+      "line": 241,
+      "claimed": "draft",
+      "sha256": "785d64a60ecd3f7e0a2bfd6c109b628f40d82512ea3ed13fc9d4d2ef5d60bde2",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "gated",
+      "blocked_by": [
+        "no current reviewer record"
+      ],
+      "findings": 0
+    },
+    "tilt_bearing": {
+      "id": "tilt_bearing",
+      "section": "S2-tilt",
+      "file": "dossier/sections/S2-tilt.yaml",
+      "line": 253,
+      "claimed": "draft",
+      "sha256": "81c84fe7a4ce76a1d937ef6bebe015a3e940cf231b0d10988a263d8f38afe852",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "fail",
+          "message": "failing: step:31:insert",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "built",
+      "blocked_by": [
+        "gate:assembly fail (failing: step:31:insert)"
+      ],
+      "findings": 1
+    },
+    "tilt_bearing_inner": {
+      "id": "tilt_bearing_inner",
+      "section": "S2-tilt",
+      "file": "dossier/sections/S2-tilt.yaml",
+      "line": 264,
+      "claimed": "draft",
+      "sha256": "6f70e1f7a2f27cca8dd875630b6e1dbd03fc9ba70f8556e90479c60c69aa7fdc",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "fail",
+          "message": "failing: step:32:insert",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "built",
+      "blocked_by": [
+        "gate:assembly fail (failing: step:32:insert)"
+      ],
+      "findings": 1
+    },
+    "shoulder_screw": {
+      "id": "shoulder_screw",
+      "section": "S2-tilt",
+      "file": "dossier/sections/S2-tilt.yaml",
+      "line": 276,
+      "claimed": "draft",
+      "sha256": "82837b5b28c4b5d1cd9b82b678534f5da43226ac107b7d7042e67b23c5e7edd0",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "gated",
+      "blocked_by": [
+        "no current reviewer record"
+      ],
+      "findings": 0
+    },
+    "ct_thumbscrew": {
+      "id": "ct_thumbscrew",
+      "section": "S2-tilt",
+      "file": "dossier/sections/S2-tilt.yaml",
+      "line": 290,
+      "claimed": "draft",
+      "sha256": "f1a8a76427df9fc311b524a994386923850c578d01fbda570e69465d78ab2b18",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "gated",
+      "blocked_by": [
+        "no current reviewer record"
+      ],
+      "findings": 0
+    },
+    "dial": {
+      "id": "dial",
+      "section": "S3-feed",
+      "file": "dossier/sections/S3-feed.yaml",
+      "line": 55,
+      "claimed": "draft",
+      "sha256": "328e1e113df65f7738ed930fd4e37fda7306c64aa4706b5a928557e394729cc8",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "fail",
+          "message": "failing: wall:dial",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "built",
+      "blocked_by": [
+        "gate:wall fail (failing: wall:dial)"
+      ],
+      "findings": 1
+    },
+    "hopper": {
+      "id": "hopper",
+      "section": "S3-feed",
+      "file": "dossier/sections/S3-feed.yaml",
+      "line": 71,
+      "claimed": "draft",
+      "sha256": "396885c3c023898d91df62daeb1d7e631f43aaaa4a29f385a61168d64eb3c876",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "fail",
+          "message": "failing: step:12:insert",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "fail",
+          "message": "failing: wall:hopper",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "built",
+      "blocked_by": [
+        "gate:assembly fail (failing: step:12:insert)",
+        "gate:wall fail (failing: wall:hopper)"
+      ],
+      "findings": 1
+    },
+    "hopper_lid": {
+      "id": "hopper_lid",
+      "section": "S3-feed",
+      "file": "dossier/sections/S3-feed.yaml",
+      "line": 94,
+      "claimed": "draft",
+      "sha256": "f972d3be4372c4e808a3a8fe9c3db03fc69e4b2b22e61d833d8c6f3e6bf69cc4",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "fail",
+          "message": "failing: wall:hopper_lid",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "built",
+      "blocked_by": [
+        "gate:wall fail (failing: wall:hopper_lid)"
+      ],
+      "findings": 1
+    },
+    "hopper_flap": {
+      "id": "hopper_flap",
+      "section": "S3-feed",
+      "file": "dossier/sections/S3-feed.yaml",
+      "line": 106,
+      "claimed": "draft",
+      "sha256": "895061561f469900f662c01d3ee73a2d554ea024097f80a99961e11f4f7ebcd3",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "gated",
+      "blocked_by": [
+        "no current reviewer record"
+      ],
+      "findings": 0
+    },
+    "feed_motor": {
+      "id": "feed_motor",
+      "section": "S3-feed",
+      "file": "dossier/sections/S3-feed.yaml",
+      "line": 115,
+      "claimed": "draft",
+      "sha256": "4a1d10edf6663e103169d5920d05ad8d4b1581e24da4bb55906114f323522b22",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "gated",
+      "blocked_by": [
+        "no current reviewer record"
+      ],
+      "findings": 0
+    },
+    "hopper_inserts": {
+      "id": "hopper_inserts",
+      "section": "S3-feed",
+      "file": "dossier/sections/S3-feed.yaml",
+      "line": 127,
+      "claimed": "draft",
+      "sha256": "7db7373b90197f24806eb01cc9217bb1e683500b0530654beaeb8f7ce3dc83b2",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "gated",
+      "blocked_by": [
+        "no current reviewer record"
+      ],
+      "findings": 0
+    },
+    "ball": {
+      "id": "ball",
+      "section": "S3-feed",
+      "file": "dossier/sections/S3-feed.yaml",
+      "line": 140,
+      "claimed": "draft",
+      "sha256": "901989207ea54f6c1813e450ee37baa9172cfb04b5e5f8065efb414a0ebe5604",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "fail",
+          "message": "failing: step:12:insert",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "built",
+      "blocked_by": [
+        "gate:assembly fail (failing: step:12:insert)"
+      ],
+      "findings": 1
+    },
+    "cartridge_body": {
+      "id": "cartridge_body",
+      "section": "S4-launcher",
+      "file": "dossier/sections/S4-launcher.yaml",
+      "line": 112,
+      "claimed": "draft",
+      "sha256": "a87da64730ba9a420d65fe4f5161037a644b8d3362563095672df4ff135f39f4",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "fail",
+          "message": "failing: joint:I-wheel-r",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "turret-fea",
+          "status": "fail",
+          "message": "verdict.all_ok is False",
+          "file": "exports/turret/fea/summary.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "fail",
+          "message": "failing: wall:cartridge_body",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "built",
+      "blocked_by": [
+        "gate:connectivity fail (failing: joint:I-wheel-r)",
+        "turret-fea fail (verdict.all_ok is False)",
+        "gate:wall fail (failing: wall:cartridge_body)"
+      ],
+      "findings": 1
+    },
+    "flywheel": {
+      "id": "flywheel",
+      "section": "S4-launcher",
+      "file": "dossier/sections/S4-launcher.yaml",
+      "line": 145,
+      "claimed": "draft",
+      "sha256": "fdb9ee63ed5bd9ee987a3d116bfaa8f415e3f011d05bb2b4da3b889f07d5ff3f",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "turret-launch",
+          "status": "pass",
+          "file": "exports/turret/launch/launch3d.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "gated",
+      "blocked_by": [
+        "no current reviewer record"
+      ],
+      "findings": 0
+    },
+    "flywheel_m": {
+      "id": "flywheel_m",
+      "section": "S4-launcher",
+      "file": "dossier/sections/S4-launcher.yaml",
+      "line": 160,
+      "claimed": "draft",
+      "sha256": "356cd39c88c1047b498dfae5095c9220f675b30388acf5fe898cd4b58526a64d",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "fail",
+          "message": "failing: connect:body:flywheel_m, joint:I-wheel-r",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "turret-launch",
+          "status": "pass",
+          "file": "exports/turret/launch/launch3d.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "built",
+      "blocked_by": [
+        "gate:connectivity fail (failing: connect:body:flywheel_m, joint:I-wheel-r)"
+      ],
+      "findings": 1
+    },
+    "flywheel_tyre": {
+      "id": "flywheel_tyre",
+      "section": "S4-launcher",
+      "file": "dossier/sections/S4-launcher.yaml",
+      "line": 172,
+      "claimed": "draft",
+      "sha256": "2e5dc4fa663bd5878e1ff6fa2833b386ae65618cb393fc9abcc7d712b42dbee7",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "turret-launch",
+          "status": "pass",
+          "file": "exports/turret/launch/launch3d.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "gated",
+      "blocked_by": [
+        "no current reviewer record"
+      ],
+      "findings": 0
+    },
+    "flywheel_tyre_m": {
+      "id": "flywheel_tyre_m",
+      "section": "S4-launcher",
+      "file": "dossier/sections/S4-launcher.yaml",
+      "line": 187,
+      "claimed": "draft",
+      "sha256": "272f25cf11c7f7a8e9efab93a215685d96d06281b112f7283e57ce94977a7f4e",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "fail",
+          "message": "failing: connect:body:flywheel_m",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "turret-launch",
+          "status": "pass",
+          "file": "exports/turret/launch/launch3d.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "built",
+      "blocked_by": [
+        "gate:connectivity fail (failing: connect:body:flywheel_m)"
+      ],
+      "findings": 1
+    },
+    "flywheel_motor_l": {
+      "id": "flywheel_motor_l",
+      "section": "S4-launcher",
+      "file": "dossier/sections/S4-launcher.yaml",
+      "line": 199,
+      "claimed": "draft",
+      "sha256": "c883ce77663f2815587c140f6b270928a987de9e96e0b47b0f76dc51e2a3058c",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "turret-launch",
+          "status": "pass",
+          "file": "exports/turret/launch/launch3d.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "gated",
+      "blocked_by": [
+        "no current reviewer record"
+      ],
+      "findings": 0
+    },
+    "flywheel_motor_r": {
+      "id": "flywheel_motor_r",
+      "section": "S4-launcher",
+      "file": "dossier/sections/S4-launcher.yaml",
+      "line": 212,
+      "claimed": "draft",
+      "sha256": "b891c4ccb81591e44e766ae5e945fb898b6ed28384dcef1c22102dea8f75e0c3",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "turret-launch",
+          "status": "pass",
+          "file": "exports/turret/launch/launch3d.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "gated",
+      "blocked_by": [
+        "no current reviewer record"
+      ],
+      "findings": 0
+    },
+    "esc_l": {
+      "id": "esc_l",
+      "section": "S4-launcher",
+      "file": "dossier/sections/S4-launcher.yaml",
+      "line": 225,
+      "claimed": "draft",
+      "sha256": "ca9271500390bf32aa257e1e9d5c70a1b477bba9c8daf604668c339c733f2883",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "gated",
+      "blocked_by": [
+        "no current reviewer record"
+      ],
+      "findings": 0
+    },
+    "esc_r": {
+      "id": "esc_r",
+      "section": "S4-launcher",
+      "file": "dossier/sections/S4-launcher.yaml",
+      "line": 236,
+      "claimed": "draft",
+      "sha256": "ba24ab6e5a1c5c76033a1b9d899521c3fc95852d253cb65dba0b6cc9a3d876a3",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "gated",
+      "blocked_by": [
+        "no current reviewer record"
+      ],
+      "findings": 0
+    },
+    "cartridge_board": {
+      "id": "cartridge_board",
+      "section": "S4-launcher",
+      "file": "dossier/sections/S4-launcher.yaml",
+      "line": 247,
+      "claimed": "draft",
+      "sha256": "3bc782679ec14ce27df10d1139dc5733841162c4b9fcd30f9e7650952d2153d3",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "gated",
+      "blocked_by": [
+        "no current reviewer record"
+      ],
+      "findings": 0
+    },
+    "barrel": {
+      "id": "barrel",
+      "section": "S5-barrel",
+      "file": "dossier/sections/S5-barrel.yaml",
+      "line": 42,
+      "claimed": "draft",
+      "sha256": "220e4ddeb0a4b462a2734d8435803e861c826fee5879533220d8244b8b9cb8ee",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "gated",
+      "blocked_by": [
+        "no current reviewer record"
+      ],
+      "findings": 0
+    },
+    "laser_mount": {
+      "id": "laser_mount",
+      "section": "S5-barrel",
+      "file": "dossier/sections/S5-barrel.yaml",
+      "line": 57,
+      "claimed": "draft",
+      "sha256": "992c5f8656b9802dc70bee24f0bd4a69d0b88a77a9ef462ca138747edbc96946",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "fail",
+          "message": "failing: wall:laser_mount",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "built",
+      "blocked_by": [
+        "gate:wall fail (failing: wall:laser_mount)"
+      ],
+      "findings": 1
+    },
+    "laser": {
+      "id": "laser",
+      "section": "S5-barrel",
+      "file": "dossier/sections/S5-barrel.yaml",
+      "line": 77,
+      "claimed": "draft",
+      "sha256": "a962c7aa46432620a71ca525f3188e46fe55f1f042ff0a97e72363086479467a",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "gated",
+      "blocked_by": [
+        "no current reviewer record"
+      ],
+      "findings": 0
+    },
+    "laser_screws": {
+      "id": "laser_screws",
+      "section": "S5-barrel",
+      "file": "dossier/sections/S5-barrel.yaml",
+      "line": 88,
+      "claimed": "draft",
+      "sha256": "566f4b532996917cda2a86fbdf37c8f0a74c05ea030dabb2c411eb85c00ed864",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "gated",
+      "blocked_by": [
+        "no current reviewer record"
+      ],
+      "findings": 0
+    },
+    "laser_inserts": {
+      "id": "laser_inserts",
+      "section": "S5-barrel",
+      "file": "dossier/sections/S5-barrel.yaml",
+      "line": 100,
+      "claimed": "draft",
+      "sha256": "bca1ee893a9f155a05da8a0240d26d2cb012ed80594add2644689e95316219ea",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "gated",
+      "blocked_by": [
+        "no current reviewer record"
+      ],
+      "findings": 0
+    },
+    "slip_ring": {
+      "id": "slip_ring",
+      "section": "S6-wiring",
+      "file": "dossier/sections/S6-wiring.yaml",
+      "line": 74,
+      "claimed": "draft",
+      "sha256": "83907976574d980ca71236348268fc242de875296015a50e8c8a4d77c6e78588",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "gated",
+      "blocked_by": [
+        "no current reviewer record"
+      ],
+      "findings": 0
+    },
+    "slip_ring_rotor": {
+      "id": "slip_ring_rotor",
+      "section": "S6-wiring",
+      "file": "dossier/sections/S6-wiring.yaml",
+      "line": 85,
+      "claimed": "draft",
+      "sha256": "de49f198cc3f3f73f55edb5f73b1a95f7581170c5fa05604504a6d9fa1341b2f",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "fail",
+          "message": "failing: step:50:insert",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "built",
+      "blocked_by": [
+        "gate:assembly fail (failing: step:50:insert)"
+      ],
+      "findings": 1
+    },
+    "ring_carrier": {
+      "id": "ring_carrier",
+      "section": "S6-wiring",
+      "file": "dossier/sections/S6-wiring.yaml",
+      "line": 97,
+      "claimed": "draft",
+      "sha256": "18e61fd9ce2d6bd3bd6b1c245ba4bf21d764563e1b8f56655ab8cae894e6f133",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "fail",
+          "message": "failing: wall:ring_carrier",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "built",
+      "blocked_by": [
+        "gate:wall fail (failing: wall:ring_carrier)"
+      ],
+      "findings": 1
+    },
+    "ring_driver": {
+      "id": "ring_driver",
+      "section": "S6-wiring",
+      "file": "dossier/sections/S6-wiring.yaml",
+      "line": 109,
+      "claimed": "draft",
+      "sha256": "8b214af14d3e87043acb717428d70aaafb2491c5b50dd1e624ace8513050e153",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "fail",
+          "message": "failing: step:50:insert",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "built",
+      "blocked_by": [
+        "gate:assembly fail (failing: step:50:insert)"
+      ],
+      "findings": 1
+    },
+    "ring_coupling": {
+      "id": "ring_coupling",
+      "section": "S6-wiring",
+      "file": "dossier/sections/S6-wiring.yaml",
+      "line": 120,
+      "claimed": "draft",
+      "sha256": "51551cea6fa0d1bf2cc90d548c5e582f4636be82156024e1a3cbf04b0bfc4eb4",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "gated",
+      "blocked_by": [
+        "no current reviewer record"
+      ],
+      "findings": 0
+    },
+    "board_bay": {
+      "id": "board_bay",
+      "section": "S6-wiring",
+      "file": "dossier/sections/S6-wiring.yaml",
+      "line": 132,
+      "claimed": "draft",
+      "sha256": "afd99ebd5407b09aa6a52f55020d286083c517768a566fd296bcac40d312042e",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "fail",
+          "message": "failing: step:50:insert",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "built",
+      "blocked_by": [
+        "gate:assembly fail (failing: step:50:insert)"
+      ],
+      "findings": 1
+    },
+    "board_bay_lid": {
+      "id": "board_bay_lid",
+      "section": "S6-wiring",
+      "file": "dossier/sections/S6-wiring.yaml",
+      "line": 146,
+      "claimed": "draft",
+      "sha256": "f1e090ba3d914817d50806c1774dd31824ca1c925934ec3da70a857c68ff1e5b",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "gated",
+      "blocked_by": [
+        "no current reviewer record"
+      ],
+      "findings": 0
+    },
+    "turret_board": {
+      "id": "turret_board",
+      "section": "S6-wiring",
+      "file": "dossier/sections/S6-wiring.yaml",
+      "line": 155,
+      "claimed": "draft",
+      "sha256": "acdac1bec35907b2a4917af84767f6615d08cc1707f04448946eda263b635d47",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "gated",
+      "blocked_by": [
+        "no current reviewer record"
+      ],
+      "findings": 0
+    },
+    "base_board": {
+      "id": "base_board",
+      "section": "S6-wiring",
+      "file": "dossier/sections/S6-wiring.yaml",
+      "line": 166,
+      "claimed": "draft",
+      "sha256": "e752e4bd7472d66e3b9aaa13e1b616f5debc8d73cc95d7e566b2f3492751473b",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "fail",
+          "message": "failing: step:53:insert",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "built",
+      "blocked_by": [
+        "gate:assembly fail (failing: step:53:insert)"
+      ],
+      "findings": 1
+    },
+    "dt_receptacle": {
+      "id": "dt_receptacle",
+      "section": "S6-wiring",
+      "file": "dossier/sections/S6-wiring.yaml",
+      "line": 176,
+      "claimed": "draft",
+      "sha256": "b38f2c896d64639279ed4ceb444cd225eec89a51ae86f654f02cfbab2dcf2d58",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "gated",
+      "blocked_by": [
+        "no current reviewer record"
+      ],
+      "findings": 0
+    },
+    "dt_plug": {
+      "id": "dt_plug",
+      "section": "S6-wiring",
+      "file": "dossier/sections/S6-wiring.yaml",
+      "line": 187,
+      "claimed": "draft",
+      "sha256": "4e921123dea3e19c327b67fe874e4117ac54f5e6988e83550fd2f7c07f1c5ece",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "gated",
+      "blocked_by": [
+        "no current reviewer record"
+      ],
+      "findings": 0
+    },
+    "compute_tray": {
+      "id": "compute_tray",
+      "section": "S7-compute",
+      "file": "dossier/sections/S7-compute.yaml",
+      "line": 64,
+      "claimed": "draft",
+      "sha256": "1a5de244388039fd45758d40c9dac5ff14c098e03d85317599de73790dfb636d",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "gated",
+      "blocked_by": [
+        "no current reviewer record"
+      ],
+      "findings": 0
+    },
+    "compute_shell": {
+      "id": "compute_shell",
+      "section": "S7-compute",
+      "file": "dossier/sections/S7-compute.yaml",
+      "line": 80,
+      "claimed": "draft",
+      "sha256": "73cb7682d2a7698a8a53c04670128fb8c7dee9d94b4ac588be21aa0826843478",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "fail",
+          "message": "failing: wall:compute_shell",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "built",
+      "blocked_by": [
+        "gate:wall fail (failing: wall:compute_shell)"
+      ],
+      "findings": 1
+    },
+    "compute": {
+      "id": "compute",
+      "section": "S7-compute",
+      "file": "dossier/sections/S7-compute.yaml",
+      "line": 96,
+      "claimed": "draft",
+      "sha256": "428c5e996c1e9599c070d9065804bb4baac35202da8f544cc33c18112b906a20",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "gated",
+      "blocked_by": [
+        "no current reviewer record"
+      ],
+      "findings": 0
+    },
+    "eth_jack": {
+      "id": "eth_jack",
+      "section": "S7-compute",
+      "file": "dossier/sections/S7-compute.yaml",
+      "line": 107,
+      "claimed": "draft",
+      "sha256": "92de48f41d7ed5c5f6a58eecc7c26211e70a4a0fba7754adf5b66ebfe51bc309",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "gated",
+      "blocked_by": [
+        "no current reviewer record"
+      ],
+      "findings": 0
+    },
+    "xt30_input": {
+      "id": "xt30_input",
+      "section": "S7-compute",
+      "file": "dossier/sections/S7-compute.yaml",
+      "line": 117,
+      "claimed": "draft",
+      "sha256": "f9d5813c9d00f939c055ba58f248e32c64dcdde9e8bdd9414341a510b3c4473e",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "gated",
+      "blocked_by": [
+        "no current reviewer record"
+      ],
+      "findings": 0
+    },
+    "input_fuses": {
+      "id": "input_fuses",
+      "section": "S7-compute",
+      "file": "dossier/sections/S7-compute.yaml",
+      "line": 127,
+      "claimed": "draft",
+      "sha256": "e958401b386b302bebdab6a135507e3070b844537823390bd89e745e7c153838",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "gated",
+      "blocked_by": [
+        "no current reviewer record"
+      ],
+      "findings": 0
+    },
+    "stand_box": {
+      "id": "stand_box",
+      "section": "S8-stand",
+      "file": "dossier/sections/S8-stand.yaml",
+      "line": 97,
+      "claimed": "draft",
+      "sha256": "94ab6afcbb8db4945e549b1c11e50922c7a743891b560190c4a9efb7a64f97c9",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "gated",
+      "blocked_by": [
+        "no current reviewer record"
+      ],
+      "findings": 0
+    },
+    "stand_bottom": {
+      "id": "stand_bottom",
+      "section": "S8-stand",
+      "file": "dossier/sections/S8-stand.yaml",
+      "line": 115,
+      "claimed": "draft",
+      "sha256": "b89b46cf6a329af86e1698c8c47b801726392d11815a7458d69c91946f794ea7",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "gated",
+      "blocked_by": [
+        "no current reviewer record"
+      ],
+      "findings": 0
+    },
+    "stand_foot": {
+      "id": "stand_foot",
+      "section": "S8-stand",
+      "file": "dossier/sections/S8-stand.yaml",
+      "line": 130,
+      "claimed": "draft",
+      "sha256": "98191a546d4756534332ced119d648c93248743fb29995e338b7b43fb151e3a3",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "gated",
+      "blocked_by": [
+        "no current reviewer record"
+      ],
+      "findings": 0
+    },
+    "dock": {
+      "id": "dock",
+      "section": "S8-stand",
+      "file": "dossier/sections/S8-stand.yaml",
+      "line": 140,
+      "claimed": "draft",
+      "sha256": "4068cbfc67316c664e32efb0ec99fa5d0a2d850a7dd0327e38ccdcd2a1d902bd",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "gated",
+      "blocked_by": [
+        "no current reviewer record"
+      ],
+      "findings": 0
+    },
+    "pack": {
+      "id": "pack",
+      "section": "S8-stand",
+      "file": "dossier/sections/S8-stand.yaml",
+      "line": 151,
+      "claimed": "draft",
+      "sha256": "285d29210161b581a30c97068d84a2b3b1c45d435a34d49e09f029c9b00d9091",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "gated",
+      "blocked_by": [
+        "no current reviewer record"
+      ],
+      "findings": 0
+    },
+    "terminal_board": {
+      "id": "terminal_board",
+      "section": "S8-stand",
+      "file": "dossier/sections/S8-stand.yaml",
+      "line": 162,
+      "claimed": "draft",
+      "sha256": "67666b3fdb807dbce57e4afa6114c6ca38b55c8ba7bb7633f9fdfb2c90eac3a0",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "gated",
+      "blocked_by": [
+        "no current reviewer record"
+      ],
+      "findings": 0
+    },
+    "usb_can": {
+      "id": "usb_can",
+      "section": "S8-stand",
+      "file": "dossier/sections/S8-stand.yaml",
+      "line": 172,
+      "claimed": "draft",
+      "sha256": "fb3ff046c9d387ee6688ca4b611a0fb03f22a5a79b5f775a1207550282de80e1",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "gated",
+      "blocked_by": [
+        "no current reviewer record"
+      ],
+      "findings": 0
+    },
+    "panel_switch": {
+      "id": "panel_switch",
+      "section": "S8-stand",
+      "file": "dossier/sections/S8-stand.yaml",
+      "line": 183,
+      "claimed": "draft",
+      "sha256": "b768900ad46adb3879ec16c1552ce414af83eadd92058baf693b18cb3fe17ba1",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "gated",
+      "blocked_by": [
+        "no current reviewer record"
+      ],
+      "findings": 0
+    },
+    "panel_pendant": {
+      "id": "panel_pendant",
+      "section": "S8-stand",
+      "file": "dossier/sections/S8-stand.yaml",
+      "line": 193,
+      "claimed": "draft",
+      "sha256": "f2153382b455546032a8596a8f1e9026fc2f36210147364857d7d83b639009d8",
+      "built_by": "unknown",
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/connectivity.json"
+        },
+        {
+          "id": "gate:assembly",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/assembly.json"
+        },
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        },
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        },
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        },
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        },
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        },
+        {
+          "id": "gate:wall",
+          "status": "pass",
+          "message": "the gate fails on other parts only",
+          "file": "exports/gates/wall.json"
+        }
+      ],
+      "status": "gated",
+      "blocked_by": [
+        "no current reviewer record"
+      ],
+      "findings": 0
+    }
+  },
+  "requirements": {
+    "R1": {
+      "text": "Mount on the TM pattern (4 x M5 on 80 x 80, 2 x \u00d85 dowels): on Gyropup's head or on the stand",
+      "verify_by": "inspection",
+      "sections": [
+        "S7-compute",
+        "S8-stand"
+      ],
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "fail",
+          "message": "fail",
+          "file": "exports/gates/connectivity.json"
+        }
+      ],
+      "file": "dossier/project.yaml",
+      "line": 5,
+      "covered_by": [
+        "gate:assembly"
+      ],
+      "status": "failed"
+    },
+    "R2": {
+      "text": "Pan continuously (a slip ring passes power and signals), 3:1 off an STS3215, with an absolute index at pan 0; gated over +-170 deg",
+      "verify_by": "analysis",
+      "sections": [
+        "S1-base",
+        "S6-wiring"
+      ],
+      "checks": [
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        }
+      ],
+      "file": "dossier/project.yaml",
+      "line": 13,
+      "covered_by": [
+        "gate:connectivity",
+        "gate:assembly",
+        "turret-fea"
+      ],
+      "status": "verified"
+    },
+    "R3": {
+      "text": "Tilt 0 to -25 deg between hard stops: the barrel never points above level",
+      "verify_by": "analysis",
+      "sections": [
+        "S2-tilt"
+      ],
+      "checks": [
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        }
+      ],
+      "file": "dossier/project.yaml",
+      "line": 22,
+      "covered_by": [
+        "gate:connectivity",
+        "gate:assembly",
+        "turret-fea"
+      ],
+      "status": "verified"
+    },
+    "R4": {
+      "text": "Hold 30 Rival rounds",
+      "verify_by": "analysis",
+      "sections": [
+        "S3-feed"
+      ],
+      "checks": [
+        {
+          "id": "gate:containment",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/containment.json"
+        }
+      ],
+      "file": "dossier/project.yaml",
+      "line": 30,
+      "covered_by": [
+        "gate:connectivity",
+        "gate:assembly",
+        "gate:motion",
+        "gate:turret-ammo",
+        "gate:fasteners"
+      ],
+      "status": "verified"
+    },
+    "R5": {
+      "text": "Hand one ball at a time to the flywheels, three a second; parked, powered or not, no ball reaches the wheels",
+      "verify_by": "analysis",
+      "sections": [
+        "S3-feed"
+      ],
+      "checks": [],
+      "file": "dossier/project.yaml",
+      "line": 38,
+      "covered_by": [
+        "gate:connectivity",
+        "gate:assembly",
+        "gate:motion",
+        "gate:turret-ammo",
+        "gate:containment",
+        "gate:fasteners"
+      ],
+      "status": "unverified"
+    },
+    "R6": {
+      "text": "Feed, squeeze and fire any Rival-compatible round of 22.2-22.8 mm and 1.6-2.0 g",
+      "verify_by": "analysis",
+      "sections": [
+        "S3-feed",
+        "S4-launcher",
+        "S5-barrel"
+      ],
+      "checks": [
+        {
+          "id": "gate:turret-ammo",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-ammo.json"
+        }
+      ],
+      "file": "dossier/project.yaml",
+      "line": 44,
+      "covered_by": [
+        "gate:connectivity",
+        "gate:assembly",
+        "gate:motion",
+        "gate:containment",
+        "gate:fasteners",
+        "gate:turret-path",
+        "turret-fea",
+        "turret-launch"
+      ],
+      "status": "verified"
+    },
+    "R7": {
+      "text": "A Hasbro round leaves at 95-100 fps; no accepted round above 105 fps, the densest under ASTM F963's 2,500 J/m^2",
+      "verify_by": "analysis",
+      "sections": [
+        "S4-launcher"
+      ],
+      "checks": [
+        {
+          "id": "turret-launch",
+          "status": "pass",
+          "file": "exports/turret/launch/launch3d.json"
+        }
+      ],
+      "file": "dossier/project.yaml",
+      "line": 53,
+      "covered_by": [
+        "gate:connectivity",
+        "gate:assembly",
+        "gate:motion",
+        "gate:turret-path",
+        "gate:turret-ammo",
+        "turret-fea"
+      ],
+      "status": "verified"
+    },
+    "R8": {
+      "text": "The ball's way from the exit pocket to the muzzle is clear: only the tyres touch it, at the nip",
+      "verify_by": "analysis",
+      "sections": [
+        "S3-feed",
+        "S4-launcher",
+        "S5-barrel"
+      ],
+      "checks": [
+        {
+          "id": "gate:turret-path",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/turret-path.json"
+        }
+      ],
+      "file": "dossier/project.yaml",
+      "line": 62,
+      "covered_by": [
+        "gate:connectivity",
+        "gate:assembly",
+        "gate:motion",
+        "gate:turret-ammo",
+        "gate:containment",
+        "gate:fasteners",
+        "turret-fea",
+        "turret-launch"
+      ],
+      "status": "verified"
+    },
+    "R9": {
+      "text": "Every part is held: nothing in the model floats",
+      "verify_by": "analysis",
+      "sections": [
+        "S1-base",
+        "S2-tilt",
+        "S3-feed",
+        "S4-launcher",
+        "S5-barrel",
+        "S6-wiring",
+        "S7-compute",
+        "S8-stand"
+      ],
+      "checks": [
+        {
+          "id": "gate:connectivity",
+          "status": "fail",
+          "message": "fail",
+          "file": "exports/gates/connectivity.json"
+        }
+      ],
+      "file": "dossier/project.yaml",
+      "line": 70,
+      "covered_by": [
+        "gate:assembly",
+        "turret-fea",
+        "gate:motion",
+        "gate:turret-ammo",
+        "gate:containment",
+        "gate:fasteners",
+        "gate:turret-path",
+        "turret-launch"
+      ],
+      "status": "failed"
+    },
+    "R10": {
+      "text": "Nothing collides over the aim's range (pan +-170 x tilt 0..-25) or the mechanisms' (the dial, the flywheels, the flap, the pinion), with the hopper loaded",
+      "verify_by": "analysis",
+      "sections": [
+        "S1-base",
+        "S2-tilt",
+        "S3-feed",
+        "S4-launcher",
+        "S5-barrel",
+        "S6-wiring"
+      ],
+      "checks": [
+        {
+          "id": "gate:motion",
+          "status": "pass",
+          "message": "warn",
+          "file": "exports/gates/motion.json"
+        }
+      ],
+      "file": "dossier/project.yaml",
+      "line": 78,
+      "covered_by": [
+        "gate:connectivity",
+        "gate:assembly",
+        "turret-fea",
+        "gate:turret-ammo",
+        "gate:containment",
+        "gate:fasteners",
+        "gate:turret-path",
+        "turret-launch"
+      ],
+      "status": "verified"
+    },
+    "R11": {
+      "text": "Every gated screw seats, engages its insert and can be driven with its key",
+      "verify_by": "analysis",
+      "sections": [
+        "S3-feed",
+        "S5-barrel"
+      ],
+      "checks": [
+        {
+          "id": "gate:fasteners",
+          "status": "pass",
+          "message": "pass",
+          "file": "exports/gates/fasteners.json"
+        }
+      ],
+      "file": "dossier/project.yaml",
+      "line": 87,
+      "covered_by": [
+        "gate:connectivity",
+        "gate:assembly",
+        "gate:motion",
+        "gate:turret-ammo",
+        "gate:containment",
+        "gate:turret-path"
+      ],
+      "status": "verified"
+    },
+    "R12": {
+      "text": "The turret goes together in its build order, each part along a straight path",
+      "verify_by": "analysis",
+      "sections": [
+        "S1-base",
+        "S2-tilt",
+        "S3-feed",
+        "S4-launcher",
+        "S5-barrel",
+        "S6-wiring",
+        "S7-compute",
+        "S8-stand"
+      ],
+      "checks": [
+        {
+          "id": "gate:assembly",
+          "status": "fail",
+          "message": "fail",
+          "file": "exports/gates/assembly.json"
+        }
+      ],
+      "file": "dossier/project.yaml",
+      "line": 95,
+      "covered_by": [
+        "gate:connectivity",
+        "turret-fea",
+        "gate:motion",
+        "gate:turret-ammo",
+        "gate:containment",
+        "gate:fasteners",
+        "gate:turret-path",
+        "turret-launch"
+      ],
+      "status": "failed"
+    },
+    "R13": {
+      "text": "Strength: SF 1.2 on the rare cases (falls), 2.0 on the everyday ones, layer-aware for printed parts",
+      "verify_by": "analysis",
+      "sections": [
+        "S1-base",
+        "S2-tilt",
+        "S4-launcher"
+      ],
+      "checks": [
+        {
+          "id": "turret-fea",
+          "status": "fail",
+          "message": "verdict.all_ok is False",
+          "file": "exports/turret/fea/summary.json"
+        }
+      ],
+      "file": "dossier/project.yaml",
+      "line": 103,
+      "covered_by": [
+        "gate:connectivity",
+        "gate:assembly",
+        "gate:motion",
+        "gate:turret-path",
+        "gate:turret-ammo",
+        "turret-launch"
+      ],
+      "status": "failed"
+    },
+    "R14": {
+      "text": "Every part is bought at a listed price, printed, or cut at an instant online price",
+      "verify_by": "inspection",
+      "sections": [
+        "S1-base",
+        "S2-tilt",
+        "S3-feed",
+        "S4-launcher",
+        "S5-barrel",
+        "S6-wiring",
+        "S7-compute",
+        "S8-stand"
+      ],
+      "checks": [],
+      "file": "dossier/project.yaml",
+      "line": 111,
+      "covered_by": [
+        "gate:connectivity",
+        "gate:assembly",
+        "turret-fea",
+        "gate:motion",
+        "gate:turret-ammo",
+        "gate:containment",
+        "gate:fasteners",
+        "gate:turret-path",
+        "turret-launch"
+      ],
+      "status": "unverified"
+    },
+    "R15": {
+      "text": "The turret carries its own Jetson Orin NX 16 GB and takes one XT30 input, 12-54 V",
+      "verify_by": "inspection",
+      "sections": [
+        "S7-compute"
+      ],
+      "checks": [],
+      "file": "dossier/project.yaml",
+      "line": 118,
+      "covered_by": [
+        "gate:connectivity",
+        "gate:assembly"
+      ],
+      "status": "unverified"
+    },
+    "R16": {
+      "text": "The turret stands alone on one DCB609 FLEXVOLT in 20 V mode, with the hold-to-run pendant",
+      "verify_by": "inspection",
+      "sections": [
+        "S8-stand"
+      ],
+      "checks": [],
+      "file": "dossier/project.yaml",
+      "line": 125,
+      "covered_by": [
+        "gate:connectivity",
+        "gate:assembly"
+      ],
+      "status": "unverified"
+    },
+    "R17": {
+      "text": "Every slip-ring circuit carries at most 2 A, on the bus and on the stand's pack",
+      "verify_by": "analysis",
+      "sections": [
+        "S6-wiring"
+      ],
+      "checks": [],
+      "file": "dossier/project.yaml",
+      "line": 132,
+      "covered_by": [
+        "gate:connectivity",
+        "gate:assembly",
+        "gate:motion"
+      ],
+      "status": "unverified"
+    },
+    "R18": {
+      "text": "Nothing spins unless ARM is held; the chronograph trips at 105 fps",
+      "verify_by": "test",
+      "sections": [
+        "S4-launcher",
+        "S6-wiring"
+      ],
+      "checks": [],
+      "file": "dossier/project.yaml",
+      "line": 138,
+      "covered_by": [
+        "gate:connectivity",
+        "gate:assembly",
+        "gate:motion",
+        "gate:turret-path",
+        "gate:turret-ammo",
+        "turret-fea",
+        "turret-launch"
+      ],
+      "status": "not_tested"
+    },
+    "R19": {
+      "text": "Show the aim with a laser parallel to the bore, under 1 mW (Class 2)",
+      "verify_by": "inspection",
+      "sections": [
+        "S5-barrel"
+      ],
+      "checks": [],
+      "file": "dossier/project.yaml",
+      "line": 144,
+      "covered_by": [
+        "gate:connectivity",
+        "gate:assembly",
+        "gate:motion",
+        "gate:turret-path",
+        "gate:turret-ammo",
+        "gate:fasteners"
+      ],
+      "status": "unverified"
+    }
+  },
+  "decisions": {
+    "D40": {
+      "scope": "project",
+      "status": "decided",
+      "complete": true,
+      "file": "dossier/decisions.yaml",
+      "line": 3
+    },
+    "D48": {
+      "scope": "section",
+      "status": "decided",
+      "complete": true,
+      "section": "S2-tilt",
+      "file": "dossier/decisions.yaml",
+      "line": 17
+    },
+    "D66": {
+      "scope": "project",
+      "status": "decided",
+      "complete": true,
+      "file": "dossier/decisions.yaml",
+      "line": 33
+    },
+    "D67": {
+      "scope": "project",
+      "status": "decided",
+      "complete": true,
+      "file": "dossier/decisions.yaml",
+      "line": 47
+    },
+    "D68": {
+      "scope": "project",
+      "status": "decided",
+      "complete": true,
+      "file": "dossier/decisions.yaml",
+      "line": 59
+    },
+    "D70": {
+      "scope": "project",
+      "status": "decided",
+      "complete": true,
+      "file": "dossier/decisions.yaml",
+      "line": 75
+    },
+    "T0.1": {
+      "scope": "project",
+      "status": "decided",
+      "complete": true,
+      "file": "dossier/decisions.yaml",
+      "line": 90
+    },
+    "T0.2": {
+      "scope": "project",
+      "status": "decided",
+      "complete": true,
+      "file": "dossier/decisions.yaml",
+      "line": 106
+    },
+    "T0.3": {
+      "scope": "project",
+      "status": "decided",
+      "complete": true,
+      "file": "dossier/decisions.yaml",
+      "line": 120
+    },
+    "T0.4": {
+      "scope": "project",
+      "status": "decided",
+      "complete": true,
+      "file": "dossier/decisions.yaml",
+      "line": 131
+    },
+    "T0.5": {
+      "scope": "project",
+      "status": "decided",
+      "complete": true,
+      "file": "dossier/decisions.yaml",
+      "line": 141
+    },
+    "T0.6": {
+      "scope": "project",
+      "status": "decided",
+      "complete": true,
+      "file": "dossier/decisions.yaml",
+      "line": 154
+    },
+    "T0.7": {
+      "scope": "project",
+      "status": "decided",
+      "complete": true,
+      "file": "dossier/decisions.yaml",
+      "line": 167
+    },
+    "T0.8": {
+      "scope": "project",
+      "status": "decided",
+      "complete": true,
+      "file": "dossier/decisions.yaml",
+      "line": 178
+    },
+    "T1.1": {
+      "scope": "section",
+      "status": "decided",
+      "complete": true,
+      "section": "S1-base",
+      "file": "dossier/sections/S1-base.yaml",
+      "line": 292
+    },
+    "T1.2": {
+      "scope": "section",
+      "status": "decided",
+      "complete": true,
+      "section": "S1-base",
+      "file": "dossier/sections/S1-base.yaml",
+      "line": 298
+    },
+    "T1.3": {
+      "scope": "section",
+      "status": "decided",
+      "complete": true,
+      "section": "S1-base",
+      "file": "dossier/sections/S1-base.yaml",
+      "line": 307
+    },
+    "T1.4": {
+      "scope": "section",
+      "status": "decided",
+      "complete": true,
+      "section": "S1-base",
+      "file": "dossier/sections/S1-base.yaml",
+      "line": 313
+    },
+    "T1.5": {
+      "scope": "section",
+      "status": "decided",
+      "complete": true,
+      "section": "S1-base",
+      "file": "dossier/sections/S1-base.yaml",
+      "line": 319
+    },
+    "T2.1": {
+      "scope": "section",
+      "status": "decided",
+      "complete": true,
+      "section": "S2-tilt",
+      "file": "dossier/sections/S2-tilt.yaml",
+      "line": 302
+    },
+    "T2.2": {
+      "scope": "section",
+      "status": "decided",
+      "complete": true,
+      "section": "S2-tilt",
+      "file": "dossier/sections/S2-tilt.yaml",
+      "line": 308
+    },
+    "T2.3": {
+      "scope": "section",
+      "status": "decided",
+      "complete": true,
+      "section": "S2-tilt",
+      "file": "dossier/sections/S2-tilt.yaml",
+      "line": 315
+    },
+    "T3.1": {
+      "scope": "section",
+      "status": "decided",
+      "complete": true,
+      "section": "S3-feed",
+      "file": "dossier/sections/S3-feed.yaml",
+      "line": 153
+    },
+    "T3.2": {
+      "scope": "section",
+      "status": "decided",
+      "complete": true,
+      "section": "S3-feed",
+      "file": "dossier/sections/S3-feed.yaml",
+      "line": 161
+    },
+    "T3.3": {
+      "scope": "section",
+      "status": "decided",
+      "complete": true,
+      "section": "S3-feed",
+      "file": "dossier/sections/S3-feed.yaml",
+      "line": 167
+    },
+    "T3.4": {
+      "scope": "section",
+      "status": "decided",
+      "complete": true,
+      "section": "S3-feed",
+      "file": "dossier/sections/S3-feed.yaml",
+      "line": 173
+    },
+    "T3.5": {
+      "scope": "section",
+      "status": "decided",
+      "complete": true,
+      "section": "S3-feed",
+      "file": "dossier/sections/S3-feed.yaml",
+      "line": 179
+    },
+    "T4.1": {
+      "scope": "section",
+      "status": "decided",
+      "complete": true,
+      "section": "S4-launcher",
+      "file": "dossier/sections/S4-launcher.yaml",
+      "line": 259
+    },
+    "T4.2": {
+      "scope": "section",
+      "status": "decided",
+      "complete": true,
+      "section": "S4-launcher",
+      "file": "dossier/sections/S4-launcher.yaml",
+      "line": 265
+    },
+    "T4.3": {
+      "scope": "section",
+      "status": "decided",
+      "complete": true,
+      "section": "S4-launcher",
+      "file": "dossier/sections/S4-launcher.yaml",
+      "line": 271
+    },
+    "T4.4": {
+      "scope": "section",
+      "status": "decided",
+      "complete": true,
+      "section": "S4-launcher",
+      "file": "dossier/sections/S4-launcher.yaml",
+      "line": 280
+    },
+    "T4.5": {
+      "scope": "section",
+      "status": "decided",
+      "complete": true,
+      "section": "S4-launcher",
+      "file": "dossier/sections/S4-launcher.yaml",
+      "line": 288
+    },
+    "T4.6": {
+      "scope": "section",
+      "status": "decided",
+      "complete": true,
+      "section": "S4-launcher",
+      "file": "dossier/sections/S4-launcher.yaml",
+      "line": 298
+    },
+    "T4.7": {
+      "scope": "section",
+      "status": "open",
+      "complete": true,
+      "section": "S4-launcher",
+      "file": "dossier/sections/S4-launcher.yaml",
+      "line": 304
+    },
+    "T5.1": {
+      "scope": "section",
+      "status": "decided",
+      "complete": true,
+      "section": "S5-barrel",
+      "file": "dossier/sections/S5-barrel.yaml",
+      "line": 114
+    },
+    "T5.2": {
+      "scope": "section",
+      "status": "decided",
+      "complete": true,
+      "section": "S5-barrel",
+      "file": "dossier/sections/S5-barrel.yaml",
+      "line": 120
+    },
+    "T6.1": {
+      "scope": "section",
+      "status": "decided",
+      "complete": true,
+      "section": "S6-wiring",
+      "file": "dossier/sections/S6-wiring.yaml",
+      "line": 198
+    },
+    "T6.2": {
+      "scope": "section",
+      "status": "decided",
+      "complete": true,
+      "section": "S6-wiring",
+      "file": "dossier/sections/S6-wiring.yaml",
+      "line": 207
+    },
+    "T7.1": {
+      "scope": "section",
+      "status": "decided",
+      "complete": true,
+      "section": "S7-compute",
+      "file": "dossier/sections/S7-compute.yaml",
+      "line": 138
+    },
+    "T7.2": {
+      "scope": "section",
+      "status": "decided",
+      "complete": true,
+      "section": "S7-compute",
+      "file": "dossier/sections/S7-compute.yaml",
+      "line": 147
+    },
+    "T7.3": {
+      "scope": "section",
+      "status": "decided",
+      "complete": true,
+      "section": "S7-compute",
+      "file": "dossier/sections/S7-compute.yaml",
+      "line": 155
+    },
+    "T7.4": {
+      "scope": "section",
+      "status": "decided",
+      "complete": true,
+      "section": "S7-compute",
+      "file": "dossier/sections/S7-compute.yaml",
+      "line": 161
+    },
+    "T8.1": {
+      "scope": "section",
+      "status": "decided",
+      "complete": true,
+      "section": "S8-stand",
+      "file": "dossier/sections/S8-stand.yaml",
+      "line": 204
+    },
+    "T8.2": {
+      "scope": "section",
+      "status": "open",
+      "complete": true,
+      "section": "S8-stand",
+      "file": "dossier/sections/S8-stand.yaml",
+      "line": 212
+    },
+    "T8.3": {
+      "scope": "section",
+      "status": "decided",
+      "complete": true,
+      "section": "S8-stand",
+      "file": "dossier/sections/S8-stand.yaml",
+      "line": 218
+    }
+  },
+  "findings": [
+    {
+      "code": "section-below-gated",
+      "severity": "error",
+      "message": "section 'S1-base' is built, below gated: pan_base: gate:assembly fail (failing: step:53:insert); turret-fea fail (verdict.all_ok is False); gate:wall fail (failing: wall:pan_base); pan_clamp: gate:assembly fail (failing: step:50:insert); pan_bearing: gate:assembly fail (failing: step:50:insert); pan_bearing_inner: gate:assembly fail (failing: step:50:insert)",
+      "file": "dossier/sections/S1-base.yaml",
+      "line": 3,
+      "item": "S1-base",
+      "parts": [
+        "circlip_50",
+        "pan_base",
+        "pan_bearing",
+        "pan_bearing_inner",
+        "pan_clamp",
+        "pan_pinion",
+        "pan_ring",
+        "pan_spacer"
+      ]
+    },
+    {
+      "code": "section-below-gated",
+      "severity": "error",
+      "message": "section 'S2-tilt' is built, below gated: tilt_yoke: gate:assembly fail (failing: step:29:insert, step:31:insert, step:32:insert, step:50:insert); turret-fea fail (verdict.all_ok is False); gate:wall fail (failing: wall:tilt_yoke); cradle: turret-fea fail (verdict.all_ok is False); gate:wall fail (failing: wall:cradle); cradle_plate_l: turret-fea fail (verdict.all_ok is False); cradle_plate_r: turret-fea fail (verdict.all_ok is False)",
+      "file": "dossier/sections/S2-tilt.yaml",
+      "line": 3,
+      "item": "S2-tilt",
+      "parts": [
+        "cradle",
+        "cradle_plate_l",
+        "cradle_plate_r",
+        "horn_boss",
+        "pivot_spacer",
+        "stop_lug",
+        "tilt_bearing",
+        "tilt_bearing_inner",
+        "tilt_yoke"
+      ]
+    },
+    {
+      "code": "section-below-gated",
+      "severity": "error",
+      "message": "section 'S3-feed' is built, below gated: dial: gate:wall fail (failing: wall:dial); hopper: gate:assembly fail (failing: step:12:insert); gate:wall fail (failing: wall:hopper); hopper_lid: gate:wall fail (failing: wall:hopper_lid); ball: gate:assembly fail (failing: step:12:insert)",
+      "file": "dossier/sections/S3-feed.yaml",
+      "line": 3,
+      "item": "S3-feed",
+      "parts": [
+        "ball",
+        "dial",
+        "hopper",
+        "hopper_lid"
+      ]
+    },
+    {
+      "code": "section-below-gated",
+      "severity": "error",
+      "message": "section 'S4-launcher' is built, below gated: cartridge_body: gate:connectivity fail (failing: joint:I-wheel-r); turret-fea fail (verdict.all_ok is False); gate:wall fail (failing: wall:cartridge_body); flywheel_m: gate:connectivity fail (failing: connect:body:flywheel_m, joint:I-wheel-r); flywheel_tyre_m: gate:connectivity fail (failing: connect:body:flywheel_m)",
+      "file": "dossier/sections/S4-launcher.yaml",
+      "line": 3,
+      "item": "S4-launcher",
+      "parts": [
+        "cartridge_body",
+        "flywheel_m",
+        "flywheel_tyre_m"
+      ]
+    },
+    {
+      "code": "decision-open",
+      "severity": "warning",
+      "message": "decision 'T4.7' is open; section 'S4-launcher' cannot be signed off until it is decided",
+      "file": "dossier/sections/S4-launcher.yaml",
+      "line": 304,
+      "item": "S4-launcher"
+    },
+    {
+      "code": "section-below-gated",
+      "severity": "error",
+      "message": "section 'S5-barrel' is built, below gated: laser_mount: gate:wall fail (failing: wall:laser_mount)",
+      "file": "dossier/sections/S5-barrel.yaml",
+      "line": 3,
+      "item": "S5-barrel",
+      "parts": [
+        "laser_mount"
+      ]
+    },
+    {
+      "code": "section-below-gated",
+      "severity": "error",
+      "message": "section 'S6-wiring' is built, below gated: slip_ring_rotor: gate:assembly fail (failing: step:50:insert); ring_carrier: gate:wall fail (failing: wall:ring_carrier); ring_driver: gate:assembly fail (failing: step:50:insert); board_bay: gate:assembly fail (failing: step:50:insert)",
+      "file": "dossier/sections/S6-wiring.yaml",
+      "line": 3,
+      "item": "S6-wiring",
+      "parts": [
+        "base_board",
+        "board_bay",
+        "ring_carrier",
+        "ring_driver",
+        "slip_ring_rotor"
+      ]
+    },
+    {
+      "code": "section-below-gated",
+      "severity": "error",
+      "message": "section 'S7-compute' is built, below gated: compute_shell: gate:wall fail (failing: wall:compute_shell)",
+      "file": "dossier/sections/S7-compute.yaml",
+      "line": 3,
+      "item": "S7-compute",
+      "parts": [
+        "compute_shell"
+      ]
+    },
+    {
+      "code": "decision-open",
+      "severity": "warning",
+      "message": "decision 'T8.2' is open; section 'S8-stand' cannot be signed off until it is decided",
+      "file": "dossier/sections/S8-stand.yaml",
+      "line": 212,
+      "item": "S8-stand"
+    }
+  ],
+  "physical_fit_verified": false
+}

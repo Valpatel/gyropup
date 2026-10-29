@@ -1,0 +1,42 @@
+name: Carrier circuit candidate evidence
+on:
+  pull_request:
+    paths:
+      - 'hardware/carrier-pan-protection/**'
+      - 'hardware/fuse-board/sexp.py'
+      - '.github/workflows/carrier-circuit-candidate.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exported-contract:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check committed source and artifact binding
+        run: python hardware/carrier-pan-protection/verify.py
+      - name: Check exported nets, arithmetic and corruption guards
+        run: |
+          python hardware/carrier-pan-protection/test_circuit.py \
+            CircuitTests.test_actual_kicad_netlist \
+            CircuitTests.test_artifact_binding \
+            CircuitTests.test_receipt_cannot_drop_source_bindings \
+            CircuitTests.test_arithmetic_and_limits \
+            CircuitTests.test_invalid_resistance \
+            CircuitTests.test_candidate_bom_and_availability_coverage \
+            CircuitTests.test_missing_or_extra_lead_rejected \
+            CircuitTests.test_wrong_manufacturer_pin_function_rejected \
+            CircuitTests.test_wrong_part_variant_rejected \
+            CircuitTests.test_native_mosfet_body_diodes_match_drain_source \
+            CircuitTests.test_reversed_body_diode_graphic_rejected \
+            CircuitTests.test_static_acceptance_boundaries_reject_unsafe_scenarios \
+            CircuitTests.test_missing_ramp_capacitance_fails_sequencing \
+            CircuitTests.test_wrong_supervisor_ov_variant_rejected \
+            CircuitTests.test_native_discrete_diode_graphics_match_polarity \
+            CircuitTests.test_restored_ctr_capacitor_invalidates_two_ms_sequencing
+      # Full native regeneration plus ten actual schematic corruption exports use
+      # pinned KiCad10.0.1 locally and must be independently rerun for design review.
+      # This job intentionally does not claim to install/run KiCad or validate hardware.

@@ -1,0 +1,187 @@
+# Project decisions for the turret (the site's decisions format, extended: alternatives with the reason each was
+# rejected). D-numbers are docs/decisions.yaml's; T0.x are the dossier's own (2026-10-28).
+- id: D40
+  decision: 'Every part is bought off the shelf at a listed price, printed, or ordered online as a custom part at an instant
+    price: no quotes. The slip ring is the SparkFun ROB-13065.'
+  why: The user wants a robot anyone can order and build
+  alternatives:
+  - option: The plan's robot-grade slip rings from Moog, Servotecnica, Senring and Moflon
+    rejected: sold on quote only
+  title: Every part bought, printed or ordered at an instant price
+  status: decided
+  date: '2026-10-27'
+  source:
+    kind: user
+    quote: why do we need to send a vendor quote requests? We should use mostly off the shelf parts, 3d printed parts, and
+      sendcutsend or similar parts?
+- id: D48
+  decision: The cradle is a printed PA6-CF rail frame with two laser-cut 6061-T6 cheek plates and an aluminium hard-stop lug
+  why: The printed cheeks failed the layer-aware push case (interlaminar shear across the cheek's layers); 3.2 mm 6061 carries
+    it in plane
+  alternatives:
+  - option: Printed cheeks
+    rejected: failed the layer-aware push case
+  - option: A printed cradle on its side
+    rejected: its layers then fail the rail
+  - option: A machined cradle
+    rejected: quote only, against D40
+  title: Printed rail frame, aluminium cheek plates and stop lug
+  status: decided
+  date: '2026-10-27'
+  scope: section
+  section: S2-tilt
+- id: D66
+  decision: 'The turret is a robot of its own: a Jetson Orin NX 16 GB on a reComputer Mini carrier, one XT30 input (12-54
+    V), mounted on Gyropup or standing alone on one DCB609'
+  why: 'Two robots that combine but are independent assemblies: the turret can be built, tested and played with on its stand
+    before Gyropup walks, and a fault in one does not take the other down'
+  alternatives:
+  - option: The turret's compute in Gyropup's head (the J501)
+    rejected: the turret could not stand alone
+  title: The turret is its own robot
+  status: decided
+  date: '2026-10-27'
+  source:
+    kind: user
+    quote: To keep things simple the turret could have it's own ... jetson mini carrier board?
+- id: D67
+  decision: The ammo is standard Hasbro Nerf Rival rounds; off-brand rounds of 22.2-22.8 mm and 1.6-2.0 g are fine
+  why: Sold everywhere, kids already have them, and the turret's physics was sized on them
+  alternatives:
+  - option: Any Rival-size foam ball
+    rejected: third-party rounds vary in size and mass, which moves the speed under the cap
+  title: Nerf Rival rounds
+  status: decided
+  date: '2026-10-27'
+  source:
+    kind: user
+    quote: standard "nerf rival" foam balls should be our ammo.
+- id: D68
+  decision: The turret fires like a stock Rival blaster, 95-100 fps, with a physical ceiling of 105 fps (a fixed regulated
+    flywheel rail)
+  why: Rival blasters are a 14+ product at about 100 fps, and ASTM F963's 2,500 J/m^2 still holds at 105 fps; a fixed rail
+    keeps the ceiling physical
+  alternatives:
+  - option: Keep 70 fps (the EN 71 margin for young children)
+    rejected: the turret is for older kids; the user asked it to fire like a Rival
+  - option: Uncapped modded speeds, 120-150 fps
+    rejected: over ASTM F963's 2,500 J/m^2 for a Rival round at 109 fps
+  title: About 100 fps, 105 fps ceiling
+  status: decided
+  date: '2026-10-27'
+  source:
+    kind: user
+    quote: Please don't take the fun out of this, it's for older kids we need to fire these things pretty good.
+- id: D70
+  decision: The slip ring's camera pair carries power (a third pair); standing alone on one FLEXVOLT, the turret fires on
+    a supply-voltage profile; the stand's switch is DC-rated for 15 A or more
+  why: Two pairs cannot carry the standalone case (3.0-3.3 A a circuit at 15 V); a third pair and a profile keep the bought
+    ring in its rating
+  alternatives:
+  - option: A boost converter to about 30 V in the stand
+    rejected: one more part, and the ring still needs the profile at the boost's limit
+  - option: A larger slip ring
+    rejected: none at a listed price with the circuits and the bore
+  - option: Two packs on the stand
+    rejected: twice the weight and cost to carry the stand
+  title: Ring power pair, supply profile, DC switch
+  status: decided
+  date: '2026-10-28'
+- id: T0.1
+  decision: 'In a chain, each child joint names the parent''s moving part as its fixed part, with a declared clearance that
+    covers the gap: I-tilt on pan_ring (39 mm), I-wheel-l and I-wheel-r on cartridge_body (4 and 1.5 mm), I-flap on cartridge_body
+    (69 mm); the real bearing pairs are the joints'' intended contacts'
+  why: cadagent grows a moving body from its joint's moving part across fixed joints and fasteners and stops at every non-fixed
+    joint's fixed part, and the connectivity gate fails a body linked to one; so the yoke's MR126 or the flap's lid cannot
+    be a child's fixed part. Reported on Valpatel/cad-agent#39
+  alternatives:
+  - option: The bearings as the fixed parts
+    rejected: 'they stay out of their parent body: the tilt group would not ride with pan in the motion gate, and the connectivity
+      gate fails the links'
+  - option: Hand-labelled bodies
+    rejected: the gates derive bodies from the declarations (final in the toolkit); there is no override
+  status: decided
+  date: '2026-10-28'
+  author: turret-dossier agent
+- id: T0.2
+  decision: The settled load rides with the hopper through a fixed joint (I-pile, a 22 mm gap clearance), and the ball/dial
+    pair is left out of the gates' pairs
+  why: The motion gate then sweeps the 30 balls with the tilt frame against the pan frame, the base and the pinion over the
+    whole aim (what turret_gates.py's sweep did over 8 x 5 poses); the dial's fins stir the pile by design, which the feed
+    sim (sim/turret_feed.py) checks
+  alternatives:
+  - option: The balls in the static frame
+    rejected: 'a moving hopper sweeps through them: every pose collides'
+  - option: The pocket balls in the dial's body
+    rejected: one part is one body; the 8 pocket balls are instances of the same part
+  status: decided
+  date: '2026-10-28'
+  author: turret-dossier agent
+- id: T0.3
+  decision: The stand (cad/turret_stand.py) is registered under the plinth, at its top on the TM face (T z -86)
+  why: Section 8 has parts to check, and the turret is built and tested on its stand first (D66)
+  alternatives:
+  - option: The head's TM ring under the plinth
+    rejected: it belongs to the body's build (cad/build.py)
+  - option: No stand in the geometry
+    rejected: section 8 would have no shapes and could never reach gated
+  status: decided
+  date: '2026-10-28'
+  author: turret-dossier agent
+- id: T0.4
+  decision: Every printed part declares a minimum wall of 0.8 mm (two 0.4 mm lines, the P1S's 0.4 nozzle)
+  why: The wall gate then finds any feature too thin to print; the design walls (PETG 2 mm perimeters, PA6-CF solid) are print
+    settings, not the thinnest feature
+  alternatives:
+  - option: Each part's nominal wall (2.4, 1.6, ...)
+    rejected: gear tips, fins and chamfers are thinner by design and would fail as walls
+  status: decided
+  date: '2026-10-28'
+  author: turret-dossier agent
+- id: T0.5
+  decision: 'The hopper''s containment runs at the pile''s tolerances (turret_gates.PILE_TOL: touch 0.2 mm, 1 mm^3, volume
+    check 0.2 mm^3), without the surface probe, support reported'
+  why: The MuJoCo settle leaves soft contacts 0.12-0.15 mm deep (a foam round squashes far more under its own weight); the
+    probe costs ~30 s a ball against a cavity cut by a finned dial and finds less than the tolerance accepts
+  alternatives:
+  - option: cadagent's defaults (0.001 mm^3)
+    rejected: every soft contact fails
+  - option: Re-settle with hard contacts
+    rejected: MuJoCo's contacts are soft by construction
+  status: decided
+  date: '2026-10-28'
+  author: turret-dossier agent
+- id: T0.6
+  decision: The pinion's mesh with the ring is an interface (I-mesh, gap 0.5 mm), left out of the gates' pairs; turret.pinion_check
+    checks it over pan
+  why: 'cadagent has no gear coupling: with the ring turned and the pinion held, or the pinion turned and the ring held, the
+    teeth interpenetrate'
+  alternatives:
+  - option: A joint for the mesh
+    rejected: two joints would drive the pan body
+  - option: An intended overlap
+    rejected: would accept any overlap of the pair, the real collisions too
+  status: decided
+  date: '2026-10-28'
+  author: turret-dossier agent
+- id: T0.7
+  decision: The turret's own checks (the ball path and D67's ammo range) write verdicts into exports/gates/ bound to the geometry
+    record (cad/turret_gates.py --dossier), after confirming the record is the turret it builds
+  why: cad-agent check then fails them when missing, failing or stale, like the toolkit's gates; the dossier lint reads them
+    as gate:turret-path and gate:turret-ammo
+  alternatives:
+  - option: Leave them in exports/turret/gates only
+    rejected: check would never see them, and nothing would mark them stale
+  status: decided
+  date: '2026-10-28'
+  author: turret-dossier agent
+- id: T0.8
+  decision: 'Contacts that no interface declares stay warnings (strict_interfaces: false); the real mounts are declared'
+  why: The bought envelopes and printed seats touch in many places that are not load paths (a board's edge on a wall, a race
+    on a spacer); declaring each would be noise
+  alternatives:
+  - option: 'strict_interfaces: true'
+    rejected: fails the gate on contacts that are not design intent
+  status: decided
+  date: '2026-10-28'
+  author: turret-dossier agent

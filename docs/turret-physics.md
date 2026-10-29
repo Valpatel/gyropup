@@ -8,7 +8,24 @@ with `.venv/bin/python sim/turret_e2e.py` (section 15). The numbers below are fr
 
 ## 0. In one paragraph
 
-**v0 (docs/decisions.yaml D42, rerun 2026-10-27 by the turret program agent).** The flywheels are two SunnySky X2216 880 KV
+**D68 (2026-10-27): the turret fires like a stock Rival blaster, with a 105 fps physical ceiling.** The launcher was
+resized for a Hasbro Rival round (22.7 mm, 1.83 g) at 95-100 fps with no accepted round (D67: 22.2-22.8 mm,
+1.6-2.0 g) ever over 105 fps (section 4). Two **SunnySky X2216 1400 KV** (the same can as the 880 KV) drive **Ø38
+TPU tyres bonded to their hubs** and crushing the ball **40 %**, from a **flywheel rail trimmed per turret**: a TDK-Lambda
+i6A4W buck (15-42 V in) whose output is set by one fixed resistor, chosen on the bench so the faster motor turns
+**15,722 rpm** at 100 % throttle (11.31 V for a nominal motor, 10.8-11.9 V for KV ±5 %). Flat out the Hasbro ball
+leaves at **97.1 fps** (95 fps at the 15,286 rpm set speed); with the magnets 15 °C warmer than at the trim and the
+rail 2 % high, the fastest accepted ball (1.6 g, 22.8 mm, soft and grippy, with 0.15 mm runout) leaves at **103.9 fps**
+and the densest (2.0 g on 22.2 mm) carries **2,480 J/m², under ASTM F963's 2,500**, which binds before the speed does.
+Untrimmed (KV +5 %, the converter's +4 % set point) the same hardware reaches 110 fps, or holds 104 only with the
+Hasbro ball at 92: **both at once need the trim**. The chronograph trip moves to 105 fps (a 1.875 ms window over the
+60 mm gates); the eRPM guard refuses to feed above 16,390 rpm. Unchanged: nothing spins unless ARM is held, the barrel
+never points above level, the laser warns, the phase-short brake on release. **Eye protection is recommended for
+everyone in range, as Hasbro does for Rival.** Recoil is 0.052 N s a shot (a 2.1 mrad kick); one ball knocks over a
+0.82 kg hinged plate at 4 m.
+
+**v0 before D68 (docs/decisions.yaml D42, rerun 2026-10-27 by the turret program agent; its 70 fps cap and 66 fps trip
+are D68's 105 fps now).** The flywheels are two SunnySky X2216 880 KV
 on the same fixed 12 V rail with Ø34 tyres (16.3 % crush on this cage), and a third STS3215 steps the dial. With the
 X2216's own constants (880 rpm/V, 117 mOhm between leads, 0.5 A at 10 V; its rotor's 4.8 kg mm^2 is est from SunnySky's
 drawing, so each wheel is 6.9e-6 kg m^2, 1.5 times the Snail's), a 52 fps nominal ball needs **8,855 rpm**, 84 % of the
@@ -153,7 +170,71 @@ down the bore: **~245 ms**, against the simulator's 146 ms (which assumed a fast
 
 ## 4. The launch in 3D (`exports/turret/launch/launch3d.json`, `launch3d.png`)
 
-**v0: the X2216 on Ø34 (D42).** The 1D and 3D models with the X2216's constants (`sim/turret_launch.py` MOTOR) and the
+**D68: about 100 fps, never over 105** (`sim/turret_launch.py` study and `sim/turret_launch3d.py`, rerun on the GB10s
+2026-10-27; `exports/turret/launch/launch.json` `trim`, `crush_choice`, `routes`; `launch3d.json` `ceiling`, `ceiling_map`).
+
+*Why crush, not just speed.* With Coulomb friction a ball that slips on the tyre all the way through the nip leaves at a
+speed set by its grip (the friction times the squeeze, integrated along the path), whatever the wheel speed: on the old
+Ø34 at 16 % crush the Hasbro ball tops out at ~48 fps on any rail. With enough crush it catches the tyre and leaves at
+about the surface speed, and then the ceiling is the surface speed: the stiffest, grippiest light ball leaves at
+0.97-0.98 of it whatever its foam. D68 needs the typical ball in that second regime, so its speed sits close to the
+ceiling and the tolerance stack is what is left between them.
+
+| Crush (Ø38, trimmed rail) | 32 % | 36 % | 38 % | **40 %** | 42 % | 44 % |
+|---|---|---|---|---|---|---|
+| Hasbro ball at 100 % (fps) | 85.7 | 95.1 | 97.4 | **97.1** | 96.8 | 96.4 |
+| Fastest corner, with the stack (fps) | 103.8 | 103.3 | 103.0 | **102.8** | 103.7 | 103.8 |
+| Peak squeeze per tyre: Hasbro / stiffest corner (N) | 45 / 184 | 57 / 228 | 64 / 252 | **71 / 276** | 79 / 302 | 88 / 329 |
+
+40 % is past the knee with room for a softer foam than the model's (at 36 % a 25 % softer ball would drop back into the
+grip-limited regime); beyond it the squeeze only loads the bearings. Ø38 at 40 % puts the motors' axes 51.62 apart, so
+the cage is as wide as it was (Ø36 at 25 %).
+
+*The tolerance stack and the trim.* The ceiling is the rail's no-load speed. A fixed set point would carry the motor's
+KV spread (+5 %, est: SunnySky publishes none) and the converter's ±4 % set point; that stack is wider than the gap
+between 95 and 105 fps:
+
+| Rail | Hasbro ball at 100 % | Fastest accepted ball, every tolerance | Densest (J/m²) |
+|---|---|---|---|
+| Fixed set point, rail chosen for the worst corner at 104 fps | **92.0 fps** (short of 95) | 104 | |
+| Fixed set point, rail chosen for the Hasbro ball at 95 fps | 95.0 | **107.3 fps** (over 105) | |
+| **Trimmed per turret** (one resistor: the faster motor at 15,722 rpm, warm) | **97.1** | **103.9** (3D; 102.8 1D) | **2,480** |
+
+What the trim leaves: the magnets 15 °C warmer than at the trim (NdFeB -0.12 %/°C: KV +1.8 %; the trim is done after a
+3 minute spin), the rail's drift (line 0.3 %, load 0.6 %, temperature 0.6 %) and the eRPM reading (0.5 %): 3.8 % in
+all. The speed limit alone would allow a 15,930 rpm trim (Hasbro 98.4 fps), but D67's densest round (2.0 g on
+22.2 mm, stiff and grippy) then carries 2,537 J/m² at 102.8 fps, over ASTM's 2,500 (its ASTM speed is 102.1 fps), so
+the trim aims that ball 1 % under: 15,722 rpm. At 16,390 rpm (n_astm) the densest ball would reach 2,500 J/m², at
+16,496 (n_105) the fastest 105 fps; the firmware's eRPM guard sits at 16,390.
+
+*The two routes* (the same no-load speed): the 880 KV would need 18.0 V (17.1-18.9 V for its KV spread): 5S, over every
+X2216's 2-4S rating, and a buck-boost from a DCB609 that sags to 15 V. The 1100 KV needs 13.7-15.1 V and the 1250 KV
+12.1-13.3 V: inside the rating but too close to 15 V for a buck. **The 1400 KV needs 10.8-11.9 V**: inside its rating
+(3S), 3 V under the pack's loaded minimum, so a plain buck holds it from both supplies (D66: 15-20.5 V alone, 30-42 V
+on Gyropup). Higher KV costs no-load current (1.46 A at speed against 0.89 A): ~32 W for the pair while spinning.
+
+| Ceiling map (Ø38, 40 %), rail for a nominal motor | 10.5 V | 11.0 V | **11.31 V** | 12.0 V | 12.5 V |
+|---|---|---|---|---|---|
+| Fastest accepted ball, every tolerance (fps) | 97.0 | 101.2 | **103.9** | 109.1 ✗ | 113.6 ✗ |
+| Densest (J/m²) | 2,151 | 2,351 | **2,480** | 2,781 ✗ | 3,010 ✗ |
+| Hasbro ball at 100 % (fps) | 90.2 | 94.4 | **97.1** | 103.0 | 104.9 |
+
+| D68 result | Value |
+|---|---|
+| Set speed for 95 fps (Hasbro) | 15,286 rpm = 107,002 eRPM, 97 % of the trimmed no-load speed |
+| Accepted population at 95 fps set, in the channel, 0.15 mm runout | 92.4 ± 4.9 fps (p1 72.6, p99 96.7: the soft, slippery foam is the tail); yaw SD 1.2 mrad, pitch SD 3.1 |
+| Accepted population at 100 %, no tolerance | 94.1 ± 5.5 fps, max 99.3 |
+| Contact, squeeze, wheel speed lost per shot | 5.1 ms; 71 N per tyre, 95 N on the cage; 5.7 % (I = 7.6e-6 kg m² a wheel) |
+| Bursts at 3-10 per s | no droop |
+| Tyre growth at no-load + tolerance | **bonded: 0.04 mm** (E 10 MPa); a free ring would grow 2.4 mm, its bore 8 % (twice the 4 % stretch fit): a tyre come loose would throw the fastest ball at 113 fps, so the tyre is bonded to the hub and spin-tested (bench 4.1) |
+| Converter bypassed (the ESCs on the 20.5 V pack) | 28,500 rpm no-load, balls to 172 fps: the eRPM guard stops the first feed; the chronograph trips after a ball |
+| Hand-over to the 1D model | 95.0 vs 95.0 fps |
+
+The sensitivity of the Hasbro ball at 100 % (the foam is not published, so the bench decides): E 0.75 / 1.2 / 3.0 MPa
+→ 82 / 97 / 95 fps; grip 0.6 / 0.8 / 1.0 → 85 / 97 / 97; a soaked ball 73; a worn one (40 % softer) 81. The ceiling
+does not depend on these (it is the stiff, grippy corner); the typical speed does, and bench test 4.2 measures it.
+
+**v0, before D68: the X2216 880 KV on Ø34 (D42; its 70 fps cap is D68's 105 now).** The 1D and 3D models with the X2216's constants (`sim/turret_launch.py` MOTOR) and the
 cage's own crush for each tyre (the motors' axes are 53.0 mm apart, so a tyre's diameter sets its crush:
 `sim/turret_launch.py` cage_crush):
 
@@ -219,7 +300,24 @@ chronograph trips after it (section 10).
 
 ## 5. The release and the stray ball (V14, the coordinator's item 2)
 
-**v0 (D42), the brake as built:** the short runs through the X2216's 117 mOhm, two IRLZ44N (25 mOhm each with 4.5 V
+**D68.** The 1400 KV's phase short is weaker per rpm (ke and kt are 0.63 of the 880 KV's) and the wheels hold 3.2
+times the energy (19.4 J for the pair at 15,286 rpm). Through the same two IRLZ44N and taps the loop is 111 mOhm (the
+FETs and taps now half of it): τ 18 ms at low speed, and at speed the winding's inductance limits the current (14 uH
+between leads est, scaled from the 880 KV's 35 uH by the turns). With the short closing 10 ms after the line drops,
+the wheels are at **5 % speed at 80 ms** and 2.0 % at 96 ms:
+
+| Ball reaches the nip after release | 0 ms | 20 | 40 | 60 | 70 | ≥ 80 |
+|---|---|---|---|---|---|---|
+| Wheel (rpm) | 15,286 | 12,104 | 6,133 | 2,276 | 1,315 | ≤ 753 |
+| It leaves at (fps) | 85 | 65 | 30 | 8.6 | rests | rests |
+
+So a ball still in the chute (≥ 96 ms) still rests at the nip, but the plan's "5 % within 50 ms" (V14) is no longer
+met (25 % at 50 ms), and the result hangs on the unmeasured inductance: 20 uH puts 5 % at 97 ms, 35 uH at 162 ms.
+Lower-resistance FETs barely help (IRLB3034: τ 10.5 ms, 5 % at 70 ms) because the inductance dominates at speed.
+Measure the 1400 KV's inductance (an LCR meter, bench 4.7); if it is over ~18 uH, lengthen the drop-to-nip path or
+keep the ESC powered with brake-on-stop for the first ~100 ms. A stray ball on the next ramp leaves at ~3 fps.
+
+**Before D68, v0 (D42), the brake as built:** the short runs through the X2216's 117 mOhm, two IRLZ44N (25 mOhm each with 4.5 V
 on the gate) and the 22 AWG taps: 173 mOhm, so the time constant at low speed is **10.2 ms** (6.9 ms for the motor
 alone). At speed the winding's inductance limits the current (`sim/turret_launch3d.py` brake_current: E R / (R^2 +
 (w_e L)^2); the X2216's inductance is not published, 35 uH between leads est). With the short closing 10 ms after the
@@ -306,6 +404,23 @@ guide's contact time (< 5 ms) and its 0.1 m/s → 10 cm speed sensitivity at 15 
 
 ## 7. The target (`exports/turret/target/target.json`, `target.png`)
 
+**D68** (the Hasbro ball at the 95 fps set speed; level shot, standard drag):
+
+| | 1 m | 2 m | 4 m | 6 m | 8 m | muzzle, 100 % (97.1 fps) | the 105 fps ceiling | densest accepted at its ceiling (101.5 fps) |
+|---|---|---|---|---|---|---|---|---|
+| Speed (fps) | 89 | 84 | 74 | 65 | 58 | 97.1 | 105 | 101.5 |
+| Energy (J) | 0.68 | 0.59 | 0.46 | 0.36 | 0.28 | 0.80 | 0.94 | 0.96 |
+| Energy density (J/m², ASTM 2,500) | | | | | | 1,946 (78 %) | 2,276 (91 %) | 2,475 (99 %) |
+
+Knock-over: the 20 g plate goes with a 35× margin at 4 m (21× before), a 150 g plywood plate 5.5× (2.2× at 10° lean),
+an empty can 9.7×, and now a quarter-full 500 ml bottle at every range to 8 m (1.45× at 4 m; before only at 1 m); a
+200 g box still not (0.48×). The heaviest 200 mm hinged plate one ball tips at 4 m is **0.82 kg at 4° lean, 0.33 kg at
+10°, 0.17 kg at 20°** (0.48 / 0.19 / 0.10 before). Safety: D68 makes the turret a 14+ product like Hasbro's Rival
+blasters (EN 71-1's 0.5 J applies to toys for under-14s); every accepted ball stays under ASTM F963's energy density.
+**Recommend eye protection for everyone in range**, as Hasbro does for Rival.
+
+**Before D68** (the 55 fps set speed):
+
 | Range | 1 m | 2 m | 3 m | 4 m | at the muzzle, 70 fps cap | stock Rival, 97 fps |
 |---|---|---|---|---|---|---|
 | Speed (fps) | 51 | 48 | 45 | 43 | 70 | 97 |
@@ -321,6 +436,15 @@ half; both under the toy limits, which a stock Rival exceeds.
 
 ## 8. The turret's own dynamics (`exports/turret/e2e/dynamics.json`)
 
+**D68:** recoil 0.052 N s a shot (1.56 N s for a 30-ball hopper), 95 N peak for 5.1 ms, **1.43 N m peak about the tilt
+axis** (0.49 of the STS3215's stall, for 5 ms); the 0.0026 kg m² tilting group turns **2.1 mrad** nose-down before
+gravity's 0.056 N m preload stops it (under 3 mrad, inside the 8.7 mrad lash: it never crosses). Tilt servo: sustained
+0.18 N m (move 0.128, mean recoil at 10/s 0.008, one faulted wheel's gyro 0.042) against 0.76 available, margin 4.3
+(6.5 before); hold margin at stall 46. The tilting group's centre is 7.5 mm behind the axis (cad/turret.py), so
+unpowered it rises to the 0° stop. **Over the head's budget**: docs/head-payload.md allows 0.05 N s a shot; 0.052 at
+95 fps, 0.054 flat out, 0.064 for a 2.0 g ball at 105: the body's budget needs raising to 0.065 N s (0.004 m/s a shot on
+a 17 kg robot). Before D68:
+
 | Item | Value |
 |---|---|
 | Recoil | 0.030 N s per shot, 57 N peak for 4.8 ms, 0.85 N m peak about the tilt axis (the ball path is 15 mm under it); the tilting group turns 1.2 mrad nose-down before gravity's 0.04 N m preload stops it, inside the servo's 8.7 mrad lash; no pan moment |
@@ -330,6 +454,15 @@ half; both under the toy limits, which a stock Rival exceeds.
 | Aim movers (mrad; cm at 2 / 4 / 6 m) | recoil 1.2 (0.2 / 0.5 / 0.7, down); **pan gear lash 7.6 (1.5 / 3.0 / 4.6)**; pan servo lash through 3:1 2.9; **tilt servo lash 8.7 (1.7 / 3.5 / 5.2)**; resolution 0.5 pan, 1.5 tilt; **pan slew 90 deg/s 14.5 (2.9 / 5.8 / 8.7)** |
 
 ## 9. Power across the ring (V3; `exports/turret/e2e/power.json`, `power.png`)
+
+**D68 (calc; sim/turret_power.py still models the 24 V ring of D41 and was not rerun):** the pair holds 19.4 J at the
+95 fps set speed (3.2 times v0's) and the 1400 KV's no-load losses are ~16 W a motor at speed. A linear ramp peaks at
+2E/T: with **the 800 ms ramp the firmware now uses**, ~49 W into the wheels, ~89 W from the rail (the ESCs at 85 %,
+the spinning losses), **~96 W from the turret's input: 6.4 A from one DCB609 at 15 V, 2.7 A from the 10S bus at 36 V**;
+with 300 ms it would be ~198 W (13.2 A at 15 V). Holding speed: ~32 W. The rail's converter (250 W, 20 A, 27 A
+over-current) carries a burst's recovery on the ESCs' 10 A limits (2 x 10 A at 11.3 V, 226 W) for the few
+milliseconds it lasts. Which ring circuits carry this under D66 (the input crosses the ring at 15-42 V) is the power
+layout's call; at 15 V and 2 A a circuit it needs four paralleled pairs during the ramp.
 
 **v0 (D42):** the X2216's wheel takes 3.0 J at the set speed. Spin-up ramps against the ring's paralleled +24 V pair
 (60 mOhm): 200 ms 3.56 A (1.78 A a circuit), **300 ms 2.51 A (1.25 A a circuit, 95 % speed in 0.285 s)**, 400 ms 2.0 A,
@@ -349,6 +482,12 @@ and 60 mΩ; the launch model's 7 % speed drop per shot.
 The ramp keeps the ring at the plan's ~2 A; nothing drops out; the burst's recovery pulses are 4.9 A for ~3 ms each. 1.9 J per wheel at speed.
 
 ## 10. The chronograph gates (V13, the coordinator's item 4)
+
+**D68: the trip at 105 fps.** Over the 60 mm gates the window is **1,875 µs** (95 fps 2,072, 100 fps 1,969, 110 fps
+1,790, the bypassed-converter 175 fps 1,125); a 30 µs edge jitter is 1.7 fps and a 1 % timing part 1.1 fps, so the
+latch trips within ±2.7 fps of 105. The Hasbro ball at 95-97 fps is 8 fps under it; the fastest accepted ball (103.9
+with every tolerance) can meet the band's lower edge, which is a nuisance trip, not a hazard. Bench 3.3 latches at
+≤ 1.80 ms (109 fps) and not at ≥ 1.95 ms (101 fps). Before D68:
 
 | Spacing | 55 fps | 58 (p99 at set) | 66 (trip) | 70 (cap) | 123 (24 V fault) | 30 µs edge jitter | 5 % RC window | bore loss between gates |
 |---|---|---|---|---|---|---|---|---|
@@ -393,7 +532,7 @@ plates sit outside the fixed camera's frame, which the next run should widen. Th
 | Checklist item | Result |
 |---|---|
 | The ball sourced; spread swept | pass |
-| Launch: the 70 fps cap at 100 % throttle with tolerances | pass, 68.0 fps highest case, 2.0 fps margin (thin: finding 4) |
+| Launch: the 70 fps cap at 100 % throttle with tolerances (D68: the 105 fps ceiling, section 4: 103.9 fps, 2,480 J/m²; the e2e is not rerun) | pass, 68.0 fps highest case, 2.0 fps margin (thin: finding 4) |
 | Launch: 1D ↔ 3D hand-over | pass (< 0.1 %) |
 | Bursts: speed droop ≤ 1 fps at 3-10/s | pass (0) |
 | ARM release with braking | pass (phase short: rests from 30 ms; coast would leave at 53 fps) |
@@ -403,7 +542,7 @@ plates sit outside the fixed camera's frame, which the next run should widen. Th
 | Feed: no doubles, nothing stuck, at every pose and rate | **fail: 3 doubles in 108 steps** (two at ≥ 5/s, one with the robot rolled 15°), 0 stuck; 29 empty steps (the hopper, finding 1) |
 | Feed: parked safe under jolt and vibration, powered or not | pass (0 leaks) |
 | Rate of fire ≥ 3/s | pass (4/s clean by stepping; latency 240 ms) |
-| Kid safety at the cap | pass (0.42 J, 1,030 J/m²) |
+| Kid safety at the cap (D68: ASTM at the 105 fps ceiling and the densest accepted ball, section 7) | pass (0.42 J, 1,030 J/m²; D68: 2,276 and 2,475 J/m², under 2,500) |
 | End to end: reachable plates hit and down, unreachable ones declared | pass in all four runs |
 
 ## 12. Findings for the CAD (for the program agent), each with the number that demands it
@@ -418,10 +557,14 @@ plates sit outside the fixed camera's frame, which the next run should widen. Th
 3. **Exit hole for continuous feeding (optional).** The ball + 1.5 mm exit hole lines up with a pocket for only ±1.2° of dial travel, so
    continuous rotation feeds nothing at 15-45 rpm. If continuous feeding is ever wanted, slot the exit along the pocket circle by ≥ one ball
    diameter (and re-check the parked pocket's blocking); if not, keep stepping and the hole as is.
-4. **The speed ceiling margin.** The whole swept population at 100 % throttle, +5 % KV, +4 % rail, runout and soft-tyre growth reaches 68.0 fps on
+4. **The speed ceiling margin.** *D68 replaces this: the trimmed rail, Ø38 at 40 % and the 1400 KV hold every accepted
+   ball at or under 103.9 fps and 2,480 J/m² (section 4); the trim is the bench's job (test 4.1), the bonded tyre the
+   assembly's.* Before D68: the whole swept population at 100 % throttle, +5 % KV, +4 % rail, runout and soft-tyre growth reaches 68.0 fps on
    Ø36 at 12 V (2 fps under the cap; the worst corner ball alone 64.2). Print the Ø34 tyres with the set (63.5 fps ceiling) and let the bench
    ceiling test choose; keep every ESC on the fixed 12 V rail and keyed away from 24 V; a 24 V fault is 79-128 fps.
-5. **Tyre growth.** TPU 95A tyres grow 0.23-0.69 mm radially at the set speed (0.34-1.01 at no-load): the crush is 27-31 % at speed, not 25 %.
+5. **Tyre growth.** *D68: at ~16,000 rpm a free TPU ring's bore grows 8 %, twice the 4 % stretch fit, so the tyre is
+   bonded to the hub (0.04 mm of growth bonded; 2.4 mm and 113 fps if it came loose: spin-test every tyre at the trim
+   speed before a ball, bench 4.1).* Before D68: TPU 95A tyres grow 0.23-0.69 mm radially at the set speed (0.34-1.01 at no-load): the crush is 27-31 % at speed, not 25 %.
    Harmless for speed (+0.4 fps) and good for centring, but the cage's wheel cavities (Ø40 + 0.75 mm clearance at 11 mm... `cav_r` 20 mm) need
    ≥ 1 mm radial clearance over the grown tyre, and the hub's rim must hold a tyre that is 1-4 % looser at speed.
 6. **Pan gear backlash.** 0.15 mm per flank on the 63 T ring is 7.6 mrad (4.6 cm at 6 m), the largest static aim error. Options: thin only the
@@ -431,7 +574,8 @@ plates sit outside the fixed camera's frame, which the next run should widen. Th
    the axis) and the recoil kick (0.85 N m peak, 1.2 mrad) does not cross it: keep the CoM behind the axis at every hopper fill (it is: motion.json).
 8. **Fire-while-panning.** The muzzle's 155 mm lever gives 14.5 mrad at 90 deg/s: fire only under ~10 deg/s of pan rate (the e2e's 'settled'
    mode) or lead by 0.16° per 10 deg/s in firmware.
-9. **Range at the set speed, and the 65 fps default.** Level from 0.55 m a 55 fps ball reaches a 0.30 m target only to 3.5 m; the game's 4-6 m
+9. **Range at the set speed, and the 65 fps default.** *D68 settles it: 95 fps by default, 97 flat out; a 95 fps ball
+   is still at 74 fps at 4 m and 58 fps at 8 m (section 7).* Before D68: Level from 0.55 m a 55 fps ball reaches a 0.30 m target only to 3.5 m; the game's 4-6 m
    targets need 65-70 fps (4.1-4.4 m) and/or the robot standing 0.15-0.30 m taller (5.0-6.2 m at 0.85 m). But 65 fps cannot be set on the
    present hardware: the nominal ball at 100 % throttle on 12 V / Ø36 is 59.5 fps (the ceiling that holds the cap is the same thing that caps the
    range), so the set speed can only be 50-57 fps. Decide together: the muzzle height (the standing stance), the tyre diameter and rail (Ø38 at
@@ -448,6 +592,12 @@ plates sit outside the fixed camera's frame, which the next run should widen. Th
     instead of + 1.5: the muzzle pitch scatter falls from 11.5 to 5 mrad, the yaw scatter from 3.9 to 2.6, the speed loss from 1.0 to 0.7 fps,
     and the topspin becomes consistent (102 ± 40 rad/s instead of 69 ± 82), halving the vertical dispersion at 4 m. Keep the dial pockets and
     the chute at + 1.5 (they fed cleanly). Do not go tighter: + 1.0 doubles the scatter and + 0.5 sticks balls.
+15. **D68: the release brake (V14).** The 1400 KV's phase short reaches 5 % speed at ~80 ms (section 5), not 50; a ball
+    in the chute still rests, but only if the winding's inductance is under ~18 uH: measure it (bench 4.7).
+16. **D68: the recoil budget.** 0.052-0.064 N s a shot is over docs/head-payload.md's 0.05 N s; the aim kick (2.1 mrad)
+    and the tilt servo (margin 4.3) are fine. The body's budget needs 0.065 N s.
+17. **D68: bond the tyres** and spin-test each wheel at the trim speed before the first ball (finding 5); the cage's
+    2.5 mm cut over the tyre stays.
 
 ## 13. Bench test plan
 
@@ -457,7 +607,9 @@ what each number replaces. In addition: the jam-rate counts (300 balls per pose 
 5-ball hoppers), the slew-and-jolt feeding test on a lazy-susan stand, paper targets at 2/4/6/8 m (20 shots each from a clamped turret:
 drop, drift, 1-σ radius), the knock-down counts, the ring's shunt trace for the stepped and ramped spin-up (expect 12 and 2.2 A), the trip
 test with simulated 1.3 ms and 2.6 ms gate pairs, and the release test (wheels at 5 % within 50 ms; 20 releases during feeding: no ball above
-20 fps unless it was already in the nip).
+20 fps unless it was already in the nip). D68 adds, before any ball: the trim (the faster motor's warm no-load speed at or under 15,722 rpm on
+its resistor), each tyre's spin test at that speed, the trip pairs at 1.80 ms (latch) and 1.95 ms (none), the Hasbro rounds' speed flat out
+(95-100 fps expected) and the lightest and densest off-brand rounds (every one at or under 105 fps), and the motors' winding inductance.
 
 ## 14. Limits of the models
 

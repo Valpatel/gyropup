@@ -23,17 +23,22 @@ GREY = (0.78, 0.79, 0.81)
 STEPS = [
     ('The pan base and its inserts', ['pan_base'], {}, (0.6, -1.0, 0.7),
      'Heat-set inserts first, with the base on its foot: 5 x M3 in the clamp ears, 3 x M3 in the carrier bosses (from '
-     'below), 4 x M3 in the base-board bosses, 4 x M4 in the DT pad. The bumper tabs\' 5 short M3 wait for the robot '
+     'below), 4 x M3 in the external carrier anchors, 4 x M4 in the DT pad. The bumper tabs\' 5 short M3 wait for the robot '
      '(no bumper on the bench, D42).'),
     ('The pan servo, its pinion and the DT12 receptacle', ['pan_servo', 'pan_pinion', 'dt_receptacle'],
      {'pan_servo': 40, 'pan_pinion': 70, 'dt_receptacle': (0, -40, 0)}, (0.6, -1.0, 0.7),
      'The STS3215 drops into its pocket, bus plugs down, on its four posts: 4 x M2 x 20 up through the foot. The pinion on '
      'its horn: 4 x M3 x 16 (heads sunk). The DT04-12PA on the pad: 4 x M4 x 10; its 12 pins and the W12P wedge with the '
      'harness to the base board.'),
-    ('The base board and the index magnet', ['base_board', 'index_magnet'], {'base_board': (25, 0, 0), 'index_magnet': 25},
-     (0.8, -0.6, 0.7),
-     'The base board (the 555, the 12 V pan regulator, the 10 A main fuse, the ring\'s stator plug) on its four bosses: '
-     '4 x M3 x 6. The 3/16 in magnet glued on the housing\'s top at pan 0 (the clamp ring has its hole).'),
+    ('The removable base-board module and the index magnet',
+     ['base_board_carrier', 'base_board', 'base_board_inserts', 'base_board_screws', 'base_carrier_inserts', 'base_carrier_screws', 'index_magnet'],
+     {'base_board_carrier': (45, 0, 0), 'base_board': (30, 0, 0), 'base_board_inserts': (45, 0, 0),
+      'base_board_screws': (25, 0, 0), 'base_carrier_screws': (65, 0, 0), 'index_magnet': 25}, (0.8, -0.6, 0.7),
+     'On the bench, fit four M3 inserts in the carrier and screw the drilled PCB onto its standoffs with four M3 x 6. '
+     'Fit four M3 inserts in the base anchors from +x. Connect the harness, then slide the entire module in from +x '
+     'and secure it with four M3 x 8 from outside. Remove the robot bumper before service; PCB screws are accessed '
+     'only on the bench. Harness disconnection access and slack remain unverified: docs/base-board-service.md. '
+     'Glue the index magnet in its housing pocket.'),
     ('The pan bearing and its clamp', ['pan_bearing', 'pan_bearing_inner', 'pan_clamp'],
      {'pan_bearing': 30, 'pan_bearing_inner': 30, 'pan_clamp': 50}, (0.6, -1.0, 0.8),
      'The 6810-2RS pressed into its seat onto the Ø62 shoulder; the aluminium clamp ring (SendCutSend) over it: 5 x M3 x 8.'),
@@ -53,11 +58,20 @@ STEPS = [
      'The rotor leads through the yoke\'s slot, the yoke on the turntable: 4 x M4 x 10. 4 x M3 inserts in the -y arm, the '
      'bay on them: 4 x M3 x 8 flat heads; the three boards on their standoffs (12 and 14 mm); the ring\'s rotor plug and '
      'the hall into level 2.'),
-    ('The tilt servo and the cradle', ['tilt_servo', 'tilt_bearing', 'tilt_bearing_inner', 'cradle', 'shoulder_screw'],
-     {'tilt_servo': (0, 40, 0), 'cradle': 40, 'shoulder_screw': (0, -40, 0)}, (0.5, -1.0, 0.5),
-     'The STS3215 into its pocket on the +y arm, 4 x M2 x 10 from the arm\'s inner face. The MR126 into the -y arm\'s '
-     'seat. The cradle: its hub onto the servo\'s horn (4 x M3 x 12), the ISO 7379 shoulder screw through the -y arm and '
-     'the bearing into the cradle\'s M5 insert. Check the 0 and -25 deg stops by hand before anything else.'),
+    ('The tilt servo and the cradle on its aluminium cheeks',
+     ['tilt_servo', 'tilt_bearing', 'tilt_bearing_inner', 'cradle', 'cradle_plate_l', 'cradle_plate_r', 'stop_lug', 'horn_boss', 'pivot_spacer',
+      'shoulder_screw'],
+     {'tilt_servo': (0, 40, 0), 'cradle': 55, 'cradle_plate_l': (0, 22, 55), 'cradle_plate_r': (0, -22, 55), 'stop_lug': (0, -38, 55),
+      'horn_boss': (0, 14, 0), 'pivot_spacer': (0, -14, 0), 'shoulder_screw': (0, -40, 0)}, (0.5, -1.0, 0.5),
+     'The rail frame, its two aluminium plates and the stop lug go together on the bench (D48): 8 x M3 inserts into the rail frame\'s two '
+     'rebates, put in from the side; the aluminium stop lug onto the -y '
+     'plate\'s outer face, 2 x M3 x 6 flat heads from the plate\'s inner face into its tapped holes, a drop of CA gel under it; each plate '
+     'into its rail\'s rebate, 4 x M3 x 8 button heads. Then the STS3215 into its pocket on the +y arm, 4 x M2 x 10 from the arm\'s inner '
+     'face, and the MR126 into the -y arm\'s seat. The cradle between the arms: the horn boss between the +y plate and the servo\'s horn, '
+     '4 x M3 x 14 flat heads from the plate\'s inner face into the horn (snug: 1.8 mm of thread); on the -y side the pivot spacer, its land '
+     'against the bearing, and the ISO 7379 shoulder screw through the arm, the bearing and the spacer into the plate\'s tapped hole (snug, '
+     'about 0.15 N m, a drop of CA gel on the thread). Check the 0 and -25 deg stops by hand before anything else: the lug meets the '
+     'yoke\'s two sectors, and the barrel cannot be pushed above level.'),
     ('The laser', ['laser_mount', 'laser'], {'laser_mount': -30, 'laser': -30}, (0.7, -1.0, 0.4),
      'The mount on the cradle\'s tab: 2 x M3 x 10 up through it; the laser in the mount on three nylon-tip M3 set screws '
      '(boresight them on the bench).'),

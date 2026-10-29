@@ -1,0 +1,88 @@
+{
+  "comparison": {
+    "bare_controller_rejection": {
+      "LM7480_differential_margin_V": -12,
+      "LM74910H_differential_margin_V": -9,
+      "LTC4359_raw_IN_absolute_margin_V": -2
+    },
+    "baseline_candidate_B": {
+      "15V_enable_margin_V": 0.069019582972901,
+      "load_input_A": 3.9867540382315774,
+      "series_loss_W": 5.980131057347366,
+      "startup_budget_current_A": 4.434043601
+    },
+    "enhanced_low_loss_direction": {
+      "15V_enable_margin_after_gate_enhancement_V": 1.302976966912901,
+      "6cm2_copper_condition_satisfies_scenario": true,
+      "actual_charged_reverse_pin_peaks": null,
+      "assembled_thermal_result": null,
+      "clamp_energy_and_temperature_margin": null,
+      "front_hot_resistance_is_assumption_ohm": 0.06,
+      "front_loss_screen_W": 0.9536524656813473,
+      "minimal_footprint_condition_satisfies_scenario": false,
+      "power_FET_VDS_static_margin_V": 153,
+      "startup_before_gate_enhancement": null,
+      "theta_required_C_per_W": 41.94400102706343
+    },
+    "larger_converter_direction": {
+      "15V_input_headroom_before_all_path_drops_V": 1,
+      "OVP_range_V": [
+        14.399999999999999,
+        16.200000000000003
+      ],
+      "actual_15V_efficiency": null,
+      "body_plan_area_ratio_to_legacy_board": 1.3981102362204723,
+      "mpn": "RP60Q-11012SRUWB/P",
+      "output_corner_V": 12.299999999999999,
+      "output_regeneration": null,
+      "output_screen_W": 39.974999999999994,
+      "power_margin_W": 20.025000000000006,
+      "reverse_input_protection": null,
+      "startup_with_selected_front_end": null,
+      "thermal_scenarios": [
+        {
+          "ambient_ceiling_with_datasheet_6_3K_per_W_C": 47.039375000000014,
+          "efficiency_assumption": 0.8,
+          "loss_W": 9.993749999999999,
+          "required_theta_at_ambient_C_per_W": 2.501563477173234,
+          "stock_thermal_condition_satisfies_scenario": false
+        },
+        {
+          "ambient_ceiling_with_datasheet_6_3K_per_W_C": 65.55720588235295,
+          "efficiency_assumption": 0.85,
+          "loss_W": 7.054411764705883,
+          "required_theta_at_ambient_C_per_W": 3.54388159266208,
+          "stock_thermal_condition_satisfies_scenario": false
+        },
+        {
+          "ambient_ceiling_with_datasheet_6_3K_per_W_C": 78.87339887640448,
+          "efficiency_assumption": 0.89,
+          "loss_W": 4.940730337078654,
+          "required_theta_at_ambient_C_per_W": 5.059980669736765,
+          "stock_thermal_condition_satisfies_scenario": false
+        }
+      ]
+    },
+    "qualifications": {
+      "architecture_selected": false,
+      "carrier_fit": false,
+      "charged_reverse_waveform": false,
+      "clamp_temperature_pulse": false,
+      "native_circuit_transcribed": false,
+      "output_regeneration": false,
+      "production_supply": false,
+      "startup_gate_bodydiode": false,
+      "thermal": false
+    },
+    "raw_charged_reverse_stress_V": 97,
+    "status": "ARCHITECTURE_RECOMMENDATION_ONLY_UNSELECTED_UNQUALIFIED"
+  },
+  "inputs_sha256": {
+    "hardware/carrier-pan-protection/calculate.py": "911d0f1402fa4ce7b087bd56fc1c54ab070d08564b44af3d42853b8223290ee9",
+    "hardware/carrier-pan-protection/circuit_design.py": "37b4d99eecaa1f567109df6762a00f69f46c02e6efbe7d53c35893d2955ace8a",
+    "research/protection/calculate_practical_architecture.py": "82926d111d5607a75f628e5ff8505fbc3e4839cbcc9d69cd480d6517311e4c5c",
+    "research/protection/carrier-practical-architecture.inputs.json": "0b6fddcf95ea8719ae215e24827ceb1c33624a0e113604e4db1afe2f95891a70",
+    "research/protection/carrier-practical-architecture.md": "44539462317f9c5874755aed66e8478b59405d7f53a6cf71c853e7b9978d6437",
+    "research/protection/test_practical_architecture.py": "93b45ba0f4cd1949ca0039790760d0f2ed3f1f94846a4161e188ea5609a33ee1"
+  }
+}

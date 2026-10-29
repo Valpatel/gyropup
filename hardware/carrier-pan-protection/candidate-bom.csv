@@ -1,0 +1,30 @@
+reference,qty,value,candidate_mpn,datasheet,note
+Q1,1,100V N-MOS,CSD19531Q5AT,https://www.ti.com/lit/ds/symlink/csd19531q5a.pdf,"Body diode anode=COMMON_SOURCE, cathode=VIN_PROTECTED. Drain exposed metal belongs to D, not a new pin9."
+Q2,1,100V N-MOS,CSD19531Q5AT,https://www.ti.com/lit/ds/symlink/csd19531q5a.pdf,"Body diode anode=COMMON_SOURCE, cathode=SENSE_HI. Common-source pair; no PCB footprint qualified."
+R1,1,10mR 1% 1W,WSL2512R0100FEA,https://www.vishay.com/docs/30100/wsl.pdf,Kelvin sense routing at pad edges required. 2-terminal part; current and sense share the pads.
+U1,1,LTC4368IMS-2,LTC4368IMS-2#PBF,https://www.analog.com/media/en/technical-documentation/data-sheets/ltc4368.pdf,"MSOP-10 pin map, revC p2. RETRY grounded: forward OC latch; UV/OV still auto-recover."
+U2,1,D42V55F12 / 5577,Pololu 5577,https://www.pololu.com/product/5577,"Project pad IDs A/B from manufacturer top view, see pins.md. EN driven by U3 UV supervisor; internal pullup retained. VRP never used as input. PG unused; not a servo OVP."
+R2,1,464k 0.1%,TNPW0805464KBEEN,https://www.vishay.com/docs/28758/tnpw_e3.pdf,OV top; stock quantity unresolved
+R3,1,4.99k 0.1%,TNPW08054K99BEEN,https://www.vishay.com/docs/28758/tnpw_e3.pdf,OV bottom
+R4,1,100k 0.1%,TNPW0805100KBEEN,https://www.vishay.com/docs/28758/tnpw_e3.pdf,UV top; converter brownout is separately gated by U3
+R5,1,4.99k 0.1%,TNPW08054K99BEEN,https://www.vishay.com/docs/28758/tnpw_e3.pdf,UV bottom
+R6,1,499k 0.1%,TNPW0805499KBEEN,https://www.vishay.com/docs/28758/tnpw_e3.pdf,SHDN top: limits pin current; not an arm circuit
+R7,1,100k 0.1%,TNPW0805100KBEEN,https://www.vishay.com/docs/28758/tnpw_e3.pdf,SHDN bottom; default ON when source valid
+R8,1,22k 0.1%,TNPW080522K0BEEN,https://www.vishay.com/docs/28758/tnpw_e3.pdf,Series with CGATE only; NOT in series with MOSFET gates
+R9,1,100k 0.1%,TNPW0805100KBEEN,https://www.vishay.com/docs/28758/tnpw_e3.pdf,Bleeder; decay depends on unmeasured module Cin
+C1,1,22uF 100V 20%,EEU-FC2A220,https://industrial.panasonic.com/ww/products/pt/aluminum-cap-lead/models/EEUFC2A220,Local VOUT decoupling; positive terminal to PAN_INPUT. 8mm diameter x11.5mm nominal body exceeds U2 height reservation.
+C2,1,47nF 100V 1%,C1206C473F1GECAUTO,https://yageogroup.com/content/datasheet/asset/file/KEM_C1091_C0G_ESD,"One of four parallel 47nF C0G ramp capacitors. Conditional slew screen, not measured inrush/SOA."
+C3,1,6.8nF 50V 5%,C0805C682J5GACTU,https://yageogroup.com/content/datasheet/asset/file/KEM_C1003_C0G_SMD,"Gate-to-common-source hotswap capacitor, ADI p15-16; NOT gate-to-ground."
+D1,1,200V series barrier,V10P20-M3/87A,https://www.vishay.com/docs/89316/v10p20.pdf,K is project ID for manufacturer cathode pad; anode leads1/2 are numbered in the drawing. Multiwatt loss; copper/thermal unqualified.
+D2,1,200V negative clamp,V10P20-M3/87A,https://www.vishay.com/docs/89316/v10p20.pdf,"Local anode GND / cathode protected input. Negative pulse current, loop inductance and cold clamp remain qualification gates."
+R10,1,20mR 1% 1W,WSL2512R0200FEA,https://www.vishay.com/docs/30100/wsl.pdf,"Parallel R1: nominal effective6.667mOhm. Shared Kelvin endpoints, symmetric low-inductance layout not yet provided."
+R11,1,100k 0.1%,TNPW0805100KBEEN,https://www.vishay.com/docs/28758/tnpw_e3.pdf,Protected-input bleeder; does not qualify negative transient clamp
+R12,1,150k 0.1%,TNPW0805150KBEEN,https://www.vishay.com/docs/28758/tnpw_e3.pdf,U3 UV divider top
+R13,1,10k 0.1%,TNPW080510K0BEEN,https://www.vishay.com/docs/28758/tnpw_e3.pdf,U3 UV divider bottom
+R14,1,499k 0.1%,TNPW0805499KBEEN,https://www.vishay.com/docs/28758/tnpw_e3.pdf,External RESET pullup plus module internal nominal1M pullup
+C4,1,100nF 100V 10% X7R,C0805C104K1RACTU,https://yageogroup.com/content/datasheet/asset/file/KEM_C1002_X7R_SMD,Local decoupling. DC-bias/temperature minimum and pulse response not qualified.
+C5,1,100nF 100V 10% X7R,C0805C104K1RACTU,https://yageogroup.com/content/datasheet/asset/file/KEM_C1002_X7R_SMD,Local decoupling. DC-bias/temperature minimum and pulse response not qualified.
+C6,1,47nF 100V 1%,C1206C473F1GECAUTO,https://yageogroup.com/content/datasheet/asset/file/KEM_C1091_C0G_ESD,"Parallel ramp bank, total188nF nominal; C0G30ppm/K screen."
+C7,1,47nF 100V 1%,C1206C473F1GECAUTO,https://yageogroup.com/content/datasheet/asset/file/KEM_C1091_C0G_ESD,"Parallel ramp bank, total188nF nominal; C0G30ppm/K screen."
+C8,1,47nF 100V 1%,C1206C473F1GECAUTO,https://yageogroup.com/content/datasheet/asset/file/KEM_C1091_C0G_ESD,"Parallel ramp bank, total188nF nominal; C0G30ppm/K screen."
+U3,1,UV / OD active-low,TPS3760A012DYYR,https://www.ti.com/lit/ds/symlink/tps3760.pdf,"A012 is adjustable UV with2% hysteresis and active-low open drain. E012 is OV, NOT a substitute. CTR and CTS open; no added timing capacitor."

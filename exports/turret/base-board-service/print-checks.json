@@ -1,0 +1,541 @@
+{
+  "schema": "gyropup.base-board-print/1",
+  "pass_model_checks": true,
+  "physical_fit_verified": false,
+  "release_ready": false,
+  "carrier": {
+    "schema": "cadagent.gate/1",
+    "gate": "wall",
+    "pass": true,
+    "status": "pass",
+    "counts": {
+      "pass": 1,
+      "warn": 0,
+      "fail": 0
+    },
+    "checks": [
+      {
+        "id": "wall:base_board_carrier",
+        "status": "pass",
+        "message": "thinnest sampled 1.497 mm >= 1.2 mm",
+        "parts": [
+          "base_board_carrier"
+        ],
+        "evidence": {
+          "wall_mm": 1.2,
+          "tol_mm": 0.01,
+          "mesh-ray": {
+            "rays": 3060,
+            "misses": 0,
+            "min_mm": 1.4972,
+            "thin_samples": 0,
+            "thin_area_mm2": 0.0,
+            "percentiles_mm": {
+              "p1": 1.4976,
+              "p5": 1.4981,
+              "p50": 3.0
+            },
+            "triangles": 3060,
+            "engine": "trimesh+rtree",
+            "watertight": true,
+            "remeasured": 0,
+            "dismissed_as_chord_error": 0,
+            "not_remeasured": 0
+          },
+          "brep-ray": {
+            "rays": 1018,
+            "misses": 0,
+            "min_mm": 1.5,
+            "thin_samples": 0,
+            "thin_area_mm2": 0.0,
+            "percentiles_mm": {
+              "p1": 1.5,
+              "p5": 1.5,
+              "p50": 3.0
+            },
+            "faces": 26,
+            "grid": [
+              3,
+              16
+            ],
+            "spacing_mm": 2.0
+          },
+          "witnesses": []
+        }
+      }
+    ],
+    "findings": [],
+    "exclusions": [],
+    "limits": {
+      "tol_mm": 0.01,
+      "max_rays": 20000,
+      "brep_grid": [
+        3,
+        16
+      ],
+      "brep_spacing_mm": 2.0,
+      "parts": {
+        "base_board_carrier": {
+          "wall_mm": 1.2
+        }
+      }
+    },
+    "assumptions": [
+      "thickness is measured by rays along the inward surface normal: mesh rays from triangle centroids (sub-sampled to max_rays) and exact B-rep rays from a UV grid on every face",
+      "a pass means no sample was thinner than wall_mm - tol_mm; regions between samples and walls met at a slant are not measured",
+      "the per-part wall_mm is the declared minimum; whether it suits the printer, nozzle, material and load is not checked",
+      "a mesh reads curved walls thin by its chord error (about 0.09 mm seen on a 2.4 mm spherical shell tessellated at 0.05 mm); with the B-rep given, thin mesh samples are re-measured exactly and only confirmed ones fail; with a mesh alone, tol_mm must cover that error",
+      "the model is checked, not the print: no shrink, elephant foot, or slicer perimeter rounding"
+    ],
+    "physical_fit_verified": false
+  },
+  "thin_control": {
+    "schema": "cadagent.gate/1",
+    "gate": "wall",
+    "pass": false,
+    "status": "fail",
+    "counts": {
+      "pass": 0,
+      "warn": 0,
+      "fail": 1
+    },
+    "checks": [
+      {
+        "id": "wall:thin_control",
+        "status": "fail",
+        "message": "thinnest 0.600 mm < 1.2 mm (sampled; see witnesses)",
+        "parts": [
+          "thin_control"
+        ],
+        "evidence": {
+          "wall_mm": 1.2,
+          "tol_mm": 0.01,
+          "mesh-ray": {
+            "rays": 12,
+            "misses": 0,
+            "min_mm": 0.6,
+            "thin_samples": 4,
+            "thin_area_mm2": 288.0,
+            "percentiles_mm": {
+              "p1": 0.6,
+              "p5": 0.6,
+              "p50": 12.0
+            },
+            "triangles": 12,
+            "engine": "trimesh+rtree",
+            "watertight": true,
+            "remeasured": 4,
+            "dismissed_as_chord_error": 0,
+            "not_remeasured": 0
+          },
+          "brep-ray": {
+            "rays": 108,
+            "misses": 0,
+            "min_mm": 0.6,
+            "thin_samples": 72,
+            "thin_area_mm2": 288.0,
+            "percentiles_mm": {
+              "p1": 0.6,
+              "p5": 0.6,
+              "p50": 0.6
+            },
+            "faces": 6,
+            "grid": [
+              3,
+              16
+            ],
+            "spacing_mm": 2.0
+          },
+          "witnesses": [
+            {
+              "method": "mesh-ray, B-rep confirmed",
+              "thickness_mm": 0.6,
+              "mesh_thickness_mm": 0.6,
+              "point": [
+                2.0,
+                -2.0,
+                0.3
+              ],
+              "exit_point": [
+                2.0,
+                -2.0,
+                -0.3
+              ]
+            },
+            {
+              "method": "mesh-ray, B-rep confirmed",
+              "thickness_mm": 0.6,
+              "mesh_thickness_mm": 0.6,
+              "point": [
+                -2.0,
+                2.0,
+                0.3
+              ],
+              "exit_point": [
+                -2.0,
+                2.0,
+                -0.3
+              ]
+            },
+            {
+              "method": "mesh-ray, B-rep confirmed",
+              "thickness_mm": 0.6,
+              "mesh_thickness_mm": 0.6,
+              "point": [
+                2.0,
+                -2.0,
+                -0.3
+              ],
+              "exit_point": [
+                2.0,
+                -2.0,
+                0.3
+              ]
+            },
+            {
+              "method": "mesh-ray, B-rep confirmed",
+              "thickness_mm": 0.6,
+              "mesh_thickness_mm": 0.6,
+              "point": [
+                -2.0,
+                2.0,
+                -0.3
+              ],
+              "exit_point": [
+                -2.0,
+                2.0,
+                0.3
+              ]
+            },
+            {
+              "method": "brep-ray",
+              "thickness_mm": 0.6,
+              "point": [
+                -1.0,
+                -5.0,
+                -0.3
+              ],
+              "exit_point": [
+                -1.0,
+                -5.0,
+                0.3
+              ]
+            },
+            {
+              "method": "brep-ray",
+              "thickness_mm": 0.6,
+              "point": [
+                -1.0,
+                -3.0,
+                -0.3
+              ],
+              "exit_point": [
+                -1.0,
+                -3.0,
+                0.3
+              ]
+            },
+            {
+              "method": "brep-ray",
+              "thickness_mm": 0.6,
+              "point": [
+                -1.0,
+                -1.0,
+                -0.3
+              ],
+              "exit_point": [
+                -1.0,
+                -1.0,
+                0.3
+              ]
+            },
+            {
+              "method": "brep-ray",
+              "thickness_mm": 0.6,
+              "point": [
+                -1.0,
+                1.0,
+                -0.3
+              ],
+              "exit_point": [
+                -1.0,
+                1.0,
+                0.3
+              ]
+            },
+            {
+              "method": "brep-ray",
+              "thickness_mm": 0.6,
+              "point": [
+                3.0,
+                1.0,
+                -0.3
+              ],
+              "exit_point": [
+                3.0,
+                1.0,
+                0.3
+              ]
+            },
+            {
+              "method": "brep-ray",
+              "thickness_mm": 0.6,
+              "point": [
+                3.0,
+                -1.0,
+                -0.3
+              ],
+              "exit_point": [
+                3.0,
+                -1.0,
+                0.3
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "findings": [
+      {
+        "id": "wall:thin_control",
+        "status": "fail",
+        "message": "thinnest 0.600 mm < 1.2 mm (sampled; see witnesses)",
+        "parts": [
+          "thin_control"
+        ],
+        "evidence": {
+          "wall_mm": 1.2,
+          "tol_mm": 0.01,
+          "mesh-ray": {
+            "rays": 12,
+            "misses": 0,
+            "min_mm": 0.6,
+            "thin_samples": 4,
+            "thin_area_mm2": 288.0,
+            "percentiles_mm": {
+              "p1": 0.6,
+              "p5": 0.6,
+              "p50": 12.0
+            },
+            "triangles": 12,
+            "engine": "trimesh+rtree",
+            "watertight": true,
+            "remeasured": 4,
+            "dismissed_as_chord_error": 0,
+            "not_remeasured": 0
+          },
+          "brep-ray": {
+            "rays": 108,
+            "misses": 0,
+            "min_mm": 0.6,
+            "thin_samples": 72,
+            "thin_area_mm2": 288.0,
+            "percentiles_mm": {
+              "p1": 0.6,
+              "p5": 0.6,
+              "p50": 0.6
+            },
+            "faces": 6,
+            "grid": [
+              3,
+              16
+            ],
+            "spacing_mm": 2.0
+          },
+          "witnesses": [
+            {
+              "method": "mesh-ray, B-rep confirmed",
+              "thickness_mm": 0.6,
+              "mesh_thickness_mm": 0.6,
+              "point": [
+                2.0,
+                -2.0,
+                0.3
+              ],
+              "exit_point": [
+                2.0,
+                -2.0,
+                -0.3
+              ]
+            },
+            {
+              "method": "mesh-ray, B-rep confirmed",
+              "thickness_mm": 0.6,
+              "mesh_thickness_mm": 0.6,
+              "point": [
+                -2.0,
+                2.0,
+                0.3
+              ],
+              "exit_point": [
+                -2.0,
+                2.0,
+                -0.3
+              ]
+            },
+            {
+              "method": "mesh-ray, B-rep confirmed",
+              "thickness_mm": 0.6,
+              "mesh_thickness_mm": 0.6,
+              "point": [
+                2.0,
+                -2.0,
+                -0.3
+              ],
+              "exit_point": [
+                2.0,
+                -2.0,
+                0.3
+              ]
+            },
+            {
+              "method": "mesh-ray, B-rep confirmed",
+              "thickness_mm": 0.6,
+              "mesh_thickness_mm": 0.6,
+              "point": [
+                -2.0,
+                2.0,
+                -0.3
+              ],
+              "exit_point": [
+                -2.0,
+                2.0,
+                0.3
+              ]
+            },
+            {
+              "method": "brep-ray",
+              "thickness_mm": 0.6,
+              "point": [
+                -1.0,
+                -5.0,
+                -0.3
+              ],
+              "exit_point": [
+                -1.0,
+                -5.0,
+                0.3
+              ]
+            },
+            {
+              "method": "brep-ray",
+              "thickness_mm": 0.6,
+              "point": [
+                -1.0,
+                -3.0,
+                -0.3
+              ],
+              "exit_point": [
+                -1.0,
+                -3.0,
+                0.3
+              ]
+            },
+            {
+              "method": "brep-ray",
+              "thickness_mm": 0.6,
+              "point": [
+                -1.0,
+                -1.0,
+                -0.3
+              ],
+              "exit_point": [
+                -1.0,
+                -1.0,
+                0.3
+              ]
+            },
+            {
+              "method": "brep-ray",
+              "thickness_mm": 0.6,
+              "point": [
+                -1.0,
+                1.0,
+                -0.3
+              ],
+              "exit_point": [
+                -1.0,
+                1.0,
+                0.3
+              ]
+            },
+            {
+              "method": "brep-ray",
+              "thickness_mm": 0.6,
+              "point": [
+                3.0,
+                1.0,
+                -0.3
+              ],
+              "exit_point": [
+                3.0,
+                1.0,
+                0.3
+              ]
+            },
+            {
+              "method": "brep-ray",
+              "thickness_mm": 0.6,
+              "point": [
+                3.0,
+                -1.0,
+                -0.3
+              ],
+              "exit_point": [
+                3.0,
+                -1.0,
+                0.3
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "exclusions": [],
+    "limits": {
+      "tol_mm": 0.01,
+      "max_rays": 20000,
+      "brep_grid": [
+        3,
+        16
+      ],
+      "brep_spacing_mm": 2.0,
+      "parts": {
+        "thin_control": {
+          "wall_mm": 1.2
+        }
+      }
+    },
+    "assumptions": [
+      "thickness is measured by rays along the inward surface normal: mesh rays from triangle centroids (sub-sampled to max_rays) and exact B-rep rays from a UV grid on every face",
+      "a pass means no sample was thinner than wall_mm - tol_mm; regions between samples and walls met at a slant are not measured",
+      "the per-part wall_mm is the declared minimum; whether it suits the printer, nozzle, material and load is not checked",
+      "a mesh reads curved walls thin by its chord error (about 0.09 mm seen on a 2.4 mm spherical shell tessellated at 0.05 mm); with the B-rep given, thin mesh samples are re-measured exactly and only confirmed ones fail; with a mesh alone, tol_mm must cover that error",
+      "the model is checked, not the print: no shrink, elephant foot, or slicer perimeter rounding"
+    ],
+    "physical_fit_verified": false
+  },
+  "rotation": {
+    "axis": [
+      0,
+      1,
+      0
+    ],
+    "degrees": 90
+  },
+  "print_bounds_mm": [
+    32.0,
+    70.0,
+    8.000000000000007
+  ],
+  "sources": {
+    "cad/check_base_board_print.py": "13374e961abacca1ba5e79508dca654e7d4919eb81e773046a84292645ae2bdb",
+    "cad/turret_base_board.py": "19deb45f7163de0ce71e9288d20b311eb689d0f55b5d174b79d6d0030ccc7bea",
+    "cad/turret_boards.py": "c7a115d2fe3cefddf46b0dd521e21076e1f7721235df3e7bd22fadb6e165707b"
+  },
+  "limits": [
+    "Sampled wall thickness, not a print or load test.",
+    "Clearance and insert fit require measured coupons.",
+    "Pan-base wall/structure qualification is outside this isolated carrier check."
+  ]
+}

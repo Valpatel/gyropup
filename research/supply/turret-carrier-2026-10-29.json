@@ -1,0 +1,1109 @@
+{
+  "schema_version": 1,
+  "observed_on": "2026-10-29",
+  "scope": "PR67 removable base-board carrier and directly adjacent stator-side interfaces only",
+  "source_commit": "faed5f510586ab282db4a27f6453165ac56f70d2",
+  "integration_base": "154d4de",
+  "issue": 79,
+  "pr": 80,
+  "source_bindings": [
+    {
+      "path": "cad/turret_base_board.py",
+      "git_blob": "d68895d43a3abaf5aefb8f16866d086f3826f8af",
+      "sha256": "d3b84f971201b65dd3c710aa2edc311211ea58ea88875728163469a6157f148a"
+    },
+    {
+      "path": "cad/turret_boards.py",
+      "git_blob": "ef0436ef6f83388bca067492f25c6f6cc8b72058",
+      "sha256": "c7a115d2fe3cefddf46b0dd521e21076e1f7721235df3e7bd22fadb6e165707b"
+    },
+    {
+      "path": "cad/build_turret.py",
+      "git_blob": "fef4aef090d1e78a5f99fcee3e899debfd342d80",
+      "sha256": "a4634e88ecafa328e5262c8c05c46cd57d7078fa962c01d0f45977f569034b48"
+    },
+    {
+      "path": "docs/base-board-service.md",
+      "git_blob": "1b83da4824117623774dc90e68a0f65c8bd77b72",
+      "sha256": "6c97b834b0dbefbba3b3efa2ee1f61733219f6de4609f1a0b14ed2d13a31cd1f"
+    },
+    {
+      "path": "docs/turret-wiring.md",
+      "git_blob": "77eba55f5f69891cfc0f65dcf91bc9ee6442f8ca",
+      "sha256": "39546fb6baf7f357eaa0e7b591eb9440f653f7b702c961ade1a6234a9780dd50"
+    },
+    {
+      "path": "catalog/turret.json",
+      "git_blob": "f3163d9d00d0b2eaa5418e7754b427cad060d14f",
+      "sha256": "036b39b5e923169713b20907fd1a113bf9044e3b201d9fcd2c4f2fcbbabdc367"
+    },
+    {
+      "path": "catalog/hardware.json",
+      "git_blob": "afaacfbd48f60bc7f86f8d18473c69181c4bbb22",
+      "sha256": "c7fb31ff99094655a86cc94c3b90c1fee829d66c6484dfe66f6c0ae0a9076858"
+    },
+    {
+      "path": "catalog/sourcing.json",
+      "git_blob": "1a23adb525a5705a289a91d268d5fe8ed1218a4d",
+      "sha256": "a002bac6b795357a717ed0528ea6e2a561d774a7e608c35fee64fd8231370a12"
+    },
+    {
+      "path": "catalog/body.json",
+      "git_blob": "99a82469f49ec26f3c55c691e2ed7e7b3c98776a",
+      "sha256": "295f114fbc5e400a12af71a8ae14ea6cb379a9233518b5b91236fae888f875de"
+    },
+    {
+      "path": "catalog/materials.json",
+      "git_blob": "fc47b71bf78c901f324292fc9eb138223150c13e",
+      "sha256": "f699e8ea644aeb4f66227f5e021a2a7996b477ef1a41d6048b7f638364ba5d1f"
+    }
+  ],
+  "method_notes": [
+    "Page observations are not reserved stock, delivery promises, supplier quotes, or checkout verification.",
+    "Factory lead time applies to replenishment; it is not automatically the wait for listed inventory.",
+    "Null means unverified, not zero. Availability and engineering suitability are separate.",
+    "Earlier search snippets and older cached responses sometimes disagreed; rows prefer the most recent successfully read exact product page.",
+    "DigiKey minimums use displayed one-piece price tiers unless explicitly documented; order multiples are unknown.",
+    "Prices are displayed USD, with supplier-specific tariff treatment; tax/shipping not calculated. No purchase total is meaningful until missing identities and design discrepancies are resolved."
+  ],
+  "rows": [
+    {
+      "key": "screw_m3x6",
+      "group": "carrier_hardware",
+      "manufacturer": "McMaster-Carr",
+      "mpn": "91290A111",
+      "required_quantity": 4,
+      "specification": "M3 x 0.5 x 6 mm black-oxide alloy-steel socket screw",
+      "supplier_url": "https://www.mcmaster.com/91290A111/",
+      "observed_on": "2026-10-29",
+      "method": "Existing catalog plus current access limitation",
+      "stock_status": "unverified",
+      "stock_quantity": null,
+      "order_unit": "pack",
+      "pieces_per_order_unit": null,
+      "minimum_order_units": null,
+      "order_multiple": null,
+      "minimum_order_basis": "Current order terms not accessible",
+      "price_usd_per_order_unit": null,
+      "factory_lead_weeks": null,
+      "ship_time": null,
+      "notes": [
+        "No current stock or ship date confirmed. Historical pack/price is not a fresh supplier observation.",
+        "Public web access failed for 91290A111; browser surface unavailable. Carrier owner independently recorded 91290A113 product-login view at 2026-10-29T08:16:39Z. No bypass or CAD publication."
+      ],
+      "historical_catalog": {
+        "checked": "2026-10-27",
+        "pack_quantity": 100,
+        "pack_price_usd": 11.59
+      }
+    },
+    {
+      "key": "turret_screw_m3x8",
+      "group": "carrier_hardware",
+      "manufacturer": "McMaster-Carr",
+      "mpn": "91290A113",
+      "required_quantity": 4,
+      "specification": "M3 x 0.5 x 8 mm black-oxide alloy-steel socket screw",
+      "supplier_url": "https://www.mcmaster.com/91290A113/",
+      "observed_on": "2026-10-29",
+      "method": "Existing catalog plus current access limitation",
+      "stock_status": "unverified",
+      "stock_quantity": null,
+      "order_unit": "pack",
+      "pieces_per_order_unit": null,
+      "minimum_order_units": null,
+      "order_multiple": null,
+      "minimum_order_basis": "Current order terms not accessible",
+      "price_usd_per_order_unit": null,
+      "factory_lead_weeks": null,
+      "ship_time": null,
+      "notes": [
+        "No current stock or ship date confirmed. Historical pack/price is not a fresh supplier observation.",
+        "Public web access failed for 91290A111; browser surface unavailable. Carrier owner independently recorded 91290A113 product-login view at 2026-10-29T08:16:39Z. No bypass or CAD publication."
+      ],
+      "historical_catalog": {
+        "checked": "2026-10-27",
+        "pack_quantity": 100,
+        "pack_price_usd": 13.28
+      }
+    },
+    {
+      "key": "insert_m3",
+      "group": "carrier_hardware",
+      "manufacturer": "McMaster-Carr",
+      "mpn": "94459A140",
+      "required_quantity": 8,
+      "specification": "M3 x 0.5 brass heat-set insert; catalog installed length 5.7 mm",
+      "supplier_url": "https://www.mcmaster.com/94459A140/",
+      "observed_on": "2026-10-29",
+      "method": "Existing catalog plus current access limitation",
+      "stock_status": "unverified",
+      "stock_quantity": null,
+      "order_unit": "pack",
+      "pieces_per_order_unit": null,
+      "minimum_order_units": null,
+      "order_multiple": null,
+      "minimum_order_basis": "Current order terms not accessible",
+      "price_usd_per_order_unit": null,
+      "factory_lead_weeks": null,
+      "ship_time": null,
+      "notes": [
+        "No current stock or ship date confirmed. Historical pack/price is not a fresh supplier observation.",
+        "Public web access failed for 91290A111; browser surface unavailable. Carrier owner independently recorded 91290A113 product-login view at 2026-10-29T08:16:39Z. No bypass or CAD publication."
+      ],
+      "historical_catalog": {
+        "checked": "2026-10-27",
+        "pack_quantity": 50,
+        "pack_price_usd": 10.91
+      }
+    },
+    {
+      "key": "ti-ne555p",
+      "group": "base_board",
+      "manufacturer": "Texas Instruments",
+      "mpn": "NE555P",
+      "required_quantity": 1,
+      "specification": "8-PDIP timer; 4.5–16 V supply",
+      "supplier_url": "https://www.digikey.com/en/products/detail/texas-instruments/NE555P/277057",
+      "observed_on": "2026-10-29",
+      "method": "primary supplier page via web reader",
+      "stock_status": "listed_in_stock",
+      "stock_quantity": 49072,
+      "order_unit": "piece",
+      "pieces_per_order_unit": 1,
+      "minimum_order_units": 1,
+      "order_multiple": null,
+      "minimum_order_basis": "lowest displayed price tier; checkout not exercised",
+      "price_usd_per_order_unit": 0.59,
+      "factory_lead_weeks": 12,
+      "ship_time": null,
+      "notes": [],
+      "designators": [
+        "U1"
+      ],
+      "supplier_sku": "296-NE555P-ND",
+      "packaging": "tube"
+    },
+    {
+      "key": "yageo-mfr-25fbf52-1k",
+      "group": "base_board",
+      "manufacturer": "Yageo",
+      "mpn": "MFR-25FBF52-1K",
+      "required_quantity": 1,
+      "specification": "1 kohm, 1%, 0.25 W axial",
+      "supplier_url": "https://www.digikey.com/en/products/detail/yageo/MFR-25FBF52-1K/13011",
+      "observed_on": "2026-10-29",
+      "method": "primary supplier page via web reader",
+      "stock_status": "listed_in_stock",
+      "stock_quantity": 44751,
+      "order_unit": "piece",
+      "pieces_per_order_unit": 1,
+      "minimum_order_units": 1,
+      "order_multiple": null,
+      "minimum_order_basis": "lowest displayed price tier; checkout not exercised",
+      "price_usd_per_order_unit": 0.1,
+      "factory_lead_weeks": 18,
+      "ship_time": null,
+      "notes": [],
+      "designators": [
+        "R1"
+      ],
+      "supplier_sku": "1.00KXBK-ND",
+      "packaging": "bulk"
+    },
+    {
+      "key": "yageo-mfr-25fbf52-6k8",
+      "group": "base_board",
+      "manufacturer": "Yageo",
+      "mpn": "MFR-25FBF52-6K8",
+      "required_quantity": 1,
+      "specification": "6.8 kohm, 1%, 0.25 W axial",
+      "supplier_url": "https://www.digikey.com/en/products/detail/yageo/MFR-25FBF52-6K8/9138205",
+      "observed_on": "2026-10-29",
+      "method": "primary supplier page via web reader",
+      "stock_status": "no_stock",
+      "stock_quantity": 0,
+      "order_unit": "piece",
+      "pieces_per_order_unit": 1,
+      "minimum_order_units": 1,
+      "order_multiple": null,
+      "minimum_order_basis": "lowest displayed price tier; checkout not exercised",
+      "price_usd_per_order_unit": 0.1,
+      "factory_lead_weeks": 18,
+      "ship_time": "9,977 expected 2026-10-30; 23 estimated 2027-03-22; neither is available stock",
+      "notes": [
+        "Catalog backup URL names MFR-25FRF52-6K8 instead. Not accepted as exact identity.",
+        "Exact Mouser product page timed out; its stock was not verified."
+      ],
+      "designators": [
+        "R2"
+      ],
+      "supplier_sku": "MFR-25FBF52-6K8-ND",
+      "packaging": "bulk"
+    },
+    {
+      "key": "cap-film-100n-5pct",
+      "group": "base_board",
+      "manufacturer": "WIMA",
+      "mpn": "MKS2C031001A00JSSD",
+      "required_quantity": 1,
+      "specification": "100 nF, 5%, 63 VDC PET; 5 mm pitch; 7.2 x 2.5 x 6.5 mm",
+      "supplier_url": "https://www.newark.com/wima/mks2c031001a00jssd/cap-0-1-f-63v-5-pet-potted/dp/46T6775",
+      "observed_on": "2026-10-29",
+      "method": "primary supplier page via web reader",
+      "stock_status": "listed_in_stock",
+      "stock_quantity": 15141,
+      "order_unit": "piece",
+      "pieces_per_order_unit": 1,
+      "minimum_order_units": 10,
+      "order_multiple": 10,
+      "minimum_order_basis": "Explicit minimum and multiple",
+      "price_usd_per_order_unit": 0.452,
+      "factory_lead_weeks": 17,
+      "ship_time": "Supplier states UK stock, 4–6 business days delivery",
+      "notes": [],
+      "designators": [
+        "C1"
+      ],
+      "supplier_sku": "46T6775"
+    },
+    {
+      "key": "cap-mlcc-100n-50v",
+      "group": "base_board",
+      "manufacturer": "Vishay",
+      "mpn": "K104K15X7RF53L2",
+      "required_quantity": 1,
+      "specification": "100 nF, 10%, 50 V X7R radial",
+      "supplier_url": "https://www.digikey.com/en/products/detail/vishay-beyschlag-draloric-bc-components/K104K15X7RF53L2/2820506",
+      "observed_on": "2026-10-29",
+      "method": "primary supplier page via web reader",
+      "stock_status": "listed_in_stock",
+      "stock_quantity": 24958,
+      "order_unit": "piece",
+      "pieces_per_order_unit": 1,
+      "minimum_order_units": 1,
+      "order_multiple": null,
+      "minimum_order_basis": "lowest displayed price tier; checkout not exercised",
+      "price_usd_per_order_unit": 0.29,
+      "factory_lead_weeks": 18,
+      "ship_time": null,
+      "notes": [],
+      "designators": [
+        "C2"
+      ],
+      "supplier_sku": "BC3324-ND",
+      "packaging": "bulk"
+    },
+    {
+      "key": "cap-mlcc-1u-50v",
+      "group": "base_board",
+      "manufacturer": "TDK",
+      "mpn": "FG24X7R1H105KRT06",
+      "required_quantity": 1,
+      "specification": "1 uF, 10%, 50 V X7R radial; 5 mm pitch; 4.5 x 3 x 5.5 mm max",
+      "supplier_url": "https://www.digikey.com/en/products/detail/tdk/FG24X7R1H105KRT06/5802988",
+      "observed_on": "2026-10-29",
+      "method": "primary supplier page via web reader",
+      "stock_status": "listed_in_stock",
+      "stock_quantity": 30377,
+      "order_unit": "piece",
+      "pieces_per_order_unit": 1,
+      "minimum_order_units": 1,
+      "order_multiple": null,
+      "minimum_order_basis": "lowest displayed price tier; checkout not exercised",
+      "price_usd_per_order_unit": 0.54,
+      "factory_lead_weeks": 24,
+      "ship_time": null,
+      "notes": [
+        "Full tape/box tier starts at 2,000, but cut-tape tier starts at one."
+      ],
+      "designators": [
+        "C3"
+      ],
+      "supplier_sku": "445-173374-1-ND",
+      "packaging": "cut tape"
+    },
+    {
+      "key": "onsemi-1n4148",
+      "group": "base_board",
+      "manufacturer": "onsemi",
+      "mpn": "1N4148",
+      "required_quantity": 1,
+      "specification": "100 V, 200 mA DO-35 diode",
+      "supplier_url": "https://www.digikey.com/en/products/detail/onsemi/1N4148/458603",
+      "observed_on": "2026-10-29",
+      "method": "primary supplier page via web reader",
+      "stock_status": "listed_in_stock",
+      "stock_quantity": 555750,
+      "order_unit": "piece",
+      "pieces_per_order_unit": 1,
+      "minimum_order_units": 1,
+      "order_multiple": null,
+      "minimum_order_basis": "lowest displayed price tier; checkout not exercised",
+      "price_usd_per_order_unit": 0.1,
+      "factory_lead_weeks": 68,
+      "ship_time": null,
+      "notes": [],
+      "designators": [
+        "D1"
+      ],
+      "supplier_sku": "1N4148FS-ND",
+      "packaging": "bulk"
+    },
+    {
+      "key": "yageo-rsf100jb-73-2k2",
+      "group": "base_board",
+      "manufacturer": "Yageo",
+      "mpn": "RSF100JB-73-2K2",
+      "required_quantity": 1,
+      "specification": "2.2 kohm, 5%, 1 W axial; 4.5 mm diameter x 11.5 mm",
+      "supplier_url": "https://www.digikey.com/en/products/detail/yageo/RSF100JB-73-2K2/18091",
+      "observed_on": "2026-10-29",
+      "method": "primary supplier page via web reader",
+      "stock_status": "listed_in_stock",
+      "stock_quantity": 5737,
+      "order_unit": "piece",
+      "pieces_per_order_unit": 1,
+      "minimum_order_units": 1,
+      "order_multiple": null,
+      "minimum_order_basis": "lowest displayed price tier; checkout not exercised",
+      "price_usd_per_order_unit": 0.2,
+      "factory_lead_weeks": 18,
+      "ship_time": null,
+      "notes": [],
+      "designators": [
+        "R3"
+      ],
+      "supplier_sku": "13-RSF100JB-73-2K2-ND",
+      "packaging": "bulk"
+    },
+    {
+      "key": "pololu-d36v50f12-4095",
+      "group": "base_board",
+      "manufacturer": "Pololu",
+      "mpn": "D36V50F12",
+      "required_quantity": 1,
+      "specification": "12 V regulator; 13.3–50 V input; typical 4.5 A at 36 V input; 25.4 x 25.4 x 9.5 mm",
+      "supplier_url": "https://www.pololu.com/product/4095",
+      "observed_on": "2026-10-29",
+      "method": "primary supplier page via web reader",
+      "stock_status": "rationed_backorders_allowed",
+      "stock_quantity": null,
+      "order_unit": "piece",
+      "pieces_per_order_unit": 1,
+      "minimum_order_units": 1,
+      "order_multiple": null,
+      "minimum_order_basis": "lowest displayed price tier; checkout not exercised",
+      "price_usd_per_order_unit": 39.95,
+      "factory_lead_weeks": null,
+      "ship_time": null,
+      "notes": [
+        "No numerical stock or ship date shown. Output current depends on conditions.",
+        "Input reverse-polarity protection is rated only to 40 V; normal input rating is 50 V. Protection at robot 42 V is not qualified by this audit.",
+        "New regulator families mentioned by supplier are not approved substitutions."
+      ],
+      "designators": [
+        "U2"
+      ],
+      "supplier_sku": "4095"
+    },
+    {
+      "key": "bourns-mf-r300",
+      "group": "base_board",
+      "manufacturer": "Bourns",
+      "mpn": "MF-R300",
+      "required_quantity": 1,
+      "specification": "30 V PTC; 3 A hold, 6 A trip; on reduced 12 V PAN rail",
+      "supplier_url": "https://www.digikey.com/en/products/detail/bourns-inc/MF-R300/259975",
+      "observed_on": "2026-10-29",
+      "method": "primary supplier page via web reader",
+      "stock_status": "listed_in_stock",
+      "stock_quantity": 43096,
+      "order_unit": "piece",
+      "pieces_per_order_unit": 1,
+      "minimum_order_units": 1,
+      "order_multiple": null,
+      "minimum_order_basis": "lowest displayed price tier; checkout not exercised",
+      "price_usd_per_order_unit": 0.6,
+      "factory_lead_weeks": 4,
+      "ship_time": null,
+      "notes": [],
+      "designators": [
+        "F1"
+      ],
+      "supplier_sku": "MF-R300-ND",
+      "packaging": "bulk"
+    },
+    {
+      "key": "bourns-mf-r010",
+      "group": "adjacent_harness",
+      "manufacturer": "Bourns",
+      "mpn": "MF-R010",
+      "required_quantity": 1,
+      "specification": "60 V PTC; 0.1 A hold, 0.2 A trip; 12 V PAN to DT12 pin 7",
+      "supplier_url": "https://www.digikey.com/en/products/detail/bourns-inc/MF-R010/259959",
+      "observed_on": "2026-10-29",
+      "method": "primary supplier page via web reader",
+      "stock_status": "listed_in_stock",
+      "stock_quantity": 7426,
+      "order_unit": "piece",
+      "pieces_per_order_unit": 1,
+      "minimum_order_units": 1,
+      "order_multiple": null,
+      "minimum_order_basis": "lowest displayed price tier; checkout not exercised",
+      "price_usd_per_order_unit": 0.4,
+      "factory_lead_weeks": 4,
+      "ship_time": null,
+      "notes": [],
+      "designators": [
+        "F4"
+      ],
+      "supplier_sku": "MF-R010-ND",
+      "packaging": "bulk"
+    },
+    {
+      "key": "diode-1n5408g",
+      "group": "adjacent_harness",
+      "manufacturer": "onsemi",
+      "mpn": "1N5408G",
+      "required_quantity": 1,
+      "specification": "1 kV, 3 A rectifier; 200 A surge; BUS/GND reverse crowbar",
+      "supplier_url": "https://www.newark.com/onsemi/1n5408g/standard-diode-3a-1kv-axial/dp/42K2941",
+      "observed_on": "2026-10-29",
+      "method": "primary supplier page via web reader",
+      "stock_status": "listed_in_stock",
+      "stock_quantity": 31895,
+      "order_unit": "piece",
+      "pieces_per_order_unit": 1,
+      "minimum_order_units": 1,
+      "order_multiple": 1,
+      "minimum_order_basis": "Explicit minimum and multiple",
+      "price_usd_per_order_unit": 0.619,
+      "factory_lead_weeks": 15,
+      "ship_time": null,
+      "notes": [
+        "Current rating alone does not validate fuse/crowbar coordination."
+      ],
+      "designators": [
+        "D8"
+      ],
+      "supplier_sku": "42K2941"
+    },
+    {
+      "key": "tvs-p6ke51a",
+      "group": "adjacent_harness",
+      "manufacturer": "Taiwan Semiconductor",
+      "mpn": "P6KE51A",
+      "required_quantity": 1,
+      "specification": "Unidirectional DO-15 TVS; 43.6 V standoff; 48.5–53.6 V breakdown; 70.1 V maximum clamp",
+      "supplier_url": "https://www.newark.com/taiwan-semiconductor/p6ke51a/tvs-diode-600w-43-6v-unidir-do/dp/99AC4212",
+      "observed_on": "2026-10-29",
+      "method": "primary supplier page via web reader",
+      "stock_status": "listed_in_stock",
+      "stock_quantity": 1476,
+      "order_unit": "piece",
+      "pieces_per_order_unit": 1,
+      "minimum_order_units": 1,
+      "order_multiple": 1,
+      "minimum_order_basis": "Explicit minimum and multiple",
+      "price_usd_per_order_unit": 1.28,
+      "factory_lead_weeks": 20,
+      "ship_time": "Supplier states UK stock, 4–6 business days delivery",
+      "notes": [
+        "Observed Taiwan Semiconductor offer is evidence, not a substitution decision.",
+        "Clamp specification exceeds U2 50 V maximum. Existing protection claim needs transient coordination; this audit does not predict actual fault waveform."
+      ],
+      "designators": [
+        "D14"
+      ],
+      "supplier_sku": "99AC4212",
+      "selection_status": "Existing catalog lists Taiwan Semiconductor or Diotec; exact manufacturer not frozen",
+      "spec_url": "https://services.taiwansemi.com/storage/resources/datasheet/P6KE%20SERIES_P2203.pdf"
+    },
+    {
+      "key": "fuse_mini58_10a",
+      "group": "head_branch",
+      "manufacturer": "Littelfuse",
+      "mpn": "0997010.WXN",
+      "required_quantity": 1,
+      "specification": "10 A, 58 VDC MINI 997 blade fuse; 1 kA interrupt; melting I2t 93 A2s",
+      "supplier_url": "https://www.digikey.com/en/products/detail/littelfuse-inc/0997010-WXN/701059",
+      "observed_on": "2026-10-29",
+      "method": "primary supplier page via web reader",
+      "stock_status": "listed_in_stock",
+      "stock_quantity": 6661,
+      "order_unit": "piece",
+      "pieces_per_order_unit": 1,
+      "minimum_order_units": 1,
+      "order_multiple": null,
+      "minimum_order_basis": "lowest displayed price tier; checkout not exercised",
+      "price_usd_per_order_unit": 1.04,
+      "factory_lead_weeks": 12,
+      "ship_time": null,
+      "notes": [
+        "One installed head-branch fuse in this scope; whole-turret el_fuse count is not copied.",
+        "LCSC C207026 confirms this exact part and rating but rendered no stock. C207027 catalog alternative requires identity correction before use."
+      ],
+      "supplier_sku": "F1874-ND",
+      "packaging": "bulk",
+      "source_cache_age": "2 days reported by web reader"
+    },
+    {
+      "key": "littelfuse-0fhm0001zxj",
+      "group": "head_branch",
+      "manufacturer": "Littelfuse",
+      "mpn": "0FHM0001ZXJ",
+      "required_quantity": 1,
+      "specification": "MINI inline holder; Newark lists 32 VDC / 20 A / 14 AWG black leads, but manufacturer publications conflict on voltage",
+      "supplier_url": "https://www.newark.com/littelfuse/0fhm0001zxj/fuse-holder-in-line/dp/56P4440",
+      "observed_on": "2026-10-29",
+      "method": "primary supplier page via web reader",
+      "stock_status": "listed_in_stock",
+      "stock_quantity": 779,
+      "order_unit": "piece",
+      "pieces_per_order_unit": 1,
+      "minimum_order_units": 1,
+      "order_multiple": 1,
+      "minimum_order_basis": "Explicit minimum and multiple",
+      "price_usd_per_order_unit": 9.71,
+      "factory_lead_weeks": 23,
+      "ship_time": null,
+      "notes": [
+        "Newark exact SKU and 2023 family PDF say 32 VDC. Manufacturer 2020 rev 113020 specifies a 58 V family and explicitly lists bare 0FHM0001ZXJ. Manufacturer 2025 rev 020425 rates selected suffixed variants 58 V but omits bare ZXJ, while retaining 32 V headings.",
+        "The documented 42 V robot BUS requires an accepted exact-part voltage basis. This audit does not establish that the physical part is inherently limited to 32 V; resolve the drawing/revision before reuse.",
+        "No selected replacement."
+      ],
+      "supplier_sku": "56P4440",
+      "design_status": "unresolved_conflicting_voltage_sources",
+      "spec_url": "https://www.mouser.com/datasheet/2/240/Littelfuse_Fuse_Holder_MINI_FHM_Datasheet-3313789.pdf",
+      "conflicting_spec_sources": [
+        {
+          "url": "https://www.mouser.com/datasheet/2/240/Littelfuse_Fuse_Holder_Inline_2520MINI_Datasheet-3311020.pdf",
+          "revision": "113020",
+          "pages": [
+            1,
+            2
+          ],
+          "finding": "58VDCfamily; exact0FHM0001ZXJ row14AWG black94mm leads"
+        },
+        {
+          "url": "https://www.littelfuse.com/assetdocs/littelfuse-fuse-holder-mini-fhm-datasheet.pdf?assetguid=339fa35e-eabc-45c5-9093-8abceaa8a2cf",
+          "revision": "020425",
+          "pages": [
+            1,
+            2
+          ],
+          "finding": "58VDC selectedrows; bare0FHM0001ZXJ omitted; headline still32V"
+        }
+      ]
+    },
+    {
+      "key": "molex-43020-1200",
+      "group": "stator_connector",
+      "manufacturer": "Molex",
+      "mpn": "43020-1200",
+      "required_quantity": 1,
+      "specification": "12-position 3 mm plug housing; male contacts separate",
+      "supplier_url": "https://www.digikey.com/en/products/detail/molex/0430201200/252495",
+      "observed_on": "2026-10-29",
+      "method": "primary supplier page via web reader",
+      "stock_status": "listed_in_stock",
+      "stock_quantity": 9554,
+      "order_unit": "piece",
+      "pieces_per_order_unit": 1,
+      "minimum_order_units": 1,
+      "order_multiple": null,
+      "minimum_order_basis": "lowest displayed price tier; checkout not exercised",
+      "price_usd_per_order_unit": 0.85,
+      "factory_lead_weeks": 8,
+      "ship_time": null,
+      "notes": [
+        "One stator-side mating pair only; do not double for rotor.",
+        "Supplier uses zero-padded numeric manufacturer identifier. Insulation diameter/tooling/crimp acceptance still requires validation."
+      ],
+      "supplier_sku": "WM1782-ND",
+      "packaging": "bulk"
+    },
+    {
+      "key": "molex-43031-0001",
+      "group": "stator_connector",
+      "manufacturer": "Molex",
+      "mpn": "43031-0001",
+      "required_quantity": 12,
+      "specification": "Male crimp contact, 20–24 AWG; board tails 24 AWG",
+      "supplier_url": "https://www.digikey.com/en/products/detail/molex/0430310001/467798",
+      "observed_on": "2026-10-29",
+      "method": "primary supplier page via web reader",
+      "stock_status": "listed_in_stock",
+      "stock_quantity": 462110,
+      "order_unit": "piece",
+      "pieces_per_order_unit": 1,
+      "minimum_order_units": 1,
+      "order_multiple": null,
+      "minimum_order_basis": "lowest displayed price tier; checkout not exercised",
+      "price_usd_per_order_unit": 0.1,
+      "factory_lead_weeks": 10,
+      "ship_time": null,
+      "notes": [
+        "One stator-side mating pair only; do not double for rotor.",
+        "Supplier uses zero-padded numeric manufacturer identifier. Insulation diameter/tooling/crimp acceptance still requires validation."
+      ],
+      "supplier_sku": "WM1841CT-ND",
+      "packaging": "cut tape"
+    },
+    {
+      "key": "molex-43025-1200",
+      "group": "stator_connector",
+      "manufacturer": "Molex",
+      "mpn": "43025-1200",
+      "required_quantity": 1,
+      "specification": "12-position 3 mm receptacle; female contacts separate",
+      "supplier_url": "https://www.digikey.com/en/products/detail/molex/0430251200/252501",
+      "observed_on": "2026-10-29",
+      "method": "primary supplier page via web reader",
+      "stock_status": "listed_in_stock",
+      "stock_quantity": 36796,
+      "order_unit": "piece",
+      "pieces_per_order_unit": 1,
+      "minimum_order_units": 1,
+      "order_multiple": null,
+      "minimum_order_basis": "lowest displayed price tier; checkout not exercised",
+      "price_usd_per_order_unit": 0.81,
+      "factory_lead_weeks": 9,
+      "ship_time": null,
+      "notes": [
+        "One stator-side mating pair only; do not double for rotor.",
+        "Supplier uses zero-padded numeric manufacturer identifier. Insulation diameter/tooling/crimp acceptance still requires validation."
+      ],
+      "supplier_sku": "WM1788-ND",
+      "packaging": "bulk"
+    },
+    {
+      "key": "molex-43030-0010",
+      "group": "stator_connector",
+      "manufacturer": "Molex",
+      "mpn": "43030-0010",
+      "required_quantity": 12,
+      "specification": "Female crimp contact, 26–30 AWG; ring leads 28 AWG",
+      "supplier_url": "https://www.digikey.com/en/products/detail/molex/0430300010/252480",
+      "observed_on": "2026-10-29",
+      "method": "primary supplier page via web reader",
+      "stock_status": "listed_in_stock",
+      "stock_quantity": 119975,
+      "order_unit": "piece",
+      "pieces_per_order_unit": 1,
+      "minimum_order_units": 1,
+      "order_multiple": null,
+      "minimum_order_basis": "lowest displayed price tier; checkout not exercised",
+      "price_usd_per_order_unit": 0.2,
+      "factory_lead_weeks": 13,
+      "ship_time": null,
+      "notes": [
+        "One stator-side mating pair only; do not double for rotor.",
+        "Supplier uses zero-padded numeric manufacturer identifier. Insulation diameter/tooling/crimp acceptance still requires validation."
+      ],
+      "supplier_sku": "WM1838-ND",
+      "packaging": "bulk"
+    },
+    {
+      "key": "te-dt04-12pa-l012",
+      "group": "base_DT12",
+      "manufacturer": "TE Connectivity",
+      "mpn": "DT04-12PA-L012",
+      "required_quantity": 1,
+      "specification": "12-position flanged DT receptacle; contacts separate",
+      "supplier_url": "https://www.digikey.com/en/products/detail/te-connectivity-deutsch-connectors/DT04-12PA-L012/7220237",
+      "observed_on": "2026-10-29",
+      "method": "primary supplier page via web reader",
+      "stock_status": "listed_in_stock",
+      "stock_quantity": 533,
+      "order_unit": "piece",
+      "pieces_per_order_unit": 1,
+      "minimum_order_units": 1,
+      "order_multiple": null,
+      "minimum_order_basis": "lowest displayed price tier; checkout not exercised",
+      "price_usd_per_order_unit": 9.49,
+      "factory_lead_weeks": 13,
+      "ship_time": null,
+      "notes": [
+        "Manufacturer N-seal insulation range is 2.23–3.68 mm; selected 24 AWG wire OD 1.4 mm is outside. A contact change alone will not qualify sealing."
+      ],
+      "supplier_sku": "1734-1362-ND",
+      "packaging": "bulk",
+      "spec_url": "https://www.te.com/en/product-DT04-12PA-L012.html"
+    },
+    {
+      "key": "te-w12p",
+      "group": "base_DT12",
+      "manufacturer": "TE Connectivity",
+      "mpn": "W12P",
+      "required_quantity": 1,
+      "specification": "12-position DT receptacle wedgelock",
+      "supplier_url": "https://www.digikey.com/en/products/detail/te-connectivity-deutsch-ict-connectors/W12P/6566598",
+      "observed_on": "2026-10-29",
+      "method": "primary supplier page via web reader",
+      "stock_status": "listed_in_stock",
+      "stock_quantity": 32867,
+      "order_unit": "piece",
+      "pieces_per_order_unit": 1,
+      "minimum_order_units": 1,
+      "order_multiple": null,
+      "minimum_order_basis": "lowest displayed price tier; checkout not exercised",
+      "price_usd_per_order_unit": 0.4,
+      "factory_lead_weeks": 5,
+      "ship_time": null,
+      "notes": [
+        "Catalog backup W12P-P004 is a different exact identifier. TE 114-151009 C3 p16 describes P004 as standard/no modification; do not conflate pack/stock observations between order codes."
+      ],
+      "supplier_sku": "1734-1034-ND",
+      "packaging": "box"
+    },
+    {
+      "key": "te-0460-202-16141",
+      "group": "base_DT12",
+      "manufacturer": "TE Connectivity",
+      "mpn": "0460-202-16141",
+      "required_quantity": 12,
+      "specification": "Size-16 nickel pin; 16–20 AWG / 0.5–1.5 mm2",
+      "supplier_url": "https://www.digikey.com/en/products/detail/te-connectivity-deutsch-ict-connectors/0460-202-16141/7200926",
+      "observed_on": "2026-10-29",
+      "method": "primary supplier page via web reader",
+      "stock_status": "listed_in_stock",
+      "stock_quantity": 619223,
+      "order_unit": "piece",
+      "pieces_per_order_unit": 1,
+      "minimum_order_units": 1,
+      "order_multiple": null,
+      "minimum_order_basis": "lowest displayed price tier; checkout not exercised",
+      "price_usd_per_order_unit": 0.45,
+      "factory_lead_weeks": 13,
+      "ship_time": null,
+      "notes": [
+        "Docs call for 12 pins but only positions 5–8 are active in the current pin map. Empty-cavity seal/contact policy is unresolved.",
+        "Manufacturer packaging of 2,500 does not override the distributor one-piece tier. Catalog 14–16 AWG description is wrong."
+      ],
+      "supplier_sku": "1734-1328-ND",
+      "packaging": "bulk",
+      "design_status": "wire_range_mismatch_on_CAN_and_safety_pairs",
+      "spec_url": "https://www.te.com/en/product-0460-202-16141.html"
+    },
+    {
+      "key": "proto-board-52x50",
+      "group": "substrate",
+      "manufacturer": "SparkFun",
+      "mpn": "PRT-08619",
+      "required_quantity": 1,
+      "specification": "Wombat PTH 80 x 100 mm blank, 2.54 mm pitch; one carrier PCB to be cut 50.8 x 30 mm",
+      "supplier_url": "https://www.sparkfun.com/protoboard-wombat-pth.html",
+      "observed_on": "2026-10-29",
+      "method": "primary supplier page via web reader",
+      "stock_status": "listed_in_stock",
+      "stock_quantity": null,
+      "order_unit": "board blank",
+      "pieces_per_order_unit": 1,
+      "minimum_order_units": 1,
+      "order_multiple": null,
+      "minimum_order_basis": "lowest displayed price tier; checkout not exercised",
+      "price_usd_per_order_unit": 7.25,
+      "factory_lead_weeks": null,
+      "ship_time": null,
+      "notes": [
+        "In-stock label, no numerical quantity or ship date.",
+        "Catalog pack_qty 2 is modeled yield, not retail quantity. Catalog generic 50×70 label is inconsistent with the linked product.",
+        "1.6 mm thickness, hole pattern and resulting solder layout are not independently qualified here.",
+        "Product page rounds the board to 80×100 mm; tagged source outline is 78.74×99.06 mm. Catalog two-piece 52×50 mm yield is unsupported for ordinary aligned cutting, independent of retail pack identity."
+      ],
+      "board_source": {
+        "url": "https://raw.githubusercontent.com/sparkfun/ProtoBoard_Wombat-PTH/v_1.4/Hardware/SparkFun_Protoboard-PTH-v14.brd",
+        "revision": "v_1.4",
+        "sha256": "b52382cef7887cf9b664424cbb7d29b462a9e85b94f381385341d4fea6d09fd2",
+        "observed_on": "2026-10-29",
+        "method": "Python ElementTree: drawing/board/plain wire layer20 bounds and hole drill fields",
+        "outline_mm": [
+          78.74,
+          99.06
+        ],
+        "factory_hole_diameter_mm": 3.175,
+        "factory_hole_centers_mm": [
+          [
+            2.54,
+            2.54
+          ],
+          [
+            76.2,
+            2.54
+          ],
+          [
+            2.54,
+            96.52
+          ],
+          [
+            76.2,
+            96.52
+          ]
+        ],
+        "limit": "Catalog two 52×50 mm pieces do not fit as aligned cuts before kerf. No alternate nesting yield, PCB thickness or carrier fabrication was qualified."
+      }
+    },
+    {
+      "key": "pololu-ul1007-24awg-60ft",
+      "group": "wire",
+      "manufacturer": "PCX via Pololu",
+      "mpn": "2630 / 2632 / 2634 / 2639",
+      "required_quantity": null,
+      "specification": "24 AWG stranded UL1007, OD1.4 mm, 60 ft spool",
+      "supplier_url": "https://www.pololu.com/product/2630",
+      "observed_on": "2026-10-29",
+      "method": "primary supplier page via web reader",
+      "stock_status": "unverified",
+      "stock_quantity": null,
+      "order_unit": "60 ft spool",
+      "pieces_per_order_unit": null,
+      "minimum_order_units": 1,
+      "order_multiple": null,
+      "minimum_order_basis": "lowest displayed price tier; checkout not exercised",
+      "price_usd_per_order_unit": 10.95,
+      "factory_lead_weeks": null,
+      "ship_time": null,
+      "notes": [
+        "C2: 4 × 120 mm plus C3: 12 × 60 mm. Cut allowance is not validated service slack.",
+        "Color allocation is not frozen. Each SKU is a separate 60 ft spool, not a four-color pack. No numerical stock or explicit ship date appeared on rendered pages; add-to-cart alone does not prove stock."
+      ],
+      "required_length_m": 1.2,
+      "cut_allowance_fraction": 0.2,
+      "cut_length_m": 1.44,
+      "color_sources": [
+        {
+          "sku": "2630",
+          "color": "black",
+          "url": "https://www.pololu.com/product/2630",
+          "stock": "unverified"
+        },
+        {
+          "sku": "2632",
+          "color": "red",
+          "url": "https://www.pololu.com/product/2632",
+          "stock": "unverified"
+        },
+        {
+          "sku": "2634",
+          "color": "yellow",
+          "url": "https://www.pololu.com/product/2634",
+          "stock": "unverified"
+        },
+        {
+          "sku": "2639",
+          "color": "white",
+          "url": "https://www.pololu.com/product/2639",
+          "stock": "unverified"
+        }
+      ]
+    },
+    {
+      "key": "remington-18ptfestr-25ft",
+      "group": "wire",
+      "manufacturer": "Remington Industries",
+      "mpn": "18PTFESTRBLA25",
+      "required_quantity": null,
+      "specification": "18 AWG stranded silver-coated copper PTFE; 600 V, OD 1.75 mm; black, 25 ft",
+      "supplier_url": "https://www.digikey.com/en/products/detail/remington-industries/18PTFESTRBLA25/11613433",
+      "observed_on": "2026-10-29",
+      "method": "primary supplier page via web reader",
+      "stock_status": "listed_in_stock",
+      "stock_quantity": 50,
+      "order_unit": "25 ft length",
+      "pieces_per_order_unit": null,
+      "minimum_order_units": 1,
+      "order_multiple": null,
+      "minimum_order_basis": "lowest displayed price tier; checkout not exercised",
+      "price_usd_per_order_unit": 64.56,
+      "factory_lead_weeks": null,
+      "ship_time": "Marketplace fulfilled by Remington; approximately8days to ship",
+      "notes": [
+        "C2 has two 120 mm conductors. Existing catalog selects black with red heatshrink identification; marker material is not selected.",
+        "Alpha Wire 6825 is not this exact product. No alternative was silently substituted."
+      ],
+      "required_length_m": 0.24,
+      "cut_allowance_fraction": 0.2,
+      "cut_length_m": 0.288,
+      "supplier_sku": "2328-18PTFESTRBLA25-ND"
+    },
+    {
+      "key": "pa6-cf",
+      "group": "print_material",
+      "manufacturer": "Bambu Lab",
+      "mpn": "PA6-CF black 1 kg (exact store variant not verified)",
+      "required_quantity": null,
+      "specification": "Catalog material for carrier; filament quantity requires current accepted slice",
+      "supplier_url": "https://us.store.bambulab.com/products/pa6-cf",
+      "observed_on": "2026-10-29",
+      "method": "Primary US store returned HTTP402 via web reader",
+      "stock_status": "unverified",
+      "stock_quantity": null,
+      "order_unit": "spool",
+      "pieces_per_order_unit": null,
+      "minimum_order_units": null,
+      "order_multiple": null,
+      "minimum_order_basis": "Exact US store variant unavailable to reader",
+      "price_usd_per_order_unit": null,
+      "factory_lead_weeks": null,
+      "ship_time": null,
+      "notes": [
+        "Current price, variant stock and delivery are unverified. Do not use the category starting price as the 1 kg price.",
+        "No carrier mass or print release inferred from filament availability."
+      ]
+    }
+  ],
+  "correction_candidates": [
+    {
+      "mpn": "0FHM0003ZXJS",
+      "manufacturer": "Littelfuse",
+      "selected": false,
+      "purpose": "Possible documented 58 V inline holder",
+      "spec_url": "https://www.littelfuse.com/assetdocs/littelfuse-fuse-holder-mini-fhm-datasheet.pdf?assetguid=339fa35e-eabc-45c5-9093-8abceaa8a2cf",
+      "spec_revision": "020425",
+      "spec_page": 2,
+      "specification": "58 VDC, 20 A, 18 AWG black leads, 3.7 in; MINI 32/58 V compatibility stated on p1",
+      "supplier_url": "https://www.digikey.com/en/products/detail/littelfuse-commercial-vehicle-products/0FHM0003ZXJS/29571868",
+      "supplier_sku": "5346-0FHM0003ZXJS-ND",
+      "observed_on": "2026-10-29",
+      "stock_quantity": 699,
+      "price_usd_each": 6.39,
+      "minimum_displayed_quantity": 1,
+      "factory_lead_weeks": 10,
+      "remaining": [
+        "Accept the current exact variant/revision; older datasheets disagree, including GXL versus TXL lead type.",
+        "Check actual body, wire joints, support, service access and insertion; CAD fit has not been validated.",
+        "Do not energize as a substitution until electrical and mechanical owners select it."
+      ]
+    },
+    {
+      "mpn": "0460-003-16329",
+      "manufacturer": "TE Connectivity",
+      "internal_pn": "2300908-1",
+      "selected": false,
+      "purpose": "Possible 24 AWG size-16 DT signal pin",
+      "spec_url": "https://www.te.com/commerce/DocumentDelivery/DDEController?Action=srchrtrv&DocFormat=pdf&DocLang=English&DocNm=2300908&DocType=Customer+Drawing&PartCntxt=2300908-1",
+      "spec_revision": "A",
+      "specification": "Gold size-16 pin; drawing specifies M22520/7-1 with M22520/7-3 positioner for 24 AWG hand crimping",
+      "supplier_url": "https://www.digikey.com/en/products/detail/te-connectivity-deutsch-ict-connectors/0460-003-16329/26277860",
+      "supplier_sku": "1734-0460-003-16329-ND",
+      "observed_on": "2026-10-29",
+      "stock_quantity": 5436,
+      "price_usd_each": 1.51,
+      "minimum_displayed_quantity": 1,
+      "factory_lead_weeks": 19,
+      "remaining": [
+        "Current DT04-12PA-L012 N-seal range 2.23–3.68 mm does not accept Pololu 1.4 mm OD; changing the contact alone is insufficient.",
+        "Select mating socket/plating, a compatible seal/housing or qualified wire transition, crimp tooling/pull acceptance and unused-cavity plugs.",
+        "The drawing does not establish that existing IWISS IWD-1620 tooling is acceptable for 24 AWG."
+      ]
+    }
+  ],
+  "additional_primary_specs": [
+    {
+      "url": "https://www.te.com/commerce/DocumentDelivery/DDEController?Action=srchrtrv&DocFormat=pdf&DocLang=English&DocNm=114-151009&DocType=Specification+Or+Standard&PartCntxt=DT04-12PA-L012",
+      "revision": "C3,2024-10-14",
+      "pages": [
+        14,
+        16,
+        24,
+        42
+      ],
+      "finding": "N-seal range 2.23–3.68 mm; E-seal 1.35–3.05 mm. Unused cavities need sealing plugs. P004 denotes standard/no modification. Wire OD must meet the seal range; 20 mm straight exit is recommended without a backshell."
+    }
+  ],
+  "c2_disconnect_candidates": {
+    "selected": false,
+    "scope": "Candidate availability only, requested by carrier owner after the frozen 29-row source snapshot. Quantities are additional to existing stator contacts, not a released BOM.",
+    "observed_on": "2026-10-29",
+    "supplier_notes": "Listed stock is not reserved; delivery was not confirmed. One-piece price tiers are shown. TME explicitly states MOQ/multiple 1; DigiKey order multiples were not checked.",
+    "amass_spec_url": "https://www.china-amass.com/public/upload/20240608/810c62b3f7ace2287989748538eb2a6b.pdf",
+    "amass_spec_revision": "2023V2",
+    "qualification_notes": [
+      "AMASS current basis is 15 A at 16 AWG with temperature rise no more than 30 K. This does not establish the same performance at distributor-listed 18 AWG.",
+      "AMASS specifies 100 mating cycles, while TME lists 1,000; preserve the manufacturer limit pending clarification.",
+      "Power pigtails, solder/heatshrink, retention, crimp tools, insulation diameter, service access and connector placement remain owned by PR67; no parts are selected by this audit."
+    ],
+    "offers": [
+      {
+        "manufacturer": "AMASS",
+        "mpn": "XT30U-M",
+        "supplier_url": "https://www.tme.com/us/en-us/details/xt30u-m/dc-power-connectors/amass/",
+        "supplier_sku": "XT30U-M",
+        "candidate_quantity": 1,
+        "stock_quantity": 42091,
+        "price_usd_each": 1.12,
+        "factory_lead_weeks": null,
+        "minimum_displayed_quantity": 1,
+        "order_multiple": 1,
+        "order_unit": "piece"
+      },
+      {
+        "manufacturer": "AMASS",
+        "mpn": "XT30U-F",
+        "supplier_url": "https://www.tme.com/us/en-us/details/xt30u-f/dc-power-connectors/amass/",
+        "supplier_sku": "XT30U-F",
+        "candidate_quantity": 1,
+        "stock_quantity": 38342,
+        "price_usd_each": 0.99,
+        "factory_lead_weeks": null,
+        "minimum_displayed_quantity": 1,
+        "order_multiple": 1,
+        "order_unit": "piece"
+      },
+      {
+        "manufacturer": "Molex",
+        "mpn": "43020-0400",
+        "supplier_url": "https://www.digikey.com/en/products/detail/molex/0430200400/252491",
+        "supplier_sku": "WM1778-ND",
+        "candidate_quantity": 1,
+        "stock_quantity": 26290,
+        "price_usd_each": 0.68,
+        "factory_lead_weeks": 15,
+        "minimum_displayed_quantity": 1,
+        "order_multiple": null,
+        "order_unit": "piece"
+      },
+      {
+        "manufacturer": "Molex",
+        "mpn": "43025-0400",
+        "supplier_url": "https://www.digikey.com/en/products/detail/molex/0430250400/252497",
+        "supplier_sku": "WM1784-ND",
+        "candidate_quantity": 1,
+        "stock_quantity": 173439,
+        "price_usd_each": 0.42,
+        "factory_lead_weeks": 7,
+        "minimum_displayed_quantity": 1,
+        "order_multiple": null,
+        "order_unit": "piece"
+      },
+      {
+        "manufacturer": "Molex",
+        "mpn": "43031-0001",
+        "supplier_url": "https://www.digikey.com/en/products/detail/molex/0430310001/467798",
+        "supplier_sku": "WM1841CT-ND",
+        "candidate_quantity": 4,
+        "stock_quantity": 462110,
+        "price_usd_each": 0.1,
+        "factory_lead_weeks": 10,
+        "minimum_displayed_quantity": 1,
+        "order_multiple": null,
+        "order_unit": "piece"
+      },
+      {
+        "manufacturer": "Molex",
+        "mpn": "43030-0001",
+        "supplier_url": "https://www.digikey.com/en/products/detail/molex/0430300001/467796",
+        "supplier_sku": "WM1837CT-ND",
+        "candidate_quantity": 4,
+        "stock_quantity": 780198,
+        "price_usd_each": 0.1,
+        "factory_lead_weeks": 10,
+        "minimum_displayed_quantity": 1,
+        "order_multiple": null,
+        "order_unit": "piece"
+      }
+    ]
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "schema": 1,
+  "source_revision": "120d531312596eb9c803ab60e5772937f82fb4bc",
+  "toolkit_revision": "2ad426943ce2c7232875e105e50810849f9a3e5e",
+  "host_role": "CAD compute host",
+  "start_utc": "2026-10-29T14:10:04Z",
+  "end_utc": "2026-10-29T14:13:19Z",
+  "exit_code": 0,
+  "run_name": "carrier-connectors-120d531",
+  "log_sha256": "4870c2ea562ee646750bac7a82f41bd0360fc500ea612fff06414dfe4975a433",
+  "stages": [
+    {
+      "command": "python tools/check-carrier-connector-support.py --out research/carrier-service-connectors/support-candidate.json --public-out exports/turret/base-board-service/connectors",
+      "elapsed_wall_time": "1:24.28",
+      "peak_rss_kib": 536268,
+      "exit_code": 0
+    },
+    {
+      "command": "python tools/check-carrier-connector-inputs.py --out research/carrier-service-connectors/private-input-diagnosis.json",
+      "elapsed_wall_time": "0:04.59",
+      "peak_rss_kib": 486988,
+      "exit_code": 0
+    },
+    {
+      "command": "python tools/check-carrier-connector-pose.py --out research/carrier-service-connectors/external-pose.json",
+      "elapsed_wall_time": "1:02.46",
+      "peak_rss_kib": 528220,
+      "exit_code": 0
+    },
+    {
+      "command": "python cad/check_base_board_interfaces.py --out exports/turret/base-board-service/interfaces",
+      "elapsed_wall_time": "0:33.50",
+      "peak_rss_kib": 515612,
+      "exit_code": 0
+    },
+    {
+      "command": "python research/carrier-insert-fit/generate.py --out <fresh-output>",
+      "elapsed_wall_time": "0:07.61",
+      "peak_rss_kib": 558156,
+      "exit_code": 0
+    }
+  ],
+  "guards": {
+    "support": 7,
+    "connector_inputs": 6,
+    "connector_pose": 4,
+    "C2_interfaces": 5,
+    "insert_specimens": 7,
+    "source_bound_thumbnails": 29
+  },
+  "previous_run": {
+    "source_revision": "306bfb09cd833b7517de8f5647bd1719ba318c22",
+    "run_name": "carrier-connectors-306bfb0",
+    "exit_code": 1,
+    "elapsed_wall_seconds": 70.08,
+    "peak_rss_kib": 533424,
+    "cause": "Full-carrier clearance incorrectly included its four unchanged heat-set mates; raw relations retained and coverage separated from new-material clearance. No downstream refresh ran."
+  },
+  "qualification": "Bounded geometry and source identity only; structural, snap, detailed thread, complete harness, full-module service and physical qualification remain open."
+}

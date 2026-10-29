@@ -6,4 +6,4 @@ Day one: the flywheel motors (the cartridge is printed after the motor is measur
 
 | # | Part | Seller part no. | For | Need | Buy | Each | Line | Backup |
 |---|---|---|---|---|---|---|---|---|
-| 1 | [SunnySky X2216 880KV V3 outrunner, short shaft, with its bolt-on prop adapter and X-mount](https://sunnyskyusa.com/products/sunnysky-x2216?variant=15890897469534) | SS-XV3-X2216-S-880-V3 (variant 15890897469534, '880 Short') | flywhemotor l, flywhemotor r | 2 | 2 | $24.99 | $49.98 | [ReadyMadeRC SS-XV3-X2216-S-880-V3 (RMRC 84776, GTIN 680306447725)](https://www.readymaderc.com/products/details/sunny-sky-x2216-brushless-motor-short-shaft-880kv) $22.99 |
+| 1 | [SunnySky X2216 1400KV V3 outrunner, short shaft, with its bolt-on prop adapter and X-mount](https://sunnyskyusa.com/products/sunnysky-x2216?variant=27868073427038) | SS-XV3-X2216-S-1400-V3 (variant 27868073427038, '1400 Short') | flywhemotor l, flywhemotor r | 2 | 2 | $24.99 | $49.98 | [ReadyMadeRC SS-XV3-X2216-S-1400-V3 (RMRC 84546, GTIN 680306447800)](https://www.readymaderc.com/products/details/sunnysky-x-series-v3-x2216-brushless-motor-short-shaft-1400kv) $24.99 |

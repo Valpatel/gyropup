@@ -23,7 +23,7 @@ The chain, per shot (R = reduced model solved outside MuJoCo; M = MuJoCo):
                                                        sim/turret_dynamics.py (not in the MuJoCo joints: reported)
 Two firing modes: 'settled' (fire when the aim error is under 0.3 deg and the pan rate under 5 deg/s) and 'panning'
 (fire as soon as the aim error is under 2 deg, while the pan servo is still finishing its move). Two set speeds: the
-program's set speed (52 fps on Ø34 tyres since D42) and 95 % of the rail's no-load speed (both under the 70 fps cap).
+program's set speed (95 fps on Ø38 tyres since D68) and 95 % of the rail's no-load speed (both under the 105 fps ceiling).
 Writes exports/turret/e2e/e2e.json (checks keyed to docs/turret-program.md's checklist), e2e.png, e2e.mp4 and frames.
 """
 from __future__ import annotations
@@ -237,7 +237,7 @@ def aim_solution(tf, spec, rng_m, h_target, v_muzzle):
     return None if el is None else -math.degrees(el)
 
 
-def run(set_fps=55.0, mode='settled', quick=False, video=True, seed=7):
+def run(set_fps=95.0, mode='settled', quick=False, video=True, seed=7):
     import mujoco
     tu = tc.cad_turret()
     tb = tc.sim_module('turret_ball')
@@ -505,7 +505,9 @@ def checks(runs, quick):
     out = {}
     out['ball_sourced'] = {'pass': bool(bl and len(bl['sources']) >= 10), 'evidence': 'exports/turret/launch/ball.json: sources with URLs and the date checked; the unknowns swept with a bench plan'}
     if l3:
-        out['launch_cap_70fps'] = {'pass': bool(l3['ceiling']['holds'] and l3['ceiling']['margin_fps'] >= 1.0), 'highest_fps_any_case': l3['ceiling']['highest_fps_any_case'], 'margin_fps': l3['ceiling']['margin_fps'],
+        out['launch_cap_105fps'] = {'pass': bool(l3['ceiling']['holds'] and l3['ceiling']['margin_fps'] >= 1.0 and l3['ceiling'].get('under_astm', True)),
+                                    'highest_fps_any_case': l3['ceiling']['highest_fps_any_case'], 'margin_fps': l3['ceiling']['margin_fps'],
+                                    'densest_ked_j_m2': l3['ceiling'].get('densest_ked_j_m2'),
                                    'how': l3['ceiling']['how_held'], 'evidence': 'exports/turret/launch/launch3d.json ceiling, ceiling_map'}
         out['launch_handover_1d_vs_3d'] = {'pass': bool(l3['handover_1d']['pass']), 'rel_err': l3['handover_1d']['rel_err']}
         out['launch_population_at_set_speed'] = {'pass': True, 'fps': l3['population_set_speed']['feed_offsets_runout_0_15mm']}
@@ -527,7 +529,9 @@ def checks(runs, quick):
                                'latency_ms_max': v['latency_ms_max'], 'continuous_clean_rpm': v['continuous_clean_rpm']}
     if tg:
         ks = tg['kid_safety']
-        out['kid_safety'] = {'pass': ks['cap_70fps']['vs_en71_0_5j'] < 1 and ks['cap_70fps']['vs_astm_2500'] < 1, 'at_cap': ks['cap_70fps'], 'at_set_55': ks['set_55fps']}
+        out['kid_safety'] = {'pass': ks['cap_105fps']['vs_astm_2500'] < 1 and ks['densest_accepted_at_its_ceiling']['vs_astm_2500'] < 1,
+                             'at_cap': ks['cap_105fps'], 'at_set_95': ks['set_95fps'], 'densest': ks['densest_accepted_at_its_ceiling'],
+                             'note': 'D68: ASTM F963 2500 J/m^2 (a 14+ product); EN 71-1 0.5 J no longer applies'}
     for r in runs:
         key = f"e2e_{r['mode']}_{int(r['set_fps'])}fps"
         hits = {k: v['hits'] for k, v in r['per_target'].items()}
@@ -599,7 +603,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--quick', action='store_true')
     ap.add_argument('--no-video', action='store_true')
-    ap.add_argument('--set-fps', nargs='*', default=['55', 'max'], help="fps values, or 'max' for 95 % of the rail's no-load speed")
+    ap.add_argument('--set-fps', nargs='*', default=['95', 'max'], help="fps values, or 'max' for 95 % of the rail's no-load speed")
     ap.add_argument('--modes', nargs='*', default=['settled', 'panning'])
     a = ap.parse_args()
     OUT.mkdir(parents=True, exist_ok=True)

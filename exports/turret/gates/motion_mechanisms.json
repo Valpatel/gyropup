@@ -1,0 +1,825 @@
+{
+  "schema": "cadagent.gate/1",
+  "gate": "motion",
+  "pass": true,
+  "status": "warn",
+  "counts": {
+    "pass": 5,
+    "warn": 1,
+    "fail": 0
+  },
+  "checks": [
+    {
+      "id": "motion:feed",
+      "status": "pass",
+      "message": "feed: no collision in 16 poses (feed 0..90 deg in 16 samples (6 deg apart, up to 6.729 mm of travel))",
+      "parts": [
+        "dial"
+      ],
+      "evidence": {
+        "joints": [
+          "feed"
+        ],
+        "poses": 16,
+        "density": [
+          {
+            "joint": "feed",
+            "axis": "rotate",
+            "unit": "deg",
+            "range": [
+              0.0,
+              90.0
+            ],
+            "samples": 16,
+            "declared_samples": 16,
+            "step": 6.0,
+            "max_radius_mm": 64.255,
+            "max_travel_per_step_mm": 6.729
+          }
+        ],
+        "coarsened": false,
+        "max_poses": 2000,
+        "moving": [
+          "dial"
+        ],
+        "bodies": [
+          "dial"
+        ],
+        "intended_contacts": [
+          "dial|feed_motor",
+          "horn_boss|tilt_servo",
+          "pan_bearing|pan_bearing_inner",
+          "pan_pinion|pan_ring",
+          "pan_pinion|pan_servo",
+          "ring_coupling|slip_ring",
+          "ring_leads_rotor|slip_ring",
+          "shoulder_screw|tilt_bearing",
+          "shoulder_screw|tilt_yoke",
+          "slip_ring|slip_ring_rotor",
+          "stop_lug|tilt_yoke",
+          "tilt_bearing|tilt_bearing_inner"
+        ],
+        "intended_contacts_touching": {
+          "dial|feed_motor": {
+            "poses": 16,
+            "first": "feed=0deg",
+            "last": "feed=90deg"
+          }
+        },
+        "collisions": [],
+        "min_clearance_mm": 0.703913,
+        "at": {
+          "gap_mm": 0.703913,
+          "pair": [
+            "dial",
+            "hopper"
+          ],
+          "pose": "feed=0deg",
+          "point_a": [
+            -29.495937,
+            2.272013,
+            159.391625
+          ],
+          "point_b": [
+            -29.144495,
+            2.315165,
+            160.0
+          ]
+        }
+      }
+    },
+    {
+      "id": "motion:flap",
+      "status": "pass",
+      "message": "flap: no collision in 6 poses (flap -50..0 deg in 6 samples (10 deg apart, up to 6.479 mm of travel))",
+      "parts": [
+        "hopper_flap"
+      ],
+      "evidence": {
+        "joints": [
+          "flap"
+        ],
+        "poses": 6,
+        "density": [
+          {
+            "joint": "flap",
+            "axis": "rotate",
+            "unit": "deg",
+            "range": [
+              -50.0,
+              0.0
+            ],
+            "samples": 6,
+            "declared_samples": 6,
+            "step": 10.0,
+            "max_radius_mm": 37.121,
+            "max_travel_per_step_mm": 6.479
+          }
+        ],
+        "coarsened": false,
+        "max_poses": 2000,
+        "moving": [
+          "hopper_flap"
+        ],
+        "bodies": [
+          "flap"
+        ],
+        "intended_contacts": [
+          "hopper_flap|hopper_lid",
+          "horn_boss|tilt_servo",
+          "pan_bearing|pan_bearing_inner",
+          "pan_pinion|pan_ring",
+          "pan_pinion|pan_servo",
+          "ring_coupling|slip_ring",
+          "ring_leads_rotor|slip_ring",
+          "shoulder_screw|tilt_bearing",
+          "shoulder_screw|tilt_yoke",
+          "slip_ring|slip_ring_rotor",
+          "stop_lug|tilt_yoke",
+          "tilt_bearing|tilt_bearing_inner"
+        ],
+        "intended_contacts_touching": {
+          "hopper_flap|hopper_lid": {
+            "poses": 1,
+            "first": "flap=-50deg",
+            "last": "flap=-50deg"
+          }
+        },
+        "collisions": [],
+        "min_clearance_mm": null,
+        "at": null,
+        "unmeasured_gap_at_least_mm": 1.773504,
+        "unmeasured_at": {
+          "mm": 1.773504,
+          "pair": [
+            "hopper",
+            "hopper_flap"
+          ],
+          "pose": "flap=-40deg"
+        }
+      }
+    },
+    {
+      "id": "motion:pan_drive",
+      "status": "pass",
+      "message": "pan_drive: no collision in 13 poses (pan_drive 0..360 deg in 13 samples (30 deg apart, up to 10.636 mm of travel))",
+      "parts": [
+        "pan_pinion"
+      ],
+      "evidence": {
+        "joints": [
+          "pan_drive"
+        ],
+        "poses": 13,
+        "density": [
+          {
+            "joint": "pan_drive",
+            "axis": "rotate",
+            "unit": "deg",
+            "range": [
+              0.0,
+              360.0
+            ],
+            "samples": 13,
+            "declared_samples": 13,
+            "step": 30.0,
+            "max_radius_mm": 20.313,
+            "max_travel_per_step_mm": 10.636
+          }
+        ],
+        "coarsened": false,
+        "max_poses": 2000,
+        "moving": [
+          "pan_pinion"
+        ],
+        "bodies": [
+          "pinion"
+        ],
+        "intended_contacts": [
+          "horn_boss|tilt_servo",
+          "pan_bearing|pan_bearing_inner",
+          "pan_pinion|pan_ring",
+          "pan_pinion|pan_servo",
+          "ring_coupling|slip_ring",
+          "ring_leads_rotor|slip_ring",
+          "shoulder_screw|tilt_bearing",
+          "shoulder_screw|tilt_yoke",
+          "slip_ring|slip_ring_rotor",
+          "stop_lug|tilt_yoke",
+          "tilt_bearing|tilt_bearing_inner"
+        ],
+        "intended_contacts_touching": {
+          "pan_pinion|pan_servo": {
+            "poses": 13,
+            "first": "pan_drive=0deg",
+            "last": "pan_drive=360deg"
+          }
+        },
+        "collisions": [],
+        "min_clearance_mm": null,
+        "at": null,
+        "unmeasured_gap_at_least_mm": 1.825,
+        "unmeasured_at": {
+          "mm": 1.825,
+          "pair": [
+            "pan_clamp",
+            "pan_pinion"
+          ],
+          "pose": "pan_drive=30deg"
+        }
+      }
+    },
+    {
+      "id": "motion:wheel_l",
+      "status": "pass",
+      "message": "wheel_l: no collision in 13 poses (wheel_l 0..360 deg in 13 samples (30 deg apart, up to 14.069 mm of travel))",
+      "parts": [
+        "flywheel"
+      ],
+      "evidence": {
+        "joints": [
+          "wheel_l"
+        ],
+        "poses": 13,
+        "density": [
+          {
+            "joint": "wheel_l",
+            "axis": "rotate",
+            "unit": "deg",
+            "range": [
+              0.0,
+              360.0
+            ],
+            "samples": 13,
+            "declared_samples": 13,
+            "step": 30.0,
+            "max_radius_mm": 26.87,
+            "max_travel_per_step_mm": 14.069
+          }
+        ],
+        "coarsened": false,
+        "max_poses": 2000,
+        "moving": [
+          "flywheel",
+          "flywheel_tyre"
+        ],
+        "bodies": [
+          "wheel_l"
+        ],
+        "intended_contacts": [
+          "flywheel|flywheel_motor_l",
+          "horn_boss|tilt_servo",
+          "pan_bearing|pan_bearing_inner",
+          "pan_pinion|pan_ring",
+          "pan_pinion|pan_servo",
+          "ring_coupling|slip_ring",
+          "ring_leads_rotor|slip_ring",
+          "shoulder_screw|tilt_bearing",
+          "shoulder_screw|tilt_yoke",
+          "slip_ring|slip_ring_rotor",
+          "stop_lug|tilt_yoke",
+          "tilt_bearing|tilt_bearing_inner"
+        ],
+        "intended_contacts_touching": {},
+        "collisions": [],
+        "min_clearance_mm": 2.136001,
+        "at": {
+          "gap_mm": 2.136001,
+          "pair": [
+            "cartridge_body",
+            "flywheel_tyre"
+          ],
+          "pose": "wheel_l=0deg",
+          "point_a": [
+            39.324351,
+            12.213108,
+            117.0
+          ],
+          "point_b": [
+            38.780388,
+            12.729445,
+            119.0
+          ]
+        },
+        "unmeasured_gap_at_least_mm": 1.845517,
+        "unmeasured_at": {
+          "mm": 1.845517,
+          "pair": [
+            "cradle_plate_l",
+            "flywheel_tyre"
+          ],
+          "pose": "wheel_l=30deg"
+        }
+      }
+    },
+    {
+      "id": "motion:wheel_r",
+      "status": "pass",
+      "message": "wheel_r: no collision in 13 poses (wheel_r 0..360 deg in 13 samples (30 deg apart, up to 14.069 mm of travel))",
+      "parts": [
+        "flywheel_m"
+      ],
+      "evidence": {
+        "joints": [
+          "wheel_r"
+        ],
+        "poses": 13,
+        "density": [
+          {
+            "joint": "wheel_r",
+            "axis": "rotate",
+            "unit": "deg",
+            "range": [
+              0.0,
+              360.0
+            ],
+            "samples": 13,
+            "declared_samples": 13,
+            "step": 30.0,
+            "max_radius_mm": 26.87,
+            "max_travel_per_step_mm": 14.069
+          }
+        ],
+        "coarsened": false,
+        "max_poses": 2000,
+        "moving": [
+          "flywheel_m",
+          "flywheel_tyre_m"
+        ],
+        "bodies": [
+          "wheel_r"
+        ],
+        "intended_contacts": [
+          "flywheel_m|flywheel_motor_r",
+          "horn_boss|tilt_servo",
+          "pan_bearing|pan_bearing_inner",
+          "pan_pinion|pan_ring",
+          "pan_pinion|pan_servo",
+          "ring_coupling|slip_ring",
+          "ring_leads_rotor|slip_ring",
+          "shoulder_screw|tilt_bearing",
+          "shoulder_screw|tilt_yoke",
+          "slip_ring|slip_ring_rotor",
+          "stop_lug|tilt_yoke",
+          "tilt_bearing|tilt_bearing_inner"
+        ],
+        "intended_contacts_touching": {},
+        "collisions": [],
+        "min_clearance_mm": 2.136001,
+        "at": {
+          "gap_mm": 2.136001,
+          "pair": [
+            "cartridge_body",
+            "flywheel_tyre_m"
+          ],
+          "pose": "wheel_r=0deg",
+          "point_a": [
+            36.002631,
+            -9.40864,
+            117.0
+          ],
+          "point_b": [
+            35.584809,
+            -10.031476,
+            119.0
+          ]
+        },
+        "unmeasured_gap_at_least_mm": 1.845517,
+        "unmeasured_at": {
+          "mm": 1.845517,
+          "pair": [
+            "cradle_plate_r",
+            "flywheel_tyre_m"
+          ],
+          "pose": "wheel_r=30deg"
+        }
+      }
+    },
+    {
+      "id": "combination:wheel_l+wheel_r",
+      "status": "warn",
+      "message": "wheel_l and wheel_r were sampled one at a time, but the swept boxes of flywheel_tyre and flywheel_tyre_m come within 0 mm: pass combine=[[...]] to sample them together",
+      "parts": [
+        "flywheel_tyre",
+        "flywheel_tyre_m"
+      ],
+      "evidence": {
+        "groups": [
+          "wheel_l",
+          "wheel_r"
+        ],
+        "box_distance_mm": 0.0
+      }
+    }
+  ],
+  "findings": [
+    {
+      "id": "combination:wheel_l+wheel_r",
+      "status": "warn",
+      "message": "wheel_l and wheel_r were sampled one at a time, but the swept boxes of flywheel_tyre and flywheel_tyre_m come within 0 mm: pass combine=[[...]] to sample them together",
+      "parts": [
+        "flywheel_tyre",
+        "flywheel_tyre_m"
+      ],
+      "evidence": {
+        "groups": [
+          "wheel_l",
+          "wheel_r"
+        ],
+        "box_distance_mm": 0.0
+      }
+    }
+  ],
+  "exclusions": [
+    {
+      "parts": [
+        "flywheel",
+        "flywheel_motor_l"
+      ],
+      "reason": "each hub's bore on its X2216's prop adapter: a 0.008 mm^3 modelling overlap where the two envelopes meet (a slip fit)"
+    },
+    {
+      "parts": [
+        "flywheel_m",
+        "flywheel_motor_r"
+      ],
+      "reason": "each hub's bore on its X2216's prop adapter: a 0.008 mm^3 modelling overlap where the two envelopes meet (a slip fit)"
+    }
+  ],
+  "limits": {
+    "touch_mm": 0.05,
+    "overlap_mm3": 0.001,
+    "near_mm": 1.0,
+    "volume_check_mm3": 0.2,
+    "default_samples": 12,
+    "max_step_deg": 30.0,
+    "max_step_mm": null,
+    "max_poses": 2000,
+    "refine_steps": 8,
+    "strict_contacts": false,
+    "combine": []
+  },
+  "assumptions": [
+    "joints are sampled at discrete values across their declared ranges, both ends included; the density is reported per joint axis. A collision that starts and ends between two samples, or a feature thinner than the travel per sample, can be missed: this is not a swept-volume check",
+    "a joint's range is measured from the pose the model was built in (0 = as modelled); a joint's axis is in assembly coordinates at that pose, and a child joint's axis is carried by its parent",
+    "what moves with a joint is its moving part's body: the transitive closure over fixed joints and fastener clamps/into (relations.moving_bodies), or the assembly's own body labels",
+    "joints in one chain are sampled on a grid; independent joints one at a time with the others at home (0 clamped into the range) unless combined",
+    "pairs that do not move relative to each other (static against static, parts of one body) are not queried; the relation table and connectivity gate cover them",
+    "exact B-rep relations within the relation tolerances; no tolerance stack, print shrink, deflection or backlash: a clear pose in the model does not prove the printed parts clear"
+  ],
+  "physical_fit_verified": false,
+  "groups": [
+    {
+      "id": "feed",
+      "joints": [
+        "feed"
+      ],
+      "poses": 16,
+      "density": [
+        {
+          "joint": "feed",
+          "axis": "rotate",
+          "unit": "deg",
+          "range": [
+            0.0,
+            90.0
+          ],
+          "samples": 16,
+          "declared_samples": 16,
+          "step": 6.0,
+          "max_radius_mm": 64.255,
+          "max_travel_per_step_mm": 6.729
+        }
+      ],
+      "coarsened": false,
+      "max_poses": 2000,
+      "bodies": [
+        "dial"
+      ],
+      "intended_contacts": [
+        "dial|feed_motor",
+        "horn_boss|tilt_servo",
+        "pan_bearing|pan_bearing_inner",
+        "pan_pinion|pan_ring",
+        "pan_pinion|pan_servo",
+        "ring_coupling|slip_ring",
+        "ring_leads_rotor|slip_ring",
+        "shoulder_screw|tilt_bearing",
+        "shoulder_screw|tilt_yoke",
+        "slip_ring|slip_ring_rotor",
+        "stop_lug|tilt_yoke",
+        "tilt_bearing|tilt_bearing_inner"
+      ],
+      "intended_contacts_touching": {
+        "dial|feed_motor": {
+          "poses": 16,
+          "first": "feed=0deg",
+          "last": "feed=90deg"
+        }
+      },
+      "collisions": [],
+      "min_clearance_mm": 0.703913,
+      "at": {
+        "gap_mm": 0.703913,
+        "pair": [
+          "dial",
+          "hopper"
+        ],
+        "pose": "feed=0deg",
+        "point_a": [
+          -29.495937,
+          2.272013,
+          159.391625
+        ],
+        "point_b": [
+          -29.144495,
+          2.315165,
+          160.0
+        ]
+      },
+      "status": "pass"
+    },
+    {
+      "id": "flap",
+      "joints": [
+        "flap"
+      ],
+      "poses": 6,
+      "density": [
+        {
+          "joint": "flap",
+          "axis": "rotate",
+          "unit": "deg",
+          "range": [
+            -50.0,
+            0.0
+          ],
+          "samples": 6,
+          "declared_samples": 6,
+          "step": 10.0,
+          "max_radius_mm": 37.121,
+          "max_travel_per_step_mm": 6.479
+        }
+      ],
+      "coarsened": false,
+      "max_poses": 2000,
+      "bodies": [
+        "flap"
+      ],
+      "intended_contacts": [
+        "hopper_flap|hopper_lid",
+        "horn_boss|tilt_servo",
+        "pan_bearing|pan_bearing_inner",
+        "pan_pinion|pan_ring",
+        "pan_pinion|pan_servo",
+        "ring_coupling|slip_ring",
+        "ring_leads_rotor|slip_ring",
+        "shoulder_screw|tilt_bearing",
+        "shoulder_screw|tilt_yoke",
+        "slip_ring|slip_ring_rotor",
+        "stop_lug|tilt_yoke",
+        "tilt_bearing|tilt_bearing_inner"
+      ],
+      "intended_contacts_touching": {
+        "hopper_flap|hopper_lid": {
+          "poses": 1,
+          "first": "flap=-50deg",
+          "last": "flap=-50deg"
+        }
+      },
+      "collisions": [],
+      "min_clearance_mm": null,
+      "at": null,
+      "unmeasured_gap_at_least_mm": 1.773504,
+      "unmeasured_at": {
+        "mm": 1.773504,
+        "pair": [
+          "hopper",
+          "hopper_flap"
+        ],
+        "pose": "flap=-40deg"
+      },
+      "status": "pass"
+    },
+    {
+      "id": "pan_drive",
+      "joints": [
+        "pan_drive"
+      ],
+      "poses": 13,
+      "density": [
+        {
+          "joint": "pan_drive",
+          "axis": "rotate",
+          "unit": "deg",
+          "range": [
+            0.0,
+            360.0
+          ],
+          "samples": 13,
+          "declared_samples": 13,
+          "step": 30.0,
+          "max_radius_mm": 20.313,
+          "max_travel_per_step_mm": 10.636
+        }
+      ],
+      "coarsened": false,
+      "max_poses": 2000,
+      "bodies": [
+        "pinion"
+      ],
+      "intended_contacts": [
+        "horn_boss|tilt_servo",
+        "pan_bearing|pan_bearing_inner",
+        "pan_pinion|pan_ring",
+        "pan_pinion|pan_servo",
+        "ring_coupling|slip_ring",
+        "ring_leads_rotor|slip_ring",
+        "shoulder_screw|tilt_bearing",
+        "shoulder_screw|tilt_yoke",
+        "slip_ring|slip_ring_rotor",
+        "stop_lug|tilt_yoke",
+        "tilt_bearing|tilt_bearing_inner"
+      ],
+      "intended_contacts_touching": {
+        "pan_pinion|pan_servo": {
+          "poses": 13,
+          "first": "pan_drive=0deg",
+          "last": "pan_drive=360deg"
+        }
+      },
+      "collisions": [],
+      "min_clearance_mm": null,
+      "at": null,
+      "unmeasured_gap_at_least_mm": 1.825,
+      "unmeasured_at": {
+        "mm": 1.825,
+        "pair": [
+          "pan_clamp",
+          "pan_pinion"
+        ],
+        "pose": "pan_drive=30deg"
+      },
+      "status": "pass"
+    },
+    {
+      "id": "wheel_l",
+      "joints": [
+        "wheel_l"
+      ],
+      "poses": 13,
+      "density": [
+        {
+          "joint": "wheel_l",
+          "axis": "rotate",
+          "unit": "deg",
+          "range": [
+            0.0,
+            360.0
+          ],
+          "samples": 13,
+          "declared_samples": 13,
+          "step": 30.0,
+          "max_radius_mm": 26.87,
+          "max_travel_per_step_mm": 14.069
+        }
+      ],
+      "coarsened": false,
+      "max_poses": 2000,
+      "bodies": [
+        "wheel_l"
+      ],
+      "intended_contacts": [
+        "flywheel|flywheel_motor_l",
+        "horn_boss|tilt_servo",
+        "pan_bearing|pan_bearing_inner",
+        "pan_pinion|pan_ring",
+        "pan_pinion|pan_servo",
+        "ring_coupling|slip_ring",
+        "ring_leads_rotor|slip_ring",
+        "shoulder_screw|tilt_bearing",
+        "shoulder_screw|tilt_yoke",
+        "slip_ring|slip_ring_rotor",
+        "stop_lug|tilt_yoke",
+        "tilt_bearing|tilt_bearing_inner"
+      ],
+      "intended_contacts_touching": {},
+      "collisions": [],
+      "min_clearance_mm": 2.136001,
+      "at": {
+        "gap_mm": 2.136001,
+        "pair": [
+          "cartridge_body",
+          "flywheel_tyre"
+        ],
+        "pose": "wheel_l=0deg",
+        "point_a": [
+          39.324351,
+          12.213108,
+          117.0
+        ],
+        "point_b": [
+          38.780388,
+          12.729445,
+          119.0
+        ]
+      },
+      "unmeasured_gap_at_least_mm": 1.845517,
+      "unmeasured_at": {
+        "mm": 1.845517,
+        "pair": [
+          "cradle_plate_l",
+          "flywheel_tyre"
+        ],
+        "pose": "wheel_l=30deg"
+      },
+      "status": "pass"
+    },
+    {
+      "id": "wheel_r",
+      "joints": [
+        "wheel_r"
+      ],
+      "poses": 13,
+      "density": [
+        {
+          "joint": "wheel_r",
+          "axis": "rotate",
+          "unit": "deg",
+          "range": [
+            0.0,
+            360.0
+          ],
+          "samples": 13,
+          "declared_samples": 13,
+          "step": 30.0,
+          "max_radius_mm": 26.87,
+          "max_travel_per_step_mm": 14.069
+        }
+      ],
+      "coarsened": false,
+      "max_poses": 2000,
+      "bodies": [
+        "wheel_r"
+      ],
+      "intended_contacts": [
+        "flywheel_m|flywheel_motor_r",
+        "horn_boss|tilt_servo",
+        "pan_bearing|pan_bearing_inner",
+        "pan_pinion|pan_ring",
+        "pan_pinion|pan_servo",
+        "ring_coupling|slip_ring",
+        "ring_leads_rotor|slip_ring",
+        "shoulder_screw|tilt_bearing",
+        "shoulder_screw|tilt_yoke",
+        "slip_ring|slip_ring_rotor",
+        "stop_lug|tilt_yoke",
+        "tilt_bearing|tilt_bearing_inner"
+      ],
+      "intended_contacts_touching": {},
+      "collisions": [],
+      "min_clearance_mm": 2.136001,
+      "at": {
+        "gap_mm": 2.136001,
+        "pair": [
+          "cartridge_body",
+          "flywheel_tyre_m"
+        ],
+        "pose": "wheel_r=0deg",
+        "point_a": [
+          36.002631,
+          -9.40864,
+          117.0
+        ],
+        "point_b": [
+          35.584809,
+          -10.031476,
+          119.0
+        ]
+      },
+      "unmeasured_gap_at_least_mm": 1.845517,
+      "unmeasured_at": {
+        "mm": 1.845517,
+        "pair": [
+          "cradle_plate_r",
+          "flywheel_tyre_m"
+        ],
+        "pose": "wheel_r=30deg"
+      },
+      "status": "pass"
+    }
+  ],
+  "not_checked": [
+    "wheel_l with wheel_r: combined poses (sampled separately)"
+  ],
+  "stats": {
+    "joints": 5,
+    "groups": 5,
+    "poses": 61,
+    "pair_queries": 373,
+    "kernel_queries": 96,
+    "memo_hits": 13,
+    "cache_hits": 264,
+    "seconds": 56.04
+  }
+}

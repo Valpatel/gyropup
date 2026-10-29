@@ -1,20 +1,20 @@
 {
  "too_big": [],
- "print_hours": 50.0,
- "printed_g": 1291,
+ "print_hours": 58.8,
+ "printed_g": 1462,
  "stand_mm": [
-  180.0,
   200.0,
-  100.0
+  200.0,
+  150.0
  ],
  "note": "printed_g and print_hours are print-plan.json's (the slicer's where sliced); sliced is cad/turret_print.py's own total",
  "sliced": {
-  "grams": 1291.0,
-  "hours": 50.1,
+  "grams": 1281.4,
+  "hours": 49.3,
   "by_material": {
    "pa6-cf": {
-    "grams": 637.0,
-    "hours": 31.8
+    "grams": 627.4,
+    "hours": 31.0
    },
    "petg": {
     "grams": 604.1,
@@ -36,6 +36,7 @@
    "Waveshare",
    "SunnySky USA",
    "Palm Beach Bots",
+   "RaceDayQuads",
    "Pololu",
    "Adafruit",
    "SparkFun",
@@ -44,14 +45,22 @@
    "McMaster-Carr",
    "VXB Bearings",
    "SendCutSend",
+   "Seeed Studio",
+   "The Power Tool Store",
    "Caldwell",
    "AbleNet",
+   "Walmart",
    "Out of Darts",
-   "Jameco",
    "IWISS",
-   "FYSETC"
+   "FYSETC",
+   "RockAuto",
+   "Pyrodrone",
+   "Newark",
+   "LCSC",
+   "Jameco",
+   "Farnell"
   ],
-  "grand_total_usd": 1609.89,
-  "lines": 125
+  "grand_total_usd": 2992.97,
+  "lines": 149
  }
 }

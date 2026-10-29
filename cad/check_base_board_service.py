@@ -1,0 +1,209 @@
+"""Source-bound, isolated BREP checks for the passive base-board carrier.
+
+Run on a compute host for the complete check. This is deliberately independent of
+the dossier's single-part sequence: a preassembled module moves as a rigid body.
+Only project-authored geometry and numerical results may be exported.
+"""
+from __future__ import annotations
+import argparse
+import hashlib
+import json
+import subprocess
+import time
+from pathlib import Path
+
+import cadquery as cq
+from cadagent.gates import Assembly, Tolerances, PairCache
+from cadagent.gates.assembly import AssemblySequenceWorld, AccessOptions, sweep_pair
+from cadagent.gates.fasteners import FastenerSpec, fastener_gate
+from cadagent.gates.verdict import Check, verdict
+import turret as tu
+import turret_base_board as bb
+
+ROOT = Path(__file__).resolve().parents[1]
+SOURCES = ['cad/turret.py','cad/turret_base_board.py','cad/turret_boards.py','cad/check_base_board_service.py',
+           'catalog/hardware.json','catalog/turret.json']
+PAIR_CACHE = PairCache(ROOT / '.cadagent-cache/base-board-service')
+TOOL = {'segments': [{'d':6.,'length':60.},{'d':25.,'length':80.}]}
+
+
+def shape(w):
+    return w.val() if hasattr(w,'val') else w
+
+
+def volume(a,b):
+    return shape(a).intersect(shape(b)).Volume()
+
+
+def compound(items):
+    return cq.Compound.makeCompound([shape(x) for x in items])
+
+
+def sweep(moving, obstacle, seat=True, direction=(-1.,0.,0.)):
+    a = Assembly();a.add('module',shape(moving));a.add('obstacle',shape(obstacle))
+    world = AssemblySequenceWorld(a)
+    return sweep_pair(world,'module',direction,'obstacle',options=AccessOptions(max_step_mm=.25),seat=seat)
+
+
+def manufacturer_inputs():
+    """Inventory the same private root the geometry loader uses; do not import CAD."""
+    models = {}
+    for pn in bb.MANUFACTURER_PARTS:
+        relative = f'references/vendor/mcmaster/{pn}/{pn}.norm.step'
+        path = bb.ROOT / relative
+        models[pn] = {'available': path.is_file(), 'file': relative}
+        if path.is_file():
+            models[pn]['sha256'] = hashlib.sha256(path.read_bytes()).hexdigest()
+    return models
+
+
+def manufacturer_complete(models):
+    """A complete, valid private inventory is mandatory, including on an empty cache."""
+    return all(models.get(pn, {}).get('available') is True and models[pn].get('valid') is True
+               for pn in bb.MANUFACTURER_PARTS)
+
+
+def model_checks_pass(checks, models):
+    return bool(checks) and all(c['pass'] for c in checks) and manufacturer_complete(models)
+
+
+def hardware_gate(which, base=None, bumper=None, bad_length=None, missing_hole=False, manufacturer=False):
+    """PCB screws tested on bench; carrier screws tested with the base present."""
+    models = manufacturer_inputs() if manufacturer else {}
+    missing = [pn for pn, record in models.items() if not record['available']]
+    if missing:
+        # Every hardware instance included below must have its real input. In
+        # particular, do not replace a missing screw or receiver with a public mesh.
+        return verdict('fasteners', [Check('manufacturer:inputs', 'fail',
+                       'private manufacturer CAD missing; geometry checks not run', missing,
+                       {'missing': missing, 'models': models})],
+                       assumptions=['Manufacturer checks require all selected private STEP inputs; no public fallback.'],
+                       extra={'hardware_geometry': 'manufacturer inputs incomplete',
+                              'not_checked': ['manufacturer fastener geometry'], 'manufacturer_models': models})
+    a = Assembly()
+    carrier=bb.carrier(); pcb=bb.board()
+    if missing_hole:
+        y,z=bb.CARRIER_HOLES[0]
+        carrier=carrier.union(bb.cx(bb.M3_CLEAR/2,53,56,y,z))
+    a.add('base_board_carrier',shape(carrier));a.add('base_board',shape(pcb))
+    hw=bb.hardware(private=manufacturer)
+    # Keep each detailed receiver independent: Boolean subtraction against a
+    # compound of four threaded inserts produced inconsistent OCCT volumes.
+    for n,s in hw.items():
+        if 'inserts#' in n:
+            a.add(n,shape(s))
+    specdata=bb.screw_specs()[which]
+    spec=FastenerSpec(name=which,**{k:v for k,v in specdata.items() if k!='pn'},diameter_mm=3.,
+                      thread_depth_mm=bb.INSERT_LENGTH,min_engagement_mm=3.,head_d_mm=5.5,head_h_mm=3.,tool='driver')
+    if manufacturer:
+        # Manufacturer STEP rays: first useful thread is 0.105 mm past each mouth.
+        # Overall length is 5.74 mm; the usable threaded span is 5.53 mm.
+        spec.thread_start_mm += .105
+        spec.thread_depth_mm = 5.53
+    for name,s in hw.items():
+        if 'screws' not in name:
+            continue
+        if name.startswith(which+'#') and bad_length is not None:
+            i=int(name.rsplit('#',1)[1]);o,d=spec.axes[i]
+            s=bb.public_screw(bad_length).rotate((0,0,0),(0,1,0),-90*d[0]).translate(o)
+        a.add(name,shape(s)).kind = 'fastener' if name.startswith(which+'#') else 'part'
+    if base is not None:a.add('pan_base',shape(base))
+    if bumper is not None:a.add('bumper_ring',shape(bumper))
+    # Every obstacle is present before the selected fasteners are driven. PCB tools
+    # are intentionally checked without the base; carrier tools with it.
+    names=[n for n in a.names if not n.startswith(which+'#')]
+    steps=[dict(order=i+1,fit=n) for i,n in enumerate(names)]
+    steps.append(dict(order=len(steps)+1,fit=spec.clamps,fasteners=[which],tool='driver'))
+    result = fastener_gate(a,{which:spec},steps=steps,tools={'driver':TOOL},cache=PAIR_CACHE)
+    result.update(hardware_geometry='private manufacturer STEP' if manufacturer else bb.PUBLIC_NOTE,
+                  manufacturer_models=models)
+    return result
+
+
+def run(out):
+    started=time.time();checks=[]
+    out.mkdir(parents=True,exist_ok=True)
+    def check(name,ok,evidence):
+        checks.append({'id':name,'pass':bool(ok),'evidence':evidence})
+        (out/'progress.json').write_text(json.dumps({'complete':False,'checks':checks},indent=2)+'\n')
+        print(name,'PASS' if ok else 'FAIL',flush=True)
+    G=tu.Geo();original=tu.pan_base(G,board_service=False);base=tu.pan_base(G);carrier=bb.carrier();board=bb.board();hw=bb.hardware()
+    for name,s in [('base',base),('carrier',carrier),('pcb',bb.pcb())]:
+        check('valid:'+name,s.val().isValid() and len(s.val().Solids())==1,{'solids':len(s.val().Solids())})
+    regions={'foot':bb.box(-120,120,-120,120,-1,5),'bearing_tube':cq.Solid.makeCylinder(35.5,38),
+             'bearing_seat':bb.box(-43,43,-50,50,38,60),'servo_pocket':bb.box(-85,-25,-50,60,0,65)}
+    for name,r in regions.items():
+        old=original.val().intersect(shape(r));new=base.val().intersect(shape(r))
+        delta=old.cut(new).Volume()+new.cut(old).Volume()
+        check('protected:'+name,delta<1e-6,{'symmetric_difference_mm3':delta})
+    check('board_seated',volume(board,base)<1e-6 and volume(board,carrier)<1e-6,
+          {'base_overlap_mm3':volume(board,base),'carrier_overlap_mm3':volume(board,carrier)})
+    module=shape(carrier).fuse(shape(board))
+    for n,s in hw.items():
+        if n.startswith(('base_board_screws#','base_board_inserts#')):
+            module=module.fuse(shape(s))
+    # The module includes hardware that actually remains attached during removal.
+    fixed_base=shape(base).fuse(compound([s for n,s in hw.items() if n.startswith('base_carrier_inserts#')]))
+    obstacles={'base':fixed_base,'pan_ring':tu.pan_ring(G),'pan_clamp':tu.pan_clamp(G),'pan_pinion':tu.pan_pinion(G)}
+    for name,obstacle in obstacles.items():
+        for service in (False,True):
+            r=sweep(module,obstacle,seat=not service)
+            check(('remove:' if service else 'install:')+name,r['state'] in ('clear','touching'),r)
+    for name,obstacle in [('old_wall',original),('bumper_retained',tu.bumper_ring(G))]:
+        r=sweep(module,obstacle,seat=False)
+        check('negative:'+name,r['state'] in ('blocked','seat'),r)
+    r=sweep(module,base,direction=(0,1,0));check('negative:wrong_direction',r['state'] in ('blocked','seat'),r)
+    gates={}
+    for name,kwargs in [('pcb_bench',dict(which='base_board_screws')),
+                        ('carrier_installed',dict(which='base_carrier_screws',base=base)),
+                        ('pcb_inside_base',dict(which='base_board_screws',base=base)),
+                        ('bumper_tool',dict(which='base_carrier_screws',base=base,bumper=tu.bumper_ring(G))),
+                        ('short_screw',dict(which='base_carrier_screws',base=base,bad_length=4)),
+                        ('long_screw',dict(which='base_carrier_screws',base=base,bad_length=16)),
+                        ('missing_hole',dict(which='base_carrier_screws',base=base,missing_hole=True)),
+                        ('manufacturer_pcb',dict(which='base_board_screws',manufacturer=True)),
+                        ('manufacturer_carrier',dict(which='base_carrier_screws',base=base,manufacturer=True))]:
+        print('running fastener stage: '+name,flush=True)
+        gates[name]=hardware_gate(**kwargs)
+        (out/(name+'.json')).write_text(json.dumps(gates[name],indent=2)+'\n')
+        expected=name in ('pcb_bench','carrier_installed','manufacturer_pcb','manufacturer_carrier')
+        failure_kind={'pcb_inside_base':':tool','bumper_tool':':tool','short_screw':':engagement',
+                      'long_screw':':tip','missing_hole':':holes'}.get(name)
+        witnessed=expected or any(c['status']=='fail' and c['id'].endswith(failure_kind)
+                      and 'could not decide' not in c['message'] for c in gates[name]['checks'])
+        check(('fasteners:' if expected else 'negative:')+name,bool(gates[name]['pass'])==expected and witnessed,
+              {'counts':gates[name]['counts'],'expected_failure':failure_kind,'witnessed':witnessed,'findings':gates[name]['findings']})
+    # This audit participates in the aggregate, independently of each stage's
+    # preflight: removing a private input cannot turn a failed candidate green.
+    private=manufacturer_inputs()
+    for pn, record in private.items():
+        if record['available']:
+            try:
+                s=bb.normalized(pn,private=True).val();b=s.BoundingBox()
+                record.update(bbox_mm=[b.xlen,b.ylen,b.zlen],valid=s.isValid())
+            except Exception as exc:
+                record.update(valid=False,error=f'{type(exc).__name__}: {exc}')
+    check('manufacturer:model_coverage',manufacturer_complete(private),private)
+    import cadagent.gates.assembly as ga
+    sourcehash={n:hashlib.sha256((ROOT/n).read_bytes()).hexdigest() for n in SOURCES}
+    result=dict(schema='gyropup.base-board-service/1',pass_model_checks=model_checks_pass(checks,private),checks=checks,
+                physical_fit_verified=False,release_ready=False,hardware_geometry='public module geometry; manufacturer fastener stages require all private STEP inputs; no fallback',
+                manufacturer_models=private,commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),
+                sources=sourcehash,toolkit_assembly_sha256=hashlib.sha256(Path(ga.__file__).read_bytes()).hexdigest(),
+                seconds=round(time.time()-started,2),limits=['No physical fits or printed tolerances measured.',
+                'Harness disconnect access and cable slack not represented; service sequence remains conditional.',
+                'Changed pan base requires renewed structural qualification.',
+                'Generic dossier single-part assembly cannot represent preassembled module motion.',
+                'Manufacturer CAD remains private; numerical comparisons only.'])
+    out.mkdir(parents=True,exist_ok=True)
+    (out/'progress.json').write_text(json.dumps({'complete':True,'checks':checks},indent=2)+'\n')
+    (out/'checks.json').write_text(json.dumps(result,indent=2)+'\n')
+    for name,g in gates.items():(out/(name+'.json')).write_text(json.dumps(g,indent=2)+'\n')
+    for name,s in [('pan_base',base),('base_board_carrier',carrier),('base_board',board)]:
+        cq.exporters.export(s,str(out/(name+'.step')))
+    return 0 if result['pass_model_checks'] else 1
+
+
+if __name__=='__main__':
+    p=argparse.ArgumentParser();p.add_argument('--out',type=Path,default=ROOT/'exports/turret/base-board-service')
+    raise SystemExit(run(p.parse_args().out))

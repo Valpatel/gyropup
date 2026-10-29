@@ -26,13 +26,13 @@ BOOT_S = 0.3
 class SimServo:
     def __init__(self, sid: int, mode: int = 3, pos: float = 0.0, min_angle: int = 0, max_angle: int = 0,
                  rng: Optional[random.Random] = None, ref: str = 'present', p_corrupt: float = 0.0,
-                 read_noise: float = 1.0):
+                 read_noise: float = 1.0, max_torque: int = 1000):
         self.sid = sid
         self.rng = rng or random.Random(sid)
         self.ref = ref
         self.p_corrupt = p_corrupt            # probability that a reply is corrupted (checksum fails)
         self.read_noise = read_noise          # +- counts on position reads
-        self.eeprom = {'mode': mode, 'min_angle': min_angle, 'max_angle': max_angle}
+        self.eeprom = {'mode': mode, 'min_angle': min_angle, 'max_angle': max_angle, 'max_torque': max_torque}
         self.pos = float(pos)                 # output shaft, counts, continuous
         self.vel = 0.0
         self.goal = float(pos)
@@ -53,7 +53,7 @@ class SimServo:
         self.torque_on = False
         self.acc = 0
         self.goal_speed = 0
-        self.torque_limit = 1000
+        self.torque_limit = self.eeprom['max_torque']   # RAM 48 starts every power-up at EEPROM 16
         self.goal = self.pos
 
     def set_power(self, on: bool, t: float):
@@ -110,6 +110,7 @@ class SimServo:
         for a, b in ((sts.R_MIN_ANGLE, sts.u16(self.eeprom['min_angle'])),
                      (sts.R_MAX_ANGLE, sts.u16(self.eeprom['max_angle'])),
                      (sts.R_MODE, bytes([self.eeprom['mode']])),
+                     (sts.R_MAX_TORQUE, sts.u16(self.eeprom['max_torque'])),
                      (sts.R_ID, bytes([self.sid])),
                      (sts.R_TORQUE_ENABLE, bytes([1 if self.torque_on else 0])),
                      (sts.R_ACC, bytes([self.acc])),

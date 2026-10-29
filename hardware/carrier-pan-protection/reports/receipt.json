@@ -1,0 +1,41 @@
+{
+  "command": "python hardware/carrier-pan-protection/build.py",
+  "contract": {
+    "NC_groups": 12,
+    "components": 29,
+    "connected_nets": 14,
+    "package_leads": 102
+  },
+  "files_sha256": {
+    "../fuse-board/sexp.py": "94cc011d6e6d9a9f167930d744ef3579e7d2422a4b6fa8daf2dbeea219abf1e4",
+    "README.md": "190eb4977b2f9b5436fb1014e19819178fd4242d6a143780f72a689f04a99334",
+    "availability.json": "549a8ccdfd7d9ea95b5baedcb47ec7aa971cfbdeffe1092e4be13df40c480ec8",
+    "build.py": "266cac90baf8089f69cfb57aef1944dde3133fd1d50c7f8eec36af7926b7d840",
+    "calculate.py": "911d0f1402fa4ce7b087bd56fc1c54ab070d08564b44af3d42853b8223290ee9",
+    "candidate-bom.csv": "4e813cf037d429719d3ce18d4c8bdc5746eb462902c3ae09ab6d615dc18c26fc",
+    "candidate.kicad_sym": "6187f963d34e79a675ed7fd7bdccb7b53fa3b31271ad8d6b004da4e5066ee17d",
+    "circuit_design.py": "37b4d99eecaa1f567109df6762a00f69f46c02e6efbe7d53c35893d2955ace8a",
+    "fault-review.md": "32c4f7ab2c633e8c8493e0e3e7d05231daa0e77203251a5e8cbd16bbe36bc160",
+    "generate.py": "c0d0e2e48231f50046da5dfaaeaa70f93813b4932ee09ffad656dae63a61b397",
+    "pan-cutoff.kicad_pro": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+    "pan-cutoff.kicad_sch": "6e087bfa8eb39fc5ea1e9a9773b0fc6f497428f2cd66e82fc60880e153e653ed",
+    "pictures/pan-cutoff.svg": "26b641beaaa019706cd8ef74dfb39b209830c39b5f648faa7074d7177142ef18",
+    "pins.md": "37ce5846b0335bea6263851fd83cf629d92b1a8a897f00f5cb5ec8205a7cadc4",
+    "reports/calculations.json": "e93f370224b7d5efd9e8b8baa07a521295a5dfe2240f2b5bccc0f7d72ccbee0c",
+    "reports/erc.rpt": "f865fe4743be5edd27d5255f1a991de18f5700ae18f9c49ffc36292789835a68",
+    "reports/netlist.xml": "a47946ea5e162b3c43397f8cb58f5fc943f0abdb22ba72ab1e388cc8a43fd7fa",
+    "sym-lib-table": "59362d3eb908cbde7cddf09ec68ab949d6ef1da86c8bf5a718339c9f2fdbf444",
+    "test_circuit.py": "46fa8dc89f2ed24dd3a906b71889b20dd07d810f736a6943fb5d240ffb589f88",
+    "verify.py": "bcc7de12ba83f610b702b2520246071b947c8a7d1a9ddfd257f0030e3303b272"
+  },
+  "interface_source": "PR67 8b86e7f, confirmed unchanged at36aa696",
+  "kicad": "10.0.1",
+  "limits": [
+    "No PCB, DRC or footprint qualification",
+    "No transient simulation or measured circuit",
+    "No safe/ready/selected claim"
+  ],
+  "schema": 1,
+  "source_base": "4e40a8d7e5f85d5cd5b8618d81cf9af34c8a0a55",
+  "status": "CANDIDATE_NOT_QUALIFIED"
+}

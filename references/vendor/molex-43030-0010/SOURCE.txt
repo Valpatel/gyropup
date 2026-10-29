@@ -1,0 +1,11 @@
+Manufacturer: Molex
+Exact catalog identity: 43030-0010
+Retrieved: 2026-10-29
+Product CAD link observed on: https://cpc.farnell.com/molex/43030-0010/contact-socket-26awg-crimp/dp/CN25934
+Download: https://www.farnell.com/cad/1985646.zip
+Archive SHA256: 805614bf7554f17e4030764d431dc3533c8760224d6711e9618a92931e03d3b9
+Private file: 430300010.stp
+Private file SHA256: 81937008bcc8bc6181f357a6c0a8f58094c53e688c3e17ad1452a2e21a96493b
+Source status: distributor-hosted manufacturer-format model; direct primary copy/hash not obtained.
+Terms: no redistribution permission established; raw STEP and derived vendor geometry stay private.
+Limits: topology validity is not functional completeness. Housing wire-entry ends/cavities are simplified; see research/carrier-service-connectors. No mated-fit or physical service qualification.

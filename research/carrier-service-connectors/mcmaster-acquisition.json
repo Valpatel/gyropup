@@ -1,0 +1,24 @@
+{
+  "observations": [
+    {
+      "part": "90592A085",
+      "started_at": "2026-10-29T13:04:06.631215+00:00",
+      "navigation_status": [
+        200
+      ],
+      "downloaded": "references/vendor/mcmaster/90592A085/90592A085.step",
+      "finished_at": "2026-10-29T13:04:12.516712+00:00"
+    },
+    {
+      "part": "91290A113",
+      "started_at": "2026-10-29T13:07:16.858178+00:00",
+      "navigation_status": [
+        200
+      ],
+      "downloaded": "references/vendor/mcmaster/91290A113/91290A113.step",
+      "finished_at": "2026-10-29T13:07:22.306216+00:00"
+    }
+  ],
+  "toolkit_source": "2ad426943ce2c7232875e105e50810849f9a3e5e",
+  "limits": "Session-specific acquisition evidence; no vendor geometry, credentials or physical qualification."
+}

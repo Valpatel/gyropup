@@ -59,6 +59,13 @@
     "url": "https://outofdarts.com/products/worker-cheetah-rounds-rival-compatible-ammo-100-pack",
     "in_stock": true,
     "ships_from": "US"
+   },
+   {
+    "seller": "Out of Darts",
+    "url": "https://outofdarts.com/products/worker-ammo-rival-rounds",
+    "in_stock": null,
+    "ships_from": "US",
+    "note": "Worker Cheetah Rival rounds, the 100-pack under its other listing (second link at the same seller; a third-party alternate: catalog/alternates.json)"
    }
   ],
   "specs": {
@@ -76,8 +83,10 @@
    "https://outofdarts.com/products/worker-cheetah-rounds-rival-compatible-ammo-100-pack"
   ],
   "confidence": "product page",
-  "notes": "mass_g is per round. 75% heavier than a short dart, so more energy at the same speed; Hasbro sells Rival as 14+ with eyewear recommended. Not recommended for a kids' game.",
-  "key": "worker-cheetah-rival-rounds-100"
+  "notes": "mass_g is per round (Worker states about 1.75 g; D67 accepts 22.2-22.8 mm and 1.6-2.0 g, checked by cad/turret_gates.py ammo_range and the launch ceiling). Listed side by side with the official Nerf Rival refill (hasbro-nerf-rival-accu-round-60), cheapest in stock first. Rival rounds are a 14+ product; eye protection recommended, as Hasbro does.",
+  "key": "worker-cheetah-rival-rounds-100",
+  "name": "Worker Cheetah Rival-compatible rounds, 100-pack",
+  "used_for": "ammo (D67): third-party Rival-compatible rounds, 22.7 mm; the cheapest a round in stock (US$0.15)"
  },
  {
   "id": "feetech-sts3215-c018-12v",
@@ -776,11 +785,11 @@
    "file": null,
    "kind": "screw",
    "frame": "axis +Z, centred on the axis, head on +z and shank towards -z; z = 0 at the underside of the head (socket, button, pan, hex and flanged heads) or at the top face of a countersunk (flat) head",
-   "available": true,
+   "available": false,
    "step_url": "https://www.mcmaster.com/91290A113/",
    "bbox_mm": null,
    "volume_mm3": null,
-   "pending": "STEP not downloaded yet: McMaster-Carr asks for a login before CAD downloads (the product page itself reads without one). Finish with .venv/bin/python tools/mcmaster_cad.py --catalog --file catalog/turret.json --only turret_screw_m3x8 once logged in, or save the STEP from a logged-in browser as references/vendor/mcmaster/91290A113/91290A113.step and run the same command."
+   "pending": "2026-10-29: no cached STEP. The initial missing-specification-table error did not establish its cause. A fresh Chrome session at 08:16:39Z returned HTTP 200 with an explicit login requirement and no specification rows or CAD controls; this observation is session-specific. Cached 2026-10-27 specifications remain historical. Authored public geometry is labelled; manufacturer checks require the actual downloaded, normalized STEP and remain incomplete."
   },
   "frame": "axis +Z, centred on the axis, head on +z and shank towards -z; z = 0 at the underside of the head (socket, button, pan, hex and flanged heads) or at the top face of a countersunk (flat) head",
   "sources": [
@@ -1219,6 +1228,52 @@
   "qty_per_robot": 5
  },
  {
+  "id": "monsterbolts-shcs-b12-9-m3x40",
+  "key": "turret_screw_m3x40",
+  "category": "fastener",
+  "vendor": "Monster Bolts",
+  "model": "SHCS - B12.9 M03 x 040(PT)",
+  "name": "M3-0.5 x 40 mm socket head cap screw, class 12.9 alloy steel, black oxide, partial thread (DIN 912 / ISO 4762)",
+  "price_usd": 0.281,
+  "price_note": "Monster Bolts: $2.81 per pack of 10, $10.53 per 50 (price_usd is per piece)",
+  "price_checked": "2026-10-27",
+  "pack_qty": 10,
+  "pack_price_usd": 2.81,
+  "buy": [
+   {
+    "seller": "Monster Bolts",
+    "url": "https://monsterbolts.com/products/socket-cap-b12-9-m3",
+    "in_stock": true,
+    "ships_from": null,
+    "seller_pn": "SHCS - B12.9 M03 x 040(PT).0010 (variant 35986541004)",
+    "price_usd": 2.81,
+    "pack_qty": 10,
+    "stock": "available: true (Shopify; no count exposed)",
+    "read_on": "2026-10-27",
+    "how_read": "json"
+   }
+  ],
+  "specs": {
+   "thread": "M3x0.5",
+   "length_mm": 40.0,
+   "head_d_mm": 5.5,
+   "head_height_mm": 3.0,
+   "grade": "12.9",
+   "finish": "black oxide",
+   "threading": "partial (ISO 4762: b = 18 mm for M3, so the thread runs from the tip at z 62 to z 80: the J501 insert's whole length)"
+  },
+  "cad": {
+   "available": false
+  },
+  "sources": [
+   "https://monsterbolts.com/products/socket-cap-b12-9-m3"
+  ],
+  "confidence": "product page",
+  "used_for": "the turret's box adapter (cad/turret_box.py): one through each leg into the J501 lid's insert, in place of the J501's M3 x 16 (head on the leg's pad at z 102, tip at z 62 as before)",
+  "qty_per_robot": 0,
+  "notes": "McMaster-Carr sells this size in its 91290A black-oxide series, but its part number could not be found by product-page reads (tools/mcmaster_cad.py reads product pages only: 91290A134 is M5 x 110, 91290A132 M20 x 35); a McMaster line can replace this one once the number is known. Read from the store's Shopify product data (socket-cap-b12-9-m3.js): 48 variants, M3 x 4 to 40, packs of 10, 50 and 250."
+ },
+ {
   "id": "mcmaster-91290a144",
   "key": "turret_screw_m4x10",
   "category": "fastener",
@@ -1432,8 +1487,8 @@
    "https://www.mcmaster.com/91294A126/"
   ],
   "confidence": "product page",
-  "used_for": "the M2006 under the dial-housing floor, countersunk flush on Ø19",
-  "qty_per_robot": 3
+  "used_for": "the cradle's stop lug (D48): 2 x from the -y cheek plate's countersinks into the lug's tapped holes",
+  "qty_per_robot": 2
  },
  {
   "id": "mcmaster-91294a130",
@@ -1836,6 +1891,95 @@
   "confidence": "product page",
   "used_for": "the CT dowels: pressed in the cradle's rails, 2.3 mm up into the cartridge's base",
   "qty_per_robot": 2
+ },
+ {
+  "id": "mcmaster-91595a340",
+  "key": "turret_dowel_5x10",
+  "category": "fastener",
+  "vendor": "McMaster-Carr",
+  "model": "91595A340",
+  "name": "Dowel Pin, 52100 Alloy Steel, 5 mm Diameter, 10 mm Long",
+  "price_usd": 0.4612,
+  "price_note": "McMaster-Carr: $11.53 per pack of 25 (price_usd is per piece)",
+  "price_checked": "2026-10-27",
+  "pack_qty": 25,
+  "pack_price_usd": 11.53,
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/91595A340/",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "d_mm": 5.0,
+   "length_mm": 10.0,
+   "mass_g": null,
+   "mass_basis": "unknown",
+   "material": "Alloy Steel",
+   "mcmaster": {
+    "raw": {
+     "Tolerance Rating": "Standard",
+     "Fastener Head Type": "Plain",
+     "Material": "Alloy Steel",
+     "Diameter": "5 mm",
+     "Diameter Tolerance": "0.004 mm to 0.012 mm",
+     "Length": "10 mm",
+     "Double Shear Breaking Strength": "Not Rated",
+     "Minimum Hardness": "Rockwell C52",
+     "Specifications Met": "DIN 6325-m6, ISO 8734",
+     "Certificate Form": "Digital",
+     "Certificate Type": "Material Certificate with Traceable Lot Number",
+     "End Shape": "Round × Chamfer/Round",
+     "End Type": "Plain",
+     "Performance": "High Strength",
+     "Pin Type": "Dowel",
+     "Shaft Type": "Plain",
+     "Steel Grade": "52100 Alloy Steel",
+     "System of Measurement": "Metric",
+     "Country of Origin": "United States, Belgium, Canada, China, France, Germany, India, Indonesia, Italy, Japan, Malaysia, Mexico, Philippines, Poland, South Korea, Switzerland, Taiwan, Thailand, Vietnam",
+     "DFARS Compliance": "Not Specialty Metals Compliant",
+     "Export Control Classification Number (ECCN)": "EAR99",
+     "REACH Compliance": "REACH (EC 1907/2006) (02/04/2026, 253 SVHC) Compliant",
+     "RoHS Compliance": "RoHS 3 (2015/863/EU) Compliant",
+     "Schedule B Number": "731829.0000",
+     "U.S.–Mexico–Canada Agreement (USMCA) Qualifying": "No"
+    },
+    "parsed": {
+     "Diameter": {
+      "value": 5.0,
+      "unit": "mm"
+     },
+     "Diameter Tolerance": {
+      "min": 0.004,
+      "max": 0.012,
+      "unit": "mm"
+     },
+     "Length": {
+      "value": 10.0,
+      "unit": "mm"
+     }
+    }
+   }
+  },
+  "cad": {
+   "file": null,
+   "kind": "pin",
+   "frame": "axis +Z, centred on the axis; the larger end (flange, head, collar) at z = 0 and the part on +z; when both ends are the same size, the heavier end at z = 0",
+   "available": true,
+   "step_url": "https://www.mcmaster.com/91595A340/",
+   "bbox_mm": null,
+   "volume_mm3": null,
+   "pending": "STEP not downloaded yet: McMaster-Carr asks for a login before CAD downloads (the product page itself reads without one). Finish with .venv/bin/python tools/mcmaster_cad.py --catalog --file catalog/turret.json --only turret_dowel_5x10 once logged in, or save the STEP from a logged-in browser as references/vendor/mcmaster/91595A340/91595A340.step and run the same command."
+  },
+  "frame": "axis +Z, centred on the axis; the larger end (flange, head, collar) at z = 0 and the part on +z; when both ends are the same size, the heavier end at z = 0",
+  "sources": [
+   "https://www.mcmaster.com/91595A340/"
+  ],
+  "confidence": "product page",
+  "used_for": "the turret's box adapter (cad/turret_box.py): the TM face's two dowels, pressed 6.5 mm into the deck, 3.5 mm proud into the pan base's 4 mm holes",
+  "qty_per_robot": 0
  },
  {
   "id": "mcmaster-98381a414",
@@ -2304,38 +2448,38 @@
   "qty_per_robot": 2
  },
  {
-  "id": "mcmaster-51225k32",
+  "id": "mcmaster-51225k24",
   "key": "turret_tube_coupling",
   "category": "fastener",
   "vendor": "McMaster-Carr",
-  "model": "51225K32",
-  "name": "Continuous-Flex Tpv Rubber Tube for Chemicals, 5/16\" ID, 7/16\" OD",
-  "price_usd": 0.94,
-  "price_note": "McMaster-Carr: $0.94 per ft. (price_usd is per piece)",
+  "model": "51225K24",
+  "name": "Continuous-Flex Tpv Rubber Tube for Chemicals, 3/16\" ID, 5/16\" OD",
+  "price_usd": 0.62,
+  "price_note": "McMaster-Carr: $0.62 per ft. (price_usd is per piece)",
   "price_checked": "2026-10-27",
   "pack_qty": 1,
-  "pack_price_usd": 0.94,
+  "pack_price_usd": 0.62,
   "buy": [
    {
     "seller": "McMaster-Carr",
-    "url": "https://www.mcmaster.com/51225K32/",
+    "url": "https://www.mcmaster.com/51225K24/",
     "in_stock": null,
     "ships_from": "US"
    }
   ],
   "specs": {
-   "id_mm": 7.9375,
-   "od_mm": 11.1125,
+   "id_mm": 4.7625,
+   "od_mm": 7.9375,
    "mass_g": null,
    "mass_basis": "unknown",
    "material": "TPV",
    "mcmaster": {
     "raw": {
      "Tube Hardness Rating": "Soft",
-     "ID": "5/16\"",
-     "OD": "7/16\"",
+     "ID": "3/16\"",
+     "OD": "5/16\"",
      "Wall Thickness": "1/16\"",
-     "Bend Radius": "2 5/8\"",
+     "Bend Radius": "1 7/8\"",
      "Hardness": "Durometer 65A",
      "Maximum Pressure @ Temperature": "Not Rated",
      "Temperature Range": "-70° F to 245° F",
@@ -2343,7 +2487,7 @@
      "Flexibility": "Continuous Flex",
      "Clarity": "Opaque",
      "Color": "Black",
-     "Chemical Resistance (Excellent)": "Deionized Water, Methanol (Methyl Alcohol), Sodium Hypochlorite (Bleach), Acetic Acid (White Vinegar) (10% Concentration), Ethylene Glycol (50% Concentration), Hydrochloric Acid (10% Concentration), Hydrochloric Acid (30% Concentration), Hydrogen Peroxide (10% Concentration), Hydrogen Peroxide (30% Concentration), Sodium Hydroxide (Caustic Soda) (10% Concentration), Sodium Hydroxide (Caustic Soda) (30% Concentration), Sulfuric Acid (10% Concentration), Sulfuric Acid (30% Concentration)",
+     "Chemical Resistance (Excellent)": "Deionized Water, Methanol (Methyl Alcohol), Sodium Hypochlorite (Bleach), Acetic Acid (White Vinegar) (10% Concentration), Acetic Acid (White Vinegar) (30% Concentration), Ethylene Glycol (50% Concentration), Hydrochloric Acid (10% Concentration), Hydrochloric Acid (30% Concentration), Hydrogen Peroxide (10% Concentration), Hydrogen Peroxide (30% Concentration), Sodium Hydroxide (Caustic Soda) (10% Concentration), Sodium Hydroxide (Caustic Soda) (30% Concentration), Sulfuric Acid (10% Concentration), Sulfuric Acid (30% Concentration)",
      "Chemical Resistance (Moderate)": "Methyl Ethyl Ketone (MEK)",
      "Chemical Resistance (Not Recommended)": "Acetone, Diesel Fuel, Fuel Oil, Gasoline, Hydraulic Fluid, Isopropyl Alcohol, Synthetic Oil, Phosphoric Acid (25% Concentration), Phosphoric Acid (85% Concentration)",
      "Connects To": "Tube",
@@ -2365,11 +2509,11 @@
     },
     "parsed": {
      "ID": {
-      "value": 7.9375,
+      "value": 4.7625,
       "unit": "mm"
      },
      "OD": {
-      "value": 11.1125,
+      "value": 7.9375,
       "unit": "mm"
      },
      "Wall Thickness": {
@@ -2377,7 +2521,7 @@
       "unit": "mm"
      },
      "Bend Radius": {
-      "value": 66.675,
+      "value": 47.625,
       "unit": "mm"
      },
      "Temperature Range": {
@@ -2393,20 +2537,20 @@
    "kind": "rod",
    "frame": "axis +Z, centred on the axis; the larger end (flange, head, collar) at z = 0 and the part on +z; when both ends are the same size, the heavier end at z = 0",
    "available": true,
-   "step_url": "https://www.mcmaster.com/51225K32/",
+   "step_url": "https://www.mcmaster.com/51225K24/",
    "bbox_mm": null,
    "volume_mm3": null,
-   "pending": "STEP not downloaded yet: McMaster-Carr asks for a login before CAD downloads (the product page itself reads without one). Finish with .venv/bin/python tools/mcmaster_cad.py --catalog --file catalog/turret.json --only turret_tube_coupling once logged in, or save the STEP from a logged-in browser as references/vendor/mcmaster/51225K32/51225K32.step and run the same command."
+   "pending": "STEP not downloaded yet: McMaster-Carr asks for a login before CAD downloads (the product page itself reads without one). Finish with .venv/bin/python tools/mcmaster_cad.py --catalog --file catalog/turret.json --only turret_tube_coupling once logged in, or save the STEP from a logged-in browser as references/vendor/mcmaster/51225K24/51225K24.step and run the same command."
   },
   "frame": "axis +Z, centred on the axis; the larger end (flange, head, collar) at z = 0 and the part on +z; when both ends are the same size, the heavier end at z = 0",
   "sources": [
-   "https://www.mcmaster.com/51225K32/"
+   "https://www.mcmaster.com/51225K24/"
   ],
   "confidence": "product page",
   "used_for": "the slip ring's rotor coupling: a 25 mm length from the 1 ft sold",
   "qty_per_robot": 1,
   "options": [
-   "Choose a Length, ft. 10 25 50",
+   "Choose a Length, ft. 25 50",
    "Choose a Length, ft."
   ]
  },
@@ -3192,9 +3336,94 @@
    "https://www.pololu.com/product/2885"
   ],
   "confidence": "product page",
-  "used_for": "the flywheel rail: 24 V in, a fixed 12 V out, the only supply the flywheel ESCs ever see (the hardware speed ceiling)",
+  "used_for": "not the flywheel rail since D68 (the trimmed TDK i6A4W replaced it: its fixed +-4 % set point and 40 V input do not fit D68 and D66)",
+  "qty_per_robot": 0,
+  "notes": "Fixed output, no trim pot. Pololu suggests the D42V110F12 (same size and pinout). D68: replaced for the flywheel rail by tdk-lambda-i6a4w020a033v-001-r."
+ },
+ {
+  "id": "tdk-lambda-i6a4w020a033v-001-r",
+  "key": "tdk-lambda-i6a4w020a033v-001-r",
+  "category": "dcdc",
+  "vendor": "TDK-Lambda",
+  "model": "i6A4W020A033V-001-R",
+  "name": "i6A4W 250 W non-isolated buck, 9-53 V in, 3.3-15 V out by one trim resistor, 20 A (1/16 brick, horizontal through-hole)",
+  "price_usd": 47.46,
+  "price_note": "Digi-Key, one unit, 1,873 in stock (Digi-Key i6A product page, read 2026-10-27); Newark 81Y1493 $40.32 (36 in stock in a search snapshot)",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/ptm/t/tdk-lambda-americas-inc/i6a-series-of-non-isolated-dc-dc-converters",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "I6A4W020A033V-001-R",
+    "price_usd": 47.46,
+    "pack_qty": 1,
+    "stock": 1873,
+    "read_on": "2026-10-27",
+    "how_read": "page"
+   },
+   {
+    "seller": "Newark",
+    "url": "https://www.newark.com/tdk-lambda/i6a4w020a033v-001-r/dc-dc-converter-3-3v-to-40v-20a/dp/81Y1493",
+    "in_stock": null,
+    "ships_from": "US",
+    "seller_pn": "81Y1493",
+    "price_usd": 40.32,
+    "pack_qty": 1,
+    "stock": "36 in one snapshot, back-order in another",
+    "read_on": "2026-10-27",
+    "how_read": "search snippet"
+   }
+  ],
+  "specs": {
+   "size_mm": [
+    33.0,
+    22.9,
+    12.7
+   ],
+   "mass_g": 15,
+   "current_a": 20,
+   "power_w": 250,
+   "input_v": [
+    9,
+    53
+   ],
+   "turn_on_v": 10,
+   "output_v": [
+    3.3,
+    15
+   ],
+   "output_set": "one resistor from TRIM (the datasheet's trim table)",
+   "setpoint_tolerance_pct": 4,
+   "line_regulation_pct": 0.3,
+   "load_regulation_pct": 1.2,
+   "ripple_mvpp": 20,
+   "overcurrent_a": 27,
+   "efficiency_pct": [
+    90,
+    97
+   ],
+   "switching_khz": 400,
+   "remote_sense": "+ sense, up to 5 %",
+   "on_off": "negative logic (-001)",
+   "external_load_capacitance_uf": [
+    0,
+    1500
+   ],
+   "note": "output cannot exceed input; TDK datasheet i6A4W rev P10",
+   "package": "DIP (1/16 brick, flat on the board): 33 x 22.9 x 12.1 (TDK i6A4W spec) to 12.7 (rev P10); the -0S1 is the SIP version (33 x 11.4 x 24.8)",
+   "trim": "Ru from TRIM (6) to VOUT- (4): Ru = Vref F / (Vo - Vref) - G, Vref 0.6 V, F 36.5 k, G 511 R (TDK i6A full specification, rev 2.3: the i6A24's constants; the i6A4W's own to be confirmed): 1.53 k for 11.31 V, 1.43-1.64 k for 10.8-11.9 V",
+   "cin_uf": "100 (TDK typical application); Cout 0.1 uF + 22 uF"
+  },
+  "sources": [
+   "https://www.rgbautomatyka.pl/en/p/file/1160/I6A4W020A033V-001-R__TDK_78.pdf",
+   "https://www.digikey.com/en/ptm/t/tdk-lambda-americas-inc/i6a-series-of-non-isolated-dc-dc-converters"
+  ],
+  "confidence": "datasheet",
+  "used_for": "the flywheel rail (D68), U3 on the turret boards' level 0: BUS (15-42 V) in, RAIL ~11.31 V out (10.8-11.9 V per turret, set by the trim string R59-R65 at bench test 4.1), always on; the Pololu 2815 switches it to the ESCs and the feed servo while ARM is held",
   "qty_per_robot": 1,
-  "notes": "Fixed output, no trim pot. Pololu suggests the D42V110F12 (same size and pinout)."
+  "notes": "A buck: the rail sits 3 V under one DCB609 at its loaded 15 V, so no buck-boost is needed (the 1400 KV motor is what makes the rail low enough). 9-53 V in covers the 15-20.5 V pack and the 30-42 V 10S bus; D66's 54 V input ceiling is 1 V over its 53 V, which no supply reaches. Its +-4 % set point and the motors' KV spread are measured out by the per-turret trim; what remains (line 0.3 %, load 1.2 % over 0-20 A, temperature) is in the ceiling stack. A fixed resistor, not a pot: soldered, sealed and recorded with the trim. The negative-logic ON/OFF pin can take the arm chain. Pololu's D42V110F12 (12 V fixed, 9 A, 60 V in, $59.95) is the fallback without a trim (it fails D68's stack: sim/turret_launch.py trim.untrimmed)."
  },
  {
   "id": "pololu-d36v50f12-4095",
@@ -3230,7 +3459,7 @@
    "https://www.pololu.com/product/4095"
   ],
   "confidence": "product page",
-  "used_for": "the 12 V aux rail on the turret (tilt servo, laser) and the 12 V pan-servo rail in the base",
+  "used_for": "two on the turret: 12 V PAN on the base board (U2: the pan servo, the pendant loop) and 12 V AUX on level 1 (U15: the tilt servo); BUS in, 50 V max",
   "qty_per_robot": 2
  },
  {
@@ -3304,7 +3533,7 @@
    "https://www.pololu.com/product/2815"
   ],
   "confidence": "product page",
-  "used_for": "the safety switch: +24 V to the flywheel regulator and the C610 only while the arm chain holds its ON pin high (> 1 V)",
+  "used_for": "the safety switch (U4, level 1): RAIL (the i6A4W's 10.8-11.9 V) to FLY (the two ESCs and the feed servo) only while the arm chain holds its ON pin high (> 1 V); on the rail side since D66/D68 (the 42 V bus is over its 32 V)",
   "qty_per_robot": 1,
   "notes": "Pololu says it is not an emergency cutoff: the robot's radio stop cuts the head rail upstream as well."
  },
@@ -3347,8 +3576,8 @@
    "https://www.mouser.com/c/?q=EEU-FR1V102"
   ],
   "confidence": "datasheet",
-  "used_for": "the capacitor bank at the regulators' input (3 x 1000 uF ride a 2 ms ring bounce at 11 A)",
-  "qty_per_robot": 3
+  "used_for": "not used since D66: the turret's bus reaches 42 V, over its 35 V (panasonic-eeu-fr1j471b, 63 V, replaced it)",
+  "qty_per_robot": 0
  },
  {
   "id": "proto-board-52x50",
@@ -5045,7 +5274,7 @@
   "id": "sunnysky-x2216-880kv-v3",
   "key": "sunnysky-x2216-880kv-v3",
   "category": "turret",
-  "preferred": true,
+  "preferred": false,
   "vendor": "SunnySky",
   "model": "X2216 V3 880KV, short shaft (SKU SS-XV3-X2216-S-880-V3)",
   "name": "SunnySky X2216 880KV V3 outrunner, short shaft, with its bolt-on prop adapter and X-mount",
@@ -5133,9 +5362,96 @@
    "https://www.readymaderc.com/products/details/sunny-sky-x2216-brushless-motor-short-shaft-880kv"
   ],
   "confidence": "datasheet",
-  "used_for": "the two flywheel motors (D42), hanging bell-down under the cartridge's cage plate; the hub clamps on the bolt-on prop adapter",
+  "used_for": "not used since D68 (the 1400 KV of the same motor replaced it); kept for the record",
   "qty_per_robot": 2,
-  "notes": "Replaces the delisted DJI Snail 2305 (D42). 880 rpm/V sits in the cage's band on the fixed 12 V rail with Ø34 tyres (worst-corner ball 64.1 fps, docs/turret-prototype-plan.md 3.1). The drawing gives the stack and the 16/19 cross; the cage plate's radial slots take the cross in any quarter turn. Screws into the mount face must not reach past 2.8 mm (M3 x 6 through the 3.5 mm plate). The box has the bolt-on prop adapter, its washer and an X-mount (not used)."
+  "notes": "Replaces the delisted DJI Snail 2305 (D42). 880 rpm/V sits in the cage's band on the fixed 12 V rail with Ø34 tyres (worst-corner ball 64.1 fps, docs/turret-prototype-plan.md 3.1). The drawing gives the stack and the 16/19 cross; the cage plate's radial slots take the cross in any quarter turn. Screws into the mount face must not reach past 2.8 mm (M3 x 6 through the 3.5 mm plate). The box has the bolt-on prop adapter, its washer and an X-mount (not used). D68: replaced by the 1400 KV (sunnysky-x2216-1400kv-v3): ~100 fps needs ~15,900 rpm, 18 V on this motor (over its 4S rating)."
+ },
+ {
+  "id": "sunnysky-x2216-1400kv-v3",
+  "key": "sunnysky-x2216-1400kv-v3",
+  "category": "turret",
+  "preferred": true,
+  "vendor": "SunnySky",
+  "model": "X2216 V3 1400KV, short shaft (SKU SS-XV3-X2216-S-1400-V3)",
+  "name": "SunnySky X2216 1400KV V3 outrunner, short shaft, with its bolt-on prop adapter and X-mount",
+  "price_usd": 24.99,
+  "price_note": "SunnySky USA, V3, one unit, available (Shopify json, 2026-10-27); ReadyMadeRC $24.99 In Stock",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "SunnySky USA",
+    "url": "https://sunnyskyusa.com/products/sunnysky-x2216?variant=27868073427038",
+    "in_stock": true,
+    "ships_from": null,
+    "seller_pn": "SS-XV3-X2216-S-1400-V3 (variant 27868073427038, '1400 Short')",
+    "price_usd": 24.99,
+    "pack_qty": 1,
+    "stock": "available: true (Shopify; no count exposed)",
+    "read_on": "2026-10-27",
+    "how_read": "json"
+   },
+   {
+    "seller": "ReadyMadeRC",
+    "url": "https://www.readymaderc.com/products/details/sunnysky-x-series-v3-x2216-brushless-motor-short-shaft-1400kv",
+    "in_stock": true,
+    "ships_from": null,
+    "seller_pn": "SS-XV3-X2216-S-1400-V3 (RMRC 84546, GTIN 680306447800)",
+    "price_usd": 24.99,
+    "pack_qty": 1,
+    "stock": "In Stock (no quantity shown)",
+    "read_on": "2026-10-27",
+    "how_read": "page"
+   }
+  ],
+  "specs": {
+   "kv_rpm_per_v": 1400,
+   "poles": 14,
+   "slots": 12,
+   "pole_pairs": 7,
+   "stator_mm": "22 x 16",
+   "diameter_mm": 27.7,
+   "length_mount_face_to_bell_face_mm": 32.0,
+   "length_with_front_boss_mm": 34.0,
+   "length_overall_mm": 36.5,
+   "shaft_diameter_mm": 3.175,
+   "front_boss_mm": "Ø9 x 2.0",
+   "mount": "4 x M3 x 0.5, 2.8 deep, on the diagonals 45 deg either side of the lead exit: 19 apart on one, 16 on the other",
+   "prop_adapter": "bolt-on: Ø17 x 4 flange on 3 x M2 into the bell on Ø12 (Ø9 recess over the boss), Ø5 (0/-0.03) pilot 5.5 long, M5 x 0.8 stud 13 long; washer Ø14.8 x 2 (Ø5.1)",
+   "mass_g": 72,
+   "mass_note": "72 g with leads (SunnySky's table, the same can as every X2216 V3 KV); 71 g (RMRC)",
+   "resistance_ohm": 0.055,
+   "resistance_note": "55 mOhm between two leads (SunnySky's table)",
+   "no_load_current_a": 1.3,
+   "no_load_current_at_v": 10.0,
+   "kt_nm_per_a": 0.00682,
+   "no_load_speed_rpm": 15722,
+   "no_load_speed_note": "the trimmed flywheel rail (D68): each turret's rail set so the faster motor turns 15,722 rpm at 100 % throttle, warm (11.31 V for a nominal 1400 KV; 10.8-11.9 V for KV +-5 %)",
+   "rotor_inertia_kg_mm2": 4.8,
+   "rotor_inertia_note": "est from the drawing (not published): steel can Ø27.7 x 0.8 x 24.5 (13.4 g at r 13.45) + 14 magnets ~15 g at r 12 + end cap: 4.8 kg mm2 +-30 %",
+   "max_continuous_a": 33,
+   "leads": "18 AWG x 100-110 mm with connectors",
+   "voltage_range_v": [
+    7.4,
+    16.8
+   ],
+   "max_continuous_note": "33 A for 30 s, 540 W (SunnySky's table); 40 A ESC recommended",
+   "voltage_note": "2-4S LiPo (SunnySky); the D68 rail is 10.8-11.9 V (3S), inside it",
+   "bearing_rpm_note": "bearings not published; the same can and bearings are sold as the 2600 KV for 3-4S (~40,000 rpm no-load), so 16,330 rpm (the trim with every tolerance) is well inside them"
+  },
+  "cad": {
+   "step_url": null,
+   "available": false,
+   "drawing_url": "http://www.rcsunnysky.com/Uploads/ueditor/image/20190903/6370311669556908787898053.jpg"
+  },
+  "sources": [
+   "https://en.rcsunnysky.com/x-fixedwingseries/1102.html",
+   "http://www.rcsunnysky.com/Uploads/ueditor/image/20190903/6370311669556908787898053.jpg",
+   "https://www.readymaderc.com/products/details/sunny-sky-x2216-brushless-motor-short-shaft-880kv"
+  ],
+  "confidence": "datasheet",
+  "used_for": "the two flywheel motors (D68), hanging bell-down under the cartridge's cage plate; the hub clamps on the bolt-on prop adapter",
+  "qty_per_robot": 2,
+  "notes": "D68: replaces the 880 KV (D42). The 880 KV would need ~18.0 V for the same speed (5S, over its 2-4S rating, and a buck-boost from a 15 V pack); the 1400 KV gets there on ~11.3 V, inside its rating and within a buck's reach of one DCB609 at 15 V. Same can, stator, shaft and prop adapter, so the cage, hub and drawing are unchanged. Screws into the mount face must not reach past 2.8 mm (M3 x 6 through the 3.5 mm plate)."
  },
  {
   "id": "tmotor-mn2212-v2-920kv",
@@ -5766,9 +6082,111 @@
    "https://www.mouser.com/ProductDetail/167-R13244AAAA"
   ],
   "confidence": "product page",
-  "used_for": "the bench stand's power switch on the 24 V input",
+  "used_for": "the bench stand's power switch, between the DCB609 dock's 20 A fuse and the XT30 lead to the turret (15-20.5 V)",
   "qty_per_robot": 1,
-  "notes": "The DC-rated rocker sold by Digi-Key and Mouser. Same Ø20.2 hole as the Switch Components RA1-1A-DC-2-B-1 (the plan's choice: RS Americas $1.54, 7 in stock; TME $1.98), which is the backup."
+  "notes": "The DC-rated rocker sold by Digi-Key and Mouser. Same Ø20.2 hole as the Switch Components RA1-1A-DC-2-B-1 (the plan's choice: RS Americas $1.54, 7 in stock; TME $1.98), which is the backup. D66/D68 (sim/turret_power.py): at 15 V (the pack empty) the turret draws 11.2 A for ~0.2 s at the top of an 800 ms spin-up with the J4012 at 48 W and the servos moving, 13.1 A with every servo at its torque cap: over its 10 A, so on the stand (BUS_V under 24 V) the firmware stretches the ramp and slows bursts (docs/turret-wiring.md 5); a 15 A or larger DC switch is the stand's own fix (open)."
+ },
+ {
+  "id": "wago-221-413",
+  "key": "wago-221-413",
+  "category": "wiring",
+  "vendor": "WAGO",
+  "model": "221-413",
+  "name": "WAGO 221-413 LEVER-NUTS compact splicing connector, 3 conductors, 24-12 AWG, 32 A / 450 V, transparent housing",
+  "price_usd": 0.84,
+  "price_note": "Newark 71Y8329 about $0.84 each at qty 1; Del City 907061 about $0.57 each, in stock (WebSearch summaries of the listings: the pages return 403 to curl and WebFetch)",
+  "price_checked": "2026-10-27",
+  "pack_qty": 1,
+  "buy": [
+   {
+    "seller": "Newark",
+    "url": "https://www.newark.com/wago/221-413/terminal-block-pluggable-3pos/dp/71Y8329",
+    "in_stock": null,
+    "ships_from": "US",
+    "seller_pn": "71Y8329",
+    "price_usd": 0.84,
+    "pack_qty": 1,
+    "stock": null,
+    "read_on": "2026-10-27",
+    "how_read": "WebSearch summary"
+   },
+   {
+    "seller": "Del City",
+    "url": "https://www.delcity.net/store/wire-connectors-quick-splices/wago-connectors/221-lever-nut-3-conductor/",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "907061",
+    "price_usd": 0.57,
+    "pack_qty": 1,
+    "stock": "in stock (search summary)",
+    "read_on": "2026-10-27",
+    "how_read": "WebSearch summary"
+   }
+  ],
+  "specs": {
+   "conductors": 3,
+   "wire_awg": "24-12 (solid, stranded, fine-stranded)",
+   "rated_current_a": 32,
+   "rated_voltage_v": 450,
+   "strip_mm": 11,
+   "datasheet": "https://www.mouser.com/datasheet/2/737/Data_Sheet221_413_-1928674.pdf"
+  },
+  "cad": {
+   "available": false
+  },
+  "sources": [
+   "https://www.newark.com/wago/221-413/terminal-block-pluggable-3pos/dp/71Y8329",
+   "https://www.delcity.net/store/wire-connectors-quick-splices/wago-connectors/221-lever-nut-3-conductor/"
+  ],
+  "confidence": "search summary",
+  "used_for": "the turret's box adapter (cad/turret_box.py): the control pod's joins: +24 V and 0 V from the switch and the XT60 to the DT12's power pins, the pendant's loop to its safety pins",
+  "qty_per_robot": 0,
+  "notes": "Newark, Del City, Galco, Arrow and Digi-Key (2946-221-413-ND) block automated reads; Home Depot also lists 10 and 50 packs. The 221-413/996-010 ten-pack is obsolete (its replacement 221-413/K006-0000); the loose 221-413 is active."
+ },
+ {
+  "id": "preson-p8106ulrl00-38xoh",
+  "key": "preson-p8106ul-3-8in",
+  "category": "turret",
+  "vendor": "Pres-On (Presbond)",
+  "model": "P8106ULRL00.38XOH",
+  "name": "Closed-cell neoprene/EPDM/SBR foam strip, 1/16 in thick x 3/8 in wide x 50 ft, rubber adhesive one side (P8106UL series, SC42UL)",
+  "price_usd": 10.95,
+  "price_note": "Presbond (Pres-On's own store): $10.95 per 50 ft roll",
+  "price_checked": "2026-10-27",
+  "pack_qty": 1,
+  "buy": [
+   {
+    "seller": "Presbond",
+    "url": "https://presbond.com/products/1-16-thick-neoprene-foam-strip-3-8-width-x-50-length-black-rubber-adhesive",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "P8106ULRL00.38XOH (variant 51479574741266)",
+    "price_usd": 10.95,
+    "pack_qty": 1,
+    "stock": "available: true (Shopify; no count exposed)",
+    "read_on": "2026-10-27",
+    "how_read": "json"
+   }
+  ],
+  "specs": {
+   "thickness_mm": 1.59,
+   "width_mm": 9.5,
+   "length_m": 15.2,
+   "density_pcf": "4-8",
+   "cells": "closed",
+   "adhesive": "high-tack rubber PSA, one side, release liner",
+   "flammability": "FMVSS 302, UL 94 HF1"
+  },
+  "cad": {
+   "available": false
+  },
+  "sources": [
+   "https://presbond.com/products/1-16-thick-neoprene-foam-strip-3-8-width-x-50-length-black-rubber-adhesive"
+  ],
+  "confidence": "product page",
+  "used_for": "the turret's box adapter (cad/turret_box.py): the seal ring under the intake shroud's floor lip (a 3 mm strip cut from the roll, laid round the lip at r 47-50; 1.6 mm squeezed to 1.0 mm between the lip and the J501 roof)",
+  "qty_per_robot": 0,
+  "notes": "Read from the store's Shopify product data (.js). 3/8 in is the narrowest single roll in 1/16 in: the 1/4 in strip comes only as an 8-roll pack ($68.95). Cut one 3 mm strip along the roll with a knife against a rule; the shroud's lip is the template."
  },
  {
   "id": "switchcomponents-ra1-1a-dc-2-b-1",
@@ -6473,8 +6891,8 @@
    "https://www.mouser.com/ProductDetail/576-0297005.WXNV"
   ],
   "confidence": "product page",
-  "used_for": "the turret's +24 V fuse in the in-line holder (one spare)",
-  "qty_per_robot": 2,
+  "used_for": "not used since D66: the head branch's fuse is the 10 A MINI 58 V (body.json fuse_mini58_10a) in the same in-line holder (the bus reaches 42 V, over its 32 V)",
+  "qty_per_robot": 0,
   "notes": ""
  },
  {
@@ -7721,7 +8139,7 @@
    "https://www.digikey.com/en/products/result?keywords=1N5822-E3%2F54"
   ],
   "confidence": "product page",
-  "used_for": "the reverse-polarity diode after the 5 A fuse (D8) and across the 2815's output (D10)",
+  "used_for": "across the 2815's output (D10, on FLY). Not D8 since D66 (40 V: the bus reaches 42 V; diode-1n5408g)",
   "qty_per_robot": 1,
   "notes": "onsemi 1N5822G is the cheapest of the named makers at Mouser (Vishay 1N5822-E3/54 = 625-1N5822-E3, $0.91, 3292 in stock). Cheaper non-listed makers exist at Mouser (Taiwan Semiconductor 821-1N5822 $0.71, 1985 in stock) but were not chosen. The same aggregator page also shows Digi-Key 2156-1N5822G-ND with 11,879 in stock at $0.32; the seller of that listing could not be verified, so it is not used. Size: DO-201AD (case 267-05): body 7.30-9.50 mm long x 4.80-5.30 mm dia; leads 1.20-1.30 mm dia, 25.4 mm min length; cathode = polarity band"
  },
@@ -7949,5 +8367,1170 @@
   "used_for": "the pendant's plug (the switch's 3.5 mm plug cut off, this soldered on)",
   "qty_per_robot": 1,
   "notes": "MATES WITH the panel receptacle TB3M in the previous entry. Chosen over TA3FX (flex relief, cable <= 2.92 mm): TA3FX is out of stock at Mouser (502-TA3FX, stock 0, $13.98); Digi-Key TA3FX-ND has 1,461 at $14.59 qty 1 (thepartsdirect 10/27/26, https://www.digikey.com/en/products/detail/switchcraft-inc/TA3FX/1290046) if a thin cable and a boot are wanted. TA3F-ND at Digi-Key is on order, non-RoHS, not usable. Pair cost: Mouser $27.32, Digi-Key $27.46. Size: Housing 10.5 mm (0.413 in) dia; cable OD 4.32 mm max (no flex relief). Weight about 7 g."
+ },
+ {
+  "id": "mcmaster-92125a133",
+  "key": "turret_screw_m3x14_flat_ss",
+  "category": "fastener",
+  "vendor": "McMaster-Carr",
+  "model": "92125A133",
+  "name": "18-8 Stainless Steel Hex-Drive Flat Head Screw, M3 x 0.5 mm Thread Size, 14 mm Long",
+  "price_usd": 0.1065,
+  "price_note": "McMaster-Carr: $10.65 per pack of 100 (price_usd is per piece)",
+  "price_checked": "2026-10-27",
+  "pack_qty": 100,
+  "pack_price_usd": 10.65,
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/92125A133/",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "thread": "M3x0.5",
+   "length_mm": 14.0,
+   "head_d_mm": 6.0,
+   "head_height_mm": 1.7,
+   "mass_g": null,
+   "mass_basis": "unknown",
+   "material": "18-8 Stainless Steel",
+   "mcmaster": {
+    "raw": {
+     "Thread Direction": "Right Hand",
+     "Drive Style": "Hex",
+     "Tip Type": "Flat",
+     "Thread Size": "M3 × 0.5 mm",
+     "Length": "14 mm",
+     "Countersink Angle": "90°",
+     "Flat Head Profile": "Standard",
+     "Head Diameter": "6 mm",
+     "Head Height": "1.7 mm",
+     "Threading": "Fully Threaded",
+     "Tensile Strength": "70,000 psi",
+     "Certificate Form": "Digital",
+     "Certificate Type": "Material Certificate with Traceable Lot Number",
+     "Drive Size": "2 mm",
+     "Fastener Head Type": "Flat",
+     "Hardness": "Not Rated",
+     "Material": "18-8 Stainless Steel",
+     "Passivation": "Passivated",
+     "Performance": "Corrosion Resistant",
+     "Specifications Met": "DIN 7991, ISO 10642",
+     "System of Measurement": "Metric",
+     "Thread Fit": "Metric Class 6g",
+     "Thread Spacing": "Coarse",
+     "Thread Type": "Metric",
+     "Country of Origin": "Brazil, China, India, Taiwan, Thailand",
+     "DFARS Compliance": "Not Specialty Metals Compliant",
+     "Export Control Classification Number (ECCN)": "EAR99",
+     "REACH Compliance": "REACH (EC 1907/2006) (02/04/2026, 253 SVHC) Compliant",
+     "RoHS Compliance": "RoHS 3 (2015/863/EU) Compliant",
+     "Schedule B Number": "731815.9000",
+     "U.S.–Mexico–Canada Agreement (USMCA) Qualifying": "No"
+    },
+    "parsed": {
+     "Thread Size": {
+      "thread": "M3x0.5",
+      "d": 3.0,
+      "pitch": 0.5,
+      "unit": "mm"
+     },
+     "Length": {
+      "value": 14.0,
+      "unit": "mm"
+     },
+     "Head Diameter": {
+      "value": 6.0,
+      "unit": "mm"
+     },
+     "Head Height": {
+      "value": 1.7,
+      "unit": "mm"
+     },
+     "Tensile Strength": {
+      "value": 482.6332,
+      "unit": "MPa"
+     },
+     "Drive Size": {
+      "value": 2.0,
+      "unit": "mm"
+     }
+    }
+   }
+  },
+  "cad": {
+   "file": null,
+   "kind": "screw",
+   "frame": "axis +Z, centred on the axis, head on +z and shank towards -z; z = 0 at the underside of the head (socket, button, pan, hex and flanged heads) or at the top face of a countersunk (flat) head",
+   "available": true,
+   "step_url": "https://www.mcmaster.com/92125A133/",
+   "bbox_mm": null,
+   "volume_mm3": null,
+   "pending": "STEP not downloaded yet: McMaster-Carr asks for a login before CAD downloads (the product page itself reads without one). Finish with .venv/bin/python tools/mcmaster_cad.py --catalog --file catalog/turret.json --only turret_screw_m3x14_flat_ss once logged in, or save the STEP from a logged-in browser as references/vendor/mcmaster/92125A133/92125A133.step and run the same command."
+  },
+  "frame": "axis +Z, centred on the axis, head on +z and shank towards -z; z = 0 at the underside of the head (socket, button, pan, hex and flanged heads) or at the top face of a countersunk (flat) head",
+  "sources": [
+   "https://www.mcmaster.com/92125A133/"
+  ],
+  "confidence": "product page",
+  "used_for": "the cradle's horn (D48): 4 x through the +y cheek plate's countersinks and the printed horn boss into the tilt servo's horn, 1.8 mm of thread in its 2.5 mm flange (M3 x 14 is the only length that reaches the horn without touching the servo; not made in black-oxide alloy steel: 91294A132 is 12 mm and 91294A134 16 mm)",
+  "qty_per_robot": 4
+ },
+ {
+  "id": "mcmaster-91239a113",
+  "key": "turret_screw_m3x8_button",
+  "category": "fastener",
+  "vendor": "McMaster-Carr",
+  "model": "91239A113",
+  "name": "Class 10.9 Screw, M3 x 0.5 mm Thread Size, 8 mm Long",
+  "price_usd": 0.0982,
+  "price_note": "McMaster-Carr: $9.82 per pack of 100 (price_usd is per piece)",
+  "price_checked": "2026-10-27",
+  "pack_qty": 100,
+  "pack_price_usd": 9.82,
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/91239A113/",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "thread": "M3x0.5",
+   "head_height_mm": 1.65,
+   "head_d_mm": 5.7,
+   "length_mm": 8.0,
+   "mass_g": null,
+   "mass_basis": "unknown",
+   "material": "Black-Oxide Alloy Steel",
+   "mcmaster": {
+    "raw": {
+     "Thread Size": "M3 × 0.5 mm",
+     "Thread Direction": "Right Hand",
+     "Thread Spacing": "Coarse",
+     "Thread Type": "Metric",
+     "Thread Fit": "Metric Class 6g",
+     "Tip Type": "Flat",
+     "Fastener Head Type": "Rounded",
+     "Head Style": "Button",
+     "Head Profile": "Standard",
+     "Head Height": "1.65 mm",
+     "Head Diameter": "5.7 mm",
+     "Drive Style": "Hex",
+     "Drive Size": "2 mm",
+     "Length": "8 mm",
+     "Threading": "Fully Threaded",
+     "Tensile Strength": "120,000 psi",
+     "Certificate Form": "Digital",
+     "Certificate Type": "Material Certificate with Traceable Lot Number",
+     "Fastener Strength Grade/Class": "Class 10.9",
+     "Hardness": "Rockwell C32",
+     "Material": "Black-Oxide Alloy Steel",
+     "Performance": "High Strength",
+     "Specifications Met": "ISO 7380",
+     "System of Measurement": "Metric",
+     "Country of Origin": "United States, Belgium, Canada, China, France, Germany, India, Indonesia, Italy, Japan, Malaysia, Mexico, Philippines, Poland, South Korea, Switzerland, Taiwan, Thailand, Vietnam",
+     "DFARS Compliance": "Not Specialty Metals Compliant",
+     "Export Control Classification Number (ECCN)": "EAR99",
+     "REACH Compliance": "REACH (EC 1907/2006) (02/04/2026, 253 SVHC) Compliant",
+     "RoHS Compliance": "RoHS 3 (2015/863/EU) Compliant",
+     "Schedule B Number": "731815.9000",
+     "U.S.–Mexico–Canada Agreement (USMCA) Qualifying": "No"
+    },
+    "parsed": {
+     "Thread Size": {
+      "thread": "M3x0.5",
+      "d": 3.0,
+      "pitch": 0.5,
+      "unit": "mm"
+     },
+     "Head Height": {
+      "value": 1.65,
+      "unit": "mm"
+     },
+     "Head Diameter": {
+      "value": 5.7,
+      "unit": "mm"
+     },
+     "Drive Size": {
+      "value": 2.0,
+      "unit": "mm"
+     },
+     "Length": {
+      "value": 8.0,
+      "unit": "mm"
+     },
+     "Tensile Strength": {
+      "value": 827.3712,
+      "unit": "MPa"
+     }
+    }
+   }
+  },
+  "cad": {
+   "file": null,
+   "kind": "screw",
+   "frame": "axis +Z, centred on the axis, head on +z and shank towards -z; z = 0 at the underside of the head (socket, button, pan, hex and flanged heads) or at the top face of a countersunk (flat) head",
+   "available": true,
+   "step_url": "https://www.mcmaster.com/91239A113/",
+   "bbox_mm": null,
+   "volume_mm3": null,
+   "pending": "STEP not downloaded yet: McMaster-Carr asks for a login before CAD downloads (the product page itself reads without one). Finish with .venv/bin/python tools/mcmaster_cad.py --catalog --file catalog/turret.json --only turret_screw_m3x8_button once logged in, or save the STEP from a logged-in browser as references/vendor/mcmaster/91239A113/91239A113.step and run the same command."
+  },
+  "frame": "axis +Z, centred on the axis, head on +z and shank towards -z; z = 0 at the underside of the head (socket, button, pan, hex and flanged heads) or at the top face of a countersunk (flat) head",
+  "sources": [
+   "https://www.mcmaster.com/91239A113/"
+  ],
+  "confidence": "product page",
+  "used_for": "the cradle's cheek plates on the rail frame (D48): 8 x into M3 inserts in the rails' rebates; button heads (1.65 mm) keep 2.3 mm from the yoke's arms",
+  "qty_per_robot": 8
+ },
+ {
+  "id": "sendcutsend-cradle-plate-l",
+  "key": "sendcutsend-cradle-plate-l",
+  "category": "turret",
+  "vendor": "SendCutSend",
+  "model": "cradle_plate_l.dxf (6061-T6, 0.125 in)",
+  "name": "Cradle cheek plate, +y (the servo's side), laser-cut 6061-T6 aluminium 0.125 in, 90 x 62 mm, 9 holes, 4 countersunk",
+  "price_usd": null,
+  "price_note": "instant price on upload of exports/turret/cradle_plate_l.dxf at sendcutsend.com (no quote): est $10-18 for one in 6061-T6 0.125 in with 4 countersinks (90 deg, Ø6.4) on the face drawn",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "SendCutSend",
+    "url": "https://sendcutsend.com/materials/6061-t6-aluminum/",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "material": "6061-T6 aluminium",
+   "thickness_in": 0.125,
+   "thickness_mm": 3.175,
+   "mass_g": 21.5,
+   "drawing": "exports/turret/cradle_plate_l.dxf"
+  },
+  "sources": [
+   "https://sendcutsend.com/materials/6061-t6-aluminum/",
+   "https://sendcutsend.com/services/tapping/",
+   "https://sendcutsend.com/services/countersinking/"
+  ],
+  "confidence": "estimate",
+  "used_for": "the cradle's +y cheek (D48): the tilt servo's horn through the horn boss (4 x M3 x 14 flat heads), on the rail frame by 4 x M3 x 8",
+  "qty_per_robot": 1
+ },
+ {
+  "id": "sendcutsend-cradle-plate-r",
+  "key": "sendcutsend-cradle-plate-r",
+  "category": "turret",
+  "vendor": "SendCutSend",
+  "model": "cradle_plate_r.dxf (6061-T6, 0.125 in)",
+  "name": "Cradle cheek plate, -y (the pivot's side), laser-cut 6061-T6 aluminium 0.125 in, 90 x 62 mm, 7 holes, 1 tapped M5, 2 countersunk",
+  "price_usd": null,
+  "price_note": "instant price on upload of exports/turret/cradle_plate_r.dxf at sendcutsend.com (no quote): est $12-20 for one in 6061-T6 0.125 in with the M5 tap and 2 countersinks (90 deg, Ø6.4) on the face drawn",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "SendCutSend",
+    "url": "https://sendcutsend.com/materials/6061-t6-aluminum/",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "material": "6061-T6 aluminium",
+   "thickness_in": 0.125,
+   "thickness_mm": 3.175,
+   "mass_g": 21.9,
+   "drawing": "exports/turret/cradle_plate_r.dxf"
+  },
+  "sources": [
+   "https://sendcutsend.com/materials/6061-t6-aluminum/",
+   "https://sendcutsend.com/services/tapping/",
+   "https://sendcutsend.com/services/countersinking/"
+  ],
+  "confidence": "estimate",
+  "used_for": "the cradle's -y cheek (D48): the ISO 7379 shoulder screw in its tapped M5 hole, the stop lug on its outer face, on the rail frame by 4 x M3 x 8",
+  "qty_per_robot": 1
+ },
+ {
+  "id": "sendcutsend-stop-lug",
+  "key": "sendcutsend-stop-lug",
+  "category": "turret",
+  "vendor": "SendCutSend",
+  "model": "stop_lug.dxf (6061-T6, 0.100 in)",
+  "name": "Tilt hard-stop lug, laser-cut 6061-T6 aluminium 0.100 in, 24 x 23 mm, 2 holes tapped M3",
+  "price_usd": null,
+  "price_note": "instant price on upload of exports/turret/stop_lug.dxf at sendcutsend.com (no quote): est $6-10 for one in 6061-T6 0.100 in with 2 M3 taps",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "SendCutSend",
+    "url": "https://sendcutsend.com/materials/6061-t6-aluminum/",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "material": "6061-T6 aluminium",
+   "thickness_in": 0.1,
+   "thickness_mm": 2.54,
+   "mass_g": 2.0,
+   "drawing": "exports/turret/stop_lug.dxf"
+  },
+  "sources": [
+   "https://sendcutsend.com/materials/6061-t6-aluminum/",
+   "https://sendcutsend.com/services/tapping/",
+   "https://sendcutsend.com/services/countersinking/"
+  ],
+  "confidence": "estimate",
+  "used_for": "the barrel's hard stops at 0 and -25 deg (D48): on the -y cheek plate's outer face, 2 x M3 x 6 flat heads from its inner face and a drop of CA gel",
+  "qty_per_robot": 1
+ },
+ {
+  "id": "hasbro-nerf-rival-accu-round-60",
+  "key": "hasbro-nerf-rival-accu-round-60",
+  "category": "turret",
+  "vendor": "Hasbro (Nerf)",
+  "model": "F5052",
+  "name": "Nerf Rival 60 Accu-Round Refill (Hasbro F5052), 60 official Rival rounds",
+  "price_usd": 19.99,
+  "price_note": "Walmart $19.99 (its Nerf Rival refill listings, read through a web search 2026-10-27: Walmart's own pages answer a robot check); eBay $16.95 (product page 13055032602)",
+  "price_checked": "2026-10-27",
+  "pack_qty": 1,
+  "buy": [
+   {
+    "seller": "Walmart",
+    "url": "https://www.walmart.com/c/kp/nerf-rival-balls",
+    "in_stock": true,
+    "ships_from": "US",
+    "price_usd": 19.99,
+    "note": "listed as 'Nerf Rival 60 Accu-Round Refill Foam Rounds, Multi-color, 60 Count'"
+   },
+   {
+    "seller": "eBay",
+    "url": "https://www.ebay.com/p/13055032602",
+    "in_stock": null,
+    "ships_from": "US",
+    "price_usd": 16.95
+   }
+  ],
+  "specs": {
+   "mass_g": 1.83,
+   "diameter_mm": 22.7,
+   "pack_count": 60,
+   "material": "foam (Hasbro Accu-Round: the most accurate Rival round, Hasbro)",
+   "mass_basis": "BlasterHub's weighing of Hasbro Rival rounds, 1.83 g average (research/turret-launcher-study.md 2.1)"
+  },
+  "cad": {
+   "step_url": null,
+   "available": false
+  },
+  "sources": [
+   "https://www.walmart.com/c/kp/nerf-rival-balls",
+   "https://www.ebay.com/p/13055032602",
+   "https://nerf.fandom.com/wiki/Accu-Round"
+  ],
+  "confidence": "seller listing (search snippet for Walmart)",
+  "used_for": "ammo (D67): the official Nerf Rival round, the ball the turret's physics is sized on",
+  "qty_per_robot": 1,
+  "notes": "The official refill beside the third-party pack (D67). Hasbro's own shop no longer sells (shop.hasbro.com redirects to its where-to-buy page); the 50-round Accu-Round refill F5051 was US$14.99 there. Rival is sold 14+; recommend eye protection, as Hasbro does."
+ },
+ {
+  "id": "seeed-recomputer-mini-j4012-ext",
+  "key": "seeed-recomputer-mini-j4012-ext",
+  "category": "compute",
+  "vendor": "Seeed Studio",
+  "model": "114993553",
+  "name": "reComputer Mini J4012 with Extension: Jetson Orin NX 16 GB on the reComputer Mini carrier, its extension board (RJ-45, CAN, 4 x USB 3), fan and heat sink, 128 GB NVMe",
+  "price_usd": 999.0,
+  "price_note": "Seeed Studio US$999.00 (its reComputer Mini & accessories page, read 2026-10-27 in Chrome); the carrier alone SKU 114993592 is US$89, the extension board SKU 114993593 US$59",
+  "price_checked": "2026-10-27",
+  "pack_qty": 1,
+  "buy": [
+   {
+    "seller": "Seeed Studio",
+    "url": "https://www.seeedstudio.com/reComputer-Mini-J4012-with-Extension-p-6353.html",
+    "in_stock": null,
+    "ships_from": "US/CN",
+    "price_usd": 999.0,
+    "seller_pn": "114993553"
+   },
+   {
+    "seller": "Switch Science",
+    "url": "https://www.switch-science.com/products/10478",
+    "in_stock": false,
+    "ships_from": "JP",
+    "price_usd": null,
+    "price_note": "JPY 207,878 incl. tax; 0 in stock on 2026-10-27"
+   }
+  ],
+  "specs": {
+   "dimensions_mm": [
+    95,
+    63,
+    66.7
+   ],
+   "mass_g": 462,
+   "input": "XT30, 12-54 V DC",
+   "module": "Jetson Orin NX 16 GB (10-40 W; 157 TOPS in Super mode)",
+   "cooling": "Seeed's fan (5 V PWM) and heat sink for the NX, inside the enclosure",
+   "interfaces": "carrier: 2 x USB 3.2 A, USB-C host, micro-B device; extension: RJ-45 GbE, 2 x CAN, 4 x USB 3",
+   "operating_temp_c": [
+    -10,
+    50
+   ],
+   "basis": "Seeed wiki (recomputer_jetson_mini_getting_started) and Botland's listing (63 x 95 x 66.7 mm, 462 g, -10 to 50 C)"
+  },
+  "cad": {
+   "step_url": null,
+   "available": false
+  },
+  "sources": [
+   "https://www.seeedstudio.com/reComputer-Mini-optional-accessories.html",
+   "https://wiki.seeedstudio.com/recomputer_jetson_mini_getting_started/"
+  ],
+  "confidence": "seller page",
+  "used_for": "the turret's own computer (D66), in the compute plinth under the pan base",
+  "qty_per_robot": 1,
+  "notes": "Bought as the J4012 kit, not the bare carrier: it is the only listing that brings the NX 16 GB with a fan and heat sink sold for it on this carrier (Seeed sells no Mini cooler on its own), and the extension board carries the RJ-45 the J501 link needs. Backup: the same kit at Switch Science (out of stock), or the parts from Seeed (carrier US$89 + extension US$59) with an NX 16 GB module (Arrow, about US$699, 24 weeks) and a cooler to choose then. Seeed's product pages answer a bot check; the accessories page was read in Chrome."
+ },
+ {
+  "id": "adafruit-909",
+  "key": "adafruit-909",
+  "category": "wiring",
+  "vendor": "Adafruit",
+  "model": "909",
+  "name": "Panel Mount Ethernet Extension Cable (RJ-45 jack with two 4-40 ears, 25 cm to a plug)",
+  "price_usd": 4.95,
+  "price_note": "Adafruit US$4.95 (product page, in stock, 2026-10-27); Digi-Key 1528-1572-ND US$4.95 (aggregator)",
+  "price_checked": "2026-10-27",
+  "pack_qty": 1,
+  "buy": [
+   {
+    "seller": "Adafruit",
+    "url": "https://www.adafruit.com/product/909",
+    "in_stock": true,
+    "ships_from": "US",
+    "price_usd": 4.95
+   },
+   {
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/detail/adafruit-industries-llc/909/5844686",
+    "in_stock": true,
+    "ships_from": "US",
+    "price_usd": 4.95,
+    "seller_pn": "1528-1572-ND"
+   }
+  ],
+  "specs": {
+   "ears_mm": 25.0,
+   "wall_max_mm": 6.0,
+   "length_mm": 330
+  },
+  "cad": {
+   "step_url": null,
+   "available": false
+  },
+  "sources": [
+   "https://www.adafruit.com/product/909"
+  ],
+  "confidence": "product page",
+  "used_for": "the turret's Ethernet port to the J501 (D66), in the compute plinth's wall",
+  "qty_per_robot": 1,
+  "notes": ""
+ },
+ {
+  "id": "dewalt-20v-dock-adapter-12awg",
+  "key": "dewalt-20v-dock-adapter-12awg",
+  "category": "wiring",
+  "vendor": "generic",
+  "model": "DeWalt 18/20 V MAX battery dock adapter, 12 AWG leads",
+  "name": "DeWalt 20 V MAX battery dock adapter, 12 AWG leads (takes a FLEXVOLT pack in its 20 V mode)",
+  "price_usd": 12.95,
+  "price_note": "Walmart US$12.95 (listing read through a web search 2026-10-27; Walmart's pages answer a robot check); Etsy US$13.50",
+  "price_checked": "2026-10-27",
+  "pack_qty": 1,
+  "buy": [
+   {
+    "seller": "Walmart",
+    "url": "https://www.walmart.com/c/kp/dewalt-adapter",
+    "in_stock": null,
+    "ships_from": "US",
+    "price_usd": 12.95
+   },
+   {
+    "seller": "Etsy",
+    "url": "https://www.etsy.com/listing/838361833",
+    "in_stock": null,
+    "ships_from": "US",
+    "price_usd": 13.5
+   }
+  ],
+  "specs": {
+   "wire_awg": 12,
+   "fits": "DeWalt 20 V MAX packs; a FLEXVOLT DCB609 runs in its 20 V mode in it (15-20.5 V)",
+   "dimensions_mm": [
+    80,
+    65,
+    30
+   ],
+   "dimensions_mm_basis": "estimate (as the 60 V adapter in power_electronics.json)"
+  },
+  "cad": {
+   "step_url": null,
+   "available": false
+  },
+  "sources": [
+   "https://www.walmart.com/c/kp/dewalt-adapter",
+   "https://www.etsy.com/listing/838361833"
+  ],
+  "confidence": "seller listing (search snippet)",
+  "used_for": "the turret stand's battery dock (D66): one DCB609 in 20 V mode",
+  "qty_per_robot": 1,
+  "notes": "A 20 V MAX dock, not the 60 V one: a FLEXVOLT pack switches to 60 V only in a 60 V tool. The stand adds its own fuse and switch after it."
+ },
+ {
+  "id": "panasonic-eeu-fr1j471b",
+  "key": "panasonic-eeu-fr1j471b",
+  "category": "power_distribution",
+  "vendor": "Panasonic",
+  "model": "EEU-FR1J471B",
+  "name": "Aluminium electrolytic, 470 uF, 63 V, low ESR (FR), 12.5 x 25 mm radial",
+  "price_usd": 1.54,
+  "price_note": "Digi-Key P15300CT-ND $1.54 at 1, ~20,107 in stock (its row on findchips, read via search 2026-10-27); Newark 62W8085 $2.13, 10,970 in stock (oemstrade 2026-10-27); Mouser 667-EEU-FR1J471B also lists it",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/result?keywords=EEU-FR1J471B",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "P15300CT-ND",
+    "price_usd": 1.54,
+    "pack_qty": 1,
+    "stock": "~20,107 (findchips row, undated)",
+    "read_on": "2026-10-27",
+    "how_read": "search snippet"
+   },
+   {
+    "seller": "Newark",
+    "url": "https://www.newark.com/search?st=EEU-FR1J471B",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "62W8085",
+    "price_usd": 2.13,
+    "pack_qty": 1,
+    "stock": 10970,
+    "read_on": "2026-10-27",
+    "how_read": "oemstrade"
+   }
+  ],
+  "specs": {
+   "capacitance_uf": 470,
+   "voltage_v": 63,
+   "size_mm": [
+    12.5,
+    25.0
+   ],
+   "lead_pitch_mm": 5.0,
+   "ripple_current_a": 1.995,
+   "esr_ohm": null,
+   "temp_c": [
+    -40,
+    105
+   ],
+   "series": "FR (low ESR, long life)"
+  },
+  "sources": [
+   "https://www.oemstrade.com/search/EEU-FR1J471B",
+   "https://uk.rs-online.com/web/p/aluminium-capacitors/2403925"
+  ],
+  "confidence": "product page",
+  "used_for": "the bus bank on the turret boards' level 0 (C4, C5): at the TDK i6A4W's input (TDK: 100 uF Cin), across the turret's 15-42 V input after the slip ring",
+  "qty_per_robot": 2,
+  "notes": "D66: the bus reaches 42 V (10S full), over the 35 V of the EEU-FR1V102 it replaces; 63 V leaves 21 V over 42 V and clears the P6KE51A clamp's breakdown (48.5-53.6 V). Lying down it is 12.5 mm tall (level 0 allows 13). Ripple 1.995 A each (RS listing)."
+ },
+ {
+  "id": "tvs-p6ke51a",
+  "key": "tvs-p6ke51a",
+  "category": "turret",
+  "vendor": "Taiwan Semiconductor (or Diotec)",
+  "model": "P6KE51A",
+  "name": "TVS diode 600 W unidirectional, 43.6 V standoff, 70.1 V clamp, DO-15 (P6KE51A)",
+  "price_usd": 1.28,
+  "price_note": "Newark 99AC4212 (Taiwan Semiconductor) $1.28, 1,476 in stock; TME P6KE51A-DIO (Diotec) $0.47, 4,628 in stock (oemstrade 2026-10-27)",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Newark",
+    "url": "https://www.newark.com/search?st=P6KE51A",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "99AC4212",
+    "price_usd": 1.28,
+    "pack_qty": 1,
+    "stock": 1476,
+    "read_on": "2026-10-27",
+    "how_read": "oemstrade"
+   },
+   {
+    "seller": "TME",
+    "url": "https://www.tme.eu/en/details/p6ke51a-dio/",
+    "in_stock": true,
+    "ships_from": "PL",
+    "seller_pn": "P6KE51A-DIO",
+    "price_usd": 0.47,
+    "pack_qty": 1,
+    "stock": 4628,
+    "read_on": "2026-10-27",
+    "how_read": "oemstrade"
+   }
+  ],
+  "specs": {
+   "VRWM_V": 43.6,
+   "VBR_V": {
+    "min": 48.5,
+    "max": 53.6,
+    "at_IT_mA": 1.0
+   },
+   "VC_max_V": 70.1,
+   "IPP_A": 8.6,
+   "PPPM_W": "600 (10/1000 us)",
+   "IFSM_A": 100,
+   "polarity": "unidirectional; band = cathode",
+   "package": "DO-15 (body 3.6 x 7.6 mm)"
+  },
+  "sources": [
+   "https://www.oemstrade.com/search/P6KE51A",
+   "https://www.vishay.com/docs/88369/p6ke.pdf"
+  ],
+  "confidence": "datasheet",
+  "used_for": "the turret's input clamp (D66: 15-42 V): D13 across BUS on the boards' level 0, D14 at the base board's input",
+  "qty_per_robot": 2,
+  "notes": "The P6KE series' JEDEC values (Vishay 88369 table, the same as the P6KE15A entry's source). 43.6 V standoff: no current at the 42 V full bus; it starts at 48.5 V, under the 50 V of the Pololu regulators and the 53 V of the TDK i6A4W, for slow overvoltage; a fast, energetic spike clamps nearer 70 V, which is what a TVS cannot prevent: the source side (the body's branch, D55) must not ring past 50 V."
+ },
+ {
+  "id": "diode-1n5408g",
+  "key": "diode-1n5408g",
+  "category": "turret",
+  "vendor": "onsemi",
+  "model": "1N5408G",
+  "name": "Rectifier 3 A 1000 V, DO-201AD (1N5408)",
+  "price_usd": 0.58,
+  "price_note": "Mouser 863-1N5408G $0.58, 33,554 in stock; Newark 42K2941 $0.619, 31,895 (oemstrade 2026-10-27)",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/863-1N5408G",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "863-1N5408G",
+    "price_usd": 0.58,
+    "pack_qty": 1,
+    "stock": 33554,
+    "read_on": "2026-10-27",
+    "how_read": "oemstrade"
+   },
+   {
+    "seller": "Newark",
+    "url": "https://www.newark.com/search?st=1N5408G",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "42K2941",
+    "price_usd": 0.619,
+    "pack_qty": 1,
+    "stock": 31895,
+    "read_on": "2026-10-27",
+    "how_read": "oemstrade"
+   }
+  ],
+  "specs": {
+   "vrrm_v": 1000,
+   "io_A": 3.0,
+   "ifsm_A": 200,
+   "i2t_a2s": 166,
+   "package": "DO-201AD: body 9.5 x 5.3 mm max, leads 1.3 mm"
+  },
+  "sources": [
+   "https://www.oemstrade.com/search/1N5408",
+   "https://www.onsemi.com/pdf/datasheet/1n5400-d.pdf"
+  ],
+  "confidence": "datasheet",
+  "used_for": "D8: the reverse-polarity crowbar across the turret's BUS after the base's 10 A fuse (a reversed supply blows the fuse)",
+  "qty_per_robot": 1,
+  "notes": "Replaces the 1N5822 (40 V: reverse-biased at 42 V on a full 10S bus). Forward it carries the fault until the fuse opens: 200 A for 8.3 ms, I2t 166 A2s, over a 10 A MINI's melting I2t; the same DO-201AD body as the 1N5822."
+ },
+ {
+  "id": "yageo-mfr-25fbf52-1k33",
+  "key": "yageo-mfr-25fbf52-1k33",
+  "category": "turret",
+  "vendor": "Yageo",
+  "model": "MFR-25FBF52-1K33",
+  "name": "Resistor 1.33 k 1 % 1/4 W metal film (Yageo MFR-25FBF52)",
+  "price_usd": 0.1,
+  "price_note": "Mouser 603-MFR-25FBF52-1K33 $0.10, 17,999 in stock (its row on oemstrade.com, read 2026-10-27); Arrow as the backup",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-1K33",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "603-MFR-25FBF52-1K33",
+    "price_usd": 0.1,
+    "pack_qty": 1,
+    "stock": 17999,
+    "read_on": "2026-10-27",
+    "how_read": "oemstrade"
+   },
+   {
+    "seller": "Arrow",
+    "url": "https://www.arrow.com/en/products/mfr-25fbf52-1k33/yageo",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "V99:2348_17668792",
+    "price_usd": 0.016,
+    "pack_qty": 1,
+    "stock": "3495 (Americas)",
+    "read_on": "2026-10-27",
+    "how_read": "oemstrade"
+   }
+  ],
+  "specs": {
+   "value": "1.33 k",
+   "tolerance": "1 %",
+   "power_w": 0.25,
+   "package": "axial, 6.3 x 2.4 mm body"
+  },
+  "sources": [
+   "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-1K33",
+   "https://www.oemstrade.com/search/MFR-25FBF52-1K33"
+  ],
+  "confidence": "product page",
+  "used_for": "the flywheel rail's trim string on level 0 (R59-R65: TRIM to VOUT-, cad/turret_boards.py)",
+  "qty_per_robot": 1,
+  "notes": "Size: Axial through-hole, body 2.4 mm dia (+-0.2) x 6.3 mm long (+-0.5), lead dia 0.55 mm; 1/4 W, +-1 %, +-100 ppm/C (Yageo MFR datasheet, MFR-25 row)."
+ },
+ {
+  "id": "yageo-mfr-25fbf52-10r",
+  "key": "yageo-mfr-25fbf52-10r",
+  "category": "turret",
+  "vendor": "Yageo",
+  "model": "MFR-25FBF52-10R",
+  "name": "Resistor 10.0 R 1 % 1/4 W metal film (Yageo MFR-25FBF52)",
+  "price_usd": 0.1,
+  "price_note": "Newark 49AK5972 $0.10, 9,608 in stock; Quest Components $0.0705, 88 in stock (oemstrade 2026-10-27); Mouser 603-MFR-25FBF52-10R not shown there",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Newark",
+    "url": "https://www.newark.com/search?st=MFR-25FBF52-10R",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "49AK5972",
+    "price_usd": 0.1,
+    "pack_qty": 1,
+    "stock": 9608,
+    "read_on": "2026-10-27",
+    "how_read": "oemstrade"
+   },
+   {
+    "seller": "Quest Components",
+    "url": "https://www.questcomp.com/",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": null,
+    "price_usd": 0.0705,
+    "pack_qty": 1,
+    "stock": 88,
+    "read_on": "2026-10-27",
+    "how_read": "oemstrade"
+   }
+  ],
+  "specs": {
+   "value": "10.0 R",
+   "tolerance": "1 %",
+   "power_w": 0.25,
+   "package": "axial, 6.3 x 2.4 mm body"
+  },
+  "sources": [
+   "https://www.oemstrade.com/search/MFR-25FBF52-10R"
+  ],
+  "confidence": "product page",
+  "used_for": "the flywheel rail's trim string on level 0 (R59-R65: TRIM to VOUT-, cad/turret_boards.py)",
+  "qty_per_robot": 1,
+  "notes": "Size: Axial through-hole, body 2.4 mm dia (+-0.2) x 6.3 mm long (+-0.5), lead dia 0.55 mm; 1/4 W, +-1 %, +-100 ppm/C (Yageo MFR datasheet, MFR-25 row)."
+ },
+ {
+  "id": "yageo-mfr-25fbf52-20r",
+  "key": "yageo-mfr-25fbf52-20r",
+  "category": "turret",
+  "vendor": "Yageo",
+  "model": "MFR-25FBF52-20R",
+  "name": "Resistor 20.0 R 1 % 1/4 W metal film (Yageo MFR-25FBF52)",
+  "price_usd": 0.1,
+  "price_note": "Mouser 603-MFR-25FBF52-20R $0.10, 3,236 in stock (its row on oemstrade.com, read 2026-10-27); Arrow as the backup",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-20R",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "603-MFR-25FBF52-20R",
+    "price_usd": 0.1,
+    "pack_qty": 1,
+    "stock": 3236,
+    "read_on": "2026-10-27",
+    "how_read": "oemstrade"
+   },
+   {
+    "seller": "Arrow",
+    "url": "https://www.arrow.com/en/products/mfr-25fbf52-20r/yageo",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "V99:2348_17665225",
+    "price_usd": 0.016,
+    "pack_qty": 1,
+    "stock": 6692,
+    "read_on": "2026-10-27",
+    "how_read": "oemstrade"
+   }
+  ],
+  "specs": {
+   "value": "20.0 R",
+   "tolerance": "1 %",
+   "power_w": 0.25,
+   "package": "axial, 6.3 x 2.4 mm body"
+  },
+  "sources": [
+   "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-20R",
+   "https://www.oemstrade.com/search/MFR-25FBF52-20R"
+  ],
+  "confidence": "product page",
+  "used_for": "the flywheel rail's trim string on level 0 (R59-R65: TRIM to VOUT-, cad/turret_boards.py)",
+  "qty_per_robot": 1,
+  "notes": "Size: Axial through-hole, body 2.4 mm dia (+-0.2) x 6.3 mm long (+-0.5), lead dia 0.55 mm; 1/4 W, +-1 %, +-100 ppm/C (Yageo MFR datasheet, MFR-25 row)."
+ },
+ {
+  "id": "yageo-mfr-25fbf52-40r2",
+  "key": "yageo-mfr-25fbf52-40r2",
+  "category": "turret",
+  "vendor": "Yageo",
+  "model": "MFR-25FBF52-40R2",
+  "name": "Resistor 40.2 R 1 % 1/4 W metal film (Yageo MFR-25FBF52)",
+  "price_usd": 0.1,
+  "price_note": "Mouser 603-MFR-25FBF52-40R2 $0.10, 5,209 in stock (its row on oemstrade.com, read 2026-10-27); Quest Components as the backup",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-40R2",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "603-MFR-25FBF52-40R2",
+    "price_usd": 0.1,
+    "pack_qty": 1,
+    "stock": 5209,
+    "read_on": "2026-10-27",
+    "how_read": "oemstrade"
+   },
+   {
+    "seller": "Quest Components",
+    "url": "https://www.questcomp.com/",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": null,
+    "price_usd": 0.063,
+    "pack_qty": 1,
+    "stock": 557,
+    "read_on": "2026-10-27",
+    "how_read": "oemstrade"
+   }
+  ],
+  "specs": {
+   "value": "40.2 R",
+   "tolerance": "1 %",
+   "power_w": 0.25,
+   "package": "axial, 6.3 x 2.4 mm body"
+  },
+  "sources": [
+   "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-40R2",
+   "https://www.oemstrade.com/search/MFR-25FBF52-40R2"
+  ],
+  "confidence": "product page",
+  "used_for": "the flywheel rail's trim string on level 0 (R59-R65: TRIM to VOUT-, cad/turret_boards.py)",
+  "qty_per_robot": 1,
+  "notes": "Size: Axial through-hole, body 2.4 mm dia (+-0.2) x 6.3 mm long (+-0.5), lead dia 0.55 mm; 1/4 W, +-1 %, +-100 ppm/C (Yageo MFR datasheet, MFR-25 row)."
+ },
+ {
+  "id": "yageo-mfr-25fbf52-80r6",
+  "key": "yageo-mfr-25fbf52-80r6",
+  "category": "turret",
+  "vendor": "Yageo",
+  "model": "MFR-25FBF52-80R6",
+  "name": "Resistor 80.6 R 1 % 1/4 W metal film (Yageo MFR-25FBF52)",
+  "price_usd": 0.1,
+  "price_note": "Mouser 603-MFR-25FBF52-80R6 $0.10, 18,577 in stock (its row on oemstrade.com, read 2026-10-27); Digi-Key as the backup",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-80R6",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "603-MFR-25FBF52-80R6",
+    "price_usd": 0.1,
+    "pack_qty": 1,
+    "stock": 18577,
+    "read_on": "2026-10-27",
+    "how_read": "oemstrade"
+   },
+   {
+    "seller": "Digi-Key",
+    "url": "https://www.digikey.com/en/products/result?keywords=MFR-25FBF52-80R6",
+    "in_stock": null,
+    "ships_from": "US",
+    "seller_pn": null,
+    "price_usd": null,
+    "pack_qty": 1,
+    "stock": null,
+    "read_on": "2026-10-27",
+    "how_read": "search link (price not read)"
+   }
+  ],
+  "specs": {
+   "value": "80.6 R",
+   "tolerance": "1 %",
+   "power_w": 0.25,
+   "package": "axial, 6.3 x 2.4 mm body"
+  },
+  "sources": [
+   "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-80R6",
+   "https://www.oemstrade.com/search/MFR-25FBF52-80R6"
+  ],
+  "confidence": "product page",
+  "used_for": "the flywheel rail's trim string on level 0 (R59-R65: TRIM to VOUT-, cad/turret_boards.py)",
+  "qty_per_robot": 1,
+  "notes": "Size: Axial through-hole, body 2.4 mm dia (+-0.2) x 6.3 mm long (+-0.5), lead dia 0.55 mm; 1/4 W, +-1 %, +-100 ppm/C (Yageo MFR datasheet, MFR-25 row)."
+ },
+ {
+  "id": "yageo-mfr-25fbf52-162r",
+  "key": "yageo-mfr-25fbf52-162r",
+  "category": "turret",
+  "vendor": "Yageo",
+  "model": "MFR-25FBF52-162R",
+  "name": "Resistor 162 R 1 % 1/4 W metal film (Yageo MFR-25FBF52)",
+  "price_usd": 0.1,
+  "price_note": "Mouser 603-MFR-25FBF52-162R $0.10, 7,377 in stock (its row on oemstrade.com, read 2026-10-27); Arrow as the backup",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-162R",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "603-MFR-25FBF52-162R",
+    "price_usd": 0.1,
+    "pack_qty": 1,
+    "stock": 7377,
+    "read_on": "2026-10-27",
+    "how_read": "oemstrade"
+   },
+   {
+    "seller": "Arrow",
+    "url": "https://www.arrow.com/en/products/mfr-25fbf52-162r/yageo",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "V99:2348_17733694",
+    "price_usd": 0.016,
+    "pack_qty": 1,
+    "stock": "8185 (Americas)",
+    "read_on": "2026-10-27",
+    "how_read": "oemstrade"
+   }
+  ],
+  "specs": {
+   "value": "162 R",
+   "tolerance": "1 %",
+   "power_w": 0.25,
+   "package": "axial, 6.3 x 2.4 mm body"
+  },
+  "sources": [
+   "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-162R",
+   "https://www.oemstrade.com/search/MFR-25FBF52-162R"
+  ],
+  "confidence": "product page",
+  "used_for": "the flywheel rail's trim string on level 0 (R59-R65: TRIM to VOUT-, cad/turret_boards.py)",
+  "qty_per_robot": 1,
+  "notes": "Size: Axial through-hole, body 2.4 mm dia (+-0.2) x 6.3 mm long (+-0.5), lead dia 0.55 mm; 1/4 W, +-1 %, +-100 ppm/C (Yageo MFR datasheet, MFR-25 row)."
+ },
+ {
+  "id": "yageo-mfr-25fbf52-324r",
+  "key": "yageo-mfr-25fbf52-324r",
+  "category": "turret",
+  "vendor": "Yageo",
+  "model": "MFR-25FBF52-324R",
+  "name": "Resistor 324 R 1 % 1/4 W metal film (Yageo MFR-25FBF52)",
+  "price_usd": 0.1,
+  "price_note": "Mouser 603-MFR-25FBF52-324R $0.10, 7,829 in stock (its row on oemstrade.com, read 2026-10-27); Arrow as the backup",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-324R",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "603-MFR-25FBF52-324R",
+    "price_usd": 0.1,
+    "pack_qty": 1,
+    "stock": 7829,
+    "read_on": "2026-10-27",
+    "how_read": "oemstrade"
+   },
+   {
+    "seller": "Arrow",
+    "url": "https://www.arrow.com/en/products/mfr-25fbf52-324r/yageo",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "V99:2348_17662115",
+    "price_usd": 0.016,
+    "pack_qty": 1,
+    "stock": 9514,
+    "read_on": "2026-10-27",
+    "how_read": "oemstrade"
+   }
+  ],
+  "specs": {
+   "value": "324 R",
+   "tolerance": "1 %",
+   "power_w": 0.25,
+   "package": "axial, 6.3 x 2.4 mm body"
+  },
+  "sources": [
+   "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-324R",
+   "https://www.oemstrade.com/search/MFR-25FBF52-324R"
+  ],
+  "confidence": "product page",
+  "used_for": "the flywheel rail's trim string on level 0 (R59-R65: TRIM to VOUT-, cad/turret_boards.py)",
+  "qty_per_robot": 1,
+  "notes": "Size: Axial through-hole, body 2.4 mm dia (+-0.2) x 6.3 mm long (+-0.5), lead dia 0.55 mm; 1/4 W, +-1 %, +-100 ppm/C (Yageo MFR datasheet, MFR-25 row)."
+ },
+ {
+  "id": "yageo-mfr-25fbf52-182k",
+  "key": "yageo-mfr-25fbf52-182k",
+  "category": "turret",
+  "vendor": "Yageo",
+  "model": "MFR-25FBF52-182K",
+  "name": "Resistor 182 k 1 % 1/4 W metal film (Yageo MFR-25FBF52)",
+  "price_usd": 0.1,
+  "price_note": "Mouser 603-MFR-25FBF52-182K $0.10, 31,912 in stock (its row on oemstrade.com, read 2026-10-27); Quest Components as the backup",
+  "price_checked": "2026-10-27",
+  "buy": [
+   {
+    "seller": "Mouser",
+    "url": "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-182K",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": "603-MFR-25FBF52-182K",
+    "price_usd": 0.1,
+    "pack_qty": 1,
+    "stock": 31912,
+    "read_on": "2026-10-27",
+    "how_read": "oemstrade"
+   },
+   {
+    "seller": "Quest Components",
+    "url": "https://www.questcomp.com/",
+    "in_stock": true,
+    "ships_from": "US",
+    "seller_pn": null,
+    "price_usd": 0.045,
+    "pack_qty": 1,
+    "stock": 440,
+    "read_on": "2026-10-27",
+    "how_read": "oemstrade"
+   }
+  ],
+  "specs": {
+   "value": "182 k",
+   "tolerance": "1 %",
+   "power_w": 0.25,
+   "package": "axial, 6.3 x 2.4 mm body"
+  },
+  "sources": [
+   "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-182K",
+   "https://www.oemstrade.com/search/MFR-25FBF52-182K"
+  ],
+  "confidence": "product page",
+  "used_for": "R20, the BUS_V divider's top (BUS to the Feather's A0 through 182 k / 10 k)",
+  "qty_per_robot": 1,
+  "notes": "Size: Axial through-hole, body 2.4 mm dia (+-0.2) x 6.3 mm long (+-0.5), lead dia 0.55 mm; 1/4 W, +-1 %, +-100 ppm/C (Yageo MFR datasheet, MFR-25 row)."
+ },
+ {
+  "id": "blue-sea-6006",
+  "key": "blue-sea-6006",
+  "category": "turret",
+  "vendor": "Blue Sea Systems",
+  "model": "6006",
+  "name": "m-Series Mini ON-OFF battery switch, single circuit, 48 V DC, 275-300 A continuous (D70: the stand's DC power switch, 15 A or more)",
+  "price_usd": 34.16,
+  "price_note": "Walmart $34.16 (red knob 6006, read through a web search 2026-10-28); NavStore $27.95 on sale but sold out; Powerboat Supply $28.99 sold out; Waytek $39.96 (0 in stock)",
+  "price_checked": "2026-10-28",
+  "buy": [
+   {
+    "seller": "Walmart",
+    "url": "https://www.walmart.com/ip/Blue-Sea-6006200-Battery-Switch-Mini-ON-OFF-Black/931742861",
+    "in_stock": null,
+    "ships_from": "US",
+    "price_usd": 34.16,
+    "read_on": "2026-10-28",
+    "how_read": "web search snippet"
+   },
+   {
+    "seller": "NavStore",
+    "url": "https://navstore.com/products/blue-sea-6006-m-series-mini-battery-switch-single-circuit-on-off-red-6006",
+    "in_stock": false,
+    "ships_from": "US",
+    "price_usd": 27.95,
+    "read_on": "2026-10-28",
+    "how_read": "web search snippet"
+   },
+   {
+    "seller": "Waytek",
+    "url": "https://waytekwire.com/item/78405B/Blue-Sea-Systems-6006-m-Series-Battery-Switch-",
+    "in_stock": false,
+    "ships_from": "US",
+    "price_usd": 39.96,
+    "read_on": "2026-10-28",
+    "how_read": "web search snippet"
+   }
+  ],
+  "specs": {
+   "poles": 1,
+   "rating": "48 V DC; 275 A continuous (300 A in some listings), 455 A for 1 min",
+   "terminals": "3/8-16 (M10) studs, 120 in-lb",
+   "ip_rating": "IP66; ignition protected (ISO 8846, SAE J1171, UL 1107, UL 1500)",
+   "mass_g": 290,
+   "mounting": "surface, front-panel or rear-panel (Blue Sea's dimensioned drawing: the stand's cut-out is drawn from it on arrival)"
+  },
+  "cad": {
+   "step_url": null,
+   "available": false
+  },
+  "sources": [
+   "https://www.bluesea.com/products/6006",
+   "https://www.walmart.com/ip/Blue-Sea-6006200-Battery-Switch-Mini-ON-OFF-Black/931742861",
+   "https://navstore.com/products/blue-sea-6006-m-series-mini-battery-switch-single-circuit-on-off-red-6006"
+  ],
+  "confidence": "seller listings (web search); bluesea.com answers 403 to a plain fetch",
+  "used_for": "the stand: the turret's power switch on the FLEXVOLT's + lead (D70: up to 13.7 A at 15 V; the Bulgin rocker's 10 A was not enough)",
+  "qty_per_robot": 1,
+  "notes": "Replaces the Bulgin R13244AAAA (10 A 28 V DC) on the stand. A battery switch: it switches the pack itself, never on a load's pulse; a 15 A part would do, but no panel rocker with a DC rating of 15 A at 20.5 V or more was found in stock (Carling/E-Switch 20 A rockers are rated at 12-14 V DC)."
  }
 ]

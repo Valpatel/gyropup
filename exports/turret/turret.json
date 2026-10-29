@@ -7,8 +7,8 @@
    "solid": false,
    "frame": "base",
    "doc": "The fixed base, printed PA6-CF on its foot (100 % solid): a \u00d8144 x 5 foot on the TM pattern (4 x M5 x 16",
-   "mass_g_each": 155.5,
-   "print_h": 10.2,
+   "mass_g_each": 160.9,
+   "print_h": 10.5,
    "bed_mm": [
     160.5,
     157.6,
@@ -71,16 +71,16 @@
   "tilt_yoke": {
    "material": "pa6-cf",
    "qty": 1,
-   "note": "PA6-CF on its back; 4 x M4 x 10 to the turntable (heads 4 mm down in the bridge)",
+   "note": "PA6-CF on its back; 4 x M4 x 10 to the turntable (heads 6 mm down in the 12 mm bridge)",
    "solid": true,
    "frame": "pan",
-   "doc": "Printed PA6-CF on its back (layers run along the arms): an 8 mm bridge on the turntable (4 x M4) and two 8 mm",
-   "mass_g_each": 101.1,
-   "print_h": 6.6,
+   "doc": "Printed PA6-CF on its back (layers run along the arms): a 12 mm bridge on the turntable (4 x M4) and two 8 mm",
+   "mass_g_each": 126.6,
+   "print_h": 8.3,
    "bed_mm": [
-    152.0,
+    172.5,
     91.0,
-    48.4
+    40.0
    ],
    "fits_bed": true,
    "valid_single_solid": true
@@ -88,16 +88,50 @@
   "cradle": {
    "material": "pa6-cf",
    "qty": 1,
-   "note": "PA6-CF flat; ISO 7379 6 x 12 shoulder screw (M5) in an insert",
+   "note": "PA6-CF flat, no supports: the rail frame (D48); 8 x M3 inserts for the aluminium cheek plates",
    "solid": true,
    "frame": "tilt",
-   "doc": "Printed PA6-CF flat (100 % solid). Two 5 mm cheeks on the tilt axis and two 17 mm rails under the cartridge,",
-   "mass_g_each": 76.3,
-   "print_h": 5.0,
+   "doc": "The cradle's rail frame (D48), printed PA6-CF flat (100 % solid, no supports): two rails under the cartridge",
+   "mass_g_each": 45.9,
+   "print_h": 3.0,
    "bed_mm": [
-    181.6,
-    126.0,
-    59.1
+    149.6,
+    113.6,
+    10.0
+   ],
+   "fits_bed": true,
+   "valid_single_solid": true
+  },
+  "horn_boss": {
+   "material": "pa6-cf",
+   "qty": 1,
+   "note": "PA6-CF on an end face; between the +y plate and the tilt servo's horn (4 x M3 x 14 flat heads)",
+   "solid": true,
+   "frame": "tilt",
+   "doc": "Printed PA6-CF (100 % solid, on an end face): a \u00d820 x 9 boss between the +y cheek plate's outer face and the tilt",
+   "mass_g_each": 2.4,
+   "print_h": 0.2,
+   "bed_mm": [
+    20.0,
+    20.0,
+    9.0
+   ],
+   "fits_bed": true,
+   "valid_single_solid": true
+  },
+  "pivot_spacer": {
+   "material": "pa6-cf",
+   "qty": 1,
+   "note": "PA6-CF on its boss face, land up; between the -y plate and the MR126 (the shoulder screw through it)",
+   "solid": true,
+   "frame": "tilt",
+   "doc": "Printed PA6-CF (100 % solid, on its boss face): between the -y cheek plate's outer face and the MR126's inner",
+   "mass_g_each": 0.8,
+   "print_h": 0.1,
+   "bed_mm": [
+    18.0,
+    18.0,
+    4.0
    ],
    "fits_bed": true,
    "valid_single_solid": true
@@ -109,10 +143,10 @@
    "solid": true,
    "frame": "tilt",
    "doc": "The ball cartridge, printed PA6-CF on its base (100 % solid, 2.5 mm walls): a base plate on the cradle rails",
-   "mass_g_each": 150.7,
-   "print_h": 9.9,
+   "mass_g_each": 166.7,
+   "print_h": 10.9,
    "bed_mm": [
-    162.6,
+    165.6,
     103.2,
     81.6
    ],
@@ -125,12 +159,12 @@
    "note": "PA6-CF on its top face; on the X2216's prop adapter: washer + M5 nylon-insert nut; bore reamed to 5.00",
    "solid": true,
    "frame": "tilt",
-   "doc": "Flywheel hub, printed PA6-CF (100 % solid) on its top face: a \u00d828 x 12 rim for the TPU tyre and a 5.5 mm web whose",
-   "mass_g_each": 5.2,
-   "print_h": 0.7,
+   "doc": "Flywheel hub, printed PA6-CF (100 % solid) on its top face: a \u00d830 x 12 rim for the TPU tyre and a 5.5 mm web whose",
+   "mass_g_each": 5.9,
+   "print_h": 0.8,
    "bed_mm": [
-    28.0,
-    28.0,
+    30.0,
+    30.0,
     12.0
    ],
    "fits_bed": true,
@@ -142,12 +176,12 @@
    "note": "TPU 95A tyre",
    "solid": false,
    "frame": "tilt",
-   "doc": "TPU 95A tyre as mounted, \u00d834 x 12 (TYRE_SET), 3 mm thick on the hub's \u00d828 rim (the assembly; the printed blank is",
-   "mass_g_each": 4.3,
-   "print_h": 0.9,
+   "doc": "TPU 95A tyre as mounted, \u00d838 x 12 (TYRE_SET), 4 mm thick on the hub's \u00d830 rim and bonded to it (the assembly; the",
+   "mass_g_each": 6.3,
+   "print_h": 1.3,
    "bed_mm": [
-    34.0,
-    34.0,
+    38.0,
+    38.0,
     12.0
    ],
    "fits_bed": true,
@@ -180,7 +214,7 @@
    "mass_g_each": 44.5,
    "print_h": 1.8,
    "bed_mm": [
-    110.8,
+    103.4,
     101.4,
     65.0
    ],
@@ -241,16 +275,16 @@
   "laser_mount": {
    "material": "petg",
    "qty": 1,
-   "note": "PETG; 3 x M3 boresight, 2 x M3 to the cradle",
+   "note": "PETG; 3 x M3 boresight, 2 x M3 x 10 to the socket pad",
    "solid": false,
    "frame": "tilt",
-   "doc": "Laser holder, printed PETG: a ring round the \u00d87 laser (\u00d811 bore with an O-ring at the back) and three M3",
-   "mass_g_each": 7.4,
+   "doc": "Laser holder, printed PETG: a ring round the \u00d87 laser over the barrel (\u00d811 bore with an O-ring at the back) and",
+   "mass_g_each": 8.0,
    "print_h": 0.3,
    "bed_mm": [
-    20.0,
-    18.0,
-    24.1
+    33.0,
+    25.0,
+    18.0
    ],
    "fits_bed": true,
    "valid_single_solid": true
@@ -296,7 +330,7 @@
    "solid": true,
    "frame": "pan",
    "doc": "The slip ring's driver, printed PA6-CF: a \u00d839.6 x 6 disc held in the top of the turntable's \u00d840 bore (three",
-   "mass_g_each": 7.0,
+   "mass_g_each": 7.7,
    "print_h": 0.5,
    "bed_mm": [
     39.9,
@@ -313,18 +347,89 @@
    "solid": false,
    "frame": "pan",
    "doc": "The turret-board bay, printed PETG on its back: a 58 x 57 tray with 2 mm walls out to y -115, screwed to the -y",
-   "mass_g_each": 27.6,
+   "mass_g_each": 28.5,
    "print_h": 1.1,
    "bed_mm": [
     58.0,
     57.0,
-    46.5
+    49.2
+   ],
+   "fits_bed": true,
+   "valid_single_solid": true
+  },
+  "board_bay_lid": {
+   "material": "petg",
+   "qty": 1,
+   "note": "PETG flat; snaps into the bay's open face",
+   "solid": false,
+   "frame": "pan",
+   "doc": "The board bay's lid, printed PETG flat: a 2 mm plate over the bay's open face with a 1.5 mm lip inside its walls",
+   "mass_g_each": 8.9,
+   "print_h": 0.4,
+   "bed_mm": [
+    58.0,
+    57.0,
+    3.5
+   ],
+   "fits_bed": true,
+   "valid_single_solid": false
+  },
+  "compute_tray": {
+   "material": "pa6-cf",
+   "qty": 1,
+   "note": "PA6-CF flat; 4 x M5 x 16 down into the head's inserts (first), 4 x M4 inserts for the shell",
+   "solid": false,
+   "frame": "base",
+   "doc": "The plinth's floor, printed PA6-CF (solid): a \u00d8156 x 10 disc on the head's TM pattern (4 x M5 x 16 counterbored",
+   "mass_g_each": 144.0,
+   "print_h": 9.4,
+   "bed_mm": [
+    156.0,
+    156.0,
+    16.0
+   ],
+   "fits_bed": true,
+   "valid_single_solid": true
+  },
+  "compute_shell": {
+   "material": "petg",
+   "qty": 1,
+   "note": "PETG upside down; 4 x M4 x 10 down into the tray, 4 x M5 inserts for the pan base",
+   "solid": false,
+   "frame": "base",
+   "doc": "The plinth's wall, printed PETG upside down: a \u00d8156 x 3 ring from the tray to the pan base's foot, four columns",
+   "mass_g_each": 187.1,
+   "print_h": 7.5,
+   "bed_mm": [
+    156.0,
+    156.0,
+    76.0
    ],
    "fits_bed": true,
    "valid_single_solid": true
   }
  },
  "bought": {
+  "compute": {
+   "mass_g": 462.0,
+   "note": "Seeed reComputer Mini J4012 with Extension (Jetson Orin NX 16 GB, 10-40 W); on the tray between its locating ribs, held down by the shell's four tabs; XT30 power, RJ-45 to the wall's jack, CAN to the slip ring, its own fan and heat sink",
+   "frame": "base"
+  },
+  "eth_jack": {
+   "mass_g": 15.0,
+   "note": "Adafruit 909 panel-mount RJ-45 extension (25 cm lead to the J4012's port)",
+   "frame": "base"
+  },
+  "xt30_input": {
+   "mass_g": 4.0,
+   "note": "Amass XT30U-F on 14 AWG leads, its housing held line to line in the plinth wall's boss (a drop of CA)",
+   "frame": "base"
+  },
+  "input_fuses": {
+   "mass_g": 20.0,
+   "note": "two Bussmann HHM inline MINI holders on the tray (58 V MINI fuses only): 20 A main, 5 A to the J4012",
+   "frame": "base"
+  },
   "pan_servo": {
    "mass_g": 60.0,
    "note": "Feetech STS3215 12 V; horn up, pinion on the horn",
@@ -350,6 +455,21 @@
    "note": "pan clamp ring, SendCutSend 6061-T6 aluminium 0.125 in (exports/turret/pan_clamp.dxf)",
    "frame": "base"
   },
+  "cradle_plate_l": {
+   "mass_g": 24.6,
+   "note": "the +y cheek plate: the tilt servo's horn through the horn boss (4 x M3 x 14 flat heads, countersunk on its inner face); SendCutSend 6061-T6 aluminium 0.125 in (exports/turret/cradle_plate_l.dxf), on 4 x M3 x 8 button heads into the rail",
+   "frame": "tilt"
+  },
+  "cradle_plate_r": {
+   "mass_g": 25.0,
+   "note": "the -y cheek plate: tapped M5 for the shoulder screw, the stop lug on its outer face; SendCutSend 6061-T6 aluminium 0.125 in (exports/turret/cradle_plate_r.dxf), on 4 x M3 x 8 button heads into the rail",
+   "frame": "tilt"
+  },
+  "stop_lug": {
+   "mass_g": 2.0,
+   "note": "the tilt hard stop: SendCutSend 6061-T6 aluminium 0.100 in, 2 holes tapped M3 (exports/turret/stop_lug.dxf); 2 x M3 x 6 flat heads from the -y plate's inner face, and a drop of CA gel",
+   "frame": "tilt"
+  },
   "slip_ring": {
    "mass_g": 25.0,
    "note": "SparkFun ROB-13065 (Senring M220 series): 12 x 2 A, \u00d822 x 26.5, flange \u00d844.5 (envelope from the vendor sheets; flange holes to measure)",
@@ -361,8 +481,8 @@
    "frame": "pan"
   },
   "ring_coupling": {
-   "mass_g": 2.0,
-   "note": "soft silicone tubing 5/16 in ID x 7/16 in OD, coupling the rotor to the driver",
+   "mass_g": 1.0,
+   "note": "soft TPV rubber tube 3/16 in ID x 5/16 in OD (McMaster 51225K24), coupling the rotor to the driver",
    "frame": "pan"
   },
   "ring_leads_rotor": {
@@ -422,12 +542,12 @@
   },
   "flywheel_motor_l": {
    "mass_g": 72.0,
-   "note": "SunnySky X2216 880KV V3 (short shaft) (SunnySky's drawing): hangs bell-down under the cage plate (4 x M3 x 6), the hub on its prop adapter under the bell (washer + M5 nylon-insert nut)",
+   "note": "SunnySky X2216 1400KV V3 (short shaft) (SunnySky's drawing): hangs bell-down under the cage plate (4 x M3 x 6), the hub on its prop adapter under the bell (washer + M5 nylon-insert nut)",
    "frame": "tilt"
   },
   "flywheel_motor_r": {
    "mass_g": 72.0,
-   "note": "SunnySky X2216 880KV V3 (short shaft) (SunnySky's drawing): hangs bell-down under the cage plate (4 x M3 x 6), the hub on its prop adapter under the bell (washer + M5 nylon-insert nut)",
+   "note": "SunnySky X2216 1400KV V3 (short shaft) (SunnySky's drawing): hangs bell-down under the cage plate (4 x M3 x 6), the hub on its prop adapter under the bell (washer + M5 nylon-insert nut)",
    "frame": "tilt"
   },
   "cartridge_board": {
@@ -457,17 +577,32 @@
   },
   "laser": {
    "mass_g": 3.0,
-   "note": "Quarton VLM-650-03 LPT, 650 nm, < 1 mW (Class 2) (D42)",
+   "note": "Quarton VLM-650-03 LPT, 650 nm, < 1 mW (Class 2) (D42): over the barrel, in its holder on the cartridge",
+   "frame": "tilt"
+  },
+  "laser_screws": {
+   "mass_g": 0.8999999999999999,
+   "note": "3 x McMaster 93285A115 M3 x 6 nylon-tip set screws (18-8): the laser's boresight, in its holder's tapped ring",
+   "frame": "tilt"
+  },
+  "laser_inserts": {
+   "mass_g": 0.716,
+   "note": "2 x McMaster 94459A140 M3 x 5.7 heat-set inserts in the barrel socket's pad: the laser holder's screws",
+   "frame": "tilt"
+  },
+  "hopper_inserts": {
+   "mass_g": 1.0739999999999998,
+   "note": "3 x McMaster 94459A140 M3 x 5.7 heat-set inserts in the housing's lugs: the hopper's screws",
    "frame": "tilt"
   }
  },
  "tyre_set": {
-  "34": {
-   "file": "flywheel_tyre_d34.stl",
-   "mounted_d_mm": 34.0,
-   "printed_od_mm": 33.08,
-   "printed_bore_mm": 26.88,
-   "crush_on_this_cage": 0.162
+  "38": {
+   "file": "flywheel_tyre_d38.stl",
+   "mounted_d_mm": 38.0,
+   "printed_od_mm": 37.06,
+   "printed_bore_mm": 28.8,
+   "crush_on_this_cage": 0.4
   }
  },
  "sheet": {
@@ -483,7 +618,53 @@
     86.7
    ],
    "mass_g": 17.8,
-   "order": "https://sendcutsend.com/materials/6061-t6-aluminum/"
+   "order": "https://sendcutsend.com/materials/6061-t6-aluminum/",
+   "operations": "none"
+  },
+  "cradle_plate_l": {
+   "dxf": "exports/turret/cradle_plate_l.dxf",
+   "step": "exports/turret/cradle_plate_l.step",
+   "vendor": "SendCutSend",
+   "material": "6061-T6 aluminium",
+   "thickness_in": 0.125,
+   "thickness_mm": 3.175,
+   "size_mm": [
+    90.0,
+    62.1
+   ],
+   "mass_g": 24.6,
+   "order": "https://sendcutsend.com/materials/6061-t6-aluminum/",
+   "operations": "4 holes countersunk 90 deg to \u00d86.4 on the face drawn (the face on the rail; DIN 7991 M3 flat heads)"
+  },
+  "cradle_plate_r": {
+   "dxf": "exports/turret/cradle_plate_r.dxf",
+   "step": "exports/turret/cradle_plate_r.step",
+   "vendor": "SendCutSend",
+   "material": "6061-T6 aluminium",
+   "thickness_in": 0.125,
+   "thickness_mm": 3.175,
+   "size_mm": [
+    90.0,
+    62.1
+   ],
+   "mass_g": 25.0,
+   "order": "https://sendcutsend.com/materials/6061-t6-aluminum/",
+   "operations": "the \u00d84.2 hole tapped M5 x 0.8; 2 holes countersunk 90 deg to \u00d86.4 on the face drawn (the face on the rail)"
+  },
+  "stop_lug": {
+   "dxf": "exports/turret/stop_lug.dxf",
+   "step": "exports/turret/stop_lug.step",
+   "vendor": "SendCutSend",
+   "material": "6061-T6 aluminium",
+   "thickness_in": 0.1,
+   "thickness_mm": 2.54,
+   "size_mm": [
+    23.8,
+    22.7
+   ],
+   "mass_g": 2.0,
+   "order": "https://sendcutsend.com/materials/6061-t6-aluminum/",
+   "operations": "2 holes tapped M3 x 0.5"
   }
  },
  "info": {
@@ -491,7 +672,7 @@
    "point": [
     0.0,
     0.0,
-    214.0
+    300.0
    ],
    "interface": "TM: 4 x M5 on 80 x 80, 2 x \u00d85 dowels at (52, 0) and (0, -52), \u00d845 centre hole",
    "needs": "head_ring_tm(L) in place of the head_saddle ring (see its docstring)"
@@ -500,7 +681,7 @@
    "point": [
     0.0,
     0.0,
-    214.0
+    300.0
    ],
    "dir": [
     0,
@@ -512,7 +693,7 @@
    "point": [
     0.0,
     0.0,
-    354.0
+    440.0
    ],
    "dir": [
     -0.0,
@@ -521,9 +702,9 @@
    ]
   },
   "muzzle": [
-   147.0,
+   150.0,
    0.0,
-   339.0
+   425.0
   ],
   "muzzle_dir": [
    1.0,
@@ -531,9 +712,9 @@
    0.0
   ],
   "laser_origin": [
-   78.0,
-   -32.0,
-   339.0
+   84.0,
+   0.0,
+   454.5
   ],
   "tilt_range_deg": [
    -25.0,
@@ -544,13 +725,13 @@
    170.0
   ],
   "pan_hard_stop_deg": 173.5,
-  "mass_estimate_g": 1639.2,
+  "mass_estimate_g": 2560.8,
   "com": [
-   -5.6,
-   -4.9,
-   309.5
+   -4.1,
+   -2.8,
+   349.2
   ],
-  "com_above_mount_mm": 95.5,
+  "com_above_mount_mm": 49.2,
   "ball_d": 22.7,
   "bore": 24.2,
   "pose": {
@@ -562,25 +743,25 @@
  "gaps_under_1mm": [
   [
    "tilt_yoke",
-   "cradle",
+   "stop_lug",
    0.0,
    0.0,
    0.0
   ],
   [
    "tilt_yoke",
-   "cradle",
+   "stop_lug",
    0.0,
    0.0,
    -25.0
   ]
  ],
- "mass_g_with_balls": 1639.2,
- "mass_g_empty": 1584.3,
+ "mass_g_with_balls": 2560.8,
+ "mass_g_empty": 2505.9,
  "com_from_mount_mm": [
-  -5.6,
-  -4.9,
-  95.5
+  -4.1,
+  -2.8,
+  49.2
  ],
  "not_modelled_g": {
   "wiring and the cable loops": 50,
@@ -589,6 +770,6 @@
   "screws, inserts, dowels, springs": 17,
   "CT connector pair (Micro-Fit 3.0 class)": 12
  },
- "print_hours": 52.3,
- "made_g": 841.6
+ "print_hours": 71.5,
+ "made_g": 1208.9
 }

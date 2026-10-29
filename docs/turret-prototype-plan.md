@@ -1,5 +1,7 @@
 # Turret prototype plan: v0 on the bench, then v1 on the robot
 
+> **Historical v0/v1 prototype plan — current readiness is tracked separately.** The original plans, build directions and logs below are preserved for context. Earlier “ready to order/print/build” statements do not qualify the current mechanical configuration. Follow [current mechanical readiness](mechanical-readiness.md) and the [carrier component register](base-board-component-checklist.md) for completed reviews, unresolved gates and the next step. No complete turret print kit or physical assembly has been qualified.
+
 Written 2026-10-27 by the planner (Fable 5.1) for the turret program agent (Opus 5.5), from a read of the turret as
 merged on main (7ef69a2: the slip ring and continuous pan built and swept clean, the physics end to end, the parts rule
 applied, the load paths strengthened by the FEA, the clearance check, the assembly order; outputs rebuilt in 641ee22).
@@ -507,7 +509,7 @@ damp ones for test 5.3).
 | 6.5 | Knock-down: 20 g hinged plates at 2 and 4 m (sim/turret.py's plate), 5 balls each | every plate down |
 | 6.6 | Temperature: 100 balls in 2 min then 10 min at speed; IR gun on ESCs, motors, the flywheel regulator, each servo | ESCs <= 80 C, motors <= 70 C, regulator <= 60 C, servos <= 60 C |
 | 6.7 | Safety-line release during feeding: 20 releases at random points of 8-ball bursts | no ball above 20 fps after a release; where each resting ball ended, logged |
-| 6.8 | Mock lidar: a Ø103 x 72 cylinder 148 mm ahead, its top 41.7 mm above the TM face, the depression table loaded | the barrel and every ball 10 mm clear at every pan |
+| 6.8 | Mock lidar: a Ø103 x 72 cylinder 143 mm ahead (the body's lidar position), its top 41.7 mm above the TM face, the depression table loaded | the barrel and every ball 10 mm clear at every pan |
 
 Numbers that differ from the models go back to their owners: launch and feed to the physics agent (sim/turret_*.py),
 fits and strengths to cad/turret.py and cad/turret_studies.py, timings to docs/turret-firmware.md.
@@ -537,7 +539,7 @@ the consumers listed at the top of this page must be rebuilt and checked.
 | T13 | **Flywheels**: section 5.4 in order, 4.1 and 4.2 before any other powered flywheel test | exports/turret/bench/ceiling.json, speed_map.json, release.json | 4.1-4.9 green; the tyre chosen and written to CONFIG and to `TYRE_SET`'s note | 2 h agent, 1 bench day |
 | T14 | **Feed and accuracy**: sections 5.5 and 5.6 | exports/turret/bench/feed.json, groups.json, game.json | green, or the failure named with its count; the drop table into the firmware | 2 h agent, 1-2 bench days |
 | T15 | **v0 sign-off.** Tick the charter's checklist with links; the measured numbers back to the physics (launch, feed), the CAD (fits, strength) and the firmware (timings); the log entry; the mass by group measured | docs/turret-program.md, docs/turret-physics.md, docs/turret-firmware.md | every v0 claim in section 2.2 has a JSON; the open items for v1 listed with the number that demands each | 2 h |
-| T16 | **v1: mass, strength, lidar, riser.** The measured groups vs 1.5 kg; infill and wall cuts where T9 allows; the cradle's across-layer case fixed if under 1.2; `cad/turret_lidar.py` rerun; the riser print; the 30 cm drop test; the bumper fitted; CONFIG rows | cad/turret.py, cad/turret_studies.py, cad/turret_lidar.py, exports/turret/lidar/ | mass_g_with_balls <= 1500 in turret.json or a new budget agreed in docs/head-payload.md; every fall case >= 1.2; the depression table regenerated | 8 h, 1 bench day |
+| T16 | **v1: mass, strength, lidar, riser.** The measured groups vs 1.5 kg; infill and wall cuts where T9 allows; the cradle's across-layer case fixed if under 1.2 (done before its first print instead: D48, docs/turret-next-plan.md N1); `cad/turret_lidar.py` rerun; the riser print; the 30 cm drop test; the bumper fitted; CONFIG rows | cad/turret.py, cad/turret_studies.py, cad/turret_lidar.py, exports/turret/lidar/ | mass_g_with_balls <= 1500 in turret.json or a new budget agreed in docs/head-payload.md; every fall case >= 1.2; the depression table regenerated | 8 h, 1 bench day |
 | T17 | **v1: awesome and dock, robot hardware.** Lights and buzzer, hopper beam, fill flap and spring, green laser if wanted; the DT06 robot harness with the radio stop; manual firing on the Orin box (`cad/turret_box.py`); the ring's life test started in the background | cad/turret.py, cad/turret_box.py, docs/turret-wiring.md | each item's acceptance from docs/turret-program.md's checklist; the box scene fires 24 balls on command with the pendant held | 10 h agent, 2 bench days |
 
 Dependencies: T1 first (the servos and motors are the critical path); T2 and T4 can run in parallel once the motor
@@ -564,7 +566,7 @@ T11-T14 in order; T16-T17 after T15.
 | PA6-CF moisture and layer strength | low / fits and cracks | Dry the spool; the fits table; the allowables already assume humid, print-knocked-down values |
 | The Feather M4 CAN is one product from one maker | low / schedule | Adafruit, Digi-Key and Mouser all stock it; the Feather RP2040 CAN is the backup; the pin map fits both |
 | The taller cage changes the tilt group's CoM | low / the barrel must still rise to 0 deg unpowered | T2's `cad/turret_motion.py` rerun: the CoM stays behind the tilt axis at every hopper fill (gravity torque negative in motion.json) |
-| The cradle's across-layer SF in a robot fall (1.0 / 0.83 / 0.81) | low on the bench / a v1 fix | T9 reruns it; T16 fixes it (a thicker rail root or layers turned) before the robot |
+| The cradle's across-layer SF in a robot fall (1.0 / 0.83 / 0.81) | low on the bench / a v1 fix | T9 reruns it; superseded by D48: aluminium cheek plates on a printed rail frame before the first print (docs/turret-next-plan.md N1) |
 
 ## Appendix: the numbers used
 

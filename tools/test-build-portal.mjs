@@ -1,6 +1,7 @@
 /** Product integration: real tables, original downloads, and browser-local part state. */
 import assert from 'node:assert/strict';
 import {mkdir,readFile,writeFile} from 'node:fs/promises';
+import {execFileSync} from 'node:child_process';
 import {parseHTML} from 'linkedom';
 import {chromium,webkit} from '@playwright/test';
 const base=(process.env.SITE_URL||'http://127.0.0.1:8893').replace(/\/$/,'');
@@ -47,6 +48,27 @@ try{
  assert.equal(await page.getByRole('button',{name:/^Picture: sort/}).count(),0,'Picture-only columns have no meaningless sort control');
  const summaries=await page.evaluate(()=>({total:+document.querySelector('#sum-total').dataset.usd,sellers:[...document.querySelectorAll('#sellertable tbody tr[data-seller]')].reduce((sum,row)=>sum+ +row.dataset.usd,0),made:+document.querySelector('#sum-made').dataset.usd,hours:+document.querySelector('#sum-hours').dataset.h}));
  assert.ok(Math.abs(summaries.total-summaries.sellers)<.01);assert.ok(summaries.made>0&&summaries.hours>0);
+ // Archived print metadata stays visible beside its queue and mixed totals,
+ // then leaves those totals when that workstream is excluded. Other streams
+ // must not inherit the turret's historical status.
+ assert.equal(await page.locator('#queue .print-history-note').count(),1);
+ assert.match(await page.locator('#queue .print-history-note').textContent(),/lack current source receipts/);
+ assert.equal(await page.locator('#streams .print-history-note').count(),1);
+ assert.equal(await page.locator('#streams .print-history-note').evaluate(note=>note.closest('.stream').querySelector('input[data-stream]').dataset.stream),'turret');
+ assert.equal(await page.locator('#summary .print-history-total').count(),1);
+ assert.equal(await page.locator('#printlede .print-history-total').count(),1);
+ assert.equal(await page.locator('#orders .print-history-total').count(),1);
+ assert.equal(await page.locator('#queue .print-history-note a').count(),2);
+ const turretToggle=page.locator('#streams input[data-stream="turret"]');
+ await turretToggle.uncheck();
+ assert.equal(await page.locator('#queue .print-history-note').count(),0);
+ assert.equal(await page.locator('#summary .print-history-total, #printlede .print-history-total, #orders .print-history-total').count(),0);
+ assert.equal(await page.locator('#queue tr[data-part-key^="print/turret/"]').count(),0);
+ assert.ok(await page.locator('#queue tr[data-part-key^="print/body/"]').count()>0);
+ assert.ok(Number(await page.locator('#sum-hours').getAttribute('data-h'))<summaries.hours);
+ await turretToggle.check();await checkModelActions();
+ assert.equal(await page.locator('#queue .print-history-note').count(),1);
+ assert.equal(Number(await page.locator('#sum-hours').getAttribute('data-h')),summaries.hours);
  const shared=await page.locator('#orders tr[data-part-key]').evaluateAll((rows,keys)=>rows.find(row=>keys.includes(row.dataset.partKey)&&row.closest('table').tBodies[0].rows.length>2)?.dataset.partKey,progressKeys);assert.ok(shared,'Build and Progress share catalog part identities');
 
  const target=page.locator('#orders tr[data-part-key='+JSON.stringify(shared)+']');
@@ -73,14 +95,32 @@ try{
  await page.getByText('Leg · what to print',{exact:true}).click();
  const prints=page.locator('#print table');await checkNativeSort(prints,7,'ascending');await prints.locator('tbody input[type=checkbox]').first().check();
  const printedKey=await prints.locator('tbody tr').first().getAttribute('data-part-key');await page.reload();await ready();assert.equal(await page.locator('tr[data-part-key='+JSON.stringify(printedKey)+'] input').first().isChecked(),true);
- const inventory=await(await context.request.get(base+'/site/models.json')).json();assert.equal(inventory.files.length,495);assert.deepEqual(inventory.files.reduce((counts,f)=>(counts[f.format]=(counts[f.format]||0)+1,counts),{}),{step:188,stl:288,'3mf':19});
+ const inventory=await(await context.request.get(base+'/site/models.json')).json();
+ // Check every original against the served revision's Git tree, not a frozen
+ // file count or the inventory endpoint's own claim of completeness.
+ assert.match(version.revision,/^[a-f0-9]{40}$/);
+ const publishedRoots=['designer','exports','catalog','designs','docs','research','cad','sim','hardware','firmware'];
+ const committed=execFileSync('git',['ls-tree','-rz','--name-only',version.revision,'--',...publishedRoots],{cwd:new URL('..',import.meta.url)}).toString().split('\0').filter(Boolean);
+ const expectedModels=committed.filter(file=>/\.(stl|step|stp|3mf)$/i.test(file)).map(file=>'/'+file).sort();
+ assert.ok(expectedModels.length>0,'Served revision contains original CAD files');
+ assert.deepEqual(inventory.files.map(file=>file.path).sort(),expectedModels,'Every committed public original appears exactly once');
+ for(const file of inventory.files)assert.equal(file.format,file.path.split('.').pop().toLowerCase());
  // Every published original has its own adjacent directory preview and unchanged download.
  const directories=new Map();for(const file of inventory.files){const dir=file.path.slice(0,file.path.lastIndexOf('/')+1);if(!directories.has(dir))directories.set(dir,[]);directories.get(dir).push(file);}
  for(const [dir,files] of directories){const response=await context.request.get(base+dir);assert.equal(response.status(),200);const {document}=parseHTML(await response.text());for(const file of files){const name=file.path.split('/').pop(),original=[...document.querySelectorAll('a[data-model-original]')].find(a=>decodeURIComponent(new URL(a.getAttribute('href'),base+dir).pathname)===file.path);assert.ok(original,file.path+' original');const preview=original.nextElementSibling;assert.ok(preview.hasAttribute('data-model-preview'),file.path+' preview');assert.equal(new URL(preview.getAttribute('href'),base).searchParams.get('file'),file.path);assert.ok(original.hasAttribute('download'));}}
  await page.goto(base+'/designer/build.html');await ready();
  const media=await(await context.request.get(base+'/catalog/images.json')).json();
  const shown=await page.locator('#made tr[data-part-key],#queue tr[data-part-key^="print/body/"]').evaluateAll(rows=>rows.map(row=>({key:row.dataset.partKey.replace(/^(made|print)\//,''),src:row.querySelector('img')?.getAttribute('src')})));
- assert.equal(shown.length,26);for(const row of shown)assert.equal(new URL(row.src,base+'/designer/build.html').pathname,'/'+media[row.key].path,row.key);
+ const framePlan=await(await context.request.get(base+'/exports/body/print-plan.json')).json();
+ const expectedShown=Object.keys(framePlan.parts).map(key=>'body/'+key);
+ for(const stream of ['body','leg','rig']){
+  const bom=await(await context.request.get(base+`/exports/${stream}/bom.json`)).json();
+  expectedShown.push(...(bom.made_to_order||[]).map(part=>stream+'/'+part.key));
+ }
+ const turretBom=await(await context.request.get(base+'/exports/turret/bench/bom.json')).json();
+ expectedShown.push(...Object.keys(turretBom.ordered_to_drawing).map(key=>'turret/'+key));
+ assert.deepEqual(shown.map(row=>row.key).sort(),expectedShown.sort(),'Every made-to-order and first-frame BOM row is shown');
+ for(const row of shown){assert.ok(media[row.key]?.path,row.key+' has a scoped geometry image');assert.equal(new URL(row.src,base+'/designer/build.html').pathname,'/'+media[row.key].path,row.key);}
  for(const key of ['pa6-cf','petg','tpu95','tpu95-gyroid']){const img=page.locator('#orders tr[data-part-key="material/'+key+'"] img');if(await img.count())assert.equal(await img.getAttribute('src'),media[key].image_url,key);}
  await page.route(url=>url.href===media.petg.image_url,route=>route.abort('failed'));
  const filament=page.locator('#orders tr[data-part-key="material/petg"]');await filament.locator('xpath=ancestor::details[contains(@class,"seller")]').locator(':scope > summary').click();
@@ -89,6 +129,49 @@ try{
  for(const [width,height] of [[320,568],[568,320],[390,844],[844,390]]){await page.setViewportSize({width,height});await page.evaluate(()=>window.scrollTo(0,document.querySelector('#made').getBoundingClientRect().top+scrollY-70));const layout=await page.evaluate(()=>({width:innerWidth,scroll:document.documentElement.scrollWidth,controls:[...document.querySelectorAll('#made .cad-table-tools input,#made .cad-table-tools select')].map(el=>({width:el.getBoundingClientRect().width,height:el.getBoundingClientRect().height}))}));assert.ok(layout.scroll<=width+1,JSON.stringify(layout));assert.ok(layout.controls.every(r=>r.height>=44&&r.width<=width),JSON.stringify(layout));await page.screenshot({path:`${out}/${engine.name()}-${width}x${height}.png`});}
  await page.setViewportSize({width:320,height:568});await page.evaluate(()=>{const host=document.querySelector('#made'),scroll=host.querySelector('.cad-table-scroll');scroll.scrollLeft=scroll.scrollWidth;window.scrollTo(0,host.getBoundingClientRect().top+scrollY-70);});
  const sticky=await page.locator('#made tbody tr').first().evaluate(row=>{const cell=row.querySelector('.cad-part-identity'),r=cell.getBoundingClientRect(),checks=[...row.querySelectorAll('.cad-status-check')].map(label=>{const r=label.getBoundingClientRect(),hit=document.elementFromPoint(r.x+r.width/2,r.y+r.height/2);return {x:r.x,right:r.right,height:r.height,width:r.width,reachable:label===hit||label.contains(hit)};});return {text:(cell.querySelector('b')||cell).innerText.trim(),x:r.x,right:r.right,checks};});assert.ok(sticky.text&&sticky.x>=0&&sticky.right<=160,JSON.stringify(sticky));assert.ok(sticky.checks.every(r=>r.height>=44&&r.width>=44&&r.x>=sticky.right-1&&r.right<=320&&r.reachable),JSON.stringify(sticky));await page.screenshot({path:`${out}/${engine.name()}-status-320.png`});
+ // Small preparation pages must expose their primary inspection actions without
+ // sideways scrolling. Page scrollWidth alone misses nested table clipping.
+ const fitReceipt=JSON.parse(await readFile(new URL('../exports/turret/carrier-insert-fit/receipt.json',import.meta.url),'utf8'));
+ for(const width of [320,390,1440]){
+  await page.setViewportSize({width,height:900});
+  await page.goto(base+'/site/pages/research-carrier-insert-fit-readme-md.html?live=0');
+  for(const name of Object.keys(fitReceipt.specimens)){
+   const action=page.getByRole('link',{name:`Preview ${name}.step in 3D`,exact:true});
+   // Do not use scrollIntoView: it can horizontally scroll an ancestor and
+   // conceal the initial clipped-action defect this check is meant to catch.
+   const verticalOnly=()=>action.evaluate(a=>window.scrollTo({left:0,top:a.getBoundingClientRect().top+scrollY-innerHeight/2,behavior:'instant'}));
+   await verticalOnly();
+   const placement=()=>action.evaluate(a=>{
+    const r=a.getBoundingClientRect(),hit=document.elementFromPoint(r.x+r.width/2,r.y+r.height/2);let clipped=false,horizontallyScrolled=false;
+    for(let parent=a.parentElement;parent;parent=parent.parentElement){
+     horizontallyScrolled ||= parent.scrollLeft!==0;
+     if(/^(auto|scroll|hidden|clip)$/.test(getComputedStyle(parent).overflowX)){
+      const box=parent.getBoundingClientRect(),left=box.left+parent.clientLeft,right=left+parent.clientWidth;
+      clipped ||= r.left<left||r.right>right;
+     }
+    }
+    return {x:r.x,right:r.right,width:r.width,height:r.height,viewport:innerWidth,reachable:hit===a||a.contains(hit),clipped,horizontallyScrolled};
+   });
+   const accessible=r=>r.x>=0&&r.right<=r.viewport&&r.width>=44&&r.height>=44&&r.reachable&&!r.clipped&&!r.horizontallyScrolled;
+   const baseline=await placement();assert.ok(accessible(baseline),JSON.stringify({name,width,...baseline}));
+   if(width===320){
+    const previous=await action.getAttribute('style');await action.evaluate(a=>a.style.transform='translateX(400px)');
+    assert.equal(accessible(await placement()),false,'An offscreen primary action must fail even inside a contained page');
+    await action.evaluate((a,value)=>value===null?a.removeAttribute('style'):a.setAttribute('style',value),previous);
+    assert.ok(accessible(await placement()));
+    // Keep the button inside the viewport but clip it inside a smaller scroll
+    // ancestor. A horizontal automation helper would silently reveal it.
+    const parentStyle=await action.evaluate(a=>a.parentElement.getAttribute('style'));
+    // Keep original+preview siblings together so live link decoration does not
+    // create an unrelated replacement action while the fixture is installed.
+    await action.evaluate(a=>{const content=a.parentElement,wrapper=document.createElement('div');wrapper.dataset.testClip='';wrapper.style.cssText='display:block;width:120px;overflow-x:auto;white-space:nowrap';content.before(wrapper);wrapper.append(content);content.style.marginLeft='100px';content.style.width='max-content';});
+    await verticalOnly();const nested=await placement();assert.equal(nested.clipped,true);assert.equal(nested.horizontallyScrolled,false);assert.equal(accessible(nested),false,'Nested clipping cannot be concealed by automation scrolling');
+    await action.evaluate((a,value)=>{const content=a.parentElement,wrapper=content.parentElement;wrapper.replaceWith(content);value===null?content.removeAttribute('style'):content.setAttribute('style',value);},parentStyle);
+    await verticalOnly();assert.ok(accessible(await placement()));
+   }
+  }
+  await page.screenshot({path:`${out}/${engine.name()}-insert-fit-${width}.png`});
+ }
  // Follow real portal preview links, then verify original parsers and native camera controls.
  await page.setViewportSize({width:1280,height:900});
  for(const file of ['/exports/body/post.stl','/exports/leg/cnc/output_adapter.step','/exports/turret/print/barrel.3mf']) {
@@ -121,5 +204,5 @@ try{
  await notice.evaluate(()=>window.noticeIdentity={viewer:window.__fileViewer,model:window.__fileViewer.model,scene:window.__fileViewer.stage.scene});await reopen.click();await notice.locator('#prototype-notice-dialog[open]').waitFor();await notice.locator('#prototype-notice-ack').click();
  assert.equal(await notice.evaluate(()=>window.noticeIdentity.viewer===window.__fileViewer&&window.noticeIdentity.model===window.__fileViewer.model&&window.noticeIdentity.scene===window.__fileViewer.stage.scene&&document.activeElement===document.querySelector('.file-nav .prototype-notice-reopen')&&sessionStorage.getItem('gyropup.prototype-notice')==='2026-10-29-v1'),true);
  await notice.screenshot({path:`${out}/${engine.name()}-viewer-phone-notice.png`});await firstEntry.close();
- assert.deepEqual(errors,[]);await writeFile(`${out}/${engine.name()}-report.json`,JSON.stringify({base,version,shared,printedKey,summaries,sticky,publishedModels:inventory.files.length,errors},null,2));console.log(`PASS ${engine.name()}: sortable semantic tables, fixed totals, shared persistent checklists, print status, atomic import/export, denied storage, 495 original/preview mappings, real STL/STEP/3MF controls and stage disposal, and four phone layouts`);
+ assert.deepEqual(errors,[]);await writeFile(`${out}/${engine.name()}-report.json`,JSON.stringify({base,version,shared,printedKey,summaries,sticky,publishedModels:inventory.files.length,errors},null,2));console.log(`PASS ${engine.name()}: sortable semantic tables, fixed totals, shared persistent checklists, print status, atomic import/export, denied storage, ${inventory.files.length} original/preview mappings, real STL/STEP/3MF controls and stage disposal, and four phone layouts`);
 }finally{await browser.close();}

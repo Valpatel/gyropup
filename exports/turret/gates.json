@@ -1,0 +1,214 @@
+{
+ "toolkit": "cadagent.gates (connectivity, containment, relation table, fasteners, motion)",
+ "fingerprint": "1432c61b9714e16d",
+ "pile": "exports/turret/feed/pile.json",
+ "verdicts": "exports/turret/gates",
+ "seconds": {
+  "connectivity": 15.7,
+  "hopper": 1358.0,
+  "path": 24.2,
+  "sweep": 1.7,
+  "ammo_range": 26.4,
+  "fasteners": 10.2,
+  "motion_mechanisms": 56.7,
+  "motion_aim": 723.2
+ },
+ "ok": true,
+ "gates": {
+  "connectivity": {
+   "ok": true,
+   "status": "warn",
+   "counts": {
+    "pass": 29,
+    "warn": 61,
+    "fail": 0
+   },
+   "findings": [
+    {
+     "id": "contact:barrel|cartridge_body",
+     "status": "warn",
+     "message": "barrel and cartridge_body are in contact (touching, 228 mm2) but no interface, joint, fastener, contains or intended overlap declares it"
+    },
+    {
+     "id": "contact:base_board|pan_base",
+     "status": "warn",
+     "message": "base_board and pan_base are in contact (touching, 93.9 mm2) but no interface, joint, fastener, contains or intended overlap declares it"
+    },
+    {
+     "id": "contact:board_bay|board_bay_lid",
+     "status": "warn",
+     "message": "board_bay and board_bay_lid are in contact (touching, 599 mm2) but no interface, joint, fastener, contains or intended overlap declares it"
+    },
+    {
+     "id": "contact:board_bay|tilt_yoke",
+     "status": "warn",
+     "message": "board_bay and tilt_yoke are in contact (touching, 1.99e+03 mm2) but no interface, joint, fastener, contains or intended overlap declares it"
+    },
+    {
+     "id": "contact:board_bay|turret_board",
+     "status": "warn",
+     "message": "board_bay and turret_board are in contact (touching, 177 mm2) but no interface, joint, fastener, contains or intended overlap declares it"
+    },
+    {
+     "id": "contact:bumper_ring|pan_base",
+     "status": "warn",
+     "message": "bumper_ring and pan_base are in contact (overlapping, 0.04121 mm3 shared) but no interface, joint, fastener, contains or intended overlap declares it"
+    },
+    {
+     "id": "contact:cartridge_board|cartridge_body",
+     "status": "warn",
+     "message": "cartridge_board and cartridge_body are in contact (touching, 104 mm2) but no interface, joint, fastener, contains or intended overlap declares it"
+    },
+    {
+     "id": "contact:cartridge_body|cradle",
+     "status": "warn",
+     "message": "cartridge_body and cradle are in contact (touching, 3.26e+03 mm2) but no interface, joint, fastener, contains or intended overlap declares it"
+    },
+    {
+     "id": "contact:cartridge_body|esc_l",
+     "status": "warn",
+     "message": "cartridge_body and esc_l are in contact (overlapping, 3.38 mm3 shared) but no interface, joint, fastener, contains or intended overlap declares it"
+    },
+    {
+     "id": "contact:cartridge_body|esc_r",
+     "status": "warn",
+     "message": "cartridge_body and esc_r are in contact (overlapping, 3.38 mm3 shared) but no interface, joint, fastener, contains or intended overlap declares it"
+    },
+    {
+     "id": "contact:cartridge_body|feed_motor",
+     "status": "warn",
+     "message": "cartridge_body and feed_motor are in contact (touching, 445 mm2) but no interface, joint, fastener, contains or intended overlap declares it"
+    },
+    {
+     "id": "contact:cartridge_body|flywheel_motor_l",
+     "status": "warn",
+     "message": "cartridge_body and flywheel_motor_l are in contact (touching, 459 mm2) but no interface, joint, fastener, contains or intended overlap declares it"
+    },
+    {
+     "id": "contact:cartridge_body|flywheel_motor_r",
+     "status": "warn",
+     "message": "cartridge_body and flywheel_motor_r are in contact (touching, 459 mm2) but no interface, joint, fastener, contains or intended overlap declares it"
+    },
+    {
+     "id": "contact:cartridge_body|hopper",
+     "status": "warn",
+     "message": "cartridge_body and hopper are in contact (touching, 716 mm2) but no interface, joint, fastener, contains or intended overlap declares it"
+    },
+    {
+     "id": "contact:cartridge_body|hopper_inserts",
+     "status": "warn",
+     "message": "cartridge_body and hopper_inserts are in contact (touching, 215 mm2) but no interface, joint, fastener, contains or intended overlap declares it"
+    },
+    {
+     "id": "contact:cartridge_body|laser_inserts",
+     "status": "warn",
+     "message": "cartridge_body and laser_inserts are in contact (touching, 143 mm2) but no interface, joint, fastener, contains or intended overlap declares it"
+    },
+    {
+     "id": "contact:cartridge_body|laser_mount",
+     "status": "warn",
+     "message": "cartridge_body and laser_mount are in contact (touching, 288 mm2) but no interface, joint, fastener, contains or intended overlap declares it"
+    },
+    {
+     "id": "contact:circlip_50|pan_ring",
+     "status": "warn",
+     "message": "circlip_50 and pan_ring are in contact (overlapping, 0.05161 mm3 shared) but no interface, joint, fastener, contains or intended overlap declares it"
+    },
+    {
+     "id": "contact:circlip_50|pan_spacer",
+     "status": "warn",
+     "message": "circlip_50 and pan_spacer are in contact (touching, 596 mm2) but no interface, joint, fastener, contains or intended overlap declares it"
+    },
+    {
+     "id": "contact:compute|compute_shell",
+     "status": "warn",
+     "message": "compute and compute_shell are in contact (touching, 160 mm2) but no interface, joint, fastener, contains or intended overlap declares it"
+    }
+   ],
+   "floating": [],
+   "unrealised": []
+  },
+  "hopper": {
+   "ok": true,
+   "status": "warn",
+   "counts": {
+    "pass": 64,
+    "warn": 1,
+    "fail": 0
+   },
+   "findings": [
+    {
+     "id": "contains:hopper_cavity:ball:support",
+     "status": "warn",
+     "message": "2 of 30 ball instance(s) rest on nothing within 0.5 mm along [0.0, 0.0, -1.0]: ball#14, ball#20"
+    }
+   ]
+  },
+  "path": {
+   "ok": true,
+   "status": "pass",
+   "counts": {
+    "pass": 410,
+    "warn": 0,
+    "fail": 0
+   },
+   "findings": []
+  },
+  "sweep": {
+   "ok": true,
+   "status": "pass",
+   "counts": {
+    "pass": 40,
+    "warn": 0,
+    "fail": 0
+   },
+   "findings": []
+  },
+  "ammo_range": {
+   "ok": true,
+   "status": "pass",
+   "counts": {
+    "pass": 6,
+    "warn": 0,
+    "fail": 0
+   },
+   "findings": []
+  },
+  "fasteners": {
+   "ok": true,
+   "status": "pass",
+   "counts": {
+    "pass": 35,
+    "warn": 0,
+    "fail": 0
+   },
+   "findings": []
+  },
+  "motion_mechanisms": {
+   "ok": true,
+   "status": "warn",
+   "counts": {
+    "pass": 5,
+    "warn": 1,
+    "fail": 0
+   },
+   "findings": [
+    {
+     "id": "combination:wheel_l+wheel_r",
+     "status": "warn",
+     "message": "wheel_l and wheel_r were sampled one at a time, but the swept boxes of flywheel_tyre and flywheel_tyre_m come within 0 mm: pass combine=[[...]] to sample them together"
+    }
+   ]
+  },
+  "motion_aim": {
+   "ok": true,
+   "status": "pass",
+   "counts": {
+    "pass": 1,
+    "warn": 0,
+    "fail": 0
+   },
+   "findings": []
+  }
+ }
+}

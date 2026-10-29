@@ -1,9 +1,9 @@
 {
  "test": "4.6",
- "title": "The 24 V fault without a ball: the pre-feed check, and the trip with a 1.3-1.6 ms pair",
+ "title": "The converter bypassed (the ESCs on the 20.5 V pack) without a ball: the pre-feed check, and the trip with a 1.3-1.6 ms pair",
  "plan": "docs/turret-prototype-plan.md section 5",
  "mode": "sim",
- "date": "2026-10-27",
+ "date": "2026-10-28",
  "pass": true,
  "checks": [
   {
@@ -37,17 +37,17 @@
    "causes": [
     "eRPM over the limit"
    ],
-   "erpm_at_trip": 82870
+   "erpm_at_trip": 115380
   },
-  "max_rpm_reported": 9119
+  "max_rpm_reported": 15814
  },
  "notes": [
-  "The eRPM never reaches the 24 V no-load (~21,000 rpm): the ramp passes the limit (11,616 rpm) a fifth of a second in and the turret is SAFE three telemetry reads later."
+  "The eRPM never reaches the 20.5 V no-load (~28,500 rpm): the ramp passes the limit (16,390 rpm) about half a second in and the turret is SAFE three telemetry reads later."
  ],
  "sim": {
   "seed": 1046,
-  "simulated_s": 5.4,
-  "wall_s": 0.1,
+  "simulated_s": 5.7,
+  "wall_s": 0.2,
   "stand_ins": [],
   "shortened": {},
   "warning": "simulated turret (firmware/turret/sim_turret.py): not a bench reading"
@@ -55,12 +55,12 @@
  "firmware": {
   "build": "v0",
   "servo_baud": 500000,
-  "motor": "SunnySky X2216 880KV V3",
-  "kv": 880.0,
+  "motor": "SunnySky X2216 1400KV V3",
+  "kv": 1400.0,
   "pole_pairs": 7,
-  "erpm_limit": 81312,
-  "tyre_mm": 34,
-  "set_rpm_52fps": 8855,
-  "ramp_s": 0.3
+  "erpm_limit": 114730,
+  "tyre_mm": 38,
+  "set_rpm_95fps": 15286,
+  "ramp_s": 0.8
  }
 }
