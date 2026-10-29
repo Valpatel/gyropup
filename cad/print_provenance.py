@@ -121,7 +121,7 @@ def current_slice_rows(root: Path, rows: dict, inputs: dict) -> dict:
     current = {}
     for name, row in rows.items():
         try:
-            if name not in parts or not successful_slice(row):
+            if name not in parts or not successful_slice(row) or not turret_print.metadata_matches(row, parts[name]):
                 continue
             source = row['source']
             mesh = root / source['file']

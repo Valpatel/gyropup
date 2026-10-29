@@ -238,6 +238,24 @@ class PrintSources(unittest.TestCase):
             self.package(['--only', 'first', '--no-slice'])
         self.assertEqual(self.published(), before)
 
+    def test_retained_display_and_quantity_fields_must_match_canonical_recipe(self):
+        original = self.package()
+        changes = {'copies': 200, 'material': 'tpu95', 'settings': {}, 'filament_profile': 'incorrect profile',
+                   'orientation': 'incorrect orientation', 'note': 'incorrect instructions'}
+        for key, value in changes.items():
+            with self.subTest(field=key):
+                report = json.loads(json.dumps(original))
+                report['parts']['second'][key] = value
+                (self.out/'print.json').write_text(json.dumps(report))
+                before = self.published()
+                self.writes.clear()
+                with self.assertRaisesRegex(ValueError, 'retained print output is stale'):
+                    self.package(['--only', 'first'])
+                self.assertEqual(self.writes, [])
+                self.assertEqual(self.published(), before)
+                self.assertEqual(set(self.current_rows(report['parts'])), {'first'})
+        (self.out/'print.json').write_text(json.dumps(original))
+
     def test_profile_cycles_and_duplicate_names_fail_closed(self):
         base = self.profiles/'filament/base.json'
         base.write_text(json.dumps({'name': 'Base', 'inherits': turret_print.FILAMENT['petg']}))

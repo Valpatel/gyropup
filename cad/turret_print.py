@@ -99,6 +99,17 @@ def slice_one(name: str, output: Path, work: Path, identity: dict) -> dict:
     return print_slicing.run(output / f'{name}.3mf', work / name, identity)
 
 
+def part_metadata(part: tuple) -> dict:
+    _, _, mat, copies, settings, support, how, note = part
+    return {'material': mat, 'filament_profile': FILAMENT[mat], 'copies': copies, 'orientation': how, 'note': note,
+            'settings': {**settings, **PLATE, **(SUPPORT if support else {})}}
+
+
+def metadata_matches(row: dict, part: tuple) -> bool:
+    # A recipe digest is not evidence that duplicated display/quantity fields match it.
+    return all(type(row.get(key)) is type(value) and row[key] == value for key, value in part_metadata(part).items())
+
+
 def recipe(part: tuple, slice_inputs: dict | None) -> str:
     _, _, mat, copies, settings, support, how, _ = part
     return provenance.fingerprint({'material': mat, 'copies': copies, 'settings': settings,
@@ -188,7 +199,7 @@ def _build(a, ap, stage: Path, backup: Path):
         if not selected:
             row = retained[name]
             expected_output = f'exports/turret/print/{name}.3mf'
-            if (row.get('file') != expected_output or row.get('source') != sources[name]
+            if (not metadata_matches(row, part) or row.get('file') != expected_output or row.get('source') != sources[name]
                     or row.get('recipe_sha256') != recipes[name] or row.get('slice_inputs') != slicing[name]
                     or (not a.no_slice and not provenance.successful_slice(row))):
                 raise ValueError(f'{name}: retained print output is stale or unbound; regenerate the full package')
@@ -203,8 +214,7 @@ def _build(a, ap, stage: Path, backup: Path):
             if a.only and name not in a.only:
                 continue
             src = meshes / f'{name}.stl'
-            row = {'material': mat, 'filament_profile': FILAMENT[mat], 'copies': copies, 'orientation': how, 'note': note,
-                   'settings': {**settings, **PLATE, **(SUPPORT if support else {})}, **make_3mf(name, src, output),
+            row = {**part_metadata(part), **make_3mf(name, src, output),
                    'source': sources[name], 'recipe_sha256': recipes[name], 'slice_inputs': slicing[name]}
             if not row.get('ok') or provenance.digest(src) != sources[name]['sha256']:
                 raise ValueError(f'{name}: mesh changed during packaging or 3MF writer rejected it')

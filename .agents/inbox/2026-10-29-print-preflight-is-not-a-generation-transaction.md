@@ -11,7 +11,9 @@ The initial `python3 tools/test-print-provenance.py` passed six tests. Independe
 - A positive mass/time row with `exit_code: 9` accepted for reuse.
 - An empty accepted-row set accompanied by historical aggregate totals of 1,234 g and 88 h.
 
-After the fix, `python3 tools/test-print-provenance.py` passes 16 adversarial tests. `PYTHONPATH=<pinned cad-agent v0.4.0 source> <CAD venv>/bin/python tools/test-print-packaging-mesh.py` passes the real 1 mm cube round trip and rejects both original/STL-copy mutation while preserving the previous package and document. No secrets or vendor geometry are part of these fixtures.
+After the fix, `python3 tools/test-print-provenance.py` passes 17 adversarial tests. `PYTHONPATH=<pinned cad-agent v0.4.0 source> <CAD venv>/bin/python tools/test-print-packaging-mesh.py` passes the real 1 mm cube round trip and rejects both original/STL-copy mutation while preserving the previous package and document. No secrets or vendor geometry are part of these fixtures.
+
+A subsequent review changed retained quantity/material/settings fields while leaving the correct recipe digest and file hashes intact. The duplicated fields drove incorrect totals. Both reuse paths now compare these fields to the canonical recipe; a six-field mutation regression verifies rejection.
 
 ## Cause and corrective rule
 
