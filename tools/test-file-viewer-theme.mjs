@@ -7,7 +7,7 @@ import {acknowledgePrototypeNotice} from './test-prototype-session.mjs';
 
 const server=process.env.SITE_URL?null:createSiteServer();
 if(server)await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
-const base=process.env.SITE_URL||`http://127.0.0.1:${server.address().port}`;
+const base=(process.env.SITE_URL||`http://127.0.0.1:${server.address().port}`).replace(/\/$/,'');
 const engine=process.env.PLAYWRIGHT_BROWSER==='webkit'?webkit:chromium;
 const browser=await engine.launch(engine===chromium?{channel:process.env.PLAYWRIGHT_CHANNEL==='chromium'?undefined:'chrome',headless:true,args:['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']}:{headless:true});
 const context=await browser.newContext();await acknowledgePrototypeNotice(context);
@@ -53,8 +53,10 @@ try{
     cases.push({width,height,state});
   }
   // A fresh browser tab receives the same consumer theme and closes cleanly.
-  const popupPromise=page.waitForEvent('popup');await page.evaluate(url=>window.open(url,'_blank'),url);const popup=await popupPromise;await ready(popup);
-  assert.equal((await inspect(popup)).root.color,'rgb(23, 61, 60)');await popup.close();assert.ok(popup.isClosed());
+  const popupPromise=page.waitForEvent('popup');await page.evaluate(url=>window.open(url,'_blank'),url);const popup=await popupPromise;
+  popup.on('pageerror',error=>errors.push(error.message));await popup.bringToFront();
+  try{await ready(popup);}catch(error){console.error('Popup readiness',await popup.evaluate(()=>({visibility:document.visibilityState,state:window.__fileViewer?.root.dataset.state,message:document.querySelector('.file-status')?.textContent,bootstrap:document.body.dataset.viewerError})));throw error;}
+  assert.equal((await inspect(popup)).root.color,'rgb(23, 61, 60)');await popup.close();assert.ok(popup.isClosed());await page.bringToFront();
   await page.getByRole('button',{name:'Top',exact:true}).click();
   assert.ok(await page.evaluate(()=>window.__fileViewer.stage.camera.position.clone().sub(window.__fileViewer.stage.controls.target).normalize().y)>.99);
   const before=await page.evaluate(()=>window.__fileViewer.stage.camera.position.distanceTo(window.__fileViewer.stage.controls.target));
@@ -72,6 +74,7 @@ try{
   await page.unroute('**/file-viewer.js*');await page.getByRole('button',{name:'Retry viewer'}).click();await ready();
   await page.getByRole('link',{name:'Back to parts'}).click();await page.waitForURL(base+'/designer/build.html');
   assert.deepEqual(errors,[]);assert.deepEqual(missing,[]);assert.deepEqual(external,[]);
-  await writeFile(`${out}/${engine.name()}-report.json`,JSON.stringify({passed:true,cases,wheelRatio:ratio,errors,missing,external},null,2));
+  const version=await(await context.request.get(base+'/version.json')).json();
+  await writeFile(`${out}/${engine.name()}-report.json`,JSON.stringify({passed:true,version,cases,wheelRatio:ratio,errors,missing,external},null,2));
   console.log(JSON.stringify({passed:true,engine:engine.name(),viewports:viewports.length,out}));
 }finally{await browser.close();if(server)await new Promise(resolve=>{server.close(resolve);server.closeAllConnections();});}
