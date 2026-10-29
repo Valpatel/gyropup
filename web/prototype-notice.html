@@ -9,22 +9,26 @@
 </section>
 <dialog id="prototype-notice-dialog" class="prototype-notice-dialog" aria-labelledby="prototype-notice-title" aria-describedby="prototype-notice-intro">
   <div class="prototype-notice-heading">
-    <p class="prototype-notice-kicker">Before you explore</p>
-    <h2 id="prototype-notice-title" tabindex="-1">Warning: unsafe research prototypes</h2>
+    <div class="prototype-notice-signal" aria-hidden="true"><svg viewBox="0 0 64 64"><path d="M27.7 8.5a5 5 0 0 1 8.6 0l25 43a5 5 0 0 1-4.3 7.5H7a5 5 0 0 1-4.3-7.5Z" fill="currentColor"/><path d="M32 23v15" stroke="#152a33" stroke-width="6" stroke-linecap="round"/><circle cx="32" cy="47" r="3.4" fill="#152a33"/></svg></div>
+    <div class="prototype-notice-heading-copy">
+      <p class="prototype-notice-kicker">Warning / experimental robotics</p>
+      <h2 id="prototype-notice-title" tabindex="-1">High-power robots.<br>Real-world risks.</h2>
+      <p class="prototype-notice-status">Unsafe research prototypes</p>
+    </div>
   </div>
   <div class="prototype-notice-content" tabindex="0" aria-label="Prototype risks and intended use">
     <p id="prototype-notice-intro"><strong>Robots are dangerous. Do not build or operate these machines without proper training.</strong></p>
     <ul>
-      <li>Unexpected movement, falling robots, pinch and crush points, and launched projectiles can cause serious injury or death and damage property.</li>
-      <li>High-power motors, batteries and electrical systems introduce additional electrical and fire hazards.</li>
-      <li>Research work requires appropriate engineering and safety training, a controlled environment, and validated safeguards. Adult supervision alone does not make these prototypes safe.</li>
+      <li><svg class="prototype-notice-risk-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h6l3 4-3 4H3m18-8h-6l-3 4 3 4h6M12 3v3m0 12v3"/></svg><div><strong class="prototype-notice-risk-label">Movement &amp; impact</strong>Unexpected movement, falling robots, pinch and crush points, and launched projectiles can cause serious injury or death and damage property.</div></li>
+      <li><svg class="prototype-notice-risk-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m13 2-9 12h7l-1 8L21 9h-8Z"/></svg><div><strong class="prototype-notice-risk-label">Power &amp; heat</strong>High-power motors, batteries and electrical systems introduce additional electrical and fire hazards.</div></li>
+      <li><svg class="prototype-notice-risk-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2 8 3v6c0 5-8 11-8 11S4 16 4 11V5Z M12 7v6m0 3h.01"/></svg><div><strong class="prototype-notice-risk-label">Trained research only</strong>Research work requires appropriate engineering and safety training, a controlled environment, and validated safeguards. Adult supervision alone does not make these prototypes safe.</div></li>
     </ul>
-    <p><strong>Gyropup prototypes are unsafe and will not be offered for sale.</strong> They are not intended for general public use. Designs are provided for research purposes only.</p>
-    <p>Supervised child and family play is a future goal requiring proven, validated designs. A working browser simulation, CAD model or test report does not establish hardware safety.</p>
+    <p class="prototype-notice-research"><strong>Gyropup prototypes are unsafe and will not be offered for sale.</strong> They are not intended for general public use. Designs are provided for research purposes only.</p>
+    <p class="prototype-notice-future">Supervised child and family play is a future goal requiring proven, validated designs. A working browser simulation, CAD model or test report does not establish hardware safety.</p>
   </div>
   <div class="prototype-notice-actions">
-    <button id="prototype-notice-ack" type="button">I understand</button>
     <a href="https://valpatel.com">Leave this site ↗</a>
+    <button id="prototype-notice-ack" type="button">I understand <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button>
   </div>
 </dialog>
 <noscript><style>html,body{overflow:auto!important;height:auto!important}</style></noscript>
