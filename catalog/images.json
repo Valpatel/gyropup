@@ -2289,7 +2289,7 @@
  "pan_clamp": {
   "kind": "render",
   "source_url": "exports/turret/component-preview/pan_clamp.step",
-  "geometry_sha256": "9b1b3689534291ac0b3727b9cfad0be6d9d93195b146afbb2efda14223307dce",
+  "geometry_sha256": "0051c41979f033a431aa9c14ed368f0a96fc00b80977c0cedaaa4ea357a6448d",
   "image_url": null,
   "path": "exports/thumbs/turret--pan_clamp.png",
   "fetched": "2026-10-29",
@@ -3269,7 +3269,7 @@
  "turret/cradle_plate_l": {
   "kind": "render",
   "source_url": "exports/turret/component-preview/cradle_plate_l.step",
-  "geometry_sha256": "ad2d4e77396788edb534eb8ea3d3ffbca4d107e451073760c8e102626d2a1ef2",
+  "geometry_sha256": "05814b3427c21c720a55038ce87b0e634f163e4f80741b594256c2b4dd590d2a",
   "image_url": null,
   "path": "exports/thumbs/turret--cradle_plate_l.png",
   "fetched": "2026-10-29",
@@ -3298,7 +3298,7 @@
  "turret/cradle_plate_r": {
   "kind": "render",
   "source_url": "exports/turret/component-preview/cradle_plate_r.step",
-  "geometry_sha256": "38bf21d42a503573ed09202a001155a4518a6c6939a1925c797e8d9d03a33d2a",
+  "geometry_sha256": "53e378491d355b57c1e65a6edbcf13939f776a001dc826255f040ebbcaf141c3",
   "image_url": null,
   "path": "exports/thumbs/turret--cradle_plate_r.png",
   "fetched": "2026-10-29",
@@ -3327,7 +3327,7 @@
  "turret/pan_clamp": {
   "kind": "render",
   "source_url": "exports/turret/component-preview/pan_clamp.step",
-  "geometry_sha256": "9b1b3689534291ac0b3727b9cfad0be6d9d93195b146afbb2efda14223307dce",
+  "geometry_sha256": "0051c41979f033a431aa9c14ed368f0a96fc00b80977c0cedaaa4ea357a6448d",
   "image_url": null,
   "path": "exports/thumbs/turret--pan_clamp.png",
   "fetched": "2026-10-29",
@@ -3356,7 +3356,7 @@
  "turret/stop_lug": {
   "kind": "render",
   "source_url": "exports/turret/component-preview/stop_lug.step",
-  "geometry_sha256": "a82ba0ecb9d201a5bc1484f6f80404e45844050af866561efb37fc4fc1291880",
+  "geometry_sha256": "7774b79dd726f9c762b83160613db2c4c54a842f61831ebf614b696df0c83e05",
   "image_url": null,
   "path": "exports/thumbs/turret--stop_lug.png",
   "fetched": "2026-10-29",
