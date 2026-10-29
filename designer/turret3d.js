@@ -128,7 +128,19 @@ export function buildTurret(color = 0xe8892b) {
 
   let flashT = 0;
   return {
-    group, pan, tilt, muzzle, laser, flashMesh: flash,
+    group, pan, tilt, muzzle, laser, laserOrigin, flashMesh: flash,
+    /** The older CAD snapshots have no laser datum. Their cylindrical laser mesh
+     * points along page +z; attach the beam to its front face, in the tilt frame. */
+    alignLaserToCAD(mesh) {
+      mesh.geometry.computeBoundingBox();
+      const bounds = mesh.geometry.boundingBox;
+      bounds.getCenter(laserOrigin.position);
+      laserOrigin.position.z = bounds.max.z;
+      mesh.updateWorldMatrix(true, false);
+      tilt.updateWorldMatrix(true, false);
+      mesh.localToWorld(laserOrigin.position);
+      tilt.worldToLocal(laserOrigin.position);
+    },
     /** Point the beam: from the laser along the barrel to the first thing it meets (`hitObjects`) or the ground. */
     updateLaser(hitObjects = [], on = true) {
       laser.visible = on && group.visible;

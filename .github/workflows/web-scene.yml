@@ -1,0 +1,34 @@
+name: Rendered mechanism
+on:
+  pull_request:
+  push:
+    branches: [main]
+jobs:
+  turret-motion:
+    runs-on: ubuntu-24.04 # Supported by the pinned Playwright 1.56 browser dependencies.
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Reproduce the pinned legacy mesh coordinate migration.
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run build
+      - name: Validate actual rendered component motion
+        env:
+          PORT: 8879
+          PLAYWRIGHT_CHANNEL: chromium
+        run: |
+          node tools/serve-site.mjs > /tmp/gyropup-site.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid"' EXIT
+          npm run test:turret
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: turret-motion-evidence
+          path: /tmp/gyropup-turret-motion
