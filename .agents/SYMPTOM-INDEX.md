@@ -12,3 +12,4 @@
 | Model bounds pass but speech hides the robot, or a fresh wide phone looks worse than resized tests | [Visible mechanism layout checks](domains/rendered-mechanisms.md) |
 | A failed download looks unpublished, a partial model looks ready, or a retry overwrites newer data | [Loading readiness and report availability](domains/loading-readiness.md) |
 | A model reports ready but disappears or contains non-finite transforms after valid JSON loads | [Loading readiness and report availability](domains/loading-readiness.md) |
+| A viewer's error/retry controls clip off a phone despite hidden page overflow | [Grid tracks and header minimums](inbox/2026-10-29-shrink-grid-tracks-before-truncating-headers.md) |
