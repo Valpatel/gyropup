@@ -8,7 +8,7 @@
     "deploy": "npm run build && wrangler pages deploy dist --project-name gyropup --branch main",
     "test:web": "node tools/test-site.mjs",
     "test:markdown": "node --test tools/test-markdown.mjs",
-    "test:cache": "node tools/test-cache.mjs",
+    "test:cache": "node --test tools/test-site-ranges.mjs && node tools/test-cache.mjs",
     "test:sim": "node tools/test-sim-transitions.mjs",
     "test:turret": "python3 tools/test-turret-frames.py && node tools/test-turret-motion.mjs",
     "test:services": "node tools/test-service-discovery.mjs",
@@ -32,7 +32,9 @@
     "test:study-media": "python3 tools/test-study-media.py && node tools/test-study-media.mjs",
     "test:diagrams": "node tools/test-diagrams.mjs",
     "test:carrier-inspection": "node --test tools/test-hosted-navigation.mjs && node tools/test-carrier-inspection.mjs && CARRIER_INSPECTION_CASE=c3-support node tools/test-carrier-inspection.mjs",
-    "test:progress": "node tools/test-progress.mjs"
+    "test:progress": "node tools/test-progress.mjs",
+    "test:highlights": "node tools/test-highlight-video.mjs",
+    "test:highlight-media": "python3 tools/check-highlights.py"
   },
   "devDependencies": {
     "@playwright/test": "1.56.1",

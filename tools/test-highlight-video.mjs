@@ -1,0 +1,218 @@
+/** Exercise the published highlights player and real moving decoded pixels. */
+import assert from 'node:assert/strict';
+import { mkdir, writeFile } from 'node:fs/promises';
+import { chromium, webkit, expect } from '@playwright/test';
+
+const base = (process.env.SITE_URL || 'http://127.0.0.1:8899').replace(/\/$/, '');
+const out = process.env.TEST_OUTPUT || '/tmp/gyropup-highlight-video';
+const engine = process.env.PLAYWRIGHT_BROWSER === 'webkit' ? webkit : chromium;
+const browserLabel = engine === webkit ? 'webkit' : process.env.PLAYWRIGHT_CHANNEL === 'chrome' ? 'chrome' : 'chromium';
+const viewports = [[320, 568], [360, 800], [375, 812], [390, 844], [393, 852], [412, 915], [430, 932],
+  [568, 320], [667, 375], [844, 390], [932, 430], [768, 1024], [1440, 900]];
+const browser = await engine.launch({ headless: true, ...(engine === chromium ? {
+  channel: process.env.PLAYWRIGHT_CHANNEL === 'chrome' ? 'chrome' : undefined,
+  args: ['--no-sandbox'],
+} : {}) });
+const context = await browser.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion: 'reduce' });
+const errors = [], cases = [], pages = [];
+const movieURL = url => /\/web\/highlights\/gyropup-highlights\.(mp4|webm)$/.test(url.pathname);
+const record = message => { cases.push(message); console.log('PASS ' + message); };
+await mkdir(out, { recursive: true });
+await context.addInitScript(() => {
+  localStorage.setItem('gyropup.probe', 'off');
+  sessionStorage.setItem('gyropup.prototype-notice', '2026-10-29-v1');
+});
+const json = async path => { const response = await context.request.get(base + path); assert.ok(response.ok(), path); return response.json(); };
+const version = await json('/version.json');
+
+async function pageFor({ motion = 'reduce', saveData = false, setup = async () => {} } = {}) {
+  const page = await context.newPage(); pages.push(page);
+  page.setDefaultTimeout(30000);
+  page.on('pageerror', error => errors.push(error.message));
+  page.mediaRequests = [];
+  page.on('request', request => { if (movieURL(new URL(request.url()))) page.mediaRequests.push(request.url()); });
+  await page.emulateMedia({ reducedMotion: motion });
+  // This player must survive a failed hero import, including missing Three.js.
+  await page.route('**/web/landing.js', route => route.fulfill({ contentType: 'text/javascript', body: 'throw new Error("Intentional hero failure in highlights test");' }));
+  if (saveData) await page.addInitScript(() => {
+    Object.defineProperty(navigator, 'connection', { value: { saveData: true, addEventListener() {} }, configurable: true });
+  });
+  await setup(page);
+  await page.goto(base + '/', { waitUntil: 'domcontentloaded' });
+  await page.locator('.highlight-controls').waitFor({ state: 'visible' });
+  await page.addStyleTag({ content: 'html{scroll-behavior:auto!important}' });
+  await page.evaluate(() => document.fonts.ready);
+  assert.equal(await page.locator('#highlight-video').getAttribute('src'), null, 'Initial page view does not assign a movie');
+  assert.equal(page.mediaRequests.length, 0, 'Initial page view does not fetch a movie');
+  return page;
+}
+async function show(page) {
+  await page.locator('.highlight-card').evaluate(el => el.scrollIntoView({ block: 'center', behavior: 'instant' }));
+  // Let both IntersectionObservers run before asserting deliberate non-playback.
+  await page.waitForTimeout(200);
+}
+async function waitPlaying(page) {
+  await page.waitForFunction(() => {
+    const host = document.querySelector('.highlight-card'), v = host.querySelector('video');
+    if (host.dataset.state === 'error') throw new Error(host.querySelector('.highlight-status').textContent);
+    return !v.paused && v.readyState >= 2 && v.currentTime > .15;
+  });
+}
+async function assertMoving(page) {
+  await waitPlaying(page);
+  const evidence = await page.locator('#highlight-video').evaluate(async v => {
+    const canvas = document.createElement('canvas'); canvas.width = 160; canvas.height = 90;
+    const ctx = canvas.getContext('2d', { willReadFrequently: true });
+    const sample = () => {
+      // Exclude edge titles/timecodes so changing labels cannot prove motion.
+      ctx.drawImage(v, v.videoWidth * .15, v.videoHeight * .22, v.videoWidth * .7, v.videoHeight * .58, 0, 0, 160, 90);
+      return ctx.getImageData(0, 0, 160, 90).data;
+    };
+    const before = sample(), time = v.currentTime, frames = v.getVideoPlaybackQuality().totalVideoFrames;
+    await new Promise((resolve, reject) => {
+      const timeout = setTimeout(() => reject(new Error('No advancing decoded video frame')), 10000);
+      const frame = () => {
+        if (v.currentTime > time + .7) { clearTimeout(timeout); resolve(); }
+        else v.requestVideoFrameCallback(frame);
+      };
+      v.requestVideoFrameCallback(frame);
+    });
+    const after = sample(); let difference = 0;
+    for (let i = 0; i < before.length; i += 4) for (let c = 0; c < 3; c++) difference += Math.abs(before[i + c] - after[i + c]);
+    return { beforeTime: time, afterTime: v.currentTime, beforeFrames: frames, afterFrames: v.getVideoPlaybackQuality().totalVideoFrames, meanPixelDifference: difference / (160 * 90 * 3) };
+  });
+  assert.ok(evidence.afterFrames > evidence.beforeFrames, 'Decoded frame count advances');
+  assert.ok(evidence.meanPixelDifference > .15, `Model region must move: ${JSON.stringify(evidence)}`);
+  return evidence;
+}
+const paused = page => page.waitForFunction(() => document.querySelector('#highlight-video').paused);
+async function hide(page) { await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' })); await paused(page); }
+async function visibility(page, hidden) {
+  // Deterministic lifecycle signal; headless browsers do not reliably hide tabs.
+  await page.evaluate(hidden => {
+    Object.defineProperty(document, 'hidden', { configurable: true, get: () => hidden });
+    document.dispatchEvent(new Event('visibilitychange'));
+  }, hidden);
+}
+try {
+  for (const [extension, type] of [['mp4', 'video/mp4'], ['webm', 'video/webm'], ['webp', 'image/webp']]) {
+    const response = await context.request.head(`${base}/web/highlights/gyropup-highlights.${extension}`);
+    assert.ok(response.ok()); assert.match(response.headers()['content-type'], new RegExp('^' + type));
+  }
+  const page = await pageFor(); await show(page);
+  assert.equal(page.mediaRequests.length, 0, 'Reduced motion does not preload a movie');
+  const poster = await page.locator('.highlight-poster').evaluate(async image => {
+    await image.decode(); return { width: image.naturalWidth, height: image.naturalHeight };
+  });
+  assert.deepEqual(poster, { width: 1280, height: 720 }, 'Poster decodes at the same 16:9 dimensions as the reel');
+  await page.locator('.highlight-card').screenshot({ path: `${out}/${browserLabel}-poster.png` });
+  record('WebP poster has the correct HTTP MIME type and decodes at 1280×720');
+  await page.locator('.highlight-toggle').click();
+  const motionEvidence = await assertMoving(page);
+  const media = await page.locator('#highlight-video').evaluate(v => ({
+    duration: v.duration, width: v.videoWidth, height: v.videoHeight, muted: v.muted,
+    h264: v.canPlayType('video/mp4; codecs="avc1.64001f"'), vp9: v.canPlayType('video/webm; codecs="vp9"'), source: v.currentSrc,
+  }));
+  assert.ok(Math.abs(media.duration - 22) < .1, 'Published reel is 22 seconds');
+  assert.equal(media.width, 1280); assert.equal(media.height, 720); assert.equal(media.muted, true);
+  assert.ok(media.source.endsWith(media.h264 ? '.mp4' : '.webm'));
+  assert.equal(new Set(page.mediaRequests.map(url => new URL(url).pathname)).size, 1, 'Only the chosen encoding is fetched');
+  await page.locator('.highlight-toggle').click(); await paused(page);
+  record('Hero failure independence, no initial media fetch, one supported encoding, real decoded moving model pixels, play/pause');
+
+  for (const [width, height] of viewports) {
+    await page.setViewportSize({ width, height }); await show(page);
+    assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), 'No horizontal overflow');
+    const screen = await page.locator('.highlight-screen').boundingBox();
+    assert.ok(Math.abs(screen.width / screen.height - 16 / 9) < .01, 'Screen preserves 16:9');
+    assert.ok(screen.x >= 0 && screen.x + screen.width <= width, 'Frame stays inside viewport');
+    for (const selector of ['.highlight-toggle', '.highlight-replay']) {
+      const bounds = await page.locator(selector).boundingBox();
+      assert.ok(bounds.width >= 44 && bounds.height >= 44, '44px touch targets');
+      assert.ok(bounds.x >= 0 && bounds.x + bounds.width <= width, 'Controls stay inside viewport');
+      assert.equal(await page.locator(selector).evaluate(el => !!el.closest('a')), false, 'Player controls are not nested in navigation');
+    }
+    if ([320, 390, 844, 1440].includes(width)) {
+      await page.locator('.highlight-toggle').focus(); await page.keyboard.press('Space'); await waitPlaying(page);
+      await page.keyboard.press('Space'); await paused(page);
+    }
+    await page.screenshot({ path: `${out}/${browserLabel}-${width}x${height}.png`, fullPage: false });
+  }
+  record('13 phone portrait/landscape, tablet and desktop viewports: 16:9 containment, 44px controls and keyboard activation');
+  await page.locator('.highlight-replay').click(); await waitPlaying(page);
+  assert.ok(await page.locator('#highlight-video').evaluate(v => v.currentTime < 2), 'Replay returns to the start');
+  await hide(page); await show(page); await paused(page);
+  await page.waitForTimeout(250); assert.equal(await page.locator('#highlight-video').evaluate(v => v.paused), true);
+  record('Reduced-motion playback stays manual after scrolling away and back');
+  await page.close();
+
+  const automatic = await pageFor({ motion: 'no-preference' });
+  const approach = async distance => {
+    await automatic.locator('.highlight-card').evaluate((el, distance) => window.scrollTo({ top: scrollY + el.getBoundingClientRect().top - innerHeight - distance, behavior: 'instant' }), distance);
+    await automatic.waitForTimeout(200);
+  };
+  await approach(230); assert.equal(automatic.mediaRequests.length, 0, 'No body request outside the near-viewport margin');
+  await approach(80); await automatic.waitForFunction(() => document.querySelector('#highlight-video').hasAttribute('src'));
+  assert.equal(await automatic.locator('#highlight-video').evaluate(v => v.paused), true, 'Near-viewport preload does not play offscreen');
+  await show(automatic); await waitPlaying(automatic);
+  await hide(automatic); await show(automatic); await waitPlaying(automatic);
+  await visibility(automatic, true); await paused(automatic);
+  await visibility(automatic, false); await waitPlaying(automatic);
+  await automatic.locator('.highlight-toggle').click(); await paused(automatic);
+  await hide(automatic); await show(automatic); await visibility(automatic, true); await visibility(automatic, false);
+  await automatic.waitForTimeout(300);
+  assert.equal(await automatic.locator('#highlight-video').evaluate(v => v.paused), true, 'User pause survives viewport and visibility changes');
+  await automatic.locator('.highlight-toggle').click(); await waitPlaying(automatic);
+  await automatic.locator('#highlight-video').evaluate(v => { v.currentTime = v.duration - .25; });
+  await automatic.waitForFunction(() => document.querySelector('.highlight-card').dataset.state === 'ended');
+  await hide(automatic); await show(automatic);
+  assert.equal(await automatic.locator('#highlight-video').evaluate(v => v.paused), true, 'Ended reel never restarts on its own');
+  await automatic.locator('.highlight-toggle').click(); await waitPlaying(automatic);
+  assert.ok(await automatic.locator('#highlight-video').evaluate(v => v.currentTime < 2));
+  record('Autoplay near viewport, offscreen/hidden suspension, preserved user pause, finite ending and deliberate replay'); await automatic.close();
+
+  const saver = await pageFor({ motion: 'no-preference', saveData: true }); await show(saver);
+  assert.equal(saver.mediaRequests.length, 0, 'Data Saver does not fetch video until play');
+  await saver.locator('.highlight-toggle').click(); await waitPlaying(saver);
+  record('Data Saver keeps playback and loading manual'); await saver.close();
+
+  let held;
+  const delayed = await pageFor({ setup: page => page.route(movieURL, route => { held = route; }) });
+  await show(delayed);
+  await delayed.locator('.highlight-toggle').click();
+  await expect.poll(() => Boolean(held), { timeout: 30000 }).toBe(true);
+  await delayed.locator('.highlight-toggle').click();
+  await delayed.unroute(movieURL); await held.continue();
+  await delayed.waitForFunction(() => document.querySelector('.highlight-card').dataset.state === 'paused');
+  assert.equal(await delayed.locator('#highlight-video').evaluate(v => v.paused), true, 'Late media cannot undo a loading-state user pause');
+  await delayed.locator('.highlight-toggle').click(); await waitPlaying(delayed);
+  record('A pause during loading survives the delayed response and allows deliberate playback'); await delayed.close();
+
+  for (const fault of ['http', 'invalid']) {
+    const bad = await pageFor({ setup: page => page.route(movieURL, route => route.fulfill(fault === 'http' ? { status: 503, body: 'Unavailable' } : {
+      contentType: route.request().url().endsWith('.mp4') ? 'video/mp4' : 'video/webm', body: 'Not a movie',
+    })) });
+    await show(bad); await bad.locator('.highlight-toggle').click();
+    await bad.waitForFunction(() => document.querySelector('.highlight-card').dataset.state === 'error');
+    assert.ok(await bad.locator('.highlight-poster').isVisible(), 'Error retains poster');
+    assert.equal(await bad.locator('.highlight-toggle-label').innerText(), 'Try again');
+    await bad.unroute(movieURL); await bad.locator('.highlight-toggle').click(); await assertMoving(bad);
+    record(`${fault} media failure retains poster and an explicit retry restores decoded playback`); await bad.close();
+  }
+  assert.deepEqual(errors, []);
+  assert.deepEqual(await json('/version.json'), version, 'Single published build throughout test');
+  await writeFile(`${out}/${browserLabel}-report.json`, JSON.stringify({ base, browser: browserLabel, version, poster, media, motionEvidence, viewports, cases, errors }, null, 2));
+} catch (error) {
+  for (const [index, page] of pages.entries()) {
+    if (page.isClosed()) continue;
+    console.error('Highlight failure details', await page.locator('#highlight-video').evaluate(v => ({
+      state: document.querySelector('.highlight-card').dataset.state, source: v.currentSrc, error: v.error && { code: v.error.code, message: v.error.message },
+      readyState: v.readyState, networkState: v.networkState, paused: v.paused, time: v.currentTime, duration: v.duration,
+      h264: v.canPlayType('video/mp4; codecs="avc1.64001f"'), vp9: v.canPlayType('video/webm; codecs="vp9"'),
+    })).catch(() => null));
+    await page.screenshot({ path: `${out}/${browserLabel}-failure-${index}.png` }).catch(() => {});
+  }
+  throw error;
+} finally {
+  await browser.close();
+}

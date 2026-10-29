@@ -1,0 +1,437 @@
+{
+  "schema": 1,
+  "format": {
+    "width": 1280,
+    "height": 720,
+    "fps": 30,
+    "frames": 660,
+    "seconds": 22,
+    "audio": false
+  },
+  "source_revision": "7953bf202fcc5ffb4bc47c5d87320018c330dd19",
+  "source_hashes": {
+    "designer/cadrig.js": "a2cb4029ef786e0793c5eb0018e0aa8d919d829bde8c5d378c1b1480c457faaf",
+    "designer/character/eyes.js": "3348578a121b75ab7425c3b6591e864b41b09512e67b642832e6c6b683d2e11b",
+    "designer/character/talk.css": "b8fa10a17e1473c98988e278cf6677a31737184285728286b68e6e42c45a9f75",
+    "designer/character/talk.js": "fa4e660fd9a25d498e7acded6abbab839f379225be77cbbbf57154222bd765dd",
+    "designer/current_turret.js": "f0ae7c297c53d5508e2ad2989f514f9269ba2a43b4ef542ead6afc9553735b8c",
+    "designer/kit/appnav.js": "4f59cae5f6b264c8256541564dff5a280ab3c02f518432836b06afbe83662e5c",
+    "designer/kit/hud.css": "283a0763da5ce7926b0af91480f64890153c06e5380d9dc1d71347fa7afcc448",
+    "designer/kit/loading.css": "4c4cc978c813968b22d816e300ca0dc4c3b53388f4464d285c1084cafaa5e49d",
+    "designer/kit/loading.js": "3890e96c2cdc1905a1c612be312aaabc6de09b3ea9f41c513c01108f7f159ada",
+    "designer/kit/panel.js": "7e42b66f9474150876eb9d737d6f67a36974f8180d7e47a6af1459fccbfcd044",
+    "designer/kit/portal-data.js": "fe4924d4ce2b41957750f8bdbec0a6d24f3f032dfed5639c6c8ac4408528597c",
+    "designer/kit/smooth_zoom.js": "bc03b15d77d2ebf689273be96c3007363e7ed86f94aa86c5e545811e3ac45c70",
+    "designer/kit/stage.js": "f0d5b7b0e7324f75b09213cdb44eca4167b1c6cbe7e9c5ffd83cf841d7b51ddc",
+    "designer/kit/vendor/fonts/fonts.css": "932aa60781252a65af3910916858ecb16b4a49600fe7f3625d9b4a5299315b64",
+    "designer/kit/vendor/fonts/inter.woff2": "3100e775e8616cd2611beecfa23a4263d7037586789b43f035236a2e6fbd4c62",
+    "designer/kit/vendor/fonts/jetbrains-mono.woff2": "83c005d49d8a6a50474c73a5a36ac0468076e9c4a29da7bdb14995d80560a5be",
+    "designer/kit/vendor/three/addons/controls/OrbitControls.js": "5a44a9e86a2a0fb11933eed69bc2cd33c76a496854c1aed6ed776efa87d7b064",
+    "designer/kit/vendor/three/addons/geometries/RoundedBoxGeometry.js": "d20aeaf7077c459a8d952d215738d7b44fba028440bb862d84b622a34f0c80bb",
+    "designer/kit/vendor/three/addons/loaders/STLLoader.js": "896d006a48b8f125385a485ccae154dadee801a953f0b45ceffe7ddd8a29ca93",
+    "designer/kit/vendor/three/three.module.min.js": "3e690ac7d180b0aadf0891bea39eec643e29e2d3e75c99b18689518665f69ba6",
+    "designer/model.js": "2d655315f9d2acc9e1d02292c1225bd447528cbe64c2e3d737ab6f0b51d771a5",
+    "designer/robot3d.js": "ca84400fbeed7953d033b93e0f0bfcd7fbec393331930f57e54c8d49df96f194",
+    "designer/robot_actions.css": "2dfd20983f095666b1b538f1f229f56de09f604c21dd8b5dc47b27662819048a",
+    "designer/robot_actions.js": "edb5f4866e2d46fe8beb11301810ad9468660fd66587969c276e432e43530afd",
+    "designer/robot_v2.js": "6bda4adaf7d472a7ba7cc60a25c13a3f751ae7a6427fa1812732876ce187430a",
+    "designer/sfx.js": "90db82703cb9d32c106992c1d67610056a319048d4030db77490642ce8c4dc55",
+    "designer/sim-layout.css": "227bee70310c5abdf3fee1751c02d902f82e0b87a95299777390dacfcc81e952",
+    "designer/sim.html": "6a05fedeab2a31fcc50b98a7ba6d5681c62a6333d6441d4f1a64e3256ba1ceb0",
+    "designer/sim.js": "b0a9d8e13470bb15726a7957b491f6126a0f7a70858c45bd218448c6582d3963",
+    "designer/turret3d.js": "e5144b01c1db071ac8921e416fcbc8e3a208a59a466bcd00cd5a86ddfa26b107",
+    "designer/turret_bench.css": "f6722bceaf5f92100c68f66dc84e491fff8593a7dbb9d8135ad20686c18485d4",
+    "designer/turret_bench.js": "2c7c14ae024d451015e8559216f1b5bfc8ab814ed76b82eac645fa4d616318ad",
+    "designer/turret_reload.js": "37b75f1250ca341e710abb9443d0e0120abe48e827efbc86b740db7b55a326e9",
+    "exports/leg/fea/hip-frame-e1-media/field-receipt.json": "ab55baf1e8acac50f49cc70b8657f029ede1e4de328d2aa9ce9ac5708100d7c2",
+    "exports/leg/fea/hip-frame-e1-media/hip-frame-e1.mp4": "e846a402145dfb49ccdc0067e3c43828b3de0591b003edf57d1bfdc37e52aa0c",
+    "exports/leg/fea/hip-frame-e1-media/hip_frame-E1.json": "80fee01acc44c0fc0cc6530808dafb8e67660320bb6cb93fbac5b8e7e98a7949",
+    "exports/leg/fea/hip-frame-e1-media/video-receipt.json": "0bd5fe01bcd5ea593be564ae6c8039c82083d4d23c8ce24c768cb05edecae1ec",
+    "exports/leg/fea/media.json": "b9d75907f51683c489a15d2e3c2bb73c894906b5f2a31190d42940a5930fa4fd",
+    "exports/leg/fea/summary.json": "a94c700284a789e9b810e9bdf2fc8989db518bd6df691dedb23c6da75a9a76e5",
+    "exports/leg/rig_jump.mp4": "7b59e8e0c807d04ca1387a4fd63f03536d44be5a637617e835fe5811ff50f217",
+    "exports/sim/turret_box/barrel.stl": "ccb797222e64719fb8ba4a67ab236e6f9ba3b88ede36926a88cc917961bcde31",
+    "exports/sim/turret_box/base_board.stl": "a3fd2d3a202337f01b3b45ad035b560fcbde07ebac8910b048ed94873d82fa20",
+    "exports/sim/turret_box/board_bay.stl": "a1143179e3d8708137c93474ea5cc2309958d5d587da2218c01602a31fca8357",
+    "exports/sim/turret_box/box_deck.stl": "161d66ebfe52e14776ee9dbf174be7e9345ac3388916ac904397ba94aca6e5f6",
+    "exports/sim/turret_box/bumper_ring.stl": "d047f52ed061d204c241c5b06187d9a5651237a9817604959e24ccbbe3f4e69d",
+    "exports/sim/turret_box/cartridge_board.stl": "498a5f4998fcf645e2ace580b27ea87d9401cfad08469a9ff7510c0fa99fdb1c",
+    "exports/sim/turret_box/cartridge_body.stl": "9a1d34898ff717811cf7cea503a2021afbfc3050a9f593b10c9bd9b277d9c1a5",
+    "exports/sim/turret_box/circlip_50.stl": "b508e2f7fd8fbbd2eb43ba5cd0ea1a16a4172d56dfb5cfe6173bf0c99dfed463",
+    "exports/sim/turret_box/cradle.stl": "9beef3e7480337e5a65388e70e2b1abd2a32d54b63db68a00b1d06e18d477c2e",
+    "exports/sim/turret_box/ct_thumbscrew.stl": "b6afd366a0817921d16407376f3385f894c57e83309a96514f20f11fac992523",
+    "exports/sim/turret_box/dial.stl": "d7678d8f21659f2474a40a8584a327c477b5a47095daa9629a9123c3f93c2c24",
+    "exports/sim/turret_box/dt_plug.stl": "28f1ca619c56d1be8e3155378579ded6e63a6557ac89683ce9f523cf291708d1",
+    "exports/sim/turret_box/dt_receptacle.stl": "ea238f2e0512a268f5fec8e7959a1c93ebedeccd49e5b3eba4a5170084f683d2",
+    "exports/sim/turret_box/esc_l.stl": "8cc013dd96e24cf12f67cd0db26cd21af1f8120954896c39c4fb4beaf3705036",
+    "exports/sim/turret_box/esc_r.stl": "b60dbd3221adb253c7dc6f8ca51da6bbb939e93ce1a75c4aeb649cef2cd6f1c1",
+    "exports/sim/turret_box/feed_motor.stl": "7443a0eebc78e5fc89dd3c154a0cf729bae5d5ffba8de08acf83722ec15f20d5",
+    "exports/sim/turret_box/flywheel.stl": "008485a6764b8cc74f0a723fdd0cd2c80e975c286f552916f66d357df3667d43",
+    "exports/sim/turret_box/flywheel_m.stl": "2b1306a3d0c7574cbe216ed0be5b48165441a3bde03cdf167cfd38e27d61f9ae",
+    "exports/sim/turret_box/flywheel_motor_l.stl": "a3fe9b333ef59308834a5811c50c9c2f34eec804b58b2c9b50a6f60fc65f12b0",
+    "exports/sim/turret_box/flywheel_motor_r.stl": "cc41c6d0e8b76f0744b45e70f5a1274d0b843a6fa48e07b2eaf6a961192e385b",
+    "exports/sim/turret_box/flywheel_tyre.stl": "81b7de92f418d2166793e0cabf3158a7ded5b1ecbb971efef1fb86db075f90c1",
+    "exports/sim/turret_box/flywheel_tyre_m.stl": "dd4ae79516757df63905d2ab566f04fb088adc4262cfcfa20303050a0d4838c9",
+    "exports/sim/turret_box/hall_switch.stl": "7080d0d027e32403a036b13a2aceafb31fd228a7bf2240c1e736a771d931d95a",
+    "exports/sim/turret_box/hopper.stl": "c186e72d2244027a836e994fc72b2fe3c6ee769c696264f9bc21476f6aba2933",
+    "exports/sim/turret_box/hopper_flap.stl": "b98ec37332d4c4c1d9ea151e63f818ea187115ed2ee8771529b90d01f0e2c7dd",
+    "exports/sim/turret_box/hopper_lid.stl": "067a2337a229d7910f234c7bc4e13e5f283b15833389a826a80e3250e83c84fb",
+    "exports/sim/turret_box/index_magnet.stl": "f5ddcf2fba3c9ca0f7325baa379425300e22c29b75bc97f6532f1813aa78997c",
+    "exports/sim/turret_box/intake_shroud.stl": "4d6f22a52f5536de610e77e2d629865396aa82b0e03733330818b5ce3c0bd038",
+    "exports/sim/turret_box/j501_base.stl": "d862d1f3781a74c0917f2c49875eb578f3f16f4f24ea56c97481671c8f88e9a7",
+    "exports/sim/turret_box/j501_cover.stl": "c4fa8e8198d0333c3d25acc162aaddcf19a796a7f6509ede8ce292840fbbb201",
+    "exports/sim/turret_box/j501_front_no_gmsl.stl": "098642b2660d082687c179c9e985554c8e29ff37c3c6745130bb21d3ecfcb5fd",
+    "exports/sim/turret_box/j501_rear_io.stl": "d9a282f5b40cd8896f49077deec97aa06d600ec1b418b02ce45499b41b833057",
+    "exports/sim/turret_box/j501_side_hatch.stl": "abcf1d6d13cded51e6598565851ffc87fd03b0cc07377033ab5a8a82469c9fe1",
+    "exports/sim/turret_box/laser.stl": "15d5be6c52708b35f2b9fcd02ba5775f2c766c72206935bbe1ac432f8f488d87",
+    "exports/sim/turret_box/laser_mount.stl": "f83f4497c8d433a018578775bc2d1bffb5065055d381bc73b3dfae88477ce6ab",
+    "exports/sim/turret_box/lid_screw_1.stl": "832162b6b6f36b4570fdbb775954c56c28effbacacb60fd948eeaccb3c433b7a",
+    "exports/sim/turret_box/lid_screw_2.stl": "d1c98538320db5d110a075cabc4ef9fb509734fb77114120e2afee11563fffaa",
+    "exports/sim/turret_box/lid_screw_3.stl": "c7c1b0d73caf4c30f6be8d8cfff068cbd134adb4921f3af72f8eebbfa7d804a7",
+    "exports/sim/turret_box/lid_screw_4.stl": "2f6659cf9d5b9d388dde05a9907c5082d504a8b7433c09e36321727d3356db1d",
+    "exports/sim/turret_box/manifest.json": "3e52510898a387fd2a31fbbb3132460d792d23058d7b5d783b9231ad1fafcf18",
+    "exports/sim/turret_box/pan_base.stl": "ab877ba91a4087ea0317df00d66cdb58b12bc3ed8e8a6416cf207e23ad950ab3",
+    "exports/sim/turret_box/pan_bearing.stl": "2b7c1b64479805bd0ccdf762b9ea931740b37a0dff2fb3a69dcb4dc88aaac756",
+    "exports/sim/turret_box/pan_bearing_inner.stl": "ab1341d036e0c77c6933671299369d005e4716bac1148a06bc9053e51fea51c3",
+    "exports/sim/turret_box/pan_clamp.stl": "10396706c9744d6a3c873fed90586f7226f991231fc355edf55bb07a35f6dca8",
+    "exports/sim/turret_box/pan_pinion.stl": "f774c4c22dce5e532063e2971ec10b49fb445e11a334ad595b1b1b6bb47dc9a1",
+    "exports/sim/turret_box/pan_ring.stl": "6e15e745ab0cd9ecae961e1bcd39fce99bac4a0b1346299a27326ef3db139160",
+    "exports/sim/turret_box/pan_servo.stl": "d06edde8996fd5a4ee27ac1ed9f572a0ebce96303865da36169f9bdc4e6e18c1",
+    "exports/sim/turret_box/pan_spacer.stl": "eff3d312665bf4d19e100a0f435539a7a9a24fbd085fc6e7d575d8dcbf8da326",
+    "exports/sim/turret_box/pod_cover.stl": "f335d57582c93d2a95eb1e58d941a57106b2078b5c9ccc2433306e8d1e2a69ef",
+    "exports/sim/turret_box/pod_fuse.stl": "1a147c5a073346fcc61edacc5e5d5fa4bec6bfdd42d5458caf22cad00faf59c1",
+    "exports/sim/turret_box/pod_pendant.stl": "98528294fed572fef0bfd346387994c7244504236f337484107d0c63fc0d23bd",
+    "exports/sim/turret_box/pod_switch.stl": "38daaf8858270514ef692a3ede3ba11fb827747055e5a3eaf94a60ab0931cc72",
+    "exports/sim/turret_box/pod_usb.stl": "ef54bbbd2b51b3a632a6670fd07531d93604765dd010697b76ea81a72a72df20",
+    "exports/sim/turret_box/pod_wago.stl": "d774d431dc1b30bcf1410fd9d2739d635e3d409eef939dd8d2350d307ea66f2a",
+    "exports/sim/turret_box/pod_xt60.stl": "d24d7ddfb98f8795859f4a33e28e592484d9382224b83a75d7e4e4d10aed7f78",
+    "exports/sim/turret_box/ring_carrier.stl": "fe08d981dc23c70d6eef77dff8feeca8bfc6c93e1e487ff21206e368de1f5bfb",
+    "exports/sim/turret_box/ring_coupling.stl": "aaef33940eb5d97757813adecf6a71a718ba24ea0a2b9924f30ebff984f30795",
+    "exports/sim/turret_box/ring_driver.stl": "a2db03ed31c262a4f9297b266e85411571b92981f71d6b6e2d0d30f42d140b52",
+    "exports/sim/turret_box/ring_leads_rotor.stl": "9357d35cca139908eabf6bcc2b2876bef549d522b801490e9c3c99b09e92139d",
+    "exports/sim/turret_box/shoulder_screw.stl": "baef4002081cea195a727a662f0689b3c009b753a26d0c3ea1dcc5e9f14b4bae",
+    "exports/sim/turret_box/slip_ring.stl": "453519aa756e7adb6baac9a5391caa10b8ae297ff543673ddce092049136a27a",
+    "exports/sim/turret_box/slip_ring_rotor.stl": "908373c88117db4a7e5db884c73a6f96c72957d24b94d4171193a3d856de2bb7",
+    "exports/sim/turret_box/tilt_bearing.stl": "7eabd055ba8a4c6ffbe286fc04d3bdd78aca33b4feb6ef93582c0fe63860a450",
+    "exports/sim/turret_box/tilt_bearing_inner.stl": "248c0f3667ffaed17264e7a21bed144775fee56f165fd320b4f82779ffca5b53",
+    "exports/sim/turret_box/tilt_servo.stl": "fa578ec54f47861e5cd9170ac5be5df1832dc52183a61012bb0cef230604946b",
+    "exports/sim/turret_box/tilt_yoke.stl": "36c324a2ef44b2e208bb5d5eccff6312d3665664a30c548620dfada7eec5fd69",
+    "exports/sim/turret_box/turret_board.stl": "869bd5ba08b01bad5c56710062b511ba91b90c6a48cdec394bc40e193c7156a9",
+    "exports/sim/v2/leg-attachments/manifest.json": "6fc73ba71806553fda43ec303e413bbfa3fefd1810f82c8edd977d5b52b72090",
+    "exports/sim/v2/leg-attachments/output_adapter.stl": "abadcc27e7425adcb6d3851684ffd915ea74e1a96699a262e9ad0fe15e096e6b",
+    "exports/sim/v2/leg-attachments/output_screw_1.stl": "59d0844c74b611ce75febb2f779c0601f63f9a6de5c2f1323907809d63b3297b",
+    "exports/sim/v2/leg-attachments/output_screw_2.stl": "58ff1d7d98f2de574b33fac73c9a3a9c473feefd68929abf4cbee052e9583619",
+    "exports/sim/v2/leg-attachments/output_screw_3.stl": "7a3b8d34d1b4ff337ddf1a836f0103712d8ab9bafa45c390141fe2151d945a89",
+    "exports/sim/v2/leg-attachments/output_screw_4.stl": "00f87327fba9965dee90ad4f98157bb481c94c311299c1d291942d3a3765860e",
+    "exports/sim/v2/leg-attachments/output_screw_5.stl": "cdd5b8ea34f7f063711b1c643c39fc406d5577c3d1aad9077a9c46d7e4797824",
+    "exports/sim/v2/leg-attachments/output_screw_6.stl": "cb763beb4269045cafd5693cb066cabd4a0383e38c3f2d78fb6d28d672566d93",
+    "exports/sim/v2/leg-attachments/output_screw_7.stl": "5dfe4a22530a8a65bffd5ac60803cb7ba313a9a2ca849291d3356a3173db3f6d",
+    "exports/sim/v2/leg-attachments/output_screw_8.stl": "1a7b8e8c08fee9f8610d988280cd3124124c9552a6ca13204d668929c801b8d8",
+    "exports/sim/v2/leg-attachments/output_screw_9.stl": "a4dbfbe14280fca277045865cd3901500779c68d7ff15ef1748c84bc7ecae5c4",
+    "exports/sim/v2/rig/body__adapter_f_l.stl": "2cd56998c321be35f9f75a8191bbc33903bd75ce5f74bc5906e19b7085c666c3",
+    "exports/sim/v2/rig/body__adapter_f_r_m.stl": "66e310f46f6f857928b61baa0afe0a682fa2e006f6343b28cde54302c80f4bc7",
+    "exports/sim/v2/rig/body__adapter_r_l.stl": "492252717b7aac7de9e9149076b65e74db882edc55731976d3b2c9d7e5a2a084",
+    "exports/sim/v2/rig/body__adapter_r_r_m.stl": "68a82f8f4a0c9d336b28eb9b62ec7d853cd099ebb07d66de3527641fac4327b6",
+    "exports/sim/v2/rig/body__battery.stl": "7e599299aab982edca57e4d78c0d75dc06ee06252a5dfeda381756843b198f56",
+    "exports/sim/v2/rig/body__camera_front.stl": "cbd27852f66375336bbab37d167348e468a15a6801cd737082548e7863b5af90",
+    "exports/sim/v2/rig/body__camera_rear.stl": "ccddcdf61f60f0537df6dd24c44cd04399e375893cb47f1bfb4348055b3a1b65",
+    "exports/sim/v2/rig/body__compute.stl": "13e15b430207bafc9bbf87fad13ed810b724d02e553d1ff07d748398b3693710",
+    "exports/sim/v2/rig/body__dcdc_12v.stl": "69d78f8c7c5c69931d8176e7d519974468150694801433d73884fdba7ffa921e",
+    "exports/sim/v2/rig/body__dcdc_compute.stl": "dd71b89e251948f1d0f34c37f8d7d9e0110aa274baeebcaffa066c7765b2127a",
+    "exports/sim/v2/rig/body__electronics_small.stl": "dc390d290eea357bd1e82de98325cdf81225269de9be62e91b925c7bcecdd3a6",
+    "exports/sim/v2/rig/body__eyes.stl": "f65fa29d0085249c6d45fe3ac58f9dcd94ef41be7d1ff83072414dd4e8d6c60d",
+    "exports/sim/v2/rig/body__fuse.stl": "439c681f90d5bf670a1c4f5f2e2a143da13b216bbdc274a6420921de8d4f5434",
+    "exports/sim/v2/rig/body__headlight_l.stl": "9ff90cdf8c63c07a7f1c355ce782f96635a5a589f7fa9b48c5ca65e733f46e92",
+    "exports/sim/v2/rig/body__headlight_r.stl": "d6bd3c52415583019a4b641fa4a1e5bde52eb080112972cbf78e5d44559bd576",
+    "exports/sim/v2/rig/body__hip_frame_l.stl": "095e7d351484dd8eb9cd7c49276468d6a42f7bffaa3cb96fdc25852cb36ec7a5",
+    "exports/sim/v2/rig/body__hip_frame_r_m.stl": "6df3faa795a0764b213d991065f901953af241b718daac0ab76bff7830b7e1b6",
+    "exports/sim/v2/rig/body__interim_body.stl": "094c327f646b1713f7603cd04cbf6a9b90c9d2e035c77f958457465b0d56954b",
+    "exports/sim/v2/rig/body__lidar.stl": "2ba4ece05c2a81093a94b76643b464109010eece6fe123b9c5a0a0ee06f7b16a",
+    "exports/sim/v2/rig/body__motor_driver_l.stl": "329693b5f2bc2abad607219e1137016ee85be416241b1fdda16189b37ca18569",
+    "exports/sim/v2/rig/body__motor_driver_r.stl": "93b75f473a9f51794439c6e19d6d00352b30589e44f2b592b6514ddf3ce82eee",
+    "exports/sim/v2/rig/body__motor_f_l.stl": "9dff6b5be5611b0bd35897070811107122b5d7dfb5c4aca363ac2233eaa98a53",
+    "exports/sim/v2/rig/body__motor_f_r_m.stl": "5ee5240182fee3fa733ed7798038fec7b43ec4b659a5e81a9242ea8c41943fea",
+    "exports/sim/v2/rig/body__motor_r_l.stl": "8a25cbf487f5b370a3a08b05cad14690cc4d32e39ab62e376530601aa7ae9365",
+    "exports/sim/v2/rig/body__motor_r_r_m.stl": "b0e03826d813641c37a09241abbf6faa1be0b8c26dd2e9a34ab99ad35cf39315",
+    "exports/sim/v2/rig/body__power_switch.stl": "e15d895964d62fa3644f6bbbca79b1802fa92c52a313f5e241b8d8f10a49f5cd",
+    "exports/sim/v2/rig/body__regen_clamp.stl": "f10586ea435172885511e3b29ba9e21d9c44b5543511767a82923a3dd5fac968",
+    "exports/sim/v2/rig/link__front_link.stl": "079e4e57b43d65799b75404791586fbaf180b51b3b277d6f7374fd3c893260b1",
+    "exports/sim/v2/rig/link__hub.stl": "f6a62ae5720cfb21763d5cdc8d9dc3c9e6075d10c667d9e6c4c7a61f494816e9",
+    "exports/sim/v2/rig/link__tyre.stl": "f0b83ff589ddcd41f97ee2f4747a923cb306900b39cf9339104b025d4e53d42b",
+    "exports/sim/v2/rig/link__upper_link.stl": "78816e0aafb1c832b4839a9370cf780b20a46cb13eca7c6c94d41f4e61c11784",
+    "exports/sim/v2/rig/link__wheel_link.stl": "40f5f626880d1b9a75d4b83cf644cdc7ea1446a51a0eb6180f5776db600349fd",
+    "exports/sim/v2/rig/manifest.json": "0f394643875bcdff247c8f285f2d0d10499104a1073088ce37c4b5f1b337086f",
+    "exports/sim/v2/summary.json": "297a40dc891e3bbb1f1985d7db461021446b5041b33969fdc33b63a4b573ceac",
+    "tools/capture-highlights.mjs": "2865634d7d05047ecbd73ca75350026ac293f484243e58ad411897135326f0fd",
+    "tools/check-highlights.py": "9c79a16a017806474f0bf99068fd524735b67343880ee2394fd10251c05eb7c5",
+    "tools/encode-highlights.py": "8b20933314046ad771e3dd6e180ae3b294c67a51602f7dedde7592416e3077c9",
+    "web/icon.svg": "0a1ba64971063f63310e5edd529874329cceb5d4adbbf95888e325accc95a303",
+    "web/model-links.css": "8b9e13dcf3940a0081acdc28eca75126803089308255781a006465351b563eb2",
+    "web/model-links.js": "ffb3fc044b2ce527840b0209c13074c3c7ccb187fd7bf47ff9b971311e643e2c",
+    "web/prototype-notice.css": "396ee38218680d5db1f6aa858d7e6554fe64d8f2e6d9935d169b7a0aa9bd6b0a",
+    "web/prototype-notice.js": "370598d683904c2b656052fa0c5d42dac758e6d3e1289a049a38abfeda3647a1"
+  },
+  "segments": [
+    {
+      "id": "turret",
+      "start": 0,
+      "frames": 120,
+      "samples": [
+        5,
+        110
+      ],
+      "crop": [
+        280,
+        120,
+        720,
+        430
+      ],
+      "title": "Current turret",
+      "subtitle": "Explore the public CAD"
+    },
+    {
+      "id": "mechanism",
+      "start": 120,
+      "frames": 90,
+      "samples": [
+        125,
+        200
+      ],
+      "crop": [
+        280,
+        120,
+        720,
+        430
+      ],
+      "title": "Inside the mechanism",
+      "subtitle": "Illustrative feed and flywheel motion"
+    },
+    {
+      "id": "battle",
+      "start": 210,
+      "frames": 180,
+      "samples": [
+        220,
+        370
+      ],
+      "crop": [
+        130,
+        100,
+        1020,
+        450
+      ],
+      "title": "Target practice",
+      "subtitle": "Interactive play simulation"
+    },
+    {
+      "id": "leg",
+      "start": 390,
+      "frames": 90,
+      "samples": [
+        393,
+        414
+      ],
+      "crop": [
+        300,
+        100,
+        680,
+        450
+      ],
+      "title": "Archived MuJoCo",
+      "subtitle": "16.25 kg leg-rig jump study"
+    },
+    {
+      "id": "e1",
+      "start": 480,
+      "frames": 90,
+      "samples": [
+        482,
+        567
+      ],
+      "crop": [
+        360,
+        140,
+        590,
+        360
+      ],
+      "source_start_seconds": 1,
+      "layout": "Native 960 x 720, centered with 160 px side bars; all original labels retained"
+    },
+    {
+      "id": "character",
+      "start": 570,
+      "frames": 90,
+      "samples": [
+        575,
+        650
+      ],
+      "crop": [
+        280,
+        100,
+        720,
+        450
+      ]
+    }
+  ],
+  "historical_leg": {
+    "revision": "ae919f7211f236f398ff77cc25d00c2017c1ab9c",
+    "report": "exports/leg/rig-results.json",
+    "report_sha256": "89e2fdb42a5250430592b6a2f3b97e0c1ddddf7e6fa33a8ec8510f913d223c80",
+    "video": "exports/leg/rig_jump.mp4",
+    "video_sha256": "7b59e8e0c807d04ca1387a4fd63f03536d44be5a637617e835fe5811ff50f217",
+    "half_mass_kg": 16.25,
+    "bus_v": 48.1,
+    "wheel": "odrive-botwheel",
+    "scenario": {
+      "scenario": "jump",
+      "title": "Crouch, push off at the 60 N m cap, tuck in the air, land",
+      "cap_nm": 60.0,
+      "peak_motor_nm": 60.0,
+      "peak_motor_speed_rad_s": 14.56,
+      "peak_wheel_force_n": 3633.0,
+      "pose_at_peak_wheel_force": {
+        "L_mm": 251.5,
+        "phi_deg": [
+          -38.1,
+          -141.9
+        ]
+      },
+      "peak_axle_force_n": 2474.2,
+      "axle_force_at_peak_n": [
+        -50.4,
+        2473.7
+      ],
+      "pose_at_peak_axle_force": {
+        "L_mm": 251.5,
+        "phi_deg": [
+          -38.1,
+          -141.9
+        ]
+      },
+      "peak_front_link_n": 1913.1,
+      "front_link_compression_n": 1913.1,
+      "front_link_tension_n": 116.4,
+      "peak_knee_pin_n": 1978.2,
+      "peak_stop_nm": 0.0,
+      "stop_hits": false,
+      "L_range_mm": [
+        154.1,
+        338.0
+      ],
+      "rig": {
+        "half_mass_kg": 16.25,
+        "dummy_kg": 7.157,
+        "moving_kg": 5.026,
+        "frame_kg": 4.066,
+        "carriage_kg": 11.224,
+        "armature": 0.0243,
+        "stop_k_nm_per_rad": 856,
+        "ref": {
+          "phi1": -0.88798,
+          "phi2": -2.25361,
+          "af": -2.31663,
+          "aw": -0.82496
+        }
+      },
+      "jump_height_mm": 244.2,
+      "peak_gearbox_nm": 100.7,
+      "gearbox_over_peak_ms": 0.0,
+      "peak_joint_force_n": {
+        "knee_f": 759.8,
+        "knee_r": 772.6,
+        "hip_f": 686.5,
+        "hip_r": 683.5,
+        "apex": 1080.8
+      }
+    },
+    "status": "Historical simulated single-leg rig; not a current full-robot or hardware test"
+  },
+  "e1": {
+    "source_start_seconds": 1,
+    "source_duration_seconds": 3,
+    "transient_simulation": false,
+    "deformation_exaggeration": 77,
+    "safety_factor": 1.65,
+    "required": 2,
+    "baseline_kg": 37.5
+  },
+  "capture": {
+    "recipe": "tools/capture-highlights.mjs",
+    "receipt": "capture-receipt.json",
+    "frames": "capture-frames.json",
+    "raw_frames_committed": false,
+    "current_model": "48-part current turret; interim full-robot body"
+  },
+  "encoding": {
+    "ffmpeg": "ffmpeg version 6.1.1-3ubuntu5 Copyright (c) 2000-2023 the FFmpeg developers",
+    "h264": [
+      "-c:v",
+      "libx264",
+      "-preset",
+      "slow",
+      "-crf",
+      "21",
+      "-profile:v",
+      "high",
+      "-level:v",
+      "3.1",
+      "-maxrate",
+      "8M",
+      "-bufsize",
+      "16M",
+      "-g",
+      "60",
+      "-movflags",
+      "+faststart"
+    ],
+    "vp9": [
+      "-c:v",
+      "libvpx-vp9",
+      "-b:v",
+      "0",
+      "-crf",
+      "31",
+      "-deadline",
+      "good",
+      "-cpu-used",
+      "2",
+      "-row-mt",
+      "1",
+      "-tile-columns",
+      "2",
+      "-g",
+      "60"
+    ],
+    "intermediate": "FFV1 yuv420p; both encodings from identical segments",
+    "poster_frame": 30,
+    "font": "designer/kit/vendor/fonts/inter.woff2"
+  },
+  "limitations": [
+    "Browser motion is illustrative, with integrated live projectiles; not a new full-robot physics result.",
+    "Leg footage retains its historical 16.25 kg / 48.1 V / BotWheel / 60 N m baseline.",
+    "E1 is historical static load scaling, with a failed strength target; not transient dynamics.",
+    "No new solver runs. Reproducible recipe and source identity, not a promise of cross-host identical encoded bytes."
+  ],
+  "outputs": {
+    "gyropup-highlights.mp4": {
+      "sha256": "47ae3212f279d3658d445904cfe10206c515a664ceb3484be39a36012b4e0e40",
+      "bytes": 1809246
+    },
+    "gyropup-highlights.webm": {
+      "sha256": "44f89d01ab8b9d436ba3aed841ce2809b56eff0ccd3eab298b9030f582f01026",
+      "bytes": 1438730
+    },
+    "gyropup-highlights.webp": {
+      "sha256": "a07f9c3eb55a824f5092f43002a87f71aca831ee1a759f10b02ae3d28e1a4a00",
+      "bytes": 32566
+    },
+    "capture-receipt.json": {
+      "sha256": "f9eab7c382cbd9b1e355a33529eeb1287d98a5276e10a04c20e558b8928f2806",
+      "bytes": 113685
+    },
+    "capture-frames.json": {
+      "sha256": "f210a76008fc63a57d639bf922008df833ed618ab2aae97e9458de39d178f394",
+      "bytes": 100989
+    }
+  }
+}
