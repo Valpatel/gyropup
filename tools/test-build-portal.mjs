@@ -105,6 +105,49 @@ try{
  for(const [width,height] of [[320,568],[568,320],[390,844],[844,390]]){await page.setViewportSize({width,height});await page.evaluate(()=>window.scrollTo(0,document.querySelector('#made').getBoundingClientRect().top+scrollY-70));const layout=await page.evaluate(()=>({width:innerWidth,scroll:document.documentElement.scrollWidth,controls:[...document.querySelectorAll('#made .cad-table-tools input,#made .cad-table-tools select')].map(el=>({width:el.getBoundingClientRect().width,height:el.getBoundingClientRect().height}))}));assert.ok(layout.scroll<=width+1,JSON.stringify(layout));assert.ok(layout.controls.every(r=>r.height>=44&&r.width<=width),JSON.stringify(layout));await page.screenshot({path:`${out}/${engine.name()}-${width}x${height}.png`});}
  await page.setViewportSize({width:320,height:568});await page.evaluate(()=>{const host=document.querySelector('#made'),scroll=host.querySelector('.cad-table-scroll');scroll.scrollLeft=scroll.scrollWidth;window.scrollTo(0,host.getBoundingClientRect().top+scrollY-70);});
  const sticky=await page.locator('#made tbody tr').first().evaluate(row=>{const cell=row.querySelector('.cad-part-identity'),r=cell.getBoundingClientRect(),checks=[...row.querySelectorAll('.cad-status-check')].map(label=>{const r=label.getBoundingClientRect(),hit=document.elementFromPoint(r.x+r.width/2,r.y+r.height/2);return {x:r.x,right:r.right,height:r.height,width:r.width,reachable:label===hit||label.contains(hit)};});return {text:(cell.querySelector('b')||cell).innerText.trim(),x:r.x,right:r.right,checks};});assert.ok(sticky.text&&sticky.x>=0&&sticky.right<=160,JSON.stringify(sticky));assert.ok(sticky.checks.every(r=>r.height>=44&&r.width>=44&&r.x>=sticky.right-1&&r.right<=320&&r.reachable),JSON.stringify(sticky));await page.screenshot({path:`${out}/${engine.name()}-status-320.png`});
+ // Small preparation pages must expose their primary inspection actions without
+ // sideways scrolling. Page scrollWidth alone misses nested table clipping.
+ const fitReceipt=JSON.parse(await readFile(new URL('../exports/turret/carrier-insert-fit/receipt.json',import.meta.url),'utf8'));
+ for(const width of [320,390,1440]){
+  await page.setViewportSize({width,height:900});
+  await page.goto(base+'/site/pages/research-carrier-insert-fit-readme-md.html?live=0');
+  for(const name of Object.keys(fitReceipt.specimens)){
+   const action=page.getByRole('link',{name:`Preview ${name}.step in 3D`,exact:true});
+   // Do not use scrollIntoView: it can horizontally scroll an ancestor and
+   // conceal the initial clipped-action defect this check is meant to catch.
+   const verticalOnly=()=>action.evaluate(a=>window.scrollTo({left:0,top:a.getBoundingClientRect().top+scrollY-innerHeight/2,behavior:'instant'}));
+   await verticalOnly();
+   const placement=()=>action.evaluate(a=>{
+    const r=a.getBoundingClientRect(),hit=document.elementFromPoint(r.x+r.width/2,r.y+r.height/2);let clipped=false,horizontallyScrolled=false;
+    for(let parent=a.parentElement;parent;parent=parent.parentElement){
+     horizontallyScrolled ||= parent.scrollLeft!==0;
+     if(/^(auto|scroll|hidden|clip)$/.test(getComputedStyle(parent).overflowX)){
+      const box=parent.getBoundingClientRect(),left=box.left+parent.clientLeft,right=left+parent.clientWidth;
+      clipped ||= r.left<left||r.right>right;
+     }
+    }
+    return {x:r.x,right:r.right,width:r.width,height:r.height,viewport:innerWidth,reachable:hit===a||a.contains(hit),clipped,horizontallyScrolled};
+   });
+   const accessible=r=>r.x>=0&&r.right<=r.viewport&&r.width>=44&&r.height>=44&&r.reachable&&!r.clipped&&!r.horizontallyScrolled;
+   const baseline=await placement();assert.ok(accessible(baseline),JSON.stringify({name,width,...baseline}));
+   if(width===320){
+    const previous=await action.getAttribute('style');await action.evaluate(a=>a.style.transform='translateX(400px)');
+    assert.equal(accessible(await placement()),false,'An offscreen primary action must fail even inside a contained page');
+    await action.evaluate((a,value)=>value===null?a.removeAttribute('style'):a.setAttribute('style',value),previous);
+    assert.ok(accessible(await placement()));
+    // Keep the button inside the viewport but clip it inside a smaller scroll
+    // ancestor. A horizontal automation helper would silently reveal it.
+    const parentStyle=await action.evaluate(a=>a.parentElement.getAttribute('style'));
+    // Keep original+preview siblings together so live link decoration does not
+    // create an unrelated replacement action while the fixture is installed.
+    await action.evaluate(a=>{const content=a.parentElement,wrapper=document.createElement('div');wrapper.dataset.testClip='';wrapper.style.cssText='display:block;width:120px;overflow-x:auto;white-space:nowrap';content.before(wrapper);wrapper.append(content);content.style.marginLeft='100px';content.style.width='max-content';});
+    await verticalOnly();const nested=await placement();assert.equal(nested.clipped,true);assert.equal(nested.horizontallyScrolled,false);assert.equal(accessible(nested),false,'Nested clipping cannot be concealed by automation scrolling');
+    await action.evaluate((a,value)=>{const content=a.parentElement,wrapper=content.parentElement;wrapper.replaceWith(content);value===null?content.removeAttribute('style'):content.setAttribute('style',value);},parentStyle);
+    await verticalOnly();assert.ok(accessible(await placement()));
+   }
+  }
+  await page.screenshot({path:`${out}/${engine.name()}-insert-fit-${width}.png`});
+ }
  // Follow real portal preview links, then verify original parsers and native camera controls.
  await page.setViewportSize({width:1280,height:900});
  for(const file of ['/exports/body/post.stl','/exports/leg/cnc/output_adapter.step','/exports/turret/print/barrel.3mf']) {

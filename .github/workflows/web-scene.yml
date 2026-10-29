@@ -14,9 +14,12 @@ jobs:
           - suite: mechanism
             commands: |
               python3 tools/test-print-provenance.py
+              python3 research/thread-mating-2026-10-29/test_wrapper.py
               python3 tools/test-base-board-interfaces.py
               python3 tools/test-carrier-connector-inputs.py
               python3 tools/test-carrier-connector-pose.py
+              python3 research/carrier-insert-fit/verify.py
+              python3 research/carrier-insert-fit/test_guards.py
               npm run test:turret
               npm run test:camera
               npm run test:models
@@ -49,6 +52,7 @@ jobs:
           - suite: build-portal
             commands: |
               npm run test:build-portal
+              npm run test:carrier-inspection
               npm run test:study-media
     steps:
       - uses: actions/checkout@v4

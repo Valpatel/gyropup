@@ -4,6 +4,7 @@
 | --- | --- |
 | Valid supplier connector solids overlap when mated or omit wire-entry holes, contacts or latch details | [Vendor solids can omit functional cavities](inbox/2026-10-29-valid-vendor-solids-can-omit-connector-cavities.md) |
 | A TVS breakdown or nominal cutoff looks safe but peak voltage, recovery or shared-branch loads remain unbounded | [Electrical protection limits and evidence](domains/electrical-protection.md) |
+| Hidden power pin, unexpected VIN net, generated schematic differs from intended net map | [Exported EDA connectivity](domains/electrical-protection.md), [incident and regression](inbox/2026-10-29-hidden-power-pins-can-create-unintended-global-nets.md) |
 | Supplier stock exists but exact rating, wire seal, retail pack or part identity does not match the assembly | [Supplier evidence and exact part identity](domains/supplier-evidence.md) |
 | CAD branches merge but the model, print kit, BOM or validation reports describe different revisions | [Mechanical release coherence](domains/mechanical-release.md) |
 | Entry warning loses focus, hides controls, or changes saved audio/scene state | [Prototype notice](domains/prototype-notice.md) |
@@ -40,3 +41,6 @@
 | Demo hit counts increase but targets stay upright, detach, or clip through the floor | [Hits must produce visible, validated motion](inbox/2026-10-29-target-hits-need-visible-motion.md) |
 | Published notes show Mermaid source instead of a diagram | [Validate the published diagram consumer](inbox/2026-10-29-mermaid-needs-the-published-renderer.md) |
 | Thread-ray samples improve after rotation but the complete mating relation is unproved or times out | [Sampled thread alignment is not complete mating](inbox/2026-10-29-thread-sampling-does-not-qualify-mating.md) |
+| A STEP loads but all parts/reservations look identical, or an unexplained ready-only timeout loses its diagnostics | [Review the imported assembly](inbox/2026-10-29-review-the-imported-assembly-not-only-the-export.md) |
+| Native design files are downloadable but notes are unlisted, or a drawing opens cropped at paper width | [Engineering files need a usable portal](inbox/2026-10-29-downloadable-cad-notes-still-need-a-usable-portal.md) |
+- Insert coupon passes but parent fit is unknown; horizontal versus vertical pilot; geometry-only3MF confused with a sliced print → [Preserve parent specimen orientation](inbox/2026-10-29-fit-specimens-must-preserve-layer-orientation.md), `research/carrier-insert-fit/`.

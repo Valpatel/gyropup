@@ -1,12 +1,29 @@
 #!/bin/bash
 set -u
 CAD_RUN_ROOT="${CAD_RUN_ROOT:-$HOME/gyropup-mechanical-runs/20261029-integration}"
-CAD_PHASE_RUN="$CAD_RUN_ROOT/thread-phase-v042-153-matrix"
-mkdir -p "$CAD_PHASE_RUN"
+CAD_PHASE_RUN="${CAD_PHASE_RUN:?Set a fresh output directory for this diagnostic}"
+# Keep all paths stable across the subsequent checkout-directory change.
+if [[ "$CAD_RUN_ROOT" != /* || "$CAD_PHASE_RUN" != /* ]]; then
+  echo 'CAD_RUN_ROOT and CAD_PHASE_RUN must be absolute paths' >&2
+  exit 2
+fi
+# Refuse before opening any existing evidence file. The parent must already exist.
+if ! mkdir "$CAD_PHASE_RUN"; then
+  echo 'Refusing to reuse or replace the diagnostic output directory' >&2
+  exit 2
+fi
 exec >"$CAD_PHASE_RUN/run.log" 2>&1
+trap 'CAD_PHASE_RC=$?; printf "RUN-DONE rc=%s\n" "$CAD_PHASE_RC"; printf "%s\n" "$CAD_PHASE_RC" > "$CAD_PHASE_RUN/done"' EXIT
 date -u +%FT%TZ
 cd "$CAD_RUN_ROOT/cad-agent-v042-thread-probe" || exit 1
-printf 'toolkit_commit='; git rev-parse HEAD
+CAD_EXPECTED_COMMIT=2ad426943ce2c7232875e105e50810849f9a3e5e
+CAD_ACTUAL_COMMIT=$(git rev-parse HEAD) || exit 2
+printf 'toolkit_commit=%s\n' "$CAD_ACTUAL_COMMIT"
+CAD_TOOLKIT_STATUS=$(git status --porcelain --untracked-files=all) || exit 2
+if [ "$CAD_ACTUAL_COMMIT" != "$CAD_EXPECTED_COMMIT" ] || [ -n "$CAD_TOOLKIT_STATUS" ]; then
+  echo 'Refusing a different or dirty toolkit checkout; use the exact reviewed source'
+  exit 2
+fi
 python3 - "$CAD_RUN_ROOT/base-board-42db26b/references/vendor/mcmaster" <<'PYHASH'
 import hashlib,sys
 from pathlib import Path
@@ -22,6 +39,4 @@ if [ "$CAD_PHASE_RC" -eq 0 ]; then
  timeout 300 "$CAD_RUN_ROOT/.venv/bin/python" tools/volume_probe.py measure "$CAD_PHASE_RUN/fixed" --method gk
  CAD_PHASE_RC=$?
 fi
-printf 'RUN-DONE rc=%s\n' "$CAD_PHASE_RC"
-printf '%s\n' "$CAD_PHASE_RC" > "$CAD_PHASE_RUN/done"
 exit "$CAD_PHASE_RC"

@@ -60,7 +60,7 @@
   "volume_measurements": null,
   "conservation_result": null,
   "original_command_script_sha256": "71bf6367a43e369f36b5cb01a3ae349cedf19c2c6ca16c7db5295367968d9ec0",
-  "public_reproduction_script_sha256": "77d184b5ae8533262e250094530164d036593ccb9f12348ddd4945a145e06cae",
+  "public_reproduction_script_sha256": "dd0cc09e2e8ce4795751a15554f9a66bafa3ff7b94e2cdf76c0764019ce25973",
   "logs": {
     "clocked-run.log": "d5d686768a7186c129e72899b7738f878098df9c22bbf3267d6600df46a54989",
     "rejected-flat-matrix.log": "0899d2fd2665bf0cb4cc2ad693f938b8d2bc9575b635ca7171d09447cda63277"
@@ -71,5 +71,11 @@
     "Sampled material rays cannot qualify global threaded mating.",
     "No seat translation, overlap exclusion, threshold relaxation, carrier geometry or selected hardware changed.",
     "The absent 91290A113 model is a separate unresolved input; no phase is transferred to it."
+  ],
+  "public_wrapper_changes_after_historical_run": [
+    "Requires explicit fresh output directory and refuses before opening existing evidence.",
+    "Requires clean exact toolkit commit and rejects failed git identity/status queries.",
+    "Records exit code for preflight failures as well as completed/failed probe phases.",
+    "Requires absolute run/output paths so checkout changes cannot redirect output or completion markers."
   ]
 }

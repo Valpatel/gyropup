@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date_utc": "2026-10-29",
+  "source_revision": "660271612fdacd7dc2b02faa0f2a1f140e7b067c",
+  "toolkit_revision": "2ad426943ce2c7232875e105e50810849f9a3e5e",
+  "command": "python research/carrier-insert-fit/generate.py --out <fresh-output>; python research/carrier-insert-fit/verify.py <fresh-output>",
+  "host_role": "CAD compute host",
+  "start_utc": "2026-10-29T13:18:38Z",
+  "end_utc": "2026-10-29T13:18:46Z",
+  "exit_code": 0,
+  "elapsed_seconds": 7.41,
+  "peak_rss_kib": 558268,
+  "earlier_runs": [
+    {
+      "source_revision": "304e00d",
+      "exit_code": 1,
+      "cause": "Consumer compared integer4 to released string version4; stopped before geometry."
+    },
+    {
+      "source_revision": "148e398",
+      "exit_code": 1,
+      "cause": "Consumer used b instead of documented b_in_a containment enum; no exports published."
+    }
+  ],
+  "artifact_receipt": "../../exports/turret/carrier-insert-fit/receipt.json",
+  "physical_trial_performed": false,
+  "review_corrections": [
+    "Optional parameter-file identity is checked, with a changed-environment negative control.",
+    "Filled-pilot negative is a valid joined solid; each CAD negative must fail for its intended diagnostic."
+  ]
+}

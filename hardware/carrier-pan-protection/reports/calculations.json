@@ -1,0 +1,98 @@
+{
+  "FET_pair_loss_W_at3_25A_max25C_Rds": 0.13520000000000001,
+  "OV": {
+    "overdrive_50mV_V": [
+      50.718619662,
+      52.674706151
+    ],
+    "recover_V": [
+      43.051695618,
+      46.061425832
+    ],
+    "trip_V": [
+      46.043665977,
+      47.950934495
+    ]
+  },
+  "SHDN_divider_V_scenario_not_full_leakage_characterization": {
+    "100": [
+      16.62035686,
+      16.768884483
+    ],
+    "15": [
+      2.491993245,
+      2.516396671
+    ],
+    "42": [
+      6.979826393,
+      7.043657505
+    ]
+  },
+  "U2_static_max_V": 12.36,
+  "UV": {
+    "overdrive_50mV_V": [
+      11.644286554,
+      12.163851682
+    ],
+    "recover_V": [
+      13.486520962,
+      14.34381108
+    ],
+    "trip_V": [
+      12.960168274,
+      13.493095217
+    ]
+  },
+  "bleeder_42V_to5V_seconds_capacitance_scenarios": {
+    "100uF": 21.338183141,
+    "22uF": 4.694400291,
+    "500uF": 106.690915704
+  },
+  "divider_initial_plus_temperature_fraction": 0.002625,
+  "gate_slew_inrush_A_total_capacitance_scenarios": {
+    "100uF": 1.913875598,
+    "22uF": 0.421052632,
+    "500uF": 9.56937799
+  },
+  "input_trip_A": {
+    "forward_startup_at_Vout_0": [
+      2.956029068,
+      7.105697247
+    ],
+    "forward_steady": [
+      3.94137209,
+      6.09059764
+    ],
+    "reverse_magnitude": [
+      0.098534302,
+      0.507549803
+    ]
+  },
+  "local_C1_only_energy_at42V_max_tolerance_J": 0.023284799999999998,
+  "reference_temperature_C": 25,
+  "screening_load": {
+    "Vin15_eta80_input_A": 3.25,
+    "Vin42_eta80_input_A": 1.1607142857142856,
+    "assumed_contingency_A": 3.25,
+    "servo_plus_aux_A": 2.71
+  },
+  "sense_loss_W_at_maxsteadytrip": 0.365435858,
+  "servo_12_6V_static_margin_V": 0.24,
+  "startup_margin_A_before_capacitance_at_15V80pct": -0.293970932,
+  "status": "UNSELECTED_UNQUALIFIED_STATIC_SCREENING",
+  "temperature_scenario_C": [
+    -40,
+    85
+  ],
+  "unqualified": [
+    "source_fault_envelope",
+    "negative_42V",
+    "PAN_INPUT_55V_peak",
+    "12V_regeneration",
+    "startup_Cin_and_load",
+    "FET_SOA_and_thermal",
+    "C1_cold_and_ripple",
+    "reset_arming_and_backfeed",
+    "PCB_and_carrier_fit"
+  ]
+}
