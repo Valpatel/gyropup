@@ -22,13 +22,19 @@ jobs:
         env:
           PORT: 8879
           PLAYWRIGHT_CHANNEL: chromium
+          SITE_URL: http://127.0.0.1:8879
         run: |
           node tools/serve-site.mjs > /tmp/gyropup-site.log 2>&1 &
           server_pid=$!
           trap 'kill "$server_pid"' EXIT
           npm run test:turret
+          npm run test:camera
+          npm run test:interactions
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: turret-motion-evidence
-          path: /tmp/gyropup-turret-motion
+          path: |
+            /tmp/gyropup-turret-motion
+            /tmp/gyropup-camera-controls
+            /tmp/gyropup-turret-interactions

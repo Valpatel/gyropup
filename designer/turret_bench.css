@@ -22,6 +22,12 @@ body.bench-mode #stage-overlay > .hud-hint:not(.tb-keys) { display: none; }     
 .tb-fire { border: 1px solid rgba(255, 42, 109, 0.45); background: rgba(255, 42, 109, 0.06); }
 .tb-fire.ready { border-color: var(--magenta); background: rgba(255, 42, 109, 0.2); box-shadow: 0 0 22px rgba(255, 42, 109, 0.4); }
 .tb-fire:active { transform: scale(0.97); }
+.tb-reload { display:grid;place-items:center;gap:2px;min-width:110px;height:60px;padding:4px 12px;border:2px solid #dc5a1d;border-radius:14px;background:#ffdf9e; }
+.tb-reload b { font-size:12px;letter-spacing:.04em; }
+.tb-reload small { font-size:10px;color:#74401f;white-space:nowrap; }
+.tb-reload.empty { box-shadow:0 0 0 3px #f5b84c; }
+.tb-reload:disabled { opacity:1;cursor:progress;background:#fff0c8; }
+.tb-arm:disabled,.tb-fire:disabled { opacity:.45;cursor:default; }
 .tb-views { display: flex; border: 1px solid var(--hairline); border-radius: 10px; overflow: hidden; }
 .tb-views button { border: 0; border-right: 1px solid var(--hairline); background: transparent; padding: 0 10px; height: 40px; color: var(--muted); }
 .tb-views button:last-child { border-right: 0; }
@@ -85,6 +91,13 @@ body.tb-mode.tb-journey-on #summary { display: none; }
   .tb-arm, .tb-fire { min-width: 72px; height: 58px; padding: 2px 8px; }
   .tb-views button { padding: 0 6px; height: 44px; font-size: 9.5px !important; letter-spacing: .04em !important; }
   .tb-journey { display: none; }
+  #tb-actions { display:grid;grid-template-columns:repeat(3,minmax(0,1fr)); }
+  .tb-arm { grid-column:1;grid-row:1; }
+  .tb-reload { grid-column:2;grid-row:1;min-width:0;width:100%;height:58px;padding:3px; }
+  .tb-fire { grid-column:3;grid-row:1; }
+  .tb-views { grid-column:1/-1;grid-row:2;display:flex; }
+  .tb-views button { flex:1; }
+  #tb-card { bottom:136px; }
   #tb-card { left: 8px; right: 8px; max-width: none; bottom: 82px; max-height: 38vh; overflow: auto; }
   #tb-journey-card { left: 8px; right: 8px; top: 8px; max-width: none; padding: 8px 10px; }
   #tb-journey-card p { font-size: 12px; margin: 6px 0 8px; max-height: 22vh; overflow: auto; }

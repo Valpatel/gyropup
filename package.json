@@ -11,7 +11,9 @@
     "test:cache": "node tools/test-cache.mjs",
     "test:sim": "node tools/test-sim-transitions.mjs",
     "test:turret": "python3 tools/test-turret-frames.py && node tools/test-turret-motion.mjs",
-    "test:services": "node tools/test-service-discovery.mjs"
+    "test:services": "node tools/test-service-discovery.mjs",
+    "test:camera": "node tools/test-camera-controls.mjs",
+    "test:interactions": "node tools/test-turret-interactions.mjs"
   },
   "devDependencies": {
     "@playwright/test": "1.56.1",

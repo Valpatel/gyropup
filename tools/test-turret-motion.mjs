@@ -109,7 +109,7 @@ try {
       if(window.liveSamples.length>=150)return;
       const s=api.state,deg=180/Math.PI;
       window.liveSamples.push(window.captureTurret('firing-'+window.liveSamples.length,{
-        pan:s.pan*deg,tilt:s.tilt*deg,pinion:-3*s.pan*deg,dial:s.phi*deg,wheel_l:s.wheelAng*deg,wheel_r:s.wheelAng*deg,flap:Math.min(1,s.flapT*2)*1.1*deg}));
+        pan:s.pan*deg,tilt:s.tilt*deg,pinion:-3*s.pan*deg,dial:s.phi*deg,wheel_l:s.wheelAng*deg,wheel_r:s.wheelAng*deg,flap:s.flapAngle*deg}));
     });
   });
   await page.waitForFunction(()=>window.__sim.bench().api.state.shots>=4,{},{timeout:30000});
