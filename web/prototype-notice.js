@@ -60,27 +60,40 @@ if (dialog && footer && typeof dialog.showModal === 'function') {
   for (const button of footer.querySelectorAll('[data-prototype-notice-open]')) {
     button.hidden = false; button.addEventListener('click', open);
   }
-  const fullscreen = !!document.getElementById('hud') && getComputedStyle(document.body).overflowY === 'hidden';
-  document.body.dataset.prototypeFullscreen = String(fullscreen);
-  // Prefer app navigation; standalone viewers use their existing top bar.
-  // Move one button if asynchronous navigation arrives later, never duplicate it.
-  if (fullscreen) {
-    const button = document.createElement('button');
-    button.type = 'button'; button.className = 'prototype-notice-reopen';
-    button.dataset.prototypeNoticeOpen = ''; button.title = 'Prototype safety notice';
-    button.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m12 3 10 18H2L12 3Z" stroke-linejoin="round"/><path d="M12 9v5" stroke-linecap="round"/><circle cx="12" cy="17.5" r=".8" fill="currentColor" stroke="none"/></svg><span class="prototype-notice-sr">Prototype safety notice</span>';
-    button.addEventListener('click', open);
-    const attachReopen = () => {
-      const nav = document.querySelector('.appnav'), header = nav || document.getElementById('topbar');
-      if (!header) return false;
+  // FEA creates its HUD only after loading a case. Watch its structural owners,
+  // not all descendants: speech typing and per-frame readouts need no notice work.
+  const button = document.createElement('button');
+  button.type = 'button'; button.className = 'prototype-notice-reopen';
+  button.dataset.prototypeNoticeOpen = ''; button.title = 'Prototype safety notice';
+  button.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m12 3 10 18H2L12 3Z" stroke-linejoin="round"/><path d="M12 9v5" stroke-linecap="round"/><circle cx="12" cy="17.5" r=".8" fill="currentColor" stroke="none"/></svg><span class="prototype-notice-sr">Prototype safety notice</span>';
+  button.addEventListener('click', open);
+  const knownOwners = new Set([document.body]);
+  const owners = new MutationObserver(syncOwners);
+  function syncOwners() {
+    // Rebind after every structural change. Moving our button must not feed the observer.
+    owners.disconnect();
+    const hud = document.getElementById('hud'), fea = document.getElementById('fea');
+    const nav = document.querySelector('.appnav'), topbar = document.getElementById('topbar');
+    const fullscreen = !!hud && getComputedStyle(document.body).overflowY === 'hidden';
+    const header = nav || topbar;
+    for (const copy of document.querySelectorAll('button.prototype-notice-reopen')) if (copy !== button) copy.remove();
+    document.body.dataset.prototypeFullscreen = String(fullscreen);
+    document.body.dataset.prototypeEnhanced = String(fullscreen && !!header);
+    if (fullscreen && header) {
       if (button.parentElement !== header) header.insertBefore(button, nav?.querySelector('.menu-toggle') ?? null);
-      document.body.dataset.prototypeEnhanced = 'true';
-      return !!nav;
-    };
-    if (!attachReopen()) {
-      const observer = new MutationObserver(() => { if (attachReopen()) observer.disconnect(); });
-      observer.observe(document.body, { childList: true });
+    } else button.remove();
+    // The ancestor chain detects replacement of a nested FEA host, HUD or header.
+    // Direct child-list observation excludes changing text and canvas/scene children.
+    for (const node of [fea, hud, nav, topbar]) {
+      for (let owner = node; owner && owner !== document.body; owner = owner.parentElement) knownOwners.add(owner);
+    }
+    // Keep connected mount parents through a retry's temporary empty state.
+    for (const target of knownOwners) {
+      if (target.isConnected) owners.observe(target, { childList: true });
+      else knownOwners.delete(target);
     }
   }
+  syncOwners();
+  window.addEventListener('resize', syncOwners, { passive: true });
   if (!acknowledged) open(); else publish();
 }
