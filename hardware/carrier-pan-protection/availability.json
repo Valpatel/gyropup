@@ -1,0 +1,252 @@
+{
+  "observed_date": "2026-10-29",
+  "scope": "U2-only circuit candidate; not a purchase order or procurement readiness pass",
+  "method": "Manufacturer specifications plus direct distributor/manufacturer offers retrieved via web. Indexed page freshness and packaging vary; no checkout or supplier contact. Stock is not a delivery commitment.",
+  "not_ready_to_order": [
+    "R2 exact available quantity unresolved",
+    "R3 inconsistent indexed packaging",
+    "R4 nonstock1000-piece tier",
+    "R6 split-reel availability unresolved",
+    "R8 nonstock8000-piece displayed tier",
+    "U2 rationing",
+    "Electrical and mechanical qualification open"
+  ],
+  "rows": [
+    {
+      "mpn": "LTC4368IMS-2#PBF",
+      "references": [
+        "U1"
+      ],
+      "build_quantity": 1,
+      "value": "LTC4368IMS-2",
+      "primary_spec_url": "https://www.analog.com/media/en/technical-documentation/data-sheets/ltc4368.pdf",
+      "offer_url": "https://www.digikey.com/en/products/detail/analog-devices-inc/LTC4368IMS-2-PBF/6820038",
+      "displayed_stock": 1295,
+      "displayed_USD": 8.05,
+      "factory_lead_weeks": 25,
+      "offer_limit": "Tube, one-piece price observed; checkout not confirmed",
+      "status": "candidate_not_selected"
+    },
+    {
+      "mpn": "CSD19531Q5AT",
+      "references": [
+        "Q1",
+        "Q2"
+      ],
+      "build_quantity": 2,
+      "value": "100V N-MOS",
+      "primary_spec_url": "https://www.ti.com/lit/ds/symlink/csd19531q5a.pdf",
+      "offer_url": "https://www.digikey.com/en/products/detail/texas-instruments/CSD19531Q5AT/4840661",
+      "displayed_stock": 1756,
+      "displayed_USD": 3.35,
+      "factory_lead_weeks": 12,
+      "offer_limit": "Cut tape one-piece; factory reel250",
+      "status": "candidate_not_selected"
+    },
+    {
+      "mpn": "Pololu 5577",
+      "references": [
+        "U2"
+      ],
+      "build_quantity": 1,
+      "value": "D42V55F12 / 5577",
+      "primary_spec_url": "https://www.pololu.com/product/5577",
+      "offer_url": "https://www.pololu.com/product/5577",
+      "displayed_stock": null,
+      "displayed_USD": 47.95,
+      "factory_lead_weeks": null,
+      "offer_limit": "Rationed; backorders allowed; stock quantity/date unverified",
+      "status": "candidate_not_selected"
+    },
+    {
+      "mpn": "WSL2512R0100FEA",
+      "references": [
+        "R1"
+      ],
+      "build_quantity": 1,
+      "value": "10mR 1% 1W",
+      "primary_spec_url": "https://www.vishay.com/docs/30100/wsl.pdf",
+      "offer_url": "https://www.digikey.com/en/products/detail/vishay-dale/WSL2512R0100FEA/712561",
+      "displayed_stock": 257291,
+      "displayed_USD": 0.63,
+      "factory_lead_weeks": 53,
+      "offer_limit": "Cut tape one-piece offer",
+      "status": "candidate_not_selected"
+    },
+    {
+      "mpn": "TNPW0805464KBEEN",
+      "references": [
+        "R2"
+      ],
+      "build_quantity": 1,
+      "value": "464k 0.1%",
+      "primary_spec_url": "https://www.vishay.com/docs/28758/tnpw_e3.pdf",
+      "offer_url": "https://au.mouser.com/en/ProductDetail/Vishay/TNPW0805464KBEEN?qs=Azd6i%252B4tfIuuZQJ6ivngAA%3D%3D",
+      "displayed_stock": null,
+      "displayed_USD": null,
+      "factory_lead_weeks": null,
+      "offer_limit": "Exact distributor listing found; stock, minimum and ship date unresolved",
+      "status": "candidate_not_selected"
+    },
+    {
+      "mpn": "TNPW08054K99BEEN",
+      "references": [
+        "R3",
+        "R5"
+      ],
+      "build_quantity": 2,
+      "value": "4.99k 0.1%",
+      "primary_spec_url": "https://www.vishay.com/docs/28758/tnpw_e3.pdf",
+      "offer_url": "https://www.digikey.com/en/products/detail/vishay-dale/TNPW08054K99BEEN/1610568",
+      "displayed_stock": null,
+      "displayed_USD": null,
+      "factory_lead_weeks": null,
+      "offer_limit": "Retrieved variants disagree: indexed CT2556 at0.71 vs older page2936/reel1000. Exact small-quantity offer must be reconfirmed",
+      "status": "candidate_not_selected"
+    },
+    {
+      "mpn": "TNPW0805127KBEEN",
+      "references": [
+        "R4"
+      ],
+      "build_quantity": 1,
+      "value": "127k 0.1%",
+      "primary_spec_url": "https://www.vishay.com/docs/28758/tnpw_e3.pdf",
+      "offer_url": "https://www.digikey.com/en/products/detail/vishay-dale/TNPW0805127KBEEN/1610728",
+      "displayed_stock": 0,
+      "displayed_USD": 0.38771,
+      "factory_lead_weeks": 20,
+      "offer_limit": "Normally nonstock; displayed reel1000 tier, not a one-piece quote",
+      "status": "candidate_not_selected"
+    },
+    {
+      "mpn": "TNPW0805499KBEEN",
+      "references": [
+        "R6"
+      ],
+      "build_quantity": 1,
+      "value": "499k 0.1%",
+      "primary_spec_url": "https://www.vishay.com/docs/28758/tnpw_e3.pdf",
+      "offer_url": "https://www.digikey.com/en/products/detail/vishay-dale/TNPW0805499KBEEN/1610796",
+      "displayed_stock": 1000,
+      "displayed_USD": null,
+      "factory_lead_weeks": null,
+      "offer_limit": "Reel listing; one-piece split and exact lead time unverified",
+      "status": "candidate_not_selected"
+    },
+    {
+      "mpn": "TNPW0805100KBEEN",
+      "references": [
+        "R7",
+        "R9"
+      ],
+      "build_quantity": 2,
+      "value": "100k 0.1%",
+      "primary_spec_url": "https://www.vishay.com/docs/28758/tnpw_e3.pdf",
+      "offer_url": "https://www.digikey.com/en/products/detail/vishay-dale/TNPW0805100KBEEN/7355083",
+      "displayed_stock": 2115,
+      "displayed_USD": null,
+      "factory_lead_weeks": 20,
+      "offer_limit": "TR/CT listed; exact quantity price not captured",
+      "status": "candidate_not_selected"
+    },
+    {
+      "mpn": "TNPW080522K0BEEN",
+      "references": [
+        "R8"
+      ],
+      "build_quantity": 1,
+      "value": "22k 0.1%",
+      "primary_spec_url": "https://www.vishay.com/docs/28758/tnpw_e3.pdf",
+      "offer_url": "https://www.digikey.com/en/products/detail/vishay-dale/TNPW080522K0BEEN/1610639",
+      "displayed_stock": 0,
+      "displayed_USD": 0.36514,
+      "factory_lead_weeks": 20,
+      "offer_limit": "Normally nonstock. Displayed order tier8000 at$0.36514 each; no economical one-piece offer. Alternate candidate would require explicit review.",
+      "status": "candidate_not_selected"
+    },
+    {
+      "mpn": "EEU-FC2A220",
+      "references": [
+        "C1"
+      ],
+      "build_quantity": 1,
+      "value": "22uF 100V 20%",
+      "primary_spec_url": "https://industrial.panasonic.com/ww/products/pt/aluminum-cap-lead/models/EEUFC2A220",
+      "offer_url": "https://www.digikey.com/en/products/detail/panasonic-industry/EEU-FC2A220/285722",
+      "displayed_stock": 927,
+      "displayed_USD": 0.64,
+      "factory_lead_weeks": 37,
+      "offer_limit": "Bulk one-piece; manufacturer packing200, not enforced distributor MOQ",
+      "status": "candidate_not_selected"
+    },
+    {
+      "mpn": "C0805C332J1GACTU",
+      "references": [
+        "C2"
+      ],
+      "build_quantity": 1,
+      "value": "3.3nF 100V 5%",
+      "primary_spec_url": "https://yageogroup.com/content/datasheet/asset/file/KEM_C1003_C0G_SMD",
+      "offer_url": "https://www.digikey.com/en/products/detail/kemet/C0805C332J1GACTU/2212568",
+      "displayed_stock": 10015,
+      "displayed_USD": 0.81,
+      "factory_lead_weeks": 21,
+      "offer_limit": "Cut tape one-piece; full reel4000",
+      "status": "candidate_not_selected"
+    },
+    {
+      "mpn": "C0805C682J5GACTU",
+      "references": [
+        "C3"
+      ],
+      "build_quantity": 1,
+      "value": "6.8nF 50V 5%",
+      "primary_spec_url": "https://yageogroup.com/content/datasheet/asset/file/KEM_C1003_C0G_SMD",
+      "offer_url": "https://www.digikey.com/en/products/detail/kemet/C0805C682J5GACTU/2213110",
+      "displayed_stock": 8757,
+      "displayed_USD": 0.98,
+      "factory_lead_weeks": 21,
+      "offer_limit": "Cut tape one-piece; full reel4000",
+      "status": "candidate_not_selected"
+    }
+  ],
+  "source_evidence": [
+    {
+      "url": "https://www.analog.com/media/en/technical-documentation/data-sheets/ltc4368.pdf",
+      "revision": "RevC",
+      "capture": "web PDF parsed; direct local downloads failed HTTP2/timeout; no local hash asserted",
+      "pages": "2 pin map;3-4 limits;7 functions;12-16 topology/fault handling"
+    },
+    {
+      "url": "https://www.ti.com/lit/ds/symlink/csd19531q5a.pdf",
+      "revision": "SLPS406B May2014",
+      "sha256": "bee261f0df17541099fec60efdc9cd4cb0cf00de5ac0ba2ff582657038cbcf92",
+      "visual_check": "p1 top-view S1-3 G4 D5-8"
+    },
+    {
+      "url": "https://www.pololu.com/file/0J2180/d42v55fx-step-down-voltage-regulators-dimensions.pdf",
+      "revision": "18 June2025",
+      "sha256": "115ff5f3896b7440a0e7dc3f527f17eebabd29f1e7ebc737c6a60a0c6870cf5b"
+    },
+    {
+      "url": "https://a.pololu-files.com/picture/0J13509.1200.jpg?92a6d5d0b8976c2542720c3daed1685a",
+      "sha256": "b72552a4d2930c37e56a94c82af2a8ca5a9188259b477eac510f24de818fae9c",
+      "view": "top, terminal rows bottom"
+    },
+    {
+      "url": "https://a.pololu-files.com/picture/0J13510.1200.jpg?07698eb9b3d80e21445afe4b491b775a",
+      "sha256": "69970e7865f5345a016b5c294bb109f5ac63a09435e58d070ae10161f9221256",
+      "view": "bottom, mirrored to top; confirms VIN versus VRP"
+    },
+    {
+      "url": "https://www.vishay.com/docs/28758/tnpw_e3.pdf",
+      "revision": "10 Apr2026",
+      "claim": "0805 0.1%,25ppm/K candidate codes; derating/voltage apply, not precision guaranteed forever"
+    },
+    {
+      "url": "https://yageogroup.com/content/datasheet/asset/file/KEM_C1003_C0G_SMD",
+      "claim": "C0G coding, voltage,5% tolerance and package; no copied vendor drawing"
+    }
+  ]
+}
