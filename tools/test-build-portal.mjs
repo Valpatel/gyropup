@@ -10,6 +10,19 @@ const browser=await engine.launch(engine===chromium?{channel:process.env.PLAYWRI
 const context=await browser.newContext({viewport:{width:1280,height:900}});await context.addInitScript(()=>sessionStorage.setItem('gyropup.prototype-notice','2026-10-29-v1'));
 const page=await context.newPage(),errors=[];page.setDefaultTimeout(60000);page.on('pageerror',error=>errors.push(error.message));
 const ready=()=>page.waitForFunction(()=>document.body.dataset.ready==='1');
+const checkModelActions=async()=>{
+ await page.locator('[data-model-preview]').first().waitFor();
+ await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+ const rows=await page.locator('tr').evaluateAll(rows=>rows.map(row=>{
+  const originals=[...row.querySelectorAll('a[data-model-original]')],previews=[...row.querySelectorAll('a[data-model-preview]')];
+  return {key:row.dataset.partKey||row.textContent.trim().slice(0,40),
+   files:[...new Set(originals.map(a=>new URL(a.href,location.href).pathname))].sort(),
+   previews:previews.map(a=>new URL(a.href,location.href).searchParams.get('file')).sort(),
+   downloads:originals.every(a=>a.hasAttribute('download'))};
+ }).filter(row=>row.files.length));
+ assert.ok(rows.length>0,'Real BOM contains downloadable models');
+ for(const row of rows){assert.deepEqual(row.previews,row.files,row.key+' has exactly one preview per model');assert.equal(row.downloads,true,row.key);}
+};
 const exported=async()=>{const download=page.waitForEvent('download');await page.getByRole('button',{name:'Export progress',exact:true}).click();return JSON.parse(await readFile(await(await download).path(),'utf8'));};
 const checkNativeSort=async(table,column,direction)=>{
  const before=await table.locator('tbody tr:not([data-fixed])').evaluateAll(rows=>rows.map(row=>row.dataset.partKey||row.textContent));
@@ -25,10 +38,10 @@ const checkNativeSort=async(table,column,direction)=>{
 try{
  const version=await(await context.request.get(base+'/version.json')).json();
  const wasm=await context.request.get(base+'/designer/kit/vendor/occt-import-js/occt-import-js.wasm',{method:'HEAD'});assert.equal(wasm.status(),200);assert.match(wasm.headers()['content-type'],/^application\/wasm/);
- await page.goto(base+'/designer/progress.html');await ready();
+ await page.goto(base+'/designer/progress.html');await ready();await checkModelActions();
  const progressKeys=await page.locator('tr[data-part-key^="buy/"]').evaluateAll(rows=>rows.map(row=>row.dataset.partKey));
  assert.ok(progressKeys.length>20);assert.equal(await page.locator('table:not(.cad-part-table)').count(),0);
- await page.goto(base+'/designer/build.html');await ready();
+ await page.goto(base+'/designer/build.html');await ready();await checkModelActions();
  assert.equal(await page.locator('table:not(.cad-part-table)').count(),0);
  assert.equal(await page.getByRole('button',{name:/^Picture: sort/}).count(),0,'Picture-only columns have no meaningless sort control');
  const summaries=await page.evaluate(()=>({total:+document.querySelector('#sum-total').dataset.usd,sellers:[...document.querySelectorAll('#sellertable tbody tr[data-seller]')].reduce((sum,row)=>sum+ +row.dataset.usd,0),made:+document.querySelector('#sum-made').dataset.usd,hours:+document.querySelector('#sum-hours').dataset.h}));
@@ -41,7 +54,7 @@ try{
  await target.locator('input[type=checkbox]').first().check();
  const label=await target.getAttribute('data-part-label');
  const search=seller.getByRole('searchbox');await search.fill(label);assert.equal(await target.isVisible(),true);assert.equal(await target.locator('input').first().isChecked(),true);await search.fill('');
- const body=page.locator('[data-stream=body]');await body.uncheck();await body.check();
+ const body=page.locator('[data-stream=body]');await body.uncheck();await body.check();await checkModelActions();
  const reopened=target.locator('xpath=ancestor::details[contains(@class,"seller")]');await reopened.locator(':scope > summary').click();assert.equal(await target.locator('input').first().isChecked(),true);
  assert.equal(await page.locator('#orders .cad-table-tools').count(),await page.locator('#orders table').count(),'Rerender disposes old toolbars');
  await page.reload();await ready();await target.locator('xpath=ancestor::details[contains(@class,"seller")]').locator(':scope > summary').click();assert.equal(await target.locator('input').first().isChecked(),true);
