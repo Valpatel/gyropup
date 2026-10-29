@@ -62,7 +62,8 @@ try{
  // FEA creates its full-screen HUD only after a report fetch. A notice that
  // classifies the page once at startup can leave its footer over the controls.
  let releaseFea,seenFea;const feaRequested=new Promise(resolve=>seenFea=resolve);
- await page.route('**/exports/fea/thigh-T1.json*',async route=>{await new Promise(resolve=>{releaseFea=resolve;seenFea();});await route.continue();});
+ // Match the resource pathname, not the document's ?case=... query string.
+ await page.route(url=>url.pathname.endsWith('/exports/fea/thigh-T1.json'),async route=>{await new Promise(resolve=>{releaseFea=resolve;seenFea();});await route.continue();});
  // The intentionally held report is awaited by the entry module itself, so
  // DOMContentLoaded cannot fire until we release it below.
  await page.goto(base+'/designer/kit/fea.html?case=../../exports/fea/thigh-T1.json',{waitUntil:'commit'});
