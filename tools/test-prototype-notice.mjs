@@ -59,6 +59,18 @@ try{
   await reopen.click();await noticeOpen(page);await page.locator('#prototype-notice-ack').click();
   assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
  }
+ // FEA creates its full-screen HUD only after a report fetch. A notice that
+ // classifies the page once at startup can leave its footer over the controls.
+ let releaseFea,seenFea;const feaRequested=new Promise(resolve=>seenFea=resolve);
+ await page.route('**/exports/fea/thigh-T1.json*',async route=>{await new Promise(resolve=>{releaseFea=resolve;seenFea();});await route.continue();});
+ await page.goto(base+'/designer/kit/fea.html?case=../../exports/fea/thigh-T1.json',{waitUntil:'domcontentloaded'});
+ await feaRequested;await page.waitForFunction(()=>document.documentElement.dataset.prototypeNoticeOpen==='false');
+ assert.equal(await page.evaluate(()=>!!window.__fea),false,'Report is deliberately held before HUD creation');releaseFea();
+ await page.waitForFunction(()=>window.__fea&&document.body.dataset.prototypeEnhanced==='true'&&document.body.dataset.prototypeFullscreen==='true');
+ assert.equal(await page.locator('#prototype-notice-footer').isVisible(),false,'Full footer leaves the late-created viewer controls clear');
+ await page.getByRole('button',{name:'SHOW PANEL',exact:true}).click();await page.locator('[data-a=max]').click();
+ await page.locator('button[data-prototype-notice-open]:visible').click();await noticeOpen(page);await page.locator('#prototype-notice-ack').click();
+ await page.screenshot({path:`${out}/${engine.name()}-late-fea.png`});
  await context.close();
 
  // A direct simulator entry is gated too; reopening releases held controls and

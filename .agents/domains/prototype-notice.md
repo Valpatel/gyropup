@@ -8,4 +8,6 @@ Opening dispatches `gyropup:prototype-notice`, gates speech/SFX without changing
 
 The full footer remains on scrolling pages. Full-screen tools get a compact header reopen control, with a standalone-header fallback when no shared app navigation exists. Test every header control's rectangle: page `scrollWidth` alone can miss a button clipped by an overflow-hidden header. No warning may cover play controls.
 
+Full-screen state is not always known when the notice initializes: FEA creates its HUD after a fetch, and retries may replace it. React to relevant header/HUD additions and replacements without rescanning on every speech mutation; move one reusable reopen control and hide the footer only after it has a usable home.
+
 Existing feature suites use `tools/test-prototype-session.mjs` to exercise an acknowledged session. `tools/test-prototype-notice.mjs` independently covers fresh/direct entry, expired/blocked storage, focus, phone geometry, retained state, held inputs, audio gates, and static/Markdown warning text. Keep those separate; an automatic acknowledgement is not evidence that the entry flow works.
