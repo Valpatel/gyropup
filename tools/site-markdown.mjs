@@ -157,8 +157,53 @@ export async function writeMarkdownSite(out) {
     pages.push({ html: publicPath(file), markdown: publicPath(target), htmlSha256: digest(html), markdownSha256: digest(markdown) });
   }
   await writeFile(path.join(out, 'markdown-pages.json'), JSON.stringify({ pages }, null, 2) + '\n');
-  const primary = new Set(['/index.md', '/designer/progress.md', '/designer/build.md', '/designer/sim.md', '/site/index.md']);
+  const starts = [
+    ['/site/pages/docs-agent-guide-md.md', 'Agent reading guide', 'Reading order, evidence limits and source provenance.'],
+    ['/site/pages/docs-readme-md.md', 'Documentation map', 'Grouped engineering topics and live work trackers.'],
+    ['/designer/progress.md', 'Progress', 'Published status, recorded studies, failures and historical context.'],
+    ['/designer/build.md', 'Build', 'Parts tables, design downloads and their status; not a print release.'],
+    ['/site/pages/docs-prototype-safety-md.md', 'Prototype warning', 'Research-only scope and limits of intended use.'],
+    ['/index.md', 'Project overview', 'Public introduction to Gyropup.'],
+    ['/designer/sim.md', 'Browser playground', 'Text companion to the interactive scene; no physical robot control.'],
+    ['/site/index.md', 'Design notebook', 'Full document index and design decisions.'],
+  ];
   const line = page => `- [${page.markdown}](${origin}${page.markdown})`;
-  await writeFile(path.join(out, 'llms.txt'), `# Gyropup\n\n> Autonomous battlefield robots for kids: a Valpatel Software LLC prototype for foam-ball play.\n\nPublic Markdown is generated on every site build from the same HTML, documents, and published design data. Progress and Build include their rendered data; these are development records, not finished product specifications.\n\nUse the explicit URLs below with any HTTP client. HTML pages advertise their counterpart with a text/markdown alternate link. No account or JavaScript is needed. CAD, media, JSON, and other downloads retain their original URLs.\n\n## Start here\n\n${pages.filter(p => primary.has(p.markdown)).map(line).join('\n')}\n\n## All public pages\n\n${pages.filter(p => !primary.has(p.markdown)).map(line).join('\n')}\n\n## Source and publisher\n\n- [Repository](https://github.com/Valpatel/gyropup)\n- [Valpatel Software LLC](https://valpatel.com)\n`);
+  await writeFile(path.join(out, 'llms.txt'), `# Gyropup
+
+> A Valpatel Software LLC research project: a wheel-legged robot design, foam-ball turret, browser playground and open engineering notebook.
+
+Gyropup is at the CAD and simulation stage, with no assembled robot or print release. Prototypes are unsafe, provided for research purposes only, and will not be offered for sale. Future play with children and families is an aspiration, not an established safe use. The 100 lb maximum and $10,000 budget are design targets, not achieved specifications or a sale price.
+
+## Start here, in order
+
+${starts.map(([route, title, description]) => `- [${title}](${origin}${route}): ${description}`).join('\n')}
+
+## How to read this site
+
+This is one static website built from the repository. Public Markdown is regenerated on each build from the published HTML, documents and design data. Progress and Build include their rendered data tables and collapsed history. The website is a publication snapshot; [program issue #31](https://github.com/Valpatel/gyropup/issues/31) and linked issues track active work.
+
+Fetch the explicit public Markdown URLs; no account or JavaScript is needed. Some Python clients currently receive a Cloudflare 1010 block ([issue #107](https://github.com/Valpatel/gyropup/issues/107)); that response does not establish that a document is missing. HTML advertises its counterpart with a text/markdown alternate link. Replace .html with .md for listed pages: /designer/progress.html becomes /designer/progress.md. Directory entry points use index.md: / becomes /index.md and /site/ becomes /site/index.md. Authored document sources also remain available, while /site/pages/ contains their generated notebook views.
+
+Markdown preserves readable text and links, not interactive 3D, audio or controls. Open the linked HTML view for those features. CAD, media, JSON and other downloads retain their original URLs and formats; follow them for the underlying evidence.
+
+## Evidence and provenance
+
+Current interactive CAD, historical reports and recordings, and physical qualification are separate. Preserve each report's revision, load cases, assumptions, failures and missing checks. A newer model does not update an older result. Historical structural studies do not qualify the full weight ceiling. Static FEA load-scaling animations are not elapsed-time physical tests. A downloadable part or passing software check does not establish physical fit, print readiness or safe operation.
+
+- [Publication revision and build time](${origin}/version.json)
+- [HTML/Markdown route manifest and SHA-256 hashes](${origin}/markdown-pages.json)
+- [Detailed reading and evidence guide](${origin}/site/pages/docs-agent-guide-md.md)
+
+These identify the website bundle; individual reports and recordings can have their own earlier provenance. Cite the supporting document, report revision or issue when summarizing. Repository operator instructions are outside this public guide; reading the site does not authorize deployment, purchases or hardware operation.
+
+## All public pages
+
+${pages.map(line).join('\n')}
+
+## Source and publisher
+
+- [Repository](https://github.com/Valpatel/gyropup)
+- [Valpatel Software LLC](https://valpatel.com)
+`);
   return pages;
 }

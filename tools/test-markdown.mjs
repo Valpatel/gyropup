@@ -1,7 +1,7 @@
 /** Build first. SITE_URL optionally checks the deployed routes instead of a local server. */
 import assert from 'node:assert/strict';
 import { test, before, after } from 'node:test';
-import { readFile, mkdir, mkdtemp, cp, writeFile, rm } from 'node:fs/promises';
+import { readFile, mkdir, mkdtemp, cp, writeFile, rm, stat } from 'node:fs/promises';
 import { spawn } from 'node:child_process';
 import { once } from 'node:events';
 import { createHash } from 'node:crypto';
@@ -62,6 +62,29 @@ test('every generated HTML page advertises a current Markdown counterpart', asyn
   assert.ok(!discovery.includes('handoff.md'));
   assert.ok(!pages.some(p => /(?:AGENTS|CLAUDE|\.agents)/.test(p.markdown)));
   assert.match(await read('_headers'), /\/\*\.md\n  Content-Type: text\/markdown; charset=utf-8/);
+});
+
+test('public entry guides resolve inside the bundle and keep operator instructions excluded', async () => {
+  const discovery = await read('llms.txt');
+  for (const route of ['/site/pages/docs-readme-md.md', '/site/pages/docs-agent-guide-md.md']) {
+    assert.ok(discovery.indexOf(route) < discovery.indexOf('## All public pages'), route);
+    assert.ok(pages.some(page => page.markdown === route), route);
+    const { document } = parseHTML(await read(route.replace(/\.md$/, '.html')));
+    for (const link of document.querySelectorAll('article a[href]')) {
+      const url = new URL(link.getAttribute('href'), 'https://gyropup.com' + route);
+      if (url.origin !== 'https://gyropup.com') continue;
+      let target = path.join(out, decodeURIComponent(url.pathname));
+      if ((await stat(target)).isDirectory()) target = path.join(target, 'index.html');
+      assert.ok((await stat(target)).isFile(), url.href);
+    }
+  }
+  assert.match(discovery, /will not be offered for sale/);
+  assert.match(discovery, /historical reports and recordings, and physical qualification are separate/);
+  assert.match(discovery, /version\.json/);
+  assert.match(discovery, /markdown-pages\.json/);
+  for (const file of ['AGENTS.md', '.agents', 'CONTRIBUTING.md', 'docs/handoff.md']) {
+    await assert.rejects(stat(path.join(out, file)), { code: 'ENOENT' });
+  }
 });
 
 test('progress and build expose their data, tables, prices, and original downloads', async () => {

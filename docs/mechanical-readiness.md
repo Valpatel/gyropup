@@ -1,10 +1,12 @@
 # Mechanical readiness and integration plan
 
+> **Status guide — 2026-10-29:** The baseline table below records the earlier integration review, not today's branch or readiness inventory. PR15/27 have since been integrated; their source-specific findings remain evidence to reconcile. Read [program status #31](https://github.com/Valpatel/gyropup/issues/31), [mechanical tracker #61](https://github.com/Valpatel/gyropup/issues/61) and [carrier allocation #96](https://github.com/Valpatel/gyropup/issues/96) for current work. No complete turret print release or physical qualification is implied.
+
 This is the component review entry point for the first physical turret and the complete Gyropup assembly. It supersedes blanket “print now” statements in older planning documents until their referenced geometry, hardware assumptions and checks are reconciled. It does not declare physical fit or safe operation.
 
 Program tracker: [issue #61](https://github.com/Valpatel/gyropup/issues/61). The user requested a deliberate component-by-component review, hardware-complete models across legs and turret, consistent landing geometry, and a final repository state containing only `dev` and `main` branches.
 
-## Current baseline and blockers
+## Historical integration baseline and recorded blockers
 
 | Source | What it represents | Use now |
 | --- | --- | --- |
