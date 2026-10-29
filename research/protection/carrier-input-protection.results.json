@@ -1,0 +1,328 @@
+{
+  "inputs_sha256": "6de4b45091db0bc565c6344221ae978ec06e1bef73b0d9243a9f76d19643ba68",
+  "calculator_sha256": "280e8ec09ac02606de7ceb623e3ac01de51df93fcddee536edba7c980685d3eb",
+  "source_commit": "6133c18fc735f47bac2e8eabde7967e27d9ae16e",
+  "results": {
+    "status": "no_architecture_selected_or_qualified",
+    "load": {
+      "published_stall_plus_estimated_aux_a": 2.71,
+      "analyst_contingency_a": 3.25,
+      "nominal_stall_plus_aux_w": 32.519999999999996
+    },
+    "converter_screening": {
+      "existing": {
+        "static_output_max_v": 12.48,
+        "static_headroom_to_servo_max_v": 0.11999999999999922,
+        "input_headroom_above_steady_robot_v": 8.0,
+        "input_margin_to_d14_specified_clamp_v": -20.099999999999994,
+        "input_margin_to_d14_max_breakdown_v": -3.6000000000000014,
+        "stand_minimum_input_margin_before_drops_v": 1.6999999999999993,
+        "contingency_output_w_at_static_max": 40.56,
+        "energy_headroom_per_100uf_to_servo_max_j": 0.0001504799999999989,
+        "guaranteed_dynamic_input_or_output_peak_v": null
+      },
+      "same_footprint_candidate": {
+        "static_output_max_v": 12.36,
+        "static_headroom_to_servo_max_v": 0.2400000000000002,
+        "input_headroom_above_steady_robot_v": 18.0,
+        "input_margin_to_d14_specified_clamp_v": -10.099999999999994,
+        "input_margin_to_d14_max_breakdown_v": 6.399999999999999,
+        "stand_minimum_input_margin_before_drops_v": 3.0,
+        "contingency_output_w_at_static_max": 40.17,
+        "energy_headroom_per_100uf_to_servo_max_j": 0.00029951999999999973,
+        "guaranteed_dynamic_input_or_output_peak_v": null
+      },
+      "wide_candidate": {
+        "static_output_max_v": 12.299999999999999,
+        "static_headroom_to_servo_max_v": 0.3000000000000007,
+        "input_headroom_above_steady_robot_v": 118.0,
+        "input_margin_to_d14_specified_clamp_v": 89.9,
+        "input_margin_to_d14_max_breakdown_v": 106.4,
+        "stand_minimum_input_margin_before_drops_v": 1.0,
+        "contingency_output_w_at_static_max": 39.974999999999994,
+        "energy_headroom_per_100uf_to_servo_max_j": 0.0003735000000000014,
+        "guaranteed_dynamic_input_or_output_peak_v": null
+      }
+    },
+    "load_sensitivity": [
+      {
+        "efficiency_assumed": 0.8,
+        "input_v": 15.0,
+        "output_w": 32.519999999999996,
+        "input_w": 40.64999999999999,
+        "input_a": 2.7099999999999995,
+        "loss_w": 8.129999999999995
+      },
+      {
+        "efficiency_assumed": 0.8,
+        "input_v": 30.0,
+        "output_w": 32.519999999999996,
+        "input_w": 40.64999999999999,
+        "input_a": 1.3549999999999998,
+        "loss_w": 8.129999999999995
+      },
+      {
+        "efficiency_assumed": 0.8,
+        "input_v": 42.0,
+        "output_w": 32.519999999999996,
+        "input_w": 40.64999999999999,
+        "input_a": 0.9678571428571426,
+        "loss_w": 8.129999999999995
+      },
+      {
+        "efficiency_assumed": 0.9,
+        "input_v": 15.0,
+        "output_w": 32.519999999999996,
+        "input_w": 36.133333333333326,
+        "input_a": 2.4088888888888884,
+        "loss_w": 3.6133333333333297
+      },
+      {
+        "efficiency_assumed": 0.9,
+        "input_v": 30.0,
+        "output_w": 32.519999999999996,
+        "input_w": 36.133333333333326,
+        "input_a": 1.2044444444444442,
+        "loss_w": 3.6133333333333297
+      },
+      {
+        "efficiency_assumed": 0.9,
+        "input_v": 42.0,
+        "output_w": 32.519999999999996,
+        "input_w": 36.133333333333326,
+        "input_a": 0.8603174603174601,
+        "loss_w": 3.6133333333333297
+      },
+      {
+        "efficiency_assumed": 0.91,
+        "input_v": 15.0,
+        "output_w": 32.519999999999996,
+        "input_w": 35.73626373626373,
+        "input_a": 2.382417582417582,
+        "loss_w": 3.216263736263734
+      },
+      {
+        "efficiency_assumed": 0.91,
+        "input_v": 30.0,
+        "output_w": 32.519999999999996,
+        "input_w": 35.73626373626373,
+        "input_a": 1.191208791208791,
+        "loss_w": 3.216263736263734
+      },
+      {
+        "efficiency_assumed": 0.91,
+        "input_v": 42.0,
+        "output_w": 32.519999999999996,
+        "input_w": 35.73626373626373,
+        "input_a": 0.8508634222919935,
+        "loss_w": 3.216263736263734
+      },
+      {
+        "efficiency_assumed": 0.95,
+        "input_v": 15.0,
+        "output_w": 32.519999999999996,
+        "input_w": 34.23157894736842,
+        "input_a": 2.2821052631578946,
+        "loss_w": 1.711578947368423
+      },
+      {
+        "efficiency_assumed": 0.95,
+        "input_v": 30.0,
+        "output_w": 32.519999999999996,
+        "input_w": 34.23157894736842,
+        "input_a": 1.1410526315789473,
+        "loss_w": 1.711578947368423
+      },
+      {
+        "efficiency_assumed": 0.95,
+        "input_v": 42.0,
+        "output_w": 32.519999999999996,
+        "input_w": 34.23157894736842,
+        "input_a": 0.8150375939849623,
+        "loss_w": 1.711578947368423
+      }
+    ],
+    "active_threshold_examples": [
+      {
+        "top_ohm": 430000,
+        "bottom_ohm": 4990,
+        "nominal_rising_v": 43.58617234468938,
+        "rising_range_v": [
+          42.843289094964554,
+          44.33182171220177
+        ],
+        "recovery_range_v": [
+          40.05928358544402,
+          42.58492447428249
+        ],
+        "guaranteed_static_recovery_above_42v": false,
+        "worst_input_at_50mv_comparator_overdrive_v": 48.69906480699998,
+        "remaining_to_50v_before_gate_delay_v": 1.3009351930000221,
+        "remaining_to_55v_design_target_before_gate_delay_v": 6.300935193000022,
+        "guaranteed_transient_output_peak_v": null
+      },
+      {
+        "top_ohm": 464000,
+        "bottom_ohm": 4990,
+        "nominal_rising_v": 46.99298597194389,
+        "rising_range_v": [
+          46.19195613968269,
+          47.79700063828284
+        ],
+        "recovery_range_v": [
+          43.19035019452564,
+          45.91355803736529
+        ],
+        "guaranteed_static_recovery_above_42v": true,
+        "worst_input_at_50mv_comparator_overdrive_v": 52.505607140576714,
+        "remaining_to_50v_before_gate_delay_v": -2.505607140576714,
+        "remaining_to_55v_design_target_before_gate_delay_v": 2.494392859423286,
+        "guaranteed_transient_output_peak_v": null
+      }
+    ],
+    "current_breaker_examples": [
+      {
+        "sense_ohm": 0.0125,
+        "steady_forward_trip_range_a": [
+          3.168316831683168,
+          4.848484848484848
+        ],
+        "limit_note": "Circuit breaker, not a current limiter; startup threshold differs and current flows during delay"
+      },
+      {
+        "sense_ohm": 0.004,
+        "steady_forward_trip_range_a": [
+          9.900990099009901,
+          15.15151515151515
+        ],
+        "limit_note": "Circuit breaker, not a current limiter; startup threshold differs and current flows during delay"
+      }
+    ],
+    "thermal_sensitivity": [
+      {
+        "efficiency_assumed": 0.8,
+        "estimated_case_c_at_assumed_ambient": 117.47899999999997,
+        "qualified_enclosure_temperature": false
+      },
+      {
+        "efficiency_assumed": 0.9,
+        "estimated_case_c_at_assumed_ambient": 79.99066666666664,
+        "qualified_enclosure_temperature": false
+      },
+      {
+        "efficiency_assumed": 0.91,
+        "estimated_case_c_at_assumed_ambient": 76.69498901098899,
+        "qualified_enclosure_temperature": false
+      },
+      {
+        "efficiency_assumed": 0.95,
+        "estimated_case_c_at_assumed_ambient": 64.20610526315791,
+        "qualified_enclosure_temperature": false
+      }
+    ],
+    "startup": {
+      "bank_energy_at_42v_j": 0.8290799999999999,
+      "bank_energy_with_20pct_cap_scenario_j": 0.9948959999999999,
+      "inrush_a_at_max_gate_current_min_gate_cap_max_bank_cap": 2.278787878787879,
+      "note": "Charging current excludes running loads; resistor-isolated gate capacitor, MOSFET SOA and actual board capacitance remain unqualified"
+    },
+    "mosfet_conduction_scenarios": [
+      {
+        "current_a": 1,
+        "pair_loss_25c_w": 0.0128,
+        "pair_loss_with_assumed_hot_multiplier_w": 0.0256
+      },
+      {
+        "current_a": 3,
+        "pair_loss_25c_w": 0.11520000000000001,
+        "pair_loss_with_assumed_hot_multiplier_w": 0.23040000000000002
+      },
+      {
+        "current_a": 10,
+        "pair_loss_25c_w": 1.28,
+        "pair_loss_with_assumed_hot_multiplier_w": 2.56
+      }
+    ],
+    "unmeasured_energy_sensitivity": [
+      {
+        "inductance_h": 1e-06,
+        "current_a": 1,
+        "stored_j": 5e-07
+      },
+      {
+        "inductance_h": 1e-06,
+        "current_a": 3,
+        "stored_j": 4.5e-06
+      },
+      {
+        "inductance_h": 1e-06,
+        "current_a": 10,
+        "stored_j": 4.9999999999999996e-05
+      },
+      {
+        "inductance_h": 1e-05,
+        "current_a": 1,
+        "stored_j": 5e-06
+      },
+      {
+        "inductance_h": 1e-05,
+        "current_a": 3,
+        "stored_j": 4.500000000000001e-05
+      },
+      {
+        "inductance_h": 1e-05,
+        "current_a": 10,
+        "stored_j": 0.0005
+      },
+      {
+        "inductance_h": 0.0001,
+        "current_a": 1,
+        "stored_j": 5e-05
+      },
+      {
+        "inductance_h": 0.0001,
+        "current_a": 3,
+        "stored_j": 0.00045000000000000004
+      },
+      {
+        "inductance_h": 0.0001,
+        "current_a": 10,
+        "stored_j": 0.005
+      }
+    ],
+    "fixed_clamp_assumption_counterexamples": [
+      {
+        "source_v": 90,
+        "source_r_ohm": 0.1,
+        "current_if_clamp_stayed_at_specified_voltage_a": 199.00000000000006,
+        "within_d14_specified_test_current": false,
+        "not_a_predicted_waveform": true
+      },
+      {
+        "source_v": 90,
+        "source_r_ohm": 1,
+        "current_if_clamp_stayed_at_specified_voltage_a": 19.900000000000006,
+        "within_d14_specified_test_current": false,
+        "not_a_predicted_waveform": true
+      },
+      {
+        "source_v": 90,
+        "source_r_ohm": 5,
+        "current_if_clamp_stayed_at_specified_voltage_a": 3.9800000000000013,
+        "within_d14_specified_test_current": true,
+        "not_a_predicted_waveform": true
+      }
+    ],
+    "unknowns": [
+      "Battery/charger maximum including tolerance and faults",
+      "Local BUS transient waveform, polarity, rise time, duration and repetition",
+      "Source impedance versus frequency; lead inductance and damping",
+      "Actual servo startup/blocked/reversal current and regenerated energy",
+      "Enclosure ambient, airflow, heatsink path and converter derating",
+      "Output ripple and load-step overshoot at servo pads",
+      "D8/fuse reverse-fault coordination and exact holder qualification",
+      "Safe fault/recovery behavior and brownout effects on pendant/servo",
+      "Active board layout, MOSFET SOA, connector/cable route and heat path"
+    ]
+  }
+}
