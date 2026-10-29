@@ -5,28 +5,15 @@
   "not_ready_to_order": [
     "R2 exact available quantity unresolved",
     "R3 inconsistent indexed packaging",
-    "R4 nonstock1000-piece tier",
     "R6 split-reel availability unresolved",
     "R8 nonstock8000-piece displayed tier",
     "U2 rationing",
-    "Electrical and mechanical qualification open"
+    "Electrical and mechanical qualification open",
+    "D1 requires a substantially better thermal solution than its2.4A free-air condition",
+    "U3 exact A012 offer must not be substituted with E012 OV variant",
+    "Input-drop/startup bounds and all PCB placement remain unqualified"
   ],
   "rows": [
-    {
-      "mpn": "LTC4368IMS-2#PBF",
-      "references": [
-        "U1"
-      ],
-      "build_quantity": 1,
-      "value": "LTC4368IMS-2",
-      "primary_spec_url": "https://www.analog.com/media/en/technical-documentation/data-sheets/ltc4368.pdf",
-      "offer_url": "https://www.digikey.com/en/products/detail/analog-devices-inc/LTC4368IMS-2-PBF/6820038",
-      "displayed_stock": 1295,
-      "displayed_USD": 8.05,
-      "factory_lead_weeks": 25,
-      "offer_limit": "Tube, one-piece price observed; checkout not confirmed",
-      "status": "candidate_not_selected"
-    },
     {
       "mpn": "CSD19531Q5AT",
       "references": [
@@ -44,21 +31,6 @@
       "status": "candidate_not_selected"
     },
     {
-      "mpn": "Pololu 5577",
-      "references": [
-        "U2"
-      ],
-      "build_quantity": 1,
-      "value": "D42V55F12 / 5577",
-      "primary_spec_url": "https://www.pololu.com/product/5577",
-      "offer_url": "https://www.pololu.com/product/5577",
-      "displayed_stock": null,
-      "displayed_USD": 47.95,
-      "factory_lead_weeks": null,
-      "offer_limit": "Rationed; backorders allowed; stock quantity/date unverified",
-      "status": "candidate_not_selected"
-    },
-    {
       "mpn": "WSL2512R0100FEA",
       "references": [
         "R1"
@@ -71,6 +43,36 @@
       "displayed_USD": 0.63,
       "factory_lead_weeks": 53,
       "offer_limit": "Cut tape one-piece offer",
+      "status": "candidate_not_selected"
+    },
+    {
+      "mpn": "LTC4368IMS-2#PBF",
+      "references": [
+        "U1"
+      ],
+      "build_quantity": 1,
+      "value": "LTC4368IMS-2",
+      "primary_spec_url": "https://www.analog.com/media/en/technical-documentation/data-sheets/ltc4368.pdf",
+      "offer_url": "https://www.digikey.com/en/products/detail/analog-devices-inc/LTC4368IMS-2-PBF/6820038",
+      "displayed_stock": 1295,
+      "displayed_USD": 8.05,
+      "factory_lead_weeks": 25,
+      "offer_limit": "Tube, one-piece price observed; checkout not confirmed",
+      "status": "candidate_not_selected"
+    },
+    {
+      "mpn": "Pololu 5577",
+      "references": [
+        "U2"
+      ],
+      "build_quantity": 1,
+      "value": "D42V55F12 / 5577",
+      "primary_spec_url": "https://www.pololu.com/product/5577",
+      "offer_url": "https://www.pololu.com/product/5577",
+      "displayed_stock": null,
+      "displayed_USD": 47.95,
+      "factory_lead_weeks": null,
+      "offer_limit": "Rationed; backorders allowed; stock quantity/date unverified",
       "status": "candidate_not_selected"
     },
     {
@@ -105,42 +107,14 @@
       "status": "candidate_not_selected"
     },
     {
-      "mpn": "TNPW0805127KBEEN",
-      "references": [
-        "R4"
-      ],
-      "build_quantity": 1,
-      "value": "127k 0.1%",
-      "primary_spec_url": "https://www.vishay.com/docs/28758/tnpw_e3.pdf",
-      "offer_url": "https://www.digikey.com/en/products/detail/vishay-dale/TNPW0805127KBEEN/1610728",
-      "displayed_stock": 0,
-      "displayed_USD": 0.38771,
-      "factory_lead_weeks": 20,
-      "offer_limit": "Normally nonstock; displayed reel1000 tier, not a one-piece quote",
-      "status": "candidate_not_selected"
-    },
-    {
-      "mpn": "TNPW0805499KBEEN",
-      "references": [
-        "R6"
-      ],
-      "build_quantity": 1,
-      "value": "499k 0.1%",
-      "primary_spec_url": "https://www.vishay.com/docs/28758/tnpw_e3.pdf",
-      "offer_url": "https://www.digikey.com/en/products/detail/vishay-dale/TNPW0805499KBEEN/1610796",
-      "displayed_stock": 1000,
-      "displayed_USD": null,
-      "factory_lead_weeks": null,
-      "offer_limit": "Reel listing; one-piece split and exact lead time unverified",
-      "status": "candidate_not_selected"
-    },
-    {
       "mpn": "TNPW0805100KBEEN",
       "references": [
+        "R4",
         "R7",
-        "R9"
+        "R9",
+        "R11"
       ],
-      "build_quantity": 2,
+      "build_quantity": 4,
       "value": "100k 0.1%",
       "primary_spec_url": "https://www.vishay.com/docs/28758/tnpw_e3.pdf",
       "offer_url": "https://www.digikey.com/en/products/detail/vishay-dale/TNPW0805100KBEEN/7355083",
@@ -148,6 +122,22 @@
       "displayed_USD": null,
       "factory_lead_weeks": 20,
       "offer_limit": "TR/CT listed; exact quantity price not captured",
+      "status": "candidate_not_selected"
+    },
+    {
+      "mpn": "TNPW0805499KBEEN",
+      "references": [
+        "R6",
+        "R14"
+      ],
+      "build_quantity": 2,
+      "value": "499k 0.1%",
+      "primary_spec_url": "https://www.vishay.com/docs/28758/tnpw_e3.pdf",
+      "offer_url": "https://www.digikey.com/en/products/detail/vishay-dale/TNPW0805499KBEEN/1610796",
+      "displayed_stock": 1000,
+      "displayed_USD": null,
+      "factory_lead_weeks": null,
+      "offer_limit": "Reel listing; one-piece split and exact lead time unverified",
       "status": "candidate_not_selected"
     },
     {
@@ -181,19 +171,22 @@
       "status": "candidate_not_selected"
     },
     {
-      "mpn": "C0805C332J1GACTU",
+      "mpn": "C1206C473F1GECAUTO",
+      "offer_url": "https://www.digikey.com/en/products/detail/kemet/C1206C473F1GECAUTO/16679977",
+      "displayed_stock": 2449,
+      "displayed_USD": 4.83,
+      "factory_lead_weeks": 26,
+      "offer_limit": "CT1; reel2000. Four parts per candidate, not four alternative offers.",
+      "status": "candidate_not_selected",
       "references": [
-        "C2"
+        "C2",
+        "C6",
+        "C7",
+        "C8"
       ],
-      "build_quantity": 1,
-      "value": "3.3nF 100V 5%",
-      "primary_spec_url": "https://yageogroup.com/content/datasheet/asset/file/KEM_C1003_C0G_SMD",
-      "offer_url": "https://www.digikey.com/en/products/detail/kemet/C0805C332J1GACTU/2212568",
-      "displayed_stock": 10015,
-      "displayed_USD": 0.81,
-      "factory_lead_weeks": 21,
-      "offer_limit": "Cut tape one-piece; full reel4000",
-      "status": "candidate_not_selected"
+      "build_quantity": 4,
+      "value": "47nF 100V 1%",
+      "primary_spec_url": "https://yageogroup.com/content/datasheet/asset/file/KEM_C1091_C0G_ESD"
     },
     {
       "mpn": "C0805C682J5GACTU",
@@ -209,6 +202,98 @@
       "factory_lead_weeks": 21,
       "offer_limit": "Cut tape one-piece; full reel4000",
       "status": "candidate_not_selected"
+    },
+    {
+      "mpn": "V10P20-M3/87A",
+      "offer_url": "https://www.digikey.com/en/products/detail/vishay-general-semiconductor-diodes-division/V10P20-M3-87A/4873187",
+      "displayed_stock": 44156,
+      "displayed_USD": 1.5,
+      "factory_lead_weeks": 31,
+      "offer_limit": "CT1; reel6500. 10A rating requires30x30mm aluminum PCB; free-air condition only2.4A.",
+      "status": "candidate_not_selected",
+      "references": [
+        "D1",
+        "D2"
+      ],
+      "build_quantity": 2,
+      "value": "200V series barrier",
+      "primary_spec_url": "https://www.vishay.com/docs/89316/v10p20.pdf"
+    },
+    {
+      "mpn": "WSL2512R0200FEA",
+      "offer_url": "https://www.newark.com/vishay/wsl2512r0200fea/curr-sense-res-smd-0r02-1w/dp/26R4257",
+      "displayed_stock": 2644,
+      "displayed_USD": null,
+      "factory_lead_weeks": 27,
+      "offer_limit": "CT1; reel2000. Parallel R1 requires shared Kelvin endpoints.",
+      "status": "candidate_not_selected",
+      "references": [
+        "R10"
+      ],
+      "build_quantity": 1,
+      "value": "20mR 1% 1W",
+      "primary_spec_url": "https://www.vishay.com/docs/30100/wsl.pdf"
+    },
+    {
+      "mpn": "TNPW0805150KBEEN",
+      "offer_url": "https://www.digikey.com/en/products/detail/vishay-dale/TNPW0805150KBEEN/1610735",
+      "displayed_stock": 1035,
+      "displayed_USD": 0.71,
+      "factory_lead_weeks": 20,
+      "offer_limit": "CT1; reel1000.",
+      "status": "candidate_not_selected",
+      "references": [
+        "R12"
+      ],
+      "build_quantity": 1,
+      "value": "150k 0.1%",
+      "primary_spec_url": "https://www.vishay.com/docs/28758/tnpw_e3.pdf"
+    },
+    {
+      "mpn": "TNPW080510K0BEEN",
+      "offer_url": "https://www.newark.com/vishay/tnpw080510k0been/chip-res-smd-10k-0-1-200mw/dp/84R1891",
+      "displayed_stock": 760,
+      "displayed_USD": 0.71,
+      "factory_lead_weeks": 9,
+      "offer_limit": "CT1; re-reel minimum10.",
+      "status": "candidate_not_selected",
+      "references": [
+        "R13"
+      ],
+      "build_quantity": 1,
+      "value": "10k 0.1%",
+      "primary_spec_url": "https://www.vishay.com/docs/28758/tnpw_e3.pdf"
+    },
+    {
+      "mpn": "C0805C104K1RACTU",
+      "offer_url": "https://www.digikey.com/en/products/detail/kemet/C0805C104K1RACTU/754779",
+      "displayed_stock": 330220,
+      "displayed_USD": 0.41,
+      "factory_lead_weeks": 21,
+      "offer_limit": "CT1; reel2500. X7R DC-bias minimum is not established by nominal capacitance.",
+      "status": "candidate_not_selected",
+      "references": [
+        "C4",
+        "C5"
+      ],
+      "build_quantity": 2,
+      "value": "100nF 100V 10% X7R",
+      "primary_spec_url": "https://yageogroup.com/content/datasheet/asset/file/KEM_C1002_X7R_SMD"
+    },
+    {
+      "mpn": "TPS3760A012DYYR",
+      "offer_url": "https://www.digikey.com/en/products/detail/texas-instruments/TPS3760A012DYYR/16365035",
+      "displayed_stock": 2778,
+      "displayed_USD": 2.28,
+      "factory_lead_weeks": 26,
+      "offer_limit": "CT1; reel3000. Separate same-MPN page16365043 showed backorder; verify actual offer. E012 listed as parametric equivalent is OV and prohibited as a silent substitute.",
+      "status": "candidate_not_selected",
+      "references": [
+        "U3"
+      ],
+      "build_quantity": 1,
+      "value": "UV / OD active-low",
+      "primary_spec_url": "https://www.ti.com/lit/ds/symlink/tps3760.pdf"
     }
   ],
   "source_evidence": [
@@ -247,6 +332,25 @@
     {
       "url": "https://yageogroup.com/content/datasheet/asset/file/KEM_C1003_C0G_SMD",
       "claim": "C0G coding, voltage,5% tolerance and package; no copied vendor drawing"
+    },
+    {
+      "url": "https://www.vishay.com/docs/89316/v10p20.pdf",
+      "revision": "08-Jan-2021",
+      "pages": "1-2 polarity,200V reverse,2.4A free-air/10A aluminum-board distinction,conditional Vf and surge;4 dimensions"
+    },
+    {
+      "url": "https://www.ti.com/lit/ds/symlink/tps3760.pdf",
+      "revision": "SBVS420A September2023",
+      "sha256": "eb7d626587f369ade98d55b60823ed28e4b4d955b41181c4443763cf0eef5e7d",
+      "pages": "3 selection A012;4 pinmap;6-9 ratings and timing;21 relative hysteresis accuracy example;23 CTR equations"
+    },
+    {
+      "url": "https://yageogroup.com/content/datasheet/asset/file/KEM_C1091_C0G_ESD",
+      "claim": "47nF100V1% C0G ESD auto series; temperature30ppm/K;1206 body3.2x1.6mm,1.8mm maximum thickness"
+    },
+    {
+      "url": "https://yageogroup.com/content/datasheet/asset/file/KEM_C1002_X7R_SMD",
+      "claim": "100nF100V10% X7R; nominal is not guaranteed biased capacitance"
     }
   ]
 }

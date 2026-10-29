@@ -3,6 +3,8 @@
 | Symptom | Canonical guidance |
 | --- | --- |
 | A TVS breakdown or nominal cutoff looks safe but peak voltage, recovery or shared-branch loads remain unbounded | [Electrical protection limits and evidence](domains/electrical-protection.md) |
+| Reverse-input rating looks sufficient but a charged output violates differential limits, or startup trips despite a nominal current margin | [Charged reverse stress and actual startup budget](inbox/2026-10-29-charged-output-changes-reverse-input-stress.md) |
+| Supervisor startup passes using a headline delay despite an installed delay capacitor or different pullup/loading | [Timing test conditions and actual topology](inbox/2026-10-29-charged-output-changes-reverse-input-stress.md#review-correction-startup-timing-depends-on-the-installed-delay-network) |
 | Hidden power pin, unexpected VIN net, generated schematic differs from intended net map | [Exported EDA connectivity](domains/electrical-protection.md), [incident and regression](inbox/2026-10-29-hidden-power-pins-can-create-unintended-global-nets.md) |
 | Supplier stock exists but exact rating, wire seal, retail pack or part identity does not match the assembly | [Supplier evidence and exact part identity](domains/supplier-evidence.md) |
 | CAD branches merge but the model, print kit, BOM or validation reports describe different revisions | [Mechanical release coherence](domains/mechanical-release.md) |

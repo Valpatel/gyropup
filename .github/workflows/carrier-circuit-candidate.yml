@@ -31,7 +31,12 @@ jobs:
             CircuitTests.test_wrong_manufacturer_pin_function_rejected \
             CircuitTests.test_wrong_part_variant_rejected \
             CircuitTests.test_native_mosfet_body_diodes_match_drain_source \
-            CircuitTests.test_reversed_body_diode_graphic_rejected
-      # Full native regeneration plus five actual schematic corruption exports use
+            CircuitTests.test_reversed_body_diode_graphic_rejected \
+            CircuitTests.test_static_acceptance_boundaries_reject_unsafe_scenarios \
+            CircuitTests.test_missing_ramp_capacitance_fails_sequencing \
+            CircuitTests.test_wrong_supervisor_ov_variant_rejected \
+            CircuitTests.test_native_discrete_diode_graphics_match_polarity \
+            CircuitTests.test_restored_ctr_capacitor_invalidates_two_ms_sequencing
+      # Full native regeneration plus ten actual schematic corruption exports use
       # pinned KiCad10.0.1 locally and must be independently rerun for design review.
       # This job intentionally does not claim to install/run KiCad or validate hardware.

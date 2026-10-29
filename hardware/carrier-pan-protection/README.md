@@ -1,23 +1,24 @@
-# PAN supply cutoff — circuit candidate
+# PAN supply protection — circuit candidate B
 
-**A complete 16-component circuit candidate is available for review. It is unselected and unqualified: do not fabricate or energize it.** It adds an LTC4368 active cutoff before a 60 V Pololu PAN converter, with a common-source MOSFET pair, input-current sense, UV/OV dividers, controlled gate ramp and local capacitance. It protects only the U2 feed; the shared head BUS remains separate.
+**The editable 29-part candidate now includes a reverse-input barrier and explicit converter startup inhibit. It remains unselected and unqualified: do not fabricate or energize it.** D1/D2 separate negative raw BUS from the LTC4368 input; a TPS3760 UV supervisor drives converter EN. The revised sense network and gate ramp have reproducible conditional startup bounds. The output remains 12 V and the shared head BUS still bypasses this circuit.
 
-Tracking [issue83](https://github.com/Valpatel/gyropup/issues/83) / [PR84](https://github.com/Valpatel/gyropup/pull/84), following [PR82's requirements](../../research/protection/carrier-input-protection.md). No current catalog selection, carrier geometry, connector or installed circuit is changed.
+Tracking [issue87](https://github.com/Valpatel/gyropup/issues/87) / [PR88](https://github.com/Valpatel/gyropup/pull/88), following [candidate A](https://github.com/Valpatel/gyropup/pull/84) and [input requirements](../../research/protection/carrier-input-protection.md). No catalog selection, carrier geometry or external connector changes here.
 
-![PAN supply cutoff circuit candidate, including MOSFET body diodes and connected protection branches](pictures/pan-cutoff.svg)
+![PAN candidate B with reverse barrier, active cutoff, current sense and converter enable supervisor](pictures/pan-cutoff.svg)
 
-The preview fits this page; pinch or use browser zoom to inspect the details. The original vector drawing retains its full A3 paper dimensions.
+The preview fits this page; pinch or use browser zoom for details. The original vector drawing uses A2 paper dimensions.
 
-- <a href="pictures/pan-cutoff.svg" download>Download original SVG</a> and [native editable KiCad schematic](pan-cutoff.kicad_sch), with local [symbol library](candidate.kicad_sym).
-- [Exact pins and carrier interfaces](pins.md); manufacturer facts and project-assigned module pad IDs are distinguished.
-- [Candidate BOM](candidate-bom.csv), [dated availability and primary sources](availability.json). Several passive offer quantities remain unresolved; the 127 kΩ and 22 kΩ candidates are normally nonstock. This is not a ready-to-order list.
-- [Fault-state review and remaining release gates](fault-review.md), [numerical screening](reports/calculations.json), [KiCad-exported netlist](reports/netlist.xml), [ERC report](reports/erc.rpt), [source/artifact receipt](reports/receipt.json).
+- <a href="pictures/pan-cutoff.svg" download>Download original SVG</a>, [native KiCad schematic](pan-cutoff.kicad_sch) and [editable symbol library](candidate.kicad_sym).
+- [Exact manufacturer pins and carrier boundaries](pins.md), [BOM](candidate-bom.csv), [dated offers and primary sources](availability.json).
+- [Fault states, numerical bounds and unresolved qualification](fault-review.md), [calculations](reports/calculations.json), [KiCad netlist](reports/netlist.xml), [ERC](reports/erc.rpt), [source/artifact receipt](reports/receipt.json).
 
-The power path, common gate/source capacitor, gate-ramp branch and each UV/OV/SHDN divider use actual connected KiCad wires. Local labels connect the Kelvin sense taps and distributed BUS/ground. Every manufacturer lead is exported, including duplicate MOSFET and module pins. Q1/Q2 use authored enhancement N-MOS graphics with visible intrinsic body diodes: both source anodes face inward and drain cathodes face outward. A separate graphical regression checks this orientation, since ERC alone cannot detect a misleading symbol. This checkpoint intentionally provides no PCB or fabrication files.
+The proposed bounds cover a charged-output reversal and a 3.25 A **12 V output** load, not merely a controller's reverse-voltage headline or nominal input current. At the declared assumptions the startup margin is 0.281 A; the 15 V enable headroom is only 69 mV. The diode loss screen is approximately 5.98 W and demands an engineered thermal path. These are explicit reasons to qualify or reject the candidate before placement, not a robust-startup or thermal pass.
+
+All 102 physical leads across 29 parts, 14 connected nets and 12 NC groups are independently checked against KiCad's exported connectivity. The power path, parallel sense resistors, dividers, ramp bank and EN supervisor use connected native wires. Visible discrete/body-diode polarity is also checked. Zero ERC verifies consistency only; it cannot certify timing, thermal behavior, fit or safety.
 
 ## Reproduce
 
-Use Python 3 and pinned KiCad CLI 10.0.1 (existing repository install). No new packages or board solver required:
+Use Python 3 and pinned KiCad CLI 10.0.1:
 
 ```sh
 python hardware/carrier-pan-protection/build.py
@@ -25,12 +26,8 @@ python hardware/carrier-pan-protection/test_circuit.py
 python hardware/carrier-pan-protection/verify.py
 ```
 
-The build regenerates the native schematic, local library, BOM, ERC, XML netlist and SVG from `circuit_design.py`; it captures source and artifact hashes. `verify.py` checks an independent pin/net contract against **KiCad's exported connectivity**, not the generator's intended net dictionary. Tests export genuinely corrupted native schematics: flipped Q2, swapped current-sense pins, a hidden power pin creating an implicit global net, bypassed cutoff and wrong hot-swap capacitor return. Additional faults check an omitted ground pad, wrong part variant/function and a reversed body-diode graphic that would otherwise leave the netlist unchanged.
+The build regenerates the schematic, local library, BOM, ERC, XML and SVG from `circuit_design.py` and binds all source/artifact hashes. Tests export corrupted native schematics: reversed MOSFET, swapped sense pins, hidden power net, bypassed cutoff, wrong gate-cap return, reversed series/clamp diodes, bypassed EN omitted parallel resistor and a connected CTR pin that must remain open. Arithmetic faults reject excessive capacitance/slew, low efficiency, diode drop, charged reverse stress a missing ramp capacitor, and the prior 6.8 nF CTR capacitor incorrectly treated as open. Variant checks reject the OV supervisor sold as a “parametric equivalent” of the UV candidate.
 
-Open `pan-cutoff.kicad_pro` / `.kicad_sch` in KiCad to inspect/edit. The files are native and portable; committing permanent changes requires updating `circuit_design.py` then rebuilding so the generator does not overwrite them. `hardware/fuse-board/sexp.py` is the existing shared parser; no fuse-board source is modified. SVG is the committed rendered view. Optional PDF export: `kicad-cli sch export pdf -o /tmp/pan-cutoff.pdf hardware/carrier-pan-protection/pan-cutoff.kicad_sch`.
+Open `pan-cutoff.kicad_pro` / `.kicad_sch` in KiCad. Permanent edits belong in `circuit_design.py` followed by regeneration. The existing `hardware/fuse-board/sexp.py` parser is reused without modification. Optional PDF: `kicad-cli sch export pdf -o /tmp/pan-cutoff.pdf hardware/carrier-pan-protection/pan-cutoff.kicad_sch`.
 
-## What this checkpoint establishes
-
-The candidate has 62 package leads across 16 parts, 11 connected nets and 4 NC groups. ERC checks pin-level consistency; it cannot certify thermal behavior, physical routing, protection timing or safety. UV/OV automatically recover even with forward-overcurrent latch mode. The circuit therefore **does not implement a persistent arm interlock**.
-
-The major blockers are still real: unknown positive surge envelope;−42 V reversal exceeds the controller limit;12 V servo regeneration/overshoot is not protected; input startup can trip under the conservative stalled-load scenario; MOSFET SOA and converter/C1 thermal/ripple are unqualified. No space is allocated for the extra board; the 8×11.5 mm capacitor exceeds the existing 9.5 mm U2 height reservation. A mechanically complete carrier cannot be inferred from this schematic.
+No PCB or extra-board area is allocated. Negative hot-insertion waveforms, positive-source transients, actual converter Cin/efficiency/dropout, diode/MOSFET SOA and thermal behavior, 12 V regeneration, reset/arming, signal backfeed and carrier fit remain open. Several inherited passive offers also need confirmation; this is not a ready-to-order kit. Automatic UV/OV/EN recovery is not a persistent safety interlock.
