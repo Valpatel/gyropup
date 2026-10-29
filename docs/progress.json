@@ -1,35 +1,25 @@
 {
-  "updated": "2026-10-28",
+  "updated": "2026-10-29",
   "status": [
     {
       "title": "Project stage",
       "value": "CAD + simulation",
-      "note": "A working browser playground and evolving hardware design. No assembled robot yet."
+      "note": "No assembled robot yet. The goal is a 100 lb maximum robot with a $10,000 target budget; these are design targets, not achieved specifications."
     },
     {
-      "title": "Leg v2",
-      "value": "bench tests next",
-      "note": "Five-bar legs with two RS-04 actuators per leg. Two load cases require physical validation (issue #29)."
+      "title": "Turret hardware",
+      "value": "Fit tests in preparation",
+      "note": "Carrier and insert specimens are on the engineering branch. Complete wiring, printed strength and physical fit remain open."
     },
     {
-      "title": "Turret",
-      "value": "mechanical refinement",
-      "note": "The standalone foam-ball turret is being refined and checked before the first physical build."
+      "title": "Structural evidence",
+      "value": "Historical load cases",
+      "note": "The featured hip-frame E1 case is below its strength target. Existing studies do not validate the full 100 lb design ceiling."
     },
     {
-      "title": "Body + wheels",
-      "value": "prototype development",
-      "note": "Frame, power, and 10-inch wheel integration are in progress; measurements and validation remain."
-    },
-    {
-      "title": "The playground",
-      "value": "browser demo",
-      "note": "Interactive CAD and recorded physics runs. Demo snapshots may predate the latest hardware revisions."
-    },
-    {
-      "title": "Built by",
-      "value": "autonomous systems",
-      "note": "AI-assisted code, CAD, simulation, and documentation, with human direction and independent review."
+      "title": "Software",
+      "value": "Live browser playground",
+      "note": "Recent releases repair diagrams, model previews and target knockdown. The demo does not control a physical robot."
     }
   ],
   "log": [
@@ -95,7 +85,7 @@
     {
       "time": "10-26 08:10",
       "title": "No hip in/out joint needed: body levelling",
-      "text": "The controller now shortens the leg on the high side, as Diablo does. New scenario side_kerb: one wheel up a 30 mm plank, along it and off; body level to 0.14\u00b0 rms (2.7\u00b0 without levelling).",
+      "text": "The controller now shortens the leg on the high side, as Diablo does. New scenario side_kerb: one wheel up a 30 mm plank, along it and off; body level to 0.14° rms (2.7° without levelling).",
       "links": [
         {
           "title": "watch it in 3D",
@@ -209,6 +199,51 @@
           "href": "https://github.com/Valpatel/gyropup/issues/29"
         }
       ]
+    },
+    {
+      "time": "2026-10-29",
+      "title": "Deformation playback and a clearer live workshop",
+      "text": "The hip-frame E1 study now has a real 12-second animation and an interactive view of the same solved field. Rendered diagrams, consistent model viewers and demo target knockdown are live. E1 still falls short of its strength target.",
+      "links": [
+        {
+          "title": "Explore the study",
+          "href": "#strength"
+        },
+        {
+          "title": "Website release",
+          "href": "https://github.com/Valpatel/gyropup/pull/78"
+        }
+      ]
+    },
+    {
+      "time": "2026-10-29",
+      "title": "Preparing the first carrier fit tests",
+      "text": "The engineering branch now includes a removable carrier layout and two insert-fit specimens with STEP, STL and 3MF files. The specimens preserve the actual print orientations. No physical measurements have been recorded; the whole turret is not print-approved.",
+      "links": [
+        {
+          "title": "Fit-test specimens · PR90",
+          "href": "https://github.com/Valpatel/gyropup/pull/90"
+        },
+        {
+          "title": "Carrier layout · PR67",
+          "href": "https://github.com/Valpatel/gyropup/pull/67"
+        }
+      ]
+    },
+    {
+      "time": "2026-10-29",
+      "title": "Working through the real power and sourcing limits",
+      "text": "A native electrical schematic and source-bound checks are integrated on the engineering branch. Review corrected a startup timing assumption; low-voltage margin, heat, board space and complete cable routes remain unresolved. Supplier checks distinguish stock indications from confirmed fit.",
+      "links": [
+        {
+          "title": "Circuit candidate · PR88",
+          "href": "https://github.com/Valpatel/gyropup/pull/88"
+        },
+        {
+          "title": "Sourcing review · PR80",
+          "href": "https://github.com/Valpatel/gyropup/pull/80"
+        }
+      ]
     }
   ],
   "shopping": {
@@ -227,7 +262,7 @@
         "qty": "1",
         "each": "~$25",
         "total": "~$25",
-        "notes": "motor IDs, zeroing, firmware and the 60 N\u00b7m cap in RobStride's tool"
+        "notes": "motor IDs, zeroing, firmware and the 60 N·m cap in RobStride's tool"
       },
       {
         "item": "XT30 (2+2) motor leads",
@@ -237,5 +272,6 @@
         "notes": "if not in the box"
       }
     ]
-  }
+  },
+  "focus": "Current focus: the turret’s removable electronics carrier, real fasteners, wiring space and first fit-test prints."
 }

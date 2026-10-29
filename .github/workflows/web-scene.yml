@@ -30,6 +30,7 @@ jobs:
               npm run test:file-viewer-theme
               npm run test:audio
               npm run test:web
+              npm run test:progress
               npm run test:markdown
               npm run test:cache
               npm run test:diagrams
