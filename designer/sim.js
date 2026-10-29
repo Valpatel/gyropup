@@ -168,9 +168,12 @@ function setDemo(on, cancelPending = true) {
   state.robot?.setExplode?.(0);
   beginTransition();
   setupLiveRange();
+  // Let the action read on entry; this floating card never changes projection when the player opens it.
+  $('#summary').classList.add('min');
   const z = demo.anchor;
   glideCamera(() => stage.fitView([new THREE.Vector3(-.55,0,z-.35),new THREE.Vector3(.55,state.robot.info.heightM,z+.35),
-    ...liveTargets.map(p=>new THREE.Vector3(p.pos[1],p.pos[2],p.pos[0]))],
+    ...liveTargets.flatMap(p=>[new THREE.Vector3(p.pos[1]-.17,0,p.pos[0]-.018),
+      new THREE.Vector3(p.pos[1]+.17,.72,p.pos[0]+.75)])],
     {direction:new THREE.Vector3(.45,.38,-1),target:new THREE.Vector3(0,.55,z+1.1),margin:1.12}));
   runSel.value = '';
   paintDemo(); paintRobotActions();

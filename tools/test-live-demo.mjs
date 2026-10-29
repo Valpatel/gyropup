@@ -66,6 +66,10 @@ try{
  const reset=await page.evaluate(()=>{clearInterval(window.targetTraceTimer);const s=window.__sim;return {trace:window.targetTrace,sameMeshes:[...s.liveTargets.values()].flatMap(t=>t.meshes).every((m,i)=>m===window.targetIdentity[i]),sameScene:s.stage.scene===window.liveIdentity.scene,sameTalk:s.talk===window.liveIdentity.talk};});
  assert.ok(reset.sameMeshes&&reset.sameScene&&reset.sameTalk,'Reset preserves meshes, scene and conversation');
  assert.ok(reset.trace.minY>=-1e-6&&reset.trace.anchorError<1e-6&&reset.trace.spacingError<1e-6);
+ // Another round must aim at the raised targets, not retain a stale cleared-range state.
+ await page.evaluate(()=>{window.__sim.demo.t=34.9;window.__sim.demo.nextShot=0;});
+ await page.waitForFunction(()=>[...window.__sim.liveTargets.values()].every(t=>t.down&&t.angle>1.5));
+ assert.ok(await page.evaluate(()=>window.__sim.demo.hits)>=6);
  const oldMag=await page.evaluate(()=>window.__sim.gun.mag);
  await action('fire').click();await page.waitForFunction(n=>window.__sim.gun.mag<n,oldMag);
  assert.equal(await page.evaluate(()=>window.__sim.demo.on),false,'Manual fire takes over the same live scene');
