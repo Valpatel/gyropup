@@ -45,6 +45,7 @@ jobs:
               npm run test:cache
               npm run test:diagrams
               npm run test:services
+              npm run test:preview
           - suite: loading
             commands: |
               npm run test:part-media
@@ -77,7 +78,7 @@ jobs:
           PLAYWRIGHT_CHANNEL: chromium
           SITE_URL: http://127.0.0.1:8879
         run: |
-          node tools/serve-site.mjs > /tmp/gyropup-site.log 2>&1 &
+          node tools/serve-site.mjs --ephemeral > /tmp/gyropup-site.log 2>&1 &
           server_pid=$!
           trap 'kill "$server_pid"' EXIT
           ${{ matrix.commands }}

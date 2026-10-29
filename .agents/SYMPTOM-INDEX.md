@@ -2,6 +2,7 @@
 
 | Symptom | Canonical guidance |
 | --- | --- |
+| Local services fill with old branch previews, or dependency symlinks look like unfinished work | [One shared preview and bounded test listeners](domains/site-preview.md), [incident](inbox/2026-10-29-preview-servers-need-one-owner.md) |
 | Valid supplier connector solids overlap when mated or omit wire-entry holes, contacts or latch details | [Vendor solids can omit functional cavities](inbox/2026-10-29-valid-vendor-solids-can-omit-connector-cavities.md) |
 | A TVS breakdown or nominal cutoff looks safe but peak voltage, recovery or shared-branch loads remain unbounded | [Electrical protection limits and evidence](domains/electrical-protection.md) |
 | Reverse-input rating looks sufficient but a charged output violates differential limits, or startup trips despite a nominal current margin | [Charged reverse stress and actual startup budget](inbox/2026-10-29-charged-output-changes-reverse-input-stress.md) |
