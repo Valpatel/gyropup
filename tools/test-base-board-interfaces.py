@@ -52,6 +52,20 @@ class CarrierInterfaces(unittest.TestCase):
         self.assertEqual(receipt['relations_engine_version'],'4')
         self.assertEqual(set(receipt['artifact_sha256']),{'carrier-wiring-candidate.step',
                          'pan-base-wiring-candidate.step','carrier-wiring-layout.step'})
+        allocations=0
+        for check in receipt['checks']:
+            evidence=check['evidence']
+            if 'per_pair_overlap_budget_mm3' not in evidence:
+                continue
+            allocations+=1
+            queries=evidence['relation_query_indices']
+            self.assertEqual(len(queries),len(evidence['pair_states']))
+            self.assertEqual(evidence['total_overlap_budget_mm3'],1e-6)
+            self.assertLess(evidence['per_pair_overlap_budget_mm3']*len(queries),1e-6)
+            for i in queries:
+                self.assertEqual(receipt['relation_queries'][i]['requested_tolerances']['overlap_mm3'],
+                                 evidence['per_pair_overlap_budget_mm3'])
+        self.assertEqual(allocations,32)
         ids={c['id'] for c in receipt['checks'] if c['pass']}
         self.assertIn('negative:closed_window',ids)
         self.assertIn('negative:bumper_blocks_power_grip',ids)

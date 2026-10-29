@@ -3,9 +3,11 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import math
 import os
 from pathlib import Path
 import time
+from dataclasses import replace
 
 ROOT=Path(__file__).resolve().parents[1]
 import print_provenance as provenance
@@ -46,13 +48,33 @@ def overlap(a,b):
     return max(CLEARANCE_VOLUME_MM3,r.overlap_mm3)
 
 
-def relation(a,b):
+def relation(a,b,tol=TOL):
     a=a.val() if hasattr(a,'val') else a;b=b.val() if hasattr(b,'val') else b
-    r=relate(a,b,TOL,contact_area=False)
-    RELATION_EVIDENCE.append(r.to_dict())
+    r=relate(a,b,tol,contact_area=False)
+    RELATION_EVIDENCE.append({**r.to_dict(),'requested_tolerances':vars(tol)})
     if r.state not in ('apart','touching','overlapping','contains'):
         raise ValueError('Undecidable BREP relation: '+str(r.error or r.state))
     return r
+
+
+def clear_of_all(a,obstacles):
+    """Allocate one aggregate clearance budget before classifying any pair.
+
+    Do not add thresholded overlap() values: several individually sub-threshold
+    overlaps could exceed the original total allowance. Equal allocation is
+    deliberately conservative. One nextafter step preserves the strict '<'
+    acceptance rule; every pair's numerical uncertainty consumes its share.
+    """
+    obstacles=tuple(obstacles)
+    if not obstacles:
+        raise ValueError('An aggregate clearance check requires explicit obstacles')
+    per_pair=math.nextafter(CLEARANCE_VOLUME_MM3/len(obstacles),0.)
+    tol=replace(TOL,overlap_mm3=per_pair)
+    states=[relation(a,b,tol).state for b in obstacles]
+    evidence={'total_overlap_budget_mm3':CLEARANCE_VOLUME_MM3,
+              'per_pair_overlap_budget_mm3':per_pair,'pair_states':states,
+              'allocation':'equal conservative shares; no thresholded-volume summation'}
+    return all(s in ('apart','touching') for s in states),evidence
 
 
 def preserved_region(a,b,region):
@@ -99,8 +121,8 @@ def run(out):
     lanes=[(23.,z,.7) for z in (15.5,18.,20.5,23.)]+[(20.,17.,1.016),(20.,24.,1.016)]
     leads=[bb.cx(r,48.05,60.,y,z) for y,z,r in lanes]
     for i,lead in enumerate(leads):
-        v=overlap(lead,carrier)+overlap(lead,base)
-        check(f'window_exit:{i}',v<1e-6,overlap_mm3=v,axis_yz_radius_mm=lanes[i])
+        clear,allocation=clear_of_all(lead,(carrier,base))
+        check(f'window_exit:{i}',clear,**allocation,axis_yz_radius_mm=lanes[i])
     check('negative:closed_window',all(overlap(l,closed)>1 for l in leads))
     reservations=[]
     for kind in ('power','signal'):
@@ -109,22 +131,23 @@ def run(out):
         for step in range(9):
             travel=c['unmate_travel_mm']*step/8
             source=body(kind,'fixed',travel)
-            v=sum(overlap(source,o) for o in (carrier,base))
-            check(f'unmate_reservation:{kind}:{step}',v<1e-6,travel_mm=travel,overlap_mm3=v)
-        check(f'module_connector_reservation:{kind}',overlap(module,carrier)+overlap(module,base)<1e-6)
+            clear,allocation=clear_of_all(source,(carrier,base))
+            check(f'unmate_reservation:{kind}:{step}',clear,travel_mm=travel,**allocation)
+        clear,allocation=clear_of_all(module,(carrier,base))
+        check(f'module_connector_reservation:{kind}',clear,**allocation)
         reservations.append(body(kind,'fixed'))
     # Latch/grip spaces are declared design envelopes, not anthropometric validation.
     accesses={'signal_latch':bb.box(74,104,-6,8,21,37),
               'power_grip':bb.box(68,100,-11,11,5.25,18)}
     for name,access in accesses.items():
-        v=overlap(access,base)+overlap(access,carrier)
-        check('access_reservation:'+name,v<1e-6,overlap_mm3=v)
+        clear,allocation=clear_of_all(access,(base,carrier))
+        check('access_reservation:'+name,clear,**allocation)
     check('negative:bumper_blocks_power_grip',overlap(accesses['power_grip'],tu.bumper_ring(g))>1.)
     check('negative:blocked_latch',overlap(accesses['signal_latch'],bb.box(78,82,-4,4,23,35))>1.)
     for i,(y,z) in enumerate(bb.CARRIER_HOLES):
         shaft=bb.cx(3.,56.01,116.,y,z)
-        v=sum(overlap(shaft,o) for o in [carrier,base,*reservations])
-        check(f'driver_shaft_reservation:{i}',v<1e-6,overlap_mm3=v)
+        clear,allocation=clear_of_all(shaft,[carrier,base,*reservations])
+        check(f'driver_shaft_reservation:{i}',clear,**allocation)
     tails=[ci.tail_requirements(k,s) for k in ('power','signal') for s in ('fixed','module')]
     for tail in tails:
         check(f'tail_lower_bound:{tail["connector"]}:{tail["side"]}',tail['length_lower_bound_pass'],

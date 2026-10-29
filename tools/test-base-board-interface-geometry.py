@@ -46,6 +46,23 @@ class NumericalPredicates(unittest.TestCase):
             with self.assertRaisesRegex(ValueError,'Undecidable.*invalid BREP'):
                 checker.overlap(self.a,self.b)
 
+    def test_small_pair_overlaps_cannot_expand_aggregate_budget(self):
+        containing=cq.Workplane('XY').box(2,2,2).val()
+        def tiny(volume,x):
+            edge=volume**(1/3)
+            return cq.Workplane('XY').box(edge,edge,edge).val().translate((x,0,0))
+        obstacles=[tiny(.6e-6,x) for x in (-.5,.5)]
+        self.assertAlmostEqual(sum(containing.intersect(b).Volume() for b in obstacles),1.2e-6,places=12)
+        self.assertEqual(sum(checker.overlap(containing,b) for b in obstacles),0.)
+        clear,evidence=checker.clear_of_all(containing,obstacles)
+        self.assertFalse(clear)
+        self.assertLess(2*evidence['per_pair_overlap_budget_mm3'],1e-6)
+        smaller=[tiny(.2e-6,x) for x in (-.5,.5)]
+        self.assertTrue(checker.clear_of_all(containing,smaller)[0])
+        self.assertTrue(checker.clear_of_all(containing,[b.translate((5,0,0)) for b in obstacles])[0])
+        with self.assertRaisesRegex(ValueError,'explicit obstacles'):
+            checker.clear_of_all(containing,[])
+
     def test_invalid_clipped_region_cannot_prove_unchanged_mount(self):
         with patch.object(cq.Shape,'intersect',return_value=invalid_open_solid()):
             with self.assertRaisesRegex(ValueError,'Undecidable.*invalid BREP'):
