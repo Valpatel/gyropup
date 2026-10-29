@@ -2,10 +2,17 @@
 
 Issue #89 / parent #66. These small **unpowered fit specimens** are extracted from the current turret carrier and pan-base CAD. They provide a way to record real hole and insert-seating measurements before a larger print. **No specimen has been physically printed or tested.**
 
-| Specimen | What it preserves | Inspection and downloads |
-|---|---|---|
-| Carrier boss | Local Ø7 boss, nearby outer edge and wiring-window edge; exterior face down, pilot vertical | [STEP](../../exports/turret/carrier-insert-fit/carrier-boss.step) |
-| Base anchor | Local anchor rail and foot; foot down, pilot horizontal | [STEP](../../exports/turret/carrier-insert-fit/base-anchor.step) |
+### Carrier boss
+
+Preserves the local Ø7 boss, nearby outer edge and wiring-window edge. Prints exterior face down, with the pilot vertical.
+
+[Carrier boss STEP](../../exports/turret/carrier-insert-fit/carrier-boss.step)
+
+### Base anchor
+
+Preserves the local anchor rail and foot. Prints foot down, with the pilot horizontal.
+
+[Base anchor STEP](../../exports/turret/carrier-insert-fit/base-anchor.step)
 
 <details><summary>STL and geometry-only 3MF downloads</summary>
 

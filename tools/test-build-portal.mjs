@@ -105,6 +105,27 @@ try{
  for(const [width,height] of [[320,568],[568,320],[390,844],[844,390]]){await page.setViewportSize({width,height});await page.evaluate(()=>window.scrollTo(0,document.querySelector('#made').getBoundingClientRect().top+scrollY-70));const layout=await page.evaluate(()=>({width:innerWidth,scroll:document.documentElement.scrollWidth,controls:[...document.querySelectorAll('#made .cad-table-tools input,#made .cad-table-tools select')].map(el=>({width:el.getBoundingClientRect().width,height:el.getBoundingClientRect().height}))}));assert.ok(layout.scroll<=width+1,JSON.stringify(layout));assert.ok(layout.controls.every(r=>r.height>=44&&r.width<=width),JSON.stringify(layout));await page.screenshot({path:`${out}/${engine.name()}-${width}x${height}.png`});}
  await page.setViewportSize({width:320,height:568});await page.evaluate(()=>{const host=document.querySelector('#made'),scroll=host.querySelector('.cad-table-scroll');scroll.scrollLeft=scroll.scrollWidth;window.scrollTo(0,host.getBoundingClientRect().top+scrollY-70);});
  const sticky=await page.locator('#made tbody tr').first().evaluate(row=>{const cell=row.querySelector('.cad-part-identity'),r=cell.getBoundingClientRect(),checks=[...row.querySelectorAll('.cad-status-check')].map(label=>{const r=label.getBoundingClientRect(),hit=document.elementFromPoint(r.x+r.width/2,r.y+r.height/2);return {x:r.x,right:r.right,height:r.height,width:r.width,reachable:label===hit||label.contains(hit)};});return {text:(cell.querySelector('b')||cell).innerText.trim(),x:r.x,right:r.right,checks};});assert.ok(sticky.text&&sticky.x>=0&&sticky.right<=160,JSON.stringify(sticky));assert.ok(sticky.checks.every(r=>r.height>=44&&r.width>=44&&r.x>=sticky.right-1&&r.right<=320&&r.reachable),JSON.stringify(sticky));await page.screenshot({path:`${out}/${engine.name()}-status-320.png`});
+ // Small preparation pages must expose their primary inspection actions without
+ // sideways scrolling. Page scrollWidth alone misses nested table clipping.
+ const fitReceipt=JSON.parse(await readFile(new URL('../exports/turret/carrier-insert-fit/receipt.json',import.meta.url),'utf8'));
+ for(const width of [320,390,1440]){
+  await page.setViewportSize({width,height:900});
+  await page.goto(base+'/site/pages/research-carrier-insert-fit-readme-md.html?live=0');
+  for(const name of Object.keys(fitReceipt.specimens)){
+   const action=page.getByRole('link',{name:`Preview ${name}.step in 3D`,exact:true});
+   await action.scrollIntoViewIfNeeded();
+   const placement=()=>action.evaluate(a=>{const r=a.getBoundingClientRect(),hit=document.elementFromPoint(r.x+r.width/2,r.y+r.height/2);return {x:r.x,right:r.right,width:r.width,height:r.height,viewport:innerWidth,reachable:hit===a||a.contains(hit)};});
+   const accessible=r=>r.x>=0&&r.right<=r.viewport&&r.width>=44&&r.height>=44&&r.reachable;
+   const baseline=await placement();assert.ok(accessible(baseline),JSON.stringify({name,width,...baseline}));
+   if(width===320){
+    const previous=await action.getAttribute('style');await action.evaluate(a=>a.style.transform='translateX(400px)');
+    assert.equal(accessible(await placement()),false,'An offscreen primary action must fail even inside a contained page');
+    await action.evaluate((a,value)=>value===null?a.removeAttribute('style'):a.setAttribute('style',value),previous);
+    assert.ok(accessible(await placement()));
+   }
+  }
+  await page.screenshot({path:`${out}/${engine.name()}-insert-fit-${width}.png`});
+ }
  // Follow real portal preview links, then verify original parsers and native camera controls.
  await page.setViewportSize({width:1280,height:900});
  for(const file of ['/exports/body/post.stl','/exports/leg/cnc/output_adapter.step','/exports/turret/print/barrel.3mf']) {
