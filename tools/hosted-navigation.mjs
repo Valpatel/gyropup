@@ -13,7 +13,7 @@ export function classifyCancellation(record,{base,pendingAtNavigation=false}) {
   const hosted=origin.protocol==='https:'&&(origin.hostname==='gyropup.com'
     ||/^(?:[a-z0-9-]+\.)?gyropup\.pages\.dev$/.test(origin.hostname));
   if(hosted&&url.pathname==='/cdn-cgi/rum'&&record.method==='POST'
-    &&['ping','fetch'].includes(record.type))return 'hostingTelemetry';
+    &&['ping','beacon','xhr'].includes(record.type))return 'hostingTelemetry';
   if(pendingAtNavigation&&record.method==='GET'&&record.type==='fetch'
     &&['/site/models.json','/site/nav.json'].includes(url.pathname))return 'cancelledOnNavigation';
   return null;

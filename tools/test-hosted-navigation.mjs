@@ -15,7 +15,7 @@ test('static and enhanced returns accept only the exact document and known query
 test('known hosting cancellation never masks failed assets, HTTP failures or unrelated hosts',()=>{
   const rum={url:base+'/cdn-cgi/rum?',method:'POST',type:'ping',error:'net::ERR_ABORTED'};
   assert.equal(classifyCancellation(rum,{base}),'hostingTelemetry');
-  assert.equal(classifyCancellation({...rum,type:'fetch',error:'Load request cancelled'},{base}),'hostingTelemetry');
+  for(const type of ['beacon','xhr'])assert.equal(classifyCancellation({...rum,type,error:'Load request cancelled'},{base}),'hostingTelemetry');
   for(const change of [{url:base+'/cdn-cgi/rum?extra=1'},{method:'GET'},{type:'script'},
     {error:'net::ERR_CONNECTION_RESET'},{url:'https://elsewhere.test/cdn-cgi/rum'},
     {url:base+'/designer/kit/file-geometry.js'}])assert.equal(classifyCancellation({...rum,...change},{base}),null);
