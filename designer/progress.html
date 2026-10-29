@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="kit/part-table.css">
 <link rel="stylesheet" href="portal-parts.css">
 <link rel="stylesheet" href="kit/loading.css" data-gyropup-loading>
+<link rel="stylesheet" href="kit/study-media.css">
 <style>
   html, body { overflow: auto; height: auto; }
   body.has-appnav main.prog { padding-top: var(--appnav-h, 64px); }
@@ -103,11 +104,11 @@
   <div id="rigtable"></div>
   <div class="gallery" id="rig" style="margin-top:14px"></div>
 
-  <div class="sec">Strength: every printed part, loaded to breaking</div>
+  <div class="sec">Strength: static load studies</div>
   <p class="lede">Each printed part under the rig's worst loads (everyday: safety factor 2; rare events: 1.2, on humid printed PA6-CF).
-  Click a row: the video ramps the load from zero to the design load and past it (black = beyond the material's strength).
+  Click a row to inspect its recorded result. Available animations scale a solved static field; they are not transient motion or fracture simulations.
   <b>open ↗</b> opens the interactive 3D view: drag the load, see the hot spots, cut it open, probe any point.</p>
-  <div class="viewer"><div id="fea"></div><div><video id="feavid" controls loop muted playsinline></video><p class="lede" id="feanote"></p></div></div>
+  <div class="viewer"><div id="fea"></div><div><div id="fea-media" class="study-media"></div><p class="lede" id="feanote"></p></div></div>
 
   <div class="sec">Parts: what to print</div>
   <p class="lede" id="printlede"></p>
