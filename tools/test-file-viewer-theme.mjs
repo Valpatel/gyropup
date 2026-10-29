@@ -11,13 +11,25 @@ const base=(process.env.SITE_URL||`http://127.0.0.1:${server.address().port}`).r
 const engine=process.env.PLAYWRIGHT_BROWSER==='webkit'?webkit:chromium;
 const browser=await engine.launch(engine===chromium?{channel:process.env.PLAYWRIGHT_CHANNEL==='chromium'?undefined:'chrome',headless:true,args:['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']}:{headless:true});
 const context=await browser.newContext();await acknowledgePrototypeNotice(context);
-const page=await context.newPage(),errors=[],missing=[],external=[],cases=[];
+const page=await context.newPage(),errors=[],missing=[],external=[],hostingTelemetry=[],cases=[];
 const out=process.env.TEST_OUTPUT||'/tmp/gyropup-file-viewer-theme';await mkdir(out,{recursive:true});
 const original='/exports/sim/turret_box/pan_base.stl';
 const url=`${base}/designer/kit/file-viewer.html?file=${encodeURIComponent(original)}`;
 page.on('pageerror',error=>errors.push(error.message));
 page.on('response',response=>{if(response.status()>=400)missing.push(response.url());});
-page.on('request',request=>{if(/^https?:/.test(request.url())&&!request.url().startsWith(base+'/'))external.push(request.url());});
+const baseURL=new URL(base),hostedGyropup=baseURL.protocol==='https:'
+  &&(baseURL.hostname==='gyropup.com'||/^(?:[a-z0-9-]+\.)?gyropup\.pages\.dev$/.test(baseURL.hostname));
+page.on('request',request=>{
+  if(!/^https?:/.test(request.url()))return;
+  const requested=new URL(request.url());if(requested.origin===baseURL.origin)return;
+  // Hosting injects this observed beacon; it is not a viewer dependency. Keep
+  // its requests visible in the receipt and reject every other external URL.
+  const beacon=hostedGyropup&&request.method()==='GET'&&request.resourceType()==='script'
+    &&requested.origin==='https://static.cloudflareinsights.com'
+    &&requested.pathname==='/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092'
+    &&!requested.search&&!requested.hash;
+  (beacon?hostingTelemetry:external).push(request.url());
+});
 function luminance(color){const x=color.match(/[\d.]+/g).slice(0,3).map(Number).map(n=>n/255).map(n=>n<=.04045?n/12.92:((n+.055)/1.055)**2.4);return x[0]*.2126+x[1]*.7152+x[2]*.0722;}
 const contrast=(a,b)=>{const x=luminance(a),y=luminance(b);return(Math.max(x,y)+.05)/(Math.min(x,y)+.05);};
 async function ready(target=page){await target.waitForFunction(()=>window.__fileViewer?.root.dataset.state==='ready');await target.evaluate(()=>document.fonts.ready);}
@@ -78,6 +90,6 @@ try{
     && ['/designer/build','/designer/build.html'].includes(url.pathname)&&!url.search&&!url.hash);
   assert.deepEqual(errors,[]);assert.deepEqual(missing,[]);assert.deepEqual(external,[]);
   const version=await(await context.request.get(base+'/version.json')).json();
-  await writeFile(`${out}/${engine.name()}-report.json`,JSON.stringify({passed:true,version,cases,wheelRatio:ratio,errors,missing,external},null,2));
+  await writeFile(`${out}/${engine.name()}-report.json`,JSON.stringify({passed:true,version,cases,wheelRatio:ratio,errors,missing,external,hostingTelemetry},null,2));
   console.log(JSON.stringify({passed:true,engine:engine.name(),viewports:viewports.length,out}));
 }finally{await browser.close();if(server)await new Promise(resolve=>{server.close(resolve);server.closeAllConnections();});}
