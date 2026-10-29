@@ -273,6 +273,41 @@
       "revision": "Apr01,2024 V4",
       "sha256": "7c43489665a7e2848fcb4de40cb9ed51f173673c1eb6e49c0a7e0d89cca75694",
       "url": "https://yageogroup.com/content/datasheet/asset/file/YAGEO-RSF_DATASHEET"
+    },
+    {
+      "evidence": "Actual current style2 drawing viewed. A12.0max width, B18.3max includes body and coated lead transition, E3.0max thickness; C5.1+/-0.7 pitch, D7.6min bare lead, diameter0.81. No body-only height, overall maximum or formed-flat geometry supplied. Hold3.0A at23C and2.04A at60C are not a guaranteed continuous3.25A operating point.",
+      "id": "bourns_mfr300",
+      "limits": [
+        "B spans the rectangular body and coated lead shoulder; body-only height is not separately dimensioned.",
+        "D is a minimum; B plus D is not a maximum overall length.",
+        "No qualified formed-flat lead geometry or finished PCB hole/land pattern supplied."
+      ],
+      "observed": "2026-10-29",
+      "pages": [
+        3,
+        4,
+        8
+      ],
+      "revision": "MF-R SERIES, REV. AR, 09/26",
+      "sha256": "d22f0f06c89097844c15e7b29d9aa5704334f4aa76778b6bc2b11aa0d7db2c72",
+      "url": "https://www.bourns.com/docs/product-datasheets/mf-r.pdf"
+    },
+    {
+      "evidence": "Actual historical authorized mirror viewed: overall G8.13max x C6.22max x D2.62max; A3.2 is terminal width, not height. Molded length B7.11max. Lands I>=3.3, J/L>=2.4, K<=4.2. Mixed min/max values do not define a maximum land span. Current2025 parsed dimensions agree, but current PDF pixels remain unavailable.",
+      "id": "littelfuse_smcj150a",
+      "limits": [
+        "Historical authorized-distributor mirror, not the current2025 revision.",
+        "All A..L dimension table values match the current2025 primary extracted text; current PDF pixels were not available from that denied primary.",
+        "9.0x3.3 is a possible chosen pattern using J/L minima and K maximum, not a manufacturer maximum land envelope.",
+        "Exact standard unidirectional SMCJ150A family; no CA, HR, or other manufacturer substitution."
+      ],
+      "observed": "2026-10-29",
+      "pages": [
+        5
+      ],
+      "revision": "JC.10/29/20",
+      "sha256": "fc7dbc6ac38dbb5c3bcf210c217b13689c80b6830fc775ef66745c9f131fdbb5",
+      "url": "https://www.mouser.com/datasheet/2/240/Littelfuse_TVS_Diode_SMCJ_Datasheet_pdf-1317380.pdf"
     }
   ],
   "status": "WIP_PRIMARY_INVENTORY_NOT_A_LAYOUT"

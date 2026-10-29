@@ -169,5 +169,16 @@ class InventoryTests(unittest.TestCase):
             d=copy.deepcopy(self.reference);d['packaging_candidates']['I.COUT'][key]=value
             with self.subTest(key=key),self.assertRaises(ValueError): C.validate_reference(d)
 
+    def test_manufacturer_dimension_axes_and_limits_cannot_be_relabelled(self):
+        original=json.loads((HERE / 'package-envelopes.json').read_text())
+        self.assertEqual(C.validate_package_limits(original)['exact_package_axis_controls'],2)
+        for mode in ('terminal_width_as_height','mixed_limits_as_max_land','coated_span_as_body','minimum_lead_as_maximum'):
+            d=copy.deepcopy(original);p=d['packages']
+            if mode=='terminal_width_as_height':p['littelfuse_smcj150a']['maximum_body_mm'][2]=3.2
+            elif mode=='mixed_limits_as_max_land':p['littelfuse_smcj150a']['land_outer_mm']=[9,3.3]
+            elif mode=='coated_span_as_body':p['bourns_mfr300']['maximum_body_mm']=[12,18.3,3]
+            else:p['bourns_mfr300']['formed_flat_envelope_mm']=[12,25.9,3]
+            with self.subTest(mode=mode),self.assertRaises(ValueError):C.validate_package_limits(d)
+
 
 if __name__=='__main__':unittest.main()

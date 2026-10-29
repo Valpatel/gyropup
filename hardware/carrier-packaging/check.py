@@ -57,6 +57,20 @@ def validate_reference(document):
     return {'reference_items':len(pins), 'electrically_qualified':False}
 
 
+def validate_package_limits(document):
+    p = document['packages']
+    fuse = p['bourns_mfr300']
+    if (fuse['maximum_body_mm'] is not None or fuse['formed_flat_envelope_mm'] is not None
+            or fuse['maximum_coated_span_mm'] != {'width_A':12,'top_to_coating_end_B':18.3,'thickness_E':3}
+            or fuse['bare_lead_length_min_mm'] != 7.6):
+        raise ValueError('MF-R300 coating span/minimum lead is not a body/formed maximum')
+    tvs = p['littelfuse_smcj150a']
+    if (tvs['maximum_body_mm'] != [8.13,6.22,2.62] or tvs['land_outer_mm'] is not None
+            or tvs['land_constraints_mm'] != {'pad_width_min':3.3,'each_pad_length_min':2.4,'inner_gap_max':4.2}):
+        raise ValueError('SMCJ height uses axisD; mixed pad limits do not give a maximum land envelope')
+    return {'exact_package_axis_controls':2}
+
+
 def _unique_rows(rows, label):
     result = {}
     for row in rows:
@@ -170,5 +184,6 @@ def validate_terminals(document):
 if __name__ == '__main__':
     result = validate_inventory(json.loads((HERE / 'component-inventory.json').read_text()))
     result.update(validate_reference(json.loads((HERE / 'front-reference-contract.json').read_text())))
+    result.update(validate_package_limits(json.loads((HERE / 'package-envelopes.json').read_text())))
     result.update(validate_terminals(json.loads((HERE / 'terminal-contract.json').read_text())))
     print(json.dumps(result, indent=2, sort_keys=True))

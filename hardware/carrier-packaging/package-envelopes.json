@@ -2,6 +2,25 @@
   "design_clearance_mm": null,
   "note": "Body, land pattern and nominal moduleprofile are different records; unknowns remain null. These are no thermal or footprint qualification.",
   "packages": {
+    "bourns_mfr300": {
+      "bare_lead_length_min_mm": 7.6,
+      "formed_flat_envelope_mm": null,
+      "land_outer_mm": null,
+      "lead_diameter_mm": 0.81,
+      "lead_pitch_mm": 5.1,
+      "lead_pitch_tolerance_mm": 0.7,
+      "match": [
+        "MF-R300"
+      ],
+      "maximum_body_mm": null,
+      "maximum_coated_span_mm": {
+        "thickness_E": 3,
+        "top_to_coating_end_B": 18.3,
+        "width_A": 12
+      },
+      "note": "Style2 unformed source, not the existing12x14x3.5 flat envelope. B includes coated lead transition; D is minimum and cannot establish overall maximum. Lead forming, board holes, mounting/thermal clearance and actual height remain open.",
+      "source": "bourns_mfr300"
+    },
     "bzg03c75": {
       "land_outer_mm": [
         6.7,
@@ -172,6 +191,34 @@
         0.88
       ],
       "source": "kemet_x7r"
+    },
+    "littelfuse_smcj150a": {
+      "land_constraints_mm": {
+        "each_pad_length_min": 2.4,
+        "inner_gap_max": 4.2,
+        "pad_width_min": 3.3
+      },
+      "land_outer_mm": null,
+      "manufacturer": "Littelfuse",
+      "match": [
+        "SMCJ150A"
+      ],
+      "maximum_body_mm": [
+        8.13,
+        6.22,
+        2.62
+      ],
+      "maximum_molded_body_mm": [
+        7.11,
+        6.22,
+        2.62
+      ],
+      "planning_land_basis": "Project choice using minimum2.4mm pads and maximum4.2mm gap; not a manufacturer maximum or assembly qualification. No alternate manufacturer,CA orHR variant.",
+      "planning_land_mm": [
+        9,
+        3.3
+      ],
+      "source": "littelfuse_smcj150a"
     },
     "ltc4359": {
       "land_outer_mm": [

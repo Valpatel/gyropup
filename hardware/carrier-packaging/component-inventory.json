@@ -7,7 +7,7 @@
   "fit_qualified": false,
   "frozen": false,
   "inventory_count": 47,
-  "package_evidence_count": 42,
+  "package_evidence_count": 44,
   "remaining_physical_inventory": [
     "external F4, D8, D14 and exact upstream fuse/holder boundary",
     "C2/C3/servo housings, contacts, crimps and actual leads",
@@ -1462,9 +1462,37 @@
     {
       "group": "complete_ideal_diode_reference_inventory",
       "id": "I.D6",
-      "maximum_envelope": null,
+      "maximum_envelope": {
+        "land_constraints_mm": {
+          "each_pad_length_min": 2.4,
+          "inner_gap_max": 4.2,
+          "pad_width_min": 3.3
+        },
+        "land_outer_mm": null,
+        "manufacturer": "Littelfuse",
+        "match": [
+          "SMCJ150A"
+        ],
+        "maximum_body_mm": [
+          8.13,
+          6.22,
+          2.62
+        ],
+        "maximum_molded_body_mm": [
+          7.11,
+          6.22,
+          2.62
+        ],
+        "planning_land_basis": "Project choice using minimum2.4mm pads and maximum4.2mm gap; not a manufacturer maximum or assembly qualification. No alternate manufacturer,CA orHR variant.",
+        "planning_land_mm": [
+          9,
+          3.3
+        ],
+        "source": "littelfuse_smcj150a"
+      },
       "mpn": "SMCJ150A",
       "package": "SMC",
+      "package_evidence_id": "littelfuse_smcj150a",
       "pins_from_reviewed_candidate": null,
       "placement": null,
       "reference_pin_contract": {
@@ -1853,8 +1881,27 @@
       "catalog_key": "bourns-mf-r300",
       "group": "retained_legacy_control_board",
       "id": "L.F1",
-      "maximum_envelope": null,
+      "maximum_envelope": {
+        "bare_lead_length_min_mm": 7.6,
+        "formed_flat_envelope_mm": null,
+        "land_outer_mm": null,
+        "lead_diameter_mm": 0.81,
+        "lead_pitch_mm": 5.1,
+        "lead_pitch_tolerance_mm": 0.7,
+        "match": [
+          "MF-R300"
+        ],
+        "maximum_body_mm": null,
+        "maximum_coated_span_mm": {
+          "thickness_E": 3,
+          "top_to_coating_end_B": 18.3,
+          "width_A": 12
+        },
+        "note": "Style2 unformed source, not the existing12x14x3.5 flat envelope. B includes coated lead transition; D is minimum and cannot establish overall maximum. Lead forming, board holes, mounting/thermal clearance and actual height remain open.",
+        "source": "bourns_mfr300"
+      },
       "mpn": "MF-R300",
+      "package_evidence_id": "bourns_mfr300",
       "placement": "existing envelope only; exact leads/pads not established",
       "prior_sources": [
         "https://www.mouser.com/c/?q=MF-R300"
@@ -1871,8 +1918,8 @@
     "docs/carrier-service-connectors.md": "f73db1114d1d807002ff454b5cb9ae1c7d94c1e29af89567b640e36f17966ec7",
     "hardware/carrier-packaging/front-reference-contract.json": "06956af049dafbeaf44bb9b0a739cde0b4ce099f0a6795758bebc77ced918b48",
     "hardware/carrier-packaging/inventory.py": "317786bb0bf507e3a572a48e45b77b08320baf9220bc0156d3c61293d0f767b7",
-    "hardware/carrier-packaging/package-envelopes.json": "9269e27790456d00d9392f30ddd3dc4f720c88ebd0297e9696530881abd8b224",
-    "hardware/carrier-packaging/primary-envelope-sources.json": "7b9b73917a10cf5215a0fffe9ca67c838039d7ec4e82f4ec4294e8bdb00f6162",
+    "hardware/carrier-packaging/package-envelopes.json": "ed80c8b61ee3eb5b791266cb5bb5490e4b4762421385daddad620b573938cd70",
+    "hardware/carrier-packaging/primary-envelope-sources.json": "3be2d86aa3ef4f50c1218ca5fdc61c90202e53205780f7a1609698c5cbea3767",
     "hardware/carrier-packaging/terminal-contract.json": "4f1eb2c31cafc363d8ea5381293db8f9ea43dcd111f506ccf698e0599a3253ca",
     "hardware/carrier-pan-protection/availability.json": "549a8ccdfd7d9ea95b5baedcb47ec7aa971cfbdeffe1092e4be13df40c480ec8",
     "hardware/carrier-pan-protection/circuit_design.py": "37b4d99eecaa1f567109df6762a00f69f46c02e6efbe7d53c35893d2955ace8a",
