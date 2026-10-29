@@ -66,8 +66,8 @@ const react = (ev) => { try { talk?.react?.(ev); } catch { /* the voice is optio
 const hud = $('#hud');
 const updateInsets = () => {
   const ins = overlayInsets(hud);
-  const card = $('#summary');
-  if (card?.classList.contains('min')) ins.top += card.getBoundingClientRect().height + 16;
+  // The stats card is a floating overlay. Folding it must not change projection
+  // insets or restart automatic camera framing.
   const dock = document.querySelector('.gp-dock-body');                  // the talk dock along the bottom
   const dr = dock?.offsetParent ? dock.getBoundingClientRect() : null;
   if (dr?.height && !dock.closest('.gp-dock')?.classList.contains('collapsed')) ins.bottom = Math.max(ins.bottom, window.innerHeight - dr.top + 8);
@@ -155,7 +155,7 @@ async function enterBench(request) {
   $('#summary').classList.remove('min');
   $('#summary').innerHTML = `<h2 class="fold" title="Show or hide the details">${sm.title}<span class="chev"></span></h2><div class="hud-readouts">`
     + sm.rows.map(([k, v]) => `<div class="r"><span>${k}</span><b>${v}</b></div>`).join('') + '</div>';
-  $('#summary .fold').onclick = () => { $('#summary').classList.toggle('min'); updateInsets(); };
+  $('#summary .fold').onclick = () => { $('#summary').classList.toggle('min'); };
   glideCamera(() => bench.enter());
   updateInsets();
 }
@@ -532,7 +532,7 @@ function renderSummary() {
          ['top deck', i.deck ? `lidar in front, turret behind: ${i.deck.tilt_max_forward_deg}° down over it, ${i.deck.lidar_hidden_deg}° hidden` : 'turret'],
          ['body', 'interim placeholder until M5']]
         .map(([k, v]) => `<div class="r"><span>${k}</span><b>${v}</b></div>`).join('') + '</div>';
-    $('#summary .fold').onclick = () => { $('#summary').classList.toggle('min'); updateInsets(); if (state.replay) frameReplay(); };
+    $('#summary .fold').onclick = () => { $('#summary').classList.toggle('min'); };
     return;
   }
   const r = state.result, d = state.design;
@@ -544,7 +544,7 @@ function renderSummary() {
        ['runtime', r.power.runtime_min ? `${Math.round(r.power.runtime_min)} min` : '—'],
        ['checks', `${r.checks.filter((c) => c.level === 'fail').length} problems · ${r.checks.filter((c) => c.level === 'warn').length} warnings`]]
       .map(([k, v]) => `<div class="r"><span>${k}</span><b>${v}</b></div>`).join('') + '</div>';
-  $('#summary .fold').onclick = () => { $('#summary').classList.toggle('min'); updateInsets(); if (state.replay) frameReplay(); };
+  $('#summary .fold').onclick = () => { $('#summary').classList.toggle('min'); };
 }
 
 // ---- panel
@@ -846,10 +846,10 @@ try {
   const hint = $('.hud-hint');
   if (hint) {
     if (matchMedia('(pointer: coarse)').matches) hint.textContent = 'DRAG · ORBIT // PINCH · ZOOM // TWO FINGERS · PAN';
-    const fade = () => hint.classList.add('faded');
+    const fade = () => { hint.classList.add('faded'); stage.controls.removeEventListener('start', fade); };
     setTimeout(fade, 6000);
     stage.renderer.domElement.addEventListener('pointerdown', fade, { once: true });
-    stage.renderer.domElement.addEventListener('wheel', fade, { once: true, passive: true });
+    stage.controls.addEventListener('start', fade); // Includes the smoothed wheel gesture.
   }
 }
 updateInsets();

@@ -7,6 +7,7 @@
 // Adapted from the Moxie simulator's moxie/scene.js (mvalancy/moxie-robot-saver, MIT).
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { smoothWheelZoom } from './smooth_zoom.js';
 
 function radialGlow(stops) {
   const c = document.createElement('canvas');
@@ -48,6 +49,8 @@ export function createStage(container, opts = {}) {
   controls.enableDamping = true;
   controls.dampingFactor = 0.08;
   controls.maxPolarAngle = 1.5;
+  controls.zoomSpeed = opts.zoomSpeed ?? 0.25; // Fine native pinch and middle-button dolly.
+  const wheelZoom = smoothWheelZoom(controls, renderer.domElement, { speed: controls.zoomSpeed });
 
   // cool control-room lighting: white key, cold fill, accent rim
   const hemi = new THREE.HemisphereLight(0xeef6ff, 0x2a3240, 1.1);
@@ -79,6 +82,7 @@ export function createStage(container, opts = {}) {
 
   // Size everything to the robot.
   function frame(height) {
+    wheelZoom.cancel();
     const s = height;
     // A tight near/far range keeps depth precision high, so close surfaces do not flicker (z-fighting).
     camera.near = 0.02 * s;
@@ -168,6 +172,7 @@ export function createStage(container, opts = {}) {
     camera.quaternion.copy(saved.q);
     camera.updateMatrixWorld();
     if (!apply) return { center, distance: dist, position };
+    wheelZoom.cancel();
     camera.position.copy(position);
     controls.target.copy(center);
     camera.far = Math.max(camera.far, dist + 4 * sphere.radius);
@@ -191,6 +196,7 @@ export function createStage(container, opts = {}) {
         if (!cb.failed) { cb.failed = true; console.error(err); document.body.dataset.stageError = String(err?.stack ?? err).slice(0, 500); }
       }
     }
+    wheelZoom.step(dt);
     controls.update();
     renderer.render(scene, camera);
     requestAnimationFrame(tick);
