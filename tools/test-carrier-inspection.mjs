@@ -31,7 +31,7 @@ async function ready(){
 async function inspect(){return page.evaluate(async()=>{
   const v=window.__fileViewer,THREE=await import('/designer/kit/vendor/three/three.module.min.js');
   const box=new THREE.Box3().setFromObject(v.model),meshes=[];
-  v.model.traverse(n=>{if(n.isMesh)meshes.push({name:n.name,colors:[].concat(n.material).map(m=>m.color.getHexString())});});
+  v.model.traverseVisible(n=>{if(n.isMesh)meshes.push({name:n.name,colors:[].concat(n.material).map(m=>m.color.getHexString())});});
   const points=Array.from({length:8},(_,i)=>new THREE.Vector3(i&1?box.max.x:box.min.x,i&2?box.max.y:box.min.y,i&4?box.max.z:box.min.z).project(v.stage.camera).toArray());
   return{meshes,triangles:v.info.triangles,boundsMm:v.info.boundsMm,scrollWidth:document.documentElement.scrollWidth,points};
 });}
@@ -73,11 +73,23 @@ try{
     assert.ok(model.scrollWidth<=width);
     assert.ok(model.points.every(p=>p.every(Number.isFinite)&&p.slice(0,2).every(n=>Math.abs(n)<1.01)),'Imported assembly fits the canvas');
     await page.screenshot({path:`${out}/${engine.name()}-${width}-assembly.png`});
-    for(const name of ['Front','Side','Top','Isometric','Fit'])await page.getByRole('button',{name,exact:true}).click();
+    const viewDirections=[];
+    for(const [name,direction]of [['Front',[0,0,1]],['Side',[1,0,0]],['Top',[0,1,.0001]],['Isometric',[1,.7,1.3]]]){
+      await page.getByRole('button',{name,exact:true}).click();
+      await page.waitForFunction(expected=>{
+        const v=window.__fileViewer,actual=v.stage.camera.position.clone().sub(v.stage.controls.target).normalize();
+        const length=Math.hypot(...expected);return expected.every((n,i)=>Math.abs(actual.getComponent(i)-n/length)<.0001);
+      },direction,{timeout:5000});
+      viewDirections.push({name,expected:direction,actual:await page.evaluate(()=>{const v=window.__fileViewer;return v.stage.camera.position.clone().sub(v.stage.controls.target).normalize().toArray();})});
+    }
     const radius=await page.evaluate(()=>window.__fileViewer.stage.camera.position.distanceTo(window.__fileViewer.stage.controls.target));
     const canvas=await page.locator('.file-canvas canvas').boundingBox();await page.mouse.move(canvas.x+canvas.width/2,canvas.y+canvas.height/2);await page.mouse.wheel(0,120);
     await page.waitForFunction(r=>window.__fileViewer.stage.camera.position.distanceTo(window.__fileViewer.stage.controls.target)>r*1.01,radius);
     const wheelRatio=await page.evaluate(r=>window.__fileViewer.stage.camera.position.distanceTo(window.__fileViewer.stage.controls.target)/r,radius);assert.ok(wheelRatio<1.02);
+    // Fit must visibly undo the wheel change, not just accept a click.
+    await page.getByRole('button',{name:'Fit',exact:true}).click();
+    await page.waitForFunction(expected=>{const v=window.__fileViewer;return Math.abs(v.stage.camera.position.distanceTo(v.stage.controls.target)-expected)<expected*.0001;},radius,{timeout:5000});
+    const fitRadius=await page.evaluate(()=>{const v=window.__fileViewer;return v.stage.camera.position.distanceTo(v.stage.controls.target);});
     assert.equal(await page.getByRole('link',{name:'Download original',exact:true}).getAttribute('href'),base+original);
     if(width===1440){
       const applyColors=async meshes=>page.evaluate(rows=>{
@@ -94,16 +106,19 @@ try{
       [baseMesh.colors,carrierMesh.colors]=[carrierMesh.colors,baseMesh.colors];
       await applyColors(swapped);const swappedModel=await inspect();assert.throws(()=>assertIdentity(swappedModel),/STEP materials must remain attached/);
       await applyColors(model.meshes);
+      await page.evaluate(()=>window.__fileViewer.model.getObjectByName('authored_public_base_board_inserts#0').visible=false);
+      const hiddenInsert=await inspect();assert.throws(()=>assertIdentity(hiddenInsert),/eight mounting inserts/);
+      await page.evaluate(()=>window.__fileViewer.model.getObjectByName('authored_public_base_board_inserts#0').visible=true);
       await page.evaluate(()=>{const model=window.__fileViewer.model;model.userData.removedReviewScrew=model.getObjectByName('authored_public_base_board_screws#0');model.remove(model.userData.removedReviewScrew);});
       const missingScrew=await inspect();assert.throws(()=>assertIdentity(missingScrew),/eight mounting screws/);
       await page.evaluate(()=>{const model=window.__fileViewer.model;model.add(model.userData.removedReviewScrew);delete model.userData.removedReviewScrew;});
-      assertIdentity(await inspect());report.negativeControls=['lost STEP materials','swapped part colors','missing mounting screw'];
+      assertIdentity(await inspect());report.negativeControls=['lost STEP materials','swapped part colors','hidden mounting insert','missing mounting screw'];
     }
 
     await page.getByRole('link',{name:'Back to parts',exact:true}).click();
     await page.waitForURL(url=>url.origin===new URL(base).origin&&[docPath,docPath.slice(0,-5)].includes(url.pathname)&&url.search==='?live=0');
     await page.locator('.cad-diagram[data-state=ready] svg').waitFor();
-    report.cases.push({width,height,documentState,model,wheelRatio});
+    report.cases.push({width,height,documentState,model,viewDirections,wheelRatio,fitRadius});
   }
   assert.deepEqual(report.errors,[]);assert.deepEqual(report.missing,[]);assert.deepEqual(report.requestFailures,[]);
   report.passed=true;console.log(JSON.stringify({passed:true,engine:engine.name(),cases:report.cases.length,out}));
