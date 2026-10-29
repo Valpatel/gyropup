@@ -28,3 +28,9 @@ Hardware: four existing McMaster 91290A111 M3 x 6 PCB screws, four 91290A113 M3 
 The PCB uses the actual `turret_boards.py` footprint layout with drilled holes; components remain package envelopes, and solder tails/connectors are unverified. The isolated checker proves the carrier plus PCB and attached hardware move together. The generic dossier's single-part assembly model cannot yet represent this bench subassembly, so its sequence remains unqualified; no collision waiver substitutes for that missing capability.
 
 The public model contains eight screws and eight inserts as labelled authored simplified hardware. Engineering fastener checks use private manufacturer STEP for 91290A111 and 94459A140 where present. The 91290A113 M3x8 STEP was absent from the local cache; a sequential single-part fetch on 2026-10-29 failed because the returned page contained no specification table. Its public authored geometry is not manufacturer CAD, and complete manufacturer-model coverage is not claimed.
+
+## Recorded model checks
+
+`python cad/check_base_board_print.py` at `24b54a1` found a sampled minimum carrier wall of 1.497 mm against the declared 1.2 mm minimum. Its independent 0.6 mm thin-plate control failed as intended. The specified +90 degree rotation about Y gives a 32 x 70 mm footprint and 8 mm height. This is not a slicer or printed-fit result. Source hashes and full ray evidence are in `exports/turret/base-board-service/print-checks.json`.
+
+The isolated hardware inventory is three SKUs and sixteen instances: eight screws and eight inserts. Four carrier screws and four anchor inserts are additional to the previous BOM; the existing four PCB screws/inserts move to the carrier.

@@ -176,7 +176,7 @@ parts:
 - id: base_board_carrier
   function: Removable passive PCB carrier, bench assembled and removed along +X after the bumper
   interfaces: [I-base-board, I-base-carrier, I-base-board-inserts]
-  material: {name: PA6-CF, process: printed}
+  material: {name: PA6-CF, process: print, print_axis: exterior face down with bosses up, wall_mm: 1.2}
   checks: [gate:connectivity, gate:assembly, gate:wall]
 - id: base_board_inserts
   function: Four M3 inserts holding the PCB on the carrier
