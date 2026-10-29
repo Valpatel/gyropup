@@ -34,15 +34,20 @@ async function playChecks() {
  await action('reload').click();assert.equal(await page.evaluate(()=>window.__sim.state.replay),null,'Reload also takes control from a recording');
  await activity('targets');await page.waitForFunction(()=>window.__sim.state.replay?.key.endsWith('/targets'));
  await action('demo').click();assert.equal(await page.evaluate(()=>window.__sim.demo.on),true);
- const previous=await page.evaluate(()=>{const R=window.__sim.state.replay;R.t=(R.run.frames.qpos.length-1)/R.run.frames.fps;return R.key;});
- await page.waitForFunction(previous=>window.__sim.state.replay?.key!==previous,previous);
- assert.equal(await page.evaluate(()=>window.__sim.talk===window.vehicleIdentity.talk),true,'Demo advance keeps the conversation');
+ await page.waitForFunction(()=>window.__sim.state.replay===null);
+ const previous=await page.evaluate(()=>{const d=window.__sim.demo;d.t=3.95;return d.phase;});
+ await page.waitForFunction(previous=>window.__sim.demo.phase!==previous,previous);
+ assert.equal(await page.evaluate(()=>window.__sim.talk===window.vehicleIdentity.talk),true,'Live demo phase changes keep the conversation');
+ await action('play').click();assert.equal(await page.evaluate(()=>window.__sim.demo.playing),false);
+ const pausedTime=await page.evaluate(()=>window.__sim.demo.t);await page.waitForTimeout(150);
+ assert.equal(await page.evaluate(()=>window.__sim.demo.t),pausedTime,'Demo pause freezes its clock');
+ await action('play').click();await page.waitForFunction(t=>window.__sim.demo.t>t,pausedTime);
  await activity('live');assert.equal(await page.evaluate(()=>window.__sim.state.replay),null);
  assert.equal(await action('play').isDisabled(),true,'Live mode does not pretend to pause a recording');
 }
 try {
  await page.goto(base+'/designer/sim.html',{waitUntil:'networkidle'});await ready();
- assert.equal(await page.evaluate(()=>window.__sim.demo.on && window.__sim.sfx.enabled),true,'Fresh visitors start with demo and sound enabled');
+ assert.equal(await page.evaluate(()=>window.__sim.demo.on && window.__sim.sfx.enabled && !window.__sim.state.replay && window.__sim.state.robot.presentation.mode==='current'),true,'Fresh visitors start with current-model live demo and sound enabled');
  for(const value of ['v2','designs/default.json']) {await model(value);await playChecks();}
  // Light sliders affect empty sky, not just the model and yard. Bench restores
  // the robot preference after its fixed, darker target range.
@@ -75,5 +80,5 @@ try {
  await page.goto(base+'/designer/sim.html?sound=1&demo=1',{waitUntil:'networkidle'});await ready();
  assert.equal(await page.evaluate(()=>window.__sim.sfx.enabled && window.__sim.demo.on),true,'Explicit on overrides saved mute');
  assert.deepEqual(errors,[]);assert.equal(await page.evaluate(()=>document.body.dataset.stageError),undefined);
- console.log(`PASS ${engine.name()}: robot v1/v2 desktop+touch play/pause, fire/burst/reload from replay, demo advance, stable scene/conversation, daylight sky, defaults/opt-outs and 6 phone/tablet layouts`);
+ console.log(`PASS ${engine.name()}: robot v1/v2 desktop+touch play/pause, fire/burst/reload from replay, current-model live demo/pause, stable scene/conversation, daylight sky, defaults/opt-outs and 6 phone/tablet layouts`);
 } finally {await browser.close();}
