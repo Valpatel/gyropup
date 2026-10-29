@@ -1,0 +1,7 @@
+# Electrical protection limits and evidence
+
+Separate documented steady supply voltage from a measured fault/transient envelope. A TVS standoff voltage, minimum breakdown, maximum clamp at a specified current, and pulse power rating describe different conditions. Check the maximum breakdown and clamping voltage against every protected device; do not use the minimum breakdown as a guaranteed terminal ceiling. Source impedance, wiring inductance, pulse duration/repetition and temperature determine the actual waveform and energy.
+
+Active protection also needs tolerances, hysteresis, overdrive-dependent response, external gate load, MOSFET safe operating area and board thermal evidence. A nominal cutoff below a device limit is insufficient. Trace whether a stage protects one converter or a shared branch: current/inrush, downstream limits and fault behavior differ. Firmware torque limits and fuse names are not measured current bounds.
+
+The [carrier protection comparison](../../research/protection/carrier-input-protection.md) and source-bound calculator retain unqualified dynamic peaks as null, not as assumed passes. Static source/voltage/load arithmetic does not establish an enclosure temperature, output-regeneration limit or physical safety. Candidate package dimensions are not a completed PCB footprint; electrical selection must precede final carrier fit/print release. Preserve the current supplier/revision rules in [supplier evidence](supplier-evidence.md).
