@@ -310,7 +310,10 @@ async function listRuns(value, request, token) {
     // Metadata has its own retry path; do not cache a malformed list with usable geometry.
     const sm = await getJson(`../exports/sim/${stem}/summary.json`);
     if (request !== designRequest) return;
-    if (!sm || typeof sm.scenarios !== 'object' || !sm.scenarios) throw new Error('Invalid recording list');
+    if (!sm || !sm.scenarios || typeof sm.scenarios !== 'object' || Array.isArray(sm.scenarios) ||
+      !Object.values(sm.scenarios).every(r=>r&&typeof r.title==='string'&&typeof r.pass==='boolean') ||
+      !Number.isInteger(sm.total)||sm.total<0||!Number.isInteger(sm.passed)||sm.passed<0||sm.passed>sm.total ||
+      (sm.mass_kg!==undefined&&(!Number.isFinite(sm.mass_kg)||sm.mass_kg<=0))) throw new Error('Invalid recording list');
     state.summary = sm;
     state.modelMass = sm.mass_kg ?? state.modelMass;
     runSel.innerHTML += Object.entries(sm.scenarios).map(([n, r]) => `<option value="${stem}/${n}">Recorded: ${r.title} — ${r.pass ? 'pass' : 'FAIL'}</option>`).join('');

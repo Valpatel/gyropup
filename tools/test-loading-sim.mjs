@@ -54,11 +54,20 @@ try {
  assert.equal(await identity(),true);assert.equal(await page.evaluate(()=>window.__sim.state.robot===window.loadingIdentity.robot),true);
  await retry.click();await page.waitForFunction(()=>window.__sim.state.modelKey==='designs/default.json');await hidden();assert.equal(await identity(),true);
  let summaryAttempts=0;
- await page.route('**/exports/sim/v2/summary.json',r=>++summaryAttempts===1?r.fulfill({json:{scenarios:null}}):r.continue());
+ await page.route('**/exports/sim/v2/summary.json',async r=>{
+  ++summaryAttempts;
+  if(summaryAttempts===1){await r.fulfill({json:{scenarios:null}});return;}
+  if(summaryAttempts===2){const response=await r.fetch(),summary=await response.json();summary.mass_kg='broken';await r.fulfill({json:summary});return;}
+  await r.continue();
+ });
  await page.selectOption('#design-select','v2');await page.waitForFunction(()=>window.__sim.state.modelKey==='v2');
  await page.waitForFunction(()=>document.getElementById('sim-loading').dataset.state==='error');
  assert.match(await status.textContent(),/recordings could not load/);
- await retry.click();await hidden();assert.equal(summaryAttempts,2,'Retry refetches a malformed recording list instead of reusing it');
+ const malformedSummary=page.waitForResponse(r=>r.url().endsWith('/exports/sim/v2/summary.json'));
+ await retry.click();await(await malformedSummary).finished();
+ await page.waitForFunction(()=>document.getElementById('sim-loading').dataset.state==='error');
+ assert.equal(await page.evaluate(()=>window.__sim.state.modelMass),null,'Malformed metadata cannot enter render state');
+ await retry.click();await hidden();assert.equal(summaryAttempts,3,'Retry refetches a malformed recording list instead of reusing it');
  await page.waitForFunction(()=>!window.__sim.state.cameraTransition&&!window.__sim.state.transition);
  // Background loading is an overlay: it cannot move the camera or hide manual actions.
  await page.route('**/exports/sim/v2/targets.json',async r=>{await new Promise(resolve=>{releaseRun=resolve;});await r.continue();});
