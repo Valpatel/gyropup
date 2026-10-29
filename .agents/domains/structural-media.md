@@ -23,3 +23,10 @@ Validate replay and seeking after initial playback. The local preview server mus
 serve real single byte ranges, as a media client can reject HTTP 200 when resuming
 with a range. `tools/test-site-ranges.mjs` checks HTTP semantics and the highlights
 browser harness checks the consumer. Verify production range responses separately.
+
+Exercise the real 3D hero and movie together on a constrained connection. An
+isolated player's successful first decoded frame does not prove smooth playback
+or that competing CAD downloads meet their deadlines. Check automatic and
+explicit loading order, queued-play cancellation, failed/missing hero release,
+initial buffering, and an actual network-emulated integrated page. Keep those
+observations distinct from real-device performance guarantees.

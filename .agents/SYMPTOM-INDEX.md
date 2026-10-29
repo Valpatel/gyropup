@@ -27,6 +27,7 @@
 | Video works in local Chrome but CI Chromium reports no supported streams or never reaches ready | [Chrome and Chromium codec coverage](inbox/2026-10-29-chrome-and-chromium-do-not-share-video-codecs.md) |
 | A movie's neighboring report or current model has changed, or a capture has the wrong aspect ratio | [Recorded evidence and capture dimensions](domains/structural-media.md) |
 | Video plays initially but WebKit replay fails with an unexpected HTTP 200 range response | [Local and production media ranges](domains/structural-media.md) |
+| Isolated video tests pass but real-page autoplay stalls or times out CAD parts on a slow connection | [Integrated media loading and buffering](domains/structural-media.md) |
 | A native navigation works but its test rejects Cloudflare canonicalization or a queryless static Back link | [Exact canonical navigation routes](inbox/2026-10-29-hosted-navigation-must-accept-the-canonical-route.md) |
 | A mesher fails with OpenSSL symbols despite gmsh-first imports, or runtime version lookup fails after solving | [Select the mesher runtime before Python starts](inbox/2026-10-29-mesher-runtime-must-be-selected-before-python-starts.md) |
 | A STEP worker surfaces a null-reference error despite empty HTTP/page-error arrays, or a fresh rerun passes after a reader failure | [Imported assembly errors and unresolved WebKit investigation](inbox/2026-10-29-review-the-imported-assembly-not-only-the-export.md#a-later-passing-import-does-not-erase-an-intermittent-reader-error) |
