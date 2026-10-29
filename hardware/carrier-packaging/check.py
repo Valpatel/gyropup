@@ -52,24 +52,109 @@ def validate_reference(document):
     return {'reference_items':len(pins), 'electrically_qualified':False}
 
 
+def _unique_rows(rows, label):
+    result = {}
+    for row in rows:
+        key = row['id']
+        if key in result:
+            raise ValueError(f'duplicate {label}: {key}')
+        result[key] = row
+    return result
+
+
 def validate_terminals(document):
-    interfaces = {r['id']:r for r in document['existing_interfaces']}
-    for pin in ('1','2','11'):
-        if interfaces['C3.module']['pins'][pin] != 'BUS_HEAD_FUSED':
-            raise ValueError('C3 must retain raw head BUS, never protected PAN rail')
-    count = sum(len(interfaces[k]['pins']) for k in ('C2-P.module','C2-S.module','C3.module','PAN.servo'))
-    if count != 21 or document['physical_end_count']['total_external_positions'] != count:
-        raise ValueError('external physical positions omitted or duplicated')
-    junctions = {r['id']:set(r['logical_members']) for r in document['junctions']}
-    if not {'H.D8.K','H.D14.K'} <= junctions['J_BUS'] or not {'H.D8.A','H.D14.A'} <= junctions['J_RETURN']:
-        raise ValueError('existing shunt leads must remain in physical-junction obligations')
+    # Independent source contract, not a count derived from whichever rows remain.
+    expected_interfaces = {
+        'C2-P.module': {'+':'BUS_HEAD_FUSED', '-':'GND'},
+        'C2-S.module': {'1':'CAN_H', '2':'CAN_L', '3':'SAFETY_A', '4':'SAFETY_B'},
+        'C3.module': {'1':'BUS_HEAD_FUSED', '2':'BUS_HEAD_FUSED', '3':'GND', '4':'GND',
+                      '5':'CAN_H', '6':'CAN_L', '7':'SAFETY_PULSE', '8':'GND',
+                      '9':'PAN_TTL', '10':'GND', '11':'BUS_HEAD_FUSED', '12':'GND'},
+        'C3.fixed': {},  # Existing mate/contact identity; not additional carrier terminals.
+        'PAN.servo': {'datasheet1':'GND', 'datasheet2':'SERVO_12V_AFTER_F1', 'datasheet3':'PAN_TTL'},
+    }
+    interfaces = _unique_rows(document['existing_interfaces'], 'interface')
+    if {k:v.get('pins', {}) for k,v in interfaces.items()} != expected_interfaces:
+        raise ValueError('exact interface IDs, pin sets and nets are required')
+    expected_legacy = {
+        'L.U1': {'1':'GND','2':'TIMING','3':'OSC_OUT','4':'SAFETY_B','5':'CTRL','6':'TIMING','7':'DISCHARGE','8':'SAFETY_B'},
+        'L.R1': {'1':'SAFETY_B','2':'DISCHARGE'},
+        'L.R2': {'1':'DISCHARGE','2':'TIMING'},
+        'L.C1': {'1':'TIMING','2':'GND'}, 'L.C2': {'1':'CTRL','2':'GND'},
+        'L.C3': {'1':'SAFETY_B','2':'GND'},
+        'L.D1': {'A':'OSC_OUT','K':'PULSE_LIMIT_IN'},
+        'L.R3': {'1':'PULSE_LIMIT_IN','2':'SAFETY_PULSE'},
+        'L.F1': {'1':'12V_PAN','2':'SERVO_12V_AFTER_F1'},
+    }
+    if document['legacy_control_pins'] != expected_legacy:
+        raise ValueError('legacy control component/pin/net contract changed')
+    adjacent = _unique_rows(document['adjacent_protection'], 'adjacent protection')
+    expected_adjacent = {
+        'H.F4': {'1':'12V_PAN','2':'SAFETY_A'},
+        'H.D8': {'A':'GND','K':'BUS_HEAD_FUSED'},
+        'H.D14': {'A':'GND','K':'BUS_HEAD_FUSED'}, 'HEAD_FUSE_HOLDER': {},
+    }
+    if {k:v.get('pins', {}) for k,v in adjacent.items()} != expected_adjacent:
+        raise ValueError('adjacent protection identities/pins/nets changed')
+    proposal = document['protection_external_terminal_proposal']
+    expected_ports = {'BUS_IN':'BUS_HEAD_FUSED', 'GND':'GND', '12V_OUT':'12V_PAN'}
+    if proposal['ports'] != list(expected_ports) or proposal['port_nets'] != expected_ports:
+        raise ValueError('protection external port contract changed')
+    # Logical boundaries do not allocate a physical pad or splice.
+    endpoints = {'LEGACY.GND':'GND'}
+    for group in (expected_interfaces, expected_legacy, expected_adjacent, {'PROTECTION':expected_ports}):
+        for component,pins in group.items():
+            for pin,net in pins.items():
+                key = component + '.' + pin
+                if key in endpoints:
+                    raise ValueError('duplicate endpoint: ' + key)
+                endpoints[key] = net
+    expected_bypasses = [
+        ['C2-S.module.1','C3.module.5','CAN_H'],
+        ['C2-S.module.2','C3.module.6','CAN_L'],
+        ['C3.module.9','PAN.servo.datasheet3','PAN_TTL'],
+    ]
+    if sorted(document['continuous_bypasses']) != sorted(expected_bypasses):
+        raise ValueError('exact unique CAN/TTL bypasses required')
+    for a,b,net in document['continuous_bypasses']:
+        if endpoints.get(a) != net or endpoints.get(b) != net:
+            raise ValueError('bypass endpoint missing or on different net')
+    expected_junctions = {
+        'J_BUS': ('BUS_HEAD_FUSED', ['C2-P.module.+','C3.module.1','C3.module.2','C3.module.11',
+                                    'PROTECTION.BUS_IN','H.D8.K','H.D14.K']),
+        'J_RETURN': ('GND', ['C2-P.module.-','C3.module.3','C3.module.4','C3.module.8',
+                            'C3.module.10','C3.module.12','PROTECTION.GND','LEGACY.GND',
+                            'PAN.servo.datasheet1','H.D8.A','H.D14.A']),
+        'J_12V': ('12V_PAN', ['PROTECTION.12V_OUT','L.F1.1','H.F4.1']),
+    }
+    junctions = _unique_rows(document['junctions'], 'junction')
+    if set(junctions) != set(expected_junctions):
+        raise ValueError('exact junction identity set required')
+    for name,(net,members) in expected_junctions.items():
+        row = junctions[name]
+        if row['net'] != net or sorted(row['logical_members']) != sorted(members):
+            raise ValueError('exact unique junction members and net required: ' + name)
+        if any(endpoints.get(member) != net for member in row['logical_members']):
+            raise ValueError('junction endpoint missing or on different net')
+        if row['hardware'] is not None or row['position'] is not None:
+            raise ValueError('junction physical allocation requires a reviewed contract revision')
+    count = sum(len(pins) for pins in expected_interfaces.values())
+    counts = document['physical_end_count']
+    if {k:v for k,v in counts.items() if k != 'note'} != {
+            'C2_module':6, 'C3_module':12, 'servo':3, 'total_external_positions':count}:
+        raise ValueError('external position count does not match complete interface contract')
     fixed = interfaces['C3.fixed']
-    if fixed['contacts'] != '12x43030-0010' or fixed['wire_awg'] != 28:
+    if (fixed['contacts'], fixed['wire_awg'], fixed['contact_awg_range'], fixed['contact_max_insulation_od_mm']) != (
+            '12x43030-0010', 28, [26,30], 1.27):
         raise ValueError('original ring contact/lead variant changed without source qualification')
-    if not fixed['contact_awg_range'][0] <= fixed['wire_awg'] <= fixed['contact_awg_range'][1]:
-        raise ValueError('wire gauge does not meet exact contact range')
-    if document['frozen'] or document['all_terminals_allocated']:
+    for name,contact in [('C2-S.module','4x43031-0001'), ('C3.module','12x43031-0001')]:
+        if interfaces[name]['contacts'] != contact or interfaces[name]['wire_awg'] != 24:
+            raise ValueError('module contact/lead variant changed without source qualification')
+    if document['frozen'] is not False or document['all_terminals_allocated'] is not False:
         raise ValueError('logical endpoints cannot claim physical termination readiness')
+    for key in ('mount_zone','pad_geometry','terminal_type','wire_strain_relief'):
+        if proposal[key] is not None:
+            raise ValueError('protection physical allocation requires a reviewed contract revision')
     for wire in document['wire_candidates_not_selected']:
         calculated = max(wire['od_in']) * 25.4 * wire['published_bend_multiple']
         if abs(calculated-wire['derived_radius_at_max_od_mm']) > 1e-9:

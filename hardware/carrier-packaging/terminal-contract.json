@@ -245,6 +245,11 @@
     "mount_zone": null,
     "note": "Threefunctionalexternalpowerports only; noimplicit connector forinternalnets. Reviewed U1 latch reset stillneeds an explicit isolated/reset interface; no live manual procedure or unselected switch is implied. Exactcoppercurrent/clearance andphysicalwireends must befrozen withPCBoutline.",
     "pad_geometry": null,
+    "port_nets": {
+      "12V_OUT": "12V_PAN",
+      "BUS_IN": "BUS_HEAD_FUSED",
+      "GND": "GND"
+    },
     "ports": [
       "BUS_IN",
       "GND",

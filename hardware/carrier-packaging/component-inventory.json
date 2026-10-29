@@ -1540,7 +1540,7 @@
     "hardware/carrier-packaging/inventory.py": "bd9d65bba0dfa666665a4cae3631c5ef9933f8dc5361f2b2deb018ecd80e552d",
     "hardware/carrier-packaging/package-envelopes.json": "ab0d9e97b28ca3e4277e2351163c5d409e81642c3f52aef7fd5a96a90b51fb3b",
     "hardware/carrier-packaging/primary-envelope-sources.json": "b67ac8c2193f1089803ef48bd7d50f687324438c15ce93e3b538c54b9b6460c4",
-    "hardware/carrier-packaging/terminal-contract.json": "ff3dc0f5f2fbb0169727f67edb67e9f0bf94d96fe45a852f40b0fd5719a33ce6",
+    "hardware/carrier-packaging/terminal-contract.json": "4f1eb2c31cafc363d8ea5381293db8f9ea43dcd111f506ccf698e0599a3253ca",
     "hardware/carrier-pan-protection/availability.json": "549a8ccdfd7d9ea95b5baedcb47ec7aa971cfbdeffe1092e4be13df40c480ec8",
     "hardware/carrier-pan-protection/circuit_design.py": "37b4d99eecaa1f567109df6762a00f69f46c02e6efbe7d53c35893d2955ace8a",
     "hardware/carrier-pan-protection/pins.md": "37ce5846b0335bea6263851fd83cf629d92b1a8a897f00f5cb5ec8205a7cadc4",

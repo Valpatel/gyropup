@@ -85,5 +85,84 @@ class InventoryTests(unittest.TestCase):
         next(x for x in d['junctions'] if x['id']=='J_BUS')['logical_members'].remove('H.D14.K')
         with self.assertRaises(ValueError):C.validate_terminals(d)
 
+    def test_every_interface_identity_pin_and_net_is_required(self):
+        original=json.loads((HERE / 'terminal-contract.json').read_text())
+        for index,row in enumerate(original['existing_interfaces']):
+            for mode in ('delete','duplicate','rename'):
+                d=copy.deepcopy(original)
+                if mode=='delete': d['existing_interfaces'].pop(index)
+                elif mode=='duplicate': d['existing_interfaces'].append(copy.deepcopy(row))
+                else: d['existing_interfaces'][index]['id'] += '.unexpected'
+                with self.subTest(interface=row['id'],mode=mode), self.assertRaises(ValueError):
+                    C.validate_terminals(d)
+            for pin in row.get('pins',{}):
+                for mode in ('delete','wrong_net'):
+                    d=copy.deepcopy(original); pins=d['existing_interfaces'][index]['pins']
+                    if mode=='delete': pins.pop(pin)
+                    else: pins[pin]='BUS_HEAD_FUSED' if pins[pin]!='BUS_HEAD_FUSED' else 'PAN_INPUT'
+                    with self.subTest(interface=row['id'],pin=pin,mode=mode), self.assertRaises(ValueError):
+                        C.validate_terminals(d)
+        # A duplicate must fail before conversion to a dictionary could hide it.
+        d=copy.deepcopy(original)
+        d['existing_interfaces'].append(copy.deepcopy(next(x for x in d['existing_interfaces'] if x['id']=='C3.module')))
+        with self.assertRaisesRegex(ValueError,'duplicate interface'): C.validate_terminals(d)
+
+    def test_every_bypass_and_junction_endpoint_is_required(self):
+        original=json.loads((HERE / 'terminal-contract.json').read_text())
+        for index,row in enumerate(original['continuous_bypasses']):
+            for mode in ('delete','duplicate','missing_endpoint','wrong_net'):
+                d=copy.deepcopy(original)
+                if mode=='delete': d['continuous_bypasses'].pop(index)
+                elif mode=='duplicate': d['continuous_bypasses'].append(copy.deepcopy(row))
+                elif mode=='missing_endpoint': d['continuous_bypasses'][index][0]='MISSING.1'
+                else: d['continuous_bypasses'][index][2]='GND'
+                with self.subTest(bypass=row,mode=mode), self.assertRaises(ValueError): C.validate_terminals(d)
+        for index,row in enumerate(original['junctions']):
+            for mode in ('delete','duplicate','wrong_net'):
+                d=copy.deepcopy(original)
+                if mode=='delete': d['junctions'].pop(index)
+                elif mode=='duplicate': d['junctions'].append(copy.deepcopy(row))
+                else: d['junctions'][index]['net']='UNEXPECTED'
+                with self.subTest(junction=row['id'],mode=mode), self.assertRaises(ValueError): C.validate_terminals(d)
+            for member in row['logical_members']:
+                for mode in ('delete','duplicate','missing_endpoint'):
+                    d=copy.deepcopy(original); members=d['junctions'][index]['logical_members']
+                    if mode=='delete': members.remove(member)
+                    elif mode=='duplicate': members.append(member)
+                    else: members[members.index(member)]='MISSING.1'
+                    with self.subTest(junction=row['id'],member=member,mode=mode), self.assertRaises(ValueError):
+                        C.validate_terminals(d)
+
+    def test_legacy_and_protection_pin_membership_is_exact(self):
+        original=json.loads((HERE / 'terminal-contract.json').read_text())
+        for ref,pins in original['legacy_control_pins'].items():
+            for pin in pins:
+                for mode in ('delete','wrong_net'):
+                    d=copy.deepcopy(original)
+                    if mode=='delete': d['legacy_control_pins'][ref].pop(pin)
+                    else: d['legacy_control_pins'][ref][pin]='UNEXPECTED'
+                    with self.subTest(ref=ref,pin=pin,mode=mode), self.assertRaises(ValueError): C.validate_terminals(d)
+        for index,row in enumerate(original['adjacent_protection']):
+            d=copy.deepcopy(original);d['adjacent_protection'].append(copy.deepcopy(row))
+            with self.subTest(ref=row['id'],mode='duplicate'), self.assertRaises(ValueError): C.validate_terminals(d)
+            d=copy.deepcopy(original);d['adjacent_protection'].pop(index)
+            with self.subTest(ref=row['id'],mode='delete'), self.assertRaises(ValueError): C.validate_terminals(d)
+            for pin in row.get('pins',{}):
+                d=copy.deepcopy(original);d['adjacent_protection'][index]['pins'][pin]='UNEXPECTED'
+                with self.subTest(ref=row['id'],pin=pin), self.assertRaises(ValueError): C.validate_terminals(d)
+        for port in original['protection_external_terminal_proposal']['ports']:
+            d=copy.deepcopy(original);d['protection_external_terminal_proposal']['ports'].remove(port)
+            with self.subTest(port=port,mode='delete'), self.assertRaises(ValueError): C.validate_terminals(d)
+            d=copy.deepcopy(original);d['protection_external_terminal_proposal']['port_nets'][port]='UNEXPECTED'
+            with self.subTest(port=port,mode='wrong_net'), self.assertRaises(ValueError): C.validate_terminals(d)
+
+    def test_position_totals_do_not_replace_endpoint_membership(self):
+        original=json.loads((HERE / 'terminal-contract.json').read_text())
+        for key in ('C2_module','C3_module','servo','total_external_positions'):
+            d=copy.deepcopy(original);d['physical_end_count'][key]+=1
+            with self.subTest(key=key), self.assertRaises(ValueError): C.validate_terminals(d)
+        d=copy.deepcopy(original);d['protection_external_terminal_proposal']['pad_geometry']={'imaginary':True}
+        with self.assertRaises(ValueError): C.validate_terminals(d)
+
 
 if __name__=='__main__':unittest.main()

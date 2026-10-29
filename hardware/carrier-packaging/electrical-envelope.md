@@ -37,7 +37,7 @@ Next: complete maximum body/land/lead and terminal inventories, resolve the mech
 
 ## Reproduce the current bounded checks
 
-Run `python hardware/carrier-packaging/inventory.py`, then `python hardware/carrier-packaging/check.py` and `python -m unittest discover -s hardware/carrier-packaging -p 'test_*.py'`. Twelve tests include dropped/duplicate items, stale source or dimensions, improper readiness promotion, reversed clamps, grounded floating reference/capacitor and mistaken direct load-capacitor assignment, protected-PAN substitution on the raw C3 bus and a24 AWG wire substituted into the original28 AWG ring contact, and an omitted existing shunt lead at a junction. These are inventory/reference controls, not EDA/ERC, physical collision, thermal or waveform validation.
+Run `python hardware/carrier-packaging/inventory.py`, then `python hardware/carrier-packaging/check.py` and `python -m unittest discover -s hardware/carrier-packaging -p 'test_*.py'`. Sixteen tests include dropped/duplicate items, stale source or dimensions, improper readiness promotion, reversed clamps, grounded floating reference/capacitor and mistaken direct load-capacitor assignment, protected-PAN substitution on the raw C3 bus and a24 AWG wire substituted into the original28 AWG ring contact, and an omitted existing shunt lead at a junction. Exact unique interface IDs, every pin/net, all bypasses and junction members, endpoint agreement and legacy/protection ports are required before totals; deletion, substitution and duplicate controls cover each group. These are inventory/reference controls, not EDA/ERC, physical collision, thermal or waveform validation.
 
 ## Complete external net inventory, physical terminals still open
 
