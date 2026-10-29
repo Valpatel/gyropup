@@ -34,13 +34,17 @@ async function pageFor({ motion = 'reduce', saveData = false, heroMode = 'failed
   page.on('request', request => { if (movieURL(new URL(request.url()))) page.mediaRequests.push(request.url()); });
   await page.emulateMedia({ reducedMotion: motion });
   // Controlled hero states isolate the player; the integration harness loads real CAD.
-  await page.route('**/web/landing.js', route => route.fulfill({ contentType: 'text/javascript', body: heroMode === 'held' ?
-    '// Intentionally pending hero fixture.' : 'throw new Error("Intentional hero failure in highlights test");' }));
+  let heroFixtureHits = 0;
+  await page.route(url => url.pathname === '/web/landing.js', route => {
+    heroFixtureHits++;
+    return route.fulfill({ contentType: 'text/javascript', body: heroMode === 'held' ?
+      '// Intentionally pending hero fixture.' : 'throw new Error("Intentional hero failure in highlights test");' });
+  });
   if (heroMode === 'missing') await page.route(base + '/', async route => {
     const response = await route.fetch();
     const { document } = parseHTML(await response.text());
     document.querySelector('#robot-preview').remove();
-    for (const script of document.querySelectorAll('script')) if (script.textContent.includes("import('/web/landing.js')")) script.remove();
+    for (const script of document.querySelectorAll('script')) if (script.textContent.includes('/web/landing.js')) script.remove();
     await route.fulfill({ response, body: document.toString() });
   });
   if (saveData) await page.addInitScript(() => {
@@ -51,6 +55,15 @@ async function pageFor({ motion = 'reduce', saveData = false, heroMode = 'failed
   await page.locator('.highlight-controls').waitFor({ state: 'visible' });
   await page.addStyleTag({ content: 'html{scroll-behavior:auto!important}' });
   await page.evaluate(() => document.fonts.ready);
+  if (heroMode === 'missing') {
+    assert.equal(await page.locator('#robot-preview').count(), 0, 'Missing-hero fixture really removes the hero');
+    assert.equal(heroFixtureHits, 0, 'Missing-hero fixture removes its bootstrap as well');
+  } else {
+    await expect.poll(() => heroFixtureHits).toBe(1);
+    await page.waitForFunction(expected => document.querySelector('#robot-preview').dataset.state === expected,
+      heroMode === 'held' ? 'loading' : 'fallback');
+    assert.notEqual(await page.locator('#robot-preview').getAttribute('data-ready'), 'true', 'The hero fixture did not accidentally load real CAD');
+  }
   assert.equal(await page.locator('#highlight-video').getAttribute('src'), null, 'Initial page view does not assign a movie');
   assert.equal(page.mediaRequests.length, 0, 'Initial page view does not fetch a movie');
   return page;
@@ -142,8 +155,24 @@ try {
   assert.equal(media.width, 1280); assert.equal(media.height, 720); assert.equal(media.muted, true);
   assert.ok(media.source.endsWith(media.h264 ? '.mp4' : '.webm'));
   assert.equal(new Set(page.mediaRequests.map(url => new URL(url).pathname)).size, 1, 'Only the chosen encoding is fetched');
+  await page.waitForFunction(() => {
+    const v = document.querySelector('#highlight-video');
+    return Array.from({ length: v.buffered.length }, (_, i) => [v.buffered.start(i), v.buffered.end(i)])
+      .some(([start, end]) => start <= v.currentTime && end - v.currentTime >= 3);
+  });
+  const pausedByDecoderWait = await page.locator('#highlight-video').evaluate(v => {
+    // A decoder/seek can transiently lower readyState without losing buffered
+    // bytes. The synthetic event isolates that distinction; real replay follows.
+    Object.defineProperty(v, 'readyState', { configurable: true, get: () => 1 });
+    v.dispatchEvent(new Event('waiting'));
+    const paused = v.paused;
+    delete v.readyState;
+    v.dispatchEvent(new Event('playing'));
+    return paused;
+  });
+  assert.equal(pausedByDecoderWait, false, 'A full buffer with transient decoder waiting must not force a pause');
   await page.locator('.highlight-toggle').click(); await paused(page);
-  record('Hero failure independence, no initial media fetch, one supported encoding, real decoded moving model pixels, play/pause');
+  record('Hero failure independence, one encoding, moving decoded pixels, and uninterrupted full-buffer decoder waiting');
 
   for (const [width, height] of viewports) {
     await page.setViewportSize({ width, height }); await show(page);
@@ -247,10 +276,17 @@ try {
   for (const cancellation of ['offscreen', 'hidden', 'preference']) {
     const cancelled = await pageFor({ motion: 'no-preference', heroMode: 'held' }); await show(cancelled);
     await cancelled.waitForFunction(() => document.querySelector('.highlight-card').dataset.state === 'queued');
-    if (cancellation === 'offscreen') await hide(cancelled);
+    if (cancellation === 'offscreen') await cancelled.evaluate(() => {
+      // One task: the readiness callback runs before the observer can deliver
+      // this scroll. Cached intersection flags alone must not authorize a GET.
+      window.scrollTo({ top: 0, behavior: 'instant' });
+      const hero = document.querySelector('#robot-preview');
+      hero.dataset.ready = 'true'; hero.dataset.state = 'ready';
+    });
     if (cancellation === 'hidden') await visibility(cancelled, true);
     if (cancellation === 'preference') await cancelled.emulateMedia({ reducedMotion: 'reduce' });
-    await releaseHero(cancelled); await noMovie(cancelled, `${cancellation} cancels queued autoplay before the hero finishes`);
+    if (cancellation !== 'offscreen') await releaseHero(cancelled);
+    await noMovie(cancelled, `${cancellation} cancels queued autoplay before the hero finishes`);
     record(`${cancellation} cancels queued autoplay without a late movie request`); await cancelled.close();
   }
   const missingHero = await pageFor({ motion: 'no-preference', heroMode: 'missing' }); await show(missingHero); await waitPlaying(missingHero);

@@ -30,3 +30,10 @@ or that competing CAD downloads meet their deadlines. Check automatic and
 explicit loading order, queued-play cancellation, failed/missing hero release,
 initial buffering, and an actual network-emulated integrated page. Keep those
 observations distinct from real-device performance guarantees.
+
+Before a delayed media request or play attempt, verify current bounds as well as
+observer state; a scroll can precede IntersectionObserver delivery. Keep queued
+intent cancellation independent of an already-false visibility predicate. Native
+`waiting` events can represent seek/decode with a complete buffer: inspect the
+contiguous range before pausing, and retain native WebKit replay coverage in
+addition to synthetic buffer tests.

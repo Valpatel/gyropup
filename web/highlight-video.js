@@ -18,13 +18,19 @@ if (card) {
   let near = false, visible = false, ready = false, buffering = false, failed = false;
   let userPaused = false, manualPlay = false, finished = false, preloadCancelled = false;
   let pendingPlay = false, attempt = 0, mediaTimer, heroTimer;
-  let heroWaitExpired = false, heroBypassed = false;
+  let heroWaitExpired = false, heroBypassed = false, queuedForHero = false;
   video.muted = true;
 
-  const wantsPlayback = () => visible && !document.hidden && !failed && !finished &&
+  const withinViewport = (margin = 0) => {
+    // Hero completion can run before IntersectionObserver delivers a recent scroll.
+    const bounds = card.getBoundingClientRect();
+    return bounds.width > 0 && bounds.height > 0 && bounds.bottom > -margin &&
+      bounds.top < innerHeight + margin && bounds.right > 0 && bounds.left < innerWidth;
+  };
+  const wantsPlayback = () => visible && withinViewport() && !document.hidden && !failed && !finished &&
     !userPaused && (manualPlay || !manualOnly());
   const wantsDownload = () => !document.hidden && !failed && !finished && !userPaused &&
-    ((manualPlay && visible) || (near && !manualOnly() && !preloadCancelled));
+    ((manualPlay && visible && withinViewport()) || (near && withinViewport(180) && !manualOnly() && !preloadCancelled));
   const waitsForHero = () => !video.hasAttribute('src') && heroLoading() && !heroBypassed;
   const queued = () => wantsPlayback() && waitsForHero() && !heroWaitExpired;
   const clearHeroTimer = () => { clearTimeout(heroTimer); heroTimer = undefined; };
@@ -49,12 +55,13 @@ if (card) {
     toggle.setAttribute('aria-label', failed ? 'Try loading highlights again' : delayed ?
       'Play highlights while the robot is still loading' : `${action} highlights`);
     replay.disabled = !ready || failed;
-    status.textContent = failed ? 'The reel couldn’t load. Try again.' : delayed ?
+    const statusText = failed ? 'The reel couldn’t load. Try again.' : delayed ?
       'The robot is still loading. Play now to load the reel too.' : waiting ?
       'The robot is loading. Your reel will play next.' : buffering ? 'Getting the reel ready for playback…' :
       finished ? 'That’s a glimpse. Explore the simulator for more.' : playing ? 'Playing · no sound' :
       ready || userPaused ? 'Paused · no sound' : manualOnly() ? 'Press play when you’re ready · no sound' :
       'Silent highlights from the workshop.';
+    if (status.textContent !== statusText) status.textContent = statusText;
     paintTime();
   };
   const pauseMedia = () => {
@@ -63,7 +70,7 @@ if (card) {
     video.pause();
   };
   const stop = () => {
-    clearHeroTimer(); clearMediaTimer(); buffering = false;
+    clearHeroTimer(); clearMediaTimer(); buffering = false; queuedForHero = false;
     pauseMedia(); paint();
   };
   const fail = () => {
@@ -73,8 +80,8 @@ if (card) {
   const waitForMedia = () => {
     if (mediaTimer === undefined) mediaTimer = setTimeout(fail, MEDIA_WAIT_MS);
   };
-  const bufferReady = () => {
-    if (!ready || video.readyState < 2 || !Number.isFinite(video.duration)) return false;
+  const enoughBuffered = () => {
+    if (!Number.isFinite(video.duration)) return false;
     const required = Math.min(STARTUP_SECONDS, video.duration - video.currentTime);
     for (let i = 0; i < video.buffered.length; i++) {
       if (video.buffered.start(i) <= video.currentTime + .05 &&
@@ -82,6 +89,7 @@ if (card) {
     }
     return false;
   };
+  const bufferReady = () => ready && video.readyState >= 2 && enoughBuffered();
   const load = () => {
     if (video.hasAttribute('src') || failed) return;
     // Match the actual AVC High 3.1 encoding, not a generic MP4 container.
@@ -94,8 +102,14 @@ if (card) {
   };
   const sync = () => {
     if (video.ended) { finished = true; manualPlay = false; }
+    if (queuedForHero && !wantsPlayback()) {
+      // Retain intent explicitly: live bounds may already be offscreen before
+      // the observer callback arrives, so a derived queued() check is too late.
+      manualPlay = false; preloadCancelled = true; queuedForHero = false;
+    }
     if (!heroLoading()) heroWaitExpired = false;
     if (waitsForHero() && (wantsDownload() || wantsPlayback()) && !heroWaitExpired) {
+      if (wantsPlayback()) queuedForHero = true;
       // Neither automatic nor deliberate playback competes with pending CAD loads.
       if (heroTimer === undefined) heroTimer = setTimeout(() => {
         heroTimer = undefined;
@@ -106,6 +120,7 @@ if (card) {
       pauseMedia(); paint(); return;
     }
     clearHeroTimer();
+    queuedForHero = false;
     if (!waitsForHero() && wantsDownload()) load();
     if (!wantsPlayback() || waitsForHero() || failed) { stop(); return; }
     if (pendingPlay || !video.paused) return;
@@ -151,7 +166,7 @@ if (card) {
     if (!Number.isFinite(video.duration) || video.duration <= 0) { fail(); return; }
     ready = true; sync(); paint();
   });
-  for (const event of ['progress', 'canplay', 'canplaythrough']) video.addEventListener(event, sync);
+  for (const event of ['progress', 'canplay', 'canplaythrough', 'seeked']) video.addEventListener(event, sync);
   video.addEventListener('playing', () => {
     if (!wantsPlayback()) { stop(); return; }
     clearMediaTimer(); ready = true; buffering = false; paint();
@@ -165,11 +180,15 @@ if (card) {
   video.addEventListener('error', () => { if (video.hasAttribute('src') && video.error) fail(); });
   video.addEventListener('waiting', () => {
     if (!wantsPlayback()) return;
-    // Refill the same modest buffer after a real underrun instead of chattering.
-    pauseMedia(); buffering = true; waitForMedia(); paint();
+    // WebKit can report waiting/low readyState while seeking within a complete
+    // buffer. Pausing then interrupts native decode recovery. Refill only when
+    // the contiguous bytes themselves are insufficient, regardless of readyState.
+    if (!enoughBuffered()) pauseMedia();
+    buffering = true; waitForMedia(); paint();
   });
   const cancelQueuedPlayback = () => {
-    if (card.dataset.state === 'queued' || buffering) { manualPlay = false; preloadCancelled = true; }
+    if (queuedForHero || buffering) { manualPlay = false; preloadCancelled = true; }
+    queuedForHero = false;
     if (manualOnly()) manualPlay = false;
   };
   const preferencesChanged = () => {
