@@ -32,7 +32,7 @@ body::after { display: none; }
   grid-template-areas: "topbar topbar" "stage panel"; }
 #topbar, #panel, .hud-card { pointer-events: auto; }
 
-#topbar { grid-area: topbar; display: flex; align-items: center; gap: 12px; min-height: 48px; padding: 0 16px;
+#topbar { grid-area: topbar; display: flex; align-items: center; gap: 12px; min-width: 0; min-height: 48px; padding: 0 16px;
   background: linear-gradient(180deg, rgba(255,250,242,.96), rgba(255,250,242,.9)); backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--hairline); }
 #topbar .glyph { width: 9px; height: 9px; background: var(--cyan); transform: rotate(45deg); box-shadow: 0 0 10px var(--glow-30); flex: none; }
@@ -113,7 +113,7 @@ input[type=range]:focus-visible { border-radius: 8px; }
 
 @media (max-width: 820px) {
   .hud-panel-tab { display: none; }
-  #hud { grid-template-columns: 1fr; grid-template-rows: auto minmax(0, 1fr) 46vh; grid-template-areas: "topbar" "stage" "panel"; }
+  #hud { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr) 46vh; grid-template-areas: "topbar" "stage" "panel"; }
   #panel { margin: 0 8px 8px; }
   #topbar { flex-wrap: wrap; padding: 8px 12px; }
 }

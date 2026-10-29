@@ -13,13 +13,18 @@ import { BALL, BALL_SPIN, ballMesh, createBalls } from './turret3d.js';
 import { evaluate, indexCatalog, legPose, effectiveDesign, resolvePart } from './model.js';
 import { createSfx } from './sfx.js';
 import { createRobotActions } from './robot_actions.js';
+import { createLoadingStatus } from './kit/loading.js';
+import { createDataReader } from './kit/portal-data.js';
 
 const $ = (s) => document.querySelector(s);
-const getJson = async (u) => { const r = await fetch(u, { cache: 'no-cache' }); if (!r.ok) throw new Error(`${u}: ${r.status}`); return r.json(); };
+const dataReader = createDataReader(fetch);
+const getJson = u => dataReader.json(u);
 const STORE = 'gyropup-design-v1';
+const startupMessage = text => { const message=$('#sim-startup .gp-loading-message'); if(message)message.textContent=text; };
 
 await mountAppNav({ root: '../', current: 'simulate' });
 const q = new URLSearchParams(location.search);
+startupMessage('Loading the parts catalogue…');
 const index = await getJson('../catalog/index.json');
 const catalog = indexCatalog(await Promise.all(index.files.map((f) => getJson(`../catalog/${f}`))));
 const materials = await getJson('../catalog/materials.json');
@@ -65,6 +70,35 @@ const react = (ev) => { try { talk?.react?.(ev); } catch { /* the voice is optio
 
 // ---- layout: keep the robot out from under the panels
 const hud = $('#hud');
+// A body-level overlay stays above speech bubbles without raising the whole HUD.
+const sceneLoading = createLoadingStatus(document.body, { overlay:true, id:'sim-loading' });
+sceneLoading.element.style.position='fixed';
+function positionLoadStatus() {
+  const area=$('#stage-overlay').getBoundingClientRect(), top=area.top+8;
+  const actions=document.getElementById(state.bench?'tb-actions':'robot-actions');
+  const actionBox=actions&&!actions.hidden&&actions.offsetParent?actions.getBoundingClientRect():null;
+  Object.assign(sceneLoading.element.style,{top:`${top}px`,left:`${area.left+area.width/2}px`,
+    maxWidth:`${Math.max(0,area.width-16)}px`,maxHeight:`${Math.max(44,(actionBox?.top??area.bottom)-top-8)}px`,overflow:'auto'});
+}
+function beginLoad(message) {
+  if (!document.body.dataset.ready) { startupMessage(message); return null; }
+  positionLoadStatus();
+  return sceneLoading.begin(message, {onCancel:cancelPendingLoad});
+}
+function cancelPendingLoad() {
+  ++designRequest; ++replayRequest;
+  sceneLoading.dismiss();
+  sel.value = state.bench ? 'turret-box' : state.modelKey;
+  runSel.value = state.replay?.key ?? '';
+  state.robot?.setPresentation?.(state.replay ? 'recorded' : 'current');
+}
+function finishLoad(token, request, type='design') {
+  if (token===null) return;
+  // The new model must actually draw before its loading message disappears.
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    if (request === (type==='design' ? designRequest : replayRequest)) sceneLoading.ready(token);
+  }));
+}
 const updateInsets = () => {
   const ins = overlayInsets(hud);
   // The stats card is a floating overlay. Folding it must not change projection
@@ -79,6 +113,7 @@ const updateInsets = () => {
   const br = bar && !bar.hidden && bar.offsetParent && getComputedStyle(bar).position !== 'static' ? bar.getBoundingClientRect() : null;
   if (br?.height) ins.bottom = Math.max(ins.bottom, window.innerHeight - br.top + 6);
   stage.setInsets(ins);
+  positionLoadStatus();
 };
 const panelFold = collapsiblePanel(hud, $('#panel'), { key: 'gyropup-sim-panel', onChange: () => { updateInsets(); if (state.replay) frameReplay(); } });
 [...$('#topbar').querySelectorAll('.hud-pill')].filter((b) => /PANEL/.test(b.textContent)).forEach((b) => b.classList.add('panel-pill'));
@@ -116,11 +151,13 @@ const demo = { on: q.get('demo') !== '0' && (!q.has('run') || q.get('run') === '
 let robotActions = null;
 const demoBtn = document.createElement('button');
 demoBtn.className = 'hud-pill';
+demoBtn.disabled = true;
 const paintDemo = () => { demoBtn.innerHTML = `<span class="dot"></span>DEMO ${demo.on ? 'ON' : 'OFF'}`; demoBtn.classList.toggle('on', demo.on); };
 demoBtn.title = 'Watch the current robot play live';
 demoBtn.onclick = toggleDemo;
 function toggleDemo() { setDemo(!demo.on); }
-function setDemo(on) {
+function setDemo(on, cancelPending = true) {
+  if (cancelPending) cancelPendingLoad();
   if (!on) { takeControl(); return; }
   if (state.replay) stopReplay(); else ++replayRequest;
   demo.on = true; demo.playing = true;
@@ -144,7 +181,7 @@ $('#topbar').insertBefore(demoBtn, soundBtn);
 // ---- the turret on the Orin AGX box: its own scene, panel sections and action bar (loaded the first time it is picked)
 let bench = null, benchLoading = null, designRequest = 0;
 const robotCache = new Map();
-async function enterBench(request) {
+async function enterBench(request, token) {
   if (!bench) {
     const loading = benchLoading ??= import('./turret_bench.js').then(module => module.createTurretBench({ stage, sfx, panel: $('#panel'), root: '../', onLayout: () => updateInsets() }));
     try {
@@ -152,8 +189,10 @@ async function enterBench(request) {
     } catch (err) {
       if (benchLoading === loading) benchLoading = null; // A transient failure must be retryable.
       if (request === designRequest) {
+        if (!state.robot && !state.bench) throw err;
         sel.value = state.modelKey;
-        talk?.dock.hint('The turret view could not load. Your game is still here; try it again.', true);
+        sceneLoading.fail('The turret could not finish loading. Your game is still here.', {token,
+          onRetry:()=>loadDesign('turret-box'),onCancel:cancelPendingLoad});
       }
       console.warn('Turret view unavailable:', err.message);
       return;
@@ -181,6 +220,7 @@ async function enterBench(request) {
   $('#summary .fold').onclick = () => { $('#summary').classList.toggle('min'); };
   glideCamera(() => bench.enter());
   updateInsets();
+  finishLoad(token,request);
 }
 function leaveBench() {
   if (!state.bench) return;
@@ -198,16 +238,15 @@ function leaveBench() {
 async function loadDesign(value) {
   const request = ++designRequest;
   ++replayRequest; // An old model's recording must not arrive on the newly selected robot.
-  if (value === 'turret-box') { await enterBench(request); return; }
-  if (value === state.modelKey && !state.bench) return;
+  state.robot?.setPresentation?.(state.replay ? 'recorded' : 'current');
+  if (value === state.modelKey && !state.bench) { sceneLoading.dismiss(); return; }
+  const name = designs.find(d=>d.file===value)?.name ?? 'robot';
+  const token = beginLoad(value==='turret-box' ? 'Loading the turret and its parts…' : `Loading ${name}…`);
+  if (value === 'turret-box') { await enterBench(request,token); return; }
   // Build each hardware view once; leave the current activity and conversation running while it loads.
   if (!robotCache.has(value)) robotCache.set(value, (async () => {
     const v2 = value === 'v2';
     const design = v2 ? { name: 'Gyropup v2 (five-bar)' } : value === '@designer' ? fromDesigner : await getJson(`../${value}`);
-    let summary = null;
-    if (value !== '@designer') {
-      try { summary = await getJson(`../exports/sim/${value.split('/').pop().replace(/\.json$/, '')}/summary.json`); } catch { /* not simulated */ }
-    }
     let robot;
     if (v2) robot = await buildRobotV2('../', { eyes });
     else {
@@ -216,14 +255,19 @@ async function loadDesign(value) {
       const cad = value === '@designer' ? null : await loadCadRig('../', value);
       robot = buildRobot(design, catalog, { eyes, mech, cad });
     }
-    return { design, v2, summary, robot, result: v2 ? null : evaluate(design, catalog, materials) };
+    return { design, v2, summary:null, robot, result: v2 ? null : evaluate(design, catalog, materials) };
   })());
   let next;
   try { next = await robotCache.get(value); }
   catch (error) {
     robotCache.delete(value);
-    if (!state.robot) throw error;
-    if (request === designRequest) { sel.value = state.modelKey; talk?.dock.hint('That robot view could not load. Your game is still here.', true); }
+    if (request !== designRequest) return;
+    if (!state.robot && !state.bench) throw error;
+    if (request === designRequest) {
+      sel.value = state.bench ? 'turret-box' : state.modelKey;
+      sceneLoading.fail('That robot could not load. Your current view is still here.', {token,
+        onRetry:()=>loadDesign(value),onCancel:cancelPendingLoad});
+    }
     return;
   }
   if (request !== designRequest) return;
@@ -252,21 +296,41 @@ async function loadDesign(value) {
   renderSummary();
   telemetry(state.robot.setPose({ height: state.height }));
   beginTransition();
-  await listRuns(value, request);
-  if (request === designRequest && demo.on) setDemo(true);
+  if(token===null)startupMessage('Loading recorded activities…');else sceneLoading.update('Loading recorded activities…',token);
+  const runsReady = await listRuns(value, request, token);
+  if (request === designRequest && demo.on) setDemo(true,false);
+  if (runsReady) finishLoad(token,request);
   paintRobotActions();
 }
 
 // ---- replays of physics runs (exports/sim/<design>/<scenario>.json)
-async function listRuns(value, request) {
+async function listRuns(value, request, token) {
   runSel.innerHTML = '<option value="">Drive & play (current robot)</option>';
-  if (value === '@designer') return;
+  if (value === '@designer') return true;
   const stem = value.split('/').pop().replace(/\.json$/, '');
   try {
-    const sm = state.summary ?? await getJson(`../exports/sim/${stem}/summary.json`);
+    // Metadata has its own retry path; do not cache a malformed list with usable geometry.
+    const sm = await getJson(`../exports/sim/${stem}/summary.json`);
     if (request !== designRequest) return;
+    if (!sm || !sm.scenarios || typeof sm.scenarios !== 'object' || Array.isArray(sm.scenarios) ||
+      !Object.values(sm.scenarios).every(r=>r&&typeof r.title==='string'&&typeof r.pass==='boolean') ||
+      !Number.isInteger(sm.total)||sm.total<0||!Number.isInteger(sm.passed)||sm.passed<0||sm.passed>sm.total ||
+      (sm.mass_kg!==undefined&&(!Number.isFinite(sm.mass_kg)||sm.mass_kg<=0))) throw new Error('Invalid recording list');
+    state.summary = sm;
+    state.modelMass = sm.mass_kg ?? state.modelMass;
     runSel.innerHTML += Object.entries(sm.scenarios).map(([n, r]) => `<option value="${stem}/${n}">Recorded: ${r.title} — ${r.pass ? 'pass' : 'FAIL'}</option>`).join('');
-  } catch { /* not simulated yet */ }
+    runSel.value=state.replay?.key ?? '';
+    renderSummary();
+    return true;
+  } catch {
+    if (request !== designRequest) return false;
+    state.summary=null;renderSummary();
+    const failureToken=token??sceneLoading.begin('Loading recordings…');
+    sceneLoading.fail('The robot is ready, but its recordings could not load.', {token:failureToken,
+      onRetry:async()=>{ const next=sceneLoading.begin('Loading recordings…',{onCancel:cancelPendingLoad});
+        if(await listRuns(value,request,next))sceneLoading.ready(next); },onCancel:cancelPendingLoad});
+    return false;
+  }
 }
 
 const propMeshes = new Map(), propPool = new Map(), ballPool = new Map(), runCache = new Map();
@@ -444,25 +508,52 @@ function boxFromMjcf(attrs) {
   return mesh;
 }
 
+function validateRecording(run) {
+  const vector=(v,n)=>Array.isArray(v)&&v.length===n&&v.every(Number.isFinite);
+  const list=(items,check)=>items===undefined||(Array.isArray(items)&&items.every(check));
+  const frames=run?.frames, width=frames?.qpos?.[0]?.length;
+  if (!frames || !Number.isFinite(frames.fps) || frames.fps<=0 || !(width>=7) ||
+    !Array.isArray(frames.qpos) || !frames.qpos.every(f=>vector(f,width)&&Math.hypot(...f.slice(3,7))>0)) throw new Error('Invalid recording frames');
+  const layout=run.qpos_layout;
+  if (!layout || Array.isArray(layout) || typeof layout!=='object' || !Object.entries(layout).every(([name,index])=>
+    Number.isInteger(index)&&index>=0&&index+(/^(root$|ball_|dart_)/.test(name)?7:1)<=width)) throw new Error('Invalid recording joints');
+  if (!list(run.props,p=>p&&typeof p.name==='string'&&[2,3,5,6].includes(p.type)&&vector(p.pos,3)&&
+    vector(p.quat,4)&&Math.hypot(...p.quat)>0&&vector(p.size,3)&&p.size.every(v=>v>=0)&&vector(p.rgba,4))) throw new Error('Invalid recording scenery');
+  const names=new Set((run.props??[]).map(p=>p.name));
+  if (!list(run.movers,m=>m&&vector(m.pivot,3)&&vector(m.axis,3)&&Math.hypot(...m.axis)>0&&
+    Number.isInteger(m.qpos)&&m.qpos>=0&&m.qpos<width&&Array.isArray(m.geoms)&&m.geoms.every(n=>names.has(n)))) throw new Error('Invalid recording motion');
+  if (!list(run.events,e=>e&&typeof e.type==='string'&&Number.isFinite(e.t)&&e.t>=0)||
+    !list(run.reasons,r=>typeof r==='string')) throw new Error('Invalid recording events');
+}
+
 async function startReplay(key) {
   const request = ++replayRequest;
   if (!key) { stopReplay(); return; }
+  ++designRequest;
+  sel.value=state.modelKey;
+  state.robot?.setPresentation?.(state.replay ? 'recorded' : 'current');
+  const token=beginLoad('Loading the recording…');
   let run;
   try {
     // No reset while loading. A late response must not replace a newer player choice.
     if (!runCache.has(key)) runCache.set(key, getJson(`../exports/sim/${key}.json`));
     run = await runCache.get(key);
+    // Validate every field used by scene construction before switching the robot presentation.
+    validateRecording(run);
   } catch (error) {
     runCache.delete(key);
     if (request === replayRequest) {
       runSel.value = state.replay?.key ?? '';
-      talk?.dock.hint('That activity could not load. Keep playing, or try it again.', true);
+      sceneLoading.fail('That recording could not load. You can keep playing.', {token,
+        onRetry:()=>startReplay(key),onCancel:cancelPendingLoad});
     }
     return;
   }
   if (request !== replayRequest || state.bench) return;
+  if(token===null)startupMessage('Loading the recorded robot…');else sceneLoading.update('Loading the recorded robot…',token);
   try { await state.robot.setPresentation?.('recorded'); }
-  catch (error) { if (request === replayRequest) { runSel.value = state.replay?.key ?? ''; talk?.dock.hint('That recording’s model could not load. Your current robot is still here.', true); } return; }
+  catch (error) { if (request === replayRequest) { runSel.value = state.replay?.key ?? ''; sceneLoading.fail('The recorded robot could not load. Your current view is still here.',
+    {token,onRetry:()=>startReplay(key),onCancel:cancelPendingLoad}); } return; }
   if (request !== replayRequest || state.bench) return;
   demo.on = false; paintDemo();
   gun.queue = []; // No latent live burst may fire after watching a recording.
@@ -490,9 +581,10 @@ async function startReplay(key) {
   replayPanel.hidden = false;
   scrub.input.max = String(run.frames.qpos.length - 1);
   scrub.set(0);
-  replayInfo.set([['model', 'Recorded physics · earlier turret snapshot'], ['scenario', run.title], ['result', run.pass ? 'pass' : `FAIL: ${run.reasons.join('; ')}`, run.pass ? 'ok' : 'fail'],
+  replayInfo.set([['model', 'Recorded physics · earlier turret snapshot'], ['scenario', run.title], ['result', run.pass ? 'pass' : `FAIL: ${(run.reasons??[]).join('; ')}`, run.pass ? 'ok' : 'fail'],
                   ['max lean', `${run.max_theta_deg}°`], ['frames', `${run.frames.qpos.length} at ${run.frames.fps} fps`]]);
   paintRobotActions(); renderGun();
+  finishLoad(token,request,'replay');
 }
 
 // Frame the robot and every target in the part of the screen the panels leave free: from behind and above the robot,
@@ -567,7 +659,7 @@ function renderSummary() {
     $('#summary').innerHTML = `<h2 class="fold" title="Show or hide the details">Gyropup v2 (five-bar)<span class="chev"></span></h2>`
       + `<div class="hud-readouts">`
       + [['recorded rig mass', `${(i.massKg ?? state.modelMass ?? 0).toFixed(1)} kg (earlier physics snapshot)`], ['legs', `five-bar, 2 x RS-04 each, ${Math.round(i.hMin)}-${Math.round(i.hMax)} mm`],
-         ['track', `${Math.round(i.trackMM)} mm`], ['recorded physics', sm ? `${sm.passed}/${sm.total} earlier scenarios pass` : 'not simulated'],
+         ['track', `${Math.round(i.trackMM)} mm`], ['recorded physics', sm ? `${sm.passed}/${sm.total} earlier scenarios pass` : 'reports unavailable'],
          ['top deck', i.deck ? `lidar in front, turret behind: ${i.deck.tilt_max_forward_deg}° down over it, ${i.deck.lidar_hidden_deg}° hidden` : 'turret'],
          ['body', 'interim placeholder until M5']]
         .map(([k, v]) => `<div class="r"><span>${k}</span><b>${v}</b></div>`).join('') + '</div>';
@@ -636,6 +728,7 @@ function stopDemoAutomation() {
   demo.on = false; demo.playing = true; paintDemo();
 }
 function takeControl() {
+  cancelPendingLoad();
   stopDemoAutomation();
   runSel.value = '';
   if (state.replay) stopReplay(); else { ++replayRequest; state.robot?.setPresentation?.('current'); }
@@ -983,6 +1076,7 @@ robotActions = createRobotActions({ parent: $('#stage-overlay'), onDemo: toggleD
     }
     paintRobotActions();
   }, onFire: queueShots, onReload: reloadRobot, onLayout: updateInsets });
+$('#robot-actions').inert = true;
 paintRobotActions();
 window.__sim = { state, stage, eyes, gun, demo, sfx, balls, get talk() { return talk; }, get props() { return propMeshes; }, setHeight: (v) => { state.height = v; sh.set(v); }, bench: () => bench };
 sel.onchange = () => loadDesign(sel.value);
@@ -1047,6 +1141,11 @@ if (runName !== 'none' && sel.value !== '@designer' && !state.bench && [...runSe
 if (q.has('fire')) queueShots(+q.get('fire') || 1);
 paintRobotActions();
 stage.start();                                         // the camera is where it will stay: show the stage
-requestAnimationFrame(() => { canvas.style.transition = 'opacity .35s ease'; canvas.style.opacity = '1'; });
+requestAnimationFrame(() => {
+  canvas.style.transition = 'opacity .35s ease'; canvas.style.opacity = '1';
+  const startup=$('#sim-startup');if(startup){startup.hidden=true;startup.setAttribute('aria-busy','false');}
+  sel.disabled=runSel.disabled=demoBtn.disabled=false;
+  $('#panel').inert=false;$('#robot-actions').inert=false;
+});
 document.body.dataset.ready = '1';
 

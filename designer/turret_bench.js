@@ -18,6 +18,7 @@ import { STLLoader } from 'three/addons/loaders/STLLoader.js';
 import { BALL, ballMesh } from './turret3d.js';
 import { section, slider, chips, readouts, toggle } from './kit/panel.js';
 import { createReloadEffect, RELOAD_OPEN_ANGLE } from './turret_reload.js';
+import { createDataReader, isRecord, validateSTLBytes, validateGeometry } from './kit/portal-data.js';
 
 const M = 0.001;
 const D2R = Math.PI / 180;
@@ -39,9 +40,13 @@ const fmt = (v, d = 0) => Number(v).toLocaleString('en-US', { minimumFractionDig
 
 export async function createTurretBench({ stage, sfx, panel, root = '../', onLayout = () => {} }) {
   const base = `${root}exports/sim/turret_box/`;
-  const res = await fetch(`${base}manifest.json`, { cache: 'no-store' });
-  if (!res.ok) throw new Error('no turret_box export: run .venv/bin/python cad/build_turret_box.py');
-  const man = await res.json();
+  const reader=createDataReader(fetch);
+  const man = await reader.json(`${base}manifest.json`, {label:'Turret manifest',validate:isRecord});
+  const vector = (v,n=3) => Array.isArray(v)&&v.length===n&&v.every(Number.isFinite);
+  if (!Array.isArray(man.parts) || !man.parts.length || !man.pivots ||
+      !['pan','tilt','pinion','dial','wheel_l','wheel_r','flap'].every(k=>vector(man.pivots[k])) ||
+      !(man.mechanics?.ball?.speed_mps>0) ||
+      !man.parts.every(p=>p&&typeof p.file==='string'&&typeof p.group==='string')) throw new Error('Invalid turret manifest');
   const mech = man.mechanics;
   const launchSpeed = mech.ball.speed_mps;
   const coarse = matchMedia('(pointer: coarse)').matches;
@@ -96,10 +101,13 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
   const clipPlane = new THREE.Plane(new THREE.Vector3(-1, 0, 0), 0);
   const parts = [];                                   // { e (manifest entry), mesh, cap, mat, group, offset }
   const capColor = new THREE.Color();
-  await Promise.all(man.parts.map(async (e) => {
-    let geo;
+  const loaded = await Promise.allSettled(man.parts.map(async (e) => {
+    if (!groups[e.group]) throw new Error(`Unknown turret part group: ${e.group}`);
     const meshURL = base + e.file + (e.sha256 ? `?v=${e.sha256}` : '');
-    try { geo = await loader.loadAsync(meshURL); } catch { console.warn('missing mesh', e.file); return; }
+    const bytes=await reader.bytes(meshURL,{label:`Turret part ${e.name||e.file}`});
+    validateSTLBytes(bytes);
+    const geo=loader.parse(bytes);
+    try{validateGeometry(geo);}catch(error){geo.dispose();throw error;}
     geo.applyMatrix4(TO_PAGE);
     const offset = new THREE.Vector3();
     if (e.group === 'pinion') { offset.copy(P(man.pivots.pinion)).negate(); geo.translate(offset.x, offset.y, offset.z); }
@@ -122,6 +130,15 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
     groups[e.group].add(mesh);
     parts.push({ e, mesh, cap, mat, group: groups[e.group], offset, shell: SHELL.has(e.part), explode: P(e.explode ?? [0, 0, 0]) });
   }));
+  const failed = loaded.filter(result=>result.status==='rejected');
+  if (failed.length) {
+    // Wait for every part request before disposing, so late completions cannot
+    // leave orphan meshes or turn a failed attempt into a partial ready scene.
+    const geometry=new Set(),materials=new Set();
+    scene.traverse(object=>{if(object.geometry)geometry.add(object.geometry);if(object.material)for(const m of [].concat(object.material))materials.add(m);});
+    geometry.forEach(g=>g.dispose());materials.forEach(m=>m.dispose());scene.removeFromParent();
+    throw new Error(`${failed.length} required turret part(s) could not load: ${failed[0].reason.message}`);
+  }
   const pickable = () => parts.filter((p) => p.mesh.visible).map((p) => p.mesh);
 
   // antennas on the J501's RP-SMA bulkheads (shown when "antennas fitted" is on): they limit the barrel's depression
