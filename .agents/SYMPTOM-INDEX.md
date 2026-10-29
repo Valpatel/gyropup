@@ -2,6 +2,7 @@
 
 | Symptom | Canonical guidance |
 | --- | --- |
+| Valid supplier connector solids overlap when mated or omit wire-entry holes, contacts or latch details | [Vendor solids can omit functional cavities](inbox/2026-10-29-valid-vendor-solids-can-omit-connector-cavities.md) |
 | A TVS breakdown or nominal cutoff looks safe but peak voltage, recovery or shared-branch loads remain unbounded | [Electrical protection limits and evidence](domains/electrical-protection.md) |
 | Supplier stock exists but exact rating, wire seal, retail pack or part identity does not match the assembly | [Supplier evidence and exact part identity](domains/supplier-evidence.md) |
 | CAD branches merge but the model, print kit, BOM or validation reports describe different revisions | [Mechanical release coherence](domains/mechanical-release.md) |
