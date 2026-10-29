@@ -72,7 +72,10 @@ try{
   assert.equal(await page.getByRole('link',{name:'Download original'}).getAttribute('href'),base+original);
   await page.screenshot({path:`${out}/${engine.name()}-entry-fallback.png`});
   await page.unroute('**/file-viewer.js*');await page.getByRole('button',{name:'Retry viewer'}).click();await ready();
-  await page.getByRole('link',{name:'Back to parts'}).click();await page.waitForURL(base+'/designer/build.html');
+  await page.getByRole('link',{name:'Back to parts'}).click();
+  // Cloudflare canonicalizes .html while the local static server preserves it.
+  await page.waitForURL(url=>url.origin===new URL(base).origin
+    && ['/designer/build','/designer/build.html'].includes(url.pathname)&&!url.search&&!url.hash);
   assert.deepEqual(errors,[]);assert.deepEqual(missing,[]);assert.deepEqual(external,[]);
   const version=await(await context.request.get(base+'/version.json')).json();
   await writeFile(`${out}/${engine.name()}-report.json`,JSON.stringify({passed:true,version,cases,wheelRatio:ratio,errors,missing,external},null,2));
