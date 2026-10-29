@@ -7,7 +7,7 @@ const base=(process.env.SITE_URL||'http://127.0.0.1:8890').replace(/\/$/,'');
 const engine=process.env.PLAYWRIGHT_BROWSER==='webkit'?webkit:chromium;
 const browser=await engine.launch(engine===chromium?{channel:process.env.PLAYWRIGHT_CHANNEL==='chromium'?undefined:'chrome',headless:true,args:['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']}:{headless:true});
 const out=process.env.TEST_OUTPUT||'/tmp/gyropup-hero-preview';await mkdir(out,{recursive:true});
-const errors=[],cases=[];
+const errors=[],cases=[],handoffs=[];
 function prefs(){localStorage.setItem('gyropup.probe','off');localStorage.setItem('gyropup-sfx','0');}
 function voiceStub(){
  window.voiceTest={spoken:[],cancelled:0};
@@ -15,6 +15,10 @@ function voiceStub(){
  Object.defineProperty(window,'speechSynthesis',{configurable:true,value:{getVoices:()=>[],speak(u){window.voiceTest.spoken.push({text:u.text,volume:u.volume});},cancel(){window.voiceTest.cancelled++;}}});
 }
 async function settle(page){await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));}
+async function handoffMetrics(page,phase){return page.evaluate(phase=>{
+ const r=document.querySelector('.hero-scene').getBoundingClientRect();
+ return {phase,scrollY,hero:{x:r.x,y:r.y,width:r.width,height:r.height,documentY:r.y+scrollY},interLoaded:document.fonts.check('600 14px Inter')};
+},phase);}
 async function assertGreetingClear(page){
  const bounds=await page.evaluate(()=>{
   const h=window.__heroPreview,cr=h.renderer.domElement.getBoundingClientRect();let bottom=-Infinity;
@@ -49,23 +53,39 @@ try{
   const context=await browser.newContext({viewport:dpr===1?{width:1440,height:1000}:{width:320,height:568},deviceScaleFactor:dpr,reducedMotion:'reduce'});await context.addInitScript(prefs);
 await acknowledgePrototypeNotice(context);
   const page=await context.newPage();page.setDefaultTimeout(60000);page.on('pageerror',e=>errors.push(e.message));
+  const handoff={dpr,delayedInter:dpr===2,phases:[]};
+  let releaseInter,interRequested;
+  if(dpr===2){
+   const fontGate=new Promise(resolve=>releaseInter=resolve);
+   interRequested=page.waitForRequest('**/inter.woff2*');
+   await page.route('**/inter.woff2*',async route=>{await fontGate;await route.continue();});
+  }
   let release;
   await page.route('**/robot_v2.js*',async route=>{await new Promise(resolve=>release=resolve);await route.continue();});
   await page.goto(base+'/',{waitUntil:'domcontentloaded'});
   await page.waitForFunction(()=>{const i=document.querySelector('.scene-fallback');return i.complete&&i.naturalWidth===1024;});
   assert.equal(await page.locator('#robot-preview canvas').count(),0);
   await page.locator('.hero-scene').scrollIntoViewIfNeeded();
-  const before=await page.locator('.hero-scene').boundingBox();
+  if(interRequested){await interRequested;assert.equal(await page.evaluate(()=>document.fonts.check('600 14px Inter')),false,'Phone case starts with Inter deliberately pending');}
+  handoff.phases.push(await handoffMetrics(page,'beforeFonts'));
   // WebKit's document.fonts.ready waits for the deliberately held module load.
-  // Load the two fonts explicitly, then capture this intentionally unfinished page.
-  await page.evaluate(()=>Promise.all([document.fonts.load('600 14px Inter'),document.fonts.load('600 10px "JetBrains Mono"')]));
+  // Font swaps and screenshot scrolling are setup, not the 3D handoff being measured.
+  const fontsLoaded=page.evaluate(()=>Promise.all([document.fonts.load('600 14px Inter'),document.fonts.load('600 10px "JetBrains Mono"')]));
+  releaseInter?.();await fontsLoaded;await settle(page);
+  handoff.phases.push(await handoffMetrics(page,'afterFonts'));
   process.env.PW_TEST_SCREENSHOT_NO_FONTS_READY='1';
   try { await page.locator('.hero-scene').screenshot({path:`${out}/${engine.name()}-loading-dpr${dpr}.png`}); }
   finally { delete process.env.PW_TEST_SCREENSHOT_NO_FONTS_READY; }
+  await settle(page);
+  handoff.phases.push(await handoffMetrics(page,'afterScreenshot'));
   await page.waitForFunction(()=>document.getElementById('robot-preview').dataset.state==='loading');
-  assert.ok(release,'Module request deliberately held');release();
+  assert.ok(release,'Module request deliberately held');
+  const before=await page.locator('.hero-scene').boundingBox();
+  handoff.phases.push(await handoffMetrics(page,'beforeRelease'));release();
   await page.waitForFunction(()=>window.__heroPreview&&document.getElementById('robot-preview').dataset.ready==='true');
   await page.waitForFunction(()=>getComputedStyle(document.querySelector('#robot-preview canvas')).opacity==='1');
+  handoff.phases.push(await handoffMetrics(page,'ready'));handoffs.push(handoff);
+  await writeFile(`${out}/${engine.name()}-handoff-dpr${dpr}.json`,JSON.stringify(handoff,null,2));
   assert.deepEqual(await page.locator('.hero-scene').boundingBox(),before,'Loading handoff does not move the hero frame');
   for(const [width,height] of [[1440,1000],[1024,768],[320,568],[390,844],[430,932],[844,390]]){
    await page.setViewportSize({width,height});await settle(page);
@@ -160,6 +180,6 @@ await acknowledgePrototypeNotice(context);
   await context.close();
  }
  assert.deepEqual(errors,[]);
- await writeFile(`${out}/${engine.name()}-report.json`,JSON.stringify({base,cases,errors},null,2));
+ await writeFile(`${out}/${engine.name()}-report.json`,JSON.stringify({base,cases,handoffs,errors},null,2));
  console.log(`PASS ${engine.name()}: visible poster/first-frame match at12 viewport/DPR combinations; delayed loading; module/WebGL fallback; hover, keyboard, touch inspection; shared audio and reduced motion`);
 }finally{await browser.close();}
