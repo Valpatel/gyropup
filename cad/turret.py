@@ -2087,8 +2087,11 @@ def print_fit(shape, rotation):
 
 
 def main():
+    import print_provenance
+    print_inputs = print_provenance.snapshot(R)
     args = [a for a in sys.argv[1:] if not a.startswith('--')]
     design = Path(args[0]) if args else R / 'designs/default.json'
+    print_context = print_provenance.context_snapshot(R, [design])
     L = derive(design)
     out = R / 'exports' / 'turret'
     out.mkdir(parents=True, exist_ok=True)
@@ -2186,6 +2189,9 @@ def main():
                     'com_from_mount_mm': [round(c, 1) for c in com], 'not_modelled_g': NOT_MODELLED_G,
                     'print_hours': round(made_h, 1), 'made_g': round(made_g, 1)})
     (out / 'turret.json').write_text(json.dumps(summary, indent=1, default=str) + '\n')
+    print_provenance.write_receipt(R, out,
+        [out / f'{name}.stl' for name in T.meta] +
+        [out / f'flywheel_tyre_d{d:.0f}.stl' for d in TYRE_SET], print_inputs, context=print_context)
     if '--sweep' in sys.argv:
         r = sweep(T, out)
         print(f"\nSWEEP pans 0..350 every 10 deg x tilts {r['tilts_deg']}: {len(r['clashes'])} clashes, "

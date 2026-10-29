@@ -13,6 +13,7 @@ jobs:
         include:
           - suite: mechanism
             commands: |
+              python3 tools/test-print-provenance.py
               npm run test:turret
               npm run test:camera
               npm run test:models

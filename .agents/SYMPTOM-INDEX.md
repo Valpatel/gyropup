@@ -2,6 +2,7 @@
 
 | Symptom | Canonical guidance |
 | --- | --- |
+| CAD branches merge but the model, print kit, BOM or validation reports describe different revisions | [Mechanical release coherence](domains/mechanical-release.md) |
 | Entry warning loses focus, hides controls, or changes saved audio/scene state | [Prototype notice](domains/prototype-notice.md) |
 | Motto or landing graphics feel cheesy despite passing layout checks | [Gyropup visual character](domains/brand-presentation.md) |
 | A motor, wheel, feed dial or flap orbits outside its assembly while animating; static bounds still pass | [Rendered mechanism frames](domains/rendered-mechanisms.md) |
@@ -17,7 +18,9 @@
 | A model reports ready but disappears or contains non-finite transforms after valid JSON loads | [Loading readiness and report availability](domains/loading-readiness.md) |
 | A viewer's error/retry controls clip off a phone despite hidden page overflow | [Grid tracks and header minimums](inbox/2026-10-29-shrink-grid-tracks-before-truncating-headers.md) |
 | Build thumbnails are missing, show unrelated parts, or disappear after publishing | [Part image identity and provenance](domains/part-images.md) |
+| Sheet thickness or dimensional bounds change after STL export without a CAD edit | [Tessellation bounds versus stock dimensions](inbox/2026-10-29-tessellated-bounds-are-not-stock-dimensions.md) |
 | Part status moves to another row after sorting, retries duplicate controls, or a model preview loses its original download | [Parts retain their identity when their table changes](domains/build-portal.md) |
 | A newly integrated CAD viewer opens but disposal throws or its animation keeps running after removal | [Parts retain their identity when their table changes](domains/build-portal.md) |
 | Phone status checkboxes remain reachable but their part names disappear, despite sticky cell styling | [Sticky identity and the scroll wrapper](inbox/2026-10-29-sticky-part-identity-needs-the-scroll-wrapper.md) |
 | Wheel tests fail after a fixed sleep under software rendering | [Wait for rendered camera targets](inbox/2026-10-29-camera-tests-must-wait-for-rendered-targets.md) |
+| Print hashes pass but package mixes revisions, slicer settings or stale totals | [Preflight is not a generation transaction](inbox/2026-10-29-print-preflight-is-not-a-generation-transaction.md) |

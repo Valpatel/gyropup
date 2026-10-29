@@ -1,0 +1,26 @@
+{
+  "purpose": "Triage of imported historical reports; no CAD generation or solve. Not validation of current geometry.",
+  "source_revision": "f2d01258401c3a44d7b4a946eec098df1fe5fb80",
+  "toolkit_revision": "28abd34caf650ced78d9d734af000715ee174efe",
+  "command": "cad-agent check --json",
+  "exit_code": 1,
+  "counts": {
+    "pass": 37,
+    "fail": 47,
+    "skip": 1
+  },
+  "physical_fit_verified": false,
+  "slicer_run": false,
+  "report_sha256": "db5d80fd6ce6f9a959b4ed83b0713d4ec18a7bf6fd898772448d3934499500be",
+  "selected_input_sha256": {
+    "cad-agent.yaml": "58c3f348fbe76a8a13ca5fad8644fb70eb37092a163d204fbb10bb82854a2233",
+    "exports/dossier-geometry.json": "073c03ba8c065d5785a029747ee0242517223111c2cd90bb5ccbbf4b8bb3c9db",
+    "exports/turret/fea/summary.json": "735ba5ec1c137c9fe734af63448089e563ebca8d8376ffea2a38ce79502aa8ef",
+    "exports/turret/launch/launch3d.json": "cfc79c8992aef36803bc58fde0368edb217dcb024c60e78156e29d4916a48250"
+  },
+  "limits": [
+    "Imported geometry record predates final source latch changes.",
+    "Generic printed-part metadata includes legacy robot geometry.",
+    "Gate successes are historical; use gates --build on the exact candidate before current-geometry acceptance."
+  ]
+}

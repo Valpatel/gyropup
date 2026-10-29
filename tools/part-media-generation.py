@@ -41,16 +41,36 @@ def sources():
             result[stream + '/' + part['key']] = {'source': part['step'],
                 'material': 'copper' if 'copper' in part['material'].lower() else 'aluminium',
                 'group': 'machined-and-cut', 'bom': stream}
-    turret = read('exports/sim/turret_box/manifest.json')
+    # Cut parts have their own source-bound inspection export. The historical
+    # whole-robot snapshot may predate new cheek plates and is not their geometry.
+    turret_manifest = 'exports/turret/component-preview/manifest.json'
+    turret = read(turret_manifest)
+    expected_sources = {'cad/turret.py', 'cad/gmi.py', 'cad/interfaces.json', 'catalog/interfaces.json',
+                        'catalog/materials.json', 'tools/export-turret-cut-previews.py'}
+    expected_parts = {'pan_clamp', 'cradle_plate_l', 'cradle_plate_r', 'stop_lug'}
+    if turret.get('schema') != 1 or turret.get('units') != 'mm' or set(turret['source_hashes']) != expected_sources:
+        raise ValueError('Cut-part preview has incomplete input provenance')
+    names = [part['name'] for part in turret['parts']]
+    if len(names) != len(expected_parts) or set(names) != expected_parts:
+        raise ValueError('Cut-part preview must contain exactly the four unique current cut parts')
+    for source, expected in turret['source_hashes'].items():
+        if digest(ROOT / source) != expected:
+            raise ValueError(f'Cut-part preview source changed: {source}; regenerate its inspection export')
     for key in read('exports/turret/bench/bom.json')['ordered_to_drawing']:
         entries = [part for part in turret['parts'] if part['name'] == key]
         if len(entries) != 1:
             raise ValueError(f'No unique current turret geometry for {key}')
         entry = entries[0]
-        result['turret/' + key] = {'source': 'exports/sim/turret_box/' + entry['file'],
-            'expected_sha256': entry['sha256'], 'material': 'aluminium', 'group': 'machined-and-cut',
-            'bom': 'turret', 'geometry_manifest': 'exports/sim/turret_box/manifest.json',
-            'note': 'Original turret STEP is not published; render uses the current hashed simulation mesh of this same part.'}
+        for extension in ('stl', 'step'):
+            expected_path = f'exports/turret/component-preview/{key}.{extension}'
+            if entry[extension] != expected_path or digest(ROOT / expected_path) != entry[extension + '_sha256']:
+                raise ValueError(f'{key}: cut-part preview {extension} identity mismatch')
+        if entry.get('valid_single_solid') is not True:
+            raise ValueError(f'{key}: cut-part preview is not a validated single solid')
+        result['turret/' + key] = {'source': entry['step'],
+            'expected_sha256': entry['step_sha256'], 'material': 'aluminium', 'group': 'machined-and-cut',
+            'bom': 'turret', 'geometry_manifest': turret_manifest,
+            'note': 'Authored current cut-part inspection STEP; mechanical qualification remains open.'}
     return result
 
 
@@ -62,7 +82,7 @@ def check_source(key, source):
                    check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     sha = digest(path)
     if source.get('expected_sha256', sha) != sha:
-        raise ValueError(f'{key}: mesh differs from current turret manifest')
+        raise ValueError(f'{key}: geometry differs from current turret manifest')
     return path, sha
 
 

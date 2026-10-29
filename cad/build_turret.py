@@ -195,6 +195,8 @@ TOOLS = [('waveshare-bus-servo-adapter-a', 1), ('tool-deutsch-crimper-iwd1620', 
 
 
 def main():
+    import print_provenance
+    print_inputs = print_provenance.snapshot(R)
     ap = argparse.ArgumentParser()
     ap.add_argument('--no-render', action='store_true')
     a = ap.parse_args()
@@ -218,7 +220,7 @@ def main():
         plan.pop(name, None)
     # the slicer's own grams and hours where cad/turret_print.py has sliced the part in its print orientation
     pj = R / 'exports' / 'turret' / 'print' / 'print.json'
-    sliced = json.loads(pj.read_text())['parts'] if pj.exists() else {}
+    sliced = print_provenance.current_slice_rows(R, json.loads(pj.read_text())['parts'], print_inputs) if pj.exists() else {}
     for name, r in plan.items():
         sp = sliced.get(name) or {}
         if sp.get('grams') and sp.get('minutes'):
@@ -276,12 +278,10 @@ def main():
                                                       'thumbnails and alternates from cad/bom_media.py'}, indent=1) + '\n')
     summary = {'too_big': too_big, 'print_hours': round(sum(p['hours'] for p in plan.values()), 1),
                'printed_g': sum(p['grams'] for p in plan.values()), 'stand_mm': [ts.W, ts.D, ts.H],
-               'note': 'printed_g and print_hours are print-plan.json\'s (the slicer\'s where sliced); sliced is cad/turret_print.py\'s own total'}
-    pj = R / 'exports' / 'turret' / 'print' / 'print.json'
-    if pj.exists():                                       # the slicer's own grams and hours for the v0 parts (cad/turret_print.py)
-        pr = json.loads(pj.read_text())
-        summary['sliced'] = {'grams': pr.get('total_grams'), 'hours': pr.get('total_hours'), 'by_material': pr.get('by_material'),
-                             'file': 'exports/turret/print/print.json'}
+               'note': 'printed_g and print_hours mix current sliced estimates with rough estimates; sliced includes only accepted current rows'}
+    totals = print_provenance.slice_totals(sliced, set(plan))
+    if totals:
+        summary['sliced'] = {**totals, 'file': 'exports/turret/print/print.json'}
     if not a.no_render:
         from cadagent.render import Renderer
         r = Renderer(OUT, subtitle='GYROPUP TURRET | ON ITS BENCH STAND')
@@ -303,6 +303,7 @@ def main():
     import turret_orders                                  # the order sheets from bom.json and the catalogue
     summary['orders'] = {k: v for k, v in turret_orders.write(OUT / 'bom.json').items() if k in ('grand_total_usd', 'lines', 'sellers')}
     (OUT / 'bench.json').write_text(json.dumps(summary, indent=1) + '\n')
+    print_provenance.write_receipt(R, OUT, [OUT / f'{name}.stl' for name in stand], print_inputs)
     import turret_mount                                   # the turret's interface for the body: exports/turret/mount.json
     turret_mount.write(T)
     sl = summary.get('sliced') or {}
