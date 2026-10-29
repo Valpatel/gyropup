@@ -10,7 +10,8 @@
     "test:markdown": "node --test tools/test-markdown.mjs",
     "test:cache": "node tools/test-cache.mjs",
     "test:sim": "node tools/test-sim-transitions.mjs",
-    "test:turret": "python3 tools/test-turret-frames.py && node tools/test-turret-motion.mjs"
+    "test:turret": "python3 tools/test-turret-frames.py && node tools/test-turret-motion.mjs",
+    "test:services": "node tools/test-service-discovery.mjs"
   },
   "devDependencies": {
     "@playwright/test": "1.56.1",

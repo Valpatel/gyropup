@@ -104,6 +104,31 @@ zone needs a proxied CNAME `@` → `gyropup.pages.dev`. A Pages domain reporting
 `CNAME record not set` needs that DNS record; repeating a Pages deployment will
 not fix DNS. No credentials belong in git, logs, or progress reports.
 
+## Public access and local services
+
+Both `gyropup.com` and `www.gyropup.com` are registered Pages custom domains,
+with proxied CNAME records pointing to `gyropup.pages.dev`. Each redirects HTTP
+to HTTPS. The www record was missing until the 2026-10-28 access investigation
+([issue 39](https://github.com/Valpatel/gyropup/issues/39)); a negative DNS cache
+can briefly outlive the repair. Both names serve the same static bundle.
+
+A valid apex certificate does not prove a network filter permits a new domain.
+When investigating a block, record the exact failing hostname, browser error or
+filter category, and timestamp. Check normal TLS verification and redirects for
+both names, then compare resolver results. Never bypass certificate validation
+to declare a website healthy. Cloudflare's standard, malware and family DNS
+resolvers returned real apex addresses during the initial investigation; this
+only describes those resolvers at that time.
+
+The hosted simulator uses browser voice and scripted replies by default. It must
+not automatically probe a visitor's localhost or private-network AI services.
+Local development keeps automatic discovery, and explicit service configuration
+remains available subject to browser HTTPS/CORS/network permissions. Run
+`npm run test:services` (or `PLAYWRIGHT_BROWSER=webkit npm run test:services`) to
+exercise actual chat discovery on public, local and misleading hostnames, plus
+configured services and failed-service fallback. The harness intercepts every
+request and never contacts real local services.
+
 ## Keep the playground current
 
 `exports/sim/` is a committed browser snapshot. Its README records provenance and
