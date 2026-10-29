@@ -364,14 +364,21 @@ export function mountTalk({ stage, getHead, eyes, root = '../', chips, brain, do
   // the voice
   let muted = ls.get('muted') === '1'; // Explicit voice preference, independent of the site's master sound.
   const master = { enabled: audio.enabled !== false, volume: Number.isFinite(+audio.volume) ? Math.max(0, Math.min(1, +audio.volume)) : 1 };
-  const voiceVolume = () => muted || !master.enabled ? 0 : VOICE_GAIN * master.volume;
+  const noticeOpen = () => document.getElementById('prototype-notice-dialog')?.open === true;
+  const voiceVolume = () => muted || !master.enabled || noticeOpen() ? 0 : VOICE_GAIN * master.volume;
   let actx = null, current = null, speakSeq = 0, answerVoice = false;
   const audioCtx = () => {
+    if (noticeOpen()) return null;
     if (!actx) { const C = window.AudioContext || window.webkitAudioContext; actx = C ? new C() : null; }
     if (actx?.state === 'suspended') actx.resume().catch(() => {});
     return actx;
   };
-  ['pointerdown', 'keydown', 'touchstart'].forEach((ev) => window.addEventListener(ev, () => audioCtx(), { once: true, passive: true }));
+  const voiceGestures = ['pointerdown', 'keydown', 'touchstart'];
+  const unlockVoice = () => {
+    if (!audioCtx()) return; // A notice gesture must not consume the later audio-unlock gesture.
+    for (const event of voiceGestures) window.removeEventListener(event, unlockVoice);
+  };
+  for (const event of voiceGestures) window.addEventListener(event, unlockVoice, { passive: true });
 
   function stopVoice() {
     speakSeq++;
@@ -380,6 +387,12 @@ export function mountTalk({ stage, getHead, eyes, root = '../', chips, brain, do
     answerVoice = false;
     if ('speechSynthesis' in window) window.speechSynthesis.cancel();
   }
+
+  document.addEventListener('gyropup:prototype-notice', () => {
+    // Invalidates delayed TTS responses too; reopening must not replay an old answer later.
+    if (noticeOpen()) { stopVoice(); hideBubble(); }
+    paintMute();
+  });
 
   async function speakPiper(text, seq) {
     const a = audioCtx();
@@ -404,7 +417,7 @@ export function mountTalk({ stage, getHead, eyes, root = '../', chips, brain, do
   }
 
   function speakBrowser(text) {
-    if (!('speechSynthesis' in window)) return false;
+    if (voiceVolume() === 0 || !('speechSynthesis' in window)) return false;
     try {
       const u = new SpeechSynthesisUtterance(text);
       u.rate = 1.0; u.pitch = 1.3; u.volume = voiceVolume();      // a stronger lift turns most system voices into a squeak
@@ -456,7 +469,7 @@ export function mountTalk({ stage, getHead, eyes, root = '../', chips, brain, do
   /** say(text, { mood, speak = true, hold }) — bubble + eye mood + voice. Resolves once the voice has started. */
   function say(text, { mood, speak: voice = true, hold, conversation = false } = {}) {
     text = String(text ?? '').trim();
-    if (!text) return Promise.resolve(false);
+    if (!text || noticeOpen()) return Promise.resolve(false);
     const tok = setMood(mood || guessMood(text));
     showBubble(text, { hold });
     const until = shownUntil;
@@ -642,7 +655,7 @@ export function mountTalk({ stage, getHead, eyes, root = '../', chips, brain, do
 
   // Stage changes and game reactions are background chatter. The conversation owns the
   // bubble, voice and expression while listening, thinking, or presenting an answer.
-  function isBusy() { return askPending || answerVoice || !!listening || performance.now() < replyBusyUntil; }
+  function isBusy() { return noticeOpen() || askPending || answerVoice || !!listening || performance.now() < replyBusyUntil; }
   function announce(text, options = {}) {
     if (isBusy() || (visible && performance.now() < shownUntil)) return false;
     say(text, options);

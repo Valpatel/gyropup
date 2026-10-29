@@ -1,3 +1,4 @@
+import { acknowledgePrototypeNotice } from './test-prototype-session.mjs';
 /** Public CAD/FEA/character routes must have a useful entry point and reachable phone controls. */
 import assert from 'node:assert/strict';
 import { mkdir, writeFile } from 'node:fs/promises';
@@ -7,6 +8,7 @@ const engine = process.env.PLAYWRIGHT_BROWSER === 'webkit' ? webkit : chromium;
 const browser = await engine.launch(engine === chromium ? { channel: process.env.PLAYWRIGHT_CHANNEL === 'chromium' ? undefined : 'chrome', headless: true,
   args: ['--no-sandbox', '--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] } : { headless: true });
 const context = await browser.newContext({ viewport: { width: 320, height: 568 } });
+await acknowledgePrototypeNotice(context);
 await context.addInitScript(() => { localStorage.setItem('gyropup.probe', 'off'); localStorage.setItem('gyropup-sfx', '0'); });
 const page = await context.newPage(), errors = [], missing = [], results = [];
 const out = process.env.TEST_OUTPUT || '/tmp/gyropup-portal-viewers';
@@ -144,6 +146,7 @@ try {
   // Start wide landscape with fresh storage: resizing from a portrait page can
   // accidentally preserve its collapsed panel and hide a real startup problem.
   const freshContext=await browser.newContext({viewport:{width:844,height:390},reducedMotion:'reduce'});
+await acknowledgePrototypeNotice(freshContext);
   await freshContext.addInitScript(()=>{localStorage.setItem('gyropup.probe','off');localStorage.setItem('gyropup-sfx','0');});
   const fresh=await freshContext.newPage();fresh.on('pageerror',e=>errors.push(e.message));
   await fresh.goto(`${base}/designer/character/talk-demo.html`,{waitUntil:'networkidle'});

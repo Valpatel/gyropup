@@ -1,3 +1,4 @@
+import { acknowledgePrototypeNotice } from './test-prototype-session.mjs';
 /** Validate actual rendered STL landmarks against independently audited CAD datums. */
 import assert from 'node:assert/strict';
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
@@ -11,6 +12,7 @@ const browser = await engine.launch(engine === chromium ? { channel:process.env.
   args:['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader'] } : {headless:true});
 await mkdir(out, {recursive:true});
 const page = await browser.newPage({viewport:{width:1280,height:900}}), errors=[];
+await acknowledgePrototypeNotice(page);
 page.on('pageerror', e => errors.push(e.message));
 await page.addInitScript(() => localStorage.setItem('gyropup.probe','off'));
 const sub=(a,b)=>a.map((x,i)=>x-b[i]), dot=(a,b)=>a.reduce((s,x,i)=>s+x*b[i],0);

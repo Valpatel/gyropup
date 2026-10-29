@@ -74,7 +74,7 @@ export function htmlToMarkdown(html, file) {
   const { document } = parseHTML(html);
   const title = document.querySelector('title')?.textContent || file;
   const interactive = !!document.querySelector('canvas, script[type="module"]');
-  document.querySelectorAll('script, style, head, svg, canvas, template, nav, button, select, input, textarea, label.inc, [aria-hidden="true"], [hidden]').forEach(el => el.remove());
+  document.querySelectorAll('script, style, head, svg, canvas, template, nav, dialog, button, select, input, textarea, label.inc, [aria-hidden="true"], [hidden]').forEach(el => el.remove());
   // CSS provides spacing and columns in the browser. Preserve that structure in text.
   for (const node of document.querySelectorAll('span, strong, b')) { node.before(' '); node.after(' '); }
   for (const grid of document.querySelectorAll('.glist, .olist, .plist')) {

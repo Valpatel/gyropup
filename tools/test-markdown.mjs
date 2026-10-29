@@ -32,6 +32,19 @@ after(async () => {
   if (server && server.exitCode === null) { const exited = once(server, 'exit'); server.kill(); await exited; }
 });
 
+test('every public page and agent counterpart includes the research warning', async () => {
+  assert.ok(!pages.some(entry => entry.html === '/web/prototype-notice.html'), 'the injection template is not a standalone page');
+  for (const entry of pages) {
+    const { document } = parseHTML(await read(entry.html));
+    assert.equal(document.querySelectorAll('#prototype-notice-dialog').length, 1, entry.html);
+    assert.equal(document.querySelectorAll('#prototype-notice-footer').length, 1, entry.html);
+    assert.ok(document.querySelector('script[src^="/web/prototype-notice.js"]'), entry.html);
+    const text = await read(entry.markdown);
+    assert.match(text, /will not be offered for sale/, entry.markdown);
+    assert.match(text, /research purposes only/, entry.markdown);
+  }
+});
+
 test('every generated HTML page advertises a current Markdown counterpart', async () => {
   assert.ok(pages.length > 100);
   const discovery = await read('llms.txt');

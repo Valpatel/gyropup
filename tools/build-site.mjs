@@ -1,5 +1,5 @@
 /** One static bundle for local development and Cloudflare Pages. No CAD runtime required. */
-import { readFile, writeFile, mkdir, cp, rm, stat } from 'node:fs/promises';
+import { readFile, writeFile, mkdir, cp, rm, stat, readdir } from 'node:fs/promises';
 import { execFileSync } from 'node:child_process';
 import path from 'node:path';
 import { marked } from 'marked';
@@ -104,6 +104,16 @@ await writeFile(path.join(out,'_headers'), `/*\n  Cache-Control: ${SITE_CACHE_CO
 await writeFile(path.join(out,'robots.txt'),'User-agent: *\nAllow: /\nSitemap: https://gyropup.com/sitemap.xml\n');
 await writeFile(path.join(out,'sitemap.xml'), '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+['/','/designer/sim.html','/designer/progress.html','/designer/build.html','/site/'].map(p=>`<url><loc>https://gyropup.com${p}</loc></url>`).join('')+'</urlset>');
 const revision = execFileSync('git',['rev-parse','HEAD'],{cwd:root}).toString().trim();
+// One static warning is shared by entry routes, documents and downloadable HTML.
+// Keep its text in the HTML so no-script visitors and agent Markdown see it too.
+const prototypeNotice = await read('web/prototype-notice.html');
+await rm(path.join(out, 'web/prototype-notice.html'));
+for (const file of (await readdir(out, { recursive:true })).filter(file => file.endsWith('.html'))) {
+  const target = path.join(out, file), html = await readFile(target, 'utf8');
+  if (!html.includes('</head>') || !html.includes('</body>')) throw new Error(`Cannot add prototype notice to ${file}`);
+  await writeFile(target, html.replace('</head>', '<link rel="stylesheet" href="/web/prototype-notice.css"></head>')
+    .replace('</body>', `${prototypeNotice}<script type="module" src="/web/prototype-notice.js"></script></body>`));
+}
 const assets = await versionSiteAssets(out);
 // Markdown records final HTML hashes, so asset URL migration must precede it.
 const markdownPages = await writeMarkdownSite(out);

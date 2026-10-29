@@ -1,3 +1,4 @@
+import { acknowledgePrototypeNotice } from './test-prototype-session.mjs';
 /** User gestures and stats folding must preserve a predictable view of the simulation. */
 import assert from 'node:assert/strict';
 import { chromium, webkit } from '@playwright/test';
@@ -7,6 +8,7 @@ const engine = process.env.PLAYWRIGHT_BROWSER === 'webkit' ? webkit : chromium;
 const browser = await engine.launch(engine === chromium ? { channel:process.env.PLAYWRIGHT_CHANNEL === 'chromium' ? undefined : 'chrome',headless:true,
   args:['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader'] } : {headless:true});
 const context = await browser.newContext({viewport:{width:1440,height:1000},hasTouch:true});
+await acknowledgePrototypeNotice(context);
 const page = await context.newPage(), errors=[];
 page.on('pageerror',e=>errors.push(e.message));
 await context.addInitScript(()=>localStorage.setItem('gyropup.probe','off'));

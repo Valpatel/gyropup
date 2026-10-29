@@ -1,3 +1,4 @@
+import { acknowledgePrototypeNotice } from './test-prototype-session.mjs';
 /** Exercise real replay switches without replacing the scene, character, or player conversation. */
 import assert from 'node:assert/strict';
 import { mkdir } from 'node:fs/promises';
@@ -7,6 +8,7 @@ const engine = process.env.PLAYWRIGHT_BROWSER === 'webkit' ? webkit : chromium;
 const browser = await engine.launch(engine === chromium ? { channel: process.env.PLAYWRIGHT_CHANNEL === 'chromium' ? undefined : 'chrome', headless: true,
   args: ['--no-sandbox', '--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] } : { headless: true });
 const context = await browser.newContext({ viewport: { width: 390, height: 844 }, hasTouch: true, deviceScaleFactor: 1 });
+await acknowledgePrototypeNotice(context);
 const page = await context.newPage(), errors = [];
 const out = process.env.TEST_OUTPUT || '/tmp/gyropup-sim-transitions';
 await mkdir(out, { recursive: true });
