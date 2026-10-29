@@ -13,7 +13,7 @@ import time
 from pathlib import Path
 
 import cadquery as cq
-from cadagent.gates import Assembly, Tolerances
+from cadagent.gates import Assembly, Tolerances, PairCache
 from cadagent.gates.assembly import AssemblySequenceWorld, AccessOptions, sweep_pair
 from cadagent.gates.fasteners import FastenerSpec, fastener_gate
 import turret as tu
@@ -22,6 +22,7 @@ import turret_base_board as bb
 ROOT = Path(__file__).resolve().parents[1]
 SOURCES = ['cad/turret.py','cad/turret_base_board.py','cad/turret_boards.py','cad/check_base_board_service.py',
            'catalog/hardware.json','catalog/turret.json']
+PAIR_CACHE = PairCache(ROOT / '.cadagent-cache/base-board-service')
 TOOL = {'segments': [{'d':6.,'length':60.},{'d':25.,'length':80.}]}
 
 
@@ -43,7 +44,7 @@ def sweep(moving, obstacle, seat=True, direction=(-1.,0.,0.)):
     return sweep_pair(world,'module',direction,'obstacle',options=AccessOptions(max_step_mm=.25),seat=seat)
 
 
-def hardware_gate(which, base=None, bumper=None, bad_length=None, missing_hole=False):
+def hardware_gate(which, base=None, bumper=None, bad_length=None, missing_hole=False, manufacturer=False):
     """PCB screws tested on bench; carrier screws tested with the base present."""
     a = Assembly()
     carrier=bb.carrier(); pcb=bb.board()
@@ -51,7 +52,7 @@ def hardware_gate(which, base=None, bumper=None, bad_length=None, missing_hole=F
         y,z=bb.CARRIER_HOLES[0]
         carrier=carrier.union(bb.cx(bb.M3_CLEAR/2,53,56,y,z))
     a.add('base_board_carrier',shape(carrier));a.add('base_board',shape(pcb))
-    hw=bb.hardware(available_private=True)
+    hw=bb.hardware(available_private=manufacturer)
     for group in ('base_board_inserts','base_carrier_inserts'):
         a.add(group,compound([s for n,s in hw.items() if n.startswith(group+'#')]))
     specdata=bb.screw_specs()[which]
@@ -71,13 +72,16 @@ def hardware_gate(which, base=None, bumper=None, bad_length=None, missing_hole=F
     names=[n for n in a.names if not n.startswith(which+'#')]
     steps=[dict(order=i+1,fit=n) for i,n in enumerate(names)]
     steps.append(dict(order=len(steps)+1,fit=spec.clamps,fasteners=[which],tool='driver'))
-    return fastener_gate(a,{which:spec},steps=steps,tools={'driver':TOOL})
+    return fastener_gate(a,{which:spec},steps=steps,tools={'driver':TOOL},cache=PAIR_CACHE)
 
 
 def run(out):
     started=time.time();checks=[]
+    out.mkdir(parents=True,exist_ok=True)
     def check(name,ok,evidence):
-        checks.append({'id':name,'pass':bool(ok),'evidence':evidence});print(name,'PASS' if ok else 'FAIL',flush=True)
+        checks.append({'id':name,'pass':bool(ok),'evidence':evidence})
+        (out/'progress.json').write_text(json.dumps({'complete':False,'checks':checks},indent=2)+'\n')
+        print(name,'PASS' if ok else 'FAIL',flush=True)
     G=tu.Geo();original=tu.pan_base(G,board_service=False);base=tu.pan_base(G);carrier=bb.carrier();board=bb.board();hw=bb.hardware()
     for name,s in [('base',base),('carrier',carrier),('pcb',bb.pcb())]:
         check('valid:'+name,s.val().isValid() and len(s.val().Solids())==1,{'solids':len(s.val().Solids())})
@@ -94,7 +98,8 @@ def run(out):
         if n.startswith(('base_board_screws#','base_board_inserts#')):
             module=module.fuse(shape(s))
     # The module includes hardware that actually remains attached during removal.
-    obstacles={'base':base,'pan_ring':tu.pan_ring(G),'pan_clamp':tu.pan_clamp(G),'pan_pinion':tu.pan_pinion(G)}
+    fixed_base=shape(base).fuse(compound([s for n,s in hw.items() if n.startswith('base_carrier_inserts#')]))
+    obstacles={'base':fixed_base,'pan_ring':tu.pan_ring(G),'pan_clamp':tu.pan_clamp(G),'pan_pinion':tu.pan_pinion(G)}
     for name,obstacle in obstacles.items():
         for service in (False,True):
             r=sweep(module,obstacle,seat=not service)
@@ -110,9 +115,13 @@ def run(out):
                         ('bumper_tool',dict(which='base_carrier_screws',base=base,bumper=tu.bumper_ring(G))),
                         ('short_screw',dict(which='base_carrier_screws',base=base,bad_length=4)),
                         ('long_screw',dict(which='base_carrier_screws',base=base,bad_length=16)),
-                        ('missing_hole',dict(which='base_carrier_screws',base=base,missing_hole=True))]:
+                        ('missing_hole',dict(which='base_carrier_screws',base=base,missing_hole=True)),
+                        ('manufacturer_pcb',dict(which='base_board_screws',manufacturer=True)),
+                        ('manufacturer_carrier',dict(which='base_carrier_screws',base=base,manufacturer=True))]:
+        print('running fastener stage: '+name,flush=True)
         gates[name]=hardware_gate(**kwargs)
-        expected=name in ('pcb_bench','carrier_installed')
+        (out/(name+'.json')).write_text(json.dumps(gates[name],indent=2)+'\n')
+        expected=name in ('pcb_bench','carrier_installed','manufacturer_pcb','manufacturer_carrier')
         check(('fasteners:' if expected else 'negative:')+name,bool(gates[name]['pass'])==expected,
               {'counts':gates[name]['counts'],'findings':gates[name]['findings']})
     # Offline manufacturer coverage is audited independently. Missing models never
@@ -136,6 +145,7 @@ def run(out):
                 'Generic dossier single-part assembly cannot represent preassembled module motion.',
                 'Manufacturer CAD remains private; numerical comparisons only.'])
     out.mkdir(parents=True,exist_ok=True)
+    (out/'progress.json').write_text(json.dumps({'complete':True,'checks':checks},indent=2)+'\n')
     (out/'checks.json').write_text(json.dumps(result,indent=2)+'\n')
     for name,g in gates.items():(out/(name+'.json')).write_text(json.dumps(g,indent=2)+'\n')
     for name,s in [('pan_base',base),('base_board_carrier',carrier),('base_board',board)]:
