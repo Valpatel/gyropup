@@ -2,6 +2,7 @@
 import hashlib
 import importlib.util
 import json
+import shutil
 from pathlib import Path
 import tempfile
 import unittest
@@ -37,12 +38,22 @@ class PrivateInputs(unittest.TestCase):
 
     def test_committed_diagnosis_matches_source_and_manifest(self):
         receipt=json.loads((MOD.ROOT/'research/carrier-service-connectors/private-input-diagnosis.json').read_text())
-        self.assertIs(receipt['readiness'],False)
-        expected=MOD.provenance.context_snapshot(MOD.ROOT,[MOD.ROOT/'tools/check-carrier-connector-inputs.py',MOD.MANIFEST])
-        self.assertEqual(receipt['context_files'],expected)
-        manifest=json.loads(MOD.MANIFEST.read_text())
-        self.assertEqual({e['part']:e['sha256'] for e in manifest['parts']},
-                         {k:v['sha256'] for k,v in receipt['inventory'].items()})
+        self.assertTrue(MOD.validate_receipt(receipt))
+
+    def test_changed_deleted_and_new_geometry_inputs_reject(self):
+        receipt=json.loads((MOD.ROOT/'research/carrier-service-connectors/private-input-diagnosis.json').read_text())
+        for name in set(receipt['inputs']['files'])|set(receipt['context_files']):
+            target=self.root/name;target.parent.mkdir(parents=True,exist_ok=True)
+            shutil.copyfile(MOD.ROOT/name,target)
+        self.assertTrue(MOD.validate_receipt(receipt,self.root))
+        helper=self.root/'cad/print_provenance.py';original=helper.read_bytes()
+        helper.write_bytes(original+b'\n# changed imported helper\n')
+        with self.assertRaisesRegex(ValueError,'closure changed'):MOD.validate_receipt(receipt,self.root)
+        helper.unlink()
+        with self.assertRaisesRegex(ValueError,'closure changed'):MOD.validate_receipt(receipt,self.root)
+        helper.write_bytes(original)
+        (self.root/'cad/new_input.py').write_text('NEW_GEOMETRY=True\n')
+        with self.assertRaisesRegex(ValueError,'closure changed'):MOD.validate_receipt(receipt,self.root)
 
 
 if __name__=='__main__':unittest.main()

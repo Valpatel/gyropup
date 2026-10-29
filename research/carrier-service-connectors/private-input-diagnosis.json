@@ -98,7 +98,7 @@
   },
   "input_fingerprint": "be0d6f5c39e2edba02e5c11600a8725921047448fe2099b2a0792593ae76266a",
   "context_files": {
-    "tools/check-carrier-connector-inputs.py": "de6c1e74c95de5f9e2d846daafa58f4e8c392604272bbed5bf888c8b69f66431",
+    "tools/check-carrier-connector-inputs.py": "20b4f98e5cef0067d921e645b44fd0809ae2bffee1f1055351e7188623ef0c45",
     "research/carrier-service-connectors/private-inputs.json": "db7318f705e1966a93b07bacbab153eaa5fa9bc03a3d6a8114fff3a573382348"
   },
   "inventory": {
@@ -359,5 +359,5 @@
     "No latch flexure, crimped terminal, lead diameter/bend or physical-fit qualification.",
     "Exact male terminal and servo mating connector CAD remain missing."
   ],
-  "elapsed_seconds": 6.586
+  "elapsed_seconds": 6.9
 }

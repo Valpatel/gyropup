@@ -30,6 +30,27 @@ def private_path(entry, root=ROOT):
     return path
 
 
+def validate_receipt(receipt, root=ROOT):
+    """Verify the full geometry closure without requiring a CAD runtime in CI."""
+    recorded=receipt['inputs']
+    if receipt['input_fingerprint']!=provenance.fingerprint(recorded):
+        raise ValueError('Recorded connector input fingerprint is inconsistent')
+    current=provenance.snapshot(root)
+    for field in ('files','GYROPUP_CAD_PARAMS_sha256'):
+        if recorded.get(field)!=current[field]:
+            raise ValueError('Connector input closure changed: '+field)
+    paths=[root/'tools/check-carrier-connector-inputs.py',root/'research/carrier-service-connectors/private-inputs.json']
+    if receipt['context_files']!=provenance.context_snapshot(root,paths):
+        raise ValueError('Connector probe or manifest changed')
+    manifest=json.loads(paths[1].read_text())
+    expected={e['part']:e['sha256'] for e in manifest['parts']}
+    if len(expected)!=len(manifest['parts']) or expected!={k:v['sha256'] for k,v in receipt['inventory'].items()}:
+        raise ValueError('Connector private identity inventory differs')
+    if receipt.get('readiness') is not False:
+        raise ValueError('This input diagnosis cannot claim service readiness')
+    return True
+
+
 def run(output):
     started = time.monotonic()
     inputs = provenance.snapshot(ROOT)
