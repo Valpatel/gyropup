@@ -7,6 +7,8 @@ const inspectButton = document.querySelector('#hero-inspect');
 const soundButton = document.querySelector('#hero-sound');
 const volumeInput = document.querySelector('#hero-volume');
 const REFERENCE_FOV = 34;
+const loadingMessage = document.getElementById('hero-loading-message');
+const loadingPhase = text => { if (loadingMessage) loadingMessage.textContent = text; };
 async function showRobot() {
   let renderer;
   try {
@@ -15,6 +17,7 @@ async function showRobot() {
       import('../designer/robot_v2.js'), import('../designer/character/eyes.js'),
       import('../designer/character/talk.js'), import('../designer/sfx.js'),
     ]);
+    loadingPhase('Loading robot parts…');
     renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -26,6 +29,7 @@ async function showRobot() {
     const fill = new THREE.DirectionalLight(0xffffff, 2); fill.position.set(-3, 2, -1); scene.add(fill);
     const eyes = createEyes({ iris: '#70d8cc' });
     const robot = await buildRobotV2('/', { eyes });
+    loadingPhase('Preparing the 3D preview…');
     scene.add(robot.group); robot.setPose({ height: .6 }); eyes.draw();
     // Ignore invisible metre-long sensor helpers. The fixed reference camera is
     // shared with the transparent square poster; only FOV changes with aspect.
@@ -150,6 +154,7 @@ async function showRobot() {
     };
   } catch (error) {
     renderer?.dispose(); renderer?.domElement.remove();
+    inspectButton.disabled = true; soundButton.disabled = true; volumeInput.disabled = true;
     delete preview.dataset.ready; preview.dataset.state = 'fallback';
     console.warn('3D preview unavailable; showing the CAD poster.', error.message);
     hint.textContent = 'Meet Gyropup in the playground.';

@@ -2,61 +2,20 @@
 // physics, the strength studies with their overload videos and 3D viewer, what to print and what to buy with a picture
 // of every part and its alternate sources), the turret on its bench stand (the same for its parts).
 import { mountAppNav } from './kit/appnav.js';
+import { createLoadingStatus } from './kit/loading.js';
+import { createDataReader, isRecord } from './kit/portal-data.js';
 
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-const getJson = async (u) => { try { const r = await fetch(u, { cache: 'no-store' }); return r.ok ? r.json() : null; } catch { return null; } };
+const reader=createDataReader(fetch);
+const getJson=(url,options={})=>reader.json(url,{validate:isRecord,...options});
 const $ = (id) => document.getElementById(id);
 const tag = (ok, warn) => `<span class="tag ${ok ? 'pass' : warn ? 'warn' : 'fail'}">${ok ? 'PASS' : warn ? 'CLOSE' : 'FAIL'}</span>`;
 const LEG = '../exports/leg/';
 
-await mountAppNav({ root: '../', current: 'progress' });
-
-const prog = await getJson('../docs/progress.json');
-if (prog) {
-  $('updated').insertAdjacentHTML('beforeend', ` Last update: <b>${esc(prog.updated)}</b>.`);
-  $('status').innerHTML = (prog.status || []).map((s) => `<div class="card"><b>${esc(s.title)}</b><div class="k">${esc(s.value)}</div><span>${esc(s.note || '')}</span></div>`).join('');
-  $('log').innerHTML = (prog.log || []).slice().reverse().map((e) => `<li><time>${esc(e.time)}</time><b>${esc(e.title)}</b><p>${esc(e.text)}`
-    + `${(e.links || []).map((l) => ` <a href="${esc(l.href)}">${esc(l.title)}</a>`).join(' ·')}</p></li>`).join('');
-  $('shop').innerHTML = prog.shopping ? `<table class="cmp"><thead><tr><th>item</th><th>qty</th><th>each</th><th>total</th><th>notes</th></tr></thead><tbody>`
-    + prog.shopping.items.map((i) => `<tr><td>${i.href ? `<a href="${esc(i.href)}">${esc(i.item)}</a>` : esc(i.item)}</td><td>${esc(i.qty)}</td><td>${esc(i.each)}</td><td>${esc(i.total)}</td><td>${esc(i.notes)}</td></tr>`).join('')
-    + `</tbody></table><p class="lede">${esc(prog.shopping.note || '')}</p>` : '';
-}
+void mountAppNav({ root: '../', current: 'progress' });
 
 // leg v2: the pictures from cad/build_leg.py
-const leg = await getJson(`${LEG}leg.json`);
-if (leg) {
-  const m = leg.mass_g;
-  $('leglede').innerHTML = `Two RS-04s 150 mm apart in one printed hip frame drive two upper links; two lower links meet at the wheel's axle.`
-    + ` Leg <b>${leg.leg_range_mm[0]}-${leg.leg_range_mm[1]} mm</b> (hip line to axle), track <b>${leg.track_mm_two_legs_back_to_back} mm</b> for two legs back to back,`
-    + ` <b>${(m.total / 1000).toFixed(2)} kg</b> per leg (${(m.printed / 1000).toFixed(2)} kg printed).`
-    + ` Clashes over the whole range: <b>${leg.clashes ? leg.clashes.filter((c) => c[0] !== 'out of range').length : '—'}</b>.`
-    + ` <a href="../exports/leg/leg_stand.step">leg_stand.step</a> (bought parts as envelopes).`;
-  const cap = { 'leg-stand-iso': 'Standing, 300 mm', 'leg-stand-outside': 'From outside: the five-bar', 'leg-stand-inside': 'From inside: both motors in the frame',
-    'leg-stand-front': 'From the front: the layers', 'leg-exploded': 'Exploded: frame, bearings, links, knee cartridges, wheel',
-    'leg-crouch-outside': 'Deepest crouch, 130 mm', 'leg-crouch-iso': 'Crouched', 'leg-tall-outside': 'Tallest, 380 mm' };
-  $('leg').innerHTML = (leg.pictures || []).map((f) => `<figure><a href="${LEG}${esc(f)}"><img src="${LEG}${esc(f)}" alt="${esc(f)}"></a>`
-    + `<figcaption><b>${esc(cap[f.replace('.png', '')] || f)}</b></figcaption></figure>`).join('');
-}
-
 // the test rig (sim/leg_rig.py)
-const rig = await getJson(`${LEG}rig-results.json`);
-if (rig) {
-  const S = rig.scenarios;
-  $('riglede').innerHTML = `One leg on a vertical rail carrying half the robot (<b>${rig.half_mass_kg} kg</b>), RS-04s capped at <b>${rig.model.leg_cap_nm} N·m</b>`
-    + ` (peak ${rig.model.leg_peak_nm}), the stops as stiff as their TPU sleeves. The leg is driven like a RoboMaster balance robot's: a virtual spring on the hip-to-axle line.`;
-  // the joints' real forces and the gearbox torque come from every step of the simulation; statics on the axle's peak
-  // force (in grey) overstates a landing's knee load about twice: the links' and the body's inertia take the spike
-  const jf = (r) => (r.peak_joint_force_n ? Math.round(Math.max(r.peak_joint_force_n.knee_f, r.peak_joint_force_n.knee_r)) : null);
-  $('rigtable').innerHTML = `<table class="cmp"><thead><tr><th>scenario</th><th>motor peak</th><th>gearbox</th><th>wheel force</th><th>knee pin</th><th>stop</th><th>leg range</th><th>jump</th></tr></thead><tbody>`
-    + Object.values(S).map((r) => `<tr><td><b>${esc(r.scenario)}</b><br><span style="color:var(--muted)">${esc(r.title)}</span></td><td>${r.peak_motor_nm} N·m</td>`
-      + `<td>${r.peak_gearbox_nm != null ? `${r.peak_gearbox_nm} N·m ${tag(r.peak_gearbox_nm <= rig.model.leg_peak_nm)}` : '—'}</td><td>${r.peak_wheel_force_n} N</td>`
-      + `<td>${jf(r) != null ? `${jf(r)} N <span style="color:var(--muted)">(statics ${Math.round(r.peak_knee_pin_n)})</span>` : `${r.peak_knee_pin_n} N`}</td>`
-      + `<td>${r.peak_stop_nm} N·m</td><td>${r.L_range_mm.join('-')} mm</td><td>${r.jump_height_mm != null ? r.jump_height_mm + ' mm' : '—'}</td></tr>`).join('')
-    + '</tbody></table>';
-  $('rig').innerHTML = Object.values(S).map((r) => `<figure><video src="${LEG}rig_${esc(r.scenario)}.mp4" controls loop muted playsinline preload="metadata"></video>`
-    + `<figcaption><b>${esc(r.scenario)}</b> ${esc(r.title)}</figcaption></figure>`).join('');
-}
-
 // the joints the whole-leg study bonds, checked on their own (cad/leg_studies.py joint_checks): each check's worst rare
 // case against its own target (rolling bearings by their static safety s0 = C0/P0, printed parts and pins by SF)
 const JOINT_NAMES = { knee_rear: 'rear knee', knee_front: 'front knee', apex_61812: 'apex 61812s', hub_rear: 'rear hub joint', hub_front: 'front hub joint' };
@@ -70,43 +29,24 @@ const jointRows = (J) => {
 };
 
 // strength (cad/leg_studies.py)
-const fea = await getJson(`${LEG}fea/summary.json`);
-if (fea) {
-  const rows = fea.results.map((r) => ({ r, ok: r.safety_factor >= r.target, warn: r.safety_factor < r.target && r.safety_factor >= 0.8 * r.target }));
-  const viewerHref = (r) => (r.viewer ? `kit/fea.html?case=${encodeURIComponent(`../../${r.viewer}`)}&title=${encodeURIComponent(`${r.part} ${r.case}`)}&current=progress` : null);
-  const b = fea.front_link_buckling;
-  $('fea').innerHTML = `<table class="cmp"><thead><tr><th>part</th><th>case</th><th>material</th><th>SF</th><th>need</th><th>deflection</th><th></th><th>3D</th></tr></thead><tbody>`
-    + rows.map(({ r, ok, warn }, i) => `<tr class="click" data-i="${i}"><td>${esc(r.part)}</td><td>${esc(r.case)}</td><td>${esc(r.material)}</td>`
-      + `<td>${r.safety_factor}</td><td>${r.target}</td><td>${r.probe_displacement_mm ? Math.hypot(...r.probe_displacement_mm).toFixed(2) : '—'} mm</td><td>${tag(ok, warn)}</td>`
-      + `<td>${viewerHref(r) ? `<a class="open3d" href="${esc(viewerHref(r))}" title="Interactive: load slider, hot spots, section cut">open ↗</a>` : '—'}</td></tr>`).join('')
-    + (b ? `<tr><td colspan="3">front lower link, buckling (${esc(b.note)})</td><td>${b.sf}</td><td>3</td><td>${b.P_cr_n} N</td><td>${tag(b.sf >= 3)}</td><td></td></tr>` : '')
-    + (fea.joints && fea.joints.checks ? jointRows(fea.joints) : '')
-    + '</tbody></table>';
-  const show = (i) => {
-    const r = rows[i].r;
-    if (r.animation) { $('feavid').src = `../${r.animation}`; $('feavid').play().catch(() => {}); }
-    else { $('feavid').removeAttribute('src'); $('feavid').poster = `../${r.png}`; }
-    const href = viewerHref(r);
-    $('feanote').innerHTML = `${href ? `<a class="hud-btn primary" href="${esc(href)}">Open ${esc(r.part)} ${esc(r.case)} in 3D ↗</a> ` : ''}`
-      + `${esc(r.part)} ${esc(r.case)}: ${esc(r.load_from)}.`;
-    document.querySelectorAll('#fea tr.click').forEach((tr) => tr.classList.toggle('on', +tr.dataset.i === i));
-  };
-  document.querySelectorAll('#fea tr.click').forEach((tr) => tr.addEventListener('click', (e) => { if (!e.target.closest('a')) show(+tr.dataset.i); }));
-  if (rows.length) show(rows.reduce((a, x, i) => (x.r.safety_factor / x.r.target < rows[a].r.safety_factor / rows[a].r.target ? i : a), 0));
-}
-
 // parts lists: a picture of every line (catalog/images.json, tools/part_images.py: product photos, renders of our printed
 // parts), its part number and its alternate sources (catalog/alternates.json). A line that names its part in words gets
 // its catalogue key from catalog/sourcing.json, which also holds the parts no catalogue file has yet.
-const media = await (async () => {
+let media,mediaPromise;
+function loadMedia(){if(!mediaPromise){
+mediaPromise=(async () => {
   const [images, alternates, sourcing, index] = await Promise.all(['images', 'alternates', 'sourcing', 'index'].map((f) => getJson(`../catalog/${f}.json`)));
+  if(!Array.isArray(index.files))throw new Error('The catalog index has an unexpected format.');
   const items = {};
-  for (const list of await Promise.all([...new Set(['hardware.json', ...((index && index.files) || [])])].map((f) => getJson(`../catalog/${f}`)))) {
+  for (const list of await Promise.all([...new Set(['hardware.json', ...((index && index.files) || [])])].map((f) => getJson(`../catalog/${f}`,{validate:value=>Array.isArray(value)&&value.every(isRecord)})))) {
     for (const it of list || []) for (const k of [it.key, it.id]) if (k && !items[k]) items[k] = it;
   }
   for (const it of (sourcing && sourcing.parts) || []) for (const k of [it.key, it.id]) if (k && !items[k]) items[k] = { ...it, pending: true };
   return { images: images || {}, alternates: alternates || {}, sourcing: sourcing || {}, items };
-})();
+})().then(value=>media=value).catch(error=>{mediaPromise=null;throw error;});
+}
+return mediaPromise;
+}
 const keysOf = (r) => {
   if (r.media_key) return [r.media_key, ...(r.also || []).map((a) => a.media_key)];
   for (const c of [r.key, r.id]) if (c && media.items[c]) return [c];
@@ -213,16 +153,6 @@ const coverage = (rows) => {
 };
 
 // what to print and what to buy (cad/build_leg.py)
-const pp = await getJson(`${LEG}print-plan.json`);
-if (pp) {
-  const bm = Object.entries(pp.by_material).map(([m, t]) => `${m}: ${(t.grams / 1000).toFixed(2)} kg, ~${Math.round(t.hours)} h, $${Math.round(t.cost_usd)}`).join(' · ');
-  $('printlede').innerHTML = `${pp.too_big.length ? `<b class="tag fail">TOO BIG: ${esc(pp.too_big.join(', '))}</b> ` : 'Every part fits the 256 mm bed. '}`
-    + `One leg: ~<b>${Math.round(pp.total_hours)} h</b> of printing (${esc(bm)}). Hours are rough.`;
-  $('print').innerHTML = `<div class="mediasum" id="print-nopic"></div><table class="cmp"><thead><tr><th></th><th>part</th><th>material</th><th>qty</th><th>size on the bed</th><th>placement</th><th>g each</th><th>hours (all)</th><th>infill</th><th>how</th></tr></thead><tbody>`
-    + Object.entries(pp.parts).sort((a, b) => b[1].hours - a[1].hours).map(([n, r]) => `<tr><td class="th">${thumb('print', n, n, true)}</td><td><a href="${LEG}${esc(n)}.stl">${esc(n)}</a></td><td>${esc(r.material)}</td><td>${r.qty}</td>`
-      + `<td>${r.size_mm.join(' × ')}</td><td>${esc(r.placement)}</td><td>${r.grams_each}</td><td>${r.hours}</td><td>${esc(r.infill)}</td><td>${esc(r.how)}</td></tr>`).join('') + '</tbody></table>';
-  showMissing('print');
-}
 // parts machined to order from our STEP at an instant price (D40, D46): cad/build_leg.py -> exports/leg/cnc/
 const madeToOrder = (rows) => (!rows || !rows.length ? '' : `<h3 style="margin-top:22px">Machined to order</h3>`
   + '<p class="lede">Upload the STEP for the instant price and enter the callouts (threads, fits, tolerances) the order form asks for; the callouts page doubles as the drawing.</p>'
@@ -231,8 +161,144 @@ const madeToOrder = (rows) => (!rows || !rows.length ? '' : `<h3 style="margin-t
     + `<td>${esc(r.material)}</td><td>${r.qty}</td><td>${r.mass_g_each}</td><td>${esc(r.vendor)}<br><span style="color:var(--muted)">backup ${esc(r.backup)}</span></td>`
     + `<td>${r.price_usd_each != null ? money(r.price_usd_each) : `<span title="${esc(r.price_note)}">~${money(r.price_estimate_usd_each)} (estimate)</span>`}</td></tr>`).join('')
   + '</tbody></table>');
-const bom = await getJson(`${LEG}bom.json`);
+// the turret on its bench stand (cad/build_turret.py)
+const TB = '../exports/turret/bench/';
+
+const validPrint=value=>isRecord(value)&&isRecord(value.parts)&&isRecord(value.by_material)&&Array.isArray(value.too_big);
+const updatedIntro=$('updated').innerHTML;
+$('progress-loading')?.remove();
+window.__portalLoads={};
+function sectionLoad(id,target,label,render){
+ const host=document.createElement('div');host.dataset.reportStatus=id;$(target).before(host);
+ const status=createLoadingStatus(host,{id:'load-'+id,onRetry:retry});let request=0,shown=false;
+ async function retry(){
+  const own=++request,token=status.begin('Loading '+label.toLowerCase()+'…');updatePageState();
+  try{const present=await render(()=>own===request);if(own!==request)return;
+   if(present){shown=true;status.ready(token);}else status.unavailable(shown?label+' is unavailable; the previous report remains shown.':label+' has not been published yet.',{token,onRetry:retry});
+  }catch(error){if(own===request)status.fail((shown?'The previous report remains shown. ':'')+error.message,{token,onRetry:retry});}
+  finally{updatePageState();}
+ }
+ window.__portalLoads[id]={retry,status};return retry();
+}
+function updatePageState(){
+ const states=Object.values(window.__portalLoads).map(load=>load.status.element.dataset.state);
+ const failed=states.includes('error'),pending=states.includes('loading');
+ document.body.dataset.ready=states.length&&states.every(state=>state==='ready'||state==='unavailable')?'1':'0';
+ document.body.dataset.loadState=pending?'loading':failed?'partial':'ready';
+}
+await Promise.all([
+sectionLoad('progress','status','Progress report',async isCurrent=>{
+const prog = await getJson('../docs/progress.json',{optional:false,validate:value=>isRecord(value)&&Array.isArray(value.status)&&Array.isArray(value.log),label:'Progress report'});
+if(!isCurrent())return false;
+if (prog) {
+  $('updated').innerHTML=updatedIntro+` Last update: <b>${esc(prog.updated)}</b>.`;
+  $('status').innerHTML = (prog.status || []).map((s) => `<div class="card"><b>${esc(s.title)}</b><div class="k">${esc(s.value)}</div><span>${esc(s.note || '')}</span></div>`).join('');
+  $('log').innerHTML = (prog.log || []).slice().reverse().map((e) => `<li><time>${esc(e.time)}</time><b>${esc(e.title)}</b><p>${esc(e.text)}`
+    + `${(e.links || []).map((l) => ` <a href="${esc(l.href)}">${esc(l.title)}</a>`).join(' ·')}</p></li>`).join('');
+  $('shop').innerHTML = prog.shopping ? `<table class="cmp"><thead><tr><th>item</th><th>qty</th><th>each</th><th>total</th><th>notes</th></tr></thead><tbody>`
+    + prog.shopping.items.map((i) => `<tr><td>${i.href ? `<a href="${esc(i.href)}">${esc(i.item)}</a>` : esc(i.item)}</td><td>${esc(i.qty)}</td><td>${esc(i.each)}</td><td>${esc(i.total)}</td><td>${esc(i.notes)}</td></tr>`).join('')
+    + `</tbody></table><p class="lede">${esc(prog.shopping.note || '')}</p>` : '';
+}
+
+
+return !!prog;
+}),
+sectionLoad('leg','leglede','Leg design',async isCurrent=>{
+const leg = await getJson(`${LEG}leg.json`,{optional:true,validate:value=>isRecord(value)&&isRecord(value.mass_g)&&Array.isArray(value.leg_range_mm),label:'Leg design'});
+if(!isCurrent())return false;
+if (leg) {
+  const m = leg.mass_g;
+  $('leglede').innerHTML = `Two RS-04s 150 mm apart in one printed hip frame drive two upper links; two lower links meet at the wheel's axle.`
+    + ` Leg <b>${leg.leg_range_mm[0]}-${leg.leg_range_mm[1]} mm</b> (hip line to axle), track <b>${leg.track_mm_two_legs_back_to_back} mm</b> for two legs back to back,`
+    + ` <b>${(m.total / 1000).toFixed(2)} kg</b> per leg (${(m.printed / 1000).toFixed(2)} kg printed).`
+    + ` Clashes over the whole range: <b>${leg.clashes ? leg.clashes.filter((c) => c[0] !== 'out of range').length : '—'}</b>.`
+    + ` <a href="../exports/leg/leg_stand.step">leg_stand.step</a> (bought parts as envelopes).`;
+  const cap = { 'leg-stand-iso': 'Standing, 300 mm', 'leg-stand-outside': 'From outside: the five-bar', 'leg-stand-inside': 'From inside: both motors in the frame',
+    'leg-stand-front': 'From the front: the layers', 'leg-exploded': 'Exploded: frame, bearings, links, knee cartridges, wheel',
+    'leg-crouch-outside': 'Deepest crouch, 130 mm', 'leg-crouch-iso': 'Crouched', 'leg-tall-outside': 'Tallest, 380 mm' };
+  $('leg').innerHTML = (leg.pictures || []).map((f) => `<figure><a href="${LEG}${esc(f)}"><img src="${LEG}${esc(f)}" alt="${esc(f)}"></a>`
+    + `<figcaption><b>${esc(cap[f.replace('.png', '')] || f)}</b></figcaption></figure>`).join('');
+}
+
+
+return !!leg;
+}),
+sectionLoad('rig','riglede','Leg test results',async isCurrent=>{
+const rig = await getJson(`${LEG}rig-results.json`,{optional:true,validate:value=>isRecord(value)&&isRecord(value.model)&&isRecord(value.scenarios),label:'Leg test results'});
+if(!isCurrent())return false;
+if (rig) {
+  const S = rig.scenarios;
+  $('riglede').innerHTML = `One leg on a vertical rail carrying half the robot (<b>${rig.half_mass_kg} kg</b>), RS-04s capped at <b>${rig.model.leg_cap_nm} N·m</b>`
+    + ` (peak ${rig.model.leg_peak_nm}), the stops as stiff as their TPU sleeves. The leg is driven like a RoboMaster balance robot's: a virtual spring on the hip-to-axle line.`;
+  // the joints' real forces and the gearbox torque come from every step of the simulation; statics on the axle's peak
+  // force (in grey) overstates a landing's knee load about twice: the links' and the body's inertia take the spike
+  const jf = (r) => (r.peak_joint_force_n ? Math.round(Math.max(r.peak_joint_force_n.knee_f, r.peak_joint_force_n.knee_r)) : null);
+  $('rigtable').innerHTML = `<table class="cmp"><thead><tr><th>scenario</th><th>motor peak</th><th>gearbox</th><th>wheel force</th><th>knee pin</th><th>stop</th><th>leg range</th><th>jump</th></tr></thead><tbody>`
+    + Object.values(S).map((r) => `<tr><td><b>${esc(r.scenario)}</b><br><span style="color:var(--muted)">${esc(r.title)}</span></td><td>${r.peak_motor_nm} N·m</td>`
+      + `<td>${r.peak_gearbox_nm != null ? `${r.peak_gearbox_nm} N·m ${tag(r.peak_gearbox_nm <= rig.model.leg_peak_nm)}` : '—'}</td><td>${r.peak_wheel_force_n} N</td>`
+      + `<td>${jf(r) != null ? `${jf(r)} N <span style="color:var(--muted)">(statics ${Math.round(r.peak_knee_pin_n)})</span>` : `${r.peak_knee_pin_n} N`}</td>`
+      + `<td>${r.peak_stop_nm} N·m</td><td>${r.L_range_mm.join('-')} mm</td><td>${r.jump_height_mm != null ? r.jump_height_mm + ' mm' : '—'}</td></tr>`).join('')
+    + '</tbody></table>';
+  $('rig').innerHTML = Object.values(S).map((r) => `<figure><video src="${LEG}rig_${esc(r.scenario)}.mp4" controls loop muted playsinline preload="metadata"></video>`
+    + `<figcaption><b>${esc(r.scenario)}</b> ${esc(r.title)}</figcaption></figure>`).join('');
+}
+
+
+return !!rig;
+}),
+sectionLoad('fea','fea','Structural reports',async isCurrent=>{
+const fea = await getJson(`${LEG}fea/summary.json`,{optional:true,validate:value=>isRecord(value)&&Array.isArray(value.results),label:'Structural reports'});
+if(!isCurrent())return false;
+if (fea) {
+  const rows = fea.results.map((r) => ({ r, ok: r.safety_factor >= r.target, warn: r.safety_factor < r.target && r.safety_factor >= 0.8 * r.target }));
+  const viewerHref = (r) => (r.viewer ? `kit/fea.html?case=${encodeURIComponent(`../../${r.viewer}`)}&title=${encodeURIComponent(`${r.part} ${r.case}`)}&current=progress` : null);
+  const b = fea.front_link_buckling;
+  $('fea').innerHTML = `<table class="cmp"><thead><tr><th>part</th><th>case</th><th>material</th><th>SF</th><th>need</th><th>deflection</th><th></th><th>3D</th></tr></thead><tbody>`
+    + rows.map(({ r, ok, warn }, i) => `<tr class="click" data-i="${i}"><td>${esc(r.part)}</td><td>${esc(r.case)}</td><td>${esc(r.material)}</td>`
+      + `<td>${r.safety_factor}</td><td>${r.target}</td><td>${r.probe_displacement_mm ? Math.hypot(...r.probe_displacement_mm).toFixed(2) : '—'} mm</td><td>${tag(ok, warn)}</td>`
+      + `<td>${viewerHref(r) ? `<a class="open3d" href="${esc(viewerHref(r))}" title="Interactive: load slider, hot spots, section cut">open ↗</a>` : '—'}</td></tr>`).join('')
+    + (b ? `<tr><td colspan="3">front lower link, buckling (${esc(b.note)})</td><td>${b.sf}</td><td>3</td><td>${b.P_cr_n} N</td><td>${tag(b.sf >= 3)}</td><td></td></tr>` : '')
+    + (fea.joints && fea.joints.checks ? jointRows(fea.joints) : '')
+    + '</tbody></table>';
+  const show = (i) => {
+    const r = rows[i].r;
+    if (r.animation) { $('feavid').src = `../${r.animation}`; $('feavid').play().catch(() => {}); }
+    else { $('feavid').removeAttribute('src'); $('feavid').poster = `../${r.png}`; }
+    const href = viewerHref(r);
+    $('feanote').innerHTML = `${href ? `<a class="hud-btn primary" href="${esc(href)}">Open ${esc(r.part)} ${esc(r.case)} in 3D ↗</a> ` : ''}`
+      + `${esc(r.part)} ${esc(r.case)}: ${esc(r.load_from)}.`;
+    document.querySelectorAll('#fea tr.click').forEach((tr) => tr.classList.toggle('on', +tr.dataset.i === i));
+  };
+  document.querySelectorAll('#fea tr.click').forEach((tr) => tr.addEventListener('click', (e) => { if (!e.target.closest('a')) show(+tr.dataset.i); }));
+  if (rows.length) show(rows.reduce((a, x, i) => (x.r.safety_factor / x.r.target < rows[a].r.safety_factor / rows[a].r.target ? i : a), 0));
+}
+
+
+return !!fea;
+}),
+sectionLoad('print','printlede','Leg print plan',async isCurrent=>{
+const pp = await getJson(`${LEG}print-plan.json`,{optional:true,validate:validPrint,label:'Leg print plan'});
+if(!isCurrent())return false;
+if (pp) {
+  await loadMedia();
+  if(!isCurrent())return false;
+  const bm = Object.entries(pp.by_material).map(([m, t]) => `${m}: ${(t.grams / 1000).toFixed(2)} kg, ~${Math.round(t.hours)} h, $${Math.round(t.cost_usd)}`).join(' · ');
+  $('printlede').innerHTML = `${pp.too_big.length ? `<b class="tag fail">TOO BIG: ${esc(pp.too_big.join(', '))}</b> ` : 'Every part fits the 256 mm bed. '}`
+    + `One leg: ~<b>${Math.round(pp.total_hours)} h</b> of printing (${esc(bm)}). Hours are rough.`;
+  $('print').innerHTML = `<div class="mediasum" id="print-nopic"></div><table class="cmp"><thead><tr><th></th><th>part</th><th>material</th><th>qty</th><th>size on the bed</th><th>placement</th><th>g each</th><th>hours (all)</th><th>infill</th><th>how</th></tr></thead><tbody>`
+    + Object.entries(pp.parts).sort((a, b) => b[1].hours - a[1].hours).map(([n, r]) => `<tr><td class="th">${thumb('print', n, n, true)}</td><td><a href="${LEG}${esc(n)}.stl">${esc(n)}</a></td><td>${esc(r.material)}</td><td>${r.qty}</td>`
+      + `<td>${r.size_mm.join(' × ')}</td><td>${esc(r.placement)}</td><td>${r.grams_each}</td><td>${r.hours}</td><td>${esc(r.infill)}</td><td>${esc(r.how)}</td></tr>`).join('') + '</tbody></table>';
+  showMissing('print');
+}
+
+return !!pp;
+}),
+sectionLoad('buy','buylede','Leg parts list',async isCurrent=>{
+const bom = await getJson(`${LEG}bom.json`,{optional:true,validate:value=>isRecord(value)&&Array.isArray(value.per_leg)&&Array.isArray(value.to_source),label:'Leg parts list'});
+if(!isCurrent())return false;
 if (bom) {
+  await loadMedia();
+  if(!isCurrent())return false;
   const mto = bom.made_to_order || [];
   $('buylede').innerHTML = `About <b>$${Math.round(bom.price_usd_per_leg)}</b> per leg for what has a price`
     + (mto.length ? `, plus about <b>$${Math.round(bom.made_to_order_estimate_usd_per_leg)}</b> machined to order (below)` : '') + `. ${coverage(bom.per_leg)}`
@@ -242,11 +308,12 @@ if (bom) {
   showMissing('buy');
 }
 
-// the turret on its bench stand (cad/build_turret.py)
-const TB = '../exports/turret/bench/';
-const tb = await getJson(`${TB}bench.json`);
-const tbom = await getJson(`${TB}bom.json`);
-const tpp = await getJson(`${TB}print-plan.json`);
+
+return !!bom;
+}),
+sectionLoad('turret','turretlede','Turret design',async isCurrent=>{
+const tb=await getJson(`${TB}bench.json`,{optional:true,validate:value=>isRecord(value)&&Array.isArray(value.stand_mm),label:'Turret design'});
+if(!isCurrent())return false;
 if (tb) {
   $('turretlede').innerHTML = `The turret (cad/turret.py: a 30-ball hopper over an 8-pocket dial, twin flywheels, a 100 mm barrel that never points above level)`
     + ` on a printed stand (${tb.stand_mm.join(' × ')} mm) with a 24 V inlet, fuse and switch, a USB-CAN adapter for a laptop and a hold-to-run pendant:`
@@ -258,10 +325,19 @@ if (tb) {
     + ['turret.png', 'turret-section.png'].map((f) => `<figure><a href="../exports/turret/${f}"><img src="../exports/turret/${f}" alt="${f}"></a>`
     + `<figcaption><b>${f === 'turret.png' ? 'Every part, labelled' : 'The ball path: hopper, dial, chute, flywheels, barrel'}</b></figcaption></figure>`).join('');
 }
+
+return !!tb;
+}),
+sectionLoad('turretbuy','turretbuylede','Turret parts list',async isCurrent=>{
+const tbom=await getJson(`${TB}bom.json`,{optional:true,validate:value=>isRecord(value)&&Array.isArray(value.bench_turret),label:'Turret parts list'});
+if(!isCurrent())return false;
 if (tbom) {
+  await loadMedia();
+  if(!isCurrent())return false;
   const rows = tbom.bench_turret;
   // bought parts the turret's CAD draws (exports/turret/turret.json) that its list leaves out
   const tj = await getJson('../exports/turret/turret.json');
+  if(!isCurrent())return false;
   const listed = new Set(rows.map((r) => r.for));
   const skip = new Set(media.sourcing.skip || []);
   const drawn = Object.keys((tj && tj.bought) || {}).filter((n) => !listed.has(n) && !skip.has(n));
@@ -272,10 +348,23 @@ if (tbom) {
   $('turretbuy').innerHTML = partList('turretbuy', all);
   showMissing('turretbuy');
 }
+
+return !!tbom;
+}),
+sectionLoad('turretprint','turretprintlede','Turret print plan',async isCurrent=>{
+const tpp=await getJson(`${TB}print-plan.json`,{optional:true,validate:validPrint,label:'Turret print plan'});
+if(!isCurrent())return false;
 if (tpp) {
+  await loadMedia();
+  if(!isCurrent())return false;
   $('turretprintlede').innerHTML = `${Object.keys(tpp.parts).length} printed parts for the turret and its stand, ~<b>${Math.round(tpp.total_hours)} h</b> of printing. Hours are rough.`;
   $('turretprint').innerHTML = `<div class="mediasum" id="turretprint-nopic"></div><table class="cmp"><thead><tr><th></th><th>part</th><th>material</th><th>qty</th><th>size on the bed</th><th>g each</th><th>hours (all)</th><th>how</th></tr></thead><tbody>`
     + Object.entries(tpp.parts).map(([n, r]) => `<tr><td class="th">${thumb('turretprint', n, n, true)}</td><td>${esc(n)}</td><td>${esc(r.material)}</td><td>${r.qty}</td>`
       + `<td>${(r.size_mm || []).join(' × ')}</td><td>${r.grams_each}</td><td>${r.hours}</td><td>${esc(r.how)}</td></tr>`).join('') + '</tbody></table>';
   showMissing('turretprint');
 }
+
+return !!tpp;
+})
+]);
+updatePageState();

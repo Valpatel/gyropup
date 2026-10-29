@@ -8,6 +8,7 @@ import * as THREE from 'three';
 import { STLLoader } from 'three/addons/loaders/STLLoader.js';
 import { buildCurrentTurret } from './current_turret.js';
 import { BALL } from './turret3d.js';
+import { createDataReader, isRecord, validateSTLBytes, validateGeometry } from './kit/portal-data.js';
 
 const M = 0.001;
 const TO_PAGE = new THREE.Matrix4().set(0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1).multiply(new THREE.Matrix4().makeScale(M, M, M));
@@ -49,13 +50,25 @@ function fiveBar(D, l1, l2) {
 
 export async function buildRobotV2(root, { eyes, color = 0xf5b82e } = {}) {
   const base0 = `${root}exports/sim/v2/rig/`;
-  const man = await (await fetch(`${base0}manifest.json`, { cache: 'no-store' })).json();
+  const reader=createDataReader(fetch),part=p=>isRecord(p)&&typeof p.file==='string'&&p.file.length>0&&typeof p.name==='string'&&p.name.length>0;
+  const positive=n=>Number.isFinite(n)&&n>0,vector=(v,n=3)=>Array.isArray(v)&&v.length===n&&v.every(Number.isFinite);
+  const validFivebar=f=>isRecord(f)&&['D_mm','l1_mm','l2_mm'].every(k=>positive(f[k]))&&Number.isFinite(f.y_off_mm)
+    &&isRecord(f.ref)&&['phi1','phi2','af','aw'].every(k=>Number.isFinite(f.ref[k]))
+    &&vector(f.h_range_mm,2)&&f.h_range_mm[0]>0&&f.h_range_mm[1]>f.h_range_mm[0];
+  const man=await reader.json(`${base0}manifest.json`,{label:'Robot manifest',validate:m=>isRecord(m)&&Array.isArray(m.body)&&m.body.length>0&&m.body.every(part)
+    &&isRecord(m.links)&&['upper','front','wheel_link','wheel'].every(key=>Array.isArray(m.links[key])&&m.links[key].length>0&&m.links[key].every(part))
+    &&Object.values(m.links).every(parts=>Array.isArray(parts)&&parts.every(part))&&validFivebar(m.fivebar)
+    &&['wheel_r_mm','track_mm','height_mm','mass_kg'].every(key=>positive(m[key]))
+    &&isRecord(m.mounts)&&vector(m.mounts.eyes)&&vector(m.mounts.camera_front)&&Array.isArray(m.mounts.headlights)&&m.mounts.headlights.every(p=>vector(p))
+    &&isRecord(m.turret)&&['pan_mm','tilt_mm','muzzle_mm'].every(key=>vector(m.turret[key]))
+    &&['pan','tilt'].every(key=>Array.isArray(m.turret[key])&&m.turret[key].length>0&&m.turret[key].every(part))});
   const loader = new STLLoader();
   const files = new Set([...man.body.filter(p=>!p.name.startsWith('turret_')).map(p=>p.file), ...Object.values(man.links).flat().map(p=>p.file)]);
   const geo={},loading=new Map();
   function loadGeometry(file){
     if(geo[file])return Promise.resolve(geo[file]);
-    if(!loading.has(file))loading.set(file,loader.loadAsync(base0+file).then(g=>{
+    if(!loading.has(file))loading.set(file,reader.bytes(base0+file,{label:'Robot part '+file}).then(bytes=>{
+      validateSTLBytes(bytes);const g=validateGeometry(loader.parse(bytes));
       g.applyMatrix4(TO_PAGE);g.computeVertexNormals();geo[file]=g;return g;
     }).catch(error=>{loading.delete(file);throw new Error(`Robot mesh ${file}: ${error.message}`);}));
     return loading.get(file);

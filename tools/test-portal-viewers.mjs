@@ -71,7 +71,7 @@ async function wheel(key) {
 }
 try {
   await page.goto(`${base}/designer/kit/viewer.html`, { waitUntil: 'networkidle' });
-  await page.waitForURL('**/designer/sim.html?run=none');
+  await page.waitForURL(url=>/\/designer\/sim(?:\.html)?$/.test(url.pathname)&&url.searchParams.get('run')==='none');
   await page.waitForFunction(() => window.__sim && document.body.dataset.ready === '1');
   assert.ok(!missing.some(u => u.includes('/exports/view/')), 'Default viewer never requests an absent export');
   results.push({ route: 'default CAD viewer', destination: '/designer/sim.html?run=none' });

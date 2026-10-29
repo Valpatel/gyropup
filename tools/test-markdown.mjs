@@ -95,6 +95,8 @@ test('a changed published status changes Markdown; local unpublished data is nev
     await mkdir(path.join(fixture, 'designer'), { recursive: true });
     await mkdir(path.join(fixture, 'docs'), { recursive: true });
     await cp(path.join(out, 'designer/progress.js'), path.join(fixture, 'designer/progress.js'));
+    await mkdir(path.join(fixture,'designer/kit'),{recursive:true});
+    await cp(path.join(out,'designer/kit/portal-data.js'),path.join(fixture,'designer/kit/portal-data.js'));
     const source = await read('designer/progress.html');
     const data = { updated: 'fixture-revision', status: [{ title: 'Published sentinel', value: 'Changed current data', note: 'Only this bundle is visible.' }], log: [] };
     await writeFile(path.join(fixture, 'docs/progress.json'), JSON.stringify(data));
@@ -102,6 +104,10 @@ test('a changed published status changes Markdown; local unpublished data is nev
     assert.ok(markdown.includes('Published sentinel'));
     assert.ok(markdown.includes('Changed current data'));
     assert.ok(!markdown.includes('bench tests next'), 'must not fall back to the checkout data');
+    await mkdir(path.join(fixture,'exports/leg'),{recursive:true});
+    await writeFile(path.join(fixture,'exports/leg/leg.json'),'<html>Not a report</html>');
+    await assert.rejects(renderPortal(source,'designer/progress.html',fixture),/Incomplete Markdown data snapshot/);
+    await rm(path.join(fixture,'exports/leg/leg.json'));
     // Missing required status must fail the build instead of publishing a blank portal.
     await rm(path.join(fixture, 'docs/progress.json'));
     await assert.rejects(renderPortal(source, 'designer/progress.html', fixture), /Empty Markdown data snapshot/);

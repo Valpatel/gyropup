@@ -5,14 +5,16 @@ import * as THREE from 'three';
 import { STLLoader } from 'three/addons/loaders/STLLoader.js';
 import { createStage } from './stage.js';
 import { section, slider, toggle, readouts } from './panel.js';
+import { createDataReader, isRecord, validateSTLBytes, validateGeometry } from './portal-data.js';
 
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
 /** createViewer({ app, panel, title, manifestUrl }) -> Promise<{ stage, parts, setExplode, setSection }> */
-export async function createViewer({ app, panel, title, manifestUrl }) {
-  const response = await fetch(manifestUrl);
-  if (!response.ok) throw new Error(`Model manifest returned ${response.status}`);
-  const manifest = await response.json();
+export async function createViewer({ app, panel, title, manifestUrl, onProgress = () => {} }) {
+  const reader=createDataReader(fetch);
+  onProgress('Downloading the model manifest…');
+  const manifest=await reader.json(manifestUrl,{label:'Model manifest',validate:value=>isRecord(value)&&Array.isArray(value.parts)&&value.parts.length>0
+    &&value.parts.every(p=>isRecord(p)&&typeof p.file==='string'&&p.file.length>0&&typeof p.name==='string'&&Array.isArray(p.bounds_mm)&&p.bounds_mm.length===6&&p.bounds_mm.every(Number.isFinite))});
   const base = new URL('.', new URL(manifestUrl, location.href));
   if (title) title.textContent = manifest.title ?? 'Model';
 
@@ -23,8 +25,11 @@ export async function createViewer({ app, panel, title, manifestUrl }) {
   const loader = new STLLoader();
   const clip = new THREE.Plane(new THREE.Vector3(-1, 0, 0), 1e9);
   const parts = [];
+  onProgress(`Loading ${manifest.parts.length} model parts…`);
   await Promise.all(manifest.parts.map(async (p) => {
-    const geo = loader.parse(await (await fetch(new URL(p.file, base))).arrayBuffer());
+    const bytes=await reader.bytes(new URL(p.file,base),{label:`Model part ${p.name}`});
+    validateSTLBytes(bytes);
+    const geo=validateGeometry(loader.parse(bytes));
     geo.computeVertexNormals();
     const mat = new THREE.MeshPhysicalMaterial({ color: p.color, roughness: 0.55, clearcoat: 0.2, clippingPlanes: [clip], clipShadows: true,
                                                  side: THREE.DoubleSide });
@@ -44,6 +49,8 @@ export async function createViewer({ app, panel, title, manifestUrl }) {
   holder.add(model);
   model.position.set(-mid.x, -box.min.y, -mid.z);
   const height = Math.max(size.x, size.y, size.z);
+  onProgress('Preparing the 3D view…');
+  await new Promise(requestAnimationFrame);
   const stage = createStage(app, { height: height * 0.8, screenshots: true });
   stage.renderer.localClippingEnabled = true;
   stage.root.add(holder);
@@ -100,5 +107,7 @@ export async function createViewer({ app, panel, title, manifestUrl }) {
     list.appendChild(row);
   }
   stage.start();
+  stage.renderer.render(stage.scene,stage.camera);
+  await new Promise(requestAnimationFrame);
   return { stage, parts, setExplode, setSection };
 }

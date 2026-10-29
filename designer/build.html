@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Gyropup Build</title>
 <link rel="stylesheet" href="kit/hud.css">
+<link rel="stylesheet" href="kit/loading.css" data-gyropup-loading>
 <style>
   /* the progress page's look (designer/progress.html): the same variables, fonts, cards, tags and part rows */
   html, body { overflow-x: hidden; overflow-y: auto; height: auto; }
@@ -131,7 +132,8 @@
 <main class="prog">
   <div class="portal-intro"><strong>Built by autonomous systems · work in progress</strong>You're inside the Gyropup workshop. These are evolving design files and simulation reports; physical testing is still ahead. <a href="../#built">About the project ↗</a></div>
   <h1>Gyropup: build the first prototype</h1>
-  <p class="summary" id="summary">Reading the parts lists and print plans…</p>
+  <div id="build-loading"><div class="gp-loading" role="status" aria-live="polite" aria-busy="true" data-state="loading"><span class="gp-loading-icon" aria-hidden="true"></span><span class="gp-loading-message">Loading parts lists and print plans…</span></div></div>
+  <p class="summary" id="summary">Parts and print totals appear after the published data is ready.</p>
   <p class="lede">Everything to order and to print for the first physical prototype: one leg on its single-leg test rig (milestone M3),
   the turret v0 on its bench stand, and the body's first open frame when its files exist. Generated from the repo's own data each
   time the page loads (the parts lists and print plans in <code>exports/</code>, the catalogue in <code>catalog/</code>, the plans'
@@ -157,6 +159,16 @@
   <div class="queue" id="queue"></div>
 <footer class="portal-footer">Created by <a href="https://valpatel.com">Valpatel Software LLC</a>. © 2026. All rights reserved. Repository materials retain their stated licenses.</footer>
 </main>
-<script type="module" src="build.js"></script>
+<script type="module">
+  try{await import('./build.js');}catch(error){
+    console.warn('Page startup failed:',error.message);
+    // Only a failed bootstrap reloads. Data/model retries above retain the existing scene.
+    if(document.body.dataset.ready!=='1'){
+      const host=document.getElementById('build-loading');host.hidden=false;
+      host.innerHTML='<div class="gp-loading" data-bootstrap-error data-state="error" role="status" aria-live="polite" aria-busy="false"><span class="gp-loading-icon" aria-hidden="true"></span><span class="gp-loading-message">The build planner could not start. Reload the page to try again.</span><span class="gp-loading-actions"><button type="button" data-bootstrap-retry>Reload page</button></span></div>';
+      host.querySelector('[data-bootstrap-retry]').onclick=()=>location.reload();
+    }
+  }
+</script>
 </body>
 </html>

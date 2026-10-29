@@ -38,7 +38,10 @@ try {
  await page.goto(base+'/designer/sim.html?design=turret-box&run=none&sound=0',{waitUntil:'networkidle'});
  await page.waitForFunction(()=>window.__sim?.bench()?.active);await settle();
  // Mouse and trackpad input: preserve magnitude while avoiding an immediate dolly jump.
- await setRadius();const one=await wheel(1);assert.equal(one.before,one.after);assert.equal(one.prevented,true);await settle();const fine=await distance();
+ await setRadius();const one=await wheel(1);assert.equal(one.before,one.after);assert.equal(one.prevented,true);
+ // A slow software renderer can miss every frame inside a 900ms sleep. Require
+ // the same physical radius target as the delta-mode checks before sampling.
+ await reaches(2*Math.pow(1/.95,.25/100));const fine=await distance();
  await setRadius();
  // Sample actual frames, not wall-clock polls: SwiftShader CI can render fewer
  // than three frames in 240ms even though the camera is easing correctly.
@@ -49,8 +52,8 @@ try {
   for(let i=0;i<16;i++){await new Promise(requestAnimationFrame);intermediate.push(radius());}
   return {before,after,intermediate};
  });
- assert.equal(big.before,big.after);const intermediate=big.intermediate;await settle();const notch=await distance();
- assert.ok(fine>2 && fine<2.001,'One-pixel trackpad motion remains fine-grained');
+ assert.equal(big.before,big.after);const intermediate=big.intermediate;await reaches(2*Math.pow(1/.95,.25*120/100));const notch=await distance();
+ assert.ok(fine>2 && fine<2.001,`One-pixel trackpad motion remains fine-grained: radius ${fine}`);
  assert.ok(notch>2.025 && notch<2.04,'A 120-pixel wheel notch changes distance by about1.55%, not6.35%');
  assert.ok(new Set(intermediate.filter(v=>v>2.00001 && v<notch-1e-5).map(v=>v.toFixed(7))).size>=3,'Wheel distance eases through multiple rendered positions');
  assert.ok(intermediate.every((v,i)=>!i || v>=intermediate[i-1]-1e-8),'Easing is monotonic');

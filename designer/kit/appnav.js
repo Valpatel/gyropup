@@ -14,12 +14,17 @@ body.has-appnav{--appnav-h:64px}.appnav a:focus-visible,.appnav button:focus-vis
 
 // root must be a plain relative path (../../, ./, designer/): it goes into links and the nav.json URL
 const ROOT_OK = /^(?:\.\.?\/)*(?:[A-Za-z0-9_-][A-Za-z0-9._-]*\/)*$/;
+const FALLBACK_NAV = { title:'Gyropup', nav:[
+  {id:'home',title:'Home',href:''}, {id:'simulate',title:'Play',href:'designer/sim.html'},
+  {id:'progress',title:'Progress',href:'designer/progress.html'}, {id:'build',title:'Build',href:'designer/build.html'},
+  {id:'docs',title:'Design notes',href:'site/'}, {id:'github',title:'GitHub ↗',href:'https://github.com/Valpatel/gyropup'},
+] };
 
 export async function mountAppNav({ root = '../', current = '' } = {}) {
   if (typeof root !== 'string' || !ROOT_OK.test(root)) return null;
-  let cfg;
-  try { cfg = await (await fetch(`${root}site/nav.json`, { cache: 'no-cache' })).json(); } catch { return null; }
-  if (!cfg?.nav?.length) return null;
+  const existing = document.querySelector('.appnav');
+  if (existing) return existing;
+  const cfg = FALLBACK_NAV;
   const style = document.createElement('style');
   style.textContent = NAV_CSS;
   document.head.appendChild(style);
@@ -45,6 +50,21 @@ export async function mountAppNav({ root = '../', current = '' } = {}) {
   nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
   document.body.prepend(nav);
   document.body.classList.add('has-appnav');
+  // Optional generated navigation must never hold the robot/report bootstrap.
+  // Render useful local links immediately; refresh the configuration in the background.
+  const abort = new AbortController(), timeout = setTimeout(() => abort.abort(), 4000);
+  fetch(`${root}site/nav.json`, { cache:'no-cache', signal:abort.signal }).then(async response => {
+    if (!response.ok) return;
+    const loaded = await response.json();
+    if (!Array.isArray(loaded.nav) || !loaded.nav.length) return;
+    const links = nav.querySelector('.nav-links');
+    // Do not replace links underneath a keyboard user. The fallback stays useful.
+    if (nav.contains(document.activeElement)) return;
+    const content = loaded.nav.filter(n => n && typeof n.title === 'string' && href(n.href) !== null).map(n =>
+      `<a class="tab${(n.id ?? n.href) === current ? ' on' : ''}" ${(n.id ?? n.href) === current ? 'aria-current="page" ' : ''}href="${esc(href(n.href))}">${esc(n.title)}</a>`).join('');
+    if (content) links.innerHTML = content;
+    links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+  }).catch(() => { /* Keep complete fallback navigation on offline/invalid data. */ }).finally(() => clearTimeout(timeout));
   liveReload();
   return nav;
 }

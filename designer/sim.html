@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="kit/hud.css">
 <link rel="stylesheet" href="sim-layout.css">
 <link rel="stylesheet" href="turret_bench.css">
+<link rel="stylesheet" href="kit/loading.css" data-gyropup-loading>
 <script type="importmap">{"imports": {"three": "./kit/vendor/three/three.module.min.js", "three/addons/": "./kit/vendor/three/addons/"}}</script>
 <style>
   #design-select, #run-select { font: 12px var(--font-mono); background: var(--surface-2); color: var(--text); border: 1px solid var(--hairline); border-radius: 6px; padding: 5px 8px; max-width: 240px; }
@@ -20,12 +21,16 @@
 </style>
 </head>
 <body>
+<div id="sim-startup" class="gp-loading gp-loading--overlay" role="status" aria-live="polite" aria-busy="true" data-state="loading" style="position:fixed;top:calc(var(--appnav-h,0px) + 80px)">
+  <span class="gp-loading-icon" aria-hidden="true"></span><span class="gp-loading-message">Loading the playground…</span>
+  <span class="gp-loading-actions"><button type="button" hidden>Try again</button></span>
+</div>
 <div id="app"></div>
 <div id="hud">
   <header id="topbar">
     <span class="hud-tag" title="Browser demo snapshot from October 2026; see Progress for current engineering reports">PLAYGROUND · WIP</span>
-    <select id="design-select" aria-label="Design"></select>
-    <select id="run-select" aria-label="Physics run"></select>
+    <select id="design-select" aria-label="Design" disabled></select>
+    <select id="run-select" aria-label="Physics run" disabled></select>
     <span class="spacer"></span>
     <button class="hud-pill on" id="alive"><span class="dot"></span>ALIVE</button>
   </header>
@@ -33,8 +38,16 @@
     <div class="hud-card stage-card" id="summary"></div>
     <div class="hud-hint">DRAG · ORBIT // SCROLL · ZOOM // RIGHT-DRAG · PAN</div>
   </main>
-  <aside id="panel"></aside>
+  <aside id="panel" inert></aside>
 </div>
-<script type="module" src="sim.js"></script>
+<script type="module">
+  const startup=document.getElementById('sim-startup');
+  import('./sim.js').catch(error=>{
+    console.warn('Playground startup failed:',error.message);
+    startup.hidden=false;startup.dataset.state='error';startup.setAttribute('aria-busy','false');
+    startup.querySelector('.gp-loading-message').textContent='The playground could not load. Please try again.';
+    const retry=startup.querySelector('button');retry.hidden=false;retry.onclick=()=>location.reload();
+  });
+</script>
 </body>
 </html>

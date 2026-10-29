@@ -13,12 +13,15 @@
 // keysOf, thumb, altList and riskTag are copied from there). Nothing here is typed in by hand: no price, quantity,
 // lead time or seller.
 import { mountAppNav } from './kit/appnav.js';
+import { createLoadingStatus } from './kit/loading.js';
+import { createDataReader, isRecord, isMarkdown } from './kit/portal-data.js';
 
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-// a file not generated yet answers 404: its short body is read so the request ends (an unread body keeps it open)
-const fetchOk = async (u) => { try { const r = await fetch(u, { cache: 'no-store' }); if (r.ok) return r; await r.arrayBuffer(); return null; } catch { return null; } };
-const getJson = async (u) => { const r = await fetchOk(u); try { return r ? await r.json() : null; } catch { return null; } };
-const getText = async (u) => { const r = await fetchOk(u); try { return r ? await r.text() : null; } catch { return null; } };
+const dataReader=createDataReader(fetch);
+const getJson=(url,options={})=>dataReader.json(url,{validate:isRecord,...options});
+const getText=(url,options={})=>dataReader.text(url,{validate:isMarkdown,...options});
+const validBOM=value=>isRecord(value)&&Object.values(value).some(Array.isArray);
+const validPrint=value=>isRecord(value)&&isRecord(value.parts)&&isRecord(value.by_material)&&Number.isFinite(value.total_hours);
 const $ = (id) => document.getElementById(id);
 const R = '../';                                            // the project root, from designer/
 const round2 = (v) => Math.round(v * 100) / 100;            // cents: each line, then each seller, then the total
@@ -30,7 +33,14 @@ const plural = (n, w, p = `${w}s`) => `${n} ${n === 1 ? w : p}`;
 const docPage = (f) => `${R}site/pages/${f.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}.html`;   // cad-agent site's slug
 const mdSlug = (t) => t.normalize('NFKD').replace(/[^\x00-\x7f]/g, '').replace(/[^\w\s-]/g, '').trim().toLowerCase().replace(/[-\s]+/g, '-');
 
-await mountAppNav({ root: R, current: 'build' });
+void mountAppNav({ root: R, current: 'build' });
+$('build-loading').replaceChildren();
+const loading=createLoadingStatus($('build-loading'),{onRetry:loadBuild,id:'build-data-status'});
+let attempt=0;
+async function loadBuild(){
+const request=++attempt,token=loading.begin('Loading parts lists and print plans…');
+document.body.dataset.ready='0';delete document.body.dataset.loadError;
+try {
 
 // ------------------------------------------------------------------------------------------------ the workstreams
 // The first prototype's three workstreams (the rig is the leg's, kept apart because its files come from its own branch).
@@ -53,30 +63,28 @@ const STREAMS = [
 const SKIP_LIST = /^(v1|not_|no_|to_source|cad_pending|made_to_order|ordered_to_drawing)/;   // not bought for this build
 const FAB = /sendcutsend|jlccnc|xometry|jlcpcb|pcbway/i;    // custom parts ordered from our files (D40)
 
-for (const s of STREAMS) {
-  s.bomData = await getJson(R + s.bom);
-  s.plans = [];
-  for (const f of s.print) {
-    if (f.includes('/bench/print-plan') && s.id === 'rig' && !s.plans.length && !s.bomData) continue;   // only once the rig exists
-    const p = await getJson(R + f);
-    if (p) s.plans.push({ file: f, data: p });
-  }
-  s.present = !!(s.bomData || s.plans.length);
-}
+await Promise.all(STREAMS.map(async s=>{
+  const files=await Promise.all([getJson(R+s.bom,{optional:true,validate:validBOM,label:s.title+' parts list'}),
+    ...s.print.map(file=>getJson(R+file,{optional:true,validate:validPrint,label:s.title+' print plan'}))]);
+  s.bomData=files[0];s.plans=s.print.flatMap((file,i)=>files[i+1]?[{file,data:files[i+1]}]:[]);
+  s.present=!!(s.bomData||s.plans.length);s.complete=!!s.bomData&&s.plans.length===s.print.length;
+}));
+loading.update('Loading the parts catalog and design plans…',token);
 const turretJson = STREAMS.find((s) => s.id === 'turret').present ? await getJson(`${R}exports/turret/turret.json`) : null;
 // the turret's own STEP and STL files are written by cad/turret.py and not kept in git: the local server's listing of
 // exports/turret/ says which are on this machine, so the page links only those
-const turretFiles = new Set(turretJson ? [...((await getText(`${R}exports/turret/`)) || '').matchAll(/href="([^"?#]+\.(?:stl|step))"/gi)]
+const turretFiles = new Set(turretJson ? [...((await getText(`${R}exports/turret/`,{optional:true,validate:value=>typeof value==='string',label:'Available turret downloads'})) || '').matchAll(/href="([^"?#]+\.(?:stl|step))"/gi)]
   .map((m) => decodeURIComponent(m[1])) : []);
 
 // ------------------------------------------------------------------------------------------------ the catalogue
 const media = await (async () => {
   const [images, alternates, sourcing, index, materials] = await Promise.all(['images', 'alternates', 'sourcing', 'index', 'materials']
     .map((f) => getJson(`${R}catalog/${f}.json`)));
+  if(!Array.isArray(index.files))throw new Error('The catalog index has an unexpected format.');
   const files = new Set(['hardware.json', ...((index && index.files) || [])]);
   if (STREAMS.find((s) => s.id === 'rig').present) files.add('rig.json');            // the rig's parts (its task T1)
   const items = {};
-  for (const list of await Promise.all([...files].map((f) => getJson(`${R}catalog/${f}`)))) {
+  for (const list of await Promise.all([...files].map((f) => getJson(`${R}catalog/${f}`,{validate:value=>Array.isArray(value)&&value.every(isRecord),label:'Parts catalog '+f})))) {
     for (const it of Array.isArray(list) ? list : []) for (const k of [it.key, it.id]) if (k && !items[k]) items[k] = it;
   }
   for (const it of (sourcing && sourcing.parts) || []) for (const k of [it.key, it.id]) if (k && !items[k]) items[k] = { ...it, pending: true };
@@ -392,7 +400,7 @@ const day1Reasons = (l) => {
 };
 
 // ------------------------------------------------------------------------------------------------ rendering
-const included = new Set(STREAMS.filter((s) => s.present).map((s) => s.id));
+const included = new Set(STREAMS.filter((s) => s.complete).map((s) => s.id));
 const altList = (l) => {
   const s = l.s, it = l.it || {};
   const alts = [];
@@ -495,7 +503,7 @@ const render = () => {
   const sellers = groups.filter((g) => !g.none).length;
 
   // the one-line summary
-  $('summary').innerHTML = `To order: <b id="sum-total" data-usd="${total}">${usd(total)}</b> from <b>${sellers}</b> sellers`
+  $('summary').innerHTML = `${STREAMS.some(s=>!s.complete)?'Published-data subtotal (unpublished workstreams excluded)':'To order'}: <b id="sum-total" data-usd="${total}">${usd(total)}</b> from <b>${sellers}</b> sellers`
     + ` (<b>${lines.length}</b> lines, whole packs and spools)`
     + `${!madeRows.length ? '' : madeUnpriced.length === madeRows.length
       ? ` + <b id="sum-made" data-usd="0">${plural(madeRows.length, 'part')}</b> machined or cut to order (not priced yet)`
@@ -518,11 +526,11 @@ const render = () => {
       : bom && bom.price_usd_known ? `bom.json's own figure: ${Object.entries(bom.price_usd_known).map(([k, v]) => `${k} ${usd(v)}`).join(', ')} at catalogue prices, pieces used` : '';
     const ph = sum(s.plans.map((p) => p.data.total_hours || 0));
     const nParts = sum(s.plans.map((p) => Object.keys(p.data.parts || {}).length));
-    return `<div class="card stream${included.has(s.id) ? '' : ' off'}"><b>${esc(s.title)}</b><span class="tag pass">FROM THE DATA</span>`
+    return `<div class="card stream${included.has(s.id) ? '' : ' off'}"><b>${esc(s.title)}</b><span class="tag ${s.complete?'pass':'warn'}">${s.complete?'FROM THE DATA':'PARTIAL EXPORT · EXCLUDED'}</span>`
       + `<p>${esc(s.about)} Plan: ${planLink}.</p>`
       + `<p>${s.plans.length ? `${plural(nParts, 'printed part')}, ~${ph.toFixed(1)} h. ` : 'No print plan yet. '}${esc(own)}${own ? '.' : ''}</p>`
       + `<ul class="files">${files}</ul>`
-      + `<label class="inc"><input type="checkbox" data-stream="${esc(s.id)}"${included.has(s.id) ? ' checked' : ''}> include in the lists and totals</label></div>`;
+      + `<label class="inc"><input type="checkbox" data-stream="${esc(s.id)}"${s.complete?'':' disabled'}${included.has(s.id) ? ' checked' : ''}> include in the lists and totals</label></div>`;
   }).join('');
   document.querySelectorAll('#streams input[data-stream]').forEach((cb) => cb.addEventListener('change', () => {
     if (cb.checked) included.add(cb.dataset.stream); else included.delete(cb.dataset.stream);
@@ -716,3 +724,12 @@ const printQueue = () => {
 };
 
 render();
+
+if(request===attempt){loading.ready(token);document.body.dataset.ready='1';}
+} catch(error){
+ if(request!==attempt)return;
+ $('summary').textContent='Parts and print totals are unavailable until the data loads successfully.';
+ loading.fail(error.message,{token,onRetry:loadBuild});document.body.dataset.loadError='1';
+}
+}
+await loadBuild();
