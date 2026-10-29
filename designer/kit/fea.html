@@ -8,7 +8,12 @@
 <script type="importmap">{"imports": {"three": "./vendor/three/three.module.min.js", "three/addons/": "./vendor/three/addons/"}}</script>
 </head>
 <body>
-<div id="fea"></div>
+<div id="fea"><main style="position:relative;z-index:4;max-width:560px;margin:var(--appnav-h,0px) auto 0;padding:24px;max-height:calc(100vh - var(--appnav-h,0px));overflow:auto">
+  <h1>Structural reports</h1>
+  <p>Explore Gyropup’s structural reports, or open an earlier thigh study to try the interactive load, colour, and section controls.</p>
+  <p><a href="../progress.html#fea">Latest structural reports</a></p>
+  <p><a href="fea.html?case=../../exports/fea/thigh-T1.json&amp;title=Earlier%20thigh%20study">Explore the earlier thigh study in 3D</a></p>
+</main></div>
 <script type="module">
   // fea.html?case=<url of a Study.export_viewer() JSON on this site, relative to this page>
   // Scriptable for links and screenshots: &load=1.5 &field=ratio|stress|sf|disp &spot=1 &clip=x:0.4 &exag=20 &panel=0
@@ -32,7 +37,7 @@
     el.querySelector('.hud-note').textContent = msg;
   };
   if (!q.has('case')) {
-    fail('Open a case with fea.html?case=<url of the JSON>. Write one with Study.export_viewer(path) (cadagent.fea) after solve().');
+    // The static entry links also remain useful to no-script browsers and Markdown readers.
   } else if (!caseUrl) {
     fail('The case must be a JSON file on this site (a relative URL or this origin).');
   } else {

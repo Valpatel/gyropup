@@ -7,7 +7,7 @@
 // room, so a shot has a crack, a thump, the squeeze through the wheels and a whoosh that carries.
 //
 // Browsers only start audio after a click or key press, so the context is created on the first gesture.
-// createSfx() -> { enabled, setEnabled(on), unlock(), shot(), hit(), down(), laser(on), flywheels(on), reload(),
+// createSfx() -> { enabled, volume, setEnabled(on), setVolume(0..1), onChange(fn), unlock(), shot(), hit(), down(), laser(on), flywheels(on), reload(),
 //                  chirp(), motion({ wheelSpeed, servoSpeed, legSpeed }), turret }
 //
 // sfx.turret is the turret on the Orin AGX box (turret_bench.js), on the same chain and at the same levels:
@@ -23,7 +23,13 @@
 
 export function createSfx({ key = 'gyropup-sfx', volume = 1.0 } = {}) {
   let ctx = null, out = null, room = null, noiseBuf = null, enabled = true;
-  try { enabled = localStorage.getItem(key) !== '0'; } catch { /* storage blocked */ }
+  try {
+    enabled = localStorage.getItem(key) !== '0';
+    const saved = localStorage.getItem(key + '-volume');
+    if (saved !== null && Number.isFinite(+saved)) volume = Math.max(0, Math.min(1, +saved));
+  } catch { /* storage blocked */ }
+  const listeners = new Set();
+  const changed = () => { for (const listener of listeners) listener({ enabled, volume }); };
   const hum = {};     // continuous voices: flywheels, servos, wheel motors
 
   function unlock() {
@@ -464,10 +470,21 @@ export function createSfx({ key = 'gyropup-sfx', volume = 1.0 } = {}) {
 
   return {
     get enabled() { return enabled; },
+    get volume() { return volume; },
+    onChange(listener) { listeners.add(listener); return () => listeners.delete(listener); },
+    setVolume(value) {
+      if (!Number.isFinite(+value)) return;
+      volume = Math.max(0, Math.min(1, +value));
+      try { localStorage.setItem(key + '-volume', String(volume)); } catch { /* storage blocked */ }
+      if (out) out.gain.value = enabled ? volume : 0;
+      changed();
+    },
     setEnabled(on) {
       enabled = Boolean(on);
       try { localStorage.setItem(key, enabled ? '1' : '0'); } catch { /* storage blocked */ }
-      if (enabled) unlock(); else ctx?.suspend();
+      if (out) out.gain.value = enabled ? volume : 0;
+      changed();
+      if (enabled) unlock(); else ctx?.suspend().catch(() => {});
     },
     unlock,
     /** The shot: the dial clicks a ball into the wheels, they crack and thump it out with a squeeze, it whooshes away

@@ -7,6 +7,7 @@
 // Adapted from the Moxie simulator's moxie/scene.js (mvalancy/moxie-robot-saver, MIT).
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { smoothWheelZoom } from './smooth_zoom.js';
 
 function radialGlow(stops) {
   const c = document.createElement('canvas');
@@ -43,11 +44,17 @@ export function createStage(container, opts = {}) {
   container.appendChild(renderer.domElement);
 
   const scene = new THREE.Scene();
+  // A transparent canvas leaves the CSS sky bright at dusk. Keep sky and lit
+  // geometry on the same eased daylight level in every playground.
+  const sky = { day: new THREE.Color(0xe8efdc), night: new THREE.Color(0x081319) };
+  scene.background = sky.day.clone();
   const camera = new THREE.PerspectiveCamera(38, 1, 0.05, 50);   // near/far are set from the model size in frame()
   const controls = new OrbitControls(camera, renderer.domElement);
   controls.enableDamping = true;
   controls.dampingFactor = 0.08;
   controls.maxPolarAngle = 1.5;
+  controls.zoomSpeed = opts.zoomSpeed ?? 0.25; // Fine native pinch and middle-button dolly.
+  const wheelZoom = smoothWheelZoom(controls, renderer.domElement, { speed: controls.zoomSpeed });
 
   // cool control-room lighting: white key, cold fill, accent rim
   const hemi = new THREE.HemisphereLight(0xeef6ff, 0x2a3240, 1.1);
@@ -79,6 +86,7 @@ export function createStage(container, opts = {}) {
 
   // Size everything to the robot.
   function frame(height) {
+    wheelZoom.cancel();
     const s = height;
     // A tight near/far range keeps depth precision high, so close surfaces do not flicker (z-fighting).
     camera.near = 0.02 * s;
@@ -106,6 +114,7 @@ export function createStage(container, opts = {}) {
   const light = { level: 1, current: 1, base: { hemi: 1.1, key: 2.8, fill: 1.0, rim: 1.0, grid: 0.12, pad: 1.0, ambient: 0.35 } };
   function applyLight() {
     const s = light.current, lit = 0.04 + 0.96 * s;
+    scene.background.copy(sky.night).lerp(sky.day, s);
     hemi.intensity = light.base.hemi * lit;
     key.intensity = light.base.key * lit;
     fill.intensity = light.base.fill * lit;
@@ -168,6 +177,7 @@ export function createStage(container, opts = {}) {
     camera.quaternion.copy(saved.q);
     camera.updateMatrixWorld();
     if (!apply) return { center, distance: dist, position };
+    wheelZoom.cancel();
     camera.position.copy(position);
     controls.target.copy(center);
     camera.far = Math.max(camera.far, dist + 4 * sphere.radius);
@@ -191,6 +201,7 @@ export function createStage(container, opts = {}) {
         if (!cb.failed) { cb.failed = true; console.error(err); document.body.dataset.stageError = String(err?.stack ?? err).slice(0, 500); }
       }
     }
+    wheelZoom.step(dt);
     controls.update();
     renderer.render(scene, camera);
     requestAnimationFrame(tick);
@@ -198,6 +209,7 @@ export function createStage(container, opts = {}) {
 
   return {
     renderer, scene, camera, controls, root, frame, setInsets, fitView,
+    setSceneBackground(day = 0xe8efdc, night = 0x081319) { sky.day.set(day); sky.night.set(night); applyLight(); },
     setSceneLight(v, immediate = false) { light.level = Math.max(0, Math.min(1, v)); if (immediate) { light.current = light.level; applyLight(); } },
     onFrame(cb) { callbacks.push(cb); },
     start() { if (!running) { running = true; requestAnimationFrame(tick); } },

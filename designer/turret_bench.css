@@ -22,6 +22,12 @@ body.bench-mode #stage-overlay > .hud-hint:not(.tb-keys) { display: none; }     
 .tb-fire { border: 1px solid rgba(255, 42, 109, 0.45); background: rgba(255, 42, 109, 0.06); }
 .tb-fire.ready { border-color: var(--magenta); background: rgba(255, 42, 109, 0.2); box-shadow: 0 0 22px rgba(255, 42, 109, 0.4); }
 .tb-fire:active { transform: scale(0.97); }
+.tb-reload { display:grid;place-items:center;gap:2px;min-width:110px;height:60px;padding:4px 12px;border:2px solid #dc5a1d;border-radius:14px;background:#ffdf9e; }
+.tb-reload b { font-size:12px;letter-spacing:.04em; }
+.tb-reload small { font-size:10px;color:#74401f;white-space:nowrap; }
+.tb-reload.empty { box-shadow:0 0 0 3px #f5b84c; }
+.tb-reload:disabled { opacity:1;cursor:progress;background:#fff0c8; }
+.tb-arm:disabled,.tb-fire:disabled { opacity:.45;cursor:default; }
 .tb-views { display: flex; border: 1px solid var(--hairline); border-radius: 10px; overflow: hidden; }
 .tb-views button { border: 0; border-right: 1px solid var(--hairline); background: transparent; padding: 0 10px; height: 40px; color: var(--muted); }
 .tb-views button:last-child { border-right: 0; }
@@ -33,7 +39,7 @@ body.bench-mode #stage-overlay > .hud-hint:not(.tb-keys) { display: none; }     
   font: 12px/1.4 var(--font-ui); text-align: center; opacity: 0; transition: opacity .25s, transform .25s; }
 #tb-toast.show { opacity: 1; transform: translate(-50%, 0); }
 
-#tb-card { left: 16px; top: auto; bottom: 96px; max-width: 360px; z-index: 6; }
+#tb-card { left: 16px; top: auto; bottom: calc(var(--tb-actions-h, 78px) + 24px); max-width: 360px; z-index: 6; }
 #tb-card h3 { margin: 0 0 6px; font: 700 14px var(--font-ui); color: var(--cyan); padding-right: 22px; }
 #tb-card p { margin: 0 0 6px; font-size: 12.5px; line-height: 1.45; color: var(--text-dim); }
 #tb-card .tb-fact { font: 11px/1.45 var(--font-mono); color: var(--muted); }
@@ -85,7 +91,13 @@ body.tb-mode.tb-journey-on #summary { display: none; }
   .tb-arm, .tb-fire { min-width: 72px; height: 58px; padding: 2px 8px; }
   .tb-views button { padding: 0 6px; height: 44px; font-size: 9.5px !important; letter-spacing: .04em !important; }
   .tb-journey { display: none; }
-  #tb-card { left: 8px; right: 8px; max-width: none; bottom: 82px; max-height: 38vh; overflow: auto; }
+  #tb-actions { display:grid;grid-template-columns:repeat(3,minmax(0,1fr)); }
+  .tb-arm { grid-column:1;grid-row:1; }
+  .tb-reload { grid-column:2;grid-row:1;min-width:0;width:100%;height:58px;padding:3px; }
+  .tb-fire { grid-column:3;grid-row:1; }
+  .tb-views { grid-column:1/-1;grid-row:2;display:flex; }
+  .tb-views button { flex:1; }
+  #tb-card { left: 8px; right: 8px; max-width: none; bottom: calc(var(--tb-actions-h, 124px) + 16px); max-height: 38vh; overflow: auto; }
   #tb-journey-card { left: 8px; right: 8px; top: 8px; max-width: none; padding: 8px 10px; }
   #tb-journey-card p { font-size: 12px; margin: 6px 0 8px; max-height: 22vh; overflow: auto; }
   .tb-jnav button { height: 40px; }
@@ -93,5 +105,5 @@ body.tb-mode.tb-journey-on #summary { display: none; }
 }
 @media (max-width: 899px) and (max-height: 520px) {
   #tb-actions { left: auto; right: max(8px, env(safe-area-inset-right)); width: min(56%, 420px); }
-  #tb-card { left: auto; right: 8px; width: min(44%, 340px); bottom: 76px; }
+  #tb-card { left: 8px; right: auto; width: min(42%, 340px); bottom: 8px; }
 }
