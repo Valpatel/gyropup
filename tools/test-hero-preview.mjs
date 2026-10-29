@@ -14,6 +14,22 @@ function voiceStub(){
  Object.defineProperty(window,'speechSynthesis',{configurable:true,value:{getVoices:()=>[],speak(u){window.voiceTest.spoken.push({text:u.text,volume:u.volume});},cancel(){window.voiceTest.cancelled++;}}});
 }
 async function settle(page){await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));}
+async function assertGreetingClear(page){
+ const bounds=await page.evaluate(()=>{
+  const h=window.__heroPreview,cr=h.renderer.domElement.getBoundingClientRect();let bottom=-Infinity;
+  h.robot.group.updateWorldMatrix(true,true);
+  h.robot.group.traverseVisible(m=>{if(!m.isMesh)return;m.geometry.computeBoundingBox();const b=m.geometry.boundingBox;
+   for(const x of [b.min.x,b.max.x])for(const y of [b.min.y,b.max.y])for(const z of [b.min.z,b.max.z]){
+    const p=m.position.clone().set(x,y,z);m.localToWorld(p);p.project(h.camera);bottom=Math.max(bottom,cr.top+(1-p.y)*cr.height/2);
+   }
+  });
+  const b=document.querySelector('.gp-bubble').getBoundingClientRect(),controls=document.querySelector('.hero-controls').getBoundingClientRect();
+  return {modelBottom:bottom,bubbleTop:b.top,bubbleBottom:b.bottom,controlsTop:controls.top,caption:getComputedStyle(document.querySelector('.scene-caption')).visibility};
+ });
+ assert.ok(bounds.bubbleTop>=bounds.modelBottom+2,`Greeting clears the whole robot: ${JSON.stringify(bounds)}`);
+ assert.ok(bounds.bubbleBottom<=bounds.controlsTop-4,`Greeting clears controls: ${JSON.stringify(bounds)}`);
+ assert.equal(bounds.caption,'hidden','Greeting temporarily replaces the caption');
+}
 async function visibleComposition(page,first=false){return page.evaluate(async first=>{
  const h=window.__heroPreview,container=document.getElementById('robot-preview'),poster=container.querySelector('img'),canvas=h.renderer.domElement;
  const frame=new Image();frame.src=first?window.firstHeroFrame:h.captureFrame();await frame.decode();
@@ -81,6 +97,7 @@ try{
    return (Math.max(bg,fg)+.05)/(Math.min(bg,fg)+.05);
   });assert.ok(contrast>=4.5,`Greeting text contrast ${contrast}`);
   await page.waitForFunction(()=>!document.querySelector('.gp-bubble').classList.contains('typing'));
+  await assertGreetingClear(page);
   await page.locator('.hero-scene').screenshot({path:`${out}/${engine.name()}-alive-greeting.png`});
   await context.close();
  }
@@ -116,6 +133,13 @@ try{
   await settle(page);const bubble=await page.locator('.gp-bubble').boundingBox();
   assert.ok(bubble.x>=0&&bubble.y>=0&&bubble.x+bubble.width<=page.viewportSize().width&&bubble.y+bubble.height<=page.viewportSize().height,'Speech stays inside the visible viewport');
   if(touch)await page.locator('.hero-scene').screenshot({path:`${out}/${engine.name()}-touch-greeting.png`});
+  if(touch)for(const [width,height] of [[320,568],[390,844],[844,390]]){
+   await page.setViewportSize({width,height});await page.locator('.hero-scene').scrollIntoViewIfNeeded();
+   await page.evaluate(()=>window.__heroPreview.talk.say('My next big idea? A ridiculously good foam-ball battle.',{speak:false,hold:30000}));
+   await page.waitForFunction(()=>!document.querySelector('.gp-bubble').classList.contains('typing'));await settle(page);
+   await assertGreetingClear(page);
+   await page.locator('.hero-scene').screenshot({path:`${out}/${engine.name()}-greeting-clear-${width}.png`});
+  }
   assert.equal(await page.evaluate(()=>window.voiceTest.spoken.length),0);
   await page.locator('#hero-sound').click();await page.evaluate(()=>window.__heroPreview.talk.say('Audible landing test'));
   await page.waitForFunction(()=>window.voiceTest.spoken.some(x=>x.text==='Audible landing test'));

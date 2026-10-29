@@ -67,6 +67,8 @@ async function showRobot() {
     const sfx = createSfx();
     const talk = mountTalk({ stage: { camera, renderer, onFrame: fn => callbacks.push(fn) }, eyes,
       getHead: () => robot.head ?? robot.base, root: '/', dock: false, audio: { enabled: false, volume: sfx.volume } });
+    // Keep greetings in the reserved caption band, clear of the detailed turret.
+    preview.parentElement.append(document.querySelector('.gp-bubble'));
     const paintSound = () => {
       soundButton.textContent = `Sound ${sfx.enabled ? 'on' : 'off'}`;
       soundButton.setAttribute('aria-pressed', String(sfx.enabled));

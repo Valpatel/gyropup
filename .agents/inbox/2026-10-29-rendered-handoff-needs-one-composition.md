@@ -17,4 +17,6 @@ PASS chromium: visible poster/first-frame match at12 viewport/DPR combinations; 
 
 The later normal-motion screenshot was the evidence that exposed the child-color problem despite those passing geometry checks. Keep both measured checks and visual review; neither substitutes for the other.
 
+A further 2026-10-29 visual inspection of `chromium-alive-greeting.png` showed the readable greeting covering the detailed turret. The shared face anchor is below that turret; viewport containment and contrast assertions both passed while the main subject was obscured. The landing now puts greetings in a reserved caption band and tests clearance against projected visible-model bounds and action controls at desktop, 320/390 px portrait and 844 px landscape. The extra band preserves the original canvas dimensions, so it does not alter poster composition. This is a landing-specific layout rule; the playground still needs speech positioned within its own free scene area.
+
 The durable procedure is [Landing preview](../domains/landing-preview.md). This checks sampled software presentation; it does not prove subjective appeal or hardware geometry correctness.
