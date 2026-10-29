@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "observed_date": "2026-10-29",
+  "parts": [
+    {
+      "part": "43020-1200",
+      "private_file": "references/vendor/molex-43020-1200/430201200.stp",
+      "sha256": "25dda729f39ad81389a81244c08fb0f2861a3ff0874eb429e954a6fabea9934d",
+      "cad_url": "https://www.farnell.com/cad/2561237.zip",
+      "cad_link_page": "https://jp.farnell.com/molex/43020-1200/-12-3mm-/dp/629327",
+      "archive_sha256": "6ab3070830473ee06afd762805afec68281ec9ba7ee91c3e864f9a7ec00997e9"
+    },
+    {
+      "part": "43025-1200",
+      "private_file": "references/vendor/molex-43025-1200/430251200.stp",
+      "sha256": "6bedba78a6d02e8cdec0fcb674d6a112a2b329a78610eb0ee70967ead8ff8f78",
+      "cad_url": "https://www.farnell.com/cad/2561230.zip",
+      "cad_link_page": "https://jp.farnell.com/molex/43025-1200/-12-3mm-/dp/629285",
+      "archive_sha256": "5a5a0048f0f1b79843ea54856f47c0ef78d3aab3c095f8dc365396534dfebf42"
+    },
+    {
+      "part": "43030-0010",
+      "private_file": "references/vendor/molex-43030-0010/430300010.stp",
+      "sha256": "81937008bcc8bc6181f357a6c0a8f58094c53e688c3e17ad1452a2e21a96493b",
+      "cad_url": "https://www.farnell.com/cad/1985646.zip",
+      "cad_link_page": "https://cpc.farnell.com/molex/43030-0010/contact-socket-26awg-crimp/dp/CN25934",
+      "archive_sha256": "805614bf7554f17e4030764d431dc3533c8760224d6711e9618a92931e03d3b9"
+    }
+  ],
+  "missing_exact_model": [
+    "43031-0001",
+    "selected 5264-3P servo mating plug, contacts and cable"
+  ],
+  "redistribution": "Private CAD only; this record contains hashes and source links, not vendor geometry."
+}

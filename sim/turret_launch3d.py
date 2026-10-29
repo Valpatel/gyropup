@@ -32,7 +32,7 @@ import argparse
 import json
 import math
 import sys
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from pathlib import Path
 
 import numpy as np
@@ -77,18 +77,20 @@ class Wheels:
     v_scale: float = 1.0                # supply tolerance
     runout: float = 0.0                 # m
     runout_phase: tuple = (0.0, 0.0)    # rad
-    tyre_E_mpa: float | None = None     # the TPU tyre's modulus: its ring grows rho w^2 r^3 / E at speed (None: rigid)
+    tyre_E_mpa: float | None = None     # the TPU tyre's modulus: it grows at speed (tyre_growth; None: rigid)
+    tyre_bonded: bool | None = None     # None: TYRE_BONDED; False: the free ring (a tyre come loose)
     ramp_s: float = 0.0                 # the set speed ramps 0 -> w_set over this (the plan's 200 ms soft start); 0: constant
     t_offset: float = 0.0               # where in the ramp the ball arrives (s)
     brake: bool = False                 # the phases are shorted (the release brake): i = -ke w / R, no drive
 
 
 # the phase-short brake as built (docs/turret-wiring.md 3.3): three IRLZ44N per motor from each phase to GND, gates at
-# ~4.5 V; the short's loop adds two FETs and the 22 AWG taps to the motor's own 117 mOhm, and the winding's inductance
-# limits the current at speed (the X2216's is not published: 35 uH between leads est, swept 0-50 uH in release_window)
+# ~4.5 V; the short's loop adds two FETs and the 22 AWG taps to the motor's own 55 mOhm (the 1400 KV, D68), and the
+# winding's inductance limits the current at speed (the X2216's is not published: 35 uH between leads est for the 880 KV,
+# so 35 x (880/1400)^2 = 14 uH for the 1400 KV, the turns being in proportion to 1/KV; swept 0-50 uH in release_window)
 BRAKE = {'r_fet_ohm': 0.025,        # IRLZ44N R_DS(on) max at V_GS 5 V (Infineon datasheet; 0.035 at 4 V)
          'r_taps_ohm': 0.006,       # 2 x 60 mm of 22 AWG (53 mOhm/m)
-         'l_ll_h': 35e-6,           # between two leads, est for a 28 mm 880 KV outrunner
+         'l_ll_h': 35e-6 * (880.0 / MOTOR['kv_rpm_v']) ** 2,   # between two leads, est
          'pole_pairs': 7}
 
 
@@ -106,9 +108,25 @@ TPU = {'rho': 1220.0, 'E_mpa': (10.0, 30.0), 'E_nominal': 20.0,
                  'sim/turret_ball.py SOURCES, checked 2026-10-27'}
 
 
-def tyre_growth(w, Rw, E_mpa):
-    """Radial growth (m) of a free-spinning thin elastomer ring of radius Rw at w rad/s: hoop strain rho w^2 R^2 / E."""
-    return TPU['rho'] * w ** 2 * Rw ** 3 / (E_mpa * 1e6)
+TYRE_BONDED = True              # D68: the tyre is bonded to the hub's rim (cad/turret.py TYRE_SET note); False: a free ring
+
+
+def tyre_growth(w, Rw, E_mpa, bonded=None, t=None, nu=0.45):
+    """Radial growth (m) of the spinning TPU tyre's outer surface at w rad/s. Bonded (TYRE_BONDED): a plane-stress
+    rotating annulus, inner radius Rw - t held by the rigid hub (u = 0), outer face free: u(r) = C1 r + C2 / r - k r^3,
+    k = (1 - nu^2) rho w^2 / (8 E). Not bonded: a free thin ring, rho w^2 R^3 / E (what the stretch fit becomes once the
+    tyre's own bore grows past its 4 % interference, ~2.5 % at 10,500 rpm and ~12 % at 16,000 on a 10 MPa TPU)."""
+    bonded = TYRE_BONDED if bonded is None else bonded
+    E = E_mpa * 1e6
+    if not bonded:
+        return TPU['rho'] * w ** 2 * Rw ** 3 / E
+    a, b = Rw - (t if t is not None else tl.TYRE_T / 1000), Rw
+    k = (1 - nu ** 2) * TPU['rho'] * w ** 2 / (8 * E)
+    # u(a) = 0: C1 a + C2 / a = k a^3;  sigma_r(b) = 0: C1 (1 + nu) - C2 (1 - nu) / b^2 = (3 + nu) k b^2
+    det = a * (-(1 - nu) / b ** 2) - (1 / a) * (1 + nu)
+    C1 = (k * a ** 3 * (-(1 - nu) / b ** 2) - (1 / a) * (3 + nu) * k * b ** 2) / det
+    C2 = (a * (3 + nu) * k * b ** 2 - (1 + nu) * k * a ** 3) / det
+    return C1 * b + C2 / b - k * b ** 3
 
 
 def _arr(v, n):
@@ -225,8 +243,11 @@ def launch3d(balls, L: tl.Launcher, entry: Entry = Entry(), wheels: Wheels = Whe
             dx, dy = x, y - yw[i]
             D = np.sqrt(dx * dx + dy * dy)
             Reff_i = Rw + ro * np.cos(ang[i] + ph[i])          # runout: the tyre's radius at the contact varies as it turns
+            Rs_i = Rw
             if wheels.tyre_E_mpa:
-                Reff_i = Reff_i + tyre_growth(w[i], Rw, wheels.tyre_E_mpa)
+                g_i = tyre_growth(w[i], Rw, wheels.tyre_E_mpa, bonded=wheels.tyre_bonded)
+                Reff_i = Reff_i + g_i
+                Rs_i = Rw + g_i                                # the grown tyre's surface moves faster
             delta = Reff_i + r - D
             inc = (delta > 0) & (np.abs(z) < half_w) & live
             if not inc.any():
@@ -236,7 +257,7 @@ def launch3d(balls, L: tl.Launcher, entry: Entry = Entry(), wheels: Wheels = Whe
             vn = -(vx * nx + vy * ny)                           # overlap growth rate
             Fn = np.where(inc, np.clip(K * np.clip(delta, 0, None) ** 1.5 * (1 + alpha * vn), 0, None), 0.0)
             # tyre surface velocity at the contact: omega_i z x (R n) = s_i w_i R (-ny, nx, 0)
-            tvx, tvy = -sign[i] * w[i] * Rw * ny, sign[i] * w[i] * Rw * nx
+            tvx, tvy = -sign[i] * w[i] * Rs_i * ny, sign[i] * w[i] * Rs_i * nx
             # ball surface velocity at the contact point (-r n from its centre): v + omega x (-r n), n = (nx, ny, 0)
             bsx = vx + wz * r * ny
             bsy = vy - wz * r * nx
@@ -310,26 +331,55 @@ def launch3d(balls, L: tl.Launcher, entry: Entry = Entry(), wheels: Wheels = Whe
 
 # ------------------------------------------------------------------------------------------------ the hardware ceiling, ARM release
 
-def ceiling_map(balls, rails=(10.0, 11.0, 12.0, 13.0, 14.0, 24.0), wheels=(32.0, 34.0, 36.0, 38.0), crush=None, seed=5):
-    """The fastest ball at 100 % throttle on a +5 % KV motor and a +4 % rail, with runout and the soft tyre's growth,
-    for each rail voltage and tyre diameter: the hardware ceiling the firmware cannot raise. crush None: each tyre's
-    own crush on this cage (the motors' axes tl.CAGE_C_MM apart), else the given crush for every tyre."""
+def _tol_wheels(tol, **kw):
+    return Wheels(full_throttle=True, kv_scale=(tol['kv'], tol['kv']), v_scale=tol['v'], **kw)
+
+
+def ceiling_balls(balls):
+    """The ceiling's balls: the corners of the accepted range (D67, tl.corners) and the population clipped into it."""
+    return [replace(b, d_mm=float(np.clip(b.d_mm, *tl.BALL_D)), m_g=float(np.clip(b.m_g, *tl.BALL_M))) for b in balls]
+
+
+def ceiling_at(balls, L, tol=None, seed=5, bonded=None):
+    """The fastest accepted ball at 100 % throttle with the tolerance stack (tl.TOL: trimmed), the feed's offsets, 0.15 mm
+    runout and the soft tyre's growth (bonded unless told): the population and the 32 corners. Returns (top fps,
+    population mean fps, the corners' top fps, the corner, the highest energy density J/m^2, that ball)."""
+    tol = tol or tl.TOL
     rng = np.random.default_rng(seed)
     n = len(balls)
     ent = Entry(y=rng.uniform(-0.00075, 0.00075, n), z=-0.00075 + rng.uniform(-0.0003, 0.0003, n), vx=rng.uniform(0.4, 0.8, n))
     phases = (rng.uniform(0, 2 * np.pi, n), rng.uniform(0, 2 * np.pi, n))
-    worst = tl.Ball('worst', tl.BALL_D[1], tl.BALL_M[0], tl.BALL_E[1], 0.2, 0.5, tl.BALL_MU[1])
+    r = launch3d(balls, L, ent, _tol_wheels(tol, runout=0.00015, runout_phase=phases, tyre_E_mpa=TPU['E_mpa'][0], tyre_bonded=bonded))
+    cs = tl.corners()
+    nc = len(cs)
+    rc = launch3d(cs, L, Entry(z=0.0, wy=0.0), _tol_wheels(tol, runout=0.00015, runout_phase=(np.zeros(nc), np.full(nc, math.pi / 2)),
+                                                           tyre_E_mpa=TPU['E_mpa'][0], tyre_bonded=bonded))
+    ok, okc = ~r['rejected'], ~rc['rejected']
+    k = int(np.argmax(np.where(okc, rc['fps'], -1)))
+    kd = [tl.ked(b, float(v)) if o else 0.0 for b, v, o in zip(list(balls) + cs, np.concatenate([r['speed'], rc['speed']]), np.concatenate([ok, okc]))]
+    j = int(np.argmax(kd))
+    return (max(float(r['fps'][ok].max()), float(rc['fps'][okc].max())), float(r['fps'][ok].mean()), float(rc['fps'][k]), cs[k].name,
+            kd[j], (list(balls) + cs)[j].name)
+
+
+def ceiling_map(balls, rails=(10.5, 11.0, tl.RAIL_V_TRIM, 12.0, 12.5), wheels=(36.0, 38.0, 40.0), crush=None, seed=5):
+    """The hardware ceiling for each rail voltage (a nominal-KV motor; with the per-turret trim this is the trimmed
+    no-load speed) and tyre diameter: ceiling_at, with each tyre at its crush on this cage (the motors' axes
+    tl.CAGE_C_MM apart) unless a crush is given. The Hasbro ball at 100 % with no tolerance beside it."""
+    balls = ceiling_balls(balls)
     rows = []
     for V in rails:
         for D in wheels:
-            L = tl.launcher_for(D, tl.cage_crush(D) if crush is None else crush, supply_v=V)
-            W = Wheels(full_throttle=True, kv_scale=(tl.TOL['kv'], tl.TOL['kv']), v_scale=tl.TOL['v'], runout=0.00015, runout_phase=phases, tyre_E_mpa=TPU['E_mpa'][0])
-            r = launch3d(balls, L, ent, W)
-            wc = launch3d(worst, L, Entry(z=0.0, wy=0.0), Wheels(full_throttle=True, kv_scale=(tl.TOL['kv'], tl.TOL['kv']), v_scale=tl.TOL['v'], tyre_E_mpa=TPU['E_mpa'][0]))
-            top = max(float(r['fps'][~r['rejected']].max()), float(wc['fps'][0]))
-            w0 = tl.no_load_speed(L, tl.TOL['kv'], tl.TOL['v'])
-            rows.append({'rail_v': V, 'wheel_d_mm': D, 'crush': round(tl.cage_crush(D) if crush is None else crush, 3), 'no_load_rpm_tol': round(w0 * 60 / (2 * math.pi)), 'surface_m_s_tol': round(w0 * D / 2000, 2),
-                         'ceiling_fps': round(top, 1), 'population_mean_fps': round(float(r['fps'][~r['rejected']].mean()), 1), 'margin_fps': round(CAP_FPS - top, 1), 'holds': top <= CAP_FPS})
+            cr = tl.cage_crush(D) if crush is None else crush
+            L = tl.launcher_for(D, cr, supply_v=V)
+            top, mean, _, corner, kd, kball = ceiling_at(balls, L, seed=seed)
+            hb = launch3d(tl.HASBRO, L, Entry(z=0.0, wy=0.0), Wheels(full_throttle=True))
+            w0 = tl.no_load_speed(L)
+            rows.append({'rail_v': round(V, 3), 'wheel_d_mm': D, 'crush': round(cr, 3), 'no_load_rpm': round(tl.rpm(w0)),
+                         'no_load_rpm_tol': round(tl.rpm(tl.no_load_speed(L, tl.TOL['kv'], tl.TOL['v']))), 'surface_m_s_tol': round(tl.no_load_speed(L, tl.TOL['kv'], tl.TOL['v']) * D / 2000, 2),
+                         'ceiling_fps': round(top, 1), 'worst_corner': corner, 'hasbro_full_throttle_fps': round(float(hb['fps'][0]), 1),
+                         'population_mean_fps': round(mean, 1), 'margin_fps': round(CAP_FPS - top, 1), 'densest_ked_j_m2': round(kd),
+                         'holds': top <= CAP_FPS, 'under_astm': kd <= tl.ASTM_KED})
     return rows
 
 
@@ -407,34 +457,44 @@ def stray_ball_rearm(ball, L, w_set, runout=0.00015, ramp_s=0.2):
     return out
 
 
-def fault_24v(balls, L, G=None):
-    """The ESCs fed 24 V by mistake (plan V13): every ball at 100 % throttle, and the chronograph's gate times."""
-    L24 = tl.Launcher(wheel_d_mm=L.wheel_d_mm, gap_mm=L.gap_mm, supply_v=24.0, wheel_I=L.wheel_I)
-    r = launch3d(balls, L24, Entry(z=0.0, wy=0.0), Wheels(full_throttle=True))
-    ok = ~r['rejected']
-    return {'population_fps': {'mean': round(float(r['fps'][ok].mean()), 1), 'min': round(float(r['fps'][ok].min()), 1), 'max': round(float(r['fps'][ok].max()), 1)},
-            'no_load_rpm_24v': round(tl.no_load_speed(L24) * 60 / (2 * math.pi)), 'surface_m_s': round(tl.no_load_speed(L24) * L.wheel_d_mm / 2000, 1)}
+def fault_input(balls, L, volts=(20.5,)):
+    """The converter bypassed or failed short, so the ESCs see the turret's input (plan V13): every ball at 100 % throttle.
+    20.5 V is one DCB609 full (standing alone; the AM32 ESCs are rated to 25.2 V, so they run); Gyropup's 30-42 V bus
+    is over the ESCs' rating and would destroy them before a ball is fed."""
+    out = {}
+    for v in volts:
+        Lf = tl.Launcher(wheel_d_mm=L.wheel_d_mm, gap_mm=L.gap_mm, supply_v=v, wheel_I=L.wheel_I, r_eff_ohm=L.r_eff_ohm)
+        r = launch3d(balls, Lf, Entry(z=0.0, wy=0.0), Wheels(full_throttle=True))
+        ok = ~r['rejected']
+        out[f'{v:g}_v'] = {'population_fps': {'mean': round(float(r['fps'][ok].mean()), 1), 'min': round(float(r['fps'][ok].min()), 1), 'max': round(float(r['fps'][ok].max()), 1)},
+                           'no_load_rpm': round(tl.rpm(tl.no_load_speed(Lf))), 'no_load_erpm': round(tl.rpm(tl.no_load_speed(Lf)) * MOTOR['pole_pairs']),
+                           'surface_m_s': round(tl.no_load_speed(Lf) * L.wheel_d_mm / 2000, 1)}
+    return out
 
 
-def chronograph(G, fps_cases=(55.0, 58.0, 66.0, 70.0, 123.0), spacings_mm=(50.0, 60.0), beam_mm=1.0, edge_jitter_us=30.0):
+def chronograph(G, fps_cases=(95.0, 100.0, 105.0, 110.0, 175.0), spacings_mm=(50.0, 60.0), beam_mm=1.0, edge_jitter_us=30.0, trip_fps=105.0):
     """Gate transit times for the trip window (plan 2.10): two IR gates in the barrel. Also what the bore does between
     the gates (the barrel model loses ~1.4 fps over 111 mm: 0.6 fps over 50 mm) and the timing error budget."""
-    out = {'cad_gates_from_socket_mm': [30.0, 80.0], 'cad_spacing_mm': 50.0, 'barrel_len_mm': G.barrel_len, 'socket_mm': 14.0, 'orange_tip_mm': 15.0}
+    out = {'cad_gates_from_socket_mm': [30.0, 80.0], 'cad_spacing_mm': 50.0, 'barrel_len_mm': G.barrel_len, 'socket_mm': 14.0, 'orange_tip_mm': 15.0,
+           'trip_fps': trip_fps}
     for s in spacings_mm:
         rows = {}
         for f in fps_cases:
             v = f * FPS
             dt_us = s / 1000 / v * 1e6
             rows[f'{f:g}_fps'] = {'transit_us': round(dt_us, 1), 'ball_occludes_gate_us': round((G.ball + beam_mm) / 1000 / v * 1e6, 1), 'beam_crossing_us': round(beam_mm / 1000 / v * 1e6, 1)}
-        v66 = 66 * FPS
-        win = s / 1000 / v66
-        err_fps = edge_jitter_us * 1e-6 / win * 66
-        out[f'spacing_{s:g}_mm'] = {'rows': rows, 'trip_window_us_at_66fps': round(win * 1e6, 1), 'fps_error_from_30us_edge_jitter': round(err_fps, 2),
-                                     'fps_error_from_5pct_rc_window': round(0.05 * 66, 2), 'bore_loss_between_gates_fps': round(1.4 * s / 111, 2)}
-    out['recommendation'] = ('keep the CAD\'s two gates but space them 60 mm (x0 + 22 and x0 + 82: 8 mm past the socket, 18 mm before the muzzle, clear of the orange tip\'s '
-                             'boss): 2.98 ms window at 66 fps, so a 30 us edge jitter is 0.7 fps and a 1 % timing part holds the trip between 65 and 67 fps; slit the Ø3.2 cross holes '
-                             'to a 1 mm beam (crossed in 48 us at 21 m/s) so both gates see the same sharp edge; the 24 V fault ball crosses in 1.4 ms, unmistakable, '
-                             'but it has already left: the pre-feed RPM check (AM32 telemetry: refuse to feed above 11,500 rpm) is what stops the first fault ball')
+        vt = trip_fps * FPS
+        win = s / 1000 / vt
+        err_fps = edge_jitter_us * 1e-6 / win * trip_fps
+        out[f'spacing_{s:g}_mm'] = {'rows': rows, 'trip_window_us': round(win * 1e6, 1), 'fps_error_from_30us_edge_jitter': round(err_fps, 2),
+                                     'fps_error_from_1pct_rc_window': round(0.01 * trip_fps, 2), 'bore_loss_between_gates_fps': round(1.4 * s / 111, 2)}
+    w60 = 0.060 / (trip_fps * FPS) * 1e6
+    out['recommendation'] = (f'the CAD\'s two gates 60 mm apart (x0 + 22 and x0 + 82: 8 mm past the socket, 18 mm before the muzzle, clear of the orange tip\'s '
+                             f'boss): a {w60:.0f} us window at {trip_fps:g} fps, so a 30 us edge jitter is {edge_jitter_us * 1e-6 / (w60 * 1e-6) * trip_fps:.1f} fps and a 1 % timing part '
+                             f'{0.01 * trip_fps:.1f} fps: the latch trips within {edge_jitter_us / w60 * trip_fps + 0.01 * trip_fps:.1f} fps of {trip_fps:g} (the Hasbro ball leaves at 95-100, the worst accepted '
+                             f'corner at 104); slit the Ø3.2 cross holes to a 1 mm beam (crossed in 31 us at 32 m/s) so both gates see the same sharp edge. A bypassed '
+                             f'converter (the ESCs on the 20.5 V pack) throws ~175 fps and crosses in 1.1 ms, unmistakable, but it has already left: the pre-feed '
+                             f'eRPM check (refuse to feed above the bench\'s n_105) is what stops the first fault ball')
     return out
 
 
@@ -527,11 +587,11 @@ def study(quick=False, seed=1):
     try:
         import turret_ball as tb
         pop = tb.population(120 if quick else 400, seed=seed)
-        balls = [b.launch() for b in pop]
+        balls = ceiling_balls([b.launch() for b in pop])           # accepted rounds only (D67): clipped to 22.2-22.8 mm, 1.6-2.0 g
         ball_src = 'sim/turret_ball.py'
     except Exception as exc:                                   # the ball module is mine too, but keep this runnable alone
         pop = None
-        balls = tl.population(120 if quick else 400, seed=seed)
+        balls = tl.population(120 if quick else 400, seed=seed)    # already the accepted range
         ball_src = f'sim/turret_launch.py population ({exc})'
     OUT.mkdir(parents=True, exist_ok=True)
     import turret_common as tc
@@ -568,32 +628,44 @@ def study(quick=False, seed=1):
     phases = (rng.uniform(0, 2 * np.pi, n), rng.uniform(0, 2 * np.pi, n))
     grown = launch3d(balls, L, ent, Wheels(w_set=(w_set, w_set), runout=0.00015, runout_phase=phases, tyre_E_mpa=TPU['E_mpa'][0]))
     Rw = L.wheel_d_mm / 2000
+    wt = w0 * tl.TOL['kv'] * tl.TOL['v']
     res['tyre_growth_mm'] = {'at_set_speed': {f'E_{E:g}_MPa': round(tyre_growth(w_set, Rw, E) * 1000, 3) for E in TPU['E_mpa']},
-                             'at_no_load_plus_tolerance': {f'E_{E:g}_MPa': round(tyre_growth(w0 * tl.TOL['kv'] * tl.TOL['v'], Rw, E) * 1000, 3) for E in TPU['E_mpa']},
+                             'at_no_load_plus_tolerance': {f'E_{E:g}_MPa': round(tyre_growth(wt, Rw, E) * 1000, 3) for E in TPU['E_mpa']},
+                             'if_not_bonded_at_no_load_plus_tolerance': {f'E_{E:g}_MPa': round(tyre_growth(wt, Rw, E, bonded=False) * 1000, 3) for E in TPU['E_mpa']},
+                             'bonded': TYRE_BONDED,
+                             'bore_strain_free_pct_at_no_load_plus_tolerance': {f'E_{E:g}_MPa': round(100 * TPU['rho'] * (wt * (Rw - tl.TYRE_T / 1000)) ** 2 / (E * 1e6), 1) for E in TPU['E_mpa']},
                              'source': TPU['source'], 'note': 'radial growth per tyre; the crush grows by twice this'}
     res['population_set_speed'] = {'centred_no_runout': {**stats(base), **disp(base)},
                                    'feed_offsets_runout_0_15mm': {**stats(real), **disp(real)},
                                    'feed_offsets_runout_0_30mm': {**stats(worn), **disp(worn)},
                                    'feed_offsets_runout_soft_tyre_growth_10mpa': {**stats(grown), **disp(grown)},
                                    'contact_ms_mean': round(float(np.mean(real['contact_ms'])), 3)}
-    # 2. the hardware ceiling: 100 % throttle, +5 % KV, +4 % rail, the feed's offsets, runout; then with the soft tyre's growth
-    worst = tl.Ball('worst', tl.BALL_D[1], tl.BALL_M[0], tl.BALL_E[1], 0.2, 0.5, tl.BALL_MU[1])
-    tol = dict(full_throttle=True, kv_scale=(tl.TOL['kv'], tl.TOL['kv']), v_scale=tl.TOL['v'])
-    ceil = launch3d(balls, L, ent, Wheels(runout=0.00015, runout_phase=phases, **tol))
-    wc = launch3d(worst, L, Entry(z=0.0, wy=0.0), Wheels(**tol))
-    ceil_g = launch3d(balls, L, ent, Wheels(runout=0.00015, runout_phase=phases, tyre_E_mpa=TPU['E_mpa'][0], **tol))
-    wc_g = launch3d(worst, L, Entry(z=0.0, wy=0.0), Wheels(tyre_E_mpa=TPU['E_mpa'][0], **tol))
-    worst_soft = tl.Ball('worst-soft', tl.BALL_D[1], tl.BALL_M[0], tl.BALL_E[0], 0.2, 0.5, tl.BALL_MU[1])
-    ws_g = launch3d(worst_soft, L, Entry(z=0.0, wy=0.0), Wheels(tyre_E_mpa=TPU['E_mpa'][0], **tol))
-    top = max(float(ceil['fps'].max()), float(wc['fps'][0]), float(ceil_g['fps'].max()), float(wc_g['fps'][0]), float(ws_g['fps'][0]))
-    res['ceiling'] = {'population_full_throttle': stats(ceil), 'worst_ball_full_throttle_fps': round(float(wc['fps'][0]), 2),
-                      'population_full_throttle_soft_tyre_growth': stats(ceil_g), 'worst_ball_full_throttle_soft_tyre_growth_fps': round(float(wc_g['fps'][0]), 2),
-                      'worst_soft_ball_full_throttle_soft_tyre_growth_fps': round(float(ws_g['fps'][0]), 2),
+    # 2. the hardware ceiling: 100 % throttle on the trimmed rail with the remaining tolerances (tl.TOL: the magnets +15 C,
+    #    the rail +2 %), the feed's offsets, 0.15 mm runout, the soft tyre's growth (bonded), the population and the 32
+    #    corners of the accepted range; then the same untrimmed (a fixed set point) and with a tyre come loose
+    top, mean, ctop, corner, kd, kball = ceiling_at(balls, L, seed=seed)
+    topu, _, ctopu, corneru, kdu, _ = ceiling_at(balls, L, tol=tl.TOL_UNTRIMMED, seed=seed)
+    topd, _, ctopd, cornerd, kdd, _ = ceiling_at(balls, L, seed=seed, bonded=False)
+    ceil = launch3d(balls, L, ent, _tol_wheels(tl.TOL, runout=0.00015, runout_phase=phases, tyre_E_mpa=TPU['E_mpa'][0]))
+    hb = launch3d(nominal, L, Entry(z=0.0, wy=0.0), Wheels(full_throttle=True))
+    pop_ft = launch3d(balls, L, ent, Wheels(full_throttle=True, runout=0.00015, runout_phase=phases, tyre_E_mpa=TPU['E_mpa'][1]))
+    n105 = tl.rpm(w0 * tl.TOL['kv'] * tl.TOL['v']) * CAP_FPS / top
+    nastm = tl.rpm(w0 * tl.TOL['kv'] * tl.TOL['v']) * math.sqrt(tl.ASTM_KED / kd)
+    res['ceiling'] = {'population_full_throttle': stats(ceil), 'worst_corner_fps': round(ctop, 2), 'worst_corner': corner,
+                      'densest_ked_j_m2': round(kd), 'densest_ball': kball, 'astm_ked_j_m2': tl.ASTM_KED, 'under_astm': bool(kd <= tl.ASTM_KED),
+                      'n_astm_rpm': round(nastm),
+                      'hasbro_full_throttle_fps': round(float(hb['fps'][0]), 2), 'population_full_throttle_no_tolerance': stats(pop_ft),
+                      'untrimmed': {'highest_fps': round(topu, 2), 'worst_corner': corneru, 'densest_ked_j_m2': round(kdu), 'tolerances': tl.TOL_UNTRIMMED['note']},
+                      'tyre_come_loose': {'highest_fps': round(topd, 2), 'worst_corner': cornerd, 'densest_ked_j_m2': round(kdd),
+                                          'note': 'the tyre debonded and floating on its 4 % stretch fit (the free ring, E 10 MPa): a failure the bench spin test (4.1) and the chronograph trip catch'},
                       'cap_fps': CAP_FPS, 'highest_fps_any_case': round(top, 2), 'margin_fps': round(CAP_FPS - top, 2), 'holds': bool(top <= CAP_FPS),
-                      'how_held': (f'the regulated 12 V rail + the {tl.MOTOR["name"]} ({tl.MOTOR["kv_rpm_v"]:.0f} rpm/V) + the Ø{D["wheel_d_mm"]:.0f} tyre: '
-                                   f'{w0 * 60 / (2 * math.pi) / 1000:.1f} krpm no-load ({w0 * D["wheel_d_mm"] / 2000:.1f} m/s surface), so even 100 % throttle on a fast motor and a high rail '
-                                   f'stays at the figure above; the ESC set speed ({w_set * 60 / (2 * math.pi) / 1000:.1f} krpm, {D["set_fps"]:.0f} fps nominal) sits under that, and the '
-                                   'chronograph latches SAFE on any ball over 66 fps')}
+                      'tolerances': tl.TOL['note'], 'n_trim_rpm': round(tl.rpm(w0)), 'n_105_rpm': round(n105),
+                      'how_held': (f'the trimmed flywheel rail ({D["supply_v"]:.2f} V for a nominal motor; each turret\'s set by one fixed resistor so the faster '
+                                   f'motor turns {tl.rpm(w0):,.0f} rpm at no load, warm) + the {tl.MOTOR["name"]} ({tl.MOTOR["kv_rpm_v"]:.0f} rpm/V) + the bonded '
+                                   f'Ø{D["wheel_d_mm"]:.0f} tyre ({w0 * D["wheel_d_mm"] / 2000:.1f} m/s surface): even 100 % throttle with the magnets 15 C warmer and the rail '
+                                   f'2 % high leaves the fastest accepted ball at the figure above and the densest under ASTM F963\'s 2500 J/m^2; the firmware '
+                                   f'cannot raise the rail, refuses to feed above {min(n105, nastm):,.0f} rpm (where a ball could pass either), and the '
+                                   f'chronograph latches SAFE on any ball over {CAP_FPS:.0f} fps')}
     # 3. mismatched wheels: one wheel slow by 2, 5, 10 %, and one wheel at the set speed with the other at no-load
     mis = []
     for pct in (0.0, 2.0, 5.0, 10.0):
@@ -634,13 +706,13 @@ def study(quick=False, seed=1):
     res['arm_release']['note'] = ('the wheels at the set speed when ARM opens; a ball already past the dial reaches the nip 0.1-0.3 s later (the feed stage\'s latency); '
                                   'coast: friction only (time constant I / (kt i0 / w0) ~ 2 s); brake: AM32 dynamic braking at the given phase current')
     res['validation_nuaa_mismatch'] = validate_nuaa_mismatch()
-    # 7. the plan's V13 / V14: the 24 V fault, the chronograph gates, the phase-short release window, the stray ball on re-arm,
+    # 7. the plan's V13 / V14: the converter bypassed, the chronograph gates, the phase-short release window, the stray ball on re-arm,
     #    and the ceiling with the 200 ms ramp active (it cannot raise it: the ramp ends at the same set speed)
-    res['fault_24v_on_the_esc'] = fault_24v(balls[:60], L)
+    res['fault_input_on_the_esc'] = fault_input(balls[:60], L)
     res['chronograph'] = chronograph(Gc)
     res['release_phase_short'] = release_window(nominal, L, w_set)
     res['stray_ball_rearm'] = stray_ball_rearm(nominal, L, w_set)
-    rr = launch3d(balls[:60], L, Entry(z=0.0, wy=0.0), Wheels(w_set=(w_set, w_set), w0=(0.0, 0.0), ramp_s=0.2, t_offset=0.2))
+    rr = launch3d(balls[:60], L, Entry(z=0.0, wy=0.0), Wheels(w_set=(w_set, w_set), ramp_s=0.2, t_offset=0.2))   # at the ramp's end the wheels are at the set speed
     res['ramp_active_at_set_speed'] = {'fps_max': round(float(rr['fps'][~rr['rejected']].max()), 2), 'note': 'the first ball fired as the 200 ms ramp ends: the same set speed, so the same ceiling'}
     (OUT / 'launch3d.json').write_text(json.dumps(res, indent=1, default=float) + '\n')
     # plots
@@ -648,10 +720,10 @@ def study(quick=False, seed=1):
     ok = ~real['rejected']
     ax[0].hist(base['fps'][~base['rejected']], bins=30, alpha=0.6, label='centred, true tyres')
     ax[0].hist(real['fps'][ok], bins=30, alpha=0.6, label='feed offsets + 0.15 mm runout')
-    ax[0].hist(ceil['fps'][~ceil['rejected']], bins=30, alpha=0.6, label='100 % throttle, +5 % KV, +4 % rail')
+    ax[0].hist(ceil['fps'][~ceil['rejected']], bins=30, alpha=0.6, label='100 % throttle, trimmed rail, magnets +15 C, rail +2 %')
     ax[0].axvline(CAP_FPS, color='k', lw=1.5)
     ax[0].set_xlabel('muzzle speed at the nip exit (fps)')
-    ax[0].set_title(f'{n} balls, Ø{D["wheel_d_mm"]:.0f} tyres, crush {int(D["crush"] * 100)} %, {D["supply_v"]:.0f} V', fontsize=9)
+    ax[0].set_title(f'{n} accepted balls, Ø{D["wheel_d_mm"]:.0f} tyres, crush {int(D["crush"] * 100)} %, {D["supply_v"]:.2f} V (trimmed)', fontsize=9)
     ax[0].legend(fontsize=7)
     ax[1].scatter(real['yaw_mrad'][ok], real['pitch_mrad'][ok], s=6, alpha=0.6, label='0.15 mm runout')
     ax[1].scatter(worn['yaw_mrad'][~worn['rejected']], worn['pitch_mrad'][~worn['rejected']], s=6, alpha=0.4, label='0.30 mm runout')

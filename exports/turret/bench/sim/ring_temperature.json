@@ -3,7 +3,7 @@
  "title": "Ring temperature: 5 A for 1 h at 15 rpm (operator reading)",
  "plan": "docs/turret-prototype-plan.md section 5",
  "mode": "sim",
- "date": "2026-10-27",
+ "date": "2026-10-28",
  "pass": true,
  "checks": [
   {
@@ -21,7 +21,7 @@
  "sim": {
   "seed": 1049,
   "simulated_s": 122.8,
-  "wall_s": 3.2,
+  "wall_s": 2.9,
   "stand_ins": [
    "carrier_rise_k",
    "rise_k"
@@ -37,12 +37,12 @@
  "firmware": {
   "build": "v0",
   "servo_baud": 500000,
-  "motor": "SunnySky X2216 880KV V3",
-  "kv": 880.0,
+  "motor": "SunnySky X2216 1400KV V3",
+  "kv": 1400.0,
   "pole_pairs": 7,
-  "erpm_limit": 81312,
-  "tyre_mm": 34,
-  "set_rpm_52fps": 8855,
-  "ramp_s": 0.3
+  "erpm_limit": 114730,
+  "tyre_mm": 38,
+  "set_rpm_95fps": 15286,
+  "ramp_s": 0.8
  }
 }

@@ -9,7 +9,7 @@
     {
       "title": "Turret hardware",
       "value": "Fit tests in preparation",
-      "note": "Carrier and insert specimens are on the engineering branch. Complete wiring, printed strength and physical fit remain open."
+      "note": "Inspect the carrier hardware and insert-fit specimens in the design notebook. Complete wiring, printed strength and physical fit remain open."
     },
     {
       "title": "Structural evidence",
@@ -242,6 +242,29 @@
         {
           "title": "Sourcing review · PR80",
           "href": "https://github.com/Valpatel/gyropup/pull/80"
+        }
+      ]
+    },
+    {
+      "time": "2026-10-29",
+      "title": "Inspect the carrier hardware and electrical candidates",
+      "text": "The design notebook now includes the 34-part connector-support assembly, separate insert-fit specimens and an editable electrical candidate. Current reviews distinguish these bounded results from the archived full-kit print plan. Complete cable routes, service access, thermal behavior, printed strength and physical fit remain open.",
+      "links": [
+        {
+          "title": "Inspect the carrier and its hardware",
+          "href": "../site/pages/docs-carrier-service-connectors-md.html"
+        },
+        {
+          "title": "Insert-fit specimens",
+          "href": "../site/pages/research-carrier-insert-fit-readme-md.html"
+        },
+        {
+          "title": "Electrical candidate",
+          "href": "../site/pages/hardware-carrier-pan-protection-readme-md.html"
+        },
+        {
+          "title": "Current readiness",
+          "href": "../site/pages/docs-mechanical-readiness-md.html"
         }
       ]
     }

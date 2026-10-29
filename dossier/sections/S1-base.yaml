@@ -1,0 +1,330 @@
+# The turret's dossier (cad-agent: docs/dossier.md in the toolkit). Hand-edited YAML; joined by id to the geometry
+# cad/turret_dossier.py registers (exports/dossier-geometry.json). The design story is docs/turret-sections.md.
+id: S1-base
+title: Base and pan drive
+purpose: Carry the turret on the plinth and turn it continuously, 3:1 off an STS3215, with an absolute index at pan 0
+requirements:
+- R2
+- R9
+- R10
+- R12
+- R13
+- R14
+author: turret-dossier agent
+interfaces:
+- id: I-pan
+  between:
+  - pan_ring
+  - pan_bearing
+  kind: revolute
+  datum: the pan axis, T (0, 0, z); the 61810-2RS bore
+  description: Continuous pan, +-170 deg gated. The turntable's journal runs in the 61810's inner race; the joint is measured
+    from the turntable to the outer race and shields (0.45 mm), within the toolkit's 1 mm. I-tilt hangs on pan_ring (the chain
+    rule).
+  owner: S1-base
+- id: I-pan-drive
+  between:
+  - pan_pinion
+  - pan_servo
+  kind: revolute
+  datum: the pan servo's shaft, T (-52.65, 0, z)
+  description: The 21 T pinion on the pan servo's horn (4 x M2); turns -3 x pan.
+  owner: S1-base
+- id: I-turntable
+  between:
+  - pan_bearing_inner
+  - pan_ring
+  kind: press_fit
+  datum: the turntable journal, Ø50
+  description: The 61810's inner race on the turntable's journal, held by the circlip below.
+  owner: S1-base
+- id: I-spacer
+  between:
+  - pan_spacer
+  - pan_bearing_inner
+  kind: contact
+  datum: the inner race's lower face
+  description: The spacer between the inner race and the circlip.
+  owner: S1-base
+- id: I-circlip
+  between:
+  - circlip_50
+  - pan_ring
+  kind: snap_fit
+  datum: the journal's groove, d2 47
+  description: 'DIN 471-50 in its groove (drawn at d2, so 0.05 mm^3 shared: an intended overlap).'
+  owner: S1-base
+- id: I-hall
+  between:
+  - hall_switch
+  - pan_ring
+  kind: bonded
+  datum: the pocket's roof under the turntable
+  description: The A1120 CA'd up against its pocket's roof, 3.5 mm over the magnet.
+  owner: S1-base
+- id: I-pan-outer
+  between:
+  - pan_bearing
+  - pan_base
+  kind: press_fit
+  datum: the base's Ø65 housing
+  description: The 61810's outer race in the housing.
+  owner: S1-base
+- id: I-clamp-base
+  between:
+  - pan_clamp
+  - pan_base
+  kind: fastened
+  datum: the housing's top, T z 47
+  description: 3 x M3 into inserts in the base.
+  owner: S1-base
+- id: I-clamp-race
+  between:
+  - pan_clamp
+  - pan_bearing
+  kind: contact
+  datum: the outer race's top face
+  description: The clamp ring holds the outer race down.
+  owner: S1-base
+- id: I-pan-servo
+  between:
+  - pan_servo
+  - pan_base
+  kind: fastened
+  datum: four posts on the base
+  description: The pan servo on four posts, horn up, plugs from below.
+  owner: S1-base
+- id: I-bumper
+  between:
+  - bumper_ring
+  - pan_base
+  kind: fastened
+  datum: the base's five tabs
+  description: '5 x M3 with washers (0.04 mm^3 shared with a tab: an intended overlap).'
+  owner: S1-base
+- id: I-magnet
+  between:
+  - index_magnet
+  - pan_base
+  kind: bonded
+  datum: the housing's top through the clamp
+  description: The index magnet glued on the housing top, 0.2 mm proud of the clamp.
+  owner: S1-base
+- id: I-circlip-spacer
+  between:
+  - circlip_50
+  - pan_spacer
+  kind: contact
+  datum: the spacer's lower face
+  description: The circlip holds the spacer up against the inner race.
+  owner: S1-base
+- id: I-mesh
+  between:
+  - pan_pinion
+  - pan_ring
+  kind: gap
+  datum: the 52.65 mm centre distance
+  description: 'The m1.25 63:21 mesh, 0.15 mm backlash a flank. Left out of the gates'' pairs (cadagent has no gear coupling:
+    a turned ring and a still pinion would interpenetrate); turret.pinion_check checks it over pan.'
+  clearance: 0.5
+  owner: S1-base
+parts:
+- id: pan_base
+  function: 'Carries the turret on the plinth''s top (the TM face): holds the 61810''s outer race, the pan servo, the DT receptacle,
+    the bumper''s tabs and the slip ring''s carrier'
+  interfaces:
+  - I-plinth-base
+  - I-pan-outer
+  - I-clamp-base
+  - I-pan-servo
+  - I-bumper
+  - I-magnet
+  - I-carrier
+  - I-base-board
+  - I-dt
+  material:
+    name: PA6-CF
+    process: FDM
+    wall_mm: 0.8
+    print_axis: +Z
+  checks:
+  - gate:connectivity
+  - gate:assembly
+  - turret-fea
+- id: pan_clamp
+  function: Clamps the 61810's outer race down in the base's housing
+  interfaces:
+  - I-clamp-base
+  - I-clamp-race
+  material:
+    name: 6061-T6 aluminium 0.125 in
+    process: laser cut (SendCutSend)
+  checks:
+  - gate:connectivity
+  - gate:assembly
+- id: pan_bearing
+  function: 'The 61810-2RS (6810-2Z, 50 x 65 x 7) outer race and shields: carries the tilting group, the fall loads and the
+    gear mesh''s reaction'
+  interfaces:
+  - I-pan
+  - I-pan-outer
+  - I-clamp-race
+  material:
+    name: McMaster 6656K229
+    process: bought
+  checks:
+  - gate:connectivity
+  - gate:assembly
+- id: pan_bearing_inner
+  function: 'The 61810''s inner race: turns with the turntable on its journal'
+  interfaces:
+  - I-turntable
+  - I-spacer
+  material:
+    name: McMaster 6656K229 (with pan_bearing)
+    process: bought
+  checks:
+  - gate:connectivity
+  - gate:assembly
+  - gate:motion
+- id: pan_ring
+  function: 'The turntable: the 63 T m1.25 ring gear on its rim, its journal through the 61810, the 40 mm open centre for
+    the slip ring and cable; the yoke bolts on top'
+  interfaces:
+  - I-pan
+  - I-tilt
+  - I-turntable
+  - I-circlip
+  - I-yoke
+  - I-driver
+  - I-hall
+  - I-mesh
+  material:
+    name: PA6-CF
+    process: FDM
+    wall_mm: 0.8
+    print_axis: -Z (teeth on the bed)
+  checks:
+  - gate:connectivity
+  - gate:assembly
+  - gate:motion
+  - turret-fea
+- id: pan_spacer
+  function: Spaces the 61810's inner race from the circlip
+  interfaces:
+  - I-spacer
+  - I-circlip-spacer
+  material: &id001
+    name: PA6-CF
+    process: FDM
+    wall_mm: 0.8
+  checks:
+  - gate:connectivity
+  - gate:assembly
+  - gate:motion
+- id: circlip_50
+  function: Holds the turntable's journal in the 61810 (DIN 471-50)
+  interfaces:
+  - I-circlip
+  - I-circlip-spacer
+  material:
+    name: McMaster 98541A167
+    process: bought
+  checks:
+  - gate:connectivity
+  - gate:assembly
+  - gate:motion
+- id: pan_pinion
+  function: 'The 21 T m1.25 pinion on the pan servo''s horn: drives the ring 3:1'
+  interfaces:
+  - I-pan-drive
+  - I-mesh
+  material: *id001
+  checks:
+  - gate:connectivity
+  - gate:assembly
+  - gate:motion
+  - turret-fea
+- id: pan_servo
+  function: 'Feetech STS3215 12 V: drives pan through the pinion; its EEPROM torque ceiling at 80 %'
+  interfaces:
+  - I-pan-drive
+  - I-pan-servo
+  material:
+    name: Feetech STS3215
+    process: bought
+  checks:
+  - gate:connectivity
+  - gate:assembly
+- id: bumper_ring
+  function: Takes knocks round the pan base
+  interfaces:
+  - I-bumper
+  material:
+    name: TPU 95A
+    process: FDM
+    wall_mm: 0.8
+  checks:
+  - gate:connectivity
+  - gate:assembly
+- id: index_magnet
+  function: 'The pan index: 760 G at the hall 3.5 mm above it'
+  interfaces:
+  - I-magnet
+  material:
+    name: McMaster 5862K102
+    process: bought
+  checks:
+  - gate:connectivity
+  - gate:assembly
+- id: hall_switch
+  function: Senses the index magnet at pan 0 (Allegro A1120)
+  interfaces:
+  - I-hall
+  material:
+    name: Allegro A1120LUA-T
+    process: bought
+  checks:
+  - gate:connectivity
+  - gate:assembly
+  - gate:motion
+decisions:
+- id: T1.1
+  decision: A ring gear on the turntable, driven by a servo beside it
+  why: The axis stays open (40 mm) for the slip ring and the cable
+  alternatives:
+  - option: A direct-drive servo on the pan axis
+    rejected: 'blocks the slip ring: no continuous pan'
+- id: T1.2
+  decision: 3:1 on a 63 T ring
+  why: The STS3215's 360 deg absolute range then covers 120 deg of pan; the hall index and counting turns give the absolute
+    pan
+  alternatives:
+  - option: '1:1'
+    rejected: too little holding torque against a push on the barrel
+  - option: '4:1'
+    rejected: too slow a slew
+- id: T1.3
+  decision: A thin-section 61810-2RS for the pan bearing
+  why: One part carries the overturning moment with the 50 mm bore free
+  alternatives:
+  - option: A pair of small bearings
+    rejected: two bearings and a spacer for the same moment, and a smaller bore for the ring and cable
+- id: T1.4
+  decision: The hall switch glued up against a closed-roof pocket in the turntable (2026-10-27)
+  why: The first pocket was open 0.2 mm above the switch, so the switch was drawn floating (the connectivity gate found it)
+  alternatives:
+  - option: An open pocket
+    rejected: 'nothing seats the switch: drawn floating, glued by guesswork'
+- id: T1.5
+  decision: The pan servo's EEPROM torque ceiling at 80 %, set by the setup tool and verified by the firmware at every init
+    (2026-10-28)
+  why: The pinion read 1.05 layer-aware at a full stall, at the tooth's root fillet; at 80 % it is 1.31 and the ring's teeth
+    1.5
+  alternatives:
+  - option: A profile shift
+    rejected: moves strength from the ring's teeth, which are at 1.2 themselves
+  - option: A wider face
+    rejected: the ring's face sets the mesh
+  - option: A metal pinion on the printed ring
+    rejected: wears the ring

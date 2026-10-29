@@ -61,7 +61,7 @@ availability (docs/turret-prototype-plan.md section 0). For the firmware:
 | A5 | LASER_EN | through the 2N7000 (Quarton VLM-650-03 LPT, Class 2); not D13, which also lights the red LED and which the bootloader pulses on a reset (the laser would flash) |
 | A2 | HOPPER_BEAM | v1 (not fitted in v0) |
 | SDA | NEOPIXEL | v1 (not fitted in v0); SCL spare |
-| A0 | BUS_V | the ring's +24 V through 91 k / 10 k (10.1 : 1) |
+| A0 | BUS_V | BUS (the XT30's 12-54 V, D66) through R20 182 k / R21 10 k (19.2 : 1: 0.78 V at 15 V, 2.81 V at 54 V); it sets the supply profile (section 4, D70) |
 | CAN (on-board transceiver) | the turret's CAN segment | 1 Mbit/s classic; only the turret and the host are on it now |
 
 ## 2. States
@@ -75,7 +75,9 @@ BOOT -> HOMING -> IDLE <-> ARMED -> SPIN_UP -> READY <-> FIRING
 
 - **BOOT.** Ping the pan and tilt servos (12 V PAN and 12 V MAIN are always on). Each servo's EEPROM is read and
   verified, never written: a release can cut the feed servo mid-write, and the setup tool owns EEPROM. The pan must be
-  in step mode, the tilt in position mode with angle limits that keep it at most 1 deg above level. Then the RAM
+  in step mode with its torque ceiling (register 16, max torque) at most 80 % of stall: the printed pinion's rare-load
+  limit, which holds at power-up before the firmware writes anything (cad/turret_studies.py R-stall); the tilt in
+  position mode with angle limits that keep it at most 1 deg above level. Then the RAM
   registers are written (torque limit 50 %, acceleration, speed: at most 100 deg/s, D7) and torque is enabled. Wrong
   EEPROM latches SERVO_CONFIG and the turret stays in FAULT.
 - **HOMING.** Section 3. Nothing else moves until it is done, and HOMING shows in the heartbeat. It fails after 15 s
@@ -130,41 +132,55 @@ index re-check. Results are in exports/turret/firmware/homing.json: 1,000 of 1,0
 
 ## 4. Flywheels
 
-- **Set speed.** It comes from CONFIG: rpm = (v_set / ratio) x 60 / (pi x D), with D the Ø34 tyre. The ratio is the
-  launch rerun's design point, 1.0054 (52 fps at 8,855 rpm), so 52 fps on Ø34 is **8,855 rpm = 61,985 eRPM**, 84 % of
-  the nominal 12 V no-load speed (10,499 rpm). The old 0.945 ratio would give 9,421 rpm. The usable band is 40-56 fps
-  (56 fps = 91 % of no-load, keeping the trim's headroom). FIRE carries the ball speed (0 means 52); CONFIG may carry
-  a bench-measured ratio after test 4.4.
-- **Tyre.** Ø34 only. Ø36 reaches 70.7 fps at the worst corner on this motor, so a CONFIG tyre row other than 34 is
-  refused and latches CONFIG_MISMATCH: no arming until it is put right.
-- **Control.** Throttle = a feed-forward from the throttle map (test 4.3's table in CONFIG, else the no-load model,
-  rpm / (880 x 12 V x 0.994)), plus a PI trim on each wheel's eRPM. The trim is bounded to +-8 % throttle and moves at
-  most 0.05 % a millisecond. Bumpless: a trim that stepped at the ramp's end put a 3 A spike on the ring in the
-  simulation. Bounded: a doubled rail cannot hide under the loop.
-- **Soft spin-up: 300 ms** from zero to the set speed (open-loop bench modes: 100 % in 300 ms). The X2216's wheel is
-  6.9e-6 kg m^2, so a 200 ms ramp puts 3.56 A on the ring's paralleled +24 V pair, while 300 ms puts 2.51 A (1.25 A a
-  circuit) and reaches 95 % speed in 0.285 s. A stepped start is 12 A: the firmware never steps. AM32's `max_ramp`
-  and its 10 A current limit are the second and third lines (`am32_settings.md`).
+- **Set speed (D68).** It comes from CONFIG: rpm = (v_set / ratio) x 60 / (pi x D), with D the Ø38 tyre and the
+  launch model's ratio 0.952, so 95 fps on Ø38 is **15,286 rpm = 107,002 eRPM**, 97 % of the trimmed rail's no-load
+  speed. The band is 40-100 fps; 100 asks for more than the rail gives a Hasbro ball (97.1 fps flat out), so the
+  wheels run flat out on the rail, which is the ceiling (105 fps for the fastest accepted ball). FIRE carries the ball
+  speed (0 means 95); CONFIG may carry a bench-measured ratio after test 4.4.
+- **Tyre.** Ø38 only (40 % crush on this cage). A CONFIG tyre row other than 38 is refused and latches
+  CONFIG_MISMATCH: no arming until it is put right.
+- **Control.** Throttle = a feed-forward from the throttle map (test 4.3's table in CONFIG, else the no-load model),
+  plus a PI trim on each wheel's eRPM. The trim is bounded to +-8 % throttle and moves at most 0.05 % a millisecond.
+  Bumpless: a trim that stepped at the ramp's end put a 3 A spike on the ring in the simulation. Bounded: a doubled
+  rail cannot hide under the loop.
+- **Soft spin-up: 800 ms on the bus** from zero to the set speed (open-loop bench modes likewise). The wheels hold
+  19.4 J for the pair at 95 fps; 0.8 s keeps the input's peak at about 98 W. The firmware never steps: a new set speed
+  while spinning ramps too. AM32's `max_ramp` and its current limit are the second and third lines
+  (`am32_settings.md`).
+- **The supply profile (D70).** The ramp and the burst rate follow BUS_V, the lowest reading over the last 2 s (the
+  pack sags under the spin-up's own current), so the slip ring's three power pairs stay within 2 A a circuit and the
+  stand's switch within its rating (docs/turret-wiring.md section 5, sim/turret_power.py):
+
+  | BUS_V (lowest over 2 s) | Ramp | Burst rate, at most |
+  |---|---|---|
+  | 24 V and over (Gyropup's 10S bus, 30-41 V) | 0.8 s | 3/s (the feed's own maximum) |
+  | 20.5-24 V (a full FLEXVOLT in 20 V mode) | 1.0 s | 3/s (4/s allowed) |
+  | 18-20.5 V | 1.6 s | 2/s |
+  | under 18 V (to 15 V, the pack empty) | 2.4 s | 1/s |
+
+  A row holds from its voltage up; between rows the slower one applies. A pack that sags below a row mid-ramp
+  stretches the ramp from where it is (its slope only falls, the current never steps), and a burst under way slows
+  to the new rate; neither speeds up mid-way. An unmeasured BUS_V (under 9 V: a cut lead) takes the slowest row; over
+  54 V (D66's ceiling) the firmware refuses to spin (EV_SHOT_REFUSED, reason 210). Tests: `test_firmware.py`
+  `supply_*` (the table, the four rows on the simulated turret, a sag mid-ramp, unmeasured, over 54 V).
 - **ESC arming.** After ARM_IN rises, the firmware sends zero throttle for 0.6 s (AM32 arms on 0.5 s), and turns on
   extended telemetry (DShot command 13) for the temperatures.
-- **The pre-feed check (the 24 V detector).** Every eRPM read of either wheel above **81,312 eRPM** (1.10 x KV x 12 V
-  x 7, 11,616 rpm) counts. Three in a row (3 ms; one corrupt frame is not a fault) latch SAFE: zero throttle, no dial
-  step, until CLEAR_FAULTS with the line released. A 24 V fault spins the X2216 to ~21,000 rpm (147,000 eRPM). The
-  ramp passes the limit a fifth of a second in, and in the simulation the turret was SAFE 2-3 ms after the first read
-  over it. A dial step also needs both wheels' eRPM fresher than 20 ms, under the limit and READY. With no eRPM the
-  firmware never feeds, and spinning without eRPM for 200 ms is SAFE.
-- **The bench's no-load limit.** CONFIG holds `no_load_rpm_max_d34` = **11,180 rpm** (78,260 eRPM), the launch model's
-  bound above which a ball could pass 66 fps on Ø34. Test 4.1 judges the measured no-load speed at 100 % throttle
-  against it and against the plan's 1.10 x KV x 12 V.
+- **The pre-feed check (D68).** Every eRPM read of either wheel above **114,730 eRPM** (16,390 rpm: the no-load
+  speed at which the densest accepted ball would reach ASTM F963's 2,500 J/m^2, just under the 16,496 at which the
+  fastest would leave at 105 fps) counts. Three in a row (3 ms; one corrupt frame is not a fault) latch SAFE: zero
+  throttle, no dial step, until CLEAR_FAULTS with the line released. With the converter bypassed (the ESCs on the
+  20.5 V pack) the turret was SAFE within 100 ms of the first read over it in the simulation. A dial step also needs
+  both wheels' eRPM fresher than 20 ms, under the limit and READY. With no eRPM the firmware never feeds, and spinning
+  without eRPM for 200 ms is SAFE.
 - **Stray ball.** Every spin-up starts with the muzzle depressed (-25 deg, or the depression table's limit). A ball
   at the gates in the ramp's first 100 ms is logged as the stray ball of the last release (~6 fps; physics section 5).
 - **Stops.** Zero throttle; AM32 brakes on stop. On a release the firmware sees the 1 kHz train stop on PULSE_MON (no
   edge for 4 ms), commands zero at once, and AM32 brakes ~16 ms before the monostable cuts the rail. Then the hardware
   phase-short closes about 8 ms after ARM falls (5-14 ms; docs/turret-wiring.md 3.3): on the short alone the X2216
-  slows with tau 10.2 ms at low speed (its 117 mOhm, two FETs and the taps) and more slowly at speed (the winding's
-  inductance), 5 % speed about 48 ms after ARM falls. The firmware does not drive the brake.
-- **Overspeed.** The latch trips in hardware on a gate pair under 2.98 ms (66 fps over 60 mm); the firmware only
-  reports TRIP and goes SAFE. It also times both gates for every ball, and a ball over 66 fps latches its own
+  slows with an effective tau of 23 ms from 15,286 rpm (18 ms at low speed; the 1400 KV's winding inductance at
+  speed), 5 % speed about 80 ms after ARM falls (config.BRAKE_TAU_S). The firmware does not drive the brake.
+- **Overspeed (D68).** The latch trips in hardware on a gate pair under 1.87 ms (105 fps over 60 mm); the firmware
+  only reports TRIP and goes SAFE. It also times both gates for every ball, and a ball over 105 fps latches its own
   OVERSPEED SAFE.
 
 ## 5. Feeding and aiming
@@ -212,7 +228,9 @@ hung ball releases two.
 - **Depression table.** The most depression allowed at each pan for the mount in use: cad/turret_lidar.py's
   `firmware_table` for the robot over its lidar, the box scene for the Orin box. The firmware clamps the tilt goal to
   it, interpolating between rows and rounding toward safety. Every tilt goal is also clamped to [-25, 0] deg. A goal
-  above level is clamped and counted, and the barrel never points above level.
+  above level is clamped and counted, and the barrel never points above level. With mount robot and no table
+  loaded, the firmware holds its built-in copy of the robot's table (`config.ROBOT_DEPRESSION`, made for the VLP-16
+  143 mm ahead of the pan axis), so the robot is never without one; a table loaded over CAN replaces it.
 - **Keep-out sectors.** Pans where the turret may aim but never fire (the operator's side on the bench and the box).
   A burst held in a keep-out for 3 s ends.
 - **Settle before firing.** A dial step only when the pan rate is under 10 deg/s, the pan has been still 0.25 s after
@@ -264,7 +282,7 @@ robot, the USB-CAN on the bench. Classic CAN at 1 Mbit/s, the 0x300 block, littl
 This mirrors the simulator's turret (sim/turret.py `TurretController`): aim within the depression table, the laser
 before shots, fire only when settled, and report shots. The host-side bridge maps one onto the other.
 
-## 7. Bench harness
+## 7. Bench harness and the host bridge
 
 On the stand (cad/turret_stand.py), 24 V comes through the XT60E-M inlet, the rocker switch and the DC-rated 5 A fuse
 to DT12 pins 1-4. The pendant powers the base's 555 through DT12 pins 7-8. The USB-CAN adapter (a candleLight /
@@ -272,8 +290,8 @@ gs_usb one, as can0 under socketcan) sits on pins 5-6 to the laptop and terminat
 mandatory soft start are in docs/turret-wiring.md section 1.2.
 
 `firmware/turret/bench_host.py` runs every test of docs/turret-prototype-plan.md section 5 that needs the firmware,
-its CAN link or a reading to record: 3.1-3.9, 4.1-4.9, 5.1-5.5 and 6.1-6.8. Tests 1.x and 2.x need neither. Each test
-writes its readings and pass/fail to `exports/turret/bench/<file>.json` (`--list` shows the files).
+its CAN link or a reading to record: 3.1-3.10, 4.1-4.10, 5.1-5.5 and 6.1-6.8. Tests 1.x and 2.x need neither. Each
+test writes its readings and pass/fail to `exports/turret/bench/<file>.json` (`--list` shows the files).
 
 - On the bench, `--can socketcan:can0` (python-can) is used. The script tells the operator what to do and asks for
   the instruments' readings, or takes them from `--answers`. The host heartbeat runs in a thread, so the turret stays
@@ -281,7 +299,57 @@ writes its readings and pass/fail to `exports/turret/bench/<file>.json` (`--list
 - `--sim` runs the same tests against `sim_turret.py`, which simulates the turret with this firmware on it, and writes
   to `exports/turret/bench/sim/` only, so a simulated result can never be mistaken for a bench reading. Phases longer
   than 120 s are shortened (the JSON says so), and readings the simulation cannot make (ring ohms, IR temperatures,
-  paper) are stated stand-ins, listed in each JSON. A dry run of all 31 tests takes about 2 minutes.
+  paper) are stated stand-ins, listed in each JSON. A dry run of all 33 tests takes about 2 minutes.
+
+**The host bridge.** `firmware/turret/host.py` is the one host for the turret outside the bench tests: manual firing
+on the laptop, on the Orin box and on the robot, and later the game. It is built on bench_host.py's protocol layer
+(its `SimLink` and `CanLink` and its `Turret`, imported, so the bench tests are unchanged). It:
+
+- sends the 10 Hz heartbeat, with the arm request high only while the user has asked to arm; the request drops on any
+  SAFE, FAULT or turret restart, so nothing re-arms without the user asking again;
+- sends the CONFIG rows for the mount as soon as the turret has homed, and again after the turret restarts (a gap in
+  its heartbeat, a break in the heartbeat's sequence, or BOOT). `--mount` is required: with no default, the robot can
+  never get the bench's full-range table by omission.
+
+  | Mount | Depression table | Keep-outs (aim, never fire) |
+  |---|---|---|
+  | robot | exports/turret/lidar/lidar.json `firmware_table`: the VLP-16 143 mm ahead of the pan axis, its top 41.7 mm above the TM face (`config.ROBOT_DEPRESSION` if the file is missing) | none: the body's business |
+  | box | exports/turret/lidar/box.json `firmware_table` | box.json's `keep_out_fire_pan_deg`: within 60 deg of straight back |
+  | bench | explicit: -25 deg at every 30 deg of pan | within 60 deg of straight back, where the operator stands |
+
+  With these go tyre 34, ring on, the launch ratio, and the throttle map once bench test 4.3 has passed
+  (exports/turret/bench/speed_map.json; in --sim, the simulated one). `--keepout none` or `--keepout FROM:TO`
+  replaces the keep-outs;
+- refuses to arm until those rows have gone out since the turret's last boot and its next heartbeat has come back
+  without CONFIG_MISMATCH. The reference echoes no CONFIG row, so that heartbeat and the restart watch are the
+  acknowledgement it allows (section 9);
+- sends AIM, FIRE and LASER: the tilt is never asked above level or below the table; pan and tilt run at most 90 deg/s,
+  and at most 50 deg/s while "people near" is set (the body's lidar and cameras, or the page). While it is set no FIRE
+  goes out, a burst under way stops and its wheels spin down, and an aim under way slows (its goal is re-sent, nudged
+  0.05 deg, because the firmware takes a new rate only with a new goal);
+- logs every SHOT, FEED, POWER, HEALTH and EVENT frame, the state changes, the CONFIG rows and the commands to
+  `exports/turret/bench/host-<UTC time>-<mount>.json`. In --sim the log goes to exports/turret/bench/sim/ and never
+  to bench/ itself, as with bench_host.py.
+
+The arm request is only a request. The safety line (the pendant on the bench, the body's STOP contact on the robot),
+the firmware's own conditions and the hardware arm chain decide. Running it:
+
+- **Simulated:** `.venv/bin/python firmware/turret/host.py --sim --mount robot`, or with
+  `--script "pendant on; arm; aim 0 -10; fire 24; status"`. The simulated time runs only inside a command (`wait S`
+  runs it), and `pendant on|off` and `load N` stand in for the operator.
+- **On the laptop:** the gs_usb adapter on DT12 pins 5-6 as above, python-can in the venv (`pip install python-can`),
+  `sudo ip link set can0 up type can bitrate 1000000`, then `.venv/bin/python firmware/turret/host.py --can
+  socketcan:can0 --mount bench` (`--mount box` on the Orin box).
+- **On the Jetson:** the J501's second CAN port as classic CAN at 1 Mbit/s (`sudo modprobe mttcan` if it is not
+  loaded, `sudo ip link set can1 up type can bitrate 1000000`, `ip -details link show can1` to check), python-can,
+  then `python3 firmware/turret/host.py --can socketcan:can1 --mount robot`. The body terminates its end of the bus at
+  the J501. If only can0 comes up (body P0), the turret stays on the USB-CAN adapter, as on the bench.
+- **For the game page's backend:** `--jsonl` reads one JSON object a line (`{"cmd": "aim", "pan": 10, "tilt": -5}`,
+  `{"cmd": "fire", "balls": 3}`, `{"cmd": "near", "on": true}`, `{"cmd": "status"}`) and answers each with one
+  JSON line. A Python backend can use `TurretHost` directly. No web server is needed.
+
+The commands are status, aim PAN [TILT [RATE]], fire N [RATE [FPS]], laser on|off, near on|off, arm, disarm, stop,
+spindown, rehome (refused while people are near: homing sweeps at 60 deg/s), clear, config, wait S and quit.
 
 ## 8. Proofs in simulation
 
@@ -289,8 +357,8 @@ writes its readings and pass/fail to `exports/turret/bench/<file>.json` (`--list
 |---|---|---|
 | `test_homing.py` | homing and turn counting, 1,000 random starts | unchanged: 1,000 / 1,000, max 6.7 s, repeatability 0.07 deg |
 | `test_feed.py` | the feed driver against a simulated STS3215 through the real packet code: 3/s with a jam injected and recovered; three jams fault; the load catches a jam before the timeout; the drop-off on release and the re-init; lost replies never double a step; the step time; the gate-paced burst with hung balls freed by the dither, the 5-ball hopper at -25 deg, the empty hopper | all pass: jam caught 68 ms after contact (load), reversed, retried, recovered; clean steps 229 ms mean, 236 max; 6 of 6 hung balls freed by a dither, 0 by a step, 0 doubles; 335 ms step to step |
-| `test_firmware.py` | protocols; 8,855 rpm / 61,985 eRPM; Ø36 refused; the tilt never above level; no spin without ARM; the re-arm; zero throttle when the heartbeat goes; a 300 Hz train refused though the hardware stays armed; the ramp never steps; the 24 V guard; one bad frame no trip; a 75 fps pair latches SAFE; aim live and capped while disarmed; the feed servo's drop-off and re-init through the firmware; a new set speed ramps; no DShot frame while the ESCs are unpowered | all 19 pass |
-| `bench_host.py --sim` | every bench test runs end to end | 33 of 33 pass on the circuit as drawn now (docs/turret-wiring.md 3, D47) |
+| `test_firmware.py` | protocols; 8,855 rpm / 61,985 eRPM; Ø36 refused; the tilt never above level; no spin without ARM; the re-arm; zero throttle when the heartbeat goes; a 300 Hz train refused though the hardware stays armed; the ramp never steps; the 24 V guard; one bad frame no trip; a 75 fps pair latches SAFE; aim live and capped while disarmed; the feed servo's drop-off and re-init through the firmware; a new set speed ramps; no DShot frame while the ESCs are unpowered; the host bridge end to end with mount robot (no arming before the table is loaded, the 85 CONFIG rows in the firmware, an aim, 24 balls, then people near: a burst stopped, fire refused, pan held to 50 deg/s) | all 20 pass; the host: 24 of 24 balls, 50.0 deg/s with people near (90.0 before) |
+| `bench_host.py --sim` | every bench test runs end to end | 33 of 33 pass on the circuit as drawn now (docs/turret-wiring.md 3, D47); 6.8 on the table for the lidar 143 mm ahead |
 
 ## 9. Open items found while building v0 (for the hardware and the plan)
 
@@ -308,3 +376,7 @@ writes its readings and pass/fail to `exports/turret/bench/<file>.json` (`--list
   PULSE_MON on A3, TRIP_IN polled.
 - **Test 6.7 cannot hold for a ball already at the nip.** A ball at the nip at the release, or reaching it within
   ~10 ms, leaves fast (the physics' own table). The early zero throttle narrows that window and cannot close it.
+- **No CONFIG echo.** The firmware answers no CONFIG row, so the host bridge cannot see that each depression row
+  arrived (a full receive FIFO on the Feather would drop one silently). It paces the rows (about 4 a millisecond), and
+  the robot has the built-in table behind it. An EVENT per accepted row (kind and index in a, the stored values in b
+  and c) would let the host check every row: proposed for the Feather port, not in the reference yet.

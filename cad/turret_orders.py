@@ -19,13 +19,15 @@ BENCH = R / 'exports' / 'turret' / 'bench'
 OUT = BENCH / 'orders'
 # the parts rule's sellers (docs/decisions.yaml D40); a line bought elsewhere is flagged on the summary page
 D40_SELLERS = ('McMaster-Carr', 'Digi-Key', 'Mouser', 'SparkFun', 'Adafruit', 'Pololu', 'SendCutSend', 'Waveshare', 'SunnySky USA',
-               'Palm Beach Bots', 'Repeat Robotics', 'AbleNet', 'FYSETC', 'Caldwell', 'IWISS', 'VXB Bearings')
+               'Palm Beach Bots', 'Repeat Robotics', 'AbleNet', 'FYSETC', 'Caldwell', 'IWISS', 'VXB Bearings',
+               'RaceDayQuads')          # D51: the Lumenier AM32 ESCs (Lumenier's own store, GetFPV, is the backup seller)
 # the order to place the orders in: the longest leads first (the servos ship from China, 1-3 weeks)
-PRIORITY = ['Waveshare', 'SunnySky USA', 'Palm Beach Bots', 'Pololu', 'Adafruit', 'SparkFun', 'Digi-Key', 'Mouser', 'McMaster-Carr',
-            'VXB Bearings', 'SendCutSend']
+PRIORITY = ['Waveshare', 'SunnySky USA', 'Palm Beach Bots', 'RaceDayQuads', 'Pololu', 'Adafruit', 'SparkFun', 'Digi-Key', 'Mouser',
+            'McMaster-Carr', 'VXB Bearings', 'SendCutSend']
 WHEN = {'Waveshare': 'Day one: the three servos are the critical path (Waveshare ships in about 3 business days, then 3-8 working days by UPS/DHL).',
         'SunnySky USA': 'Day one: the flywheel motors (the cartridge is printed after the motor is measured in hand, plan T2).',
-        'SendCutSend': 'Day one: upload the drawing for an instant price; 3-5 days.'}
+        'SendCutSend': 'Day one: upload the four drawings (two thicknesses) for an instant price; 3-5 days.',
+        'RaceDayQuads': 'Day one, with the Repeat ESCs (D51): the backup AM32 pair, so the first bench hour (plan N10) can pick the pair that returns eRPM.'}
 
 
 def slug(s: str) -> str:
@@ -149,10 +151,14 @@ def write(bom_path: Path = BENCH / 'bom.json') -> dict:
     md += ['', f'**Total: {money(grand)}** before shipping and tax (whole packs; the McMaster packs and the tools are most of the gap to the '
            '"parts used" figure).', '']
     if sheet:
-        md += ['## The custom part (SendCutSend)', '']
+        md += ['## The custom parts (SendCutSend, one cart)', '',
+               'Each DXF is the part seen from the face its countersinks are cut in (the face a screw head goes into): upload it face up, '
+               'as drawn, so the countersinks land on that face. Tapped holes are drawn at their tap drill (M5: Ø4.2, M3: Ø2.5).', '']
         for name, s in sheet.items():
+            ops = s.get('operations') or 'none'
             md.append(f"- `{name}`: upload `{s['drawing']}` at {s.get('url', 'sendcutsend.com')} as **{s['name']}, {s['thickness_in']} in "
-                      f"({s['thickness_mm']} mm)**, quantity 1, deburred, no finish. The instant price shows on upload.")
+                      f"({s['thickness_mm']} mm)**, quantity 1, deburred, no finish" + (f"; **{ops}**" if ops != 'none' else '') +
+                      ". The instant price shows on upload.")
         md.append('')
     if off_rule:
         md += ['## Bought outside the parts rule\'s seller list', '',

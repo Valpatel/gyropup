@@ -7,8 +7,10 @@ research/turret-slip-ring.md (sources and dates). Charter and checklist: docs/tu
 build, well researched" and "Make sure you do real physics simulations of the turrets with the foam balls end to end,
 make something I can actually build, get good parts from mcmaster."
 
-Hard rules stand: the barrel never points above horizontal; muzzle speed ≤ 70 fps (21.3 m/s); nothing spins or
-feeds unless the safety line is held (the pendant on the bench, the radio stop on the robot).
+Hard rules stand: the barrel never points above horizontal; muzzle speed ≤ 105 fps (32.0 m/s) for every accepted round,
+held by the hardware (D68, which replaced the 70 fps cap: a Hasbro Rival round leaves at ~97 fps, like a stock Rival
+blaster); nothing spins or feeds unless the safety line is held (the pendant on the bench, the radio stop on the robot).
+Eye protection is recommended for everyone in range, as Hasbro does for Rival.
 
 ## 0. The decision in one paragraph
 
@@ -20,11 +22,13 @@ turns; the base stays passive (fuse, the pan servo's 12 V regulator, the safety-
 flywheels soft-start over 200 ms, which turns an 11 A spin-up pulse into 2 A at the ring, with the ESC current limit
 as the backstop. Pan becomes continuous; absolute pan comes from the STS3215's own 12-bit angle plus one index
 magnet in the base, homed at power-up. Buy the $27.95 SparkFun/Senring ring now for the bench and request quotes for a
-2 × 10 A + 12-signal ring for the robot. The 70 fps cap is **not** a firmware number: the flywheel ESCs run from a fixed
-12 V regulator, which caps the wheels at 10,437 rpm and the worst ball at 64 fps flat out (the simulator's 123 fps is
-the same wheels on 24 V), and a hardware window comparator on the barrel's two chronograph gates latches the safety
-line open on any ball over the cap. Releasing the line cuts the ESC and dial power and shorts the flywheel phases: the
-wheels are at 5 % speed in 36 ms, before a ball already dropped (96 ms) can reach them.
+2 × 10 A + 12-signal ring for the robot. The 105 fps ceiling (D68) is **not** a firmware number: the flywheel ESCs run
+from a regulated rail trimmed per turret (one fixed resistor on a TDK i6A4W buck, set on the bench so the faster X2216
+1400 KV turns 15,722 rpm at no load), which holds every accepted ball at or under 103.9 fps flat out with every
+tolerance (the same wheels on the 20.5 V pack would throw 172 fps), and a hardware window comparator on the barrel's
+two chronograph gates latches the safety line open on any ball over 105 fps. Releasing the line cuts the ESC and dial
+power and shorts the flywheel phases: the wheels are at 5 % speed in ~80 ms (D68's faster wheels; it was 36 ms), before
+a ball already dropped (96 ms) can reach them if the motors' inductance is as estimated (section 2.11, V14).
 
 ## 1. Decisions (decided 2026-10-27: docs/decisions.yaml D40, D41)
 
@@ -41,12 +45,12 @@ on the bench *and* on the robot (the soft start holds every circuit under 2 A; p
 | D2 | **Ring tier** | C: SparkFun ROB-13065 (Senring M220-12, 12 × 2 A, $27.95, in stock); B: Senring M220-0210-12S (2 × 10 A + 12 signal) or Moflon MC330-P0308-S06 / MC3309 grade (3 × 8 A + 6 × 2 A), quote, est $60-150; A: Servotecnica SVTS A 03-S-A-04/06 (4 × 6 A + 6 × 2 A, < 10 mΩ dynamic, 10⁷ revs, US office) or Moog AC6310 (3 × 10 A + 6 × 2 A), quote, est $150-400 (Moog's plain 12 × 2 A lists at about $192) | **Buy C now** for the bench (it carries the turret once the soft start is in: 2 A pulses on 4 + 4 paralleled rings) and **request quotes for B and A in parallel**. For the robot take the **Senring M220-0210-12S** if ≤ $120 and the **Servotecnica 04/06** if the user wants the specified dynamic resistance and US support; all three share the Ø22 / Ø44 flange envelope, so the carrier is a per-model print, nothing else changes |
 | D3 | **Turret controller** | Adafruit Feather M4 CAN Express (SAME51, CAN transceiver and 5 V boost on board, $24.95, in stock) vs the robot's WeAct STM32G474 core + SN65HVD230 module (catalog) | **Feather M4 CAN** for the bench and the first robot: one board, no soldering of a transceiver, 16 PWM, 6 ADC, 3.3 V logic. The G474 stays the choice if the firmware team wants one toolchain with the balance controller; the pin map in section 2 fits both |
 | D4 | **Where the pan servo is driven from** | (A) the turret MCU's servo bus crosses the ring on one TTL ring; (B) a second CAN node in the base drives the pan servo | **(A)**: one firmware, one CAN node, a checksummed protocol with retries on the one crossing line; a bus fault leaves the servo holding position (safe). (B) is the upgrade if the TTL-over-ring test (section 6) shows errors |
-| D5 | **Flywheel rail regulator** (the physics design runs the flywheel ESCs from a 12 V regulated rail for the velocity ceiling) | one Pololu D24V150F12 (15 A, 40 V in, $79.95, rationed) or the newer D42V110F12 (6-16 A, 60 V in, $69.95; 12 V SKU to confirm on Pololu) shared by both ESCs; or one D36V50F12 (4.5 A, $39.95) per ESC as a hardware current ceiling | **One shared 15 A-class regulator** with the AM32 limit at 10 A and the 200 ms ramp. Per-ESC 4.5 A regulators give a hard ceiling but their overload behaviour (droop) can brown out an ESC mid-spin-up; test before adopting |
+| D5 | **Flywheel rail regulator** (the flywheel ESCs run from a regulated rail whose no-load speed is the velocity ceiling) | D68: a fixed 12 V Pololu (D24V150F12: 40 V in, under the 10S bus's 42 V; D42V110F12: 9 A, 60 V in, $59.95) with its ±4 % set point; or the **TDK-Lambda i6A4W020A033V-001-R** (9-53 V in, 3.3-15 V by one trim resistor, 20 A, 250 W, $47.46 Digi-Key, Newark backup) trimmed per turret; or a buck-boost for an 880 KV at ~18 V | **D68: the TDK i6A4W, trimmed per turret** (the faster X2216 1400 KV at 15,722 rpm no-load, warm; ~11.3 V, 10.8-11.9 V for KV ±5 %), shared by both ESCs, the AM32 limit at 10 A and the 800 ms ramp. A fixed set point cannot hold both D68 numbers (the Hasbro ball at 95 fps and every accepted ball under 105: sim/turret_launch.py `trim.untrimmed`); a buck works from one DCB609's loaded 15 V because the 1400 KV keeps the rail under 12 V. Before D68: one shared 15 A-class 12 V regulator |
 | D6 | **Camera provision** | reserve 2 signal rings as a pair now; or buy a USB-rated capsule later; or a Wi-Fi camera on the turret | **Reserve the pair now** (it costs nothing on a 12-signal ring). Decide the camera later |
 | D7 | **What the safety line stops** | flywheels and dial only (the hard rule) vs all motion | **Flywheels and dial off in hardware; pan and tilt stay live but the firmware caps pan at the 100 deg/s people-near limit while disarmed**, so the turret can park and point without ever spinning or feeding |
 | D8 | **Quotes** | The agents must not contact vendors (Gyropup is private) | The user sends the quote requests from section 5.2 (text provided) or approves the agent doing so |
 | D9 | **How the safety line brakes the flywheels** | (a) a phase-short brake: three logic-level MOSFETs across the motor phases, closed by hardware 10 ms after the ESC power drops; (b) AM32 brake-on-stop, with the hardware chain forcing a zero-throttle pulse train into the ESCs and keeping them powered for 1 s; (c) both | **(c)**: AM32 brake-on-stop for every normal stop from firmware, and the phase-short as the release brake, because it needs no ESC firmware, no signal source and no power to work (section 2.11): τ = 12 ms, 5 % speed in 36 ms (calc) |
-| D10 | **The independent overspeed cut-out** | (a) a hardware window comparator on the two chronograph gates that latches the safety line open on any ball faster than 66 fps; (b) a wheel-speed trip (frequency-to-voltage on one motor phase, LM2917 class); (c) firmware only | **(a)** now (6 logic parts, it measures the ball itself, it also covers a wrong regulator), with the firmware's own per-shot speed check and RPM-telemetry lockout on top; (b) only if the physics agent wants a cut before the first fast ball (section 2.10) |
+| D10 | **The independent overspeed cut-out** | (a) a hardware window comparator on the two chronograph gates that latches the safety line open on any ball faster than 105 fps (D68; 66 fps before); (b) a wheel-speed trip (frequency-to-voltage on one motor phase, LM2917 class); (c) firmware only | **(a)** now (6 logic parts, it measures the ball itself, it also covers a wrong regulator), with the firmware's own per-shot speed check and RPM-telemetry lockout on top; (b) only if the physics agent wants a cut before the first fast ball (section 2.10) |
 
 ## 2. The electrical architecture across the pan joint
 
@@ -91,31 +95,47 @@ to 7-8; the robot's radio stop output (designed separately) will too. Twisted pa
 
 ### 2.4 Power rails
 
-| Rail | Source | Feeds | Fuse | Part |
+*Rewritten for D66 (one XT30 input, its own Jetson) and D68 (the trimmed flywheel rail); the build's detail is
+docs/turret-wiring.md 4.*
+
+| Rail | Source | Feeds | Fuse / protection | Part |
 |---|---|---|---|---|
-| 24 V in | DT12 → base | everything | 10 A ATO blade in the base, 32 V DC type | holder and fuse: McMaster (section 5) |
-| 12 V pan (base) | Pololu D36V50F12 (13.3-50 V in, 4.5 A typ) | STS3215 pan servo (2.7 A stall) | 3 A polyfuse or 3 A blade | Pololu 4095, $39.95 |
-| *(the three rails above are in the base; those below are on the turret, fed by the ring)* | | | | |
-| 12 V flywheel (turret) | Pololu D24V150F12 (15 A) or D42V110F12 | 2 × AM32 ESC → Snail 2305 (10 A limit each) | 15 A mini blade at the regulator input | Pololu 2885 $79.95 / D42V110F12 $69.95 |
-| 24 V dial (turret) | straight from the ring, through the safety switch | C610 → M2006 (10 A max) | 10 A mini blade | |
-| 12 V aux (turret) | Pololu D36V50F12 | tilt STS3215 (2.7 A stall), laser (20 mA at 12-24 V) | 3 A polyfuse | Pololu 4095, $39.95 |
-| 5 V logic (turret) | Pololu D36V28F5 class or the aux regulator → a 5 V buck (2-4 A family, $23.95-24.95; exact 5 V SKU to confirm) | Feather (USB/VBUS pin), servo-bus buffer, hall sensor, WS2812 lights (0.5 A), chronograph gates | 2 A polyfuse | |
+| Input (plinth) | one XT30, 12-54 V in principle: one DCB609 in 20 V mode on the stand (15-20.5 V) or Gyropup's 10S bus (30-42 V) | the J4012 (Jetson, up to 48 W) directly; the head branch | 20 A MINI 58 V main; 5 A MINI 58 V to the J4012 | XT30, Bussmann HHM holders (body.json) |
+| BUS (head branch) | the input | the base board (pan servo's regulator), and across the ring's circuits 1, 2, 11 (+) and 3, 4, 12 (GND) to the bay | 10 A MINI 58 V; 1N5408 reverse crowbar; P6KE51A clamps at the base and the bay; 2 x 470 uF 63 V on level 0 | `fuse_mini58_10a`, `diode-1n5408g`, `tvs-p6ke51a`, `panasonic-eeu-fr1j471b` |
+| 12 V pan (base) | Pololu D36V50F12 (13.3-50 V in, 4.5 A) | STS3215 pan servo (2.7 A stall, est); the 555's pendant loop | MF-R300 | Pololu 4095, $39.95 |
+| *(the rails above are on the fixed side; those below are on the turret, fed by the ring)* | | | | |
+| RAIL (flywheel, turret) | TDK i6A4W020A033V-001-R (9-53 V in, 20 A, 250 W), always on, trimmed per turret to ~11.31 V (10.8-11.9 V) by a resistor string on its TRIM pin | the safety switch only | P6KE15A; its own 27 A limit | $47.46 Digi-Key, Newark backup |
+| FLY (turret) | RAIL through the Pololu 2815 (16 A, ON pin from ARM) | 2 x AM32 ESC -> X2216 1400 KV (10 A limit each); the feed STS3215 | MF-R300 (feed servo); 1N5822 + P6KE15A | Pololu 2815, $8.49 |
+| 12 V aux (turret) | Pololu D36V50F12 (50 V in) | tilt STS3215 | MF-R300 | Pololu 4095, $39.95 |
+| 5 V logic (turret) | Pololu D36V28F5 (5.3-50 V in, 3.2 A) | Feather (USB pin), servo-bus buffer, hall sensor, gates, laser | MF-R250 | Pololu 3782, $23.95 |
 
-The **safety switch** (Pololu 2815, 16 A, ON pin) sits between the ring's +24 V and the two motor rails (flywheel
-regulator input and the C610), so with the line open the ESCs and the C610 have no power at all; the MCU, the servos,
-the laser and the lights stay up. The aux and logic rails are upstream of the switch.
+The **safety switch** (Pololu 2815) sits between RAIL and the motor loads, so with the line open the ESCs and the feed
+servo have no power at all, and the phase-short brake closes 5-14 ms later; the MCU, the pan and tilt servos, the laser
+and the gates stay up. It is on the rail side because the bus (42 V full) is over its 32 V. The speed ceiling is the
+trimmed rail: the ESCs only ever see it, and no firmware setting can raise it. The tilt servo and the logic have their
+own regulators so the rail's per-turret trim never moves their supply. Every part on the bus is rated 50 V or more.
+The plan's 24 V dial rail and C610 are gone (the feed is an STS3215 since D42).
 
-### 2.5 Current budget (data sheets and the launch model; research §11-12)
+### 2.5 Current budget (sim/turret_power.py, D66/D68)
 
-| Load | Continuous (game average) | Peak | Duration | Control |
+The flywheel pair holds 19.4 J at the 95 fps set speed (15,286 rpm); the firmware's 800 ms ramp peaks at ~85 W into
+the rail converter (100 ms), holding speed takes ~37 W, a shot's recovery pulse (both ESCs at their 10 A limit) up to
+~270 W for ~10 ms. "Play": the servos moving, the J4012 at 48 W; "worst": every servo at its 50 % torque cap at once.
+
+| | 15 V (pack empty) | 20.5 V (pack full) | 30 V (bus) | 42 V (bus full) |
 |---|---|---|---|---|
-| Flywheels, 2 × Snail 2305 on the 12 V rail | 0.36 A (idle at speed) + 0.3 A (10 shots/s recovery) at 24 V | **11.1 A at 24 V** stepped with a 10 A limit; **2.1 A** with the 200 ms ramp | 40 ms / 200 ms | AM32 `limits.current` = 10 A (verify on the bench), firmware ramp, regulator ~32 A instantaneous limit |
-| Dial, M2006 + C610 at 24 V | 0.3-1 A while feeding (est: 1 N·m is 5.6 A; a 45° dial step needs far less) | 3 A step cap, 5 A jam threshold, 10 A C610 hard max | ≤ 0.5 s (jam timeout) | firmware current command; never during spin-up |
-| Tilt STS3215 at 12 V | 0.3 A at 24 V (est) | 2.7 A stall → 1.5 A at 24 V | moves of 0.25 s | protection current register 28 |
-| Pan STS3215 (base, not through the ring) | | 2.7 A stall at 12 V | | torque limit 50 % (cad/turret_motion.py: gear SF) |
-| Laser | 0.02 A | | | GPIO |
-| Lights, MCU, sensors | 0.25 A at 24 V (est) | | | |
-| **Ring total** | **≤ 2 A at 24 V** (≤ 48 W, inside the 40 W average with the lights dimmed) | **≤ 13 A for 50 ms** worst case (stepped spin-up + a tilt move); **≤ 5 A** as flown (ramp + dial cap) | | |
+| Input, spin-up peak (100 ms), play / worst | 11.2 / 13.1 A | 7.9 / 9.1 A | 5.2 / 6.1 A | 3.7 / 4.3 A |
+| Input, 8 shots at 10/s (1 s RMS), play / worst | 11.3 / 13.7 A | 8.0 / 9.7 A | 5.2 / 6.3 A | 3.7 / 4.4 A |
+| Input, game average (J4012 at 25 W / 48 W) | 3.9 / 5.4 A | 2.8 / 3.9 A | 1.9 / 2.7 A | 1.4 / 1.9 A |
+| Ring's busiest circuit (of 3), spin-up / burst, play | 3.0 / 3.3 A | 2.1 / 2.4 A | 1.4 / 1.5 A | 1.0 / 1.1 A |
+| Ring, game average a circuit | 0.64 A | 0.47 A | 0.32 A | 0.23 A |
+
+On the 10S bus the ring (2 A a circuit) holds at 800 ms and 10/s with margin. On the stand's pack it does not, so the
+firmware runs a stand profile from BUS_V: a 1.0 s ramp and bursts of at most 4/s at 20.5 V, 1.6 s and 2/s at 18 V,
+2.4 s and 1/s at 15 V (docs/turret-wiring.md 5). The stand's rocker (10 A 28 V DC) is within its rating on that profile
+in play (8.7 A at 15 V) and with the J4012 in its 25 W mode at the worst coincidence (9.3 A); at 800 ms and 10/s on an
+empty pack it would carry 11-14 A. Section 2.6 below is the D41 plan's reasoning at 24 V; its numbers are superseded by
+this table.
 
 ### 2.6 Holding the peaks inside the ring's rating
 
@@ -182,30 +202,52 @@ Base: 10 A ATO blade (main). Turret: 15 A mini blade (flywheel regulator input),
 
 ### 2.10 The hardware speed ceiling and the independent overspeed cut-out
 
-The simulator's breakdown (main cc58794) is right that a throttle number in firmware is no cap: the Ø36 wheels at the
-Snail's 21,000 rpm no-load speed on 24 V have a surface speed of 39.6 m/s and would throw about 123 fps (calc, with
-the launch model's 0.945 speed ratio). Two independent layers replace the firmware number:
+D68 (2026-10-27) replaced the 70 fps cap: the turret fires a Hasbro Rival round at about 100 fps, as Hasbro's own Rival
+flywheel blasters do (Nemesis 94-101 fps, Prometheus 100; sold for 14+), and **no accepted round (D67: 22.2-22.8 mm,
+1.6-2.0 g) may leave above 105 fps**, by hardware. A throttle number in firmware is no ceiling: the same wheels on the
+20.5 V pack would throw 172 fps. Three independent layers:
 
-1. **The ceiling is physical: the ESC rail voltage.** The flywheel ESCs are fed only by the fixed 12 V regulator (2.4):
-   no-load 10,437 rpm, 19.7 m/s surface speed, and the launch model's worst ball flat out at 64.2 fps with a +5 % motor
-   and a +4 % regulator (research §12; V1). An ESC cannot exceed its rail. Build rules that keep it so: the regulator is
-   a fixed-output part (no trim pot); the CT connector's flywheel-rail pins carry 12 V only and are keyed apart from the
-   24 V dial pins; the 24 V never reaches the cartridge's ESC side; the bench test V13 runs the wheels at 100 % throttle
-   and measures. The firmware's set speed (55 fps) and its per-shot chronograph check (lockout above 66 fps, S2 of
-   research/turret-launcher-study.md) sit under that ceiling.
-2. **The cut-out measures the ball.** The barrel's two IR gates, 50 mm apart, feed a hardware window comparator: gate 1
-   starts a 74HC123 one-shot of 2.49 ms (the time a ball at 66 fps takes; 70 fps is 2.34 ms, 123 fps 1.33 ms, calc for
-   50 mm: scale with the printed spacing); gate 2 clocks a 74HC74 flip-flop whose D input is the one-shot's Q. A ball
-   faster than 66 fps arrives while Q is still high, the flip-flop sets and **TRIP** latches: it is ANDed into the arm
+1. **The ceiling is physical: the flywheel rail, trimmed per turret.** The flywheel ESCs are fed only by the TDK-Lambda
+   i6A4W buck (D5), whose output is set by one fixed resistor chosen on the bench: with the faster of the two X2216
+   1400 KV motors warm (after a 3 minute spin) at 100 % throttle, its no-load speed is at or under **15,722 rpm**
+   (110,054 eRPM; ~11.3 V, 10.8-11.9 V for KV ±5 %). On Ø38 tyres bonded to their hubs and crushing the ball 40 %, the
+   Hasbro ball then leaves at **97.1 fps flat out** (95 at the 15,286 rpm set speed), and with what the trim cannot
+   measure out (the magnets 15 °C warmer, KV +1.8 %; the rail's line, load and temperature drift and the eRPM reading,
+   +2.0 %), feed offsets and 0.15 mm runout, the fastest accepted ball leaves at **103.9 fps** and the densest (2.0 g on
+   22.2 mm) carries **2,480 J/m²**, under ASTM F963's 2,500, which binds first (sim/turret_launch3d.py `ceiling`).
+   Why the trim: a fixed set point carries the motors' KV spread (+5 %, est) and the converter's ±4 %, and then the
+   rail either holds 104 fps with the Hasbro ball at 92, or gives the Hasbro ball 95 and the worst corner 107 (V1). An
+   ESC cannot exceed its rail, and no firmware setting changes the resistor. Build rules: the trim resistor is a fixed
+   part soldered in and recorded with the trim (never a pot); the CT connector's flywheel-rail pins carry only the
+   trimmed rail and are keyed apart from the turret's input; the input never reaches the ESC side; the tyres are
+   bonded (a tyre come loose would grow 2.4 mm and throw 113 fps); test 4.1 measures the trim and spins each tyre.
+2. **The pre-feed check (firmware, on the ESCs' eRPM).** No dial step while either wheel reads over 16,390 rpm (114,730
+   eRPM): the speed at which the densest accepted ball would reach 2,500 J/m² (the fastest would reach 105 fps at
+   16,496). The trimmed rail with every tolerance reaches 16,330. It stops the first ball of a wrong rail or motor.
+3. **The cut-out measures the ball.** The barrel's two IR gates, 60 mm apart, feed a hardware window comparator: gate 1
+   starts a 74HC123 one-shot of **1.875 ms** (the time a ball at 105 fps takes over 60 mm; 100 fps is 1.97 ms, the
+   bypassed converter's 172 fps 1.1 ms); gate 2 clocks a 74HC74 flip-flop whose D input is the one-shot's Q. A ball
+   faster than 105 fps arrives while Q is still high, the flip-flop sets and **TRIP** latches: it is ANDed into the arm
    chain ahead of the monostable (2.8), so the flywheel and dial rails drop and the phase brake closes, and nothing
-   re-arms until a recessed reset button (or a power cycle) clears the latch. The same gate edges go to the MCU, which
-   logs every shot's speed and refuses to fire above 66 fps on its own. The trip acts after one fast ball has left,
-   which is why layer 1 is the ceiling and this is the backstop against a wrong regulator or wrong wheels. A
-   pre-shot trip on wheel speed (an LM2917 frequency-to-voltage converter on one motor phase, 7 pole pairs:
-   1,098 Hz at the set speed, 1,397 Hz at 70 fps, calc) is the option if the physics agent finds a case where one fast
-   ball is not acceptable; it is not in the first build.
+   re-arms until a recessed reset button (or a power cycle) clears the latch. A 30 µs edge jitter and a 1 % timing
+   part put the trip within ±2.7 fps of 105 (bench 3.3: latched at ≤ 1.80 ms, not at ≥ 1.95 ms). The same gate edges
+   go to the MCU, which logs every shot's speed and refuses to fire above 105 fps on its own. The trip acts after one
+   fast ball has left, which is why layer 1 is the ceiling and this is the backstop against a wrong rail, a loose
+   tyre or wrong wheels. A pre-shot trip on wheel speed (an LM2917 frequency-to-voltage converter on one motor phase,
+   7 pole pairs: 1,834 Hz at the trimmed no-load speed, 1,912 Hz at 16,390 rpm) stays an option, not in the first build.
+
+Safety beyond the ceiling is unchanged: nothing spins unless ARM is held, the barrel never points above level, the
+laser warns before firing, the phase-short brake on release. **The docs recommend eye protection for everyone in
+range, as Hasbro does for Rival.**
 
 ### 2.11 Braking the flywheels when the line is released
+
+**D68.** The faster wheels (19.4 J for the pair at 15,286 rpm, 3.2x before) on the 1400 KV (ke and kt 0.63 of the
+880 KV's) brake slower through the same short: τ 18 ms at low speed (the IRLZ44Ns and taps are half the 111 mOhm
+loop), limited at speed by the winding's inductance (14 uH est): **5 % at ~80 ms** after the line drops, 2 % at 96 ms,
+so a ball still in the chute rests at the nip; one already in the nip within 60 ms of the release leaves at up to
+85 fps (docs/turret-physics.md section 5). The result hangs on the inductance (20 uH: 5 % at 97 ms); bench 4.7
+measures it. Lower-resistance FETs barely help at speed. The numbers below are the design before D68.
 
 Unbraked, the wheels coast on their 0.18 A friction (τ ≈ 2 s by the no-load current; the simulator saw ~1.4 s to a
 stop), and a ball already past the dial reaches the nip about 96 ms after the release (simulator). The release must
@@ -327,20 +369,20 @@ chute → flywheels → barrel → flight → target). Numbers below are the cur
 
 | # | Claim | Today | Proof before building | Proof on the bench |
 |---|---|---|---|---|
-| V1 | Muzzle speed ≤ 70 fps at 100 % throttle for every ball, a +5 % motor and a +4 % regulator | worst ball 64.2 fps, margin 3.6 fps (Ø36 wheels, 25 % crush, 12 V rail) | e2e sim with the regulator's real tolerance (D24V150F12 ±4 %) and the AM32 `max_ramp` | chronograph (two gates in the barrel) on 20 balls at 100 % throttle: all ≤ 70 fps |
-| V2 | Set speed 55 fps ± spread | population 54.7 fps mean, SD 1.0, p99 56.2 | e2e | 50 balls at the set speed: mean 53-57, none > 60 fps |
+| V1 | Muzzle speed ≤ 105 fps at 100 % throttle for every accepted round (D67, D68), the magnets 15 °C warm and the trimmed rail 2 % high; the densest under ASTM's 2,500 J/m² | **103.9 fps** fastest, **2,480 J/m²** densest, the Hasbro ball 97.1 (Ø38 bonded, 40 % crush, the 1400 KV at 15,722 rpm no-load; sim/turret_launch3d.py `ceiling`). Untrimmed (KV +5 %, ±4 % set point): 110 fps | the trim procedure on two motors from different batches; the bench's eRPM reading against a tachometer | test 4.1 (the trim, warm), then 20 Hasbro rounds at 100 %: 95-100 fps, and 20 of the lightest and densest off-brand rounds: all ≤ 105 fps |
+| V2 | Set speed 95 fps ± spread (D68) | accepted population at 95 fps set: 92.4 ± 4.9 fps, p99 96.7 (the tail is the soft, slippery foam) | e2e | 50 Hasbro rounds at the set speed: mean 92-98, none > 105 fps |
 | V3 | **Flywheel spin-up current pulse** (sizes the ring's power rings) | 11.1 A peak at 24 V for 39 ms with a stepped 10 A limit; 2.1 A with the 200 ms ramp (research §12, calc) | e2e sim adds the ESC's DC input current (duty × phase current), the regulator (efficiency, 32 A instantaneous limit) and writes the 24 V-side current trace: peak, charge, RMS over 1 s, for step and ramp | 20 mΩ shunt in the ring's +24 V lead, scope at 1 MHz: peak ≤ 3 A with the ramp, ≤ 12 A stepped; RMS ≤ 3 A |
 | V4 | Burst recovery: 8 shots at 10/s stay within the speed window | 7 % speed drop per shot, recovered on the 10 A limit (launch.json burst_10_per_s) | e2e burst with the ring's series resistance (60 mΩ) and the capacitor bank | chronograph on 8-ball bursts: every shot within ±3 fps of the set speed |
 | V5 | Feed: exactly one ball per 45° step at every pose and rate; nothing leaves when parked, powered or not | sim/turret_feed.py cases (tilts 0/−25, body lean ±10 pitch / ±15 roll, 5 m/s² shake 8-25 Hz, three frictions) | e2e | 100 steps at each of 4 poses with real balls: 0 misses, 0 doubles; parked shake test on the stand: 0 balls out |
-| V6 | Recoil ≤ 0.05 N·s per shot | 0.031 nominal, 0.0448 at the cap with the heaviest ball | e2e reports per-shot impulse | not measured directly; the stand's clamp tabs are the proxy |
+| V6 | Recoil ≤ 0.05 N·s per shot (D68: over it; the head budget needs 0.065) | 0.052 at 95 fps, 0.054 flat out, 0.064 for a 2.0 g ball at 105 (was 0.031) | e2e reports per-shot impulse | not measured directly; the stand's clamp tabs are the proxy |
 | V7 | Pan and tilt servo margins | tilt move margin 7.6, hold 70; pan 90 deg/s max, a 90° move in 1.0 s at best; pinion SF 2.15 at 50 % torque | cad/turret_motion.py stays green after the ring, boards and connectors are added to the masses | time a 90° pan and a 25° tilt with the hopper full |
 | V8 | Nothing panning or tilting comes within 10 mm of the lidar or its ball path at the firmware's depression limit | lidar.json per-pan table, 181 pans | regenerate after the CAD changes | a Ø103 × 72 mock lidar on the stand; sweep pan at the limit table |
 | V9 | Ring: dynamic resistance, CAN errors, temperature, life | vendor ratings (10-60 mΩ, 10⁷ revs) | none | section 6 |
 | V10 | Pan homing finds the index within one turn and the sector is right | design (3.2) | firmware unit test with simulated wraps | 20 power-ups at random pans: every home within 6 s, no wrong sector |
 | V11 | Safety line: release → no spin, no feed; faults never arm | design (2.8) | none | section 6.5: release-to-rail-off ≤ 25 ms; all fault injections stay disarmed |
 | V12 | End to end: the turret on the stand knocks down the targets scenario's plates | sim/turret.py `targets` (5 plates at 3.0-4.2 m) | e2e sim | 5 foam plates at 3-4 m, 24 balls: ≥ 3 down |
-| V13 | **The speed ceiling is physical**: on the 12 V rail the wheels cannot throw over 70 fps at 100 % throttle; the chronograph trip latches on any ball over 66 fps | 64.2 fps worst ball (launch model); 123 fps if the ESCs ever saw 24 V (simulator breakdown) | e2e at 100 % throttle on the 12 V rail with +5 % KV, +4 % V, the lightest and heaviest balls; the trip's 2.49 ms window against the sim's gate times | 20 balls at 100 % throttle: all ≤ 70 fps; trip test 6.7: a 1.3 ms simulated gate pair latches, a 2.6 ms pair does not; reset only by the button |
-| V14 | **Release brakes the wheels before a dropped ball arrives**: < 5 % speed within 50 ms; the resting ball's fate on re-arm is known | τ = 12 ms phase-short (calc); 96 ms ball arrival (simulator) | e2e: release at every ms of the dial-to-nip window with the phase-short model; report the ball's end state and its exit speed on the next ramp | 6.8: release → wheels at 5 % within 50 ms (RPM telemetry and a phase bEMF trace); 20 releases during feeding: no ball leaves the muzzle above 20 fps |
+| V13 | **The speed ceiling is physical** (D68): on the trimmed rail the wheels cannot throw an accepted round over 105 fps at 100 % throttle; the eRPM guard refuses to feed above 16,390 rpm; the chronograph trip latches on any ball over 105 fps | 103.9 fps worst ball (3D, every tolerance); 172 fps if the ESCs ever saw the 20.5 V pack (the converter bypassed) | the ceiling map over rail and tyre; the trip's 1.875 ms window against the sim's gate times | 20 balls at 100 % throttle: all ≤ 105 fps; trip test 6.7: a 1.80 ms simulated gate pair latches, a 1.95 ms pair does not; reset only by the button |
+| V14 | **Release brakes the wheels before a dropped ball arrives**: < 5 % speed within 50 ms; the resting ball's fate on re-arm is known | D68: 5 % at ~80 ms from 15,286 rpm (τ 18 ms, the winding's 14 uH est), so the 50 ms target is missed, but a ball in the chute (≥ 96 ms) still rests unless the inductance is over ~18 uH: measure it. Before D68: τ = 12 ms phase-short (calc); 96 ms ball arrival (simulator) | e2e: release at every ms of the dial-to-nip window with the phase-short model; report the ball's end state and its exit speed on the next ramp | 6.8: release → wheels at 5 % within 50 ms (RPM telemetry and a phase bEMF trace); 20 releases during feeding: no ball leaves the muzzle above 20 fps |
 
 ## 5. Bill of materials for the pan joint and its electrics
 
@@ -490,11 +532,12 @@ genuine 1 kHz train arms; every fault disarms within 25 ms.**
 
 ### 6.7 Overspeed trip
 
-With the wheels off: feed the trip circuit simulated gate pulse pairs from a signal generator at 1.3, 2.2, 2.4, 2.6
-and 3.0 ms spacing; **accept: latched at ≤ 2.4 ms, not latched at ≥ 2.6 ms, the latch survives until the reset
-button, the arm chain cannot be re-armed while latched.** With the wheels on the 12 V rail at 100 % throttle: 20 balls,
-all ≤ 70 fps (V13) and no trip; then with the one-shot temporarily set to 3.0 ms (a 55 fps threshold) fire 5 balls at
-the set speed: the first ball trips. Never test the trip by feeding the ESCs 24 V.
+With the wheels off: feed the trip circuit simulated gate pulse pairs from a signal generator at 1.3, 1.6, 1.75, 1.80,
+1.85, 1.9, 1.95 and 2.1 ms spacing over the 60 mm gates (D68: the window is 1.875 ms, 105 fps); **accept: latched at
+≤ 1.80 ms (109 fps), not latched at ≥ 1.95 ms (101 fps), the latch survives until the reset button, the arm chain
+cannot be re-armed while latched.** With the wheels on the trimmed rail at 100 % throttle: 20 balls, all ≤ 105 fps (V13)
+and no trip; then with the one-shot temporarily set to 2.2 ms (an 89 fps threshold) fire 5 balls at the set speed:
+the first ball trips. Never test the trip by bypassing the converter. Everyone in range wears eye protection.
 
 ### 6.8 Braking on release
 

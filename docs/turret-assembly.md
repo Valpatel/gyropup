@@ -50,11 +50,11 @@ The driver pressed into the top of the turntable's bore (three crush ribs and a 
 
 The rotor leads through the yoke's slot, the yoke on the turntable: 4 x M4 x 10. 4 x M3 inserts in the -y arm, the bay on them: 4 x M3 x 8 flat heads; the three boards on their standoffs (12 and 14 mm); the ring's rotor plug and the hall into level 2.
 
-## 8. The tilt servo and the cradle
+## 8. The tilt servo and the cradle on its aluminium cheeks
 
 ![step 8](../exports/turret/assembly/step-08.png)
 
-The STS3215 into its pocket on the +y arm, 4 x M2 x 10 from the arm's inner face. The MR126 into the -y arm's seat. The cradle: its hub onto the servo's horn (4 x M3 x 12), the ISO 7379 shoulder screw through the -y arm and the bearing into the cradle's M5 insert. Check the 0 and -25 deg stops by hand before anything else.
+The rail frame, its two aluminium plates and the stop lug go together on the bench (D48): 8 x M3 inserts into the rail frame's two rebates, put in from the side; the aluminium stop lug onto the -y plate's outer face, 2 x M3 x 6 flat heads from the plate's inner face into its tapped holes, a drop of CA gel under it; each plate into its rail's rebate, 4 x M3 x 8 button heads. Then the STS3215 into its pocket on the +y arm, 4 x M2 x 10 from the arm's inner face, and the MR126 into the -y arm's seat. The cradle between the arms: the horn boss between the +y plate and the servo's horn, 4 x M3 x 14 flat heads from the plate's inner face into the horn (snug: 1.8 mm of thread); on the -y side the pivot spacer, its land against the bearing, and the ISO 7379 shoulder screw through the arm, the bearing and the spacer into the plate's tapped hole (snug, about 0.15 N m, a drop of CA gel on the thread). Check the 0 and -25 deg stops by hand before anything else: the lug meets the yoke's two sectors, and the barrel cannot be pushed above level.
 
 ## 9. The laser
 
@@ -92,15 +92,16 @@ The cartridge down onto the cradle's two dowels, the knurled thumbscrew up into 
 | screw m3x6 | Black-Oxide Alloy Steel Socket Head Screw, US Origin, M3 x 0.5 mm Thread Size, 6 mm Long | McMaster-Carr 91290A111 | 20 |
 | screw m3x8 | Black-Oxide Alloy Steel Socket Head Screw, US Origin, M3 x 0.5 mm Thread Size, 8 mm Long | McMaster-Carr 91290A113 | 15 |
 | screw m3x10 | Black-Oxide Alloy Steel Socket Head Screw, US Origin, M3 x 0.5 mm Thread Size, 10 mm Long | McMaster-Carr 91290A115 | 2 |
-| screw m3x12 | Black-Oxide Alloy Steel Socket Head Screw, US Origin, M3 x 0.5 mm Thread Size, 12 mm Long | McMaster-Carr 91290A117 | 4 |
 | screw m3x16 | Black-Oxide Alloy Steel Socket Head Screw, US Origin, M3 x 0.5 mm Thread Size, 16 mm Long | McMaster-Carr 91290A120 | 4 |
+| flat m3x14 | 18-8 Stainless Steel Hex-Drive Flat Head Screw, M3 x 0.5 mm Thread Size, 14 mm Long | McMaster-Carr 92125A133 | 4 |
+| button m3x8 | Class 10.9 Screw, M3 x 0.5 mm Thread Size, 8 mm Long | McMaster-Carr 91239A113 | 8 |
+| flat m3x6 | Black-Oxide Alloy Steel Hex-Drive Flat Head Screw, 90 Degree Countersink, M3 x 0.5 mm Thread Size, 6 mm Long | McMaster-Carr 91294A126 | 2 |
 | screw m4x10 | Black-Oxide Alloy Steel Socket Head Screw, US Origin, M4 x 0.7 mm Thread Size, 10 mm Long | McMaster-Carr 91290A144 | 8 |
 | flat m3x8 | Black-Oxide Alloy Steel Hex-Drive Flat Head Screw, 90 Degree Countersink, M3 x 0.5 mm Thread Size, 8 mm Long | McMaster-Carr 91294A128 | 4 |
 | flat m3x10 | Black-Oxide Alloy Steel Hex-Drive Flat Head Screw, 90 Degree Countersink, M3 x 0.5 mm Thread Size, 10 mm Long | McMaster-Carr 91294A130 | 3 |
 | setscrew m3x6 | Nylon-Tip 18-8 Stainless Steel Set Screw, M3 x 0.5 mm Thread, 6 mm Long | McMaster-Carr 93285A115 | 4 |
-| insert m3 | Heat-Set Threaded Inserts for Plastic, Standard, Brass, M3 x 0.5 mm Thread Size, 5.7 mm Installed Length | McMaster-Carr 94459A140 | 29 |
+| insert m3 | Heat-Set Threaded Inserts for Plastic, Standard, Brass, M3 x 0.5 mm Thread Size, 5.7 mm Installed Length | McMaster-Carr 94459A140 | 37 |
 | insert m4 | Heat-Set Threaded Inserts for Plastic, Standard, Brass, M4 x 0.7 mm Thread Size, 6.4 mm Installed Length | McMaster-Carr 94459A160 | 9 |
-| insert m5 | Heat-Set Threaded Inserts for Plastic, Standard, Brass, M5 x 0.8 mm Thread Size, 7.9 mm Installed Length | McMaster-Carr 94459A775 | 1 |
 | washer m3 large | 18-8 Stainless Steel Oversized Washer, for M3 Screw, 3.2mm ID, 9.0mm OD, 0.7mm to 0.9mm Thick | McMaster-Carr 91116A120 | 3 |
 | dowel 4x8 | Dowel Pin, 52100 Alloy Steel, 4 mm Diameter, 8 mm Long | McMaster-Carr 91595A150 | 2 |
 | oring ct | Oil-Resistant Buna-N O-Ring, 1/16 Fractional Width, Dash Number 006 | McMaster-Carr 9452K14 | 1 |

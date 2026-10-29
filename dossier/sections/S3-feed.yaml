@@ -1,0 +1,185 @@
+# The turret's dossier (cad-agent: docs/dossier.md in the toolkit). Hand-edited YAML; joined by id to the geometry
+# cad/turret_dossier.py registers (exports/dossier-geometry.json). The design story is docs/turret-sections.md.
+id: S3-feed
+title: 'Feed: hopper, dial, exit, chute'
+purpose: Hold 30 balls and hand exactly one at a time to the flywheels on command, three a second; with the dial parked, no
+  ball can reach the wheels
+requirements:
+- R4
+- R5
+- R6
+- R8
+- R9
+- R10
+- R11
+- R12
+- R14
+author: turret-dossier agent
+interfaces:
+- id: I-lid
+  between:
+  - hopper_lid
+  - hopper
+  kind: press_fit
+  datum: the hopper's top, z hopper_top
+  description: The lid's spigot in the hopper.
+  owner: S3-feed
+- id: I-pile
+  between:
+  - ball
+  - hopper
+  kind: gap
+  datum: the hopper's cavity
+  description: 'The settled load rides with the hopper (a fixed joint, so the motion gate sweeps it with the tilt frame).
+    A loose ball is held by the cavity, not by contact: the 22 mm clearance is the furthest ball''s gap to the hopper (21.9
+    mm, in the pile''s middle).'
+  clearance: 22.0
+  owner: S3-feed
+- id: I-hopper-lugs
+  between:
+  - hopper
+  - hopper_inserts
+  kind: fastened
+  datum: 'the housing''s lugs at 45, 150, 210 deg (dd96792, from 0, 135, 225: at 0 deg a lug sat under the cage''s top plate)'
+  description: 3 x M3 x 8 socket heads (hopper_screws) into the lugs' inserts.
+  owner: S3-feed
+- id: I-dial-horn
+  between:
+  - dial
+  - feed_motor
+  kind: other
+  datum: the feed servo's horn
+  description: 'The dial on 4 x M3 x 8 into the horn (the horn is drawn with the servo: the torque path of I-feed).'
+  owner: S3-feed
+parts:
+- id: dial
+  function: 'Hands one ball at a time to the exit hole: 8 pockets, a 30 deg stirring cone with four fins, parked with a spoke
+    over the hole'
+  interfaces:
+  - I-feed
+  - I-dial-horn
+  material:
+    name: PETG
+    process: FDM
+    wall_mm: 0.8
+    print_axis: +Z (cone up)
+  checks:
+  - gate:connectivity
+  - gate:assembly
+  - gate:motion
+  - gate:turret-ammo
+- id: hopper
+  function: Holds the 30-ball load over the dial
+  interfaces:
+  - I-lid
+  - I-pile
+  - I-hopper-lugs
+  - I-hopper-seat
+  material:
+    name: PETG
+    process: FDM
+    wall_mm: 0.8
+    print_axis: +Z
+  fasteners:
+  - to: hopper_inserts
+    screws: turret_screw_m3x8
+    qty: 3
+    via: I-hopper-lugs
+  checks:
+  - gate:connectivity
+  - gate:assembly
+  - gate:motion
+  - gate:containment
+  - gate:fasteners
+- id: hopper_lid
+  function: Closes the hopper; carries the fill flap's hinge lugs
+  interfaces:
+  - I-lid
+  material: &id001
+    name: PETG
+    process: FDM
+    wall_mm: 0.8
+  checks:
+  - gate:connectivity
+  - gate:assembly
+  - gate:motion
+- id: hopper_flap
+  function: Closes the fill port; opens for the dock's spout on a Ø2 pin with a torsion spring
+  interfaces:
+  - I-flap
+  material: *id001
+  checks:
+  - gate:connectivity
+  - gate:assembly
+  - gate:motion
+- id: feed_motor
+  function: 'Feetech STS3215 (bus ID 3): steps the dial 45 deg a shot'
+  interfaces:
+  - I-feed-servo
+  - I-dial-horn
+  material:
+    name: Feetech STS3215
+    process: bought
+  checks:
+  - gate:connectivity
+  - gate:assembly
+  - gate:motion
+- id: hopper_inserts
+  function: The thread for the hopper's three screws (3 x M3 heat-set)
+  interfaces:
+  - I-hopper-inserts
+  - I-hopper-lugs
+  material:
+    name: McMaster 94459A140
+    process: bought
+  checks:
+  - gate:connectivity
+  - gate:assembly
+  - gate:motion
+  - gate:fasteners
+- id: ball
+  function: 'The ammo: 30 Rival rounds, the physics-settled load (8 in the pockets, 22 in the pile)'
+  interfaces:
+  - I-pile
+  material:
+    name: Nerf Rival round (D67)
+    process: bought
+  checks:
+  - gate:connectivity
+  - gate:assembly
+  - gate:motion
+  - gate:containment
+decisions:
+- id: T3.1
+  decision: An 8-pocket dial under a gravity hopper, pitch radius 37 (study 8)
+  why: One servo, and the pocket sets the dose; at r 37 the gap between 4 mm spokes is at least the bore
+  alternatives:
+  - option: An auger
+    rejected: jams on foam
+  - option: A pusher
+    rejected: two moving parts and a magazine
+- id: T3.2
+  decision: A 30 deg cone with four fins on the dial
+  why: The pile's middle rolls out to the pockets and the fins stir it at every step
+  alternatives:
+  - option: A flat dial floor
+    rejected: 'physics finding 1: only 3 of 7 pockets filled under a settled pile'
+- id: T3.3
+  decision: A baffle over the exit pocket (+-24 deg)
+  why: Nothing refills the pocket over the hole, so one ball a step
+  alternatives:
+  - option: No baffle
+    rejected: 'the pocket over the hole refills from the pile: a double feed'
+- id: T3.4
+  decision: The hopper's top at 100
+  why: A physics fill fits 34 balls under 100
+  alternatives:
+  - option: The top at 95
+    rejected: a physics fill fits only 29 balls
+- id: T3.5
+  decision: The fill flap opens 50 deg (I-flap -50..0)
+  why: The motion gate found its knuckle meeting the lid at 51 deg (turret/program 8016d3e); 50 deg is the flap's own stop
+    and clears the dock's spout
+  alternatives:
+  - option: 70 deg, as first briefed
+    rejected: the knuckle runs into the lid at 51 deg; it would need a relieved knuckle or lugs

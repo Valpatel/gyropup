@@ -1,0 +1,579 @@
+{
+  "schema_version": "1.0",
+  "title": "Gyropup \u00b7 CAD verification",
+  "features": [
+    {
+      "feature_id": "cad-parts",
+      "feature_title": "Printed parts",
+      "checks": [
+        {
+          "name": "chassis",
+          "status": "pass",
+          "message": "valid single solid \u00b7 watertight \u00b7 181 \u00d7 206 \u00d7 99 mm \u00b7 fits Bambu Lab P1S bed 256 \u00d7 256 \u00d7 256 mm"
+        },
+        {
+          "name": "battery cradle",
+          "status": "pass",
+          "message": "valid single solid \u00b7 watertight \u00b7 144 \u00d7 109.4 \u00d7 18 mm \u00b7 fits Bambu Lab P1S bed 256 \u00d7 256 \u00d7 256 mm"
+        },
+        {
+          "name": "head saddle",
+          "status": "pass",
+          "message": "valid single solid \u00b7 watertight \u00b7 149.999 \u00d7 206.397 \u00d7 28 mm \u00b7 fits Bambu Lab P1S bed 256 \u00d7 256 \u00d7 256 mm"
+        },
+        {
+          "name": "electronics bay",
+          "status": "fail",
+          "message": "solid_count is 5 (expected 1) \u00b7 138 \u00d7 206 \u00d7 99 mm \u00b7 fits Bambu Lab P1S bed 256 \u00d7 256 \u00d7 256 mm",
+          "error": "solid_count is 5 (expected 1)"
+        },
+        {
+          "name": "face",
+          "status": "pass",
+          "message": "valid single solid \u00b7 watertight \u00b7 76 \u00d7 140 \u00d7 14 mm \u00b7 fits Bambu Lab P1S bed 256 \u00d7 256 \u00d7 256 mm"
+        },
+        {
+          "name": "camera cradle",
+          "status": "pass",
+          "message": "valid single solid \u00b7 watertight \u00b7 35 \u00d7 106 \u00d7 30 mm \u00b7 fits Bambu Lab P1S bed 256 \u00d7 256 \u00d7 256 mm"
+        },
+        {
+          "name": "lidar hanger",
+          "status": "pass",
+          "message": "valid single solid \u00b7 watertight \u00b7 103.983 \u00d7 103.759 \u00d7 8 mm \u00b7 fits Bambu Lab P1S bed 256 \u00d7 256 \u00d7 256 mm"
+        },
+        {
+          "name": "lidar guard",
+          "status": "pass",
+          "message": "valid single solid \u00b7 watertight \u00b7 149.966 \u00d7 149.983 \u00d7 72 mm \u00b7 fits Bambu Lab P1S bed 256 \u00d7 256 \u00d7 256 mm"
+        },
+        {
+          "name": "yoke bracket",
+          "status": "pass",
+          "message": "valid single solid \u00b7 watertight \u00b7 150 \u00d7 139 \u00d7 213.9 mm \u00b7 fits Bambu Lab P1S bed 256 \u00d7 256 \u00d7 256 mm"
+        },
+        {
+          "name": "hip motor plate",
+          "status": "pass",
+          "message": "valid single solid \u00b7 watertight \u00b7 164.026 \u00d7 177.973 \u00d7 24.1 mm \u00b7 fits Bambu Lab P1S bed 256 \u00d7 256 \u00d7 256 mm"
+        },
+        {
+          "name": "hip output adapter",
+          "status": "pass",
+          "message": "valid single solid \u00b7 watertight \u00b7 63.486 \u00d7 63.493 \u00d7 27.6 mm \u00b7 fits Bambu Lab P1S bed 256 \u00d7 256 \u00d7 256 mm"
+        },
+        {
+          "name": "knee output adapter",
+          "status": "pass",
+          "message": "valid single solid \u00b7 watertight \u00b7 63.486 \u00d7 63.493 \u00d7 27.6 mm \u00b7 fits Bambu Lab P1S bed 256 \u00d7 256 \u00d7 256 mm"
+        },
+        {
+          "name": "knee motor plate",
+          "status": "pass",
+          "message": "valid single solid \u00b7 watertight \u00b7 164.026 \u00d7 177.973 \u00d7 24.1 mm \u00b7 fits Bambu Lab P1S bed 256 \u00d7 256 \u00d7 256 mm"
+        },
+        {
+          "name": "thigh",
+          "status": "fail",
+          "message": "71.969 \u00d7 265.987 \u00d7 72 mm exceeds the Bambu Lab P1S bed 256 \u00d7 256 \u00d7 256 mm \u00b7 71.969 \u00d7 265.987 \u00d7 72 mm",
+          "error": "71.969 \u00d7 265.987 \u00d7 72 mm exceeds the Bambu Lab P1S bed 256 \u00d7 256 \u00d7 256 mm"
+        },
+        {
+          "name": "shin",
+          "status": "fail",
+          "message": "89.966 \u00d7 266.99 \u00d7 37.5 mm exceeds the Bambu Lab P1S bed 256 \u00d7 256 \u00d7 256 mm \u00b7 89.966 \u00d7 266.99 \u00d7 37.5 mm",
+          "error": "89.966 \u00d7 266.99 \u00d7 37.5 mm exceeds the Bambu Lab P1S bed 256 \u00d7 256 \u00d7 256 mm"
+        },
+        {
+          "name": "knee crank",
+          "status": "pass",
+          "message": "valid single solid \u00b7 watertight \u00b7 71.996 \u00d7 109.945 \u00d7 14 mm \u00b7 fits Bambu Lab P1S bed 256 \u00d7 256 \u00d7 256 mm"
+        },
+        {
+          "name": "wheel adapter",
+          "status": "pass",
+          "message": "valid single solid \u00b7 watertight \u00b7 77.983 \u00d7 77.991 \u00d7 12.5 mm \u00b7 fits Bambu Lab P1S bed 256 \u00d7 256 \u00d7 256 mm"
+        },
+        {
+          "name": "pan base",
+          "status": "pass",
+          "message": "valid single solid \u00b7 watertight \u00b7 157.98 \u00d7 154.956 \u00d7 50 mm \u00b7 fits Bambu Lab P1S bed 256 \u00d7 256 \u00d7 256 mm"
+        },
+        {
+          "name": "pan clamp",
+          "status": "pass",
+          "message": "valid single solid \u00b7 watertight \u00b7 87.98 \u00d7 97.994 \u00d7 3 mm \u00b7 fits Bambu Lab P1S bed 256 \u00d7 256 \u00d7 256 mm"
+        },
+        {
+          "name": "pan ring",
+          "status": "pass",
+          "message": "valid single solid \u00b7 watertight \u00b7 114.623 \u00d7 81.241 \u00d7 34 mm \u00b7 fits Bambu Lab P1S bed 256 \u00d7 256 \u00d7 256 mm"
+        },
+        {
+          "name": "pan pinion",
+          "status": "pass",
+          "message": "valid single solid \u00b7 watertight \u00b7 28.634 \u00d7 28.714 \u00d7 13 mm \u00b7 fits Bambu Lab P1S bed 256 \u00d7 256 \u00d7 256 mm"
+        },
+        {
+          "name": "tilt yoke",
+          "status": "pass",
+          "message": "valid single solid \u00b7 watertight \u00b7 82.991 \u00d7 160.976 \u00d7 48.384 mm \u00b7 fits Bambu Lab P1S bed 256 \u00d7 256 \u00d7 256 mm"
+        },
+        {
+          "name": "cradle",
+          "status": "pass",
+          "message": "valid single solid \u00b7 watertight \u00b7 181.6 \u00d7 130.976 \u00d7 57.09 mm \u00b7 fits Bambu Lab P1S bed 256 \u00d7 256 \u00d7 256 mm"
+        },
+        {
+          "name": "cartridge body",
+          "status": "pass",
+          "message": "valid single solid \u00b7 watertight \u00b7 161.6 \u00d7 108.976 \u00d7 53.1 mm \u00b7 fits Bambu Lab P1S bed 256 \u00d7 256 \u00d7 256 mm"
+        },
+        {
+          "name": "flywheel",
+          "status": "pass",
+          "message": "valid single solid \u00b7 watertight \u00b7 31.993 \u00d7 31.996 \u00d7 15 mm \u00b7 fits Bambu Lab P1S bed 256 \u00d7 256 \u00d7 256 mm"
+        },
+        {
+          "name": "flywheel tyre",
+          "status": "pass",
+          "message": "valid single solid \u00b7 watertight \u00b7 39.991 \u00d7 39.996 \u00d7 12 mm \u00b7 fits Bambu Lab P1S bed 256 \u00d7 256 \u00d7 256 mm"
+        },
+        {
+          "name": "dial",
+          "status": "pass",
+          "message": "valid single solid \u00b7 watertight \u00b7 90.87 \u00d7 90.87 \u00d7 26 mm \u00b7 fits Bambu Lab P1S bed 256 \u00d7 256 \u00d7 256 mm"
+        },
+        {
+          "name": "hopper",
+          "status": "pass",
+          "message": "valid single solid \u00b7 watertight \u00b7 111.175 \u00d7 102.2 \u00d7 35 mm \u00b7 fits Bambu Lab P1S bed 256 \u00d7 256 \u00d7 256 mm"
+        },
+        {
+          "name": "hopper lid",
+          "status": "pass",
+          "message": "valid single solid \u00b7 watertight \u00b7 102.177 \u00d7 102.189 \u00d7 13 mm \u00b7 fits Bambu Lab P1S bed 256 \u00d7 256 \u00d7 256 mm"
+        },
+        {
+          "name": "hopper flap",
+          "status": "pass",
+          "message": "valid single solid \u00b7 watertight \u00b7 39.992 \u00d7 35.995 \u00d7 6 mm \u00b7 fits Bambu Lab P1S bed 256 \u00d7 256 \u00d7 256 mm"
+        },
+        {
+          "name": "barrel",
+          "status": "pass",
+          "message": "valid single solid \u00b7 watertight \u00b7 29.997 \u00d7 35 \u00d7 100 mm \u00b7 fits Bambu Lab P1S bed 256 \u00d7 256 \u00d7 256 mm"
+        },
+        {
+          "name": "laser mount",
+          "status": "pass",
+          "message": "valid single solid \u00b7 watertight \u00b7 20 \u00d7 22 \u00d7 26.1 mm \u00b7 fits Bambu Lab P1S bed 256 \u00d7 256 \u00d7 256 mm"
+        },
+        {
+          "name": "bumper ring",
+          "status": "pass",
+          "message": "valid single solid \u00b7 watertight \u00b7 171.957 \u00d7 168.583 \u00d7 16 mm \u00b7 fits Bambu Lab P1S bed 256 \u00d7 256 \u00d7 256 mm"
+        }
+      ]
+    },
+    {
+      "feature_id": "cad-print-files",
+      "feature_title": "Print files",
+      "checks": [
+        {
+          "name": "chassis",
+          "status": "fail",
+          "message": "missing exports/chassis.3mf",
+          "error": "exports/chassis.3mf"
+        },
+        {
+          "name": "battery cradle",
+          "status": "fail",
+          "message": "missing exports/battery_cradle.3mf",
+          "error": "exports/battery_cradle.3mf"
+        },
+        {
+          "name": "head saddle",
+          "status": "fail",
+          "message": "missing exports/head_saddle.3mf",
+          "error": "exports/head_saddle.3mf"
+        },
+        {
+          "name": "electronics bay",
+          "status": "fail",
+          "message": "missing exports/electronics_bay.3mf",
+          "error": "exports/electronics_bay.3mf"
+        },
+        {
+          "name": "face",
+          "status": "fail",
+          "message": "missing exports/face.3mf",
+          "error": "exports/face.3mf"
+        },
+        {
+          "name": "camera cradle",
+          "status": "fail",
+          "message": "missing exports/camera_cradle.3mf",
+          "error": "exports/camera_cradle.3mf"
+        },
+        {
+          "name": "lidar hanger",
+          "status": "fail",
+          "message": "missing exports/lidar_hanger.3mf",
+          "error": "exports/lidar_hanger.3mf"
+        },
+        {
+          "name": "lidar guard",
+          "status": "fail",
+          "message": "missing exports/lidar_guard.3mf",
+          "error": "exports/lidar_guard.3mf"
+        },
+        {
+          "name": "yoke bracket",
+          "status": "fail",
+          "message": "missing exports/yoke_bracket.3mf",
+          "error": "exports/yoke_bracket.3mf"
+        },
+        {
+          "name": "hip motor plate",
+          "status": "fail",
+          "message": "missing exports/hip_motor_plate.3mf",
+          "error": "exports/hip_motor_plate.3mf"
+        },
+        {
+          "name": "hip output adapter",
+          "status": "fail",
+          "message": "missing exports/hip_output_adapter.3mf",
+          "error": "exports/hip_output_adapter.3mf"
+        },
+        {
+          "name": "knee output adapter",
+          "status": "fail",
+          "message": "missing exports/knee_output_adapter.3mf",
+          "error": "exports/knee_output_adapter.3mf"
+        },
+        {
+          "name": "knee motor plate",
+          "status": "fail",
+          "message": "missing exports/knee_motor_plate.3mf",
+          "error": "exports/knee_motor_plate.3mf"
+        },
+        {
+          "name": "thigh",
+          "status": "fail",
+          "message": "missing exports/thigh.3mf",
+          "error": "exports/thigh.3mf"
+        },
+        {
+          "name": "shin",
+          "status": "fail",
+          "message": "missing exports/shin.3mf",
+          "error": "exports/shin.3mf"
+        },
+        {
+          "name": "knee crank",
+          "status": "fail",
+          "message": "missing exports/knee_crank.3mf",
+          "error": "exports/knee_crank.3mf"
+        },
+        {
+          "name": "wheel adapter",
+          "status": "fail",
+          "message": "missing exports/wheel_adapter.3mf",
+          "error": "exports/wheel_adapter.3mf"
+        },
+        {
+          "name": "pan base",
+          "status": "fail",
+          "message": "missing exports/pan_base.3mf",
+          "error": "exports/pan_base.3mf"
+        },
+        {
+          "name": "pan clamp",
+          "status": "fail",
+          "message": "missing exports/pan_clamp.3mf",
+          "error": "exports/pan_clamp.3mf"
+        },
+        {
+          "name": "pan ring",
+          "status": "fail",
+          "message": "missing exports/pan_ring.3mf",
+          "error": "exports/pan_ring.3mf"
+        },
+        {
+          "name": "pan pinion",
+          "status": "fail",
+          "message": "missing exports/pan_pinion.3mf",
+          "error": "exports/pan_pinion.3mf"
+        },
+        {
+          "name": "tilt yoke",
+          "status": "fail",
+          "message": "missing exports/tilt_yoke.3mf",
+          "error": "exports/tilt_yoke.3mf"
+        },
+        {
+          "name": "cradle",
+          "status": "fail",
+          "message": "missing exports/cradle.3mf",
+          "error": "exports/cradle.3mf"
+        },
+        {
+          "name": "cartridge body",
+          "status": "fail",
+          "message": "missing exports/cartridge_body.3mf",
+          "error": "exports/cartridge_body.3mf"
+        },
+        {
+          "name": "flywheel",
+          "status": "fail",
+          "message": "missing exports/flywheel.3mf",
+          "error": "exports/flywheel.3mf"
+        },
+        {
+          "name": "flywheel tyre",
+          "status": "fail",
+          "message": "missing exports/flywheel_tyre.3mf",
+          "error": "exports/flywheel_tyre.3mf"
+        },
+        {
+          "name": "dial",
+          "status": "fail",
+          "message": "missing exports/dial.3mf",
+          "error": "exports/dial.3mf"
+        },
+        {
+          "name": "hopper",
+          "status": "fail",
+          "message": "missing exports/hopper.3mf",
+          "error": "exports/hopper.3mf"
+        },
+        {
+          "name": "hopper lid",
+          "status": "fail",
+          "message": "missing exports/hopper_lid.3mf",
+          "error": "exports/hopper_lid.3mf"
+        },
+        {
+          "name": "hopper flap",
+          "status": "fail",
+          "message": "missing exports/hopper_flap.3mf",
+          "error": "exports/hopper_flap.3mf"
+        },
+        {
+          "name": "barrel",
+          "status": "fail",
+          "message": "missing exports/barrel.3mf",
+          "error": "exports/barrel.3mf"
+        },
+        {
+          "name": "laser mount",
+          "status": "fail",
+          "message": "missing exports/laser_mount.3mf",
+          "error": "exports/laser_mount.3mf"
+        },
+        {
+          "name": "bumper ring",
+          "status": "fail",
+          "message": "missing exports/bumper_ring.3mf",
+          "error": "exports/bumper_ring.3mf"
+        }
+      ]
+    },
+    {
+      "feature_id": "cad-checks",
+      "feature_title": "Design checks",
+      "checks": [
+        {
+          "name": "turret-fea \u00b7 Turret FEA (layer-aware SF targets)",
+          "status": "fail",
+          "message": "verdict.all_ok is false (exports/turret/fea/summary.json)",
+          "error": "verdict.all_ok is false",
+          "evidence": {
+            "type": "link",
+            "url": "../exports/turret/fea/summary.json",
+            "label": "exports/turret/fea/summary.json"
+          }
+        },
+        {
+          "name": "turret-launch \u00b7 Turret launch ceiling (D68)",
+          "status": "pass",
+          "message": "ceiling.holds, ceiling.under_astm true in exports/turret/launch/launch3d.json",
+          "evidence": {
+            "type": "link",
+            "url": "../exports/turret/launch/launch3d.json",
+            "label": "exports/turret/launch/launch3d.json"
+          }
+        }
+      ]
+    },
+    {
+      "feature_id": "cad-links",
+      "feature_title": "Review pages and links",
+      "checks": [
+        {
+          "name": "no pages configured",
+          "status": "skip",
+          "message": "add cad.html_pages to cad-agent.yaml"
+        }
+      ]
+    },
+    {
+      "feature_id": "cad-gates",
+      "feature_title": "Integrity gates",
+      "checks": [
+        {
+          "name": "gate connectivity",
+          "status": "fail",
+          "message": "2 failed: connect:body:flywheel_m, joint:I-wheel-r (139 checks, 1 warning(s)) \u00b7 110 shapes \u00b7 physical fit not verified",
+          "error": "2 failed: connect:body:flywheel_m, joint:I-wheel-r (139 checks, 1 warning(s)) \u00b7 110 shapes \u00b7 physical fit not verified",
+          "evidence": {
+            "type": "link",
+            "url": "../exports/gates/connectivity.md",
+            "label": "connectivity.md"
+          }
+        },
+        {
+          "name": "gate containment",
+          "status": "pass",
+          "message": "65 checks, 1 warning(s) \u00b7 110 shapes \u00b7 physical fit not verified",
+          "evidence": {
+            "type": "link",
+            "url": "../exports/gates/containment.md",
+            "label": "containment.md"
+          }
+        },
+        {
+          "name": "gate fasteners",
+          "status": "pass",
+          "message": "35 checks, 0 warning(s) \u00b7 110 shapes \u00b7 physical fit not verified",
+          "evidence": {
+            "type": "link",
+            "url": "../exports/gates/fasteners.md",
+            "label": "fasteners.md"
+          }
+        },
+        {
+          "name": "gate motion",
+          "status": "pass",
+          "message": "3 checks, 1 warning(s) \u00b7 110 shapes \u00b7 physical fit not verified",
+          "evidence": {
+            "type": "link",
+            "url": "../exports/gates/motion.md",
+            "label": "motion.md"
+          }
+        },
+        {
+          "name": "gate assembly",
+          "status": "fail",
+          "message": "6 failed: step:12:insert, step:29:insert, step:31:insert ... (226 checks, 0 warning(s)) \u00b7 110 shapes \u00b7 physical fit not verified",
+          "error": "6 failed: step:12:insert, step:29:insert, step:31:insert ... (226 checks, 0 warning(s)) \u00b7 110 shapes \u00b7 physical fit not verified",
+          "evidence": {
+            "type": "link",
+            "url": "../exports/gates/assembly.md",
+            "label": "assembly.md"
+          }
+        },
+        {
+          "name": "gate wall",
+          "status": "fail",
+          "message": "12 failed: wall:cartridge_body, wall:compute_shell, wall:cradle ... (28 checks, 0 warning(s)) \u00b7 110 shapes \u00b7 physical fit not verified",
+          "error": "12 failed: wall:cartridge_body, wall:compute_shell, wall:cradle ... (28 checks, 0 warning(s)) \u00b7 110 shapes \u00b7 physical fit not verified",
+          "evidence": {
+            "type": "link",
+            "url": "../exports/gates/wall.md",
+            "label": "wall.md"
+          }
+        },
+        {
+          "name": "gate turret-ammo",
+          "status": "pass",
+          "message": "6 checks, 0 warning(s) \u00b7 110 shapes \u00b7 physical fit not verified",
+          "evidence": {
+            "type": "link",
+            "url": "../exports/gates/turret-ammo.md",
+            "label": "turret-ammo.md"
+          }
+        },
+        {
+          "name": "gate turret-path",
+          "status": "pass",
+          "message": "410 checks, 0 warning(s) \u00b7 110 shapes \u00b7 physical fit not verified",
+          "evidence": {
+            "type": "link",
+            "url": "../exports/gates/turret-path.md",
+            "label": "turret-path.md"
+          }
+        }
+      ]
+    },
+    {
+      "feature_id": "cad-dossier",
+      "feature_title": "Design dossier",
+      "checks": [
+        {
+          "name": "section S1-base \u00b7 Base and pan drive",
+          "status": "fail",
+          "message": "built: pan_base: gate:assembly fail (failing: step:53:insert); turret-fea fail (verdict.all_ok is False); gate:wall fail (failing: wall:pan_base); pan_clamp: gate:assembly fail (failing: step:50:insert); pan_bearing: gate:assembly fail (failing: step:50:insert)",
+          "error": "built: pan_base: gate:assembly fail (failing: step:53:insert); turret-fea fail (verdict.all_ok is False); gate:wall fail (failing: wall:pan_base); pan_clamp: gate:assembly fail (failing: step:50:insert); pan_bearing: gate:assembly fail (failing: step:50:insert)"
+        },
+        {
+          "name": "section S2-tilt \u00b7 Tilt yoke and cradle",
+          "status": "fail",
+          "message": "built: tilt_yoke: gate:assembly fail (failing: step:29:insert, step:31:insert, step:32:insert, step:50:insert); turret-fea fail (verdict.all_ok is False); gate:wall fail (failing: wall:tilt_yoke); cradle: turret-fea fail (verdict.all_ok is False); gate:wall fail (failing: wall:cradle); cradle_plate_l: turret-fea fail (verdict.all_ok is False)",
+          "error": "built: tilt_yoke: gate:assembly fail (failing: step:29:insert, step:31:insert, step:32:insert, step:50:insert); turret-fea fail (verdict.all_ok is False); gate:wall fail (failing: wall:tilt_yoke); cradle: turret-fea fail (verdict.all_ok is False); gate:wall fail (failing: wall:cradle); cradle_plate_l: turret-fea fail (verdict.all_ok is False)"
+        },
+        {
+          "name": "section S3-feed \u00b7 Feed: hopper, dial, exit, chute",
+          "status": "fail",
+          "message": "built: dial: gate:wall fail (failing: wall:dial); hopper: gate:assembly fail (failing: step:12:insert); gate:wall fail (failing: wall:hopper); hopper_lid: gate:wall fail (failing: wall:hopper_lid)",
+          "error": "built: dial: gate:wall fail (failing: wall:dial); hopper: gate:assembly fail (failing: step:12:insert); gate:wall fail (failing: wall:hopper); hopper_lid: gate:wall fail (failing: wall:hopper_lid)"
+        },
+        {
+          "name": "section S4-launcher \u00b7 Launcher: flywheel cage, motors, nip",
+          "status": "fail",
+          "message": "built: cartridge_body: gate:connectivity fail (failing: joint:I-wheel-r); turret-fea fail (verdict.all_ok is False); gate:wall fail (failing: wall:cartridge_body); flywheel_m: gate:connectivity fail (failing: connect:body:flywheel_m, joint:I-wheel-r); flywheel_tyre_m: gate:connectivity fail (failing: connect:body:flywheel_m)",
+          "error": "built: cartridge_body: gate:connectivity fail (failing: joint:I-wheel-r); turret-fea fail (verdict.all_ok is False); gate:wall fail (failing: wall:cartridge_body); flywheel_m: gate:connectivity fail (failing: connect:body:flywheel_m, joint:I-wheel-r); flywheel_tyre_m: gate:connectivity fail (failing: connect:body:flywheel_m)"
+        },
+        {
+          "name": "section S5-barrel \u00b7 Barrel and laser",
+          "status": "fail",
+          "message": "built: laser_mount: gate:wall fail (failing: wall:laser_mount)",
+          "error": "built: laser_mount: gate:wall fail (failing: wall:laser_mount)"
+        },
+        {
+          "name": "section S6-wiring \u00b7 Wiring and slip ring",
+          "status": "fail",
+          "message": "built: slip_ring_rotor: gate:assembly fail (failing: step:50:insert); ring_carrier: gate:wall fail (failing: wall:ring_carrier); ring_driver: gate:assembly fail (failing: step:50:insert)",
+          "error": "built: slip_ring_rotor: gate:assembly fail (failing: step:50:insert); ring_carrier: gate:wall fail (failing: wall:ring_carrier); ring_driver: gate:assembly fail (failing: step:50:insert)"
+        },
+        {
+          "name": "section S7-compute \u00b7 Compute and power (D66)",
+          "status": "fail",
+          "message": "built: compute_shell: gate:wall fail (failing: wall:compute_shell)",
+          "error": "built: compute_shell: gate:wall fail (failing: wall:compute_shell)"
+        },
+        {
+          "name": "section S8-stand \u00b7 The stand and its battery (D66)",
+          "status": "pass",
+          "message": "gated: stand_box: no current reviewer record; stand_bottom: no current reviewer record; stand_foot: no current reviewer record"
+        }
+      ]
+    }
+  ],
+  "header_meta": {
+    "project": "gyropup",
+    "revision": "revision unknown",
+    "generated": "2026-10-29 07:24 UTC"
+  },
+  "footer_meta": {
+    "checks": "37 pass / 47 fail / 1 skip",
+    "physical_fit": "physical fit NOT verified (CAD only)",
+    "slicer": "slicer not run"
+  },
+  "project": "gyropup",
+  "revision": null,
+  "physical_fit_verified": false,
+  "slicer_run": false,
+  "pass": false
+}

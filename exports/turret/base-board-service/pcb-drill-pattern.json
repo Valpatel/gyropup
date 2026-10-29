@@ -1,0 +1,41 @@
+{
+  "schema": "gyropup.base-pcb-drill/1",
+  "size_mm": [
+    50.8,
+    30.0
+  ],
+  "hole_diameter_mm": 3.2,
+  "centres_from_cut_lower_left_mm": [
+    [
+      3.0,
+      3.0
+    ],
+    [
+      3.0,
+      27.0
+    ],
+    [
+      47.8,
+      3.0
+    ],
+    [
+      47.8,
+      27.0
+    ]
+  ],
+  "minimum_nominal_edge_ligament_mm": 1.4,
+  "plastic_retainer_hole_diameter_mm": 3.4,
+  "factory_pattern_reused": false,
+  "physical_fit_verified": false,
+  "sources": {
+    "cad/turret_base_board.py": "153e49871e0a3359478cd34a50daf7e44f4497970097475c829dbbcdacda90ba",
+    "cad/turret_boards.py": "c7a115d2fe3cefddf46b0dd521e21076e1f7721235df3e7bd22fadb6e165707b",
+    "tools/export-base-board-drill.py": "c29d4f3137549c320824fe18ac64ce51fe72d6cb42b7b3d6db769c51466ac00a"
+  },
+  "limits": [
+    "Not a drill template at printed page scale; use the stated dimensions.",
+    "Cut Wombat stock and drill the custom pattern; original factory mounting holes are elsewhere.",
+    "Remove burrs and inspect copper/insulation around mounting screws; electrical clearance remains to validate.",
+    "Board thickness1.6mm remains a design assumption to measure on received stock."
+  ]
+}

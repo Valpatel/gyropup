@@ -1,0 +1,1521 @@
+{
+  "schema": "cadagent.gate/1",
+  "gate": "fasteners",
+  "pass": true,
+  "status": "pass",
+  "counts": {
+    "pass": 35,
+    "warn": 0,
+    "fail": 0
+  },
+  "checks": [
+    {
+      "id": "fastener:hopper_screws#0:seat",
+      "status": "pass",
+      "message": "the head bears on hopper all round",
+      "parts": [
+        "hopper",
+        "hopper_screws#0"
+      ],
+      "evidence": {
+        "first_hit": [
+          {
+            "part": "hopper",
+            "t_mm": 0.0
+          },
+          {
+            "part": "hopper",
+            "t_mm": 0.0
+          },
+          {
+            "part": "hopper",
+            "t_mm": 0.0
+          },
+          {
+            "part": "hopper",
+            "t_mm": 0.0
+          },
+          {
+            "part": "hopper",
+            "t_mm": 0.0
+          },
+          {
+            "part": "hopper",
+            "t_mm": 0.0
+          },
+          {
+            "part": "hopper",
+            "t_mm": 0.0
+          },
+          {
+            "part": "hopper",
+            "t_mm": 0.0
+          }
+        ],
+        "seat_gap_mm": [
+          0.0,
+          0.0
+        ],
+        "head": {
+          "r_mm": 2.75,
+          "h_mm": 3.0,
+          "source": "declared"
+        }
+      }
+    },
+    {
+      "id": "fastener:hopper_screws#0:stack",
+      "status": "pass",
+      "message": "hopper clamped in contact, grip 3.00 mm",
+      "parts": [
+        "hopper",
+        "hopper_screws#0"
+      ],
+      "evidence": {
+        "angles": [
+          {
+            "angle": 0,
+            "ok": true,
+            "order": [
+              "hopper"
+            ],
+            "grip_mm": 3.0
+          },
+          {
+            "angle": 1,
+            "ok": true,
+            "order": [
+              "hopper"
+            ],
+            "grip_mm": 3.0
+          },
+          {
+            "angle": 2,
+            "ok": true,
+            "order": [
+              "hopper"
+            ],
+            "grip_mm": 3.0
+          },
+          {
+            "angle": 3,
+            "ok": true,
+            "order": [
+              "hopper"
+            ],
+            "grip_mm": 3.0
+          },
+          {
+            "angle": 4,
+            "ok": true,
+            "order": [
+              "hopper"
+            ],
+            "grip_mm": 3.0
+          },
+          {
+            "angle": 5,
+            "ok": true,
+            "order": [
+              "hopper"
+            ],
+            "grip_mm": 3.0
+          },
+          {
+            "angle": 6,
+            "ok": true,
+            "order": [
+              "hopper"
+            ],
+            "grip_mm": 3.0
+          },
+          {
+            "angle": 7,
+            "ok": true,
+            "order": [
+              "hopper"
+            ],
+            "grip_mm": 3.0
+          }
+        ],
+        "grip_mm": 3.0
+      }
+    },
+    {
+      "id": "fastener:hopper_screws#0:holes",
+      "status": "pass",
+      "message": "clearance holes on the axis through hopper",
+      "parts": [
+        "hopper_screws#0"
+      ],
+      "evidence": {
+        "holes": {
+          "hopper": {
+            "radius_mm": 1.7,
+            "point": [
+              -7.3384,
+              38.9616,
+              162.7
+            ],
+            "open_to_mm": 3.75
+          }
+        }
+      }
+    },
+    {
+      "id": "fastener:hopper_screws#0:engagement",
+      "status": "pass",
+      "message": "5.00 mm engaged in hopper_inserts (10.0 threads), minimum 2.40",
+      "parts": [
+        "hopper_inserts",
+        "hopper_screws#0"
+      ],
+      "evidence": {
+        "thread_start_mm": 3.0,
+        "thread_end_mm": 8.7,
+        "engagement_mm": 5.0,
+        "thread_stretches": [
+          [
+            3.0,
+            8.7
+          ]
+        ],
+        "bridge_mm": 0.75,
+        "min_engagement_mm": 2.4,
+        "min_source": "default 0.8 d",
+        "pitch_mm": 0.5,
+        "probe_radius_mm": 1.38,
+        "threads": 10.0
+      }
+    },
+    {
+      "id": "fastener:hopper_screws#0:tip",
+      "status": "pass",
+      "message": "tip clear: nothing within 10.0 mm past it",
+      "parts": [
+        "hopper_screws#0"
+      ],
+      "evidence": {
+        "next_solid": null,
+        "tip_t_mm": 8.0,
+        "tip_clearance_mm": null,
+        "min_tip_clearance_mm": 0.5,
+        "probe_end_t_mm": 18.0
+      }
+    },
+    {
+      "id": "fastener:hopper_screws#0:length",
+      "status": "pass",
+      "message": "8 mm fits the stack",
+      "parts": [
+        "hopper_screws#0"
+      ],
+      "evidence": {
+        "fits_mm": [
+          5.4,
+          null
+        ],
+        "limited_by": null,
+        "stock_that_fits_mm": [
+          6.0,
+          7.0,
+          8.0,
+          10.0,
+          12.0,
+          14.0
+        ],
+        "length_mm": 8.0,
+        "record_length_mm": 8.0,
+        "thread_depth_required_mm": 5.0
+      }
+    },
+    {
+      "id": "fastener:hopper_screws#0:tool",
+      "status": "pass",
+      "message": "the hex 2.5 reaches the head at step 1",
+      "parts": [
+        "hopper_screws#0"
+      ],
+      "evidence": {
+        "tool": "hex 2.5",
+        "step": 1,
+        "step_fit": "hopper",
+        "envelope": {
+          "segments": [
+            {
+              "d": 3.0,
+              "length": 60.0
+            }
+          ],
+          "start": "head",
+          "offset_mm": 0.0,
+          "swing": null
+        },
+        "start_t_mm": -3.0,
+        "blocked": [],
+        "service_blocked": [],
+        "clear": true,
+        "present_count": 88
+      }
+    },
+    {
+      "id": "fastener:hopper_screws#1:seat",
+      "status": "pass",
+      "message": "the head bears on hopper all round",
+      "parts": [
+        "hopper",
+        "hopper_screws#1"
+      ],
+      "evidence": {
+        "first_hit": [
+          {
+            "part": "hopper",
+            "t_mm": 0.0
+          },
+          {
+            "part": "hopper",
+            "t_mm": 0.0
+          },
+          {
+            "part": "hopper",
+            "t_mm": 0.0
+          },
+          {
+            "part": "hopper",
+            "t_mm": 0.0
+          },
+          {
+            "part": "hopper",
+            "t_mm": 0.0
+          },
+          {
+            "part": "hopper",
+            "t_mm": 0.0
+          },
+          {
+            "part": "hopper",
+            "t_mm": 0.0
+          },
+          {
+            "part": "hopper",
+            "t_mm": 0.0
+          }
+        ],
+        "seat_gap_mm": [
+          0.0,
+          0.0
+        ],
+        "head": {
+          "r_mm": 2.75,
+          "h_mm": 3.0,
+          "source": "declared"
+        }
+      }
+    },
+    {
+      "id": "fastener:hopper_screws#1:stack",
+      "status": "pass",
+      "message": "hopper clamped in contact, grip 3.00 mm",
+      "parts": [
+        "hopper",
+        "hopper_screws#1"
+      ],
+      "evidence": {
+        "angles": [
+          {
+            "angle": 0,
+            "ok": true,
+            "order": [
+              "hopper"
+            ],
+            "grip_mm": 3.0
+          },
+          {
+            "angle": 1,
+            "ok": true,
+            "order": [
+              "hopper"
+            ],
+            "grip_mm": 3.0
+          },
+          {
+            "angle": 2,
+            "ok": true,
+            "order": [
+              "hopper"
+            ],
+            "grip_mm": 3.0
+          },
+          {
+            "angle": 3,
+            "ok": true,
+            "order": [
+              "hopper"
+            ],
+            "grip_mm": 3.0
+          },
+          {
+            "angle": 4,
+            "ok": true,
+            "order": [
+              "hopper"
+            ],
+            "grip_mm": 3.0
+          },
+          {
+            "angle": 5,
+            "ok": true,
+            "order": [
+              "hopper"
+            ],
+            "grip_mm": 3.0
+          },
+          {
+            "angle": 6,
+            "ok": true,
+            "order": [
+              "hopper"
+            ],
+            "grip_mm": 3.0
+          },
+          {
+            "angle": 7,
+            "ok": true,
+            "order": [
+              "hopper"
+            ],
+            "grip_mm": 3.0
+          }
+        ],
+        "grip_mm": 3.0
+      }
+    },
+    {
+      "id": "fastener:hopper_screws#1:holes",
+      "status": "pass",
+      "message": "clearance holes on the axis through hopper",
+      "parts": [
+        "hopper_screws#1"
+      ],
+      "evidence": {
+        "holes": {
+          "hopper": {
+            "radius_mm": 1.7,
+            "point": [
+              -94.018,
+              27.55,
+              162.7
+            ],
+            "open_to_mm": 3.75
+          }
+        }
+      }
+    },
+    {
+      "id": "fastener:hopper_screws#1:engagement",
+      "status": "pass",
+      "message": "5.00 mm engaged in hopper_inserts (10.0 threads), minimum 2.40",
+      "parts": [
+        "hopper_inserts",
+        "hopper_screws#1"
+      ],
+      "evidence": {
+        "thread_start_mm": 3.0,
+        "thread_end_mm": 8.7,
+        "engagement_mm": 5.0,
+        "thread_stretches": [
+          [
+            3.0,
+            8.7
+          ]
+        ],
+        "bridge_mm": 0.75,
+        "min_engagement_mm": 2.4,
+        "min_source": "default 0.8 d",
+        "pitch_mm": 0.5,
+        "probe_radius_mm": 1.38,
+        "threads": 10.0
+      }
+    },
+    {
+      "id": "fastener:hopper_screws#1:tip",
+      "status": "pass",
+      "message": "tip clear: nothing within 10.0 mm past it",
+      "parts": [
+        "hopper_screws#1"
+      ],
+      "evidence": {
+        "next_solid": null,
+        "tip_t_mm": 8.0,
+        "tip_clearance_mm": null,
+        "min_tip_clearance_mm": 0.5,
+        "probe_end_t_mm": 18.0
+      }
+    },
+    {
+      "id": "fastener:hopper_screws#1:length",
+      "status": "pass",
+      "message": "8 mm fits the stack",
+      "parts": [
+        "hopper_screws#1"
+      ],
+      "evidence": {
+        "fits_mm": [
+          5.4,
+          null
+        ],
+        "limited_by": null,
+        "stock_that_fits_mm": [
+          6.0,
+          7.0,
+          8.0,
+          10.0,
+          12.0,
+          14.0
+        ],
+        "length_mm": 8.0,
+        "record_length_mm": 8.0,
+        "thread_depth_required_mm": 5.0
+      }
+    },
+    {
+      "id": "fastener:hopper_screws#1:tool",
+      "status": "pass",
+      "message": "the hex 2.5 reaches the head at step 1",
+      "parts": [
+        "hopper_screws#1"
+      ],
+      "evidence": {
+        "tool": "hex 2.5",
+        "step": 1,
+        "step_fit": "hopper",
+        "envelope": {
+          "segments": [
+            {
+              "d": 3.0,
+              "length": 60.0
+            }
+          ],
+          "start": "head",
+          "offset_mm": 0.0,
+          "swing": null
+        },
+        "start_t_mm": -3.0,
+        "blocked": [],
+        "service_blocked": [],
+        "clear": true,
+        "present_count": 88
+      }
+    },
+    {
+      "id": "fastener:hopper_screws#2:seat",
+      "status": "pass",
+      "message": "the head bears on hopper all round",
+      "parts": [
+        "hopper",
+        "hopper_screws#2"
+      ],
+      "evidence": {
+        "first_hit": [
+          {
+            "part": "hopper",
+            "t_mm": 0.0
+          },
+          {
+            "part": "hopper",
+            "t_mm": 0.0
+          },
+          {
+            "part": "hopper",
+            "t_mm": 0.0
+          },
+          {
+            "part": "hopper",
+            "t_mm": 0.0
+          },
+          {
+            "part": "hopper",
+            "t_mm": 0.0
+          },
+          {
+            "part": "hopper",
+            "t_mm": 0.0
+          },
+          {
+            "part": "hopper",
+            "t_mm": 0.0
+          },
+          {
+            "part": "hopper",
+            "t_mm": 0.0
+          }
+        ],
+        "seat_gap_mm": [
+          0.0,
+          0.0
+        ],
+        "head": {
+          "r_mm": 2.75,
+          "h_mm": 3.0,
+          "source": "declared"
+        }
+      }
+    },
+    {
+      "id": "fastener:hopper_screws#2:stack",
+      "status": "pass",
+      "message": "hopper clamped in contact, grip 3.00 mm",
+      "parts": [
+        "hopper",
+        "hopper_screws#2"
+      ],
+      "evidence": {
+        "angles": [
+          {
+            "angle": 0,
+            "ok": true,
+            "order": [
+              "hopper"
+            ],
+            "grip_mm": 3.0
+          },
+          {
+            "angle": 1,
+            "ok": true,
+            "order": [
+              "hopper"
+            ],
+            "grip_mm": 3.0
+          },
+          {
+            "angle": 2,
+            "ok": true,
+            "order": [
+              "hopper"
+            ],
+            "grip_mm": 3.0
+          },
+          {
+            "angle": 3,
+            "ok": true,
+            "order": [
+              "hopper"
+            ],
+            "grip_mm": 3.0
+          },
+          {
+            "angle": 4,
+            "ok": true,
+            "order": [
+              "hopper"
+            ],
+            "grip_mm": 3.0
+          },
+          {
+            "angle": 5,
+            "ok": true,
+            "order": [
+              "hopper"
+            ],
+            "grip_mm": 3.0
+          },
+          {
+            "angle": 6,
+            "ok": true,
+            "order": [
+              "hopper"
+            ],
+            "grip_mm": 3.0
+          },
+          {
+            "angle": 7,
+            "ok": true,
+            "order": [
+              "hopper"
+            ],
+            "grip_mm": 3.0
+          }
+        ],
+        "grip_mm": 3.0
+      }
+    },
+    {
+      "id": "fastener:hopper_screws#2:holes",
+      "status": "pass",
+      "message": "clearance holes on the axis through hopper",
+      "parts": [
+        "hopper_screws#2"
+      ],
+      "evidence": {
+        "holes": {
+          "hopper": {
+            "radius_mm": 1.7,
+            "point": [
+              -94.018,
+              -27.55,
+              162.7
+            ],
+            "open_to_mm": 3.75
+          }
+        }
+      }
+    },
+    {
+      "id": "fastener:hopper_screws#2:engagement",
+      "status": "pass",
+      "message": "5.00 mm engaged in hopper_inserts (10.0 threads), minimum 2.40",
+      "parts": [
+        "hopper_inserts",
+        "hopper_screws#2"
+      ],
+      "evidence": {
+        "thread_start_mm": 3.0,
+        "thread_end_mm": 8.7,
+        "engagement_mm": 5.0,
+        "thread_stretches": [
+          [
+            3.0,
+            8.7
+          ]
+        ],
+        "bridge_mm": 0.75,
+        "min_engagement_mm": 2.4,
+        "min_source": "default 0.8 d",
+        "pitch_mm": 0.5,
+        "probe_radius_mm": 1.38,
+        "threads": 10.0
+      }
+    },
+    {
+      "id": "fastener:hopper_screws#2:tip",
+      "status": "pass",
+      "message": "tip clear: nothing within 10.0 mm past it",
+      "parts": [
+        "hopper_screws#2"
+      ],
+      "evidence": {
+        "next_solid": null,
+        "tip_t_mm": 8.0,
+        "tip_clearance_mm": null,
+        "min_tip_clearance_mm": 0.5,
+        "probe_end_t_mm": 18.0
+      }
+    },
+    {
+      "id": "fastener:hopper_screws#2:length",
+      "status": "pass",
+      "message": "8 mm fits the stack",
+      "parts": [
+        "hopper_screws#2"
+      ],
+      "evidence": {
+        "fits_mm": [
+          5.4,
+          null
+        ],
+        "limited_by": null,
+        "stock_that_fits_mm": [
+          6.0,
+          7.0,
+          8.0,
+          10.0,
+          12.0,
+          14.0
+        ],
+        "length_mm": 8.0,
+        "record_length_mm": 8.0,
+        "thread_depth_required_mm": 5.0
+      }
+    },
+    {
+      "id": "fastener:hopper_screws#2:tool",
+      "status": "pass",
+      "message": "the hex 2.5 reaches the head at step 1",
+      "parts": [
+        "hopper_screws#2"
+      ],
+      "evidence": {
+        "tool": "hex 2.5",
+        "step": 1,
+        "step_fit": "hopper",
+        "envelope": {
+          "segments": [
+            {
+              "d": 3.0,
+              "length": 60.0
+            }
+          ],
+          "start": "head",
+          "offset_mm": 0.0,
+          "swing": null
+        },
+        "start_t_mm": -3.0,
+        "blocked": [],
+        "service_blocked": [],
+        "clear": true,
+        "present_count": 88
+      }
+    },
+    {
+      "id": "fastener:laser_foot_screws#0:seat",
+      "status": "pass",
+      "message": "the head bears on laser_mount all round",
+      "parts": [
+        "laser_foot_screws#0",
+        "laser_mount"
+      ],
+      "evidence": {
+        "first_hit": [
+          {
+            "part": "laser_mount",
+            "t_mm": 0.0
+          },
+          {
+            "part": "laser_mount",
+            "t_mm": 0.0
+          },
+          {
+            "part": "laser_mount",
+            "t_mm": 0.0
+          },
+          {
+            "part": "laser_mount",
+            "t_mm": 0.0
+          },
+          {
+            "part": "laser_mount",
+            "t_mm": 0.0
+          },
+          {
+            "part": "laser_mount",
+            "t_mm": 0.0
+          },
+          {
+            "part": "laser_mount",
+            "t_mm": 0.0
+          },
+          {
+            "part": "laser_mount",
+            "t_mm": 0.0
+          }
+        ],
+        "seat_gap_mm": [
+          0.0,
+          0.0
+        ],
+        "head": {
+          "r_mm": 2.75,
+          "h_mm": 3.0,
+          "source": "declared"
+        }
+      }
+    },
+    {
+      "id": "fastener:laser_foot_screws#0:stack",
+      "status": "pass",
+      "message": "laser_mount clamped in contact, grip 6.00 mm",
+      "parts": [
+        "laser_foot_screws#0",
+        "laser_mount"
+      ],
+      "evidence": {
+        "angles": [
+          {
+            "angle": 0,
+            "ok": true,
+            "order": [
+              "laser_mount"
+            ],
+            "grip_mm": 6.0
+          },
+          {
+            "angle": 1,
+            "ok": true,
+            "order": [
+              "laser_mount"
+            ],
+            "grip_mm": 6.0
+          },
+          {
+            "angle": 2,
+            "ok": true,
+            "order": [
+              "laser_mount"
+            ],
+            "grip_mm": 6.0
+          },
+          {
+            "angle": 3,
+            "ok": true,
+            "order": [
+              "laser_mount"
+            ],
+            "grip_mm": 6.0
+          },
+          {
+            "angle": 4,
+            "ok": true,
+            "order": [
+              "laser_mount"
+            ],
+            "grip_mm": 6.0
+          },
+          {
+            "angle": 5,
+            "ok": true,
+            "order": [
+              "laser_mount"
+            ],
+            "grip_mm": 6.0
+          },
+          {
+            "angle": 6,
+            "ok": true,
+            "order": [
+              "laser_mount"
+            ],
+            "grip_mm": 6.0
+          },
+          {
+            "angle": 7,
+            "ok": true,
+            "order": [
+              "laser_mount"
+            ],
+            "grip_mm": 6.0
+          }
+        ],
+        "grip_mm": 6.0
+      }
+    },
+    {
+      "id": "fastener:laser_foot_screws#0:holes",
+      "status": "pass",
+      "message": "clearance holes on the axis through laser_mount",
+      "parts": [
+        "laser_foot_screws#0"
+      ],
+      "evidence": {
+        "holes": {
+          "laser_mount": {
+            "radius_mm": 1.7,
+            "point": [
+              61.7,
+              9.0,
+              153.0
+            ],
+            "open_to_mm": 3.75
+          }
+        }
+      }
+    },
+    {
+      "id": "fastener:laser_foot_screws#0:engagement",
+      "status": "pass",
+      "message": "4.00 mm engaged in laser_inserts (8.0 threads), minimum 2.40",
+      "parts": [
+        "laser_foot_screws#0",
+        "laser_inserts"
+      ],
+      "evidence": {
+        "thread_start_mm": 6.0,
+        "thread_end_mm": 11.7,
+        "engagement_mm": 4.0,
+        "thread_stretches": [
+          [
+            6.0,
+            11.7
+          ]
+        ],
+        "bridge_mm": 0.75,
+        "min_engagement_mm": 2.4,
+        "min_source": "default 0.8 d",
+        "pitch_mm": 0.5,
+        "probe_radius_mm": 1.38,
+        "threads": 8.0
+      }
+    },
+    {
+      "id": "fastener:laser_foot_screws#0:tip",
+      "status": "pass",
+      "message": "tip clear: 2.50 mm to cartridge_body",
+      "parts": [
+        "laser_foot_screws#0"
+      ],
+      "evidence": {
+        "next_solid": {
+          "part": "cartridge_body",
+          "t_mm": 12.5
+        },
+        "tip_t_mm": 10.0,
+        "tip_clearance_mm": 2.5,
+        "min_tip_clearance_mm": 0.5,
+        "probe_end_t_mm": 20.0
+      }
+    },
+    {
+      "id": "fastener:laser_foot_screws#0:length",
+      "status": "pass",
+      "message": "10 mm fits the stack (8.40..12.00)",
+      "parts": [
+        "laser_foot_screws#0"
+      ],
+      "evidence": {
+        "fits_mm": [
+          8.4,
+          12.0
+        ],
+        "limited_by": "cartridge_body",
+        "stock_that_fits_mm": [
+          10.0,
+          12.0
+        ],
+        "length_mm": 10.0,
+        "record_length_mm": 10.0,
+        "thread_depth_required_mm": 4.0
+      }
+    },
+    {
+      "id": "fastener:laser_foot_screws#0:tool",
+      "status": "pass",
+      "message": "the hex 2.5 reaches the head at step 2",
+      "parts": [
+        "laser_foot_screws#0"
+      ],
+      "evidence": {
+        "tool": "hex 2.5",
+        "step": 2,
+        "step_fit": "laser_mount",
+        "envelope": {
+          "segments": [
+            {
+              "d": 3.0,
+              "length": 60.0
+            }
+          ],
+          "start": "head",
+          "offset_mm": 0.0,
+          "swing": null
+        },
+        "start_t_mm": -3.0,
+        "blocked": [],
+        "service_blocked": [],
+        "clear": true,
+        "present_count": 89
+      }
+    },
+    {
+      "id": "fastener:laser_foot_screws#1:seat",
+      "status": "pass",
+      "message": "the head bears on laser_mount all round",
+      "parts": [
+        "laser_foot_screws#1",
+        "laser_mount"
+      ],
+      "evidence": {
+        "first_hit": [
+          {
+            "part": "laser_mount",
+            "t_mm": 0.0
+          },
+          {
+            "part": "laser_mount",
+            "t_mm": 0.0
+          },
+          {
+            "part": "laser_mount",
+            "t_mm": 0.0
+          },
+          {
+            "part": "laser_mount",
+            "t_mm": 0.0
+          },
+          {
+            "part": "laser_mount",
+            "t_mm": 0.0
+          },
+          {
+            "part": "laser_mount",
+            "t_mm": 0.0
+          },
+          {
+            "part": "laser_mount",
+            "t_mm": 0.0
+          },
+          {
+            "part": "laser_mount",
+            "t_mm": 0.0
+          }
+        ],
+        "seat_gap_mm": [
+          0.0,
+          0.0
+        ],
+        "head": {
+          "r_mm": 2.75,
+          "h_mm": 3.0,
+          "source": "declared"
+        }
+      }
+    },
+    {
+      "id": "fastener:laser_foot_screws#1:stack",
+      "status": "pass",
+      "message": "laser_mount clamped in contact, grip 6.00 mm",
+      "parts": [
+        "laser_foot_screws#1",
+        "laser_mount"
+      ],
+      "evidence": {
+        "angles": [
+          {
+            "angle": 0,
+            "ok": true,
+            "order": [
+              "laser_mount"
+            ],
+            "grip_mm": 6.0
+          },
+          {
+            "angle": 1,
+            "ok": true,
+            "order": [
+              "laser_mount"
+            ],
+            "grip_mm": 6.0
+          },
+          {
+            "angle": 2,
+            "ok": true,
+            "order": [
+              "laser_mount"
+            ],
+            "grip_mm": 6.0
+          },
+          {
+            "angle": 3,
+            "ok": true,
+            "order": [
+              "laser_mount"
+            ],
+            "grip_mm": 6.0
+          },
+          {
+            "angle": 4,
+            "ok": true,
+            "order": [
+              "laser_mount"
+            ],
+            "grip_mm": 6.0
+          },
+          {
+            "angle": 5,
+            "ok": true,
+            "order": [
+              "laser_mount"
+            ],
+            "grip_mm": 6.0
+          },
+          {
+            "angle": 6,
+            "ok": true,
+            "order": [
+              "laser_mount"
+            ],
+            "grip_mm": 6.0
+          },
+          {
+            "angle": 7,
+            "ok": true,
+            "order": [
+              "laser_mount"
+            ],
+            "grip_mm": 6.0
+          }
+        ],
+        "grip_mm": 6.0
+      }
+    },
+    {
+      "id": "fastener:laser_foot_screws#1:holes",
+      "status": "pass",
+      "message": "clearance holes on the axis through laser_mount",
+      "parts": [
+        "laser_foot_screws#1"
+      ],
+      "evidence": {
+        "holes": {
+          "laser_mount": {
+            "radius_mm": 1.7,
+            "point": [
+              61.7,
+              -9.0,
+              153.0
+            ],
+            "open_to_mm": 3.75
+          }
+        }
+      }
+    },
+    {
+      "id": "fastener:laser_foot_screws#1:engagement",
+      "status": "pass",
+      "message": "4.00 mm engaged in laser_inserts (8.0 threads), minimum 2.40",
+      "parts": [
+        "laser_foot_screws#1",
+        "laser_inserts"
+      ],
+      "evidence": {
+        "thread_start_mm": 6.0,
+        "thread_end_mm": 11.7,
+        "engagement_mm": 4.0,
+        "thread_stretches": [
+          [
+            6.0,
+            11.7
+          ]
+        ],
+        "bridge_mm": 0.75,
+        "min_engagement_mm": 2.4,
+        "min_source": "default 0.8 d",
+        "pitch_mm": 0.5,
+        "probe_radius_mm": 1.38,
+        "threads": 8.0
+      }
+    },
+    {
+      "id": "fastener:laser_foot_screws#1:tip",
+      "status": "pass",
+      "message": "tip clear: 2.50 mm to cartridge_body",
+      "parts": [
+        "laser_foot_screws#1"
+      ],
+      "evidence": {
+        "next_solid": {
+          "part": "cartridge_body",
+          "t_mm": 12.5
+        },
+        "tip_t_mm": 10.0,
+        "tip_clearance_mm": 2.5,
+        "min_tip_clearance_mm": 0.5,
+        "probe_end_t_mm": 20.0
+      }
+    },
+    {
+      "id": "fastener:laser_foot_screws#1:length",
+      "status": "pass",
+      "message": "10 mm fits the stack (8.40..12.00)",
+      "parts": [
+        "laser_foot_screws#1"
+      ],
+      "evidence": {
+        "fits_mm": [
+          8.4,
+          12.0
+        ],
+        "limited_by": "cartridge_body",
+        "stock_that_fits_mm": [
+          10.0,
+          12.0
+        ],
+        "length_mm": 10.0,
+        "record_length_mm": 10.0,
+        "thread_depth_required_mm": 4.0
+      }
+    },
+    {
+      "id": "fastener:laser_foot_screws#1:tool",
+      "status": "pass",
+      "message": "the hex 2.5 reaches the head at step 2",
+      "parts": [
+        "laser_foot_screws#1"
+      ],
+      "evidence": {
+        "tool": "hex 2.5",
+        "step": 2,
+        "step_fit": "laser_mount",
+        "envelope": {
+          "segments": [
+            {
+              "d": 3.0,
+              "length": 60.0
+            }
+          ],
+          "start": "head",
+          "offset_mm": 0.0,
+          "swing": null
+        },
+        "start_t_mm": -3.0,
+        "blocked": [],
+        "service_blocked": [],
+        "clear": true,
+        "present_count": 89
+      }
+    }
+  ],
+  "findings": [],
+  "exclusions": [],
+  "limits": {
+    "seat_tol_mm": 0.05,
+    "gap_tol_mm": 0.05,
+    "hole_clearance_mm": 0.1,
+    "tip_clearance_mm": 0.5,
+    "stack_tol_mm": 0.05,
+    "length_tol_mm": 0.05,
+    "min_engagement_d": 0.8,
+    "look_ahead_mm": 10.0,
+    "lines": 8,
+    "service_access": true,
+    "touch_mm": 0.05,
+    "overlap_mm3": 0.001,
+    "stock_lengths": "default metric + inch list"
+  },
+  "assumptions": [
+    "Each fastener is read along its own axis from the declared seat (dossier fastener() axes); the model is checked, not the hardware: no tolerance stack, no print shrink, no torque or pull-out rating.",
+    "Threads are envelopes: engagement is the axial overlap of the screw with the receiver's modelled thread region (material at 0.92 d/2 or just outside d/2 but inside d + hole_clearance/2, whichever starts first; gaps up to 1.5 pitches bridged, so crests and relief grooves read as one region), not proof of strength.",
+    "The head bears where lines parallel to the axis (FastenerOptions.lines angles x three rings between shank and head rim) first meet the clamped part: the outer ring must bear at every angle, the inner ones may run through a chamfer at the hole, and the stack needs one clean ring per angle. Holes are measured by radial rays at 8 angles and three depths per clamped part. Features between the samples are missed.",
+    "Without a placed screw solid the head is the declared head_d_mm x head_h_mm, else 1.6 d x 1.0 d (socket head), and the length is the record's length_mm.",
+    "The tool is the declared envelope (stepped cylinders and an optional swing disc), swept straight along the axis from the head top; it is checked against the parts present at the assembly step that installs the fastener (parts no step fits count as present).",
+    "Minimum engagement is the declared min_engagement_mm, else min_engagement_d x d; stock lengths are a default list of common metric and inch lengths unless the project gives its own."
+  ],
+  "physical_fit_verified": false,
+  "table": [
+    {
+      "fastener": "hopper_screws#0",
+      "name": "hopper_screws",
+      "key": "turret_screw_m3x8",
+      "clamps": "hopper",
+      "stack": [
+        "hopper"
+      ],
+      "into": "hopper_inserts",
+      "seat": [
+        -9.0384,
+        38.9616,
+        163.0
+      ],
+      "direction": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "thread_start": [
+        -9.0384,
+        38.9616,
+        160.0
+      ],
+      "grip_mm": 3.0,
+      "thread_start_mm": 3.0,
+      "thread_start_record_mm": 3.0,
+      "thread_depth_mm": 5.7,
+      "engagement_mm": 5.0,
+      "engagement_threads": 10.0,
+      "min_engagement_mm": 2.4,
+      "length_mm": 8.0,
+      "stock": true,
+      "fits_mm": [
+        5.4,
+        null
+      ],
+      "thread_depth_required_mm": 5.0,
+      "tip_clearance_mm": null,
+      "tool": "hex 2.5",
+      "step": 1,
+      "tool_clear": true,
+      "status": "pass",
+      "failed": [],
+      "body": "tilt"
+    },
+    {
+      "fastener": "hopper_screws#1",
+      "name": "hopper_screws",
+      "key": "turret_screw_m3x8",
+      "clamps": "hopper",
+      "stack": [
+        "hopper"
+      ],
+      "into": "hopper_inserts",
+      "seat": [
+        -95.718,
+        27.55,
+        163.0
+      ],
+      "direction": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "thread_start": [
+        -95.718,
+        27.55,
+        160.0
+      ],
+      "grip_mm": 3.0,
+      "thread_start_mm": 3.0,
+      "thread_start_record_mm": 3.0,
+      "thread_depth_mm": 5.7,
+      "engagement_mm": 5.0,
+      "engagement_threads": 10.0,
+      "min_engagement_mm": 2.4,
+      "length_mm": 8.0,
+      "stock": true,
+      "fits_mm": [
+        5.4,
+        null
+      ],
+      "thread_depth_required_mm": 5.0,
+      "tip_clearance_mm": null,
+      "tool": "hex 2.5",
+      "step": 1,
+      "tool_clear": true,
+      "status": "pass",
+      "failed": [],
+      "body": "tilt"
+    },
+    {
+      "fastener": "hopper_screws#2",
+      "name": "hopper_screws",
+      "key": "turret_screw_m3x8",
+      "clamps": "hopper",
+      "stack": [
+        "hopper"
+      ],
+      "into": "hopper_inserts",
+      "seat": [
+        -95.718,
+        -27.55,
+        163.0
+      ],
+      "direction": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "thread_start": [
+        -95.718,
+        -27.55,
+        160.0
+      ],
+      "grip_mm": 3.0,
+      "thread_start_mm": 3.0,
+      "thread_start_record_mm": 3.0,
+      "thread_depth_mm": 5.7,
+      "engagement_mm": 5.0,
+      "engagement_threads": 10.0,
+      "min_engagement_mm": 2.4,
+      "length_mm": 8.0,
+      "stock": true,
+      "fits_mm": [
+        5.4,
+        null
+      ],
+      "thread_depth_required_mm": 5.0,
+      "tip_clearance_mm": null,
+      "tool": "hex 2.5",
+      "step": 1,
+      "tool_clear": true,
+      "status": "pass",
+      "failed": [],
+      "body": "tilt"
+    },
+    {
+      "fastener": "laser_foot_screws#0",
+      "name": "laser_foot_screws",
+      "key": "turret_screw_m3x10",
+      "clamps": "laser_mount",
+      "stack": [
+        "laser_mount"
+      ],
+      "into": "laser_inserts",
+      "seat": [
+        60.0,
+        9.0,
+        153.6
+      ],
+      "direction": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "thread_start": [
+        60.0,
+        9.0,
+        147.6
+      ],
+      "grip_mm": 6.0,
+      "thread_start_mm": 6.0,
+      "thread_start_record_mm": 6.0,
+      "thread_depth_mm": 5.7,
+      "engagement_mm": 4.0,
+      "engagement_threads": 8.0,
+      "min_engagement_mm": 2.4,
+      "length_mm": 10.0,
+      "stock": true,
+      "fits_mm": [
+        8.4,
+        12.0
+      ],
+      "thread_depth_required_mm": 4.0,
+      "tip_clearance_mm": 2.5,
+      "tool": "hex 2.5",
+      "step": 2,
+      "tool_clear": true,
+      "status": "pass",
+      "failed": [],
+      "body": "tilt"
+    },
+    {
+      "fastener": "laser_foot_screws#1",
+      "name": "laser_foot_screws",
+      "key": "turret_screw_m3x10",
+      "clamps": "laser_mount",
+      "stack": [
+        "laser_mount"
+      ],
+      "into": "laser_inserts",
+      "seat": [
+        60.0,
+        -9.0,
+        153.6
+      ],
+      "direction": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "thread_start": [
+        60.0,
+        -9.0,
+        147.6
+      ],
+      "grip_mm": 6.0,
+      "thread_start_mm": 6.0,
+      "thread_start_record_mm": 6.0,
+      "thread_depth_mm": 5.7,
+      "engagement_mm": 4.0,
+      "engagement_threads": 8.0,
+      "min_engagement_mm": 2.4,
+      "length_mm": 10.0,
+      "stock": true,
+      "fits_mm": [
+        8.4,
+        12.0
+      ],
+      "thread_depth_required_mm": 4.0,
+      "tip_clearance_mm": 2.5,
+      "tool": "hex 2.5",
+      "step": 2,
+      "tool_clear": true,
+      "status": "pass",
+      "failed": [],
+      "body": "tilt"
+    }
+  ],
+  "tools": {
+    "hex 2.5": {
+      "envelope_d": 3.0,
+      "length": 60.0
+    }
+  },
+  "relation_stats": null
+}

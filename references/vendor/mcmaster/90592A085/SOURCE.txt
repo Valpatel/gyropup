@@ -1,0 +1,12 @@
+McMaster-Carr parts. McMaster-Carr CAD, for design use; not redistributed.
+Files per part: <PN>.step (as downloaded), <PN>.norm.step (moved into the frame for its kind), <PN>.page.json (the product page's data).
+
+90592A085 Steel Hex Nut, Medium-Strength, Class 8, M3 x 0.5 mm Thread Size
+URL: https://www.mcmaster.com/90592A085/
+Downloaded: 2026-10-29
+
+2026-10-29 exact private acquisition receipt:
+  90592A085.step SHA256: d0feffe192f58b741eda311c939ea24f625f03f879fd19433bb009d700433f1c
+  90592A085.norm.step SHA256: 15e61a3d9e1c3159c501e6a714492eb8db30630879f2bcb73238d02469dd1c75
+  90592A085.page.json SHA256: c92e162f16ee20518ea82a5b334863784382340feb3c100b8a042432d8b3e100
+  90592A085.norm.json SHA256: adcc4a6691db33a272660a8a1865d1470c57f1cd4215e5c11bda88bd29fe5e3f

@@ -1,0 +1,14 @@
+{
+  "part": "91290A113",
+  "url": "https://www.mcmaster.com/91290A113/",
+  "observed_at": "2026-10-29T08:16:39.875336+00:00",
+  "http_status": 200,
+  "result": "Explicit login requirement observed in a fresh browser session; product specifications and CAD controls were unavailable.",
+  "specification_rows": 0,
+  "cad_selectors": 0,
+  "step_downloaded": false,
+  "selected_part_changed": false,
+  "catalog_changed": false,
+  "vendor_geometry_published": false,
+  "scope": "This session only; not an account-wide or part-availability conclusion."
+}

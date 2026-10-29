@@ -46,3 +46,4 @@ test-results/
 # Public browser simulation snapshot; no RL policies or private run directories.
 !exports/sim/
 !exports/sim/**
+/.cadagent-cache/

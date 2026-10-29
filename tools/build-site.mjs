@@ -51,7 +51,8 @@ const models=tracked.filter(file=>roots.some(root=>file.startsWith(root))&&/\.(?
 await writeFile(path.join(out,'site/models.json'),JSON.stringify({files:models.map(file=>({path:'/'+file,format:file.split('.').pop().toLowerCase(),preview:'/designer/kit/file-viewer.html?file='+encodeURIComponent('/'+file)}))},null,2));
 const publishedModels=new Set(models.map(file=>'/'+file));
 const slug = p => p.toLowerCase().replace(/[^a-z0-9]+/g,'-');
-const documents = tracked.filter(p => /^(docs|research)\/.*\.md$/.test(p) && p !== 'docs/handoff.md');
+const documents = tracked.filter(p => /^(docs|research|hardware)\/.*\.md$/.test(p)
+  && p !== 'docs/handoff.md' && !/(?:^|\/)(?:AGENTS|CLAUDE)\.md$/.test(p));
 documents.push('README.md', 'catalog/SCHEMA.md');
 const pagePath = p => `/site/pages/${slug(p)}.html`;
 function frame(title, body) {

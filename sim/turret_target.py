@@ -95,7 +95,7 @@ def max_plate_mass(J, H=0.2, lean_deg=4.0, hit_frac=0.5):
 
 
 def study(speeds_by_range=None):
-    """speeds_by_range: {range_m: v} from the flight stage; defaults to the nominal 55 fps shot with the standard drag."""
+    """speeds_by_range: {range_m: v} from the flight stage; defaults to the D68 set speed (95 fps) with the standard drag."""
     import matplotlib
     matplotlib.use('Agg')
     import matplotlib.pyplot as plt
@@ -103,25 +103,38 @@ def study(speeds_by_range=None):
     spec = tb.nominal()
     if speeds_by_range is None:
         import turret_flight as tf
-        speeds_by_range = tf.speed_at_ranges(55 * tl.FPS, spec)
+        speeds_by_range = tf.speed_at_ranges(tl.DESIGN['set_fps'] * tl.FPS, spec)
     res = {'limits': LIMITS, 'targets': TARGETS, 'ball': spec.__dict__,
            'impact_by_range': {f'{d:g}_m': impact(spec, v) for d, v in speeds_by_range.items()},
-           'impact_at_muzzle': {f'{f}_fps': impact(spec, f * tl.FPS) for f in (55, 65, 70, 90, 100)},
+           'impact_at_muzzle': {f'{f}_fps': impact(spec, f * tl.FPS) for f in (55, 70, 95, 100, 105)},
            'knockdown': {}}
     for name, t in TARGETS.items():
         res['knockdown'][name] = {f'{d:g}_m': knockdown(t, spec, v) for d, v in speeds_by_range.items()}
     worst = tb.worst_for_cap()
+    # D67's densest accepted round (2.0 g on 22.2 mm), stiff and grippy, at its own ceiling: exports/turret/launch/launch.json
+    densest = tb.BallSpec('densest-accepted', 'spec', tl.BALL_D[0], tl.BALL_M[1], tl.BALL_E[1], tl.BALL_RESTITUTION[1], tl.BALL_MU[1], 0.7, tb.RANGES['nu'])
+    lj = R / 'exports' / 'turret' / 'launch' / 'launch.json'
+    trim = json.loads(lj.read_text()).get('trim', {}) if lj.exists() else {}
+    dense_v = math.sqrt(2 * trim['densest_ked_j_m2'] * densest.area_m2 / densest.m_kg) if trim.get('densest_ked_j_m2') else tl.CAP
+    ft = trim.get('hasbro_full_throttle_fps', tl.TARGET_FPS[1])
     res['knockdown_soft_slow_ball'] = {f'{d:g}_m': knockdown(TARGETS['sim_plate_20g'], tb.BallSpec('soft', 'x', 22.5, 1.6, 0.75, 0.45, 0.6, 0.4), v * 0.9, e=0.45)
                                        for d, v in speeds_by_range.items()}
     res['max_hinged_plate_mass_kg'] = {f'{d:g}_m': {f'lean_{l}_deg': round(max_plate_mass(ball_impulse(spec.m_kg, v, spec.e, 1.0), 0.2, l), 3) for l in (2, 4, 10, 20)}
                                        for d, v in speeds_by_range.items()}
-    res['kid_safety'] = {'cap_70fps': impact(spec, tl.CAP), 'set_55fps': impact(spec, 55 * tl.FPS), 'worst_ball_at_cap': impact(worst, tl.CAP),
-                         'verdict': 'at the 70 fps cap a 1.83 g ball carries 0.42 J (84 % of EN 71-1 resilient limit) and 1030 J/m^2 (41 % of ASTM); at the 55 fps set speed 0.26 J and 640 J/m^2; a stock Rival blaster at 97 fps is 0.81 J, 1.9-2.0x the cap and 3.1x the set speed'}
+    cap, setp, full, dense = impact(spec, tl.CAP), impact(spec, tl.DESIGN['set_fps'] * tl.FPS), impact(spec, ft * tl.FPS), impact(densest, dense_v)
+    res['kid_safety'] = {'cap_105fps': cap, 'set_95fps': setp, 'full_throttle': full, 'densest_accepted_at_its_ceiling': dense,
+                         'worst_ball_at_cap': impact(worst, tl.CAP),
+                         'verdict': (f'D68 (a 14+ product like Hasbro\'s Rival blasters; EN 71-1\'s 0.5 J is for toys for under-14s): at the 105 fps ceiling '
+                                     f'the Hasbro ball carries {cap["ke_j"]:.2f} J and {cap["ked_j_m2"]:.0f} J/m^2 ({100 * cap["vs_astm_2500"]:.0f} % of ASTM F963); '
+                                     f'flat out on the trimmed rail ({ft:.1f} fps) {full["ke_j"]:.2f} J, {full["ked_j_m2"]:.0f} J/m^2; the densest accepted round '
+                                     f'(2.0 g on 22.2 mm) at its own ceiling ({dense["fps"]:.1f} fps) {dense["ke_j"]:.2f} J, {dense["ked_j_m2"]:.0f} J/m^2 '
+                                     f'({100 * dense["vs_astm_2500"]:.0f} % of ASTM): the trim holds it there. A stock Rival blaster at 97 fps is '
+                                     f'{impact(spec, 97 * tl.FPS)["ke_j"]:.2f} J. Eye protection is recommended, as Hasbro does')}
     (OUT / 'target.json').write_text(json.dumps(res, indent=1, default=str) + '\n')
     fig, ax = plt.subplots(1, 2, figsize=(11, 4), dpi=130)
     ds = sorted(speeds_by_range)
-    ax[0].plot(ds, [impact(spec, speeds_by_range[d])['ke_j'] for d in ds], 'o-', label='Gyropup, 55 fps set speed')
-    ax[0].axhline(impact(spec, tl.CAP)['ke_j'], color='#c2410c', ls='--', label='at the 70 fps cap (muzzle)')
+    ax[0].plot(ds, [impact(spec, speeds_by_range[d])['ke_j'] for d in ds], 'o-', label=f"Gyropup, {tl.DESIGN['set_fps']:.0f} fps set speed")
+    ax[0].axhline(impact(spec, tl.CAP)['ke_j'], color='#c2410c', ls='--', label='at the 105 fps ceiling (muzzle)')
     ax[0].axhline(impact(spec, 97 * tl.FPS)['ke_j'], color='#7c3aed', ls=':', label='stock Rival, 97 fps (muzzle)')
     ax[0].axhline(0.5, color='k', lw=1, label='EN 71-1 resilient 0.5 J')
     ax[0].set_xlabel('range (m)')

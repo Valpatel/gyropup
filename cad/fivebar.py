@@ -980,6 +980,19 @@ SCREWS = {   # what each screw group is, its size, and where its head seats (cat
 }
 
 
+def upper_output_screws():
+    """Project-authored screw envelopes in one upper link's local frame (not vendor STEP).
+
+    Keep each of the nine stocked output screws individually identifiable for
+    the public renderer. Engineering fit checks still require the vendor model.
+    """
+    _, adi = gmi.output_adapter(MOTOR, 'L')
+    ob, hd = gmi.motor_interface(MOTOR)['output']['bolts'], adi['head']
+    return [(f'output_screw_{i + 1}', screw(5.0, hd['length'], hd['d'], hd['h'],
+             Y['motor_out'] + adi['z_head_seat'], -1, x, -y))
+            for i, (x, y) in enumerate(gmi.circle_pts(ob['pcd'], angles=ob['angles']))]
+
+
 def screw_groups(fr, j):
     """Every screw of the leg as one envelope per group."""
     out = {}
@@ -996,8 +1009,7 @@ def screw_groups(fr, j):
     # the hubs' screws turn with their links and adapters: built in the link's frame (a motor-frame point (x, y) sits
     # at (x, -y) there, gmi.place's turn) and placed as the link is
     ao = STD['AO-L']
-    _, adi = gmi.output_adapter(MOTOR, 'L')
-    ob, hd = gmi.motor_interface(MOTOR)['output']['bolts'], adi['head']
+    output_screws = upper_output_screws()
     links = outputs = None
     for key in ('upper_front', 'upper_rear'):
         hub = None
@@ -1006,8 +1018,7 @@ def screw_groups(fr, j):
             hub = sc if hub is None else hub.union(sc)
         links = place(hub, *fr[key]) if links is None else links.union(place(hub, *fr[key]))
         ring = None
-        for (x, y) in gmi.circle_pts(ob['pcd'], angles=ob['angles']):
-            sc = screw(5.0, hd['length'], hd['d'], hd['h'], Y['motor_out'] + adi['z_head_seat'], -1, x, -y)
+        for _, sc in output_screws:
             ring = sc if ring is None else ring.union(sc)
         outputs = place(ring, *fr[key]) if outputs is None else outputs.union(place(ring, *fr[key]))
     out['screws_links'] = links

@@ -7,7 +7,13 @@ the 0.1 in grid so a person can build them.
 Writes exports/turret/wiring/board-<name>.png and boards.json. Sizes are the makers' (Pololu, Adafruit, the parts' data
 sheets); a placement is the part's footprint on the board (its body and its leads), in mm from the board's lower left
 corner, components side up. The bay's three boards are the CAD's (cad/turret.py TB: 52 x 50, M3 standoff holes 3 mm in
-from the edges, parts at most 11 / 12.5 / 8.5 mm tall on levels 0 / 1 / 2).
+from the edges, parts at most 13 / 11 / 8.5 mm tall on levels 0 / 1 / 2: since D66/D68 level 0 carries the TDK i6A4W,
+12.7 mm, and the bus bank lying down; the stack's depth is unchanged, the standoffs 14 / 12 mm).
+
+Rails (docs/turret-wiring.md 4): BUS, the turret's one input (D66: 15-20.5 V on the stand's pack, 30-42 V on Gyropup's
+10S bus), across the ring; RAIL, the TDK i6A4W's trimmed output (10.8-11.9 V per turret, D68), always on; FLY, RAIL
+through the Pololu 2815 while ARM is held (the ESCs and the feed servo); 12 V AUX (the tilt servo) and 12 V PAN (the pan
+servo) from their own D36V50F12s; 5 V from the D36V28F5. Every part on BUS is rated 50 V or more.
 """
 from __future__ import annotations
 
@@ -23,9 +29,9 @@ HOLE_KEEPOUT = 3.2                      # around each standoff hole: the standof
 # block: a 1/4 W resistor lying is 10.2 x 2.5, a radial MLCC 5.1 x 3.2 x 6, the 100 nF film 7.6 x 3 x 7, the 1 uF film
 # 10.5 x 5.5 x 10, the 1 W resistor 15.2 x 3.5 lying)
 FP = {
-    'D24V150F12': (43.2, 31.8, 11.0), 'D36V50F12': (25.4, 25.4, 9.5), 'D36V28F5': (17.8, 20.3, 7.0), 'Pololu 2815': (25.4, 20.3, 4.1),
+    'i6A4W': (33.0, 22.9, 12.7), 'cap 470uF 63V lying': (29.0, 12.5, 12.5), 'D36V50F12': (25.4, 25.4, 9.5), 'D36V28F5': (17.8, 20.3, 7.0), 'Pololu 2815': (25.4, 20.3, 4.1),
     'Feather M4 CAN': (50.8, 22.8, 8.0), 'DIP-16': (20.3, 10.2, 4.5), 'DIP-14': (17.8, 10.2, 4.5), 'DIP-8': (10.2, 10.2, 4.5), 'DIP-6': (7.6, 10.2, 4.5),
-    'TO-92': (5.1, 4.0, 5.0), 'TO-220': (10.2, 5.1, 21.0), 'cap 1000uF lying': (24.0, 12.5, 12.5), 'R 1/4 W': (10.2, 2.5, 2.5),
+    'TO-92': (5.1, 4.0, 5.0), 'TO-220': (10.2, 5.1, 21.0), 'R 1/4 W': (10.2, 2.5, 2.5),
     'button 6x6': (6.0, 6.0, 5.0), 'polyfuse flat': (12.0, 14.0, 3.5), 'pad strip': (10.2, 2.5, 1.0),
 }
 
@@ -39,38 +45,44 @@ def group(w, h, tall):
 # COMPONENTS' (below), and docs/turret-wiring.md section 3 has the circuit
 BOARDS = {
     'base': ((50.8, 30.0), [(3.0, 3.0), (47.8, 3.0), (3.0, 27.0), (47.8, 27.0)], 11.0, 'the base board, on the base\'s +x wall (4 x M3 x 6), parts towards the housing', [
-        ('D36V50F12 12 V PAN (U2)', 'D36V50F12', 19.0, 2.3, False, '24 V in from the 5 A fuse, 12 V out to the pan servo and the pendant loop'),
+        ('D36V50F12 12 V PAN (U2)', 'D36V50F12', 19.0, 2.3, False, 'BUS in (15-42 V, 50 V max) from the 10 A fuse, 12 V out to the pan servo and the pendant loop'),
         ('NE555 1 kHz (U1)', 'DIP-8', 6.5, 0.5, False, 'astable on the pendant loop\'s 12 V: R1 1.0 k, R2 6.8 k, C1 100 nF film: 986 Hz'),
         ('R1 R2 C2 C3', group(12.0, 5.0, 6.0), 6.5, 10.8, False, 'the 555\'s timing resistors, CTRL and supply decoupling'),
         ('MF-R300 (F1, pan servo)', 'polyfuse flat', 6.5, 15.95, False, 'in the 12 V PAN to the pan servo\'s V'),
-        ('R3 2.2 k 1 W, D1', group(5.4, 17.0, 3.5), 0.6, 6.4, False, 'the 555\'s output through D1 (blocks a +24 V fault) and R3 to ring 7 (SAFETY+)'),
+        ('R3 2.2 k 1 W, D1', group(5.4, 17.0, 3.5), 0.6, 6.4, False, 'the 555\'s output through D1 (blocks a BUS fault on the line) and R3 to ring 7 (SAFETY+)'),
         ('C1 film', group(3.2, 8.0, 7.0), 44.6, 6.5, False, 'the 555\'s 100 nF timing capacitor (film, 5 %)'),
         ('servo, ring, CAN pads', 'pad strip', 48.0, 8.0, True, 'the pan servo\'s 3-pin, the ring plug\'s 24 AWG tails, CAN through'),
     ]),
-    'level0': ((52.0, 50.0), [(3.0, 3.0), (49.0, 3.0), (3.0, 47.0), (49.0, 47.0)], 11.0, 'bay level 0 on the tray\'s four bosses: the fixed 12 V regulator', [
-        ('D24V150F12 12 V MAIN (U3)', 'D24V150F12', 4.4, 9.1, False, 'always on: the speed ceiling (the fixed 12 V rail) and the tilt servo\'s supply'),
-        ('2N7000 laser switch (Q1)', 'TO-92', 8.0, 1.0, False, 'gate from LASER_5V (the bus buffer on level 2) through R6 100 R, R7 100 k to GND; drain to the laser\'s -'),
-        ('R6 R7', group(10.2, 5.1, 2.5), 14.0, 1.0, False, ''),
-        ('12 V pads', 'pad strip', 26.0, 1.5, False, '12 V MAIN out to the 2815 (level 1) and the tilt servo\'s lead (MF-R300 in line)'),
-        ('24 V pads', 'pad strip', 20.0, 46.5, False, '+24 V and GND from the bank (level 1)'),
-        ('D9 TVS (12 V MAIN)', group(12.7, 4.0, 4.0), 6.5, 42.0, False, 'P6KE15A across 12 V MAIN: Pololu\'s TVS at the 2815\'s input'),
-        ('D10 1N5822 (12 V FLY)', group(15.2, 5.5, 5.5), 30.5, 42.0, False, 'across 12 V FLY: Pololu\'s Schottky at the 2815\'s output'),
+    'level0': ((52.0, 50.0), [(3.0, 3.0), (49.0, 3.0), (3.0, 47.0), (49.0, 47.0)], 13.0, 'bay level 0 on the tray\'s four bosses: the flywheel rail (TDK i6A4W, trimmed) and the bus bank', [
+        ('TDK i6A4W RAIL (U3)', 'i6A4W', 9.5, 0.4, False, 'BUS in (9-53 V), RAIL out 10.8-11.9 V set by the trim string; always on (ON/OFF to VIN-); '
+         'TRIM (pin 6) at the right-hand end, beside R59-R65'),
+        ('trim R59-R65', group(7.6, 12.7, 11.0), 43.8, 7.0, False, 'standing, at U3\'s TRIM pin: R59 1.33 k in series with R60-R65 (10, 20, 40.2, 80.6, '
+         '162, 324 R), each with a solder bridge across it: 1.33-1.97 k, 10 R steps (0.5 % of the rail)'),
+        ('2N7000 laser switch (Q1)', 'TO-92', 2.0, 7.0, False, 'gate from LASER_5V (the bus buffer on level 2) through R6 100 R, R7 100 k to GND; drain to the laser\'s -'),
+        ('R6 R7', group(5.1, 10.2, 2.5), 2.0, 11.6, False, ''),
+        ('470 uF 63 V (C4)', 'cap 470uF 63V lying', 7.0, 24.4, False, 'across BUS and GND at U3\'s input (its 100 uF Cin and the bank)'),
+        ('470 uF 63 V (C5)', 'cap 470uF 63V lying', 7.0, 37.2, False, ''),
+        ('BUS pads', 'pad strip', 0.4, 24.4, True, 'BUS and GND from the ring\'s rotor plug (level 2), on to level 1 (U5, U15, the BUS_V divider)'),
+        ('D13 TVS (BUS)', group(4.0, 12.7, 4.0), 2.95, 24.4, False, 'P6KE51A across BUS (43.6 V standoff: above the 42 V full bus, clamps before the 50 V parts)'),
+        ('D9 TVS (RAIL)', group(4.0, 12.7, 4.0), 36.2, 24.6, False, 'P6KE15A across RAIL: Pololu\'s TVS at the 2815\'s input'),
+        ('D10 1N5822 (FLY)', group(5.5, 15.2, 5.5), 40.4, 24.6, False, 'across FLY: Pololu\'s Schottky at the 2815\'s output'),
+        ('RAIL pads', 'pad strip', 46.2, 24.6, True, 'RAIL up to the 2815 (level 1), FLY back down for D10 and on to the CT power plug'),
     ]),
-    'level1': ((52.0, 50.0), [(3.0, 3.0), (49.0, 3.0), (3.0, 47.0), (49.0, 47.0)], 12.5, 'bay level 1 on 12 mm standoffs: the safety switch, 5 V and the arm chain\'s front end', [
-        ('Pololu 2815 safety switch (U4)', 'Pololu 2815', 6.4, 0.5, False, 'switches 12 V MAIN to 12 V FLY; ON from ARM; its slide switch OFF'),
-        ('D36V28F5 5 V (U5)', 'D36V28F5', 32.4, 6.5, False, '24 V in, 5 V out through the MF-R250 (F2, in line) to levels 1 and 2 and the cartridge'),
-        ('1000 uF bank (C4)', 'cap 1000uF lying', 6.4, 21.4, False, 'across the ring\'s +24 V and GND'),
-        ('1000 uF bank (C5)', 'cap 1000uF lying', 6.4, 34.3, False, ''),
-        ('CD74HC423E (U7, both one-shots)', 'DIP-16', 31.2, 27.4, True, 'on 3.3 V. A: the 18.5 ms retriggerable pulse detector (R10 39 k, C6 1 uF); '
+    'level1': ((52.0, 50.0), [(3.0, 3.0), (49.0, 3.0), (3.0, 47.0), (49.0, 47.0)], 11.0, 'bay level 1 on 14 mm standoffs: the safety switch, 12 V AUX, 5 V and the arm chain\'s front end', [
+        ('Pololu 2815 safety switch (U4)', 'Pololu 2815', 6.4, 0.5, False, 'switches RAIL (U3, 10.8-11.9 V) to FLY; ON from ARM; its slide switch OFF'),
+        ('D36V28F5 5 V (U5)', 'D36V28F5', 32.4, 6.5, False, 'BUS in (50 V max), 5 V out through the MF-R250 (F2, in line) to levels 1 and 2 and the cartridge'),
+        ('D36V50F12 12 V AUX (U15)', 'D36V50F12', 6.2, 21.2, False, 'BUS in (50 V max), 12 V out to the tilt servo (MF-R300 in its lead): '
+         'its own regulator, so the flywheel rail\'s trim never moves the servo\'s supply'),
+        ('CD74HC423E (U7, both one-shots)', 'DIP-16', 31.8, 27.4, True, 'on 3.3 V. A: the 18.5 ms retriggerable pulse detector (R10 39 k, C6 1 uF); '
          'B: the 3.0 ms trip window (R11 63.4 k to start, selected at bench test 3.3, C7 100 nF film)'),
         ('4N35 opto (U6)', 'DIP-6', 42.2, 27.4, False, 'its LED on SAFETY+/- through R8 2.2 k 1 W, D2 across it reversed; its transistor pulls PULSE low (R9 10 k to 3.3 V)'),
         ('R8 2.2 k 1 W, D2', group(5.5, 17.0, 3.5), 0.6, 6.4, False, 'the opto LED\'s resistor and reverse diode'),
         ('C6 R10', group(5.5, 19.8, 6.0), 0.6, 23.8, False, 'one-shot A\'s timing: 39 k 1 %, 1 uF'),
-        ('C7 film, R11, C8', group(7.6, 5.6, 7.0), 41.6, 38.0, False, 'one-shot B\'s timing (R11 chosen from 60.4-73.2 k at bench test 3.3) and U7\'s decoupling'),
+        ('C7 film, R11, C8', group(7.6, 5.6, 7.0), 42.2, 38.0, False, 'one-shot B\'s timing (R11 chosen from 60.4-73.2 k at bench test 3.3) and U7\'s decoupling'),
         ('R9 R20 R21 R50 C13', group(13.2, 5.7, 11.0), 32.4, 0.5, False, 'standing: PULSE\'s 39 k pull-up and its 100 k to the Feather; BUS_V, '
-         'the +24 V through 91 k / 10 k to the Feather\'s A0'),
+         'BUS through 182 k / 10 k to the Feather\'s A0'),
     ]),
-    'level2': ((52.0, 50.0), [(3.0, 3.0), (49.0, 3.0), (3.0, 47.0), (49.0, 47.0)], 8.5, 'bay level 2 on 14 mm standoffs: the MCU, the trip latch and ARM', [
+    'level2': ((52.0, 50.0), [(3.0, 3.0), (49.0, 3.0), (3.0, 47.0), (49.0, 47.0)], 8.5, 'bay level 2 on 12 mm standoffs: the MCU, the trip latch and ARM', [
         ('Feather M4 CAN (U8)', 'Feather M4 CAN', 0.6, 13.6, False, 'on its two header rows, USB towards the bay\'s open side; its 3V pin is the logic\'s 3.3 V; '
          'its own 120 R terminates CAN (the Trm jumper left closed)'),
         ('74HC74 trip latch (U9)', 'DIP-14', 7.0, 0.8, False, 'on 3.3 V: D from one-shot B, CLK from GATE_2, /CLR from the button and the power-up RC'),
@@ -94,18 +106,17 @@ BOARDS = {
         ('LM393 gates (U13)', 'DIP-8', 20.0, 2.0, False, 'the two gates\' comparators, 0.3 V hysteresis, open-collector to GATE_1/2'),
         ('74HCT14 brake driver (U12)', 'DIP-14', 8.0, 30.0, False, 'ARM -> 6.8 k / 1 uF -> one Schmitt inverter -> BRAKE (high ~8 ms after ARM falls; '
          'D3 + 1 k release it at once when ARM rises)'),
-        ('MF-R300 (F3, feed servo)', 'polyfuse flat', 8.0, 15.0, False, 'in the 12 V FLY to the feed servo\'s V'),
+        ('MF-R300 (F3, feed servo)', 'polyfuse flat', 8.0, 15.0, False, 'in FLY to the feed servo\'s V'),
         ('R39-R48 C16', group(15.0, 7.0, 6.0), 20.0, 13.0, False, 'the gates: emitters 100 R from 5 V, receivers 4.7 k pull-ups, 10 k into the comparator, '
          '10 k / 10 k reference, 100 k hysteresis'),
         ('R27-R38 C17-C22', group(18.0, 9.0, 6.0), 20.0, 20.5, False, 'the FETs\' 6 x 1 k gate resistors, 6 x 100 k and 6 x 100 nF gate to GND '
          '(the capacitors right at each FET\'s gate and source legs)'),
         ('R55-R57', group(8.6, 5.6, 11.0), 30.7, 6.8, False, 'standing: 1 k in series in ESC_L, ESC_R and FEED_TTL at the cartridge end'),
-        ('D11 TVS (12 V FLY)', group(12.7, 3.6, 4.0), 19.5, 40.2, False, 'P6KE15A across 12 V FLY at the pigtail pads'),
+        ('D11 TVS (FLY)', group(12.7, 3.6, 4.0), 19.5, 40.2, False, 'P6KE15A across FLY at the pigtail pads'),
         ('R24-R26 D3 C14 C15', group(12.0, 6.0, 6.0), 26.5, 30.0, False, 'the brake\'s RC and its fast release, U12\'s decoupling, ARM\'s 100 k pull-down'),
-        ('pigtail pads', 'pad strip', 8.0, 41.0, False, 'from the two CT plugs: 12 V FLY x 3, GND x 3, ARM, +5 V, GATE_1/2, SIG_GND, ESC_L/R, FEED_TTL'),
+        ('pigtail pads', 'pad strip', 8.0, 41.0, False, 'from the two CT plugs: FLY x 3, GND x 3, ARM, +5 V, GATE_1/2, SIG_GND, ESC_L/R, FEED_TTL'),
     ]),
-    'stand': ((70.0, 50.0), [(2.0, 2.0), (68.0, 2.0), (2.0, 48.0), (68.0, 48.0)], 30.0, 'the stand\'s terminal board on the bottom plate\'s four bosses', [
-        ('24 V in / out pads', 'pad strip', 10.0, 40.0, False, 'from the fuse and the rocker; to the DT06 plug pins 1-2 (+) and 3-4 (-), 18 AWG'),
+    'stand': ((70.0, 50.0), [(2.0, 2.0), (68.0, 2.0), (2.0, 48.0), (68.0, 48.0)], 30.0, 'the stand\'s terminal board on the bottom plate\'s four bosses (signals only: since D66 the pack\'s power runs dock -> 20 A fuse -> rocker -> XT30 lead, not through this board)', [
         ('pendant pads', 'pad strip', 10.0, 25.0, False, 'the pendant socket\'s (TB3M mini-XLR) pins 1 and 2 to DT06 pins 7 and 8 (the dry loop)'),
         ('CAN pads', 'pad strip', 10.0, 10.0, False, 'the USB-CAN\'s H and L to DT06 pins 5 and 6, twisted; the 120 R is on the USB-CAN'),
     ]),
@@ -122,27 +133,40 @@ COMPONENTS = [
     ('C1', 'base', '100 nF film 5 %', 'cap-film-100n-5pct', 'pins 2 and 6 to GND: the timing capacitor'),
     ('C2', 'base', '100 nF X7R', 'cap-mlcc-100n-50v', 'pin 5 (CTRL) to GND'),
     ('C3', 'base', '1 uF X7R', 'cap-mlcc-1u-50v', 'VCC to GND at pin 8'),
-    ('D1', 'base', '1N4148', 'onsemi-1n4148', 'pin 3 (anode) to R3: a +24 V fault on the line cannot drive back into the 555'),
+    ('D1', 'base', '1N4148', 'onsemi-1n4148', 'pin 3 (anode) to R3: a BUS fault on the line cannot drive back into the 555'),
     ('R3', 'base', '2.2 k 1 W', 'yageo-rsf100jb-73-2k2', 'D1 to ring 7 (SAFETY+); ring 8 (SAFETY-) is the base\'s GND'),
     ('F4', 'harness', 'MF-R010', 'bourns-mf-r010', 'in line in the wire from the base board\'s 12 V PAN to DT12 7 (the pendant loop out), heat-shrunk: a short of the loop to GND trips it'),
-    ('D8', 'harness', '1N5822', 'schottky-1n5822', 'across +24 V and GND right after the 5 A in-line fuse, at the base board\'s input pads (cathode to +24 V): a reversed supply blows the fuse'),
-    ('U2', 'base', 'D36V50F12', 'pololu-d36v50f12-4095', '12 V PAN from the +24 V after the 5 A fuse'),
+    ('D8', 'harness', '1N5408', 'diode-1n5408g', 'across BUS and GND right after the 10 A in-line fuse, at the base board\'s input pads (cathode to BUS): a reversed supply blows the fuse (1000 V, 200 A surge; the 1N5822 it replaces is a 40 V part)'),
+    ('D14', 'harness', 'P6KE51A', 'tvs-p6ke51a', 'across BUS and GND beside D8 at the base board\'s input pads (cathode to BUS): clamps a bus spike before U2 (50 V max)'),
+    ('U2', 'base', 'D36V50F12', 'pololu-d36v50f12-4095', '12 V PAN from BUS after the 10 A fuse'),
     ('F1', 'base', 'MF-R300', 'bourns-mf-r300', '12 V PAN to the pan servo'),
-    # level 0: 12 V MAIN, the laser's switch, the 2815's protection (Pololu: a TVS across its input, a Schottky across its output)
-    ('U3', 'level0', 'D24V150F12', 'pololu-d24v150f12-2885', '12 V MAIN, always on'),
+    # level 0: the flywheel rail (D68: the TDK i6A4W, trimmed per turret), the bus bank and clamp, the laser's switch, the
+    # 2815's protection (Pololu: a TVS across its input, a Schottky across its output)
+    ('U3', 'level0', 'i6A4W020A033V-001-R', 'tdk-lambda-i6a4w020a033v-001-r', 'RAIL, always on: VIN+ (1) BUS, VIN- (3) GND, ON/OFF (2) to VIN- (negative logic: on), '
+     'VOUT+ (8) and SENSE+ (7) joined at the pins, VOUT- (4) GND, TRIM (6) through R59-R65 to VOUT- (4)'),
+    ('R59', 'level0', '1.33 k 1 %', R14W.format('1k33'), 'TRIM (6) to R60: the trim string\'s fixed part (TDK i6A: Ru = 0.6 x 36.5 k / (Vo - 0.6) - 511 R; 1.53 k for 11.31 V)'),
+    ('R60', 'level0', '10.0 R 1 %', R14W.format('10r'), 'in series in the trim string, a solder bridge across it: bridged = 10 R out (the rail up ~0.06 V)'),
+    ('R61', 'level0', '20.0 R 1 %', R14W.format('20r'), 'likewise, 20 R'),
+    ('R62', 'level0', '40.2 R 1 %', R14W.format('40r2'), 'likewise, 40.2 R'),
+    ('R63', 'level0', '80.6 R 1 %', R14W.format('80r6'), 'likewise, 80.6 R'),
+    ('R64', 'level0', '162 R 1 %', R14W.format('162r'), 'likewise, 162 R'),
+    ('R65', 'level0', '324 R 1 %', R14W.format('324r'), 'likewise, 324 R; its far end to VOUT- (4). Bench test 4.1 starts with no bridge (1.97 k: ~9.5 V) and '
+     'bridges from the largest down until the faster motor, warm, turns at or under 15,722 rpm; then the bridges are sealed (conformal coat)'),
+    ('C4', 'level0', '470 uF 63 V low ESR', 'panasonic-eeu-fr1j471b', 'BUS to GND at U3\'s VIN pins (TDK: 100 uF at the input)'),
+    ('C5', 'level0', '470 uF 63 V low ESR', 'panasonic-eeu-fr1j471b', 'BUS to GND'),
+    ('D13', 'level0', 'P6KE51A', 'tvs-p6ke51a', 'across BUS and GND at the BUS pads (cathode to BUS): 43.6 V standoff, 48.5-53.6 V breakdown'),
     ('Q1', 'level0', '2N7000', 'onsemi-2n7000', 'the laser\'s low side: drain to the laser\'s -, source GND; the laser\'s + on 5 V'),
     ('R6', 'level0', '100 R', R14W.format('100r'), 'LASER_5V (U11 2Y, level 2) to Q1\'s gate'),
     ('R7', 'level0', '100 k', R14W.format('100k'), 'Q1\'s gate to GND'),
-    ('D9', 'level0', 'P6KE15A', 'tvs-p6ke15a', 'across 12 V MAIN and GND (cathode to 12 V): the 2815\'s input'),
-    ('D10', 'level0', '1N5822', 'schottky-1n5822', 'across 12 V FLY and GND (cathode to 12 V FLY): the 2815\'s output when it opens on a running load'),
+    ('D9', 'level0', 'P6KE15A', 'tvs-p6ke15a', 'across RAIL and GND (cathode to RAIL): the 2815\'s input (12.8 V standoff over the 11.9 V top of the trim)'),
+    ('D10', 'level0', '1N5822', 'schottky-1n5822', 'across FLY and GND (cathode to FLY): the 2815\'s output when it opens on a running load'),
     # level 1
-    ('U4', 'level1', 'Pololu 2815', 'pololu-2815', '12 V MAIN in, 12 V FLY out, ON = ARM; the slide switch OFF (glue it there)'),
-    ('U5', 'level1', 'D36V28F5', 'pololu-d36v28f5-3782', '5 V from +24 V'),
+    ('U4', 'level1', 'Pololu 2815', 'pololu-2815', 'RAIL in, FLY out, ON = ARM; the slide switch OFF (glue it there). On RAIL (<= 11.9 V), never on BUS: its 32 V maximum'),
+    ('U5', 'level1', 'D36V28F5', 'pololu-d36v28f5-3782', '5 V from BUS (5.3-50 V in)'),
+    ('U15', 'level1', 'D36V50F12', 'pololu-d36v50f12-4095', '12 V AUX from BUS (50 V max): the tilt servo, through an MF-R300 in its lead'),
     ('F2', 'level1', 'MF-R250', 'bourns-mf-r250', 'in line in the 5 V'),
-    ('C4', 'level1', '1000 uF 35 V', 'panasonic-eeu-fr1v102', '+24 V to GND'),
-    ('C5', 'level1', '1000 uF 35 V', 'panasonic-eeu-fr1v102', '+24 V to GND'),
     ('U6', 'level1', '4N35', 'vishay-4n35', 'pin 1 (anode) from R8, pin 2 (cathode) to ring 8; pin 5 (collector) = PULSE; pin 4 (emitter) GND; pin 6 open'),
-    ('R8', 'level1', '2.2 k 1 W', 'yageo-rsf100jb-73-2k2', 'ring 7 (SAFETY+) to U6 pin 1: a +24 V fault drives 10 mA, steady, so no edges'),
+    ('R8', 'level1', '2.2 k 1 W', 'yageo-rsf100jb-73-2k2', 'ring 7 (SAFETY+) to U6 pin 1: a BUS fault on the line drives a steady 6-19 mA (0.76 W in R8 at 42 V), so no edges'),
     ('D2', 'level1', '1N4148', 'onsemi-1n4148', 'across U6\'s LED reversed (anode at pin 2): the LED never sees a reverse voltage'),
     ('R9', 'level1', '39 k', R14W.format('39k'), 'PULSE to 3.3 V (0.085 mA: the 4N35 at 2 mA sinks over 0.36 mA even hot)'),
     ('R50', 'level1', '100 k', R14W.format('100k'), 'PULSE to the Feather\'s A3 (PULSE_MON): the Feather can read PULSE but not drive it'),
@@ -157,8 +181,8 @@ COMPONENTS = [
     ('R11d', 'level1', '73.2 k 1 %', R14W.format('73k2'), 'one-shot B\'s choice'),
     ('C7', 'level1', '100 nF film 5 %', 'cap-film-100n-5pct', 'pin 6 to pin 7'),
     ('C8', 'level1', '100 nF X7R', 'cap-mlcc-100n-50v', 'U7 pin 16 to pin 8'),
-    ('R20', 'level1', '91 k 1 %', R14W.format('91k'), '+24 V to BUS_V'),
-    ('R21', 'level1', '10 k', R14W.format('10k'), 'BUS_V to GND (10.1 : 1 to the Feather\'s A0)'),
+    ('R20', 'level1', '182 k 1 %', R14W.format('182k'), 'BUS to BUS_V'),
+    ('R21', 'level1', '10 k', R14W.format('10k'), 'BUS_V to GND (19.2 : 1 to the Feather\'s A0: 0.78 V at 15 V, 2.19 V at 42 V, 2.81 V at D66\'s 54 V)'),
     ('C13', 'level1', '100 nF X7R', 'cap-mlcc-100n-50v', 'across R21'),
     # level 2
     ('U8', 'level2', 'Feather M4 CAN', 'adafruit-feather-m4-can-4759', 'USB pin from 5 V through D7; 3V pin = the logic\'s 3.3 V (U7, U9, U10, U14 and the pull-ups); '
@@ -196,7 +220,7 @@ COMPONENTS = [
     ('R26', 'cartridge', '1 k', R14W.format('1k'), 'D3 to BRK_RC (the short opens 0.6-1.4 ms after ARM rises)'),
     ('C15', 'cartridge', '1 uF X7R', 'cap-mlcc-1u-50v', 'BRK_RC to GND'),
     ('C14', 'cartridge', '100 nF X7R', 'cap-mlcc-100n-50v', 'U12 decoupling'),
-    ('D11', 'cartridge', 'P6KE15A', 'tvs-p6ke15a', 'across 12 V FLY and GND at the pigtail pads (cathode to 12 V FLY)'),
+    ('D11', 'cartridge', 'P6KE15A', 'tvs-p6ke15a', 'across FLY and GND at the pigtail pads (cathode to FLY)'),
     ('R55', 'cartridge', '1 k', R14W.format('1k'), 'ESC_L (CT signal 1) to the left ESC\'s signal lead'),
     ('R56', 'cartridge', '1 k', R14W.format('1k'), 'ESC_R (CT signal 2) to the right ESC\'s signal lead'),
     ('R57', 'cartridge', '1 k', R14W.format('1k'), 'FEED_TTL (CT signal 3) to the feed servo\'s signal: an unpowered servo is not fed from the bus'),
@@ -205,15 +229,17 @@ COMPONENTS = [
     [(f'R{27 + k}', 'cartridge', '1 k', R14W.format('1k'), f'BRAKE_{"ABC"[k // 2]} to Q{2 + k}\'s gate') for k in range(6)] + \
     [(f'R{33 + k}', 'cartridge', '100 k', R14W.format('100k'), f'Q{2 + k}\'s gate to GND') for k in range(6)] + \
     [(f'C{17 + k}', 'cartridge', '100 nF X7R', 'cap-mlcc-100n-50v', f'Q{2 + k}\'s gate to source: the ESC\'s phase edges cannot lift the gate') for k in range(6)] + [
-    ('F3', 'cartridge', 'MF-R300', 'bourns-mf-r300', '12 V FLY to the feed servo'),
+    ('F3', 'cartridge', 'MF-R300', 'bourns-mf-r300', 'FLY to the feed servo'),
     ('D4', 'cartridge', 'TSAL4400', 'vishay-tsal4400', 'gate 1\'s emitter: anode from R39, cathode GND'),
     ('D5', 'cartridge', 'TSAL4400', 'vishay-tsal4400', 'gate 2\'s emitter'),
     ('R39', 'cartridge', '100 R', R14W.format('100r'), '5 V to D4 (37 mA)'),
     ('R40', 'cartridge', '100 R', R14W.format('100r'), '5 V to D5'),
     ('Q8', 'cartridge', 'TEFT4300', 'vishay-teft4300', 'gate 1\'s receiver: collector to R41 and R43, emitter GND'),
     ('Q9', 'cartridge', 'TEFT4300', 'vishay-teft4300', 'gate 2\'s receiver'),
-    ('R41', 'cartridge', '10 k', R14W.format('10k'), '5 V to Q8\'s collector (39 k if bench test 3.4\'s lit level stays over 1 V)'),
-    ('R42', 'cartridge', '10 k', R14W.format('10k'), '5 V to Q9\'s collector'),
+    ('R41', 'cartridge', '10 k', R14W.format('10k'), '5 V to Q8\'s collector (39 k if bench test 3.10\'s clear level stays over 1 V)'),
+    ('R42', 'cartridge', '10 k', R14W.format('10k'), '5 V to Q9\'s collector (likewise)'),
+    ('R41a', 'cartridge', '39 k', R14W.format('39k'), 'R41\'s alternate, bench test 3.10 (D51: in the first order)'),
+    ('R42a', 'cartridge', '39 k', R14W.format('39k'), 'R42\'s alternate, bench test 3.10'),
     ('U13', 'cartridge', 'LM393P', 'ti-lm393p', 'on 5 V. IN+ (3, 5) from the collectors through R43/R44, IN- (2, 6) = REF; OUT (1, 7) = GATE_1, GATE_2 (open collector)'),
     ('R43', 'cartridge', '10 k', R14W.format('10k'), 'Q8\'s collector to U13 pin 3'),
     ('R44', 'cartridge', '10 k', R14W.format('10k'), 'Q9\'s collector to U13 pin 5'),
@@ -223,7 +249,7 @@ COMPONENTS = [
     ('R48', 'cartridge', '100 k', R14W.format('100k'), 'U13 pin 7 to pin 5'),
     ('C16', 'cartridge', '100 nF X7R', 'cap-mlcc-100n-50v', 'U13 decoupling'),
 ]
-PASSIVE_PREFIXES = ('yageo-', 'cap-', 'onsemi-1n4148', 'omron-b3f', 'schottky-', 'tvs-', 'vishay-bat85', 'bourns-mf-r010')     # the passives cad/build_turret.py counts
+PASSIVE_PREFIXES = ('yageo-', 'cap-', 'onsemi-1n4148', 'omron-b3f', 'schottky-', 'tvs-', 'diode-', 'vishay-bat85', 'bourns-mf-r010')     # the passives cad/build_turret.py counts
 
 
 def passive_counts() -> dict:
@@ -280,8 +306,8 @@ def draw(name, b, path):
     for hx, hy in holes:
         ax.add_patch(Circle((hx, hy), 1.6, fc='white', ec='#5b4a2a'))
         ax.add_patch(Circle((hx, hy), HOLE_KEEPOUT, fc='none', ec='#5b4a2a', ls=':', lw=0.8))
-    col = {'D24V150F12': '#2563eb', 'D36V50F12': '#2563eb', 'D36V28F5': '#2563eb', 'Pololu 2815': '#7c3aed', 'Feather M4 CAN': '#0f766e',
-           'TO-220': '#334155', 'cap 1000uF lying': '#1e3a8a', 'polyfuse flat': '#ca8a04', 'button 6x6': '#b91c1c', 'pad strip': '#9ca3af',
+    col = {'i6A4W': '#2563eb', 'D36V50F12': '#2563eb', 'D36V28F5': '#2563eb', 'Pololu 2815': '#7c3aed', 'Feather M4 CAN': '#0f766e',
+           'TO-220': '#334155', 'cap 470uF 63V lying': '#1e3a8a', 'polyfuse flat': '#ca8a04', 'button 6x6': '#b91c1c', 'pad strip': '#9ca3af',
            'group': '#d6c49a'}
     for label, fp, x, y, w, h, tall, note in (placed(p) for p in parts):
         ax.add_patch(Rectangle((x, y), w, h, fc=col.get(fp, '#111827'), ec='black', lw=0.8, alpha=0.82, ls='--' if fp == 'group' else '-'))

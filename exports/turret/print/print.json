@@ -1,4 +1,9 @@
 {
+ "publication": {
+   "status": "historical",
+   "reviewed": "2026-10-29",
+   "reason": "Archived turret print estimates and files predate the current mechanical changes and lack current source receipts. No complete turret print kit has been regenerated or qualified."
+ },
  "printer": "Bambu Lab P1S 0.4 nozzle",
  "nozzle": "0.4 mm hardened steel (PA6-CF is abrasive)",
  "process": "0.20mm Standard @BBL X1C",
@@ -245,12 +250,12 @@
    "size_mm": [
     91.0,
     152.0,
-    48.4
+    40.0
    ],
    "ok": true,
-   "grams": 104.16,
-   "minutes": 285.7,
-   "filament_m": 39.37,
+   "grams": 118.08,
+   "minutes": 308.4,
+   "filament_m": 44.63,
    "error": null,
    "exit_code": 0,
    "log_tail": null
@@ -259,27 +264,76 @@
    "material": "pa6-cf",
    "filament_profile": "Bambu PA6-CF @BBL X1C",
    "copies": 1,
-   "orientation": "flat",
-   "note": "its cheeks bend across the layers (FEA: SF 0.77 under a 50 N push on the muzzle, humid PA6-CF): keep it dry, do not push the barrel, and print a spare when the schedule allows",
+   "orientation": "flat, no supports",
+   "note": "the rail frame (D48): its cheeks are the two SendCutSend plates; 8 x M3 inserts in the rebates, put in from the side",
    "settings": {
     "wall_loops": "4",
     "sparse_infill_density": "100%",
     "sparse_infill_pattern": "zig-zag",
-    "curr_bed_type": "Textured PEI Plate",
-    "enable_support": "1",
-    "support_type": "tree(auto)",
-    "support_threshold_angle": "30"
+    "curr_bed_type": "Textured PEI Plate"
    },
    "file": "exports/turret/print/cradle.3mf",
    "size_mm": [
     181.6,
-    126.0,
-    59.1
+    113.0,
+    10.0
    ],
    "ok": true,
-   "grams": 76.56,
-   "minutes": 207.2,
-   "filament_m": 28.94,
+   "grams": 49.84,
+   "minutes": 124.6,
+   "filament_m": 18.84,
+   "error": null,
+   "exit_code": 0,
+   "log_tail": null
+  },
+  "horn_boss": {
+   "material": "pa6-cf",
+   "filament_profile": "Bambu PA6-CF @BBL X1C",
+   "copies": 1,
+   "orientation": "on an end face",
+   "note": "between the +y plate and the tilt servo's horn (D48)",
+   "settings": {
+    "wall_loops": "4",
+    "sparse_infill_density": "100%",
+    "sparse_infill_pattern": "zig-zag",
+    "curr_bed_type": "Textured PEI Plate"
+   },
+   "file": "exports/turret/print/horn_boss.3mf",
+   "size_mm": [
+    20.0,
+    20.0,
+    9.0
+   ],
+   "ok": true,
+   "grams": 2.37,
+   "minutes": 10.1,
+   "filament_m": 0.9,
+   "error": null,
+   "exit_code": 0,
+   "log_tail": null
+  },
+  "pivot_spacer": {
+   "material": "pa6-cf",
+   "filament_profile": "Bambu PA6-CF @BBL X1C",
+   "copies": 1,
+   "orientation": "on its boss face, the land up",
+   "note": "between the -y plate and the MR126 (D48); its 1 mm land bears on the inner race only",
+   "settings": {
+    "wall_loops": "4",
+    "sparse_infill_density": "100%",
+    "sparse_infill_pattern": "zig-zag",
+    "curr_bed_type": "Textured PEI Plate"
+   },
+   "file": "exports/turret/print/pivot_spacer.3mf",
+   "size_mm": [
+    18.0,
+    18.0,
+    4.0
+   ],
+   "ok": true,
+   "grams": 0.83,
+   "minutes": 2.9,
+   "filament_m": 0.31,
    "error": null,
    "exit_code": 0,
    "log_tail": null
@@ -530,8 +584,8 @@
  },
  "by_material": {
   "pa6-cf": {
-   "grams": 637.0,
-   "hours": 31.8
+   "grams": 627.4,
+   "hours": 31.0
   },
   "petg": {
    "grams": 604.1,
@@ -546,12 +600,15 @@
    "hours": 0.6
   }
  },
- "total_grams": 1291.0,
- "total_hours": 50.1,
+ "total_grams": 1281.4,
+ "total_hours": 49.3,
  "not_printed_v0": {
   "bumper_ring": "v1 (the robot): no bumper on the bench",
   "hopper_flap": "v1: the dock's fill flap",
-  "pan_clamp": "cut by SendCutSend in 6061-T6 aluminium (exports/turret/pan_clamp.dxf)"
+  "pan_clamp": "cut by SendCutSend in 6061-T6 aluminium (exports/turret/pan_clamp.dxf)",
+  "cradle_plate_l": "cut by SendCutSend in 6061-T6 aluminium 0.125 in, 4 countersinks (exports/turret/cradle_plate_l.dxf; D48)",
+  "cradle_plate_r": "cut by SendCutSend in 6061-T6 aluminium 0.125 in, tapped M5, 2 countersinks (exports/turret/cradle_plate_r.dxf; D48)",
+  "stop_lug": "cut by SendCutSend in 6061-T6 aluminium 0.100 in, 2 holes tapped M3 (exports/turret/stop_lug.dxf; D48)"
  },
  "schedule": [
   [
@@ -577,6 +634,8 @@
    [
     "tilt_yoke",
     "cradle",
+    "horn_boss",
+    "pivot_spacer",
     "board_bay",
     "laser_mount"
    ]

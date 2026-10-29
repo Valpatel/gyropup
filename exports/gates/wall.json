@@ -1,0 +1,5320 @@
+{
+  "schema": "cadagent.gate/1",
+  "gate": "wall",
+  "pass": false,
+  "status": "fail",
+  "counts": {
+    "pass": 16,
+    "warn": 0,
+    "fail": 12
+  },
+  "checks": [
+    {
+      "id": "wall:barrel",
+      "status": "pass",
+      "message": "thinnest sampled 1.000 mm >= 0.8 mm",
+      "parts": [
+        "barrel"
+      ],
+      "evidence": {
+        "wall_mm": 0.8,
+        "tol_mm": 0.01,
+        "mesh-ray": {
+          "rays": 2856,
+          "misses": 0,
+          "min_mm": 1.0,
+          "thin_samples": 0,
+          "thin_area_mm2": 0.0,
+          "percentiles_mm": {
+            "p1": 1.0109,
+            "p5": 1.0559,
+            "p50": 2.8983
+          },
+          "triangles": 2856,
+          "engine": "trimesh+rtree",
+          "watertight": true,
+          "remeasured": 0,
+          "dismissed_as_chord_error": 0,
+          "not_remeasured": 0
+        },
+        "brep-ray": {
+          "rays": 904,
+          "misses": 0,
+          "min_mm": 1.0,
+          "thin_samples": 0,
+          "thin_area_mm2": 0.0,
+          "percentiles_mm": {
+            "p1": 1.0462,
+            "p5": 2.65,
+            "p50": 2.65
+          },
+          "faces": 36,
+          "grid": [
+            3,
+            16
+          ],
+          "spacing_mm": 2.0
+        },
+        "witnesses": []
+      }
+    },
+    {
+      "id": "wall:board_bay",
+      "status": "pass",
+      "message": "thinnest sampled 1.200 mm >= 0.8 mm",
+      "parts": [
+        "board_bay"
+      ],
+      "evidence": {
+        "wall_mm": 0.8,
+        "tol_mm": 0.01,
+        "mesh-ray": {
+          "rays": 4040,
+          "misses": 0,
+          "min_mm": 1.2,
+          "thin_samples": 0,
+          "thin_area_mm2": 0.0,
+          "percentiles_mm": {
+            "p1": 2.0,
+            "p5": 2.0,
+            "p50": 3.0
+          },
+          "triangles": 4040,
+          "engine": "trimesh+rtree",
+          "watertight": true,
+          "remeasured": 0,
+          "dismissed_as_chord_error": 0,
+          "not_remeasured": 0
+        },
+        "brep-ray": {
+          "rays": 3000,
+          "misses": 0,
+          "min_mm": 1.2,
+          "thin_samples": 0,
+          "thin_area_mm2": 0.0,
+          "percentiles_mm": {
+            "p1": 1.2,
+            "p5": 1.2,
+            "p50": 1.2
+          },
+          "faces": 39,
+          "grid": [
+            3,
+            16
+          ],
+          "spacing_mm": 2.0
+        },
+        "witnesses": []
+      }
+    },
+    {
+      "id": "wall:board_bay_lid",
+      "status": "pass",
+      "message": "thinnest sampled 1.490 mm >= 0.8 mm",
+      "parts": [
+        "board_bay_lid"
+      ],
+      "evidence": {
+        "wall_mm": 0.8,
+        "tol_mm": 0.01,
+        "mesh-ray": {
+          "rays": 44,
+          "misses": 0,
+          "min_mm": 1.49,
+          "thin_samples": 0,
+          "thin_area_mm2": 0.0,
+          "percentiles_mm": {
+            "p1": 1.49,
+            "p5": 1.49,
+            "p50": 1.5
+          },
+          "triangles": 44,
+          "engine": "trimesh+rtree",
+          "watertight": true,
+          "remeasured": 0,
+          "dismissed_as_chord_error": 0,
+          "not_remeasured": 0
+        },
+        "brep-ray": {
+          "rays": 856,
+          "misses": 0,
+          "min_mm": 1.5,
+          "thin_samples": 0,
+          "thin_area_mm2": 0.0,
+          "percentiles_mm": {
+            "p1": 1.5,
+            "p5": 1.5,
+            "p50": 2.0
+          },
+          "faces": 16,
+          "grid": [
+            3,
+            16
+          ],
+          "spacing_mm": 2.0
+        },
+        "witnesses": []
+      }
+    },
+    {
+      "id": "wall:bumper_ring",
+      "status": "pass",
+      "message": "thinnest sampled 1.358 mm >= 0.8 mm",
+      "parts": [
+        "bumper_ring"
+      ],
+      "evidence": {
+        "wall_mm": 0.8,
+        "tol_mm": 0.01,
+        "mesh-ray": {
+          "rays": 2388,
+          "misses": 0,
+          "min_mm": 1.802,
+          "thin_samples": 0,
+          "thin_area_mm2": 0.0,
+          "percentiles_mm": {
+            "p1": 1.8228,
+            "p5": 2.2514,
+            "p50": 14.0
+          },
+          "triangles": 2388,
+          "engine": "trimesh+rtree",
+          "watertight": true,
+          "remeasured": 0,
+          "dismissed_as_chord_error": 0,
+          "not_remeasured": 0
+        },
+        "brep-ray": {
+          "rays": 4661,
+          "misses": 0,
+          "min_mm": 1.3578,
+          "thin_samples": 0,
+          "thin_area_mm2": 0.0,
+          "percentiles_mm": {
+            "p1": 1.8112,
+            "p5": 2.6158,
+            "p50": 4.0
+          },
+          "faces": 201,
+          "grid": [
+            3,
+            16
+          ],
+          "spacing_mm": 2.0
+        },
+        "witnesses": []
+      }
+    },
+    {
+      "id": "wall:cartridge_body",
+      "status": "fail",
+      "message": "thinnest 0.002 mm < 0.8 mm (sampled; see witnesses)",
+      "parts": [
+        "cartridge_body"
+      ],
+      "evidence": {
+        "wall_mm": 0.8,
+        "tol_mm": 0.01,
+        "mesh-ray": {
+          "rays": 19756,
+          "misses": 0,
+          "min_mm": 0.0171,
+          "thin_samples": 310,
+          "thin_area_mm2": 137.659,
+          "percentiles_mm": {
+            "p1": 0.5134,
+            "p5": 1.4981,
+            "p50": 3.5
+          },
+          "triangles": 19756,
+          "engine": "trimesh+rtree",
+          "watertight": true,
+          "remeasured": 310,
+          "dismissed_as_chord_error": 3,
+          "not_remeasured": 0
+        },
+        "brep-ray": {
+          "rays": 9915,
+          "misses": 0,
+          "min_mm": 0.0017,
+          "thin_samples": 62,
+          "thin_area_mm2": 265.42,
+          "percentiles_mm": {
+            "p1": 0.85,
+            "p5": 1.6801,
+            "p50": 3.5
+          },
+          "faces": 283,
+          "grid": [
+            3,
+            16
+          ],
+          "spacing_mm": 2.0
+        },
+        "witnesses": [
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.0017,
+            "point": [
+              10.9529,
+              9.5334,
+              117.5469
+            ],
+            "exit_point": [
+              10.9517,
+              9.5321,
+              117.5469
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.0017,
+            "point": [
+              10.9529,
+              -9.5334,
+              117.5469
+            ],
+            "exit_point": [
+              10.9517,
+              -9.5321,
+              117.5469
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.0078,
+            "mesh_thickness_mm": 0.0333,
+            "point": [
+              2.4906,
+              10.6423,
+              132.8913
+            ],
+            "exit_point": [
+              2.4829,
+              10.6407,
+              132.8913
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.0171,
+            "mesh_thickness_mm": 0.0171,
+            "point": [
+              18.2198,
+              -11.0769,
+              134.5111
+            ],
+            "exit_point": [
+              18.2198,
+              -11.0639,
+              134.5
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.0171,
+            "mesh_thickness_mm": 0.0171,
+            "point": [
+              18.2198,
+              11.0769,
+              134.5111
+            ],
+            "exit_point": [
+              18.2198,
+              11.0639,
+              134.5
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.021,
+            "mesh_thickness_mm": 0.0278,
+            "point": [
+              9.0468,
+              11.3762,
+              129.1714
+            ],
+            "exit_point": [
+              9.0474,
+              11.396,
+              129.1785
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.0315,
+            "mesh_thickness_mm": 0.0389,
+            "point": [
+              2.4686,
+              -10.7462,
+              132.7017
+            ],
+            "exit_point": [
+              2.4377,
+              -10.7397,
+              132.7017
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.0322,
+            "mesh_thickness_mm": 0.035,
+            "point": [
+              3.4695,
+              3.3357,
+              139.4859
+            ],
+            "exit_point": [
+              3.4915,
+              3.3446,
+              139.5078
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.0346,
+            "mesh_thickness_mm": 0.0363,
+            "point": [
+              9.164,
+              -11.2349,
+              129.5349
+            ],
+            "exit_point": [
+              9.1649,
+              -11.267,
+              129.5477
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.0356,
+            "mesh_thickness_mm": 0.0484,
+            "point": [
+              9.6749,
+              10.6983,
+              130.6675
+            ],
+            "exit_point": [
+              9.6756,
+              10.7298,
+              130.6841
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "wall:compute_shell",
+      "status": "fail",
+      "message": "thinnest 0.100 mm < 0.8 mm (sampled; see witnesses)",
+      "parts": [
+        "compute_shell"
+      ],
+      "evidence": {
+        "wall_mm": 0.8,
+        "tol_mm": 0.01,
+        "mesh-ray": {
+          "rays": 5988,
+          "misses": 0,
+          "min_mm": 0.1008,
+          "thin_samples": 59,
+          "thin_area_mm2": 35.428,
+          "percentiles_mm": {
+            "p1": 0.8471,
+            "p5": 2.4845,
+            "p50": 5.0
+          },
+          "triangles": 5988,
+          "engine": "trimesh+rtree",
+          "watertight": true,
+          "remeasured": 59,
+          "dismissed_as_chord_error": 0,
+          "not_remeasured": 0
+        },
+        "brep-ray": {
+          "rays": 7800,
+          "misses": 0,
+          "min_mm": 0.1,
+          "thin_samples": 105,
+          "thin_area_mm2": 353.411,
+          "percentiles_mm": {
+            "p1": 0.6142,
+            "p5": 2.5,
+            "p50": 4.0
+          },
+          "faces": 162,
+          "grid": [
+            3,
+            16
+          ],
+          "spacing_mm": 2.0
+        },
+        "witnesses": [
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.1,
+            "mesh_thickness_mm": 0.1008,
+            "point": [
+              -69.1411,
+              16.1,
+              -46.0085
+            ],
+            "exit_point": [
+              -69.1411,
+              16.0,
+              -46.0091
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.1,
+            "point": [
+              -69.6807,
+              16.0,
+              -46.0
+            ],
+            "exit_point": [
+              -69.6807,
+              16.1,
+              -46.0
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.1,
+            "point": [
+              -68.508,
+              16.0,
+              -46.0
+            ],
+            "exit_point": [
+              -68.508,
+              16.1,
+              -46.0
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.1,
+            "point": [
+              -70.8534,
+              16.0,
+              -46.0
+            ],
+            "exit_point": [
+              -70.8534,
+              16.1,
+              -46.0
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.1,
+            "point": [
+              -66.1626,
+              16.0,
+              -46.0
+            ],
+            "exit_point": [
+              -66.1626,
+              16.1,
+              -46.0
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.1,
+            "point": [
+              -67.3353,
+              16.0,
+              -46.0
+            ],
+            "exit_point": [
+              -67.3353,
+              16.1,
+              -46.0
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.1,
+            "point": [
+              -72.0261,
+              16.0,
+              -46.0
+            ],
+            "exit_point": [
+              -72.0261,
+              16.1,
+              -46.0
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.1,
+            "point": [
+              -73.1988,
+              16.0,
+              -46.0
+            ],
+            "exit_point": [
+              -73.1988,
+              16.1,
+              -46.0
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.1,
+            "point": [
+              -65.9525,
+              16.1,
+              -46.0
+            ],
+            "exit_point": [
+              -65.9525,
+              16.0,
+              -46.0
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.1003,
+            "mesh_thickness_mm": 0.1011,
+            "point": [
+              -72.7306,
+              16.1003,
+              -45.9725
+            ],
+            "exit_point": [
+              -72.7306,
+              16.0,
+              -45.9705
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "wall:compute_tray",
+      "status": "pass",
+      "message": "thinnest sampled 2.000 mm >= 0.8 mm",
+      "parts": [
+        "compute_tray"
+      ],
+      "evidence": {
+        "wall_mm": 0.8,
+        "tol_mm": 0.01,
+        "mesh-ray": {
+          "rays": 3856,
+          "misses": 0,
+          "min_mm": 2.0,
+          "thin_samples": 0,
+          "thin_area_mm2": 0.0,
+          "percentiles_mm": {
+            "p1": 2.0,
+            "p5": 2.0,
+            "p50": 10.0
+          },
+          "triangles": 3856,
+          "engine": "trimesh+rtree",
+          "watertight": true,
+          "remeasured": 0,
+          "dismissed_as_chord_error": 0,
+          "not_remeasured": 0
+        },
+        "brep-ray": {
+          "rays": 1954,
+          "misses": 0,
+          "min_mm": 2.0,
+          "thin_samples": 0,
+          "thin_area_mm2": 0.0,
+          "percentiles_mm": {
+            "p1": 2.0,
+            "p5": 2.0,
+            "p50": 10.0
+          },
+          "faces": 47,
+          "grid": [
+            3,
+            16
+          ],
+          "spacing_mm": 2.0
+        },
+        "witnesses": []
+      }
+    },
+    {
+      "id": "wall:cradle",
+      "status": "fail",
+      "message": "thinnest 0.200 mm < 0.8 mm (sampled; see witnesses)",
+      "parts": [
+        "cradle"
+      ],
+      "evidence": {
+        "wall_mm": 0.8,
+        "tol_mm": 0.01,
+        "mesh-ray": {
+          "rays": 3436,
+          "misses": 0,
+          "min_mm": 0.205,
+          "thin_samples": 19,
+          "thin_area_mm2": 8.145,
+          "percentiles_mm": {
+            "p1": 2.2574,
+            "p5": 3.0374,
+            "p50": 8.3
+          },
+          "triangles": 3436,
+          "engine": "trimesh+rtree",
+          "watertight": true,
+          "remeasured": 19,
+          "dismissed_as_chord_error": 0,
+          "not_remeasured": 0
+        },
+        "brep-ray": {
+          "rays": 3135,
+          "misses": 0,
+          "min_mm": 0.2704,
+          "thin_samples": 3,
+          "thin_area_mm2": 16.733,
+          "percentiles_mm": {
+            "p1": 2.7316,
+            "p5": 3.7516,
+            "p50": 10.0
+          },
+          "faces": 61,
+          "grid": [
+            3,
+            16
+          ],
+          "spacing_mm": 2.0
+        },
+        "witnesses": [
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.2002,
+            "mesh_thickness_mm": 0.205,
+            "point": [
+              -27.9643,
+              -39.0101,
+              108.5667
+            ],
+            "exit_point": [
+              -27.9627,
+              -38.81,
+              108.5667
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.2039,
+            "mesh_thickness_mm": 0.2085,
+            "point": [
+              -27.8213,
+              -39.0137,
+              109.2333
+            ],
+            "exit_point": [
+              -27.8128,
+              -38.81,
+              109.2333
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.2076,
+            "mesh_thickness_mm": 0.2126,
+            "point": [
+              -28.25,
+              -39.0173,
+              108.5667
+            ],
+            "exit_point": [
+              -28.262,
+              -38.81,
+              108.5667
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.2189,
+            "mesh_thickness_mm": 0.2233,
+            "point": [
+              -28.3926,
+              -39.028,
+              109.2333
+            ],
+            "exit_point": [
+              -28.4126,
+              -38.81,
+              109.2333
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.2704,
+            "point": [
+              -27.225,
+              -38.81,
+              109.5875
+            ],
+            "exit_point": [
+              -27.225,
+              -39.0804,
+              109.5875
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.2704,
+            "point": [
+              -27.225,
+              -38.81,
+              108.9625
+            ],
+            "exit_point": [
+              -27.225,
+              -39.0804,
+              108.9625
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.334,
+            "mesh_thickness_mm": 0.3374,
+            "point": [
+              -26.9736,
+              -39.1343,
+              109.2333
+            ],
+            "exit_point": [
+              -26.8938,
+              -38.81,
+              109.2333
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.3536,
+            "mesh_thickness_mm": 0.36,
+            "point": [
+              -29.0956,
+              -39.1519,
+              109.2333
+            ],
+            "exit_point": [
+              -29.1857,
+              -38.81,
+              109.2333
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.3974,
+            "mesh_thickness_mm": 0.4002,
+            "point": [
+              -29.2333,
+              -39.1907,
+              108.5667
+            ],
+            "exit_point": [
+              -29.3473,
+              -38.81,
+              108.5667
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.4215,
+            "mesh_thickness_mm": 0.4285,
+            "point": [
+              -26.6985,
+              -39.2117,
+              108.5667
+            ],
+            "exit_point": [
+              -26.5709,
+              -38.81,
+              108.5667
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "wall:dial",
+      "status": "fail",
+      "message": "thinnest 0.636 mm < 0.8 mm (sampled; see witnesses)",
+      "parts": [
+        "dial"
+      ],
+      "evidence": {
+        "wall_mm": 0.8,
+        "tol_mm": 0.01,
+        "mesh-ray": {
+          "rays": 3536,
+          "misses": 0,
+          "min_mm": 0.7453,
+          "thin_samples": 27,
+          "thin_area_mm2": 169.899,
+          "percentiles_mm": {
+            "p1": 0.8252,
+            "p5": 1.6499,
+            "p50": 5.5
+          },
+          "triangles": 3536,
+          "engine": "trimesh+rtree",
+          "watertight": true,
+          "remeasured": 27,
+          "dismissed_as_chord_error": 2,
+          "not_remeasured": 0
+        },
+        "brep-ray": {
+          "rays": 5434,
+          "misses": 0,
+          "min_mm": 0.6356,
+          "thin_samples": 56,
+          "thin_area_mm2": 230.244,
+          "percentiles_mm": {
+            "p1": 0.7834,
+            "p5": 2.0,
+            "p50": 4.0
+          },
+          "faces": 86,
+          "grid": [
+            3,
+            16
+          ],
+          "spacing_mm": 2.0
+        },
+        "witnesses": [
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.6356,
+            "point": [
+              -57.9396,
+              -1.9771,
+              164.3438
+            ],
+            "exit_point": [
+              -57.6261,
+              -1.9147,
+              163.7944
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.6356,
+            "point": [
+              -38.0604,
+              1.9771,
+              164.3438
+            ],
+            "exit_point": [
+              -38.3739,
+              1.9147,
+              163.7944
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.6356,
+            "point": [
+              -46.0229,
+              -9.9396,
+              164.3438
+            ],
+            "exit_point": [
+              -46.0853,
+              -9.6261,
+              163.7944
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.6356,
+            "point": [
+              -46.0229,
+              9.9396,
+              164.3438
+            ],
+            "exit_point": [
+              -46.0853,
+              9.6261,
+              163.7944
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.6356,
+            "point": [
+              -38.0604,
+              -1.9771,
+              164.3438
+            ],
+            "exit_point": [
+              -38.3739,
+              -1.9147,
+              163.7944
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.6356,
+            "point": [
+              -57.9396,
+              1.9771,
+              164.3438
+            ],
+            "exit_point": [
+              -57.6261,
+              1.9147,
+              163.7944
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.6356,
+            "point": [
+              -49.9771,
+              -9.9396,
+              164.3438
+            ],
+            "exit_point": [
+              -49.9147,
+              -9.6261,
+              163.7944
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.6356,
+            "point": [
+              -49.9771,
+              9.9396,
+              164.3438
+            ],
+            "exit_point": [
+              -49.9147,
+              9.6261,
+              163.7944
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.7504,
+            "mesh_thickness_mm": 0.7469,
+            "point": [
+              -58.2495,
+              0.0564,
+              148.9258
+            ],
+            "exit_point": [
+              -58.9998,
+              0.0694,
+              148.9258
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.7506,
+            "mesh_thickness_mm": 0.7528,
+            "point": [
+              -47.9271,
+              -10.2492,
+              148.9257
+            ],
+            "exit_point": [
+              -47.9103,
+              -10.9996,
+              148.9257
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "wall:flywheel",
+      "status": "pass",
+      "message": "thinnest sampled 2.996 mm >= 0.8 mm",
+      "parts": [
+        "flywheel"
+      ],
+      "evidence": {
+        "wall_mm": 0.8,
+        "tol_mm": 0.01,
+        "mesh-ray": {
+          "rays": 946,
+          "misses": 0,
+          "min_mm": 2.9963,
+          "thin_samples": 0,
+          "thin_area_mm2": 0.0,
+          "percentiles_mm": {
+            "p1": 2.9963,
+            "p5": 2.9963,
+            "p50": 7.1934
+          },
+          "triangles": 946,
+          "engine": "trimesh+rtree",
+          "watertight": true,
+          "remeasured": 0,
+          "dismissed_as_chord_error": 0,
+          "not_remeasured": 0
+        },
+        "brep-ray": {
+          "rays": 698,
+          "misses": 0,
+          "min_mm": 3.0,
+          "thin_samples": 0,
+          "thin_area_mm2": 0.0,
+          "percentiles_mm": {
+            "p1": 3.0,
+            "p5": 3.0,
+            "p50": 5.5
+          },
+          "faces": 7,
+          "grid": [
+            3,
+            16
+          ],
+          "spacing_mm": 2.0
+        },
+        "witnesses": []
+      }
+    },
+    {
+      "id": "wall:flywheel_m",
+      "status": "pass",
+      "message": "thinnest sampled 2.996 mm >= 0.8 mm",
+      "parts": [
+        "flywheel_m"
+      ],
+      "evidence": {
+        "wall_mm": 0.8,
+        "tol_mm": 0.01,
+        "mesh-ray": {
+          "rays": 946,
+          "misses": 0,
+          "min_mm": 2.9963,
+          "thin_samples": 0,
+          "thin_area_mm2": 0.0,
+          "percentiles_mm": {
+            "p1": 2.9963,
+            "p5": 2.9963,
+            "p50": 7.1934
+          },
+          "triangles": 946,
+          "engine": "trimesh+rtree",
+          "watertight": true,
+          "remeasured": 0,
+          "dismissed_as_chord_error": 0,
+          "not_remeasured": 0
+        },
+        "brep-ray": {
+          "rays": 698,
+          "misses": 0,
+          "min_mm": 3.0,
+          "thin_samples": 0,
+          "thin_area_mm2": 0.0,
+          "percentiles_mm": {
+            "p1": 3.0,
+            "p5": 3.0,
+            "p50": 5.5
+          },
+          "faces": 7,
+          "grid": [
+            3,
+            16
+          ],
+          "spacing_mm": 2.0
+        },
+        "witnesses": []
+      }
+    },
+    {
+      "id": "wall:flywheel_tyre",
+      "status": "pass",
+      "message": "thinnest sampled 3.995 mm >= 0.8 mm",
+      "parts": [
+        "flywheel_tyre"
+      ],
+      "evidence": {
+        "wall_mm": 0.8,
+        "tol_mm": 0.01,
+        "mesh-ray": {
+          "rays": 504,
+          "misses": 0,
+          "min_mm": 3.995,
+          "thin_samples": 0,
+          "thin_area_mm2": 0.0,
+          "percentiles_mm": {
+            "p1": 3.995,
+            "p5": 3.995,
+            "p50": 7.9975
+          },
+          "triangles": 504,
+          "engine": "trimesh+rtree",
+          "watertight": true,
+          "remeasured": 0,
+          "dismissed_as_chord_error": 0,
+          "not_remeasured": 0
+        },
+        "brep-ray": {
+          "rays": 584,
+          "misses": 0,
+          "min_mm": 4.0,
+          "thin_samples": 0,
+          "thin_area_mm2": 0.0,
+          "percentiles_mm": {
+            "p1": 4.0,
+            "p5": 4.0,
+            "p50": 4.0
+          },
+          "faces": 4,
+          "grid": [
+            3,
+            16
+          ],
+          "spacing_mm": 2.0
+        },
+        "witnesses": []
+      }
+    },
+    {
+      "id": "wall:flywheel_tyre_m",
+      "status": "pass",
+      "message": "thinnest sampled 3.995 mm >= 0.8 mm",
+      "parts": [
+        "flywheel_tyre_m"
+      ],
+      "evidence": {
+        "wall_mm": 0.8,
+        "tol_mm": 0.01,
+        "mesh-ray": {
+          "rays": 504,
+          "misses": 0,
+          "min_mm": 3.995,
+          "thin_samples": 0,
+          "thin_area_mm2": 0.0,
+          "percentiles_mm": {
+            "p1": 3.995,
+            "p5": 3.995,
+            "p50": 7.9975
+          },
+          "triangles": 504,
+          "engine": "trimesh+rtree",
+          "watertight": true,
+          "remeasured": 0,
+          "dismissed_as_chord_error": 0,
+          "not_remeasured": 0
+        },
+        "brep-ray": {
+          "rays": 584,
+          "misses": 0,
+          "min_mm": 4.0,
+          "thin_samples": 0,
+          "thin_area_mm2": 0.0,
+          "percentiles_mm": {
+            "p1": 4.0,
+            "p5": 4.0,
+            "p50": 4.0
+          },
+          "faces": 4,
+          "grid": [
+            3,
+            16
+          ],
+          "spacing_mm": 2.0
+        },
+        "witnesses": []
+      }
+    },
+    {
+      "id": "wall:hopper",
+      "status": "fail",
+      "message": "thinnest 0.617 mm < 0.8 mm (sampled; see witnesses)",
+      "parts": [
+        "hopper"
+      ],
+      "evidence": {
+        "wall_mm": 0.8,
+        "tol_mm": 0.01,
+        "mesh-ray": {
+          "rays": 2502,
+          "misses": 0,
+          "min_mm": 0.731,
+          "thin_samples": 2,
+          "thin_area_mm2": 19.959,
+          "percentiles_mm": {
+            "p1": 1.5703,
+            "p5": 1.5913,
+            "p50": 3.0
+          },
+          "triangles": 2502,
+          "engine": "trimesh+rtree",
+          "watertight": true,
+          "remeasured": 2,
+          "dismissed_as_chord_error": 0,
+          "not_remeasured": 0
+        },
+        "brep-ray": {
+          "rays": 1179,
+          "misses": 0,
+          "min_mm": 0.6167,
+          "thin_samples": 2,
+          "thin_area_mm2": 70.46,
+          "percentiles_mm": {
+            "p1": 1.0147,
+            "p5": 1.6,
+            "p50": 3.0
+          },
+          "faces": 50,
+          "grid": [
+            3,
+            16
+          ],
+          "spacing_mm": 2.0
+        },
+        "witnesses": [
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.6167,
+            "point": [
+              -26.3863,
+              -9.5062,
+              160.0
+            ],
+            "exit_point": [
+              -26.3863,
+              -9.5062,
+              160.6167
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.6167,
+            "point": [
+              -26.3863,
+              9.5063,
+              160.0
+            ],
+            "exit_point": [
+              -26.3863,
+              9.5063,
+              160.6167
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.731,
+            "mesh_thickness_mm": 0.731,
+            "point": [
+              -21.3904,
+              11.6054,
+              160.0
+            ],
+            "exit_point": [
+              -21.3904,
+              11.6054,
+              160.731
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.731,
+            "mesh_thickness_mm": 0.731,
+            "point": [
+              -21.3904,
+              -11.6054,
+              160.0
+            ],
+            "exit_point": [
+              -21.3904,
+              -11.6054,
+              160.731
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "wall:hopper_flap",
+      "status": "pass",
+      "message": "thinnest sampled 1.948 mm >= 0.8 mm",
+      "parts": [
+        "hopper_flap"
+      ],
+      "evidence": {
+        "wall_mm": 0.8,
+        "tol_mm": 0.01,
+        "mesh-ray": {
+          "rays": 664,
+          "misses": 0,
+          "min_mm": 1.9475,
+          "thin_samples": 0,
+          "thin_area_mm2": 0.0,
+          "percentiles_mm": {
+            "p1": 1.9476,
+            "p5": 1.9478,
+            "p50": 12.4853
+          },
+          "triangles": 664,
+          "engine": "trimesh+rtree",
+          "watertight": true,
+          "remeasured": 0,
+          "dismissed_as_chord_error": 0,
+          "not_remeasured": 0
+        },
+        "brep-ray": {
+          "rays": 602,
+          "misses": 0,
+          "min_mm": 1.95,
+          "thin_samples": 0,
+          "thin_area_mm2": 0.0,
+          "percentiles_mm": {
+            "p1": 1.95,
+            "p5": 1.95,
+            "p50": 2.0
+          },
+          "faces": 10,
+          "grid": [
+            3,
+            16
+          ],
+          "spacing_mm": 2.0
+        },
+        "witnesses": []
+      }
+    },
+    {
+      "id": "wall:hopper_lid",
+      "status": "fail",
+      "message": "thinnest 0.704 mm < 0.8 mm (sampled; see witnesses)",
+      "parts": [
+        "hopper_lid"
+      ],
+      "evidence": {
+        "wall_mm": 0.8,
+        "tol_mm": 0.01,
+        "mesh-ray": {
+          "rays": 1802,
+          "misses": 0,
+          "min_mm": 0.7378,
+          "thin_samples": 2,
+          "thin_area_mm2": 1.598,
+          "percentiles_mm": {
+            "p1": 1.0,
+            "p5": 1.0,
+            "p50": 2.5822
+          },
+          "triangles": 1802,
+          "engine": "trimesh+rtree",
+          "watertight": true,
+          "remeasured": 2,
+          "dismissed_as_chord_error": 0,
+          "not_remeasured": 0
+        },
+        "brep-ray": {
+          "rays": 2022,
+          "misses": 0,
+          "min_mm": 1.0,
+          "thin_samples": 0,
+          "thin_area_mm2": 0.0,
+          "percentiles_mm": {
+            "p1": 1.0,
+            "p5": 1.0,
+            "p50": 2.0
+          },
+          "faces": 84,
+          "grid": [
+            3,
+            16
+          ],
+          "spacing_mm": 2.0
+        },
+        "witnesses": [
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.7036,
+            "mesh_thickness_mm": 0.7378,
+            "point": [
+              -74.3095,
+              -14.7034,
+              225.3333
+            ],
+            "exit_point": [
+              -74.5869,
+              -15.35,
+              225.3333
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.7036,
+            "mesh_thickness_mm": 0.7378,
+            "point": [
+              -74.3095,
+              14.7034,
+              225.3333
+            ],
+            "exit_point": [
+              -74.5869,
+              15.35,
+              225.3333
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "wall:horn_boss",
+      "status": "pass",
+      "message": "thinnest sampled 1.290 mm >= 0.8 mm",
+      "parts": [
+        "horn_boss"
+      ],
+      "evidence": {
+        "wall_mm": 0.8,
+        "tol_mm": 0.01,
+        "mesh-ray": {
+          "rays": 1528,
+          "misses": 0,
+          "min_mm": 1.2902,
+          "thin_samples": 0,
+          "thin_area_mm2": 0.0,
+          "percentiles_mm": {
+            "p1": 1.3026,
+            "p5": 1.4494,
+            "p50": 9.025
+          },
+          "triangles": 1528,
+          "engine": "trimesh+rtree",
+          "watertight": true,
+          "remeasured": 0,
+          "dismissed_as_chord_error": 0,
+          "not_remeasured": 0
+        },
+        "brep-ray": {
+          "rays": 381,
+          "misses": 0,
+          "min_mm": 1.3,
+          "thin_samples": 0,
+          "thin_area_mm2": 0.0,
+          "percentiles_mm": {
+            "p1": 1.3,
+            "p5": 1.3,
+            "p50": 6.75
+          },
+          "faces": 8,
+          "grid": [
+            3,
+            16
+          ],
+          "spacing_mm": 2.0
+        },
+        "witnesses": []
+      }
+    },
+    {
+      "id": "wall:laser_mount",
+      "status": "fail",
+      "message": "thinnest 0.400 mm < 0.8 mm (sampled; see witnesses)",
+      "parts": [
+        "laser_mount"
+      ],
+      "evidence": {
+        "wall_mm": 0.8,
+        "tol_mm": 0.01,
+        "mesh-ray": {
+          "rays": 3116,
+          "misses": 0,
+          "min_mm": 0.4037,
+          "thin_samples": 38,
+          "thin_area_mm2": 277.672,
+          "percentiles_mm": {
+            "p1": 0.6496,
+            "p5": 1.8986,
+            "p50": 4.8194
+          },
+          "triangles": 3116,
+          "engine": "trimesh+rtree",
+          "watertight": true,
+          "remeasured": 38,
+          "dismissed_as_chord_error": 0,
+          "not_remeasured": 0
+        },
+        "brep-ray": {
+          "rays": 1072,
+          "misses": 0,
+          "min_mm": 0.4637,
+          "thin_samples": 40,
+          "thin_area_mm2": 149.07,
+          "percentiles_mm": {
+            "p1": 0.49,
+            "p5": 1.3767,
+            "p50": 3.5
+          },
+          "faces": 22,
+          "grid": [
+            3,
+            16
+          ],
+          "spacing_mm": 2.0
+        },
+        "witnesses": [
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.4001,
+            "mesh_thickness_mm": 0.4037,
+            "point": [
+              60.0257,
+              -12.0999,
+              156.9
+            ],
+            "exit_point": [
+              60.029,
+              -12.5,
+              156.9
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.4001,
+            "mesh_thickness_mm": 0.4037,
+            "point": [
+              60.0257,
+              12.0999,
+              156.9
+            ],
+            "exit_point": [
+              60.029,
+              12.5,
+              156.9
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.403,
+            "mesh_thickness_mm": 0.4062,
+            "point": [
+              60.1288,
+              -12.0973,
+              160.2
+            ],
+            "exit_point": [
+              60.1456,
+              -12.5,
+              160.2
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.403,
+            "mesh_thickness_mm": 0.4062,
+            "point": [
+              60.1288,
+              12.0973,
+              160.2
+            ],
+            "exit_point": [
+              60.1456,
+              12.5,
+              160.2
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.4059,
+            "mesh_thickness_mm": 0.4098,
+            "point": [
+              59.8198,
+              -12.0948,
+              160.2
+            ],
+            "exit_point": [
+              59.7962,
+              -12.5,
+              160.2
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.4059,
+            "mesh_thickness_mm": 0.4098,
+            "point": [
+              59.8198,
+              12.0948,
+              160.2
+            ],
+            "exit_point": [
+              59.7962,
+              12.5,
+              160.2
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.4147,
+            "mesh_thickness_mm": 0.4175,
+            "point": [
+              59.7169,
+              12.0871,
+              156.9
+            ],
+            "exit_point": [
+              59.6791,
+              12.5,
+              156.9
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.4147,
+            "mesh_thickness_mm": 0.4175,
+            "point": [
+              59.7169,
+              -12.0871,
+              156.9
+            ],
+            "exit_point": [
+              59.6791,
+              -12.5,
+              156.9
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.418,
+            "mesh_thickness_mm": 0.4214,
+            "point": [
+              60.3333,
+              12.5,
+              158.2
+            ],
+            "exit_point": [
+              60.3333,
+              12.082,
+              158.2
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.418,
+            "mesh_thickness_mm": 0.4214,
+            "point": [
+              60.3333,
+              -12.5,
+              158.2
+            ],
+            "exit_point": [
+              60.3333,
+              -12.082,
+              158.2
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "wall:pan_base",
+      "status": "fail",
+      "message": "thinnest 0.071 mm < 0.8 mm (sampled; see witnesses)",
+      "parts": [
+        "pan_base"
+      ],
+      "evidence": {
+        "wall_mm": 0.8,
+        "tol_mm": 0.01,
+        "mesh-ray": {
+          "rays": 15236,
+          "misses": 0,
+          "min_mm": 0.0066,
+          "thin_samples": 381,
+          "thin_area_mm2": 205.362,
+          "percentiles_mm": {
+            "p1": 0.5,
+            "p5": 1.0,
+            "p50": 5.0
+          },
+          "triangles": 15236,
+          "engine": "trimesh+rtree",
+          "watertight": true,
+          "remeasured": 381,
+          "dismissed_as_chord_error": 19,
+          "not_remeasured": 0
+        },
+        "brep-ray": {
+          "rays": 10973,
+          "misses": 0,
+          "min_mm": 0.1,
+          "thin_samples": 91,
+          "thin_area_mm2": 439.908,
+          "percentiles_mm": {
+            "p1": 1.0,
+            "p5": 1.4,
+            "p50": 5.0
+          },
+          "faces": 399,
+          "grid": [
+            3,
+            16
+          ],
+          "spacing_mm": 2.0
+        },
+        "witnesses": [
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.0706,
+            "mesh_thickness_mm": 0.0763,
+            "point": [
+              -42.0823,
+              35.4542,
+              33.6667
+            ],
+            "exit_point": [
+              -42.1117,
+              35.39,
+              33.6667
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.0868,
+            "mesh_thickness_mm": 0.0888,
+            "point": [
+              -36.2721,
+              43.3321,
+              17.33
+            ],
+            "exit_point": [
+              -36.2074,
+              43.39,
+              17.33
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.1,
+            "mesh_thickness_mm": 0.1014,
+            "point": [
+              -42.39,
+              7.1,
+              7.1333
+            ],
+            "exit_point": [
+              -42.3892,
+              7.0,
+              7.1333
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.1,
+            "point": [
+              -42.4,
+              7.1,
+              15.7667
+            ],
+            "exit_point": [
+              -42.4,
+              7.0,
+              15.7667
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.1,
+            "point": [
+              -42.4,
+              7.1,
+              13.3
+            ],
+            "exit_point": [
+              -42.4,
+              7.0,
+              13.3
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.1,
+            "point": [
+              -42.4,
+              7.1,
+              10.8333
+            ],
+            "exit_point": [
+              -42.4,
+              7.0,
+              10.8333
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.1,
+            "point": [
+              -42.4,
+              7.1,
+              8.3667
+            ],
+            "exit_point": [
+              -42.4,
+              7.0,
+              8.3667
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.1,
+            "point": [
+              -42.4,
+              7.1,
+              5.9
+            ],
+            "exit_point": [
+              -42.4,
+              7.0,
+              5.9
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.1011,
+            "mesh_thickness_mm": 0.1024,
+            "point": [
+              -42.3501,
+              7.101,
+              12.0667
+            ],
+            "exit_point": [
+              -42.3459,
+              7.0,
+              12.0667
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.1464,
+            "mesh_thickness_mm": 0.1536,
+            "point": [
+              -20.9928,
+              -70.3333,
+              9.4324
+            ],
+            "exit_point": [
+              -20.915,
+              -70.3333,
+              9.5564
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "wall:pan_pinion",
+      "status": "pass",
+      "message": "thinnest sampled 0.850 mm >= 0.8 mm",
+      "parts": [
+        "pan_pinion"
+      ],
+      "evidence": {
+        "wall_mm": 0.8,
+        "tol_mm": 0.01,
+        "mesh-ray": {
+          "rays": 4132,
+          "misses": 0,
+          "min_mm": 0.855,
+          "thin_samples": 0,
+          "thin_area_mm2": 0.0,
+          "percentiles_mm": {
+            "p1": 1.1583,
+            "p5": 1.6243,
+            "p50": 13.6
+          },
+          "triangles": 4132,
+          "engine": "trimesh+rtree",
+          "watertight": true,
+          "remeasured": 0,
+          "dismissed_as_chord_error": 0,
+          "not_remeasured": 0
+        },
+        "brep-ray": {
+          "rays": 4109,
+          "misses": 0,
+          "min_mm": 0.85,
+          "thin_samples": 0,
+          "thin_area_mm2": 0.0,
+          "percentiles_mm": {
+            "p1": 1.1858,
+            "p5": 1.344,
+            "p50": 2.0608
+          },
+          "faces": 416,
+          "grid": [
+            3,
+            16
+          ],
+          "spacing_mm": 2.0
+        },
+        "witnesses": []
+      }
+    },
+    {
+      "id": "wall:pan_ring",
+      "status": "fail",
+      "message": "thinnest 0.025 mm < 0.8 mm (sampled; see witnesses)",
+      "parts": [
+        "pan_ring"
+      ],
+      "evidence": {
+        "wall_mm": 0.8,
+        "tol_mm": 0.01,
+        "mesh-ray": {
+          "rays": 8402,
+          "misses": 0,
+          "min_mm": 0.0263,
+          "thin_samples": 4,
+          "thin_area_mm2": 2.054,
+          "percentiles_mm": {
+            "p1": 1.0,
+            "p5": 1.6827,
+            "p50": 16.0
+          },
+          "triangles": 8402,
+          "engine": "trimesh+rtree",
+          "watertight": true,
+          "remeasured": 4,
+          "dismissed_as_chord_error": 0,
+          "not_remeasured": 0
+        },
+        "brep-ray": {
+          "rays": 14402,
+          "misses": 0,
+          "min_mm": 0.0434,
+          "thin_samples": 14,
+          "thin_area_mm2": 10.12,
+          "percentiles_mm": {
+            "p1": 1.1818,
+            "p5": 1.3462,
+            "p50": 5.0
+          },
+          "faces": 1435,
+          "grid": [
+            3,
+            16
+          ],
+          "spacing_mm": 2.0
+        },
+        "witnesses": [
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.0245,
+            "mesh_thickness_mm": 0.0263,
+            "point": [
+              32.7285,
+              -0.6714,
+              53.5667
+            ],
+            "exit_point": [
+              32.75,
+              -0.6831,
+              53.5667
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.0245,
+            "mesh_thickness_mm": 0.0263,
+            "point": [
+              32.7285,
+              0.6714,
+              53.5667
+            ],
+            "exit_point": [
+              32.75,
+              0.6831,
+              53.5667
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.0434,
+            "point": [
+              32.7124,
+              0.7,
+              54.3333
+            ],
+            "exit_point": [
+              32.75,
+              0.7217,
+              54.3333
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.0434,
+            "point": [
+              32.7124,
+              -0.7,
+              54.3333
+            ],
+            "exit_point": [
+              32.75,
+              -0.7217,
+              54.3333
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.1072,
+            "point": [
+              32.75,
+              0.8087,
+              53.2833
+            ],
+            "exit_point": [
+              32.6428,
+              0.8087,
+              53.2833
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.1072,
+            "point": [
+              32.75,
+              -0.8087,
+              53.85
+            ],
+            "exit_point": [
+              32.6428,
+              -0.8087,
+              53.85
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.474,
+            "point": [
+              32.75,
+              -1.1652,
+              53.85
+            ],
+            "exit_point": [
+              32.276,
+              -1.1652,
+              53.85
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.474,
+            "point": [
+              32.75,
+              1.1652,
+              53.2833
+            ],
+            "exit_point": [
+              32.276,
+              1.1652,
+              53.2833
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.474,
+            "point": [
+              32.75,
+              1.1652,
+              54.4167
+            ],
+            "exit_point": [
+              32.276,
+              1.1652,
+              54.4167
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.474,
+            "point": [
+              32.75,
+              -1.1652,
+              54.4167
+            ],
+            "exit_point": [
+              32.276,
+              -1.1652,
+              54.4167
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "wall:pan_spacer",
+      "status": "pass",
+      "message": "thinnest sampled 1.049 mm >= 0.8 mm",
+      "parts": [
+        "pan_spacer"
+      ],
+      "evidence": {
+        "wall_mm": 0.8,
+        "tol_mm": 0.01,
+        "mesh-ray": {
+          "rays": 756,
+          "misses": 0,
+          "min_mm": 1.0487,
+          "thin_samples": 0,
+          "thin_area_mm2": 0.0,
+          "percentiles_mm": {
+            "p1": 1.0487,
+            "p5": 1.0487,
+            "p50": 3.5
+          },
+          "triangles": 756,
+          "engine": "trimesh+rtree",
+          "watertight": true,
+          "remeasured": 0,
+          "dismissed_as_chord_error": 0,
+          "not_remeasured": 0
+        },
+        "brep-ray": {
+          "rays": 442,
+          "misses": 0,
+          "min_mm": 1.05,
+          "thin_samples": 0,
+          "thin_area_mm2": 0.0,
+          "percentiles_mm": {
+            "p1": 1.05,
+            "p5": 1.05,
+            "p50": 4.35
+          },
+          "faces": 6,
+          "grid": [
+            3,
+            16
+          ],
+          "spacing_mm": 2.0
+        },
+        "witnesses": []
+      }
+    },
+    {
+      "id": "wall:pivot_spacer",
+      "status": "fail",
+      "message": "thinnest 0.750 mm < 0.8 mm (sampled; see witnesses)",
+      "parts": [
+        "pivot_spacer"
+      ],
+      "evidence": {
+        "wall_mm": 0.8,
+        "tol_mm": 0.01,
+        "mesh-ray": {
+          "rays": 756,
+          "misses": 0,
+          "min_mm": 0.7491,
+          "thin_samples": 126,
+          "thin_area_mm2": 21.354,
+          "percentiles_mm": {
+            "p1": 0.7491,
+            "p5": 0.7491,
+            "p50": 3.525
+          },
+          "triangles": 756,
+          "engine": "trimesh+rtree",
+          "watertight": true,
+          "remeasured": 126,
+          "dismissed_as_chord_error": 0,
+          "not_remeasured": 0
+        },
+        "brep-ray": {
+          "rays": 183,
+          "misses": 0,
+          "min_mm": 0.75,
+          "thin_samples": 14,
+          "thin_area_mm2": 34.766,
+          "percentiles_mm": {
+            "p1": 0.75,
+            "p5": 0.75,
+            "p50": 3.025
+          },
+          "faces": 6,
+          "grid": [
+            3,
+            16
+          ],
+          "spacing_mm": 2.0
+        },
+        "witnesses": [
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.75,
+            "mesh_thickness_mm": 0.7491,
+            "point": [
+              0.0282,
+              -60.1433,
+              136.6001
+            ],
+            "exit_point": [
+              0.022,
+              -60.1433,
+              137.3501
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.75,
+            "mesh_thickness_mm": 0.7491,
+            "point": [
+              -0.1977,
+              -60.4767,
+              136.6057
+            ],
+            "exit_point": [
+              -0.1541,
+              -60.4767,
+              137.3545
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.75,
+            "mesh_thickness_mm": 0.7491,
+            "point": [
+              -0.1977,
+              -60.1433,
+              143.3943
+            ],
+            "exit_point": [
+              -0.1541,
+              -60.1433,
+              142.6455
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.75,
+            "mesh_thickness_mm": 0.7491,
+            "point": [
+              2.0304,
+              -60.4767,
+              137.2728
+            ],
+            "exit_point": [
+              1.5825,
+              -60.4767,
+              137.8744
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.75,
+            "mesh_thickness_mm": 0.7491,
+            "point": [
+              1.7487,
+              -60.1433,
+              137.0842
+            ],
+            "exit_point": [
+              1.363,
+              -60.1433,
+              137.7274
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.75,
+            "mesh_thickness_mm": 0.7491,
+            "point": [
+              2.9303,
+              -60.1433,
+              141.7244
+            ],
+            "exit_point": [
+              2.2839,
+              -60.1433,
+              141.344
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.75,
+            "mesh_thickness_mm": 0.7491,
+            "point": [
+              1.7487,
+              -60.1433,
+              142.9158
+            ],
+            "exit_point": [
+              1.363,
+              -60.1433,
+              142.2726
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.75,
+            "mesh_thickness_mm": 0.7491,
+            "point": [
+              2.0304,
+              -60.1433,
+              142.7272
+            ],
+            "exit_point": [
+              1.5825,
+              -60.1433,
+              142.1256
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.75,
+            "mesh_thickness_mm": 0.7491,
+            "point": [
+              -1.2946,
+              -60.1433,
+              136.8561
+            ],
+            "exit_point": [
+              -1.0091,
+              -60.1433,
+              137.5496
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.75,
+            "mesh_thickness_mm": 0.7491,
+            "point": [
+              -1.8919,
+              -60.1433,
+              142.825
+            ],
+            "exit_point": [
+              -1.4746,
+              -60.1433,
+              142.2018
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "wall:ring_carrier",
+      "status": "fail",
+      "message": "thinnest 0.002 mm < 0.8 mm (sampled; see witnesses)",
+      "parts": [
+        "ring_carrier"
+      ],
+      "evidence": {
+        "wall_mm": 0.8,
+        "tol_mm": 0.01,
+        "mesh-ray": {
+          "rays": 3484,
+          "misses": 0,
+          "min_mm": 0.0043,
+          "thin_samples": 141,
+          "thin_area_mm2": 10.704,
+          "percentiles_mm": {
+            "p1": 0.1158,
+            "p5": 1.0,
+            "p50": 5.7008
+          },
+          "triangles": 3484,
+          "engine": "trimesh+rtree",
+          "watertight": true,
+          "remeasured": 141,
+          "dismissed_as_chord_error": 0,
+          "not_remeasured": 0
+        },
+        "brep-ray": {
+          "rays": 2234,
+          "misses": 0,
+          "min_mm": 0.1075,
+          "thin_samples": 41,
+          "thin_area_mm2": 26.988,
+          "percentiles_mm": {
+            "p1": 0.3968,
+            "p5": 1.0549,
+            "p50": 9.4
+          },
+          "faces": 114,
+          "grid": [
+            3,
+            16
+          ],
+          "spacing_mm": 2.0
+        },
+        "witnesses": [
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.0022,
+            "mesh_thickness_mm": 0.0043,
+            "point": [
+              19.7987,
+              -33.0137,
+              0.6453
+            ],
+            "exit_point": [
+              19.7998,
+              -33.0149,
+              0.6468
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.0023,
+            "mesh_thickness_mm": 0.0043,
+            "point": [
+              19.9567,
+              -32.9196,
+              0.595
+            ],
+            "exit_point": [
+              19.958,
+              -32.9208,
+              0.5966
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.0026,
+            "mesh_thickness_mm": 0.0043,
+            "point": [
+              19.8057,
+              33.0092,
+              0.6436
+            ],
+            "exit_point": [
+              19.807,
+              33.0106,
+              0.6453
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.0039,
+            "mesh_thickness_mm": 0.0043,
+            "point": [
+              19.9152,
+              32.943,
+              0.6105
+            ],
+            "exit_point": [
+              19.9173,
+              32.945,
+              0.613
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.0268,
+            "mesh_thickness_mm": 0.0278,
+            "point": [
+              18.4707,
+              33.7565,
+              0.5948
+            ],
+            "exit_point": [
+              18.4748,
+              33.7761,
+              0.6127
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.0275,
+            "mesh_thickness_mm": 0.0287,
+            "point": [
+              18.5119,
+              -33.7328,
+              0.6107
+            ],
+            "exit_point": [
+              18.5164,
+              -33.7528,
+              0.629
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.0548,
+            "mesh_thickness_mm": 0.0619,
+            "point": [
+              -26.5564,
+              27.8192,
+              0.6123
+            ],
+            "exit_point": [
+              -26.5747,
+              27.8557,
+              0.6488
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.0551,
+            "mesh_thickness_mm": 0.0597,
+            "point": [
+              -27.8523,
+              26.5225,
+              0.5959
+            ],
+            "exit_point": [
+              -27.8893,
+              26.5403,
+              0.6326
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.088,
+            "mesh_thickness_mm": 0.0973,
+            "point": [
+              20.1148,
+              32.7542,
+              0.5828
+            ],
+            "exit_point": [
+              20.166,
+              32.7952,
+              0.6415
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.0897,
+            "mesh_thickness_mm": 0.0917,
+            "point": [
+              20.2446,
+              -32.6723,
+              0.5228
+            ],
+            "exit_point": [
+              20.2988,
+              -32.7114,
+              0.5826
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "wall:ring_driver",
+      "status": "pass",
+      "message": "thinnest sampled 1.101 mm >= 0.8 mm",
+      "parts": [
+        "ring_driver"
+      ],
+      "evidence": {
+        "wall_mm": 0.8,
+        "tol_mm": 0.01,
+        "mesh-ray": {
+          "rays": 1276,
+          "misses": 0,
+          "min_mm": 1.1014,
+          "thin_samples": 0,
+          "thin_area_mm2": 0.0,
+          "percentiles_mm": {
+            "p1": 2.0,
+            "p5": 2.0,
+            "p50": 6.0
+          },
+          "triangles": 1276,
+          "engine": "trimesh+rtree",
+          "watertight": true,
+          "remeasured": 0,
+          "dismissed_as_chord_error": 0,
+          "not_remeasured": 0
+        },
+        "brep-ray": {
+          "rays": 1084,
+          "misses": 0,
+          "min_mm": 2.0,
+          "thin_samples": 0,
+          "thin_area_mm2": 0.0,
+          "percentiles_mm": {
+            "p1": 2.0,
+            "p5": 2.2101,
+            "p50": 6.0
+          },
+          "faces": 46,
+          "grid": [
+            3,
+            16
+          ],
+          "spacing_mm": 2.0
+        },
+        "witnesses": []
+      }
+    },
+    {
+      "id": "wall:stand_bottom",
+      "status": "pass",
+      "message": "thinnest sampled 2.200 mm >= 0.8 mm",
+      "parts": [
+        "stand_bottom"
+      ],
+      "evidence": {
+        "wall_mm": 0.8,
+        "tol_mm": 0.01,
+        "mesh-ray": {
+          "rays": 3412,
+          "misses": 0,
+          "min_mm": 2.2,
+          "thin_samples": 0,
+          "thin_area_mm2": 0.0,
+          "percentiles_mm": {
+            "p1": 2.2,
+            "p5": 2.2,
+            "p50": 5.8252
+          },
+          "triangles": 3412,
+          "engine": "trimesh+rtree",
+          "watertight": true,
+          "remeasured": 0,
+          "dismissed_as_chord_error": 0,
+          "not_remeasured": 0
+        },
+        "brep-ray": {
+          "rays": 2920,
+          "misses": 0,
+          "min_mm": 2.2,
+          "thin_samples": 0,
+          "thin_area_mm2": 0.0,
+          "percentiles_mm": {
+            "p1": 2.2,
+            "p5": 3.0,
+            "p50": 8.0
+          },
+          "faces": 56,
+          "grid": [
+            3,
+            16
+          ],
+          "spacing_mm": 2.0
+        },
+        "witnesses": []
+      }
+    },
+    {
+      "id": "wall:stand_box",
+      "status": "pass",
+      "message": "thinnest sampled 2.000 mm >= 0.8 mm",
+      "parts": [
+        "stand_box"
+      ],
+      "evidence": {
+        "wall_mm": 0.8,
+        "tol_mm": 0.01,
+        "mesh-ray": {
+          "rays": 6432,
+          "misses": 0,
+          "min_mm": 2.0,
+          "thin_samples": 0,
+          "thin_area_mm2": 0.0,
+          "percentiles_mm": {
+            "p1": 2.0,
+            "p5": 3.7952,
+            "p50": 7.9917
+          },
+          "triangles": 6432,
+          "engine": "trimesh+rtree",
+          "watertight": true,
+          "remeasured": 0,
+          "dismissed_as_chord_error": 0,
+          "not_remeasured": 0
+        },
+        "brep-ray": {
+          "rays": 8368,
+          "misses": 0,
+          "min_mm": 2.0,
+          "thin_samples": 0,
+          "thin_area_mm2": 0.0,
+          "percentiles_mm": {
+            "p1": 2.0,
+            "p5": 3.0,
+            "p50": 6.0
+          },
+          "faces": 97,
+          "grid": [
+            3,
+            16
+          ],
+          "spacing_mm": 2.0
+        },
+        "witnesses": []
+      }
+    },
+    {
+      "id": "wall:tilt_yoke",
+      "status": "fail",
+      "message": "thinnest 0.155 mm < 0.8 mm (sampled; see witnesses)",
+      "parts": [
+        "tilt_yoke"
+      ],
+      "evidence": {
+        "wall_mm": 0.8,
+        "tol_mm": 0.01,
+        "mesh-ray": {
+          "rays": 7530,
+          "misses": 0,
+          "min_mm": 0.3097,
+          "thin_samples": 3,
+          "thin_area_mm2": 7.065,
+          "percentiles_mm": {
+            "p1": 1.7978,
+            "p5": 2.0,
+            "p50": 9.0729
+          },
+          "triangles": 7530,
+          "engine": "trimesh+rtree",
+          "watertight": true,
+          "remeasured": 3,
+          "dismissed_as_chord_error": 0,
+          "not_remeasured": 0
+        },
+        "brep-ray": {
+          "rays": 5924,
+          "misses": 0,
+          "min_mm": 0.1548,
+          "thin_samples": 12,
+          "thin_area_mm2": 16.519,
+          "percentiles_mm": {
+            "p1": 1.8,
+            "p5": 3.0,
+            "p50": 8.0
+          },
+          "faces": 117,
+          "grid": [
+            3,
+            16
+          ],
+          "spacing_mm": 2.0
+        },
+        "witnesses": [
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.1548,
+            "point": [
+              -19.8763,
+              -58.31,
+              113.6232
+            ],
+            "exit_point": [
+              -20.0,
+              -58.31,
+              113.7164
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.1548,
+            "point": [
+              -19.8763,
+              -59.31,
+              113.6232
+            ],
+            "exit_point": [
+              -20.0,
+              -59.31,
+              113.7164
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.1548,
+            "point": [
+              -19.8763,
+              -60.31,
+              113.6232
+            ],
+            "exit_point": [
+              -20.0,
+              -60.31,
+              113.7164
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.3097,
+            "mesh_thickness_mm": 0.3097,
+            "point": [
+              -19.7527,
+              -59.81,
+              113.7873
+            ],
+            "exit_point": [
+              -20.0,
+              -59.81,
+              113.9736
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.41,
+            "point": [
+              -0.0,
+              69.4009,
+              153.0
+            ],
+            "exit_point": [
+              -0.0,
+              69.4009,
+              153.41
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.5175,
+            "point": [
+              -8.0354,
+              68.1433,
+              129.7808
+            ],
+            "exit_point": [
+              -8.3553,
+              68.1433,
+              129.374
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.5175,
+            "point": [
+              8.0354,
+              68.1433,
+              129.7808
+            ],
+            "exit_point": [
+              8.3553,
+              68.1433,
+              129.374
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.5189,
+            "mesh_thickness_mm": 0.5484,
+            "point": [
+              -19.5767,
+              -59.81,
+              126.1165
+            ],
+            "exit_point": [
+              -20.0,
+              -59.81,
+              125.8163
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.6193,
+            "mesh_thickness_mm": 0.6193,
+            "point": [
+              -19.5054,
+              -58.81,
+              114.1155
+            ],
+            "exit_point": [
+              -20.0,
+              -58.81,
+              114.4882
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.7742,
+            "point": [
+              -19.3817,
+              -58.31,
+              114.2796
+            ],
+            "exit_point": [
+              -20.0,
+              -58.31,
+              114.7455
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "findings": [
+    {
+      "id": "wall:cartridge_body",
+      "status": "fail",
+      "message": "thinnest 0.002 mm < 0.8 mm (sampled; see witnesses)",
+      "parts": [
+        "cartridge_body"
+      ],
+      "evidence": {
+        "wall_mm": 0.8,
+        "tol_mm": 0.01,
+        "mesh-ray": {
+          "rays": 19756,
+          "misses": 0,
+          "min_mm": 0.0171,
+          "thin_samples": 310,
+          "thin_area_mm2": 137.659,
+          "percentiles_mm": {
+            "p1": 0.5134,
+            "p5": 1.4981,
+            "p50": 3.5
+          },
+          "triangles": 19756,
+          "engine": "trimesh+rtree",
+          "watertight": true,
+          "remeasured": 310,
+          "dismissed_as_chord_error": 3,
+          "not_remeasured": 0
+        },
+        "brep-ray": {
+          "rays": 9915,
+          "misses": 0,
+          "min_mm": 0.0017,
+          "thin_samples": 62,
+          "thin_area_mm2": 265.42,
+          "percentiles_mm": {
+            "p1": 0.85,
+            "p5": 1.6801,
+            "p50": 3.5
+          },
+          "faces": 283,
+          "grid": [
+            3,
+            16
+          ],
+          "spacing_mm": 2.0
+        },
+        "witnesses": [
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.0017,
+            "point": [
+              10.9529,
+              9.5334,
+              117.5469
+            ],
+            "exit_point": [
+              10.9517,
+              9.5321,
+              117.5469
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.0017,
+            "point": [
+              10.9529,
+              -9.5334,
+              117.5469
+            ],
+            "exit_point": [
+              10.9517,
+              -9.5321,
+              117.5469
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.0078,
+            "mesh_thickness_mm": 0.0333,
+            "point": [
+              2.4906,
+              10.6423,
+              132.8913
+            ],
+            "exit_point": [
+              2.4829,
+              10.6407,
+              132.8913
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.0171,
+            "mesh_thickness_mm": 0.0171,
+            "point": [
+              18.2198,
+              -11.0769,
+              134.5111
+            ],
+            "exit_point": [
+              18.2198,
+              -11.0639,
+              134.5
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.0171,
+            "mesh_thickness_mm": 0.0171,
+            "point": [
+              18.2198,
+              11.0769,
+              134.5111
+            ],
+            "exit_point": [
+              18.2198,
+              11.0639,
+              134.5
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.021,
+            "mesh_thickness_mm": 0.0278,
+            "point": [
+              9.0468,
+              11.3762,
+              129.1714
+            ],
+            "exit_point": [
+              9.0474,
+              11.396,
+              129.1785
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.0315,
+            "mesh_thickness_mm": 0.0389,
+            "point": [
+              2.4686,
+              -10.7462,
+              132.7017
+            ],
+            "exit_point": [
+              2.4377,
+              -10.7397,
+              132.7017
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.0322,
+            "mesh_thickness_mm": 0.035,
+            "point": [
+              3.4695,
+              3.3357,
+              139.4859
+            ],
+            "exit_point": [
+              3.4915,
+              3.3446,
+              139.5078
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.0346,
+            "mesh_thickness_mm": 0.0363,
+            "point": [
+              9.164,
+              -11.2349,
+              129.5349
+            ],
+            "exit_point": [
+              9.1649,
+              -11.267,
+              129.5477
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.0356,
+            "mesh_thickness_mm": 0.0484,
+            "point": [
+              9.6749,
+              10.6983,
+              130.6675
+            ],
+            "exit_point": [
+              9.6756,
+              10.7298,
+              130.6841
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "wall:compute_shell",
+      "status": "fail",
+      "message": "thinnest 0.100 mm < 0.8 mm (sampled; see witnesses)",
+      "parts": [
+        "compute_shell"
+      ],
+      "evidence": {
+        "wall_mm": 0.8,
+        "tol_mm": 0.01,
+        "mesh-ray": {
+          "rays": 5988,
+          "misses": 0,
+          "min_mm": 0.1008,
+          "thin_samples": 59,
+          "thin_area_mm2": 35.428,
+          "percentiles_mm": {
+            "p1": 0.8471,
+            "p5": 2.4845,
+            "p50": 5.0
+          },
+          "triangles": 5988,
+          "engine": "trimesh+rtree",
+          "watertight": true,
+          "remeasured": 59,
+          "dismissed_as_chord_error": 0,
+          "not_remeasured": 0
+        },
+        "brep-ray": {
+          "rays": 7800,
+          "misses": 0,
+          "min_mm": 0.1,
+          "thin_samples": 105,
+          "thin_area_mm2": 353.411,
+          "percentiles_mm": {
+            "p1": 0.6142,
+            "p5": 2.5,
+            "p50": 4.0
+          },
+          "faces": 162,
+          "grid": [
+            3,
+            16
+          ],
+          "spacing_mm": 2.0
+        },
+        "witnesses": [
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.1,
+            "mesh_thickness_mm": 0.1008,
+            "point": [
+              -69.1411,
+              16.1,
+              -46.0085
+            ],
+            "exit_point": [
+              -69.1411,
+              16.0,
+              -46.0091
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.1,
+            "point": [
+              -69.6807,
+              16.0,
+              -46.0
+            ],
+            "exit_point": [
+              -69.6807,
+              16.1,
+              -46.0
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.1,
+            "point": [
+              -68.508,
+              16.0,
+              -46.0
+            ],
+            "exit_point": [
+              -68.508,
+              16.1,
+              -46.0
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.1,
+            "point": [
+              -70.8534,
+              16.0,
+              -46.0
+            ],
+            "exit_point": [
+              -70.8534,
+              16.1,
+              -46.0
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.1,
+            "point": [
+              -66.1626,
+              16.0,
+              -46.0
+            ],
+            "exit_point": [
+              -66.1626,
+              16.1,
+              -46.0
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.1,
+            "point": [
+              -67.3353,
+              16.0,
+              -46.0
+            ],
+            "exit_point": [
+              -67.3353,
+              16.1,
+              -46.0
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.1,
+            "point": [
+              -72.0261,
+              16.0,
+              -46.0
+            ],
+            "exit_point": [
+              -72.0261,
+              16.1,
+              -46.0
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.1,
+            "point": [
+              -73.1988,
+              16.0,
+              -46.0
+            ],
+            "exit_point": [
+              -73.1988,
+              16.1,
+              -46.0
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.1,
+            "point": [
+              -65.9525,
+              16.1,
+              -46.0
+            ],
+            "exit_point": [
+              -65.9525,
+              16.0,
+              -46.0
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.1003,
+            "mesh_thickness_mm": 0.1011,
+            "point": [
+              -72.7306,
+              16.1003,
+              -45.9725
+            ],
+            "exit_point": [
+              -72.7306,
+              16.0,
+              -45.9705
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "wall:cradle",
+      "status": "fail",
+      "message": "thinnest 0.200 mm < 0.8 mm (sampled; see witnesses)",
+      "parts": [
+        "cradle"
+      ],
+      "evidence": {
+        "wall_mm": 0.8,
+        "tol_mm": 0.01,
+        "mesh-ray": {
+          "rays": 3436,
+          "misses": 0,
+          "min_mm": 0.205,
+          "thin_samples": 19,
+          "thin_area_mm2": 8.145,
+          "percentiles_mm": {
+            "p1": 2.2574,
+            "p5": 3.0374,
+            "p50": 8.3
+          },
+          "triangles": 3436,
+          "engine": "trimesh+rtree",
+          "watertight": true,
+          "remeasured": 19,
+          "dismissed_as_chord_error": 0,
+          "not_remeasured": 0
+        },
+        "brep-ray": {
+          "rays": 3135,
+          "misses": 0,
+          "min_mm": 0.2704,
+          "thin_samples": 3,
+          "thin_area_mm2": 16.733,
+          "percentiles_mm": {
+            "p1": 2.7316,
+            "p5": 3.7516,
+            "p50": 10.0
+          },
+          "faces": 61,
+          "grid": [
+            3,
+            16
+          ],
+          "spacing_mm": 2.0
+        },
+        "witnesses": [
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.2002,
+            "mesh_thickness_mm": 0.205,
+            "point": [
+              -27.9643,
+              -39.0101,
+              108.5667
+            ],
+            "exit_point": [
+              -27.9627,
+              -38.81,
+              108.5667
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.2039,
+            "mesh_thickness_mm": 0.2085,
+            "point": [
+              -27.8213,
+              -39.0137,
+              109.2333
+            ],
+            "exit_point": [
+              -27.8128,
+              -38.81,
+              109.2333
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.2076,
+            "mesh_thickness_mm": 0.2126,
+            "point": [
+              -28.25,
+              -39.0173,
+              108.5667
+            ],
+            "exit_point": [
+              -28.262,
+              -38.81,
+              108.5667
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.2189,
+            "mesh_thickness_mm": 0.2233,
+            "point": [
+              -28.3926,
+              -39.028,
+              109.2333
+            ],
+            "exit_point": [
+              -28.4126,
+              -38.81,
+              109.2333
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.2704,
+            "point": [
+              -27.225,
+              -38.81,
+              109.5875
+            ],
+            "exit_point": [
+              -27.225,
+              -39.0804,
+              109.5875
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.2704,
+            "point": [
+              -27.225,
+              -38.81,
+              108.9625
+            ],
+            "exit_point": [
+              -27.225,
+              -39.0804,
+              108.9625
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.334,
+            "mesh_thickness_mm": 0.3374,
+            "point": [
+              -26.9736,
+              -39.1343,
+              109.2333
+            ],
+            "exit_point": [
+              -26.8938,
+              -38.81,
+              109.2333
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.3536,
+            "mesh_thickness_mm": 0.36,
+            "point": [
+              -29.0956,
+              -39.1519,
+              109.2333
+            ],
+            "exit_point": [
+              -29.1857,
+              -38.81,
+              109.2333
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.3974,
+            "mesh_thickness_mm": 0.4002,
+            "point": [
+              -29.2333,
+              -39.1907,
+              108.5667
+            ],
+            "exit_point": [
+              -29.3473,
+              -38.81,
+              108.5667
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.4215,
+            "mesh_thickness_mm": 0.4285,
+            "point": [
+              -26.6985,
+              -39.2117,
+              108.5667
+            ],
+            "exit_point": [
+              -26.5709,
+              -38.81,
+              108.5667
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "wall:dial",
+      "status": "fail",
+      "message": "thinnest 0.636 mm < 0.8 mm (sampled; see witnesses)",
+      "parts": [
+        "dial"
+      ],
+      "evidence": {
+        "wall_mm": 0.8,
+        "tol_mm": 0.01,
+        "mesh-ray": {
+          "rays": 3536,
+          "misses": 0,
+          "min_mm": 0.7453,
+          "thin_samples": 27,
+          "thin_area_mm2": 169.899,
+          "percentiles_mm": {
+            "p1": 0.8252,
+            "p5": 1.6499,
+            "p50": 5.5
+          },
+          "triangles": 3536,
+          "engine": "trimesh+rtree",
+          "watertight": true,
+          "remeasured": 27,
+          "dismissed_as_chord_error": 2,
+          "not_remeasured": 0
+        },
+        "brep-ray": {
+          "rays": 5434,
+          "misses": 0,
+          "min_mm": 0.6356,
+          "thin_samples": 56,
+          "thin_area_mm2": 230.244,
+          "percentiles_mm": {
+            "p1": 0.7834,
+            "p5": 2.0,
+            "p50": 4.0
+          },
+          "faces": 86,
+          "grid": [
+            3,
+            16
+          ],
+          "spacing_mm": 2.0
+        },
+        "witnesses": [
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.6356,
+            "point": [
+              -57.9396,
+              -1.9771,
+              164.3438
+            ],
+            "exit_point": [
+              -57.6261,
+              -1.9147,
+              163.7944
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.6356,
+            "point": [
+              -38.0604,
+              1.9771,
+              164.3438
+            ],
+            "exit_point": [
+              -38.3739,
+              1.9147,
+              163.7944
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.6356,
+            "point": [
+              -46.0229,
+              -9.9396,
+              164.3438
+            ],
+            "exit_point": [
+              -46.0853,
+              -9.6261,
+              163.7944
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.6356,
+            "point": [
+              -46.0229,
+              9.9396,
+              164.3438
+            ],
+            "exit_point": [
+              -46.0853,
+              9.6261,
+              163.7944
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.6356,
+            "point": [
+              -38.0604,
+              -1.9771,
+              164.3438
+            ],
+            "exit_point": [
+              -38.3739,
+              -1.9147,
+              163.7944
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.6356,
+            "point": [
+              -57.9396,
+              1.9771,
+              164.3438
+            ],
+            "exit_point": [
+              -57.6261,
+              1.9147,
+              163.7944
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.6356,
+            "point": [
+              -49.9771,
+              -9.9396,
+              164.3438
+            ],
+            "exit_point": [
+              -49.9147,
+              -9.6261,
+              163.7944
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.6356,
+            "point": [
+              -49.9771,
+              9.9396,
+              164.3438
+            ],
+            "exit_point": [
+              -49.9147,
+              9.6261,
+              163.7944
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.7504,
+            "mesh_thickness_mm": 0.7469,
+            "point": [
+              -58.2495,
+              0.0564,
+              148.9258
+            ],
+            "exit_point": [
+              -58.9998,
+              0.0694,
+              148.9258
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.7506,
+            "mesh_thickness_mm": 0.7528,
+            "point": [
+              -47.9271,
+              -10.2492,
+              148.9257
+            ],
+            "exit_point": [
+              -47.9103,
+              -10.9996,
+              148.9257
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "wall:hopper",
+      "status": "fail",
+      "message": "thinnest 0.617 mm < 0.8 mm (sampled; see witnesses)",
+      "parts": [
+        "hopper"
+      ],
+      "evidence": {
+        "wall_mm": 0.8,
+        "tol_mm": 0.01,
+        "mesh-ray": {
+          "rays": 2502,
+          "misses": 0,
+          "min_mm": 0.731,
+          "thin_samples": 2,
+          "thin_area_mm2": 19.959,
+          "percentiles_mm": {
+            "p1": 1.5703,
+            "p5": 1.5913,
+            "p50": 3.0
+          },
+          "triangles": 2502,
+          "engine": "trimesh+rtree",
+          "watertight": true,
+          "remeasured": 2,
+          "dismissed_as_chord_error": 0,
+          "not_remeasured": 0
+        },
+        "brep-ray": {
+          "rays": 1179,
+          "misses": 0,
+          "min_mm": 0.6167,
+          "thin_samples": 2,
+          "thin_area_mm2": 70.46,
+          "percentiles_mm": {
+            "p1": 1.0147,
+            "p5": 1.6,
+            "p50": 3.0
+          },
+          "faces": 50,
+          "grid": [
+            3,
+            16
+          ],
+          "spacing_mm": 2.0
+        },
+        "witnesses": [
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.6167,
+            "point": [
+              -26.3863,
+              -9.5062,
+              160.0
+            ],
+            "exit_point": [
+              -26.3863,
+              -9.5062,
+              160.6167
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.6167,
+            "point": [
+              -26.3863,
+              9.5063,
+              160.0
+            ],
+            "exit_point": [
+              -26.3863,
+              9.5063,
+              160.6167
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.731,
+            "mesh_thickness_mm": 0.731,
+            "point": [
+              -21.3904,
+              11.6054,
+              160.0
+            ],
+            "exit_point": [
+              -21.3904,
+              11.6054,
+              160.731
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.731,
+            "mesh_thickness_mm": 0.731,
+            "point": [
+              -21.3904,
+              -11.6054,
+              160.0
+            ],
+            "exit_point": [
+              -21.3904,
+              -11.6054,
+              160.731
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "wall:hopper_lid",
+      "status": "fail",
+      "message": "thinnest 0.704 mm < 0.8 mm (sampled; see witnesses)",
+      "parts": [
+        "hopper_lid"
+      ],
+      "evidence": {
+        "wall_mm": 0.8,
+        "tol_mm": 0.01,
+        "mesh-ray": {
+          "rays": 1802,
+          "misses": 0,
+          "min_mm": 0.7378,
+          "thin_samples": 2,
+          "thin_area_mm2": 1.598,
+          "percentiles_mm": {
+            "p1": 1.0,
+            "p5": 1.0,
+            "p50": 2.5822
+          },
+          "triangles": 1802,
+          "engine": "trimesh+rtree",
+          "watertight": true,
+          "remeasured": 2,
+          "dismissed_as_chord_error": 0,
+          "not_remeasured": 0
+        },
+        "brep-ray": {
+          "rays": 2022,
+          "misses": 0,
+          "min_mm": 1.0,
+          "thin_samples": 0,
+          "thin_area_mm2": 0.0,
+          "percentiles_mm": {
+            "p1": 1.0,
+            "p5": 1.0,
+            "p50": 2.0
+          },
+          "faces": 84,
+          "grid": [
+            3,
+            16
+          ],
+          "spacing_mm": 2.0
+        },
+        "witnesses": [
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.7036,
+            "mesh_thickness_mm": 0.7378,
+            "point": [
+              -74.3095,
+              -14.7034,
+              225.3333
+            ],
+            "exit_point": [
+              -74.5869,
+              -15.35,
+              225.3333
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.7036,
+            "mesh_thickness_mm": 0.7378,
+            "point": [
+              -74.3095,
+              14.7034,
+              225.3333
+            ],
+            "exit_point": [
+              -74.5869,
+              15.35,
+              225.3333
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "wall:laser_mount",
+      "status": "fail",
+      "message": "thinnest 0.400 mm < 0.8 mm (sampled; see witnesses)",
+      "parts": [
+        "laser_mount"
+      ],
+      "evidence": {
+        "wall_mm": 0.8,
+        "tol_mm": 0.01,
+        "mesh-ray": {
+          "rays": 3116,
+          "misses": 0,
+          "min_mm": 0.4037,
+          "thin_samples": 38,
+          "thin_area_mm2": 277.672,
+          "percentiles_mm": {
+            "p1": 0.6496,
+            "p5": 1.8986,
+            "p50": 4.8194
+          },
+          "triangles": 3116,
+          "engine": "trimesh+rtree",
+          "watertight": true,
+          "remeasured": 38,
+          "dismissed_as_chord_error": 0,
+          "not_remeasured": 0
+        },
+        "brep-ray": {
+          "rays": 1072,
+          "misses": 0,
+          "min_mm": 0.4637,
+          "thin_samples": 40,
+          "thin_area_mm2": 149.07,
+          "percentiles_mm": {
+            "p1": 0.49,
+            "p5": 1.3767,
+            "p50": 3.5
+          },
+          "faces": 22,
+          "grid": [
+            3,
+            16
+          ],
+          "spacing_mm": 2.0
+        },
+        "witnesses": [
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.4001,
+            "mesh_thickness_mm": 0.4037,
+            "point": [
+              60.0257,
+              -12.0999,
+              156.9
+            ],
+            "exit_point": [
+              60.029,
+              -12.5,
+              156.9
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.4001,
+            "mesh_thickness_mm": 0.4037,
+            "point": [
+              60.0257,
+              12.0999,
+              156.9
+            ],
+            "exit_point": [
+              60.029,
+              12.5,
+              156.9
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.403,
+            "mesh_thickness_mm": 0.4062,
+            "point": [
+              60.1288,
+              -12.0973,
+              160.2
+            ],
+            "exit_point": [
+              60.1456,
+              -12.5,
+              160.2
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.403,
+            "mesh_thickness_mm": 0.4062,
+            "point": [
+              60.1288,
+              12.0973,
+              160.2
+            ],
+            "exit_point": [
+              60.1456,
+              12.5,
+              160.2
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.4059,
+            "mesh_thickness_mm": 0.4098,
+            "point": [
+              59.8198,
+              -12.0948,
+              160.2
+            ],
+            "exit_point": [
+              59.7962,
+              -12.5,
+              160.2
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.4059,
+            "mesh_thickness_mm": 0.4098,
+            "point": [
+              59.8198,
+              12.0948,
+              160.2
+            ],
+            "exit_point": [
+              59.7962,
+              12.5,
+              160.2
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.4147,
+            "mesh_thickness_mm": 0.4175,
+            "point": [
+              59.7169,
+              12.0871,
+              156.9
+            ],
+            "exit_point": [
+              59.6791,
+              12.5,
+              156.9
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.4147,
+            "mesh_thickness_mm": 0.4175,
+            "point": [
+              59.7169,
+              -12.0871,
+              156.9
+            ],
+            "exit_point": [
+              59.6791,
+              -12.5,
+              156.9
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.418,
+            "mesh_thickness_mm": 0.4214,
+            "point": [
+              60.3333,
+              12.5,
+              158.2
+            ],
+            "exit_point": [
+              60.3333,
+              12.082,
+              158.2
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.418,
+            "mesh_thickness_mm": 0.4214,
+            "point": [
+              60.3333,
+              -12.5,
+              158.2
+            ],
+            "exit_point": [
+              60.3333,
+              -12.082,
+              158.2
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "wall:pan_base",
+      "status": "fail",
+      "message": "thinnest 0.071 mm < 0.8 mm (sampled; see witnesses)",
+      "parts": [
+        "pan_base"
+      ],
+      "evidence": {
+        "wall_mm": 0.8,
+        "tol_mm": 0.01,
+        "mesh-ray": {
+          "rays": 15236,
+          "misses": 0,
+          "min_mm": 0.0066,
+          "thin_samples": 381,
+          "thin_area_mm2": 205.362,
+          "percentiles_mm": {
+            "p1": 0.5,
+            "p5": 1.0,
+            "p50": 5.0
+          },
+          "triangles": 15236,
+          "engine": "trimesh+rtree",
+          "watertight": true,
+          "remeasured": 381,
+          "dismissed_as_chord_error": 19,
+          "not_remeasured": 0
+        },
+        "brep-ray": {
+          "rays": 10973,
+          "misses": 0,
+          "min_mm": 0.1,
+          "thin_samples": 91,
+          "thin_area_mm2": 439.908,
+          "percentiles_mm": {
+            "p1": 1.0,
+            "p5": 1.4,
+            "p50": 5.0
+          },
+          "faces": 399,
+          "grid": [
+            3,
+            16
+          ],
+          "spacing_mm": 2.0
+        },
+        "witnesses": [
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.0706,
+            "mesh_thickness_mm": 0.0763,
+            "point": [
+              -42.0823,
+              35.4542,
+              33.6667
+            ],
+            "exit_point": [
+              -42.1117,
+              35.39,
+              33.6667
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.0868,
+            "mesh_thickness_mm": 0.0888,
+            "point": [
+              -36.2721,
+              43.3321,
+              17.33
+            ],
+            "exit_point": [
+              -36.2074,
+              43.39,
+              17.33
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.1,
+            "mesh_thickness_mm": 0.1014,
+            "point": [
+              -42.39,
+              7.1,
+              7.1333
+            ],
+            "exit_point": [
+              -42.3892,
+              7.0,
+              7.1333
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.1,
+            "point": [
+              -42.4,
+              7.1,
+              15.7667
+            ],
+            "exit_point": [
+              -42.4,
+              7.0,
+              15.7667
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.1,
+            "point": [
+              -42.4,
+              7.1,
+              13.3
+            ],
+            "exit_point": [
+              -42.4,
+              7.0,
+              13.3
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.1,
+            "point": [
+              -42.4,
+              7.1,
+              10.8333
+            ],
+            "exit_point": [
+              -42.4,
+              7.0,
+              10.8333
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.1,
+            "point": [
+              -42.4,
+              7.1,
+              8.3667
+            ],
+            "exit_point": [
+              -42.4,
+              7.0,
+              8.3667
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.1,
+            "point": [
+              -42.4,
+              7.1,
+              5.9
+            ],
+            "exit_point": [
+              -42.4,
+              7.0,
+              5.9
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.1011,
+            "mesh_thickness_mm": 0.1024,
+            "point": [
+              -42.3501,
+              7.101,
+              12.0667
+            ],
+            "exit_point": [
+              -42.3459,
+              7.0,
+              12.0667
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.1464,
+            "mesh_thickness_mm": 0.1536,
+            "point": [
+              -20.9928,
+              -70.3333,
+              9.4324
+            ],
+            "exit_point": [
+              -20.915,
+              -70.3333,
+              9.5564
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "wall:pan_ring",
+      "status": "fail",
+      "message": "thinnest 0.025 mm < 0.8 mm (sampled; see witnesses)",
+      "parts": [
+        "pan_ring"
+      ],
+      "evidence": {
+        "wall_mm": 0.8,
+        "tol_mm": 0.01,
+        "mesh-ray": {
+          "rays": 8402,
+          "misses": 0,
+          "min_mm": 0.0263,
+          "thin_samples": 4,
+          "thin_area_mm2": 2.054,
+          "percentiles_mm": {
+            "p1": 1.0,
+            "p5": 1.6827,
+            "p50": 16.0
+          },
+          "triangles": 8402,
+          "engine": "trimesh+rtree",
+          "watertight": true,
+          "remeasured": 4,
+          "dismissed_as_chord_error": 0,
+          "not_remeasured": 0
+        },
+        "brep-ray": {
+          "rays": 14402,
+          "misses": 0,
+          "min_mm": 0.0434,
+          "thin_samples": 14,
+          "thin_area_mm2": 10.12,
+          "percentiles_mm": {
+            "p1": 1.1818,
+            "p5": 1.3462,
+            "p50": 5.0
+          },
+          "faces": 1435,
+          "grid": [
+            3,
+            16
+          ],
+          "spacing_mm": 2.0
+        },
+        "witnesses": [
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.0245,
+            "mesh_thickness_mm": 0.0263,
+            "point": [
+              32.7285,
+              -0.6714,
+              53.5667
+            ],
+            "exit_point": [
+              32.75,
+              -0.6831,
+              53.5667
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.0245,
+            "mesh_thickness_mm": 0.0263,
+            "point": [
+              32.7285,
+              0.6714,
+              53.5667
+            ],
+            "exit_point": [
+              32.75,
+              0.6831,
+              53.5667
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.0434,
+            "point": [
+              32.7124,
+              0.7,
+              54.3333
+            ],
+            "exit_point": [
+              32.75,
+              0.7217,
+              54.3333
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.0434,
+            "point": [
+              32.7124,
+              -0.7,
+              54.3333
+            ],
+            "exit_point": [
+              32.75,
+              -0.7217,
+              54.3333
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.1072,
+            "point": [
+              32.75,
+              0.8087,
+              53.2833
+            ],
+            "exit_point": [
+              32.6428,
+              0.8087,
+              53.2833
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.1072,
+            "point": [
+              32.75,
+              -0.8087,
+              53.85
+            ],
+            "exit_point": [
+              32.6428,
+              -0.8087,
+              53.85
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.474,
+            "point": [
+              32.75,
+              -1.1652,
+              53.85
+            ],
+            "exit_point": [
+              32.276,
+              -1.1652,
+              53.85
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.474,
+            "point": [
+              32.75,
+              1.1652,
+              53.2833
+            ],
+            "exit_point": [
+              32.276,
+              1.1652,
+              53.2833
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.474,
+            "point": [
+              32.75,
+              1.1652,
+              54.4167
+            ],
+            "exit_point": [
+              32.276,
+              1.1652,
+              54.4167
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.474,
+            "point": [
+              32.75,
+              -1.1652,
+              54.4167
+            ],
+            "exit_point": [
+              32.276,
+              -1.1652,
+              54.4167
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "wall:pivot_spacer",
+      "status": "fail",
+      "message": "thinnest 0.750 mm < 0.8 mm (sampled; see witnesses)",
+      "parts": [
+        "pivot_spacer"
+      ],
+      "evidence": {
+        "wall_mm": 0.8,
+        "tol_mm": 0.01,
+        "mesh-ray": {
+          "rays": 756,
+          "misses": 0,
+          "min_mm": 0.7491,
+          "thin_samples": 126,
+          "thin_area_mm2": 21.354,
+          "percentiles_mm": {
+            "p1": 0.7491,
+            "p5": 0.7491,
+            "p50": 3.525
+          },
+          "triangles": 756,
+          "engine": "trimesh+rtree",
+          "watertight": true,
+          "remeasured": 126,
+          "dismissed_as_chord_error": 0,
+          "not_remeasured": 0
+        },
+        "brep-ray": {
+          "rays": 183,
+          "misses": 0,
+          "min_mm": 0.75,
+          "thin_samples": 14,
+          "thin_area_mm2": 34.766,
+          "percentiles_mm": {
+            "p1": 0.75,
+            "p5": 0.75,
+            "p50": 3.025
+          },
+          "faces": 6,
+          "grid": [
+            3,
+            16
+          ],
+          "spacing_mm": 2.0
+        },
+        "witnesses": [
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.75,
+            "mesh_thickness_mm": 0.7491,
+            "point": [
+              0.0282,
+              -60.1433,
+              136.6001
+            ],
+            "exit_point": [
+              0.022,
+              -60.1433,
+              137.3501
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.75,
+            "mesh_thickness_mm": 0.7491,
+            "point": [
+              -0.1977,
+              -60.4767,
+              136.6057
+            ],
+            "exit_point": [
+              -0.1541,
+              -60.4767,
+              137.3545
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.75,
+            "mesh_thickness_mm": 0.7491,
+            "point": [
+              -0.1977,
+              -60.1433,
+              143.3943
+            ],
+            "exit_point": [
+              -0.1541,
+              -60.1433,
+              142.6455
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.75,
+            "mesh_thickness_mm": 0.7491,
+            "point": [
+              2.0304,
+              -60.4767,
+              137.2728
+            ],
+            "exit_point": [
+              1.5825,
+              -60.4767,
+              137.8744
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.75,
+            "mesh_thickness_mm": 0.7491,
+            "point": [
+              1.7487,
+              -60.1433,
+              137.0842
+            ],
+            "exit_point": [
+              1.363,
+              -60.1433,
+              137.7274
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.75,
+            "mesh_thickness_mm": 0.7491,
+            "point": [
+              2.9303,
+              -60.1433,
+              141.7244
+            ],
+            "exit_point": [
+              2.2839,
+              -60.1433,
+              141.344
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.75,
+            "mesh_thickness_mm": 0.7491,
+            "point": [
+              1.7487,
+              -60.1433,
+              142.9158
+            ],
+            "exit_point": [
+              1.363,
+              -60.1433,
+              142.2726
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.75,
+            "mesh_thickness_mm": 0.7491,
+            "point": [
+              2.0304,
+              -60.1433,
+              142.7272
+            ],
+            "exit_point": [
+              1.5825,
+              -60.1433,
+              142.1256
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.75,
+            "mesh_thickness_mm": 0.7491,
+            "point": [
+              -1.2946,
+              -60.1433,
+              136.8561
+            ],
+            "exit_point": [
+              -1.0091,
+              -60.1433,
+              137.5496
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.75,
+            "mesh_thickness_mm": 0.7491,
+            "point": [
+              -1.8919,
+              -60.1433,
+              142.825
+            ],
+            "exit_point": [
+              -1.4746,
+              -60.1433,
+              142.2018
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "wall:ring_carrier",
+      "status": "fail",
+      "message": "thinnest 0.002 mm < 0.8 mm (sampled; see witnesses)",
+      "parts": [
+        "ring_carrier"
+      ],
+      "evidence": {
+        "wall_mm": 0.8,
+        "tol_mm": 0.01,
+        "mesh-ray": {
+          "rays": 3484,
+          "misses": 0,
+          "min_mm": 0.0043,
+          "thin_samples": 141,
+          "thin_area_mm2": 10.704,
+          "percentiles_mm": {
+            "p1": 0.1158,
+            "p5": 1.0,
+            "p50": 5.7008
+          },
+          "triangles": 3484,
+          "engine": "trimesh+rtree",
+          "watertight": true,
+          "remeasured": 141,
+          "dismissed_as_chord_error": 0,
+          "not_remeasured": 0
+        },
+        "brep-ray": {
+          "rays": 2234,
+          "misses": 0,
+          "min_mm": 0.1075,
+          "thin_samples": 41,
+          "thin_area_mm2": 26.988,
+          "percentiles_mm": {
+            "p1": 0.3968,
+            "p5": 1.0549,
+            "p50": 9.4
+          },
+          "faces": 114,
+          "grid": [
+            3,
+            16
+          ],
+          "spacing_mm": 2.0
+        },
+        "witnesses": [
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.0022,
+            "mesh_thickness_mm": 0.0043,
+            "point": [
+              19.7987,
+              -33.0137,
+              0.6453
+            ],
+            "exit_point": [
+              19.7998,
+              -33.0149,
+              0.6468
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.0023,
+            "mesh_thickness_mm": 0.0043,
+            "point": [
+              19.9567,
+              -32.9196,
+              0.595
+            ],
+            "exit_point": [
+              19.958,
+              -32.9208,
+              0.5966
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.0026,
+            "mesh_thickness_mm": 0.0043,
+            "point": [
+              19.8057,
+              33.0092,
+              0.6436
+            ],
+            "exit_point": [
+              19.807,
+              33.0106,
+              0.6453
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.0039,
+            "mesh_thickness_mm": 0.0043,
+            "point": [
+              19.9152,
+              32.943,
+              0.6105
+            ],
+            "exit_point": [
+              19.9173,
+              32.945,
+              0.613
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.0268,
+            "mesh_thickness_mm": 0.0278,
+            "point": [
+              18.4707,
+              33.7565,
+              0.5948
+            ],
+            "exit_point": [
+              18.4748,
+              33.7761,
+              0.6127
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.0275,
+            "mesh_thickness_mm": 0.0287,
+            "point": [
+              18.5119,
+              -33.7328,
+              0.6107
+            ],
+            "exit_point": [
+              18.5164,
+              -33.7528,
+              0.629
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.0548,
+            "mesh_thickness_mm": 0.0619,
+            "point": [
+              -26.5564,
+              27.8192,
+              0.6123
+            ],
+            "exit_point": [
+              -26.5747,
+              27.8557,
+              0.6488
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.0551,
+            "mesh_thickness_mm": 0.0597,
+            "point": [
+              -27.8523,
+              26.5225,
+              0.5959
+            ],
+            "exit_point": [
+              -27.8893,
+              26.5403,
+              0.6326
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.088,
+            "mesh_thickness_mm": 0.0973,
+            "point": [
+              20.1148,
+              32.7542,
+              0.5828
+            ],
+            "exit_point": [
+              20.166,
+              32.7952,
+              0.6415
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.0897,
+            "mesh_thickness_mm": 0.0917,
+            "point": [
+              20.2446,
+              -32.6723,
+              0.5228
+            ],
+            "exit_point": [
+              20.2988,
+              -32.7114,
+              0.5826
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "wall:tilt_yoke",
+      "status": "fail",
+      "message": "thinnest 0.155 mm < 0.8 mm (sampled; see witnesses)",
+      "parts": [
+        "tilt_yoke"
+      ],
+      "evidence": {
+        "wall_mm": 0.8,
+        "tol_mm": 0.01,
+        "mesh-ray": {
+          "rays": 7530,
+          "misses": 0,
+          "min_mm": 0.3097,
+          "thin_samples": 3,
+          "thin_area_mm2": 7.065,
+          "percentiles_mm": {
+            "p1": 1.7978,
+            "p5": 2.0,
+            "p50": 9.0729
+          },
+          "triangles": 7530,
+          "engine": "trimesh+rtree",
+          "watertight": true,
+          "remeasured": 3,
+          "dismissed_as_chord_error": 0,
+          "not_remeasured": 0
+        },
+        "brep-ray": {
+          "rays": 5924,
+          "misses": 0,
+          "min_mm": 0.1548,
+          "thin_samples": 12,
+          "thin_area_mm2": 16.519,
+          "percentiles_mm": {
+            "p1": 1.8,
+            "p5": 3.0,
+            "p50": 8.0
+          },
+          "faces": 117,
+          "grid": [
+            3,
+            16
+          ],
+          "spacing_mm": 2.0
+        },
+        "witnesses": [
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.1548,
+            "point": [
+              -19.8763,
+              -58.31,
+              113.6232
+            ],
+            "exit_point": [
+              -20.0,
+              -58.31,
+              113.7164
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.1548,
+            "point": [
+              -19.8763,
+              -59.31,
+              113.6232
+            ],
+            "exit_point": [
+              -20.0,
+              -59.31,
+              113.7164
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.1548,
+            "point": [
+              -19.8763,
+              -60.31,
+              113.6232
+            ],
+            "exit_point": [
+              -20.0,
+              -60.31,
+              113.7164
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.3097,
+            "mesh_thickness_mm": 0.3097,
+            "point": [
+              -19.7527,
+              -59.81,
+              113.7873
+            ],
+            "exit_point": [
+              -20.0,
+              -59.81,
+              113.9736
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.41,
+            "point": [
+              -0.0,
+              69.4009,
+              153.0
+            ],
+            "exit_point": [
+              -0.0,
+              69.4009,
+              153.41
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.5175,
+            "point": [
+              -8.0354,
+              68.1433,
+              129.7808
+            ],
+            "exit_point": [
+              -8.3553,
+              68.1433,
+              129.374
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.5175,
+            "point": [
+              8.0354,
+              68.1433,
+              129.7808
+            ],
+            "exit_point": [
+              8.3553,
+              68.1433,
+              129.374
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.5189,
+            "mesh_thickness_mm": 0.5484,
+            "point": [
+              -19.5767,
+              -59.81,
+              126.1165
+            ],
+            "exit_point": [
+              -20.0,
+              -59.81,
+              125.8163
+            ]
+          },
+          {
+            "method": "mesh-ray, B-rep confirmed",
+            "thickness_mm": 0.6193,
+            "mesh_thickness_mm": 0.6193,
+            "point": [
+              -19.5054,
+              -58.81,
+              114.1155
+            ],
+            "exit_point": [
+              -20.0,
+              -58.81,
+              114.4882
+            ]
+          },
+          {
+            "method": "brep-ray",
+            "thickness_mm": 0.7742,
+            "point": [
+              -19.3817,
+              -58.31,
+              114.2796
+            ],
+            "exit_point": [
+              -20.0,
+              -58.31,
+              114.7455
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "exclusions": [],
+  "limits": {
+    "tol_mm": 0.01,
+    "max_rays": 20000,
+    "brep_grid": [
+      3,
+      16
+    ],
+    "brep_spacing_mm": 2.0,
+    "parts": {
+      "barrel": {
+        "wall_mm": 0.8
+      },
+      "board_bay": {
+        "wall_mm": 0.8
+      },
+      "board_bay_lid": {
+        "wall_mm": 0.8
+      },
+      "bumper_ring": {
+        "wall_mm": 0.8
+      },
+      "cartridge_body": {
+        "wall_mm": 0.8
+      },
+      "compute_shell": {
+        "wall_mm": 0.8
+      },
+      "compute_tray": {
+        "wall_mm": 0.8
+      },
+      "cradle": {
+        "wall_mm": 0.8
+      },
+      "dial": {
+        "wall_mm": 0.8
+      },
+      "flywheel": {
+        "wall_mm": 0.8
+      },
+      "flywheel_m": {
+        "wall_mm": 0.8
+      },
+      "flywheel_tyre": {
+        "wall_mm": 0.8
+      },
+      "flywheel_tyre_m": {
+        "wall_mm": 0.8
+      },
+      "hopper": {
+        "wall_mm": 0.8
+      },
+      "hopper_flap": {
+        "wall_mm": 0.8
+      },
+      "hopper_lid": {
+        "wall_mm": 0.8
+      },
+      "horn_boss": {
+        "wall_mm": 0.8
+      },
+      "laser_mount": {
+        "wall_mm": 0.8
+      },
+      "pan_base": {
+        "wall_mm": 0.8
+      },
+      "pan_pinion": {
+        "wall_mm": 0.8
+      },
+      "pan_ring": {
+        "wall_mm": 0.8
+      },
+      "pan_spacer": {
+        "wall_mm": 0.8
+      },
+      "pivot_spacer": {
+        "wall_mm": 0.8
+      },
+      "ring_carrier": {
+        "wall_mm": 0.8
+      },
+      "ring_driver": {
+        "wall_mm": 0.8
+      },
+      "stand_bottom": {
+        "wall_mm": 0.8
+      },
+      "stand_box": {
+        "wall_mm": 0.8
+      },
+      "tilt_yoke": {
+        "wall_mm": 0.8
+      }
+    }
+  },
+  "assumptions": [
+    "thickness is measured by rays along the inward surface normal: mesh rays from triangle centroids (sub-sampled to max_rays) and exact B-rep rays from a UV grid on every face",
+    "a pass means no sample was thinner than wall_mm - tol_mm; regions between samples and walls met at a slant are not measured",
+    "the per-part wall_mm is the declared minimum; whether it suits the printer, nozzle, material and load is not checked",
+    "a mesh reads curved walls thin by its chord error (about 0.09 mm seen on a 2.4 mm spherical shell tessellated at 0.05 mm); with the B-rep given, thin mesh samples are re-measured exactly and only confirmed ones fail; with a mesh alone, tol_mm must cover that error",
+    "the model is checked, not the print: no shrink, elephant foot, or slicer perimeter rounding"
+  ],
+  "physical_fit_verified": false,
+  "inputs": {
+    "geometry": {
+      "file": "exports/dossier-geometry.json",
+      "digest": "edd7861908ab42802edb28b9c73ed1307458919926b28689727218328f7fe254",
+      "hashes": {
+        "ball#0": "a65216ac687270ac3257d29316de2a648a924d4e4f5291d1cc63901574160ace",
+        "ball#1": "03b799fd45df8370f59431ab5068e7b671858a68d009000f07a41f47b7f7923d",
+        "ball#10": "2d5e0259b190effb6819b4aac948720444062af4e364857eecbc650e650f7054",
+        "ball#11": "fcb0b087a6f670b97c9555413802a81c551b0250fb2ad4f58e8b05ea9493135c",
+        "ball#12": "55be408654d5c8c6537583bf1e6627836694de530dc8389500edb564624783b5",
+        "ball#13": "58c9e448feaa4e7b179e2623e3e312f44a4e01495ac8aaab039981045ccab972",
+        "ball#14": "41d444fd5cf6ea169982ddfd9aed651b1129d4ddb96b657dbe522751cf4043f3",
+        "ball#15": "c847bfbec6e6a7c2020505e5ac8c9ac382c7fb197b850f44181460fd25057ce3",
+        "ball#16": "b74f8fc4348bb35d1a3170c2bb61f101e1febdac1e4ec8cb0dd912c27f0d7f26",
+        "ball#17": "ae100fa2038963e1ac1da6f65a5441607e6193897937746853381696a97df192",
+        "ball#18": "4d1b80f468136bc89986f2b66aab77640348e422e7ad7bc87e2462f3e8d6e223",
+        "ball#19": "d335ed92c315ba0d2a1f7f9dcad55955956efd9199cde8571721e43051ac1993",
+        "ball#2": "acc48ce2a5f2e6a50462aa2de5a5cb8bcc5d9c33e9fc9d9ef442637092d9a327",
+        "ball#20": "880a6bec8fbdbd4ea4f3d3b2e35594e63f175f062498f10d7fa50655135bea3d",
+        "ball#21": "aa980a937510d1d4938a71f4a3d5efb2ff9b556f49da05184d3c193ae86f8bfc",
+        "ball#22": "961903f3d0ecc374a0619a9b48a08eeb7f1bd7d250b535659fdb556a58771565",
+        "ball#23": "0b058c1ec3ea98cc3ef3f6e7bf55e3732801c0ce33da9347d653c5fc70103888",
+        "ball#24": "aa2730bb73cb6a6b40036fea1d51a6863a891230108757d3bf2eceb382e37f07",
+        "ball#25": "4699dac6fa06617aa04cb1693692fe4c14259588bc0d624636fe2761311679d5",
+        "ball#26": "bdea7592bd92b077c2ab76decdfe7414ae5315d1a898706738fc663eca976003",
+        "ball#27": "1575e8658be342954d0699c8f23d6faaa21ecc2e703ffb6b9c5e682dd8ef7736",
+        "ball#28": "c14fb2d2a5e6be89c66ba9f2a8d1629fc885dbd30411d7ab3516ad782a250a8a",
+        "ball#29": "6c22cc806a08be1fed03f74955d1973bc44a77c972ee5cf304a54b033c96ccec",
+        "ball#3": "710247883e3018526577c078e76d622f5dc00d70d5a6f0f73ce416c308f99202",
+        "ball#4": "034d3a325c7e1dc92a50af0744ff0dbd95c43d316f0a4383ccef90a664f39754",
+        "ball#5": "fcf8f6bf500e9da9e67f4a4a03516362dff62bafacee8971e35baed0805cce75",
+        "ball#6": "2660f2931d97d37f9f10047d29c39f4b295e9cfc507a37a2279539d5d646a766",
+        "ball#7": "a55c4782c355177437b8b067ac8bee84a6b951916da216ef1e15b52dbafd0943",
+        "ball#8": "a996235308cccc98bded38b9d14263eec13402be1b913a8a455cf456c394f7ea",
+        "ball#9": "fa11222c233c9168ab4a6734aa679d21af8c9d3e6cd5992140930e0ffa5eca3f",
+        "barrel": "ffdc798a409ecf39e33751b2934d98ed2fc711e89476fc7f36dfda50374cc940",
+        "base_board": "c6a7de0e8985518af4e8fe3170a99c622ba0dc8b818031aa4f61e271429feb2c",
+        "board_bay": "fac6f89b4e1affe822af20a1dfb5174bbd7460740bca930039ff2fccc19e3c47",
+        "board_bay_lid": "3f35f0e96a4a1e2874ef33bee1272c49d1e4fec22a3dc3a459cd47b2d4ef3f09",
+        "bumper_ring": "91e6d1c7230c669727e96f0542d43cab7bd264aaccc5f5d6fde45da3b5a42ebc",
+        "cartridge_board": "76a7fee9501317026fb599f7d6ea77493ac04f19d8fcf083621f59e2abf158c0",
+        "cartridge_body": "83cb0fee3e9ac1311432b62bfc131d8bcf12cb39ddaf18483916d6c5c20e0302",
+        "circlip_50": "4732d3026f49ca83f9a7f37e06851f2f2778306fb7f5d6e0cadce35b92b6ab57",
+        "compute": "19df8bd0dbda8b8c5a2d5561abe550787e39ac0f85789a09dfa9d1e47cc38141",
+        "compute_shell": "345c2945ae2ff0c20ffa748e89ae1797f36a9b81a763b042542bbac8a9d6ea04",
+        "compute_tray": "8cc9d05e5583e83ea2fc9327f8809c737d4975ae429f7207f7b9cc0143932589",
+        "cradle": "d06851e7f6c4499bd281cc3ac92ff2701830d56fe746a7fbd51b1dc16e6538cf",
+        "cradle_plate_l": "ac28d6c0c439676eaf1fc2adb35db7bd45ef1b0966861e4a4c1c975becc0fd56",
+        "cradle_plate_r": "32469157ddfff0bcd9f3b0e18858f613a42c7427149d61a639c8e5f3902c7052",
+        "ct_thumbscrew": "0c671c252d37f8a13364b0d6b3c9fe64c3509b9ed911d6e167f03a6e6c1e5071",
+        "dial": "1bb91abbb7f8c46f22ed7c8899356aeb94c477002eb5f9b0d91071bd71cbfbf8",
+        "dock": "64f8a777930af22cb70a960871f389757c58699efa05b1f6a997155e468c94e9",
+        "dt_plug": "0b4aa436ed04c60c8c3d867b566521d8331e7b6acba70f1858f3df23cbc6c708",
+        "dt_receptacle": "c40f8087351820986a821ead94c8f182aae7333c1ae3f5432e2acb7d5805ce24",
+        "esc_l": "512b249bbe269cfac70c84c75567f28984e0b3b68c7c9778450f9811343514c4",
+        "esc_r": "c4b5a23106e80e94d3ba93137ff12a5475ebf4b4132c1f64c9245a331d12df5b",
+        "eth_jack": "1cecaac97930297d5b1043a4b907b38ffbb4e8beeb28bd89e5cf17f6d34499af",
+        "feed_motor": "85e7b10529e831292e8ef016f3d48c6f40705e50d8a3f255482645cc6db7a746",
+        "flywheel": "087f82d6eadf63fd75ac32009574267901c7c1ddac031a9709548adbc6fe68f4",
+        "flywheel_m": "1fccfda45e0f1f88794ade29044db983d03a57ebec85a2562b4b9a237913a240",
+        "flywheel_motor_l": "adb3422ab73a8db6101d5454d1b3fab6e8e5aa83d836a8b3e486d67bddaeb09b",
+        "flywheel_motor_r": "deac14529d7c19340e4e0357145f6511be0a731c25babdcb3895098132be2841",
+        "flywheel_tyre": "9c5dca93473c44737dc003f2695ade7119caa135640d237f8027e2f78ec2d911",
+        "flywheel_tyre_m": "45b1129d43e3dc566c9270b6746571e18774107816fa540a8546a6b0e022029f",
+        "hall_switch": "29a32ceed8f0166678d1974fc6c87e78d14ca776141137dadb173592dbd531fb",
+        "hopper": "bfc93c60bd5926acbb4898a30326c88cce75a85fcc1d50fb77c49c5e196c1087",
+        "hopper_cavity": "065686cd5c709350ee7b20697adf17e0125faeb6ad00dcacffc18bfc65eabb29",
+        "hopper_flap": "e2a894672535e11447b7d39c5b35030fe6076fe4816e30a793822cc4c794383f",
+        "hopper_inserts": "c24c13e0f2422e6983760178a64171984af561cd3c122c45f478b6c1f1139a54",
+        "hopper_lid": "d694d917f175f67060b4f5c6fa92b92f9d5d80eae63f047a91b2230b92885c26",
+        "hopper_screws#0": "53b5fe777e051c88c7d6521bd9e5d3b134cb9b64f9b6f24e0db16d00a7c6d94c",
+        "hopper_screws#1": "0bfc468fd0b58556b346fbf12b7fa86609d4c5b124ccc58f50350f95985901e5",
+        "hopper_screws#2": "1438cf69e3399d57a655cde3ac22c0160f1237d800a7a249fa029094d0de4c5d",
+        "horn_boss": "6705056118088b16e66be2eda682010594a755ca7fc2a9c6ec891051dcc70ae7",
+        "index_magnet": "325cc63fa0300a24127b730a1b52c5f736fb73ef5d1575525d734aad8017c590",
+        "input_fuses": "b534b3e5b8aed6645004cbeb8705dc572894318c7baf4da72b4f6871afe8f764",
+        "laser": "695162186a4e2a06a514809cff63624efe4299109be32a31c764187c7972499c",
+        "laser_foot_screws#0": "1f97f888f2c03f371262319233282008f448c738b01eff503b6d086288d2ff3f",
+        "laser_foot_screws#1": "5b54dc9d581be2e9b9410659993816e37c5dac82cf28369ce4e80893c4669480",
+        "laser_inserts": "3af66ecfc890a165f682072cf0566bda26e2819a68d2ec0c0e74d1fc32033fc9",
+        "laser_mount": "934ffd01d50a86b557764968147cd3597e93edff772f7854a72a17d862cbeea9",
+        "laser_screws": "2ac3f2b3f0a6b44373fa2f05017b97b716dd76ed2a0bfca401de7114e97e8baa",
+        "pack": "2696437aeff8ec28495d5088ff88feb6902c75ee46790744a002b0c8ac62aed2",
+        "pan_base": "e3ab8a9a83f46cdf630fbbcefaa90410f82d3a5d574693809731429599a3027d",
+        "pan_bearing": "b3ecd75d87d4786da6a6ad989bb010f3cf73c8e81947e29373431b61379943c8",
+        "pan_bearing_inner": "fa6405bae408a522df79b4f92adcfece1d11d9a272c362a68c6f0ec70f73d5cf",
+        "pan_clamp": "f740503a7e3b5f178b8db7bbf524392bdf2e5d17f672139ed040393d226da80e",
+        "pan_pinion": "f67a4f24a2cb9eb960063acc400866b6fe61792f57a9c11a69577be7e479f40d",
+        "pan_ring": "f6e98b4fb1d08325a8a7026fba95b01576b23cd148a2c35b90aa5bf4e6eb1397",
+        "pan_servo": "33d2ecab1a490de17d78e743ea0acb7f01f67698a324c9b34bd3ae365da3cb14",
+        "pan_spacer": "ac07f0f05892c702b83f4de3c4d10bfebbfedab51fa9c7af6266b083b8a25622",
+        "panel_pendant": "90dd95e773e6c5ffd2b780c940b4a722f848b814d3cb694116398f21a10d7b7e",
+        "panel_switch": "3c11999fa6b562cf6f844cf21ad705da68343306a2b9b190ec0da4346138b6cd",
+        "pivot_spacer": "f32dec7018eb00fb17326fc94c7fc195897dfded7fb60f76d63cbedd457424ff",
+        "ring_carrier": "74127d526bc7ba5fdd4d2ae07b94552d4cd42fde8b3614e20475c3c48b49b008",
+        "ring_coupling": "d6517f3eee6025d83ff8d29a91f0d7916742d032db0671e8ea160387fafd0154",
+        "ring_driver": "ce570693a041534fc0cd02830c7e3aedbc3c622ae526cd00d94f299825e62169",
+        "shoulder_screw": "1fc799385bf1184cb28e4857175675d9380fb92a02fda004961f5ea2f1936d7d",
+        "slip_ring": "f77ab054fa727ff8ad8a2e61e68593dbfdd325fc135ac9443fa5f43cea6d0a29",
+        "slip_ring_rotor": "c616abbe4fd2b61a15769b9393a8af23a50ff906524c7ecfade4d46262ee5694",
+        "stand_bottom": "14afdd1ed648276eb975a7f6e6329b07243e98b62c2f0a9625c52d13798b6658",
+        "stand_box": "3ed1d579d2bc6e4bcb56d64d9ba876ff70545e70c2084ad7fb4d713b138051cc",
+        "stand_foot#0": "765798c4312d1208813b9391bab6f802e632017eda81fa1a214d41354706c4da",
+        "stand_foot#1": "3c94328497e334fe2bab51f825adc96e20678d1586932da30956a42040091c24",
+        "stand_foot#2": "e953da1adfe197721f4be80d0c0031d6fd741a19753e59f4fee9fcad9d96a45f",
+        "stand_foot#3": "91bf952d3d3ec45557ad7c4610bc069cdfa3d2f250769ad8f846d54a3c4d75fb",
+        "stop_lug": "9c4122602635954c8540a91e0d802f9677f98835f62e0638fbfcd3a8170be25b",
+        "terminal_board": "862d5ed8b5dfc05e96d74e7ea9aad012e49d4785b4900b5ea74b6a7f0759534d",
+        "tilt_bearing": "bf9047f7aeccd6e7ec1033ff43613dc29cc4ecc73fa0727383f78f846e648333",
+        "tilt_bearing_inner": "d8e528ff24eaaeb12b27323bc7a1a584f50a920bbd2897880040613cc0a7cf9d",
+        "tilt_servo": "5bb7c0a100f381bb15202d9cc7b57b41faf5e568c374df2dedb2fdb21c758129",
+        "tilt_yoke": "ad7b9c1545c1bbba883d78d1cfed7f9c1bc27d10d4a3e4e51b5d5f3f080bdbfe",
+        "turret_board": "65c4ebf5b938d79e38cc02ec284512a445dfd48dbbaaad2d9b65766467268016",
+        "usb_can": "84b85b023467dde090a46adce7a6c7d48f3b33046c6d129809c38b10b693ac8f",
+        "xt30_input": "aea2dbf4db68d36634d0ea180dc1dd8d3ede3df562b6c652d3ca2fc750650f95"
+      }
+    },
+    "toolkit": "0.3.1",
+    "declarations": "77bdfcaa878f5179df03c1cbc7217315c2b7651b0b3d002cfc8a5651236d0b2e",
+    "options": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+  }
+}

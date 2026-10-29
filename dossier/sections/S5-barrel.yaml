@@ -1,0 +1,129 @@
+# The turret's dossier (cad-agent: docs/dossier.md in the toolkit). Hand-edited YAML; joined by id to the geometry
+# cad/turret_dossier.py registers (exports/dossier-geometry.json). The design story is docs/turret-sections.md.
+id: S5-barrel
+title: Barrel and laser
+purpose: Guide the ball out straight, time it, and show the aim with a laser parallel to the bore
+requirements:
+- R6
+- R8
+- R9
+- R10
+- R11
+- R12
+- R14
+- R19
+author: turret-dossier agent
+interfaces:
+- id: I-set-screws
+  between:
+  - laser_screws
+  - laser_mount
+  kind: fastened
+  datum: the ring's three tapped M3 holes
+  description: Three M3 x 6 nylon-tip set screws (McMaster 93285A115) at 120 deg.
+  owner: S5-barrel
+- id: I-laser
+  between:
+  - laser
+  - laser_screws
+  kind: contact
+  datum: the set screws' tips
+  description: The laser held by the three set screws' tips, 2 mm clear of the ring's bore.
+  owner: S5-barrel
+- id: I-laser-foot
+  between:
+  - laser_mount
+  - laser_inserts
+  kind: fastened
+  datum: the socket pad, C z 22.6
+  description: 2 x M3 x 10 socket heads (laser_foot_screws) into the pad's inserts.
+  owner: S5-barrel
+parts:
+- id: barrel
+  function: Guides the ball out straight; carries the two chronograph gates; the last 15 mm blaze orange
+  interfaces:
+  - I-barrel
+  material:
+    name: PETG
+    process: FDM
+    wall_mm: 0.8
+    print_axis: standing
+  checks:
+  - gate:connectivity
+  - gate:assembly
+  - gate:motion
+  - gate:turret-path
+  - gate:turret-ammo
+- id: laser_mount
+  function: Holds the laser over the barrel on the bore's plane, with three boresight set screws
+  interfaces:
+  - I-set-screws
+  - I-laser-foot
+  - I-laser-pad
+  material:
+    name: PETG
+    process: FDM
+    wall_mm: 0.8
+  fasteners:
+  - to: laser_inserts
+    screws: turret_screw_m3x10
+    qty: 2
+    via: I-laser-foot
+  checks:
+  - gate:connectivity
+  - gate:assembly
+  - gate:motion
+  - gate:fasteners
+- id: laser
+  function: Shows the aim, parallel to the bore (Quarton VLM-650-03, < 1 mW, Class 2)
+  interfaces:
+  - I-laser
+  material:
+    name: Quarton VLM-650-03 LPT
+    process: bought
+  checks:
+  - gate:connectivity
+  - gate:assembly
+  - gate:motion
+- id: laser_screws
+  function: Hold and boresight the laser (3 x M3 x 6 nylon-tip set screws)
+  interfaces:
+  - I-set-screws
+  - I-laser
+  material:
+    name: McMaster 93285A115
+    process: bought
+  checks:
+  - gate:connectivity
+  - gate:assembly
+  - gate:motion
+- id: laser_inserts
+  function: The thread for the laser holder's two screws (2 x M3 heat-set)
+  interfaces:
+  - I-laser-inserts
+  - I-laser-foot
+  material:
+    name: McMaster 94459A140
+    process: bought
+  checks:
+  - gate:connectivity
+  - gate:assembly
+  - gate:motion
+  - gate:fasteners
+decisions:
+- id: T5.1
+  decision: The bore ball + 2.0 past the nip
+  why: 'Finding 14: the ball rides the floor and rolls to a steady topspin; pitch scatter 11.5 to 5 mrad'
+  alternatives:
+  - option: Ball + 1.5 throughout
+    rejected: 11.5 mrad pitch scatter
+- id: T5.2
+  decision: The laser on the cartridge's top, over the barrel on the bore's plane (2026-10-28)
+  why: It comes off with the cartridge, so its boresight is to the barrel it sits on; no sideways parallax
+  alternatives:
+  - option: On the cradle's front-left tab
+    rejected: 32 mm of sideways parallax, and it read as a box stuck on the side
+  - option: In the barrel
+    rejected: the barrel is a swap part and a ball path
+  - option: Under the barrel
+    rejected: in the depression arc over the deck

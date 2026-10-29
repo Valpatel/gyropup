@@ -69,56 +69,56 @@
    "file": "ceiling_noload.json",
    "pass": true,
    "failed": [],
-   "simulated_s": 8.5
+   "simulated_s": 9.1
   },
   {
    "test": "4.2",
    "file": "ceiling.json",
    "pass": true,
    "failed": [],
-   "simulated_s": 15.7
+   "simulated_s": 16.2
   },
   {
    "test": "4.3",
    "file": "speed_map.json",
    "pass": true,
    "failed": [],
-   "simulated_s": 36.7
+   "simulated_s": 39.0
   },
   {
    "test": "4.4",
    "file": "set_speed.json",
    "pass": true,
    "failed": [],
-   "simulated_s": 25.9
+   "simulated_s": 26.5
   },
   {
    "test": "4.5",
    "file": "spinup_current.json",
    "pass": true,
    "failed": [],
-   "simulated_s": 9.7
+   "simulated_s": 10.1
   },
   {
    "test": "4.6",
    "file": "fault_24v.json",
    "pass": true,
    "failed": [],
-   "simulated_s": 5.4
+   "simulated_s": 5.7
   },
   {
    "test": "4.7",
    "file": "release.json",
    "pass": true,
    "failed": [],
-   "simulated_s": 174.2
+   "simulated_s": 184.4
   },
   {
    "test": "4.8",
    "file": "tyre_growth.json",
    "pass": true,
    "failed": [],
-   "simulated_s": 23.7
+   "simulated_s": 24.1
   },
   {
    "test": "4.9",
@@ -139,28 +139,28 @@
    "file": "rails.json",
    "pass": true,
    "failed": [],
-   "simulated_s": 16.1
+   "simulated_s": 16.6
   },
   {
    "test": "5.1",
    "file": "feed.json",
    "pass": true,
    "failed": [],
-   "simulated_s": 145.3
+   "simulated_s": 146.3
   },
   {
    "test": "5.2",
    "file": "feed_max_rate.json",
    "pass": true,
    "failed": [],
-   "simulated_s": 48.7
+   "simulated_s": 48.9
   },
   {
    "test": "5.3",
    "file": "feed_worn_damp.json",
    "pass": true,
    "failed": [],
-   "simulated_s": 54.3
+   "simulated_s": 55.2
   },
   {
    "test": "5.4",
@@ -174,21 +174,21 @@
    "file": "feed_last_balls.json",
    "pass": true,
    "failed": [],
-   "simulated_s": 17.8
+   "simulated_s": 18.3
   },
   {
    "test": "6.1",
    "file": "boresight.json",
    "pass": true,
    "failed": [],
-   "simulated_s": 12.0
+   "simulated_s": 12.5
   },
   {
    "test": "6.2",
    "file": "groups.json",
    "pass": true,
    "failed": [],
-   "simulated_s": 26.4
+   "simulated_s": 27.1
   },
   {
    "test": "6.3",
@@ -202,28 +202,28 @@
    "file": "fire_while_panning.json",
    "pass": true,
    "failed": [],
-   "simulated_s": 16.0
+   "simulated_s": 16.1
   },
   {
    "test": "6.5",
    "file": "knockdown.json",
    "pass": true,
    "failed": [],
-   "simulated_s": 13.6
+   "simulated_s": 14.2
   },
   {
    "test": "6.6",
    "file": "temperature.json",
    "pass": true,
    "failed": [],
-   "simulated_s": 259.2
+   "simulated_s": 259.7
   },
   {
    "test": "6.7",
    "file": "release_feeding.json",
    "pass": true,
    "failed": [],
-   "simulated_s": 120.3
+   "simulated_s": 121.5
   },
   {
    "test": "6.8",

@@ -11,7 +11,7 @@ The rules it holds, whatever the host sends:
     200 ms, the host's arm request (seen low after the line is held: the pendant alone never arms, and nothing re-arms
     by itself after a SAFE), no trip and no latched fault; losing any of them is zero throttle and a stopped dial in
     the same millisecond;
-  - no dial step without both wheels' eRPM fresh, under 1.10 x KV x 12 V x 7 and READY (the pre-feed check);
+  - no dial step without both wheels' eRPM fresh, under NO_LOAD_RPM_105 x 7 and READY (the pre-feed check);
   - pan and tilt stay live when disarmed, at most 100 deg/s; homing (homing.py, unchanged) before anything moves on
     command.
 """
@@ -28,6 +28,8 @@ import sts
 from feed import FAULT as FEED_FAULT
 from feed import MOVING, OFFLINE, PARKED, Burst, FeedDriver, FeedPort
 from flywheel import Flywheels
+
+REFUSED_SUPPLY = 210           # EV_SHOT_REFUSED's reason: BUS_V over C.BUS_V_MAX
 
 ARMED_STATES = ('ARMED', 'SPIN_UP', 'READY', 'FIRING')
 LATCHING = M.F_ERPM_LIMIT | M.F_OVERSPEED | M.F_HOME_FAILED | M.F_SERVO_CONFIG | M.F_CONFIG_MISMATCH
@@ -52,7 +54,9 @@ class HAL:
     def can_send(self, cid: int, data: bytes): raise NotImplementedError
     def can_counters(self) -> Tuple[int, int, int]: return 0, 0, 0           # TEC, REC, bus-off count
     def laser(self, on: bool): pass                                          # A5 (not D13: the bootloader pulses it)
-    def bus_mv(self) -> int: return 24000                                    # A0, the ring's +24 V through 10:1
+    def bus_mv(self) -> int: return 0                                        # A0: BUS (12-54 V, D66) in mV, read through
+    #                                                                          R20 182 k / R21 10 k (19.2 : 1); 0 = not
+    #                                                                          measured, which takes the slowest profile
 
 
 class PulseMonitor:
@@ -134,6 +138,11 @@ class TurretFirmware:
         self.tilt_written_t = -1.0
         self.tilt_speed_reg = None
         self.tilt_clamped = 0                             # host tilt goals above level that were clamped
+        # D70: the supply profile from BUS_V (the lowest over BUS_V_WINDOW_S)
+        self.bus_v = 0.0
+        self.bus_win: deque = deque()                    # (t, v), v increasing: the window's minimum is bus_win[0]
+        self.profile = C.supply_profile(0.0)             # (ramp_s, rate cap, row's voltage)
+        self.profile_changes = 0
         # firing
         self.fire_req: Optional[dict] = None
         self.burst: Optional[Burst] = None
@@ -184,6 +193,7 @@ class TurretFirmware:
             self.trip_t = t
         self.trip = trip
         self.pulse.update(t, self.hal.pulse_edges())
+        self._supply(t)
         for cid, data in self.hal.can_recv():
             if cid in M.MSGS:
                 self._can(t, *M.unpack(cid, data))
@@ -202,6 +212,30 @@ class TurretFirmware:
         self._telemetry(t)
 
     # =================================================================== inputs
+    def _supply(self, t: float):
+        """D70: BUS_V's lowest reading over the window picks the ramp and the burst rate (config.supply_profile). A
+        longer ramp stretches a spin-up in progress; a lower rate slows a burst in progress; neither ever speeds up
+        mid-way."""
+        v = self.hal.bus_mv() / 1000.0
+        self.bus_v = v
+        w = self.bus_win
+        while w and w[-1][1] >= v:
+            w.pop()
+        w.append((t, v))
+        while w[0][0] < t - C.BUS_V_WINDOW_S:
+            w.popleft()
+        prof = C.supply_profile(w[0][1])
+        if prof[:2] != self.profile[:2]:
+            self.profile_changes += 1
+        self.profile = prof
+        self.fly.set_ramp(t, prof[0])
+        if self.burst is not None:
+            self.burst.min_period = max(self.burst.min_period, 1.0 / prof[1])
+
+    def supply_over(self) -> bool:
+        """BUS_V over D66's 54 V ceiling: nothing spins."""
+        return self.bus_v > C.BUS_V_MAX
+
     def _can(self, t: float, name: str, f: dict):
         if name == 'HOST_HEARTBEAT':
             self.hb_t = t
@@ -429,6 +463,8 @@ class TurretFirmware:
             if e is None:
                 continue
             good = e['mode'] == mode
+            if sid == C.ID_PAN:                                          # the printed pinion's ceiling (EEPROM 16)
+                good = good and 0 < e['max_torque'] <= C.PAN_MAX_TORQUE
             if sid == C.ID_TILT:
                 over = int(math.ceil(1.0 / C.DEG_PER_COUNT))          # at most 1 deg above level, into the stop
                 if C.TILT_SIGN < 0:
@@ -693,6 +729,10 @@ class TurretFirmware:
             self.bench = None
 
     def _spin_up(self, t: float, rpm: Optional[float] = None, throttle: Optional[float] = None):
+        if self.supply_over():                          # D66: 12-54 V; over it, refuse (the converters' ratings)
+            self._event(M.EV_SHOT_REFUSED, self.fire_req['req'] if self.fire_req else 0, REFUSED_SUPPLY)
+            self.fire_req = self.bench = None
+            return
         self.spin = {'rpm': rpm, 'throttle': throttle, 'phase': 'depress', 't': t}
         self._enter('SPIN_UP', t)
 
@@ -743,7 +783,7 @@ class TurretFirmware:
         elif s == 'READY':
             if self.fire_req is not None:
                 fr = self.fire_req
-                self.burst = Burst(fr['balls'], fr['rate'], t)
+                self.burst = Burst(fr['balls'], min(fr['rate'], self.profile[1]), t)
                 self.fire_req = None
                 self._enter('FIRING', t)
             elif self.bench is not None and self.bench['kind'] == 'spin':

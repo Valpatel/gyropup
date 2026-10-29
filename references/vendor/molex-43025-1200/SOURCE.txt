@@ -1,0 +1,11 @@
+Manufacturer: Molex
+Exact catalog identity: 43025-1200
+Retrieved: 2026-10-29
+Product CAD link observed on: https://jp.farnell.com/molex/43025-1200/-12-3mm-/dp/629285
+Download: https://www.farnell.com/cad/2561230.zip
+Archive SHA256: 5a5a0048f0f1b79843ea54856f47c0ef78d3aab3c095f8dc365396534dfebf42
+Private file: 430251200.stp
+Private file SHA256: 6bedba78a6d02e8cdec0fcb674d6a112a2b329a78610eb0ee70967ead8ff8f78
+Source status: distributor-hosted manufacturer-format model; direct primary copy/hash not obtained.
+Terms: no redistribution permission established; raw STEP and derived vendor geometry stay private.
+Limits: topology validity is not functional completeness. Housing wire-entry ends/cavities are simplified; see research/carrier-service-connectors. No mated-fit or physical service qualification.

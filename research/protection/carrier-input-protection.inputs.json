@@ -1,0 +1,276 @@
+{
+  "schema": 1,
+  "observed_on": "2026-10-29",
+  "status": "comparison_only_no_selected_architecture",
+  "source_commit": "6133c18fc735f47bac2e8eabde7967e27d9ae16e",
+  "source_bindings": [
+    {
+      "path": "sim/turret_power.py",
+      "sha256": "2470c01abf416bf413c3b1da03b48b811f7b6db8065e0084ffe90b3ae2634ff3"
+    },
+    {
+      "path": "docs/turret-wiring.md",
+      "sha256": "39546fb6baf7f357eaa0e7b591eb9440f653f7b702c961ade1a6234a9780dd50"
+    },
+    {
+      "path": "cad/turret_boards.py",
+      "sha256": "c7a115d2fe3cefddf46b0dd521e21076e1f7721235df3e7bd22fadb6e165707b"
+    },
+    {
+      "path": "catalog/turret.json",
+      "sha256": "64a971e371a515a925cbe66f5ce541ecbe8d5314c0509e7c3ef39fe39249f02e"
+    }
+  ],
+  "sources": {
+    "pololu_existing": {
+      "url": "https://www.pololu.com/product/4095",
+      "basis": "Manufacturer product page, read 2026-10-29"
+    },
+    "pololu_candidate": {
+      "url": "https://www.pololu.com/product/5577",
+      "dimension_url": "https://www.pololu.com/product/5577/specs",
+      "basis": "Manufacturer product page/specification, read 2026-10-29; typical continuous current is not a thermal guarantee"
+    },
+    "servo": {
+      "url": "https://docs.waveshare.com/ST3215_Servo",
+      "basis": "Manufacturer/distributor documentation for SKU22414, 12V variant; current tolerance not stated"
+    },
+    "d14": {
+      "url": "https://services.taiwansemi.com/storage/resources/datasheet/P6KE%20SERIES_P2203.pdf",
+      "revision": "P2203",
+      "basis": "Taiwan Semiconductor candidate manufacturer in existing unfrozen catalog; not transferable to another maker"
+    },
+    "active": {
+      "url": "https://www.analog.com/media/en/technical-documentation/data-sheets/ltc4368.pdf",
+      "revision": "C",
+      "pages": [
+        3,
+        4,
+        7,
+        11,
+        12,
+        13
+      ],
+      "basis": "Threshold bounds apply under stated electrical conditions; timing test conditions must not be generalized to arbitrary surge waveforms"
+    },
+    "fet": {
+      "url": "https://www.ti.com/lit/ds/symlink/csd19531q5a.pdf",
+      "revision": "B, May2014",
+      "pages": [
+        1,
+        3,
+        6
+      ],
+      "basis": "Candidate only; on-resistance bound at25C/10Vgate, safe operating area must cover actual startup and turnoff trajectory"
+    },
+    "wide_module": {
+      "url": "https://atta.szlcsc.com/upload/public/pdf/source/20240410/9508BE6CC3D74E556CF61D2C04F6A5CF.pdf",
+      "manufacturer_url": "https://www.tracopower.com/products/tep40uir.pdf",
+      "revision": "February7,2024",
+      "basis": "Manufacturer-authored datasheet mirrored by distributor; manufacturer URL returned403. Exact model thermal characteristic curves not retrieved; no full-temperature power claim",
+      "download_sha256": "f5a9ee4d8a515e6bb1bf39ebe940b7ed68e3995d5b0fee1f6c4979cc9321934d",
+      "default_test_conditions": "Nominal input voltage, resistive full load, +25 C after warm-up unless a particular specification states otherwise. Set/line/load/temperature coefficients are maxima; 8.3 K/W thermal impedance is typical."
+    }
+  },
+  "steady": {
+    "robot_max_v": 42.0,
+    "robot_min_v": 30.0,
+    "stand_min_v": 15.0,
+    "stand_max_v": 20.5,
+    "vout_nominal_v": 12.0,
+    "servo_max_v": 12.6,
+    "servo_stall_a": 2.7,
+    "aux_estimate_a": 0.01,
+    "servo_model_cap_a": 1.5,
+    "servo_model_move_a": 0.6,
+    "servo_model_hold_a": 0.15,
+    "stall_contingency_fraction": 0.2,
+    "source_resistance_estimates_ohm": {
+      "pack": 0.06,
+      "robot": 0.04,
+      "head": 0.015
+    },
+    "efficiency_scenarios": [
+      0.8,
+      0.9,
+      0.91,
+      0.95
+    ],
+    "evidence": "Source voltages and current estimates are design assumptions;2.7A is published stall current, not a certified peak bound.20% is an analyst screening contingency, not manufacturer tolerance."
+  },
+  "d14": {
+    "standoff_v": 43.6,
+    "breakdown_min_v": 48.5,
+    "breakdown_max_v": 53.6,
+    "breakdown_test_a": 0.001,
+    "clamp_max_v": 70.1,
+    "clamp_test_a": 8.6,
+    "pulse_rating_w": 600,
+    "pulse_form": "10/1000us; derating/repetition conditions apply"
+  },
+  "converters": {
+    "existing": {
+      "name": "D36V50F12",
+      "input_min_v": 13.3,
+      "input_max_v": 50,
+      "reverse_max_v": 40,
+      "set_accuracy_fraction": 0.04,
+      "dimensions_mm": [
+        25.4,
+        25.4,
+        9.5
+      ]
+    },
+    "same_board_outline_candidate": {
+      "name": "D42V55F12",
+      "input_min_v": 12,
+      "input_max_v": 60,
+      "set_accuracy_fraction": 0.03,
+      "dimensions_mm": [
+        25.4,
+        25.4,
+        9.017
+      ]
+    },
+    "wide_candidate": {
+      "name": "TEP40-7212UIR",
+      "input_min_v": 14,
+      "input_max_v": 160,
+      "surge_v": 185,
+      "surge_max_s": 1,
+      "output_max_a": 3.33,
+      "output_max_w": 40,
+      "set_accuracy_fraction": 0.01,
+      "line_fraction": 0.001,
+      "load_fraction": 0.001,
+      "temp_fraction_per_k": 0.0002,
+      "specified_ambient_c": [
+        -40,
+        85
+      ],
+      "reference_c": 25,
+      "max_case_c": 105,
+      "dimensions_mm": [
+        57.9,
+        36.8,
+        12.7
+      ]
+    }
+  },
+  "active_example": {
+    "name": "LTC4368IMS-2#PBF",
+    "purpose": "Unselected threshold/current examples, not a complete schematic",
+    "ov_ref_range_v": [
+      0.4925,
+      0.5075
+    ],
+    "ov_ref_nominal_v": 0.5,
+    "hysteresis_range_v": [
+      0.02,
+      0.032
+    ],
+    "leakage_abs_a": 1e-08,
+    "resistor_tolerance": 0.001,
+    "bottom_ohm": 4990,
+    "top_examples_ohm": [
+      430000,
+      464000
+    ],
+    "delay_at_specified_overdrive_us": 2,
+    "gate_turnoff_with_test_2n2_us": 6,
+    "timing_conditions": "2us comparator bound is at50mV overdrive and VIN12V;6us gate bound uses2.2nF. These do not certify proposed hardware at42V.",
+    "timing_overdrive_v": 0.05,
+    "forward_sense_range_v": [
+      0.04,
+      0.06
+    ],
+    "sense_examples_ohm": [
+      0.0125,
+      0.004
+    ],
+    "sense_tolerance": 0.01,
+    "fet_rds_25c_max_ohm": 0.0064,
+    "fet_hot_multiplier_scenario": 2.0,
+    "gate_up_range_a": [
+      2e-05,
+      6e-05
+    ],
+    "gate_cap_example_f": 3.3e-08,
+    "gate_cap_tolerance": 0.1,
+    "downstream_bank_f": 0.00094,
+    "bank_cap_tolerance_scenario": 0.2
+  },
+  "energy_examples": {
+    "inductance_h": [
+      1e-06,
+      1e-05,
+      0.0001
+    ],
+    "current_a": [
+      1,
+      3,
+      10
+    ],
+    "output_capacitance_f": 0.0001,
+    "source_pulse_v": 90,
+    "source_r_scenarios_ohm": [
+      0.1,
+      1,
+      5
+    ],
+    "pulse_duration_s": 0.0001,
+    "warning": "Sensitivity examples only. No measured source pulse, inductance, duration, repetition or energy bound exists."
+  },
+  "unknowns": [
+    "Battery/charger maximum including tolerance and faults",
+    "Local BUS transient waveform, polarity, rise time, duration and repetition",
+    "Source impedance versus frequency; lead inductance and damping",
+    "Actual servo startup/blocked/reversal current and regenerated energy",
+    "Enclosure ambient, airflow, heatsink path and converter derating",
+    "Output ripple and load-step overshoot at servo pads",
+    "D8/fuse reverse-fault coordination and exact holder qualification",
+    "Safe fault/recovery behavior and brownout effects on pendant/servo",
+    "Active board layout, MOSFET SOA, connector/cable route and heat path"
+  ],
+  "availability": [
+    {
+      "mpn": "TEP40-7212UIR",
+      "supplier_url": "https://www.digikey.com/en/products/detail/traco-power/TEP-40-7212UIR/12471340",
+      "stock": 3,
+      "price_usd": 138.18,
+      "factory_lead_weeks": 21,
+      "minimum_displayed_quantity": 1
+    },
+    {
+      "mpn": "D42V55F12 / Pololu5577",
+      "supplier_url": "https://www.pololu.com/product/5577",
+      "stock": null,
+      "status": "rationed; backorders allowed",
+      "price_usd": 47.95,
+      "factory_lead_weeks": null,
+      "minimum_displayed_quantity": 1
+    },
+    {
+      "mpn": "LTC4368IMS-2#PBF",
+      "supplier_url": "https://www.digikey.com/en/products/detail/analog-devices-inc/LTC4368IMS-2-PBF/6820038",
+      "stock": 1295,
+      "price_usd": 8.05,
+      "factory_lead_weeks": 25,
+      "minimum_displayed_quantity": 1
+    },
+    {
+      "mpn": "CSD19531Q5AT",
+      "supplier_url": "https://www.digikey.com/en/products/detail/texas-instruments/CSD19531Q5AT/4840661",
+      "stock": 1756,
+      "price_usd": 3.35,
+      "factory_lead_weeks": 12,
+      "minimum_displayed_quantity": 1
+    }
+  ],
+  "availability_limits": "Read2026-10-29; stock not reserved; lead times are replenishment, no promised delivery; order multiples unverified. Candidate resistor/capacitor/network selections and complete board BOM are not released.",
+  "thermal_sensitivity": {
+    "ambient_c": 50,
+    "wide_module_case_to_ambient_k_per_w": 8.3,
+    "basis": "50C is an analyst scenario;8.3K/W is manufacturer typical without heatsink, not a sealed-carrier bound."
+  }
+}

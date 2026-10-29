@@ -1,0 +1,1 @@
+(sym_lib_table (lib (name "Candidate")(type "KiCad")(uri "${KIPRJMOD}/candidate.kicad_sym")(options "")(descr "Authored candidate symbols; see pins.md")))
