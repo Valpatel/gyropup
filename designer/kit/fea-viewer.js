@@ -12,6 +12,7 @@
 import * as THREE from 'three';
 import { createStage } from './stage.js';
 import { section, slider, toggle, readouts, collapsiblePanel, overlayInsets } from './panel.js';
+import { createDataReader } from './portal-data.js';
 
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const clamp01 = (x) => (x < 0 ? 0 : x > 1 ? 1 : x);
@@ -130,9 +131,12 @@ border:1px solid var(--hairline);border-radius:6px;background:var(--surface-2);c
  * ignored.
  */
 export async function mountFeaViewer(element, url, opts = {}) {
-  const resp = await fetch(url, { cache: 'no-store' });
-  if (!resp.ok) throw new Error(`${resp.status} ${resp.statusText}`);
-  const data = await resp.json();
+  opts.onProgress?.('Downloading the structural report…');
+  const bytes=await createDataReader(fetch).bytes(url,{label:'Structural report'});
+  opts.onProgress?.('Decoding the structural surfaces…');
+  await new Promise(requestAnimationFrame);
+  let data;
+  try{data=JSON.parse(new TextDecoder().decode(bytes));}catch{throw new Error('The downloaded report is not valid JSON.');}
   if (data.format !== 'cadagent-fea-viewer') throw new Error('not a cad-agent FEA viewer file (Study.export_viewer)');
 
   if (!document.getElementById('fea-viewer-css')) {
@@ -159,6 +163,18 @@ export async function mountFeaViewer(element, url, opts = {}) {
     stress_mpa: num(h?.stress_mpa), of_strength: num(h?.of_strength), fails_at: num(h?.fails_at, Infinity),
     smoothed_mpa: h?.smoothed_mpa == null ? null : num(h.smoothed_mpa), hint: String(h?.hint ?? ''), mesh_note: String(h?.mesh_note ?? '') }));
 
+  // --- the surface: one vertex per triangle corner, so a triangle can turn black on its own (element stress)
+  const surf = data.surface;
+  const nv = Math.trunc(num(surf.vertices)), nt = Math.trunc(num(surf.triangles));
+  const P0 = decode(surf.positions), IDX = decode(surf.index), D = decode(surf.displacement);
+  const VM = decode(surf.von_mises), VMT = decode(surf.tri_von_mises), FL = decode(surf.flags);
+  const SM = surf.von_mises_smoothed ? decode(surf.von_mises_smoothed) : null;         // averaged corners ("smoothed")
+  const TFL = surf.tri_flags ? decode(surf.tri_flags) : new Uint8Array(nt);           // 1: support element, not checked
+  if (P0.length !== 3 * nv || D.length !== 3 * nv || VM.length !== nv || FL.length !== nv || IDX.length !== 3 * nt
+      || VMT.length !== nt || TFL.length !== nt || IDX.some((i) => i >= nv)) throw new Error('inconsistent surface arrays');
+  if(nv<3||nt<1||![P0,D,VM,VMT].every(values=>values.every(Number.isFinite))||IDX.some(i=>i<0||!Number.isInteger(i))||(SM&&SM.length!==nv))throw new Error('The structural report has invalid or empty surfaces.');
+  opts.onProgress?.('Preparing the structural view…');
+  await new Promise(requestAnimationFrame);
   element.innerHTML = `<div id="app"></div><div id="hud">
     <header id="topbar"><span class="glyph"></span><h1>${esc(title)}</h1>
       <span class="hud-tag fea-material">${esc(mat.name)}</span><span class="hud-tag fea-safety">SF ${fmt(res.safety_factor)}</span><span class="spacer"></span>
@@ -176,15 +192,6 @@ export async function mountFeaViewer(element, url, opts = {}) {
   const statusEl = element.querySelector('.fea-status'), legendEl = element.querySelector('.fea-legend');
   const labelsEl = element.querySelector('.fea-labels'), tipEl = element.querySelector('.fea-tip');
 
-  // --- the surface: one vertex per triangle corner, so a triangle can turn black on its own (element stress)
-  const surf = data.surface;
-  const nv = Math.trunc(num(surf.vertices)), nt = Math.trunc(num(surf.triangles));
-  const P0 = decode(surf.positions), IDX = decode(surf.index), D = decode(surf.displacement);
-  const VM = decode(surf.von_mises), VMT = decode(surf.tri_von_mises), FL = decode(surf.flags);
-  const SM = surf.von_mises_smoothed ? decode(surf.von_mises_smoothed) : null;         // averaged corners ("smoothed")
-  const TFL = surf.tri_flags ? decode(surf.tri_flags) : new Uint8Array(nt);           // 1: support element, not checked
-  if (P0.length !== 3 * nv || D.length !== 3 * nv || VM.length !== nv || FL.length !== nv || IDX.length !== 3 * nt
-      || VMT.length !== nt || TFL.length !== nt || IDX.some((i) => i >= nv)) throw new Error('inconsistent surface arrays');
   const DM = new Float32Array(nv);
   let dmaxS = 0;
   for (let i = 0; i < nv; i++) { DM[i] = Math.hypot(D[3 * i], D[3 * i + 1], D[3 * i + 2]); if (DM[i] > dmaxS) dmaxS = DM[i]; }
@@ -773,7 +780,9 @@ export async function mountFeaViewer(element, url, opts = {}) {
   update();
   S_.dirty = false;
   fit('iso');
+  stage.renderer.render(stage.scene,stage.camera);
   stage.start();
+  await new Promise(requestAnimationFrame);
   let disposed = false;
   function dispose() {                                // free the GPU and the listeners, empty the element
     if (disposed) return;

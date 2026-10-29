@@ -8,6 +8,8 @@
 <script type="importmap">{"imports": {"three": "./vendor/three/three.module.min.js", "three/addons/": "./vendor/three/addons/"}}</script>
 </head>
 <body>
+<div id="fea-loading" style="position:fixed;top:calc(var(--appnav-h,0px) + 64px);left:12px;right:12px;z-index:20;max-width:520px;margin:auto" hidden><p role="status">Loading the structural report…</p></div>
+<script>if(new URLSearchParams(location.search).has('case'))document.getElementById('fea-loading').hidden=false;</script>
 <div id="fea"><main style="position:relative;z-index:4;max-width:560px;margin:var(--appnav-h,0px) auto 0;padding:24px;max-height:calc(100vh - var(--appnav-h,0px));overflow:auto">
   <h1>Structural reports</h1>
   <p>Explore Gyropup’s structural reports, or open an earlier thigh study to try the interactive load, colour, and section controls.</p>
@@ -21,6 +23,7 @@
   // &back=<a page on this site>. Parameters that do not parse are ignored.
   import { mountFeaViewer } from './fea-viewer.js';
   import { mountAppNav } from './appnav.js';
+  import { createLoadingStatus } from './loading.js';
   const q = new URLSearchParams(location.search);
   // links stay on this site: no other origin and no javascript:, data: or similar URLs
   const sameOrigin = (h) => { try { const u = new URL(h, location.href); return u.origin === location.origin ? u : null; } catch { return null; } };
@@ -29,28 +32,28 @@
   const finite = (k) => (q.has(k) && q.get(k).trim() !== '' && Number.isFinite(+q.get(k)) ? +q.get(k) : null);
   const caseUrl = q.has('case') ? sameOrigin(q.get('case')) : null;
   const back = (q.has('back') && sameOrigin(q.get('back'))) ? q.get('back') : `${root}site/`;
-  if (q.get('nav') !== '0') await mountAppNav({ root, current: q.get('current') ?? '' });
+  if (q.get('nav') !== '0') void mountAppNav({ root, current: q.get('current') ?? '' });
   const el = document.getElementById('fea');
-  const fail = (msg) => {
-    el.innerHTML = '<div id="hud"><header id="topbar"><span class="glyph"></span><h1>FEA results</h1></header>'
-      + '<main id="stage-overlay"><div class="hud-card" style="max-width:520px"><p class="hud-note"></p></div></main></div>';
-    el.querySelector('.hud-note').textContent = msg;
-  };
+  const host=document.getElementById('fea-loading');host.replaceChildren();
+  const loading=createLoadingStatus(host,{id:'fea-load-status'});
   if (!q.has('case')) {
     // The static entry links also remain useful to no-script browsers and Markdown readers.
   } else if (!caseUrl) {
-    fail('The case must be a JSON file on this site (a relative URL or this origin).');
+    loading.fail('The case must be a JSON file on this site (a relative URL or this origin).');
   } else {
-    let v = null;
+    let request=0;
+    async function load(){
+    const own=++request,token=loading.begin('Loading the structural report…');
+    document.body.dataset.ready='0';let v=null;
     try {
       const name = decodeURIComponent(caseUrl.pathname.split('/').pop().replace(/\.json$/, ''));
       const title = q.get('title') ?? name;
-      v = await mountFeaViewer(el, caseUrl.href, { title, back, backLabel: 'Project site', panel: q.get('panel') === '0' ? false : undefined });
+      v = await mountFeaViewer(el, caseUrl.href, { title, back, backLabel: 'Project site', panel: q.get('panel') === '0' ? false : undefined,onProgress:message=>loading.update(message,token) });
       document.title = `${title}: FEA`;
     } catch (e) {
-      fail(`Could not load ${caseUrl.pathname}: ${e.message}`);
+      if(own===request)loading.fail(`This structural report could not load. ${e.message}`,{token,onRetry:load});
     }
-    if (v) {
+    if (v && own===request) {
       // each setter ignores what it cannot use (an unknown field or axis, a load that is not a number)
       if (q.has('field')) v.setField(q.get('field'));
       if (finite('load') !== null) v.setLoad(finite('load'));
@@ -59,8 +62,10 @@
       if (finite('spot') !== null) v.flyTo(finite('spot') - 1, { instant: true });
       if (q.get('play') === '1') v.play(true);
       window.__fea = v;
-      document.body.dataset.ready = '1';
+      document.body.dataset.ready = '1';loading.ready(token);
     }
+    }
+    await load();
   }
 </script>
 </body>

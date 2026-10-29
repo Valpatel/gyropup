@@ -25,7 +25,10 @@ export async function renderPortal(html, file, out) {
   const { document, window } = parseHTML(html);
   const source = await readFile(path.join(out, script.file), 'utf8');
   const imports = source.match(/^import .*$/gm) || [];
-  if (imports.length !== 1 || imports[0] !== "import { mountAppNav } from './kit/appnav.js';") {
+  const expectedImports = ["import { mountAppNav } from './kit/appnav.js';", "import { createLoadingStatus } from './kit/loading.js';",
+    file === 'designer/build.html' ? "import { createDataReader, isRecord, isMarkdown } from './kit/portal-data.js';"
+      : "import { createDataReader, isRecord } from './kit/portal-data.js';"];
+  if (imports.length !== expectedImports.length || imports.some((line,i)=>line!==expectedImports[i])) {
     throw new Error(`Update the Markdown renderer for changed imports in ${script.file}`);
   }
   const fetch = async input => {
@@ -41,10 +44,29 @@ export async function renderPortal(html, file, out) {
       throw error;
     }
   };
+  // Execute the exact published, pure data reader with this bundle's fetch, never
+  // import a checkout-local fallback. UI-only status feedback gets a DOM adapter;
+  // failed sections remain a build failure instead of a partial static snapshot.
+  const dataSource=await readFile(path.join(out,'designer/kit/portal-data.js'),'utf8');
+  if (/^import\s/m.test(dataSource)) throw new Error('Update the Markdown renderer for portal-data imports');
+  const dataAPI=new Function(dataSource.replace(/^export /gm,'')+'\nreturn {createDataReader,isRecord,isMarkdown};')();
+  const statuses=[];
+  const createLoadingStatus=(host)=>{
+    const element=document.createElement('p');element.className='gp-loading';element.hidden=true;host.append(element);
+    let generation=0;
+    const finish=(state,message,token=generation)=>{if(token!==generation)return false;++generation;element.dataset.state=state;element.textContent=message;element.hidden=state==='ready';return true;};
+    const api={element,begin(message){const token=++generation;element.hidden=false;element.dataset.state='loading';element.textContent=message;return token;},
+      update(message,token=generation){if(token===generation)element.textContent=message;},ready(token){return finish('ready','',token);},
+      fail(message,options={}){return finish('error',message,options.token);},unavailable(message,options={}){return finish('unavailable',message,options.token);},
+      dismiss(){++generation;element.hidden=true;},dispose(){++generation;element.remove();}};
+    statuses.push(api);return api;
+  };
   const AsyncFunction = Object.getPrototypeOf(async function () {}).constructor;
-  await new AsyncFunction('document', 'window', 'fetch', 'mountAppNav',
-    source.replace(imports[0], ''))(document, window, fetch, async () => {});
+  await new AsyncFunction('document','window','fetch','mountAppNav','createLoadingStatus','createDataReader','isRecord','isMarkdown',
+    imports.reduce((body,line)=>body.replace(line,''),source))(document,window,fetch,async()=>{},createLoadingStatus,dataAPI.createDataReader,dataAPI.isRecord,dataAPI.isMarkdown);
   if (!document.querySelector(script.ready)) throw new Error(`Empty Markdown data snapshot: ${file}`);
+  const errors=statuses.filter(status=>status.element.dataset.state==='error');
+  if(errors.length)throw new Error(`Incomplete Markdown data snapshot: ${file}: ${errors.map(status=>status.element.textContent).join('; ')}`);
   return document.toString();
 }
 

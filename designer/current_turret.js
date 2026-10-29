@@ -4,6 +4,7 @@
 import * as THREE from 'three';
 import { STLLoader } from 'three/addons/loaders/STLLoader.js';
 import { buildTurret, ballMesh } from './turret3d.js';
+import { createDataReader, isRecord, validateSTLBytes, validateGeometry } from './kit/portal-data.js';
 
 const M = .001, D2R = Math.PI / 180;
 const point = p => new THREE.Vector3(p[1] * M, p[2] * M, p[0] * M);
@@ -11,9 +12,13 @@ const TO_PAGE = new THREE.Matrix4().set(0,1,0,0, 0,0,1,0, 1,0,0,0, 0,0,0,1).mult
 const JOINTS = new Set(['base','pan','tilt','pinion','dial','wheel_l','wheel_r','flap']);
 
 export async function buildCurrentTurret(root, { color = 0xf5b82e } = {}) {
-  const source = `${root}exports/sim/turret_box/`, response = await fetch(source + 'manifest.json', { cache:'no-store' });
-  if (!response.ok) throw new Error(`Current turret manifest: ${response.status}`);
-  const manifest = await response.json(), turret = buildTurret(color), mount = point(manifest.pivots.pan);
+  const source=`${root}exports/sim/turret_box/`,reader=createDataReader(fetch),xyz=p=>Array.isArray(p)&&p.length===3&&p.every(Number.isFinite);
+  const manifest=await reader.json(source+'manifest.json',{label:'Current turret manifest',validate:m=>isRecord(m)&&Array.isArray(m.parts)&&m.parts.length>0
+    &&m.parts.every(p=>isRecord(p)&&typeof p.file==='string'&&p.file.length>0&&typeof p.name==='string')
+    &&[...JOINTS].every(group=>m.parts.some(p=>p.group===group))&&isRecord(m.pivots)
+    &&['pan','tilt','pinion','dial','wheel_l','wheel_r','flap'].every(key=>xyz(m.pivots[key]))&&xyz(m.muzzle)&&xyz(m.laser)
+    &&Array.isArray(m.pockets)&&m.pockets.every(xyz)&&Array.isArray(m.pile)&&m.pile.every(xyz)&&Number.isFinite(m.mechanics?.ball?.speed_mps)&&m.mechanics.ball.speed_mps>0});
+  const turret=buildTurret(color),mount=point(manifest.pivots.pan);
   // Keep the effect objects/API while replacing every procedural solid.
   const placeholders=[];
   turret.group.traverse(o => { if(o.isMesh && !o.userData.keep) placeholders.push(o); });
@@ -30,7 +35,8 @@ export async function buildCurrentTurret(root, { color = 0xf5b82e } = {}) {
   }
   const loader=new STLLoader(), parts=[];
   await Promise.all(manifest.parts.filter(p=>JOINTS.has(p.group)).map(async entry=>{
-    const geometry=await loader.loadAsync(source+entry.file+(entry.sha256?`?v=${entry.sha256}`:''));
+    const bytes=await reader.bytes(source+entry.file+(entry.sha256?`?v=${entry.sha256}`:''),{label:'Turret part '+entry.name});
+    validateSTLBytes(bytes);const geometry=validateGeometry(loader.parse(bytes));
     geometry.applyMatrix4(TO_PAGE);
     if(entry.group==='base') geometry.translate(-mount.x,-mount.y,-mount.z);
     if(entry.group==='pinion') { const p=point(manifest.pivots.pinion); geometry.translate(-p.x,-p.y,-p.z); }

@@ -31,6 +31,7 @@
 </head>
 <body>
 <div id="app"></div>
+<div id="talk-loading" style="position:fixed;top:72px;left:12px;right:12px;z-index:20;max-width:520px;margin:auto"><p role="status">Loading Gyropup’s current robot…</p></div>
 <div id="hud">
   <header id="topbar">
     <span class="glyph"></span><h1>Gyropup talk</h1>
@@ -51,7 +52,7 @@
     </details>
     <details class="hud-section" open>
       <summary><span class="tick"></span>Services</summary>
-      <div class="body"><button class="hud-btn" id="detect">Detect services</button><div id="svc">not checked yet</div></div>
+      <div class="body"><button class="hud-btn" id="detect" disabled>Detect services</button><div id="service-loading"></div><div id="svc">not checked yet</div></div>
     </details>
   </aside>
 </div>
@@ -63,11 +64,19 @@
   import { buildRobotV2 } from '../robot_v2.js';
   import { createEyes } from './eyes.js';
   import { collapsiblePanel, overlayInsets, section, slider } from '../kit/panel.js';
+  import { createLoadingStatus } from '../kit/loading.js';
 
-  const stage = createStage(document.getElementById('app'), { height: 1 });
-  const eyes=createEyes({iris:'#55e9ff'}),setMood=eyes.set.bind(eyes);
-  eyes.set=mood=>{setMood(mood);document.body.dataset.mood=mood;};
+  const loadingHost=document.getElementById('talk-loading');loadingHost.replaceChildren();
+  const loading=createLoadingStatus(loadingHost,{id:'talk-load-status',onRetry:load});
+  let stage,eyes,request=0;
+  async function load(){
+  const own=++request,token=loading.begin('Loading Gyropup’s current robot…');document.body.dataset.ready='0';
+  try {
+  stage??=createStage(document.getElementById('app'),{height:1});
+  if(!eyes){eyes=createEyes({iris:'#55e9ff'});const setMood=eyes.set.bind(eyes);eyes.set=mood=>{setMood(mood);document.body.dataset.mood=mood;};}
   const robot=await buildRobotV2('../../',{eyes});
+  if(own!==request)return;
+  loading.update('Preparing Gyropup’s face and conversation…',token);
   stage.root.add(robot.group);
   const bounds=new THREE.Box3();robot.group.updateMatrixWorld(true);
   robot.group.traverseVisible(object=>{if(object.isMesh){object.geometry.computeBoundingBox();bounds.union(object.geometry.boundingBox.clone().applyMatrix4(object.matrixWorld));}});
@@ -132,13 +141,26 @@
   for (const ev of ['hello', 'fire', 'hit', 'down', 'miss', 'reload', 'empty', 'fall', 'low_battery']) btn(document.getElementById('events'), ev, () => talk.react(ev));
   const lines = { happy: 'Wheee! That was fun!', curious: 'Ooh, what is that?', sleepy: 'Yawn... charger time?', grumpy: 'Hey! Foam balls at targets only!', surprised: 'Whoa! Did you see that?', focused: 'Locking on to the target...' };
   for (const [mood, line] of Object.entries(lines)) btn(document.getElementById('moods'), mood, () => talk.say(line, { mood }));
-  document.getElementById('detect').onclick = async () => {
+  const detectButton=document.getElementById('detect');
+  const serviceLoading=createLoadingStatus(document.getElementById('service-loading'),{id:'service-load-status',onRetry:detectServices});
+  async function detectServices(){
+    const serviceToken=serviceLoading.begin('Checking voice, ears and conversation services…');detectButton.disabled=true;
+    try{
     const s = await talk.detect(true);
     document.getElementById('svc').textContent =
       `voice: ${s.tts.ok ? `Piper ${s.tts.voice ?? ''} at ${s.tts.base}` : s.tts.name}\nears:  ${s.stt.ok ? 'Whisper ' + s.stt.base : s.stt.name}\nbrain: ${s.llm.ok ? s.llm.base + ' ' + s.llm.model : 'scripted'}`;
-  };
+      serviceLoading.ready(serviceToken);
+    }catch(error){serviceLoading.fail('Services could not be checked. '+error.message,{token:serviceToken,onRetry:detectServices});}
+    finally{detectButton.disabled=false;}
+  }
+  detectButton.onclick=detectServices;detectButton.disabled=false;
 
   setTimeout(() => talk.say('Hi! I am Gyropup. Want to play a target game?', { mood: 'happy', hold: 60000 }), 400);
+  await new Promise(requestAnimationFrame);stage.renderer.render(stage.scene,stage.camera);
+  loading.ready(token);document.body.dataset.ready='1';
+  }catch(error){if(own===request)loading.fail('Gyropup could not load. '+error.message,{token,onRetry:load});}
+  }
+  await load();
 </script>
 </body>
 </html>
