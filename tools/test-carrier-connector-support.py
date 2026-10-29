@@ -24,6 +24,17 @@ class SupportEvidence(unittest.TestCase):
         changed=copy.deepcopy(self.receipt);changed['checks'][0]['pass']=False
         with self.assertRaisesRegex(ValueError,'failed checks'):MOD.validate_receipt(changed)
 
+    def test_deleted_clearance_false_summary_and_duplicate_checks_reject(self):
+        for target in ('support:installed_neighbours','carrier:nonmating_neighbours',
+                       'carrier_added_material:all_neighbours'):
+            changed=copy.deepcopy(self.receipt)
+            changed['checks']=[c for c in changed['checks'] if c['id']!=target]
+            with self.assertRaisesRegex(ValueError,'check coverage'):MOD.validate_receipt(changed)
+        changed=copy.deepcopy(self.receipt);changed['checks'].append(copy.deepcopy(changed['checks'][0]))
+        with self.assertRaisesRegex(ValueError,'check coverage'):MOD.validate_receipt(changed)
+        changed=copy.deepcopy(self.receipt);changed['bounded_geometry_checks_pass']=False
+        with self.assertRaisesRegex(ValueError,'failed checks'):MOD.validate_receipt(changed)
+
     def test_source_closure_change_rejects(self):
         with tempfile.TemporaryDirectory() as tmp:
             root=Path(tmp)

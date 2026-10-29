@@ -20,6 +20,26 @@ import print_provenance as provenance
 PUBLIC_FILES={'carrier-support-candidate.step','C3-support-candidate.step','C3-support-layout.step'}
 
 
+def expected_check_ids():
+    """Published evidence coverage; a missing failed result cannot become green."""
+    names={'valid:carrier','valid:support','carrier_depth_unchanged','carrier_added_material_valid',
+           'carrier_added_material:all_neighbours','carrier:nonmating_neighbours','support:installed_neighbours',
+           'support:carrier_seat','negative:closed_panel_blocks_housing','latch_finger_reservation',
+           'C3_straight_exit:module','C3_straight_exit:fixed','C3_service:mated->unplugged',
+           'C3_service:unplugged->outboard_before_park','C3_service:outboard_before_park->parked',
+           'negative:C3_unplug_blocker','negative:blocked_new_hole','panel_thickness_in_drawing_range',
+           'public_STEP_roundtrip:carrier-support-candidate','public_STEP_roundtrip:C3-support-candidate'}
+    names|={f'valid:{group}#{i}' for group in ('c3_support_nuts','c3_support_screws') for i in range(2)}
+    names|={f'{prefix}{i}' for prefix in ('preserve_original_mount:pcb:','preserve_original_mount:retainer:',
+                                        'original_retainer_driver:') for i in range(4)}
+    names|={f'C2_straight_exit:{i}' for i in range(6)}
+    names|={f'{prefix}{i}' for prefix in ('nut_seated:','screw_clearance_holes:','nut_inside_sweep:',
+                                        'nut_install_before_PCB:','negative:nut_removal_with_PCB:',
+                                        'support_driver_bench:','negative:blocked_driver:',
+                                        'screw_nut_nominal_stack:') for i in range(2)}
+    return names
+
+
 def context_paths(root=ROOT):
     return [root/'tools/check-carrier-connector-support.py',
             root/'tools/check-carrier-connector-inputs.py',
@@ -46,7 +66,11 @@ def validate_receipt(receipt,root=ROOT):
         raise ValueError('Support connector identities differ')
     if receipt['readiness'] is not False or receipt['load_screen']['structural_readiness'] is not False:
         raise ValueError('Bounded support check cannot establish readiness')
-    if not receipt['checks'] or any(c['pass'] is not True for c in receipt['checks']):
+    checks=receipt.get('checks',[])
+    ids=[c.get('id') for c in checks]
+    if set(ids)!=expected_check_ids() or len(ids)!=len(expected_check_ids()):
+        raise ValueError('Support check coverage is incomplete, duplicate or unexpected')
+    if receipt.get('bounded_geometry_checks_pass') is not True or any(c['pass'] is not True for c in checks):
         raise ValueError('Support candidate has failed checks')
     artifacts=receipt.get('public_artifact_sha256')
     if not isinstance(artifacts,dict) or set(artifacts)!=PUBLIC_FILES:
