@@ -71,8 +71,8 @@
 
 /* Soft light and grounded shadows carry the notice's depth into quieter surfaces. */
 .hero-scene{background:radial-gradient(ellipse at 28% 12%,#f4fcff9c,transparent 62%),linear-gradient(145deg,#d9edf3,#a9cfde);box-shadow:inset 0 1px 1px #ffffffc7,inset 0 0 0 1px #749dab55,0 24px 48px #204a581a,0 4px 10px #204a5810}
-.landing-page .primary{background:linear-gradient(180deg,#ce4a1c,#ac3210);border:1px solid #a42d0c;box-shadow:inset 0 1px 0 #ffffff40,0 3px 0 #7f260e,0 7px 14px #a83b1726}
-.landing-page .primary:hover{background:linear-gradient(180deg,#d75120,#b53a14);box-shadow:inset 0 1px 0 #ffffff40,0 4px 0 #7f260e,0 10px 18px #a83b1726}
+.landing-page .primary{background:linear-gradient(180deg,#c74718,#ac3210);border:1px solid #a42d0c;box-shadow:inset 0 1px 0 #ffffff40,0 3px 0 #7f260e,0 7px 14px #a83b1726}
+.landing-page .primary:hover{background:linear-gradient(180deg,#bd4016,#a62f0f);box-shadow:inset 0 1px 0 #ffffff40,0 4px 0 #7f260e,0 10px 18px #a83b1726}
 .mission{border:1px solid #173d3c12;box-shadow:inset 0 1px 0 #ffffffc7,0 12px 24px #173d3c0d,0 2px 4px #173d3c08}
 .mission-orange{background:linear-gradient(155deg,#ffeadb,#f9d9c1)}.mission-blue{background:linear-gradient(155deg,#ecf8fb,#d4e8ef)}.mission-yellow{background:linear-gradient(155deg,#fff4cc,#f8e7ae)}
 .play-section,.stack-card,.closing{box-shadow:inset 0 1px 0 #ffffffd6,0 14px 30px #173d3c0c,0 2px 5px #173d3c08}
