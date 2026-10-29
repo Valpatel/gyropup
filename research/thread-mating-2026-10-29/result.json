@@ -60,7 +60,7 @@
   "volume_measurements": null,
   "conservation_result": null,
   "original_command_script_sha256": "71bf6367a43e369f36b5cb01a3ae349cedf19c2c6ca16c7db5295367968d9ec0",
-  "public_reproduction_script_sha256": "afa5168fccdf9873441a8b6ab851c00b8bd80a2cfda2a898d41119f593f3b979",
+  "public_reproduction_script_sha256": "dd0cc09e2e8ce4795751a15554f9a66bafa3ff7b94e2cdf76c0764019ce25973",
   "logs": {
     "clocked-run.log": "d5d686768a7186c129e72899b7738f878098df9c22bbf3267d6600df46a54989",
     "rejected-flat-matrix.log": "0899d2fd2665bf0cb4cc2ad693f938b8d2bc9575b635ca7171d09447cda63277"
@@ -75,6 +75,7 @@
   "public_wrapper_changes_after_historical_run": [
     "Requires explicit fresh output directory and refuses before opening existing evidence.",
     "Requires clean exact toolkit commit and rejects failed git identity/status queries.",
-    "Records exit code for preflight failures as well as completed/failed probe phases."
+    "Records exit code for preflight failures as well as completed/failed probe phases.",
+    "Requires absolute run/output paths so checkout changes cannot redirect output or completion markers."
   ]
 }

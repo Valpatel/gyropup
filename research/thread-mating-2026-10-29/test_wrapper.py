@@ -6,7 +6,7 @@ import subprocess
 import tempfile
 import unittest
 
-SCRIPT=Path(__file__).with_name('run-clocked-probe.sh')
+SCRIPT=Path(__file__).resolve().with_name('run-clocked-probe.sh')
 SHA='2ad426943ce2c7232875e105e50810849f9a3e5e'
 
 class WrapperTests(unittest.TestCase):
@@ -25,11 +25,18 @@ class WrapperTests(unittest.TestCase):
         self.env={**os.environ,'PATH':str(bins)+os.pathsep+os.environ['PATH'],
                   'CAD_RUN_ROOT':str(self.root),'CAD_PHASE_RUN':str(self.output),
                   'MOCK_COMMIT':SHA,'MOCK_DIRTY':'','MOCK_CALLS':str(self.calls)}
-    def run_wrapper(self):return subprocess.run(['bash',str(SCRIPT)],env=self.env,capture_output=True,text=True)
+    def run_wrapper(self):return subprocess.run(['bash',str(SCRIPT)],env=self.env,cwd=self.root,capture_output=True,text=True)
     def test_existing_output_preserves_evidence(self):
         self.output.mkdir();log=self.output/'run.log';log.write_text('original evidence\n')
         self.assertNotEqual(self.run_wrapper().returncode,0)
         self.assertEqual(log.read_text(),'original evidence\n');self.assertFalse((self.output/'done').exists());self.assertFalse(self.calls.exists())
+    def test_relative_paths_rejected_before_output(self):
+        for key in ('CAD_RUN_ROOT','CAD_PHASE_RUN'):
+            with self.subTest(key=key):
+                original=self.env[key];self.env[key]='relative'
+                self.assertNotEqual(self.run_wrapper().returncode,0)
+                self.assertFalse(self.output.exists());self.assertFalse((self.root/'relative').exists());self.assertFalse(self.calls.exists())
+                self.env[key]=original
     def test_wrong_revision_never_reaches_cad(self):
         self.env['MOCK_COMMIT']='0'*40
         self.assertNotEqual(self.run_wrapper().returncode,0)

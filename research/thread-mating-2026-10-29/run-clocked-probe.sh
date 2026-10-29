@@ -2,6 +2,11 @@
 set -u
 CAD_RUN_ROOT="${CAD_RUN_ROOT:-$HOME/gyropup-mechanical-runs/20261029-integration}"
 CAD_PHASE_RUN="${CAD_PHASE_RUN:?Set a fresh output directory for this diagnostic}"
+# Keep all paths stable across the subsequent checkout-directory change.
+if [[ "$CAD_RUN_ROOT" != /* || "$CAD_PHASE_RUN" != /* ]]; then
+  echo 'CAD_RUN_ROOT and CAD_PHASE_RUN must be absolute paths' >&2
+  exit 2
+fi
 # Refuse before opening any existing evidence file. The parent must already exist.
 if ! mkdir "$CAD_PHASE_RUN"; then
   echo 'Refusing to reuse or replace the diagnostic output directory' >&2
