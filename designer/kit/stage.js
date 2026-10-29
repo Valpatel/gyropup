@@ -44,6 +44,10 @@ export function createStage(container, opts = {}) {
   container.appendChild(renderer.domElement);
 
   const scene = new THREE.Scene();
+  // A transparent canvas leaves the CSS sky bright at dusk. Keep sky and lit
+  // geometry on the same eased daylight level in every playground.
+  const sky = { day: new THREE.Color(0xe8efdc), night: new THREE.Color(0x081319) };
+  scene.background = sky.day.clone();
   const camera = new THREE.PerspectiveCamera(38, 1, 0.05, 50);   // near/far are set from the model size in frame()
   const controls = new OrbitControls(camera, renderer.domElement);
   controls.enableDamping = true;
@@ -110,6 +114,7 @@ export function createStage(container, opts = {}) {
   const light = { level: 1, current: 1, base: { hemi: 1.1, key: 2.8, fill: 1.0, rim: 1.0, grid: 0.12, pad: 1.0, ambient: 0.35 } };
   function applyLight() {
     const s = light.current, lit = 0.04 + 0.96 * s;
+    scene.background.copy(sky.night).lerp(sky.day, s);
     hemi.intensity = light.base.hemi * lit;
     key.intensity = light.base.key * lit;
     fill.intensity = light.base.fill * lit;
@@ -204,6 +209,7 @@ export function createStage(container, opts = {}) {
 
   return {
     renderer, scene, camera, controls, root, frame, setInsets, fitView,
+    setSceneBackground(day = 0xe8efdc, night = 0x081319) { sky.day.set(day); sky.night.set(night); applyLight(); },
     setSceneLight(v, immediate = false) { light.level = Math.max(0, Math.min(1, v)); if (immediate) { light.current = light.level; applyLight(); } },
     onFrame(cb) { callbacks.push(cb); },
     start() { if (!running) { running = true; requestAnimationFrame(tick); } },

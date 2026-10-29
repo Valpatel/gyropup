@@ -37,11 +37,20 @@ try {
  await page.waitForFunction(()=>window.__sim?.bench()?.active);await settle();
  // Mouse and trackpad input: preserve magnitude while avoiding an immediate dolly jump.
  await setRadius();const one=await wheel(1);assert.equal(one.before,one.after);assert.equal(one.prevented,true);await settle();const fine=await distance();
- await setRadius();const big=await wheel(120);assert.equal(big.before,big.after);
- const intermediate=[];for(let i=0;i<12;i++){await page.waitForTimeout(20);intermediate.push(await distance());}await settle();const notch=await distance();
+ await setRadius();
+ // Sample actual frames, not wall-clock polls: SwiftShader CI can render fewer
+ // than three frames in 240ms even though the camera is easing correctly.
+ const big=await page.evaluate(async()=>{
+  const s=window.__sim.stage, radius=()=>s.camera.position.distanceTo(s.controls.target), before=radius();
+  s.renderer.domElement.dispatchEvent(new WheelEvent('wheel',{deltaY:120,bubbles:true,cancelable:true}));
+  const after=radius(), intermediate=[];
+  for(let i=0;i<16;i++){await new Promise(requestAnimationFrame);intermediate.push(radius());}
+  return {before,after,intermediate};
+ });
+ assert.equal(big.before,big.after);const intermediate=big.intermediate;await settle();const notch=await distance();
  assert.ok(fine>2 && fine<2.001,'One-pixel trackpad motion remains fine-grained');
  assert.ok(notch>2.025 && notch<2.04,'A 120-pixel wheel notch changes distance by about1.55%, not6.35%');
- assert.ok(intermediate.filter(v=>v>2.00001 && v<notch-1e-5).length>=3,'Wheel distance eases through multiple rendered positions');
+ assert.ok(new Set(intermediate.filter(v=>v>2.00001 && v<notch-1e-5).map(v=>v.toFixed(7))).size>=3,'Wheel distance eases through multiple rendered positions');
  assert.ok(intermediate.every((v,i)=>!i || v>=intermediate[i-1]-1e-8),'Easing is monotonic');
  const normalizedRadius=2*Math.pow(1/.95,.25*48/100);
  await setRadius();await wheel(3,1);await reaches(normalizedRadius);const line=await distance();
@@ -61,12 +70,21 @@ try {
  // Real two-finger touch input via the browser protocol; symmetric pinch avoids intentional two-finger pan.
  if(engine===chromium){
   await setRadius();const client=await context.newCDPSession(page);const x=canvas.width*.45,y=canvas.height*.5;
+  const aim=()=>page.evaluate(()=>{const s=window.__sim.bench().api.state;return [s.panCmd,s.tiltCmd];});
+  const initialAim=await aim();
   await client.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{x:x-50,y,id:1},{x:x+50,y,id:2}]});
   const pinch=[];
   for(let i=1;i<=8;i++){await client.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[{x:x-50-i*5,y,id:1},{x:x+50+i*5,y,id:2}]});await page.waitForTimeout(20);pinch.push(await distance());}
   await client.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});await settle();
   assert.ok((await distance())<1.85 && (await distance())>1.65,'Native touch pinch uses fine continuous scaling');
   assert.ok(pinch.every((v,i)=>!i || v<=pinch[i-1]+1e-7) && new Set(pinch.map(v=>v.toFixed(5))).size>=5,`Touch pinch progresses continuously: ${pinch}`);
+  close(initialAim,await aim(),'Pinch never changes turret aim');
+  await client.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{x:x-30,y,id:1},{x:x+30,y,id:2}]});
+  await client.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[{x:x-31,y,id:1},{x:x+31,y,id:2}]});
+  await client.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});
+  close(initialAim,await aim(),'Tiny two-finger gesture is not an aim tap');
+  await page.mouse.click(x,y,{button:'right'});
+  close(initialAim,await aim(),'Right click is not an aim tap');
   await client.detach();
  }
  // Stats card collapse/expand must not change pose, projection or camera-follow ownership.

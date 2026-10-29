@@ -12,6 +12,7 @@ import { createEyes, eyesGlyph } from './character/eyes.js';
 import { BALL, BALL_SPIN, ballMesh, createBalls } from './turret3d.js';
 import { evaluate, indexCatalog, legPose, effectiveDesign, resolvePart } from './model.js';
 import { createSfx } from './sfx.js';
+import { createRobotActions } from './robot_actions.js';
 
 const $ = (s) => document.querySelector(s);
 const getJson = async (u) => { const r = await fetch(u, { cache: 'no-cache' }); if (!r.ok) throw new Error(`${u}: ${r.status}`); return r.json(); };
@@ -71,8 +72,8 @@ const updateInsets = () => {
   const dock = document.querySelector('.gp-dock-body');                  // the talk dock along the bottom
   const dr = dock?.offsetParent ? dock.getBoundingClientRect() : null;
   if (dr?.height && !dock.closest('.gp-dock')?.classList.contains('collapsed')) ins.bottom = Math.max(ins.bottom, window.innerHeight - dr.top + 8);
-  const bar = document.getElementById('tb-actions');               // the turret bench's ARM / FIRE bar
-  const br = bar && !bar.hidden ? bar.getBoundingClientRect() : null;
+  const bar = document.getElementById(state.bench ? 'tb-actions' : 'robot-actions');
+  const br = bar && !bar.hidden && bar.offsetParent ? bar.getBoundingClientRect() : null;
   if (br?.height) ins.bottom = Math.max(ins.bottom, window.innerHeight - br.top + 6);
   stage.setInsets(ins);
 };
@@ -105,13 +106,15 @@ const paintSound = () => { soundBtn.innerHTML = `<span class="dot"></span>SOUND 
 soundBtn.onclick = () => { sfx.setEnabled(!sfx.enabled); paintSound(); };
 paintSound();
 $('#topbar').insertBefore(soundBtn, $('#alive'));
-// demo mode: every replay in turn, each once, the camera easing from one to the next (?demo=1 starts in it)
-const demo = { on: false };
+// Demo is on for a fresh visit. Explicit live-mode links and demo=0 remain opt-outs.
+const demo = { on: q.get('demo') !== '0' && q.get('run') !== 'none' };
+let robotActions = null;
 const demoBtn = document.createElement('button');
 demoBtn.className = 'hud-pill';
 const paintDemo = () => { demoBtn.innerHTML = `<span class="dot"></span>DEMO ${demo.on ? 'ON' : 'OFF'}`; demoBtn.classList.toggle('on', demo.on); };
 demoBtn.title = 'Play every physics run in turn';
-demoBtn.onclick = () => { demo.on = !demo.on; paintDemo(); if (demo.on && !state.replay) nextReplay(); };
+demoBtn.onclick = toggleDemo;
+function toggleDemo() { demo.on = !demo.on; paintDemo(); paintRobotActions(); if (demo.on && !state.replay) nextReplay(); }
 paintDemo();
 $('#topbar').insertBefore(demoBtn, soundBtn);
 async function nextReplay() {
@@ -127,7 +130,6 @@ async function nextReplay() {
 let bench = null, benchLoading = null, designRequest = 0;
 const robotCache = new Map();
 async function enterBench(request) {
-  if (demo.on) { demo.on = false; paintDemo(); }
   if (!bench) {
     const loading = benchLoading ??= import('./turret_bench.js').then(module => module.createTurretBench({ stage, sfx, panel: $('#panel'), root: '../', onLayout: () => updateInsets() }));
     try {
@@ -145,10 +147,11 @@ async function enterBench(request) {
   if (request !== designRequest) return;
   stopReplay();
   state.bench = true;
+  paintRobotActions();
   // A darker range makes the flight guide readable; keep the robot's daylight
   // preference separate so switching modes restores its original appearance.
   stage.setSceneLight(0.5);
-  stage.scene.background = new THREE.Color(0x14272b);
+  stage.setSceneBackground(0x294044, 0x071115);
   yard.material.color.setHex(0x304447);
   if (state.robot) { state.robot.group.visible = false; if (state.robot.turret) state.robot.turret.laser.visible = false; }
   for (const l of state.robot?.lights ?? []) l.spot.visible = false;
@@ -169,11 +172,12 @@ function leaveBench() {
   state.bench = false;
   bench?.exit();
   stage.setSceneLight(daylight);
-  stage.scene.background = null;
+  stage.setSceneBackground();
   yard.material.color.setHex(0xb8cba0);
   document.body.classList.remove('bench-mode');
   for (const s of robotSections) if (s !== replayPanel) s.hidden = false;
   for (const el of [runSel, demoBtn, $('#alive')]) el.style.display = '';
+  paintRobotActions();
 }
 
 async function loadDesign(value) {
@@ -234,6 +238,8 @@ async function loadDesign(value) {
   telemetry(state.robot.setPose({ height: state.height }));
   beginTransition();
   await listRuns(value, request);
+  if (request === designRequest && document.body.dataset.ready && demo.on) await nextReplay();
+  paintRobotActions();
 }
 
 // ---- replays of physics runs (exports/sim/<design>/<scenario>.json)
@@ -440,6 +446,7 @@ async function startReplay(key) {
     return;
   }
   if (request !== replayRequest || state.bench) return;
+  gun.queue = []; // No latent live burst may fire after watching a recording.
   state.cameraTransition = null;
   beginTransition();
   const movers = reconcileProps(run);
@@ -558,10 +565,10 @@ function renderSummary() {
 // ---- panel
 const panel = $('#panel');
 const pose = section(panel, 'Pose', { note: 'legs keep the wheels under the hips' });
-const sh = slider(pose, { label: 'Height', min: 0, max: 1, step: 0.01, value: state.height, fmt: (v) => `${Math.round(v * 100)}%`, onInput: (v) => { state.height = v; } });
-slider(pose, { label: 'Body pitch', min: -20, max: 20, step: 0.5, value: 0, unit: '°', onInput: (v) => { state.pitch = v * Math.PI / 180; } });
-slider(pose, { label: 'Leg difference (lean sideways)', min: -80, max: 80, step: 1, value: 0, unit: ' mm', onInput: (v) => { state.rollMM = v; } });
-slider(pose, { label: 'Drive speed', min: -1.5, max: 1.5, step: 0.05, value: 0, unit: ' m/s', fmt: (v) => `${v.toFixed(2)} m/s`, onInput: (v) => { state.speed = v; } });
+const sh = slider(pose, { label: 'Height', min: 0, max: 1, step: 0.01, value: state.height, fmt: (v) => `${Math.round(v * 100)}%`, onInput: (v) => { takeControl(); state.height = v; } });
+slider(pose, { label: 'Body pitch', min: -20, max: 20, step: 0.5, value: 0, unit: '°', onInput: (v) => { takeControl(); state.pitch = v * Math.PI / 180; } });
+slider(pose, { label: 'Leg difference (lean sideways)', min: -80, max: 80, step: 1, value: 0, unit: ' mm', onInput: (v) => { takeControl(); state.rollMM = v; } });
+slider(pose, { label: 'Drive speed', min: -1.5, max: 1.5, step: 0.05, value: 0, unit: ' m/s', fmt: (v) => `${v.toFixed(2)} m/s`, onInput: (v) => { takeControl(); state.speed = v; } });
 
 const replaySec = section(panel, 'Replay', { note: 'physics run from MuJoCo' });
 const replayPanel = replaySec.parentElement;
@@ -578,12 +585,12 @@ replaySec.appendChild(playBtn);
 const tele = readouts(section(panel, 'Telemetry', { note: 'static, from the design' }));
 const gunSec = section(panel, 'Turret', { note: 'removable head payload' });
 const gunInfo = readouts(gunSec);
-slider(gunSec, { label: 'Pan', min: -180, max: 180, step: 1, value: 0, unit: '°', onInput: (v) => { gun.pan = v * Math.PI / 180; } });
-slider(gunSec, { label: 'Tilt (never above horizontal)', min: -20, max: 0, step: 0.5, value: -3, unit: '°', onInput: (v) => { gun.tilt = v * Math.PI / 180; } });
+slider(gunSec, { label: 'Pan', min: -180, max: 180, step: 1, value: 0, unit: '°', onInput: (v) => { takeControl(); gun.pan = v * Math.PI / 180; } });
+slider(gunSec, { label: 'Tilt (never above horizontal)', min: -20, max: 0, step: 0.5, value: -3, unit: '°', onInput: (v) => { takeControl(); gun.tilt = v * Math.PI / 180; } });
 const gunRow = document.createElement('div');
 gunRow.className = 'hud-chips';
 for (const [label, fn] of [['FIRE', () => queueShots(1)], ['BURST 8', () => queueShots(8)],
-  ['RELOAD', () => { gun.mag = gun.capacity; gun.queue = []; sfx.reload(); react('reload'); renderGun(); }]]) {
+  ['RELOAD', reloadRobot]]) {
   const b = document.createElement('button');
   b.className = 'hud-btn' + (label === 'FIRE' ? ' primary' : '');
   b.textContent = label;
@@ -600,7 +607,19 @@ const laserChips = chips(laserRow, [{ id: 'auto', html: 'AUTO', title: 'On when 
 laserChips.mark('auto');
 const fovToggle = toggle(gunSec, 'Show sensor fields of view', false, (on) => { gun.showFov = on; if (state.robot) state.robot.fov.visible = on; });
 
+function takeControl() {
+  demo.on = false; paintDemo();
+  runSel.value = '';
+  if (state.replay) stopReplay(); else ++replayRequest;
+  paintRobotActions();
+}
+function reloadRobot() {
+  takeControl(); gun.mag = gun.capacity; gun.queue = [];
+  sfx.reload(); react('reload'); renderGun();
+}
 function queueShots(n) {
+  if (!state.robot?.turret || !gun.attached) return;
+  takeControl();
   const now = performance.now() / 1000;
   // in auto, the laser comes on and the flywheels spin up first: a visible and audible "about to fire" warning
   const start = Math.max(now, gun.queue.at(-1) ?? 0) + (gun.laserMode === 'auto' && !gun.laserOn ? 0.4 : 0);
@@ -608,6 +627,7 @@ function queueShots(n) {
   gun.armedUntil = Math.max(gun.armedUntil, start + n / 10 + 1.2);
 }
 function renderGun() {
+  paintRobotActions();
   const t = state.robot?.turret;
   gunInfo.set(t ? [['hopper', `${gun.mag} / ${gun.capacity} balls`, gun.mag ? 'ok' : 'fail'],
                    ['ammo', `foam balls, Ø${(BALL.d * 1000).toFixed(1)} mm, ${(BALL.mass * 1000).toFixed(2)} g`],
@@ -633,8 +653,8 @@ eyeChips.mark('neutral');
 const scene = section(panel, 'Scene');
 toggle(scene, 'Headlights', true, (on) => { gun.headlights = on; for (const l of state.robot?.lights ?? []) { l.spot.visible = on; l.lens.material.emissiveIntensity = on ? 1.6 : 0.05; } });
 slider(scene, { label: 'Daylight (lower it for dusk)', min: 0, max: 1, step: 0.01, value: 1, fmt: (v) => v.toFixed(2), onInput: (v) => { stage.setSceneLight(v); setDaylight(v); } });
-toggle(scene, 'Liveliness (idle motion, blinks, moods)', true, (on) => { state.alive = on; $('#alive').classList.toggle('on', on); });
-$('#alive').onclick = () => { state.alive = !state.alive; $('#alive').classList.toggle('on', state.alive); };
+const aliveToggle = toggle(scene, 'Liveliness (idle motion, blinks, moods)', true, (on) => { state.alive = on; $('#alive').classList.toggle('on', on); });
+$('#alive').onclick = () => { state.alive = !state.alive; aliveToggle.checked = state.alive; $('#alive').classList.toggle('on', state.alive); };
 const robotSections = [...$('#panel').querySelectorAll('details.hud-section')];     // hidden while the turret bench is up
 
 // headlights: dim in daylight (as eyes see them), full strength at dusk
@@ -688,6 +708,7 @@ let teleT = 0;
 const prevTurret = { pan: 0, tilt: 0 };
 stage.onFrame((t, dt) => {
   stepCamera(dt);
+  paintRobotActions();
   if (state.bench) { bench?.step(t, dt); return; }
   if (!state.robot) return;
   if (state.replay) {
@@ -835,9 +856,26 @@ function tiltLimit(pan) {
   return (t0 + (t1 - t0) * (d - p0) / (p1 - p0)) * Math.PI / 180;
 }
 
-window.__sim = { state, stage, eyes, get talk() { return talk; }, get props() { return propMeshes; }, setHeight: (v) => { state.height = v; sh.set(v); }, bench: () => bench };
+function paintRobotActions() {
+  robotActions?.paint({ hidden: !!state.bench, demoOn: demo.on, replay: !!state.replay, playing: !!state.replay?.playing,
+    scenario: state.replay?.key?.split('/').pop(), mag: gun.mag, capacity: gun.capacity, attached: !!state.robot?.turret && gun.attached });
+}
+robotActions = createRobotActions({ parent: $('#stage-overlay'), onDemo: toggleDemo,
+  onPlay: () => { if (state.replay) state.replay.playing = !state.replay.playing; paintRobotActions(); },
+  onActivity: async (activity) => {
+    if (activity === 'live') { takeControl(); return; }
+    if (activity === 'demo') { demo.on = true; paintDemo(); if (!state.replay) await nextReplay(); }
+    else {
+      demo.on = false; paintDemo();
+      const key = [...runSel.options].find(o => o.value.endsWith(`/${activity}`))?.value;
+      if (key) { runSel.value = key; await startReplay(key); }
+    }
+    paintRobotActions();
+  }, onFire: queueShots, onReload: reloadRobot, onLayout: updateInsets });
+paintRobotActions();
+window.__sim = { state, stage, eyes, gun, demo, sfx, get talk() { return talk; }, get props() { return propMeshes; }, setHeight: (v) => { state.height = v; sh.set(v); }, bench: () => bench };
 sel.onchange = () => loadDesign(sel.value);
-runSel.onchange = () => startReplay(runSel.value);
+runSel.onchange = () => { demo.on = false; paintDemo(); if (!runSel.value) takeControl(); else startReplay(runSel.value); };
 await loadDesign(sel.value);
 // Gyropup's voice: speech bubbles over its head, spoken lines, a talk dock (character/talk.js)
 try {
@@ -865,15 +903,14 @@ updateInsets();
 const canvas = stage.renderer.domElement;
 canvas.style.opacity = '0';
 if (q.get('panel') === '0') panelFold.set(true);
-if (q.get('sound') === '0') { sfx.setEnabled(false); paintSound(); talk?.setMuted?.(true); }
+if (q.has('sound')) { sfx.setEnabled(q.get('sound') !== '0'); paintSound(); talk?.setMuted?.(!sfx.enabled); }
 setTimeout(() => { if (!state.replay && !state.bench) react(Math.random() < 0.5 ? 'hello' : 'banter'); }, 1200);   // replays greet with their own line
 // ?cam=side|front|iso and ?height=0..1 for screenshots and docs; ?run=<scenario> starts a replay
 const camAt = { side: [1, 0.35, 0], front: [0, 0.35, 1], iso: [0.6, 0.45, 1], back: [0, 0.35, -1] }[q.get('cam')];
 if (camAt) { const dist = state.robot.info.heightM * 2.4; stage.camera.position.set(...camAt.map((v) => v * dist)); stage.controls.target.set(0, state.robot.info.heightM * 0.45, 0); }
 if (q.has('height')) window.__sim?.setHeight?.(+q.get('height'));
-if (q.get('alive') === '0') { state.alive = false; $('#alive').classList.remove('on'); }
+if (q.get('alive') === '0') { state.alive = false; aliveToggle.checked = false; $('#alive').classList.remove('on'); }
 if (q.get('demo') === '1') { demo.on = true; paintDemo(); }
-if (q.has('fire')) queueShots(+q.get('fire') || 1);
 if (q.has('light')) { if (!state.bench) stage.setSceneLight(+q.get('light'), true); setDaylight(+q.get('light')); }
 if (q.get('fov') === '1') { gun.showFov = true; fovToggle.checked = true; if (state.robot) state.robot.fov.visible = true; }
 // target practice is the default view; ?run=none for the live pose
@@ -885,6 +922,8 @@ if (runName !== 'none' && sel.value !== '@designer' && !state.bench && [...runSe
   await startReplay(key);
   if (q.has('t') && state.replay) { state.replay.t = +q.get('t'); state.replay.playing = q.get('play') === '1'; }
 }
+if (q.has('fire')) queueShots(+q.get('fire') || 1);
+paintRobotActions();
 stage.start();                                         // the camera is where it will stay: show the stage
 requestAnimationFrame(() => { canvas.style.transition = 'opacity .35s ease'; canvas.style.opacity = '1'; });
 document.body.dataset.ready = '1';
