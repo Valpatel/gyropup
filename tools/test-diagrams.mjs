@@ -19,6 +19,10 @@ try{
   const diagrams=await page.locator('.cad-diagram').evaluateAll(nodes=>nodes.map(el=>({theme:el.dataset.theme,state:el.dataset.state,labelCount:el.querySelectorAll('svg text,svg .nodeLabel,svg foreignObject').length,rect:el.querySelector('svg').getBoundingClientRect().toJSON()})));
   assert.ok(diagrams.every(d=>d.theme==='light'&&d.labelCount>0&&d.rect.width>100&&d.rect.height>30),'Match the actual light document even with a dark OS preference');
   assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'No document overflow on phone');
+  for(const figure of await page.locator('.cad-diagram').all()){
+   const scrolled=await figure.evaluate(el=>{const view=el.querySelector('.cad-diagram-view'),hint=el.querySelector('.cad-diagram-hint'),overflow=view.scrollWidth>view.clientWidth+1;const nodes=[...el.querySelectorAll('svg .node')];const node=nodes.sort((a,b)=>b.getBoundingClientRect().right-a.getBoundingClientRect().right)[0];view.scrollLeft=view.scrollWidth;const r=node?.getBoundingClientRect(),v=view.getBoundingClientRect();const result={overflow,hintVisible:!hint.hidden,text:node?.textContent.trim(),right:r?.right,edge:v.right,scroll:view.scrollLeft};view.scrollLeft=0;return result;});
+   assert.equal(scrolled.hintVisible,scrolled.overflow);assert.ok(scrolled.text,'A semantic node must exist');assert.ok(scrolled.right<=scrolled.edge+1,'The rightmost semantic node is reachable');if(scrolled.overflow)assert.ok(scrolled.scroll>0);
+  }
   const markdown=await page.request.get(base+doc.path.replace(/\.html$/,'.md'));assert.equal(markdown.status(),200);assert.match(await markdown.text(),/```mermaid/);
   await page.screenshot({path:`${out}/${engine.name()}-${width}-${doc.file.replaceAll('/','-')}.png`,fullPage:true});cases.push({width,...doc,diagrams});await context.close();
  }
