@@ -1,0 +1,11 @@
+# Video duration does not prove a moving simulation
+
+On 2026-10-29 the production Progress page displayed hip-frame E1 as a zero-second video. `exports/leg/fea/summary.json` had only a PNG: its original producer used `--no-anim`. The player assigned that image as a video poster while leaving native controls visible. The underlying case is static FEA, with SF 1.65 below the required 2.00, not a transient simulation.
+
+The bounded reproduction at `831532a951ae55df4d1f09470382ba7779c71fa3` matched 0.2678 mm and 13.91 MPa. A first 12-second/288-frame encode passed `ffprobe` and full FFmpeg decoding, yet sampled frames were frozen: PyVista's `screenshot()` rendered initially but reused the framebuffer after geometry, camera and text changed. Explicit `plot.render()` before every capture fixed the motion. The corrected renderer is `c312c1546511`; its output and source receipt are committed with PR #72.
+
+Evidence: `python3 tools/check-study-media.py` reports 288 decoded frames, 12 seconds, model-region mean color difference 29.8296 and 29.6083% of channels differing by more than 20 between unloaded and loaded frames at the same camera direction. `tools/test-study-media.py` rejects a duplicated-frame control plus eleven source/artifact/label mutations. The reproduced PNG SHA-256 matches the original: `69bef81914bd4103edfd2e7c1275747bbbe84ff1b5abd3c54dc8fa619feab5d3`. Phone Chromium and WebKit verify real advancing decoded frames, failed-download recovery, reduced motion and missing-media stills.
+
+Corrective rule: use an image for a still, explicit pending/error states for media, and video controls only after finite duration and playable data exist. Static deformation must be labeled as load scaling, with physical values separate from exaggerated display motion. Check actual decoded model pixels, not merely encoder success, file size, duration or changing captions. Bind clips to source, fields, report identity and output hashes; do not promote a historical load case to the current design without a new analysis.
+
+Limits: this fixes presentation. It does not clear E1's failed strength gate, validate the future 100 lb target, simulate fractures, or qualify hardware. See [structural study media](../../docs/structural-study-media.md).

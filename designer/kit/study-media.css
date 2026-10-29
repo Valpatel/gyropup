@@ -1,0 +1,10 @@
+.study-media { min-width: 0; overflow: hidden; border: 1px solid var(--hairline); border-radius: 14px; background: #f8fafc; box-shadow: 0 12px 30px #10263a12; }
+.study-media-stage { position: relative; aspect-ratio: 4 / 3; background: #102130; }
+.study-media-stage img, .study-media-stage video { position: absolute; width: 100%; height: 100%; inset: 0; object-fit: contain; border: 0; border-radius: 0; }
+.study-media [hidden] { display: none !important; }
+.study-media-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 12px 14px 0; }
+.study-media-kind { color: #304c62; font: 700 12px var(--font-mono); flex: 1 1 160px; }
+.study-media button { min-height: 44px; padding: 8px 14px; border: 1px solid #176177; border-radius: 8px; background: #17495b; color: #fff; font: 600 13px var(--font-ui, sans-serif); cursor: pointer; }
+.study-media button:focus-visible { outline: 3px solid #df7800; outline-offset: 3px; }
+.study-media-status { margin: 0; padding: 12px 14px 16px; color: #385164; font-size: 13px; line-height: 1.5; }
+.study-media[data-state="error"] .study-media-status { color: #8b290d; }
