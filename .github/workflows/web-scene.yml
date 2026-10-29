@@ -18,6 +18,7 @@ jobs:
               python3 tools/test-base-board-interfaces.py
               python3 tools/test-carrier-connector-inputs.py
               python3 tools/test-carrier-connector-pose.py
+              python3 tools/test-carrier-connector-support.py
               python3 research/carrier-insert-fit/verify.py
               python3 research/carrier-insert-fit/test_guards.py
               npm run test:turret
