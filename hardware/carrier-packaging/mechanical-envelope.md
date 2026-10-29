@@ -354,7 +354,7 @@ transforms; Python standard-library calculations on 2026-10-29 gave the values
 shown. No kernel or new geometry was run. Reproduce the key length screen with:
 
 ```python
-from math import hypot
+from math import hypot, sqrt, sin, cos, radians, isclose
 pivot = (85.285, 43.88)
 anchor = (40.0, -35.5, 13.0)
 radius = hypot(84.0 - pivot[0], 69.98 - pivot[1])
@@ -365,6 +365,25 @@ assert abs(maximum - 138.48195538027392) < 1e-9
 outer_radius = hypot(82.15-pivot[0], 69.98-pivot[1])
 array_maximum = 19.1 + hypot(hypot(pivot[0]-anchor[0], pivot[1]-anchor[1]) + outer_radius, 43.075-anchor[2])
 assert abs(array_maximum - 140.5588235466063) < 1e-9
+# The existing five mount axes partition into two and three, without new holes.
+angles = (30, 90, 150, 210, 330)
+service_mounts = []
+for angle in angles:
+    x, y = 84*cos(radians(angle)), 84*sin(radians(angle))
+    if x >= 0 and sqrt(3)*x-y >= 0:
+        service_mounts.append(angle)
+assert service_mounts == [30, 330]
+assert [a for a in angles if a not in service_mounts] == [90, 150, 210]
+# Bare sector interval bounds; the actual step-lap must be checked after generation.
+assert isclose(-sqrt(86**2-31**2), -80.21845174272562)
+assert isclose(86*sin(radians(60)), 74.47818472546172)
+assert 31+100 > 121.01  # beyond both previously tested horizontal tool shafts
+assert sqrt(82**2-56**2) > 56  # outside the low attachment zone before translation
+assert isclose(34-22.89/2-21, 1.555)  # proposed lower ligament; no strength acceptance
+# C3 quarter-turn parking must follow removal of the +30-degree bumper bolt:
+assert 62.285 < 84*cos(radians(30)) < 81.385
+assert 0 < 43.315-84*sin(radians(30)) < 3  # parked exit enters the proposed Ø6 shaft
+assert 84*sin(radians(30))-26.98 > 3  # mandatory seated exit is below that shaft
 ```
 
 | Read input | SHA256 at this investigation |
