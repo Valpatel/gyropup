@@ -8,6 +8,9 @@ HERE = Path(__file__).resolve().parent
 spec = importlib.util.spec_from_file_location('packaging_inventory', HERE / 'inventory.py')
 I = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(I)
+spec = importlib.util.spec_from_file_location('packaging_allocation', HERE / 'allocation.py')
+A = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(A)
 
 
 def validate_inventory(document, expected=None):
@@ -69,6 +72,39 @@ def validate_package_limits(document):
             or tvs['land_constraints_mm'] != {'pad_width_min':3.3,'each_pad_length_min':2.4,'inner_gap_max':4.2}):
         raise ValueError('SMCJ height uses axisD; mixed pad limits do not give a maximum land envelope')
     return {'exact_package_axis_controls':2}
+
+
+def validate_allocation(document):
+    if document != A.allocation():
+        raise ValueError('paper assignment differs from current exact sources and declared candidate')
+    boards = _unique_rows(document['assemblies'], 'assembly')
+    if set(boards) != {'CONTROL_TERMINATION','PAN_POWER'}:
+        raise ValueError('two explicit assemblies required')
+    assigned = [ref for row in boards.values() for ref in row['electronic_members']]
+    inventory = I.inventory()
+    expected = {r['id'] for r in inventory['rows']}
+    if len(assigned) != len(set(assigned)) or set(assigned) != expected:
+        raise ValueError('every electronic item must be assigned exactly once')
+    if set(boards['CONTROL_TERMINATION']['electronic_members']) != {r for r in expected if r.startswith('L.')}:
+        raise ValueError('legacy control assignment must be explicit')
+    controls = _unique_rows(boards['CONTROL_TERMINATION']['wire_pad_candidates'], 'control pad')
+    power = _unique_rows(boards['PAN_POWER']['wire_pad_candidates'], 'power pad')
+    if len(controls) != 19 or len(power) != 4:
+        raise ValueError('physical pad candidates must account for bypasses and four interboard wires')
+    for pin in ('BUS_IN','GND_IN','12V_OUT','GND_OUT'):
+        if controls['CTRL.POWER.'+pin]['net'] != power['POWER.'+pin]['net']:
+            raise ValueError('interboard endpoint nets differ')
+    cap = document['height_screens']['capacitor']
+    cap_margin = cap['available_top_z_mm']-cap['pcb_top_z_mm']-cap['body_max_mm']-cap['vent_free_min_mm']
+    module = document['height_screens']['converter']
+    module_top = module['candidate_module_pcb_bottom_z_mm']+module['nominal_module_pcb_mm']+module['nominal_top_parts_mm']
+    lower_gap = module['candidate_module_pcb_bottom_z_mm']-module['nominal_bottom_parts_mm']-module['base_pcb_top_z_mm']-module['candidate_under_module_part_height_max_mm']
+    if cap['qualified'] is not False or module['qualified'] is not False:
+        raise ValueError('unknown stack tolerances cannot produce qualification')
+    return {'paper_assigned_electronics':len(assigned),'control_wire_pad_candidates':len(controls),
+            'power_wire_pad_candidates':len(power),'cap_margin_before_unknown_allowances_mm':round(cap_margin,6),
+            'module_nominal_top_z_mm':round(module_top,6),'module_nominal_under_clearance_mm':round(lower_gap,6),
+            'physical_allocation_qualified':False}
 
 
 def _unique_rows(rows, label):
@@ -184,6 +220,7 @@ def validate_terminals(document):
 if __name__ == '__main__':
     result = validate_inventory(json.loads((HERE / 'component-inventory.json').read_text()))
     result.update(validate_reference(json.loads((HERE / 'front-reference-contract.json').read_text())))
+    result.update(validate_allocation(json.loads((HERE / 'allocation-proposal.json').read_text())))
     result.update(validate_package_limits(json.loads((HERE / 'package-envelopes.json').read_text())))
     result.update(validate_terminals(json.loads((HERE / 'terminal-contract.json').read_text())))
     print(json.dumps(result, indent=2, sort_keys=True))

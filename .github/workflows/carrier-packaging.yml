@@ -7,6 +7,7 @@ on:
       - 'research/protection/carrier-practical-architecture.inputs.json'
       - 'cad/turret_boards.py'
       - 'catalog/turret.json'
+      - 'catalog/hardware.json'
       - 'docs/base-board-interfaces.md'
       - 'docs/carrier-service-connectors.md'
       - '.github/workflows/carrier-packaging.yml'

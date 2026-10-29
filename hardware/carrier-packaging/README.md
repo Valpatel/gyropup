@@ -11,3 +11,5 @@ Ownership in this single worktree:
 The current [electrical inventory](electrical-envelope.md) and [mechanical envelope](mechanical-envelope.md) record the proposed 44×40×18 mm region and why two simpler placements fail the service-path screen. They remain work in progress, not fit or fabrication evidence.
 
 Next: finish enumerating the complete LTC4359 reference network plus retained cutoff/control/converter hardware and external terminations; coordinate a real contour, per-side heights, mounting/heat path and connector/tool/strain-relief zones against seated, parked and removal states. Preserve exact source identities and explicitly unresolved clamp, startup, regeneration, thermal and material/retention limits. Independent review is required before integration.
+
+The [two-assembly paper allocation](paper-allocation.md) assigns all47 electronic entries without claiming component placement. It records19 control-board and4 power-board wire-pad candidates, a finite power-board outline and conditional height screens; mounting, routing, thermal and service-path gates remain open.

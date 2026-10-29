@@ -180,5 +180,37 @@ class InventoryTests(unittest.TestCase):
             else:p['bourns_mfr300']['formed_flat_envelope_mm']=[12,25.9,3]
             with self.subTest(mode=mode),self.assertRaises(ValueError):C.validate_package_limits(d)
 
+    def test_paper_assignment_covers_all_electronics_and_wire_ends(self):
+        d=json.loads((HERE/'allocation-proposal.json').read_text());r=C.validate_allocation(d)
+        self.assertEqual((r['paper_assigned_electronics'],r['control_wire_pad_candidates'],r['power_wire_pad_candidates']),(47,19,4))
+        self.assertEqual(r['cap_margin_before_unknown_allowances_mm'],0.5)
+        self.assertEqual(r['module_nominal_top_z_mm'],37.67)
+        self.assertEqual(r['module_nominal_under_clearance_mm'],0.8)
+        self.assertFalse(r['physical_allocation_qualified'])
+
+    def test_paper_assignment_rejects_omitted_or_duplicate_components(self):
+        original=json.loads((HERE/'allocation-proposal.json').read_text())
+        for mode in ('missing','duplicate','move_legacy'):
+            d=copy.deepcopy(original)
+            if mode=='missing':d['assemblies'][1]['electronic_members'].pop()
+            elif mode=='duplicate':d['assemblies'][1]['electronic_members'].append(d['assemblies'][0]['electronic_members'][0])
+            else:d['assemblies'][1]['electronic_members'].append(d['assemblies'][0]['electronic_members'].pop())
+            with self.subTest(mode=mode),self.assertRaises(ValueError):C.validate_allocation(d)
+
+    def test_paper_assignment_rejects_hidden_wire_end_or_changed_net(self):
+        original=json.loads((HERE/'allocation-proposal.json').read_text())
+        for mode in ('missing_ground','duplicate','protected_bus'):
+            d=copy.deepcopy(original);p=d['assemblies'][1]['wire_pad_candidates']
+            if mode=='missing_ground':p[:]=[r for r in p if r['id']!='POWER.GND_OUT']
+            elif mode=='duplicate':p.append(copy.deepcopy(p[0]))
+            else:p[0]['net']='PAN_INPUT'
+            with self.subTest(mode=mode),self.assertRaises(ValueError):C.validate_allocation(d)
+
+    def test_unknown_stack_allowances_cannot_be_zeroed_or_qualified(self):
+        original=json.loads((HERE/'allocation-proposal.json').read_text())
+        for group,key,value in [('capacitor','mount_gap_mm',0),('capacitor','vent_free_min_mm',0),('capacitor','qualified',True),('converter','profile_tolerance_mm',0),('converter','nominal_bottom_parts_mm',0),('converter','qualified',True)]:
+            d=copy.deepcopy(original);d['height_screens'][group][key]=value
+            with self.subTest(group=group,key=key),self.assertRaises(ValueError):C.validate_allocation(d)
+
 
 if __name__=='__main__':unittest.main()

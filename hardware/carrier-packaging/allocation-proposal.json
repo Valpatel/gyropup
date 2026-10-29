@@ -1,0 +1,318 @@
+{
+  "assemblies": [
+    {
+      "additional_unassigned_parts": [
+        "H.F4",
+        "H.D8",
+        "H.D14",
+        "physical BUS/return connections and retention"
+      ],
+      "candidate_outline_mm": [
+        50.8,
+        30,
+        1.6
+      ],
+      "electronic_members": [
+        "L.U1",
+        "L.R1",
+        "L.R2",
+        "L.C1",
+        "L.C2",
+        "L.C3",
+        "L.D1",
+        "L.R3",
+        "L.F1"
+      ],
+      "id": "CONTROL_TERMINATION",
+      "placement": null,
+      "proposal": "Replacement custom control/termination PCB within existing outline, not reuse of an assumed empty perfboard area. All legacy parts require new exact placement/formed leads.",
+      "wire_pad_candidates": [
+        {
+          "endpoint": "C2-P.module.+",
+          "hole_land_wire_qualification": null,
+          "id": "CTRL.C2-P.module.+",
+          "net": "BUS_HEAD_FUSED",
+          "position": null
+        },
+        {
+          "endpoint": "C2-P.module.-",
+          "hole_land_wire_qualification": null,
+          "id": "CTRL.C2-P.module.-",
+          "net": "GND",
+          "position": null
+        },
+        {
+          "endpoint": "C2-S.module.3",
+          "hole_land_wire_qualification": null,
+          "id": "CTRL.C2-S.module.3",
+          "net": "SAFETY_A",
+          "position": null
+        },
+        {
+          "endpoint": "C2-S.module.4",
+          "hole_land_wire_qualification": null,
+          "id": "CTRL.C2-S.module.4",
+          "net": "SAFETY_B",
+          "position": null
+        },
+        {
+          "endpoint": "C3.module.1",
+          "hole_land_wire_qualification": null,
+          "id": "CTRL.C3.module.1",
+          "net": "BUS_HEAD_FUSED",
+          "position": null
+        },
+        {
+          "endpoint": "C3.module.10",
+          "hole_land_wire_qualification": null,
+          "id": "CTRL.C3.module.10",
+          "net": "GND",
+          "position": null
+        },
+        {
+          "endpoint": "C3.module.11",
+          "hole_land_wire_qualification": null,
+          "id": "CTRL.C3.module.11",
+          "net": "BUS_HEAD_FUSED",
+          "position": null
+        },
+        {
+          "endpoint": "C3.module.12",
+          "hole_land_wire_qualification": null,
+          "id": "CTRL.C3.module.12",
+          "net": "GND",
+          "position": null
+        },
+        {
+          "endpoint": "C3.module.2",
+          "hole_land_wire_qualification": null,
+          "id": "CTRL.C3.module.2",
+          "net": "BUS_HEAD_FUSED",
+          "position": null
+        },
+        {
+          "endpoint": "C3.module.3",
+          "hole_land_wire_qualification": null,
+          "id": "CTRL.C3.module.3",
+          "net": "GND",
+          "position": null
+        },
+        {
+          "endpoint": "C3.module.4",
+          "hole_land_wire_qualification": null,
+          "id": "CTRL.C3.module.4",
+          "net": "GND",
+          "position": null
+        },
+        {
+          "endpoint": "C3.module.7",
+          "hole_land_wire_qualification": null,
+          "id": "CTRL.C3.module.7",
+          "net": "SAFETY_PULSE",
+          "position": null
+        },
+        {
+          "endpoint": "C3.module.8",
+          "hole_land_wire_qualification": null,
+          "id": "CTRL.C3.module.8",
+          "net": "GND",
+          "position": null
+        },
+        {
+          "endpoint": "PAN.servo.datasheet1",
+          "hole_land_wire_qualification": null,
+          "id": "CTRL.PAN.servo.datasheet1",
+          "net": "GND",
+          "position": null
+        },
+        {
+          "endpoint": "PAN.servo.datasheet2",
+          "hole_land_wire_qualification": null,
+          "id": "CTRL.PAN.servo.datasheet2",
+          "net": "SERVO_12V_AFTER_F1",
+          "position": null
+        },
+        {
+          "endpoint": "POWER.BUS_IN",
+          "hole_land_wire_qualification": null,
+          "id": "CTRL.POWER.BUS_IN",
+          "net": "BUS_HEAD_FUSED",
+          "position": null
+        },
+        {
+          "endpoint": "POWER.GND_IN",
+          "hole_land_wire_qualification": null,
+          "id": "CTRL.POWER.GND_IN",
+          "net": "GND",
+          "position": null
+        },
+        {
+          "endpoint": "POWER.12V_OUT",
+          "hole_land_wire_qualification": null,
+          "id": "CTRL.POWER.12V_OUT",
+          "net": "12V_PAN",
+          "position": null
+        },
+        {
+          "endpoint": "POWER.GND_OUT",
+          "hole_land_wire_qualification": null,
+          "id": "CTRL.POWER.GND_OUT",
+          "net": "GND",
+          "position": null
+        }
+      ]
+    },
+    {
+      "candidate_outline_mm": [
+        40,
+        36,
+        1.6
+      ],
+      "candidate_pcb_z_mm": [
+        24.4,
+        26
+      ],
+      "candidate_world_xy_mm": {
+        "x": [
+          6,
+          46
+        ],
+        "y": [
+          55,
+          91
+        ]
+      },
+      "electronic_members": [
+        "P.Q1",
+        "P.Q2",
+        "P.R1",
+        "P.U1",
+        "P.U2",
+        "P.R2",
+        "P.R3",
+        "P.R4",
+        "P.R5",
+        "P.R6",
+        "P.R7",
+        "P.R8",
+        "P.R9",
+        "P.C1",
+        "P.C2",
+        "P.C3",
+        "P.D2",
+        "P.R10",
+        "P.R11",
+        "P.R12",
+        "P.R13",
+        "P.R14",
+        "P.C4",
+        "P.C5",
+        "P.C6",
+        "P.C7",
+        "P.C8",
+        "P.U3",
+        "I.U1",
+        "I.Q1",
+        "I.D1",
+        "I.D2",
+        "I.D3",
+        "I.D4",
+        "I.D5",
+        "I.D6",
+        "I.R2",
+        "I.COUT"
+      ],
+      "id": "PAN_POWER",
+      "placement": null,
+      "proposal": "One candidate power PCB with retained cutoff plus complete ideal-diode reference, Pololu module as an explicitly mounted daughterboard only after actual underside/heat/interconnect review.",
+      "trial_assembly_region_mm": {
+        "x": [
+          4,
+          48
+        ],
+        "y": [
+          53,
+          93
+        ],
+        "z": [
+          23,
+          41
+        ]
+      },
+      "wire_pad_candidates": [
+        {
+          "hole_land_wire_qualification": null,
+          "id": "POWER.BUS_IN",
+          "net": "BUS_HEAD_FUSED",
+          "position": null
+        },
+        {
+          "hole_land_wire_qualification": null,
+          "id": "POWER.GND_IN",
+          "net": "GND",
+          "position": null
+        },
+        {
+          "hole_land_wire_qualification": null,
+          "id": "POWER.12V_OUT",
+          "net": "12V_PAN",
+          "position": null
+        },
+        {
+          "hole_land_wire_qualification": null,
+          "id": "POWER.GND_OUT",
+          "net": "GND",
+          "position": null
+        }
+      ]
+    }
+  ],
+  "fit_qualified": false,
+  "frozen": false,
+  "ground_boundary": "GND_IN and GND_OUT are separate proposed physical pads/wires on the same electrical GND. They do not imply isolation or validated star routing/noise performance; both join the logical return network. Three logical protection ports are unchanged.",
+  "height_screens": {
+    "capacitor": {
+      "available_top_z_mm": 41,
+      "body_max_mm": 12.5,
+      "mount_gap_mm": null,
+      "pcb_top_z_mm": 26,
+      "qualified": false,
+      "tolerance_and_insulation_mm": null,
+      "vent_free_min_mm": 2
+    },
+    "converter": {
+      "available_top_z_mm": 41,
+      "base_pcb_top_z_mm": 26,
+      "candidate_module_pcb_bottom_z_mm": 30,
+      "candidate_under_module_part_height_max_mm": 1.8,
+      "mounting_interconnect_insulation": null,
+      "nominal_bottom_parts_mm": 1.4,
+      "nominal_module_pcb_mm": 1.57,
+      "nominal_top_parts_mm": 6.1,
+      "profile_tolerance_mm": null,
+      "qualified": false
+    }
+  },
+  "native_circuit_or_layout_generated": false,
+  "not_allocated": [
+    "All electronic XY positions, routes and real lands",
+    "All19 control-board and4 power-board wire-pad positions, strain relief and hole sizes",
+    "Four-wire interboard harness gauge/length/route/retention",
+    "Exact servo connector and conductor identity; conditional3A connector is not3.25A qualified",
+    "Raw10A head-bus/return copper, splice and fault-temperature capacity",
+    "Legacy F1 forming, all through-hole lead stacks and shunt/fuse coordination",
+    "Power PCB retention, screw/insert/collar/insulation volumes and heat path",
+    "C2 release, sector-bolt access, practical bumper seam/support/tolerance path and C3 quarter-turn lead routing",
+    "Source/charged-reversal/startup/transient/regen/thermal qualification"
+  ],
+  "observed": "2026-10-29",
+  "physical_inventory_complete": false,
+  "source_sha256": {
+    "catalog/hardware.json": "c7fb31ff99094655a86cc94c3b90c1fee829d66c6484dfe66f6c0ae0a9076858",
+    "hardware/carrier-packaging/allocation.py": "47f3f79d3fac2ebb0ad2d392ad34129f47905993c11dbb6aa6bb92feddd7aab7",
+    "hardware/carrier-packaging/component-inventory.json": "8eb7b174960e51bd378e9e0a4a744243721cdfb0614659f9f72bee516873ef4e",
+    "hardware/carrier-packaging/mechanical-envelope.md": "b864e94290f451d689324aa89e69a282129f1819031429f26ce69711c8895fca",
+    "hardware/carrier-packaging/terminal-contract.json": "4f1eb2c31cafc363d8ea5381293db8f9ea43dcd111f506ccf698e0599a3253ca"
+  },
+  "status": "PAPER_ALLOCATION_ONLY_NOT_COMPONENT_PLACEMENT"
+}
