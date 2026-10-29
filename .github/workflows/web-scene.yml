@@ -34,10 +34,14 @@ jobs:
               npm run test:services
           - suite: loading
             commands: |
+              npm run test:part-media
               npm run test:portal-data
               npm run test:loading-sim
               npm run test:loading-portal
               npm run test:loading-hero
+          - suite: build-portal
+            commands: |
+              npm run test:build-portal
     steps:
       - uses: actions/checkout@v4
         with:

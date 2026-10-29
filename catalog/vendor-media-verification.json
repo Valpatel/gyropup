@@ -1,0 +1,1738 @@
+{
+  "schema_version": 1,
+  "verified_at": "2026-10-29T05:06:25Z",
+  "scope": {
+    "existing_vendor_records": 157,
+    "existing_images_downloaded_and_visually_checked": 37,
+    "new_material_records": 4,
+    "records": 162,
+    "status_counts": {
+      "verified": 23,
+      "rejected": 5,
+      "not_checked": 116,
+      "unavailable": 18
+    },
+    "new_scoped_vendor_records": 1
+  },
+  "method": [
+    "Bounded GET of 37 known existing vendor image URLs; decoded each image and captured byte count, dimensions, SHA256.",
+    "Viewed all 37 images in browser contact sheets and compared product appearance with catalog identity.",
+    "Fetched current product source pages and required exact image linkage plus matching product identity for usable status.",
+    "Fetched and visually inspected Bambu spool photos separately; official og:image vase samples were rejected as spool illustrations.",
+    "No downloaded vendor image is committed. URLs point to public manufacturer/vendor sources; source copyright remains with owner."
+  ],
+  "limits": [
+    "Usable means a matching product image and provenance were verified at the recorded time, not permission to redistribute image bytes or guarantee future hotlink availability.",
+    "Vendor images can fail later; UI must retain a useful linked fallback.",
+    "not_checked and unavailable records must not be promoted to verified merely because their existing URLs load.",
+    "Photos do not prove dimensions, firmware, included accessories, stock, price, or component suitability."
+  ],
+  "records": {
+    "adafruit-2167": {
+      "source_url": "https://www.adafruit.com/product/2167",
+      "image_url": "https://www.adafruit.com/images/480x360/2167-05.jpg",
+      "part_number": "2167",
+      "http_status": 200,
+      "content_type": "image/jpeg",
+      "bytes": 25212,
+      "dimensions": [
+        480,
+        360
+      ],
+      "sha256": "686da0cd6f54156765005460e54760ba97b54a086f6beefe30f45a539ec3ed7a",
+      "source_http_status": 200,
+      "source_title": "IR Break Beam Sensors with Premium Wire Header Ends - 3mm LEDs : Adafruit Industries, Unique & fun DIY electronics and kits",
+      "image_link_in_source": true,
+      "verified": "2026-10-29",
+      "visual_inspection": "Real component image viewed in a browser contact sheet; no placeholder or logo.",
+      "usable": true,
+      "status": "verified",
+      "match_evidence": "Image is linked from the current product page; product title and component appearance match this catalog record."
+    },
+    "adafruit-2517": {
+      "source_url": "https://www.adafruit.com/product/2517",
+      "image_url": "https://www.adafruit.com/images/480x360/2517-01.jpg",
+      "part_number": "2517",
+      "http_status": 200,
+      "content_type": "image/jpeg",
+      "bytes": 56572,
+      "dimensions": [
+        480,
+        360
+      ],
+      "sha256": "e79de463b6f85dc6c06d39043c2084b5b5a040db3e8920b937ed423efa4fc57e",
+      "source_http_status": 200,
+      "source_title": "Silicone Cover Stranded-Core Wire - 25ft 26AWG - Black : Adafruit Industries, Unique & fun DIY electronics and kits",
+      "image_link_in_source": true,
+      "verified": "2026-10-29",
+      "visual_inspection": "Real component image viewed in a browser contact sheet; no placeholder or logo.",
+      "usable": true,
+      "status": "verified",
+      "match_evidence": "Image is linked from the current product page; product title and component appearance match this catalog record."
+    },
+    "adafruit-feather-m4-can-4759": {
+      "source_url": "https://www.adafruit.com/product/4759",
+      "image_url": "https://www.adafruit.com/images/480x360/4759-09.jpg",
+      "part_number": "4759",
+      "http_status": 200,
+      "content_type": "image/jpeg",
+      "bytes": 138590,
+      "dimensions": [
+        480,
+        360
+      ],
+      "sha256": "1397fe78797e092b6e74ac74274c0c72b11bd59a11438d89e619c6c656213313",
+      "source_http_status": 200,
+      "source_title": "Adafruit Feather M4 CAN Express with ATSAME51 : Adafruit Industries, Unique & fun DIY electronics and kits",
+      "image_link_in_source": true,
+      "verified": "2026-10-29",
+      "visual_inspection": "Real component image viewed in a browser contact sheet; no placeholder or logo.",
+      "usable": true,
+      "status": "verified",
+      "match_evidence": "Image is linked from the current product page; product title and component appearance match this catalog record."
+    },
+    "adafruit-neopixel-ring-12-1643": {
+      "source_url": "https://www.adafruit.com/product/1643",
+      "image_url": "https://www.adafruit.com/images/480x360/1643-00.jpg",
+      "part_number": "1643",
+      "http_status": 200,
+      "content_type": "image/jpeg",
+      "bytes": 72404,
+      "dimensions": [
+        480,
+        360
+      ],
+      "sha256": "55592951ee91d89e282e917c711964ecfe2ca7ac8d65b2ec6df7fbb9e2e0c96f",
+      "source_http_status": 200,
+      "source_title": "NeoPixel Ring - 12 x 5050 RGB LED with Integrated Drivers : Adafruit Industries, Unique & fun DIY electronics and kits",
+      "image_link_in_source": true,
+      "verified": "2026-10-29",
+      "visual_inspection": "Real component image viewed in a browser contact sheet; no placeholder or logo.",
+      "usable": true,
+      "status": "verified",
+      "match_evidence": "Image is linked from the current product page; product title and component appearance match this catalog record."
+    },
+    "allegro-a1120lua-t": {
+      "status": "rejected",
+      "usable": false,
+      "source_url": "https://www.cytechsystems.com/fr/product/a1120lua-t",
+      "image_url": "https://www.cytechsystems.com/images/pages/products/hero-bg.jpeg",
+      "reason": "Existing image is a generic site hero background, not an A1120LUA-T product image.",
+      "verified": "2026-10-29"
+    },
+    "amass-xt60e-f": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://pro.maplin.co.uk/products/female-xt60e-panel-mount-gold-plated-connector-20a-amass",
+      "image_url": "https://pro.maplin.co.uk/cdn/shop/files/bb83438d-c18a-42cc-bfc9-f0095a11117a_1200x1200.jpg?v=1769637314",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "amass-xt60e-m": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://pro.maplin.co.uk/products/male-xt60e-panel-mount-gold-plated-connector-20a-amass",
+      "image_url": "https://pro.maplin.co.uk/cdn/shop/files/af4d9ad8-7b8e-4dd7-b682-2049cc3fffb7_1200x1200.jpg?v=1769649604",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "ballast_shaft": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.mcmaster.com/6649K433/",
+      "image_url": "https://www.mcmaster.com/mvC/Contents/gfx/ImageCache/664/6649K433_817e06d7-fe9b-4b3f-b7b0-391c8b17906b@4x_638012306543535228.png?ver=ImageNotFound",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "bearing_61810": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.mcmaster.com/4668K273/",
+      "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/466/4668K273_9f4760bc-e5c3-4a0a-833a-bc63e2c9218e@3x_1689087952.png?ver=ImageNotFound",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "bearing_61812": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.mcmaster.com/6656K236/",
+      "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/665/6656K236_dca0e3f2-2beb-4187-b67f-09508b2c0b76@3x_1686322600.png?ver=ImageNotFound",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "bearing_6201": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.mcmaster.com/5972K42/",
+      "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/597/5972K42_62befef1-15c9-458d-962d-784d87a9a185@4x_cccfs_1757605990.png?ver=ImageNotFound",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "bearing_mr126": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.mcmaster.com/7804K112/",
+      "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/780/7804K112_66876404-7476-4cfd-8e8f-96ddc4bbdab3@4x_o9vj3_1787087084.png?ver=ImageNotFound",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "bench_supply_48v": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.bravoelectro.com/lrs-600-48.html",
+      "image_url": "https://www.bravoelectro.com/media/catalog/product/cache/656e967247d4eb88b33e3f0739f96e0a/m/e/mea-lrs-600.png",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "bolt_m12x80": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://boltdepot.com/Product-Details?product=6132",
+      "image_url": "https://boltdepot.com/images/dimensions/hex-bolt-full-thread-8.8-dimensions.gif",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "bracket_corner_8": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://us.misumi-ec.com/vona2/detail/110300450470/?HissuCode=HBLTS8-C-SEP",
+      "image_url": "https://us.misumi-ec.com/linked/material/mech/MSM1/PHOTO/10300450470.jpg",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "bracket_free_angle_8": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://us.misumi-ec.com/vona2/detail/110302255430/?HissuCode=HBLTBA40-SET1",
+      "image_url": "https://us.misumi-ec.com/linked/material/mech/MSM1/PHOTO/10302255430.jpg",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "bumper-feet-12.7": {
+      "source_url": "https://www.digikey.com/en/products/detail/3m/SJ5003/26770367",
+      "image_url": "https://mm.digikey.com/Volume0/opasdata/d220001/derivates/1/003/249/318/MFG_19_SJ5003_sml%28200x200%29.jpg",
+      "part_number": "SJ5003 (Bumpon)",
+      "http_status": 200,
+      "content_type": "image/jpeg",
+      "bytes": 2139,
+      "dimensions": [
+        200,
+        200
+      ],
+      "sha256": "b66cf241d1fa2736e7b3e15e924802b2e42b95bc5ce88b08c5c49ad0dcfb1d71",
+      "verified": "2026-10-29",
+      "visual_inspection": "Real component image viewed in a browser contact sheet; no placeholder or logo.",
+      "usable": false,
+      "status": "unavailable",
+      "reason": "Image loads and looks like a component, but current product-page linkage could not be confirmed in this pass.",
+      "source_check_note": "Product page blocked, incomplete, or did not expose a title: HTTP Error 403: Forbidden"
+    },
+    "can_cable": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.automationdirect.com/adc/shopping/catalog/bulk_wire_-a-_cable/data_-a-_communication_cable/q0357-1",
+      "image_url": "https://cdn.automationdirect.com/static/images/products/packaging/pkg_q03571.jpg?format=auto",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "carabiner": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.amazon.com/dp/B07D73RRH5?th=1",
+      "image_url": "https://m.media-amazon.com/images/I/71EHgMN-ymS._AC_SX569_.jpg",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "circlip_50": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.mcmaster.com/98541A167/",
+      "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/985/98541A167_0fb2b0c0-12c6-4354-b73c-78744528e02a1691688702@4x_1691688707.png?ver=ImageNotFound",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "circlip_60": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.mcmaster.com/98541A174/",
+      "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/985/98541A174_e74ddd8e-5862-4551-a176-27a0a882de301691688678@4x_1691688682.png?ver=ImageNotFound",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "dcdc_ddr30l12": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.bravoelectro.com/ddr-30l-12.html",
+      "image_url": "https://www.bravoelectro.com/media/catalog/product/cache/656e967247d4eb88b33e3f0739f96e0a/m/e/mea-ddr-30.png",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "dial_indicator": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.grizzly.com/products/grizzly-magnetic-base-dial-indicator-combo/g9849",
+      "image_url": "https://cdn0.grizzly.com/pics/jpeg1000/g/g9849-0dd7f1a335f90c2e1a4977f35549ba6b.jpg",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "diode_1n4001": {
+      "source_url": "https://www.sparkfun.com/diode-rectifier-1a-50v-1n4001.html",
+      "image_url": "https://www.sparkfun.com/media/catalog/product/cache/6b78ac9ed927a3c2db42a3c84dab4ce5/0/8/08588-02-L.jpg",
+      "part_number": "COM-08589",
+      "http_status": 200,
+      "content_type": "image/jpeg",
+      "bytes": 4568,
+      "dimensions": [
+        265,
+        265
+      ],
+      "sha256": "b294ad909f48244c6c0b490340495580c9040db7c588772b9740b43e35cdf60b",
+      "source_http_status": 200,
+      "source_title": "Diode Rectifier - 1A, 50V (1N4001) - SparkFun Electronics",
+      "image_link_in_source": true,
+      "verified": "2026-10-29",
+      "visual_inspection": "Real component image viewed in a browser contact sheet; no placeholder or logo.",
+      "usable": true,
+      "status": "verified",
+      "match_evidence": "Image is linked from the current product page; product title and component appearance match this catalog record.",
+      "limits": "SparkFun 1N4001 page itself uses filename 08588-02-L.jpg; linked page confirms identity despite filename differing from catalog SKU 08589."
+    },
+    "dji-c610-esc": {
+      "source_url": "https://store.dji.com/product/rm-c610-brushless-dc-motor-speed-control",
+      "image_url": "https://se-cdn.djiits.com/tpc/uploads/sku/cover/558cd530-82db-40ce-811e-016067958dda@ultra.png",
+      "part_number": "RoboMaster C610 (EAN 6958265164521)",
+      "http_status": 200,
+      "content_type": "image/png",
+      "bytes": 26603,
+      "dimensions": [
+        1280,
+        1280
+      ],
+      "sha256": "47eeac572915f3b0df94d57aea4dc87e8dc4f2b238ab36fd5a190f4c257d6fa6",
+      "source_http_status": 200,
+      "verified": "2026-10-29",
+      "visual_inspection": "Real component image viewed in a browser contact sheet; no placeholder or logo.",
+      "usable": false,
+      "status": "unavailable",
+      "reason": "Image loads and looks like a component, but current product-page linkage could not be confirmed in this pass.",
+      "source_check_note": "Product page blocked, incomplete, or did not expose a title: no HTML title"
+    },
+    "dji-robomaster-m2006-p36": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://aifitlab.com/products/dji-robomaster-m2006-p36-brushless-dc-gear-motor",
+      "image_url": "http://aifitlab.com/cdn/shop/files/M2006-1.jpg?crop=center&height=1200&v=1753109987&width=1200",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "dji-robomaster-snail-2305": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://aifitlab.com/products/dji-robomaster-snail-2305-motor-c615-speed-controller",
+      "image_url": "http://aifitlab.com/cdn/shop/files/RoboMaster_Snail_2305-main-5.jpg?crop=center&height=1200&v=1757881488&width=1200",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "dowel_5x16": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.mcmaster.com/91595A352/",
+      "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/915/91595A352_7f0be984-dd97-46fe-a434-a790a0acb4a0@4x_637950732820060056.png?ver=ImageNotFound",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "extrusion_4040_620": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://us.misumi-ec.com/vona2/detail/110302689860/?HissuCode=HFS8-4040-620",
+      "image_url": "https://us.misumi-ec.com/linked/material/mech/MSM1/PHOTO/10302689860.jpg",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "extrusion_4040_720": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://us.misumi-ec.com/vona2/detail/110302689860/?HissuCode=HFS8-4040-720",
+      "image_url": "https://us.misumi-ec.com/linked/material/mech/MSM1/PHOTO/10302689860.jpg",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "extrusion_4040_900": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://us.misumi-ec.com/vona2/detail/110302689860/?HissuCode=HFS8-4040-900",
+      "image_url": "https://us.misumi-ec.com/linked/material/mech/MSM1/PHOTO/10302689860.jpg",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "extrusion_4080_620": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://us.misumi-ec.com/vona2/detail/110302690310/?HissuCode=HFS8-4080-620",
+      "image_url": "https://us.misumi-ec.com/linked/material/mech/MSM1/PHOTO/10302690310.jpg",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "extrusion_8080_1200": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://us.misumi-ec.com/vona2/detail/110302690740/?HissuCode=HFS8-8080-1200",
+      "image_url": "https://us.misumi-ec.com/linked/material/mech/MSM1/PHOTO/10302690740.jpg",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "eye_sleeve": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.mcmaster.com/96990A403/",
+      "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/969/96990A403_2f05800d-4105-4036-b279-f25d2e9740b4@4x_638061860006710954.png?ver=ImageNotFound",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "feather_m4_can": {
+      "source_url": "https://www.adafruit.com/product/4759",
+      "image_url": "https://www.adafruit.com/images/480x360/4759-09.jpg",
+      "part_number": "4759",
+      "http_status": 200,
+      "content_type": "image/jpeg",
+      "bytes": 19949,
+      "dimensions": [
+        480,
+        360
+      ],
+      "sha256": "e55e99bddcbd20d2969892ecf0103d8acc1894ce9133b306f3332247c7e17837",
+      "source_http_status": 200,
+      "source_title": "Adafruit Feather M4 CAN Express with ATSAME51 : Adafruit Industries, Unique & fun DIY electronics and kits",
+      "image_link_in_source": true,
+      "verified": "2026-10-29",
+      "visual_inspection": "Real component image viewed in a browser contact sheet; no placeholder or logo.",
+      "usable": true,
+      "status": "verified",
+      "match_evidence": "Image is linked from the current product page; product title and component appearance match this catalog record."
+    },
+    "featherwing_proto": {
+      "source_url": "https://www.adafruit.com/product/2884",
+      "image_url": "https://www.adafruit.com/images/480x360/2884-13.jpg",
+      "part_number": "2884",
+      "http_status": 200,
+      "content_type": "image/jpeg",
+      "bytes": 31781,
+      "dimensions": [
+        480,
+        360
+      ],
+      "sha256": "93cdcd5bef4f28e26f8b9bdd6c6aa14a8985f80a31f647d0310af7ae4bfd844f",
+      "source_http_status": 200,
+      "source_title": "FeatherWing Proto - Prototyping Add-on For All Feather Boards : Adafruit Industries, Unique & fun DIY electronics and kits",
+      "image_link_in_source": true,
+      "verified": "2026-10-29",
+      "visual_inspection": "Real component image viewed in a browser contact sheet; no placeholder or logo.",
+      "usable": true,
+      "status": "verified",
+      "match_evidence": "Image is linked from the current product page; product title and component appearance match this catalog record."
+    },
+    "feetech-sts3215-c018-12v": {
+      "source_url": "https://www.waveshare.com/st3215-servo.htm?sku=22414",
+      "image_url": "https://www.waveshare.com/media/catalog/product/cache/1/image/560x560/9df78eab33525d08d6e5fb8d27136e95/s/t/st3215-servo-1_5.jpg",
+      "part_number": "STS3215 / ST3215 12 V 30 kg-cm serial bus servo",
+      "http_status": 200,
+      "content_type": "image/jpeg",
+      "bytes": 27973,
+      "dimensions": [
+        560,
+        560
+      ],
+      "sha256": "4f272cb6a81791bce476d6e7f94af7bd7fa19e575c4604d42af9aa8980ee44fc",
+      "source_http_status": 200,
+      "source_title": "ST3215 Series Serial Bus Servo, High precision and torque, 360 Degrees Magnetic Encoder, Two-way Feedback, Servo/Motor Mode Switchable, Options For 30kg.cm@12V / 19.5kg.cm@7.4V Torque | ST3215 Servo",
+      "image_link_in_source": true,
+      "verified": "2026-10-29",
+      "visual_inspection": "Real component image viewed in a browser contact sheet; no placeholder or logo.",
+      "usable": true,
+      "status": "verified",
+      "match_evidence": "Image is linked from the current product page; product title and component appearance match this catalog record.",
+      "limits": "Official ST3215 series image; source offers 12 V and 7.4 V variants. Photograph does not certify C018 firmware/revision."
+    },
+    "ferrule_kit": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.iwiss.com/products/hsc8-6-4-kit-ferrule-crimping-tool-kit-awg-23-10-self-adjustable-ratchet-ferrule-crimper-plier-c-w-770end-sleeve-ferrules-connector-terminals",
+      "image_url": "https://www.iwiss.com/cdn/shop/files/46_1-351986_1200x1200.jpg?v=1731482399",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "fuse-5x20-5a-slow": {
+      "source_url": "https://www.lcsc.com/product-detail/C142728.html",
+      "image_url": "https://assets.lcsc.com/images/lcsc/900x900/20250824_Littelfuse-0218005-MXP_C142728_front.jpg",
+      "part_number": "0218005.MXP",
+      "http_status": 200,
+      "content_type": "image/jpeg",
+      "bytes": 120148,
+      "dimensions": [
+        900,
+        900
+      ],
+      "sha256": "cf715c1c35b093941a766fa753eeaf3cc5fc6ded5d9a1b160fc56380b63217d5",
+      "source_http_status": 200,
+      "source_title": "0218005.MXP | Fuses | Littelfuse | LCSC",
+      "image_link_in_source": true,
+      "verified": "2026-10-29",
+      "visual_inspection": "Real component image viewed in a browser contact sheet; no placeholder or logo.",
+      "usable": true,
+      "status": "verified",
+      "match_evidence": "Image is linked from the current product page; product title and component appearance match this catalog record."
+    },
+    "fuse-holder-5x20-panel": {
+      "source_url": "https://www.digikey.com/en/products/detail/littelfuse-inc/03455LS1H/553826",
+      "image_url": "https://mm.digikey.com/Volume0/opasdata/d220001/derivates/1/010/175/458/03455LS1H_sml.jpg",
+      "part_number": "03455LS1H",
+      "http_status": 200,
+      "content_type": "image/jpeg",
+      "bytes": 4545,
+      "dimensions": [
+        200,
+        200
+      ],
+      "sha256": "612d0fe6d91cb6a6816299e8b04c83b8c856bfb0e5233db17bbc573d943ae4a5",
+      "verified": "2026-10-29",
+      "visual_inspection": "Real component image viewed in a browser contact sheet; no placeholder or logo.",
+      "usable": false,
+      "status": "unavailable",
+      "reason": "Image loads and looks like a component, but current product-page linkage could not be confirmed in this pass.",
+      "source_check_note": "Product page blocked, incomplete, or did not expose a title: HTTP Error 403: Forbidden"
+    },
+    "fuse_holder_5x20": {
+      "source_url": "https://www.lcsc.com/product-detail/C206937.html",
+      "image_url": "https://assets.lcsc.com/images/lcsc/900x900/20180914_Littelfuse-03455LS1HX020_C206937_front.jpg",
+      "part_number": "Littelfuse 03455LS1H",
+      "http_status": 200,
+      "content_type": "image/jpeg",
+      "bytes": 135325,
+      "dimensions": [
+        900,
+        900
+      ],
+      "sha256": "0ea9c404871df5a691fe0687fc419b32c24cbab4ba468bca1732a7b115faeaca",
+      "source_http_status": 200,
+      "source_title": "03455LS1HX020 | Circuit Protection Accessories | Littelfuse | LCSC",
+      "image_link_in_source": true,
+      "verified": "2026-10-29",
+      "visual_inspection": "Real component image viewed in a browser contact sheet; no placeholder or logo.",
+      "usable": false,
+      "status": "rejected",
+      "match_evidence": "Image is linked from the current product page; product title and component appearance match this catalog record.",
+      "reason": "Existing source and photo identify 03455LS1HX020; catalog specifies 03455LS1H. Variant match is not established."
+    },
+    "fuse_holder_cc": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.galco.com/lpsc0001z-littelfuse.html",
+      "image_url": "https://www.galco.com/media/catalog/product/cache/6517c62f5899ad6aa0ba23ceb3eeff97/l/p/lpsc0001z-littelfuse_1.jpg",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "fuse_kldr030": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.standardelectricsupply.com/Littelfuse-KLDR030-TXP-POWR-GARD-Time-Delay-Fuse",
+      "image_url": "https://do1jvmih5t6vs.cloudfront.net/userfiles/ad/small/littelfuse_kldr_100txp.jpg",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "gh_header_2p": {
+      "source_url": "https://www.lcsc.com/product-detail/C161690.html",
+      "image_url": "https://assets.lcsc.com/images/lcsc/900x900/20180914_JST-BM02B-GHS-TBT-LF-SN_C161690_front.jpg",
+      "part_number": "JST BM02B-GHS-TBT(LF)(SN) (LCSC C161690)",
+      "http_status": 200,
+      "content_type": "image/jpeg",
+      "bytes": 141462,
+      "dimensions": [
+        900,
+        900
+      ],
+      "sha256": "e05bc9d841c29ec8c1650399b729cd840eca1f9d050dda9decf5dbcb8e8c2b2f",
+      "source_http_status": 200,
+      "source_title": "BM02B-GHS-TBT(LF)(SN) | Headers, Male Pins | JST | LCSC",
+      "image_link_in_source": true,
+      "verified": "2026-10-29",
+      "visual_inspection": "Real component image viewed in a browser contact sheet; no placeholder or logo.",
+      "usable": true,
+      "status": "verified",
+      "match_evidence": "Image is linked from the current product page; product title and component appearance match this catalog record."
+    },
+    "heatshrink_kit": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.racedayquads.com/products/530-pcs-heat-shrink-tube-set",
+      "image_url": "http://www.racedayquads.com/cdn/shop/products/fpvelite-heat-shrink-tube-set-530pc-hardware-6996551991409.jpg?v=1762440086",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "hx711": {
+      "source_url": "https://www.sparkfun.com/products/13879",
+      "image_url": "https://www.sparkfun.com/media/catalog/product/cache/6b78ac9ed927a3c2db42a3c84dab4ce5/1/3/13879-SparkFun_Load_Cell_Amplifier_-_HX711-01.jpg",
+      "part_number": "SEN-13879",
+      "http_status": 200,
+      "content_type": "image/jpeg",
+      "bytes": 31732,
+      "dimensions": [
+        265,
+        265
+      ],
+      "sha256": "0f8f8f279c6c7896f6c1446263f86ff5c67bf4e35af98351e84f49cc16b116c3",
+      "source_http_status": 200,
+      "source_title": "SparkFun Load Cell Amplifier - HX711 - SparkFun Electronics",
+      "image_link_in_source": true,
+      "verified": "2026-10-29",
+      "visual_inspection": "Real component image viewed in a browser contact sheet; no placeholder or logo.",
+      "usable": true,
+      "status": "verified",
+      "match_evidence": "Image is linked from the current product page; product title and component appearance match this catalog record."
+    },
+    "insert_m3": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.mcmaster.com/94459A140/",
+      "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/944/94459A140_a9913aa7-f5c2-42dc-b9cf-50c0ddd18ff8@4x_1678148412.png?ver=ImageNotFound",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "insert_m5": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.mcmaster.com/94459A775/",
+      "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/944/94459A775_00c6605d-575e-43e8-9b51-27e70a308c50@4x_jymiv_1745595557.png?ver=ImageNotFound",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "insert_m8": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.mcmaster.com/94459A778/",
+      "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/944/94459A778_e07a0520-35fa-4ed4-a61b-5d6f10d336fb@4x_qb06t_1745595486.png?ver=ImageNotFound",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "kcd1-rocker-16a": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.e-switch.com/product/rca1913-series-sealed-power-rocker-switch/",
+      "image_url": "https://www.e-switch.com/wp-content/uploads/2025/09/RCA1913F1ABLKBLKWHT3-scaled.jpg",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "keystone-3557-2": {
+      "status": "rejected",
+      "usable": false,
+      "source_url": "https://jlcpcb.com/partdetail/3557-2/C352820",
+      "image_url": "https://rs.jlcpcb.com/webResource/jlcpcb/component-platform-static/images/parts/detail/assembly-poster.png",
+      "reason": "Existing image is a generic assembly-poster asset, not the Keystone 3557-2 product.",
+      "verified": "2026-10-29"
+    },
+    "knee_pin": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.mcmaster.com/92981A411/",
+      "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/929/92981A411_97e51fb7-ee04-4f88-9356-f2c6ff39bc271788200838@4x_simix_1788200839.png?ver=ImageNotFound",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "knee_pin_70": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.mcmaster.com/92981A409/",
+      "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/929/92981A409_9a629ed8-cfc5-4e82-ae50-c0702f5ca1421788200756@4x_agyz4_1788200758.png?ver=ImageNotFound",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "knee_spacer": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.mcmaster.com/9056K68/",
+      "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/905/9056K682_1d47a1bc-43a2-4385-bc86-088876c314511748449844@2x_npy81_1748449849.png?ver=ImageNotFound",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "load_cell_s500": {
+      "source_url": "https://www.phidgets.com/?prodid=231",
+      "image_url": "https://cdn.phidgets.com/productfiles/3140/3140_0/Images/551x-/20/3140_0.jpg",
+      "part_number": "3140_0",
+      "http_status": 200,
+      "content_type": "image/jpeg",
+      "bytes": 17637,
+      "dimensions": [
+        551,
+        319
+      ],
+      "sha256": "adc15cacc919be52b79533e158573129c270f4d6e73070aeee91a6c0d6f234d9",
+      "source_http_status": 200,
+      "source_title": "S-Type Load Cell - 500kg (C2) - 3140_0 - Phidgets",
+      "image_link_in_source": true,
+      "verified": "2026-10-29",
+      "visual_inspection": "Real component image viewed in a browser contact sheet; no placeholder or logo.",
+      "usable": true,
+      "status": "verified",
+      "match_evidence": "Image is linked from the current product page; product title and component appearance match this catalog record."
+    },
+    "load_cells_4x50": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://vxb.com/products/4-pack-50kg-half-bridge-load-cell-sensor-kit-with",
+      "image_url": "http://vxb.com/cdn/shop/files/71B-t-uLhZL.jpg?v=1785673102",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "molex-43020-0600": {
+      "source_url": "https://heilind.com/mol43020-0600.html",
+      "image_url": "https://heilind-product-assets.s3.us-east-1.amazonaws.com/MOL/43020_0600.jpg",
+      "part_number": "43020-0600",
+      "http_status": 200,
+      "content_type": "image/jpeg",
+      "bytes": 162003,
+      "dimensions": [
+        1024,
+        768
+      ],
+      "sha256": "1ac8de3ba920b84f5a66098ff2b0ae74cae08860d290f9489b6c5c51dae5fe8e",
+      "source_http_status": 200,
+      "verified": "2026-10-29",
+      "visual_inspection": "Real component image viewed in a browser contact sheet; no placeholder or logo.",
+      "usable": false,
+      "status": "unavailable",
+      "reason": "Image loads and looks like a component, but current product-page linkage could not be confirmed in this pass.",
+      "source_check_note": "Product page blocked, incomplete, or did not expose a title: no HTML title"
+    },
+    "molex-43020-0800": {
+      "source_url": "https://heilind.com/mol43020-0800.html",
+      "image_url": "https://heilind-product-assets.s3.us-east-1.amazonaws.com/MOL/43020_0800.jpg",
+      "part_number": "43020-0800",
+      "http_status": 200,
+      "content_type": "image/jpeg",
+      "bytes": 134655,
+      "dimensions": [
+        1024,
+        768
+      ],
+      "sha256": "d9d33ac57ef7e179415c37842892566b7d893a82382d4968e94c38f0aa0a7780",
+      "source_http_status": 200,
+      "verified": "2026-10-29",
+      "visual_inspection": "Real component image viewed in a browser contact sheet; no placeholder or logo.",
+      "usable": false,
+      "status": "unavailable",
+      "reason": "Image loads and looks like a component, but current product-page linkage could not be confirmed in this pass.",
+      "source_check_note": "Product page blocked, incomplete, or did not expose a title: no HTML title"
+    },
+    "molex-43020-1200": {
+      "source_url": "https://heilind.com/mol43020-1200.html",
+      "image_url": "https://heilind-product-assets.s3.us-east-1.amazonaws.com/MOL/43020_1200.jpg",
+      "part_number": "43020-1200",
+      "http_status": 200,
+      "content_type": "image/jpeg",
+      "bytes": 177375,
+      "dimensions": [
+        1024,
+        768
+      ],
+      "sha256": "1a5793022447dc5850677a274a29ab212f40c0ea04e4a4f0c4b64add71fcfb64",
+      "source_http_status": 200,
+      "verified": "2026-10-29",
+      "visual_inspection": "Real component image viewed in a browser contact sheet; no placeholder or logo.",
+      "usable": false,
+      "status": "unavailable",
+      "reason": "Image loads and looks like a component, but current product-page linkage could not be confirmed in this pass.",
+      "source_check_note": "Product page blocked, incomplete, or did not expose a title: no HTML title"
+    },
+    "molex-43025-0600": {
+      "source_url": "https://heilind.com/mol43025-0600.html",
+      "image_url": "https://sku-product-images.s3.us-east-2.amazonaws.com/MOL/43025-0600.png",
+      "part_number": "43025-0600",
+      "http_status": 200,
+      "content_type": "binary/octet-stream",
+      "bytes": 26154,
+      "dimensions": [
+        220,
+        150
+      ],
+      "sha256": "bb205263ac31c3c0af0e76d43f6ba2a246c68eacf4fe05262afed712ffc770ed",
+      "source_http_status": 200,
+      "verified": "2026-10-29",
+      "visual_inspection": "Real component image viewed in a browser contact sheet; no placeholder or logo.",
+      "usable": false,
+      "status": "unavailable",
+      "reason": "Image loads and looks like a component, but current product-page linkage could not be confirmed in this pass.",
+      "source_check_note": "Product page blocked, incomplete, or did not expose a title: no HTML title"
+    },
+    "molex-43025-0800": {
+      "source_url": "https://heilind.com/mol43025-0800.html",
+      "image_url": "https://heilind-product-assets.s3.us-east-1.amazonaws.com/MOL/43025_0800.jpg",
+      "part_number": "43025-0800",
+      "http_status": 200,
+      "content_type": "image/jpeg",
+      "bytes": 37815,
+      "dimensions": [
+        1024,
+        768
+      ],
+      "sha256": "a7681fd07cde653e4c15c28600b8893a3aebf64e1ea22d232dcee97279df1a02",
+      "source_http_status": 200,
+      "verified": "2026-10-29",
+      "visual_inspection": "Real component image viewed in a browser contact sheet; no placeholder or logo.",
+      "usable": false,
+      "status": "unavailable",
+      "reason": "Image loads and looks like a component, but current product-page linkage could not be confirmed in this pass.",
+      "source_check_note": "Product page blocked, incomplete, or did not expose a title: no HTML title"
+    },
+    "molex-43030-0001": {
+      "source_url": "https://heilind.com/mol43030-0001.html",
+      "image_url": "https://heilind-product-assets.s3.us-east-1.amazonaws.com/MOL/43030_0001.jpg",
+      "part_number": "43030-0001",
+      "http_status": 200,
+      "content_type": "image/jpeg",
+      "bytes": 226481,
+      "dimensions": [
+        1024,
+        768
+      ],
+      "sha256": "26987ca1afa35d80dc5ef7310e31e7af55213a2d605cece5971352e4d11f376e",
+      "source_http_status": 200,
+      "verified": "2026-10-29",
+      "visual_inspection": "Real component image viewed in a browser contact sheet; no placeholder or logo.",
+      "usable": false,
+      "status": "unavailable",
+      "reason": "Image loads and looks like a component, but current product-page linkage could not be confirmed in this pass.",
+      "source_check_note": "Product page blocked, incomplete, or did not expose a title: no HTML title"
+    },
+    "molex-43030-0038": {
+      "source_url": "https://heilind.com/mol43030-0038.html",
+      "image_url": "https://sku-product-images.s3.us-east-2.amazonaws.com/MOL/43030-0038.jpg",
+      "part_number": "43030-0038",
+      "http_status": 200,
+      "content_type": "binary/octet-stream",
+      "bytes": 132925,
+      "dimensions": [
+        1024,
+        768
+      ],
+      "sha256": "66a005b859b599b7f8e00fe7bff858d796dfd63d5f7b8f4d825054ffa324c943",
+      "source_http_status": 200,
+      "verified": "2026-10-29",
+      "visual_inspection": "Real component image viewed in a browser contact sheet; no placeholder or logo.",
+      "usable": false,
+      "status": "unavailable",
+      "reason": "Image loads and looks like a component, but current product-page linkage could not be confirmed in this pass.",
+      "source_check_note": "Product page blocked, incomplete, or did not expose a title: no HTML title"
+    },
+    "molex-43031-0001": {
+      "source_url": "https://heilind.com/mol43031-0001.html",
+      "image_url": "https://sku-product-images.s3.us-east-2.amazonaws.com/MOL/43031-0001.jpg",
+      "part_number": "43031-0001",
+      "http_status": 200,
+      "content_type": "binary/octet-stream",
+      "bytes": 49770,
+      "dimensions": [
+        1024,
+        768
+      ],
+      "sha256": "f038b8119d8914e559306d4a0ace4204385e72f37fce10e63e1d630e6d07b3fd",
+      "source_http_status": 200,
+      "verified": "2026-10-29",
+      "visual_inspection": "Real component image viewed in a browser contact sheet; no placeholder or logo.",
+      "usable": false,
+      "status": "unavailable",
+      "reason": "Image loads and looks like a component, but current product-page linkage could not be confirmed in this pass.",
+      "source_check_note": "Product page blocked, incomplete, or did not expose a title: no HTML title"
+    },
+    "molex-43031-0021": {
+      "source_url": "https://heilind.com/mol43031-0021.html",
+      "image_url": "https://heilind-product-assets.s3.us-east-1.amazonaws.com/MOL/43031_0021.jpg",
+      "part_number": "43031-0021",
+      "http_status": 200,
+      "content_type": "image/jpeg",
+      "bytes": 198650,
+      "dimensions": [
+        1024,
+        768
+      ],
+      "sha256": "7471f52ee554bc4de7937c389f1c52cc9d6e48b625b100f1f16754699410e4e9",
+      "source_http_status": 200,
+      "verified": "2026-10-29",
+      "visual_inspection": "Real component image viewed in a browser contact sheet; no placeholder or logo.",
+      "usable": false,
+      "status": "unavailable",
+      "reason": "Image loads and looks like a component, but current product-page linkage could not be confirmed in this pass.",
+      "source_check_note": "Product page blocked, incomplete, or did not expose a title: no HTML title"
+    },
+    "nut_m10_nyloc": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.mcmaster.com/94645A220/",
+      "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/946/94645A220_3c94cd47-bf57-4c30-b79a-5de0961431c1@4x_638092017707974091.png?ver=ImageNotFound",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "nut_m12": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://boltdepot.com/Product-Details?product=4790",
+      "image_url": "https://boltdepot.com/images/dimensions/hex-nut-dimensions1.gif",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "nut_m4_dropin": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://us.misumi-ec.com/vona2/detail/110302257010/?HissuCode=HNTA8-4",
+      "image_url": "https://us.misumi-ec.com/linked/material/mech/MSM1/PHOTO/10302257010.jpg",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "nut_m6_dropin": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://us.misumi-ec.com/vona2/detail/110302257010/?HissuCode=HNTA8-6",
+      "image_url": "https://us.misumi-ec.com/linked/material/mech/MSM1/PHOTO/10302257010.jpg",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "nut_m6_nylock": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://boltdepot.com/Product-Details?product=4804",
+      "image_url": "https://boltdepot.com/images/dimensions/hex-lock-nut-nylon-insert-dimensions1.gif",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "nut_m8_dropin": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://us.misumi-ec.com/vona2/detail/110302257010/?HissuCode=HNTA8-8",
+      "image_url": "https://us.misumi-ec.com/linked/material/mech/MSM1/PHOTO/10302257010.jpg",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "odrive-botwheel": {
+      "source_url": "https://shop.odriverobotics.com/products/botwheels",
+      "image_url": "https://shop.odriverobotics.com/cdn/shop/files/PXL_20220913_163241201-2.jpg?v=1705544648",
+      "part_number": "BotWheel (BW0124)",
+      "http_status": 200,
+      "content_type": "image/jpeg",
+      "bytes": 157626,
+      "dimensions": [
+        1500,
+        1500
+      ],
+      "sha256": "0fc9a00476764ae70b85268f6cc235451b2f69444005a2cb41da9f2a45e3040b",
+      "verified": "2026-10-29",
+      "visual_inspection": "Real component image viewed in a browser contact sheet; no placeholder or logo.",
+      "usable": false,
+      "status": "unavailable",
+      "reason": "Image loads and looks like a component, but current product-page linkage could not be confirmed in this pass.",
+      "source_check_note": "Product page blocked, incomplete, or did not expose a title: HTTP Error 429: Too Many Requests"
+    },
+    "pa6-cf": {
+      "status": "verified",
+      "usable": true,
+      "verified": "2026-10-29",
+      "source_url": "https://store.metatechtr.com/bambu-lab-pa6-cf-black-1kg-filament",
+      "source_title": "Bambu Lab PA6-CF-Black 1 kg Filament",
+      "image_url": "https://store.metatechtr.com/Data/EditorFiles/mtt-catalog-webp-20261018/catalog-9d197d91a5f464e9c153ff59.webp",
+      "http_status": 200,
+      "source_http_status": 200,
+      "content_type": "image/webp",
+      "bytes": 63900,
+      "dimensions": [
+        574,
+        569
+      ],
+      "sha256": "9d197d91a5f464e9c153ff59c7302eba5e3d6d865089f0327372af09aaf5041c",
+      "image_link_in_source": true,
+      "media_kind": "vendor_product_photo",
+      "match_evidence": "Current vendor product page embeds this photo in its package contents. Visible spool label reads PA6-CF; photo illustrates the material, not a guaranteed variant/quantity.",
+      "visual_inspection": "Actual image viewed; label/product appearance checked. No image editing or inferred product rendering."
+    },
+    "pack_adapter_60v": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.newegg.com/p/1DK-013R-00A95",
+      "image_url": "https://c1.neweggimages.com/ProductImage/B8VPD2309220IGWI059.jpg",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "pendant-hold-to-run": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.ablenetinc.com/specs-ic/",
+      "image_url": "https://cdn11.bigcommerce.com/s-rwcdtzv1dl/images/stencil/1280x1280/products/253/1023/21__48704_copy__76767.1755183350.jpg?c=1",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "pendant_specs": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.ablenetinc.com/specs-ic/",
+      "image_url": "https://cdn11.bigcommerce.com/s-rwcdtzv1dl/products/253/images/1023/21__48704_copy__76767.1755183350.386.513.jpg?c=1",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "petg": {
+      "status": "verified",
+      "usable": true,
+      "verified": "2026-10-29",
+      "source_url": "https://us.store.bambulab.com/products/petg-basic",
+      "source_title": "PETG Basic",
+      "image_url": "https://store.bblcdn.com/s7/default/d9169957dc2f414dbbf555a00afa7ac8/In_the_Box_3.jpg",
+      "http_status": 200,
+      "source_http_status": 200,
+      "content_type": "image/jpeg",
+      "bytes": 379148,
+      "dimensions": [
+        1103,
+        1103
+      ],
+      "sha256": "69101a441190a045de67f2b08fdb8c353838c75148fc5be8226e95cecf9af74b",
+      "image_link_in_source": true,
+      "media_kind": "manufacturer_product_photo",
+      "match_evidence": "Current official PETG Basic product gallery embeds this image. Actual filament spool and refill are pictured with captions; illustrative white color, not a color specification.",
+      "visual_inspection": "Actual image viewed; label/product appearance checked. No image editing or inferred product rendering."
+    },
+    "picotronic-dd520-1-24-12x40": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://shop.picotronic.de/de/p/70121025",
+      "image_url": "https://shop.picotronic.de/media/75/53/33/1605719838/77ef5a469762cc75e98c2cad32de8842.jpg?ts=1752053638",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "pin_lanyard": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.mcmaster.com/90312A296/",
+      "image_url": "https://www.mcmaster.com/mvC/Contents/gfx/ImageCache/303/30345t851c1-e01j-digital-master1562013971-p9@1x_636975943100802305.png?ver=ImageNotFound",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "pololu-2815": {
+      "source_url": "https://www.pololu.com/product/2815",
+      "image_url": "https://a.pololu-files.com/picture/0J6935.1200x627.jpg?4368b174ef0d272ae488757f22f7003b",
+      "part_number": "2815",
+      "http_status": 200,
+      "content_type": "image/jpeg",
+      "bytes": 103651,
+      "dimensions": [
+        1200,
+        627
+      ],
+      "sha256": "9533713f0548b8cd983cc70d46dd8089eebc674faf12797a624412cd793de41a",
+      "source_http_status": 200,
+      "source_title": "Pololu - Big MOSFET Slide Switch with Reverse Voltage Protection, HP",
+      "image_link_in_source": true,
+      "verified": "2026-10-29",
+      "visual_inspection": "Real component image viewed in a browser contact sheet; no placeholder or logo.",
+      "usable": true,
+      "status": "verified",
+      "match_evidence": "Image is linked from the current product page; product title and component appearance match this catalog record."
+    },
+    "pololu-d24v150f12-2885": {
+      "source_url": "https://www.pololu.com/product/2885",
+      "image_url": "https://a.pololu-files.com/picture/0J7417.1200x627.jpg?6855a2c28ffe5db39f44ecffbaafc4a9",
+      "part_number": "2885 (D24V150F12)",
+      "http_status": 200,
+      "content_type": "image/jpeg",
+      "bytes": 123762,
+      "dimensions": [
+        1200,
+        627
+      ],
+      "sha256": "372406fbc2b69d43b518c7e9c39564e70b89a32f91b8954f981fb458673a36b7",
+      "source_http_status": 200,
+      "source_title": "Pololu 12V, 15A Step-Down Voltage Regulator D24V150F12",
+      "image_link_in_source": true,
+      "verified": "2026-10-29",
+      "visual_inspection": "Real component image viewed in a browser contact sheet; no placeholder or logo.",
+      "usable": true,
+      "status": "verified",
+      "match_evidence": "Image is linked from the current product page; product title and component appearance match this catalog record."
+    },
+    "pololu-d36v28f5-3782": {
+      "source_url": "https://www.pololu.com/product/3782",
+      "image_url": "https://a.pololu-files.com/picture/0J10034.1200x627.jpg?350df8fb4dc5d71103c50dc1d5f33deb",
+      "part_number": "3782 (D36V28F5)",
+      "http_status": 200,
+      "content_type": "image/jpeg",
+      "bytes": 115668,
+      "dimensions": [
+        1200,
+        627
+      ],
+      "sha256": "43f19c936a0f23c882ae6968b69bf094c563f90085d5bef5af3f671c58ce6ac3",
+      "source_http_status": 200,
+      "source_title": "Pololu - 5V, 3.2A Step-Down Voltage Regulator D36V28F5",
+      "image_link_in_source": true,
+      "verified": "2026-10-29",
+      "visual_inspection": "Real component image viewed in a browser contact sheet; no placeholder or logo.",
+      "usable": true,
+      "status": "verified",
+      "match_evidence": "Image is linked from the current product page; product title and component appearance match this catalog record."
+    },
+    "pololu-d36v50f12-4095": {
+      "source_url": "https://www.pololu.com/product/4095",
+      "image_url": "https://a.pololu-files.com/picture/0J10727.1200x627.jpg?c7702cbf7fabe7700c6a33c8e31405d5",
+      "part_number": "4095 (D36V50F12)",
+      "http_status": 200,
+      "content_type": "image/jpeg",
+      "bytes": 104955,
+      "dimensions": [
+        1200,
+        627
+      ],
+      "sha256": "e61285f4856a8e920b39d005293be3f6f134b797d1ea1e91751f737df0c046ac",
+      "source_http_status": 200,
+      "source_title": "Pololu - 12V, 4.5A Step-Down Voltage Regulator D36V50F12",
+      "image_link_in_source": true,
+      "verified": "2026-10-29",
+      "visual_inspection": "Real component image viewed in a browser contact sheet; no placeholder or logo.",
+      "usable": true,
+      "status": "verified",
+      "match_evidence": "Image is linked from the current product page; product title and component appearance match this catalog record."
+    },
+    "proto-board-52x50": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.taydaelectronics.com/double-side-prototyping-board-50x70mm.html",
+      "image_url": "https://www.taydaelectronics.com/media/catalog/product/cache/1eb4f7f02fef46fb836117af4bb921e7/5/x/5x7.jpg.jpg",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "proto-board-70x50": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://botland.store/circuit-boards/2745-universal-double-sided-board-50x70mm-5904422303303.html",
+      "image_url": "https://cdn3.botland.store/49246-large_default/universal-double-sided-board-50x70mm.jpg",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "quick_pin": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.mcmaster.com/92384A274/",
+      "image_url": "https://www.mcmaster.com/mvC/Contents/gfx/ImageCache/923/92384A274_7202b591-a1e8-4c89-b0b2-e8a73bf2a1261771890495@4x_2u5un_1771891152.png?ver=ImageNotFound",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "rail_hgr15_kit": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://vxb.com/products/beefy-square-cnc-linear-rail-kit-hgh15-39-37-inch",
+      "image_url": "http://vxb.com/cdn/shop/files/61hnxsA8mHL.jpg?v=1783863733",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "repeat-robotics-am32-35a-esc": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://palmbeachbots.com/products/repeat-robotics-am32-brushless-drive-esc-bi-directional",
+      "image_url": "http://palmbeachbots.com/cdn/shop/files/AM32DriveESC.jpg?v=1706386827",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "resistor_kit": {
+      "source_url": "https://www.sparkfun.com/resistor-kit-1-4w-500-total.html",
+      "image_url": "https://www.sparkfun.com/media/catalog/product/cache/6b78ac9ed927a3c2db42a3c84dab4ce5/1/0/10969-Resistor_Kit_-_1_4W__500_total_-01.jpg",
+      "part_number": "COM-10969",
+      "http_status": 200,
+      "content_type": "image/jpeg",
+      "bytes": 25049,
+      "dimensions": [
+        265,
+        265
+      ],
+      "sha256": "315e543baed49babe97ffe06ee44ecd02d93e5b4c766c3573d093362eebc38b2",
+      "source_http_status": 200,
+      "source_title": "Resistor Kit - 1/4W (500 total) - SparkFun Electronics",
+      "image_link_in_source": true,
+      "verified": "2026-10-29",
+      "visual_inspection": "Real component image viewed in a browser contact sheet; no placeholder or logo.",
+      "usable": true,
+      "status": "verified",
+      "match_evidence": "Image is linked from the current product page; product title and component appearance match this catalog record."
+    },
+    "rig/tof_vl53l1x": {
+      "status": "verified",
+      "usable": true,
+      "verified": "2026-10-29",
+      "source_url": "https://www.adafruit.com/product/3967",
+      "source_title": "Adafruit VL53L1X Time of Flight Distance Sensor -~30 to 4000 mm",
+      "image_url": "https://cdn-shop.adafruit.com/480x360/3967-00.jpg",
+      "http_status": 200,
+      "source_http_status": 200,
+      "content_type": "image/jpeg",
+      "bytes": 28079,
+      "dimensions": [
+        480,
+        360
+      ],
+      "sha256": "7eeabcd61268fd7403236f2de56ed5d100b4d7a44000a02ebde101c4f59bbb52",
+      "image_link_in_source": true,
+      "media_kind": "manufacturer_product_photo",
+      "match_evidence": "Only for catalog/rig.json Adafruit model 3967. Current Adafruit 3967 product page links this photo; board label VL53L1X matches. Do not replace shared ToF keys for a SparkFun 14722 BOM.",
+      "visual_inspection": "Actual image viewed; label/product appearance checked. No image editing or inferred product rendering.",
+      "catalog_scope": {
+        "file": "catalog/rig.json",
+        "key": "tof_vl53l1x",
+        "vendor": "Adafruit",
+        "model": "3967"
+      },
+      "conflicting_previous": {
+        "image_url": "https://www.sparkfun.com/media/catalog/product/cache/6b78ac9ed927a3c2db42a3c84dab4ce5/1/4/14722-SparkFun_Distance_Sensor_Breakout-_4_Meter__VL53L1X__Qwiic_-01.jpg",
+        "source_url": "https://www.sparkfun.com/products/14722",
+        "reason": "SparkFun 14722 is a different breakout from the rig catalog Adafruit 3967; can remain valid for a separately scoped SparkFun BOM."
+      }
+    },
+    "robstride-rs-04": {
+      "source_url": "https://www.robstride.com/products/robStride04",
+      "image_url": "https://www.robstride.com/assets/RobStride04_banner_product-cbeffa4c.jpg",
+      "part_number": "RS-04",
+      "http_status": 200,
+      "content_type": "image/jpeg",
+      "bytes": 162198,
+      "dimensions": [
+        2000,
+        1415
+      ],
+      "sha256": "cbeffa4c9b9e9643be1a6535df17e0eac44a21c5fae695bdedf5cd41e784b104",
+      "source_http_status": 200,
+      "source_title": "RobStride Dynamics",
+      "image_link_in_source": false,
+      "verified": "2026-10-29",
+      "visual_inspection": "Real component image viewed in a browser contact sheet; no placeholder or logo.",
+      "usable": false,
+      "status": "unavailable",
+      "reason": "Image loads and looks like a component, but current product-page linkage could not be confirmed in this pass."
+    },
+    "rubber_mat": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.amazon.com/dp/B0F8RCXB7D",
+      "image_url": "https://m.media-amazon.com/images/I/71glrKMT78L._AC_SY450_PIbundle-2,TopRight,0,0_SH20_.jpg",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "screw_3_8x1": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.mcmaster.com/91251A624/",
+      "image_url": "https://www.mcmaster.com/mvC/Contents/gfx/ImageCache/912/91251A624_8076a85d-862e-448e-9ecd-74539e05489b1683565919@4x_1683565922.png?ver=ImageNotFound",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "screw_3_8x3_4": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.mcmaster.com/91251A622/",
+      "image_url": "https://www.mcmaster.com/mvC/Contents/gfx/ImageCache/912/91251A622_ce7b4bf6-86ef-4f3c-a941-d811fc268c961683564470@4x_1683564474.png?ver=ImageNotFound",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "screw_m12x30": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://boltdepot.com/Product-Details?product=6604",
+      "image_url": "https://boltdepot.com/images/dimensions/socket-head-knurled-full-thread-dimensions.gif",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "screw_m3x6": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.mcmaster.com/91290A111/",
+      "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/912/91290A111_b98fcb5f-bf8f-4786-bfcc-3ea5c71f81091772469680@4x_jd8ed_1772469682.png?ver=ImageNotFound",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "screw_m4x16_rail": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.mcmaster.com/91292A118/",
+      "image_url": "https://www.mcmaster.com/mvC/Contents/gfx/ImageCache/912/91292A118_40aa502e-c99e-4645-8609-15fed20c0d2a@4x_dv6gz_1758145931.png?ver=ImageNotFound",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "screw_m4x20": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.mcmaster.com/91290A168/",
+      "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/912/91290A168_0a44c627-8ead-473d-bac6-2f30e649e6651772470112@4x_4iwxo_1772470116.png?ver=ImageNotFound",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "screw_m5x16": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.mcmaster.com/91290A232/",
+      "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/912/91290A232_c76f2dd5-252e-49e5-9673-f3123d628bd41772470442@2x_1533g_1772470443.png?ver=ImageNotFound",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "screw_m5x25": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.mcmaster.com/91290A252/",
+      "image_url": "https://www.mcmaster.com/mvC/Contents/gfx/ImageCache/912/91290A252_5a244e88-5588-402d-9785-ef8d949246f41772470074@4x_b8w25_1772470076.png?ver=ImageNotFound",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "screw_m5x30": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.mcmaster.com/91290A254/",
+      "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/912/91290A254_31754cd4-296f-4772-a1a6-499168fcfd6d1772469060@4x_x7z38_1772469065.png?ver=ImageNotFound",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "screw_m5x40": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.mcmaster.com/91290A662/",
+      "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/912/91290A662_ff094cc8-cabe-4366-922b-fe11aec85f96@4x_jqv22_1782428026.png?ver=ImageNotFound",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "screw_m6x30": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.mcmaster.com/91290A332/",
+      "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/912/91290A332_96fb5519-4c28-4da4-99ae-2fde928aa0741772469803@4x_93dxj_1772469808.png?ver=ImageNotFound",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "screw_m6x35": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.mcmaster.com/91290A334/",
+      "image_url": "https://www.mcmaster.com/mvC/Contents/gfx/ImageCache/912/91290A334_32b0966f-fa53-4c4f-bda5-abeb74d4eb991772469056@4x_y3r3h_1772469060.png?ver=ImageNotFound",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "screw_m6x40": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.mcmaster.com/91290A336/",
+      "image_url": "https://www.mcmaster.com/mvC/Contents/gfx/ImageCache/912/91290A336_b6aa32cf-6b65-4758-bb63-b7f23cd86d261772469542@4x_jk4ld_1772469545.png?ver=ImageNotFound",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "screw_m8x16_bh": {
+      "status": "rejected",
+      "usable": false,
+      "source_url": "https://8020.net/40-4376.html",
+      "image_url": "https://8020.net/media/catalog/product/cache/8ab71e5c6755cc499f19eeeb2f9ec805/4/0/40-4376_photo_1.png",
+      "reason": "Existing image filename 40-4376 conflicts with catalog part 13-8316; do not treat as a verified product photo.",
+      "verified": "2026-10-29"
+    },
+    "screw_m8x40": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://boltdepot.com/Product-Details?product=6565",
+      "image_url": "https://boltdepot.com/images/dimensions/socket-head-knurled-dimensions.gif",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "shoulder_6x12_m5": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.mcmaster.com/92981A101/",
+      "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/929/92981A101_8de84135-ae26-45e3-9a42-2df22c62002a1770818613@4x_r5xg9_1770818616.png?ver=ImageNotFound",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "sling_1in": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.amazon.com/dp/B0026GIUMG",
+      "image_url": "https://m.media-amazon.com/images/I/417OV--XaQL._SX466_.jpg",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "sparkfun-rob-13065": {
+      "source_url": "https://www.sparkfun.com/products/13065",
+      "image_url": "https://www.sparkfun.com/media/catalog/product/cache/6b78ac9ed927a3c2db42a3c84dab4ce5/1/3/13065-01.jpg",
+      "part_number": "ROB-13065",
+      "http_status": 200,
+      "content_type": "image/jpeg",
+      "bytes": 8862,
+      "dimensions": [
+        265,
+        265
+      ],
+      "sha256": "156600a74b4971da0edf99ca9b646f30dee571ad8f2fd524317cf396f3877765",
+      "source_http_status": 200,
+      "source_title": "Slip Ring - 12 Wire (2A) - SparkFun Electronics",
+      "image_link_in_source": true,
+      "verified": "2026-10-29",
+      "visual_inspection": "Real component image viewed in a browser contact sheet; no placeholder or logo.",
+      "usable": true,
+      "status": "verified",
+      "match_evidence": "Image is linked from the current product page; product title and component appearance match this catalog record."
+    },
+    "stop_pin": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.mcmaster.com/98432A386/",
+      "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/984/98432A386_60c66a92-06d7-44e7-86a0-72899af31396@2x_hqdsd_1718826495.png?ver=ImageNotFound",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "stud_m12x80": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.fastenal.com/product/details/91217237",
+      "image_url": "https://img1.fastenal.com/infp360pmm/derivates/3/001/285/061/0156404.jpg",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "te-dt04-12pa-l012": {
+      "source_url": "https://www.lcsc.com/product-detail/C6423585.html",
+      "image_url": "https://assets.lcsc.com/images/lcsc/900x900/20260902_TE-Connectivity-DT04-12PA-L012_C6423585_front.jpg",
+      "part_number": "DT04-12PA-L012",
+      "http_status": 200,
+      "content_type": "image/jpeg",
+      "bytes": 27283,
+      "dimensions": [
+        900,
+        899
+      ],
+      "sha256": "b40ff11e99d2c1ea5d79191edef6e22d2d37bfb93b1738ba6f4c4bc6e0db3d16",
+      "verified": "2026-10-29",
+      "visual_inspection": "Real component image viewed in a browser contact sheet; no placeholder or logo.",
+      "usable": false,
+      "status": "unavailable",
+      "reason": "Image loads and looks like a component, but current product-page linkage could not be confirmed in this pass.",
+      "source_check_note": "Product page blocked, incomplete, or did not expose a title: IncompleteRead(383206 bytes read)"
+    },
+    "te-dt06-12sa-kit": {
+      "source_url": "https://www.digikey.com/en/products/detail/te-connectivity-deutsch-ict-connectors/DT06-12SA/6566568",
+      "image_url": "https://mm.digikey.com/Volume0/opasdata/d220001/derivates/1/300/314/703/DT06-12SA_sml.jpg",
+      "part_number": "DT06-12SA (+ W12S wedge + 12 x 0462-201-16141 sockets)",
+      "http_status": 200,
+      "content_type": "image/jpeg",
+      "bytes": 6511,
+      "dimensions": [
+        200,
+        200
+      ],
+      "sha256": "2f8e08ddfd2374d9310a40298e5ce74cd785a261a7f2e159e8c844fa602ba141",
+      "verified": "2026-10-29",
+      "visual_inspection": "Real component image viewed in a browser contact sheet; no placeholder or logo.",
+      "usable": false,
+      "status": "unavailable",
+      "reason": "Image loads and looks like a component, but current product-page linkage could not be confirmed in this pass.",
+      "source_check_note": "Product page blocked, incomplete, or did not expose a title: HTTP Error 403: Forbidden"
+    },
+    "timer_offdelay": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.automationdirect.com/adc/shopping/catalog/relays_-z-_timers/timer_relays/t2r-m1-adj-240u",
+      "image_url": "https://cdn.automationdirect.com/static/images/products/packaging/pkg_t2rm1adj240u.jpg?format=auto",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "tof_vl53l1x": {
+      "status": "unavailable",
+      "usable": false,
+      "source_url": "https://www.sparkfun.com/products/14722",
+      "image_url": "https://www.sparkfun.com/media/catalog/product/cache/6b78ac9ed927a3c2db42a3c84dab4ce5/1/4/14722-SparkFun_Distance_Sensor_Breakout-_4_Meter__VL53L1X__Qwiic_-01.jpg",
+      "verified": "2026-10-29",
+      "reason": "Shared key is ambiguous: existing photo depicts SparkFun 14722, while rig.json specifies Adafruit 3967. Use exact product-scoped candidate rig/tof_vl53l1x only for the Adafruit rig row."
+    },
+    "tpu95": {
+      "status": "verified",
+      "usable": true,
+      "verified": "2026-10-29",
+      "source_url": "https://bambulab-eu.myshopify.com/products/tpu-95a-hf",
+      "source_title": "TPU 95A HF",
+      "image_url": "https://cdn.shopify.com/s/files/1/0651/1555/4032/files/spool.jpg?v=1700016974",
+      "http_status": 200,
+      "source_http_status": 200,
+      "content_type": "image/jpeg",
+      "bytes": 63279,
+      "dimensions": [
+        574,
+        569
+      ],
+      "sha256": "21fdeb60d9ae4de13bf908ccf1dd4f87a20ab10432859fd5de2935b6b30b7c39",
+      "image_link_in_source": true,
+      "media_kind": "manufacturer_product_photo",
+      "match_evidence": "Official Bambu EU product description embeds this photo under What is in the Box / Filament with Spool. Visible spool label reads TPU 95A HF.",
+      "visual_inspection": "Actual image viewed; label/product appearance checked. No image editing or inferred product rendering."
+    },
+    "tpu95-gyroid": {
+      "status": "verified",
+      "usable": true,
+      "verified": "2026-10-29",
+      "source_url": "https://bambulab-eu.myshopify.com/products/tpu-95a-hf",
+      "source_title": "TPU 95A HF",
+      "image_url": "https://cdn.shopify.com/s/files/1/0651/1555/4032/files/spool.jpg?v=1700016974",
+      "http_status": 200,
+      "source_http_status": 200,
+      "content_type": "image/jpeg",
+      "bytes": 63279,
+      "dimensions": [
+        574,
+        569
+      ],
+      "sha256": "21fdeb60d9ae4de13bf908ccf1dd4f87a20ab10432859fd5de2935b6b30b7c39",
+      "image_link_in_source": true,
+      "media_kind": "manufacturer_product_photo",
+      "match_evidence": "Material alias of tpu95 in catalog/materials.json. Photo shows the raw TPU 95A HF filament spool, not a printed gyroid part.",
+      "visual_inspection": "Actual image viewed; label/product appearance checked. No image editing or inferred product rendering.",
+      "alias_of": "tpu95"
+    },
+    "turret_dowel_4x8": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.mcmaster.com/91595A150/",
+      "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/915/91595A150_e9ae7045-dc2d-4d0d-a21a-cb77c886d277@4x_637951010825344443.png?ver=ImageNotFound",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "turret_insert_m3_short": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.mcmaster.com/94459A130/",
+      "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/944/94459A130_a515982a-951e-4898-a4b6-a815cf3acba9@4x_638110150122526611.png?ver=ImageNotFound",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "turret_insert_m4": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.mcmaster.com/94459A160/",
+      "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/944/94459A160_2a3ecda0-18e9-4cd4-83a1-1af9d1a671a3@4x_638110149675462558.png?ver=ImageNotFound",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "turret_magnet_disc": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.mcmaster.com/5862K103/",
+      "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/586/5862K103_995a47e3-95c3-4b29-a523-1d974d7c5dfe@4x_1bpma_1778808629.png?ver=ImageNotFound",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "turret_nut_m2_5": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.mcmaster.com/91828A113/",
+      "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/918/91828A113_5943e53a-9d38-441e-a754-b8971440d90f1785460293@4x_9slus_1785460296.png?ver=ImageNotFound",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "turret_oring_ct": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.mcmaster.com/9452K14/",
+      "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/945/9452K14p1-j05-digitall@4x_636898248326177130.png?ver=ImageNotFound",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "turret_pin_1_16x3_16": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.mcmaster.com/98381A414/",
+      "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/983/98381A414_e6ba0b03-1864-45bb-9889-e4e4e754f5571690578801@2x_1690578806.png?ver=ImageNotFound",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "turret_pin_2x20": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.mcmaster.com/93600A249/",
+      "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/936/93600A249_70f101e7-fed9-4048-81d9-6401621b4a4e@4x_638039862576899238.png?ver=ImageNotFound",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "turret_screw_m2_5x8": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.mcmaster.com/91290A102/",
+      "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/912/91290A102_f4126a63-2ea8-49b7-a2f9-a8c8161f6378@4x_638090345084361039.png?ver=ImageNotFound",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "turret_screw_m2x10": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.mcmaster.com/91290A017/",
+      "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/912/91290A017_4da46e33-0bea-4479-9459-d31a44c7d7ed@4x_638090337203301641.png?ver=ImageNotFound",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "turret_screw_m2x20": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.mcmaster.com/91290A049/",
+      "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/912/91290A049_5ff49e92-227e-4c22-bd19-96e804aabea9@4x_638090341073140795.png?ver=ImageNotFound",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "turret_screw_m2x8": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.mcmaster.com/91290A015/",
+      "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/912/91290A015_ef00831f-07a2-41c8-a5fa-c6e807a215c9@4x_638090336293841896.png?ver=ImageNotFound",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "turret_screw_m3x10": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.mcmaster.com/91290A115/",
+      "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/912/91290A115_b7a2d0f2-33b0-404f-be96-67cd87f43b361772469672@4x_knmfk_1772469677.png?ver=ImageNotFound",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "turret_screw_m3x10_flat": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.mcmaster.com/91294A130/",
+      "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/912/91294A130_a15225ad-3758-4486-95f9-7534ccbd91b91752243016@4x_hj0uf_1752243018.png?ver=ImageNotFound",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "turret_screw_m3x12": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.mcmaster.com/91290A117/",
+      "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/912/91290A117_be41e43f-7b6d-4e6f-9c2e-ff3ef886a6031772469757@4x_40ciy_1772469762.png?ver=ImageNotFound",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "turret_screw_m3x16": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.mcmaster.com/91290A120/",
+      "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/912/91290A120_30f62381-8e3c-4109-a092-cb8a7eb172851772469969@4x_f37oq_1772469976.png?ver=ImageNotFound",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "turret_screw_m3x20": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.mcmaster.com/91290A123/",
+      "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/912/91290A123_b3b4aa51-f816-4783-88ef-5000780ed9051772469909@4x_txt6b_1772469914.png?ver=ImageNotFound",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "turret_screw_m3x6_flat": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.mcmaster.com/91294A126/",
+      "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/912/91294A126_ddc13748-fa0c-478e-ae08-d02ca5766f031752242984@4x_sfet8_1752242987.png?ver=ImageNotFound",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "turret_screw_m3x8": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.mcmaster.com/91290A113/",
+      "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/912/91290A113_04b16d50-5c13-43f5-bdb9-e0ac07473af41772468268@4x_au45v_1772468273.png?ver=ImageNotFound",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "turret_screw_m3x8_flat": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.mcmaster.com/91294A128/",
+      "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/912/91294A128_69ef5434-3c79-4e45-afda-d6aeea4611ca1752243162@4x_lfbml_1752243164.png?ver=ImageNotFound",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "turret_screw_m4x10": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.mcmaster.com/91290A144/",
+      "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/912/91290A144_bbac7fef-d28c-42bb-b1b5-0e70351372bf1772470031@4x_ke850_1772470035.png?ver=ImageNotFound",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "turret_setscrew_m3x6_nylon": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.mcmaster.com/93285A115/",
+      "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/932/93285A115_10d20692-50de-4030-9c48-278d7370c0c7@2x_638110393701749568.png?ver=ImageNotFound",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "turret_spring_flap": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.mcmaster.com/9271K13/",
+      "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/927/9271K13_585706f8-eef8-449f-8159-a0b5259723df@2x_638110155337456723.png?ver=ImageNotFound",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "turret_standoff_m3x12": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.mcmaster.com/98952A110/",
+      "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/989/98952A110p1-j08-digitall@4x_636874189957795271.png?ver=ImageNotFound",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "turret_standoff_m3x14": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.mcmaster.com/98952A112/",
+      "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/989/98952A112p1-j08-digitall@4x_636874450993349394.png?ver=ImageNotFound",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "turret_thumbscrew_m4x12": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.mcmaster.com/92581A250/",
+      "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/925/92581A250_4cc67876-c710-4e8d-beb1-f3bdb91a97be@4x_1680529774.png?ver=ImageNotFound",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "turret_tube_coupling": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.mcmaster.com/51225K32/",
+      "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/512/51225K32_e59b26a8-2c96-4067-8f62-977db744e096@2x_1693600028.png?ver=ImageNotFound",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "turret_washer_m3": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.mcmaster.com/93475A210/",
+      "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/934/93475A210_43d9f8da-be53-4978-b846-d1498ddfcb62@4x_2cpql_1782861354.png?ver=ImageNotFound",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "usb-can-canable2": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.fysetc.com/products/fysetc-ucan-board",
+      "image_url": "https://cdn.shopify.com/s/files/1/0478/7532/6101/products/FYSETC-UCAN-Board-Based-on-STM32F072-USB-to-CAN-Adapter-Support-with-CAnable-CandleLight-Klipper-firmware_e3321e86-3f1d-4340-886e-7fdda740ea04.jpg?v=1670897213",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "usb_can_u2c": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://biqu.equipment/products/bigtreetech-ebb36-42-can-bus-u2c-v2-1-klipper-board?variant=39762747949154",
+      "image_url": "http://biqu.equipment/cdn/shop/products/EBB-36_7899172f-17a5-4310-8807-74e88e0aac27.jpg?v=1760706456",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "washer_2in": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.mcmaster.com/91117A219/",
+      "image_url": "https://www.mcmaster.com/mvC/Contents/gfx/ImageCache/911/91117A219_704643e1-cb4f-48cd-a940-f140b8ace428@4x_1677075840.png?ver=ImageNotFound",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "washer_3_8": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.mcmaster.com/91090A121/",
+      "image_url": "https://www.mcmaster.com/mvC/Contents/gfx/ImageCache/910/91090A121_7ff62caf-46fd-48dc-a1bd-2ba1fce1e447@4x_1677024484.png?ver=ImageNotFound",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "washer_m12": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://boltdepot.com/Product-Details?product=4531",
+      "image_url": "https://boltdepot.com/images/dimensions/flat-washer-dimensions.gif",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "washer_m12_thin": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.mcmaster.com/98689A118/",
+      "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/986/98689A118_e8c3621b-8ec8-43e7-82b1-4dafeeab5aaf1691718543@4x_1691718546.png?ver=ImageNotFound",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "washer_m3_large": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.mcmaster.com/91116A120/",
+      "image_url": "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/911/91116A120_5a88fe08-facd-43bc-ab0a-c42663d3bfe0@4x_xtprb_1780837777.png?ver=ImageNotFound",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "washer_m5": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.mcmaster.com/93475A240/",
+      "image_url": "https://www.mcmaster.com/mvC/Contents/gfx/ImageCache/934/93475A240_0aa5da33-aac8-476e-9808-73b93d346b98@4x_uzphd_1782866333.png?ver=ImageNotFound",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "washer_m6_large": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.mcmaster.com/91116A150/",
+      "image_url": "https://www.mcmaster.com/mvC/Contents/gfx/ImageCache/911/91116A150_08525b54-c2a6-4a34-9cbd-1c1531db4579@4x_nbkh5_1780839059.png?ver=ImageNotFound",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "weight_plate_1p25": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://bodysolid.com/cast-iron-standard-plates",
+      "image_url": "https://cdn11.bigcommerce.com/s-2v01ommyhe/products/403/images/763/RPB-1028px__27881.1733252872.386.513.jpg?c=1",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "weight_plate_2p5": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://bodysolid.com/cast-iron-standard-plates",
+      "image_url": "https://cdn11.bigcommerce.com/s-2v01ommyhe/products/403/images/763/RPB-1028px__27881.1733252872.386.513.jpg?c=1",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "wire_12awg": {
+      "status": "rejected",
+      "usable": false,
+      "source_url": "https://bntechgo.com/",
+      "image_url": "https://cdn11.bigcommerce.com/s-clng77kigt/images/stencil/original/carousel/71/banner-1--1.png?c=2",
+      "reason": "Existing image is a carousel/banner asset; exact 12 AWG wire product photograph is not verified.",
+      "verified": "2026-10-29"
+    },
+    "worker-cheetah-rival-rounds-100": {
+      "source_url": "https://outofdarts.com/products/worker-cheetah-rounds-rival-compatible-ammo-100-pack",
+      "image_url": "https://outofdarts.com/cdn/shop/files/Out-of-Darts-Darts-Ammo-Worker-Rival-Rounds.jpg?v=1703286147",
+      "part_number": "Cheetah Rival-compatible rounds, 100-pack",
+      "http_status": 200,
+      "content_type": "image/jpeg",
+      "bytes": 309131,
+      "dimensions": [
+        2048,
+        2048
+      ],
+      "sha256": "91ad4263bbfda46d81b5721c5c9cb6fd1f06b662ad407137b12d4a555dfd2387",
+      "verified": "2026-10-29",
+      "visual_inspection": "Real component image viewed in a browser contact sheet; no placeholder or logo.",
+      "usable": false,
+      "status": "unavailable",
+      "reason": "Image loads and looks like a component, but current product-page linkage could not be confirmed in this pass.",
+      "source_check_note": "Product page blocked, incomplete, or did not expose a title: HTTP Error 429: Too Many Requests"
+    },
+    "xt30_male": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.racedayquads.com/products/xt30-connector-male-or-female",
+      "image_url": "http://www.racedayquads.com/cdn/shop/products/fpvelite-xt30-connector-1pc-male-or-female-male-hardware-14854623330417.jpg?v=1762440749",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "xt60_pair": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://www.racedayquads.com/products/amass-xt60h-connector-1pc-choose-your-version",
+      "image_url": "http://www.racedayquads.com/cdn/shop/products/fpvelite-amass-xt60h-connector-1pc-choose-your-version-male-yellow-hardware-14854140526705.jpg?v=1762440747",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    },
+    "xt60e_f_panel": {
+      "status": "not_checked",
+      "usable": false,
+      "source_url": "https://pro.maplin.co.uk/products/female-xt60e-panel-mount-gold-plated-connector-20a-amass",
+      "image_url": "https://pro.maplin.co.uk/cdn/shop/files/bb83438d-c18a-42cc-bfc9-f0095a11117a_1200x1200.jpg?v=1769637314",
+      "reason": "Outside this bounded verification pass; existing catalog URL is not proof of a usable matching image."
+    }
+  }
+}

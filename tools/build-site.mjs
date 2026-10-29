@@ -4,6 +4,8 @@ import { execFileSync } from 'node:child_process';
 import path from 'node:path';
 import { marked } from 'marked';
 import YAML from 'yaml';
+import { parseHTML } from 'linkedom';
+import { addModelPreviews } from '../web/model-links.js';
 import { writeMarkdownSite } from './site-markdown.mjs';
 import { SITE_CACHE_CONTROL, versionSiteAssets } from './site-cache.mjs';
 const root = path.resolve(import.meta.dirname, '..');
@@ -45,6 +47,9 @@ const nav = [
   {id:'docs',title:'Design notes',href:'site/'}, {id:'repo',title:'GitHub ↗',href:'https://github.com/Valpatel/gyropup'},
 ];
 await writeFile(path.join(out, 'site/nav.json'), JSON.stringify({title:'Gyropup',nav},null,2));
+const models=tracked.filter(file=>roots.some(root=>file.startsWith(root))&&/\.(?:stl|step|stp|3mf)$/i.test(file)).sort();
+await writeFile(path.join(out,'site/models.json'),JSON.stringify({files:models.map(file=>({path:'/'+file,format:file.split('.').pop().toLowerCase(),preview:'/designer/kit/file-viewer.html?file='+encodeURIComponent('/'+file)}))},null,2));
+const publishedModels=new Set(models.map(file=>'/'+file));
 const slug = p => p.toLowerCase().replace(/[^a-z0-9]+/g,'-');
 const documents = tracked.filter(p => /^(docs|research)\/.*\.md$/.test(p) && p !== 'docs/handoff.md');
 documents.push('README.md', 'catalog/SCHEMA.md');
@@ -109,10 +114,13 @@ const revision = execFileSync('git',['rev-parse','HEAD'],{cwd:root}).toString().
 const prototypeNotice = await read('web/prototype-notice.html');
 await rm(path.join(out, 'web/prototype-notice.html'));
 for (const file of (await readdir(out, { recursive:true })).filter(file => file.endsWith('.html'))) {
-  const target = path.join(out, file), html = await readFile(target, 'utf8');
+  const target = path.join(out, file);
+  const parsed=parseHTML(await readFile(target,'utf8'));
+  addModelPreviews(parsed.document,{base:'https://gyropup.com/'+file,published:publishedModels});
+  const html=parsed.document.toString();
   if (!html.includes('</head>') || !html.includes('</body>')) throw new Error(`Cannot add prototype notice to ${file}`);
-  await writeFile(target, html.replace('</head>', '<link rel="stylesheet" href="/web/prototype-notice.css"></head>')
-    .replace('</body>', `${prototypeNotice}<script type="module" src="/web/prototype-notice.js"></script></body>`));
+  await writeFile(target, html.replace('</head>', '<link rel="stylesheet" href="/web/prototype-notice.css"><link rel="stylesheet" href="/web/model-links.css"></head>')
+    .replace('</body>', `${prototypeNotice}<script type="module" src="/web/prototype-notice.js"></script><script type="module" src="/web/model-links.js"></script></body>`));
 }
 const assets = await versionSiteAssets(out);
 // Markdown records final HTML hashes, so asset URL migration must precede it.

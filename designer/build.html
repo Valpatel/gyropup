@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Gyropup Build</title>
 <link rel="stylesheet" href="kit/hud.css">
+<link rel="stylesheet" href="kit/part-table.css">
+<link rel="stylesheet" href="portal-parts.css">
 <link rel="stylesheet" href="kit/loading.css" data-gyropup-loading>
 <style>
   /* the progress page's look (designer/progress.html): the same variables, fonts, cards, tags and part rows */
@@ -133,19 +135,18 @@
   <div class="portal-intro"><strong>Built by autonomous systems · work in progress</strong>You're inside the Gyropup workshop. These are evolving design files and simulation reports; physical testing is still ahead. <a href="../#built">About the project ↗</a></div>
   <h1>Gyropup: build the first prototype</h1>
   <div id="build-loading"><div class="gp-loading" role="status" aria-live="polite" aria-busy="true" data-state="loading"><span class="gp-loading-icon" aria-hidden="true"></span><span class="gp-loading-message">Loading parts lists and print plans…</span></div></div>
-  <p class="summary" id="summary">Parts and print totals appear after the published data is ready.</p>
-  <p class="lede">Everything to order and to print for the first physical prototype: one leg on its single-leg test rig (milestone M3),
-  the turret v0 on its bench stand, and the body's first open frame when its files exist. Generated from the repo's own data each
-  time the page loads (the parts lists and print plans in <code>exports/</code>, the catalogue in <code>catalog/</code>, the plans'
-  chosen sellers in <code>docs/</code>); nothing on it is typed by hand. Prices are the listed ones on the date shown, before shipping and tax.</p>
+  <div class="summary" id="summary">Parts and print totals appear after the published data is ready.</div>
+  <p class="lede">Plan the first prototype: choose workstreams, compare suppliers, and follow the print queues. Prices are recorded estimates before shipping and tax. Design files and quantities update as the project progresses.</p>
+  <nav class="portal-jumps" aria-label="Build sections"><a href="#streams">Workstreams</a><a href="#sellers">Suppliers</a><a href="#made">Made parts</a><a href="#materials">Filament</a><a href="#queue">Print queues</a></nav>
   <div class="status" id="streams"></div>
 
-  <div class="sec">Order on day 1: longest lead times first</div>
+  <div id="progress-tools"></div>
+<div class="sec">Order on day 1: longest lead times first</div>
   <p class="lede" id="daylede"></p>
   <div id="day1"></div>
 
   <div class="sec">Order list, by seller</div>
-  <p class="lede" id="orderlede"></p>
+  <div class="lede" id="orderlede"></div>
   <div id="sellers"></div>
   <div id="orders"></div>
 

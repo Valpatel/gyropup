@@ -79,14 +79,16 @@ test('progress and build expose their data, tables, prices, and original downloa
   const { document } = parseHTML(await renderPortal(await read('designer/build.html'), 'designer/build.html', out));
   const total = document.querySelector('#grand-usd').textContent.trim();
   assert.ok(build.includes(total), 'order total must match the browser renderer');
-  assert.match(build, /\|.*part number, seller/i);
+  assert.match(build, /\|.*Supplier part number/i);
   const tables = marked.lexer(build).filter(token => token.type === 'table');
-  const orders = tables.find(table => table.header.some(cell => cell.text === 'part number, seller'));
+  const orders = tables.find(table => table.header.some(cell => cell.text === 'Supplier part number'));
   assert.ok(orders?.rows.length > 1, 'order records remain parseable Markdown table rows');
   assert.equal(orders.header.length, 7, 'all order columns remain associated with their values');
   assert.ok(!tables.some(table => table.rows.some(row => row.length !== table.header.length)));
   assert.match(build, /https:\/\/gyropup.com\/exports\/leg\/bom.json/);
   assert.match(build, /https:\/\/gyropup.com\/exports\/[^)]+\.stl/);
+  assert.match(build, /Preview 3D/);
+  assert.match(build, /file-viewer\.html\?file=/);
 });
 
 test('a changed published status changes Markdown; local unpublished data is never read', async () => {
@@ -94,6 +96,7 @@ test('a changed published status changes Markdown; local unpublished data is nev
   try {
     await mkdir(path.join(fixture, 'designer'), { recursive: true });
     await mkdir(path.join(fixture, 'docs'), { recursive: true });
+    await mkdir(path.join(fixture,'site'));await writeFile(path.join(fixture,'site/models.json'),JSON.stringify({files:[]}));
     await cp(path.join(out, 'designer/progress.js'), path.join(fixture, 'designer/progress.js'));
     await mkdir(path.join(fixture,'designer/kit'),{recursive:true});
     await cp(path.join(out,'designer/kit/portal-data.js'),path.join(fixture,'designer/kit/portal-data.js'));

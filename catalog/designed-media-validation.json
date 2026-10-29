@@ -1,0 +1,191 @@
+{
+  "schema": 1,
+  "date": "2026-10-29",
+  "command": "python tools/part-media-generation.py --render --check",
+  "generator_sha256": "c31c11019ee3719f216176a672b913bf0c86dc076d4005bea17d3f58769ae877",
+  "renderer": {
+    "cadquery": "2.8.0",
+    "pyvista": "0.49.1",
+    "vtk": [
+      9,
+      6,
+      2
+    ],
+    "projection": "orthographic",
+    "camera_direction": [
+      1,
+      -1.25,
+      0.9
+    ],
+    "up": [
+      0,
+      0,
+      1
+    ],
+    "projected_fit_padding": 1.12,
+    "step_tolerance_mm": 0.08,
+    "step_angular_tolerance_rad": 0.1
+  },
+  "counts": {
+    "body_first_frame": 13,
+    "machined_and_cut": 13
+  },
+  "parts": {
+    "body/post": {
+      "geometry": "exports/body/post.stl",
+      "geometry_sha256": "0db4877c1804b101d28002a5c1fbe89fcb71a8ec0c5cc64b61060a118213f9ad",
+      "image": "exports/thumbs/body--post.png",
+      "image_sha256": "fe2d68c61a6d7089c0f3464d79947ab268fc3a8d1a098892949901c53a5d7099"
+    },
+    "body/riser": {
+      "geometry": "exports/body/riser.stl",
+      "geometry_sha256": "d4f8dd2014dec059d827eeaa9c37906249f7bff661aa0625a86f92b74a96e1af",
+      "image": "exports/thumbs/body--riser.png",
+      "image_sha256": "530032993ecc4ac3cdc6e7b23cb38b1bc81051a41096b9c7d9d1ccb8c0a2301e"
+    },
+    "body/isolator": {
+      "geometry": "exports/body/isolator.stl",
+      "geometry_sha256": "e73b7552c0189f809cd69e35d0c59db0d016a6f9f18280171a85cc4687fbecce",
+      "image": "exports/thumbs/body--isolator.png",
+      "image_sha256": "4cf3c4f377b64d44aeea377f4de4faca28275601bbaf966efd060696c89846aa"
+    },
+    "body/plate_post": {
+      "geometry": "exports/body/plate_post.stl",
+      "geometry_sha256": "5b5e282d2e16b95b5167b4ffcfa3f7754600f2f7e6b133974ef7a7e08ef0c16b",
+      "image": "exports/thumbs/body--plate_post.png",
+      "image_sha256": "cc66c3ab3ffd27cd03c7ad8f458b4a1be413a9051c5577c91d9b1e036e439483"
+    },
+    "body/bus_insulator": {
+      "geometry": "exports/body/bus_insulator.stl",
+      "geometry_sha256": "2c138c7dbe129161c974555fc191b1f19a5ef2bab432c6fa11606b3e3e6ce2f3",
+      "image": "exports/thumbs/body--bus_insulator.png",
+      "image_sha256": "64604d59c9ed8128918fdf752c878bd1736308d83607d8cdde83e18ee84365db"
+    },
+    "body/dcdc_bracket": {
+      "geometry": "exports/body/dcdc_bracket.stl",
+      "geometry_sha256": "e1cc02232bc0bf5df5b97f070a989bc5b84397f7f7942f5a92f4ad0ad0b972e7",
+      "image": "exports/thumbs/body--dcdc_bracket.png",
+      "image_sha256": "ca3971a932c0204ee8079b09b89aec52dd0f84bfadf7c460b5e5e97afa9bd50f"
+    },
+    "body/bay_rail_l": {
+      "geometry": "exports/body/bay_rail_l.stl",
+      "geometry_sha256": "2dd42e5e9a72a2d2a151384d0d3be7d54981c01dc55119328ebca24439d7c184",
+      "image": "exports/thumbs/body--bay_rail_l.png",
+      "image_sha256": "d9b33a8e007656c2572cb45aab99ccaba43f84ec467739d1d5e7b160328e7658"
+    },
+    "body/bay_rail_r": {
+      "geometry": "exports/body/bay_rail_r.stl",
+      "geometry_sha256": "57cac53bf09a799b7071fb72b25bf3b4409e85d015118e8178f9247a2c8303aa",
+      "image": "exports/thumbs/body--bay_rail_r.png",
+      "image_sha256": "7dd7a3bda9fa23a7545fffbc95c714f48a1224fe2f22d239db2158c8ad2a9bf5"
+    },
+    "body/adapter_plate_front": {
+      "geometry": "exports/body/adapter_plate_front.stl",
+      "geometry_sha256": "5bad6c43b1a7de966cb762d36221071fe9cfaaf682c1c6f2200f9469309bb488",
+      "image": "exports/thumbs/body--adapter_plate_front.png",
+      "image_sha256": "7575842feaa93d4f457dd80f613b9d5c0c64949eaf6f18550d582f016d23cb3e"
+    },
+    "body/bay_door_front": {
+      "geometry": "exports/body/bay_door_front.stl",
+      "geometry_sha256": "10df817f0161a86125bcafa21fe18af40f87ad534776181d7b4bbba0ba4a3d25",
+      "image": "exports/thumbs/body--bay_door_front.png",
+      "image_sha256": "20e15691ea3a4a6cde68d2b1fabe8d5447d1cd8fa2306143afb9e140b478069f"
+    },
+    "body/adapter_plate_rear": {
+      "geometry": "exports/body/adapter_plate_rear.stl",
+      "geometry_sha256": "c3b97e6b125c5f5221d34022a7c5720120672f014fd97eddc588ea59980e061b",
+      "image": "exports/thumbs/body--adapter_plate_rear.png",
+      "image_sha256": "bcdbb172276483409de14eccd29934177f59ae464c60887705fa48902e132405"
+    },
+    "body/bay_door_rear": {
+      "geometry": "exports/body/bay_door_rear.stl",
+      "geometry_sha256": "5397dc1c1bb75e30664960600ed34b39f9e203f49a765bb04e49be7e5c016b0e",
+      "image": "exports/thumbs/body--bay_door_rear.png",
+      "image_sha256": "9146dec9a6f45c62ff7a8091933f7f758f45c537ed8110376680a4f409d79f7b"
+    },
+    "body/bay_skid": {
+      "geometry": "exports/body/bay_skid.stl",
+      "geometry_sha256": "ceb788f97deed6d78a63db5c3d24a1212d91b7b54678b2aea5f4558d7d8d3e00",
+      "image": "exports/thumbs/body--bay_skid.png",
+      "image_sha256": "436c59aec7395c5138a7246923dce892ab0e8152f5348f329c3fa4df02e70b28"
+    },
+    "body/cheek": {
+      "geometry": "exports/body/sendcutsend/cheek_5052-H32_0.187in_x2.step",
+      "geometry_sha256": "feae8ac0f57620c5c4c5ce92ae49e3f9d7d754c48e44ac26654f3e5ae817d9c8",
+      "image": "exports/thumbs/body--cheek.png",
+      "image_sha256": "fa57b242d856533cf58f3d2a956703384a5d8369db305c884ccfd670ea323255"
+    },
+    "body/floor_tray": {
+      "geometry": "exports/body/sendcutsend/floor_tray_5052-H32_0.125in_x1.step",
+      "geometry_sha256": "c34178586aa6396dacf9f64dbf862caa00863627a44541f643ab8a805b5c7466",
+      "image": "exports/thumbs/body--floor_tray.png",
+      "image_sha256": "4a05cbc5ab4ae745e0ead45b65e0234e84110eeab422281f501d55f6007e8c51"
+    },
+    "body/belly_plate": {
+      "geometry": "exports/body/sendcutsend/belly_plate_6061-T6_0.100in_x1.step",
+      "geometry_sha256": "e7d953ce513f63bd4de65bb9b271447e098003db4a92ab6da5e085206d1d2681",
+      "image": "exports/thumbs/body--belly_plate.png",
+      "image_sha256": "74db8771e5034161419248fa65885d8410fc5915f4b555de90f1282c16998656"
+    },
+    "body/deck": {
+      "geometry": "exports/body/sendcutsend/deck_5052-H32_0.100in_x1.step",
+      "geometry_sha256": "4ef99fe85dad1f14b2f4d31e0115a2f752a3067dd5216559ad88d7d4397ad107",
+      "image": "exports/thumbs/body--deck.png",
+      "image_sha256": "3f380148624b5a064fcc41f6d4dd02e932c0ddfb6006639e3031a4cdd9229a8a"
+    },
+    "body/compute_pallet": {
+      "geometry": "exports/body/sendcutsend/compute_pallet_6061-T6_0.125in_x1.step",
+      "geometry_sha256": "892a84905e0d3fc65792e2bba26c32f3bb49728491eaf62291678d34728ed502",
+      "image": "exports/thumbs/body--compute_pallet.png",
+      "image_sha256": "d38d931a34fcb4dc8258a2fbc1670e1505fab7f0b17869932ed0f4c8337f50d8"
+    },
+    "body/turret_plate": {
+      "geometry": "exports/body/sendcutsend/turret_plate_6061-T6_0.125in_x1.step",
+      "geometry_sha256": "9b2066456f0985268dc4e3c1253a18b0d441f522da724fb81cd7246167ebb5cb",
+      "image": "exports/thumbs/body--turret_plate.png",
+      "image_sha256": "815f5a5630d4d519061ef4bf86d44a74cb240b5df0a246a86b2115faad9fd757"
+    },
+    "body/power_plate": {
+      "geometry": "exports/body/sendcutsend/power_plate_5052-H32_0.100in_x1.step",
+      "geometry_sha256": "a9d75cc93169834ecf7f8db6595a16482953c98d6b452089e8e1633554a08e74",
+      "image": "exports/thumbs/body--power_plate.png",
+      "image_sha256": "68dd6653d5a0f2c70685b94d1bd2611f8f3bdec2d9fce3b87fbab8fd7c3b3dd5"
+    },
+    "body/bus_bar": {
+      "geometry": "exports/body/sendcutsend/bus_bar_C110_0.125in_x2.step",
+      "geometry_sha256": "6b02bfa3afec5ff1fdc351a6313f54f8664de0d00975bf2dc7d15be92440d45c",
+      "image": "exports/thumbs/body--bus_bar.png",
+      "image_sha256": "68abf889615eb28a5c33176167d3b5b3cb57f405d08589dd0fe313e6ead011b4"
+    },
+    "body/bay_floor": {
+      "geometry": "exports/body/sendcutsend/bay_floor_5052-H32_0.063in_x1.step",
+      "geometry_sha256": "89584928815565c544686535ecbe2828095f37d2a1184a2db47c6f260175df1e",
+      "image": "exports/thumbs/body--bay_floor.png",
+      "image_sha256": "aa96d0148970a73baf7250a3f62ae45ab7373a303a8736b1d79ba24bc28d10d0"
+    },
+    "body/bay_side": {
+      "geometry": "exports/body/sendcutsend/bay_side_5052-H32_0.063in_x2.step",
+      "geometry_sha256": "7e97e27e0f82b29e74e824e66d58a125cae519ef5662af0c19d6d786cb4ba8a9",
+      "image": "exports/thumbs/body--bay_side.png",
+      "image_sha256": "f3c7177850984037b84127eaebf2968e775cac27f1c52f92e459fc0b284c6d69"
+    },
+    "leg/output_adapter": {
+      "geometry": "exports/leg/cnc/output_adapter.step",
+      "geometry_sha256": "f31754b45d253ba6e3ca57cca5a7454bc7ae26b7f03080fcfe5a7d47df3ddca1",
+      "image": "exports/thumbs/leg--output_adapter.png",
+      "image_sha256": "831d230b52a703dbd5c0630066e870385243b39a49cc725b2da535b6d69a86e7"
+    },
+    "rig/carriage_plate": {
+      "geometry": "exports/rig/sendcutsend/carriage_plate.step",
+      "geometry_sha256": "048b938d3b7ce7eb8f36c73015d07bc895696b756098277aa3d480671e1ac7ba",
+      "image": "exports/thumbs/rig--carriage_plate.png",
+      "image_sha256": "ded173f372bca32811451390b6f07503d9bc6252db894b59af61d2a25117eb83"
+    },
+    "turret/pan_clamp": {
+      "geometry": "exports/sim/turret_box/pan_clamp.stl",
+      "geometry_sha256": "10396706c9744d6a3c873fed90586f7226f991231fc355edf55bb07a35f6dca8",
+      "image": "exports/thumbs/turret--pan_clamp.png",
+      "image_sha256": "ba521b688bc262d6d4ad1e07648930fd67ceb22d4bbf7f8023bf438861c7065e"
+    }
+  }
+}
