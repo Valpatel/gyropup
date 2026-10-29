@@ -432,3 +432,11 @@
   why: "The user explicitly raised the maximum weight. A revised requirement must not relabel older lower-mass evidence as a successful 100 lb test."
   status: decided
   source: {kind: user, quote: "Also throughout our project there's notes about 50lb max weight, that should be raised to 100."}
+
+- id: D73
+  date: "2026-10-28"
+  title: "Public prototype warning and a $10,000 design target"
+  decision: "Current Gyropup prototypes are unsafe research machines, not for sale or general public use. The site requires an explicit warning acknowledgement per browser-tab session and keeps a persistent warning on the landing and document pages. Future play with children is a goal requiring proven final designs and adult supervision; supervision does not establish current prototype safety. The landing states design targets of up to 100 lb and $10,000. The cost figure is a target, not an offer or a validated production estimate. See docs/prototype-safety.md."
+  why: "The user requested clear risks before entry and at the bottom of the page, clarified the distinction between current high-power prototypes and future supervised family use, and supplied the cost target."
+  status: decided
+  source: {kind: user, quote: 'Warning should be a modal before entering page? "I accept" or something'}

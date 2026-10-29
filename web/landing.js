@@ -107,7 +107,7 @@ async function showRobot() {
     const revealedAt = previous;
     renderer.setAnimationLoop(now => {
       const dt = Math.min((now - previous) / 1000, .05); previous = now;
-      if (!visible || document.hidden) return;
+      if (!visible || document.hidden || document.getElementById('prototype-notice-dialog')?.open) return;
       const presented = now - revealedAt > 350;
       if (presented) {
         const target = pinned || hovering ? .45 : 0;

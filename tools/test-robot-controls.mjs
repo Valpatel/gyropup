@@ -1,3 +1,4 @@
+import { acknowledgePrototypeNotice } from './test-prototype-session.mjs';
 /** Real vehicle controls must remain useful while the default demo is playing. */
 import assert from 'node:assert/strict';
 import { mkdir } from 'node:fs/promises';
@@ -7,6 +8,7 @@ const engine = process.env.PLAYWRIGHT_BROWSER === 'webkit' ? webkit : chromium;
 const browser = await engine.launch(engine === chromium ? { channel:process.env.PLAYWRIGHT_CHANNEL === 'chromium' ? undefined : 'chrome', headless:true,
   args:['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader'] } : {headless:true});
 const context = await browser.newContext({viewport:{width:1440,height:1000},hasTouch:true});
+await acknowledgePrototypeNotice(context);
 await context.addInitScript(()=>localStorage.setItem('gyropup.probe','off'));
 const page = await context.newPage(), errors=[];
 page.on('pageerror',e=>errors.push(e.message));
@@ -20,6 +22,7 @@ async function model(value) {
 }
 async function checkFreshLayout() {
  const fresh=await browser.newContext({viewport:{width:1280,height:900}});
+await acknowledgePrototypeNotice(fresh);
  await fresh.addInitScript(()=>localStorage.setItem('gyropup.probe','off'));
  const p=await fresh.newPage();p.on('pageerror',e=>errors.push(e.message));
  let releaseCss;

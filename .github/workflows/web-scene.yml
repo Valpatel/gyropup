@@ -24,6 +24,7 @@ jobs:
               npm run test:demo
           - suite: presentation
             commands: |
+              npm run test:notice
               npm run test:hero
               npm run test:viewers
               npm run test:audio

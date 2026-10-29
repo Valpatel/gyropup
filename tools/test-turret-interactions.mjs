@@ -1,3 +1,4 @@
+import { acknowledgePrototypeNotice } from './test-prototype-session.mjs';
 import assert from 'node:assert/strict';
 import {mkdir,writeFile} from 'node:fs/promises';
 import {chromium,webkit} from '@playwright/test';
@@ -5,6 +6,7 @@ const base=(process.env.SITE_URL||'http://127.0.0.1:8882').replace(/\/$/,'');
 const engine=process.env.PLAYWRIGHT_BROWSER==='webkit'?webkit:chromium;
 const browser=await engine.launch(engine===chromium?{channel:process.env.PLAYWRIGHT_CHANNEL==='chromium'?undefined:'chrome',headless:true,args:['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']}:{headless:true});
 const page=await browser.newPage({viewport:{width:1280,height:900}}),errors=[];
+await acknowledgePrototypeNotice(page);
 page.setDefaultTimeout(90000); // Software-rendered CI advances capped simulation time slowly.
 async function resize(width,height){
  const wasPhone=page.viewportSize().width<900;

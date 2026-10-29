@@ -1,3 +1,4 @@
+import { acknowledgePrototypeNotice } from './test-prototype-session.mjs';
 /** Master audio gates both synthesis backends without erasing voice-only preferences. */
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
@@ -15,6 +16,7 @@ function browserVoice() {
 }
 async function remoteVoice() {
  const context=await browser.newContext();await context.addInitScript(browserVoice);
+await acknowledgePrototypeNotice(context);
  await context.addInitScript(()=>{
   window.remoteAudio={started:0,stopped:0,gains:[]};
   class AudioContext {
@@ -63,6 +65,7 @@ async function remoteVoice() {
 }
 async function siteControls() {
  const context=await browser.newContext({viewport:{width:1200,height:900}});await context.addInitScript(browserVoice);
+await acknowledgePrototypeNotice(context);
  const page=await context.newPage();page.on('pageerror',e=>errors.push(e.message));
  if(process.env.AUDIO_SOURCE==='1')await page.route('**/designer/**',async route=>{
   const p=new URL(route.request().url()).pathname;
