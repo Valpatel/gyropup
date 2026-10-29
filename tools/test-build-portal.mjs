@@ -113,15 +113,34 @@ try{
   await page.goto(base+'/site/pages/research-carrier-insert-fit-readme-md.html?live=0');
   for(const name of Object.keys(fitReceipt.specimens)){
    const action=page.getByRole('link',{name:`Preview ${name}.step in 3D`,exact:true});
-   await action.scrollIntoViewIfNeeded();
-   const placement=()=>action.evaluate(a=>{const r=a.getBoundingClientRect(),hit=document.elementFromPoint(r.x+r.width/2,r.y+r.height/2);return {x:r.x,right:r.right,width:r.width,height:r.height,viewport:innerWidth,reachable:hit===a||a.contains(hit)};});
-   const accessible=r=>r.x>=0&&r.right<=r.viewport&&r.width>=44&&r.height>=44&&r.reachable;
+   // Do not use scrollIntoView: it can horizontally scroll an ancestor and
+   // conceal the initial clipped-action defect this check is meant to catch.
+   const verticalOnly=()=>action.evaluate(a=>window.scrollTo({left:0,top:a.getBoundingClientRect().top+scrollY-innerHeight/2,behavior:'instant'}));
+   await verticalOnly();
+   const placement=()=>action.evaluate(a=>{
+    const r=a.getBoundingClientRect(),hit=document.elementFromPoint(r.x+r.width/2,r.y+r.height/2);let clipped=false,horizontallyScrolled=false;
+    for(let parent=a.parentElement;parent;parent=parent.parentElement){
+     horizontallyScrolled ||= parent.scrollLeft!==0;
+     if(/^(auto|scroll|hidden|clip)$/.test(getComputedStyle(parent).overflowX)){
+      const box=parent.getBoundingClientRect(),left=box.left+parent.clientLeft,right=left+parent.clientWidth;
+      clipped ||= r.left<left||r.right>right;
+     }
+    }
+    return {x:r.x,right:r.right,width:r.width,height:r.height,viewport:innerWidth,reachable:hit===a||a.contains(hit),clipped,horizontallyScrolled};
+   });
+   const accessible=r=>r.x>=0&&r.right<=r.viewport&&r.width>=44&&r.height>=44&&r.reachable&&!r.clipped&&!r.horizontallyScrolled;
    const baseline=await placement();assert.ok(accessible(baseline),JSON.stringify({name,width,...baseline}));
    if(width===320){
     const previous=await action.getAttribute('style');await action.evaluate(a=>a.style.transform='translateX(400px)');
     assert.equal(accessible(await placement()),false,'An offscreen primary action must fail even inside a contained page');
     await action.evaluate((a,value)=>value===null?a.removeAttribute('style'):a.setAttribute('style',value),previous);
     assert.ok(accessible(await placement()));
+    // Keep the button inside the viewport but clip it inside a smaller scroll
+    // ancestor. A horizontal automation helper would silently reveal it.
+    await action.evaluate(a=>{const wrapper=document.createElement('span');wrapper.dataset.testClip='';wrapper.style.cssText='display:block;width:120px;overflow-x:auto;white-space:nowrap';a.before(wrapper);wrapper.append(a);a.style.marginLeft='100px';a.style.display='inline-block';});
+    await verticalOnly();const nested=await placement();assert.equal(nested.clipped,true);assert.equal(nested.horizontallyScrolled,false);assert.equal(accessible(nested),false,'Nested clipping cannot be concealed by automation scrolling');
+    await action.evaluate((a,value)=>{const wrapper=a.parentElement;wrapper.replaceWith(a);value===null?a.removeAttribute('style'):a.setAttribute('style',value);},previous);
+    await verticalOnly();assert.ok(accessible(await placement()));
    }
   }
   await page.screenshot({path:`${out}/${engine.name()}-insert-fit-${width}.png`});
