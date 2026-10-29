@@ -3,6 +3,7 @@
 from __future__ import annotations
 import hashlib
 import json
+import os
 from pathlib import Path
 import sys
 
@@ -24,6 +25,10 @@ def check(root=ROOT, package=None):
     if (report.get('physical_measurements') is not None or report.get('physical_fit_verified') is not False
             or report.get('release_ready') is not False):
         raise ValueError('Generated geometry cannot claim physical qualification')
+    override = os.environ.get('GYROPUP_CAD_PARAMS')
+    parameter_hash = digest(Path(override)) if override else None
+    if report.get('inputs', {}).get('GYROPUP_CAD_PARAMS_sha256') != parameter_hash:
+        raise ValueError('Optional CAD parameter input changed; regenerate specimens')
     actual_inputs = {p.relative_to(root).as_posix(): digest(p) for folder in ('cad','catalog','designs')
                      for p in (root/folder).rglob('*') if p.is_file() and p.suffix in ('.py','.json')}
     if report.get('inputs', {}).get('files') != actual_inputs:

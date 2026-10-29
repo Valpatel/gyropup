@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 """Receipt corruption controls; only small copied sources/artifacts, no CAD kernel."""
 import json
+import os
 from pathlib import Path
 import shutil
 import tempfile
 import unittest
+from unittest.mock import patch
 from verify import ROOT, check
 
 
@@ -41,6 +43,11 @@ class Guards(unittest.TestCase):
     def test_added_generation_dependency(self):
         (self.root/'research/carrier-insert-fit/helper.py').write_text('# new dependency\n')
         with self.assertRaisesRegex(ValueError,'sources changed'):check(self.root)
+
+    def test_optional_parameter_override(self):
+        parameters=self.root/'changed-parameters.json';parameters.write_text('{}')
+        with patch.dict(os.environ, {'GYROPUP_CAD_PARAMS': str(parameters)}):
+            with self.assertRaisesRegex(ValueError, 'Optional CAD parameter'):check(self.root)
 
     def test_false_qualification(self):
         p=self.package/'receipt.json';d=json.loads(p.read_text());d['physical_fit_verified']=True;p.write_text(json.dumps(d))

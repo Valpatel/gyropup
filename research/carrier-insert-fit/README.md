@@ -4,8 +4,19 @@ Issue #89 / parent #66. These small **unpowered fit specimens** are extracted fr
 
 | Specimen | What it preserves | Inspection and downloads |
 |---|---|---|
-| Carrier boss | Local Ø7 boss, nearby outer edge and wiring-window edge; exterior face down, pilot vertical | [STEP](../../exports/turret/carrier-insert-fit/carrier-boss.step) · [STL](../../exports/turret/carrier-insert-fit/carrier-boss.stl) · [geometry-only 3MF](../../exports/turret/carrier-insert-fit/carrier-boss.3mf) |
-| Base anchor | Local anchor rail and foot; foot down, pilot horizontal | [STEP](../../exports/turret/carrier-insert-fit/base-anchor.step) · [STL](../../exports/turret/carrier-insert-fit/base-anchor.stl) · [geometry-only 3MF](../../exports/turret/carrier-insert-fit/base-anchor.3mf) |
+| Carrier boss | Local Ø7 boss, nearby outer edge and wiring-window edge; exterior face down, pilot vertical | [STEP](../../exports/turret/carrier-insert-fit/carrier-boss.step) |
+| Base anchor | Local anchor rail and foot; foot down, pilot horizontal | [STEP](../../exports/turret/carrier-insert-fit/base-anchor.step) |
+
+<details><summary>STL and geometry-only 3MF downloads</summary>
+
+- [Carrier boss — STL mesh](../../exports/turret/carrier-insert-fit/carrier-boss.stl)
+- [Carrier boss — geometry-only 3MF](../../exports/turret/carrier-insert-fit/carrier-boss.3mf)
+- [Base anchor — STL mesh](../../exports/turret/carrier-insert-fit/base-anchor.stl)
+- [Base anchor — geometry-only 3MF](../../exports/turret/carrier-insert-fit/base-anchor.3mf)
+
+These files have the same print orientation as the corresponding STEP. The 3MF packages contain geometry only; apply and inspect the recipe before slicing.
+
+</details>
 
 Both retain the **nominal Ø4 blind pilot**, 6.5 mm hole depth and 8 mm axial stock. The bore floor leaves 1.5 mm of material. A nominal 5.74 mm insert, seated flush, leaves 0.76 mm between its tip and that floor. These are CAD dimensions, not measured print dimensions. One print orientation cannot qualify the other.
 
