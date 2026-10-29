@@ -636,6 +636,7 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
   };
   const kd = (e) => onKey(e, true), ku = (e) => onKey(e, false);
   const blur = () => { S.arm.clear(); S.trigger = false; S.keys.clear(); };
+  const prototypeNotice = event => { if (event.detail?.open) blur(); };
 
   // click / tap: a part -> what it does; the range -> aim there (a drag still orbits the camera)
   const ray = new THREE.Raycaster();
@@ -1485,6 +1486,7 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
     window.addEventListener('keydown', kd);
     window.addEventListener('keyup', ku);
     window.addEventListener('blur', blur);
+    document.addEventListener('gyropup:prototype-notice', prototypeNotice);
     prevAim.pan = S.pan; prevAim.tilt = S.tilt;              // no servo whine for where it already points
     canvas.addEventListener('pointerdown', onDown);
     canvas.addEventListener('pointerup', onUp);
@@ -1514,6 +1516,7 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
     window.removeEventListener('keydown', kd);
     window.removeEventListener('keyup', ku);
     window.removeEventListener('blur', blur);
+    document.removeEventListener('gyropup:prototype-notice', prototypeNotice);
     canvas.removeEventListener('pointerdown', onDown);
     canvas.removeEventListener('pointerup', onUp);
     canvas.removeEventListener('pointercancel', onCancel);

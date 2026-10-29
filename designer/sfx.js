@@ -31,9 +31,13 @@ export function createSfx({ key = 'gyropup-sfx', volume = 1.0 } = {}) {
   const listeners = new Set();
   const changed = () => { for (const listener of listeners) listener({ enabled, volume }); };
   const hum = {};     // continuous voices: flywheels, servos, wheel motors
+  const noticeOpen = () => document.getElementById('prototype-notice-dialog')?.open === true;
+  const applyOutput = () => { if (out) out.gain.value = enabled && !noticeOpen() ? volume : 0; };
+  // Temporarily gate output without rewriting the user's saved enabled/volume preferences.
+  document.addEventListener('gyropup:prototype-notice', applyOutput);
 
   function unlock() {
-    if (!enabled) return null;
+    if (!enabled || noticeOpen()) return null;
     if (!ctx) {
       const AC = window.AudioContext || window.webkitAudioContext;
       if (!AC) return null;
@@ -57,7 +61,7 @@ export function createSfx({ key = 'gyropup-sfx', volume = 1.0 } = {}) {
   }
   // iOS starts audio only at the end of a tap (touchend, pointerup); desktop browsers on any gesture
   for (const ev of ['pointerdown', 'keydown', 'touchstart', 'pointerup', 'touchend']) window.addEventListener(ev, () => unlock(), { passive: true });
-  const live = () => (enabled && ctx && ctx.state === 'running' ? ctx : null);
+  const live = () => (enabled && !noticeOpen() && ctx && ctx.state === 'running' ? ctx : null);
 
   // a short room (0.7 s, stereo, darkening as it decays): the launcher's sounds send to it
   function makeRoom() {
@@ -476,13 +480,13 @@ export function createSfx({ key = 'gyropup-sfx', volume = 1.0 } = {}) {
       if (!Number.isFinite(+value)) return;
       volume = Math.max(0, Math.min(1, +value));
       try { localStorage.setItem(key + '-volume', String(volume)); } catch { /* storage blocked */ }
-      if (out) out.gain.value = enabled ? volume : 0;
+      applyOutput();
       changed();
     },
     setEnabled(on) {
       enabled = Boolean(on);
       try { localStorage.setItem(key, enabled ? '1' : '0'); } catch { /* storage blocked */ }
-      if (out) out.gain.value = enabled ? volume : 0;
+      applyOutput();
       changed();
       if (enabled) unlock(); else ctx?.suspend().catch(() => {});
     },

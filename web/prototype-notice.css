@@ -1,0 +1,36 @@
+html[data-prototype-notice-open=true]{overflow:hidden}
+/* Namespaced notice styling must also work on the full-screen simulator's HUD skin. */
+.prototype-notice-footer,.prototype-notice-dialog{box-sizing:border-box;font-family:Inter,system-ui,sans-serif;color:#293d39;text-align:left;letter-spacing:normal}
+.prototype-notice-footer{position:relative;z-index:51;padding:28px max(20px,env(safe-area-inset-right)) 32px max(20px,env(safe-area-inset-left));background:#fff0d9;border-top:2px solid #bb6425;font-size:13px;line-height:1.65}
+.prototype-notice-footer-inner{max-width:1000px;margin:0 auto}
+.prototype-notice-footer h2{font-size:18px;line-height:1.3;letter-spacing:-.02em;margin:0 0 12px;color:#703c1a}
+.prototype-notice-footer p{margin:9px 0;max-width:none;color:#293d39;font-size:13px;line-height:1.65}
+.prototype-notice-footer button{margin-top:9px;min-height:44px;padding:10px 16px;border:1px solid #8e623e;border-radius:12px;color:#573615;background:#fffaf2;font:650 13px/1.3 Inter,system-ui,sans-serif;cursor:pointer}
+.prototype-notice-footer [hidden]{display:none!important}
+/* A full-screen stage keeps its bottom controls; its header reopens the complete notice. */
+body[data-prototype-fullscreen=true][data-prototype-enhanced=true]>.prototype-notice-footer{display:none}
+.prototype-notice-dialog{width:min(600px,calc(100vw - 24px));max-width:none;max-height:calc(100vh - 24px);max-height:calc(100dvh - 24px);padding:0;margin:auto;border:1px solid #a5b6aa;border-radius:20px;background:#fffdf5;box-shadow:0 20px 80px #102c4466;overflow:hidden}
+.prototype-notice-dialog[open]{display:flex;flex-direction:column}
+.prototype-notice-dialog::backdrop{background:#132b3ad9;backdrop-filter:blur(4px)}
+.prototype-notice-heading{padding:24px 28px 14px;flex:none}
+.prototype-notice-kicker{font:700 11px/1.4 Inter,system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#91521f;margin:0 0 8px}
+.prototype-notice-dialog h2{font:750 27px/1.15 Inter,system-ui,sans-serif;letter-spacing:-.035em;color:#253f3b;margin:0}
+.prototype-notice-dialog h2:focus{outline:none}
+.prototype-notice-content{padding:0 28px 18px;overflow:auto;overscroll-behavior:contain;min-height:0;font:14px/1.6 Inter,system-ui,sans-serif;color:#293d39;scrollbar-gutter:stable}
+.prototype-notice-content p{font:inherit;color:inherit;margin:0 0 14px;max-width:none}
+.prototype-notice-content p:last-child{margin-bottom:0}
+.prototype-notice-content ul{margin:0 0 14px;padding-left:21px}
+.prototype-notice-content li{margin:0 0 8px;padding-left:2px}
+.prototype-notice-actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:flex-end;flex:none;padding:16px 28px 20px;border-top:1px solid #d8dfd3;background:#f1f5e9}
+.prototype-notice-actions button,.prototype-notice-actions a{display:flex;align-items:center;justify-content:center;min-height:46px;box-sizing:border-box;border-radius:12px;padding:11px 16px;font:700 13px/1.3 Inter,system-ui,sans-serif;text-decoration:none;letter-spacing:normal;text-transform:none;cursor:pointer}
+.prototype-notice-actions button{border:1px solid #244f49;background:#244f49;color:#fff}
+.prototype-notice-actions a{border:1px solid #aabbb0;background:#fffdf5;color:#244f49}
+.prototype-notice-footer button:focus-visible,.prototype-notice-dialog button:focus-visible,.prototype-notice-dialog a:focus-visible,.prototype-notice-content:focus-visible,.prototype-notice-reopen:focus-visible{outline:3px solid #147988;outline-offset:3px}
+.appnav .prototype-notice-reopen,#topbar .prototype-notice-reopen{display:flex;align-items:center;justify-content:center;flex:0 0 44px;width:44px;height:44px;padding:0;border:1px solid #bc8a55;border-radius:50%;background:#fff0d9;color:#78441f;cursor:pointer}
+.prototype-notice-reopen svg{width:22px;height:22px;pointer-events:none}
+.prototype-notice-sr{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+@media(max-width:420px){.appnav .prototype-notice-reopen~.menu-toggle{padding-left:10px;padding-right:10px}.prototype-notice-heading{padding:20px 18px 12px}.prototype-notice-dialog h2{font-size:23px}.prototype-notice-content{padding:0 18px 16px;font-size:13px}.prototype-notice-actions{padding:12px 18px 16px;justify-content:stretch;gap:8px}.prototype-notice-actions button,.prototype-notice-actions a{flex:1;padding:10px 9px;font-size:12px}}
+@media(max-height:420px){.prototype-notice-heading{padding-top:14px;padding-bottom:10px}.prototype-notice-dialog h2{font-size:22px}.prototype-notice-kicker{margin-bottom:5px}.prototype-notice-actions{padding-top:10px;padding-bottom:12px}}
+@media(prefers-reduced-motion:reduce){.prototype-notice-dialog::backdrop{backdrop-filter:none}}
+
+@media(max-width:820px){#topbar:has(.prototype-notice-reopen){flex-wrap:nowrap;gap:8px}#topbar:has(.prototype-notice-reopen) h1{min-width:0;overflow:hidden;text-overflow:ellipsis}#topbar:has(.prototype-notice-reopen)>.hud-tag:not(a){display:none}}
