@@ -70,10 +70,13 @@ const updateInsets = () => {
   // The stats card is a floating overlay. Folding it must not change projection
   // insets or restart automatic camera framing.
   const dock = document.querySelector('.gp-dock-body');                  // the talk dock along the bottom
-  const dr = dock?.offsetParent ? dock.getBoundingClientRect() : null;
+  const dockRoot = dock?.closest('.gp-dock');
+  // Both overlays load their CSS asynchronously. Their temporary normal-flow
+  // rectangles are not canvas coverage and must never become camera insets.
+  const dr = dock?.offsetParent && getComputedStyle(dockRoot).position !== 'static' ? dock.getBoundingClientRect() : null;
   if (dr?.height && !dock.closest('.gp-dock')?.classList.contains('collapsed')) ins.bottom = Math.max(ins.bottom, window.innerHeight - dr.top + 8);
   const bar = document.getElementById(state.bench ? 'tb-actions' : 'robot-actions');
-  const br = bar && !bar.hidden && bar.offsetParent ? bar.getBoundingClientRect() : null;
+  const br = bar && !bar.hidden && bar.offsetParent && getComputedStyle(bar).position !== 'static' ? bar.getBoundingClientRect() : null;
   if (br?.height) ins.bottom = Math.max(ins.bottom, window.innerHeight - br.top + 6);
   stage.setInsets(ins);
 };
@@ -989,7 +992,18 @@ await loadDesign(sel.value);
 try {
   talk = (await import('./character/talk.js')).mountTalk({ stage, eyes, audio: { enabled: sfx.enabled, volume: sfx.volume }, getHead: () => state.robot?.turret?.group ?? state.robot?.base });
   const dockEl = document.querySelector('.gp-dock');
-  if (dockEl) new MutationObserver(() => updateInsets()).observe(dockEl, { attributes: true, attributeFilter: ['class'] });
+  if (dockEl) {
+    new MutationObserver(updateInsets).observe(dockEl, { attributes: true, attributeFilter: ['class'] });
+    // Updating the canvas during ResizeObserver delivery can trigger another
+    // layout delivery in WebKit. Coalesce measurements into the next frame.
+    let dockLayoutFrame = 0;
+    const dockResize = new ResizeObserver(() => {
+      if (!dockLayoutFrame) dockLayoutFrame = requestAnimationFrame(() => { dockLayoutFrame = 0; updateInsets(); });
+    });
+    dockResize.observe(dockEl);
+    dockResize.observe(dockEl.querySelector('.gp-dock-body'));
+    document.querySelector('link[data-gyropup-talk]')?.addEventListener('load', updateInsets, { once: true });
+  }
   // on a phone the dock starts folded to its Talk tab in the corner (unless the visitor chose otherwise before)
   let chose = null;
   try { chose = localStorage.getItem('gyropup.dockCollapsed'); } catch { /* storage blocked */ }

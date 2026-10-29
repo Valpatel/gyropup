@@ -18,6 +18,44 @@ async function model(value) {
  await page.selectOption('#design-select',value);
  await page.waitForFunction(value=>window.__sim.state.modelKey===value && !window.__sim.state.bench,value);
 }
+async function checkFreshLayout() {
+ const fresh=await browser.newContext({viewport:{width:1280,height:900}});
+ await fresh.addInitScript(()=>localStorage.setItem('gyropup.probe','off'));
+ const p=await fresh.newPage();p.on('pageerror',e=>errors.push(e.message));
+ let releaseCss;
+ await p.route('**/character/talk.css*',async route=>{await new Promise(resolve=>{releaseCss=resolve;});await route.continue();});
+ try {
+  await p.goto(base+'/designer/sim.html?run=none&demo=0&sound=0',{waitUntil:'domcontentloaded'});
+  await p.waitForFunction(()=>document.body.dataset.ready==='1'&&!!window.__sim.talk);
+  assert.ok(releaseCss,'Fresh startup genuinely waits for delayed talk styling');
+  const received=p.waitForResponse(r=>/\/character\/talk\.css/.test(r.url()));releaseCss();await (await received).finished();
+  await p.waitForFunction(()=>getComputedStyle(document.querySelector('.gp-dock')).position==='fixed'&&window.__sim.stage.camera.view.offsetY<200);
+  await p.evaluate(()=>document.fonts.ready);
+  const bounds=await p.evaluate(async()=>{
+   const THREE=await import('three'),s=window.__sim,r=s.stage.renderer.domElement.getBoundingClientRect();
+   const points=[];
+   s.stage.scene.updateMatrixWorld(true);s.stage.camera.updateMatrixWorld(true);
+   s.state.robot.group.traverse(mesh=>{
+    if(!mesh.isMesh)return;
+    for(let parent=mesh;parent;parent=parent.parent)if(!parent.visible)return;
+    mesh.geometry.computeBoundingBox();const box=mesh.geometry.boundingBox;
+    for(let i=0;i<8;i++){
+     const v=new THREE.Vector3(i&1?box.max.x:box.min.x,i&2?box.max.y:box.min.y,i&4?box.max.z:box.min.z).applyMatrix4(mesh.matrixWorld).project(s.stage.camera);
+     points.push({x:r.left+(v.x+1)*r.width/2,y:r.top+(1-v.y)*r.height/2});
+    }
+   });
+   return {top:Math.min(...points.map(v=>v.y)),bottom:Math.max(...points.map(v=>v.y)),left:Math.min(...points.map(v=>v.x)),right:Math.max(...points.map(v=>v.x)),
+    freeTop:document.querySelector('#topbar').getBoundingClientRect().bottom,freeBottom:document.querySelector('.gp-dock-body').getBoundingClientRect().top,
+    freeRight:document.querySelector('#panel').getBoundingClientRect().left,view:s.stage.camera.view};
+  });
+  assert.ok(bounds.top>=bounds.freeTop&&bounds.bottom<=bounds.freeBottom&&bounds.left>=0&&bounds.right<=bounds.freeRight,`Fresh robot fits above the dock and beside controls: ${JSON.stringify(bounds)}`);
+  const projection=await p.evaluate(()=>window.__sim.stage.camera.projectionMatrix.toArray());
+  await p.locator('#summary .fold').click();
+  await p.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+  assert.deepEqual(await p.evaluate(()=>window.__sim.stage.camera.projectionMatrix.toArray()),projection,'Stats remains an overlay after late dock layout');
+  await p.screenshot({path:`${out}/${engine.name()}-fresh-manual.png`});
+ } finally {releaseCss?.();await fresh.close();}
+}
 async function playChecks() {
  await activity('targets');await page.waitForFunction(()=>window.__sim.state.replay?.key.endsWith('/targets'));
  await action('play').click();assert.equal(await page.evaluate(()=>window.__sim.state.replay.playing),false);
@@ -46,6 +84,7 @@ async function playChecks() {
  assert.equal(await action('play').isDisabled(),true,'Live mode does not pretend to pause a recording');
 }
 try {
+ await checkFreshLayout();
  await page.goto(base+'/designer/sim.html',{waitUntil:'networkidle'});await ready();
  assert.equal(await page.evaluate(()=>window.__sim.demo.on && window.__sim.sfx.enabled && !window.__sim.state.replay && window.__sim.state.robot.presentation.mode==='current'),true,'Fresh visitors start with current-model live demo and sound enabled');
  for(const value of ['v2','designs/default.json']) {await model(value);await playChecks();}
@@ -80,5 +119,5 @@ try {
  await page.goto(base+'/designer/sim.html?sound=1&demo=1',{waitUntil:'networkidle'});await ready();
  assert.equal(await page.evaluate(()=>window.__sim.sfx.enabled && window.__sim.demo.on),true,'Explicit on overrides saved mute');
  assert.deepEqual(errors,[]);assert.equal(await page.evaluate(()=>document.body.dataset.stageError),undefined);
- console.log(`PASS ${engine.name()}: robot v1/v2 desktop+touch play/pause, fire/burst/reload from replay, current-model live demo/pause, stable scene/conversation, daylight sky, defaults/opt-outs and 6 phone/tablet layouts`);
+ console.log(`PASS ${engine.name()}: fresh delayed-CSS startup framing, stable stats overlay, robot v1/v2 desktop+touch play/pause, fire/burst/reload from replay, current-model live demo/pause, stable scene/conversation, daylight sky, defaults/opt-outs and 6 phone/tablet layouts`);
 } finally {await browser.close();}
