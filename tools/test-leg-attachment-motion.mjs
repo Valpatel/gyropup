@@ -52,29 +52,35 @@ try{
   t.r.base.attach(m);const parentHome=t.capture('wrong-parent-home',zero);t.pose(turn);const parentTurn=t.capture('wrong-parent-turn',turn);
   owner.add(m);m.position.copy(pos);m.quaternion.copy(quat);m.scale.copy(scale);t.pose(zero);
   // Shift the physical pivot while retaining the adapter's exact home world pose.
-  const pivot=owner.position.clone();t.r.base.attach(m);owner.position.z+=.01;owner.attach(m);
+  const pivot=owner.position.clone(),children=owner.children.map(object=>({object,position:object.position.clone(),quaternion:object.quaternion.clone(),scale:object.scale.clone()}));
+  children.forEach(p=>t.r.base.attach(p.object));owner.position.z+=.01;children.forEach(p=>owner.attach(p.object));
   const pivotHome=t.capture('wrong-pivot-home',zero);t.pose(turn);const pivotTurn=t.capture('wrong-pivot-turn',turn);
-  owner.position.copy(pivot);m.position.copy(pos);m.quaternion.copy(quat);m.scale.copy(scale);t.pose(zero);
+  owner.position.copy(pivot);children.forEach(p=>{p.object.position.copy(p.position);p.object.quaternion.copy(p.quaternion);p.object.scale.copy(p.scale);});t.pose(zero);
+  owner.rotation.y=.25;const axis=t.capture('wrong-axis',zero);owner.rotation.y=0;t.pose(zero);
+  const housing=t.by.motor_f_l,hp=housing.position.clone(),hq=housing.quaternion.clone(),hs=housing.scale.clone();
+  owner.attach(housing);const housingHome=t.capture('wrong-housing-home',zero);t.pose(turn);const housingTurn=t.capture('wrong-housing-turn',turn);
+  t.r.base.add(housing);housing.position.copy(hp);housing.quaternion.copy(hq);housing.scale.copy(hs);t.pose(zero);
   m.scale.multiplyScalar(1000);const units=t.capture('wrong-units',zero);m.scale.copy(scale);
-  const restored=t.capture('restored',zero);return{parentHome,parentTurn,pivotHome,pivotTurn,units,restored};
+  const restored=t.capture('restored',zero);return{parentHome,parentTurn,pivotHome,pivotTurn,axis,housingHome,housingTurn,units,restored};
  });
  assert.ok(error(negative.parentHome).max<.02);assert.ok(error(negative.parentTurn).max>10,'Wrong parent rejected');
- // Other children also move for this seeded pivot; the adapter itself remains correct at home.
- const adapterError=s=>{const components={...s.components};for(const [name,c] of Object.entries(fixture.contract.components))if(name!=='output_adapter_f_l')components[name]=c.points;return error({...s,angles_deg:Object.fromEntries(Object.keys(s.angles_deg).map(k=>[k,0])),components});};
- assert.ok(adapterError(negative.pivotHome).max<.02,'Wrong pivot preserves adapter home placement');
- assert.ok(error(negative.pivotTurn).max>5,'Wrong pivot rejected');assert.ok(error(negative.units).max>1000,'Unit mismatch rejected');assert.ok(error(negative.restored).max<.02);
+ assert.ok(error(negative.pivotHome).max<.02,'Wrong pivot preserves every component at home');
+ assert.ok(error(negative.pivotTurn).max>5,'Wrong pivot rejected');assert.ok(error(negative.axis).max>5,'Wrong axis rejected');
+ assert.ok(error(negative.housingHome).max<.02);assert.ok(error(negative.housingTurn).max>20,'Spinning stationary housing rejected');
+ assert.ok(error(negative.units).max>1000,'Unit mismatch rejected');assert.ok(error(negative.restored).max<.02);
  const transitions=await page.evaluate(async()=>{
   const t=window.legMotionTest,r=t.r;
   const archivedBefore=r.legHardware.recorded.map(m=>({name:m.name,parent:m.parent===r.base,position:m.position.toArray(),rotation:m.quaternion.toArray(),scale:m.scale.toArray()}));
   await r.setPresentation('recorded');const recorded={oldVisible:r.legHardware.recorded.every(m=>m.visible),currentHidden:r.legHardware.current.every(p=>!p.mesh.visible),source:r.presentation.legSource};
-  await r.setPresentation('current');
+  await r.setPresentation('current');const pending=r.setPresentation('recorded');r.setPresentation('current');await pending;
+  const staleProtected=r.presentation.mode==='current'&&r.legHardware.current.every(p=>p.mesh.visible)&&r.legHardware.recorded.every(m=>!m.visible);
   const zero=Object.fromEntries(Object.keys(r.legs).flatMap(side=>['f','r'].map(end=>[`upper_${end}_${side}`,0])));
   t.pose(zero);r.setExplode(.45);r.setExplode(0);
   const archivedAfter=r.legHardware.recorded.map(m=>({name:m.name,parent:m.parent===r.base,position:m.position.toArray(),rotation:m.quaternion.toArray(),scale:m.scale.toArray()}));
-  return{archivedBefore,archivedAfter,recorded,current:r.legHardware.current.every(p=>p.mesh.visible),oldHidden:r.legHardware.recorded.every(m=>!m.visible),restored:t.capture('explosion-restored',zero)};
+  return{archivedBefore,archivedAfter,recorded,staleProtected,current:r.legHardware.current.every(p=>p.mesh.visible),oldHidden:r.legHardware.recorded.every(m=>!m.visible),restored:t.capture('explosion-restored',zero)};
  });
  assert.deepEqual(transitions.archivedAfter,transitions.archivedBefore,'Archive mesh transforms unchanged');
- assert.ok(transitions.recorded.oldVisible&&transitions.recorded.currentHidden&&transitions.current&&transitions.oldHidden);
+ assert.ok(transitions.recorded.oldVisible&&transitions.recorded.currentHidden&&transitions.current&&transitions.oldHidden&&transitions.staleProtected);
  assert.ok(error(transitions.restored).max<.02,'Explosion reset restores the joint frames');
  // Closed-loop live controls and body pose changes use the same ownership.
  const live=await page.evaluate(fixture=>{
@@ -92,6 +98,9 @@ try{
   const sample=await page.evaluate(angles=>{const t=window.legMotionTest;t.pose(angles);return t.capture('route',angles);},fixture.poses.at(-1));assert.ok(error(sample).max<.02);
  }
  const delivered={};for(const file of Object.keys(fixture.source_hashes).filter(f=>f.startsWith('exports/'))){const response=await page.request.get(base+'/'+file);assert.ok(response.ok());delivered[file]=createHash('sha256').update(await response.body()).digest('hex');assert.equal(delivered[file],fixture.source_hashes[file],file);}
+ for(const file of ['designer/robot_v2.js','exports/sim/v2/rig/manifest.json','exports/sim/v2/leg-attachments/manifest.json']){
+  const response=await page.request.get(base+'/'+file);assert.ok(response.ok());delivered[file]=createHash('sha256').update(await response.body()).digest('hex');
+ }
  const version=await(await page.request.get(base+'/version.json')).json();
  // Any missing required attachment preserves the honest landing fallback.
  await page.route('**/leg-attachments/output_screw_1.stl*',route=>route.abort());await page.goto(base+'/',{waitUntil:'networkidle'});
@@ -102,5 +111,5 @@ try{
  await writeFile(`${out}/${engine.name()}-trace.json`,JSON.stringify(trace));
  await writeFile(`${out}/${engine.name()}-source-hashes.json`,JSON.stringify(delivered,null,2));
  await writeFile(`${out}/${engine.name()}-summary.json`,JSON.stringify({version,worst,components:44,poses:samples.length,liveFrames:live.length,negative:Object.fromEntries(Object.entries(negative).map(([k,v])=>[k,error(v)])),transitions,errors},null,2));
- console.log(`PASS ${engine.name()}: 44 components × ${samples.length} required/combined poses + ${live.length} live frames; worst ${worst.max.toFixed(6)}mm; ownership/pivot/units controls; archive transforms; hero/sim/talk; failed-load fallback`);
+ console.log(`PASS ${engine.name()}: 44 components × ${samples.length} required/combined poses + ${live.length} live frames; worst ${worst.max.toFixed(6)}mm; 5 negative controls; archive transforms/race; hero/sim/talk; failed-load fallback`);
 }finally{await browser.close();}
