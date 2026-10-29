@@ -105,6 +105,11 @@ try {
     await image.decode(); return { width: image.naturalWidth, height: image.naturalHeight };
   });
   assert.deepEqual(poster, { width: 1280, height: 720 }, 'Poster decodes at the same 16:9 dimensions as the reel');
+  assert.match(await page.locator('#highlight-description').innerText(), /archived leg-rig physics and historical static deformation/);
+  const footageHref = await page.locator('.highlight-footage').getAttribute('href');
+  const footageResponse = await context.request.get(new URL(footageHref, base).href);
+  assert.ok(footageResponse.ok(), 'About the footage reaches its published document');
+  assert.match(await footageResponse.text(), /Landing highlights reel/);
   await page.locator('.highlight-card').screenshot({ path: `${out}/${browserLabel}-poster.png` });
   record('WebP poster has the correct HTTP MIME type and decodes at 1280×720');
   await page.locator('.highlight-toggle').click();
@@ -126,11 +131,12 @@ try {
     const screen = await page.locator('.highlight-screen').boundingBox();
     assert.ok(Math.abs(screen.width / screen.height - 16 / 9) < .01, 'Screen preserves 16:9');
     assert.ok(screen.x >= 0 && screen.x + screen.width <= width, 'Frame stays inside viewport');
-    for (const selector of ['.highlight-toggle', '.highlight-replay']) {
+    assert.ok(await page.locator('#highlight-description').evaluate(el => parseFloat(getComputedStyle(el).fontSize) >= 12), 'Footage context stays readable independently of source captions');
+    for (const selector of ['.highlight-toggle', '.highlight-replay', '.highlight-footage']) {
       const bounds = await page.locator(selector).boundingBox();
       assert.ok(bounds.width >= 44 && bounds.height >= 44, '44px touch targets');
       assert.ok(bounds.x >= 0 && bounds.x + bounds.width <= width, 'Controls stay inside viewport');
-      assert.equal(await page.locator(selector).evaluate(el => !!el.closest('a')), false, 'Player controls are not nested in navigation');
+      if (selector !== '.highlight-footage') assert.equal(await page.locator(selector).evaluate(el => !!el.closest('a')), false, 'Player controls are not nested in navigation');
     }
     if ([320, 390, 844, 1440].includes(width)) {
       await page.locator('.highlight-toggle').focus(); await page.keyboard.press('Space'); await waitPlaying(page);
