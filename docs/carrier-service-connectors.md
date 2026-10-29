@@ -75,4 +75,28 @@ There is a source discrepancy: the header detail is marked A2505-WV at 2.5 mm pi
 
 The official [ST3215 CAD resource](https://docs.waveshare.com/ST3215_Servo/Resources-And-Documents) is retained privately as a conditional case reference. Its STEP root is named`SCS215 v5`; one of its eight solids is invalid, and the PCB model supplies only plain connector blocks, with no detailed cavities, contacts, latch, mating plug or cable. It cannot qualify the pan-servo disconnect. The carrier-side service connection should avoid requiring blind unplugging beneath the installed servo; its exact compatible termination and retained OEM lead must be established before that design is frozen.
 
-Next bounded work is an externally accessible C3 pose above the bumper, with latch facing outward, plus a retained fixed-side parking position. A carrier support, 19.1 mm free exits, anchor-to-anchor slack and clearance against the installed base, bumper, bearing and C2 connections must all be demonstrated. The legacy 60/250 mm lengths are not accepted by this source checkpoint, and no fully checked service route is claimed.
+## External C3 service-pose candidate
+
+The [external-space probe](../tools/check-carrier-connector-pose.py) places the housing array centre at turret **X84/Z34 mm**, with mating along Y and the latch facing outward +X. The module plug spans Y−16.89..0. The fixed receptacle initially spans Y−6.12..7.88. The connector stays above the installed bumper; lowering the module housing 13 mm is an explicit collision control.
+
+| Stage | Fixed receptacle translation from its mated pose | Purpose |
+| --- | --- | --- |
+| Seated | (0,0,0) mm | Housing pose only; mating internals remain unqualified |
+| Unplugged | (0,+16,0) mm | Design separation stroke, exceeding the 6.12 mm nominal nose overlap |
+| Outboard before parking | (0,+43,0) mm | Move past the carrier before coming inward |
+| Parked candidate | (−30,+43,0) mm | Array centre at X54/Z34; housing stays beyond the carrier's +Y edge |
+
+Each straight segment is enclosed in the exact axis-aligned housing bounding-box sweep, which conservatively contains all intermediate positions. These boxes clear the listed base, carrier/PCB, bumper, pan clamp/ring, authored fasteners and C2/servo reservations under the recorded aggregate error budget. A finger-space reservation outside the latch is clear of those same neighbours. The original attempt lowered 9 mm while moving inward and failed against the base and bumper; it remains recoverable at commit 43696e7. The revised path retains height. A deliberately misplaced parked connector inside the carrier also fails.
+
+These results do **not** qualify an installed connector support, parking keeper, finger ergonomics, latch flexure, upper-head sweep or cables. The mate pair is not counted as a clear interface. C2's source halves are represented at their released positions, **not** proved parking positions; they and their tails still need a parking route before the entire module can withdraw. The released rigid-module API must eventually include the actual retained assembly and every remaining obstacle.
+
+Two anchor coordinates are explicit candidates, not existing retention hardware:
+
+| Tail | Anchor candidate, turret mm | Retained length from anchor to connector | Necessary geometric lower bound |
+| --- | --- | --- | --- |
+| Fixed stator tail | (40,−35.5,13) | 145 mm | Maximum 135.30 mm during the stated motion |
+| Module tail | (84,−39,34) | 30 mm | 22.11 mm |
+
+The calculation preserves 19.1 mm unbiased straight exit, then measures the remaining endpoint distance. The norm is convex along each straight translation segment, so its endpoint maximum bounds that length expression throughout the segment. It still omits bending, bundle shape, crimp penetration, tie-wrap and obstacles; no wire route follows merely from a positive length allowance. The ring-to-fixed-anchor and PCB-to-module-anchor lengths are additional to these retained lengths. [SparkFun's exact ROB-13065 page](https://www.sparkfun.com/slip-ring-12-wire-2a.html) states 28 AWG and 250 mm leads; those are total supplier leads, not 145 mm of automatically available service slack.
+
+The next concrete support must preserve the carrier's original fastener seats and PCB bosses, hold the connector body without biasing its free wire exit, and retain the fixed half outside the withdrawal volume. The current base-board “servo, ring, CAN pads” entry is a 2.5×10.2 mm rotated envelope, not an assigned solder-pad map. A real net-to-pad/termination map must precede acceptance of all C2, C3 and servo wire exits. Neither the legacy 60 mm module lead nor the new candidate lengths are accepted cutting instructions.

@@ -98,7 +98,7 @@
   },
   "input_fingerprint": "be0d6f5c39e2edba02e5c11600a8725921047448fe2099b2a0792593ae76266a",
   "context_files": {
-    "tools/check-carrier-connector-pose.py": "a9d862c7f64c9e4ee3920c23860d07fa7ec56b373af0daef3914005578d14d04",
+    "tools/check-carrier-connector-pose.py": "cb06cb16943f5ee60b98ebe9b630d437aba395db58936028eb21f0a28e711346",
     "tools/check-carrier-connector-inputs.py": "20b4f98e5cef0067d921e645b44fd0809ae2bffee1f1055351e7188623ef0c45",
     "research/carrier-service-connectors/private-inputs.json": "db7318f705e1966a93b07bacbab153eaa5fa9bc03a3d6a8114fff3a573382348"
   },
@@ -134,7 +134,7 @@
       "parked": [
         -30.0,
         43.0,
-        -9.0
+        0.0
       ]
     }
   },
@@ -2376,14 +2376,14 @@
     },
     {
       "id": "fixed_housing_swept_box:outboard_before_park->parked",
-      "external_clear": false,
+      "external_clear": true,
       "bounds_mm": [
         49.86,
         36.879999999999995,
-        15.579999999999998,
+        24.579999999999995,
         90.71,
         50.88,
-        43.43
+        43.42999999999999
       ],
       "total_overlap_budget_mm3": 1e-06,
       "per_pair_overlap_budget_mm3": 3.703703703703703e-08,
@@ -2391,28 +2391,19 @@
         "pan_base": {
           "a": "a",
           "b": "b",
-          "state": "overlapping",
-          "gap_mm": 0.0,
-          "overlap_mm3": 101.473782,
-          "a_outside_b_mm3": 15825.941218,
-          "b_outside_a_mm3": 143238.034682,
+          "state": "apart",
+          "gap_mm": 1.88,
+          "overlap_mm3": 0.0,
           "witness": {
-            "overlap_centroid_estimate": {
-              "method": "Gauss centroid refinements 1e-6 and 1e-8; approximate witness only",
-              "refinement_delta_mm": 6.355287432313019e-14
-            },
-            "overlap_centroid": [
-              55.493901,
-              43.686195,
-              16.79
-            ],
-            "overlap_box": [
+            "point_a": [
               49.86,
               36.88,
-              15.58,
-              61.837413,
-              50.88,
-              18.0
+              24.58
+            ],
+            "point_b": [
+              49.86,
+              35.0,
+              24.58
             ],
             "volume_integration": {
               "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
@@ -2461,12 +2452,12 @@
             "point_a": [
               49.86,
               36.88,
-              15.58
+              24.58
             ],
             "point_b": [
               48.0,
               25.4,
-              15.58
+              24.58
             ],
             "volume_integration": {
               "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
@@ -2481,33 +2472,24 @@
         "bumper_installed": {
           "a": "a",
           "b": "b",
-          "state": "overlapping",
-          "gap_mm": 0.0,
-          "overlap_mm3": 482.989361,
-          "a_outside_b_mm3": 15444.425639,
-          "b_outside_a_mm3": 29877.594668,
+          "state": "apart",
+          "gap_mm": 4.58,
+          "overlap_mm3": 0.0,
           "witness": {
-            "overlap_centroid_estimate": {
-              "method": "Gauss centroid refinements 1e-6 and 1e-8; approximate witness only",
-              "refinement_delta_mm": 7.105427357601002e-15
-            },
-            "overlap_centroid": [
-              71.26562,
-              43.905292,
-              17.79
+            "point_a": [
+              65.488112,
+              49.348832,
+              24.58
             ],
-            "overlap_box": [
-              63.890841,
-              36.88,
-              15.58,
-              79.346236,
-              50.88,
+            "point_b": [
+              65.488112,
+              49.348832,
               20.0
             ],
             "volume_integration": {
               "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
               "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-              "max_estimated_error_mm3": 9.273295854836697e-08,
+              "max_estimated_error_mm3": 8.623891085045327e-08,
               "max_refinement_delta_mm3": 0.0
             }
           },
@@ -2599,13 +2581,13 @@
           "a": "a",
           "b": "b",
           "state": "apart",
-          "gap_mm": 36.88,
+          "gap_mm": 37.733471,
           "overlap_mm3": 0.0,
           "witness": {
             "point_a": [
               62.2,
               36.88,
-              16.6
+              24.58
             ],
             "point_b": [
               62.2,
@@ -2615,7 +2597,7 @@
             "volume_integration": {
               "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
               "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-              "max_estimated_error_mm3": 1.0802618059339391e-11,
+              "max_estimated_error_mm3": 7.1485336169037825e-12,
               "max_refinement_delta_mm3": 0.0
             }
           },
@@ -2626,13 +2608,13 @@
           "a": "a",
           "b": "b",
           "state": "apart",
-          "gap_mm": 10.48,
+          "gap_mm": 13.17235,
           "overlap_mm3": 0.0,
           "witness": {
             "point_a": [
               62.2,
               36.88,
-              16.6
+              24.58
             ],
             "point_b": [
               62.2,
@@ -2642,7 +2624,7 @@
             "volume_integration": {
               "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
               "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-              "max_estimated_error_mm3": 1.0802618059339391e-11,
+              "max_estimated_error_mm3": 7.1485336169037825e-12,
               "max_refinement_delta_mm3": 0.0
             }
           },
@@ -2669,7 +2651,7 @@
             "volume_integration": {
               "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
               "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-              "max_estimated_error_mm3": 1.0802618059339391e-11,
+              "max_estimated_error_mm3": 7.1485336169037825e-12,
               "max_refinement_delta_mm3": 0.0
             }
           },
@@ -2696,7 +2678,7 @@
             "volume_integration": {
               "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
               "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-              "max_estimated_error_mm3": 1.0802618059339391e-11,
+              "max_estimated_error_mm3": 7.1485336169037825e-12,
               "max_refinement_delta_mm3": 0.0
             }
           },
@@ -2707,18 +2689,18 @@
           "a": "a",
           "b": "b",
           "state": "apart",
-          "gap_mm": 56.99918,
+          "gap_mm": 58.645344,
           "overlap_mm3": 0.0,
           "witness": {
             "point_a": [
               49.86,
               36.88,
-              15.58
+              24.58
             ],
             "point_b": [
               46.4,
-              -19.666786,
-              9.303383
+              -19.740324,
+              9.699017
             ],
             "volume_integration": {
               "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
@@ -2761,18 +2743,18 @@
           "a": "a",
           "b": "b",
           "state": "apart",
-          "gap_mm": 13.602345,
+          "gap_mm": 18.840294,
           "overlap_mm3": 0.0,
           "witness": {
             "point_a": [
               49.86,
               36.88,
-              15.58
+              24.58
             ],
             "point_b": [
               46.4,
-              24.903626,
-              10.137698
+              24.272133,
+              11.014353
             ],
             "volume_integration": {
               "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
@@ -2815,18 +2797,18 @@
           "a": "a",
           "b": "b",
           "state": "apart",
-          "gap_mm": 65.448173,
+          "gap_mm": 66.895034,
           "overlap_mm3": 0.0,
           "witness": {
             "point_a": [
               56.0,
               36.88,
-              15.58
+              24.58
             ],
             "point_b": [
               56.0,
-              -28.26283,
-              9.26533
+              -28.319694,
+              9.615191
             ],
             "volume_integration": {
               "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
@@ -2869,18 +2851,18 @@
           "a": "a",
           "b": "b",
           "state": "apart",
-          "gap_mm": 6.074443,
+          "gap_mm": 13.902651,
           "overlap_mm3": 0.0,
           "witness": {
             "point_a": [
               56.0,
               36.88,
-              15.58
+              24.58
             ],
             "point_b": [
               56.0,
-              32.83241,
-              11.050554
+              31.971017,
+              11.572864
             ],
             "volume_integration": {
               "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
@@ -2923,18 +2905,18 @@
           "a": "a",
           "b": "b",
           "state": "apart",
-          "gap_mm": 57.284068,
+          "gap_mm": 58.933187,
           "overlap_mm3": 0.0,
           "witness": {
             "point_a": [
               49.86,
               36.88,
-              15.58
+              24.58
             ],
             "point_b": [
               49.86,
-              -20.054405,
-              9.260358
+              -20.117515,
+              9.599884
             ],
             "volume_integration": {
               "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
@@ -2977,18 +2959,18 @@
           "a": "a",
           "b": "b",
           "state": "apart",
-          "gap_mm": 13.54493,
+          "gap_mm": 18.909857,
           "overlap_mm3": 0.0,
           "witness": {
             "point_a": [
               49.86,
               36.88,
-              15.58
+              24.58
             ],
             "point_b": [
               49.86,
-              24.548567,
-              9.976351
+              24.00663,
+              10.728681
             ],
             "volume_integration": {
               "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
@@ -3031,18 +3013,18 @@
           "a": "a",
           "b": "b",
           "state": "apart",
-          "gap_mm": 65.838173,
+          "gap_mm": 67.285034,
           "overlap_mm3": 0.0,
           "witness": {
             "point_a": [
               49.86,
               36.88,
-              15.58
+              24.58
             ],
             "point_b": [
               49.86,
-              -28.65101,
-              9.227701
+              -28.69981,
+              9.527946
             ],
             "volume_integration": {
               "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
@@ -3085,18 +3067,18 @@
           "a": "a",
           "b": "b",
           "state": "apart",
-          "gap_mm": 6.464443,
+          "gap_mm": 14.292651,
           "overlap_mm3": 0.0,
           "witness": {
             "point_a": [
               49.86,
               36.88,
-              15.58
+              24.58
             ],
             "point_b": [
               49.86,
-              32.572541,
-              10.759748
+              31.833309,
+              11.207985
             ],
             "volume_integration": {
               "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
@@ -5482,14 +5464,14 @@
         "rear_exit_mm": [
           54.0,
           50.88,
-          25.0
+          34.0
         ],
         "free_exit_end_mm": [
           54.0,
           69.98,
-          25.0
+          34.0
         ],
-        "necessary_lower_bound_mm": 126.17955173608078,
+        "necessary_lower_bound_mm": 127.55750504229755,
         "retained_mm": 145.0,
         "length_lower_bound_pass": true
       }
@@ -5524,5 +5506,5 @@
     "C2 released-source reservations are not a complete parked harness; module withdrawal is not checked.",
     "Upper head, remote hardware and all cable paths are not included; no whole-turret motion claim."
   ],
-  "elapsed_seconds": 80.235
+  "elapsed_seconds": 79.46
 }

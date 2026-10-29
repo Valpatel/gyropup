@@ -28,7 +28,25 @@ FIXED_RETAINED_MM=145.
 MODULE_RETAINED_MM=30.
 FREE_EXIT_MM=19.1  # PS-43045-001 R, 10-16 circuits; NOT a minimum bend radius.
 STATES={'mated':(0.,0.,0.),'unplugged':(0.,16.,0.),
-        'outboard_before_park':(0.,43.,0.),'parked':(-30.,43.,-9.)}
+        'outboard_before_park':(0.,43.,0.),'parked':(-30.,43.,0.)}
+
+
+def validate_receipt(receipt,root=ROOT):
+    recorded=receipt['inputs'];current=provenance.snapshot(root)
+    if receipt['input_fingerprint']!=provenance.fingerprint(recorded):
+        raise ValueError('External-pose input fingerprint differs')
+    for key in ('files','GYROPUP_CAD_PARAMS_sha256'):
+        if recorded.get(key)!=current[key]:raise ValueError('External-pose geometry input closure changed')
+    paths=[root/'tools/check-carrier-connector-pose.py',root/'tools/check-carrier-connector-inputs.py',
+           root/'research/carrier-service-connectors/private-inputs.json']
+    if receipt['context_files']!=provenance.context_snapshot(root,paths):
+        raise ValueError('External-pose probe or private manifest changed')
+    manifest=json.loads(paths[-1].read_text())
+    if receipt['private_inputs']!={e['part']:e['sha256'] for e in manifest['parts']}:
+        raise ValueError('External-pose private input identities differ')
+    if receipt.get('readiness') is not False:
+        raise ValueError('This external pose cannot establish whole-service readiness')
+    return True
 
 
 def run(output):
