@@ -59,6 +59,7 @@ import numpy as np
 R = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(R / 'cad'))
 import gmi  # noqa: E402
+import turret_base_board as base_board_service  # noqa: E402
 
 FAST = gmi.FAST
 BED = gmi.STD['print']['bed_mm']
@@ -402,7 +403,7 @@ def servo_envelope(G, shaft_xyz, axis):
 SERVO_END_WALL = 8.0          # mm: the pan servo pocket's end wall (3 until 2026-10-27, docs/turret-sections.md section 1)
 
 
-def pan_base(G):
+def pan_base(G, *, board_service=True):
     """The fixed base, printed PA6-CF on its foot (100 % solid): a Ø144 x 5 foot on the TM pattern (4 x M5 x 16
     counterbored through it into the head ring's inserts, 2 x Ø5 dowel holes, a Ø65 centre opening (wider than the
     TM's Ø45 so the pan_spacer and the circlip go on from below), six lightening windows), a housing tube holding the
@@ -475,7 +476,7 @@ def pan_base(G):
     for a in BUMPER_TABS:
         x, y = polar(BUMPER_BOLT_R, math.radians(a))
         s = s.cut(insert_hole(x, y, G.bumper_z[0], 'M3', 5.5))                             # short insert, 4.3 mm
-    return s
+    return base_board_service.service_base(s) if board_service else s
 
 
 BUMPER_TABS = (30.0, 90.0, 150.0, 210.0, 330.0)   # none straight ahead: the lidar is 10 mm from the bumper there
@@ -1628,9 +1629,11 @@ def bought_parts(G):
     leads = cyl_z(rl, rg['top'] + 0.3, zl + rl, 0.0, -LEADS['r']).union(cyl_y(rl, -G.arm_y[1] - 3.0, -LEADS['r'], 0.0, zl))
     out['ring_leads_rotor'] = (leads, 'pan', 0.0, 'the ring\'s rotor leads, a Ø7.5 bundle (12 x 26 AWG + 2 x 17 AWG): beside the coupling, up '
                                'through the driver and the yoke\'s slot, along the bridge and through the -y arm\'s window to the bay')
-    x0 = BB['x0'] - BB['standoff']
-    out['base_board'] = (box(x0 - BB['board'][2] - BB['parts_h'] + 2.0, x0, -BB['board'][1] / 2, BB['board'][1] / 2, 6.0, 6.0 + BB['board'][0]), 'base', 30.0,
-                         'base board (est): DT12 fuse, the 555 safety-pulse oscillator, the pan servo\'s 12 V regulator, the ring\'s stator connector')
+    out['base_board'] = (base_board_service.board(), 'base', 30.0,
+                         '50.8 x 30 x 1.6 PCB with drilled mounting holes and component envelopes from turret_boards.py; solder/connectors unverified')
+    for name, shape in base_board_service.public_parts().items():
+        out[name] = (shape, 'base', 1.43 if 'inserts' in name else (2.9 if 'carrier' in name else 2.6),
+                     base_board_service.PUBLIC_NOTE + '; four instances, see docs/base-board-service.md')
     holes, ys = bay_boards(G)
     zc, (bw, bh, bt) = sum(TB['z']) / 2, TB['board']
     stack = None
@@ -1750,6 +1753,7 @@ def balls(G, n_hopper=22):
 MADE = [
     # name, function, frame, material, qty, print rotation, note
     ('pan_base', pan_base, 'base', 'pa6-cf', 1, None, 'PA6-CF on its foot; 4 x M5 x 16 into the head ring, 2 x Ø5 dowels'),
+    ('base_board_carrier', base_board_service.carrier, 'base', 'pa6-cf', 1, ((0, 1, 0), 90), 'Removable board carrier; exterior face on bed, standoffs up; service requires bumper removal'),
     ('pan_ring', pan_ring, 'pan', 'pa6-cf', 1, ((1, 0, 0), 180), 'PA6-CF upside down; DIN 471-50 circlip; 4 x M4 inserts'),
     ('pan_spacer', pan_spacer, 'pan', 'pa6-cf', 1, ((1, 0, 0), 180), 'PA6-CF on its wide end; between the 61810 inner race and the circlip'),
     ('pan_pinion', pan_pinion, 'pinion', 'pa6-cf', 1, None, 'PA6-CF; 4 x M2 to the horn; turns -3 x pan about the servo axis'),
@@ -2212,7 +2216,7 @@ COL = {
     'shoulder_screw': (0.10, 0.10, 0.11), 'pan_spacer': (0.85, 0.42, 0.10),
     'ring_carrier': (0.30, 0.32, 0.35), 'ring_driver': (0.85, 0.42, 0.10), 'board_bay': (0.55, 0.60, 0.65),
     'slip_ring': (0.80, 0.65, 0.20), 'slip_ring_rotor': (0.80, 0.65, 0.20), 'ring_coupling': (0.95, 0.95, 0.90),
-    'ring_leads_rotor': (0.75, 0.15, 0.15), 'base_board': (0.10, 0.45, 0.20), 'turret_board': (0.10, 0.45, 0.20),
+    'ring_leads_rotor': (0.75, 0.15, 0.15), 'base_board': (0.10, 0.45, 0.20), 'base_board_carrier': (0.30, 0.35, 0.42), 'base_board_screws': (0.25, 0.25, 0.28), 'base_carrier_screws': (0.25, 0.25, 0.28), 'base_board_inserts': (0.72, 0.51, 0.20), 'base_carrier_inserts': (0.72, 0.51, 0.20), 'turret_board': (0.10, 0.45, 0.20),
     'index_magnet': (0.60, 0.60, 0.65), 'hall_switch': (0.10, 0.10, 0.10),
     'flywheel_motor_l': (0.65, 0.15, 0.15), 'flywheel_motor_r': (0.65, 0.15, 0.15), 'esc_l': (0.1, 0.35, 0.15), 'esc_r': (0.1, 0.35, 0.15),
     'feed_motor': (0.12, 0.12, 0.14), 'cartridge_board': (0.10, 0.45, 0.20), 'laser': (0.15, 0.6, 0.15),

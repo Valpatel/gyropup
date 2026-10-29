@@ -23,17 +23,22 @@ GREY = (0.78, 0.79, 0.81)
 STEPS = [
     ('The pan base and its inserts', ['pan_base'], {}, (0.6, -1.0, 0.7),
      'Heat-set inserts first, with the base on its foot: 5 x M3 in the clamp ears, 3 x M3 in the carrier bosses (from '
-     'below), 4 x M3 in the base-board bosses, 4 x M4 in the DT pad. The bumper tabs\' 5 short M3 wait for the robot '
+     'below), 4 x M3 in the external carrier anchors, 4 x M4 in the DT pad. The bumper tabs\' 5 short M3 wait for the robot '
      '(no bumper on the bench, D42).'),
     ('The pan servo, its pinion and the DT12 receptacle', ['pan_servo', 'pan_pinion', 'dt_receptacle'],
      {'pan_servo': 40, 'pan_pinion': 70, 'dt_receptacle': (0, -40, 0)}, (0.6, -1.0, 0.7),
      'The STS3215 drops into its pocket, bus plugs down, on its four posts: 4 x M2 x 20 up through the foot. The pinion on '
      'its horn: 4 x M3 x 16 (heads sunk). The DT04-12PA on the pad: 4 x M4 x 10; its 12 pins and the W12P wedge with the '
      'harness to the base board.'),
-    ('The base board and the index magnet', ['base_board', 'index_magnet'], {'base_board': (25, 0, 0), 'index_magnet': 25},
-     (0.8, -0.6, 0.7),
-     'The base board (the 555, the 12 V pan regulator, the 10 A main fuse, the ring\'s stator plug) on its four bosses: '
-     '4 x M3 x 6. The 3/16 in magnet glued on the housing\'s top at pan 0 (the clamp ring has its hole).'),
+    ('The removable base-board module and the index magnet',
+     ['base_board_carrier', 'base_board', 'base_board_inserts', 'base_board_screws', 'base_carrier_inserts', 'base_carrier_screws', 'index_magnet'],
+     {'base_board_carrier': (45, 0, 0), 'base_board': (30, 0, 0), 'base_board_inserts': (45, 0, 0),
+      'base_board_screws': (25, 0, 0), 'base_carrier_screws': (65, 0, 0), 'index_magnet': 25}, (0.8, -0.6, 0.7),
+     'On the bench, fit four M3 inserts in the carrier and screw the drilled PCB onto its standoffs with four M3 x 6. '
+     'Fit four M3 inserts in the base anchors from +x. Connect the harness, then slide the entire module in from +x '
+     'and secure it with four M3 x 8 from outside. Remove the robot bumper before service; PCB screws are accessed '
+     'only on the bench. Harness disconnection access and slack remain unverified: docs/base-board-service.md. '
+     'Glue the index magnet in its housing pocket.'),
     ('The pan bearing and its clamp', ['pan_bearing', 'pan_bearing_inner', 'pan_clamp'],
      {'pan_bearing': 30, 'pan_bearing_inner': 30, 'pan_clamp': 50}, (0.6, -1.0, 0.8),
      'The 6810-2RS pressed into its seat onto the Ø62 shoulder; the aluminium clamp ring (SendCutSend) over it: 5 x M3 x 8.'),

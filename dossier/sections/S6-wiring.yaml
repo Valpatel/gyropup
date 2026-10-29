@@ -168,11 +168,26 @@ parts:
   interfaces:
   - I-base-board
   material:
-    name: base board (JLCPCB)
+    name: Adafruit 1608 perfboard cut to 50.8 x 30, corners drilled
     process: bought
   checks:
   - gate:connectivity
   - gate:assembly
+- id: base_board_carrier
+  function: Removable passive PCB carrier, bench assembled and removed along +X after the bumper
+  interfaces: [I-base-board, I-base-carrier, I-base-board-inserts]
+  material: {name: PA6-CF, process: printed}
+  checks: [gate:connectivity, gate:assembly, gate:wall]
+- id: base_board_inserts
+  function: Four M3 inserts holding the PCB on the carrier
+  interfaces: [I-base-board-inserts]
+  material: {name: McMaster 94459A140 brass, process: bought}
+  checks: [gate:connectivity, gate:assembly]
+- id: base_carrier_inserts
+  function: Four M3 inserts holding the removable carrier on the base
+  interfaces: [I-base-carrier-inserts]
+  material: {name: McMaster 94459A140 brass, process: bought}
+  checks: [gate:connectivity, gate:assembly]
 - id: dt_receptacle
   function: 'The TM connector: the robot harness''s power and safety loop (DT04-12PA)'
   interfaces:

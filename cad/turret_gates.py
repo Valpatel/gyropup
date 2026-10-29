@@ -125,7 +125,7 @@ def geometry_fingerprint():
     import cadagent.gates as cg
     h = hashlib.sha256()
     gdir = Path(cg.__file__).parent
-    for f in [R / 'cad' / 'turret.py', Path(__file__), PILE, LAUNCH] + sorted(gdir.glob('*.py')):
+    for f in [R / 'cad' / 'turret.py', R / 'cad' / 'turret_base_board.py', R / 'cad' / 'turret_boards.py', Path(__file__), PILE, LAUNCH] + sorted(gdir.glob('*.py')):
         h.update(f.read_bytes() if f.exists() else b'-')
     return h.hexdigest()[:16]
 

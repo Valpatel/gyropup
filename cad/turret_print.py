@@ -43,6 +43,7 @@ PARTS = [
     ('stand_bottom', 'bench/stand_bottom.stl', 'petg', 1, STAND, False, 'flat', ''),
     ('compute_tray', 'compute_tray.stl', 'pa6-cf', 1, PARTIAL, False, 'flat, ribs up', 'the compute plinth\'s floor (D66): 4 x M4 inserts'),
     ('compute_shell', 'compute_shell.stl', 'petg', 1, PETG, True, 'upside down, on its top rim', 'the compute plinth\'s wall (D66): 4 x M5 inserts in the column tops'),
+    ('base_board_carrier', 'base_board_carrier.stl', 'pa6-cf', 1, SOLID, False, 'exterior face down, standoffs up', 'removable carrier: four M3 inserts; fit/insert coupons and harness service allowance unverified'),
     ('pan_base', 'pan_base.stl', 'pa6-cf', 1, PARTIAL, True, 'on its foot', '40 % gyroid inside 4 perimeters (the FEA case)'),
     ('pan_ring', 'pan_ring.stl', 'pa6-cf', 1, SOLID, True, 'upside down: the gear teeth flat on the bed', ''),
     ('pan_spacer', 'pan_spacer.stl', 'pa6-cf', 1, SOLID, False, 'on its wide end', ''),
@@ -75,7 +76,7 @@ NOT_PRINTED = {'bumper_ring': 'v1 (the robot): no bumper on the bench', 'hopper_
 # the print order (plan 4.2): the stand first, then the pan stack and the tilt group, the cartridge parts after the motor
 # and the servo are in hand, the tyres last
 SCHEDULE = [('Day 1', ['stand_box', 'stand_bottom']),
-            ('Day 1-2: the compute plinth and the pan stack (PA6-CF, PETG)', ['compute_tray', 'compute_shell', 'pan_base', 'pan_ring', 'pan_spacer', 'pan_pinion', 'ring_carrier', 'ring_driver']),
+            ('Day 1-2: the compute plinth and the pan stack (PA6-CF, PETG)', ['compute_tray', 'compute_shell', 'pan_base', 'base_board_carrier', 'pan_ring', 'pan_spacer', 'pan_pinion', 'ring_carrier', 'ring_driver']),
             ('Day 2-3: the tilt group (PA6-CF, PETG)', ['tilt_yoke', 'cradle', 'horn_boss', 'pivot_spacer', 'board_bay', 'board_bay_lid', 'laser_mount']),
             ('Once the X2216 and a servo are in hand: the cartridge', ['cartridge_body', 'flywheel', 'dial', 'hopper', 'hopper_lid', 'barrel']),
             ('Last', ['flywheel_tyre'])]

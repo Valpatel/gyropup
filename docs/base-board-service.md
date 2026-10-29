@@ -22,3 +22,9 @@ Hardware: four existing McMaster 91290A111 M3 x 6 PCB screws, four 91290A113 M3 
 - Original trapped geometry, retained bumper, incorrect screw length and missing holes must fail.
 - Printed clearance and insert coupons must be measured before physical release.
 - Harness connections must be accessible and their service slack measured before service is considered complete.
+
+## Current evidence limits
+
+The PCB uses the actual `turret_boards.py` footprint layout with drilled holes; components remain package envelopes, and solder tails/connectors are unverified. The isolated checker proves the carrier plus PCB and attached hardware move together. The generic dossier's single-part assembly model cannot yet represent this bench subassembly, so its sequence remains unqualified; no collision waiver substitutes for that missing capability.
+
+The public model contains eight screws and eight inserts as labelled authored simplified hardware. Engineering fastener checks use private manufacturer STEP for 91290A111 and 94459A140 where present. The 91290A113 M3x8 STEP was absent from the local cache; a sequential single-part fetch on 2026-10-29 failed because the returned page contained no specification table. Its public authored geometry is not manufacturer CAD, and complete manufacturer-model coverage is not claimed.
