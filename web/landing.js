@@ -49,7 +49,7 @@ async function showRobot() {
     const resize = () => {
       const w = preview.clientWidth, h = preview.clientHeight;
       if (!w || !h) return;
-      renderer.setSize(w, h); camera.aspect = w / h;
+      renderer.setSize(w, h, false); camera.aspect = w / h;
       camera.fov = 2 * Math.atan(Math.tan(REFERENCE_FOV * Math.PI / 360) * Math.max(1, 1 / camera.aspect)) * 180 / Math.PI;
       camera.updateProjectionMatrix(); controls.update();
     };
@@ -66,7 +66,7 @@ async function showRobot() {
     const callbacks = [];
     const sfx = createSfx();
     const talk = mountTalk({ stage: { camera, renderer, onFrame: fn => callbacks.push(fn) }, eyes,
-      getHead: () => robot.base, root: '/', dock: false, audio: { enabled: false, volume: sfx.volume } });
+      getHead: () => robot.head ?? robot.base, root: '/', dock: false, audio: { enabled: false, volume: sfx.volume } });
     const paintSound = () => {
       soundButton.textContent = `Sound ${sfx.enabled ? 'on' : 'off'}`;
       soundButton.setAttribute('aria-pressed', String(sfx.enabled));
@@ -132,9 +132,11 @@ async function showRobot() {
     // This captures the actual renderer; it does not synthesize a second illustration.
     window.__heroPreview = { renderer, scene, camera, controls, robot, eyes, talk, sfx,
       get inspection() { return { pinned, hovering, amount: explode }; },
+      get activity() { return { seconds: activeTime, announcements: line }; },
+      captureFrame() { renderer.render(scene, camera); return renderer.domElement.toDataURL('image/png'); },
       capturePoster(size = 1024) {
         const pixelRatio = renderer.getPixelRatio();
-        renderer.setPixelRatio(1); renderer.setSize(size, size);
+        renderer.setPixelRatio(1); renderer.setSize(size, size, false);
         camera.aspect = 1; camera.fov = REFERENCE_FOV; camera.position.copy(homePosition); controls.target.copy(center);
         controls.autoRotate = false; controls.update(); camera.updateProjectionMatrix();
         robot.setExplode?.(0); robot.setPose({ height: .6 }); eyes.draw();
