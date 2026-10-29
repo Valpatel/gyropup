@@ -25,8 +25,8 @@
     "reports/erc.rpt": "f865fe4743be5edd27d5255f1a991de18f5700ae18f9c49ffc36292789835a68",
     "reports/netlist.xml": "2265922b4b4e160f2b3a95d6c6592f9a2a3e322dd102a942b2a5d72a116d4aee",
     "sym-lib-table": "59362d3eb908cbde7cddf09ec68ab949d6ef1da86c8bf5a718339c9f2fdbf444",
-    "test_circuit.py": "806ddcd6a782bbccd3d74dc9236982d63a76a1d9837d3f1a928308e3b0273aac",
-    "verify.py": "39a19eafe1809d059716d2c89214cefd4c79ddf71308e3142e89c08c30511f57"
+    "test_circuit.py": "1065910cba26010b09cffafc26b5178223469f0dbe20fab8fba3305ef64f30ef",
+    "verify.py": "84923e6291e8c9e024c3998686f0fe494756d3dc72c3f4f4a8b334f933e7f490"
   },
   "interface_source": "PR67 8b86e7f, confirmed unchanged at36aa696",
   "kicad": "10.0.1",

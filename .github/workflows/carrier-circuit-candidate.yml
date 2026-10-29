@@ -23,6 +23,7 @@ jobs:
           python hardware/carrier-pan-protection/test_circuit.py \
             CircuitTests.test_actual_kicad_netlist \
             CircuitTests.test_artifact_binding \
+            CircuitTests.test_receipt_cannot_drop_source_bindings \
             CircuitTests.test_arithmetic_and_limits \
             CircuitTests.test_invalid_resistance \
             CircuitTests.test_candidate_bom_and_availability_coverage \

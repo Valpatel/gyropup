@@ -18,6 +18,10 @@ class CircuitTests(unittest.TestCase):
     def test_actual_kicad_netlist(self):
         self.assertEqual(verify.check_netlist(self.root)['package_leads'],62)
     def test_artifact_binding(self): verify.check_receipt()
+    def test_receipt_cannot_drop_source_bindings(self):
+        receipt=json.loads((HERE/'reports/receipt.json').read_text())
+        del receipt['files_sha256']['pan-cutoff.kicad_sch']
+        with self.assertRaises(AssertionError):verify.check_receipt(receipt)
     def test_arithmetic_and_limits(self):
         r=calculate.calculate()
         self.assertAlmostEqual(r['FET_pair_loss_W_at3_25A_max25C_Rds'],.1352)

@@ -57,8 +57,15 @@ def check_netlist(root):
     return {'components':len(comps),'package_leads':len(seen),'connected_nets':len(actual),'NC_groups':len(ncs)}
 
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
-def check_receipt():
-    receipt=json.loads((HERE/'reports/receipt.json').read_text())
+REQUIRED_FILES={'README.md','pins.md','fault-review.md','availability.json','circuit_design.py','generate.py','calculate.py',
+ 'verify.py','test_circuit.py','build.py','pan-cutoff.kicad_sch','pan-cutoff.kicad_pro','candidate.kicad_sym',
+ 'sym-lib-table','candidate-bom.csv','pictures/pan-cutoff.svg','reports/erc.rpt','reports/netlist.xml',
+ 'reports/calculations.json','../fuse-board/sexp.py'}
+def check_receipt(receipt=None):
+    if receipt is None: receipt=json.loads((HERE/'reports/receipt.json').read_text())
+    assert receipt['schema']==1 and receipt['status']=='CANDIDATE_NOT_QUALIFIED', 'wrong evidence schema/status'
+    assert receipt['kicad']=='10.0.1', 'unreviewed EDA tool version'
+    assert set(receipt['files_sha256'])==REQUIRED_FILES, 'missing/extra source or artifact bindings'
     for path,wanted in receipt['files_sha256'].items():
         assert sha(HERE/path)==wanted,f'stale artifact/source: {path}'
     return receipt
