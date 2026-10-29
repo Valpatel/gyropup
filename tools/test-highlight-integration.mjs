@@ -37,7 +37,7 @@ function installProbe() {
   sessionStorage.setItem('gyropup.prototype-notice', '2026-10-29-v1');
   const probe = window.__highlightIntegrationProbe = {
     timeOrigin: performance.timeOrigin, heroReadyAt: null, heroStates: [],
-    sources: [], events: [], firstDecodedFrame: null,
+    sources: [], events: [], frames: [], firstDecodedFrame: null,
   };
   document.addEventListener('DOMContentLoaded', () => {
     const video = document.querySelector('#highlight-video');
@@ -62,13 +62,21 @@ function installProbe() {
         error: video.error && { code: video.error.code, message: video.error.message },
       }));
     }
-    video.requestVideoFrameCallback((now, metadata) => {
-      probe.firstDecodedFrame = {
+    const frame = (now, metadata) => {
+      const decoded = {
         at: now, epochMs: performance.timeOrigin + now, mediaTime: metadata.mediaTime,
         presentedFrames: metadata.presentedFrames, buffered: buffered(),
         heroReady: hero.dataset.ready === 'true',
       };
-    });
+      probe.firstDecodedFrame ??= decoded;
+      probe.frames.push({
+        at: now, mediaTime: metadata.mediaTime,
+        decodedFrames: video.getVideoPlaybackQuality().totalVideoFrames,
+        paused: video.paused, playerState: document.querySelector('.highlight-card').dataset.state,
+      });
+      video.requestVideoFrameCallback(frame);
+    };
+    video.requestVideoFrameCallback(frame);
   }, { once: true });
 }
 
@@ -140,6 +148,8 @@ function summarize(report) {
   const events = probe?.events || [];
   const playing = events.find(event => event.type === 'playing');
   const ended = events.find(event => event.type === 'ended');
+  const replayEnded = probe?.replayRequestedAt == null ? undefined :
+    events.find(event => event.type === 'ended' && event.at > probe.replayRequestedAt);
   const stalls = [];
   for (const [index, event] of events.entries()) {
     if (event.type !== 'waiting' || !playing || event.at <= playing.at || (ended && event.at >= ended.at)) continue;
@@ -155,6 +165,32 @@ function summarize(report) {
     firstDecodedFrameBuffered: first?.buffered, firstPlaying: playing,
     movieResource: movie, stalls, totalStallMs: stalls.reduce((sum, stall) => sum + (stall.durationMs || 0), 0),
   };
+  if (probe?.replayRequestedAt != null) {
+    const waits = events.filter(event => event.type === 'waiting' && event.at >= probe.replayRequestedAt &&
+      (!replayEnded || event.at < replayEnded.at)).map(event => {
+      // WebKit can recover a full-buffer replay seek with advancing decoded
+      // frames but no new "playing" event. Keep raw events and name the actual
+      // recovery evidence rather than labelling that playback unresolved.
+      const frame = probe.frames?.find(frame => frame.at > event.at && frame.mediaTime > event.mediaTime + .02 &&
+        !frame.paused && frame.playerState !== 'error');
+      const native = events.find(next => next.at > event.at && ['playing', 'ended', 'error'].includes(next.type));
+      const recovery = [frame && { at: frame.at, kind: 'decoded-frame', mediaTime: frame.mediaTime, decodedFrames: frame.decodedFrames },
+        native && { at: native.at, kind: native.type, mediaTime: native.mediaTime }]
+        .filter(Boolean).sort((a, b) => a.at - b.at)[0];
+      return {
+        at: event.at, mediaTime: event.mediaTime, buffered: event.buffered,
+        recovery, durationMs: recovery ? recovery.at - event.at : null,
+      };
+    });
+    summary.replay = {
+      requestedAt: probe.replayRequestedAt, baseline: report.replayBaseline,
+      endedAt: replayEnded?.at,
+      requestedToEndedMs: replayEnded ? replayEnded.at - probe.replayRequestedAt : null,
+      additionalDecodedFrames: report.replayAdditionalDecodedFrames,
+      qualityCounterResetBeforeBaseline: report.replayQualityCounterResetBeforeBaseline,
+      waits, totalWaitMs: waits.reduce((sum, wait) => sum + (wait.durationMs || 0), 0),
+    };
+  }
   if (first && report.cdpMedia.length) {
     const media = report.cdpMedia[0];
     summary.chromeBodyBytesAtFirstFrame = media.data.filter(chunk => chunk.epochMs <= first.epochMs)
@@ -270,8 +306,10 @@ async function run(mode) {
         assert.ok(report.motion.meanPixelDifference > .15, 'The model region moves, independently of baked captions');
         await page.waitForFunction(() => {
           const video = document.querySelector('#highlight-video');
-          if (video.error) throw new Error(video.error.message);
-          return video.ended;
+          if (video.error || document.querySelector('.highlight-card').dataset.state === 'error') {
+            throw new Error(video.error?.message || document.querySelector('.highlight-status').textContent);
+          }
+          return video.ended && window.__highlightIntegrationProbe.events.some(event => event.type === 'ended');
         });
         report.snapshots.push({ label: 'natural-end', ...await state(page) });
         const completed = report.snapshots.at(-1);
@@ -283,13 +321,45 @@ async function run(mode) {
         assert.ok(completed.hero.renderCalls > 0); assert.ok(completed.hero.triangles > 0);
         assert.equal(completed.hero.soundEnabled, false);
         assert.equal(completed.hero.loadingHidden, true);
+        await page.evaluate(() => { window.__highlightIntegrationProbe.replayRequestedAt = performance.now(); });
         await page.locator('.highlight-replay').click();
         await page.waitForFunction(() => {
           const video = document.querySelector('#highlight-video');
+          if (video.error || document.querySelector('.highlight-card').dataset.state === 'error') {
+            throw new Error(video.error?.message || document.querySelector('.highlight-status').textContent);
+          }
           return !video.paused && video.currentTime > .7 && video.currentTime < 5;
         });
         report.snapshots.push({ label: 'replay-with-hero-ready', ...await state(page) });
-        await page.locator('.highlight-toggle').click();
+        // WebKit may reset its quality counter on the seek back to zero. Take
+        // the baseline after replay has actually begun, not at the first end.
+        const replayStart = report.snapshots.at(-1);
+        report.replayBaseline = { at: replayStart.at, mediaTime: replayStart.video.time, decodedFrames: replayStart.video.decodedFrames };
+        report.replayQualityCounterResetBeforeBaseline = replayStart.video.decodedFrames < completed.video.decodedFrames;
+        await page.waitForFunction(baseline => {
+          const video = document.querySelector('#highlight-video'), probe = window.__highlightIntegrationProbe;
+          const playerState = document.querySelector('.highlight-card').dataset.state;
+          if (video.error || playerState === 'error') {
+            throw new Error(video.error?.message || document.querySelector('.highlight-status').textContent);
+          }
+          const now = performance.now(), frames = video.getVideoPlaybackQuality().totalVideoFrames;
+          const watch = probe.replayProgress ??= { at: baseline.at, mediaTime: baseline.mediaTime, decodedFrames: baseline.decodedFrames };
+          if (video.currentTime > watch.mediaTime + .02 && frames > watch.decodedFrames) {
+            watch.at = now; watch.mediaTime = video.currentTime; watch.decodedFrames = frames;
+          }
+          if (video.ended && probe.events.some(event => event.type === 'ended' && event.at > probe.replayRequestedAt)) return true;
+          if (now - watch.at > 8000) throw new Error('Replay stopped advancing decoded frames for eight seconds');
+          return false;
+        }, report.replayBaseline, { polling: 100, timeout: 35000 });
+        report.snapshots.push({ label: 'replay-natural-end', ...await state(page) });
+        const replayEnd = report.snapshots.at(-1);
+        report.replayAdditionalDecodedFrames = replayEnd.video.decodedFrames - report.replayBaseline.decodedFrames;
+        assert.ok(report.replayAdditionalDecodedFrames >= 600, 'The second replay decodes at least 600 more frames after its startup baseline');
+        assert.equal(replayEnd.video.ended, true); assert.equal(replayEnd.video.paused, true);
+        assert.equal(replayEnd.video.state, 'ended'); assert.equal(replayEnd.video.error, null);
+        assert.ok(Math.abs(replayEnd.video.time - 22) < .1, 'The complete second replay reaches its natural 22-second end');
+        assert.equal(replayEnd.hero.ready, true);
+        // Leave the naturally ended player untouched; toggling here starts a third play.
         await page.screenshot({ path: `${out}/${browserLabel}-${mode}-390x844.png` });
         report.endVersion = await version(context);
         assert.deepEqual(report.endVersion, report.version, 'One published build throughout the cold integration case');
@@ -328,6 +398,7 @@ async function run(mode) {
     assert.ok(playable && playable[1] - firstPlaying.mediaTime >= 2.8, 'Initial playback has approximately three seconds buffered');
     assert.ok(report.summary.stalls.every(stall => stall.durationMs !== null), 'Every playback wait recovers');
     assert.ok(report.summary.totalStallMs <= 1000, `No meaningful repeated stalls under the recorded conditions: ${report.summary.totalStallMs.toFixed(1)} ms`);
+    assert.ok(report.summary.replay.waits.every(wait => wait.recovery && wait.recovery.kind !== 'error'), 'Replay waits recover through native events or actual decoded-frame progress');
     report.passed = true;
     console.log(`PASS ${browserLabel} ${mode}: hero ${Math.round(report.summary.heroReadyMs)} ms; request→frame ${Math.round(report.summary.requestToFirstDecodedFrameMs)} ms; ${report.summary.stalls.length} waits / ${Math.round(report.summary.totalStallMs)} ms; real motion and full playback/replay`);
   } catch (error) {

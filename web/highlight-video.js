@@ -10,15 +10,18 @@ if (card) {
   const time = card.querySelector('.highlight-time');
   const progress = card.querySelector('.highlight-progress span');
   const hero = document.querySelector('#robot-preview');
-  const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+  const motionQuery = '(prefers-reduced-motion: reduce)';
+  const reducedMotion = matchMedia(motionQuery);
   const connection = navigator.connection;
-  const manualOnly = () => reducedMotion.matches || connection?.saveData === true;
+  // WebKit can update a fresh query before delivering changes to retained lists.
+  const manualOnly = () => matchMedia(motionQuery).matches || connection?.saveData === true;
   const heroLoading = () => hero?.isConnected && hero.dataset.state === 'loading' && hero.dataset.ready !== 'true';
   const STARTUP_SECONDS = 3, HERO_WAIT_MS = 60000, MEDIA_WAIT_MS = 20000;
   let near = false, visible = false, ready = false, buffering = false, failed = false;
   let userPaused = false, manualPlay = false, finished = false, preloadCancelled = false;
   let pendingPlay = false, attempt = 0, mediaTimer, heroTimer;
   let heroWaitExpired = false, heroBypassed = false, queuedForHero = false;
+  let recoveryFrame, recoveryGeneration = 0;
   video.muted = true;
 
   const withinViewport = (margin = 0) => {
@@ -35,6 +38,11 @@ if (card) {
   const queued = () => wantsPlayback() && waitsForHero() && !heroWaitExpired;
   const clearHeroTimer = () => { clearTimeout(heroTimer); heroTimer = undefined; };
   const clearMediaTimer = () => { clearTimeout(mediaTimer); mediaTimer = undefined; };
+  const clearFrameRecovery = () => {
+    recoveryGeneration++;
+    if (recoveryFrame !== undefined) video.cancelVideoFrameCallback?.(recoveryFrame);
+    recoveryFrame = undefined;
+  };
   const formatTime = seconds => `${Math.floor(seconds / 60)}:${String(Math.floor(seconds % 60)).padStart(2, '0')}`;
   const paintTime = () => {
     if (!Number.isFinite(video.duration)) return;
@@ -65,6 +73,7 @@ if (card) {
     paintTime();
   };
   const pauseMedia = () => {
+    clearFrameRecovery();
     attempt++;
     pendingPlay = false;
     video.pause();
@@ -79,6 +88,28 @@ if (card) {
   };
   const waitForMedia = () => {
     if (mediaTimer === undefined) mediaTimer = setTimeout(fail, MEDIA_WAIT_MS);
+  };
+  const watchFrameRecovery = () => {
+    clearFrameRecovery();
+    if (video.paused || !video.requestVideoFrameCallback) return;
+    const generation = recoveryGeneration, playbackAttempt = attempt, source = video.currentSrc, waitingTime = video.currentTime;
+    let baseline;
+    const frame = (now, metadata) => {
+      if (generation !== recoveryGeneration || playbackAttempt !== attempt || source !== video.currentSrc || !wantsPlayback() || video.paused) return;
+      recoveryFrame = undefined;
+      // A full-buffer WebKit seek can resume frames without another playing
+      // event. Require real frame progression; elapsed wall time alone cannot
+      // cancel the watchdog for a genuinely frozen decoder.
+      if (!video.seeking) {
+        if (baseline && metadata.presentedFrames > baseline.presentedFrames &&
+            metadata.mediaTime > baseline.mediaTime + .001 && metadata.mediaTime > waitingTime + .001) {
+          clearFrameRecovery(); clearMediaTimer(); buffering = false; paint(); return;
+        }
+        baseline ??= { mediaTime: metadata.mediaTime, presentedFrames: metadata.presentedFrames };
+      }
+      recoveryFrame = video.requestVideoFrameCallback(frame);
+    };
+    recoveryFrame = video.requestVideoFrameCallback(frame);
   };
   const enoughBuffered = () => {
     if (!Number.isFinite(video.duration)) return false;
@@ -144,6 +175,7 @@ if (card) {
     });
   };
   const playFromStart = (restart = false) => {
+    clearFrameRecovery(); clearMediaTimer(); attempt++; pendingPlay = false;
     if (heroWaitExpired && heroLoading()) heroBypassed = true;
     if (failed) {
       failed = false; ready = false; buffering = false;
@@ -166,16 +198,26 @@ if (card) {
     if (!Number.isFinite(video.duration) || video.duration <= 0) { fail(); return; }
     ready = true; sync(); paint();
   });
-  for (const event of ['progress', 'canplay', 'canplaythrough', 'seeked']) video.addEventListener(event, sync);
+  for (const event of ['progress', 'canplay', 'canplaythrough']) video.addEventListener(event, sync);
+  video.addEventListener('seeking', () => {
+    clearFrameRecovery(); clearMediaTimer(); attempt++; pendingPlay = false;
+    buffering = wantsPlayback();
+    if (buffering) waitForMedia();
+    paint();
+  });
+  video.addEventListener('seeked', () => {
+    sync();
+    if (buffering && wantsPlayback() && !video.paused) watchFrameRecovery();
+  });
   video.addEventListener('playing', () => {
     if (!wantsPlayback()) { stop(); return; }
-    clearMediaTimer(); ready = true; buffering = false; paint();
+    clearFrameRecovery(); clearMediaTimer(); ready = true; buffering = false; paint();
   });
   video.addEventListener('pause', paint);
   video.addEventListener('timeupdate', paintTime);
   video.addEventListener('ended', () => {
     finished = true; manualPlay = false; buffering = false;
-    clearMediaTimer(); paint();
+    clearFrameRecovery(); clearMediaTimer(); paint();
   });
   video.addEventListener('error', () => { if (video.hasAttribute('src') && video.error) fail(); });
   video.addEventListener('waiting', () => {
@@ -184,7 +226,7 @@ if (card) {
     // buffer. Pausing then interrupts native decode recovery. Refill only when
     // the contiguous bytes themselves are insufficient, regardless of readyState.
     if (!enoughBuffered()) pauseMedia();
-    buffering = true; waitForMedia(); paint();
+    buffering = true; waitForMedia(); watchFrameRecovery(); paint();
   });
   const cancelQueuedPlayback = () => {
     if (queuedForHero || buffering) { manualPlay = false; preloadCancelled = true; }

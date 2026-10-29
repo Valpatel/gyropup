@@ -37,3 +37,11 @@ intent cancellation independent of an already-false visibility predicate. Native
 `waiting` events can represent seek/decode with a complete buffer: inspect the
 contiguous range before pausing, and retain native WebKit replay coverage in
 addition to synthetic buffer tests.
+
+Clear a recovery watchdog on actual forward presented-frame progress as well as
+normal media events. Scope callbacks to the current play/source generation, and
+invalidate them on cancellation, retry, seek and replay; frozen recovery must
+still time out. Complete the full second replay past the watchdog deadline.
+Read current reduced-motion preferences at the final eligibility decision:
+WebKit can briefly report a fresh query as true before a retained list and its
+change listener update. Keep the listener for ongoing cancellation too.

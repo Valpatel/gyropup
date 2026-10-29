@@ -167,10 +167,10 @@ try {
     v.dispatchEvent(new Event('waiting'));
     const paused = v.paused;
     delete v.readyState;
-    v.dispatchEvent(new Event('playing'));
     return paused;
   });
   assert.equal(pausedByDecoderWait, false, 'A full buffer with transient decoder waiting must not force a pause');
+  await page.waitForFunction(() => document.querySelector('.highlight-card').dataset.state === 'playing');
   await page.locator('.highlight-toggle').click(); await paused(page);
   record('Hero failure independence, one encoding, moving decoded pixels, and uninterrupted full-buffer decoder waiting');
 
@@ -289,6 +289,25 @@ try {
     await noMovie(cancelled, `${cancellation} cancels queued autoplay before the hero finishes`);
     record(`${cancellation} cancels queued autoplay without a late movie request`); await cancelled.close();
   }
+  const laggedPreference = await pageFor({ motion: 'no-preference', heroMode: 'held', setup: page => page.addInitScript(() => {
+    const nativeMatchMedia = window.matchMedia.bind(window);
+    window.__currentReducedMotion = false;
+    window.matchMedia = query => {
+      if (query !== '(prefers-reduced-motion: reduce)') return nativeMatchMedia(query);
+      // Model the observed WebKit interval: new queries see the current setting,
+      // while retained query objects have not received their change event yet.
+      const captured = window.__currentReducedMotion;
+      return { media: query, matches: captured, addEventListener() {}, removeEventListener() {} };
+    };
+  }) });
+  await show(laggedPreference);
+  await laggedPreference.waitForFunction(() => document.querySelector('.highlight-card').dataset.state === 'queued');
+  await laggedPreference.evaluate(() => {
+    window.__currentReducedMotion = true;
+    const hero = document.querySelector('#robot-preview'); hero.dataset.ready = 'true'; hero.dataset.state = 'ready';
+  });
+  await noMovie(laggedPreference, 'Current reduced motion wins before a retained query delivers its change event');
+  record('A late MediaQueryList event cannot authorize a movie against the current motion preference'); await laggedPreference.close();
   const missingHero = await pageFor({ motion: 'no-preference', heroMode: 'missing' }); await show(missingHero); await waitPlaying(missingHero);
   assert.equal(await missingHero.locator('#robot-preview').count(), 0);
   record('A page without a hero starts the independent player normally'); await missingHero.close();
@@ -331,6 +350,29 @@ try {
   assert.equal(await partial.locator('#highlight-video').evaluate(v => v.paused), true, 'Late buffer completion preserves a deliberate pause');
   await partial.locator('.highlight-toggle').click(); await waitPlaying(partial);
   record('Startup needs a contiguous buffer at currentTime; cancellation and cached resume do not depend on future events'); await partial.close();
+
+  const frozenRecovery = await pageFor({ setup: page => page.clock.install() }); await show(frozenRecovery);
+  await frozenRecovery.locator('.highlight-toggle').click(); await waitPlaying(frozenRecovery);
+  await frozenRecovery.waitForFunction(() => {
+    const v = document.querySelector('#highlight-video');
+    return v.buffered.length > 0 && v.buffered.end(0) - v.currentTime >= 3;
+  });
+  await frozenRecovery.locator('#highlight-video').evaluate(v => {
+    // Deliver one seek-like frame, then no forward frame observations. This
+    // isolates the watchdog without substituting a frozen file for the reel.
+    Object.defineProperty(v, 'requestVideoFrameCallback', { value: callback => {
+      window.__heldRecoveryFrame = callback; return 1;
+    } });
+    Object.defineProperty(v, 'cancelVideoFrameCallback', { value: () => {} });
+    v.dispatchEvent(new Event('waiting'));
+    window.__heldRecoveryFrame(performance.now(), { mediaTime: v.currentTime, presentedFrames: 1 });
+  });
+  await frozenRecovery.clock.fastForward(20001);
+  await frozenRecovery.waitForFunction(() => document.querySelector('.highlight-card').dataset.state === 'error');
+  await frozenRecovery.evaluate(() => window.__heldRecoveryFrame(performance.now(), { mediaTime: 5, presentedFrames: 20 }));
+  assert.equal(await frozenRecovery.locator('.highlight-card').getAttribute('data-state'), 'error');
+  assert.equal(await frozenRecovery.locator('#highlight-video').evaluate(v => v.paused), true, 'A stale recovery frame cannot revive the failed attempt');
+  record('A lone seek frame cannot disarm the frozen-recovery watchdog, and its late callback stays invalid'); await frozenRecovery.close();
 
   assert.deepEqual(errors, []);
   assert.deepEqual(await json('/version.json'), version, 'Single published build throughout test');
