@@ -27,6 +27,7 @@ jobs:
               npm run test:notice
               npm run test:hero
               npm run test:viewers
+              npm run test:file-viewer-theme
               npm run test:audio
               npm run test:web
               npm run test:markdown

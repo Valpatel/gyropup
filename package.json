@@ -16,6 +16,7 @@
     "test:interactions": "node tools/test-turret-interactions.mjs",
     "test:robot": "node tools/test-robot-controls.mjs",
     "test:viewers": "node tools/test-portal-viewers.mjs",
+    "test:file-viewer-theme": "node tools/test-file-viewer-theme.mjs",
     "test:audio": "node tools/test-audio-settings.mjs",
     "test:hero": "node tools/test-hero-preview.mjs",
     "test:demo": "node tools/test-live-demo.mjs",
