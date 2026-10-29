@@ -1,0 +1,373 @@
+{
+  "commit": "683ae9ac0fd810b6669c3239fe71d5676b7261b2",
+  "sources": {
+    "cad/turret.py": "4a360b60f3fdd9a5b63898fed7dac1126d4d6974b66fce269c39600b734e2f36",
+    "cad/turret_base_board.py": "19deb45f7163de0ce71e9288d20b311eb689d0f55b5d174b79d6d0030ccc7bea",
+    "cad/turret_boards.py": "c7a115d2fe3cefddf46b0dd521e21076e1f7721235df3e7bd22fadb6e165707b",
+    "cad/check_base_board_service.py": "ea499b69a6a70f98a66652a3c00be207b93e3f6a5d470806acb30f45b1386153",
+    "catalog/hardware.json": "c7fb31ff99094655a86cc94c3b90c1fee829d66c6484dfe66f6c0ae0a9076858",
+    "catalog/turret.json": "860daa91485e3c713798271a66b5baff8aa42742ff4e002ac05f02c9a879305f"
+  },
+  "pass_model_checks": false,
+  "failures": [
+    {
+      "id": "fasteners:manufacturer_pcb",
+      "pass": false,
+      "evidence": {
+        "counts": {
+          "pass": 20,
+          "warn": 0,
+          "fail": 8
+        },
+        "findings": [
+          {
+            "id": "fastener:base_board_screws#0:tip",
+            "status": "fail",
+            "message": "the kernel could not decide the screw against base_board_inserts: volumes disagree: vol(a) 168.518 != common 0.33917 + cut 163.288 mm3",
+            "parts": [
+              "base_board_inserts",
+              "base_board_screws#0"
+            ],
+            "evidence": {
+              "next_solid": {
+                "part": "base_board_carrier",
+                "t_mm": 8.1
+              },
+              "tip_t_mm": 6.0,
+              "tip_clearance_mm": 2.1,
+              "min_tip_clearance_mm": 0.5,
+              "probe_end_t_mm": 16.0
+            }
+          },
+          {
+            "id": "fastener:base_board_screws#0:length",
+            "status": "fail",
+            "message": "the thread starts 1.71 mm from the seat in the model, the record says 1.6: recompute the stack; 5.53 mm of thread modelled, the record says 5.74",
+            "parts": [
+              "base_board_screws#0"
+            ],
+            "evidence": {
+              "fits_mm": [
+                4.705,
+                7.6
+              ],
+              "limited_by": "base_board_carrier",
+              "stock_that_fits_mm": [
+                5.0,
+                6.0,
+                7.0
+              ],
+              "length_mm": 6.0,
+              "record_length_mm": 6.0,
+              "thread_depth_required_mm": 4.295
+            }
+          },
+          {
+            "id": "fastener:base_board_screws#1:tip",
+            "status": "fail",
+            "message": "the kernel could not decide the screw against base_board_inserts: volumes disagree: vol(a) 168.518 != common 0.33917 + cut 163.458 mm3",
+            "parts": [
+              "base_board_inserts",
+              "base_board_screws#1"
+            ],
+            "evidence": {
+              "next_solid": {
+                "part": "base_board_carrier",
+                "t_mm": 8.1
+              },
+              "tip_t_mm": 6.0,
+              "tip_clearance_mm": 2.1,
+              "min_tip_clearance_mm": 0.5,
+              "probe_end_t_mm": 16.0
+            }
+          },
+          {
+            "id": "fastener:base_board_screws#1:length",
+            "status": "fail",
+            "message": "the thread starts 1.71 mm from the seat in the model, the record says 1.6: recompute the stack; 5.53 mm of thread modelled, the record says 5.74",
+            "parts": [
+              "base_board_screws#1"
+            ],
+            "evidence": {
+              "fits_mm": [
+                4.705,
+                7.6
+              ],
+              "limited_by": "base_board_carrier",
+              "stock_that_fits_mm": [
+                5.0,
+                6.0,
+                7.0
+              ],
+              "length_mm": 6.0,
+              "record_length_mm": 6.0,
+              "thread_depth_required_mm": 4.295
+            }
+          },
+          {
+            "id": "fastener:base_board_screws#2:tip",
+            "status": "fail",
+            "message": "the kernel could not decide the screw against base_board_inserts: volumes disagree: vol(a) 168.518 != common 0.33917 + cut 171.592 mm3",
+            "parts": [
+              "base_board_inserts",
+              "base_board_screws#2"
+            ],
+            "evidence": {
+              "next_solid": {
+                "part": "base_board_carrier",
+                "t_mm": 8.1
+              },
+              "tip_t_mm": 6.0,
+              "tip_clearance_mm": 2.1,
+              "min_tip_clearance_mm": 0.5,
+              "probe_end_t_mm": 16.0
+            }
+          },
+          {
+            "id": "fastener:base_board_screws#2:length",
+            "status": "fail",
+            "message": "the thread starts 1.71 mm from the seat in the model, the record says 1.6: recompute the stack; 5.53 mm of thread modelled, the record says 5.74",
+            "parts": [
+              "base_board_screws#2"
+            ],
+            "evidence": {
+              "fits_mm": [
+                4.705,
+                7.6
+              ],
+              "limited_by": "base_board_carrier",
+              "stock_that_fits_mm": [
+                5.0,
+                6.0,
+                7.0
+              ],
+              "length_mm": 6.0,
+              "record_length_mm": 6.0,
+              "thread_depth_required_mm": 4.295
+            }
+          },
+          {
+            "id": "fastener:base_board_screws#3:tip",
+            "status": "fail",
+            "message": "the kernel could not decide the screw against base_board_inserts: volumes disagree: vol(a) 168.518 != common 0.33917 + cut 171.762 mm3",
+            "parts": [
+              "base_board_inserts",
+              "base_board_screws#3"
+            ],
+            "evidence": {
+              "next_solid": {
+                "part": "base_board_carrier",
+                "t_mm": 8.1
+              },
+              "tip_t_mm": 6.0,
+              "tip_clearance_mm": 2.1,
+              "min_tip_clearance_mm": 0.5,
+              "probe_end_t_mm": 16.0
+            }
+          },
+          {
+            "id": "fastener:base_board_screws#3:length",
+            "status": "fail",
+            "message": "the thread starts 1.71 mm from the seat in the model, the record says 1.6: recompute the stack; 5.53 mm of thread modelled, the record says 5.74",
+            "parts": [
+              "base_board_screws#3"
+            ],
+            "evidence": {
+              "fits_mm": [
+                4.705,
+                7.6
+              ],
+              "limited_by": "base_board_carrier",
+              "stock_that_fits_mm": [
+                5.0,
+                6.0,
+                7.0
+              ],
+              "length_mm": 6.0,
+              "record_length_mm": 6.0,
+              "thread_depth_required_mm": 4.295
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "fasteners:manufacturer_carrier",
+      "pass": false,
+      "evidence": {
+        "counts": {
+          "pass": 20,
+          "warn": 0,
+          "fail": 8
+        },
+        "findings": [
+          {
+            "id": "fastener:base_carrier_screws#0:tip",
+            "status": "fail",
+            "message": "the kernel could not decide the screw against base_carrier_inserts: volumes disagree: vol(a) 168.518 != common 6.63245 + cut 161.81 mm3",
+            "parts": [
+              "base_carrier_inserts",
+              "base_carrier_screws#0"
+            ],
+            "evidence": {
+              "next_solid": {
+                "part": "pan_base",
+                "t_mm": 9.5
+              },
+              "tip_t_mm": 8.0,
+              "tip_clearance_mm": 1.5,
+              "min_tip_clearance_mm": 0.5,
+              "probe_end_t_mm": 18.0
+            }
+          },
+          {
+            "id": "fastener:base_carrier_screws#0:length",
+            "status": "fail",
+            "message": "the thread starts 3.10 mm from the seat in the model, the record says 3: recompute the stack; 5.53 mm of thread modelled, the record says 5.74",
+            "parts": [
+              "base_carrier_screws#0"
+            ],
+            "evidence": {
+              "fits_mm": [
+                6.105,
+                9.0
+              ],
+              "limited_by": "pan_base",
+              "stock_that_fits_mm": [
+                7.0,
+                8.0
+              ],
+              "length_mm": 8.0,
+              "record_length_mm": 8.0,
+              "thread_depth_required_mm": 4.895
+            }
+          },
+          {
+            "id": "fastener:base_carrier_screws#1:tip",
+            "status": "fail",
+            "message": "the kernel could not decide the screw against base_carrier_inserts: volumes disagree: vol(a) 168.518 != common 6.63245 + cut 161.703 mm3",
+            "parts": [
+              "base_carrier_inserts",
+              "base_carrier_screws#1"
+            ],
+            "evidence": {
+              "next_solid": {
+                "part": "pan_base",
+                "t_mm": 9.5
+              },
+              "tip_t_mm": 8.0,
+              "tip_clearance_mm": 1.5,
+              "min_tip_clearance_mm": 0.5,
+              "probe_end_t_mm": 18.0
+            }
+          },
+          {
+            "id": "fastener:base_carrier_screws#1:length",
+            "status": "fail",
+            "message": "the thread starts 3.10 mm from the seat in the model, the record says 3: recompute the stack; 5.53 mm of thread modelled, the record says 5.74",
+            "parts": [
+              "base_carrier_screws#1"
+            ],
+            "evidence": {
+              "fits_mm": [
+                6.105,
+                9.0
+              ],
+              "limited_by": "pan_base",
+              "stock_that_fits_mm": [
+                7.0,
+                8.0
+              ],
+              "length_mm": 8.0,
+              "record_length_mm": 8.0,
+              "thread_depth_required_mm": 4.895
+            }
+          },
+          {
+            "id": "fastener:base_carrier_screws#2:tip",
+            "status": "fail",
+            "message": "the kernel could not decide the screw against base_carrier_inserts: volumes disagree: vol(a) 168.518 != common 6.63245 + cut 162.044 mm3",
+            "parts": [
+              "base_carrier_inserts",
+              "base_carrier_screws#2"
+            ],
+            "evidence": {
+              "next_solid": {
+                "part": "pan_base",
+                "t_mm": 9.5
+              },
+              "tip_t_mm": 8.0,
+              "tip_clearance_mm": 1.5,
+              "min_tip_clearance_mm": 0.5,
+              "probe_end_t_mm": 18.0
+            }
+          },
+          {
+            "id": "fastener:base_carrier_screws#2:length",
+            "status": "fail",
+            "message": "the thread starts 3.10 mm from the seat in the model, the record says 3: recompute the stack; 5.53 mm of thread modelled, the record says 5.74",
+            "parts": [
+              "base_carrier_screws#2"
+            ],
+            "evidence": {
+              "fits_mm": [
+                6.105,
+                9.0
+              ],
+              "limited_by": "pan_base",
+              "stock_that_fits_mm": [
+                7.0,
+                8.0
+              ],
+              "length_mm": 8.0,
+              "record_length_mm": 8.0,
+              "thread_depth_required_mm": 4.895
+            }
+          },
+          {
+            "id": "fastener:base_carrier_screws#3:tip",
+            "status": "fail",
+            "message": "the kernel could not decide the screw against base_carrier_inserts: volumes disagree: vol(a) 168.518 != common 6.63245 + cut 161.937 mm3",
+            "parts": [
+              "base_carrier_inserts",
+              "base_carrier_screws#3"
+            ],
+            "evidence": {
+              "next_solid": {
+                "part": "pan_base",
+                "t_mm": 9.5
+              },
+              "tip_t_mm": 8.0,
+              "tip_clearance_mm": 1.5,
+              "min_tip_clearance_mm": 0.5,
+              "probe_end_t_mm": 18.0
+            }
+          },
+          {
+            "id": "fastener:base_carrier_screws#3:length",
+            "status": "fail",
+            "message": "the thread starts 3.10 mm from the seat in the model, the record says 3: recompute the stack; 5.53 mm of thread modelled, the record says 5.74",
+            "parts": [
+              "base_carrier_screws#3"
+            ],
+            "evidence": {
+              "fits_mm": [
+                6.105,
+                9.0
+              ],
+              "limited_by": "pan_base",
+              "stock_that_fits_mm": [
+                7.0,
+                8.0
+              ],
+              "length_mm": 8.0,
+              "record_length_mm": 8.0,
+              "thread_depth_required_mm": 4.895
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "physical_fit_verified": false
+}

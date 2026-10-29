@@ -128,7 +128,8 @@ def register(reg, T, pile):
     for name, (s, frame) in tg.parts_local(T, park).items():
         if name in tu.base_board_service.screw_specs():
             continue  # registered as individual fasteners below, not a duplicate compound
-        reg.add_part(name, _shape(s), section=SECTION_OF[name], place=home if frame == 'tilt' else None,
+        solids = list(_shape(s).Solids()) if name in ('base_board_inserts', 'base_carrier_inserts') else _shape(s)
+        reg.add_part(name, solids, section=SECTION_OF[name], place=home if frame == 'tilt' else None,
                      grounded=name == GROUNDED, free=name in FREE, reason=FREE.get(name, ''))
     r = G.ball / 2
     reg.add_part('ball', tg.sphere(r), section=SECTION_OF['ball'], place=[c_to_t(G, c) for c in tg.hopper_balls(pile)],

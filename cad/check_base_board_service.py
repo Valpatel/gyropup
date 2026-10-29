@@ -53,11 +53,19 @@ def hardware_gate(which, base=None, bumper=None, bad_length=None, missing_hole=F
         carrier=carrier.union(bb.cx(bb.M3_CLEAR/2,53,56,y,z))
     a.add('base_board_carrier',shape(carrier));a.add('base_board',shape(pcb))
     hw=bb.hardware(available_private=manufacturer)
-    for group in ('base_board_inserts','base_carrier_inserts'):
-        a.add(group,compound([s for n,s in hw.items() if n.startswith(group+'#')]))
+    # Keep each detailed receiver independent: Boolean subtraction against a
+    # compound of four threaded inserts produced inconsistent OCCT volumes.
+    for n,s in hw.items():
+        if 'inserts#' in n:
+            a.add(n,shape(s))
     specdata=bb.screw_specs()[which]
     spec=FastenerSpec(name=which,**{k:v for k,v in specdata.items() if k!='pn'},diameter_mm=3.,
                       thread_depth_mm=bb.INSERT_LENGTH,min_engagement_mm=3.,head_d_mm=5.5,head_h_mm=3.,tool='driver')
+    if manufacturer and (ROOT/'references/vendor/mcmaster/94459A140/94459A140.norm.step').is_file():
+        # Manufacturer STEP rays: first useful thread is 0.105 mm past each mouth.
+        # Overall length is 5.74 mm; the usable threaded span is 5.53 mm.
+        spec.thread_start_mm += .105
+        spec.thread_depth_mm = 5.53
     for name,s in hw.items():
         if 'screws' not in name:
             continue
@@ -122,8 +130,12 @@ def run(out):
         gates[name]=hardware_gate(**kwargs)
         (out/(name+'.json')).write_text(json.dumps(gates[name],indent=2)+'\n')
         expected=name in ('pcb_bench','carrier_installed','manufacturer_pcb','manufacturer_carrier')
-        check(('fasteners:' if expected else 'negative:')+name,bool(gates[name]['pass'])==expected,
-              {'counts':gates[name]['counts'],'findings':gates[name]['findings']})
+        failure_kind={'pcb_inside_base':':tool','bumper_tool':':tool','short_screw':':engagement',
+                      'long_screw':':tip','missing_hole':':holes'}.get(name)
+        witnessed=expected or any(c['status']=='fail' and c['id'].endswith(failure_kind)
+                      and 'could not decide' not in c['message'] for c in gates[name]['checks'])
+        check(('fasteners:' if expected else 'negative:')+name,bool(gates[name]['pass'])==expected and witnessed,
+              {'counts':gates[name]['counts'],'expected_failure':failure_kind,'witnessed':witnessed,'findings':gates[name]['findings']})
     # Offline manufacturer coverage is audited independently. Missing models never
     # silently become a manufacturer's model and do not qualify hardware completeness.
     private={}
