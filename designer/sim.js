@@ -145,6 +145,11 @@ async function enterBench(request) {
   if (request !== designRequest) return;
   stopReplay();
   state.bench = true;
+  // A darker range makes the flight guide readable; keep the robot's daylight
+  // preference separate so switching modes restores its original appearance.
+  stage.setSceneLight(0.5);
+  stage.scene.background = new THREE.Color(0x14272b);
+  yard.material.color.setHex(0x304447);
   if (state.robot) { state.robot.group.visible = false; if (state.robot.turret) state.robot.turret.laser.visible = false; }
   for (const l of state.robot?.lights ?? []) l.spot.visible = false;
   setLaser(false);
@@ -163,6 +168,9 @@ function leaveBench() {
   if (!state.bench) return;
   state.bench = false;
   bench?.exit();
+  stage.setSceneLight(daylight);
+  stage.scene.background = null;
+  yard.material.color.setHex(0xb8cba0);
   document.body.classList.remove('bench-mode');
   for (const s of robotSections) if (s !== replayPanel) s.hidden = false;
   for (const el of [runSel, demoBtn, $('#alive')]) el.style.display = '';
@@ -866,7 +874,7 @@ if (q.has('height')) window.__sim?.setHeight?.(+q.get('height'));
 if (q.get('alive') === '0') { state.alive = false; $('#alive').classList.remove('on'); }
 if (q.get('demo') === '1') { demo.on = true; paintDemo(); }
 if (q.has('fire')) queueShots(+q.get('fire') || 1);
-if (q.has('light')) { stage.setSceneLight(+q.get('light'), true); setDaylight(+q.get('light')); }
+if (q.has('light')) { if (!state.bench) stage.setSceneLight(+q.get('light'), true); setDaylight(+q.get('light')); }
 if (q.get('fov') === '1') { gun.showFov = true; fovToggle.checked = true; if (state.robot) state.robot.fov.visible = true; }
 // target practice is the default view; ?run=none for the live pose
 const runName = q.get('run') ?? 'targets';
