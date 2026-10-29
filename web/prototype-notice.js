@@ -74,17 +74,19 @@ if (dialog && footer && typeof dialog.showModal === 'function') {
     owners.disconnect();
     const hud = document.getElementById('hud'), fea = document.getElementById('fea');
     const nav = document.querySelector('.appnav'), topbar = document.getElementById('topbar');
-    const fullscreen = !!hud && getComputedStyle(document.body).overflowY === 'hidden';
-    const header = nav || topbar;
+    const fileHost=document.getElementById('file-viewer'), fileNav=fileHost?.querySelector('.file-nav');
+    const fullscreen = !!(hud||fileHost) && getComputedStyle(document.body).overflowY === 'hidden';
+    const header = nav || topbar || fileNav;
     for (const copy of document.querySelectorAll('button.prototype-notice-reopen')) if (copy !== button) copy.remove();
     document.body.dataset.prototypeFullscreen = String(fullscreen);
-    document.body.dataset.prototypeEnhanced = String(fullscreen && !!header);
     if (fullscreen && header) {
       if (button.parentElement !== header) header.insertBefore(button, nav?.querySelector('.menu-toggle') ?? null);
     } else button.remove();
+    // A hidden/unfinished viewer header cannot replace the visible footer notice.
+    document.body.dataset.prototypeEnhanced=String(fullscreen&&button.isConnected&&button.getClientRects().length>0);
     // The ancestor chain detects replacement of a nested FEA host, HUD or header.
     // Direct child-list observation excludes changing text and canvas/scene children.
-    for (const node of [fea, hud, nav, topbar]) {
+    for (const node of [fea, hud, nav, topbar, fileHost, fileNav]) {
       for (let owner = node; owner && owner !== document.body; owner = owner.parentElement) knownOwners.add(owner);
     }
     // Keep connected mount parents through a retry's temporary empty state.

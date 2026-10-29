@@ -5,7 +5,7 @@ import { createHash } from 'node:crypto';
 import { pathToFileURL } from 'node:url';
 import { SITE_CACHE_CONTROL } from './site-cache.mjs';
 const root = path.resolve(import.meta.dirname, '../dist');
-const types = {'.html':'text/html; charset=utf-8','.md':'text/markdown; charset=utf-8','.txt':'text/plain; charset=utf-8','.js':'text/javascript','.mjs':'text/javascript','.css':'text/css','.json':'application/json','.svg':'image/svg+xml','.png':'image/png','.jpg':'image/jpeg','.mp4':'video/mp4','.woff2':'font/woff2','.stl':'application/octet-stream'};
+const types = {'.html':'text/html; charset=utf-8','.md':'text/markdown; charset=utf-8','.txt':'text/plain; charset=utf-8','.js':'text/javascript','.mjs':'text/javascript','.css':'text/css','.json':'application/json','.svg':'image/svg+xml','.png':'image/png','.jpg':'image/jpeg','.mp4':'video/mp4','.woff2':'font/woff2','.stl':'application/octet-stream','.wasm':'application/wasm'};
 const port = Number(process.env.PORT || 8644);
 export function createSiteServer(directory = root) {
 return http.createServer(async (req,res)=>{

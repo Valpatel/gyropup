@@ -14,3 +14,5 @@
 | A model reports ready but disappears or contains non-finite transforms after valid JSON loads | [Loading readiness and report availability](domains/loading-readiness.md) |
 | A viewer's error/retry controls clip off a phone despite hidden page overflow | [Grid tracks and header minimums](inbox/2026-10-29-shrink-grid-tracks-before-truncating-headers.md) |
 | Build thumbnails are missing, show unrelated parts, or disappear after publishing | [Part image identity and provenance](domains/part-images.md) |
+| Part status moves to another row after sorting, retries duplicate controls, or a model preview loses its original download | [Parts retain their identity when their table changes](domains/build-portal.md) |
+| A newly integrated CAD viewer opens but disposal throws or its animation keeps running after removal | [Parts retain their identity when their table changes](domains/build-portal.md) |

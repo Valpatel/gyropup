@@ -3,12 +3,14 @@
 // of every part and its alternate sources), the turret on its bench stand (the same for its parts).
 import { mountAppNav } from './kit/appnav.js';
 import { createLoadingStatus } from './kit/loading.js';
+import { createPortalParts } from './portal-parts.js';
 import { createDataReader, isRecord } from './kit/portal-data.js';
 
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const reader=createDataReader(fetch);
 const getJson=(url,options={})=>reader.json(url,{validate:isRecord,...options});
 const $ = (id) => document.getElementById(id);
+const partsUI=createPortalParts($('progress-tools'));
 const tag = (ok, warn) => `<span class="tag ${ok ? 'pass' : warn ? 'warn' : 'fail'}">${ok ? 'PASS' : warn ? 'CLOSE' : 'FAIL'}</span>`;
 const LEG = '../exports/leg/';
 
@@ -24,8 +26,8 @@ const jointValue = (j, c) => ({ '6201 s0': () => `${j['6201'].load_n} N`, pin: (
 const jointRows = (J) => {
   const worst = {};
   for (const c of J.checks) { const k = `${c.joint}|${c.check}`; if (!worst[k] || c.sf / c.target < worst[k].sf / worst[k].target) worst[k] = c; }
-  return Object.values(worst).map((c) => `<tr><td colspan="3">${esc(JOINT_NAMES[c.joint] || c.joint)}: ${esc(c.check)} (${esc(c.case)})</td><td>${c.sf}</td><td>${c.target}</td>`
-    + `<td>${esc(jointValue(J[c.case][c.joint], c))}</td><td>${tag(c.sf >= c.target, c.sf < c.target && c.sf >= 0.8 * c.target)}</td><td></td></tr>`).join('');
+  return Object.values(worst).map((c) => `<tr><td>${esc(JOINT_NAMES[c.joint]||c.joint)}</td><td>${esc(c.check)} (${esc(c.case)})</td><td>Joint check</td><td data-sort-value="${c.sf}">${c.sf}</td><td data-sort-value="${c.target}">${c.target}</td>`
+    + `<td data-sort-value="">${esc(jointValue(J[c.case][c.joint], c))}</td><td>${tag(c.sf >= c.target, c.sf < c.target && c.sf >= 0.8 * c.target)}</td><td></td></tr>`).join('');
 };
 
 // strength (cad/leg_studies.py)
@@ -55,40 +57,18 @@ const keysOf = (r) => {
   return [];
 };
 const money = (v) => (v != null ? `$${Number(v).toFixed(2)}` : '—');
+// Historical shopping notes store explicit USD text; other formats remain unknown.
+const noteUSD=value=>/^~?\$[\d,]+(?:\.\d+)?$/.test(String(value))?Number(String(value).replace(/[~$,]/g,'')):'';
 const noPic = new Map();                                  // section -> keys without a picture (none, or it failed to load)
-const showMissing = (sec) => {
-  const el = $(`${sec}-nopic`);
-  const ks = [...(noPic.get(sec) || [])];
-  if (el) el.innerHTML = ks.length ? `<span class="tag fail">${ks.length} WITHOUT A PICTURE</span> ${esc(ks.join(', '))}`
-    + ' <span style="color:var(--dim)">(previews pending)</span>' : '';
-};
-const markMissing = (sec, key, now = false) => {
-  if (!noPic.has(sec)) noPic.set(sec, new Set());
-  noPic.get(sec).add(key);
-  if (now) showMissing(sec);
-};
-window.__thumbMissing = (img) => {
-  const a = img.closest('.thumb');
-  a.classList.add('missing');
-  a.removeAttribute('href');
-  a.title = `No picture for ${a.dataset.key} on this machine (bought parts' photos are not in git): preview pending`;
-  markMissing(a.dataset.sec, a.dataset.key, true);
-  img.remove();
-};
-const thumb = (sec, key, label, small = false) => {
-  const im = key ? media.images[key] : null;
-  const cls = `thumb${small ? ' sm' : ''}`;
-  if (im?.kind === 'vendor' && !im.path && /^https?:\/\//.test(im.source_url || '')) {
-    return `<a class="${cls} source" href="${esc(im.source_url)}" aria-label="${esc('View '+(label || key)+' at its supplier')}"><span aria-hidden="true">↗</span>View part</a>`;
-  }
-  if (!im || !im.path) {
-    markMissing(sec, key || label);
-    return `<div class="${cls} missing" title="${esc(`No picture for ${key || label}: preview pending`)}"></div>`;
-  }
-  const href = im.kind === 'render' ? `../${im.path}` : (im.source_url || `../${im.path}`);
-  const tip = im.kind === 'render' ? `${key}: a render of our CAD (${im.source_url})` : `${key}: picture from ${im.seller || ''} ${im.source_url} (${im.fetched})`;
-  return `<a class="${cls}" href="${esc(href)}" title="${esc(tip)}" data-sec="${esc(sec)}" data-key="${esc(key)}">`
-    + `<img src="../${esc(im.path)}" alt="${esc(label || key)}" loading="lazy" onerror="__thumbMissing(this)"></a>`;
+const showMissing=sec=>{const el=$(`${sec}-nopic`),count=noPic.get(sec)?.size||0;if(el)el.textContent=count?`${count} part photos are pending. Supplier and design links remain available.`:'';};
+const markMissing=(sec,key,now=false)=>{if(!noPic.has(sec))noPic.set(sec,new Set());noPic.get(sec).add(key);if(now)showMissing(sec);};
+window.__thumbMissing=img=>{const a=img.closest('.thumb');markMissing(a.dataset.sec,a.dataset.key,true);a.classList.add('source');a.textContent='View source ↗';};
+const thumb=(sec,key,label,small=false)=>{
+ const scope=['print','buy'].includes(sec)?'leg':sec.startsWith('turret')?'turret':sec;
+ key=media.images[`${scope}/${key}`]?`${scope}/${key}`:key;
+ const im=media.images[key],src=im?.path?'../'+im.path:im?.verification?.status==='verified'?im.image_url:null,source=im?.source_url,href=source?(/^(?:[a-z]+:|\/)/i.test(source)?source:'../'+source):(im?.path?'../'+im.path:null),cls=`thumb${small?' sm':''}`;
+ if(!src){markMissing(sec,key||label);return href?`<a class="${cls} source" href="${esc(href)}">View source ↗</a>`:`<span class="${cls} unavailable">Photo pending</span>`;}
+ return `<a class="${cls}" href="${esc(href||src)}" data-sec="${esc(sec)}" data-key="${esc(key)}" title="${esc(im.kind==='render'?'Rendered from the published CAD':'Product image · '+(im.seller||'supplier'))}"><img src="${esc(src)}" alt="${esc(label||key)}" loading="lazy" onerror="__thumbMissing(this)"></a>`;
 };
 const partRef = (key, row = {}) => {
   const it = media.items[key] || {};
@@ -122,44 +102,34 @@ const riskTag = (key) => {
   const [cls, label] = RISK[rk.level] || ['warn', String(rk.level || 'NOTE').toUpperCase()];
   return `<div class="risk"><span class="tag ${cls}">${label}</span> ${esc(rk.note)}${rk.checked ? ` <span class="chk">(${esc(rk.checked)})</span>` : ''}</div>`;
 };
-const partRow = (sec, r) => {
-  const keys = keysOf(r);
-  const k = keys[0];
-  const it = media.items[k] || {};
-  const name = r.name || it.name || (it.vendor && it.model ? `${it.vendor} ${it.model}` : null) || r.item || r.key || '?';
-  const each = r.price_usd_each != null ? r.price_usd_each : it.price_usd;
-  const also = keys.slice(1).map((x) => `<div class="also"><b style="font:600 12px var(--font-ui)">+ ${esc((media.items[x] || {}).name || x)}</b><br>${partRef(x)}</div>`).join('');
-  return `<div class="prow"><div class="t thumbs">${keys.length ? keys.map((x, i) => thumb(sec, x, x, i > 0)).join('') : thumb(sec, null, r.item || r.key)}</div>`
-    + `<div class="m"><b>${esc(name)}</b><span class="key">${esc(keys.join(' + ') || 'no catalogue key')}</span><div class="for">${esc(r.for || '')}</div>`
-      + `${keys.map(riskTag).join('')}</div>`
-    + `<div class="p">${k ? partRef(k, r) : '<span class="tag warn">TO SOURCE</span>'}${also}</div>`
-    + `<div class="q">${esc(r.qty)}</div>`
-    + `<div class="c">${each != null ? money(each) : (it.pending && it.price_note ? `<small title="${esc(it.price_note)}">${esc(it.price_note.replace(/^[^:]*:\s*/, '').slice(0, 40))}</small>` : '—')}`
-      + `${each != null && r.qty > 1 ? `<small>${money(each * r.qty)}</small>` : ''}</div>`
-    + `<div class="a">${keys.length ? keys.map((x) => (keys.length > 1 ? `<div class="key">${esc(x)}</div>` : '') + altList(x)).join('') : '<span class="tag fail">NO KEY</span>'}</div></div>`;
+const partRow=(sec,r)=>{
+ const keys=keysOf(r),k=keys[0],it=media.items[k]||{},name=r.name||it.name||r.item||r.key||'Part',each=r.price_usd_each??it.price_usd;
+ return `<tr data-part-key="buy/${esc(r.identity)}" data-part-label="${esc(name)}"><td>${keys.length?keys.map(x=>thumb(sec,x,name,true)).join(''):thumb(sec,null,name)}</td><td class="part-main"><b>${esc(name)}</b><details><summary>Uses and sourcing notes</summary>${esc(r.for||'')}${keys.map(riskTag).join('')}</details></td><td>${keys.length?keys.map(x=>partRef(x,r)).join('<br>'):'Source pending'}</td><td data-sort-value="${Number.isFinite(r.qty)?r.qty:''}">${esc(r.qty)}</td><td data-sort-value="${each??''}">${money(each)}${each!=null&&r.qty>1?`<small>${money(each*r.qty)} for this line</small>`:''}</td><td>${keys.map(altList).join('')||'No alternate recorded'}</td></tr>`;
 };
-const partList = (sec, rows) => `<div class="mediasum" id="${sec}-nopic"></div><div class="plist"><div class="prow head"><div class="t">picture</div><div class="m">part</div>`
-  + '<div class="p">part number</div><div class="q">qty</div><div class="c">each / line</div><div class="a">alternates (click)</div></div>'
-  + rows.map((r) => partRow(sec, r)).join('') + '</div>';
+const partList=(sec,rows)=>{
+ const grouped=new Map();
+ for(const r of rows){const identity=keysOf(r).join('+')||`${sec}/${r.key||r.item||r.name}`;if(grouped.has(identity)){const existing=grouped.get(identity);existing.qty+=r.qty;existing.for=[existing.for,r.for].filter(Boolean).join('; ');}else grouped.set(identity,{...r,identity});}
+ return `<div class="mediasum" id="${sec}-nopic"></div><table class="cmp" data-track="buy" data-label="${sec==='buy'?'Leg parts':'Turret parts'}"><thead><tr><th>Picture</th><th>Part</th><th>Supplier part number</th><th>Quantity</th><th>Unit price</th><th>Alternates</th></tr></thead><tbody>${[...grouped.values()].map(r=>partRow(sec,r)).join('')}</tbody></table>`;
+};
 const coverage = (rows) => {
   const keys = [...new Set(rows.flatMap(keysOf))];
-  const pics = keys.filter((k) => (media.images[k] || {}).path).length;
+  const pics = keys.filter(k=>media.images[k]?.path||media.images[k]?.verification?.status==='verified').length;
   const alts = keys.filter((k) => (media.alternates[k] || []).length).length;
   const noKey = rows.filter((r) => !keysOf(r).length).length;
   const hard = keys.filter((k) => ((media.sourcing.risk || {})[k] || {}).level === 'high');
   return `${keys.length} different parts: <b>${pics}</b> with a picture, <b>${alts}</b> with an alternate source`
     + `${noKey ? `, <span class="tag fail">${noKey} WITHOUT A CATALOGUE KEY</span>` : ''}.`
-    + `${hard.length ? ` <span class="tag fail">${hard.length} HARD TO BUY</span> ${esc(hard.join(', '))}.` : ''}`;
+    + `${hard.length ? ` <span class="tag fail">${hard.length} HARD TO BUY</span> Check their sourcing notes.` : ''}`;
 };
 
 // what to print and what to buy (cad/build_leg.py)
 // parts machined to order from our STEP at an instant price (D40, D46): cad/build_leg.py -> exports/leg/cnc/
 const madeToOrder = (rows) => (!rows || !rows.length ? '' : `<h3 style="margin-top:22px">Machined to order</h3>`
   + '<p class="lede">Upload the STEP for the instant price and enter the callouts (threads, fits, tolerances) the order form asks for; the callouts page doubles as the drawing.</p>'
-  + '<table class="cmp"><thead><tr><th></th><th>part</th><th>material</th><th>qty</th><th>g each</th><th>order from</th><th>each</th></tr></thead><tbody>'
-  + rows.map((r) => `<tr><td class="th">${thumb('buy', r.key, r.key, true)}</td><td><a href="../${esc(r.step)}">${esc(r.key)}.step</a> · <a href="../exports/leg/cnc/README.md">callouts</a></td>`
-    + `<td>${esc(r.material)}</td><td>${r.qty}</td><td>${r.mass_g_each}</td><td>${esc(r.vendor)}<br><span style="color:var(--muted)">backup ${esc(r.backup)}</span></td>`
-    + `<td>${r.price_usd_each != null ? money(r.price_usd_each) : `<span title="${esc(r.price_note)}">~${money(r.price_estimate_usd_each)} (estimate)</span>`}</td></tr>`).join('')
+  + '<table class="cmp" data-track="buy" data-label="Leg made parts"><thead><tr><th>Picture</th><th>Part</th><th>Material</th><th>Quantity</th><th>Grams each</th><th>Supplier</th><th>Unit price</th></tr></thead><tbody>'
+  + rows.map((r) => `<tr data-part-key="made/leg/${esc(r.key)}" data-part-label="${esc(r.key)}"><td class="th">${thumb('buy', r.key, r.key, true)}</td><td><a href="../${esc(r.step)}">${esc(r.key)}.step</a> · <a href="../exports/leg/cnc/README.md">callouts</a></td>`
+    + `<td>${esc(r.material)}</td><td data-sort-value="${r.qty}">${r.qty}</td><td data-sort-value="${r.mass_g_each}">${r.mass_g_each}</td><td>${esc(r.vendor)}<br><span style="color:var(--muted)">backup ${esc(r.backup)}</span></td>`
+    + `<td data-sort-value="${r.price_usd_each??r.price_estimate_usd_each??''}">${r.price_usd_each != null ? money(r.price_usd_each) : `<span title="${esc(r.price_note)}">~${money(r.price_estimate_usd_each)} (estimate)</span>`}</td></tr>`).join('')
   + '</tbody></table>');
 // the turret on its bench stand (cad/build_turret.py)
 const TB = '../exports/turret/bench/';
@@ -195,9 +165,9 @@ if (prog) {
   $('status').innerHTML = (prog.status || []).map((s) => `<div class="card"><b>${esc(s.title)}</b><div class="k">${esc(s.value)}</div><span>${esc(s.note || '')}</span></div>`).join('');
   $('log').innerHTML = (prog.log || []).slice().reverse().map((e) => `<li><time>${esc(e.time)}</time><b>${esc(e.title)}</b><p>${esc(e.text)}`
     + `${(e.links || []).map((l) => ` <a href="${esc(l.href)}">${esc(l.title)}</a>`).join(' ·')}</p></li>`).join('');
-  $('shop').innerHTML = prog.shopping ? `<table class="cmp"><thead><tr><th>item</th><th>qty</th><th>each</th><th>total</th><th>notes</th></tr></thead><tbody>`
-    + prog.shopping.items.map((i) => `<tr><td>${i.href ? `<a href="${esc(i.href)}">${esc(i.item)}</a>` : esc(i.item)}</td><td>${esc(i.qty)}</td><td>${esc(i.each)}</td><td>${esc(i.total)}</td><td>${esc(i.notes)}</td></tr>`).join('')
-    + `</tbody></table><p class="lede">${esc(prog.shopping.note || '')}</p>` : '';
+  partsUI.replace($('shop'), prog.shopping ? `<table class="cmp" data-label="Motor order notes"><thead><tr><th>item</th><th>qty</th><th>each</th><th>total</th><th>notes</th></tr></thead><tbody>`
+    + prog.shopping.items.map((i) => `<tr><td>${i.href ? `<a href="${esc(i.href)}">${esc(i.item)}</a>` : esc(i.item)}</td><td data-sort-value="${/^\d+$/.test(String(i.qty))?Number(i.qty):''}">${esc(i.qty)}</td><td data-sort-value="${noteUSD(i.each)}">${esc(i.each)}</td><td data-sort-value="${noteUSD(i.total)}">${esc(i.total)}</td><td>${esc(i.notes)}</td></tr>`).join('')
+    + `</tbody></table><p class="lede">${esc(prog.shopping.note || '')}</p>` : '');
 }
 
 
@@ -233,12 +203,12 @@ if (rig) {
   // the joints' real forces and the gearbox torque come from every step of the simulation; statics on the axle's peak
   // force (in grey) overstates a landing's knee load about twice: the links' and the body's inertia take the spike
   const jf = (r) => (r.peak_joint_force_n ? Math.round(Math.max(r.peak_joint_force_n.knee_f, r.peak_joint_force_n.knee_r)) : null);
-  $('rigtable').innerHTML = `<table class="cmp"><thead><tr><th>scenario</th><th>motor peak</th><th>gearbox</th><th>wheel force</th><th>knee pin</th><th>stop</th><th>leg range</th><th>jump</th></tr></thead><tbody>`
-    + Object.values(S).map((r) => `<tr><td><b>${esc(r.scenario)}</b><br><span style="color:var(--muted)">${esc(r.title)}</span></td><td>${r.peak_motor_nm} N·m</td>`
-      + `<td>${r.peak_gearbox_nm != null ? `${r.peak_gearbox_nm} N·m ${tag(r.peak_gearbox_nm <= rig.model.leg_peak_nm)}` : '—'}</td><td>${r.peak_wheel_force_n} N</td>`
-      + `<td>${jf(r) != null ? `${jf(r)} N <span style="color:var(--muted)">(statics ${Math.round(r.peak_knee_pin_n)})</span>` : `${r.peak_knee_pin_n} N`}</td>`
-      + `<td>${r.peak_stop_nm} N·m</td><td>${r.L_range_mm.join('-')} mm</td><td>${r.jump_height_mm != null ? r.jump_height_mm + ' mm' : '—'}</td></tr>`).join('')
-    + '</tbody></table>';
+  partsUI.replace($('rigtable'), `<table class="cmp" data-label="Leg test results"><thead><tr><th>scenario</th><th>motor peak</th><th>gearbox</th><th>wheel force</th><th>knee pin</th><th>stop</th><th>leg range</th><th>jump</th></tr></thead><tbody>`
+    + Object.values(S).map((r) => `<tr><td><b>${esc(r.scenario)}</b><br><span style="color:var(--muted)">${esc(r.title)}</span></td><td data-sort-value="${r.peak_motor_nm??''}">${r.peak_motor_nm} N·m</td>`
+      + `<td data-sort-value="${r.peak_gearbox_nm??''}">${r.peak_gearbox_nm != null ? `${r.peak_gearbox_nm} N·m ${tag(r.peak_gearbox_nm <= rig.model.leg_peak_nm)}` : '—'}</td><td data-sort-value="${r.peak_wheel_force_n??''}">${r.peak_wheel_force_n} N</td>`
+      + `<td data-sort-value="${jf(r)??r.peak_knee_pin_n??''}">${jf(r) != null ? `${jf(r)} N <span style="color:var(--muted)">(statics ${Math.round(r.peak_knee_pin_n)})</span>` : `${r.peak_knee_pin_n} N`}</td>`
+      + `<td data-sort-value="${r.peak_stop_nm??''}">${r.peak_stop_nm} N·m</td><td>${r.L_range_mm.join('-')} mm</td><td data-sort-value="${r.jump_height_mm??''}">${r.jump_height_mm != null ? r.jump_height_mm + ' mm' : '—'}</td></tr>`).join('')
+    + '</tbody></table>');
   $('rig').innerHTML = Object.values(S).map((r) => `<figure><video src="${LEG}rig_${esc(r.scenario)}.mp4" controls loop muted playsinline preload="metadata"></video>`
     + `<figcaption><b>${esc(r.scenario)}</b> ${esc(r.title)}</figcaption></figure>`).join('');
 }
@@ -253,13 +223,13 @@ if (fea) {
   const rows = fea.results.map((r) => ({ r, ok: r.safety_factor >= r.target, warn: r.safety_factor < r.target && r.safety_factor >= 0.8 * r.target }));
   const viewerHref = (r) => (r.viewer ? `kit/fea.html?case=${encodeURIComponent(`../../${r.viewer}`)}&title=${encodeURIComponent(`${r.part} ${r.case}`)}&current=progress` : null);
   const b = fea.front_link_buckling;
-  $('fea').innerHTML = `<table class="cmp"><thead><tr><th>part</th><th>case</th><th>material</th><th>SF</th><th>need</th><th>deflection</th><th></th><th>3D</th></tr></thead><tbody>`
+  partsUI.replace($('fea'), `<table class="cmp" data-label="Structural reports"><thead><tr><th>part</th><th>case</th><th>material</th><th>SF</th><th>need</th><th>deflection</th><th></th><th>3D</th></tr></thead><tbody>`
     + rows.map(({ r, ok, warn }, i) => `<tr class="click" data-i="${i}"><td>${esc(r.part)}</td><td>${esc(r.case)}</td><td>${esc(r.material)}</td>`
-      + `<td>${r.safety_factor}</td><td>${r.target}</td><td>${r.probe_displacement_mm ? Math.hypot(...r.probe_displacement_mm).toFixed(2) : '—'} mm</td><td>${tag(ok, warn)}</td>`
+      + `<td data-sort-value="${r.safety_factor??''}">${r.safety_factor}</td><td data-sort-value="${r.target??''}">${r.target}</td><td data-sort-value="${r.probe_displacement_mm?Math.hypot(...r.probe_displacement_mm):''}">${r.probe_displacement_mm ? Math.hypot(...r.probe_displacement_mm).toFixed(2) : '—'} mm</td><td>${tag(ok, warn)}</td>`
       + `<td>${viewerHref(r) ? `<a class="open3d" href="${esc(viewerHref(r))}" title="Interactive: load slider, hot spots, section cut">open ↗</a>` : '—'}</td></tr>`).join('')
-    + (b ? `<tr><td colspan="3">front lower link, buckling (${esc(b.note)})</td><td>${b.sf}</td><td>3</td><td>${b.P_cr_n} N</td><td>${tag(b.sf >= 3)}</td><td></td></tr>` : '')
+    + (b ? `<tr><td>front lower link</td><td>buckling (${esc(b.note)})</td><td>Structural check</td><td data-sort-value="${b.sf}">${b.sf}</td><td data-sort-value="3">3</td><td data-sort-value="">${b.P_cr_n} N</td><td>${tag(b.sf >= 3)}</td><td></td></tr>` : '')
     + (fea.joints && fea.joints.checks ? jointRows(fea.joints) : '')
-    + '</tbody></table>';
+    + '</tbody></table>');
   const show = (i) => {
     const r = rows[i].r;
     if (r.animation) { $('feavid').src = `../${r.animation}`; $('feavid').play().catch(() => {}); }
@@ -285,9 +255,9 @@ if (pp) {
   const bm = Object.entries(pp.by_material).map(([m, t]) => `${m}: ${(t.grams / 1000).toFixed(2)} kg, ~${Math.round(t.hours)} h, $${Math.round(t.cost_usd)}`).join(' · ');
   $('printlede').innerHTML = `${pp.too_big.length ? `<b class="tag fail">TOO BIG: ${esc(pp.too_big.join(', '))}</b> ` : 'Every part fits the 256 mm bed. '}`
     + `One leg: ~<b>${Math.round(pp.total_hours)} h</b> of printing (${esc(bm)}). Hours are rough.`;
-  $('print').innerHTML = `<div class="mediasum" id="print-nopic"></div><table class="cmp"><thead><tr><th></th><th>part</th><th>material</th><th>qty</th><th>size on the bed</th><th>placement</th><th>g each</th><th>hours (all)</th><th>infill</th><th>how</th></tr></thead><tbody>`
-    + Object.entries(pp.parts).sort((a, b) => b[1].hours - a[1].hours).map(([n, r]) => `<tr><td class="th">${thumb('print', n, n, true)}</td><td><a href="${LEG}${esc(n)}.stl">${esc(n)}</a></td><td>${esc(r.material)}</td><td>${r.qty}</td>`
-      + `<td>${r.size_mm.join(' × ')}</td><td>${esc(r.placement)}</td><td>${r.grams_each}</td><td>${r.hours}</td><td>${esc(r.infill)}</td><td>${esc(r.how)}</td></tr>`).join('') + '</tbody></table>';
+  partsUI.replace($('print'), `<div class="mediasum" id="print-nopic"></div><table class="cmp" data-track="print" data-label="Leg print queue"><thead><tr><th></th><th>part</th><th>material</th><th>qty</th><th>size on the bed</th><th>placement</th><th>g each</th><th>hours (all)</th><th>infill</th><th>how</th></tr></thead><tbody>`
+    + Object.entries(pp.parts).sort((a, b) => b[1].hours - a[1].hours).map(([n, r]) => `<tr data-part-key="print/leg/${esc(n)}" data-part-label="${esc(n)}"><td class="th">${thumb('print', n, n, true)}</td><td><a href="${LEG}${esc(n)}.stl">${esc(n)}</a></td><td>${esc(r.material)}</td><td data-sort-value="${r.qty??''}">${r.qty}</td>`
+      + `<td>${r.size_mm.join(' × ')}</td><td>${esc(r.placement)}</td><td data-sort-value="${r.grams_each??''}">${r.grams_each}</td><td data-sort-value="${r.hours??''}">${r.hours}</td><td>${esc(r.infill)}</td><td>${esc(r.how)}</td></tr>`).join('') + '</tbody></table>');
   showMissing('print');
 }
 
@@ -304,7 +274,7 @@ if (bom) {
     + (mto.length ? `, plus about <b>$${Math.round(bom.made_to_order_estimate_usd_per_leg)}</b> machined to order (below)` : '') + `. ${coverage(bom.per_leg)}`
     + (bom.to_source.length ? ` <span class="tag warn">TO SOURCE</span> ${esc(bom.to_source.join(', '))}` : ' Every part has a part number.')
     + ' Click a picture for the page it came from; open <b>alternates</b> for other places to buy each part and what would change.';
-  $('buy').innerHTML = partList('buy', bom.per_leg) + madeToOrder(mto);
+  partsUI.replace($('buy'), partList('buy', bom.per_leg) + madeToOrder(mto));
   showMissing('buy');
 }
 
@@ -345,7 +315,7 @@ if (tbom) {
   $('turretbuylede').innerHTML = `About <b>$${Math.round(tbom.price_usd_known)}</b> for what has a price. ${coverage(all)}`
     + (drawn.length ? ` <span class="tag warn">DRAWN, NOT ON THE LIST</span> ${esc(drawn.join(', '))}.` : '')
     + (tbom.note ? ` ${esc(tbom.note.charAt(0).toUpperCase() + tbom.note.slice(1))}.` : '');
-  $('turretbuy').innerHTML = partList('turretbuy', all);
+  partsUI.replace($('turretbuy'), partList('turretbuy', all));
   showMissing('turretbuy');
 }
 
@@ -358,9 +328,9 @@ if (tpp) {
   await loadMedia();
   if(!isCurrent())return false;
   $('turretprintlede').innerHTML = `${Object.keys(tpp.parts).length} printed parts for the turret and its stand, ~<b>${Math.round(tpp.total_hours)} h</b> of printing. Hours are rough.`;
-  $('turretprint').innerHTML = `<div class="mediasum" id="turretprint-nopic"></div><table class="cmp"><thead><tr><th></th><th>part</th><th>material</th><th>qty</th><th>size on the bed</th><th>g each</th><th>hours (all)</th><th>how</th></tr></thead><tbody>`
-    + Object.entries(tpp.parts).map(([n, r]) => `<tr><td class="th">${thumb('turretprint', n, n, true)}</td><td>${esc(n)}</td><td>${esc(r.material)}</td><td>${r.qty}</td>`
-      + `<td>${(r.size_mm || []).join(' × ')}</td><td>${r.grams_each}</td><td>${r.hours}</td><td>${esc(r.how)}</td></tr>`).join('') + '</tbody></table>';
+  partsUI.replace($('turretprint'), `<div class="mediasum" id="turretprint-nopic"></div><table class="cmp" data-track="print" data-label="Turret print queue"><thead><tr><th></th><th>part</th><th>material</th><th>qty</th><th>size on the bed</th><th>g each</th><th>hours (all)</th><th>how</th></tr></thead><tbody>`
+    + Object.entries(tpp.parts).map(([n, r]) => `<tr data-part-key="print/turret/${esc(n)}" data-part-label="${esc(n)}"><td class="th">${thumb('turretprint', n, n, true)}</td><td>${esc(n)}</td><td>${esc(r.material)}</td><td data-sort-value="${r.qty??''}">${r.qty}</td>`
+      + `<td>${(r.size_mm || []).join(' × ')}</td><td data-sort-value="${r.grams_each??''}">${r.grams_each}</td><td data-sort-value="${r.hours??''}">${r.hours}</td><td>${esc(r.how)}</td></tr>`).join('') + '</tbody></table>');
   showMissing('turretprint');
 }
 

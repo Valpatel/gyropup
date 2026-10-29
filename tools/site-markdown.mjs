@@ -5,6 +5,7 @@ import { createHash } from 'node:crypto';
 import { parseHTML } from 'linkedom';
 import TurndownService from 'turndown';
 import { gfm } from 'turndown-plugin-gfm';
+import { addModelPreviews } from '../web/model-links.js';
 
 const origin = 'https://gyropup.com';
 const digest = value => createHash('sha256').update(value).digest('hex');
@@ -25,7 +26,7 @@ export async function renderPortal(html, file, out) {
   const { document, window } = parseHTML(html);
   const source = await readFile(path.join(out, script.file), 'utf8');
   const imports = source.match(/^import .*$/gm) || [];
-  const expectedImports = ["import { mountAppNav } from './kit/appnav.js';", "import { createLoadingStatus } from './kit/loading.js';",
+  const expectedImports = ["import { mountAppNav } from './kit/appnav.js';", "import { createLoadingStatus } from './kit/loading.js';", "import { createPortalParts } from './portal-parts.js';",
     file === 'designer/build.html' ? "import { createDataReader, isRecord, isMarkdown } from './kit/portal-data.js';"
       : "import { createDataReader, isRecord } from './kit/portal-data.js';"];
   if (imports.length !== expectedImports.length || imports.some((line,i)=>line!==expectedImports[i])) {
@@ -62,11 +63,13 @@ export async function renderPortal(html, file, out) {
     statuses.push(api);return api;
   };
   const AsyncFunction = Object.getPrototypeOf(async function () {}).constructor;
-  await new AsyncFunction('document','window','fetch','mountAppNav','createLoadingStatus','createDataReader','isRecord','isMarkdown',
-    imports.reduce((body,line)=>body.replace(line,''),source))(document,window,fetch,async()=>{},createLoadingStatus,dataAPI.createDataReader,dataAPI.isRecord,dataAPI.isMarkdown);
+  await new AsyncFunction('document','window','fetch','mountAppNav','createLoadingStatus','createDataReader','isRecord','isMarkdown','createPortalParts',
+    imports.reduce((body,line)=>body.replace(line,''),source))(document,window,fetch,async()=>{},createLoadingStatus,dataAPI.createDataReader,dataAPI.isRecord,dataAPI.isMarkdown,()=>({dispose(){},enhance(){},replace(host,html){host.innerHTML=html;}}));
   if (!document.querySelector(script.ready)) throw new Error(`Empty Markdown data snapshot: ${file}`);
   const errors=statuses.filter(status=>status.element.dataset.state==='error');
   if(errors.length)throw new Error(`Incomplete Markdown data snapshot: ${file}: ${errors.map(status=>status.element.textContent).join('; ')}`);
+  const inventory=JSON.parse(await readFile(path.join(out,'site/models.json'),'utf8'));
+  addModelPreviews(document,{base:origin+'/'+file,published:new Set(inventory.files.map(file=>file.path))});
   return document.toString();
 }
 

@@ -14,6 +14,7 @@
 // lead time or seller.
 import { mountAppNav } from './kit/appnav.js';
 import { createLoadingStatus } from './kit/loading.js';
+import { createPortalParts } from './portal-parts.js';
 import { createDataReader, isRecord, isMarkdown } from './kit/portal-data.js';
 
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -23,6 +24,8 @@ const getText=(url,options={})=>dataReader.text(url,{validate:isMarkdown,...opti
 const validBOM=value=>isRecord(value)&&Object.values(value).some(Array.isArray);
 const validPrint=value=>isRecord(value)&&isRecord(value.parts)&&isRecord(value.by_material)&&Number.isFinite(value.total_hours);
 const $ = (id) => document.getElementById(id);
+const partsUI=createPortalParts($('progress-tools'));
+$('progress-tools').insertAdjacentHTML('beforeend','<p class="media-note">Checklist boxes track parts, not purchased quantities. Required quantities continue to follow the selected design.</p>');
 const R = '../';                                            // the project root, from designer/
 const round2 = (v) => Math.round(v * 100) / 100;            // cents: each line, then each seller, then the total
 const sum = (xs) => xs.reduce((a, b) => a + b, 0);
@@ -165,31 +168,16 @@ const dayRow = (name) => {
 // ------------------------------------------------------------------------------------------------ pictures
 let noPic = new Set();
 window.__thumbMissing = (img) => {
-  const a = img.closest('.thumb');
-  a.classList.add('missing');
-  a.removeAttribute('href');
-  a.title = `No picture for ${a.dataset.key} on this machine (bought parts' photos are not in git): preview pending`;
-  noPic.add(a.dataset.key);
-  const el = $('nopic');
-  if (el) el.innerHTML = noPicNote();
-  img.remove();
+  const a=img.closest('.thumb');a.classList.add('source');a.textContent=a.hasAttribute('href')?'View source ↗':'Photo unavailable';
+  noPic.add(a.dataset.key);const el=$('nopic');if(el)el.innerHTML=noPicNote();
 };
-const noPicNote = () => (noPic.size ? `<span class="tag fail">${noPic.size} WITHOUT A PICTURE</span> <span class="dim small">${esc([...noPic].join(', '))}`
-  + ' (previews pending)</span>' : '');
-const thumb = (key, label, small = false) => {
-  const im = key ? media.images[key] : null;
-  const cls = `thumb${small ? ' sm' : ''}`;
-  if (im?.kind === 'vendor' && !im.path && /^https?:\/\//.test(im.source_url || '')) {
-    return `<a class="${cls} source" href="${esc(im.source_url)}" aria-label="${esc('View '+(label || key)+' at its supplier')}"><span aria-hidden="true">↗</span>View part</a>`;
-  }
-  if (!im || !im.path) {
-    noPic.add(key || label);
-    return `<div class="${cls} missing" title="${esc(`No picture for ${key || label}: preview pending`)}"></div>`;
-  }
-  const href = im.kind === 'render' ? `${R}${im.path}` : (im.source_url || `${R}${im.path}`);
-  const tip = im.kind === 'render' ? `${key}: a render of our CAD` : `${key}: picture from ${im.seller || ''} ${im.source_url || ''} (${im.fetched || ''})`;
-  return `<a class="${cls}" href="${esc(href)}" title="${esc(tip)}" data-key="${esc(key)}">`
-    + `<img src="${R}${esc(im.path)}" alt="${esc(label || key)}" loading="lazy" onerror="__thumbMissing(this)"></a>`;
+const noPicNote=()=>noPic.size?`<p class="media-note">${noPic.size} part photos are pending. Available supplier and design links remain beside each part.</p>`:'';
+const imageKey=(key,stream)=>stream&&media.images[`${stream}/${key}`]?`${stream}/${key}`:key;
+const thumb=(key,label,small=false)=>{
+  const im=media.images[key],src=im?.path?R+im.path:im?.verification?.status==='verified'?im.image_url:null;
+  const source=im?.source_url,href=source?(/^(?:[a-z]+:|\/)/i.test(source)?source:R+source):(im?.path?R+im.path:null),cls=`thumb${small?' sm':''}`;
+  if(!src){noPic.add(key||label);return href?`<a class="${cls} source" href="${esc(href)}">View source ↗</a>`:`<span class="${cls} unavailable">Photo pending</span>`;}
+  return `<a class="${cls}" href="${esc(href||src)}" data-key="${esc(key)}" title="${esc(im.kind==='render'?'Rendered from the published CAD':'Product image · '+(im.seller||'supplier'))}"><img src="${esc(src)}" alt="${esc(label||key)}" loading="lazy" onerror="__thumbMissing(this)"></a>`;
 };
 
 // ------------------------------------------------------------------------------------------------ the lines to buy
@@ -476,16 +464,16 @@ const mainCell = (l) => {
   // a "cheaper option" note is moot once a plan buys the cheaper option
   const risk = s.via === 'plan' && l.risk && l.risk.level === 'cost' ? '' : riskTag(l.risk);
   return `<b>${esc(s.via === 'plan' ? `${s.pn} (${s.seller})` : l.name)}</b><span class="key">${esc(l.filament ? l.material : l.key)}</span>`
-    + `<div class="for">${forText(l)}</div>${plan}${flags ? `<div class="flags">${flags}</div>` : ''}${risk}`;
+    + `<details><summary>Uses and sourcing notes</summary><div class="for">${forText(l)}</div>${plan}${flags ? `<div class="flags">${flags}</div>` : ''}${risk}</details>`;
 };
-const orderRow = (l) => `<div class="orow" data-key="${esc(l.key)}" data-order="${l.order ?? ''}">`
-  + `<div class="t">${thumb(l.filament ? null : l.key, l.name)}</div><div class="m">${mainCell(l)}</div><div class="p">${pnCell(l)}</div>`
-  + `<div class="stats"><div class="q">${qtyCell(l)}</div><div class="u">${unitCell(l)}</div><div class="l">${lineCell(l)}</div></div>`
-  + `<div class="a">${l.filament ? '<span class="dim small">any brand of the same material</span>' : altList(l)}</div></div>`;
-const ORDER_HEAD = '<div class="orow head"><div class="t">picture</div><div class="m">part (and what it is for)</div><div class="p">part number, seller</div>'
-  + '<div class="q">qty</div><div class="u">each</div><div class="l">line</div><div class="a">alternates (click)</div></div>';
+const orderRow = (l) => `<tr data-key="${esc(l.key)}" data-part-key="${esc(l.filament?'material/'+l.material:'buy/'+l.key)}" data-part-label="${esc(l.name)}" data-order="${l.order??''}">`
+  + `<td>${thumb(l.filament?l.material:l.key,l.name)}</td><td class="part-main">${mainCell(l)}</td><td>${pnCell(l)}</td>`
+  + `<td data-sort-value="${l.need}">${qtyCell(l)}</td><td data-sort-value="${l.s.each??''}">${unitCell(l)}</td><td data-sort-value="${l.order??''}">${lineCell(l)}</td>`
+  + `<td>${l.filament?'Use the material specified by the print plan.':altList(l)}</td></tr>`;
+const ORDER_HEAD='<thead><tr><th>Picture</th><th>Part</th><th>Supplier part number</th><th>Quantity needed</th><th>Unit price</th><th>Order cost</th><th>Alternates</th></tr></thead>';
 
 const render = () => {
+  partsUI.dispose(document.querySelector('main'));
   noPic = new Set();
   const { lines: bought, made } = collect(included);
   const fil = filamentLines(included);
@@ -502,15 +490,11 @@ const render = () => {
   const grams = sum(prints.mats.map((m) => m.grams));
   const sellers = groups.filter((g) => !g.none).length;
 
-  // the one-line summary
-  $('summary').innerHTML = `${STREAMS.some(s=>!s.complete)?'Published-data subtotal (unpublished workstreams excluded)':'To order'}: <b id="sum-total" data-usd="${total}">${usd(total)}</b> from <b>${sellers}</b> sellers`
-    + ` (<b>${lines.length}</b> lines, whole packs and spools)`
-    + `${!madeRows.length ? '' : madeUnpriced.length === madeRows.length
-      ? ` + <b id="sum-made" data-usd="0">${plural(madeRows.length, 'part')}</b> machined or cut to order (not priced yet)`
-      : ` + <b id="sum-made" data-usd="${madeEst}">~${usd(madeEst)}</b> machined or cut to order (estimate)`}`
-    + ` · <b id="sum-hours" data-h="${hours.toFixed(1)}">~${hours.toFixed(1)} h</b> of printing (${kg(grams)} kg)`
-    + ` · <b id="sum-unpriced" data-n="${unpricedBought.length + madeUnpriced.length}">${unpricedBought.length + madeUnpriced.length}</b>`
-    + ` ${unpricedBought.length + madeUnpriced.length === 1 ? 'line' : 'lines'} still without a price.`;
+  $('summary').innerHTML=`<p class="portal-summary-note">${STREAMS.some(s=>!s.complete)?'Published-data subtotal · incomplete workstreams excluded':'Included prototype workstreams'}</p><div class="summary-grid">`
+    +`<div><small>Parts and filament</small><b id="sum-total" data-usd="${total}">${usd(total)}</b><p>${lines.length} lines · ${sellers} sellers · whole packs</p></div>`
+    +`<div><small>Made to order · estimate</small><b id="sum-made" data-usd="${madeEst}">${madeRows.length?`~${usd(madeEst)}`:'—'}</b><p>${madeRows.length} custom parts</p></div>`
+    +`<div><small>Printing · estimate</small><b id="sum-hours" data-h="${hours.toFixed(1)}">${hours.toFixed(1)} h</b><p>${kg(grams)} kg of material</p></div>`
+    +`<div><small>Prices to confirm</small><b id="sum-unpriced" data-n="${unpricedBought.length+madeUnpriced.length}">${unpricedBought.length+madeUnpriced.length}</b><p>Unpriced lines excluded from totals</p></div></div>`;
 
   // the workstreams
   $('streams').innerHTML = STREAMS.map((s) => {
@@ -529,7 +513,7 @@ const render = () => {
     return `<div class="card stream${included.has(s.id) ? '' : ' off'}"><b>${esc(s.title)}</b><span class="tag ${s.complete?'pass':'warn'}">${s.complete?'FROM THE DATA':'PARTIAL EXPORT · EXCLUDED'}</span>`
       + `<p>${esc(s.about)} Plan: ${planLink}.</p>`
       + `<p>${s.plans.length ? `${plural(nParts, 'printed part')}, ~${ph.toFixed(1)} h. ` : 'No print plan yet. '}${esc(own)}${own ? '.' : ''}</p>`
-      + `<ul class="files">${files}</ul>`
+      + `<details><summary>Published source files</summary><ul class="files">${files}</ul></details>`
       + `<label class="inc"><input type="checkbox" data-stream="${esc(s.id)}"${s.complete?'':' disabled'}${included.has(s.id) ? ' checked' : ''}> include in the lists and totals</label></div>`;
   }).join('');
   document.querySelectorAll('#streams input[data-stream]').forEach((cb) => cb.addEventListener('change', () => {
@@ -549,46 +533,28 @@ const render = () => {
   $('daylede').innerHTML = `What to order first, so nothing waits on it: lines that ship from China, are out of stock or backordered, are hard to buy,`
     + ` or are made to order, and any line whose data records a lead time of a week or more. A lead time is shown only where the data`
     + ` records one (a seller's stock line, the catalogue's price note, the made-to-order note), with where it came from.`;
-  $('day1').innerHTML = cands.length ? `<div class="glist"><div class="grow drow head"><div>#</div><div></div><div>part</div><div>seller</div><div>lead time (as recorded)</div></div>`
-    + cands.map((c, i) => {
-      const lead = c.lead ? `<span class="lead">${esc(c.lead.phrase)}</span> <span class="dim small">(${esc(c.lead.src)}${c.lead.date ? `, ${esc(c.lead.date)}` : ''})</span>`
-        : '<span class="lead none">lead time not recorded</span>';
-      const tags = c.why.filter((w) => !w[3]).map(([cls, t]) => `<span class="tag ${cls}">${t}</span>`).join(' ');
-      if (c.m) {
-        return `<div class="grow drow"><div class="num">${i + 1}</div><div>${thumb(c.m.picKey, c.m.name, true)}</div>`
-          + `<div><b>${esc(c.m.name)}</b> <span class="dim">×${c.m.qty}</span><div class="flags" style="margin-top:4px">${tags}</div></div>`
-          + `<div class="mono"><span class="lbl">from</span>${c.m.vendorHtml}</div><div><span class="lbl">lead</span>${lead}</div></div>`;
-      }
-      const l = c.l;
-      return `<div class="grow drow"><div class="num">${i + 1}</div><div>${thumb(l.key, l.name, true)}</div>`
-        + `<div><b>${esc(l.s.via === 'plan' ? `${l.s.pn} (${l.s.seller})` : l.name)}</b> <span class="dim">×${l.need}</span>`
-        + `${tags ? `<div class="flags" style="margin-top:4px">${tags}</div>` : ''}${riskTag(l.risk)}</div>`
-        + `<div class="mono"><span class="lbl">from</span>${l.s.url ? `<a href="${esc(l.s.url)}">${esc(l.sellerName || l.s.seller || '?')}</a>` : esc(l.sellerName || '?')}`
-        + `${l.s.shipsFrom ? ` <span class="dim">(ships from ${esc(l.s.shipsFrom)})</span>` : ''}</div><div><span class="lbl">lead</span>${lead}</div></div>`;
-    }).join('') + '</div>' : '<p class="lede">Nothing in the included lists ships from China, is backordered, or records a long lead time.</p>';
+  $('day1').innerHTML=cands.length?`<details class="portal-details"><summary>Review ${cands.length} priority items</summary><table class="cmp" data-label="Order priorities" data-track="buy"><thead><tr><th>Priority</th><th>Picture</th><th>Part</th><th>Supplier</th><th>Lead time</th></tr></thead><tbody>`+cands.map((c,i)=>{
+    const item=c.m||c.l,name=c.m?item.name:item.name,key=c.m?`made/${item.id}`:`buy/${item.key}`;
+    return `<tr data-part-key="${esc(key)}" data-part-label="${esc(name)}"><td data-sort-value="${i+1}">${i+1}</td><td>${thumb(c.m?item.picKey:item.key,name,true)}</td><td>${esc(name)}<details><summary>Why order early</summary>${c.why.map(w=>esc(w[1])).join(' · ')}</details></td><td>${c.m?item.vendorHtml:pnCell(item)}</td><td data-sort-value="${c.lead?.days??''}">${c.lead?esc(c.lead.phrase):'Not recorded'}${c.lead?`<small>${esc(c.lead.src)} ${esc(c.lead.date||'')}</small>`:''}</td></tr>`;
+  }).join('')+'</tbody></table></details>':'<p class="lede">No long-lead items are recorded in the included lists.</p>';
 
   // the order list
   const planned = lines.filter((l) => l.s.via === 'plan');
-  $('orderlede').innerHTML = `Every bought line of the included workstreams, merged by part (one line per part, with what each workstream uses it for)`
-    + ` and grouped by the site you order from: McMaster-Carr, then the motor and wheel makers' stores, the bearing sellers, the electronics`
-    + ` distributors and the rest, then the filament. <b>qty</b> is what this build uses; <b>line</b> is what the order costs in whole packs`
-    + ` (McMaster's pack sizes, the catalogue's pack notes, minimum orders, tube bought by the length), with the cost of the pieces used beneath it.`
-    + `${planned.length ? ` ${plural(planned.length, 'line')} buy${planned.length === 1 ? 's' : ''} from the seller a plan's Primary column names (${esc(planned.map((l) => `${l.s.pn} at ${l.s.seller}`).join(', '))}), not the catalogue's.` : ''}`
-    + ` <span id="nopic"></span>`;
-  $('sellers').innerHTML = `<div class="tablewrap"><table class="cmp" id="sellertable"><thead><tr><th>seller</th><th class="n">lines</th><th class="n">to order</th><th class="n wide">pieces used</th><th>no price</th></tr></thead><tbody>`
+  $('orderlede').innerHTML=`<p>Parts are grouped by supplier. Search, sort, and tick your progress in each list.</p><details class="portal-details"><summary>How quantities and prices are calculated</summary><p>Quantity is what this build uses. Order cost includes whole packs, minimum orders, stocked lengths and kilogram spools; the cost of the pieces used is shown separately. Existing plan choices and recorded supplier prices are preserved.</p>${planned.length?`<p>${planned.length} lines use the supplier selected by the design plan. The source is recorded in each part's notes.</p>`:''}</details><div id="nopic"></div>`;
+  $('sellers').innerHTML = `<div class="tablewrap"><table class="cmp" id="sellertable" data-label="Supplier totals"><thead><tr><th>seller</th><th class="n">lines</th><th class="n">to order</th><th class="n wide">pieces used</th><th>no price</th></tr></thead><tbody>`
     + groups.map((g) => `<tr data-seller="${esc(g.key)}" data-usd="${g.total}"><td><a href="#g-${esc(g.key.replace(/[^a-z0-9]+/gi, '-'))}">${esc(g.name)}</a></td>`
-      + `<td class="n">${g.lines.length}</td><td class="n">${usd(g.total)}</td><td class="n wide">${usd(g.used)}</td>`
-      + `<td>${g.unpriced ? `<span class="tag fail">${g.unpriced}</span>` : ''}</td></tr>`).join('')
-    + `<tr class="tot"><td>total</td><td class="n">${lines.length}</td><td class="n" id="grand-usd" data-usd="${total}">${usd(total)}</td><td class="n wide">${usd(usedTotal)}</td>`
+      + `<td class="n" data-sort-value="${g.lines.length}">${g.lines.length}</td><td class="n" data-sort-value="${g.total}">${usd(g.total)}</td><td class="n wide" data-sort-value="${g.used}">${usd(g.used)}</td>`
+      + `<td data-sort-value="${g.unpriced}">${g.unpriced ? `<span class="tag fail">${g.unpriced}</span>` : ''}</td></tr>`).join('')
+    + `<tr class="tot" data-fixed><td>total</td><td class="n">${lines.length}</td><td class="n" id="grand-usd" data-usd="${total}">${usd(total)}</td><td class="n wide">${usd(usedTotal)}</td>`
     + `<td>${unpricedBought.length ? `<span class="tag fail">${unpricedBought.length}</span>` : ''}</td></tr></tbody></table></div>`;
   $('orders').innerHTML = groups.map((g) => {
     const paste = g.lines.filter((l) => l.s.pn && l.order != null && !l.filament);
-    return `<section class="seller" id="g-${esc(g.key.replace(/[^a-z0-9]+/gi, '-'))}"><header><h3>${g.url ? `<a href="${esc(g.url)}">${esc(g.name)}</a>` : esc(g.name)}</h3>`
+    return `<details class="seller" id="g-${esc(g.key.replace(/[^a-z0-9]+/gi, '-'))}"><summary><b>${esc(g.name)}</b>`
       + `<span class="why">${plural(g.lines.length, 'line')}${g.unpriced ? ` · <span class="tag fail">${g.unpriced} WITHOUT A PRICE</span>` : ''}`
       + `${g.filament ? ' · whole kilograms of what the print plans weigh, no allowance for reprints' : ''}</span>`
-      + `<span class="sub">${usd(g.total)}</span></header><div class="olist">${ORDER_HEAD}${g.lines.map(orderRow).join('')}</div>`
+      + `<span class="sub">${usd(g.total)}</span><span>Open list ↕</span></summary>${g.url?`<p class="seller-link"><a href="${esc(g.url)}">Visit ${esc(g.name)} ↗</a></p>`:''}<table class="cmp" data-track="buy" data-label="${esc(g.name)}">${ORDER_HEAD}<tbody>${g.lines.map(orderRow).join('')}</tbody></table>`
       + `${paste.length > 2 ? `<footer><details class="paste"><summary>part numbers and packs to paste into the order form</summary>`
-        + `<textarea readonly rows="${Math.min(paste.length, 12)}">${esc(paste.map((l) => `${l.s.pn}\t${l.packs}`).join('\n'))}</textarea></details></footer>` : ''}</section>`;
+        + `<textarea readonly rows="${Math.min(paste.length, 12)}">${esc(paste.map((l) => `${l.s.pn}\t${l.packs}`).join('\n'))}</textarea></details></footer>` : ''}</details>`;
   }).join('')
     + `<div class="grand"><span>Total to order</span><b>${usd(total)}</b><span class="dim">${plural(lines.length, 'line')} from ${sellers} sellers;`
     + ` the pieces used cost ${usd(usedTotal)}${unpricedBought.length ? `; ${plural(unpricedBought.length, 'line')} without a price are not in it` : ''}.</span></div>`;
@@ -598,37 +564,22 @@ const render = () => {
     + ` enter the callouts the order form asks for (threads, fits, tolerances), and attach the callouts page as the drawing. Prices here are`
     + ` estimates until the instant price is read on upload: <b>~${usd(madeEst)}</b>${madeUnpriced.length ? `, and ${plural(madeUnpriced.length, 'part')} with no estimate` : ''}.`
     : 'No machined or cut parts in the included workstreams.';
-  $('made').innerHTML = madeRows.length ? `<div class="glist"><div class="grow mrow head"><div>picture</div><div>part</div><div>files</div><div>qty</div><div>order from</div><div>estimate</div></div>`
-    + madeRows.map((m) => `<div class="grow mrow" data-made="${esc(m.key)}"><div>${thumb(m.picKey, m.name)}</div>`
-      + `<div><b>${esc(m.name)}</b><div class="dim small">${esc(m.desc)}</div><div class="dim small"><i>${esc(m.stream)}</i></div>`
-      + `${m.callouts.length ? `<details class="callouts"><summary>${plural(m.callouts.length, 'callout')} for the order form</summary><ol>${m.callouts.map((c) => `<li>${esc(c)}</li>`).join('')}</ol></details>` : ''}</div>`
-      + `<div class="mono"><span class="lbl">files</span>${m.files.map((f) => `<a href="${esc(f.href)}">${esc(f.label)}</a>`).join('<br>')}</div>`
-      + `<div class="mono"><span class="lbl">qty</span>${m.qty}</div><div class="mono"><span class="lbl">from</span>${m.vendorHtml}</div>`
-      + `<div class="est"><span class="lbl">estimate</span>${m.estHtml}</div></div>`).join('') + '</div>' : '';
+  $('made').innerHTML=madeRows.length?`<table class="cmp" data-label="Made to order" data-track="buy"><thead><tr><th>Picture</th><th>Part</th><th>Design files</th><th>Quantity</th><th>Supplier</th><th>Estimate</th></tr></thead><tbody>`+madeRows.map(m=>`<tr data-made="${esc(m.key)}" data-part-key="made/${esc(m.id)}" data-part-label="${esc(m.name)}"><td>${thumb(m.picKey,m.name)}</td><td><b>${esc(m.name)}</b><small>${esc(m.stream)}</small><details><summary>Material and callouts</summary>${esc(m.desc)}<ul>${m.callouts.map(c=>`<li>${esc(c)}</li>`).join('')}</ul></details></td><td>${m.files.map(f=>`<a href="${esc(f.href)}" title="${esc(f.label)}">${/\.(step|stp)$/i.test(f.href)?'STEP':/\.dxf$/i.test(f.href)?'DXF':esc(f.label)}</a>`).join('<br>')}</td><td data-sort-value="${m.qty}">${m.qty}</td><td>${m.vendorHtml}</td><td data-sort-value="${m.total??''}">${m.estHtml}</td></tr>`).join('')+'</tbody></table>':'';
 
   // the print queue
   $('printlede').innerHTML = `Every printed part of the included print plans, in printing order: the leg${STREAMS.find((s) => s.id === 'rig').present ? ' and its rig' : ''}`
     + ` in the order of <a href="${esc(secLink('docs/leg-prototype-plan.md', '6.2'))}">docs/leg-prototype-plan.md 6.2</a> (the day it names),`
     + ` everything else longest first. About <b>${hours.toFixed(1)} h</b> on one P1S; the plans' hours are rough (grams / density / a`
     + ` strength-holding volumetric rate). Filament cost is for the grams used; the order list buys whole kilograms.`;
-  $('materials').innerHTML = `<div class="tablewrap"><table class="cmp" id="mattable"><thead><tr><th>material</th><th class="n">pieces</th><th class="n">kg</th><th class="n">hours</th>`
+  $('materials').innerHTML = `<div class="tablewrap"><table class="cmp" id="mattable" data-label="Filament totals"><thead><tr><th>material</th><th class="n">pieces</th><th class="n">kg</th><th class="n">hours</th>`
     + `<th class="n"><span class="wide">filament </span>used</th><th class="n">to buy</th></tr></thead><tbody>`
     + prints.mats.map((m) => `<tr data-mat="${esc(m.key)}" data-hours="${m.hours.toFixed(1)}" data-grams="${m.grams}" data-cost="${m.cost.toFixed(2)}">`
-      + `<td><b>${esc(m.key)}</b> <span class="dim wide">${esc(m.name)}</span></td><td class="n">${m.parts}</td><td class="n">${kg(m.grams)}</td><td class="n">${m.hours.toFixed(1)}</td>`
-      + `<td class="n">${usd(m.cost)}</td><td class="n">${m.buyKg} kg<span class="wide"> · </span><br class="narrow">${usd(m.buyUsd)}</td></tr>`).join('')
-    + `<tr class="tot"><td>total</td><td class="n">${sum(prints.mats.map((m) => m.parts))}</td><td class="n">${kg(grams)}</td><td class="n" id="mat-hours">${hours.toFixed(1)}</td>`
+      + `<td><b>${esc(m.key)}</b> <span class="dim wide">${esc(m.name)}</span></td><td class="n" data-sort-value="${m.parts}">${m.parts}</td><td class="n" data-sort-value="${m.grams/1000}">${kg(m.grams)}</td><td class="n" data-sort-value="${m.hours}">${m.hours.toFixed(1)}</td>`
+      + `<td class="n" data-sort-value="${m.cost}">${usd(m.cost)}</td><td class="n" data-sort-value="${m.buyUsd??''}">${m.buyKg} kg<span class="wide"> · </span><br class="narrow">${usd(m.buyUsd)}</td></tr>`).join('')
+    + `<tr class="tot" data-fixed><td>total</td><td class="n">${sum(prints.mats.map((m) => m.parts))}</td><td class="n">${kg(grams)}</td><td class="n" id="mat-hours">${hours.toFixed(1)}</td>`
     + `<td class="n">${usd(round2(sum(prints.mats.map((m) => m.cost))))}</td><td class="n">${usd(round2(sum(prints.mats.map((m) => m.buyUsd || 0))))}</td></tr></tbody></table></div>`;
-  $('queue').innerHTML = prints.queues.map((q) => `<h3>${esc(q.title)} <span class="dim">${esc(q.how)}; ${plural(q.parts.length, 'part')}, ~${q.hours.toFixed(1)} h</span></h3>`
-    + `<div class="glist"><div class="grow prow head"><div>#</div><div></div><div>part</div><div>material</div><div>qty</div><div>g (all)</div><div>h (all)</div><div>on the bed</div><div>${q.days ? 'plan day' : ''}</div></div>`
-    + q.parts.map((p, i) => `<div class="grow prow" data-part="${esc(p.name)}"><div class="num">${i + 1}</div><div>${thumb(p.name, p.name, true)}</div>`
-      + `<div><b>${p.stl ? `<a href="${esc(p.stl)}">${esc(p.name)}</a>` : esc(p.name)}</b>`
-      + `${p.nostl ? ' <span class="tag warn" title="cad/turret.py writes the turret\'s STLs into exports/turret/ (not kept in git): run it for this one">NO STL ON THIS MACHINE</span>' : ''}`
-      + `<div class="how">${esc(p.how || '')}${p.infill ? ` <span style="color:var(--dim)">(${esc(p.infill)})</span>` : ''}</div></div>`
-      + `<div class="stats"><div class="mono"><span class="lbl">material</span>${esc(p.material)}</div><div class="mono"><span class="lbl">qty</span>${p.qty}</div>`
-      + `<div class="mono"><span class="lbl">g (all)</span>${p.grams}</div><div class="mono"><span class="lbl">h (all)</span>${p.hours}</div>`
-      + `<div class="mono"><span class="lbl">on the bed</span>${(p.size_mm || []).join(' × ')} mm${p.placement ? `, ${esc(p.placement)}` : ''}${p.fits === false ? ' <span class="tag fail">TOO BIG</span>' : ''}</div>`
-      + `${q.days ? `<div class="mono"><span class="lbl">plan day</span>${p.day ? esc(p.day) : '<span class="dim">—</span>'}</div>` : ''}</div></div>`).join('') + '</div>').join('')
-    || '<p class="lede">No print plan in the included workstreams.</p>';
+  $('queue').innerHTML=prints.queues.map(q=>`<h3>${esc(q.title)}</h3><p class="lede">${esc(q.how)} · ${q.parts.length} parts · about ${q.hours.toFixed(1)} h</p><table class="cmp" data-track="print" data-label="${esc(q.title)} print queue"><thead><tr><th>Order</th><th>Picture</th><th>Part</th><th>Material</th><th>Quantity</th><th>Grams</th><th>Hours</th><th>Print setup</th></tr></thead><tbody>`+q.parts.map((p,i)=>`<tr data-part="${esc(p.name)}" data-part-key="print/${esc(p.stream+'/'+p.name)}" data-part-label="${esc(p.name)}"><td data-sort-value="${i+1}">${i+1}</td><td>${thumb(imageKey(p.name,p.stream),p.name,true)}</td><td>${p.stl?`<a href="${esc(p.stl)}">${esc(p.name)}</a>`:esc(p.name)}${p.nostl?'<small>Model export pending</small>':''}</td><td>${esc(p.material)}</td><td data-sort-value="${p.qty}">${p.qty}</td><td data-sort-value="${p.grams}">${p.grams}</td><td data-sort-value="${p.hours}">${p.hours}</td><td><details><summary>Placement and instructions</summary>${(p.size_mm||[]).join(' × ')} mm · ${esc(p.placement||'')}<p>${esc(p.how||'')} ${esc(p.infill||'')}</p>${p.day?`<p>Plan day ${esc(p.day)}</p>`:''}${p.fits===false?'<strong>Exceeds the specified print bed</strong>':''}</details></td></tr>`).join('')+'</tbody></table>').join('')||'<p class="lede">No print plan in the included workstreams.</p>';
+  partsUI.enhance(document.querySelector('main'));
   const el = $('nopic');
   if (el) el.innerHTML = noPicNote();
 };
@@ -648,12 +599,12 @@ const madeInfo = (m) => {
     const files = [r.dxf || r.drawing, r.step].filter((f, i, a) => f && a.indexOf(f) === i).map((f) => ({ href: `${R}${f}`, label: f.split('/').pop() }));
     if (r.readme) files.push({ href: `${R}${r.readme}`, label: `order sheet (${r.readme.split('/').pop()})` });
     else if (/\/cnc\//.test(r.step || '')) files.push({ href: `${R}${r.step.replace(/[^/]+$/, 'README.md')}`, label: 'callouts page (README.md)' });
-    return { key: r.key, name: r.key, picKey: r.key, stream: st, qty: m.qty, callouts: r.spec || [], files,
+    return { key: r.key, id: m.s.id+'/'+r.key, name: r.key, picKey: imageKey(r.key,m.s.id), stream: st, qty: m.qty, callouts: r.spec || [], files,
       desc: `${r.material || ''}${r.mass_g_each ? `, ${r.mass_g_each} g` : ''}${r.size_mm ? `, ${r.size_mm.join(' × ')} mm` : ''}`,
       vendorHtml: `${domainLink(r.vendor)}${r.backup ? `<br><span class="dim">backup ${domainLink(r.backup)}</span>` : ''}`,
       total: est != null ? round2(est * m.qty) : null,
       estHtml: est != null ? `${r.price_usd_each != null ? `${usd(r.price_usd_each)} each` : `~${usd(est)} each <span class="tag warn">ESTIMATE</span>`}<br>~${usd(round2(est * m.qty))} line`
-        + `<div class="note">${esc(r.price_note || '')}</div>` : '<span class="tag fail">NO PRICE</span>',
+        + `<details class="note"><summary>Price source</summary>${esc(r.price_note || '')}</details>` : '<span class="tag fail">NO PRICE</span>',
       lead: leadOf([{ t: r.price_note, src: 'made-to-order note' }]) };
   }
   // cut to our drawing (ordered_to_drawing), or a list line a fab service makes (kind 'fab')
@@ -670,12 +621,12 @@ const madeInfo = (m) => {
   const buy = (it.buy || [])[0] || {};
   const url = d.url || buy.url || row.url || null, vendor = d.vendor || it.vendor || buy.seller || row.vendor || '?';
   const est = it.price_usd ?? row.price_usd_each ?? null;
-  return { key: m.key, name: m.key, picKey: media.images[m.key] ? m.key : k, stream: st, qty: m.qty, callouts: [], files,
+  return { key: m.key, id: m.s.id+'/'+m.key, name: m.key, picKey: imageKey(m.key,m.s.id)||k, stream: st, qty: m.qty, callouts: [], files,
     desc: `${it.name || row.item || ''}${d.name ? ` (${d.name}${d.thickness_mm ? `, ${d.thickness_mm} mm` : ''})` : ''}${drawing ? '; the DXF is the drawing' : ''}`,
     vendorHtml: `${url ? `<a href="${esc(url)}">${esc(vendor)}</a>` : esc(vendor)}`
       + `<br><span class="dim">backup ${(media.alternates[k] || []).length ? esc(media.alternates[k][0].supplier) : 'not recorded'}</span>`,
     total: est != null ? round2(est * m.qty) : null,
-    estHtml: `${est != null ? `${usd(est)} each` : '<span class="tag fail">NO PRICE</span>'}${it.price_note ? `<div class="note">${esc(it.price_note)}</div>` : ''}`,
+    estHtml: `${est != null ? `${usd(est)} each` : '<span class="tag fail">NO PRICE</span>'}${it.price_note ? `<details class="note"><summary>Price source</summary>${esc(it.price_note)}</details>` : ''}`,
     lead: leadOf([{ t: it.price_note, src: 'catalogue price note', date: it.price_checked }]) };
 };
 

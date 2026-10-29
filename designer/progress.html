@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Gyropup Progress</title>
 <link rel="stylesheet" href="kit/hud.css">
+<link rel="stylesheet" href="kit/part-table.css">
+<link rel="stylesheet" href="portal-parts.css">
 <link rel="stylesheet" href="kit/loading.css" data-gyropup-loading>
 <style>
   html, body { overflow: auto; height: auto; }
@@ -85,7 +87,9 @@
   <p class="lede" id="updated">One robot, built leg first: one leg on a test rig, then the foam-ball turret, then the body around two
   legs. Everything here is CAD and simulation until parts are printed; reports update with each published design change. Everything to order and print
   for the first prototype, by seller: <a href="build.html">Build</a>.</p>
-  <div class="status" id="status"></div>
+  <nav class="portal-jumps" aria-label="Progress sections"><a href="#status">Status</a><a href="#rigtable">Tests</a><a href="#fea">Strength</a><a href="#print">Prints</a><a href="#buy">Parts</a><a href="#turretbuy">Turret</a></nav>
+  <div id="progress-tools"></div>
+<div class="status" id="status"></div>
 
   <div class="sec">Latest</div>
   <div class="card"><ul class="log" id="log"></ul></div>
