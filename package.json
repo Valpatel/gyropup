@@ -34,6 +34,7 @@
     "test:carrier-inspection": "node --test tools/test-hosted-navigation.mjs && node tools/test-carrier-inspection.mjs && CARRIER_INSPECTION_CASE=c3-support node tools/test-carrier-inspection.mjs",
     "test:progress": "node tools/test-progress.mjs",
     "test:highlights": "node tools/test-highlight-video.mjs",
+    "test:highlight-integration": "node tools/test-highlight-integration.mjs",
     "test:highlight-media": "python3 tools/check-highlights.py"
   },
   "devDependencies": {

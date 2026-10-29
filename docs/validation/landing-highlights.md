@@ -69,6 +69,32 @@ a deliberate user pause. Reduced-motion and Data Saver visitors start it manuall
 The finite reel offers replay, clear loading/error states and retry; it works even
 if the independent 3D hero fails.
 
+### Full-page loading correction
+
+The initial isolated-player checks intentionally failed the hero import. A later
+real-hero check found that simultaneous CAD and movie downloads could fail on a
+constrained connection, so main publication was held for
+[issue 111](https://github.com/Valpatel/gyropup/issues/111). With Chrome at
+390×844, 150 ms latency, 1.6 Mbps download and 750 kbps upload, the hero-only
+baseline loaded in 37.726 s without failures. Autoplay pushed two turret requests
+past their existing 20 s deadline; the reel had 20 buffering intervals totaling
+21.225 s. A first decoded frame was not evidence of smooth playback.
+
+The correction queues automatic and explicit movie loading behind the active
+hero load and buffers about three seconds before playback. Queued intent remains
+cancelable, and absent or failed hero modules release the independent player.
+A 60-second hero wait expires to an explicit “Play now” choice with the robot's
+loading state explained; it does not silently begin competing downloads. CAD geometry, physics and video
+pixels are unchanged; increasing the CAD timeout alone would not address media
+contention or repeated playback waits.
+
+`npm run test:highlight-integration` exercises the actual hero and reel together,
+including the constrained connection above. Its timestamps and stall counts are
+browser/network emulation observations, not physical-phone guarantees. The
+deterministic player harness separately checks loading order and cancellation.
+Final correction evidence belongs on issue 111 and its linked PR before the
+main publication resumes.
+
 ## Validation
 
 `npm run test:highlight-media` checks source/output identity, mandatory input

@@ -41,6 +41,7 @@ jobs:
               npm run test:web
               npm run test:progress
               npm run test:highlights
+              npm run test:highlight-integration
               npm run test:markdown
               npm run test:cache
               npm run test:diagrams
