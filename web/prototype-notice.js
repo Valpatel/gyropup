@@ -42,7 +42,20 @@ if (dialog && footer && typeof dialog.showModal === 'function') {
     if (!acknowledged) event.preventDefault();
   });
   dialog.addEventListener('close', () => { publish(); });
-  // Let native focus navigation and button activation work, but keep simulator shortcuts inert.
+  // Native dialog focus can reach browser chrome when reverse-tabbing from the first
+  // item. Keep both boundaries inside while preserving native Enter/Space/scrolling.
+  dialog.addEventListener('keydown', event => {
+    if (event.key !== 'Tab' || event.ctrlKey || event.altKey || event.metaKey) return;
+    const items = [...dialog.querySelectorAll('button:not(:disabled),a[href],[tabindex]:not([tabindex="-1"])')]
+      .filter(element => element.getClientRects().length && getComputedStyle(element).visibility !== 'hidden');
+    const first = items[0], last = items.at(-1), active = document.activeElement;
+    if (!first) return;
+    if (!items.includes(active) || event.shiftKey && active === first || !event.shiftKey && active === last) {
+      event.preventDefault();
+      (event.shiftKey ? last : first).focus({ preventScroll: true });
+    }
+  });
+  // Keep simulator shortcuts inert without suppressing native button activation.
   for (const type of ['keydown', 'keyup', 'keypress']) dialog.addEventListener(type, event => event.stopPropagation());
   for (const button of footer.querySelectorAll('[data-prototype-notice-open]')) {
     button.hidden = false; button.addEventListener('click', open);
