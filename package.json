@@ -20,6 +20,7 @@
     "test:hero": "node tools/test-hero-preview.mjs",
     "test:demo": "node tools/test-live-demo.mjs",
     "test:models": "node tools/test-current-model.mjs",
+    "test:legs": "python3 tools/test-leg-attachments.py && node tools/test-leg-attachment-motion.mjs",
     "test:notice": "node tools/test-prototype-notice.mjs",
     "test:portal-data": "node --test tools/test-portal-data.mjs",
     "test:loading-sim": "node tools/test-loading-sim.mjs",

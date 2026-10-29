@@ -17,6 +17,7 @@ jobs:
               npm run test:turret
               npm run test:camera
               npm run test:models
+              npm run test:legs
           - suite: playground
             commands: |
               npm run test:interactions
