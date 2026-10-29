@@ -810,8 +810,40 @@
       "notes": [
         "In-stock label, no numerical quantity or ship date.",
         "Catalog pack_qty 2 is modeled yield, not retail quantity. Catalog generic 50×70 label is inconsistent with the linked product.",
-        "1.6 mm thickness, hole pattern and resulting solder layout are not independently qualified here."
-      ]
+        "1.6 mm thickness, hole pattern and resulting solder layout are not independently qualified here.",
+        "Product page rounds the board to 80×100 mm; tagged source outline is 78.74×99.06 mm. Catalog two-piece 52×50 mm yield is unsupported for ordinary aligned cutting, independent of retail pack identity."
+      ],
+      "board_source": {
+        "url": "https://raw.githubusercontent.com/sparkfun/ProtoBoard_Wombat-PTH/v_1.4/Hardware/SparkFun_Protoboard-PTH-v14.brd",
+        "revision": "v_1.4",
+        "sha256": "b52382cef7887cf9b664424cbb7d29b462a9e85b94f381385341d4fea6d09fd2",
+        "observed_on": "2026-10-29",
+        "method": "Python ElementTree: drawing/board/plain wire layer20 bounds and hole drill fields",
+        "outline_mm": [
+          78.74,
+          99.06
+        ],
+        "factory_hole_diameter_mm": 3.175,
+        "factory_hole_centers_mm": [
+          [
+            2.54,
+            2.54
+          ],
+          [
+            76.2,
+            2.54
+          ],
+          [
+            2.54,
+            96.52
+          ],
+          [
+            76.2,
+            96.52
+          ]
+        ],
+        "limit": "Catalog two 52×50 mm pieces do not fit as aligned cuts before kerf. No alternate nesting yield, PCB thickness or carrier fabrication was qualified."
+      }
     },
     {
       "key": "pololu-ul1007-24awg-60ft",
