@@ -17,3 +17,9 @@ Validate real Chromium/WebKit desktop and phone rendering, visible text/control
 contrast, local-only dependencies and loading/error states. Theme updates must
 preserve model materials and camera pose. Neither a visual preview nor a theme
 implies current mechanical or print qualification.
+
+The hosted navigation regression must accept the local `.html` route and its
+Cloudflare extensionless canonical route after a native click, while requiring
+the same origin and exact destination path. Do not replace navigation with a
+direct `goto` or ignore a failed assertion. Original download/href checks remain
+strict. See [the canonical-route incident](../inbox/2026-10-29-hosted-navigation-must-accept-the-canonical-route.md).

@@ -44,6 +44,7 @@ jobs:
           - suite: build-portal
             commands: |
               npm run test:build-portal
+              npm run test:study-media
     steps:
       - uses: actions/checkout@v4
         with:
@@ -54,6 +55,8 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npx playwright install --with-deps chromium
+      - if: matrix.suite == 'build-portal'
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg
       - run: npm run build
       - name: Validate ${{ matrix.suite }}
         env:
