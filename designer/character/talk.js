@@ -163,9 +163,10 @@ const ICON = {
  *   eyes     { set(expression) }
  *   root     path from the page to the project root (as mountAppNav); talk.css is found via import.meta.url instead
  *   chips    three suggestion strings for the dock;  brain  { base, model, key } to force an OpenAI-compatible endpoint
- * Returns { say, ask, listen, react, setMuted, dock, services, detect }.
+ *   audio    optional master { enabled, volume }; setAudio updates it without changing saved voice mute
+ * Returns { say, ask, listen, react, setMuted, setAudio, audio, dock, services, detect }.
  */
-export function mountTalk({ stage, getHead, eyes, root = '../', chips, brain, dock: wantDock = true } = {}) {
+export function mountTalk({ stage, getHead, eyes, root = '../', chips, brain, dock: wantDock = true, audio = {} } = {}) {
   void root;
   if (!document.querySelector('link[data-gyropup-talk]')) {
     const link = document.createElement('link');
@@ -361,7 +362,9 @@ export function mountTalk({ stage, getHead, eyes, root = '../', chips, brain, do
 
   // =============================================================================================================
   // the voice
-  let muted = ls.get('muted') === '1';
+  let muted = ls.get('muted') === '1'; // Explicit voice preference, independent of the site's master sound.
+  const master = { enabled: audio.enabled !== false, volume: Number.isFinite(+audio.volume) ? Math.max(0, Math.min(1, +audio.volume)) : 1 };
+  const voiceVolume = () => muted || !master.enabled ? 0 : VOICE_GAIN * master.volume;
   let actx = null, current = null, speakSeq = 0, answerVoice = false;
   const audioCtx = () => {
     if (!actx) { const C = window.AudioContext || window.webkitAudioContext; actx = C ? new C() : null; }
@@ -385,15 +388,16 @@ export function mountTalk({ stage, getHead, eyes, root = '../', chips, brain, do
       const r = await fetchT(services.tts.base.replace(/\/$/, '') + '/tts?text=' + encodeURIComponent(text.slice(0, 600)), {}, 8000);
       if (!r.ok) return false;
       const buf = await a.decodeAudioData(await r.arrayBuffer());
-      if (seq !== speakSeq || muted) return true;              // superseded while loading: drop it silently
+      if (seq !== speakSeq || voiceVolume() === 0) return true;              // superseded while loading: drop it silently
       const src = a.createBufferSource();
       src.buffer = buf;
       src.playbackRate.value = services.tts.rate ?? 1.14;      // 1.14 for a plain Piper: pup, not newsreader
       const g = a.createGain();
-      g.gain.value = VOICE_GAIN;                                // under the turret: the shots are the loudest thing (sfx.js)
+      g.gain.value = voiceVolume();                                // under the turret: the shots are the loudest thing (sfx.js)
       src.connect(g).connect(a.destination);
-      src.onended = () => { if (current === src) { current = null; answerVoice = false; } };
-      current = src;
+      const playback = { stop: () => src.stop(), setVolume: value => { g.gain.value = value; } };
+      src.onended = () => { if (current === playback) { current = null; answerVoice = false; } };
+      current = playback;
       src.start();
       return true;
     } catch { return false; }
@@ -403,12 +407,24 @@ export function mountTalk({ stage, getHead, eyes, root = '../', chips, brain, do
     if (!('speechSynthesis' in window)) return false;
     try {
       const u = new SpeechSynthesisUtterance(text);
-      u.rate = 1.0; u.pitch = 1.3; u.volume = VOICE_GAIN;      // a stronger lift turns most system voices into a squeak
+      u.rate = 1.0; u.pitch = 1.3; u.volume = voiceVolume();      // a stronger lift turns most system voices into a squeak
       const vs = window.speechSynthesis.getVoices() || [];
       const en = vs.filter((v) => /^en/i.test(v.lang));
       const pick = (re) => en.find((v) => re.test(v.name));
       u.voice = pick(/natural|neural/i) || pick(/google us english|samantha|aria|jenny|ava|zira|female/i) || en[0] || null;
-      const playback = { stop: () => window.speechSynthesis.cancel() };
+      let boundary = 0;
+      u.onboundary = event => { if (Number.isInteger(event.charIndex)) boundary = event.charIndex; };
+      const playback = {
+        stop: () => window.speechSynthesis.cancel(),
+        setVolume(value) {
+          if (u.volume === value) return;
+          // Browsers need a new utterance to apply volume reliably. Resume at
+          // the last spoken word rather than replaying the whole answer.
+          current = null;
+          window.speechSynthesis.cancel();
+          speakBrowser(text.slice(boundary));
+        },
+      };
       u.onend = u.onerror = () => { if (current === playback) { current = null; answerVoice = false; } };
       current = playback;
       window.speechSynthesis.speak(u);
@@ -418,13 +434,13 @@ export function mountTalk({ stage, getHead, eyes, root = '../', chips, brain, do
 
   async function speak(text, conversation = false) {
     stopVoice();
-    if (muted || !text) return false;
+    if (voiceVolume() === 0 || !text) return false;
     const seq = speakSeq;
     answerVoice = conversation; // includes time waiting for a delayed voice service
     await detect();
-    if (seq !== speakSeq || muted) return false;
+    if (seq !== speakSeq || voiceVolume() === 0) return false;
     if (services.tts.ok && await speakPiper(text, seq)) return true;
-    if (seq !== speakSeq || muted) return false;
+    if (seq !== speakSeq || voiceVolume() === 0) return false;
     const started = speakBrowser(text);
     if (!started) answerVoice = false;
     return started;
@@ -633,12 +649,27 @@ export function mountTalk({ stage, getHead, eyes, root = '../', chips, brain, do
     return true;
   }
 
+  function paintMute() {
+    const silent = voiceVolume() === 0, masterOff = !master.enabled || master.volume === 0;
+    if (muteBtn) {
+      muteBtn.classList.toggle('muted', silent); muteBtn.innerHTML = silent ? ICON.muted : ICON.speaker;
+      muteBtn.title = masterOff ? 'Site sound is off; use the Sound controls to enable it' : muted ? 'Unmute Gyropup' : 'Mute Gyropup';
+      muteBtn.setAttribute('aria-pressed', String(silent)); muteBtn.disabled = masterOff;
+    }
+    renderStatus();
+  }
   function setMuted(v) {
     muted = !!v; ls.set('muted', muted ? '1' : '0');
-    if (muted) stopVoice();
-    if (muteBtn) { muteBtn.classList.toggle('muted', muted); muteBtn.innerHTML = muted ? ICON.muted : ICON.speaker; muteBtn.title = muted ? 'Unmute Gyropup' : 'Mute Gyropup'; muteBtn.setAttribute('aria-pressed', String(muted)); }
-    renderStatus();
+    if (voiceVolume() === 0) stopVoice();
+    paintMute();
     return muted;
+  }
+  function setAudio({ enabled = master.enabled, volume = master.volume } = {}) {
+    master.enabled = !!enabled;
+    if (Number.isFinite(+volume)) master.volume = Math.max(0, Math.min(1, +volume));
+    // Invalidates pending remote speech too; unmuting must never revive an old response.
+    if (voiceVolume() === 0) stopVoice(); else current?.setVolume?.(voiceVolume());
+    paintMute();
   }
 
   // =============================================================================================================
@@ -658,7 +689,7 @@ export function mountTalk({ stage, getHead, eyes, root = '../', chips, brain, do
     if (!services.checked) { statusEl.innerHTML = 'voice · ears · brain: <b>on first use</b>'; return; }
     const voice = services.tts.name + (services.tts.ok && services.tts.label ? ` (${services.tts.label})` : '');
     statusEl.innerHTML = [
-      b('VOICE', muted ? 'muted' : voice, services.tts.ok && !muted),
+      b('VOICE', voiceVolume() === 0 ? 'muted' : voice, services.tts.ok && voiceVolume() > 0),
       b('EARS', services.stt.name, services.stt.ok),
       b('BRAIN', services.llm.ok ? services.llm.model : 'scripted', services.llm.ok),
     ].join(' · ');
@@ -722,5 +753,5 @@ export function mountTalk({ stage, getHead, eyes, root = '../', chips, brain, do
   setMuted(muted);
   renderStatus();
 
-  return { say, ask, listen, react, announce, isBusy, get conversation() { return history.map(entry => ({ ...entry })); }, setMuted, dock: dockApi, services, detect, stop: () => { stopVoice(); hideBubble(); } };
+  return { say, ask, listen, react, announce, isBusy, get conversation() { return history.map(entry => ({ ...entry })); }, setMuted, setAudio, get audio() { return { ...master, muted, voiceVolume: voiceVolume() }; }, dock: dockApi, services, detect, stop: () => { stopVoice(); hideBubble(); } };
 }

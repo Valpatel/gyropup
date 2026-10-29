@@ -104,6 +104,7 @@ const soundBtn = document.createElement('button');
 soundBtn.className = 'hud-pill';
 const paintSound = () => { soundBtn.innerHTML = `<span class="dot"></span>SOUND ${sfx.enabled ? 'ON' : 'OFF'}`; soundBtn.classList.toggle('on', sfx.enabled); };
 soundBtn.onclick = () => { sfx.setEnabled(!sfx.enabled); paintSound(); };
+sfx.onChange(audio => { paintSound(); talk?.setAudio(audio); });
 paintSound();
 $('#topbar').insertBefore(soundBtn, $('#alive'));
 // Demo is on for a fresh visit. Explicit live-mode links and demo=0 remain opt-outs.
@@ -656,6 +657,9 @@ slider(scene, { label: 'Daylight (lower it for dusk)', min: 0, max: 1, step: 0.0
 const aliveToggle = toggle(scene, 'Liveliness (idle motion, blinks, moods)', true, (on) => { state.alive = on; $('#alive').classList.toggle('on', on); });
 $('#alive').onclick = () => { state.alive = !state.alive; aliveToggle.checked = state.alive; $('#alive').classList.toggle('on', state.alive); };
 const robotSections = [...$('#panel').querySelectorAll('details.hud-section')];     // hidden while the turret bench is up
+const soundSection = section(panel, 'Sound', { note: 'effects + voice' }); // Shared by robot and bench modes.
+slider(soundSection, { label: 'Volume', min: 0, max: 1, step: 0.01, value: sfx.volume,
+  fmt: value => `${Math.round(value * 100)}%`, onInput: value => sfx.setVolume(value) });
 
 // headlights: dim in daylight (as eyes see them), full strength at dusk
 let daylight = 1;
@@ -879,7 +883,7 @@ runSel.onchange = () => { demo.on = false; paintDemo(); if (!runSel.value) takeC
 await loadDesign(sel.value);
 // Gyropup's voice: speech bubbles over its head, spoken lines, a talk dock (character/talk.js)
 try {
-  talk = (await import('./character/talk.js')).mountTalk({ stage, eyes, getHead: () => state.robot?.turret?.group ?? state.robot?.base });
+  talk = (await import('./character/talk.js')).mountTalk({ stage, eyes, audio: { enabled: sfx.enabled, volume: sfx.volume }, getHead: () => state.robot?.turret?.group ?? state.robot?.base });
   const dockEl = document.querySelector('.gp-dock');
   if (dockEl) new MutationObserver(() => updateInsets()).observe(dockEl, { attributes: true, attributeFilter: ['class'] });
   // on a phone the dock starts folded to its Talk tab in the corner (unless the visitor chose otherwise before)
@@ -903,7 +907,7 @@ updateInsets();
 const canvas = stage.renderer.domElement;
 canvas.style.opacity = '0';
 if (q.get('panel') === '0') panelFold.set(true);
-if (q.has('sound')) { sfx.setEnabled(q.get('sound') !== '0'); paintSound(); talk?.setMuted?.(!sfx.enabled); }
+if (q.has('sound')) { sfx.setEnabled(q.get('sound') !== '0'); paintSound(); }
 setTimeout(() => { if (!state.replay && !state.bench) react(Math.random() < 0.5 ? 'hello' : 'banter'); }, 1200);   // replays greet with their own line
 // ?cam=side|front|iso and ?height=0..1 for screenshots and docs; ?run=<scenario> starts a replay
 const camAt = { side: [1, 0.35, 0], front: [0, 0.35, 1], iso: [0.6, 0.45, 1], back: [0, 0.35, -1] }[q.get('cam')];

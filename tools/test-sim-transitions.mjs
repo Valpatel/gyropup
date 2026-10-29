@@ -34,6 +34,7 @@ try {
       eyes: s.eyes, talk: s.talk, dock: s.talk.dock.el, target: s.props.get('target_a') };
     window.original.scales = new Map();
     s.state.robot.group.traverse(o => window.original.scales.set(o, o.scale.toArray()));
+    s.sfx.setEnabled(true); // This test explicitly exercises speech behind the site's master sound gate.
     s.talk.setMuted(false);
     s.talk.ask('Remember our foam robot adventure?');
   });
