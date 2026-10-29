@@ -63,7 +63,9 @@ try{
  // classifies the page once at startup can leave its footer over the controls.
  let releaseFea,seenFea;const feaRequested=new Promise(resolve=>seenFea=resolve);
  await page.route('**/exports/fea/thigh-T1.json*',async route=>{await new Promise(resolve=>{releaseFea=resolve;seenFea();});await route.continue();});
- await page.goto(base+'/designer/kit/fea.html?case=../../exports/fea/thigh-T1.json',{waitUntil:'domcontentloaded'});
+ // The intentionally held report is awaited by the entry module itself, so
+ // DOMContentLoaded cannot fire until we release it below.
+ await page.goto(base+'/designer/kit/fea.html?case=../../exports/fea/thigh-T1.json',{waitUntil:'commit'});
  await feaRequested;await page.waitForFunction(()=>document.documentElement.dataset.prototypeNoticeOpen==='false');
  assert.equal(await page.evaluate(()=>!!window.__fea),false,'Report is deliberately held before HUD creation');releaseFea();
  await page.waitForFunction(()=>window.__fea&&document.body.dataset.prototypeEnhanced==='true'&&document.body.dataset.prototypeFullscreen==='true');
