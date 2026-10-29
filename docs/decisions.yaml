@@ -424,3 +424,11 @@
   status: decided
   source: {kind: user, quote: "Usage limits reset, full steam ahead, finish our plans and get this ready for first prototype manufacturing."}
   alternatives: [keep 35.0 kg and swap to 6 Ah packs (-1.0 kg, 2/3 the energy), the 8.5 in wheel (-0.46 kg), a 36.1 kg ceiling at 18.3 kg a leg (does not cover the turret)]
+
+- id: D72
+  date: "2026-10-28"
+  title: "The complete-robot product weight ceiling is 100 lb (45.36 kg)"
+  decision: "The complete robot, including its operating battery, compute, sensors, turret and loaded consumables, has a product weight ceiling of 100 lb (45.359237 kg). This replaces the former public 50 lb ambition. The current CAD/design baseline remains 37.5 kg; D71's 37.0 kg as-built gate and 18.75 kg-per-leg results describe the configuration those reports evaluated, not the new product ceiling. Any design using the additional budget needs its mass ledger, dynamics and affected load cases checked at its actual operating mass before manufacturing. See docs/design-weight-budget.md."
+  why: "The user explicitly raised the maximum weight. A revised requirement must not relabel older lower-mass evidence as a successful 100 lb test."
+  status: decided
+  source: {kind: user, quote: "Also throughout our project there's notes about 50lb max weight, that should be raised to 100."}
