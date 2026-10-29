@@ -39,3 +39,4 @@
 | Demo hit counts increase but targets stay upright, detach, or clip through the floor | [Hits must produce visible, validated motion](inbox/2026-10-29-target-hits-need-visible-motion.md) |
 | Published notes show Mermaid source instead of a diagram | [Validate the published diagram consumer](inbox/2026-10-29-mermaid-needs-the-published-renderer.md) |
 | Thread-ray samples improve after rotation but the complete mating relation is unproved or times out | [Sampled thread alignment is not complete mating](inbox/2026-10-29-thread-sampling-does-not-qualify-mating.md) |
+| A STEP loads but all parts/reservations look identical, or an unexplained ready-only timeout loses its diagnostics | [Review the imported assembly](inbox/2026-10-29-review-the-imported-assembly-not-only-the-export.md) |

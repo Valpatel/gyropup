@@ -1,0 +1,11 @@
+# Inspect the imported assembly, including names and material assignments
+
+On 2026-10-29, PR67's `8b86e7f` review STEP loaded 27,186 triangles but displayed entirely in one color. The exporter had combined the base, PCB, screws, inserts and connector reservations into one compound. Its comment described labelled geometry, but the actual imported model could not distinguish completed parts from reserved space. The shared viewer already preserved source names/colors; the exporter was losing them.
+
+The correction exports a named, colored assembly. At `4a07c11` / assets `d771603d80e3988b4579`, independent Chrome/WebKit checks observed 30 member identities, seven colors and 27,158 triangles at 320×568, 390×844 and 1440×1000. The eight screws, eight inserts and four explicitly named C2 reservation members remain distinct. The page describes reservations and leaves readiness false. This is a bounded inspection assembly, not full BOM or physical qualification.
+
+The persistent `npm run test:carrier-inspection` follows the native document→Preview→viewer→document path, hashes the served original against its committed receipt, checks Mermaid and member-specific materials, and exercises camera views/fine wheel/framing. Negative controls mutate the actual browser scene to lose colors, swap colors between parts and remove a screw; the same observation path rejects them. This catches appearance loss even when an STL/STEP file and triangle count exist.
+
+A single earlier WebKit ready-only wait timed out without preserving the terminal state. Three independent exact-sequence reproductions loaded the unchanged file in 3.67–3.86 seconds, without worker/console/network errors; its cause remains unknown. The new harness waits for ready **or** error/cancellation and always saves failure state, requests and a capture. It also waits for the returned document diagram before beginning the next navigation, so the test does not abort its own in-flight Mermaid fetch. No speculative reader-code change was made.
+
+Corrective rule: inspect the real consumer artifact, not merely the producer's intent or a number of distinct colors. Materials must remain attached to the correct members. Keep diagnostic failure evidence even when later attempts pass, and do not turn an unqualified reservation into apparently finished hardware through presentation.
