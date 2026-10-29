@@ -736,6 +736,7 @@ function takeControl() {
 }
 function reloadRobot() {
   takeControl(); gun.mag = gun.capacity; gun.queue = [];
+  resetLiveTargets();
   state.robot?.setExplode?.(0); state.robot?.turret?.reload?.();
   sfx.reload(); react('reload'); renderGun();
 }
@@ -837,10 +838,53 @@ function replayLaser(R, tt) {
 const liveTargets = [-.65, 0, .65].map((x, i) => ({ name: `target_${String.fromCharCode(97 + i)}`, type: 5,
   size: [.17, .018, 0], pos: [3, x, .55], quat: [Math.SQRT1_2, 0, Math.SQRT1_2, 0],
   rgba: [[.15,.63,.63,1],[.95,.35,.15,1],[.36,.52,.8,1]][i] }));
+const liveTargetMotion = new Map();
+const targetAxis = new THREE.Vector3(1, 0, 0), targetRotation = new THREE.Quaternion();
 function setupLiveRange() {
   for (const target of liveTargets) target.pos[0] = demo.anchor + 3;
   reconcileProps({ props: liveTargets.flatMap(p => [p, { name: p.name + '_stand', type: 6,
     size: [.025,.025,.25], pos: [p.pos[0],p.pos[1],.25], quat: [1,0,0,0], rgba: [.3,.4,.36,1] }]) });
+  liveTargetMotion.clear();
+  for (const target of liveTargets) liveTargetMotion.set(target.name, {
+    // The 50 mm square stand hinges 25 mm above the floor; both pieces share this pivot.
+    pivot: new THREE.Vector3(target.pos[1], .025, target.pos[0]),
+    names: [target.name, target.name + '_stand'],
+    meshes: [propMeshes.get(target.name), propMeshes.get(target.name + '_stand')],
+    angle: 0, velocity: 0, down: false, reset: null,
+  });
+}
+function resetLiveTargets() {
+  for (const target of liveTargetMotion.values()) if (target.down && !target.reset)
+    target.reset = { from: target.angle, elapsed: 0 };
+}
+function knockLiveTarget(mesh, point) {
+  const target = [...liveTargetMotion.values()].find(candidate => candidate.meshes.includes(mesh));
+  if (!target || target.down || target.reset) return;
+  target.down = true; target.velocity = 2.8;
+  burst(point, mesh.material.color, 12, 1.2); sfx.down(); react('down');
+}
+function poseLiveTargets(dt) {
+  for (const target of liveTargetMotion.values()) {
+    if (!target.meshes.every((mesh, i) => propMeshes.get(target.names[i]) === mesh)) continue;
+    if (target.reset) {
+      target.reset.elapsed += dt;
+      const progress = Math.min(1, target.reset.elapsed / 1.2), smooth = progress * progress * (3 - 2 * progress);
+      target.angle = target.reset.from * (1 - smooth); target.velocity = 0;
+      if (progress === 1) { target.reset = null; target.down = false; }
+    } else if (target.down && dt > 0) {
+      // A bounded hinge animation gives impact feedback; it is not an engineering dynamics result.
+      target.velocity += (8 * Math.sin(target.angle) - .7 * target.velocity) * dt;
+      target.angle = Math.min(Math.PI / 2, Math.max(0, target.angle + target.velocity * dt));
+      if (target.angle === Math.PI / 2) target.velocity = 0;
+    }
+    targetRotation.setFromAxisAngle(targetAxis, target.angle);
+    for (const mesh of target.meshes) {
+      const rest = mesh.userData.replayPose;
+      mesh.position.copy(rest.position).sub(target.pivot).applyQuaternion(targetRotation).add(target.pivot);
+      mesh.quaternion.copy(rest.quaternion).premultiply(targetRotation);
+      mesh.updateMatrixWorld(true);
+    }
+  }
 }
 function stepDemo(dt) {
   demo.t += dt;
@@ -854,20 +898,21 @@ function stepDemo(dt) {
   const driveTime = Math.max(0, Math.min(6, time - 4));
   state.speed = time >= 4 && time < 10 ? .3 * Math.sin(Math.PI * driveTime / 3) : 0;
   if (time >= 10 && time < 20) {
-    const target = liveTargets[Math.min(2, Math.floor((time - 10) / 3.3))];
+    const target = liveTargets.find(candidate => !liveTargetMotion.get(candidate.name)?.down);
     const muzzle = state.robot.turret?.muzzle;
-    if (muzzle) {
+    if (muzzle && target) {
       const origin = muzzle.getWorldPosition(new THREE.Vector3());
       const dx = target.pos[1] - origin.x, dz = target.pos[0] - origin.z, distance = Math.hypot(dx,dz);
       const speed = state.robot.turret.launchSpeed ?? BALL.speed;
       gun.pan = Math.atan2(dx,dz);
       gun.tilt = Math.min(0, Math.atan2(target.pos[2] - origin.y + 9.81 * distance * distance / (2 * speed * speed), distance));
     }
-    if (demo.t >= demo.nextShot && time > 10.8 && gun.mag > 0 && !gun.queue.length) {
+    if (target && demo.t >= demo.nextShot && time > 10.8 && gun.mag > 0 && !gun.queue.length) {
       scheduleShots(1); demo.nextShot = demo.t + 1.25;
     }
   } else { gun.pan = .28 * Math.sin(time * .65); gun.tilt = -.05; }
   if (time >= 20 && !demo.reloaded) {
+    resetLiveTargets();
     gun.mag = gun.capacity; gun.queue = []; state.robot.turret?.reload?.(); sfx.reload(); renderGun(); demo.reloaded = true;
   }
   if (time < 20) demo.reloaded = false;
@@ -897,6 +942,7 @@ function stepLiveBalls(dt) {
     ball.g.position.copy(hit.point).addScaledVector(normal,BALL.d / 2);
     ball.v.reflect(normal).multiplyScalar(.2);ball.hitTarget = true;
     hit.object.material.emissive.set(0x67e7b2);hit.object.userData.glowT = .7;
+    knockLiveTarget(hit.object, hit.point);
     demo.hits++;sfx.hit();react('hit');ringFlash(hit.point,0x8bf1b7,.5,.3);
   }
   for (const mesh of propMeshes.values()) if (mesh.userData.glowT > 0) {
@@ -1015,6 +1061,7 @@ stage.onFrame((t, dt) => {
   if (demo.on && demo.playing) stepDemo(dt);
   syncLiveControls();
   poseProps(null);
+  poseLiveTargets(motionDt);
   let height = state.height, pitch = state.pitch;
   const liveTime = demo.on ? demo.t : t;
   if (state.alive) {
@@ -1078,7 +1125,7 @@ robotActions = createRobotActions({ parent: $('#stage-overlay'), onDemo: toggleD
   }, onFire: queueShots, onReload: reloadRobot, onLayout: updateInsets });
 $('#robot-actions').inert = true;
 paintRobotActions();
-window.__sim = { state, stage, eyes, gun, demo, sfx, balls, get talk() { return talk; }, get props() { return propMeshes; }, setHeight: (v) => { state.height = v; sh.set(v); }, bench: () => bench };
+window.__sim = { state, stage, eyes, gun, demo, sfx, balls, get talk() { return talk; }, get props() { return propMeshes; }, get liveTargets() { return liveTargetMotion; }, setHeight: (v) => { state.height = v; sh.set(v); }, bench: () => bench };
 sel.onchange = () => loadDesign(sel.value);
 runSel.onchange = () => { stopDemoAutomation(); if (!runSel.value) takeControl(); else startReplay(runSel.value); };
 await loadDesign(sel.value);
