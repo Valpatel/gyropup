@@ -3,11 +3,11 @@
 /* Gyropup's consumer palette. The reusable viewer remains product-neutral. */
 :root,.file-viewer{--file-font:'Inter',system-ui,sans-serif}
 :root[data-file-theme=light],.file-viewer[data-file-theme=light]{
-  --file-background:#fffdf5;--file-canvas:#e7f0e7;--file-surface:#fffaf2;
+  --file-background:#fffdf5;--file-canvas:#d9edf3;--file-surface:#fffaf2;
   --file-text:#173d3c;--file-muted:#526863;--file-border:#819384;
   --file-control:#fffdf5;--file-control-hover:#e2efda;--file-control-text:#173d3c;
   --file-focus:#187a79;--file-error:#a62b19;--file-accent:#28736c;
-  --file-grid:#819d8e;--file-glow:#d8efbb;
+  --file-grid:#819d8e;--file-glow:#48778b;
 }
 .file-title h1{font-weight:750;letter-spacing:-.025em}
 .file-header{padding-top:14px;padding-bottom:14px}
@@ -16,5 +16,5 @@
 .file-viewer[data-file-theme=light] .file-link[download]:hover{background:#a33010}
 .file-controls{padding-top:12px;padding-bottom:max(12px,env(safe-area-inset-bottom))}
 .file-status{box-shadow:0 12px 32px #173d3c20}
-@media(max-width:480px){.file-header{padding:10px}.file-controls{padding:8px 10px max(8px,env(safe-area-inset-bottom))}}
+@media(max-width:480px){.file-header{padding:10px}.file-nav{gap:4px}.file-nav .file-link{font-size:13px;padding:8px 10px}.file-controls{padding:8px 10px max(8px,env(safe-area-inset-bottom))}}
 @media(max-height:450px){.file-header{padding:5px 8px}.file-controls{padding:5px 8px}}
