@@ -13,6 +13,11 @@ const base=(process.env.SITE_URL||`http://127.0.0.1:${server.address().port}`).r
 const engine=process.env.PLAYWRIGHT_BROWSER==='webkit'?webkit:chromium;
 const browser=await engine.launch(engine===chromium?{channel:process.env.PLAYWRIGHT_CHANNEL==='chromium'?undefined:'chrome',headless:true,args:['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']}:{headless:true});
 const context=await browser.newContext();await acknowledgePrototypeNotice(context);
+// This harness uses a static loopback server, not `cad-agent site --serve`.
+// Disable only its development poller via the existing idempotence marker; the
+// queryless static Back link must remain queryless, and all HTTP checks stay on.
+const localLiveReloadDisabled=/^(127\.0\.0\.1|localhost|\[::1\])$/.test(new URL(base).hostname);
+if(localLiveReloadDisabled)await context.addInitScript(()=>{window.__cadagentLive=true;});
 const page=await context.newPage(),out=process.env.TEST_OUTPUT||await mkdtemp('/tmp/gyropup-carrier-inspection-');
 await mkdir(out,{recursive:true});
 const candidate=process.env.CARRIER_INSPECTION_CASE||'c2';
@@ -31,7 +36,7 @@ const contract=c3?{
   carrierName:'carrier_authored',members:30,screws:8,reservations:4,reservationColor:'f25c17',diagrams:1,
   status:/readiness: false/,
 };
-const report={engine:engine.name(),candidate,passed:false,cases:[],errors:[],missing:[],requestFailures:[]};
+const report={engine:engine.name(),candidate,localLiveReloadDisabled,passed:false,cases:[],errors:[],missing:[],requestFailures:[]};
 page.on('pageerror',error=>report.errors.push(error.message));
 page.on('response',response=>{if(response.status()>=400)report.missing.push({url:response.url(),status:response.status()});});
 const navigate=trackNavigationRequests(page,base,report);
