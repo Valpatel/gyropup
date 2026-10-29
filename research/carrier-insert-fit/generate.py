@@ -113,16 +113,23 @@ def validate_orientation(spec):
 
 
 def controls(source, spec):
+    # The obstruction must join the floor. A floating core would only exercise
+    # the one-solid guard, never the bore-clearance witness.
+    obstructed = valid(source.fuse(bore_probe(spec, .1, 6.6, 1.)))
+    through = valid(source.cut(bore_probe(spec, -.1, 8.1, 2.)))
     outcomes = {}
-    for name, fn in {
-        'filled_pilot': lambda: validate_local(source.fuse(bore_probe(spec, .1, 6.4, 1.)), spec),
-        'drilled_through': lambda: validate_local(source.cut(bore_probe(spec, -.1, 8.1, 2.)), spec),
-        'wrong_orientation': lambda: validate_orientation({**spec, 'rotation_y_deg': spec['rotation_y_deg']+90.}),
+    for name, (fn, expected) in {
+        'filled_pilot': (lambda: validate_local(obstructed, spec), 'Nominal pilot is obstructed'),
+        'drilled_through': (lambda: validate_local(through, spec), 'Blind pilot floor/back wall is missing'),
+        'wrong_orientation': (lambda: validate_orientation({**spec, 'rotation_y_deg': spec['rotation_y_deg']+90.}),
+                              'Insert pilot has the wrong layer/print orientation'),
     }.items():
         try:
             fn()
         except ValueError as error:
-            outcomes[name] = {'rejected': True, 'reason': str(error)}
+            if not str(error).startswith(expected):
+                raise ValueError(f'Control {name} failed for the wrong reason: {error}') from error
+            outcomes[name] = {'rejected': True, 'reason': str(error), 'expected_diagnostic': expected}
         else:
             raise ValueError(f'Negative control unexpectedly accepted: {name}')
     return outcomes
