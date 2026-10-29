@@ -1,0 +1,584 @@
+{
+  "scope": "Remote ancestor refs only. No local branch/worktree/environment mutation. Ordinary deletion guarded against advertised-tip drift; no force flags.",
+  "startedAt": "2026-10-29T07:26:27.684717+00:00",
+  "completedAt": "2026-10-29T07:29:44.702941+00:00",
+  "repositories": [
+    {
+      "repo": "Valpatel/gyropup",
+      "deleted": [
+        {
+          "ref": "refs/heads/body/b5-fuse-board",
+          "sha": "760e88922ccbf99a375b5b249d88570b0a473fc1",
+          "integrationTarget": {
+            "ref": "refs/heads/main",
+            "sha": "c9229dd24d5616f28c010a22d81627e24e3bf065"
+          },
+          "checkedAt": "2026-10-29T07:26:28.791309+00:00",
+          "deletedAt": "2026-10-29T07:26:32.188160+00:00",
+          "openPRHeadMatches": [],
+          "verifiedAbsent": true
+        },
+        {
+          "ref": "refs/heads/body/b8-firmware",
+          "sha": "25c6f405a63770874a104fffe5038edda2e198a3",
+          "integrationTarget": {
+            "ref": "refs/heads/main",
+            "sha": "c9229dd24d5616f28c010a22d81627e24e3bf065"
+          },
+          "checkedAt": "2026-10-29T07:26:33.276224+00:00",
+          "deletedAt": "2026-10-29T07:26:36.537346+00:00",
+          "openPRHeadMatches": [],
+          "verifiedAbsent": true
+        },
+        {
+          "ref": "refs/heads/docs/cache-policy-observation",
+          "sha": "4d49dfbcc8026ad926c7b818503990fe767bbf64",
+          "integrationTarget": {
+            "ref": "refs/heads/main",
+            "sha": "c9229dd24d5616f28c010a22d81627e24e3bf065"
+          },
+          "checkedAt": "2026-10-29T07:26:39.133499+00:00",
+          "deletedAt": "2026-10-29T07:26:42.454205+00:00",
+          "openPRHeadMatches": [],
+          "verifiedAbsent": true
+        },
+        {
+          "ref": "refs/heads/feat/gyropup-brand-agents",
+          "sha": "be60d632c0751f0cfd1ad641bfed8b9eb4c67790",
+          "integrationTarget": {
+            "ref": "refs/heads/main",
+            "sha": "c9229dd24d5616f28c010a22d81627e24e3bf065"
+          },
+          "checkedAt": "2026-10-29T07:26:43.567657+00:00",
+          "deletedAt": "2026-10-29T07:26:47.909794+00:00",
+          "openPRHeadMatches": [],
+          "verifiedAbsent": true
+        },
+        {
+          "ref": "refs/heads/feat/gyropup-web-launch",
+          "sha": "c8d35cc83c0bcdf4559a04ca7e9df0eb13ec271e",
+          "integrationTarget": {
+            "ref": "refs/heads/main",
+            "sha": "c9229dd24d5616f28c010a22d81627e24e3bf065"
+          },
+          "checkedAt": "2026-10-29T07:26:48.950639+00:00",
+          "deletedAt": "2026-10-29T07:26:52.338166+00:00",
+          "openPRHeadMatches": [],
+          "verifiedAbsent": true
+        },
+        {
+          "ref": "refs/heads/fix/build-portal",
+          "sha": "70ba8a1980ef41cd7aec941e29442c038bd8b5ea",
+          "integrationTarget": {
+            "ref": "refs/heads/main",
+            "sha": "c9229dd24d5616f28c010a22d81627e24e3bf065"
+          },
+          "checkedAt": "2026-10-29T07:26:53.563527+00:00",
+          "deletedAt": "2026-10-29T07:26:57.521297+00:00",
+          "openPRHeadMatches": [],
+          "verifiedAbsent": true
+        },
+        {
+          "ref": "refs/heads/fix/hero-measurement",
+          "sha": "96bfc43b417c89d28524840376c7c3fa63ac5421",
+          "integrationTarget": {
+            "ref": "refs/heads/main",
+            "sha": "c9229dd24d5616f28c010a22d81627e24e3bf065"
+          },
+          "checkedAt": "2026-10-29T07:26:58.885271+00:00",
+          "deletedAt": "2026-10-29T07:27:02.800241+00:00",
+          "openPRHeadMatches": [],
+          "verifiedAbsent": true
+        },
+        {
+          "ref": "refs/heads/fix/hero-preview-handoff",
+          "sha": "b39ecf2d5d5035902502ffc47e6bbee683a7948c",
+          "integrationTarget": {
+            "ref": "refs/heads/main",
+            "sha": "c9229dd24d5616f28c010a22d81627e24e3bf065"
+          },
+          "checkedAt": "2026-10-29T07:27:03.883156+00:00",
+          "deletedAt": "2026-10-29T07:27:07.195912+00:00",
+          "openPRHeadMatches": [],
+          "verifiedAbsent": true
+        },
+        {
+          "ref": "refs/heads/fix/loading-states",
+          "sha": "7efb2287af05097f8b64ad1c59658531f7caabbd",
+          "integrationTarget": {
+            "ref": "refs/heads/main",
+            "sha": "c9229dd24d5616f28c010a22d81627e24e3bf065"
+          },
+          "checkedAt": "2026-10-29T07:27:08.257627+00:00",
+          "deletedAt": "2026-10-29T07:27:11.589220+00:00",
+          "openPRHeadMatches": [],
+          "verifiedAbsent": true
+        },
+        {
+          "ref": "refs/heads/fix/motto-depth",
+          "sha": "570125ba7e49dd7d5ee335b47e946a5b3707dbe6",
+          "integrationTarget": {
+            "ref": "refs/heads/main",
+            "sha": "c9229dd24d5616f28c010a22d81627e24e3bf065"
+          },
+          "checkedAt": "2026-10-29T07:27:12.670869+00:00",
+          "deletedAt": "2026-10-29T07:27:15.986540+00:00",
+          "openPRHeadMatches": [],
+          "verifiedAbsent": true
+        },
+        {
+          "ref": "refs/heads/fix/prototype-entry-notice",
+          "sha": "2c71bd45065ed03478dfb591a24e348d3d9f7f80",
+          "integrationTarget": {
+            "ref": "refs/heads/main",
+            "sha": "c9229dd24d5616f28c010a22d81627e24e3bf065"
+          },
+          "checkedAt": "2026-10-29T07:27:17.065826+00:00",
+          "deletedAt": "2026-10-29T07:27:20.455408+00:00",
+          "openPRHeadMatches": [],
+          "verifiedAbsent": true
+        },
+        {
+          "ref": "refs/heads/fix/secure-public-access",
+          "sha": "6c428dc396ea3ecfc8f0d417ee27edb316838cdc",
+          "integrationTarget": {
+            "ref": "refs/heads/main",
+            "sha": "c9229dd24d5616f28c010a22d81627e24e3bf065"
+          },
+          "checkedAt": "2026-10-29T07:27:21.515699+00:00",
+          "deletedAt": "2026-10-29T07:27:24.939238+00:00",
+          "openPRHeadMatches": [],
+          "verifiedAbsent": true
+        },
+        {
+          "ref": "refs/heads/fix/sim-camera-reload",
+          "sha": "7ab7e135efb0c8cc9b78a7494290340a66f8235a",
+          "integrationTarget": {
+            "ref": "refs/heads/main",
+            "sha": "c9229dd24d5616f28c010a22d81627e24e3bf065"
+          },
+          "checkedAt": "2026-10-29T07:27:26.020943+00:00",
+          "deletedAt": "2026-10-29T07:27:30.097627+00:00",
+          "openPRHeadMatches": [],
+          "verifiedAbsent": true
+        },
+        {
+          "ref": "refs/heads/fix/site-cache-freshness",
+          "sha": "4992f3b23f91edcc9dcb6836a2e7b6fe07c5c52e",
+          "integrationTarget": {
+            "ref": "refs/heads/main",
+            "sha": "c9229dd24d5616f28c010a22d81627e24e3bf065"
+          },
+          "checkedAt": "2026-10-29T07:27:31.588422+00:00",
+          "deletedAt": "2026-10-29T07:27:35.657686+00:00",
+          "openPRHeadMatches": [],
+          "verifiedAbsent": true
+        },
+        {
+          "ref": "refs/heads/fix/turret-pivot-frames",
+          "sha": "de2c59d631fc6514de57ea237a997aaf6d44b8ac",
+          "integrationTarget": {
+            "ref": "refs/heads/main",
+            "sha": "c9229dd24d5616f28c010a22d81627e24e3bf065"
+          },
+          "checkedAt": "2026-10-29T07:27:37.026821+00:00",
+          "deletedAt": "2026-10-29T07:27:41.055406+00:00",
+          "openPRHeadMatches": [],
+          "verifiedAbsent": true
+        },
+        {
+          "ref": "refs/heads/fix/warning-style",
+          "sha": "aa5cdc352420e390866e58c4669483fb4d8e0b2e",
+          "integrationTarget": {
+            "ref": "refs/heads/main",
+            "sha": "c9229dd24d5616f28c010a22d81627e24e3bf065"
+          },
+          "checkedAt": "2026-10-29T07:27:42.482814+00:00",
+          "deletedAt": "2026-10-29T07:27:46.615396+00:00",
+          "openPRHeadMatches": [],
+          "verifiedAbsent": true
+        },
+        {
+          "ref": "refs/heads/leg/stops",
+          "sha": "6d97219b0d5b6fc4381b6d0fd6a060f04094d930",
+          "integrationTarget": {
+            "ref": "refs/heads/main",
+            "sha": "c9229dd24d5616f28c010a22d81627e24e3bf065"
+          },
+          "checkedAt": "2026-10-29T07:27:47.996927+00:00",
+          "deletedAt": "2026-10-29T07:27:52.370214+00:00",
+          "openPRHeadMatches": [],
+          "verifiedAbsent": true
+        },
+        {
+          "ref": "refs/heads/wheels/study",
+          "sha": "d2f7b97fc072bd23b7d1a4a913b83ef91fab9b7a",
+          "integrationTarget": {
+            "ref": "refs/heads/main",
+            "sha": "c9229dd24d5616f28c010a22d81627e24e3bf065"
+          },
+          "checkedAt": "2026-10-29T07:28:03.819633+00:00",
+          "deletedAt": "2026-10-29T07:28:08.090502+00:00",
+          "openPRHeadMatches": [],
+          "verifiedAbsent": true
+        }
+      ],
+      "preserved": [
+        {
+          "ref": "refs/heads/body/program",
+          "sha": "5fe10c632f201cf886027fcd8499564b55dcda03",
+          "reason": "open PR head"
+        },
+        {
+          "ref": "refs/heads/dev",
+          "sha": "1475902b25813d4be378aef36c307ec605b0bc30",
+          "reason": "integration, active owner, or WIP ref"
+        },
+        {
+          "ref": "refs/heads/feat/base-board-service",
+          "sha": "8a9f7221dccdbbb8f95de5b2cba587891d9e9d79",
+          "reason": "integration, active owner, or WIP ref"
+        },
+        {
+          "ref": "refs/heads/feat/leg-adapter-ownership",
+          "sha": "90837db88f297deffb9644a674a7dbb439fe40d0",
+          "reason": "integration, active owner, or WIP ref"
+        },
+        {
+          "ref": "refs/heads/feat/mechanical-integration",
+          "sha": "6339e1283113d57ffd0be932c39a983c2efc52b7",
+          "reason": "integration, active owner, or WIP ref"
+        },
+        {
+          "ref": "refs/heads/legrig/program",
+          "sha": "d862b59e4d101a43ba746a26d772cf529be58eee",
+          "reason": "open PR head"
+        },
+        {
+          "ref": "refs/heads/main",
+          "sha": "c9229dd24d5616f28c010a22d81627e24e3bf065",
+          "reason": "integration, active owner, or WIP ref"
+        },
+        {
+          "ref": "refs/heads/research/can-actuator-candidates",
+          "sha": "40b5c5f2967ed8253a0e67cd8af875e06e3d27a3",
+          "reason": "open PR head"
+        },
+        {
+          "ref": "refs/heads/turret/dossier",
+          "sha": "630a2dbb44bee80beea6668b38514a6782e39610",
+          "reason": "open PR head"
+        },
+        {
+          "ref": "refs/heads/turret/power-d66",
+          "sha": "60ea27dc33989668d40b28282f3698cbc69aef68",
+          "reason": "not proven ancestor of current remote main/dev; preserved"
+        },
+        {
+          "ref": "refs/heads/turret/program",
+          "sha": "14a4127cefa1f67ecbc4d70986beb9b56adceedf",
+          "reason": "open PR head"
+        },
+        {
+          "ref": "refs/heads/wip/body/program",
+          "sha": "a206134d7b8ddf4f9e1df72fa0ea3e07b5a2d3eb",
+          "reason": "integration, active owner, or WIP ref"
+        },
+        {
+          "ref": "refs/heads/wip/leg/stops",
+          "sha": "bfae49c712f5d5afff7666e4612a3427e2687366",
+          "reason": "integration, active owner, or WIP ref"
+        },
+        {
+          "ref": "refs/heads/wip/turret/program",
+          "sha": "a05b09faed70644c8aca3ebac0837475ce04b8d3",
+          "reason": "integration, active owner, or WIP ref"
+        },
+        {
+          "ref": "refs/heads/wip/wheels/study",
+          "sha": "4b2ad904ed2fd3dca26c0421e6036fc0b2449cf4",
+          "reason": "integration, active owner, or WIP ref"
+        }
+      ],
+      "finalRemote": {
+        "refs/heads/body/program": "5fe10c632f201cf886027fcd8499564b55dcda03",
+        "refs/heads/dev": "1475902b25813d4be378aef36c307ec605b0bc30",
+        "refs/heads/feat/base-board-service": "8a9f7221dccdbbb8f95de5b2cba587891d9e9d79",
+        "refs/heads/feat/leg-adapter-ownership": "90837db88f297deffb9644a674a7dbb439fe40d0",
+        "refs/heads/feat/mechanical-integration": "6339e1283113d57ffd0be932c39a983c2efc52b7",
+        "refs/heads/legrig/program": "d862b59e4d101a43ba746a26d772cf529be58eee",
+        "refs/heads/main": "c9229dd24d5616f28c010a22d81627e24e3bf065",
+        "refs/heads/research/can-actuator-candidates": "40b5c5f2967ed8253a0e67cd8af875e06e3d27a3",
+        "refs/heads/turret/dossier": "630a2dbb44bee80beea6668b38514a6782e39610",
+        "refs/heads/turret/power-d66": "60ea27dc33989668d40b28282f3698cbc69aef68",
+        "refs/heads/turret/program": "14a4127cefa1f67ecbc4d70986beb9b56adceedf",
+        "refs/heads/wip/body/program": "a206134d7b8ddf4f9e1df72fa0ea3e07b5a2d3eb",
+        "refs/heads/wip/leg/stops": "bfae49c712f5d5afff7666e4612a3427e2687366",
+        "refs/heads/wip/turret/program": "a05b09faed70644c8aca3ebac0837475ce04b8d3",
+        "refs/heads/wip/wheels/study": "4b2ad904ed2fd3dca26c0421e6036fc0b2449cf4"
+      },
+      "localBranchNamesPreserved": true,
+      "localBranchTipsUnchanged": true,
+      "worktreeInventoryUnchanged": true
+    },
+    {
+      "repo": "Valpatel/cad-agent",
+      "deleted": [
+        {
+          "ref": "refs/heads/feat/design-process",
+          "sha": "34ac4152d615ce8491099f4ff60c260c424f5182",
+          "integrationTarget": {
+            "ref": "refs/heads/main",
+            "sha": "28abd34caf650ced78d9d734af000715ee174efe"
+          },
+          "checkedAt": "2026-10-29T07:28:12.430722+00:00",
+          "deletedAt": "2026-10-29T07:28:16.543132+00:00",
+          "openPRHeadMatches": [],
+          "verifiedAbsent": true
+        },
+        {
+          "ref": "refs/heads/feat/design-process-skill",
+          "sha": "6f409b67e6bd72de48f6bbf13d45e18e95aaaafb",
+          "integrationTarget": {
+            "ref": "refs/heads/main",
+            "sha": "28abd34caf650ced78d9d734af000715ee174efe"
+          },
+          "checkedAt": "2026-10-29T07:28:17.912998+00:00",
+          "deletedAt": "2026-10-29T07:28:22.382497+00:00",
+          "openPRHeadMatches": [],
+          "verifiedAbsent": true
+        },
+        {
+          "ref": "refs/heads/feat/dossier",
+          "sha": "f3b9af120016dd0f6e3dbd243f78149bebff825d",
+          "integrationTarget": {
+            "ref": "refs/heads/main",
+            "sha": "28abd34caf650ced78d9d734af000715ee174efe"
+          },
+          "checkedAt": "2026-10-29T07:28:23.830120+00:00",
+          "deletedAt": "2026-10-29T07:28:27.998563+00:00",
+          "openPRHeadMatches": [],
+          "verifiedAbsent": true
+        },
+        {
+          "ref": "refs/heads/feat/dossier-lint",
+          "sha": "0bdd2d9c96a91e2e90e3bb4c3ffaf7f84bf80ce5",
+          "integrationTarget": {
+            "ref": "refs/heads/main",
+            "sha": "28abd34caf650ced78d9d734af000715ee174efe"
+          },
+          "checkedAt": "2026-10-29T07:28:29.403073+00:00",
+          "deletedAt": "2026-10-29T07:28:33.510581+00:00",
+          "openPRHeadMatches": [],
+          "verifiedAbsent": true
+        },
+        {
+          "ref": "refs/heads/feat/gate-assembly",
+          "sha": "a420539f8a5458306d55759b1f57cff1b1bc41e5",
+          "integrationTarget": {
+            "ref": "refs/heads/main",
+            "sha": "28abd34caf650ced78d9d734af000715ee174efe"
+          },
+          "checkedAt": "2026-10-29T07:28:34.947881+00:00",
+          "deletedAt": "2026-10-29T07:28:39.155747+00:00",
+          "openPRHeadMatches": [],
+          "verifiedAbsent": true
+        },
+        {
+          "ref": "refs/heads/feat/gate-connectivity",
+          "sha": "0fc5b9ea29b31fcf4598e1826a16212917ce16fb",
+          "integrationTarget": {
+            "ref": "refs/heads/main",
+            "sha": "28abd34caf650ced78d9d734af000715ee174efe"
+          },
+          "checkedAt": "2026-10-29T07:28:40.528918+00:00",
+          "deletedAt": "2026-10-29T07:28:44.526538+00:00",
+          "openPRHeadMatches": [],
+          "verifiedAbsent": true
+        },
+        {
+          "ref": "refs/heads/feat/gate-containment",
+          "sha": "3d1cba100211a51168cca5022086eeef87668076",
+          "integrationTarget": {
+            "ref": "refs/heads/main",
+            "sha": "28abd34caf650ced78d9d734af000715ee174efe"
+          },
+          "checkedAt": "2026-10-29T07:28:45.916998+00:00",
+          "deletedAt": "2026-10-29T07:28:49.878936+00:00",
+          "openPRHeadMatches": [],
+          "verifiedAbsent": true
+        },
+        {
+          "ref": "refs/heads/feat/gate-fasteners",
+          "sha": "7d26129b9e21a2ca963dd3675de466b92bf85672",
+          "integrationTarget": {
+            "ref": "refs/heads/main",
+            "sha": "28abd34caf650ced78d9d734af000715ee174efe"
+          },
+          "checkedAt": "2026-10-29T07:28:50.932279+00:00",
+          "deletedAt": "2026-10-29T07:28:54.388944+00:00",
+          "openPRHeadMatches": [],
+          "verifiedAbsent": true
+        },
+        {
+          "ref": "refs/heads/feat/gate-motion",
+          "sha": "8cd9370b8bac6bc6bbbe8720b844224ebd7e86a0",
+          "integrationTarget": {
+            "ref": "refs/heads/main",
+            "sha": "28abd34caf650ced78d9d734af000715ee174efe"
+          },
+          "checkedAt": "2026-10-29T07:28:55.452267+00:00",
+          "deletedAt": "2026-10-29T07:28:58.843310+00:00",
+          "openPRHeadMatches": [],
+          "verifiedAbsent": true
+        },
+        {
+          "ref": "refs/heads/feat/gates-cli",
+          "sha": "85ca27cd4b4aeef3fd4b8c63ce6f286483296b11",
+          "integrationTarget": {
+            "ref": "refs/heads/main",
+            "sha": "28abd34caf650ced78d9d734af000715ee174efe"
+          },
+          "checkedAt": "2026-10-29T07:28:59.903040+00:00",
+          "deletedAt": "2026-10-29T07:29:03.341949+00:00",
+          "openPRHeadMatches": [],
+          "verifiedAbsent": true
+        },
+        {
+          "ref": "refs/heads/feat/gates-core",
+          "sha": "f8d4741022298431d14c4e7a1015c53d9b3add65",
+          "integrationTarget": {
+            "ref": "refs/heads/main",
+            "sha": "28abd34caf650ced78d9d734af000715ee174efe"
+          },
+          "checkedAt": "2026-10-29T07:29:04.408806+00:00",
+          "deletedAt": "2026-10-29T07:29:07.868387+00:00",
+          "openPRHeadMatches": [],
+          "verifiedAbsent": true
+        },
+        {
+          "ref": "refs/heads/feat/pivot-validation",
+          "sha": "c11732a8b3b5dc3593ea49f6fe1546fa2203e87a",
+          "integrationTarget": {
+            "ref": "refs/heads/main",
+            "sha": "28abd34caf650ced78d9d734af000715ee174efe"
+          },
+          "checkedAt": "2026-10-29T07:29:08.894816+00:00",
+          "deletedAt": "2026-10-29T07:29:12.390061+00:00",
+          "openPRHeadMatches": [],
+          "verifiedAbsent": true
+        },
+        {
+          "ref": "refs/heads/feat/reproducible-3mf",
+          "sha": "87175cfda63e04e2bc550ddf230df0d0c6fa4788",
+          "integrationTarget": {
+            "ref": "refs/heads/main",
+            "sha": "28abd34caf650ced78d9d734af000715ee174efe"
+          },
+          "checkedAt": "2026-10-29T07:29:13.471369+00:00",
+          "deletedAt": "2026-10-29T07:29:16.922074+00:00",
+          "openPRHeadMatches": [],
+          "verifiedAbsent": true
+        },
+        {
+          "ref": "refs/heads/feat/site-review",
+          "sha": "5142ba41f4d946f6580e14d59b95a81c449db4d7",
+          "integrationTarget": {
+            "ref": "refs/heads/main",
+            "sha": "28abd34caf650ced78d9d734af000715ee174efe"
+          },
+          "checkedAt": "2026-10-29T07:29:19.483559+00:00",
+          "deletedAt": "2026-10-29T07:29:22.894825+00:00",
+          "openPRHeadMatches": [],
+          "verifiedAbsent": true
+        },
+        {
+          "ref": "refs/heads/feat/view-groups",
+          "sha": "c57c1377ee8fed6db2a423ae0dfc1b1ffb038ee8",
+          "integrationTarget": {
+            "ref": "refs/heads/main",
+            "sha": "28abd34caf650ced78d9d734af000715ee174efe"
+          },
+          "checkedAt": "2026-10-29T07:29:23.967853+00:00",
+          "deletedAt": "2026-10-29T07:29:27.388135+00:00",
+          "openPRHeadMatches": [],
+          "verifiedAbsent": true
+        },
+        {
+          "ref": "refs/heads/feat/web-parts",
+          "sha": "e096507d7ba54c6c8e8bd1d9d6add7b795f67259",
+          "integrationTarget": {
+            "ref": "refs/heads/main",
+            "sha": "28abd34caf650ced78d9d734af000715ee174efe"
+          },
+          "checkedAt": "2026-10-29T07:29:28.448224+00:00",
+          "deletedAt": "2026-10-29T07:29:31.933943+00:00",
+          "openPRHeadMatches": [],
+          "verifiedAbsent": true
+        },
+        {
+          "ref": "refs/heads/feat/workflow-kit",
+          "sha": "c8d1371306ba37e07b0332259e8a5e59a2277449",
+          "integrationTarget": {
+            "ref": "refs/heads/main",
+            "sha": "28abd34caf650ced78d9d734af000715ee174efe"
+          },
+          "checkedAt": "2026-10-29T07:29:32.989382+00:00",
+          "deletedAt": "2026-10-29T07:29:36.477273+00:00",
+          "openPRHeadMatches": [],
+          "verifiedAbsent": true
+        },
+        {
+          "ref": "refs/heads/release/v0.4.0",
+          "sha": "01db0add3bfdef4cac31788cae510b0f171a5a2d",
+          "integrationTarget": {
+            "ref": "refs/heads/main",
+            "sha": "28abd34caf650ced78d9d734af000715ee174efe"
+          },
+          "checkedAt": "2026-10-29T07:29:39.068291+00:00",
+          "deletedAt": "2026-10-29T07:29:42.575282+00:00",
+          "openPRHeadMatches": [],
+          "verifiedAbsent": true
+        }
+      ],
+      "preserved": [
+        {
+          "ref": "refs/heads/dev",
+          "sha": "e0b3a9455815276e09d43d5e570becdaef12d95a",
+          "reason": "integration, active owner, or WIP ref"
+        },
+        {
+          "ref": "refs/heads/feat/review-signoff",
+          "sha": "2200e8ef8b629e993ee05d2b4e664aa05258bf0b",
+          "reason": "not proven ancestor of current remote main/dev; preserved"
+        },
+        {
+          "ref": "refs/heads/fix/fea-temp-step",
+          "sha": "0e950901009e953e5b20229cd6301cf0c83bad00",
+          "reason": "not proven ancestor of current remote main/dev; preserved"
+        },
+        {
+          "ref": "refs/heads/main",
+          "sha": "28abd34caf650ced78d9d734af000715ee174efe",
+          "reason": "integration, active owner, or WIP ref"
+        },
+        {
+          "ref": "refs/heads/wip/feat/gate-containment",
+          "sha": "d16d2eca70b407e2e2c4180b51352eff33d3d084",
+          "reason": "integration, active owner, or WIP ref"
+        }
+      ],
+      "finalRemote": {
+        "refs/heads/dev": "e0b3a9455815276e09d43d5e570becdaef12d95a",
+        "refs/heads/feat/review-signoff": "2200e8ef8b629e993ee05d2b4e664aa05258bf0b",
+        "refs/heads/fix/fea-temp-step": "0e950901009e953e5b20229cd6301cf0c83bad00",
+        "refs/heads/main": "28abd34caf650ced78d9d734af000715ee174efe",
+        "refs/heads/wip/feat/gate-containment": "d16d2eca70b407e2e2c4180b51352eff33d3d084"
+      },
+      "localBranchNamesPreserved": true,
+      "localBranchTipsUnchanged": true,
+      "worktreeInventoryUnchanged": true
+    }
+  ],
+  "finalVerifiedAt": "2026-10-29T07:29:55.846687+00:00"
+}

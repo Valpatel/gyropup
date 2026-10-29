@@ -8,7 +8,7 @@ Program tracker: [issue #61](https://github.com/Valpatel/gyropup/issues/61). The
 
 | Source | What it represents | Use now |
 | --- | --- | --- |
-| Published main `1475902` | Current public portal and canonical rendered robot, with the older turret hardware configuration | Preserve application behavior; do not infer complete physical assembly from its appearance |
+| Published main `c9229dd` | Current public portal and canonical rendered robot, with the older turret hardware configuration | Preserve application behavior; do not infer complete physical assembly from its appearance |
 | `turret/program` `14a4127` / PR15 | Newer mechanical and compute changes, including a front cartridge latch and different launcher assumptions | Design work in progress; latest structural geometry lacks complete regenerated gates |
 | `turret/dossier` `630a2db` / PR27 | Eight subsystem registry and source-bound run-3 checks | Useful failure evidence for its own revision; it is not the final latch geometry |
 | `body/program` `5fe10c6` / PR28 | Body/power/retention changes | Review deck load-path evidence, mass assumptions and battery interface measurements |
@@ -72,7 +72,7 @@ A failure returns the affected subsystem to correction and review, followed by a
 
 PR27's run-3 JSON reports connectivity 136 pass / 1 warning / 2 failures; assembly 220 pass / 6 failures; walls 16 pass / 12 failures; and motion 2 pass / 1 warning. Some prose counts differ. The geometry changed afterward, so these counts describe historical failure evidence only.
 
-The motion configuration samples flywheels at 0° and 360° only; `max_step_deg`/`max_step_mm` are unset and `strict_contacts` is false. Assembly has no service/removal coverage. Each inspected gate says `physical_fit_verified:false`. Correct those coverage gaps before using new passes as release evidence. The full-kit print source still names a Ø34 tyre while the program CAD uses Ø38; do not release a mixed kit.
+The motion configuration samples flywheels at 0° and 360° only; `max_step_deg`/`max_step_mm` are unset and `strict_contacts` is false. Assembly has no service/removal coverage. Each inspected gate says `physical_fit_verified:false`. Correct those coverage gaps before using new passes as release evidence. The historical full-kit print source named a Ø34 tyre while the program CAD used Ø38. The candidate now consumes the canonical selected tyre and rejects unbound/mixed print inputs; no regenerated or qualified full kit has been released. See [print source provenance](print-source-provenance.md).
 
 The full robot's existing 37–37.75 kg studies do not establish the requested 100 lb (45.36 kg) ceiling. The hip-frame E1 result (1.65 vs 2.0) and undamped knee-bearing static factor (0.94 vs 1.0) remain open, together with measured wheel-clamp and battery-dock interfaces.
 
@@ -84,4 +84,4 @@ For both Gyropup and cad-agent, final cleanup requires no open applicable PR, no
 
 ## Immediate next step
 
-The independent subsystem and geometry audits are complete. Program and dossier sources have been combined on the unreleased integration branch, preserving current web behavior; their imported reports are historical. Finish the component register and the passive base-board mounting/service-access correction first, followed by the tilt assembly. An isolated compute environment is being prepared at cad-agent v0.4.0; no new heavy solve has started. The promotional reel is deferred. The website-test timing correction passed independent review and merged as PR62.
+The independent subsystem and geometry audits are complete. Program and dossier sources have been combined on the unreleased integration branch, preserving current web behavior; their imported reports are historical. Finish the component register and the passive base-board mounting/service-access correction first, followed by the tilt assembly. The isolated CAD compute environment is ready at cad-agent v0.4.0. Bounded passive carrier and cut-part checks have run; no new full assembly or structural qualification has completed. The promotional reel is deferred. The website-test timing correction passed independent review and merged as PR62; hosted revision is `c9229dd`. The passive carrier is tracked in PR67, rendered adapter ownership in PR65, and generic rigid-subassembly validation in cad-agent PR69. Current cut-part preview exports are inspection models only. Eighteen already-integrated remote refs in each repository were retired after tip/ancestry/dependency checks; local worktrees and unfinished branches remain preserved.

@@ -5,12 +5,14 @@ import { mountAppNav } from './kit/appnav.js';
 import { createLoadingStatus } from './kit/loading.js';
 import { createPortalParts } from './portal-parts.js';
 import { createDataReader, isRecord } from './kit/portal-data.js';
+import { mountStudyMedia, matchingStudyMedia } from './kit/study-media.js';
 
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const reader=createDataReader(fetch);
 const getJson=(url,options={})=>reader.json(url,{validate:isRecord,...options});
 const $ = (id) => document.getElementById(id);
 const partsUI=createPortalParts($('progress-tools'));
+const studyPlayer=mountStudyMedia($('fea-media'));
 const tag = (ok, warn) => `<span class="tag ${ok ? 'pass' : warn ? 'warn' : 'fail'}">${ok ? 'PASS' : warn ? 'CLOSE' : 'FAIL'}</span>`;
 const LEG = '../exports/leg/';
 
@@ -220,8 +222,13 @@ sectionLoad('fea','fea','Structural reports',async isCurrent=>{
 const fea = await getJson(`${LEG}fea/summary.json`,{optional:true,validate:value=>isRecord(value)&&Array.isArray(value.results),label:'Structural reports'});
 if(!isCurrent())return false;
 if (fea) {
+  let mediaIndex=null,mediaProblem='';
+  try { mediaIndex=await getJson(`${LEG}fea/media.json`,{optional:true,validate:value=>isRecord(value)&&value.schema===1&&isRecord(value.cases),label:'Structural animation metadata'}); }
+  catch(error) { mediaProblem=error.message; }
+  if(!isCurrent())return false;
+  const mediaFor=r=>{try{return matchingStudyMedia(r,mediaIndex);}catch{return null;}};
   const rows = fea.results.map((r) => ({ r, ok: r.safety_factor >= r.target, warn: r.safety_factor < r.target && r.safety_factor >= 0.8 * r.target }));
-  const viewerHref = (r) => (r.viewer ? `kit/fea.html?case=${encodeURIComponent(`../../${r.viewer}`)}&title=${encodeURIComponent(`${r.part} ${r.case}`)}&current=progress` : null);
+  const viewerHref = r=>{const file=mediaFor(r)?.fields||r.viewer;return file?`kit/fea.html?case=${encodeURIComponent(`../../${file}`)}&title=${encodeURIComponent(`${r.part} ${r.case}`)}&current=progress`:null;};
   const b = fea.front_link_buckling;
   partsUI.replace($('fea'), `<table class="cmp" data-label="Structural reports"><thead><tr><th>part</th><th>case</th><th>material</th><th>SF</th><th>need</th><th>deflection</th><th></th><th>3D</th></tr></thead><tbody>`
     + rows.map(({ r, ok, warn }, i) => `<tr class="click" data-i="${i}"><td>${esc(r.part)}</td><td>${esc(r.case)}</td><td>${esc(r.material)}</td>`
@@ -232,11 +239,13 @@ if (fea) {
     + '</tbody></table>');
   const show = (i) => {
     const r = rows[i].r;
-    if (r.animation) { $('feavid').src = `../${r.animation}`; $('feavid').play().catch(() => {}); }
-    else { $('feavid').removeAttribute('src'); $('feavid').poster = `../${r.png}`; }
+    let media=null,problem=mediaProblem;
+    try { media=matchingStudyMedia(r,mediaIndex); } catch(error) { problem=error.message; }
+    studyPlayer.show(r,media,{problem});
     const href = viewerHref(r);
     $('feanote').innerHTML = `${href ? `<a class="hud-btn primary" href="${esc(href)}">Open ${esc(r.part)} ${esc(r.case)} in 3D ↗</a> ` : ''}`
-      + `${esc(r.part)} ${esc(r.case)}: ${esc(r.load_from)}.`;
+      + `${esc(r.part)} ${esc(r.case)}: ${esc(r.load_from)}. `
+      + `<b>Safety factor ${esc(r.safety_factor)} / required ${esc(r.target)}${r.safety_factor<r.target?' — below target':''}.</b>`;
     document.querySelectorAll('#fea tr.click').forEach((tr) => tr.classList.toggle('on', +tr.dataset.i === i));
   };
   document.querySelectorAll('#fea tr.click').forEach((tr) => tr.addEventListener('click', (e) => { if (!e.target.closest('a')) show(+tr.dataset.i); }));

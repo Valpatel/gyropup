@@ -1,6 +1,7 @@
 /** Product integration: real tables, original downloads, and browser-local part state. */
 import assert from 'node:assert/strict';
 import {mkdir,readFile,writeFile} from 'node:fs/promises';
+import {execFileSync} from 'node:child_process';
 import {parseHTML} from 'linkedom';
 import {chromium,webkit} from '@playwright/test';
 const base=(process.env.SITE_URL||'http://127.0.0.1:8893').replace(/\/$/,'');
@@ -10,6 +11,20 @@ const browser=await engine.launch(engine===chromium?{channel:process.env.PLAYWRI
 const context=await browser.newContext({viewport:{width:1280,height:900}});await context.addInitScript(()=>sessionStorage.setItem('gyropup.prototype-notice','2026-10-29-v1'));
 const page=await context.newPage(),errors=[];page.setDefaultTimeout(60000);page.on('pageerror',error=>errors.push(error.message));
 const ready=()=>page.waitForFunction(()=>document.body.dataset.ready==='1');
+const checkModelActions=async()=>{
+ await page.locator('[data-model-preview]').first().waitFor({state:'attached'});
+ await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+ const rows=await page.locator('tr').evaluateAll(rows=>rows.map(row=>{
+  const originals=[...row.querySelectorAll('a[data-model-original]')],previews=[...row.querySelectorAll('a[data-model-preview]')];
+  return {key:row.dataset.partKey||row.textContent.trim().slice(0,40),
+   files:[...new Set(originals.map(a=>new URL(a.href,location.href).pathname))].sort(),
+   previews:previews.map(a=>new URL(a.href,location.href).searchParams.get('file')).sort(),
+   downloads:originals.every(a=>a.hasAttribute('download')),
+   identityVisible:!row.querySelector('.cad-part-identity')||previews.every(a=>a.parentElement===row.querySelector('.cad-part-identity'))};
+ }).filter(row=>row.files.length));
+ assert.ok(rows.length>0,'Real BOM contains downloadable models');
+ for(const row of rows){assert.deepEqual(row.previews,row.files,row.key+' has exactly one preview per model');assert.equal(row.downloads,true,row.key);assert.equal(row.identityVisible,true,row.key+' keeps preview with part identity');}
+};
 const exported=async()=>{const download=page.waitForEvent('download');await page.getByRole('button',{name:'Export progress',exact:true}).click();return JSON.parse(await readFile(await(await download).path(),'utf8'));};
 const checkNativeSort=async(table,column,direction)=>{
  const before=await table.locator('tbody tr:not([data-fixed])').evaluateAll(rows=>rows.map(row=>row.dataset.partKey||row.textContent));
@@ -25,10 +40,10 @@ const checkNativeSort=async(table,column,direction)=>{
 try{
  const version=await(await context.request.get(base+'/version.json')).json();
  const wasm=await context.request.get(base+'/designer/kit/vendor/occt-import-js/occt-import-js.wasm',{method:'HEAD'});assert.equal(wasm.status(),200);assert.match(wasm.headers()['content-type'],/^application\/wasm/);
- await page.goto(base+'/designer/progress.html');await ready();
+ await page.goto(base+'/designer/progress.html');await ready();await checkModelActions();
  const progressKeys=await page.locator('tr[data-part-key^="buy/"]').evaluateAll(rows=>rows.map(row=>row.dataset.partKey));
  assert.ok(progressKeys.length>20);assert.equal(await page.locator('table:not(.cad-part-table)').count(),0);
- await page.goto(base+'/designer/build.html');await ready();
+ await page.goto(base+'/designer/build.html');await ready();await checkModelActions();
  assert.equal(await page.locator('table:not(.cad-part-table)').count(),0);
  assert.equal(await page.getByRole('button',{name:/^Picture: sort/}).count(),0,'Picture-only columns have no meaningless sort control');
  const summaries=await page.evaluate(()=>({total:+document.querySelector('#sum-total').dataset.usd,sellers:[...document.querySelectorAll('#sellertable tbody tr[data-seller]')].reduce((sum,row)=>sum+ +row.dataset.usd,0),made:+document.querySelector('#sum-made').dataset.usd,hours:+document.querySelector('#sum-hours').dataset.h}));
@@ -41,7 +56,7 @@ try{
  await target.locator('input[type=checkbox]').first().check();
  const label=await target.getAttribute('data-part-label');
  const search=seller.getByRole('searchbox');await search.fill(label);assert.equal(await target.isVisible(),true);assert.equal(await target.locator('input').first().isChecked(),true);await search.fill('');
- const body=page.locator('[data-stream=body]');await body.uncheck();await body.check();
+ const body=page.locator('[data-stream=body]');await body.uncheck();await body.check();await checkModelActions();
  const reopened=target.locator('xpath=ancestor::details[contains(@class,"seller")]');await reopened.locator(':scope > summary').click();assert.equal(await target.locator('input').first().isChecked(),true);
  assert.equal(await page.locator('#orders .cad-table-tools').count(),await page.locator('#orders table').count(),'Rerender disposes old toolbars');
  await page.reload();await ready();await target.locator('xpath=ancestor::details[contains(@class,"seller")]').locator(':scope > summary').click();assert.equal(await target.locator('input').first().isChecked(),true);
@@ -56,14 +71,32 @@ try{
  const names=await parts.locator('tbody tr').evaluateAll(rows=>rows.map(row=>row.cells[1].textContent.trim()));assert.deepEqual(names,[...names].sort(new Intl.Collator(undefined,{numeric:true,sensitivity:'base'}).compare));
  const prints=page.locator('#print table');await checkNativeSort(prints,7,'ascending');await prints.locator('tbody input[type=checkbox]').first().check();
  const printedKey=await prints.locator('tbody tr').first().getAttribute('data-part-key');await page.reload();await ready();assert.equal(await page.locator('tr[data-part-key='+JSON.stringify(printedKey)+'] input').first().isChecked(),true);
- const inventory=await(await context.request.get(base+'/site/models.json')).json();assert.equal(inventory.files.length,495);assert.deepEqual(inventory.files.reduce((counts,f)=>(counts[f.format]=(counts[f.format]||0)+1,counts),{}),{step:188,stl:288,'3mf':19});
+ const inventory=await(await context.request.get(base+'/site/models.json')).json();
+ // Check every original against the served revision's Git tree, not a frozen
+ // file count or the inventory endpoint's own claim of completeness.
+ assert.match(version.revision,/^[a-f0-9]{40}$/);
+ const publishedRoots=['designer','exports','catalog','designs','docs','research','cad','sim','hardware','firmware'];
+ const committed=execFileSync('git',['ls-tree','-rz','--name-only',version.revision,'--',...publishedRoots],{cwd:new URL('..',import.meta.url)}).toString().split('\0').filter(Boolean);
+ const expectedModels=committed.filter(file=>/\.(stl|step|stp|3mf)$/i.test(file)).map(file=>'/'+file).sort();
+ assert.ok(expectedModels.length>0,'Served revision contains original CAD files');
+ assert.deepEqual(inventory.files.map(file=>file.path).sort(),expectedModels,'Every committed public original appears exactly once');
+ for(const file of inventory.files)assert.equal(file.format,file.path.split('.').pop().toLowerCase());
  // Every published original has its own adjacent directory preview and unchanged download.
  const directories=new Map();for(const file of inventory.files){const dir=file.path.slice(0,file.path.lastIndexOf('/')+1);if(!directories.has(dir))directories.set(dir,[]);directories.get(dir).push(file);}
  for(const [dir,files] of directories){const response=await context.request.get(base+dir);assert.equal(response.status(),200);const {document}=parseHTML(await response.text());for(const file of files){const name=file.path.split('/').pop(),original=[...document.querySelectorAll('a[data-model-original]')].find(a=>decodeURIComponent(new URL(a.getAttribute('href'),base+dir).pathname)===file.path);assert.ok(original,file.path+' original');const preview=original.nextElementSibling;assert.ok(preview.hasAttribute('data-model-preview'),file.path+' preview');assert.equal(new URL(preview.getAttribute('href'),base).searchParams.get('file'),file.path);assert.ok(original.hasAttribute('download'));}}
  await page.goto(base+'/designer/build.html');await ready();
  const media=await(await context.request.get(base+'/catalog/images.json')).json();
  const shown=await page.locator('#made tr[data-part-key],#queue tr[data-part-key^="print/body/"]').evaluateAll(rows=>rows.map(row=>({key:row.dataset.partKey.replace(/^(made|print)\//,''),src:row.querySelector('img')?.getAttribute('src')})));
- assert.equal(shown.length,26);for(const row of shown)assert.equal(new URL(row.src,base+'/designer/build.html').pathname,'/'+media[row.key].path,row.key);
+ const framePlan=await(await context.request.get(base+'/exports/body/print-plan.json')).json();
+ const expectedShown=Object.keys(framePlan.parts).map(key=>'body/'+key);
+ for(const stream of ['body','leg','rig']){
+  const bom=await(await context.request.get(base+`/exports/${stream}/bom.json`)).json();
+  expectedShown.push(...(bom.made_to_order||[]).map(part=>stream+'/'+part.key));
+ }
+ const turretBom=await(await context.request.get(base+'/exports/turret/bench/bom.json')).json();
+ expectedShown.push(...Object.keys(turretBom.ordered_to_drawing).map(key=>'turret/'+key));
+ assert.deepEqual(shown.map(row=>row.key).sort(),expectedShown.sort(),'Every made-to-order and first-frame BOM row is shown');
+ for(const row of shown){assert.ok(media[row.key]?.path,row.key+' has a scoped geometry image');assert.equal(new URL(row.src,base+'/designer/build.html').pathname,'/'+media[row.key].path,row.key);}
  for(const key of ['pa6-cf','petg','tpu95','tpu95-gyroid']){const img=page.locator('#orders tr[data-part-key="material/'+key+'"] img');if(await img.count())assert.equal(await img.getAttribute('src'),media[key].image_url,key);}
  await page.route(url=>url.href===media.petg.image_url,route=>route.abort('failed'));
  const filament=page.locator('#orders tr[data-part-key="material/petg"]');await filament.locator('xpath=ancestor::details[contains(@class,"seller")]').locator(':scope > summary').click();
@@ -104,5 +137,5 @@ try{
  await notice.evaluate(()=>window.noticeIdentity={viewer:window.__fileViewer,model:window.__fileViewer.model,scene:window.__fileViewer.stage.scene});await reopen.click();await notice.locator('#prototype-notice-dialog[open]').waitFor();await notice.locator('#prototype-notice-ack').click();
  assert.equal(await notice.evaluate(()=>window.noticeIdentity.viewer===window.__fileViewer&&window.noticeIdentity.model===window.__fileViewer.model&&window.noticeIdentity.scene===window.__fileViewer.stage.scene&&document.activeElement===document.querySelector('.file-nav .prototype-notice-reopen')&&sessionStorage.getItem('gyropup.prototype-notice')==='2026-10-29-v1'),true);
  await notice.screenshot({path:`${out}/${engine.name()}-viewer-phone-notice.png`});await firstEntry.close();
- assert.deepEqual(errors,[]);await writeFile(`${out}/${engine.name()}-report.json`,JSON.stringify({base,version,shared,printedKey,summaries,sticky,publishedModels:inventory.files.length,errors},null,2));console.log(`PASS ${engine.name()}: sortable semantic tables, fixed totals, shared persistent checklists, print status, atomic import/export, denied storage, 495 original/preview mappings, real STL/STEP/3MF controls and stage disposal, and four phone layouts`);
+ assert.deepEqual(errors,[]);await writeFile(`${out}/${engine.name()}-report.json`,JSON.stringify({base,version,shared,printedKey,summaries,sticky,publishedModels:inventory.files.length,errors},null,2));console.log(`PASS ${engine.name()}: sortable semantic tables, fixed totals, shared persistent checklists, print status, atomic import/export, denied storage, ${inventory.files.length} original/preview mappings, real STL/STEP/3MF controls and stage disposal, and four phone layouts`);
 }finally{await browser.close();}

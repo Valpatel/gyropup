@@ -74,6 +74,10 @@ test('progress and build expose their data, tables, prices, and original downloa
   assert.ok(md.includes(progress.updated));
   assert.ok(md.includes(progress.log.at(-1).title));
   assert.match(md, /\|.*scenario/i);
+  assert.match(md, /Watch the deformation animation/);
+  assert.match(md, /WebM alternative/);
+  assert.match(md, /static load scaling, not elapsed physical time/i);
+  assert.match(md, /does not validate the 100 lb design target/);
   const build = await read('designer/build.md');
   assert.ok(!build.includes('Reading the parts lists'));
   const { document } = parseHTML(await renderPortal(await read('designer/build.html'), 'designer/build.html', out));
@@ -100,6 +104,7 @@ test('a changed published status changes Markdown; local unpublished data is nev
     await cp(path.join(out, 'designer/progress.js'), path.join(fixture, 'designer/progress.js'));
     await mkdir(path.join(fixture,'designer/kit'),{recursive:true});
     await cp(path.join(out,'designer/kit/portal-data.js'),path.join(fixture,'designer/kit/portal-data.js'));
+    await cp(path.join(out,'designer/kit/study-media.js'),path.join(fixture,'designer/kit/study-media.js'));
     const source = await read('designer/progress.html');
     const data = { updated: 'fixture-revision', status: [{ title: 'Published sentinel', value: 'Changed current data', note: 'Only this bundle is visible.' }], log: [] };
     await writeFile(path.join(fixture, 'docs/progress.json'), JSON.stringify(data));
