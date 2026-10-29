@@ -2,7 +2,7 @@
 // selection's loading/error state separate from the report table and old clips.
 export function mountStudyMedia(host,{staticRender=false}={}) {
   host.innerHTML = `<div class="study-media-stage"><img class="study-still" alt="">
-    <video id="feavid" controls loop muted playsinline preload="metadata" hidden></video></div>
+    <video id="feavid" controls loop muted playsinline preload="auto" hidden></video></div>
     <div class="study-media-toolbar"><span class="study-media-kind"></span>
     <button type="button" class="study-play" hidden>Play deformation</button>
     <button type="button" class="study-retry" hidden>Retry animation</button></div>
@@ -14,6 +14,7 @@ export function mountStudyMedia(host,{staticRender=false}={}) {
     const source=media?.video||record.animation;
     kind.textContent=source?'Animated static deformation':'Recorded static result';
     status.textContent=source?'Static load scaling, not elapsed physical time. Deformation is exaggerated; the recorded safety factor is unchanged.':problem?'Animation metadata unavailable; recorded static result shown.':'No animation was published for this case.';
+    if(media)status.append(' Recorded 37.5 kg baseline; this does not validate the 100 lb design target.');
     if(source){const link=host.ownerDocument.createElement('a');link.href='../'+source;link.textContent='Watch the deformation animation';status.append(' ',link);}
   }};
   let selection=0,events,timer,current;
@@ -48,7 +49,7 @@ export function mountStudyMedia(host,{staticRender=false}={}) {
       if(own!==selection||video.currentSrc!==new URL('../'+source,location.href).href)return;
       if(!Number.isFinite(video.duration)||video.duration<=0)return failure();
       clearTimeout(timer);still.hidden=true;video.hidden=false;play.hidden=false;
-      state('ready',`${Math.round(video.duration)}-second presentation loop · static load scaling, not elapsed physical time. Deformation is exaggerated; the recorded safety factor is unchanged.`);
+      state('ready',`${Math.round(video.duration)}-second presentation loop · static load scaling, not elapsed physical time. Deformation is exaggerated; the recorded safety factor is unchanged.${media?' Recorded 37.5 kg baseline; this does not validate the 100 lb design target.':''}`);
       if(!matchMedia('(prefers-reduced-motion: reduce)').matches)video.play().catch(()=>{});
     },{signal});
     video.addEventListener('play',()=>{if(own===selection)play.textContent='Pause animation';},{signal});
