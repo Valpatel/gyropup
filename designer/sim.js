@@ -14,9 +14,11 @@ import { evaluate, indexCatalog, legPose, effectiveDesign, resolvePart } from '.
 import { createSfx } from './sfx.js';
 import { createRobotActions } from './robot_actions.js';
 import { createLoadingStatus } from './kit/loading.js';
+import { createDataReader } from './kit/portal-data.js';
 
 const $ = (s) => document.querySelector(s);
-const getJson = async (u) => { const r = await fetch(u, { cache: 'no-cache' }); if (!r.ok) throw new Error(`${u}: ${r.status}`); return r.json(); };
+const dataReader = createDataReader(fetch);
+const getJson = u => dataReader.json(u);
 const STORE = 'gyropup-design-v1';
 const startupMessage = text => { const message=$('#sim-startup .gp-loading-message'); if(message)message.textContent=text; };
 
