@@ -14,9 +14,11 @@ const JOINTS = new Set(['base','pan','tilt','pinion','dial','wheel_l','wheel_r',
 export async function buildCurrentTurret(root, { color = 0xf5b82e } = {}) {
   const source=`${root}exports/sim/turret_box/`,reader=createDataReader(fetch),xyz=p=>Array.isArray(p)&&p.length===3&&p.every(Number.isFinite);
   const manifest=await reader.json(source+'manifest.json',{label:'Current turret manifest',validate:m=>isRecord(m)&&Array.isArray(m.parts)&&m.parts.length>0
-    &&m.parts.every(p=>isRecord(p)&&typeof p.file==='string'&&p.file.length>0&&typeof p.name==='string')
+    &&m.parts.every(p=>isRecord(p)&&typeof p.file==='string'&&p.file.length>0&&typeof p.name==='string'
+      &&Array.isArray(p.bbox)&&p.bbox.length===6&&p.bbox.every(Number.isFinite)&&(p.explode==null||xyz(p.explode)))
     &&[...JOINTS].every(group=>m.parts.some(p=>p.group===group))&&isRecord(m.pivots)
-    &&['pan','tilt','pinion','dial','wheel_l','wheel_r','flap'].every(key=>xyz(m.pivots[key]))&&xyz(m.muzzle)&&xyz(m.laser)
+    &&['pan','tilt','pinion','dial','wheel_l','wheel_r','flap'].every(key=>xyz(m.pivots[key]))&&Number.isFinite(m.pivots.pinion_ratio)&&xyz(m.muzzle)&&xyz(m.laser)
+    &&Number.isFinite(m.masses_g?.turret_with_balls)&&m.masses_g.turret_with_balls>0
     &&Array.isArray(m.pockets)&&m.pockets.every(xyz)&&Array.isArray(m.pile)&&m.pile.every(xyz)&&Number.isFinite(m.mechanics?.ball?.speed_mps)&&m.mechanics.ball.speed_mps>0});
   const turret=buildTurret(color),mount=point(manifest.pivots.pan);
   // Keep the effect objects/API while replacing every procedural solid.

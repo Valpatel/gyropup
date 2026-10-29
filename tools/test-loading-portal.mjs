@@ -151,6 +151,25 @@ try{
     }
     await ready(page);assert.equal(await page.locator('#app canvas').count(),1);assert.ok(await page.evaluate(()=>window.__fea.stage.renderer.info.render.calls>0));record('FEA '+mode);await page.close();
   }
+  const bodyManifest=await json('/exports/sim/v2/rig/manifest.json');
+  const faults=[m=>delete m.fivebar.l1_mm,m=>m.fivebar.ref.phi1=null,m=>m.fivebar.h_range_mm.reverse(),m=>m.mounts.eyes=[0],m=>m.wheel_r_mm=0,m=>m.track_mm='wide',m=>m.height_mm=null,m=>m.turret.muzzle_mm=[]];
+  let manifestAttempts=0,earlyMeshes=0;
+  const malformedRobot=await pageFor('/designer/character/talk-demo.html',async page=>{
+    page.on('request',request=>{if(/\.stl(?:\?|$)/.test(request.url()))earlyMeshes++;});
+    await page.route('**/exports/sim/v2/rig/manifest.json*',route=>{const data=structuredClone(bodyManifest);faults[manifestAttempts++]?.(data);return route.fulfill({json:data});});
+  });
+  await state(malformedRobot,'talk-load-status','error');
+  await malformedRobot.evaluate(()=>window.firstCanvas=document.querySelector('#app canvas'));
+  for(let attempt=1;attempt<=faults.length;attempt++){
+    await state(malformedRobot,'talk-load-status','error');assert.equal(manifestAttempts,attempt);assert.equal(earlyMeshes,0,'Invalid kinematic data is rejected before mesh requests');
+    assert.equal(await malformedRobot.evaluate(()=>!!window.__talkDemo),false);
+    assert.ok(await malformedRobot.evaluate(()=>window.firstCanvas===document.querySelector('#app canvas')));
+    await retry(malformedRobot,'talk-load-status');
+  }
+  await ready(malformedRobot);assert.equal(manifestAttempts,faults.length+1);
+  assert.equal(await malformedRobot.evaluate(()=>{const robot=window.__talkDemo.robot;robot.group.updateMatrixWorld(true);let bad=0;robot.group.traverse(o=>{if(!o.matrixWorld.elements.every(Number.isFinite))bad++;});return bad;}),0);
+  assert.equal(await malformedRobot.locator('.gp-dock').count(),1);assert.equal(await malformedRobot.locator('#app canvas').count(),1);
+  record('Robot kinematic manifest failures and finite same-stage recovery');await malformedRobot.close();
   const talk=await pageFor('/designer/character/talk-demo.html',page=>page.route('**'+partURL+'*',route=>route.fulfill({contentType:'text/html',body:'<html>Not the robot part</html>'})));
   await state(talk,'talk-load-status','error');await errorLayout(talk,'talk-load-status','talk-error');assert.ok(await talk.locator('#detect').isDisabled());
   await talk.evaluate(()=>window.originalCanvas=document.querySelector('#app canvas'));
