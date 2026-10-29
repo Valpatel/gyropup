@@ -129,8 +129,10 @@ def controls(source, spec):
 
 
 def run(output):
-    if RELATIONS_VERSION != 4:
+    if RELATIONS_VERSION != "4":
         raise ValueError('Use reviewed cad-agent relation engine4')
+    if board.INSERT_PILOT != 4. or board.INSERT_LENGTH != 5.74:
+        raise ValueError('Nominal insert/pilot basis changed; revise the specimen plan before regenerating')
     if output.exists():
         raise ValueError('Use a fresh output directory; do not overwrite a prior measurement package')
     parts = {'base_board_carrier': board.carrier().val(), 'pan_base': turret.pan_base(turret.Geo()).val()}

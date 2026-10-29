@@ -19,7 +19,7 @@ def check(root=ROOT, package=None):
     root = Path(root)
     package = Path(package) if package else root/'exports/turret/carrier-insert-fit'
     report = json.loads((package/'receipt.json').read_text())
-    if report.get('schema') != 'gyropup.carrier-insert-fit/1' or report.get('relation_engine') != 4:
+    if report.get('schema') != 'gyropup.carrier-insert-fit/1' or report.get('relation_engine') != '4':
         raise ValueError('Unsupported specimen evidence')
     if (report.get('physical_measurements') is not None or report.get('physical_fit_verified') is not False
             or report.get('release_ready') is not False):
