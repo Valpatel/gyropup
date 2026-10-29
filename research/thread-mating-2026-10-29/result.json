@@ -1,0 +1,75 @@
+{
+  "schema": "gyropup.thread-phase-diagnostic/1",
+  "recorded_utc": "2026-10-29T11:51:35.731623+00:00",
+  "outcome": "inconclusive_timeout",
+  "qualification_pass": false,
+  "physical_fit_verified": false,
+  "toolkit_commit": "2ad426943ce2c7232875e105e50810849f9a3e5e",
+  "runtime_observed_after_run": {
+    "python": "3.12.3",
+    "OCP": "7.9.3.1"
+  },
+  "inputs": {
+    "a": {
+      "file": "91290A111.norm.step",
+      "sha256": "5254e828992285b42974ce077f5b1443fb8831397bcd9e653c4f5680df3b4191",
+      "transform": [
+        0,
+        0,
+        -1,
+        46.4,
+        -0.45399049973954686,
+        -0.8910065241883678,
+        0,
+        -22.4,
+        -0.8910065241883678,
+        0.45399049973954686,
+        0,
+        9
+      ]
+    },
+    "b": {
+      "file": "94459A140.norm.step",
+      "sha256": "2ee42df52bf86ee05039c239b23e0d589d0587bb604ee06c28531315631158a0",
+      "transform": [
+        0.0,
+        0.0,
+        1.0,
+        48.0,
+        0.0,
+        1.0,
+        0.0,
+        -22.4,
+        -1.0,
+        0.0,
+        0.0,
+        9.0
+      ]
+    }
+  },
+  "screw_rotation_about_seated_world_x_degrees": 153,
+  "seat_translation_mm": [
+    0,
+    0,
+    0
+  ],
+  "preparation_timeout_seconds": 900,
+  "exit_code": 124,
+  "last_started_phase": "cut_a",
+  "completed_bundle": false,
+  "volume_measurements": null,
+  "conservation_result": null,
+  "original_command_script_sha256": "71bf6367a43e369f36b5cb01a3ae349cedf19c2c6ca16c7db5295367968d9ec0",
+  "public_reproduction_script_sha256": "77d184b5ae8533262e250094530164d036593ccb9f12348ddd4945a145e06cae",
+  "logs": {
+    "clocked-run.log": "d5d686768a7186c129e72899b7738f878098df9c22bbf3267d6600df46a54989",
+    "rejected-flat-matrix.log": "0899d2fd2665bf0cb4cc2ad693f938b8d2bc9575b635ca7171d09447cda63277"
+  },
+  "limits": [
+    "The common phase advanced to cut_a but no measured complete Boolean bundle was produced.",
+    "A timeout does not establish clearance, interference or kernel invalidity.",
+    "Sampled material rays cannot qualify global threaded mating.",
+    "No seat translation, overlap exclusion, threshold relaxation, carrier geometry or selected hardware changed.",
+    "The absent 91290A113 model is a separate unresolved input; no phase is transferred to it."
+  ]
+}
