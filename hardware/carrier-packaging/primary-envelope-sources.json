@@ -99,25 +99,27 @@
       "url": "https://www.analog.com/media/en/technical-documentation/data-sheets/ltc4359.pdf"
     },
     {
-      "evidence": "C1206C473F1GECAUTO: 47nF100V1206 standardtermination rowEH; length3.2+/-0.2,width1.6+/-0.2,thickness1.6+/-0.2mm. These dimensions do not include solder.",
+      "evidence": "C1206C473F1GECAUTO: 47nF100V1206 standardtermination rowEH; length3.2+/-0.2,width1.6+/-0.2,thickness1.6+/-0.2mm. These dimensions do not include solder. DensityB reflow land table distinguishes actual pad extents from V1/V2 placement courtyard; no minimum-density qualification inferred.",
       "id": "kemet_c0g_esd",
       "observed": "2026-10-29",
       "pages": [
         5,
         7,
-        8
+        8,
+        10
       ],
       "sha256": "e7a71bb470bbc82e77e3ecbfce7749d3f5c963985e62d4494ad52de285945189",
       "url": "https://yageogroup.com/content/datasheet/asset/file/KEM_C1091_C0G_ESD"
     },
     {
-      "evidence": "C0805C682J5GACTU:6800pF50V0805 rowDN; body2.0+/-0.2x1.25+/-0.2x0.78+/-0.10mm. Exactmanufacturer sheet mirrored byFarnell2739974 corroborates.",
+      "evidence": "C0805C682J5GACTU:6800pF50V0805 rowDN; body2.0+/-0.2x1.25+/-0.2x0.78+/-0.10mm. Exactmanufacturer sheet mirrored byFarnell2739974 corroborates. DensityB reflow land table distinguishes actual pad extents from V1/V2 placement courtyard; no minimum-density qualification inferred.",
       "id": "kemet_c0g",
       "observed": "2026-10-29",
       "pages": [
         3,
         6,
-        10
+        10,
+        12
       ],
       "sha256": "02d179914aeb9585eb2229ba8e18ef9d6b01c77c056de2af295d6950a2a5cc0d",
       "url": "https://yageogroup.com/content/datasheet/asset/file/KEM_C1003_C0G_SMD"
@@ -182,6 +184,95 @@
       ],
       "sha256": "a3756e59fd06d0ba736edf9ffe71d99d2aae33fb7e49fedc86165a241179f4a6",
       "url": "https://www.ti.com/lit/ds/symlink/ne555.pdf"
+    },
+    {
+      "evidence": "Viewed SOD523: max lead span He1.65, width D0.85, height A0.65 mm; body E1.25 max. Recommended lands span2.00 x0.70, pad0.60 and gap0.80. Band marks cathode; no numerical pin identities inferred.",
+      "id": "ddz9699",
+      "observed": "2026-10-29",
+      "pages": [
+        1,
+        6
+      ],
+      "public_distributor_entry": "https://sg.element14.com/diodes-inc/ddz9699t-7/zener-diode-12v-0-15w-sod-523/dp/3945445",
+      "revision": "DS30553 Rev8-2, October2017",
+      "sha256": "b38bbd85d3fcc58919638c971408e479c3e9b540943b65f0eeea1981c7cf9bcd",
+      "url": "https://4donline.ihs.com/images/VipMasterIC/IC/DIOD/DIOD-S-A0003550665/DIOD-S-A0003550665-1.pdf?hkey=6D3A4C79FDBF58556ACFDE234799DDF0"
+    },
+    {
+      "evidence": "Viewed exact SMA drawing: max lead span E5.59, width A2.92 and height J2.30 mm. Recommended pads span6.50 x1.70, pad2.50 long, gap1.50. Do not transfer this height to S1B revision24.",
+      "id": "smat70a",
+      "observed": "2026-10-29",
+      "pages": [
+        1,
+        3,
+        4
+      ],
+      "public_distributor_entry": "https://uk.farnell.com/diodes-inc/smat70a-13-f/diode-tvs-uni-dir-70v-400w-sma/dp/1858620",
+      "revision": "DS30213 Rev11-2, November2014",
+      "sha256": "65aad151e0c2aa6926a8f3a8686b5afc460f44fa0b3cb597594413173ebcc13e",
+      "url": "https://4donline.ihs.com/images/VipMasterIC/IC/DIOD/DIOD-S-A0000194668/DIOD-S-A0000194668-1.pdf?hkey=6D3A4C79FDBF58556ACFDE234799DDF0"
+    },
+    {
+      "evidence": "Viewed SOD123: maximum He3.85 xD1.70 xA1.35 mm including stand-off. Land span4.05 x0.95, pad0.90 long. Exact -7-F grade retained.",
+      "id": "mmsz5231",
+      "observed": "2026-10-29",
+      "pages": [
+        1,
+        4
+      ],
+      "public_distributor_entry": "https://www.newark.com/diodes-inc/mmsz5231b-7-f/diode-zener-5-1v-0-5w-sod-123/dp/12T2210",
+      "revision": "DS18010 Rev28-2, October2017",
+      "sha256": "7c7ac7a58521db27991b0d8dbd84d04d00fc84bc85af85bed1c8d31b20ebd200",
+      "url": "https://4donline.ihs.com/images/VipMasterIC/IC/DIOD/DIOD-S-A0003550771/DIOD-S-A0003550771-1.pdf?hkey=6D3A4C79FDBF58556ACFDE234799DDF0"
+    },
+    {
+      "evidence": "Viewed1206-HP row: body3.1+/-0.20 x1.6+/-0.15 x0.5+/-0.15 mm. Reflow lands Z3.60 xX1.80; padY1.05 and gapG1.50. This is not the wave-solder row or a pulse qualification.",
+      "id": "crcw_hp",
+      "observed": "2026-10-29",
+      "pages": [
+        9
+      ],
+      "revision": "17-Mar-2026, document20043",
+      "sha256": "32bd4d94168d55efdfc9027fdf77b6d07089394de8f57f647498b0d768fe5452",
+      "url": "https://www.vishay.com/docs/20043/crcwhpe3.pdf"
+    },
+    {
+      "evidence": "100nF100V0805 waterfall gives DN: thickness0.78+/-0.10; body2.0+/-0.2 x1.25+/-0.2. Viewed densityB reflow: centre offsets C0.90, pads Y1.15 xX1.45 => copper span2.95 x1.45; V1/V2 are courtyard3.50 x2.00, not copper. Effective capacitance/assembly qualification separate.",
+      "id": "kemet_x7r",
+      "observed": "2026-10-29",
+      "pages": [
+        3,
+        5,
+        9,
+        12
+      ],
+      "revision": "C1002_X7R 2026-09-01",
+      "sha256": "d8e6ca6631862e31a19b90b6cfe13f1b20153c2efd6c8e30f1a5d5ba147aa908",
+      "url": "https://yageogroup.com/content/datasheet/asset/file/KEM_C1002_X7R_SMD"
+    },
+    {
+      "evidence": "Actual dimension drawing viewed. MFR-25, not miniatureMFR25S: length6.3+/-0.5, diameter2.4+/-0.2, lead0.55+/-0.05. Exact B bulk/F100ppm/52 axial code is not M/FB factory-formed option. Installed lead pitch and board stack remain unspecified.",
+      "id": "yageo_mfr",
+      "observed": "2026-10-29",
+      "pages": [
+        2,
+        3
+      ],
+      "revision": "Apr03,2024 V4",
+      "sha256": "b460acdb476469774e0785a8ef85aec79e2d95fe41beaa79c5a414e4e95e3fe0",
+      "url": "https://yageogroup.com/content/datasheet/asset/file/YAGEO-MFR_DATASHEET"
+    },
+    {
+      "evidence": "Actual dimension drawing viewed. RSF100, not miniatureRSF1WS: length11.5+/-1.0, diameter4.5+/-0.5, lead0.8+/-0.05. Exact B bulk/73 axial code is not M/MB factory-formed option. Installed lead pitch, body cooling and board stack remain unspecified.",
+      "id": "yageo_rsf",
+      "observed": "2026-10-29",
+      "pages": [
+        2,
+        3
+      ],
+      "revision": "Apr01,2024 V4",
+      "sha256": "7c43489665a7e2848fcb4de40cb9ed51f173673c1eb6e49c0a7e0d89cca75694",
+      "url": "https://yageogroup.com/content/datasheet/asset/file/YAGEO-RSF_DATASHEET"
     }
   ],
   "status": "WIP_PRIMARY_INVENTORY_NOT_A_LAYOUT"

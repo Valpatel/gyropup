@@ -7,7 +7,7 @@
   "fit_qualified": false,
   "frozen": false,
   "inventory_count": 47,
-  "package_evidence_count": 32,
+  "package_evidence_count": 42,
   "remaining_physical_inventory": [
     "external F4, D8, D14 and exact upstream fuse/holder boundary",
     "C2/C3/servo housings, contacts, crimps and actual leads",
@@ -571,7 +571,23 @@
       "group": "retained_cutoff_converter",
       "id": "P.C2",
       "maximum_envelope": {
-        "land_outer_mm": null,
+        "land_center_offsets_mm": [
+          -1.5,
+          1.5
+        ],
+        "land_density": "B, manufacturer reflow recommendation; not an application qualification",
+        "land_outer_mm": [
+          4.15,
+          1.8
+        ],
+        "land_pad_mm": [
+          1.15,
+          1.8
+        ],
+        "manufacturer_courtyard_mm": [
+          4.7,
+          2.3
+        ],
         "match": [
           "C1206C473F1GECAUTO"
         ],
@@ -605,7 +621,23 @@
       "group": "retained_cutoff_converter",
       "id": "P.C3",
       "maximum_envelope": {
-        "land_outer_mm": null,
+        "land_center_offsets_mm": [
+          -0.9,
+          0.9
+        ],
+        "land_density": "B, manufacturer reflow recommendation; not an application qualification",
+        "land_outer_mm": [
+          2.95,
+          1.45
+        ],
+        "land_pad_mm": [
+          1.15,
+          1.45
+        ],
+        "manufacturer_courtyard_mm": [
+          3.5,
+          2
+        ],
         "match": [
           "C0805C682J5GACTU"
         ],
@@ -862,8 +894,36 @@
       "datasheet": "https://yageogroup.com/content/datasheet/asset/file/KEM_C1002_X7R_SMD",
       "group": "retained_cutoff_converter",
       "id": "P.C4",
-      "maximum_envelope": null,
+      "maximum_envelope": {
+        "land_center_offsets_mm": [
+          -0.9,
+          0.9
+        ],
+        "land_density": "B, manufacturer reflow recommendation; not an application qualification",
+        "land_outer_mm": [
+          2.95,
+          1.45
+        ],
+        "land_pad_mm": [
+          1.15,
+          1.45
+        ],
+        "manufacturer_courtyard_mm": [
+          3.5,
+          2
+        ],
+        "match": [
+          "C0805C104K1RACTU"
+        ],
+        "maximum_body_mm": [
+          2.2,
+          1.45,
+          0.88
+        ],
+        "source": "kemet_x7r"
+      },
       "mpn": "C0805C104K1RACTU",
+      "package_evidence_id": "kemet_x7r",
       "pins_from_reviewed_candidate": {
         "1": "VIN_PROTECTED",
         "2": "GND"
@@ -884,8 +944,36 @@
       "datasheet": "https://yageogroup.com/content/datasheet/asset/file/KEM_C1002_X7R_SMD",
       "group": "retained_cutoff_converter",
       "id": "P.C5",
-      "maximum_envelope": null,
+      "maximum_envelope": {
+        "land_center_offsets_mm": [
+          -0.9,
+          0.9
+        ],
+        "land_density": "B, manufacturer reflow recommendation; not an application qualification",
+        "land_outer_mm": [
+          2.95,
+          1.45
+        ],
+        "land_pad_mm": [
+          1.15,
+          1.45
+        ],
+        "manufacturer_courtyard_mm": [
+          3.5,
+          2
+        ],
+        "match": [
+          "C0805C104K1RACTU"
+        ],
+        "maximum_body_mm": [
+          2.2,
+          1.45,
+          0.88
+        ],
+        "source": "kemet_x7r"
+      },
       "mpn": "C0805C104K1RACTU",
+      "package_evidence_id": "kemet_x7r",
       "pins_from_reviewed_candidate": {
         "1": "PAN_INPUT",
         "2": "GND"
@@ -907,7 +995,23 @@
       "group": "retained_cutoff_converter",
       "id": "P.C6",
       "maximum_envelope": {
-        "land_outer_mm": null,
+        "land_center_offsets_mm": [
+          -1.5,
+          1.5
+        ],
+        "land_density": "B, manufacturer reflow recommendation; not an application qualification",
+        "land_outer_mm": [
+          4.15,
+          1.8
+        ],
+        "land_pad_mm": [
+          1.15,
+          1.8
+        ],
+        "manufacturer_courtyard_mm": [
+          4.7,
+          2.3
+        ],
         "match": [
           "C1206C473F1GECAUTO"
         ],
@@ -941,7 +1045,23 @@
       "group": "retained_cutoff_converter",
       "id": "P.C7",
       "maximum_envelope": {
-        "land_outer_mm": null,
+        "land_center_offsets_mm": [
+          -1.5,
+          1.5
+        ],
+        "land_density": "B, manufacturer reflow recommendation; not an application qualification",
+        "land_outer_mm": [
+          4.15,
+          1.8
+        ],
+        "land_pad_mm": [
+          1.15,
+          1.8
+        ],
+        "manufacturer_courtyard_mm": [
+          4.7,
+          2.3
+        ],
         "match": [
           "C1206C473F1GECAUTO"
         ],
@@ -975,7 +1095,23 @@
       "group": "retained_cutoff_converter",
       "id": "P.C8",
       "maximum_envelope": {
-        "land_outer_mm": null,
+        "land_center_offsets_mm": [
+          -1.5,
+          1.5
+        ],
+        "land_density": "B, manufacturer reflow recommendation; not an application qualification",
+        "land_outer_mm": [
+          4.15,
+          1.8
+        ],
+        "land_pad_mm": [
+          1.15,
+          1.8
+        ],
+        "manufacturer_courtyard_mm": [
+          4.7,
+          2.3
+        ],
         "match": [
           "C1206C473F1GECAUTO"
         ],
@@ -1070,7 +1206,7 @@
           2.1,
           0.85
         ],
-        "note": "Heightconservativelyaddsmaxstandoff0.05totableAmax0.8. ExposedpadmayconnectonlyfloatingVSS.",
+        "note": "Height conservatively adds maximum stand-off0.05 to tableA maximum0.8. EP is explicitly NC in the paper proposal following >30V spacing guidance; pin6 remains FLOATING_VSS. EP metal/land is still reserved.",
         "source": "ltc4359"
       },
       "mpn": "LTC4359IDCB#TRPBF",
@@ -1138,9 +1274,30 @@
     {
       "group": "complete_ideal_diode_reference_inventory",
       "id": "I.D1",
-      "maximum_envelope": null,
+      "maximum_envelope": {
+        "land_gap_mm": 1.5,
+        "land_outer_mm": [
+          6.5,
+          1.7
+        ],
+        "land_pad_mm": [
+          2.5,
+          1.7
+        ],
+        "match": [
+          "SMAT70A-13-F"
+        ],
+        "maximum_body_mm": [
+          5.59,
+          2.92,
+          2.3
+        ],
+        "pin_basis": "Cathode band K, opposite lead A; project pad numbering remains separate.",
+        "source": "smat70a"
+      },
       "mpn": "SMAT70A-13-F",
       "package": "SMA",
+      "package_evidence_id": "smat70a",
       "pins_from_reviewed_candidate": null,
       "placement": null,
       "reference_pin_contract": {
@@ -1160,9 +1317,29 @@
     {
       "group": "complete_ideal_diode_reference_inventory",
       "id": "I.D2",
-      "maximum_envelope": null,
+      "maximum_envelope": {
+        "land_outer_mm": [
+          4.05,
+          0.95
+        ],
+        "land_pad_mm": [
+          0.9,
+          0.95
+        ],
+        "match": [
+          "MMSZ5231B-7-F"
+        ],
+        "maximum_body_mm": [
+          3.85,
+          1.7,
+          1.35
+        ],
+        "pin_basis": "Cathode band K, opposite lead A; project pad numbering remains separate.",
+        "source": "mmsz5231"
+      },
       "mpn": "MMSZ5231B-7-F",
       "package": "SOD123",
+      "package_evidence_id": "mmsz5231",
       "pins_from_reviewed_candidate": null,
       "placement": null,
       "reference_pin_contract": {
@@ -1220,9 +1397,30 @@
     {
       "group": "complete_ideal_diode_reference_inventory",
       "id": "I.D4",
-      "maximum_envelope": null,
+      "maximum_envelope": {
+        "land_gap_mm": 0.8,
+        "land_outer_mm": [
+          2,
+          0.7
+        ],
+        "land_pad_mm": [
+          0.6,
+          0.7
+        ],
+        "match": [
+          "DDZ9699T-7"
+        ],
+        "maximum_body_mm": [
+          1.65,
+          0.85,
+          0.65
+        ],
+        "pin_basis": "Cathode band K, opposite lead A; project pad numbering remains separate.",
+        "source": "ddz9699"
+      },
       "mpn": "DDZ9699T-7",
       "package": "SOD523",
+      "package_evidence_id": "ddz9699",
       "pins_from_reviewed_candidate": null,
       "placement": null,
       "reference_pin_contract": {
@@ -1286,9 +1484,29 @@
     {
       "group": "complete_ideal_diode_reference_inventory",
       "id": "I.R2",
-      "maximum_envelope": null,
+      "maximum_envelope": {
+        "land_gap_mm": 1.5,
+        "land_outer_mm": [
+          3.6,
+          1.8
+        ],
+        "land_pad_mm": [
+          1.05,
+          1.8
+        ],
+        "match": [
+          "CRCW12062K00FKEAHP"
+        ],
+        "maximum_body_mm": [
+          3.3,
+          1.75,
+          0.65
+        ],
+        "source": "crcw_hp"
+      },
       "mpn": "CRCW12062K00FKEAHP",
       "package": "1206",
+      "package_evidence_id": "crcw_hp",
       "pins_from_reviewed_candidate": null,
       "placement": null,
       "reference_pin_contract": {
@@ -1308,9 +1526,47 @@
     {
       "group": "complete_ideal_diode_reference_inventory",
       "id": "I.COUT",
-      "maximum_envelope": null,
-      "mpn": null,
-      "package": null,
+      "maximum_envelope": {
+        "land_center_offsets_mm": [
+          -1.5,
+          1.5
+        ],
+        "land_density": "B, manufacturer reflow recommendation; not an application qualification",
+        "land_outer_mm": [
+          4.15,
+          1.8
+        ],
+        "land_pad_mm": [
+          1.15,
+          1.8
+        ],
+        "manufacturer_courtyard_mm": [
+          4.7,
+          2.3
+        ],
+        "match": [
+          "C1206C473F1GECAUTO"
+        ],
+        "maximum_body_mm": [
+          3.4,
+          1.8,
+          1.8
+        ],
+        "source": "kemet_c0g_esd"
+      },
+      "mpn": "C1206C473F1GECAUTO",
+      "package": "1206",
+      "package_evidence_id": "kemet_c0g_esd",
+      "packaging_candidate_only": {
+        "capacitance_nf": 47,
+        "dielectric": "C0G",
+        "limit": "Body and manufacturer land record only. Actual OUTsense-to-FLOATING_VSS waveform, maximum clamp, pulse and temperature bounds remain unknown; 75V zener marking is not a100V pass. Replace and revalidate placement if required voltage or body changes.",
+        "mpn": "C1206C473F1GECAUTO",
+        "qualification": false,
+        "rated_voltage_v": 100,
+        "selected_mpn": null,
+        "tolerance_percent": 1
+      },
       "pins_from_reviewed_candidate": null,
       "placement": null,
       "reference_pin_contract": {
@@ -1318,8 +1574,14 @@
         "2": "FLOATING_VSS"
       },
       "source": "https://www.analog.com/media/en/technical-documentation/data-sheets/ltc4359.pdf#page=12",
-      "supplier_observation": null,
-      "value": "47nF reference capacitor; exact voltage/MPN pending topology check"
+      "supplier_observation": {
+        "limit": "Carry-forward dated observation only; see exact stock/pack/lead caveats at source.",
+        "observed_on": "2026-10-29",
+        "readiness": false,
+        "row_index": 10,
+        "source": "hardware/carrier-pan-protection/availability.json"
+      },
+      "value": "47nF100V1%C0G unselected packaging candidate; differential waveform qualification open"
     },
     {
       "catalog_key": "ti-ne555p",
@@ -1359,8 +1621,32 @@
       "catalog_key": "yageo-mfr-25fbf52-1k",
       "group": "retained_legacy_control_board",
       "id": "L.R1",
-      "maximum_envelope": null,
+      "maximum_envelope": {
+        "additional_unknowns": [
+          "formed lead pitch and minimum bend clearance",
+          "stand-off, mounting and underside trimming",
+          "solder pad/drill selection"
+        ],
+        "land_outer_mm": null,
+        "lead_diameter_max_mm": 0.6,
+        "match": [
+          "MFR-25FBF52-1K",
+          "MFR-25FBF52-6K8"
+        ],
+        "maximum_body_mm": [
+          6.8,
+          2.6,
+          2.6
+        ],
+        "shape": "axial cylinder; installed orientation unfrozen",
+        "source": "yageo_mfr",
+        "unformed_lead_length_range_mm": [
+          26,
+          30
+        ]
+      },
       "mpn": "MFR-25FBF52-1K",
+      "package_evidence_id": "yageo_mfr",
       "placement": "existing envelope only; exact leads/pads not established",
       "prior_sources": [
         "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-1K",
@@ -1374,8 +1660,32 @@
       "catalog_key": "yageo-mfr-25fbf52-6k8",
       "group": "retained_legacy_control_board",
       "id": "L.R2",
-      "maximum_envelope": null,
+      "maximum_envelope": {
+        "additional_unknowns": [
+          "formed lead pitch and minimum bend clearance",
+          "stand-off, mounting and underside trimming",
+          "solder pad/drill selection"
+        ],
+        "land_outer_mm": null,
+        "lead_diameter_max_mm": 0.6,
+        "match": [
+          "MFR-25FBF52-1K",
+          "MFR-25FBF52-6K8"
+        ],
+        "maximum_body_mm": [
+          6.8,
+          2.6,
+          2.6
+        ],
+        "shape": "axial cylinder; installed orientation unfrozen",
+        "source": "yageo_mfr",
+        "unformed_lead_length_range_mm": [
+          26,
+          30
+        ]
+      },
       "mpn": "MFR-25FBF52-6K8",
+      "package_evidence_id": "yageo_mfr",
       "placement": "existing envelope only; exact leads/pads not established",
       "prior_sources": [
         "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-6K8",
@@ -1505,8 +1815,31 @@
       "catalog_key": "yageo-rsf100jb-73-2k2",
       "group": "retained_legacy_control_board",
       "id": "L.R3",
-      "maximum_envelope": null,
+      "maximum_envelope": {
+        "additional_unknowns": [
+          "formed lead pitch and minimum bend clearance",
+          "stand-off, mounting and underside trimming",
+          "solder pad/drill selection"
+        ],
+        "land_outer_mm": null,
+        "lead_diameter_max_mm": 0.85,
+        "match": [
+          "RSF100JB-73-2K2"
+        ],
+        "maximum_body_mm": [
+          12.5,
+          5,
+          5
+        ],
+        "shape": "axial cylinder; installed orientation unfrozen",
+        "source": "yageo_rsf",
+        "unformed_lead_length_range_mm": [
+          33,
+          37
+        ]
+      },
       "mpn": "RSF100JB-73-2K2",
+      "package_evidence_id": "yageo_rsf",
       "placement": "existing envelope only; exact leads/pads not established",
       "prior_sources": [
         "https://www.mouser.com/ProductDetail/603-RSF100JB-73-2K2",
@@ -1536,10 +1869,10 @@
     "catalog/turret.json": "036b39b5e923169713b20907fd1a113bf9044e3b201d9fcd2c4f2fcbbabdc367",
     "docs/base-board-interfaces.md": "32a4d63c33ee79dad2753a7be1d8dc6b60ea557a8a842370f5f1ca5680e6d7b8",
     "docs/carrier-service-connectors.md": "f73db1114d1d807002ff454b5cb9ae1c7d94c1e29af89567b640e36f17966ec7",
-    "hardware/carrier-packaging/front-reference-contract.json": "f658762cb95e52615563630107bb940ddc16a12de5d287d0c48cfd134530417b",
-    "hardware/carrier-packaging/inventory.py": "bd9d65bba0dfa666665a4cae3631c5ef9933f8dc5361f2b2deb018ecd80e552d",
-    "hardware/carrier-packaging/package-envelopes.json": "ab0d9e97b28ca3e4277e2351163c5d409e81642c3f52aef7fd5a96a90b51fb3b",
-    "hardware/carrier-packaging/primary-envelope-sources.json": "b67ac8c2193f1089803ef48bd7d50f687324438c15ce93e3b538c54b9b6460c4",
+    "hardware/carrier-packaging/front-reference-contract.json": "06956af049dafbeaf44bb9b0a739cde0b4ce099f0a6795758bebc77ced918b48",
+    "hardware/carrier-packaging/inventory.py": "317786bb0bf507e3a572a48e45b77b08320baf9220bc0156d3c61293d0f767b7",
+    "hardware/carrier-packaging/package-envelopes.json": "9269e27790456d00d9392f30ddd3dc4f720c88ebd0297e9696530881abd8b224",
+    "hardware/carrier-packaging/primary-envelope-sources.json": "7b9b73917a10cf5215a0fffe9ca67c838039d7ec4e82f4ec4294e8bdb00f6162",
     "hardware/carrier-packaging/terminal-contract.json": "4f1eb2c31cafc363d8ea5381293db8f9ea43dcd111f506ccf698e0599a3253ca",
     "hardware/carrier-pan-protection/availability.json": "549a8ccdfd7d9ea95b5baedcb47ec7aa971cfbdeffe1092e4be13df40c480ec8",
     "hardware/carrier-pan-protection/circuit_design.py": "37b4d99eecaa1f567109df6762a00f69f46c02e6efbe7d53c35893d2955ace8a",

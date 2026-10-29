@@ -63,13 +63,25 @@
   "native_circuit_generated": false,
   "observed": "2026-10-29",
   "open_gates": [
-    "exact COUT MPN/voltage/dielectric",
+    "I.COUT exact packaging candidate is unselected; differential waveform, voltage and response qualification open",
     "all clamp/current/pulse/temperature qualification for the declared source and charged-output envelope",
     "modern BZG03C75 grade equivalence and DDZ9699T procurement",
     "layout leakage to floating reference and open SHDN; physical creepage/copper/thermal",
     "actual source/load waveforms and output regeneration",
     "DCB pin spacing above30V: actual creepage/clearance and contamination/leakage; no64C/W thermal inheritance with unqualified exposed-pad/copper arrangement"
   ],
+  "packaging_candidates": {
+    "I.COUT": {
+      "capacitance_nf": 47,
+      "dielectric": "C0G",
+      "limit": "Body and manufacturer land record only. Actual OUTsense-to-FLOATING_VSS waveform, maximum clamp, pulse and temperature bounds remain unknown; 75V zener marking is not a100V pass. Replace and revalidate placement if required voltage or body changes.",
+      "mpn": "C1206C473F1GECAUTO",
+      "qualification": false,
+      "rated_voltage_v": 100,
+      "selected_mpn": null,
+      "tolerance_percent": 1
+    }
+  },
   "pin_basis": {
     "I.Q1": "Infineon Rev2.5 page1: gate1, drain2/tab, source3; page9 PG-TO263-3.",
     "I.U1": "Actual RevF page2 DCB6 TOP VIEW independently viewed; page2 render identity recorded separately. Exposed pad7 electricallyNC follows page11 guidance to increase effective pin spacing above30V; its physical metal/land still must be reserved. Pin6 remains FLOATING_VSS. SHDN5 open follows Figure10; leakage/startup remains unqualified.",

@@ -18,6 +18,26 @@
       "note": "Modern exactgrade package only; equivalence to legacyFig10 clamp remains unqualified.",
       "source": "bzg03"
     },
+    "crcw_hp": {
+      "land_gap_mm": 1.5,
+      "land_outer_mm": [
+        3.6,
+        1.8
+      ],
+      "land_pad_mm": [
+        1.05,
+        1.8
+      ],
+      "match": [
+        "CRCW12062K00FKEAHP"
+      ],
+      "maximum_body_mm": [
+        3.3,
+        1.75,
+        0.65
+      ],
+      "source": "crcw_hp"
+    },
     "csd19531": {
       "land_outer_mm": [
         6.305,
@@ -32,6 +52,27 @@
         1.1
       ],
       "source": "csd19531"
+    },
+    "ddz9699": {
+      "land_gap_mm": 0.8,
+      "land_outer_mm": [
+        2,
+        0.7
+      ],
+      "land_pad_mm": [
+        0.6,
+        0.7
+      ],
+      "match": [
+        "DDZ9699T-7"
+      ],
+      "maximum_body_mm": [
+        1.65,
+        0.85,
+        0.65
+      ],
+      "pin_basis": "Cathode band K, opposite lead A; project pad numbering remains separate.",
+      "source": "ddz9699"
     },
     "ipb200n25": {
       "land_outer_mm": [
@@ -49,7 +90,23 @@
       "source": "ipb200n25"
     },
     "kemet_c0g": {
-      "land_outer_mm": null,
+      "land_center_offsets_mm": [
+        -0.9,
+        0.9
+      ],
+      "land_density": "B, manufacturer reflow recommendation; not an application qualification",
+      "land_outer_mm": [
+        2.95,
+        1.45
+      ],
+      "land_pad_mm": [
+        1.15,
+        1.45
+      ],
+      "manufacturer_courtyard_mm": [
+        3.5,
+        2
+      ],
       "match": [
         "C0805C682J5GACTU"
       ],
@@ -61,7 +118,23 @@
       "source": "kemet_c0g"
     },
     "kemet_c0g_esd": {
-      "land_outer_mm": null,
+      "land_center_offsets_mm": [
+        -1.5,
+        1.5
+      ],
+      "land_density": "B, manufacturer reflow recommendation; not an application qualification",
+      "land_outer_mm": [
+        4.15,
+        1.8
+      ],
+      "land_pad_mm": [
+        1.15,
+        1.8
+      ],
+      "manufacturer_courtyard_mm": [
+        4.7,
+        2.3
+      ],
       "match": [
         "C1206C473F1GECAUTO"
       ],
@@ -71,6 +144,34 @@
         1.8
       ],
       "source": "kemet_c0g_esd"
+    },
+    "kemet_x7r": {
+      "land_center_offsets_mm": [
+        -0.9,
+        0.9
+      ],
+      "land_density": "B, manufacturer reflow recommendation; not an application qualification",
+      "land_outer_mm": [
+        2.95,
+        1.45
+      ],
+      "land_pad_mm": [
+        1.15,
+        1.45
+      ],
+      "manufacturer_courtyard_mm": [
+        3.5,
+        2
+      ],
+      "match": [
+        "C0805C104K1RACTU"
+      ],
+      "maximum_body_mm": [
+        2.2,
+        1.45,
+        0.88
+      ],
+      "source": "kemet_x7r"
     },
     "ltc4359": {
       "land_outer_mm": [
@@ -85,8 +186,28 @@
         2.1,
         0.85
       ],
-      "note": "Heightconservativelyaddsmaxstandoff0.05totableAmax0.8. ExposedpadmayconnectonlyfloatingVSS.",
+      "note": "Height conservatively adds maximum stand-off0.05 to tableA maximum0.8. EP is explicitly NC in the paper proposal following >30V spacing guidance; pin6 remains FLOATING_VSS. EP metal/land is still reserved.",
       "source": "ltc4359"
+    },
+    "mmsz5231": {
+      "land_outer_mm": [
+        4.05,
+        0.95
+      ],
+      "land_pad_mm": [
+        0.9,
+        0.95
+      ],
+      "match": [
+        "MMSZ5231B-7-F"
+      ],
+      "maximum_body_mm": [
+        3.85,
+        1.7,
+        1.35
+      ],
+      "pin_basis": "Cathode band K, opposite lead A; project pad numbering remains separate.",
+      "source": "mmsz5231"
     },
     "ne555p": {
       "lead_below_seating_min_mm": 3.18,
@@ -170,6 +291,27 @@
       "nominal_bottom_mm": 1.4,
       "nominal_top_mm": 6.1,
       "source": "pololu5577"
+    },
+    "smat70a": {
+      "land_gap_mm": 1.5,
+      "land_outer_mm": [
+        6.5,
+        1.7
+      ],
+      "land_pad_mm": [
+        2.5,
+        1.7
+      ],
+      "match": [
+        "SMAT70A-13-F"
+      ],
+      "maximum_body_mm": [
+        5.59,
+        2.92,
+        2.3
+      ],
+      "pin_basis": "Cathode band K, opposite lead A; project pad numbering remains separate.",
+      "source": "smat70a"
     },
     "tnpw0805": {
       "land_outer_mm": [
@@ -272,6 +414,53 @@
         0.889
       ],
       "source": "wsl2512"
+    },
+    "yageo_mfr": {
+      "additional_unknowns": [
+        "formed lead pitch and minimum bend clearance",
+        "stand-off, mounting and underside trimming",
+        "solder pad/drill selection"
+      ],
+      "land_outer_mm": null,
+      "lead_diameter_max_mm": 0.6,
+      "match": [
+        "MFR-25FBF52-1K",
+        "MFR-25FBF52-6K8"
+      ],
+      "maximum_body_mm": [
+        6.8,
+        2.6,
+        2.6
+      ],
+      "shape": "axial cylinder; installed orientation unfrozen",
+      "source": "yageo_mfr",
+      "unformed_lead_length_range_mm": [
+        26,
+        30
+      ]
+    },
+    "yageo_rsf": {
+      "additional_unknowns": [
+        "formed lead pitch and minimum bend clearance",
+        "stand-off, mounting and underside trimming",
+        "solder pad/drill selection"
+      ],
+      "land_outer_mm": null,
+      "lead_diameter_max_mm": 0.85,
+      "match": [
+        "RSF100JB-73-2K2"
+      ],
+      "maximum_body_mm": [
+        12.5,
+        5,
+        5
+      ],
+      "shape": "axial cylinder; installed orientation unfrozen",
+      "source": "yageo_rsf",
+      "unformed_lead_length_range_mm": [
+        33,
+        37
+      ]
     }
   },
   "pcb_contour_frozen": false,

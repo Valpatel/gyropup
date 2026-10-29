@@ -164,5 +164,10 @@ class InventoryTests(unittest.TestCase):
         d=copy.deepcopy(original);d['protection_external_terminal_proposal']['pad_geometry']={'imaginary':True}
         with self.assertRaises(ValueError): C.validate_terminals(d)
 
+    def test_cout_packaging_candidate_does_not_become_selection(self):
+        for key,value in [('selected_mpn','C1206C473F1GECAUTO'),('qualification',True),('rated_voltage_v',75)]:
+            d=copy.deepcopy(self.reference);d['packaging_candidates']['I.COUT'][key]=value
+            with self.subTest(key=key),self.assertRaises(ValueError): C.validate_reference(d)
+
 
 if __name__=='__main__':unittest.main()

@@ -27,7 +27,7 @@ FRONT = [
     ('D5', 'S1B-13-F', 'floating-reference return diode', 'SMA'),
     ('D6', 'SMCJ150A', '150V TVS, Littelfuse candidate manufacturer', 'SMC'),
     ('R2', 'CRCW12062K00FKEAHP', '2kohm pulse resistor candidate; pulse acceptance open', '1206'),
-    ('COUT', None, '47nF reference capacitor; exact voltage/MPN pending topology check', None),
+    ('COUT', 'C1206C473F1GECAUTO', '47nF100V1%C0G unselected packaging candidate; differential waveform qualification open', '1206'),
 ]
 
 
@@ -89,6 +89,8 @@ def inventory():
     for row in rows:
         if row['id'].startswith('I.'):
             row['reference_pin_contract'] = front_contract['component_pins'][row['id']]
+            if row['id'] == 'I.COUT':
+                row['packaging_candidate_only'] = front_contract['packaging_candidates']['I.COUT']
         matches = [(name, data) for name, data in packages.items()
                    if row['mpn'] in data.get('match', []) or
                    (data.get('prefix') and (row['mpn'] or '').startswith(data['prefix']))]
@@ -103,7 +105,8 @@ def inventory():
         row['supplier_observation'] = None
         source = ('hardware/carrier-pan-protection/availability.json' if row['id'].startswith('P.')
                   else 'research/protection/carrier-practical-architecture.inputs.json')
-        if row['id'].startswith('P.'):
+        if row['id'].startswith('P.') or row['id'] == 'I.COUT':
+            source = 'hardware/carrier-pan-protection/availability.json'
             matches = [(n, offer) for n, offer in enumerate(retained_offers['rows']) if offer['mpn'] == row['mpn']]
             if matches:
                 row['supplier_observation'] = {'source': source, 'row_index': matches[0][0],

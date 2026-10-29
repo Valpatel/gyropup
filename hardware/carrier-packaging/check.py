@@ -49,6 +49,11 @@ def validate_reference(document):
     load = document['interfaces']['load_capacitance']
     if load['dedicated_front_capacitor'] is not None:
         raise ValueError('new front capacitor requires a deliberate contract revision')
+    candidate = document['packaging_candidates']['I.COUT']
+    if (candidate['mpn'], candidate['selected_mpn'], candidate['capacitance_nf'],
+        candidate['rated_voltage_v'], candidate['tolerance_percent'], candidate['dielectric'], candidate['qualification']) != (
+            'C1206C473F1GECAUTO', None, 47, 100, 1, 'C0G', False):
+        raise ValueError('COUT unselected packaging identity/limits changed')
     return {'reference_items':len(pins), 'electrically_qualified':False}
 
 
