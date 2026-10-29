@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Check the shipped meshes, not just manifest declarations; no CAD kernel needed."""
 import importlib.util
+import hashlib
 import json
 import math
 from pathlib import Path
@@ -27,6 +28,7 @@ class SceneFrames(unittest.TestCase):
         for part in PARTS.values():
             with self.subTest(part=part['name']):
                 points = vertices(SCENE / part['file'])
+                self.assertEqual(part['sha256'], hashlib.sha256((SCENE / part['file']).read_bytes()).hexdigest())
                 self.assertTrue(all(math.isfinite(n) for p in points for n in p))
                 bounds = [min(p[i] for p in points) for i in range(3)] + [max(p[i] for p in points) for i in range(3)]
                 self.assertLessEqual(max(abs(a-b) for a,b in zip(bounds,part['bbox'])), .051)

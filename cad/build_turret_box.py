@@ -12,6 +12,7 @@ after either changes picks the change up. Frames: the box frame of cad/turret_bo
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import math
 import struct
@@ -644,6 +645,11 @@ def main():
     for step in journey:
         if step['focus'] is not None:
             step['focus'][0] = round(step['focus'][0] - G.tilt_x, 1)
+
+    # Bind each mesh URL to its bytes so returning browsers cannot mix a new
+    # frame manifest with a previously cached, differently centered mesh.
+    for part in parts:
+        part['sha256'] = hashlib.sha256((SCENE / part['file']).read_bytes()).hexdigest()
 
     # ---- the manifest
     man = {'units': 'mm', 'frame': 'box: x forward (pan 0), y left, z up; origin on the desk under the pan axis. Each part is in its '

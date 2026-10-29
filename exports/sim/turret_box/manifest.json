@@ -470,7 +470,8 @@
     -64.0,
     153.0
    ],
-   "callout": true
+   "callout": true,
+   "sha256": "ab877ba91a4087ea0317df00d66cdb58b12bc3ed8e8a6416cf207e23ad950ab3"
   },
   {
    "name": "pan_ring",
@@ -506,7 +507,8 @@
     -40.0,
     63.0
    ],
-   "callout": true
+   "callout": true,
+   "sha256": "6e15e745ab0cd9ecae961e1bcd39fce99bac4a0b1346299a27326ef3db139160"
   },
   {
    "name": "pan_spacer",
@@ -536,7 +538,8 @@
    "qty": 1,
    "how": "PA6-CF on its wide end; between the 61810 inner race and the circlip",
    "doc": "Printed PA6-CF thrust ring (100 % solid) between the 61810's inner race and the DIN 471-50 circlip: it slides",
-   "print_h": 0.2
+   "print_h": 0.2,
+   "sha256": "eff3d312665bf4d19e100a0f435539a7a9a24fbd085fc6e7d575d8dcbf8da326"
   },
   {
    "name": "pan_pinion",
@@ -572,7 +575,8 @@
     -14.0,
     206.0
    ],
-   "callout": true
+   "callout": true,
+   "sha256": "f774c4c22dce5e532063e2971ec10b49fb445e11a334ad595b1b1b6bb47dc9a1"
   },
   {
    "name": "tilt_yoke",
@@ -608,7 +612,8 @@
     -68.5,
     100.0
    ],
-   "callout": true
+   "callout": true,
+   "sha256": "36c324a2ef44b2e208bb5d5eccff6312d3665664a30c548620dfada7eec5fd69"
   },
   {
    "name": "cradle",
@@ -644,7 +649,8 @@
     -56.5,
     -33.1
    ],
-   "callout": true
+   "callout": true,
+   "sha256": "9beef3e7480337e5a65388e70e2b1abd2a32d54b63db68a00b1d06e18d477c2e"
   },
   {
    "name": "cartridge_body",
@@ -680,7 +686,8 @@
     -49.0,
     -5.0
    ],
-   "callout": true
+   "callout": true,
+   "sha256": "9a1d34898ff717811cf7cea503a2021afbfc3050a9f593b10c9bd9b277d9c1a5"
   },
   {
    "name": "flywheel",
@@ -710,7 +717,8 @@
    "qty": 2,
    "how": "PA6-CF on its top face; on the X2216's prop adapter: washer + M5 nylon-insert nut; bore reamed to 5.00",
    "doc": "Flywheel hub, printed PA6-CF (100 % solid) on its top face: a \u00d828 x 12 rim for the TPU tyre and a 5.5 mm web whose",
-   "print_h": 0.7
+   "print_h": 0.7,
+   "sha256": "008485a6764b8cc74f0a723fdd0cd2c80e975c286f552916f66d357df3667d43"
   },
   {
    "name": "flywheel_m",
@@ -740,7 +748,8 @@
    "qty": 2,
    "how": "PA6-CF on its top face; on the X2216's prop adapter: washer + M5 nylon-insert nut; bore reamed to 5.00",
    "doc": "Flywheel hub, printed PA6-CF (100 % solid) on its top face: a \u00d828 x 12 rim for the TPU tyre and a 5.5 mm web whose",
-   "print_h": 0.7
+   "print_h": 0.7,
+   "sha256": "2b1306a3d0c7574cbe216ed0be5b48165441a3bde03cdf167cfd38e27d61f9ae"
   },
   {
    "name": "flywheel_tyre",
@@ -776,7 +785,8 @@
     20.0,
     0.0
    ],
-   "callout": true
+   "callout": true,
+   "sha256": "81b7de92f418d2166793e0cabf3158a7ded5b1ecbb971efef1fb86db075f90c1"
   },
   {
    "name": "flywheel_tyre_m",
@@ -806,7 +816,8 @@
    "qty": 2,
    "how": "TPU 95A tyre",
    "doc": "TPU 95A tyre as mounted, \u00d834 x 12 (TYRE_SET), 3 mm thick on the hub's \u00d828 rim (the assembly; the printed blank is",
-   "print_h": 0.9
+   "print_h": 0.9,
+   "sha256": "dd4ae79516757df63905d2ab566f04fb088adc4262cfcfa20303050a0d4838c9"
   },
   {
    "name": "dial",
@@ -842,7 +853,8 @@
     -6.0,
     10.8
    ],
-   "callout": true
+   "callout": true,
+   "sha256": "d7678d8f21659f2474a40a8584a327c477b5a47095daa9629a9123c3f93c2c24"
   },
   {
    "name": "hopper",
@@ -878,7 +890,8 @@
     -50.7,
     65.0
    ],
-   "callout": true
+   "callout": true,
+   "sha256": "c186e72d2244027a836e994fc72b2fe3c6ee769c696264f9bc21476f6aba2933"
   },
   {
    "name": "hopper_lid",
@@ -908,7 +921,8 @@
    "qty": 1,
    "how": "PETG",
    "doc": "Lid, printed PETG: a 2 mm disc with a spigot into the hopper, a \u00d832 fill port where the dock's spout pushes the",
-   "print_h": 0.7
+   "print_h": 0.7,
+   "sha256": "067a2337a229d7910f234c7bc4e13e5f283b15833389a826a80e3250e83c84fb"
   },
   {
    "name": "hopper_flap",
@@ -938,7 +952,8 @@
    "qty": 1,
    "how": "PETG; \u00d82 pin + torsion spring",
    "doc": "The fill-port flap, printed PETG: a \u00d836 x 2 disc and a hinge knuckle between the lid's lugs.",
-   "print_h": 0.1
+   "print_h": 0.1,
+   "sha256": "b98ec37332d4c4c1d9ea151e63f818ea187115ed2ee8771529b90d01f0e2c7dd"
   },
   {
    "name": "barrel",
@@ -974,7 +989,8 @@
     -15.0,
     -15.0
    ],
-   "callout": true
+   "callout": true,
+   "sha256": "ccb797222e64719fb8ba4a67ab236e6f9ba3b88ede36926a88cc917961bcde31"
   },
   {
    "name": "laser_mount",
@@ -1004,7 +1020,8 @@
    "qty": 1,
    "how": "PETG; 3 x M3 boresight, 2 x M3 to the cradle",
    "doc": "Laser holder, printed PETG: a ring round the \u00d87 laser (\u00d811 bore with an O-ring at the back) and three M3",
-   "print_h": 0.3
+   "print_h": 0.3,
+   "sha256": "f83f4497c8d433a018578775bc2d1bffb5065055d381bc73b3dfae88477ce6ab"
   },
   {
    "name": "bumper_ring",
@@ -1034,7 +1051,8 @@
    "qty": 1,
    "how": "TPU 95A; 5 x M3 with washers",
    "doc": "TPU 95A ring, 4 mm wide and 14 mm tall, widened to a lug at each of the base's five tabs for its M3 screw and",
-   "print_h": 3.8
+   "print_h": 3.8,
+   "sha256": "d047f52ed061d204c241c5b06187d9a5651237a9817604959e24ccbbe3f4e69d"
   },
   {
    "name": "ring_carrier",
@@ -1064,7 +1082,8 @@
    "qty": 1,
    "how": "PA6-CF on its top face; 3 x M3 x 10 flat heads up into the base; 3 x M3 inserts for the ring",
    "doc": "The slip ring's carrier, printed PA6-CF on its top face (100 % solid): a \u00d864.5 x 12 disc in the foot's \u00d865",
-   "print_h": 2.0
+   "print_h": 2.0,
+   "sha256": "fe08d981dc23c70d6eef77dff8feeca8bfc6c93e1e487ff21206e368de1f5bfb"
   },
   {
    "name": "ring_driver",
@@ -1094,7 +1113,8 @@
    "qty": 1,
    "how": "PA6-CF on its top face; in the turntable's bore (ribs + CA)",
    "doc": "The slip ring's driver, printed PA6-CF: a \u00d839.6 x 6 disc held in the top of the turntable's \u00d840 bore (three",
-   "print_h": 0.5
+   "print_h": 0.5,
+   "sha256": "a2db03ed31c262a4f9297b266e85411571b92981f71d6b6e2d0d30f42d140b52"
   },
   {
    "name": "board_bay",
@@ -1124,7 +1144,8 @@
    "qty": 1,
    "how": "PETG on its back; 4 x M3 x 8 flat heads to the -y yoke arm; 4 x M3 inserts for the boards",
    "doc": "The turret-board bay, printed PETG on its back: a 58 x 57 tray with 2 mm walls out to y -115, screwed to the -y",
-   "print_h": 1.1
+   "print_h": 1.1,
+   "sha256": "a1143179e3d8708137c93474ea5cc2309958d5d587da2218c01602a31fca8357"
   },
   {
    "name": "pan_servo",
@@ -1156,7 +1177,8 @@
     25.0,
     161.0
    ],
-   "callout": true
+   "callout": true,
+   "sha256": "d06edde8996fd5a4ee27ac1ed9f572a0ebce96303865da36169f9bdc4e6e18c1"
   },
   {
    "name": "pan_bearing",
@@ -1188,7 +1210,8 @@
     -32.0,
     184.0
    ],
-   "callout": true
+   "callout": true,
+   "sha256": "2b7c1b64479805bd0ccdf762b9ea931740b37a0dff2fb3a69dcb4dc88aaac756"
   },
   {
    "name": "pan_bearing_inner",
@@ -1214,7 +1237,8 @@
     125
    ],
    "mass_g": 15.0,
-   "note": "the 6810-2Z's inner race (turns with the pan ring; bought with pan_bearing)"
+   "note": "the 6810-2Z's inner race (turns with the pan ring; bought with pan_bearing)",
+   "sha256": "ab1341d036e0c77c6933671299369d005e4716bac1148a06bc9053e51fea51c3"
   },
   {
    "name": "circlip_50",
@@ -1240,7 +1264,8 @@
     0
    ],
    "mass_g": 11.4,
-   "note": "DIN 471-50 external ring under the pan_spacer; McMaster 98541A167"
+   "note": "DIN 471-50 external ring under the pan_spacer; McMaster 98541A167",
+   "sha256": "b508e2f7fd8fbbd2eb43ba5cd0ea1a16a4172d56dfb5cfe6173bf0c99dfed463"
   },
   {
    "name": "pan_clamp",
@@ -1266,7 +1291,8 @@
     145
    ],
    "mass_g": 17.8,
-   "note": "pan clamp ring, SendCutSend 6061-T6 aluminium 0.125 in (exports/turret/pan_clamp.dxf)"
+   "note": "pan clamp ring, SendCutSend 6061-T6 aluminium 0.125 in (exports/turret/pan_clamp.dxf)",
+   "sha256": "10396706c9744d6a3c873fed90586f7226f991231fc355edf55bb07a35f6dca8"
   },
   {
    "name": "slip_ring",
@@ -1292,7 +1318,8 @@
     0
    ],
    "mass_g": 25.0,
-   "note": "SparkFun ROB-13065 (Senring M220 series): 12 x 2 A, \u00d822 x 26.5, flange \u00d844.5 (envelope from the vendor sheets; flange holes to measure)"
+   "note": "SparkFun ROB-13065 (Senring M220 series): 12 x 2 A, \u00d822 x 26.5, flange \u00d844.5 (envelope from the vendor sheets; flange holes to measure)",
+   "sha256": "453519aa756e7adb6baac9a5391caa10b8ae297ff543673ddce092049136a27a"
   },
   {
    "name": "slip_ring_rotor",
@@ -1318,7 +1345,8 @@
     0
    ],
    "mass_g": 0.0,
-   "note": "the ring's rotor stub (bought with the ring)"
+   "note": "the ring's rotor stub (bought with the ring)",
+   "sha256": "908373c88117db4a7e5db884c73a6f96c72957d24b94d4171193a3d856de2bb7"
   },
   {
    "name": "ring_coupling",
@@ -1344,7 +1372,8 @@
     0
    ],
    "mass_g": 2.0,
-   "note": "soft silicone tubing 5/16 in ID x 7/16 in OD, coupling the rotor to the driver"
+   "note": "soft silicone tubing 5/16 in ID x 7/16 in OD, coupling the rotor to the driver",
+   "sha256": "aaef33940eb5d97757813adecf6a71a718ba24ea0a2b9924f30ebff984f30795"
   },
   {
    "name": "ring_leads_rotor",
@@ -1370,7 +1399,8 @@
     0
    ],
    "mass_g": 0.0,
-   "note": "the ring's rotor leads, a \u00d87.5 bundle (12 x 26 AWG + 2 x 17 AWG): beside the coupling, up through the driver and the yoke's slot, along the bridge and through the -y arm's window to the bay"
+   "note": "the ring's rotor leads, a \u00d87.5 bundle (12 x 26 AWG + 2 x 17 AWG): beside the coupling, up through the driver and the yoke's slot, along the bridge and through the -y arm's window to the bay",
+   "sha256": "9357d35cca139908eabf6bcc2b2876bef549d522b801490e9c3c99b09e92139d"
   },
   {
    "name": "base_board",
@@ -1396,7 +1426,8 @@
     0
    ],
    "mass_g": 30.0,
-   "note": "base board (est): DT12 fuse, the 555 safety-pulse oscillator, the pan servo's 12 V regulator, the ring's stator connector"
+   "note": "base board (est): DT12 fuse, the 555 safety-pulse oscillator, the pan servo's 12 V regulator, the ring's stator connector",
+   "sha256": "a3fd2d3a202337f01b3b45ad035b560fcbde07ebac8910b048ed94873d82fa20"
   },
   {
    "name": "turret_board",
@@ -1422,7 +1453,8 @@
     0
    ],
    "mass_g": 100.0,
-   "note": "turret boards (cad/turret_boards.py): level 0 the D24V150F12 12 V regulator (always on); level 1 the Pololu 2815 switch (12 V to the flywheels and the feed), the 5 V regulator, 2 x 1000 uF, the opto and the one-shots; level 2 the Feather M4 CAN, the trip latch, the ARM gate and the bus buffer"
+   "note": "turret boards (cad/turret_boards.py): level 0 the D24V150F12 12 V regulator (always on); level 1 the Pololu 2815 switch (12 V to the flywheels and the feed), the 5 V regulator, 2 x 1000 uF, the opto and the one-shots; level 2 the Feather M4 CAN, the trip latch, the ARM gate and the bus buffer",
+   "sha256": "869bd5ba08b01bad5c56710062b511ba91b90c6a48cdec394bc40e193c7156a9"
   },
   {
    "name": "index_magnet",
@@ -1448,7 +1480,8 @@
     0
    ],
    "mass_g": 0.8,
-   "note": "neodymium disc 3/16 x 1/8 in (McMaster 5862K102), the pan index: ~760 G at the hall's element 3.5 mm over it (Br 1.32 T, on-axis formula), 4x the A1120's highest operate point; on the housing's top, through the clamp ring (0.2 mm proud), glued"
+   "note": "neodymium disc 3/16 x 1/8 in (McMaster 5862K102), the pan index: ~760 G at the hall's element 3.5 mm over it (Br 1.32 T, on-axis formula), 4x the A1120's highest operate point; on the housing's top, through the clamp ring (0.2 mm proud), glued",
+   "sha256": "f5ddcf2fba3c9ca0f7325baa379425300e22c29b75bc97f6532f1813aa78997c"
   },
   {
    "name": "hall_switch",
@@ -1474,7 +1507,8 @@
     0
    ],
    "mass_g": 0.3,
-   "note": "Allegro A1120LUA-T unipolar hall switch (UA package), on the turntable"
+   "note": "Allegro A1120LUA-T unipolar hall switch (UA package), on the turntable",
+   "sha256": "7080d0d027e32403a036b13a2aceafb31fd228a7bf2240c1e736a771d931d95a"
   },
   {
    "name": "dt_receptacle",
@@ -1506,7 +1540,8 @@
     -93.0,
     160.0
    ],
-   "callout": true
+   "callout": true,
+   "sha256": "ea238f2e0512a268f5fec8e7959a1c93ebedeccd49e5b3eba4a5170084f683d2"
   },
   {
    "name": "dt_plug",
@@ -1532,7 +1567,8 @@
     95
    ],
    "mass_g": 0.0,
-   "note": "DT06-12SA plug on the robot harness (robot side; use a 90 deg boot so the harness turns down)"
+   "note": "DT06-12SA plug on the robot harness (robot side; use a 90 deg boot so the harness turns down)",
+   "sha256": "28f1ca619c56d1be8e3155378579ded6e63a6557ac89683ce9f523cf291708d1"
   },
   {
    "name": "tilt_servo",
@@ -1564,7 +1600,8 @@
     83.5,
     140.0
    ],
-   "callout": true
+   "callout": true,
+   "sha256": "fa578ec54f47861e5cd9170ac5be5df1832dc52183a61012bb0cef230604946b"
   },
   {
    "name": "tilt_bearing",
@@ -1590,7 +1627,8 @@
     195
    ],
    "mass_g": 1.3125,
-   "note": "126-2Z (MR126 size, 6 x 12 x 4): outer race and shields; McMaster 7804K112"
+   "note": "126-2Z (MR126 size, 6 x 12 x 4): outer race and shields; McMaster 7804K112",
+   "sha256": "7eabd055ba8a4c6ffbe286fc04d3bdd78aca33b4feb6ef93582c0fe63860a450"
   },
   {
    "name": "tilt_bearing_inner",
@@ -1616,7 +1654,8 @@
     195
    ],
    "mass_g": 0.4375,
-   "note": "the 126-2Z's inner race (turns with the cradle; bought with tilt_bearing)"
+   "note": "the 126-2Z's inner race (turns with the cradle; bought with tilt_bearing)",
+   "sha256": "248c0f3667ffaed17264e7a21bed144775fee56f165fd320b4f82779ffca5b53"
   },
   {
    "name": "shoulder_screw",
@@ -1642,7 +1681,8 @@
     0
    ],
    "mass_g": 6.7,
-   "note": "ISO 7379 shoulder screw 6 x 12, M5 x 10: the tilt pivot (-y); McMaster 92981A101"
+   "note": "ISO 7379 shoulder screw 6 x 12, M5 x 10: the tilt pivot (-y); McMaster 92981A101",
+   "sha256": "baef4002081cea195a727a662f0689b3c009b753a26d0c3ea1dcc5e9f14b4bae"
   },
   {
    "name": "flywheel_motor_l",
@@ -1668,7 +1708,8 @@
     290
    ],
    "mass_g": 72.0,
-   "note": "SunnySky X2216 880KV V3 (short shaft) (SunnySky's drawing): hangs bell-down under the cage plate (4 x M3 x 6), the hub on its prop adapter under the bell (washer + M5 nylon-insert nut)"
+   "note": "SunnySky X2216 880KV V3 (short shaft) (SunnySky's drawing): hangs bell-down under the cage plate (4 x M3 x 6), the hub on its prop adapter under the bell (washer + M5 nylon-insert nut)",
+   "sha256": "a3fe9b333ef59308834a5811c50c9c2f34eec804b58b2c9b50a6f60fc65f12b0"
   },
   {
    "name": "flywheel_motor_r",
@@ -1694,7 +1735,8 @@
     290
    ],
    "mass_g": 72.0,
-   "note": "SunnySky X2216 880KV V3 (short shaft) (SunnySky's drawing): hangs bell-down under the cage plate (4 x M3 x 6), the hub on its prop adapter under the bell (washer + M5 nylon-insert nut)"
+   "note": "SunnySky X2216 880KV V3 (short shaft) (SunnySky's drawing): hangs bell-down under the cage plate (4 x M3 x 6), the hub on its prop adapter under the bell (washer + M5 nylon-insert nut)",
+   "sha256": "cc41c6d0e8b76f0744b45e70f5a1274d0b843a6fa48e07b2eaf6a961192e385b"
   },
   {
    "name": "cartridge_board",
@@ -1720,7 +1762,8 @@
     330
    ],
    "mass_g": 30.0,
-   "note": "cartridge board (est): 6 x IRLZ44N phase-short brake FETs standing along its front edge, the LM393 gate comparator, the feed servo's polyfuse; on 4 printed posts over the ESCs and the cage plate"
+   "note": "cartridge board (est): 6 x IRLZ44N phase-short brake FETs standing along its front edge, the LM393 gate comparator, the feed servo's polyfuse; on 4 printed posts over the ESCs and the cage plate",
+   "sha256": "498a5f4998fcf645e2ace580b27ea87d9401cfad08469a9ff7510c0fa99fdb1c"
   },
   {
    "name": "esc_l",
@@ -1746,7 +1789,8 @@
     320
    ],
    "mass_g": 5.0,
-   "note": "Repeat Robotics AM32 35 A, on the cage plate under the cartridge board (the backup Lumenier Razor Pro F4 45A AM32 is 28 x 12 x 5)"
+   "note": "Repeat Robotics AM32 35 A, on the cage plate under the cartridge board (the backup Lumenier Razor Pro F4 45A AM32 is 28 x 12 x 5)",
+   "sha256": "8cc013dd96e24cf12f67cd0db26cd21af1f8120954896c39c4fb4beaf3705036"
   },
   {
    "name": "esc_r",
@@ -1772,7 +1816,8 @@
     320
    ],
    "mass_g": 5.0,
-   "note": "Repeat Robotics AM32 35 A, on the cage plate under the cartridge board (the backup Lumenier Razor Pro F4 45A AM32 is 28 x 12 x 5)"
+   "note": "Repeat Robotics AM32 35 A, on the cage plate under the cartridge board (the backup Lumenier Razor Pro F4 45A AM32 is 28 x 12 x 5)",
+   "sha256": "b60dbd3221adb253c7dc6f8ca51da6bbb939e93ce1a75c4aeb649cef2cd6f1c1"
   },
   {
    "name": "feed_motor",
@@ -1804,7 +1849,8 @@
     -12.0,
     -33.0
    ],
-   "callout": true
+   "callout": true,
+   "sha256": "7443a0eebc78e5fc89dd3c154a0cf729bae5d5ffba8de08acf83722ec15f20d5"
   },
   {
    "name": "ct_thumbscrew",
@@ -1830,7 +1876,8 @@
     0
    ],
    "mass_g": 4.0,
-   "note": "DIN 464 knurled thumbscrew M4 x 12 (McMaster 92581A250), the CT latch, under the rail"
+   "note": "DIN 464 knurled thumbscrew M4 x 12 (McMaster 92581A250), the CT latch, under the rail",
+   "sha256": "b6afd366a0817921d16407376f3385f894c57e83309a96514f20f11fac992523"
   },
   {
    "name": "laser",
@@ -1862,7 +1909,8 @@
     -32.0,
     -15.0
    ],
-   "callout": true
+   "callout": true,
+   "sha256": "15d5be6c52708b35f2b9fcd02ba5775f2c766c72206935bbe1ac432f8f488d87"
   },
   {
    "name": "box_deck",
@@ -1897,7 +1945,8 @@
     -100.0,
     137.0
    ],
-   "callout": true
+   "callout": true,
+   "sha256": "161d66ebfe52e14776ee9dbf174be7e9345ac3388916ac904397ba94aca6e5f6"
   },
   {
    "name": "intake_shroud",
@@ -1932,7 +1981,8 @@
     30.0,
     115.0
    ],
-   "callout": true
+   "callout": true,
+   "sha256": "4d6f22a52f5536de610e77e2d629865396aa82b0e03733330818b5ce3c0bd038"
   },
   {
    "name": "pod_cover",
@@ -1961,7 +2011,8 @@
    "mass_g": 12.2,
    "qty": 1,
    "how": "PETG flat; 4 x M3 x 6",
-   "print_h": 0.5
+   "print_h": 0.5,
+   "sha256": "f335d57582c93d2a95eb1e58d941a57106b2078b5c9ccc2433306e8d1e2a69ef"
   },
   {
    "name": "pod_xt60",
@@ -1987,7 +2038,8 @@
     60
    ],
    "mass_g": 10.0,
-   "note": "Amass XT60E-M panel plug: 24 V in (the J501 takes 12-36 V, so one 24 V supply can feed both)"
+   "note": "Amass XT60E-M panel plug: 24 V in (the J501 takes 12-36 V, so one 24 V supply can feed both)",
+   "sha256": "d24d7ddfb98f8795859f4a33e28e592484d9382224b83a75d7e4e4d10aed7f78"
   },
   {
    "name": "pod_switch",
@@ -2013,7 +2065,8 @@
     60
    ],
    "mass_g": 10.0,
-   "note": "KCD1 rocker switch, 16 A"
+   "note": "KCD1 rocker switch, 16 A",
+   "sha256": "38daaf8858270514ef692a3ede3ba11fb827747055e5a3eaf94a60ab0931cc72"
   },
   {
    "name": "pod_fuse",
@@ -2039,7 +2092,8 @@
     60
    ],
    "mass_g": 10.0,
-   "note": "5 x 20 mm panel fuse holder, 5 A slow-blow"
+   "note": "5 x 20 mm panel fuse holder, 5 A slow-blow",
+   "sha256": "1a147c5a073346fcc61edacc5e5d5fa4bec6bfdd42d5458caf22cad00faf59c1"
   },
   {
    "name": "pod_pendant",
@@ -2071,7 +2125,8 @@
     30.0,
     117.5
    ],
-   "callout": true
+   "callout": true,
+   "sha256": "98528294fed572fef0bfd346387994c7244504236f337484107d0c63fc0d23bd"
   },
   {
    "name": "pod_usb",
@@ -2097,7 +2152,8 @@
     60
    ],
    "mass_g": 20.0,
-   "note": "USB-CAN adapter (CANable 2.0 class): CAN to the turret, USB to the J501's rear USB-A"
+   "note": "USB-CAN adapter (CANable 2.0 class): CAN to the turret, USB to the J501's rear USB-A",
+   "sha256": "ef54bbbd2b51b3a632a6670fd07531d93604765dd010697b76ea81a72a72df20"
   },
   {
    "name": "pod_wago",
@@ -2123,7 +2179,8 @@
     60
    ],
    "mass_g": 15.0,
-   "note": "WAGO 221 lever connectors: 24 V and 0 V to the DT12 power pins, the pendant loop to its safety pins"
+   "note": "WAGO 221 lever connectors: 24 V and 0 V to the DT12 power pins, the pendant loop to its safety pins",
+   "sha256": "d774d431dc1b30bcf1410fd9d2739d635e3d409eef939dd8d2350d307ea66f2a"
   },
   {
    "name": "lid_screw_1",
@@ -2149,7 +2206,8 @@
     120
    ],
    "mass_g": 1.5,
-   "note": "M3 x 40 ISO 4762 socket head, in place of the J501's M3 x 16"
+   "note": "M3 x 40 ISO 4762 socket head, in place of the J501's M3 x 16",
+   "sha256": "832162b6b6f36b4570fdbb775954c56c28effbacacb60fd948eeaccb3c433b7a"
   },
   {
    "name": "lid_screw_2",
@@ -2175,7 +2233,8 @@
     120
    ],
    "mass_g": 1.5,
-   "note": "M3 x 40 ISO 4762 socket head, in place of the J501's M3 x 16"
+   "note": "M3 x 40 ISO 4762 socket head, in place of the J501's M3 x 16",
+   "sha256": "d1c98538320db5d110a075cabc4ef9fb509734fb77114120e2afee11563fffaa"
   },
   {
    "name": "lid_screw_3",
@@ -2201,7 +2260,8 @@
     120
    ],
    "mass_g": 1.5,
-   "note": "M3 x 40 ISO 4762 socket head, in place of the J501's M3 x 16"
+   "note": "M3 x 40 ISO 4762 socket head, in place of the J501's M3 x 16",
+   "sha256": "c7c1b0d73caf4c30f6be8d8cfff068cbd134adb4921f3af72f8eebbfa7d804a7"
   },
   {
    "name": "lid_screw_4",
@@ -2227,7 +2287,8 @@
     120
    ],
    "mass_g": 1.5,
-   "note": "M3 x 40 ISO 4762 socket head, in place of the J501's M3 x 16"
+   "note": "M3 x 40 ISO 4762 socket head, in place of the J501's M3 x 16",
+   "sha256": "2f6659cf9d5b9d388dde05a9907c5082d504a8b7433c09e36321727d3356db1d"
   },
   {
    "name": "j501_base",
@@ -2256,7 +2317,8 @@
     77472,
     22766
    ],
-   "source": "/home/scubasonar/Code/j501-agx/exports/view/base.stl"
+   "source": "/home/scubasonar/Code/j501-agx/exports/view/base.stl",
+   "sha256": "d862d1f3781a74c0917f2c49875eb578f3f16f4f24ea56c97481671c8f88e9a7"
   },
   {
    "name": "j501_cover",
@@ -2291,7 +2353,8 @@
     -80.0,
     97.0
    ],
-   "callout": true
+   "callout": true,
+   "sha256": "c4fa8e8198d0333c3d25acc162aaddcf19a796a7f6509ede8ce292840fbbb201"
   },
   {
    "name": "j501_front_no_gmsl",
@@ -2320,7 +2383,8 @@
     18464,
     9232
    ],
-   "source": "/home/scubasonar/Code/j501-agx/exports/view/front_no_gmsl.stl"
+   "source": "/home/scubasonar/Code/j501-agx/exports/view/front_no_gmsl.stl",
+   "sha256": "098642b2660d082687c179c9e985554c8e29ff37c3c6745130bb21d3ecfcb5fd"
   },
   {
    "name": "j501_rear_io",
@@ -2349,7 +2413,8 @@
     19582,
     9790
    ],
-   "source": "/home/scubasonar/Code/j501-agx/exports/view/rear_io.stl"
+   "source": "/home/scubasonar/Code/j501-agx/exports/view/rear_io.stl",
+   "sha256": "d9a282f5b40cd8896f49077deec97aa06d600ec1b418b02ce45499b41b833057"
   },
   {
    "name": "j501_side_hatch",
@@ -2378,7 +2443,8 @@
     852,
     852
    ],
-   "source": "/home/scubasonar/Code/j501-agx/exports/view/side_hatch.stl"
+   "source": "/home/scubasonar/Code/j501-agx/exports/view/side_hatch.stl",
+   "sha256": "abcf1d6d13cded51e6598565851ffc87fd03b0cc07377033ab5a8a82469c9fe1"
   }
  ],
  "journey": [

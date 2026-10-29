@@ -97,7 +97,8 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
   const capColor = new THREE.Color();
   await Promise.all(man.parts.map(async (e) => {
     let geo;
-    try { geo = await loader.loadAsync(base + e.file); } catch { console.warn('missing mesh', e.file); return; }
+    const meshURL = base + e.file + (e.sha256 ? `?v=${e.sha256}` : '');
+    try { geo = await loader.loadAsync(meshURL); } catch { console.warn('missing mesh', e.file); return; }
     geo.applyMatrix4(TO_PAGE);
     const offset = new THREE.Vector3();
     if (e.group === 'pinion') { offset.copy(P(man.pivots.pinion)).negate(); geo.translate(offset.x, offset.y, offset.z); }

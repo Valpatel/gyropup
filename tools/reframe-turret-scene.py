@@ -47,6 +47,7 @@ def regenerate(output):
                 part['bbox'][i] = round(part['bbox'][i] + TILT_X, 1)
         if part['part'] in {'feed_motor', 'cartridge_body', 'barrel', 'laser', 'cradle'} and 'anchor' in part:
             part['anchor'][0] = round(part['anchor'][0] - TILT_X, 1)
+        part['sha256'] = hashlib.sha256(data).hexdigest()
         (output / part['file']).write_bytes(data)
     for group in rotating:
         man['pivots'][group][0] -= TILT_X

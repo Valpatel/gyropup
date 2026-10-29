@@ -2,6 +2,7 @@
 import assert from 'node:assert/strict';
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { chromium, webkit } from '@playwright/test';
+import { createHash } from 'node:crypto';
 const fixture = JSON.parse(await readFile(new URL('../tests/fixtures/turret-motion-reference.json', import.meta.url)));
 const base = (process.env.SITE_URL || 'http://127.0.0.1:8879').replace(/\/$/, '');
 const out = process.env.TEST_OUTPUT || '/tmp/gyropup-turret-motion';
@@ -117,7 +118,15 @@ try {
   }
   await page.screenshot({path:`${out}/${engine.name()}-phone.png`});
   assert.deepEqual(errors,[]);
-  const trace={schema_version:1,length_unit:'mm',frame:'assembly-home',capture_source:`${base} actual Three.js STL vertices; ${engine.name()}`,samples};
+  const version=await (await page.request.get(base+'/version.json')).json();
+  const manifestBytes=await (await page.request.get(base+'/exports/sim/turret_box/manifest.json')).body();
+  const manifest=JSON.parse(manifestBytes);
+  const requested=await page.evaluate(()=>performance.getEntriesByType('resource').map(e=>e.name));
+  for(const p of manifest.parts) assert.ok(requested.some(u=>u.endsWith(`/turret_box/${p.file}?v=${p.sha256}`)),`Content-versioned mesh loaded: ${p.name}`);
+  const manifestHash=createHash('sha256').update(manifestBytes).digest('hex');
+  const trace={schema_version:1,length_unit:'mm',frame:'assembly-home',capture_source:`${base}; ${engine.name()}; actual Three.js STL vertices; revision=${version.revision}; assets=${version.assets}; manifest_sha256=${manifestHash}; per-mesh hashes in capture-manifest.json`,samples};
+  await writeFile(`${out}/capture-manifest.json`,manifestBytes);
+  await writeFile(`${out}/capture-version.json`,JSON.stringify(version));
   await writeFile(`${out}/${engine.name()}-trace.json`,JSON.stringify(trace));
   await writeFile(`${out}/contract.json`,JSON.stringify(fixture.contract));
   await writeFile(`${out}/${engine.name()}-summary.json`,JSON.stringify({components:66,poses:samples.length,liveFrames:live.length,maxErrorMm:worst.error,worst:worst.worst,speed,attachments},null,2));
