@@ -74,6 +74,27 @@ class NumericalPredicates(unittest.TestCase):
                 with self.assertRaisesRegex(ValueError,'Undecidable'):
                     checker.overlap(self.a,self.b)
 
+    def test_measured_uncertainty_consumes_the_allocated_budget(self):
+        # Feed controlled integration estimates through the actual relation
+        # policy, rather than injecting a preclassified unknown Relation.
+        estimate=relations._VolumeEstimate
+        values=[estimate(8,0,0,0),estimate(8,0,0,0),
+                estimate(.4e-6,.2e-6,.2e-6,0),estimate(8-.4e-6,0,0,0)]
+        with patch.object(relations,'_measure_volume',side_effect=values):
+            with self.assertRaisesRegex(ValueError,'straddles'):
+                checker.clear_of_all(self.a,[self.a,self.a])
+
+    def test_protected_region_retains_strict_total_difference_boundary(self):
+        # Controlled exact mass estimates reproduce the old '< 1e-6' boundary;
+        # this is a numerical decision control, not a claimed physical collision.
+        region=cq.Solid.makeBox(5,5,5,cq.Vector(-1,-1,-1))
+        estimate=relations._VolumeEstimate
+        for outside,expected in ((.5e-6,False),(.4e-6,True)):
+            values=[estimate(2e-6,0,0,0),estimate(2e-6,0,0,0),
+                    estimate(2e-6-outside,0,0,0),estimate(outside,0,0,0),estimate(outside,0,0,0)]
+            with self.subTest(total_difference=2*outside),patch.object(relations,'_measure_volume',side_effect=values):
+                self.assertEqual(checker.preserved_region(self.a,self.a,region)[0],expected)
+
 
 if __name__=='__main__':
     unittest.main(verbosity=2)

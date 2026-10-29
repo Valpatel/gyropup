@@ -50,6 +50,7 @@ class CarrierInterfaces(unittest.TestCase):
         self.assertFalse(receipt['readiness'])
         self.assertFalse(receipt['physical_fit_verified'])
         self.assertEqual(receipt['relations_engine_version'],'4')
+        self.assertLess(2*receipt['relation_tolerances']['contain_mm3'],1e-6)
         self.assertEqual(set(receipt['artifact_sha256']),{'carrier-wiring-candidate.step',
                          'pan-base-wiring-candidate.step','carrier-wiring-layout.step'})
         allocations=0

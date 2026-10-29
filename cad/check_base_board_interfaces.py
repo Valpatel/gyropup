@@ -23,8 +23,10 @@ import turret_carrier_interfaces as ci
 
 CLEARANCE_VOLUME_MM3=1e-6
 # Preserve the original total1e-6 symmetric-difference allowance by allocating
-# half to each outside volume. Uncertainty consumes these budgets in relate().
-TOL=Tolerances(overlap_mm3=CLEARANCE_VOLUME_MM3,contain_mm3=CLEARANCE_VOLUME_MM3/2)
+# just under half to each outside volume (the former sum used strict '<').
+# Uncertainty consumes these budgets in relate().
+TOL=Tolerances(overlap_mm3=CLEARANCE_VOLUME_MM3,
+               contain_mm3=math.nextafter(CLEARANCE_VOLUME_MM3/2,0.))
 RELATION_EVIDENCE=[]
 
 

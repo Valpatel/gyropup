@@ -8,6 +8,8 @@ Correction: reuse `print_provenance.snapshot` for the complete CAD/config/catalo
 
 A second review of WIP 1f03d27 found that summing thresholded pair results expanded the aggregate allowance: two actual 0.6e-6 mm³ contacts each became zero, hiding their 1.2e-6 mm³ sum. Allocate the single total budget across all pairs before classifying them, retain each allocation, and never describe a thresholded result as measured common volume. Equal conservative shares can reject uneven overlaps that would fit the total; that limitation is intentional and does not increase acceptance.
 
+Independent recheck of 36aa696 then caught an equality edge: two protected-region outside volumes exactly 0.5e-6 mm³ each were accepted by inclusive half-budgets, whereas the former total test was strictly `< 1e-6`. Allocate one floating-point step below each equal share for both clearance and protected-region checks. Test exact equality, a below-limit control and actual integration-error estimates through the real relation decision path; a canned unknown-result test alone does not exercise that boundary.
+
 Committed reproductions:
 
 ```sh
@@ -15,6 +17,6 @@ python tools/test-base-board-interface-geometry.py
 python tools/test-base-board-interfaces.py
 ```
 
-The first suite uses real overlapping/disjoint boxes and an invalid open solid, plus clipped-region, numerical-unknown and aggregate-budget controls. It passed five tests under the separately pinned v0.4.2 source at 2ad4269. The second includes changed M5 clearance, deleted `gmi.py`, added input and recorded-allocation cases. Full corrected candidate evidence and the independent recheck belong to the source-hashed interface receipt and PR review, not this note.
+The first suite uses real overlapping/disjoint boxes and an invalid open solid, plus clipped-region, numerical-unknown, aggregate-budget, strict-equality and integration-error controls. It runs under the separately pinned v0.4.2 source at 2ad4269. The second includes changed M5 clearance, deleted `gmi.py`, added input and recorded-allocation cases. Full corrected candidate evidence and the independent recheck belong to the source-hashed interface receipt and PR review, not this note.
 
 Limits: even valid bounded relations do not establish connector retention, wire bends, electrical isolation, physical tolerances or strength. Separate `readiness:false` remains required while those inputs are absent. Never replace this distinction with a blanket intended-overlap exception.
