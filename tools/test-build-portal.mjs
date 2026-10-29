@@ -48,6 +48,27 @@ try{
  assert.equal(await page.getByRole('button',{name:/^Picture: sort/}).count(),0,'Picture-only columns have no meaningless sort control');
  const summaries=await page.evaluate(()=>({total:+document.querySelector('#sum-total').dataset.usd,sellers:[...document.querySelectorAll('#sellertable tbody tr[data-seller]')].reduce((sum,row)=>sum+ +row.dataset.usd,0),made:+document.querySelector('#sum-made').dataset.usd,hours:+document.querySelector('#sum-hours').dataset.h}));
  assert.ok(Math.abs(summaries.total-summaries.sellers)<.01);assert.ok(summaries.made>0&&summaries.hours>0);
+ // Archived print metadata stays visible beside its queue and mixed totals,
+ // then leaves those totals when that workstream is excluded. Other streams
+ // must not inherit the turret's historical status.
+ assert.equal(await page.locator('#queue .print-history-note').count(),1);
+ assert.match(await page.locator('#queue .print-history-note').textContent(),/lack current source receipts/);
+ assert.equal(await page.locator('#streams .print-history-note').count(),1);
+ assert.equal(await page.locator('#streams .print-history-note').evaluate(note=>note.closest('.stream').querySelector('input[data-stream]').dataset.stream),'turret');
+ assert.equal(await page.locator('#summary .print-history-total').count(),1);
+ assert.equal(await page.locator('#printlede .print-history-total').count(),1);
+ assert.equal(await page.locator('#orders .print-history-total').count(),1);
+ assert.equal(await page.locator('#queue .print-history-note a').count(),2);
+ const turretToggle=page.locator('#streams input[data-stream="turret"]');
+ await turretToggle.uncheck();
+ assert.equal(await page.locator('#queue .print-history-note').count(),0);
+ assert.equal(await page.locator('#summary .print-history-total, #printlede .print-history-total, #orders .print-history-total').count(),0);
+ assert.equal(await page.locator('#queue tr[data-part-key^="print/turret/"]').count(),0);
+ assert.ok(await page.locator('#queue tr[data-part-key^="print/body/"]').count()>0);
+ assert.ok(Number(await page.locator('#sum-hours').getAttribute('data-h'))<summaries.hours);
+ await turretToggle.check();await checkModelActions();
+ assert.equal(await page.locator('#queue .print-history-note').count(),1);
+ assert.equal(Number(await page.locator('#sum-hours').getAttribute('data-h')),summaries.hours);
  const shared=await page.locator('#orders tr[data-part-key]').evaluateAll((rows,keys)=>rows.find(row=>keys.includes(row.dataset.partKey)&&row.closest('table').tBodies[0].rows.length>2)?.dataset.partKey,progressKeys);assert.ok(shared,'Build and Progress share catalog part identities');
 
  const target=page.locator('#orders tr[data-part-key='+JSON.stringify(shared)+']');

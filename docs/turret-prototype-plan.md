@@ -1,5 +1,7 @@
 # Turret prototype plan: v0 on the bench, then v1 on the robot
 
+> **Historical v0/v1 prototype plan — current readiness is tracked separately.** The original plans, build directions and logs below are preserved for context. Earlier “ready to order/print/build” statements do not qualify the current mechanical configuration. Follow [current mechanical readiness](mechanical-readiness.md) and the [carrier component register](base-board-component-checklist.md) for completed reviews, unresolved gates and the next step. No complete turret print kit or physical assembly has been qualified.
+
 Written 2026-10-27 by the planner (Fable 5.1) for the turret program agent (Opus 5.5), from a read of the turret as
 merged on main (7ef69a2: the slip ring and continuous pan built and swept clean, the physics end to end, the parts rule
 applied, the load paths strengthened by the FEA, the clearance check, the assembly order; outputs rebuilt in 641ee22).

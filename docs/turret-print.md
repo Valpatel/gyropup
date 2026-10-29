@@ -1,5 +1,13 @@
 # Printing the bench turret (v0)
 
+> **Historical full-kit print plan — not a current print package.** The archived files, settings, weights and times below predate the current carrier and mechanical changes. Their original exports lack the source receipts required by the current packaging checks. No complete turret kit has been regenerated or qualified. Consult [current mechanical readiness](mechanical-readiness.md) and [print source provenance](print-source-provenance.md) before selecting files.
+>
+> The separate [carrier insert-fit specimens](../research/carrier-insert-fit/README.md) are the current bounded fit-study package. They contain geometry-only STEP/STL/3MF files and blank measurement records, with no sliced printer profile, G-code or physical-fit result. They do not qualify this archived full kit.
+
+## Archived v0 instructions
+
+The original plan follows for historical comparison. Its printing directions, readiness claims and schedule are not current build authorization.
+
 From `cad/turret_print.py`: every printed part of the bench turret and its stand as a 3MF in the orientation it prints in (`exports/turret/print/<part>.3mf`, one part centred on the bed), sliced by Bambu Studio for a P1S with these settings, so the grams and hours are the slicer's own. Open a 3MF in Bambu Studio, pick the printer, the filament and the settings in the table, and slice. The strength checks (cad/turret_studies.py) assume these settings: PA6-CF solid except the pan base, PETG with 2 mm walls (5 loops) and 40 % gyroid.
 
 **Before printing:** the P1S needs its 0.4 mm hardened-steel nozzle for PA6-CF (it is abrasive), and the PA6-CF must be dried (Bambu: 80 °C for 8 h); print it on the textured PEI plate with the glue stick. Heat-set inserts go in while the part is still warm where you can. Measure the fits of bench test 1.1 as parts come off (docs/turret-bench-tests.md).

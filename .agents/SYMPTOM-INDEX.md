@@ -42,6 +42,7 @@
 | A manufacturer check turns green when its private CAD cache is missing | [Manufacturer checks must reject missing inputs](inbox/2026-10-29-manufacturer-checks-must-reject-missing-inputs.md) |
 | A McMaster lookup reports no specification table or no CAD controls | [Verify the rendered cause](inbox/2026-10-29-missing-product-table-needs-rendered-evidence.md) |
 | Print hashes pass but package mixes revisions, slicer settings or stale totals | [Preflight is not a generation transaction](inbox/2026-10-29-print-preflight-is-not-a-generation-transaction.md) |
+| Old print instructions look current even though source guards reject their exports | [Label historical print pages at their entry points](inbox/2026-10-29-historical-print-pages-need-local-status.md) |
 | Demo hit counts increase but targets stay upright, detach, or clip through the floor | [Hits must produce visible, validated motion](inbox/2026-10-29-target-hits-need-visible-motion.md) |
 | Published notes show Mermaid source instead of a diagram | [Validate the published diagram consumer](inbox/2026-10-29-mermaid-needs-the-published-renderer.md) |
 | Thread-ray samples improve after rotation but the complete mating relation is unproved or times out | [Sampled thread alignment is not complete mating](inbox/2026-10-29-thread-sampling-does-not-qualify-mating.md) |

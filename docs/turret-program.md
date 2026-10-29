@@ -1,5 +1,7 @@
 # The turret program
 
+> **Earlier turret program and progress record — current readiness is tracked separately.** The original plans, build directions and logs below are preserved for context. Earlier “ready to order/print/build” statements do not qualify the current mechanical configuration. Follow [current mechanical readiness](mechanical-readiness.md) and the [carrier component register](base-board-component-checklist.md) for completed reviews, unresolved gates and the next step. No complete turret print kit or physical assembly has been qualified.
+
 The user: "keep a good agent running 24/7 making our turret something we can manufacture, fully validated and
 awesome with nerf balls." This file is that agent's charter, checklist and log. Every turret agent reads it first,
 works the next open items, ticks what it proved (with the evidence), and appends to the log before it stops.
