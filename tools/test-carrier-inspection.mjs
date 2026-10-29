@@ -5,6 +5,7 @@ import {mkdir,mkdtemp,readFile,writeFile} from 'node:fs/promises';
 import {chromium,webkit} from '@playwright/test';
 import {createSiteServer} from './serve-site.mjs';
 import {acknowledgePrototypeNotice} from './test-prototype-session.mjs';
+import {isDocumentReturn,trackNavigationRequests} from './hosted-navigation.mjs';
 
 const server=process.env.SITE_URL?null:createSiteServer();
 if(server)await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
@@ -33,7 +34,7 @@ const contract=c3?{
 const report={engine:engine.name(),candidate,passed:false,cases:[],errors:[],missing:[],requestFailures:[]};
 page.on('pageerror',error=>report.errors.push(error.message));
 page.on('response',response=>{if(response.status()>=400)report.missing.push({url:response.url(),status:response.status()});});
-page.on('requestfailed',request=>report.requestFailures.push({url:request.url(),error:request.failure()?.errorText}));
+const navigate=trackNavigationRequests(page,base,report);
 const {original,docPath}=contract;
 const doc=base+docPath+'?live=0'; // Static previews do not run cad-agent's local live-reload endpoint.
 const state=()=>page.evaluate(()=>({url:location.href,visibility:document.visibilityState,
@@ -87,7 +88,11 @@ try{
   report.stepSha256=createHash('sha256').update(await file.body()).digest('hex');
   assert.equal(report.stepSha256,receipt[contract.hashes][original.split('/').at(-1)],'Served original matches the committed geometry receipt');
   for(const [width,height]of [[320,568],[390,844],[1440,1000]]){
-    await page.setViewportSize({width,height});await page.goto(doc);
+    // Exercise the build-time link independently of progressive enhancement.
+    // The remaining viewports use the real module and wait for its query-aware link.
+    const staticLink=width===320,enhancer='**/web/model-links.js*';
+    if(staticLink)await page.route(enhancer,route=>route.fulfill({contentType:'text/javascript',body:'// Static-link fallback scenario.'}));
+    await page.setViewportSize({width,height});await navigate(()=>page.goto(doc));
     if(contract.diagrams)await page.locator('.cad-diagram-view svg').waitFor();
     const documentState=await page.evaluate(()=>({width:document.documentElement.scrollWidth,
       diagrams:document.querySelectorAll('.cad-diagram[data-state=ready] svg').length,
@@ -95,9 +100,18 @@ try{
     assert.ok(documentState.width<=width);assert.equal(documentState.diagrams,contract.diagrams);assert.equal(documentState.visibleSource,0);
     assert.match(await page.locator('article').innerText(),contract.status);
     const link=page.getByRole('link',{name:'Preview '+original.split('/').at(-1)+' in 3D',exact:true});
+    if(!staticLink)await page.waitForFunction(label=>{
+      const a=[...document.querySelectorAll('a[data-model-preview]')].find(n=>n.getAttribute('aria-label')===label);
+      const back=a&&new URL(a.href).searchParams.get('back');
+      return back===location.pathname+location.search;
+    },'Preview '+original.split('/').at(-1)+' in 3D');
     await link.scrollIntoViewIfNeeded();await page.screenshot({path:`${out}/${engine.name()}-${candidate}-${width}-document.png`});
-    await link.click();await ready();
+    const advertised=new URL(await link.getAttribute('href'),base),back=advertised.searchParams.get('back');
+    assert.ok(back&&isDocumentReturn(back,{base,docPath}),'Preview must advertise this exact document');
+    const backURL=new URL(back,base);assert.equal(backURL.search,staticLink?'':'?live=0');
+    await navigate(()=>link.click());await ready();
     assert.equal(new URL(page.url()).searchParams.get('file'),original);
+    assert.equal(new URL(page.url()).searchParams.get('back'),back);
     const model=await inspect();assertIdentity(model);
     assert.ok(model.triangles>0&&model.boundsMm.every(n=>Number.isFinite(n)&&n>0));
     assert.ok(model.scrollWidth<=width);
@@ -164,10 +178,13 @@ try{
       assertIdentity(await inspect());report.negativeControls=['lost STEP materials','swapped part colors','hidden mounting insert','hidden fastener material','zero-opacity fastener','missing mounting screw',...(c3?['hidden C3 support','hidden added nut','hidden added screw']:[])];
     }
 
-    await page.getByRole('link',{name:'Back to parts',exact:true}).click();
-    await page.waitForURL(url=>url.origin===new URL(base).origin&&[docPath,docPath.slice(0,-5)].includes(url.pathname)&&url.search==='?live=0');
+    const returnLink=page.getByRole('link',{name:'Back to parts',exact:true});
+    assert.equal(await returnLink.getAttribute('href'),backURL.href);
+    await navigate(()=>returnLink.click());
+    await page.waitForURL(url=>isDocumentReturn(url,{base,docPath,search:backURL.search}));
     if(contract.diagrams)await page.locator('.cad-diagram[data-state=ready] svg').waitFor();
-    report.cases.push({width,height,documentState,model,viewDirections,wheelRatio,fitRadius});
+    report.cases.push({width,height,staticLink,advertisedBack:backURL.href,returnedURL:page.url(),documentState,model,viewDirections,wheelRatio,fitRadius});
+    if(staticLink)await page.unroute(enhancer);
   }
   assert.deepEqual(report.errors,[]);assert.deepEqual(report.missing,[]);assert.deepEqual(report.requestFailures,[]);
   report.passed=true;console.log(JSON.stringify({passed:true,engine:engine.name(),candidate,cases:report.cases.length,out}));
