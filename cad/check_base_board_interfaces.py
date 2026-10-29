@@ -3,15 +3,27 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 from pathlib import Path
 import time
+
+ROOT=Path(__file__).resolve().parents[1]
+import print_provenance as provenance
+# Capture the complete CAD/config/catalog closure before geometry imports read it.
+IMPORTED_INPUTS=provenance.snapshot(ROOT)
 import cadquery as cq
 import OCP
+from cadagent.gates import Tolerances, relate
+from cadagent.gates.relations import RELATIONS_VERSION
 import turret as tu
 import turret_base_board as bb
 import turret_carrier_interfaces as ci
 
-ROOT=Path(__file__).resolve().parents[1]
+CLEARANCE_VOLUME_MM3=1e-6
+# Preserve the original total1e-6 symmetric-difference allowance by allocating
+# half to each outside volume. Uncertainty consumes these budgets in relate().
+TOL=Tolerances(overlap_mm3=CLEARANCE_VOLUME_MM3,contain_mm3=CLEARANCE_VOLUME_MM3/2)
+RELATION_EVIDENCE=[]
 
 
 def body(kind,side,travel=0.):
@@ -22,13 +34,48 @@ def body(kind,side,travel=0.):
 
 
 def overlap(a,b):
+    """Thresholded interference; doubtful topology/numerics can never become zero.
+
+    This is not raw common volume. Zero means the reviewed relation predicate
+    found apart/touching under the declared threshold. Full numerical witnesses
+    are retained in the receipt. No unvalidated supplied volumes are passed in.
+    """
+    r=relation(a,b)
+    if r.state in ('apart','touching'):
+        return 0.
+    return max(CLEARANCE_VOLUME_MM3,r.overlap_mm3)
+
+
+def relation(a,b):
     a=a.val() if hasattr(a,'val') else a;b=b.val() if hasattr(b,'val') else b
-    return a.intersect(b).Volume()
+    r=relate(a,b,TOL,contact_area=False)
+    RELATION_EVIDENCE.append(r.to_dict())
+    if r.state not in ('apart','touching','overlapping','contains'):
+        raise ValueError('Undecidable BREP relation: '+str(r.error or r.state))
+    return r
+
+
+def preserved_region(a,b,region):
+    """Validate clipped BREPs and both outside volumes; never mass an unchecked cut."""
+    a=a.val() if hasattr(a,'val') else a;b=b.val() if hasattr(b,'val') else b
+    region=region.val() if hasattr(region,'val') else region
+    r=relation(a.intersect(region),b.intersect(region))
+    return r.state=='contains' and r.contained=='both',r.to_dict()
 
 
 def run(out):
-    started=time.monotonic();checks=[]
+    started=time.monotonic();checks=[];RELATION_EVIDENCE.clear();query_start=0
+    if os.environ.get('GYROPUP_CAD_PARAMS'):
+        raise ValueError('Carrier interface candidate requires the committed default configuration')
+    if RELATIONS_VERSION!='4':
+        raise ValueError('Carrier predicates require reviewed relations engine4 (cad-agent v0.4.2); no older volume fallback')
+    inputs=provenance.snapshot(ROOT)
+    if inputs!=IMPORTED_INPUTS:
+        raise ValueError('CAD/config/runtime inputs changed after geometry imports; restart in a fresh process')
     def check(name,ok,**evidence):
+        nonlocal query_start
+        evidence['relation_query_indices']=list(range(query_start,len(RELATION_EVIDENCE)))
+        query_start=len(RELATION_EVIDENCE)
         checks.append({'id':name,'pass':bool(ok),'evidence':evidence})
     g=tu.Geo();old=tu.pan_base(g,board_service=False);base=tu.pan_base(g)
     carrier=bb.carrier();closed=bb.carrier(wiring=False)
@@ -40,17 +87,14 @@ def run(out):
     regions={'foot':bb.box(-120,120,-120,120,-1,5),'bearing_tube':cq.Solid.makeCylinder(35.5,38),
              'bearing_seat':bb.box(-43,43,-50,50,38,60),'servo_pocket':bb.box(-85,-25,-50,60,0,65)}
     for name,region in regions.items():
-        r=region.val() if hasattr(region,'val') else region
-        before=old.val().intersect(r);after=base.val().intersect(r)
-        delta=before.cut(after).Volume()+after.cut(before).Volume()
-        check('protected:'+name,delta<1e-6,symmetric_difference_mm3=delta)
+        same,r=preserved_region(old,base,region)
+        check('protected:'+name,same,relation=r)
     # Exact neighbourhoods around every original mount, not only their centre points.
     for group,holes in [('pcb',bb.BOARD_HOLES),('retainer',bb.CARRIER_HOLES)]:
         for i,(y,z) in enumerate(holes):
             r=bb.cx(3.5,47.9,56.1,y,z).val()
-            a=closed.val().intersect(r);b=carrier.val().intersect(r)
-            delta=a.cut(b).Volume()+b.cut(a).Volume()
-            check(f'unchanged_mount:{group}:{i}',delta<1e-6,symmetric_difference_mm3=delta)
+            same,rel=preserved_region(closed,carrier,r)
+            check(f'unchanged_mount:{group}:{i}',same,relation=rel)
     # Straight solder-side exit reservations; their net/pad assignment is still unproved.
     lanes=[(23.,z,.7) for z in (15.5,18.,20.5,23.)]+[(20.,17.,1.016),(20.,24.,1.016)]
     leads=[bb.cx(r,48.05,60.,y,z) for y,z,r in lanes]
@@ -99,9 +143,9 @@ def run(out):
             'anchors_mm':ci.ANCHORS,'module_service_pose_mm':[ci.MODULE_TRAVEL_MM,0.,0.],
             'source_urls':ci.SOURCES,'seconds':round(time.monotonic()-started,2),
             'runtime':{'cadquery':cq.__version__,'OCP':OCP.__version__},
-            'source_sha256':{p:hashlib.sha256((ROOT/p).read_bytes()).hexdigest() for p in
-                            ('cad/turret.py','cad/turret_base_board.py','cad/turret_boards.py',
-                             'cad/turret_carrier_interfaces.py','cad/check_base_board_interfaces.py')},
+            'relations_engine_version':RELATIONS_VERSION,
+            'inputs':inputs,'source_sha256':inputs['files'],'input_fingerprint':provenance.fingerprint(inputs),
+            'relation_tolerances':vars(TOL),'relation_queries':RELATION_EVIDENCE,
             'limits':['Connector solids are authored dimension/space reservations, not manufacturer models.',
                       'Molex latch/ears are reserved, not mechanically validated; XT30 mated depth is unknown.',
                       'Straight wire exits and endpoint distance are necessary lower bounds, not bend or cable sweep proofs.',
@@ -113,14 +157,25 @@ def run(out):
     out.mkdir(parents=True,exist_ok=True)
     cq.exporters.export(carrier,str(out/'carrier-wiring-candidate.step'))
     cq.exporters.export(base,str(out/'pan-base-wiring-candidate.step'))
-    # Include the real footprint/component layout and every mounting instance in
-    # the review assembly. Public fasteners remain labelled authored geometry.
-    layout=[base.val(),carrier.val(),bb.board().val(),*[s.val() for s in bb.hardware().values()],
-            *[s.val() for s in reservations]]
-    cq.exporters.export(cq.Compound.makeCompound(layout),
-                        str(out/'carrier-wiring-layout.step'))
+    # Preserve names/colours in XCAF: review must distinguish authored mechanical
+    # parts, public simplified hardware, component envelopes and reservations.
+    layout=cq.Assembly(name='carrier_interface_candidate_unqualified')
+    layout.add(base,name='pan_base_authored',color=cq.Color(.40,.46,.52))
+    layout.add(carrier,name='carrier_authored',color=cq.Color(.20,.48,.68))
+    layout.add(bb.pcb(),name='cut_PCB_nominal_stock',color=cq.Color(.12,.48,.28))
+    for i,(name,component) in enumerate(bb.components().items()):
+        layout.add(component,name=f'component_envelope_{i}_{name}',color=cq.Color(.26,.29,.33))
+    for name,hardware in bb.hardware().items():
+        colour=cq.Color(.72,.53,.20) if 'inserts' in name else cq.Color(.72,.75,.78)
+        layout.add(hardware,name='authored_public_'+name,color=colour)
+    for kind in ('power','signal'):
+        for side in ('module','fixed'):
+            layout.add(body(kind,side),name=f'RESERVATION_ONLY_C2_{kind}_{side}',color=cq.Color(.95,.36,.09,.65))
+    layout.save(str(out/'carrier-wiring-layout.step'))
     result['artifact_sha256']={p:hashlib.sha256((out/p).read_bytes()).hexdigest() for p in
                               ('carrier-wiring-candidate.step','pan-base-wiring-candidate.step','carrier-wiring-layout.step')}
+    if provenance.snapshot(ROOT)!=inputs:
+        raise ValueError('CAD/config/runtime inputs changed during generation; discard the candidate and rerun')
     # A partial export must not publish a new completed receipt.
     (out/'interfaces.json').write_text(json.dumps(result,indent=2)+'\n')
     print(json.dumps({'checks':len(checks),'failed':[c['id'] for c in checks if not c['pass']],

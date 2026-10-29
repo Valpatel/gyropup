@@ -5,6 +5,7 @@ reservations are intentionally separate. No CAD kernel or network is needed.
 """
 from __future__ import annotations
 from math import dist
+import print_provenance as provenance
 
 SOURCES = {
     'amass': 'https://www.china-amass.com/public/upload/20240608/810c62b3f7ace2287989748538eb2a6b.pdf',
@@ -100,3 +101,20 @@ def readiness(evidence):
     required=('geometry','connector_models','latch_and_retention','bend_radius','solder_and_insulation',
               'c3_and_servo_disconnect','source_protection','physical_fit')
     return all(evidence.get(k) is True for k in required)
+
+
+def validate_source_receipt(root,receipt):
+    """Kernel-free identity guard; CI need not install the recorded CAD runtime.
+
+    Compare the entire closure, so altered/deleted/new geometry inputs all fail.
+    Runtime versions/source fingerprint are recorded and compared by the CAD run.
+    """
+    recorded=receipt.get('inputs',{})
+    if receipt.get('input_fingerprint')!=provenance.fingerprint(recorded):
+        raise ValueError('Carrier input fingerprint is inconsistent')
+    current=provenance.snapshot(root)
+    for field in ('files','GYROPUP_CAD_PARAMS_sha256'):
+        if recorded.get(field)!=current[field]:
+            raise ValueError('Carrier CAD/config input closure changed: '+field)
+    if receipt.get('source_sha256')!=recorded.get('files'):
+        raise ValueError('Carrier source-file binding differs from its input snapshot')

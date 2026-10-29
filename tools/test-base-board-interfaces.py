@@ -3,6 +3,8 @@ import hashlib
 import json
 from pathlib import Path
 import sys
+import shutil
+import tempfile
 import unittest
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -39,6 +41,7 @@ class CarrierInterfaces(unittest.TestCase):
 
     def test_receipt_is_current_and_does_not_erase_unqualified_coverage(self):
         receipt=json.loads((ROOT/'exports/turret/base-board-service/interfaces/interfaces.json').read_text())
+        ci.validate_source_receipt(ROOT,receipt)
         for path,digest in receipt['source_sha256'].items():
             self.assertEqual(hashlib.sha256((ROOT/path).read_bytes()).hexdigest(),digest,path)
         for path,digest in receipt['artifact_sha256'].items():
@@ -46,12 +49,37 @@ class CarrierInterfaces(unittest.TestCase):
         self.assertTrue(receipt['bounded_reservation_checks_pass'])
         self.assertFalse(receipt['readiness'])
         self.assertFalse(receipt['physical_fit_verified'])
+        self.assertEqual(receipt['relations_engine_version'],'4')
+        self.assertEqual(set(receipt['artifact_sha256']),{'carrier-wiring-candidate.step',
+                         'pan-base-wiring-candidate.step','carrier-wiring-layout.step'})
         ids={c['id'] for c in receipt['checks'] if c['pass']}
         self.assertIn('negative:closed_window',ids)
         self.assertIn('negative:bumper_blocks_power_grip',ids)
         self.assertIn('negative:blocked_latch',ids)
         for kind in ('power','signal'):
             self.assertIn('negative:withdraw_still_mated:'+kind,ids)
+
+    def test_changed_deleted_or_new_geometry_dependency_rejects_receipt(self):
+        receipt=json.loads((ROOT/'exports/turret/base-board-service/interfaces/interfaces.json').read_text())
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp)
+            for path in receipt['inputs']['files']:
+                (root/path).parent.mkdir(parents=True,exist_ok=True)
+                shutil.copyfile(ROOT/path,root/path)
+            ci.validate_source_receipt(root,receipt)
+            interface=root/'cad/interfaces.json';original=interface.read_bytes()
+            changed=json.loads(original);changed['fasteners']['M5']['clear']+=2
+            interface.write_text(json.dumps(changed))
+            with self.assertRaisesRegex(ValueError,'closure changed'):
+                ci.validate_source_receipt(root,receipt)
+            interface.write_bytes(original)
+            gmi=root/'cad/gmi.py';original=gmi.read_bytes();gmi.unlink()
+            with self.assertRaisesRegex(ValueError,'closure changed'):
+                ci.validate_source_receipt(root,receipt)
+            gmi.write_bytes(original)
+            (root/'cad/new-effective-input.json').write_text('{}')
+            with self.assertRaisesRegex(ValueError,'closure changed'):
+                ci.validate_source_receipt(root,receipt)
 
 
 if __name__=='__main__':
