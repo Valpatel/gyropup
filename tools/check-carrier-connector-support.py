@@ -17,6 +17,7 @@ import time
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'cad'))
 import print_provenance as provenance
+PUBLIC_FILES={'carrier-support-candidate.step','C3-support-candidate.step','C3-support-layout.step'}
 
 
 def context_paths(root=ROOT):
@@ -47,7 +48,10 @@ def validate_receipt(receipt,root=ROOT):
         raise ValueError('Bounded support check cannot establish readiness')
     if not receipt['checks'] or any(c['pass'] is not True for c in receipt['checks']):
         raise ValueError('Support candidate has failed checks')
-    for name,wanted in receipt.get('public_artifact_sha256',{}).items():
+    artifacts=receipt.get('public_artifact_sha256')
+    if not isinstance(artifacts,dict) or set(artifacts)!=PUBLIC_FILES:
+        raise ValueError('Support public artifact binding is incomplete or unexpected')
+    for name,wanted in artifacts.items():
         path=root/'exports/turret/base-board-service/connectors'/name
         if not path.is_file() or provenance.digest(path)!=wanted:
             raise ValueError('Support public artifact changed: '+name)

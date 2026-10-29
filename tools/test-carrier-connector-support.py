@@ -34,6 +34,22 @@ class SupportEvidence(unittest.TestCase):
             p=root/'cad/turret_base_board.py';p.write_bytes(p.read_bytes()+b'\n# altered underlying mount\n')
             with self.assertRaisesRegex(ValueError,'closure changed'):MOD.validate_receipt(self.receipt,root)
 
+    def test_missing_partial_or_changed_artifact_binding_rejects(self):
+        for replacement in (None,{}, {'C3-support-layout.step':self.receipt['public_artifact_sha256']['C3-support-layout.step']}):
+            changed=copy.deepcopy(self.receipt)
+            if replacement is None:del changed['public_artifact_sha256']
+            else:changed['public_artifact_sha256']=replacement
+            with self.assertRaisesRegex(ValueError,'artifact binding'):MOD.validate_receipt(changed)
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp)
+            artifacts={'exports/turret/base-board-service/connectors/'+n for n in self.receipt['public_artifact_sha256']}
+            for name in set(self.receipt['inputs']['files'])|set(self.receipt['context_files'])|artifacts:
+                p=root/name;p.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(MOD.ROOT/name,p)
+            self.assertTrue(MOD.validate_receipt(self.receipt,root))
+            p=root/'exports/turret/base-board-service/connectors/C3-support-candidate.step'
+            p.write_bytes(p.read_bytes()+b'\nchanged export\n')
+            with self.assertRaisesRegex(ValueError,'public artifact changed'):MOD.validate_receipt(self.receipt,root)
+
     def test_actual_negative_controls_and_original_mounts_present(self):
         checks={c['id']:c['pass'] for c in self.receipt['checks']}
         for i in range(4):
@@ -61,6 +77,8 @@ class SupportEvidence(unittest.TestCase):
         self.assertIs(self.receipt['panel_retention_qualified'],False)
         screen=self.receipt['load_screen']
         self.assertEqual(screen['mating_force_n'],96.)
+        self.assertEqual(screen['force_direction'],[0.,-1.,0.])
+        self.assertEqual(screen['mount_moments_nmm'],{'about_X':2304.,'about_Z':-2688.})
         self.assertIsNone(screen['unmating_force_max_n'])
         self.assertIsNone(screen['allowable_mpa'])
         self.assertGreater(screen['one_post_equivalent_estimate_mpa'],35.)

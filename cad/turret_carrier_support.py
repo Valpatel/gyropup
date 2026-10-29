@@ -156,9 +156,11 @@ def load_screen():
     return {
         'mating_force_n':force,'unmating_force_max_n':None,
         'mating_source':'PS-43045-001 revision R,6.2 item7:8.0 N/circuit maximum;12 circuits',
-        'force_direction':[0.,1.,0.],'application_mm':[84.,0.,34.],
+        'force_direction':[0.,-1.,0.],'application_mm':[84.,0.,34.],
+        'mating_motion':'Fixed receptacle moves -Y toward the supported module plug.',
+        'unmating_force_direction':[0.,1.,0.],
         'mount_reference_mm':[56.,0.,10.],'outward_lever_mm':lever_x,'vertical_lever_mm':lever_z,
-        'mount_moments_nmm':{'about_Z':moment_z,'about_X':-moment_x},
+        'mount_moments_nmm':{'about_Z':-moment_z,'about_X':moment_x},
         'bolt_axis_couple_n':moment_z/(HOLES[1][0]-HOLES[0][0]),
         'bolt_vertical_shear_couple_n':moment_x/(HOLES[1][0]-HOLES[0][0]),
         'bolt_shear_resultant_n_if_direct_load_shared':math.hypot(force/2,moment_x/20.),
