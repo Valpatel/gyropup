@@ -257,6 +257,11 @@ try {
   assert.equal(await missingHero.locator('#robot-preview').count(), 0);
   record('A page without a hero starts the independent player normally'); await missingHero.close();
 
+  const removedHero = await pageFor({ motion: 'no-preference', heroMode: 'held' }); await show(removedHero);
+  await removedHero.waitForFunction(() => document.querySelector('.highlight-card').dataset.state === 'queued');
+  await removedHero.locator('.hero-scene').evaluate(el => el.remove()); await waitPlaying(removedHero);
+  record('Removing a pending hero through an ancestor releases its queued reel'); await removedHero.close();
+
   const hungHero = await pageFor({ heroMode: 'held', setup: page => page.clock.install() }); await show(hungHero);
   await hungHero.locator('.highlight-toggle').click();
   await hungHero.waitForFunction(() => document.querySelector('.highlight-card').dataset.state === 'queued');

@@ -187,7 +187,10 @@ if (card) {
   if (hero) {
     new MutationObserver(sync).observe(hero, { attributes: true, attributeFilter: ['data-ready', 'data-state'] });
     // Removing a hero is equivalent to a page that has no hero at all.
-    if (hero.parentElement) new MutationObserver(sync).observe(hero.parentElement, { childList: true });
+    const removalObserver = new MutationObserver(() => {
+      if (!hero.isConnected) { removalObserver.disconnect(); sync(); }
+    });
+    removalObserver.observe(document.body, { childList: true, subtree: true });
   }
   card.querySelector('.highlight-controls').hidden = false;
   if ('IntersectionObserver' in window) {
