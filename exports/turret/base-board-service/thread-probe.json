@@ -1,0 +1,36 @@
+{
+  "schema": "gyropup.thread-boolean-probe/1",
+  "frame": "world",
+  "grip_mm": 1.6,
+  "result": {
+    "a": "91290A111",
+    "b": "94459A140",
+    "state": "unknown",
+    "exact": true,
+    "cached": false,
+    "error": "volumes disagree: vol(a) 92.6421 != common 5.62478 + cut 101.134 mm3"
+  },
+  "seconds": 97.517,
+  "python": "3.12.3",
+  "machine": "x86_64",
+  "cadquery": "2.8.0",
+  "cadagent": "0.1.0",
+  "toolkit_relations_sha256": "91d25e6c9ea213f921766ec6941835c28b597a86fdc256a1e0ee4434ffb70bcd",
+  "probe_sha256": "a6663faef07d2c0d69f129fe546447ccf79e391b5553ea6b0d04b11dfdfda693",
+  "private_models": {
+    "91290A111": {
+      "reference": "https://www.mcmaster.com/91290A111/",
+      "sha256": "5254e828992285b42974ce077f5b1443fb8831397bcd9e653c4f5680df3b4191"
+    },
+    "94459A140": {
+      "reference": "https://www.mcmaster.com/94459A140/",
+      "sha256": "2ee42df52bf86ee05039c239b23e0d589d0587bb604ee06c28531315631158a0"
+    }
+  },
+  "solid_volumes_mm3": {
+    "screw": 92.64206524625244,
+    "insert": 42.12956638370704
+  },
+  "physical_fit_verified": false,
+  "note": "An unknown kernel result is unresolved, never a pass. No tolerance is enlarged."
+}

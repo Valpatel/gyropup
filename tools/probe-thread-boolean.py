@@ -10,6 +10,8 @@ import hashlib
 import importlib.metadata
 import json
 import platform
+import subprocess
+import OCP
 import sys
 import time
 from pathlib import Path
@@ -34,9 +36,15 @@ def main():
         insert=insert.translate((-46.4,22.4,-9)).rotate((0,0,0),(0,1,0),90)
     started=time.time();tol=relations.Tolerances()
     result=relations.relate(screw,insert,tol,names=('91290A111','94459A140')).to_dict()
+    def commit_at(path):
+        try:
+            return subprocess.check_output(['git','-C',str(path),'rev-parse','HEAD'],text=True,stderr=subprocess.DEVNULL).strip()
+        except subprocess.CalledProcessError:
+            return None
     receipt={'schema':'gyropup.thread-boolean-probe/1','frame':a.frame,'grip_mm':1.6,'result':result,
              'seconds':round(time.time()-started,3),'python':sys.version.split()[0],'machine':platform.machine(),
-             'cadquery':cq.__version__,'cadagent':importlib.metadata.version('cad-agent'),
+             'cadquery':cq.__version__,'ocp':OCP.__version__,'cadagent_metadata_version':importlib.metadata.version('cad-agent'),
+             'toolkit_git_commit':commit_at(Path(relations.__file__).parent),'probe_git_commit':commit_at(ROOT),
              'toolkit_relations_sha256':hashlib.sha256(Path(relations.__file__).read_bytes()).hexdigest(),
              'probe_sha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
              'private_models':{pn:{'reference':f'https://www.mcmaster.com/{pn}/','sha256':hashlib.sha256(f.read_bytes()).hexdigest()}
