@@ -53,6 +53,8 @@ class SceneFrames(unittest.TestCase):
     def test_effects_follow_the_actual_geometry(self):
         barrel = vertices(SCENE / 'barrel.stl')
         self.assertAlmostEqual(MAN['muzzle'][0], max(p[0] for p in barrel), delta=.001)
+        for axis in [1, 2]:
+            self.assertAlmostEqual(MAN['muzzle'][axis], (min(p[axis] for p in barrel) + max(p[axis] for p in barrel))/2, delta=.001)
         laser = vertices(SCENE / 'laser.stl')
         self.assertAlmostEqual(MAN['laser'][0], max(p[0] for p in laser), delta=.001)
         self.assertEqual(MAN['ball_path'][-1], MAN['muzzle'])

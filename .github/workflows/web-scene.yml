@@ -6,7 +6,7 @@ on:
 jobs:
   turret-motion:
     runs-on: ubuntu-24.04 # Supported by the pinned Playwright 1.56 browser dependencies.
-    timeout-minutes: 12
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
         with:
@@ -32,6 +32,7 @@ jobs:
           npm run test:interactions
           npm run test:robot
           npm run test:viewers
+          npm run test:audio
       - uses: actions/upload-artifact@v4
         if: always()
         with:

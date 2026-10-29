@@ -480,7 +480,7 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
     { id: 'section', html: 'CUT', title: 'A section through the ball path' }, { id: 'explode', html: 'APART', title: 'Exploded: how it goes together' }], (id) => setView(id));
   mechSec.querySelectorAll('.hud-chip').forEach((b) => { b.style.width = 'auto'; b.style.minWidth = '56px'; b.style.font = '600 10px var(--font-mono)'; });
   viewChips.mark('solid');
-  const explSl = slider(mechSec, { label: 'Exploded', min: 0, max: 1, step: 0.01, value: 0, fmt: (v) => `${Math.round(v * 100)} %`, onInput: (v) => { S.explodeCmd = v; } });
+  const explSl = slider(mechSec, { label: 'Exploded', min: 0, max: 1, step: 0.01, value: 0, fmt: (v) => `${Math.round(v * 100)} %`, onInput: (v) => { if (S.journey) stopJourney(); S.explodeCmd = v; } });
   const labelsT = toggle(mechSec, 'Callouts (numbered labels)', S.labels, (on) => { S.labels = on; });
   toggle(mechSec, 'Airflow of the J501 under the deck', S.airflow, (on) => { S.airflow = on; flowGroup.visible = on; if (on && S.view === 'solid') setView('xray'); });
   const jb = document.createElement('button');
@@ -722,6 +722,7 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
 
   // ------------------------------------------------------------------------------------------------ views
   function setView(v) {
+    if (v === 'explode' && S.journey) stopJourney();
     if (v === 'explode') { S.explodeCmd = Math.max(S.explodeCmd, 1); explSl.set(S.explodeCmd); }
     else if (S.view === 'explode') { S.explodeCmd = 0; explSl.set(0); }
     S.view = v;
@@ -819,7 +820,8 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
     if (S.journey) stopJourney();
     select(null);
     for (const b of S.flying) b.demo = false;
-    S.journey = { step: 0, t: 0, ball: null, auto: true, pocket: null, labels: S.labels };
+    S.journey = { step: 0, t: 0, ball: null, auto: true, pocket: null, labels: S.labels, reassembling: S.explode > 1e-4 };
+    S.explodeCmd = 0; explSl.set(0);
     setView('section');
     S.labels = false; labelsT.checked = false;
     jcard.hidden = false;
@@ -859,7 +861,7 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
     const jy = S.journey;
     if (!jy) return;
     if (what === 'play') { jy.auto = !jy.auto; if (!jy.auto) stopCamEase(); renderJourney(); return; }
-    const to = Math.max(0, Math.min(J.length - 1, jy.step + (what === 'next' ? 1 : -1)));
+    const to = Math.max(0, Math.min(J.length - 1, (jy.pendingStep ?? jy.step) + (what === 'next' ? 1 : -1)));
     gotoStep(to);
   }
   // each step: where the camera looks, how fast time runs, what the ball does
@@ -880,6 +882,7 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
     barrel: [cum[IX.nipOut] + 0.006, cum[IX.muzzle] - 0.006], muzzle: [cum[IX.muzzle] - 0.006, cum[IX.muzzle] + 0.03] };
   function gotoStep(i) {
     const jy = S.journey;
+    if (jy.reassembling) { jy.pendingStep = i; return; }
     jy.step = i;
     jy.t = 0;
     jy.landed = null;
@@ -925,7 +928,16 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
     return best;
   }
   function stepJourney(dtReal) {
-    const jy = S.journey, st = J[jy.step], cfg = STEP[st.id];
+    const jy = S.journey;
+    if (jy.reassembling) {
+      S.timeScale = 1;
+      if (S.explode > 1e-4) return;
+      jy.reassembling = false;
+      const pending = jy.pendingStep ?? 0; delete jy.pendingStep;
+      gotoStep(pending);
+      return;
+    }
+    const st = J[jy.step], cfg = STEP[st.id];
     S.timeScale = cfg.scale ?? 1;
     if (cfg.scale != null) sfx.turret.slowmo(cfg.scale);      // the ball's stages set it as the ball goes (below)
     jy.t += dtReal;
@@ -989,10 +1001,11 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
     muzzle.getWorldPosition(p);
     muzzle.getWorldQuaternion(tmpQ);
     d.set(0, 0, 1).applyQuaternion(tmpQ);
-    const ang = SPREAD_DEG * D2R * Math.sqrt(-2 * Math.log(Math.max(1e-6, Math.random()))), az = Math.random() * 2 * Math.PI;
+    const ang = (demo ? 0 : SPREAD_DEG) * D2R * Math.sqrt(-2 * Math.log(Math.max(1e-6, Math.random()))), az = Math.random() * 2 * Math.PI;
     const perp1 = new THREE.Vector3().crossVectors(d, new THREE.Vector3(0, 1, 0)).normalize(), perp2 = new THREE.Vector3().crossVectors(perp1, d);
     d.addScaledVector(perp1, Math.cos(az) * Math.tan(ang)).addScaledVector(perp2, Math.sin(az) * Math.tan(ang)).normalize();
-    const v = launchSpeed * (1 + SPEED_SPREAD * (Math.random() * 2 - 1)) * (S.rpm > 0 ? Math.min(1, S.rpm / fl.rpm) : 1);
+    // A narrated flight demonstrates nominal speed even after manual stage skips.
+    const v = demo ? launchSpeed : launchSpeed * (1 + SPEED_SPREAD * (Math.random() * 2 - 1)) * (S.rpm > 0 ? Math.min(1, S.rpm / fl.rpm) : 1);
     const { g, streak } = ballMesh();
     g.position.copy(p);
     scene.add(g, streak);
@@ -1322,7 +1335,7 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
   function step(t, dtReal) {
     if (!S.active) return;
     const paused = S.journey && !S.journey.auto;
-    if (paused) S.timeScale = 0;
+    if (paused) { if (S.journey.reassembling) stepJourney(0); S.timeScale = 0; }
     else if (S.journey) stepJourney(dtReal);
     else { S.timeScale = 1; sfx.turret.slowmo(1); }
     const motionDt = paused ? 0 : dtReal;
@@ -1352,7 +1365,12 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
     else if ((S.offFor += dt) > BRAKE_DELAY_S) S.rpm = S.rpm < 0.5 ? 0 : S.rpm * Math.exp(-dt / BRAKE_TAU_S);
     const laserOn = armed && !S.journey;
     if (laserOn !== S.laserOn) { S.laserOn = laserOn; sfx.laser(laserOn); }
-    const ready = armed && S.rpm >= 0.95 * fl.rpm && hopperCount() > 0;
+    if (!S.journey && (S.trigger || S.queue > 0) && armed && S.explodeCmd > 0) {
+      S.explodeCmd = 0; explSl.set(0);
+      if (S.view === 'explode') setView('solid');
+      say('Reassembling before firing…', 1200);
+    }
+    const ready = armed && S.rpm >= 0.95 * fl.rpm && hopperCount() > 0 && S.explode < 1e-4;
     fireBtn.classList.toggle('ready', ready);
     const now = performance.now() / 1000;
     if (!S.journey && (S.trigger || S.queue > 0) && ready && Math.abs(S.phiCmd - S.phi) < 1e-6 && now >= S.nextAt) {
@@ -1399,7 +1417,8 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
     gates.forEach((m, k) => { m.material.opacity = gateT[k] > 0 ? 0.9 : (S.view !== 'solid' ? 0.25 : 0); });
     // the explode slider eases; parts move along their offsets in their groups
     S.explode += (S.explodeCmd - S.explode) * (1 - Math.exp(-dtReal * 6));
-    if (Math.abs(S.explode - (S.lastExplode ?? -1)) > 1e-4) {
+    if (S.explodeCmd === 0 && S.explode < 1e-4) S.explode = 0;
+    if (Math.abs(S.explode - (S.lastExplode ?? -1)) > 1e-4 || (S.explode === 0 && S.lastExplode !== 0)) {
       S.lastExplode = S.explode;
       for (const p of parts) p.mesh.position.copy(p.explode).multiplyScalar(0.6 * S.explode);
     }
@@ -1522,7 +1541,7 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
       aim(panDeg, tiltDeg) { S.panCmd = panDeg * D2R; S.tiltCmd = tiltDeg * D2R; S.pan = S.panCmd; S.tilt = S.tiltCmd; panSl.set(panDeg); tiltSl.set(tiltDeg); },
       view: setView, journey: (i = 0) => { startJourney(); if (i && S.journey) gotoStep(i); }, select: (name) => select(parts.find((p) => p.e.part === name) ?? null, true),
       labels(on) { S.labels = on; labelsT.checked = on; }, airflow(on) { S.airflow = on; flowGroup.visible = on; }, antennas(on) { S.antennas = on; antennas.visible = on; },
-      reload, resetTargets, explode(v) { S.explodeCmd = v; explSl.set(v); },
+      reload, resetTargets, explode(v) { if(S.journey)stopJourney(); S.explodeCmd = v; explSl.set(v); },
     },
   };
 }

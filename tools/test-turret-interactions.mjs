@@ -5,6 +5,7 @@ const base=(process.env.SITE_URL||'http://127.0.0.1:8882').replace(/\/$/,'');
 const engine=process.env.PLAYWRIGHT_BROWSER==='webkit'?webkit:chromium;
 const browser=await engine.launch(engine===chromium?{channel:process.env.PLAYWRIGHT_CHANNEL==='chromium'?undefined:'chrome',headless:true,args:['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']}:{headless:true});
 const page=await browser.newPage({viewport:{width:1280,height:900}}),errors=[];
+page.setDefaultTimeout(90000); // Software-rendered CI advances capped simulation time slowly.
 const out=process.env.TEST_OUTPUT||'/tmp/gyropup-turret-interactions';await mkdir(out,{recursive:true});
 page.on('pageerror',e=>errors.push(e.message));
 await page.addInitScript(()=>localStorage.setItem('gyropup.probe','off'));
@@ -36,6 +37,38 @@ try{
  await page.evaluate(()=>window.__sim.bench().api.arm(true));await fireButton.focus();await page.keyboard.down('Enter');
  assert.equal(await page.evaluate(()=>window.__sim.bench().api.state.trigger),true);await page.keyboard.up('Enter');
  assert.equal(await page.evaluate(()=>window.__sim.bench().api.state.trigger),false);await page.evaluate(()=>window.__sim.bench().api.arm(false));
+ // A journey must reunite exploded geometry before its ball enters the barrel.
+ await page.evaluate(()=>window.__sim.bench().api.explode(1));
+ await page.waitForFunction(()=>window.__sim.bench().api.state.explode>.9);
+ await page.evaluate(()=>window.__sim.bench().api.journey(6));
+ assert.equal(await page.evaluate(()=>!!window.__sim.bench().api.state.journey.ball),false,'No disconnected ball during reassembly');
+ await page.locator('[data-j=play]').click(); // Pause during assembly must still place the pending stage.
+ await page.waitForFunction(()=>window.__sim.bench().api.state.journey.step===6&&!window.__sim.bench().api.state.journey.reassembling);
+ const bore=await page.evaluate(()=>{
+  const a=window.__sim.bench().api,m=a.mechanism,p=m.parts.find(p=>p.e.part==='barrel').mesh;
+  p.geometry.computeBoundingBox();const box=p.geometry.boundingBox;
+  const center=p.position.clone();box.getCenter(center);center.z=box.max.z;
+  p.localToWorld(center);const muzzle=m.muzzle.getWorldPosition(center.clone());
+  const ball=a.state.journey.ball.g.getWorldPosition(center.clone());
+  const axis=center.clone().set(0,0,1).applyQuaternion(p.getWorldQuaternion(p.quaternion.clone()));
+  return {mouthErrorMM:center.distanceTo(muzzle)*1000,ballAxisErrorMM:ball.sub(center).cross(axis).length()*1000};
+ });
+ assert.ok(bore.mouthErrorMM<.001&&bore.ballAxisErrorMM<.001,`Journey follows actual barrel: ${JSON.stringify(bore)}`);
+ // Manual stage navigation must demonstrate nominal flight, even when paused before wheel spin-up.
+ await page.evaluate(()=>{window.__sim.bench().api.state.rpm=1;});
+ await page.locator('[data-j=next]').click();
+ const flight=await page.evaluate(()=>{const b=window.__sim.bench(),s=b.api.state,ball=s.flying.find(b=>b.demo);return {speed:ball.v.length(),nominal:b.manifest.mechanics.ball.speed_mps,age:ball.age};});
+ assert.ok(Math.abs(flight.speed-flight.nominal)<1e-9);assert.equal(flight.age,0);
+ await page.locator('.tb-jhead button').click();
+ // A live shot from inspection also waits until the visible barrel is assembled.
+ await page.evaluate(()=>{const a=window.__sim.bench().api;a.explode(1);});
+ await page.waitForFunction(()=>window.__sim.bench().api.state.explode>.9);
+ const shotsBefore=await page.evaluate(()=>{const a=window.__sim.bench().api;a.arm(true);a.fire(1);return a.state.shots;});
+ await page.waitForFunction(()=>window.__sim.bench().api.state.explodeCmd===0);
+ assert.equal(await page.evaluate(()=>window.__sim.bench().api.state.shots),shotsBefore);
+ await page.waitForFunction(n=>window.__sim.bench().api.state.shots>n,shotsBefore,{timeout:90000});
+ assert.equal(await page.evaluate(()=>window.__sim.bench().api.state.explode),0);
+ await page.evaluate(()=>window.__sim.bench().api.arm(false));
  // PAUSE freezes the demonstrated ball and all rotating mechanism parts, then PLAY resumes them.
  await page.evaluate(()=>window.__sim.bench().api.journey(2));
  await page.waitForFunction(()=>window.__sim.bench().api.state.journey.t>.05);
@@ -79,19 +112,21 @@ try{
  assert.equal(await page.evaluate(()=>window.__sim.bench().api.state.reloading?.elapsed),frozen);
  assert.ok(frozen>=paused);
  await page.selectOption('#design-select','turret-box');await page.waitForFunction(()=>window.__sim.bench().active);
- await page.waitForFunction(()=>!window.__sim.bench().api.state.reloading,null,{timeout:15000});
+ await page.waitForFunction(()=>!window.__sim.bench().api.state.reloading,null,{timeout:60000});
  const completed=await page.evaluate(()=>{const s=window.__sim,a=s.bench().api,m=a.mechanism,k=window.kept;return {count:a.state.pile+a.state.pockets.filter(Boolean).length,angle:a.state.flapAngle,hidden:!m.refill.group.visible,jar:m.refill.jar===k.jar,scene:s.stage.scene===k.scene,renderer:s.stage.renderer===k.renderer,talk:s.talk===k.talk,conversation:JSON.stringify(s.talk.conversation)===JSON.stringify(k.conversation),mechanism:m.world===k.mechanism};});
  assert.deepEqual(completed,{count:30,angle:0,hidden:true,jar:true,scene:true,renderer:true,talk:true,conversation:true,mechanism:true},'Completed in same scene/conversation; capacity exact; pooled jar hidden; flap closed');
  // Full hopper does not start a second pour. Reduced-motion completion follows the same state path.
  assert.equal(await page.evaluate(()=>window.__sim.bench().api.reload()),false);
  await page.emulateMedia({reducedMotion:'reduce'});
  await page.evaluate(()=>{const a=window.__sim.bench().api;a.state.pile-=3;a.reload();});
- await page.waitForFunction(()=>!window.__sim.bench().api.state.reloading,null,{timeout:15000});
+ await page.waitForFunction(()=>!window.__sim.bench().api.state.reloading,null,{timeout:60000});
  assert.equal(await page.evaluate(()=>{const a=window.__sim.bench().api;return a.state.pile+a.state.pockets.filter(Boolean).length;}),30);
  await page.emulateMedia({reducedMotion:'no-preference'});
  const phones=[];
  for(const [width,height] of [[320,568],[360,640],[390,844],[430,932],[844,390]]){
-  await page.setViewportSize({width,height});await page.waitForTimeout(100);
+  await page.setViewportSize({width,height});
+  await page.waitForFunction(()=>document.getElementById('hud').classList.contains('drawer-closed'));
+  await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
   await page.evaluate(()=>window.__sim.bench().api.select('pan_base'));
   const metrics=await page.evaluate(()=>{
    const b=document.querySelector('.tb-reload'),r=b.getBoundingClientRect(),el=document.elementFromPoint(r.x+r.width/2,r.y+r.height/2);
@@ -116,6 +151,6 @@ try{
   await auto.click();assert.ok(await auto.evaluate(b=>b.classList.contains('active')));
  }
  assert.deepEqual(errors,[]);assert.equal(await page.evaluate(()=>document.body.dataset.stageError),undefined);
- await writeFile(`${out}/${engine.name()}-report.json`,JSON.stringify({base,arc,pouring,phones,centers,errors},null,2));
+ await writeFile(`${out}/${engine.name()}-report.json`,JSON.stringify({base,arc,bore,flight,pouring,phones,centers,errors},null,2));
  console.log(`PASS ${engine.name()}: visible ballistic arc; progressive jar reload; spam/fire/journey gates; paused resume; same scene/conversation; reduced motion; 5 reachable phone layouts; native keyboard; real pause; centered AUTO`);
 }catch(error){console.error('Failure state',await page.evaluate(()=>{const s=window.__sim,a=s?.bench()?.api;return {error:document.body.dataset.stageError,bench:s?.state.bench,active:s?.bench()?.active,reloading:a?.state.reloading,journey:!!a?.state.journey};}).catch(()=>null),errors);throw error;}finally{await browser.close();}
