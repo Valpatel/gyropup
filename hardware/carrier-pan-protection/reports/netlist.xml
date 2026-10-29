@@ -1,0 +1,741 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<export version="E">
+  <design>
+    <source>pan-cutoff.kicad_sch</source>
+    <date>reproducible export; see receipt.json</date>
+    <tool>Eeschema 10.0.1</tool>
+    <sheet number="1" name="/" tstamps="/">
+      <title_block>
+        <title>Gyropup PAN input cutoff - circuit candidate</title>
+        <company>Valpatel Software LLC</company>
+        <rev>CANDIDATE A</rev>
+        <date>2026-10-29</date>
+        <source>pan-cutoff.kicad_sch</source>
+        <comment number="1" value="Issue83 / PR84. Not for fabrication. No PCB or footprint qualification." />
+        <comment number="2" value="" />
+        <comment number="3" value="" />
+        <comment number="4" value="" />
+        <comment number="5" value="" />
+        <comment number="6" value="" />
+        <comment number="7" value="" />
+        <comment number="8" value="" />
+        <comment number="9" value="" />
+      </title_block>
+    </sheet>
+  </design>
+  <components>
+    <comp ref="C1">
+      <value>22uF 100V 20%</value>
+      <footprint>Capacitor_THT:CP_Radial_D8.0mm_P3.50mm</footprint>
+      <datasheet>https://industrial.panasonic.com/ww/products/pt/aluminum-cap-lead/models/EEUFC2A220</datasheet>
+      <fields>
+        <field name="MPN">EEU-FC2A220</field>
+        <field name="Status">UNSELECTED / UNQUALIFIED CANDIDATE</field>
+        <field name="Note">Local VOUT decoupling; positive terminal to PAN_INPUT. 8mm diameter x11.5mm nominal body exceeds U2 height reservation.</field>
+        <field name="Footprint">Capacitor_THT:CP_Radial_D8.0mm_P3.50mm</field>
+        <field name="Datasheet">https://industrial.panasonic.com/ww/products/pt/aluminum-cap-lead/models/EEUFC2A220</field>
+        <field name="Description" />
+      </fields>
+      <libsource lib="Candidate" part="C_POL" description="" />
+      <property name="MPN" value="EEU-FC2A220" />
+      <property name="Status" value="UNSELECTED / UNQUALIFIED CANDIDATE" />
+      <property name="Note" value="Local VOUT decoupling; positive terminal to PAN_INPUT. 8mm diameter x11.5mm nominal body exceeds U2 height reservation." />
+      <property name="Sheetname" value="" />
+      <property name="Sheetfile" value="pan-cutoff.kicad_sch" />
+      <sheetpath names="/" tstamps="/" />
+      <tstamps>06c782af-c166-5c96-adea-bdc728d28f8e</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1" />
+            <pin num="2" />
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C2">
+      <value>3.3nF 100V 5%</value>
+      <footprint>Capacitor_SMD:C_0805_2012Metric</footprint>
+      <datasheet>https://yageogroup.com/content/datasheet/asset/file/KEM_C1003_C0G_SMD</datasheet>
+      <fields>
+        <field name="MPN">C0805C332J1GACTU</field>
+        <field name="Status">UNSELECTED / UNQUALIFIED CANDIDATE</field>
+        <field name="Note">ADI CGATE example value; actual U2 capacitance/inrush and SOA not qualified.</field>
+        <field name="Footprint">Capacitor_SMD:C_0805_2012Metric</field>
+        <field name="Datasheet">https://yageogroup.com/content/datasheet/asset/file/KEM_C1003_C0G_SMD</field>
+        <field name="Description" />
+      </fields>
+      <libsource lib="Candidate" part="C" description="" />
+      <property name="MPN" value="C0805C332J1GACTU" />
+      <property name="Status" value="UNSELECTED / UNQUALIFIED CANDIDATE" />
+      <property name="Note" value="ADI CGATE example value; actual U2 capacitance/inrush and SOA not qualified." />
+      <property name="Sheetname" value="" />
+      <property name="Sheetfile" value="pan-cutoff.kicad_sch" />
+      <sheetpath names="/" tstamps="/" />
+      <tstamps>ff602bc9-9079-5f6a-9066-0a5100368004</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1" />
+            <pin num="2" />
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C3">
+      <value>6.8nF 50V 5%</value>
+      <footprint>Capacitor_SMD:C_0805_2012Metric</footprint>
+      <datasheet>https://yageogroup.com/content/datasheet/asset/file/KEM_C1003_C0G_SMD</datasheet>
+      <fields>
+        <field name="MPN">C0805C682J5GACTU</field>
+        <field name="Status">UNSELECTED / UNQUALIFIED CANDIDATE</field>
+        <field name="Note">Gate-to-common-source hotswap capacitor, ADI p15-16; NOT gate-to-ground.</field>
+        <field name="Footprint">Capacitor_SMD:C_0805_2012Metric</field>
+        <field name="Datasheet">https://yageogroup.com/content/datasheet/asset/file/KEM_C1003_C0G_SMD</field>
+        <field name="Description" />
+      </fields>
+      <libsource lib="Candidate" part="C" description="" />
+      <property name="MPN" value="C0805C682J5GACTU" />
+      <property name="Status" value="UNSELECTED / UNQUALIFIED CANDIDATE" />
+      <property name="Note" value="Gate-to-common-source hotswap capacitor, ADI p15-16; NOT gate-to-ground." />
+      <property name="Sheetname" value="" />
+      <property name="Sheetfile" value="pan-cutoff.kicad_sch" />
+      <sheetpath names="/" tstamps="/" />
+      <tstamps>9151baee-d2d7-554e-b3f0-134424337c27</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1" />
+            <pin num="2" />
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="Q1">
+      <value>100V N-MOS</value>
+      <datasheet>https://www.ti.com/lit/ds/symlink/csd19531q5a.pdf</datasheet>
+      <fields>
+        <field name="MPN">CSD19531Q5AT</field>
+        <field name="Status">UNSELECTED / UNQUALIFIED CANDIDATE</field>
+        <field name="Note">Body diode anode=COMMON_SOURCE, cathode=BUS_HEAD_FUSED. Drain exposed metal belongs to D, not a new pin9.</field>
+        <field name="Footprint" />
+        <field name="Datasheet">https://www.ti.com/lit/ds/symlink/csd19531q5a.pdf</field>
+        <field name="Description" />
+      </fields>
+      <libsource lib="Candidate" part="Q_IN" description="" />
+      <property name="MPN" value="CSD19531Q5AT" />
+      <property name="Status" value="UNSELECTED / UNQUALIFIED CANDIDATE" />
+      <property name="Note" value="Body diode anode=COMMON_SOURCE, cathode=BUS_HEAD_FUSED. Drain exposed metal belongs to D, not a new pin9." />
+      <property name="Sheetname" value="" />
+      <property name="Sheetfile" value="pan-cutoff.kicad_sch" />
+      <sheetpath names="/" tstamps="/" />
+      <tstamps>f33af189-53c3-51ea-b517-e1da39a4dc45</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="5" />
+            <pin num="6" />
+            <pin num="7" />
+            <pin num="8" />
+            <pin num="4" />
+            <pin num="1" />
+            <pin num="2" />
+            <pin num="3" />
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="Q2">
+      <value>100V N-MOS</value>
+      <datasheet>https://www.ti.com/lit/ds/symlink/csd19531q5a.pdf</datasheet>
+      <fields>
+        <field name="MPN">CSD19531Q5AT</field>
+        <field name="Status">UNSELECTED / UNQUALIFIED CANDIDATE</field>
+        <field name="Note">Body diode anode=COMMON_SOURCE, cathode=SENSE_HI. Common-source pair; no PCB footprint qualified.</field>
+        <field name="Footprint" />
+        <field name="Datasheet">https://www.ti.com/lit/ds/symlink/csd19531q5a.pdf</field>
+        <field name="Description" />
+      </fields>
+      <libsource lib="Candidate" part="Q_OUT" description="" />
+      <property name="MPN" value="CSD19531Q5AT" />
+      <property name="Status" value="UNSELECTED / UNQUALIFIED CANDIDATE" />
+      <property name="Note" value="Body diode anode=COMMON_SOURCE, cathode=SENSE_HI. Common-source pair; no PCB footprint qualified." />
+      <property name="Sheetname" value="" />
+      <property name="Sheetfile" value="pan-cutoff.kicad_sch" />
+      <sheetpath names="/" tstamps="/" />
+      <tstamps>0928c61a-c5e4-5dca-b848-c4fede98bfe5</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1" />
+            <pin num="2" />
+            <pin num="3" />
+            <pin num="4" />
+            <pin num="5" />
+            <pin num="6" />
+            <pin num="7" />
+            <pin num="8" />
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R1">
+      <value>10mR 1% 1W</value>
+      <footprint>Resistor_SMD:R_2512_6332Metric</footprint>
+      <datasheet>https://www.vishay.com/docs/30100/wsl.pdf</datasheet>
+      <fields>
+        <field name="MPN">WSL2512R0100FEA</field>
+        <field name="Status">UNSELECTED / UNQUALIFIED CANDIDATE</field>
+        <field name="Note">Kelvin sense routing at pad edges required. 2-terminal part; current and sense share the pads.</field>
+        <field name="Footprint">Resistor_SMD:R_2512_6332Metric</field>
+        <field name="Datasheet">https://www.vishay.com/docs/30100/wsl.pdf</field>
+        <field name="Description" />
+      </fields>
+      <libsource lib="Candidate" part="R" description="" />
+      <property name="MPN" value="WSL2512R0100FEA" />
+      <property name="Status" value="UNSELECTED / UNQUALIFIED CANDIDATE" />
+      <property name="Note" value="Kelvin sense routing at pad edges required. 2-terminal part; current and sense share the pads." />
+      <property name="Sheetname" value="" />
+      <property name="Sheetfile" value="pan-cutoff.kicad_sch" />
+      <sheetpath names="/" tstamps="/" />
+      <tstamps>44469669-de61-5f58-a7fb-d7394534bda7</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1" />
+            <pin num="2" />
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R2">
+      <value>464k 0.1%</value>
+      <footprint>Resistor_SMD:R_0805_2012Metric</footprint>
+      <datasheet>https://www.vishay.com/docs/28758/tnpw_e3.pdf</datasheet>
+      <fields>
+        <field name="MPN">TNPW0805464KBEEN</field>
+        <field name="Status">UNSELECTED / UNQUALIFIED CANDIDATE</field>
+        <field name="Note">OV top; stock quantity unresolved</field>
+        <field name="Footprint">Resistor_SMD:R_0805_2012Metric</field>
+        <field name="Datasheet">https://www.vishay.com/docs/28758/tnpw_e3.pdf</field>
+        <field name="Description" />
+      </fields>
+      <libsource lib="Candidate" part="R" description="" />
+      <property name="MPN" value="TNPW0805464KBEEN" />
+      <property name="Status" value="UNSELECTED / UNQUALIFIED CANDIDATE" />
+      <property name="Note" value="OV top; stock quantity unresolved" />
+      <property name="Sheetname" value="" />
+      <property name="Sheetfile" value="pan-cutoff.kicad_sch" />
+      <sheetpath names="/" tstamps="/" />
+      <tstamps>7b0c2a85-49c0-5a13-bfd3-0bb6e21633b8</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1" />
+            <pin num="2" />
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R3">
+      <value>4.99k 0.1%</value>
+      <footprint>Resistor_SMD:R_0805_2012Metric</footprint>
+      <datasheet>https://www.vishay.com/docs/28758/tnpw_e3.pdf</datasheet>
+      <fields>
+        <field name="MPN">TNPW08054K99BEEN</field>
+        <field name="Status">UNSELECTED / UNQUALIFIED CANDIDATE</field>
+        <field name="Note">OV bottom</field>
+        <field name="Footprint">Resistor_SMD:R_0805_2012Metric</field>
+        <field name="Datasheet">https://www.vishay.com/docs/28758/tnpw_e3.pdf</field>
+        <field name="Description" />
+      </fields>
+      <libsource lib="Candidate" part="R" description="" />
+      <property name="MPN" value="TNPW08054K99BEEN" />
+      <property name="Status" value="UNSELECTED / UNQUALIFIED CANDIDATE" />
+      <property name="Note" value="OV bottom" />
+      <property name="Sheetname" value="" />
+      <property name="Sheetfile" value="pan-cutoff.kicad_sch" />
+      <sheetpath names="/" tstamps="/" />
+      <tstamps>6f05905f-3ca6-596b-9403-aea8c999967b</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1" />
+            <pin num="2" />
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R4">
+      <value>127k 0.1%</value>
+      <footprint>Resistor_SMD:R_0805_2012Metric</footprint>
+      <datasheet>https://www.vishay.com/docs/28758/tnpw_e3.pdf</datasheet>
+      <fields>
+        <field name="MPN">TNPW0805127KBEEN</field>
+        <field name="Status">UNSELECTED / UNQUALIFIED CANDIDATE</field>
+        <field name="Note">UV top; listed nonstock/reel order</field>
+        <field name="Footprint">Resistor_SMD:R_0805_2012Metric</field>
+        <field name="Datasheet">https://www.vishay.com/docs/28758/tnpw_e3.pdf</field>
+        <field name="Description" />
+      </fields>
+      <libsource lib="Candidate" part="R" description="" />
+      <property name="MPN" value="TNPW0805127KBEEN" />
+      <property name="Status" value="UNSELECTED / UNQUALIFIED CANDIDATE" />
+      <property name="Note" value="UV top; listed nonstock/reel order" />
+      <property name="Sheetname" value="" />
+      <property name="Sheetfile" value="pan-cutoff.kicad_sch" />
+      <sheetpath names="/" tstamps="/" />
+      <tstamps>74681b5f-c4b0-5fd5-a22c-58bea184a458</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1" />
+            <pin num="2" />
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R5">
+      <value>4.99k 0.1%</value>
+      <footprint>Resistor_SMD:R_0805_2012Metric</footprint>
+      <datasheet>https://www.vishay.com/docs/28758/tnpw_e3.pdf</datasheet>
+      <fields>
+        <field name="MPN">TNPW08054K99BEEN</field>
+        <field name="Status">UNSELECTED / UNQUALIFIED CANDIDATE</field>
+        <field name="Note">UV bottom</field>
+        <field name="Footprint">Resistor_SMD:R_0805_2012Metric</field>
+        <field name="Datasheet">https://www.vishay.com/docs/28758/tnpw_e3.pdf</field>
+        <field name="Description" />
+      </fields>
+      <libsource lib="Candidate" part="R" description="" />
+      <property name="MPN" value="TNPW08054K99BEEN" />
+      <property name="Status" value="UNSELECTED / UNQUALIFIED CANDIDATE" />
+      <property name="Note" value="UV bottom" />
+      <property name="Sheetname" value="" />
+      <property name="Sheetfile" value="pan-cutoff.kicad_sch" />
+      <sheetpath names="/" tstamps="/" />
+      <tstamps>ebf3b8b1-765f-530a-a28b-a82169379b64</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1" />
+            <pin num="2" />
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R6">
+      <value>499k 0.1%</value>
+      <footprint>Resistor_SMD:R_0805_2012Metric</footprint>
+      <datasheet>https://www.vishay.com/docs/28758/tnpw_e3.pdf</datasheet>
+      <fields>
+        <field name="MPN">TNPW0805499KBEEN</field>
+        <field name="Status">UNSELECTED / UNQUALIFIED CANDIDATE</field>
+        <field name="Note">SHDN top: limits pin current; not an arm circuit</field>
+        <field name="Footprint">Resistor_SMD:R_0805_2012Metric</field>
+        <field name="Datasheet">https://www.vishay.com/docs/28758/tnpw_e3.pdf</field>
+        <field name="Description" />
+      </fields>
+      <libsource lib="Candidate" part="R" description="" />
+      <property name="MPN" value="TNPW0805499KBEEN" />
+      <property name="Status" value="UNSELECTED / UNQUALIFIED CANDIDATE" />
+      <property name="Note" value="SHDN top: limits pin current; not an arm circuit" />
+      <property name="Sheetname" value="" />
+      <property name="Sheetfile" value="pan-cutoff.kicad_sch" />
+      <sheetpath names="/" tstamps="/" />
+      <tstamps>76241c34-7c78-563f-9f8c-45bdcbec4b06</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1" />
+            <pin num="2" />
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R7">
+      <value>100k 0.1%</value>
+      <footprint>Resistor_SMD:R_0805_2012Metric</footprint>
+      <datasheet>https://www.vishay.com/docs/28758/tnpw_e3.pdf</datasheet>
+      <fields>
+        <field name="MPN">TNPW0805100KBEEN</field>
+        <field name="Status">UNSELECTED / UNQUALIFIED CANDIDATE</field>
+        <field name="Note">SHDN bottom; default ON when source valid</field>
+        <field name="Footprint">Resistor_SMD:R_0805_2012Metric</field>
+        <field name="Datasheet">https://www.vishay.com/docs/28758/tnpw_e3.pdf</field>
+        <field name="Description" />
+      </fields>
+      <libsource lib="Candidate" part="R" description="" />
+      <property name="MPN" value="TNPW0805100KBEEN" />
+      <property name="Status" value="UNSELECTED / UNQUALIFIED CANDIDATE" />
+      <property name="Note" value="SHDN bottom; default ON when source valid" />
+      <property name="Sheetname" value="" />
+      <property name="Sheetfile" value="pan-cutoff.kicad_sch" />
+      <sheetpath names="/" tstamps="/" />
+      <tstamps>d474fcd5-c540-5cb0-aa08-c1f1a5127379</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1" />
+            <pin num="2" />
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R8">
+      <value>22k 0.1%</value>
+      <footprint>Resistor_SMD:R_0805_2012Metric</footprint>
+      <datasheet>https://www.vishay.com/docs/28758/tnpw_e3.pdf</datasheet>
+      <fields>
+        <field name="MPN">TNPW080522K0BEEN</field>
+        <field name="Status">UNSELECTED / UNQUALIFIED CANDIDATE</field>
+        <field name="Note">Series with CGATE only; NOT in series with MOSFET gates</field>
+        <field name="Footprint">Resistor_SMD:R_0805_2012Metric</field>
+        <field name="Datasheet">https://www.vishay.com/docs/28758/tnpw_e3.pdf</field>
+        <field name="Description" />
+      </fields>
+      <libsource lib="Candidate" part="R" description="" />
+      <property name="MPN" value="TNPW080522K0BEEN" />
+      <property name="Status" value="UNSELECTED / UNQUALIFIED CANDIDATE" />
+      <property name="Note" value="Series with CGATE only; NOT in series with MOSFET gates" />
+      <property name="Sheetname" value="" />
+      <property name="Sheetfile" value="pan-cutoff.kicad_sch" />
+      <sheetpath names="/" tstamps="/" />
+      <tstamps>b0688de4-0240-5458-8f2c-ba7ea5dd323d</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1" />
+            <pin num="2" />
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R9">
+      <value>100k 0.1%</value>
+      <footprint>Resistor_SMD:R_0805_2012Metric</footprint>
+      <datasheet>https://www.vishay.com/docs/28758/tnpw_e3.pdf</datasheet>
+      <fields>
+        <field name="MPN">TNPW0805100KBEEN</field>
+        <field name="Status">UNSELECTED / UNQUALIFIED CANDIDATE</field>
+        <field name="Note">Bleeder; decay depends on unmeasured module Cin</field>
+        <field name="Footprint">Resistor_SMD:R_0805_2012Metric</field>
+        <field name="Datasheet">https://www.vishay.com/docs/28758/tnpw_e3.pdf</field>
+        <field name="Description" />
+      </fields>
+      <libsource lib="Candidate" part="R" description="" />
+      <property name="MPN" value="TNPW0805100KBEEN" />
+      <property name="Status" value="UNSELECTED / UNQUALIFIED CANDIDATE" />
+      <property name="Note" value="Bleeder; decay depends on unmeasured module Cin" />
+      <property name="Sheetname" value="" />
+      <property name="Sheetfile" value="pan-cutoff.kicad_sch" />
+      <sheetpath names="/" tstamps="/" />
+      <tstamps>72853de0-3cdd-57ef-b06e-462b06f35387</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1" />
+            <pin num="2" />
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="U1">
+      <value>LTC4368IMS-2</value>
+      <footprint>Package_SO:MSOP-10_3x3mm_P0.5mm</footprint>
+      <datasheet>https://www.analog.com/media/en/technical-documentation/data-sheets/ltc4368.pdf</datasheet>
+      <fields>
+        <field name="MPN">LTC4368IMS-2#PBF</field>
+        <field name="Status">UNSELECTED / UNQUALIFIED CANDIDATE</field>
+        <field name="Note">MSOP-10 pin map, revC p2. RETRY grounded: forward OC latch; UV/OV still auto-recover.</field>
+        <field name="Footprint">Package_SO:MSOP-10_3x3mm_P0.5mm</field>
+        <field name="Datasheet">https://www.analog.com/media/en/technical-documentation/data-sheets/ltc4368.pdf</field>
+        <field name="Description" />
+      </fields>
+      <libsource lib="Candidate" part="LTC4368IMS2" description="" />
+      <property name="MPN" value="LTC4368IMS-2#PBF" />
+      <property name="Status" value="UNSELECTED / UNQUALIFIED CANDIDATE" />
+      <property name="Note" value="MSOP-10 pin map, revC p2. RETRY grounded: forward OC latch; UV/OV still auto-recover." />
+      <property name="Sheetname" value="" />
+      <property name="Sheetfile" value="pan-cutoff.kicad_sch" />
+      <sheetpath names="/" tstamps="/" />
+      <tstamps>1bcada5e-834f-59d9-8612-2e1cf1d9bfd3</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1" />
+            <pin num="2" />
+            <pin num="3" />
+            <pin num="4" />
+            <pin num="6" />
+            <pin num="5" />
+            <pin num="10" />
+            <pin num="9" />
+            <pin num="8" />
+            <pin num="7" />
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="U2">
+      <value>D42V55F12 / 5577</value>
+      <datasheet>https://www.pololu.com/product/5577</datasheet>
+      <fields>
+        <field name="MPN">Pololu 5577</field>
+        <field name="Status">UNSELECTED / UNQUALIFIED CANDIDATE</field>
+        <field name="Note">Project pad IDs A/B from manufacturer top view, see pins.md. EN left open uses internal pullup. VRP never used as input. PG unused; not a servo OVP.</field>
+        <field name="Footprint" />
+        <field name="Datasheet">https://www.pololu.com/product/5577</field>
+        <field name="Description" />
+      </fields>
+      <libsource lib="Candidate" part="D42V55F12" description="" />
+      <property name="MPN" value="Pololu 5577" />
+      <property name="Status" value="UNSELECTED / UNQUALIFIED CANDIDATE" />
+      <property name="Note" value="Project pad IDs A/B from manufacturer top view, see pins.md. EN left open uses internal pullup. VRP never used as input. PG unused; not a servo OVP." />
+      <property name="Sheetname" value="" />
+      <property name="Sheetfile" value="pan-cutoff.kicad_sch" />
+      <sheetpath names="/" tstamps="/" />
+      <tstamps>f1d0f5c2-702c-5b30-9897-7e628d47d0e8</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="A4" />
+            <pin num="B4" />
+            <pin num="B6" />
+            <pin num="A2" />
+            <pin num="A3" />
+            <pin num="B2" />
+            <pin num="B3" />
+            <pin num="A1" />
+            <pin num="B1" />
+            <pin num="A5" />
+            <pin num="B5" />
+            <pin num="A6" />
+          </pins>
+        </unit>
+      </units>
+    </comp>
+  </components>
+  <libparts>
+    <libpart lib="Candidate" part="C">
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">C</field>
+        <field name="Footprint" />
+        <field name="Datasheet" />
+        <field name="Description" />
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive" />
+        <pin num="2" name="" type="passive" />
+      </pins>
+    </libpart>
+    <libpart lib="Candidate" part="C_POL">
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">C_POL</field>
+        <field name="Footprint" />
+        <field name="Datasheet" />
+        <field name="Description" />
+      </fields>
+      <pins>
+        <pin num="1" name="+" type="passive" />
+        <pin num="2" name="-" type="passive" />
+      </pins>
+    </libpart>
+    <libpart lib="Candidate" part="D42V55F12">
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">D42V55F12</field>
+        <field name="Footprint" />
+        <field name="Datasheet" />
+        <field name="Description" />
+      </fields>
+      <pins>
+        <pin num="A1" name="VOUT" type="power_out" />
+        <pin num="A2" name="GND" type="power_in" />
+        <pin num="A3" name="GND" type="passive" />
+        <pin num="A4" name="VIN" type="power_in" />
+        <pin num="A5" name="VRP" type="passive" />
+        <pin num="A6" name="PG" type="open_collector" />
+        <pin num="B1" name="VOUT" type="passive" />
+        <pin num="B2" name="GND" type="passive" />
+        <pin num="B3" name="GND" type="passive" />
+        <pin num="B4" name="VIN" type="passive" />
+        <pin num="B5" name="VRP" type="passive" />
+        <pin num="B6" name="EN" type="input" />
+      </pins>
+    </libpart>
+    <libpart lib="Candidate" part="LTC4368IMS2">
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">LTC4368IMS2</field>
+        <field name="Footprint" />
+        <field name="Datasheet" />
+        <field name="Description" />
+      </fields>
+      <pins>
+        <pin num="1" name="VIN" type="power_in" />
+        <pin num="2" name="UV" type="input" />
+        <pin num="3" name="OV" type="input" />
+        <pin num="4" name="RETRY" type="input" />
+        <pin num="5" name="GND" type="power_in" />
+        <pin num="6" name="SHDN" type="input" />
+        <pin num="7" name="FAULT" type="open_collector" />
+        <pin num="8" name="VOUT" type="passive" />
+        <pin num="9" name="SENSE" type="input" />
+        <pin num="10" name="GATE" type="output" />
+      </pins>
+    </libpart>
+    <libpart lib="Candidate" part="Q_IN">
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">Q_IN</field>
+        <field name="Footprint" />
+        <field name="Datasheet" />
+        <field name="Description" />
+      </fields>
+      <pins>
+        <pin num="1" name="S" type="passive" />
+        <pin num="2" name="S" type="passive" />
+        <pin num="3" name="S" type="passive" />
+        <pin num="4" name="G" type="input" />
+        <pin num="5" name="D" type="passive" />
+        <pin num="6" name="D" type="passive" />
+        <pin num="7" name="D" type="passive" />
+        <pin num="8" name="D" type="passive" />
+      </pins>
+    </libpart>
+    <libpart lib="Candidate" part="Q_OUT">
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">Q_OUT</field>
+        <field name="Footprint" />
+        <field name="Datasheet" />
+        <field name="Description" />
+      </fields>
+      <pins>
+        <pin num="1" name="S" type="passive" />
+        <pin num="2" name="S" type="passive" />
+        <pin num="3" name="S" type="passive" />
+        <pin num="4" name="G" type="input" />
+        <pin num="5" name="D" type="passive" />
+        <pin num="6" name="D" type="passive" />
+        <pin num="7" name="D" type="passive" />
+        <pin num="8" name="D" type="passive" />
+      </pins>
+    </libpart>
+    <libpart lib="Candidate" part="R">
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">R</field>
+        <field name="Footprint" />
+        <field name="Datasheet" />
+        <field name="Description" />
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive" />
+        <pin num="2" name="" type="passive" />
+      </pins>
+    </libpart>
+  </libparts>
+  <libraries>
+    <library logical="Candidate">
+      <uri>${KIPRJMOD}/candidate.kicad_sym</uri>
+    </library>
+  </libraries>
+  <nets>
+    <net code="1" name="/12V_PAN" class="Default">
+      <node ref="U2" pin="A1" pinfunction="VOUT_A1" pintype="power_out" />
+      <node ref="U2" pin="B1" pinfunction="VOUT_B1" pintype="passive" />
+    </net>
+    <net code="2" name="/BUS_HEAD_FUSED" class="Default">
+      <node ref="Q1" pin="5" pinfunction="D_5" pintype="passive" />
+      <node ref="Q1" pin="6" pinfunction="D_6" pintype="passive" />
+      <node ref="Q1" pin="7" pinfunction="D_7" pintype="passive" />
+      <node ref="Q1" pin="8" pinfunction="D_8" pintype="passive" />
+      <node ref="R2" pin="1" pintype="passive" />
+      <node ref="R4" pin="1" pintype="passive" />
+      <node ref="R6" pin="1" pintype="passive" />
+      <node ref="U1" pin="1" pinfunction="VIN_1" pintype="power_in" />
+    </net>
+    <net code="3" name="/COMMON_SOURCE" class="Default">
+      <node ref="C3" pin="2" pintype="passive" />
+      <node ref="Q1" pin="1" pinfunction="S_1" pintype="passive" />
+      <node ref="Q1" pin="2" pinfunction="S_2" pintype="passive" />
+      <node ref="Q1" pin="3" pinfunction="S_3" pintype="passive" />
+      <node ref="Q2" pin="1" pinfunction="S_1" pintype="passive" />
+      <node ref="Q2" pin="2" pinfunction="S_2" pintype="passive" />
+      <node ref="Q2" pin="3" pinfunction="S_3" pintype="passive" />
+    </net>
+    <net code="4" name="/GATE" class="Default">
+      <node ref="C3" pin="1" pintype="passive" />
+      <node ref="Q1" pin="4" pinfunction="G_4" pintype="input" />
+      <node ref="Q2" pin="4" pinfunction="G_4" pintype="input" />
+      <node ref="R8" pin="1" pintype="passive" />
+      <node ref="U1" pin="10" pinfunction="GATE_10" pintype="output" />
+    </net>
+    <net code="5" name="/GATE_RC" class="Default">
+      <node ref="C2" pin="1" pintype="passive" />
+      <node ref="R8" pin="2" pintype="passive" />
+    </net>
+    <net code="6" name="/GND" class="Default">
+      <node ref="C1" pin="2" pinfunction="-_2" pintype="passive" />
+      <node ref="C2" pin="2" pintype="passive" />
+      <node ref="R3" pin="2" pintype="passive" />
+      <node ref="R5" pin="2" pintype="passive" />
+      <node ref="R7" pin="2" pintype="passive" />
+      <node ref="R9" pin="2" pintype="passive" />
+      <node ref="U1" pin="4" pinfunction="RETRY_4" pintype="input" />
+      <node ref="U1" pin="5" pinfunction="GND_5" pintype="power_in" />
+      <node ref="U2" pin="A2" pinfunction="GND_A2" pintype="power_in" />
+      <node ref="U2" pin="A3" pinfunction="GND_A3" pintype="passive" />
+      <node ref="U2" pin="B2" pinfunction="GND_B2" pintype="passive" />
+      <node ref="U2" pin="B3" pinfunction="GND_B3" pintype="passive" />
+    </net>
+    <net code="7" name="/OV_DIV" class="Default">
+      <node ref="R2" pin="2" pintype="passive" />
+      <node ref="R3" pin="1" pintype="passive" />
+      <node ref="U1" pin="3" pinfunction="OV_3" pintype="input" />
+    </net>
+    <net code="8" name="/PAN_INPUT" class="Default">
+      <node ref="C1" pin="1" pinfunction="+_1" pintype="passive" />
+      <node ref="R1" pin="2" pintype="passive" />
+      <node ref="R9" pin="1" pintype="passive" />
+      <node ref="U1" pin="8" pinfunction="VOUT_8" pintype="passive" />
+      <node ref="U2" pin="A4" pinfunction="VIN_A4" pintype="power_in" />
+      <node ref="U2" pin="B4" pinfunction="VIN_B4" pintype="passive" />
+    </net>
+    <net code="9" name="/SENSE_HI" class="Default">
+      <node ref="Q2" pin="5" pinfunction="D_5" pintype="passive" />
+      <node ref="Q2" pin="6" pinfunction="D_6" pintype="passive" />
+      <node ref="Q2" pin="7" pinfunction="D_7" pintype="passive" />
+      <node ref="Q2" pin="8" pinfunction="D_8" pintype="passive" />
+      <node ref="R1" pin="1" pintype="passive" />
+      <node ref="U1" pin="9" pinfunction="SENSE_9" pintype="input" />
+    </net>
+    <net code="10" name="/SHDN_DIV" class="Default">
+      <node ref="R6" pin="2" pintype="passive" />
+      <node ref="R7" pin="1" pintype="passive" />
+      <node ref="U1" pin="6" pinfunction="SHDN_6" pintype="input" />
+    </net>
+    <net code="11" name="/UV_DIV" class="Default">
+      <node ref="R4" pin="2" pintype="passive" />
+      <node ref="R5" pin="1" pintype="passive" />
+      <node ref="U1" pin="2" pinfunction="UV_2" pintype="input" />
+    </net>
+    <net code="12" name="unconnected-(U1-FAULT-Pad7)" class="Default">
+      <node ref="U1" pin="7" pinfunction="FAULT_7" pintype="open_collector+no_connect" />
+    </net>
+    <net code="13" name="unconnected-(U2-EN-PadB6)" class="Default">
+      <node ref="U2" pin="B6" pinfunction="EN_B6" pintype="input+no_connect" />
+    </net>
+    <net code="14" name="unconnected-(U2-PG-PadA6)" class="Default">
+      <node ref="U2" pin="A6" pinfunction="PG_A6" pintype="open_collector+no_connect" />
+    </net>
+    <net code="15" name="unconnected-(U2-VRP-PadA5)" class="Default">
+      <node ref="U2" pin="A5" pinfunction="VRP_A5" pintype="passive+no_connect" />
+      <node ref="U2" pin="B5" pinfunction="VRP_B5" pintype="passive+no_connect" />
+    </net>
+  </nets>
+</export>

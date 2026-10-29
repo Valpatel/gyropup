@@ -3,6 +3,7 @@
 | Symptom | Canonical guidance |
 | --- | --- |
 | A TVS breakdown or nominal cutoff looks safe but peak voltage, recovery or shared-branch loads remain unbounded | [Electrical protection limits and evidence](domains/electrical-protection.md) |
+| Hidden power pin, unexpected VIN net, generated schematic differs from intended net map | [Exported EDA connectivity](domains/electrical-protection.md), [incident and regression](inbox/2026-10-29-hidden-power-pins-can-create-unintended-global-nets.md) |
 | Supplier stock exists but exact rating, wire seal, retail pack or part identity does not match the assembly | [Supplier evidence and exact part identity](domains/supplier-evidence.md) |
 | CAD branches merge but the model, print kit, BOM or validation reports describe different revisions | [Mechanical release coherence](domains/mechanical-release.md) |
 | Entry warning loses focus, hides controls, or changes saved audio/scene state | [Prototype notice](domains/prototype-notice.md) |
