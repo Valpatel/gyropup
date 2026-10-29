@@ -1,0 +1,533 @@
+{
+  "capturedUTC": "2026-10-29",
+  "purpose": "Initial inventory, not permission to delete; ancestry alone does not establish patch equivalence or worktree safety.",
+  "repositories": [
+    {
+      "repo": "gyropup",
+      "targets": {
+        "origin/main": "1475902b25813d4be378aef36c307ec605b0bc30"
+      },
+      "refs": [
+        {
+          "ref": "heads/body/b5-fuse-board",
+          "sha": "760e88922ccbf99a375b5b249d88570b0a473fc1",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "heads/body/b8-firmware",
+          "sha": "25c6f405a63770874a104fffe5038edda2e198a3",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "heads/body/program",
+          "sha": "5fe10c632f201cf886027fcd8499564b55dcda03",
+          "commitsNotInIntegration": 5
+        },
+        {
+          "ref": "heads/docs/cache-policy-observation",
+          "sha": "4d49dfbcc8026ad926c7b818503990fe767bbf64",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "heads/feat/gyropup-brand-agents",
+          "sha": "be60d632c0751f0cfd1ad641bfed8b9eb4c67790",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "heads/feat/gyropup-web-launch",
+          "sha": "c8d35cc83c0bcdf4559a04ca7e9df0eb13ec271e",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "heads/feat/mechanical-integration",
+          "sha": "1475902b25813d4be378aef36c307ec605b0bc30",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "heads/fix/build-portal",
+          "sha": "f7195253e569cefcb3c2c22dd727a4750504c503",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "heads/fix/hero-measurement",
+          "sha": "0c3a987833c2e9bf60ac772a8e64a1ab5d72f7d7",
+          "commitsNotInIntegration": 1
+        },
+        {
+          "ref": "heads/fix/hero-preview-handoff",
+          "sha": "806c1ade28186aaca5850b5765acad3218508f06",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "heads/fix/loading-states",
+          "sha": "7efb2287af05097f8b64ad1c59658531f7caabbd",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "heads/fix/motto-depth",
+          "sha": "1475902b25813d4be378aef36c307ec605b0bc30",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "heads/fix/prototype-entry-notice",
+          "sha": "baff7725c20ca09ff5609e2ee52a0708329de817",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "heads/fix/secure-public-access",
+          "sha": "6c428dc396ea3ecfc8f0d417ee27edb316838cdc",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "heads/fix/sim-camera-reload",
+          "sha": "545bdfea6611a38e51a44d522b7f3f25e5077475",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "heads/fix/site-cache-freshness",
+          "sha": "4992f3b23f91edcc9dcb6836a2e7b6fe07c5c52e",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "heads/fix/turret-pivot-frames",
+          "sha": "de2c59d631fc6514de57ea237a997aaf6d44b8ac",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "heads/fix/warning-style",
+          "sha": "74d7850696e3484e7ab70e3ca21efd8cdf5f09c0",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "heads/leg/stops",
+          "sha": "6d97219b0d5b6fc4381b6d0fd6a060f04094d930",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "heads/legrig/program",
+          "sha": "d862b59e4d101a43ba746a26d772cf529be58eee",
+          "commitsNotInIntegration": 5
+        },
+        {
+          "ref": "heads/main",
+          "sha": "a79e48cbba8ee08f9219a05dc79e642da9461efe",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "heads/research/can-actuator-candidates",
+          "sha": "40b5c5f2967ed8253a0e67cd8af875e06e3d27a3",
+          "commitsNotInIntegration": 2
+        },
+        {
+          "ref": "heads/turret/d68-launcher",
+          "sha": "041585cc31fdbafa75beeee17321d125890d501b",
+          "commitsNotInIntegration": 24
+        },
+        {
+          "ref": "heads/turret/dossier",
+          "sha": "630a2dbb44bee80beea6668b38514a6782e39610",
+          "commitsNotInIntegration": 65
+        },
+        {
+          "ref": "heads/turret/power-d66",
+          "sha": "60ea27dc33989668d40b28282f3698cbc69aef68",
+          "commitsNotInIntegration": 34
+        },
+        {
+          "ref": "heads/turret/program",
+          "sha": "14a4127cefa1f67ecbc4d70986beb9b56adceedf",
+          "commitsNotInIntegration": 55
+        },
+        {
+          "ref": "heads/wheels/study",
+          "sha": "d2f7b97fc072bd23b7d1a4a913b83ef91fab9b7a",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "remotes/origin/body/b5-fuse-board",
+          "sha": "760e88922ccbf99a375b5b249d88570b0a473fc1",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "remotes/origin/body/b8-firmware",
+          "sha": "25c6f405a63770874a104fffe5038edda2e198a3",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "remotes/origin/body/program",
+          "sha": "5fe10c632f201cf886027fcd8499564b55dcda03",
+          "commitsNotInIntegration": 5
+        },
+        {
+          "ref": "remotes/origin/docs/cache-policy-observation",
+          "sha": "4d49dfbcc8026ad926c7b818503990fe767bbf64",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "remotes/origin/feat/gyropup-brand-agents",
+          "sha": "be60d632c0751f0cfd1ad641bfed8b9eb4c67790",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "remotes/origin/feat/gyropup-web-launch",
+          "sha": "c8d35cc83c0bcdf4559a04ca7e9df0eb13ec271e",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "remotes/origin/feat/mechanical-integration",
+          "sha": "1475902b25813d4be378aef36c307ec605b0bc30",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "remotes/origin/fix/build-portal",
+          "sha": "70ba8a1980ef41cd7aec941e29442c038bd8b5ea",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "remotes/origin/fix/hero-measurement",
+          "sha": "0c3a987833c2e9bf60ac772a8e64a1ab5d72f7d7",
+          "commitsNotInIntegration": 1
+        },
+        {
+          "ref": "remotes/origin/fix/hero-preview-handoff",
+          "sha": "b39ecf2d5d5035902502ffc47e6bbee683a7948c",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "remotes/origin/fix/loading-states",
+          "sha": "7efb2287af05097f8b64ad1c59658531f7caabbd",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "remotes/origin/fix/motto-depth",
+          "sha": "570125ba7e49dd7d5ee335b47e946a5b3707dbe6",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "remotes/origin/fix/prototype-entry-notice",
+          "sha": "2c71bd45065ed03478dfb591a24e348d3d9f7f80",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "remotes/origin/fix/secure-public-access",
+          "sha": "6c428dc396ea3ecfc8f0d417ee27edb316838cdc",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "remotes/origin/fix/sim-camera-reload",
+          "sha": "7ab7e135efb0c8cc9b78a7494290340a66f8235a",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "remotes/origin/fix/site-cache-freshness",
+          "sha": "4992f3b23f91edcc9dcb6836a2e7b6fe07c5c52e",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "remotes/origin/fix/turret-pivot-frames",
+          "sha": "de2c59d631fc6514de57ea237a997aaf6d44b8ac",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "remotes/origin/fix/warning-style",
+          "sha": "aa5cdc352420e390866e58c4669483fb4d8e0b2e",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "remotes/origin/leg/stops",
+          "sha": "6d97219b0d5b6fc4381b6d0fd6a060f04094d930",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "remotes/origin/legrig/program",
+          "sha": "d862b59e4d101a43ba746a26d772cf529be58eee",
+          "commitsNotInIntegration": 5
+        },
+        {
+          "ref": "remotes/origin/main",
+          "sha": "1475902b25813d4be378aef36c307ec605b0bc30",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "remotes/origin/research/can-actuator-candidates",
+          "sha": "40b5c5f2967ed8253a0e67cd8af875e06e3d27a3",
+          "commitsNotInIntegration": 2
+        },
+        {
+          "ref": "remotes/origin/turret/dossier",
+          "sha": "630a2dbb44bee80beea6668b38514a6782e39610",
+          "commitsNotInIntegration": 65
+        },
+        {
+          "ref": "remotes/origin/turret/power-d66",
+          "sha": "60ea27dc33989668d40b28282f3698cbc69aef68",
+          "commitsNotInIntegration": 34
+        },
+        {
+          "ref": "remotes/origin/turret/program",
+          "sha": "14a4127cefa1f67ecbc4d70986beb9b56adceedf",
+          "commitsNotInIntegration": 55
+        },
+        {
+          "ref": "remotes/origin/wheels/study",
+          "sha": "d2f7b97fc072bd23b7d1a4a913b83ef91fab9b7a",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "remotes/origin/wip/body/program",
+          "sha": "a206134d7b8ddf4f9e1df72fa0ea3e07b5a2d3eb",
+          "commitsNotInIntegration": 5
+        },
+        {
+          "ref": "remotes/origin/wip/leg/stops",
+          "sha": "bfae49c712f5d5afff7666e4612a3427e2687366",
+          "commitsNotInIntegration": 1
+        },
+        {
+          "ref": "remotes/origin/wip/turret/program",
+          "sha": "a05b09faed70644c8aca3ebac0837475ce04b8d3",
+          "commitsNotInIntegration": 55
+        },
+        {
+          "ref": "remotes/origin/wip/wheels/study",
+          "sha": "4b2ad904ed2fd3dca26c0421e6036fc0b2449cf4",
+          "commitsNotInIntegration": 1
+        }
+      ]
+    },
+    {
+      "repo": "cad-agent",
+      "targets": {
+        "origin/main": "28abd34caf650ced78d9d734af000715ee174efe",
+        "origin/dev": "e0b3a9455815276e09d43d5e570becdaef12d95a"
+      },
+      "refs": [
+        {
+          "ref": "heads/feat/design-process",
+          "sha": "34ac4152d615ce8491099f4ff60c260c424f5182",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "heads/feat/design-process-skill",
+          "sha": "6f409b67e6bd72de48f6bbf13d45e18e95aaaafb",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "heads/feat/dossier",
+          "sha": "f3b9af120016dd0f6e3dbd243f78149bebff825d",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "heads/feat/dossier-lint",
+          "sha": "0bdd2d9c96a91e2e90e3bb4c3ffaf7f84bf80ce5",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "heads/feat/explore-compare",
+          "sha": "adb01f5b1a296571ee5bd3220c11c926ff6b9620",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "heads/feat/fea-pure-couple",
+          "sha": "f2caf396b4d44c8112209e654cb1f7d88938ff3f",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "heads/feat/gate-assembly",
+          "sha": "a420539f8a5458306d55759b1f57cff1b1bc41e5",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "heads/feat/gate-connectivity",
+          "sha": "0fc5b9ea29b31fcf4598e1826a16212917ce16fb",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "heads/feat/gate-containment",
+          "sha": "3d1cba100211a51168cca5022086eeef87668076",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "heads/feat/gate-fasteners",
+          "sha": "7d26129b9e21a2ca963dd3675de466b92bf85672",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "heads/feat/gate-motion",
+          "sha": "8cd9370b8bac6bc6bbbe8720b844224ebd7e86a0",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "heads/feat/gates-cli",
+          "sha": "85ca27cd4b4aeef3fd4b8c63ce6f286483296b11",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "heads/feat/gates-core",
+          "sha": "f8d4741022298431d14c4e7a1015c53d9b3add65",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "heads/feat/pivot-validation",
+          "sha": "c11732a8b3b5dc3593ea49f6fe1546fa2203e87a",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "heads/feat/review-signoff",
+          "sha": "2200e8ef8b629e993ee05d2b4e664aa05258bf0b",
+          "commitsNotInIntegration": 10
+        },
+        {
+          "ref": "heads/feat/site-review",
+          "sha": "5142ba41f4d946f6580e14d59b95a81c449db4d7",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "heads/feat/web-parts",
+          "sha": "e096507d7ba54c6c8e8bd1d9d6add7b795f67259",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "heads/fix/fea-temp-step",
+          "sha": "0e950901009e953e5b20229cd6301cf0c83bad00",
+          "commitsNotInIntegration": 3
+        },
+        {
+          "ref": "heads/local/gyropup-int",
+          "sha": "afccc71ddba2a7a858e8acbd39102969a1e7880d",
+          "commitsNotInIntegration": 15
+        },
+        {
+          "ref": "heads/local/j501-int",
+          "sha": "c378afc98668fb44a5d54bb67d6b905f4629a7da",
+          "commitsNotInIntegration": 2
+        },
+        {
+          "ref": "heads/main",
+          "sha": "8037991014b6dc45acafa9e34a98b2da54f186a5",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "heads/release/v0.4.0",
+          "sha": "01db0add3bfdef4cac31788cae510b0f171a5a2d",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "remotes/origin/dev",
+          "sha": "e0b3a9455815276e09d43d5e570becdaef12d95a",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "remotes/origin/feat/design-process",
+          "sha": "34ac4152d615ce8491099f4ff60c260c424f5182",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "remotes/origin/feat/design-process-skill",
+          "sha": "6f409b67e6bd72de48f6bbf13d45e18e95aaaafb",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "remotes/origin/feat/dossier",
+          "sha": "f3b9af120016dd0f6e3dbd243f78149bebff825d",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "remotes/origin/feat/dossier-lint",
+          "sha": "0bdd2d9c96a91e2e90e3bb4c3ffaf7f84bf80ce5",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "remotes/origin/feat/gate-assembly",
+          "sha": "a420539f8a5458306d55759b1f57cff1b1bc41e5",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "remotes/origin/feat/gate-connectivity",
+          "sha": "0fc5b9ea29b31fcf4598e1826a16212917ce16fb",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "remotes/origin/feat/gate-containment",
+          "sha": "3d1cba100211a51168cca5022086eeef87668076",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "remotes/origin/feat/gate-fasteners",
+          "sha": "7d26129b9e21a2ca963dd3675de466b92bf85672",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "remotes/origin/feat/gate-motion",
+          "sha": "8cd9370b8bac6bc6bbbe8720b844224ebd7e86a0",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "remotes/origin/feat/gates-cli",
+          "sha": "85ca27cd4b4aeef3fd4b8c63ce6f286483296b11",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "remotes/origin/feat/gates-core",
+          "sha": "f8d4741022298431d14c4e7a1015c53d9b3add65",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "remotes/origin/feat/pivot-validation",
+          "sha": "c11732a8b3b5dc3593ea49f6fe1546fa2203e87a",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "remotes/origin/feat/reproducible-3mf",
+          "sha": "87175cfda63e04e2bc550ddf230df0d0c6fa4788",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "remotes/origin/feat/review-signoff",
+          "sha": "2200e8ef8b629e993ee05d2b4e664aa05258bf0b",
+          "commitsNotInIntegration": 10
+        },
+        {
+          "ref": "remotes/origin/feat/site-review",
+          "sha": "5142ba41f4d946f6580e14d59b95a81c449db4d7",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "remotes/origin/feat/view-groups",
+          "sha": "c57c1377ee8fed6db2a423ae0dfc1b1ffb038ee8",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "remotes/origin/feat/web-parts",
+          "sha": "e096507d7ba54c6c8e8bd1d9d6add7b795f67259",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "remotes/origin/feat/workflow-kit",
+          "sha": "c8d1371306ba37e07b0332259e8a5e59a2277449",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "remotes/origin/fix/fea-temp-step",
+          "sha": "0e950901009e953e5b20229cd6301cf0c83bad00",
+          "commitsNotInIntegration": 3
+        },
+        {
+          "ref": "remotes/origin/main",
+          "sha": "28abd34caf650ced78d9d734af000715ee174efe",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "remotes/origin/release/v0.4.0",
+          "sha": "01db0add3bfdef4cac31788cae510b0f171a5a2d",
+          "commitsNotInIntegration": 0
+        },
+        {
+          "ref": "remotes/origin/wip/feat/gate-containment",
+          "sha": "d16d2eca70b407e2e2c4180b51352eff33d3d084",
+          "commitsNotInIntegration": 1
+        }
+      ]
+    }
+  ]
+}
