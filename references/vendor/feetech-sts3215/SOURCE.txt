@@ -13,3 +13,16 @@ Used in: cad/turret.py SERVO (case 45.2 x 24.7 x 32 between the mounting faces, 
   4 x M2 on the output face at 8.30 and 29.00 from the axis, +-10.25 across; 4 x M2 on the idler face at 8.30 and 32.75),
   cad/turret_motion.py (2.94 N m stall, 45 rpm, 2.7 A stall at 12 V, straight torque-speed line, backlash <= 0.5 deg).
 Licence/terms: Feetech and Waveshare files: no licence stated, local reference copy only. SO-ARM100: Apache-2.0.
+
+2026-10-29 connector-service inspection (issue85 / PR86):
+  ST3215.step SHA256: 58e38e4dc49f97df738c5f229f9aa8a7dce64a0a1d01335486a52d53e6017e8a
+  ST-3215-C018.pdf SHA256: d0a735a8ddc23585dd7fef40bf7ed87359b6234436103e00bb6e992b5ffe9f39
+  ST3215.dxf SHA256: b5fdce6c6bdce84ec6d47aff86dbbbe5abe919e18ebe6517c5413e4c276e0644
+  Official resource page: https://docs.waveshare.com/ST3215_Servo/Resources-And-Documents
+  STEP FILE_NAME is ST3215 (2022-06-08), but root PRODUCT is SCS215 v5; 2D drawing is also titled SCS215.
+  Imported eight solids: seven valid; XG-ZIJI_16:1 invalid, so the compound is invalid.
+  PCB-CHAZUO_92:1 has plain connector blocks, not detailed cavities/contacts/latch or a mating cable.
+  Conditional case reference only; neither exact connector fit nor the selected C018 internals are qualified.
+  C018 A/0 sheet specifies 5264-3P, 15 cm lead, 1=GND / 2=VCC / 3=Signal.
+  Header detail A2505-WV says 2.5 mm pitch; case callout says 5264/2.54. Exact connector supplier,
+  actual included lead gauge/insulation OD/minimum bend radius, and plug-view pin mapping remain unresolved.

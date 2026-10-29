@@ -1,0 +1,6369 @@
+{
+  "schema": 1,
+  "readiness": false,
+  "bounded_geometry_checks_pass": true,
+  "inputs": {
+    "files": {
+      "cad/assembly.py": "4b7c7ef0a5364e524b14d7599b2357f0de4249a2c51e8a02cc69d929b30bab8a",
+      "cad/assembly_checks.py": "33ee6454e3477586e2a2dc7af2901e60678ca61a567152d5d7e987bfde104122",
+      "cad/body_battery.py": "6f3f177936c74be9a3196199ea839ac39e30f7a1e9d78a26106291960ee2f4d0",
+      "cad/body_bom.py": "cd7f7bfc9d9b81a1c9e49be93bcd05e32457ccf52d148fdf407b0fb107382d35",
+      "cad/body_frame.py": "4e61e8620801be1c54f2a2c59600547073f559c4041156777a3373469bb18ec6",
+      "cad/body_fuse_board.py": "b705420639121f67e085d47d697dc05d7316737b0fcb7ad06bb3483e8ff01f2d",
+      "cad/body_guards.py": "cc9f220ca9d4708eb81b86396d483115f03fe7a7be2f3bdfd8c5a998f521ffb8",
+      "cad/body_joints.py": "78b96a277de30729bdaa121db7d20657c37ef933e710bafb3ee36738d6a40504",
+      "cad/body_layout.py": "1f4e675a1685fa0223355649dd6a3fd789f7aa032807a6fc2a6f7df75b660b49",
+      "cad/body_legloads.py": "795ba8985155d2fea01a5463f737c3cccb1ce3c0082951eee05374ea172bc1cf",
+      "cad/body_params.py": "e866a9390a68f08975637ce02b8a91c89cb1115279feb2b0f821dc10eab9bdce",
+      "cad/body_sections.py": "29aa27a83d7a3c68c79af3561d96f6b29d925a83bcb1c5504a1fb694a7e101d1",
+      "cad/body_sheet.py": "0950557bacfd897cff8ca0c9e54fdfecb3f87b7bd9b5e272ffe8804ca39d96cb",
+      "cad/body_shell.py": "5f99fd2872c4e66129377936a2d451221f7d50a14938507429a5d01818707e76",
+      "cad/body_studies.py": "1c4a5b13bbba9934ee9821e28c16e9461722b06c3218ea4548fc637179ca7a13",
+      "cad/body_thermal.py": "8c9c34f4d4f542a582932b0f1f5f2f4cddff397b830d14790bff57e302e3c527",
+      "cad/body_views.py": "124b94d76e8118a565b2db3af2dc9cfcecd5f2e2f46d49b3191724d5aada7245",
+      "cad/body_wiring.py": "d2373c52e0c8a78439bd3624079319d54d07d238104eba9d1f2bcf774c165055",
+      "cad/bom_media.py": "5a602e66f19ec759909d195c3778a01dd558142896f5deb88525450b35f143b6",
+      "cad/build.py": "e32a18e2ef8813917d804c10dd9ccb4f3dc0a6151447f2e413891cbdc8d331e4",
+      "cad/build_body.py": "c164c14497312e0d499d001e9e48563b5941c7a5dce6ef591b9579b0a2462d1f",
+      "cad/build_leg.py": "df0dce327efa6b4f956dabafa26b34cf67119bc36da51f13696abaf47f9a3584",
+      "cad/build_rig.py": "c286adb59bae681147f84a38b97e8caaa73ad8eb8f55a3748ff0b738e85a3956",
+      "cad/build_turret.py": "ebefa059c8d6259405e48b82d32c9e575b44b6e0ff6d8a5a7e329d06211eba4a",
+      "cad/build_turret_box.py": "ccf563650cc5102ecc9a5d50691ae03bb14e0c1070584b7347ca6ea3b0946650",
+      "cad/cables.py": "3f55bc5744775773a2deb211ba2540a56a256075ff08a1fa0e05cbca89e40785",
+      "cad/check_base_board_interfaces.py": "db511119bbcfac161ed10af4204dd5e219001d36572686014406fb35c13d569e",
+      "cad/check_base_board_print.py": "13374e961abacca1ba5e79508dca654e7d4919eb81e773046a84292645ae2bdb",
+      "cad/check_base_board_service.py": "bc05259433eaf5493ba5a6d702a7b5124f8fb17ef911207932137f9b675959ef",
+      "cad/electronics.py": "e3d322ee903366af22caa191dbc1aab80546a1c90aac886d1d87b7905af93daa",
+      "cad/fivebar.py": "7cd3c4170a168da1fe999b3b2f93401c60584fa5b888690d0f16480fb8914fd4",
+      "cad/gmi.py": "dab034a3ee939a7b5f4a6fbae5b8ba7371d2113c5380a8450733650c2d02deae",
+      "cad/interfaces.json": "a4842a317dd2e64e9b4e11d34376bc36c26e1ddf8435a4b16a85dae3cd730b73",
+      "cad/leg.py": "86d141a9c548328b871cc118f3267797326294c89f4e50633e82274458b1d666",
+      "cad/leg_studies.py": "740c94fe586eff664fc4370804d8a056bf282be8f33ede3f5836db647bb4409f",
+      "cad/parameters.json": "92cfeaa792a2466594852afeef08af70fe74335ce60f458bd976f62ec0a39e13",
+      "cad/print_provenance.py": "db0d9cdc14e0d0363899d82c03eb31cb63ea0d7718fedcf127a5545f8f6bec88",
+      "cad/print_slicing.py": "3e0b5a8bf86c0aec92729425e12173d4ef131975b30d009918a26776d315c56f",
+      "cad/printplan.py": "0bd820acb603117a981dff62e18097dd0ad84edc1d75bc2d8a13cd5c36a4a5d9",
+      "cad/rig_assembly.py": "38afebccbe9daa0c610a90e47280781fb1460ab4668e6b4962f4d9defda288af",
+      "cad/rig_bench.py": "5113019d7de2bb75ac65e81d8d89dced8a8ed950b9bc5d7d3fa709e3f6417255",
+      "cad/rig_hardware.py": "c71fdf439173243c0134ea588b9c9bf3a2d97c964c4675793f3db94db37a9754",
+      "cad/rig_integrity.py": "5750354f73700a3f94bc2112b9972ed621dc7ea46a8123aa53ca76d22a45397b",
+      "cad/rig_parts.py": "0702c1e6a30121a1e8b4d0d528b0817b0e73890ad2fa309f4389e5ec6a48a1d8",
+      "cad/rig_views.py": "6c06380d63be63c3a2aa32644bb52a5c24b5d1771a113686deea524705d63dbe",
+      "cad/studies.py": "35149401f3a753024568eba0b34765419ed535d42c5bf19a11544d13cad8f823",
+      "cad/test_body.py": "8a9d3167ef2b94c9361e0d3be591a8ebbc268c7a6b191f111ce9a1838750e4c8",
+      "cad/turret.py": "76d4fa676c3181e1d3bf0c623cefa75e420a3b2ed90057320d038c8b7aa41534",
+      "cad/turret_assembly.py": "2fc9805707c7ecc7f6a605c5a8a5c528fb89794f27d4eba699db8b02acc00b3f",
+      "cad/turret_base_board.py": "153e49871e0a3359478cd34a50daf7e44f4497970097475c829dbbcdacda90ba",
+      "cad/turret_boards.py": "c7a115d2fe3cefddf46b0dd521e21076e1f7721235df3e7bd22fadb6e165707b",
+      "cad/turret_box.py": "7ad68697d006181cad758ffc243d599ebaadb0ad098c7902137acfcebec54999",
+      "cad/turret_carrier_interfaces.py": "9d6dd70ef106195f0f70783458b5c93a30c257af623f1d3be28caec85212d743",
+      "cad/turret_carrier_support.py": "ce4badb9b9314fc3a03ab187c5b2ba21b1a8a865c6c38a4637221071176110de",
+      "cad/turret_dossier.py": "d9a08a49fa719534f2f1a14699f84057236eaf7a9be909e35f89ceacc87a15d9",
+      "cad/turret_gates.py": "013fa03b36bd576799901ac21c2953a2e00688e36c75090b340498a664277b80",
+      "cad/turret_lidar.py": "2101a2ca20558d8b231fd9004d864c7b385b5a9bd4cdb102249477c0384713e9",
+      "cad/turret_motion.py": "36f2be781776126b7c63bd27103f4ff24644d76568d8f793a2e68b5aeab6e260",
+      "cad/turret_mount.py": "e519a405ad676efe55db6e613e58197cf9894f1afbbbc8cf1c38b38cb22f14a0",
+      "cad/turret_orders.py": "eaaaae1668a186b7438f0dd394d5b27e1bee7c0ef4901bc880f806f7d4e60480",
+      "cad/turret_print.py": "e4274cf5040443db1b60386da619d2ad7f749e85469c076e911bb12d1fec3f3c",
+      "cad/turret_stand.py": "e3ce781c6e80576cb9fb9cdd4f0956fcf5340c9eb8a6a53d2d0062ff20103e02",
+      "cad/turret_studies.py": "3df0a51cf2bdf05ddce4dd07c45e1ccd0d6e34da763432b9f1fefa874f479a1c",
+      "cad/wheel_fit.py": "57c75e2462fb6f3606b81e4baac284dcac9a7b67bb47183f425d8bb8f730febd",
+      "catalog/alternates.json": "9d5da650878fefa12654cdedae841d2daf22c1101c7f038018a75b8921d5ee3b",
+      "catalog/body.json": "295f114fbc5e400a12af71a8ae14ea6cb379a9233518b5b91236fae888f875de",
+      "catalog/designed-media-validation.json": "f0ec08ffd77f7929e093742f6fcfa7c8b96417a52228de0f2d7c0433d8ca1a1c",
+      "catalog/hardware.json": "c7fb31ff99094655a86cc94c3b90c1fee829d66c6484dfe66f6c0ae0a9076858",
+      "catalog/images.json": "9936ba0433f65278c583b847450604ee554c19a61365cfc49570b436df0bbd09",
+      "catalog/index.json": "5e77d00c8ab4961f5da0bb2d5692a23170b9f4143e05d850d7b33fe36d70f334",
+      "catalog/interfaces.json": "3889bc34503444f389e7951d74944f37b7e57b0b2b3be68ed596b959e83a46af",
+      "catalog/leg_actuators.json": "b8ed3125cca22e9936b929fa1529395b1dead7a9585c21c63995bb294fa31bc5",
+      "catalog/lights.json": "7f8a4a2ebf819141ba8929257bce17a3868d5420fd34a4ee137e7d8b2ee51f78",
+      "catalog/materials.json": "f699e8ea644aeb4f66227f5e021a2a7996b477ef1a41d6048b7f638364ba5d1f",
+      "catalog/motor_drivers.json": "4b4d83c2ba6ded0127992de1fb01982e96d831a79864af73ff49ecad102704e3",
+      "catalog/power_electronics.json": "896ad5da63cb4cf56ebb38607e012343395e220d3c4a8d0a2275e9a614012c97",
+      "catalog/rig.json": "997162e8d3e332905a80ad5da3106627af568c5455f7017e0d48ed0f80ff8a4a",
+      "catalog/sensors_compute.json": "7ba205b22b43195db0dcff85976a18f0a8405f782c3437e675122dbbc549f47a",
+      "catalog/sourcing.json": "a002bac6b795357a717ed0528ea6e2a561d774a7e608c35fee64fd8231370a12",
+      "catalog/turret.json": "036b39b5e923169713b20907fd1a113bf9044e3b201d9fcd2c4f2fcbbabdc367",
+      "catalog/vendor-media-verification.json": "3025ca6b68918b33986078c8a8087f036a653f17c230accf665127fa3d72d733",
+      "catalog/wheel_motors.json": "e92baa60e433e177d87450145943c32bd6b60bebb97e1c1746354aa00f2dbc99",
+      "designs/default.json": "3dc7d04d0d6eeec81decefa360f3904b093f19515d6944910c2cb20c976db211"
+    },
+    "GYROPUP_CAD_PARAMS_sha256": null,
+    "versions": {
+      "cad-agent": "0.4.0",
+      "cadquery": "2.8.0",
+      "cadquery-ocp": "7.9.3.1.1",
+      "numpy": "2.5.4"
+    },
+    "toolkit_sources_sha256": "c2941322d5f3d000d3777b0047567211d06855861fa5e14229d7d7519fef3ed3"
+  },
+  "input_fingerprint": "dd0e5c77b8bc2ae7066f4fb987637bb9874d5e8e839f116b6190d16f2cc659f1",
+  "context_files": {
+    "tools/check-carrier-connector-support.py": "ddaef1821bb40721ef7f91f02e04b697c7fbc754829ae1eff17647329345838a",
+    "tools/check-carrier-connector-inputs.py": "20b4f98e5cef0067d921e645b44fd0809ae2bffee1f1055351e7188623ef0c45",
+    "tools/check-carrier-connector-pose.py": "cb06cb16943f5ee60b98ebe9b630d437aba395db58936028eb21f0a28e711346",
+    "research/carrier-service-connectors/private-inputs.json": "db7318f705e1966a93b07bacbab153eaa5fa9bc03a3d6a8114fff3a573382348",
+    "research/carrier-service-connectors/support-hardware-catalog.json": "61e5e3d8d6152d0e35ffdb77406a63fa8338879ffabb20bc4a155f0861cb717e"
+  },
+  "private_hardware_sha256": {
+    "91290A113": "4ac68e49d4435961b2295703fb854e8f09176a038d3ee8d63b7ee61010e5d289",
+    "90592A085": "15e61a3d9e1c3159c501e6a714492eb8db30630879f2bcb73238d02469dd1c75"
+  },
+  "private_connector_sha256": {
+    "43020-1200": "25dda729f39ad81389a81244c08fb0f2861a3ff0874eb429e954a6fabea9934d",
+    "43025-1200": "6bedba78a6d02e8cdec0fcb674d6a112a2b329a78610eb0ee70967ead8ff8f78"
+  },
+  "checks": [
+    {
+      "id": "valid:carrier",
+      "pass": true,
+      "evidence": {
+        "bounds_mm": [
+          48.0,
+          -35.0,
+          5.5,
+          56.0,
+          35.0,
+          37.5
+        ],
+        "relation_query_indices": []
+      }
+    },
+    {
+      "id": "valid:support",
+      "pass": true,
+      "evidence": {
+        "bounds_mm": [
+          56.0,
+          -27.0,
+          6.0,
+          93.0,
+          19.0,
+          56.0
+        ],
+        "relation_query_indices": []
+      }
+    },
+    {
+      "id": "valid:c3_support_screws#0",
+      "pass": true,
+      "evidence": {
+        "bounds_mm": [
+          49.9999999,
+          -12.75,
+          7.25,
+          61.0000001,
+          -7.25,
+          12.750000000000002
+        ],
+        "relation_query_indices": []
+      }
+    },
+    {
+      "id": "valid:c3_support_nuts#0",
+      "pass": true,
+      "evidence": {
+        "bounds_mm": [
+          50.6,
+          -12.7500001,
+          6.845854178470179,
+          53.0000002,
+          -7.2499999,
+          13.154145821529822
+        ],
+        "relation_query_indices": []
+      }
+    },
+    {
+      "id": "valid:c3_support_screws#1",
+      "pass": true,
+      "evidence": {
+        "bounds_mm": [
+          49.9999999,
+          7.25,
+          7.25,
+          61.0000001,
+          12.75,
+          12.750000000000002
+        ],
+        "relation_query_indices": []
+      }
+    },
+    {
+      "id": "valid:c3_support_nuts#1",
+      "pass": true,
+      "evidence": {
+        "bounds_mm": [
+          50.6,
+          7.2499999,
+          6.845854178470179,
+          53.0000002,
+          12.7500001,
+          13.154145821529822
+        ],
+        "relation_query_indices": []
+      }
+    },
+    {
+      "id": "carrier_depth_unchanged",
+      "pass": true,
+      "evidence": {
+        "relation_query_indices": []
+      }
+    },
+    {
+      "id": "preserve_original_mount:pcb:0",
+      "pass": true,
+      "evidence": {
+        "relation_query_indices": [
+          0
+        ]
+      }
+    },
+    {
+      "id": "preserve_original_mount:pcb:1",
+      "pass": true,
+      "evidence": {
+        "relation_query_indices": [
+          1
+        ]
+      }
+    },
+    {
+      "id": "preserve_original_mount:pcb:2",
+      "pass": true,
+      "evidence": {
+        "relation_query_indices": [
+          2
+        ]
+      }
+    },
+    {
+      "id": "preserve_original_mount:pcb:3",
+      "pass": true,
+      "evidence": {
+        "relation_query_indices": [
+          3
+        ]
+      }
+    },
+    {
+      "id": "preserve_original_mount:retainer:0",
+      "pass": true,
+      "evidence": {
+        "relation_query_indices": [
+          4
+        ]
+      }
+    },
+    {
+      "id": "preserve_original_mount:retainer:1",
+      "pass": true,
+      "evidence": {
+        "relation_query_indices": [
+          5
+        ]
+      }
+    },
+    {
+      "id": "preserve_original_mount:retainer:2",
+      "pass": true,
+      "evidence": {
+        "relation_query_indices": [
+          6
+        ]
+      }
+    },
+    {
+      "id": "preserve_original_mount:retainer:3",
+      "pass": true,
+      "evidence": {
+        "relation_query_indices": [
+          7
+        ]
+      }
+    },
+    {
+      "id": "carrier_added_material_valid",
+      "pass": true,
+      "evidence": {
+        "relation_query_indices": [
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ]
+      }
+    },
+    {
+      "id": "carrier_added_material:all_neighbours",
+      "pass": true,
+      "evidence": {
+        "pair_states": {
+          "pan_base": "apart",
+          "PCB_and_packages": "apart",
+          "bumper_installed": "apart",
+          "pan_clamp": "apart",
+          "pan_ring": "apart",
+          "pan_servo_RESERVATION": "apart",
+          "C2_power_module_RESERVATION": "apart",
+          "C2_power_released_RESERVATION": "apart",
+          "C2_signal_module_RESERVATION": "apart",
+          "C2_signal_released_RESERVATION": "apart",
+          "base_board_screws#0_AUTHORED": "apart",
+          "base_board_screws#1_AUTHORED": "apart",
+          "base_board_screws#2_AUTHORED": "apart",
+          "base_board_screws#3_AUTHORED": "apart",
+          "base_carrier_screws#0_AUTHORED": "apart",
+          "base_carrier_screws#1_AUTHORED": "apart",
+          "base_carrier_screws#2_AUTHORED": "apart",
+          "base_carrier_screws#3_AUTHORED": "apart",
+          "base_board_inserts#0_AUTHORED": "apart",
+          "base_board_inserts#1_AUTHORED": "apart",
+          "base_board_inserts#2_AUTHORED": "apart",
+          "base_board_inserts#3_AUTHORED": "apart",
+          "base_carrier_inserts#0_AUTHORED": "apart",
+          "base_carrier_inserts#1_AUTHORED": "apart",
+          "base_carrier_inserts#2_AUTHORED": "apart",
+          "base_carrier_inserts#3_AUTHORED": "apart"
+        },
+        "total_budget_mm3": 1e-06,
+        "per_pair_budget_mm3": 3.8461538461538455e-08,
+        "relation_query_indices": [
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41
+        ]
+      }
+    },
+    {
+      "id": "carrier:nonmating_neighbours",
+      "pass": true,
+      "evidence": {
+        "excluded_existing_mates": [
+          "base_board_inserts#0_AUTHORED",
+          "base_board_inserts#1_AUTHORED",
+          "base_board_inserts#2_AUTHORED",
+          "base_board_inserts#3_AUTHORED"
+        ],
+        "pair_states": {
+          "pan_base": "touching",
+          "PCB_and_packages": "touching",
+          "bumper_installed": "apart",
+          "pan_clamp": "apart",
+          "pan_ring": "apart",
+          "pan_servo_RESERVATION": "apart",
+          "C2_power_module_RESERVATION": "apart",
+          "C2_power_released_RESERVATION": "apart",
+          "C2_signal_module_RESERVATION": "apart",
+          "C2_signal_released_RESERVATION": "apart",
+          "base_board_screws#0_AUTHORED": "apart",
+          "base_board_screws#1_AUTHORED": "apart",
+          "base_board_screws#2_AUTHORED": "apart",
+          "base_board_screws#3_AUTHORED": "apart",
+          "base_carrier_screws#0_AUTHORED": "touching",
+          "base_carrier_screws#1_AUTHORED": "touching",
+          "base_carrier_screws#2_AUTHORED": "touching",
+          "base_carrier_screws#3_AUTHORED": "touching",
+          "base_carrier_inserts#0_AUTHORED": "touching",
+          "base_carrier_inserts#1_AUTHORED": "touching",
+          "base_carrier_inserts#2_AUTHORED": "touching",
+          "base_carrier_inserts#3_AUTHORED": "touching"
+        },
+        "total_budget_mm3": 1e-06,
+        "per_pair_budget_mm3": 4.5454545454545444e-08,
+        "relation_query_indices": [
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59,
+          60,
+          61,
+          62,
+          63
+        ]
+      }
+    },
+    {
+      "id": "support:installed_neighbours",
+      "pass": true,
+      "evidence": {
+        "pair_states": {
+          "pan_base": "apart",
+          "PCB_and_packages": "apart",
+          "bumper_installed": "apart",
+          "pan_clamp": "apart",
+          "pan_ring": "apart",
+          "pan_servo_RESERVATION": "apart",
+          "C2_power_module_RESERVATION": "apart",
+          "C2_power_released_RESERVATION": "apart",
+          "C2_signal_module_RESERVATION": "apart",
+          "C2_signal_released_RESERVATION": "apart",
+          "base_board_screws#0_AUTHORED": "apart",
+          "base_board_screws#1_AUTHORED": "apart",
+          "base_board_screws#2_AUTHORED": "apart",
+          "base_board_screws#3_AUTHORED": "apart",
+          "base_carrier_screws#0_AUTHORED": "apart",
+          "base_carrier_screws#1_AUTHORED": "apart",
+          "base_carrier_screws#2_AUTHORED": "apart",
+          "base_carrier_screws#3_AUTHORED": "apart",
+          "base_board_inserts#0_AUTHORED": "apart",
+          "base_board_inserts#1_AUTHORED": "apart",
+          "base_board_inserts#2_AUTHORED": "apart",
+          "base_board_inserts#3_AUTHORED": "apart",
+          "base_carrier_inserts#0_AUTHORED": "apart",
+          "base_carrier_inserts#1_AUTHORED": "apart",
+          "base_carrier_inserts#2_AUTHORED": "apart",
+          "base_carrier_inserts#3_AUTHORED": "apart"
+        },
+        "total_budget_mm3": 1e-06,
+        "per_pair_budget_mm3": 3.8461538461538455e-08,
+        "relation_query_indices": [
+          64,
+          65,
+          66,
+          67,
+          68,
+          69,
+          70,
+          71,
+          72,
+          73,
+          74,
+          75,
+          76,
+          77,
+          78,
+          79,
+          80,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          87,
+          88,
+          89
+        ]
+      }
+    },
+    {
+      "id": "support:carrier_seat",
+      "pass": true,
+      "evidence": {
+        "pair_states": {
+          "carrier": "touching"
+        },
+        "total_budget_mm3": 1e-06,
+        "per_pair_budget_mm3": 9.999999999999997e-07,
+        "relation_query_indices": [
+          90
+        ]
+      }
+    },
+    {
+      "id": "C2_straight_exit:0",
+      "pass": true,
+      "evidence": {
+        "pair_states": {
+          "carrier": "apart",
+          "support": "apart"
+        },
+        "total_budget_mm3": 1e-06,
+        "per_pair_budget_mm3": 4.999999999999999e-07,
+        "relation_query_indices": [
+          91,
+          92
+        ]
+      }
+    },
+    {
+      "id": "C2_straight_exit:1",
+      "pass": true,
+      "evidence": {
+        "pair_states": {
+          "carrier": "apart",
+          "support": "apart"
+        },
+        "total_budget_mm3": 1e-06,
+        "per_pair_budget_mm3": 4.999999999999999e-07,
+        "relation_query_indices": [
+          93,
+          94
+        ]
+      }
+    },
+    {
+      "id": "C2_straight_exit:2",
+      "pass": true,
+      "evidence": {
+        "pair_states": {
+          "carrier": "apart",
+          "support": "apart"
+        },
+        "total_budget_mm3": 1e-06,
+        "per_pair_budget_mm3": 4.999999999999999e-07,
+        "relation_query_indices": [
+          95,
+          96
+        ]
+      }
+    },
+    {
+      "id": "C2_straight_exit:3",
+      "pass": true,
+      "evidence": {
+        "pair_states": {
+          "carrier": "apart",
+          "support": "apart"
+        },
+        "total_budget_mm3": 1e-06,
+        "per_pair_budget_mm3": 4.999999999999999e-07,
+        "relation_query_indices": [
+          97,
+          98
+        ]
+      }
+    },
+    {
+      "id": "C2_straight_exit:4",
+      "pass": true,
+      "evidence": {
+        "pair_states": {
+          "carrier": "apart",
+          "support": "apart"
+        },
+        "total_budget_mm3": 1e-06,
+        "per_pair_budget_mm3": 4.999999999999999e-07,
+        "relation_query_indices": [
+          99,
+          100
+        ]
+      }
+    },
+    {
+      "id": "C2_straight_exit:5",
+      "pass": true,
+      "evidence": {
+        "pair_states": {
+          "carrier": "apart",
+          "support": "apart"
+        },
+        "total_budget_mm3": 1e-06,
+        "per_pair_budget_mm3": 4.999999999999999e-07,
+        "relation_query_indices": [
+          101,
+          102
+        ]
+      }
+    },
+    {
+      "id": "original_retainer_driver:0",
+      "pass": true,
+      "evidence": {
+        "pair_states": {
+          "support": "apart"
+        },
+        "total_budget_mm3": 1e-06,
+        "per_pair_budget_mm3": 9.999999999999997e-07,
+        "relation_query_indices": [
+          103
+        ]
+      }
+    },
+    {
+      "id": "original_retainer_driver:1",
+      "pass": true,
+      "evidence": {
+        "pair_states": {
+          "support": "apart"
+        },
+        "total_budget_mm3": 1e-06,
+        "per_pair_budget_mm3": 9.999999999999997e-07,
+        "relation_query_indices": [
+          104
+        ]
+      }
+    },
+    {
+      "id": "original_retainer_driver:2",
+      "pass": true,
+      "evidence": {
+        "pair_states": {
+          "support": "apart"
+        },
+        "total_budget_mm3": 1e-06,
+        "per_pair_budget_mm3": 9.999999999999997e-07,
+        "relation_query_indices": [
+          105
+        ]
+      }
+    },
+    {
+      "id": "original_retainer_driver:3",
+      "pass": true,
+      "evidence": {
+        "pair_states": {
+          "support": "apart"
+        },
+        "total_budget_mm3": 1e-06,
+        "per_pair_budget_mm3": 9.999999999999997e-07,
+        "relation_query_indices": [
+          106
+        ]
+      }
+    },
+    {
+      "id": "nut_seated:0",
+      "pass": true,
+      "evidence": {
+        "pair_states": {
+          "carrier": "touching",
+          "support": "apart",
+          "PCB": "apart"
+        },
+        "total_budget_mm3": 1e-06,
+        "per_pair_budget_mm3": 3.3333333333333325e-07,
+        "relation_query_indices": [
+          107,
+          108,
+          109
+        ]
+      }
+    },
+    {
+      "id": "screw_clearance_holes:0",
+      "pass": true,
+      "evidence": {
+        "pair_states": {
+          "carrier": "apart",
+          "support": "touching",
+          "PCB": "apart"
+        },
+        "total_budget_mm3": 1e-06,
+        "per_pair_budget_mm3": 3.3333333333333325e-07,
+        "relation_query_indices": [
+          110,
+          111,
+          112
+        ]
+      }
+    },
+    {
+      "id": "nut_inside_sweep:0",
+      "pass": true,
+      "evidence": {
+        "relation_query_indices": [
+          113
+        ]
+      }
+    },
+    {
+      "id": "nut_install_before_PCB:0",
+      "pass": true,
+      "evidence": {
+        "pair_states": {
+          "carrier": "touching",
+          "support": "apart"
+        },
+        "total_budget_mm3": 1e-06,
+        "per_pair_budget_mm3": 4.999999999999999e-07,
+        "relation_query_indices": [
+          114,
+          115
+        ]
+      }
+    },
+    {
+      "id": "negative:nut_removal_with_PCB:0",
+      "pass": true,
+      "evidence": {
+        "prerequisite": "Remove PCB on bench before replacing support; not required for normal whole-module removal.",
+        "relation_query_indices": [
+          116
+        ]
+      }
+    },
+    {
+      "id": "support_driver_bench:0",
+      "pass": true,
+      "evidence": {
+        "pair_states": {
+          "support": "apart",
+          "carrier": "apart",
+          "PCB": "apart"
+        },
+        "total_budget_mm3": 1e-06,
+        "per_pair_budget_mm3": 3.3333333333333325e-07,
+        "relation_query_indices": [
+          117,
+          118,
+          119
+        ]
+      }
+    },
+    {
+      "id": "negative:blocked_driver:0",
+      "pass": true,
+      "evidence": {
+        "relation_query_indices": [
+          120
+        ]
+      }
+    },
+    {
+      "id": "screw_nut_nominal_stack:0",
+      "pass": true,
+      "evidence": {
+        "grip_mm": 5.0,
+        "nut_thickness_mm": 2.4,
+        "nominal_projection_mm": 0.6,
+        "exact_nut_bounds_mm": [
+          50.6,
+          -12.7500001,
+          6.845854178470179,
+          53.0000002,
+          -7.2499999,
+          13.154145821529822
+        ],
+        "exact_screw_bounds_mm": [
+          49.9999999,
+          -12.75,
+          7.25,
+          61.0000001,
+          -7.25,
+          12.750000000000002
+        ],
+        "thread_mate_qualified": false,
+        "relation_query_indices": []
+      }
+    },
+    {
+      "id": "nut_seated:1",
+      "pass": true,
+      "evidence": {
+        "pair_states": {
+          "carrier": "touching",
+          "support": "apart",
+          "PCB": "apart"
+        },
+        "total_budget_mm3": 1e-06,
+        "per_pair_budget_mm3": 3.3333333333333325e-07,
+        "relation_query_indices": [
+          121,
+          122,
+          123
+        ]
+      }
+    },
+    {
+      "id": "screw_clearance_holes:1",
+      "pass": true,
+      "evidence": {
+        "pair_states": {
+          "carrier": "apart",
+          "support": "touching",
+          "PCB": "apart"
+        },
+        "total_budget_mm3": 1e-06,
+        "per_pair_budget_mm3": 3.3333333333333325e-07,
+        "relation_query_indices": [
+          124,
+          125,
+          126
+        ]
+      }
+    },
+    {
+      "id": "nut_inside_sweep:1",
+      "pass": true,
+      "evidence": {
+        "relation_query_indices": [
+          127
+        ]
+      }
+    },
+    {
+      "id": "nut_install_before_PCB:1",
+      "pass": true,
+      "evidence": {
+        "pair_states": {
+          "carrier": "touching",
+          "support": "apart"
+        },
+        "total_budget_mm3": 1e-06,
+        "per_pair_budget_mm3": 4.999999999999999e-07,
+        "relation_query_indices": [
+          128,
+          129
+        ]
+      }
+    },
+    {
+      "id": "negative:nut_removal_with_PCB:1",
+      "pass": true,
+      "evidence": {
+        "prerequisite": "Remove PCB on bench before replacing support; not required for normal whole-module removal.",
+        "relation_query_indices": [
+          130
+        ]
+      }
+    },
+    {
+      "id": "support_driver_bench:1",
+      "pass": true,
+      "evidence": {
+        "pair_states": {
+          "support": "apart",
+          "carrier": "apart",
+          "PCB": "apart"
+        },
+        "total_budget_mm3": 1e-06,
+        "per_pair_budget_mm3": 3.3333333333333325e-07,
+        "relation_query_indices": [
+          131,
+          132,
+          133
+        ]
+      }
+    },
+    {
+      "id": "negative:blocked_driver:1",
+      "pass": true,
+      "evidence": {
+        "relation_query_indices": [
+          134
+        ]
+      }
+    },
+    {
+      "id": "screw_nut_nominal_stack:1",
+      "pass": true,
+      "evidence": {
+        "grip_mm": 5.0,
+        "nut_thickness_mm": 2.4,
+        "nominal_projection_mm": 0.6,
+        "exact_nut_bounds_mm": [
+          50.6,
+          7.2499999,
+          6.845854178470179,
+          53.0000002,
+          12.7500001,
+          13.154145821529822
+        ],
+        "exact_screw_bounds_mm": [
+          49.9999999,
+          7.25,
+          7.25,
+          61.0000001,
+          12.75,
+          12.750000000000002
+        ],
+        "thread_mate_qualified": false,
+        "relation_query_indices": []
+      }
+    },
+    {
+      "id": "negative:closed_panel_blocks_housing",
+      "pass": true,
+      "evidence": {
+        "relation_query_indices": [
+          135,
+          136
+        ]
+      }
+    },
+    {
+      "id": "latch_finger_reservation",
+      "pass": true,
+      "evidence": {
+        "pair_states": {
+          "support": "apart"
+        },
+        "total_budget_mm3": 1e-06,
+        "per_pair_budget_mm3": 9.999999999999997e-07,
+        "relation_query_indices": [
+          137
+        ]
+      }
+    },
+    {
+      "id": "C3_straight_exit:module",
+      "pass": true,
+      "evidence": {
+        "pair_states": {
+          "support": "apart"
+        },
+        "total_budget_mm3": 1e-06,
+        "per_pair_budget_mm3": 9.999999999999997e-07,
+        "relation_query_indices": [
+          138
+        ]
+      }
+    },
+    {
+      "id": "C3_straight_exit:fixed",
+      "pass": true,
+      "evidence": {
+        "pair_states": {
+          "support": "apart"
+        },
+        "total_budget_mm3": 1e-06,
+        "per_pair_budget_mm3": 9.999999999999997e-07,
+        "relation_query_indices": [
+          139
+        ]
+      }
+    },
+    {
+      "id": "C3_service:mated->unplugged",
+      "pass": true,
+      "evidence": {
+        "pair_states": {
+          "carrier": "apart",
+          "support": "apart",
+          "c3_support_screws#0": "apart",
+          "c3_support_nuts#0": "apart",
+          "c3_support_screws#1": "apart",
+          "c3_support_nuts#1": "apart"
+        },
+        "total_budget_mm3": 1e-06,
+        "per_pair_budget_mm3": 1.6666666666666662e-07,
+        "relation_query_indices": [
+          140,
+          141,
+          142,
+          143,
+          144,
+          145
+        ]
+      }
+    },
+    {
+      "id": "C3_service:unplugged->outboard_before_park",
+      "pass": true,
+      "evidence": {
+        "pair_states": {
+          "carrier": "apart",
+          "support": "apart",
+          "c3_support_screws#0": "apart",
+          "c3_support_nuts#0": "apart",
+          "c3_support_screws#1": "apart",
+          "c3_support_nuts#1": "apart"
+        },
+        "total_budget_mm3": 1e-06,
+        "per_pair_budget_mm3": 1.6666666666666662e-07,
+        "relation_query_indices": [
+          146,
+          147,
+          148,
+          149,
+          150,
+          151
+        ]
+      }
+    },
+    {
+      "id": "C3_service:outboard_before_park->parked",
+      "pass": true,
+      "evidence": {
+        "pair_states": {
+          "carrier": "apart",
+          "support": "apart",
+          "c3_support_screws#0": "apart",
+          "c3_support_nuts#0": "apart",
+          "c3_support_screws#1": "apart",
+          "c3_support_nuts#1": "apart"
+        },
+        "total_budget_mm3": 1e-06,
+        "per_pair_budget_mm3": 1.6666666666666662e-07,
+        "relation_query_indices": [
+          152,
+          153,
+          154,
+          155,
+          156,
+          157
+        ]
+      }
+    },
+    {
+      "id": "negative:C3_unplug_blocker",
+      "pass": true,
+      "evidence": {
+        "relation_query_indices": [
+          158
+        ]
+      }
+    },
+    {
+      "id": "negative:blocked_new_hole",
+      "pass": true,
+      "evidence": {
+        "relation_query_indices": [
+          159
+        ]
+      }
+    },
+    {
+      "id": "panel_thickness_in_drawing_range",
+      "pass": true,
+      "evidence": {
+        "thickness_mm": 2.0,
+        "physical_fit": false,
+        "relation_query_indices": []
+      }
+    },
+    {
+      "id": "public_STEP_roundtrip:carrier-support-candidate",
+      "pass": true,
+      "evidence": {
+        "bounds_mm": [
+          48.0,
+          -35.0,
+          5.5,
+          56.0,
+          35.0,
+          37.5
+        ],
+        "relation_query_indices": [
+          160
+        ]
+      }
+    },
+    {
+      "id": "public_STEP_roundtrip:C3-support-candidate",
+      "pass": true,
+      "evidence": {
+        "bounds_mm": [
+          56.0,
+          -27.0,
+          6.0,
+          93.0,
+          19.0,
+          56.0
+        ],
+        "relation_query_indices": [
+          161
+        ]
+      }
+    }
+  ],
+  "relations": [
+    {
+      "a": "a",
+      "b": "b",
+      "state": "contains",
+      "gap_mm": 0.0,
+      "overlap_mm3": 226.194671,
+      "a_outside_b_mm3": 0.0,
+      "b_outside_a_mm3": 0.0,
+      "contained": "both",
+      "wall_mm": 0.0,
+      "witness": {
+        "overlap_centroid_estimate": {
+          "method": "Gauss centroid refinements 1e-6 and 1e-8; approximate witness only",
+          "refinement_delta_mm": 2.051491992592166e-08
+        },
+        "overlap_centroid": [
+          52.270833,
+          -22.4,
+          9.0
+        ],
+        "overlap_box": [
+          48.0,
+          -25.9,
+          5.5,
+          56.0,
+          -18.9,
+          12.5
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 2.2768468063625906e-07,
+          "max_refinement_delta_mm3": 2.842170943040401e-14
+        },
+        "inner_point": [
+          53.0,
+          -22.4,
+          12.5
+        ],
+        "outer_point": [
+          53.0,
+          -22.4,
+          12.5
+        ]
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "contains",
+      "gap_mm": 0.0,
+      "overlap_mm3": 226.194671,
+      "a_outside_b_mm3": 0.0,
+      "b_outside_a_mm3": 0.0,
+      "contained": "both",
+      "wall_mm": 0.0,
+      "witness": {
+        "overlap_centroid_estimate": {
+          "method": "Gauss centroid refinements 1e-6 and 1e-8; approximate witness only",
+          "refinement_delta_mm": 1.6280579355608324e-14
+        },
+        "overlap_centroid": [
+          52.270833,
+          -22.4,
+          33.0
+        ],
+        "overlap_box": [
+          48.0,
+          -25.9,
+          29.5,
+          56.0,
+          -18.9,
+          36.5
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 2.289020773564973e-07,
+          "max_refinement_delta_mm3": 5.684341886080802e-14
+        },
+        "inner_point": [
+          53.0,
+          -22.4,
+          36.5
+        ],
+        "outer_point": [
+          53.0,
+          -22.4,
+          36.5
+        ]
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "contains",
+      "gap_mm": 0.0,
+      "overlap_mm3": 226.194671,
+      "a_outside_b_mm3": 0.0,
+      "b_outside_a_mm3": 0.0,
+      "contained": "both",
+      "wall_mm": 0.0,
+      "witness": {
+        "overlap_centroid_estimate": {
+          "method": "Gauss centroid refinements 1e-6 and 1e-8; approximate witness only",
+          "refinement_delta_mm": 2.0514923448928925e-08
+        },
+        "overlap_centroid": [
+          52.270833,
+          22.4,
+          9.0
+        ],
+        "overlap_box": [
+          48.0,
+          18.9,
+          5.5,
+          56.0,
+          25.9,
+          12.5
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 2.2768467851098167e-07,
+          "max_refinement_delta_mm3": 2.842170943040401e-14
+        },
+        "inner_point": [
+          53.0,
+          22.4,
+          12.5
+        ],
+        "outer_point": [
+          53.0,
+          22.4,
+          12.5
+        ]
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "contains",
+      "gap_mm": 0.0,
+      "overlap_mm3": 226.194671,
+      "a_outside_b_mm3": 0.0,
+      "b_outside_a_mm3": 0.0,
+      "contained": "both",
+      "wall_mm": 0.0,
+      "witness": {
+        "overlap_centroid_estimate": {
+          "method": "Gauss centroid refinements 1e-6 and 1e-8; approximate witness only",
+          "refinement_delta_mm": 1.0048591735576161e-14
+        },
+        "overlap_centroid": [
+          52.270833,
+          22.4,
+          33.0
+        ],
+        "overlap_box": [
+          48.0,
+          18.9,
+          29.5,
+          56.0,
+          25.9,
+          36.5
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 2.289020773511191e-07,
+          "max_refinement_delta_mm3": 5.684341886080802e-14
+        },
+        "inner_point": [
+          53.0,
+          22.4,
+          36.5
+        ],
+        "outer_point": [
+          53.0,
+          22.4,
+          36.5
+        ]
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "contains",
+      "gap_mm": 0.0,
+      "overlap_mm3": 88.215922,
+      "a_outside_b_mm3": 0.0,
+      "b_outside_a_mm3": 0.0,
+      "contained": "both",
+      "wall_mm": 0.0,
+      "witness": {
+        "overlap_centroid_estimate": {
+          "method": "Gauss centroid refinements 1e-6 and 1e-8; approximate witness only",
+          "refinement_delta_mm": 3.778990986802522e-08
+        },
+        "overlap_centroid": [
+          54.5,
+          -31.0,
+          9.0
+        ],
+        "overlap_box": [
+          53.0,
+          -34.5,
+          5.5,
+          56.0,
+          -27.5,
+          12.5
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 8.1677844809462e-08,
+          "max_refinement_delta_mm3": 0.0
+        },
+        "inner_point": [
+          53.0,
+          -31.0,
+          12.5
+        ],
+        "outer_point": [
+          53.0,
+          -31.0,
+          12.5
+        ]
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "contains",
+      "gap_mm": 0.0,
+      "overlap_mm3": 88.215922,
+      "a_outside_b_mm3": 0.0,
+      "b_outside_a_mm3": 0.0,
+      "contained": "both",
+      "wall_mm": 0.0,
+      "witness": {
+        "overlap_centroid_estimate": {
+          "method": "Gauss centroid refinements 1e-6 and 1e-8; approximate witness only",
+          "refinement_delta_mm": 7.944109290391274e-15
+        },
+        "overlap_centroid": [
+          54.5,
+          -31.0,
+          33.0
+        ],
+        "overlap_box": [
+          53.0,
+          -34.5,
+          29.5,
+          56.0,
+          -27.5,
+          36.5
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 8.16778396628596e-08,
+          "max_refinement_delta_mm3": 1.4210854715202004e-14
+        },
+        "inner_point": [
+          53.0,
+          -31.0,
+          36.5
+        ],
+        "outer_point": [
+          53.0,
+          -31.0,
+          36.5
+        ]
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "contains",
+      "gap_mm": 0.0,
+      "overlap_mm3": 88.215922,
+      "a_outside_b_mm3": 0.0,
+      "b_outside_a_mm3": 0.0,
+      "contained": "both",
+      "wall_mm": 0.0,
+      "witness": {
+        "overlap_centroid_estimate": {
+          "method": "Gauss centroid refinements 1e-6 and 1e-8; approximate witness only",
+          "refinement_delta_mm": 3.7789911644382225e-08
+        },
+        "overlap_centroid": [
+          54.5,
+          31.0,
+          9.0
+        ],
+        "overlap_box": [
+          53.0,
+          27.5,
+          5.5,
+          56.0,
+          34.5,
+          12.5
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 8.16778412541556e-08,
+          "max_refinement_delta_mm3": 0.0
+        },
+        "inner_point": [
+          53.0,
+          31.0,
+          12.5
+        ],
+        "outer_point": [
+          53.0,
+          31.0,
+          12.5
+        ]
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "contains",
+      "gap_mm": 0.0,
+      "overlap_mm3": 88.215922,
+      "a_outside_b_mm3": 0.0,
+      "b_outside_a_mm3": 0.0,
+      "contained": "both",
+      "wall_mm": 0.0,
+      "witness": {
+        "overlap_centroid_estimate": {
+          "method": "Gauss centroid refinements 1e-6 and 1e-8; approximate witness only",
+          "refinement_delta_mm": 1.0658141036401503e-14
+        },
+        "overlap_centroid": [
+          54.5,
+          31.0,
+          33.0
+        ],
+        "overlap_box": [
+          53.0,
+          27.5,
+          29.5,
+          56.0,
+          34.5,
+          36.5
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 8.16778396631713e-08,
+          "max_refinement_delta_mm3": 1.4210854715202004e-14
+        },
+        "inner_point": [
+          53.0,
+          31.0,
+          36.5
+        ],
+        "outer_point": [
+          53.0,
+          31.0,
+          36.5
+        ]
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "overlapping",
+      "gap_mm": 0.0,
+      "overlap_mm3": 28.304192,
+      "a_outside_b_mm3": 4825.010828,
+      "b_outside_a_mm3": 43.954808,
+      "witness": {
+        "overlap_centroid_estimate": {
+          "method": "Gauss centroid refinements 1e-6 and 1e-8; approximate witness only",
+          "refinement_delta_mm": 1.6280579355608324e-14
+        },
+        "overlap_centroid": [
+          50.87,
+          -22.4,
+          9.0
+        ],
+        "overlap_box": [
+          48.0,
+          -24.76,
+          6.64,
+          53.74,
+          -20.04,
+          11.36
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 7.668898295805837e-07,
+          "max_refinement_delta_mm3": 2.1316282072803006e-14
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "overlapping",
+      "gap_mm": 0.0,
+      "overlap_mm3": 28.304192,
+      "a_outside_b_mm3": 4894.454148,
+      "b_outside_a_mm3": 43.954808,
+      "witness": {
+        "overlap_centroid_estimate": {
+          "method": "Gauss centroid refinements 1e-6 and 1e-8; approximate witness only",
+          "refinement_delta_mm": 1.6280579355608324e-14
+        },
+        "overlap_centroid": [
+          50.87,
+          -22.4,
+          9.0
+        ],
+        "overlap_box": [
+          48.0,
+          -24.76,
+          6.64,
+          53.74,
+          -20.04,
+          11.36
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 8.964602471328652e-07,
+          "max_refinement_delta_mm3": 2.1316282072803006e-14
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "overlapping",
+      "gap_mm": 0.0,
+      "overlap_mm3": 28.304192,
+      "a_outside_b_mm3": 4825.010828,
+      "b_outside_a_mm3": 43.954808,
+      "witness": {
+        "overlap_centroid_estimate": {
+          "method": "Gauss centroid refinements 1e-6 and 1e-8; approximate witness only",
+          "refinement_delta_mm": 1.7404671430534633e-14
+        },
+        "overlap_centroid": [
+          50.87,
+          -22.4,
+          33.0
+        ],
+        "overlap_box": [
+          48.0,
+          -24.76,
+          30.64,
+          53.74,
+          -20.04,
+          35.36
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 7.668899094315807e-07,
+          "max_refinement_delta_mm3": 9.094947017729282e-13
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "overlapping",
+      "gap_mm": 0.0,
+      "overlap_mm3": 28.304192,
+      "a_outside_b_mm3": 4894.454148,
+      "b_outside_a_mm3": 43.954808,
+      "witness": {
+        "overlap_centroid_estimate": {
+          "method": "Gauss centroid refinements 1e-6 and 1e-8; approximate witness only",
+          "refinement_delta_mm": 1.7404671430534633e-14
+        },
+        "overlap_centroid": [
+          50.87,
+          -22.4,
+          33.0
+        ],
+        "overlap_box": [
+          48.0,
+          -24.76,
+          30.64,
+          53.74,
+          -20.04,
+          35.36
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 8.964598843417923e-07,
+          "max_refinement_delta_mm3": 2.1316282072803006e-14
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "overlapping",
+      "gap_mm": 0.0,
+      "overlap_mm3": 28.304192,
+      "a_outside_b_mm3": 4825.010828,
+      "b_outside_a_mm3": 43.954808,
+      "witness": {
+        "overlap_centroid_estimate": {
+          "method": "Gauss centroid refinements 1e-6 and 1e-8; approximate witness only",
+          "refinement_delta_mm": 1.507288760336424e-14
+        },
+        "overlap_centroid": [
+          50.87,
+          22.4,
+          9.0
+        ],
+        "overlap_box": [
+          48.0,
+          20.04,
+          6.64,
+          53.74,
+          24.76,
+          11.36
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 7.668902105123994e-07,
+          "max_refinement_delta_mm3": 2.842170943040401e-14
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "overlapping",
+      "gap_mm": 0.0,
+      "overlap_mm3": 28.304192,
+      "a_outside_b_mm3": 4894.454148,
+      "b_outside_a_mm3": 43.954808,
+      "witness": {
+        "overlap_centroid_estimate": {
+          "method": "Gauss centroid refinements 1e-6 and 1e-8; approximate witness only",
+          "refinement_delta_mm": 1.507288760336424e-14
+        },
+        "overlap_centroid": [
+          50.87,
+          22.4,
+          9.0
+        ],
+        "overlap_box": [
+          48.0,
+          20.04,
+          6.64,
+          53.74,
+          24.76,
+          11.36
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 8.964608283779444e-07,
+          "max_refinement_delta_mm3": 2.842170943040401e-14
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "overlapping",
+      "gap_mm": 0.0,
+      "overlap_mm3": 28.304192,
+      "a_outside_b_mm3": 4825.010828,
+      "b_outside_a_mm3": 43.954808,
+      "witness": {
+        "overlap_centroid_estimate": {
+          "method": "Gauss centroid refinements 1e-6 and 1e-8; approximate witness only",
+          "refinement_delta_mm": 1.5888218580782548e-14
+        },
+        "overlap_centroid": [
+          50.87,
+          22.4,
+          33.0
+        ],
+        "overlap_box": [
+          48.0,
+          20.04,
+          30.64,
+          53.74,
+          24.76,
+          35.36
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 7.668906207966352e-07,
+          "max_refinement_delta_mm3": 9.094947017729282e-13
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "overlapping",
+      "gap_mm": 0.0,
+      "overlap_mm3": 28.304192,
+      "a_outside_b_mm3": 4894.454148,
+      "b_outside_a_mm3": 43.954808,
+      "witness": {
+        "overlap_centroid_estimate": {
+          "method": "Gauss centroid refinements 1e-6 and 1e-8; approximate witness only",
+          "refinement_delta_mm": 1.5888218580782548e-14
+        },
+        "overlap_centroid": [
+          50.87,
+          22.4,
+          33.0
+        ],
+        "overlap_box": [
+          48.0,
+          20.04,
+          30.64,
+          53.74,
+          24.76,
+          35.36
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 8.964602705403383e-07,
+          "max_refinement_delta_mm3": 9.094947017729282e-13
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 1.0,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          53.0,
+          10.0,
+          6.0
+        ],
+        "point_b": [
+          53.0,
+          10.0,
+          5.0
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 0.00031114295695469104,
+          "max_refinement_delta_mm3": 0.0
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 2.2,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          50.2,
+          10.0,
+          6.709103
+        ],
+        "point_b": [
+          48.0,
+          10.0,
+          6.709103
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 1.875487874964619e-07,
+          "max_refinement_delta_mm3": 1.8189894035458565e-12
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 26.905039,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          53.0,
+          14.0,
+          10.0
+        ],
+        "point_b": [
+          73.640388,
+          31.25849,
+          10.0
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 1.875487874964619e-07,
+          "max_refinement_delta_mm3": 0.0
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 33.386653,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          50.2,
+          9.676737,
+          13.986916
+        ],
+        "point_b": [
+          46.0,
+          7.0,
+          47.0
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 5.210928624665377e-06,
+          "max_refinement_delta_mm3": 2.7284841053187847e-12
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 29.515505,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          50.2,
+          8.78507,
+          13.811029
+        ],
+        "point_b": [
+          24.625756,
+          4.309542,
+          27.85
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 0.0002546896594745055,
+          "max_refinement_delta_mm3": 0.0
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 90.54971,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          50.2,
+          10.0,
+          14.0
+        ],
+        "point_b": [
+          -40.3,
+          10.0,
+          17.0
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 9.288449275751611e-06,
+          "max_refinement_delta_mm3": 0.0
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 9.2,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          53.0,
+          -10.0,
+          14.0
+        ],
+        "point_b": [
+          62.2,
+          -10.0,
+          14.0
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 1.875487874964619e-07,
+          "max_refinement_delta_mm3": 0.0
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 9.2,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          53.0,
+          14.0,
+          10.0
+        ],
+        "point_b": [
+          62.2,
+          14.0,
+          10.0
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 1.875487874964619e-07,
+          "max_refinement_delta_mm3": 0.0
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 12.041595,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          53.0,
+          -10.0,
+          14.0
+        ],
+        "point_b": [
+          62.0,
+          -10.0,
+          22.0
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 1.875487874964619e-07,
+          "max_refinement_delta_mm3": 0.0
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 12.041595,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          53.0,
+          10.0,
+          14.0
+        ],
+        "point_b": [
+          62.0,
+          10.0,
+          22.0
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 1.875487874964619e-07,
+          "max_refinement_delta_mm3": 0.0
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 6.842443,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          50.2,
+          -13.987056,
+          9.678463
+        ],
+        "point_b": [
+          46.4,
+          -19.658899,
+          9.221057
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 1.875487874964619e-07,
+          "max_refinement_delta_mm3": 1.4210854715202004e-14
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 19.748718,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          50.2,
+          -11.898225,
+          13.520901
+        ],
+        "point_b": [
+          46.4,
+          -21.09497,
+          30.579381
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 1.875487874964619e-07,
+          "max_refinement_delta_mm3": 1.4210854715202004e-14
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 6.842443,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          50.2,
+          13.987056,
+          9.678463
+        ],
+        "point_b": [
+          46.4,
+          19.658899,
+          9.221057
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 1.875487874964619e-07,
+          "max_refinement_delta_mm3": 1.4210854715202004e-14
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 19.748718,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          50.2,
+          11.898225,
+          13.520901
+        ],
+        "point_b": [
+          46.4,
+          21.09497,
+          30.579381
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 1.875487874964619e-07,
+          "max_refinement_delta_mm3": 0.0
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 14.585652,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          53.0,
+          -13.995473,
+          9.809739
+        ],
+        "point_b": [
+          56.0,
+          -28.253113,
+          9.130804
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 1.875487874964619e-07,
+          "max_refinement_delta_mm3": 2.842170943040401e-14
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 24.578596,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          53.0,
+          -12.697077,
+          12.953942
+        ],
+        "point_b": [
+          56.0,
+          -29.145759,
+          30.969165
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 1.875487874964619e-07,
+          "max_refinement_delta_mm3": 0.0
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 14.585652,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          53.0,
+          13.995473,
+          9.809739
+        ],
+        "point_b": [
+          56.0,
+          28.253113,
+          9.130804
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 1.875487874964619e-07,
+          "max_refinement_delta_mm3": 2.842170943040401e-14
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 24.578596,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          53.0,
+          12.697077,
+          12.953942
+        ],
+        "point_b": [
+          56.0,
+          29.145759,
+          30.969165
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 1.875487874964619e-07,
+          "max_refinement_delta_mm3": 0.0
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 6.080257,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          53.0,
+          -13.987056,
+          9.678463
+        ],
+        "point_b": [
+          53.0,
+          -20.047637,
+          9.189707
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 1.875487874964619e-07,
+          "max_refinement_delta_mm3": 1.4210854715202004e-14
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 19.769677,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          53.0,
+          -11.898225,
+          13.520901
+        ],
+        "point_b": [
+          53.0,
+          -21.280047,
+          30.922669
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 1.875487874964619e-07,
+          "max_refinement_delta_mm3": 0.0
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 6.080257,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          53.0,
+          13.987056,
+          9.678463
+        ],
+        "point_b": [
+          53.0,
+          20.047637,
+          9.189707
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 1.875487874964619e-07,
+          "max_refinement_delta_mm3": 1.4210854715202004e-14
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 19.769677,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          53.0,
+          11.898225,
+          13.520901
+        ],
+        "point_b": [
+          53.0,
+          21.280047,
+          30.922669
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 1.875487874964619e-07,
+          "max_refinement_delta_mm3": 0.0
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 14.663796,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          53.0,
+          -13.995473,
+          9.809739
+        ],
+        "point_b": [
+          53.0,
+          -28.642671,
+          9.112254
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 1.875487874964619e-07,
+          "max_refinement_delta_mm3": 2.842170943040401e-14
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 24.784823,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          53.0,
+          -12.697077,
+          12.953942
+        ],
+        "point_b": [
+          53.0,
+          -29.408724,
+          31.257174
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 1.875487874964619e-07,
+          "max_refinement_delta_mm3": 2.842170943040401e-14
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 14.663796,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          53.0,
+          13.995473,
+          9.809739
+        ],
+        "point_b": [
+          53.0,
+          28.642671,
+          9.112254
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 1.875487874964619e-07,
+          "max_refinement_delta_mm3": 2.842170943040401e-14
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 24.784823,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          53.0,
+          12.697077,
+          12.953942
+        ],
+        "point_b": [
+          53.0,
+          29.408724,
+          31.257174
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 1.875487874964619e-07,
+          "max_refinement_delta_mm3": 0.0
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "touching",
+      "gap_mm": 0.0,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          53.0,
+          35.0,
+          5.5
+        ],
+        "point_b": [
+          53.0,
+          35.0,
+          5.5
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 0.00031114295695469104,
+          "max_refinement_delta_mm3": 0.0
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "touching",
+      "gap_mm": 0.0,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          48.0,
+          22.4,
+          12.5
+        ],
+        "point_b": [
+          48.0,
+          22.4,
+          12.5
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 8.656859951292687e-07,
+          "max_refinement_delta_mm3": 1.8189894035458565e-12
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 13.960133,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          56.0,
+          35.0,
+          6.0
+        ],
+        "point_b": [
+          67.814592,
+          42.436447,
+          6.0
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 8.656859951292687e-07,
+          "max_refinement_delta_mm3": 0.0
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 10.307764,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          53.0,
+          0.0,
+          37.5
+        ],
+        "point_b": [
+          49.0,
+          -0.0,
+          47.0
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 5.210928624665377e-06,
+          "max_refinement_delta_mm3": 2.7284841053187847e-12
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 19.835401,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          53.0,
+          -0.415204,
+          37.5
+        ],
+        "point_b": [
+          40.622878,
+          -0.415204,
+          53.0
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 0.0002546896594745055,
+          "max_refinement_delta_mm3": 0.0
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 88.3,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          48.0,
+          22.4,
+          36.5
+        ],
+        "point_b": [
+          -40.3,
+          22.4,
+          36.5
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 9.288449275751611e-06,
+          "max_refinement_delta_mm3": 0.0
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 6.2,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          56.0,
+          -10.0,
+          11.7
+        ],
+        "point_b": [
+          62.2,
+          -10.0,
+          11.7
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 8.656859951292687e-07,
+          "max_refinement_delta_mm3": 0.0
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 6.2,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          56.0,
+          24.0,
+          14.0
+        ],
+        "point_b": [
+          62.2,
+          24.0,
+          14.0
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 8.656859951292687e-07,
+          "max_refinement_delta_mm3": 0.0
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 6.0,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          56.0,
+          -16.89,
+          36.0
+        ],
+        "point_b": [
+          62.0,
+          -16.89,
+          36.0
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 8.656859951292687e-07,
+          "max_refinement_delta_mm3": 0.0
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 6.0,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          56.0,
+          9.88,
+          36.0
+        ],
+        "point_b": [
+          62.0,
+          9.88,
+          36.0
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 8.656859951292687e-07,
+          "max_refinement_delta_mm3": 0.0
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 0.5,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          48.0,
+          -22.4,
+          11.0
+        ],
+        "point_b": [
+          48.0,
+          -22.4,
+          10.5
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 8.656859951292687e-07,
+          "max_refinement_delta_mm3": 1.4210854715202004e-14
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 0.5,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          48.0,
+          -22.4,
+          35.0
+        ],
+        "point_b": [
+          48.0,
+          -22.4,
+          34.5
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 8.656859951292687e-07,
+          "max_refinement_delta_mm3": 1.4210854715202004e-14
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 0.5,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          48.0,
+          22.4,
+          11.0
+        ],
+        "point_b": [
+          48.0,
+          22.4,
+          10.5
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 8.656859951292687e-07,
+          "max_refinement_delta_mm3": 1.4210854715202004e-14
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 0.5,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          48.0,
+          22.4,
+          35.0
+        ],
+        "point_b": [
+          48.0,
+          22.4,
+          34.5
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 8.656859951292687e-07,
+          "max_refinement_delta_mm3": 0.0
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "touching",
+      "gap_mm": 0.0,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          56.0,
+          -31.0,
+          10.7
+        ],
+        "point_b": [
+          56.0,
+          -31.0,
+          10.7
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 9.525669842653627e-07,
+          "max_refinement_delta_mm3": 2.842170943040401e-14
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "touching",
+      "gap_mm": 0.0,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          56.0,
+          -31.0,
+          34.7
+        ],
+        "point_b": [
+          56.0,
+          -31.0,
+          34.7
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 9.35816487725557e-07,
+          "max_refinement_delta_mm3": 0.0
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "touching",
+      "gap_mm": 0.0,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          56.0,
+          31.0,
+          10.7
+        ],
+        "point_b": [
+          56.0,
+          31.0,
+          10.7
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 9.525666566726945e-07,
+          "max_refinement_delta_mm3": 2.842170943040401e-14
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "touching",
+      "gap_mm": 0.0,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          56.0,
+          31.0,
+          34.7
+        ],
+        "point_b": [
+          56.0,
+          31.0,
+          34.7
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 9.35816149632696e-07,
+          "max_refinement_delta_mm3": 0.0
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "touching",
+      "gap_mm": 0.0,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          53.0,
+          -31.0,
+          10.7
+        ],
+        "point_b": [
+          53.0,
+          -31.0,
+          10.7
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 8.665581497557265e-07,
+          "max_refinement_delta_mm3": 2.842170943040401e-14
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "touching",
+      "gap_mm": 0.0,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          53.0,
+          -31.0,
+          34.7
+        ],
+        "point_b": [
+          53.0,
+          -31.0,
+          34.7
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 8.664104445964646e-07,
+          "max_refinement_delta_mm3": 2.842170943040401e-14
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "touching",
+      "gap_mm": 0.0,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          53.0,
+          31.0,
+          10.7
+        ],
+        "point_b": [
+          53.0,
+          31.0,
+          10.7
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 8.665577738414236e-07,
+          "max_refinement_delta_mm3": 2.842170943040401e-14
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "touching",
+      "gap_mm": 0.0,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          53.0,
+          31.0,
+          34.7
+        ],
+        "point_b": [
+          53.0,
+          31.0,
+          34.7
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 8.664100964493142e-07,
+          "max_refinement_delta_mm3": 0.0
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 1.0,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          56.0,
+          -27.0,
+          6.0
+        ],
+        "point_b": [
+          56.0,
+          -27.0,
+          5.0
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 0.00031114295695469104,
+          "max_refinement_delta_mm3": 0.0
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 8.0,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          56.0,
+          19.0,
+          6.0
+        ],
+        "point_b": [
+          48.0,
+          19.0,
+          6.0
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 2.4392768716150575e-07,
+          "max_refinement_delta_mm3": 1.8189894035458565e-12
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 0.5,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          85.577917,
+          -8.51,
+          20.5
+        ],
+        "point_b": [
+          85.577917,
+          -8.51,
+          20.0
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 2.4392768716150575e-07,
+          "max_refinement_delta_mm3": 0.0
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 7.56022,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          56.0,
+          4.0,
+          47.0
+        ],
+        "point_b": [
+          48.730668,
+          1.923048,
+          47.0
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 5.210928624665377e-06,
+          "max_refinement_delta_mm3": 2.7284841053187847e-12
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 15.542012,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          56.0,
+          4.0,
+          56.0
+        ],
+        "point_b": [
+          40.462355,
+          3.631592,
+          56.0
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 0.0002546896594745055,
+          "max_refinement_delta_mm3": 0.0
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 96.3,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          56.0,
+          18.0,
+          49.0
+        ],
+        "point_b": [
+          -40.3,
+          18.0,
+          49.0
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 9.288449275751611e-06,
+          "max_refinement_delta_mm3": 0.0
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 0.7,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          61.5,
+          -12.0,
+          13.99
+        ],
+        "point_b": [
+          62.2,
+          -12.0,
+          13.99
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 2.4392768716150575e-07,
+          "max_refinement_delta_mm3": 0.0
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 0.7,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          61.5,
+          18.0,
+          13.99
+        ],
+        "point_b": [
+          62.2,
+          18.0,
+          13.99
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 2.4392768716150575e-07,
+          "max_refinement_delta_mm3": 0.0
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 0.5,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          61.5,
+          -16.89,
+          36.0
+        ],
+        "point_b": [
+          62.0,
+          -16.89,
+          36.0
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 2.4392768716150575e-07,
+          "max_refinement_delta_mm3": 0.0
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 0.5,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          61.5,
+          9.88,
+          36.0
+        ],
+        "point_b": [
+          62.0,
+          9.88,
+          36.0
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 2.4392768716150575e-07,
+          "max_refinement_delta_mm3": 0.0
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 3.6,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          56.0,
+          -22.4,
+          10.5
+        ],
+        "point_b": [
+          52.4,
+          -22.4,
+          10.5
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 2.4392768716150575e-07,
+          "max_refinement_delta_mm3": 1.4210854715202004e-14
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 3.6,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          56.0,
+          -22.4,
+          34.5
+        ],
+        "point_b": [
+          52.4,
+          -22.4,
+          34.5
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 2.4392768716150575e-07,
+          "max_refinement_delta_mm3": 1.4210854715202004e-14
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 4.070626,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          56.0,
+          19.0,
+          9.0
+        ],
+        "point_b": [
+          52.4,
+          20.9,
+          9.0
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 2.4392768716150575e-07,
+          "max_refinement_delta_mm3": 1.4210854715202004e-14
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 4.62277,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          56.0,
+          18.0,
+          33.0
+        ],
+        "point_b": [
+          52.4,
+          20.9,
+          33.0
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 2.4392768716150575e-07,
+          "max_refinement_delta_mm3": 0.0
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 1.25,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          56.0,
+          -27.0,
+          9.0
+        ],
+        "point_b": [
+          56.0,
+          -28.25,
+          9.0
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 2.4392768716150575e-07,
+          "max_refinement_delta_mm3": 2.842170943040401e-14
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 2.25,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          56.0,
+          -26.0,
+          33.0
+        ],
+        "point_b": [
+          56.0,
+          -28.25,
+          33.0
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 2.4392768716150575e-07,
+          "max_refinement_delta_mm3": 0.0
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 9.25,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          56.0,
+          19.0,
+          9.0
+        ],
+        "point_b": [
+          56.0,
+          28.25,
+          9.0
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 2.4392768716150575e-07,
+          "max_refinement_delta_mm3": 2.842170943040401e-14
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 10.25,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          56.0,
+          18.0,
+          33.0
+        ],
+        "point_b": [
+          56.0,
+          28.25,
+          33.0
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 2.4392768716150575e-07,
+          "max_refinement_delta_mm3": 0.0
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 2.26,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          56.0,
+          -22.4,
+          6.64
+        ],
+        "point_b": [
+          53.74,
+          -22.4,
+          6.64
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 2.4392768716150575e-07,
+          "max_refinement_delta_mm3": 1.4210854715202004e-14
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 2.26,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          56.0,
+          -22.4,
+          30.64
+        ],
+        "point_b": [
+          53.74,
+          -22.4,
+          30.64
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 2.4392768716150575e-07,
+          "max_refinement_delta_mm3": 0.0
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 2.48781,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          56.0,
+          19.0,
+          9.0
+        ],
+        "point_b": [
+          53.74,
+          20.04,
+          9.0
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 2.4392768716150575e-07,
+          "max_refinement_delta_mm3": 1.4210854715202004e-14
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 3.044536,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          56.0,
+          18.0,
+          33.0
+        ],
+        "point_b": [
+          53.74,
+          20.04,
+          33.0
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 2.4392768716150575e-07,
+          "max_refinement_delta_mm3": 0.0
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 3.419006,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          56.0,
+          -27.0,
+          9.0
+        ],
+        "point_b": [
+          53.0,
+          -28.64,
+          9.0
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 2.4392768716150575e-07,
+          "max_refinement_delta_mm3": 2.842170943040401e-14
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 3.996198,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          56.0,
+          -26.0,
+          33.0
+        ],
+        "point_b": [
+          53.0,
+          -28.64,
+          33.0
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 2.4392768716150575e-07,
+          "max_refinement_delta_mm3": 2.842170943040401e-14
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 10.096019,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          56.0,
+          19.0,
+          9.0
+        ],
+        "point_b": [
+          53.0,
+          28.64,
+          9.0
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 2.4392768716150575e-07,
+          "max_refinement_delta_mm3": 2.842170943040401e-14
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 11.054845,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          56.0,
+          18.0,
+          33.0
+        ],
+        "point_b": [
+          53.0,
+          28.64,
+          33.0
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 2.4392768716150575e-07,
+          "max_refinement_delta_mm3": 0.0
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "touching",
+      "gap_mm": 0.0,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          56.0,
+          10.0,
+          11.7
+        ],
+        "point_b": [
+          56.0,
+          10.0,
+          11.7
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 8.656859951292687e-07,
+          "max_refinement_delta_mm3": 0.0
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 0.8,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          53.0,
+          23.0,
+          14.8
+        ],
+        "point_b": [
+          53.0,
+          23.0,
+          14.0
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 8.656859951292687e-07,
+          "max_refinement_delta_mm3": 3.552713678800501e-15
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 3.572002,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          56.0,
+          22.34457,
+          15.254214
+        ],
+        "point_b": [
+          56.0,
+          19.0,
+          14.0
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 2.4392768716150575e-07,
+          "max_refinement_delta_mm3": 3.552713678800501e-15
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 2.3,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          53.0,
+          23.7,
+          18.0
+        ],
+        "point_b": [
+          53.0,
+          26.0,
+          18.0
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 8.656859951292687e-07,
+          "max_refinement_delta_mm3": 7.105427357601002e-15
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 4.3,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          60.0,
+          22.3,
+          18.0
+        ],
+        "point_b": [
+          60.0,
+          18.0,
+          18.0
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 2.4392768716150575e-07,
+          "max_refinement_delta_mm3": 7.105427357601002e-15
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 2.3,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          53.0,
+          23.7,
+          20.5
+        ],
+        "point_b": [
+          53.0,
+          26.0,
+          20.5
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 8.656859951292687e-07,
+          "max_refinement_delta_mm3": 7.105427357601002e-15
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 4.3,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          60.0,
+          22.3,
+          20.5
+        ],
+        "point_b": [
+          60.0,
+          18.0,
+          20.5
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 2.4392768716150575e-07,
+          "max_refinement_delta_mm3": 7.105427357601002e-15
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 2.3,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          53.0,
+          23.7,
+          23.0
+        ],
+        "point_b": [
+          53.0,
+          26.0,
+          23.0
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 8.656859951292687e-07,
+          "max_refinement_delta_mm3": 7.105427357601002e-15
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 4.3,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          60.0,
+          22.3,
+          23.0
+        ],
+        "point_b": [
+          60.0,
+          18.0,
+          23.0
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 2.4392768716150575e-07,
+          "max_refinement_delta_mm3": 7.105427357601002e-15
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 1.984,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          53.0,
+          20.0,
+          15.984
+        ],
+        "point_b": [
+          53.0,
+          20.0,
+          14.0
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 8.656859951292687e-07,
+          "max_refinement_delta_mm3": 7.105427357601002e-15
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 0.984,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          60.0,
+          18.984,
+          17.0
+        ],
+        "point_b": [
+          60.0,
+          18.0,
+          17.0
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 2.4392768716150575e-07,
+          "max_refinement_delta_mm3": 7.105427357601002e-15
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 2.984,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          53.0,
+          20.0,
+          25.016
+        ],
+        "point_b": [
+          53.0,
+          20.0,
+          28.0
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 8.656859951292687e-07,
+          "max_refinement_delta_mm3": 7.105427357601002e-15
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 0.984,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          60.0,
+          18.984,
+          24.0
+        ],
+        "point_b": [
+          60.0,
+          18.0,
+          24.0
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 2.4392768716150575e-07,
+          "max_refinement_delta_mm3": 7.105427357601002e-15
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 1.421302,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          59.01,
+          -28.0,
+          9.0
+        ],
+        "point_b": [
+          58.0,
+          -27.0,
+          9.0
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 1.0258995444286252e-06,
+          "max_refinement_delta_mm3": 0.0
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 2.0,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          59.01,
+          -28.0,
+          33.0
+        ],
+        "point_b": [
+          59.01,
+          -26.0,
+          33.0
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 1.0258995443993375e-06,
+          "max_refinement_delta_mm3": 0.0
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 9.056495,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          59.01,
+          28.0,
+          9.0
+        ],
+        "point_b": [
+          58.0,
+          19.0,
+          9.0
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 1.0258995443993375e-06,
+          "max_refinement_delta_mm3": 0.0
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 10.0,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          59.01,
+          28.0,
+          33.0
+        ],
+        "point_b": [
+          59.01,
+          18.0,
+          33.0
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 1.0258995443711603e-06,
+          "max_refinement_delta_mm3": 0.0
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "touching",
+      "gap_mm": 1e-06,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          53.0,
+          -8.625,
+          7.61843
+        ],
+        "point_b": [
+          53.000001,
+          -8.625,
+          7.61843
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 1.9153088217649383e-06,
+          "max_refinement_delta_mm3": 1.9153088217649383e-06
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 3.0,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          53.0,
+          -8.625,
+          7.61843
+        ],
+        "point_b": [
+          56.0,
+          -8.625,
+          7.61843
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 1.9153088217649383e-06,
+          "max_refinement_delta_mm3": 1.9153088217649383e-06
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 2.6,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          50.6,
+          -8.625,
+          7.61843
+        ],
+        "point_b": [
+          48.0,
+          -8.625,
+          7.61843
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 1.9153088217649383e-06,
+          "max_refinement_delta_mm3": 1.9153088217649383e-06
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 0.2,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          56.0,
+          -10.0,
+          8.5
+        ],
+        "point_b": [
+          56.0,
+          -10.0,
+          8.3
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 2.5256169142940668e-05,
+          "max_refinement_delta_mm3": 2.3183646717939155e-05
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "touching",
+      "gap_mm": 0.0,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          58.0,
+          -10.0,
+          7.4
+        ],
+        "point_b": [
+          58.0,
+          -10.0,
+          7.4
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 2.5265360683952224e-05,
+          "max_refinement_delta_mm3": 2.3183646717939155e-05
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 2.0,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          50.0,
+          -10.0,
+          11.17524
+        ],
+        "point_b": [
+          48.0,
+          -10.0,
+          11.17524
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 2.5256169142940668e-05,
+          "max_refinement_delta_mm3": 2.3183646717939155e-05
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "contains",
+      "gap_mm": 0.0,
+      "overlap_mm3": 48.415853,
+      "a_outside_b_mm3": 292.148593,
+      "b_outside_a_mm3": 0.0,
+      "contained": "b_in_a",
+      "wall_mm": 0.0,
+      "witness": {
+        "overlap_centroid_estimate": {
+          "method": "Gauss centroid refinements 1e-6 and 1e-8; approximate witness only",
+          "refinement_delta_mm": 5.0884528586428687e-08
+        },
+        "overlap_centroid": [
+          51.800005,
+          -9.999989,
+          9.999996
+        ],
+        "overlap_box": [
+          50.6,
+          -12.75,
+          6.845854,
+          53.0,
+          -7.25,
+          13.154146
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 1.9153088217649383e-06,
+          "max_refinement_delta_mm3": 1.9153088217649383e-06
+        },
+        "inner_point": [
+          50.823139,
+          -12.68125,
+          8.372594
+        ],
+        "outer_point": [
+          50.823139,
+          -12.68125,
+          8.372594
+        ]
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "touching",
+      "gap_mm": 1e-06,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          53.0,
+          -12.75,
+          11.587713
+        ],
+        "point_b": [
+          53.000001,
+          -12.75,
+          11.587713
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 8.656859951292687e-07,
+          "max_refinement_delta_mm3": 0.0
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 3.0,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          53.0,
+          -10.0,
+          6.824574
+        ],
+        "point_b": [
+          56.0,
+          -10.0,
+          6.824574
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 2.4392768716150575e-07,
+          "max_refinement_delta_mm3": 0.0
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "overlapping",
+      "gap_mm": 0.0,
+      "overlap_mm3": 41.91563,
+      "a_outside_b_mm3": 298.64886,
+      "b_outside_a_mm3": 2345.012516,
+      "witness": {
+        "overlap_centroid_estimate": {
+          "method": "Gauss centroid refinements 1e-6 and 1e-8; approximate witness only",
+          "refinement_delta_mm": 1.7763568394002505e-15
+        },
+        "overlap_centroid": [
+          47.2,
+          -10.0,
+          10.0
+        ],
+        "overlap_box": [
+          46.4,
+          -12.75,
+          6.824574,
+          48.0,
+          -7.25,
+          13.175426
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 1.5689879913646174e-08,
+          "max_refinement_delta_mm3": 0.0
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 1.463194,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          61.5,
+          -11.344329,
+          12.681936
+        ],
+        "point_b": [
+          61.5,
+          -12.0,
+          13.99
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 1.026070490373168e-06,
+          "max_refinement_delta_mm3": 0.0
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 5.01,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          61.01,
+          -10.0,
+          13.0
+        ],
+        "point_b": [
+          56.0,
+          -10.0,
+          13.0
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 1.026070490373168e-06,
+          "max_refinement_delta_mm3": 0.0
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 13.01,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          61.01,
+          -10.0,
+          13.0
+        ],
+        "point_b": [
+          48.0,
+          -10.0,
+          13.0
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 1.026070490373168e-06,
+          "max_refinement_delta_mm3": 0.0
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "overlapping",
+      "gap_mm": 0.0,
+      "overlap_mm3": 141.371669,
+      "a_outside_b_mm3": 1555.088364,
+      "b_outside_a_mm3": 109.955743,
+      "witness": {
+        "overlap_centroid_estimate": {
+          "method": "Gauss centroid refinements 1e-6 and 1e-8; approximate witness only",
+          "refinement_delta_mm": 1.432144669219779e-14
+        },
+        "overlap_centroid": [
+          72.5,
+          -10.0,
+          10.0
+        ],
+        "overlap_box": [
+          70.0,
+          -13.0,
+          7.0,
+          75.0,
+          -7.0,
+          13.0
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 1.3426130449243253e-06,
+          "max_refinement_delta_mm3": 2.2737367544323206e-13
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "touching",
+      "gap_mm": 1e-06,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          53.0,
+          11.375,
+          7.61843
+        ],
+        "point_b": [
+          53.000001,
+          11.375,
+          7.61843
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 1.9153088217649383e-06,
+          "max_refinement_delta_mm3": 1.9153088217649383e-06
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 3.0,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          53.0,
+          11.375,
+          7.61843
+        ],
+        "point_b": [
+          56.0,
+          11.375,
+          7.61843
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 1.9153088217649383e-06,
+          "max_refinement_delta_mm3": 1.9153088217649383e-06
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 2.6,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          50.6,
+          11.375,
+          7.61843
+        ],
+        "point_b": [
+          48.0,
+          11.375,
+          7.61843
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 1.9153088217649383e-06,
+          "max_refinement_delta_mm3": 1.9153088217649383e-06
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 0.2,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          56.0,
+          10.0,
+          8.5
+        ],
+        "point_b": [
+          56.0,
+          10.0,
+          8.3
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 2.5256169159580125e-05,
+          "max_refinement_delta_mm3": 2.3183646746360864e-05
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "touching",
+      "gap_mm": 0.0,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          58.0,
+          10.0,
+          7.4
+        ],
+        "point_b": [
+          58.0,
+          10.0,
+          7.4
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 2.526536068523925e-05,
+          "max_refinement_delta_mm3": 2.3183646746360864e-05
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 2.0,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          50.0,
+          10.0,
+          11.17524
+        ],
+        "point_b": [
+          48.0,
+          10.0,
+          11.17524
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 2.5256169159580125e-05,
+          "max_refinement_delta_mm3": 2.3183646746360864e-05
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "contains",
+      "gap_mm": 0.0,
+      "overlap_mm3": 48.415853,
+      "a_outside_b_mm3": 292.148593,
+      "b_outside_a_mm3": 0.0,
+      "contained": "b_in_a",
+      "wall_mm": 0.0,
+      "witness": {
+        "overlap_centroid_estimate": {
+          "method": "Gauss centroid refinements 1e-6 and 1e-8; approximate witness only",
+          "refinement_delta_mm": 5.088452996440791e-08
+        },
+        "overlap_centroid": [
+          51.800005,
+          10.000011,
+          9.999996
+        ],
+        "overlap_box": [
+          50.6,
+          7.25,
+          6.845854,
+          53.0,
+          12.75,
+          13.154146
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 1.9153088217649383e-06,
+          "max_refinement_delta_mm3": 1.9153088217649383e-06
+        },
+        "inner_point": [
+          50.823139,
+          7.31875,
+          8.372594
+        ],
+        "outer_point": [
+          50.823139,
+          7.31875,
+          8.372594
+        ]
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "touching",
+      "gap_mm": 1e-06,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          53.0,
+          7.25,
+          11.587713
+        ],
+        "point_b": [
+          53.000001,
+          7.25,
+          11.587713
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 8.656859951292687e-07,
+          "max_refinement_delta_mm3": 0.0
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 3.0,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          53.0,
+          10.0,
+          6.824574
+        ],
+        "point_b": [
+          56.0,
+          10.0,
+          6.824574
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 2.4392768716150575e-07,
+          "max_refinement_delta_mm3": 0.0
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "overlapping",
+      "gap_mm": 0.0,
+      "overlap_mm3": 41.91563,
+      "a_outside_b_mm3": 298.64886,
+      "b_outside_a_mm3": 2345.012516,
+      "witness": {
+        "overlap_centroid_estimate": {
+          "method": "Gauss centroid refinements 1e-6 and 1e-8; approximate witness only",
+          "refinement_delta_mm": 7.105427357601002e-15
+        },
+        "overlap_centroid": [
+          47.2,
+          10.0,
+          10.0
+        ],
+        "overlap_box": [
+          46.4,
+          7.25,
+          6.824574,
+          48.0,
+          12.75,
+          13.175426
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 1.568983320359401e-08,
+          "max_refinement_delta_mm3": 0.0
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 0.99,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          61.01,
+          10.0,
+          13.0
+        ],
+        "point_b": [
+          61.01,
+          10.0,
+          13.99
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 1.026070490373168e-06,
+          "max_refinement_delta_mm3": 0.0
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 5.01,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          61.01,
+          10.0,
+          13.0
+        ],
+        "point_b": [
+          56.0,
+          10.0,
+          13.0
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 1.026070490373168e-06,
+          "max_refinement_delta_mm3": 0.0
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 13.01,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          61.01,
+          10.0,
+          13.0
+        ],
+        "point_b": [
+          48.0,
+          10.0,
+          13.0
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 1.026070490373168e-06,
+          "max_refinement_delta_mm3": 0.0
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "overlapping",
+      "gap_mm": 0.0,
+      "overlap_mm3": 141.371669,
+      "a_outside_b_mm3": 1555.088364,
+      "b_outside_a_mm3": 109.955743,
+      "witness": {
+        "overlap_centroid_estimate": {
+          "method": "Gauss centroid refinements 1e-6 and 1e-8; approximate witness only",
+          "refinement_delta_mm": 1.432144669219779e-14
+        },
+        "overlap_centroid": [
+          72.5,
+          10.0,
+          10.0
+        ],
+        "overlap_box": [
+          70.0,
+          7.0,
+          7.0,
+          75.0,
+          13.0,
+          13.0
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 1.3426130449243253e-06,
+          "max_refinement_delta_mm3": 2.2737367544323206e-13
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "overlapping",
+      "gap_mm": 0.0,
+      "overlap_mm3": 5.392086,
+      "a_outside_b_mm3": 2053.27871,
+      "b_outside_a_mm3": 16837.948302,
+      "witness": {
+        "overlap_centroid_estimate": {
+          "method": "Gauss centroid refinements 1e-6 and 1e-8; approximate witness only",
+          "refinement_delta_mm": 7.671311721569361e-14
+        },
+        "overlap_centroid": [
+          84.0,
+          -7.417476,
+          34.0
+        ],
+        "overlap_box": [
+          82.22,
+          -8.51,
+          22.071238,
+          85.78,
+          -6.51,
+          45.928762
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 2.8698729595248705e-07,
+          "max_refinement_delta_mm3": 0.0
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "overlapping",
+      "gap_mm": 0.0,
+      "overlap_mm3": 271.107477,
+      "a_outside_b_mm3": 1787.56332,
+      "b_outside_a_mm3": 16881.555712,
+      "witness": {
+        "overlap_centroid_estimate": {
+          "method": "Gauss centroid refinements 1e-6 and 1e-8; approximate witness only",
+          "refinement_delta_mm": 4.264181500047145e-14
+        },
+        "overlap_centroid": [
+          84.000302,
+          -7.510019,
+          34.00411
+        ],
+        "overlap_box": [
+          80.575,
+          -8.51,
+          22.071238,
+          87.425,
+          -6.51,
+          45.928762
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 2.5970624324675337e-07,
+          "max_refinement_delta_mm3": 0.0
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 0.39,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          90.71,
+          -6.12,
+          41.0
+        ],
+        "point_b": [
+          90.71,
+          -6.51,
+          41.0
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 2.4392768716150575e-07,
+          "max_refinement_delta_mm3": 0.0
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 4.925,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          82.15,
+          -16.89,
+          43.075
+        ],
+        "point_b": [
+          82.15,
+          -16.89,
+          48.0
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 2.4392768716150575e-07,
+          "max_refinement_delta_mm3": 0.0
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 4.925,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          82.15,
+          7.88,
+          43.075
+        ],
+        "point_b": [
+          82.15,
+          7.88,
+          48.0
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 2.4392768716150575e-07,
+          "max_refinement_delta_mm3": 0.0
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 23.86,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          79.86,
+          -6.12,
+          28.0
+        ],
+        "point_b": [
+          56.0,
+          -6.12,
+          28.0
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 8.656859951292687e-07,
+          "max_refinement_delta_mm3": 0.0
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 0.39,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          79.86,
+          -6.12,
+          43.43
+        ],
+        "point_b": [
+          79.86,
+          -6.51,
+          43.43
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 2.4392768716150575e-07,
+          "max_refinement_delta_mm3": 0.0
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 22.619366,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          79.86,
+          -6.12,
+          24.58
+        ],
+        "point_b": [
+          61.0,
+          -9.331364,
+          12.512554
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 2.5256169142940668e-05,
+          "max_refinement_delta_mm3": 2.3183646717939155e-05
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 29.557943,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          79.86,
+          -6.12,
+          24.58
+        ],
+        "point_b": [
+          53.0,
+          -9.292789,
+          12.657509
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 1.9153088217649383e-06,
+          "max_refinement_delta_mm3": 1.9153088217649383e-06
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 22.343232,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          79.86,
+          10.0,
+          24.58
+        ],
+        "point_b": [
+          61.0,
+          10.0,
+          12.6
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 2.5256169159580125e-05,
+          "max_refinement_delta_mm3": 2.3183646746360864e-05
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 29.349761,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          79.86,
+          10.0,
+          24.58
+        ],
+        "point_b": [
+          53.0,
+          10.0,
+          12.75
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 1.9153088217649383e-06,
+          "max_refinement_delta_mm3": 1.9153088217649383e-06
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 23.86,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          79.86,
+          26.0,
+          26.0
+        ],
+        "point_b": [
+          56.0,
+          26.0,
+          26.0
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 8.656859951292687e-07,
+          "max_refinement_delta_mm3": 0.0
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 4.57,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          79.86,
+          9.88,
+          43.43
+        ],
+        "point_b": [
+          79.86,
+          9.88,
+          48.0
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 2.4392768716150575e-07,
+          "max_refinement_delta_mm3": 0.0
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 29.002604,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          79.86,
+          9.88,
+          24.58
+        ],
+        "point_b": [
+          60.85,
+          -7.803752,
+          11.654991
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 2.5256169142940668e-05,
+          "max_refinement_delta_mm3": 2.3183646717939155e-05
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 34.598365,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          79.86,
+          9.88,
+          24.58
+        ],
+        "point_b": [
+          52.77245,
+          -7.303795,
+          11.617413
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 1.9153088217649383e-06,
+          "max_refinement_delta_mm3": 1.9153088217649383e-06
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 22.343232,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          79.86,
+          10.0,
+          24.58
+        ],
+        "point_b": [
+          61.0,
+          10.0,
+          12.6
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 2.5256169159580125e-05,
+          "max_refinement_delta_mm3": 2.3183646746360864e-05
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 29.349761,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          79.86,
+          10.0,
+          24.58
+        ],
+        "point_b": [
+          53.0,
+          10.0,
+          12.75
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 1.9153088217649383e-06,
+          "max_refinement_delta_mm3": 1.9153088217649383e-06
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 1.88,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          53.0,
+          36.88,
+          37.5
+        ],
+        "point_b": [
+          53.0,
+          35.0,
+          37.5
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 8.656859951292687e-07,
+          "max_refinement_delta_mm3": 0.0
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 18.88,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          56.0,
+          36.88,
+          24.58
+        ],
+        "point_b": [
+          56.0,
+          18.0,
+          24.58
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 2.4392768716150575e-07,
+          "max_refinement_delta_mm3": 0.0
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 46.344916,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          58.15,
+          36.88,
+          24.58
+        ],
+        "point_b": [
+          58.15,
+          -7.374066,
+          10.816683
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 2.5256169142940668e-05,
+          "max_refinement_delta_mm3": 2.3183646717939155e-05
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 46.019625,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          52.768769,
+          36.88,
+          24.58
+        ],
+        "point_b": [
+          52.768769,
+          -7.255643,
+          11.547312
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 1.9153088217649383e-06,
+          "max_refinement_delta_mm3": 1.9153088217649383e-06
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 27.829581,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          58.15,
+          36.88,
+          24.58
+        ],
+        "point_b": [
+          58.15,
+          12.417299,
+          11.311169
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 2.5256169159580125e-05,
+          "max_refinement_delta_mm3": 2.3183646746360864e-05
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "apart",
+      "gap_mm": 27.426615,
+      "overlap_mm3": 0.0,
+      "witness": {
+        "point_a": [
+          50.833301,
+          36.88,
+          24.58
+        ],
+        "point_b": [
+          50.833301,
+          12.73362,
+          11.573403
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 1.9153088217649383e-06,
+          "max_refinement_delta_mm3": 1.9153088217649383e-06
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "contains",
+      "gap_mm": 0.0,
+      "overlap_mm3": 50.0,
+      "a_outside_b_mm3": 6085.675,
+      "b_outside_a_mm3": 0.0,
+      "contained": "b_in_a",
+      "wall_mm": 0.14,
+      "witness": {
+        "overlap_centroid_estimate": {
+          "method": "Gauss centroid refinements 1e-6 and 1e-8; approximate witness only",
+          "refinement_delta_mm": 5.883469768860719e-14
+        },
+        "overlap_centroid": [
+          82.5,
+          14.0,
+          32.5
+        ],
+        "overlap_box": [
+          80.0,
+          13.0,
+          30.0,
+          85.0,
+          15.0,
+          35.0
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 4.431764584940842e-12,
+          "max_refinement_delta_mm3": 0.0
+        },
+        "inner_point": [
+          80.0,
+          13.0,
+          35.0
+        ],
+        "outer_point": [
+          79.86,
+          13.0,
+          35.0
+        ]
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "overlapping",
+      "gap_mm": 0.0,
+      "overlap_mm3": 16.987327,
+      "a_outside_b_mm3": 86.901773,
+      "b_outside_a_mm3": 4933.00862,
+      "witness": {
+        "overlap_centroid_estimate": {
+          "method": "Gauss centroid refinements 1e-6 and 1e-8; approximate witness only",
+          "refinement_delta_mm": 1.4953452293276018e-07
+        },
+        "overlap_centroid": [
+          54.5,
+          -10.000001,
+          10.0
+        ],
+        "overlap_box": [
+          53.0,
+          -11.5,
+          8.5,
+          56.0,
+          -8.5,
+          11.5
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 2.5256169142940668e-05,
+          "max_refinement_delta_mm3": 2.3183646717939155e-05
+        }
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "contains",
+      "gap_mm": 0.0,
+      "overlap_mm3": 4922.75834,
+      "a_outside_b_mm3": 0.0,
+      "b_outside_a_mm3": 0.0,
+      "contained": "both",
+      "wall_mm": 0.0,
+      "witness": {
+        "overlap_centroid_estimate": {
+          "method": "Gauss centroid refinements 1e-6 and 1e-8; approximate witness only",
+          "refinement_delta_mm": 3.4808588791448606e-12
+        },
+        "overlap_centroid": [
+          54.01729,
+          0.167284,
+          21.527372
+        ],
+        "overlap_box": [
+          48.0,
+          -35.0,
+          5.5,
+          56.0,
+          35.0,
+          37.5
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 8.658381327627966e-07,
+          "max_refinement_delta_mm3": 9.094947017729282e-13
+        },
+        "inner_point": [
+          53.0,
+          35.0,
+          37.5
+        ],
+        "outer_point": [
+          53.0,
+          35.0,
+          37.5
+        ]
+      },
+      "exact": true,
+      "cached": false
+    },
+    {
+      "a": "a",
+      "b": "b",
+      "state": "contains",
+      "gap_mm": 0.0,
+      "overlap_mm3": 16843.340389,
+      "a_outside_b_mm3": 0.0,
+      "b_outside_a_mm3": 0.0,
+      "contained": "both",
+      "wall_mm": 0.0,
+      "witness": {
+        "overlap_centroid_estimate": {
+          "method": "Gauss centroid refinements 1e-6 and 1e-8; approximate witness only",
+          "refinement_delta_mm": 1.4458497151625688e-14
+        },
+        "overlap_centroid": [
+          70.52525,
+          -4.127549,
+          43.128118
+        ],
+        "overlap_box": [
+          56.0,
+          -27.0,
+          6.0,
+          93.0,
+          19.0,
+          56.0
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 2.4392768716150575e-07,
+          "max_refinement_delta_mm3": 0.0
+        },
+        "inner_point": [
+          56.0,
+          -27.0,
+          14.0
+        ],
+        "outer_point": [
+          56.0,
+          -27.0,
+          14.0
+        ]
+      },
+      "exact": true,
+      "cached": false
+    }
+  ],
+  "existing_unqualified_mates": {
+    "base_board_inserts#0_AUTHORED": {
+      "baseline": {
+        "a": "a",
+        "b": "b",
+        "state": "overlapping",
+        "gap_mm": 0.0,
+        "overlap_mm3": 28.304192,
+        "a_outside_b_mm3": 4825.010828,
+        "b_outside_a_mm3": 43.954808,
+        "witness": {
+          "overlap_centroid_estimate": {
+            "method": "Gauss centroid refinements 1e-6 and 1e-8; approximate witness only",
+            "refinement_delta_mm": 1.6280579355608324e-14
+          },
+          "overlap_centroid": [
+            50.87,
+            -22.4,
+            9.0
+          ],
+          "overlap_box": [
+            48.0,
+            -24.76,
+            6.64,
+            53.74,
+            -20.04,
+            11.36
+          ],
+          "volume_integration": {
+            "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+            "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+            "max_estimated_error_mm3": 7.668898295805837e-07,
+            "max_refinement_delta_mm3": 2.1316282072803006e-14
+          }
+        },
+        "exact": true,
+        "cached": false
+      },
+      "candidate": {
+        "a": "a",
+        "b": "b",
+        "state": "overlapping",
+        "gap_mm": 0.0,
+        "overlap_mm3": 28.304192,
+        "a_outside_b_mm3": 4894.454148,
+        "b_outside_a_mm3": 43.954808,
+        "witness": {
+          "overlap_centroid_estimate": {
+            "method": "Gauss centroid refinements 1e-6 and 1e-8; approximate witness only",
+            "refinement_delta_mm": 1.6280579355608324e-14
+          },
+          "overlap_centroid": [
+            50.87,
+            -22.4,
+            9.0
+          ],
+          "overlap_box": [
+            48.0,
+            -24.76,
+            6.64,
+            53.74,
+            -20.04,
+            11.36
+          ],
+          "volume_integration": {
+            "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+            "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+            "max_estimated_error_mm3": 8.964602471328652e-07,
+            "max_refinement_delta_mm3": 2.1316282072803006e-14
+          }
+        },
+        "exact": true,
+        "cached": false
+      },
+      "physical_fit_verified": false,
+      "qualification": "Unchanged existing heat-set mate; not an accepted clearance."
+    },
+    "base_board_inserts#1_AUTHORED": {
+      "baseline": {
+        "a": "a",
+        "b": "b",
+        "state": "overlapping",
+        "gap_mm": 0.0,
+        "overlap_mm3": 28.304192,
+        "a_outside_b_mm3": 4825.010828,
+        "b_outside_a_mm3": 43.954808,
+        "witness": {
+          "overlap_centroid_estimate": {
+            "method": "Gauss centroid refinements 1e-6 and 1e-8; approximate witness only",
+            "refinement_delta_mm": 1.7404671430534633e-14
+          },
+          "overlap_centroid": [
+            50.87,
+            -22.4,
+            33.0
+          ],
+          "overlap_box": [
+            48.0,
+            -24.76,
+            30.64,
+            53.74,
+            -20.04,
+            35.36
+          ],
+          "volume_integration": {
+            "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+            "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+            "max_estimated_error_mm3": 7.668899094315807e-07,
+            "max_refinement_delta_mm3": 9.094947017729282e-13
+          }
+        },
+        "exact": true,
+        "cached": false
+      },
+      "candidate": {
+        "a": "a",
+        "b": "b",
+        "state": "overlapping",
+        "gap_mm": 0.0,
+        "overlap_mm3": 28.304192,
+        "a_outside_b_mm3": 4894.454148,
+        "b_outside_a_mm3": 43.954808,
+        "witness": {
+          "overlap_centroid_estimate": {
+            "method": "Gauss centroid refinements 1e-6 and 1e-8; approximate witness only",
+            "refinement_delta_mm": 1.7404671430534633e-14
+          },
+          "overlap_centroid": [
+            50.87,
+            -22.4,
+            33.0
+          ],
+          "overlap_box": [
+            48.0,
+            -24.76,
+            30.64,
+            53.74,
+            -20.04,
+            35.36
+          ],
+          "volume_integration": {
+            "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+            "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+            "max_estimated_error_mm3": 8.964598843417923e-07,
+            "max_refinement_delta_mm3": 2.1316282072803006e-14
+          }
+        },
+        "exact": true,
+        "cached": false
+      },
+      "physical_fit_verified": false,
+      "qualification": "Unchanged existing heat-set mate; not an accepted clearance."
+    },
+    "base_board_inserts#2_AUTHORED": {
+      "baseline": {
+        "a": "a",
+        "b": "b",
+        "state": "overlapping",
+        "gap_mm": 0.0,
+        "overlap_mm3": 28.304192,
+        "a_outside_b_mm3": 4825.010828,
+        "b_outside_a_mm3": 43.954808,
+        "witness": {
+          "overlap_centroid_estimate": {
+            "method": "Gauss centroid refinements 1e-6 and 1e-8; approximate witness only",
+            "refinement_delta_mm": 1.507288760336424e-14
+          },
+          "overlap_centroid": [
+            50.87,
+            22.4,
+            9.0
+          ],
+          "overlap_box": [
+            48.0,
+            20.04,
+            6.64,
+            53.74,
+            24.76,
+            11.36
+          ],
+          "volume_integration": {
+            "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+            "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+            "max_estimated_error_mm3": 7.668902105123994e-07,
+            "max_refinement_delta_mm3": 2.842170943040401e-14
+          }
+        },
+        "exact": true,
+        "cached": false
+      },
+      "candidate": {
+        "a": "a",
+        "b": "b",
+        "state": "overlapping",
+        "gap_mm": 0.0,
+        "overlap_mm3": 28.304192,
+        "a_outside_b_mm3": 4894.454148,
+        "b_outside_a_mm3": 43.954808,
+        "witness": {
+          "overlap_centroid_estimate": {
+            "method": "Gauss centroid refinements 1e-6 and 1e-8; approximate witness only",
+            "refinement_delta_mm": 1.507288760336424e-14
+          },
+          "overlap_centroid": [
+            50.87,
+            22.4,
+            9.0
+          ],
+          "overlap_box": [
+            48.0,
+            20.04,
+            6.64,
+            53.74,
+            24.76,
+            11.36
+          ],
+          "volume_integration": {
+            "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+            "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+            "max_estimated_error_mm3": 8.964608283779444e-07,
+            "max_refinement_delta_mm3": 2.842170943040401e-14
+          }
+        },
+        "exact": true,
+        "cached": false
+      },
+      "physical_fit_verified": false,
+      "qualification": "Unchanged existing heat-set mate; not an accepted clearance."
+    },
+    "base_board_inserts#3_AUTHORED": {
+      "baseline": {
+        "a": "a",
+        "b": "b",
+        "state": "overlapping",
+        "gap_mm": 0.0,
+        "overlap_mm3": 28.304192,
+        "a_outside_b_mm3": 4825.010828,
+        "b_outside_a_mm3": 43.954808,
+        "witness": {
+          "overlap_centroid_estimate": {
+            "method": "Gauss centroid refinements 1e-6 and 1e-8; approximate witness only",
+            "refinement_delta_mm": 1.5888218580782548e-14
+          },
+          "overlap_centroid": [
+            50.87,
+            22.4,
+            33.0
+          ],
+          "overlap_box": [
+            48.0,
+            20.04,
+            30.64,
+            53.74,
+            24.76,
+            35.36
+          ],
+          "volume_integration": {
+            "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+            "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+            "max_estimated_error_mm3": 7.668906207966352e-07,
+            "max_refinement_delta_mm3": 9.094947017729282e-13
+          }
+        },
+        "exact": true,
+        "cached": false
+      },
+      "candidate": {
+        "a": "a",
+        "b": "b",
+        "state": "overlapping",
+        "gap_mm": 0.0,
+        "overlap_mm3": 28.304192,
+        "a_outside_b_mm3": 4894.454148,
+        "b_outside_a_mm3": 43.954808,
+        "witness": {
+          "overlap_centroid_estimate": {
+            "method": "Gauss centroid refinements 1e-6 and 1e-8; approximate witness only",
+            "refinement_delta_mm": 1.5888218580782548e-14
+          },
+          "overlap_centroid": [
+            50.87,
+            22.4,
+            33.0
+          ],
+          "overlap_box": [
+            48.0,
+            20.04,
+            30.64,
+            53.74,
+            24.76,
+            35.36
+          ],
+          "volume_integration": {
+            "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+            "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+            "max_estimated_error_mm3": 8.964602705403383e-07,
+            "max_refinement_delta_mm3": 9.094947017729282e-13
+          }
+        },
+        "exact": true,
+        "cached": false
+      },
+      "physical_fit_verified": false,
+      "qualification": "Unchanged existing heat-set mate; not an accepted clearance."
+    }
+  },
+  "panel_housing_relation": {
+    "a": "a",
+    "b": "b",
+    "state": "overlapping",
+    "gap_mm": 0.0,
+    "overlap_mm3": 5.392086,
+    "a_outside_b_mm3": 2053.27871,
+    "b_outside_a_mm3": 16837.948302,
+    "witness": {
+      "overlap_centroid_estimate": {
+        "method": "Gauss centroid refinements 1e-6 and 1e-8; approximate witness only",
+        "refinement_delta_mm": 7.671311721569361e-14
+      },
+      "overlap_centroid": [
+        84.0,
+        -7.417476,
+        34.0
+      ],
+      "overlap_box": [
+        82.22,
+        -8.51,
+        22.071238,
+        85.78,
+        -6.51,
+        45.928762
+      ],
+      "volume_integration": {
+        "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+        "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+        "max_estimated_error_mm3": 2.8698729595248705e-07,
+        "max_refinement_delta_mm3": 0.0
+      }
+    },
+    "exact": true,
+    "cached": false
+  },
+  "panel_retention_qualified": false,
+  "load_screen": {
+    "mating_force_n": 96.0,
+    "unmating_force_max_n": null,
+    "mating_source": "PS-43045-001 revision R,6.2 item7:8.0 N/circuit maximum;12 circuits",
+    "force_direction": [
+      0.0,
+      -1.0,
+      0.0
+    ],
+    "application_mm": [
+      84.0,
+      0.0,
+      34.0
+    ],
+    "mating_motion": "Fixed receptacle moves -Y toward the supported module plug.",
+    "unmating_force_direction": [
+      0.0,
+      1.0,
+      0.0
+    ],
+    "mount_reference_mm": [
+      56.0,
+      0.0,
+      10.0
+    ],
+    "outward_lever_mm": 28.0,
+    "vertical_lever_mm": 24.0,
+    "mount_moments_nmm": {
+      "about_Z": -2688.0,
+      "about_X": 2304.0
+    },
+    "bolt_axis_couple_n": 134.4,
+    "bolt_vertical_shear_couple_n": 115.2,
+    "bolt_shear_resultant_n_if_direct_load_shared": 124.8,
+    "bolt_reaction_basis": "Static two-point force balance; no assumed friction/preload credit.",
+    "post_section_mm": [
+      5.5,
+      14.0
+    ],
+    "rail_section_mm": [
+      14.0,
+      8.0
+    ],
+    "one_post_bending_mpa": 12.823747680890538,
+    "one_rail_bending_mpa": 8.26530612244898,
+    "one_post_torsion_estimate_mpa": 19.041322314049587,
+    "one_post_equivalent_estimate_mpa": 35.38593464903413,
+    "material": "PA6-CF candidate; no measured directional/moisture/creep allowable assigned",
+    "allowable_mpa": null,
+    "structural_readiness": false,
+    "limits": [
+      "Actual flange contact, load sharing, bolt/printed-bearing stresses and joint stiffness remain unmodelled.",
+      "No stress concentration, panel clip stress, screw preload, nut-seat creep, print porosity or fatigue calculation.",
+      "The torsion approximation is a screening estimate, not a guaranteed conservative stress bound.",
+      "Use conditioned printed material evidence and a complete load/contact model before acceptance."
+    ]
+  },
+  "assembly_order": [
+    {
+      "order": 1,
+      "fit": "base_board_carrier",
+      "note": "Bench; PCB absent."
+    },
+    {
+      "order": 2,
+      "fit": "base_board_inserts",
+      "note": "Bare carrier, before connectors/electronics. Heat-setting process still requires coupon measurements."
+    },
+    {
+      "order": 3,
+      "fit": "c3_support_nuts",
+      "insertion": "+X",
+      "note": "Load inward-open pockets before PCB."
+    },
+    {
+      "order": 4,
+      "fit": "c3_support",
+      "insertion": "-X",
+      "fasteners": [
+        "c3_support_screws"
+      ],
+      "note": "Hold nuts from the inward face until screws engage; screws and nuts remain with module."
+    },
+    {
+      "order": 5,
+      "fit": "C3_module_housing",
+      "insertion": "+Y",
+      "note": "Snap-panel flex/retention unresolved; rigid supplier intersection is recorded, not waived."
+    },
+    {
+      "order": 6,
+      "fit": "base_board",
+      "fasteners": [
+        "base_board_screws"
+      ],
+      "note": "PCB prevents straight nut removal after installation; remove PCB first to replace bracket."
+    }
+  ],
+  "rigid_module_members": [
+    "base_board_carrier",
+    "base_board",
+    "c3_support",
+    "C3_module_housing",
+    "C2_power_module_RESERVATION",
+    "C2_signal_module_RESERVATION",
+    "base_board_screws#0",
+    "base_board_screws#1",
+    "base_board_screws#2",
+    "base_board_screws#3",
+    "base_board_inserts#0",
+    "base_board_inserts#1",
+    "base_board_inserts#2",
+    "base_board_inserts#3",
+    "c3_support_screws#0",
+    "c3_support_screws#1",
+    "c3_support_nuts#0",
+    "c3_support_nuts#1",
+    "component:D36V50F12 12 V PAN (U2)",
+    "component:NE555 1 kHz (U1)",
+    "component:R1 R2 C2 C3",
+    "component:MF-R300 (F1, pan servo)",
+    "component:R3 2.2 k 1 W, D1",
+    "component:C1 film",
+    "component:servo, ring, CAN pads"
+  ],
+  "rigid_module_hardware_complete": false,
+  "unmodelled_retained_items": [
+    "Twelve C3 male contacts and installed crimps",
+    "Four C2 signal male contacts and installed crimps",
+    "C2 power connector contacts/terminations and retained power tails",
+    "C2/C3 signal wiring, external BUS and return junctions, ties and abrasion protection",
+    "Pan-servo carrier-side connector, support and retained lead",
+    "New protection circuit, thermal solution and real board terminals"
+  ],
+  "limits": [
+    "Not a full insertion/removal sequence or upper-head-motion check.",
+    "Panel snap flex, thread clocking, torque, strength, creep and physical fit remain unqualified.",
+    "Nut pockets resist rotation only after assembly; hold loose nuts until screws engage.",
+    "C2/C3/servo parking, actual retained tails/junctions and added protection board remain incomplete.",
+    "Wire-exit and tool corridors are explicit design reservations, not detailed cable/tool models."
+  ],
+  "elapsed_seconds": 84.007,
+  "public_artifact_sha256": {
+    "carrier-support-candidate.step": "d8e77115bc679df6ae46185dc1b8783a31c7b9de139bb6287199815e40d8a13b",
+    "C3-support-candidate.step": "43c50e167c7c0876d2f54299c67dffd11af2f36ac8cb3d1d773313382faaf6f8",
+    "C3-support-layout.step": "7a1ee25ffefbbf961b7aa83b17c89455ecfa42e8b4191c9d17b24821151c4824"
+  },
+  "public_geometry_note": "Independently authored dimension representation; not manufacturer CAD; no threads or flexible clip geometry."
+}

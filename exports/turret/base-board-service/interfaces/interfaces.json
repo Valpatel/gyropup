@@ -3498,7 +3498,7 @@
     "splice_application": "https://www.te.com/commerce/DocumentDelivery/DDEController?Action=srchrtrv&DocFormat=pdf&DocLang=English&DocNm=114-2157&DocType=Specification+Or+Standard&PartCntxt=320559",
     "wire": "https://www.remingtonindustries.com/content/PTFE%20Hook%20Up%20Wire%20Data%20Sheet.pdf"
   },
-  "seconds": 30.82,
+  "seconds": 32.2,
   "runtime": {
     "cadquery": "2.8.0",
     "OCP": "7.9.3.1"
@@ -3559,6 +3559,7 @@
       "cad/turret_boards.py": "c7a115d2fe3cefddf46b0dd521e21076e1f7721235df3e7bd22fadb6e165707b",
       "cad/turret_box.py": "7ad68697d006181cad758ffc243d599ebaadb0ad098c7902137acfcebec54999",
       "cad/turret_carrier_interfaces.py": "9d6dd70ef106195f0f70783458b5c93a30c257af623f1d3be28caec85212d743",
+      "cad/turret_carrier_support.py": "ce4badb9b9314fc3a03ab187c5b2ba21b1a8a865c6c38a4637221071176110de",
       "cad/turret_dossier.py": "d9a08a49fa719534f2f1a14699f84057236eaf7a9be909e35f89ceacc87a15d9",
       "cad/turret_gates.py": "013fa03b36bd576799901ac21c2953a2e00688e36c75090b340498a664277b80",
       "cad/turret_lidar.py": "2101a2ca20558d8b231fd9004d864c7b385b5a9bd4cdb102249477c0384713e9",
@@ -3652,6 +3653,7 @@
     "cad/turret_boards.py": "c7a115d2fe3cefddf46b0dd521e21076e1f7721235df3e7bd22fadb6e165707b",
     "cad/turret_box.py": "7ad68697d006181cad758ffc243d599ebaadb0ad098c7902137acfcebec54999",
     "cad/turret_carrier_interfaces.py": "9d6dd70ef106195f0f70783458b5c93a30c257af623f1d3be28caec85212d743",
+    "cad/turret_carrier_support.py": "ce4badb9b9314fc3a03ab187c5b2ba21b1a8a865c6c38a4637221071176110de",
     "cad/turret_dossier.py": "d9a08a49fa719534f2f1a14699f84057236eaf7a9be909e35f89ceacc87a15d9",
     "cad/turret_gates.py": "013fa03b36bd576799901ac21c2953a2e00688e36c75090b340498a664277b80",
     "cad/turret_lidar.py": "2101a2ca20558d8b231fd9004d864c7b385b5a9bd4cdb102249477c0384713e9",
@@ -3682,7 +3684,7 @@
     "catalog/wheel_motors.json": "e92baa60e433e177d87450145943c32bd6b60bebb97e1c1746354aa00f2dbc99",
     "designs/default.json": "3dc7d04d0d6eeec81decefa360f3904b093f19515d6944910c2cb20c976db211"
   },
-  "input_fingerprint": "7bf0c19aabbb9c54f428f32880ba5be205e54af3f9bd28dbb9fdec02b0d44e12",
+  "input_fingerprint": "dd0e5c77b8bc2ae7066f4fb987637bb9874d5e8e839f116b6190d16f2cc659f1",
   "relation_tolerances": {
     "touch_mm": 0.01,
     "overlap_mm3": 1e-06,
@@ -7435,8 +7437,8 @@
     "Base and carrier changes require renewed structural, print and physical-fit qualification."
   ],
   "artifact_sha256": {
-    "carrier-wiring-candidate.step": "24128410af19e53731a3d93a3e2cd0a22a8d58a006f4f8b38d8026bcd7283a45",
-    "pan-base-wiring-candidate.step": "f91e6fea0b76b5951b6ff954b2b79edd9062534110a799d3b945451f91b02ab8",
-    "carrier-wiring-layout.step": "b2f375596949a5b1d66c066744108ba339484e44ce7083a88a329c57d06dbc24"
+    "carrier-wiring-candidate.step": "a8634ffc0de37614a15d85ff12420db9658da859ad5b7bb41f22bd3f71af6061",
+    "pan-base-wiring-candidate.step": "b8f3492488d8c8cc214ecf679bd537e0df7a6bd5dacceeac2b31f0ddef7f81f8",
+    "carrier-wiring-layout.step": "f7768d344c51f3912f40a50d5971ce73b8543cf49cbec592f7f7b11848039a9a"
   }
 }

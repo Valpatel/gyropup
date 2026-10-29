@@ -31,7 +31,7 @@
     "test:build-portal": "node --test tools/test-model-links.mjs && node tools/test-build-portal.mjs",
     "test:study-media": "python3 tools/test-study-media.py && node tools/test-study-media.mjs",
     "test:diagrams": "node tools/test-diagrams.mjs",
-    "test:carrier-inspection": "node tools/test-carrier-inspection.mjs"
+    "test:carrier-inspection": "node tools/test-carrier-inspection.mjs && CARRIER_INSPECTION_CASE=c3-support node tools/test-carrier-inspection.mjs"
   },
   "devDependencies": {
     "@playwright/test": "1.56.1",

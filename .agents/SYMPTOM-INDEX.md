@@ -2,6 +2,7 @@
 
 | Symptom | Canonical guidance |
 | --- | --- |
+| Valid supplier connector solids overlap when mated or omit wire-entry holes, contacts or latch details | [Vendor solids can omit functional cavities](inbox/2026-10-29-valid-vendor-solids-can-omit-connector-cavities.md) |
 | A TVS breakdown or nominal cutoff looks safe but peak voltage, recovery or shared-branch loads remain unbounded | [Electrical protection limits and evidence](domains/electrical-protection.md) |
 | Reverse-input rating looks sufficient but a charged output violates differential limits, or startup trips despite a nominal current margin | [Charged reverse stress and actual startup budget](inbox/2026-10-29-charged-output-changes-reverse-input-stress.md) |
 | Supervisor startup passes using a headline delay despite an installed delay capacitor or different pullup/loading | [Timing test conditions and actual topology](inbox/2026-10-29-charged-output-changes-reverse-input-stress.md#review-correction-startup-timing-depends-on-the-installed-delay-network) |
@@ -46,3 +47,4 @@
 | A STEP loads but all parts/reservations look identical, or an unexplained ready-only timeout loses its diagnostics | [Review the imported assembly](inbox/2026-10-29-review-the-imported-assembly-not-only-the-export.md) |
 | Native design files are downloadable but notes are unlisted, or a drawing opens cropped at paper width | [Engineering files need a usable portal](inbox/2026-10-29-downloadable-cad-notes-still-need-a-usable-portal.md) |
 - Insert coupon passes but parent fit is unknown; horizontal versus vertical pilot; geometry-only3MF confused with a sliced print → [Preserve parent specimen orientation](inbox/2026-10-29-fit-specimens-must-preserve-layer-orientation.md), `research/carrier-insert-fit/`.
+- A failed CAD receipt passes after its failed check or output manifest is deleted → [Require complete evidence membership](inbox/2026-10-29-receipt-coverage-must-not-be-optional.md), `tools/test-carrier-connector-support.py`.

@@ -1,0 +1,277 @@
+[
+  {
+    "id": "mcmaster-91290a113",
+    "key": "turret_screw_m3x8",
+    "category": "fastener",
+    "vendor": "McMaster-Carr",
+    "model": "91290A113",
+    "name": "Black-Oxide Alloy Steel Socket Head Screw, US Origin, M3 x 0.5 mm Thread Size, 8 mm Long",
+    "price_usd": 0.1328,
+    "price_note": "McMaster-Carr: $13.28 per pack of 100 (price_usd is per piece)",
+    "price_checked": "2026-10-29",
+    "pack_qty": 100,
+    "pack_price_usd": 13.28,
+    "buy": [
+      {
+        "seller": "McMaster-Carr",
+        "url": "https://www.mcmaster.com/91290A113/",
+        "in_stock": null,
+        "ships_from": "US"
+      }
+    ],
+    "specs": {
+      "thread": "M3x0.5",
+      "length_mm": 8.0,
+      "head_d_mm": 5.5,
+      "head_height_mm": 3.0,
+      "mass_g": 0.815,
+      "mass_basis": "CAD volume x density 7.85 g/cm3 (estimate)",
+      "material": "Black-Oxide Alloy Steel",
+      "mcmaster": {
+        "raw": {
+          "Thread Size": "M3 \u00d7 0.5 mm",
+          "Thread Spacing": "Coarse",
+          "Thread Type": "Metric",
+          "Thread Fit": "Metric Class 5g6g",
+          "Thread Direction": "Right Hand",
+          "Socket Head Profile": "Standard",
+          "Fastener Head Type": "Socket",
+          "Drive Style": "Hex",
+          "Length": "8 mm",
+          "Head Diameter": "5.5 mm",
+          "Head Height": "3 mm",
+          "Threading": "Fully Threaded",
+          "Tensile Strength": "170,000 psi",
+          "Fastener Strength Grade/Class": "Class 12.9",
+          "Drive Size": "2.5 mm",
+          "Hardness": "Rockwell C41",
+          "Material": "Black-Oxide Alloy Steel",
+          "Performance": "High Strength",
+          "Specifications Met": "DIN 912, ISO 4762",
+          "System of Measurement": "Metric",
+          "Tip Type": "Flat",
+          "Country of Origin": "United States",
+          "DFARS Compliance": "Specialty Metals Compliant (252.225-7009)",
+          "Export Control Classification Number (ECCN)": "EAR99",
+          "REACH Compliance": "REACH (EC 1907/2006) (02/04/2026, 253 SVHC) Compliant",
+          "RoHS Compliance": "RoHS 3 (2015/863/EU) Compliant",
+          "Schedule B Number": "731815.9000",
+          "U.S.\u2013Mexico\u2013Canada Agreement (USMCA) Qualifying": "Yes"
+        },
+        "parsed": {
+          "Thread Size": {
+            "thread": "M3x0.5",
+            "d": 3.0,
+            "pitch": 0.5,
+            "unit": "mm"
+          },
+          "Length": {
+            "value": 8.0,
+            "unit": "mm"
+          },
+          "Head Diameter": {
+            "value": 5.5,
+            "unit": "mm"
+          },
+          "Head Height": {
+            "value": 3.0,
+            "unit": "mm"
+          },
+          "Tensile Strength": {
+            "value": 1172.1092,
+            "unit": "MPa"
+          },
+          "Drive Size": {
+            "value": 2.5,
+            "unit": "mm"
+          }
+        }
+      }
+    },
+    "cad": {
+      "file": "references/vendor/mcmaster/91290A113/91290A113.norm.step",
+      "kind": "screw",
+      "frame": "axis +Z, centred on the axis, head on +z and shank towards -z; z = 0 at the underside of the head (socket, button, pan, hex and flanged heads) or at the top face of a countersunk (flat) head",
+      "available": true,
+      "step_url": "https://www.mcmaster.com/91290A113/",
+      "bbox_mm": {
+        "min": [
+          -2.75,
+          -2.75,
+          -8.0
+        ],
+        "max": [
+          2.75,
+          2.75,
+          3.0
+        ],
+        "size": [
+          5.5,
+          5.5,
+          11.0
+        ]
+      },
+      "volume_mm3": 103.866
+    },
+    "frame": "axis +Z, centred on the axis, head on +z and shank towards -z; z = 0 at the underside of the head (socket, button, pan, hex and flanged heads) or at the top face of a countersunk (flat) head",
+    "sources": [
+      "https://www.mcmaster.com/91290A113/"
+    ],
+    "confidence": "product page",
+    "used_for": "the aluminium pan clamp (5), the slip ring's flange to the carrier with washers (3), the hopper lugs (3), the dial on the M2006 shaft with a washer (1)",
+    "qty_per_robot": 12,
+    "qualification": "Current exact-part acquisition; candidate support quantities only, no fit or strength acceptance.",
+    "source_record": "2026-10-29 fresh standard single-part Session; HTTP200; actual STEP downloaded; browser closed.",
+    "private_file_sha256": {
+      "references/vendor/mcmaster/91290A113/91290A113.step": "ace720d7e71be04d4559f3f5ad6b2ae2275e0fa29ba6bf8577be2c910c24c957",
+      "references/vendor/mcmaster/91290A113/91290A113.norm.step": "4ac68e49d4435961b2295703fb854e8f09176a038d3ee8d63b7ee61010e5d289",
+      "references/vendor/mcmaster/91290A113/91290A113.page.json": "03dc27895645c310dd6796f27b88a199457ff822d0c272afa2354f2dc947e7ab",
+      "references/vendor/mcmaster/91290A113/91290A113.norm.json": "794b5decb60c872d8df9e2d421d9f1c8bd6f96f8de7499411966b92bd72112d9"
+    },
+    "candidate_support_quantity": 2,
+    "quantity_promoted_to_product_bom": false,
+    "notes": "Separate C3 bracket proposal: two M3\u00d78 screws clamp 2mm bracket +3mm carrier +2.4mm nuts; nominal projection0.6mm. Geometry, locking/retention, torque and physical fit remain unqualified.",
+    "private_topology_observation": {
+      "valid": true,
+      "solids": 1,
+      "faces": 357,
+      "exact_bounds_mm": [
+        -2.75,
+        -2.75,
+        -8.0000001,
+        2.75,
+        2.75,
+        3.0000001000000003
+      ],
+      "qualification": "Topology and bounds only; no fastener mate, torque or strength result."
+    }
+  },
+  {
+    "id": "mcmaster-90592a085",
+    "key": "nut_m3",
+    "category": "fastener",
+    "vendor": "McMaster-Carr",
+    "model": "90592A085",
+    "name": "Steel Hex Nut, Medium-Strength, Class 8, M3 x 0.5 mm Thread Size",
+    "price_usd": 0.0294,
+    "price_note": "McMaster-Carr: $2.94 per pack of 100 (price_usd is per piece)",
+    "price_checked": "2026-10-29",
+    "pack_qty": 100,
+    "pack_price_usd": 2.94,
+    "buy": [
+      {
+        "seller": "McMaster-Carr",
+        "url": "https://www.mcmaster.com/90592A085/",
+        "in_stock": null,
+        "ships_from": "US"
+      }
+    ],
+    "specs": {
+      "thread": "M3x0.5",
+      "width_mm": 5.5,
+      "height_mm": 2.4,
+      "mass_g": 0.38,
+      "mass_basis": "CAD volume x density 7.85 g/cm3 (estimate)",
+      "material": "Steel",
+      "mcmaster": {
+        "raw": {
+          "Hex Nut Profile": "Standard",
+          "Fastener Strength Rating": "Medium",
+          "Material": "Steel",
+          "Thread Size": "M3 \u00d7 0.5 mm",
+          "Width": "5.5 mm",
+          "Height": "2.4 mm",
+          "Fastener Strength Grade/Class": "Class 8",
+          "Specifications Met": "DIN 934",
+          "Drive Style": "External Hex",
+          "Nut Type": "Hex",
+          "System of Measurement": "Metric",
+          "Thread Direction": "Right Hand",
+          "Thread Fit": "Metric Class 6H",
+          "Thread Spacing": "Coarse",
+          "Thread Type": "Metric",
+          "Country of Origin": "China, Germany, Taiwan",
+          "DFARS Compliance": "Not Specialty Metals Compliant",
+          "Export Control Classification Number (ECCN)": "EAR99",
+          "REACH Compliance": "REACH (EC 1907/2006) (02/04/2026, 253 SVHC) Compliant",
+          "RoHS Compliance": "RoHS 3 (2015/863/EU) Compliant",
+          "Schedule B Number": "731816.0000",
+          "U.S.\u2013Mexico\u2013Canada Agreement (USMCA) Qualifying": "No"
+        },
+        "parsed": {
+          "Thread Size": {
+            "thread": "M3x0.5",
+            "d": 3.0,
+            "pitch": 0.5,
+            "unit": "mm"
+          },
+          "Width": {
+            "value": 5.5,
+            "unit": "mm"
+          },
+          "Height": {
+            "value": 2.4,
+            "unit": "mm"
+          }
+        }
+      }
+    },
+    "cad": {
+      "file": "references/vendor/mcmaster/90592A085/90592A085.norm.step",
+      "kind": "nut",
+      "frame": "axis +Z, centred on the axis; the larger end (flange, head, collar) at z = 0 and the part on +z; when both ends are the same size, the heavier end at z = 0",
+      "available": true,
+      "step_url": "https://www.mcmaster.com/90592A085/",
+      "bbox_mm": {
+        "min": [
+          -3.1541,
+          -2.75,
+          0.0
+        ],
+        "max": [
+          3.1541,
+          2.75,
+          2.4
+        ],
+        "size": [
+          6.3083,
+          5.5,
+          2.4
+        ]
+      },
+      "volume_mm3": 48.413
+    },
+    "frame": "axis +Z, centred on the axis; the larger end (flange, head, collar) at z = 0 and the part on +z; when both ends are the same size, the heavier end at z = 0",
+    "sources": [
+      "https://www.mcmaster.com/90592A085/"
+    ],
+    "confidence": "product page",
+    "used_for": null,
+    "qty_per_robot": null,
+    "qualification": "Current exact-part acquisition; candidate support quantities only, no fit or strength acceptance.",
+    "source_record": "2026-10-29 fresh standard single-part Session; HTTP200; actual STEP downloaded; browser closed.",
+    "private_file_sha256": {
+      "references/vendor/mcmaster/90592A085/90592A085.step": "d0feffe192f58b741eda311c939ea24f625f03f879fd19433bb009d700433f1c",
+      "references/vendor/mcmaster/90592A085/90592A085.norm.step": "15e61a3d9e1c3159c501e6a714492eb8db30630879f2bcb73238d02469dd1c75",
+      "references/vendor/mcmaster/90592A085/90592A085.page.json": "c92e162f16ee20518ea82a5b334863784382340feb3c100b8a042432d8b3e100",
+      "references/vendor/mcmaster/90592A085/90592A085.norm.json": "adcc4a6691db33a272660a8a1865d1470c57f1cd4215e5c11bda88bd29fe5e3f"
+    },
+    "candidate_support_quantity": 2,
+    "quantity_promoted_to_product_bom": false,
+    "notes": "Separate C3 bracket proposal: two M3\u00d78 screws clamp 2mm bracket +3mm carrier +2.4mm nuts; nominal projection0.6mm. Geometry, locking/retention, torque and physical fit remain unqualified.",
+    "private_topology_observation": {
+      "valid": true,
+      "solids": 1,
+      "faces": 43,
+      "exact_bounds_mm": [
+        -3.154145821529821,
+        -2.7500001,
+        5.838672220806777e-17,
+        3.154145821529821,
+        2.7500001,
+        2.4000002
+      ],
+      "qualification": "Topology and bounds only; no fastener mate, torque or strength result."
+    }
+  }
+]
