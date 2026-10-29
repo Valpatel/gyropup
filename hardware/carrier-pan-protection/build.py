@@ -36,7 +36,9 @@ def build():
     stable,count=re.subn(r'<title>SVG Image created as pan-cutoff\.svg date [^<]+</title>',
                         '<title>Gyropup PAN cutoff candidate; see source-bound receipt</title>',svg.read_text())
     if count!=1: raise RuntimeError('Unexpected KiCad SVG title format; review before normalizing metadata')
-    svg.write_text(stable)
+    # KiCad emits trailing spaces inside multiline style attributes; retain the
+    # newline separators while normalizing that insignificant export whitespace.
+    svg.write_text('\n'.join(line.rstrip() for line in stable.splitlines())+'\n')
     (HERE/'reports/calculations.json').write_text(json.dumps(calculate.calculate(),indent=2,sort_keys=True)+'\n')
     files=['README.md','pins.md','fault-review.md','availability.json','circuit_design.py','generate.py','calculate.py','verify.py','test_circuit.py','build.py',
       'pan-cutoff.kicad_sch','pan-cutoff.kicad_pro','candidate.kicad_sym','sym-lib-table','candidate-bom.csv',

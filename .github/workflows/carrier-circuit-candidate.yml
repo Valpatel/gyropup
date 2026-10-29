@@ -29,7 +29,9 @@ jobs:
             CircuitTests.test_candidate_bom_and_availability_coverage \
             CircuitTests.test_missing_or_extra_lead_rejected \
             CircuitTests.test_wrong_manufacturer_pin_function_rejected \
-            CircuitTests.test_wrong_part_variant_rejected
+            CircuitTests.test_wrong_part_variant_rejected \
+            CircuitTests.test_native_mosfet_body_diodes_match_drain_source \
+            CircuitTests.test_reversed_body_diode_graphic_rejected
       # Full native regeneration plus five actual schematic corruption exports use
       # pinned KiCad10.0.1 locally and must be independently rerun for design review.
       # This job intentionally does not claim to install/run KiCad or validate hardware.

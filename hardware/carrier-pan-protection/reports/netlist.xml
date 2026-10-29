@@ -36,7 +36,7 @@
         <field name="Datasheet">https://industrial.panasonic.com/ww/products/pt/aluminum-cap-lead/models/EEUFC2A220</field>
         <field name="Description" />
       </fields>
-      <libsource lib="Candidate" part="C_POL" description="" />
+      <libsource lib="Candidate" part="C_POL_V" description="" />
       <property name="MPN" value="EEU-FC2A220" />
       <property name="Status" value="UNSELECTED / UNQUALIFIED CANDIDATE" />
       <property name="Note" value="Local VOUT decoupling; positive terminal to PAN_INPUT. 8mm diameter x11.5mm nominal body exceeds U2 height reservation." />
@@ -65,7 +65,7 @@
         <field name="Datasheet">https://yageogroup.com/content/datasheet/asset/file/KEM_C1003_C0G_SMD</field>
         <field name="Description" />
       </fields>
-      <libsource lib="Candidate" part="C" description="" />
+      <libsource lib="Candidate" part="C_V" description="" />
       <property name="MPN" value="C0805C332J1GACTU" />
       <property name="Status" value="UNSELECTED / UNQUALIFIED CANDIDATE" />
       <property name="Note" value="ADI CGATE example value; actual U2 capacitance/inrush and SOA not qualified." />
@@ -94,7 +94,7 @@
         <field name="Datasheet">https://yageogroup.com/content/datasheet/asset/file/KEM_C1003_C0G_SMD</field>
         <field name="Description" />
       </fields>
-      <libsource lib="Candidate" part="C" description="" />
+      <libsource lib="Candidate" part="C_GS" description="" />
       <property name="MPN" value="C0805C682J5GACTU" />
       <property name="Status" value="UNSELECTED / UNQUALIFIED CANDIDATE" />
       <property name="Note" value="Gate-to-common-source hotswap capacitor, ADI p15-16; NOT gate-to-ground." />
@@ -105,8 +105,8 @@
       <units>
         <unit name="A">
           <pins>
-            <pin num="1" />
             <pin num="2" />
+            <pin num="1" />
           </pins>
         </unit>
       </units>
@@ -220,7 +220,7 @@
         <field name="Datasheet">https://www.vishay.com/docs/28758/tnpw_e3.pdf</field>
         <field name="Description" />
       </fields>
-      <libsource lib="Candidate" part="R" description="" />
+      <libsource lib="Candidate" part="R_V" description="" />
       <property name="MPN" value="TNPW0805464KBEEN" />
       <property name="Status" value="UNSELECTED / UNQUALIFIED CANDIDATE" />
       <property name="Note" value="OV top; stock quantity unresolved" />
@@ -249,7 +249,7 @@
         <field name="Datasheet">https://www.vishay.com/docs/28758/tnpw_e3.pdf</field>
         <field name="Description" />
       </fields>
-      <libsource lib="Candidate" part="R" description="" />
+      <libsource lib="Candidate" part="R_V" description="" />
       <property name="MPN" value="TNPW08054K99BEEN" />
       <property name="Status" value="UNSELECTED / UNQUALIFIED CANDIDATE" />
       <property name="Note" value="OV bottom" />
@@ -278,7 +278,7 @@
         <field name="Datasheet">https://www.vishay.com/docs/28758/tnpw_e3.pdf</field>
         <field name="Description" />
       </fields>
-      <libsource lib="Candidate" part="R" description="" />
+      <libsource lib="Candidate" part="R_V" description="" />
       <property name="MPN" value="TNPW0805127KBEEN" />
       <property name="Status" value="UNSELECTED / UNQUALIFIED CANDIDATE" />
       <property name="Note" value="UV top; listed nonstock/reel order" />
@@ -307,7 +307,7 @@
         <field name="Datasheet">https://www.vishay.com/docs/28758/tnpw_e3.pdf</field>
         <field name="Description" />
       </fields>
-      <libsource lib="Candidate" part="R" description="" />
+      <libsource lib="Candidate" part="R_V" description="" />
       <property name="MPN" value="TNPW08054K99BEEN" />
       <property name="Status" value="UNSELECTED / UNQUALIFIED CANDIDATE" />
       <property name="Note" value="UV bottom" />
@@ -336,7 +336,7 @@
         <field name="Datasheet">https://www.vishay.com/docs/28758/tnpw_e3.pdf</field>
         <field name="Description" />
       </fields>
-      <libsource lib="Candidate" part="R" description="" />
+      <libsource lib="Candidate" part="R_V" description="" />
       <property name="MPN" value="TNPW0805499KBEEN" />
       <property name="Status" value="UNSELECTED / UNQUALIFIED CANDIDATE" />
       <property name="Note" value="SHDN top: limits pin current; not an arm circuit" />
@@ -365,7 +365,7 @@
         <field name="Datasheet">https://www.vishay.com/docs/28758/tnpw_e3.pdf</field>
         <field name="Description" />
       </fields>
-      <libsource lib="Candidate" part="R" description="" />
+      <libsource lib="Candidate" part="R_V" description="" />
       <property name="MPN" value="TNPW0805100KBEEN" />
       <property name="Status" value="UNSELECTED / UNQUALIFIED CANDIDATE" />
       <property name="Note" value="SHDN bottom; default ON when source valid" />
@@ -394,7 +394,7 @@
         <field name="Datasheet">https://www.vishay.com/docs/28758/tnpw_e3.pdf</field>
         <field name="Description" />
       </fields>
-      <libsource lib="Candidate" part="R" description="" />
+      <libsource lib="Candidate" part="R_V" description="" />
       <property name="MPN" value="TNPW080522K0BEEN" />
       <property name="Status" value="UNSELECTED / UNQUALIFIED CANDIDATE" />
       <property name="Note" value="Series with CGATE only; NOT in series with MOSFET gates" />
@@ -423,7 +423,7 @@
         <field name="Datasheet">https://www.vishay.com/docs/28758/tnpw_e3.pdf</field>
         <field name="Description" />
       </fields>
-      <libsource lib="Candidate" part="R" description="" />
+      <libsource lib="Candidate" part="R_V" description="" />
       <property name="MPN" value="TNPW0805100KBEEN" />
       <property name="Status" value="UNSELECTED / UNQUALIFIED CANDIDATE" />
       <property name="Note" value="Bleeder; decay depends on unmeasured module Cin" />
@@ -466,8 +466,8 @@
             <pin num="1" />
             <pin num="2" />
             <pin num="3" />
-            <pin num="4" />
             <pin num="6" />
+            <pin num="4" />
             <pin num="5" />
             <pin num="10" />
             <pin num="9" />
@@ -517,10 +517,10 @@
     </comp>
   </components>
   <libparts>
-    <libpart lib="Candidate" part="C">
+    <libpart lib="Candidate" part="C_GS">
       <fields>
         <field name="Reference">U</field>
-        <field name="Value">C</field>
+        <field name="Value">C_GS</field>
         <field name="Footprint" />
         <field name="Datasheet" />
         <field name="Description" />
@@ -530,10 +530,10 @@
         <pin num="2" name="" type="passive" />
       </pins>
     </libpart>
-    <libpart lib="Candidate" part="C_POL">
+    <libpart lib="Candidate" part="C_POL_V">
       <fields>
         <field name="Reference">U</field>
-        <field name="Value">C_POL</field>
+        <field name="Value">C_POL_V</field>
         <field name="Footprint" />
         <field name="Datasheet" />
         <field name="Description" />
@@ -541,6 +541,19 @@
       <pins>
         <pin num="1" name="+" type="passive" />
         <pin num="2" name="-" type="passive" />
+      </pins>
+    </libpart>
+    <libpart lib="Candidate" part="C_V">
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">C_V</field>
+        <field name="Footprint" />
+        <field name="Datasheet" />
+        <field name="Description" />
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive" />
+        <pin num="2" name="" type="passive" />
       </pins>
     </libpart>
     <libpart lib="Candidate" part="D42V55F12">
@@ -629,6 +642,19 @@
       <fields>
         <field name="Reference">U</field>
         <field name="Value">R</field>
+        <field name="Footprint" />
+        <field name="Datasheet" />
+        <field name="Description" />
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive" />
+        <pin num="2" name="" type="passive" />
+      </pins>
+    </libpart>
+    <libpart lib="Candidate" part="R_V">
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">R_V</field>
         <field name="Footprint" />
         <field name="Datasheet" />
         <field name="Description" />

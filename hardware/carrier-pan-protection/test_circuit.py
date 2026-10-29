@@ -1,5 +1,6 @@
 """Independent exported-net checks and actual native-schematic negative controls."""
 import csv
+import copy
 import json
 from pathlib import Path
 import subprocess
@@ -89,9 +90,46 @@ class CircuitTests(unittest.TestCase):
         self.native_negative(change)
     def test_native_hotswap_cap_wrong_return(self):
         def change(tree):
-            labels=[l for l in S.find(tree,'label') if l[1]=='COMMON_SOURCE' and float(S.first(l,'at')[2])>70]
-            self.assertEqual(len(labels),1);labels[0][1]='GND'
+            c3=next(s for s in S.find(tree,'symbol') if any(p[1:3]==['Reference','C3'] for p in S.find(s,'property')))
+            lib=next(s for s in S.find(S.first(tree,'lib_symbols'),'symbol') if s[1]==S.first(c3,'lib_id')[1])
+            pin=next(p for unit in S.find(lib,'symbol') for p in S.find(unit,'pin') if S.first(p,'number')[1]=='2')
+            xy=S.first(c3,'at'); local=S.first(pin,'at'); point=(round(float(xy[1])+float(local[1]),4),round(float(xy[2])-float(local[2]),4))
+            wires=[w for w in S.find(tree,'wire') if any(tuple(map(float,xy[1:]))==point for xy in S.find(S.first(w,'pts'),'xy'))]
+            self.assertEqual(len(wires),1);tree.remove(wires[0])
+            label=copy.deepcopy(next(l for l in S.find(tree,'label') if l[1]=='GND'))
+            S.first(label,'at')[1:]=[*point,0];S.first(label,'uuid')[1]='32972365-1e54-4d39-acd1-a9dc74735440';tree.append(label)
         self.native_negative(change)
+    def assert_body_diodes(self,tree):
+        # Check the visible diode separately from net connectivity: graphics can lie while ERC passes.
+        for name in ('Q_IN','Q_OUT'):
+            lib=next(s for s in S.find(S.first(tree,'lib_symbols'),'symbol') if s[1]=='Candidate:'+name)
+            lines=[p for unit in S.find(lib,'symbol') for p in S.find(unit,'polyline')]
+            triangles=[p for p in lines if len(S.find(S.first(p,'pts'),'xy'))==4 and S.first(S.first(p,'fill'),'type')[1]=='none']
+            self.assertEqual(len(triangles),1)
+            points=[tuple(map(float,p[1:])) for p in S.find(S.first(triangles[0],'pts'),'xy')[:-1]]
+            cathode=next(p for p in points if sum(p[0]==q[0] for q in points)==1)
+            anode=next(p for p in points if sum(p[0]==q[0] for q in points)==2)
+            pins=[p for unit in S.find(lib,'symbol') for p in S.find(unit,'pin')]
+            drain=float(S.first(next(p for p in pins if S.first(p,'number')[1]=='5'),'at')[1])
+            source=float(S.first(next(p for p in pins if S.first(p,'number')[1]=='1'),'at')[1])
+            self.assertGreater((cathode[0]-anode[0])*(drain-source),0,'body diode cathode must face drain')
+            bars=[]
+            for line in lines:
+                ends=[tuple(map(float,p[1:])) for p in S.find(S.first(line,'pts'),'xy')]
+                if len(ends)==2 and ends[0][0]==ends[1][0]==cathode[0] and min(p[1] for p in ends)<cathode[1]<max(p[1] for p in ends):bars.append(line)
+            self.assertEqual(len(bars),1,'one explicit cathode bar must match the diode triangle')
+    def test_native_mosfet_body_diodes_match_drain_source(self):
+        self.assert_body_diodes(S.parse((HERE/'pan-cutoff.kicad_sch').read_text()))
+    def test_reversed_body_diode_graphic_rejected(self):
+        tree=S.parse((HERE/'pan-cutoff.kicad_sch').read_text())
+        lib=next(s for s in S.find(S.first(tree,'lib_symbols'),'symbol') if s[1]=='Candidate:Q_IN')
+        for unit in S.find(lib,'symbol'):
+            for line in S.find(unit,'polyline'):
+                points=S.find(S.first(line,'pts'),'xy')
+                # Reverse only the diode graphic, preserving package pins and the real electrical netlist.
+                if all(float(p[2])>4 for p in points):
+                    for p in points:p[1]=-float(p[1])
+        with self.assertRaises(AssertionError):self.assert_body_diodes(tree)
     def test_invalid_resistance(self):
         old=calculate.D.PARTS['R1']['value']
         try:

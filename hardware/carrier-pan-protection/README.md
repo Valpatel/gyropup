@@ -9,7 +9,7 @@ Tracking [issue83](https://github.com/Valpatel/gyropup/issues/83) / [PR84](https
 - [Candidate BOM](candidate-bom.csv), [dated availability and primary sources](availability.json). Several passive offer quantities remain unresolved; the 127 kΩ and 22 kΩ candidates are normally nonstock. This is not a ready-to-order list.
 - [Fault-state review and remaining release gates](fault-review.md), [numerical screening](reports/calculations.json), [KiCad-exported netlist](reports/netlist.xml), [ERC report](reports/erc.rpt), [source/artifact receipt](reports/receipt.json).
 
-The upper power-path wires in the schematic are actual connected KiCad wires. Net labels connect the other parts. Every manufacturer lead is exported, including duplicate MOSFET and module pins. Q1/Q2 use explicit D/S/G terminal block symbols; intrinsic body-diode direction is specified in `pins.md`. This checkpoint intentionally provides no PCB or fabrication files.
+The power path, common gate/source capacitor, gate-ramp branch and each UV/OV/SHDN divider use actual connected KiCad wires. Local labels connect the Kelvin sense taps and distributed BUS/ground. Every manufacturer lead is exported, including duplicate MOSFET and module pins. Q1/Q2 use authored enhancement N-MOS graphics with visible intrinsic body diodes: both source anodes face inward and drain cathodes face outward. A separate graphical regression checks this orientation, since ERC alone cannot detect a misleading symbol. This checkpoint intentionally provides no PCB or fabrication files.
 
 ## Reproduce
 
@@ -21,7 +21,7 @@ python hardware/carrier-pan-protection/test_circuit.py
 python hardware/carrier-pan-protection/verify.py
 ```
 
-The build regenerates the native schematic, local library, BOM, ERC, XML netlist and SVG from `circuit_design.py`; it captures source and artifact hashes. `verify.py` checks an independent pin/net contract against **KiCad's exported connectivity**, not the generator's intended net dictionary. Tests export genuinely corrupted native schematics: flipped Q2, swapped current-sense pins, a hidden power pin creating an implicit global net, bypassed cutoff and wrong hot-swap capacitor return. Additional faults check an omitted ground pad and wrong part variant/function.
+The build regenerates the native schematic, local library, BOM, ERC, XML netlist and SVG from `circuit_design.py`; it captures source and artifact hashes. `verify.py` checks an independent pin/net contract against **KiCad's exported connectivity**, not the generator's intended net dictionary. Tests export genuinely corrupted native schematics: flipped Q2, swapped current-sense pins, a hidden power pin creating an implicit global net, bypassed cutoff and wrong hot-swap capacitor return. Additional faults check an omitted ground pad, wrong part variant/function and a reversed body-diode graphic that would otherwise leave the netlist unchanged.
 
 Open `pan-cutoff.kicad_pro` / `.kicad_sch` in KiCad to inspect/edit. The files are native and portable; committing permanent changes requires updating `circuit_design.py` then rebuilding so the generator does not overwrite them. `hardware/fuse-board/sexp.py` is the existing shared parser; no fuse-board source is modified. SVG is the committed rendered view. Optional PDF export: `kicad-cli sch export pdf -o /tmp/pan-cutoff.pdf hardware/carrier-pan-protection/pan-cutoff.kicad_sch`.
 
