@@ -52,6 +52,7 @@ export function chips(parent, items, onPick) {
     b.title = it.title ?? it.id;
     b.setAttribute('aria-label', it.title ?? it.id);
     b.innerHTML = it.html ?? esc(it.id);
+    if (!b.querySelector('svg')) b.classList.add('text');
     b.addEventListener('click', () => { mark(it.id); onPick(it.id); });
     row.appendChild(b);
   }

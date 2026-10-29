@@ -13,7 +13,9 @@
     "test:turret": "python3 tools/test-turret-frames.py && node tools/test-turret-motion.mjs",
     "test:services": "node tools/test-service-discovery.mjs",
     "test:camera": "node tools/test-camera-controls.mjs",
-    "test:interactions": "node tools/test-turret-interactions.mjs"
+    "test:interactions": "node tools/test-turret-interactions.mjs",
+    "test:robot": "node tools/test-robot-controls.mjs",
+    "test:viewers": "node tools/test-portal-viewers.mjs"
   },
   "devDependencies": {
     "@playwright/test": "1.56.1",

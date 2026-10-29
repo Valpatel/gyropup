@@ -386,12 +386,22 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
     <button type="button" class="tb-reload" aria-label="Reload hopper"><b>RELOAD</b><small>30 / 30 · R</small></button>
     <button type="button" class="tb-fire" aria-label="Fire (hold for automatic)"><b>FIRE</b><small>${coarse ? 'tap / hold' : 'F / ENTER'}</small></button>`;
   overlay.appendChild(bar);
+  new ResizeObserver(() => { if (!bar.hidden) hud.style.setProperty('--tb-actions-h', `${Math.ceil(bar.getBoundingClientRect().height)}px`); }).observe(bar);
   const armBtn = bar.querySelector('.tb-arm'), fireBtn = bar.querySelector('.tb-fire');
   const reloadBtn=bar.querySelector('.tb-reload');
   reloadBtn.addEventListener('click',reload);
   const holdBtn = (btn, down, up) => {
     btn.addEventListener('pointerdown', (ev) => { ev.preventDefault(); btn.setPointerCapture?.(ev.pointerId); down(); });
     for (const t of ['pointerup', 'pointercancel', 'lostpointercapture']) btn.addEventListener(t, () => up());
+    btn.addEventListener('keydown', ev => {
+      if (ev.key !== ' ' && ev.key !== 'Enter') return;
+      ev.preventDefault(); if (!ev.repeat && !btn.disabled) down();
+    });
+    btn.addEventListener('keyup', ev => {
+      if (ev.key !== ' ' && ev.key !== 'Enter') return;
+      ev.preventDefault(); up();
+    });
+    btn.addEventListener('blur', up);
     btn.addEventListener('contextmenu', (ev) => ev.preventDefault());
   };
   holdBtn(armBtn, () => S.arm.add('button'), () => S.arm.delete('button'));
@@ -487,7 +497,7 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
   const kinds = [['made', 'Turret: printed parts'], ['bought', 'Bought parts'], ['adapter', 'The adapter on the box'], ['j501', 'The J501 box']];
   partSel.innerHTML = '<option value="">Pick a part…</option>' + kinds.map(([k, label]) => `<optgroup label="${label}">`
     + listed.filter((p) => p.e.kind === k).map((p) => `<option value="${esc(p.e.name)}">${esc(p.e.title)}</option>`).join('') + '</optgroup>').join('');
-  partSel.onchange = () => { const p = parts.find((q) => q.e.name === partSel.value); if (p) select(p, true); };
+  partSel.onchange = () => { const p = parts.find((q) => q.e.name === partSel.value); select(p ?? null, !!p); };
   mechSec.appendChild(partSel);
   const liveSec = sec('Live', { note: 'what the turret is doing' });
   const live = readouts(liveSec);
@@ -600,8 +610,16 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
   function clearBalls() { for (const b of S.flying) scene.remove(b.g, b.streak); S.flying = []; }
 
   const onKey = (ev, down) => {
-    if (!S.active || ev.target?.closest?.('input[type=text], textarea, select')) return;
+    if (!S.active) return;
     const k = ev.key.toLowerCase();
+    // Release held shortcuts even if focus moved into a native control meanwhile.
+    if (!down) {
+      S.keys.delete(k);
+      if (k === ' ') S.arm.delete('key');
+      if (k === 'f' || k === 'enter') pullTrigger(false);
+    }
+    if (ev.target?.closest?.('input, textarea, select, [contenteditable]:not([contenteditable=false])')) return;
+    if ((k === ' ' || k === 'enter') && ev.target?.closest?.('button, a, [role=button]')) return;
     if (k === ' ') { ev.preventDefault(); if (down && !S.reloading) S.arm.add('key'); else S.arm.delete('key'); return; }
     if (k === 'enter' && ev.target?.closest?.('button, a')) return;
     if (k === 'f' || k === 'enter') { ev.preventDefault(); if (down && !ev.repeat) pullTrigger(true); if (!down) pullTrigger(false); return; }
@@ -623,10 +641,17 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
   const ray = new THREE.Raycaster();
   const ndc = new THREE.Vector2();
   let downAt = null;
+  const pointers = new Set();
   const canvas = stage.renderer.domElement;
-  const onDown = (ev) => { downAt = { x: ev.clientX, y: ev.clientY, t: performance.now() }; };
+  const onDown = (ev) => {
+    pointers.add(ev.pointerId);
+    downAt = pointers.size === 1 && ev.button === 0 ? { id:ev.pointerId,x:ev.clientX,y:ev.clientY,t:performance.now() } : null;
+  };
+  const onCancel = ev => {pointers.delete(ev.pointerId);downAt=null;};
   const onUp = (ev) => {
-    if (!S.active || !downAt) return;
+    const eligible = pointers.size===1 && downAt?.id===ev.pointerId;
+    pointers.delete(ev.pointerId);
+    if (!S.active || !eligible) {downAt=null;return;}
     const moved = Math.hypot(ev.clientX - downAt.x, ev.clientY - downAt.y), dt = performance.now() - downAt.t;
     downAt = null;
     if (moved > 8 || dt > 600) return;
@@ -785,7 +810,7 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
     cam.to = { target: target.clone(), pos: target.clone().addScaledVector(d, dist) };
   }
   function stopCamEase() { cam.to = null; }
-  const onCamStart = () => { if (!S.journey) stopCamEase(); };
+  const onCamStart = () => { if (!S.journey?.auto) stopCamEase(); };
 
   // ------------------------------------------------------------------------------------------------ the journey
   const J = man.journey;
@@ -833,7 +858,7 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
   function journeyNav(what) {
     const jy = S.journey;
     if (!jy) return;
-    if (what === 'play') { jy.auto = !jy.auto; renderJourney(); return; }
+    if (what === 'play') { jy.auto = !jy.auto; if (!jy.auto) stopCamEase(); renderJourney(); return; }
     const to = Math.max(0, Math.min(J.length - 1, jy.step + (what === 'next' ? 1 : -1)));
     gotoStep(to);
   }
@@ -885,6 +910,7 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
     else if (id === 'chute') sfx.turret.roll((JWIN.chute[1] - JWIN.chute[0]) / STEP.chute.vis);
     else if (id === 'barrel') sfx.turret.bore((JWIN.barrel[1] - JWIN.barrel[0]) / STEP.barrel.vis);
     else if (id === 'flight') sfx.turret.fly();
+    stepJourney(0); // Place the new stage immediately, including when manually stepping while paused.
     renderJourney();
   }
   // the time scale a stage starts at (stepJourney keeps it up to date as the ball goes)
@@ -1295,9 +1321,12 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
   const PAN_GEAR = Math.abs(man.pivots.pinion_ratio || 3);
   function step(t, dtReal) {
     if (!S.active) return;
-    if (S.journey) stepJourney(dtReal);
+    const paused = S.journey && !S.journey.auto;
+    if (paused) S.timeScale = 0;
+    else if (S.journey) stepJourney(dtReal);
     else { S.timeScale = 1; sfx.turret.slowmo(1); }
-    const dt = dtReal * S.timeScale;
+    const motionDt = paused ? 0 : dtReal;
+    const dt = motionDt * S.timeScale;
     // aim: keys slew the command; the servos follow at their top speeds
     const kp = (S.keys.has('arrowleft') || S.keys.has('a') ? 1 : 0) - (S.keys.has('arrowright') || S.keys.has('d') ? 1 : 0);
     const kt = (S.keys.has('arrowup') || S.keys.has('w') ? 1 : 0) - (S.keys.has('arrowdown') || S.keys.has('s') ? 1 : 0);
@@ -1359,14 +1388,14 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
       dial: S.phi, wheel_l: S.wheelAng, wheel_r: S.wheelAng, flap: S.flapAngle });
     stepTransit(dt);
     stepBalls(dt);
-    stepTargetReset(dtReal);
+    stepTargetReset(motionDt);
     stepPlates(dt);
     stepCans(dt);
-    stepFx(dtReal);
-    flashT = Math.max(0, flashT - Math.max(dt, dtReal * 0.2));      // in slow motion the flash still fades in a moment
+    stepFx(motionDt);
+    flashT = Math.max(0, flashT - Math.max(dt, motionDt * 0.2));      // in slow motion the flash still fades in a moment
     flash.material.opacity = flashT > 0 ? 0.9 : 0;
     flash.scale.setScalar(1 + 6 * flashT);
-    gateT = gateT.map((g) => Math.max(0, g - dtReal));
+    gateT = gateT.map((g) => Math.max(0, g - motionDt));
     gates.forEach((m, k) => { m.material.opacity = gateT[k] > 0 ? 0.9 : (S.view !== 'solid' ? 0.25 : 0); });
     // the explode slider eases; parts move along their offsets in their groups
     S.explode += (S.explodeCmd - S.explode) * (1 - Math.exp(-dtReal * 6));
@@ -1391,7 +1420,7 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
     const servoSpeed = dt > 0 && S.timeScale >= 1 ? Math.hypot(PAN_GEAR * (S.pan - prevAim.pan), S.tilt - prevAim.tilt) / dt : 0;
     prevAim.pan = S.pan; prevAim.tilt = S.tilt;
     sfx.motion({ wheelSpeed: 0, legSpeed: 0, servoSpeed: 0 });
-    sfx.turret.frame({ spin: S.rpm / fl.rpm, servo: servoSpeed, dial: dialSpeed });
+    sfx.turret.frame({ spin: paused ? 0 : S.rpm / fl.rpm, servo: servoSpeed, dial: dialSpeed });
     // the camera glide
     if (cam.to) {
       const k = 1 - Math.exp(-dtReal * 3.2);
@@ -1440,6 +1469,7 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
     prevAim.pan = S.pan; prevAim.tilt = S.tilt;              // no servo whine for where it already points
     canvas.addEventListener('pointerdown', onDown);
     canvas.addEventListener('pointerup', onUp);
+    canvas.addEventListener('pointercancel', onCancel);
     stage.controls.addEventListener('start', onCamStart);
     setView(S.view);
     frame('range');
@@ -1467,6 +1497,8 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
     window.removeEventListener('blur', blur);
     canvas.removeEventListener('pointerdown', onDown);
     canvas.removeEventListener('pointerup', onUp);
+    canvas.removeEventListener('pointercancel', onCancel);
+    pointers.clear();downAt=null;
     stage.controls.removeEventListener('start', onCamStart);
   }
   function summary() {

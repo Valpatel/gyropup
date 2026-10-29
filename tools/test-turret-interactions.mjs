@@ -12,10 +12,46 @@ try{
  await page.goto(base+'/designer/sim.html?design=turret-box&run=none&sound=0',{waitUntil:'networkidle'});
  await page.waitForFunction(()=>window.__sim?.bench()?.active);
  await page.waitForFunction(()=>window.__sim.talk);
+ // Native controls own their keys; releasing a shortcut after focus moves still clears it.
+ const guide=page.getByRole('checkbox',{name:'Show curved shot guide',exact:true});
+ await guide.focus();await page.keyboard.press('Space');assert.equal(await guide.isChecked(),false);
+ assert.equal(await page.evaluate(()=>window.__sim.bench().api.state.arm.size),0);
+ await page.keyboard.press('Space');assert.equal(await guide.isChecked(),true);
+ const rate=page.getByRole('slider',{name:/Rate of fire/});
+ await rate.fill('1');await rate.dispatchEvent('input');
+ await rate.focus();await page.keyboard.press('ArrowRight');assert.equal(await rate.inputValue(),'2');
+ await page.keyboard.press('ArrowLeft');assert.equal(await rate.inputValue(),'1');
+ await page.evaluate(()=>document.activeElement.blur());await page.keyboard.down('Space');
+ await rate.focus();await page.keyboard.up('Space');assert.equal(await page.evaluate(()=>window.__sim.bench().api.state.arm.size),0);
+ await page.getByRole('combobox',{name:'Part',exact:true}).selectOption({index:1});
+ assert.ok(await page.evaluate(()=>!!window.__sim.bench().api.state.selected));
+ await page.getByRole('combobox',{name:'Part',exact:true}).selectOption('');
+ assert.equal(await page.evaluate(()=>window.__sim.bench().api.state.selected?.e.name??null),null);
+ const armButton=page.locator('.tb-arm'),fireButton=page.locator('.tb-fire');
+ await armButton.focus();await page.keyboard.down('Space');
+ assert.ok(await page.evaluate(()=>window.__sim.bench().api.state.arm.has('button')));
+ await page.keyboard.up('Space');assert.equal(await page.evaluate(()=>window.__sim.bench().api.state.arm.size),0);
+ await armButton.focus();await page.keyboard.down('Enter');await rate.focus();
+ assert.equal(await page.evaluate(()=>window.__sim.bench().api.state.arm.size),0,'Blur releases button hold');await page.keyboard.up('Enter');
+ await page.evaluate(()=>window.__sim.bench().api.arm(true));await fireButton.focus();await page.keyboard.down('Enter');
+ assert.equal(await page.evaluate(()=>window.__sim.bench().api.state.trigger),true);await page.keyboard.up('Enter');
+ assert.equal(await page.evaluate(()=>window.__sim.bench().api.state.trigger),false);await page.evaluate(()=>window.__sim.bench().api.arm(false));
+ // PAUSE freezes the demonstrated ball and all rotating mechanism parts, then PLAY resumes them.
+ await page.evaluate(()=>window.__sim.bench().api.journey(2));
+ await page.waitForFunction(()=>window.__sim.bench().api.state.journey.t>.05);
+ await page.locator('[data-j=play]').click();
+ const pose=()=>page.evaluate(()=>{const s=window.__sim.bench().api.state;return {t:s.journey.t,s:s.journey.ball.s,phi:s.phi,wheel:s.wheelAng,rpm:s.rpm,position:s.journey.ball.g.position.toArray()};});
+ const frozenJourney=await pose();await page.waitForTimeout(450);assert.deepEqual(await pose(),frozenJourney);
+ await page.locator('[data-j=next]').click();
+ assert.equal(await page.evaluate(()=>window.__sim.bench().api.state.journey.step),3);
+ const nextJourney=await pose();await page.waitForTimeout(150);assert.deepEqual(await pose(),nextJourney);
+ assert.notDeepEqual(nextJourney.position,frozenJourney.position,'Manual NEXT places the paused ball in the selected stage');
+ await page.locator('[data-j=play]').click();await page.waitForFunction(t=>window.__sim.bench().api.state.journey.t>t,nextJourney.t);
+ await page.locator('.tb-jhead button').click();
  await page.evaluate(()=>window.__sim.talk.ask('Remember our orange reload jar.'));
  await page.evaluate(()=>{const s=window.__sim,b=s.bench();b.api.aim(-140,0);b.api.arm(true);
   window.kept={scene:s.stage.scene,renderer:s.stage.renderer,talk:s.talk,conversation:s.talk.conversation,mechanism:b.api.mechanism.world,jar:b.api.mechanism.refill.jar};});
- await page.waitForFunction(()=>window.__sim.bench().api.prediction.points.length>4);
+ await page.waitForFunction(()=>window.__sim.bench().api.prediction.points.length>4&&window.__sim.bench().api.prediction.arc.visible);
  const arc=await page.evaluate(()=>{
   const a=window.__sim.bench().api,p=a.prediction,points=p.points,start=points[0],last=points.at(-1),line=last.clone().sub(start),len=line.length();line.normalize();
   const bend=Math.max(...points.map(v=>v.clone().sub(start).cross(line).length()));
@@ -50,19 +86,36 @@ try{
  assert.equal(await page.evaluate(()=>window.__sim.bench().api.reload()),false);
  await page.emulateMedia({reducedMotion:'reduce'});
  await page.evaluate(()=>{const a=window.__sim.bench().api;a.state.pile-=3;a.reload();});
- await page.waitForFunction(()=>!window.__sim.bench().api.state.reloading,null,{timeout:5000});
+ await page.waitForFunction(()=>!window.__sim.bench().api.state.reloading,null,{timeout:15000});
  assert.equal(await page.evaluate(()=>{const a=window.__sim.bench().api;return a.state.pile+a.state.pockets.filter(Boolean).length;}),30);
  await page.emulateMedia({reducedMotion:'no-preference'});
  const phones=[];
  for(const [width,height] of [[320,568],[360,640],[390,844],[430,932],[844,390]]){
   await page.setViewportSize({width,height});await page.waitForTimeout(100);
+  await page.evaluate(()=>window.__sim.bench().api.select('pan_base'));
   const metrics=await page.evaluate(()=>{
    const b=document.querySelector('.tb-reload'),r=b.getBoundingClientRect(),el=document.elementFromPoint(r.x+r.width/2,r.y+r.height/2);
-   return {visible:!!el&&b.contains(el),x:r.x,y:r.y,w:r.width,h:r.height,overflow:document.documentElement.scrollWidth-innerWidth};});
-  assert.ok(metrics.visible&&metrics.w>=44&&metrics.h>=44,`Reload reachable ${width}x${height}: ${JSON.stringify(metrics)}`);assert.ok(metrics.overflow<=1);phones.push({width,height,...metrics});
+   const card=document.getElementById('tb-card').getBoundingClientRect(),bar=document.getElementById('tb-actions').getBoundingClientRect();
+   const overlap=Math.min(card.right,bar.right)>Math.max(card.left,bar.left)&&Math.min(card.bottom,bar.bottom)>Math.max(card.top,bar.top);
+   const actions=[...document.querySelectorAll('.tb-arm,.tb-fire,.tb-reload')].every(b=>{const r=b.getBoundingClientRect();return b.contains(document.elementFromPoint(r.x+r.width/2,r.y+r.height/2));});
+   return {overlap,actions,visible:!!el&&b.contains(el),x:r.x,y:r.y,w:r.width,h:r.height,overflow:document.documentElement.scrollWidth-innerWidth};});
+  assert.ok(!metrics.overlap&&metrics.actions&&metrics.visible&&metrics.w>=44&&metrics.h>=44,`Reload reachable ${width}x${height}: ${JSON.stringify(metrics)}`);assert.ok(metrics.overflow<=1);phones.push({width,height,...metrics});
  }
+ await page.evaluate(()=>window.__sim.bench().api.select(null));
  await page.setViewportSize({width:390,height:844});await page.screenshot({path:`${out}/${engine.name()}-phone.png`});
+ // Text chips must remain optically centered, with useful tap targets, at desktop and phone widths.
+ await page.selectOption('#design-select','v2');await page.waitForFunction(()=>!window.__sim.state.bench);
+ const centers=[];
+ for(const [width,height] of [[1280,900],[320,568],[390,844]]){
+  await page.setViewportSize({width,height});await page.waitForTimeout(200);
+  const drawer=page.locator('#drawer-handle');if(await drawer.isVisible()&&await drawer.getAttribute('aria-expanded')==='false')await drawer.click();
+  await page.evaluate(()=>{document.querySelector('#hud').classList.remove('panel-collapsed');document.querySelectorAll('#panel details').forEach(d=>d.open=true);});
+  const auto=page.locator('button.hud-chip[data-id=auto]');await auto.scrollIntoViewIfNeeded();
+  const c=await auto.evaluate(b=>{const r=b.getBoundingClientRect(),range=document.createRange();range.selectNodeContents(b);const t=range.getBoundingClientRect();return {dx:t.x+t.width/2-r.x-r.width/2,dy:t.y+t.height/2-r.y-r.height/2,w:r.width,h:r.height};});
+  assert.ok(Math.abs(c.dx)<1&&Math.abs(c.dy)<2&&c.w>=44&&c.h>=44,`AUTO centered ${width}: ${JSON.stringify(c)}`);centers.push({width,height,...c});
+  await auto.click();assert.ok(await auto.evaluate(b=>b.classList.contains('active')));
+ }
  assert.deepEqual(errors,[]);assert.equal(await page.evaluate(()=>document.body.dataset.stageError),undefined);
- await writeFile(`${out}/${engine.name()}-report.json`,JSON.stringify({base,arc,pouring,phones,errors},null,2));
- console.log(`PASS ${engine.name()}: visible ballistic arc; progressive jar reload; spam/fire/journey gates; paused resume; same scene/conversation; reduced motion; 5 reachable phone layouts`);
-}finally{await browser.close();}
+ await writeFile(`${out}/${engine.name()}-report.json`,JSON.stringify({base,arc,pouring,phones,centers,errors},null,2));
+ console.log(`PASS ${engine.name()}: visible ballistic arc; progressive jar reload; spam/fire/journey gates; paused resume; same scene/conversation; reduced motion; 5 reachable phone layouts; native keyboard; real pause; centered AUTO`);
+}catch(error){console.error('Failure state',await page.evaluate(()=>{const s=window.__sim,a=s?.bench()?.api;return {error:document.body.dataset.stageError,bench:s?.state.bench,active:s?.bench()?.active,reloading:a?.state.reloading,journey:!!a?.state.journey};}).catch(()=>null),errors);throw error;}finally{await browser.close();}

@@ -30,6 +30,8 @@ jobs:
           npm run test:turret
           npm run test:camera
           npm run test:interactions
+          npm run test:robot
+          npm run test:viewers
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -38,3 +40,5 @@ jobs:
             /tmp/gyropup-turret-motion
             /tmp/gyropup-camera-controls
             /tmp/gyropup-turret-interactions
+            /tmp/gyropup-robot-controls
+            /tmp/gyropup-portal-viewers
