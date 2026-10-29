@@ -21,6 +21,7 @@ from pathlib import Path
 
 R = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(R / 'cad'))
+import print_provenance as provenance  # noqa: E402
 OUT = R / 'exports' / 'turret' / 'print'
 WORK = R / 'build' / 'slicer' / 'turret'
 BED = (256.0, 256.0)
@@ -39,7 +40,7 @@ SUPPORT = {'enable_support': '1', 'support_type': 'tree(auto)', 'support_thresho
 PLATE = {'curr_bed_type': 'Textured PEI Plate'}      # the slicer's default cool plate refuses PETG, PA6-CF and TPU
 # (part, mesh file, material, copies, settings, needs support, how it sits on the bed, note)
 PARTS = [
-    ('stand_box', 'bench/stand_box.stl', 'petg', 1, STAND, True, 'upside down, on its top plate', 'the stand first: it needs no decision'),
+    ('stand_box', 'bench/stand_box.stl', 'petg', 1, STAND, True, 'upside down, on its top plate', 'verify the selected panel switch and mounting geometry before printing'),
     ('stand_bottom', 'bench/stand_bottom.stl', 'petg', 1, STAND, False, 'flat', ''),
     ('compute_tray', 'compute_tray.stl', 'pa6-cf', 1, PARTIAL, False, 'flat, ribs up', 'the compute plinth\'s floor (D66): 4 x M4 inserts'),
     ('compute_shell', 'compute_shell.stl', 'petg', 1, PETG, True, 'upside down, on its top rim', 'the compute plinth\'s wall (D66): 4 x M5 inserts in the column tops'),
@@ -65,7 +66,7 @@ PARTS = [
     ('laser_mount', 'laser_mount.stl', 'petg', 1, PETG, False, 'on its foot', ''),
     ('board_bay', 'board_bay.stl', 'petg', 1, PETG, False, 'on its back', ''),
     ('board_bay_lid', 'board_bay_lid.stl', 'petg', 1, PETG, False, 'flat, the lip up', 'the bay\'s snap lid (modelled since 2026-10-27)'),
-    ('flywheel_tyre', 'flywheel_tyre_d34.stl', 'tpu95', 2, TPU, False, 'flat', 'Ø34 mounted (printed 4 % under the Ø28 rim): the only tyre for the X2216 (D42)'),
+    ('flywheel_tyre', 'flywheel_tyre.stl', 'tpu95', 2, TPU, False, 'flat', 'the selected CAD tyre in its unstretched print shape; do not substitute a historical diameter variant'),
 ]
 NOT_PRINTED = {'bumper_ring': 'v1 (the robot): no bumper on the bench', 'hopper_flap': 'v1: the dock\'s fill flap',
                'pan_clamp': 'cut by SendCutSend in 6061-T6 aluminium (exports/turret/pan_clamp.dxf)',
@@ -112,7 +113,32 @@ def main():
     t0 = time.time()
     path = OUT / 'print.json'
     old = json.loads(path.read_text()) if path.exists() else {}
-    rows = dict(old.get('parts', {}))
+    names = {p[0] for p in PARTS}
+    if a.only and not set(a.only) <= names:
+        ap.error('Unknown part(s): ' + ', '.join(sorted(set(a.only) - names)))
+    inputs = provenance.snapshot(R)
+    sources = {}
+    recipes = {}
+    # Validate every input and every retained row before modifying any output.
+    # A partial rerun must never combine new 3MFs with an old unbound print kit.
+    retained = old.get('parts', {}) if a.only else {}
+    rows = {}
+    for name, mesh, mat, copies, settings, support, how, note in PARTS:
+        selected = not a.only or name in a.only
+        if not selected and name not in retained:
+            continue
+        sources[name] = provenance.validate_mesh(R, R / 'exports/turret' / mesh, inputs)
+        recipes[name] = provenance.fingerprint({'material': mat, 'copies': copies, 'settings': settings,
+            'support': support, 'orientation': how, 'printer': PRINTER, 'process': PROCESS,
+            'filament': FILAMENT[mat], 'plate': PLATE, 'support_settings': SUPPORT})
+        if not selected:
+            row = retained[name]
+            expected_output = f'exports/turret/print/{name}.3mf'
+            output = R / expected_output
+            if (row.get('file') != expected_output or row.get('source') != sources[name] or row.get('recipe_sha256') != recipes[name]
+                    or not output.is_file() or row.get('sha256') != provenance.digest(output)):
+                raise ValueError(f'{name}: retained print output is stale or unbound; regenerate the full package')
+            rows[name] = row
     for name, mesh, mat, copies, settings, support, how, note in PARTS:
         if a.only and name not in a.only:
             continue
@@ -120,7 +146,11 @@ def main():
         if not src.exists():
             raise FileNotFoundError(f'{src}: run cad/turret.py and cad/build_turret.py first')
         row = {'material': mat, 'filament_profile': FILAMENT[mat], 'copies': copies, 'orientation': how, 'note': note,
-               'settings': {**settings, **PLATE, **(SUPPORT if support else {})}, **make_3mf(name, src)}
+               'settings': {**settings, **PLATE, **(SUPPORT if support else {})}, **make_3mf(name, src),
+               'source': sources[name], 'recipe_sha256': recipes[name]}
+        if not row.get('ok'):
+            raise ValueError(f'{name}: 3MF writer rejected the mesh; package remains unqualified')
+        row['sha256'] = provenance.digest(R / row['file'])
         if not a.no_slice:
             row.update(slice_one(name, mat, settings, support))
             print(f"  {name:15} {mat:10} x{copies}  {row.get('grams')} g  {row.get('minutes')} min  {row['size_mm']}"
@@ -131,6 +161,8 @@ def main():
     tot = lambda key, mats: round(sum((r.get(key) or 0) * r['copies'] for r in rows.values() if r['material'] in mats), 1)
     by = {m: {'grams': tot('grams', (m,)), 'hours': round(tot('minutes', (m,)) / 60, 1)} for m in ('pa6-cf', 'petg', 'petg-clear', 'tpu95')}
     res = {'printer': PRINTER, 'nozzle': '0.4 mm hardened steel (PA6-CF is abrasive)', 'process': PROCESS, 'bed_mm': BED, 'parts': rows,
+           'complete': set(rows) == names, 'physical_fit_verified': False,
+           'qualification': 'Source-bound print preparation; mechanical and physical acceptance remain separate.',
            'by_material': by, 'total_grams': round(sum(v['grams'] for v in by.values()), 1), 'total_hours': round(sum(v['hours'] for v in by.values()), 1),
            'not_printed_v0': NOT_PRINTED, 'schedule': SCHEDULE,
            'note': 'grams and minutes are Bambu Studio\'s own (command line) for the part in this orientation with these settings and its '
@@ -145,6 +177,9 @@ def write_doc(res: dict):
     rows = res['parts']
     hrs = lambda n: round((rows[n].get('minutes') or 0) * rows[n]['copies'] / 60, 1)
     lines = ['# Printing the bench turret (v0)', '',
+             '**Research prototype — not a fabrication release.** Review the current [mechanical readiness gates](mechanical-readiness.md) '
+             'before printing. Matching source hashes establish artifact identity, not fit, strength or safe operation. '
+             + ('This package includes every planned print row.' if res['complete'] else 'This package is partial; its totals are incomplete.'), '',
              'From `cad/turret_print.py`: every printed part of the bench turret and its stand as a 3MF in the orientation it prints in '
              '(`exports/turret/print/<part>.3mf`, one part centred on the bed), sliced by Bambu Studio for a P1S with these settings, so '
              'the grams and hours are the slicer\'s own. Open a 3MF in Bambu Studio, pick the printer, the filament and the settings in the '
