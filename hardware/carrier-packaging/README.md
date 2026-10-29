@@ -8,4 +8,6 @@ Ownership in this single worktree:
 - Electrical author and sole Git committer: README, electrical-envelope.md, component/terminal/source data and bounded checks.
 - Mechanical author: mechanical-envelope.md only, plus read-only spatial investigation. No Git operations or geometry generation.
 
-Next: enumerate the complete LTC4359 reference network plus retained cutoff/control/converter hardware and external terminations; coordinate a real contour, per-side heights, mounting/heat path and connector/tool/strain-relief zones against seated, parked and removal states. Preserve exact source identities and explicitly unresolved clamp, startup, regeneration, thermal and material/retention limits. Independent review is required before integration.
+The current [electrical inventory](electrical-envelope.md) and [mechanical envelope](mechanical-envelope.md) record the proposed 44×40×18 mm region and why two simpler placements fail the service-path screen. They remain work in progress, not fit or fabrication evidence.
+
+Next: finish enumerating the complete LTC4359 reference network plus retained cutoff/control/converter hardware and external terminations; coordinate a real contour, per-side heights, mounting/heat path and connector/tool/strain-relief zones against seated, parked and removal states. Preserve exact source identities and explicitly unresolved clamp, startup, regeneration, thermal and material/retention limits. Independent review is required before integration.

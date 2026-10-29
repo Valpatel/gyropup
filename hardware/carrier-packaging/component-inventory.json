@@ -1,0 +1,722 @@
+{
+  "complete_physical_inventory": false,
+  "excluded_replaced_parts": [
+    "P.D1: V10P20 series barrier replaced by complete I.* inventory",
+    "L.U2: old D36V50F12 replaced functionally by P.U2 D42V55F12"
+  ],
+  "fit_qualified": false,
+  "frozen": false,
+  "inventory_count": 47,
+  "remaining_physical_inventory": [
+    "external F4, D8, D14 and exact upstream fuse/holder boundary",
+    "C2/C3/servo housings, contacts, crimps and actual leads",
+    "BUS and GND junction hardware and every solder/PCB terminal",
+    "mounting/retention, insulation, heat path and strain relief"
+  ],
+  "rows": [
+    {
+      "datasheet": "https://www.ti.com/lit/ds/symlink/csd19531q5a.pdf",
+      "group": "retained_cutoff_converter",
+      "id": "P.Q1",
+      "maximum_envelope": null,
+      "mpn": "CSD19531Q5AT",
+      "pins_from_reviewed_candidate": {
+        "1": "COMMON_SOURCE",
+        "2": "COMMON_SOURCE",
+        "3": "COMMON_SOURCE",
+        "4": "GATE",
+        "5": "VIN_PROTECTED",
+        "6": "VIN_PROTECTED",
+        "7": "VIN_PROTECTED",
+        "8": "VIN_PROTECTED"
+      },
+      "placement": null,
+      "prior_candidate_footprint": null,
+      "source": "hardware/carrier-pan-protection/circuit_design.py",
+      "value": "100V N-MOS"
+    },
+    {
+      "datasheet": "https://www.ti.com/lit/ds/symlink/csd19531q5a.pdf",
+      "group": "retained_cutoff_converter",
+      "id": "P.Q2",
+      "maximum_envelope": null,
+      "mpn": "CSD19531Q5AT",
+      "pins_from_reviewed_candidate": {
+        "1": "COMMON_SOURCE",
+        "2": "COMMON_SOURCE",
+        "3": "COMMON_SOURCE",
+        "4": "GATE",
+        "5": "SENSE_HI",
+        "6": "SENSE_HI",
+        "7": "SENSE_HI",
+        "8": "SENSE_HI"
+      },
+      "placement": null,
+      "prior_candidate_footprint": null,
+      "source": "hardware/carrier-pan-protection/circuit_design.py",
+      "value": "100V N-MOS"
+    },
+    {
+      "datasheet": "https://www.vishay.com/docs/30100/wsl.pdf",
+      "group": "retained_cutoff_converter",
+      "id": "P.R1",
+      "maximum_envelope": null,
+      "mpn": "WSL2512R0100FEA",
+      "pins_from_reviewed_candidate": {
+        "1": "SENSE_HI",
+        "2": "PAN_INPUT"
+      },
+      "placement": null,
+      "prior_candidate_footprint": "Resistor_SMD:R_2512_6332Metric",
+      "source": "hardware/carrier-pan-protection/circuit_design.py",
+      "value": "10mR 1% 1W"
+    },
+    {
+      "datasheet": "https://www.analog.com/media/en/technical-documentation/data-sheets/ltc4368.pdf",
+      "group": "retained_cutoff_converter",
+      "id": "P.U1",
+      "maximum_envelope": null,
+      "mpn": "LTC4368IMS-2#PBF",
+      "pins_from_reviewed_candidate": {
+        "1": "VIN_PROTECTED",
+        "10": "GATE",
+        "2": "UV_DIV",
+        "3": "OV_DIV",
+        "4": "GND",
+        "5": "GND",
+        "6": "SHDN_DIV",
+        "7": null,
+        "8": "PAN_INPUT",
+        "9": "SENSE_HI"
+      },
+      "placement": null,
+      "prior_candidate_footprint": "Package_SO:MSOP-10_3x3mm_P0.5mm",
+      "source": "hardware/carrier-pan-protection/circuit_design.py",
+      "value": "LTC4368IMS-2"
+    },
+    {
+      "datasheet": "https://www.pololu.com/product/5577",
+      "group": "retained_cutoff_converter",
+      "id": "P.U2",
+      "maximum_envelope": null,
+      "mpn": "Pololu 5577",
+      "pins_from_reviewed_candidate": {
+        "A1": "12V_PAN",
+        "A2": "GND",
+        "A3": "GND",
+        "A4": "PAN_INPUT",
+        "A5": null,
+        "A6": null,
+        "B1": "12V_PAN",
+        "B2": "GND",
+        "B3": "GND",
+        "B4": "PAN_INPUT",
+        "B5": null,
+        "B6": "PAN_ENABLE"
+      },
+      "placement": null,
+      "prior_candidate_footprint": null,
+      "source": "hardware/carrier-pan-protection/circuit_design.py",
+      "value": "D42V55F12 / 5577"
+    },
+    {
+      "datasheet": "https://www.vishay.com/docs/28758/tnpw_e3.pdf",
+      "group": "retained_cutoff_converter",
+      "id": "P.R2",
+      "maximum_envelope": null,
+      "mpn": "TNPW0805464KBEEN",
+      "pins_from_reviewed_candidate": {
+        "1": "VIN_PROTECTED",
+        "2": "OV_DIV"
+      },
+      "placement": null,
+      "prior_candidate_footprint": "Resistor_SMD:R_0805_2012Metric",
+      "source": "hardware/carrier-pan-protection/circuit_design.py",
+      "value": "464k 0.1%"
+    },
+    {
+      "datasheet": "https://www.vishay.com/docs/28758/tnpw_e3.pdf",
+      "group": "retained_cutoff_converter",
+      "id": "P.R3",
+      "maximum_envelope": null,
+      "mpn": "TNPW08054K99BEEN",
+      "pins_from_reviewed_candidate": {
+        "1": "OV_DIV",
+        "2": "GND"
+      },
+      "placement": null,
+      "prior_candidate_footprint": "Resistor_SMD:R_0805_2012Metric",
+      "source": "hardware/carrier-pan-protection/circuit_design.py",
+      "value": "4.99k 0.1%"
+    },
+    {
+      "datasheet": "https://www.vishay.com/docs/28758/tnpw_e3.pdf",
+      "group": "retained_cutoff_converter",
+      "id": "P.R4",
+      "maximum_envelope": null,
+      "mpn": "TNPW0805100KBEEN",
+      "pins_from_reviewed_candidate": {
+        "1": "VIN_PROTECTED",
+        "2": "UV_DIV"
+      },
+      "placement": null,
+      "prior_candidate_footprint": "Resistor_SMD:R_0805_2012Metric",
+      "source": "hardware/carrier-pan-protection/circuit_design.py",
+      "value": "100k 0.1%"
+    },
+    {
+      "datasheet": "https://www.vishay.com/docs/28758/tnpw_e3.pdf",
+      "group": "retained_cutoff_converter",
+      "id": "P.R5",
+      "maximum_envelope": null,
+      "mpn": "TNPW08054K99BEEN",
+      "pins_from_reviewed_candidate": {
+        "1": "UV_DIV",
+        "2": "GND"
+      },
+      "placement": null,
+      "prior_candidate_footprint": "Resistor_SMD:R_0805_2012Metric",
+      "source": "hardware/carrier-pan-protection/circuit_design.py",
+      "value": "4.99k 0.1%"
+    },
+    {
+      "datasheet": "https://www.vishay.com/docs/28758/tnpw_e3.pdf",
+      "group": "retained_cutoff_converter",
+      "id": "P.R6",
+      "maximum_envelope": null,
+      "mpn": "TNPW0805499KBEEN",
+      "pins_from_reviewed_candidate": {
+        "1": "VIN_PROTECTED",
+        "2": "SHDN_DIV"
+      },
+      "placement": null,
+      "prior_candidate_footprint": "Resistor_SMD:R_0805_2012Metric",
+      "source": "hardware/carrier-pan-protection/circuit_design.py",
+      "value": "499k 0.1%"
+    },
+    {
+      "datasheet": "https://www.vishay.com/docs/28758/tnpw_e3.pdf",
+      "group": "retained_cutoff_converter",
+      "id": "P.R7",
+      "maximum_envelope": null,
+      "mpn": "TNPW0805100KBEEN",
+      "pins_from_reviewed_candidate": {
+        "1": "SHDN_DIV",
+        "2": "GND"
+      },
+      "placement": null,
+      "prior_candidate_footprint": "Resistor_SMD:R_0805_2012Metric",
+      "source": "hardware/carrier-pan-protection/circuit_design.py",
+      "value": "100k 0.1%"
+    },
+    {
+      "datasheet": "https://www.vishay.com/docs/28758/tnpw_e3.pdf",
+      "group": "retained_cutoff_converter",
+      "id": "P.R8",
+      "maximum_envelope": null,
+      "mpn": "TNPW080522K0BEEN",
+      "pins_from_reviewed_candidate": {
+        "1": "GATE",
+        "2": "GATE_RC"
+      },
+      "placement": null,
+      "prior_candidate_footprint": "Resistor_SMD:R_0805_2012Metric",
+      "source": "hardware/carrier-pan-protection/circuit_design.py",
+      "value": "22k 0.1%"
+    },
+    {
+      "datasheet": "https://www.vishay.com/docs/28758/tnpw_e3.pdf",
+      "group": "retained_cutoff_converter",
+      "id": "P.R9",
+      "maximum_envelope": null,
+      "mpn": "TNPW0805100KBEEN",
+      "pins_from_reviewed_candidate": {
+        "1": "PAN_INPUT",
+        "2": "GND"
+      },
+      "placement": null,
+      "prior_candidate_footprint": "Resistor_SMD:R_0805_2012Metric",
+      "source": "hardware/carrier-pan-protection/circuit_design.py",
+      "value": "100k 0.1%"
+    },
+    {
+      "datasheet": "https://industrial.panasonic.com/ww/products/pt/aluminum-cap-lead/models/EEUFC2A220",
+      "group": "retained_cutoff_converter",
+      "id": "P.C1",
+      "maximum_envelope": null,
+      "mpn": "EEU-FC2A220",
+      "pins_from_reviewed_candidate": {
+        "1": "PAN_INPUT",
+        "2": "GND"
+      },
+      "placement": null,
+      "prior_candidate_footprint": "Capacitor_THT:CP_Radial_D8.0mm_P3.50mm",
+      "source": "hardware/carrier-pan-protection/circuit_design.py",
+      "value": "22uF 100V 20%"
+    },
+    {
+      "datasheet": "https://yageogroup.com/content/datasheet/asset/file/KEM_C1091_C0G_ESD",
+      "group": "retained_cutoff_converter",
+      "id": "P.C2",
+      "maximum_envelope": null,
+      "mpn": "C1206C473F1GECAUTO",
+      "pins_from_reviewed_candidate": {
+        "1": "GATE_RC",
+        "2": "GND"
+      },
+      "placement": null,
+      "prior_candidate_footprint": "Capacitor_SMD:C_1206_3216Metric",
+      "source": "hardware/carrier-pan-protection/circuit_design.py",
+      "value": "47nF 100V 1%"
+    },
+    {
+      "datasheet": "https://yageogroup.com/content/datasheet/asset/file/KEM_C1003_C0G_SMD",
+      "group": "retained_cutoff_converter",
+      "id": "P.C3",
+      "maximum_envelope": null,
+      "mpn": "C0805C682J5GACTU",
+      "pins_from_reviewed_candidate": {
+        "1": "GATE",
+        "2": "COMMON_SOURCE"
+      },
+      "placement": null,
+      "prior_candidate_footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "source": "hardware/carrier-pan-protection/circuit_design.py",
+      "value": "6.8nF 50V 5%"
+    },
+    {
+      "datasheet": "https://www.vishay.com/docs/89316/v10p20.pdf",
+      "group": "retained_cutoff_converter",
+      "id": "P.D2",
+      "maximum_envelope": null,
+      "mpn": "V10P20-M3/87A",
+      "pins_from_reviewed_candidate": {
+        "1": "GND",
+        "2": "GND",
+        "K": "VIN_PROTECTED"
+      },
+      "placement": null,
+      "prior_candidate_footprint": null,
+      "source": "hardware/carrier-pan-protection/circuit_design.py",
+      "value": "200V negative clamp"
+    },
+    {
+      "datasheet": "https://www.vishay.com/docs/30100/wsl.pdf",
+      "group": "retained_cutoff_converter",
+      "id": "P.R10",
+      "maximum_envelope": null,
+      "mpn": "WSL2512R0200FEA",
+      "pins_from_reviewed_candidate": {
+        "1": "SENSE_HI",
+        "2": "PAN_INPUT"
+      },
+      "placement": null,
+      "prior_candidate_footprint": "Resistor_SMD:R_2512_6332Metric",
+      "source": "hardware/carrier-pan-protection/circuit_design.py",
+      "value": "20mR 1% 1W"
+    },
+    {
+      "datasheet": "https://www.vishay.com/docs/28758/tnpw_e3.pdf",
+      "group": "retained_cutoff_converter",
+      "id": "P.R11",
+      "maximum_envelope": null,
+      "mpn": "TNPW0805100KBEEN",
+      "pins_from_reviewed_candidate": {
+        "1": "VIN_PROTECTED",
+        "2": "GND"
+      },
+      "placement": null,
+      "prior_candidate_footprint": "Resistor_SMD:R_0805_2012Metric",
+      "source": "hardware/carrier-pan-protection/circuit_design.py",
+      "value": "100k 0.1%"
+    },
+    {
+      "datasheet": "https://www.vishay.com/docs/28758/tnpw_e3.pdf",
+      "group": "retained_cutoff_converter",
+      "id": "P.R12",
+      "maximum_envelope": null,
+      "mpn": "TNPW0805150KBEEN",
+      "pins_from_reviewed_candidate": {
+        "1": "PAN_INPUT",
+        "2": "EN_SENSE"
+      },
+      "placement": null,
+      "prior_candidate_footprint": "Resistor_SMD:R_0805_2012Metric",
+      "source": "hardware/carrier-pan-protection/circuit_design.py",
+      "value": "150k 0.1%"
+    },
+    {
+      "datasheet": "https://www.vishay.com/docs/28758/tnpw_e3.pdf",
+      "group": "retained_cutoff_converter",
+      "id": "P.R13",
+      "maximum_envelope": null,
+      "mpn": "TNPW080510K0BEEN",
+      "pins_from_reviewed_candidate": {
+        "1": "EN_SENSE",
+        "2": "GND"
+      },
+      "placement": null,
+      "prior_candidate_footprint": "Resistor_SMD:R_0805_2012Metric",
+      "source": "hardware/carrier-pan-protection/circuit_design.py",
+      "value": "10k 0.1%"
+    },
+    {
+      "datasheet": "https://www.vishay.com/docs/28758/tnpw_e3.pdf",
+      "group": "retained_cutoff_converter",
+      "id": "P.R14",
+      "maximum_envelope": null,
+      "mpn": "TNPW0805499KBEEN",
+      "pins_from_reviewed_candidate": {
+        "1": "PAN_INPUT",
+        "2": "PAN_ENABLE"
+      },
+      "placement": null,
+      "prior_candidate_footprint": "Resistor_SMD:R_0805_2012Metric",
+      "source": "hardware/carrier-pan-protection/circuit_design.py",
+      "value": "499k 0.1%"
+    },
+    {
+      "datasheet": "https://yageogroup.com/content/datasheet/asset/file/KEM_C1002_X7R_SMD",
+      "group": "retained_cutoff_converter",
+      "id": "P.C4",
+      "maximum_envelope": null,
+      "mpn": "C0805C104K1RACTU",
+      "pins_from_reviewed_candidate": {
+        "1": "VIN_PROTECTED",
+        "2": "GND"
+      },
+      "placement": null,
+      "prior_candidate_footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "source": "hardware/carrier-pan-protection/circuit_design.py",
+      "value": "100nF 100V 10% X7R"
+    },
+    {
+      "datasheet": "https://yageogroup.com/content/datasheet/asset/file/KEM_C1002_X7R_SMD",
+      "group": "retained_cutoff_converter",
+      "id": "P.C5",
+      "maximum_envelope": null,
+      "mpn": "C0805C104K1RACTU",
+      "pins_from_reviewed_candidate": {
+        "1": "PAN_INPUT",
+        "2": "GND"
+      },
+      "placement": null,
+      "prior_candidate_footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "source": "hardware/carrier-pan-protection/circuit_design.py",
+      "value": "100nF 100V 10% X7R"
+    },
+    {
+      "datasheet": "https://yageogroup.com/content/datasheet/asset/file/KEM_C1091_C0G_ESD",
+      "group": "retained_cutoff_converter",
+      "id": "P.C6",
+      "maximum_envelope": null,
+      "mpn": "C1206C473F1GECAUTO",
+      "pins_from_reviewed_candidate": {
+        "1": "GATE_RC",
+        "2": "GND"
+      },
+      "placement": null,
+      "prior_candidate_footprint": "Capacitor_SMD:C_1206_3216Metric",
+      "source": "hardware/carrier-pan-protection/circuit_design.py",
+      "value": "47nF 100V 1%"
+    },
+    {
+      "datasheet": "https://yageogroup.com/content/datasheet/asset/file/KEM_C1091_C0G_ESD",
+      "group": "retained_cutoff_converter",
+      "id": "P.C7",
+      "maximum_envelope": null,
+      "mpn": "C1206C473F1GECAUTO",
+      "pins_from_reviewed_candidate": {
+        "1": "GATE_RC",
+        "2": "GND"
+      },
+      "placement": null,
+      "prior_candidate_footprint": "Capacitor_SMD:C_1206_3216Metric",
+      "source": "hardware/carrier-pan-protection/circuit_design.py",
+      "value": "47nF 100V 1%"
+    },
+    {
+      "datasheet": "https://yageogroup.com/content/datasheet/asset/file/KEM_C1091_C0G_ESD",
+      "group": "retained_cutoff_converter",
+      "id": "P.C8",
+      "maximum_envelope": null,
+      "mpn": "C1206C473F1GECAUTO",
+      "pins_from_reviewed_candidate": {
+        "1": "GATE_RC",
+        "2": "GND"
+      },
+      "placement": null,
+      "prior_candidate_footprint": "Capacitor_SMD:C_1206_3216Metric",
+      "source": "hardware/carrier-pan-protection/circuit_design.py",
+      "value": "47nF 100V 1%"
+    },
+    {
+      "datasheet": "https://www.ti.com/lit/ds/symlink/tps3760.pdf",
+      "group": "retained_cutoff_converter",
+      "id": "P.U3",
+      "maximum_envelope": null,
+      "mpn": "TPS3760A012DYYR",
+      "pins_from_reviewed_candidate": {
+        "1": "PAN_INPUT",
+        "10": null,
+        "11": null,
+        "12": null,
+        "13": "GND",
+        "14": null,
+        "2": null,
+        "3": "EN_SENSE",
+        "4": null,
+        "5": null,
+        "6": "PAN_ENABLE",
+        "7": null,
+        "8": "GND",
+        "9": null
+      },
+      "placement": null,
+      "prior_candidate_footprint": null,
+      "source": "hardware/carrier-pan-protection/circuit_design.py",
+      "value": "UV / OD active-low"
+    },
+    {
+      "group": "complete_ideal_diode_reference_inventory",
+      "id": "I.U1",
+      "maximum_envelope": null,
+      "mpn": "LTC4359IDCB#TRPBF",
+      "package": "DFN6 DCB with exposed pad",
+      "pins_from_reviewed_candidate": null,
+      "placement": null,
+      "source": "https://www.analog.com/media/en/technical-documentation/data-sheets/ltc4359.pdf#page=12",
+      "value": "ideal diode controller"
+    },
+    {
+      "group": "complete_ideal_diode_reference_inventory",
+      "id": "I.Q1",
+      "maximum_envelope": null,
+      "mpn": "IPB200N25N3GATMA1",
+      "package": "PG-TO263-3",
+      "pins_from_reviewed_candidate": null,
+      "placement": null,
+      "source": "https://www.analog.com/media/en/technical-documentation/data-sheets/ltc4359.pdf#page=12",
+      "value": "250V N-MOS"
+    },
+    {
+      "group": "complete_ideal_diode_reference_inventory",
+      "id": "I.D1",
+      "maximum_envelope": null,
+      "mpn": "SMAT70A-13-F",
+      "package": "SMA",
+      "pins_from_reviewed_candidate": null,
+      "placement": null,
+      "source": "https://www.analog.com/media/en/technical-documentation/data-sheets/ltc4359.pdf#page=12",
+      "value": "70V TVS"
+    },
+    {
+      "group": "complete_ideal_diode_reference_inventory",
+      "id": "I.D2",
+      "maximum_envelope": null,
+      "mpn": "MMSZ5231B-7-F",
+      "package": "SOD123",
+      "pins_from_reviewed_candidate": null,
+      "placement": null,
+      "source": "https://www.analog.com/media/en/technical-documentation/data-sheets/ltc4359.pdf#page=12",
+      "value": "5.1V zener"
+    },
+    {
+      "group": "complete_ideal_diode_reference_inventory",
+      "id": "I.D3",
+      "maximum_envelope": null,
+      "mpn": "BZG03C75-M3_A-08",
+      "package": "SMA",
+      "pins_from_reviewed_candidate": null,
+      "placement": null,
+      "source": "https://www.analog.com/media/en/technical-documentation/data-sheets/ltc4359.pdf#page=12",
+      "value": "75V zener; modern grade equivalence open"
+    },
+    {
+      "group": "complete_ideal_diode_reference_inventory",
+      "id": "I.D4",
+      "maximum_envelope": null,
+      "mpn": "DDZ9699T-7",
+      "package": "SOD523",
+      "pins_from_reviewed_candidate": null,
+      "placement": null,
+      "source": "https://www.analog.com/media/en/technical-documentation/data-sheets/ltc4359.pdf#page=12",
+      "value": "12V gate zener; supply not confirmed"
+    },
+    {
+      "group": "complete_ideal_diode_reference_inventory",
+      "id": "I.D5",
+      "maximum_envelope": null,
+      "mpn": "S1B-13-F",
+      "package": "SMA",
+      "pins_from_reviewed_candidate": null,
+      "placement": null,
+      "source": "https://www.analog.com/media/en/technical-documentation/data-sheets/ltc4359.pdf#page=12",
+      "value": "floating-reference return diode"
+    },
+    {
+      "group": "complete_ideal_diode_reference_inventory",
+      "id": "I.D6",
+      "maximum_envelope": null,
+      "mpn": "SMCJ150A",
+      "package": "SMC",
+      "pins_from_reviewed_candidate": null,
+      "placement": null,
+      "source": "https://www.analog.com/media/en/technical-documentation/data-sheets/ltc4359.pdf#page=12",
+      "value": "150V TVS, Littelfuse candidate manufacturer"
+    },
+    {
+      "group": "complete_ideal_diode_reference_inventory",
+      "id": "I.R2",
+      "maximum_envelope": null,
+      "mpn": "CRCW12062K00FKEAHP",
+      "package": "1206",
+      "pins_from_reviewed_candidate": null,
+      "placement": null,
+      "source": "https://www.analog.com/media/en/technical-documentation/data-sheets/ltc4359.pdf#page=12",
+      "value": "2kohm pulse resistor candidate; pulse acceptance open"
+    },
+    {
+      "group": "complete_ideal_diode_reference_inventory",
+      "id": "I.COUT",
+      "maximum_envelope": null,
+      "mpn": null,
+      "package": null,
+      "pins_from_reviewed_candidate": null,
+      "placement": null,
+      "source": "https://www.analog.com/media/en/technical-documentation/data-sheets/ltc4359.pdf#page=12",
+      "value": "47nF reference capacitor; exact voltage/MPN pending topology check"
+    },
+    {
+      "catalog_key": "ti-ne555p",
+      "group": "retained_legacy_control_board",
+      "id": "L.U1",
+      "maximum_envelope": null,
+      "mpn": "NE555P",
+      "placement": "existing envelope only; exact leads/pads not established",
+      "prior_sources": [
+        "https://www.ti.com/product/NE555/part-details/NE555P"
+      ],
+      "source": "cad/turret_boards.py",
+      "value": "NE555P"
+    },
+    {
+      "catalog_key": "yageo-mfr-25fbf52-1k",
+      "group": "retained_legacy_control_board",
+      "id": "L.R1",
+      "maximum_envelope": null,
+      "mpn": "MFR-25FBF52-1K",
+      "placement": "existing envelope only; exact leads/pads not established",
+      "prior_sources": [
+        "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-1K",
+        "https://www.digikey.com/en/products/detail/yageo/MFR-25FBF52-1K/1.00KXBK-ND/13011"
+      ],
+      "source": "cad/turret_boards.py",
+      "value": "1.00 k 1 %"
+    },
+    {
+      "catalog_key": "yageo-mfr-25fbf52-6k8",
+      "group": "retained_legacy_control_board",
+      "id": "L.R2",
+      "maximum_envelope": null,
+      "mpn": "MFR-25FBF52-6K8",
+      "placement": "existing envelope only; exact leads/pads not established",
+      "prior_sources": [
+        "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-6K8",
+        "https://www.digikey.com/en/products/detail/yageo/MFR-25FRF52-6K8/MFR-25FRF52-6K8-ND/9139107"
+      ],
+      "source": "cad/turret_boards.py",
+      "value": "6.8 k 1 %"
+    },
+    {
+      "catalog_key": "cap-film-100n-5pct",
+      "group": "retained_legacy_control_board",
+      "id": "L.C1",
+      "maximum_envelope": null,
+      "mpn": "MKS2C031001A00JSSD",
+      "placement": "existing envelope only; exact leads/pads not established",
+      "prior_sources": [
+        "https://www.mouser.com/ProductDetail/WIMA/MKS2-1-63-5/?qs=ISKKXg98%252B1lWN2VQKHfGJg%3D%3D",
+        "https://www.newark.com/search?st=46T6775"
+      ],
+      "source": "cad/turret_boards.py",
+      "value": "100 nF film 5 %"
+    },
+    {
+      "catalog_key": "cap-mlcc-100n-50v",
+      "group": "retained_legacy_control_board",
+      "id": "L.C2",
+      "maximum_envelope": null,
+      "mpn": "K104K15X7RF53L2",
+      "placement": "existing envelope only; exact leads/pads not established",
+      "prior_sources": [
+        "https://www.mouser.com/ProductDetail/594-K104K15X7RF53L2",
+        "https://www.digikey.com/en/products/detail/vishay-beyschlag-draloric-bc-components/K104K15X7RF53L2/2820506"
+      ],
+      "source": "cad/turret_boards.py",
+      "value": "100 nF X7R"
+    },
+    {
+      "catalog_key": "cap-mlcc-1u-50v",
+      "group": "retained_legacy_control_board",
+      "id": "L.C3",
+      "maximum_envelope": null,
+      "mpn": "FG24X7R1H105KRT06",
+      "placement": "existing envelope only; exact leads/pads not established",
+      "prior_sources": [
+        "https://www.mouser.com/ProductDetail/810-FG24X7R1H105KRT6",
+        "https://www.digikey.com/en/products/detail/tdk/FG24X7R1H105KRT06/5802988"
+      ],
+      "source": "cad/turret_boards.py",
+      "value": "1 uF X7R"
+    },
+    {
+      "catalog_key": "onsemi-1n4148",
+      "group": "retained_legacy_control_board",
+      "id": "L.D1",
+      "maximum_envelope": null,
+      "mpn": "1N4148",
+      "placement": "existing envelope only; exact leads/pads not established",
+      "prior_sources": [
+        "https://www.mouser.com/ProductDetail/512-1N4148",
+        "https://www.digikey.com/en/products/detail/onsemi/1N4148/458603"
+      ],
+      "source": "cad/turret_boards.py",
+      "value": "1N4148"
+    },
+    {
+      "catalog_key": "yageo-rsf100jb-73-2k2",
+      "group": "retained_legacy_control_board",
+      "id": "L.R3",
+      "maximum_envelope": null,
+      "mpn": "RSF100JB-73-2K2",
+      "placement": "existing envelope only; exact leads/pads not established",
+      "prior_sources": [
+        "https://www.mouser.com/ProductDetail/603-RSF100JB-73-2K2",
+        "https://www.digikey.com/product-detail/en/yageo/RSF100JB-73-2K2/2.2KW-1-ND/18091"
+      ],
+      "source": "cad/turret_boards.py",
+      "value": "2.2 k 1 W"
+    },
+    {
+      "catalog_key": "bourns-mf-r300",
+      "group": "retained_legacy_control_board",
+      "id": "L.F1",
+      "maximum_envelope": null,
+      "mpn": "MF-R300",
+      "placement": "existing envelope only; exact leads/pads not established",
+      "prior_sources": [
+        "https://www.mouser.com/c/?q=MF-R300"
+      ],
+      "source": "cad/turret_boards.py",
+      "value": "MF-R300"
+    }
+  ],
+  "source_sha256": {
+    "cad/turret_boards.py": "c7a115d2fe3cefddf46b0dd521e21076e1f7721235df3e7bd22fadb6e165707b",
+    "catalog/turret.json": "036b39b5e923169713b20907fd1a113bf9044e3b201d9fcd2c4f2fcbbabdc367",
+    "hardware/carrier-packaging/inventory.py": "fffeac944f3afd1902b0f460327da7db1388a02112fa1b878ef0b6432061a6e1",
+    "hardware/carrier-pan-protection/circuit_design.py": "37b4d99eecaa1f567109df6762a00f69f46c02e6efbe7d53c35893d2955ace8a"
+  },
+  "status": "WIP_INVENTORY_NOT_A_FROZEN_LAYOUT"
+}

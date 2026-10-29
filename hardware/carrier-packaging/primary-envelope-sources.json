@@ -1,0 +1,43 @@
+{
+  "status": "WIP_PRIMARY_INVENTORY_NOT_A_LAYOUT",
+  "sources": [
+    {
+      "id": "pololu5577",
+      "url": "https://www.pololu.com/file/0J2180/d42v55fx-step-down-voltage-regulators-dimensions.pdf",
+      "date": "18 June 2025",
+      "pages": [
+        1
+      ],
+      "observed": "2026-10-29",
+      "evidence": "Viewed dimension drawing: 25.4mm square with board edge +/-0.3mm; items5570-5577 profile6.1 abovePCB,1.57PCB,1.4 belowPCB. These profile heights have no stated tolerance, so reserve allowance separately. Twelve1.02mm holes,2.54pitch, three2.18 mounting holes."
+    },
+    {
+      "id": "panasonic_fc",
+      "url": "https://industrial.panasonic.com/cdbs/www-data/pdf/RDF0000/ABA0000C1209.pdf",
+      "pages": [
+        1
+      ],
+      "observed": "2026-10-29",
+      "evidence": "EEUFC2A220 exact100V22uF case8x11.5mm; family drawing D+/-0.5mm, L<=16 givesL+/-1.0mm except listed15mm variants. Max8.5diameter,12.5body;0.6+/-0.05lead,3.5+/-0.5pitch. Vent clearance/mounting stack still to freeze."
+    },
+    {
+      "id": "tnpw0805",
+      "url": "https://www.vishay.com/docs/28758/tnpw_e3.pdf",
+      "revision": "10-Apr-2026",
+      "pages": [
+        15
+      ],
+      "observed": "2026-10-29",
+      "evidence": "TNPW0805 body2.0+/-0.1 x1.25+/-0.15 x0.45+/-0.10mm. Max2.1x1.4x0.55; land recommendation separate doc28950."
+    },
+    {
+      "id": "wsl2512",
+      "url": "https://www.vishay.com/docs/30100/wsl.pdf",
+      "pages": [
+        2
+      ],
+      "observed": "2026-10-29",
+      "evidence": "0.007..0.5ohm row: max body6.604x3.434x0.889mm. Recommended pads a1.65,b3.68,gap4.06 => total span7.36x3.68mm. Kelvin endpoint routing remains required."
+    }
+  ]
+}
