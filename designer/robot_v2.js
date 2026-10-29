@@ -117,6 +117,38 @@ export async function buildRobotV2(root, { eyes, color = 0xf5b82e } = {}) {
     base.add(upperF, upperR);
     legs[side] = { upperF, lowerF, upperR, lowerR, wheel };
   }
+  // The committed interim rig put adapters on the fixed body. Keep that exact
+  // snapshot for recorded playback; current presentation uses separately
+  // versioned, joint-local attachments. New CAD exports already own them in upper.
+  const legacyAdapters=base.children.filter(m=>/^adapter_[fr]_[lr]$/.test(m.name));
+  const legHardware={current:[],recorded:legacyAdapters,source:base0+'manifest.json',manifest:null};
+  if(legacyAdapters.length){
+    if(legacyAdapters.length!==4)throw new Error('Incomplete archived output-adapter set');
+    const source=base0+'../leg-attachments/manifest.json';
+    const attachments=await reader.json(source,{label:'Upper-link attachments',validate:a=>isRecord(a)&&a.schema_version===1&&a.units==='mm'
+      &&Array.isArray(a.parts)&&a.parts.length===10&&a.parts.every(part)
+      &&new Set(a.parts.map(p=>p.name)).size===10&&a.parts.some(p=>p.name==='output_adapter')
+      &&Array.from({length:9},(_,i)=>'output_screw_'+(i+1)).every(name=>a.parts.some(p=>p.name===name))});
+    const entries=attachments.parts.map(p=>({...p,file:'../leg-attachments/'+p.file}));
+    await Promise.all(entries.map(p=>loadGeometry(p.file)));
+    for(const [side,leg] of Object.entries(legs))for(const [end,owner] of [['f','upperF'],['r','upperR']])for(const entry of entries){
+      const object=mesh(entry,side==='r');object.name=entry.name+'_'+end+'_'+side;
+      leg[owner].add(object);legHardware.current.push({name:object.name,entry,mesh:object});
+    }
+    legHardware.source=source;legHardware.manifest=attachments;
+  }else{
+    for(const [side,leg] of Object.entries(legs))for(const [end,owner] of [['f','upperF'],['r','upperR']])for(const object of leg[owner].children){
+      if(!/^(output_adapter|output_screw_\d+)$/.test(object.name))continue;
+      const entry=man.links.upper.find(p=>p.name===object.name);object.name+='_'+end+'_'+side;
+      legHardware.current.push({name:object.name,entry,mesh:object});
+    }
+  }
+  function setLegPresentation(mode){
+    if(!legacyAdapters.length)return;
+    legacyAdapters.forEach(m=>m.visible=mode==='recorded');
+    legHardware.current.forEach(p=>p.mesh.visible=mode==='current');
+  }
+  setLegPresentation('current');
   // joint angles -> link rotations: the leg joints turn about the robot's -y (page -x), the wheel about +y (page +x)
   function setLeg(side, mf, kf, mr, kr, w) {
     const L = legs[side];
@@ -268,15 +300,16 @@ export async function buildRobotV2(root, { eyes, color = 0xf5b82e } = {}) {
     const request=++presentationRequest;setExplode(0);
     // Current takes effect synchronously for firing; archived downloads never
     // replace a newer user choice or discard the existing usable model.
-    if(mode==='current'){turret.setSnapshot(mode);return;}
-    await loadRecorded();if(request===presentationRequest)turret.setSnapshot(mode);
+    if(mode==='current'){turret.setSnapshot(mode);setLegPresentation(mode);return;}
+    await loadRecorded();if(request===presentationRequest){turret.setSnapshot(mode);setLegPresentation(mode);}
   }
   group.traverse((o) => { if (o.isMesh && o.material?.transparent) o.castShadow = false; });
   setPose();
   const currentHeightMM = T.pan_mm[2] + turret.model.manifest.pivots.tilt[2] + Math.max(...turret.model.parts.filter(p=>p.entry.group==='tilt').map(p=>p.entry.bbox[5]));
   const heightM = (wheelR + hMax + Math.max(man.height_mm,currentHeightMM)) * M;
-  return { group, base, head, setPose, setFromQpos, turret, lights, fov, legs, setExplode, setPresentation,
+  return { group, base, head, setPose, setFromQpos, turret, lights, fov, legs, legHardware, setExplode, setPresentation,
            get presentation(){return {mode:turret.presentation,robotId:'gyropup-v2-rig',turretId:turret.presentation==='current'?'turret-box-v2':'v2-recorded-turret',
-             bodySource:base0+'manifest.json',turretSource:turret.presentation==='current'?turret.model.source:base0+'manifest.json'};},
+             bodySource:base0+'manifest.json',legSource:turret.presentation==='current'?legHardware.source:base0+'manifest.json',
+             turretSource:turret.presentation==='current'?turret.model.source:base0+'manifest.json'};},
            info: { heightM, hMin, hMax, wheelR, trackMM: man.track_mm, massKg: man.mass_kg, massBasis:'recorded v2 physics snapshot; current turret presentation has not rerun full-robot physics', currentTurretMassKg:turret.model.manifest.masses_g.turret_with_balls/1000, massSplit: man.mass_split_kg, deck: man.deck, legRef, v2: true } };
 }
