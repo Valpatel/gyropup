@@ -4,7 +4,7 @@ import { readFile } from 'node:fs/promises';
 import { chromium, webkit } from '@playwright/test';
 
 const engine = process.env.PLAYWRIGHT_BROWSER === 'webkit' ? webkit : chromium;
-const browser = await engine.launch(engine === chromium ? { channel: 'chrome', headless: true } : { headless: true });
+const browser = await engine.launch(engine === chromium ? { channel: process.env.PLAYWRIGHT_CHANNEL === 'chromium' ? undefined : 'chrome', headless: true } : { headless: true });
 const root = new URL('../', import.meta.url);
 const html = `<!doctype html><meta charset="utf-8"><title>Chat discovery regression</title>
 <script type="importmap">{"imports":{"three":"/designer/kit/vendor/three/three.module.min.js"}}</script>

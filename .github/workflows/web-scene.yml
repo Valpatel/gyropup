@@ -1,12 +1,36 @@
-name: Rendered mechanism
+name: Playground and presentation
 on:
   pull_request:
   push:
     branches: [main]
 jobs:
-  turret-motion:
-    runs-on: ubuntu-24.04 # Supported by the pinned Playwright 1.56 browser dependencies.
+  browser-validation:
+    runs-on: ubuntu-24.04
     timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - suite: mechanism
+            commands: |
+              npm run test:turret
+              npm run test:camera
+              npm run test:models
+          - suite: playground
+            commands: |
+              npm run test:interactions
+              npm run test:robot
+              npm run test:sim
+              npm run test:demo
+          - suite: presentation
+            commands: |
+              npm run test:hero
+              npm run test:viewers
+              npm run test:audio
+              npm run test:web
+              npm run test:markdown
+              npm run test:cache
+              npm run test:services
     steps:
       - uses: actions/checkout@v4
         with:
@@ -18,7 +42,7 @@ jobs:
       - run: npm ci
       - run: npx playwright install --with-deps chromium
       - run: npm run build
-      - name: Validate actual rendered component motion
+      - name: Validate ${{ matrix.suite }}
         env:
           PORT: 8879
           PLAYWRIGHT_CHANNEL: chromium
@@ -27,19 +51,11 @@ jobs:
           node tools/serve-site.mjs > /tmp/gyropup-site.log 2>&1 &
           server_pid=$!
           trap 'kill "$server_pid"' EXIT
-          npm run test:turret
-          npm run test:camera
-          npm run test:interactions
-          npm run test:robot
-          npm run test:viewers
-          npm run test:audio
+          ${{ matrix.commands }}
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: turret-motion-evidence
+          name: ${{ matrix.suite }}-evidence
           path: |
-            /tmp/gyropup-turret-motion
-            /tmp/gyropup-camera-controls
-            /tmp/gyropup-turret-interactions
-            /tmp/gyropup-robot-controls
-            /tmp/gyropup-portal-viewers
+            /tmp/gyropup-*
+            test-results

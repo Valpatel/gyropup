@@ -6,7 +6,8 @@
 //   const robot = await buildRobotV2('../', { eyes });   // { group, base, setPose, setFromQpos, turret, lights, fov, info }
 import * as THREE from 'three';
 import { STLLoader } from 'three/addons/loaders/STLLoader.js';
-import { buildTurret } from './turret3d.js';
+import { buildCurrentTurret } from './current_turret.js';
+import { BALL } from './turret3d.js';
 
 const M = 0.001;
 const TO_PAGE = new THREE.Matrix4().set(0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1).multiply(new THREE.Matrix4().makeScale(M, M, M));
@@ -50,17 +51,16 @@ export async function buildRobotV2(root, { eyes, color = 0xf5b82e } = {}) {
   const base0 = `${root}exports/sim/v2/rig/`;
   const man = await (await fetch(`${base0}manifest.json`, { cache: 'no-store' })).json();
   const loader = new STLLoader();
-  const files = new Set([...man.body.map((p) => p.file), ...Object.values(man.links).flat().map((p) => p.file),
-                         ...Object.values(man.turret).filter(Array.isArray).flat().filter((p) => p?.file).map((p) => p.file)]);
-  const geo = {};
-  await Promise.all([...files].map(async (f) => {
-    try {
-      const g = await loader.loadAsync(base0 + f);
-      g.applyMatrix4(TO_PAGE);
-      g.computeVertexNormals();
-      geo[f] = g;
-    } catch { console.warn('missing mesh', f); }
-  }));
+  const files = new Set([...man.body.filter(p=>!p.name.startsWith('turret_')).map(p=>p.file), ...Object.values(man.links).flat().map(p=>p.file)]);
+  const geo={},loading=new Map();
+  function loadGeometry(file){
+    if(geo[file])return Promise.resolve(geo[file]);
+    if(!loading.has(file))loading.set(file,loader.loadAsync(base0+file).then(g=>{
+      g.applyMatrix4(TO_PAGE);g.computeVertexNormals();geo[file]=g;return g;
+    }).catch(error=>{loading.delete(file);throw new Error(`Robot mesh ${file}: ${error.message}`);}));
+    return loading.get(file);
+  }
+  await Promise.all([...files].map(loadGeometry));
   const matCache = new Map();
   const mat = (c, opacity = 1) => {
     const k = `${c}/${opacity}`;
@@ -124,31 +124,37 @@ export async function buildRobotV2(root, { eyes, color = 0xf5b82e } = {}) {
              kf: (ang(f.C, [x, z]) - f.ang) - (ref.af - ref.phi1), kr: (ang(r.C, [x, z]) - r.ang) - (ref.aw - ref.phi2) };
   }
 
-  // the turret: the procedural one's moving groups (aim, laser, flash) carrying the CAD's meshes at the CAD's pivots
-  const turret = buildTurret(color);
-  {
-    const T = man.turret;
-    turret.group.traverse((o) => { if (o.isMesh && o !== turret.muzzle && !o.userData.keep) o.visible = false; });
-    const panP = at(T.pan_mm), tiltP = at(T.tilt_mm);
-    const fixed = new THREE.Group();
-    for (const p of man.body) if (p.name.startsWith('turret_')) { const m = mesh(p); if (m) fixed.add(m); }
-    turret.group.position.set(0, 0, 0);
-    turret.group.add(fixed);
-    turret.pan.position.copy(panP);
-    for (const p of T.pan ?? []) { const m = mesh(p); if (m) turret.pan.add(m); }
-    turret.tilt.position.copy(tiltP).sub(panP);
-    for (const p of T.tilt ?? []) { const m = mesh(p); if (m) turret.tilt.add(m); }
-    turret.muzzle.position.copy(at(T.muzzle_mm)).sub(tiltP);
-    const laserMesh = turret.tilt.children.find(m => /_laser$/.test(m.name));
-    if (laserMesh) turret.alignLaserToCAD(laserMesh);
-    if (turret.flashMesh) turret.flashMesh.position.copy(turret.muzzle.position).add(new THREE.Vector3(0, 0, 0.006));
-    base.add(turret.group);
+  // Current live presentation and recorded physics share the body, but retain
+  // their own turret geometry. A recorded ball trajectory belongs to its original
+  // muzzle; never move it onto a newer assembly and call that new physics.
+  const turret = await buildCurrentTurret(root, { color });
+  const T=man.turret,panP=at(T.pan_mm),tiltP=at(T.tilt_mm);
+  turret.group.position.copy(panP);base.add(turret.group);
+  let recordedReady=false,recordedLoading=null,presentationRequest=0;
+  async function loadRecorded(){
+    if(recordedReady)return;
+    if(!recordedLoading)recordedLoading=(async()=>{
+      const definitions=[...man.body.filter(p=>p.name.startsWith('turret_')),...(T.pan??[]),...(T.tilt??[])];
+      await Promise.all(definitions.map(p=>loadGeometry(p.file)));
+      const fixed=new THREE.Group(),pan=new THREE.Group(),tilt=new THREE.Group();
+      fixed.position.copy(panP).negate();
+      for(const p of man.body)if(p.name.startsWith('turret_')){const m=mesh(p);if(m)fixed.add(m);}
+      for(const p of T.pan??[]){const m=mesh(p);if(m)pan.add(m);}
+      for(const p of T.tilt??[]){const m=mesh(p);if(m)tilt.add(m);}
+      const laser=tilt.children.find(m=>/_laser$/.test(m.name)),laserPoint=at(T.muzzle_mm).sub(tiltP);
+      if(laser){laser.geometry.computeBoundingBox();laser.geometry.boundingBox.getCenter(laserPoint);laserPoint.z=laser.geometry.boundingBox.max.z;}
+      turret.group.add(fixed);turret.pan.add(pan);turret.tilt.add(tilt);
+      turret.registerRecorded({groups:[fixed,pan,tilt],tilt:tiltP.clone().sub(panP),muzzle:at(T.muzzle_mm).sub(tiltP),laser:laserPoint,launchSpeed:BALL.speed});
+      recordedReady=true;
+    })().catch(error=>{recordedLoading=null;throw error;});
+    await recordedLoading;
   }
 
   // the eyes on the front face (the DualEye board) and the headlights on the side walls, like ears. No two faces in
   // one plane: the bezel straddles the shell's face (1.5 mm in, 1.5 mm out), the screens stand 1 mm proud of the bezel,
   // and each lens is a 3 mm plate half sunk in its pod, so its glowing face is 1.5 mm in front of the pod's
   const em = at(man.mounts.eyes);
+  const head = new THREE.Object3D();head.position.copy(em);base.add(head);
   const bezel = new THREE.Mesh(new THREE.BoxGeometry(0.062, 0.03, 0.003), new THREE.MeshPhysicalMaterial({ color: 0x0b0e12, roughness: 0.3, clearcoat: 1 }));
   bezel.position.copy(em);
   base.add(bezel);
@@ -227,9 +233,37 @@ export async function buildRobotV2(root, { eyes, color = 0xf5b82e } = {}) {
     }
     group.position.set(0, 0, 0);
   }
+  // Presentation-only offsets: leg/link kinematics and archived qpos remain
+  // unchanged. Labels never attach to this exploded illustration.
+  const roots=base.children.filter(child=>child!==turret.group&&child!==fov&&child!==head);
+  const exploding=roots.map(object=>{
+    const home=object.position.clone();
+    const direction=home.clone();
+    if(object.isMesh){object.geometry.computeBoundingBox();object.geometry.boundingBox.getCenter(direction);}
+    direction.y-=.1;
+    if(direction.length()<.01)direction.set(0,1,0);
+    return {object,home,offset:direction.normalize().multiplyScalar(.075)};
+  });
+  function setExplode(amount=0){
+    const value=Math.max(0,Math.min(1,Number.isFinite(+amount)?+amount:0));
+    for(const item of exploding)item.object.position.copy(item.home).addScaledVector(item.offset,value);
+    turret.group.position.copy(panP).add(new THREE.Vector3(0,.08*value,0));
+    turret.setExplode(value);
+  }
+  async function setPresentation(mode='current'){
+    if(mode!=='current'&&mode!=='recorded')throw new Error(`Unknown robot presentation: ${mode}`);
+    const request=++presentationRequest;setExplode(0);
+    // Current takes effect synchronously for firing; archived downloads never
+    // replace a newer user choice or discard the existing usable model.
+    if(mode==='current'){turret.setSnapshot(mode);return;}
+    await loadRecorded();if(request===presentationRequest)turret.setSnapshot(mode);
+  }
   group.traverse((o) => { if (o.isMesh && o.material?.transparent) o.castShadow = false; });
   setPose();
-  const heightM = (wheelR + hMax + man.height_mm) * M;
-  return { group, base, setPose, setFromQpos, turret, lights, fov, legs,
-           info: { heightM, hMin, hMax, wheelR, trackMM: man.track_mm, massKg: man.mass_kg, massSplit: man.mass_split_kg, deck: man.deck, legRef, v2: true } };
+  const currentHeightMM = T.pan_mm[2] + turret.model.manifest.pivots.tilt[2] + Math.max(...turret.model.parts.filter(p=>p.entry.group==='tilt').map(p=>p.entry.bbox[5]));
+  const heightM = (wheelR + hMax + Math.max(man.height_mm,currentHeightMM)) * M;
+  return { group, base, head, setPose, setFromQpos, turret, lights, fov, legs, setExplode, setPresentation,
+           get presentation(){return {mode:turret.presentation,robotId:'gyropup-v2-rig',turretId:turret.presentation==='current'?'turret-box-v2':'v2-recorded-turret',
+             bodySource:base0+'manifest.json',turretSource:turret.presentation==='current'?turret.model.source:base0+'manifest.json'};},
+           info: { heightM, hMin, hMax, wheelR, trackMM: man.track_mm, massKg: man.mass_kg, massBasis:'recorded v2 physics snapshot; current turret presentation has not rerun full-robot physics', currentTurretMassKg:turret.model.manifest.masses_g.turret_with_balls/1000, massSplit: man.mass_split_kg, deck: man.deck, legRef, v2: true } };
 }

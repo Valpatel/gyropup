@@ -166,9 +166,10 @@ a claim to have tested every physical phone or Safari version.
 can leave a local resolver with a negative cache briefly after creation; verify
 against a public resolver and validate normal TLS rather than redeploying.
 
-The landing page presents a 50-pound-class robot family as the ambition. Current
-CAD uses37.5kg (see decision D71); do not turn the brand ambition into a verified
-product specification. Tritium is a design requirement (D19). The Tritium,
+The product weight ceiling is 100 lb (45.36 kg), recorded in decision D72 and
+[the weight budget](design-weight-budget.md). Current CAD uses 37.5 kg (see D71).
+The ceiling is a design requirement; existing load results retain their tested
+masses and do not establish validation at the full 100 lb ceiling. Tritium is a design requirement (D19). The Tritium,
 Graphlings, and GraphDone cards describe the integration roadmap, not a running
 connected robot. GraphDone coordinates development work, not onboard control.
 

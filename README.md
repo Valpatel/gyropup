@@ -18,8 +18,11 @@ electronics.
 3. **The body** around two legs: the Orin compute, the battery and the electronics inside one printed shell, the
    lights on the hips beside the turret, the eyes on the face.
 
-**Status:** leg v2 is in CAD and simulation; nothing is built yet. The old serial-leg robot (`cad/build.py`,
-`cad/leg.py`, `sim/model.py`, the 3D game page) stays only until leg v2 is on the full robot.
+**Status:** leg v2 is in CAD and simulation; nothing is built yet. Current interactive pages share the v2 robot
+and detailed turret. Older serial-leg designs and recorded physics remain labeled historical snapshots.
+
+**Weight ceiling:** 100 lb (45.36 kg) for the complete robot. The current CAD estimate is 37.5 kg (83 lb);
+[the weight budget](docs/design-weight-budget.md) distinguishes that estimate and existing tested loads from the new ceiling.
 
 **Website & playground:** [gyropup.com](https://gyropup.com). The same landing page,
 simulator and engineering portal run locally: `nvm use && npm ci && npm run dev`.

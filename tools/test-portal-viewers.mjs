@@ -16,8 +16,8 @@ page.on('response', response => { if (response.status() >= 400 && response.url()
 const portrait = [[320, 568], [360, 640], [375, 667], [390, 844], [393, 852], [412, 915], [414, 896], [430, 932], [480, 960]];
 const sizes = [...portrait, ...portrait.map(([w, h]) => [h, w]), [768, 1024], [1024, 768], [1440, 900]];
 async function settle() { await page.waitForTimeout(800); }
-async function visibleModel(key, minimumHeight = 35) {
-  const bounds = await page.evaluate(async key => {
+async function visibleModel(key, minimumHeight = 35, targetPage = page) {
+  const bounds = await targetPage.evaluate(async key => {
     const THREE = await import('/designer/kit/vendor/three/three.module.min.js');
     const s = window[key].stage, canvas = s.renderer.domElement.getBoundingClientRect();
     s.root.updateMatrixWorld(true); s.camera.updateMatrixWorld(true);
@@ -34,11 +34,12 @@ async function visibleModel(key, minimumHeight = 35) {
     const top = document.querySelector('#topbar').getBoundingClientRect().bottom;
     const status = document.querySelector('.fea-status'), legend = document.querySelector('.fea-legend');
     const dock = document.querySelector('.gp-dock');
-    return { x: Math.min(...xs), right: Math.max(...xs), y: Math.min(...ys), bottom: Math.max(...ys),
+    const min=values=>values.reduce((a,b)=>Math.min(a,b),Infinity),max=values=>values.reduce((a,b)=>Math.max(a,b),-Infinity);
+    return { x: min(xs), right: max(xs), y: min(ys), bottom: max(ys),
       freeTop: status?.offsetParent ? Math.max(top, status.getBoundingClientRect().bottom) : top,
       freeBottom: legend?.offsetParent ? legend.getBoundingClientRect().top : dock ? dock.getBoundingClientRect().top : innerHeight,
       width: innerWidth, height: innerHeight, scrollWidth: document.documentElement.scrollWidth,
-      obstacles: [...document.querySelectorAll('#topbar, #panel, .fea-status, .fea-legend, .gp-dock')].filter(el => el.offsetParent !== null).map(el => {
+      obstacles: [...document.querySelectorAll('#topbar, #panel, .fea-status, .fea-legend, .gp-dock, .gp-bubble:not(.hidden):not(.off-stage)')].filter(el => el.getClientRects().length && getComputedStyle(el).visibility!=='hidden' && getComputedStyle(el).opacity!=='0').map(el => {
         const r = el.getBoundingClientRect(); return { name: el.className || el.id, x: r.left, right: r.right, y: r.top, bottom: r.bottom };
       }) };
   }, key);
@@ -69,7 +70,7 @@ async function wheel(key) {
 try {
   await page.goto(`${base}/designer/kit/viewer.html`, { waitUntil: 'networkidle' });
   await page.waitForURL('**/designer/sim.html?run=none');
-  await page.waitForFunction(() => window.__sim);
+  await page.waitForFunction(() => window.__sim && document.body.dataset.ready === '1');
   assert.ok(!missing.some(u => u.includes('/exports/view/')), 'Default viewer never requests an absent export');
   results.push({ route: 'default CAD viewer', destination: '/designer/sim.html?run=none' });
 
@@ -122,9 +123,11 @@ try {
   await page.goto(`${base}/designer/character/talk-demo.html`, { waitUntil: 'networkidle' });
   await page.waitForFunction(() => window.__talkDemo);
   await page.evaluate(() => window.__talk.dock.collapse(false));
+  await page.waitForFunction(()=>{const b=document.querySelector('.gp-bubble');return b?.textContent.includes('target game')&&!b.classList.contains('typing');});
   for (const [width, height] of [[320, 568], [390, 844], [568, 320], [844, 390], [1440, 900]]) {
     await page.setViewportSize({ width, height }); await settle();
     results.push({ route: 'Talk demo', width, height, bounds: await visibleModel('__talkDemo') });
+    if(width===568)await page.screenshot({path:`${out}/talk-landscape.png`});
   }
   await page.setViewportSize({ width: 320, height: 568 }); await settle();
   await page.screenshot({ path: `${out}/talk-phone.png` });
@@ -138,6 +141,25 @@ try {
   await page.getByTitle('Ask Gyropup', { exact: true }).click();
   await page.waitForFunction(() => window.__talk.conversation.some(m => m.role === 'assistant'));
   results.push({ route: 'Talk controls and conversation', wheelRatio: await wheel('__talkDemo') });
+  // Start wide landscape with fresh storage: resizing from a portrait page can
+  // accidentally preserve its collapsed panel and hide a real startup problem.
+  const freshContext=await browser.newContext({viewport:{width:844,height:390},reducedMotion:'reduce'});
+  await freshContext.addInitScript(()=>{localStorage.setItem('gyropup.probe','off');localStorage.setItem('gyropup-sfx','0');});
+  const fresh=await freshContext.newPage();fresh.on('pageerror',e=>errors.push(e.message));
+  await fresh.goto(`${base}/designer/character/talk-demo.html`,{waitUntil:'networkidle'});
+  await fresh.waitForFunction(()=>window.__talkDemo);
+  await fresh.waitForFunction(()=>{const b=document.querySelector('.gp-bubble');return b?.textContent.includes('target game')&&!b.classList.contains('typing');});
+  assert.ok(await fresh.evaluate(()=>window.__talkDemo.controlsPanel.collapsed()),'Fresh short landscape opens with model space');
+  const freshBounds=await visibleModel('__talkDemo',100,fresh);
+  assert.ok(freshBounds.right-freshBounds.x>=60,'Fresh landscape model is not squeezed into a thumbnail by the desktop panel');
+  await fresh.screenshot({path:`${out}/talk-fresh-landscape.png`});
+  await fresh.getByRole('button',{name:'SHOW PANEL',exact:true}).click();
+  await fresh.waitForFunction(()=>window.__talk.dock.isCollapsed());
+  await fresh.getByRole('button',{name:'Talk',exact:true}).click();
+  await fresh.waitForFunction(()=>window.__talkDemo.controlsPanel.collapsed());
+  await fresh.waitForTimeout(800);
+  await visibleModel('__talkDemo',100,fresh);
+  results.push({route:'Fresh talk landscape',width:844,height:390,bounds:freshBounds});await freshContext.close();
   assert.deepEqual(errors, [], 'No browser exceptions');
   assert.deepEqual(missing, [], 'No missing published assets');
   await writeFile(`${out}/report.json`, JSON.stringify({ checkedAt: new Date().toISOString(), base, results, errors, missing }, null, 2));

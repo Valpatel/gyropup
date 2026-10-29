@@ -22,7 +22,7 @@ server.prependListener('request', (req, res) => {
 await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
 const base = `http://127.0.0.1:${server.address().port}`;
 const browser = process.env.PLAYWRIGHT_BROWSER === 'webkit'
-  ? await webkit.launch() : await chromium.launch({channel:'chrome', headless:true});
+  ? await webkit.launch() : await chromium.launch({channel:process.env.PLAYWRIGHT_CHANNEL==='chromium'?undefined:'chrome', headless:true});
 try {
   // Build validation catches the exact failure that blanks a page when a new
   // relative dependency exists locally but was omitted from git ls-files.

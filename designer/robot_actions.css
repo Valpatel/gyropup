@@ -20,3 +20,5 @@ body:not(.bench-mode) .gp-dock { bottom:calc(var(--robot-actions-h,112px) + 20px
  #robot-actions { left:auto; right:8px; transform:none; width:calc(100% - 228px); max-width:500px; }
  body:not(.bench-mode) .gp-dock { bottom:calc(var(--robot-actions-h,108px) + 20px) !important; }
 }
+
+.ra-status { margin:6px 0 0; text-align:center; color:#526a60; font:500 10px/1.4 var(--font-ui,system-ui); }
