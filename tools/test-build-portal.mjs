@@ -66,8 +66,11 @@ try{
  await input.setInputFiles({name:'valid.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify({version:1,project:'gyropup',parts:{[shared]:{inHand:true}}}))});
  await page.waitForFunction(()=>document.querySelector('.cad-progress-receipt').textContent.includes('Imported'));assert.equal(await target.locator('input').nth(1).isChecked(),true);
  await page.goto(base+'/designer/progress.html');await ready();const other=page.locator('tr[data-part-key='+JSON.stringify(shared)+']').first();assert.equal(await other.locator('input').first().isChecked(),true);assert.equal(await other.locator('input').nth(1).isChecked(),true);
+ await page.locator('#parts > summary').click();
+ await page.getByText('Leg · what to buy',{exact:true}).click();
  const parts=page.locator('#buy table').first();await parts.locator('thead th').nth(1).locator('button').click();
  const names=await parts.locator('tbody tr').evaluateAll(rows=>rows.map(row=>row.cells[1].textContent.trim()));assert.deepEqual(names,[...names].sort(new Intl.Collator(undefined,{numeric:true,sensitivity:'base'}).compare));
+ await page.getByText('Leg · what to print',{exact:true}).click();
  const prints=page.locator('#print table');await checkNativeSort(prints,7,'ascending');await prints.locator('tbody input[type=checkbox]').first().check();
  const printedKey=await prints.locator('tbody tr').first().getAttribute('data-part-key');await page.reload();await ready();assert.equal(await page.locator('tr[data-part-key='+JSON.stringify(printedKey)+'] input').first().isChecked(),true);
  const inventory=await(await context.request.get(base+'/site/models.json')).json();assert.equal(inventory.files.length,495);assert.deepEqual(inventory.files.reduce((counts,f)=>(counts[f.format]=(counts[f.format]||0)+1,counts),{}),{step:188,stl:288,'3mf':19});

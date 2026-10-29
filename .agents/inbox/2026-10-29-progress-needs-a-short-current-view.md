@@ -1,0 +1,11 @@
+# Published progress needs maintained evidence and a short default view
+
+2026-10-29, production `290f7b12b31f3c702481caf34a5787659c437af6`: independent browser inspection at 390 px measured a 42,798 px page, 25 expanded historical entries and Strength beginning at Y=11,386. `docs/progress.json` still said `2026-10-28` despite subsequent reviewed releases. At desktop width Strength began at Y=5,388. The case table also preceded the movie on phones.
+
+Cause: the page rendered the complete chronological log and every report in full. Work was recorded in PRs and engineering notes without maintaining the public progress snapshot. A successful build and no horizontal overflow did not establish that the useful content was findable.
+
+Corrective rule: keep the current focus and a few dated, evidence-linked updates near the start; feature the source-bound deformation player before long tables; place detailed reports and dated history in native disclosures. Keep old notes explicitly historical. Do not replace dates with the build time or promote engineering-branch candidates to released/physically qualified work. Update `docs/progress.json` at each meaningful engineering checkpoint and website release.
+
+Validation: `SITE_URL=<preview> node tools/test-progress.mjs` exercises 21 phone portrait/landscape, tablet and desktop sizes, native keyboard disclosure control, nested/cold/repeated-hash links, retry state, the real default E1 player and all entries in the Markdown route. `test-study-media.mjs` still checks decoded frames, failures and the interactive field. `test-build-portal.mjs` opens the actual procurement disclosures before sorting/checking rows. The first visual pass exposed an empty loading wrapper occupying a grid column; placing that status outside the two-column media layout fixed it, and the browser test now checks the desktop player/context arrangement.
+
+Limits: these are browser and publication checks, not fresh structural analysis, supplier reservations, physical fit or manufacture approval. The existing E1 strength failure and historical mass baseline remain unchanged. Exact final source, independent review and hosted release receipts belong on PR94/issue93.

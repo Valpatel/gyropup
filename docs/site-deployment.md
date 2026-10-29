@@ -222,3 +222,13 @@ Run `SITE_URL=http://127.0.0.1:8764 npm run test:sim` after the build; set
 across stage changes, conversation and scene identity, loop blending, stale
 fetches, cached models, target re-racking, and phone slider layouts. The mock
 verifies browser continuity without claiming a production AI backend is online.
+
+### Keep public progress current
+
+At each meaningful engineering checkpoint and website release, update
+`docs/progress.json` with a dated, evidence-linked entry and the current focus.
+Distinguish live production work from candidates on an engineering branch and
+physical measurements. Never use the build timestamp as the report date.
+The Progress page keeps three recent entries visible and the complete history
+in date-grouped disclosures; its Markdown route retains every entry.
+See [Progress presentation checks](validation/progress-presentation.md).

@@ -169,7 +169,7 @@ function updatePageState(){
  document.body.dataset.loadState=pending?'loading':failed?'partial':'ready';
 }
 await Promise.all([
-sectionLoad('progress','status','Progress report',async isCurrent=>{
+sectionLoad('progress','current-focus','Progress report',async isCurrent=>{
 const prog = await getJson('../docs/progress.json',{optional:false,validate:value=>isRecord(value)&&Array.isArray(value.status)&&Array.isArray(value.log),label:'Progress report'});
 if(!isCurrent())return false;
 if (prog) {
@@ -237,7 +237,7 @@ if (rig) {
 
 return !!rig;
 }),
-sectionLoad('fea','fea','Structural reports',async isCurrent=>{
+sectionLoad('fea','strength-title','Structural reports',async isCurrent=>{
 const fea = await getJson(`${LEG}fea/summary.json`,{optional:true,validate:value=>isRecord(value)&&Array.isArray(value.results),label:'Structural reports'});
 if(!isCurrent())return false;
 if (fea) {
