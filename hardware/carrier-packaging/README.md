@@ -1,15 +1,22 @@
-# PAN carrier packaging contract — in progress
+# PAN carrier packaging proposal
 
-[Issue96](https://github.com/Valpatel/gyropup/issues/96) continues the reviewed circuit, architecture comparison and C3 carrier work from engineering `fa459d09aebe416be21edc1c11ceb37fe41c3f7e`. This checkpoint must establish a complete candidate component/termination inventory and shared physical assumptions before another circuit or CAD revision. No board outline, thermal assembly, harness route or fit is frozen yet.
+This bounded checkpoint advances [issue #96](https://github.com/Valpatel/gyropup/issues/96) with source records for all 47 electronic items, a logical terminal map, a mechanical service proposal and a two-assembly paper allocation. It does **not** freeze a board layout, heat path, harness route or fabrication design. The broader issue remains open.
 
-The existing 50.8×30 mm control board is occupied. The legacy U2 box and C3 support are not extra PCB space. A manufacturer's 40×40 mm thermal test board is neither allocated area nor a demonstrated minimum size. The source/servo contract remains 15–20.5 V stand /30–42 V robot input and 12 V PAN output. No purchases or energized tests.
+The existing 50.8 × 30 mm control board is occupied. Its old U2 box and the C3 support are not spare PCB space. A manufacturer's 40 × 40 mm thermal test board is neither an allocated region nor a demonstrated minimum size. The source/servo contract remains 15–20.5 V stand / 30–42 V robot input and 12 V PAN output. There have been no purchases or energized tests.
 
-Ownership in this single worktree:
-- Electrical author and sole Git committer: README, electrical-envelope.md, component/terminal/source data and bounded checks.
-- Mechanical author: mechanical-envelope.md only, plus read-only spatial investigation. No Git operations or geometry generation.
+The [electrical source record](electrical-envelope.md) distinguishes maximum dimensions, nominal profiles, formed-lead datums, copper lands and unknown assembly allowances. Every electronic row has primary package evidence; this is not a complete physical BOM. Actual mounting, junctions, soldered leads and adjacent harness parts remain unresolved. The [mechanical proposal](mechanical-envelope.md) records the bumper-sector and C3-parking prerequisites without claiming a new CAD clearance or strength result.
 
-The current [electrical inventory](electrical-envelope.md) and [mechanical envelope](mechanical-envelope.md) record the proposed 44×40×18 mm region and why two simpler placements fail the service-path screen. They remain work in progress, not fit or fabrication evidence.
+The [paper allocation](paper-allocation.md) assigns all 47 electronic entries to a control/termination board and a PAN power assembly. It lists 19 control-board and four power-board wire-pad candidates, a finite trial power-board outline and conditional height screens. No component or terminal has an accepted physical placement. The capacitor screen leaves only 0.5 mm before unknown mounting and tolerance allowances; it is not a stack approval.
 
-Next: finish enumerating the complete LTC4359 reference network plus retained cutoff/control/converter hardware and external terminations; coordinate a real contour, per-side heights, mounting/heat path and connector/tool/strain-relief zones against seated, parked and removal states. Preserve exact source identities and explicitly unresolved clamp, startup, regeneration, thermal and material/retention limits. Independent review is required before integration.
+Reproduce the committed checkpoint from the repository root:
 
-The [two-assembly paper allocation](paper-allocation.md) assigns all47 electronic entries without claiming component placement. It records19 control-board and4 power-board wire-pad candidates, a finite power-board outline and conditional height screens; mounting, routing, thermal and service-path gates remain open.
+```sh
+python hardware/carrier-packaging/check.py
+python -m unittest discover -s hardware/carrier-packaging -p 'test_*.py'
+```
+
+After an intentional source change, regenerate with `inventory.py` followed by `allocation.py`, then review the diff and repeat the checks. CI checks committed evidence without silently refreshing it.
+
+Next: resolve the remaining delivery/lead-form specifications and critical supply gaps; assign every actual component, terminal, mounting and thermal region; then validate the complete seated, released, parked and removal sequence. Source transients, charged reversal, startup, regeneration, material strength and energized behavior remain separate qualification gates. No native circuit or CAD revision is produced by this checkpoint.
+
+Ownership: the electrical author is the sole Git committer and owns these records/checks; the mechanical author owns only `mechanical-envelope.md` and its read-only investigation. Independent review is required before integration.

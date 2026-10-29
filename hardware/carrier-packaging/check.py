@@ -71,7 +71,16 @@ def validate_package_limits(document):
     if (tvs['maximum_body_mm'] != [8.13,6.22,2.62] or tvs['land_outer_mm'] is not None
             or tvs['land_constraints_mm'] != {'pad_width_min':3.3,'each_pad_length_min':2.4,'inner_gap_max':4.2}):
         raise ValueError('SMCJ height uses axisD; mixed pad limits do not give a maximum land envelope')
-    return {'exact_package_axis_controls':2}
+    diode = p['diodes_s1b']
+    if diode['maximum_body_mm'] != [5.59,2.92,2.4] or diode['minimum_body_land_union_mm'] != [6.5,2.92]:
+        raise ValueError('exact S1B SMA revision/body-plus-land envelope changed')
+    cap = p['tdk_fg24']
+    if (cap['maximum_body_mm'] is not None or cap['complete_installed_envelope_mm'] is not None
+            or cap['incoming_pitch_range_mm'] != [4,6]
+            or cap['older_individual_sheet_text_pitch_range_mm'] != [4.8,5.8]
+            or cap['top_to_formed_lead_datum_max_mm'] != 5.5):
+        raise ValueError('TDK formed-lead datum/revision-specific pitch is not a complete body bound')
+    return {'exact_package_axis_controls':4}
 
 
 def validate_allocation(document):

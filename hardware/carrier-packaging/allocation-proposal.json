@@ -12,6 +12,11 @@
         30,
         1.6
       ],
+      "component_face_direction": [
+        -1,
+        0,
+        0
+      ],
       "electronic_members": [
         "L.U1",
         "L.R1",
@@ -23,8 +28,41 @@
         "L.R3",
         "L.F1"
       ],
+      "existing_world_region_mm": {
+        "x": [
+          46.4,
+          48
+        ],
+        "y": [
+          -25.4,
+          25.4
+        ],
+        "z": [
+          6,
+          36
+        ]
+      },
       "id": "CONTROL_TERMINATION",
       "placement": null,
+      "preserved_mount_holes_board_local_mm": [
+        [
+          3,
+          3
+        ],
+        [
+          47.8,
+          3
+        ],
+        [
+          3,
+          27
+        ],
+        [
+          47.8,
+          27
+        ]
+      ],
+      "preserved_pcb_hole_diameter_mm": 3.2,
       "proposal": "Replacement custom control/termination PCB within existing outline, not reuse of an assumed empty perfboard area. All legacy parts require new exact placement/formed leads.",
       "wire_pad_candidates": [
         {
@@ -309,8 +347,8 @@
   "physical_inventory_complete": false,
   "source_sha256": {
     "catalog/hardware.json": "c7fb31ff99094655a86cc94c3b90c1fee829d66c6484dfe66f6c0ae0a9076858",
-    "hardware/carrier-packaging/allocation.py": "47f3f79d3fac2ebb0ad2d392ad34129f47905993c11dbb6aa6bb92feddd7aab7",
-    "hardware/carrier-packaging/component-inventory.json": "8eb7b174960e51bd378e9e0a4a744243721cdfb0614659f9f72bee516873ef4e",
+    "hardware/carrier-packaging/allocation.py": "8528d8481124e8b621d1671c5f009a2ce94b987e1111d013c93339d40e1b25ac",
+    "hardware/carrier-packaging/component-inventory.json": "cb5b28158c4d1fc487ddc98e460bbb0751fd51842d4ff4a1d643e4ed27558097",
     "hardware/carrier-packaging/mechanical-envelope.md": "b864e94290f451d689324aa89e69a282129f1819031429f26ce69711c8895fca",
     "hardware/carrier-packaging/terminal-contract.json": "4f1eb2c31cafc363d8ea5381293db8f9ea43dcd111f506ccf698e0599a3253ca"
   },

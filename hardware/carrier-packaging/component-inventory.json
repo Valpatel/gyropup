@@ -7,7 +7,7 @@
   "fit_qualified": false,
   "frozen": false,
   "inventory_count": 47,
-  "package_evidence_count": 45,
+  "package_evidence_count": 47,
   "remaining_physical_inventory": [
     "external F4, D8, D14 and exact upstream fuse/holder boundary",
     "C2/C3/servo housings, contacts, crimps and actual leads",
@@ -1491,9 +1491,40 @@
     {
       "group": "complete_ideal_diode_reference_inventory",
       "id": "I.D5",
-      "maximum_envelope": null,
+      "maximum_envelope": {
+        "land_gap_mm": 1.5,
+        "land_outer_mm": [
+          6.5,
+          1.7
+        ],
+        "land_pad_mm": [
+          2.5,
+          1.7
+        ],
+        "match": [
+          "S1B-13-F"
+        ],
+        "maximum_body_mm": [
+          5.59,
+          2.92,
+          2.4
+        ],
+        "maximum_molded_body_mm": [
+          4.6,
+          2.92,
+          2.4
+        ],
+        "minimum_body_land_union_mm": [
+          6.5,
+          2.92
+        ],
+        "note": "Rev24-2 drawing, not neighboring SMB or older Rev20 J2.30. Separate latest package/pad application notes not retrieved; incoming drawing/assembly acceptance remains open.",
+        "pin_basis": "Cathode band K, opposite lead A; actual footprint numbering remains separate.",
+        "source": "diodes_s1b"
+      },
       "mpn": "S1B-13-F",
       "package": "SMA",
+      "package_evidence_id": "diodes_s1b",
       "pins_from_reviewed_candidate": null,
       "placement": null,
       "reference_pin_contract": {
@@ -1848,8 +1879,37 @@
       "catalog_key": "cap-mlcc-1u-50v",
       "group": "retained_legacy_control_board",
       "id": "L.C3",
-      "maximum_envelope": null,
+      "maximum_envelope": {
+        "coating_width_max_mm": 4.5,
+        "complete_installed_envelope_mm": null,
+        "free_lead_length_below_datum_range_mm": [
+          5,
+          9
+        ],
+        "incoming_pitch_range_mm": [
+          4,
+          6
+        ],
+        "land_outer_mm": null,
+        "lead_diameter_range_mm": [
+          0.47,
+          0.6
+        ],
+        "match": [
+          "FG24X7R1H105KRT06"
+        ],
+        "maximum_body_mm": null,
+        "note": "Use revision-specific2024 family dimensions for paper screening. Older2015 text-only sheet has a narrower pitch range; delivery specification remains unselected. Formed bends exceed4.5mm coating width. No PCB drill, finished solder tail or flat reforming qualification follows.",
+        "older_individual_sheet_text_pitch_range_mm": [
+          4.8,
+          5.8
+        ],
+        "source": "tdk_fg24",
+        "thickness_max_mm": 3,
+        "top_to_formed_lead_datum_max_mm": 5.5
+      },
       "mpn": "FG24X7R1H105KRT06",
+      "package_evidence_id": "tdk_fg24",
       "placement": "existing envelope only; exact leads/pads not established",
       "prior_sources": [
         "https://www.mouser.com/ProductDetail/810-FG24X7R1H105KRT6",
@@ -1969,8 +2029,8 @@
     "docs/carrier-service-connectors.md": "f73db1114d1d807002ff454b5cb9ae1c7d94c1e29af89567b640e36f17966ec7",
     "hardware/carrier-packaging/front-reference-contract.json": "06956af049dafbeaf44bb9b0a739cde0b4ce099f0a6795758bebc77ced918b48",
     "hardware/carrier-packaging/inventory.py": "317786bb0bf507e3a572a48e45b77b08320baf9220bc0156d3c61293d0f767b7",
-    "hardware/carrier-packaging/package-envelopes.json": "b64773564646c491bccb4e3f3eaf41e2aea7cecfe4fc689df0454eea3743665c",
-    "hardware/carrier-packaging/primary-envelope-sources.json": "45a9007e8e9e7a77cd1fbf6fa15c537f4a994f4cf81c3156d9a6917a55ddc9c6",
+    "hardware/carrier-packaging/package-envelopes.json": "8b263374bc27d7c5c99ef11a136f4f8df5c49db56fd91fb4316132f467bdbb4f",
+    "hardware/carrier-packaging/primary-envelope-sources.json": "7d4e6f55c351073e6d1123a988b6b02bb7f94df2ed41540917ee59bec3723f57",
     "hardware/carrier-packaging/terminal-contract.json": "4f1eb2c31cafc363d8ea5381293db8f9ea43dcd111f506ccf698e0599a3253ca",
     "hardware/carrier-pan-protection/availability.json": "549a8ccdfd7d9ea95b5baedcb47ec7aa971cfbdeffe1092e4be13df40c480ec8",
     "hardware/carrier-pan-protection/circuit_design.py": "37b4d99eecaa1f567109df6762a00f69f46c02e6efbe7d53c35893d2955ace8a",

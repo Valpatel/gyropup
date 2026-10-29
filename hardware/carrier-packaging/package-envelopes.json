@@ -93,6 +93,37 @@
       "pin_basis": "Cathode band K, opposite lead A; project pad numbering remains separate.",
       "source": "ddz9699"
     },
+    "diodes_s1b": {
+      "land_gap_mm": 1.5,
+      "land_outer_mm": [
+        6.5,
+        1.7
+      ],
+      "land_pad_mm": [
+        2.5,
+        1.7
+      ],
+      "match": [
+        "S1B-13-F"
+      ],
+      "maximum_body_mm": [
+        5.59,
+        2.92,
+        2.4
+      ],
+      "maximum_molded_body_mm": [
+        4.6,
+        2.92,
+        2.4
+      ],
+      "minimum_body_land_union_mm": [
+        6.5,
+        2.92
+      ],
+      "note": "Rev24-2 drawing, not neighboring SMB or older Rev20 J2.30. Separate latest package/pad application notes not retrieved; incoming drawing/assembly acceptance remains open.",
+      "pin_basis": "Cathode band K, opposite lead A; actual footprint numbering remains separate.",
+      "source": "diodes_s1b"
+    },
     "ipb200n25": {
       "land_outer_mm": [
         16.25,
@@ -411,6 +442,35 @@
       "pin_basis": "Cathode band K, opposite lead A; project pad numbering remains separate.",
       "source": "smat70a"
     },
+    "tdk_fg24": {
+      "coating_width_max_mm": 4.5,
+      "complete_installed_envelope_mm": null,
+      "free_lead_length_below_datum_range_mm": [
+        5,
+        9
+      ],
+      "incoming_pitch_range_mm": [
+        4,
+        6
+      ],
+      "land_outer_mm": null,
+      "lead_diameter_range_mm": [
+        0.47,
+        0.6
+      ],
+      "match": [
+        "FG24X7R1H105KRT06"
+      ],
+      "maximum_body_mm": null,
+      "note": "Use revision-specific2024 family dimensions for paper screening. Older2015 text-only sheet has a narrower pitch range; delivery specification remains unselected. Formed bends exceed4.5mm coating width. No PCB drill, finished solder tail or flat reforming qualification follows.",
+      "older_individual_sheet_text_pitch_range_mm": [
+        4.8,
+        5.8
+      ],
+      "source": "tdk_fg24",
+      "thickness_max_mm": 3,
+      "top_to_formed_lead_datum_max_mm": 5.5
+    },
     "tnpw0805": {
       "land_outer_mm": [
         2.8,
@@ -562,6 +622,7 @@
     }
   },
   "pcb_contour_frozen": false,
+  "planar_envelope_rule": "A land rectangle bounds copper only. Actual placement must union complete component/lead geometry and lands, then add courtyard/assembly/electrical clearances. A null complete body/lead envelope must not become zero size.",
   "solder_height_mm": null,
   "status": "PARTIAL_PRIMARY_PACKAGE_INVENTORY_NOT_PLACEMENT",
   "units": "mm"

@@ -171,7 +171,7 @@ class InventoryTests(unittest.TestCase):
 
     def test_manufacturer_dimension_axes_and_limits_cannot_be_relabelled(self):
         original=json.loads((HERE / 'package-envelopes.json').read_text())
-        self.assertEqual(C.validate_package_limits(original)['exact_package_axis_controls'],2)
+        self.assertEqual(C.validate_package_limits(original)['exact_package_axis_controls'],4)
         for mode in ('terminal_width_as_height','mixed_limits_as_max_land','coated_span_as_body','minimum_lead_as_maximum'):
             d=copy.deepcopy(original);p=d['packages']
             if mode=='terminal_width_as_height':p['littelfuse_smcj150a']['maximum_body_mm'][2]=3.2
@@ -211,6 +211,16 @@ class InventoryTests(unittest.TestCase):
         for group,key,value in [('capacitor','mount_gap_mm',0),('capacitor','vent_free_min_mm',0),('capacitor','qualified',True),('converter','profile_tolerance_mm',0),('converter','nominal_bottom_parts_mm',0),('converter','qualified',True)]:
             d=copy.deepcopy(original);d['height_screens'][group][key]=value
             with self.subTest(group=group,key=key),self.assertRaises(ValueError):C.validate_allocation(d)
+
+    def test_exact_revision_and_lead_extent_are_not_generic_package_shortcuts(self):
+        original=json.loads((HERE/'package-envelopes.json').read_text())
+        for mode in ('old_s1b_height','land_width_as_whole_part','old_tdk_pitch','coating_as_full_envelope'):
+            d=copy.deepcopy(original);p=d['packages']
+            if mode=='old_s1b_height':p['diodes_s1b']['maximum_body_mm'][2]=2.3
+            elif mode=='land_width_as_whole_part':p['diodes_s1b']['minimum_body_land_union_mm']=[6.5,1.7]
+            elif mode=='old_tdk_pitch':p['tdk_fg24']['incoming_pitch_range_mm']=[4.8,5.8]
+            else:p['tdk_fg24']['complete_installed_envelope_mm']=[4.5,3,5.5]
+            with self.subTest(mode=mode),self.assertRaises(ValueError):C.validate_package_limits(d)
 
 
 if __name__=='__main__':unittest.main()

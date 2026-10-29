@@ -326,6 +326,51 @@
       "revision": "LTC4368 RevC04/21; package05-08-1661 RevF",
       "sha256": "1a4f8b351d04f893511f6c8023b882a0bbcb0118521c71b0c4c032c5e7af7a52",
       "url": "https://www.mouser.com/datasheet/2/609/ltc4368-3126108.pdf"
+    },
+    {
+      "evidence": "Actual served primary DS16003Rev24-2 SMA drawing: overall lead span E5.59max, body width A2.92max, height J2.40max. Molded length B4.60max. Pads2.50x1.70 with1.50gap,6.50span. This is not the SMB row or older Rev20 height2.30. Package/land union is at least6.50x2.92 before added clearance.",
+      "id": "diodes_s1b",
+      "limits": [
+        "Current served manufacturer URL is the observed source, not a claim of recently issued revision. Older Rev20-2 Jmax2.30 is superseded for this captured revision by Jmax2.40.",
+        "The package and pad pages direct latest geometry to AP02002/AP02001 respectively; these separate application notes were not retrieved in this bounded task.",
+        "Suggested 6.5 x1.7 pad-plan rectangle is not the full component courtyard: the body is up to2.92 wide. Additional solder/courtyard/process allowances not assigned."
+      ],
+      "observed": "2026-10-29",
+      "pages": [
+        3,
+        4
+      ],
+      "render_sha256": {
+        "diodes-s1b-3.png": "7497127c8498b78c9447eebe265bf55e5dcfc7f1dcb6cd2ddb732218f57411dc",
+        "diodes-s1b-4.png": "84d5cd7f08c9b6df7b3b65f5872f705fc3dfd3f6eacec26aa0c115de6a5c2b27"
+      },
+      "revision": "DS16003 Rev.24-2 December 2014",
+      "sha256": "b02c2d1278212e6ce4486762b4fef19cd2e933f0452272557adf1bfbefe97d59",
+      "url": "https://www.diodes.com/assets/Datasheets/ds16003.pdf"
+    },
+    {
+      "acquisition": "Exact-product public Datasheet download; transient link query omitted, refresh the normal product link if necessary. Manufacturer individual-sheet direct URL returned403 and is not claimed visually inspected.",
+      "evidence": "Actual20241125 family drawing and exact FG24X7R1H105KRT06 row viewed. Coating width4.5max, thickness3.0max;5.5max reaches formed-lead straight-section datum. Lead pitch5+/-1, free leads7+/-2 below datum, lead diameter0.5+0.10/-0.03. Bends extend outside coating width; this does not define a finished installed body/lead envelope.",
+      "id": "tdk_fg24",
+      "limits": [
+        "5.5 mm is not merely coating-body height; it reaches the formed-lead datum. The drawing shows bends outside the 4.5 mm coating width.",
+        "Family 2024 pitch 5 +/-1 mm differs from older individual-sheet extracted text 5 +0.8/-0.2. The older direct sheet returned403 in ordinary browser and was not visually inspected. Do not merge revision-specific tolerances silently.",
+        "No finished PCB hole size, solder-tail height, reforming procedure, courtyard, mounting stand-off, or flat orientation qualification inferred. Delivery specification remains to be selected."
+      ],
+      "observed": "2026-10-29",
+      "older_text_only_source": "https://product.tdk.com/en/system/files/dam/doc/product/capacitor/ceramic/lead-mlcc/chara_sheet/fg24x7r1h105krt06.pdf",
+      "pages": [
+        20,
+        22
+      ],
+      "public_distributor_entry": "https://jlcpcb.com/partdetail/TDK-FG24X7R1H105KRT06/C694551",
+      "render_sha256": {
+        "tdk-fg-dimensions-p20.png": "d323a6370f785a63675b4d6f1063d76788279092d729d8c25f94204daef66c74",
+        "tdk-fg-exact-p22.png": "abfec285d6c57615c6b103e5bd22388f003ea9b8dcae48dfb7b807cb92548abf"
+      },
+      "revision": "leadmlcc_halogenfree_fg_en 2024-11-25",
+      "sha256": "fb578a0b9a60361f2c1e0f45cbace199071713b7fa11f2b01da7f3569f14caca",
+      "url": "https://jlc-prod-smt.oss-eu-central-1.aliyuncs.com/smtDataManualFile/8559364035163815936-C694551.pdf"
     }
   ],
   "status": "WIP_PRIMARY_INVENTORY_NOT_A_LAYOUT"
