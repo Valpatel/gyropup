@@ -13,3 +13,5 @@ The published-model inventory is generated from tracked files inside the existin
 For small preparation pages, keep primary model-inspection actions in the initial horizontal viewport. Test their actual rectangles and hit targets after scrolling into view: page-width checks do not detect clipped actions inside a scroll wrapper. Prefer stacked entries for a few items; reserve horizontal tables for comparisons that need them. The specimen case in `tools/test-build-portal.mjs` includes an actual offscreen-action negative.
 
 Do not call `scrollIntoView` before an initial-horizontal-visibility assertion: it can scroll nested ancestors to hide the defect. Scroll vertically only, check clipping-ancestor bounds and unchanged horizontal offsets, and test a real nested overflow corruption.
+
+Clipping fixtures around decorated model links must preserve the original-download/preview sibling pair. Wrap their common paragraph; moving only the preview legitimately triggers the live decorator to create a replacement and makes the test exercise a different behavior.

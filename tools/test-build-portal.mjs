@@ -137,9 +137,12 @@ try{
     assert.ok(accessible(await placement()));
     // Keep the button inside the viewport but clip it inside a smaller scroll
     // ancestor. A horizontal automation helper would silently reveal it.
-    await action.evaluate(a=>{const wrapper=document.createElement('span');wrapper.dataset.testClip='';wrapper.style.cssText='display:block;width:120px;overflow-x:auto;white-space:nowrap';a.before(wrapper);wrapper.append(a);a.style.marginLeft='100px';a.style.display='inline-block';});
+    const parentStyle=await action.evaluate(a=>a.parentElement.getAttribute('style'));
+    // Keep original+preview siblings together so live link decoration does not
+    // create an unrelated replacement action while the fixture is installed.
+    await action.evaluate(a=>{const content=a.parentElement,wrapper=document.createElement('div');wrapper.dataset.testClip='';wrapper.style.cssText='display:block;width:120px;overflow-x:auto;white-space:nowrap';content.before(wrapper);wrapper.append(content);content.style.marginLeft='100px';content.style.width='max-content';});
     await verticalOnly();const nested=await placement();assert.equal(nested.clipped,true);assert.equal(nested.horizontallyScrolled,false);assert.equal(accessible(nested),false,'Nested clipping cannot be concealed by automation scrolling');
-    await action.evaluate((a,value)=>{const wrapper=a.parentElement;wrapper.replaceWith(a);value===null?a.removeAttribute('style'):a.setAttribute('style',value);},previous);
+    await action.evaluate((a,value)=>{const content=a.parentElement,wrapper=content.parentElement;wrapper.replaceWith(content);value===null?content.removeAttribute('style'):content.setAttribute('style',value);},parentStyle);
     await verticalOnly();assert.ok(accessible(await placement()));
    }
   }
