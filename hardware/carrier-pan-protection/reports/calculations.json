@@ -1,4 +1,8 @@
 {
+  "EN_release_delay_s": [
+    0.006621623776750857,
+    0.011414253029863266
+  ],
   "FET_pair_loss_W_at3_25A_max25C_Rds": 0.13520000000000001,
   "OV": {
     "overdrive_50mV_V": [
@@ -14,33 +18,19 @@
       47.950934495
     ]
   },
-  "SHDN_divider_V_scenario_not_full_leakage_characterization": {
-    "100": [
-      16.62035686,
-      16.768884483
-    ],
-    "15": [
-      2.491993245,
-      2.516396671
-    ],
-    "42": [
-      6.979826393,
-      7.043657505
-    ]
-  },
   "U2_static_max_V": 12.36,
   "UV": {
     "overdrive_50mV_V": [
-      11.644286554,
-      12.163851682
+      9.262804373,
+      9.67509975
     ],
     "recover_V": [
-      13.486520962,
-      14.34381108
+      10.728264537,
+      11.409036283
     ],
     "trip_V": [
-      12.960168274,
-      13.493095217
+      10.309561633,
+      10.732378124
     ]
   },
   "bleeder_42V_to5V_seconds_capacitance_scenarios": {
@@ -49,36 +39,81 @@
     "500uF": 106.690915704
   },
   "divider_initial_plus_temperature_fraction": 0.002625,
-  "gate_slew_inrush_A_total_capacitance_scenarios": {
-    "100uF": 1.913875598,
-    "22uF": 0.421052632,
-    "500uF": 9.56937799
-  },
-  "input_trip_A": {
-    "forward_startup_at_Vout_0": [
-      2.956029068,
-      7.105697247
-    ],
-    "forward_steady": [
-      3.94137209,
-      6.09059764
-    ],
-    "reverse_magnitude": [
-      0.098534302,
-      0.507549803
-    ]
+  "legacy_10mohm_startup_min_A": 2.956029067619165,
+  "legacy_unprotected_U1_differential_V": {
+    "raw_minus42_output42": -84,
+    "raw_minus42_output55": -97
   },
   "local_C1_only_energy_at42V_max_tolerance_J": 0.023284799999999998,
   "reference_temperature_C": 25,
-  "screening_load": {
-    "Vin15_eta80_input_A": 3.25,
-    "Vin42_eta80_input_A": 1.1607142857142856,
-    "assumed_contingency_A": 3.25,
-    "servo_plus_aux_A": 2.71
+  "revision_B_conditional_screen": {
+    "15V_enable_margin_V": 0.069019582972901,
+    "D1_required_theta_JA_at85C_125C_target_C_per_W": 6.688816618969382,
+    "D1_reverse_screen_V": 97,
+    "D1_steady_loss_screen_W": 5.980131057347366,
+    "EN": {
+      "fall_V": [
+        12.594832668,
+        13.006836843
+      ],
+      "rise_V": [
+        12.845754817,
+        13.267959109
+      ]
+    },
+    "PAN_INPUT_available_at15V_V": 13.3369786919729,
+    "all_conditional_static_gates_pass": true,
+    "assumptions": {
+      "Cin_total_max_uF": 500,
+      "D1_forward_drop_max_V": 1.5,
+      "FET_pair_hot_resistance_max_ohm": 0.03,
+      "auxiliary_input_allowance_A": 0.005,
+      "charged_output_max_V": 55,
+      "efficiency_min": 0.8,
+      "protected_input_min_V": -2,
+      "raw_reverse_V": -42
+    },
+    "capacitor_charge_A": 0.16150444621740437,
+    "charged_reverse_U1_differential_V": -57,
+    "gates": {
+      "15V_enable_headroom": true,
+      "15V_input_UV_recovery": true,
+      "U1_charged_reverse_differential": true,
+      "U1_negative_absolute": true,
+      "U2_input_rating": true,
+      "U3_VDD_recommended": true,
+      "barrier_reverse_rating": true,
+      "startup_current_budget": true,
+      "supervisor_valid_before_module_minimum": true
+    },
+    "input_trip_A": {
+      "forward_startup_at_Vout_0": [
+        4.434043601,
+        10.65854587
+      ],
+      "forward_steady": [
+        5.912058135,
+        9.13589646
+      ],
+      "reverse_magnitude": [
+        0.147801453,
+        0.761324705
+      ]
+    },
+    "qualified": false,
+    "ramp_bank_min_F": 1.857534e-07,
+    "ramp_slew_model_V_per_s": 323.00889243480873,
+    "sense_nominal_ohm": 0.006666666666666667,
+    "startup_load_input_A": 3.9867540382315774,
+    "startup_margin_A": 0.28078511655101845,
+    "startup_total_A": 4.1532584844489815,
+    "supervisor_voltage_at_max_startup_delay_V": 3.3460177848696175
   },
-  "sense_loss_W_at_maxsteadytrip": 0.365435858,
+  "sense_each_loss_W_at60mV": [
+    0.3654358583936048,
+    0.1827179291968024
+  ],
   "servo_12_6V_static_margin_V": 0.24,
-  "startup_margin_A_before_capacitance_at_15V80pct": -0.293970932,
   "status": "UNSELECTED_UNQUALIFIED_STATIC_SCREENING",
   "temperature_scenario_C": [
     -40,
@@ -86,11 +121,12 @@
   ],
   "unqualified": [
     "source_fault_envelope",
-    "negative_42V",
+    "negative_hot_insertion_clamp_and_energy",
     "PAN_INPUT_55V_peak",
     "12V_regeneration",
-    "startup_Cin_and_load",
+    "startup_Cin_efficiency_dropout_and_slew",
     "FET_SOA_and_thermal",
+    "D1_loss_and_cold_drop",
     "C1_cold_and_ripple",
     "reset_arming_and_backfeed",
     "PCB_and_carrier_fit"

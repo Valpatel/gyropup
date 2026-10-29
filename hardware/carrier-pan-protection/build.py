@@ -43,7 +43,7 @@ def build():
     files=['README.md','pins.md','fault-review.md','availability.json','circuit_design.py','generate.py','calculate.py','verify.py','test_circuit.py','build.py',
       'pan-cutoff.kicad_sch','pan-cutoff.kicad_pro','candidate.kicad_sym','sym-lib-table','candidate-bom.csv',
       'pictures/pan-cutoff.svg','reports/erc.rpt','reports/netlist.xml','reports/calculations.json']
-    receipt={'schema':1,'status':'CANDIDATE_NOT_QUALIFIED','kicad':version,'source_base':'d284f63f26d3f5a83347c33e402103f486668b24',
+    receipt={'schema':1,'status':'CANDIDATE_NOT_QUALIFIED','kicad':version,'source_base':'4e40a8d7e5f85d5cd5b8618d81cf9af34c8a0a55',
       'interface_source':'PR67 8b86e7f, confirmed unchanged at36aa696','command':'python hardware/carrier-pan-protection/build.py',
       'contract':contract,'files_sha256':{p:verify.sha(HERE/p) for p in files},
       'limits':['No PCB, DRC or footprint qualification','No transient simulation or measured circuit','No safe/ready/selected claim']}

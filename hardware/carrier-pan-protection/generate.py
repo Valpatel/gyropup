@@ -45,6 +45,8 @@ def symbol(name, s):
     elif name in ('C_V','C_POL_V','C_GS'):
         body=[line((-2.54,1.27),(2.54,1.27)),line((-2.54,-1.27),(2.54,-1.27))]
         if name=='C_POL_V':body += [line((-5.08,2.54),(-2.54,2.54)),line((-3.81,1.27),(-3.81,3.81))]
+    elif name=='D_SERIES':body=[triangle([(-2.54,-2.54),(-2.54,2.54),(2.54,0)]),line((2.54,-2.54),(2.54,2.54))]
+    elif name=='D_CLAMP':body=[triangle([(-2.54,-2.54),(2.54,-2.54),(0,2.54)]),line((-2.54,2.54),(2.54,2.54))]
     elif name in ('Q_IN','Q_OUT'):body=mosfet(name=='Q_OUT')
     elif name=='FLAG': body=[line((0,0),(0,2.54)),line((0,2.54),(2.54,2.54)),line((2.54,2.54),(0,3.81))]
     else: body=[n('rectangle',n('start',-bw,bh),n('end',bw,-bh),n('stroke',n('width',0.254),n('type',atom('default'))),n('fill',n('type',atom('background'))))]
@@ -65,8 +67,9 @@ def generate():
     endpoints={(tuple(point),net) for net,points in D.WIRE_PATHS for point in points}
     for ref,p in D.PARTS.items():
         X,Y=p['xy']; s=D.SYMBOLS[p['symbol']]; symid=uid('part',ref); flag=ref.startswith('#')
-        vertical=p['symbol'] in ('R_V','C_V','C_POL_V','C_GS')
+        vertical=p['symbol'] in ('R_V','C_V','C_POL_V','C_GS','D_CLAMP')
         fx,fy=(X+13.97,Y-2.54) if vertical else (X,Y-s['box'][1]-6.35)
+        if p['symbol']=='TPS3760A012':fx,fy=X,Y-52.07
         fields=[prop('Reference',ref,fx,fy,flag),prop('Value',p['value'],fx,fy+3.81,flag),
                 prop('Footprint',p['footprint'],hide=True),prop('Datasheet',p['datasheet'],hide=True),
                 prop('MPN',p['mpn'],hide=True),prop('Status','UNSELECTED / UNQUALIFIED CANDIDATE',hide=True),prop('Note',p['note'],hide=True)]
@@ -95,9 +98,9 @@ def generate():
     for i,pt in enumerate(D.JUNCTIONS):
         connections.append(n('junction',n('at',*pt),n('diameter',0),n('color',0,0,0,0),n('uuid',uid('junction',i))))
     notes=[n('text',text,n('exclude_from_sim',atom('no')),n('at',x,y,0),effects(1.27,'left'),n('uuid',uid('text',i))) for i,(x,y,text) in enumerate(D.NOTES)]
-    doc=n('kicad_sch',n('version',20250114),n('generator','eeschema'),n('generator_version','10.0'),n('uuid',root),n('paper','A3'),
-          n('title_block',n('title','Gyropup PAN input cutoff - circuit candidate'),n('date',D.DATE),n('rev','CANDIDATE A'),
-            n('company','Valpatel Software LLC'),n('comment',1,'Issue83 / PR84. Not for fabrication. No PCB or footprint qualification.')),
+    doc=n('kicad_sch',n('version',20250114),n('generator','eeschema'),n('generator_version','10.0'),n('uuid',root),n('paper','A2'),
+          n('title_block',n('title','Gyropup PAN input cutoff - circuit candidate'),n('date',D.DATE),n('rev','CANDIDATE B'),
+            n('company','Valpatel Software LLC'),n('comment',1,'Issue87 / PR88. Not for fabrication. No PCB or footprint qualification.')),
           n('lib_symbols',*libs),*placed,*connections,*notes,n('sheet_instances',n('path','/',n('page','1'))),n('embedded_fonts',atom('no')))
     (HERE/(D.NAME+'.kicad_sch')).write_text(S.dump(doc)+'\n')
     (HERE/'candidate.kicad_sym').write_text(S.dump(n('kicad_symbol_lib',n('version',20250114),n('generator','kicad_symbol_editor'),*[n('symbol',s[1].split(':')[1],*s[2:]) for s in libs]))+'\n')
@@ -105,7 +108,7 @@ def generate():
     # No rule suppressions. An empty project makes the directory the library-table root for CLI ERC.
     (HERE/(D.NAME+'.kicad_pro')).write_text('{}\n')
     with (HERE/'candidate-bom.csv').open('w') as f:
-        w=csv.writer(f); w.writerow(['reference','qty','value','candidate_mpn','datasheet','note'])
+        w=csv.writer(f,lineterminator="\n"); w.writerow(['reference','qty','value','candidate_mpn','datasheet','note'])
         for r,p in D.PARTS.items():
             if not r.startswith('#'):w.writerow([r,1,p['value'],p['mpn'],p['datasheet'],p['note']])
     print('generated native schematic + editable library + candidate BOM')
