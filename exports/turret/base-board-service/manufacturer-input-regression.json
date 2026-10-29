@@ -1,0 +1,33 @@
+{
+  "schema": "gyropup.base-board-input-regression/1",
+  "commit": "58218228565fea96d3e438cab06a002dd0f7f8a5",
+  "checked_at": "2026-10-29T08:35:52.486567+00:00",
+  "command": "python tools/test-base-board-manufacturer.py",
+  "exit_code": 0,
+  "regression_passed": true,
+  "stdout": "",
+  "stderr": "test_aggregate_requires_every_valid_private_input_even_with_green_geometry (__main__.ManufacturerInputs.test_aggregate_requires_every_valid_private_input_even_with_green_geometry) ... ok\ntest_empty_or_partial_cache_cannot_qualify_either_manufacturer_stage (__main__.ManufacturerInputs.test_empty_or_partial_cache_cannot_qualify_either_manufacturer_stage) ... ok\ntest_explicit_public_geometry_check_remains_public (__main__.ManufacturerInputs.test_explicit_public_geometry_check_remains_public) ... ok\ntest_strict_hardware_loader_cannot_use_authored_fallback (__main__.ManufacturerInputs.test_strict_hardware_loader_cannot_use_authored_fallback) ... ok\n\n----------------------------------------------------------------------\nRan 4 tests in 0.666s\n\nOK\n",
+  "sources": {
+    "cad/check_base_board_service.py": "bc05259433eaf5493ba5a6d702a7b5124f8fb17ef911207932137f9b675959ef",
+    "cad/turret_base_board.py": "d3b84f971201b65dd3c710aa2edc311211ea58ea88875728163469a6157f148a",
+    "cad/turret_boards.py": "c7a115d2fe3cefddf46b0dd521e21076e1f7721235df3e7bd22fadb6e165707b",
+    "tools/test-base-board-manufacturer.py": "e9239827355206e4cdd4922c58339787cc5653f62aea702fad2206263182ba7a"
+  },
+  "runtime": {
+    "python": "3.12.3",
+    "cadquery": "2.8.0",
+    "ocp": "7.9.3.1"
+  },
+  "toolkit_sources": {
+    "cadagent.gates.assembly": "3bb550480670cf59ab0499c7e5e21fbb7c46babee42bf8edb8fe3dfb1af4faf3",
+    "cadagent.gates.fasteners": "f99c874b66c3f48b4e3bcdffe0b316bf622dd06ddcc9c19a9aba093c6b258698",
+    "cadagent.gates.relations": "91d25e6c9ea213f921766ec6941835c28b597a86fdc256a1e0ee4434ffb70bcd",
+    "cadagent.gates.verdict": "3b0a9f75114141e8bfc3a0ccc45c8bb4e2390bdf06233a8643ace07308cd91d7"
+  },
+  "physical_fit_verified": false,
+  "release_ready": false,
+  "limits": [
+    "Bounded input-coverage regression only; no complete candidate CAD run.",
+    "Partial-cache files are test sentinels; no manufacturer geometry imported or published by missing-input cases."
+  ]
+}

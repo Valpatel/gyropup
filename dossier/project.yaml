@@ -265,10 +265,28 @@ interfaces:
 - id: I-base-board
   between:
   - base_board
-  - pan_base
+  - base_board_carrier
   kind: fastened
-  datum: inside the base, -x side
-  description: The base board on standoffs in the base.
+  datum: PCB back face x48; standoffs on removable carrier
+  description: Four M3x6 fitted on the bench; module service requires bumper removal and verified harness slack.
+  owner: S6-wiring
+- id: I-base-carrier
+  between: [base_board_carrier, pan_base]
+  kind: fastened
+  datum: anchor faces x53, four screws y+/-31 z9/33
+  description: Four external M3x8; the PCB and carrier move together along +X for removal.
+  owner: S6-wiring
+- id: I-base-board-inserts
+  between: [base_board_inserts, base_board_carrier]
+  kind: press_fit
+  datum: insert mouths x48, installed on bench
+  description: M3 heat-set inserts; model interference represents displaced polymer, physical fit unverified.
+  owner: S6-wiring
+- id: I-base-carrier-inserts
+  between: [base_carrier_inserts, pan_base]
+  kind: press_fit
+  datum: insert mouths x53, installed from +X
+  description: M3 heat-set inserts; model interference represents displaced polymer, physical fit unverified.
   owner: S6-wiring
 - id: I-dt
   between:
@@ -321,6 +339,10 @@ gates:
   - part: dt_plug
     reason: the robot harness's plug, a separate cable plugged into the receptacle (absent on the stand)
   intended_overlaps:
+  - parts: [base_board_inserts, base_board_carrier]
+    reason: Heat-set insert knurls displace polymer in the 4 mm pilot; physical fit remains unverified.
+  - parts: [base_carrier_inserts, pan_base]
+    reason: Heat-set insert knurls displace polymer in the 4 mm pilot; physical fit remains unverified.
   - parts:
     - circlip_50
     - pan_ring
@@ -397,6 +419,10 @@ gates:
   strict_interfaces: false
   motion_samples: 12
   tools:
+    base driver:
+      segments:
+      - {d: 6, length: 60}
+      - {d: 25, length: 80}
     hex 2.5:
       envelope_d: 3.0
       length: 60.0

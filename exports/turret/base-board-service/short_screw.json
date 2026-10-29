@@ -1,0 +1,1473 @@
+{
+  "schema": "cadagent.gate/1",
+  "gate": "fasteners",
+  "pass": false,
+  "status": "fail",
+  "counts": {
+    "pass": 20,
+    "warn": 0,
+    "fail": 8
+  },
+  "checks": [
+    {
+      "id": "fastener:base_carrier_screws#0:seat",
+      "status": "pass",
+      "message": "the head bears on base_board_carrier all round",
+      "parts": [
+        "base_board_carrier",
+        "base_carrier_screws#0"
+      ],
+      "evidence": {
+        "first_hit": [
+          {
+            "part": "base_board_carrier",
+            "t_mm": 0.0
+          },
+          {
+            "part": "base_board_carrier",
+            "t_mm": 0.0
+          },
+          {
+            "part": "base_board_carrier",
+            "t_mm": 0.0
+          },
+          {
+            "part": "base_board_carrier",
+            "t_mm": 0.0
+          },
+          {
+            "part": "base_board_carrier",
+            "t_mm": 0.0
+          },
+          {
+            "part": "base_board_carrier",
+            "t_mm": 0.0
+          },
+          {
+            "part": "base_board_carrier",
+            "t_mm": 0.0
+          },
+          {
+            "part": "base_board_carrier",
+            "t_mm": 0.0
+          }
+        ],
+        "seat_gap_mm": [
+          0.0,
+          0.0
+        ],
+        "head": {
+          "r_mm": 2.75,
+          "h_mm": 3.0,
+          "source": "solid"
+        }
+      }
+    },
+    {
+      "id": "fastener:base_carrier_screws#0:stack",
+      "status": "pass",
+      "message": "base_board_carrier clamped in contact, grip 3.00 mm",
+      "parts": [
+        "base_board_carrier",
+        "base_carrier_screws#0"
+      ],
+      "evidence": {
+        "angles": [
+          {
+            "angle": 0,
+            "ok": true,
+            "order": [
+              "base_board_carrier"
+            ],
+            "grip_mm": 3.0
+          },
+          {
+            "angle": 1,
+            "ok": true,
+            "order": [
+              "base_board_carrier"
+            ],
+            "grip_mm": 3.0
+          },
+          {
+            "angle": 2,
+            "ok": true,
+            "order": [
+              "base_board_carrier"
+            ],
+            "grip_mm": 3.0
+          },
+          {
+            "angle": 3,
+            "ok": true,
+            "order": [
+              "base_board_carrier"
+            ],
+            "grip_mm": 3.0
+          },
+          {
+            "angle": 4,
+            "ok": true,
+            "order": [
+              "base_board_carrier"
+            ],
+            "grip_mm": 3.0
+          },
+          {
+            "angle": 5,
+            "ok": true,
+            "order": [
+              "base_board_carrier"
+            ],
+            "grip_mm": 3.0
+          },
+          {
+            "angle": 6,
+            "ok": true,
+            "order": [
+              "base_board_carrier"
+            ],
+            "grip_mm": 3.0
+          },
+          {
+            "angle": 7,
+            "ok": true,
+            "order": [
+              "base_board_carrier"
+            ],
+            "grip_mm": 3.0
+          }
+        ],
+        "grip_mm": 3.0
+      }
+    },
+    {
+      "id": "fastener:base_carrier_screws#0:holes",
+      "status": "pass",
+      "message": "clearance holes on the axis through base_board_carrier",
+      "parts": [
+        "base_carrier_screws#0"
+      ],
+      "evidence": {
+        "holes": {
+          "base_board_carrier": {
+            "radius_mm": 1.7,
+            "point": [
+              55.7,
+              -29.3,
+              9.0
+            ],
+            "open_to_mm": 3.75
+          }
+        }
+      }
+    },
+    {
+      "id": "fastener:base_carrier_screws#0:engagement",
+      "status": "fail",
+      "message": "1.00 mm of thread in base_carrier_inserts (2.0 threads), under the minimum 3.00 mm (declared)",
+      "parts": [
+        "base_carrier_inserts#0",
+        "base_carrier_screws#0"
+      ],
+      "evidence": {
+        "thread_start_mm": 3.0,
+        "thread_end_mm": 8.74,
+        "engagement_mm": 1.0,
+        "thread_stretches": [
+          [
+            3.0,
+            8.74
+          ]
+        ],
+        "bridge_mm": 0.75,
+        "min_engagement_mm": 3.0,
+        "min_source": "declared",
+        "pitch_mm": 0.5,
+        "probe_radius_mm": 1.38,
+        "threads": 2.0
+      }
+    },
+    {
+      "id": "fastener:base_carrier_screws#0:tip",
+      "status": "pass",
+      "message": "tip clear: 5.50 mm to pan_base",
+      "parts": [
+        "base_carrier_screws#0"
+      ],
+      "evidence": {
+        "next_solid": {
+          "part": "pan_base",
+          "t_mm": 9.5
+        },
+        "tip_t_mm": 4.0,
+        "tip_clearance_mm": 5.5,
+        "min_tip_clearance_mm": 0.5,
+        "probe_end_t_mm": 14.0
+      }
+    },
+    {
+      "id": "fastener:base_carrier_screws#0:length",
+      "status": "fail",
+      "message": "the placed solid is 4.00 mm long, the record says 8; length 4 is outside the 6.00..9.00 mm the stack takes (thread at 3.00 + 3.00 engagement; pan_base at 9.50 less 0.5 tip room)",
+      "parts": [
+        "base_carrier_screws#0"
+      ],
+      "evidence": {
+        "fits_mm": [
+          6.0,
+          9.0
+        ],
+        "limited_by": "pan_base",
+        "stock_that_fits_mm": [
+          6.0,
+          7.0,
+          8.0
+        ],
+        "length_mm": 4.0,
+        "record_length_mm": 8.0,
+        "thread_depth_required_mm": 1.0
+      }
+    },
+    {
+      "id": "fastener:base_carrier_screws#0:tool",
+      "status": "pass",
+      "message": "the driver reaches the head at step 16",
+      "parts": [
+        "base_carrier_screws#0"
+      ],
+      "evidence": {
+        "tool": "driver",
+        "step": 16,
+        "step_fit": "base_board_carrier",
+        "envelope": {
+          "segments": [
+            {
+              "d": 6.0,
+              "length": 60.0
+            },
+            {
+              "d": 25.0,
+              "length": 80.0
+            }
+          ],
+          "start": "head",
+          "offset_mm": 0.0,
+          "swing": null
+        },
+        "start_t_mm": -3.0,
+        "blocked": [],
+        "clear": true,
+        "present_count": 19
+      }
+    },
+    {
+      "id": "fastener:base_carrier_screws#1:seat",
+      "status": "pass",
+      "message": "the head bears on base_board_carrier all round",
+      "parts": [
+        "base_board_carrier",
+        "base_carrier_screws#1"
+      ],
+      "evidence": {
+        "first_hit": [
+          {
+            "part": "base_board_carrier",
+            "t_mm": 0.0
+          },
+          {
+            "part": "base_board_carrier",
+            "t_mm": 0.0
+          },
+          {
+            "part": "base_board_carrier",
+            "t_mm": 0.0
+          },
+          {
+            "part": "base_board_carrier",
+            "t_mm": 0.0
+          },
+          {
+            "part": "base_board_carrier",
+            "t_mm": 0.0
+          },
+          {
+            "part": "base_board_carrier",
+            "t_mm": 0.0
+          },
+          {
+            "part": "base_board_carrier",
+            "t_mm": 0.0
+          },
+          {
+            "part": "base_board_carrier",
+            "t_mm": 0.0
+          }
+        ],
+        "seat_gap_mm": [
+          0.0,
+          0.0
+        ],
+        "head": {
+          "r_mm": 2.75,
+          "h_mm": 3.0,
+          "source": "solid"
+        }
+      }
+    },
+    {
+      "id": "fastener:base_carrier_screws#1:stack",
+      "status": "pass",
+      "message": "base_board_carrier clamped in contact, grip 3.00 mm",
+      "parts": [
+        "base_board_carrier",
+        "base_carrier_screws#1"
+      ],
+      "evidence": {
+        "angles": [
+          {
+            "angle": 0,
+            "ok": true,
+            "order": [
+              "base_board_carrier"
+            ],
+            "grip_mm": 3.0
+          },
+          {
+            "angle": 1,
+            "ok": true,
+            "order": [
+              "base_board_carrier"
+            ],
+            "grip_mm": 3.0
+          },
+          {
+            "angle": 2,
+            "ok": true,
+            "order": [
+              "base_board_carrier"
+            ],
+            "grip_mm": 3.0
+          },
+          {
+            "angle": 3,
+            "ok": true,
+            "order": [
+              "base_board_carrier"
+            ],
+            "grip_mm": 3.0
+          },
+          {
+            "angle": 4,
+            "ok": true,
+            "order": [
+              "base_board_carrier"
+            ],
+            "grip_mm": 3.0
+          },
+          {
+            "angle": 5,
+            "ok": true,
+            "order": [
+              "base_board_carrier"
+            ],
+            "grip_mm": 3.0
+          },
+          {
+            "angle": 6,
+            "ok": true,
+            "order": [
+              "base_board_carrier"
+            ],
+            "grip_mm": 3.0
+          },
+          {
+            "angle": 7,
+            "ok": true,
+            "order": [
+              "base_board_carrier"
+            ],
+            "grip_mm": 3.0
+          }
+        ],
+        "grip_mm": 3.0
+      }
+    },
+    {
+      "id": "fastener:base_carrier_screws#1:holes",
+      "status": "pass",
+      "message": "clearance holes on the axis through base_board_carrier",
+      "parts": [
+        "base_carrier_screws#1"
+      ],
+      "evidence": {
+        "holes": {
+          "base_board_carrier": {
+            "radius_mm": 1.7,
+            "point": [
+              55.7,
+              -29.3,
+              33.0
+            ],
+            "open_to_mm": 3.75
+          }
+        }
+      }
+    },
+    {
+      "id": "fastener:base_carrier_screws#1:engagement",
+      "status": "fail",
+      "message": "1.00 mm of thread in base_carrier_inserts (2.0 threads), under the minimum 3.00 mm (declared)",
+      "parts": [
+        "base_carrier_inserts#1",
+        "base_carrier_screws#1"
+      ],
+      "evidence": {
+        "thread_start_mm": 3.0,
+        "thread_end_mm": 8.74,
+        "engagement_mm": 1.0,
+        "thread_stretches": [
+          [
+            3.0,
+            8.74
+          ]
+        ],
+        "bridge_mm": 0.75,
+        "min_engagement_mm": 3.0,
+        "min_source": "declared",
+        "pitch_mm": 0.5,
+        "probe_radius_mm": 1.38,
+        "threads": 2.0
+      }
+    },
+    {
+      "id": "fastener:base_carrier_screws#1:tip",
+      "status": "pass",
+      "message": "tip clear: 5.50 mm to pan_base",
+      "parts": [
+        "base_carrier_screws#1"
+      ],
+      "evidence": {
+        "next_solid": {
+          "part": "pan_base",
+          "t_mm": 9.5
+        },
+        "tip_t_mm": 4.0,
+        "tip_clearance_mm": 5.5,
+        "min_tip_clearance_mm": 0.5,
+        "probe_end_t_mm": 14.0
+      }
+    },
+    {
+      "id": "fastener:base_carrier_screws#1:length",
+      "status": "fail",
+      "message": "the placed solid is 4.00 mm long, the record says 8; length 4 is outside the 6.00..9.00 mm the stack takes (thread at 3.00 + 3.00 engagement; pan_base at 9.50 less 0.5 tip room)",
+      "parts": [
+        "base_carrier_screws#1"
+      ],
+      "evidence": {
+        "fits_mm": [
+          6.0,
+          9.0
+        ],
+        "limited_by": "pan_base",
+        "stock_that_fits_mm": [
+          6.0,
+          7.0,
+          8.0
+        ],
+        "length_mm": 4.0,
+        "record_length_mm": 8.0,
+        "thread_depth_required_mm": 1.0
+      }
+    },
+    {
+      "id": "fastener:base_carrier_screws#1:tool",
+      "status": "pass",
+      "message": "the driver reaches the head at step 16",
+      "parts": [
+        "base_carrier_screws#1"
+      ],
+      "evidence": {
+        "tool": "driver",
+        "step": 16,
+        "step_fit": "base_board_carrier",
+        "envelope": {
+          "segments": [
+            {
+              "d": 6.0,
+              "length": 60.0
+            },
+            {
+              "d": 25.0,
+              "length": 80.0
+            }
+          ],
+          "start": "head",
+          "offset_mm": 0.0,
+          "swing": null
+        },
+        "start_t_mm": -3.0,
+        "blocked": [],
+        "clear": true,
+        "present_count": 19
+      }
+    },
+    {
+      "id": "fastener:base_carrier_screws#2:seat",
+      "status": "pass",
+      "message": "the head bears on base_board_carrier all round",
+      "parts": [
+        "base_board_carrier",
+        "base_carrier_screws#2"
+      ],
+      "evidence": {
+        "first_hit": [
+          {
+            "part": "base_board_carrier",
+            "t_mm": 0.0
+          },
+          {
+            "part": "base_board_carrier",
+            "t_mm": 0.0
+          },
+          {
+            "part": "base_board_carrier",
+            "t_mm": 0.0
+          },
+          {
+            "part": "base_board_carrier",
+            "t_mm": 0.0
+          },
+          {
+            "part": "base_board_carrier",
+            "t_mm": 0.0
+          },
+          {
+            "part": "base_board_carrier",
+            "t_mm": 0.0
+          },
+          {
+            "part": "base_board_carrier",
+            "t_mm": 0.0
+          },
+          {
+            "part": "base_board_carrier",
+            "t_mm": 0.0
+          }
+        ],
+        "seat_gap_mm": [
+          0.0,
+          0.0
+        ],
+        "head": {
+          "r_mm": 2.75,
+          "h_mm": 3.0,
+          "source": "solid"
+        }
+      }
+    },
+    {
+      "id": "fastener:base_carrier_screws#2:stack",
+      "status": "pass",
+      "message": "base_board_carrier clamped in contact, grip 3.00 mm",
+      "parts": [
+        "base_board_carrier",
+        "base_carrier_screws#2"
+      ],
+      "evidence": {
+        "angles": [
+          {
+            "angle": 0,
+            "ok": true,
+            "order": [
+              "base_board_carrier"
+            ],
+            "grip_mm": 3.0
+          },
+          {
+            "angle": 1,
+            "ok": true,
+            "order": [
+              "base_board_carrier"
+            ],
+            "grip_mm": 3.0
+          },
+          {
+            "angle": 2,
+            "ok": true,
+            "order": [
+              "base_board_carrier"
+            ],
+            "grip_mm": 3.0
+          },
+          {
+            "angle": 3,
+            "ok": true,
+            "order": [
+              "base_board_carrier"
+            ],
+            "grip_mm": 3.0
+          },
+          {
+            "angle": 4,
+            "ok": true,
+            "order": [
+              "base_board_carrier"
+            ],
+            "grip_mm": 3.0
+          },
+          {
+            "angle": 5,
+            "ok": true,
+            "order": [
+              "base_board_carrier"
+            ],
+            "grip_mm": 3.0
+          },
+          {
+            "angle": 6,
+            "ok": true,
+            "order": [
+              "base_board_carrier"
+            ],
+            "grip_mm": 3.0
+          },
+          {
+            "angle": 7,
+            "ok": true,
+            "order": [
+              "base_board_carrier"
+            ],
+            "grip_mm": 3.0
+          }
+        ],
+        "grip_mm": 3.0
+      }
+    },
+    {
+      "id": "fastener:base_carrier_screws#2:holes",
+      "status": "pass",
+      "message": "clearance holes on the axis through base_board_carrier",
+      "parts": [
+        "base_carrier_screws#2"
+      ],
+      "evidence": {
+        "holes": {
+          "base_board_carrier": {
+            "radius_mm": 1.7,
+            "point": [
+              55.7,
+              32.7,
+              9.0
+            ],
+            "open_to_mm": 3.75
+          }
+        }
+      }
+    },
+    {
+      "id": "fastener:base_carrier_screws#2:engagement",
+      "status": "fail",
+      "message": "1.00 mm of thread in base_carrier_inserts (2.0 threads), under the minimum 3.00 mm (declared)",
+      "parts": [
+        "base_carrier_inserts#2",
+        "base_carrier_screws#2"
+      ],
+      "evidence": {
+        "thread_start_mm": 3.0,
+        "thread_end_mm": 8.74,
+        "engagement_mm": 1.0,
+        "thread_stretches": [
+          [
+            3.0,
+            8.74
+          ]
+        ],
+        "bridge_mm": 0.75,
+        "min_engagement_mm": 3.0,
+        "min_source": "declared",
+        "pitch_mm": 0.5,
+        "probe_radius_mm": 1.38,
+        "threads": 2.0
+      }
+    },
+    {
+      "id": "fastener:base_carrier_screws#2:tip",
+      "status": "pass",
+      "message": "tip clear: 5.50 mm to pan_base",
+      "parts": [
+        "base_carrier_screws#2"
+      ],
+      "evidence": {
+        "next_solid": {
+          "part": "pan_base",
+          "t_mm": 9.5
+        },
+        "tip_t_mm": 4.0,
+        "tip_clearance_mm": 5.5,
+        "min_tip_clearance_mm": 0.5,
+        "probe_end_t_mm": 14.0
+      }
+    },
+    {
+      "id": "fastener:base_carrier_screws#2:length",
+      "status": "fail",
+      "message": "the placed solid is 4.00 mm long, the record says 8; length 4 is outside the 6.00..9.00 mm the stack takes (thread at 3.00 + 3.00 engagement; pan_base at 9.50 less 0.5 tip room)",
+      "parts": [
+        "base_carrier_screws#2"
+      ],
+      "evidence": {
+        "fits_mm": [
+          6.0,
+          9.0
+        ],
+        "limited_by": "pan_base",
+        "stock_that_fits_mm": [
+          6.0,
+          7.0,
+          8.0
+        ],
+        "length_mm": 4.0,
+        "record_length_mm": 8.0,
+        "thread_depth_required_mm": 1.0
+      }
+    },
+    {
+      "id": "fastener:base_carrier_screws#2:tool",
+      "status": "pass",
+      "message": "the driver reaches the head at step 16",
+      "parts": [
+        "base_carrier_screws#2"
+      ],
+      "evidence": {
+        "tool": "driver",
+        "step": 16,
+        "step_fit": "base_board_carrier",
+        "envelope": {
+          "segments": [
+            {
+              "d": 6.0,
+              "length": 60.0
+            },
+            {
+              "d": 25.0,
+              "length": 80.0
+            }
+          ],
+          "start": "head",
+          "offset_mm": 0.0,
+          "swing": null
+        },
+        "start_t_mm": -3.0,
+        "blocked": [],
+        "clear": true,
+        "present_count": 19
+      }
+    },
+    {
+      "id": "fastener:base_carrier_screws#3:seat",
+      "status": "pass",
+      "message": "the head bears on base_board_carrier all round",
+      "parts": [
+        "base_board_carrier",
+        "base_carrier_screws#3"
+      ],
+      "evidence": {
+        "first_hit": [
+          {
+            "part": "base_board_carrier",
+            "t_mm": 0.0
+          },
+          {
+            "part": "base_board_carrier",
+            "t_mm": 0.0
+          },
+          {
+            "part": "base_board_carrier",
+            "t_mm": 0.0
+          },
+          {
+            "part": "base_board_carrier",
+            "t_mm": 0.0
+          },
+          {
+            "part": "base_board_carrier",
+            "t_mm": 0.0
+          },
+          {
+            "part": "base_board_carrier",
+            "t_mm": 0.0
+          },
+          {
+            "part": "base_board_carrier",
+            "t_mm": 0.0
+          },
+          {
+            "part": "base_board_carrier",
+            "t_mm": 0.0
+          }
+        ],
+        "seat_gap_mm": [
+          0.0,
+          0.0
+        ],
+        "head": {
+          "r_mm": 2.75,
+          "h_mm": 3.0,
+          "source": "solid"
+        }
+      }
+    },
+    {
+      "id": "fastener:base_carrier_screws#3:stack",
+      "status": "pass",
+      "message": "base_board_carrier clamped in contact, grip 3.00 mm",
+      "parts": [
+        "base_board_carrier",
+        "base_carrier_screws#3"
+      ],
+      "evidence": {
+        "angles": [
+          {
+            "angle": 0,
+            "ok": true,
+            "order": [
+              "base_board_carrier"
+            ],
+            "grip_mm": 3.0
+          },
+          {
+            "angle": 1,
+            "ok": true,
+            "order": [
+              "base_board_carrier"
+            ],
+            "grip_mm": 3.0
+          },
+          {
+            "angle": 2,
+            "ok": true,
+            "order": [
+              "base_board_carrier"
+            ],
+            "grip_mm": 3.0
+          },
+          {
+            "angle": 3,
+            "ok": true,
+            "order": [
+              "base_board_carrier"
+            ],
+            "grip_mm": 3.0
+          },
+          {
+            "angle": 4,
+            "ok": true,
+            "order": [
+              "base_board_carrier"
+            ],
+            "grip_mm": 3.0
+          },
+          {
+            "angle": 5,
+            "ok": true,
+            "order": [
+              "base_board_carrier"
+            ],
+            "grip_mm": 3.0
+          },
+          {
+            "angle": 6,
+            "ok": true,
+            "order": [
+              "base_board_carrier"
+            ],
+            "grip_mm": 3.0
+          },
+          {
+            "angle": 7,
+            "ok": true,
+            "order": [
+              "base_board_carrier"
+            ],
+            "grip_mm": 3.0
+          }
+        ],
+        "grip_mm": 3.0
+      }
+    },
+    {
+      "id": "fastener:base_carrier_screws#3:holes",
+      "status": "pass",
+      "message": "clearance holes on the axis through base_board_carrier",
+      "parts": [
+        "base_carrier_screws#3"
+      ],
+      "evidence": {
+        "holes": {
+          "base_board_carrier": {
+            "radius_mm": 1.7,
+            "point": [
+              55.7,
+              32.7,
+              33.0
+            ],
+            "open_to_mm": 3.75
+          }
+        }
+      }
+    },
+    {
+      "id": "fastener:base_carrier_screws#3:engagement",
+      "status": "fail",
+      "message": "1.00 mm of thread in base_carrier_inserts (2.0 threads), under the minimum 3.00 mm (declared)",
+      "parts": [
+        "base_carrier_inserts#3",
+        "base_carrier_screws#3"
+      ],
+      "evidence": {
+        "thread_start_mm": 3.0,
+        "thread_end_mm": 8.74,
+        "engagement_mm": 1.0,
+        "thread_stretches": [
+          [
+            3.0,
+            8.74
+          ]
+        ],
+        "bridge_mm": 0.75,
+        "min_engagement_mm": 3.0,
+        "min_source": "declared",
+        "pitch_mm": 0.5,
+        "probe_radius_mm": 1.38,
+        "threads": 2.0
+      }
+    },
+    {
+      "id": "fastener:base_carrier_screws#3:tip",
+      "status": "pass",
+      "message": "tip clear: 5.50 mm to pan_base",
+      "parts": [
+        "base_carrier_screws#3"
+      ],
+      "evidence": {
+        "next_solid": {
+          "part": "pan_base",
+          "t_mm": 9.5
+        },
+        "tip_t_mm": 4.0,
+        "tip_clearance_mm": 5.5,
+        "min_tip_clearance_mm": 0.5,
+        "probe_end_t_mm": 14.0
+      }
+    },
+    {
+      "id": "fastener:base_carrier_screws#3:length",
+      "status": "fail",
+      "message": "the placed solid is 4.00 mm long, the record says 8; length 4 is outside the 6.00..9.00 mm the stack takes (thread at 3.00 + 3.00 engagement; pan_base at 9.50 less 0.5 tip room)",
+      "parts": [
+        "base_carrier_screws#3"
+      ],
+      "evidence": {
+        "fits_mm": [
+          6.0,
+          9.0
+        ],
+        "limited_by": "pan_base",
+        "stock_that_fits_mm": [
+          6.0,
+          7.0,
+          8.0
+        ],
+        "length_mm": 4.0,
+        "record_length_mm": 8.0,
+        "thread_depth_required_mm": 1.0
+      }
+    },
+    {
+      "id": "fastener:base_carrier_screws#3:tool",
+      "status": "pass",
+      "message": "the driver reaches the head at step 16",
+      "parts": [
+        "base_carrier_screws#3"
+      ],
+      "evidence": {
+        "tool": "driver",
+        "step": 16,
+        "step_fit": "base_board_carrier",
+        "envelope": {
+          "segments": [
+            {
+              "d": 6.0,
+              "length": 60.0
+            },
+            {
+              "d": 25.0,
+              "length": 80.0
+            }
+          ],
+          "start": "head",
+          "offset_mm": 0.0,
+          "swing": null
+        },
+        "start_t_mm": -3.0,
+        "blocked": [],
+        "clear": true,
+        "present_count": 19
+      }
+    }
+  ],
+  "findings": [
+    {
+      "id": "fastener:base_carrier_screws#0:engagement",
+      "status": "fail",
+      "message": "1.00 mm of thread in base_carrier_inserts (2.0 threads), under the minimum 3.00 mm (declared)",
+      "parts": [
+        "base_carrier_inserts#0",
+        "base_carrier_screws#0"
+      ],
+      "evidence": {
+        "thread_start_mm": 3.0,
+        "thread_end_mm": 8.74,
+        "engagement_mm": 1.0,
+        "thread_stretches": [
+          [
+            3.0,
+            8.74
+          ]
+        ],
+        "bridge_mm": 0.75,
+        "min_engagement_mm": 3.0,
+        "min_source": "declared",
+        "pitch_mm": 0.5,
+        "probe_radius_mm": 1.38,
+        "threads": 2.0
+      }
+    },
+    {
+      "id": "fastener:base_carrier_screws#0:length",
+      "status": "fail",
+      "message": "the placed solid is 4.00 mm long, the record says 8; length 4 is outside the 6.00..9.00 mm the stack takes (thread at 3.00 + 3.00 engagement; pan_base at 9.50 less 0.5 tip room)",
+      "parts": [
+        "base_carrier_screws#0"
+      ],
+      "evidence": {
+        "fits_mm": [
+          6.0,
+          9.0
+        ],
+        "limited_by": "pan_base",
+        "stock_that_fits_mm": [
+          6.0,
+          7.0,
+          8.0
+        ],
+        "length_mm": 4.0,
+        "record_length_mm": 8.0,
+        "thread_depth_required_mm": 1.0
+      }
+    },
+    {
+      "id": "fastener:base_carrier_screws#1:engagement",
+      "status": "fail",
+      "message": "1.00 mm of thread in base_carrier_inserts (2.0 threads), under the minimum 3.00 mm (declared)",
+      "parts": [
+        "base_carrier_inserts#1",
+        "base_carrier_screws#1"
+      ],
+      "evidence": {
+        "thread_start_mm": 3.0,
+        "thread_end_mm": 8.74,
+        "engagement_mm": 1.0,
+        "thread_stretches": [
+          [
+            3.0,
+            8.74
+          ]
+        ],
+        "bridge_mm": 0.75,
+        "min_engagement_mm": 3.0,
+        "min_source": "declared",
+        "pitch_mm": 0.5,
+        "probe_radius_mm": 1.38,
+        "threads": 2.0
+      }
+    },
+    {
+      "id": "fastener:base_carrier_screws#1:length",
+      "status": "fail",
+      "message": "the placed solid is 4.00 mm long, the record says 8; length 4 is outside the 6.00..9.00 mm the stack takes (thread at 3.00 + 3.00 engagement; pan_base at 9.50 less 0.5 tip room)",
+      "parts": [
+        "base_carrier_screws#1"
+      ],
+      "evidence": {
+        "fits_mm": [
+          6.0,
+          9.0
+        ],
+        "limited_by": "pan_base",
+        "stock_that_fits_mm": [
+          6.0,
+          7.0,
+          8.0
+        ],
+        "length_mm": 4.0,
+        "record_length_mm": 8.0,
+        "thread_depth_required_mm": 1.0
+      }
+    },
+    {
+      "id": "fastener:base_carrier_screws#2:engagement",
+      "status": "fail",
+      "message": "1.00 mm of thread in base_carrier_inserts (2.0 threads), under the minimum 3.00 mm (declared)",
+      "parts": [
+        "base_carrier_inserts#2",
+        "base_carrier_screws#2"
+      ],
+      "evidence": {
+        "thread_start_mm": 3.0,
+        "thread_end_mm": 8.74,
+        "engagement_mm": 1.0,
+        "thread_stretches": [
+          [
+            3.0,
+            8.74
+          ]
+        ],
+        "bridge_mm": 0.75,
+        "min_engagement_mm": 3.0,
+        "min_source": "declared",
+        "pitch_mm": 0.5,
+        "probe_radius_mm": 1.38,
+        "threads": 2.0
+      }
+    },
+    {
+      "id": "fastener:base_carrier_screws#2:length",
+      "status": "fail",
+      "message": "the placed solid is 4.00 mm long, the record says 8; length 4 is outside the 6.00..9.00 mm the stack takes (thread at 3.00 + 3.00 engagement; pan_base at 9.50 less 0.5 tip room)",
+      "parts": [
+        "base_carrier_screws#2"
+      ],
+      "evidence": {
+        "fits_mm": [
+          6.0,
+          9.0
+        ],
+        "limited_by": "pan_base",
+        "stock_that_fits_mm": [
+          6.0,
+          7.0,
+          8.0
+        ],
+        "length_mm": 4.0,
+        "record_length_mm": 8.0,
+        "thread_depth_required_mm": 1.0
+      }
+    },
+    {
+      "id": "fastener:base_carrier_screws#3:engagement",
+      "status": "fail",
+      "message": "1.00 mm of thread in base_carrier_inserts (2.0 threads), under the minimum 3.00 mm (declared)",
+      "parts": [
+        "base_carrier_inserts#3",
+        "base_carrier_screws#3"
+      ],
+      "evidence": {
+        "thread_start_mm": 3.0,
+        "thread_end_mm": 8.74,
+        "engagement_mm": 1.0,
+        "thread_stretches": [
+          [
+            3.0,
+            8.74
+          ]
+        ],
+        "bridge_mm": 0.75,
+        "min_engagement_mm": 3.0,
+        "min_source": "declared",
+        "pitch_mm": 0.5,
+        "probe_radius_mm": 1.38,
+        "threads": 2.0
+      }
+    },
+    {
+      "id": "fastener:base_carrier_screws#3:length",
+      "status": "fail",
+      "message": "the placed solid is 4.00 mm long, the record says 8; length 4 is outside the 6.00..9.00 mm the stack takes (thread at 3.00 + 3.00 engagement; pan_base at 9.50 less 0.5 tip room)",
+      "parts": [
+        "base_carrier_screws#3"
+      ],
+      "evidence": {
+        "fits_mm": [
+          6.0,
+          9.0
+        ],
+        "limited_by": "pan_base",
+        "stock_that_fits_mm": [
+          6.0,
+          7.0,
+          8.0
+        ],
+        "length_mm": 4.0,
+        "record_length_mm": 8.0,
+        "thread_depth_required_mm": 1.0
+      }
+    }
+  ],
+  "exclusions": [],
+  "limits": {
+    "seat_tol_mm": 0.05,
+    "gap_tol_mm": 0.05,
+    "hole_clearance_mm": 0.1,
+    "tip_clearance_mm": 0.5,
+    "stack_tol_mm": 0.05,
+    "length_tol_mm": 0.05,
+    "min_engagement_d": 0.8,
+    "look_ahead_mm": 10.0,
+    "lines": 8,
+    "service_access": true,
+    "touch_mm": 0.01,
+    "overlap_mm3": 0.001,
+    "stock_lengths": "default metric + inch list"
+  },
+  "assumptions": [
+    "Each fastener is read along its own axis from the declared seat (dossier fastener() axes); the model is checked, not the hardware: no tolerance stack, no print shrink, no torque or pull-out rating.",
+    "Threads are envelopes: engagement is the axial overlap of the screw with the receiver's modelled thread region (material at 0.92 d/2 or just outside d/2 but inside d + hole_clearance/2, whichever starts first; gaps up to 1.5 pitches bridged, so crests and relief grooves read as one region), not proof of strength.",
+    "The head bears where lines parallel to the axis (FastenerOptions.lines angles x three rings between shank and head rim) first meet the clamped part: the outer ring must bear at every angle, the inner ones may run through a chamfer at the hole, and the stack needs one clean ring per angle. Holes are measured by radial rays at 8 angles and three depths per clamped part. Features between the samples are missed.",
+    "Without a placed screw solid the head is the declared head_d_mm x head_h_mm, else 1.6 d x 1.0 d (socket head), and the length is the record's length_mm.",
+    "The tool is the declared envelope (stepped cylinders and an optional swing disc), swept straight along the axis from the head top; it is checked against the parts present at the assembly step that installs the fastener (parts no step fits count as present).",
+    "Minimum engagement is the declared min_engagement_mm, else min_engagement_d x d; stock lengths are a default list of common metric and inch lengths unless the project gives its own."
+  ],
+  "physical_fit_verified": false,
+  "table": [
+    {
+      "fastener": "base_carrier_screws#0",
+      "name": "base_carrier_screws",
+      "key": "turret_screw_m3x8",
+      "clamps": "base_board_carrier",
+      "stack": [
+        "base_board_carrier"
+      ],
+      "into": "base_carrier_inserts",
+      "seat": [
+        56.0,
+        -31.0,
+        9.0
+      ],
+      "direction": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "thread_start": [
+        53.0,
+        -31.0,
+        9.0
+      ],
+      "grip_mm": 3.0,
+      "thread_start_mm": 3.0,
+      "thread_start_record_mm": 3.0,
+      "thread_depth_mm": 5.74,
+      "engagement_mm": 1.0,
+      "engagement_threads": 2.0,
+      "min_engagement_mm": 3.0,
+      "length_mm": 4.0,
+      "stock": true,
+      "fits_mm": [
+        6.0,
+        9.0
+      ],
+      "thread_depth_required_mm": 1.0,
+      "tip_clearance_mm": 5.5,
+      "tool": "driver",
+      "step": 16,
+      "tool_clear": true,
+      "status": "fail",
+      "failed": [
+        "engagement",
+        "length"
+      ],
+      "body": "base_carrier_screws#0"
+    },
+    {
+      "fastener": "base_carrier_screws#1",
+      "name": "base_carrier_screws",
+      "key": "turret_screw_m3x8",
+      "clamps": "base_board_carrier",
+      "stack": [
+        "base_board_carrier"
+      ],
+      "into": "base_carrier_inserts",
+      "seat": [
+        56.0,
+        -31.0,
+        33.0
+      ],
+      "direction": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "thread_start": [
+        53.0,
+        -31.0,
+        33.0
+      ],
+      "grip_mm": 3.0,
+      "thread_start_mm": 3.0,
+      "thread_start_record_mm": 3.0,
+      "thread_depth_mm": 5.74,
+      "engagement_mm": 1.0,
+      "engagement_threads": 2.0,
+      "min_engagement_mm": 3.0,
+      "length_mm": 4.0,
+      "stock": true,
+      "fits_mm": [
+        6.0,
+        9.0
+      ],
+      "thread_depth_required_mm": 1.0,
+      "tip_clearance_mm": 5.5,
+      "tool": "driver",
+      "step": 16,
+      "tool_clear": true,
+      "status": "fail",
+      "failed": [
+        "engagement",
+        "length"
+      ],
+      "body": "base_carrier_screws#1"
+    },
+    {
+      "fastener": "base_carrier_screws#2",
+      "name": "base_carrier_screws",
+      "key": "turret_screw_m3x8",
+      "clamps": "base_board_carrier",
+      "stack": [
+        "base_board_carrier"
+      ],
+      "into": "base_carrier_inserts",
+      "seat": [
+        56.0,
+        31.0,
+        9.0
+      ],
+      "direction": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "thread_start": [
+        53.0,
+        31.0,
+        9.0
+      ],
+      "grip_mm": 3.0,
+      "thread_start_mm": 3.0,
+      "thread_start_record_mm": 3.0,
+      "thread_depth_mm": 5.74,
+      "engagement_mm": 1.0,
+      "engagement_threads": 2.0,
+      "min_engagement_mm": 3.0,
+      "length_mm": 4.0,
+      "stock": true,
+      "fits_mm": [
+        6.0,
+        9.0
+      ],
+      "thread_depth_required_mm": 1.0,
+      "tip_clearance_mm": 5.5,
+      "tool": "driver",
+      "step": 16,
+      "tool_clear": true,
+      "status": "fail",
+      "failed": [
+        "engagement",
+        "length"
+      ],
+      "body": "base_carrier_screws#2"
+    },
+    {
+      "fastener": "base_carrier_screws#3",
+      "name": "base_carrier_screws",
+      "key": "turret_screw_m3x8",
+      "clamps": "base_board_carrier",
+      "stack": [
+        "base_board_carrier"
+      ],
+      "into": "base_carrier_inserts",
+      "seat": [
+        56.0,
+        31.0,
+        33.0
+      ],
+      "direction": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "thread_start": [
+        53.0,
+        31.0,
+        33.0
+      ],
+      "grip_mm": 3.0,
+      "thread_start_mm": 3.0,
+      "thread_start_record_mm": 3.0,
+      "thread_depth_mm": 5.74,
+      "engagement_mm": 1.0,
+      "engagement_threads": 2.0,
+      "min_engagement_mm": 3.0,
+      "length_mm": 4.0,
+      "stock": true,
+      "fits_mm": [
+        6.0,
+        9.0
+      ],
+      "thread_depth_required_mm": 1.0,
+      "tip_clearance_mm": 5.5,
+      "tool": "driver",
+      "step": 16,
+      "tool_clear": true,
+      "status": "fail",
+      "failed": [
+        "engagement",
+        "length"
+      ],
+      "body": "base_carrier_screws#3"
+    }
+  ],
+  "tools": {
+    "driver": {
+      "segments": [
+        {
+          "d": 6.0,
+          "length": 60.0
+        },
+        {
+          "d": 25.0,
+          "length": 80.0
+        }
+      ]
+    }
+  },
+  "relation_stats": {
+    "parts": 19,
+    "pairs": 171,
+    "candidates": 12,
+    "kernel_queries": 4,
+    "cache_hits": 8,
+    "broad_phase_s": 0.0058,
+    "narrow_phase_s": 0.0821,
+    "states": {
+      "apart": 4,
+      "touching": 4,
+      "overlapping": 4,
+      "contains": 0,
+      "unknown": 0,
+      "unchecked": 0
+    }
+  }
+}

@@ -30,6 +30,11 @@
 | The 3D file viewer looks unrelated to the main site or its controls lose contrast | [Original-file viewer theme](domains/file-viewer-theme.md) |
 | Phone status checkboxes remain reachable but their part names disappear, despite sticky cell styling | [Sticky identity and the scroll wrapper](inbox/2026-10-29-sticky-part-identity-needs-the-scroll-wrapper.md) |
 | Wheel tests fail after a fixed sleep under software rendering | [Wait for rendered camera targets](inbox/2026-10-29-camera-tests-must-wait-for-rendered-targets.md) |
+| A PCB is seated without overlap but cannot be installed, reached with a driver, or removed | [Final pose does not prove electronics service](inbox/2026-10-29-final-pose-does-not-prove-electronics-service.md) |
+| A removable board has wire lengths but no verified disconnect travel, retained slack or wire exit | [Cutting allowance is not service slack](inbox/2026-10-29-wire-allowance-is-not-service-slack.md) |
+| A bounded CAD check stays green after a configuration edit, or invalid Boolean geometry reports zero overlap | [Full input closure and valid Booleans](inbox/2026-10-29-bounded-cad-checks-need-full-inputs-and-valid-booleans.md) |
+| A manufacturer check turns green when its private CAD cache is missing | [Manufacturer checks must reject missing inputs](inbox/2026-10-29-manufacturer-checks-must-reject-missing-inputs.md) |
+| A McMaster lookup reports no specification table or no CAD controls | [Verify the rendered cause](inbox/2026-10-29-missing-product-table-needs-rendered-evidence.md) |
 | Print hashes pass but package mixes revisions, slicer settings or stale totals | [Preflight is not a generation transaction](inbox/2026-10-29-print-preflight-is-not-a-generation-transaction.md) |
 | Demo hit counts increase but targets stay upright, detach, or clip through the floor | [Hits must produce visible, validated motion](inbox/2026-10-29-target-hits-need-visible-motion.md) |
 | Published notes show Mermaid source instead of a diagram | [Validate the published diagram consumer](inbox/2026-10-29-mermaid-needs-the-published-renderer.md) |

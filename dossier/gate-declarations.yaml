@@ -16,3 +16,7 @@ intended_overlaps:
   reason: 'thread envelope: the M3 screw''s nominal Ø3 in the insert''s Ø2.5 minor diameter, by design'
 - parts: [hopper_screws, hopper_inserts]
   reason: 'thread envelope: the M3 screw''s nominal Ø3 in the insert''s Ø2.5 minor diameter, by design'
+- parts: [base_board_screws, base_board_inserts]
+  reason: Nominal screw thread overlaps the insert minor diameter; the isolated fastener gate checks engagement.
+- parts: [base_carrier_screws, base_carrier_inserts]
+  reason: Nominal screw thread overlaps the insert minor diameter; the isolated fastener gate checks engagement.

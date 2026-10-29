@@ -57,7 +57,7 @@ SECTIONS = {
                     'flywheel_motor_r', 'esc_l', 'esc_r', 'cartridge_board'],
     'S5-barrel': ['barrel', 'laser_mount', 'laser', 'laser_screws', 'laser_inserts'],
     'S6-wiring': ['slip_ring', 'slip_ring_rotor', 'ring_carrier', 'ring_driver', 'ring_coupling', 'board_bay',
-                  'board_bay_lid', 'turret_board', 'base_board', 'dt_receptacle', 'dt_plug'],
+                  'board_bay_lid', 'turret_board', 'base_board', 'base_board_carrier', 'base_board_inserts', 'base_carrier_inserts', 'dt_receptacle', 'dt_plug'],
     'S7-compute': ['compute_tray', 'compute_shell', 'compute', 'eth_jack', 'xt30_input', 'input_fuses'],
     'S8-stand': ['stand_box', 'stand_bottom', 'stand_foot', 'dock', 'pack', 'terminal_board', 'usb_can',
                  'panel_switch', 'panel_pendant'],
@@ -94,6 +94,8 @@ FIXED = [
     ('I-motor-r', 'flywheel_motor_r', 'cartridge_body'), ('I-esc-l', 'esc_l', 'cartridge_body'),
     ('I-esc-r', 'esc_r', 'cartridge_body'), ('I-cart-board', 'cartridge_board', 'cartridge_body'),
     ('I-pile', 'ball', 'hopper'),
+    ('I-base-board-inserts', 'base_board_inserts', 'base_board_carrier'),
+    ('I-base-carrier-inserts', 'base_carrier_inserts', 'pan_base'),
     # each flywheel body (seed the hub)
     ('I-tyre-l', 'flywheel_tyre', 'flywheel'), ('I-tyre-r', 'flywheel_tyre_m', 'flywheel_m'),
 ]
@@ -124,7 +126,10 @@ def register(reg, T, pile):
 
     # parts at home: the tilt frame placed by a translation (so the cavity follows the hopper)
     for name, (s, frame) in tg.parts_local(T, park).items():
-        reg.add_part(name, _shape(s), section=SECTION_OF[name], place=home if frame == 'tilt' else None,
+        if name in tu.base_board_service.screw_specs():
+            continue  # registered as individual fasteners below, not a duplicate compound
+        solids = list(_shape(s).Solids()) if name in ('base_board_inserts', 'base_carrier_inserts') else _shape(s)
+        reg.add_part(name, solids, section=SECTION_OF[name], place=home if frame == 'tilt' else None,
                      grounded=name == GROUNDED, free=name in FREE, reason=FREE.get(name, ''))
     r = G.ball / 2
     reg.add_part('ball', tg.sphere(r), section=SECTION_OF['ball'], place=[c_to_t(G, c) for c in tg.hopper_balls(pile)],
@@ -175,6 +180,13 @@ def register(reg, T, pile):
                      at=[Axis(o, d) for o, d in spec.axes], length_mm=spec.length_mm, diameter_mm=SCREW['d'],
                      thread_start_mm=spec.thread_start_mm, thread_depth_mm=tu.INSERT_M3['l'],
                      shape=socket_head_envelope(SCREW['d'], spec.length_mm, SCREW['head_d'], SCREW['head_h']))
+
+    for name, spec in tu.base_board_service.screw_specs().items():
+        reg.fastener(spec['key'], clamps=spec['clamps'], into=spec['into'], name=name,
+                     via='I-base-board' if name == 'base_board_screws' else 'I-base-carrier', tool='base driver',
+                     at=[Axis(o,d) for o,d in spec['axes']], length_mm=spec['length_mm'], diameter_mm=3.,
+                     thread_start_mm=spec['thread_start_mm'], thread_depth_mm=tu.base_board_service.INSERT_LENGTH,
+                     shape=tu.base_board_service.public_screw(spec['length_mm']).val())
 
     for order, (fit, onto, direction, extra) in enumerate(ASSEMBLY, start=1):
         reg.assembly.step(order, fit, onto, direction=direction, **extra)
@@ -243,8 +255,16 @@ ASSEMBLY = [
     ('pan_servo', 'pan_pinion', '+Z', {}),
     ('slip_ring_rotor', 'ring_coupling', '+Z', {}),
     ('slip_ring', 'slip_ring_rotor', '+Z', {}),
-    ('base_board', 'pan_bearing', '+Z', {}),
+    # The generic single-part sequence does not certify this bench subassembly moving
+    # as one module. Keep coverage explicit; check_base_board_service.py proves its
+    # rigid module path. Do not add an overlap waiver to make this sequence pass.
+    ('base_board_carrier', None, '-X', {}),
+    ('base_board_inserts', 'base_board_carrier', '+X', {}),
+    ('base_board', 'base_board_carrier', '+X', {'tool': 'base driver', 'fasteners': ['base_board_screws']}),
     ('pan_base', 'pan_bearing', '+Z', {}),
+    ('base_carrier_inserts', 'pan_base', '-X', {}),
+    # Carrier screws are covered, but grouped module installation remains unresolved.
+    ('base_carrier_screws', 'base_board_carrier', '-X', {'tool': 'base driver', 'fasteners': ['base_carrier_screws']}),
     ('ring_carrier', 'pan_base', '+Z', {}),
     ('bumper_ring', 'pan_base', '+Z', {}),
     ('dt_receptacle', 'pan_base', '+Y', {}),
