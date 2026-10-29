@@ -114,8 +114,9 @@ def hardware(*, private=False):
 
 
 def module_members():
-    """Exact retained identities; no unallocated wires/pads hidden in a compound."""
-    return ['base_board_carrier','base_board','c3_support','C3_module_housing'] + [
+    """Represented retained identities, not a hardware-complete module inventory."""
+    return ['base_board_carrier','base_board','c3_support','C3_module_housing',
+            'C2_power_module_RESERVATION','C2_signal_module_RESERVATION'] + [
         f'{group}#{i}' for group,count in (('base_board_screws',4),('base_board_inserts',4),
                                           ('c3_support_screws',2),('c3_support_nuts',2))
         for i in range(count)] + ['component:'+n for n in bb.components()]
@@ -124,15 +125,25 @@ def module_members():
 def assembly_order():
     return [
         {'order':1,'fit':'base_board_carrier','note':'Bench; PCB absent.'},
-        {'order':2,'fit':'c3_support_nuts','insertion':'+X','note':'Load inward-open pockets before PCB.'},
-        {'order':3,'fit':'c3_support','insertion':'-X','fasteners':['c3_support_screws'],
+        {'order':2,'fit':'base_board_inserts',
+         'note':'Bare carrier, before connectors/electronics. Heat-setting process still requires coupon measurements.'},
+        {'order':3,'fit':'c3_support_nuts','insertion':'+X','note':'Load inward-open pockets before PCB.'},
+        {'order':4,'fit':'c3_support','insertion':'-X','fasteners':['c3_support_screws'],
          'note':'Hold nuts from the inward face until screws engage; screws and nuts remain with module.'},
-        {'order':4,'fit':'C3_module_housing','insertion':'+Y',
+        {'order':5,'fit':'C3_module_housing','insertion':'+Y',
          'note':'Snap-panel flex/retention unresolved; rigid supplier intersection is recorded, not waived.'},
-        {'order':5,'fit':'base_board_inserts','note':'Existing qualified process still requires coupon measurements.'},
         {'order':6,'fit':'base_board','fasteners':['base_board_screws'],
          'note':'PCB prevents straight nut removal after installation; remove PCB first to replace bracket.'},
     ]
+
+
+def unmodelled_retained_items():
+    return ['Twelve C3 male contacts and installed crimps',
+            'Four C2 signal male contacts and installed crimps',
+            'C2 power connector contacts/terminations and retained power tails',
+            'C2/C3 signal wiring, external BUS and return junctions, ties and abrasion protection',
+            'Pan-servo carrier-side connector, support and retained lead',
+            'New protection circuit, thermal solution and real board terminals']
 
 
 def load_screen():

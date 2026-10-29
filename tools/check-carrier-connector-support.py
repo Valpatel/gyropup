@@ -235,6 +235,7 @@ def run(output,public_out=None):
             'checks':checks,'relations':relations,'existing_unqualified_mates':existing_mates,
             'panel_housing_relation':panel_relation.to_dict(),'panel_retention_qualified':False,
             'load_screen':cs.load_screen(),'assembly_order':cs.assembly_order(),'rigid_module_members':cs.module_members(),
+            'rigid_module_hardware_complete':False,'unmodelled_retained_items':cs.unmodelled_retained_items(),
             'limits':['Not a full insertion/removal sequence or upper-head-motion check.',
                       'Panel snap flex, thread clocking, torque, strength, creep and physical fit remain unqualified.',
                       'Nut pockets resist rotation only after assembly; hold loose nuts until screws engage.',
