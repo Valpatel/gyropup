@@ -5,6 +5,9 @@
   "scripts": {
     "build": "node tools/build-site.mjs",
     "dev": "npm run build && node tools/serve-site.mjs",
+    "preview": "node tools/serve-site.mjs",
+    "preview:status": "node tools/serve-site.mjs --status",
+    "test:preview": "node --test tools/test-site-preview.mjs",
     "deploy": "npm run build && wrangler pages deploy dist --project-name gyropup --branch main",
     "test:web": "node tools/test-site.mjs",
     "test:markdown": "node --test tools/test-markdown.mjs",

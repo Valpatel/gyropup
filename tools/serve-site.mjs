@@ -6,11 +6,15 @@ import { pathToFileURL } from 'node:url';
 import { SITE_CACHE_CONTROL } from './site-cache.mjs';
 const root = path.resolve(import.meta.dirname, '../dist');
 const types = {'.html':'text/html; charset=utf-8','.md':'text/markdown; charset=utf-8','.txt':'text/plain; charset=utf-8','.js':'text/javascript','.mjs':'text/javascript','.css':'text/css','.json':'application/json','.svg':'image/svg+xml','.png':'image/png','.jpg':'image/jpeg','.webp':'image/webp','.mp4':'video/mp4','.webm':'video/webm','.woff2':'font/woff2','.stl':'application/octet-stream','.wasm':'application/wasm'};
-const port = Number(process.env.PORT || 8644);
-export function createSiteServer(directory = root) {
+export function createSiteServer(directory = root, preview = null) {
 return http.createServer(async (req,res)=>{
   try {
     const pathname = decodeURIComponent(new URL(req.url,'http://localhost').pathname);
+    if (preview && pathname === '/_gyropup/preview') {
+      if (!['GET', 'HEAD'].includes(req.method)) { res.writeHead(405); res.end(); return; }
+      res.writeHead(200, {'Content-Type':'application/json', 'Cache-Control':'no-store'});
+      res.end(req.method === 'HEAD' ? undefined : JSON.stringify(preview)); return;
+    }
     let file = path.resolve(directory,'.'+pathname);
     if (!file.startsWith(directory+path.sep) && file!==directory) throw new Error('Invalid path');
     try { if ((await stat(file)).isDirectory()) file = path.join(file,'index.html'); }
@@ -38,5 +42,8 @@ return http.createServer(async (req,res)=>{
 });
 }
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
-  const server = createSiteServer().listen(port,'127.0.0.1',()=>console.log(`Gyropup: http://127.0.0.1:${server.address().port}`));
+  const initialParentPid = process.ppid;
+  const {previewCLI} = await import('./site-preview.mjs');
+  try { await previewCLI(createSiteServer, root, process.argv.slice(2), initialParentPid); }
+  catch (error) { console.error(error.message); process.exitCode = 1; }
 }
