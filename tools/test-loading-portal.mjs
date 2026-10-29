@@ -10,6 +10,7 @@ const context=await browser.newContext({viewport:{width:320,height:568},reducedM
 await context.addInitScript(()=>{localStorage.setItem('gyropup.probe','off');localStorage.setItem('gyropup-sfx','0');sessionStorage.setItem('gyropup.prototype-notice','2026-10-29-v1');});
 await mkdir(out,{recursive:true});
 const json=async path=>{const r=await context.request.get(base+path);assert.ok(r.ok(),path);return r.json();};
+const initialVersion=await json('/version.json');
 const turret=await json('/exports/sim/turret_box/manifest.json'),part=turret.parts.find(p=>p.name==='barrel');
 const partURL='/exports/sim/turret_box/'+part.file;
 const manifest={title:'Loading test: published barrel',parts:[{name:part.name,file:base+partURL,color:part.color,bounds_mm:part.bbox}]};
@@ -115,14 +116,14 @@ try{
   await reports.unroute('**/exports/leg/fea/summary.json*');await retry(reports,'load-fea');await state(reports,'load-fea','ready');
   assert.ok(await reports.evaluate(()=>window.savedLog===document.getElementById('log')),'Retry preserves unrelated report identity');record('Independent report failure versus optional404');await reports.close();
 
-  for(const mode of ['held','http','html','empty']){
+  for(const mode of ['held','http','html','empty','prefix']){
     let releasePart;
     const page=await pageFor('/designer/kit/viewer.html?manifest='+encodeURIComponent('/__loading__/model.json'),async page=>{
       await page.route('**/__loading__/model.json',route=>route.fulfill({contentType:'application/json',body:JSON.stringify(manifest)}));
       await page.route('**'+partURL+'*',async route=>{
         if(mode==='held'){await new Promise(resolve=>releasePart=resolve);await route.continue();}
         else if(mode==='http')await fail(route);
-        else await route.fulfill({contentType:mode==='html'?'text/html':'application/octet-stream',body:mode==='html'?'<html>Not STL</html>':Buffer.alloc(84)});
+        else await route.fulfill({contentType:mode==='html'?'text/html':'application/octet-stream',body:mode==='html'?'<html>Not STL</html>':mode==='prefix'?' '.repeat(80)+'solid invalid\nendsolid invalid\n':Buffer.alloc(84)});
       });
     });
     if(mode==='held'){
@@ -163,7 +164,7 @@ try{
   await state(talk,'service-load-status','ready');assert.ok(await talk.locator('#detect').isEnabled());assert.ok(await talk.evaluate(()=>window.savedTalk===window.__talk));
   assert.match(await talk.locator('#svc').innerText(),/scripted/);record('Talk same-stage retry and service pending state');await talk.close();
   assert.deepEqual(errors,[],'No escaped bootstrap or decode exceptions');
-  const version=await json('/version.json');await writeFile(`${out}/${engine.name()}-report.json`,JSON.stringify({checkedAt:new Date().toISOString(),base,version,cases,errors},null,2));
+  const version=await json('/version.json');assert.deepEqual(version,initialVersion,'Do not mix assets from multiple builds during this suite');await writeFile(`${out}/${engine.name()}-report.json`,JSON.stringify({checkedAt:new Date().toISOString(),base,version,cases,errors},null,2));
   console.log(`PASS ${engine.name()}: ${cases.length} portal loading/recovery cases; optional404 versus failure, stale reports, invalid STL/JSON/surfaces, real frame readiness, same-stage Talk retry and keyboard/phone status controls`);
 }catch(error){
   console.error('Escaped page errors:',errors);

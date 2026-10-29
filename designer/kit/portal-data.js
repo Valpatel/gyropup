@@ -30,10 +30,13 @@ export const isMarkdown = value => typeof value === 'string' && value.trim().len
 
 /** Reject empty/HTML responses before STLLoader can mistake them for binary STL. */
 export function validateSTLBytes(bytes) {
-  if (!(bytes instanceof ArrayBuffer) || bytes.byteLength < 15) throw new Error('The downloaded part is empty or is not STL geometry.');
-  const start = new TextDecoder().decode(new Uint8Array(bytes, 0, Math.min(bytes.byteLength, 256))).trimStart();
-  const binary = bytes.byteLength >= 84 && 84 + new DataView(bytes).getUint32(80, true) * 50 === bytes.byteLength;
-  if (!binary && !/^solid(?:\s|$)/i.test(start)) throw new Error('The downloaded part is not STL geometry.');
+  if (!(bytes instanceof ArrayBuffer) || bytes.byteLength < 84) throw new Error('The downloaded part is empty or is not STL geometry.');
+  const data=new Uint8Array(bytes),solid=[115,111,108,105,100];
+  const binary = 84 + new DataView(bytes).getUint32(80, true) * 50 === bytes.byteLength;
+  // Match the vendored STLLoader's byte-level classifier: trimming whitespace or
+  // accepting uppercase SOLID could admit text it treats as a huge binary mesh.
+  const ascii=[0,1,2,3,4].some(offset=>solid.every((value,index)=>data[offset+index]===value));
+  if (!binary && !ascii) throw new Error('The downloaded part is not STL geometry.');
 }
 
 export function validateGeometry(geometry) {
