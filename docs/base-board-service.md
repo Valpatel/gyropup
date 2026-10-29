@@ -8,6 +8,7 @@ Geometry implemented; model acceptance remains incomplete after the detailed man
 
 The [component checklist](base-board-component-checklist.md) records exact hardware placements, assembly/service dependencies, missing connector and wiring envelopes, and the remaining acceptance evidence.
 The [cut-stock and drilling plan](base-board-stock.md) defines the custom Ø3.2 PCB holes separately from the Ø3.4 printed carrier retainer holes.
+The [disconnect candidate](base-board-interfaces.md) adds the rounded solder-side window, actual strain-relief anchor features, C2 pin map, interface drawing and bounded connector/service-space checks. Its authored connector reservations do not qualify the real harness; readiness remains false.
 
 ## Design contract
 

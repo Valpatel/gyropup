@@ -26,7 +26,7 @@ def main():
                     f'<path d="M{x-2.3},{h-y}h4.6 M{x},{h-y-2.3}v4.6" stroke="#bd3a12" stroke-width=".09"/>']
     drawing += ['</g>', '<text x="28" y="390" font-size="14">Hole centres from the cut board’s lower-left corner (mm):</text>',
                 f'<text x="28" y="414" font-size="14">{", ".join(f"({x:g}, {y:g})" for x,y in holes)}; edge ligament {margin:g} mm nominal</text>',
-                '<text x="28" y="441" font-size="12">Research drawing: verify stock, drill, copper clearance and physical fit before assembly.</text>', '</g></svg>']
+                '<text x="28" y="441" font-size="12">Not to scale — use stated dimensions. Verify stock, copper clearance and physical fit.</text>', '</g></svg>']
     (out/'pcb-drill-pattern.svg').write_text('\n'.join(drawing)+'\n')
     receipt = {'schema':'gyropup.base-pcb-drill/1', 'size_mm':[w,h], 'hole_diameter_mm':board.PCB_MOUNT_CLEAR,
                'centres_from_cut_lower_left_mm':holes, 'minimum_nominal_edge_ligament_mm':margin,

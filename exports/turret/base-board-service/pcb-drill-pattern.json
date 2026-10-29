@@ -28,9 +28,9 @@
   "factory_pattern_reused": false,
   "physical_fit_verified": false,
   "sources": {
-    "cad/turret_base_board.py": "999af1583be283641dfac352166f14c4607f5d55210f96eeec025de1b2d2f6ca",
+    "cad/turret_base_board.py": "153e49871e0a3359478cd34a50daf7e44f4497970097475c829dbbcdacda90ba",
     "cad/turret_boards.py": "c7a115d2fe3cefddf46b0dd521e21076e1f7721235df3e7bd22fadb6e165707b",
-    "tools/export-base-board-drill.py": "73357ffe9cf15ed615001a1ba6df6d77c1c239cd68e1cdfdfb73dd569d883998"
+    "tools/export-base-board-drill.py": "c29d4f3137549c320824fe18ac64ce51fe72d6cb42b7b3d6db769c51466ac00a"
   },
   "limits": [
     "Not a drill template at printed page scale; use the stated dimensions.",

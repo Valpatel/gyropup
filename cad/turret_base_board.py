@@ -22,6 +22,7 @@ INSERT_PILOT = 4.0  # catalogue maximum hole diameter; printed fit still needs a
 INSERT_LENGTH = 5.74  # normalized 94459A140 manufacturer model, nominal 5.7
 PUBLIC_NOTE = 'authored simplified hardware; not manufacturer CAD; threads/knurls omitted'
 MANUFACTURER_PARTS = ('91290A111', '91290A113', '94459A140')
+WIRING_WINDOW = (-26., 26., 14., 28.)  # Y/Z; rounded R2, between the unchanged PCB bosses
 
 
 def box(x0, x1, y0, y1, z0, z1):
@@ -45,10 +46,22 @@ def service_base(original):
         s = s.union(box(45,53,y-4,y+4,4.99,37))
     for y,z in CARRIER_HOLES:
         s = s.cut(cx(INSERT_PILOT/2,46.5,53.1,y,z))
+    # Fixed C2 harness saddle. Its footprint is wholly inside the existing foot;
+    # all new material is above z5. The tie/wire fit remains unqualified.
+    s = s.union(fixed_harness_saddle())
     return s
 
 
-def carrier(_G=None):
+def fixed_harness_saddle():
+    return box(50,58,37,42,4.99,12).cut(box(52,56,36.9,42.1,7,9.5))
+
+
+def wiring_window():
+    y0,y1,z0,z1 = WIRING_WINDOW
+    return box(52.9,56.1,y0,y1,z0,z1).edges('|X').fillet(2)
+
+
+def carrier(_G=None, *, wiring=True):
     """Print exterior face down (rotate +90 about Y); insert bosses point upward."""
     s = box(53,56,-35,35,5.5,37.5)
     for y,z in BOARD_HOLES:
@@ -56,6 +69,14 @@ def carrier(_G=None):
         s = s.cut(cx(INSERT_PILOT/2,47.9,54.5,y,z))
     for y,z in CARRIER_HOLES:
         s = s.cut(cx(M3_CLEAR/2,52.9,56.1,y,z))
+    if wiring:
+        # Access to the actual solder side, including the existing edge pad strip.
+        # No wire is routed through the 0.25/0.5 mm perimeter clearances.
+        s = s.cut(wiring_window())
+        # Two tie slots retain a web on the side rail. No outward boss: the
+        # exterior face must remain planar for the existing face-down print.
+        for z0,z1 in ((18,19.5),(22.5,24)):
+            s = s.cut(box(52.9,56.1,-32,-29,z0,z1))
     return s
 
 

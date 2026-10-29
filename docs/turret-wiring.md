@@ -1,5 +1,7 @@
 # Turret wiring and harness (v0, the bench build)
 
+**Carrier revision in review:** [C2 disconnect and service layout](base-board-interfaces.md) supersedes the original fixed C2 attachment/120 mm estimate for the removable carrier. It defines actual cavity identities and protected/disconnected boundaries, while marking holder voltage, DT wire/seal compatibility, D14/U2 protection and physical routing unqualified. It is an interface drawing, not a verified electrical schematic or build authorization.
+
 The electrics of the foam-ball turret as built for the bench (docs/decisions.yaml D42): every connector and its pinout,
 every conductor's gauge and length, the fuses, the hardware arm chain (the safety pulses across the slip ring, the
 overspeed trip, the phase-short brake), the current budget, and the boards laid out part by part. Since D66 the turret

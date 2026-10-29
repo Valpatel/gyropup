@@ -14,6 +14,7 @@ jobs:
           - suite: mechanism
             commands: |
               python3 tools/test-print-provenance.py
+              python3 tools/test-base-board-interfaces.py
               npm run test:turret
               npm run test:camera
               npm run test:models
