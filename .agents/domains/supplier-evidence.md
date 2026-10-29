@@ -1,0 +1,7 @@
+# Supplier evidence and exact part identity
+
+Treat availability, compatibility, access to manufacturer CAD, and build qualification as separate states. A supplier login failure leaves stock unknown; an add-to-cart button is not a stock count. Null is not zero. Record a dated exact SKU, source URL, revision, supplier order unit, minimum/multiple, stock observation and replenishment lead time. Keep retail pack size distinct from manufacturing yield and wire cut allowance distinct from validated service slack.
+
+Resolve conflicting manufacturer revisions before making an electrical or mechanical limit definitive. A family heading or a different suffix cannot qualify the exact selected part. Preserve the contrary evidence and explicitly retract an earlier claim when new evidence defeats it. A matching contact gauge alone does not validate the connector: conductor, insulation OD, seal, mating plating, crimp tool and unused cavities must agree.
+
+The [2026-10-29 carrier audit](../../research/supply/turret-carrier-2026-10-29.md) binds ten source files and 29 existing catalog/material identities. Its checker verifies source hashes, circuit-designator coverage, mounting totals, wire arithmetic and unknown-stock semantics. It does not verify supplier truth, electrical qualification, geometry, tooling or present stock. Keep new connector candidates outside a dated source snapshot until the design owner selects and validates them. Private supplier CAD stays private.
