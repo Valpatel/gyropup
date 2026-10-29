@@ -62,6 +62,16 @@ export async function buildRobotV2(root, { eyes, color = 0xf5b82e } = {}) {
     &&isRecord(m.mounts)&&vector(m.mounts.eyes)&&vector(m.mounts.camera_front)&&Array.isArray(m.mounts.headlights)&&m.mounts.headlights.every(p=>vector(p))
     &&isRecord(m.turret)&&['pan_mm','tilt_mm','muzzle_mm'].every(key=>vector(m.turret[key]))
     &&['pan','tilt'].every(key=>Array.isArray(m.turret[key])&&m.turret[key].length>0&&m.turret[key].every(part))});
+  const attachmentNames=['output_adapter',...Array.from({length:9},(_,i)=>'output_screw_'+(i+1))];
+  const archivedNames=['adapter_f_l','adapter_f_r','adapter_r_l','adapter_r_r'];
+  const archivedEntries=man.body.filter(p=>/^adapter_[fr]_[lr]$/.test(p.name));
+  const modernEntries=man.links.upper.filter(p=>/^(output_adapter|output_screw_\d+)$/.test(p.name));
+  const complete=(entries,names)=>entries.length===names.length&&names.every(name=>entries.filter(p=>p.name===name).length===1);
+  // Readiness requires one complete representation. An absent/partial legacy
+  // set must not silently take the modern path and omit every hip adapter.
+  if(archivedEntries.length){
+    if(!complete(archivedEntries,archivedNames)||modernEntries.length)throw new Error('Incomplete, duplicate or mixed archived output-adapter set');
+  }else if(!complete(modernEntries,attachmentNames))throw new Error('Incomplete or duplicate upper-link attachment set');
   const loader = new STLLoader();
   const files = new Set([...man.body.filter(p=>!p.name.startsWith('turret_')).map(p=>p.file), ...Object.values(man.links).flat().map(p=>p.file)]);
   const geo={},loading=new Map();
@@ -123,12 +133,9 @@ export async function buildRobotV2(root, { eyes, color = 0xf5b82e } = {}) {
   const legacyAdapters=base.children.filter(m=>/^adapter_[fr]_[lr]$/.test(m.name));
   const legHardware={current:[],recorded:legacyAdapters,source:base0+'manifest.json',manifest:null};
   if(legacyAdapters.length){
-    if(legacyAdapters.length!==4)throw new Error('Incomplete archived output-adapter set');
     const source=base0+'../leg-attachments/manifest.json';
     const attachments=await reader.json(source,{label:'Upper-link attachments',validate:a=>isRecord(a)&&a.schema_version===1&&a.units==='mm'
-      &&Array.isArray(a.parts)&&a.parts.length===10&&a.parts.every(part)
-      &&new Set(a.parts.map(p=>p.name)).size===10&&a.parts.some(p=>p.name==='output_adapter')
-      &&Array.from({length:9},(_,i)=>'output_screw_'+(i+1)).every(name=>a.parts.some(p=>p.name===name))});
+      &&Array.isArray(a.parts)&&a.parts.every(part)&&complete(a.parts,attachmentNames)});
     const entries=attachments.parts.map(p=>({...p,file:'../leg-attachments/'+p.file}));
     await Promise.all(entries.map(p=>loadGeometry(p.file)));
     for(const [side,leg] of Object.entries(legs))for(const [end,owner] of [['f','upperF'],['r','upperR']])for(const entry of entries){

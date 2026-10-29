@@ -102,6 +102,31 @@ try{
   const response=await page.request.get(base+'/'+file);assert.ok(response.ok());delivered[file]=createHash('sha256').update(await response.body()).digest('hex');
  }
  const version=await(await page.request.get(base+'/version.json')).json();
+ // Real malformed responses must fail readiness, rather than hiding missing
+ // adapters by interpreting an empty legacy set as a modern exporter format.
+ const rig=await(await page.request.get(base+'/exports/sim/v2/rig/manifest.json')).json();
+ const attachments=await(await page.request.get(base+'/exports/sim/v2/leg-attachments/manifest.json')).json();
+ const modern=structuredClone(rig);modern.body=modern.body.filter(p=>!/^adapter_[fr]_[lr]$/.test(p.name));
+ modern.links.upper.push(...attachments.parts.map(p=>({...p,file:'../leg-attachments/'+p.file})));
+ const missing=structuredClone(rig);missing.body=missing.body.filter(p=>!/^adapter_[fr]_[lr]$/.test(p.name));
+ const partial=structuredClone(rig);partial.body=partial.body.filter(p=>p.name!=='adapter_f_l');
+ const duplicate=structuredClone(rig);duplicate.body[duplicate.body.findIndex(p=>p.name==='adapter_f_r')]=structuredClone(duplicate.body.find(p=>p.name==='adapter_f_l'));
+ const mixed=structuredClone(rig);mixed.links.upper.push(structuredClone(modern.links.upper.find(p=>p.name==='output_adapter')));
+ const modernPartial=structuredClone(modern);modernPartial.links.upper=modernPartial.links.upper.filter(p=>p.name!=='output_screw_9');
+ const modernDuplicate=structuredClone(modern);modernDuplicate.links.upper[modernDuplicate.links.upper.findIndex(p=>p.name==='output_screw_9')]=structuredClone(modernDuplicate.links.upper.find(p=>p.name==='output_screw_8'));
+ const modernExtra=structuredClone(modern);modernExtra.links.upper.push({...structuredClone(modern.links.upper.find(p=>p.name==='output_screw_8')),name:'output_screw_10'});
+ const manifestRoute='**/exports/sim/v2/rig/manifest.json*';
+ const rejected=[];
+ for(const [name,manifest] of Object.entries({missing,partial,duplicate,mixed,modernPartial,modernDuplicate,modernExtra})){
+  await page.route(manifestRoute,route=>route.fulfill({json:manifest}));await page.goto(base+'/',{waitUntil:'networkidle'});
+  await page.waitForFunction(()=>document.getElementById('robot-preview').dataset.state==='fallback');
+  assert.equal(await page.locator('#robot-preview canvas').count(),0,name+' preserves fallback');rejected.push(name);await page.unroute(manifestRoute);
+ }
+ await page.route(manifestRoute,route=>route.fulfill({json:modern}));await page.goto(base+'/',{waitUntil:'networkidle'});
+ await page.waitForFunction(()=>window.__heroPreview?.robot.legHardware);const modernReady=await install('hero');
+ assert.equal(modernReady.count,40);assert.equal(modernReady.legacy,0);
+ const modernSample=await page.evaluate(angles=>{const t=window.legMotionTest;t.pose(angles);return t.capture('modern',angles);},fixture.poses.at(-1));
+ assert.ok(error(modernSample).max<.02,'Complete future exporter format retains correct ownership');await page.unroute(manifestRoute);
  // Any missing required attachment preserves the honest landing fallback.
  await page.route('**/leg-attachments/output_screw_1.stl*',route=>route.abort());await page.goto(base+'/',{waitUntil:'networkidle'});
  await page.waitForFunction(()=>document.getElementById('robot-preview').dataset.state==='fallback');assert.equal(await page.locator('#robot-preview canvas').count(),0);
@@ -110,6 +135,6 @@ try{
  const trace={schema_version:1,length_unit:'mm',frame:'assembly-home',capture_source:`${base};${engine.name()}; actual STL vertices through world matrices; only known free-body placement removed; revision ${version.revision}; source hashes in adjacent receipt`,samples:[...samples,...live,transitions.restored]};
  await writeFile(`${out}/${engine.name()}-trace.json`,JSON.stringify(trace));
  await writeFile(`${out}/${engine.name()}-source-hashes.json`,JSON.stringify(delivered,null,2));
- await writeFile(`${out}/${engine.name()}-summary.json`,JSON.stringify({version,worst,components:44,poses:samples.length,liveFrames:live.length,negative:Object.fromEntries(Object.entries(negative).map(([k,v])=>[k,error(v)])),transitions,errors},null,2));
- console.log(`PASS ${engine.name()}: 44 components × ${samples.length} required/combined poses + ${live.length} live frames; worst ${worst.max.toFixed(6)}mm; 5 negative controls; archive transforms/race; hero/sim/talk; failed-load fallback`);
+ await writeFile(`${out}/${engine.name()}-summary.json`,JSON.stringify({version,worst,components:44,poses:samples.length,liveFrames:live.length,negative:Object.fromEntries(Object.entries(negative).map(([k,v])=>[k,error(v)])),transitions,rejectedManifests:rejected,modernReady,errors},null,2));
+ console.log(`PASS ${engine.name()}: 44 components × ${samples.length} required/combined poses + ${live.length} live frames; worst ${worst.max.toFixed(6)}mm; 5 negative controls; archive transforms/race; hero/sim/talk; 7 malformed manifests; modern format; failed-load fallback`);
 }finally{await browser.close();}
