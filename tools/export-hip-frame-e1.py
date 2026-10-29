@@ -48,12 +48,15 @@ def main():
     # that input in the isolated output directory without replacing the baseline.
     shutil.copyfile(ROOT / 'exports/leg/fea/summary.json', OUT / 'summary.json')
     sys.path[:0] = [str(ROOT / 'cad'), str(ROOT)]
-    # Load the mesher before CAD libraries: on the isolated ARM runner its bundled
-    # TLS dependency must resolve before another extension loads system OpenSSL.
-    # This changes only this process, not the host or any shared environment.
+    # The isolated ARM runner also requires matching libcrypto/libssl in its
+    # process-local LD_PRELOAD. Import order alone is insufficient: hashlib can
+    # load system OpenSSL before this point. Record actual mapped binary hashes.
     import gmsh  # noqa: F401
     import leg_studies
     import cadagent
+    runtime = sorted({Path(line.split()[-1]) for line in Path('/proc/self/maps').read_text().splitlines()
+                      if any(name in line for name in ('libgmsh', 'libcrypto.so', 'libssl.so', 'libs2n'))})
+    runtime_hashes = [{'name': p.name, 'sha256': digest(p)} for p in runtime]
     toolkit_root = Path(cadagent.__file__).parent
     toolkit = {p.relative_to(toolkit_root).as_posix(): digest(p) for p in sorted(toolkit_root.rglob('*.py'))}
     leg_studies.OUT = OUT
@@ -74,6 +77,7 @@ def main():
     receipt = {'schema': 1, 'purpose': 'Reproduced static E1 field for an explanatory deformation animation',
         'source_revision': revision, 'source_hashes': before, 'toolkit_sources_sha256': toolkit,
         'versions': {name: version(name) for name in ('cad-agent', 'cadquery', 'cadquery-ocp', 'numpy', 'scikit-fem', 'gmsh')},
+        'mapped_runtime_libraries': runtime_hashes,
         'baseline': original, 'reproduced': solved, 'fields': fields.relative_to(ROOT).as_posix(),
         'fields_sha256': digest(fields), 'transient_simulation': False, 'qualified_for_manufacture': False,
         'limitations': 'Linear elastic, small deflection, isotropic weak-direction material; recorded 37.5 kg robot load case. '
