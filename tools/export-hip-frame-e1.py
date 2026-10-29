@@ -48,6 +48,10 @@ def main():
     # that input in the isolated output directory without replacing the baseline.
     shutil.copyfile(ROOT / 'exports/leg/fea/summary.json', OUT / 'summary.json')
     sys.path[:0] = [str(ROOT / 'cad'), str(ROOT)]
+    # Load the mesher before CAD libraries: on the isolated ARM runner its bundled
+    # TLS dependency must resolve before another extension loads system OpenSSL.
+    # This changes only this process, not the host or any shared environment.
+    import gmsh  # noqa: F401
     import leg_studies
     import cadagent
     toolkit_root = Path(cadagent.__file__).parent
