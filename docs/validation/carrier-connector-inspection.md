@@ -13,6 +13,8 @@ The C3 contract also requires the support's own material, the labelled incomplet
 
 Both contracts enter through the design note's native Preview link, verify the original download bytes, wait for ready **or a terminal error**, inspect actual visible meshes/materials, test all camera buttons, fine wheel increments and Fit, and return through the native Back link. Phone framing and document overflow are checked. Each run preserves a candidate-specific report, screenshots and terminal diagnostics.
 
+The default evidence directory is newly allocated per process. When setting `TEST_OUTPUT`, choose an agent/run-specific path; parallel reviews must not share screenshot paths. An early C3 review had a temporary path collision, so those screenshots are not treated as uniquely attributable evidence; its separately named programmatic reports remain valid, and the independent reviewer repeated the visual check in an isolated directory.
+
 Deliberate browser-scene corruption must be detected: lost materials, swapped part colors, hidden inserts, invisible/zero-opacity fastener materials and removed screws. The C3 case additionally hides its support, one added nut and one added screw in turn. The real imported scene is restored and checked afterward. All twelve cases completed without page, HTTP or request errors.
 
 These browser tests establish inspection behavior and preserved model identities. They do not qualify the incomplete C3 housing representation, flexible clips, wiring, printed support strength, physical fit or whole-module removal. The current candidate remains unqualified for fabrication.

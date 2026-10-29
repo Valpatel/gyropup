@@ -1,7 +1,7 @@
 /** Inspect the actual exported carrier through the document's native preview link. */
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
-import {mkdir,readFile,writeFile} from 'node:fs/promises';
+import {mkdir,mkdtemp,readFile,writeFile} from 'node:fs/promises';
 import {chromium,webkit} from '@playwright/test';
 import {createSiteServer} from './serve-site.mjs';
 import {acknowledgePrototypeNotice} from './test-prototype-session.mjs';
@@ -12,7 +12,7 @@ const base=(process.env.SITE_URL||`http://127.0.0.1:${server.address().port}`).r
 const engine=process.env.PLAYWRIGHT_BROWSER==='webkit'?webkit:chromium;
 const browser=await engine.launch(engine===chromium?{channel:process.env.PLAYWRIGHT_CHANNEL==='chromium'?undefined:'chrome',headless:true,args:['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']}:{headless:true});
 const context=await browser.newContext();await acknowledgePrototypeNotice(context);
-const page=await context.newPage(),out=process.env.TEST_OUTPUT||'/tmp/gyropup-carrier-inspection';
+const page=await context.newPage(),out=process.env.TEST_OUTPUT||await mkdtemp('/tmp/gyropup-carrier-inspection-');
 await mkdir(out,{recursive:true});
 const candidate=process.env.CARRIER_INSPECTION_CASE||'c2';
 assert.ok(['c2','c3-support'].includes(candidate),'Unknown carrier inspection contract');
