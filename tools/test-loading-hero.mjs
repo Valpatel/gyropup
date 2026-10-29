@@ -7,6 +7,7 @@ const engine=process.env.PLAYWRIGHT_BROWSER==='webkit'?webkit:chromium;
 const browser=await engine.launch(engine===chromium?{channel:process.env.PLAYWRIGHT_CHANNEL==='chromium'?undefined:'chrome',headless:true,args:['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']}:{headless:true});
 const out=process.env.TEST_OUTPUT||'/tmp/gyropup-loading-hero';await mkdir(out,{recursive:true});
 const errors=[],results=[];
+let version;
 async function fresh(viewport={width:320,height:568}){
  const context=await browser.newContext({viewport,reducedMotion:'reduce'});
  await context.addInitScript(()=>{localStorage.setItem('gyropup.probe','off');localStorage.setItem('gyropup-sfx','0');sessionStorage.setItem('gyropup.prototype-notice','2026-10-29-v1');});
@@ -28,6 +29,7 @@ async function capture(page,name){
  try{await page.locator('.hero-scene').screenshot({path:`${out}/${engine.name()}-${name}.png`});}finally{if(previous===undefined)delete process.env.PW_TEST_SCREENSHOT_NO_FONTS_READY;else process.env.PW_TEST_SCREENSHOT_NO_FONTS_READY=previous;}
 }
 try{
+ version=await(await fetch(base+'/version.json')).json();
  for(const [width,height] of [[1440,1000],[320,568],[844,390]]){
   const {context,page}=await fresh({width,height});let release,requested;const request=new Promise(resolve=>requested=resolve);
   await page.route('**/web/landing.js*',async route=>{await new Promise(resolve=>{release=resolve;requested();});await route.continue();});
@@ -49,7 +51,7 @@ try{
   const {context,page}=await fresh();let failures=mode==='entry'?2:1;
   if(mode==='webgl')await context.addInitScript(()=>{if(sessionStorage.getItem('hero-webgl-attempt'))return;sessionStorage.setItem('hero-webgl-attempt','1');const get=HTMLCanvasElement.prototype.getContext;HTMLCanvasElement.prototype.getContext=function(type,...args){return /webgl/.test(type)?null:get.call(this,type,...args);};});
   else await page.route(mode==='entry'?'**/web/landing.js*':mode==='dependency'?'**/robot_v2.js*':'**/*.stl*',route=>{if(failures>0){failures--;return route.abort();}return route.continue();});
-  await page.goto(base+'/',{waitUntil:'domcontentloaded'});await failed(page);await page.locator('.hero-scene').scrollIntoViewIfNeeded();
+  await page.goto(base+'/',{waitUntil:'domcontentloaded'});await failed(page);await page.waitForFunction(()=>document.querySelector('.scene-fallback').naturalWidth===1024);await page.locator('.hero-scene').scrollIntoViewIfNeeded();
   for(let attempt=0;attempt<(mode==='entry'?2:1);attempt++){
    await failed(page);assert.equal(await page.locator('#hero-loading').getAttribute('aria-busy'),'false');assert.ok(await page.locator('#hero-loading button').isVisible());assert.equal(await page.locator('#robot-preview canvas').count(),0);
    assert.equal(await page.locator('.scene-fallback').evaluate(e=>getComputedStyle(e).opacity),'1');assert.ok(await page.locator('#hero-inspect').isDisabled());
@@ -61,6 +63,6 @@ try{
   await ready(page);assert.equal(await page.locator('#robot-preview canvas').count(),1);assert.ok(await page.locator('#hero-loading').isHidden());await context.close();
  }
  const nojs=await browser.newContext({javaScriptEnabled:false,viewport:{width:320,height:568}}),page=await nojs.newPage();await page.goto(base+'/');assert.ok(await page.locator('.hero-loading-static').isVisible());assert.ok(await page.locator('#hero-loading').isHidden());await nojs.close();
- assert.deepEqual(errors,[]);await writeFile(`${out}/${engine.name()}-report.json`,JSON.stringify({base,results,errors},null,2));
+ assert.deepEqual(errors,[]);assert.deepEqual(await(await fetch(base+'/version.json')).json(),version,'The built site stayed unchanged during the suite');await writeFile(`${out}/${engine.name()}-report.json`,JSON.stringify({base,version,results,errors},null,2));
  console.log(`PASS ${engine.name()}: delayed hero feedback at3 layouts, matching poster/frame, entry/dependency/geometry/WebGL failure and real keyboard retry, repeated failure, no stale reset, reduced motion and no-JS fallback`);
 }finally{await browser.close();}
