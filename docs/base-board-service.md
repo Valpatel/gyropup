@@ -7,6 +7,7 @@ Issue #66; integration #61. This passive change keeps the existing PCB pose and 
 Geometry implemented; model acceptance remains incomplete after the detailed manufacturer checks failed. Physical fit, printer clearance, harness disconnection/slack and affected-base structural qualification are unverified. Do not treat this isolated mounting change as a turret print release.
 
 The [component checklist](base-board-component-checklist.md) records exact hardware placements, assembly/service dependencies, missing connector and wiring envelopes, and the remaining acceptance evidence.
+The [cut-stock and drilling plan](base-board-stock.md) defines the custom Ø3.2 PCB holes separately from the Ø3.4 printed carrier retainer holes.
 
 ## Design contract
 

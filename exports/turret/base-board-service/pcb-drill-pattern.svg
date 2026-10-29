@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 460">
+<rect width="660" height="460" fill="#fffdf5"/>
+<g font-family="sans-serif" fill="#173d3c">
+<text x="28" y="32" font-size="20">Base PCB — custom cut and drilling plan</text>
+<text x="28" y="60" font-size="14">50.8 × 30 mm; four Ø3.2 drilled mounting holes</text>
+<g transform="translate(76 95) scale(9)">
+<rect width="50.8" height="30.0" fill="#d9edf3" stroke="#173d3c" stroke-width=".18"/>
+<circle cx="3.0" cy="27.0" r="1.6" fill="#fffdf5" stroke="#173d3c" stroke-width=".12"/>
+<path d="M0.7000000000000002,27.0h4.6 M3.0,24.7v4.6" stroke="#bd3a12" stroke-width=".09"/>
+<circle cx="3.0" cy="3.0" r="1.6" fill="#fffdf5" stroke="#173d3c" stroke-width=".12"/>
+<path d="M0.7000000000000002,3.0h4.6 M3.0,0.7000000000000002v4.6" stroke="#bd3a12" stroke-width=".09"/>
+<circle cx="47.8" cy="27.0" r="1.6" fill="#fffdf5" stroke="#173d3c" stroke-width=".12"/>
+<path d="M45.5,27.0h4.6 M47.8,24.7v4.6" stroke="#bd3a12" stroke-width=".09"/>
+<circle cx="47.8" cy="3.0" r="1.6" fill="#fffdf5" stroke="#173d3c" stroke-width=".12"/>
+<path d="M45.5,3.0h4.6 M47.8,0.7000000000000002v4.6" stroke="#bd3a12" stroke-width=".09"/>
+</g>
+<text x="28" y="390" font-size="14">Hole centres from the cut board’s lower-left corner (mm):</text>
+<text x="28" y="414" font-size="14">(3, 3), (3, 27), (47.8, 3), (47.8, 27); edge ligament 1.4 mm nominal</text>
+<text x="28" y="441" font-size="12">Research drawing: verify stock, drill, copper clearance and physical fit before assembly.</text>
+</g></svg>

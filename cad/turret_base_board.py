@@ -12,9 +12,12 @@ import cadquery as cq
 from turret_boards import BOARDS, FP
 
 ROOT = Path(__file__).resolve().parents[1]
-BOARD_HOLES = tuple((y, z) for y in (-22.4, 22.4) for z in (9.0, 33.0))
+BOARD_SIZE = BOARDS['base'][0]
+BOARD_Z0 = 6.0
+BOARD_HOLES = tuple(sorted((x - BOARD_SIZE[0]/2, y + BOARD_Z0) for x,y in BOARDS['base'][1]))
 CARRIER_HOLES = tuple((y, z) for y in (-31.0, 31.0) for z in (9.0, 33.0))
 M3_CLEAR = 3.4
+PCB_MOUNT_CLEAR = 3.2  # custom-drilled cut Wombat board; not its original factory hole pattern
 INSERT_PILOT = 4.0  # catalogue maximum hole diameter; printed fit still needs a coupon
 INSERT_LENGTH = 5.74  # normalized 94459A140 manufacturer model, nominal 5.7
 PUBLIC_NOTE = 'authored simplified hardware; not manufacturer CAD; threads/knurls omitted'
@@ -57,9 +60,9 @@ def carrier(_G=None):
 
 
 def pcb():
-    s = box(46.4,48,-25.4,25.4,6,36)
+    s = box(46.4,48,-BOARD_SIZE[0]/2,BOARD_SIZE[0]/2,BOARD_Z0,BOARD_Z0+BOARD_SIZE[1])
     for y,z in BOARD_HOLES:
-        s = s.cut(cx(M3_CLEAR/2,46.3,48.1,y,z))
+        s = s.cut(cx(PCB_MOUNT_CLEAR/2,46.3,48.1,y,z))
     return s
 
 

@@ -567,8 +567,10 @@ pictures show the components side; wire on the back. Each part's footprint inclu
 | Cartridge board, 50 x 44, on four posts over the cage | ![cartridge](../exports/turret/wiring/board-cartridge.png) | 6 x IRLZ44N in a row along the front edge (phases to GND, 100 nF and 100 k at each gate), the 74HCT14 brake driver (three inverters, two gates each) and its RC, LM393 (gates), MF-R300 (feed servo), D11 (TVS), R55-R57 in the ESC and feed signals, the gates' resistors, the pigtail's pads; the two ESCs lie on the cage plate under it |
 | Stand terminal board, 70 x 50 | ![stand](../exports/turret/wiring/board-stand.png) | the pendant and CAN junctions to the DT06 plug (the pack's power runs fuse -> rocker -> XT30, not through it: D66) |
 
-The perfboard is SparkFun's PRT-08619 (80 x 100 mm, plated through; one board cuts into two 52 x 50 pieces). Drill the
-corner holes to Ø3.2 at the standoff pattern (46 x 44 on the bay's boards). The Feather goes in on its two header rows,
+The perfboard is SparkFun's PRT-08619 (nominally 80 x 100 mm, plated through). Its linked v1.4 design has a 78.74 x
+99.06 mm outline: the previous two-52-x-50-pieces yield is unsupported, even before allowing a cut kerf. Verify the
+nesting and received stock before ordering/cutting. Drill the corner holes to Ø3.2 at the standoff pattern (46 x 44 on
+the bay's boards; the base board's custom 44.8 x 24 pattern and cut dimensions are in [base-board-stock.md](base-board-stock.md)). The Feather goes in on its two header rows,
 USB towards the bay's open face; nothing on level 2 stands taller than 8.5 mm.
 
 ## 7. Building the electrics, in order
