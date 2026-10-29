@@ -31,15 +31,24 @@ async function ready(){
 async function inspect(){return page.evaluate(async()=>{
   const v=window.__fileViewer,THREE=await import('/designer/kit/vendor/three/three.module.min.js');
   const box=new THREE.Box3().setFromObject(v.model),meshes=[];
-  v.model.traverseVisible(n=>{if(n.isMesh)meshes.push({name:n.name,colors:[].concat(n.material).map(m=>m.color.getHexString())});});
+  v.model.traverseVisible(n=>{
+    if(!n.isMesh)return;
+    const materials=[].concat(n.material),geometry=n.geometry,total=geometry.index?.count??geometry.getAttribute('position')?.count??0;
+    const start=Math.max(0,geometry.drawRange.start),end=Math.min(total,start+geometry.drawRange.count);
+    const groups=Array.isArray(n.material)?geometry.groups:[{start:0,count:total,materialIndex:0}];
+    const used=[...new Set(groups.filter(g=>Math.max(start,g.start)<Math.min(end,g.start+g.count)).map(g=>g.materialIndex))];
+    const drawn=used.map(i=>materials[i]).filter(m=>m?.visible&&(!m.transparent||m.opacity>0));
+    const size=new THREE.Box3().setFromObject(n).getSize(new THREE.Vector3()).toArray();
+    if(drawn.length&&size.every(value=>Number.isFinite(value)&&value>0))meshes.push({name:n.name,colors:drawn.map(m=>m.color.getHexString())});
+  });
   const points=Array.from({length:8},(_,i)=>new THREE.Vector3(i&1?box.max.x:box.min.x,i&2?box.max.y:box.min.y,i&4?box.max.z:box.min.z).project(v.stage.camera).toArray());
   return{meshes,triangles:v.info.triangles,boundsMm:v.info.boundsMm,scrollWidth:document.documentElement.scrollWidth,points};
 });}
 function assertIdentity(model){
   const names=model.meshes.map(m=>m.name);assert.equal(new Set(names).size,names.length,'STEP member identities must be unique');
   for(const name of ['pan_base_authored','carrier_authored','cut_PCB_nominal_stock'])assert.ok(names.includes(name),name);
-  assert.equal(names.filter(n=>/^authored_public_.*screws#/.test(n)).length,8,'All eight mounting screws remain individually visible');
-  assert.equal(names.filter(n=>/^authored_public_.*inserts#/.test(n)).length,8,'All eight mounting inserts remain individually visible');
+  assert.equal(names.filter(n=>/^authored_public_.*screws#/.test(n)).length,8,'All eight mounting screws remain renderable');
+  assert.equal(names.filter(n=>/^authored_public_.*inserts#/.test(n)).length,8,'All eight mounting inserts remain renderable');
   const reservations=model.meshes.filter(m=>m.name.startsWith('RESERVATION_ONLY_C2_'));
   assert.equal(reservations.length,4,'Both halves of both C2 candidates remain explicitly reservations');
   assert.ok(reservations.every(m=>m.colors.every(c=>c==='f25c17')),'Reservation orange survives the STEP importer');
@@ -109,10 +118,21 @@ try{
       await page.evaluate(()=>window.__fileViewer.model.getObjectByName('authored_public_base_board_inserts#0').visible=false);
       const hiddenInsert=await inspect();assert.throws(()=>assertIdentity(hiddenInsert),/eight mounting inserts/);
       await page.evaluate(()=>window.__fileViewer.model.getObjectByName('authored_public_base_board_inserts#0').visible=true);
+
+      for(const mode of ['hidden_material','transparent_material']){
+        await page.evaluate(mode=>{
+          const n=window.__fileViewer.model.getObjectByName('authored_public_base_board_inserts#0'),materials=[].concat(n.material);
+          n.userData.reviewMaterialState=materials.map(m=>({visible:m.visible,transparent:m.transparent,opacity:m.opacity}));
+          materials.forEach(m=>{if(mode==='hidden_material')m.visible=false;else{m.transparent=true;m.opacity=0;}});
+        },mode);
+        const invisibleMaterial=await inspect();assert.throws(()=>assertIdentity(invisibleMaterial),/eight mounting inserts/);
+        await page.evaluate(()=>{const n=window.__fileViewer.model.getObjectByName('authored_public_base_board_inserts#0');[].concat(n.material).forEach((m,i)=>Object.assign(m,n.userData.reviewMaterialState[i]));delete n.userData.reviewMaterialState;});
+      }
+
       await page.evaluate(()=>{const model=window.__fileViewer.model;model.userData.removedReviewScrew=model.getObjectByName('authored_public_base_board_screws#0');model.remove(model.userData.removedReviewScrew);});
       const missingScrew=await inspect();assert.throws(()=>assertIdentity(missingScrew),/eight mounting screws/);
       await page.evaluate(()=>{const model=window.__fileViewer.model;model.add(model.userData.removedReviewScrew);delete model.userData.removedReviewScrew;});
-      assertIdentity(await inspect());report.negativeControls=['lost STEP materials','swapped part colors','hidden mounting insert','missing mounting screw'];
+      assertIdentity(await inspect());report.negativeControls=['lost STEP materials','swapped part colors','hidden mounting insert','hidden fastener material','zero-opacity fastener','missing mounting screw'];
     }
 
     await page.getByRole('link',{name:'Back to parts',exact:true}).click();
