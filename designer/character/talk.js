@@ -10,7 +10,7 @@
 //          sim/tts/server.py)  else speechSynthesis
 //   ears   Moxie's Whisper STT sidecar POST http://<page host>:8082/stt         (sim/stt/server.py)  else Web Speech API
 //   brain  an OpenAI-compatible /chat/completions: localStorage gyropup.llmBase (+ .llmModel, .llmKey), else Ollama on
-//          http://127.0.0.1:11434 (first suitable model from /api/tags), else a scripted keyword brain.
+//          http://127.0.0.1:11434 on local pages only (first suitable model from /api/tags), else a scripted brain.
 // Overrides (localStorage): gyropup.ttsBase, gyropup.sttBase, gyropup.llmBase, gyropup.llmModel, gyropup.llmKey,
 // gyropup.probe = 'off' (never probe; browser voice + scripted brain only). See character/README.md.
 //
@@ -115,9 +115,14 @@ async function fetchT(url, init = {}, ms = 1500) {
 // the tailnet can reach it (Moxie's voice/local.js::pageCouldReachSidecar, plus Tailscale's 100.64/10 and *.ts.net).
 // An explicit address always wins.
 function pageIsLocal() {
-  const h = location.hostname || '';
-  return h === '' || /^(localhost|127\.|0\.0\.0\.0|\[?::1\]?|192\.168\.|10\.|172\.(1[6-9]|2\d|3[01])\.|100\.(6[4-9]|[7-9]\d|1[01]\d|12[0-7])\.)/.test(h)
-    || /\.(local|lan|ts\.net)$/.test(h);
+  const h = (location.hostname || '').toLowerCase();
+  if (!h || h === 'localhost' || h === '[::1]' || h === '::1' || /\.(localhost|local|lan|ts\.net)$/.test(h)) return true;
+  // Match complete IPv4 addresses: localhost.example.com and 10.example.com are public hosts.
+  if (!/^\d{1,3}(?:\.\d{1,3}){3}$/.test(h)) return false;
+  const [a, b, c, d] = h.split('.').map(Number);
+  if ([a, b, c, d].some(n => n > 255)) return false;
+  return h === '0.0.0.0' || a === 127 || a === 10 || (a === 192 && b === 168)
+    || (a === 172 && b >= 16 && b <= 31) || (a === 100 && b >= 64 && b <= 127);
 }
 const sidecar = (port) => `http://${location.hostname || '127.0.0.1'}:${port}`;
 
@@ -210,7 +215,9 @@ export function mountTalk({ stage, getHead, eyes, root = '../', chips, brain, do
       } catch { /* unreachable: fall through to Ollama */ }
       if (L.ok) return;
     }
-    if (ls.get('probe') === 'off') return;
+    // A public demo must not discover services on its visitor's computer. Explicit configuration
+    // above remains opt-in; public pages cannot fall back from it to loopback probes.
+    if (ls.get('probe') === 'off' || !pageIsLocal()) return;
     try {
       const r = await fetchT('http://127.0.0.1:11434/api/tags', {}, 1200);
       if (!r.ok) return;

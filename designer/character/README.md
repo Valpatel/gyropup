@@ -53,7 +53,7 @@ dock), so an idle page does not log refused connections. Nothing needs a key or 
 |---|---|---|
 | Voice | Gyropup's Piper sidecar ([below](#gyropups-voice-toolstts_serverpy)), `GET http://<page host>:8081/tts?text=…` (WAV), played as `/health`'s `rate` says (1: the sidecar shapes the voice). Moxie's Piper server also works; it says no rate, so it is played 14% faster and higher | the browser's `speechSynthesis`, a little higher, natural English voices first |
 | Ears | Moxie's Whisper STT, `POST http://<page host>:8082/stt` (webm audio; Deepgram-shaped JSON back), silence auto-stop | Chrome's Web Speech API (sends audio to Google; needs internet). Neither: a clear message, type instead |
-| Brain | an OpenAI-compatible `POST <base>/chat/completions`: first `localStorage gyropup.llmBase`, else Ollama at `http://127.0.0.1:11434` (first chat model from `/api/tags`, preferring llama3.2, qwen2.5, gemma, phi, mistral) | a scripted brain: keyword replies (hello, name, dance, shoot/balls, jump, battery, balance, joke, trick, ...) |
+| Brain | an OpenAI-compatible `POST <base>/chat/completions`: first `localStorage gyropup.llmBase`, else, on local pages only, Ollama at `http://127.0.0.1:11434` (first chat model from `/api/tags`, preferring llama3.2, qwen2.5, gemma, phi, mistral) | a scripted brain: keyword replies (hello, name, dance, shoot/balls, jump, battery, balance, joke, trick, ...) |
 
 The brain uses a Gyropup persona prompt: a playful, kid-safe robot pup on the Tritium team that balances on two
 wheels and plays foam-ball target games, 1 to 2 short sentences, a mood tag that drives the eyes. A question about
@@ -185,3 +185,5 @@ Piper-then-browser voice chain), `sim/web/mic.js` (recording, silence auto-stop,
 `sim/web/css/dock.css` and `css/hud.css` (the dock and bubble look), and `mqtt/moxie_sdk/chat.py` (the
 OpenAI-compatible brain call). The Whisper server is Moxie's `sim/stt/server.py`; `tools/tts_server.py` keeps the
 protocol of Moxie's `sim/tts/server.py`. `eyes.js` adapts `sim/web/moxie/face.js` from the same project.
+
+Public pages (including gyropup.com) never automatically discover a visitor’s local AI or voice servers. Browser voice and the scripted brain are the default. Explicit `gyropup.llmBase`, `gyropup.ttsBase`, `gyropup.sttBase`, or `GYROPUP_BRAIN` configuration remains opt-in; the endpoint must meet the browser’s HTTPS, CORS and local-network permission requirements.
