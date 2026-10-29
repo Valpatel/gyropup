@@ -40,6 +40,7 @@ jobs:
               npm run test:audio
               npm run test:web
               npm run test:progress
+              npm run test:highlights
               npm run test:markdown
               npm run test:cache
               npm run test:diagrams
@@ -56,6 +57,7 @@ jobs:
               npm run test:build-portal
               npm run test:carrier-inspection
               npm run test:study-media
+              npm run test:highlight-media
     steps:
       - uses: actions/checkout@v4
         with:

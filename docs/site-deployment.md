@@ -173,9 +173,12 @@ masses and do not establish validation at the full 100 lb ceiling. Tritium is a 
 Graphlings, and GraphDone cards describe the integration roadmap, not a running
 connected robot. GraphDone coordinates development work, not onboard control.
 
-`web/playground.png` is a browser capture of the committed target-practice
-snapshot, taken2026-10-28. Regenerate it from the simulator when that snapshot
-changes; do not use a screenshot of an obsolete landing page as the video poster.
+The landing highlights use fresh captures of the current public turret and demo,
+plus explicitly archived leg physics and E1 static deformation inserts. The matching
+WebP poster and H.264/VP9 movies live in `web/highlights/`. Rebuild them with the
+[capture and encoding recipe](validation/landing-highlights.md); do not pair the
+movie with a screenshot from another robot revision. The older `web/playground.png`
+remains an archival asset and is no longer the landing movie's poster.
 
 ## Markdown for agents
 

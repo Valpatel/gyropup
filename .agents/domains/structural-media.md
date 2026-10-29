@@ -9,3 +9,17 @@ Bind a field to committed producer inputs and a report, and bind a video to that
 `tools/test-study-media.mjs` checks real advancing decoded frames, keyboard and phone controls, reduced motion, case-switch cancellation, missing clips, HTTP503/invalid media, recovery, stale report identity and the corresponding interactive field. Use both Chromium and WebKit. See [reproduction and limits](../../docs/structural-study-media.md) and [the framebuffer incident](../inbox/2026-10-29-video-duration-does-not-prove-a-moving-simulation.md).
 
 Installed Chrome and bundled Playwright Chromium can have different codec support. Test the exact CI browser as well as Chrome and WebKit; inspect `canPlayType`, media errors and ready/network state rather than extending timeouts. The E1 player uses H.264 when its actual AVC profile/level is supported and the source-bound VP9 companion otherwise. Both encodings require full decode, equivalent model-region pixels and correct media MIME types. See [the codec incident](../inbox/2026-10-29-chrome-and-chromium-do-not-share-video-codecs.md).
+
+An adjacent report can be newer than its movie. Bind each clip to the report and
+producer revision that actually created it; label archival inserts independently
+of the current model. The landing highlights recipe and checks are in
+[the reel validation record](../../docs/validation/landing-highlights.md). Check
+the actual captured raster dimensions, not only the viewport or requested size:
+page headers, resize observers and camera inset updates can resize the framebuffer.
+Read the PNG dimensions before encoding so a 1280×656 canvas cannot be silently
+stretched into a claimed 1280×720 capture.
+
+Validate replay and seeking after initial playback. The local preview server must
+serve real single byte ranges, as a media client can reject HTTP 200 when resuming
+with a range. `tools/test-site-ranges.mjs` checks HTTP semantics and the highlights
+browser harness checks the consumer. Verify production range responses separately.

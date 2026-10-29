@@ -5,7 +5,7 @@ import { createHash } from 'node:crypto';
 import { pathToFileURL } from 'node:url';
 import { SITE_CACHE_CONTROL } from './site-cache.mjs';
 const root = path.resolve(import.meta.dirname, '../dist');
-const types = {'.html':'text/html; charset=utf-8','.md':'text/markdown; charset=utf-8','.txt':'text/plain; charset=utf-8','.js':'text/javascript','.mjs':'text/javascript','.css':'text/css','.json':'application/json','.svg':'image/svg+xml','.png':'image/png','.jpg':'image/jpeg','.mp4':'video/mp4','.webm':'video/webm','.woff2':'font/woff2','.stl':'application/octet-stream','.wasm':'application/wasm'};
+const types = {'.html':'text/html; charset=utf-8','.md':'text/markdown; charset=utf-8','.txt':'text/plain; charset=utf-8','.js':'text/javascript','.mjs':'text/javascript','.css':'text/css','.json':'application/json','.svg':'image/svg+xml','.png':'image/png','.jpg':'image/jpeg','.webp':'image/webp','.mp4':'video/mp4','.webm':'video/webm','.woff2':'font/woff2','.stl':'application/octet-stream','.wasm':'application/wasm'};
 const port = Number(process.env.PORT || 8644);
 export function createSiteServer(directory = root) {
 return http.createServer(async (req,res)=>{
@@ -17,9 +17,23 @@ return http.createServer(async (req,res)=>{
     catch { if (!path.extname(file)) file += '.html'; }
     const data = await readFile(file);
     const etag = '"' + createHash('sha256').update(data).digest('hex') + '"';
-    const headers = {'Content-Type':types[path.extname(file)] || 'application/octet-stream', 'Cache-Control':SITE_CACHE_CONTROL, ETag:etag};
+    const headers = {'Content-Type':types[path.extname(file)] || 'application/octet-stream', 'Cache-Control':SITE_CACHE_CONTROL, ETag:etag, 'Accept-Ranges':'bytes'};
     if (req.headers['if-none-match'] === etag) { res.writeHead(304, headers); res.end(); return; }
-    res.writeHead(200,headers);res.end(req.method==='HEAD'?undefined:data);
+    // Seeking/replaying MP4 in WebKit requires the same byte-range behavior as
+    // static production hosting. Ignore unsupported multi-ranges and validators.
+    const range = req.method === 'GET' && (!req.headers['if-range'] || req.headers['if-range'] === etag)
+      ? /^bytes=(\d*)-(\d*)$/.exec(req.headers.range?.trim() || '') : null;
+    if (range && (range[1] || range[2])) {
+      const start = range[1] ? Number(range[1]) : Math.max(0, data.length - Number(range[2]));
+      const end = range[1] && range[2] ? Math.min(Number(range[2]), data.length - 1) : data.length - 1;
+      if (start >= data.length || end < start) {
+        res.writeHead(416, {...headers, 'Content-Range':`bytes */${data.length}`, 'Content-Length':0});res.end();return;
+      }
+      const body = data.subarray(start, end + 1);
+      res.writeHead(206, {...headers, 'Content-Range':`bytes ${start}-${end}/${data.length}`, 'Content-Length':body.length});
+      res.end(body);return;
+    }
+    res.writeHead(200,{...headers,'Content-Length':data.length});res.end(req.method==='HEAD'?undefined:data);
   } catch { res.writeHead(404,{'Content-Type':'text/plain'}); res.end('Not found'); }
 });
 }
