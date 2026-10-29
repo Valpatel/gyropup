@@ -2,6 +2,7 @@
 """Extract nominal fit specimens. Geometry identity is not physical qualification."""
 from __future__ import annotations
 import argparse
+import csv
 import hashlib
 import json
 import math
@@ -138,7 +139,7 @@ def run(output):
     with tempfile.TemporaryDirectory(prefix='.carrier-fit-', dir=output.parent) as temporary:
         stage = Path(temporary)
         for name, spec in SPECS.items():
-            raw = valid(parts[spec['part']].intersect(board.box(*spec['clip_mm']).val()))
+            raw = valid(valid(parts[spec['part']]).intersect(board.box(*spec['clip_mm']).val()))
             witnesses = validate_local(raw, spec)
             validate_orientation(spec)
             negative = controls(raw, spec)
@@ -176,6 +177,11 @@ def run(output):
                 'negative_controls': negative, 'mesh': {'watertight': True, 'connected_components': 1,
                 'triangles': len(mesh.faces), 'bounds_error_mm': error, 'export_report': mesh_report},
                 'geometry_only_3mf': package, 'requested_recipe': recipe}
+        with (stage/'measurements.csv').open('w', newline='') as stream:
+            writer = csv.writer(stream)
+            writer.writerow(['specimen','repeat','print_batch','filament_lot','drying_record','printer_nozzle','slicer_version','resolved_profile_hash','support_removal','insert_lot','measured_pilot_mouth_mm','measured_pilot_depth_mm','measured_insert_length_mm','installation_tip','tip_temperature_C','dwell_seconds','seated_depth_mm','cracks_bulging','thread_obstruction','fixture_and_method','operator_date','notes'])
+            for name in SPECS:
+                for repeat in range(1,4):writer.writerow([name, repeat]+['']*20)
         receipt = {'schema': 'gyropup.carrier-insert-fit/1',
             'source_revision': subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip(),
             'inputs': INPUTS, 'context_files': CONTEXT, 'relation_engine': RELATIONS_VERSION,
