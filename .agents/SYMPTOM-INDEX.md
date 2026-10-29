@@ -27,3 +27,4 @@
 | Wheel tests fail after a fixed sleep under software rendering | [Wait for rendered camera targets](inbox/2026-10-29-camera-tests-must-wait-for-rendered-targets.md) |
 | Demo hit counts increase but targets stay upright, detach, or clip through the floor | [Hits must produce visible, validated motion](inbox/2026-10-29-target-hits-need-visible-motion.md) |
 | Published notes show Mermaid source instead of a diagram | [Validate the published diagram consumer](inbox/2026-10-29-mermaid-needs-the-published-renderer.md) |
+| Progress looks stale, the useful simulation is buried, or links cannot open collapsed reports | [Progress publication and readable history](domains/progress-publication.md) |

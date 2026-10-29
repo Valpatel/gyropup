@@ -22,7 +22,8 @@ const record=label=>{cases.push(label);console.log('PASS '+label);};
 async function pageFor(setup=async()=>{}){
   const page=await context.newPage();page.setDefaultTimeout(30000);page.on('pageerror',error=>errors.push(error.message));
   await setup(page);await page.goto(base+'/designer/progress.html',{waitUntil:'domcontentloaded'});
-  await page.locator(selector(hip)).waitFor();return page;
+  await page.locator(selector(hip)).waitFor({state:'attached'});
+  await page.locator('#load-cases > summary').click();return page;
 }
 async function select(page,i){await page.locator(selector(i)).locator('td').first().click();}
 async function state(page,value){await page.waitForFunction(value=>{
