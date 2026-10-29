@@ -42,7 +42,7 @@ The 42 V normal source also exceeds U2's published 40 V reverse-protection limit
 | Candidate architecture | Dimensions and capability | Consequence for this carrier |
 |---|---|---|
 | **A: wider-input U2 converter**, TRACO TEP40-7212UIR | 14–160 V operating input; 185 V for at most 1 s; 12 V / 3.33 A / 40 W. Body 57.9×36.8×12.7 mm; pins protrude separately. | Body alone exceeds the 50.8×30 mm PCB. Requires a new support/thermal/routing arrangement. It tolerates the cited D14 clamp point but does not bound D14 energy or protect other BUS loads. |
-| **B: active input disconnect**, LTC4368 with back-to-back MOSFETs, preferably evaluated with same-footprint 60 V U2 candidate | LTC4368IMS package: approximately 3×4.9 mm including leads, 1.10 mm maximum height; two candidate CSD19531Q5AT MOSFETs each 5×6 mm. D42V55F12 is 25.4×25.4×9.017 mm. | Converter footprint can remain comparable, but protection needs a custom PCB, copper, passives, capacitance and a validated thermal path. Package dimensions are **not** a complete board footprint or a fit approval. Placement before all C2 loads versus only U2 changes the requirements substantially. |
+| **B: active input disconnect**, LTC4368 with back-to-back MOSFETs, preferably evaluated with 60 V U2 candidate with the same board outline | LTC4368IMS package: approximately 3×4.9 mm including leads, 1.10 mm maximum height; two candidate CSD19531Q5AT MOSFETs each 5×6 mm. D42V55F12 is 25.4×25.4×9.017 mm. | The converter board outline remains 25.4×25.4 mm, but protection needs a custom PCB, copper, passives, capacitance and a validated thermal path. Package dimensions are **not** a complete board footprint or a fit approval. Placement before all C2 loads versus only U2 changes the requirements substantially. |
 
 A 60 V converter by itself is an incomplete shortcut: [Pololu D42V55F12](https://www.pololu.com/product/5577) remains **10.1 V below** the cited 70.1 V clamp. Its published current is typical; 12 V ±3% improves static output margin but does not establish transient immunity. [Manufacturer dimensions](https://www.pololu.com/product/5577/specs) are not proof of pin/keepout interchangeability.
 
@@ -94,7 +94,7 @@ One-piece price tiers were displayed; order multiples and checkout delivery were
 
 ## Decision and release requirements
 
-**Proposed next design work, not a selected architecture:** develop the active cutoff plus same-footprint60 V converter as a U2-only option, because it preserves more carrier space. Keep TRACO as a larger-layout fallback. Do not freeze the U2 mounting or print a final electronics carrier until its owner resolves these gates:
+**Proposed next design work, not a selected architecture:** develop the active cutoff plus a 60 V converter with the same board outline as a U2-only option, because it preserves more carrier space. Keep TRACO as a larger-layout fallback. Do not freeze the U2 mounting or print a final electronics carrier until its owner resolves these gates:
 
 1. Freeze source maximum/tolerance and fault envelope at the carrier terminals: positive/negative peak, rise time, duration, repetition, source impedance and available energy. Measure safe operating events and use controlled injection for the agreed fault envelope; do not extrapolate this arithmetic into a destructive test recipe.
 2. Freeze maximum servo/input load and temperature, including startup, blocked motion, reversal and auxiliary current. Use an electrically justified limit or measured worst case with margin; firmware torque percentage alone is insufficient.

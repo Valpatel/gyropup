@@ -67,7 +67,9 @@
       "url": "https://atta.szlcsc.com/upload/public/pdf/source/20240410/9508BE6CC3D74E556CF61D2C04F6A5CF.pdf",
       "manufacturer_url": "https://www.tracopower.com/products/tep40uir.pdf",
       "revision": "February7,2024",
-      "basis": "Manufacturer-authored datasheet mirrored by distributor; manufacturer URL returned403. Exact model thermal characteristic curves not retrieved; no full-temperature power claim"
+      "basis": "Manufacturer-authored datasheet mirrored by distributor; manufacturer URL returned403. Exact model thermal characteristic curves not retrieved; no full-temperature power claim",
+      "download_sha256": "f5a9ee4d8a515e6bb1bf39ebe940b7ed68e3995d5b0fee1f6c4979cc9321934d",
+      "default_test_conditions": "Nominal input voltage, resistive full load, +25 C after warm-up unless a particular specification states otherwise. Set/line/load/temperature coefficients are maxima; 8.3 K/W thermal impedance is typical."
     }
   },
   "steady": {
@@ -119,7 +121,7 @@
         9.5
       ]
     },
-    "same_footprint_candidate": {
+    "same_board_outline_candidate": {
       "name": "D42V55F12",
       "input_min_v": 12,
       "input_max_v": 60,

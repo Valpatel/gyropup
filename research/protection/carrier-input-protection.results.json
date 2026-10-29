@@ -1,5 +1,5 @@
 {
-  "inputs_sha256": "6de4b45091db0bc565c6344221ae978ec06e1bef73b0d9243a9f76d19643ba68",
+  "inputs_sha256": "217a102aa8ce2764fd1f828cb879c6cb530a1cc616c91854f79247b7b61b516f",
   "calculator_sha256": "280e8ec09ac02606de7ceb623e3ac01de51df93fcddee536edba7c980685d3eb",
   "source_commit": "6133c18fc735f47bac2e8eabde7967e27d9ae16e",
   "results": {
@@ -21,7 +21,7 @@
         "energy_headroom_per_100uf_to_servo_max_j": 0.0001504799999999989,
         "guaranteed_dynamic_input_or_output_peak_v": null
       },
-      "same_footprint_candidate": {
+      "same_board_outline_candidate": {
         "static_output_max_v": 12.36,
         "static_headroom_to_servo_max_v": 0.2400000000000002,
         "input_headroom_above_steady_robot_v": 18.0,

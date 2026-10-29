@@ -34,7 +34,7 @@ class ProtectionChecks(unittest.TestCase):
     def test_static_headroom_does_not_become_transient_proof(self):
         r = calculate(self.inputs)
         self.assertLess(r['converter_screening']['existing']['input_margin_to_d14_max_breakdown_v'], 0)
-        self.assertLess(r['converter_screening']['same_footprint_candidate']['input_margin_to_d14_specified_clamp_v'], 0)
+        self.assertLess(r['converter_screening']['same_board_outline_candidate']['input_margin_to_d14_specified_clamp_v'], 0)
         self.assertGreater(r['converter_screening']['wide_candidate']['input_margin_to_d14_specified_clamp_v'], 0)
         for c in r['converter_screening'].values():
             self.assertIsNone(c['guaranteed_dynamic_input_or_output_peak_v'])
